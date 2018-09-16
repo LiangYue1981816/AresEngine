@@ -90,7 +90,7 @@ bool CGfxTexture2DArray::TransferTexture2DArray(const gli::texture2d_array *text
 		return false;
 	}
 
-	if (m_mipLevels != texture->levels()) {
+	if (m_mipLevels != (GLsizei)texture->levels()) {
 		return false;
 	}
 
@@ -145,7 +145,7 @@ bool CGfxTexture2DArray::TransferTexture2D(GLsizei layer, const gli::texture2d *
 		return false;
 	}
 
-	if (m_mipLevels < texture->levels()) {
+	if (m_mipLevels < (GLsizei)texture->levels()) {
 		return false;
 	}
 

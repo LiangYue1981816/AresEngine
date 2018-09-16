@@ -89,7 +89,7 @@ bool CGfxTextureCubeMap::TransferTextureCubeMap(const gli::texture_cube *texture
 		return false;
 	}
 
-	if (m_mipLevels != texture->levels()) {
+	if (m_mipLevels != (GLsizei)texture->levels()) {
 		return false;
 	}
 
@@ -148,7 +148,7 @@ bool CGfxTextureCubeMap::TransferTexture2D(GLsizei face, const gli::texture2d *t
 		return false;
 	}
 
-	if (m_mipLevels != texture->levels()) {
+	if (m_mipLevels != (GLsizei)texture->levels()) {
 		return false;
 	}
 

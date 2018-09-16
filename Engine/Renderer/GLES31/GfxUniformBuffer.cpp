@@ -40,7 +40,7 @@ void CGfxUniformBuffer::Destroy(void)
 
 bool CGfxUniformBuffer::SetData(const void *pBuffer, size_t size, size_t offset)
 {
-	if (m_size < size) {
+	if (m_size < (GLsizei)size) {
 		return false;
 	}
 

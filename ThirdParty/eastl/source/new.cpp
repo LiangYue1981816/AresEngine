@@ -1,3 +1,6 @@
+#include "stdlib.h"
+
+
 extern void* alloc_mem(size_t size, const char* file, int line, bool is_array);
 extern void free_pointer(void* usr_ptr, void* addr, bool is_array);
 

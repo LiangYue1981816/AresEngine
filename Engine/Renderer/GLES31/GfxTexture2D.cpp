@@ -89,7 +89,7 @@ bool CGfxTexture2D::TransferTexture2D(const gli::texture2d *texture)
 		return false;
 	}
 
-	if (m_mipLevels != texture->levels()) {
+	if (m_mipLevels != (GLsizei)texture->levels()) {
 		return false;
 	}
 
