@@ -26,9 +26,6 @@ CGfxCamera::CGfxCamera(void)
 CGfxCamera::~CGfxCamera(void)
 {
 	ClearQueue();
-	{
-		m_index = 1 - m_index;
-	}
 	ClearQueue();
 
 	delete m_pCommandBuffer[0];
@@ -158,6 +155,8 @@ void CGfxCamera::AddQueue(CGfxMaterial *pMaterial, CGfxMesh *pMesh, const glm::m
 
 void CGfxCamera::ClearQueue(void)
 {
+	m_index = 1 - m_index;
+
 	for (int indexThread = 0; indexThread < THREAD_COUNT; indexThread++) {
 		for (const auto &itMaterialQueue : m_queueOpaque[indexThread][m_index]) {
 			for (const auto itMeshQueue : itMaterialQueue.second) {
@@ -184,8 +183,6 @@ void CGfxCamera::ClearQueue(void)
 
 void CGfxCamera::CmdDraw(void)
 {
-	m_pCommandBuffer[m_index]->Clearup();
-
 	Renderer()->CmdBeginPass(m_pCommandBuffer[m_index], m_pFrameBuffer);
 	{
 		Renderer()->CmdSetScissor(m_pCommandBuffer[m_index], (int)m_camera.scissor.x, (int)m_camera.scissor.y, (int)m_camera.scissor.z, (int)m_camera.scissor.w);
@@ -230,8 +227,6 @@ void CGfxCamera::Submit(void)
 
 	Renderer()->Update();
 	Renderer()->Submit(m_pCommandBuffer[1 - m_index]);
-
-	m_index = 1 - m_index;
 }
 
 const CGfxUniformCamera* CGfxCamera::GetUniformCamera(void) const

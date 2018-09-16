@@ -157,6 +157,8 @@ void CSceneManager::UpdateCamera(CGfxCamera *pCamera)
 
 	m_taskGraphRender.Wait();
 	{
+		pCamera->ClearQueue();
+
 		for (int indexThread = 0; indexThread < THREAD_COUNT; indexThread++) {
 			taskUpdateCameraMeshs[indexThread].SetParams(indexThread, &m_meshManager, pCamera);
 			m_taskGraphRender.Task(&taskUpdateCameraMeshs[indexThread], NULL, &m_eventUpdateCameraSkin, NULL);

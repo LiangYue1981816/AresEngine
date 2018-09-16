@@ -73,5 +73,7 @@ void CComponentMesh::Update(float deltaTime)
 
 void CComponentMesh::UpdateCamera(CGfxCamera *pCamera, int indexThread)
 {
-
+	if (pCamera->IsVisible(GetAABB())) {
+		pCamera->AddQueue(m_pMaterial, m_pMesh, m_pParentNode->GetWorldTransform(), indexThread);
+	}
 }
