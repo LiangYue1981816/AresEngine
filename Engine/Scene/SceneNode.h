@@ -1,0 +1,111 @@
+#pragma once
+#include <eastl/vector.h>
+#include <eastl/unordered_map.h>
+#include "ComponentMesh.h"
+#include "ComponentSkin.h"
+#include "ComponentParticle.h"
+
+
+class CSceneNode
+{
+	friend class CScene;
+	friend class CSceneManager;
+
+
+public:
+	CSceneNode(uint32_t name, CScene *pScene);
+	CSceneNode(uint32_t name);
+	virtual ~CSceneNode(void);
+
+
+public:
+	uint32_t GetName(void) const;
+	CSceneNode* GetParent(void) const;
+
+public:
+	void SetActive(bool bActive);
+	bool IsActive(void) const;
+
+public:
+	bool AttachNode(CSceneNode *pNode);
+	bool DetachNode(CSceneNode *pNode);
+	void DetachNodeAll(void);
+	CSceneNode* GetNode(uint32_t name) const;
+
+public:
+	bool AttachComponentMesh(CComponentMeshPtr &ptrComponentMesh);
+	bool DetachComponentMesh(CComponentMeshPtr &ptrComponentMesh);
+	void DetachComponentMeshAll(void);
+	CComponentMeshPtr GetComponentMesh(uint32_t name);
+
+	bool AttachComponentSkin(CComponentSkinPtr &ptrComponentSkin);
+	bool DetachComponentSkin(CComponentSkinPtr &ptrComponentSkin);
+	void DetachComponentSkinAll(void);
+	CComponentSkinPtr GetComponentSkin(uint32_t name);
+
+	bool AttachComponentParticle(CComponentParticlePtr &ptrComponentParticle);
+	bool DetachComponentParticle(CComponentParticlePtr &ptrComponentParticle);
+	void DetachComponentParticleAll(void);
+	CComponentParticlePtr GetComponentParticle(uint32_t name);
+
+private:
+	template<class T> bool AttachComponent(CComponentPtr<T> &ptrComponent, eastl::unordered_map<uint32_t, CComponentPtr<T>> &container);
+	template<class T> bool DetachComponent(CComponentPtr<T> &ptrComponent, eastl::unordered_map<uint32_t, CComponentPtr<T>> &container);
+	template<class T> void DetachComponentAll(eastl::unordered_map<uint32_t, CComponentPtr<T>> &container);
+	template<class T> CComponentPtr<T> GetComponent(uint32_t name, eastl::unordered_map<uint32_t, CComponentPtr<T>> &container);
+
+public:
+	void Identity(void);
+
+	void SetLocalScale(float x, float y, float z);
+	void SetLocalPosition(float x, float y, float z);
+	void SetLocalOrientation(float x, float y, float z, float w);
+	void SetLocalDirection(float dirx, float diry, float dirz, float upx = 0.0f, float upy = 1.0f, float upz = 0.0f);
+
+	void SetWorldScale(float x, float y, float z);
+	void SetWorldPosition(float x, float y, float z);
+	void SetWorldOrientation(float x, float y, float z, float w);
+	void SetWorldDirection(float dirx, float diry, float dirz, float upx = 0.0f, float upy = 1.0f, float upz = 0.0f);
+
+	const glm::vec3& GetLocalScale(void) const;
+	const glm::vec3& GetLocalPosition(void) const;
+	const glm::quat& GetLocalOrientation(void) const;
+	const glm::mat4& GetLocalTransform(void) const;
+
+	const glm::vec3& GetWorldScale(void);
+	const glm::vec3& GetWorldPosition(void);
+	const glm::quat& GetWorldOrientation(void);
+	const glm::mat4& GetWorldTransform(void);
+
+private:
+	bool UpdateTransform(bool bParentUpdate);
+	bool UpdateTransformImmediately(void);
+
+
+private:
+	uint32_t m_name;
+
+private:
+	bool m_bActive;
+
+private:
+	glm::vec3 m_localScale;
+	glm::vec3 m_localPosition;
+	glm::quat m_localOrientation;
+	glm::mat4 m_localTransform;
+	glm::vec3 m_worldScale;
+	glm::vec3 m_worldPosition;
+	glm::quat m_worldOrientation;
+	glm::mat4 m_worldTransform;
+	bool m_bNeedUpdateTransform;
+
+private:
+	CSceneNode *m_pParentNode;
+	eastl::unordered_map<uint32_t, CSceneNode*> m_pChildNodes;
+	eastl::unordered_map<uint32_t, CComponentMeshPtr> m_ptrComponentMeshs;
+	eastl::unordered_map<uint32_t, CComponentSkinPtr> m_ptrComponentSkins;
+	eastl::unordered_map<uint32_t, CComponentParticlePtr> m_ptrComponentParticles;
+
+private:
+	CScene *m_pScene;
+};
