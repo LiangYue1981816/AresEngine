@@ -18,6 +18,174 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Application\Main.h" />
+    <ClInclude Include="Application\Resource.h" />
+    <ClInclude Include="Application\stdafx.h" />
+    <ClInclude Include="Application\targetver.h" />
+    <ClInclude Include="Engine\Base\ComponentManager.h" />
+    <ClInclude Include="Engine\Base\Define.h" />
+    <ClInclude Include="Engine\Base\Delegate.h" />
+    <ClInclude Include="Engine\Base\nvwa\c++11.h" />
+    <ClInclude Include="Engine\Base\nvwa\debug_new.h" />
+    <ClInclude Include="Engine\Base\nvwa\fast_mutex.h" />
+    <ClInclude Include="Engine\Base\nvwa\static_assert.h" />
+    <ClInclude Include="Engine\Base\SharedPtr.h" />
+    <ClInclude Include="Engine\Base\TaskGraph.h" />
+    <ClInclude Include="Engine\Base\Utils.h" />
+    <ClInclude Include="Engine\Engine.h" />
+    <ClInclude Include="Engine\Renderer\GLES31\GfxCamera.h" />
+    <ClInclude Include="Engine\Renderer\GLES31\GfxCameraManager.h" />
+    <ClInclude Include="Engine\Renderer\GLES31\GfxCommandBeginPass.h" />
+    <ClInclude Include="Engine\Renderer\GLES31\GfxCommandBindCamera.h" />
+    <ClInclude Include="Engine\Renderer\GLES31\GfxCommandBindInputTexture.h" />
+    <ClInclude Include="Engine\Renderer\GLES31\GfxCommandBindMaterial.h" />
+    <ClInclude Include="Engine\Renderer\GLES31\GfxCommandBindMesh.h" />
+    <ClInclude Include="Engine\Renderer\GLES31\GfxCommandBuffer.h" />
+    <ClInclude Include="Engine\Renderer\GLES31\GfxCommandClearColor.h" />
+    <ClInclude Include="Engine\Renderer\GLES31\GfxCommandClearDepth.h" />
+    <ClInclude Include="Engine\Renderer\GLES31\GfxCommandDrawElements.h" />
+    <ClInclude Include="Engine\Renderer\GLES31\GfxCommandDrawIndirect.h" />
+    <ClInclude Include="Engine\Renderer\GLES31\GfxCommandDrawInstance.h" />
+    <ClInclude Include="Engine\Renderer\GLES31\GfxCommandEndPass.h" />
+    <ClInclude Include="Engine\Renderer\GLES31\GfxCommandExecute.h" />
+    <ClInclude Include="Engine\Renderer\GLES31\GfxCommandSetBlend.h" />
+    <ClInclude Include="Engine\Renderer\GLES31\GfxCommandSetColorWrite.h" />
+    <ClInclude Include="Engine\Renderer\GLES31\GfxCommandSetCullFace.h" />
+    <ClInclude Include="Engine\Renderer\GLES31\GfxCommandSetDepthTest.h" />
+    <ClInclude Include="Engine\Renderer\GLES31\GfxCommandSetDepthWrite.h" />
+    <ClInclude Include="Engine\Renderer\GLES31\GfxCommandSetPolygonOffset.h" />
+    <ClInclude Include="Engine\Renderer\GLES31\GfxCommandSetScissor.h" />
+    <ClInclude Include="Engine\Renderer\GLES31\GfxCommandSetViewport.h" />
+    <ClInclude Include="Engine\Renderer\GLES31\GfxDefinition.h" />
+    <ClInclude Include="Engine\Renderer\GLES31\GfxFrameBuffer.h" />
+    <ClInclude Include="Engine\Renderer\GLES31\GfxFrameBufferManager.h" />
+    <ClInclude Include="Engine\Renderer\GLES31\GfxGLM.h" />
+    <ClInclude Include="Engine\Renderer\GLES31\GfxIndexBuffer.h" />
+    <ClInclude Include="Engine\Renderer\GLES31\GfxInstanceBuffer.h" />
+    <ClInclude Include="Engine\Renderer\GLES31\GfxMaterial.h" />
+    <ClInclude Include="Engine\Renderer\GLES31\GfxMaterialManager.h" />
+    <ClInclude Include="Engine\Renderer\GLES31\GfxMesh.h" />
+    <ClInclude Include="Engine\Renderer\GLES31\GfxMeshManager.h" />
+    <ClInclude Include="Engine\Renderer\GLES31\GfxProgram.h" />
+    <ClInclude Include="Engine\Renderer\GLES31\GfxProgramManager.h" />
+    <ClInclude Include="Engine\Renderer\GLES31\GfxRenderer.h" />
+    <ClInclude Include="Engine\Renderer\GLES31\GfxSampler.h" />
+    <ClInclude Include="Engine\Renderer\GLES31\GfxSamplerManager.h" />
+    <ClInclude Include="Engine\Renderer\GLES31\GfxTexture2D.h" />
+    <ClInclude Include="Engine\Renderer\GLES31\GfxTexture2DArray.h" />
+    <ClInclude Include="Engine\Renderer\GLES31\GfxTextureBase.h" />
+    <ClInclude Include="Engine\Renderer\GLES31\GfxTextureCubeMap.h" />
+    <ClInclude Include="Engine\Renderer\GLES31\GfxTextureManager.h" />
+    <ClInclude Include="Engine\Renderer\GLES31\GfxUniformBuffer.h" />
+    <ClInclude Include="Engine\Renderer\GLES31\GfxUniformCamera.h" />
+    <ClInclude Include="Engine\Renderer\GLES31\GfxUniformEngine.h" />
+    <ClInclude Include="Engine\Renderer\GLES31\GfxUniformMat4.h" />
+    <ClInclude Include="Engine\Renderer\GLES31\GfxUniformVec1.h" />
+    <ClInclude Include="Engine\Renderer\GLES31\GfxUniformVec2.h" />
+    <ClInclude Include="Engine\Renderer\GLES31\GfxUniformVec3.h" />
+    <ClInclude Include="Engine\Renderer\GLES31\GfxUniformVec4.h" />
+    <ClInclude Include="Engine\Renderer\GLES31\GfxVertexArrayObject.h" />
+    <ClInclude Include="Engine\Renderer\GLES31\GfxVertexAttribute.h" />
+    <ClInclude Include="Engine\Renderer\GLES31\GfxVertexBuffer.h" />
+    <ClInclude Include="Engine\Scene\Component\Component.h" />
+    <ClInclude Include="Engine\Scene\Component\ComponentMesh.h" />
+    <ClInclude Include="Engine\Scene\Component\ComponentParticle.h" />
+    <ClInclude Include="Engine\Scene\Component\ComponentSkin.h" />
+    <ClInclude Include="Engine\Scene\Scene.h" />
+    <ClInclude Include="Engine\Scene\SceneManager.h" />
+    <ClInclude Include="Engine\Scene\SceneNode.h" />
+    <ClInclude Include="Engine\Scene\Task\TaskCommandBuffer.h" />
+    <ClInclude Include="Engine\Scene\Task\TaskComponentUpdate.h" />
+    <ClInclude Include="Engine\Scene\Task\TaskComponentUpdateCamera.h" />
+    <ClInclude Include="ThirdParty\event\event.h" />
+    <ClInclude Include="ThirdParty\spirv-cross\GLSL.std.450.h" />
+    <ClInclude Include="ThirdParty\spirv-cross\spirv.hpp" />
+    <ClInclude Include="ThirdParty\spirv-cross\spirv_cfg.hpp" />
+    <ClInclude Include="ThirdParty\spirv-cross\spirv_common.hpp" />
+    <ClInclude Include="ThirdParty\spirv-cross\spirv_cpp.hpp" />
+    <ClInclude Include="ThirdParty\spirv-cross\spirv_cross.hpp" />
+    <ClInclude Include="ThirdParty\spirv-cross\spirv_glsl.hpp" />
+    <ClInclude Include="ThirdParty\spirv-cross\spirv_hlsl.hpp" />
+    <ClInclude Include="ThirdParty\spirv-cross\spirv_msl.hpp" />
+    <ClInclude Include="ThirdParty\tinyxml\tinystr.h" />
+    <ClInclude Include="ThirdParty\tinyxml\tinyxml.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Application\Main.cpp" />
+    <ClCompile Include="Application\stdafx.cpp" />
+    <ClCompile Include="Engine\Base\nvwa\debug_new.cpp" />
+    <ClCompile Include="Engine\Base\nvwa\operator_new.cpp" />
+    <ClCompile Include="Engine\Base\TaskGraph.cpp" />
+    <ClCompile Include="Engine\Base\Utils.cpp" />
+    <ClCompile Include="Engine\Engine.cpp" />
+    <ClCompile Include="Engine\Renderer\GLES31\GfxCamera.cpp" />
+    <ClCompile Include="Engine\Renderer\GLES31\GfxCameraManager.cpp" />
+    <ClCompile Include="Engine\Renderer\GLES31\GfxCommandBuffer.cpp" />
+    <ClCompile Include="Engine\Renderer\GLES31\GfxFrameBuffer.cpp" />
+    <ClCompile Include="Engine\Renderer\GLES31\GfxFrameBufferManager.cpp" />
+    <ClCompile Include="Engine\Renderer\GLES31\GfxIndexBuffer.cpp" />
+    <ClCompile Include="Engine\Renderer\GLES31\GfxInstanceBuffer.cpp" />
+    <ClCompile Include="Engine\Renderer\GLES31\GfxMaterial.cpp" />
+    <ClCompile Include="Engine\Renderer\GLES31\GfxMaterialManager.cpp" />
+    <ClCompile Include="Engine\Renderer\GLES31\GfxMesh.cpp" />
+    <ClCompile Include="Engine\Renderer\GLES31\GfxMeshManager.cpp" />
+    <ClCompile Include="Engine\Renderer\GLES31\GfxProgram.cpp" />
+    <ClCompile Include="Engine\Renderer\GLES31\GfxProgramManager.cpp" />
+    <ClCompile Include="Engine\Renderer\GLES31\GfxRenderer.cpp" />
+    <ClCompile Include="Engine\Renderer\GLES31\GfxSampler.cpp" />
+    <ClCompile Include="Engine\Renderer\GLES31\GfxSamplerManager.cpp" />
+    <ClCompile Include="Engine\Renderer\GLES31\GfxTexture2D.cpp" />
+    <ClCompile Include="Engine\Renderer\GLES31\GfxTexture2DArray.cpp" />
+    <ClCompile Include="Engine\Renderer\GLES31\GfxTextureBase.cpp" />
+    <ClCompile Include="Engine\Renderer\GLES31\GfxTextureCubeMap.cpp" />
+    <ClCompile Include="Engine\Renderer\GLES31\GfxTextureManager.cpp" />
+    <ClCompile Include="Engine\Renderer\GLES31\GfxUniformBuffer.cpp" />
+    <ClCompile Include="Engine\Renderer\GLES31\GfxUniformCamera.cpp" />
+    <ClCompile Include="Engine\Renderer\GLES31\GfxUniformEngine.cpp" />
+    <ClCompile Include="Engine\Renderer\GLES31\GfxUniformMat4.cpp" />
+    <ClCompile Include="Engine\Renderer\GLES31\GfxUniformVec1.cpp" />
+    <ClCompile Include="Engine\Renderer\GLES31\GfxUniformVec2.cpp" />
+    <ClCompile Include="Engine\Renderer\GLES31\GfxUniformVec3.cpp" />
+    <ClCompile Include="Engine\Renderer\GLES31\GfxUniformVec4.cpp" />
+    <ClCompile Include="Engine\Renderer\GLES31\GfxVertexArrayObject.cpp" />
+    <ClCompile Include="Engine\Renderer\GLES31\GfxVertexAttribute.cpp" />
+    <ClCompile Include="Engine\Renderer\GLES31\GfxVertexBuffer.cpp" />
+    <ClCompile Include="Engine\Scene\Component\ComponentMesh.cpp" />
+    <ClCompile Include="Engine\Scene\Component\ComponentParticle.cpp" />
+    <ClCompile Include="Engine\Scene\Component\ComponentSkin.cpp" />
+    <ClCompile Include="Engine\Scene\Scene.cpp" />
+    <ClCompile Include="Engine\Scene\SceneManager.cpp" />
+    <ClCompile Include="Engine\Scene\SceneNode.cpp" />
+    <ClCompile Include="ThirdParty\eastl\source\allocator_eastl.cpp" />
+    <ClCompile Include="ThirdParty\eastl\source\assert.cpp" />
+    <ClCompile Include="ThirdParty\eastl\source\fixed_pool.cpp" />
+    <ClCompile Include="ThirdParty\eastl\source\hashtable.cpp" />
+    <ClCompile Include="ThirdParty\eastl\source\intrusive_list.cpp" />
+    <ClCompile Include="ThirdParty\eastl\source\new.cpp" />
+    <ClCompile Include="ThirdParty\eastl\source\numeric_limits.cpp" />
+    <ClCompile Include="ThirdParty\eastl\source\red_black_tree.cpp" />
+    <ClCompile Include="ThirdParty\eastl\source\string.cpp" />
+    <ClCompile Include="ThirdParty\eastl\source\thread_support.cpp" />
+    <ClCompile Include="ThirdParty\event\event.c" />
+    <ClCompile Include="ThirdParty\spirv-cross\spirv_cfg.cpp" />
+    <ClCompile Include="ThirdParty\spirv-cross\spirv_cpp.cpp" />
+    <ClCompile Include="ThirdParty\spirv-cross\spirv_cross.cpp" />
+    <ClCompile Include="ThirdParty\spirv-cross\spirv_glsl.cpp" />
+    <ClCompile Include="ThirdParty\spirv-cross\spirv_hlsl.cpp" />
+    <ClCompile Include="ThirdParty\spirv-cross\spirv_msl.cpp" />
+    <ClCompile Include="ThirdParty\tinyxml\tinystr.cpp" />
+    <ClCompile Include="ThirdParty\tinyxml\tinyxml.cpp" />
+    <ClCompile Include="ThirdParty\tinyxml\tinyxmlerror.cpp" />
+    <ClCompile Include="ThirdParty\tinyxml\tinyxmlparser.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Application\Big.ico" />
+    <Image Include="Application\small.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Application\Resource.rc" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{263EF1CB-72B3-418C-ADA2-8BDAD1E1D553}</ProjectGuid>
@@ -30,27 +198,27 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -72,102 +240,104 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <IntDir>./Bin/Temp/$(Platform)\$(Configuration)\</IntDir>
+    <OutDir>./Bin/$(Platform)</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
+    <IntDir>./Bin/Temp/$(Platform)\$(Configuration)\</IntDir>
+    <OutDir>./Bin/$(Platform)</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
+    <IntDir>./Bin/Temp/$(Platform)\$(Configuration)\</IntDir>
+    <OutDir>./Bin/$(Platform)</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
+    <IntDir>./Bin/Temp/$(Platform)\$(Configuration)\</IntDir>
+    <OutDir>./Bin/$(Platform)</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>THREAD_COUNT=4;WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>./;./Application;./Editor;./Engine;./Engine/Base;./Engine/Renderer;./Engine/Renderer/GLES31;./Engine/Renderer/GLES31/gles3;./Engine/Renderer/Vulkan;./Engine/Resource;./Engine/Scene;./Engine/Scene/Component;./Engine/Scene/Task;./ThirdParty;./ThirdParty/eastl;./ThirdParty/event;./ThirdParty/gli;./ThirdParty/glm;./ThirdParty/pthread;./ThirdParty/spirv-cross;./ThirdParty/tinyxml;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>./ThirdParty/pthread/x86;./ThirdParty/glew-2.1.0/lib/Release/Win32</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;glew32.lib;pthreadVC2.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>THREAD_COUNT=4;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>./;./Application;./Editor;./Engine;./Engine/Base;./Engine/Renderer;./Engine/Renderer/GLES31;./Engine/Renderer/GLES31/gles3;./Engine/Renderer/Vulkan;./Engine/Resource;./Engine/Scene;./Engine/Scene/Component;./Engine/Scene/Task;./ThirdParty;./ThirdParty/eastl;./ThirdParty/event;./ThirdParty/gli;./ThirdParty/glm;./ThirdParty/pthread;./ThirdParty/spirv-cross;./ThirdParty/tinyxml;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>./ThirdParty/pthread/x64;./ThirdParty/glew-2.1.0/lib/Release/x64</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;glew32.lib;pthreadVC2.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>THREAD_COUNT=4;WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>./;./Application;./Editor;./Engine;./Engine/Base;./Engine/Renderer;./Engine/Renderer/GLES31;./Engine/Renderer/GLES31/gles3;./Engine/Renderer/Vulkan;./Engine/Resource;./Engine/Scene;./Engine/Scene/Component;./Engine/Scene/Task;./ThirdParty;./ThirdParty/eastl;./ThirdParty/event;./ThirdParty/gli;./ThirdParty/glm;./ThirdParty/pthread;./ThirdParty/spirv-cross;./ThirdParty/tinyxml;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>./ThirdParty/pthread/x86;./ThirdParty/glew-2.1.0/lib/Release/Win32</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;glew32.lib;pthreadVC2.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>THREAD_COUNT=4;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>./;./Application;./Editor;./Engine;./Engine/Base;./Engine/Renderer;./Engine/Renderer/GLES31;./Engine/Renderer/GLES31/gles3;./Engine/Renderer/Vulkan;./Engine/Resource;./Engine/Scene;./Engine/Scene/Component;./Engine/Scene/Task;./ThirdParty;./ThirdParty/eastl;./ThirdParty/event;./ThirdParty/gli;./ThirdParty/glm;./ThirdParty/pthread;./ThirdParty/spirv-cross;./ThirdParty/tinyxml;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>./ThirdParty/pthread/x64;./ThirdParty/glew-2.1.0/lib/Release/x64</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;glew32.lib;pthreadVC2.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClInclude Include="AresEngine.h" />
-    <ClInclude Include="Resource.h" />
-    <ClInclude Include="stdafx.h" />
-    <ClInclude Include="targetver.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="AresEngine.cpp" />
-    <ClCompile Include="stdafx.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="AresEngine.rc" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="AresEngine.ico" />
-    <Image Include="small.ico" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

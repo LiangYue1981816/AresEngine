@@ -1,0 +1,601 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Application">
+      <UniqueIdentifier>{ef6f7e6a-2dba-4637-b627-dbd4f9264ded}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine">
+      <UniqueIdentifier>{f3d9f627-b984-4fb1-9277-a8db45f00dfd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game">
+      <UniqueIdentifier>{913ea0fe-874c-42d0-bf0f-00b40b3b9c80}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty">
+      <UniqueIdentifier>{6158f56d-4df4-4e1d-bab2-6e1f9f6a6bdf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Header Files">
+      <UniqueIdentifier>{333af751-5753-4b2e-8a49-08e6db66b31d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Source Files">
+      <UniqueIdentifier>{5da56349-6e33-4500-8ff7-92eaa131d419}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Resource FIles">
+      <UniqueIdentifier>{98f8cbb1-a85e-4f88-89e4-2c5bf52ff741}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Base">
+      <UniqueIdentifier>{0171edf4-6f1a-4196-b1cf-2ad68932ab1e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Renderer">
+      <UniqueIdentifier>{ca0cecde-bb0e-4762-9c8f-1955ccb3ed65}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Resource">
+      <UniqueIdentifier>{facb9389-6c9d-4dbb-9b8c-f18537178e6e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Scene">
+      <UniqueIdentifier>{3b17925f-6ad5-443d-b17a-f4116ba4d530}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Base\Header Files">
+      <UniqueIdentifier>{dae0dda0-e68f-4617-b188-3184601cf0f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Scene\Header Files">
+      <UniqueIdentifier>{36ed1c03-130f-4716-a24a-ee6f48b86205}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Resource\Header Files">
+      <UniqueIdentifier>{4cb7f122-7f24-4c51-8dd4-351c076c2810}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Base\Source Files">
+      <UniqueIdentifier>{579c5042-16be-4fd5-9dac-d7995b4d48ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Scene\Source Files">
+      <UniqueIdentifier>{33373598-a125-466f-85da-e518fcd024b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Resource\Source Files">
+      <UniqueIdentifier>{abda98ed-3b53-412e-bcd1-d1dbc95d66c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Renderer\GLES31">
+      <UniqueIdentifier>{216efd2a-af7e-4ca0-9e30-f4b788b591ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Renderer\Vulkan">
+      <UniqueIdentifier>{cc2ffa9f-d435-4289-addc-61ebee8a2422}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Renderer\GLES31\Header Files">
+      <UniqueIdentifier>{c8a7f08a-571e-499b-a9e8-bf63d2d24d8d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Renderer\GLES31\Source Files">
+      <UniqueIdentifier>{79cf6f71-2ce1-4364-bd1f-d8921ae0ddc1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Renderer\Vulkan\Header Files">
+      <UniqueIdentifier>{0578c6bf-8373-476c-94b5-879eea53d761}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Renderer\Vulkan\Source Files">
+      <UniqueIdentifier>{b25332d1-ba3d-4c2f-8ae1-f8aebd5a8f80}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Renderer\Gfx">
+      <UniqueIdentifier>{3995f083-b95e-4e5e-b4a4-b64d0ea767ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Renderer\GLES31\Source Files\Commands">
+      <UniqueIdentifier>{aeda77ed-5e43-47af-81ae-ab4988918700}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Scene\Source Files\Component">
+      <UniqueIdentifier>{35f4a36d-8094-4583-996d-4a1c059804e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Scene\Source Files\Component\Header Files">
+      <UniqueIdentifier>{e25f93bd-e201-4446-8c26-3617d9eb8458}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Scene\Source Files\Component\Source Files">
+      <UniqueIdentifier>{26a97420-1812-441c-98e2-bc8ac9450747}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Scene\Source Files\Task">
+      <UniqueIdentifier>{8f386109-ef25-4573-98d0-cc98cfcf4337}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Base\Source Files\nvwa">
+      <UniqueIdentifier>{4fdf234a-5389-4b11-b0a5-4eeddcb6d3a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Base\Source Files\nvwa\Header Files">
+      <UniqueIdentifier>{da4a5c93-3296-4e0a-868f-9eb210dfa6f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Base\Source Files\nvwa\Source Files">
+      <UniqueIdentifier>{3eea1ff8-b966-489d-92fa-c21dd026524e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\eastl">
+      <UniqueIdentifier>{2d616e3b-42aa-4e8c-b5b1-879dcfb2f398}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\event">
+      <UniqueIdentifier>{e57f4b0f-fffd-472a-b9cb-fba2d467fda1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\spirv-cross">
+      <UniqueIdentifier>{39ba05d1-3fd0-4ee9-8acf-c0904bc9a460}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\tinyxml">
+      <UniqueIdentifier>{224b336a-32c3-4fa7-b2ee-ec64b33ae360}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Application\Main.h">
+      <Filter>Application\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\stdafx.h">
+      <Filter>Application\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\targetver.h">
+      <Filter>Application\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Resource.h">
+      <Filter>Application\Resource FIles</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Base\ComponentManager.h">
+      <Filter>Engine\Base\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Base\Define.h">
+      <Filter>Engine\Base\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Base\Delegate.h">
+      <Filter>Engine\Base\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Base\SharedPtr.h">
+      <Filter>Engine\Base\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Base\TaskGraph.h">
+      <Filter>Engine\Base\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Base\Utils.h">
+      <Filter>Engine\Base\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Renderer\GLES31\GfxCommandBeginPass.h">
+      <Filter>Engine\Renderer\GLES31\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Renderer\GLES31\GfxCommandBindCamera.h">
+      <Filter>Engine\Renderer\GLES31\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Renderer\GLES31\GfxCommandBindInputTexture.h">
+      <Filter>Engine\Renderer\GLES31\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Renderer\GLES31\GfxCommandBindMaterial.h">
+      <Filter>Engine\Renderer\GLES31\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Renderer\GLES31\GfxCommandBindMesh.h">
+      <Filter>Engine\Renderer\GLES31\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Renderer\GLES31\GfxCommandClearColor.h">
+      <Filter>Engine\Renderer\GLES31\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Renderer\GLES31\GfxCommandClearDepth.h">
+      <Filter>Engine\Renderer\GLES31\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Renderer\GLES31\GfxCommandDrawElements.h">
+      <Filter>Engine\Renderer\GLES31\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Renderer\GLES31\GfxCommandDrawIndirect.h">
+      <Filter>Engine\Renderer\GLES31\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Renderer\GLES31\GfxCommandDrawInstance.h">
+      <Filter>Engine\Renderer\GLES31\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Renderer\GLES31\GfxCommandEndPass.h">
+      <Filter>Engine\Renderer\GLES31\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Renderer\GLES31\GfxCommandExecute.h">
+      <Filter>Engine\Renderer\GLES31\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Renderer\GLES31\GfxCommandSetBlend.h">
+      <Filter>Engine\Renderer\GLES31\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Renderer\GLES31\GfxCommandSetColorWrite.h">
+      <Filter>Engine\Renderer\GLES31\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Renderer\GLES31\GfxCommandSetCullFace.h">
+      <Filter>Engine\Renderer\GLES31\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Renderer\GLES31\GfxCommandSetDepthTest.h">
+      <Filter>Engine\Renderer\GLES31\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Renderer\GLES31\GfxCommandSetDepthWrite.h">
+      <Filter>Engine\Renderer\GLES31\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Renderer\GLES31\GfxCommandSetPolygonOffset.h">
+      <Filter>Engine\Renderer\GLES31\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Renderer\GLES31\GfxCommandSetScissor.h">
+      <Filter>Engine\Renderer\GLES31\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Renderer\GLES31\GfxCommandSetViewport.h">
+      <Filter>Engine\Renderer\GLES31\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Renderer\GLES31\GfxCamera.h">
+      <Filter>Engine\Renderer\GLES31\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Renderer\GLES31\GfxCameraManager.h">
+      <Filter>Engine\Renderer\GLES31\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Renderer\GLES31\GfxCommandBuffer.h">
+      <Filter>Engine\Renderer\GLES31\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Renderer\GLES31\GfxDefinition.h">
+      <Filter>Engine\Renderer\GLES31\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Renderer\GLES31\GfxFrameBuffer.h">
+      <Filter>Engine\Renderer\GLES31\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Renderer\GLES31\GfxFrameBufferManager.h">
+      <Filter>Engine\Renderer\GLES31\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Renderer\GLES31\GfxGLM.h">
+      <Filter>Engine\Renderer\GLES31\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Renderer\GLES31\GfxIndexBuffer.h">
+      <Filter>Engine\Renderer\GLES31\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Renderer\GLES31\GfxInstanceBuffer.h">
+      <Filter>Engine\Renderer\GLES31\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Renderer\GLES31\GfxMaterial.h">
+      <Filter>Engine\Renderer\GLES31\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Renderer\GLES31\GfxMaterialManager.h">
+      <Filter>Engine\Renderer\GLES31\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Renderer\GLES31\GfxMesh.h">
+      <Filter>Engine\Renderer\GLES31\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Renderer\GLES31\GfxMeshManager.h">
+      <Filter>Engine\Renderer\GLES31\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Renderer\GLES31\GfxProgram.h">
+      <Filter>Engine\Renderer\GLES31\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Renderer\GLES31\GfxProgramManager.h">
+      <Filter>Engine\Renderer\GLES31\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Renderer\GLES31\GfxRenderer.h">
+      <Filter>Engine\Renderer\GLES31\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Renderer\GLES31\GfxSampler.h">
+      <Filter>Engine\Renderer\GLES31\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Renderer\GLES31\GfxSamplerManager.h">
+      <Filter>Engine\Renderer\GLES31\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Renderer\GLES31\GfxTexture2D.h">
+      <Filter>Engine\Renderer\GLES31\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Renderer\GLES31\GfxTexture2DArray.h">
+      <Filter>Engine\Renderer\GLES31\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Renderer\GLES31\GfxTextureBase.h">
+      <Filter>Engine\Renderer\GLES31\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Renderer\GLES31\GfxTextureCubeMap.h">
+      <Filter>Engine\Renderer\GLES31\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Renderer\GLES31\GfxTextureManager.h">
+      <Filter>Engine\Renderer\GLES31\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Renderer\GLES31\GfxUniformBuffer.h">
+      <Filter>Engine\Renderer\GLES31\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Renderer\GLES31\GfxUniformCamera.h">
+      <Filter>Engine\Renderer\GLES31\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Renderer\GLES31\GfxUniformEngine.h">
+      <Filter>Engine\Renderer\GLES31\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Renderer\GLES31\GfxUniformMat4.h">
+      <Filter>Engine\Renderer\GLES31\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Renderer\GLES31\GfxUniformVec1.h">
+      <Filter>Engine\Renderer\GLES31\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Renderer\GLES31\GfxUniformVec2.h">
+      <Filter>Engine\Renderer\GLES31\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Renderer\GLES31\GfxUniformVec3.h">
+      <Filter>Engine\Renderer\GLES31\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Renderer\GLES31\GfxUniformVec4.h">
+      <Filter>Engine\Renderer\GLES31\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Renderer\GLES31\GfxVertexArrayObject.h">
+      <Filter>Engine\Renderer\GLES31\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Renderer\GLES31\GfxVertexAttribute.h">
+      <Filter>Engine\Renderer\GLES31\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Renderer\GLES31\GfxVertexBuffer.h">
+      <Filter>Engine\Renderer\GLES31\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Scene\Scene.h">
+      <Filter>Engine\Scene\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Scene\SceneManager.h">
+      <Filter>Engine\Scene\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Scene\SceneNode.h">
+      <Filter>Engine\Scene\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Scene\Task\TaskCommandBuffer.h">
+      <Filter>Engine\Scene\Source Files\Task</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Scene\Task\TaskComponentUpdate.h">
+      <Filter>Engine\Scene\Source Files\Task</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Scene\Task\TaskComponentUpdateCamera.h">
+      <Filter>Engine\Scene\Source Files\Task</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Scene\Component\Component.h">
+      <Filter>Engine\Scene\Source Files\Component\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Scene\Component\ComponentMesh.h">
+      <Filter>Engine\Scene\Source Files\Component\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Scene\Component\ComponentParticle.h">
+      <Filter>Engine\Scene\Source Files\Component\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Scene\Component\ComponentSkin.h">
+      <Filter>Engine\Scene\Source Files\Component\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Base\nvwa\c++11.h">
+      <Filter>Engine\Base\Source Files\nvwa\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Base\nvwa\debug_new.h">
+      <Filter>Engine\Base\Source Files\nvwa\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Base\nvwa\fast_mutex.h">
+      <Filter>Engine\Base\Source Files\nvwa\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Base\nvwa\static_assert.h">
+      <Filter>Engine\Base\Source Files\nvwa\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Engine.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\event\event.h">
+      <Filter>ThirdParty\event</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\tinyxml\tinystr.h">
+      <Filter>ThirdParty\tinyxml</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\tinyxml\tinyxml.h">
+      <Filter>ThirdParty\tinyxml</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\spirv-cross\spirv_cpp.hpp">
+      <Filter>ThirdParty\spirv-cross</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\spirv-cross\spirv_cross.hpp">
+      <Filter>ThirdParty\spirv-cross</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\spirv-cross\spirv_glsl.hpp">
+      <Filter>ThirdParty\spirv-cross</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\spirv-cross\spirv_hlsl.hpp">
+      <Filter>ThirdParty\spirv-cross</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\spirv-cross\spirv_msl.hpp">
+      <Filter>ThirdParty\spirv-cross</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\spirv-cross\GLSL.std.450.h">
+      <Filter>ThirdParty\spirv-cross</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\spirv-cross\spirv.hpp">
+      <Filter>ThirdParty\spirv-cross</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\spirv-cross\spirv_cfg.hpp">
+      <Filter>ThirdParty\spirv-cross</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\spirv-cross\spirv_common.hpp">
+      <Filter>ThirdParty\spirv-cross</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Application\Main.cpp">
+      <Filter>Application\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\stdafx.cpp">
+      <Filter>Application\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Base\TaskGraph.cpp">
+      <Filter>Engine\Base\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Base\Utils.cpp">
+      <Filter>Engine\Base\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Renderer\GLES31\GfxCamera.cpp">
+      <Filter>Engine\Renderer\GLES31\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Renderer\GLES31\GfxCameraManager.cpp">
+      <Filter>Engine\Renderer\GLES31\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Renderer\GLES31\GfxCommandBuffer.cpp">
+      <Filter>Engine\Renderer\GLES31\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Renderer\GLES31\GfxFrameBuffer.cpp">
+      <Filter>Engine\Renderer\GLES31\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Renderer\GLES31\GfxFrameBufferManager.cpp">
+      <Filter>Engine\Renderer\GLES31\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Renderer\GLES31\GfxIndexBuffer.cpp">
+      <Filter>Engine\Renderer\GLES31\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Renderer\GLES31\GfxInstanceBuffer.cpp">
+      <Filter>Engine\Renderer\GLES31\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Renderer\GLES31\GfxMaterial.cpp">
+      <Filter>Engine\Renderer\GLES31\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Renderer\GLES31\GfxMaterialManager.cpp">
+      <Filter>Engine\Renderer\GLES31\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Renderer\GLES31\GfxMesh.cpp">
+      <Filter>Engine\Renderer\GLES31\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Renderer\GLES31\GfxMeshManager.cpp">
+      <Filter>Engine\Renderer\GLES31\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Renderer\GLES31\GfxProgram.cpp">
+      <Filter>Engine\Renderer\GLES31\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Renderer\GLES31\GfxProgramManager.cpp">
+      <Filter>Engine\Renderer\GLES31\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Renderer\GLES31\GfxRenderer.cpp">
+      <Filter>Engine\Renderer\GLES31\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Renderer\GLES31\GfxSampler.cpp">
+      <Filter>Engine\Renderer\GLES31\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Renderer\GLES31\GfxSamplerManager.cpp">
+      <Filter>Engine\Renderer\GLES31\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Renderer\GLES31\GfxTexture2D.cpp">
+      <Filter>Engine\Renderer\GLES31\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Renderer\GLES31\GfxTexture2DArray.cpp">
+      <Filter>Engine\Renderer\GLES31\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Renderer\GLES31\GfxTextureBase.cpp">
+      <Filter>Engine\Renderer\GLES31\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Renderer\GLES31\GfxTextureCubeMap.cpp">
+      <Filter>Engine\Renderer\GLES31\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Renderer\GLES31\GfxTextureManager.cpp">
+      <Filter>Engine\Renderer\GLES31\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Renderer\GLES31\GfxUniformBuffer.cpp">
+      <Filter>Engine\Renderer\GLES31\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Renderer\GLES31\GfxUniformCamera.cpp">
+      <Filter>Engine\Renderer\GLES31\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Renderer\GLES31\GfxUniformEngine.cpp">
+      <Filter>Engine\Renderer\GLES31\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Renderer\GLES31\GfxUniformMat4.cpp">
+      <Filter>Engine\Renderer\GLES31\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Renderer\GLES31\GfxUniformVec1.cpp">
+      <Filter>Engine\Renderer\GLES31\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Renderer\GLES31\GfxUniformVec2.cpp">
+      <Filter>Engine\Renderer\GLES31\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Renderer\GLES31\GfxUniformVec3.cpp">
+      <Filter>Engine\Renderer\GLES31\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Renderer\GLES31\GfxUniformVec4.cpp">
+      <Filter>Engine\Renderer\GLES31\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Renderer\GLES31\GfxVertexArrayObject.cpp">
+      <Filter>Engine\Renderer\GLES31\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Renderer\GLES31\GfxVertexAttribute.cpp">
+      <Filter>Engine\Renderer\GLES31\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Renderer\GLES31\GfxVertexBuffer.cpp">
+      <Filter>Engine\Renderer\GLES31\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Scene\Scene.cpp">
+      <Filter>Engine\Scene\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Scene\SceneManager.cpp">
+      <Filter>Engine\Scene\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Scene\SceneNode.cpp">
+      <Filter>Engine\Scene\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Scene\Component\ComponentMesh.cpp">
+      <Filter>Engine\Scene\Source Files\Component\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Scene\Component\ComponentParticle.cpp">
+      <Filter>Engine\Scene\Source Files\Component\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Scene\Component\ComponentSkin.cpp">
+      <Filter>Engine\Scene\Source Files\Component\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Base\nvwa\debug_new.cpp">
+      <Filter>Engine\Base\Source Files\nvwa\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Base\nvwa\operator_new.cpp">
+      <Filter>Engine\Base\Source Files\nvwa\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Engine.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="ThirdParty\eastl\source\allocator_eastl.cpp">
+      <Filter>ThirdParty\eastl</Filter>
+    </ClCompile>
+    <ClCompile Include="ThirdParty\eastl\source\assert.cpp">
+      <Filter>ThirdParty\eastl</Filter>
+    </ClCompile>
+    <ClCompile Include="ThirdParty\eastl\source\fixed_pool.cpp">
+      <Filter>ThirdParty\eastl</Filter>
+    </ClCompile>
+    <ClCompile Include="ThirdParty\eastl\source\hashtable.cpp">
+      <Filter>ThirdParty\eastl</Filter>
+    </ClCompile>
+    <ClCompile Include="ThirdParty\eastl\source\intrusive_list.cpp">
+      <Filter>ThirdParty\eastl</Filter>
+    </ClCompile>
+    <ClCompile Include="ThirdParty\eastl\source\new.cpp">
+      <Filter>ThirdParty\eastl</Filter>
+    </ClCompile>
+    <ClCompile Include="ThirdParty\eastl\source\numeric_limits.cpp">
+      <Filter>ThirdParty\eastl</Filter>
+    </ClCompile>
+    <ClCompile Include="ThirdParty\eastl\source\red_black_tree.cpp">
+      <Filter>ThirdParty\eastl</Filter>
+    </ClCompile>
+    <ClCompile Include="ThirdParty\eastl\source\string.cpp">
+      <Filter>ThirdParty\eastl</Filter>
+    </ClCompile>
+    <ClCompile Include="ThirdParty\eastl\source\thread_support.cpp">
+      <Filter>ThirdParty\eastl</Filter>
+    </ClCompile>
+    <ClCompile Include="ThirdParty\event\event.c">
+      <Filter>ThirdParty\event</Filter>
+    </ClCompile>
+    <ClCompile Include="ThirdParty\tinyxml\tinystr.cpp">
+      <Filter>ThirdParty\tinyxml</Filter>
+    </ClCompile>
+    <ClCompile Include="ThirdParty\tinyxml\tinyxml.cpp">
+      <Filter>ThirdParty\tinyxml</Filter>
+    </ClCompile>
+    <ClCompile Include="ThirdParty\tinyxml\tinyxmlerror.cpp">
+      <Filter>ThirdParty\tinyxml</Filter>
+    </ClCompile>
+    <ClCompile Include="ThirdParty\tinyxml\tinyxmlparser.cpp">
+      <Filter>ThirdParty\tinyxml</Filter>
+    </ClCompile>
+    <ClCompile Include="ThirdParty\spirv-cross\spirv_cpp.cpp">
+      <Filter>ThirdParty\spirv-cross</Filter>
+    </ClCompile>
+    <ClCompile Include="ThirdParty\spirv-cross\spirv_cross.cpp">
+      <Filter>ThirdParty\spirv-cross</Filter>
+    </ClCompile>
+    <ClCompile Include="ThirdParty\spirv-cross\spirv_glsl.cpp">
+      <Filter>ThirdParty\spirv-cross</Filter>
+    </ClCompile>
+    <ClCompile Include="ThirdParty\spirv-cross\spirv_hlsl.cpp">
+      <Filter>ThirdParty\spirv-cross</Filter>
+    </ClCompile>
+    <ClCompile Include="ThirdParty\spirv-cross\spirv_msl.cpp">
+      <Filter>ThirdParty\spirv-cross</Filter>
+    </ClCompile>
+    <ClCompile Include="ThirdParty\spirv-cross\spirv_cfg.cpp">
+      <Filter>ThirdParty\spirv-cross</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Application\Big.ico">
+      <Filter>Application\Resource FIles</Filter>
+    </Image>
+    <Image Include="Application\small.ico">
+      <Filter>Application\Resource FIles</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Application\Resource.rc">
+      <Filter>Application\Resource FIles</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>
