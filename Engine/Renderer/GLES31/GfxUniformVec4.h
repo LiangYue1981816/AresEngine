@@ -14,8 +14,8 @@ public:
 	void Apply(void);
 
 public:
-	GLuint GetSize(void) const;
 	GLuint GetBuffer(void) const;
+	GLsizeiptr GetSize(void) const;
 
 
 private:

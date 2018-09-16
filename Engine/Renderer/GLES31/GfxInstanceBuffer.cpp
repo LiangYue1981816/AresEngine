@@ -67,7 +67,7 @@ void CGfxInstanceBuffer::UpdateInstance(void)
 	if (m_bDirty) {
 		m_bDirty = false;
 
-		GLuint size = m_instanceDatas.size() * sizeof(glm::mat4);
+		GLsizeiptr size = (GLsizeiptr)m_instanceDatas.size() * sizeof(glm::mat4);
 
 		if (m_size < size) {
 			m_size = INSTANCE_BUFFER_SIZE;
@@ -86,7 +86,7 @@ void CGfxInstanceBuffer::UpdateInstance(void)
 
 GLuint CGfxInstanceBuffer::GetInstanceCount(void) const
 {
-	return m_instanceDatas.size();
+	return (GLuint)m_instanceDatas.size();
 }
 
 GLuint CGfxInstanceBuffer::GetInstanceFormat(void) const
@@ -99,7 +99,7 @@ GLuint CGfxInstanceBuffer::GetInstanceBuffer(void) const
 	return m_instanceBuffer;
 }
 
-GLuint CGfxInstanceBuffer::GetSize(void) const
+GLsizeiptr CGfxInstanceBuffer::GetSize(void) const
 {
 	return m_size;
 }

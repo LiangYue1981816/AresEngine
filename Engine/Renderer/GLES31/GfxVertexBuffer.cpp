@@ -41,10 +41,10 @@ void CGfxVertexBuffer::Bind(void) const
 
 bool CGfxVertexBuffer::BufferData(size_t size, const void *pBuffer, bool bDynamic)
 {
-	m_size = m_size;
+	m_size = (GLsizeiptr)m_size;
 
 	glBindBuffer(GL_ARRAY_BUFFER, m_vertexBuffer);
-	glBufferData(GL_ARRAY_BUFFER, size, pBuffer, bDynamic ? GL_DYNAMIC_DRAW : GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, m_size, pBuffer, bDynamic ? GL_DYNAMIC_DRAW : GL_STATIC_DRAW);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 	return true;
@@ -65,7 +65,7 @@ GLuint CGfxVertexBuffer::GetVertexBuffer(void) const
 	return m_vertexBuffer;
 }
 
-GLuint CGfxVertexBuffer::GetSize(void) const
+GLsizeiptr CGfxVertexBuffer::GetSize(void) const
 {
 	return m_size;
 }

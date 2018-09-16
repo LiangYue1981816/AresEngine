@@ -3,7 +3,7 @@
 #include "GfxMaterial.h"
 
 
-#define TEXTURE_INTERNAL_NAME(name) (name ^ ((GLuint)this))
+#define TEXTURE_INTERNAL_NAME(name) (GLuint)(name ^ (size_t)this)
 
 
 static GLenum StringToCullFace(const char *szString)
@@ -618,9 +618,9 @@ GLuint CGfxMaterial::GetTextureUnits(void) const
 {
 	GLuint numTexUnits = 0;
 
-	numTexUnits += m_pTexture2ds.size();
-	numTexUnits += m_pTexture2dArrays.size();
-	numTexUnits += m_pTextureCubeMaps.size();
+	numTexUnits += (GLuint)m_pTexture2ds.size();
+	numTexUnits += (GLuint)m_pTexture2dArrays.size();
+	numTexUnits += (GLuint)m_pTextureCubeMaps.size();
 
 	return numTexUnits;
 }

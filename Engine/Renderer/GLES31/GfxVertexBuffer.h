@@ -21,11 +21,11 @@ private:
 	GLuint GetVertexCount(void) const;
 	GLuint GetVertexFormat(void) const;
 	GLuint GetVertexBuffer(void) const;
-	GLuint GetSize(void) const;
+	GLsizeiptr GetSize(void) const;
 
 
 private:
 	GLuint m_vertexFormat;
 	GLuint m_vertexBuffer;
-	GLuint m_size;
+	GLsizeiptr m_size;
 };

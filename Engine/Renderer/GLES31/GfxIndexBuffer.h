@@ -21,11 +21,11 @@ private:
 	GLenum GetIndexType(void) const;
 	GLuint GetIndexCount(void) const;
 	GLuint GetIndexBuffer(void) const;
-	GLuint GetSize(void) const;
+	GLsizeiptr GetSize(void) const;
 
 
 private:
 	GLenum m_indexType;
 	GLuint m_indexBuffer;
-	GLuint m_size;
+	GLsizeiptr m_size;
 };

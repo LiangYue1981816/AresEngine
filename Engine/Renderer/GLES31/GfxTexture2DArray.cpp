@@ -29,7 +29,7 @@ bool CGfxTexture2DArray::Load(const char *szFileName)
 		gli::gl::format format = GL.translate(texture.format(), texture.swizzles());
 
 		if (texture.target() != gli::TARGET_2D_ARRAY) throw 1;
-		if (Create(format.External, format.Internal, texture.extent().x, texture.extent().y, texture.levels(), texture.layers()) == false) throw 2;
+		if (Create(format.External, format.Internal, texture.extent().x, texture.extent().y, (GLsizei)texture.levels(), (GLsizei)texture.layers()) == false) throw 2;
 		if (TransferTexture2DArray((const gli::texture2d_array *)&texture) == false) throw 3;
 
 		return true;
@@ -40,7 +40,7 @@ bool CGfxTexture2DArray::Load(const char *szFileName)
 	}
 }
 
-bool CGfxTexture2DArray::Create(GLenum format, GLenum internalFormat, GLsizei width, GLsizei height, GLuint mipLevels, GLuint arrayLayers)
+bool CGfxTexture2DArray::Create(GLenum format, GLenum internalFormat, GLsizei width, GLsizei height, GLsizei mipLevels, GLsizei arrayLayers)
 {
 	Free();
 
@@ -103,7 +103,7 @@ bool CGfxTexture2DArray::TransferTexture2DArray(const gli::texture2d_array *text
 		for (int layer = 0; layer < (int)texture->layers(); layer++) {
 			for (int level = 0; level < (int)texture->levels(); level++) {
 				if (gli::is_compressed(texture->format())) {
-					glCompressedTexSubImage3D(GL_TEXTURE_2D_ARRAY, level, 0, 0, layer, texture->extent(level).x, texture->extent(level).y, 1, format.Internal, texture->size(level), texture->data(layer, 0, level));
+					glCompressedTexSubImage3D(GL_TEXTURE_2D_ARRAY, level, 0, 0, layer, texture->extent(level).x, texture->extent(level).y, 1, format.Internal, (GLsizei)texture->size(level), texture->data(layer, 0, level));
 				}
 				else {
 					glTexSubImage3D(GL_TEXTURE_2D_ARRAY, level, 0, 0, layer, texture->extent(level).x, texture->extent(level).y, 1, format.External, format.Type, texture->data(layer, 0, level));
@@ -116,7 +116,7 @@ bool CGfxTexture2DArray::TransferTexture2DArray(const gli::texture2d_array *text
 	return true;
 }
 
-bool CGfxTexture2DArray::TransferTexture2D(GLuint layer, const gli::texture2d *texture)
+bool CGfxTexture2DArray::TransferTexture2D(GLsizei layer, const gli::texture2d *texture)
 {
 	if (texture == NULL) {
 		return false;
@@ -157,7 +157,7 @@ bool CGfxTexture2DArray::TransferTexture2D(GLuint layer, const gli::texture2d *t
 	{
 		for (int level = 0; level < (int)texture->levels(); level++) {
 			if (gli::is_compressed(texture->format())) {
-				glCompressedTexSubImage3D(GL_TEXTURE_2D_ARRAY, level, 0, 0, layer, texture->extent(level).x, texture->extent(level).y, 1, format.Internal, texture->size(level), texture->data(layer, 0, level));
+				glCompressedTexSubImage3D(GL_TEXTURE_2D_ARRAY, level, 0, 0, layer, texture->extent(level).x, texture->extent(level).y, 1, format.Internal, (GLsizei)texture->size(level), texture->data(layer, 0, level));
 			}
 			else {
 				glTexSubImage3D(GL_TEXTURE_2D_ARRAY, level, 0, 0, layer, texture->extent(level).x, texture->extent(level).y, 1, format.External, format.Type, texture->data(layer, 0, level));
@@ -169,7 +169,7 @@ bool CGfxTexture2DArray::TransferTexture2D(GLuint layer, const gli::texture2d *t
 	return true;
 }
 
-bool CGfxTexture2DArray::TransferTexture2D(GLuint layer, GLuint level, GLenum format, GLsizei width, GLsizei height, GLenum type, const GLvoid *data)
+bool CGfxTexture2DArray::TransferTexture2D(GLsizei layer, GLsizei level, GLenum format, GLsizei width, GLsizei height, GLenum type, const GLvoid *data)
 {
 	if (m_texture == 0) {
 		return false;
@@ -196,7 +196,7 @@ bool CGfxTexture2DArray::TransferTexture2D(GLuint layer, GLuint level, GLenum fo
 	return true;
 }
 
-bool CGfxTexture2DArray::TransferTexture2DCompressed(GLuint layer, GLuint level, GLenum format, GLsizei width, GLsizei height, GLsizei size, const GLvoid *data)
+bool CGfxTexture2DArray::TransferTexture2DCompressed(GLsizei layer, GLsizei level, GLenum format, GLsizei width, GLsizei height, GLsizei size, const GLvoid *data)
 {
 	if (m_texture == 0) {
 		return false;

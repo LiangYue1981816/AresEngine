@@ -47,11 +47,11 @@ protected:
 	GLenum m_format;
 	GLenum m_internalFormat;
 
-	GLuint m_width;
-	GLuint m_height;
+	GLsizei m_width;
+	GLsizei m_height;
 
-	GLuint m_mipLevels;
-	GLuint m_arrayLayers;
+	GLsizei m_mipLevels;
+	GLsizei m_arrayLayers;
 
 private:
 	GLuint refCount;

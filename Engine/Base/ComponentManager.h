@@ -20,7 +20,7 @@ public:
 	bool NewComponent(uint32_t key, T component)
 	{
 		if (m_keyIndex.find(key) == m_keyIndex.end()) {
-			uint32_t index = m_components.size();
+			size_t index = m_components.size();
 
 			m_keyIndex[key] = index;
 			m_indexKey[index] = key;
@@ -36,8 +36,8 @@ public:
 	bool DeleteComponent(uint32_t key)
 	{
 		if (m_keyIndex.find(key) != m_keyIndex.end()) {
-			uint32_t indexCurrent = m_keyIndex[key];
-			uint32_t indexEnd = m_components.size() - 1;
+			size_t indexCurrent = m_keyIndex[key];
+			size_t indexEnd = m_components.size() - 1;
 			uint32_t keyEnd = m_indexKey[indexEnd];
 
 			m_keyIndex[keyEnd] = indexCurrent;
@@ -65,12 +65,12 @@ public:
 		m_components.clear();
 	}
 
-	uint32_t GetComponentCount(void) const
+	size_t GetComponentCount(void) const
 	{
 		return m_components.size();
 	}
 
-	T* GetComponentByIndex(uint32_t index)
+	T* GetComponentByIndex(size_t index)
 	{
 		return index < m_components.size() ? &m_components[index] : NULL;
 	}
@@ -84,8 +84,8 @@ public:
 
 private:
 	eastl::vector<T> m_components;
-	eastl::unordered_map<uint32_t, uint32_t> m_keyIndex;
-	eastl::unordered_map<uint32_t, uint32_t> m_indexKey;
+	eastl::unordered_map<uint32_t, size_t> m_keyIndex;
+	eastl::unordered_map<size_t, uint32_t> m_indexKey;
 };
 
 template<class T> class CComponentPtr

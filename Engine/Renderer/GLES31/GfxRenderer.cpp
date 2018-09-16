@@ -69,7 +69,7 @@ CGfxRenderer::CGfxRenderer(void *hDC, const char *szShaderPath, const char *szTe
 	HGLRC hRC = wglCreateContext((HDC)m_hDC);
 	wglMakeCurrent((HDC)m_hDC, hRC);
 
-	glewInit();
+	GLenum err = glewInit();
 #endif
 
 	strcpy(m_szShaderPath, szShaderPath);
@@ -404,7 +404,7 @@ bool CGfxRenderer::CmdDrawInstance(CGfxCommandBuffer *pCommandBuffer, CGfxMesh *
 		return false;
 	}
 
-	if (pCommandBuffer->CmdDrawInstance(GL_TRIANGLES, pMesh->GetIndexType(), indexCount, baseIndex, mtxTransforms.size()) == false) {
+	if (pCommandBuffer->CmdDrawInstance(GL_TRIANGLES, pMesh->GetIndexType(), indexCount, baseIndex, (GLsizei)mtxTransforms.size()) == false) {
 		return false;
 	}
 
@@ -430,7 +430,7 @@ bool CGfxRenderer::CmdDrawIndirect(CGfxCommandBuffer *pCommandBuffer, CGfxMesh *
 		return false;
 	}
 
-	if (pCommandBuffer->CmdDrawIndirect(GL_TRIANGLES, pMesh->GetIndexType(), indexCount, baseIndex, baseVertex, mtxTransforms.size()) == false) {
+	if (pCommandBuffer->CmdDrawIndirect(GL_TRIANGLES, pMesh->GetIndexType(), indexCount, baseIndex, baseVertex, (GLsizei)mtxTransforms.size()) == false) {
 		return false;
 	}
 

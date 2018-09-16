@@ -23,10 +23,10 @@ void CGfxIndexBuffer::Bind(void) const
 
 bool CGfxIndexBuffer::BufferData(size_t size, const void *pBuffer, bool bDynamic)
 {
-	m_size = size;
+	m_size = (GLsizeiptr)size;
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_indexBuffer);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, size, pBuffer, bDynamic ? GL_DYNAMIC_DRAW : GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_size, pBuffer, bDynamic ? GL_DYNAMIC_DRAW : GL_STATIC_DRAW);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
 	return true;
@@ -47,7 +47,7 @@ GLuint CGfxIndexBuffer::GetIndexBuffer(void) const
 	return m_indexBuffer;
 }
 
-GLuint CGfxIndexBuffer::GetSize(void) const
+GLsizeiptr CGfxIndexBuffer::GetSize(void) const
 {
 	return m_size;
 }

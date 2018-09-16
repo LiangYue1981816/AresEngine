@@ -83,8 +83,8 @@ bool CGfxFrameBuffer::SetRenderTexture(GLuint index, CGfxTexture2D *pTexture, bo
 			glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + itTexture.first, GL_TEXTURE_2D, itTexture.second->GetTexture(), 0);
 		}
 
-		glReadBuffers(drawBuffers.size(), drawBuffers.data());
-		glDrawBuffers(drawBuffers.size(), drawBuffers.data());
+		glReadBuffers((GLsizei)drawBuffers.size(), drawBuffers.data());
+		glDrawBuffers((GLsizei)drawBuffers.size(), drawBuffers.data());
 	}
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
@@ -129,5 +129,5 @@ void CGfxFrameBuffer::InvalidateFramebuffer(void)
 		}
 	}
 
-	glInvalidateFramebuffer(GL_FRAMEBUFFER, discardBuffers.size(), discardBuffers.data());
+	glInvalidateFramebuffer(GL_FRAMEBUFFER, (GLsizei)discardBuffers.size(), discardBuffers.data());
 }

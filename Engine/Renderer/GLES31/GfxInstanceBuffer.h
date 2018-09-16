@@ -26,13 +26,13 @@ private:
 	GLuint GetInstanceCount(void) const;
 	GLuint GetInstanceFormat(void) const;
 	GLuint GetInstanceBuffer(void) const;
-	GLuint GetSize(void) const;
+	GLsizeiptr GetSize(void) const;
 
 
 private:
 	GLuint m_instanceFormat;
 	GLuint m_instanceBuffer;
-	GLuint m_size;
+	GLsizeiptr m_size;
 
 private:
 	bool m_bDirty;

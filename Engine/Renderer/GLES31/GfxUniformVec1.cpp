@@ -32,12 +32,12 @@ void CGfxUniformVec1::Apply(void)
 	}
 }
 
-GLuint CGfxUniformVec1::GetSize(void) const
-{
-	return m_pUniformBuffer->GetSize();
-}
-
 GLuint CGfxUniformVec1::GetBuffer(void) const
 {
 	return m_pUniformBuffer->GetBuffer();
+}
+
+GLsizeiptr CGfxUniformVec1::GetSize(void) const
+{
+	return m_pUniformBuffer->GetSize();
 }
