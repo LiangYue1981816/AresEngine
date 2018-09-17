@@ -30,8 +30,14 @@ public:
 	void SetOrtho(float left, float right, float bottom, float top, float zNear, float zFar);
 	void SetLookat(float eyex, float eyey, float eyez, float centerx, float centery, float centerz, float upx, float upy, float upz);
 
-	const float* GetProjectionMatrix(void) const;
-	const float* GetViewMatrix(void) const;
+	const glm::vec3& GetPosition(void) const;
+	const glm::vec3& GetForwardDirection(void) const;
+	const glm::vec3& GetUpDirection(void) const;
+
+	const glm::mat4& GetProjectionMatrix(void) const;
+	const glm::mat4& GetViewMatrix(void) const;
+	const glm::mat4& GetViewInverseMatrix(void) const;
+	const glm::mat4& GetViewInverseTransposeMatrix(void) const;
 
 public:
 	glm::vec3 WorldToScreen(const glm::vec3 &world);

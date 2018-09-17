@@ -90,14 +90,39 @@ void CGfxCamera::SetLookat(float eyex, float eyey, float eyez, float centerx, fl
 	m_pUniformCamera->SetLookat(eyex, eyey, eyez, centerx, centery, centerz, upx, upy, upz);
 }
 
-const float* CGfxCamera::GetProjectionMatrix(void) const
+const glm::vec3& CGfxCamera::GetPosition(void) const
 {
-	return (float *)&m_camera.projectionMatrix;
+	return m_camera.position;
 }
 
-const float* CGfxCamera::GetViewMatrix(void) const
+const glm::vec3& CGfxCamera::GetForwardDirection(void) const
 {
-	return (float *)&m_camera.viewMatrix;
+	return m_camera.forward;
+}
+
+const glm::vec3& CGfxCamera::GetUpDirection(void) const
+{
+	return m_camera.up;
+}
+
+const glm::mat4& CGfxCamera::GetProjectionMatrix(void) const
+{
+	return m_camera.projectionMatrix;
+}
+
+const glm::mat4& CGfxCamera::GetViewMatrix(void) const
+{
+	return m_camera.viewMatrix;
+}
+
+const glm::mat4& CGfxCamera::GetViewInverseMatrix(void) const
+{
+	return m_camera.viewInverseMatrix;
+}
+
+const glm::mat4& CGfxCamera::GetViewInverseTransposeMatrix(void) const
+{
+	return m_camera.viewInverseTransposeMatrix;
 }
 
 glm::vec3 CGfxCamera::WorldToScreen(const glm::vec3 &world)
