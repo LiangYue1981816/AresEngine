@@ -41,7 +41,7 @@ void CGfxVertexBuffer::Bind(void) const
 
 bool CGfxVertexBuffer::BufferData(size_t size, const void *pBuffer, bool bDynamic)
 {
-	m_size = (GLsizeiptr)m_size;
+	m_size = (GLsizeiptr)size;
 
 	glBindBuffer(GL_ARRAY_BUFFER, m_vertexBuffer);
 	glBufferData(GL_ARRAY_BUFFER, m_size, pBuffer, bDynamic ? GL_DYNAMIC_DRAW : GL_STATIC_DRAW);

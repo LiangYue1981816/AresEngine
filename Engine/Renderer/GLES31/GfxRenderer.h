@@ -75,7 +75,7 @@ public:
 	CGfxCamera* GetCamera(const char *szName);
 
 public:
-	CGfxFrameBuffer* CreateFrameBuffer(GLuint width, GLuint height);
+	CGfxFrameBuffer* CreateFrameBuffer(GLuint width, GLuint height, bool bDepthRenderBuffer);
 	CGfxProgram* CreateProgram(const char *szVertexFileName, const char *szFragmentFileName);
 	CGfxSampler* CreateSampler(GLenum minFilter, GLenum magFilter, GLenum addressMode);
 	CGfxTexture2D* CreateTexture2D(GLuint name);

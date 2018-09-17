@@ -9,7 +9,7 @@ class CGfxFrameBuffer
 
 
 private:
-	CGfxFrameBuffer(GLuint width, GLuint height);
+	CGfxFrameBuffer(GLuint width, GLuint height, bool bDepthRenderBuffer);
 	virtual ~CGfxFrameBuffer(void);
 
 
@@ -18,12 +18,16 @@ public:
 	void Release(void);
 
 public:
-	bool SetRenderTexture(GLuint index, CGfxTexture2D *pTexture, bool invalidation);
-	bool CheckFramebufferStatus(void);
+	bool SetDepthTexture(CGfxTexture2D *pTexture);
+	bool SetColorTexture(GLuint index, CGfxTexture2D *pTexture, bool invalidation);
+	bool Apply(void);
 
 public:
 	GLuint GetWidth(void) const;
 	GLuint GetHeight(void) const;
+
+	CGfxTexture2D* GetDepthTexture(void) const;
+	CGfxTexture2D* GetColorTexture(GLuint index) const;
 
 private:
 	void Bind(void);
@@ -37,7 +41,9 @@ private:
 private:
 	GLuint m_fbo;
 	GLuint m_rbo;
-	eastl::unordered_map<GLuint, CGfxTexture2D*> m_pTextures;
+
+	CGfxTexture2D *m_pDepthTexture;
+	eastl::unordered_map<GLuint, CGfxTexture2D*> m_pColorTextures;
 	eastl::unordered_map<GLuint, bool> m_invalidations;
 
 private:

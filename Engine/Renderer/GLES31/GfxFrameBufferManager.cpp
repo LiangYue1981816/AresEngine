@@ -17,9 +17,9 @@ CGfxFrameBufferManager::~CGfxFrameBufferManager(void)
 	m_pFrameBuffers.clear();
 }
 
-CGfxFrameBuffer* CGfxFrameBufferManager::CreateFrameBuffer(GLuint width, GLuint height)
+CGfxFrameBuffer* CGfxFrameBufferManager::CreateFrameBuffer(GLuint width, GLuint height, bool bDepthRenderBuffer)
 {
-	CGfxFrameBuffer *pFrameBuffer = new CGfxFrameBuffer(width, height);
+	CGfxFrameBuffer *pFrameBuffer = new CGfxFrameBuffer(width, height, bDepthRenderBuffer);
 	m_pFrameBuffers[pFrameBuffer] = pFrameBuffer;
 	return m_pFrameBuffers[pFrameBuffer];
 }

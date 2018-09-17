@@ -226,44 +226,42 @@ bool CGfxMaterial::Load(const char *szFileName)
 bool CGfxMaterial::LoadState(TiXmlNode *pParentNode)
 {
 	try {
-		LogOutput("GfxRenderer", "\tLoadState ... ");
-		{
-			if (TiXmlNode *pCullNode = pParentNode->FirstChild("Cull")) {
-				m_state.bEnableCullFace = pCullNode->ToElement()->AttributeBool("enable");
-				m_state.cullFace = StringToCullFace(pCullNode->ToElement()->AttributeString("cull_face"));
-				m_state.frontFace = StringToFrontFace(pCullNode->ToElement()->AttributeString("front_face"));
-			}
-
-			if (TiXmlNode *pDepthNode = pParentNode->FirstChild("Depth")) {
-				m_state.bEnableDepthTest = pDepthNode->ToElement()->AttributeBool("enable_test");
-				m_state.bEnableDepthWrite = pDepthNode->ToElement()->AttributeBool("enable_write");
-				m_state.depthFunc = StringToDepthFunc(pDepthNode->ToElement()->AttributeString("depth_func"));
-			}
-
-			if (TiXmlNode *pColorNode = pParentNode->FirstChild("Color")) {
-				m_state.bEnableColorWrite[0] = pColorNode->ToElement()->AttributeBool("enable_write_red");
-				m_state.bEnableColorWrite[1] = pColorNode->ToElement()->AttributeBool("enable_write_green");
-				m_state.bEnableColorWrite[2] = pColorNode->ToElement()->AttributeBool("enable_write_blue");
-				m_state.bEnableColorWrite[3] = pColorNode->ToElement()->AttributeBool("enable_write_alpha");
-			}
-
-			if (TiXmlNode *pBlendNode = pParentNode->FirstChild("Blend")) {
-				m_state.bEnableBlend = pBlendNode->ToElement()->AttributeBool("enable");
-				m_state.srcBlendFactor = StringToBlendSrcFactor(pBlendNode->ToElement()->AttributeString("src_factor"));
-				m_state.dstBlendFactor = StringToBlendDstFactor(pBlendNode->ToElement()->AttributeString("dst_factor"));
-			}
-
-			if (TiXmlNode *pOffsetNode = pParentNode->FirstChild("Offset")) {
-				m_state.bEnablePolygonOffset = pOffsetNode->ToElement()->AttributeBool("enable");
-				m_state.polygonOffsetFactor = pOffsetNode->ToElement()->AttributeFloat1("factor");
-				m_state.polygonOffsetUnits = pOffsetNode->ToElement()->AttributeFloat1("units");
-			}
+		if (TiXmlNode *pCullNode = pParentNode->FirstChild("Cull")) {
+			m_state.bEnableCullFace = pCullNode->ToElement()->AttributeBool("enable");
+			m_state.cullFace = StringToCullFace(pCullNode->ToElement()->AttributeString("cull_face"));
+			m_state.frontFace = StringToFrontFace(pCullNode->ToElement()->AttributeString("front_face"));
 		}
-		LogOutput("GfxRenderer", "OK\n");
+
+		if (TiXmlNode *pDepthNode = pParentNode->FirstChild("Depth")) {
+			m_state.bEnableDepthTest = pDepthNode->ToElement()->AttributeBool("enable_test");
+			m_state.bEnableDepthWrite = pDepthNode->ToElement()->AttributeBool("enable_write");
+			m_state.depthFunc = StringToDepthFunc(pDepthNode->ToElement()->AttributeString("depth_func"));
+		}
+
+		if (TiXmlNode *pColorNode = pParentNode->FirstChild("Color")) {
+			m_state.bEnableColorWrite[0] = pColorNode->ToElement()->AttributeBool("enable_write_red");
+			m_state.bEnableColorWrite[1] = pColorNode->ToElement()->AttributeBool("enable_write_green");
+			m_state.bEnableColorWrite[2] = pColorNode->ToElement()->AttributeBool("enable_write_blue");
+			m_state.bEnableColorWrite[3] = pColorNode->ToElement()->AttributeBool("enable_write_alpha");
+		}
+
+		if (TiXmlNode *pBlendNode = pParentNode->FirstChild("Blend")) {
+			m_state.bEnableBlend = pBlendNode->ToElement()->AttributeBool("enable");
+			m_state.srcBlendFactor = StringToBlendSrcFactor(pBlendNode->ToElement()->AttributeString("src_factor"));
+			m_state.dstBlendFactor = StringToBlendDstFactor(pBlendNode->ToElement()->AttributeString("dst_factor"));
+		}
+
+		if (TiXmlNode *pOffsetNode = pParentNode->FirstChild("Offset")) {
+			m_state.bEnablePolygonOffset = pOffsetNode->ToElement()->AttributeBool("enable");
+			m_state.polygonOffsetFactor = pOffsetNode->ToElement()->AttributeFloat1("factor");
+			m_state.polygonOffsetUnits = pOffsetNode->ToElement()->AttributeFloat1("units");
+		}
+
+		LogOutput("GfxRenderer", "\tLoadState ... OK\n");
 		return true;
 	}
 	catch (int) {
-		LogOutput("GfxRenderer", "Fail\n");
+		LogOutput("GfxRenderer", "\tLoadState ... Fail\n");
 		return false;
 	}
 }
@@ -271,22 +269,20 @@ bool CGfxMaterial::LoadState(TiXmlNode *pParentNode)
 bool CGfxMaterial::LoadProgram(TiXmlNode *pParentNode)
 {
 	try {
-		LogOutput("GfxRenderer", "\tLoadProgram ... ");
-		{
-			if (TiXmlNode *pProgramNode = pParentNode->FirstChild("Program")) {
-				const char *szVertexFileName = pProgramNode->ToElement()->AttributeString("vertex_file_name");
-				const char *szFragmentFileName = pProgramNode->ToElement()->AttributeString("fragment_file_name");
-				if (szVertexFileName == NULL || szFragmentFileName == NULL) throw 0;
+		if (TiXmlNode *pProgramNode = pParentNode->FirstChild("Program")) {
+			const char *szVertexFileName = pProgramNode->ToElement()->AttributeString("vertex_file_name");
+			const char *szFragmentFileName = pProgramNode->ToElement()->AttributeString("fragment_file_name");
+			if (szVertexFileName == NULL || szFragmentFileName == NULL) throw 0;
 
-				m_pProgram = Renderer()->CreateProgram(szVertexFileName, szFragmentFileName);
-				if (m_pProgram->IsValid() == false) throw 1;
-			}
+			m_pProgram = Renderer()->CreateProgram(szVertexFileName, szFragmentFileName);
+			if (m_pProgram->IsValid() == false) throw 1;
 		}
-		LogOutput("GfxRenderer", "OK\n");
+
+		LogOutput("GfxRenderer", "\tLoadProgram ... OK\n");
 		return true;
 	}
 	catch (int err) {
-		LogOutput("GfxRenderer", "Fail(%d)\n", err);
+		LogOutput("GfxRenderer", "\tLoadProgram ... Fail(%d)\n", err);
 		return false;
 	}
 }
@@ -294,33 +290,31 @@ bool CGfxMaterial::LoadProgram(TiXmlNode *pParentNode)
 bool CGfxMaterial::LoadTexture2D(TiXmlNode *pParentNode)
 {
 	try {
-		LogOutput("GfxRenderer", "\tLoadTexture2D ... ");
-		{
-			if (TiXmlNode *pTextureNode = pParentNode->FirstChild("Texture2D")) {
-				do {
-					const char *szName = pTextureNode->ToElement()->AttributeString("name");
-					const char *szFileName = pTextureNode->ToElement()->AttributeString("file_name");
-					if (szName == NULL || szFileName == NULL) throw 0;
+		if (TiXmlNode *pTextureNode = pParentNode->FirstChild("Texture2D")) {
+			do {
+				const char *szName = pTextureNode->ToElement()->AttributeString("name");
+				const char *szFileName = pTextureNode->ToElement()->AttributeString("file_name");
+				if (szName == NULL || szFileName == NULL) throw 0;
 
-					GLenum minFilter = StringToMinFilter(pTextureNode->ToElement()->AttributeString("min_filter"));
-					GLenum magFilter = StringToMagFilter(pTextureNode->ToElement()->AttributeString("mag_filter"));
-					GLenum addressMode = StringToAddressMode(pTextureNode->ToElement()->AttributeString("address_mode"));
-					if (minFilter == GL_INVALID_ENUM || magFilter == GL_INVALID_ENUM || addressMode == GL_INVALID_ENUM) throw 1;
+				GLenum minFilter = StringToMinFilter(pTextureNode->ToElement()->AttributeString("min_filter"));
+				GLenum magFilter = StringToMagFilter(pTextureNode->ToElement()->AttributeString("mag_filter"));
+				GLenum addressMode = StringToAddressMode(pTextureNode->ToElement()->AttributeString("address_mode"));
+				if (minFilter == GL_INVALID_ENUM || magFilter == GL_INVALID_ENUM || addressMode == GL_INVALID_ENUM) throw 1;
 
-					GLuint name = HashValue(szName);
-					if (m_pProgram->IsTextureValid(name) && m_pTexture2ds.find(name) == m_pTexture2ds.end()) {
-						m_pSamplers[name] = Renderer()->CreateSampler(minFilter, magFilter, addressMode);
-						m_pTexture2ds[name] = Renderer()->LoadTexture2D(szFileName);
-						m_pTexture2ds[name]->Retain();
-					}
-				} while (pTextureNode = pParentNode->IterateChildren("Texture2D", pTextureNode));
-			}
+				GLuint name = HashValue(szName);
+				if (m_pProgram->IsTextureValid(name) && m_pTexture2ds.find(name) == m_pTexture2ds.end()) {
+					m_pSamplers[name] = Renderer()->CreateSampler(minFilter, magFilter, addressMode);
+					m_pTexture2ds[name] = Renderer()->LoadTexture2D(szFileName);
+					m_pTexture2ds[name]->Retain();
+				}
+			} while (pTextureNode = pParentNode->IterateChildren("Texture2D", pTextureNode));
 		}
-		LogOutput("GfxRenderer", "OK\n");
+
+		LogOutput("GfxRenderer", "\tLoadTexture2D ... OK\n");
 		return true;
 	}
 	catch (int err) {
-		LogOutput("GfxRenderer", "Fail(%d)\n", err);
+		LogOutput("GfxRenderer", "\tLoadTexture2D ... Fail(%d)\n", err);
 		return false;
 	}
 }
@@ -328,34 +322,31 @@ bool CGfxMaterial::LoadTexture2D(TiXmlNode *pParentNode)
 bool CGfxMaterial::LoadTexture2DArray(TiXmlNode *pParentNode)
 {
 	try {
-		
-		LogOutput("GfxRenderer", "\tLoadTexture2DArray ... ");
-		{
-			if (TiXmlNode *pTextureNode = pParentNode->FirstChild("Texture2DArray")) {
-				do {
-					const char *szName = pTextureNode->ToElement()->AttributeString("name");
-					const char *szFileName = pTextureNode->ToElement()->AttributeString("file_name");
-					if (szName == NULL || szFileName == NULL) throw 0;
+		if (TiXmlNode *pTextureNode = pParentNode->FirstChild("Texture2DArray")) {
+			do {
+				const char *szName = pTextureNode->ToElement()->AttributeString("name");
+				const char *szFileName = pTextureNode->ToElement()->AttributeString("file_name");
+				if (szName == NULL || szFileName == NULL) throw 0;
 
-					GLenum minFilter = StringToMinFilter(pTextureNode->ToElement()->AttributeString("min_filter"));
-					GLenum magFilter = StringToMagFilter(pTextureNode->ToElement()->AttributeString("mag_filter"));
-					GLenum addressMode = StringToAddressMode(pTextureNode->ToElement()->AttributeString("address_mode"));
-					if (minFilter == GL_INVALID_ENUM || magFilter == GL_INVALID_ENUM || addressMode == GL_INVALID_ENUM) throw 1;
+				GLenum minFilter = StringToMinFilter(pTextureNode->ToElement()->AttributeString("min_filter"));
+				GLenum magFilter = StringToMagFilter(pTextureNode->ToElement()->AttributeString("mag_filter"));
+				GLenum addressMode = StringToAddressMode(pTextureNode->ToElement()->AttributeString("address_mode"));
+				if (minFilter == GL_INVALID_ENUM || magFilter == GL_INVALID_ENUM || addressMode == GL_INVALID_ENUM) throw 1;
 
-					GLuint name = HashValue(szName);
-					if (m_pProgram->IsTextureValid(name) && m_pTexture2dArrays.find(name) == m_pTexture2dArrays.end()) {
-						m_pSamplers[name] = Renderer()->CreateSampler(minFilter, magFilter, addressMode);
-						m_pTexture2dArrays[name] = Renderer()->LoadTexture2DArray(szFileName);
-						m_pTexture2dArrays[name]->Retain();
-					}
-				} while (pTextureNode = pParentNode->IterateChildren("Texture2DArray", pTextureNode));
-			}
+				GLuint name = HashValue(szName);
+				if (m_pProgram->IsTextureValid(name) && m_pTexture2dArrays.find(name) == m_pTexture2dArrays.end()) {
+					m_pSamplers[name] = Renderer()->CreateSampler(minFilter, magFilter, addressMode);
+					m_pTexture2dArrays[name] = Renderer()->LoadTexture2DArray(szFileName);
+					m_pTexture2dArrays[name]->Retain();
+				}
+			} while (pTextureNode = pParentNode->IterateChildren("Texture2DArray", pTextureNode));
 		}
-		LogOutput("GfxRenderer", "OK\n");
+
+		LogOutput("GfxRenderer", "\tLoadTexture2DArray ... OK\n");
 		return true;
 	}
 	catch (int err) {
-		LogOutput("GfxRenderer", "Fail(%d)\n", err);
+		LogOutput("GfxRenderer", "\tLoadTexture2DArray ... Fail(%d)\n", err);
 		return false;
 	}
 }
@@ -363,33 +354,31 @@ bool CGfxMaterial::LoadTexture2DArray(TiXmlNode *pParentNode)
 bool CGfxMaterial::LoadTextureCubeMap(TiXmlNode *pParentNode)
 {
 	try {
-		LogOutput("GfxRenderer", "\tLoadTextureCubeMap ... ");
-		{
-			if (TiXmlNode *pTextureNode = pParentNode->FirstChild("TextureCubeMap")) {
-				do {
-					const char *szName = pTextureNode->ToElement()->AttributeString("name");
-					const char *szFileName = pTextureNode->ToElement()->AttributeString("file_name");
-					if (szName == NULL || szFileName == NULL) throw 0;
+		if (TiXmlNode *pTextureNode = pParentNode->FirstChild("TextureCubeMap")) {
+			do {
+				const char *szName = pTextureNode->ToElement()->AttributeString("name");
+				const char *szFileName = pTextureNode->ToElement()->AttributeString("file_name");
+				if (szName == NULL || szFileName == NULL) throw 0;
 
-					GLenum minFilter = StringToMinFilter(pTextureNode->ToElement()->AttributeString("min_filter"));
-					GLenum magFilter = StringToMagFilter(pTextureNode->ToElement()->AttributeString("mag_filter"));
-					GLenum addressMode = StringToAddressMode(pTextureNode->ToElement()->AttributeString("address_mode"));
-					if (minFilter == GL_INVALID_ENUM || magFilter == GL_INVALID_ENUM || addressMode == GL_INVALID_ENUM) throw 1;
+				GLenum minFilter = StringToMinFilter(pTextureNode->ToElement()->AttributeString("min_filter"));
+				GLenum magFilter = StringToMagFilter(pTextureNode->ToElement()->AttributeString("mag_filter"));
+				GLenum addressMode = StringToAddressMode(pTextureNode->ToElement()->AttributeString("address_mode"));
+				if (minFilter == GL_INVALID_ENUM || magFilter == GL_INVALID_ENUM || addressMode == GL_INVALID_ENUM) throw 1;
 
-					GLuint name = HashValue(szName);
-					if (m_pProgram->IsTextureValid(name) && m_pTextureCubeMaps.find(name) == m_pTextureCubeMaps.end()) {
-						m_pSamplers[name] = Renderer()->CreateSampler(minFilter, magFilter, addressMode);
-						m_pTextureCubeMaps[name] = Renderer()->LoadTextureCubeMap(szFileName);
-						m_pTextureCubeMaps[name]->Retain();
-					}
-				} while (pTextureNode = pParentNode->IterateChildren("TextureCubeMap", pTextureNode));
-			}
+				GLuint name = HashValue(szName);
+				if (m_pProgram->IsTextureValid(name) && m_pTextureCubeMaps.find(name) == m_pTextureCubeMaps.end()) {
+					m_pSamplers[name] = Renderer()->CreateSampler(minFilter, magFilter, addressMode);
+					m_pTextureCubeMaps[name] = Renderer()->LoadTextureCubeMap(szFileName);
+					m_pTextureCubeMaps[name]->Retain();
+				}
+			} while (pTextureNode = pParentNode->IterateChildren("TextureCubeMap", pTextureNode));
 		}
-		LogOutput("GfxRenderer", "OK\n");
+
+		LogOutput("GfxRenderer", "\tLoadTextureCubeMap ... OK\n");
 		return true;
 	}
 	catch (int err) {
-		LogOutput("GfxRenderer", "Fail(%d)\n", err);
+		LogOutput("GfxRenderer", "\tLoadTextureCubeMap ... Fail(%d)\n", err);
 		return false;
 	}
 }
@@ -397,25 +386,23 @@ bool CGfxMaterial::LoadTextureCubeMap(TiXmlNode *pParentNode)
 bool CGfxMaterial::LoadUniformVec1(TiXmlNode *pParentNode)
 {
 	try {
-		LogOutput("GfxRenderer", "\tLoadUniformVec1 ... ");
-		{
-			if (TiXmlNode *pUniformNode = pParentNode->FirstChild("Uniform1f")) {
-				do {
-					const char *szName = pUniformNode->ToElement()->AttributeString("name");
-					if (szName == NULL) throw 0;
+		if (TiXmlNode *pUniformNode = pParentNode->FirstChild("Uniform1f")) {
+			do {
+				const char *szName = pUniformNode->ToElement()->AttributeString("name");
+				if (szName == NULL) throw 0;
 
-					if (CGfxUniformVec1 *pUniform = GetUniformVec1(szName)) {
-						GLfloat value = pUniformNode->ToElement()->AttributeFloat1("value");
-						pUniform->SetValue(value);
-					}
-				} while (pUniformNode = pParentNode->IterateChildren("Uniform1f", pUniformNode));
-			}
+				if (CGfxUniformVec1 *pUniform = GetUniformVec1(szName)) {
+					GLfloat value = pUniformNode->ToElement()->AttributeFloat1("value");
+					pUniform->SetValue(value);
+				}
+			} while (pUniformNode = pParentNode->IterateChildren("Uniform1f", pUniformNode));
 		}
-		LogOutput("GfxRenderer", "OK\n");
+
+		LogOutput("GfxRenderer", "\tLoadUniformVec1 ... OK\n");
 		return true;
 	}
 	catch (int err) {
-		LogOutput("GfxRenderer", "Fail(%d)\n", err);
+		LogOutput("GfxRenderer", "\tLoadUniformVec1 ... Fail(%d)\n", err);
 		return false;
 	}
 }
@@ -423,25 +410,23 @@ bool CGfxMaterial::LoadUniformVec1(TiXmlNode *pParentNode)
 bool CGfxMaterial::LoadUniformVec2(TiXmlNode *pParentNode)
 {
 	try {
-		LogOutput("GfxRenderer", "\tLoadUniformVec2 ... ");
-		{
-			if (TiXmlNode *pUniformNode = pParentNode->FirstChild("Uniform2f")) {
-				do {
-					const char *szName = pUniformNode->ToElement()->AttributeString("name");
-					if (szName == NULL) throw 0;
+		if (TiXmlNode *pUniformNode = pParentNode->FirstChild("Uniform2f")) {
+			do {
+				const char *szName = pUniformNode->ToElement()->AttributeString("name");
+				if (szName == NULL) throw 0;
 
-					if (CGfxUniformVec2 *pUniform = GetUniformVec2(szName)) {
-						GLfloat value[2]; pUniformNode->ToElement()->AttributeFloat2("value", value);
-						pUniform->SetValue(value[0], value[1]);
-					}
-				} while (pUniformNode = pParentNode->IterateChildren("Uniform2f", pUniformNode));
-			}
+				if (CGfxUniformVec2 *pUniform = GetUniformVec2(szName)) {
+					GLfloat value[2]; pUniformNode->ToElement()->AttributeFloat2("value", value);
+					pUniform->SetValue(value[0], value[1]);
+				}
+			} while (pUniformNode = pParentNode->IterateChildren("Uniform2f", pUniformNode));
 		}
-		LogOutput("GfxRenderer", "OK\n");
+
+		LogOutput("GfxRenderer", "\tLoadUniformVec2 ... OK\n");
 		return true;
 	}
 	catch (int err) {
-		LogOutput("GfxRenderer", "Fail(%d)\n", err);
+		LogOutput("GfxRenderer", "\tLoadUniformVec2 ... Fail(%d)\n", err);
 		return false;
 	}
 }
@@ -449,25 +434,23 @@ bool CGfxMaterial::LoadUniformVec2(TiXmlNode *pParentNode)
 bool CGfxMaterial::LoadUniformVec3(TiXmlNode *pParentNode)
 {
 	try {
-		LogOutput("GfxRenderer", "\tLoadUniformVec3 ... ");
-		{
-			if (TiXmlNode *pUniformNode = pParentNode->FirstChild("Uniform3f")) {
-				do {
-					const char *szName = pUniformNode->ToElement()->AttributeString("name");
-						if (szName == NULL) throw 0;
+		if (TiXmlNode *pUniformNode = pParentNode->FirstChild("Uniform3f")) {
+			do {
+				const char *szName = pUniformNode->ToElement()->AttributeString("name");
+					if (szName == NULL) throw 0;
 
-						if (CGfxUniformVec3 *pUniform = GetUniformVec3(szName)) {
-							GLfloat value[3]; pUniformNode->ToElement()->AttributeFloat3("value", value);
-								pUniform->SetValue(value[0], value[1], value[2]);
-						}
-				} while (pUniformNode = pParentNode->IterateChildren("Uniform3f", pUniformNode));
-			}
+					if (CGfxUniformVec3 *pUniform = GetUniformVec3(szName)) {
+						GLfloat value[3]; pUniformNode->ToElement()->AttributeFloat3("value", value);
+							pUniform->SetValue(value[0], value[1], value[2]);
+					}
+			} while (pUniformNode = pParentNode->IterateChildren("Uniform3f", pUniformNode));
 		}
-		LogOutput("GfxRenderer", "OK\n");
+
+		LogOutput("GfxRenderer", "\tLoadUniformVec3 ... OK\n");
 		return true;
 	}
 	catch (int err) {
-		LogOutput("GfxRenderer", "Fail(%d)\n", err);
+		LogOutput("GfxRenderer", "\tLoadUniformVec3 ... Fail(%d)\n", err);
 		return false;
 	}
 }
@@ -475,25 +458,23 @@ bool CGfxMaterial::LoadUniformVec3(TiXmlNode *pParentNode)
 bool CGfxMaterial::LoadUniformVec4(TiXmlNode *pParentNode)
 {
 	try {
-		LogOutput("GfxRenderer", "\tLoadUniformVec4 ... ");
-		{
-			if (TiXmlNode *pUniformNode = pParentNode->FirstChild("Uniform4f")) {
-				do {
-					const char *szName = pUniformNode->ToElement()->AttributeString("name");
-					if (szName == NULL) throw 0;
+		if (TiXmlNode *pUniformNode = pParentNode->FirstChild("Uniform4f")) {
+			do {
+				const char *szName = pUniformNode->ToElement()->AttributeString("name");
+				if (szName == NULL) throw 0;
 
-					if (CGfxUniformVec4 *pUniform = GetUniformVec4(szName)) {
-						GLfloat value[4]; pUniformNode->ToElement()->AttributeFloat4("value", value);
-						pUniform->SetValue(value[0], value[1], value[2], value[3]);
-					}
-				} while (pUniformNode = pParentNode->IterateChildren("Uniform4f", pUniformNode));
-			}
+				if (CGfxUniformVec4 *pUniform = GetUniformVec4(szName)) {
+					GLfloat value[4]; pUniformNode->ToElement()->AttributeFloat4("value", value);
+					pUniform->SetValue(value[0], value[1], value[2], value[3]);
+				}
+			} while (pUniformNode = pParentNode->IterateChildren("Uniform4f", pUniformNode));
 		}
-		LogOutput("GfxRenderer", "OK\n");
+
+		LogOutput("GfxRenderer", "\tLoadUniformVec4 ... OK\n");
 		return true;
 	}
 	catch (int err) {
-		LogOutput("GfxRenderer", "Fail(%d)\n", err);
+		LogOutput("GfxRenderer", "\tLoadUniformVec4 ... Fail(%d)\n", err);
 		return false;
 	}
 }

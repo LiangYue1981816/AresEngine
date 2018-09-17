@@ -155,6 +155,11 @@ CGfxCamera* CGfxRenderer::GetCamera(const char *szName)
 	return m_pCameraManager->GetCamera(szName);
 }
 
+CGfxFrameBuffer* CGfxRenderer::CreateFrameBuffer(GLuint width, GLuint height, bool bDepthRenderBuffer)
+{
+	return m_pFrameBufferManager->CreateFrameBuffer(width, height, bDepthRenderBuffer);
+}
+
 CGfxProgram* CGfxRenderer::CreateProgram(const char *szVertexFileName, const char *szFragmentFileName)
 {
 	return m_pProgramManager->CreateProgram(szVertexFileName, szFragmentFileName);
@@ -180,6 +185,16 @@ CGfxTextureCubeMap* CGfxRenderer::CreateTextureCubeMap(GLuint name)
 	return m_pTextureManager->CreateTextureCubeMap(name);
 }
 
+CGfxMesh* CGfxRenderer::LoadMesh(const char *szFileName)
+{
+	return m_pMeshManager->LoadMesh(szFileName);
+}
+
+CGfxMaterial* CGfxRenderer::LoadMaterial(const char *szFileName)
+{
+	return m_pMaterialManager->LoadMaterial(szFileName);
+}
+
 CGfxTexture2D* CGfxRenderer::LoadTexture2D(const char *szFileName)
 {
 	return m_pTextureManager->LoadTexture2D(szFileName);
@@ -195,39 +210,24 @@ CGfxTextureCubeMap* CGfxRenderer::LoadTextureCubeMap(const char *szFileName)
 	return m_pTextureManager->LoadTextureCubeMap(szFileName);
 }
 
-void CGfxRenderer::FreeTexture(CGfxTextureBase *pTexture)
-{
-	m_pTextureManager->FreeTexture(pTexture);
-}
-
-CGfxFrameBuffer* CGfxRenderer::CreateFrameBuffer(GLuint width, GLuint height)
-{
-	return m_pFrameBufferManager->CreateFrameBuffer(width, height);
-}
-
-void CGfxRenderer::FreeFrameBuffer(CGfxFrameBuffer *pFrameBuffer)
-{
-	m_pFrameBufferManager->DestroyFrameBuffer(pFrameBuffer);
-}
-
-CGfxMesh* CGfxRenderer::LoadMesh(const char *szFileName)
-{
-	return m_pMeshManager->LoadMesh(szFileName);
-}
-
 void CGfxRenderer::FreeMesh(CGfxMesh *pMesh)
 {
 	m_pMeshManager->FreeMesh(pMesh);
 }
 
-CGfxMaterial* CGfxRenderer::LoadMaterial(const char *szFileName)
-{
-	return m_pMaterialManager->LoadMaterial(szFileName);
-}
-
 void CGfxRenderer::FreeMaterial(CGfxMaterial *pMaterial)
 {
 	m_pMaterialManager->FreeMaterial(pMaterial);
+}
+
+void CGfxRenderer::FreeTexture(CGfxTextureBase *pTexture)
+{
+	m_pTextureManager->FreeTexture(pTexture);
+}
+
+void CGfxRenderer::FreeFrameBuffer(CGfxFrameBuffer *pFrameBuffer)
+{
+	m_pFrameBufferManager->DestroyFrameBuffer(pFrameBuffer);
 }
 
 void CGfxRenderer::SetTime(float t, float dt)

@@ -49,9 +49,11 @@ void LogOutput(const char *szTag, const char *szFormat, ...)
 
 #ifdef _WIN32
 
+	OutputDebugString(szTag);
+	OutputDebugString(": ");
 	OutputDebugString(szText);
 
 #endif
 
-	printf(szText);
+	printf("%s: %s", szTag, szText);
 }

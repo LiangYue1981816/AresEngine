@@ -10,37 +10,45 @@ static void glReadBuffers(GLsizei n, const GLenum *bufs)
 	}
 }
 
-CGfxFrameBuffer::CGfxFrameBuffer(GLuint width, GLuint height)
+CGfxFrameBuffer::CGfxFrameBuffer(GLuint width, GLuint height, bool bDepthRenderBuffer)
 	: m_width(width)
 	, m_height(height)
 
 	, m_fbo(0)
 	, m_rbo(0)
+	, m_pDepthTexture(NULL)
 
 	, refCount(0)
 {
-	glGenRenderbuffers(1, &m_rbo);
-	glBindRenderbuffer(GL_RENDERBUFFER, m_rbo);
-	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT24, m_width, m_height);
-	glBindRenderbuffer(GL_RENDERBUFFER, 0);
-
 	glGenFramebuffers(1, &m_fbo);
-	glBindFramebuffer(GL_FRAMEBUFFER, m_fbo);
-	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, m_rbo);
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+	if (bDepthRenderBuffer) {
+		glGenRenderbuffers(1, &m_rbo);
+		glBindRenderbuffer(GL_RENDERBUFFER, m_rbo);
+		glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT24, m_width, m_height);
+		glBindRenderbuffer(GL_RENDERBUFFER, 0);
+	}
 }
 
 CGfxFrameBuffer::~CGfxFrameBuffer(void)
 {
-	glDeleteFramebuffers(1, &m_fbo);
-	glDeleteRenderbuffers(1, &m_rbo);
-
-	for (const auto &itTexture : m_pTextures) {
-		itTexture.second->Release();
+	if (m_fbo) {
+		glDeleteFramebuffers(1, &m_fbo);
 	}
 
-	m_pTextures.clear();
-	m_invalidations.clear();
+	if (m_rbo) {
+		glDeleteRenderbuffers(1, &m_rbo);
+	}
+
+	if (m_pDepthTexture) {
+		m_pDepthTexture->Release();
+	}
+
+	for (const auto &itTexture : m_pColorTextures) {
+		if (itTexture.second) {
+			itTexture.second->Release();
+		}
+	}
 }
 
 void CGfxFrameBuffer::Retain(void)
@@ -59,44 +67,76 @@ void CGfxFrameBuffer::Release(void)
 	}
 }
 
-bool CGfxFrameBuffer::SetRenderTexture(GLuint index, CGfxTexture2D *pTexture, bool invalidation)
+bool CGfxFrameBuffer::SetDepthTexture(CGfxTexture2D *pTexture)
 {
-	if (m_pTextures.find(index) != m_pTextures.end()) {
-		return false;
-	}
-
-	if (pTexture->GetWidth() != m_width || pTexture->GetHeight() != m_height) {
-		return false;
-	}
-
-	pTexture->Retain();
-
-	m_pTextures[index] = pTexture;
-	m_invalidations[index] = invalidation;
-
-	glBindFramebuffer(GL_FRAMEBUFFER, m_fbo);
-	{
-		eastl::vector<GLenum> drawBuffers;
-
-		for (const auto &itTexture : m_pTextures) {
-			drawBuffers.push_back(GL_COLOR_ATTACHMENT0 + itTexture.first);
-			glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + itTexture.first, GL_TEXTURE_2D, itTexture.second->GetTexture(), 0);
+	if (pTexture) {
+		if (pTexture->GetWidth() != m_width || pTexture->GetHeight() != m_height) {
+			return false;
 		}
-
-		glReadBuffers((GLsizei)drawBuffers.size(), drawBuffers.data());
-		glDrawBuffers((GLsizei)drawBuffers.size(), drawBuffers.data());
 	}
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
-	return CheckFramebufferStatus();
+	if (m_pDepthTexture) {
+		m_pDepthTexture->Release();
+	}
+
+	m_pDepthTexture = pTexture;
+
+	if (m_pDepthTexture) {
+		m_pDepthTexture->Retain();
+	}
+
+	return true;
 }
 
-bool CGfxFrameBuffer::CheckFramebufferStatus(void)
+bool CGfxFrameBuffer::SetColorTexture(GLuint index, CGfxTexture2D *pTexture, bool invalidation)
+{
+	if (pTexture) {
+		if (pTexture->GetWidth() != m_width || pTexture->GetHeight() != m_height) {
+			return false;
+		}
+	}
+
+	if (m_pColorTextures[index]) {
+		m_pColorTextures[index]->Release();
+	}
+
+	m_pColorTextures[index] = pTexture;
+	m_invalidations[index] = pTexture && invalidation;
+
+	if (m_pColorTextures[index]) {
+		m_pColorTextures[index]->Retain();
+	}
+
+	return true;
+}
+
+bool CGfxFrameBuffer::Apply(void)
 {
 	GLenum status;
 
 	glBindFramebuffer(GL_FRAMEBUFFER, m_fbo);
 	{
+		eastl::vector<GLenum> drawBuffers;
+
+		for (const auto &itTexture : m_pColorTextures) {
+			if (itTexture.second) {
+				drawBuffers.push_back(GL_COLOR_ATTACHMENT0 + itTexture.first);
+				glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + itTexture.first, GL_TEXTURE_2D, itTexture.second->GetTexture(), 0);
+			}
+		}
+
+		if (m_pDepthTexture || m_rbo) {
+			if (m_pDepthTexture) {
+				glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, m_pDepthTexture->GetTexture(), 0);
+			}
+			else {
+				glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, m_rbo);
+			}
+		}
+
+		glReadBuffers((GLsizei)drawBuffers.size(), drawBuffers.data());
+		glDrawBuffers((GLsizei)drawBuffers.size(), drawBuffers.data());
+
 		status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
 	}
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -112,6 +152,17 @@ GLuint CGfxFrameBuffer::GetWidth(void) const
 GLuint CGfxFrameBuffer::GetHeight(void) const
 {
 	return m_height;
+}
+
+CGfxTexture2D* CGfxFrameBuffer::GetDepthTexture(void) const
+{
+	return m_pDepthTexture;
+}
+
+CGfxTexture2D* CGfxFrameBuffer::GetColorTexture(GLuint index) const
+{
+	const auto &itTexture = m_pColorTextures.find(index);
+	return itTexture != m_pColorTextures.end() ? itTexture->second : NULL;
 }
 
 void CGfxFrameBuffer::Bind(void)
