@@ -17,6 +17,7 @@
 #include "GfxGLM.h"
 #include "GfxDefinition.h"
 
+#include "GfxResource.h"
 #include "GfxCamera.h"
 #include "GfxMesh.h"
 #include "GfxProgram.h"
