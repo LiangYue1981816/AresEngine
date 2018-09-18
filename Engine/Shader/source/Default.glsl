@@ -35,7 +35,6 @@ layout (location = 0) out vec4 outFragColor;
 
 void main()
 {
-	outFragColor.rgb = texture(texDiffuse, inTexcoord).rgb;
-	outFragColor.a = 1.0;
+	outFragColor = texture(texDiffuse, inTexcoord);
 }
 #endif

@@ -109,6 +109,9 @@
     <Filter Include="ThirdParty\tinyxml">
       <UniqueIdentifier>{224b336a-32c3-4fa7-b2ee-ec64b33ae360}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ThirdParty\lodepng">
+      <UniqueIdentifier>{2e66d167-842f-4e31-88b5-1d6834c3a953}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\Main.h">
@@ -384,6 +387,9 @@
     <ClInclude Include="ThirdParty\spirv-cross\spirv_common.hpp">
       <Filter>ThirdParty\spirv-cross</Filter>
     </ClInclude>
+    <ClInclude Include="ThirdParty\lodepng\lodepng.h">
+      <Filter>ThirdParty\lodepng</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application\Main.cpp">
@@ -583,6 +589,9 @@
     </ClCompile>
     <ClCompile Include="ThirdParty\spirv-cross\spirv_cfg.cpp">
       <Filter>ThirdParty\spirv-cross</Filter>
+    </ClCompile>
+    <ClCompile Include="ThirdParty\lodepng\lodepng.cpp">
+      <Filter>ThirdParty\lodepng</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

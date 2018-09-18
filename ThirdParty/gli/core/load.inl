@@ -1,12 +1,13 @@
-#include "../load_tga.hpp"
 #include "../load_dds.hpp"
 #include "../load_kmg.hpp"
 #include "../load_ktx.hpp"
+#include "../load_tga.hpp"
+#include "../load_png.hpp"
 #include "file.hpp"
 
 namespace gli
 {
-	/// Load a texture (DDS, KTX or KMG) from memory
+	/// Load a texture (DDS, KMG, KTX, TGA or PNG) from memory
 	inline texture load(char const * Data, std::size_t Size)
 	{
 		{
@@ -29,11 +30,16 @@ namespace gli
 			if (!Texture.empty())
 				return Texture;
 		}
+		{
+			texture Texture = load_png(Data, Size);
+			if (!Texture.empty())
+				return Texture;
+		}
 
 		return texture();
 	}
 
-	/// Load a texture (DDS, KTX or KMG) from file
+	/// Load a texture (DDS, KMG, KTX, TGA or PNG) from file
 	inline texture load(char const * Filename)
 	{
 		FILE* File = detail::open_file(Filename, "rb");
@@ -53,7 +59,7 @@ namespace gli
 		return load(&Data[0], Data.size());
 	}
 
-	/// Load a texture (DDS, KTX or KMG) from file
+	/// Load a texture (DDS, KMG, KTX, TGA or PNG) from file
 	inline texture load(std::string const & Filename)
 	{
 		return load(Filename.c_str());

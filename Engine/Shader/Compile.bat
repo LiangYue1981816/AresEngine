@@ -6,6 +6,6 @@ for %%i in (.\source\*.glsl) do (
 	spirv-cross.exe --es --version 310 .\bin\%%~ni.frag --output .\debug\%%~ni.frag
 )
 
-copy /y .\bin\*.* ..\..\Bin\Shader
+copy /y .\bin\*.* ..\..\Bin\Data\Shader
 
 pause
