@@ -155,36 +155,6 @@ CGfxCamera* CGfxRenderer::GetCamera(const char *szName)
 	return m_pCameraManager->GetCamera(szName);
 }
 
-CGfxProgram* CGfxRenderer::CreateProgram(const char *szVertexFileName, const char *szFragmentFileName)
-{
-	return m_pProgramManager->CreateProgram(szVertexFileName, szFragmentFileName);
-}
-
-CGfxSampler* CGfxRenderer::CreateSampler(GLenum minFilter, GLenum magFilter, GLenum addressMode)
-{
-	return m_pSamplerManager->CreateSampler(minFilter, magFilter, addressMode);
-}
-
-CGfxFrameBuffer* CGfxRenderer::CreateFrameBuffer(GLuint width, GLuint height, bool bDepthRenderBuffer)
-{
-	return m_pFrameBufferManager->CreateFrameBuffer(width, height, bDepthRenderBuffer);
-}
-
-CGfxTexture2D* CGfxRenderer::CreateTexture2D(GLuint name)
-{
-	return m_pTextureManager->CreateTexture2D(name);
-}
-
-CGfxTexture2DArray* CGfxRenderer::CreateTexture2DArray(GLuint name)
-{
-	return m_pTextureManager->CreateTexture2DArray(name);
-}
-
-CGfxTextureCubeMap* CGfxRenderer::CreateTextureCubeMap(GLuint name)
-{
-	return m_pTextureManager->CreateTextureCubeMap(name);
-}
-
 CGfxMesh* CGfxRenderer::LoadMesh(const char *szFileName)
 {
 	return m_pMeshManager->LoadMesh(szFileName);
@@ -208,6 +178,36 @@ CGfxTexture2DArray* CGfxRenderer::LoadTexture2DArray(const char *szFileName)
 CGfxTextureCubeMap* CGfxRenderer::LoadTextureCubeMap(const char *szFileName)
 {
 	return m_pTextureManager->LoadTextureCubeMap(szFileName);
+}
+
+CGfxFrameBuffer* CGfxRenderer::CreateFrameBuffer(GLuint width, GLuint height, bool bDepthRenderBuffer)
+{
+	return m_pFrameBufferManager->CreateFrameBuffer(width, height, bDepthRenderBuffer);
+}
+
+CGfxTexture2D* CGfxRenderer::CreateTexture2D(GLuint name)
+{
+	return m_pTextureManager->CreateTexture2D(name);
+}
+
+CGfxTexture2DArray* CGfxRenderer::CreateTexture2DArray(GLuint name)
+{
+	return m_pTextureManager->CreateTexture2DArray(name);
+}
+
+CGfxTextureCubeMap* CGfxRenderer::CreateTextureCubeMap(GLuint name)
+{
+	return m_pTextureManager->CreateTextureCubeMap(name);
+}
+
+CGfxProgram* CGfxRenderer::CreateProgram(const char *szVertexFileName, const char *szFragmentFileName)
+{
+	return m_pProgramManager->CreateProgram(szVertexFileName, szFragmentFileName);
+}
+
+CGfxSampler* CGfxRenderer::CreateSampler(GLenum minFilter, GLenum magFilter, GLenum addressMode)
+{
+	return m_pSamplerManager->CreateSampler(minFilter, magFilter, addressMode);
 }
 
 void CGfxRenderer::FreeMesh(CGfxMesh *pMesh)

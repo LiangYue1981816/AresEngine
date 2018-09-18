@@ -76,21 +76,21 @@ public:
 public:
 	CGfxCamera* GetCamera(const char *szName);
 
-private:
-	CGfxProgram* CreateProgram(const char *szVertexFileName, const char *szFragmentFileName);
-	CGfxSampler* CreateSampler(GLenum minFilter, GLenum magFilter, GLenum addressMode);
-
 public:
-	CGfxFrameBuffer* CreateFrameBuffer(GLuint width, GLuint height, bool bDepthRenderBuffer);
-	CGfxTexture2D* CreateTexture2D(GLuint name);
-	CGfxTexture2DArray* CreateTexture2DArray(GLuint name);
-	CGfxTextureCubeMap* CreateTextureCubeMap(GLuint name);
-
 	CGfxMesh* LoadMesh(const char *szFileName);
 	CGfxMaterial* LoadMaterial(const char *szFileName);
 	CGfxTexture2D* LoadTexture2D(const char *szFileName);
 	CGfxTexture2DArray* LoadTexture2DArray(const char *szFileName);
 	CGfxTextureCubeMap* LoadTextureCubeMap(const char *szFileName);
+
+	CGfxFrameBuffer* CreateFrameBuffer(GLuint width, GLuint height, bool bDepthRenderBuffer);
+	CGfxTexture2D* CreateTexture2D(GLuint name);
+	CGfxTexture2DArray* CreateTexture2DArray(GLuint name);
+	CGfxTextureCubeMap* CreateTextureCubeMap(GLuint name);
+
+private:
+	CGfxProgram* CreateProgram(const char *szVertexFileName, const char *szFragmentFileName);
+	CGfxSampler* CreateSampler(GLenum minFilter, GLenum magFilter, GLenum addressMode);
 
 private:
 	void FreeMesh(CGfxMesh *pMesh);
