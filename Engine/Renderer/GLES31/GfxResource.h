@@ -4,6 +4,10 @@
 
 class CGfxResource
 {
+	template<class T>
+	friend class CGfxResourcePtr;
+
+
 protected:
 	CGfxResource(void);
 	virtual ~CGfxResource(void);
@@ -27,14 +31,14 @@ public:
 	}
 	virtual ~CGfxResourcePtr(void)
 	{
-		Release();
+		CSharedPtr<T>::Release();
 	}
 
 protected:
 	virtual void FreePointer(void)
 	{
-		if (m_pPointer) {
-			((CGfxResource *)m_pPointer)->Release();
+		if (CSharedPtr<T>::m_pPointer) {
+			((CGfxResource *)CSharedPtr<T>::m_pPointer)->Release();
 		}
 	}
 };
