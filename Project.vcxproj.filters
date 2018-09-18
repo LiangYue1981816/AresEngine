@@ -390,6 +390,12 @@
     <ClInclude Include="ThirdParty\lodepng\lodepng.h">
       <Filter>ThirdParty\lodepng</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\Renderer\GLES31\GfxResource.h">
+      <Filter>Engine\Renderer\GLES31\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Renderer\GLES31\GfxResourceManager.h">
+      <Filter>Engine\Renderer\GLES31\Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application\Main.cpp">
@@ -592,6 +598,12 @@
     </ClCompile>
     <ClCompile Include="ThirdParty\lodepng\lodepng.cpp">
       <Filter>ThirdParty\lodepng</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Renderer\GLES31\GfxResource.cpp">
+      <Filter>Engine\Renderer\GLES31\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Renderer\GLES31\GfxResourceManager.cpp">
+      <Filter>Engine\Renderer\GLES31\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

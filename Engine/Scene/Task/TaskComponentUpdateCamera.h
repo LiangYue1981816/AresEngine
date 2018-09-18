@@ -37,7 +37,7 @@ public:
 
 			for (size_t index = indexBegin; index < indexEnd; index++) {
 				CComponent *pComponent = (CComponent *)m_pComponentManager->GetComponentByIndex(index);
-				pComponent->UpdateCamera(m_pCamera, m_indexThread);
+				pComponent->TaskUpdateCamera(m_pCamera, m_indexThread);
 			}
 		}
 	}

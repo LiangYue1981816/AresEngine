@@ -37,7 +37,7 @@ public:
 
 			for (size_t index = indexBegin; index < indexEnd; index++) {
 				CComponent *pComponent = (CComponent *)m_pComponentManager->GetComponentByIndex(index);
-				pComponent->Update(m_deltaTime);
+				pComponent->TaskUpdate(m_deltaTime);
 			}
 		}
 	}

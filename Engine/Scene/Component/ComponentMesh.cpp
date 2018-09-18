@@ -66,12 +66,12 @@ CGfxMaterial* CComponentMesh::GetMaterial(void) const
 	return m_pMaterial;
 }
 
-void CComponentMesh::Update(float deltaTime)
+void CComponentMesh::TaskUpdate(float deltaTime)
 {
 
 }
 
-void CComponentMesh::UpdateCamera(CGfxCamera *pCamera, int indexThread)
+void CComponentMesh::TaskUpdateCamera(CGfxCamera *pCamera, int indexThread)
 {
 	if (pCamera->IsVisible(GetAABB())) {
 		pCamera->AddQueue(m_pMaterial, m_pMesh, m_pParentNode->GetWorldTransform(), indexThread);

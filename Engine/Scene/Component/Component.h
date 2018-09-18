@@ -22,8 +22,8 @@ public:
 
 
 public:
-	virtual void Update(float deltaTime) = 0;
-	virtual void UpdateCamera(CGfxCamera *pCamera, int indexThread) = 0;
+	virtual void TaskUpdate(float deltaTime) = 0;
+	virtual void TaskUpdateCamera(CGfxCamera *pCamera, int indexThread) = 0;
 
 
 protected:

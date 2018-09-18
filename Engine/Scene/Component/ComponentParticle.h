@@ -10,8 +10,8 @@ public:
 	virtual ~CComponentParticle(void);
 
 public:
-	virtual void Update(float deltaTime);
-	virtual void UpdateCamera(CGfxCamera *pCamera, int indexThread);
+	virtual void TaskUpdate(float deltaTime);
+	virtual void TaskUpdateCamera(CGfxCamera *pCamera, int indexThread);
 };
 
 typedef CComponentPtr<CComponentParticle> CComponentParticlePtr;

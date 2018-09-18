@@ -13,12 +13,12 @@ CComponentSkin::~CComponentSkin(void)
 
 }
 
-void CComponentSkin::Update(float deltaTime)
+void CComponentSkin::TaskUpdate(float deltaTime)
 {
 
 }
 
-void CComponentSkin::UpdateCamera(CGfxCamera *pCamera, int indexThread)
+void CComponentSkin::TaskUpdateCamera(CGfxCamera *pCamera, int indexThread)
 {
 
 }

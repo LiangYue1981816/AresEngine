@@ -13,12 +13,12 @@ CComponentParticle::~CComponentParticle(void)
 
 }
 
-void CComponentParticle::Update(float deltaTime)
+void CComponentParticle::TaskUpdate(float deltaTime)
 {
 
 }
 
-void CComponentParticle::UpdateCamera(CGfxCamera *pCamera, int indexThread)
+void CComponentParticle::TaskUpdateCamera(CGfxCamera *pCamera, int indexThread)
 {
 
 }
