@@ -17,8 +17,11 @@
 #include "GfxGLM.h"
 #include "GfxDefinition.h"
 
-#include "GfxResource.h"
 #include "GfxCamera.h"
+#include "GfxCameraManager.h"
+#include "GfxCommandBuffer.h"
+
+#include "GfxResource.h"
 #include "GfxMesh.h"
 #include "GfxProgram.h"
 #include "GfxSampler.h"
@@ -27,9 +30,7 @@
 #include "GfxTextureCubeMap.h"
 #include "GfxMaterial.h"
 #include "GfxFrameBuffer.h"
-#include "GfxCommandBuffer.h"
 
-#include "GfxCameraManager.h"
 #include "GfxMeshManager.h"
 #include "GfxProgramManager.h"
 #include "GfxSamplerManager.h"
