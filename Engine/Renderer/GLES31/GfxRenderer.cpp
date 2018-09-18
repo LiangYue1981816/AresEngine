@@ -155,11 +155,6 @@ CGfxCamera* CGfxRenderer::GetCamera(const char *szName)
 	return m_pCameraManager->GetCamera(szName);
 }
 
-CGfxFrameBuffer* CGfxRenderer::CreateFrameBuffer(GLuint width, GLuint height, bool bDepthRenderBuffer)
-{
-	return m_pFrameBufferManager->CreateFrameBuffer(width, height, bDepthRenderBuffer);
-}
-
 CGfxProgram* CGfxRenderer::CreateProgram(const char *szVertexFileName, const char *szFragmentFileName)
 {
 	return m_pProgramManager->CreateProgram(szVertexFileName, szFragmentFileName);
@@ -168,6 +163,11 @@ CGfxProgram* CGfxRenderer::CreateProgram(const char *szVertexFileName, const cha
 CGfxSampler* CGfxRenderer::CreateSampler(GLenum minFilter, GLenum magFilter, GLenum addressMode)
 {
 	return m_pSamplerManager->CreateSampler(minFilter, magFilter, addressMode);
+}
+
+CGfxFrameBuffer* CGfxRenderer::CreateFrameBuffer(GLuint width, GLuint height, bool bDepthRenderBuffer)
+{
+	return m_pFrameBufferManager->CreateFrameBuffer(width, height, bDepthRenderBuffer);
 }
 
 CGfxTexture2D* CGfxRenderer::CreateTexture2D(GLuint name)

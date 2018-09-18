@@ -74,10 +74,12 @@ public:
 public:
 	CGfxCamera* GetCamera(const char *szName);
 
-public:
-	CGfxFrameBuffer* CreateFrameBuffer(GLuint width, GLuint height, bool bDepthRenderBuffer);
+private:
 	CGfxProgram* CreateProgram(const char *szVertexFileName, const char *szFragmentFileName);
 	CGfxSampler* CreateSampler(GLenum minFilter, GLenum magFilter, GLenum addressMode);
+
+public:
+	CGfxFrameBuffer* CreateFrameBuffer(GLuint width, GLuint height, bool bDepthRenderBuffer);
 	CGfxTexture2D* CreateTexture2D(GLuint name);
 	CGfxTexture2DArray* CreateTexture2DArray(GLuint name);
 	CGfxTextureCubeMap* CreateTextureCubeMap(GLuint name);
