@@ -155,51 +155,6 @@ CGfxCamera* CGfxRenderer::GetCamera(const char *szName)
 	return m_pCameraManager->GetCamera(szName);
 }
 
-CGfxMesh* CGfxRenderer::LoadMesh(const char *szFileName)
-{
-	return m_pMeshManager->LoadMesh(szFileName);
-}
-
-CGfxMaterial* CGfxRenderer::LoadMaterial(const char *szFileName)
-{
-	return m_pMaterialManager->LoadMaterial(szFileName);
-}
-
-CGfxTexture2D* CGfxRenderer::LoadTexture2D(const char *szFileName)
-{
-	return m_pTextureManager->LoadTexture2D(szFileName);
-}
-
-CGfxTexture2DArray* CGfxRenderer::LoadTexture2DArray(const char *szFileName)
-{
-	return m_pTextureManager->LoadTexture2DArray(szFileName);
-}
-
-CGfxTextureCubeMap* CGfxRenderer::LoadTextureCubeMap(const char *szFileName)
-{
-	return m_pTextureManager->LoadTextureCubeMap(szFileName);
-}
-
-CGfxFrameBuffer* CGfxRenderer::CreateFrameBuffer(GLuint width, GLuint height, bool bDepthRenderBuffer)
-{
-	return m_pFrameBufferManager->CreateFrameBuffer(width, height, bDepthRenderBuffer);
-}
-
-CGfxTexture2D* CGfxRenderer::CreateTexture2D(GLuint name)
-{
-	return m_pTextureManager->CreateTexture2D(name);
-}
-
-CGfxTexture2DArray* CGfxRenderer::CreateTexture2DArray(GLuint name)
-{
-	return m_pTextureManager->CreateTexture2DArray(name);
-}
-
-CGfxTextureCubeMap* CGfxRenderer::CreateTextureCubeMap(GLuint name)
-{
-	return m_pTextureManager->CreateTextureCubeMap(name);
-}
-
 CGfxProgram* CGfxRenderer::CreateProgram(const char *szVertexFileName, const char *szFragmentFileName)
 {
 	return m_pProgramManager->CreateProgram(szVertexFileName, szFragmentFileName);
@@ -208,6 +163,51 @@ CGfxProgram* CGfxRenderer::CreateProgram(const char *szVertexFileName, const cha
 CGfxSampler* CGfxRenderer::CreateSampler(GLenum minFilter, GLenum magFilter, GLenum addressMode)
 {
 	return m_pSamplerManager->CreateSampler(minFilter, magFilter, addressMode);
+}
+
+CGfxFrameBufferPtr CGfxRenderer::CreateFrameBuffer(GLuint width, GLuint height, bool bDepthRenderBuffer)
+{
+	return m_pFrameBufferManager->CreateFrameBuffer(width, height, bDepthRenderBuffer);
+}
+
+CGfxTexture2DPtr CGfxRenderer::CreateTexture2D(GLuint name)
+{
+	return m_pTextureManager->CreateTexture2D(name);
+}
+
+CGfxTexture2DArrayPtr CGfxRenderer::CreateTexture2DArray(GLuint name)
+{
+	return m_pTextureManager->CreateTexture2DArray(name);
+}
+
+CGfxTextureCubeMapPtr CGfxRenderer::CreateTextureCubeMap(GLuint name)
+{
+	return m_pTextureManager->CreateTextureCubeMap(name);
+}
+
+CGfxMeshPtr CGfxRenderer::LoadMesh(const char *szFileName)
+{
+	return m_pMeshManager->LoadMesh(szFileName);
+}
+
+CGfxMaterialPtr CGfxRenderer::LoadMaterial(const char *szFileName)
+{
+	return m_pMaterialManager->LoadMaterial(szFileName);
+}
+
+CGfxTexture2DPtr CGfxRenderer::LoadTexture2D(const char *szFileName)
+{
+	return m_pTextureManager->LoadTexture2D(szFileName);
+}
+
+CGfxTexture2DArrayPtr CGfxRenderer::LoadTexture2DArray(const char *szFileName)
+{
+	return m_pTextureManager->LoadTexture2DArray(szFileName);
+}
+
+CGfxTextureCubeMapPtr CGfxRenderer::LoadTextureCubeMap(const char *szFileName)
+{
+	return m_pTextureManager->LoadTextureCubeMap(szFileName);
 }
 
 void CGfxRenderer::FreeMesh(CGfxMesh *pMesh)
@@ -310,9 +310,9 @@ void CGfxRenderer::SetFogDistanceDensity(float startDistance, float endDistance,
 	m_pUniformEngine->SetFogDistanceDensity(startDistance, endDistance, density);
 }
 
-bool CGfxRenderer::CmdBeginPass(CGfxCommandBuffer *pCommandBuffer, CGfxFrameBuffer *pFrameBuffer)
+bool CGfxRenderer::CmdBeginPass(CGfxCommandBuffer *pCommandBuffer, const CGfxFrameBufferPtr &ptrFrameBuffer)
 {
-	return pCommandBuffer->CmdBeginPass(pFrameBuffer);
+	return pCommandBuffer->CmdBeginPass(ptrFrameBuffer);
 }
 
 bool CGfxRenderer::CmdEndPass(CGfxCommandBuffer *pCommandBuffer)
@@ -365,9 +365,9 @@ bool CGfxRenderer::CmdBindCamera(CGfxCommandBuffer *pCommandBuffer, CGfxCamera *
 	return pCommandBuffer->CmdBindCamera(pCamera);
 }
 
-bool CGfxRenderer::CmdBindMaterial(CGfxCommandBuffer *pCommandBuffer, CGfxMaterial *pMaterial)
+bool CGfxRenderer::CmdBindMaterial(CGfxCommandBuffer *pCommandBuffer, const CGfxMaterialPtr &ptrMaterial)
 {
-	return pCommandBuffer->CmdBindMaterial(pMaterial);
+	return pCommandBuffer->CmdBindMaterial(ptrMaterial);
 }
 
 bool CGfxRenderer::CmdBindInputTexture(CGfxCommandBuffer *pCommandBuffer, const char *szName, GLuint texture, GLenum minFilter, GLenum magFilter, GLenum addressMode)
@@ -385,26 +385,26 @@ bool CGfxRenderer::CmdClearColor(CGfxCommandBuffer *pCommandBuffer, float red, f
 	return pCommandBuffer->CmdClearColor(red, green, blue, alpha);
 }
 
-bool CGfxRenderer::CmdDrawInstance(CGfxCommandBuffer *pCommandBuffer, CGfxMesh *pMesh, int indexCount, int baseIndex, eastl::vector<glm::mat4> &mtxTransforms)
+bool CGfxRenderer::CmdDrawInstance(CGfxCommandBuffer *pCommandBuffer, const CGfxMeshPtr &ptrMesh, int indexCount, int baseIndex, const eastl::vector<glm::mat4> &mtxTransforms)
 {
-	if (pCommandBuffer->CmdBindMesh(pMesh, mtxTransforms) == false) {
+	if (pCommandBuffer->CmdBindMesh(ptrMesh, mtxTransforms) == false) {
 		return false;
 	}
 
-	if (pCommandBuffer->CmdDrawInstance(GL_TRIANGLES, pMesh->GetIndexType(), indexCount, baseIndex, (GLsizei)mtxTransforms.size()) == false) {
+	if (pCommandBuffer->CmdDrawInstance(GL_TRIANGLES, ptrMesh->GetIndexType(), indexCount, baseIndex, (GLsizei)mtxTransforms.size()) == false) {
 		return false;
 	}
 
 	return true;
 }
 
-bool CGfxRenderer::CmdDrawIndirect(CGfxCommandBuffer *pCommandBuffer, CGfxMesh *pMesh, int indexCount, int baseIndex, GLsizei baseVertex, eastl::vector<glm::mat4> &mtxTransforms)
+bool CGfxRenderer::CmdDrawIndirect(CGfxCommandBuffer *pCommandBuffer, const CGfxMeshPtr &ptrMesh, int indexCount, int baseIndex, GLsizei baseVertex, const eastl::vector<glm::mat4> &mtxTransforms)
 {
-	if (pCommandBuffer->CmdBindMesh(pMesh, mtxTransforms) == false) {
+	if (pCommandBuffer->CmdBindMesh(ptrMesh, mtxTransforms) == false) {
 		return false;
 	}
 
-	if (pCommandBuffer->CmdDrawIndirect(GL_TRIANGLES, pMesh->GetIndexType(), indexCount, baseIndex, baseVertex, (GLsizei)mtxTransforms.size()) == false) {
+	if (pCommandBuffer->CmdDrawIndirect(GL_TRIANGLES, ptrMesh->GetIndexType(), indexCount, baseIndex, baseVertex, (GLsizei)mtxTransforms.size()) == false) {
 		return false;
 	}
 
@@ -413,17 +413,15 @@ bool CGfxRenderer::CmdDrawIndirect(CGfxCommandBuffer *pCommandBuffer, CGfxMesh *
 
 bool CGfxRenderer::CmdDrawScreen(CGfxCommandBuffer *pCommandBuffer)
 {
-	eastl::vector<glm::mat4> mtxTransforms;
-	mtxTransforms.push_back(glm::mat4());
-
-	if (pCommandBuffer->CmdBindMesh(m_pScreenMesh, mtxTransforms) == false) {
+	/*
+	if (pCommandBuffer->CmdBindMesh(m_pScreenMesh) == false) {
 		return false;
 	}
 
 	if (pCommandBuffer->CmdDrawElements(GL_TRIANGLES, m_pScreenMesh->GetIndexType(), m_pScreenMesh->GetIndexCount(), 0) == false) {
 		return false;
 	}
-
+	*/
 	return true;
 }
 

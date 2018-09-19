@@ -145,12 +145,12 @@ bool CScene::LoadMesh(TiXmlNode *pNode, CSceneNode *pCurrentNode)
 			const char *szMaterialFileName = pMeshNode->ToElement()->AttributeString("material");
 			if (szMeshFileName == NULL || szMaterialFileName == NULL) throw 0;
 
-			CGfxMesh *pMesh = Renderer()->LoadMesh(szMeshFileName);
-			CGfxMaterial *pMaterial = Renderer()->LoadMaterial(szMaterialFileName);
+			CGfxMeshPtr ptrMesh = Renderer()->LoadMesh(szMeshFileName);
+			CGfxMaterialPtr ptrMaterial = Renderer()->LoadMaterial(szMaterialFileName);
 
 			CComponentMeshPtr ptrComponentMesh = SceneManager()->CreateComponentMesh(SceneManager()->GetNextComponentMeshName());
-			ptrComponentMesh->SetMesh(pMesh);
-			ptrComponentMesh->SetMaterial(pMaterial);
+			ptrComponentMesh->SetMesh(ptrMesh);
+			ptrComponentMesh->SetMaterial(ptrMaterial);
 			pCurrentNode->AttachComponentMesh(ptrComponentMesh);
 		}
 		return true;

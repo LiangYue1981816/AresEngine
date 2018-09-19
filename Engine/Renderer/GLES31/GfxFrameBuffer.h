@@ -27,8 +27,8 @@ public:
 	CGfxTexture2DPtr GetColorTexture(GLuint index) const;
 
 private:
-	void Bind(void);
-	void InvalidateFramebuffer(void);
+	void Bind(void) const;
+	void InvalidateFramebuffer(void) const;
 
 
 private:

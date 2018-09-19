@@ -124,12 +124,12 @@ CGfxTexture2DPtr CGfxFrameBuffer::GetColorTexture(GLuint index) const
 	return itTexture != m_ptrColorTextures.end() ? itTexture->second : NULL;
 }
 
-void CGfxFrameBuffer::Bind(void)
+void CGfxFrameBuffer::Bind(void) const
 {
 	glBindFramebuffer(GL_FRAMEBUFFER, m_fbo);
 }
 
-void CGfxFrameBuffer::InvalidateFramebuffer(void)
+void CGfxFrameBuffer::InvalidateFramebuffer(void) const
 {
 	eastl::vector<GLenum> discardBuffers;
 

@@ -74,24 +74,27 @@ public:
 	const char* GetMaterialFullPath(const char *szFileName, char *szFullPath) const;
 	const char* GetMeshFullPath(const char *szFileName, char *szFullPath) const;
 
+	// Camera
 public:
 	CGfxCamera* GetCamera(const char *szName);
 
-public:
-	CGfxMesh* LoadMesh(const char *szFileName);
-	CGfxMaterial* LoadMaterial(const char *szFileName);
-	CGfxTexture2D* LoadTexture2D(const char *szFileName);
-	CGfxTexture2DArray* LoadTexture2DArray(const char *szFileName);
-	CGfxTextureCubeMap* LoadTextureCubeMap(const char *szFileName);
-
-	CGfxFrameBuffer* CreateFrameBuffer(GLuint width, GLuint height, bool bDepthRenderBuffer);
-	CGfxTexture2D* CreateTexture2D(GLuint name);
-	CGfxTexture2DArray* CreateTexture2DArray(GLuint name);
-	CGfxTextureCubeMap* CreateTextureCubeMap(GLuint name);
-
+	// Internal Gfx Resource
 private:
 	CGfxProgram* CreateProgram(const char *szVertexFileName, const char *szFragmentFileName);
 	CGfxSampler* CreateSampler(GLenum minFilter, GLenum magFilter, GLenum addressMode);
+
+	// External Gfx Resource
+public:
+	CGfxFrameBufferPtr CreateFrameBuffer(GLuint width, GLuint height, bool bDepthRenderBuffer);
+	CGfxTexture2DPtr CreateTexture2D(GLuint name);
+	CGfxTexture2DArrayPtr CreateTexture2DArray(GLuint name);
+	CGfxTextureCubeMapPtr CreateTextureCubeMap(GLuint name);
+
+	CGfxMeshPtr LoadMesh(const char *szFileName);
+	CGfxMaterialPtr LoadMaterial(const char *szFileName);
+	CGfxTexture2DPtr LoadTexture2D(const char *szFileName);
+	CGfxTexture2DArrayPtr LoadTexture2DArray(const char *szFileName);
+	CGfxTextureCubeMapPtr LoadTextureCubeMap(const char *szFileName);
 
 private:
 	void FreeMesh(CGfxMesh *pMesh);
@@ -99,6 +102,7 @@ private:
 	void FreeTexture(CGfxTextureBase *pTexture);
 	void FreeFrameBuffer(CGfxFrameBuffer *pFrameBuffer);
 
+	// Feature
 public:
 	void SetTime(float t, float dt);
 
@@ -123,8 +127,9 @@ public:
 	void SetFogHeightDensity(float startHeight, float endHeight, float density);
 	void SetFogDistanceDensity(float startDistance, float endDistance, float density);
 
+	// Gfx Command
 public:
-	bool CmdBeginPass(CGfxCommandBuffer *pCommandBuffer, CGfxFrameBuffer *pFrameBuffer);
+	bool CmdBeginPass(CGfxCommandBuffer *pCommandBuffer, const CGfxFrameBufferPtr &ptrFrameBuffer);
 	bool CmdEndPass(CGfxCommandBuffer *pCommandBuffer);
 
 	bool CmdSetScissor(CGfxCommandBuffer *pCommandBuffer, int x, int y, int width, int height);
@@ -137,17 +142,18 @@ public:
 	bool CmdSetPolygonOffset(CGfxCommandBuffer *pCommandBuffer, bool bEnable, GLfloat factor, GLfloat units);
 
 	bool CmdBindCamera(CGfxCommandBuffer *pCommandBuffer, CGfxCamera *pCamera);
-	bool CmdBindMaterial(CGfxCommandBuffer *pCommandBuffer, CGfxMaterial *pMaterial);
+	bool CmdBindMaterial(CGfxCommandBuffer *pCommandBuffer, const CGfxMaterialPtr &ptrMaterial);
 	bool CmdBindInputTexture(CGfxCommandBuffer *pCommandBuffer, const char *szName, GLuint texture, GLenum minFilter, GLenum magFilter, GLenum addressMode);
 
 	bool CmdClearDepth(CGfxCommandBuffer *pCommandBuffer, float depth);
 	bool CmdClearColor(CGfxCommandBuffer *pCommandBuffer, float red, float green, float blue, float alpha);
-	bool CmdDrawInstance(CGfxCommandBuffer *pCommandBuffer, CGfxMesh *pMesh, int indexCount, int baseIndex, eastl::vector<glm::mat4> &mtxTransforms);
-	bool CmdDrawIndirect(CGfxCommandBuffer *pCommandBuffer, CGfxMesh *pMesh, int indexCount, int baseIndex, GLsizei baseVertex, eastl::vector<glm::mat4> &mtxTransforms);
+	bool CmdDrawInstance(CGfxCommandBuffer *pCommandBuffer, const CGfxMeshPtr &ptrMesh, int indexCount, int baseIndex, const eastl::vector<glm::mat4> &mtxTransforms);
+	bool CmdDrawIndirect(CGfxCommandBuffer *pCommandBuffer, const CGfxMeshPtr &ptrMesh, int indexCount, int baseIndex, GLsizei baseVertex, const eastl::vector<glm::mat4> &mtxTransforms);
 	bool CmdDrawScreen(CGfxCommandBuffer *pCommandBuffer);
 
 	bool CmdExecute(CGfxCommandBuffer *pCommandBuffer, CGfxCommandBuffer *pSecondaryCommandBuffer);
 
+	// Update & Render
 public:
 	void Update(void);
 	void Submit(const CGfxCommandBuffer *pCommandBuffer);
