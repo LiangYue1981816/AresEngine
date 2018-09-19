@@ -6,29 +6,25 @@
 class CGfxCommandEndPass : public CGfxCommandBase
 {
 public:
-	CGfxCommandEndPass(CGfxFrameBuffer *pFrameBuffer)
-		: m_pFrameBuffer(pFrameBuffer)
+	CGfxCommandEndPass(const CGfxFrameBufferPtr &ptrFrameBuffer)
+		: m_ptrFrameBuffer(ptrFrameBuffer)
 	{
-		if (m_pFrameBuffer) {
-			m_pFrameBuffer->Retain();
-		}
+
 	}
 	virtual ~CGfxCommandEndPass(void)
 	{
-		if (m_pFrameBuffer) {
-			m_pFrameBuffer->Release();
-		}
+
 	}
 
 public:
 	virtual void Execute(void) const
 	{
-		if (m_pFrameBuffer) {
-			Renderer()->InvalidateFramebuffer(m_pFrameBuffer);
+		if (m_ptrFrameBuffer.IsValid()) {
+			Renderer()->InvalidateFramebuffer(m_ptrFrameBuffer);
 		}
 	}
 
 
 private:
-	CGfxFrameBuffer *m_pFrameBuffer;
+	CGfxFrameBufferPtr m_ptrFrameBuffer;
 };

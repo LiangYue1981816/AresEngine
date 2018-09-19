@@ -21,7 +21,7 @@ typedef struct GL_STATE {
 } GL_STATE;
 
 
-class CGfxMaterial
+class CGfxMaterial : public CGfxResource
 {
 	friend class CGfxRenderer;
 	friend class CGfxMaterialManager;
@@ -30,12 +30,9 @@ class CGfxMaterial
 private:
 	CGfxMaterial(GLuint name);
 	virtual ~CGfxMaterial(void);
+	virtual void Release(void);
 
 	
-public:
-	void Retain(void);
-	void Release(void);
-
 private:
 	bool Load(const char *szFileName);
 	bool LoadState(TiXmlNode *pParentNode);
@@ -69,9 +66,9 @@ private:
 public:
 	GLuint GetTextureUnits(void) const;
 
-	CGfxTexture2D* GetTexture2D(const char *szName);
-	CGfxTexture2DArray* GetTexture2DArray(const char *szName);
-	CGfxTextureCubeMap* GetTextureCubeMap(const char *szName);
+	CGfxTexture2DPtr GetTexture2D(const char *szName);
+	CGfxTexture2DArrayPtr GetTexture2DArray(const char *szName);
+	CGfxTextureCubeMapPtr GetTextureCubeMap(const char *szName);
 
 	CGfxUniformVec1* GetUniformVec1(const char *szName);
 	CGfxUniformVec2* GetUniformVec2(const char *szName);
@@ -94,16 +91,13 @@ private:
 	CGfxProgram *m_pProgram;
 
 	eastl::unordered_map<GLuint, CGfxSampler*> m_pSamplers;
-	eastl::unordered_map<GLuint, CGfxTexture2D*> m_pTexture2ds;
-	eastl::unordered_map<GLuint, CGfxTexture2DArray*> m_pTexture2dArrays;
-	eastl::unordered_map<GLuint, CGfxTextureCubeMap*> m_pTextureCubeMaps;
+	eastl::unordered_map<GLuint, CGfxTexture2DPtr> m_ptrTexture2ds;
+	eastl::unordered_map<GLuint, CGfxTexture2DArrayPtr> m_ptrTexture2dArrays;
+	eastl::unordered_map<GLuint, CGfxTextureCubeMapPtr> m_ptrTextureCubeMaps;
 
 	eastl::unordered_map<GLuint, CGfxUniformVec1*> m_pUniformVec1s;
 	eastl::unordered_map<GLuint, CGfxUniformVec2*> m_pUniformVec2s;
 	eastl::unordered_map<GLuint, CGfxUniformVec3*> m_pUniformVec3s;
 	eastl::unordered_map<GLuint, CGfxUniformVec4*> m_pUniformVec4s;
 	eastl::unordered_map<GLuint, CGfxUniformMat4*> m_pUniformMat4s;
-
-private:
-	GLuint refCount;
 };

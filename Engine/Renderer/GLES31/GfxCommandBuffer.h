@@ -18,10 +18,6 @@ public:
 	virtual void Execute(void) const = 0;
 };
 
-class CGfxMesh;
-class CGfxMaterial;
-class CGfxFrameBuffer;
-class CGfxUniformCamera;
 class CGfxCommandBuffer
 {
 	friend class CGfxRenderer;
@@ -37,7 +33,7 @@ public:
 	bool Execute(void) const;
 
 public:
-	bool CmdBeginPass(CGfxFrameBuffer *pFrameBuffer);
+	bool CmdBeginPass(const CGfxFrameBufferPtr &ptrFrameBuffer);
 	bool CmdEndPass(void);
 
 	bool CmdSetScissor(int x, int y, int width, int height);
@@ -49,10 +45,9 @@ public:
 	bool CmdSetBlend(bool bEnable, GLenum srcFactor, GLenum dstFactor);
 	bool CmdSetPolygonOffset(bool bEnable, GLfloat factor, GLfloat units);
 
-	bool CmdBindMesh(CGfxMesh *pMesh);
-	bool CmdBindMesh(CGfxMesh *pMesh, eastl::vector<glm::mat4> &mtxTransforms);
 	bool CmdBindCamera(CGfxCamera *pCamera);
-	bool CmdBindMaterial(CGfxMaterial *pMaterial);
+	bool CmdBindMesh(const CGfxMeshPtr &ptrMesh, const eastl::vector<glm::mat4> &mtxTransforms);
+	bool CmdBindMaterial(const CGfxMaterialPtr &ptrMaterial);
 	bool CmdBindInputTexture(const char *szName, GLuint texture, GLenum minFilter, GLenum magFilter, GLenum addressMode);
 
 	bool CmdClearDepth(float depth);
@@ -69,6 +64,6 @@ private:
 	bool m_bInPassScope;
 
 private:
-	CGfxFrameBuffer *m_pFrameBuffer;
+	CGfxFrameBufferPtr m_ptrFrameBuffer;
 	eastl::vector<CGfxCommandBase*> m_commands;
 };

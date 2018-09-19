@@ -6,7 +6,6 @@
 CGfxCamera::CGfxCamera(void)
 	: m_index(0)
 
-	, m_pFrameBuffer(NULL)
 	, m_pUniformCamera(NULL)
 	, m_pCommandBuffer{ NULL }
 
@@ -33,9 +32,9 @@ CGfxCamera::~CGfxCamera(void)
 	delete m_pUniformCamera;
 }
 
-void CGfxCamera::SetFrameBuffer(CGfxFrameBuffer *pFrameBuffer)
+void CGfxCamera::SetFrameBuffer(const CGfxFrameBufferPtr &ptrFrameBuffer)
 {
-	m_pFrameBuffer = pFrameBuffer;
+	m_ptrFrameBuffer = ptrFrameBuffer;
 }
 
 void CGfxCamera::SetEnableClearDepth(bool bEnable)
@@ -150,30 +149,14 @@ bool CGfxCamera::IsVisible(const glm::sphere &sphere)
 	return m_camera.visible(sphere);
 }
 
-void CGfxCamera::AddQueue(CGfxMaterial *pMaterial, CGfxMesh *pMesh, const glm::mat4 &mtxTransform, int indexThread)
+void CGfxCamera::AddQueue(const CGfxMaterialPtr &ptrMaterial, const CGfxMeshPtr &ptrMesh, const glm::mat4 &mtxTransform, int indexThread)
 {
 	if (indexThread >= 0 && indexThread < THREAD_COUNT) {
-		if (pMaterial->IsEnableBlend()) {
-			if (m_queueTransparent[indexThread][m_index].find(pMaterial) == m_queueTransparent[indexThread][m_index].end()) {
-				pMaterial->Retain();
-			}
-
-			if (m_queueTransparent[indexThread][m_index][pMaterial].find(pMesh) == m_queueTransparent[indexThread][m_index][pMaterial].end()) {
-				pMesh->Retain();
-			}
-
-			m_queueTransparent[indexThread][m_index][pMaterial][pMesh].push_back(mtxTransform);
+		if (ptrMaterial->IsEnableBlend()) {
+			m_queueTransparent[indexThread][m_index][ptrMaterial][ptrMesh].push_back(mtxTransform);
 		}
 		else {
-			if (m_queueOpaque[indexThread][m_index].find(pMaterial) == m_queueOpaque[indexThread][m_index].end()) {
-				pMaterial->Retain();
-			}
-
-			if (m_queueOpaque[indexThread][m_index][pMaterial].find(pMesh) == m_queueOpaque[indexThread][m_index][pMaterial].end()) {
-				pMesh->Retain();
-			}
-
-			m_queueOpaque[indexThread][m_index][pMaterial][pMesh].push_back(mtxTransform);
+			m_queueOpaque[indexThread][m_index][ptrMaterial][ptrMesh].push_back(mtxTransform);
 		}
 	}
 }
@@ -183,22 +166,6 @@ void CGfxCamera::ClearQueue(void)
 	m_index = 1 - m_index;
 
 	for (int indexThread = 0; indexThread < THREAD_COUNT; indexThread++) {
-		for (const auto &itMaterialQueue : m_queueOpaque[indexThread][m_index]) {
-			for (const auto itMeshQueue : itMaterialQueue.second) {
-				itMeshQueue.first->Release();
-			}
-
-			itMaterialQueue.first->Release();
-		}
-
-		for (const auto &itMaterialQueue : m_queueTransparent[indexThread][m_index]) {
-			for (const auto itMeshQueue : itMaterialQueue.second) {
-				itMeshQueue.first->Release();
-			}
-
-			itMaterialQueue.first->Release();
-		}
-
 		m_queueOpaque[indexThread][m_index].clear();
 		m_queueTransparent[indexThread][m_index].clear();
 	}
@@ -208,7 +175,7 @@ void CGfxCamera::ClearQueue(void)
 
 void CGfxCamera::CmdDraw(void)
 {
-	Renderer()->CmdBeginPass(m_pCommandBuffer[m_index], m_pFrameBuffer);
+	Renderer()->CmdBeginPass(m_pCommandBuffer[m_index], m_ptrFrameBuffer);
 	{
 		Renderer()->CmdSetScissor(m_pCommandBuffer[m_index], (int)m_camera.scissor.x, (int)m_camera.scissor.y, (int)m_camera.scissor.z, (int)m_camera.scissor.w);
 		Renderer()->CmdSetViewport(m_pCommandBuffer[m_index], (int)m_camera.viewport.x, (int)m_camera.viewport.y, (int)m_camera.viewport.z, (int)m_camera.viewport.w);

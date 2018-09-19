@@ -2,7 +2,7 @@
 #include "GfxRenderer.h"
 
 
-class CGfxTextureBase
+class CGfxTextureBase : public CGfxResource
 {
 	friend class CGfxRenderer;
 	friend class CGfxMaterial;
@@ -12,11 +12,8 @@ class CGfxTextureBase
 protected:
 	CGfxTextureBase(GLuint name);
 	virtual ~CGfxTextureBase(void);
+	virtual void Release(void);
 
-
-public:
-	void Retain(void);
-	void Release(void);
 
 protected:
 	virtual bool CreateExtern(GLuint texture);
@@ -52,7 +49,4 @@ protected:
 
 	GLsizei m_mipLevels;
 	GLsizei m_arrayLayers;
-
-private:
-	GLuint refCount;
 };

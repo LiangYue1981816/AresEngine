@@ -2,7 +2,7 @@
 #include "GfxRenderer.h"
 
 
-class CGfxFrameBuffer
+class CGfxFrameBuffer : public CGfxResource
 {
 	friend class CGfxRenderer;
 	friend class CGfxFrameBufferManager;
@@ -11,23 +11,20 @@ class CGfxFrameBuffer
 private:
 	CGfxFrameBuffer(GLuint width, GLuint height, bool bDepthRenderBuffer);
 	virtual ~CGfxFrameBuffer(void);
+	virtual void Release(void);
 
 
 public:
-	void Retain(void);
-	void Release(void);
-
-public:
-	bool SetDepthTexture(CGfxTexture2D *pTexture);
-	bool SetColorTexture(GLuint index, CGfxTexture2D *pTexture, bool invalidation);
+	bool SetDepthTexture(CGfxTexture2DPtr &ptrTexture);
+	bool SetColorTexture(GLuint index, CGfxTexture2DPtr &ptrTexture, bool invalidation);
 	bool Apply(void);
 
 public:
 	GLuint GetWidth(void) const;
 	GLuint GetHeight(void) const;
 
-	CGfxTexture2D* GetDepthTexture(void) const;
-	CGfxTexture2D* GetColorTexture(GLuint index) const;
+	CGfxTexture2DPtr GetDepthTexture(void) const;
+	CGfxTexture2DPtr GetColorTexture(GLuint index) const;
 
 private:
 	void Bind(void);
@@ -42,10 +39,7 @@ private:
 	GLuint m_fbo;
 	GLuint m_rbo;
 
-	CGfxTexture2D *m_pDepthTexture;
-	eastl::unordered_map<GLuint, CGfxTexture2D*> m_pColorTextures;
+	CGfxTexture2DPtr m_ptrDepthTexture;
+	eastl::unordered_map<GLuint, CGfxTexture2DPtr> m_ptrColorTextures;
 	eastl::unordered_map<GLuint, bool> m_invalidations;
-
-private:
-	GLuint refCount;
 };

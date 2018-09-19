@@ -7,41 +7,24 @@
 class CGfxCommandBindMesh : public CGfxCommandBase
 {
 public:
-	CGfxCommandBindMesh(CGfxMesh *pMesh)
-		: m_pMesh(pMesh)
-	{
-		if (m_pMesh) {
-			m_pMesh->Retain();
-		}
-	}
-	CGfxCommandBindMesh(CGfxMesh *pMesh, eastl::vector<glm::mat4> &mtxTransforms)
-		: m_pMesh(pMesh)
+	CGfxCommandBindMesh(const CGfxMeshPtr &ptrMesh, const eastl::vector<glm::mat4> &mtxTransforms)
+		: m_ptrMesh(ptrMesh)
 		, m_mtxTransforms(mtxTransforms)
 	{
-		if (m_pMesh) {
-			m_pMesh->Retain();
-		}
+
 	}
 	virtual ~CGfxCommandBindMesh(void)
 	{
-		if (m_pMesh) {
-			m_pMesh->Release();
-		}
+
 	}
 
 public:
 	virtual void Execute(void) const
 	{
-		if (m_pMesh) {
-			if (m_mtxTransforms.size()) {
-				m_pMesh->ClearInstance();
-
-				for (GLuint index = 0; index < m_mtxTransforms.size(); index++) {
-					m_pMesh->AddInstance(m_mtxTransforms[index]);
-				}
-			}
-
-			Renderer()->BindMesh(m_pMesh);
+		if (m_ptrMesh.IsValid()) {
+			m_ptrMesh->ClearInstance();
+			m_ptrMesh->SetInstance(m_mtxTransforms);
+			Renderer()->BindMesh(m_ptrMesh);
 		}
 		else {
 			glBindVertexArray(0);
@@ -52,6 +35,6 @@ public:
 
 
 private:
-	CGfxMesh *m_pMesh;
+	CGfxMeshPtr m_ptrMesh;
 	eastl::vector<glm::mat4> m_mtxTransforms;
 };

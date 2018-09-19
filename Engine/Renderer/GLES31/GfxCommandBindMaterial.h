@@ -7,25 +7,21 @@
 class CGfxCommandBindMaterial : public CGfxCommandBase
 {
 public:
-	CGfxCommandBindMaterial(CGfxMaterial *pMaterial)
-		: m_pMaterial(pMaterial)
+	CGfxCommandBindMaterial(const CGfxMaterialPtr &ptrMaterial)
+		: m_ptrMaterial(ptrMaterial)
 	{
-		if (m_pMaterial) {
-			m_pMaterial->Retain();
-		}
+
 	}
 	virtual ~CGfxCommandBindMaterial(void)
 	{
-		if (m_pMaterial) {
-			m_pMaterial->Release();
-		}
+
 	}
 
 public:
 	virtual void Execute(void) const
 	{
-		if (m_pMaterial) {
-			Renderer()->BindMaterial(m_pMaterial);
+		if (m_ptrMaterial.IsValid()) {
+			Renderer()->BindMaterial(m_ptrMaterial);
 		}
 		else {
 			glUseProgram(0);
@@ -34,5 +30,5 @@ public:
 
 
 private:
-	CGfxMaterial *m_pMaterial;
+	CGfxMaterialPtr m_ptrMaterial;
 };

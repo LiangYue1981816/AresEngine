@@ -26,7 +26,6 @@
 CGfxCommandBuffer::CGfxCommandBuffer(bool bMainCommandBuffer)
 	: m_bMainCommandBuffer(bMainCommandBuffer)
 	, m_bInPassScope(false)
-	, m_pFrameBuffer(NULL)
 {
 
 }
@@ -44,7 +43,7 @@ void CGfxCommandBuffer::Clearup(void)
 
 	m_commands.clear();
 	m_bInPassScope = false;
-	m_pFrameBuffer = NULL;
+	m_ptrFrameBuffer.Release();
 }
 
 bool CGfxCommandBuffer::Execute(void) const
@@ -59,12 +58,12 @@ bool CGfxCommandBuffer::Execute(void) const
 	return false;
 }
 
-bool CGfxCommandBuffer::CmdBeginPass(CGfxFrameBuffer *pFrameBuffer)
+bool CGfxCommandBuffer::CmdBeginPass(const CGfxFrameBufferPtr &ptrFrameBuffer)
 {
 	if (m_bMainCommandBuffer == true && m_bInPassScope == false) {
 		m_bInPassScope = true;
-		m_pFrameBuffer = pFrameBuffer;
-		m_commands.push_back(new CGfxCommandBeginPass(m_pFrameBuffer));
+		m_ptrFrameBuffer = ptrFrameBuffer;
+		m_commands.push_back(new CGfxCommandBeginPass(m_ptrFrameBuffer));
 		return true;
 	}
 
@@ -74,9 +73,9 @@ bool CGfxCommandBuffer::CmdBeginPass(CGfxFrameBuffer *pFrameBuffer)
 bool CGfxCommandBuffer::CmdEndPass(void)
 {
 	if (m_bMainCommandBuffer == true && m_bInPassScope == true) {
-		m_commands.push_back(new CGfxCommandEndPass(m_pFrameBuffer));
+		m_commands.push_back(new CGfxCommandEndPass(m_ptrFrameBuffer));
 		m_bInPassScope = false;
-		m_pFrameBuffer = NULL;
+		m_ptrFrameBuffer.Release();
 		return true;
 	}
 
@@ -163,26 +162,6 @@ bool CGfxCommandBuffer::CmdSetPolygonOffset(bool bEnable, GLfloat factor, GLfloa
 	return false;
 }
 
-bool CGfxCommandBuffer::CmdBindMesh(CGfxMesh *pMesh)
-{
-	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
-		m_commands.push_back(new CGfxCommandBindMesh(pMesh));
-		return true;
-	}
-
-	return false;
-}
-
-bool CGfxCommandBuffer::CmdBindMesh(CGfxMesh *pMesh, eastl::vector<glm::mat4> &mtxTransforms)
-{
-	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
-		m_commands.push_back(new CGfxCommandBindMesh(pMesh, mtxTransforms));
-		return true;
-	}
-
-	return false;
-}
-
 bool CGfxCommandBuffer::CmdBindCamera(CGfxCamera *pCamera)
 {
 	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
@@ -193,10 +172,20 @@ bool CGfxCommandBuffer::CmdBindCamera(CGfxCamera *pCamera)
 	return false;
 }
 
-bool CGfxCommandBuffer::CmdBindMaterial(CGfxMaterial *pMaterial)
+bool CGfxCommandBuffer::CmdBindMesh(const CGfxMeshPtr &ptrMesh, const eastl::vector<glm::mat4> &mtxTransforms)
 {
 	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
-		m_commands.push_back(new CGfxCommandBindMaterial(pMaterial));
+		m_commands.push_back(new CGfxCommandBindMesh(ptrMesh, mtxTransforms));
+		return true;
+	}
+
+	return false;
+}
+
+bool CGfxCommandBuffer::CmdBindMaterial(const CGfxMaterialPtr &ptrMaterial)
+{
+	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
+		m_commands.push_back(new CGfxCommandBindMaterial(ptrMaterial));
 		return true;
 	}
 

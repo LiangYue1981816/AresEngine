@@ -126,8 +126,6 @@ static GLenum StringToBlendDstFactor(const char *szString)
 CGfxMaterial::CGfxMaterial(GLuint name)
 	: m_name(name)
 	, m_pProgram(NULL)
-
-	, refCount(0)
 {
 	m_state.bEnableCullFace = GL_TRUE;
 	m_state.bEnableDepthTest = GL_TRUE;
@@ -152,20 +150,9 @@ CGfxMaterial::~CGfxMaterial(void)
 	Free();
 }
 
-void CGfxMaterial::Retain(void)
-{
-	refCount++;
-}
-
 void CGfxMaterial::Release(void)
 {
-	if (refCount > 0) {
-		refCount--;
-	}
-
-	if (refCount == 0) {
-		Renderer()->FreeMaterial(this);
-	}
+	Renderer()->FreeMaterial(this);
 }
 
 bool CGfxMaterial::Load(const char *szFileName)
@@ -302,10 +289,9 @@ bool CGfxMaterial::LoadTexture2D(TiXmlNode *pParentNode)
 				if (minFilter == GL_INVALID_ENUM || magFilter == GL_INVALID_ENUM || addressMode == GL_INVALID_ENUM) throw 1;
 
 				GLuint name = HashValue(szName);
-				if (m_pProgram->IsTextureValid(name) && m_pTexture2ds.find(name) == m_pTexture2ds.end()) {
+				if (m_pProgram->IsTextureValid(name) && m_ptrTexture2ds.find(name) == m_ptrTexture2ds.end()) {
 					m_pSamplers[name] = Renderer()->CreateSampler(minFilter, magFilter, addressMode);
-					m_pTexture2ds[name] = Renderer()->LoadTexture2D(szFileName);
-					m_pTexture2ds[name]->Retain();
+					m_ptrTexture2ds[name] = Renderer()->LoadTexture2D(szFileName);
 				}
 			} while (pTextureNode = pParentNode->IterateChildren("Texture2D", pTextureNode));
 		}
@@ -334,10 +320,9 @@ bool CGfxMaterial::LoadTexture2DArray(TiXmlNode *pParentNode)
 				if (minFilter == GL_INVALID_ENUM || magFilter == GL_INVALID_ENUM || addressMode == GL_INVALID_ENUM) throw 1;
 
 				GLuint name = HashValue(szName);
-				if (m_pProgram->IsTextureValid(name) && m_pTexture2dArrays.find(name) == m_pTexture2dArrays.end()) {
+				if (m_pProgram->IsTextureValid(name) && m_ptrTexture2dArrays.find(name) == m_ptrTexture2dArrays.end()) {
 					m_pSamplers[name] = Renderer()->CreateSampler(minFilter, magFilter, addressMode);
-					m_pTexture2dArrays[name] = Renderer()->LoadTexture2DArray(szFileName);
-					m_pTexture2dArrays[name]->Retain();
+					m_ptrTexture2dArrays[name] = Renderer()->LoadTexture2DArray(szFileName);
 				}
 			} while (pTextureNode = pParentNode->IterateChildren("Texture2DArray", pTextureNode));
 		}
@@ -366,10 +351,9 @@ bool CGfxMaterial::LoadTextureCubeMap(TiXmlNode *pParentNode)
 				if (minFilter == GL_INVALID_ENUM || magFilter == GL_INVALID_ENUM || addressMode == GL_INVALID_ENUM) throw 1;
 
 				GLuint name = HashValue(szName);
-				if (m_pProgram->IsTextureValid(name) && m_pTextureCubeMaps.find(name) == m_pTextureCubeMaps.end()) {
+				if (m_pProgram->IsTextureValid(name) && m_ptrTextureCubeMaps.find(name) == m_ptrTextureCubeMaps.end()) {
 					m_pSamplers[name] = Renderer()->CreateSampler(minFilter, magFilter, addressMode);
-					m_pTextureCubeMaps[name] = Renderer()->LoadTextureCubeMap(szFileName);
-					m_pTextureCubeMaps[name]->Retain();
+					m_ptrTextureCubeMaps[name] = Renderer()->LoadTextureCubeMap(szFileName);
 				}
 			} while (pTextureNode = pParentNode->IterateChildren("TextureCubeMap", pTextureNode));
 		}
@@ -481,18 +465,6 @@ bool CGfxMaterial::LoadUniformVec4(TiXmlNode *pParentNode)
 
 void CGfxMaterial::Free(void)
 {
-	for (auto &itTexture : m_pTexture2ds) {
-		itTexture.second->Release();
-	}
-
-	for (auto &itTexture : m_pTexture2dArrays) {
-		itTexture.second->Release();
-	}
-
-	for (auto &itTexture : m_pTextureCubeMaps) {
-		itTexture.second->Release();
-	}
-
 	for (auto &itUniform : m_pUniformVec1s) {
 		delete itUniform.second;
 	}
@@ -515,9 +487,9 @@ void CGfxMaterial::Free(void)
 
 	m_pProgram = NULL;
 	m_pSamplers.clear();
-	m_pTexture2ds.clear();
-	m_pTexture2dArrays.clear();
-	m_pTextureCubeMaps.clear();
+	m_ptrTexture2ds.clear();
+	m_ptrTexture2dArrays.clear();
+	m_ptrTextureCubeMaps.clear();
 	m_pUniformVec1s.clear();
 	m_pUniformVec2s.clear();
 	m_pUniformVec3s.clear();
@@ -599,56 +571,53 @@ GLuint CGfxMaterial::GetTextureUnits(void) const
 {
 	GLuint numTexUnits = 0;
 
-	numTexUnits += (GLuint)m_pTexture2ds.size();
-	numTexUnits += (GLuint)m_pTexture2dArrays.size();
-	numTexUnits += (GLuint)m_pTextureCubeMaps.size();
+	numTexUnits += (GLuint)m_ptrTexture2ds.size();
+	numTexUnits += (GLuint)m_ptrTexture2dArrays.size();
+	numTexUnits += (GLuint)m_ptrTextureCubeMaps.size();
 
 	return numTexUnits;
 }
 
-CGfxTexture2D* CGfxMaterial::GetTexture2D(const char *szName)
+CGfxTexture2DPtr CGfxMaterial::GetTexture2D(const char *szName)
 {
 	GLuint name = HashValue(szName);
 
 	if ((m_pProgram == NULL) || (m_pProgram && m_pProgram->IsTextureValid(name))) {
-		if (m_pTexture2ds[name] == NULL) {
-			m_pTexture2ds[name] = Renderer()->CreateTexture2D(TEXTURE_INTERNAL_NAME(name));
-			m_pTexture2ds[name]->Retain();
+		if (m_ptrTexture2ds[name] == NULL) {
+			m_ptrTexture2ds[name] = Renderer()->CreateTexture2D(TEXTURE_INTERNAL_NAME(name));
 		}
 
-		return m_pTexture2ds[name];
+		return m_ptrTexture2ds[name];
 	}
 
 	return NULL;
 }
 
-CGfxTexture2DArray* CGfxMaterial::GetTexture2DArray(const char *szName)
+CGfxTexture2DArrayPtr CGfxMaterial::GetTexture2DArray(const char *szName)
 {
 	GLuint name = HashValue(szName);
 
 	if ((m_pProgram == NULL) || (m_pProgram && m_pProgram->IsTextureValid(name))) {
-		if (m_pTexture2dArrays[name] == NULL) {
-			m_pTexture2dArrays[name] = Renderer()->CreateTexture2DArray(TEXTURE_INTERNAL_NAME(name));
-			m_pTexture2dArrays[name]->Retain();
+		if (m_ptrTexture2dArrays[name] == NULL) {
+			m_ptrTexture2dArrays[name] = Renderer()->CreateTexture2DArray(TEXTURE_INTERNAL_NAME(name));
 		}
 
-		return m_pTexture2dArrays[name];
+		return m_ptrTexture2dArrays[name];
 	}
 
 	return NULL;
 }
 
-CGfxTextureCubeMap* CGfxMaterial::GetTextureCubeMap(const char *szName)
+CGfxTextureCubeMapPtr CGfxMaterial::GetTextureCubeMap(const char *szName)
 {
 	GLuint name = HashValue(szName);
 
 	if ((m_pProgram == NULL) || (m_pProgram && m_pProgram->IsTextureValid(name))) {
-		if (m_pTextureCubeMaps[name] == NULL) {
-			m_pTextureCubeMaps[name] = Renderer()->CreateTextureCubeMap(TEXTURE_INTERNAL_NAME(name));
-			m_pTextureCubeMaps[name]->Retain();
+		if (m_ptrTextureCubeMaps[name] == NULL) {
+			m_ptrTextureCubeMaps[name] = Renderer()->CreateTextureCubeMap(TEXTURE_INTERNAL_NAME(name));
 		}
 
-		return m_pTextureCubeMaps[name];
+		return m_ptrTextureCubeMaps[name];
 	}
 
 	return NULL;
@@ -814,19 +783,19 @@ void CGfxMaterial::BindUniforms(CGfxProgram *pProgram) const
 
 void CGfxMaterial::BindTextures(CGfxProgram *pProgram, GLuint indexUnit) const
 {
-	for (const auto &itTexture : m_pTexture2ds) {
+	for (const auto &itTexture : m_ptrTexture2ds) {
 		if (pProgram->BindTexture2D(itTexture.first, itTexture.second->GetTexture(), m_pSamplers.find(itTexture.first)->second->GetSampler(), indexUnit)) {
 			indexUnit++;
 		}
 	}
 
-	for (const auto &itTexture : m_pTexture2dArrays) {
+	for (const auto &itTexture : m_ptrTexture2dArrays) {
 		if (pProgram->BindTextureArray(itTexture.first, itTexture.second->GetTexture(), m_pSamplers.find(itTexture.first)->second->GetSampler(), indexUnit)) {
 			indexUnit++;
 		}
 	}
 
-	for (const auto &itTexture : m_pTextureCubeMaps) {
+	for (const auto &itTexture : m_ptrTextureCubeMaps) {
 		if (pProgram->BindTextureCubeMap(itTexture.first, itTexture.second->GetTexture(), m_pSamplers.find(itTexture.first)->second->GetSampler(), indexUnit)) {
 			indexUnit++;
 		}

@@ -31,7 +31,7 @@ CGfxMesh* CGfxMeshManager::LoadMesh(const char *szFileName)
 
 void CGfxMeshManager::FreeMesh(CGfxMesh *pMesh)
 {
-	if (pMesh && pMesh->refCount == 0) {
+	if (pMesh) {
 		m_pMeshs.erase(pMesh->GetName());
 		delete pMesh;
 	}

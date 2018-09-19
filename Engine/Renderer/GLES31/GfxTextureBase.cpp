@@ -17,8 +17,6 @@ CGfxTextureBase::CGfxTextureBase(GLuint name)
 
 	, m_mipLevels(0)
 	, m_arrayLayers(0)
-
-	, refCount(0)
 {
 
 }
@@ -28,20 +26,9 @@ CGfxTextureBase::~CGfxTextureBase(void)
 	Free();
 }
 
-void CGfxTextureBase::Retain(void)
-{
-	refCount++;
-}
-
 void CGfxTextureBase::Release(void)
 {
-	if (refCount > 0) {
-		refCount--;
-	}
-
-	if (refCount == 0) {
-		Renderer()->FreeTexture(this);
-	}
+	Renderer()->FreeTexture(this);
 }
 
 bool CGfxTextureBase::CreateExtern(GLuint texture)

@@ -26,7 +26,7 @@ CGfxFrameBuffer* CGfxFrameBufferManager::CreateFrameBuffer(GLuint width, GLuint 
 
 void CGfxFrameBufferManager::DestroyFrameBuffer(CGfxFrameBuffer *pFrameBuffer)
 {
-	if (pFrameBuffer && pFrameBuffer->refCount == 0) {
+	if (pFrameBuffer) {
 		m_pFrameBuffers.erase(pFrameBuffer);
 		delete pFrameBuffer;
 	}

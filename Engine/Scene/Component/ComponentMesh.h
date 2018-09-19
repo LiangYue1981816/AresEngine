@@ -3,9 +3,6 @@
 #include "ComponentManager.h"
 
 
-class CGfxMesh;
-class CGfxMaterial;
-
 class CComponentMesh : public CComponent
 {
 public:
@@ -15,12 +12,14 @@ public:
 
 
 public:
-	void SetMesh(CGfxMesh *pMesh);
-	void SetMaterial(CGfxMaterial *pMaterial);
+	void SetMesh(const CGfxMeshPtr &ptrMesh);
+	void SetMaterial(const CGfxMaterialPtr &ptrMaterial);
 
-	glm::aabb GetAABB(void) const;
-	CGfxMesh* GetMesh(void) const;
-	CGfxMaterial* GetMaterial(void) const;
+	const CGfxMeshPtr& GetMesh(void) const;
+	const CGfxMaterialPtr& GetMaterial(void) const;
+
+public:
+	glm::aabb GetAABB(void);
 
 public:
 	virtual void TaskUpdate(float deltaTime);
@@ -28,8 +27,8 @@ public:
 
 
 private:
-	CGfxMesh *m_pMesh;
-	CGfxMaterial *m_pMaterial;
+	CGfxMeshPtr m_ptrMesh;
+	CGfxMaterialPtr m_ptrMaterial;
 };
 
 typedef CComponentPtr<CComponentMesh> CComponentMeshPtr;

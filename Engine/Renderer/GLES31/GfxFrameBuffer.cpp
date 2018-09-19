@@ -16,9 +16,6 @@ CGfxFrameBuffer::CGfxFrameBuffer(GLuint width, GLuint height, bool bDepthRenderB
 
 	, m_fbo(0)
 	, m_rbo(0)
-	, m_pDepthTexture(NULL)
-
-	, refCount(0)
 {
 	glGenFramebuffers(1, &m_fbo);
 
@@ -39,73 +36,35 @@ CGfxFrameBuffer::~CGfxFrameBuffer(void)
 	if (m_rbo) {
 		glDeleteRenderbuffers(1, &m_rbo);
 	}
-
-	if (m_pDepthTexture) {
-		m_pDepthTexture->Release();
-	}
-
-	for (const auto &itTexture : m_pColorTextures) {
-		if (itTexture.second) {
-			itTexture.second->Release();
-		}
-	}
-}
-
-void CGfxFrameBuffer::Retain(void)
-{
-	refCount++;
 }
 
 void CGfxFrameBuffer::Release(void)
 {
-	if (refCount > 0) {
-		refCount--;
-	}
-
-	if (refCount == 0) {
-		Renderer()->FreeFrameBuffer(this);
-	}
+	Renderer()->FreeFrameBuffer(this);
 }
 
-bool CGfxFrameBuffer::SetDepthTexture(CGfxTexture2D *pTexture)
+bool CGfxFrameBuffer::SetDepthTexture(CGfxTexture2DPtr &ptrTexture)
 {
-	if (pTexture) {
-		if (pTexture->GetWidth() != m_width || pTexture->GetHeight() != m_height) {
+	if (ptrTexture.IsValid()) {
+		if (ptrTexture->GetWidth() != m_width || ptrTexture->GetHeight() != m_height) {
 			return false;
 		}
 	}
 
-	if (m_pDepthTexture) {
-		m_pDepthTexture->Release();
-	}
-
-	m_pDepthTexture = pTexture;
-
-	if (m_pDepthTexture) {
-		m_pDepthTexture->Retain();
-	}
-
+	m_ptrDepthTexture = ptrTexture;
 	return true;
 }
 
-bool CGfxFrameBuffer::SetColorTexture(GLuint index, CGfxTexture2D *pTexture, bool invalidation)
+bool CGfxFrameBuffer::SetColorTexture(GLuint index, CGfxTexture2DPtr &ptrTexture, bool invalidation)
 {
-	if (pTexture) {
-		if (pTexture->GetWidth() != m_width || pTexture->GetHeight() != m_height) {
+	if (ptrTexture.IsValid()) {
+		if (ptrTexture->GetWidth() != m_width || ptrTexture->GetHeight() != m_height) {
 			return false;
 		}
 	}
 
-	if (m_pColorTextures[index]) {
-		m_pColorTextures[index]->Release();
-	}
-
-	m_pColorTextures[index] = pTexture;
-	m_invalidations[index] = pTexture && invalidation;
-
-	if (m_pColorTextures[index]) {
-		m_pColorTextures[index]->Retain();
-	}
+	m_ptrColorTextures[index] = ptrTexture;
+	m_invalidations[index] = ptrTexture.IsValid() && invalidation;
 
 	return true;
 }
@@ -118,16 +77,16 @@ bool CGfxFrameBuffer::Apply(void)
 	{
 		eastl::vector<GLenum> drawBuffers;
 
-		for (const auto &itTexture : m_pColorTextures) {
-			if (itTexture.second) {
+		for (const auto &itTexture : m_ptrColorTextures) {
+			if (itTexture.second.IsValid()) {
 				drawBuffers.push_back(GL_COLOR_ATTACHMENT0 + itTexture.first);
 				glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + itTexture.first, GL_TEXTURE_2D, itTexture.second->GetTexture(), 0);
 			}
 		}
 
-		if (m_pDepthTexture || m_rbo) {
-			if (m_pDepthTexture) {
-				glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, m_pDepthTexture->GetTexture(), 0);
+		if (m_ptrDepthTexture.IsValid() || m_rbo) {
+			if (m_ptrDepthTexture.IsValid()) {
+				glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, m_ptrDepthTexture->GetTexture(), 0);
 			}
 			else {
 				glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, m_rbo);
@@ -154,15 +113,15 @@ GLuint CGfxFrameBuffer::GetHeight(void) const
 	return m_height;
 }
 
-CGfxTexture2D* CGfxFrameBuffer::GetDepthTexture(void) const
+CGfxTexture2DPtr CGfxFrameBuffer::GetDepthTexture(void) const
 {
-	return m_pDepthTexture;
+	return m_ptrDepthTexture;
 }
 
-CGfxTexture2D* CGfxFrameBuffer::GetColorTexture(GLuint index) const
+CGfxTexture2DPtr CGfxFrameBuffer::GetColorTexture(GLuint index) const
 {
-	const auto &itTexture = m_pColorTextures.find(index);
-	return itTexture != m_pColorTextures.end() ? itTexture->second : NULL;
+	const auto &itTexture = m_ptrColorTextures.find(index);
+	return itTexture != m_ptrColorTextures.end() ? itTexture->second : NULL;
 }
 
 void CGfxFrameBuffer::Bind(void)

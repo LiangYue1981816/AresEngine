@@ -4,66 +4,45 @@
 
 CComponentMesh::CComponentMesh(uint32_t name)
 	: CComponent(name)
-	, m_pMesh(NULL)
-	, m_pMaterial(NULL)
 {
 
 }
 
 CComponentMesh::CComponentMesh(const CComponentMesh &component)
 	: CComponent(component.m_name)
-	, m_pMesh(NULL)
-	, m_pMaterial(NULL)
 {
-	SetMesh(component.m_pMesh);
-	SetMaterial(component.m_pMaterial);
+	SetMesh(component.m_ptrMesh);
+	SetMaterial(component.m_ptrMaterial);
 }
 
 CComponentMesh::~CComponentMesh(void)
 {
-	SetMesh(NULL);
-	SetMaterial(NULL);
+
 }
 
-void CComponentMesh::SetMesh(CGfxMesh *pMesh)
+void CComponentMesh::SetMesh(const CGfxMeshPtr &ptrMesh)
 {
-	if (m_pMesh) {
-		m_pMesh->Release();
-	}
-
-	m_pMesh = pMesh;
-
-	if (m_pMesh) {
-		m_pMesh->Retain();
-	}
+	m_ptrMesh = ptrMesh;
 }
 
-void CComponentMesh::SetMaterial(CGfxMaterial *pMaterial)
+void CComponentMesh::SetMaterial(const CGfxMaterialPtr &ptrMaterial)
 {
-	if (m_pMaterial) {
-		m_pMaterial->Release();
-	}
-
-	m_pMaterial = pMaterial;
-
-	if (m_pMaterial) {
-		m_pMaterial->Retain();
-	}
+	m_ptrMaterial = ptrMaterial;
 }
 
-glm::aabb CComponentMesh::GetAABB(void) const
+const CGfxMeshPtr& CComponentMesh::GetMesh(void) const
 {
-	return m_pParentNode && m_pMesh ? m_pMesh->GetAABB() * m_pParentNode->GetWorldTransform() : glm::aabb();
+	return m_ptrMesh;
 }
 
-CGfxMesh* CComponentMesh::GetMesh(void) const
+const CGfxMaterialPtr& CComponentMesh::GetMaterial(void) const
 {
-	return m_pMesh;
+	return m_ptrMaterial;
 }
 
-CGfxMaterial* CComponentMesh::GetMaterial(void) const
+glm::aabb CComponentMesh::GetAABB(void)
 {
-	return m_pMaterial;
+	return m_pParentNode && m_ptrMesh.IsValid() ? m_ptrMesh->GetLocalAABB() * m_pParentNode->GetWorldTransform() : glm::aabb();
 }
 
 void CComponentMesh::TaskUpdate(float deltaTime)
@@ -74,6 +53,6 @@ void CComponentMesh::TaskUpdate(float deltaTime)
 void CComponentMesh::TaskUpdateCamera(CGfxCamera *pCamera, int indexThread)
 {
 	if (pCamera->IsVisible(GetAABB())) {
-		pCamera->AddQueue(m_pMaterial, m_pMesh, m_pParentNode->GetWorldTransform(), indexThread);
+		pCamera->AddQueue(m_ptrMaterial, m_ptrMesh, m_pParentNode->GetWorldTransform(), indexThread);
 	}
 }

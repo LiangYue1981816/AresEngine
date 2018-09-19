@@ -1,5 +1,8 @@
 #pragma once
 
+template<class T>
+class CGfxResourcePtr;
+class CGfxResource;
 class CGfxCamera;
 class CGfxCameraManager;
 class CGfxCommandBase;
@@ -17,9 +20,9 @@ class CGfxProgramManager;
 class CGfxRenderer;
 class CGfxSampler;
 class CGfxSamplerManager;
+class CGfxTextureBase;
 class CGfxTexture2D;
 class CGfxTexture2DArray;
-class CGfxTextureBase;
 class CGfxTextureCubeMap;
 class CGfxTextureManager;
 class CGfxUniformBuffer;
@@ -32,3 +35,10 @@ class CGfxUniformVec3;
 class CGfxUniformVec4;
 class CGfxVertexArrayObject;
 class CGfxVertexBuffer;
+
+typedef CGfxResourcePtr<CGfxFrameBuffer> CGfxFrameBufferPtr;
+typedef CGfxResourcePtr<CGfxTexture2D> CGfxTexture2DPtr;
+typedef CGfxResourcePtr<CGfxTexture2DArray> CGfxTexture2DArrayPtr;
+typedef CGfxResourcePtr<CGfxTextureCubeMap> CGfxTextureCubeMapPtr;
+typedef CGfxResourcePtr<CGfxMesh> CGfxMeshPtr;
+typedef CGfxResourcePtr<CGfxMaterial> CGfxMaterialPtr;

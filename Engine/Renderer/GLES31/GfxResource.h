@@ -23,11 +23,11 @@ public:
 	}
 	CGfxResourcePtr(const T *pPointer)
 	{
-		Set((const T *)pPointer, NULL);
+		CSharedPtr<T>::Set((const T *)pPointer, NULL);
 	}
 	CGfxResourcePtr(const CGfxResourcePtr<CGfxResource> &ptr)
 	{
-		Set((const T *)ptr.m_pPointer, ptr.m_pRefCount);
+		CSharedPtr<T>::Set((const T *)ptr.m_pPointer, ptr.m_pRefCount);
 	}
 	virtual ~CGfxResourcePtr(void)
 	{

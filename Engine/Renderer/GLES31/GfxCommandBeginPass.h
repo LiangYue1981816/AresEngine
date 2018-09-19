@@ -7,25 +7,21 @@
 class CGfxCommandBeginPass : public CGfxCommandBase
 {
 public:
-	CGfxCommandBeginPass(CGfxFrameBuffer *pFrameBuffer)
-		: m_pFrameBuffer(pFrameBuffer)
+	CGfxCommandBeginPass(const CGfxFrameBufferPtr &ptrFrameBuffer)
+		: m_ptrFrameBuffer(ptrFrameBuffer)
 	{
-		if (m_pFrameBuffer) {
-			m_pFrameBuffer->Retain();
-		}
+
 	}
 	virtual ~CGfxCommandBeginPass(void)
 	{
-		if (m_pFrameBuffer) {
-			m_pFrameBuffer->Release();
-		}
+
 	}
 
 public:
 	virtual void Execute(void) const
 	{
-		if (m_pFrameBuffer) {
-			Renderer()->BindFrameBuffer(m_pFrameBuffer);
+		if (m_ptrFrameBuffer.IsValid()) {
+			Renderer()->BindFrameBuffer(m_ptrFrameBuffer);
 		}
 		else {
 			glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -34,5 +30,5 @@ public:
 
 
 private:
-	CGfxFrameBuffer *m_pFrameBuffer;
+	CGfxFrameBufferPtr m_ptrFrameBuffer;
 };

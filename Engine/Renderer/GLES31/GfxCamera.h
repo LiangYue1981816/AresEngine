@@ -14,7 +14,7 @@ private:
 
 
 public:
-	void SetFrameBuffer(CGfxFrameBuffer *pFrameBuffer);
+	void SetFrameBuffer(const CGfxFrameBufferPtr &ptrFrameBuffer);
 
 public:
 	void SetEnableClearDepth(bool bEnable);
@@ -49,7 +49,7 @@ public:
 	bool IsVisible(const glm::sphere &sphere);
 
 public:
-	void AddQueue(CGfxMaterial *pMaterial, CGfxMesh *pMesh, const glm::mat4 &mtxTransform, int indexThread);
+	void AddQueue(const CGfxMaterialPtr &ptrMaterial, const CGfxMeshPtr &ptrMesh, const glm::mat4 &mtxTransform, int indexThread);
 	void ClearQueue(void);
 
 public:
@@ -72,13 +72,14 @@ private:
 
 private:
 	glm::camera m_camera;
-
-	CGfxFrameBuffer *m_pFrameBuffer;
 	CGfxUniformCamera *m_pUniformCamera;
 
 private:
 	GLuint m_index;
-	eastl::unordered_map<CGfxMaterial*, eastl::unordered_map<CGfxMesh*, eastl::vector<glm::mat4>>> m_queueOpaque[THREAD_COUNT][2];
-	eastl::unordered_map<CGfxMaterial*, eastl::unordered_map<CGfxMesh*, eastl::vector<glm::mat4>>> m_queueTransparent[THREAD_COUNT][2];
+	eastl::map<CGfxMaterialPtr, eastl::map<CGfxMeshPtr, eastl::vector<glm::mat4>>> m_queueOpaque[THREAD_COUNT][2];
+	eastl::map<CGfxMaterialPtr, eastl::map<CGfxMeshPtr, eastl::vector<glm::mat4>>> m_queueTransparent[THREAD_COUNT][2];
 	CGfxCommandBuffer *m_pCommandBuffer[2];
+
+private:
+	CGfxFrameBufferPtr m_ptrFrameBuffer;
 };

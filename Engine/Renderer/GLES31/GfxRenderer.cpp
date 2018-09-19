@@ -385,19 +385,6 @@ bool CGfxRenderer::CmdClearColor(CGfxCommandBuffer *pCommandBuffer, float red, f
 	return pCommandBuffer->CmdClearColor(red, green, blue, alpha);
 }
 
-bool CGfxRenderer::CmdDrawInstance(CGfxCommandBuffer *pCommandBuffer, CGfxMesh *pMesh, int indexCount, int baseIndex)
-{
-	if (pCommandBuffer->CmdBindMesh(pMesh) == false) {
-		return false;
-	}
-
-	if (pCommandBuffer->CmdDrawInstance(GL_TRIANGLES, pMesh->GetIndexType(), indexCount, baseIndex, pMesh->GetInstanceCount()) == false) {
-		return false;
-	}
-
-	return true;
-}
-
 bool CGfxRenderer::CmdDrawInstance(CGfxCommandBuffer *pCommandBuffer, CGfxMesh *pMesh, int indexCount, int baseIndex, eastl::vector<glm::mat4> &mtxTransforms)
 {
 	if (pCommandBuffer->CmdBindMesh(pMesh, mtxTransforms) == false) {
@@ -405,19 +392,6 @@ bool CGfxRenderer::CmdDrawInstance(CGfxCommandBuffer *pCommandBuffer, CGfxMesh *
 	}
 
 	if (pCommandBuffer->CmdDrawInstance(GL_TRIANGLES, pMesh->GetIndexType(), indexCount, baseIndex, (GLsizei)mtxTransforms.size()) == false) {
-		return false;
-	}
-
-	return true;
-}
-
-bool CGfxRenderer::CmdDrawIndirect(CGfxCommandBuffer *pCommandBuffer, CGfxMesh *pMesh, int indexCount, int baseIndex, GLsizei baseVertex)
-{
-	if (pCommandBuffer->CmdBindMesh(pMesh) == false) {
-		return false;
-	}
-
-	if (pCommandBuffer->CmdDrawIndirect(GL_TRIANGLES, pMesh->GetIndexType(), indexCount, baseIndex, baseVertex, pMesh->GetInstanceCount()) == false) {
 		return false;
 	}
 
@@ -439,7 +413,10 @@ bool CGfxRenderer::CmdDrawIndirect(CGfxCommandBuffer *pCommandBuffer, CGfxMesh *
 
 bool CGfxRenderer::CmdDrawScreen(CGfxCommandBuffer *pCommandBuffer)
 {
-	if (pCommandBuffer->CmdBindMesh(m_pScreenMesh) == false) {
+	eastl::vector<glm::mat4> mtxTransforms;
+	mtxTransforms.push_back(glm::mat4());
+
+	if (pCommandBuffer->CmdBindMesh(m_pScreenMesh, mtxTransforms) == false) {
 		return false;
 	}
 

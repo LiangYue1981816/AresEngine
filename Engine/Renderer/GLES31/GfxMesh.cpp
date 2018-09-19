@@ -15,8 +15,6 @@ CGfxMesh::CGfxMesh(GLuint name)
 	, m_pVertexBuffer(NULL)
 	, m_pInstanceBuffer(NULL)
 	, m_pVertexArrayObject(NULL)
-
-	, refCount(0)
 {
 	m_aabb.zero();
 }
@@ -26,20 +24,9 @@ CGfxMesh::~CGfxMesh(void)
 	Free();
 }
 
-void CGfxMesh::Retain(void)
-{
-	refCount++;
-}
-
 void CGfxMesh::Release(void)
 {
-	if (refCount > 0) {
-		refCount--;
-	}
-
-	if (refCount == 0) {
-		Renderer()->FreeMesh(this);
-	}
+	Renderer()->FreeMesh(this);
 }
 
 bool CGfxMesh::Load(const char *szFileName)
@@ -199,17 +186,17 @@ void CGfxMesh::CreateInstanceBuffer(GLuint format)
 	m_pInstanceBuffer = new CGfxInstanceBuffer(format);
 }
 
-void CGfxMesh::SetInstance(const glm::mat4 &mtxTransform)
-{
-	if (m_pInstanceBuffer) {
-		m_pInstanceBuffer->SetInstance(mtxTransform);
-	}
-}
-
 void CGfxMesh::AddInstance(const glm::mat4 &mtxTransform)
 {
 	if (m_pInstanceBuffer) {
 		m_pInstanceBuffer->AddInstance(mtxTransform);
+	}
+}
+
+void CGfxMesh::SetInstance(const eastl::vector<glm::mat4> &mtxTransforms)
+{
+	if (m_pInstanceBuffer) {
+		m_pInstanceBuffer->SetInstance(mtxTransforms);
 	}
 }
 
@@ -250,7 +237,7 @@ GLuint CGfxMesh::GetInstanceCount(void) const
 	return m_pInstanceBuffer ? m_pInstanceBuffer->GetInstanceCount() : 0;
 }
 
-const glm::aabb& CGfxMesh::GetAABB(void) const
+const glm::aabb& CGfxMesh::GetLocalAABB(void) const
 {
 	return m_aabb;
 }

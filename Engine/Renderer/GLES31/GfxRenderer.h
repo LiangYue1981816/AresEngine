@@ -7,6 +7,7 @@
 #include <gli.hpp>
 #include <eastl/string.h>
 #include <eastl/vector.h>
+#include <eastl/map.h>
 #include <eastl/unordered_map.h>
 
 #include "Engine.h"
@@ -16,10 +17,6 @@
 
 #include "GfxGLM.h"
 #include "GfxDefinition.h"
-
-#include "GfxCamera.h"
-#include "GfxCameraManager.h"
-#include "GfxCommandBuffer.h"
 
 #include "GfxResource.h"
 #include "GfxMesh.h"
@@ -45,6 +42,10 @@
 #include "GfxUniformVec3.h"
 #include "GfxUniformVec4.h"
 #include "GfxUniformMat4.h"
+
+#include "GfxCamera.h"
+#include "GfxCameraManager.h"
+#include "GfxCommandBuffer.h"
 
 
 class CGfxRenderer
@@ -141,9 +142,7 @@ public:
 
 	bool CmdClearDepth(CGfxCommandBuffer *pCommandBuffer, float depth);
 	bool CmdClearColor(CGfxCommandBuffer *pCommandBuffer, float red, float green, float blue, float alpha);
-	bool CmdDrawInstance(CGfxCommandBuffer *pCommandBuffer, CGfxMesh *pMesh, int indexCount, int baseIndex);
 	bool CmdDrawInstance(CGfxCommandBuffer *pCommandBuffer, CGfxMesh *pMesh, int indexCount, int baseIndex, eastl::vector<glm::mat4> &mtxTransforms);
-	bool CmdDrawIndirect(CGfxCommandBuffer *pCommandBuffer, CGfxMesh *pMesh, int indexCount, int baseIndex, GLsizei baseVertex);
 	bool CmdDrawIndirect(CGfxCommandBuffer *pCommandBuffer, CGfxMesh *pMesh, int indexCount, int baseIndex, GLsizei baseVertex, eastl::vector<glm::mat4> &mtxTransforms);
 	bool CmdDrawScreen(CGfxCommandBuffer *pCommandBuffer);
 

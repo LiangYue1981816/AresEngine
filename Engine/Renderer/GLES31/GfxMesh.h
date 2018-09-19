@@ -2,7 +2,7 @@
 #include "GfxRenderer.h"
 
 
-class CGfxMesh
+class CGfxMesh : public CGfxResource
 {
 	friend class CGfxRenderer;
 	friend class CGfxMeshManager;
@@ -11,11 +11,8 @@ class CGfxMesh
 private:
 	CGfxMesh(GLuint name);
 	virtual ~CGfxMesh(void);
+	virtual void Release(void);
 
-
-public:
-	void Retain(void);
-	void Release(void);
 
 private:
 	bool Load(const char *szFileName);
@@ -26,8 +23,8 @@ private:
 	void CreateInstanceBuffer(GLuint format);
 
 public:
-	void SetInstance(const glm::mat4 &mtxTransform);
 	void AddInstance(const glm::mat4 &mtxTransform);
+	void SetInstance(const eastl::vector<glm::mat4> &mtxTransforms);
 	void ClearInstance(void);
 
 public:
@@ -40,7 +37,7 @@ public:
 	GLuint GetVertexCount(void) const;
 	GLuint GetInstanceCount(void) const;
 
-	const glm::aabb& GetAABB(void) const;
+	const glm::aabb& GetLocalAABB(void) const;
 
 private:
 	void Bind(void) const;
@@ -57,7 +54,4 @@ private:
 	CGfxVertexBuffer *m_pVertexBuffer;
 	CGfxInstanceBuffer *m_pInstanceBuffer;
 	CGfxVertexArrayObject *m_pVertexArrayObject;
-
-private:
-	GLuint refCount;
 };
