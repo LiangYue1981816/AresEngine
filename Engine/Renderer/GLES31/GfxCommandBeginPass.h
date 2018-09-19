@@ -21,7 +21,7 @@ public:
 	virtual void Execute(void) const
 	{
 		if (m_ptrFrameBuffer.IsValid()) {
-			Renderer()->BindFrameBuffer(m_ptrFrameBuffer);
+			m_ptrFrameBuffer->Bind();
 		}
 		else {
 			glBindFramebuffer(GL_FRAMEBUFFER, 0);

@@ -16,11 +16,6 @@ CGfxIndexBuffer::~CGfxIndexBuffer(void)
 	glDeleteBuffers(1, &m_indexBuffer);
 }
 
-void CGfxIndexBuffer::Bind(void) const
-{
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_indexBuffer);
-}
-
 bool CGfxIndexBuffer::BufferData(size_t size, const void *pBuffer, bool bDynamic)
 {
 	m_size = (GLsizeiptr)size;
@@ -50,4 +45,9 @@ GLuint CGfxIndexBuffer::GetIndexBuffer(void) const
 GLsizeiptr CGfxIndexBuffer::GetSize(void) const
 {
 	return m_size;
+}
+
+void CGfxIndexBuffer::Bind(void) const
+{
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_indexBuffer);
 }

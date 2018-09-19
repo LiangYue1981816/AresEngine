@@ -55,9 +55,6 @@ class CGfxRenderer
 	friend class CGfxMaterial;
 	friend class CGfxTextureBase;
 	friend class CGfxFrameBuffer;
-	friend class CGfxCommandBeginPass;
-	friend class CGfxCommandEndPass;
-	friend class CGfxCommandBindMesh;
 	friend class CGfxCommandBindCamera;
 	friend class CGfxCommandBindMaterial;
 	friend class CGfxCommandBindInputTexture;
@@ -78,12 +75,12 @@ public:
 public:
 	CGfxCamera* GetCamera(const char *szName);
 
-	// Internal Gfx Resource
+	// Internal Gfx Resources
 private:
 	CGfxProgram* CreateProgram(const char *szVertexFileName, const char *szFragmentFileName);
 	CGfxSampler* CreateSampler(GLenum minFilter, GLenum magFilter, GLenum addressMode);
 
-	// External Gfx Resource
+	// External Gfx Resources
 public:
 	CGfxFrameBufferPtr CreateFrameBuffer(GLuint width, GLuint height, bool bDepthRenderBuffer);
 	CGfxTexture2DPtr CreateTexture2D(GLuint name);
@@ -102,7 +99,7 @@ private:
 	void FreeTexture(CGfxTextureBase *pTexture);
 	void FreeFrameBuffer(CGfxFrameBuffer *pFrameBuffer);
 
-	// Feature
+	// Features
 public:
 	void SetTime(float t, float dt);
 
@@ -127,7 +124,7 @@ public:
 	void SetFogHeightDensity(float startHeight, float endHeight, float density);
 	void SetFogDistanceDensity(float startDistance, float endDistance, float density);
 
-	// Gfx Command
+	// Gfx Commands
 public:
 	bool CmdBeginPass(CGfxCommandBuffer *pCommandBuffer, const CGfxFrameBufferPtr &ptrFrameBuffer);
 	bool CmdEndPass(CGfxCommandBuffer *pCommandBuffer);
@@ -160,9 +157,6 @@ public:
 	void Present(void);
 
 private:
-	void InvalidateFramebuffer(CGfxFrameBuffer *pFrameBuffer);
-	void BindFrameBuffer(CGfxFrameBuffer *pFrameBuffer);
-	void BindMesh(CGfxMesh *pMesh);
 	void BindCamera(CGfxCamera *pCamera);
 	void BindMaterial(CGfxMaterial *pMaterial);
 	void BindInputTexture(const char *szName, GLuint texture, GLenum minFilter, GLenum magFilter, GLenum addressMode);

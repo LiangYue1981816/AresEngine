@@ -14,7 +14,6 @@ private:
 
 
 private:
-	void Bind(void) const;
 	bool BufferData(size_t size, const void *pBuffer, bool bDynamic);
 
 private:
@@ -22,6 +21,9 @@ private:
 	GLuint GetIndexCount(void) const;
 	GLuint GetIndexBuffer(void) const;
 	GLsizeiptr GetSize(void) const;
+
+private:
+	void Bind(void) const;
 
 
 private:

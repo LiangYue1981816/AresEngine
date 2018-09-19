@@ -59,13 +59,7 @@ public:
 public:
 	GLuint GetName(void) const;
 
-private:
-	CGfxProgram* GetProgram(void);
-	CGfxSampler* GetSampler(const char *szName, GLenum minFilter, GLenum magFilter, GLenum addressMode);
-
-public:
 	GLuint GetTextureUnits(void) const;
-
 	CGfxTexture2DPtr GetTexture2D(const char *szName);
 	CGfxTexture2DArrayPtr GetTexture2DArray(const char *szName);
 	CGfxTextureCubeMapPtr GetTextureCubeMap(const char *szName);
@@ -77,6 +71,10 @@ public:
 	CGfxUniformMat4* GetUniformMat4(const char *szName);
 
 private:
+	CGfxProgram* GetProgram(void);
+	CGfxSampler* GetSampler(const char *szName, GLenum minFilter, GLenum magFilter, GLenum addressMode);
+
+public:
 	void Bind(void) const;
 	void BindState(void) const;
 	void BindUniforms(CGfxProgram *pProgram) const;

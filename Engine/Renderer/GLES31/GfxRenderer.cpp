@@ -447,27 +447,6 @@ void CGfxRenderer::Present(void)
 #endif
 }
 
-void CGfxRenderer::InvalidateFramebuffer(CGfxFrameBuffer *pFrameBuffer)
-{
-	if (pFrameBuffer) {
-		pFrameBuffer->InvalidateFramebuffer();
-	}
-}
-
-void CGfxRenderer::BindFrameBuffer(CGfxFrameBuffer *pFrameBuffer)
-{
-	if (pFrameBuffer) {
-		pFrameBuffer->Bind();
-	}
-}
-
-void CGfxRenderer::BindMesh(CGfxMesh *pMesh)
-{
-	if (pMesh) {
-		pMesh->Bind();
-	}
-}
-
 void CGfxRenderer::BindCamera(CGfxCamera *pCamera)
 {
 	if (m_pCurrentMaterial) {

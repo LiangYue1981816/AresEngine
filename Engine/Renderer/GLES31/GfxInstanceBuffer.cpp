@@ -21,28 +21,6 @@ CGfxInstanceBuffer::~CGfxInstanceBuffer(void)
 	glDeleteBuffers(1, &m_instanceBuffer);
 }
 
-void CGfxInstanceBuffer::Bind(void) const
-{
-	glBindBuffer(GL_ARRAY_BUFFER, m_instanceBuffer);
-	{
-		GLuint instanceStride = GetInstanceStride(m_instanceFormat);
-
-		for (GLuint indexAttribute = 0; indexAttribute < INSTANCE_ATTRIBUTE_COUNT; indexAttribute++) {
-			GLuint attribute = (1 << indexAttribute);
-
-			if (m_instanceFormat & attribute) {
-				GLuint location = GetInstanceAttributeLocation(attribute);
-				GLuint components = GetInstanceAttributeComponents(attribute);
-				GLuint offset = GetInstanceAttributeOffset(m_instanceFormat, attribute);
-
-				glEnableVertexAttribArray(location);
-				glVertexAttribPointer(location, components, GL_FLOAT, GL_FALSE, instanceStride, (const void *)offset);
-				glVertexAttribDivisor(location, 1);
-			}
-		}
-	}
-}
-
 void CGfxInstanceBuffer::AddInstance(const glm::mat4 &mtxTransform)
 {
 	m_bDirty = true;
@@ -101,4 +79,26 @@ GLuint CGfxInstanceBuffer::GetInstanceBuffer(void) const
 GLsizeiptr CGfxInstanceBuffer::GetSize(void) const
 {
 	return m_size;
+}
+
+void CGfxInstanceBuffer::Bind(void) const
+{
+	glBindBuffer(GL_ARRAY_BUFFER, m_instanceBuffer);
+	{
+		GLuint instanceStride = GetInstanceStride(m_instanceFormat);
+
+		for (GLuint indexAttribute = 0; indexAttribute < INSTANCE_ATTRIBUTE_COUNT; indexAttribute++) {
+			GLuint attribute = (1 << indexAttribute);
+
+			if (m_instanceFormat & attribute) {
+				GLuint location = GetInstanceAttributeLocation(attribute);
+				GLuint components = GetInstanceAttributeComponents(attribute);
+				GLuint offset = GetInstanceAttributeOffset(m_instanceFormat, attribute);
+
+				glEnableVertexAttribArray(location);
+				glVertexAttribPointer(location, components, GL_FLOAT, GL_FALSE, instanceStride, (const void *)offset);
+				glVertexAttribDivisor(location, 1);
+			}
+		}
+	}
 }

@@ -24,7 +24,8 @@ public:
 		if (m_ptrMesh.IsValid()) {
 			m_ptrMesh->ClearInstance();
 			m_ptrMesh->SetInstance(m_mtxTransforms);
-			Renderer()->BindMesh(m_ptrMesh);
+			m_ptrMesh->UpdateInstance();
+			m_ptrMesh->Bind();
 		}
 		else {
 			glBindVertexArray(0);

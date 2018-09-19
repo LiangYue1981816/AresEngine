@@ -14,9 +14,6 @@ private:
 
 
 private:
-	void Bind(void) const;
-
-private:
 	void AddInstance(const glm::mat4 &mtxTransform);
 	void SetInstance(const eastl::vector<glm::mat4> &mtxTransforms);
 	void ClearInstance(void);
@@ -27,6 +24,9 @@ private:
 	GLuint GetInstanceFormat(void) const;
 	GLuint GetInstanceBuffer(void) const;
 	GLsizeiptr GetSize(void) const;
+
+private:
+	void Bind(void) const;
 
 
 private:

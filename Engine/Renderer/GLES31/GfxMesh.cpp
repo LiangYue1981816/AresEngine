@@ -207,6 +207,13 @@ void CGfxMesh::ClearInstance(void)
 	}
 }
 
+void CGfxMesh::UpdateInstance(void)
+{
+	if (m_pInstanceBuffer) {
+		m_pInstanceBuffer->UpdateInstance();
+	}
+}
+
 GLuint CGfxMesh::GetName(void) const
 {
 	return m_name;
@@ -244,10 +251,6 @@ const glm::aabb& CGfxMesh::GetLocalAABB(void) const
 
 void CGfxMesh::Bind(void) const
 {
-	if (m_pInstanceBuffer) {
-		m_pInstanceBuffer->UpdateInstance();
-	}
-
 	if (m_pVertexArrayObject) {
 		m_pVertexArrayObject->Bind();
 	}

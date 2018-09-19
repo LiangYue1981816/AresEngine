@@ -26,6 +26,7 @@ public:
 	void AddInstance(const glm::mat4 &mtxTransform);
 	void SetInstance(const eastl::vector<glm::mat4> &mtxTransforms);
 	void ClearInstance(void);
+	void UpdateInstance(void);
 
 public:
 	GLuint GetName(void) const;
@@ -39,7 +40,7 @@ public:
 
 	const glm::aabb& GetLocalAABB(void) const;
 
-private:
+public:
 	void Bind(void) const;
 
 

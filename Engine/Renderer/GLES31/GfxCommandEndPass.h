@@ -20,7 +20,7 @@ public:
 	virtual void Execute(void) const
 	{
 		if (m_ptrFrameBuffer.IsValid()) {
-			Renderer()->InvalidateFramebuffer(m_ptrFrameBuffer);
+			m_ptrFrameBuffer->InvalidateFramebuffer();
 		}
 	}
 
