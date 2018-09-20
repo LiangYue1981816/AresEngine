@@ -42,3 +42,19 @@ protected:
 		}
 	}
 };
+
+template<class T> struct eastl::hash<CGfxResourcePtr<T>>
+{
+	inline size_t operator()(const CGfxResourcePtr<T> &key) const
+	{
+		return (size_t)key.GetPointer();
+	}
+};
+
+template<class T> struct eastl::equal_to<CGfxResourcePtr<T>>
+{
+	inline bool operator()(const CGfxResourcePtr<T> &ptrLeft, const CGfxResourcePtr<T> &ptrRight) const
+	{
+		return ptrLeft.GetPointer() == ptrRight.GetPointer();
+	}
+};

@@ -76,8 +76,8 @@ private:
 
 private:
 	GLuint m_index;
-	eastl::map<CGfxMaterialPtr, eastl::map<CGfxMeshPtr, eastl::vector<glm::mat4>>> m_queueOpaque[THREAD_COUNT][2];
-	eastl::map<CGfxMaterialPtr, eastl::map<CGfxMeshPtr, eastl::vector<glm::mat4>>> m_queueTransparent[THREAD_COUNT][2];
+	eastl::unordered_map<CGfxMaterialPtr, eastl::unordered_map<CGfxMeshPtr, eastl::vector<glm::mat4>>> m_queueOpaque[THREAD_COUNT][2];
+	eastl::unordered_map<CGfxMaterialPtr, eastl::unordered_map<CGfxMeshPtr, eastl::vector<glm::mat4>>> m_queueTransparent[THREAD_COUNT][2];
 	CGfxCommandBuffer *m_pCommandBuffer[2];
 
 private:

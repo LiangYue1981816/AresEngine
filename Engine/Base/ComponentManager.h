@@ -160,7 +160,7 @@ public:
 		return m_key;
 	}
 
-	inline CComponentManager<T> GetManager(void) const
+	inline CComponentManager<T>* GetManager(void) const
 	{
 		return m_pManager;
 	}
@@ -234,3 +234,22 @@ template<class T> inline bool operator >= (const CComponentPtr<T> &ptrLeft, cons
 {
 	return ptrLeft.GetKey() >= ptrRight.GetKey();
 }
+
+template<class T> struct eastl::hash<CComponentPtr<T>>
+{
+	inline size_t operator()(const CComponentPtr<T> &key) const
+	{
+		size_t key = (size_t)key.GetKey();
+		size_t manager = (size_t)key.GetManager();
+		key ^= manager + 0x9e3779b9 + (key << 6) + (key >> 2);
+		return key;
+	}
+};
+
+template<class T> struct eastl::equal_to<CComponentPtr<T>>
+{
+	inline bool operator()(const CComponentPtr<T> &ptrLeft, const CComponentPtr<T> &ptrRight) const
+	{
+		return ptrLeft.GetKey() == ptrRight.GetKey() && ptrLeft.GetManager() == ptrRight.GetManager();
+	}
+};

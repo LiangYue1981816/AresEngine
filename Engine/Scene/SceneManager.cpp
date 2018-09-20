@@ -6,6 +6,8 @@
 
 
 CSceneManager::CSceneManager(void)
+	: m_taskGraphUpdate("TashGraph_Update", 99)
+	, m_taskGraphRender("TaskGraph_Render", 25)
 {
 	event_init(&m_eventUpdateSkin, 1);
 	event_init(&m_eventUpdateParticle, 1);

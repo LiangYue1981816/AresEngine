@@ -1,6 +1,8 @@
 #pragma once
 #include "event.h"
 #include "pthread.h"
+#include <stdio.h>
+#include <stdlib.h>
 #include <eastl/vector.h>
 #include <eastl/unordered_map.h>
 
@@ -38,7 +40,7 @@ private:
 class CTaskGraph
 {
 public:
-	CTaskGraph(void);
+	CTaskGraph(const char *szName, int priority);
 	virtual ~CTaskGraph(void);
 
 
@@ -50,6 +52,10 @@ public:
 private:
 	static void* TaskThread(void *pParams);
 
+
+private:
+	char m_szName[260];
+	int m_priority;
 
 private:
 	event_t m_eventExit;
