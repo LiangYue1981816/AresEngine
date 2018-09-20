@@ -54,10 +54,6 @@ private:
 
 
 private:
-	char m_szName[260];
-	int m_priority;
-
-private:
 	event_t m_eventExit;
 	event_t m_eventReady;
 	event_t m_eventFinish;

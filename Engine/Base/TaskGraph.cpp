@@ -31,33 +31,34 @@ static void SetThreadName(DWORD dwThreadID, const char* szName)
 }
 #endif
 
-static void pthread_set_name(pthread_t thread, const char *szName)
+static void pthread_set_name(pthread_t thread, const char *name)
 {
 #ifdef _WINDOWS
 	if (DWORD Win32ThreadID = pthread_getw32threadid_np(thread)) {
-		SetThreadName(Win32ThreadID, szName);
+		SetThreadName(Win32ThreadID, name);
 	}
 #else
 	pthread_setname_np(thread, name);
 #endif
 }
 
-static pthread_attr_t pthread_attr_create(int priority)
+static int pthread_set_sched_param(pthread_t thread, int policy, int priority)
 {
-	pthread_attr_t thread_attr;
+#ifdef _WINDOWS
+	policy = SCHED_OTHER;
+#endif
+
+	const int min_priority = 1;
+	const int max_priority = 99;
+	if (priority < min_priority) priority = min_priority;
+	if (priority > max_priority) priority = max_priority;
+
 	struct sched_param thread_param;
-	int status, thread_policy, rr_min_priority, rr_max_priority;
+	const int sched_min_priority = sched_get_priority_min(policy);
+	const int sched_max_priority = sched_get_priority_max(policy);
+	thread_param.sched_priority = (sched_max_priority - sched_min_priority) * priority / (max_priority - min_priority) + sched_min_priority;
 
-	pthread_attr_init(&thread_attr);
-	pthread_attr_getschedpolicy(&thread_attr, &thread_policy);
-	pthread_attr_getschedparam(&thread_attr, &thread_param);
-	status = pthread_attr_setschedpolicy(&thread_attr, SCHED_RR);
-	rr_min_priority = sched_get_priority_min(SCHED_RR);
-	rr_max_priority = sched_get_priority_max(SCHED_RR);
-	pthread_attr_setschedparam(&thread_attr, &thread_param);
-	pthread_attr_setinheritsched(&thread_attr, PTHREAD_EXPLICIT_SCHED);
-
-	return thread_attr;
+	return pthread_setschedparam(thread, policy, &thread_param);
 }
 
 
@@ -104,31 +105,22 @@ void* CTask::GetTaskParams(void) const
 
 
 CTaskGraph::CTaskGraph(const char *szName, int priority)
-	: m_priority(priority)
 {
-	if (szName) {
-		strcpy(m_szName, szName);
-	}
-	else {
-		strcpy(m_szName, "TaskGraph");
-	}
-
 	event_init(&m_eventExit, 0);
 	event_init(&m_eventReady, 1);
 	event_init(&m_eventFinish, 1);
 	event_init(&m_eventDispatch, 0);
 	pthread_mutex_init(&m_mutexTaskList, NULL);
 
-	pthread_attr_t thread_attr = pthread_attr_create(priority);
-
 	for (int indexThread = 0; indexThread < THREAD_COUNT; indexThread++) {
-		char szName[260];
-		sprintf(szName, "%s_%d(%2.2d)", m_szName, indexThread, m_priority);
-		pthread_create(&m_threads[indexThread], NULL, TaskThread, this);
-		pthread_set_name(m_threads[indexThread], szName);
-	}
+		int rcode;
+		rcode = pthread_create(&m_threads[indexThread], NULL, TaskThread, this);
+		rcode = pthread_set_sched_param(m_threads[indexThread], SCHED_RR, priority);
 
-	pthread_attr_destroy(&thread_attr);
+		char szThreadName[260];
+		sprintf(szThreadName, "%s_%d(%2.2d)", szName, indexThread, priority);
+		pthread_set_name(m_threads[indexThread], szThreadName);
+	}
 }
 
 CTaskGraph::~CTaskGraph(void)
