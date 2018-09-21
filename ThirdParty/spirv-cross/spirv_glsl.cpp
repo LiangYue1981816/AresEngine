@@ -1326,7 +1326,7 @@ void CompilerGLSL::emit_specialization_constant(const SPIRConstant &constant)
 void CompilerGLSL::replace_illegal_names()
 {
 	// clang-format off
-	static const unordered_set<string> keywords = {
+	const unordered_set<string> keywords = {
 		"active", "asm", "atomic_uint", "attribute", "bool", "break",
 		"bvec2", "bvec3", "bvec4", "case", "cast", "centroid", "class", "coherent", "common", "const", "continue", "default", "discard",
 		"dmat2", "dmat2x2", "dmat2x3", "dmat2x4", "dmat3", "dmat3x2", "dmat3x3", "dmat3x4", "dmat4", "dmat4x2", "dmat4x3", "dmat4x4",

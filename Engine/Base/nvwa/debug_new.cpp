@@ -340,7 +340,7 @@ int dump_memory_objects()
 		total_size += ptr->size;
     }
 
-	LogOutput("Memory", "*** %d objects found, total size %llu\n", object_cnt, total_size);
+	LogOutput("Memory", "*** %d objects found, total size %d\n", object_cnt, total_size);
     return object_cnt;
 }
 

@@ -1,4 +1,5 @@
 #include "Engine.h"
+#include "nvwa/debug_new.h"
 
 
 CEngine* CEngine::pInstance = NULL;
@@ -21,6 +22,10 @@ void CEngine::Destroy(void)
 	}
 
 	pInstance = NULL;
+
+#ifdef _DEBUG
+	dump_memory_objects();
+#endif
 }
 
 CEngine::CEngine(void *hDC, const char *szShaderPath, const char *szTexturePath, const char *szMaterialPath, const char *szMeshPath)

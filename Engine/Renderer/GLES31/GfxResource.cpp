@@ -4,6 +4,7 @@
 
 
 CGfxResource::CGfxResource(void)
+	: refCount(0)
 {
 
 }
