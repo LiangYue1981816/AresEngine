@@ -15,7 +15,13 @@ protected:
 
 
 private:
+	uint32_t IncRefCount(void);
+	uint32_t DecRefCount(void);
+
+
+private:
 	uint32_t refCount;
+	pthread_spinlock_t lock;
 };
 
 template<class T> class CGfxResourcePtr
@@ -53,7 +59,7 @@ private:
 
 		if (pPointer) {
 			m_pPointer = (T *)pPointer;
-			((CGfxResource *)m_pPointer)->refCount++;
+			((CGfxResource *)m_pPointer)->IncRefCount();
 		}
 	}
 
@@ -68,7 +74,7 @@ public:
 	inline void Release(void)
 	{
 		if (m_pPointer) {
-			if (--(((CGfxResource *)m_pPointer)->refCount) == 0) {
+			if (((CGfxResource *)m_pPointer)->DecRefCount() == 0) {
 				FreePointer();
 			}
 		}
