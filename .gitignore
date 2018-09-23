@@ -331,3 +331,4 @@ ASALocalRun/
 
 # svn
 .svn
+*.rar
