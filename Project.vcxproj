@@ -276,6 +276,7 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>./;./Application;./Editor;./Engine;./Engine/Base;./Engine/Renderer;./Engine/Renderer/GLES31;./Engine/Renderer/GLES31/gles3;./Engine/Renderer/Vulkan;./Engine/Resource;./Engine/Scene;./Engine/Scene/Component;./Engine/Scene/Task;./ThirdParty;./ThirdParty/eastl;./ThirdParty/event;./ThirdParty/gli;./ThirdParty/glm;./ThirdParty/lodepng;./ThirdParty/pthread;./ThirdParty/spirv-cross;./ThirdParty/tinyxml;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4996;4312</DisableSpecificWarnings>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -294,6 +295,7 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>./;./Application;./Editor;./Engine;./Engine/Base;./Engine/Renderer;./Engine/Renderer/GLES31;./Engine/Renderer/GLES31/gles3;./Engine/Renderer/Vulkan;./Engine/Resource;./Engine/Scene;./Engine/Scene/Component;./Engine/Scene/Task;./ThirdParty;./ThirdParty/eastl;./ThirdParty/event;./ThirdParty/gli;./ThirdParty/glm;./ThirdParty/lodepng;./ThirdParty/pthread;./ThirdParty/spirv-cross;./ThirdParty/tinyxml;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4996;4312</DisableSpecificWarnings>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -314,6 +316,7 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>./;./Application;./Editor;./Engine;./Engine/Base;./Engine/Renderer;./Engine/Renderer/GLES31;./Engine/Renderer/GLES31/gles3;./Engine/Renderer/Vulkan;./Engine/Resource;./Engine/Scene;./Engine/Scene/Component;./Engine/Scene/Task;./ThirdParty;./ThirdParty/eastl;./ThirdParty/event;./ThirdParty/gli;./ThirdParty/glm;./ThirdParty/lodepng;./ThirdParty/pthread;./ThirdParty/spirv-cross;./ThirdParty/tinyxml;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4996;4312</DisableSpecificWarnings>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -336,6 +339,7 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>./;./Application;./Editor;./Engine;./Engine/Base;./Engine/Renderer;./Engine/Renderer/GLES31;./Engine/Renderer/GLES31/gles3;./Engine/Renderer/Vulkan;./Engine/Resource;./Engine/Scene;./Engine/Scene/Component;./Engine/Scene/Task;./ThirdParty;./ThirdParty/eastl;./ThirdParty/event;./ThirdParty/gli;./ThirdParty/glm;./ThirdParty/lodepng;./ThirdParty/pthread;./ThirdParty/spirv-cross;./ThirdParty/tinyxml;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4996;4312</DisableSpecificWarnings>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

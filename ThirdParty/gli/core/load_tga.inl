@@ -33,12 +33,26 @@ namespace gli {
 
 			texture Texture(
 				TARGET_2D,
-				Header.bitsperpixel == 24 ? FORMAT_BGR8_UNORM_PACK8 : FORMAT_BGRA8_UNORM_PACK8,
-//				Header.bitsperpixel == 24 ? FORMAT_RGB8_UNORM_PACK8 : FORMAT_RGBA8_UNORM_PACK8,
+				Header.bitsperpixel == 24 ? FORMAT_RGB8_UNORM_PACK8 : FORMAT_RGBA8_UNORM_PACK8,
 				texture::extent_type(std::max<texture::size_type>(Header.width, 1), std::max<texture::size_type>(Header.height, 1), 1),
 				1,
 				1,
 				1);
+
+			// BGR(A) => RGB(A)
+			int pixelSize = Header.bitsperpixel / 8;
+			int buffWidth = ((Header.width * Header.bitsperpixel + 31) / 32) * 4;
+			unsigned char *base = (unsigned char *)Data + sizeof(detail::tga_header);
+
+			for (int y = 0; y < Header.height; y++) {
+				unsigned char *pixel = base + y * buffWidth;
+				for (int x = 0; x < buffWidth; x += pixelSize) {
+					unsigned char r = pixel[x + 0];
+					unsigned char b = pixel[x + 2];
+					pixel[x + 0] = b;
+					pixel[x + 2] = r;
+				}
+			}
 
 			std::memcpy(Texture.data(0, 0, 0), Data + sizeof(detail::tga_header), Texture.size(0));
 
