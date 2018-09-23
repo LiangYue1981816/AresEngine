@@ -245,7 +245,7 @@ void CGfxUniformEngine::SetDirectLightColor(float red, float green, float blue)
 void CGfxUniformEngine::SetDirectLightDirection(float dirx, float diry, float dirz)
 {
 	m_bDirty = true;
-	m_params.directLightDirection = glm::normalize(glm::vec4(-dirx, -diry, -dirz, 0.0));
+	m_params.directLightDirection = glm::vec4(glm::normalize(glm::vec3(-dirx, -diry, -dirz)), 0.0f);
 }
 
 void CGfxUniformEngine::SetFogColor(float red, float green, float blue)
