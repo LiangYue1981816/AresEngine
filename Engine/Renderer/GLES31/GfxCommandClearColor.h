@@ -1,5 +1,4 @@
 #pragma once
-#include <gl31.h>
 #include "GfxCommandBuffer.h"
 
 
@@ -22,8 +21,11 @@ public:
 public:
 	virtual void Execute(void) const
 	{
-		glClearColor(m_red, m_green, m_blue, m_alpha);
-		glClear(GL_COLOR_BUFFER_BIT);
+		CGfxProfilerSample(CGfxProfiler::SAMPLE_TYPE_COMMAND_CLEAR_COLOR, "CommandClearColor");
+		{
+			glClearColor(m_red, m_green, m_blue, m_alpha);
+			glClear(GL_COLOR_BUFFER_BIT);
+		}
 	}
 
 

@@ -12,12 +12,12 @@ USE_INSTANCE_ATTRIBUTE_TRANSFORM_MATRIX_COL1;
 USE_INSTANCE_ATTRIBUTE_TRANSFORM_MATRIX_COL2;
 USE_INSTANCE_ATTRIBUTE_TRANSFORM_MATRIX_COL3;
 
-layout (location = 0) out vec2 outTexcoord;
+layout (location = 0) out mediump vec2 outTexcoord;
 
 void main()
 {
-	mat4 worldMatrix = mat4(inInstanceTransformMatrixCol0, inInstanceTransformMatrixCol1, inInstanceTransformMatrixCol2, inInstanceTransformMatrixCol3);
-	vec3 worldPosition = (worldMatrix * vec4(inPosition.xyz, 1.0)).xyz;
+	highp mat4 worldMatrix = mat4(inInstanceTransformMatrixCol0, inInstanceTransformMatrixCol1, inInstanceTransformMatrixCol2, inInstanceTransformMatrixCol3);
+	highp vec3 worldPosition = (worldMatrix * vec4(inPosition.xyz, 1.0)).xyz;
 
 	outTexcoord = inTexcoord0;
 	gl_Position = cameraProjectionViewMatrix * vec4(worldPosition, 1.0);
@@ -30,7 +30,7 @@ precision mediump float;
 
 uniform sampler2D texDiffuse;
 
-layout (location = 0) in vec2 inTexcoord;
+layout (location = 0) in mediump vec2 inTexcoord;
 layout (location = 0) out vec4 outFragColor;
 
 void main()

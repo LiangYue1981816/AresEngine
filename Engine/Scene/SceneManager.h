@@ -7,6 +7,7 @@
 #include "ComponentMesh.h"
 #include "ComponentSkin.h"
 #include "ComponentParticle.h"
+#include "ComponentPointLight.h"
 
 
 class CSceneManager
@@ -24,6 +25,7 @@ public:
 	uint32_t GetNextComponentMeshName(void) const;
 	uint32_t GetNextComponentSkinName(void) const;
 	uint32_t GetNextComponentParticleName(void) const;
+	uint32_t GetNextComponentPointLightName(void) const;
 
 public:
 	CScene* CreateScene(uint32_t name);
@@ -37,6 +39,7 @@ public:
 	CComponentMeshPtr CreateComponentMesh(uint32_t name);
 	CComponentSkinPtr CreateComponentSkin(uint32_t name);
 	CComponentParticlePtr CreateComponentParticle(uint32_t name);
+	CComponentPointLightPtr CreateComponentPointLight(uint32_t name);
 
 private:
 	void Update(float deltaTime);
@@ -48,6 +51,7 @@ private:
 	CComponentManager<CComponentMesh> m_meshManager;
 	CComponentManager<CComponentSkin> m_skinManager;
 	CComponentManager<CComponentParticle> m_particleManager;
+	CComponentManager<CComponentPointLight> m_pointLightManager;
 
 private:
 	eastl::unordered_map<uint32_t, CScene*> m_pScenes;
@@ -56,8 +60,12 @@ private:
 private:
 	event_t m_eventUpdateSkin;
 	event_t m_eventUpdateParticle;
+	event_t m_eventUpdatePointLight;
+
 	event_t m_eventUpdateCameraSkin;
 	event_t m_eventUpdateCameraParticle;
+	event_t m_eventUpdateCameraPointLight;
+
 	event_t m_eventCommandBuffer;
 
 private:

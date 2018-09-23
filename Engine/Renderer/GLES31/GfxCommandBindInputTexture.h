@@ -1,5 +1,4 @@
 #pragma once
-#include <gl31.h>
 #include "GfxCommandBuffer.h"
 
 
@@ -23,7 +22,10 @@ public:
 public:
 	virtual void Execute(void) const
 	{
-		Renderer()->BindInputTexture(m_name.c_str(), m_texture, m_minFilter, m_magFilter, m_addressMode);
+		CGfxProfilerSample(CGfxProfiler::SAMPLE_TYPE_COMMAND_BIND_INPUTTEXTURE, "CommandBindInputTexture");
+		{
+			Renderer()->BindInputTexture(m_name.c_str(), m_texture, m_minFilter, m_magFilter, m_addressMode);
+		}
 	}
 
 

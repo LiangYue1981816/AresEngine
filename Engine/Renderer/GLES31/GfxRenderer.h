@@ -47,6 +47,8 @@
 #include "GfxCameraManager.h"
 #include "GfxCommandBuffer.h"
 
+#include "GfxProfiler.h"
+
 
 class CGfxRenderer
 {

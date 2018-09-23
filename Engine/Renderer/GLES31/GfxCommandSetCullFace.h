@@ -1,5 +1,4 @@
 #pragma once
-#include <gl31.h>
 #include "GfxCommandBuffer.h"
 
 
@@ -21,15 +20,18 @@ public:
 public:
 	virtual void Execute(void) const
 	{
-		if (m_bEnable) {
-			glEnable(GL_CULL_FACE);
-		}
-		else {
-			glDisable(GL_CULL_FACE);
-		}
+		CGfxProfilerSample(CGfxProfiler::SAMPLE_TYPE_COMMAND_SET_CULLFACE, "CommandSetCullFace");
+		{
+			if (m_bEnable) {
+				glEnable(GL_CULL_FACE);
+			}
+			else {
+				glDisable(GL_CULL_FACE);
+			}
 
-		glCullFace(m_cullFace);
-		glFrontFace(m_frontFace);
+			glCullFace(m_cullFace);
+			glFrontFace(m_frontFace);
+		}
 	}
 
 

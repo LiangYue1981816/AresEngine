@@ -1,5 +1,4 @@
 #pragma once
-#include <gl31.h>
 #include "GfxCommandBuffer.h"
 
 
@@ -22,7 +21,10 @@ public:
 public:
 	virtual void Execute(void) const
 	{
-		glColorMask(m_bEnableRed ? GL_TRUE : GL_FALSE, m_bEnableGreen ? GL_TRUE : GL_FALSE, m_bEnableBlue ? GL_TRUE : GL_FALSE, m_bEnableAlpha ? GL_TRUE : GL_FALSE);
+		CGfxProfilerSample(CGfxProfiler::SAMPLE_TYPE_COMMAND_SET_COLORWRITE, "CommandSetColorWrite");
+		{
+			glColorMask(m_bEnableRed ? GL_TRUE : GL_FALSE, m_bEnableGreen ? GL_TRUE : GL_FALSE, m_bEnableBlue ? GL_TRUE : GL_FALSE, m_bEnableAlpha ? GL_TRUE : GL_FALSE);
+		}
 	}
 
 

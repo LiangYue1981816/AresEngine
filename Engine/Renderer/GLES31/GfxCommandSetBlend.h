@@ -1,5 +1,4 @@
 #pragma once
-#include <gl31.h>
 #include "GfxCommandBuffer.h"
 
 
@@ -21,14 +20,17 @@ public:
 public:
 	virtual void Execute(void) const
 	{
-		if (m_bEnable) {
-			glEnable(GL_BLEND);
-		}
-		else {
-			glDisable(GL_BLEND);
-		}
+		CGfxProfilerSample(CGfxProfiler::SAMPLE_TYPE_COMMAND_SET_BLEND, "CommandSetBlend");
+		{
+			if (m_bEnable) {
+				glEnable(GL_BLEND);
+			}
+			else {
+				glDisable(GL_BLEND);
+			}
 
-		glBlendFunc(m_srcFactor, m_dstFactor);
+			glBlendFunc(m_srcFactor, m_dstFactor);
+		}
 	}
 
 

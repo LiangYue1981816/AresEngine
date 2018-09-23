@@ -1,5 +1,4 @@
 #pragma once
-#include <gl31.h>
 #include "GfxCommandBuffer.h"
 
 
@@ -21,14 +20,17 @@ public:
 public:
 	virtual void Execute(void) const
 	{
-		if (m_bEnable) {
-			glEnable(GL_POLYGON_OFFSET_FILL);
-		}
-		else {
-			glDisable(GL_POLYGON_OFFSET_FILL);
-		}
+		CGfxProfilerSample(CGfxProfiler::SAMPLE_TYPE_COMMAND_SET_POLYGONOFFSET, "CommandSetPolygonOffset");
+		{
+			if (m_bEnable) {
+				glEnable(GL_POLYGON_OFFSET_FILL);
+			}
+			else {
+				glDisable(GL_POLYGON_OFFSET_FILL);
+			}
 
-		glPolygonOffset(m_factor, m_units);
+			glPolygonOffset(m_factor, m_units);
+		}
 	}
 
 

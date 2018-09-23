@@ -8,6 +8,12 @@ CComponentSkin::CComponentSkin(uint32_t name)
 
 }
 
+CComponentSkin::CComponentSkin(const CComponentSkin &component)
+	: CComponent(component)
+{
+
+}
+
 CComponentSkin::~CComponentSkin(void)
 {
 

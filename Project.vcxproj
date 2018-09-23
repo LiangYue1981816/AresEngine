@@ -67,6 +67,7 @@
     <ClInclude Include="Engine\Renderer\GLES31\GfxMaterialManager.h" />
     <ClInclude Include="Engine\Renderer\GLES31\GfxMesh.h" />
     <ClInclude Include="Engine\Renderer\GLES31\GfxMeshManager.h" />
+    <ClInclude Include="Engine\Renderer\GLES31\GfxProfiler.h" />
     <ClInclude Include="Engine\Renderer\GLES31\GfxProgram.h" />
     <ClInclude Include="Engine\Renderer\GLES31\GfxProgramManager.h" />
     <ClInclude Include="Engine\Renderer\GLES31\GfxRenderer.h" />
@@ -92,6 +93,7 @@
     <ClInclude Include="Engine\Scene\Component\Component.h" />
     <ClInclude Include="Engine\Scene\Component\ComponentMesh.h" />
     <ClInclude Include="Engine\Scene\Component\ComponentParticle.h" />
+    <ClInclude Include="Engine\Scene\Component\ComponentPointLight.h" />
     <ClInclude Include="Engine\Scene\Component\ComponentSkin.h" />
     <ClInclude Include="Engine\Scene\Scene.h" />
     <ClInclude Include="Engine\Scene\SceneManager.h" />
@@ -132,6 +134,7 @@
     <ClCompile Include="Engine\Renderer\GLES31\GfxMaterialManager.cpp" />
     <ClCompile Include="Engine\Renderer\GLES31\GfxMesh.cpp" />
     <ClCompile Include="Engine\Renderer\GLES31\GfxMeshManager.cpp" />
+    <ClCompile Include="Engine\Renderer\GLES31\GfxProfiler.cpp" />
     <ClCompile Include="Engine\Renderer\GLES31\GfxProgram.cpp" />
     <ClCompile Include="Engine\Renderer\GLES31\GfxProgramManager.cpp" />
     <ClCompile Include="Engine\Renderer\GLES31\GfxRenderer.cpp" />
@@ -156,6 +159,7 @@
     <ClCompile Include="Engine\Renderer\GLES31\GfxVertexBuffer.cpp" />
     <ClCompile Include="Engine\Scene\Component\ComponentMesh.cpp" />
     <ClCompile Include="Engine\Scene\Component\ComponentParticle.cpp" />
+    <ClCompile Include="Engine\Scene\Component\ComponentPointLight.cpp" />
     <ClCompile Include="Engine\Scene\Component\ComponentSkin.cpp" />
     <ClCompile Include="Engine\Scene\Scene.cpp" />
     <ClCompile Include="Engine\Scene\SceneManager.cpp" />

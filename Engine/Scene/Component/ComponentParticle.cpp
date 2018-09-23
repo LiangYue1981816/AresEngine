@@ -8,6 +8,12 @@ CComponentParticle::CComponentParticle(uint32_t name)
 
 }
 
+CComponentParticle::CComponentParticle(const CComponentParticle &component)
+	: CComponent(component)
+{
+
+}
+
 CComponentParticle::~CComponentParticle(void)
 {
 

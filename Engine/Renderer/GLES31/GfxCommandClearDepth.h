@@ -1,5 +1,4 @@
 #pragma once
-#include <gl31.h>
 #include "GfxCommandBuffer.h"
 
 
@@ -19,8 +18,11 @@ public:
 public:
 	virtual void Execute(void) const
 	{
-		glClearDepthf(m_depth);
-		glClear(GL_DEPTH_BUFFER_BIT);
+		CGfxProfilerSample(CGfxProfiler::SAMPLE_TYPE_COMMAND_CLEAR_DEPTH, "CommandClearDepth");
+		{
+			glClearDepthf(m_depth);
+			glClear(GL_DEPTH_BUFFER_BIT);
+		}
 	}
 
 

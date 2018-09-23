@@ -15,6 +15,12 @@ public:
 	{
 
 	}
+	CComponent(const CComponent &component)
+		: m_name(component.m_name)
+		, m_pParentNode(component.m_pParentNode)
+	{
+
+	}
 	virtual ~CComponent(void)
 	{
 

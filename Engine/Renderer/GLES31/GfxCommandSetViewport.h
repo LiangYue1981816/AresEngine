@@ -1,5 +1,4 @@
 #pragma once
-#include <gl31.h>
 #include "GfxCommandBuffer.h"
 
 
@@ -22,7 +21,10 @@ public:
 public:
 	virtual void Execute(void) const
 	{
-		glViewport(m_x, m_y, m_width, m_height);
+		CGfxProfilerSample(CGfxProfiler::SAMPLE_TYPE_COMMAND_SET_VIEWPORT, "CommandSetViewport");
+		{
+			glViewport(m_x, m_y, m_width, m_height);
+		}
 	}
 
 

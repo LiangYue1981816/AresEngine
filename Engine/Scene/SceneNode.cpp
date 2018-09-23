@@ -196,6 +196,26 @@ CComponentParticlePtr CSceneNode::GetComponentParticle(uint32_t name)
 	return GetComponent(name, m_ptrComponentParticles);
 }
 
+bool CSceneNode::AttachComponentPointLight(CComponentPointLightPtr &ptrComponentPointLight)
+{
+	return AttachComponent(ptrComponentPointLight, m_ptrComponentPointLights);
+}
+
+bool CSceneNode::DetachComponentPointLight(CComponentPointLightPtr &ptrComponentPointLight)
+{
+	return DetachComponent(ptrComponentPointLight, m_ptrComponentPointLights);
+}
+
+void CSceneNode::DetachComponentPointLightAll(void)
+{
+	DetachComponentAll(m_ptrComponentPointLights);
+}
+
+CComponentPointLightPtr CSceneNode::GetComponentPointLight(uint32_t name)
+{
+	return GetComponent(name, m_ptrComponentPointLights);
+}
+
 template<class T> bool CSceneNode::AttachComponent(CComponentPtr<T> &ptrComponent, eastl::unordered_map<uint32_t, CComponentPtr<T>> &container)
 {
 	if (ptrComponent.IsNull()) {

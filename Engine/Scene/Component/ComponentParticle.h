@@ -7,6 +7,7 @@ class CComponentParticle : public CComponent
 {
 public:
 	CComponentParticle(uint32_t name);
+	CComponentParticle(const CComponentParticle &component);
 	virtual ~CComponentParticle(void);
 
 public:

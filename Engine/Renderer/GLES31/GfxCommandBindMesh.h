@@ -1,6 +1,4 @@
 #pragma once
-#include <gl31.h>
-#include "GfxRenderer.h"
 #include "GfxCommandBuffer.h"
 
 
@@ -21,16 +19,19 @@ public:
 public:
 	virtual void Execute(void) const
 	{
-		if (m_ptrMesh.IsValid()) {
-			m_ptrMesh->ClearInstance();
-			m_ptrMesh->SetInstance(m_mtxTransforms);
-			m_ptrMesh->UpdateInstance();
-			m_ptrMesh->Bind();
-		}
-		else {
-			glBindVertexArray(0);
-			glBindBuffer(GL_ARRAY_BUFFER, 0);
-			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+		CGfxProfilerSample(CGfxProfiler::SAMPLE_TYPE_COMMAND_BIND_MESH, "CommandBindMesh");
+		{
+			if (m_ptrMesh.IsValid()) {
+				m_ptrMesh->ClearInstance();
+				m_ptrMesh->SetInstance(m_mtxTransforms);
+				m_ptrMesh->UpdateInstance();
+				m_ptrMesh->Bind();
+			}
+			else {
+				glBindVertexArray(0);
+				glBindBuffer(GL_ARRAY_BUFFER, 0);
+				glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+			}
 		}
 	}
 

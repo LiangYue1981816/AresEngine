@@ -1,5 +1,4 @@
 #pragma once
-#include <gl31.h>
 #include "GfxCommandBuffer.h"
 
 
@@ -24,21 +23,24 @@ public:
 public:
 	virtual void Execute(void) const
 	{
-		struct {
-			uint32_t count;
-			uint32_t instanceCount;
-			uint32_t baseIndex;
-			uint32_t baseVertex;
-			uint32_t reserved;
-		} indirect;
+		CGfxProfilerSample(CGfxProfiler::SAMPLE_TYPE_COMMAND_DRAW_INDIRECT, "CommandDrawIndirect");
+		{
+			struct {
+				uint32_t count;
+				uint32_t instanceCount;
+				uint32_t baseIndex;
+				uint32_t baseVertex;
+				uint32_t reserved;
+			} indirect;
 
-		indirect.count = m_count;
-		indirect.baseIndex = m_baseIndex;
-		indirect.baseVertex = m_baseVertex;
-		indirect.instanceCount = m_instanceCount;
-		indirect.reserved = 0;
+			indirect.count = m_count;
+			indirect.baseIndex = m_baseIndex;
+			indirect.baseVertex = m_baseVertex;
+			indirect.instanceCount = m_instanceCount;
+			indirect.reserved = 0;
 
-		glDrawElementsIndirect(m_mode, m_type, (const void *)&indirect);
+			glDrawElementsIndirect(m_mode, m_type, (const void *)&indirect);
+		}
 	}
 
 

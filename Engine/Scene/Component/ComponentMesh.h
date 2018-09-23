@@ -6,8 +6,8 @@
 class CComponentMesh : public CComponent
 {
 public:
-	CComponentMesh(const CComponentMesh &component);
 	CComponentMesh(uint32_t name);
+	CComponentMesh(const CComponentMesh &component);
 	virtual ~CComponentMesh(void);
 
 
@@ -19,7 +19,8 @@ public:
 	const CGfxMaterialPtr& GetMaterial(void) const;
 
 public:
-	glm::aabb GetAABB(void);
+	glm::aabb GetLocalAABB(void);
+	glm::aabb GetWorldAABB(void);
 
 public:
 	virtual void TaskUpdate(float deltaTime);

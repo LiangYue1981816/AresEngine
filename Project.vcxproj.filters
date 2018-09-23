@@ -393,6 +393,12 @@
     <ClInclude Include="Engine\Renderer\GLES31\GfxResource.h">
       <Filter>Engine\Renderer\GLES31\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\Renderer\GLES31\GfxProfiler.h">
+      <Filter>Engine\Renderer\GLES31\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Scene\Component\ComponentPointLight.h">
+      <Filter>Engine\Scene\Source Files\Component\Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application\Main.cpp">
@@ -598,6 +604,12 @@
     </ClCompile>
     <ClCompile Include="Engine\Renderer\GLES31\GfxResource.cpp">
       <Filter>Engine\Renderer\GLES31\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Renderer\GLES31\GfxProfiler.cpp">
+      <Filter>Engine\Renderer\GLES31\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Scene\Component\ComponentPointLight.cpp">
+      <Filter>Engine\Scene\Source Files\Component\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

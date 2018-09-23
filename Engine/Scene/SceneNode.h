@@ -4,6 +4,7 @@
 #include "ComponentMesh.h"
 #include "ComponentSkin.h"
 #include "ComponentParticle.h"
+#include "ComponentPointLight.h"
 
 
 class CSceneNode
@@ -47,6 +48,11 @@ public:
 	bool DetachComponentParticle(CComponentParticlePtr &ptrComponentParticle);
 	void DetachComponentParticleAll(void);
 	CComponentParticlePtr GetComponentParticle(uint32_t name);
+
+	bool AttachComponentPointLight(CComponentPointLightPtr &ptrComponentPointLight);
+	bool DetachComponentPointLight(CComponentPointLightPtr &ptrComponentPointLight);
+	void DetachComponentPointLightAll(void);
+	CComponentPointLightPtr GetComponentPointLight(uint32_t name);
 
 private:
 	template<class T> bool AttachComponent(CComponentPtr<T> &ptrComponent, eastl::unordered_map<uint32_t, CComponentPtr<T>> &container);
@@ -105,6 +111,7 @@ private:
 	eastl::unordered_map<uint32_t, CComponentMeshPtr> m_ptrComponentMeshs;
 	eastl::unordered_map<uint32_t, CComponentSkinPtr> m_ptrComponentSkins;
 	eastl::unordered_map<uint32_t, CComponentParticlePtr> m_ptrComponentParticles;
+	eastl::unordered_map<uint32_t, CComponentPointLightPtr> m_ptrComponentPointLights;
 
 private:
 	CScene *m_pScene;

@@ -1,6 +1,4 @@
 #pragma once
-#include <gl31.h>
-#include "GfxRenderer.h"
 #include "GfxCommandBuffer.h"
 
 
@@ -20,11 +18,14 @@ public:
 public:
 	virtual void Execute(void) const
 	{
-		if (m_ptrMaterial.IsValid()) {
-			Renderer()->BindMaterial(m_ptrMaterial);
-		}
-		else {
-			glUseProgram(0);
+		CGfxProfilerSample(CGfxProfiler::SAMPLE_TYPE_COMMAND_BIND_MATERIAL, "CommandBindMaterial");
+		{
+			if (m_ptrMaterial.IsValid()) {
+				Renderer()->BindMaterial(m_ptrMaterial);
+			}
+			else {
+				glUseProgram(0);
+			}
 		}
 	}
 

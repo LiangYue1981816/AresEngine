@@ -1,5 +1,4 @@
 #pragma once
-#include <gl31.h>
 #include "GfxCommandBuffer.h"
 
 
@@ -19,8 +18,11 @@ public:
 public:
 	virtual void Execute(void) const
 	{
-		if (m_ptrFrameBuffer.IsValid()) {
-			m_ptrFrameBuffer->InvalidateFramebuffer();
+		CGfxProfilerSample(CGfxProfiler::SAMPLE_TYPE_COMMAND_END_PASS, "CommandEndPass");
+		{
+			if (m_ptrFrameBuffer.IsValid()) {
+				m_ptrFrameBuffer->InvalidateFramebuffer();
+			}
 		}
 	}
 

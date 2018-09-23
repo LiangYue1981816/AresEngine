@@ -11,8 +11,12 @@ CSceneManager::CSceneManager(void)
 {
 	event_init(&m_eventUpdateSkin, 1);
 	event_init(&m_eventUpdateParticle, 1);
+	event_init(&m_eventUpdatePointLight, 1);
+
 	event_init(&m_eventUpdateCameraSkin, 1);
 	event_init(&m_eventUpdateCameraParticle, 1);
+	event_init(&m_eventUpdateCameraPointLight, 1);
+
 	event_init(&m_eventCommandBuffer, 1);
 }
 
@@ -20,8 +24,12 @@ CSceneManager::~CSceneManager(void)
 {
 	event_destroy(&m_eventUpdateSkin);
 	event_destroy(&m_eventUpdateParticle);
+	event_destroy(&m_eventUpdatePointLight);
+
 	event_destroy(&m_eventUpdateCameraSkin);
 	event_destroy(&m_eventUpdateCameraParticle);
+	event_destroy(&m_eventUpdateCameraPointLight);
+
 	event_destroy(&m_eventCommandBuffer);
 }
 
@@ -54,6 +62,14 @@ uint32_t CSceneManager::GetNextComponentParticleName(void) const
 	static uint32_t count = 0;
 	static char szName[260] = { 0 };
 	sprintf(szName, "_PARTICLE_%d", count++);
+	return HashValue(szName);
+}
+
+uint32_t CSceneManager::GetNextComponentPointLightName(void) const
+{
+	static uint32_t count = 0;
+	static char szName[260] = { 0 };
+	sprintf(szName, "_POINTLIGHT_%d", count++);
 	return HashValue(szName);
 }
 
@@ -117,6 +133,16 @@ CComponentParticlePtr CSceneManager::CreateComponentParticle(uint32_t name)
 	}
 }
 
+CComponentPointLightPtr CSceneManager::CreateComponentPointLight(uint32_t name)
+{
+	if (m_pointLightManager.NewComponent(name, CComponentPointLight(name))) {
+		return CComponentPointLightPtr(name, &m_pointLightManager);
+	}
+	else {
+		return CComponentPointLightPtr();
+	}
+}
+
 void CSceneManager::Update(float deltaTime)
 {
 	for (const auto &itScene : m_pScenes) {
@@ -126,6 +152,7 @@ void CSceneManager::Update(float deltaTime)
 	static CTaskComponentUpdate<CComponentMesh> taskUpdateMeshs[THREAD_COUNT];
 	static CTaskComponentUpdate<CComponentSkin> taskUpdateSkins[THREAD_COUNT];
 	static CTaskComponentUpdate<CComponentParticle> taskUpdateParticles[THREAD_COUNT];
+	static CTaskComponentUpdate<CComponentPointLight> taskUpdatePointLights[THREAD_COUNT];
 
 	for (int indexThread = 0; indexThread < THREAD_COUNT; indexThread++) {
 		taskUpdateMeshs[indexThread].SetParams(indexThread, &m_meshManager, deltaTime);
@@ -139,7 +166,12 @@ void CSceneManager::Update(float deltaTime)
 
 	for (int indexThread = 0; indexThread < THREAD_COUNT; indexThread++) {
 		taskUpdateParticles[indexThread].SetParams(indexThread, &m_particleManager, deltaTime);
-		m_taskGraphUpdate.Task(&taskUpdateParticles[indexThread], NULL, NULL, &m_eventUpdateParticle);
+		m_taskGraphUpdate.Task(&taskUpdateParticles[indexThread], NULL, &m_eventUpdatePointLight, &m_eventUpdateParticle);
+	}
+
+	for (int indexThread = 0; indexThread < THREAD_COUNT; indexThread++) {
+		taskUpdatePointLights[indexThread].SetParams(indexThread, &m_pointLightManager, deltaTime);
+		m_taskGraphUpdate.Task(&taskUpdatePointLights[indexThread], NULL, NULL, &m_eventUpdatePointLight);
 	}
 
 	m_taskGraphUpdate.Dispatch();
@@ -155,6 +187,7 @@ void CSceneManager::UpdateCamera(CGfxCamera *pCamera)
 	static CTaskComponentUpdateCamera<CComponentMesh> taskUpdateCameraMeshs[THREAD_COUNT];
 	static CTaskComponentUpdateCamera<CComponentSkin> taskUpdateCameraSkins[THREAD_COUNT];
 	static CTaskComponentUpdateCamera<CComponentParticle> taskUpdateCameraParticles[THREAD_COUNT];
+	static CTaskComponentUpdateCamera<CComponentPointLight> taskUpdateCameraPointLights[THREAD_COUNT];
 	static CTaskCommandBuffer taskCommandBuffer;
 
 	m_taskGraphRender.Wait();
@@ -173,7 +206,12 @@ void CSceneManager::UpdateCamera(CGfxCamera *pCamera)
 
 		for (int indexThread = 0; indexThread < THREAD_COUNT; indexThread++) {
 			taskUpdateCameraParticles[indexThread].SetParams(indexThread, &m_particleManager, pCamera);
-			m_taskGraphRender.Task(&taskUpdateCameraParticles[indexThread], NULL, &m_eventCommandBuffer, &m_eventUpdateCameraParticle);
+			m_taskGraphRender.Task(&taskUpdateCameraParticles[indexThread], NULL, &m_eventUpdateCameraPointLight, &m_eventUpdateCameraParticle);
+		}
+
+		for (int indexThread = 0; indexThread < THREAD_COUNT; indexThread++) {
+			taskUpdateCameraPointLights[indexThread].SetParams(indexThread, &m_pointLightManager, pCamera);
+			m_taskGraphRender.Task(&taskUpdateCameraPointLights[indexThread], NULL, &m_eventCommandBuffer, &m_eventUpdateCameraPointLight);
 		}
 
 		m_taskGraphRender.Task(&taskCommandBuffer, pCamera, NULL, &m_eventCommandBuffer);

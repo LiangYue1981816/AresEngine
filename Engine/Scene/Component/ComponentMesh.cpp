@@ -9,7 +9,7 @@ CComponentMesh::CComponentMesh(uint32_t name)
 }
 
 CComponentMesh::CComponentMesh(const CComponentMesh &component)
-	: CComponent(component.m_name)
+	: CComponent(component)
 {
 	SetMesh(component.m_ptrMesh);
 	SetMaterial(component.m_ptrMaterial);
@@ -40,7 +40,12 @@ const CGfxMaterialPtr& CComponentMesh::GetMaterial(void) const
 	return m_ptrMaterial;
 }
 
-glm::aabb CComponentMesh::GetAABB(void)
+glm::aabb CComponentMesh::GetLocalAABB(void)
+{
+	return m_ptrMesh.IsValid() ? m_ptrMesh->GetLocalAABB() : glm::aabb();
+}
+
+glm::aabb CComponentMesh::GetWorldAABB(void)
 {
 	return m_pParentNode && m_ptrMesh.IsValid() ? m_ptrMesh->GetLocalAABB() * m_pParentNode->GetWorldTransform() : glm::aabb();
 }
@@ -52,7 +57,7 @@ void CComponentMesh::TaskUpdate(float deltaTime)
 
 void CComponentMesh::TaskUpdateCamera(CGfxCamera *pCamera, int indexThread)
 {
-	if (pCamera->IsVisible(GetAABB())) {
+	if (pCamera->IsVisible(GetWorldAABB())) {
 		pCamera->AddQueue(m_ptrMaterial, m_ptrMesh, m_pParentNode->GetWorldTransform(), indexThread);
 	}
 }

@@ -1,5 +1,4 @@
 #pragma once
-#include <gl31.h>
 #include "GfxCommandBuffer.h"
 
 
@@ -22,7 +21,10 @@ public:
 public:
 	virtual void Execute(void) const
 	{
-		glDrawElements(m_mode, m_count, m_type, (const void *)m_baseIndex);
+		CGfxProfilerSample(CGfxProfiler::SAMPLE_TYPE_COMMAND_DRAW_ELEMENTS, "CommandDrawElements");
+		{
+			glDrawElements(m_mode, m_count, m_type, (const void *)m_baseIndex);
+		}
 	}
 
 

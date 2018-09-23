@@ -1,71 +1,71 @@
 #ifndef _ENGINE_INC_
 #define _ENGINE_INC_
 
-#define USE_VERTEX_ATTRIBUTE_POSITION  layout (location = 0) in vec3 inPosition
-#define USE_VERTEX_ATTRIBUTE_NORMAL    layout (location = 1) in vec3 inNormal
-#define USE_VERTEX_ATTRIBUTE_BINORMAL  layout (location = 2) in vec3 inBinormal
-#define USE_VERTEX_ATTRIBUTE_COLOR     layout (location = 3) in vec3 inColor
-#define USE_VERTEX_ATTRIBUTE_TEXCOORD0 layout (location = 4) in vec2 inTexcoord0
-#define USE_VERTEX_ATTRIBUTE_TEXCOORD1 layout (location = 5) in vec2 inTexcoord1
-#define USE_VERTEX_ATTRIBUTE_INDICES   layout (location = 6) in vec4 inIndices
-#define USE_VERTEX_ATTRIBUTE_WEIGHTS   layout (location = 7) in vec4 inWeights
+#define USE_VERTEX_ATTRIBUTE_POSITION  layout (location = 0) in highp   vec3 inPosition
+#define USE_VERTEX_ATTRIBUTE_NORMAL    layout (location = 1) in mediump vec3 inNormal
+#define USE_VERTEX_ATTRIBUTE_BINORMAL  layout (location = 2) in mediump vec3 inBinormal
+#define USE_VERTEX_ATTRIBUTE_COLOR     layout (location = 3) in mediump vec3 inColor
+#define USE_VERTEX_ATTRIBUTE_TEXCOORD0 layout (location = 4) in mediump vec2 inTexcoord0
+#define USE_VERTEX_ATTRIBUTE_TEXCOORD1 layout (location = 5) in mediump vec2 inTexcoord1
+#define USE_VERTEX_ATTRIBUTE_INDICES   layout (location = 6) in mediump vec4 inIndices
+#define USE_VERTEX_ATTRIBUTE_WEIGHTS   layout (location = 7) in mediump vec4 inWeights
 
-#define USE_INSTANCE_ATTRIBUTE_TRANSFORM_MATRIX_COL0 layout (location = 8)  in vec4 inInstanceTransformMatrixCol0
-#define USE_INSTANCE_ATTRIBUTE_TRANSFORM_MATRIX_COL1 layout (location = 9)  in vec4 inInstanceTransformMatrixCol1
-#define USE_INSTANCE_ATTRIBUTE_TRANSFORM_MATRIX_COL2 layout (location = 10) in vec4 inInstanceTransformMatrixCol2
-#define USE_INSTANCE_ATTRIBUTE_TRANSFORM_MATRIX_COL3 layout (location = 11) in vec4 inInstanceTransformMatrixCol3
+#define USE_INSTANCE_ATTRIBUTE_TRANSFORM_MATRIX_COL0 layout (location = 8)  in highp vec4 inInstanceTransformMatrixCol0
+#define USE_INSTANCE_ATTRIBUTE_TRANSFORM_MATRIX_COL1 layout (location = 9)  in highp vec4 inInstanceTransformMatrixCol1
+#define USE_INSTANCE_ATTRIBUTE_TRANSFORM_MATRIX_COL2 layout (location = 10) in highp vec4 inInstanceTransformMatrixCol2
+#define USE_INSTANCE_ATTRIBUTE_TRANSFORM_MATRIX_COL3 layout (location = 11) in highp vec4 inInstanceTransformMatrixCol3
 
 
 #define USE_ENGINE_UNIFORM                                                         \
 	uniform Engine                                                                 \
 	{                                                                              \
-		vec4 time;                                                                 \
-		vec4 sinTime;                                                              \
-		vec4 cosTime;                                                              \
-		vec4 deltaTime;                                                            \
+		mediump vec4 time;                                                         \
+		mediump vec4 sinTime;                                                      \
+		mediump vec4 cosTime;                                                      \
+		mediump vec4 deltaTime;                                                    \
 		                                                                           \
-		mat4 shadowProjectionMatrix;                                               \
-		mat4 shadowProjectionViewMatrix;                                           \
-		mat4 shadowViewMatrix;                                                     \
-		vec4 shadowParams;                                                         \
+		highp mat4 shadowProjectionMatrix;                                         \
+		highp mat4 shadowProjectionViewMatrix;                                     \
+		highp mat4 shadowViewMatrix;                                               \
+		highp vec4 shadowParams;                                                   \
 		                                                                           \
-		vec4 lightFactor;                                                          \
+		mediump vec4 lightFactor;                                                  \
 		                                                                           \
-		vec4 ambientLightRed0;                                                     \
-		vec4 ambientLightRed1;                                                     \
-		vec4 ambientLightRed2;                                                     \
-		vec4 ambientLightGreen0;                                                   \
-		vec4 ambientLightGreen1;                                                   \
-		vec4 ambientLightGreen2;                                                   \
-		vec4 ambientLightBlue0;                                                    \
-		vec4 ambientLightBlue1;                                                    \
-		vec4 ambientLightBlue2;                                                    \
-		mat4 ambientLightRotationMatrix;                                           \
+		mediump vec4 ambientLightRed0;                                             \
+		mediump vec4 ambientLightRed1;                                             \
+		mediump vec4 ambientLightRed2;                                             \
+		mediump vec4 ambientLightGreen0;                                           \
+		mediump vec4 ambientLightGreen1;                                           \
+		mediump vec4 ambientLightGreen2;                                           \
+		mediump vec4 ambientLightBlue0;                                            \
+		mediump vec4 ambientLightBlue1;                                            \
+		mediump vec4 ambientLightBlue2;                                            \
+		mediump mat4 ambientLightRotationMatrix;                                   \
 		                                                                           \
-		vec4 pointLightColor;                                                      \
-		vec4 pointLightPosition;                                                   \
-		vec4 pointLightAttenuation;                                                \
+		mediump vec4 pointLightColor;                                              \
+		mediump vec4 pointLightPosition;                                           \
+		mediump vec4 pointLightAttenuation;                                        \
 		                                                                           \
-		vec4 directLightColor;                                                     \
-		vec4 directLightDirection;                                                 \
+		mediump vec4 directLightColor;                                             \
+		mediump vec4 directLightDirection;                                         \
 		                                                                           \
-		vec4 fogColor;                                                             \
-		vec4 fogHeightDensity;                                                     \
-		vec4 fogDistanceDensity;                                                   \
+		mediump vec4 fogColor;                                                     \
+		mediump vec4 fogHeightDensity;                                             \
+		mediump vec4 fogDistanceDensity;                                           \
 	} engine
 	
 #define USE_CAMERA_UNIFORM                                                         \
 	uniform Camera                                                                 \
 	{                                                                              \
-		vec4 screen;                                                               \
-		vec4 zbuffer;                                                              \
-		vec4 projection;                                                           \
+		highp vec4 screen;                                                         \
+		highp vec4 zbuffer;                                                        \
+		highp vec4 projection;                                                     \
 		                                                                           \
-		mat4 projectionMatrix;                                                     \
-		mat4 projectionViewMatrix;                                                 \
-		mat4 viewMatrix;                                                           \
-		mat4 viewInverseMatrix;                                                    \
-		mat4 viewInverseTransposeMatrix;                                           \
+		highp mat4 projectionMatrix;                                               \
+		highp mat4 projectionViewMatrix;                                           \
+		highp mat4 viewMatrix;                                                     \
+		highp mat4 viewInverseMatrix;                                              \
+		highp mat4 viewInverseTransposeMatrix;                                     \
 	} camera
 
 USE_ENGINE_UNIFORM;

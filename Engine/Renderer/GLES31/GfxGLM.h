@@ -201,13 +201,17 @@ namespace glm {
 
 		bool valid(void) const
 		{
-			if (minVertex.x > maxVertex.x) return false;
-			if (minVertex.y > maxVertex.y) return false;
-			if (minVertex.z > maxVertex.z) return false;
+			if (minVertex.x > maxVertex.x ||
+				minVertex.y > maxVertex.y ||
+				minVertex.z > maxVertex.z) {
+				return false;
+			}
 
-			if (maxVertex.x - minVertex.x < 0.001f) return false;
-			if (maxVertex.y - minVertex.y < 0.001f) return false;
-			if (maxVertex.z - minVertex.z < 0.001f) return false;
+			if (maxVertex.x - minVertex.x < 0.001f &&
+				maxVertex.y - minVertex.y < 0.001f &&
+				maxVertex.z - minVertex.z < 0.001f) {
+				return false;
+			}
 
 			return true;
 		}

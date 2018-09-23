@@ -7,6 +7,7 @@ class CComponentSkin : public CComponent
 {
 public:
 	CComponentSkin(uint32_t name);
+	CComponentSkin(const CComponentSkin &component);
 	virtual ~CComponentSkin(void);
 
 public:

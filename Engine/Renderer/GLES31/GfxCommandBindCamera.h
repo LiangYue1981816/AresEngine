@@ -1,6 +1,4 @@
 #pragma once
-#include <gl31.h>
-#include "GfxRenderer.h"
 #include "GfxCommandBuffer.h"
 
 
@@ -20,8 +18,11 @@ public:
 public:
 	virtual void Execute(void) const
 	{
-		if (m_pCamera) {
-			Renderer()->BindCamera(m_pCamera);
+		CGfxProfilerSample(CGfxProfiler::SAMPLE_TYPE_COMMAND_BIND_CAMERA, "CommandBindCamera");
+		{
+			if (m_pCamera) {
+				Renderer()->BindCamera(m_pCamera);
+			}
 		}
 	}
 

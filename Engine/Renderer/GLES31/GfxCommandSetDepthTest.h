@@ -1,5 +1,4 @@
 #pragma once
-#include <gl31.h>
 #include "GfxCommandBuffer.h"
 
 
@@ -20,14 +19,17 @@ public:
 public:
 	virtual void Execute(void) const
 	{
-		if (m_bEnable) {
-			glEnable(GL_DEPTH_TEST);
-		}
-		else {
-			glDisable(GL_DEPTH_TEST);
-		}
+		CGfxProfilerSample(CGfxProfiler::SAMPLE_TYPE_COMMAND_SET_DEPTHTEST, "CommandSetDepthTest");
+		{
+			if (m_bEnable) {
+				glEnable(GL_DEPTH_TEST);
+			}
+			else {
+				glDisable(GL_DEPTH_TEST);
+			}
 
-		glDepthFunc(m_depthFunc);
+			glDepthFunc(m_depthFunc);
+		}
 	}
 
 

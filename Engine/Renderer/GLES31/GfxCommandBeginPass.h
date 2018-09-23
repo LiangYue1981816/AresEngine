@@ -1,6 +1,4 @@
 #pragma once
-#include <gl31.h>
-#include "GfxRenderer.h"
 #include "GfxCommandBuffer.h"
 
 
@@ -20,11 +18,14 @@ public:
 public:
 	virtual void Execute(void) const
 	{
-		if (m_ptrFrameBuffer.IsValid()) {
-			m_ptrFrameBuffer->Bind();
-		}
-		else {
-			glBindFramebuffer(GL_FRAMEBUFFER, 0);
+		CGfxProfilerSample(CGfxProfiler::SAMPLE_TYPE_COMMAND_BEGIN_PASS, "CommandBeginPass");
+		{
+			if (m_ptrFrameBuffer.IsValid()) {
+				m_ptrFrameBuffer->Bind();
+			}
+			else {
+				glBindFramebuffer(GL_FRAMEBUFFER, 0);
+			}
 		}
 	}
 
