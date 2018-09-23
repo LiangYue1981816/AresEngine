@@ -28,13 +28,13 @@ void main()
 precision mediump float;
 #include "engine.inc"
 
-uniform sampler2D texDiffuse;
+uniform sampler2D texAlbedo;
 
 layout (location = 0) in mediump vec2 inTexcoord;
 layout (location = 0) out vec4 outFragColor;
 
 void main()
 {
-	outFragColor = texture(texDiffuse, inTexcoord);
+	outFragColor = texture(texAlbedo, inTexcoord);
 }
 #endif
