@@ -4,7 +4,7 @@
 #include "GfxVertexAttribute.h"
 
 
-static const int INSTANCE_BUFFER_SIZE = 1 * 1024;
+static const int INSTANCE_BUFFER_SIZE = 256;
 
 CGfxInstanceBuffer::CGfxInstanceBuffer(GLuint format)
 	: m_instanceFormat(format)
