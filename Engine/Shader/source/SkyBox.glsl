@@ -28,7 +28,7 @@ void main()
 precision mediump float;
 #include "engine.inc"
 
-uniform sampler2D texAlbedo;
+DESCRIPTOR_SET_PASS(8) uniform sampler2D texAlbedo;
 
 layout (location = 0) in mediump vec2 inTexcoord;
 layout (location = 0) out vec4 outFragColor;

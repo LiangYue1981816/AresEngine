@@ -68,15 +68,15 @@ precision mediump float;
 #include "engine.inc"
 #include "light.inc"
 
-uniform sampler2D texAlbedo;
+DESCRIPTOR_SET_PASS(8)  uniform sampler2D texAlbedo;
 #ifdef AO_MAP
-uniform sampler2D texAO;
+DESCRIPTOR_SET_PASS(9)  uniform sampler2D texAO;
 #endif
 #ifdef NORMAL_MAP
-uniform sampler2D texNormal;
+DESCRIPTOR_SET_PASS(10) uniform sampler2D texNormal;
 #endif
-uniform sampler2D texRoughMetallic;
-uniform samplerCube texEnv;
+DESCRIPTOR_SET_PASS(11) uniform sampler2D texRoughMetallic;
+DESCRIPTOR_SET_PASS(12) uniform samplerCube texEnv;
 
 layout (location = 0) in highp   vec3 inPosition;
 layout (location = 1) in mediump vec2 inTexcoord;

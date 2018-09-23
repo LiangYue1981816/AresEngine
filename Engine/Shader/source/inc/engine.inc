@@ -16,8 +16,24 @@
 #define USE_INSTANCE_ATTRIBUTE_TRANSFORM_MATRIX_COL3 layout (location = 11) in highp vec4 inInstanceTransformMatrixCol3
 
 
+#ifdef GLES
+	#define DESCRIPTOR_SET_FRAME(b)  layout (binding = b)
+	#define DESCRIPTOR_SET_CAMERA(b) layout (binding = b)
+	#define DESCRIPTOR_SET_PASS(b)   layout (binding = b)
+	#define DESCRIPTOR_SET_DRAW(b)   layout (binding = b)
+#else
+	#define DESCRIPTOR_SET_FRAME(b)  layout (set = 0, binding = b)
+	#define DESCRIPTOR_SET_CAMERA(b) layout (set = 1, binding = b)
+	#define DESCRIPTOR_SET_PASS(b)   layout (set = 2, binding = b)
+	#define DESCRIPTOR_SET_DRAW(b)   layout (set = 3, binding = b)
+#endif
+
+#define DESCRIPTOR_BIND_ENGINE 0
+#define DESCRIPTOR_BIND_CAMERA 1
+
+
 #define USE_ENGINE_UNIFORM                                                         \
-	uniform Engine                                                                 \
+	DESCRIPTOR_SET_FRAME(DESCRIPTOR_BIND_ENGINE) uniform Engine                    \
 	{                                                                              \
 		mediump vec4 time;                                                         \
 		mediump vec4 sinTime;                                                      \
@@ -55,7 +71,7 @@
 	} engine
 	
 #define USE_CAMERA_UNIFORM                                                         \
-	uniform Camera                                                                 \
+	DESCRIPTOR_SET_CAMERA(DESCRIPTOR_BIND_CAMERA) uniform Camera                   \
 	{                                                                              \
 		highp vec4 screen;                                                         \
 		highp vec4 zbuffer;                                                        \
