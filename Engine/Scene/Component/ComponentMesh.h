@@ -23,7 +23,7 @@ public:
 	glm::aabb GetWorldAABB(void);
 
 public:
-	virtual void TaskUpdate(float deltaTime);
+	virtual void TaskUpdate(float gameTime, float deltaTime);
 	virtual void TaskUpdateCamera(CGfxCamera *pCamera, int indexThread);
 
 

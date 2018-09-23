@@ -20,8 +20,9 @@ public:
 
 
 public:
-	void SetParams(int indexThread, CComponentManager<T> *pComponentManager, float deltaTime)
+	void SetParams(int indexThread, CComponentManager<T> *pComponentManager, float gameTime, float deltaTime)
 	{
+		m_gameTime = gameTime;
 		m_deltaTime = deltaTime;
 
 		m_indexThread = indexThread;
@@ -37,13 +38,14 @@ public:
 
 			for (size_t index = indexBegin; index < indexEnd; index++) {
 				CComponent *pComponent = (CComponent *)m_pComponentManager->GetComponentByIndex(index);
-				pComponent->TaskUpdate(m_deltaTime);
+				pComponent->TaskUpdate(m_gameTime, m_deltaTime);
 			}
 		}
 	}
 
 
 private:
+	float m_gameTime;
 	float m_deltaTime;
 
 private:

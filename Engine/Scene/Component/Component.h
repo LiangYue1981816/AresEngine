@@ -28,7 +28,7 @@ public:
 
 
 public:
-	virtual void TaskUpdate(float deltaTime) = 0;
+	virtual void TaskUpdate(float gameTime, float deltaTime) = 0;
 	virtual void TaskUpdateCamera(CGfxCamera *pCamera, int indexThread) = 0;
 
 

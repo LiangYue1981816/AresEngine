@@ -50,7 +50,7 @@ glm::aabb CComponentMesh::GetWorldAABB(void)
 	return m_pParentNode && m_ptrMesh.IsValid() ? m_ptrMesh->GetLocalAABB() * m_pParentNode->GetWorldTransform() : glm::aabb();
 }
 
-void CComponentMesh::TaskUpdate(float deltaTime)
+void CComponentMesh::TaskUpdate(float gameTime, float deltaTime)
 {
 
 }

@@ -19,7 +19,7 @@ CComponentParticle::~CComponentParticle(void)
 
 }
 
-void CComponentParticle::TaskUpdate(float deltaTime)
+void CComponentParticle::TaskUpdate(float gameTime, float deltaTime)
 {
 
 }

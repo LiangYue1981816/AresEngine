@@ -19,7 +19,7 @@ CComponentSkin::~CComponentSkin(void)
 
 }
 
-void CComponentSkin::TaskUpdate(float deltaTime)
+void CComponentSkin::TaskUpdate(float gameTime, float deltaTime)
 {
 
 }

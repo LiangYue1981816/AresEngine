@@ -143,7 +143,82 @@ CComponentPointLightPtr CSceneManager::CreateComponentPointLight(uint32_t name)
 	}
 }
 
-void CSceneManager::Update(float deltaTime)
+void CSceneManager::SetShadowOrtho(float left, float right, float bottom, float top, float zNear, float zFar)
+{
+	Renderer()->SetShadowOrtho(left, right, bottom, top, zNear, zFar);
+}
+
+void CSceneManager::SetShadowLookat(float eyex, float eyey, float eyez, float centerx, float centery, float centerz, float upx, float upy, float upz)
+{
+	Renderer()->SetShadowLookat(eyex, eyey, eyez, centerx, centery, centerz, upx, upy, upz);
+}
+
+void CSceneManager::SetShadowDistance(float distance)
+{
+	Renderer()->SetShadowDistance(distance);
+}
+
+void CSceneManager::SetShadowResolution(float resolution)
+{
+	Renderer()->SetShadowResolution(resolution);
+}
+
+void CSceneManager::SetLightFactor(float ambientLightFactor, float pointLightFactor, float directLightFactor, float envLightFactor)
+{
+	Renderer()->SetLightFactor(ambientLightFactor, pointLightFactor, directLightFactor, envLightFactor);
+}
+
+void CSceneManager::SetAmbientLightSH(float shRed[9], float shGreen[9], float shBlue[9])
+{
+	Renderer()->SetAmbientLightSH(shRed, shGreen, shBlue);
+}
+
+void CSceneManager::SetAmbientLightRotation(float angle, float axisx, float axisy, float axisz)
+{
+	Renderer()->SetAmbientLightRotation(angle, axisx, axisy, axisz);
+}
+
+void CSceneManager::SetMainPointLightColor(float red, float green, float blue)
+{
+	Renderer()->SetPointLightColor(red, green, blue);
+}
+
+void CSceneManager::SetMainPointLightPosition(float posx, float posy, float posz, float radius)
+{
+	Renderer()->SetPointLightPosition(posx, posy, posz, radius);
+}
+
+void CSceneManager::SetMainPointLightAttenuation(float linear, float square, float constant)
+{
+	Renderer()->SetPointLightAttenuation(linear, square, constant);
+}
+
+void CSceneManager::SetMainDirectLightColor(float red, float green, float blue)
+{
+	Renderer()->SetDirectLightColor(red, green, blue);
+}
+
+void CSceneManager::SetMainDirectLightDirection(float dirx, float diry, float dirz)
+{
+	Renderer()->SetDirectLightDirection(dirx, diry, dirz);
+}
+
+void CSceneManager::SetFogColor(float red, float green, float blue)
+{
+	Renderer()->SetFogColor(red, green, blue);
+}
+
+void CSceneManager::SetFogHeightDensity(float startHeight, float endHeight, float density)
+{
+	Renderer()->SetFogHeightDensity(startHeight, endHeight, density);
+}
+
+void CSceneManager::SetFogDistanceDensity(float startDistance, float endDistance, float density)
+{
+	Renderer()->SetFogDistanceDensity(startDistance, endDistance, density);
+}
+
+void CSceneManager::Update(float totalTime, float deltaTime)
 {
 	for (const auto &itScene : m_pScenes) {
 		itScene.second->GetRootNode()->UpdateTransform(false);
@@ -155,27 +230,29 @@ void CSceneManager::Update(float deltaTime)
 	static CTaskComponentUpdate<CComponentPointLight> taskUpdatePointLights[THREAD_COUNT];
 
 	for (int indexThread = 0; indexThread < THREAD_COUNT; indexThread++) {
-		taskUpdateMeshs[indexThread].SetParams(indexThread, &m_meshManager, deltaTime);
+		taskUpdateMeshs[indexThread].SetParams(indexThread, &m_meshManager, totalTime, deltaTime);
 		m_taskGraphUpdate.Task(&taskUpdateMeshs[indexThread], NULL, &m_eventUpdateSkin, NULL);
 	}
 
 	for (int indexThread = 0; indexThread < THREAD_COUNT; indexThread++) {
-		taskUpdateSkins[indexThread].SetParams(indexThread, &m_skinManager, deltaTime);
+		taskUpdateSkins[indexThread].SetParams(indexThread, &m_skinManager, totalTime, deltaTime);
 		m_taskGraphUpdate.Task(&taskUpdateSkins[indexThread], NULL, &m_eventUpdateParticle, &m_eventUpdateSkin);
 	}
 
 	for (int indexThread = 0; indexThread < THREAD_COUNT; indexThread++) {
-		taskUpdateParticles[indexThread].SetParams(indexThread, &m_particleManager, deltaTime);
+		taskUpdateParticles[indexThread].SetParams(indexThread, &m_particleManager, totalTime, deltaTime);
 		m_taskGraphUpdate.Task(&taskUpdateParticles[indexThread], NULL, &m_eventUpdatePointLight, &m_eventUpdateParticle);
 	}
 
 	for (int indexThread = 0; indexThread < THREAD_COUNT; indexThread++) {
-		taskUpdatePointLights[indexThread].SetParams(indexThread, &m_pointLightManager, deltaTime);
+		taskUpdatePointLights[indexThread].SetParams(indexThread, &m_pointLightManager, totalTime, deltaTime);
 		m_taskGraphUpdate.Task(&taskUpdatePointLights[indexThread], NULL, NULL, &m_eventUpdatePointLight);
 	}
 
 	m_taskGraphUpdate.Dispatch();
 	m_taskGraphUpdate.Wait();
+
+	Renderer()->SetTime(totalTime, deltaTime);
 }
 
 void CSceneManager::UpdateCamera(CGfxCamera *pCamera)

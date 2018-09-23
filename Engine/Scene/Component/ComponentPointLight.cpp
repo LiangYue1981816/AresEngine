@@ -19,7 +19,7 @@ CComponentPointLight::~CComponentPointLight(void)
 
 }
 
-void CComponentPointLight::TaskUpdate(float deltaTime)
+void CComponentPointLight::TaskUpdate(float gameTime, float deltaTime)
 {
 
 }

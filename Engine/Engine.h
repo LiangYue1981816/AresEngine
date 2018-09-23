@@ -39,6 +39,9 @@ public:
 
 
 private:
+	float m_totalTime;
+
+private:
 	CGfxRenderer *m_pRenderer;
 	CSceneManager *m_pSceneManager;
 

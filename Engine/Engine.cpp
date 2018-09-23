@@ -29,7 +29,9 @@ void CEngine::Destroy(void)
 }
 
 CEngine::CEngine(void *hDC, const char *szShaderPath, const char *szTexturePath, const char *szMaterialPath, const char *szMeshPath)
-	: m_pRenderer(NULL)
+	: m_totalTime(0.0f)
+
+	, m_pRenderer(NULL)
 	, m_pSceneManager(NULL)
 {
 	m_pRenderer = new CGfxRenderer(hDC, szShaderPath, szTexturePath, szMaterialPath, szMeshPath);
@@ -59,7 +61,8 @@ CSceneManager* CEngine::GetSceneManager(void) const
 
 void CEngine::Update(float deltaTime)
 {
-	m_pSceneManager->Update(deltaTime);
+	m_totalTime += deltaTime;
+	m_pSceneManager->Update(m_totalTime, deltaTime);
 }
 
 void CEngine::UpdateCamera(CGfxCamera *pCamera)
