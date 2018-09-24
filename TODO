@@ -1,0 +1,14 @@
+2018.9.24
+1. Program与Shader分离
+a. 新增Shader图形资源，以及管理器，在启动之初即进行编译得到二进制及反射信息
+b. Program根据所选用的Shader，并进行链接
+
+2. 材质增加Pass
+a. Pass图形资源
+b. Pass作为材质的子集，并用map<solution, vector<Pass>>进行管理，其中solution是pass分组，vector<Pass>是该分组内所有pass，当选中某solution后，该solution内的所有pass按照顺序执行渲染
+
+3. Gfx资源与游戏资源分离
+a. Gfx资源只包含创建和销毁，不包含IO，并用map<GfxRes*,GfxRes*>进行管理
+b. 游戏资源负责IO
+c. 游戏资源管理器负责根据所制定的资源目录收集相应资源，并提供载入资源
+d. 在资源载入时可以使用多线程载入

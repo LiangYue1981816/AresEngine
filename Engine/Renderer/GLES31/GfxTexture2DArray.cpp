@@ -11,7 +11,18 @@ CGfxTexture2DArray::CGfxTexture2DArray(GLuint name)
 
 CGfxTexture2DArray::~CGfxTexture2DArray(void)
 {
+	Free();
+}
 
+void CGfxTexture2DArray::Free(void)
+{
+	for (const auto &itLayerSize : m_size) {
+		for (const auto &itLevelSize : itLayerSize.second) {
+			CGfxProfiler::DecTextureDataSize(itLevelSize.second);
+		}
+	}
+
+	CGfxTextureBase::Free();
 }
 
 bool CGfxTexture2DArray::Load(const char *szFileName)
@@ -38,6 +49,17 @@ bool CGfxTexture2DArray::Load(const char *szFileName)
 		Free();
 		return false;
 	}
+}
+
+bool CGfxTexture2DArray::LoadLayer(const char *szFileName, GLsizei layer)
+{
+	char szFullPath[260];
+	Renderer()->GetTextureFullPath(szFileName, szFullPath);
+
+	const gli::texture texture = gli::load(szFullPath);
+	if (texture.empty()) return false;
+
+	return TransferTexture2D(layer, (const gli::texture2d *)&texture);
 }
 
 bool CGfxTexture2DArray::Create(GLenum format, GLenum internalFormat, GLsizei width, GLsizei height, GLsizei mipLevels, GLsizei arrayLayers)
@@ -102,12 +124,18 @@ bool CGfxTexture2DArray::TransferTexture2DArray(const gli::texture2d_array *text
 	{
 		for (int layer = 0; layer < (int)texture->layers(); layer++) {
 			for (int level = 0; level < (int)texture->levels(); level++) {
-				if (gli::is_compressed(texture->format())) {
-					glCompressedTexSubImage3D(GL_TEXTURE_2D_ARRAY, level, 0, 0, layer, texture->extent(level).x, texture->extent(level).y, 1, format.Internal, (GLsizei)texture->size(level), texture->data(layer, 0, level));
+				CGfxProfiler::DecTextureDataSize(m_size[layer][level]);
+				{
+					m_size[layer][level] = (GLsizeiptr)texture->size(level);
+
+					if (gli::is_compressed(texture->format())) {
+						glCompressedTexSubImage3D(GL_TEXTURE_2D_ARRAY, level, 0, 0, layer, texture->extent(level).x, texture->extent(level).y, 1, format.Internal, (GLsizei)texture->size(level), texture->data(layer, 0, level));
+					}
+					else {
+						glTexSubImage3D(GL_TEXTURE_2D_ARRAY, level, 0, 0, layer, texture->extent(level).x, texture->extent(level).y, 1, format.External, format.Type, texture->data(layer, 0, level));
+					}
 				}
-				else {
-					glTexSubImage3D(GL_TEXTURE_2D_ARRAY, level, 0, 0, layer, texture->extent(level).x, texture->extent(level).y, 1, format.External, format.Type, texture->data(layer, 0, level));
-				}
+				CGfxProfiler::IncTextureDataSize(m_size[layer][level]);
 			}
 		}
 	}
@@ -156,12 +184,18 @@ bool CGfxTexture2DArray::TransferTexture2D(GLsizei layer, const gli::texture2d *
 	glBindTexture(GL_TEXTURE_2D_ARRAY, m_texture);
 	{
 		for (int level = 0; level < (int)texture->levels(); level++) {
-			if (gli::is_compressed(texture->format())) {
-				glCompressedTexSubImage3D(GL_TEXTURE_2D_ARRAY, level, 0, 0, layer, texture->extent(level).x, texture->extent(level).y, 1, format.Internal, (GLsizei)texture->size(level), texture->data(layer, 0, level));
+			CGfxProfiler::DecTextureDataSize(m_size[layer][level]);
+			{
+				m_size[layer][level] = (GLsizeiptr)texture->size(level);
+
+				if (gli::is_compressed(texture->format())) {
+					glCompressedTexSubImage3D(GL_TEXTURE_2D_ARRAY, level, 0, 0, layer, texture->extent(level).x, texture->extent(level).y, 1, format.Internal, (GLsizei)texture->size(level), texture->data(layer, 0, level));
+				}
+				else {
+					glTexSubImage3D(GL_TEXTURE_2D_ARRAY, level, 0, 0, layer, texture->extent(level).x, texture->extent(level).y, 1, format.External, format.Type, texture->data(layer, 0, level));
+				}
 			}
-			else {
-				glTexSubImage3D(GL_TEXTURE_2D_ARRAY, level, 0, 0, layer, texture->extent(level).x, texture->extent(level).y, 1, format.External, format.Type, texture->data(layer, 0, level));
-			}
+			CGfxProfiler::IncTextureDataSize(m_size[layer][level]);
 		}
 	}
 	glBindTexture(GL_TEXTURE_2D_ARRAY, 0);
@@ -169,7 +203,7 @@ bool CGfxTexture2DArray::TransferTexture2D(GLsizei layer, const gli::texture2d *
 	return true;
 }
 
-bool CGfxTexture2DArray::TransferTexture2D(GLsizei layer, GLsizei level, GLenum format, GLsizei width, GLsizei height, GLenum type, const GLvoid *data)
+bool CGfxTexture2DArray::TransferTexture2D(GLsizei layer, GLsizei level, GLenum format, GLsizei width, GLsizei height, GLenum type, GLsizei size, const GLvoid *data)
 {
 	if (m_texture == 0) {
 		return false;
@@ -189,7 +223,12 @@ bool CGfxTexture2DArray::TransferTexture2D(GLsizei layer, GLsizei level, GLenum 
 
 	glBindTexture(GL_TEXTURE_2D_ARRAY, m_texture);
 	{
-		glTexSubImage3D(GL_TEXTURE_2D_ARRAY, level, 0, 0, layer, width, height, 1, format, type, data);
+		CGfxProfiler::DecTextureDataSize(m_size[layer][level]);
+		{
+			m_size[layer][level] = (GLsizeiptr)size;
+			glTexSubImage3D(GL_TEXTURE_2D_ARRAY, level, 0, 0, layer, width, height, 1, format, type, data);
+		}
+		CGfxProfiler::IncTextureDataSize(m_size[layer][level]);
 	}
 	glBindTexture(GL_TEXTURE_2D_ARRAY, 0);
 
@@ -216,7 +255,12 @@ bool CGfxTexture2DArray::TransferTexture2DCompressed(GLsizei layer, GLsizei leve
 
 	glBindTexture(GL_TEXTURE_2D_ARRAY, m_texture);
 	{
-		glCompressedTexSubImage3D(GL_TEXTURE_2D_ARRAY, level, 0, 0, layer, width, height, 1, format, size, data);
+		CGfxProfiler::DecTextureDataSize(m_size[layer][level]);
+		{
+			m_size[layer][level] = (GLsizeiptr)size;
+			glCompressedTexSubImage3D(GL_TEXTURE_2D_ARRAY, level, 0, 0, layer, width, height, 1, format, size, data);
+		}
+		CGfxProfiler::IncTextureDataSize(m_size[layer][level]);
 	}
 	glBindTexture(GL_TEXTURE_2D_ARRAY, 0);
 

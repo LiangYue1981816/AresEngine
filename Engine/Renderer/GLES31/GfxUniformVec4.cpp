@@ -8,13 +8,11 @@ CGfxUniformVec4::CGfxUniformVec4(void)
 	: m_bDirty(false)
 	, m_pUniformBuffer(NULL)
 {
-	m_pUniformBuffer = new CGfxUniformBuffer;
-	m_pUniformBuffer->Create(NULL, sizeof(m_value), true);
+	m_pUniformBuffer = new CGfxUniformBuffer(sizeof(m_value), true);
 }
 
 CGfxUniformVec4::~CGfxUniformVec4(void)
 {
-	m_pUniformBuffer->Destroy();
 	delete m_pUniformBuffer;
 }
 
@@ -28,7 +26,7 @@ void CGfxUniformVec4::Apply(void)
 {
 	if (m_bDirty) {
 		m_bDirty = false;
-		m_pUniformBuffer->SetData(&m_value, sizeof(m_value));
+		m_pUniformBuffer->BufferData(0, sizeof(m_value), &m_value);
 	}
 }
 

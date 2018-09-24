@@ -4,21 +4,31 @@
 #include "GfxVertexAttribute.h"
 
 
-static const int INSTANCE_BUFFER_SIZE = 256;
+static const int INSTANCE_BUFFER_SIZE = 128;
 
 CGfxInstanceBuffer::CGfxInstanceBuffer(GLuint format)
 	: m_instanceFormat(format)
 	, m_instanceBuffer(0)
-	, m_size(0)
+	, m_size(INSTANCE_BUFFER_SIZE)
 
 	, m_bDirty(false)
 {
+	CGfxProfiler::IncInstanceBufferSize(m_size);
+
 	glGenBuffers(1, &m_instanceBuffer);
+	glBindBuffer(GL_ARRAY_BUFFER, m_instanceBuffer);
+	glBufferData(GL_ARRAY_BUFFER, m_size, NULL, GL_DYNAMIC_DRAW);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
 CGfxInstanceBuffer::~CGfxInstanceBuffer(void)
 {
+	CGfxProfiler::DecInstanceBufferSize(m_size);
+
 	glDeleteBuffers(1, &m_instanceBuffer);
+	m_instanceFormat = 0;
+	m_instanceBuffer = 0;
+	m_size = 0;
 }
 
 void CGfxInstanceBuffer::AddInstance(const glm::mat4 &mtxTransform)
@@ -47,12 +57,16 @@ void CGfxInstanceBuffer::UpdateInstance(void)
 		GLsizeiptr size = (GLsizeiptr)m_instanceDatas.size() * sizeof(glm::mat4);
 
 		if (m_size < size) {
-			m_size = INSTANCE_BUFFER_SIZE;
-			while (m_size < size) m_size <<= 1;
+			CGfxProfiler::DecInstanceBufferSize(m_size);
+			{
+				m_size = INSTANCE_BUFFER_SIZE;
+				while (m_size < size) m_size <<= 1;
 
-			glBindBuffer(GL_ARRAY_BUFFER, m_instanceBuffer);
-			glBufferData(GL_ARRAY_BUFFER, m_size, NULL, GL_DYNAMIC_DRAW);
-			glBindBuffer(GL_ARRAY_BUFFER, 0);
+				glBindBuffer(GL_ARRAY_BUFFER, m_instanceBuffer);
+				glBufferData(GL_ARRAY_BUFFER, m_size, NULL, GL_DYNAMIC_DRAW);
+				glBindBuffer(GL_ARRAY_BUFFER, 0);
+			}
+			CGfxProfiler::IncInstanceBufferSize(m_size);
 		}
 
 		glBindBuffer(GL_ARRAY_BUFFER, m_instanceBuffer);

@@ -3,44 +3,30 @@
 #include "GfxUniformBuffer.h"
 
 
-CGfxUniformBuffer::CGfxUniformBuffer(void)
+CGfxUniformBuffer::CGfxUniformBuffer(size_t size, bool bDynamic)
 	: m_buffer(0)
-	, m_size(0)
+	, m_size(size)
 {
+	CGfxProfiler::IncUniformBufferSize(m_size);
 
-}
-
-CGfxUniformBuffer::~CGfxUniformBuffer(void)
-{
-	Destroy();
-}
-
-bool CGfxUniformBuffer::Create(const void *pBuffer, size_t size, bool bDynamic)
-{
-	Destroy();
-
-	m_size = (GLsizeiptr)size;
 	glGenBuffers(1, &m_buffer);
 	glBindBuffer(GL_UNIFORM_BUFFER, m_buffer);
 	glBufferData(GL_UNIFORM_BUFFER, m_size, NULL, bDynamic ? GL_DYNAMIC_DRAW : GL_STATIC_DRAW);
 	glBindBuffer(GL_UNIFORM_BUFFER, 0);
-
-	return SetData(pBuffer, size);
 }
 
-void CGfxUniformBuffer::Destroy(void)
+CGfxUniformBuffer::~CGfxUniformBuffer(void)
 {
-	if (m_buffer) {
-		glDeleteBuffers(1, &m_buffer);
-	}
+	CGfxProfiler::DecUniformBufferSize(m_size);
 
-	m_size = 0;
+	glDeleteBuffers(1, &m_buffer);
 	m_buffer = 0;
+	m_size = 0;
 }
 
-bool CGfxUniformBuffer::SetData(const void *pBuffer, size_t size, size_t offset)
+bool CGfxUniformBuffer::BufferData(size_t offset, size_t size, const void *pBuffer)
 {
-	if (m_size < (GLsizei)size) {
+	if (m_size < (GLsizeiptr)(offset + size)) {
 		return false;
 	}
 

@@ -23,6 +23,8 @@ void CEngine::Destroy(void)
 
 	pInstance = NULL;
 
+	CGfxProfiler::LogGfxMemory();
+
 #ifdef _DEBUG
 	dump_memory_objects();
 #endif

@@ -132,11 +132,9 @@ CGfxUniformEngine::CGfxUniformEngine(void)
 	: m_bDirty(false)
 	, m_pUniformBuffer(NULL)
 {
-	m_pUniformBuffer = new CGfxUniformBuffer;
-	m_pUniformBuffer->Create(NULL, sizeof(m_params), true);
+	m_pUniformBuffer = new CGfxUniformBuffer(sizeof(m_params), true);
 
 	SetLightFactor(1.0f, 1.0f, 1.0f, 1.0f);
-
 	SetPointLightColor(0.0f, 0.0f, 0.0f);
 	SetPointLightPosition(0.0f, 0.0f, 0.0f, 0.0f);
 	SetPointLightAttenuation(0.0f, 0.0f, 1.0f);
@@ -144,7 +142,6 @@ CGfxUniformEngine::CGfxUniformEngine(void)
 
 CGfxUniformEngine::~CGfxUniformEngine(void)
 {
-	m_pUniformBuffer->Destroy();
 	delete m_pUniformBuffer;
 }
 
@@ -270,7 +267,7 @@ void CGfxUniformEngine::Apply(void)
 {
 	if (m_bDirty) {
 		m_bDirty = false;
-		m_pUniformBuffer->SetData(&m_params, sizeof(m_params));
+		m_pUniformBuffer->BufferData(0, sizeof(m_params), &m_params);
 	}
 }
 

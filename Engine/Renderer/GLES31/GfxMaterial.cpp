@@ -539,7 +539,7 @@ void CGfxMaterial::SetEnablePolygonOffset(bool bEnable, GLfloat factor, GLfloat 
 
 bool CGfxMaterial::IsEnableBlend(void) const
 {
-	return m_state.bEnableBlend;
+	return m_state.bEnableBlend == GL_TRUE ? true : false;
 }
 
 GLuint CGfxMaterial::GetName(void) const

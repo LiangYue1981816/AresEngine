@@ -5,14 +5,12 @@
 class CGfxUniformBuffer
 {
 public:
-	CGfxUniformBuffer(void);
+	CGfxUniformBuffer(size_t size, bool bDynamic);
 	virtual ~CGfxUniformBuffer(void);
 
 
 public:
-	bool Create(const void *pBuffer, size_t size, bool bDynamic);
-	void Destroy(void);
-	bool SetData(const void *pBuffer, size_t size, size_t offset = 0);
+	bool BufferData(size_t offset, size_t size, const void *pBuffer);
 
 public:
 	GLuint GetBuffer(void) const;

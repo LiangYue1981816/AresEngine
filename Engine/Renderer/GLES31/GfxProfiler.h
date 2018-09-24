@@ -52,16 +52,39 @@ public:
 
 
 public:
-	static void SetEnable(bool bEnable);
+	static void SetEnableProfiler(bool bEnable);
+
+	static void IncTextureDataSize(size_t size);
+	static void DecTextureDataSize(size_t size);
+
+	static void IncUniformBufferSize(size_t size);
+	static void DecUniformBufferSize(size_t size);
+
+	static void IncVertexBufferSize(size_t size);
+	static void DecVertexBufferSize(size_t size);
+
+	static void IncIndexBufferSize(size_t size);
+	static void DecIndexBufferSize(size_t size);
+
+	static void IncInstanceBufferSize(size_t size);
+	static void DecInstanceBufferSize(size_t size);
 
 	static void ResetSamples(void);
 	static void BeginSample(SampleType type, const char *name);
 	static void EndSample(SampleType type);
 
-	static void Log(void);
+	static void LogGfxMemory(void);
+	static void LogProfiler(void);
 
 private:
 	static bool bEnableProfiler;
+
+	static size_t textureDataSize;
+	static size_t uniformBufferSize;
+	static size_t vertexBufferSize;
+	static size_t indexBufferSize;
+	static size_t instanceBufferSize;
+
 	static Sample samples[SampleType::SAMPLE_TYPE_COUNT];
 };
 

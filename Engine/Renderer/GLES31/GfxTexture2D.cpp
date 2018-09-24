@@ -11,7 +11,16 @@ CGfxTexture2D::CGfxTexture2D(GLuint name)
 
 CGfxTexture2D::~CGfxTexture2D(void)
 {
+	Free();
+}
 
+void CGfxTexture2D::Free(void)
+{
+	for (const auto &itLevelSize : m_size) {
+		CGfxProfiler::DecTextureDataSize(itLevelSize.second);
+	}
+
+	CGfxTextureBase::Free();
 }
 
 bool CGfxTexture2D::Load(const char *szFileName)
@@ -96,12 +105,18 @@ bool CGfxTexture2D::TransferTexture2D(const gli::texture2d *texture)
 	glBindTexture(GL_TEXTURE_2D, m_texture);
 	{
 		for (int level = 0; level < (int)texture->levels(); level++) {
-			if (gli::is_compressed(texture->format())) {
-				glCompressedTexSubImage2D(GL_TEXTURE_2D, level, 0, 0, texture->extent(level).x, texture->extent(level).y, format.Internal, (GLsizei)texture->size(level), texture->data(0, 0, level));
+			CGfxProfiler::DecTextureDataSize(m_size[level]);
+			{
+				m_size[level] = (GLsizeiptr)texture->size(level);
+
+				if (gli::is_compressed(texture->format())) {
+					glCompressedTexSubImage2D(GL_TEXTURE_2D, level, 0, 0, texture->extent(level).x, texture->extent(level).y, format.Internal, (GLsizei)texture->size(level), texture->data(0, 0, level));
+				}
+				else {
+					glTexSubImage2D(GL_TEXTURE_2D, level, 0, 0, texture->extent(level).x, texture->extent(level).y, format.External, format.Type, texture->data(0, 0, level));
+				}
 			}
-			else {
-				glTexSubImage2D(GL_TEXTURE_2D, level, 0, 0, texture->extent(level).x, texture->extent(level).y, format.External, format.Type, texture->data(0, 0, level));
-			}
+			CGfxProfiler::IncTextureDataSize(m_size[level]);
 		}
 	}
 	glBindTexture(GL_TEXTURE_2D, 0);
@@ -109,7 +124,7 @@ bool CGfxTexture2D::TransferTexture2D(const gli::texture2d *texture)
 	return true;
 }
 
-bool CGfxTexture2D::TransferTexture2D(GLsizei level, GLenum format, GLsizei width, GLsizei height, GLenum type, const GLvoid *data)
+bool CGfxTexture2D::TransferTexture2D(GLsizei level, GLenum format, GLsizei width, GLsizei height, GLenum type, GLsizei size, const GLvoid *data)
 {
 	if (m_texture == 0) {
 		return false;
@@ -125,7 +140,12 @@ bool CGfxTexture2D::TransferTexture2D(GLsizei level, GLenum format, GLsizei widt
 
 	glBindTexture(GL_TEXTURE_2D, m_texture);
 	{
-		glTexSubImage2D(GL_TEXTURE_2D, level, 0, 0, width, height, format, type, data);
+		CGfxProfiler::DecTextureDataSize(m_size[level]);
+		{
+			m_size[level] = (GLsizeiptr)size;
+			glTexSubImage2D(GL_TEXTURE_2D, level, 0, 0, width, height, format, type, data);
+		}
+		CGfxProfiler::IncTextureDataSize(m_size[level]);
 	}
 	glBindTexture(GL_TEXTURE_2D, 0);
 
@@ -148,7 +168,12 @@ bool CGfxTexture2D::TransferTexture2DCompressed(GLsizei level, GLenum format, GL
 
 	glBindTexture(GL_TEXTURE_2D, m_texture);
 	{
-		glCompressedTexSubImage2D(GL_TEXTURE_2D, level, 0, 0, width, height, format, size, data);
+		CGfxProfiler::DecTextureDataSize(m_size[level]);
+		{
+			m_size[level] = (GLsizeiptr)size;
+			glCompressedTexSubImage2D(GL_TEXTURE_2D, level, 0, 0, width, height, format, size, data);
+		}
+		CGfxProfiler::IncTextureDataSize(m_size[level]);
 	}
 	glBindTexture(GL_TEXTURE_2D, 0);
 

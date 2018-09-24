@@ -9,12 +9,12 @@ class CGfxIndexBuffer
 
 
 private:
-	CGfxIndexBuffer(GLenum type);
+	CGfxIndexBuffer(GLenum type, size_t size, bool bDynamic);
 	virtual ~CGfxIndexBuffer(void);
 
 
 private:
-	bool BufferData(size_t size, const void *pBuffer, bool bDynamic);
+	bool BufferData(size_t offset, size_t size, const void *pBuffer);
 
 private:
 	GLenum GetIndexType(void) const;

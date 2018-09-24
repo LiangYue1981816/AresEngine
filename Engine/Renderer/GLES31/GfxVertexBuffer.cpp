@@ -4,25 +4,37 @@
 #include "GfxVertexAttribute.h"
 
 
-CGfxVertexBuffer::CGfxVertexBuffer(GLuint format)
+CGfxVertexBuffer::CGfxVertexBuffer(GLuint format, size_t size, bool bDynamic)
 	: m_vertexFormat(format)
 	, m_vertexBuffer(0)
-	, m_size(0)
+	, m_size(size)
 {
+	CGfxProfiler::IncVertexBufferSize(m_size);
+
 	glGenBuffers(1, &m_vertexBuffer);
+	glBindBuffer(GL_ARRAY_BUFFER, m_vertexBuffer);
+	glBufferData(GL_ARRAY_BUFFER, m_size, NULL, bDynamic ? GL_DYNAMIC_DRAW : GL_STATIC_DRAW);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
 CGfxVertexBuffer::~CGfxVertexBuffer(void)
 {
+	CGfxProfiler::DecVertexBufferSize(m_size);
+
 	glDeleteBuffers(1, &m_vertexBuffer);
+	m_vertexFormat = 0;
+	m_vertexBuffer = 0;
+	m_size = 0;
 }
 
-bool CGfxVertexBuffer::BufferData(size_t size, const void *pBuffer, bool bDynamic)
+bool CGfxVertexBuffer::BufferData(size_t offset, size_t size, const void *pBuffer)
 {
-	m_size = (GLsizeiptr)size;
+	if (m_size < (GLsizeiptr)(offset + size)) {
+		return false;
+	}
 
 	glBindBuffer(GL_ARRAY_BUFFER, m_vertexBuffer);
-	glBufferData(GL_ARRAY_BUFFER, m_size, pBuffer, bDynamic ? GL_DYNAMIC_DRAW : GL_STATIC_DRAW);
+	glBufferSubData(GL_ARRAY_BUFFER, (GLintptr)offset, (GLsizeiptr)size, pBuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 	return true;

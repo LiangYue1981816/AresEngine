@@ -8,13 +8,11 @@ CGfxUniformCamera::CGfxUniformCamera(void)
 	: m_bDirty(false)
 	, m_pUniformBuffer(NULL)
 {
-	m_pUniformBuffer = new CGfxUniformBuffer;
-	m_pUniformBuffer->Create(NULL, sizeof(m_params), true);
+	m_pUniformBuffer = new CGfxUniformBuffer(sizeof(m_params), true);
 }
 
 CGfxUniformCamera::~CGfxUniformCamera(void)
 {
-	m_pUniformBuffer->Destroy();
 	delete m_pUniformBuffer;
 }
 
@@ -71,7 +69,7 @@ void CGfxUniformCamera::Apply(void)
 {
 	if (m_bDirty) {
 		m_bDirty = false;
-		m_pUniformBuffer->SetData(&m_params, sizeof(m_params));
+		m_pUniformBuffer->BufferData(0, sizeof(m_params), &m_params);
 	}
 }
 

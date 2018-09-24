@@ -9,12 +9,12 @@ class CGfxVertexBuffer
 
 
 private:
-	CGfxVertexBuffer(GLuint format);
+	CGfxVertexBuffer(GLuint format, size_t size, bool bDynamic);
 	virtual ~CGfxVertexBuffer(void);
 
 
 private:
-	bool BufferData(size_t size, const void *pBuffer, bool bDynamic);
+	bool BufferData(size_t offset, size_t size, const void *pBuffer);
 
 private:
 	GLuint GetVertexCount(void) const;
