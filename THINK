@@ -1,0 +1,23 @@
+关于Shader管理
+对于复杂工程而言，会有大量的Shader。其来源主要有两种途径
+一是本身就种类繁多的Shader
+二是由Shader编译宏开关导致的同一份Shader源码编译出多分Shader二进制。
+
+如何有效管理这些Shader，其实也是两个问题
+一是由编译宏导致的同一份Shade源代码编译出多分Shader如何做到不重不漏，实际上是一种排列组合，当Shader宏开关多的时候人工保证不重不漏雁度较大且艰难维护
+二是在材质中如何配置使用那一份Shader，这又涉及到Shader如何命硬，尤其是带有宏开关编译出的多分Shader而言更是如此，很可能Shader名会很长。
+
+解决方案是不要离线编译出大量的Shader，正是因为量大所以才不容易管理，很多Shader是否真的在使用只有在运行时才能确定，基于此方案如下
+Step1: 材质上配置Shader源文件，同时需要配置Define那些宏
+<Program vertex_shader="BRDF_PbrIBL.glsl", fragment_shader="BRDF_PbrIBL.glsl" >
+	<Define name="AO_MAP" />
+	<Define name="NORMAL_MAP" />
+</Program>
+Step2: 载入材质的Shader时，将Define中的宏，设置到Shaderc中，并使用Shaderc的预处理器生成应用宏之后的Shader代码
+Step3: 对预处理后的Shader代码做Hash
+Step4: 若Hash在ShaderBinary文件夹中不存在同名shader文件，则使用shaderc对齐进行编译，并将编译后的结果以hash名称保存到ShaderBinary文件夹中
+Step5: 从ShaderBinary中载入Hash同名Shader文件，并使用Spirv-cross进行反射处理，同时生成Shader源文件进行编译
+
+可能存在的性能问题解决办法
+1. 预处理的时间，这个没办法，必须要经过预处理，还要根据预处理后的Shader代码Hash值查找编译后的Shader二进制文件
+2. shaderc编译速度，编译只发生第一次使用某个Shader的时候。完全可在PC上实现生成好。

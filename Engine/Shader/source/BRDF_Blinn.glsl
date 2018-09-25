@@ -78,6 +78,9 @@ DESCRIPTOR_SET_PASS(10) uniform sampler2D texNormal;
 #ifdef SPECULAR_MAP
 DESCRIPTOR_SET_PASS(11) uniform sampler2D texSpecular;
 #endif
+#ifdef ROUGH_METALLIC_MAP
+DESCRIPTOR_SET_PASS(12) uniform sampler2D texRoughMetallic;
+#endif
 
 layout (location = 0) in highp   vec3 inPosition;
 layout (location = 1) in mediump vec2 inTexcoord;
@@ -104,8 +107,14 @@ void main()
 #else
 	lowp vec3 specularColor = vec3(1.0);
 #endif
-	lowp float metallic = 0.7;
+#ifdef ROUGH_METALLIC_MAP
+	lowp vec3 rough_metallic = texture(texRoughMetallic, inTexcoord).rgb;
+	lowp float metallic = rough_metallic.b;
+	lowp float roughness = rough_metallic.g;
+#else
+	lowp float metallic = 0.3;
 	lowp float roughness = 0.3;
+#endif
 
 #ifdef NORMAL_MAP
 	mediump vec3 pixelNormal = texture(texNormal, inTexcoord).rgb * 2.0 - 1.0;

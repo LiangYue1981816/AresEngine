@@ -102,6 +102,7 @@
     <ClInclude Include="Engine\Scene\Task\TaskComponentUpdate.h" />
     <ClInclude Include="Engine\Scene\Task\TaskComponentUpdateCamera.h" />
     <ClInclude Include="ThirdParty\event\event.h" />
+    <ClInclude Include="ThirdParty\glslc\file_includer.h" />
     <ClInclude Include="ThirdParty\lodepng\lodepng.h" />
     <ClInclude Include="ThirdParty\spirv-cross\GLSL.std.450.h" />
     <ClInclude Include="ThirdParty\spirv-cross\spirv.hpp" />
@@ -175,6 +176,7 @@
     <ClCompile Include="ThirdParty\eastl\source\string.cpp" />
     <ClCompile Include="ThirdParty\eastl\source\thread_support.cpp" />
     <ClCompile Include="ThirdParty\event\event.c" />
+    <ClCompile Include="ThirdParty\glslc\file_includer.cc" />
     <ClCompile Include="ThirdParty\lodepng\lodepng.cpp" />
     <ClCompile Include="ThirdParty\spirv-cross\spirv_cfg.cpp" />
     <ClCompile Include="ThirdParty\spirv-cross\spirv_cpp.cpp" />
@@ -274,15 +276,15 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>THREAD_COUNT=4;_WINDOWS;WIN32;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>./;./Application;./Editor;./Engine;./Engine/Base;./Engine/Renderer;./Engine/Renderer/GLES31;./Engine/Renderer/GLES31/gles3;./Engine/Renderer/Vulkan;./Engine/Resource;./Engine/Scene;./Engine/Scene/Component;./Engine/Scene/Task;./ThirdParty;./ThirdParty/eastl;./ThirdParty/event;./ThirdParty/gli;./ThirdParty/glm;./ThirdParty/lodepng;./ThirdParty/pthread;./ThirdParty/spirv-cross;./ThirdParty/tinyxml;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(VULKAN_SDK)/include;$(VULKAN_SDK)/shaderc/libshaderc/include;$(VULKAN_SDK)/shaderc/libshaderc_util/include;$(VULKAN_SDK)/spirv-tools/include;./;./ThirdParty;./ThirdParty/eastl;./ThirdParty/event;./ThirdParty/gli;./ThirdParty/glm;./ThirdParty/lodepng;./ThirdParty/pthread;./ThirdParty/spirv-cross;./ThirdParty/tinyxml;./Application;./Editor;./Engine;./Engine/Base;./Engine/Renderer;./Engine/Renderer/GLES31;./Engine/Renderer/GLES31/gles3;./Engine/Renderer/Vulkan;./Engine/Resource;./Engine/Scene;./Engine/Scene/Component;./Engine/Scene/Task;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4996;4312</DisableSpecificWarnings>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>./ThirdParty/pthread/x86;./ThirdParty/glew-2.1.0/lib/Release/Win32</AdditionalLibraryDirectories>
-      <AdditionalDependencies>imm32.lib;opengl32.lib;glew32.lib;pthreadVC2.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(VULKAN_SDK)/Lib32;./ThirdParty/pthread/x86;./ThirdParty/glew-2.1.0/lib/Release/Win32</AdditionalLibraryDirectories>
+      <AdditionalDependencies>vulkan-1.lib;shaderc_combined.lib;pthreadVC2.lib;glew32.lib;opengl32.lib;kernel32.lib;user32.lib;gdi32.lib;imm32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -293,15 +295,15 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>THREAD_COUNT=4;_WINDOWS;__LP64__;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>./;./Application;./Editor;./Engine;./Engine/Base;./Engine/Renderer;./Engine/Renderer/GLES31;./Engine/Renderer/GLES31/gles3;./Engine/Renderer/Vulkan;./Engine/Resource;./Engine/Scene;./Engine/Scene/Component;./Engine/Scene/Task;./ThirdParty;./ThirdParty/eastl;./ThirdParty/event;./ThirdParty/gli;./ThirdParty/glm;./ThirdParty/lodepng;./ThirdParty/pthread;./ThirdParty/spirv-cross;./ThirdParty/tinyxml;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(VULKAN_SDK)/include;$(VULKAN_SDK)/shaderc/libshaderc/include;$(VULKAN_SDK)/shaderc/libshaderc_util/include;$(VULKAN_SDK)/spirv-tools/include;./;./ThirdParty;./ThirdParty/eastl;./ThirdParty/event;./ThirdParty/gli;./ThirdParty/glm;./ThirdParty/lodepng;./ThirdParty/pthread;./ThirdParty/spirv-cross;./ThirdParty/tinyxml;./Application;./Editor;./Engine;./Engine/Base;./Engine/Renderer;./Engine/Renderer/GLES31;./Engine/Renderer/GLES31/gles3;./Engine/Renderer/Vulkan;./Engine/Resource;./Engine/Scene;./Engine/Scene/Component;./Engine/Scene/Task;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4996;4312</DisableSpecificWarnings>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>./ThirdParty/pthread/x64;./ThirdParty/glew-2.1.0/lib/Release/x64</AdditionalLibraryDirectories>
-      <AdditionalDependencies>imm32.lib;opengl32.lib;glew32.lib;pthreadVC2.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(VULKAN_SDK)/Lib;./ThirdParty/pthread/x64;./ThirdParty/glew-2.1.0/lib/Release/x64</AdditionalLibraryDirectories>
+      <AdditionalDependencies>vulkan-1.lib;shaderc_combined.lib;pthreadVC2.lib;glew32.lib;opengl32.lib;kernel32.lib;user32.lib;gdi32.lib;imm32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -314,17 +316,18 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>THREAD_COUNT=4;_WINDOWS;WIN32;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>./;./Application;./Editor;./Engine;./Engine/Base;./Engine/Renderer;./Engine/Renderer/GLES31;./Engine/Renderer/GLES31/gles3;./Engine/Renderer/Vulkan;./Engine/Resource;./Engine/Scene;./Engine/Scene/Component;./Engine/Scene/Task;./ThirdParty;./ThirdParty/eastl;./ThirdParty/event;./ThirdParty/gli;./ThirdParty/glm;./ThirdParty/lodepng;./ThirdParty/pthread;./ThirdParty/spirv-cross;./ThirdParty/tinyxml;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(VULKAN_SDK)/include;$(VULKAN_SDK)/shaderc/libshaderc/include;$(VULKAN_SDK)/shaderc/libshaderc_util/include;$(VULKAN_SDK)/spirv-tools/include;./;./ThirdParty;./ThirdParty/eastl;./ThirdParty/event;./ThirdParty/gli;./ThirdParty/glm;./ThirdParty/lodepng;./ThirdParty/pthread;./ThirdParty/spirv-cross;./ThirdParty/tinyxml;./Application;./Editor;./Engine;./Engine/Base;./Engine/Renderer;./Engine/Renderer/GLES31;./Engine/Renderer/GLES31/gles3;./Engine/Renderer/Vulkan;./Engine/Resource;./Engine/Scene;./Engine/Scene/Component;./Engine/Scene/Task;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4996;4312</DisableSpecificWarnings>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>./ThirdParty/pthread/x86;./ThirdParty/glew-2.1.0/lib/Release/Win32</AdditionalLibraryDirectories>
-      <AdditionalDependencies>imm32.lib;opengl32.lib;glew32.lib;pthreadVC2.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(VULKAN_SDK)/Lib32;./ThirdParty/pthread/x86;./ThirdParty/glew-2.1.0/lib/Release/Win32</AdditionalLibraryDirectories>
+      <AdditionalDependencies>vulkan-1.lib;shaderc_combined.lib;pthreadVC2.lib;glew32.lib;opengl32.lib;kernel32.lib;user32.lib;gdi32.lib;imm32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -337,17 +340,18 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>THREAD_COUNT=4;_WINDOWS;__LP64__;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>./;./Application;./Editor;./Engine;./Engine/Base;./Engine/Renderer;./Engine/Renderer/GLES31;./Engine/Renderer/GLES31/gles3;./Engine/Renderer/Vulkan;./Engine/Resource;./Engine/Scene;./Engine/Scene/Component;./Engine/Scene/Task;./ThirdParty;./ThirdParty/eastl;./ThirdParty/event;./ThirdParty/gli;./ThirdParty/glm;./ThirdParty/lodepng;./ThirdParty/pthread;./ThirdParty/spirv-cross;./ThirdParty/tinyxml;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(VULKAN_SDK)/include;$(VULKAN_SDK)/shaderc/libshaderc/include;$(VULKAN_SDK)/shaderc/libshaderc_util/include;$(VULKAN_SDK)/spirv-tools/include;./;./ThirdParty;./ThirdParty/eastl;./ThirdParty/event;./ThirdParty/gli;./ThirdParty/glm;./ThirdParty/lodepng;./ThirdParty/pthread;./ThirdParty/spirv-cross;./ThirdParty/tinyxml;./Application;./Editor;./Engine;./Engine/Base;./Engine/Renderer;./Engine/Renderer/GLES31;./Engine/Renderer/GLES31/gles3;./Engine/Renderer/Vulkan;./Engine/Resource;./Engine/Scene;./Engine/Scene/Component;./Engine/Scene/Task;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4996;4312</DisableSpecificWarnings>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>./ThirdParty/pthread/x64;./ThirdParty/glew-2.1.0/lib/Release/x64</AdditionalLibraryDirectories>
-      <AdditionalDependencies>imm32.lib;opengl32.lib;glew32.lib;pthreadVC2.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(VULKAN_SDK)/Lib;./ThirdParty/pthread/x64;./ThirdParty/glew-2.1.0/lib/Release/x64</AdditionalLibraryDirectories>
+      <AdditionalDependencies>vulkan-1.lib;shaderc_combined.lib;pthreadVC2.lib;glew32.lib;opengl32.lib;kernel32.lib;user32.lib;gdi32.lib;imm32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

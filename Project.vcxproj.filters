@@ -112,6 +112,9 @@
     <Filter Include="ThirdParty\lodepng">
       <UniqueIdentifier>{2e66d167-842f-4e31-88b5-1d6834c3a953}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ThirdParty\glslc">
+      <UniqueIdentifier>{6a14d146-d3cd-47be-9b5d-ce2f0ab72e18}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\Main.h">
@@ -399,6 +402,9 @@
     <ClInclude Include="Engine\Scene\Component\ComponentPointLight.h">
       <Filter>Engine\Scene\Source Files\Component\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ThirdParty\glslc\file_includer.h">
+      <Filter>ThirdParty\glslc</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application\Main.cpp">
@@ -610,6 +616,9 @@
     </ClCompile>
     <ClCompile Include="Engine\Scene\Component\ComponentPointLight.cpp">
       <Filter>Engine\Scene\Source Files\Component\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ThirdParty\glslc\file_includer.cc">
+      <Filter>ThirdParty\glslc</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

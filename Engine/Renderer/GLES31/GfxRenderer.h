@@ -5,6 +5,7 @@
 
 #include <gl31.h>
 #include <gli.hpp>
+#include <shaderc/shaderc.hpp>
 #include <eastl/string.h>
 #include <eastl/vector.h>
 #include <eastl/map.h>
