@@ -10,8 +10,6 @@ CEngine* CEngine::GetInstance(void)
 
 void CEngine::Create(void *hDC, const char *szShaderPath, const char *szTexturePath, const char *szMaterialPath, const char *szMeshPath)
 {
-	InitAllocator();
-
 	if (pInstance == NULL) {
 		pInstance = new CEngine(hDC, szShaderPath, szTexturePath, szMaterialPath, szMeshPath);
 	}
@@ -30,8 +28,6 @@ void CEngine::Destroy(void)
 #if defined (_DEBUG) || defined (DEBUG)
 	dump_memory_objects();
 #endif
-
-	ExitAllocator();
 }
 
 CEngine::CEngine(void *hDC, const char *szShaderPath, const char *szTexturePath, const char *szMaterialPath, const char *szMeshPath)

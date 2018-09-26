@@ -12,7 +12,7 @@
 #define ALIGN_4KBYTE(a)  ALIGN_BYTE(a, 4096)
 
 
-#define GET_MEM_SIZE(ptr) (*((uint32_t *)(ptr) - 1) & 0x00ffffff)
+#define GET_MEM_SIZE(ptr) (*((uint32_t *)(ptr) - 1) & 0x01FFFFFF)
 
 #define GET_BLOCK(pPointer) (BLOCK *)((uint8_t *)pPointer - ALIGN_4BYTE(sizeof(BLOCK)))
 #define GET_BLOCK_POOL(pBlock) (BLOCK_POOL *)((uint8_t *)(pBlock) - (pBlock)->dwOffset - ALIGN_16BYTE(sizeof(BLOCK_POOL)))
