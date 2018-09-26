@@ -3,7 +3,7 @@
 #include "debug_new.h"
 
 
-#ifdef _DEBUG
+#if defined (_DEBUG) || defined (DEBUG)
 void* operator new(size_t size, const char* file, int line)
 {
 	return alloc_mem(size, file, line, false);
@@ -66,41 +66,41 @@ void operator delete[](void* ptr, const std::nothrow_t&) noexcept
 #else
 void* operator new(size_t size)
 {
-	return malloc(size);
+	return AllocMemory(size);
 }
 
 void* operator new(size_t size, const std::nothrow_t&) noexcept
 {
-	return malloc(size);
+	return AllocMemory(size);
 }
 
 void* operator new[](size_t size)
 {
-	return malloc(size);
+	return AllocMemory(size);
 }
 
 void* operator new[](size_t size, const std::nothrow_t&) noexcept
 {
-	return malloc(size);
+	return AllocMemory(size);
 }
 
 void operator delete(void* ptr)
 {
-	free(ptr);
+	FreeMemory(ptr);
 }
 
 void operator delete(void* ptr, const std::nothrow_t&) noexcept
 {
-	free(ptr);
+	FreeMemory(ptr);
 }
 
 void operator delete[](void* ptr)
 {
-	free(ptr);
+	FreeMemory(ptr);
 }
 
 void operator delete[](void* ptr, const std::nothrow_t&) noexcept
 {
-	free(ptr);
+	FreeMemory(ptr);
 }
 #endif

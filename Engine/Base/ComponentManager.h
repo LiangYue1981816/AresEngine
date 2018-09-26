@@ -133,7 +133,7 @@ private:
 			m_pRefCount = pRefCount;
 
 			if (m_pRefCount == NULL) {
-				m_pRefCount = (uint32_t *)malloc(sizeof(*m_pRefCount)); (*m_pRefCount) = 0;
+				m_pRefCount = (uint32_t *)AllocMemory(sizeof(*m_pRefCount)); (*m_pRefCount) = 0;
 			}
 
 			++(*m_pRefCount);
@@ -145,7 +145,7 @@ public:
 	{
 		if (m_pRefCount) {
 			if (-- (*m_pRefCount) == 0) {
-				free(m_pRefCount);
+				FreeMemory(m_pRefCount);
 				m_pManager->DeleteComponent(m_key);
 			}
 		}

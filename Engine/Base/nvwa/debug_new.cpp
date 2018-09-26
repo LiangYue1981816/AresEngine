@@ -222,7 +222,7 @@ void* alloc_mem(size_t size, const char* file, int line, bool is_array)
     STATIC_ASSERT((_DEBUG_NEW_ALIGNMENT & (_DEBUG_NEW_ALIGNMENT - 1)) == 0, Alignment_must_be_power_of_two);
     STATIC_ASSERT(_DEBUG_NEW_TAILCHECK >= 0, Invalid_tail_check_length);
     size_t s = size + ALIGNED_LIST_ITEM_SIZE + _DEBUG_NEW_TAILCHECK;
-	new_ptr_list_t* ptr = (new_ptr_list_t*)malloc(s);
+	new_ptr_list_t* ptr = (new_ptr_list_t*)AllocMemory(s);
     if (ptr == NULL)
     {
 		LogOutput("Memory", "Out of memory when allocating %lu bytes\n", (unsigned long)size);
@@ -303,7 +303,7 @@ void free_pointer(void* usr_ptr, void* addr, bool is_array)
         ptr->prev->next = ptr->next;
         ptr->next->prev = ptr->prev;
     }
-	free(ptr);
+	FreeMemory(ptr);
     return;
 }
 

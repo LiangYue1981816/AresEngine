@@ -78,8 +78,8 @@ bool CGfxMesh::Load(const char *szFileName)
 		fread(&m_aabb.maxVertex.z, sizeof(m_aabb.maxVertex.z), 1, pFile);
 		m_aabb.normalize();
 
-		pIndexBuffer = malloc(header.indexBufferSize);
-		pVertexBuffer = malloc(header.vertexBufferSize);
+		pIndexBuffer = AllocMemory(header.indexBufferSize);
+		pVertexBuffer = AllocMemory(header.vertexBufferSize);
 
 		fseek(pFile, header.indexBufferOffset, SEEK_SET);
 		fread(pIndexBuffer, header.indexBufferSize, 1, pFile);
@@ -95,8 +95,8 @@ bool CGfxMesh::Load(const char *szFileName)
 		m_pIndexBuffer->BufferData(0, header.indexBufferSize, pIndexBuffer);
 		m_pVertexBuffer->BufferData(0, header.vertexBufferSize, pVertexBuffer);
 
-		free(pVertexBuffer);
-		free(pIndexBuffer);
+		FreeMemory(pVertexBuffer);
+		FreeMemory(pIndexBuffer);
 		fclose(pFile);
 
 		return true;
@@ -104,8 +104,8 @@ bool CGfxMesh::Load(const char *szFileName)
 	catch (int) {
 		Free();
 
-		if (pVertexBuffer) free(pVertexBuffer);
-		if (pIndexBuffer) free(pIndexBuffer);
+		if (pVertexBuffer) FreeMemory(pVertexBuffer);
+		if (pIndexBuffer) FreeMemory(pIndexBuffer);
 		if (pFile) fclose(pFile);
 
 		return false;

@@ -39,6 +39,7 @@
 
 #include <new>
 #include <stdio.h>
+#include "MemoryAllocator.h"
 
 #ifdef _MSC_VER
 #pragma warning(disable: 4074)
@@ -56,7 +57,7 @@ int dump_memory_objects();
 int check_mem_corruption();
 
 /* Special allocation/deallocation functions in the global scope */
-#ifdef _DEBUG
+#if defined (_DEBUG) || defined (DEBUG)
 #ifndef _DEBUG_NEW_REDEFINE_NEW
 #define _DEBUG_NEW_REDEFINE_NEW 1
 #endif

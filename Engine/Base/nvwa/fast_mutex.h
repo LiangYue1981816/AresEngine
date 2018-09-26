@@ -106,7 +106,7 @@
 #   undef _PTHREADS
 # endif
 
-# ifdef _DEBUG
+#if defined (_DEBUG) || defined (DEBUG)
 #   include <stdio.h>
 #   include <stdlib.h>
 /** Macro for fast_mutex assertions.  Real version (for debug mode). */
@@ -139,12 +139,12 @@
 #       if _FAST_MUTEX_CHECK_INITIALIZATION
         bool _M_initialized;
 #       endif
-#       ifdef _DEBUG
+#       if defined (_DEBUG) || defined (DEBUG)
         bool _M_locked;
 #       endif
     public:
         fast_mutex()
-#       ifdef _DEBUG
+#       if defined (_DEBUG) || defined (DEBUG)
             : _M_locked(false)
 #       endif
         {
@@ -166,7 +166,7 @@
                 return;
 #       endif
             _M_mtx_impl.lock();
-#       ifdef _DEBUG
+#       if defined (_DEBUG) || defined (DEBUG)
             _FAST_MUTEX_ASSERT(!_M_locked, "lock(): already locked");
             _M_locked = true;
 #       endif
@@ -177,7 +177,7 @@
             if (!_M_initialized)
                 return;
 #       endif
-#       ifdef _DEBUG
+#       if defined (_DEBUG) || defined (DEBUG)
             _FAST_MUTEX_ASSERT(_M_locked, "unlock(): not locked");
             _M_locked = false;
 #       endif
@@ -208,12 +208,12 @@
 #       if _FAST_MUTEX_CHECK_INITIALIZATION
         bool _M_initialized;
 #       endif
-#       ifdef _DEBUG
+#       if defined (_DEBUG) || defined (DEBUG)
         bool _M_locked;
 #       endif
     public:
         fast_mutex()
-#       ifdef _DEBUG
+#       if defined (_DEBUG) || defined (DEBUG)
             : _M_locked(false)
 #       endif
         {
@@ -237,7 +237,7 @@
                 return;
 #       endif
             ::pthread_mutex_lock(&_M_mtx_impl);
-#       ifdef _DEBUG
+#       if defined (_DEBUG) || defined (DEBUG)
             // The following assertion should _always_ be true for a
             // real `fast' pthread_mutex.  However, this assertion can
             // help sometimes, when people forget to use `-lpthread' and
@@ -253,7 +253,7 @@
             if (!_M_initialized)
                 return;
 #       endif
-#       ifdef _DEBUG
+#       if defined (_DEBUG) || defined (DEBUG)
             _FAST_MUTEX_ASSERT(_M_locked, "unlock(): not locked");
             _M_locked = false;
 #       endif
@@ -287,12 +287,12 @@
 #       if _FAST_MUTEX_CHECK_INITIALIZATION
         bool _M_initialized;
 #       endif
-#       ifdef _DEBUG
+#       if defined (_DEBUG) || defined (DEBUG)
         bool _M_locked;
 #       endif
     public:
         fast_mutex()
-#       ifdef _DEBUG
+#       if defined (_DEBUG) || defined (DEBUG)
             : _M_locked(false)
 #       endif
         {
@@ -316,7 +316,7 @@
                 return;
 #       endif
             ::EnterCriticalSection(&_M_mtx_impl);
-#       ifdef _DEBUG
+#       if defined (_DEBUG) || defined (DEBUG)
             _FAST_MUTEX_ASSERT(!_M_locked, "lock(): already locked");
             _M_locked = true;
 #       endif
@@ -327,7 +327,7 @@
             if (!_M_initialized)
                 return;
 #       endif
-#       ifdef _DEBUG
+#       if defined (_DEBUG) || defined (DEBUG)
             _FAST_MUTEX_ASSERT(_M_locked, "unlock(): not locked");
             _M_locked = false;
 #       endif
@@ -353,12 +353,12 @@
      */
     class fast_mutex
     {
-#       ifdef _DEBUG
+#       if defined (_DEBUG) || defined (DEBUG)
         bool _M_locked;
 #       endif
     public:
         fast_mutex()
-#       ifdef _DEBUG
+#       if defined (_DEBUG) || defined (DEBUG)
             : _M_locked(false)
 #       endif
         {
@@ -369,14 +369,14 @@
         }
         void lock()
         {
-#       ifdef _DEBUG
+#       if defined (_DEBUG) || defined (DEBUG)
             _FAST_MUTEX_ASSERT(!_M_locked, "lock(): already locked");
             _M_locked = true;
 #       endif
         }
         void unlock()
         {
-#       ifdef _DEBUG
+#       if defined (_DEBUG) || defined (DEBUG)
             _FAST_MUTEX_ASSERT(_M_locked, "unlock(): not locked");
             _M_locked = false;
 #       endif

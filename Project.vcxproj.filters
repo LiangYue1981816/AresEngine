@@ -115,6 +115,18 @@
     <Filter Include="ThirdParty\glslc">
       <UniqueIdentifier>{6a14d146-d3cd-47be-9b5d-ce2f0ab72e18}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Memory">
+      <UniqueIdentifier>{82b33ac1-dfbf-4da0-a866-e47f3dfaf8f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Memory\Header Files">
+      <UniqueIdentifier>{f96f8ba8-8af1-4d6e-a383-d13894d590d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Memory\Source Files">
+      <UniqueIdentifier>{b93190be-ebc3-4b47-9e56-6423d1c82929}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\rbtree">
+      <UniqueIdentifier>{1fa5fa8e-8988-4c61-adcd-517bc6cb3041}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\Main.h">
@@ -405,6 +417,21 @@
     <ClInclude Include="ThirdParty\glslc\file_includer.h">
       <Filter>ThirdParty\glslc</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\Memory\MemoryAllocator.h">
+      <Filter>Engine\Memory\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Memory\MemoryHeap.h">
+      <Filter>Engine\Memory\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Memory\MemoryPool.h">
+      <Filter>Engine\Memory\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Memory\MemorySystem.h">
+      <Filter>Engine\Memory\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\rbtree\rbtree.h">
+      <Filter>ThirdParty\rbtree</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application\Main.cpp">
@@ -619,6 +646,21 @@
     </ClCompile>
     <ClCompile Include="ThirdParty\glslc\file_includer.cc">
       <Filter>ThirdParty\glslc</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Memory\MemoryAllocator.cpp">
+      <Filter>Engine\Memory\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Memory\MemoryHeap.cpp">
+      <Filter>Engine\Memory\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Memory\MemoryPool.cpp">
+      <Filter>Engine\Memory\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Memory\MemorySystem.cpp">
+      <Filter>Engine\Memory\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ThirdParty\rbtree\rbtree.cpp">
+      <Filter>ThirdParty\rbtree</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
