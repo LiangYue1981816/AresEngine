@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <assert.h>
+#include "pthread.h"
 #include "MemoryPool.h"
 #include "MemoryHeap.h"
 
@@ -49,6 +50,7 @@ struct BLOCK_POOL_HEAD {
 };
 
 struct POOL_ALLOCATOR {
+	pthread_spinlock_t lock;
 	BLOCK_POOL_HEAD pools[BLOCK_POOL_COUNT];
 };
 
@@ -94,6 +96,7 @@ POOL_ALLOCATOR* POOL_Create(HEAP_ALLOCATOR *pHeapAllocator)
 		pPoolAllocator->pools[indexPool].pBlockPoolHead = NULL;
 		pPoolAllocator->pools[indexPool].pBlockPoolFreeHead = NULL;
 	}
+	pthread_spin_init(&pPoolAllocator->lock, PTHREAD_PROCESS_PRIVATE);
 
 	return pPoolAllocator;
 }
@@ -110,6 +113,7 @@ void POOL_Destroy(HEAP_ALLOCATOR *pHeapAllocator, POOL_ALLOCATOR *pPoolAllocator
 			} while (pBlockPool = pBlockPoolNext);
 		}
 	}
+	pthread_spin_destroy(&pPoolAllocator->lock);
 
 	HEAP_Free(pHeapAllocator, pPoolAllocator);
 }
@@ -123,28 +127,32 @@ void* POOL_Alloc(HEAP_ALLOCATOR *pHeapAllocator, POOL_ALLOCATOR *pPoolAllocator,
 		const uint32_t dwIndexPool = dwMemSize / 16;
 
 		if (dwIndexPool < BLOCK_POOL_COUNT) {
-			BLOCK_POOL_HEAD *pPoolHead = &pPoolAllocator->pools[dwIndexPool];
+			pthread_spin_lock(&pPoolAllocator->lock);
+			{
+				BLOCK_POOL_HEAD *pPoolHead = &pPoolAllocator->pools[dwIndexPool];
 
-			if (pPoolHead->pBlockPoolFreeHead == NULL) {
-				pPoolHead->pBlockPoolFreeHead = POOL_CreatePool(pHeapAllocator, dwMemSize);
+				if (pPoolHead->pBlockPoolFreeHead == NULL) {
+					pPoolHead->pBlockPoolFreeHead = POOL_CreatePool(pHeapAllocator, dwMemSize);
 
-				if (pPoolHead->pBlockPoolHead) {
-					pPoolHead->pBlockPoolHead->pPrev = pPoolHead->pBlockPoolFreeHead;
-					pPoolHead->pBlockPoolFreeHead->pNext = pPoolHead->pBlockPoolHead;
+					if (pPoolHead->pBlockPoolHead) {
+						pPoolHead->pBlockPoolHead->pPrev = pPoolHead->pBlockPoolFreeHead;
+						pPoolHead->pBlockPoolFreeHead->pNext = pPoolHead->pBlockPoolHead;
+					}
+
+					pPoolHead->pBlockPoolHead = pPoolHead->pBlockPoolFreeHead;
 				}
 
-				pPoolHead->pBlockPoolHead = pPoolHead->pBlockPoolFreeHead;
+				pPointer = &pPoolHead->pBlockPoolFreeHead->pBlockHead->dwAddress;
+				pPoolHead->pBlockPoolFreeHead->pBlockHead = GET_BLOCK_NEXT(pPoolHead->pBlockPoolFreeHead->pBlockHead);
+				pPoolHead->pBlockPoolFreeHead->dwBlockIndex++;
+
+				if (pPoolHead->pBlockPoolFreeHead->dwBlockIndex == pPoolHead->pBlockPoolFreeHead->dwBlockCount) {
+					pPoolHead->pBlockPoolFreeHead = pPoolHead->pBlockPoolFreeHead->pFreeNext;
+				}
+
+				*pPointer++ = dwMemSize;
 			}
-
-			pPointer = &pPoolHead->pBlockPoolFreeHead->pBlockHead->dwAddress;
-			pPoolHead->pBlockPoolFreeHead->pBlockHead = GET_BLOCK_NEXT(pPoolHead->pBlockPoolFreeHead->pBlockHead);
-			pPoolHead->pBlockPoolFreeHead->dwBlockIndex++;
-
-			if (pPoolHead->pBlockPoolFreeHead->dwBlockIndex == pPoolHead->pBlockPoolFreeHead->dwBlockCount) {
-				pPoolHead->pBlockPoolFreeHead = pPoolHead->pBlockPoolFreeHead->pFreeNext;
-			}
-
-			*pPointer++ = dwMemSize;
+			pthread_spin_unlock(&pPoolAllocator->lock);
 		}
 	}
 
@@ -158,42 +166,45 @@ bool POOL_Free(HEAP_ALLOCATOR *pHeapAllocator, POOL_ALLOCATOR *pPoolAllocator, v
 		const uint32_t dwIndexPool = dwMemSize / 16;
 
 		if (dwIndexPool < BLOCK_POOL_COUNT) {
-			BLOCK *pBlock = GET_BLOCK(pPointer);
-			BLOCK_POOL *pBlockPool = GET_BLOCK_POOL(pBlock);
-			BLOCK_POOL_HEAD *pPoolHead = &pPoolAllocator->pools[dwIndexPool];
+			pthread_spin_lock(&pPoolAllocator->lock);
+			{
+				BLOCK *pBlock = GET_BLOCK(pPointer);
+				BLOCK_POOL *pBlockPool = GET_BLOCK_POOL(pBlock);
+				BLOCK_POOL_HEAD *pPoolHead = &pPoolAllocator->pools[dwIndexPool];
 
-			if (pBlockPool->dwBlockIndex == pBlockPool->dwBlockCount) {
-				pBlockPool->pFreeNext = NULL;
-				pBlockPool->pFreePrev = NULL;
+				if (pBlockPool->dwBlockIndex == pBlockPool->dwBlockCount) {
+					pBlockPool->pFreeNext = NULL;
+					pBlockPool->pFreePrev = NULL;
 
-				if (pPoolHead->pBlockPoolFreeHead) {
-					pPoolHead->pBlockPoolFreeHead->pFreePrev = pBlockPool;
-					pBlockPool->pFreeNext = pPoolHead->pBlockPoolFreeHead;
+					if (pPoolHead->pBlockPoolFreeHead) {
+						pPoolHead->pBlockPoolFreeHead->pFreePrev = pBlockPool;
+						pBlockPool->pFreeNext = pPoolHead->pBlockPoolFreeHead;
+					}
+
+					pPoolHead->pBlockPoolFreeHead = pBlockPool;
+				}
+				else {
+					pBlock->dwOffsetNext = pBlockPool->pBlockHead->dwOffset;
 				}
 
-				pPoolHead->pBlockPoolFreeHead = pBlockPool;
+				pBlockPool->dwBlockIndex--;
+
+				if (pBlockPool->dwBlockIndex == 0) {
+					if (pBlockPool->pPrev) pBlockPool->pPrev->pNext = pBlockPool->pNext;
+					if (pBlockPool->pNext) pBlockPool->pNext->pPrev = pBlockPool->pPrev;
+					if (pPoolHead->pBlockPoolHead == pBlockPool) pPoolHead->pBlockPoolHead = pBlockPool->pNext;
+
+					if (pBlockPool->pFreePrev) pBlockPool->pFreePrev->pFreeNext = pBlockPool->pFreeNext;
+					if (pBlockPool->pFreeNext) pBlockPool->pFreeNext->pFreePrev = pBlockPool->pFreePrev;
+					if (pPoolHead->pBlockPoolFreeHead == pBlockPool) pPoolHead->pBlockPoolFreeHead = pBlockPool->pFreeNext;
+
+					POOL_DestroyPool(pHeapAllocator, pBlockPool);
+				}
+				else {
+					pBlockPool->pBlockHead = pBlock;
+				}
 			}
-			else {
-				pBlock->dwOffsetNext = pBlockPool->pBlockHead->dwOffset;
-			}
-
-			pBlockPool->dwBlockIndex--;
-
-			if (pBlockPool->dwBlockIndex == 0) {
-				if (pBlockPool->pPrev) pBlockPool->pPrev->pNext = pBlockPool->pNext;
-				if (pBlockPool->pNext) pBlockPool->pNext->pPrev = pBlockPool->pPrev;
-				if (pPoolHead->pBlockPoolHead == pBlockPool) pPoolHead->pBlockPoolHead = pBlockPool->pNext;
-
-				if (pBlockPool->pFreePrev) pBlockPool->pFreePrev->pFreeNext = pBlockPool->pFreeNext;
-				if (pBlockPool->pFreeNext) pBlockPool->pFreeNext->pFreePrev = pBlockPool->pFreePrev;
-				if (pPoolHead->pBlockPoolFreeHead == pBlockPool) pPoolHead->pBlockPoolFreeHead = pBlockPool->pFreeNext;
-
-				POOL_DestroyPool(pHeapAllocator, pBlockPool);
-			}
-			else {
-				pBlockPool->pBlockHead = pBlock;
-			}
-
+			pthread_spin_unlock(&pPoolAllocator->lock);
 			return true;
 		}
 	}

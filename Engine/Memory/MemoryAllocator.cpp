@@ -15,9 +15,8 @@
 
 // ABBBBBBCCCCCCCCCCCCCCCCCCCCCCCCC
 // A: system memory or allocator memory
-// B: thread id
-// C: size
-
+// B: thread id. Max Thread Number 64
+// C: size. Max Size 32MB
 #define GET_MEM_SIZE(ptr) (*((uint32_t *)(ptr) - 1) & 0x01FFFFFF)
 
 #define GET_MEM_SYSTEM(ptr) (*((uint32_t *)(ptr) - 1) & 0x80000000)
@@ -27,19 +26,19 @@
 #define SET_MEM_THREAD_ID(ptr)   *((uint32_t *)(ptr) - 1) = ((indexThread & 0x0000003F) << 25) | (*((uint32_t *)(ptr) - 1) & 0x81FFFFFF)
 
 
+#define MAX_THREAD_COUNT 64
 static bool bInitAllocator = false;
-static pthread_t threads[THREAD_COUNT] = { NULL };
-static pthread_spinlock_t locks[THREAD_COUNT] = { NULL };
-static HEAP_ALLOCATOR *pHeapAllocators[THREAD_COUNT] = { NULL };
-static POOL_ALLOCATOR *pPoolAllocators[THREAD_COUNT] = { NULL };
+static pthread_t threads[MAX_THREAD_COUNT] = { NULL };
+static POOL_ALLOCATOR *pPoolAllocators[MAX_THREAD_COUNT] = { NULL };
+static HEAP_ALLOCATOR *pHeapAllocator = NULL;
 
 
 static int GetThreadIndex(void)
 {
-	int indexThread = 0;
+	int indexThread = -1;
 	pthread_t thread = pthread_self();
 
-	for (int index = 0; index < THREAD_COUNT; index++) {
+	for (int index = 0; index < MAX_THREAD_COUNT; index++) {
 		if (threads[index].p == thread.p) {
 			indexThread = index;
 			break;
@@ -59,13 +58,13 @@ void InitAllocator(void)
 {
 #ifdef MEMORY_ALLOCATOR
 	if (bInitAllocator == false) {
-		bInitAllocator = true;
+		pHeapAllocator = HEAP_Create();
 
-		for (int indexThread = 0; indexThread < THREAD_COUNT; indexThread++) {
-			pthread_spin_init(&locks[indexThread], PTHREAD_PROCESS_PRIVATE);
-			pHeapAllocators[indexThread] = HEAP_Create();
-			pPoolAllocators[indexThread] = POOL_Create(pHeapAllocators[indexThread]);
+		for (int indexThread = 0; indexThread < MAX_THREAD_COUNT; indexThread++) {
+			pPoolAllocators[indexThread] = POOL_Create(pHeapAllocator);
 		}
+
+		bInitAllocator = true;
 	}
 #endif
 }
@@ -76,11 +75,11 @@ void ExitAllocator(void)
 	if (bInitAllocator) {
 		bInitAllocator = false;
 
-		for (int indexThread = 0; indexThread < THREAD_COUNT; indexThread++) {
-			POOL_Destroy(pHeapAllocators[indexThread], pPoolAllocators[indexThread]);
-			HEAP_Destroy(pHeapAllocators[indexThread]);
-			pthread_spin_destroy(&locks[indexThread]);
+		for (int indexThread = 0; indexThread < MAX_THREAD_COUNT; indexThread++) {
+			POOL_Destroy(pHeapAllocator, pPoolAllocators[indexThread]);
 		}
+
+		HEAP_Destroy(pHeapAllocator);
 	}
 #endif
 }
@@ -91,30 +90,21 @@ void* AllocMemory(size_t size)
 
 #ifdef MEMORY_ALLOCATOR
 	uint32_t *pPointer = NULL;
+	int indexThread = GetThreadIndex();
 
-	if (bInitAllocator && size < 0x01FFFFFF) {
-		int indexThread = GetThreadIndex();
-
+	if (bInitAllocator && indexThread >= 0 && size < 0x01FFFFFF) {
 		if (pPointer == NULL) {
-			pthread_spin_lock(&locks[indexThread]);
-			{
-				pPointer = (uint32_t *)POOL_Alloc(pHeapAllocators[indexThread], pPoolAllocators[indexThread], size);
-			}
-			pthread_spin_unlock(&locks[indexThread]);
+			pPointer = (uint32_t *)POOL_Alloc(pHeapAllocator, pPoolAllocators[indexThread], size);
 		}
 
 		if (pPointer == NULL) {
-			pthread_spin_lock(&locks[indexThread]);
-			{
-				pPointer = (uint32_t *)HEAP_Alloc(pHeapAllocators[indexThread], size);
-			}
-			pthread_spin_unlock(&locks[indexThread]);
+			pPointer = (uint32_t *)HEAP_Alloc(pHeapAllocator, size);
 		}
 
 		SET_MEM_THREAD_ID(pPointer);
 	}
 	else {
-		pPointer = (uint32_t *)_malloc(size + 4); *pPointer++ = size;
+		pPointer = (uint32_t *)_malloc(size + 4); *pPointer++ = (uint32_t)size;
 		SET_MEM_SYSTEM(pPointer);
 	}
 
@@ -131,23 +121,15 @@ void FreeMemory(void *pPointer)
 		uint32_t indexThread = GET_MEM_THREAD_ID(pPointer);
 
 		if (pPointer) {
-			pthread_spin_lock(&locks[indexThread]);
-			{
-				if (POOL_Free(pHeapAllocators[indexThread], pPoolAllocators[indexThread], pPointer)) {
-					pPointer = NULL;
-				}
+			if (POOL_Free(pHeapAllocator, pPoolAllocators[indexThread], pPointer)) {
+				pPointer = NULL;
 			}
-			pthread_spin_unlock(&locks[indexThread]);
 		}
 
 		if (pPointer) {
-			pthread_spin_lock(&locks[indexThread]);
-			{
-				if (HEAP_Free(pHeapAllocators[indexThread], pPointer)) {
-					pPointer = NULL;
-				}
+			if (HEAP_Free(pHeapAllocator, pPointer)) {
+				pPointer = NULL;
 			}
-			pthread_spin_unlock(&locks[indexThread]);
 		}
 	}
 	else {
@@ -157,19 +139,3 @@ void FreeMemory(void *pPointer)
 	_free(pPointer);
 #endif
 }
-
-
-class CMemoryAllocator
-{
-public:
-	CMemoryAllocator(void)
-	{
-		InitAllocator();
-	}
-	~CMemoryAllocator(void)
-	{
-		ExitAllocator();
-	}
-};
-
-static CMemoryAllocator allocator;

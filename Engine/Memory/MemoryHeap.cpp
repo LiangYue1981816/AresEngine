@@ -2,6 +2,7 @@
 #include <stdint.h>
 #include <assert.h>
 #include "rbtree.h"
+#include "pthread.h"
 #include "MemoryHeap.h"
 #include "MemorySystem.h"
 
@@ -27,7 +28,7 @@
 
 #define NODE_INDEX(size) (((size) / BLOCK_UNIT_SIZE) - 1)
 
-static const uint32_t BLOCK_POOL_SIZE = 1 * 1024 * 1024;
+static const uint32_t BLOCK_POOL_SIZE = 4 * 1024 * 1024;
 static const uint32_t BLOCK_UNIT_SIZE = 4 * 1024;
 
 struct BLOCK;
@@ -72,6 +73,7 @@ struct BLOCK_POOL {
 };
 
 struct HEAP_ALLOCATOR {
+	pthread_mutex_t mutex;
 	BLOCK_POOL *pBlockPoolHead;
 };
 
@@ -292,7 +294,10 @@ static void HEAP_PoolFree(BLOCK_POOL *pBlockPool, BLOCK *pBlock)
 HEAP_ALLOCATOR* HEAP_Create(void)
 {
 	HEAP_ALLOCATOR *pHeapAllocator = (HEAP_ALLOCATOR *)_malloc(sizeof(HEAP_ALLOCATOR));
+
 	pHeapAllocator->pBlockPoolHead = NULL;
+	pthread_mutex_init(&pHeapAllocator->mutex, NULL);
+
 	return pHeapAllocator;
 }
 
@@ -300,12 +305,14 @@ void HEAP_Destroy(HEAP_ALLOCATOR *pHeapAllocator)
 {
 	if (BLOCK_POOL *pBlockPool = pHeapAllocator->pBlockPoolHead) {
 		BLOCK_POOL *pBlockPoolNext = NULL;
-
 		do {
 			pBlockPoolNext = pBlockPool->pNext;
 			HEAP_DestroyPool(pBlockPool);
 		} while (pBlockPool = pBlockPoolNext);
 	}
+
+	pHeapAllocator->pBlockPoolHead = NULL;
+	pthread_mutex_destroy(&pHeapAllocator->mutex);
 
 	_free(pHeapAllocator);
 }
@@ -315,26 +322,32 @@ void* HEAP_Alloc(HEAP_ALLOCATOR *pHeapAllocator, size_t size)
 	uint32_t *pPointer = NULL;
 
 	if (pHeapAllocator) {
-		const uint32_t dwMemSize = (uint32_t)ALIGN_BYTE(size, BLOCK_UNIT_SIZE);
+		pthread_mutex_lock(&pHeapAllocator->mutex);
+		{
+			const uint32_t dwMemSize = (uint32_t)ALIGN_BYTE(size, BLOCK_UNIT_SIZE);
 
-		do {
-			if (BLOCK_POOL *pBlockPool = pHeapAllocator->pBlockPoolHead) {
-				do {
-					if (pPointer = (uint32_t *)HEAP_PoolAlloc(pBlockPool, dwMemSize)) {
-						return pPointer;
-					}
-				} while (pBlockPool = pBlockPool->pNext);
-			}
+			do {
+				if (BLOCK_POOL *pBlockPool = pHeapAllocator->pBlockPoolHead) {
+					do {
+						if (pPointer = (uint32_t *)HEAP_PoolAlloc(pBlockPool, dwMemSize)) {
+							goto RET;
+						}
+					} while (pBlockPool = pBlockPool->pNext);
+				}
 
-			BLOCK_POOL *pBlockPool = HEAP_CreatePool(dwMemSize);
+				BLOCK_POOL *pBlockPool = HEAP_CreatePool(dwMemSize);
 
-			if (pHeapAllocator->pBlockPoolHead) {
-				pHeapAllocator->pBlockPoolHead->pPrev = pBlockPool;
-				pBlockPool->pNext = pHeapAllocator->pBlockPoolHead;
-			}
+				if (pHeapAllocator->pBlockPoolHead) {
+					pHeapAllocator->pBlockPoolHead->pPrev = pBlockPool;
+					pBlockPool->pNext = pHeapAllocator->pBlockPoolHead;
+				}
 
-			pHeapAllocator->pBlockPoolHead = pBlockPool;
-		} while (true);
+				pHeapAllocator->pBlockPoolHead = pBlockPool;
+			} while (true);
+		RET:
+			;
+		}
+		pthread_mutex_unlock(&pHeapAllocator->mutex);
 	}
 
 	return pPointer;
@@ -343,27 +356,30 @@ void* HEAP_Alloc(HEAP_ALLOCATOR *pHeapAllocator, size_t size)
 bool HEAP_Free(HEAP_ALLOCATOR *pHeapAllocator, void *pPointer)
 {
 	if (pHeapAllocator) {
-		BLOCK *pBlock = (BLOCK *)((uint8_t *)pPointer - ALIGN_16BYTE(sizeof(BLOCK)));
-		BLOCK_POOL *pBlockPool = pBlock->pPool;
+		pthread_mutex_lock(&pHeapAllocator->mutex);
+		{
+			BLOCK *pBlock = (BLOCK *)((uint8_t *)pPointer - ALIGN_16BYTE(sizeof(BLOCK)));
+			BLOCK_POOL *pBlockPool = pBlock->pPool;
 
-		HEAP_PoolFree(pBlockPool, pBlock);
-		/*
-		if (pBlockPool->dwSize == pBlockPool->dwFullSize) {
-			if (pHeapAllocator->pBlockPoolHead == pBlockPool) {
-				pHeapAllocator->pBlockPoolHead =  pBlockPool->pNext;
+			HEAP_PoolFree(pBlockPool, pBlock);
+
+			if (pBlockPool->dwSize == pBlockPool->dwFullSize) {
+				if (pHeapAllocator->pBlockPoolHead == pBlockPool) {
+					pHeapAllocator->pBlockPoolHead =  pBlockPool->pNext;
+				}
+
+				if (pBlockPool->pPrev) {
+					pBlockPool->pPrev->pNext = pBlockPool->pNext;
+				}
+
+				if (pBlockPool->pNext) {
+					pBlockPool->pNext->pPrev = pBlockPool->pPrev;
+				}
+
+				HEAP_DestroyPool(pBlockPool);
 			}
-
-			if (pBlockPool->pPrev) {
-				pBlockPool->pPrev->pNext = pBlockPool->pNext;
-			}
-
-			if (pBlockPool->pNext) {
-				pBlockPool->pNext->pPrev = pBlockPool->pPrev;
-			}
-
-			HEAP_DestroyPool(pBlockPool);
 		}
-		*/
+		pthread_mutex_unlock(&pHeapAllocator->mutex);
 		return true;
 	}
 
