@@ -12,7 +12,7 @@ private:
 	virtual ~CGfxShaderCompiler(void);
 
 
-private:
+public:
 	void SetCachePath(const char *szPath);
 
 	void AddIncludePath(const char *szPath);
