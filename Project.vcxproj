@@ -78,6 +78,7 @@
     <ClInclude Include="Engine\Renderer\GLES31\GfxResource.h" />
     <ClInclude Include="Engine\Renderer\GLES31\GfxSampler.h" />
     <ClInclude Include="Engine\Renderer\GLES31\GfxSamplerManager.h" />
+    <ClInclude Include="Engine\Renderer\GLES31\GfxShaderCompiler.h" />
     <ClInclude Include="Engine\Renderer\GLES31\GfxTexture2D.h" />
     <ClInclude Include="Engine\Renderer\GLES31\GfxTexture2DArray.h" />
     <ClInclude Include="Engine\Renderer\GLES31\GfxTextureBase.h" />
@@ -151,6 +152,7 @@
     <ClCompile Include="Engine\Renderer\GLES31\GfxResource.cpp" />
     <ClCompile Include="Engine\Renderer\GLES31\GfxSampler.cpp" />
     <ClCompile Include="Engine\Renderer\GLES31\GfxSamplerManager.cpp" />
+    <ClCompile Include="Engine\Renderer\GLES31\GfxShaderCompiler.cpp" />
     <ClCompile Include="Engine\Renderer\GLES31\GfxTexture2D.cpp" />
     <ClCompile Include="Engine\Renderer\GLES31\GfxTexture2DArray.cpp" />
     <ClCompile Include="Engine\Renderer\GLES31\GfxTextureBase.cpp" />

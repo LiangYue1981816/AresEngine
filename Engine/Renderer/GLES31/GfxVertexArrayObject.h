@@ -8,9 +8,12 @@ class CGfxVertexArrayObject
 
 
 private:
-	CGfxVertexArrayObject(const CGfxIndexBuffer *pIndexBuffer, const CGfxVertexBuffer *pVertexBuffer, const CGfxInstanceBuffer *pInstanceBuffer);
+	CGfxVertexArrayObject(void);
 	virtual ~CGfxVertexArrayObject(void);
 
+
+private:
+	bool Buffer(CGfxIndexBuffer *pIndexBuffer, CGfxVertexBuffer *pVertexBuffer, CGfxInstanceBuffer *pInstanceBuffer);
 
 private:
 	void Bind(void) const;
@@ -18,4 +21,7 @@ private:
 
 private:
 	GLuint m_vao;
+	CGfxIndexBuffer *m_pIndexBuffer;
+	CGfxVertexBuffer *m_pVertexBuffer;
+	CGfxInstanceBuffer *m_pInstanceBuffer;
 };

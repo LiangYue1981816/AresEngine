@@ -14,13 +14,15 @@ private:
 	virtual void Release(void);
 
 
-private:
+public:
 	bool Load(const char *szFileName);
 	void Free(void);
 
-	void CreateIndexBuffer(size_t size, const void *pBuffer, bool bDynamic, GLenum type);
-	void CreateVertexBuffer(size_t size, const void *pBuffer, bool bDynamic, GLuint format);
-	void CreateInstanceBuffer(GLuint format);
+public:
+	bool CreateIndexBuffer(size_t size, const void *pBuffer, bool bDynamic, GLenum type);
+	bool CreateVertexBuffer(size_t size, const void *pBuffer, bool bDynamic, GLuint format);
+	bool CreateInstanceBuffer(GLuint format);
+	bool CreateVertexArrayObject(void);
 
 public:
 	void AddInstance(const glm::mat4 &mtxTransform);

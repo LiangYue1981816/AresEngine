@@ -87,13 +87,10 @@ bool CGfxMesh::Load(const char *szFileName)
 		fseek(pFile, header.vertexBufferOffset, SEEK_SET);
 		fread(pVertexBuffer, header.vertexBufferSize, 1, pFile);
 
-		m_pIndexBuffer = new CGfxIndexBuffer(GL_UNSIGNED_INT, header.indexBufferSize, false);
-		m_pVertexBuffer = new CGfxVertexBuffer(format, header.vertexBufferSize, false);
-		m_pInstanceBuffer = new CGfxInstanceBuffer(INSTANCE_ATTRIBUTE_TRANSFORM);
-		m_pVertexArrayObject = new CGfxVertexArrayObject(m_pIndexBuffer, m_pVertexBuffer, m_pInstanceBuffer);
-
-		m_pIndexBuffer->BufferData(0, header.indexBufferSize, pIndexBuffer);
-		m_pVertexBuffer->BufferData(0, header.vertexBufferSize, pVertexBuffer);
+		CreateIndexBuffer(header.indexBufferSize, pIndexBuffer, false, GL_UNSIGNED_INT);
+		CreateVertexBuffer(header.vertexBufferSize, pVertexBuffer, false, format);
+		CreateInstanceBuffer(INSTANCE_ATTRIBUTE_TRANSFORM);
+		CreateVertexArrayObject();
 
 		FreeMemory(pVertexBuffer);
 		FreeMemory(pIndexBuffer);
@@ -136,7 +133,7 @@ void CGfxMesh::Free(void)
 	m_pVertexArrayObject = NULL;
 }
 
-void CGfxMesh::CreateIndexBuffer(size_t size, const void *pBuffer, bool bDynamic, GLenum type)
+bool CGfxMesh::CreateIndexBuffer(size_t size, const void *pBuffer, bool bDynamic, GLenum type)
 {
 	if (m_pIndexBuffer) {
 		delete m_pIndexBuffer;
@@ -150,10 +147,10 @@ void CGfxMesh::CreateIndexBuffer(size_t size, const void *pBuffer, bool bDynamic
 	m_pVertexArrayObject = NULL;
 
 	m_pIndexBuffer = new CGfxIndexBuffer(type, size, bDynamic);
-	m_pIndexBuffer->BufferData(0, size, pBuffer);
+	return m_pIndexBuffer->BufferData(0, size, pBuffer);
 }
 
-void CGfxMesh::CreateVertexBuffer(size_t size, const void *pBuffer, bool bDynamic, GLuint format)
+bool CGfxMesh::CreateVertexBuffer(size_t size, const void *pBuffer, bool bDynamic, GLuint format)
 {
 	if (m_pVertexBuffer) {
 		delete m_pVertexBuffer;
@@ -167,10 +164,10 @@ void CGfxMesh::CreateVertexBuffer(size_t size, const void *pBuffer, bool bDynami
 	m_pVertexArrayObject = NULL;
 
 	m_pVertexBuffer = new CGfxVertexBuffer(format, size, bDynamic);
-	m_pVertexBuffer->BufferData(0, size, pBuffer);
+	return m_pVertexBuffer->BufferData(0, size, pBuffer);
 }
 
-void CGfxMesh::CreateInstanceBuffer(GLuint format)
+bool CGfxMesh::CreateInstanceBuffer(GLuint format)
 {
 	if (m_pInstanceBuffer) {
 		delete m_pInstanceBuffer;
@@ -184,6 +181,17 @@ void CGfxMesh::CreateInstanceBuffer(GLuint format)
 	m_pVertexArrayObject = NULL;
 
 	m_pInstanceBuffer = new CGfxInstanceBuffer(format);
+	return true;
+}
+
+bool CGfxMesh::CreateVertexArrayObject(void)
+{
+	if (m_pVertexArrayObject) {
+		delete m_pVertexArrayObject;
+	}
+
+	m_pVertexArrayObject = new CGfxVertexArrayObject;
+	return m_pVertexArrayObject->Buffer(m_pIndexBuffer, m_pVertexBuffer, m_pInstanceBuffer);
 }
 
 void CGfxMesh::AddInstance(const glm::mat4 &mtxTransform)

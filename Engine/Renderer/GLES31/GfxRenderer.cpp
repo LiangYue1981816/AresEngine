@@ -150,6 +150,11 @@ const char* CGfxRenderer::GetMeshFullPath(const char *szFileName, char *szFullPa
 	return szFullPath;
 }
 
+CGfxShaderCompiler* CGfxRenderer::GetCompiler(void)
+{
+	return &m_compiler;
+}
+
 CGfxCamera* CGfxRenderer::GetCamera(const char *szName)
 {
 	return m_pCameraManager->GetCamera(szName);

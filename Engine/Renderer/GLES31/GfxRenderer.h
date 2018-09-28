@@ -6,6 +6,11 @@
 #include <gl31.h>
 #include <gli.hpp>
 #include <shaderc/shaderc.hpp>
+#include <glslc/file_includer.h>
+#include <string>
+#include <vector>
+#include <map>
+#include <unordered_map>
 #include <eastl/string.h>
 #include <eastl/vector.h>
 #include <eastl/map.h>
@@ -18,6 +23,8 @@
 
 #include "GfxGLM.h"
 #include "GfxDefinition.h"
+
+#include "GfxShaderCompiler.h"
 
 #include "GfxResource.h"
 #include "GfxMesh.h"
@@ -73,6 +80,10 @@ public:
 	const char* GetTextureFullPath(const char *szFileName, char *szFullPath) const;
 	const char* GetMaterialFullPath(const char *szFileName, char *szFullPath) const;
 	const char* GetMeshFullPath(const char *szFileName, char *szFullPath) const;
+
+	// Compiler
+public:
+	CGfxShaderCompiler* GetCompiler(void);
 
 	// Camera
 public:
@@ -190,4 +201,7 @@ private:
 	CGfxTextureManager *m_pTextureManager;
 	CGfxMaterialManager *m_pMaterialManager;
 	CGfxMeshManager *m_pMeshManager;
+
+private:
+	CGfxShaderCompiler m_compiler;
 };

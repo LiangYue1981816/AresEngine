@@ -38,6 +38,89 @@ unsigned int HashValue(const char *szString)
 	return dwHashValue ? dwHashValue : 0xffffffff;
 }
 
+unsigned int HashValue(const unsigned char *pBuffer, int length)
+{
+	const unsigned char *c = pBuffer;
+	unsigned int dwHashValue = 0x00000000;
+
+	while (length--) {
+//		dwHashValue = (dwHashValue << 5) - dwHashValue + (*c == '/' ? '\\' : *c); c++;
+		dwHashValue = (dwHashValue << 4) - dwHashValue + (*c == '/' ? '\\' : *c); c++;
+	}
+
+	return dwHashValue ? dwHashValue : 0xffffffff;
+}
+
+size_t fsize(FILE *stream)
+{
+	long pos;
+	size_t size;
+
+	pos = ftell(stream);
+	{
+		fseek(stream, 0, SEEK_END);
+		size = ftell(stream);
+	}
+	fseek(stream, pos, SEEK_SET);
+
+	return size;
+}
+
+size_t freadline(char *buffer, size_t size, FILE *stream)
+{
+	char c;
+	size_t count = 0;
+
+	while (feof(stream) == FALSE && count < size - 1) {
+		c = fgetc(stream);
+
+		if (c == '\r') {
+			c = fgetc(stream);
+		}
+
+		if (c == '\n') {
+			break;
+		}
+
+		if (c == -1) {
+			break;
+		}
+
+		*buffer = c;
+
+		buffer++;
+		count++;
+	}
+
+	*buffer = 0;
+
+	return count;
+}
+
+size_t freadstring(char *buffer, size_t size, FILE *stream)
+{
+	size_t len = 0;
+	size_t reads = 0;
+
+	reads += fread(&len, sizeof(len), 1, stream);
+	reads += fread(buffer, sizeof(*buffer), min(len, size), stream);
+	buffer[min(len, size)] = 0;
+
+	return reads;
+}
+
+size_t fwritestring(const char *buffer, size_t size, FILE *stream)
+{
+	size_t len = 0;
+	size_t writes = 0;
+
+	len = min(strlen(buffer), size);
+	writes += fwrite(&len, sizeof(len), 1, stream);
+	writes += fwrite(buffer, sizeof(*buffer), len, stream);
+
+	return writes;
+}
+
 void LogOutput(const char *szTag, const char *szFormat, ...)
 {
 	static char szText[128 * 1024];

@@ -432,6 +432,9 @@
     <ClInclude Include="ThirdParty\rbtree\rbtree.h">
       <Filter>ThirdParty\rbtree</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\Renderer\GLES31\GfxShaderCompiler.h">
+      <Filter>Engine\Renderer\GLES31\Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application\Main.cpp">
@@ -661,6 +664,9 @@
     </ClCompile>
     <ClCompile Include="ThirdParty\rbtree\rbtree.cpp">
       <Filter>ThirdParty\rbtree</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Renderer\GLES31\GfxShaderCompiler.cpp">
+      <Filter>Engine\Renderer\GLES31\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

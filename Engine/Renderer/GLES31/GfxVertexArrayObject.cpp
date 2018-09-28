@@ -6,27 +6,47 @@
 #include "GfxVertexArrayObject.h"
 
 
-CGfxVertexArrayObject::CGfxVertexArrayObject(const CGfxIndexBuffer *pIndexBuffer, const CGfxVertexBuffer *pVertexBuffer, const CGfxInstanceBuffer *pInstanceBuffer)
+CGfxVertexArrayObject::CGfxVertexArrayObject(void)
 	: m_vao(0)
+	, m_pIndexBuffer(NULL)
+	, m_pVertexBuffer(NULL)
+	, m_pInstanceBuffer(NULL)
 {
 	glGenVertexArrays(1, &m_vao);
-
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-	glBindVertexArray(m_vao);
-	{
-		pIndexBuffer->Bind();
-		pVertexBuffer->Bind();
-		pInstanceBuffer->Bind();
-	}
-	glBindVertexArray(0);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
 CGfxVertexArrayObject::~CGfxVertexArrayObject(void)
 {
 	glDeleteVertexArrays(1, &m_vao);
+}
+
+bool CGfxVertexArrayObject::Buffer(CGfxIndexBuffer *pIndexBuffer, CGfxVertexBuffer *pVertexBuffer, CGfxInstanceBuffer *pInstanceBuffer)
+{
+	m_pIndexBuffer = pIndexBuffer;
+	m_pVertexBuffer = pVertexBuffer;
+	m_pInstanceBuffer = pInstanceBuffer;
+
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	glBindVertexArray(m_vao);
+	{
+		if (m_pIndexBuffer) {
+			m_pIndexBuffer->Bind();
+		}
+
+		if (m_pVertexBuffer) {
+			m_pVertexBuffer->Bind();
+		}
+
+		if (m_pInstanceBuffer) {
+			m_pInstanceBuffer->Bind();
+		}
+	}
+	glBindVertexArray(0);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+	return true;
 }
 
 void CGfxVertexArrayObject::Bind(void) const
