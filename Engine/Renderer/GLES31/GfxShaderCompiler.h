@@ -13,7 +13,7 @@ private:
 
 
 public:
-	void SetCachePath(const char *szPath);
+	void SetShaderCachePath(const char *szPath);
 
 	void AddIncludePath(const char *szPath);
 	void AddMacroDefinition(const char *szName);
@@ -24,7 +24,7 @@ public:
 
 
 private:
-	char m_szCachePath[_MAX_STRING];
+	char m_szShaderCachePath[_MAX_STRING];
 
 	shaderc_util::FileFinder m_fileFinder;
 	std::unique_ptr<glslc::FileIncluder> m_fileIncluder;

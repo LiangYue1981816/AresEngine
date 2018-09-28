@@ -34,15 +34,16 @@ static bool LoadShaderBinary(const char *szFileName, std::vector<uint32_t> &word
 	return HashValue((uint8_t *)words.data(), sizeof(uint32_t) * words.size()) == dwHashValue ? true : false;
 }
 
-static bool PreprocessShader(std::string &source, const char *szFileName, shaderc_shader_kind kind, const shaderc::Compiler &compiler, const shaderc::CompileOptions &options)
+static bool PreprocessShader(std::string &source, shaderc_shader_kind kind, const shaderc::Compiler &compiler, const shaderc::CompileOptions &options, std::string &preprocess)
 {
-	shaderc::PreprocessedSourceCompilationResult module = compiler.PreprocessGlsl(source, kind, szFileName, options);
+	shaderc::PreprocessedSourceCompilationResult module = compiler.PreprocessGlsl(source, kind, "SPIR-V Compiler", options);
 
 	if (module.GetCompilationStatus() != shaderc_compilation_status_success) {
 		LogOutput("GfxRenderer", "Preprocess Fail: %s\n", module.GetErrorMessage().c_str());
 		return false;
 	}
 
+	preprocess = { module.cbegin(), module.cend() };
 	return true;
 }
 
@@ -61,7 +62,7 @@ static bool CompileShader(std::string &source, shaderc_shader_kind kind, const s
 
 
 CGfxShaderCompiler::CGfxShaderCompiler(void)
-	: m_szCachePath{ 0 }
+	: m_szShaderCachePath{ 0 }
 	, m_fileIncluder(new glslc::FileIncluder(&m_fileFinder))
 {
 
@@ -72,9 +73,9 @@ CGfxShaderCompiler::~CGfxShaderCompiler(void)
 
 }
 
-void CGfxShaderCompiler::SetCachePath(const char *szPath)
+void CGfxShaderCompiler::SetShaderCachePath(const char *szPath)
 {
-	strcpy(m_szCachePath, szPath);
+	strcpy(m_szShaderCachePath, szPath);
 }
 
 void CGfxShaderCompiler::AddIncludePath(const char *szPath)
@@ -120,12 +121,13 @@ std::vector<uint32_t> CGfxShaderCompiler::Compile(const char *szFileName, shader
 		}
 
 		std::string source;
-		if (PreprocessShader(source, szFileName, kind, m_compiler, options) == false) {
+		std::string preprocess;
+		if (PreprocessShader(source, kind, m_compiler, options, preprocess) == false) {
 			break;
 		}
 
 		char szBinFileName[_MAX_STRING];
-		sprintf(szBinFileName, "%s/%x", m_szCachePath, HashValue(source.c_str()));
+		sprintf(szBinFileName, "%s/%x", m_szShaderCachePath, HashValue(preprocess.c_str()));
 
 		if (LoadShaderBinary(szBinFileName, words) == false) {
 			if (CompileShader(source, kind, m_compiler, options, words) == false) {
