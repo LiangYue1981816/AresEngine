@@ -17,5 +17,5 @@ private:
 
 
 private:
-	eastl::unordered_map<GLuint64, CGfxSampler*> m_pSamplers;
+	eastl::unordered_map<uint64_t, CGfxSampler*> m_pSamplers;
 };

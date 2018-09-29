@@ -5,8 +5,11 @@
 
 #include <gl31.h>
 #include <gli.hpp>
+#include <spirv_cfg.hpp>
+#include <spirv_glsl.hpp>
 #include <shaderc/shaderc.hpp>
 #include <glslc/file_includer.h>
+
 #include <string>
 #include <vector>
 #include <map>
@@ -23,11 +26,13 @@
 
 #include "GfxGLM.h"
 #include "GfxDefinition.h"
+#include "GfxExtension.h"
 
 #include "GfxShaderCompiler.h"
 
 #include "GfxResource.h"
 #include "GfxMesh.h"
+#include "GfxShader.h"
 #include "GfxProgram.h"
 #include "GfxSampler.h"
 #include "GfxTexture2D.h"
@@ -37,6 +42,7 @@
 #include "GfxFrameBuffer.h"
 
 #include "GfxMeshManager.h"
+#include "GfxShaderManager.h"
 #include "GfxProgramManager.h"
 #include "GfxSamplerManager.h"
 #include "GfxTextureManager.h"

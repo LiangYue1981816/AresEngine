@@ -11,60 +11,12 @@ CGfxTexture2DArray::CGfxTexture2DArray(GLuint name)
 
 CGfxTexture2DArray::~CGfxTexture2DArray(void)
 {
-	Free();
-}
-
-void CGfxTexture2DArray::Free(void)
-{
-	for (const auto &itLayerSize : m_size) {
-		for (const auto &itLevelSize : itLayerSize.second) {
-			CGfxProfiler::DecTextureDataSize(itLevelSize.second);
-		}
-	}
-
-	CGfxTextureBase::Free();
-}
-
-bool CGfxTexture2DArray::Load(const char *szFileName)
-{
-	try {
-		Free();
-
-		char szFullPath[260];
-		Renderer()->GetTextureFullPath(szFileName, szFullPath);
-
-		const gli::texture texture = gli::load(szFullPath);
-		if (texture.empty()) throw 0;
-
-		gli::gl GL(gli::gl::PROFILE_ES30);
-		gli::gl::format format = GL.translate(texture.format(), texture.swizzles());
-
-		if (texture.target() != gli::TARGET_2D_ARRAY) throw 1;
-		if (Create(format.External, format.Internal, texture.extent().x, texture.extent().y, (GLsizei)texture.levels(), (GLsizei)texture.layers()) == false) throw 2;
-		if (TransferTexture2DArray((const gli::texture2d_array *)&texture) == false) throw 3;
-
-		return true;
-	}
-	catch (int) {
-		Free();
-		return false;
-	}
-}
-
-bool CGfxTexture2DArray::LoadLayer(const char *szFileName, GLsizei layer)
-{
-	char szFullPath[260];
-	Renderer()->GetTextureFullPath(szFileName, szFullPath);
-
-	const gli::texture texture = gli::load(szFullPath);
-	if (texture.empty()) return false;
-
-	return TransferTexture2D(layer, (const gli::texture2d *)&texture);
+	Destroy();
 }
 
 bool CGfxTexture2DArray::Create(GLenum format, GLenum internalFormat, GLsizei width, GLsizei height, GLsizei mipLevels, GLsizei arrayLayers)
 {
-	Free();
+	Destroy();
 
 	m_format = format;
 	m_internalFormat = internalFormat;
@@ -81,6 +33,17 @@ bool CGfxTexture2DArray::Create(GLenum format, GLenum internalFormat, GLsizei wi
 	glBindTexture(GL_TEXTURE_2D_ARRAY, 0);
 
 	return true;
+}
+
+void CGfxTexture2DArray::Destroy(void)
+{
+	for (const auto &itLayerSize : m_size) {
+		for (const auto &itLevelSize : itLayerSize.second) {
+			CGfxProfiler::DecTextureDataSize(itLevelSize.second);
+		}
+	}
+
+	CGfxTextureBase::Destroy();
 }
 
 bool CGfxTexture2DArray::TransferTexture2DArray(const gli::texture2d_array *texture)

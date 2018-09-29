@@ -44,43 +44,7 @@ CGfxTextureCubeMap* CGfxTextureManager::CreateTextureCubeMap(GLuint name)
 	return (CGfxTextureCubeMap *)m_pTextures[name];
 }
 
-CGfxTexture2D* CGfxTextureManager::LoadTexture2D(const char *szFileName)
-{
-	GLuint name = HashValue(szFileName);
-
-	if (m_pTextures[name] == NULL) {
-		m_pTextures[name] = new CGfxTexture2D(name);
-		m_pTextures[name]->Load(szFileName);
-	}
-
-	return (CGfxTexture2D *)m_pTextures[name];
-}
-
-CGfxTexture2DArray* CGfxTextureManager::LoadTexture2DArray(const char *szFileName)
-{
-	GLuint name = HashValue(szFileName);
-
-	if (m_pTextures[name] == NULL) {
-		m_pTextures[name] = new CGfxTexture2DArray(name);
-		m_pTextures[name]->Load(szFileName);
-	}
-
-	return (CGfxTexture2DArray *)m_pTextures[name];
-}
-
-CGfxTextureCubeMap* CGfxTextureManager::LoadTextureCubeMap(const char *szFileName)
-{
-	GLuint name = HashValue(szFileName);
-
-	if (m_pTextures[name] == NULL) {
-		m_pTextures[name] = new CGfxTextureCubeMap(name);
-		m_pTextures[name]->Load(szFileName);
-	}
-
-	return (CGfxTextureCubeMap *)m_pTextures[name];
-}
-
-void CGfxTextureManager::FreeTexture(CGfxTextureBase *pTexture)
+void CGfxTextureManager::DestroyTexture(CGfxTextureBase *pTexture)
 {
 	if (pTexture) {
 		m_pTextures.erase(pTexture->GetName());

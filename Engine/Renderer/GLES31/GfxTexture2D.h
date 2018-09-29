@@ -12,12 +12,11 @@ class CGfxTexture2D : public CGfxTextureBase
 private:
 	CGfxTexture2D(GLuint name);
 	virtual ~CGfxTexture2D(void);
-	virtual void Free(void);
 
 
 public:
-	bool Load(const char *szFileName);
 	bool Create(GLenum format, GLenum internalFormat, GLsizei width, GLsizei height, GLsizei mipLevels);
+	void Destroy(void);
 
 public:
 	bool TransferTexture2D(const gli::texture2d *texture);

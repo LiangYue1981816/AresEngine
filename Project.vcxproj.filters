@@ -435,6 +435,15 @@
     <ClInclude Include="Engine\Renderer\GLES31\GfxShaderCompiler.h">
       <Filter>Engine\Renderer\GLES31\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\Renderer\GLES31\GfxShader.h">
+      <Filter>Engine\Renderer\GLES31\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Renderer\GLES31\GfxShaderManager.h">
+      <Filter>Engine\Renderer\GLES31\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Renderer\GLES31\GfxExtension.h">
+      <Filter>Engine\Renderer\GLES31\Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application\Main.cpp">
@@ -666,6 +675,15 @@
       <Filter>ThirdParty\rbtree</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Renderer\GLES31\GfxShaderCompiler.cpp">
+      <Filter>Engine\Renderer\GLES31\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Renderer\GLES31\GfxShader.cpp">
+      <Filter>Engine\Renderer\GLES31\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Renderer\GLES31\GfxShaderManager.cpp">
+      <Filter>Engine\Renderer\GLES31\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Renderer\GLES31\GfxExtension.cpp">
       <Filter>Engine\Renderer\GLES31\Source Files</Filter>
     </ClCompile>
   </ItemGroup>

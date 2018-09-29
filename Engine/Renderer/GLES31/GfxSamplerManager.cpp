@@ -19,7 +19,7 @@ CGfxSamplerManager::~CGfxSamplerManager(void)
 
 CGfxSampler* CGfxSamplerManager::CreateSampler(GLenum minFilter, GLenum magFilter, GLenum addressMode)
 {
-	GLuint64 name = (((GLuint64)minFilter) << 32) | (((GLuint64)magFilter) << 16) | ((GLuint64)addressMode);
+	uint64_t name = (((uint64_t)minFilter) << 32) | (((uint64_t)magFilter) << 16) | ((uint64_t)addressMode);
 
 	if (m_pSamplers[name] == NULL) {
 		m_pSamplers[name] = new CGfxSampler(minFilter, magFilter, addressMode);

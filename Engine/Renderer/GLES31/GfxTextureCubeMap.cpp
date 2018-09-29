@@ -11,60 +11,12 @@ CGfxTextureCubeMap::CGfxTextureCubeMap(GLuint name)
 
 CGfxTextureCubeMap::~CGfxTextureCubeMap(void)
 {
-	Free();
-}
-
-void CGfxTextureCubeMap::Free(void)
-{
-	for (const auto &itFaceSize : m_size) {
-		for (const auto &itLevelSize : itFaceSize.second) {
-			CGfxProfiler::DecTextureDataSize(itLevelSize.second);
-		}
-	}
-
-	CGfxTextureBase::Free();
-}
-
-bool CGfxTextureCubeMap::Load(const char *szFileName)
-{
-	try {
-		Free();
-
-		char szFullPath[260];
-		Renderer()->GetTextureFullPath(szFileName, szFullPath);
-
-		const gli::texture texture = gli::load(szFullPath);
-		if (texture.empty()) throw 0;
-
-		gli::gl GL(gli::gl::PROFILE_ES30);
-		gli::gl::format format = GL.translate(texture.format(), texture.swizzles());
-
-		if (texture.target() != gli::TARGET_CUBE) throw 1;
-		if (Create(format.External, format.Internal, texture.extent().x, texture.extent().y, (GLsizei)texture.levels()) == false) throw 2;
-		if (TransferTextureCubeMap((const gli::texture_cube *)&texture) == false) throw 3;
-
-		return true;
-	}
-	catch (int) {
-		Free();
-		return false;
-	}
-}
-
-bool CGfxTextureCubeMap::LoadFace(const char *szFileName, GLsizei face)
-{
-	char szFullPath[260];
-	Renderer()->GetTextureFullPath(szFileName, szFullPath);
-
-	const gli::texture texture = gli::load(szFullPath);
-	if (texture.empty()) return false;
-
-	return TransferTexture2D(face, (const gli::texture2d *)&texture);
+	Destroy();
 }
 
 bool CGfxTextureCubeMap::Create(GLenum format, GLenum internalFormat, GLsizei width, GLsizei height, GLsizei mipLevels)
 {
-	Free();
+	Destroy();
 
 	m_format = format;
 	m_internalFormat = internalFormat;
@@ -80,6 +32,17 @@ bool CGfxTextureCubeMap::Create(GLenum format, GLenum internalFormat, GLsizei wi
 	glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
 
 	return true;
+}
+
+void CGfxTextureCubeMap::Destroy(void)
+{
+	for (const auto &itFaceSize : m_size) {
+		for (const auto &itLevelSize : itFaceSize.second) {
+			CGfxProfiler::DecTextureDataSize(itLevelSize.second);
+		}
+	}
+
+	CGfxTextureBase::Destroy();
 }
 
 bool CGfxTextureCubeMap::TransferTextureCubeMap(const gli::texture_cube *texture)

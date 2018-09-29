@@ -116,6 +116,10 @@ void* AllocMemory(size_t size)
 
 void FreeMemory(void *pPointer)
 {
+	if (pPointer == NULL) {
+		return;
+	}
+
 #ifdef MEMORY_ALLOCATOR
 	if (bInitAllocator && GET_MEM_SYSTEM(pPointer) == 0) {
 		uint32_t indexThread = GET_MEM_THREAD_ID(pPointer);

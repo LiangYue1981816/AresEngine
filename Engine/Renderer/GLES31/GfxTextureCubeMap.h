@@ -12,13 +12,11 @@ class CGfxTextureCubeMap : public CGfxTextureBase
 private:
 	CGfxTextureCubeMap(GLuint name);
 	virtual ~CGfxTextureCubeMap(void);
-	virtual void Free(void);
 
 
 public:
-	bool Load(const char *szFileName);
-	bool LoadFace(const char *szFileName, GLsizei face);
 	bool Create(GLenum format, GLenum internalFormat, GLsizei width, GLsizei height, GLsizei mipLevels);
+	void Destroy(void);
 
 public:
 	bool TransferTextureCubeMap(const gli::texture_cube *texture);

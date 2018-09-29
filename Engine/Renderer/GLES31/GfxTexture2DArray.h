@@ -12,13 +12,11 @@ class CGfxTexture2DArray : public CGfxTextureBase
 private:
 	CGfxTexture2DArray(GLuint name);
 	virtual ~CGfxTexture2DArray(void);
-	virtual void Free(void);
 
 
 public:
-	bool Load(const char *szFileName);
-	bool LoadLayer(const char *szFileName, GLsizei layer);
 	bool Create(GLenum format, GLenum internalFormat, GLsizei width, GLsizei height, GLsizei mipLevels, GLsizei arrayLayers);
+	void Destroy(void);
 
 public:
 	bool TransferTexture2DArray(const gli::texture2d_array *texture);

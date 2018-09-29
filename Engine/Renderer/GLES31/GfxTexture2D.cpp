@@ -11,47 +11,12 @@ CGfxTexture2D::CGfxTexture2D(GLuint name)
 
 CGfxTexture2D::~CGfxTexture2D(void)
 {
-	Free();
-}
-
-void CGfxTexture2D::Free(void)
-{
-	for (const auto &itLevelSize : m_size) {
-		CGfxProfiler::DecTextureDataSize(itLevelSize.second);
-	}
-
-	CGfxTextureBase::Free();
-}
-
-bool CGfxTexture2D::Load(const char *szFileName)
-{
-	try {
-		Free();
-
-		char szFullPath[260];
-		Renderer()->GetTextureFullPath(szFileName, szFullPath);
-
-		const gli::texture texture = gli::load(szFullPath);
-		if (texture.empty()) throw 0;
-
-		gli::gl GL(gli::gl::PROFILE_ES30);
-		gli::gl::format format = GL.translate(texture.format(), texture.swizzles());
-
-		if (texture.target() != gli::TARGET_2D) throw 1;
-		if (Create(format.External, format.Internal, texture.extent().x, texture.extent().y, (GLsizei)texture.levels()) == false) throw 2;
-		if (TransferTexture2D((const gli::texture2d *)&texture) == false) throw 3;
-
-		return true;
-	}
-	catch (int) {
-		Free();
-		return false;
-	}
+	Destroy();
 }
 
 bool CGfxTexture2D::Create(GLenum format, GLenum internalFormat, GLsizei width, GLsizei height, GLsizei mipLevels)
 {
-	Free();
+	Destroy();
 
 	m_format = format;
 	m_internalFormat = internalFormat;
@@ -67,6 +32,15 @@ bool CGfxTexture2D::Create(GLenum format, GLenum internalFormat, GLsizei width, 
 	glBindTexture(GL_TEXTURE_2D, 0);
 
 	return true;
+}
+
+void CGfxTexture2D::Destroy(void)
+{
+	for (const auto &itLevelSize : m_size) {
+		CGfxProfiler::DecTextureDataSize(itLevelSize.second);
+	}
+
+	CGfxTextureBase::Destroy();
 }
 
 bool CGfxTexture2D::TransferTexture2D(const gli::texture2d *texture)

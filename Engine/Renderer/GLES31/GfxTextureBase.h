@@ -15,10 +15,9 @@ protected:
 	virtual void Release(void);
 
 
-protected:
+public:
 	virtual bool CreateExtern(GLuint texture);
-	virtual bool Load(const char *szFileName) = 0;
-	virtual void Free(void);
+	virtual void Destroy(void);
 
 public:
 	bool IsValid(void) const;

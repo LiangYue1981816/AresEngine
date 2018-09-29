@@ -13,9 +13,11 @@ private:
 
 
 private:
-	CGfxProgram* CreateProgram(const char *szVertexFileName, const char *szFragmentFileName);
+	CGfxProgram* CreateComputeProgram(uint32_t nameComputeShader);
+	CGfxProgram* CreateGraphicsProgram(uint32_t nameVertexShader, uint32_t nameFragmentShader);
+	void DestroyProgram(CGfxProgram *pProgram);
 
 
 private:
-	eastl::unordered_map<GLuint64, CGfxProgram*> m_pPrograms;
+	eastl::unordered_map<uint64_t, CGfxProgram*> m_pPrograms;
 };

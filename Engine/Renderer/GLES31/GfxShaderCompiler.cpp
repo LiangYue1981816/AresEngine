@@ -3,18 +3,19 @@
 #include "GfxShaderCompiler.h"
 
 
-static bool SaveShaderBinary(const char *szFileName, const std::vector<uint32_t> &words)
+static std::string LoadShader(const char *szFileName)
 {
-	FILE *pFile = fopen(szFileName, "wb");
-	if (pFile == NULL) return false;
+	if (FILE *pFile = fopen(szFileName, "rb")) {
+		static char szSource[128 * 1024];
+		size_t size = fsize(pFile);
 
-	uint32_t dwHashValue = HashValue((uint8_t *)words.data(), sizeof(uint32_t) * words.size());
+		fread(szSource, 1, size, pFile);
+		fclose(pFile);
 
-	fwrite(&dwHashValue, sizeof(dwHashValue), 1, pFile);
-	fwrite(words.data(), sizeof(uint32_t), words.size(), pFile);
-	fclose(pFile);
+		return szSource;
+	}
 
-	return true;
+	return "";
 }
 
 static bool LoadShaderBinary(const char *szFileName, std::vector<uint32_t> &words)
@@ -34,17 +35,30 @@ static bool LoadShaderBinary(const char *szFileName, std::vector<uint32_t> &word
 	return HashValue((uint8_t *)words.data(), sizeof(uint32_t) * words.size()) == dwHashValue ? true : false;
 }
 
-static bool PreprocessShader(std::string &source, shaderc_shader_kind kind, const shaderc::Compiler &compiler, const shaderc::CompileOptions &options, std::string &preprocess)
+static bool SaveShaderBinary(const char *szFileName, const std::vector<uint32_t> &words)
+{
+	FILE *pFile = fopen(szFileName, "wb");
+	if (pFile == NULL) return false;
+
+	uint32_t dwHashValue = HashValue((uint8_t *)words.data(), sizeof(uint32_t) * words.size());
+
+	fwrite(&dwHashValue, sizeof(dwHashValue), 1, pFile);
+	fwrite(words.data(), sizeof(uint32_t), words.size(), pFile);
+	fclose(pFile);
+
+	return true;
+}
+
+static std::string PreprocessShader(std::string &source, shaderc_shader_kind kind, const shaderc::Compiler &compiler, const shaderc::CompileOptions &options)
 {
 	shaderc::PreprocessedSourceCompilationResult module = compiler.PreprocessGlsl(source, kind, "SPIR-V Compiler", options);
 
 	if (module.GetCompilationStatus() != shaderc_compilation_status_success) {
 		LogOutput("GfxRenderer", "Preprocess Fail: %s\n", module.GetErrorMessage().c_str());
-		return false;
+		return "";
 	}
 
-	preprocess = { module.cbegin(), module.cend() };
-	return true;
+	return { module.cbegin(), module.cend() };
 }
 
 static bool CompileShader(std::string &source, shaderc_shader_kind kind, const shaderc::Compiler &compiler, const shaderc::CompileOptions &options, std::vector<uint32_t> &words)
@@ -61,21 +75,22 @@ static bool CompileShader(std::string &source, shaderc_shader_kind kind, const s
 }
 
 
-CGfxShaderCompiler::CGfxShaderCompiler(void)
+CGfxShaderCompiler::CGfxShaderCompiler(const char *szShaderCachePath)
 	: m_szShaderCachePath{ 0 }
 	, m_fileIncluder(new glslc::FileIncluder(&m_fileFinder))
 {
+	strcpy(m_szShaderCachePath, szShaderCachePath);
 
+	m_options.SetIncluder(std::move(m_fileIncluder));
+	m_options.SetWarningsAsErrors();
+	m_options.SetSourceLanguage(shaderc_source_language_glsl);
+	m_options.SetForcedVersionProfile(310, shaderc_profile_es);
+	m_options.AddMacroDefinition("GLES");
 }
 
 CGfxShaderCompiler::~CGfxShaderCompiler(void)
 {
 
-}
-
-void CGfxShaderCompiler::SetShaderCachePath(const char *szPath)
-{
-	strcpy(m_szShaderCachePath, szPath);
 }
 
 void CGfxShaderCompiler::AddIncludePath(const char *szPath)
@@ -99,18 +114,30 @@ void CGfxShaderCompiler::ClearMacroDefinition(void)
 	m_strMacroDefinitionNameAndValues.clear();
 }
 
+std::string CGfxShaderCompiler::Preprocess(const char *szFileName, shaderc_shader_kind kind)
+{
+	shaderc::CompileOptions options(m_options);
+
+	for (const auto &itMacroDefinition : m_strMacroDefinitionNames) {
+		options.AddMacroDefinition(itMacroDefinition);
+	}
+
+	for (const auto &itMacroDefinition : m_strMacroDefinitionNameAndValues) {
+		options.AddMacroDefinition(itMacroDefinition.first, itMacroDefinition.second);
+	}
+
+	std::string source = LoadShader(szFileName);
+	if (source.empty()) return "";
+
+	return PreprocessShader(source, kind, m_compiler, options);
+}
+
 std::vector<uint32_t> CGfxShaderCompiler::Compile(const char *szFileName, shaderc_shader_kind kind)
 {
 	std::vector<uint32_t> words;
 
 	do {
-		shaderc::CompileOptions options;
-
-		options.SetIncluder(std::move(m_fileIncluder));
-		options.SetWarningsAsErrors();
-		options.SetSourceLanguage(shaderc_source_language_glsl);
-		options.SetForcedVersionProfile(310, shaderc_profile_es);
-		options.AddMacroDefinition("GLES");
+		shaderc::CompileOptions options(m_options);
 
 		for (const auto &itMacroDefinition : m_strMacroDefinitionNames) {
 			options.AddMacroDefinition(itMacroDefinition);
@@ -120,11 +147,11 @@ std::vector<uint32_t> CGfxShaderCompiler::Compile(const char *szFileName, shader
 			options.AddMacroDefinition(itMacroDefinition.first, itMacroDefinition.second);
 		}
 
-		std::string source;
-		std::string preprocess;
-		if (PreprocessShader(source, kind, m_compiler, options, preprocess) == false) {
-			break;
-		}
+		std::string source = LoadShader(szFileName);
+		if (source.empty()) break;
+
+		std::string preprocess = PreprocessShader(source, kind, m_compiler, options);
+		if (preprocess.empty()) break;
 
 		char szBinFileName[_MAX_STRING];
 		sprintf(szBinFileName, "%s/%x", m_szShaderCachePath, HashValue(preprocess.c_str()));

@@ -62,6 +62,7 @@
     <ClInclude Include="Engine\Renderer\GLES31\GfxCommandSetScissor.h" />
     <ClInclude Include="Engine\Renderer\GLES31\GfxCommandSetViewport.h" />
     <ClInclude Include="Engine\Renderer\GLES31\GfxDefinition.h" />
+    <ClInclude Include="Engine\Renderer\GLES31\GfxExtension.h" />
     <ClInclude Include="Engine\Renderer\GLES31\GfxFrameBuffer.h" />
     <ClInclude Include="Engine\Renderer\GLES31\GfxFrameBufferManager.h" />
     <ClInclude Include="Engine\Renderer\GLES31\GfxGLM.h" />
@@ -78,7 +79,9 @@
     <ClInclude Include="Engine\Renderer\GLES31\GfxResource.h" />
     <ClInclude Include="Engine\Renderer\GLES31\GfxSampler.h" />
     <ClInclude Include="Engine\Renderer\GLES31\GfxSamplerManager.h" />
+    <ClInclude Include="Engine\Renderer\GLES31\GfxShader.h" />
     <ClInclude Include="Engine\Renderer\GLES31\GfxShaderCompiler.h" />
+    <ClInclude Include="Engine\Renderer\GLES31\GfxShaderManager.h" />
     <ClInclude Include="Engine\Renderer\GLES31\GfxTexture2D.h" />
     <ClInclude Include="Engine\Renderer\GLES31\GfxTexture2DArray.h" />
     <ClInclude Include="Engine\Renderer\GLES31\GfxTextureBase.h" />
@@ -137,6 +140,7 @@
     <ClCompile Include="Engine\Renderer\GLES31\GfxCamera.cpp" />
     <ClCompile Include="Engine\Renderer\GLES31\GfxCameraManager.cpp" />
     <ClCompile Include="Engine\Renderer\GLES31\GfxCommandBuffer.cpp" />
+    <ClCompile Include="Engine\Renderer\GLES31\GfxExtension.cpp" />
     <ClCompile Include="Engine\Renderer\GLES31\GfxFrameBuffer.cpp" />
     <ClCompile Include="Engine\Renderer\GLES31\GfxFrameBufferManager.cpp" />
     <ClCompile Include="Engine\Renderer\GLES31\GfxIndexBuffer.cpp" />
@@ -152,7 +156,9 @@
     <ClCompile Include="Engine\Renderer\GLES31\GfxResource.cpp" />
     <ClCompile Include="Engine\Renderer\GLES31\GfxSampler.cpp" />
     <ClCompile Include="Engine\Renderer\GLES31\GfxSamplerManager.cpp" />
+    <ClCompile Include="Engine\Renderer\GLES31\GfxShader.cpp" />
     <ClCompile Include="Engine\Renderer\GLES31\GfxShaderCompiler.cpp" />
+    <ClCompile Include="Engine\Renderer\GLES31\GfxShaderManager.cpp" />
     <ClCompile Include="Engine\Renderer\GLES31\GfxTexture2D.cpp" />
     <ClCompile Include="Engine\Renderer\GLES31\GfxTexture2DArray.cpp" />
     <ClCompile Include="Engine\Renderer\GLES31\GfxTextureBase.cpp" />

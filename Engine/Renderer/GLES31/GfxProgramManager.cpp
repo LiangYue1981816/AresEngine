@@ -17,16 +17,32 @@ CGfxProgramManager::~CGfxProgramManager(void)
 	m_pPrograms.clear();
 }
 
-CGfxProgram* CGfxProgramManager::CreateProgram(const char *szVertexFileName, const char *szFragmentFileName)
+CGfxProgram* CGfxProgramManager::CreateComputeProgram(uint32_t nameComputeShader)
 {
-	GLuint64 nameVertex = HashValue(szVertexFileName);
-	GLuint64 nameFragment = HashValue(szFragmentFileName);
-	GLuint64 name = nameVertex << 32 | nameFragment;
+	uint64_t name = (uint64_t)0xffffffff00000000 | (uint64_t)nameComputeShader;
 
 	if (m_pPrograms[name] == NULL) {
-		m_pPrograms[name] = new CGfxProgram;
-		m_pPrograms[name]->Load(szVertexFileName, szFragmentFileName);
+		m_pPrograms[name] = new CGfxProgram(name);
 	}
 
 	return m_pPrograms[name];
+}
+
+CGfxProgram* CGfxProgramManager::CreateGraphicsProgram(uint32_t nameVertexShader, uint32_t nameFragmentShader)
+{
+	uint64_t name = ((uint64_t)nameVertexShader << 32) | (uint64_t)nameFragmentShader;
+
+	if (m_pPrograms[name] == NULL) {
+		m_pPrograms[name] = new CGfxProgram(name);
+	}
+
+	return m_pPrograms[name];
+}
+
+void CGfxProgramManager::DestroyProgram(CGfxProgram *pProgram)
+{
+	if (pProgram) {
+		m_pPrograms.erase(pProgram->GetName());
+		delete pProgram;
+	}
 }
