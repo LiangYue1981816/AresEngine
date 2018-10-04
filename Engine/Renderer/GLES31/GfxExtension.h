@@ -3,20 +3,21 @@
 
 
 typedef struct GLstate {
-	GLboolean bEnableCullFace;
-	GLboolean bEnableDepthTest;
-	GLboolean bEnableDepthWrite;
-	GLboolean bEnableColorWrite[4];
-	GLboolean bEnableBlend;
-	GLboolean bEnablePolygonOffset;
-	GLenum cullFace;
-	GLenum frontFace;
-	GLenum depthFunc;
-	GLenum srcBlendFactor;
-	GLenum dstBlendFactor;
-	GLfloat polygonOffsetFactor;
-	GLfloat polygonOffsetUnits;
+	uint32_t bEnableCullFace;
+	uint32_t bEnableDepthTest;
+	uint32_t bEnableDepthWrite;
+	uint32_t bEnableColorWrite[4];
+	uint32_t bEnableBlend;
+	uint32_t bEnablePolygonOffset;
+	uint32_t cullFace;
+	uint32_t frontFace;
+	uint32_t depthFunc;
+	uint32_t srcBlendFactor;
+	uint32_t dstBlendFactor;
+	float polygonOffsetFactor;
+	float polygonOffsetUnits;
 } GLstate;
 
 
-extern GLenum glGetShaderKind(shaderc_shader_kind kind);
+extern void glReadBuffers(int n, const uint32_t *bufs);
+extern uint32_t glGetShaderKind(shaderc_shader_kind kind);

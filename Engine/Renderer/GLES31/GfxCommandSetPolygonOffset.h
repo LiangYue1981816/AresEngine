@@ -5,7 +5,7 @@
 class CGfxCommandSetPolygonOffset : public CGfxCommandBase
 {
 public:
-	CGfxCommandSetPolygonOffset(bool bEnable, GLfloat factor, GLfloat units)
+	CGfxCommandSetPolygonOffset(bool bEnable, float factor, float units)
 		: m_bEnable(bEnable)
 		, m_factor(factor)
 		, m_units(units)
@@ -36,6 +36,6 @@ public:
 
 private:
 	bool m_bEnable;
-	GLfloat m_factor;
-	GLfloat m_units;
+	float m_factor;
+	float m_units;
 };

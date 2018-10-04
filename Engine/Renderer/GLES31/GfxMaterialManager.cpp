@@ -19,7 +19,7 @@ CGfxMaterialManager::~CGfxMaterialManager(void)
 
 CGfxMaterial* CGfxMaterialManager::LoadMaterial(const char *szFileName)
 {
-	GLuint name = HashValue(szFileName);
+	uint32_t name = HashValue(szFileName);
 
 	if (m_pMaterials[name] == NULL) {
 		m_pMaterials[name] = new CGfxMaterial(name);

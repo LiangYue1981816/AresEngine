@@ -13,7 +13,7 @@ private:
 
 
 private:
-	CGfxSampler* CreateSampler(GLenum minFilter, GLenum magFilter, GLenum addressMode);
+	CGfxSampler* CreateSampler(uint32_t minFilter, uint32_t magFilter, uint32_t addressMode);
 
 
 private:

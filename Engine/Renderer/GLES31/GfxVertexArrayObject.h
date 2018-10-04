@@ -20,7 +20,7 @@ private:
 
 
 private:
-	GLuint m_vao;
+	uint32_t m_vao;
 	CGfxIndexBuffer *m_pIndexBuffer;
 	CGfxVertexBuffer *m_pVertexBuffer;
 	CGfxInstanceBuffer *m_pInstanceBuffer;

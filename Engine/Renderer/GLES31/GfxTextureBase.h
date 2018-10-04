@@ -19,36 +19,36 @@ public:
 
 public:
 	virtual bool Load(const char *szFileName) = 0;
-	virtual bool CreateExtern(GLuint texture);
+	virtual bool CreateExtern(uint32_t texture);
 	virtual void Destroy(void);
 
 public:
-	GLuint GetTexture(void) const;
+	uint32_t GetTexture(void) const;
 
-	GLenum GetFormat(void) const;
-	GLenum GetInternalFormat(void) const;
+	uint32_t GetFormat(void) const;
+	uint32_t GetInternalFormat(void) const;
 
-	GLsizei GetWidth(void) const;
-	GLsizei GetHeight(void) const;
+	int GetWidth(void) const;
+	int GetHeight(void) const;
 
-	GLsizei GetLevels(void) const;
-	GLsizei GetLayers(void) const;
+	int GetLevels(void) const;
+	int GetLayers(void) const;
 
 
 protected:
 	uint32_t m_name;
 
 protected:
-	GLuint m_texture;
-	GLboolean m_extern;
+	uint32_t m_texture;
+	uint32_t m_bExtern;
 
 protected:
-	GLenum m_format;
-	GLenum m_internalFormat;
+	uint32_t m_format;
+	uint32_t m_internalFormat;
 
-	GLsizei m_width;
-	GLsizei m_height;
+	int m_width;
+	int m_height;
 
-	GLsizei m_mipLevels;
-	GLsizei m_arrayLayers;
+	int m_mipLevels;
+	int m_arrayLayers;
 };

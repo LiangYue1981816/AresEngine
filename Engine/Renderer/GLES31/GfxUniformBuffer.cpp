@@ -26,23 +26,23 @@ CGfxUniformBuffer::~CGfxUniformBuffer(void)
 
 bool CGfxUniformBuffer::BufferData(size_t offset, size_t size, const void *pBuffer)
 {
-	if (m_size < (GLsizeiptr)(offset + size)) {
+	if (m_size < (uint32_t)(offset + size)) {
 		return false;
 	}
 
 	glBindBuffer(GL_UNIFORM_BUFFER, m_buffer);
-	glBufferSubData(GL_UNIFORM_BUFFER, (GLintptr)offset, (GLsizeiptr)size, pBuffer);
+	glBufferSubData(GL_UNIFORM_BUFFER, (int)offset, (uint32_t)size, pBuffer);
 	glBindBuffer(GL_UNIFORM_BUFFER, 0);
 
 	return true;
 }
 
-GLuint CGfxUniformBuffer::GetBuffer(void) const
+uint32_t CGfxUniformBuffer::GetBuffer(void) const
 {
 	return m_buffer;
 }
 
-GLsizeiptr CGfxUniformBuffer::GetSize(void) const
+uint32_t CGfxUniformBuffer::GetSize(void) const
 {
 	return m_size;
 }

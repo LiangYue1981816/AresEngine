@@ -18,5 +18,5 @@ private:
 
 
 private:
-	eastl::unordered_map<GLuint, CGfxMaterial*> m_pMaterials;
+	eastl::unordered_map<uint32_t, CGfxMaterial*> m_pMaterials;
 };

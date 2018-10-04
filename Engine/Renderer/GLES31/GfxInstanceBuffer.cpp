@@ -6,7 +6,7 @@
 
 static const int INSTANCE_BUFFER_SIZE = 128;
 
-CGfxInstanceBuffer::CGfxInstanceBuffer(GLuint format)
+CGfxInstanceBuffer::CGfxInstanceBuffer(uint32_t format)
 	: m_instanceFormat(format)
 	, m_instanceBuffer(0)
 	, m_size(INSTANCE_BUFFER_SIZE)
@@ -56,7 +56,7 @@ void CGfxInstanceBuffer::UpdateInstance(void)
 
 		glBindBuffer(GL_ARRAY_BUFFER, m_instanceBuffer);
 		{
-			GLsizeiptr size = (GLsizeiptr)m_instances.size() * sizeof(glm::mat4);
+			uint32_t size = (uint32_t)m_instances.size() * sizeof(glm::mat4);
 
 			if (m_size < size) {
 				CGfxProfiler::DecInstanceBufferSize(m_size);
@@ -75,22 +75,22 @@ void CGfxInstanceBuffer::UpdateInstance(void)
 	}
 }
 
-GLuint CGfxInstanceBuffer::GetInstanceCount(void) const
+uint32_t CGfxInstanceBuffer::GetInstanceCount(void) const
 {
-	return (GLuint)m_instances.size();
+	return (uint32_t)m_instances.size();
 }
 
-GLuint CGfxInstanceBuffer::GetInstanceFormat(void) const
+uint32_t CGfxInstanceBuffer::GetInstanceFormat(void) const
 {
 	return m_instanceFormat;
 }
 
-GLuint CGfxInstanceBuffer::GetInstanceBuffer(void) const
+uint32_t CGfxInstanceBuffer::GetInstanceBuffer(void) const
 {
 	return m_instanceBuffer;
 }
 
-GLsizeiptr CGfxInstanceBuffer::GetSize(void) const
+uint32_t CGfxInstanceBuffer::GetSize(void) const
 {
 	return m_size;
 }
@@ -99,15 +99,15 @@ void CGfxInstanceBuffer::Bind(void) const
 {
 	glBindBuffer(GL_ARRAY_BUFFER, m_instanceBuffer);
 	{
-		GLuint instanceStride = GetInstanceStride(m_instanceFormat);
+		uint32_t instanceStride = GetInstanceStride(m_instanceFormat);
 
-		for (GLuint indexAttribute = 0; indexAttribute < INSTANCE_ATTRIBUTE_COUNT; indexAttribute++) {
-			GLuint attribute = (1 << indexAttribute);
+		for (uint32_t indexAttribute = 0; indexAttribute < INSTANCE_ATTRIBUTE_COUNT; indexAttribute++) {
+			uint32_t attribute = (1 << indexAttribute);
 
 			if (m_instanceFormat & attribute) {
-				GLuint location = GetInstanceAttributeLocation(attribute);
-				GLuint components = GetInstanceAttributeComponents(attribute);
-				GLuint offset = GetInstanceAttributeOffset(m_instanceFormat, attribute);
+				uint32_t location = GetInstanceAttributeLocation(attribute);
+				uint32_t components = GetInstanceAttributeComponents(attribute);
+				uint32_t offset = GetInstanceAttributeOffset(m_instanceFormat, attribute);
 
 				glEnableVertexAttribArray(location);
 				glVertexAttribPointer(location, components, GL_FLOAT, GL_FALSE, instanceStride, (const void *)offset);

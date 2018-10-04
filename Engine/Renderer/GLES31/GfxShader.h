@@ -25,8 +25,8 @@ public:
 	bool IsValid(void) const;
 
 public:
-	GLuint GetKind(void) const;
-	GLuint GetProgram(void) const;
+	uint32_t GetKind(void) const;
+	uint32_t GetProgram(void) const;
 	spirv_cross::CompilerGLSL* GetCompiler(void) const;
 
 
@@ -34,7 +34,7 @@ private:
 	uint32_t m_name;
 
 private:
-	GLuint m_kind;
-	GLuint m_program;
+	uint32_t m_kind;
+	uint32_t m_program;
 	spirv_cross::CompilerGLSL *m_pShaderCompiler;
 };

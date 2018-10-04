@@ -7,6 +7,7 @@ extern unsigned int tick(void);
 extern unsigned int HashValue(const char *szString);
 extern unsigned int HashValue(const unsigned char *pBuffer, int length);
 extern void splitfilename(const char *name, char *fname, char *ext);
+extern int fexist(const char *name);
 extern size_t fsize(FILE *stream);
 extern size_t freadline(char *buffer, size_t size, FILE *stream);
 extern size_t freadstring(char *buffer, size_t size, FILE *stream);

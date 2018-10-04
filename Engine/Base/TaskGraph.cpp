@@ -3,7 +3,6 @@
 
 #ifdef _WINDOWS
 #include <windows.h>
-#define MS_VC_EXCEPTION 0x406D1388
 
 #pragma pack(push,8)
 typedef struct tagTHREADNAME_INFO
@@ -17,6 +16,8 @@ typedef struct tagTHREADNAME_INFO
 
 static void SetThreadName(DWORD dwThreadID, const char* szName)
 {
+	#define MS_VC_EXCEPTION 0x406D1388
+
 	THREADNAME_INFO info;
 	info.dwType = 0x1000;
 	info.szName = szName;
@@ -42,23 +43,34 @@ static void pthread_set_name(pthread_t thread, const char *name)
 #endif
 }
 
-static int pthread_set_sched_param(pthread_t thread, int policy, int priority)
+static int pthread_attr_create(pthread_attr_t *attr, sched_param *param, int policy, int priority)
 {
 #ifdef _WINDOWS
 	policy = SCHED_OTHER;
 #endif
+
+	int rcode = NO_ERROR;
 
 	const int min_priority = 1;
 	const int max_priority = 99;
 	if (priority < min_priority) priority = min_priority;
 	if (priority > max_priority) priority = max_priority;
 
-	struct sched_param thread_param;
 	const int sched_min_priority = sched_get_priority_min(policy);
 	const int sched_max_priority = sched_get_priority_max(policy);
-	thread_param.sched_priority = (sched_max_priority - sched_min_priority) * priority / (max_priority - min_priority) + sched_min_priority;
+	param->sched_priority = (sched_max_priority - sched_min_priority) * priority / (max_priority - min_priority) + sched_min_priority;
 
-	return pthread_setschedparam(thread, policy, &thread_param);
+	rcode = pthread_attr_init(attr);
+	if (rcode != NO_ERROR) goto RET;
+
+	rcode = pthread_attr_setschedpolicy(attr, policy);
+	if (rcode != NO_ERROR) goto RET;
+
+	rcode = pthread_attr_setschedparam(attr, param);
+	if (rcode != NO_ERROR) goto RET;
+
+RET:
+	return rcode;
 }
 
 
@@ -113,9 +125,13 @@ CTaskGraph::CTaskGraph(const char *szName, int priority)
 	pthread_mutex_init(&m_mutexTaskList, NULL);
 
 	for (int indexThread = 0; indexThread < THREAD_COUNT; indexThread++) {
-		int rcode;
-		rcode = pthread_create(&m_threads[indexThread], NULL, TaskThread, this);
-		rcode = pthread_set_sched_param(m_threads[indexThread], SCHED_RR, priority);
+		int rcode = NO_ERROR;
+
+		sched_param param;
+		pthread_attr_t attr;
+		rcode = pthread_attr_create(&attr, &param, SCHED_RR, priority);
+		rcode = pthread_create(&m_threads[indexThread], &attr, TaskThread, this);
+		rcode = pthread_attr_destroy(&attr);
 
 		char szThreadName[260];
 		sprintf(szThreadName, "%s_%d(%2.2d)", szName, indexThread, priority);

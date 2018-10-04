@@ -4,7 +4,7 @@
 #include "GfxVertexAttribute.h"
 
 
-CGfxVertexBuffer::CGfxVertexBuffer(GLuint format, size_t size, bool bDynamic)
+CGfxVertexBuffer::CGfxVertexBuffer(uint32_t format, size_t size, bool bDynamic)
 	: m_vertexFormat(format)
 	, m_vertexBuffer(0)
 	, m_size(size)
@@ -29,33 +29,33 @@ CGfxVertexBuffer::~CGfxVertexBuffer(void)
 
 bool CGfxVertexBuffer::BufferData(size_t offset, size_t size, const void *pBuffer)
 {
-	if (m_size < (GLsizeiptr)(offset + size)) {
+	if (m_size < (uint32_t)(offset + size)) {
 		return false;
 	}
 
 	glBindBuffer(GL_ARRAY_BUFFER, m_vertexBuffer);
-	glBufferSubData(GL_ARRAY_BUFFER, (GLintptr)offset, (GLsizeiptr)size, pBuffer);
+	glBufferSubData(GL_ARRAY_BUFFER, (int)offset, (uint32_t)size, pBuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 	return true;
 }
 
-GLuint CGfxVertexBuffer::GetVertexCount(void) const
+uint32_t CGfxVertexBuffer::GetVertexCount(void) const
 {
 	return m_size / GetVertexStride(m_vertexFormat);
 }
 
-GLuint CGfxVertexBuffer::GetVertexFormat(void) const
+uint32_t CGfxVertexBuffer::GetVertexFormat(void) const
 {
 	return m_vertexFormat;
 }
 
-GLuint CGfxVertexBuffer::GetVertexBuffer(void) const
+uint32_t CGfxVertexBuffer::GetVertexBuffer(void) const
 {
 	return m_vertexBuffer;
 }
 
-GLsizeiptr CGfxVertexBuffer::GetSize(void) const
+uint32_t CGfxVertexBuffer::GetSize(void) const
 {
 	return m_size;
 }
@@ -64,15 +64,15 @@ void CGfxVertexBuffer::Bind(void) const
 {
 	glBindBuffer(GL_ARRAY_BUFFER, m_vertexBuffer);
 	{
-		GLuint vertexStride = GetVertexStride(m_vertexFormat);
+		uint32_t vertexStride = GetVertexStride(m_vertexFormat);
 
-		for (GLuint indexAttribute = 0; indexAttribute < VERTEX_ATTRIBUTE_COUNT; indexAttribute++) {
-			GLuint attribute = (1 << indexAttribute);
+		for (uint32_t indexAttribute = 0; indexAttribute < VERTEX_ATTRIBUTE_COUNT; indexAttribute++) {
+			uint32_t attribute = (1 << indexAttribute);
 
 			if (m_vertexFormat & attribute) {
-				GLuint location = GetVertexAttributeLocation(attribute);
-				GLuint components = GetVertexAttributeComponents(attribute);
-				GLuint offset = GetVertexAttributeOffset(m_vertexFormat, attribute);
+				uint32_t location = GetVertexAttributeLocation(attribute);
+				uint32_t components = GetVertexAttributeComponents(attribute);
+				uint32_t offset = GetVertexAttributeOffset(m_vertexFormat, attribute);
 
 				glEnableVertexAttribArray(location);
 				glVertexAttribPointer(location, components, GL_FLOAT, GL_FALSE, vertexStride, (const void *)offset);

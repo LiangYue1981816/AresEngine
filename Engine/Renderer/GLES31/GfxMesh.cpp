@@ -136,7 +136,7 @@ void CGfxMesh::Free(void)
 	m_pVertexArrayObject = NULL;
 }
 
-bool CGfxMesh::CreateIndexBuffer(size_t size, const void *pBuffer, bool bDynamic, GLenum type)
+bool CGfxMesh::CreateIndexBuffer(size_t size, const void *pBuffer, bool bDynamic, uint32_t type)
 {
 	if (m_pIndexBuffer) {
 		delete m_pIndexBuffer;
@@ -153,7 +153,7 @@ bool CGfxMesh::CreateIndexBuffer(size_t size, const void *pBuffer, bool bDynamic
 	return m_pIndexBuffer->BufferData(0, size, pBuffer);
 }
 
-bool CGfxMesh::CreateVertexBuffer(size_t size, const void *pBuffer, bool bDynamic, GLuint format)
+bool CGfxMesh::CreateVertexBuffer(size_t size, const void *pBuffer, bool bDynamic, uint32_t format)
 {
 	if (m_pVertexBuffer) {
 		delete m_pVertexBuffer;
@@ -170,7 +170,7 @@ bool CGfxMesh::CreateVertexBuffer(size_t size, const void *pBuffer, bool bDynami
 	return m_pVertexBuffer->BufferData(0, size, pBuffer);
 }
 
-bool CGfxMesh::CreateInstanceBuffer(GLuint format)
+bool CGfxMesh::CreateInstanceBuffer(uint32_t format)
 {
 	if (m_pInstanceBuffer) {
 		delete m_pInstanceBuffer;
@@ -225,27 +225,27 @@ void CGfxMesh::UpdateInstance(void)
 	}
 }
 
-GLenum CGfxMesh::GetIndexType(void) const
+uint32_t CGfxMesh::GetIndexType(void) const
 {
 	return m_pIndexBuffer ? m_pIndexBuffer->GetIndexType() : GL_INVALID_ENUM;
 }
 
-GLuint CGfxMesh::GetIndexCount(void) const
+uint32_t CGfxMesh::GetIndexCount(void) const
 {
 	return m_pIndexBuffer ? m_pIndexBuffer->GetIndexCount() : 0;
 }
 
-GLuint CGfxMesh::GetVertexFormat(void) const
+uint32_t CGfxMesh::GetVertexFormat(void) const
 {
 	return m_pVertexBuffer ? m_pVertexBuffer->GetVertexFormat() : 0;
 }
 
-GLuint CGfxMesh::GetVertexCount(void) const
+uint32_t CGfxMesh::GetVertexCount(void) const
 {
 	return m_pVertexBuffer ? m_pVertexBuffer->GetVertexCount() : 0;
 }
 
-GLuint CGfxMesh::GetInstanceCount(void) const
+uint32_t CGfxMesh::GetInstanceCount(void) const
 {
 	return m_pInstanceBuffer ? m_pInstanceBuffer->GetInstanceCount() : 0;
 }

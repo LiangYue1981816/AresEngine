@@ -34,10 +34,10 @@ private:
 public:
 	bool SetPipeline(const CGfxShader *pVertexShader, const CGfxShader *pFragmentShader, const GLstate &state);
 
-	bool SetSampler(const char *szName, GLenum minFilter, GLenum magFilter, GLenum addressMode);
-	bool SetTexture2D(const char *szName, GLuint externTexture);
-	bool SetTexture2DArray(const char *szName, GLuint externTexture);
-	bool SetTextureCubeMap(const char *szName, GLuint externTexture);
+	bool SetSampler(const char *szName, uint32_t minFilter, uint32_t magFilter, uint32_t addressMode);
+	bool SetTexture2D(const char *szName, uint32_t externTexture);
+	bool SetTexture2DArray(const char *szName, uint32_t externTexture);
+	bool SetTextureCubeMap(const char *szName, uint32_t externTexture);
 	bool SetTexture2D(const char *szName, const char *szFileName);
 	bool SetTexture2DArray(const char *szName, const char *szFileName);
 	bool SetTextureCubeMap(const char *szName, const char *szFileName);

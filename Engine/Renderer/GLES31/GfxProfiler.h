@@ -20,10 +20,10 @@ public:
 		}
 
 		const char *name;
-		GLuint timeBegin;
-		GLuint timeEnd;
-		GLuint timeTotal;
-		GLuint timeCount;
+		uint32_t timeBegin;
+		uint32_t timeEnd;
+		uint32_t timeTotal;
+		uint32_t timeCount;
 	} Sample;
 
 	typedef enum SampleType {

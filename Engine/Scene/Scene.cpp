@@ -68,7 +68,7 @@ bool CScene::Load(const char *szFileName)
 		Free();
 
 		TiXmlDocument xmlDoc;
-		if (xmlDoc.LoadFile(szFileName) == false) throw 0;
+		if (xmlDoc.LoadFile(Renderer()->GetResourceFullName(szFileName)) == false) throw 0;
 
 		TiXmlNode *pSceneNode = xmlDoc.FirstChild("Scene");
 		if (pSceneNode == NULL) throw 1;

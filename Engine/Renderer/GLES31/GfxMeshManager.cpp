@@ -19,7 +19,7 @@ CGfxMeshManager::~CGfxMeshManager(void)
 
 CGfxMesh* CGfxMeshManager::LoadMesh(const char *szFileName)
 {
-	GLuint name = HashValue(szFileName);
+	uint32_t name = HashValue(szFileName);
 
 	if (m_pMeshs[name] == NULL) {
 		m_pMeshs[name] = new CGfxMesh(name);

@@ -5,7 +5,7 @@
 class CGfxCommandDrawElements : public CGfxCommandBase
 {
 public:
-	CGfxCommandDrawElements(GLenum mode, GLenum type, GLsizei count, GLsizei baseIndex)
+	CGfxCommandDrawElements(uint32_t mode, uint32_t type, int count, int baseIndex)
 		: m_mode(mode)
 		, m_type(type)
 		, m_count(count)
@@ -29,8 +29,8 @@ public:
 
 
 private:
-	GLenum m_mode;
-	GLenum m_type;
-	GLsizei m_count;
-	GLsizei m_baseIndex;
+	uint32_t m_mode;
+	uint32_t m_type;
+	int m_count;
+	int m_baseIndex;
 };

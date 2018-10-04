@@ -89,6 +89,6 @@ private:
 	event_t m_eventUpdateCameraPointLight;
 
 private:
-	CTaskGraph m_taskGraphUpdate;
-	CTaskGraph m_taskGraphRender;
+	CTaskGraph m_taskGraphUpdateLogic;
+	CTaskGraph m_taskGraphUpdateCamera;
 };

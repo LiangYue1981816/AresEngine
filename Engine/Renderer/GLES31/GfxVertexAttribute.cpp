@@ -4,10 +4,10 @@
 
 
 struct ATTRIBUTE {
-	GLuint flag;
-	GLuint size;
-	GLuint components;
-	GLuint location;
+	uint32_t flag;
+	uint32_t size;
+	uint32_t components;
+	uint32_t location;
 	const char *name;
 };
 
@@ -27,11 +27,11 @@ static const ATTRIBUTE instanceAttributes[INSTANCE_ATTRIBUTE_COUNT] = {
 	{ INSTANCE_ATTRIBUTE_TRANSFORM_MATRIX_COL3, 4, 4, 11, "inInstanceTransformMatrixCol3" },
 };
 
-static GLuint GetStride(GLuint format, const ATTRIBUTE *attributes, GLuint count)
+static uint32_t GetStride(uint32_t format, const ATTRIBUTE *attributes, uint32_t count)
 {
-	GLuint stride = 0;
+	uint32_t stride = 0;
 
-	for (GLuint indexAttribute = 0; indexAttribute < count; indexAttribute++) {
+	for (uint32_t indexAttribute = 0; indexAttribute < count; indexAttribute++) {
 		if (format & attributes[indexAttribute].flag) {
 			stride += attributes[indexAttribute].components * attributes[indexAttribute].size;
 		}
@@ -40,9 +40,9 @@ static GLuint GetStride(GLuint format, const ATTRIBUTE *attributes, GLuint count
 	return stride;
 }
 
-static GLuint GetAttributeSize(GLuint attribute, const ATTRIBUTE *attributes, GLuint count)
+static uint32_t GetAttributeSize(uint32_t attribute, const ATTRIBUTE *attributes, uint32_t count)
 {
-	for (GLuint indexAttribute = 0; indexAttribute < count; indexAttribute++) {
+	for (uint32_t indexAttribute = 0; indexAttribute < count; indexAttribute++) {
 		if (attribute == attributes[indexAttribute].flag) {
 			return attributes[indexAttribute].size;
 		}
@@ -51,11 +51,11 @@ static GLuint GetAttributeSize(GLuint attribute, const ATTRIBUTE *attributes, GL
 	return 0;
 }
 
-static GLuint GetAttributeOffset(GLuint format, GLuint attribute, const ATTRIBUTE *attributes, GLuint count)
+static uint32_t GetAttributeOffset(uint32_t format, uint32_t attribute, const ATTRIBUTE *attributes, uint32_t count)
 {
-	GLuint offset = 0;
+	uint32_t offset = 0;
 
-	for (GLuint indexAttribute = 0; indexAttribute < count; indexAttribute++) {
+	for (uint32_t indexAttribute = 0; indexAttribute < count; indexAttribute++) {
 		if (attribute == attributes[indexAttribute].flag) return offset;
 		if (format & attributes[indexAttribute].flag) offset += attributes[indexAttribute].components * attributes[indexAttribute].size;
 	}
@@ -63,9 +63,9 @@ static GLuint GetAttributeOffset(GLuint format, GLuint attribute, const ATTRIBUT
 	return -1;
 }
 
-static GLuint GetAttributeComponents(GLuint attribute, const ATTRIBUTE *attributes, GLuint count)
+static uint32_t GetAttributeComponents(uint32_t attribute, const ATTRIBUTE *attributes, uint32_t count)
 {
-	for (GLuint indexAttribute = 0; indexAttribute < count; indexAttribute++) {
+	for (uint32_t indexAttribute = 0; indexAttribute < count; indexAttribute++) {
 		if (attribute == attributes[indexAttribute].flag) {
 			return attributes[indexAttribute].components;
 		}
@@ -74,9 +74,9 @@ static GLuint GetAttributeComponents(GLuint attribute, const ATTRIBUTE *attribut
 	return 0;
 }
 
-static GLuint GetAttributeLocation(GLuint attribute, const ATTRIBUTE *attributes, GLuint count)
+static uint32_t GetAttributeLocation(uint32_t attribute, const ATTRIBUTE *attributes, uint32_t count)
 {
-	for (GLuint indexAttribute = 0; indexAttribute < count; indexAttribute++) {
+	for (uint32_t indexAttribute = 0; indexAttribute < count; indexAttribute++) {
 		if (attribute == attributes[indexAttribute].flag) {
 			return attributes[indexAttribute].location;
 		}
@@ -85,52 +85,52 @@ static GLuint GetAttributeLocation(GLuint attribute, const ATTRIBUTE *attributes
 	return -1;
 }
 
-GLuint GetVertexStride(GLuint format)
+uint32_t GetVertexStride(uint32_t format)
 {
 	return GetStride(format, vertexAttributes, VERTEX_ATTRIBUTE_COUNT);
 }
 
-GLuint GetVertexAttributeSize(GLuint attribute)
+uint32_t GetVertexAttributeSize(uint32_t attribute)
 {
 	return GetAttributeSize(attribute, vertexAttributes, VERTEX_ATTRIBUTE_COUNT);
 }
 
-GLuint GetVertexAttributeOffset(GLuint format, GLuint attribute)
+uint32_t GetVertexAttributeOffset(uint32_t format, uint32_t attribute)
 {
 	return GetAttributeOffset(format, attribute, vertexAttributes, VERTEX_ATTRIBUTE_COUNT);
 }
 
-GLuint GetVertexAttributeComponents(GLuint attribute)
+uint32_t GetVertexAttributeComponents(uint32_t attribute)
 {
 	return GetAttributeComponents(attribute, vertexAttributes, VERTEX_ATTRIBUTE_COUNT);
 }
 
-GLuint GetVertexAttributeLocation(GLuint attribute)
+uint32_t GetVertexAttributeLocation(uint32_t attribute)
 {
 	return GetAttributeLocation(attribute, vertexAttributes, VERTEX_ATTRIBUTE_COUNT);
 }
 
-GLuint GetInstanceStride(GLuint format)
+uint32_t GetInstanceStride(uint32_t format)
 {
 	return GetStride(format, instanceAttributes, INSTANCE_ATTRIBUTE_COUNT);
 }
 
-GLuint GetInstanceAttributeSize(GLuint attribute)
+uint32_t GetInstanceAttributeSize(uint32_t attribute)
 {
 	return GetAttributeSize(attribute, instanceAttributes, INSTANCE_ATTRIBUTE_COUNT);
 }
 
-GLuint GetInstanceAttributeOffset(GLuint format, GLuint attribute)
+uint32_t GetInstanceAttributeOffset(uint32_t format, uint32_t attribute)
 {
 	return GetAttributeOffset(format, attribute, instanceAttributes, INSTANCE_ATTRIBUTE_COUNT);
 }
 
-GLuint GetInstanceAttributeComponents(GLuint attribute)
+uint32_t GetInstanceAttributeComponents(uint32_t attribute)
 {
 	return GetAttributeComponents(attribute, instanceAttributes, INSTANCE_ATTRIBUTE_COUNT);
 }
 
-GLuint GetInstanceAttributeLocation(GLuint attribute)
+uint32_t GetInstanceAttributeLocation(uint32_t attribute)
 {
 	return GetAttributeLocation(attribute, instanceAttributes, INSTANCE_ATTRIBUTE_COUNT);
 }

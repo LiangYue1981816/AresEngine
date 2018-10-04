@@ -5,7 +5,7 @@
 class CGfxCommandSetCullFace : public CGfxCommandBase
 {
 public:
-	CGfxCommandSetCullFace(bool bEnable, GLenum cullFace, GLenum frontFace)
+	CGfxCommandSetCullFace(bool bEnable, uint32_t cullFace, uint32_t frontFace)
 		: m_bEnable(bEnable)
 		, m_cullFace(cullFace)
 		, m_frontFace(frontFace)
@@ -37,6 +37,6 @@ public:
 
 private:
 	bool m_bEnable;
-	GLenum m_cullFace;
-	GLenum m_frontFace;
+	uint32_t m_cullFace;
+	uint32_t m_frontFace;
 };

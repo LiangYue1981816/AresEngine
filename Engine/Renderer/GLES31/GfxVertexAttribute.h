@@ -19,14 +19,14 @@
 #define INSTANCE_ATTRIBUTE_TRANSFORM (INSTANCE_ATTRIBUTE_TRANSFORM_MATRIX_COL0 | INSTANCE_ATTRIBUTE_TRANSFORM_MATRIX_COL1 | INSTANCE_ATTRIBUTE_TRANSFORM_MATRIX_COL2 | INSTANCE_ATTRIBUTE_TRANSFORM_MATRIX_COL3)
 
 
-extern GLuint GetVertexStride(GLuint format);
-extern GLuint GetVertexAttributeSize(GLuint attribute);
-extern GLuint GetVertexAttributeOffset(GLuint format, GLuint attribute);
-extern GLuint GetVertexAttributeComponents(GLuint attribute);
-extern GLuint GetVertexAttributeLocation(GLuint attribute);
+extern uint32_t GetVertexStride(uint32_t format);
+extern uint32_t GetVertexAttributeSize(uint32_t attribute);
+extern uint32_t GetVertexAttributeOffset(uint32_t format, uint32_t attribute);
+extern uint32_t GetVertexAttributeComponents(uint32_t attribute);
+extern uint32_t GetVertexAttributeLocation(uint32_t attribute);
 
-extern GLuint GetInstanceStride(GLuint format);
-extern GLuint GetInstanceAttributeSize(GLuint attribute);
-extern GLuint GetInstanceAttributeOffset(GLuint format, GLuint attribute);
-extern GLuint GetInstanceAttributeComponents(GLuint attribute);
-extern GLuint GetInstanceAttributeLocation(GLuint attribute);
+extern uint32_t GetInstanceStride(uint32_t format);
+extern uint32_t GetInstanceAttributeSize(uint32_t attribute);
+extern uint32_t GetInstanceAttributeOffset(uint32_t format, uint32_t attribute);
+extern uint32_t GetInstanceAttributeComponents(uint32_t attribute);
+extern uint32_t GetInstanceAttributeLocation(uint32_t attribute);

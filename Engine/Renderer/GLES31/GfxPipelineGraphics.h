@@ -19,12 +19,12 @@ private:
 	bool CreateState(const GLstate &state);
 
 public:
-	void SetEnableCullFace(bool bEnable, GLenum cullFace, GLenum frontFace);
-	void SetEnableDepthTest(bool bEnable, GLenum depthFunc);
+	void SetEnableCullFace(bool bEnable, uint32_t cullFace, uint32_t frontFace);
+	void SetEnableDepthTest(bool bEnable, uint32_t depthFunc);
 	void SetEnableDepthWrite(bool bEnable);
 	void SetEnableColorWrite(bool bEnableRed, bool bEnableGreen, bool bEnableBlue, bool bEnableAlpha);
-	void SetEnableBlend(bool bEnable, GLenum srcFactor, GLenum dstFactor);
-	void SetEnablePolygonOffset(bool bEnable, GLfloat factor, GLfloat units);
+	void SetEnableBlend(bool bEnable, uint32_t srcFactor, uint32_t dstFactor);
+	void SetEnablePolygonOffset(bool bEnable, float factor, float units);
 
 	bool IsEnableBlend(void) const;
 

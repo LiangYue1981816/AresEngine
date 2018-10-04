@@ -26,7 +26,7 @@ bool CGfxTextureCubeMap::Load(const char *szFileName)
 		gli::gl GL(gli::gl::PROFILE_ES30);
 		gli::gl::format format = GL.translate(texture.format(), texture.swizzles());
 
-		if (Create(format.External, format.Internal, texture.extent().x, texture.extent().y, (GLsizei)texture.levels()) == false) throw 2;
+		if (Create(format.External, format.Internal, texture.extent().x, texture.extent().y, (int)texture.levels()) == false) throw 2;
 		if (TransferTextureCubeMap((const gli::texture_cube *)&texture) == false) throw 3;
 
 		return true;
@@ -37,7 +37,7 @@ bool CGfxTextureCubeMap::Load(const char *szFileName)
 	}
 }
 
-bool CGfxTextureCubeMap::LoadFace(const char *szFileName, GLsizei face)
+bool CGfxTextureCubeMap::LoadFace(const char *szFileName, int face)
 {
 	const gli::texture texture = gli::load(Renderer()->GetResourceFullName(szFileName));
 	if (texture.empty()) return false;
@@ -46,7 +46,7 @@ bool CGfxTextureCubeMap::LoadFace(const char *szFileName, GLsizei face)
 	return TransferTexture2D(face, (const gli::texture2d *)&texture);
 }
 
-bool CGfxTextureCubeMap::Create(GLenum format, GLenum internalFormat, GLsizei width, GLsizei height, GLsizei mipLevels)
+bool CGfxTextureCubeMap::Create(uint32_t format, uint32_t internalFormat, int width, int height, int mipLevels)
 {
 	Destroy();
 
@@ -91,11 +91,11 @@ bool CGfxTextureCubeMap::TransferTextureCubeMap(const gli::texture_cube *texture
 		return false;
 	}
 
-	if (m_extern == GL_TRUE) {
+	if (m_bExtern == GL_TRUE) {
 		return false;
 	}
 
-	if (m_mipLevels != (GLsizei)texture->levels()) {
+	if (m_mipLevels != (int)texture->levels()) {
 		return false;
 	}
 
@@ -120,20 +120,20 @@ bool CGfxTextureCubeMap::TransferTextureCubeMap(const gli::texture_cube *texture
 			CGfxProfiler::DecTextureDataSize(m_size[GL_TEXTURE_CUBE_MAP_POSITIVE_Z][level]);
 			CGfxProfiler::DecTextureDataSize(m_size[GL_TEXTURE_CUBE_MAP_NEGATIVE_Z][level]);
 			{
-				m_size[GL_TEXTURE_CUBE_MAP_POSITIVE_X][level] = (GLsizeiptr)texture->size(level);
-				m_size[GL_TEXTURE_CUBE_MAP_NEGATIVE_X][level] = (GLsizeiptr)texture->size(level);
-				m_size[GL_TEXTURE_CUBE_MAP_POSITIVE_Y][level] = (GLsizeiptr)texture->size(level);
-				m_size[GL_TEXTURE_CUBE_MAP_NEGATIVE_Y][level] = (GLsizeiptr)texture->size(level);
-				m_size[GL_TEXTURE_CUBE_MAP_POSITIVE_Z][level] = (GLsizeiptr)texture->size(level);
-				m_size[GL_TEXTURE_CUBE_MAP_NEGATIVE_Z][level] = (GLsizeiptr)texture->size(level);
+				m_size[GL_TEXTURE_CUBE_MAP_POSITIVE_X][level] = (uint32_t)texture->size(level);
+				m_size[GL_TEXTURE_CUBE_MAP_NEGATIVE_X][level] = (uint32_t)texture->size(level);
+				m_size[GL_TEXTURE_CUBE_MAP_POSITIVE_Y][level] = (uint32_t)texture->size(level);
+				m_size[GL_TEXTURE_CUBE_MAP_NEGATIVE_Y][level] = (uint32_t)texture->size(level);
+				m_size[GL_TEXTURE_CUBE_MAP_POSITIVE_Z][level] = (uint32_t)texture->size(level);
+				m_size[GL_TEXTURE_CUBE_MAP_NEGATIVE_Z][level] = (uint32_t)texture->size(level);
 
 				if (gli::is_compressed(texture->format())) {
-					glCompressedTexSubImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X, level, 0, 0, texture->extent(level).x, texture->extent(level).y, format.Internal, (GLsizei)texture->size(level), texture->data(0, 0, level));
-					glCompressedTexSubImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_X, level, 0, 0, texture->extent(level).x, texture->extent(level).y, format.Internal, (GLsizei)texture->size(level), texture->data(0, 1, level));
-					glCompressedTexSubImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_Y, level, 0, 0, texture->extent(level).x, texture->extent(level).y, format.Internal, (GLsizei)texture->size(level), texture->data(0, 2, level));
-					glCompressedTexSubImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_Y, level, 0, 0, texture->extent(level).x, texture->extent(level).y, format.Internal, (GLsizei)texture->size(level), texture->data(0, 3, level));
-					glCompressedTexSubImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_Z, level, 0, 0, texture->extent(level).x, texture->extent(level).y, format.Internal, (GLsizei)texture->size(level), texture->data(0, 4, level));
-					glCompressedTexSubImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_Z, level, 0, 0, texture->extent(level).x, texture->extent(level).y, format.Internal, (GLsizei)texture->size(level), texture->data(0, 5, level));
+					glCompressedTexSubImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X, level, 0, 0, texture->extent(level).x, texture->extent(level).y, format.Internal, (int)texture->size(level), texture->data(0, 0, level));
+					glCompressedTexSubImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_X, level, 0, 0, texture->extent(level).x, texture->extent(level).y, format.Internal, (int)texture->size(level), texture->data(0, 1, level));
+					glCompressedTexSubImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_Y, level, 0, 0, texture->extent(level).x, texture->extent(level).y, format.Internal, (int)texture->size(level), texture->data(0, 2, level));
+					glCompressedTexSubImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_Y, level, 0, 0, texture->extent(level).x, texture->extent(level).y, format.Internal, (int)texture->size(level), texture->data(0, 3, level));
+					glCompressedTexSubImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_Z, level, 0, 0, texture->extent(level).x, texture->extent(level).y, format.Internal, (int)texture->size(level), texture->data(0, 4, level));
+					glCompressedTexSubImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_Z, level, 0, 0, texture->extent(level).x, texture->extent(level).y, format.Internal, (int)texture->size(level), texture->data(0, 5, level));
 				}
 				else {
 					glTexSubImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X, level, 0, 0, texture->extent(level).x, texture->extent(level).y, format.External, format.Type, texture->data(0, 0, level));
@@ -157,7 +157,7 @@ bool CGfxTextureCubeMap::TransferTextureCubeMap(const gli::texture_cube *texture
 	return true;
 }
 
-bool CGfxTextureCubeMap::TransferTexture2D(GLsizei face, const gli::texture2d *texture)
+bool CGfxTextureCubeMap::TransferTexture2D(int face, const gli::texture2d *texture)
 {
 	if (texture == NULL) {
 		return false;
@@ -171,11 +171,11 @@ bool CGfxTextureCubeMap::TransferTexture2D(GLsizei face, const gli::texture2d *t
 		return false;
 	}
 
-	if (m_extern == GL_TRUE) {
+	if (m_bExtern == GL_TRUE) {
 		return false;
 	}
 
-	if (m_mipLevels != (GLsizei)texture->levels()) {
+	if (m_mipLevels != (int)texture->levels()) {
 		return false;
 	}
 
@@ -195,10 +195,10 @@ bool CGfxTextureCubeMap::TransferTexture2D(GLsizei face, const gli::texture2d *t
 		for (int level = 0; level < (int)texture->levels(); level++) {
 			CGfxProfiler::DecTextureDataSize(m_size[GL_TEXTURE_CUBE_MAP_POSITIVE_X + face][level]);
 			{
-				m_size[GL_TEXTURE_CUBE_MAP_POSITIVE_X + face][level] = (GLsizeiptr)texture->size(level);
+				m_size[GL_TEXTURE_CUBE_MAP_POSITIVE_X + face][level] = (uint32_t)texture->size(level);
 
 				if (gli::is_compressed(texture->format())) {
-					glCompressedTexSubImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + face, level, 0, 0, texture->extent(level).x, texture->extent(level).y, format.Internal, (GLsizei)texture->size(level), texture->data(0, 0, level));
+					glCompressedTexSubImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + face, level, 0, 0, texture->extent(level).x, texture->extent(level).y, format.Internal, (int)texture->size(level), texture->data(0, 0, level));
 				}
 				else {
 					glTexSubImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + face, level, 0, 0, texture->extent(level).x, texture->extent(level).y, format.External, format.Type, texture->data(0, 0, level));
@@ -212,13 +212,13 @@ bool CGfxTextureCubeMap::TransferTexture2D(GLsizei face, const gli::texture2d *t
 	return true;
 }
 
-bool CGfxTextureCubeMap::TransferTexture2D(GLsizei face, GLsizei level, GLenum format, GLint xoffset, GLint yoffset, GLsizei width, GLsizei height, GLenum type, GLsizei size, const GLvoid *data)
+bool CGfxTextureCubeMap::TransferTexture2D(int face, int level, uint32_t format, int xoffset, int yoffset, int width, int height, uint32_t type, int size, const void *data)
 {
 	if (m_texture == 0) {
 		return false;
 	}
 
-	if (m_extern == GL_TRUE) {
+	if (m_bExtern == GL_TRUE) {
 		return false;
 	}
 
@@ -230,7 +230,7 @@ bool CGfxTextureCubeMap::TransferTexture2D(GLsizei face, GLsizei level, GLenum f
 	{
 		CGfxProfiler::DecTextureDataSize(m_size[face][level]);
 		{
-			m_size[face][level] = (GLsizeiptr)size;
+			m_size[face][level] = (uint32_t)size;
 			glTexSubImage2D(face, level, xoffset, yoffset, width, height, format, type, data);
 		}
 		CGfxProfiler::IncTextureDataSize(m_size[face][level]);
@@ -240,13 +240,13 @@ bool CGfxTextureCubeMap::TransferTexture2D(GLsizei face, GLsizei level, GLenum f
 	return true;
 }
 
-bool CGfxTextureCubeMap::TransferTexture2DCompressed(GLsizei face, GLsizei level, GLenum format, GLint xoffset, GLint yoffset, GLsizei width, GLsizei height, GLsizei size, const GLvoid *data)
+bool CGfxTextureCubeMap::TransferTexture2DCompressed(int face, int level, uint32_t format, int xoffset, int yoffset, int width, int height, int size, const void *data)
 {
 	if (m_texture == 0) {
 		return false;
 	}
 
-	if (m_extern == GL_TRUE) {
+	if (m_bExtern == GL_TRUE) {
 		return false;
 	}
 
@@ -258,7 +258,7 @@ bool CGfxTextureCubeMap::TransferTexture2DCompressed(GLsizei face, GLsizei level
 	{
 		CGfxProfiler::DecTextureDataSize(m_size[face][level]);
 		{
-			m_size[face][level] = (GLsizeiptr)size;
+			m_size[face][level] = (uint32_t)size;
 			glCompressedTexSubImage2D(face, level, xoffset, yoffset, width, height, format, size, data);
 		}
 		CGfxProfiler::IncTextureDataSize(m_size[face][level]);

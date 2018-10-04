@@ -9,14 +9,14 @@ class CGfxSampler
 
 
 private:
-	CGfxSampler(GLenum minFilter, GLenum magFilter, GLenum addressMode);
+	CGfxSampler(uint32_t minFilter, uint32_t magFilter, uint32_t addressMode);
 	virtual ~CGfxSampler(void);
 
 
 public:
-	GLuint GetSampler(void) const;
+	uint32_t GetSampler(void) const;
 
 
 private:
-	GLuint m_sampler;
+	uint32_t m_sampler;
 };

@@ -103,7 +103,7 @@ bool CGfxCommandBuffer::CmdSetViewport(int x, int y, int width, int height)
 	return false;
 }
 
-bool CGfxCommandBuffer::CmdSetCullFace(bool bEnable, GLenum cullFace, GLenum frontFace)
+bool CGfxCommandBuffer::CmdSetCullFace(bool bEnable, uint32_t cullFace, uint32_t frontFace)
 {
 	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
 		m_commands.push_back(new CGfxCommandSetCullFace(bEnable, cullFace, frontFace));
@@ -113,7 +113,7 @@ bool CGfxCommandBuffer::CmdSetCullFace(bool bEnable, GLenum cullFace, GLenum fro
 	return false;
 }
 
-bool CGfxCommandBuffer::CmdSetDepthTest(bool bEnable, GLenum depthFunc)
+bool CGfxCommandBuffer::CmdSetDepthTest(bool bEnable, uint32_t depthFunc)
 {
 	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
 		m_commands.push_back(new CGfxCommandSetDepthTest(bEnable, depthFunc));
@@ -143,7 +143,7 @@ bool CGfxCommandBuffer::CmdSetColorWrite(bool bEnableRed, bool bEnableGreen, boo
 	return false;
 }
 
-bool CGfxCommandBuffer::CmdSetBlend(bool bEnable, GLenum srcFactor, GLenum dstFactor)
+bool CGfxCommandBuffer::CmdSetBlend(bool bEnable, uint32_t srcFactor, uint32_t dstFactor)
 {
 	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
 		m_commands.push_back(new CGfxCommandSetBlend(bEnable, srcFactor, dstFactor));
@@ -153,7 +153,7 @@ bool CGfxCommandBuffer::CmdSetBlend(bool bEnable, GLenum srcFactor, GLenum dstFa
 	return false;
 }
 
-bool CGfxCommandBuffer::CmdSetPolygonOffset(bool bEnable, GLfloat factor, GLfloat units)
+bool CGfxCommandBuffer::CmdSetPolygonOffset(bool bEnable, float factor, float units)
 {
 	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
 		m_commands.push_back(new CGfxCommandSetPolygonOffset(bEnable, factor, units));
@@ -203,7 +203,7 @@ bool CGfxCommandBuffer::CmdBindMaterialPass(const CGfxMaterialPtr &ptrMaterial, 
 	return false;
 }
 
-bool CGfxCommandBuffer::CmdBindInputTexture(const char *szName, GLuint texture, GLenum minFilter, GLenum magFilter, GLenum addressMode)
+bool CGfxCommandBuffer::CmdBindInputTexture(const char *szName, uint32_t texture, uint32_t minFilter, uint32_t magFilter, uint32_t addressMode)
 {
 	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
 		m_commands.push_back(new CGfxCommandBindInputTexture(szName, texture, minFilter, magFilter, addressMode));
@@ -233,7 +233,7 @@ bool CGfxCommandBuffer::CmdClearColor(float red, float green, float blue, float 
 	return false;
 }
 
-bool CGfxCommandBuffer::CmdDrawInstance(GLenum mode, GLenum type, GLsizei count, GLsizei baseIndex, GLsizei instanceCount)
+bool CGfxCommandBuffer::CmdDrawInstance(uint32_t mode, uint32_t type, int count, int baseIndex, int instanceCount)
 {
 	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
 		m_commands.push_back(new CGfxCommandDrawInstance(mode, type, count, baseIndex, instanceCount));
@@ -243,7 +243,7 @@ bool CGfxCommandBuffer::CmdDrawInstance(GLenum mode, GLenum type, GLsizei count,
 	return false;
 }
 
-bool CGfxCommandBuffer::CmdDrawIndirect(GLenum mode, GLenum type, GLsizei count, GLsizei baseIndex, GLsizei baseVertex, GLsizei instanceCount)
+bool CGfxCommandBuffer::CmdDrawIndirect(uint32_t mode, uint32_t type, int count, int baseIndex, int baseVertex, int instanceCount)
 {
 	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
 		m_commands.push_back(new CGfxCommandDrawIndirect(mode, type, count, baseIndex, baseVertex, instanceCount));
@@ -253,7 +253,7 @@ bool CGfxCommandBuffer::CmdDrawIndirect(GLenum mode, GLenum type, GLsizei count,
 	return false;
 }
 
-bool CGfxCommandBuffer::CmdDrawElements(GLenum mode, GLenum type, GLsizei count, GLsizei baseIndex)
+bool CGfxCommandBuffer::CmdDrawElements(uint32_t mode, uint32_t type, int count, int baseIndex)
 {
 	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
 		m_commands.push_back(new CGfxCommandDrawElements(mode, type, count, baseIndex));

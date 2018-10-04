@@ -9,7 +9,7 @@ class CGfxInstanceBuffer
 
 
 private:
-	CGfxInstanceBuffer(GLuint format);
+	CGfxInstanceBuffer(uint32_t format);
 	virtual ~CGfxInstanceBuffer(void);
 
 
@@ -20,19 +20,19 @@ private:
 	void UpdateInstance(void);
 
 private:
-	GLuint GetInstanceCount(void) const;
-	GLuint GetInstanceFormat(void) const;
-	GLuint GetInstanceBuffer(void) const;
-	GLsizeiptr GetSize(void) const;
+	uint32_t GetInstanceCount(void) const;
+	uint32_t GetInstanceFormat(void) const;
+	uint32_t GetInstanceBuffer(void) const;
+	uint32_t GetSize(void) const;
 
 private:
 	void Bind(void) const;
 
 
 private:
-	GLuint m_instanceFormat;
-	GLuint m_instanceBuffer;
-	GLsizeiptr m_size;
+	uint32_t m_instanceFormat;
+	uint32_t m_instanceBuffer;
+	uint32_t m_size;
 
 private:
 	bool m_bDirty;

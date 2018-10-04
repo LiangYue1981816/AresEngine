@@ -88,6 +88,16 @@ void splitfilename(const char *name, char *fname, char *ext)
 	}
 }
 
+int fexist(const char *name)
+{
+	if (FILE *stream = fopen(name, "rb")) {
+		fclose(stream);
+		return 1;
+	}
+
+	return 0;
+}
+
 size_t fsize(FILE *stream)
 {
 	long pos;

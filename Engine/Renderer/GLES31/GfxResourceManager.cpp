@@ -54,5 +54,5 @@ void CGfxResourceManager::SetResourcePath(const char *szPathName, const char *sz
 const char* CGfxResourceManager::GetResourceFullName(const char *szFileName) const
 {
 	const auto &itResourceFullName = m_strResourceFullNames.find(HashValue(szFileName));
-	return itResourceFullName != m_strResourceFullNames.end() ? itResourceFullName->second.c_str() : NULL;
+	return itResourceFullName != m_strResourceFullNames.end() ? itResourceFullName->second.c_str() : "";
 }

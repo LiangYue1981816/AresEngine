@@ -5,7 +5,7 @@
 class CGfxCommandDrawInstance : public CGfxCommandBase
 {
 public:
-	CGfxCommandDrawInstance(GLenum mode, GLenum type, GLsizei count, GLsizei baseIndex, GLsizei instanceCount)
+	CGfxCommandDrawInstance(uint32_t mode, uint32_t type, int count, int baseIndex, int instanceCount)
 		: m_mode(mode)
 		, m_type(type)
 		, m_count(count)
@@ -30,9 +30,9 @@ public:
 
 
 private:
-	GLenum m_mode;
-	GLenum m_type;
-	GLsizei m_count;
-	GLsizei m_baseIndex;
-	GLsizei m_instanceCount;
+	uint32_t m_mode;
+	uint32_t m_type;
+	int m_count;
+	int m_baseIndex;
+	int m_instanceCount;
 };

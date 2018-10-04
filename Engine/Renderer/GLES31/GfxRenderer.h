@@ -101,7 +101,7 @@ private:
 	CGfxShader* LoadShader(const char *szFileName, shaderc_shader_kind kind);
 	CGfxPipelineCompute* CreatePipelineCompute(const CGfxShader *pComputeShader);
 	CGfxPipelineGraphics* CreatePipelineGraphics(const CGfxShader *pVertexShader, const CGfxShader *pFragmentShader, const GLstate &state);
-	CGfxSampler* CreateSampler(GLenum minFilter, GLenum magFilter, GLenum addressMode);
+	CGfxSampler* CreateSampler(uint32_t minFilter, uint32_t magFilter, uint32_t addressMode);
 #pragma endregion
 
 #pragma region External Gfx Resources
@@ -109,7 +109,7 @@ public:
 	CGfxTexture2DPtr CreateTexture2D(uint32_t name);
 	CGfxTexture2DArrayPtr CreateTexture2DArray(uint32_t name);
 	CGfxTextureCubeMapPtr CreateTextureCubeMap(uint32_t name);
-	CGfxFrameBufferPtr CreateFrameBuffer(GLuint width, GLuint height, bool bDepthRenderBuffer);
+	CGfxFrameBufferPtr CreateFrameBuffer(uint32_t width, uint32_t height, bool bDepthRenderBuffer);
 
 	CGfxMeshPtr LoadMesh(const char *szFileName);
 	CGfxMaterialPtr LoadMaterial(const char *szFileName);
@@ -163,22 +163,22 @@ public:
 
 	bool CmdSetScissor(CGfxCommandBuffer *pCommandBuffer, int x, int y, int width, int height);
 	bool CmdSetViewport(CGfxCommandBuffer *pCommandBuffer, int x, int y, int width, int height);
-	bool CmdSetCullFace(CGfxCommandBuffer *pCommandBuffer, bool bEnable, GLenum cullFace, GLenum frontFace);
-	bool CmdSetDepthTest(CGfxCommandBuffer *pCommandBuffer, bool bEnable, GLenum depthFunc);
+	bool CmdSetCullFace(CGfxCommandBuffer *pCommandBuffer, bool bEnable, uint32_t cullFace, uint32_t frontFace);
+	bool CmdSetDepthTest(CGfxCommandBuffer *pCommandBuffer, bool bEnable, uint32_t depthFunc);
 	bool CmdSetDepthWrite(CGfxCommandBuffer *pCommandBuffer, bool bEnable);
 	bool CmdSetColorWrite(CGfxCommandBuffer *pCommandBuffer, bool bEnableRed, bool bEnableGreen, bool bEnableBlue, bool bEnableAlpha);
-	bool CmdSetBlend(CGfxCommandBuffer *pCommandBuffer, bool bEnable, GLenum srcFactor, GLenum dstFactor);
-	bool CmdSetPolygonOffset(CGfxCommandBuffer *pCommandBuffer, bool bEnable, GLfloat factor, GLfloat units);
+	bool CmdSetBlend(CGfxCommandBuffer *pCommandBuffer, bool bEnable, uint32_t srcFactor, uint32_t dstFactor);
+	bool CmdSetPolygonOffset(CGfxCommandBuffer *pCommandBuffer, bool bEnable, float factor, float units);
 
 	bool CmdBindCamera(CGfxCommandBuffer *pCommandBuffer, CGfxCamera *pCamera);
 	bool CmdBindPipeline(CGfxCommandBuffer *pCommandBuffer, CGfxPipelineBase *pPipeline);
 	bool CmdBindMaterialPass(CGfxCommandBuffer *pCommandBuffer, const CGfxMaterialPtr &ptrMaterial, uint32_t namePass);
-	bool CmdBindInputTexture(CGfxCommandBuffer *pCommandBuffer, const char *szName, GLuint texture, GLenum minFilter, GLenum magFilter, GLenum addressMode);
+	bool CmdBindInputTexture(CGfxCommandBuffer *pCommandBuffer, const char *szName, uint32_t texture, uint32_t minFilter, uint32_t magFilter, uint32_t addressMode);
 
 	bool CmdClearDepth(CGfxCommandBuffer *pCommandBuffer, float depth);
 	bool CmdClearColor(CGfxCommandBuffer *pCommandBuffer, float red, float green, float blue, float alpha);
 	bool CmdDrawInstance(CGfxCommandBuffer *pCommandBuffer, const CGfxMeshPtr &ptrMesh, int indexCount, int baseIndex, const eastl::vector<glm::mat4> &mtxTransforms);
-	bool CmdDrawIndirect(CGfxCommandBuffer *pCommandBuffer, const CGfxMeshPtr &ptrMesh, int indexCount, int baseIndex, GLsizei baseVertex, const eastl::vector<glm::mat4> &mtxTransforms);
+	bool CmdDrawIndirect(CGfxCommandBuffer *pCommandBuffer, const CGfxMeshPtr &ptrMesh, int indexCount, int baseIndex, int baseVertex, const eastl::vector<glm::mat4> &mtxTransforms);
 	bool CmdDrawScreen(CGfxCommandBuffer *pCommandBuffer);
 
 	bool CmdExecute(CGfxCommandBuffer *pCommandBuffer, CGfxCommandBuffer *pSecondaryCommandBuffer);
@@ -195,7 +195,7 @@ private:
 	void BindPipeline(CGfxPipelineBase *pPipeline);
 	void BindCamera(CGfxCamera *pCamera);
 	void BindMaterialPass(CGfxMaterialPass *pPass);
-	void BindInputTexture(const char *szName, GLuint texture, GLenum minFilter, GLenum magFilter, GLenum addressMode);
+	void BindInputTexture(const char *szName, uint32_t texture, uint32_t minFilter, uint32_t magFilter, uint32_t addressMode);
 #pragma endregion
 
 

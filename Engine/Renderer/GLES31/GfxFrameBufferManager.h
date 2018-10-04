@@ -13,7 +13,7 @@ private:
 
 
 private:
-	CGfxFrameBuffer* CreateFrameBuffer(GLuint width, GLuint height, bool bDepthRenderBuffer);
+	CGfxFrameBuffer* CreateFrameBuffer(uint32_t width, uint32_t height, bool bDepthRenderBuffer);
 	void DestroyFrameBuffer(CGfxFrameBuffer *pFrameBuffer);
 
 

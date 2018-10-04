@@ -3,9 +3,9 @@
 #include "GfxMaterialPass.h"
 
 
-#define TEXTURE_INTERNAL_NAME(name) (GLuint)(name ^ (size_t)this)
+#define TEXTURE_INTERNAL_NAME(name) (uint32_t)(name ^ (size_t)this)
 
-static GLenum StringToCullFace(const char *szString)
+static uint32_t StringToCullFace(const char *szString)
 {
 	if (szString) {
 		if (!stricmp(szString, "GL_FRONT")) return GL_FRONT;
@@ -16,7 +16,7 @@ static GLenum StringToCullFace(const char *szString)
 	return GL_BACK;
 }
 
-static GLenum StringToFrontFace(const char *szString)
+static uint32_t StringToFrontFace(const char *szString)
 {
 	if (szString) {
 		if (!stricmp(szString, "GL_CW")) return GL_CW;
@@ -26,7 +26,7 @@ static GLenum StringToFrontFace(const char *szString)
 	return GL_CCW;
 }
 
-static GLenum StringToDepthFunc(const char *szString)
+static uint32_t StringToDepthFunc(const char *szString)
 {
 	if (szString) {
 		if (!stricmp(szString, "GL_NEVER")) return GL_NEVER;
@@ -41,7 +41,7 @@ static GLenum StringToDepthFunc(const char *szString)
 	return GL_LESS;
 }
 
-static GLenum StringToMinFilter(const char *szString)
+static uint32_t StringToMinFilter(const char *szString)
 {
 	if (szString) {
 		if (!stricmp(szString, "GL_LINEAR")) return GL_LINEAR;
@@ -55,7 +55,7 @@ static GLenum StringToMinFilter(const char *szString)
 	return GL_LINEAR_MIPMAP_NEAREST;
 }
 
-static GLenum StringToMagFilter(const char *szString)
+static uint32_t StringToMagFilter(const char *szString)
 {
 	if (szString) {
 		if (!stricmp(szString, "GL_LINEAR")) return GL_LINEAR;
@@ -65,7 +65,7 @@ static GLenum StringToMagFilter(const char *szString)
 	return GL_LINEAR;
 }
 
-static GLenum StringToAddressMode(const char *szString)
+static uint32_t StringToAddressMode(const char *szString)
 {
 	if (szString) {
 		if (!stricmp(szString, "GL_REPEAT")) return GL_REPEAT;
@@ -75,7 +75,7 @@ static GLenum StringToAddressMode(const char *szString)
 	return GL_REPEAT;
 }
 
-static GLenum StringToBlendSrcFactor(const char *szString)
+static uint32_t StringToBlendSrcFactor(const char *szString)
 {
 	if (szString) {
 		if (!stricmp(szString, "GL_ZERO")) return GL_ZERO;
@@ -98,7 +98,7 @@ static GLenum StringToBlendSrcFactor(const char *szString)
 	return GL_SRC_ALPHA;
 }
 
-static GLenum StringToBlendDstFactor(const char *szString)
+static uint32_t StringToBlendDstFactor(const char *szString)
 {
 	if (szString) {
 		if (!stricmp(szString, "GL_ZERO")) return GL_ZERO;
@@ -289,6 +289,11 @@ bool CGfxMaterialPass::LoadPipelineShader(TiXmlNode *pPipelineNode, CGfxShader *
 			char szBinFileName[_MAX_STRING] = { 0 };
 			sprintf(szBinFileName, "%x.%s", HashValue(preprocess.c_str()), szExtName[kind]);
 
+#ifdef _WINDOWS
+			if (fexist(Renderer()->GetResourceFullName(szBinFileName)) == 0) {
+				Renderer()->GetShaderCompiler()->Compile(Renderer()->GetResourceFullName(szFileName), kind);
+			}
+#endif
 			pShader = Renderer()->LoadShader(szBinFileName, kind);
 			if (pShader->IsValid() == false) throw 3;
 		}
@@ -314,13 +319,13 @@ bool CGfxMaterialPass::LoadTexture2D(TiXmlNode *pPassNode)
 
 					LogOutput(NULL, "%s ... ", szFileName);
 
-					GLenum minFilter = StringToMinFilter(pTextureNode->ToElement()->AttributeString("min_filter"));
-					GLenum magFilter = StringToMagFilter(pTextureNode->ToElement()->AttributeString("mag_filter"));
-					GLenum addressMode = StringToAddressMode(pTextureNode->ToElement()->AttributeString("address_mode"));
+					uint32_t minFilter = StringToMinFilter(pTextureNode->ToElement()->AttributeString("min_filter"));
+					uint32_t magFilter = StringToMagFilter(pTextureNode->ToElement()->AttributeString("mag_filter"));
+					uint32_t addressMode = StringToAddressMode(pTextureNode->ToElement()->AttributeString("address_mode"));
 					if (minFilter == GL_INVALID_ENUM || magFilter == GL_INVALID_ENUM || addressMode == GL_INVALID_ENUM) throw 1;
 
-					if (SetSampler(szName, minFilter, magFilter, addressMode) == false) throw 2;
-					if (SetTexture2D(szName, szFileName) == false) throw 3;
+					SetSampler(szName, minFilter, magFilter, addressMode);
+					SetTexture2D(szName, szFileName);
 				}
 				LogOutput(NULL, "OK\n");
 			} while (pTextureNode = pPassNode->IterateChildren("Texture2D", pTextureNode));
@@ -346,13 +351,13 @@ bool CGfxMaterialPass::LoadTexture2DArray(TiXmlNode *pPassNode)
 
 					LogOutput(NULL, "%s ... ", szFileName);
 
-					GLenum minFilter = StringToMinFilter(pTextureNode->ToElement()->AttributeString("min_filter"));
-					GLenum magFilter = StringToMagFilter(pTextureNode->ToElement()->AttributeString("mag_filter"));
-					GLenum addressMode = StringToAddressMode(pTextureNode->ToElement()->AttributeString("address_mode"));
+					uint32_t minFilter = StringToMinFilter(pTextureNode->ToElement()->AttributeString("min_filter"));
+					uint32_t magFilter = StringToMagFilter(pTextureNode->ToElement()->AttributeString("mag_filter"));
+					uint32_t addressMode = StringToAddressMode(pTextureNode->ToElement()->AttributeString("address_mode"));
 					if (minFilter == GL_INVALID_ENUM || magFilter == GL_INVALID_ENUM || addressMode == GL_INVALID_ENUM) throw 1;
 
-					if (SetSampler(szName, minFilter, magFilter, addressMode) == false) throw 2;
-					if (SetTexture2DArray(szName, szFileName) == false) throw 3;
+					SetSampler(szName, minFilter, magFilter, addressMode);
+					SetTexture2DArray(szName, szFileName);
 				}
 				LogOutput(NULL, "OK\n");
 			} while (pTextureNode = pPassNode->IterateChildren("Texture2DArray", pTextureNode));
@@ -378,13 +383,13 @@ bool CGfxMaterialPass::LoadTextureCubeMap(TiXmlNode *pPassNode)
 
 					LogOutput(NULL, "%s ... ", szFileName);
 
-					GLenum minFilter = StringToMinFilter(pTextureNode->ToElement()->AttributeString("min_filter"));
-					GLenum magFilter = StringToMagFilter(pTextureNode->ToElement()->AttributeString("mag_filter"));
-					GLenum addressMode = StringToAddressMode(pTextureNode->ToElement()->AttributeString("address_mode"));
+					uint32_t minFilter = StringToMinFilter(pTextureNode->ToElement()->AttributeString("min_filter"));
+					uint32_t magFilter = StringToMagFilter(pTextureNode->ToElement()->AttributeString("mag_filter"));
+					uint32_t addressMode = StringToAddressMode(pTextureNode->ToElement()->AttributeString("address_mode"));
 					if (minFilter == GL_INVALID_ENUM || magFilter == GL_INVALID_ENUM || addressMode == GL_INVALID_ENUM) throw 1;
 
-					if (SetSampler(szName, minFilter, magFilter, addressMode) == false) throw 2;
-					if (SetTextureCubeMap(szName, szFileName) == false) throw 3;
+					SetSampler(szName, minFilter, magFilter, addressMode);
+					SetTextureCubeMap(szName, szFileName);
 				}
 				LogOutput(NULL, "OK\n");
 			} while (pTextureNode = pPassNode->IterateChildren("TextureCubeMap", pTextureNode));
@@ -410,7 +415,7 @@ bool CGfxMaterialPass::LoadUniformVec1(TiXmlNode *pPassNode)
 
 					LogOutput(NULL, "%s = \"%s\" ... ", szName, szValue);
 
-					GLfloat value = pUniformNode->ToElement()->AttributeFloat1("value");
+					float value = pUniformNode->ToElement()->AttributeFloat1("value");
 					SetUniformVec1(szName, value);
 				}
 				LogOutput(NULL, "OK\n");
@@ -437,7 +442,7 @@ bool CGfxMaterialPass::LoadUniformVec2(TiXmlNode *pPassNode)
 
 					LogOutput(NULL, "%s = \"%s\" ... ", szName, szValue);
 
-					GLfloat value[2]; pUniformNode->ToElement()->AttributeFloat2("value", value);
+					float value[2]; pUniformNode->ToElement()->AttributeFloat2("value", value);
 					SetUniformVec2(szName, value[0], value[1]);
 				}
 				LogOutput(NULL, "OK\n");
@@ -464,7 +469,7 @@ bool CGfxMaterialPass::LoadUniformVec3(TiXmlNode *pPassNode)
 
 					LogOutput(NULL, "%s = \"%s\" ... ", szName, szValue);
 
-					GLfloat value[3]; pUniformNode->ToElement()->AttributeFloat3("value", value);
+					float value[3]; pUniformNode->ToElement()->AttributeFloat3("value", value);
 					SetUniformVec3(szName, value[0], value[1], value[2]);
 				}
 				LogOutput(NULL, "OK\n");
@@ -491,7 +496,7 @@ bool CGfxMaterialPass::LoadUniformVec4(TiXmlNode *pPassNode)
 
 					LogOutput(NULL, "%s = \"%s\" ... ", szName, szValue);
 
-					GLfloat value[4]; pUniformNode->ToElement()->AttributeFloat4("value", value);
+					float value[4]; pUniformNode->ToElement()->AttributeFloat4("value", value);
 					SetUniformVec4(szName, value[0], value[1], value[2], value[3]);
 				}
 				LogOutput(NULL, "OK\n");
@@ -521,9 +526,9 @@ bool CGfxMaterialPass::SetPipeline(const CGfxShader *pVertexShader, const CGfxSh
 	return true;
 }
 
-bool CGfxMaterialPass::SetSampler(const char *szName, GLenum minFilter, GLenum magFilter, GLenum addressMode)
+bool CGfxMaterialPass::SetSampler(const char *szName, uint32_t minFilter, uint32_t magFilter, uint32_t addressMode)
 {
-	GLuint name = HashValue(szName);
+	uint32_t name = HashValue(szName);
 
 	if ((m_pPipeline == NULL) || (m_pPipeline && m_pPipeline->IsTextureValid(name))) {
 		m_pSamplers[name] = Renderer()->CreateSampler(minFilter, magFilter, addressMode);
@@ -533,9 +538,9 @@ bool CGfxMaterialPass::SetSampler(const char *szName, GLenum minFilter, GLenum m
 	return false;
 }
 
-bool CGfxMaterialPass::SetTexture2D(const char *szName, GLuint externTexture)
+bool CGfxMaterialPass::SetTexture2D(const char *szName, uint32_t externTexture)
 {
-	GLuint name = HashValue(szName);
+	uint32_t name = HashValue(szName);
 
 	if ((m_pPipeline == NULL) || (m_pPipeline && m_pPipeline->IsTextureValid(name))) {
 		m_ptrTexture2ds[name] = Renderer()->CreateTexture2D(TEXTURE_INTERNAL_NAME(name));
@@ -546,9 +551,9 @@ bool CGfxMaterialPass::SetTexture2D(const char *szName, GLuint externTexture)
 	return false;
 }
 
-bool CGfxMaterialPass::SetTexture2DArray(const char *szName, GLuint externTexture)
+bool CGfxMaterialPass::SetTexture2DArray(const char *szName, uint32_t externTexture)
 {
-	GLuint name = HashValue(szName);
+	uint32_t name = HashValue(szName);
 
 	if ((m_pPipeline == NULL) || (m_pPipeline && m_pPipeline->IsTextureValid(name))) {
 		m_ptrTexture2dArrays[name] = Renderer()->CreateTexture2DArray(TEXTURE_INTERNAL_NAME(name));
@@ -559,9 +564,9 @@ bool CGfxMaterialPass::SetTexture2DArray(const char *szName, GLuint externTextur
 	return false;
 }
 
-bool CGfxMaterialPass::SetTextureCubeMap(const char *szName, GLuint externTexture)
+bool CGfxMaterialPass::SetTextureCubeMap(const char *szName, uint32_t externTexture)
 {
-	GLuint name = HashValue(szName);
+	uint32_t name = HashValue(szName);
 
 	if ((m_pPipeline == NULL) || (m_pPipeline && m_pPipeline->IsTextureValid(name))) {
 		m_ptrTextureCubeMaps[name] = Renderer()->CreateTextureCubeMap(TEXTURE_INTERNAL_NAME(name));
@@ -574,7 +579,7 @@ bool CGfxMaterialPass::SetTextureCubeMap(const char *szName, GLuint externTextur
 
 bool CGfxMaterialPass::SetTexture2D(const char *szName, const char *szFileName)
 {
-	GLuint name = HashValue(szName);
+	uint32_t name = HashValue(szName);
 
 	if ((m_pPipeline == NULL) || (m_pPipeline && m_pPipeline->IsTextureValid(name))) {
 		m_ptrTexture2ds[name] = Renderer()->LoadTexture2D(szFileName);
@@ -586,7 +591,7 @@ bool CGfxMaterialPass::SetTexture2D(const char *szName, const char *szFileName)
 
 bool CGfxMaterialPass::SetTexture2DArray(const char *szName, const char *szFileName)
 {
-	GLuint name = HashValue(szName);
+	uint32_t name = HashValue(szName);
 
 	if ((m_pPipeline == NULL) || (m_pPipeline && m_pPipeline->IsTextureValid(name))) {
 		m_ptrTexture2dArrays[name] = Renderer()->LoadTexture2DArray(szFileName);
@@ -598,7 +603,7 @@ bool CGfxMaterialPass::SetTexture2DArray(const char *szName, const char *szFileN
 
 bool CGfxMaterialPass::SetTextureCubeMap(const char *szName, const char *szFileName)
 {
-	GLuint name = HashValue(szName);
+	uint32_t name = HashValue(szName);
 
 	if ((m_pPipeline == NULL) || (m_pPipeline && m_pPipeline->IsTextureValid(name))) {
 		m_ptrTextureCubeMaps[name] = Renderer()->LoadTextureCubeMap(szFileName);
@@ -610,7 +615,7 @@ bool CGfxMaterialPass::SetTextureCubeMap(const char *szName, const char *szFileN
 
 bool CGfxMaterialPass::SetUniformVec1(const char *szName, float x)
 {
-	GLuint name = HashValue(szName);
+	uint32_t name = HashValue(szName);
 
 	if ((m_pPipeline == NULL) || (m_pPipeline && m_pPipeline->IsUniformValid(name))) {
 		if (m_pUniformVec1s[name] == NULL) {
@@ -626,7 +631,7 @@ bool CGfxMaterialPass::SetUniformVec1(const char *szName, float x)
 
 bool CGfxMaterialPass::SetUniformVec2(const char *szName, float x, float y)
 {
-	GLuint name = HashValue(szName);
+	uint32_t name = HashValue(szName);
 
 	if ((m_pPipeline == NULL) || (m_pPipeline && m_pPipeline->IsUniformValid(name))) {
 		if (m_pUniformVec2s[name] == NULL) {
@@ -642,7 +647,7 @@ bool CGfxMaterialPass::SetUniformVec2(const char *szName, float x, float y)
 
 bool CGfxMaterialPass::SetUniformVec3(const char *szName, float x, float y, float z)
 {
-	GLuint name = HashValue(szName);
+	uint32_t name = HashValue(szName);
 
 	if ((m_pPipeline == NULL) || (m_pPipeline && m_pPipeline->IsUniformValid(name))) {
 		if (m_pUniformVec3s[name] == NULL) {
@@ -658,7 +663,7 @@ bool CGfxMaterialPass::SetUniformVec3(const char *szName, float x, float y, floa
 
 bool CGfxMaterialPass::SetUniformVec4(const char *szName, float x, float y, float z, float w)
 {
-	GLuint name = HashValue(szName);
+	uint32_t name = HashValue(szName);
 
 	if ((m_pPipeline == NULL) || (m_pPipeline && m_pPipeline->IsUniformValid(name))) {
 		if (m_pUniformVec4s[name] == NULL) {
@@ -674,7 +679,7 @@ bool CGfxMaterialPass::SetUniformVec4(const char *szName, float x, float y, floa
 
 bool CGfxMaterialPass::SetUniformMat4(const char *szName, const float *matrix)
 {
-	GLuint name = HashValue(szName);
+	uint32_t name = HashValue(szName);
 
 	if ((m_pPipeline == NULL) || (m_pPipeline && m_pPipeline->IsUniformValid(name))) {
 		if (m_pUniformMat4s[name] == NULL) {

@@ -5,7 +5,7 @@
 class CGfxCommandSetDepthTest : public CGfxCommandBase
 {
 public:
-	CGfxCommandSetDepthTest(bool bEnable, GLenum depthFunc)
+	CGfxCommandSetDepthTest(bool bEnable, uint32_t depthFunc)
 		: m_bEnable(bEnable)
 		, m_depthFunc(depthFunc)
 	{
@@ -35,5 +35,5 @@ public:
 
 private:
 	bool m_bEnable;
-	GLenum m_depthFunc;
+	uint32_t m_depthFunc;
 };

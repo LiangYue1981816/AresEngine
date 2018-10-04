@@ -16,17 +16,17 @@ private:
 
 public:
 	bool Load(const char *szFileName);
-	bool LoadFace(const char *szFileName, GLsizei face);
-	bool Create(GLenum format, GLenum internalFormat, GLsizei width, GLsizei height, GLsizei mipLevels);
+	bool LoadFace(const char *szFileName, int face);
+	bool Create(uint32_t format, uint32_t internalFormat, int width, int height, int mipLevels);
 	void Destroy(void);
 
 public:
 	bool TransferTextureCubeMap(const gli::texture_cube *texture);
-	bool TransferTexture2D(GLsizei face, const gli::texture2d *texture);
-	bool TransferTexture2D(GLsizei face, GLsizei level, GLenum format, GLint xoffset, GLint yoffset, GLsizei width, GLsizei height, GLenum type, GLsizei size, const GLvoid *data);
-	bool TransferTexture2DCompressed(GLsizei face, GLsizei level, GLenum format, GLint xoffset, GLint yoffset, GLsizei width, GLsizei height, GLsizei size, const GLvoid *data);
+	bool TransferTexture2D(int face, const gli::texture2d *texture);
+	bool TransferTexture2D(int face, int level, uint32_t format, int xoffset, int yoffset, int width, int height, uint32_t type, int size, const void *data);
+	bool TransferTexture2DCompressed(int face, int level, uint32_t format, int xoffset, int yoffset, int width, int height, int size, const void *data);
 
 
 private:
-	eastl::unordered_map<GLsizei, eastl::unordered_map<GLsizei, GLsizeiptr>> m_size;
+	eastl::unordered_map<int, eastl::unordered_map<int, uint32_t>> m_size;
 };

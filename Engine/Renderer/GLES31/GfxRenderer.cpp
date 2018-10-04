@@ -11,7 +11,7 @@ extern "C" {
 #define GLAPIENTRY APIENTRY
 #define APIENTRY WINAPI
 #define GLEWAPI extern __declspec(dllexport)
-GLEWAPI GLenum GLAPIENTRY glewInit(void);
+GLEWAPI uint32_t GLAPIENTRY glewInit(void);
 
 #ifdef __cplusplus
 }
@@ -74,7 +74,7 @@ CGfxRenderer::CGfxRenderer(void *hDC, const char *szShaderCachePath)
 	HGLRC hRC = wglCreateContext((HDC)m_hDC);
 	wglMakeCurrent((HDC)m_hDC, hRC);
 
-	GLenum err = glewInit();
+	uint32_t err = glewInit();
 #endif
 
 	m_pScreenMesh = new CGfxMesh(0);
@@ -105,7 +105,7 @@ CGfxRenderer::CGfxRenderer(void *hDC, const char *szShaderCachePath)
 		{ glm::vec3(-1.0f,  1.0f, 0.0f), glm::vec2(0.0f, 1.0f) },
 	};
 
-	const static GLuint indices[] = {
+	const static uint32_t indices[] = {
 		0, 1, 2, 2, 3, 0
 	};
 
@@ -167,7 +167,7 @@ CGfxPipelineGraphics* CGfxRenderer::CreatePipelineGraphics(const CGfxShader *pVe
 	return m_pPipelineManager->CreatePipelineGraphics(pVertexShader, pFragmentShader, state);
 }
 
-CGfxSampler* CGfxRenderer::CreateSampler(GLenum minFilter, GLenum magFilter, GLenum addressMode)
+CGfxSampler* CGfxRenderer::CreateSampler(uint32_t minFilter, uint32_t magFilter, uint32_t addressMode)
 {
 	return m_pSamplerManager->CreateSampler(minFilter, magFilter, addressMode);
 }
@@ -189,7 +189,7 @@ CGfxTextureCubeMapPtr CGfxRenderer::CreateTextureCubeMap(uint32_t name)
 	return m_pTextureManager->CreateTextureCubeMap(name);
 }
 
-CGfxFrameBufferPtr CGfxRenderer::CreateFrameBuffer(GLuint width, GLuint height, bool bDepthRenderBuffer)
+CGfxFrameBufferPtr CGfxRenderer::CreateFrameBuffer(uint32_t width, uint32_t height, bool bDepthRenderBuffer)
 {
 	return m_pFrameBufferManager->CreateFrameBuffer(width, height, bDepthRenderBuffer);
 }
@@ -355,12 +355,12 @@ bool CGfxRenderer::CmdSetViewport(CGfxCommandBuffer *pCommandBuffer, int x, int 
 	return pCommandBuffer->CmdSetViewport(x, y, width, height);
 }
 
-bool CGfxRenderer::CmdSetCullFace(CGfxCommandBuffer *pCommandBuffer, bool bEnable, GLenum cullFace, GLenum frontFace)
+bool CGfxRenderer::CmdSetCullFace(CGfxCommandBuffer *pCommandBuffer, bool bEnable, uint32_t cullFace, uint32_t frontFace)
 {
 	return pCommandBuffer->CmdSetCullFace(bEnable, cullFace, frontFace);
 }
 
-bool CGfxRenderer::CmdSetDepthTest(CGfxCommandBuffer *pCommandBuffer, bool bEnable, GLenum depthFunc)
+bool CGfxRenderer::CmdSetDepthTest(CGfxCommandBuffer *pCommandBuffer, bool bEnable, uint32_t depthFunc)
 {
 	return pCommandBuffer->CmdSetDepthTest(bEnable, depthFunc);
 }
@@ -375,12 +375,12 @@ bool CGfxRenderer::CmdSetColorWrite(CGfxCommandBuffer *pCommandBuffer, bool bEna
 	return pCommandBuffer->CmdSetColorWrite(bEnableRed, bEnableGreen, bEnableBlue, bEnableAlpha);
 }
 
-bool CGfxRenderer::CmdSetBlend(CGfxCommandBuffer *pCommandBuffer, bool bEnable, GLenum srcFactor, GLenum dstFactor)
+bool CGfxRenderer::CmdSetBlend(CGfxCommandBuffer *pCommandBuffer, bool bEnable, uint32_t srcFactor, uint32_t dstFactor)
 {
 	return pCommandBuffer->CmdSetBlend(bEnable, srcFactor, dstFactor);
 }
 
-bool CGfxRenderer::CmdSetPolygonOffset(CGfxCommandBuffer *pCommandBuffer, bool bEnable, GLfloat factor, GLfloat units)
+bool CGfxRenderer::CmdSetPolygonOffset(CGfxCommandBuffer *pCommandBuffer, bool bEnable, float factor, float units)
 {
 	return pCommandBuffer->CmdSetPolygonOffset(bEnable, factor, units);
 }
@@ -400,7 +400,7 @@ bool CGfxRenderer::CmdBindMaterialPass(CGfxCommandBuffer *pCommandBuffer, const 
 	return pCommandBuffer->CmdBindMaterialPass(ptrMaterial, namePass);
 }
 
-bool CGfxRenderer::CmdBindInputTexture(CGfxCommandBuffer *pCommandBuffer, const char *szName, GLuint texture, GLenum minFilter, GLenum magFilter, GLenum addressMode)
+bool CGfxRenderer::CmdBindInputTexture(CGfxCommandBuffer *pCommandBuffer, const char *szName, uint32_t texture, uint32_t minFilter, uint32_t magFilter, uint32_t addressMode)
 {
 	return pCommandBuffer->CmdBindInputTexture(szName, texture, minFilter, magFilter, addressMode);
 }
@@ -421,20 +421,20 @@ bool CGfxRenderer::CmdDrawInstance(CGfxCommandBuffer *pCommandBuffer, const CGfx
 		return false;
 	}
 
-	if (pCommandBuffer->CmdDrawInstance(GL_TRIANGLES, ptrMesh->GetIndexType(), indexCount, baseIndex, (GLsizei)mtxTransforms.size()) == false) {
+	if (pCommandBuffer->CmdDrawInstance(GL_TRIANGLES, ptrMesh->GetIndexType(), indexCount, baseIndex, (int)mtxTransforms.size()) == false) {
 		return false;
 	}
 
 	return true;
 }
 
-bool CGfxRenderer::CmdDrawIndirect(CGfxCommandBuffer *pCommandBuffer, const CGfxMeshPtr &ptrMesh, int indexCount, int baseIndex, GLsizei baseVertex, const eastl::vector<glm::mat4> &mtxTransforms)
+bool CGfxRenderer::CmdDrawIndirect(CGfxCommandBuffer *pCommandBuffer, const CGfxMeshPtr &ptrMesh, int indexCount, int baseIndex, int baseVertex, const eastl::vector<glm::mat4> &mtxTransforms)
 {
 	if (pCommandBuffer->CmdBindMesh(ptrMesh, mtxTransforms) == false) {
 		return false;
 	}
 
-	if (pCommandBuffer->CmdDrawIndirect(GL_TRIANGLES, ptrMesh->GetIndexType(), indexCount, baseIndex, baseVertex, (GLsizei)mtxTransforms.size()) == false) {
+	if (pCommandBuffer->CmdDrawIndirect(GL_TRIANGLES, ptrMesh->GetIndexType(), indexCount, baseIndex, baseVertex, (int)mtxTransforms.size()) == false) {
 		return false;
 	}
 
@@ -512,7 +512,7 @@ void CGfxRenderer::BindMaterialPass(CGfxMaterialPass *pPass)
 	}
 }
 
-void CGfxRenderer::BindInputTexture(const char *szName, GLuint texture, GLenum minFilter, GLenum magFilter, GLenum addressMode)
+void CGfxRenderer::BindInputTexture(const char *szName, uint32_t texture, uint32_t minFilter, uint32_t magFilter, uint32_t addressMode)
 {
 	m_pGlobalPass->SetTexture2D(szName, texture);
 	m_pGlobalPass->SetSampler(szName, minFilter, magFilter, addressMode);

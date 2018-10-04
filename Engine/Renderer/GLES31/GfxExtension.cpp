@@ -3,7 +3,14 @@
 #include "GfxExtension.h"
 
 
-GLenum glGetShaderKind(shaderc_shader_kind kind)
+void glReadBuffers(int n, const uint32_t *bufs)
+{
+	for (int index = 0; index < n; index++) {
+		glReadBuffer(bufs[index]);
+	}
+}
+
+uint32_t glGetShaderKind(shaderc_shader_kind kind)
 {
 	switch (kind) {
 	case shaderc_shader_kind::shaderc_vertex_shader:

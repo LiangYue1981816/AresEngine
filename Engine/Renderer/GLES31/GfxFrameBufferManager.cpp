@@ -17,7 +17,7 @@ CGfxFrameBufferManager::~CGfxFrameBufferManager(void)
 	m_pFrameBuffers.clear();
 }
 
-CGfxFrameBuffer* CGfxFrameBufferManager::CreateFrameBuffer(GLuint width, GLuint height, bool bDepthRenderBuffer)
+CGfxFrameBuffer* CGfxFrameBufferManager::CreateFrameBuffer(uint32_t width, uint32_t height, bool bDepthRenderBuffer)
 {
 	CGfxFrameBuffer *pFrameBuffer = new CGfxFrameBuffer(width, height, bDepthRenderBuffer);
 	m_pFrameBuffers[pFrameBuffer] = pFrameBuffer;

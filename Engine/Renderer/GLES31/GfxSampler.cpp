@@ -3,7 +3,7 @@
 #include "GfxSampler.h"
 
 
-CGfxSampler::CGfxSampler(GLenum minFilter, GLenum magFilter, GLenum addressMode)
+CGfxSampler::CGfxSampler(uint32_t minFilter, uint32_t magFilter, uint32_t addressMode)
 	: m_sampler(0)
 {
 	glGenSamplers(1, &m_sampler);
@@ -19,7 +19,7 @@ CGfxSampler::~CGfxSampler(void)
 	glDeleteSamplers(1, &m_sampler);
 }
 
-GLuint CGfxSampler::GetSampler(void) const
+uint32_t CGfxSampler::GetSampler(void) const
 {
 	return m_sampler;
 }

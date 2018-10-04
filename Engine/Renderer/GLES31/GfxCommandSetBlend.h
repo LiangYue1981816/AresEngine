@@ -5,7 +5,7 @@
 class CGfxCommandSetBlend : public CGfxCommandBase
 {
 public:
-	CGfxCommandSetBlend(bool bEnable, GLenum srcFactor, GLenum dstFactor)
+	CGfxCommandSetBlend(bool bEnable, uint32_t srcFactor, uint32_t dstFactor)
 		: m_bEnable(bEnable)
 		, m_srcFactor(srcFactor)
 		, m_dstFactor(dstFactor)
@@ -36,6 +36,6 @@ public:
 
 private:
 	bool m_bEnable;
-	GLenum m_srcFactor;
-	GLenum m_dstFactor;
+	uint32_t m_srcFactor;
+	uint32_t m_dstFactor;
 };

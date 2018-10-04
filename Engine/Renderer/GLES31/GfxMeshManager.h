@@ -19,5 +19,5 @@ private:
 
 
 private:
-	eastl::unordered_map<GLuint, CGfxMesh*> m_pMeshs;
+	eastl::unordered_map<uint32_t, CGfxMesh*> m_pMeshs;
 };

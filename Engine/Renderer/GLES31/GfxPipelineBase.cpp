@@ -54,12 +54,12 @@ void CGfxPipelineBase::Destroy(void)
 	m_sampledImageLocations.clear();
 }
 
-bool CGfxPipelineBase::SetUniformLocation(const char *szName, GLuint program)
+bool CGfxPipelineBase::SetUniformLocation(const char *szName, uint32_t program)
 {
 	uint32_t name = HashValue(szName);
 
 	if (m_uniformBlockLocations.find(name) == m_uniformBlockLocations.end()) {
-		GLuint location = glGetUniformBlockIndex(program, szName);
+		uint32_t location = glGetUniformBlockIndex(program, szName);
 
 		if (location != GL_INVALID_INDEX) {
 			m_uniformBlockLocations[name] = location;
@@ -71,12 +71,12 @@ bool CGfxPipelineBase::SetUniformLocation(const char *szName, GLuint program)
 	return false;
 }
 
-bool CGfxPipelineBase::SetTextureLocation(const char *szName, GLuint program)
+bool CGfxPipelineBase::SetTextureLocation(const char *szName, uint32_t program)
 {
 	uint32_t name = HashValue(szName);
 
 	if (m_sampledImageLocations.find(name) == m_sampledImageLocations.end()) {
-		GLuint location = glGetUniformLocation(program, szName);
+		uint32_t location = glGetUniformLocation(program, szName);
 
 		if (location != GL_INVALID_INDEX) {
 			m_sampledImageLocations[name] = location;
@@ -98,7 +98,7 @@ bool CGfxPipelineBase::IsTextureValid(uint32_t name) const
 }
 
 
-bool CGfxPipelineBase::BindTexture2D(uint32_t name, GLuint texture, GLuint sampler, GLuint unit) const
+bool CGfxPipelineBase::BindTexture2D(uint32_t name, uint32_t texture, uint32_t sampler, uint32_t unit) const
 {
 	const auto &itLocation = m_sampledImageLocations.find(name);
 
@@ -113,7 +113,7 @@ bool CGfxPipelineBase::BindTexture2D(uint32_t name, GLuint texture, GLuint sampl
 	return false;
 }
 
-bool CGfxPipelineBase::BindTexture2DArray(uint32_t name, GLuint texture, GLuint sampler, GLuint unit) const
+bool CGfxPipelineBase::BindTexture2DArray(uint32_t name, uint32_t texture, uint32_t sampler, uint32_t unit) const
 {
 	const auto &itLocation = m_sampledImageLocations.find(name);
 
@@ -128,7 +128,7 @@ bool CGfxPipelineBase::BindTexture2DArray(uint32_t name, GLuint texture, GLuint 
 	return false;
 }
 
-bool CGfxPipelineBase::BindTextureCubeMap(uint32_t name, GLuint texture, GLuint sampler, GLuint unit) const
+bool CGfxPipelineBase::BindTextureCubeMap(uint32_t name, uint32_t texture, uint32_t sampler, uint32_t unit) const
 {
 	const auto &itLocation = m_sampledImageLocations.find(name);
 
@@ -143,7 +143,7 @@ bool CGfxPipelineBase::BindTextureCubeMap(uint32_t name, GLuint texture, GLuint 
 	return false;
 }
 
-bool CGfxPipelineBase::BindUniformBuffer(uint32_t name, GLuint buffer, GLsizeiptr size, GLintptr offset) const
+bool CGfxPipelineBase::BindUniformBuffer(uint32_t name, uint32_t buffer, uint32_t size, int offset) const
 {
 	const auto &itLocation = m_uniformBlockLocations.find(name);
 

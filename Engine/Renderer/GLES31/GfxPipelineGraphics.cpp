@@ -82,14 +82,14 @@ bool CGfxPipelineGraphics::CreateState(const GLstate &state)
 	return true;
 }
 
-void CGfxPipelineGraphics::SetEnableCullFace(bool bEnable, GLenum cullFace, GLenum frontFace)
+void CGfxPipelineGraphics::SetEnableCullFace(bool bEnable, uint32_t cullFace, uint32_t frontFace)
 {
 	m_state.bEnableCullFace = bEnable ? GL_TRUE : GL_FALSE;
 	m_state.cullFace = cullFace;
 	m_state.frontFace = frontFace;
 }
 
-void CGfxPipelineGraphics::SetEnableDepthTest(bool bEnable, GLenum depthFunc)
+void CGfxPipelineGraphics::SetEnableDepthTest(bool bEnable, uint32_t depthFunc)
 {
 	m_state.bEnableDepthTest = bEnable ? GL_TRUE : GL_FALSE;
 	m_state.depthFunc = depthFunc;
@@ -108,14 +108,14 @@ void CGfxPipelineGraphics::SetEnableColorWrite(bool bEnableRed, bool bEnableGree
 	m_state.bEnableColorWrite[3] = bEnableAlpha ? GL_TRUE : GL_FALSE;
 }
 
-void CGfxPipelineGraphics::SetEnableBlend(bool bEnable, GLenum srcFactor, GLenum dstFactor)
+void CGfxPipelineGraphics::SetEnableBlend(bool bEnable, uint32_t srcFactor, uint32_t dstFactor)
 {
 	m_state.bEnableBlend = bEnable ? GL_TRUE : GL_FALSE;
 	m_state.srcBlendFactor = srcFactor;
 	m_state.dstBlendFactor = dstFactor;
 }
 
-void CGfxPipelineGraphics::SetEnablePolygonOffset(bool bEnable, GLfloat factor, GLfloat units)
+void CGfxPipelineGraphics::SetEnablePolygonOffset(bool bEnable, float factor, float units)
 {
 	m_state.bEnablePolygonOffset = bEnable ? GL_TRUE : GL_FALSE;
 	m_state.polygonOffsetFactor = factor;

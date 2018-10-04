@@ -73,12 +73,12 @@ void CGfxUniformCamera::Apply(void)
 	}
 }
 
-GLuint CGfxUniformCamera::GetBuffer(void) const
+uint32_t CGfxUniformCamera::GetBuffer(void) const
 {
 	return m_pUniformBuffer->GetBuffer();
 }
 
-GLsizeiptr CGfxUniformCamera::GetSize(void) const
+uint32_t CGfxUniformCamera::GetSize(void) const
 {
 	return m_pUniformBuffer->GetSize();
 }

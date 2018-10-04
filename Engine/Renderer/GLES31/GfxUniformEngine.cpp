@@ -271,12 +271,12 @@ void CGfxUniformEngine::Apply(void)
 	}
 }
 
-GLuint CGfxUniformEngine::GetBuffer(void) const
+uint32_t CGfxUniformEngine::GetBuffer(void) const
 {
 	return m_pUniformBuffer->GetBuffer();
 }
 
-GLsizeiptr CGfxUniformEngine::GetSize(void) const
+uint32_t CGfxUniformEngine::GetSize(void) const
 {
 	return m_pUniformBuffer->GetSize();
 }

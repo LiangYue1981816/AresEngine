@@ -38,24 +38,24 @@ public:
 
 	bool CmdSetScissor(int x, int y, int width, int height);
 	bool CmdSetViewport(int x, int y, int width, int height);
-	bool CmdSetCullFace(bool bEnable, GLenum cullFace, GLenum frontFace);
-	bool CmdSetDepthTest(bool bEnable, GLenum depthFunc);
+	bool CmdSetCullFace(bool bEnable, uint32_t cullFace, uint32_t frontFace);
+	bool CmdSetDepthTest(bool bEnable, uint32_t depthFunc);
 	bool CmdSetDepthWrite(bool bEnable);
 	bool CmdSetColorWrite(bool bEnableRed, bool bEnableGreen, bool bEnableBlue, bool bEnableAlpha);
-	bool CmdSetBlend(bool bEnable, GLenum srcFactor, GLenum dstFactor);
-	bool CmdSetPolygonOffset(bool bEnable, GLfloat factor, GLfloat units);
+	bool CmdSetBlend(bool bEnable, uint32_t srcFactor, uint32_t dstFactor);
+	bool CmdSetPolygonOffset(bool bEnable, float factor, float units);
 
 	bool CmdBindCamera(CGfxCamera *pCamera);
 	bool CmdBindPipeline(CGfxPipelineBase *pPipeline);
 	bool CmdBindMesh(const CGfxMeshPtr &ptrMesh, const eastl::vector<glm::mat4> &mtxTransforms);
 	bool CmdBindMaterialPass(const CGfxMaterialPtr &ptrMaterial, uint32_t namePass);
-	bool CmdBindInputTexture(const char *szName, GLuint texture, GLenum minFilter, GLenum magFilter, GLenum addressMode);
+	bool CmdBindInputTexture(const char *szName, uint32_t texture, uint32_t minFilter, uint32_t magFilter, uint32_t addressMode);
 
 	bool CmdClearDepth(float depth);
 	bool CmdClearColor(float red, float green, float blue, float alpha);
-	bool CmdDrawInstance(GLenum mode, GLenum type, GLsizei count, GLsizei baseIndex, GLsizei instanceCount);
-	bool CmdDrawIndirect(GLenum mode, GLenum type, GLsizei count, GLsizei baseIndex, GLsizei baseVertex, GLsizei instanceCount);
-	bool CmdDrawElements(GLenum mode, GLenum type, GLsizei count, GLsizei baseIndex);
+	bool CmdDrawInstance(uint32_t mode, uint32_t type, int count, int baseIndex, int instanceCount);
+	bool CmdDrawIndirect(uint32_t mode, uint32_t type, int count, int baseIndex, int baseVertex, int instanceCount);
+	bool CmdDrawElements(uint32_t mode, uint32_t type, int count, int baseIndex);
 
 	bool CmdExecute(CGfxCommandBuffer *pCommandBuffer);
 

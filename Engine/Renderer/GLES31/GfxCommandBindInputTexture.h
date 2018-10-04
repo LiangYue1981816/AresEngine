@@ -5,7 +5,7 @@
 class CGfxCommandBindInputTexture : public CGfxCommandBase
 {
 public:
-	CGfxCommandBindInputTexture(const char *szName, GLuint texture, GLenum minFilter, GLenum magFilter, GLenum addressMode)
+	CGfxCommandBindInputTexture(const char *szName, uint32_t texture, uint32_t minFilter, uint32_t magFilter, uint32_t addressMode)
 		: m_name(szName)
 		, m_texture(texture)
 		, m_minFilter(minFilter)
@@ -31,8 +31,8 @@ public:
 
 private:
 	eastl::string m_name;
-	GLuint m_texture;
-	GLenum m_minFilter;
-	GLenum m_magFilter;
-	GLenum m_addressMode;
+	uint32_t m_texture;
+	uint32_t m_minFilter;
+	uint32_t m_magFilter;
+	uint32_t m_addressMode;
 };

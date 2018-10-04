@@ -75,7 +75,7 @@ private:
 	CGfxUniformCamera *m_pUniformCamera;
 
 private:
-	GLuint m_index;
+	uint32_t m_index;
 	CGfxCommandBuffer m_mainCommandBuffer[2];
 	eastl::vector<CGfxCommandBuffer> m_secondaryCommandBuffer[THREAD_COUNT][2];
 	eastl::unordered_map<CGfxMaterialPtr, eastl::unordered_map<CGfxMeshPtr, eastl::vector<glm::mat4>>> m_materialQueue[THREAD_COUNT][2];

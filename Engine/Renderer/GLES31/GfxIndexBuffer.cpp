@@ -3,7 +3,7 @@
 #include "GfxIndexBuffer.h"
 
 
-CGfxIndexBuffer::CGfxIndexBuffer(GLenum type, size_t size, bool bDynamic)
+CGfxIndexBuffer::CGfxIndexBuffer(uint32_t type, size_t size, bool bDynamic)
 	: m_indexType(type)
 	, m_indexBuffer(0)
 	, m_size(size)
@@ -28,33 +28,33 @@ CGfxIndexBuffer::~CGfxIndexBuffer(void)
 
 bool CGfxIndexBuffer::BufferData(size_t offset, size_t size, const void *pBuffer)
 {
-	if (m_size < (GLsizeiptr)(offset + size)) {
+	if (m_size < (uint32_t)(offset + size)) {
 		return false;
 	}
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_indexBuffer);
-	glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, (GLintptr)offset, (GLsizeiptr)size, pBuffer);
+	glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, (int)offset, (uint32_t)size, pBuffer);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
 	return true;
 }
 
-GLenum CGfxIndexBuffer::GetIndexType(void) const
+uint32_t CGfxIndexBuffer::GetIndexType(void) const
 {
 	return m_indexType;
 }
 
-GLuint CGfxIndexBuffer::GetIndexCount(void) const
+uint32_t CGfxIndexBuffer::GetIndexCount(void) const
 {
 	return m_size / (m_indexType == GL_UNSIGNED_SHORT ? 2 : 4);
 }
 
-GLuint CGfxIndexBuffer::GetIndexBuffer(void) const
+uint32_t CGfxIndexBuffer::GetIndexBuffer(void) const
 {
 	return m_indexBuffer;
 }
 
-GLsizeiptr CGfxIndexBuffer::GetSize(void) const
+uint32_t CGfxIndexBuffer::GetSize(void) const
 {
 	return m_size;
 }

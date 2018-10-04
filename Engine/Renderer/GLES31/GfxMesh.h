@@ -22,9 +22,9 @@ public:
 	void Free(void);
 
 public:
-	bool CreateIndexBuffer(size_t size, const void *pBuffer, bool bDynamic, GLenum type);
-	bool CreateVertexBuffer(size_t size, const void *pBuffer, bool bDynamic, GLuint format);
-	bool CreateInstanceBuffer(GLuint format);
+	bool CreateIndexBuffer(size_t size, const void *pBuffer, bool bDynamic, uint32_t type);
+	bool CreateVertexBuffer(size_t size, const void *pBuffer, bool bDynamic, uint32_t format);
+	bool CreateInstanceBuffer(uint32_t format);
 	bool CreateVertexArrayObject(void);
 
 public:
@@ -34,12 +34,12 @@ public:
 	void UpdateInstance(void);
 
 public:
-	GLenum GetIndexType(void) const;
-	GLuint GetIndexCount(void) const;
+	uint32_t GetIndexType(void) const;
+	uint32_t GetIndexCount(void) const;
 
-	GLuint GetVertexFormat(void) const;
-	GLuint GetVertexCount(void) const;
-	GLuint GetInstanceCount(void) const;
+	uint32_t GetVertexFormat(void) const;
+	uint32_t GetVertexCount(void) const;
+	uint32_t GetInstanceCount(void) const;
 
 	const glm::aabb& GetLocalAABB(void) const;
 

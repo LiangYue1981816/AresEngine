@@ -5,7 +5,7 @@
 class CGfxCommandDrawIndirect : public CGfxCommandBase
 {
 public:
-	CGfxCommandDrawIndirect(GLenum mode, GLenum type, GLsizei count, GLsizei baseIndex, GLsizei baseVertex, GLsizei instanceCount)
+	CGfxCommandDrawIndirect(uint32_t mode, uint32_t type, int count, int baseIndex, int baseVertex, int instanceCount)
 		: m_mode(mode)
 		, m_type(type)
 		, m_count(count)
@@ -45,10 +45,10 @@ public:
 
 
 private:
-	GLenum m_mode;
-	GLenum m_type;
-	GLsizei m_count;
-	GLsizei m_baseIndex;
-	GLsizei m_baseVertex;
-	GLsizei m_instanceCount;
+	uint32_t m_mode;
+	uint32_t m_type;
+	int m_count;
+	int m_baseIndex;
+	int m_baseVertex;
+	int m_instanceCount;
 };

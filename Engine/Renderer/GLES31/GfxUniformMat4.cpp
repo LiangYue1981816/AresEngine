@@ -45,12 +45,12 @@ void CGfxUniformMat4::Apply(void)
 	}
 }
 
-GLuint CGfxUniformMat4::GetBuffer(void) const
+uint32_t CGfxUniformMat4::GetBuffer(void) const
 {
 	return m_pUniformBuffer->GetBuffer();
 }
 
-GLsizeiptr CGfxUniformMat4::GetSize(void) const
+uint32_t CGfxUniformMat4::GetSize(void) const
 {
 	return m_pUniformBuffer->GetSize();
 }

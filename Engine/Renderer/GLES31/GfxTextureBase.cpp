@@ -7,7 +7,7 @@ CGfxTextureBase::CGfxTextureBase(uint32_t name)
 	: m_name(name)
 
 	, m_texture(0)
-	, m_extern(GL_FALSE)
+	, m_bExtern(GL_FALSE)
 
 	, m_format(GL_INVALID_ENUM)
 	, m_internalFormat(GL_INVALID_ENUM)
@@ -36,26 +36,26 @@ uint32_t CGfxTextureBase::GetName(void) const
 	return m_name;
 }
 
-bool CGfxTextureBase::CreateExtern(GLuint texture)
+bool CGfxTextureBase::CreateExtern(uint32_t texture)
 {
 	Destroy();
 
 	m_texture = texture;
-	m_extern = GL_TRUE;
+	m_bExtern = GL_TRUE;
 
 	return true;
 }
 
 void CGfxTextureBase::Destroy(void)
 {
-	if (m_extern == GL_FALSE) {
+	if (m_bExtern == GL_FALSE) {
 		if (m_texture) {
 			glDeleteTextures(1, &m_texture);
 		}
 	}
 
 	m_texture = 0;
-	m_extern = GL_FALSE;
+	m_bExtern = GL_FALSE;
 
 	m_format = GL_INVALID_ENUM;
 	m_internalFormat = GL_INVALID_ENUM;
@@ -67,37 +67,37 @@ void CGfxTextureBase::Destroy(void)
 	m_arrayLayers = 0;
 }
 
-GLuint CGfxTextureBase::GetTexture(void) const
+uint32_t CGfxTextureBase::GetTexture(void) const
 {
 	return m_texture;
 }
 
-GLenum CGfxTextureBase::GetFormat(void) const
+uint32_t CGfxTextureBase::GetFormat(void) const
 {
 	return m_format;
 }
 
-GLenum CGfxTextureBase::GetInternalFormat(void) const
+uint32_t CGfxTextureBase::GetInternalFormat(void) const
 {
 	return m_internalFormat;
 }
 
-GLsizei CGfxTextureBase::GetWidth(void) const
+int CGfxTextureBase::GetWidth(void) const
 {
 	return m_width;
 }
 
-GLsizei CGfxTextureBase::GetHeight(void) const
+int CGfxTextureBase::GetHeight(void) const
 {
 	return m_height;
 }
 
-GLsizei CGfxTextureBase::GetLevels(void) const
+int CGfxTextureBase::GetLevels(void) const
 {
 	return m_mipLevels;
 }
 
-GLsizei CGfxTextureBase::GetLayers(void) const
+int CGfxTextureBase::GetLayers(void) const
 {
 	return m_arrayLayers;
 }

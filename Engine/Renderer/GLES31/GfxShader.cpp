@@ -81,12 +81,12 @@ bool CGfxShader::IsValid(void) const
 	return m_program != 0;
 }
 
-GLuint CGfxShader::GetKind(void) const
+uint32_t CGfxShader::GetKind(void) const
 {
 	return m_kind;
 }
 
-GLuint CGfxShader::GetProgram(void) const
+uint32_t CGfxShader::GetProgram(void) const
 {
 	return m_program;
 }

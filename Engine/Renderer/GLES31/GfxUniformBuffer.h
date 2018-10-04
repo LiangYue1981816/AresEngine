@@ -13,11 +13,11 @@ public:
 	bool BufferData(size_t offset, size_t size, const void *pBuffer);
 
 public:
-	GLuint GetBuffer(void) const;
-	GLsizeiptr GetSize(void) const;
+	uint32_t GetBuffer(void) const;
+	uint32_t GetSize(void) const;
 
 
 private:
-	GLuint m_buffer;
-	GLsizeiptr m_size;
+	uint32_t m_buffer;
+	uint32_t m_size;
 };
