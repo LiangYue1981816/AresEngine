@@ -6,7 +6,7 @@
 
 unsigned int tick(void)
 {
-#ifdef _WIN32
+#ifdef _WINDOWS
 
 	LARGE_INTEGER freq;
 	LARGE_INTEGER count;
@@ -49,6 +49,43 @@ unsigned int HashValue(const unsigned char *pBuffer, int length)
 	}
 
 	return dwHashValue ? dwHashValue : 0xffffffff;
+}
+
+void splitfilename(const char *name, char *fname, char *ext)
+{
+	const char *p = NULL;
+	const char *c = NULL;
+	const char *base = name;
+
+	for (p = base; *p; p++) {
+		if (*p == '/' || *p == '\\') {
+			do {
+				p++;
+			} while (*p == '/' || *p == '\\');
+
+			base = p;
+		}
+	}
+
+	size_t len = strlen(base);
+	for (p = base + len; p != base && *p != '.'; p--);
+	if (p == base && *p != '.') p = base + len;
+
+	if (fname) {
+		for (c = base; c < p; c++) {
+			fname[c - base] = *c;
+		}
+
+		fname[c - base] = 0;
+	}
+
+	if (ext) {
+		for (c = p; c < base + len; c++) {
+			ext[c - p] = *c;
+		}
+
+		ext[c - p] = 0;
+	}
 }
 
 size_t fsize(FILE *stream)
@@ -130,13 +167,20 @@ void LogOutput(const char *szTag, const char *szFormat, ...)
 	vsprintf(szText, szFormat, vaList);
 	va_end(vaList);
 
-#ifdef _WIN32
+#ifdef _WINDOWS
 
-	OutputDebugString(szTag);
-	OutputDebugString(": ");
+	if (szTag) {
+		OutputDebugString(szTag);
+		OutputDebugString(": ");
+	}
+
 	OutputDebugString(szText);
 
 #endif
 
-	printf("%s: %s", szTag, szText);
+	if (szTag) {
+		printf("%s: ", szTag);
+	}
+
+	printf("%s", szText);
 }

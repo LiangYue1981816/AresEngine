@@ -34,19 +34,19 @@ CGfxInstanceBuffer::~CGfxInstanceBuffer(void)
 void CGfxInstanceBuffer::AddInstance(const glm::mat4 &mtxTransform)
 {
 	m_bDirty = true;
-	m_instanceDatas.push_back(mtxTransform);
+	m_instances.push_back(mtxTransform);
 }
 
 void CGfxInstanceBuffer::SetInstance(const eastl::vector<glm::mat4> &mtxTransforms)
 {
 	m_bDirty = true;
-	m_instanceDatas = mtxTransforms;
+	m_instances = mtxTransforms;
 }
 
 void CGfxInstanceBuffer::ClearInstance(void)
 {
 	m_bDirty = true;
-	m_instanceDatas.clear();
+	m_instances.clear();
 }
 
 void CGfxInstanceBuffer::UpdateInstance(void)
@@ -54,30 +54,30 @@ void CGfxInstanceBuffer::UpdateInstance(void)
 	if (m_bDirty) {
 		m_bDirty = false;
 
-		GLsizeiptr size = (GLsizeiptr)m_instanceDatas.size() * sizeof(glm::mat4);
-
-		if (m_size < size) {
-			CGfxProfiler::DecInstanceBufferSize(m_size);
-			{
-				m_size = INSTANCE_BUFFER_SIZE;
-				while (m_size < size) m_size <<= 1;
-
-				glBindBuffer(GL_ARRAY_BUFFER, m_instanceBuffer);
-				glBufferData(GL_ARRAY_BUFFER, m_size, NULL, GL_DYNAMIC_DRAW);
-				glBindBuffer(GL_ARRAY_BUFFER, 0);
-			}
-			CGfxProfiler::IncInstanceBufferSize(m_size);
-		}
-
 		glBindBuffer(GL_ARRAY_BUFFER, m_instanceBuffer);
-		glBufferSubData(GL_ARRAY_BUFFER, 0, size, m_instanceDatas.data());
+		{
+			GLsizeiptr size = (GLsizeiptr)m_instances.size() * sizeof(glm::mat4);
+
+			if (m_size < size) {
+				CGfxProfiler::DecInstanceBufferSize(m_size);
+				{
+					m_size = INSTANCE_BUFFER_SIZE;
+					while (m_size < size) m_size <<= 1;
+
+					glBufferData(GL_ARRAY_BUFFER, m_size, NULL, GL_DYNAMIC_DRAW);
+				}
+				CGfxProfiler::IncInstanceBufferSize(m_size);
+			}
+
+			glBufferSubData(GL_ARRAY_BUFFER, 0, size, m_instances.data());
+		}
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 	}
 }
 
 GLuint CGfxInstanceBuffer::GetInstanceCount(void) const
 {
-	return (GLuint)m_instanceDatas.size();
+	return (GLuint)m_instances.size();
 }
 
 GLuint CGfxInstanceBuffer::GetInstanceFormat(void) const

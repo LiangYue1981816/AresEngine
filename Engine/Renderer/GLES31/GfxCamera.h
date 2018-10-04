@@ -5,7 +5,6 @@
 class CGfxCamera
 {
 	friend class CGfxRenderer;
-	friend class CGfxCameraManager;
 
 
 private:
@@ -49,12 +48,13 @@ public:
 	bool IsVisible(const glm::sphere &sphere);
 
 public:
-	void AddQueue(const CGfxMaterialPtr &ptrMaterial, const CGfxMeshPtr &ptrMesh, const glm::mat4 &mtxTransform, int indexThread);
+	void AddQueue(int indexThread, const CGfxMaterialPtr &ptrMaterial, const CGfxMeshPtr &ptrMesh, const glm::mat4 &mtxTransform);
 	void ClearQueue(void);
 
 public:
-	void CmdDraw(void);
+	void CmdDraw(int indexThread, uint32_t namePass);
 	void Submit(void);
+	void Apply(void);
 
 private:
 	const CGfxUniformCamera* GetUniformCamera(void) const;
@@ -76,9 +76,9 @@ private:
 
 private:
 	GLuint m_index;
-	eastl::unordered_map<CGfxMaterialPtr, eastl::unordered_map<CGfxMeshPtr, eastl::vector<glm::mat4>>> m_queueOpaque[THREAD_COUNT][2];
-	eastl::unordered_map<CGfxMaterialPtr, eastl::unordered_map<CGfxMeshPtr, eastl::vector<glm::mat4>>> m_queueTransparent[THREAD_COUNT][2];
-	CGfxCommandBuffer *m_pCommandBuffer[2];
+	CGfxCommandBuffer m_mainCommandBuffer[2];
+	eastl::vector<CGfxCommandBuffer> m_secondaryCommandBuffer[THREAD_COUNT][2];
+	eastl::unordered_map<CGfxMaterialPtr, eastl::unordered_map<CGfxMeshPtr, eastl::vector<glm::mat4>>> m_materialQueue[THREAD_COUNT][2];
 
 private:
 	CGfxFrameBufferPtr m_ptrFrameBuffer;

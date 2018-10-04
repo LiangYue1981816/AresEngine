@@ -9,9 +9,12 @@ class CGfxMesh : public CGfxResource
 
 
 private:
-	CGfxMesh(GLuint name);
+	CGfxMesh(uint32_t name);
 	virtual ~CGfxMesh(void);
 	virtual void Release(void);
+
+public:
+	uint32_t GetName(void) const;
 
 
 public:
@@ -31,8 +34,6 @@ public:
 	void UpdateInstance(void);
 
 public:
-	GLuint GetName(void) const;
-
 	GLenum GetIndexType(void) const;
 	GLuint GetIndexCount(void) const;
 
@@ -47,7 +48,7 @@ public:
 
 
 private:
-	GLuint m_name;
+	uint32_t m_name;
 
 private:
 	glm::aabb m_aabb;

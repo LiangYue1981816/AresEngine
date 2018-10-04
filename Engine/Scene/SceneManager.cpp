@@ -16,8 +16,6 @@ CSceneManager::CSceneManager(void)
 	event_init(&m_eventUpdateCameraSkin, 1);
 	event_init(&m_eventUpdateCameraParticle, 1);
 	event_init(&m_eventUpdateCameraPointLight, 1);
-
-	event_init(&m_eventCommandBuffer, 1);
 }
 
 CSceneManager::~CSceneManager(void)
@@ -29,8 +27,6 @@ CSceneManager::~CSceneManager(void)
 	event_destroy(&m_eventUpdateCameraSkin);
 	event_destroy(&m_eventUpdateCameraParticle);
 	event_destroy(&m_eventUpdateCameraPointLight);
-
-	event_destroy(&m_eventCommandBuffer);
 }
 
 uint32_t CSceneManager::GetNextNodeName(void) const
@@ -265,35 +261,31 @@ void CSceneManager::UpdateCamera(CGfxCamera *pCamera)
 	static CTaskComponentUpdateCamera<CComponentSkin> taskUpdateCameraSkins[THREAD_COUNT];
 	static CTaskComponentUpdateCamera<CComponentParticle> taskUpdateCameraParticles[THREAD_COUNT];
 	static CTaskComponentUpdateCamera<CComponentPointLight> taskUpdateCameraPointLights[THREAD_COUNT];
-	static CTaskCommandBuffer taskCommandBuffer;
 
-	m_taskGraphRender.Wait();
-	{
-		pCamera->ClearQueue();
+	pCamera->ClearQueue();
 
-		for (int indexThread = 0; indexThread < THREAD_COUNT; indexThread++) {
-			taskUpdateCameraMeshs[indexThread].SetParams(indexThread, &m_meshManager, pCamera);
-			m_taskGraphRender.Task(&taskUpdateCameraMeshs[indexThread], NULL, &m_eventUpdateCameraSkin, NULL);
-		}
-
-		for (int indexThread = 0; indexThread < THREAD_COUNT; indexThread++) {
-			taskUpdateCameraSkins[indexThread].SetParams(indexThread, &m_skinManager, pCamera);
-			m_taskGraphRender.Task(&taskUpdateCameraSkins[indexThread], NULL, &m_eventUpdateCameraParticle, &m_eventUpdateCameraSkin);
-		}
-
-		for (int indexThread = 0; indexThread < THREAD_COUNT; indexThread++) {
-			taskUpdateCameraParticles[indexThread].SetParams(indexThread, &m_particleManager, pCamera);
-			m_taskGraphRender.Task(&taskUpdateCameraParticles[indexThread], NULL, &m_eventUpdateCameraPointLight, &m_eventUpdateCameraParticle);
-		}
-
-		for (int indexThread = 0; indexThread < THREAD_COUNT; indexThread++) {
-			taskUpdateCameraPointLights[indexThread].SetParams(indexThread, &m_pointLightManager, pCamera);
-			m_taskGraphRender.Task(&taskUpdateCameraPointLights[indexThread], NULL, &m_eventCommandBuffer, &m_eventUpdateCameraPointLight);
-		}
-
-		m_taskGraphRender.Task(&taskCommandBuffer, pCamera, NULL, &m_eventCommandBuffer);
+	for (int indexThread = 0; indexThread < THREAD_COUNT; indexThread++) {
+		taskUpdateCameraMeshs[indexThread].SetParams(indexThread, &m_meshManager, pCamera);
+		m_taskGraphRender.Task(&taskUpdateCameraMeshs[indexThread], NULL, &m_eventUpdateCameraSkin, NULL);
 	}
+
+	for (int indexThread = 0; indexThread < THREAD_COUNT; indexThread++) {
+		taskUpdateCameraSkins[indexThread].SetParams(indexThread, &m_skinManager, pCamera);
+		m_taskGraphRender.Task(&taskUpdateCameraSkins[indexThread], NULL, &m_eventUpdateCameraParticle, &m_eventUpdateCameraSkin);
+	}
+
+	for (int indexThread = 0; indexThread < THREAD_COUNT; indexThread++) {
+		taskUpdateCameraParticles[indexThread].SetParams(indexThread, &m_particleManager, pCamera);
+		m_taskGraphRender.Task(&taskUpdateCameraParticles[indexThread], NULL, &m_eventUpdateCameraPointLight, &m_eventUpdateCameraParticle);
+	}
+
+	for (int indexThread = 0; indexThread < THREAD_COUNT; indexThread++) {
+		taskUpdateCameraPointLights[indexThread].SetParams(indexThread, &m_pointLightManager, pCamera);
+		m_taskGraphRender.Task(&taskUpdateCameraPointLights[indexThread], NULL, NULL, &m_eventUpdateCameraPointLight);
+	}
+
 	m_taskGraphRender.Dispatch();
+	m_taskGraphRender.Wait();
 }
 
 void CSceneManager::RenderCamera(CGfxCamera *pCamera)

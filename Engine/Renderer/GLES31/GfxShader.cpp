@@ -5,7 +5,7 @@
 
 CGfxShader::CGfxShader(uint32_t name)
 	: m_name(name)
-	, m_kind(0)
+	, m_kind(-1)
 	, m_program(0)
 	, m_pShaderCompiler(NULL)
 {
@@ -22,23 +22,43 @@ uint32_t CGfxShader::GetName(void) const
 	return m_name;
 }
 
+bool CGfxShader::Load(const char *szFileName, shaderc_shader_kind kind)
+{
+	Destroy();
+
+	std::vector<uint32_t> words;
+	if (CGfxShaderCompiler::LoadShaderBinary(Renderer()->GetResourceFullName(szFileName), words) == false) return false;
+	if (Create(words.data(), words.size(), kind) == false) return false;
+
+	return true;
+}
+
 bool CGfxShader::Create(const uint32_t *words, size_t numWords, shaderc_shader_kind kind)
 {
-	m_pShaderCompiler = new spirv_cross::CompilerGLSL(words, numWords);
+	try {
+		Destroy();
 
-	spirv_cross::CompilerGLSL::Options options;
-	options.version = 310;
-	options.es = true;
-	options.vertex.fixup_clipspace = false;
-	m_pShaderCompiler->set_options(options);
+		spirv_cross::CompilerGLSL::Options options;
+		options.version = 310;
+		options.es = true;
+		options.vertex.fixup_clipspace = false;
 
-	const eastl::string strSource = m_pShaderCompiler->compile().c_str();
-	const char *szSource = strSource.c_str();
+		m_pShaderCompiler = new spirv_cross::CompilerGLSL(words, numWords);
+		m_pShaderCompiler->set_options(options);
 
-	m_kind = kind;
-	m_program = glCreateShaderProgramv(glGetShaderKind(kind), 1, &szSource);
+		const std::string strSource = m_pShaderCompiler->compile();
+		const char *szSource = strSource.c_str();
 
-	return m_program != 0;
+		m_kind = kind;
+		m_program = glCreateShaderProgramv(glGetShaderKind(kind), 1, &szSource);
+		if (m_program == 0) throw 0;
+
+		return true;
+	}
+	catch (int) {
+		Destroy();
+		return false;
+	}
 }
 
 void CGfxShader::Destroy(void)
@@ -51,9 +71,14 @@ void CGfxShader::Destroy(void)
 		delete m_pShaderCompiler;
 	}
 
-	m_kind = 0;
+	m_kind = -1;
 	m_program = 0;
 	m_pShaderCompiler = NULL;
+}
+
+bool CGfxShader::IsValid(void) const
+{
+	return m_program != 0;
 }
 
 GLuint CGfxShader::GetKind(void) const

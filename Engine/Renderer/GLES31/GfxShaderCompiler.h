@@ -21,6 +21,11 @@ public:
 	std::string Preprocess(const char *szFileName, shaderc_shader_kind kind);
 	std::vector<uint32_t> Compile(const char *szFileName, shaderc_shader_kind kind);
 
+public:
+	static std::string LoadShader(const char *szFileName);
+	static bool LoadShaderBinary(const char *szFileName, std::vector<uint32_t> &words);
+	static bool SaveShaderBinary(const char *szFileName, const std::vector<uint32_t> &words);
+
 
 private:
 	char m_szShaderCachePath[_MAX_STRING];

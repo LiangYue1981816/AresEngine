@@ -42,7 +42,7 @@
 #if defined(__unix__) || defined(__unix) || (defined(__APPLE__) && defined(__MACH__))
 #include <alloca.h>
 #endif
-#ifdef _WIN32
+#ifdef _WINDOWS
 #include <malloc.h>
 #endif
 #include "utils.h"

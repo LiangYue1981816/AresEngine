@@ -36,5 +36,5 @@ private:
 
 private:
 	bool m_bDirty;
-	eastl::vector<glm::mat4> m_instanceDatas;
+	eastl::vector<glm::mat4> m_instances;
 };

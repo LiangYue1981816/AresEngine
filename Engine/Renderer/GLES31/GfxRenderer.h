@@ -11,12 +11,12 @@
 #include <glslc/file_includer.h>
 
 #include <string>
-#include <vector>
 #include <map>
+#include <vector>
 #include <unordered_map>
 #include <eastl/string.h>
-#include <eastl/vector.h>
 #include <eastl/map.h>
+#include <eastl/vector.h>
 #include <eastl/unordered_map.h>
 
 #include "Engine.h"
@@ -25,41 +25,43 @@
 #include "SharedPtr.h"
 
 #include "GfxGLM.h"
-#include "GfxDefinition.h"
 #include "GfxExtension.h"
-
-#include "GfxShaderCompiler.h"
+#include "GfxDefinition.h"
 
 #include "GfxResource.h"
+#include "GfxResourceManager.h"
+
 #include "GfxMesh.h"
 #include "GfxShader.h"
-#include "GfxProgram.h"
 #include "GfxSampler.h"
 #include "GfxTexture2D.h"
 #include "GfxTexture2DArray.h"
 #include "GfxTextureCubeMap.h"
+#include "GfxPipelineCompute.h"
+#include "GfxPipelineGraphics.h"
 #include "GfxMaterial.h"
+#include "GfxMaterialPass.h"
 #include "GfxFrameBuffer.h"
 
 #include "GfxMeshManager.h"
 #include "GfxShaderManager.h"
-#include "GfxProgramManager.h"
 #include "GfxSamplerManager.h"
 #include "GfxTextureManager.h"
+#include "GfxPipelineManager.h"
 #include "GfxMaterialManager.h"
 #include "GfxFrameBufferManager.h"
 
-#include "GfxUniformEngine.h"
-#include "GfxUniformCamera.h"
 #include "GfxUniformVec1.h"
 #include "GfxUniformVec2.h"
 #include "GfxUniformVec3.h"
 #include "GfxUniformVec4.h"
 #include "GfxUniformMat4.h"
+#include "GfxUniformEngine.h"
+#include "GfxUniformCamera.h"
 
-#include "GfxCamera.h"
-#include "GfxCameraManager.h"
+#include "GfxShaderCompiler.h"
 #include "GfxCommandBuffer.h"
+#include "GfxCamera.h"
 
 #include "GfxProfiler.h"
 
@@ -67,45 +69,47 @@
 class CGfxRenderer
 {
 	friend class CEngine;
-	friend class CGfxMesh;
-	friend class CGfxMaterial;
-	friend class CGfxTextureBase;
 	friend class CGfxFrameBuffer;
+	friend class CGfxMesh;
+	friend class CGfxTextureBase;
+	friend class CGfxMaterial;
+	friend class CGfxMaterialPass;
 	friend class CGfxCommandBindCamera;
-	friend class CGfxCommandBindMaterial;
+	friend class CGfxCommandBindPipeline;
+	friend class CGfxCommandBindMaterialPass;
 	friend class CGfxCommandBindInputTexture;
 
 
 private:
-	CGfxRenderer(void *hDC, const char *szShaderPath, const char *szTexturePath, const char *szMaterialPath, const char *szMeshPath);
+	CGfxRenderer(void *hDC, const char *szShaderCachePath);
 	virtual ~CGfxRenderer(void);
 
 
+#pragma region Shader Compiler
 public:
-	const char* GetShaderFullPath(const char *szFileName, char *szFullPath) const;
-	const char* GetTextureFullPath(const char *szFileName, char *szFullPath) const;
-	const char* GetMaterialFullPath(const char *szFileName, char *szFullPath) const;
-	const char* GetMeshFullPath(const char *szFileName, char *szFullPath) const;
+	CGfxShaderCompiler* GetShaderCompiler(void) const;
+#pragma endregion
 
-	// Compiler
+#pragma region Resource Path
 public:
-	CGfxShaderCompiler* GetCompiler(void);
+	void SetResourcePath(const char *szPathName, const char *szExtName);
+	const char* GetResourceFullName(const char *szFileName) const;
+#pragma endregion
 
-	// Camera
-public:
-	CGfxCamera* GetCamera(const char *szName);
-
-	// Internal Gfx Resources
+#pragma region Internal Gfx Resources
 private:
-	CGfxProgram* CreateProgram(const char *szVertexFileName, const char *szFragmentFileName);
+	CGfxShader* LoadShader(const char *szFileName, shaderc_shader_kind kind);
+	CGfxPipelineCompute* CreatePipelineCompute(const CGfxShader *pComputeShader);
+	CGfxPipelineGraphics* CreatePipelineGraphics(const CGfxShader *pVertexShader, const CGfxShader *pFragmentShader, const GLstate &state);
 	CGfxSampler* CreateSampler(GLenum minFilter, GLenum magFilter, GLenum addressMode);
+#pragma endregion
 
-	// External Gfx Resources
+#pragma region External Gfx Resources
 public:
+	CGfxTexture2DPtr CreateTexture2D(uint32_t name);
+	CGfxTexture2DArrayPtr CreateTexture2DArray(uint32_t name);
+	CGfxTextureCubeMapPtr CreateTextureCubeMap(uint32_t name);
 	CGfxFrameBufferPtr CreateFrameBuffer(GLuint width, GLuint height, bool bDepthRenderBuffer);
-	CGfxTexture2DPtr CreateTexture2D(GLuint name);
-	CGfxTexture2DArrayPtr CreateTexture2DArray(GLuint name);
-	CGfxTextureCubeMapPtr CreateTextureCubeMap(GLuint name);
 
 	CGfxMeshPtr LoadMesh(const char *szFileName);
 	CGfxMaterialPtr LoadMaterial(const char *szFileName);
@@ -114,12 +118,19 @@ public:
 	CGfxTextureCubeMapPtr LoadTextureCubeMap(const char *szFileName);
 
 private:
-	void FreeMesh(CGfxMesh *pMesh);
-	void FreeMaterial(CGfxMaterial *pMaterial);
-	void FreeTexture(CGfxTextureBase *pTexture);
-	void FreeFrameBuffer(CGfxFrameBuffer *pFrameBuffer);
+	void DestroyMesh(CGfxMesh *pMesh);
+	void DestroyMaterial(CGfxMaterial *pMaterial);
+	void DestroyTexture(CGfxTextureBase *pTexture);
+	void DestroyFrameBuffer(CGfxFrameBuffer *pFrameBuffer);
+#pragma endregion
 
-	// Features
+#pragma region Camera
+public:
+	CGfxCamera* CreateCamera(void) const;
+	void DestroyCamera(CGfxCamera *pCamera) const;
+#pragma endregion
+
+#pragma region Features
 public:
 	void SetTime(float t, float dt);
 
@@ -143,11 +154,12 @@ public:
 	void SetFogColor(float red, float green, float blue);
 	void SetFogHeightDensity(float startHeight, float endHeight, float density);
 	void SetFogDistanceDensity(float startDistance, float endDistance, float density);
+#pragma endregion
 
-	// Gfx Commands
+#pragma region Commands
 public:
-	bool CmdBeginPass(CGfxCommandBuffer *pCommandBuffer, const CGfxFrameBufferPtr &ptrFrameBuffer);
-	bool CmdEndPass(CGfxCommandBuffer *pCommandBuffer);
+	bool CmdBeginRenderPass(CGfxCommandBuffer *pCommandBuffer, const CGfxFrameBufferPtr &ptrFrameBuffer);
+	bool CmdEndRenderPass(CGfxCommandBuffer *pCommandBuffer);
 
 	bool CmdSetScissor(CGfxCommandBuffer *pCommandBuffer, int x, int y, int width, int height);
 	bool CmdSetViewport(CGfxCommandBuffer *pCommandBuffer, int x, int y, int width, int height);
@@ -159,7 +171,8 @@ public:
 	bool CmdSetPolygonOffset(CGfxCommandBuffer *pCommandBuffer, bool bEnable, GLfloat factor, GLfloat units);
 
 	bool CmdBindCamera(CGfxCommandBuffer *pCommandBuffer, CGfxCamera *pCamera);
-	bool CmdBindMaterial(CGfxCommandBuffer *pCommandBuffer, const CGfxMaterialPtr &ptrMaterial);
+	bool CmdBindPipeline(CGfxCommandBuffer *pCommandBuffer, CGfxPipelineBase *pPipeline);
+	bool CmdBindMaterialPass(CGfxCommandBuffer *pCommandBuffer, const CGfxMaterialPtr &ptrMaterial, uint32_t namePass);
 	bool CmdBindInputTexture(CGfxCommandBuffer *pCommandBuffer, const char *szName, GLuint texture, GLenum minFilter, GLenum magFilter, GLenum addressMode);
 
 	bool CmdClearDepth(CGfxCommandBuffer *pCommandBuffer, float depth);
@@ -169,45 +182,45 @@ public:
 	bool CmdDrawScreen(CGfxCommandBuffer *pCommandBuffer);
 
 	bool CmdExecute(CGfxCommandBuffer *pCommandBuffer, CGfxCommandBuffer *pSecondaryCommandBuffer);
+#pragma endregion
 
-	// Update & Render
+#pragma region Draw
 public:
-	void Update(void);
 	void Submit(const CGfxCommandBuffer *pCommandBuffer);
 	void Present(void);
+#pragma endregion
 
+#pragma region Bind
 private:
+	void BindPipeline(CGfxPipelineBase *pPipeline);
 	void BindCamera(CGfxCamera *pCamera);
-	void BindMaterial(CGfxMaterial *pMaterial);
+	void BindMaterialPass(CGfxMaterialPass *pPass);
 	void BindInputTexture(const char *szName, GLuint texture, GLenum minFilter, GLenum magFilter, GLenum addressMode);
+#pragma endregion
 
-
-private:
-	char m_szShaderPath[260];
-	char m_szTexturePath[260];
-	char m_szMaterialPath[260];
-	char m_szMeshPath[260];
 
 private:
 	void *m_hDC;
 
 private:
 	CGfxMesh *m_pScreenMesh;
-	CGfxMaterial *m_pGlobalMaterial;
-	CGfxMaterial *m_pCurrentMaterial;
+	CGfxMaterialPass *m_pGlobalPass;
+	CGfxMaterialPass *m_pCurrentPass;
+	CGfxPipelineBase *m_pCurrentPipeline;
 
 private:
 	CGfxUniformEngine *m_pUniformEngine;
 
 private:
-	CGfxCameraManager *m_pCameraManager;
-	CGfxFrameBufferManager *m_pFrameBufferManager;
-	CGfxProgramManager *m_pProgramManager;
+	CGfxResourceManager *m_pResourceManager;
+	CGfxMeshManager *m_pMeshManager;
+	CGfxShaderManager *m_pShaderManager;
 	CGfxSamplerManager *m_pSamplerManager;
 	CGfxTextureManager *m_pTextureManager;
+	CGfxPipelineManager *m_pPipelineManager;
 	CGfxMaterialManager *m_pMaterialManager;
-	CGfxMeshManager *m_pMeshManager;
+	CGfxFrameBufferManager *m_pFrameBufferManager;
 
 private:
-	CGfxShaderCompiler m_compiler;
+	CGfxShaderCompiler *m_pShaderCompiler;
 };

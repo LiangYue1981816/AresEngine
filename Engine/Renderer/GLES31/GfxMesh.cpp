@@ -4,11 +4,11 @@
 #include "GfxIndexBuffer.h"
 #include "GfxVertexBuffer.h"
 #include "GfxInstanceBuffer.h"
-#include "GfxVertexAttribute.h"
 #include "GfxVertexArrayObject.h"
+#include "GfxVertexAttribute.h"
 
 
-CGfxMesh::CGfxMesh(GLuint name)
+CGfxMesh::CGfxMesh(uint32_t name)
 	: m_name(name)
 
 	, m_pIndexBuffer(NULL)
@@ -16,7 +16,7 @@ CGfxMesh::CGfxMesh(GLuint name)
 	, m_pInstanceBuffer(NULL)
 	, m_pVertexArrayObject(NULL)
 {
-	m_aabb.zero();
+
 }
 
 CGfxMesh::~CGfxMesh(void)
@@ -26,7 +26,12 @@ CGfxMesh::~CGfxMesh(void)
 
 void CGfxMesh::Release(void)
 {
-	Renderer()->FreeMesh(this);
+	Renderer()->DestroyMesh(this);
+}
+
+uint32_t CGfxMesh::GetName(void) const
+{
+	return m_name;
 }
 
 bool CGfxMesh::Load(const char *szFileName)
@@ -58,10 +63,7 @@ bool CGfxMesh::Load(const char *szFileName)
 	try {
 		Free();
 
-		char szFullPath[260];
-		Renderer()->GetMeshFullPath(szFileName, szFullPath);
-
-		pFile = fopen(szFullPath, "rb");
+		pFile = fopen(Renderer()->GetResourceFullName(szFileName), "rb");
 		if (pFile == NULL) throw 0;
 
 		MeshHeader header;
@@ -127,6 +129,7 @@ void CGfxMesh::Free(void)
 		delete m_pVertexArrayObject;
 	}
 
+	m_aabb.zero();
 	m_pIndexBuffer = NULL;
 	m_pVertexBuffer = NULL;
 	m_pInstanceBuffer = NULL;
@@ -220,11 +223,6 @@ void CGfxMesh::UpdateInstance(void)
 	if (m_pInstanceBuffer) {
 		m_pInstanceBuffer->UpdateInstance();
 	}
-}
-
-GLuint CGfxMesh::GetName(void) const
-{
-	return m_name;
 }
 
 GLenum CGfxMesh::GetIndexType(void) const

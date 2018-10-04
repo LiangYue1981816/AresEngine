@@ -88,8 +88,6 @@ private:
 	event_t m_eventUpdateCameraParticle;
 	event_t m_eventUpdateCameraPointLight;
 
-	event_t m_eventCommandBuffer;
-
 private:
 	CTaskGraph m_taskGraphUpdate;
 	CTaskGraph m_taskGraphRender;

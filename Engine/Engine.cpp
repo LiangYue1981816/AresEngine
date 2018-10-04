@@ -8,10 +8,10 @@ CEngine* CEngine::GetInstance(void)
 	return pInstance;
 }
 
-void CEngine::Create(void *hDC, const char *szShaderPath, const char *szTexturePath, const char *szMaterialPath, const char *szMeshPath)
+void CEngine::Create(void *hDC, const char *szShaderCachePath)
 {
 	if (pInstance == NULL) {
-		pInstance = new CEngine(hDC, szShaderPath, szTexturePath, szMaterialPath, szMeshPath);
+		pInstance = new CEngine(hDC, szShaderCachePath);
 	}
 }
 
@@ -30,13 +30,13 @@ void CEngine::Destroy(void)
 #endif
 }
 
-CEngine::CEngine(void *hDC, const char *szShaderPath, const char *szTexturePath, const char *szMaterialPath, const char *szMeshPath)
+CEngine::CEngine(void *hDC, const char *szShaderCachePath)
 	: m_totalTime(0.0f)
 
 	, m_pRenderer(NULL)
 	, m_pSceneManager(NULL)
 {
-	m_pRenderer = new CGfxRenderer(hDC, szShaderPath, szTexturePath, szMaterialPath, szMeshPath);
+	m_pRenderer = new CGfxRenderer(hDC, szShaderCachePath);
 	m_pSceneManager = new CSceneManager;
 }
 
@@ -44,11 +44,6 @@ CEngine::~CEngine(void)
 {
 	delete m_pSceneManager;
 	delete m_pRenderer;
-}
-
-CGfxCamera* CEngine::GetCamera(const char *szName) const
-{
-	return m_pRenderer->GetCamera(szName);
 }
 
 CGfxRenderer* CEngine::GetRenderer(void) const

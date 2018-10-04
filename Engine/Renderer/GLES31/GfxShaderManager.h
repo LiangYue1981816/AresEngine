@@ -13,7 +13,7 @@ private:
 
 
 private:
-	CGfxShader* CreateShader(uint32_t name);
+	CGfxShader* LoadShader(const char *szFileName, shaderc_shader_kind kind);
 
 
 private:

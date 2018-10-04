@@ -29,7 +29,7 @@ CGfxMaterial* CGfxMaterialManager::LoadMaterial(const char *szFileName)
 	return m_pMaterials[name];
 }
 
-void CGfxMaterialManager::FreeMaterial(CGfxMaterial *pMaterial)
+void CGfxMaterialManager::DestroyMaterial(CGfxMaterial *pMaterial)
 {
 	if (pMaterial) {
 		m_pMaterials.erase(pMaterial->GetName());

@@ -5,35 +5,38 @@
 class CGfxTextureBase : public CGfxResource
 {
 	friend class CGfxRenderer;
-	friend class CGfxMaterial;
 	friend class CGfxTextureManager;
 
 
 protected:
-	CGfxTextureBase(GLuint name);
+	CGfxTextureBase(uint32_t name);
 	virtual ~CGfxTextureBase(void);
 	virtual void Release(void);
 
+public:
+	uint32_t GetName(void) const;
+
 
 public:
+	virtual bool Load(const char *szFileName) = 0;
 	virtual bool CreateExtern(GLuint texture);
 	virtual void Destroy(void);
 
 public:
-	bool IsValid(void) const;
-
-	GLuint GetName(void) const;
 	GLuint GetTexture(void) const;
 
 	GLenum GetFormat(void) const;
 	GLenum GetInternalFormat(void) const;
 
-	GLuint GetWidth(void) const;
-	GLuint GetHeight(void) const;
+	GLsizei GetWidth(void) const;
+	GLsizei GetHeight(void) const;
+
+	GLsizei GetLevels(void) const;
+	GLsizei GetLayers(void) const;
 
 
 protected:
-	GLuint m_name;
+	uint32_t m_name;
 
 protected:
 	GLuint m_texture;

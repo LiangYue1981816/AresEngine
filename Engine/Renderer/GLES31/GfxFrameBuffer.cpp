@@ -40,7 +40,7 @@ CGfxFrameBuffer::~CGfxFrameBuffer(void)
 
 void CGfxFrameBuffer::Release(void)
 {
-	Renderer()->FreeFrameBuffer(this);
+	Renderer()->DestroyFrameBuffer(this);
 }
 
 bool CGfxFrameBuffer::SetDepthTexture(CGfxTexture2DPtr &ptrTexture)
@@ -138,6 +138,10 @@ void CGfxFrameBuffer::InvalidateFramebuffer(void) const
 			discardBuffers.push_back(GL_COLOR_ATTACHMENT0 + itInvalidation.first);
 		}
 	}
+
+	discardBuffers.push_back(GL_DEPTH_ATTACHMENT);
+	discardBuffers.push_back(GL_STENCIL_ATTACHMENT);
+	discardBuffers.push_back(GL_DEPTH_STENCIL_ATTACHMENT);
 
 	glInvalidateFramebuffer(GL_FRAMEBUFFER, (GLsizei)discardBuffers.size(), discardBuffers.data());
 }

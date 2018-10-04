@@ -29,7 +29,16 @@ CGfxMesh* CGfxMeshManager::LoadMesh(const char *szFileName)
 	return m_pMeshs[name];
 }
 
-void CGfxMeshManager::FreeMesh(CGfxMesh *pMesh)
+CGfxMesh* CGfxMeshManager::CreateMesh(uint32_t name)
+{
+	if (m_pMeshs[name] == NULL) {
+		m_pMeshs[name] = new CGfxMesh(name);
+	}
+
+	return m_pMeshs[name];
+}
+
+void CGfxMeshManager::DestroyMesh(CGfxMesh *pMesh)
 {
 	if (pMesh) {
 		m_pMeshs.erase(pMesh->GetName());

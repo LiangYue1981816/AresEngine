@@ -14,7 +14,8 @@ private:
 
 private:
 	CGfxMesh* LoadMesh(const char *szFileName);
-	void FreeMesh(CGfxMesh *pMesh);
+	CGfxMesh* CreateMesh(uint32_t name);
+	void DestroyMesh(CGfxMesh *pMesh);
 
 
 private:

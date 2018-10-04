@@ -1,34 +1,33 @@
 #pragma once
+#include<io.h>
 #include "MemoryAllocator.h"
 #include "TaskGraph.h"
 #include "GfxRenderer.h"
 #include "SceneManager.h"
 
 
-#define CreateEngine(hDC, szShaderPath, szTexturePath, szMaterialPath, szMeshPath) CEngine::Create((hDC), (szShaderPath), (szTexturePath), (szMaterialPath), (szMeshPath))
+#define CreateEngine(hDC, szShaderCachePath) CEngine::Create((hDC), (szShaderCachePath))
 #define DestroyEngine() CEngine::Destroy()
 
 #define Engine() CEngine::GetInstance()
 #define Renderer() CEngine::GetInstance()->GetRenderer()
 #define SceneManager() CEngine::GetInstance()->GetSceneManager()
-#define Camera(name) CEngine::GetInstance()->GetCamera(name)
 
 
 class CEngine
 {
 public:
 	static CEngine* GetInstance(void);
-	static void Create(void *hDC, const char *szShaderPath, const char *szTexturePath, const char *szMaterialPath, const char *szMeshPath);
+	static void Create(void *hDC, const char *szShaderCachePath);
 	static void Destroy(void);
 
 
 private:
-	CEngine(void *hDC, const char *szShaderPath, const char *szTexturePath, const char *szMaterialPath, const char *szMeshPath);
+	CEngine(void *hDC, const char *szShaderCachePath);
 	virtual ~CEngine(void);
 
 
 public:
-	CGfxCamera* GetCamera(const char *szName) const;
 	CGfxRenderer* GetRenderer(void) const;
 	CSceneManager* GetSceneManager(void) const;
 

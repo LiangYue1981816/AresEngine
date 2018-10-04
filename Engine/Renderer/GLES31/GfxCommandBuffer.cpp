@@ -1,11 +1,12 @@
 #include "Engine.h"
 #include "GfxRenderer.h"
 #include "GfxCommandBuffer.h"
-#include "GfxCommandBeginPass.h"
-#include "GfxCommandEndPass.h"
+#include "GfxCommandBeginRenderPass.h"
+#include "GfxCommandEndRenderPass.h"
 #include "GfxCommandBindMesh.h"
 #include "GfxCommandBindCamera.h"
-#include "GfxCommandBindMaterial.h"
+#include "GfxCommandBindPipeline.h"
+#include "GfxCommandBindMaterialPass.h"
 #include "GfxCommandBindInputTexture.h"
 #include "GfxCommandSetScissor.h"
 #include "GfxCommandSetViewport.h"
@@ -58,22 +59,22 @@ bool CGfxCommandBuffer::Execute(void) const
 	return false;
 }
 
-bool CGfxCommandBuffer::CmdBeginPass(const CGfxFrameBufferPtr &ptrFrameBuffer)
+bool CGfxCommandBuffer::CmdBeginRenderPass(const CGfxFrameBufferPtr &ptrFrameBuffer)
 {
 	if (m_bMainCommandBuffer == true && m_bInPassScope == false) {
 		m_bInPassScope = true;
 		m_ptrFrameBuffer = ptrFrameBuffer;
-		m_commands.push_back(new CGfxCommandBeginPass(m_ptrFrameBuffer));
+		m_commands.push_back(new CGfxCommandBeginRenderPass(m_ptrFrameBuffer));
 		return true;
 	}
 
 	return false;
 }
 
-bool CGfxCommandBuffer::CmdEndPass(void)
+bool CGfxCommandBuffer::CmdEndRenderPass(void)
 {
 	if (m_bMainCommandBuffer == true && m_bInPassScope == true) {
-		m_commands.push_back(new CGfxCommandEndPass(m_ptrFrameBuffer));
+		m_commands.push_back(new CGfxCommandEndRenderPass(m_ptrFrameBuffer));
 		m_bInPassScope = false;
 		m_ptrFrameBuffer.Release();
 		return true;
@@ -172,6 +173,16 @@ bool CGfxCommandBuffer::CmdBindCamera(CGfxCamera *pCamera)
 	return false;
 }
 
+bool CGfxCommandBuffer::CmdBindPipeline(CGfxPipelineBase *pPipeline)
+{
+	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
+		m_commands.push_back(new CGfxCommandBindPipeline(pPipeline));
+		return true;
+	}
+
+	return false;
+}
+
 bool CGfxCommandBuffer::CmdBindMesh(const CGfxMeshPtr &ptrMesh, const eastl::vector<glm::mat4> &mtxTransforms)
 {
 	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
@@ -182,10 +193,10 @@ bool CGfxCommandBuffer::CmdBindMesh(const CGfxMeshPtr &ptrMesh, const eastl::vec
 	return false;
 }
 
-bool CGfxCommandBuffer::CmdBindMaterial(const CGfxMaterialPtr &ptrMaterial)
+bool CGfxCommandBuffer::CmdBindMaterialPass(const CGfxMaterialPtr &ptrMaterial, uint32_t namePass)
 {
 	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
-		m_commands.push_back(new CGfxCommandBindMaterial(ptrMaterial));
+		m_commands.push_back(new CGfxCommandBindMaterialPass(ptrMaterial, namePass));
 		return true;
 	}
 

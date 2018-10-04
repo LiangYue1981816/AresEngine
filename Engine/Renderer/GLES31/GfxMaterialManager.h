@@ -14,7 +14,7 @@ private:
 
 private:
 	CGfxMaterial* LoadMaterial(const char *szFileName);
-	void FreeMaterial(CGfxMaterial *pMaterial);
+	void DestroyMaterial(CGfxMaterial *pMaterial);
 
 
 private:

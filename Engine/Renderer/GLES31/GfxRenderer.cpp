@@ -3,7 +3,7 @@
 #include "GfxVertexAttribute.h"
 
 
-#ifdef _WIN32
+#ifdef _WINDOWS
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -23,23 +23,28 @@ GLEWAPI GLenum GLAPIENTRY glewInit(void);
 #define UNIFORM_CAMERA_NAME "Camera"
 
 
-CGfxRenderer::CGfxRenderer(void *hDC, const char *szShaderPath, const char *szTexturePath, const char *szMaterialPath, const char *szMeshPath)
+CGfxRenderer::CGfxRenderer(void *hDC, const char *szShaderCachePath)
 	: m_hDC(hDC)
 
 	, m_pScreenMesh(NULL)
-	, m_pGlobalMaterial(NULL)
-	, m_pCurrentMaterial(NULL)
+	, m_pGlobalPass(NULL)
+	, m_pCurrentPass(NULL)
+	, m_pCurrentPipeline(NULL)
 
 	, m_pUniformEngine(NULL)
 
-	, m_pFrameBufferManager(NULL)
-	, m_pProgramManager(NULL)
+	, m_pResourceManager(NULL)
+	, m_pMeshManager(NULL)
+	, m_pShaderManager(NULL)
 	, m_pSamplerManager(NULL)
 	, m_pTextureManager(NULL)
+	, m_pPipelineManager(NULL)
 	, m_pMaterialManager(NULL)
-	, m_pMeshManager(NULL)
+	, m_pFrameBufferManager(NULL)
+
+	, m_pShaderCompiler(NULL)
 {
-#ifdef _WIN32
+#ifdef _WINDOWS
 	int pixelFormat;
 
 	PIXELFORMATDESCRIPTOR pixelFormatDescriptor = {
@@ -72,23 +77,21 @@ CGfxRenderer::CGfxRenderer(void *hDC, const char *szShaderPath, const char *szTe
 	GLenum err = glewInit();
 #endif
 
-	strcpy(m_szShaderPath, szShaderPath);
-	strcpy(m_szTexturePath, szTexturePath);
-	strcpy(m_szMaterialPath, szMaterialPath);
-	strcpy(m_szMeshPath, szMeshPath);
-
 	m_pScreenMesh = new CGfxMesh(0);
-	m_pGlobalMaterial = new CGfxMaterial(0);
+	m_pGlobalPass = new CGfxMaterialPass(0);
 
 	m_pUniformEngine = new CGfxUniformEngine;
 
-	m_pCameraManager = new CGfxCameraManager;
-	m_pFrameBufferManager = new CGfxFrameBufferManager;
-	m_pProgramManager = new CGfxProgramManager;
+	m_pResourceManager = new CGfxResourceManager;
+	m_pMeshManager = new CGfxMeshManager;
+	m_pShaderManager = new CGfxShaderManager;
 	m_pSamplerManager = new CGfxSamplerManager;
 	m_pTextureManager = new CGfxTextureManager;
+	m_pPipelineManager = new CGfxPipelineManager;
 	m_pMaterialManager = new CGfxMaterialManager;
-	m_pMeshManager = new CGfxMeshManager;
+	m_pFrameBufferManager = new CGfxFrameBufferManager;
+
+	m_pShaderCompiler = new CGfxShaderCompiler(szShaderCachePath);
 
 	struct Vertex {
 		glm::vec3 position;
@@ -113,81 +116,82 @@ CGfxRenderer::CGfxRenderer(void *hDC, const char *szShaderPath, const char *szTe
 CGfxRenderer::~CGfxRenderer(void)
 {
 	delete m_pScreenMesh;
-	delete m_pGlobalMaterial;
+	delete m_pGlobalPass;
 
 	delete m_pUniformEngine;
 
-	delete m_pCameraManager;
+	delete m_pResourceManager;
 	delete m_pMeshManager;
-	delete m_pMaterialManager;
-	delete m_pTextureManager;
+	delete m_pShaderManager;
 	delete m_pSamplerManager;
-	delete m_pProgramManager;
+	delete m_pTextureManager;
+	delete m_pPipelineManager;
+	delete m_pMaterialManager;
 	delete m_pFrameBufferManager;
+
+	delete m_pShaderCompiler;
 }
 
-const char* CGfxRenderer::GetShaderFullPath(const char *szFileName, char *szFullPath) const
+#pragma region Shader Compiler
+CGfxShaderCompiler* CGfxRenderer::GetShaderCompiler(void) const
 {
-	sprintf(szFullPath, "%s/%s", m_szShaderPath, szFileName);
-	return szFullPath;
+	return m_pShaderCompiler;
+}
+#pragma endregion
+
+#pragma region Resource Path
+void CGfxRenderer::SetResourcePath(const char *szPathName, const char *szExtName)
+{
+	m_pResourceManager->SetResourcePath(szPathName, szExtName);
 }
 
-const char* CGfxRenderer::GetTextureFullPath(const char *szFileName, char *szFullPath) const
+const char* CGfxRenderer::GetResourceFullName(const char *szFileName) const
 {
-	sprintf(szFullPath, "%s/%s", m_szTexturePath, szFileName);
-	return szFullPath;
+	return m_pResourceManager->GetResourceFullName(szFileName);
+}
+#pragma endregion
+
+#pragma region Internal Gfx Resources
+CGfxShader* CGfxRenderer::LoadShader(const char *szFileName, shaderc_shader_kind kind)
+{
+	return m_pShaderManager->LoadShader(szFileName, kind);
 }
 
-const char* CGfxRenderer::GetMaterialFullPath(const char *szFileName, char *szFullPath) const
+CGfxPipelineCompute* CGfxRenderer::CreatePipelineCompute(const CGfxShader *pComputeShader)
 {
-	sprintf(szFullPath, "%s/%s", m_szMaterialPath, szFileName);
-	return szFullPath;
+	return m_pPipelineManager->CreatePipelineCompute(pComputeShader);
 }
 
-const char* CGfxRenderer::GetMeshFullPath(const char *szFileName, char *szFullPath) const
+CGfxPipelineGraphics* CGfxRenderer::CreatePipelineGraphics(const CGfxShader *pVertexShader, const CGfxShader *pFragmentShader, const GLstate &state)
 {
-	sprintf(szFullPath, "%s/%s", m_szMeshPath, szFileName);
-	return szFullPath;
-}
-
-CGfxShaderCompiler* CGfxRenderer::GetCompiler(void)
-{
-	return &m_compiler;
-}
-
-CGfxCamera* CGfxRenderer::GetCamera(const char *szName)
-{
-	return m_pCameraManager->GetCamera(szName);
-}
-
-CGfxProgram* CGfxRenderer::CreateProgram(const char *szVertexFileName, const char *szFragmentFileName)
-{
-	return m_pProgramManager->CreateProgram(szVertexFileName, szFragmentFileName);
+	return m_pPipelineManager->CreatePipelineGraphics(pVertexShader, pFragmentShader, state);
 }
 
 CGfxSampler* CGfxRenderer::CreateSampler(GLenum minFilter, GLenum magFilter, GLenum addressMode)
 {
 	return m_pSamplerManager->CreateSampler(minFilter, magFilter, addressMode);
 }
+#pragma endregion
 
-CGfxFrameBufferPtr CGfxRenderer::CreateFrameBuffer(GLuint width, GLuint height, bool bDepthRenderBuffer)
-{
-	return m_pFrameBufferManager->CreateFrameBuffer(width, height, bDepthRenderBuffer);
-}
-
-CGfxTexture2DPtr CGfxRenderer::CreateTexture2D(GLuint name)
+#pragma region External Gfx Resources
+CGfxTexture2DPtr CGfxRenderer::CreateTexture2D(uint32_t name)
 {
 	return m_pTextureManager->CreateTexture2D(name);
 }
 
-CGfxTexture2DArrayPtr CGfxRenderer::CreateTexture2DArray(GLuint name)
+CGfxTexture2DArrayPtr CGfxRenderer::CreateTexture2DArray(uint32_t name)
 {
 	return m_pTextureManager->CreateTexture2DArray(name);
 }
 
-CGfxTextureCubeMapPtr CGfxRenderer::CreateTextureCubeMap(GLuint name)
+CGfxTextureCubeMapPtr CGfxRenderer::CreateTextureCubeMap(uint32_t name)
 {
 	return m_pTextureManager->CreateTextureCubeMap(name);
+}
+
+CGfxFrameBufferPtr CGfxRenderer::CreateFrameBuffer(GLuint width, GLuint height, bool bDepthRenderBuffer)
+{
+	return m_pFrameBufferManager->CreateFrameBuffer(width, height, bDepthRenderBuffer);
 }
 
 CGfxMeshPtr CGfxRenderer::LoadMesh(const char *szFileName)
@@ -215,26 +219,40 @@ CGfxTextureCubeMapPtr CGfxRenderer::LoadTextureCubeMap(const char *szFileName)
 	return m_pTextureManager->LoadTextureCubeMap(szFileName);
 }
 
-void CGfxRenderer::FreeMesh(CGfxMesh *pMesh)
+void CGfxRenderer::DestroyMesh(CGfxMesh *pMesh)
 {
-	m_pMeshManager->FreeMesh(pMesh);
+	m_pMeshManager->DestroyMesh(pMesh);
 }
 
-void CGfxRenderer::FreeMaterial(CGfxMaterial *pMaterial)
+void CGfxRenderer::DestroyMaterial(CGfxMaterial *pMaterial)
 {
-	m_pMaterialManager->FreeMaterial(pMaterial);
+	m_pMaterialManager->DestroyMaterial(pMaterial);
 }
 
-void CGfxRenderer::FreeTexture(CGfxTextureBase *pTexture)
+void CGfxRenderer::DestroyTexture(CGfxTextureBase *pTexture)
 {
-	m_pTextureManager->FreeTexture(pTexture);
+	m_pTextureManager->DestroyTexture(pTexture);
 }
 
-void CGfxRenderer::FreeFrameBuffer(CGfxFrameBuffer *pFrameBuffer)
+void CGfxRenderer::DestroyFrameBuffer(CGfxFrameBuffer *pFrameBuffer)
 {
 	m_pFrameBufferManager->DestroyFrameBuffer(pFrameBuffer);
 }
+#pragma endregion
 
+#pragma region Camera
+CGfxCamera* CGfxRenderer::CreateCamera(void) const
+{
+	return new CGfxCamera;
+}
+
+void CGfxRenderer::DestroyCamera(CGfxCamera *pCamera) const
+{
+	delete pCamera;
+}
+#pragma endregion
+
+#pragma region Features
 void CGfxRenderer::SetTime(float t, float dt)
 {
 	m_pUniformEngine->SetTime(t, dt);
@@ -314,15 +332,17 @@ void CGfxRenderer::SetFogDistanceDensity(float startDistance, float endDistance,
 {
 	m_pUniformEngine->SetFogDistanceDensity(startDistance, endDistance, density);
 }
+#pragma endregion
 
-bool CGfxRenderer::CmdBeginPass(CGfxCommandBuffer *pCommandBuffer, const CGfxFrameBufferPtr &ptrFrameBuffer)
+#pragma region Commands
+bool CGfxRenderer::CmdBeginRenderPass(CGfxCommandBuffer *pCommandBuffer, const CGfxFrameBufferPtr &ptrFrameBuffer)
 {
-	return pCommandBuffer->CmdBeginPass(ptrFrameBuffer);
+	return pCommandBuffer->CmdBeginRenderPass(ptrFrameBuffer);
 }
 
-bool CGfxRenderer::CmdEndPass(CGfxCommandBuffer *pCommandBuffer)
+bool CGfxRenderer::CmdEndRenderPass(CGfxCommandBuffer *pCommandBuffer)
 {
-	return pCommandBuffer->CmdEndPass();
+	return pCommandBuffer->CmdEndRenderPass();
 }
 
 bool CGfxRenderer::CmdSetScissor(CGfxCommandBuffer *pCommandBuffer, int x, int y, int width, int height)
@@ -370,9 +390,14 @@ bool CGfxRenderer::CmdBindCamera(CGfxCommandBuffer *pCommandBuffer, CGfxCamera *
 	return pCommandBuffer->CmdBindCamera(pCamera);
 }
 
-bool CGfxRenderer::CmdBindMaterial(CGfxCommandBuffer *pCommandBuffer, const CGfxMaterialPtr &ptrMaterial)
+bool CGfxRenderer::CmdBindPipeline(CGfxCommandBuffer *pCommandBuffer, CGfxPipelineBase *pPipeline)
 {
-	return pCommandBuffer->CmdBindMaterial(ptrMaterial);
+	return pCommandBuffer->CmdBindPipeline(pPipeline);
+}
+
+bool CGfxRenderer::CmdBindMaterialPass(CGfxCommandBuffer *pCommandBuffer, const CGfxMaterialPtr &ptrMaterial, uint32_t namePass)
+{
+	return pCommandBuffer->CmdBindMaterialPass(ptrMaterial, namePass);
 }
 
 bool CGfxRenderer::CmdBindInputTexture(CGfxCommandBuffer *pCommandBuffer, const char *szName, GLuint texture, GLenum minFilter, GLenum magFilter, GLenum addressMode)
@@ -434,12 +459,9 @@ bool CGfxRenderer::CmdExecute(CGfxCommandBuffer *pCommandBuffer, CGfxCommandBuff
 {
 	return pCommandBuffer->CmdExecute(pSecondaryCommandBuffer);
 }
+#pragma endregion
 
-void CGfxRenderer::Update(void)
-{
-	m_pUniformEngine->Apply();
-}
-
+#pragma region Draw
 void CGfxRenderer::Submit(const CGfxCommandBuffer *pCommandBuffer)
 {
 	pCommandBuffer->Execute();
@@ -447,37 +469,52 @@ void CGfxRenderer::Submit(const CGfxCommandBuffer *pCommandBuffer)
 
 void CGfxRenderer::Present(void)
 {
-#ifdef _WIN32
+#ifdef _WINDOWS
 	::SwapBuffers((HDC)m_hDC);
 #endif
+
+	m_pCurrentPass = NULL;
+}
+#pragma endregion
+
+#pragma region Bind
+void CGfxRenderer::BindPipeline(CGfxPipelineBase *pPipeline)
+{
+	if (m_pCurrentPipeline != pPipeline) {
+		m_pCurrentPipeline = (CGfxPipelineBase *)pPipeline;
+
+		if (m_pCurrentPipeline) {
+			m_pCurrentPipeline->BindPipeline();
+			m_pCurrentPipeline->BindUniformBuffer(HashValue(UNIFORM_ENGINE_NAME), m_pUniformEngine->GetBuffer(), m_pUniformEngine->GetSize());
+			m_pUniformEngine->Apply();
+		}
+	}
 }
 
 void CGfxRenderer::BindCamera(CGfxCamera *pCamera)
 {
-	if (m_pCurrentMaterial) {
-		m_pCurrentMaterial->GetProgram()->BindUniformBuffer(HashValue(UNIFORM_CAMERA_NAME), pCamera->GetUniformCamera()->GetBuffer(), pCamera->GetUniformCamera()->GetSize());
+	if (m_pCurrentPipeline) {
+		m_pCurrentPipeline->BindUniformBuffer(HashValue(UNIFORM_CAMERA_NAME), pCamera->GetUniformCamera()->GetBuffer(), pCamera->GetUniformCamera()->GetSize());
+		pCamera->Apply();
 	}
 }
 
-void CGfxRenderer::BindMaterial(CGfxMaterial *pMaterial)
+void CGfxRenderer::BindMaterialPass(CGfxMaterialPass *pPass)
 {
-	if (m_pCurrentMaterial != pMaterial) {
-		m_pCurrentMaterial = pMaterial;
+	if (m_pCurrentPass != pPass) {
+		m_pCurrentPass = (CGfxMaterialPass *)pPass;
 
-		if (m_pCurrentMaterial) {
-			m_pCurrentMaterial->Bind();
-			m_pCurrentMaterial->GetProgram()->BindUniformBuffer(HashValue(UNIFORM_ENGINE_NAME), m_pUniformEngine->GetBuffer(), m_pUniformEngine->GetSize());
+		if (m_pCurrentPass && m_pCurrentPipeline) {
+			uint32_t indexTexUnit = 0;
+			CGfxMaterialPass::Bind(m_pCurrentPipeline, m_pCurrentPass, indexTexUnit);
+			CGfxMaterialPass::Bind(m_pCurrentPipeline, m_pGlobalPass, indexTexUnit);
 		}
-	}
-
-	if (m_pCurrentMaterial) {
-		m_pGlobalMaterial->BindUniforms(m_pCurrentMaterial->GetProgram());
-		m_pGlobalMaterial->BindTextures(m_pCurrentMaterial->GetProgram(), m_pCurrentMaterial->GetTextureUnits());
 	}
 }
 
 void CGfxRenderer::BindInputTexture(const char *szName, GLuint texture, GLenum minFilter, GLenum magFilter, GLenum addressMode)
 {
-	m_pGlobalMaterial->GetTexture2D(szName)->CreateExtern(texture);
-	m_pGlobalMaterial->GetSampler(szName, minFilter, magFilter, addressMode);
+	m_pGlobalPass->SetTexture2D(szName, texture);
+	m_pGlobalPass->SetSampler(szName, minFilter, magFilter, addressMode);
 }
+#pragma endregion

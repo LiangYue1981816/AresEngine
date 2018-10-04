@@ -3,7 +3,7 @@
 #include "GfxTextureBase.h"
 
 
-CGfxTextureBase::CGfxTextureBase(GLuint name)
+CGfxTextureBase::CGfxTextureBase(uint32_t name)
 	: m_name(name)
 
 	, m_texture(0)
@@ -28,7 +28,12 @@ CGfxTextureBase::~CGfxTextureBase(void)
 
 void CGfxTextureBase::Release(void)
 {
-	Renderer()->FreeTexture(this);
+	Renderer()->DestroyTexture(this);
+}
+
+uint32_t CGfxTextureBase::GetName(void) const
+{
+	return m_name;
 }
 
 bool CGfxTextureBase::CreateExtern(GLuint texture)
@@ -62,16 +67,6 @@ void CGfxTextureBase::Destroy(void)
 	m_arrayLayers = 0;
 }
 
-bool CGfxTextureBase::IsValid(void) const
-{
-	return m_texture != 0;
-}
-
-GLuint CGfxTextureBase::GetName(void) const
-{
-	return m_name;
-}
-
 GLuint CGfxTextureBase::GetTexture(void) const
 {
 	return m_texture;
@@ -87,12 +82,22 @@ GLenum CGfxTextureBase::GetInternalFormat(void) const
 	return m_internalFormat;
 }
 
-GLuint CGfxTextureBase::GetWidth(void) const
+GLsizei CGfxTextureBase::GetWidth(void) const
 {
 	return m_width;
 }
 
-GLuint CGfxTextureBase::GetHeight(void) const
+GLsizei CGfxTextureBase::GetHeight(void) const
 {
 	return m_height;
+}
+
+GLsizei CGfxTextureBase::GetLevels(void) const
+{
+	return m_mipLevels;
+}
+
+GLsizei CGfxTextureBase::GetLayers(void) const
+{
+	return m_arrayLayers;
 }

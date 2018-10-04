@@ -33,8 +33,8 @@ public:
 	bool Execute(void) const;
 
 public:
-	bool CmdBeginPass(const CGfxFrameBufferPtr &ptrFrameBuffer);
-	bool CmdEndPass(void);
+	bool CmdBeginRenderPass(const CGfxFrameBufferPtr &ptrFrameBuffer);
+	bool CmdEndRenderPass(void);
 
 	bool CmdSetScissor(int x, int y, int width, int height);
 	bool CmdSetViewport(int x, int y, int width, int height);
@@ -46,8 +46,9 @@ public:
 	bool CmdSetPolygonOffset(bool bEnable, GLfloat factor, GLfloat units);
 
 	bool CmdBindCamera(CGfxCamera *pCamera);
+	bool CmdBindPipeline(CGfxPipelineBase *pPipeline);
 	bool CmdBindMesh(const CGfxMeshPtr &ptrMesh, const eastl::vector<glm::mat4> &mtxTransforms);
-	bool CmdBindMaterial(const CGfxMaterialPtr &ptrMaterial);
+	bool CmdBindMaterialPass(const CGfxMaterialPtr &ptrMaterial, uint32_t namePass);
 	bool CmdBindInputTexture(const char *szName, GLuint texture, GLenum minFilter, GLenum magFilter, GLenum addressMode);
 
 	bool CmdClearDepth(float depth);

@@ -2,15 +2,15 @@
 #include "GfxCommandBuffer.h"
 
 
-class CGfxCommandBeginPass : public CGfxCommandBase
+class CGfxCommandBeginRenderPass : public CGfxCommandBase
 {
 public:
-	CGfxCommandBeginPass(const CGfxFrameBufferPtr &ptrFrameBuffer)
+	CGfxCommandBeginRenderPass(const CGfxFrameBufferPtr &ptrFrameBuffer)
 		: m_ptrFrameBuffer(ptrFrameBuffer)
 	{
 
 	}
-	virtual ~CGfxCommandBeginPass(void)
+	virtual ~CGfxCommandBeginRenderPass(void)
 	{
 
 	}
@@ -18,7 +18,7 @@ public:
 public:
 	virtual void Execute(void) const
 	{
-		CGfxProfilerSample(CGfxProfiler::SAMPLE_TYPE_COMMAND_BEGIN_PASS, "CommandBeginPass");
+		CGfxProfilerSample(CGfxProfiler::SAMPLE_TYPE_COMMAND_BEGIN_RENDERPASS, "CommandBeginRenderPass");
 		{
 			if (m_ptrFrameBuffer.IsValid()) {
 				m_ptrFrameBuffer->Bind();

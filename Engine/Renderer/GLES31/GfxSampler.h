@@ -4,7 +4,7 @@
 
 class CGfxSampler
 {
-	friend class CGfxMaterial;
+	friend class CGfxRenderer;
 	friend class CGfxSamplerManager;
 
 
@@ -13,7 +13,7 @@ private:
 	virtual ~CGfxSampler(void);
 
 
-private:
+public:
 	GLuint GetSampler(void) const;
 
 

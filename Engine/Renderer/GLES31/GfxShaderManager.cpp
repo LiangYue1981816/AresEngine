@@ -17,10 +17,13 @@ CGfxShaderManager::~CGfxShaderManager(void)
 	m_pShaders.clear();
 }
 
-CGfxShader* CGfxShaderManager::CreateShader(uint32_t name)
+CGfxShader* CGfxShaderManager::LoadShader(const char *szFileName, shaderc_shader_kind kind)
 {
+	uint32_t name = HashValue(szFileName);
+
 	if (m_pShaders[name] == NULL) {
 		m_pShaders[name] = new CGfxShader(name);
+		m_pShaders[name]->Load(szFileName, kind);
 	}
 
 	return m_pShaders[name];
