@@ -59,7 +59,9 @@ CSceneManager* CEngine::GetSceneManager(void) const
 void CEngine::Update(float deltaTime)
 {
 	m_totalTime += deltaTime;
-	m_pSceneManager->Update(m_totalTime, deltaTime);
+
+	m_pRenderer->SetTime(m_totalTime, deltaTime);
+	m_pSceneManager->UpdateLogic(m_totalTime, deltaTime);
 }
 
 void CEngine::UpdateCamera(CGfxCamera *pCamera)

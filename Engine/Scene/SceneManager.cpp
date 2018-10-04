@@ -214,7 +214,7 @@ void CSceneManager::SetFogDistanceDensity(float startDistance, float endDistance
 	Renderer()->SetFogDistanceDensity(startDistance, endDistance, density);
 }
 
-void CSceneManager::Update(float totalTime, float deltaTime)
+void CSceneManager::UpdateLogic(float totalTime, float deltaTime)
 {
 	for (const auto &itScene : m_pScenes) {
 		itScene.second->GetRootNode()->UpdateTransform(false);
@@ -247,7 +247,7 @@ void CSceneManager::Update(float totalTime, float deltaTime)
 
 	m_taskGraphUpdateLogic.Dispatch();
 	{
-		Renderer()->SetTime(totalTime, deltaTime);
+		// ...
 	}
 	m_taskGraphUpdateLogic.Wait();
 }

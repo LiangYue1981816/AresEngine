@@ -64,7 +64,7 @@ public:
 	void SetFogDistanceDensity(float startDistance, float endDistance, float density);
 
 private:
-	void Update(float totalTime, float deltaTime);
+	void UpdateLogic(float totalTime, float deltaTime);
 	void UpdateCamera(CGfxCamera *pCamera);
 	void RenderCamera(CGfxCamera *pCamera);
 
