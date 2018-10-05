@@ -28,6 +28,10 @@ public:
 	uint32_t GetNextComponentPointLightName(void) const;
 
 public:
+	CGfxCamera* GetMainCamera(void) const;
+	CGfxCamera* GetShadowCamera(void) const;
+
+public:
 	CScene* CreateScene(uint32_t name);
 	void DestroyScene(CScene *pScene);
 
@@ -66,7 +70,6 @@ public:
 private:
 	void UpdateLogic(float totalTime, float deltaTime);
 	void UpdateCamera(CGfxCamera *pCamera);
-	void RenderCamera(CGfxCamera *pCamera);
 
 
 private:
@@ -76,13 +79,16 @@ private:
 	CComponentManager<CComponentPointLight> m_pointLightManager;
 
 private:
+	CGfxCamera *m_pMainCamera;
+	CGfxCamera *m_pShadowCamera;
+
 	eastl::unordered_map<uint32_t, CScene*> m_pScenes;
 	eastl::unordered_map<uint32_t, CSceneNode*> m_pNodes;
 
 private:
-	event_t m_eventUpdateSkin;
-	event_t m_eventUpdateParticle;
-	event_t m_eventUpdatePointLight;
+	event_t m_eventUpdateLogicSkin;
+	event_t m_eventUpdateLogicParticle;
+	event_t m_eventUpdateLogicPointLight;
 
 	event_t m_eventUpdateCameraSkin;
 	event_t m_eventUpdateCameraParticle;

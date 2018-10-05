@@ -149,6 +149,12 @@ void CGfxCamera::AddQueue(int indexThread, const CGfxMaterialPtr &ptrMaterial, c
 	}
 }
 
+void CGfxCamera::ClearQueueAll(void)
+{
+	ClearQueue();
+	ClearQueue();
+}
+
 void CGfxCamera::ClearQueue(void)
 {
 	m_index = 1 - m_index;

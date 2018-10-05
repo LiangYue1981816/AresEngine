@@ -217,6 +217,8 @@ bool CGfxMaterialPass::LoadPipeline(TiXmlNode *pPassNode)
 
 bool CGfxMaterialPass::LoadPipelineState(TiXmlNode *pPipelineNode, GLstate &state)
 {
+	glInitState(&state);
+
 	if (TiXmlNode *pStateNode = pPipelineNode->FirstChild("State")) {
 		LogOutput("GfxRenderer", "\t\t\tLoadState ... ");
 		{

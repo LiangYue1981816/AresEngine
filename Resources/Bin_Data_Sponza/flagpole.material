@@ -1,0 +1,16 @@
+<Material>
+	<Pass name="Default">
+		<Pipeline>
+			<Vertex file_name="Default.glsl">
+				<Define name="VERTEX_SHADER" />
+			</Vertex>
+			<Fragment file_name="Default.glsl">
+				<Define name="FRAGMENT_SHADER" />
+			</Fragment>
+			<State>
+			</State>
+		</Pipeline>
+		<Texture2D name="texAlbedo" file_name="sponza_flagpole.tga" min_filter="GL_LINEAR_MIPMAP_NEAREST" mag_filter="GL_LINEAR" address_mode="GL_REPEAT" />
+    <Texture2D name="texSpecular" file_name="sponza_flagpole_spec.tga" min_filter="GL_LINEAR_MIPMAP_NEAREST" mag_filter="GL_LINEAR" address_mode="GL_REPEAT" />
+	</Pass>
+</Material>

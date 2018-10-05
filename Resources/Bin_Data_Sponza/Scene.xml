@@ -1,0 +1,1144 @@
+<Scene>
+    <Node translation="0.000000 0.000000 0.000000" rotation="0.000000 0.000000 0.000000 1.000000" scale="1.000000 1.000000 1.000000">
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_00.mesh" material="leaf.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_01.mesh" material="vase_round.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_03.mesh" material="Material__298.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_05.mesh" material="bricks.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_06.mesh" material="bricks.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_07.mesh" material="arch.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_08.mesh" material="ceiling.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_09.mesh" material="column_a.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_10.mesh" material="column_a.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_11.mesh" material="column_a.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_12.mesh" material="column_a.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_13.mesh" material="column_a.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_14.mesh" material="column_a.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_15.mesh" material="column_a.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_16.mesh" material="column_a.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_17.mesh" material="arch.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_18.mesh" material="floor.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_19.mesh" material="ceiling.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_20.mesh" material="arch.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_21.mesh" material="arch.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_22.mesh" material="column_c.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_23.mesh" material="column_c.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_24.mesh" material="column_c.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_25.mesh" material="column_c.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_26.mesh" material="column_c.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_27.mesh" material="column_c.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_28.mesh" material="column_c.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_29.mesh" material="column_c.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_30.mesh" material="column_c.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_31.mesh" material="column_c.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_32.mesh" material="column_c.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_33.mesh" material="column_c.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_34.mesh" material="bricks.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_35.mesh" material="ceiling.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_36.mesh" material="bricks.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_37.mesh" material="arch.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_38.mesh" material="ceiling.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_39.mesh" material="arch.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_40.mesh" material="ceiling.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_41.mesh" material="arch.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_42.mesh" material="ceiling.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_43.mesh" material="arch.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_44.mesh" material="ceiling.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_45.mesh" material="arch.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_46.mesh" material="ceiling.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_47.mesh" material="arch.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_48.mesh" material="ceiling.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_49.mesh" material="arch.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_50.mesh" material="ceiling.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_51.mesh" material="arch.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_52.mesh" material="ceiling.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_53.mesh" material="arch.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_54.mesh" material="ceiling.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_55.mesh" material="arch.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_56.mesh" material="arch.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_57.mesh" material="arch.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_58.mesh" material="arch.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_59.mesh" material="arch.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_60.mesh" material="arch.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_61.mesh" material="arch.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_62.mesh" material="arch.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_63.mesh" material="arch.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_64.mesh" material="arch.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_65.mesh" material="arch.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_66.mesh" material="bricks.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_67.mesh" material="arch.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_68.mesh" material="bricks.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_69.mesh" material="bricks.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_70.mesh" material="details.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_71.mesh" material="details.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_72.mesh" material="details.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_73.mesh" material="details.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_74.mesh" material="details.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_75.mesh" material="bricks.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_76.mesh" material="column_c.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_77.mesh" material="column_c.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_78.mesh" material="column_c.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_79.mesh" material="column_c.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_80.mesh" material="column_c.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_81.mesh" material="column_c.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_82.mesh" material="column_c.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_83.mesh" material="column_c.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_84.mesh" material="column_c.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_85.mesh" material="column_c.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_86.mesh" material="column_c.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_87.mesh" material="column_c.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_88.mesh" material="column_c.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_89.mesh" material="column_c.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_90.mesh" material="column_c.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_91.mesh" material="column_c.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_92.mesh" material="column_c.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_93.mesh" material="column_c.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_94.mesh" material="column_c.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_95.mesh" material="column_c.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_96.mesh" material="column_c.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_97.mesh" material="column_c.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_98.mesh" material="column_c.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_99.mesh" material="column_c.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_100.mesh" material="column_c.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_101.mesh" material="column_c.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_102.mesh" material="column_c.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_103.mesh" material="column_c.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_104.mesh" material="column_c.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_105.mesh" material="column_c.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_106.mesh" material="column_c.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_107.mesh" material="column_c.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_108.mesh" material="column_c.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_109.mesh" material="column_c.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_110.mesh" material="column_c.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_111.mesh" material="column_c.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_112.mesh" material="column_c.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_113.mesh" material="column_c.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_114.mesh" material="column_c.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_115.mesh" material="column_c.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_116.mesh" material="bricks.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_117.mesh" material="floor.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_118.mesh" material="column_a.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_119.mesh" material="column_a.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_120.mesh" material="column_a.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_121.mesh" material="column_a.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_122.mesh" material="arch.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_123.mesh" material="arch.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_124.mesh" material="arch.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_125.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_126.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_127.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_128.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_129.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_130.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_131.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_132.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_133.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_134.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_135.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_136.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_137.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_138.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_139.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_140.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_141.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_142.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_143.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_144.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_145.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_146.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_147.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_148.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_149.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_150.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_151.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_152.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_153.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_154.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_155.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_156.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_157.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_158.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_159.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_160.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_161.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_162.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_163.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_164.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_165.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_166.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_167.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_168.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_169.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_170.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_171.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_172.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_173.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_174.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_175.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_176.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_177.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_178.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_179.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_180.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_181.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_182.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_183.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_184.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_185.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_186.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_187.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_188.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_189.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_190.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_191.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_192.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_193.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_194.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_195.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_196.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_197.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_198.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_199.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_200.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_201.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_202.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_203.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_204.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_205.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_206.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_207.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_208.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_209.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_210.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_211.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_212.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_213.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_214.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_215.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_216.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_217.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_218.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_219.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_220.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_221.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_222.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_223.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_224.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_225.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_226.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_227.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_228.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_229.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_230.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_231.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_232.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_233.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_234.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_235.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_236.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_237.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_238.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_239.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_240.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_241.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_242.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_243.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_244.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_245.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_246.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_247.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_248.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_249.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_250.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_251.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_252.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_253.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_254.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_255.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_256.mesh" material="column_b.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_258.mesh" material="bricks.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_259.mesh" material="flagpole.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_260.mesh" material="flagpole.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_261.mesh" material="flagpole.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_262.mesh" material="flagpole.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_263.mesh" material="flagpole.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_264.mesh" material="flagpole.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_265.mesh" material="flagpole.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_266.mesh" material="flagpole.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_267.mesh" material="flagpole.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_268.mesh" material="flagpole.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_269.mesh" material="flagpole.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_270.mesh" material="flagpole.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_271.mesh" material="flagpole.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_272.mesh" material="flagpole.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_273.mesh" material="flagpole.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_274.mesh" material="flagpole.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_275.mesh" material="leaf.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_276.mesh" material="leaf.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_277.mesh" material="leaf.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_278.mesh" material="leaf.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_279.mesh" material="leaf.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_280.mesh" material="leaf.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_281.mesh" material="leaf.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_282.mesh" material="fabric_e.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_283.mesh" material="fabric_d.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_284.mesh" material="fabric_a.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_285.mesh" material="fabric_e.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_286.mesh" material="fabric_d.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_287.mesh" material="fabric_e.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_288.mesh" material="fabric_a.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_289.mesh" material="fabric_d.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_290.mesh" material="flagpole.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_291.mesh" material="flagpole.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_292.mesh" material="flagpole.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_293.mesh" material="flagpole.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_294.mesh" material="flagpole.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_295.mesh" material="flagpole.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_296.mesh" material="flagpole.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_297.mesh" material="flagpole.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_298.mesh" material="flagpole.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_299.mesh" material="flagpole.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_300.mesh" material="flagpole.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_301.mesh" material="flagpole.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_302.mesh" material="flagpole.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_303.mesh" material="flagpole.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_304.mesh" material="flagpole.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_305.mesh" material="flagpole.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_306.mesh" material="flagpole.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_307.mesh" material="flagpole.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_308.mesh" material="flagpole.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_309.mesh" material="flagpole.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_310.mesh" material="flagpole.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_311.mesh" material="flagpole.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_312.mesh" material="flagpole.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_313.mesh" material="flagpole.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_314.mesh" material="flagpole.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_315.mesh" material="flagpole.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_316.mesh" material="flagpole.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_317.mesh" material="flagpole.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_318.mesh" material="flagpole.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_319.mesh" material="flagpole.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_320.mesh" material="fabric_g.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_321.mesh" material="fabric_c.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_322.mesh" material="fabric_f.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_323.mesh" material="fabric_c.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_324.mesh" material="fabric_f.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_325.mesh" material="fabric_c.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_326.mesh" material="fabric_g.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_327.mesh" material="fabric_f.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_328.mesh" material="fabric_c.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_329.mesh" material="fabric_g.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_330.mesh" material="chain.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_331.mesh" material="chain.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_332.mesh" material="chain.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_333.mesh" material="chain.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_334.mesh" material="vase_hanging.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_335.mesh" material="vase_hanging.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_336.mesh" material="vase_hanging.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_337.mesh" material="vase_hanging.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_338.mesh" material="vase_hanging.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_339.mesh" material="chain.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_340.mesh" material="chain.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_341.mesh" material="chain.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_342.mesh" material="chain.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_343.mesh" material="vase_hanging.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_344.mesh" material="vase_hanging.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_345.mesh" material="vase_hanging.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_346.mesh" material="vase_hanging.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_347.mesh" material="vase_hanging.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_348.mesh" material="chain.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_349.mesh" material="chain.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_350.mesh" material="chain.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_351.mesh" material="chain.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_352.mesh" material="vase_hanging.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_353.mesh" material="vase_hanging.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_354.mesh" material="vase_hanging.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_355.mesh" material="vase_hanging.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_356.mesh" material="vase_hanging.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_357.mesh" material="chain.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_358.mesh" material="chain.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_359.mesh" material="chain.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_360.mesh" material="chain.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_361.mesh" material="vase_hanging.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_362.mesh" material="vase_hanging.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_363.mesh" material="vase_hanging.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_364.mesh" material="vase_hanging.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_365.mesh" material="vase_hanging.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_366.mesh" material="vase_round.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_367.mesh" material="vase_round.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_368.mesh" material="vase_round.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_369.mesh" material="vase_round.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_370.mesh" material="vase_round.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_371.mesh" material="vase_round.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_372.mesh" material="vase_round.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_373.mesh" material="vase.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_374.mesh" material="vase.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_375.mesh" material="vase.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_376.mesh" material="vase.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_377.mesh" material="Material__25.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_378.mesh" material="Material__25.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_379.mesh" material="bricks.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_380.mesh" material="roof.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_381.mesh" material="roof.material" />
+        </Node>
+        <Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+            <Mesh mesh="sponza_382.mesh" material="bricks.material" />
+        </Node>
+    </Node>
+</Scene>

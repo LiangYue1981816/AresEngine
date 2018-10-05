@@ -16,7 +16,8 @@ private:
 
 private:
 	bool Create(const CGfxShader *pComputeShader);
-	bool CreateProgram(const CGfxShader *pComputeShader);
+	void CreateProgram(const CGfxShader *pComputeShader);
+	void Destroy(void);
 
 public:
 	void BindPipeline(void) const;

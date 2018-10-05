@@ -50,6 +50,7 @@ public:
 public:
 	void AddQueue(int indexThread, const CGfxMaterialPtr &ptrMaterial, const CGfxMeshPtr &ptrMesh, const glm::mat4 &mtxTransform);
 	void ClearQueue(void);
+	void ClearQueueAll(void);
 
 public:
 	void CmdDraw(int indexThread, uint32_t namePass);

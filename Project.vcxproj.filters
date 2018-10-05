@@ -127,6 +127,15 @@
     <Filter Include="ThirdParty\rbtree">
       <UniqueIdentifier>{1fa5fa8e-8988-4c61-adcd-517bc6cb3041}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\RenderSolution">
+      <UniqueIdentifier>{d0f5aea1-7607-413f-9ac9-bfe517c26be4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\RenderSolution\Header Files">
+      <UniqueIdentifier>{8e48a5e0-6e18-4f8c-a31c-cf7d79a8972b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\RenderSolution\Source Files">
+      <UniqueIdentifier>{382afbb0-67b3-462b-8f2f-e15b61897bb1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\Main.h">
@@ -315,9 +324,6 @@
     <ClInclude Include="Engine\Scene\Task\TaskCommandBuffer.h">
       <Filter>Engine\Scene\Source Files\Task</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Scene\Task\TaskComponentUpdate.h">
-      <Filter>Engine\Scene\Source Files\Task</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\Scene\Task\TaskComponentUpdateCamera.h">
       <Filter>Engine\Scene\Source Files\Task</Filter>
     </ClInclude>
@@ -455,6 +461,15 @@
     </ClInclude>
     <ClInclude Include="Engine\Renderer\GLES31\GfxCommandBindPipeline.h">
       <Filter>Engine\Renderer\GLES31\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Scene\Task\TaskComponentUpdateLogic.h">
+      <Filter>Engine\Scene\Source Files\Task</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\RenderSolution\RenderSolutionBase.h">
+      <Filter>Engine\RenderSolution\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\RenderSolution\RenderSolutionDefault.h">
+      <Filter>Engine\RenderSolution\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -706,6 +721,12 @@
     </ClCompile>
     <ClCompile Include="Engine\Renderer\GLES31\GfxPipelineBase.cpp">
       <Filter>Engine\Renderer\GLES31\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\RenderSolution\RenderSolutionBase.cpp">
+      <Filter>Engine\RenderSolution\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\RenderSolution\RenderSolutionDefault.cpp">
+      <Filter>Engine\RenderSolution\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

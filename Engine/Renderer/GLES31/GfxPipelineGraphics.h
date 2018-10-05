@@ -15,8 +15,9 @@ private:
 
 private:
 	bool Create(const CGfxShader *pVertexShader, const CGfxShader *pFragmentShader, const GLstate &state);
-	bool CreateProgram(const CGfxShader *pVertexShader, const CGfxShader *pFragmentShader);
-	bool CreateState(const GLstate &state);
+	void CreateProgram(const CGfxShader *pVertexShader, const CGfxShader *pFragmentShader);
+	void CreateState(const GLstate &state);
+	void Destroy(void);
 
 public:
 	void SetEnableCullFace(bool bEnable, uint32_t cullFace, uint32_t frontFace);

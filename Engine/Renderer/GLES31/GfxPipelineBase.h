@@ -16,14 +16,6 @@ public:
 	uint32_t GetName(void) const;
 
 
-protected:
-	virtual bool CreateLocations(const CGfxShader *pShader);
-	virtual void Destroy(void);
-
-protected:
-	virtual bool SetUniformLocation(const char *szName, uint32_t program);
-	virtual bool SetTextureLocation(const char *szName, uint32_t program);
-
 public:
 	virtual bool IsUniformValid(uint32_t name) const;
 	virtual bool IsTextureValid(uint32_t name) const;
@@ -41,8 +33,5 @@ protected:
 
 protected:
 	uint32_t m_pipeline;
-
-protected:
-	eastl::unordered_map<uint32_t, uint32_t> m_uniformBlockLocations;
-	eastl::unordered_map<uint32_t, uint32_t> m_sampledImageLocations;
+	CGfxShader *m_pShaders[shaderc_compute_shader - shaderc_vertex_shader + 1];
 };

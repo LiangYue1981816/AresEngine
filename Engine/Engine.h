@@ -12,6 +12,8 @@
 #define Engine() CEngine::GetInstance()
 #define Renderer() CEngine::GetInstance()->GetRenderer()
 #define SceneManager() CEngine::GetInstance()->GetSceneManager()
+#define MainCamera() CEngine::GetInstance()->GetSceneManager()->GetMainCamera()
+#define ShadowCamera() CEngine::GetInstance()->GetSceneManager()->GetShadowCamera()
 
 
 class CEngine
@@ -34,8 +36,6 @@ public:
 public:
 	void Update(float deltaTime);
 	void UpdateCamera(CGfxCamera *pCamera);
-	void RenderCamera(CGfxCamera *pCamera);
-	void RenderPresent(void);
 
 
 private:

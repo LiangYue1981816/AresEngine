@@ -6,27 +6,12 @@
 CGfxPipelineGraphics::CGfxPipelineGraphics(uint32_t name)
 	: CGfxPipelineBase(name)
 {
-	m_state.bEnableCullFace = GL_TRUE;
-	m_state.bEnableDepthTest = GL_TRUE;
-	m_state.bEnableDepthWrite = GL_TRUE;
-	m_state.bEnableColorWrite[0] = GL_TRUE;
-	m_state.bEnableColorWrite[1] = GL_TRUE;
-	m_state.bEnableColorWrite[2] = GL_TRUE;
-	m_state.bEnableColorWrite[3] = GL_TRUE;
-	m_state.bEnableBlend = GL_FALSE;
-	m_state.bEnablePolygonOffset = GL_FALSE;
-	m_state.cullFace = GL_BACK;
-	m_state.frontFace = GL_CCW;
-	m_state.depthFunc = GL_LESS;
-	m_state.srcBlendFactor = GL_SRC_ALPHA;
-	m_state.dstBlendFactor = GL_ONE_MINUS_SRC_ALPHA;
-	m_state.polygonOffsetFactor = 0.0f;
-	m_state.polygonOffsetUnits = 0.0f;
+	glInitState(&m_state);
 }
 
 CGfxPipelineGraphics::~CGfxPipelineGraphics(void)
 {
-
+	Destroy();
 }
 
 bool CGfxPipelineGraphics::Create(const CGfxShader *pVertexShader, const CGfxShader *pFragmentShader, const GLstate &state)
@@ -57,29 +42,40 @@ bool CGfxPipelineGraphics::Create(const CGfxShader *pVertexShader, const CGfxSha
 
 	Destroy();
 	CreateProgram(pVertexShader, pFragmentShader);
-	CreateLocations(pVertexShader);
-	CreateLocations(pFragmentShader);
 	CreateState(state);
 
 	return true;
 }
 
-bool CGfxPipelineGraphics::CreateProgram(const CGfxShader *pVertexShader, const CGfxShader *pFragmentShader)
-{
-	glBindProgramPipeline(m_pipeline);
-	{
-		glUseProgramStages(m_pipeline, glGetShaderKind(shaderc_vertex_shader), pVertexShader->GetProgram());
-		glUseProgramStages(m_pipeline, glGetShaderKind(shaderc_fragment_shader), pFragmentShader->GetProgram());
-	}
-	glBindProgramPipeline(0);
-
-	return true;
-}
-
-bool CGfxPipelineGraphics::CreateState(const GLstate &state)
+void CGfxPipelineGraphics::CreateState(const GLstate &state)
 {
 	memcpy(&m_state, &state, sizeof(state));
-	return true;
+}
+
+void CGfxPipelineGraphics::CreateProgram(const CGfxShader *pVertexShader, const CGfxShader *pFragmentShader)
+{
+	m_pShaders[shaderc_vertex_shader] = (CGfxShader *)pVertexShader;
+	m_pShaders[shaderc_fragment_shader] = (CGfxShader *)pFragmentShader;
+
+	glBindProgramPipeline(m_pipeline);
+	{
+		glUseProgramStages(m_pipeline, glGetShaderKind(shaderc_vertex_shader), m_pShaders[shaderc_vertex_shader]->GetProgram());
+		glUseProgramStages(m_pipeline, glGetShaderKind(shaderc_fragment_shader), m_pShaders[shaderc_fragment_shader]->GetProgram());
+	}
+	glBindProgramPipeline(0);
+}
+
+void CGfxPipelineGraphics::Destroy(void)
+{
+	m_pShaders[shaderc_vertex_shader] = NULL;
+	m_pShaders[shaderc_fragment_shader] = NULL;
+
+	glBindProgramPipeline(m_pipeline);
+	{
+		glUseProgramStages(m_pipeline, glGetShaderKind(shaderc_vertex_shader), 0);
+		glUseProgramStages(m_pipeline, glGetShaderKind(shaderc_fragment_shader), 0);
+	}
+	glBindProgramPipeline(0);
 }
 
 void CGfxPipelineGraphics::SetEnableCullFace(bool bEnable, uint32_t cullFace, uint32_t frontFace)

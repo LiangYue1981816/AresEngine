@@ -36,6 +36,8 @@ CEngine::CEngine(void *hDC, const char *szShaderCachePath)
 	, m_pRenderer(NULL)
 	, m_pSceneManager(NULL)
 {
+	pInstance = this;
+
 	m_pRenderer = new CGfxRenderer(hDC, szShaderCachePath);
 	m_pSceneManager = new CSceneManager;
 }
@@ -44,6 +46,8 @@ CEngine::~CEngine(void)
 {
 	delete m_pSceneManager;
 	delete m_pRenderer;
+
+	pInstance = NULL;
 }
 
 CGfxRenderer* CEngine::GetRenderer(void) const
@@ -67,14 +71,4 @@ void CEngine::Update(float deltaTime)
 void CEngine::UpdateCamera(CGfxCamera *pCamera)
 {
 	m_pSceneManager->UpdateCamera(pCamera);
-}
-
-void CEngine::RenderCamera(CGfxCamera *pCamera)
-{
-	m_pSceneManager->RenderCamera(pCamera);
-}
-
-void CEngine::RenderPresent(void)
-{
-	m_pRenderer->Present();
 }

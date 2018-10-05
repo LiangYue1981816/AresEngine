@@ -474,18 +474,21 @@ void CGfxRenderer::Present(void)
 #endif
 
 	m_pCurrentPass = NULL;
+	m_pCurrentPipeline = NULL;
 }
 #pragma endregion
 
 #pragma region Bind
 void CGfxRenderer::BindPipeline(CGfxPipelineBase *pPipeline)
 {
+	static const uint32_t uniformEngineName = HashValue(UNIFORM_ENGINE_NAME);
+
 	if (m_pCurrentPipeline != pPipeline) {
 		m_pCurrentPipeline = (CGfxPipelineBase *)pPipeline;
 
 		if (m_pCurrentPipeline) {
 			m_pCurrentPipeline->BindPipeline();
-			m_pCurrentPipeline->BindUniformBuffer(HashValue(UNIFORM_ENGINE_NAME), m_pUniformEngine->GetBuffer(), m_pUniformEngine->GetSize());
+			m_pCurrentPipeline->BindUniformBuffer(uniformEngineName, m_pUniformEngine->GetBuffer(), m_pUniformEngine->GetSize());
 			m_pUniformEngine->Apply();
 		}
 	}
@@ -493,8 +496,10 @@ void CGfxRenderer::BindPipeline(CGfxPipelineBase *pPipeline)
 
 void CGfxRenderer::BindCamera(CGfxCamera *pCamera)
 {
+	static const uint32_t uniformCameraName = HashValue(UNIFORM_CAMERA_NAME);
+
 	if (m_pCurrentPipeline) {
-		m_pCurrentPipeline->BindUniformBuffer(HashValue(UNIFORM_CAMERA_NAME), pCamera->GetUniformCamera()->GetBuffer(), pCamera->GetUniformCamera()->GetSize());
+		m_pCurrentPipeline->BindUniformBuffer(uniformCameraName, pCamera->GetUniformCamera()->GetBuffer(), pCamera->GetUniformCamera()->GetSize());
 		pCamera->Apply();
 	}
 }
