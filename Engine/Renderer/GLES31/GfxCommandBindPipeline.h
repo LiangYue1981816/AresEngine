@@ -23,6 +23,9 @@ public:
 			if (m_pPipeline) {
 				Renderer()->BindPipeline(m_pPipeline);
 			}
+			else {
+				glBindProgramPipeline(0);
+			}
 		}
 	}
 

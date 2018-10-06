@@ -37,23 +37,13 @@ bool CGfxPipelineCompute::Create(const CGfxShader *pComputeShader)
 void CGfxPipelineCompute::CreateProgram(const CGfxShader *pComputeShader)
 {
 	m_pShaders[shaderc_compute_shader] = (CGfxShader *)pComputeShader;
-
-	glBindProgramPipeline(m_pipeline);
-	{
-		glUseProgramStages(m_pipeline, glGetShaderKind(shaderc_compute_shader), m_pShaders[shaderc_compute_shader]->GetProgram());
-	}
-	glBindProgramPipeline(0);
+	glUseProgramStages(m_pipeline, glGetProgramStage(shaderc_compute_shader), m_pShaders[shaderc_compute_shader]->GetProgram());
 }
 
 void CGfxPipelineCompute::Destroy(void)
 {
 	m_pShaders[shaderc_compute_shader] = NULL;
-
-	glBindProgramPipeline(m_pipeline);
-	{
-		glUseProgramStages(m_pipeline, glGetShaderKind(shaderc_compute_shader), 0);
-	}
-	glBindProgramPipeline(0);
+	glUseProgramStages(m_pipeline, glGetProgramStage(shaderc_compute_shader), 0);
 }
 
 void CGfxPipelineCompute::BindPipeline(void) const

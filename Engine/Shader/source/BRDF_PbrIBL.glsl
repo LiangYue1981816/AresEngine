@@ -92,7 +92,13 @@ layout (location = 0) out vec4 outFragColor;
 
 void main()
 {
-	lowp vec3 albedoColor = Gamma2Linear(texture(texAlbedo, inTexcoord).rgb);
+	lowp vec4 albedo = texture(texAlbedo, inTexcoord);
+#ifdef ALPHA_TEST
+	if (albedo.a < 0.5)
+		discard;
+#endif
+
+	lowp vec3 albedoColor = Gamma2Linear(albedo.rgb);
 #ifdef AO_MAP
 	lowp vec3 ao = texture(texAO, inTexcoord).rgb;
 #else

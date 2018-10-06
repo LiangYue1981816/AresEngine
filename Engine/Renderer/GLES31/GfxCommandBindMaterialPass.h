@@ -25,12 +25,6 @@ public:
 				if (const CGfxMaterialPass *pPass = m_ptrMaterial->GetPass(m_namePass)) {
 					Renderer()->BindMaterialPass((CGfxMaterialPass *)pPass);
 				}
-				else {
-					glBindProgramPipeline(0);
-				}
-			}
-			else {
-				glBindProgramPipeline(0);
 			}
 		}
 	}

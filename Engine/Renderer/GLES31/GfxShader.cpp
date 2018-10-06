@@ -52,7 +52,7 @@ bool CGfxShader::Create(const uint32_t *words, size_t numWords, shaderc_shader_k
 		const char *szSource = strSource.c_str();
 
 		m_kind = kind;
-		m_program = glCreateShaderProgramv(glGetShaderKind(kind), 1, &szSource);
+		m_program = glCreateShaderProgramv(glGetShaderType(kind), 1, &szSource);
 		if (m_program == 0) throw 0;
 		if (CreateLayouts() == false) throw 1;
 

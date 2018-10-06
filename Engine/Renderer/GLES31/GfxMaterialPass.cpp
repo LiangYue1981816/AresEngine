@@ -195,16 +195,18 @@ bool CGfxMaterialPass::LoadPipeline(TiXmlNode *pPassNode)
 	try {
 		LogOutput("GfxRenderer", "\t\tLoadPipeline\n");
 		{
-			GLstate state;
-			CGfxShader *pVertexShader = NULL;
-			CGfxShader *pFragmentShader = NULL;
-
 			TiXmlNode *pPipelineNode = pPassNode->FirstChild("Pipeline");
 			if (pPipelineNode == NULL) throw 0;
-			if (LoadPipelineState(pPipelineNode, state) == false) throw 1;
-			if (LoadPipelineShader(pPipelineNode, pVertexShader, shaderc_vertex_shader) == false) throw 2;
-			if (LoadPipelineShader(pPipelineNode, pFragmentShader, shaderc_fragment_shader) == false) throw 3;
-			if (SetPipeline(pVertexShader, pFragmentShader, state) == false) throw 4;
+
+			GLstate state;
+			LoadPipelineState(pPipelineNode, state);
+
+			CGfxShader *pVertexShader = NULL;
+			CGfxShader *pFragmentShader = NULL;
+			LoadPipelineShader(pPipelineNode, pVertexShader, shaderc_vertex_shader);
+			LoadPipelineShader(pPipelineNode, pFragmentShader, shaderc_fragment_shader);
+
+			if (SetPipeline(pVertexShader, pFragmentShader, state) == false) throw 1;
 		}
 		LogOutput("GfxRenderer", "\t\tOK\n");
 		return true;

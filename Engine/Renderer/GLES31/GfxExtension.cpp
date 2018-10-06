@@ -30,15 +30,29 @@ void glReadBuffers(int n, const uint32_t *bufs)
 	}
 }
 
-uint32_t glGetShaderKind(shaderc_shader_kind kind)
+uint32_t glGetShaderType(shaderc_shader_kind kind)
 {
 	switch (kind) {
-	case shaderc_shader_kind::shaderc_vertex_shader:
+	case shaderc_vertex_shader:
 		return GL_VERTEX_SHADER;
-	case shaderc_shader_kind::shaderc_fragment_shader:
+	case shaderc_fragment_shader:
 		return GL_FRAGMENT_SHADER;
-	case shaderc_shader_kind::shaderc_compute_shader:
+	case shaderc_compute_shader:
 		return GL_COMPUTE_SHADER;
+	default:
+		return GL_INVALID_ENUM;
+	}
+}
+
+uint32_t glGetProgramStage(shaderc_shader_kind kind)
+{
+	switch (kind) {
+	case shaderc_vertex_shader:
+		return GL_VERTEX_SHADER_BIT;
+	case shaderc_fragment_shader:
+		return GL_FRAGMENT_SHADER_BIT;
+	case shaderc_compute_shader:
+		return GL_COMPUTE_SHADER_BIT;
 	default:
 		return GL_INVALID_ENUM;
 	}

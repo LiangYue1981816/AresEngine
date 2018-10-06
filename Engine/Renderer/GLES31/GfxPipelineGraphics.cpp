@@ -57,12 +57,8 @@ void CGfxPipelineGraphics::CreateProgram(const CGfxShader *pVertexShader, const 
 	m_pShaders[shaderc_vertex_shader] = (CGfxShader *)pVertexShader;
 	m_pShaders[shaderc_fragment_shader] = (CGfxShader *)pFragmentShader;
 
-	glBindProgramPipeline(m_pipeline);
-	{
-		glUseProgramStages(m_pipeline, glGetShaderKind(shaderc_vertex_shader), m_pShaders[shaderc_vertex_shader]->GetProgram());
-		glUseProgramStages(m_pipeline, glGetShaderKind(shaderc_fragment_shader), m_pShaders[shaderc_fragment_shader]->GetProgram());
-	}
-	glBindProgramPipeline(0);
+	glUseProgramStages(m_pipeline, glGetProgramStage(shaderc_vertex_shader), m_pShaders[shaderc_vertex_shader]->GetProgram());
+	glUseProgramStages(m_pipeline, glGetProgramStage(shaderc_fragment_shader), m_pShaders[shaderc_fragment_shader]->GetProgram());
 }
 
 void CGfxPipelineGraphics::Destroy(void)
@@ -70,12 +66,8 @@ void CGfxPipelineGraphics::Destroy(void)
 	m_pShaders[shaderc_vertex_shader] = NULL;
 	m_pShaders[shaderc_fragment_shader] = NULL;
 
-	glBindProgramPipeline(m_pipeline);
-	{
-		glUseProgramStages(m_pipeline, glGetShaderKind(shaderc_vertex_shader), 0);
-		glUseProgramStages(m_pipeline, glGetShaderKind(shaderc_fragment_shader), 0);
-	}
-	glBindProgramPipeline(0);
+	glUseProgramStages(m_pipeline, glGetProgramStage(shaderc_vertex_shader), 0);
+	glUseProgramStages(m_pipeline, glGetProgramStage(shaderc_fragment_shader), 0);
 }
 
 void CGfxPipelineGraphics::SetEnableCullFace(bool bEnable, uint32_t cullFace, uint32_t frontFace)

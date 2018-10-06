@@ -21,4 +21,5 @@ typedef struct GLstate {
 
 extern void glInitState(GLstate *state);
 extern void glReadBuffers(int n, const uint32_t *bufs);
-extern uint32_t glGetShaderKind(shaderc_shader_kind kind);
+extern uint32_t glGetShaderType(shaderc_shader_kind kind);
+extern uint32_t glGetProgramStage(shaderc_shader_kind kind);

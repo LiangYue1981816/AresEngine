@@ -35,6 +35,14 @@ layout (location = 0) out vec4 outFragColor;
 
 void main()
 {
-	outFragColor = texture(texAlbedo, inTexcoord);
+	vec4 color = texture(texAlbedo, inTexcoord);
+
+#ifdef ALPHA_TEST
+	if (color.a < 0.5)
+		discard;
+#endif
+
+	outFragColor.rgb = color.rgb;
+	outFragColor.a = 1.0;
 }
 #endif
