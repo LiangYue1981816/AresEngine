@@ -4,11 +4,11 @@
 
 
 CGfxFrameBuffer::CGfxFrameBuffer(uint32_t width, uint32_t height, bool bDepthStencilRenderBuffer)
-	: m_width(width)
-	, m_height(height)
-
-	, m_fbo(0)
+	: m_fbo(0)
 	, m_rbo(0)
+
+	, m_width(width)
+	, m_height(height)
 {
 	glGenFramebuffers(1, &m_fbo);
 
@@ -44,7 +44,7 @@ bool CGfxFrameBuffer::SetDepthStencilTexture(CGfxTexture2DPtr &ptrTexture)
 		}
 	}
 
-	m_ptrDepthTexture = ptrTexture;
+	m_ptrDepthStencilTexture = ptrTexture;
 	return true;
 }
 
@@ -77,9 +77,9 @@ bool CGfxFrameBuffer::Apply(void)
 			}
 		}
 
-		if (m_ptrDepthTexture.IsValid() || m_rbo) {
-			if (m_ptrDepthTexture.IsValid()) {
-				glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_TEXTURE_2D, m_ptrDepthTexture->GetTexture(), 0);
+		if (m_ptrDepthStencilTexture.IsValid() || m_rbo) {
+			if (m_ptrDepthStencilTexture.IsValid()) {
+				glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_TEXTURE_2D, m_ptrDepthStencilTexture->GetTexture(), 0);
 			}
 			else {
 				glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, m_rbo);
@@ -106,9 +106,9 @@ uint32_t CGfxFrameBuffer::GetHeight(void) const
 	return m_height;
 }
 
-CGfxTexture2DPtr CGfxFrameBuffer::GetDepthTexture(void) const
+CGfxTexture2DPtr CGfxFrameBuffer::GetDepthStencilTexture(void) const
 {
-	return m_ptrDepthTexture;
+	return m_ptrDepthStencilTexture;
 }
 
 CGfxTexture2DPtr CGfxFrameBuffer::GetColorTexture(uint32_t index) const

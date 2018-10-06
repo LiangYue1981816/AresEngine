@@ -23,7 +23,7 @@ public:
 	uint32_t GetWidth(void) const;
 	uint32_t GetHeight(void) const;
 
-	CGfxTexture2DPtr GetDepthTexture(void) const;
+	CGfxTexture2DPtr GetDepthStencilTexture(void) const;
 	CGfxTexture2DPtr GetColorTexture(uint32_t index) const;
 
 public:
@@ -32,14 +32,14 @@ public:
 
 
 private:
-	uint32_t m_width;
-	uint32_t m_height;
-
-private:
 	uint32_t m_fbo;
 	uint32_t m_rbo;
 
-	CGfxTexture2DPtr m_ptrDepthTexture;
+private:
+	uint32_t m_width;
+	uint32_t m_height;
+
+	CGfxTexture2DPtr m_ptrDepthStencilTexture;
 	eastl::unordered_map<uint32_t, CGfxTexture2DPtr> m_ptrColorTextures;
 	eastl::unordered_map<uint32_t, bool> m_invalidations;
 };
