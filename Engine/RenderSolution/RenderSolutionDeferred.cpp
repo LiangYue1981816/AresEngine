@@ -1,18 +1,18 @@
 #include "TaskCommandBuffer.h"
-#include "RenderSolutionDefault.h"
+#include "RenderSolutionDeferred.h"
 
 
-CRenderSolutionDefault::CRenderSolutionDefault(void)
+CRenderSolutionDeferred::CRenderSolutionDeferred(void)
 {
 
 }
 
-CRenderSolutionDefault::~CRenderSolutionDefault(void)
+CRenderSolutionDeferred::~CRenderSolutionDeferred(void)
 {
 
 }
 
-void CRenderSolutionDefault::Render(void)
+void CRenderSolutionDeferred::Render(void)
 {
 	m_taskCommandBuffer.Wait();
 	{
@@ -27,7 +27,7 @@ void CRenderSolutionDefault::Render(void)
 	m_taskCommandBuffer.Dispatch();
 }
 
-void CRenderSolutionDefault::Present(void)
+void CRenderSolutionDeferred::Present(void)
 {
 	MainCamera()->Submit();
 	Renderer()->Present();

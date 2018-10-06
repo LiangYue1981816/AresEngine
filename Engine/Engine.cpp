@@ -1,5 +1,8 @@
 #include "Engine.h"
-#include "nvwa/debug_new.h"
+#include "RenderSolutionDefault.h"
+#include "RenderSolutionDeferred.h"
+#include "RenderSolutionForward.h"
+#include "RenderSolutionForwardPlus.h"
 
 
 CEngine* CEngine::pInstance = NULL;
@@ -31,19 +34,31 @@ void CEngine::Destroy(void)
 }
 
 CEngine::CEngine(void *hDC, const char *szShaderCachePath)
-	: m_totalTime(0.0f)
+	: m_totalLogicTime(0.0f)
+	, m_totalRenderTime(0.0f)
 
 	, m_pRenderer(NULL)
 	, m_pSceneManager(NULL)
+	, m_pRenderSolutions{ NULL }
 {
 	pInstance = this;
 
 	m_pRenderer = new CGfxRenderer(hDC, szShaderCachePath);
 	m_pSceneManager = new CSceneManager;
+
+	m_pRenderSolutions[RENDER_SOLUTION_DEFAULT] = new CRenderSolutionDefault;
+	m_pRenderSolutions[RENDER_SOLUTION_DEFERRED] = new CRenderSolutionDeferred;
+	m_pRenderSolutions[RENDER_SOLUTION_FORWARD] = new CRenderSolutionForward;
+	m_pRenderSolutions[RENDER_SOLUTION_FORWARD_PLUS] = new CRenderSolutionForwardPlus;
 }
 
 CEngine::~CEngine(void)
 {
+	delete m_pRenderSolutions[RENDER_SOLUTION_DEFAULT];
+	delete m_pRenderSolutions[RENDER_SOLUTION_DEFERRED];
+	delete m_pRenderSolutions[RENDER_SOLUTION_FORWARD];
+	delete m_pRenderSolutions[RENDER_SOLUTION_FORWARD_PLUS];
+
 	delete m_pSceneManager;
 	delete m_pRenderer;
 
@@ -60,15 +75,22 @@ CSceneManager* CEngine::GetSceneManager(void) const
 	return m_pSceneManager;
 }
 
-void CEngine::Update(float deltaTime)
+void CEngine::UpdateLogic(float deltaTime)
 {
-	m_totalTime += deltaTime;
-
-	m_pRenderer->SetTime(m_totalTime, deltaTime);
-	m_pSceneManager->UpdateLogic(m_totalTime, deltaTime);
+	m_totalLogicTime += deltaTime;
+	m_pSceneManager->UpdateLogic(m_totalLogicTime, deltaTime);
 }
 
 void CEngine::UpdateCamera(CGfxCamera *pCamera)
 {
 	m_pSceneManager->UpdateCamera(pCamera);
+}
+
+void CEngine::Render(float deltaTime, RenderSolution solution)
+{
+	m_totalRenderTime += deltaTime;
+	m_pRenderer->SetTime(m_totalRenderTime, deltaTime);
+
+	m_pRenderSolutions[solution]->Render();
+	m_pRenderSolutions[solution]->Present();
 }

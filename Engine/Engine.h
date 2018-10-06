@@ -1,5 +1,4 @@
 #pragma once
-#include<io.h>
 #include "MemoryAllocator.h"
 #include "TaskGraph.h"
 #include "GfxRenderer.h"
@@ -14,6 +13,21 @@
 #define SceneManager() CEngine::GetInstance()->GetSceneManager()
 #define MainCamera() CEngine::GetInstance()->GetSceneManager()->GetMainCamera()
 #define ShadowCamera() CEngine::GetInstance()->GetSceneManager()->GetShadowCamera()
+
+
+typedef enum RenderSolution {
+	RENDER_SOLUTION_DEFAULT = 0,
+	RENDER_SOLUTION_DEFERRED,
+	RENDER_SOLUTION_FORWARD,
+	RENDER_SOLUTION_FORWARD_PLUS,
+	RENDER_SOLUTION_COUNT
+} RenderSolution;
+
+class CRenderSolutionBase;
+class CRenderSolutionDefault;
+class CRenderSolutionDeferred;
+class CRenderSolutionForward;
+class CRenderSolutionForwardPlus;
 
 
 class CEngine
@@ -34,16 +48,19 @@ public:
 	CSceneManager* GetSceneManager(void) const;
 
 public:
-	void Update(float deltaTime);
+	void UpdateLogic(float deltaTime);
 	void UpdateCamera(CGfxCamera *pCamera);
+	void Render(float deltaTime, RenderSolution solution);
 
 
 private:
-	float m_totalTime;
+	float m_totalLogicTime;
+	float m_totalRenderTime;
 
 private:
 	CGfxRenderer *m_pRenderer;
 	CSceneManager *m_pSceneManager;
+	CRenderSolutionBase *m_pRenderSolutions[RENDER_SOLUTION_COUNT];
 
 private:
 	static CEngine *pInstance;

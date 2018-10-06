@@ -1,4 +1,5 @@
 #pragma once
+#include "Engine.h"
 #include "TaskGraph.h"
 #include "Component.h"
 #include "ComponentManager.h"

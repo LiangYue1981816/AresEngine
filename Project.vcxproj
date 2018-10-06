@@ -104,6 +104,10 @@
     <ClInclude Include="Engine\Renderer\GLES31\GfxVertexBuffer.h" />
     <ClInclude Include="Engine\RenderSolution\RenderSolutionBase.h" />
     <ClInclude Include="Engine\RenderSolution\RenderSolutionDefault.h" />
+    <ClInclude Include="Engine\RenderSolution\RenderSolutionDeferred.h" />
+    <ClInclude Include="Engine\RenderSolution\RenderSolutionForward.h" />
+    <ClInclude Include="Engine\RenderSolution\RenderSolutionForwardPlus.h" />
+    <ClInclude Include="Engine\RenderSolution\Task\TaskCommandBuffer.h" />
     <ClInclude Include="Engine\Scene\Component\Component.h" />
     <ClInclude Include="Engine\Scene\Component\ComponentMesh.h" />
     <ClInclude Include="Engine\Scene\Component\ComponentParticle.h" />
@@ -112,7 +116,6 @@
     <ClInclude Include="Engine\Scene\Scene.h" />
     <ClInclude Include="Engine\Scene\SceneManager.h" />
     <ClInclude Include="Engine\Scene\SceneNode.h" />
-    <ClInclude Include="Engine\Scene\Task\TaskCommandBuffer.h" />
     <ClInclude Include="Engine\Scene\Task\TaskComponentUpdateCamera.h" />
     <ClInclude Include="Engine\Scene\Task\TaskComponentUpdateLogic.h" />
     <ClInclude Include="ThirdParty\event\event.h" />
@@ -186,6 +189,9 @@
     <ClCompile Include="Engine\Renderer\GLES31\GfxVertexBuffer.cpp" />
     <ClCompile Include="Engine\RenderSolution\RenderSolutionBase.cpp" />
     <ClCompile Include="Engine\RenderSolution\RenderSolutionDefault.cpp" />
+    <ClCompile Include="Engine\RenderSolution\RenderSolutionDeferred.cpp" />
+    <ClCompile Include="Engine\RenderSolution\RenderSolutionForward.cpp" />
+    <ClCompile Include="Engine\RenderSolution\RenderSolutionForwardPlus.cpp" />
     <ClCompile Include="Engine\Scene\Component\ComponentMesh.cpp" />
     <ClCompile Include="Engine\Scene\Component\ComponentParticle.cpp" />
     <ClCompile Include="Engine\Scene\Component\ComponentPointLight.cpp" />

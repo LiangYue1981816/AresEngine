@@ -136,6 +136,9 @@
     <Filter Include="Engine\RenderSolution\Source Files">
       <UniqueIdentifier>{382afbb0-67b3-462b-8f2f-e15b61897bb1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\RenderSolution\Source Files\Task">
+      <UniqueIdentifier>{4ed0b9fe-cbc3-4e50-8eed-308a37a75cf9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\Main.h">
@@ -321,9 +324,6 @@
     <ClInclude Include="Engine\Scene\SceneNode.h">
       <Filter>Engine\Scene\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Scene\Task\TaskCommandBuffer.h">
-      <Filter>Engine\Scene\Source Files\Task</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\Scene\Task\TaskComponentUpdateCamera.h">
       <Filter>Engine\Scene\Source Files\Task</Filter>
     </ClInclude>
@@ -470,6 +470,18 @@
     </ClInclude>
     <ClInclude Include="Engine\RenderSolution\RenderSolutionDefault.h">
       <Filter>Engine\RenderSolution\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\RenderSolution\RenderSolutionDeferred.h">
+      <Filter>Engine\RenderSolution\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\RenderSolution\RenderSolutionForward.h">
+      <Filter>Engine\RenderSolution\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\RenderSolution\RenderSolutionForwardPlus.h">
+      <Filter>Engine\RenderSolution\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\RenderSolution\Task\TaskCommandBuffer.h">
+      <Filter>Engine\RenderSolution\Source Files\Task</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -726,6 +738,15 @@
       <Filter>Engine\RenderSolution\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Engine\RenderSolution\RenderSolutionDefault.cpp">
+      <Filter>Engine\RenderSolution\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\RenderSolution\RenderSolutionDeferred.cpp">
+      <Filter>Engine\RenderSolution\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\RenderSolution\RenderSolutionForward.cpp">
+      <Filter>Engine\RenderSolution\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\RenderSolution\RenderSolutionForwardPlus.cpp">
       <Filter>Engine\RenderSolution\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
