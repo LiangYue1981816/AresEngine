@@ -160,6 +160,9 @@ public:
 		return join("_", id);
 	}
 
+	// Get the struct member count.
+	uint32_t get_member_count(uint32_t id) const;
+
 	// Given an OpTypeStruct in ID, obtain the identifier for member number "index".
 	// This may be an empty string.
 	const std::string &get_member_name(uint32_t id, uint32_t index) const;

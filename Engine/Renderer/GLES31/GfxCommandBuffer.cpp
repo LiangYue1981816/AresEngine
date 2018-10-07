@@ -3,11 +3,6 @@
 #include "GfxCommandBuffer.h"
 #include "GfxCommandBeginRenderPass.h"
 #include "GfxCommandEndRenderPass.h"
-#include "GfxCommandBindMesh.h"
-#include "GfxCommandBindCamera.h"
-#include "GfxCommandBindPipeline.h"
-#include "GfxCommandBindMaterialPass.h"
-#include "GfxCommandBindInputTexture.h"
 #include "GfxCommandSetScissor.h"
 #include "GfxCommandSetViewport.h"
 #include "GfxCommandSetCullFace.h"
@@ -16,6 +11,22 @@
 #include "GfxCommandSetColorWrite.h"
 #include "GfxCommandSetBlend.h"
 #include "GfxCommandSetPolygonOffset.h"
+#include "GfxCommandBindMesh.h"
+#include "GfxCommandBindCamera.h"
+#include "GfxCommandBindPipeline.h"
+#include "GfxCommandBindMaterialPass.h"
+#include "GfxCommandBindInputTexture.h"
+#include "GfxCommandUniform1f.h"
+#include "GfxCommandUniform2f.h"
+#include "GfxCommandUniform3f.h"
+#include "GfxCommandUniform4f.h"
+#include "GfxCommandUniform1fv.h"
+#include "GfxCommandUniform2fv.h"
+#include "GfxCommandUniform3fv.h"
+#include "GfxCommandUniform4fv.h"
+#include "GfxCommandUniformMatrix2fv.h"
+#include "GfxCommandUniformMatrix3fv.h"
+#include "GfxCommandUniformMatrix4fv.h"
 #include "GfxCommandClearDepth.h"
 #include "GfxCommandClearColor.h"
 #include "GfxCommandDrawInstance.h"
@@ -207,6 +218,116 @@ bool CGfxCommandBuffer::CmdBindInputTexture(const char *szName, uint32_t texture
 {
 	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
 		m_commands.push_back(new CGfxCommandBindInputTexture(szName, texture, minFilter, magFilter, addressMode));
+		return true;
+	}
+
+	return false;
+}
+
+bool CGfxCommandBuffer::CmdUniform1f(const char *szName, float v0)
+{
+	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
+		m_commands.push_back(new CGfxCommandUniform1f(szName, v0));
+		return true;
+	}
+
+	return false;
+}
+
+bool CGfxCommandBuffer::CmdUniform2f(const char *szName, float v0, float v1)
+{
+	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
+		m_commands.push_back(new CGfxCommandUniform2f(szName, v0, v1));
+		return true;
+	}
+
+	return false;
+}
+
+bool CGfxCommandBuffer::CmdUniform3f(const char *szName, float v0, float v1, float v2)
+{
+	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
+		m_commands.push_back(new CGfxCommandUniform3f(szName, v0, v1, v2));
+		return true;
+	}
+
+	return false;
+}
+
+bool CGfxCommandBuffer::CmdUniform4f(const char *szName, float v0, float v1, float v2, float v3)
+{
+	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
+		m_commands.push_back(new CGfxCommandUniform4f(szName, v0, v1, v2, v3));
+		return true;
+	}
+
+	return false;
+}
+
+bool CGfxCommandBuffer::CmdUniform1fv(const char *szName, uint32_t count, const float *value)
+{
+	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
+		m_commands.push_back(new CGfxCommandUniform1fv(szName, count, value));
+		return true;
+	}
+
+	return false;
+}
+
+bool CGfxCommandBuffer::CmdUniform2fv(const char *szName, uint32_t count, const float *value)
+{
+	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
+		m_commands.push_back(new CGfxCommandUniform2fv(szName, count, value));
+		return true;
+	}
+
+	return false;
+}
+
+bool CGfxCommandBuffer::CmdUniform3fv(const char *szName, uint32_t count, const float *value)
+{
+	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
+		m_commands.push_back(new CGfxCommandUniform3fv(szName, count, value));
+		return true;
+	}
+
+	return false;
+}
+
+bool CGfxCommandBuffer::CmdUniform4fv(const char *szName, uint32_t count, const float *value)
+{
+	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
+		m_commands.push_back(new CGfxCommandUniform4fv(szName, count, value));
+		return true;
+	}
+
+	return false;
+}
+
+bool CGfxCommandBuffer::CmdUniformMatrix2fv(const char *szName, uint32_t count, const float *value)
+{
+	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
+		m_commands.push_back(new CGfxCommandUniformMatrix2fv(szName, count, value));
+		return true;
+	}
+
+	return false;
+}
+
+bool CGfxCommandBuffer::CmdUniformMatrix3fv(const char *szName, uint32_t count, const float *value)
+{
+	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
+		m_commands.push_back(new CGfxCommandUniformMatrix3fv(szName, count, value));
+		return true;
+	}
+
+	return false;
+}
+
+bool CGfxCommandBuffer::CmdUniformMatrix4fv(const char *szName, uint32_t count, const float *value)
+{
+	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
+		m_commands.push_back(new CGfxCommandUniformMatrix4fv(szName, count, value));
 		return true;
 	}
 

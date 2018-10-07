@@ -5,12 +5,15 @@
 
 class CRenderSolutionForward : public CRenderSolutionBase
 {
-public:
+	friend class CEngine;
+
+
+private:
 	CRenderSolutionForward(void);
 	virtual ~CRenderSolutionForward(void);
 
 
-public:
+private:
 	virtual void Render(void);
 	virtual void Present(void);
 };

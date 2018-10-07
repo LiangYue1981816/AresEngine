@@ -7,6 +7,8 @@ class CGfxShader
 	friend class CGfxRenderer;
 	friend class CGfxShaderManager;
 
+	friend class CGfxPipelineBase;
+
 
 private:
 	CGfxShader(uint32_t name);
@@ -23,18 +25,35 @@ private:
 	void Destroy(void);
 
 private:
+	void SetUniformLocation(const char *szName);
 	void SetUniformBlockBinding(const char *szName, uint32_t binding);
-	void SetSampledImageLocation(const char *szName, uint32_t binding);
+	void SetSampledImageLocation(const char *szName);
 
-public:
+private:
 	bool BindTexture2D(uint32_t name, uint32_t texture, uint32_t sampler, uint32_t unit) const;
 	bool BindTexture2DArray(uint32_t name, uint32_t texture, uint32_t sampler, uint32_t unit) const;
 	bool BindTextureCubeMap(uint32_t name, uint32_t texture, uint32_t sampler, uint32_t unit) const;
 	bool BindUniformBuffer(uint32_t name, uint32_t buffer, uint32_t size, int offset = 0) const;
 
+	bool Uniform1f(uint32_t name, float v0) const;
+	bool Uniform2f(uint32_t name, float v0, float v1) const;
+	bool Uniform3f(uint32_t name, float v0, float v1, float v2) const;
+	bool Uniform4f(uint32_t name, float v0, float v1, float v2, float v3) const;
+
+	bool Uniform1fv(uint32_t name, uint32_t count, const float *value) const;
+	bool Uniform2fv(uint32_t name, uint32_t count, const float *value) const;
+	bool Uniform3fv(uint32_t name, uint32_t count, const float *value) const;
+	bool Uniform4fv(uint32_t name, uint32_t count, const float *value) const;
+
+	bool UniformMatrix2fv(uint32_t name, uint32_t count, const float *value) const;
+	bool UniformMatrix3fv(uint32_t name, uint32_t count, const float *value) const;
+	bool UniformMatrix4fv(uint32_t name, uint32_t count, const float *value) const;
+
 public:
 	bool IsValid(void) const;
+
 	bool IsUniformValid(uint32_t name) const;
+	bool IsUniformBlockValid(uint32_t name) const;
 	bool IsTextureValid(uint32_t name) const;
 
 public:
@@ -50,8 +69,9 @@ private:
 	uint32_t m_program;
 
 private:
-	eastl::unordered_map<uint32_t, uint32_t> m_uniformBlockBindings; // [name, binding]
-	eastl::unordered_map<uint32_t, uint32_t> m_sampledImageLocations;// [name, location]
+	eastl::unordered_map<uint32_t, uint32_t> m_uniformLocations;      // [name, location]
+	eastl::unordered_map<uint32_t, uint32_t> m_uniformBlockBindings;  // [name, binding]
+	eastl::unordered_map<uint32_t, uint32_t> m_sampledImageLocations; // [name, location]
 
 private:
 	spirv_cross::CompilerGLSL *m_pShaderCompiler;

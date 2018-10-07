@@ -79,6 +79,17 @@ class CGfxRenderer
 	friend class CGfxCommandBindPipeline;
 	friend class CGfxCommandBindMaterialPass;
 	friend class CGfxCommandBindInputTexture;
+	friend class CGfxCommandUniform1f;
+	friend class CGfxCommandUniform2f;
+	friend class CGfxCommandUniform3f;
+	friend class CGfxCommandUniform4f;
+	friend class CGfxCommandUniform1fv;
+	friend class CGfxCommandUniform2fv;
+	friend class CGfxCommandUniform3fv;
+	friend class CGfxCommandUniform4fv;
+	friend class CGfxCommandUniformMatrix2fv;
+	friend class CGfxCommandUniformMatrix3fv;
+	friend class CGfxCommandUniformMatrix4fv;
 
 
 private:
@@ -176,6 +187,18 @@ public:
 	bool CmdBindMaterialPass(CGfxCommandBuffer *pCommandBuffer, const CGfxMaterialPtr &ptrMaterial, uint32_t namePass);
 	bool CmdBindInputTexture(CGfxCommandBuffer *pCommandBuffer, const char *szName, uint32_t texture, uint32_t minFilter, uint32_t magFilter, uint32_t addressMode);
 
+	bool CmdUniform1f(CGfxCommandBuffer *pCommandBuffer, const char *szName, float v0);
+	bool CmdUniform2f(CGfxCommandBuffer *pCommandBuffer, const char *szName, float v0, float v1);
+	bool CmdUniform3f(CGfxCommandBuffer *pCommandBuffer, const char *szName, float v0, float v1, float v2);
+	bool CmdUniform4f(CGfxCommandBuffer *pCommandBuffer, const char *szName, float v0, float v1, float v2, float v3);
+	bool CmdUniform1fv(CGfxCommandBuffer *pCommandBuffer, const char *szName, uint32_t count, const float *value);
+	bool CmdUniform2fv(CGfxCommandBuffer *pCommandBuffer, const char *szName, uint32_t count, const float *value);
+	bool CmdUniform3fv(CGfxCommandBuffer *pCommandBuffer, const char *szName, uint32_t count, const float *value);
+	bool CmdUniform4fv(CGfxCommandBuffer *pCommandBuffer, const char *szName, uint32_t count, const float *value);
+	bool CmdUniformMatrix2fv(CGfxCommandBuffer *pCommandBuffer, const char *szName, uint32_t count, const float *value);
+	bool CmdUniformMatrix3fv(CGfxCommandBuffer *pCommandBuffer, const char *szName, uint32_t count, const float *value);
+	bool CmdUniformMatrix4fv(CGfxCommandBuffer *pCommandBuffer, const char *szName, uint32_t count, const float *value);
+
 	bool CmdClearDepth(CGfxCommandBuffer *pCommandBuffer, float depth);
 	bool CmdClearColor(CGfxCommandBuffer *pCommandBuffer, float red, float green, float blue, float alpha);
 	bool CmdDrawInstance(CGfxCommandBuffer *pCommandBuffer, const CGfxMeshPtr &ptrMesh, int indexCount, int baseIndex, const eastl::vector<glm::mat4> &mtxTransforms);
@@ -197,6 +220,21 @@ private:
 	void BindCamera(CGfxCamera *pCamera);
 	void BindMaterialPass(CGfxMaterialPass *pPass);
 	void BindInputTexture(const char *szName, uint32_t texture, uint32_t minFilter, uint32_t magFilter, uint32_t addressMode);
+#pragma endregion
+
+#pragma region Uniform
+private:
+	void Uniform1f(uint32_t name, float v0) const;
+	void Uniform2f(uint32_t name, float v0, float v1) const;
+	void Uniform3f(uint32_t name, float v0, float v1, float v2) const;
+	void Uniform4f(uint32_t name, float v0, float v1, float v2, float v3) const;
+	void Uniform1fv(uint32_t name, uint32_t count, const float *value) const;
+	void Uniform2fv(uint32_t name, uint32_t count, const float *value) const;
+	void Uniform3fv(uint32_t name, uint32_t count, const float *value) const;
+	void Uniform4fv(uint32_t name, uint32_t count, const float *value) const;
+	void UniformMatrix2fv(uint32_t name, uint32_t count, const float *value) const;
+	void UniformMatrix3fv(uint32_t name, uint32_t count, const float *value) const;
+	void UniformMatrix4fv(uint32_t name, uint32_t count, const float *value) const;
 #pragma endregion
 
 

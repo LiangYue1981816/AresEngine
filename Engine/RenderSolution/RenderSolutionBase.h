@@ -4,12 +4,15 @@
 
 class CRenderSolutionBase
 {
-public:
+	friend class CEngine;
+
+
+protected:
 	CRenderSolutionBase(void);
 	virtual ~CRenderSolutionBase(void);
 
 
-public:
+protected:
 	virtual void Render(void) = 0;
 	virtual void Present(void) = 0;
 

@@ -5,12 +5,15 @@
 
 class CRenderSolutionDefault : public CRenderSolutionBase
 {
-public:
+	friend class CEngine;
+
+
+private:
 	CRenderSolutionDefault(void);
 	virtual ~CRenderSolutionDefault(void);
 
 
-public:
+private:
 	virtual void Render(void);
 	virtual void Present(void);
 };

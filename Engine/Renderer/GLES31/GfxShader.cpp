@@ -51,6 +51,11 @@ bool CGfxShader::Create(const uint32_t *words, size_t numWords, shaderc_shader_k
 		const std::string strSource = m_pShaderCompiler->compile();
 		const char *szSource = strSource.c_str();
 
+#ifdef DEBUG
+		LogOutput(NULL, "\n");
+		LogOutput("GfxRenderer", "\n%s\n", szSource);
+#endif
+
 		m_kind = kind;
 		m_program = glCreateShaderProgramv(glGetShaderType(kind), 1, &szSource);
 		if (m_program == 0) throw 0;
@@ -68,17 +73,26 @@ bool CGfxShader::CreateLayouts(void)
 {
 	const spirv_cross::ShaderResources shaderResources = m_pShaderCompiler->get_shader_resources();
 
+	for (const auto &itPushConstant : shaderResources.push_constant_buffers) {
+		if (m_pShaderCompiler->get_type(itPushConstant.base_type_id).basetype == spirv_cross::SPIRType::Struct) {
+			for (uint32_t index = 0; index < m_pShaderCompiler->get_member_count(itPushConstant.base_type_id); index++) {
+				const std::string &member = m_pShaderCompiler->get_member_name(itPushConstant.base_type_id, index);
+				const std::string name = itPushConstant.name + "." + member;
+				SetUniformLocation(name.c_str());
+			}
+		}
+	}
+
 	for (const auto &itUniform : shaderResources.uniform_buffers) {
-		if (m_pShaderCompiler->get_type(itUniform.type_id).basetype == spirv_cross::SPIRType::Struct) {
+		if (m_pShaderCompiler->get_type(itUniform.base_type_id).basetype == spirv_cross::SPIRType::Struct) {
 			const uint32_t binding = m_pShaderCompiler->get_decoration(itUniform.id, spv::DecorationBinding);
 			SetUniformBlockBinding(itUniform.name.c_str(), binding);
 		}
 	}
 
 	for (const auto &itSampledImage : shaderResources.sampled_images) {
-		if (m_pShaderCompiler->get_type(itSampledImage.type_id).basetype == spirv_cross::SPIRType::SampledImage) {
-			const uint32_t binding = m_pShaderCompiler->get_decoration(itSampledImage.id, spv::DecorationBinding);
-			SetSampledImageLocation(itSampledImage.name.c_str(), binding);
+		if (m_pShaderCompiler->get_type(itSampledImage.base_type_id).basetype == spirv_cross::SPIRType::SampledImage) {
+			SetSampledImageLocation(itSampledImage.name.c_str());
 		}
 	}
 
@@ -99,8 +113,22 @@ void CGfxShader::Destroy(void)
 	m_program = 0;
 	m_pShaderCompiler = NULL;
 
+	m_uniformLocations.clear();
 	m_uniformBlockBindings.clear();
 	m_sampledImageLocations.clear();
+}
+
+void CGfxShader::SetUniformLocation(const char *szName)
+{
+	uint32_t name = HashValue(szName);
+
+	if (m_uniformLocations.find(name) == m_uniformLocations.end()) {
+		uint32_t location = glGetUniformLocation(m_program, szName);
+
+		if (location != GL_INVALID_INDEX) {
+			m_uniformLocations[name] = location;
+		}
+	}
 }
 
 void CGfxShader::SetUniformBlockBinding(const char *szName, uint32_t binding)
@@ -117,7 +145,7 @@ void CGfxShader::SetUniformBlockBinding(const char *szName, uint32_t binding)
 	}
 }
 
-void CGfxShader::SetSampledImageLocation(const char *szName, uint32_t binding)
+void CGfxShader::SetSampledImageLocation(const char *szName)
 {
 	uint32_t name = HashValue(szName);
 
@@ -187,12 +215,149 @@ bool CGfxShader::BindUniformBuffer(uint32_t name, uint32_t buffer, uint32_t size
 	return false;
 }
 
+bool CGfxShader::Uniform1f(uint32_t name, float v0) const
+{
+	const auto &itLocation = m_uniformLocations.find(name);
+
+	if (itLocation != m_uniformLocations.end()) {
+		glProgramUniform1f(m_program, itLocation->second, v0);
+		return true;
+	}
+
+	return false;
+}
+
+bool CGfxShader::Uniform2f(uint32_t name, float v0, float v1) const
+{
+	const auto &itLocation = m_uniformLocations.find(name);
+
+	if (itLocation != m_uniformLocations.end()) {
+		glProgramUniform2f(m_program, itLocation->second, v0, v1);
+		return true;
+	}
+
+	return false;
+}
+
+bool CGfxShader::Uniform3f(uint32_t name, float v0, float v1, float v2) const
+{
+	const auto &itLocation = m_uniformLocations.find(name);
+
+	if (itLocation != m_uniformLocations.end()) {
+		glProgramUniform3f(m_program, itLocation->second, v0, v1, v2);
+		return true;
+	}
+
+	return false;
+}
+
+bool CGfxShader::Uniform4f(uint32_t name, float v0, float v1, float v2, float v3) const
+{
+	const auto &itLocation = m_uniformLocations.find(name);
+
+	if (itLocation != m_uniformLocations.end()) {
+		glProgramUniform4f(m_program, itLocation->second, v0, v1, v2, v3);
+		return true;
+	}
+
+	return false;
+}
+
+bool CGfxShader::Uniform1fv(uint32_t name, uint32_t count, const float *value) const
+{
+	const auto &itLocation = m_uniformLocations.find(name);
+
+	if (itLocation != m_uniformLocations.end()) {
+		glProgramUniform1fv(m_program, itLocation->second, count, value);
+		return true;
+	}
+
+	return false;
+}
+
+bool CGfxShader::Uniform2fv(uint32_t name, uint32_t count, const float *value) const
+{
+	const auto &itLocation = m_uniformLocations.find(name);
+
+	if (itLocation != m_uniformLocations.end()) {
+		glProgramUniform2fv(m_program, itLocation->second, count, value);
+		return true;
+	}
+
+	return false;
+}
+
+bool CGfxShader::Uniform3fv(uint32_t name, uint32_t count, const float *value) const
+{
+	const auto &itLocation = m_uniformLocations.find(name);
+
+	if (itLocation != m_uniformLocations.end()) {
+		glProgramUniform3fv(m_program, itLocation->second, count, value);
+		return true;
+	}
+
+	return false;
+}
+
+bool CGfxShader::Uniform4fv(uint32_t name, uint32_t count, const float *value) const
+{
+	const auto &itLocation = m_uniformLocations.find(name);
+
+	if (itLocation != m_uniformLocations.end()) {
+		glProgramUniform4fv(m_program, itLocation->second, count, value);
+		return true;
+	}
+
+	return false;
+}
+
+bool CGfxShader::UniformMatrix2fv(uint32_t name, uint32_t count, const float *value) const
+{
+	const auto &itLocation = m_uniformLocations.find(name);
+
+	if (itLocation != m_uniformLocations.end()) {
+		glProgramUniformMatrix2fv(m_program, itLocation->second, count, GL_FALSE, value);
+		return true;
+	}
+
+	return false;
+}
+
+bool CGfxShader::UniformMatrix3fv(uint32_t name, uint32_t count, const float *value) const
+{
+	const auto &itLocation = m_uniformLocations.find(name);
+
+	if (itLocation != m_uniformLocations.end()) {
+		glProgramUniformMatrix3fv(m_program, itLocation->second, count, GL_FALSE, value);
+		return true;
+	}
+
+	return false;
+}
+
+bool CGfxShader::UniformMatrix4fv(uint32_t name, uint32_t count, const float *value) const
+{
+	const auto &itLocation = m_uniformLocations.find(name);
+
+	if (itLocation != m_uniformLocations.end()) {
+		glProgramUniformMatrix4fv(m_program, itLocation->second, count, GL_FALSE, value);
+		return true;
+	}
+
+	return false;
+}
+
 bool CGfxShader::IsValid(void) const
 {
 	return m_program != 0;
 }
 
 bool CGfxShader::IsUniformValid(uint32_t name) const
+{
+	return m_uniformLocations.find(name) != m_uniformLocations.end();
+}
+
+bool CGfxShader::IsUniformBlockValid(uint32_t name) const
 {
 	return m_uniformBlockBindings.find(name) != m_uniformBlockBindings.end();
 }

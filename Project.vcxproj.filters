@@ -483,6 +483,39 @@
     <ClInclude Include="Engine\RenderSolution\Task\TaskCommandBuffer.h">
       <Filter>Engine\RenderSolution\Source Files\Task</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\Renderer\GLES31\GfxCommandUniform1f.h">
+      <Filter>Engine\Renderer\GLES31\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Renderer\GLES31\GfxCommandUniform2f.h">
+      <Filter>Engine\Renderer\GLES31\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Renderer\GLES31\GfxCommandUniform3f.h">
+      <Filter>Engine\Renderer\GLES31\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Renderer\GLES31\GfxCommandUniform4f.h">
+      <Filter>Engine\Renderer\GLES31\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Renderer\GLES31\GfxCommandUniform1fv.h">
+      <Filter>Engine\Renderer\GLES31\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Renderer\GLES31\GfxCommandUniform2fv.h">
+      <Filter>Engine\Renderer\GLES31\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Renderer\GLES31\GfxCommandUniform3fv.h">
+      <Filter>Engine\Renderer\GLES31\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Renderer\GLES31\GfxCommandUniform4fv.h">
+      <Filter>Engine\Renderer\GLES31\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Renderer\GLES31\GfxCommandUniformMatrix2fv.h">
+      <Filter>Engine\Renderer\GLES31\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Renderer\GLES31\GfxCommandUniformMatrix3fv.h">
+      <Filter>Engine\Renderer\GLES31\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Renderer\GLES31\GfxCommandUniformMatrix4fv.h">
+      <Filter>Engine\Renderer\GLES31\Source Files\Commands</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application\Main.cpp">

@@ -5,12 +5,15 @@
 
 class CRenderSolutionDeferred : public CRenderSolutionBase
 {
-public:
+	friend class CEngine;
+
+
+private:
 	CRenderSolutionDeferred(void);
 	virtual ~CRenderSolutionDeferred(void);
 
 
-public:
+private:
 	virtual void Render(void);
 	virtual void Present(void);
 };

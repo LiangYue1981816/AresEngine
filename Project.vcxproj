@@ -61,6 +61,17 @@
     <ClInclude Include="Engine\Renderer\GLES31\GfxCommandSetPolygonOffset.h" />
     <ClInclude Include="Engine\Renderer\GLES31\GfxCommandSetScissor.h" />
     <ClInclude Include="Engine\Renderer\GLES31\GfxCommandSetViewport.h" />
+    <ClInclude Include="Engine\Renderer\GLES31\GfxCommandUniform1f.h" />
+    <ClInclude Include="Engine\Renderer\GLES31\GfxCommandUniform1fv.h" />
+    <ClInclude Include="Engine\Renderer\GLES31\GfxCommandUniform2f.h" />
+    <ClInclude Include="Engine\Renderer\GLES31\GfxCommandUniform2fv.h" />
+    <ClInclude Include="Engine\Renderer\GLES31\GfxCommandUniform3f.h" />
+    <ClInclude Include="Engine\Renderer\GLES31\GfxCommandUniform3fv.h" />
+    <ClInclude Include="Engine\Renderer\GLES31\GfxCommandUniform4f.h" />
+    <ClInclude Include="Engine\Renderer\GLES31\GfxCommandUniform4fv.h" />
+    <ClInclude Include="Engine\Renderer\GLES31\GfxCommandUniformMatrix2fv.h" />
+    <ClInclude Include="Engine\Renderer\GLES31\GfxCommandUniformMatrix3fv.h" />
+    <ClInclude Include="Engine\Renderer\GLES31\GfxCommandUniformMatrix4fv.h" />
     <ClInclude Include="Engine\Renderer\GLES31\GfxDefinition.h" />
     <ClInclude Include="Engine\Renderer\GLES31\GfxExtension.h" />
     <ClInclude Include="Engine\Renderer\GLES31\GfxFrameBuffer.h" />
