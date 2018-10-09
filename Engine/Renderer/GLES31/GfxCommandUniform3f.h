@@ -21,7 +21,7 @@ public:
 public:
 	virtual void Execute(void) const
 	{
-		CGfxProfilerSample(CGfxProfiler::SAMPLE_TYPE_COMMAND_UNIFORM3F, "CommandUniform3f");
+		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_UNIFORM3F, "CommandUniform3f");
 		{
 			Renderer()->Uniform3f(m_name, m_v0, m_v1, m_v2);
 		}

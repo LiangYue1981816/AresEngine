@@ -10,6 +10,7 @@ template<class T> class CTaskComponentUpdateCamera : public CTask
 public:
 	CTaskComponentUpdateCamera(void)
 		: m_indexThread(0)
+		, m_indexQueue(0)
 		, m_pComponentManager(NULL)
 	{
 
@@ -21,11 +22,12 @@ public:
 
 
 public:
-	void SetParams(int indexThread, CComponentManager<T> *pComponentManager, CGfxCamera *pCamera)
+	void SetParams(int indexThread, int indexQueue, CComponentManager<T> *pComponentManager, CGfxCamera *pCamera)
 	{
 		m_pCamera = pCamera;
 
 		m_indexThread = indexThread;
+		m_indexQueue = indexQueue;
 		m_pComponentManager = pComponentManager;
 	}
 
@@ -38,7 +40,7 @@ public:
 
 			for (size_t index = indexBegin; index < indexEnd; index++) {
 				CComponent *pComponent = (CComponent *)m_pComponentManager->GetComponentByIndex(index);
-				pComponent->TaskUpdateCamera(m_pCamera, m_indexThread);
+				pComponent->TaskUpdateCamera(m_pCamera, m_indexThread, m_indexQueue);
 			}
 		}
 	}
@@ -49,5 +51,6 @@ private:
 
 private:
 	int m_indexThread;
+	int m_indexQueue;
 	CComponentManager<T> *m_pComponentManager;
 };

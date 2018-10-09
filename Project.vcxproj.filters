@@ -198,24 +198,6 @@
     <ClInclude Include="Engine\Renderer\GLES31\GfxCommandExecute.h">
       <Filter>Engine\Renderer\GLES31\Source Files\Commands</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Renderer\GLES31\GfxCommandSetBlend.h">
-      <Filter>Engine\Renderer\GLES31\Source Files\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Renderer\GLES31\GfxCommandSetColorWrite.h">
-      <Filter>Engine\Renderer\GLES31\Source Files\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Renderer\GLES31\GfxCommandSetCullFace.h">
-      <Filter>Engine\Renderer\GLES31\Source Files\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Renderer\GLES31\GfxCommandSetDepthTest.h">
-      <Filter>Engine\Renderer\GLES31\Source Files\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Renderer\GLES31\GfxCommandSetDepthWrite.h">
-      <Filter>Engine\Renderer\GLES31\Source Files\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Renderer\GLES31\GfxCommandSetPolygonOffset.h">
-      <Filter>Engine\Renderer\GLES31\Source Files\Commands</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\Renderer\GLES31\GfxCommandSetScissor.h">
       <Filter>Engine\Renderer\GLES31\Source Files\Commands</Filter>
     </ClInclude>
@@ -514,6 +496,9 @@
       <Filter>Engine\Renderer\GLES31\Source Files\Commands</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Renderer\GLES31\GfxCommandUniformMatrix4fv.h">
+      <Filter>Engine\Renderer\GLES31\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Renderer\GLES31\GfxCommandResolve.h">
       <Filter>Engine\Renderer\GLES31\Source Files\Commands</Filter>
     </ClInclude>
   </ItemGroup>

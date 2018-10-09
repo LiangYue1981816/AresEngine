@@ -19,7 +19,7 @@ public:
 public:
 	virtual void Execute(void) const
 	{
-		CGfxProfilerSample(CGfxProfiler::SAMPLE_TYPE_COMMAND_UNIFORMMATRIX3FV, "CommandUniformMatrix3fv");
+		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_UNIFORMMATRIX3FV, "CommandUniformMatrix3fv");
 		{
 			Renderer()->UniformMatrix3fv(m_name, m_value.size(), m_value.data());
 		}

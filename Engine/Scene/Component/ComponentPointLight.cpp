@@ -24,7 +24,7 @@ void CComponentPointLight::TaskUpdate(float gameTime, float deltaTime)
 
 }
 
-void CComponentPointLight::TaskUpdateCamera(CGfxCamera *pCamera, int indexThread)
+void CComponentPointLight::TaskUpdateCamera(CGfxCamera *pCamera, int indexThread, int indexQueue)
 {
 
 }

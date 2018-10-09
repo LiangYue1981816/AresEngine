@@ -261,3 +261,8 @@ bool CGfxTexture2DArray::TransferTexture2DCompressed(int layer, int level, uint3
 
 	return true;
 }
+
+uint32_t CGfxTexture2DArray::GetTarget(void) const
+{
+	return GL_TEXTURE_2D_ARRAY;
+}

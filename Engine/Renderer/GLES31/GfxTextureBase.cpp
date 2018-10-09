@@ -15,6 +15,7 @@ CGfxTextureBase::CGfxTextureBase(uint32_t name)
 	, m_width(0)
 	, m_height(0)
 
+	, m_samples(0)
 	, m_mipLevels(0)
 	, m_arrayLayers(0)
 {
@@ -63,6 +64,7 @@ void CGfxTextureBase::Destroy(void)
 	m_width = 0;
 	m_height = 0;
 
+	m_samples = 0;
 	m_mipLevels = 0;
 	m_arrayLayers = 0;
 }

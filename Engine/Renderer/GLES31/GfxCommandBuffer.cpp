@@ -3,14 +3,9 @@
 #include "GfxCommandBuffer.h"
 #include "GfxCommandBeginRenderPass.h"
 #include "GfxCommandEndRenderPass.h"
+#include "GfxCommandResolve.h"
 #include "GfxCommandSetScissor.h"
 #include "GfxCommandSetViewport.h"
-#include "GfxCommandSetCullFace.h"
-#include "GfxCommandSetDepthTest.h"
-#include "GfxCommandSetDepthWrite.h"
-#include "GfxCommandSetColorWrite.h"
-#include "GfxCommandSetBlend.h"
-#include "GfxCommandSetPolygonOffset.h"
 #include "GfxCommandBindMesh.h"
 #include "GfxCommandBindCamera.h"
 #include "GfxCommandBindPipeline.h"
@@ -94,6 +89,16 @@ bool CGfxCommandBuffer::CmdEndRenderPass(void)
 	return false;
 }
 
+bool CGfxCommandBuffer::CmdResolve(const CGfxFrameBufferPtr &ptrFrameBufferSrc, const CGfxFrameBufferPtr &ptrFrameBufferDst)
+{
+	if (m_bMainCommandBuffer == true && m_bInPassScope == false) {
+		m_commands.push_back(new CGfxCommandResolve(ptrFrameBufferSrc, ptrFrameBufferDst));
+		return true;
+	}
+
+	return false;
+}
+
 bool CGfxCommandBuffer::CmdSetScissor(int x, int y, int width, int height)
 {
 	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
@@ -108,66 +113,6 @@ bool CGfxCommandBuffer::CmdSetViewport(int x, int y, int width, int height)
 {
 	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
 		m_commands.push_back(new CGfxCommandSetViewport(x, y, width, height));
-		return true;
-	}
-
-	return false;
-}
-
-bool CGfxCommandBuffer::CmdSetCullFace(bool bEnable, uint32_t cullFace, uint32_t frontFace)
-{
-	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
-		m_commands.push_back(new CGfxCommandSetCullFace(bEnable, cullFace, frontFace));
-		return true;
-	}
-
-	return false;
-}
-
-bool CGfxCommandBuffer::CmdSetDepthTest(bool bEnable, uint32_t depthFunc)
-{
-	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
-		m_commands.push_back(new CGfxCommandSetDepthTest(bEnable, depthFunc));
-		return true;
-	}
-
-	return false;
-}
-
-bool CGfxCommandBuffer::CmdSetDepthWrite(bool bEnable)
-{
-	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
-		m_commands.push_back(new CGfxCommandSetDepthWrite(bEnable));
-		return true;
-	}
-
-	return false;
-}
-
-bool CGfxCommandBuffer::CmdSetColorWrite(bool bEnableRed, bool bEnableGreen, bool bEnableBlue, bool bEnableAlpha)
-{
-	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
-		m_commands.push_back(new CGfxCommandSetColorWrite(bEnableRed, bEnableGreen, bEnableBlue, bEnableAlpha));
-		return true;
-	}
-
-	return false;
-}
-
-bool CGfxCommandBuffer::CmdSetBlend(bool bEnable, uint32_t srcFactor, uint32_t dstFactor)
-{
-	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
-		m_commands.push_back(new CGfxCommandSetBlend(bEnable, srcFactor, dstFactor));
-		return true;
-	}
-
-	return false;
-}
-
-bool CGfxCommandBuffer::CmdSetPolygonOffset(bool bEnable, float factor, float units)
-{
-	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
-		m_commands.push_back(new CGfxCommandSetPolygonOffset(bEnable, factor, units));
 		return true;
 	}
 

@@ -21,9 +21,9 @@ public:
 public:
 	virtual void Execute(void) const
 	{
-		CGfxProfilerSample(CGfxProfiler::SAMPLE_TYPE_COMMAND_SET_VIEWPORT, "CommandSetViewport");
+		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_SET_VIEWPORT, "CommandSetViewport");
 		{
-			glViewport(m_x, m_y, m_width, m_height);
+			GLViewport(m_x, m_y, m_width, m_height);
 		}
 	}
 

@@ -12,6 +12,7 @@ CGfxInstanceBuffer::CGfxInstanceBuffer(uint32_t format)
 	, m_size(INSTANCE_BUFFER_SIZE)
 
 	, m_bDirty(false)
+	, m_hash(INVALID_VALUE)
 {
 	CGfxProfiler::IncInstanceBufferSize(m_size);
 
@@ -54,24 +55,29 @@ void CGfxInstanceBuffer::UpdateInstance(void)
 	if (m_bDirty) {
 		m_bDirty = false;
 
-		glBindBuffer(GL_ARRAY_BUFFER, m_instanceBuffer);
-		{
-			uint32_t size = (uint32_t)m_instances.size() * sizeof(glm::mat4);
+		uint32_t size = (uint32_t)m_instances.size() * sizeof(glm::mat4);
+		uint32_t hash = HashValue((unsigned char *)m_instances.data(), size);
 
-			if (m_size < size) {
-				CGfxProfiler::DecInstanceBufferSize(m_size);
-				{
-					m_size = INSTANCE_BUFFER_SIZE;
-					while (m_size < size) m_size <<= 1;
+		if (m_hash != hash) {
+			m_hash  = hash;
 
-					glBufferData(GL_ARRAY_BUFFER, m_size, NULL, GL_DYNAMIC_DRAW);
+			glBindBuffer(GL_ARRAY_BUFFER, m_instanceBuffer);
+			{
+				if (m_size < size) {
+					CGfxProfiler::DecInstanceBufferSize(m_size);
+					{
+						m_size = INSTANCE_BUFFER_SIZE;
+						while (m_size < size) m_size <<= 1;
+
+						glBufferData(GL_ARRAY_BUFFER, m_size, NULL, GL_DYNAMIC_DRAW);
+					}
+					CGfxProfiler::IncInstanceBufferSize(m_size);
 				}
-				CGfxProfiler::IncInstanceBufferSize(m_size);
-			}
 
-			glBufferSubData(GL_ARRAY_BUFFER, 0, size, m_instances.data());
+				glBufferSubData(GL_ARRAY_BUFFER, 0, size, m_instances.data());
+			}
+			glBindBuffer(GL_ARRAY_BUFFER, 0);
 		}
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
 	}
 }
 

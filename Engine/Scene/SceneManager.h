@@ -69,7 +69,7 @@ public:
 
 private:
 	void UpdateLogic(float totalTime, float deltaTime);
-	void UpdateCamera(CGfxCamera *pCamera);
+	void UpdateCamera(CGfxCamera *pCamera, int indexQueue);
 
 
 private:

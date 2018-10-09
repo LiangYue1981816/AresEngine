@@ -8,6 +8,7 @@ class CTaskCommandBuffer : public CTask
 public:
 	CTaskCommandBuffer(void)
 		: m_indexThread(0)
+		, m_indexQueue(0)
 		, m_namePass(0)
 	{
 
@@ -19,21 +20,23 @@ public:
 
 
 public:
-	void SetParams(int indexThread, uint32_t namePass)
+	void SetParams(int indexThread, int indexQueue, uint32_t namePass)
 	{
 		m_indexThread = indexThread;
+		m_indexQueue = indexQueue;
 		m_namePass = namePass;
 	}
 
 	virtual void TaskFunc(void *pParams)
 	{
 		if (CGfxCamera *pCamera = (CGfxCamera *)pParams) {
-			pCamera->CmdDraw(m_indexThread, m_namePass);
+			pCamera->CmdDraw(m_indexThread, m_indexQueue, m_namePass);
 		}
 	}
 
 
 private:
 	int m_indexThread;
+	int m_indexQueue;
 	uint32_t m_namePass;
 };

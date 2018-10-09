@@ -36,6 +36,7 @@ extern "C" {
 ** Khronos $Revision$ on $Date$
 */
 
+#include <GL/GL.h>
 #include <GLES3/gl3platform.h>
 
 #ifndef GL_APIENTRYP
@@ -604,7 +605,7 @@ typedef void (GL_APIENTRYP PFNGLVIEWPORTPROC) (GLint x, GLint y, GLsizei width, 
 #define glGetAttribLocation GLEW_GET_FUN(__glewGetAttribLocation)
 #define glGetBooleanv GLEW_GET_FUN(__glewGetBooleanv)
 #define glGetBufferParameteriv GLEW_GET_FUN(__glewGetBufferParameteriv)
-#define glGetError GLEW_GET_FUN(__glewGetError)
+//#define glGetError GLEW_GET_FUN(__glewGetError)
 #define glGetFloatv GLEW_GET_FUN(__glewGetFloatv)
 #define glGetFramebufferAttachmentParameteriv GLEW_GET_FUN(__glewGetFramebufferAttachmentParameteriv)
 #define glGetIntegerv GLEW_GET_FUN(__glewGetIntegerv)
@@ -632,7 +633,7 @@ typedef void (GL_APIENTRYP PFNGLVIEWPORTPROC) (GLint x, GLint y, GLsizei width, 
 #define glIsRenderbuffer GLEW_GET_FUN(__glewIsRenderbuffer)
 #define glIsShader GLEW_GET_FUN(__glewIsShader)
 #define glIsTexture GLEW_GET_FUN(__glewIsTexture)
-#define glLineWidth GLEW_GET_FUN(__glewLineWidth)
+//#define glLineWidth GLEW_GET_FUN(__glewLineWidth)
 #define glLinkProgram GLEW_GET_FUN(__glewLinkProgram)
 #define glPixelStorei GLEW_GET_FUN(__glewPixelStorei)
 #define glReadPixels GLEW_GET_FUN(__glewReadPixels)
@@ -641,11 +642,11 @@ typedef void (GL_APIENTRYP PFNGLVIEWPORTPROC) (GLint x, GLint y, GLsizei width, 
 #define glSampleCoverage GLEW_GET_FUN(__glewSampleCoverage)
 #define glShaderBinary GLEW_GET_FUN(__glewShaderBinary)
 #define glShaderSource GLEW_GET_FUN(__glewShaderSource)
-#define glStencilFunc GLEW_GET_FUN(__glewStencilFunc)
+//#define glStencilFunc GLEW_GET_FUN(__glewStencilFunc)
+//#define glStencilMask GLEW_GET_FUN(__glewStencilMask)
+//#define glStencilOp GLEW_GET_FUN(__glewStencilOp)
 #define glStencilFuncSeparate GLEW_GET_FUN(__glewStencilFuncSeparate)
-#define glStencilMask GLEW_GET_FUN(__glewStencilMask)
 #define glStencilMaskSeparate GLEW_GET_FUN(__glewStencilMaskSeparate)
-#define glStencilOp GLEW_GET_FUN(__glewStencilOp)
 #define glStencilOpSeparate GLEW_GET_FUN(__glewStencilOpSeparate)
 #define glTexParameterf GLEW_GET_FUN(__glewTexParameterf)
 #define glTexParameterfv GLEW_GET_FUN(__glewTexParameterfv)

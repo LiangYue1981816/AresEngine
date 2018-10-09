@@ -5,7 +5,11 @@
 #include "SceneManager.h"
 
 
-#define CreateEngine(hDC, szShaderCachePath) CEngine::Create((hDC), (szShaderCachePath))
+#define LOG_TAG_MEMORY "Memory"
+#define LOG_TAG_RENDERER "GfxRenderer"
+
+
+#define CreateEngine(hDC, szShaderCachePath, nScreenWidth, nScreenHeight) CEngine::Create((hDC), (szShaderCachePath), (nScreenWidth), (nScreenHeight))
 #define DestroyEngine() CEngine::Destroy()
 
 #define Engine() CEngine::GetInstance()
@@ -34,24 +38,28 @@ class CEngine
 {
 public:
 	static CEngine* GetInstance(void);
-	static void Create(void *hDC, const char *szShaderCachePath);
+	static void Create(void *hDC, const char *szShaderCachePath, int screenWidth, int screenHeight);
 	static void Destroy(void);
 
 
 private:
-	CEngine(void *hDC, const char *szShaderCachePath);
+	CEngine(void *hDC, const char *szShaderCachePath, int screenWidth, int screenHeight);
 	virtual ~CEngine(void);
 
 
 public:
 	CGfxRenderer* GetRenderer(void) const;
 	CSceneManager* GetSceneManager(void) const;
+	CRenderSolutionBase* GetRenderSolution(RenderSolution solution) const;
 
 public:
 	void UpdateLogic(float deltaTime);
 	void UpdateCamera(CGfxCamera *pCamera);
 	void Render(float deltaTime, RenderSolution solution);
 
+
+private:
+	int m_indexQueue;
 
 private:
 	float m_totalLogicTime;

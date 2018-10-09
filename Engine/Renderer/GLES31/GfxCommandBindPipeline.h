@@ -18,13 +18,13 @@ public:
 public:
 	virtual void Execute(void) const
 	{
-		CGfxProfilerSample(CGfxProfiler::SAMPLE_TYPE_COMMAND_BIND_PIPELINE, "CommandBindPipeline");
+		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_BIND_PIPELINE, "CommandBindPipeline");
 		{
 			if (m_pPipeline) {
 				Renderer()->BindPipeline(m_pPipeline);
 			}
 			else {
-				glBindProgramPipeline(0);
+				GLBindProgramPipeline(0);
 			}
 		}
 	}

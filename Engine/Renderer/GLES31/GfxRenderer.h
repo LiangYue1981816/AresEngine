@@ -70,11 +70,11 @@
 class CGfxRenderer
 {
 	friend class CEngine;
-	friend class CGfxFrameBuffer;
 	friend class CGfxMesh;
-	friend class CGfxTextureBase;
 	friend class CGfxMaterial;
 	friend class CGfxMaterialPass;
+	friend class CGfxTextureBase;
+	friend class CGfxFrameBuffer;
 	friend class CGfxCommandBindCamera;
 	friend class CGfxCommandBindPipeline;
 	friend class CGfxCommandBindMaterialPass;
@@ -121,7 +121,8 @@ public:
 	CGfxTexture2DPtr CreateTexture2D(uint32_t name);
 	CGfxTexture2DArrayPtr CreateTexture2DArray(uint32_t name);
 	CGfxTextureCubeMapPtr CreateTextureCubeMap(uint32_t name);
-	CGfxFrameBufferPtr CreateFrameBuffer(uint32_t width, uint32_t height, bool bDepthRenderBuffer);
+	CGfxFrameBufferPtr CreateFrameBuffer(uint32_t width, uint32_t height);
+	CGfxFrameBufferPtr CreateFrameBuffer(uint32_t width, uint32_t height, bool bDepthRenderBuffer, int samples = 0);
 
 	CGfxMeshPtr LoadMesh(const char *szFileName);
 	CGfxMaterialPtr LoadMaterial(const char *szFileName);
@@ -172,15 +173,10 @@ public:
 public:
 	bool CmdBeginRenderPass(CGfxCommandBuffer *pCommandBuffer, const CGfxFrameBufferPtr &ptrFrameBuffer);
 	bool CmdEndRenderPass(CGfxCommandBuffer *pCommandBuffer);
+	bool CmdResolve(CGfxCommandBuffer *pCommandBuffer, const CGfxFrameBufferPtr &ptrFrameBufferSrc, const CGfxFrameBufferPtr &ptrFrameBufferDst);
 
 	bool CmdSetScissor(CGfxCommandBuffer *pCommandBuffer, int x, int y, int width, int height);
 	bool CmdSetViewport(CGfxCommandBuffer *pCommandBuffer, int x, int y, int width, int height);
-	bool CmdSetCullFace(CGfxCommandBuffer *pCommandBuffer, bool bEnable, uint32_t cullFace, uint32_t frontFace);
-	bool CmdSetDepthTest(CGfxCommandBuffer *pCommandBuffer, bool bEnable, uint32_t depthFunc);
-	bool CmdSetDepthWrite(CGfxCommandBuffer *pCommandBuffer, bool bEnable);
-	bool CmdSetColorWrite(CGfxCommandBuffer *pCommandBuffer, bool bEnableRed, bool bEnableGreen, bool bEnableBlue, bool bEnableAlpha);
-	bool CmdSetBlend(CGfxCommandBuffer *pCommandBuffer, bool bEnable, uint32_t srcFactor, uint32_t dstFactor);
-	bool CmdSetPolygonOffset(CGfxCommandBuffer *pCommandBuffer, bool bEnable, float factor, float units);
 
 	bool CmdBindCamera(CGfxCommandBuffer *pCommandBuffer, CGfxCamera *pCamera);
 	bool CmdBindPipeline(CGfxCommandBuffer *pCommandBuffer, CGfxPipelineBase *pPipeline);

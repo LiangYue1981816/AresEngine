@@ -18,7 +18,7 @@ public:
 public:
 	virtual void Execute(void) const
 	{
-		CGfxProfilerSample(CGfxProfiler::SAMPLE_TYPE_COMMAND_END_RENDERPASS, "CommandEndRenderPass");
+		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_END_RENDERPASS, "CommandEndRenderPass");
 		{
 			if (m_ptrFrameBuffer.IsValid()) {
 				m_ptrFrameBuffer->InvalidateFramebuffer();

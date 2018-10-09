@@ -18,13 +18,13 @@ public:
 public:
 	virtual void Execute(void) const
 	{
-		CGfxProfilerSample(CGfxProfiler::SAMPLE_TYPE_COMMAND_BEGIN_RENDERPASS, "CommandBeginRenderPass");
+		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_BEGIN_RENDERPASS, "CommandBeginRenderPass");
 		{
 			if (m_ptrFrameBuffer.IsValid()) {
 				m_ptrFrameBuffer->Bind();
 			}
 			else {
-				glBindFramebuffer(GL_FRAMEBUFFER, 0);
+				GLBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
 			}
 		}
 	}

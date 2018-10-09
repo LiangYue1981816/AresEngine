@@ -170,7 +170,7 @@ uint32_t CGfxMaterialPass::GetName(void) const
 bool CGfxMaterialPass::Load(TiXmlNode *pPassNode)
 {
 	try {
-		LogOutput("GfxRenderer", "\tLoadPass(%s)\n", pPassNode->ToElement()->AttributeString("name"));
+		LogOutput(LOG_TAG_RENDERER, "\tLoadPass(%s)\n", pPassNode->ToElement()->AttributeString("name"));
 		{
 			if (LoadPipeline(pPassNode) == false) throw 0;
 			if (LoadTexture2D(pPassNode) == false) throw 1;
@@ -181,11 +181,11 @@ bool CGfxMaterialPass::Load(TiXmlNode *pPassNode)
 			if (LoadUniformVec3(pPassNode) == false) throw 6;
 			if (LoadUniformVec4(pPassNode) == false) throw 7;
 		}
-		LogOutput("GfxRenderer", "\tOK\n");
+		LogOutput(LOG_TAG_RENDERER, "\tOK\n");
 		return true;
 	}
 	catch (int err) {
-		LogOutput("GfxRenderer", "\tFail(%d)\n", err);
+		LogOutput(LOG_TAG_RENDERER, "\tFail(%d)\n", err);
 		return false;
 	}
 }
@@ -193,7 +193,7 @@ bool CGfxMaterialPass::Load(TiXmlNode *pPassNode)
 bool CGfxMaterialPass::LoadPipeline(TiXmlNode *pPassNode)
 {
 	try {
-		LogOutput("GfxRenderer", "\t\tLoadPipeline\n");
+		LogOutput(LOG_TAG_RENDERER, "\t\tLoadPipeline\n");
 		{
 			TiXmlNode *pPipelineNode = pPassNode->FirstChild("Pipeline");
 			if (pPipelineNode == NULL) throw 0;
@@ -208,21 +208,21 @@ bool CGfxMaterialPass::LoadPipeline(TiXmlNode *pPassNode)
 
 			if (SetPipeline(pVertexShader, pFragmentShader, state) == false) throw 1;
 		}
-		LogOutput("GfxRenderer", "\t\tOK\n");
+		LogOutput(LOG_TAG_RENDERER, "\t\tOK\n");
 		return true;
 	}
 	catch (int err) {
-		LogOutput("GfxRenderer", "\t\tFail(%d)", err);
+		LogOutput(LOG_TAG_RENDERER, "\t\tFail(%d)", err);
 		return false;
 	}
 }
 
 bool CGfxMaterialPass::LoadPipelineState(TiXmlNode *pPipelineNode, GLstate &state)
 {
-	glInitState(&state);
+	GLInitState(&state);
 
 	if (TiXmlNode *pStateNode = pPipelineNode->FirstChild("State")) {
-		LogOutput("GfxRenderer", "\t\t\tLoadState ... ");
+		LogOutput(LOG_TAG_RENDERER, "\t\t\tLoadState ... ");
 		{
 			if (TiXmlNode *pCullNode = pStateNode->FirstChild("Cull")) {
 				state.bEnableCullFace = pCullNode->ToElement()->AttributeBool("enable");
@@ -265,7 +265,7 @@ bool CGfxMaterialPass::LoadPipelineShader(TiXmlNode *pPipelineNode, CGfxShader *
 	try {
 		char szShaderKind[2][_MAX_STRING] = { "Vertex", "Fragment" };
 
-		LogOutput("GfxRenderer", "\t\t\tLoad%sShader ", szShaderKind[kind]);
+		LogOutput(LOG_TAG_RENDERER, "\t\t\tLoad%sShader ", szShaderKind[kind]);
 		{
 			TiXmlNode *pShaderNode = pPipelineNode->FirstChild(szShaderKind[kind]);
 			if (pShaderNode == NULL) throw 0;
@@ -315,7 +315,7 @@ bool CGfxMaterialPass::LoadTexture2D(TiXmlNode *pPassNode)
 	try {
 		if (TiXmlNode *pTextureNode = pPassNode->FirstChild("Texture2D")) {
 			do {
-				LogOutput("GfxRenderer", "\t\tLoadTexture2D ");
+				LogOutput(LOG_TAG_RENDERER, "\t\tLoadTexture2D ");
 				{
 					const char *szName = pTextureNode->ToElement()->AttributeString("name");
 					const char *szFileName = pTextureNode->ToElement()->AttributeString("file_name");
@@ -347,7 +347,7 @@ bool CGfxMaterialPass::LoadTexture2DArray(TiXmlNode *pPassNode)
 	try {
 		if (TiXmlNode *pTextureNode = pPassNode->FirstChild("Texture2DArray")) {
 			do {
-				LogOutput("GfxRenderer", "\t\tLoadTexture2DArray ");
+				LogOutput(LOG_TAG_RENDERER, "\t\tLoadTexture2DArray ");
 				{
 					const char *szName = pTextureNode->ToElement()->AttributeString("name");
 					const char *szFileName = pTextureNode->ToElement()->AttributeString("file_name");
@@ -379,7 +379,7 @@ bool CGfxMaterialPass::LoadTextureCubeMap(TiXmlNode *pPassNode)
 	try {
 		if (TiXmlNode *pTextureNode = pPassNode->FirstChild("TextureCubeMap")) {
 			do {
-				LogOutput("GfxRenderer", "\t\tLoadTextureCubeMap ");
+				LogOutput(LOG_TAG_RENDERER, "\t\tLoadTextureCubeMap ");
 				{
 					const char *szName = pTextureNode->ToElement()->AttributeString("name");
 					const char *szFileName = pTextureNode->ToElement()->AttributeString("file_name");
@@ -411,7 +411,7 @@ bool CGfxMaterialPass::LoadUniformVec1(TiXmlNode *pPassNode)
 	try {
 		if (TiXmlNode *pUniformNode = pPassNode->FirstChild("Uniform1f")) {
 			do {
-				LogOutput("GfxRenderer", "\t\tLoadUniformVec1 ");
+				LogOutput(LOG_TAG_RENDERER, "\t\tLoadUniformVec1 ");
 				{
 					const char *szName = pUniformNode->ToElement()->AttributeString("name");
 					const char *szValue = pUniformNode->ToElement()->AttributeString("value");
@@ -438,7 +438,7 @@ bool CGfxMaterialPass::LoadUniformVec2(TiXmlNode *pPassNode)
 	try {
 		if (TiXmlNode *pUniformNode = pPassNode->FirstChild("Uniform2f")) {
 			do {
-				LogOutput("GfxRenderer", "\t\tLoadUniformVec2 ... ");
+				LogOutput(LOG_TAG_RENDERER, "\t\tLoadUniformVec2 ... ");
 				{
 					const char *szName = pUniformNode->ToElement()->AttributeString("name");
 					const char *szValue = pUniformNode->ToElement()->AttributeString("value");
@@ -465,7 +465,7 @@ bool CGfxMaterialPass::LoadUniformVec3(TiXmlNode *pPassNode)
 	try {
 		if (TiXmlNode *pUniformNode = pPassNode->FirstChild("Uniform3f")) {
 			do {
-				LogOutput("GfxRenderer", "\t\tLoadUniformVec3 ... ");
+				LogOutput(LOG_TAG_RENDERER, "\t\tLoadUniformVec3 ... ");
 				{
 					const char *szName = pUniformNode->ToElement()->AttributeString("name");
 					const char *szValue = pUniformNode->ToElement()->AttributeString("value");
@@ -492,7 +492,7 @@ bool CGfxMaterialPass::LoadUniformVec4(TiXmlNode *pPassNode)
 	try {
 		if (TiXmlNode *pUniformNode = pPassNode->FirstChild("Uniform4f")) {
 			do {
-				LogOutput("GfxRenderer", "\t\tLoadUniformVec4 ... ");
+				LogOutput(LOG_TAG_RENDERER, "\t\tLoadUniformVec4 ... ");
 				{
 					const char *szName = pUniformNode->ToElement()->AttributeString("name");
 					const char *szValue = pUniformNode->ToElement()->AttributeString("value");
@@ -742,19 +742,19 @@ void CGfxMaterialPass::BindTextures(const CGfxPipelineBase *pPipeline, const CGf
 {
 	if (pPipeline) {
 		for (const auto &itTexture : pPass->m_ptrTexture2ds) {
-			if (pPipeline->BindTexture2D(itTexture.first, itTexture.second->GetTexture(), pPass->m_pSamplers.find(itTexture.first)->second->GetSampler(), indexTexUnit)) {
+			if (pPipeline->BindTexture(itTexture.first, itTexture.second->GetTarget(), itTexture.second->GetTexture(), pPass->m_pSamplers.find(itTexture.first)->second->GetSampler(), indexTexUnit)) {
 				indexTexUnit++;
 			}
 		}
 
 		for (const auto &itTexture : pPass->m_ptrTexture2dArrays) {
-			if (pPipeline->BindTexture2DArray(itTexture.first, itTexture.second->GetTexture(), pPass->m_pSamplers.find(itTexture.first)->second->GetSampler(), indexTexUnit)) {
+			if (pPipeline->BindTexture(itTexture.first, itTexture.second->GetTarget(), itTexture.second->GetTexture(), pPass->m_pSamplers.find(itTexture.first)->second->GetSampler(), indexTexUnit)) {
 				indexTexUnit++;
 			}
 		}
 
 		for (const auto &itTexture : pPass->m_ptrTextureCubeMaps) {
-			if (pPipeline->BindTextureCubeMap(itTexture.first, itTexture.second->GetTexture(), pPass->m_pSamplers.find(itTexture.first)->second->GetSampler(), indexTexUnit)) {
+			if (pPipeline->BindTexture(itTexture.first, itTexture.second->GetTarget(), itTexture.second->GetTexture(), pPass->m_pSamplers.find(itTexture.first)->second->GetSampler(), indexTexUnit)) {
 				indexTexUnit++;
 			}
 		}

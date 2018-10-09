@@ -6,7 +6,7 @@
 CGfxPipelineGraphics::CGfxPipelineGraphics(uint32_t name)
 	: CGfxPipelineBase(name)
 {
-	glInitState(&m_state);
+	GLInitState(&m_state);
 }
 
 CGfxPipelineGraphics::~CGfxPipelineGraphics(void)
@@ -117,47 +117,6 @@ bool CGfxPipelineGraphics::IsEnableBlend(void) const
 
 void CGfxPipelineGraphics::BindPipeline(void) const
 {
-	if (m_state.bEnableCullFace) {
-		glEnable(GL_CULL_FACE);
-	}
-	else {
-		glDisable(GL_CULL_FACE);
-	}
-
-	if (m_state.bEnableDepthTest) {
-		glEnable(GL_DEPTH_TEST);
-	}
-	else {
-		glDisable(GL_DEPTH_TEST);
-	}
-
-	if (m_state.bEnableDepthWrite) {
-		glDepthMask(GL_TRUE);
-	}
-	else {
-		glDepthMask(GL_FALSE);
-	}
-
-	if (m_state.bEnableBlend) {
-		glEnable(GL_BLEND);
-	}
-	else {
-		glDisable(GL_BLEND);
-	}
-
-	if (m_state.bEnablePolygonOffset) {
-		glEnable(GL_POLYGON_OFFSET_FILL);
-	}
-	else {
-		glDisable(GL_POLYGON_OFFSET_FILL);
-	}
-
-	glCullFace(m_state.cullFace);
-	glFrontFace(m_state.frontFace);
-	glDepthFunc(m_state.depthFunc);
-	glBlendFunc(m_state.srcBlendFactor, m_state.dstBlendFactor);
-	glPolygonOffset(m_state.polygonOffsetFactor, m_state.polygonOffsetUnits);
-	glColorMask(m_state.bEnableColorWrite[0], m_state.bEnableColorWrite[1], m_state.bEnableColorWrite[2], m_state.bEnableColorWrite[3]);
-
-	glBindProgramPipeline(m_pipeline);
+	GLBindState(&m_state);
+	GLBindProgramPipeline(m_pipeline);
 }

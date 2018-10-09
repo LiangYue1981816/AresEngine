@@ -21,10 +21,10 @@ public:
 public:
 	virtual void Execute(void) const
 	{
-		CGfxProfilerSample(CGfxProfiler::SAMPLE_TYPE_COMMAND_SET_SCISSOR, "CommandSetScissor");
+		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_SET_SCISSOR, "CommandSetScissor");
 		{
-			glEnable(GL_SCISSOR_TEST);
-			glScissor(m_x, m_y, m_width, m_height);
+			GLEnable(GL_SCISSOR_TEST);
+			GLScissor(m_x, m_y, m_width, m_height);
 		}
 	}
 

@@ -88,35 +88,35 @@ void CGfxProfiler::EndSample(SampleType type)
 	if (bEnableProfiler) {
 		samples[type].timeEnd = tick();
 		samples[type].timeTotal += samples[type].timeEnd - samples[type].timeBegin;
-		samples[type].timeCount += 1;
+		samples[type].count += 1;
 	}
 }
 
 void CGfxProfiler::LogGfxMemory(void)
 {
-	LogOutput("GfxRenderer", "GfxMemory\n");
-	LogOutput("GfxRenderer", "\tTextureData = %dKB\n", textureDataSize / 1024);
-	LogOutput("GfxRenderer", "\tUniformBuffer = %dKB\n", uniformBufferSize / 1024);
-	LogOutput("GfxRenderer", "\tVertexBuffer = %dKB\n", vertexBufferSize / 1024);
-	LogOutput("GfxRenderer", "\tIndexBuffer = %dKB\n", indexBufferSize / 1024);
-	LogOutput("GfxRenderer", "\tInstanceBuffer = %dKB\n", instanceBufferSize / 1024);
-	LogOutput("GfxRenderer", "Total memory = %dKB\n", (textureDataSize + uniformBufferSize + vertexBufferSize + indexBufferSize + instanceBufferSize) / 1024);
+	LogOutput(LOG_TAG_RENDERER, "GfxMemory\n");
+	LogOutput(LOG_TAG_RENDERER, "\tTextureData = %dKB\n", textureDataSize / 1024);
+	LogOutput(LOG_TAG_RENDERER, "\tUniformBuffer = %dKB\n", uniformBufferSize / 1024);
+	LogOutput(LOG_TAG_RENDERER, "\tVertexBuffer = %dKB\n", vertexBufferSize / 1024);
+	LogOutput(LOG_TAG_RENDERER, "\tIndexBuffer = %dKB\n", indexBufferSize / 1024);
+	LogOutput(LOG_TAG_RENDERER, "\tInstanceBuffer = %dKB\n", instanceBufferSize / 1024);
+	LogOutput(LOG_TAG_RENDERER, "Total memory = %dKB\n", (textureDataSize + uniformBufferSize + vertexBufferSize + indexBufferSize + instanceBufferSize) / 1024);
 }
 
-void CGfxProfiler::LogProfiler(void)
+void CGfxProfiler::LogProfiler(int frameCount)
 {
 	if (bEnableProfiler) {
-		LogOutput("GfxRenderer", "Profiler\n");
+		LogOutput(LOG_TAG_RENDERER, "Profiler\n");
 
 		float totalTime = 0.0f;
 		for (int index = 0; index < SampleType::SAMPLE_TYPE_COUNT; index++) {
 			if (samples[index].name) {
-				LogOutput("GfxRenderer", "\t%s time = %fms count = %d\n", samples[index].name, samples[index].timeTotal / 1000.0f, samples[index].timeCount);
-				totalTime += samples[index].timeTotal / 1000.0f;
+				LogOutput(LOG_TAG_RENDERER, "\t%s time = %fms count = %d\n", samples[index].name, samples[index].timeTotal / frameCount / 1000.0f, samples[index].count);
+				totalTime += samples[index].timeTotal / frameCount / 1000.0f;
 			}
 		}
 
-		LogOutput("GfxRenderer", "Total time=%fms\n", totalTime);
+		LogOutput(LOG_TAG_RENDERER, "Total time=%fms\n", totalTime);
 	}
 }
 
@@ -130,5 +130,11 @@ CGfxProfilerSample::CGfxProfilerSample(CGfxProfiler::SampleType type, const char
 
 CGfxProfilerSample::~CGfxProfilerSample(void)
 {
+#ifdef DEBUG
+	uint32_t err = glGetError();
+	if (err != NO_ERROR) {
+		LogOutput(LOG_TAG_RENDERER, "%s error=0x%x\n", m_name, err);
+	}
+#endif
 	CGfxProfiler::EndSample(m_type);
 }

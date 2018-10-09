@@ -8,14 +8,22 @@ class CRenderSolutionBase
 
 
 protected:
-	CRenderSolutionBase(void);
+	CRenderSolutionBase(int screenWidth, int screenHeight);
 	virtual ~CRenderSolutionBase(void);
 
 
-protected:
-	virtual void Render(void) = 0;
-	virtual void Present(void) = 0;
+public:
+	virtual void SetEnableMSAA(bool bEnable, int width, int height, int samples = 4) = 0;
 
+protected:
+	virtual void Render(int indexQueue) = 0;
+	virtual void Present(int indexQueue) = 0;
+	virtual void Clearup(int indexQueue) = 0;
+
+
+protected:
+	CGfxCommandBuffer m_mainCommandBuffer[2];
+	CGfxFrameBufferPtr m_ptrFrameBufferScreen;
 
 protected:
 	CTaskGraph m_taskCommandBuffer;

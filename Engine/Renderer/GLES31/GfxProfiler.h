@@ -16,14 +16,14 @@ public:
 			timeBegin = 0;
 			timeEnd = 0;
 			timeTotal = 0;
-			timeCount = 0;
+			count = 0;
 		}
 
 		const char *name;
 		uint32_t timeBegin;
 		uint32_t timeEnd;
 		uint32_t timeTotal;
-		uint32_t timeCount;
+		uint32_t count;
 	} Sample;
 
 	typedef enum SampleType {
@@ -58,6 +58,7 @@ public:
 		SAMPLE_TYPE_COMMAND_DRAW_INSTANCE,
 		SAMPLE_TYPE_COMMAND_DRAW_INDIRECT,
 		SAMPLE_TYPE_COMMAND_DRAW_ELEMENTS,
+		SAMPLE_TYPE_COMMAND_RESOLVE,
 
 		SAMPLE_TYPE_COUNT
 	} SampleType;
@@ -86,7 +87,7 @@ public:
 	static void EndSample(SampleType type);
 
 	static void LogGfxMemory(void);
-	static void LogProfiler(void);
+	static void LogProfiler(int frameCount);
 
 private:
 	static bool bEnableProfiler;

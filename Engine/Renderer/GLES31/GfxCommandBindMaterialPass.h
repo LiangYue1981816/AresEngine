@@ -19,7 +19,7 @@ public:
 public:
 	virtual void Execute(void) const
 	{
-		CGfxProfilerSample(CGfxProfiler::SAMPLE_TYPE_COMMAND_BIND_MATERIALPASS, "CommandBindMaterialPass");
+		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_BIND_MATERIALPASS, "CommandBindMaterialPass");
 		{
 			if (m_ptrMaterial.IsValid()) {
 				if (const CGfxMaterialPass *pPass = m_ptrMaterial->GetPass(m_namePass)) {

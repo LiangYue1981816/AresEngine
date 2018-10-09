@@ -53,7 +53,7 @@ bool CGfxShader::Create(const uint32_t *words, size_t numWords, shaderc_shader_k
 
 #ifdef DEBUG
 		LogOutput(NULL, "\n");
-		LogOutput("GfxRenderer", "\n%s\n", szSource);
+		LogOutput(LOG_TAG_RENDERER, "\n%s\n", szSource);
 #endif
 
 		m_kind = kind;
@@ -158,44 +158,14 @@ void CGfxShader::SetSampledImageLocation(const char *szName)
 	}
 }
 
-bool CGfxShader::BindTexture2D(uint32_t name, uint32_t texture, uint32_t sampler, uint32_t unit) const
+bool CGfxShader::BindTexture(uint32_t name, uint32_t target, uint32_t texture, uint32_t sampler, uint32_t unit) const
 {
 	const auto &itLocation = m_sampledImageLocations.find(name);
 
 	if (itLocation != m_sampledImageLocations.end()) {
-		glActiveTexture(GL_TEXTURE0 + unit);
-		glBindSampler(unit, sampler);
-		glBindTexture(GL_TEXTURE_2D, texture);
-		glProgramUniform1i(m_program, itLocation->second, unit);
-		return true;
-	}
-
-	return false;
-}
-
-bool CGfxShader::BindTexture2DArray(uint32_t name, uint32_t texture, uint32_t sampler, uint32_t unit) const
-{
-	const auto &itLocation = m_sampledImageLocations.find(name);
-
-	if (itLocation != m_sampledImageLocations.end()) {
-		glActiveTexture(GL_TEXTURE0 + unit);
-		glBindSampler(unit, sampler);
-		glBindTexture(GL_TEXTURE_2D_ARRAY, texture);
-		glProgramUniform1i(m_program, itLocation->second, unit);
-		return true;
-	}
-
-	return false;
-}
-
-bool CGfxShader::BindTextureCubeMap(uint32_t name, uint32_t texture, uint32_t sampler, uint32_t unit) const
-{
-	const auto &itLocation = m_sampledImageLocations.find(name);
-
-	if (itLocation != m_sampledImageLocations.end()) {
-		glActiveTexture(GL_TEXTURE0 + unit);
-		glBindSampler(unit, sampler);
-		glBindTexture(GL_TEXTURE_CUBE_MAP, texture);
+		GLActiveTexture(unit);
+		GLBindSampler(unit, sampler);
+		GLBindTexture(unit, target, texture);
 		glProgramUniform1i(m_program, itLocation->second, unit);
 		return true;
 	}
@@ -208,7 +178,7 @@ bool CGfxShader::BindUniformBuffer(uint32_t name, uint32_t buffer, uint32_t size
 	const auto &itBinding = m_uniformBlockBindings.find(name);
 
 	if (itBinding != m_uniformBlockBindings.end()) {
-		glBindBufferRange(GL_UNIFORM_BUFFER, itBinding->second, buffer, offset, size);
+		GLBindBufferRange(GL_UNIFORM_BUFFER, itBinding->second, buffer, offset, size);
 		return true;
 	}
 

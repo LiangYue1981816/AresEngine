@@ -18,7 +18,7 @@ public:
 public:
 	virtual void Execute(void) const
 	{
-		CGfxProfilerSample(CGfxProfiler::SAMPLE_TYPE_COMMAND_BIND_CAMERA, "CommandBindCamera");
+		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_BIND_CAMERA, "CommandBindCamera");
 		{
 			if (m_pCamera) {
 				Renderer()->BindCamera(m_pCamera);

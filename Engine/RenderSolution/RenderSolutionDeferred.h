@@ -9,11 +9,15 @@ class CRenderSolutionDeferred : public CRenderSolutionBase
 
 
 private:
-	CRenderSolutionDeferred(void);
+	CRenderSolutionDeferred(int screenWidth, int screenHeight);
 	virtual ~CRenderSolutionDeferred(void);
 
 
+public:
+	virtual void SetEnableMSAA(bool bEnable, int width, int height, int samples = 4);
+
 private:
-	virtual void Render(void);
-	virtual void Present(void);
+	virtual void Render(int indexQueue);
+	virtual void Present(int indexQueue);
+	virtual void Clearup(int indexQueue);
 };

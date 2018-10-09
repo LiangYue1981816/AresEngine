@@ -267,3 +267,8 @@ bool CGfxTextureCubeMap::TransferTexture2DCompressed(int face, int level, uint32
 
 	return true;
 }
+
+uint32_t CGfxTextureCubeMap::GetTarget(void) const
+{
+	return GL_TEXTURE_CUBE_MAP;
+}

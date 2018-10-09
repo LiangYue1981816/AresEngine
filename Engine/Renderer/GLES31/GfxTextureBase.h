@@ -23,16 +23,17 @@ public:
 	virtual void Destroy(void);
 
 public:
-	uint32_t GetTexture(void) const;
+	virtual uint32_t GetTarget(void) const = 0;
+	virtual uint32_t GetTexture(void) const;
 
-	uint32_t GetFormat(void) const;
-	uint32_t GetInternalFormat(void) const;
+	virtual uint32_t GetFormat(void) const;
+	virtual uint32_t GetInternalFormat(void) const;
 
-	int GetWidth(void) const;
-	int GetHeight(void) const;
+	virtual int GetWidth(void) const;
+	virtual int GetHeight(void) const;
 
-	int GetLevels(void) const;
-	int GetLayers(void) const;
+	virtual int GetLevels(void) const;
+	virtual int GetLayers(void) const;
 
 
 protected:
@@ -49,6 +50,7 @@ protected:
 	int m_width;
 	int m_height;
 
+	int m_samples;
 	int m_mipLevels;
 	int m_arrayLayers;
 };

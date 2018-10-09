@@ -62,7 +62,7 @@ bool CGfxMaterial::Load(const char *szFileName)
 	try {
 		Destroy();
 
-		LogOutput("GfxRenderer", "LoadMaterial(%s)\n", szFileName);
+		LogOutput(LOG_TAG_RENDERER, "LoadMaterial(%s)\n", szFileName);
 		{
 			TiXmlDocument xmlDoc;
 			if (xmlDoc.LoadFile(Renderer()->GetResourceFullName(szFileName)) == false) throw 0;
@@ -78,12 +78,12 @@ bool CGfxMaterial::Load(const char *szFileName)
 				} while (pPassNode = pMaterialNode->IterateChildren("Pass", pPassNode));
 			}
 		}
-		LogOutput("GfxRenderer", "OK\n");
+		LogOutput(LOG_TAG_RENDERER, "OK\n");
 		return true;
 	}
 	catch (int err) {
 		Destroy();
-		LogOutput("GfxRenderer", "Fail(%d)\n", err);
+		LogOutput(LOG_TAG_RENDERER, "Fail(%d)\n", err);
 		return false;
 	}
 }

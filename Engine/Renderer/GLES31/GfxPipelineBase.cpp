@@ -54,39 +54,13 @@ bool CGfxPipelineBase::IsTextureValid(uint32_t name) const
 	return false;
 }
 
-bool CGfxPipelineBase::BindTexture2D(uint32_t name, uint32_t texture, uint32_t sampler, uint32_t unit) const
+bool CGfxPipelineBase::BindTexture(uint32_t name, uint32_t target, uint32_t texture, uint32_t sampler, uint32_t unit) const
 {
 	bool rcode = false;
 
 	for (int index = 0; index < shaderc_compute_shader - shaderc_vertex_shader + 1; index++) {
 		if (m_pShaders[index]) {
-			rcode = m_pShaders[index]->BindTexture2D(name, texture, sampler, unit) || rcode;
-		}
-	}
-
-	return rcode;
-}
-
-bool CGfxPipelineBase::BindTexture2DArray(uint32_t name, uint32_t texture, uint32_t sampler, uint32_t unit) const
-{
-	bool rcode = false;
-
-	for (int index = 0; index < shaderc_compute_shader - shaderc_vertex_shader + 1; index++) {
-		if (m_pShaders[index]) {
-			rcode = m_pShaders[index]->BindTexture2DArray(name, texture, sampler, unit) || rcode;
-		}
-	}
-
-	return rcode;
-}
-
-bool CGfxPipelineBase::BindTextureCubeMap(uint32_t name, uint32_t texture, uint32_t sampler, uint32_t unit) const
-{
-	bool rcode = false;
-
-	for (int index = 0; index < shaderc_compute_shader - shaderc_vertex_shader + 1; index++) {
-		if (m_pShaders[index]) {
-			rcode = m_pShaders[index]->BindTextureCubeMap(name, texture, sampler, unit) || rcode;
+			rcode = m_pShaders[index]->BindTexture(name, target, texture, sampler, unit) || rcode;
 		}
 	}
 

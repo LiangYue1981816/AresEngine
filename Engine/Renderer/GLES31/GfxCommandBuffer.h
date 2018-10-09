@@ -35,15 +35,10 @@ public:
 public:
 	bool CmdBeginRenderPass(const CGfxFrameBufferPtr &ptrFrameBuffer);
 	bool CmdEndRenderPass(void);
+	bool CmdResolve(const CGfxFrameBufferPtr &ptrFrameBufferSrc, const CGfxFrameBufferPtr &ptrFrameBufferDst);
 
 	bool CmdSetScissor(int x, int y, int width, int height);
 	bool CmdSetViewport(int x, int y, int width, int height);
-	bool CmdSetCullFace(bool bEnable, uint32_t cullFace, uint32_t frontFace);
-	bool CmdSetDepthTest(bool bEnable, uint32_t depthFunc);
-	bool CmdSetDepthWrite(bool bEnable);
-	bool CmdSetColorWrite(bool bEnableRed, bool bEnableGreen, bool bEnableBlue, bool bEnableAlpha);
-	bool CmdSetBlend(bool bEnable, uint32_t srcFactor, uint32_t dstFactor);
-	bool CmdSetPolygonOffset(bool bEnable, float factor, float units);
 
 	bool CmdBindCamera(CGfxCamera *pCamera);
 	bool CmdBindPipeline(CGfxPipelineBase *pPipeline);

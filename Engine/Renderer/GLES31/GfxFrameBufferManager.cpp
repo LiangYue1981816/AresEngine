@@ -17,9 +17,16 @@ CGfxFrameBufferManager::~CGfxFrameBufferManager(void)
 	m_pFrameBuffers.clear();
 }
 
-CGfxFrameBuffer* CGfxFrameBufferManager::CreateFrameBuffer(uint32_t width, uint32_t height, bool bDepthRenderBuffer)
+CGfxFrameBuffer* CGfxFrameBufferManager::CreateFrameBuffer(uint32_t width, uint32_t height)
 {
-	CGfxFrameBuffer *pFrameBuffer = new CGfxFrameBuffer(width, height, bDepthRenderBuffer);
+	CGfxFrameBuffer *pFrameBuffer = new CGfxFrameBuffer(width, height);
+	m_pFrameBuffers[pFrameBuffer] = pFrameBuffer;
+	return m_pFrameBuffers[pFrameBuffer];
+}
+
+CGfxFrameBuffer* CGfxFrameBufferManager::CreateFrameBuffer(uint32_t width, uint32_t height, bool bDepthRenderBuffer, int samples)
+{
+	CGfxFrameBuffer *pFrameBuffer = new CGfxFrameBuffer(width, height, bDepthRenderBuffer, samples);
 	m_pFrameBuffers[pFrameBuffer] = pFrameBuffer;
 	return m_pFrameBuffers[pFrameBuffer];
 }

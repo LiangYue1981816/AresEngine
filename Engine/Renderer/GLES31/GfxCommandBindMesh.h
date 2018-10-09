@@ -19,7 +19,7 @@ public:
 public:
 	virtual void Execute(void) const
 	{
-		CGfxProfilerSample(CGfxProfiler::SAMPLE_TYPE_COMMAND_BIND_MESH, "CommandBindMesh");
+		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_BIND_MESH, "CommandBindMesh");
 		{
 			if (m_ptrMesh.IsValid()) {
 				m_ptrMesh->ClearInstance();
@@ -28,9 +28,9 @@ public:
 				m_ptrMesh->Bind();
 			}
 			else {
-				glBindVertexArray(0);
-				glBindBuffer(GL_ARRAY_BUFFER, 0);
-				glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+				GLBindVertexArray(0);
+				GLBindBuffer(GL_ARRAY_BUFFER, 0);
+				GLBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 			}
 		}
 	}

@@ -37,7 +37,7 @@ bool CGfxTexture2D::Load(const char *szFileName)
 	}
 }
 
-bool CGfxTexture2D::Create(uint32_t format, uint32_t internalFormat, int width, int height, int mipLevels)
+bool CGfxTexture2D::Create(uint32_t format, uint32_t internalFormat, int width, int height, int mipLevels, int samples)
 {
 	Destroy();
 
@@ -47,12 +47,21 @@ bool CGfxTexture2D::Create(uint32_t format, uint32_t internalFormat, int width, 
 	m_width = width;
 	m_height = height;
 
+	m_samples = samples;
 	m_mipLevels = mipLevels;
 
-	glGenTextures(1, &m_texture);
-	glBindTexture(GL_TEXTURE_2D, m_texture);
-	glTexStorage2D(GL_TEXTURE_2D, m_mipLevels, m_internalFormat, m_width, m_height);
-	glBindTexture(GL_TEXTURE_2D, 0);
+	if (m_samples == 0) {
+		glGenTextures(1, &m_texture);
+		glBindTexture(GL_TEXTURE_2D, m_texture);
+		glTexStorage2D(GL_TEXTURE_2D, m_mipLevels, m_internalFormat, m_width, m_height);
+		glBindTexture(GL_TEXTURE_2D, 0);
+	}
+	else {
+		glGenTextures(1, &m_texture);
+		glBindTexture(GL_TEXTURE_2D_MULTISAMPLE, m_texture);
+		glTexStorage2DMultisample(GL_TEXTURE_2D_MULTISAMPLE, m_samples, m_internalFormat, m_width, m_height, GL_TRUE);
+		glBindTexture(GL_TEXTURE_2D_MULTISAMPLE, 0);
+	}
 
 	return true;
 }
@@ -85,6 +94,10 @@ bool CGfxTexture2D::TransferTexture2D(const gli::texture2d *texture)
 	}
 
 	if (m_mipLevels != (int)texture->levels()) {
+		return false;
+	}
+
+	if (m_samples != 0) {
 		return false;
 	}
 
@@ -135,6 +148,10 @@ bool CGfxTexture2D::TransferTexture2D(int level, uint32_t format, int xoffset, i
 		return false;
 	}
 
+	if (m_samples != 0) {
+		return false;
+	}
+
 	glBindTexture(GL_TEXTURE_2D, m_texture);
 	{
 		CGfxProfiler::DecTextureDataSize(m_size[level]);
@@ -163,6 +180,10 @@ bool CGfxTexture2D::TransferTexture2DCompressed(int level, uint32_t format, int 
 		return false;
 	}
 
+	if (m_samples != 0) {
+		return false;
+	}
+
 	glBindTexture(GL_TEXTURE_2D, m_texture);
 	{
 		CGfxProfiler::DecTextureDataSize(m_size[level]);
@@ -175,4 +196,9 @@ bool CGfxTexture2D::TransferTexture2DCompressed(int level, uint32_t format, int 
 	glBindTexture(GL_TEXTURE_2D, 0);
 
 	return true;
+}
+
+uint32_t CGfxTexture2D::GetTarget(void) const
+{
+	return m_samples == 0 ? GL_TEXTURE_2D : GL_TEXTURE_2D_MULTISAMPLE;
 }

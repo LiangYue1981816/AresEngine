@@ -11,10 +11,10 @@ CEngine* CEngine::GetInstance(void)
 	return pInstance;
 }
 
-void CEngine::Create(void *hDC, const char *szShaderCachePath)
+void CEngine::Create(void *hDC, const char *szShaderCachePath, int screenWidth, int screenHeight)
 {
 	if (pInstance == NULL) {
-		pInstance = new CEngine(hDC, szShaderCachePath);
+		pInstance = new CEngine(hDC, szShaderCachePath, screenWidth, screenHeight);
 	}
 }
 
@@ -33,8 +33,10 @@ void CEngine::Destroy(void)
 #endif
 }
 
-CEngine::CEngine(void *hDC, const char *szShaderCachePath)
-	: m_totalLogicTime(0.0f)
+CEngine::CEngine(void *hDC, const char *szShaderCachePath, int screenWidth, int screenHeight)
+	: m_indexQueue(0)
+
+	, m_totalLogicTime(0.0f)
 	, m_totalRenderTime(0.0f)
 
 	, m_pRenderer(NULL)
@@ -46,10 +48,10 @@ CEngine::CEngine(void *hDC, const char *szShaderCachePath)
 	m_pRenderer = new CGfxRenderer(hDC, szShaderCachePath);
 	m_pSceneManager = new CSceneManager;
 
-	m_pRenderSolutions[RENDER_SOLUTION_DEFAULT] = new CRenderSolutionDefault;
-	m_pRenderSolutions[RENDER_SOLUTION_DEFERRED] = new CRenderSolutionDeferred;
-	m_pRenderSolutions[RENDER_SOLUTION_FORWARD] = new CRenderSolutionForward;
-	m_pRenderSolutions[RENDER_SOLUTION_FORWARD_PLUS] = new CRenderSolutionForwardPlus;
+	m_pRenderSolutions[RENDER_SOLUTION_DEFAULT] = new CRenderSolutionDefault(screenWidth, screenHeight);
+	m_pRenderSolutions[RENDER_SOLUTION_DEFERRED] = new CRenderSolutionDeferred(screenWidth, screenHeight);
+	m_pRenderSolutions[RENDER_SOLUTION_FORWARD] = new CRenderSolutionForward(screenWidth, screenHeight);
+	m_pRenderSolutions[RENDER_SOLUTION_FORWARD_PLUS] = new CRenderSolutionForwardPlus(screenWidth, screenHeight);
 }
 
 CEngine::~CEngine(void)
@@ -75,6 +77,11 @@ CSceneManager* CEngine::GetSceneManager(void) const
 	return m_pSceneManager;
 }
 
+CRenderSolutionBase* CEngine::GetRenderSolution(RenderSolution solution) const
+{
+	return m_pRenderSolutions[solution];
+}
+
 void CEngine::UpdateLogic(float deltaTime)
 {
 	m_totalLogicTime += deltaTime;
@@ -83,7 +90,7 @@ void CEngine::UpdateLogic(float deltaTime)
 
 void CEngine::UpdateCamera(CGfxCamera *pCamera)
 {
-	m_pSceneManager->UpdateCamera(pCamera);
+	m_pSceneManager->UpdateCamera(pCamera, m_indexQueue);
 }
 
 void CEngine::Render(float deltaTime, RenderSolution solution)
@@ -91,6 +98,9 @@ void CEngine::Render(float deltaTime, RenderSolution solution)
 	m_totalRenderTime += deltaTime;
 	m_pRenderer->SetTime(m_totalRenderTime, deltaTime);
 
-	m_pRenderSolutions[solution]->Render();
-	m_pRenderSolutions[solution]->Present();
+	m_pRenderSolutions[solution]->Render(m_indexQueue);
+	m_pRenderSolutions[solution]->Present(1 - m_indexQueue);
+	m_pRenderSolutions[solution]->Clearup(1 - m_indexQueue);
+
+	m_indexQueue = 1 - m_indexQueue;
 }

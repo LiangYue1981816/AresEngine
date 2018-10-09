@@ -30,9 +30,7 @@ private:
 	void SetSampledImageLocation(const char *szName);
 
 private:
-	bool BindTexture2D(uint32_t name, uint32_t texture, uint32_t sampler, uint32_t unit) const;
-	bool BindTexture2DArray(uint32_t name, uint32_t texture, uint32_t sampler, uint32_t unit) const;
-	bool BindTextureCubeMap(uint32_t name, uint32_t texture, uint32_t sampler, uint32_t unit) const;
+	bool BindTexture(uint32_t name, uint32_t target, uint32_t texture, uint32_t sampler, uint32_t unit) const;
 	bool BindUniformBuffer(uint32_t name, uint32_t buffer, uint32_t size, int offset = 0) const;
 
 	bool Uniform1f(uint32_t name, float v0) const;

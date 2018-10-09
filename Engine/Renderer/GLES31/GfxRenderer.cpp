@@ -111,6 +111,8 @@ CGfxRenderer::CGfxRenderer(void *hDC, const char *szShaderCachePath)
 
 	m_pScreenMesh->CreateIndexBuffer(sizeof(indices), indices, false, GL_UNSIGNED_INT);
 	m_pScreenMesh->CreateVertexBuffer(sizeof(vertices), vertices, false, VERTEX_ATTRIBUTE_POSITION | VERTEX_ATTRIBUTE_TEXCOORD0);
+
+	GLResetContext();
 }
 
 CGfxRenderer::~CGfxRenderer(void)
@@ -189,9 +191,14 @@ CGfxTextureCubeMapPtr CGfxRenderer::CreateTextureCubeMap(uint32_t name)
 	return m_pTextureManager->CreateTextureCubeMap(name);
 }
 
-CGfxFrameBufferPtr CGfxRenderer::CreateFrameBuffer(uint32_t width, uint32_t height, bool bDepthRenderBuffer)
+CGfxFrameBufferPtr CGfxRenderer::CreateFrameBuffer(uint32_t width, uint32_t height)
 {
-	return m_pFrameBufferManager->CreateFrameBuffer(width, height, bDepthRenderBuffer);
+	return m_pFrameBufferManager->CreateFrameBuffer(width, height);
+}
+
+CGfxFrameBufferPtr CGfxRenderer::CreateFrameBuffer(uint32_t width, uint32_t height, bool bDepthRenderBuffer, int samples)
+{
+	return m_pFrameBufferManager->CreateFrameBuffer(width, height, bDepthRenderBuffer, samples);
 }
 
 CGfxMeshPtr CGfxRenderer::LoadMesh(const char *szFileName)
@@ -345,6 +352,11 @@ bool CGfxRenderer::CmdEndRenderPass(CGfxCommandBuffer *pCommandBuffer)
 	return pCommandBuffer->CmdEndRenderPass();
 }
 
+bool CGfxRenderer::CmdResolve(CGfxCommandBuffer *pCommandBuffer, const CGfxFrameBufferPtr &ptrFrameBufferSrc, const CGfxFrameBufferPtr &ptrFrameBufferDst)
+{
+	return pCommandBuffer->CmdResolve(ptrFrameBufferSrc, ptrFrameBufferDst);
+}
+
 bool CGfxRenderer::CmdSetScissor(CGfxCommandBuffer *pCommandBuffer, int x, int y, int width, int height)
 {
 	return pCommandBuffer->CmdSetScissor(x, y, width, height);
@@ -353,36 +365,6 @@ bool CGfxRenderer::CmdSetScissor(CGfxCommandBuffer *pCommandBuffer, int x, int y
 bool CGfxRenderer::CmdSetViewport(CGfxCommandBuffer *pCommandBuffer, int x, int y, int width, int height)
 {
 	return pCommandBuffer->CmdSetViewport(x, y, width, height);
-}
-
-bool CGfxRenderer::CmdSetCullFace(CGfxCommandBuffer *pCommandBuffer, bool bEnable, uint32_t cullFace, uint32_t frontFace)
-{
-	return pCommandBuffer->CmdSetCullFace(bEnable, cullFace, frontFace);
-}
-
-bool CGfxRenderer::CmdSetDepthTest(CGfxCommandBuffer *pCommandBuffer, bool bEnable, uint32_t depthFunc)
-{
-	return pCommandBuffer->CmdSetDepthTest(bEnable, depthFunc);
-}
-
-bool CGfxRenderer::CmdSetDepthWrite(CGfxCommandBuffer *pCommandBuffer, bool bEnable)
-{
-	return pCommandBuffer->CmdSetDepthWrite(bEnable);
-}
-
-bool CGfxRenderer::CmdSetColorWrite(CGfxCommandBuffer *pCommandBuffer, bool bEnableRed, bool bEnableGreen, bool bEnableBlue, bool bEnableAlpha)
-{
-	return pCommandBuffer->CmdSetColorWrite(bEnableRed, bEnableGreen, bEnableBlue, bEnableAlpha);
-}
-
-bool CGfxRenderer::CmdSetBlend(CGfxCommandBuffer *pCommandBuffer, bool bEnable, uint32_t srcFactor, uint32_t dstFactor)
-{
-	return pCommandBuffer->CmdSetBlend(bEnable, srcFactor, dstFactor);
-}
-
-bool CGfxRenderer::CmdSetPolygonOffset(CGfxCommandBuffer *pCommandBuffer, bool bEnable, float factor, float units)
-{
-	return pCommandBuffer->CmdSetPolygonOffset(bEnable, factor, units);
 }
 
 bool CGfxRenderer::CmdBindCamera(CGfxCommandBuffer *pCommandBuffer, CGfxCamera *pCamera)
@@ -498,15 +480,17 @@ bool CGfxRenderer::CmdDrawIndirect(CGfxCommandBuffer *pCommandBuffer, const CGfx
 
 bool CGfxRenderer::CmdDrawScreen(CGfxCommandBuffer *pCommandBuffer)
 {
-	/*
-	if (pCommandBuffer->CmdBindMesh(m_pScreenMesh) == false) {
+	eastl::vector<glm::mat4> mtxTransforms;
+	mtxTransforms.emplace_back(glm::mat4());
+
+	if (pCommandBuffer->CmdBindMesh(m_pScreenMesh, mtxTransforms) == false) {
 		return false;
 	}
 
 	if (pCommandBuffer->CmdDrawElements(GL_TRIANGLES, m_pScreenMesh->GetIndexType(), m_pScreenMesh->GetIndexCount(), 0) == false) {
 		return false;
 	}
-	*/
+
 	return true;
 }
 

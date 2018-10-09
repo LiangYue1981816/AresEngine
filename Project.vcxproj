@@ -53,12 +53,7 @@
     <ClInclude Include="Engine\Renderer\GLES31\GfxCommandDrawInstance.h" />
     <ClInclude Include="Engine\Renderer\GLES31\GfxCommandEndRenderPass.h" />
     <ClInclude Include="Engine\Renderer\GLES31\GfxCommandExecute.h" />
-    <ClInclude Include="Engine\Renderer\GLES31\GfxCommandSetBlend.h" />
-    <ClInclude Include="Engine\Renderer\GLES31\GfxCommandSetColorWrite.h" />
-    <ClInclude Include="Engine\Renderer\GLES31\GfxCommandSetCullFace.h" />
-    <ClInclude Include="Engine\Renderer\GLES31\GfxCommandSetDepthTest.h" />
-    <ClInclude Include="Engine\Renderer\GLES31\GfxCommandSetDepthWrite.h" />
-    <ClInclude Include="Engine\Renderer\GLES31\GfxCommandSetPolygonOffset.h" />
+    <ClInclude Include="Engine\Renderer\GLES31\GfxCommandResolve.h" />
     <ClInclude Include="Engine\Renderer\GLES31\GfxCommandSetScissor.h" />
     <ClInclude Include="Engine\Renderer\GLES31\GfxCommandSetViewport.h" />
     <ClInclude Include="Engine\Renderer\GLES31\GfxCommandUniform1f.h" />

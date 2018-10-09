@@ -48,5 +48,5 @@ void CGfxPipelineCompute::Destroy(void)
 
 void CGfxPipelineCompute::BindPipeline(void) const
 {
-	glBindProgramPipeline(m_pipeline);
+	GLBindProgramPipeline(m_pipeline);
 }

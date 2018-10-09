@@ -36,5 +36,6 @@ private:
 
 private:
 	bool m_bDirty;
+	uint32_t m_hash;
 	eastl::vector<glm::mat4> m_instances;
 };

@@ -20,7 +20,8 @@ private:
 
 
 private:
-	CGfxFrameBuffer(uint32_t width, uint32_t height, bool bDepthStencilRenderBuffer);
+	CGfxFrameBuffer(uint32_t width, uint32_t height);
+	CGfxFrameBuffer(uint32_t width, uint32_t height, bool bDepthStencilRenderBuffer, int samples = 0);
 	virtual ~CGfxFrameBuffer(void);
 	virtual void Release(void);
 
@@ -31,6 +32,8 @@ public:
 	bool Apply(void);
 
 public:
+	uint32_t GetFBO(void) const;
+
 	uint32_t GetWidth(void) const;
 	uint32_t GetHeight(void) const;
 

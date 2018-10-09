@@ -22,7 +22,7 @@ public:
 public:
 	virtual void Execute(void) const
 	{
-		CGfxProfilerSample(CGfxProfiler::SAMPLE_TYPE_COMMAND_BIND_INPUTTEXTURE, "CommandBindInputTexture");
+		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_BIND_INPUTTEXTURE, "CommandBindInputTexture");
 		{
 			Renderer()->BindInputTexture(m_name.c_str(), m_texture, m_minFilter, m_magFilter, m_addressMode);
 		}

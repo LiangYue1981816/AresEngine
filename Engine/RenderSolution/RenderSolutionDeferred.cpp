@@ -2,17 +2,24 @@
 #include "RenderSolutionDeferred.h"
 
 
-CRenderSolutionDeferred::CRenderSolutionDeferred(void)
+CRenderSolutionDeferred::CRenderSolutionDeferred(int screenWidth, int screenHeight)
+	: CRenderSolutionBase(screenWidth, screenHeight)
 {
 
 }
 
 CRenderSolutionDeferred::~CRenderSolutionDeferred(void)
 {
+	Clearup(0);
+	Clearup(1);
+}
+
+void CRenderSolutionDeferred::SetEnableMSAA(bool bEnable, int width, int height, int samples)
+{
 
 }
 
-void CRenderSolutionDeferred::Render(void)
+void CRenderSolutionDeferred::Render(int indexQueue)
 {
 	m_taskCommandBuffer.Wait();
 	{
@@ -20,15 +27,19 @@ void CRenderSolutionDeferred::Render(void)
 		static CTaskCommandBuffer taskCommandBuffers[THREAD_COUNT];
 
 		for (int indexThread = 0; indexThread < THREAD_COUNT; indexThread++) {
-			taskCommandBuffers[indexThread].SetParams(indexThread, namePass);
+			taskCommandBuffers[indexThread].SetParams(indexThread, indexQueue, namePass);
 			m_taskCommandBuffer.Task(&taskCommandBuffers[indexThread], MainCamera(), NULL, NULL);
 		}
 	}
 	m_taskCommandBuffer.Dispatch();
 }
 
-void CRenderSolutionDeferred::Present(void)
+void CRenderSolutionDeferred::Present(int indexQueue)
 {
-	MainCamera()->Submit();
 	Renderer()->Present();
+}
+
+void CRenderSolutionDeferred::Clearup(int indexQueue)
+{
+
 }

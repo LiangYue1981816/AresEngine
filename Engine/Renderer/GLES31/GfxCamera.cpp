@@ -4,18 +4,7 @@
 
 
 CGfxCamera::CGfxCamera(void)
-	: m_index(0)
-	, m_mainCommandBuffer{ CGfxCommandBuffer(true), CGfxCommandBuffer(true) }
-
-	, m_bEnableClearDepth(true)
-	, m_bEnableClearColor(true)
-	, m_clearDepth(1.0f)
-	, m_clearColorRed(0.0f)
-	, m_clearColorGreen(0.0f)
-	, m_clearColorBlue(0.0f)
-	, m_clearColorAlpha(0.0f)
-
-	, m_pUniformCamera(NULL)
+	: m_pUniformCamera(NULL)
 {
 	m_pUniformCamera = new CGfxUniformCamera;
 }
@@ -23,34 +12,6 @@ CGfxCamera::CGfxCamera(void)
 CGfxCamera::~CGfxCamera(void)
 {
 	delete m_pUniformCamera;
-}
-
-void CGfxCamera::SetFrameBuffer(const CGfxFrameBufferPtr &ptrFrameBuffer)
-{
-	m_ptrFrameBuffer = ptrFrameBuffer;
-}
-
-void CGfxCamera::SetEnableClearDepth(bool bEnable)
-{
-	m_bEnableClearDepth = bEnable;
-}
-
-void CGfxCamera::SetEnableClearColor(bool bEnable)
-{
-	m_bEnableClearColor = bEnable;
-}
-
-void CGfxCamera::SetClearDepth(float depth)
-{
-	m_clearDepth = depth;
-}
-
-void CGfxCamera::SetClearColor(float red, float green, float blue, float alpha)
-{
-	m_clearColorRed = red;
-	m_clearColorGreen = green;
-	m_clearColorBlue = blue;
-	m_clearColorAlpha = alpha;
 }
 
 void CGfxCamera::SetScissor(float x, float y, float width, float height)
@@ -80,6 +41,16 @@ void CGfxCamera::SetLookat(float eyex, float eyey, float eyez, float centerx, fl
 {
 	m_camera.setLookat(glm::vec3(eyex, eyey, eyez), glm::vec3(centerx, centery, centerz), glm::vec3(upx, upy, upz));
 	m_pUniformCamera->SetLookat(eyex, eyey, eyez, centerx, centery, centerz, upx, upy, upz);
+}
+
+const glm::vec4& CGfxCamera::GetScissor(void) const
+{
+	return m_camera.scissor;
+}
+
+const glm::vec4& CGfxCamera::GetViewport(void) const
+{
+	return m_camera.viewport;
 }
 
 const glm::vec3& CGfxCamera::GetPosition(void) const
@@ -142,36 +113,32 @@ bool CGfxCamera::IsVisible(const glm::sphere &sphere)
 	return m_camera.visible(sphere);
 }
 
-void CGfxCamera::AddQueue(int indexThread, const CGfxMaterialPtr &ptrMaterial, const CGfxMeshPtr &ptrMesh, const glm::mat4 &mtxTransform)
+void CGfxCamera::AddQueue(int indexThread, int indexQueue, const CGfxMaterialPtr &ptrMaterial, const CGfxMeshPtr &ptrMesh, const glm::mat4 &mtxTransform)
 {
 	if (indexThread >= 0 && indexThread < THREAD_COUNT) {
-		m_materialQueue[indexThread][m_index][ptrMaterial][ptrMesh].push_back(mtxTransform);
+		m_materialQueue[indexThread][indexQueue][ptrMaterial][ptrMesh].push_back(mtxTransform);
 	}
 }
 
 void CGfxCamera::ClearQueueAll(void)
 {
-	ClearQueue();
-	ClearQueue();
+	ClearQueue(0);
+	ClearQueue(1);
 }
 
-void CGfxCamera::ClearQueue(void)
+void CGfxCamera::ClearQueue(int indexQueue)
 {
-	m_index = 1 - m_index;
-
 	for (int indexThread = 0; indexThread < THREAD_COUNT; indexThread++) {
-		m_materialQueue[indexThread][m_index].clear();
-		m_secondaryCommandBuffer[indexThread][m_index].clear();
+		m_materialQueue[indexThread][indexQueue].clear();
+		m_secondaryCommandBuffer[indexThread][indexQueue].clear();
 	}
-
-	m_mainCommandBuffer[m_index].Clearup();
 }
 
-void CGfxCamera::CmdDraw(int indexThread, uint32_t namePass)
+void CGfxCamera::CmdDraw(int indexThread, int indexQueue, uint32_t namePass)
 {
 	eastl::unordered_map<const CGfxPipelineBase*, eastl::vector<CGfxMaterialPtr>> pipelineQueue;
 	{
-		for (const auto &itMaterialQueue : m_materialQueue[indexThread][m_index]) {
+		for (const auto &itMaterialQueue : m_materialQueue[indexThread][indexQueue]) {
 			if (const CGfxMaterialPass *pPass = itMaterialQueue.first->GetPass(namePass)) {
 				if (const CGfxPipelineBase *pPipeline = pPass->GetPipeline()) {
 					pipelineQueue[pPipeline].push_back(itMaterialQueue.first);
@@ -184,8 +151,8 @@ void CGfxCamera::CmdDraw(int indexThread, uint32_t namePass)
 		}
 	}
 
-	m_secondaryCommandBuffer[indexThread][m_index].emplace_back(false);
-	CGfxCommandBuffer *pCommandBuffer = &m_secondaryCommandBuffer[indexThread][m_index][m_secondaryCommandBuffer[indexThread][m_index].size() - 1];
+	m_secondaryCommandBuffer[indexThread][indexQueue].emplace_back(false);
+	CGfxCommandBuffer *pCommandBuffer = &m_secondaryCommandBuffer[indexThread][indexQueue][m_secondaryCommandBuffer[indexThread][indexQueue].size() - 1];
 	{
 		for (const auto &itPipelineQueue : pipelineQueue) {
 			Renderer()->CmdBindPipeline(pCommandBuffer, (CGfxPipelineBase *)itPipelineQueue.first);
@@ -194,7 +161,7 @@ void CGfxCamera::CmdDraw(int indexThread, uint32_t namePass)
 			for (const auto &itMaterial : itPipelineQueue.second) {
 				Renderer()->CmdBindMaterialPass(pCommandBuffer, itMaterial, namePass);
 
-				for (const auto &itMeshQueue : m_materialQueue[indexThread][m_index][itMaterial]) {
+				for (const auto &itMeshQueue : m_materialQueue[indexThread][indexQueue][itMaterial]) {
 					Renderer()->CmdDrawInstance(pCommandBuffer, itMeshQueue.first, itMeshQueue.first->GetIndexCount(), 0, itMeshQueue.second);
 				}
 			}
@@ -202,29 +169,16 @@ void CGfxCamera::CmdDraw(int indexThread, uint32_t namePass)
 	}
 }
 
-void CGfxCamera::Submit(void)
+void CGfxCamera::CmdExecute(int indexQueue, CGfxCommandBuffer *pMainCommandBuffer)
 {
-	Renderer()->CmdBeginRenderPass(&m_mainCommandBuffer[1 - m_index], m_ptrFrameBuffer);
-	{
-		Renderer()->CmdSetScissor(&m_mainCommandBuffer[1 - m_index], (int)m_camera.scissor.x, (int)m_camera.scissor.y, (int)m_camera.scissor.z, (int)m_camera.scissor.w);
-		Renderer()->CmdSetViewport(&m_mainCommandBuffer[1 - m_index], (int)m_camera.viewport.x, (int)m_camera.viewport.y, (int)m_camera.viewport.z, (int)m_camera.viewport.w);
+	Renderer()->CmdSetScissor(pMainCommandBuffer, (int)m_camera.scissor.x, (int)m_camera.scissor.y, (int)m_camera.scissor.z, (int)m_camera.scissor.w);
+	Renderer()->CmdSetViewport(pMainCommandBuffer, (int)m_camera.viewport.x, (int)m_camera.viewport.y, (int)m_camera.viewport.z, (int)m_camera.viewport.w);
 
-		if (m_bEnableClearDepth) {
-			Renderer()->CmdClearDepth(&m_mainCommandBuffer[1 - m_index], m_clearDepth);
-		}
-
-		if (m_bEnableClearColor) {
-			Renderer()->CmdClearColor(&m_mainCommandBuffer[1 - m_index], m_clearColorRed, m_clearColorGreen, m_clearColorBlue, m_clearColorAlpha);
-		}
-
-		for (int indexThread = 0; indexThread < THREAD_COUNT; indexThread++) {
-			for (const auto &itCommandBuffer : m_secondaryCommandBuffer[indexThread][1 - m_index]) {
-				Renderer()->CmdExecute(&m_mainCommandBuffer[1 - m_index], (CGfxCommandBuffer *)&itCommandBuffer);
-			}
+	for (int indexThread = 0; indexThread < THREAD_COUNT; indexThread++) {
+		for (const auto &itCommandBuffer : m_secondaryCommandBuffer[indexThread][indexQueue]) {
+			Renderer()->CmdExecute(pMainCommandBuffer, (CGfxCommandBuffer *)&itCommandBuffer);
 		}
 	}
-	Renderer()->CmdEndRenderPass(&m_mainCommandBuffer[1 - m_index]);
-	Renderer()->Submit(&m_mainCommandBuffer[1 - m_index]);
 }
 
 void CGfxCamera::Apply(void)

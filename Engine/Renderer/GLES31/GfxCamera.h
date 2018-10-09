@@ -13,21 +13,15 @@ private:
 
 
 public:
-	void SetFrameBuffer(const CGfxFrameBufferPtr &ptrFrameBuffer);
-
-public:
-	void SetEnableClearDepth(bool bEnable);
-	void SetEnableClearColor(bool bEnable);
-
-	void SetClearDepth(float depth);
-	void SetClearColor(float red, float green, float blue, float alpha);
-
-public:
 	void SetScissor(float x, float y, float width, float height);
 	void SetViewport(float x, float y, float width, float height);
+
 	void SetPerspective(float fovy, float aspect, float zNear, float zFar);
 	void SetOrtho(float left, float right, float bottom, float top, float zNear, float zFar);
 	void SetLookat(float eyex, float eyey, float eyez, float centerx, float centery, float centerz, float upx, float upy, float upz);
+
+	const glm::vec4& GetScissor(void) const;
+	const glm::vec4& GetViewport(void) const;
 
 	const glm::vec3& GetPosition(void) const;
 	const glm::vec3& GetForwardDirection(void) const;
@@ -48,13 +42,13 @@ public:
 	bool IsVisible(const glm::sphere &sphere);
 
 public:
-	void AddQueue(int indexThread, const CGfxMaterialPtr &ptrMaterial, const CGfxMeshPtr &ptrMesh, const glm::mat4 &mtxTransform);
-	void ClearQueue(void);
+	void AddQueue(int indexThread, int indexQueue, const CGfxMaterialPtr &ptrMaterial, const CGfxMeshPtr &ptrMesh, const glm::mat4 &mtxTransform);
+	void ClearQueue(int indexQueue);
 	void ClearQueueAll(void);
 
 public:
-	void CmdDraw(int indexThread, uint32_t namePass);
-	void Submit(void);
+	void CmdDraw(int indexThread, int indexQueue, uint32_t namePass);
+	void CmdExecute(int indexQueue, CGfxCommandBuffer *pMainCommandBuffer);
 	void Apply(void);
 
 private:
@@ -62,25 +56,10 @@ private:
 
 
 private:
-	bool m_bEnableClearDepth;
-	bool m_bEnableClearColor;
-
-	float m_clearDepth;
-	float m_clearColorRed;
-	float m_clearColorGreen;
-	float m_clearColorBlue;
-	float m_clearColorAlpha;
-
-private:
 	glm::camera m_camera;
 	CGfxUniformCamera *m_pUniformCamera;
 
 private:
-	uint32_t m_index;
-	CGfxCommandBuffer m_mainCommandBuffer[2];
 	eastl::vector<CGfxCommandBuffer> m_secondaryCommandBuffer[THREAD_COUNT][2];
 	eastl::unordered_map<CGfxMaterialPtr, eastl::unordered_map<CGfxMeshPtr, eastl::vector<glm::mat4>>> m_materialQueue[THREAD_COUNT][2];
-
-private:
-	CGfxFrameBufferPtr m_ptrFrameBuffer;
 };
