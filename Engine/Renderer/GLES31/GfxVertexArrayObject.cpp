@@ -51,5 +51,5 @@ bool CGfxVertexArrayObject::Buffer(CGfxIndexBuffer *pIndexBuffer, CGfxVertexBuff
 
 void CGfxVertexArrayObject::Bind(void) const
 {
-	glBindVertexArray(m_vao);
+	GLBindVertexArray(m_vao);
 }
