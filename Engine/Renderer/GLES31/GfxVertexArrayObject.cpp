@@ -31,15 +31,17 @@ bool CGfxVertexArrayObject::Buffer(CGfxIndexBuffer *pIndexBuffer, CGfxVertexBuff
 	glBindVertexArray(m_vao);
 	{
 		if (m_pIndexBuffer) {
-			m_pIndexBuffer->Bind();
+			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_pIndexBuffer->GetIndexBuffer());
 		}
 
 		if (m_pVertexBuffer) {
-			m_pVertexBuffer->Bind();
+			glBindBuffer(GL_ARRAY_BUFFER, m_pVertexBuffer->GetVertexBuffer());
+			m_pVertexBuffer->SetupFormat();
 		}
 
 		if (m_pInstanceBuffer) {
-			m_pInstanceBuffer->Bind();
+			glBindBuffer(GL_ARRAY_BUFFER, m_pInstanceBuffer->GetInstanceBuffer());
+			m_pInstanceBuffer->SetupFormat();
 		}
 	}
 	glBindVertexArray(0);

@@ -61,5 +61,5 @@ uint32_t CGfxIndexBuffer::GetSize(void) const
 
 void CGfxIndexBuffer::Bind(void) const
 {
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_indexBuffer);
+	GLBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_indexBuffer);
 }

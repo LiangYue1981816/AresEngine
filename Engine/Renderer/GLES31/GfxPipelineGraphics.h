@@ -27,8 +27,6 @@ public:
 	void SetEnableBlend(bool bEnable, uint32_t srcFactor, uint32_t dstFactor);
 	void SetEnablePolygonOffset(bool bEnable, float factor, float units);
 
-	bool IsEnableBlend(void) const;
-
 public:
 	void BindPipeline(void) const;
 

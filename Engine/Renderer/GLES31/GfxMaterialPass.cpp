@@ -26,6 +26,38 @@ static uint32_t StringToFrontFace(const char *szString)
 	return GL_CCW;
 }
 
+static uint32_t StringToStencilFunc(const char *szString)
+{
+	if (szString) {
+		if (!stricmp(szString, "GL_NEVER")) return GL_NEVER;
+		if (!stricmp(szString, "GL_LESS")) return GL_LESS;
+		if (!stricmp(szString, "GL_LEQUAL")) return GL_LEQUAL;
+		if (!stricmp(szString, "GL_GREATER")) return GL_GREATER;
+		if (!stricmp(szString, "GL_GEQUAL")) return GL_GEQUAL;
+		if (!stricmp(szString, "GL_EQUAL")) return GL_EQUAL;
+		if (!stricmp(szString, "GL_NOTEQUAL")) return GL_NOTEQUAL;
+		if (!stricmp(szString, "GL_ALWAYS")) return GL_ALWAYS;
+	}
+
+	return GL_ALWAYS;
+}
+
+static uint32_t StringToStencilOp(const char *szString)
+{
+	if (szString) {
+		if (!stricmp(szString, "GL_KEEP")) return GL_KEEP;
+		if (!stricmp(szString, "GL_ZERO")) return GL_ZERO;
+		if (!stricmp(szString, "GL_REPLACE")) return GL_REPLACE;
+		if (!stricmp(szString, "GL_INCR")) return GL_INCR;
+		if (!stricmp(szString, "GL_INCR_WRAP")) return GL_INCR_WRAP;
+		if (!stricmp(szString, "GL_DECR")) return GL_DECR;
+		if (!stricmp(szString, "GL_DECR_WRAP")) return GL_DECR_WRAP;
+		if (!stricmp(szString, "GL_INVERT")) return GL_INVERT;
+	}
+
+	return GL_KEEP;
+}
+
 static uint32_t StringToDepthFunc(const char *szString)
 {
 	if (szString) {
@@ -39,6 +71,19 @@ static uint32_t StringToDepthFunc(const char *szString)
 	}
 
 	return GL_LESS;
+}
+
+static uint32_t StringToBlendEquation(const char *szString)
+{
+	if (szString) {
+		if (!stricmp(szString, "GL_FUNC_ADD")) return GL_FUNC_ADD;
+		if (!stricmp(szString, "GL_FUNC_SUBTRACT")) return GL_FUNC_SUBTRACT;
+		if (!stricmp(szString, "GL_FUNC_REVERSE_SUBTRACT")) return GL_FUNC_REVERSE_SUBTRACT;
+		if (!stricmp(szString, "GL_MIN")) return GL_MIN;
+		if (!stricmp(szString, "GL_MAX")) return GL_MAX;
+	}
+
+	return GL_FUNC_ADD;
 }
 
 static uint32_t StringToMinFilter(const char *szString)
@@ -230,10 +275,22 @@ bool CGfxMaterialPass::LoadPipelineState(TiXmlNode *pPipelineNode, GLstate &stat
 				state.frontFace = StringToFrontFace(pCullNode->ToElement()->AttributeString("front_face"));
 			}
 
+			if (TiXmlNode *pStencilNode = pStateNode->FirstChild("Stencil")) {
+				state.bEnableStencilTest = pStencilNode->ToElement()->AttributeBool("enable");
+				state.stencilFunc = StringToStencilFunc(pStencilNode->ToElement()->AttributeString("func"));
+				state.stencilRef = pStencilNode->ToElement()->AttributeInt1("ref");
+				state.stencilMask = pStencilNode->ToElement()->AttributeInt1("mask");
+				state.stencilOpSFail = StringToStencilOp(pStencilNode->ToElement()->AttributeString("sfail"));
+				state.stencilOpDFail = StringToStencilOp(pStencilNode->ToElement()->AttributeString("dfail"));
+				state.stencilOpDPass = StringToStencilOp(pStencilNode->ToElement()->AttributeString("dpass"));
+			}
+
 			if (TiXmlNode *pDepthNode = pStateNode->FirstChild("Depth")) {
 				state.bEnableDepthTest = pDepthNode->ToElement()->AttributeBool("enable_test");
 				state.bEnableDepthWrite = pDepthNode->ToElement()->AttributeBool("enable_write");
-				state.depthFunc = StringToDepthFunc(pDepthNode->ToElement()->AttributeString("depth_func"));
+				state.depthFunc = StringToDepthFunc(pDepthNode->ToElement()->AttributeString("func"));
+				state.depthRangeNear = pDepthNode->ToElement()->AttributeFloat1("range_near");
+				state.depthRangeFar = pDepthNode->ToElement()->AttributeFloat1("range_far");
 			}
 
 			if (TiXmlNode *pColorNode = pStateNode->FirstChild("Color")) {
@@ -243,10 +300,15 @@ bool CGfxMaterialPass::LoadPipelineState(TiXmlNode *pPipelineNode, GLstate &stat
 				state.bEnableColorWrite[3] = pColorNode->ToElement()->AttributeBool("enable_write_alpha");
 			}
 
+			if (TiXmlNode *pAlphaToCoverageNode = pStateNode->FirstChild("AlphaToCoverage")) {
+				state.bEnableAlphaToCoverage = pAlphaToCoverageNode->ToElement()->AttributeBool("enable");
+			}
+
 			if (TiXmlNode *pBlendNode = pStateNode->FirstChild("Blend")) {
 				state.bEnableBlend = pBlendNode->ToElement()->AttributeBool("enable");
-				state.srcBlendFactor = StringToBlendSrcFactor(pBlendNode->ToElement()->AttributeString("src_factor"));
-				state.dstBlendFactor = StringToBlendDstFactor(pBlendNode->ToElement()->AttributeString("dst_factor"));
+				state.blendSrcFactor = StringToBlendSrcFactor(pBlendNode->ToElement()->AttributeString("src_factor"));
+				state.blendDstFactor = StringToBlendDstFactor(pBlendNode->ToElement()->AttributeString("dst_factor"));
+				state.blendEquation = StringToBlendEquation(pBlendNode->ToElement()->AttributeString("equation"));
 			}
 
 			if (TiXmlNode *pOffsetNode = pStateNode->FirstChild("Offset")) {

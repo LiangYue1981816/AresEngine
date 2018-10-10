@@ -27,6 +27,7 @@ private:
 
 private:
 	void Bind(void) const;
+	void SetupFormat(void) const;
 
 
 private:

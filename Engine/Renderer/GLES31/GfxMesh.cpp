@@ -267,10 +267,12 @@ void CGfxMesh::Bind(void) const
 
 		if (m_pVertexBuffer) {
 			m_pVertexBuffer->Bind();
+			m_pVertexBuffer->SetupFormat();
 		}
 
 		if (m_pInstanceBuffer) {
 			m_pInstanceBuffer->Bind();
+			m_pInstanceBuffer->SetupFormat();
 		}
 	}
 }

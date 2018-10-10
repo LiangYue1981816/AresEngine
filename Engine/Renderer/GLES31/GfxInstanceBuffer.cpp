@@ -61,7 +61,7 @@ void CGfxInstanceBuffer::UpdateInstance(void)
 		if (m_hash != hash) {
 			m_hash  = hash;
 
-			glBindBuffer(GL_ARRAY_BUFFER, m_instanceBuffer);
+			GLBindBuffer(GL_ARRAY_BUFFER, m_instanceBuffer);
 			{
 				if (m_size < size) {
 					CGfxProfiler::DecInstanceBufferSize(m_size);
@@ -76,7 +76,7 @@ void CGfxInstanceBuffer::UpdateInstance(void)
 
 				glBufferSubData(GL_ARRAY_BUFFER, 0, size, m_instances.data());
 			}
-			glBindBuffer(GL_ARRAY_BUFFER, 0);
+			GLBindBuffer(GL_ARRAY_BUFFER, 0);
 		}
 	}
 }
@@ -103,22 +103,24 @@ uint32_t CGfxInstanceBuffer::GetSize(void) const
 
 void CGfxInstanceBuffer::Bind(void) const
 {
-	glBindBuffer(GL_ARRAY_BUFFER, m_instanceBuffer);
-	{
-		uint32_t instanceStride = GetInstanceStride(m_instanceFormat);
+	GLBindBuffer(GL_ARRAY_BUFFER, m_instanceBuffer);
+}
 
-		for (uint32_t indexAttribute = 0; indexAttribute < INSTANCE_ATTRIBUTE_COUNT; indexAttribute++) {
-			uint32_t attribute = (1 << indexAttribute);
+void CGfxInstanceBuffer::SetupFormat(void) const
+{
+	uint32_t instanceStride = GetInstanceStride(m_instanceFormat);
 
-			if (m_instanceFormat & attribute) {
-				uint32_t location = GetInstanceAttributeLocation(attribute);
-				uint32_t components = GetInstanceAttributeComponents(attribute);
-				uint32_t offset = GetInstanceAttributeOffset(m_instanceFormat, attribute);
+	for (uint32_t indexAttribute = 0; indexAttribute < INSTANCE_ATTRIBUTE_COUNT; indexAttribute++) {
+		uint32_t attribute = (1 << indexAttribute);
 
-				glEnableVertexAttribArray(location);
-				glVertexAttribPointer(location, components, GL_FLOAT, GL_FALSE, instanceStride, (const void *)offset);
-				glVertexAttribDivisor(location, 1);
-			}
+		if (m_instanceFormat & attribute) {
+			uint32_t location = GetInstanceAttributeLocation(attribute);
+			uint32_t components = GetInstanceAttributeComponents(attribute);
+			uint32_t offset = GetInstanceAttributeOffset(m_instanceFormat, attribute);
+
+			glEnableVertexAttribArray(location);
+			glVertexAttribPointer(location, components, GL_FLOAT, GL_FALSE, instanceStride, (const void *)offset);
+			glVertexAttribDivisor(location, 1);
 		}
 	}
 }

@@ -40,9 +40,11 @@ bool CGfxMaterial::Load(const char *szFileName)
 				</Fragment>
 				<State>
 					<Cull enable="" cull_face="" front_face="" />
-					<Depth enable_test="" enable_write="" depth_func="" />
+					<Stencil enable="" func="" ref="" mask="" sfail="" dfail="" dpass="" />
+					<Depth enable_test="" enable_write="" func="" range_near="" range_far="" />
 					<Color enable_write_red="" enable_write_green="" enable_write_blue="" enable_write_alpha="" />
-					<Blend enable="" src_factor="" dst_factor="" />
+					<AlphaToCoverage enable="" />
+					<Blend enable="" src_factor="" dst_factor="" equation="" />
 					<Offset enable="" factor="" units="" />
 				</State>
 			</Pipeline>

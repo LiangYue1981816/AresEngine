@@ -87,11 +87,6 @@ typedef struct PolygonOffsetParam {
 	float units;
 } PolygonOffsetParam;
 
-typedef struct SampleMaskiParam {
-	uint32_t maskNumber;
-	uint32_t mask;
-} SampleMaskiParam;
-
 typedef struct DepthRangefParam {
 	float n;
 	float f;
@@ -182,7 +177,6 @@ static CullFaceParam CullFace;
 static FrontFaceParam FrontFace;
 static LineWidthParam LineWidth;
 static PolygonOffsetParam PolygonOffset;
-static SampleMaskiParam SampleMaski;
 static DepthRangefParam DepthRangef;
 static DepthFuncParam DepthFunc;
 static DepthMaskParam DepthMask;
@@ -208,19 +202,39 @@ static eastl::unordered_map<GLuint, TextureParam> Textures;
 void GLInitState(GLstate *state)
 {
 	state->bEnableCullFace = GL_TRUE;
+	state->cullFace = GL_BACK;
+	state->frontFace = GL_CCW;
+
+	state->bEnableStencilTest = GL_FALSE;
+	state->stencilFunc = GL_ALWAYS;
+	state->stencilRef = 0;
+	state->stencilMask = 1;
+	state->stencilOpSFail = GL_KEEP;
+	state->stencilOpDFail = GL_KEEP;
+	state->stencilOpDPass = GL_KEEP;
+
 	state->bEnableDepthTest = GL_TRUE;
 	state->bEnableDepthWrite = GL_TRUE;
+	state->depthFunc = GL_LESS;
+	state->depthRangeNear = 0.0f;
+	state->depthRangeFar = 1.0f;
+
 	state->bEnableColorWrite[0] = GL_TRUE;
 	state->bEnableColorWrite[1] = GL_TRUE;
 	state->bEnableColorWrite[2] = GL_TRUE;
 	state->bEnableColorWrite[3] = GL_TRUE;
+
+	state->bEnableAlphaToCoverage = GL_FALSE;
 	state->bEnableBlend = GL_FALSE;
+	state->blendSrcFactor = GL_ONE;
+	state->blendDstFactor = GL_ZERO;
+	state->blendEquation = GL_FUNC_ADD;
+	state->blendColor[0] = 0.0f;
+	state->blendColor[1] = 0.0f;
+	state->blendColor[2] = 0.0f;
+	state->blendColor[3] = 0.0f;
+
 	state->bEnablePolygonOffset = GL_FALSE;
-	state->cullFace = GL_BACK;
-	state->frontFace = GL_CCW;
-	state->depthFunc = GL_LESS;
-	state->srcBlendFactor = GL_SRC_ALPHA;
-	state->dstBlendFactor = GL_ONE_MINUS_SRC_ALPHA;
 	state->polygonOffsetFactor = 0.0f;
 	state->polygonOffsetUnits = 0.0f;
 }
@@ -229,13 +243,26 @@ void GLBindState(const GLstate *state)
 {
 	if (state->bEnableCullFace) {
 		GLEnable(GL_CULL_FACE);
+		GLCullFace(state->cullFace);
+		GLFrontFace(state->frontFace);
 	}
 	else {
 		GLDisable(GL_CULL_FACE);
 	}
 
+	if (state->bEnableStencilTest) {
+		GLEnable(GL_STENCIL_TEST);
+		GLStencilFunc(state->stencilFunc, state->stencilRef, state->stencilMask);
+		GLStencilOp(state->stencilOpSFail, state->stencilOpDFail, state->stencilOpDPass);
+	}
+	else {
+		GLDisable(GL_STENCIL_TEST);
+	}
+
 	if (state->bEnableDepthTest) {
 		GLEnable(GL_DEPTH_TEST);
+		GLDepthFunc(state->depthFunc);
+		GLDepthRangef(state->depthRangeNear, state->depthRangeFar);
 	}
 	else {
 		GLDisable(GL_DEPTH_TEST);
@@ -248,8 +275,18 @@ void GLBindState(const GLstate *state)
 		GLDepthMask(GL_FALSE);
 	}
 
+	if (state->bEnableAlphaToCoverage) {
+		GLEnable(GL_SAMPLE_ALPHA_TO_COVERAGE);
+	}
+	else {
+		GLDisable(GL_SAMPLE_ALPHA_TO_COVERAGE);
+	}
+
 	if (state->bEnableBlend) {
 		GLEnable(GL_BLEND);
+		GLBlendFunc(state->blendSrcFactor, state->blendDstFactor);
+		GLBlendEquation(state->blendEquation);
+		GLBlendColor(state->blendColor[0], state->blendColor[1], state->blendColor[2], state->blendColor[3]);
 	}
 	else {
 		GLDisable(GL_BLEND);
@@ -257,17 +294,17 @@ void GLBindState(const GLstate *state)
 
 	if (state->bEnablePolygonOffset) {
 		GLEnable(GL_POLYGON_OFFSET_FILL);
+		GLPolygonOffset(state->polygonOffsetFactor, state->polygonOffsetUnits);
 	}
 	else {
 		GLDisable(GL_POLYGON_OFFSET_FILL);
 	}
 
-	GLCullFace(state->cullFace);
-	GLFrontFace(state->frontFace);
-	GLDepthFunc(state->depthFunc);
-	GLBlendFunc(state->srcBlendFactor, state->dstBlendFactor);
-	GLPolygonOffset(state->polygonOffsetFactor, state->polygonOffsetUnits);
-	GLColorMask(state->bEnableColorWrite[0], state->bEnableColorWrite[1], state->bEnableColorWrite[2], state->bEnableColorWrite[3]);
+	GLColorMask(
+		state->bEnableColorWrite[0], 
+		state->bEnableColorWrite[1], 
+		state->bEnableColorWrite[2], 
+		state->bEnableColorWrite[3]);
 }
 
 void GLResetContext(void)
@@ -300,8 +337,6 @@ void GLResetContext(void)
 	LineWidth.width = GL_INVALID_VALUE;
 	PolygonOffset.factor = GL_INVALID_VALUE;
 	PolygonOffset.units = GL_INVALID_VALUE;
-	SampleMaski.maskNumber = GL_INVALID_VALUE;
-	SampleMaski.mask = GL_INVALID_VALUE;
 	DepthRangef.n = GL_INVALID_VALUE;
 	DepthRangef.f = GL_INVALID_VALUE;
 	DepthFunc.func = GL_INVALID_ENUM;
@@ -453,15 +488,6 @@ void GLPolygonOffset(GLfloat factor, GLfloat units)
 		PolygonOffset.factor = factor;
 		PolygonOffset.units = units;
 		glPolygonOffset(factor, units);
-	}
-}
-
-void GLSampleMaski(GLuint maskNumber, GLbitfield mask)
-{
-	if (SampleMaski.maskNumber != maskNumber || SampleMaski.mask != mask) {
-		SampleMaski.maskNumber = maskNumber;
-		SampleMaski.mask = mask;
-		glSampleMaski(maskNumber, mask);
 	}
 }
 

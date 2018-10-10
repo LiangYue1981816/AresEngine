@@ -99,8 +99,8 @@ void CGfxPipelineGraphics::SetEnableColorWrite(bool bEnableRed, bool bEnableGree
 void CGfxPipelineGraphics::SetEnableBlend(bool bEnable, uint32_t srcFactor, uint32_t dstFactor)
 {
 	m_state.bEnableBlend = bEnable ? GL_TRUE : GL_FALSE;
-	m_state.srcBlendFactor = srcFactor;
-	m_state.dstBlendFactor = dstFactor;
+	m_state.blendSrcFactor = srcFactor;
+	m_state.blendDstFactor = dstFactor;
 }
 
 void CGfxPipelineGraphics::SetEnablePolygonOffset(bool bEnable, float factor, float units)
@@ -108,11 +108,6 @@ void CGfxPipelineGraphics::SetEnablePolygonOffset(bool bEnable, float factor, fl
 	m_state.bEnablePolygonOffset = bEnable ? GL_TRUE : GL_FALSE;
 	m_state.polygonOffsetFactor = factor;
 	m_state.polygonOffsetUnits = units;
-}
-
-bool CGfxPipelineGraphics::IsEnableBlend(void) const
-{
-	return m_state.bEnableBlend == GL_TRUE;
 }
 
 void CGfxPipelineGraphics::BindPipeline(void) const

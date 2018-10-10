@@ -11,16 +11,33 @@ extern uint32_t glGetProgramStage(shaderc_shader_kind kind);
 #pragma region OpenGL state cache
 typedef struct GLstate {
 	uint32_t bEnableCullFace;
-	uint32_t bEnableDepthTest;
-	uint32_t bEnableDepthWrite;
-	uint32_t bEnableColorWrite[4];
-	uint32_t bEnableBlend;
-	uint32_t bEnablePolygonOffset;
 	uint32_t cullFace;
 	uint32_t frontFace;
+
+	uint32_t bEnableStencilTest;
+	uint32_t stencilFunc;
+	uint32_t stencilRef;
+	uint32_t stencilMask;
+	uint32_t stencilOpSFail;
+	uint32_t stencilOpDFail;
+	uint32_t stencilOpDPass;
+
+	uint32_t bEnableDepthTest;
+	uint32_t bEnableDepthWrite;
 	uint32_t depthFunc;
-	uint32_t srcBlendFactor;
-	uint32_t dstBlendFactor;
+	float depthRangeNear;
+	float depthRangeFar;
+
+	uint32_t bEnableColorWrite[4];
+
+	uint32_t bEnableAlphaToCoverage;
+	uint32_t bEnableBlend;
+	uint32_t blendSrcFactor;
+	uint32_t blendDstFactor;
+	uint32_t blendEquation;
+	float blendColor[4];
+
+	uint32_t bEnablePolygonOffset;
 	float polygonOffsetFactor;
 	float polygonOffsetUnits;
 } GLstate;
@@ -44,7 +61,6 @@ extern void GLCullFace(GLenum mode);
 extern void GLFrontFace(GLenum mode);
 extern void GLLineWidth(GLfloat width);
 extern void GLPolygonOffset(GLfloat factor, GLfloat units);
-extern void GLSampleMaski(GLuint maskNumber, GLbitfield mask);
 extern void GLDepthRangef(GLfloat n, GLfloat f);
 extern void GLDepthFunc(GLenum func);
 extern void GLDepthMask(GLboolean flag);
