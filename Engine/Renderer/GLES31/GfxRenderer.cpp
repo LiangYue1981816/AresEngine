@@ -3,22 +3,6 @@
 #include "GfxVertexAttribute.h"
 
 
-#ifdef _WINDOWS
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-#define GLAPIENTRY APIENTRY
-#define APIENTRY WINAPI
-#define GLEWAPI extern __declspec(dllexport)
-GLEWAPI uint32_t GLAPIENTRY glewInit(void);
-
-#ifdef __cplusplus
-}
-#endif
-#endif
-
-
 #define UNIFORM_ENGINE_NAME "Engine"
 #define UNIFORM_CAMERA_NAME "Camera"
 
@@ -44,39 +28,6 @@ CGfxRenderer::CGfxRenderer(void *hDC, const char *szShaderCachePath)
 
 	, m_pShaderCompiler(NULL)
 {
-#ifdef _WINDOWS
-	int pixelFormat;
-
-	PIXELFORMATDESCRIPTOR pixelFormatDescriptor = {
-		sizeof(PIXELFORMATDESCRIPTOR),  // size of this pfd 
-		1,                              // version number 
-		PFD_DRAW_TO_WINDOW |            // support window 
-		PFD_SUPPORT_OPENGL |            // support OpenGL 
-		PFD_DOUBLEBUFFER,               // double buffered 
-		PFD_TYPE_RGBA,                  // RGBA type 
-		32,                             // 32-bit color depth 
-		0, 0, 0, 0, 0, 0,               // color bits ignored 
-		0,                              // no alpha buffer 
-		0,                              // shift bit ignored 
-		0,                              // no accumulation buffer 
-		0, 0, 0, 0,                     // accum bits ignored 
-		24,                             // 24-bit z-buffer 
-		8,                              // 8-bit stencil buffer 
-		0,                              // no auxiliary buffer 
-		PFD_MAIN_PLANE,                 // main layer 
-		0,                              // reserved 
-		0, 0, 0                         // layer masks ignored 
-	};
-
-	pixelFormat = ChoosePixelFormat((HDC)m_hDC, &pixelFormatDescriptor);
-	SetPixelFormat((HDC)m_hDC, pixelFormat, &pixelFormatDescriptor);
-
-	HGLRC hRC = wglCreateContext((HDC)m_hDC);
-	wglMakeCurrent((HDC)m_hDC, hRC);
-
-	uint32_t err = glewInit();
-#endif
-
 	m_pScreenMesh = new CGfxMesh(0);
 	m_pGlobalPass = new CGfxMaterialPass(0);
 
