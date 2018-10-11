@@ -115,6 +115,7 @@ static int parse_version(void)
 
 	if (version.major < 3)
 		return -1;
+
 	return 0;
 }
 

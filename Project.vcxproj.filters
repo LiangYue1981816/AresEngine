@@ -139,6 +139,9 @@
     <Filter Include="Engine\RenderSolution\Source Files\Task">
       <UniqueIdentifier>{4ed0b9fe-cbc3-4e50-8eed-308a37a75cf9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ThirdParty\gl3w">
+      <UniqueIdentifier>{b2235de6-cf3d-4c67-93c4-c2889efc4260}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\Main.h">
@@ -501,6 +504,12 @@
     <ClInclude Include="Engine\Renderer\GLES31\GfxCommandResolve.h">
       <Filter>Engine\Renderer\GLES31\Source Files\Commands</Filter>
     </ClInclude>
+    <ClInclude Include="ThirdParty\gl3w\gl3w.h">
+      <Filter>ThirdParty\gl3w</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\gl3w\glcorearb.h">
+      <Filter>ThirdParty\gl3w</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application\Main.cpp">
@@ -766,6 +775,9 @@
     </ClCompile>
     <ClCompile Include="Engine\RenderSolution\RenderSolutionForwardPlus.cpp">
       <Filter>Engine\RenderSolution\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ThirdParty\gl3w\gl3w.c">
+      <Filter>ThirdParty\gl3w</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
