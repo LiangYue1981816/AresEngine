@@ -510,6 +510,12 @@
     <ClInclude Include="ThirdParty\gl3w\glcorearb.h">
       <Filter>ThirdParty\gl3w</Filter>
     </ClInclude>
+    <ClInclude Include="Application\WGLExtensions.h">
+      <Filter>Application\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Renderer\GLES31\GfxRenderPass.h">
+      <Filter>Engine\Renderer\GLES31\Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application\Main.cpp">
@@ -778,6 +784,12 @@
     </ClCompile>
     <ClCompile Include="ThirdParty\gl3w\gl3w.c">
       <Filter>ThirdParty\gl3w</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\WGLExtensions.cpp">
+      <Filter>Application\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Renderer\GLES31\GfxRenderPass.cpp">
+      <Filter>Engine\Renderer\GLES31\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

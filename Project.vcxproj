@@ -23,6 +23,7 @@
     <ClInclude Include="Application\Resource.h" />
     <ClInclude Include="Application\stdafx.h" />
     <ClInclude Include="Application\targetver.h" />
+    <ClInclude Include="Application\WGLExtensions.h" />
     <ClInclude Include="Engine\Base\ComponentManager.h" />
     <ClInclude Include="Engine\Base\Define.h" />
     <ClInclude Include="Engine\Base\Delegate.h" />
@@ -85,6 +86,7 @@
     <ClInclude Include="Engine\Renderer\GLES31\GfxPipelineManager.h" />
     <ClInclude Include="Engine\Renderer\GLES31\GfxProfiler.h" />
     <ClInclude Include="Engine\Renderer\GLES31\GfxRenderer.h" />
+    <ClInclude Include="Engine\Renderer\GLES31\GfxRenderPass.h" />
     <ClInclude Include="Engine\Renderer\GLES31\GfxResource.h" />
     <ClInclude Include="Engine\Renderer\GLES31\GfxResourceManager.h" />
     <ClInclude Include="Engine\Renderer\GLES31\GfxSampler.h" />
@@ -145,6 +147,7 @@
   <ItemGroup>
     <ClCompile Include="Application\Main.cpp" />
     <ClCompile Include="Application\stdafx.cpp" />
+    <ClCompile Include="Application\WGLExtensions.cpp" />
     <ClCompile Include="Engine\Base\nvwa\debug_new.cpp" />
     <ClCompile Include="Engine\Base\nvwa\operator_new.cpp" />
     <ClCompile Include="Engine\Base\TaskGraph.cpp" />
@@ -172,6 +175,7 @@
     <ClCompile Include="Engine\Renderer\GLES31\GfxPipelineManager.cpp" />
     <ClCompile Include="Engine\Renderer\GLES31\GfxProfiler.cpp" />
     <ClCompile Include="Engine\Renderer\GLES31\GfxRenderer.cpp" />
+    <ClCompile Include="Engine\Renderer\GLES31\GfxRenderPass.cpp" />
     <ClCompile Include="Engine\Renderer\GLES31\GfxResource.cpp" />
     <ClCompile Include="Engine\Renderer\GLES31\GfxResourceManager.cpp" />
     <ClCompile Include="Engine\Renderer\GLES31\GfxSampler.cpp" />
