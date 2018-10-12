@@ -24,6 +24,7 @@ CGfxRenderer::CGfxRenderer(void *hDC, const char *szShaderCachePath)
 	, m_pTextureManager(NULL)
 	, m_pPipelineManager(NULL)
 	, m_pMaterialManager(NULL)
+	, m_pRenderPassManager(NULL)
 	, m_pFrameBufferManager(NULL)
 
 	, m_pShaderCompiler(NULL)
@@ -40,6 +41,7 @@ CGfxRenderer::CGfxRenderer(void *hDC, const char *szShaderCachePath)
 	m_pTextureManager = new CGfxTextureManager;
 	m_pPipelineManager = new CGfxPipelineManager;
 	m_pMaterialManager = new CGfxMaterialManager;
+	m_pRenderPassManager = new CGfxRenderPassManager;
 	m_pFrameBufferManager = new CGfxFrameBufferManager;
 
 	m_pShaderCompiler = new CGfxShaderCompiler(szShaderCachePath);
@@ -80,6 +82,7 @@ CGfxRenderer::~CGfxRenderer(void)
 	delete m_pTextureManager;
 	delete m_pPipelineManager;
 	delete m_pMaterialManager;
+	delete m_pRenderPassManager;
 	delete m_pFrameBufferManager;
 
 	delete m_pShaderCompiler;
@@ -142,14 +145,14 @@ CGfxTextureCubeMapPtr CGfxRenderer::CreateTextureCubeMap(uint32_t name)
 	return m_pTextureManager->CreateTextureCubeMap(name);
 }
 
+CGfxRenderPassPtr CGfxRenderer::CreateRenderPass(uint32_t numAttachments, uint32_t numSubpasses)
+{
+	return m_pRenderPassManager->CreateRenderPass(numAttachments, numSubpasses);
+}
+
 CGfxFrameBufferPtr CGfxRenderer::CreateFrameBuffer(uint32_t width, uint32_t height)
 {
 	return m_pFrameBufferManager->CreateFrameBuffer(width, height);
-}
-
-CGfxFrameBufferPtr CGfxRenderer::CreateFrameBuffer(uint32_t width, uint32_t height, bool bDepthRenderBuffer, int samples)
-{
-	return m_pFrameBufferManager->CreateFrameBuffer(width, height, bDepthRenderBuffer, samples);
 }
 
 CGfxMeshPtr CGfxRenderer::LoadMesh(const char *szFileName)
@@ -190,6 +193,11 @@ void CGfxRenderer::DestroyMaterial(CGfxMaterial *pMaterial)
 void CGfxRenderer::DestroyTexture(CGfxTextureBase *pTexture)
 {
 	m_pTextureManager->DestroyTexture(pTexture);
+}
+
+void CGfxRenderer::DestroyRenderPass(CGfxRenderPass *pRenderPass)
+{
+	m_pRenderPassManager->DestroyRenderPass(pRenderPass);
 }
 
 void CGfxRenderer::DestroyFrameBuffer(CGfxFrameBuffer *pFrameBuffer)
@@ -293,19 +301,14 @@ void CGfxRenderer::SetFogDistanceDensity(float startDistance, float endDistance,
 #pragma endregion
 
 #pragma region Commands
-bool CGfxRenderer::CmdBeginRenderPass(CGfxCommandBuffer *pCommandBuffer, const CGfxFrameBufferPtr &ptrFrameBuffer)
+bool CGfxRenderer::CmdBeginRenderPass(CGfxCommandBuffer *pCommandBuffer, const CGfxFrameBufferPtr &ptrFrameBuffer, const CGfxRenderPassPtr &ptrRenderPass)
 {
-	return pCommandBuffer->CmdBeginRenderPass(ptrFrameBuffer);
+	return pCommandBuffer->CmdBeginRenderPass(ptrFrameBuffer, ptrRenderPass);
 }
 
 bool CGfxRenderer::CmdEndRenderPass(CGfxCommandBuffer *pCommandBuffer)
 {
 	return pCommandBuffer->CmdEndRenderPass();
-}
-
-bool CGfxRenderer::CmdResolve(CGfxCommandBuffer *pCommandBuffer, const CGfxFrameBufferPtr &ptrFrameBufferSrc, const CGfxFrameBufferPtr &ptrFrameBufferDst)
-{
-	return pCommandBuffer->CmdResolve(ptrFrameBufferSrc, ptrFrameBufferDst);
 }
 
 bool CGfxRenderer::CmdSetScissor(CGfxCommandBuffer *pCommandBuffer, int x, int y, int width, int height)

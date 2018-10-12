@@ -5,9 +5,10 @@
 class CGfxCommandResolve : public CGfxCommandBase
 {
 public:
-	CGfxCommandResolve(const CGfxFrameBufferPtr &ptrFrameBufferSrc, const CGfxFrameBufferPtr &ptrFrameBufferDst)
-		: m_ptrFrameBufferSrc(ptrFrameBufferSrc)
-		, m_ptrFrameBufferDst(ptrFrameBufferDst)
+	CGfxCommandResolve(const CGfxFrameBufferPtr &ptrFrameBuffer, const CGfxRenderPassPtr &ptrRenderPass, int indexSubPass)
+		: m_ptrFrameBuffer(ptrFrameBuffer)
+		, m_ptrRenderPass(ptrRenderPass)
+		, m_indexSubPass(indexSubPass)
 	{
 
 	}
@@ -21,6 +22,7 @@ public:
 	{
 		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_RESOLVE, "CommandResolve");
 		{
+			/*
 			if (m_ptrFrameBufferSrc.IsValid() && m_ptrFrameBufferDst.IsValid() && m_ptrFrameBufferSrc != m_ptrFrameBufferDst) {
 				GLBindFramebuffer(GL_READ_FRAMEBUFFER, m_ptrFrameBufferSrc->GetFBO());
 				GLBindFramebuffer(GL_DRAW_FRAMEBUFFER, m_ptrFrameBufferDst->GetFBO());
@@ -29,11 +31,13 @@ public:
 					0, 0, m_ptrFrameBufferDst->GetWidth() - 1, m_ptrFrameBufferDst->GetHeight() - 1, 
 					GL_COLOR_BUFFER_BIT, GL_NEAREST);
 			}
+			*/
 		}
 	}
 
 
 private:
-	CGfxFrameBufferPtr m_ptrFrameBufferSrc;
-	CGfxFrameBufferPtr m_ptrFrameBufferDst;
+	CGfxFrameBufferPtr m_ptrFrameBuffer;
+	CGfxRenderPassPtr m_ptrRenderPass;
+	int m_indexSubPass;
 };

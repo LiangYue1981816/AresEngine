@@ -5,8 +5,9 @@
 class CGfxCommandEndRenderPass : public CGfxCommandBase
 {
 public:
-	CGfxCommandEndRenderPass(const CGfxFrameBufferPtr &ptrFrameBuffer)
+	CGfxCommandEndRenderPass(const CGfxFrameBufferPtr &ptrFrameBuffer, const CGfxRenderPassPtr &ptrRenderPass)
 		: m_ptrFrameBuffer(ptrFrameBuffer)
+		, m_ptrRenderPass(ptrRenderPass)
 	{
 
 	}
@@ -19,14 +20,10 @@ public:
 	virtual void Execute(void) const
 	{
 		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_END_RENDERPASS, "CommandEndRenderPass");
-		{
-			if (m_ptrFrameBuffer.IsValid()) {
-				m_ptrFrameBuffer->InvalidateFramebuffer();
-			}
-		}
 	}
 
 
 private:
 	CGfxFrameBufferPtr m_ptrFrameBuffer;
+	CGfxRenderPassPtr m_ptrRenderPass;
 };

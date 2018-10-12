@@ -42,6 +42,7 @@
     <ClInclude Include="Engine\Renderer\GLES31\GfxCamera.h" />
     <ClInclude Include="Engine\Renderer\GLES31\GfxCommandBeginRenderPass.h" />
     <ClInclude Include="Engine\Renderer\GLES31\GfxCommandBindCamera.h" />
+    <ClInclude Include="Engine\Renderer\GLES31\GfxCommandBindFrameBuffer.h" />
     <ClInclude Include="Engine\Renderer\GLES31\GfxCommandBindInputTexture.h" />
     <ClInclude Include="Engine\Renderer\GLES31\GfxCommandBindMaterialPass.h" />
     <ClInclude Include="Engine\Renderer\GLES31\GfxCommandBindMesh.h" />
@@ -54,6 +55,7 @@
     <ClInclude Include="Engine\Renderer\GLES31\GfxCommandDrawInstance.h" />
     <ClInclude Include="Engine\Renderer\GLES31\GfxCommandEndRenderPass.h" />
     <ClInclude Include="Engine\Renderer\GLES31\GfxCommandExecute.h" />
+    <ClInclude Include="Engine\Renderer\GLES31\GfxCommandInvalidateFramebuffer.h" />
     <ClInclude Include="Engine\Renderer\GLES31\GfxCommandResolve.h" />
     <ClInclude Include="Engine\Renderer\GLES31\GfxCommandSetScissor.h" />
     <ClInclude Include="Engine\Renderer\GLES31\GfxCommandSetViewport.h" />
@@ -87,6 +89,7 @@
     <ClInclude Include="Engine\Renderer\GLES31\GfxProfiler.h" />
     <ClInclude Include="Engine\Renderer\GLES31\GfxRenderer.h" />
     <ClInclude Include="Engine\Renderer\GLES31\GfxRenderPass.h" />
+    <ClInclude Include="Engine\Renderer\GLES31\GfxRenderPassManager.h" />
     <ClInclude Include="Engine\Renderer\GLES31\GfxResource.h" />
     <ClInclude Include="Engine\Renderer\GLES31\GfxResourceManager.h" />
     <ClInclude Include="Engine\Renderer\GLES31\GfxSampler.h" />
@@ -176,6 +179,7 @@
     <ClCompile Include="Engine\Renderer\GLES31\GfxProfiler.cpp" />
     <ClCompile Include="Engine\Renderer\GLES31\GfxRenderer.cpp" />
     <ClCompile Include="Engine\Renderer\GLES31\GfxRenderPass.cpp" />
+    <ClCompile Include="Engine\Renderer\GLES31\GfxRenderPassManager.cpp" />
     <ClCompile Include="Engine\Renderer\GLES31\GfxResource.cpp" />
     <ClCompile Include="Engine\Renderer\GLES31\GfxResourceManager.cpp" />
     <ClCompile Include="Engine\Renderer\GLES31\GfxSampler.cpp" />

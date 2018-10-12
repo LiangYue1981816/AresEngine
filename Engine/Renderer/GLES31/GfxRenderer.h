@@ -42,6 +42,7 @@
 #include "GfxPipelineGraphics.h"
 #include "GfxMaterial.h"
 #include "GfxMaterialPass.h"
+#include "GfxRenderPass.h"
 #include "GfxFrameBuffer.h"
 
 #include "GfxMeshManager.h"
@@ -50,6 +51,7 @@
 #include "GfxTextureManager.h"
 #include "GfxPipelineManager.h"
 #include "GfxMaterialManager.h"
+#include "GfxRenderPassManager.h"
 #include "GfxFrameBufferManager.h"
 
 #include "GfxUniformVec1.h"
@@ -74,6 +76,7 @@ class CGfxRenderer
 	friend class CGfxMaterial;
 	friend class CGfxMaterialPass;
 	friend class CGfxTextureBase;
+	friend class CGfxRenderPass;
 	friend class CGfxFrameBuffer;
 	friend class CGfxCommandBindCamera;
 	friend class CGfxCommandBindPipeline;
@@ -121,8 +124,8 @@ public:
 	CGfxTexture2DPtr CreateTexture2D(uint32_t name);
 	CGfxTexture2DArrayPtr CreateTexture2DArray(uint32_t name);
 	CGfxTextureCubeMapPtr CreateTextureCubeMap(uint32_t name);
+	CGfxRenderPassPtr CreateRenderPass(uint32_t numAttachments, uint32_t numSubpasses);
 	CGfxFrameBufferPtr CreateFrameBuffer(uint32_t width, uint32_t height);
-	CGfxFrameBufferPtr CreateFrameBuffer(uint32_t width, uint32_t height, bool bDepthRenderBuffer, int samples = 0);
 
 	CGfxMeshPtr LoadMesh(const char *szFileName);
 	CGfxMaterialPtr LoadMaterial(const char *szFileName);
@@ -134,6 +137,7 @@ private:
 	void DestroyMesh(CGfxMesh *pMesh);
 	void DestroyMaterial(CGfxMaterial *pMaterial);
 	void DestroyTexture(CGfxTextureBase *pTexture);
+	void DestroyRenderPass(CGfxRenderPass *pRenderPass);
 	void DestroyFrameBuffer(CGfxFrameBuffer *pFrameBuffer);
 #pragma endregion
 
@@ -171,9 +175,8 @@ public:
 
 #pragma region Commands
 public:
-	bool CmdBeginRenderPass(CGfxCommandBuffer *pCommandBuffer, const CGfxFrameBufferPtr &ptrFrameBuffer);
+	bool CmdBeginRenderPass(CGfxCommandBuffer *pCommandBuffer, const CGfxFrameBufferPtr &ptrFrameBuffer, const CGfxRenderPassPtr &ptrRenderPass);
 	bool CmdEndRenderPass(CGfxCommandBuffer *pCommandBuffer);
-	bool CmdResolve(CGfxCommandBuffer *pCommandBuffer, const CGfxFrameBufferPtr &ptrFrameBufferSrc, const CGfxFrameBufferPtr &ptrFrameBufferDst);
 
 	bool CmdSetScissor(CGfxCommandBuffer *pCommandBuffer, int x, int y, int width, int height);
 	bool CmdSetViewport(CGfxCommandBuffer *pCommandBuffer, int x, int y, int width, int height);
@@ -254,6 +257,7 @@ private:
 	CGfxTextureManager *m_pTextureManager;
 	CGfxPipelineManager *m_pPipelineManager;
 	CGfxMaterialManager *m_pMaterialManager;
+	CGfxRenderPassManager *m_pRenderPassManager;
 	CGfxFrameBufferManager *m_pFrameBufferManager;
 
 private:

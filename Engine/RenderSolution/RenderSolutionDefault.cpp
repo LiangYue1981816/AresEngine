@@ -17,6 +17,7 @@ CRenderSolutionDefault::~CRenderSolutionDefault(void)
 
 void CRenderSolutionDefault::SetEnableMSAA(bool bEnable, int width, int height, int samples)
 {
+	/*
 	if (m_bEnableMSAA != bEnable) {
 		m_bEnableMSAA = bEnable;
 
@@ -33,6 +34,7 @@ void CRenderSolutionDefault::SetEnableMSAA(bool bEnable, int width, int height, 
 			m_ptrColorTextureMSAA.Release();
 		}
 	}
+	*/
 }
 
 void CRenderSolutionDefault::Render(int indexQueue)
@@ -52,6 +54,7 @@ void CRenderSolutionDefault::Render(int indexQueue)
 
 void CRenderSolutionDefault::Present(int indexQueue)
 {
+	/*
 	CGfxCommandBuffer *pMainCommandBuffer = &m_mainCommandBuffer[indexQueue];
 	CGfxFrameBufferPtr &ptrFrameBuffer = m_bEnableMSAA ? m_ptrFrameBufferMSAA : m_ptrFrameBufferScreen;
 
@@ -68,6 +71,7 @@ void CRenderSolutionDefault::Present(int indexQueue)
 
 	Renderer()->Submit(pMainCommandBuffer);
 	Renderer()->Present();
+	*/
 }
 
 void CRenderSolutionDefault::Clearup(int indexQueue)

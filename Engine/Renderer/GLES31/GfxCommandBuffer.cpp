@@ -6,11 +6,13 @@
 #include "GfxCommandResolve.h"
 #include "GfxCommandSetScissor.h"
 #include "GfxCommandSetViewport.h"
+#include "GfxCommandBindFrameBuffer.h"
 #include "GfxCommandBindMesh.h"
 #include "GfxCommandBindCamera.h"
 #include "GfxCommandBindPipeline.h"
 #include "GfxCommandBindMaterialPass.h"
 #include "GfxCommandBindInputTexture.h"
+#include "GfxCommandInvalidateFramebuffer.h"
 #include "GfxCommandUniform1f.h"
 #include "GfxCommandUniform2f.h"
 #include "GfxCommandUniform3f.h"
@@ -33,6 +35,7 @@
 CGfxCommandBuffer::CGfxCommandBuffer(bool bMainCommandBuffer)
 	: m_bMainCommandBuffer(bMainCommandBuffer)
 	, m_bInPassScope(false)
+	, m_indexSubPass(0)
 {
 
 }
@@ -49,7 +52,10 @@ void CGfxCommandBuffer::Clearup(void)
 	}
 
 	m_commands.clear();
+
 	m_bInPassScope = false;
+	m_indexSubPass = 0;
+	m_ptrRenderPass.Release();
 	m_ptrFrameBuffer.Release();
 }
 
@@ -65,12 +71,32 @@ bool CGfxCommandBuffer::Execute(void) const
 	return false;
 }
 
-bool CGfxCommandBuffer::CmdBeginRenderPass(const CGfxFrameBufferPtr &ptrFrameBuffer)
+bool CGfxCommandBuffer::CmdBeginRenderPass(const CGfxFrameBufferPtr &ptrFrameBuffer, const CGfxRenderPassPtr &ptrRenderPass)
 {
-	if (m_bMainCommandBuffer == true && m_bInPassScope == false) {
+	if (m_bMainCommandBuffer == true && m_bInPassScope == false && m_commands.empty()) {
 		m_bInPassScope = true;
+
+		m_indexSubPass = 0;
+		m_ptrRenderPass = ptrRenderPass;
 		m_ptrFrameBuffer = ptrFrameBuffer;
-		m_commands.push_back(new CGfxCommandBeginRenderPass(m_ptrFrameBuffer));
+
+		m_commands.push_back(new CGfxCommandBeginRenderPass(m_ptrFrameBuffer, m_ptrRenderPass));
+		m_commands.push_back(new CGfxCommandBindFrameBuffer(m_ptrFrameBuffer, m_ptrRenderPass, m_indexSubPass));
+
+		return true;
+	}
+
+	return false;
+}
+
+bool CGfxCommandBuffer::CmdNextSubpass(void)
+{
+	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
+		m_commands.push_back(new CGfxCommandInvalidateFramebuffer(m_ptrFrameBuffer, m_ptrRenderPass, m_indexSubPass));
+		m_commands.push_back(new CGfxCommandResolve(m_ptrFrameBuffer, m_ptrRenderPass, m_indexSubPass));
+		m_indexSubPass += 1;
+		m_commands.push_back(new CGfxCommandBindFrameBuffer(m_ptrFrameBuffer, m_ptrRenderPass, m_indexSubPass));
+
 		return true;
 	}
 
@@ -80,19 +106,12 @@ bool CGfxCommandBuffer::CmdBeginRenderPass(const CGfxFrameBufferPtr &ptrFrameBuf
 bool CGfxCommandBuffer::CmdEndRenderPass(void)
 {
 	if (m_bMainCommandBuffer == true && m_bInPassScope == true) {
-		m_commands.push_back(new CGfxCommandEndRenderPass(m_ptrFrameBuffer));
 		m_bInPassScope = false;
-		m_ptrFrameBuffer.Release();
-		return true;
-	}
 
-	return false;
-}
+		m_commands.push_back(new CGfxCommandInvalidateFramebuffer(m_ptrFrameBuffer, m_ptrRenderPass, m_indexSubPass));
+		m_commands.push_back(new CGfxCommandResolve(m_ptrFrameBuffer, m_ptrRenderPass, m_indexSubPass));
+		m_commands.push_back(new CGfxCommandEndRenderPass(m_ptrFrameBuffer, m_ptrRenderPass));
 
-bool CGfxCommandBuffer::CmdResolve(const CGfxFrameBufferPtr &ptrFrameBufferSrc, const CGfxFrameBufferPtr &ptrFrameBufferDst)
-{
-	if (m_bMainCommandBuffer == true && m_bInPassScope == false) {
-		m_commands.push_back(new CGfxCommandResolve(ptrFrameBufferSrc, ptrFrameBufferDst));
 		return true;
 	}
 

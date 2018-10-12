@@ -5,48 +5,16 @@
 
 CGfxFrameBuffer::CGfxFrameBuffer(uint32_t width, uint32_t height)
 	: m_fbo(0)
-	, m_rbo(0)
-
-	, m_width(width)
-	, m_height(height)
-{
-
-}
-
-CGfxFrameBuffer::CGfxFrameBuffer(uint32_t width, uint32_t height, bool bDepthStencilRenderBuffer, int samples)
-	: m_fbo(0)
-	, m_rbo(0)
 
 	, m_width(width)
 	, m_height(height)
 {
 	glGenFramebuffers(1, &m_fbo);
-
-	if (bDepthStencilRenderBuffer) {
-		if (samples == 0) {
-			glGenRenderbuffers(1, &m_rbo);
-			glBindRenderbuffer(GL_RENDERBUFFER, m_rbo);
-			glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, m_width, m_height);
-			glBindRenderbuffer(GL_RENDERBUFFER, 0);
-		}
-		else {
-			glGenRenderbuffers(1, &m_rbo);
-			glBindRenderbuffer(GL_RENDERBUFFER, m_rbo);
-			glRenderbufferStorageMultisample(GL_RENDERBUFFER, samples, GL_DEPTH24_STENCIL8, m_width, m_height);
-			glBindRenderbuffer(GL_RENDERBUFFER, 0);
-		}
-	}
 }
 
 CGfxFrameBuffer::~CGfxFrameBuffer(void)
 {
-	if (m_fbo) {
-		glDeleteFramebuffers(1, &m_fbo);
-	}
-
-	if (m_rbo) {
-		glDeleteRenderbuffers(1, &m_rbo);
-	}
+	glDeleteFramebuffers(1, &m_fbo);
 }
 
 void CGfxFrameBuffer::Release(void)
@@ -54,82 +22,14 @@ void CGfxFrameBuffer::Release(void)
 	Renderer()->DestroyFrameBuffer(this);
 }
 
-bool CGfxFrameBuffer::SetDepthStencilTexture(CGfxTexture2DPtr &ptrTexture, bool bInvalidation, bool bClear, float depth, int stencil)
+bool CGfxFrameBuffer::SetAttachmentTexture(uint32_t indexAttachment, CGfxTexture2DPtr &ptrAttachmentTexture)
 {
-	if (ptrTexture.IsValid()) {
-		if (ptrTexture->GetWidth() != m_width || ptrTexture->GetHeight() != m_height) {
-			return false;
-		}
-	}
-
-	if (m_fbo) {
-		m_attachmentDepthStencil.ptrTexture = ptrTexture;
-		m_attachmentDepthStencil.bInvalidation = ptrTexture.IsValid() && bInvalidation;
-		m_attachmentDepthStencil.bClear = bClear;
-		m_attachmentDepthStencil.depth = depth;
-		m_attachmentDepthStencil.stencil = stencil;
-	}
-
-	return true;
-}
-
-bool CGfxFrameBuffer::SetColorTexture(uint32_t index, CGfxTexture2DPtr &ptrTexture, bool bInvalidation, bool bClear, float red, float green, float blue, float alpha)
-{
-	if (ptrTexture.IsValid()) {
-		if (ptrTexture->GetWidth() != m_width || ptrTexture->GetHeight() != m_height) {
-			return false;
-		}
-	}
-
-	if (m_fbo) {
-		m_attachmentColors[index].ptrTexture = ptrTexture;
-		m_attachmentColors[index].bInvalidation = ptrTexture.IsValid() && bInvalidation;
-		m_attachmentColors[index].bClear = bClear;
-		m_attachmentColors[index].color[0] = red;
-		m_attachmentColors[index].color[1] = green;
-		m_attachmentColors[index].color[2] = blue;
-		m_attachmentColors[index].color[3] = alpha;
-	}
-
-	return true;
-}
-
-bool CGfxFrameBuffer::Apply(void)
-{
-	if (m_fbo == 0) {
+	if (ptrAttachmentTexture->GetWidth() == m_width && ptrAttachmentTexture->GetHeight() == m_height) {
+		m_ptrAttachmentTextures[indexAttachment] = ptrAttachmentTexture;
 		return true;
 	}
 
-	uint32_t status;
-	{
-		glBindFramebuffer(GL_FRAMEBUFFER, m_fbo);
-		{
-			eastl::vector<uint32_t> drawBuffers;
-
-			for (const auto &itAttachment : m_attachmentColors) {
-				if (itAttachment.second.ptrTexture.IsValid()) {
-					drawBuffers.push_back(GL_COLOR_ATTACHMENT0 + itAttachment.first);
-					glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + itAttachment.first, itAttachment.second.ptrTexture->GetTarget(), itAttachment.second.ptrTexture->GetTexture(), 0);
-				}
-			}
-
-			if (m_attachmentDepthStencil.ptrTexture.IsValid() || m_rbo) {
-				if (m_attachmentDepthStencil.ptrTexture.IsValid()) {
-					glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, m_attachmentDepthStencil.ptrTexture->GetTarget(), m_attachmentDepthStencil.ptrTexture->GetTexture(), 0);
-				}
-				else {
-					glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, m_rbo);
-				}
-			}
-
-			glReadBuffers((int)drawBuffers.size(), drawBuffers.data());
-			glDrawBuffers((int)drawBuffers.size(), drawBuffers.data());
-
-			status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
-		}
-		glBindFramebuffer(GL_FRAMEBUFFER, 0);
-	}
-	return status == GL_FRAMEBUFFER_COMPLETE;
+	return false;
 }
 
 uint32_t CGfxFrameBuffer::GetFBO(void) const
@@ -147,54 +47,63 @@ uint32_t CGfxFrameBuffer::GetHeight(void) const
 	return m_height;
 }
 
-CGfxTexture2DPtr CGfxFrameBuffer::GetDepthStencilTexture(void) const
+CGfxTexture2DPtr CGfxFrameBuffer::GetAttachmentTexture(uint32_t indexAttachment) const
 {
-	return m_attachmentDepthStencil.ptrTexture;
+	const auto &itAttachmentTexture = m_ptrAttachmentTextures.find(indexAttachment);
+	return itAttachmentTexture != m_ptrAttachmentTextures.end() ? itAttachmentTexture->second : NULL;
 }
 
-CGfxTexture2DPtr CGfxFrameBuffer::GetColorTexture(uint32_t index) const
-{
-	const auto &itAttachment = m_attachmentColors.find(index);
-	return itAttachment != m_attachmentColors.end() ? itAttachment->second.ptrTexture : NULL;
-}
-
-void CGfxFrameBuffer::Bind(void) const
+void CGfxFrameBuffer::Bind(const AttachmentInformation *pAttachmentInformations, const SubPassInformation *pSubPassInformation) const
 {
 	GLBindFramebuffer(GL_DRAW_FRAMEBUFFER, m_fbo);
 	{
-		for (const auto &itAttachment : m_attachmentColors) {
-			if (itAttachment.second.ptrTexture.IsValid() && itAttachment.second.bClear) {
-				glClearBufferfv(GL_COLOR, GL_COLOR_ATTACHMENT0 + itAttachment.first, itAttachment.second.color);
+		eastl::vector<uint32_t> drawBuffers;
+
+		for (const auto &itAttachment : pSubPassInformation->outputAttachments) {
+			CGfxTexture2DPtr ptrColorTexture = GetAttachmentTexture(itAttachment.first);
+			if (ptrColorTexture.IsValid()) {
+				drawBuffers.push_back(GL_COLOR_ATTACHMENT0 + itAttachment.first);
+				glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + itAttachment.first, ptrColorTexture->GetTarget(), ptrColorTexture->GetTexture(), 0);
+
+				if (pAttachmentInformations[itAttachment.first].bClear) {
+					glClearBufferfv(GL_COLOR, GL_COLOR_ATTACHMENT0 + itAttachment.first, pAttachmentInformations[itAttachment.first].color);
+				}
 			}
 		}
 
-		if (m_attachmentDepthStencil.ptrTexture.IsValid() && m_attachmentDepthStencil.bClear) {
-			glClearBufferfi(GL_DEPTH_STENCIL, 0, m_attachmentDepthStencil.depth, m_attachmentDepthStencil.stencil);
+		CGfxTexture2DPtr ptrDepthStencilTexture = GetAttachmentTexture(pSubPassInformation->depthStencilAttachment);
+		if (ptrDepthStencilTexture.IsValid()) {
+			glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, ptrDepthStencilTexture->GetTarget(), ptrDepthStencilTexture->GetTexture(), 0);
+
+			if (pAttachmentInformations[pSubPassInformation->depthStencilAttachment].bClear) {
+				glClearBufferfi(GL_DEPTH_STENCIL, 0, pAttachmentInformations[pSubPassInformation->depthStencilAttachment].depth, pAttachmentInformations[pSubPassInformation->depthStencilAttachment].stencil);
+			}
 		}
+
+		glReadBuffers((int)drawBuffers.size(), drawBuffers.data());
+		glDrawBuffers((int)drawBuffers.size(), drawBuffers.data());
+
+		uint32_t status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
+		bool bValid = status == GL_FRAMEBUFFER_COMPLETE;
 	}
 }
 
-void CGfxFrameBuffer::InvalidateFramebuffer(void) const
+void CGfxFrameBuffer::InvalidateFramebuffer(const AttachmentInformation *pAttachmentInformations, const SubPassInformation *pSubPassInformation) const
 {
-	if (m_fbo == 0) {
-		return;
-	}
-
 	eastl::vector<uint32_t> discardBuffers;
 	{
-		for (const auto &itAttachment : m_attachmentColors) {
-			if (itAttachment.second.ptrTexture.IsValid() && itAttachment.second.bInvalidation) {
-				discardBuffers.push_back(GL_COLOR_ATTACHMENT0 + itAttachment.first);
+		for (const auto &itAttachment : pSubPassInformation->outputAttachments) {
+			CGfxTexture2DPtr ptrColorTexture = GetAttachmentTexture(itAttachment.first);
+			if (ptrColorTexture.IsValid()) {
+				if (pAttachmentInformations[itAttachment.first].bInvalidation) {
+					discardBuffers.push_back(GL_COLOR_ATTACHMENT0 + itAttachment.first);
+				}
 			}
 		}
 
-		if (m_attachmentDepthStencil.ptrTexture.IsValid() || m_rbo) {
-			if (m_attachmentDepthStencil.ptrTexture.IsValid()) {
-				if (m_attachmentDepthStencil.bInvalidation) {
-					discardBuffers.push_back(GL_DEPTH_STENCIL_ATTACHMENT);
-				}
-			}
-			else {
+		CGfxTexture2DPtr ptrDepthStencilTexture = GetAttachmentTexture(pSubPassInformation->depthStencilAttachment);
+		if (ptrDepthStencilTexture.IsValid()) {
+			if (pAttachmentInformations[pSubPassInformation->depthStencilAttachment].bInvalidation) {
 				discardBuffers.push_back(GL_DEPTH_STENCIL_ATTACHMENT);
 			}
 		}

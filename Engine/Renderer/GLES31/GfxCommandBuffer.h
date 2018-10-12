@@ -33,9 +33,9 @@ public:
 	bool Execute(void) const;
 
 public:
-	bool CmdBeginRenderPass(const CGfxFrameBufferPtr &ptrFrameBuffer);
+	bool CmdBeginRenderPass(const CGfxFrameBufferPtr &ptrFrameBuffer, const CGfxRenderPassPtr &ptrRenderPass);
+	bool CmdNextSubpass(void);
 	bool CmdEndRenderPass(void);
-	bool CmdResolve(const CGfxFrameBufferPtr &ptrFrameBufferSrc, const CGfxFrameBufferPtr &ptrFrameBufferDst);
 
 	bool CmdSetScissor(int x, int y, int width, int height);
 	bool CmdSetViewport(int x, int y, int width, int height);
@@ -72,6 +72,8 @@ private:
 	bool m_bInPassScope;
 
 private:
+	uint32_t m_indexSubPass;
+	CGfxRenderPassPtr m_ptrRenderPass;
 	CGfxFrameBufferPtr m_ptrFrameBuffer;
 	eastl::vector<CGfxCommandBase*> m_commands;
 };

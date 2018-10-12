@@ -31,6 +31,9 @@ class CGfxInstanceBuffer;
 class CGfxVertexBuffer;
 class CGfxVertexArrayObject;
 
+class CGfxRenderPass;
+class CGfxRenderPassManager;
+
 class CGfxFrameBuffer;
 class CGfxFrameBufferManager;
 
@@ -77,6 +80,7 @@ class CGfxResourcePtr;
 class CGfxResource;
 class CGfxResourceManager;
 
+typedef CGfxResourcePtr<CGfxRenderPass> CGfxRenderPassPtr;
 typedef CGfxResourcePtr<CGfxFrameBuffer> CGfxFrameBufferPtr;
 typedef CGfxResourcePtr<CGfxMesh> CGfxMeshPtr;
 typedef CGfxResourcePtr<CGfxMaterial> CGfxMaterialPtr;

@@ -5,8 +5,9 @@
 class CGfxCommandBeginRenderPass : public CGfxCommandBase
 {
 public:
-	CGfxCommandBeginRenderPass(const CGfxFrameBufferPtr &ptrFrameBuffer)
+	CGfxCommandBeginRenderPass(const CGfxFrameBufferPtr &ptrFrameBuffer, const CGfxRenderPassPtr &ptrRenderPass)
 		: m_ptrFrameBuffer(ptrFrameBuffer)
+		, m_ptrRenderPass(ptrRenderPass)
 	{
 
 	}
@@ -19,17 +20,10 @@ public:
 	virtual void Execute(void) const
 	{
 		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_BEGIN_RENDERPASS, "CommandBeginRenderPass");
-		{
-			if (m_ptrFrameBuffer.IsValid()) {
-				m_ptrFrameBuffer->Bind();
-			}
-			else {
-				GLBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
-			}
-		}
 	}
 
 
 private:
 	CGfxFrameBufferPtr m_ptrFrameBuffer;
+	CGfxRenderPassPtr m_ptrRenderPass;
 };
