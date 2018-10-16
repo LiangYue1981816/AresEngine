@@ -5,9 +5,11 @@
 CRenderSolutionDefault::CRenderSolutionDefault(void)
 	: m_bEnableMSAA(false)
 {
-	m_ptrRenderPass = Renderer()->CreateRenderPass(1, 1);
-	m_ptrRenderPass->SetColorAttachment(0, false, true, 0.2f, 0.2f, 0.2f, 0.0f);
-	m_ptrRenderPass->SetSubpassOutputColorReference(0, 0);
+	m_ptrRenderPass = Renderer()->CreateRenderPass(2, 1);
+	m_ptrRenderPass->SetDepthStencilAttachment(0, true, true, 1.0f, 0);
+	m_ptrRenderPass->SetColorAttachment(1, false, true, 0.2f, 0.2f, 0.2f, 0.0f);
+	m_ptrRenderPass->SetSubpassOutputDepthStencilReference(0, 0);
+	m_ptrRenderPass->SetSubpassOutputColorReference(0, 1);
 }
 
 CRenderSolutionDefault::~CRenderSolutionDefault(void)

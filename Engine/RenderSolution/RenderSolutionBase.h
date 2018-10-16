@@ -23,6 +23,7 @@ protected:
 
 protected:
 	CGfxCommandBuffer m_mainCommandBuffer[2];
+	CGfxTexture2DPtr m_ptrDepthStencilTexture;
 	CGfxFrameBufferPtr m_ptrFrameBufferScreens[CGfxSwapChain::SWAPCHAIN_IMAGE_COUNT];
 
 protected:

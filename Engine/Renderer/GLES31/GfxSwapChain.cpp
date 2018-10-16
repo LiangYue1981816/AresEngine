@@ -7,7 +7,7 @@ CGfxSwapChain::CGfxSwapChain(void *hDC, int width, int height, uint32_t format)
 	: m_hDC(hDC)
 	, m_indexTexture(0)
 {
-	m_ptrTexture = Renderer()->CreateTexture2D(HashValue("SwapChain Texture"));
+	m_ptrTexture = Renderer()->CreateTexture2D(HashValue("SwapChain Color Texture"));
 	m_ptrTexture->Create(format, format, width, height, 1, 0);
 
 	glGenFramebuffers(1, &m_fbo);
@@ -53,6 +53,16 @@ void CGfxSwapChain::Present(void)
 #ifdef _WINDOWS
 	::SwapBuffers((HDC)m_hDC);
 #endif
+}
+
+int CGfxSwapChain::GetWidth(void) const
+{
+	return m_ptrTexture->GetWidth();
+}
+
+int CGfxSwapChain::GetHeight(void) const
+{
+	return m_ptrTexture->GetHeight();
 }
 
 int CGfxSwapChain::GetTextureIndex(void) const

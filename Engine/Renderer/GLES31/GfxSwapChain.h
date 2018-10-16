@@ -16,6 +16,9 @@ private:
 	void Present(void);
 
 public:
+	int GetWidth(void) const;
+	int GetHeight(void) const;
+
 	int GetTextureIndex(void) const;
 	const CGfxTexture2DPtr& GetTexture(int index) const;
 
