@@ -4,13 +4,16 @@
 
 
 CGfxCamera::CGfxCamera(void)
-	: m_pUniformCamera(NULL)
+	: m_pRenderQueue(NULL)
+	, m_pUniformCamera(NULL)
 {
+	m_pRenderQueue = new CGfxRenderQueue;
 	m_pUniformCamera = new CGfxUniformCamera;
 }
 
 CGfxCamera::~CGfxCamera(void)
 {
+	delete m_pRenderQueue;
 	delete m_pUniformCamera;
 }
 
@@ -41,6 +44,11 @@ void CGfxCamera::SetLookat(float eyex, float eyey, float eyez, float centerx, fl
 {
 	m_camera.setLookat(glm::vec3(eyex, eyey, eyez), glm::vec3(centerx, centery, centerz), glm::vec3(upx, upy, upz));
 	m_pUniformCamera->SetLookat(eyex, eyey, eyez, centerx, centery, centerz, upx, upy, upz);
+}
+
+void CGfxCamera::Apply(void)
+{
+	m_pUniformCamera->Apply();
 }
 
 const glm::vec4& CGfxCamera::GetScissor(void) const
@@ -88,6 +96,11 @@ const glm::mat4& CGfxCamera::GetViewInverseTransposeMatrix(void) const
 	return m_camera.viewInverseTransposeMatrix;
 }
 
+const CGfxUniformCamera* CGfxCamera::GetUniformCamera(void) const
+{
+	return m_pUniformCamera;
+}
+
 glm::vec3 CGfxCamera::WorldToScreen(const glm::vec3 &world)
 {
 	return m_camera.worldToScreen(world);
@@ -115,78 +128,28 @@ bool CGfxCamera::IsVisible(const glm::sphere &sphere)
 
 void CGfxCamera::AddQueue(int indexThread, int indexQueue, const CGfxMaterialPtr &ptrMaterial, const CGfxMeshPtr &ptrMesh, const glm::mat4 &mtxTransform)
 {
-	if (indexThread >= 0 && indexThread < THREAD_COUNT) {
-		m_materialQueue[indexThread][indexQueue][ptrMaterial][ptrMesh].push_back(mtxTransform);
-	}
+	m_pRenderQueue->AddQueue(indexThread, indexQueue, ptrMaterial, ptrMesh, mtxTransform);
 }
 
 void CGfxCamera::ClearQueueAll(void)
 {
-	ClearQueue(0);
-	ClearQueue(1);
+	m_pRenderQueue->ClearQueueAll();
 }
 
 void CGfxCamera::ClearQueue(int indexQueue)
 {
-	for (int indexThread = 0; indexThread < THREAD_COUNT; indexThread++) {
-		m_materialQueue[indexThread][indexQueue].clear();
-		m_secondaryCommandBuffer[indexThread][indexQueue].clear();
-	}
+	m_pRenderQueue->ClearQueue(indexQueue);
 }
 
 void CGfxCamera::CmdDraw(int indexThread, int indexQueue, uint32_t namePass)
 {
-	eastl::unordered_map<const CGfxPipelineBase*, eastl::vector<CGfxMaterialPtr>> pipelineQueue;
-	{
-		for (const auto &itMaterialQueue : m_materialQueue[indexThread][indexQueue]) {
-			if (const CGfxMaterialPass *pPass = itMaterialQueue.first->GetPass(namePass)) {
-				if (const CGfxPipelineBase *pPipeline = pPass->GetPipeline()) {
-					pipelineQueue[pPipeline].push_back(itMaterialQueue.first);
-				}
-			}
-		}
-
-		if (pipelineQueue.empty()) {
-			return;
-		}
-	}
-
-	m_secondaryCommandBuffer[indexThread][indexQueue].emplace_back(false);
-	CGfxCommandBuffer *pCommandBuffer = &m_secondaryCommandBuffer[indexThread][indexQueue][m_secondaryCommandBuffer[indexThread][indexQueue].size() - 1];
-	{
-		for (const auto &itPipelineQueue : pipelineQueue) {
-			Renderer()->CmdBindPipeline(pCommandBuffer, (CGfxPipelineBase *)itPipelineQueue.first);
-			Renderer()->CmdBindCamera(pCommandBuffer, this);
-
-			for (const auto &itMaterial : itPipelineQueue.second) {
-				Renderer()->CmdBindMaterialPass(pCommandBuffer, itMaterial, namePass);
-
-				for (const auto &itMeshQueue : m_materialQueue[indexThread][indexQueue][itMaterial]) {
-					Renderer()->CmdDrawInstance(pCommandBuffer, itMeshQueue.first, itMeshQueue.first->GetIndexCount(), 0, itMeshQueue.second);
-				}
-			}
-		}
-	}
+	m_pRenderQueue->CmdDraw(this, indexThread, indexQueue, namePass);
 }
 
-void CGfxCamera::CmdExecute(int indexQueue, CGfxCommandBuffer *pMainCommandBuffer)
+void CGfxCamera::CmdExecute(CGfxCommandBuffer *pMainCommandBuffer, int indexQueue)
 {
 	Renderer()->CmdSetScissor(pMainCommandBuffer, (int)m_camera.scissor.x, (int)m_camera.scissor.y, (int)m_camera.scissor.z, (int)m_camera.scissor.w);
 	Renderer()->CmdSetViewport(pMainCommandBuffer, (int)m_camera.viewport.x, (int)m_camera.viewport.y, (int)m_camera.viewport.z, (int)m_camera.viewport.w);
 
-	for (int indexThread = 0; indexThread < THREAD_COUNT; indexThread++) {
-		for (const auto &itCommandBuffer : m_secondaryCommandBuffer[indexThread][indexQueue]) {
-			Renderer()->CmdExecute(pMainCommandBuffer, (CGfxCommandBuffer *)&itCommandBuffer);
-		}
-	}
-}
-
-void CGfxCamera::Apply(void)
-{
-	m_pUniformCamera->Apply();
-}
-
-const CGfxUniformCamera* CGfxCamera::GetUniformCamera(void) const
-{
-	return m_pUniformCamera;
+	m_pRenderQueue->CmdExecute(pMainCommandBuffer, indexQueue);
 }

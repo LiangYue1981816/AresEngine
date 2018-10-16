@@ -35,7 +35,7 @@ CGfxInstanceBuffer::~CGfxInstanceBuffer(void)
 void CGfxInstanceBuffer::AddInstance(const glm::mat4 &mtxTransform)
 {
 	m_bDirty = true;
-	m_instances.push_back(mtxTransform);
+	m_instances.emplace_back(mtxTransform);
 }
 
 void CGfxInstanceBuffer::SetInstance(const eastl::vector<glm::mat4> &mtxTransforms)

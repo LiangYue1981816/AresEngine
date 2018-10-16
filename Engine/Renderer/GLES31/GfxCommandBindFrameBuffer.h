@@ -26,7 +26,7 @@ public:
 				m_ptrFrameBuffer->Bind(m_ptrRenderPass->GetAttachments(), m_ptrRenderPass->GetSubPass(m_indexSubPass));
 			}
 			else {
-				GLBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
+				GLBindFramebuffer(GL_FRAMEBUFFER, 0);
 			}
 		}
 	}

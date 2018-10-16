@@ -102,7 +102,7 @@ void CGfxShaderCompiler::AddIncludePath(const char *szPath)
 
 void CGfxShaderCompiler::AddMacroDefinition(const char *szName)
 {
-	m_strMacroDefinitionNames.push_back(szName);
+	m_strMacroDefinitionNames.emplace_back(szName);
 }
 
 void CGfxShaderCompiler::AddMacroDefinition(const char *szName, const char *szValue)

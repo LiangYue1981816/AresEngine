@@ -525,6 +525,12 @@
     <ClInclude Include="Engine\Renderer\GLES31\GfxCommandInvalidateFramebuffer.h">
       <Filter>Engine\Renderer\GLES31\Source Files\Commands</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\Renderer\GLES31\GfxRenderQueue.h">
+      <Filter>Engine\Renderer\GLES31\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Renderer\GLES31\GfxSwapChain.h">
+      <Filter>Engine\Renderer\GLES31\Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application\Main.cpp">
@@ -801,6 +807,12 @@
       <Filter>Engine\Renderer\GLES31\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Renderer\GLES31\GfxRenderPassManager.cpp">
+      <Filter>Engine\Renderer\GLES31\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Renderer\GLES31\GfxRenderQueue.cpp">
+      <Filter>Engine\Renderer\GLES31\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Renderer\GLES31\GfxSwapChain.cpp">
       <Filter>Engine\Renderer\GLES31\Source Files</Filter>
     </ClCompile>
   </ItemGroup>

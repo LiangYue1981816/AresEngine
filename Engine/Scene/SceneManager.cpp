@@ -11,8 +11,8 @@ CSceneManager::CSceneManager(void)
 	, m_taskGraphUpdateLogic("TashGraph_UpdateLogic", 75)
 	, m_taskGraphUpdateCamera("TaskGraph_UpdateCamera", 75)
 {
-	m_pMainCamera = Renderer()->CreateCamera();
-	m_pShadowCamera = Renderer()->CreateCamera();
+	m_pMainCamera = new CGfxCamera;
+	m_pShadowCamera = new CGfxCamera;
 
 	event_init(&m_eventUpdateLogicSkin, 1);
 	event_init(&m_eventUpdateLogicParticle, 1);
@@ -25,8 +25,8 @@ CSceneManager::CSceneManager(void)
 
 CSceneManager::~CSceneManager(void)
 {
-	Renderer()->DestroyCamera(m_pMainCamera);
-	Renderer()->DestroyCamera(m_pShadowCamera);
+	delete m_pMainCamera;
+	delete m_pShadowCamera;
 
 	event_destroy(&m_eventUpdateLogicSkin);
 	event_destroy(&m_eventUpdateLogicParticle);

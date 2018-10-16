@@ -24,7 +24,7 @@ public:
 
 			m_keyIndex[key] = index;
 			m_indexKey[index] = key;
-			m_components.push_back(component);
+			m_components.emplace_back(component);
 
 			return true;
 		}

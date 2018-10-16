@@ -3,7 +3,7 @@
 #include "GfxRenderPass.h"
 
 
-CGfxRenderPass::CGfxRenderPass(uint32_t numAttachments, uint32_t numSubpasses)
+CGfxRenderPass::CGfxRenderPass(int numAttachments, int numSubpasses)
 {
 	m_attachments.resize(numAttachments);
 	m_subpasses.resize(numAttachments);
@@ -19,9 +19,9 @@ void CGfxRenderPass::Release(void)
 	Renderer()->DestroyRenderPass(this);
 }
 
-bool CGfxRenderPass::SetColorAttachment(uint32_t indexAttachment, bool bInvalidation, bool bClear, float red, float green, float blue, float alpha)
+bool CGfxRenderPass::SetColorAttachment(int indexAttachment, bool bInvalidation, bool bClear, float red, float green, float blue, float alpha)
 {
-	if (indexAttachment >= m_attachments.size()) {
+	if (indexAttachment >= (int)m_attachments.size()) {
 		return false;
 	}
 
@@ -35,9 +35,9 @@ bool CGfxRenderPass::SetColorAttachment(uint32_t indexAttachment, bool bInvalida
 	return true;
 }
 
-bool CGfxRenderPass::SetDepthStencilAttachment(uint32_t indexAttachment, bool bInvalidation, bool bClear, float depth, int stencil)
+bool CGfxRenderPass::SetDepthStencilAttachment(int indexAttachment, bool bInvalidation, bool bClear, float depth, int stencil)
 {
-	if (indexAttachment >= m_attachments.size()) {
+	if (indexAttachment >= (int)m_attachments.size()) {
 		return false;
 	}
 
@@ -49,13 +49,13 @@ bool CGfxRenderPass::SetDepthStencilAttachment(uint32_t indexAttachment, bool bI
 	return true;
 }
 
-bool CGfxRenderPass::SetSubpassInputColorReference(uint32_t indexSubPass, uint32_t indexAttachment)
+bool CGfxRenderPass::SetSubpassInputColorReference(int indexSubPass, int indexAttachment)
 {
-	if (indexSubPass >= m_subpasses.size()) {
+	if (indexSubPass >= (int)m_subpasses.size()) {
 		return false;
 	}
 
-	if (indexAttachment >= m_attachments.size()) {
+	if (indexAttachment >= (int)m_attachments.size()) {
 		return false;
 	}
 
@@ -64,13 +64,13 @@ bool CGfxRenderPass::SetSubpassInputColorReference(uint32_t indexSubPass, uint32
 	return true;
 }
 
-bool CGfxRenderPass::SetSubpassOutputColorReference(uint32_t indexSubPass, uint32_t indexAttachment)
+bool CGfxRenderPass::SetSubpassOutputColorReference(int indexSubPass, int indexAttachment)
 {
-	if (indexSubPass >= m_subpasses.size()) {
+	if (indexSubPass >= (int)m_subpasses.size()) {
 		return false;
 	}
 
-	if (indexAttachment >= m_attachments.size()) {
+	if (indexAttachment >= (int)m_attachments.size()) {
 		return false;
 	}
 
@@ -79,13 +79,13 @@ bool CGfxRenderPass::SetSubpassOutputColorReference(uint32_t indexSubPass, uint3
 	return true;
 }
 
-bool CGfxRenderPass::SetSubpassOutputDepthStencilReference(uint32_t indexSubPass, uint32_t indexAttachment)
+bool CGfxRenderPass::SetSubpassOutputDepthStencilReference(int indexSubPass, int indexAttachment)
 {
-	if (indexSubPass >= m_subpasses.size()) {
+	if (indexSubPass >= (int)m_subpasses.size()) {
 		return false;
 	}
 
-	if (indexAttachment >= m_attachments.size()) {
+	if (indexAttachment >= (int)m_attachments.size()) {
 		return false;
 	}
 
@@ -94,13 +94,13 @@ bool CGfxRenderPass::SetSubpassOutputDepthStencilReference(uint32_t indexSubPass
 	return true;
 }
 
-bool CGfxRenderPass::SetSubpassResolveColorReference(uint32_t indexSubPass, uint32_t indexAttachment)
+bool CGfxRenderPass::SetSubpassResolveColorReference(int indexSubPass, int indexAttachment)
 {
-	if (indexSubPass >= m_subpasses.size()) {
+	if (indexSubPass >= (int)m_subpasses.size()) {
 		return false;
 	}
 
-	if (indexAttachment >= m_attachments.size()) {
+	if (indexAttachment >= (int)m_attachments.size()) {
 		return false;
 	}
 
@@ -119,9 +119,9 @@ const AttachmentInformation* CGfxRenderPass::GetAttachments(void) const
 	return m_attachments.data();
 }
 
-const AttachmentInformation* CGfxRenderPass::GetAttachment(uint32_t indexAttachment) const
+const AttachmentInformation* CGfxRenderPass::GetAttachment(int indexAttachment) const
 {
-	return indexAttachment < m_attachments.size() ? &m_attachments[indexAttachment] : NULL;
+	return indexAttachment >= 0 && indexAttachment < (int)m_attachments.size() ? &m_attachments[indexAttachment] : NULL;
 }
 
 uint32_t CGfxRenderPass::GetSubPassCount(void) const
@@ -129,17 +129,17 @@ uint32_t CGfxRenderPass::GetSubPassCount(void) const
 	return m_subpasses.size();
 }
 
-uint32_t CGfxRenderPass::GetSubpassInputAttachmentCount(uint32_t indexSubPass) const
+uint32_t CGfxRenderPass::GetSubpassInputAttachmentCount(int indexSubPass) const
 {
-	return indexSubPass < m_subpasses.size() ? m_subpasses[indexSubPass].inputAttachments.size() : 0;
+	return indexSubPass >= 0 && indexSubPass < (int)m_subpasses.size() ? m_subpasses[indexSubPass].inputAttachments.size() : 0;
 }
 
-uint32_t CGfxRenderPass::GetSubpassOutputAttachmentCount(uint32_t indexSubPass) const
+uint32_t CGfxRenderPass::GetSubpassOutputAttachmentCount(int indexSubPass) const
 {
-	return indexSubPass < m_subpasses.size() ? m_subpasses[indexSubPass].outputAttachments.size() : 0;
+	return indexSubPass >= 0 && indexSubPass < (int)m_subpasses.size() ? m_subpasses[indexSubPass].outputAttachments.size() : 0;
 }
 
-const SubPassInformation* CGfxRenderPass::GetSubPass(uint32_t indexSubPass) const
+const SubPassInformation* CGfxRenderPass::GetSubPass(int indexSubPass) const
 {
-	return indexSubPass < m_subpasses.size() ? &m_subpasses[indexSubPass] : NULL;
+	return indexSubPass >= 0 && indexSubPass < (int)m_subpasses.size() ? &m_subpasses[indexSubPass] : NULL;
 }

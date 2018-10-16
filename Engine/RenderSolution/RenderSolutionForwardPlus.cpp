@@ -2,8 +2,7 @@
 #include "RenderSolutionForwardPlus.h"
 
 
-CRenderSolutionForwardPlus::CRenderSolutionForwardPlus(int screenWidth, int screenHeight)
-	: CRenderSolutionBase(screenWidth, screenHeight)
+CRenderSolutionForwardPlus::CRenderSolutionForwardPlus(void)
 {
 
 }

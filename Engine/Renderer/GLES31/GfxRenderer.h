@@ -29,6 +29,8 @@
 #include "GfxExtension.h"
 #include "GfxDefinition.h"
 
+#include "GfxShaderCompiler.h"
+
 #include "GfxResource.h"
 #include "GfxResourceManager.h"
 
@@ -62,9 +64,10 @@
 #include "GfxUniformEngine.h"
 #include "GfxUniformCamera.h"
 
-#include "GfxShaderCompiler.h"
-#include "GfxCommandBuffer.h"
 #include "GfxCamera.h"
+#include "GfxSwapChain.h"
+#include "GfxRenderQueue.h"
+#include "GfxCommandBuffer.h"
 
 #include "GfxProfiler.h"
 
@@ -95,10 +98,19 @@ class CGfxRenderer
 	friend class CGfxCommandUniformMatrix4fv;
 
 
+public:
+	static CGfxRenderer* GetInstance(void);
+
+
 private:
-	CGfxRenderer(void *hDC, const char *szShaderCachePath);
+	CGfxRenderer(void *hDC, const char *szShaderCachePath, int width, int height, uint32_t format);
 	virtual ~CGfxRenderer(void);
 
+
+#pragma region SwapChain
+public:
+	CGfxSwapChain* GetSwapChain(void) const;
+#pragma endregion
 
 #pragma region Shader Compiler
 public:
@@ -124,8 +136,8 @@ public:
 	CGfxTexture2DPtr CreateTexture2D(uint32_t name);
 	CGfxTexture2DArrayPtr CreateTexture2DArray(uint32_t name);
 	CGfxTextureCubeMapPtr CreateTextureCubeMap(uint32_t name);
-	CGfxRenderPassPtr CreateRenderPass(uint32_t numAttachments, uint32_t numSubpasses);
-	CGfxFrameBufferPtr CreateFrameBuffer(uint32_t width, uint32_t height);
+	CGfxRenderPassPtr CreateRenderPass(int numAttachments, int numSubpasses);
+	CGfxFrameBufferPtr CreateFrameBuffer(int width, int height);
 
 	CGfxMeshPtr LoadMesh(const char *szFileName);
 	CGfxMaterialPtr LoadMaterial(const char *szFileName);
@@ -139,12 +151,6 @@ private:
 	void DestroyTexture(CGfxTextureBase *pTexture);
 	void DestroyRenderPass(CGfxRenderPass *pRenderPass);
 	void DestroyFrameBuffer(CGfxFrameBuffer *pFrameBuffer);
-#pragma endregion
-
-#pragma region Camera
-public:
-	CGfxCamera* CreateCamera(void) const;
-	void DestroyCamera(CGfxCamera *pCamera) const;
 #pragma endregion
 
 #pragma region Features
@@ -238,7 +244,7 @@ private:
 
 
 private:
-	void *m_hDC;
+	CGfxSwapChain *m_pSwapChain;
 
 private:
 	CGfxMesh *m_pScreenMesh;
@@ -262,4 +268,7 @@ private:
 
 private:
 	CGfxShaderCompiler *m_pShaderCompiler;
+
+private:
+	static CGfxRenderer *pInstance;
 };

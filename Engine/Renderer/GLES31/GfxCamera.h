@@ -4,10 +4,7 @@
 
 class CGfxCamera
 {
-	friend class CGfxRenderer;
-
-
-private:
+public:
 	CGfxCamera(void);
 	virtual ~CGfxCamera(void);
 
@@ -20,6 +17,8 @@ public:
 	void SetOrtho(float left, float right, float bottom, float top, float zNear, float zFar);
 	void SetLookat(float eyex, float eyey, float eyez, float centerx, float centery, float centerz, float upx, float upy, float upz);
 
+	void Apply(void);
+
 	const glm::vec4& GetScissor(void) const;
 	const glm::vec4& GetViewport(void) const;
 
@@ -31,6 +30,8 @@ public:
 	const glm::mat4& GetViewMatrix(void) const;
 	const glm::mat4& GetViewInverseMatrix(void) const;
 	const glm::mat4& GetViewInverseTransposeMatrix(void) const;
+
+	const CGfxUniformCamera* GetUniformCamera(void) const;
 
 public:
 	glm::vec3 WorldToScreen(const glm::vec3 &world);
@@ -48,18 +49,13 @@ public:
 
 public:
 	void CmdDraw(int indexThread, int indexQueue, uint32_t namePass);
-	void CmdExecute(int indexQueue, CGfxCommandBuffer *pMainCommandBuffer);
-	void Apply(void);
-
-private:
-	const CGfxUniformCamera* GetUniformCamera(void) const;
+	void CmdExecute(CGfxCommandBuffer *pMainCommandBuffer, int indexQueue);
 
 
 private:
 	glm::camera m_camera;
-	CGfxUniformCamera *m_pUniformCamera;
 
 private:
-	eastl::vector<CGfxCommandBuffer> m_secondaryCommandBuffer[THREAD_COUNT][2];
-	eastl::unordered_map<CGfxMaterialPtr, eastl::unordered_map<CGfxMeshPtr, eastl::vector<glm::mat4>>> m_materialQueue[THREAD_COUNT][2];
+	CGfxRenderQueue *m_pRenderQueue;
+	CGfxUniformCamera *m_pUniformCamera;
 };

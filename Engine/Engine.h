@@ -9,11 +9,11 @@
 #define LOG_TAG_RENDERER "GfxRenderer"
 
 
-#define CreateEngine(hDC, szShaderCachePath, nScreenWidth, nScreenHeight) CEngine::Create((hDC), (szShaderCachePath), (nScreenWidth), (nScreenHeight))
+#define CreateEngine(hDC, szShaderCachePath, nScreenWidth, nScreenHeight, nScreenPixelFormat) CEngine::Create((hDC), (szShaderCachePath), (nScreenWidth), (nScreenHeight), (nScreenPixelFormat))
 #define DestroyEngine() CEngine::Destroy()
 
 #define Engine() CEngine::GetInstance()
-#define Renderer() CEngine::GetInstance()->GetRenderer()
+#define Renderer() CGfxRenderer::GetInstance()
 #define SceneManager() CEngine::GetInstance()->GetSceneManager()
 #define MainCamera() CEngine::GetInstance()->GetSceneManager()->GetMainCamera()
 #define ShadowCamera() CEngine::GetInstance()->GetSceneManager()->GetShadowCamera()
@@ -38,12 +38,12 @@ class CEngine
 {
 public:
 	static CEngine* GetInstance(void);
-	static void Create(void *hDC, const char *szShaderCachePath, int screenWidth, int screenHeight);
+	static void Create(void *hDC, const char *szShaderCachePath, int screenWidth, int screenHeight, uint32_t screenPixelFormat);
 	static void Destroy(void);
 
 
 private:
-	CEngine(void *hDC, const char *szShaderCachePath, int screenWidth, int screenHeight);
+	CEngine(void *hDC, const char *szShaderCachePath, int screenWidth, int screenHeight, uint32_t screenPixelFormat);
 	virtual ~CEngine(void);
 
 

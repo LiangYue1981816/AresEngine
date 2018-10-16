@@ -90,6 +90,7 @@
     <ClInclude Include="Engine\Renderer\GLES31\GfxRenderer.h" />
     <ClInclude Include="Engine\Renderer\GLES31\GfxRenderPass.h" />
     <ClInclude Include="Engine\Renderer\GLES31\GfxRenderPassManager.h" />
+    <ClInclude Include="Engine\Renderer\GLES31\GfxRenderQueue.h" />
     <ClInclude Include="Engine\Renderer\GLES31\GfxResource.h" />
     <ClInclude Include="Engine\Renderer\GLES31\GfxResourceManager.h" />
     <ClInclude Include="Engine\Renderer\GLES31\GfxSampler.h" />
@@ -97,6 +98,7 @@
     <ClInclude Include="Engine\Renderer\GLES31\GfxShader.h" />
     <ClInclude Include="Engine\Renderer\GLES31\GfxShaderCompiler.h" />
     <ClInclude Include="Engine\Renderer\GLES31\GfxShaderManager.h" />
+    <ClInclude Include="Engine\Renderer\GLES31\GfxSwapChain.h" />
     <ClInclude Include="Engine\Renderer\GLES31\GfxTexture2D.h" />
     <ClInclude Include="Engine\Renderer\GLES31\GfxTexture2DArray.h" />
     <ClInclude Include="Engine\Renderer\GLES31\GfxTextureBase.h" />
@@ -180,6 +182,7 @@
     <ClCompile Include="Engine\Renderer\GLES31\GfxRenderer.cpp" />
     <ClCompile Include="Engine\Renderer\GLES31\GfxRenderPass.cpp" />
     <ClCompile Include="Engine\Renderer\GLES31\GfxRenderPassManager.cpp" />
+    <ClCompile Include="Engine\Renderer\GLES31\GfxRenderQueue.cpp" />
     <ClCompile Include="Engine\Renderer\GLES31\GfxResource.cpp" />
     <ClCompile Include="Engine\Renderer\GLES31\GfxResourceManager.cpp" />
     <ClCompile Include="Engine\Renderer\GLES31\GfxSampler.cpp" />
@@ -187,6 +190,7 @@
     <ClCompile Include="Engine\Renderer\GLES31\GfxShader.cpp" />
     <ClCompile Include="Engine\Renderer\GLES31\GfxShaderCompiler.cpp" />
     <ClCompile Include="Engine\Renderer\GLES31\GfxShaderManager.cpp" />
+    <ClCompile Include="Engine\Renderer\GLES31\GfxSwapChain.cpp" />
     <ClCompile Include="Engine\Renderer\GLES31\GfxTexture2D.cpp" />
     <ClCompile Include="Engine\Renderer\GLES31\GfxTexture2DArray.cpp" />
     <ClCompile Include="Engine\Renderer\GLES31\GfxTextureBase.cpp" />

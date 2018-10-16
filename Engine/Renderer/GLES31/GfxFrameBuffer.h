@@ -9,31 +9,33 @@ class CGfxFrameBuffer : public CGfxResource
 
 
 private:
-	CGfxFrameBuffer(uint32_t width, uint32_t height);
+	CGfxFrameBuffer(int width, int height);
 	virtual ~CGfxFrameBuffer(void);
 	virtual void Release(void);
 
 
 public:
-	bool SetAttachmentTexture(uint32_t indexAttachment, CGfxTexture2DPtr &ptrAttachmentTexture);
+	bool SetAttachmentTexture(int indexAttachment, CGfxTexture2DPtr &ptrAttachmentTexture);
 
 public:
-	uint32_t GetFBO(void) const;
-	uint32_t GetWidth(void) const;
-	uint32_t GetHeight(void) const;
-	CGfxTexture2DPtr GetAttachmentTexture(uint32_t indexAttachment) const;
+	int GetWidth(void) const;
+	int GetHeight(void) const;
+
+	CGfxTexture2DPtr GetAttachmentTexture(int indexAttachment) const;
 
 public:
 	void Bind(const AttachmentInformation *pAttachmentInformations, const SubPassInformation *pSubPassInformation) const;
+	void Resolve(const AttachmentInformation *pAttachmentInformations, const SubPassInformation *pSubPassInformation) const;
 	void InvalidateFramebuffer(const AttachmentInformation *pAttachmentInformations, const SubPassInformation *pSubPassInformation) const;
 
 
 private:
 	uint32_t m_fbo;
+	uint32_t m_resolve;
 
 private:
-	uint32_t m_width;
-	uint32_t m_height;
+	int m_width;
+	int m_height;
 
-	eastl::unordered_map<uint32_t, CGfxTexture2DPtr> m_ptrAttachmentTextures;
+	eastl::unordered_map<int, CGfxTexture2DPtr> m_ptrAttachmentTextures;
 };

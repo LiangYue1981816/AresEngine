@@ -9,7 +9,7 @@ class CRenderSolutionDefault : public CRenderSolutionBase
 
 
 private:
-	CRenderSolutionDefault(int screenWidth, int screenHeight);
+	CRenderSolutionDefault(void);
 	virtual ~CRenderSolutionDefault(void);
 
 
@@ -21,6 +21,10 @@ private:
 	virtual void Present(int indexQueue);
 	virtual void Clearup(int indexQueue);
 
+
+private:
+	CGfxRenderPassPtr m_ptrRenderPass;
+	CGfxRenderPassPtr m_ptrRenderPassMSAA;
 
 private:
 	bool m_bEnableMSAA;

@@ -8,7 +8,7 @@ class CRenderSolutionBase
 
 
 protected:
-	CRenderSolutionBase(int screenWidth, int screenHeight);
+	CRenderSolutionBase(void);
 	virtual ~CRenderSolutionBase(void);
 
 
@@ -23,7 +23,7 @@ protected:
 
 protected:
 	CGfxCommandBuffer m_mainCommandBuffer[2];
-	CGfxFrameBufferPtr m_ptrFrameBufferScreen;
+	CGfxFrameBufferPtr m_ptrFrameBufferScreens[CGfxSwapChain::SWAPCHAIN_IMAGE_COUNT];
 
 protected:
 	CTaskGraph m_taskCommandBuffer;

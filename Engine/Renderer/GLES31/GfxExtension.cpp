@@ -139,8 +139,17 @@ typedef struct BlendColorParam {
 	float alpha;
 } BlendColorParam;
 
+typedef struct FrameBufferAttachmentParam {
+	uint32_t target;
+	uint32_t texture;
+	int level;
+} FrameBufferAttachmentParam;
+
 typedef struct FrameBufferParam {
 	uint32_t framebuffer;
+	eastl::unordered_map<uint32_t, eastl::unordered_map<uint32_t, FrameBufferAttachmentParam>> attachments;
+	eastl::unordered_map<uint32_t, eastl::vector<uint32_t>> readbuffers;
+	eastl::unordered_map<uint32_t, eastl::vector<uint32_t>> drawbuffers;
 } FrameBufferParam;
 
 typedef struct ProgramPipelineParam {
@@ -187,8 +196,8 @@ static StencilMaskParam StencilMask;
 static BlendFuncParam BlendFunc;
 static BlendEquationParam BlendEquation;
 static BlendColorParam BlendColor;
-static ProgramPipelineParam ProgramPipeline;
 static VertexArrayParam VertexArray;
+static ProgramPipelineParam ProgramPipeline;
 
 static eastl::unordered_map<GLenum, GLboolean> Caps;
 static eastl::unordered_map<GLenum, GLuint> Buffers;
@@ -196,8 +205,8 @@ static eastl::unordered_map<GLenum, BufferBaseParam> BufferBases;
 static eastl::unordered_map<GLenum, BufferRangeParam> BufferRanges;
 static eastl::unordered_map<GLenum, FrameBufferParam> FrameBuffers;
 static eastl::unordered_map<GLuint, GLuint> Samplers;
-static eastl::unordered_map<GLuint, GLuint> ActiveTextures;
 static eastl::unordered_map<GLuint, TextureParam> Textures;
+static eastl::unordered_map<GLuint, GLuint> ActiveTextures;
 
 void GLInitState(GLstate *state)
 {
@@ -583,28 +592,6 @@ void GLBlendColor(GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha)
 	}
 }
 
-void GLBindFramebuffer(GLenum target, GLuint framebuffer)
-{
-	switch (target) {
-	case GL_FRAMEBUFFER:
-	case GL_DRAW_FRAMEBUFFER:
-	case GL_READ_FRAMEBUFFER:
-		if (FrameBuffers.find(target) == FrameBuffers.end() || FrameBuffers[target].framebuffer != framebuffer) {
-			FrameBuffers[target].framebuffer = framebuffer;
-			glBindFramebuffer(target, framebuffer);
-		}
-		break;
-	}
-}
-
-void GLBindProgramPipeline(GLuint pipeline)
-{
-	if (ProgramPipeline.pipeline != pipeline) {
-		ProgramPipeline.pipeline = pipeline;
-		glBindProgramPipeline(pipeline);
-	}
-}
-
 void GLBindVertexArray(GLuint array)
 {
 	if (VertexArray.array != array) {
@@ -652,7 +639,7 @@ void GLBindBufferBase(GLenum target, GLuint index, GLuint buffer)
 	}
 }
 
-void GLBindBufferRange(GLenum target, GLuint index, GLuint buffer, GLintptr offset, GLsizeiptr size)
+void GLBindBufferRange(GLenum target, GLuint index, GLuint buffer, GLint offset, GLsizei size)
 {
 	switch (target) {
 	case GL_ATOMIC_COUNTER_BUFFER:
@@ -692,6 +679,107 @@ void GLBindTexture(GLuint unit, GLenum target, GLuint texture)
 		Textures[unit].target = target;
 		Textures[unit].texture = texture;
 		glBindTexture(target, texture);
+	}
+}
+
+void GLBindProgramPipeline(GLuint pipeline)
+{
+	if (ProgramPipeline.pipeline != pipeline) {
+		ProgramPipeline.pipeline = pipeline;
+		glBindProgramPipeline(pipeline);
+	}
+}
+
+void GLBindFramebuffer(GLenum target, GLuint framebuffer)
+{
+	switch (target) {
+	case GL_FRAMEBUFFER:
+	case GL_DRAW_FRAMEBUFFER:
+	case GL_READ_FRAMEBUFFER:
+		if (FrameBuffers.find(target) == FrameBuffers.end() || FrameBuffers[target].framebuffer != framebuffer) {
+			FrameBuffers[target].framebuffer = framebuffer;
+			glBindFramebuffer(target, framebuffer);
+		}
+		break;
+	}
+}
+
+void GLBindFramebufferTexture2D(GLenum target, GLenum attachment, GLenum textarget, GLuint texture, GLint level)
+{
+	if (FrameBuffers.find(target) != FrameBuffers.end()) {
+		uint32_t framebuffer = FrameBuffers[target].framebuffer;
+		if (FrameBuffers[target].attachments[framebuffer].find(attachment) == FrameBuffers[target].attachments[framebuffer].end() || FrameBuffers[target].attachments[framebuffer][attachment].target != textarget || FrameBuffers[target].attachments[framebuffer][attachment].texture != texture || FrameBuffers[target].attachments[framebuffer][attachment].level != level) {
+			FrameBuffers[target].attachments[framebuffer][attachment].target = textarget;
+			FrameBuffers[target].attachments[framebuffer][attachment].texture = texture;
+			FrameBuffers[target].attachments[framebuffer][attachment].level = level;
+			glFramebufferTexture2D(target, attachment, textarget, texture, level);
+		}
+	}
+}
+
+void GLReadBuffers(GLenum target, GLsizei n, const GLenum *bufs)
+{
+	if (FrameBuffers.find(target) != FrameBuffers.end()) {
+		bool bReset = false;
+		uint32_t framebuffer = FrameBuffers[target].framebuffer;
+
+		if (n != FrameBuffers[target].readbuffers[framebuffer].size()) {
+			bReset = true;
+		}
+		else {
+			for (int index = 0; index < n; index++) {
+				if (bufs[index] != FrameBuffers[target].readbuffers[framebuffer][index]) {
+					bReset = true;
+					break;
+				}
+			}
+		}
+
+		if (bReset) {
+			FrameBuffers[target].readbuffers[framebuffer].clear();
+
+			for (int index = 0; index < n; index++) {
+				FrameBuffers[target].readbuffers[framebuffer].emplace_back(bufs[index]);
+			}
+
+			glReadBuffers(n, bufs);
+		}
+	}
+	else {
+		glReadBuffers(n, bufs);
+	}
+}
+
+void GLDrawBuffers(GLenum target, GLsizei n, const GLenum *bufs)
+{
+	if (FrameBuffers.find(target) != FrameBuffers.end()) {
+		bool bReset = false;
+		uint32_t framebuffer = FrameBuffers[target].framebuffer;
+
+		if (n != FrameBuffers[target].drawbuffers[framebuffer].size()) {
+			bReset = true;
+		}
+		else {
+			for (int index = 0; index < n; index++) {
+				if (bufs[index] != FrameBuffers[target].drawbuffers[framebuffer][index]) {
+					bReset = true;
+					break;
+				}
+			}
+		}
+
+		if (bReset) {
+			FrameBuffers[target].drawbuffers[framebuffer].clear();
+
+			for (int index = 0; index < n; index++) {
+				FrameBuffers[target].drawbuffers[framebuffer].emplace_back(bufs[index]);
+			}
+
+			glDrawBuffers(n, bufs);
+		}
+	}
+	else {
+		glDrawBuffers(n, bufs);
 	}
 }
 #pragma endregion

@@ -7,8 +7,14 @@
 #define UNIFORM_CAMERA_NAME "Camera"
 
 
-CGfxRenderer::CGfxRenderer(void *hDC, const char *szShaderCachePath)
-	: m_hDC(hDC)
+CGfxRenderer* CGfxRenderer::pInstance = NULL;
+CGfxRenderer* CGfxRenderer::GetInstance(void)
+{
+	return pInstance;
+}
+
+CGfxRenderer::CGfxRenderer(void *hDC, const char *szShaderCachePath, int width, int height, uint32_t format)
+	: m_pSwapChain(NULL)
 
 	, m_pScreenMesh(NULL)
 	, m_pGlobalPass(NULL)
@@ -29,6 +35,8 @@ CGfxRenderer::CGfxRenderer(void *hDC, const char *szShaderCachePath)
 
 	, m_pShaderCompiler(NULL)
 {
+	pInstance = this;
+
 	m_pScreenMesh = new CGfxMesh(0);
 	m_pGlobalPass = new CGfxMaterialPass(0);
 
@@ -44,6 +52,7 @@ CGfxRenderer::CGfxRenderer(void *hDC, const char *szShaderCachePath)
 	m_pRenderPassManager = new CGfxRenderPassManager;
 	m_pFrameBufferManager = new CGfxFrameBufferManager;
 
+	m_pSwapChain = new CGfxSwapChain(hDC, width, height, format);
 	m_pShaderCompiler = new CGfxShaderCompiler(szShaderCachePath);
 
 	struct Vertex {
@@ -70,6 +79,9 @@ CGfxRenderer::CGfxRenderer(void *hDC, const char *szShaderCachePath)
 
 CGfxRenderer::~CGfxRenderer(void)
 {
+	delete m_pSwapChain;
+	delete m_pShaderCompiler;
+
 	delete m_pScreenMesh;
 	delete m_pGlobalPass;
 
@@ -84,9 +96,14 @@ CGfxRenderer::~CGfxRenderer(void)
 	delete m_pMaterialManager;
 	delete m_pRenderPassManager;
 	delete m_pFrameBufferManager;
-
-	delete m_pShaderCompiler;
 }
+
+#pragma region SwapChain
+CGfxSwapChain* CGfxRenderer::GetSwapChain(void) const
+{
+	return m_pSwapChain;
+}
+#pragma endregion
 
 #pragma region Shader Compiler
 CGfxShaderCompiler* CGfxRenderer::GetShaderCompiler(void) const
@@ -145,12 +162,12 @@ CGfxTextureCubeMapPtr CGfxRenderer::CreateTextureCubeMap(uint32_t name)
 	return m_pTextureManager->CreateTextureCubeMap(name);
 }
 
-CGfxRenderPassPtr CGfxRenderer::CreateRenderPass(uint32_t numAttachments, uint32_t numSubpasses)
+CGfxRenderPassPtr CGfxRenderer::CreateRenderPass(int numAttachments, int numSubpasses)
 {
 	return m_pRenderPassManager->CreateRenderPass(numAttachments, numSubpasses);
 }
 
-CGfxFrameBufferPtr CGfxRenderer::CreateFrameBuffer(uint32_t width, uint32_t height)
+CGfxFrameBufferPtr CGfxRenderer::CreateFrameBuffer(int width, int height)
 {
 	return m_pFrameBufferManager->CreateFrameBuffer(width, height);
 }
@@ -203,18 +220,6 @@ void CGfxRenderer::DestroyRenderPass(CGfxRenderPass *pRenderPass)
 void CGfxRenderer::DestroyFrameBuffer(CGfxFrameBuffer *pFrameBuffer)
 {
 	m_pFrameBufferManager->DestroyFrameBuffer(pFrameBuffer);
-}
-#pragma endregion
-
-#pragma region Camera
-CGfxCamera* CGfxRenderer::CreateCamera(void) const
-{
-	return new CGfxCamera;
-}
-
-void CGfxRenderer::DestroyCamera(CGfxCamera *pCamera) const
-{
-	delete pCamera;
 }
 #pragma endregion
 
@@ -462,9 +467,7 @@ void CGfxRenderer::Submit(const CGfxCommandBuffer *pCommandBuffer)
 
 void CGfxRenderer::Present(void)
 {
-#ifdef _WINDOWS
-	::SwapBuffers((HDC)m_hDC);
-#endif
+	m_pSwapChain->Present();
 
 	m_pCurrentPass = NULL;
 	m_pCurrentPipeline = NULL;

@@ -2,8 +2,7 @@
 #include "RenderSolutionDeferred.h"
 
 
-CRenderSolutionDeferred::CRenderSolutionDeferred(int screenWidth, int screenHeight)
-	: CRenderSolutionBase(screenWidth, screenHeight)
+CRenderSolutionDeferred::CRenderSolutionDeferred(void)
 {
 
 }

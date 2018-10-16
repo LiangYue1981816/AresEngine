@@ -2,11 +2,12 @@
 #include "RenderSolutionDefault.h"
 
 
-CRenderSolutionDefault::CRenderSolutionDefault(int screenWidth, int screenHeight)
-	: CRenderSolutionBase(screenWidth, screenHeight)
-	, m_bEnableMSAA(false)
+CRenderSolutionDefault::CRenderSolutionDefault(void)
+	: m_bEnableMSAA(false)
 {
-
+	m_ptrRenderPass = Renderer()->CreateRenderPass(1, 1);
+	m_ptrRenderPass->SetColorAttachment(0, false, true, 0.2f, 0.2f, 0.2f, 0.0f);
+	m_ptrRenderPass->SetSubpassOutputColorReference(0, 0);
 }
 
 CRenderSolutionDefault::~CRenderSolutionDefault(void)
@@ -25,9 +26,8 @@ void CRenderSolutionDefault::SetEnableMSAA(bool bEnable, int width, int height, 
 			m_ptrColorTextureMSAA = Renderer()->CreateTexture2D(HashValue("ColorTextureMSAA"));
 			m_ptrColorTextureMSAA->Create(GL_RGBA, GL_RGBA8, width, height, 1, samples);
 
-			m_ptrFrameBufferMSAA = Renderer()->CreateFrameBuffer(width, height, true, samples);
-			m_ptrFrameBufferMSAA->SetColorTexture(0, m_ptrColorTextureMSAA, false, false);
-			m_ptrFrameBufferMSAA->Apply();
+			m_ptrFrameBufferMSAA = Renderer()->CreateFrameBuffer(width, height);
+			m_ptrFrameBufferMSAA->SetAttachmentTexture(0, m_ptrColorTextureMSAA);
 		}
 		else {
 			m_ptrFrameBufferMSAA.Release();
@@ -54,6 +54,20 @@ void CRenderSolutionDefault::Render(int indexQueue)
 
 void CRenderSolutionDefault::Present(int indexQueue)
 {
+	CGfxCommandBuffer *pMainCommandBuffer = &m_mainCommandBuffer[indexQueue];
+
+	const CGfxRenderPassPtr &ptrRenderPass = m_ptrRenderPass;
+	const CGfxFrameBufferPtr &ptrFrameBuffer = m_ptrFrameBufferScreens[Renderer()->GetSwapChain()->GetTextureIndex()];
+
+	Renderer()->CmdBeginRenderPass(pMainCommandBuffer, ptrFrameBuffer, ptrRenderPass);
+	{
+		MainCamera()->CmdExecute(pMainCommandBuffer, indexQueue);
+	}
+	Renderer()->CmdEndRenderPass(pMainCommandBuffer);
+
+	Renderer()->Submit(pMainCommandBuffer);
+	Renderer()->Present();
+
 	/*
 	CGfxCommandBuffer *pMainCommandBuffer = &m_mainCommandBuffer[indexQueue];
 	CGfxFrameBufferPtr &ptrFrameBuffer = m_bEnableMSAA ? m_ptrFrameBufferMSAA : m_ptrFrameBufferScreen;

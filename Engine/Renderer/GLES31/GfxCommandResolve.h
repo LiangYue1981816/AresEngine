@@ -22,16 +22,9 @@ public:
 	{
 		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_RESOLVE, "CommandResolve");
 		{
-			/*
-			if (m_ptrFrameBufferSrc.IsValid() && m_ptrFrameBufferDst.IsValid() && m_ptrFrameBufferSrc != m_ptrFrameBufferDst) {
-				GLBindFramebuffer(GL_READ_FRAMEBUFFER, m_ptrFrameBufferSrc->GetFBO());
-				GLBindFramebuffer(GL_DRAW_FRAMEBUFFER, m_ptrFrameBufferDst->GetFBO());
-				glBlitFramebuffer(
-					0, 0, m_ptrFrameBufferSrc->GetWidth() - 1, m_ptrFrameBufferSrc->GetHeight() - 1, 
-					0, 0, m_ptrFrameBufferDst->GetWidth() - 1, m_ptrFrameBufferDst->GetHeight() - 1, 
-					GL_COLOR_BUFFER_BIT, GL_NEAREST);
+			if (m_ptrFrameBuffer.IsValid() && m_ptrRenderPass.IsValid()) {
+				m_ptrFrameBuffer->Resolve(m_ptrRenderPass->GetAttachments(), m_ptrRenderPass->GetSubPass(m_indexSubPass));
 			}
-			*/
 		}
 	}
 

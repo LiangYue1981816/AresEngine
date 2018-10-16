@@ -9,7 +9,7 @@ class CRenderSolutionForwardPlus : public CRenderSolutionBase
 
 
 private:
-	CRenderSolutionForwardPlus(int screenWidth, int screenHeight);
+	CRenderSolutionForwardPlus(void);
 	virtual ~CRenderSolutionForwardPlus(void);
 
 

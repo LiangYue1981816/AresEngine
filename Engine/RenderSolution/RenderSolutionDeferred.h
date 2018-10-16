@@ -9,7 +9,7 @@ class CRenderSolutionDeferred : public CRenderSolutionBase
 
 
 private:
-	CRenderSolutionDeferred(int screenWidth, int screenHeight);
+	CRenderSolutionDeferred(void);
 	virtual ~CRenderSolutionDeferred(void);
 
 

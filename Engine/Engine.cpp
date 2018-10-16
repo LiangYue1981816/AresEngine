@@ -11,10 +11,10 @@ CEngine* CEngine::GetInstance(void)
 	return pInstance;
 }
 
-void CEngine::Create(void *hDC, const char *szShaderCachePath, int screenWidth, int screenHeight)
+void CEngine::Create(void *hDC, const char *szShaderCachePath, int screenWidth, int screenHeight, uint32_t screenPixelFormat)
 {
 	if (pInstance == NULL) {
-		pInstance = new CEngine(hDC, szShaderCachePath, screenWidth, screenHeight);
+		pInstance = new CEngine(hDC, szShaderCachePath, screenWidth, screenHeight, screenPixelFormat);
 	}
 }
 
@@ -33,7 +33,7 @@ void CEngine::Destroy(void)
 #endif
 }
 
-CEngine::CEngine(void *hDC, const char *szShaderCachePath, int screenWidth, int screenHeight)
+CEngine::CEngine(void *hDC, const char *szShaderCachePath, int screenWidth, int screenHeight, uint32_t screenPixelFormat)
 	: m_indexQueue(0)
 
 	, m_totalLogicTime(0.0f)
@@ -45,13 +45,13 @@ CEngine::CEngine(void *hDC, const char *szShaderCachePath, int screenWidth, int 
 {
 	pInstance = this;
 
-	m_pRenderer = new CGfxRenderer(hDC, szShaderCachePath);
+	m_pRenderer = new CGfxRenderer(hDC, szShaderCachePath, screenWidth, screenHeight, screenPixelFormat);
 	m_pSceneManager = new CSceneManager;
 
-	m_pRenderSolutions[RENDER_SOLUTION_DEFAULT] = new CRenderSolutionDefault(screenWidth, screenHeight);
-	m_pRenderSolutions[RENDER_SOLUTION_DEFERRED] = new CRenderSolutionDeferred(screenWidth, screenHeight);
-	m_pRenderSolutions[RENDER_SOLUTION_FORWARD] = new CRenderSolutionForward(screenWidth, screenHeight);
-	m_pRenderSolutions[RENDER_SOLUTION_FORWARD_PLUS] = new CRenderSolutionForwardPlus(screenWidth, screenHeight);
+	m_pRenderSolutions[RENDER_SOLUTION_DEFAULT] = new CRenderSolutionDefault;
+	m_pRenderSolutions[RENDER_SOLUTION_DEFERRED] = new CRenderSolutionDeferred;
+	m_pRenderSolutions[RENDER_SOLUTION_FORWARD] = new CRenderSolutionForward;
+	m_pRenderSolutions[RENDER_SOLUTION_FORWARD_PLUS] = new CRenderSolutionForwardPlus;
 }
 
 CEngine::~CEngine(void)

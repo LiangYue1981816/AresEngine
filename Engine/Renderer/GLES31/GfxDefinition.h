@@ -1,34 +1,15 @@
 #pragma once
 
 class CGfxRenderer;
-class CGfxCamera;
 
-class CGfxCommandBase;
-class CGfxCommandBeginPass;
-class CGfxCommandBindCamera;
-class CGfxCommandBindInputTexture;
-class CGfxCommandBindMaterial;
-class CGfxCommandBindMesh;
+class CGfxCamera;
+class CGfxSwapChain;
+class CGfxRenderQueue;
 class CGfxCommandBuffer;
-class CGfxCommandClearColor;
-class CGfxCommandClearDepth;
-class CGfxCommandDrawElements;
-class CGfxCommandDrawIndirect;
-class CGfxCommandDrawInstance;
-class CGfxCommandEndPass;
-class CGfxCommandExecute;
-class CGfxCommandSetBlend;
-class CGfxCommandSetColorWrite;
-class CGfxCommandSetCullFace;
-class CGfxCommandSetDepthTest;
-class CGfxCommandSetDepthWrite;
-class CGfxCommandSetPolygonOffset;
-class CGfxCommandSetScissor;
-class CGfxCommandSetViewport;
 
 class CGfxIndexBuffer;
-class CGfxInstanceBuffer;
 class CGfxVertexBuffer;
+class CGfxInstanceBuffer;
 class CGfxVertexArrayObject;
 
 class CGfxRenderPass;
