@@ -24,10 +24,4 @@ private:
 
 private:
 	CGfxRenderPassPtr m_ptrRenderPass;
-	CGfxRenderPassPtr m_ptrRenderPassMSAA;
-
-private:
-	bool m_bEnableMSAA;
-	CGfxTexture2DPtr m_ptrColorTextureMSAA;
-	CGfxFrameBufferPtr m_ptrFrameBufferMSAA;
 };

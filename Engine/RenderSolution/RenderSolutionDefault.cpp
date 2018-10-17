@@ -3,13 +3,14 @@
 
 
 CRenderSolutionDefault::CRenderSolutionDefault(void)
-	: m_bEnableMSAA(false)
 {
-	m_ptrRenderPass = Renderer()->CreateRenderPass(2, 1);
+	m_ptrRenderPass = Renderer()->CreateRenderPass(3, 1);
 	m_ptrRenderPass->SetDepthStencilAttachment(0, true, true, 1.0f, 0);
-	m_ptrRenderPass->SetColorAttachment(1, false, true, 0.2f, 0.2f, 0.2f, 0.0f);
+	m_ptrRenderPass->SetColorAttachment(1, true, true, 0.2f, 0.2f, 0.2f, 0.0f);
+	m_ptrRenderPass->SetColorAttachment(2, false, true, 0.2f, 0.2f, 0.2f, 0.0f);
 	m_ptrRenderPass->SetSubpassOutputDepthStencilReference(0, 0);
 	m_ptrRenderPass->SetSubpassOutputColorReference(0, 1);
+	m_ptrRenderPass->SetSubpassResolveColorReference(0, 2);
 }
 
 CRenderSolutionDefault::~CRenderSolutionDefault(void)
@@ -20,23 +21,7 @@ CRenderSolutionDefault::~CRenderSolutionDefault(void)
 
 void CRenderSolutionDefault::SetEnableMSAA(bool bEnable, int width, int height, int samples)
 {
-	/*
-	if (m_bEnableMSAA != bEnable) {
-		m_bEnableMSAA = bEnable;
 
-		if (m_bEnableMSAA) {
-			m_ptrColorTextureMSAA = Renderer()->CreateTexture2D(HashValue("ColorTextureMSAA"));
-			m_ptrColorTextureMSAA->Create(GL_RGBA, GL_RGBA8, width, height, 1, samples);
-
-			m_ptrFrameBufferMSAA = Renderer()->CreateFrameBuffer(width, height);
-			m_ptrFrameBufferMSAA->SetAttachmentTexture(0, m_ptrColorTextureMSAA);
-		}
-		else {
-			m_ptrFrameBufferMSAA.Release();
-			m_ptrColorTextureMSAA.Release();
-		}
-	}
-	*/
 }
 
 void CRenderSolutionDefault::Render(int indexQueue)
