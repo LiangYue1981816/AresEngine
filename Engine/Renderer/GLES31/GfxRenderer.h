@@ -29,11 +29,7 @@
 #include "GfxExtension.h"
 #include "GfxDefinition.h"
 
-#include "GfxShaderCompiler.h"
-
 #include "GfxResource.h"
-#include "GfxResourceManager.h"
-
 #include "GfxMesh.h"
 #include "GfxShader.h"
 #include "GfxSampler.h"
@@ -47,6 +43,7 @@
 #include "GfxRenderPass.h"
 #include "GfxFrameBuffer.h"
 
+#include "GfxResourceManager.h"
 #include "GfxMeshManager.h"
 #include "GfxShaderManager.h"
 #include "GfxSamplerManager.h"
@@ -68,6 +65,7 @@
 #include "GfxSwapChain.h"
 #include "GfxRenderQueue.h"
 #include "GfxCommandBuffer.h"
+#include "GfxShaderCompiler.h"
 
 #include "GfxProfiler.h"
 
@@ -85,6 +83,7 @@ class CGfxRenderer
 	friend class CGfxCommandBindPipeline;
 	friend class CGfxCommandBindMaterialPass;
 	friend class CGfxCommandBindInputTexture;
+	friend class CGfxCommandBindSubPassInputTexture;
 	friend class CGfxCommandUniform1f;
 	friend class CGfxCommandUniform2f;
 	friend class CGfxCommandUniform3f;

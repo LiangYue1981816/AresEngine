@@ -34,13 +34,13 @@ public:
 	const CGfxUniformCamera* GetUniformCamera(void) const;
 
 public:
-	glm::vec3 WorldToScreen(const glm::vec3 &world);
-	glm::vec3 ScreenToWorld(const glm::vec3 &screen);
+	glm::vec3 WorldToScreen(const glm::vec3 &world) const;
+	glm::vec3 ScreenToWorld(const glm::vec3 &screen) const;
 
 public:
-	bool IsVisible(const glm::vec3 &vertex);
-	bool IsVisible(const glm::aabb &aabb);
-	bool IsVisible(const glm::sphere &sphere);
+	bool IsVisible(const glm::vec3 &vertex) const;
+	bool IsVisible(const glm::aabb &aabb) const;
+	bool IsVisible(const glm::sphere &sphere) const;
 
 public:
 	void AddQueue(int indexThread, int indexQueue, const CGfxMaterialPtr &ptrMaterial, const CGfxMeshPtr &ptrMesh, const glm::mat4 &mtxTransform);

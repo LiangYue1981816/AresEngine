@@ -19,7 +19,10 @@ CGfxPipelineManager::~CGfxPipelineManager(void)
 
 CGfxPipelineCompute* CGfxPipelineManager::CreatePipelineCompute(const CGfxShader *pComputeShader)
 {
-	uint32_t name = pComputeShader->GetName();
+	char szName[_MAX_STRING];
+	sprintf(szName, "%8.8X", pComputeShader->GetName());
+
+	uint32_t name = HashValue(szName);
 
 	if (m_pPipelines[name] == NULL) {
 		m_pPipelines[name] = new CGfxPipelineCompute(name);

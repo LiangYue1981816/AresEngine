@@ -47,6 +47,7 @@
     <ClInclude Include="Engine\Renderer\GLES31\GfxCommandBindMaterialPass.h" />
     <ClInclude Include="Engine\Renderer\GLES31\GfxCommandBindMesh.h" />
     <ClInclude Include="Engine\Renderer\GLES31\GfxCommandBindPipeline.h" />
+    <ClInclude Include="Engine\Renderer\GLES31\GfxCommandBindSubPassInputTexture.h" />
     <ClInclude Include="Engine\Renderer\GLES31\GfxCommandBuffer.h" />
     <ClInclude Include="Engine\Renderer\GLES31\GfxCommandClearColor.h" />
     <ClInclude Include="Engine\Renderer\GLES31\GfxCommandClearDepth.h" />

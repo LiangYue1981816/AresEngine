@@ -13,7 +13,7 @@ private:
 
 
 private:
-	CGfxRenderPass* CreateRenderPass(uint32_t numAttachments, uint32_t numSubpasses);
+	CGfxRenderPass* CreateRenderPass(int numAttachments, int numSubpasses);
 	void DestroyRenderPass(CGfxRenderPass *pRenderPass);
 
 

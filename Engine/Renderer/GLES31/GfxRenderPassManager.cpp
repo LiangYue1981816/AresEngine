@@ -17,7 +17,7 @@ CGfxRenderPassManager::~CGfxRenderPassManager(void)
 	m_pRenderPasses.clear();
 }
 
-CGfxRenderPass* CGfxRenderPassManager::CreateRenderPass(uint32_t numAttachments, uint32_t numSubpasses)
+CGfxRenderPass* CGfxRenderPassManager::CreateRenderPass(int numAttachments, int numSubpasses)
 {
 	CGfxRenderPass *pRenderPass = new CGfxRenderPass(numAttachments, numSubpasses);
 	m_pRenderPasses[pRenderPass] = pRenderPass;

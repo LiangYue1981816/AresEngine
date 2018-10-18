@@ -62,8 +62,8 @@ CGfxRenderer::CGfxRenderer(void *hDC, const char *szShaderCachePath, int width, 
 
 	const static Vertex vertices[] = {
 		{ glm::vec3(-1.0f, -1.0f, 0.0f), glm::vec2(0.0f, 0.0f) },
-		{ glm::vec3(1.0f,  -1.0f, 0.0f), glm::vec2(1.0f, 0.0f) },
-		{ glm::vec3(1.0f,   1.0f, 0.0f), glm::vec2(1.0f, 1.0f) },
+		{ glm::vec3( 1.0f, -1.0f, 0.0f), glm::vec2(1.0f, 0.0f) },
+		{ glm::vec3( 1.0f,  1.0f, 0.0f), glm::vec2(1.0f, 1.0f) },
 		{ glm::vec3(-1.0f,  1.0f, 0.0f), glm::vec2(0.0f, 1.0f) },
 	};
 

@@ -58,14 +58,14 @@ void CGfxFrameBuffer::Bind(const AttachmentInformation *pAttachmentInformations,
 		uint32_t indexAttachment = 0;
 		eastl::vector<uint32_t> drawBuffers;
 
-		for (const auto &itAttachment : pSubPassInformation->outputAttachments) {
-			const CGfxTexture2DPtr ptrColorTexture = GetAttachmentTexture(itAttachment.first);
-			if (ptrColorTexture.IsValid()) {
+		for (const auto &itOutputAttachment : pSubPassInformation->outputAttachments) {
+			const CGfxTexture2DPtr ptrOutputTexture = GetAttachmentTexture(itOutputAttachment.first);
+			if (ptrOutputTexture.IsValid()) {
 				drawBuffers.emplace_back(GL_COLOR_ATTACHMENT0 + indexAttachment);
-				GLBindFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + indexAttachment, ptrColorTexture->GetTarget(), ptrColorTexture->GetTexture(), 0);
+				GLBindFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + indexAttachment, ptrOutputTexture->GetTarget(), ptrOutputTexture->GetTexture(), 0);
 
-				if (pAttachmentInformations[itAttachment.first].bClear) {
-					glClearBufferfv(GL_COLOR, indexAttachment, pAttachmentInformations[itAttachment.first].color);
+				if (pAttachmentInformations[itOutputAttachment.first].bClear) {
+					glClearBufferfv(GL_COLOR, indexAttachment, pAttachmentInformations[itOutputAttachment.first].color);
 				}
 
 				indexAttachment++;
@@ -100,14 +100,14 @@ void CGfxFrameBuffer::Resolve(const AttachmentInformation *pAttachmentInformatio
 		uint32_t indexAttachment = 0;
 		eastl::vector<uint32_t> drawBuffers;
 
-		for (const auto &itAttachment : pSubPassInformation->resolveAttachments) {
-			const CGfxTexture2DPtr ptrColorTexture = GetAttachmentTexture(itAttachment.first);
-			if (ptrColorTexture.IsValid()) {
+		for (const auto &itResolveAttachment : pSubPassInformation->resolveAttachments) {
+			const CGfxTexture2DPtr ptrResolveTexture = GetAttachmentTexture(itResolveAttachment.first);
+			if (ptrResolveTexture.IsValid()) {
 				drawBuffers.emplace_back(GL_COLOR_ATTACHMENT0 + indexAttachment);
-				GLBindFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + indexAttachment, ptrColorTexture->GetTarget(), ptrColorTexture->GetTexture(), 0);
-					
-				if (pAttachmentInformations[itAttachment.first].bClear) {
-					glClearBufferfv(GL_COLOR, indexAttachment, pAttachmentInformations[itAttachment.first].color);
+				GLBindFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + indexAttachment, ptrResolveTexture->GetTarget(), ptrResolveTexture->GetTexture(), 0);
+
+				if (pAttachmentInformations[itResolveAttachment.first].bClear) {
+					glClearBufferfv(GL_COLOR, indexAttachment, pAttachmentInformations[itResolveAttachment.first].color);
 				}
 
 				indexAttachment++;
@@ -137,10 +137,10 @@ void CGfxFrameBuffer::InvalidateFramebuffer(const AttachmentInformation *pAttach
 	{
 		uint32_t indexAttachment = 0;
 
-		for (const auto &itAttachment : pSubPassInformation->outputAttachments) {
-			const CGfxTexture2DPtr ptrColorTexture = GetAttachmentTexture(itAttachment.first);
-			if (ptrColorTexture.IsValid()) {
-				if (pAttachmentInformations[itAttachment.first].bInvalidation) {
+		for (const auto &itOutputAttachment : pSubPassInformation->outputAttachments) {
+			const CGfxTexture2DPtr ptrOutputTexture = GetAttachmentTexture(itOutputAttachment.first);
+			if (ptrOutputTexture.IsValid()) {
+				if (pAttachmentInformations[itOutputAttachment.first].bInvalidation) {
 					discardBuffers.emplace_back(GL_COLOR_ATTACHMENT0 + indexAttachment);
 				}
 

@@ -49,7 +49,7 @@ bool CGfxRenderPass::SetDepthStencilAttachment(int indexAttachment, bool bInvali
 	return true;
 }
 
-bool CGfxRenderPass::SetSubpassInputColorReference(int indexSubPass, int indexAttachment)
+bool CGfxRenderPass::SetSubpassInputColorReference(int indexSubPass, int indexAttachment, const char *szName)
 {
 	if (indexSubPass >= (int)m_subpasses.size()) {
 		return false;
@@ -59,7 +59,7 @@ bool CGfxRenderPass::SetSubpassInputColorReference(int indexSubPass, int indexAt
 		return false;
 	}
 
-	m_subpasses[indexSubPass].inputAttachments[indexAttachment] = indexAttachment;
+	m_subpasses[indexSubPass].inputAttachments[indexAttachment] = szName;
 
 	return true;
 }

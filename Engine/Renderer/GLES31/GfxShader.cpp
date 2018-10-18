@@ -96,6 +96,12 @@ bool CGfxShader::CreateLayouts(void)
 		}
 	}
 
+	for (const auto &itSubpassInput : shaderResources.subpass_inputs) {
+		if (m_pShaderCompiler->get_type(itSubpassInput.base_type_id).basetype == spirv_cross::SPIRType::Image) {
+			SetSampledImageLocation(itSubpassInput.name.c_str());
+		}
+	}
+
 	return true;
 }
 

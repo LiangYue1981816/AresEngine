@@ -70,46 +70,6 @@ void CGfxPipelineGraphics::Destroy(void)
 	glUseProgramStages(m_pipeline, glGetProgramStage(shaderc_fragment_shader), 0);
 }
 
-void CGfxPipelineGraphics::SetEnableCullFace(bool bEnable, uint32_t cullFace, uint32_t frontFace)
-{
-	m_state.bEnableCullFace = bEnable ? GL_TRUE : GL_FALSE;
-	m_state.cullFace = cullFace;
-	m_state.frontFace = frontFace;
-}
-
-void CGfxPipelineGraphics::SetEnableDepthTest(bool bEnable, uint32_t depthFunc)
-{
-	m_state.bEnableDepthTest = bEnable ? GL_TRUE : GL_FALSE;
-	m_state.depthFunc = depthFunc;
-}
-
-void CGfxPipelineGraphics::SetEnableDepthWrite(bool bEnable)
-{
-	m_state.bEnableDepthWrite = bEnable ? GL_TRUE : GL_FALSE;
-}
-
-void CGfxPipelineGraphics::SetEnableColorWrite(bool bEnableRed, bool bEnableGreen, bool bEnableBlue, bool bEnableAlpha)
-{
-	m_state.bEnableColorWrite[0] = bEnableRed ? GL_TRUE : GL_FALSE;
-	m_state.bEnableColorWrite[1] = bEnableGreen ? GL_TRUE : GL_FALSE;
-	m_state.bEnableColorWrite[2] = bEnableBlue ? GL_TRUE : GL_FALSE;
-	m_state.bEnableColorWrite[3] = bEnableAlpha ? GL_TRUE : GL_FALSE;
-}
-
-void CGfxPipelineGraphics::SetEnableBlend(bool bEnable, uint32_t srcFactor, uint32_t dstFactor)
-{
-	m_state.bEnableBlend = bEnable ? GL_TRUE : GL_FALSE;
-	m_state.blendSrcFactor = srcFactor;
-	m_state.blendDstFactor = dstFactor;
-}
-
-void CGfxPipelineGraphics::SetEnablePolygonOffset(bool bEnable, float factor, float units)
-{
-	m_state.bEnablePolygonOffset = bEnable ? GL_TRUE : GL_FALSE;
-	m_state.polygonOffsetFactor = factor;
-	m_state.polygonOffsetUnits = units;
-}
-
 void CGfxPipelineGraphics::BindPipeline(void) const
 {
 	GLBindState(&m_state);

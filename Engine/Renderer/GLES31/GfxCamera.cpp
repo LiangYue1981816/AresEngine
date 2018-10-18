@@ -101,27 +101,27 @@ const CGfxUniformCamera* CGfxCamera::GetUniformCamera(void) const
 	return m_pUniformCamera;
 }
 
-glm::vec3 CGfxCamera::WorldToScreen(const glm::vec3 &world)
+glm::vec3 CGfxCamera::WorldToScreen(const glm::vec3 &world) const
 {
 	return m_camera.worldToScreen(world);
 }
 
-glm::vec3 CGfxCamera::ScreenToWorld(const glm::vec3 &screen)
+glm::vec3 CGfxCamera::ScreenToWorld(const glm::vec3 &screen) const
 {
 	return m_camera.screenToWorld(screen);
 }
 
-bool CGfxCamera::IsVisible(const glm::vec3 &vertex)
+bool CGfxCamera::IsVisible(const glm::vec3 &vertex) const
 {
 	return m_camera.visible(vertex);
 }
 
-bool CGfxCamera::IsVisible(const glm::aabb &aabb)
+bool CGfxCamera::IsVisible(const glm::aabb &aabb) const
 {
 	return m_camera.visible(aabb);
 }
 
-bool CGfxCamera::IsVisible(const glm::sphere &sphere)
+bool CGfxCamera::IsVisible(const glm::sphere &sphere) const
 {
 	return m_camera.visible(sphere);
 }

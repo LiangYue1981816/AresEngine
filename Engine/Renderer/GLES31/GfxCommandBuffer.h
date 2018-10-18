@@ -69,11 +69,13 @@ public:
 
 private:
 	bool m_bMainCommandBuffer;
-	bool m_bInPassScope;
 
 private:
+	bool m_bInPassScope;
 	uint32_t m_indexSubPass;
 	CGfxRenderPassPtr m_ptrRenderPass;
 	CGfxFrameBufferPtr m_ptrFrameBuffer;
-	eastl::vector<CGfxCommandBase*> m_commands;
+
+private:
+	eastl::vector<CGfxCommandBase*> m_pCommands;
 };
