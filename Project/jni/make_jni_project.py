@@ -12,13 +12,25 @@ def ModuleFileList(moduleName, msvcProjectFileName, androidFileName):
 	for itemGroup in itemGroups:
 		files = itemGroup.getElementsByTagName("ClCompile");
 		for index in range(files.length):
+			isExcluded = False;
+			
+			excluded = files[index].getElementsByTagName("ExcludedFromBuild");
+			for index in range(excluded.length):
+				condition = excluded[index].getAttribute("Condition");
+				if condition.find("Library") != "-1":
+					isExcluded = True;
+					break;
+			
+			if isExcluded == True:
+				continue;
+			
 			fileName = files[index].getAttribute("Include");
 			fileName = fileName.replace("\\", "/");
 			if index < files.length - 1:
 				fileName += " \\";
 			file.write(fileName + "\n");
-			
+	
 	file.close();
 	return;
 	
-ModuleFileList("ENGINE_SRC_FILES", "./msvc/Project.vcxproj", "./jni/ENGINE_SRC_FILES.mk");
+ModuleFileList("ENGINE_SRC_FILES", "../msvc/Project.vcxproj", "./ENGINE_SRC_FILES.mk");
