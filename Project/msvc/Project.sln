@@ -3,12 +3,14 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.2026
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AresEngine", "Project.vcxproj", "{263EF1CB-72B3-418C-ADA2-8BDAD1E1D553}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Project", "Project.vcxproj", "{263EF1CB-72B3-418C-ADA2-8BDAD1E1D553}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
 		Debug|x86 = Debug|x86
+		Library|x64 = Library|x64
+		Library|x86 = Library|x86
 		Release|x64 = Release|x64
 		Release|x86 = Release|x86
 	EndGlobalSection
@@ -17,6 +19,10 @@ Global
 		{263EF1CB-72B3-418C-ADA2-8BDAD1E1D553}.Debug|x64.Build.0 = Debug|x64
 		{263EF1CB-72B3-418C-ADA2-8BDAD1E1D553}.Debug|x86.ActiveCfg = Debug|Win32
 		{263EF1CB-72B3-418C-ADA2-8BDAD1E1D553}.Debug|x86.Build.0 = Debug|Win32
+		{263EF1CB-72B3-418C-ADA2-8BDAD1E1D553}.Library|x64.ActiveCfg = Library|x64
+		{263EF1CB-72B3-418C-ADA2-8BDAD1E1D553}.Library|x64.Build.0 = Library|x64
+		{263EF1CB-72B3-418C-ADA2-8BDAD1E1D553}.Library|x86.ActiveCfg = Library|Win32
+		{263EF1CB-72B3-418C-ADA2-8BDAD1E1D553}.Library|x86.Build.0 = Library|Win32
 		{263EF1CB-72B3-418C-ADA2-8BDAD1E1D553}.Release|x64.ActiveCfg = Release|x64
 		{263EF1CB-72B3-418C-ADA2-8BDAD1E1D553}.Release|x64.Build.0 = Release|x64
 		{263EF1CB-72B3-418C-ADA2-8BDAD1E1D553}.Release|x86.ActiveCfg = Release|Win32
