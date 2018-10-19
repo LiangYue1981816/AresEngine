@@ -2,7 +2,6 @@
 #include <io.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <windows.h>
 
 #include <gl31.h>
 #include <gli.hpp>

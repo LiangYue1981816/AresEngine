@@ -36,6 +36,7 @@ extern "C" {
 ** Khronos $Revision$ on $Date$
 */
 
+#include <windows.h>
 #include <GL/GL.h>
 #include <GLES3/gl3platform.h>
 
