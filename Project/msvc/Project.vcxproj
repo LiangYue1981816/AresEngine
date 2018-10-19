@@ -27,11 +27,26 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Application\Windows\Main.h" />
-    <ClInclude Include="..\..\Application\Windows\Resource.h" />
-    <ClInclude Include="..\..\Application\Windows\stdafx.h" />
-    <ClInclude Include="..\..\Application\Windows\targetver.h" />
-    <ClInclude Include="..\..\Application\Windows\WGLExtensions.h" />
+    <ClInclude Include="..\..\Application\Windows\Main.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Library|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Library|x64'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="..\..\Application\Windows\Resource.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Library|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Library|x64'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="..\..\Application\Windows\stdafx.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Library|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Library|x64'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="..\..\Application\Windows\targetver.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Library|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Library|x64'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="..\..\Application\Windows\WGLExtensions.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Library|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Library|x64'">true</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="..\..\Engine\Base\ComponentManager.h" />
     <ClInclude Include="..\..\Engine\Base\Define.h" />
     <ClInclude Include="..\..\Engine\Base\Delegate.h" />
@@ -264,11 +279,20 @@
     <ClCompile Include="..\..\ThirdParty\tinyxml\tinyxmlparser.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\..\Application\Windows\Big.ico" />
-    <Image Include="..\..\Application\Windows\small.ico" />
+    <Image Include="..\..\Application\Windows\Big.ico">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Library|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Library|x64'">true</ExcludedFromBuild>
+    </Image>
+    <Image Include="..\..\Application\Windows\small.ico">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Library|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Library|x64'">true</ExcludedFromBuild>
+    </Image>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="..\..\Application\Windows\Resource.rc" />
+    <ResourceCompile Include="..\..\Application\Windows\Resource.rc">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Library|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Library|x64'">true</ExcludedFromBuild>
+    </ResourceCompile>
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
