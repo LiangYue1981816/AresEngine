@@ -13,7 +13,14 @@ protected:
 
 
 public:
-	virtual void SetEnableMSAA(bool bEnable, int width, int height, int samples = 4) = 0;
+	virtual void SetEnableMSAA(bool bEnable, int samples = 4) = 0;
+
+protected:
+	virtual void CreateFrameBuffer(void) = 0;
+	virtual void DestroyFrameBuffer(void) = 0;
+
+	virtual void CreateFrameBufferMSAA(int samples) = 0;
+	virtual void DestroyFrameBufferMSAA(void) = 0;
 
 protected:
 	virtual void Render(int indexQueue) = 0;
@@ -23,11 +30,6 @@ protected:
 
 protected:
 	CGfxCommandBuffer m_mainCommandBuffer[2];
-
-	CGfxTexture2DPtr m_ptrColorTextureMSAA;
-	CGfxTexture2DPtr m_ptrDepthStencilTextureMSAA;
-
-	CGfxFrameBufferPtr m_ptrFrameBufferScreens[CGfxSwapChain::SWAPCHAIN_IMAGE_COUNT];
 
 protected:
 	CTaskGraph m_taskCommandBuffer;

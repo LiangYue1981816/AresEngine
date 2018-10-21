@@ -14,7 +14,14 @@ private:
 
 
 public:
-	virtual void SetEnableMSAA(bool bEnable, int width, int height, int samples = 4);
+	virtual void SetEnableMSAA(bool bEnable, int samples = 4);
+
+protected:
+	virtual void CreateFrameBuffer(void);
+	virtual void DestroyFrameBuffer(void);
+
+	virtual void CreateFrameBufferMSAA(int samples);
+	virtual void DestroyFrameBufferMSAA(void);
 
 private:
 	virtual void Render(int indexQueue);

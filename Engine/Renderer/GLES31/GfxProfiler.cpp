@@ -100,13 +100,13 @@ void CGfxProfiler::LogGfxMemory(void)
 	LogOutput(LOG_TAG_RENDERER, "\tVertexBuffer = %dKB\n", vertexBufferSize / 1024);
 	LogOutput(LOG_TAG_RENDERER, "\tIndexBuffer = %dKB\n", indexBufferSize / 1024);
 	LogOutput(LOG_TAG_RENDERER, "\tInstanceBuffer = %dKB\n", instanceBufferSize / 1024);
-	LogOutput(LOG_TAG_RENDERER, "Total memory = %dKB\n", (textureDataSize + uniformBufferSize + vertexBufferSize + indexBufferSize + instanceBufferSize) / 1024);
+	LogOutput(LOG_TAG_RENDERER, "\tTotal memory = %dKB\n", (textureDataSize + uniformBufferSize + vertexBufferSize + indexBufferSize + instanceBufferSize) / 1024);
 }
 
 void CGfxProfiler::LogProfiler(int frameCount)
 {
 	if (bEnableProfiler) {
-		LogOutput(LOG_TAG_RENDERER, "Profiler\n");
+		LogOutput(LOG_TAG_RENDERER, "GfxProfiler\n");
 
 		float totalTime = 0.0f;
 		for (int index = 0; index < SampleType::SAMPLE_TYPE_COUNT; index++) {
@@ -116,7 +116,7 @@ void CGfxProfiler::LogProfiler(int frameCount)
 			}
 		}
 
-		LogOutput(LOG_TAG_RENDERER, "Total time=%3.3fms\n", totalTime);
+		LogOutput(LOG_TAG_RENDERER, "\tTotal time=%3.3fms\n", totalTime);
 	}
 }
 

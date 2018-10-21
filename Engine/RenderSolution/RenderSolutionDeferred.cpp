@@ -13,7 +13,27 @@ CRenderSolutionDeferred::~CRenderSolutionDeferred(void)
 	Clearup(1);
 }
 
-void CRenderSolutionDeferred::SetEnableMSAA(bool bEnable, int width, int height, int samples)
+void CRenderSolutionDeferred::SetEnableMSAA(bool bEnable, int samples)
+{
+
+}
+
+void CRenderSolutionDeferred::CreateFrameBuffer(void)
+{
+
+}
+
+void CRenderSolutionDeferred::DestroyFrameBuffer(void)
+{
+
+}
+
+void CRenderSolutionDeferred::CreateFrameBufferMSAA(int samples)
+{
+
+}
+
+void CRenderSolutionDeferred::DestroyFrameBufferMSAA(void)
 {
 
 }

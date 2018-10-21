@@ -13,7 +13,27 @@ CRenderSolutionForward::~CRenderSolutionForward(void)
 	Clearup(1);
 }
 
-void CRenderSolutionForward::SetEnableMSAA(bool bEnable, int width, int height, int samples)
+void CRenderSolutionForward::SetEnableMSAA(bool bEnable, int samples)
+{
+
+}
+
+void CRenderSolutionForward::CreateFrameBuffer(void)
+{
+
+}
+
+void CRenderSolutionForward::DestroyFrameBuffer(void)
+{
+
+}
+
+void CRenderSolutionForward::CreateFrameBufferMSAA(int samples)
+{
+
+}
+
+void CRenderSolutionForward::DestroyFrameBufferMSAA(void)
 {
 
 }
