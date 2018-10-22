@@ -126,30 +126,17 @@ bool CGfxCamera::IsVisible(const glm::sphere &sphere) const
 	return m_camera.visible(sphere);
 }
 
-void CGfxCamera::AddQueue(int indexThread, int indexQueue, const CGfxMaterialPtr &ptrMaterial, const CGfxMeshPtr &ptrMesh, const glm::mat4 &mtxTransform)
+void CGfxCamera::AddMesh(int indexThread, int indexQueue, const CGfxMaterialPtr &ptrMaterial, const CGfxMeshPtr &ptrMesh, const glm::mat4 &mtxTransform)
 {
-	m_pRenderQueue->AddQueue(indexThread, indexQueue, ptrMaterial, ptrMesh, mtxTransform);
+	m_pRenderQueue->AddMesh(indexThread, indexQueue, ptrMaterial, ptrMesh, mtxTransform);
 }
 
-void CGfxCamera::ClearQueueAll(void)
+void CGfxCamera::Clear(int indexQueue)
 {
-	m_pRenderQueue->ClearQueueAll();
+	m_pRenderQueue->Clear(indexQueue);
 }
 
-void CGfxCamera::ClearQueue(int indexQueue)
+void CGfxCamera::CmdDraw(CGfxCommandBuffer *pCommandBuffer, int indexThread, int indexQueue, uint32_t namePass)
 {
-	m_pRenderQueue->ClearQueue(indexQueue);
-}
-
-void CGfxCamera::CmdDraw(int indexThread, int indexQueue, uint32_t namePass)
-{
-	m_pRenderQueue->CmdDraw(this, indexThread, indexQueue, namePass);
-}
-
-void CGfxCamera::CmdExecute(CGfxCommandBuffer *pMainCommandBuffer, int indexQueue)
-{
-	Renderer()->CmdSetScissor(pMainCommandBuffer, (int)m_camera.scissor.x, (int)m_camera.scissor.y, (int)m_camera.scissor.z, (int)m_camera.scissor.w);
-	Renderer()->CmdSetViewport(pMainCommandBuffer, (int)m_camera.viewport.x, (int)m_camera.viewport.y, (int)m_camera.viewport.z, (int)m_camera.viewport.w);
-
-	m_pRenderQueue->CmdExecute(pMainCommandBuffer, indexQueue);
+	m_pRenderQueue->CmdDraw(this, pCommandBuffer, indexThread, indexQueue, namePass);
 }

@@ -42,4 +42,8 @@ private:
 	CGfxTexture2DPtr m_ptrColorTextureMSAA;
 	CGfxTexture2DPtr m_ptrDepthStencilTextureMSAA;
 	CGfxFrameBufferPtr m_ptrFrameBufferScreenMSAA[CGfxSwapChain::SWAPCHAIN_IMAGE_COUNT];
+
+private:
+	CGfxCommandBuffer m_mainCommandBuffer[2];
+	eastl::vector<CGfxCommandBuffer> m_secondaryCommandBuffer[THREAD_COUNT][2];
 };

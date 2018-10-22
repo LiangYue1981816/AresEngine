@@ -8,8 +8,6 @@ CGfxShader::CGfxShader(uint32_t name)
 
 	, m_kind(-1)
 	, m_program(0)
-
-	, m_pShaderCompiler(NULL)
 {
 
 }
@@ -37,6 +35,8 @@ bool CGfxShader::Load(const char *szFileName, shaderc_shader_kind kind)
 
 bool CGfxShader::Create(const uint32_t *words, size_t numWords, shaderc_shader_kind kind)
 {
+	spirv_cross::CompilerGLSL *pShaderCompiler = NULL;
+
 	try {
 		Destroy();
 
@@ -45,10 +45,10 @@ bool CGfxShader::Create(const uint32_t *words, size_t numWords, shaderc_shader_k
 		options.es = true;
 		options.vertex.fixup_clipspace = false;
 
-		m_pShaderCompiler = new spirv_cross::CompilerGLSL(words, numWords);
-		m_pShaderCompiler->set_options(options);
+		pShaderCompiler = new spirv_cross::CompilerGLSL(words, numWords);
+		pShaderCompiler->set_options(options);
 
-		const std::string strSource = m_pShaderCompiler->compile();
+		const std::string strSource = pShaderCompiler->compile();
 		const char *szSource = strSource.c_str();
 
 #ifdef DEBUG
@@ -59,24 +59,28 @@ bool CGfxShader::Create(const uint32_t *words, size_t numWords, shaderc_shader_k
 		m_kind = kind;
 		m_program = glCreateShaderProgramv(glGetShaderType(kind), 1, &szSource);
 		if (m_program == 0) throw 0;
-		if (CreateLayouts() == false) throw 1;
+		if (CreateLayouts(pShaderCompiler) == false) throw 1;
+
+		delete pShaderCompiler;
 
 		return true;
 	}
 	catch (int) {
 		Destroy();
+		delete pShaderCompiler;
+
 		return false;
 	}
 }
 
-bool CGfxShader::CreateLayouts(void)
+bool CGfxShader::CreateLayouts(const spirv_cross::CompilerGLSL *pShaderCompiler)
 {
-	const spirv_cross::ShaderResources shaderResources = m_pShaderCompiler->get_shader_resources();
+	const spirv_cross::ShaderResources shaderResources = pShaderCompiler->get_shader_resources();
 
 	for (const auto &itPushConstant : shaderResources.push_constant_buffers) {
-		if (m_pShaderCompiler->get_type(itPushConstant.base_type_id).basetype == spirv_cross::SPIRType::Struct) {
-			for (uint32_t index = 0; index < m_pShaderCompiler->get_member_count(itPushConstant.base_type_id); index++) {
-				const std::string &member = m_pShaderCompiler->get_member_name(itPushConstant.base_type_id, index);
+		if (pShaderCompiler->get_type(itPushConstant.base_type_id).basetype == spirv_cross::SPIRType::Struct) {
+			for (uint32_t index = 0; index < pShaderCompiler->get_member_count(itPushConstant.base_type_id); index++) {
+				const std::string &member = pShaderCompiler->get_member_name(itPushConstant.base_type_id, index);
 				const std::string name = itPushConstant.name + "." + member;
 				SetUniformLocation(name.c_str());
 			}
@@ -84,20 +88,20 @@ bool CGfxShader::CreateLayouts(void)
 	}
 
 	for (const auto &itUniform : shaderResources.uniform_buffers) {
-		if (m_pShaderCompiler->get_type(itUniform.base_type_id).basetype == spirv_cross::SPIRType::Struct) {
-			const uint32_t binding = m_pShaderCompiler->get_decoration(itUniform.id, spv::DecorationBinding);
+		if (pShaderCompiler->get_type(itUniform.base_type_id).basetype == spirv_cross::SPIRType::Struct) {
+			const uint32_t binding = pShaderCompiler->get_decoration(itUniform.id, spv::DecorationBinding);
 			SetUniformBlockBinding(itUniform.name.c_str(), binding);
 		}
 	}
 
 	for (const auto &itSampledImage : shaderResources.sampled_images) {
-		if (m_pShaderCompiler->get_type(itSampledImage.base_type_id).basetype == spirv_cross::SPIRType::SampledImage) {
+		if (pShaderCompiler->get_type(itSampledImage.base_type_id).basetype == spirv_cross::SPIRType::SampledImage) {
 			SetSampledImageLocation(itSampledImage.name.c_str());
 		}
 	}
 
 	for (const auto &itSubpassInput : shaderResources.subpass_inputs) {
-		if (m_pShaderCompiler->get_type(itSubpassInput.base_type_id).basetype == spirv_cross::SPIRType::Image) {
+		if (pShaderCompiler->get_type(itSubpassInput.base_type_id).basetype == spirv_cross::SPIRType::Image) {
 			SetSampledImageLocation(itSubpassInput.name.c_str());
 		}
 	}
@@ -111,13 +115,8 @@ void CGfxShader::Destroy(void)
 		glDeleteProgram(m_program);
 	}
 
-	if (m_pShaderCompiler) {
-		delete m_pShaderCompiler;
-	}
-
 	m_kind = -1;
 	m_program = 0;
-	m_pShaderCompiler = NULL;
 
 	m_uniformLocations.clear();
 	m_uniformBlockBindings.clear();

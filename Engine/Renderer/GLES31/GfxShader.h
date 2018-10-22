@@ -21,7 +21,7 @@ public:
 private:
 	bool Load(const char *szFileName, shaderc_shader_kind kind);
 	bool Create(const uint32_t *words, size_t numWords, shaderc_shader_kind kind);
-	bool CreateLayouts(void);
+	bool CreateLayouts(const spirv_cross::CompilerGLSL *pShaderCompiler);
 	void Destroy(void);
 
 private:
@@ -70,7 +70,4 @@ private:
 	eastl::unordered_map<uint32_t, uint32_t> m_uniformLocations;      // [name, location]
 	eastl::unordered_map<uint32_t, uint32_t> m_uniformBlockBindings;  // [name, binding]
 	eastl::unordered_map<uint32_t, uint32_t> m_sampledImageLocations; // [name, location]
-
-private:
-	spirv_cross::CompilerGLSL *m_pShaderCompiler;
 };

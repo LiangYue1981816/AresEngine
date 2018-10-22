@@ -43,13 +43,11 @@ public:
 	bool IsVisible(const glm::sphere &sphere) const;
 
 public:
-	void AddQueue(int indexThread, int indexQueue, const CGfxMaterialPtr &ptrMaterial, const CGfxMeshPtr &ptrMesh, const glm::mat4 &mtxTransform);
-	void ClearQueue(int indexQueue);
-	void ClearQueueAll(void);
+	void AddMesh(int indexThread, int indexQueue, const CGfxMaterialPtr &ptrMaterial, const CGfxMeshPtr &ptrMesh, const glm::mat4 &mtxTransform);
+	void Clear(int indexQueue);
 
 public:
-	void CmdDraw(int indexThread, int indexQueue, uint32_t namePass);
-	void CmdExecute(CGfxCommandBuffer *pMainCommandBuffer, int indexQueue);
+	void CmdDraw(CGfxCommandBuffer *pCommandBuffer, int indexThread, int indexQueue, uint32_t namePass);
 
 
 private:

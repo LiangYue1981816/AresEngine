@@ -281,7 +281,7 @@ void CSceneManager::UpdateCamera(CGfxCamera *pCamera, int indexQueue)
 	static CTaskComponentUpdateCamera<CComponentParticle> taskUpdateCameraParticles[THREAD_COUNT];
 	static CTaskComponentUpdateCamera<CComponentPointLight> taskUpdateCameraPointLights[THREAD_COUNT];
 
-	pCamera->ClearQueue(indexQueue);
+	pCamera->Clear(indexQueue);
 
 	for (int indexThread = 0; indexThread < THREAD_COUNT; indexThread++) {
 		taskUpdateCameraMeshs[indexThread].SetParams(indexThread, indexQueue, &m_meshManager, pCamera);

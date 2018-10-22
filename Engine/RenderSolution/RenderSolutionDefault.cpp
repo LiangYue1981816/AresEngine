@@ -3,6 +3,7 @@
 
 
 CRenderSolutionDefault::CRenderSolutionDefault(void)
+	: m_mainCommandBuffer{ CGfxCommandBuffer(true), CGfxCommandBuffer(true) }
 {
 	SetEnableMSAA(false);
 }
@@ -99,7 +100,10 @@ void CRenderSolutionDefault::Render(int indexQueue)
 		static CTaskCommandBuffer taskCommandBuffers[THREAD_COUNT];
 
 		for (int indexThread = 0; indexThread < THREAD_COUNT; indexThread++) {
-			taskCommandBuffers[indexThread].SetParams(indexThread, indexQueue, namePass);
+			m_secondaryCommandBuffer[indexThread][indexQueue].emplace_back(false);
+			CGfxCommandBuffer *pCommandBuffer = &m_secondaryCommandBuffer[indexThread][indexQueue][m_secondaryCommandBuffer[indexThread][indexQueue].size() - 1];
+
+			taskCommandBuffers[indexThread].SetParams(pCommandBuffer, indexThread, indexQueue, namePass);
 			m_taskCommandBuffer.Task(&taskCommandBuffers[indexThread], MainCamera(), NULL, NULL);
 		}
 	}
@@ -115,7 +119,17 @@ void CRenderSolutionDefault::Present(int indexQueue)
 
 	Renderer()->CmdBeginRenderPass(pMainCommandBuffer, ptrFrameBuffer, ptrRenderPass);
 	{
-		MainCamera()->CmdExecute(pMainCommandBuffer, indexQueue);
+		const glm::vec4 &scissor = MainCamera()->GetScissor();
+		const glm::vec4 &viewport = MainCamera()->GetViewport();
+
+		Renderer()->CmdSetScissor(pMainCommandBuffer, (int)scissor.x, (int)scissor.y, (int)scissor.z, (int)scissor.w);
+		Renderer()->CmdSetViewport(pMainCommandBuffer, (int)viewport.x, (int)viewport.y, (int)viewport.z, (int)viewport.w);
+
+		for (int indexThread = 0; indexThread < THREAD_COUNT; indexThread++) {
+			for (const auto &itCommandBuffer : m_secondaryCommandBuffer[indexThread][indexQueue]) {
+				Renderer()->CmdExecute(pMainCommandBuffer, (CGfxCommandBuffer *)&itCommandBuffer);
+			}
+		}
 	}
 	Renderer()->CmdEndRenderPass(pMainCommandBuffer);
 
@@ -126,5 +140,10 @@ void CRenderSolutionDefault::Present(int indexQueue)
 void CRenderSolutionDefault::Clearup(int indexQueue)
 {
 	m_mainCommandBuffer[indexQueue].Clearup();
-	MainCamera()->ClearQueue(indexQueue);
+
+	for (int indexThread = 0; indexThread < THREAD_COUNT; indexThread++) {
+		m_secondaryCommandBuffer[indexThread][indexQueue].clear();
+	}
+
+	MainCamera()->Clear(indexQueue);
 }

@@ -29,8 +29,5 @@ protected:
 
 
 protected:
-	CGfxCommandBuffer m_mainCommandBuffer[2];
-
-protected:
 	CTaskGraph m_taskCommandBuffer;
 };
