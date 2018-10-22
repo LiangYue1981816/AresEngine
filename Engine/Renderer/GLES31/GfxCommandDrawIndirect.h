@@ -5,13 +5,10 @@
 class CGfxCommandDrawIndirect : public CGfxCommandBase
 {
 public:
-	CGfxCommandDrawIndirect(uint32_t mode, uint32_t type, int count, int baseIndex, int baseVertex, int instanceCount)
+	CGfxCommandDrawIndirect(uint32_t mode, uint32_t type, uint32_t offset)
 		: m_mode(mode)
 		, m_type(type)
-		, m_count(count)
-		, m_baseIndex(baseIndex)
-		, m_baseVertex(baseVertex)
-		, m_instanceCount(instanceCount)
+		, m_offset(offset)
 	{
 
 	}
@@ -25,21 +22,7 @@ public:
 	{
 		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_DRAW_INDIRECT, "CommandDrawIndirect");
 		{
-			struct {
-				uint32_t count;
-				uint32_t instanceCount;
-				uint32_t baseIndex;
-				uint32_t baseVertex;
-				uint32_t reserved;
-			} indirect;
-
-			indirect.count = m_count;
-			indirect.baseIndex = m_baseIndex;
-			indirect.baseVertex = m_baseVertex;
-			indirect.instanceCount = m_instanceCount;
-			indirect.reserved = 0;
-
-			glDrawElementsIndirect(m_mode, m_type, (const void *)&indirect);
+			glDrawElementsIndirect(m_mode, m_type, (const void *)m_offset);
 		}
 	}
 
@@ -47,8 +30,5 @@ public:
 private:
 	uint32_t m_mode;
 	uint32_t m_type;
-	int m_count;
-	int m_baseIndex;
-	int m_baseVertex;
-	int m_instanceCount;
+	uint32_t m_offset;
 };

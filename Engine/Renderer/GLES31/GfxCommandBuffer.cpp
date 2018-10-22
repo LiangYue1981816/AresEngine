@@ -320,30 +320,30 @@ bool CGfxCommandBuffer::CmdClearColor(float red, float green, float blue, float 
 	return false;
 }
 
-bool CGfxCommandBuffer::CmdDrawInstance(uint32_t mode, uint32_t type, int count, int baseIndex, int instanceCount)
+bool CGfxCommandBuffer::CmdDrawInstance(uint32_t mode, uint32_t type, uint32_t offset, int count, int instanceCount)
 {
 	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
-		m_pCommands.emplace_back(new CGfxCommandDrawInstance(mode, type, count, baseIndex, instanceCount));
+		m_pCommands.emplace_back(new CGfxCommandDrawInstance(mode, type, offset, count, instanceCount));
 		return true;
 	}
 
 	return false;
 }
 
-bool CGfxCommandBuffer::CmdDrawIndirect(uint32_t mode, uint32_t type, int count, int baseIndex, int baseVertex, int instanceCount)
+bool CGfxCommandBuffer::CmdDrawIndirect(uint32_t mode, uint32_t type, uint32_t offset)
 {
 	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
-		m_pCommands.emplace_back(new CGfxCommandDrawIndirect(mode, type, count, baseIndex, baseVertex, instanceCount));
+		m_pCommands.emplace_back(new CGfxCommandDrawIndirect(mode, type, offset));
 		return true;
 	}
 
 	return false;
 }
 
-bool CGfxCommandBuffer::CmdDrawElements(uint32_t mode, uint32_t type, int count, int baseIndex)
+bool CGfxCommandBuffer::CmdDrawElements(uint32_t mode, uint32_t type, uint32_t offset, int count)
 {
 	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
-		m_pCommands.emplace_back(new CGfxCommandDrawElements(mode, type, count, baseIndex));
+		m_pCommands.emplace_back(new CGfxCommandDrawElements(mode, type, offset, count));
 		return true;
 	}
 

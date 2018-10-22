@@ -32,6 +32,8 @@ CGfxRenderer::CGfxRenderer(void *hDC, const char *szShaderCachePath, int width, 
 	, m_pMaterialManager(NULL)
 	, m_pRenderPassManager(NULL)
 	, m_pFrameBufferManager(NULL)
+	, m_pDrawIndirectBufferManager(NULL)
+	, m_pDispatchIndirectBufferManager(NULL)
 
 	, m_pShaderCompiler(NULL)
 {
@@ -51,6 +53,8 @@ CGfxRenderer::CGfxRenderer(void *hDC, const char *szShaderCachePath, int width, 
 	m_pMaterialManager = new CGfxMaterialManager;
 	m_pRenderPassManager = new CGfxRenderPassManager;
 	m_pFrameBufferManager = new CGfxFrameBufferManager;
+	m_pDrawIndirectBufferManager = new CGfxDrawIndirectBufferManager;
+	m_pDispatchIndirectBufferManager = new CGfxDispatchIndirectBufferManager;
 
 	m_pSwapChain = new CGfxSwapChain(hDC, width, height, format);
 	m_pShaderCompiler = new CGfxShaderCompiler(szShaderCachePath);
@@ -96,6 +100,8 @@ CGfxRenderer::~CGfxRenderer(void)
 	delete m_pMaterialManager;
 	delete m_pRenderPassManager;
 	delete m_pFrameBufferManager;
+	delete m_pDrawIndirectBufferManager;
+	delete m_pDispatchIndirectBufferManager;
 }
 
 #pragma region SwapChain
@@ -172,6 +178,16 @@ CGfxFrameBufferPtr CGfxRenderer::CreateFrameBuffer(int width, int height)
 	return m_pFrameBufferManager->CreateFrameBuffer(width, height);
 }
 
+CGfxDrawIndirectBufferPtr CGfxRenderer::CreateDrawIndirectBuffer(int baseVertex, uint32_t firstIndex, uint32_t indexCount, uint32_t instanceCount)
+{
+	return m_pDrawIndirectBufferManager->CreateDrawIndirectBuffer(baseVertex, firstIndex, indexCount, instanceCount);
+}
+
+CGfxDispatchIndirectBufferPtr CGfxRenderer::CreateDispatchIndirectBuffer(uint32_t numGroupsX, uint32_t numGroupsY, uint32_t numGroupsZ)
+{
+	return m_pDispatchIndirectBufferManager->CreateDispatchIndirectBuffer(numGroupsX, numGroupsY, numGroupsZ);
+}
+
 CGfxMeshPtr CGfxRenderer::LoadMesh(const char *szFileName)
 {
 	return m_pMeshManager->LoadMesh(szFileName);
@@ -220,6 +236,16 @@ void CGfxRenderer::DestroyRenderPass(CGfxRenderPass *pRenderPass)
 void CGfxRenderer::DestroyFrameBuffer(CGfxFrameBuffer *pFrameBuffer)
 {
 	m_pFrameBufferManager->DestroyFrameBuffer(pFrameBuffer);
+}
+
+void CGfxRenderer::DestroyDrawIndirectBuffer(CGfxDrawIndirectBuffer *pBuffer)
+{
+	m_pDrawIndirectBufferManager->DestroyDrawIndirectBuffer(pBuffer);
+}
+
+void CGfxRenderer::DestroyDispatchIndirectBuffer(CGfxDispatchIndirectBuffer *pBuffer)
+{
+	m_pDispatchIndirectBufferManager->DestroyDispatchIndirectBuffer(pBuffer);
 }
 #pragma endregion
 
@@ -411,26 +437,26 @@ bool CGfxRenderer::CmdClearColor(CGfxCommandBuffer *pCommandBuffer, float red, f
 	return pCommandBuffer->CmdClearColor(red, green, blue, alpha);
 }
 
-bool CGfxRenderer::CmdDrawInstance(CGfxCommandBuffer *pCommandBuffer, const CGfxMeshPtr &ptrMesh, int indexCount, int baseIndex, const eastl::vector<glm::mat4> &mtxTransforms)
+bool CGfxRenderer::CmdDrawInstance(CGfxCommandBuffer *pCommandBuffer, const CGfxMeshPtr &ptrMesh, uint32_t offset, int indexCount, const eastl::vector<glm::mat4> &mtxTransforms)
 {
 	if (pCommandBuffer->CmdBindMesh(ptrMesh, mtxTransforms) == false) {
 		return false;
 	}
 
-	if (pCommandBuffer->CmdDrawInstance(GL_TRIANGLES, ptrMesh->GetIndexType(), indexCount, baseIndex, (int)mtxTransforms.size()) == false) {
+	if (pCommandBuffer->CmdDrawInstance(GL_TRIANGLES, ptrMesh->GetIndexType(), offset, indexCount, (int)mtxTransforms.size()) == false) {
 		return false;
 	}
 
 	return true;
 }
 
-bool CGfxRenderer::CmdDrawIndirect(CGfxCommandBuffer *pCommandBuffer, const CGfxMeshPtr &ptrMesh, int indexCount, int baseIndex, int baseVertex, const eastl::vector<glm::mat4> &mtxTransforms)
+bool CGfxRenderer::CmdDrawIndirect(CGfxCommandBuffer *pCommandBuffer, const CGfxMeshPtr &ptrMesh, uint32_t offset, const eastl::vector<glm::mat4> &mtxTransforms)
 {
 	if (pCommandBuffer->CmdBindMesh(ptrMesh, mtxTransforms) == false) {
 		return false;
 	}
 
-	if (pCommandBuffer->CmdDrawIndirect(GL_TRIANGLES, ptrMesh->GetIndexType(), indexCount, baseIndex, baseVertex, (int)mtxTransforms.size()) == false) {
+	if (pCommandBuffer->CmdDrawIndirect(GL_TRIANGLES, ptrMesh->GetIndexType(), offset) == false) {
 		return false;
 	}
 
@@ -446,7 +472,7 @@ bool CGfxRenderer::CmdDrawScreen(CGfxCommandBuffer *pCommandBuffer)
 		return false;
 	}
 
-	if (pCommandBuffer->CmdDrawElements(GL_TRIANGLES, m_pScreenMesh->GetIndexType(), m_pScreenMesh->GetIndexCount(), 0) == false) {
+	if (pCommandBuffer->CmdDrawElements(GL_TRIANGLES, m_pScreenMesh->GetIndexType(), 0, m_pScreenMesh->GetIndexCount()) == false) {
 		return false;
 	}
 

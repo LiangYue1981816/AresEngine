@@ -60,9 +60,9 @@ public:
 
 	bool CmdClearDepth(float depth);
 	bool CmdClearColor(float red, float green, float blue, float alpha);
-	bool CmdDrawInstance(uint32_t mode, uint32_t type, int count, int baseIndex, int instanceCount);
-	bool CmdDrawIndirect(uint32_t mode, uint32_t type, int count, int baseIndex, int baseVertex, int instanceCount);
-	bool CmdDrawElements(uint32_t mode, uint32_t type, int count, int baseIndex);
+	bool CmdDrawInstance(uint32_t mode, uint32_t type, uint32_t offset, int count, int instanceCount);
+	bool CmdDrawIndirect(uint32_t mode, uint32_t type, uint32_t offset);
+	bool CmdDrawElements(uint32_t mode, uint32_t type, uint32_t offset, int count);
 
 	bool CmdExecute(CGfxCommandBuffer *pCommandBuffer);
 

@@ -52,7 +52,7 @@ void CGfxRenderQueue::CmdDraw(CGfxCamera *pCamera, CGfxCommandBuffer *pCommandBu
 			Renderer()->CmdBindMaterialPass(pCommandBuffer, itMaterial, namePass);
 
 			for (const auto &itMeshQueue : m_materialMeshQueue[indexThread][indexQueue][itMaterial]) {
-				Renderer()->CmdDrawInstance(pCommandBuffer, itMeshQueue.first, itMeshQueue.first->GetIndexCount(), 0, itMeshQueue.second);
+				Renderer()->CmdDrawInstance(pCommandBuffer, itMeshQueue.first, 0, itMeshQueue.first->GetIndexCount(), itMeshQueue.second);
 			}
 		}
 	}

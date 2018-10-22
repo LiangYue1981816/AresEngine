@@ -41,6 +41,8 @@
 #include "GfxMaterialPass.h"
 #include "GfxRenderPass.h"
 #include "GfxFrameBuffer.h"
+#include "GfxDrawIndirectBuffer.h"
+#include "GfxDispatchIndirectBuffer.h"
 
 #include "GfxResourceManager.h"
 #include "GfxMeshManager.h"
@@ -51,6 +53,8 @@
 #include "GfxMaterialManager.h"
 #include "GfxRenderPassManager.h"
 #include "GfxFrameBufferManager.h"
+#include "GfxDrawIndirectBufferManager.h"
+#include "GfxDispatchIndirectBufferManager.h"
 
 #include "GfxUniformVec1.h"
 #include "GfxUniformVec2.h"
@@ -78,6 +82,8 @@ class CGfxRenderer
 	friend class CGfxTextureBase;
 	friend class CGfxRenderPass;
 	friend class CGfxFrameBuffer;
+	friend class CGfxDrawIndirectBuffer;
+	friend class CGfxDispatchIndirectBuffer;
 	friend class CGfxCommandBindCamera;
 	friend class CGfxCommandBindPipeline;
 	friend class CGfxCommandBindMaterialPass;
@@ -136,6 +142,8 @@ public:
 	CGfxTextureCubeMapPtr CreateTextureCubeMap(uint32_t name);
 	CGfxRenderPassPtr CreateRenderPass(int numAttachments, int numSubpasses);
 	CGfxFrameBufferPtr CreateFrameBuffer(int width, int height);
+	CGfxDrawIndirectBufferPtr CreateDrawIndirectBuffer(int baseVertex, uint32_t firstIndex, uint32_t indexCount, uint32_t instanceCount);
+	CGfxDispatchIndirectBufferPtr CreateDispatchIndirectBuffer(uint32_t numGroupsX, uint32_t numGroupsY, uint32_t numGroupsZ);
 
 	CGfxMeshPtr LoadMesh(const char *szFileName);
 	CGfxMaterialPtr LoadMaterial(const char *szFileName);
@@ -149,6 +157,8 @@ private:
 	void DestroyTexture(CGfxTextureBase *pTexture);
 	void DestroyRenderPass(CGfxRenderPass *pRenderPass);
 	void DestroyFrameBuffer(CGfxFrameBuffer *pFrameBuffer);
+	void DestroyDrawIndirectBuffer(CGfxDrawIndirectBuffer *pBuffer);
+	void DestroyDispatchIndirectBuffer(CGfxDispatchIndirectBuffer *pBuffer);
 #pragma endregion
 
 #pragma region Features
@@ -204,8 +214,8 @@ public:
 
 	bool CmdClearDepth(CGfxCommandBuffer *pCommandBuffer, float depth);
 	bool CmdClearColor(CGfxCommandBuffer *pCommandBuffer, float red, float green, float blue, float alpha);
-	bool CmdDrawInstance(CGfxCommandBuffer *pCommandBuffer, const CGfxMeshPtr &ptrMesh, int indexCount, int baseIndex, const eastl::vector<glm::mat4> &mtxTransforms);
-	bool CmdDrawIndirect(CGfxCommandBuffer *pCommandBuffer, const CGfxMeshPtr &ptrMesh, int indexCount, int baseIndex, int baseVertex, const eastl::vector<glm::mat4> &mtxTransforms);
+	bool CmdDrawInstance(CGfxCommandBuffer *pCommandBuffer, const CGfxMeshPtr &ptrMesh, uint32_t offset, int indexCount, const eastl::vector<glm::mat4> &mtxTransforms);
+	bool CmdDrawIndirect(CGfxCommandBuffer *pCommandBuffer, const CGfxMeshPtr &ptrMesh, uint32_t offset, const eastl::vector<glm::mat4> &mtxTransforms);
 	bool CmdDrawScreen(CGfxCommandBuffer *pCommandBuffer);
 
 	bool CmdExecute(CGfxCommandBuffer *pCommandBuffer, CGfxCommandBuffer *pSecondaryCommandBuffer);
@@ -263,6 +273,8 @@ private:
 	CGfxMaterialManager *m_pMaterialManager;
 	CGfxRenderPassManager *m_pRenderPassManager;
 	CGfxFrameBufferManager *m_pFrameBufferManager;
+	CGfxDrawIndirectBufferManager *m_pDrawIndirectBufferManager;
+	CGfxDispatchIndirectBufferManager *m_pDispatchIndirectBufferManager;
 
 private:
 	CGfxShaderCompiler *m_pShaderCompiler;
