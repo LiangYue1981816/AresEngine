@@ -95,8 +95,6 @@
     <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxCommandUniformMatrix3fv.h" />
     <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxCommandUniformMatrix4fv.h" />
     <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxDefinition.h" />
-    <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxDispatchIndirectBuffer.h" />
-    <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxDispatchIndirectBufferManager.h" />
     <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxDrawIndirectBuffer.h" />
     <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxDrawIndirectBufferManager.h" />
     <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxExtension.h" />
@@ -201,8 +199,6 @@
     <ClCompile Include="..\..\Engine\Memory\MemorySystem.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\GLES31\GfxCamera.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\GLES31\GfxCommandBuffer.cpp" />
-    <ClCompile Include="..\..\Engine\Renderer\GLES31\GfxDispatchIndirectBuffer.cpp" />
-    <ClCompile Include="..\..\Engine\Renderer\GLES31\GfxDispatchIndirectBufferManager.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\GLES31\GfxDrawIndirectBuffer.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\GLES31\GfxDrawIndirectBufferManager.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\GLES31\GfxExtension.cpp" />

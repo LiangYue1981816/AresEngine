@@ -13,10 +13,10 @@ private:
 
 
 private:
-	CGfxDrawIndirectBuffer* CreateDrawIndirectBuffer(int baseVertex, uint32_t firstIndex, uint32_t indexCount, uint32_t instanceCount);
+	CGfxDrawIndirectBuffer* CreateDrawIndirectBuffer(const CGfxMesh *pMesh, int baseVertex, uint32_t firstIndex, uint32_t indexCount);
 	void DestroyDrawIndirectBuffer(CGfxDrawIndirectBuffer *pBuffer);
 
 
 private:
-	eastl::unordered_map<CGfxDrawIndirectBuffer*, CGfxDrawIndirectBuffer*> m_pBuffers;
+	eastl::unordered_map<uint32_t, CGfxDrawIndirectBuffer*> m_pBuffers;
 };

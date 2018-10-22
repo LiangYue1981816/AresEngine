@@ -33,7 +33,6 @@ CGfxRenderer::CGfxRenderer(void *hDC, const char *szShaderCachePath, int width, 
 	, m_pRenderPassManager(NULL)
 	, m_pFrameBufferManager(NULL)
 	, m_pDrawIndirectBufferManager(NULL)
-	, m_pDispatchIndirectBufferManager(NULL)
 
 	, m_pShaderCompiler(NULL)
 {
@@ -54,7 +53,6 @@ CGfxRenderer::CGfxRenderer(void *hDC, const char *szShaderCachePath, int width, 
 	m_pRenderPassManager = new CGfxRenderPassManager;
 	m_pFrameBufferManager = new CGfxFrameBufferManager;
 	m_pDrawIndirectBufferManager = new CGfxDrawIndirectBufferManager;
-	m_pDispatchIndirectBufferManager = new CGfxDispatchIndirectBufferManager;
 
 	m_pSwapChain = new CGfxSwapChain(hDC, width, height, format);
 	m_pShaderCompiler = new CGfxShaderCompiler(szShaderCachePath);
@@ -101,7 +99,6 @@ CGfxRenderer::~CGfxRenderer(void)
 	delete m_pRenderPassManager;
 	delete m_pFrameBufferManager;
 	delete m_pDrawIndirectBufferManager;
-	delete m_pDispatchIndirectBufferManager;
 }
 
 #pragma region SwapChain
@@ -178,14 +175,9 @@ CGfxFrameBufferPtr CGfxRenderer::CreateFrameBuffer(int width, int height)
 	return m_pFrameBufferManager->CreateFrameBuffer(width, height);
 }
 
-CGfxDrawIndirectBufferPtr CGfxRenderer::CreateDrawIndirectBuffer(int baseVertex, uint32_t firstIndex, uint32_t indexCount, uint32_t instanceCount)
+CGfxDrawIndirectBufferPtr CGfxRenderer::CreateDrawIndirectBuffer(const CGfxMesh *pMesh, int baseVertex, uint32_t firstIndex, uint32_t indexCount)
 {
-	return m_pDrawIndirectBufferManager->CreateDrawIndirectBuffer(baseVertex, firstIndex, indexCount, instanceCount);
-}
-
-CGfxDispatchIndirectBufferPtr CGfxRenderer::CreateDispatchIndirectBuffer(uint32_t numGroupsX, uint32_t numGroupsY, uint32_t numGroupsZ)
-{
-	return m_pDispatchIndirectBufferManager->CreateDispatchIndirectBuffer(numGroupsX, numGroupsY, numGroupsZ);
+	return m_pDrawIndirectBufferManager->CreateDrawIndirectBuffer(pMesh, baseVertex, firstIndex, indexCount);
 }
 
 CGfxMeshPtr CGfxRenderer::LoadMesh(const char *szFileName)
@@ -241,11 +233,6 @@ void CGfxRenderer::DestroyFrameBuffer(CGfxFrameBuffer *pFrameBuffer)
 void CGfxRenderer::DestroyDrawIndirectBuffer(CGfxDrawIndirectBuffer *pBuffer)
 {
 	m_pDrawIndirectBufferManager->DestroyDrawIndirectBuffer(pBuffer);
-}
-
-void CGfxRenderer::DestroyDispatchIndirectBuffer(CGfxDispatchIndirectBuffer *pBuffer)
-{
-	m_pDispatchIndirectBufferManager->DestroyDispatchIndirectBuffer(pBuffer);
 }
 #pragma endregion
 

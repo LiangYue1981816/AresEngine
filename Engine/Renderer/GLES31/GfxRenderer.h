@@ -42,7 +42,6 @@
 #include "GfxRenderPass.h"
 #include "GfxFrameBuffer.h"
 #include "GfxDrawIndirectBuffer.h"
-#include "GfxDispatchIndirectBuffer.h"
 
 #include "GfxResourceManager.h"
 #include "GfxMeshManager.h"
@@ -54,7 +53,6 @@
 #include "GfxRenderPassManager.h"
 #include "GfxFrameBufferManager.h"
 #include "GfxDrawIndirectBufferManager.h"
-#include "GfxDispatchIndirectBufferManager.h"
 
 #include "GfxUniformVec1.h"
 #include "GfxUniformVec2.h"
@@ -142,8 +140,7 @@ public:
 	CGfxTextureCubeMapPtr CreateTextureCubeMap(uint32_t name);
 	CGfxRenderPassPtr CreateRenderPass(int numAttachments, int numSubpasses);
 	CGfxFrameBufferPtr CreateFrameBuffer(int width, int height);
-	CGfxDrawIndirectBufferPtr CreateDrawIndirectBuffer(int baseVertex, uint32_t firstIndex, uint32_t indexCount, uint32_t instanceCount);
-	CGfxDispatchIndirectBufferPtr CreateDispatchIndirectBuffer(uint32_t numGroupsX, uint32_t numGroupsY, uint32_t numGroupsZ);
+	CGfxDrawIndirectBufferPtr CreateDrawIndirectBuffer(const CGfxMesh *pMesh, int baseVertex, uint32_t firstIndex, uint32_t indexCount);
 
 	CGfxMeshPtr LoadMesh(const char *szFileName);
 	CGfxMaterialPtr LoadMaterial(const char *szFileName);
@@ -158,7 +155,6 @@ private:
 	void DestroyRenderPass(CGfxRenderPass *pRenderPass);
 	void DestroyFrameBuffer(CGfxFrameBuffer *pFrameBuffer);
 	void DestroyDrawIndirectBuffer(CGfxDrawIndirectBuffer *pBuffer);
-	void DestroyDispatchIndirectBuffer(CGfxDispatchIndirectBuffer *pBuffer);
 #pragma endregion
 
 #pragma region Features
@@ -274,7 +270,6 @@ private:
 	CGfxRenderPassManager *m_pRenderPassManager;
 	CGfxFrameBufferManager *m_pFrameBufferManager;
 	CGfxDrawIndirectBufferManager *m_pDrawIndirectBufferManager;
-	CGfxDispatchIndirectBufferManager *m_pDispatchIndirectBufferManager;
 
 private:
 	CGfxShaderCompiler *m_pShaderCompiler;

@@ -3,27 +3,24 @@
 #include "GfxDrawIndirectBuffer.h"
 
 
-CGfxDrawIndirectBuffer::CGfxDrawIndirectBuffer(int baseVertex, uint32_t firstIndex, uint32_t indexCount, uint32_t instanceCount)
-	: m_buffer(0)
+typedef struct {
+	uint32_t indexCount;
+	uint32_t instanceCount;
+	uint32_t firstIndex;
+	int      baseVertex;
+	uint32_t reservedMustBeZero;
+} DrawCommand;
+
+CGfxDrawIndirectBuffer::CGfxDrawIndirectBuffer(uint32_t name, int baseVertex, uint32_t firstIndex, uint32_t indexCount)
+	: m_name(name)
+	, m_buffer(0)
+	, m_baseVertex(baseVertex)
+	, m_firstIndex(firstIndex)
+	, m_indexCount(indexCount)
 {
-	typedef struct {
-		uint32_t indexCount;
-		uint32_t instanceCount;
-		uint32_t firstIndex;
-		int      baseVertex;
-		uint32_t reservedMustBeZero;
-	} DrawElementsIndirectCommand;
-
-	DrawElementsIndirectCommand command;
-	command.baseVertex = baseVertex;
-	command.firstIndex = firstIndex;
-	command.indexCount = indexCount;
-	command.instanceCount = instanceCount;
-	command.reservedMustBeZero = 0;
-
 	glGenBuffers(1, &m_buffer);
 	glBindBuffer(GL_DRAW_INDIRECT_BUFFER, m_buffer);
-	glBufferData(GL_DRAW_INDIRECT_BUFFER, sizeof(command), &command, GL_STATIC_DRAW);
+	glBufferData(GL_DRAW_INDIRECT_BUFFER, sizeof(DrawCommand), NULL, GL_DYNAMIC_DRAW);
 	glBindBuffer(GL_DRAW_INDIRECT_BUFFER, 0);
 }
 
@@ -37,7 +34,20 @@ void CGfxDrawIndirectBuffer::Release(void)
 	Renderer()->DestroyDrawIndirectBuffer(this);
 }
 
-void CGfxDrawIndirectBuffer::Bind(void) const
+uint32_t CGfxDrawIndirectBuffer::GetName(void) const
 {
-	glBindBuffer(GL_DRAW_INDIRECT_BUFFER, m_buffer);
+	return m_name;
+}
+
+void CGfxDrawIndirectBuffer::Bind(uint32_t instanceCount) const
+{
+	DrawCommand drawCommand;
+	drawCommand.baseVertex = m_baseVertex;
+	drawCommand.firstIndex = m_firstIndex;
+	drawCommand.indexCount = m_indexCount;
+	drawCommand.instanceCount = instanceCount;
+	drawCommand.reservedMustBeZero = 0;
+
+	GLBindBuffer(GL_DRAW_INDIRECT_BUFFER, m_buffer);
+	glBufferSubData(GL_DRAW_INDIRECT_BUFFER, 0, sizeof(drawCommand), &drawCommand);
 }

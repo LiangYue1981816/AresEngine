@@ -9,15 +9,26 @@ class CGfxDrawIndirectBuffer : public CGfxResource
 
 
 private:
-	CGfxDrawIndirectBuffer(int baseVertex, uint32_t firstIndex, uint32_t indexCount, uint32_t instanceCount);
+	CGfxDrawIndirectBuffer(uint32_t name, int baseVertex, uint32_t firstIndex, uint32_t indexCount);
 	virtual ~CGfxDrawIndirectBuffer(void);
 	virtual void Release(void);
 
+public:
+	uint32_t GetName(void) const;
+
 
 public:
-	void Bind(void) const;
+	void Bind(uint32_t instanceCount) const;
 
 
 private:
+	uint32_t m_name;
+
+private:
 	uint32_t m_buffer;
+
+private:
+	int m_baseVertex;
+	uint32_t m_firstIndex;
+	uint32_t m_indexCount;
 };

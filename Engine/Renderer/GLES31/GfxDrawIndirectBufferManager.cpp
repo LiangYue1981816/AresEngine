@@ -17,17 +17,24 @@ CGfxDrawIndirectBufferManager::~CGfxDrawIndirectBufferManager(void)
 	m_pBuffers.clear();
 }
 
-CGfxDrawIndirectBuffer* CGfxDrawIndirectBufferManager::CreateDrawIndirectBuffer(int baseVertex, uint32_t firstIndex, uint32_t indexCount, uint32_t instanceCount)
+CGfxDrawIndirectBuffer* CGfxDrawIndirectBufferManager::CreateDrawIndirectBuffer(const CGfxMesh *pMesh, int baseVertex, uint32_t firstIndex, uint32_t indexCount)
 {
-	CGfxDrawIndirectBuffer *pBuffer = new CGfxDrawIndirectBuffer(baseVertex, firstIndex, indexCount, instanceCount);
-	m_pBuffers[pBuffer] = pBuffer;
-	return m_pBuffers[pBuffer];
+	char szName[_MAX_STRING];
+	sprintf(szName, "%8.8X_%8.8X_%8.8X_%8.8X", pMesh->GetName(), baseVertex, firstIndex, indexCount);
+
+	uint32_t name = HashValue(szName);
+
+	if (m_pBuffers[name] == NULL) {
+		m_pBuffers[name] = new CGfxDrawIndirectBuffer(name, baseVertex, firstIndex, indexCount);
+	}
+
+	return m_pBuffers[name];
 }
 
 void CGfxDrawIndirectBufferManager::DestroyDrawIndirectBuffer(CGfxDrawIndirectBuffer *pBuffer)
 {
 	if (pBuffer) {
-		m_pBuffers.erase(pBuffer);
+		m_pBuffers.erase(pBuffer->GetName());
 		delete pBuffer;
 	}
 }

@@ -540,12 +540,6 @@
     <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxDrawIndirectBufferManager.h">
       <Filter>Engine\Renderer\GLES31\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxDispatchIndirectBuffer.h">
-      <Filter>Engine\Renderer\GLES31\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxDispatchIndirectBufferManager.h">
-      <Filter>Engine\Renderer\GLES31\Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Engine\Base\TaskGraph.cpp">
@@ -834,12 +828,6 @@
       <Filter>Engine\Renderer\GLES31\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\Renderer\GLES31\GfxDrawIndirectBufferManager.cpp">
-      <Filter>Engine\Renderer\GLES31\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\Renderer\GLES31\GfxDispatchIndirectBuffer.cpp">
-      <Filter>Engine\Renderer\GLES31\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\Renderer\GLES31\GfxDispatchIndirectBufferManager.cpp">
       <Filter>Engine\Renderer\GLES31\Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -15,9 +15,6 @@ class CGfxVertexArrayObject;
 class CGfxDrawIndirectBuffer;
 class CGfxDrawIndirectBufferManager;
 
-class CGfxDispatchIndirectBuffer;
-class CGfxDispatchIndirectBufferManager;
-
 class CGfxRenderPass;
 class CGfxRenderPassManager;
 
@@ -75,4 +72,3 @@ typedef CGfxResourcePtr<CGfxTexture2D> CGfxTexture2DPtr;
 typedef CGfxResourcePtr<CGfxTexture2DArray> CGfxTexture2DArrayPtr;
 typedef CGfxResourcePtr<CGfxTextureCubeMap> CGfxTextureCubeMapPtr;
 typedef CGfxResourcePtr<CGfxDrawIndirectBuffer> CGfxDrawIndirectBufferPtr;
-typedef CGfxResourcePtr<CGfxDispatchIndirectBuffer> CGfxDispatchIndirectBufferPtr;
