@@ -90,4 +90,13 @@ extern void GLBindFramebufferTexture2D(GLenum target, GLenum attachment, GLenum 
 
 extern void GLReadBuffers(GLenum target, GLsizei n, const GLenum *bufs);
 extern void GLDrawBuffers(GLenum target, GLsizei n, const GLenum *bufs);
+
+extern void GLProgramUniform1i(GLuint program, GLint location, GLint v0);
+extern void GLProgramUniform2i(GLuint program, GLint location, GLint v0, GLint v1);
+extern void GLProgramUniform3i(GLuint program, GLint location, GLint v0, GLint v1, GLint v2);
+extern void GLProgramUniform4i(GLuint program, GLint location, GLint v0, GLint v1, GLint v2, GLint v3);
+extern void GLProgramUniform1f(GLuint program, GLint location, GLfloat v0);
+extern void GLProgramUniform2f(GLuint program, GLint location, GLfloat v0, GLfloat v1);
+extern void GLProgramUniform3f(GLuint program, GLint location, GLfloat v0, GLfloat v1, GLfloat v2);
+extern void GLProgramUniform4f(GLuint program, GLint location, GLfloat v0, GLfloat v1, GLfloat v2, GLfloat v3);
 #pragma endregion

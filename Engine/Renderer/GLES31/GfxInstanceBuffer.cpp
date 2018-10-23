@@ -32,22 +32,10 @@ CGfxInstanceBuffer::~CGfxInstanceBuffer(void)
 	m_size = 0;
 }
 
-void CGfxInstanceBuffer::AddInstance(const glm::mat4 &mtxTransform)
-{
-	m_bDirty = true;
-	m_instances.emplace_back(mtxTransform);
-}
-
 void CGfxInstanceBuffer::SetInstance(const eastl::vector<glm::mat4> &mtxTransforms)
 {
 	m_bDirty = true;
 	m_instances = mtxTransforms;
-}
-
-void CGfxInstanceBuffer::ClearInstance(void)
-{
-	m_bDirty = true;
-	m_instances.clear();
 }
 
 void CGfxInstanceBuffer::UpdateInstance(void)

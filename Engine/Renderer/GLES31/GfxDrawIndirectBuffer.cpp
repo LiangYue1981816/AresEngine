@@ -17,6 +17,7 @@ CGfxDrawIndirectBuffer::CGfxDrawIndirectBuffer(uint32_t name, int baseVertex, ui
 	, m_baseVertex(baseVertex)
 	, m_firstIndex(firstIndex)
 	, m_indexCount(indexCount)
+	, m_instanceCount(0)
 {
 	glGenBuffers(1, &m_buffer);
 	glBindBuffer(GL_DRAW_INDIRECT_BUFFER, m_buffer);
@@ -39,15 +40,20 @@ uint32_t CGfxDrawIndirectBuffer::GetName(void) const
 	return m_name;
 }
 
-void CGfxDrawIndirectBuffer::Bind(uint32_t instanceCount) const
+void CGfxDrawIndirectBuffer::Bind(uint32_t instanceCount)
 {
-	DrawCommand drawCommand;
-	drawCommand.baseVertex = m_baseVertex;
-	drawCommand.firstIndex = m_firstIndex;
-	drawCommand.indexCount = m_indexCount;
-	drawCommand.instanceCount = instanceCount;
-	drawCommand.reservedMustBeZero = 0;
-
 	GLBindBuffer(GL_DRAW_INDIRECT_BUFFER, m_buffer);
-	glBufferSubData(GL_DRAW_INDIRECT_BUFFER, 0, sizeof(drawCommand), &drawCommand);
+
+	if (m_instanceCount != instanceCount) {
+		m_instanceCount  = instanceCount;
+
+		DrawCommand drawCommand;
+		drawCommand.baseVertex = m_baseVertex;
+		drawCommand.firstIndex = m_firstIndex;
+		drawCommand.indexCount = m_indexCount;
+		drawCommand.instanceCount = m_instanceCount;
+		drawCommand.reservedMustBeZero = 0;
+
+		glBufferSubData(GL_DRAW_INDIRECT_BUFFER, 0, sizeof(drawCommand), &drawCommand);
+	}
 }

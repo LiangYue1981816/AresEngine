@@ -11,8 +11,9 @@ CComponentMesh::CComponentMesh(uint32_t name)
 CComponentMesh::CComponentMesh(const CComponentMesh &component)
 	: CComponent(component)
 {
-	SetMesh(component.m_ptrMesh);
 	SetMaterial(component.m_ptrMaterial);
+	SetMesh(component.m_ptrMesh);
+	SetDrawIndirectBuffer(component.m_ptrDrawIndirectBuffer);
 }
 
 CComponentMesh::~CComponentMesh(void)
@@ -20,14 +21,24 @@ CComponentMesh::~CComponentMesh(void)
 
 }
 
+void CComponentMesh::SetMaterial(const CGfxMaterialPtr &ptrMaterial)
+{
+	m_ptrMaterial = ptrMaterial;
+}
+
 void CComponentMesh::SetMesh(const CGfxMeshPtr &ptrMesh)
 {
 	m_ptrMesh = ptrMesh;
 }
 
-void CComponentMesh::SetMaterial(const CGfxMaterialPtr &ptrMaterial)
+void CComponentMesh::SetDrawIndirectBuffer(const CGfxDrawIndirectBufferPtr &ptrDrawIndirectBuffer)
 {
-	m_ptrMaterial = ptrMaterial;
+	m_ptrDrawIndirectBuffer = ptrDrawIndirectBuffer;
+}
+
+const CGfxMaterialPtr& CComponentMesh::GetMaterial(void) const
+{
+	return m_ptrMaterial;
 }
 
 const CGfxMeshPtr& CComponentMesh::GetMesh(void) const
@@ -35,9 +46,9 @@ const CGfxMeshPtr& CComponentMesh::GetMesh(void) const
 	return m_ptrMesh;
 }
 
-const CGfxMaterialPtr& CComponentMesh::GetMaterial(void) const
+const CGfxDrawIndirectBufferPtr& CComponentMesh::GetDrawIndirectBuffer(void) const
 {
-	return m_ptrMaterial;
+	return m_ptrDrawIndirectBuffer;
 }
 
 glm::aabb CComponentMesh::GetLocalAABB(void)
@@ -59,5 +70,6 @@ void CComponentMesh::TaskUpdateCamera(CGfxCamera *pCamera, int indexThread, int 
 {
 	if (pCamera->IsVisible(GetWorldAABB())) {
 		pCamera->AddMesh(indexThread, indexQueue, m_ptrMaterial, m_ptrMesh, m_pParentNode->GetWorldTransform());
+//		pCamera->AddMeshIndirect(indexThread, indexQueue, m_ptrMaterial, m_ptrMesh, m_ptrDrawIndirectBuffer, m_pParentNode->GetWorldTransform());
 	}
 }

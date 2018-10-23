@@ -197,24 +197,10 @@ bool CGfxMesh::CreateVertexArrayObject(void)
 	return m_pVertexArrayObject->Buffer(m_pIndexBuffer, m_pVertexBuffer, m_pInstanceBuffer);
 }
 
-void CGfxMesh::AddInstance(const glm::mat4 &mtxTransform)
-{
-	if (m_pInstanceBuffer) {
-		m_pInstanceBuffer->AddInstance(mtxTransform);
-	}
-}
-
 void CGfxMesh::SetInstance(const eastl::vector<glm::mat4> &mtxTransforms)
 {
 	if (m_pInstanceBuffer) {
 		m_pInstanceBuffer->SetInstance(mtxTransforms);
-	}
-}
-
-void CGfxMesh::ClearInstance(void)
-{
-	if (m_pInstanceBuffer) {
-		m_pInstanceBuffer->ClearInstance();
 	}
 }
 

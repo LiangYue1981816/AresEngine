@@ -130,6 +130,7 @@ static void SHRotate(float shRedRotate[9], float shGreenRotate[9], float shBlueR
 
 CGfxUniformEngine::CGfxUniformEngine(void)
 	: m_bDirty(false)
+	, m_hash(INVALID_VALUE)
 	, m_pUniformBuffer(NULL)
 {
 	m_pUniformBuffer = new CGfxUniformBuffer(sizeof(m_params), true);
@@ -267,7 +268,13 @@ void CGfxUniformEngine::Apply(void)
 {
 	if (m_bDirty) {
 		m_bDirty = false;
-		m_pUniformBuffer->BufferData(0, sizeof(m_params), &m_params);
+
+		uint32_t hash = HashValue((unsigned char *)&m_params, sizeof(m_params));
+
+		if (m_hash != hash) {
+			m_hash  = hash;
+			m_pUniformBuffer->BufferData(0, sizeof(m_params), &m_params);
+		}
 	}
 }
 

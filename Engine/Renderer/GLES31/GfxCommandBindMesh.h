@@ -22,7 +22,6 @@ public:
 		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_BIND_MESH, "CommandBindMesh");
 		{
 			if (m_ptrMesh.IsValid()) {
-				m_ptrMesh->ClearInstance();
 				m_ptrMesh->SetInstance(m_mtxTransforms);
 				m_ptrMesh->UpdateInstance();
 				m_ptrMesh->Bind();

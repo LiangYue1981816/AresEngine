@@ -8,6 +8,7 @@
 #include "GfxCommandSetViewport.h"
 #include "GfxCommandBindFrameBuffer.h"
 #include "GfxCommandBindMesh.h"
+#include "GfxCommandBindDrawIndirectBuffer.h"
 #include "GfxCommandBindCamera.h"
 #include "GfxCommandBindPipeline.h"
 #include "GfxCommandBindMaterialPass.h"
@@ -164,6 +165,16 @@ bool CGfxCommandBuffer::CmdBindMesh(const CGfxMeshPtr &ptrMesh, const eastl::vec
 {
 	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
 		m_pCommands.emplace_back(new CGfxCommandBindMesh(ptrMesh, mtxTransforms));
+		return true;
+	}
+
+	return false;
+}
+
+bool CGfxCommandBuffer::CmdBindDrawIndirectBuffer(const CGfxDrawIndirectBufferPtr &ptrDrawIndirectBuffer, uint32_t instanceCount)
+{
+	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
+		m_pCommands.emplace_back(new CGfxCommandBindDrawIndirectBuffer(ptrDrawIndirectBuffer, instanceCount));
 		return true;
 	}
 

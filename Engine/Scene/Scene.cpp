@@ -141,16 +141,18 @@ bool CScene::LoadMesh(TiXmlNode *pNode, CSceneNode *pCurrentNode)
 {
 	try {
 		if (TiXmlNode *pMeshNode = pNode->FirstChild("Mesh")) {
-			const char *szMeshFileName = pMeshNode->ToElement()->AttributeString("mesh");
 			const char *szMaterialFileName = pMeshNode->ToElement()->AttributeString("material");
-			if (szMeshFileName == NULL || szMaterialFileName == NULL) throw 0;
+			const char *szMeshFileName = pMeshNode->ToElement()->AttributeString("mesh");
+			if (szMaterialFileName == NULL || szMeshFileName == NULL) throw 0;
 
-			CGfxMeshPtr ptrMesh = Renderer()->LoadMesh(szMeshFileName);
 			CGfxMaterialPtr ptrMaterial = Renderer()->LoadMaterial(szMaterialFileName);
+			CGfxMeshPtr ptrMesh = Renderer()->LoadMesh(szMeshFileName);
+			CGfxDrawIndirectBufferPtr ptrDrawIndirectBuffer = Renderer()->CreateDrawIndirectBuffer(ptrMesh, 0, 0, ptrMesh->GetIndexCount());
 
 			CComponentMeshPtr ptrComponentMesh = SceneManager()->CreateComponentMesh(SceneManager()->GetNextComponentMeshName());
-			ptrComponentMesh->SetMesh(ptrMesh);
 			ptrComponentMesh->SetMaterial(ptrMaterial);
+			ptrComponentMesh->SetMesh(ptrMesh);
+			ptrComponentMesh->SetDrawIndirectBuffer(ptrDrawIndirectBuffer);
 			pCurrentNode->AttachComponentMesh(ptrComponentMesh);
 		}
 		return true;

@@ -65,6 +65,7 @@
     <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxCamera.h" />
     <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxCommandBeginRenderPass.h" />
     <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxCommandBindCamera.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxCommandBindDrawIndirectBuffer.h" />
     <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxCommandBindFrameBuffer.h" />
     <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxCommandBindInputTexture.h" />
     <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxCommandBindMaterialPass.h" />

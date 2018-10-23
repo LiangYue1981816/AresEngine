@@ -171,7 +171,7 @@ bool CGfxShader::BindTexture(uint32_t name, uint32_t target, uint32_t texture, u
 		GLActiveTexture(unit);
 		GLBindSampler(unit, sampler);
 		GLBindTexture(unit, target, texture);
-		glProgramUniform1i(m_program, itLocation->second, unit);
+		GLProgramUniform1i(m_program, itLocation->second, unit);
 		return true;
 	}
 
@@ -195,7 +195,7 @@ bool CGfxShader::Uniform1f(uint32_t name, float v0) const
 	const auto &itLocation = m_uniformLocations.find(name);
 
 	if (itLocation != m_uniformLocations.end()) {
-		glProgramUniform1f(m_program, itLocation->second, v0);
+		GLProgramUniform1f(m_program, itLocation->second, v0);
 		return true;
 	}
 
@@ -207,7 +207,7 @@ bool CGfxShader::Uniform2f(uint32_t name, float v0, float v1) const
 	const auto &itLocation = m_uniformLocations.find(name);
 
 	if (itLocation != m_uniformLocations.end()) {
-		glProgramUniform2f(m_program, itLocation->second, v0, v1);
+		GLProgramUniform2f(m_program, itLocation->second, v0, v1);
 		return true;
 	}
 
@@ -219,7 +219,7 @@ bool CGfxShader::Uniform3f(uint32_t name, float v0, float v1, float v2) const
 	const auto &itLocation = m_uniformLocations.find(name);
 
 	if (itLocation != m_uniformLocations.end()) {
-		glProgramUniform3f(m_program, itLocation->second, v0, v1, v2);
+		GLProgramUniform3f(m_program, itLocation->second, v0, v1, v2);
 		return true;
 	}
 
@@ -231,7 +231,7 @@ bool CGfxShader::Uniform4f(uint32_t name, float v0, float v1, float v2, float v3
 	const auto &itLocation = m_uniformLocations.find(name);
 
 	if (itLocation != m_uniformLocations.end()) {
-		glProgramUniform4f(m_program, itLocation->second, v0, v1, v2, v3);
+		GLProgramUniform4f(m_program, itLocation->second, v0, v1, v2, v3);
 		return true;
 	}
 

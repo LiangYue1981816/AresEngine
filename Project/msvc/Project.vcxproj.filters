@@ -540,6 +540,9 @@
     <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxDrawIndirectBufferManager.h">
       <Filter>Engine\Renderer\GLES31\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxCommandBindDrawIndirectBuffer.h">
+      <Filter>Engine\Renderer\GLES31\Source Files\Commands</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Engine\Base\TaskGraph.cpp">

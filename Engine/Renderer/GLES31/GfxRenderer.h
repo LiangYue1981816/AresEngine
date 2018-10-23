@@ -211,7 +211,7 @@ public:
 	bool CmdClearDepth(CGfxCommandBuffer *pCommandBuffer, float depth);
 	bool CmdClearColor(CGfxCommandBuffer *pCommandBuffer, float red, float green, float blue, float alpha);
 	bool CmdDrawInstance(CGfxCommandBuffer *pCommandBuffer, const CGfxMeshPtr &ptrMesh, uint32_t offset, int indexCount, const eastl::vector<glm::mat4> &mtxTransforms);
-	bool CmdDrawIndirect(CGfxCommandBuffer *pCommandBuffer, const CGfxMeshPtr &ptrMesh, uint32_t offset, const eastl::vector<glm::mat4> &mtxTransforms);
+	bool CmdDrawIndirect(CGfxCommandBuffer *pCommandBuffer, const CGfxMeshPtr &ptrMesh, const CGfxDrawIndirectBufferPtr &ptrDrawIndirectBuffer, uint32_t offset, const eastl::vector<glm::mat4> &mtxTransforms);
 	bool CmdDrawScreen(CGfxCommandBuffer *pCommandBuffer);
 
 	bool CmdExecute(CGfxCommandBuffer *pCommandBuffer, CGfxCommandBuffer *pSecondaryCommandBuffer);

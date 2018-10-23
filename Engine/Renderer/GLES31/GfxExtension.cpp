@@ -140,7 +140,7 @@ typedef struct BlendColorParam {
 } BlendColorParam;
 
 typedef struct FrameBufferAttachmentParam {
-	uint32_t target;
+	uint32_t textarget;
 	uint32_t texture;
 	int level;
 } FrameBufferAttachmentParam;
@@ -154,6 +154,14 @@ typedef struct FrameBufferParam {
 
 typedef struct ProgramPipelineParam {
 	uint32_t pipeline;
+	eastl::unordered_map<int, eastl::unordered_map<int, int>> uniform1i;
+	eastl::unordered_map<int, eastl::unordered_map<int, int[2]>> uniform2i;
+	eastl::unordered_map<int, eastl::unordered_map<int, int[3]>> uniform3i;
+	eastl::unordered_map<int, eastl::unordered_map<int, int[4]>> uniform4i;
+	eastl::unordered_map<int, eastl::unordered_map<int, float>> uniform1f;
+	eastl::unordered_map<int, eastl::unordered_map<int, float[2]>> uniform2f;
+	eastl::unordered_map<int, eastl::unordered_map<int, float[3]>> uniform3f;
+	eastl::unordered_map<int, eastl::unordered_map<int, float[4]>> uniform4f;
 } ProgramPipelineParam;
 
 typedef struct VertexArrayParam {
@@ -326,6 +334,14 @@ void GLResetContext(void)
 	Samplers.clear();
 	Textures.clear();
 	ActiveTextures.clear();
+	ProgramPipeline.uniform1i.clear();
+	ProgramPipeline.uniform2i.clear();
+	ProgramPipeline.uniform3i.clear();
+	ProgramPipeline.uniform4i.clear();
+	ProgramPipeline.uniform1f.clear();
+	ProgramPipeline.uniform2f.clear();
+	ProgramPipeline.uniform3f.clear();
+	ProgramPipeline.uniform4f.clear();
 
 	Scissor.x = GL_INVALID_VALUE;
 	Scissor.y = GL_INVALID_VALUE;
@@ -686,6 +702,14 @@ void GLBindProgramPipeline(GLuint pipeline)
 {
 	if (ProgramPipeline.pipeline != pipeline) {
 		ProgramPipeline.pipeline = pipeline;
+		ProgramPipeline.uniform1i.clear();
+		ProgramPipeline.uniform2i.clear();
+		ProgramPipeline.uniform3i.clear();
+		ProgramPipeline.uniform4i.clear();
+		ProgramPipeline.uniform1f.clear();
+		ProgramPipeline.uniform2f.clear();
+		ProgramPipeline.uniform3f.clear();
+		ProgramPipeline.uniform4f.clear();
 		glBindProgramPipeline(pipeline);
 	}
 }
@@ -708,8 +732,8 @@ void GLBindFramebufferTexture2D(GLenum target, GLenum attachment, GLenum textarg
 {
 	if (FrameBuffers.find(target) != FrameBuffers.end()) {
 		uint32_t framebuffer = FrameBuffers[target].framebuffer;
-		if (FrameBuffers[target].attachments[framebuffer].find(attachment) == FrameBuffers[target].attachments[framebuffer].end() || FrameBuffers[target].attachments[framebuffer][attachment].target != textarget || FrameBuffers[target].attachments[framebuffer][attachment].texture != texture || FrameBuffers[target].attachments[framebuffer][attachment].level != level) {
-			FrameBuffers[target].attachments[framebuffer][attachment].target = textarget;
+		if (FrameBuffers[target].attachments[framebuffer].find(attachment) == FrameBuffers[target].attachments[framebuffer].end() || FrameBuffers[target].attachments[framebuffer][attachment].textarget != textarget || FrameBuffers[target].attachments[framebuffer][attachment].texture != texture || FrameBuffers[target].attachments[framebuffer][attachment].level != level) {
+			FrameBuffers[target].attachments[framebuffer][attachment].textarget = textarget;
 			FrameBuffers[target].attachments[framebuffer][attachment].texture = texture;
 			FrameBuffers[target].attachments[framebuffer][attachment].level = level;
 			glFramebufferTexture2D(target, attachment, textarget, texture, level);
@@ -780,6 +804,102 @@ void GLDrawBuffers(GLenum target, GLsizei n, const GLenum *bufs)
 	}
 	else {
 		glDrawBuffers(n, bufs);
+	}
+}
+
+void GLProgramUniform1i(GLuint program, GLint location, GLint v0)
+{
+	if (ProgramPipeline.uniform1i[program].find(location) == ProgramPipeline.uniform1i[program].end() ||
+		ProgramPipeline.uniform1i[program][location] != v0) {
+		ProgramPipeline.uniform1i[program][location] = v0;
+		glProgramUniform1i(program, location, v0);
+	}
+}
+
+void GLProgramUniform2i(GLuint program, GLint location, GLint v0, GLint v1)
+{
+	if (ProgramPipeline.uniform2i[program].find(location) == ProgramPipeline.uniform2i[program].end() ||
+		ProgramPipeline.uniform2i[program][location][0] != v0 ||
+		ProgramPipeline.uniform2i[program][location][1] != v1) {
+		ProgramPipeline.uniform2i[program][location][0] = v0;
+		ProgramPipeline.uniform2i[program][location][1] = v1;
+		glProgramUniform2i(program, location, v0, v1);
+	}
+}
+
+void GLProgramUniform3i(GLuint program, GLint location, GLint v0, GLint v1, GLint v2)
+{
+	if (ProgramPipeline.uniform3i[program].find(location) == ProgramPipeline.uniform3i[program].end() ||
+		ProgramPipeline.uniform3i[program][location][0] != v0 ||
+		ProgramPipeline.uniform3i[program][location][1] != v1 ||
+		ProgramPipeline.uniform3i[program][location][2] != v2) {
+		ProgramPipeline.uniform3i[program][location][0] = v0;
+		ProgramPipeline.uniform3i[program][location][1] = v1;
+		ProgramPipeline.uniform3i[program][location][2] = v2;
+		glProgramUniform3i(program, location, v0, v1, v2);
+	}
+}
+
+void GLProgramUniform4i(GLuint program, GLint location, GLint v0, GLint v1, GLint v2, GLint v3)
+{
+	if (ProgramPipeline.uniform4i[program].find(location) == ProgramPipeline.uniform4i[program].end() ||
+		ProgramPipeline.uniform4i[program][location][0] != v0 ||
+		ProgramPipeline.uniform4i[program][location][1] != v1 ||
+		ProgramPipeline.uniform4i[program][location][2] != v2 ||
+		ProgramPipeline.uniform4i[program][location][3] != v3) {
+		ProgramPipeline.uniform4i[program][location][0] = v0;
+		ProgramPipeline.uniform4i[program][location][1] = v1;
+		ProgramPipeline.uniform4i[program][location][2] = v2;
+		ProgramPipeline.uniform4i[program][location][3] = v3;
+		glProgramUniform4i(program, location, v0, v1, v2, v3);
+	}
+}
+
+void GLProgramUniform1f(GLuint program, GLint location, GLfloat v0)
+{
+	if (ProgramPipeline.uniform1f[program].find(location) == ProgramPipeline.uniform1f[program].end() ||
+		ProgramPipeline.uniform1f[program][location] != v0) {
+		ProgramPipeline.uniform1f[program][location] = v0;
+		glProgramUniform1f(program, location, v0);
+	}
+}
+
+void GLProgramUniform2f(GLuint program, GLint location, GLfloat v0, GLfloat v1)
+{
+	if (ProgramPipeline.uniform2f[program].find(location) == ProgramPipeline.uniform2f[program].end() ||
+		ProgramPipeline.uniform2f[program][location][0] != v0 ||
+		ProgramPipeline.uniform2f[program][location][1] != v1) {
+		ProgramPipeline.uniform2f[program][location][0] = v0;
+		ProgramPipeline.uniform2f[program][location][1] = v1;
+		glProgramUniform2f(program, location, v0, v1);
+	}
+}
+
+void GLProgramUniform3f(GLuint program, GLint location, GLfloat v0, GLfloat v1, GLfloat v2)
+{
+	if (ProgramPipeline.uniform3f[program].find(location) == ProgramPipeline.uniform3f[program].end() ||
+		ProgramPipeline.uniform3f[program][location][0] != v0 ||
+		ProgramPipeline.uniform3f[program][location][1] != v1 ||
+		ProgramPipeline.uniform3f[program][location][2] != v2) {
+		ProgramPipeline.uniform3f[program][location][0] = v0;
+		ProgramPipeline.uniform3f[program][location][1] = v1;
+		ProgramPipeline.uniform3f[program][location][2] = v2;
+		glProgramUniform3f(program, location, v0, v1, v2);
+	}
+}
+
+void GLProgramUniform4f(GLuint program, GLint location, GLfloat v0, GLfloat v1, GLfloat v2, GLfloat v3)
+{
+	if (ProgramPipeline.uniform4f[program].find(location) == ProgramPipeline.uniform4f[program].end() ||
+		ProgramPipeline.uniform4f[program][location][0] != v0 ||
+		ProgramPipeline.uniform4f[program][location][1] != v1 ||
+		ProgramPipeline.uniform4f[program][location][2] != v2 ||
+		ProgramPipeline.uniform4f[program][location][3] != v3) {
+		ProgramPipeline.uniform4f[program][location][0] = v0;
+		ProgramPipeline.uniform4f[program][location][1] = v1;
+		ProgramPipeline.uniform4f[program][location][2] = v2;
+		ProgramPipeline.uniform4f[program][location][3] = v3;
+		glProgramUniform4f(program, location, v0, v1, v2, v3);
 	}
 }
 #pragma endregion

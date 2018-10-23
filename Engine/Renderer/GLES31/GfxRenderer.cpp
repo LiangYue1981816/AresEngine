@@ -437,9 +437,13 @@ bool CGfxRenderer::CmdDrawInstance(CGfxCommandBuffer *pCommandBuffer, const CGfx
 	return true;
 }
 
-bool CGfxRenderer::CmdDrawIndirect(CGfxCommandBuffer *pCommandBuffer, const CGfxMeshPtr &ptrMesh, uint32_t offset, const eastl::vector<glm::mat4> &mtxTransforms)
+bool CGfxRenderer::CmdDrawIndirect(CGfxCommandBuffer *pCommandBuffer, const CGfxMeshPtr &ptrMesh, const CGfxDrawIndirectBufferPtr &ptrDrawIndirectBuffer, uint32_t offset, const eastl::vector<glm::mat4> &mtxTransforms)
 {
 	if (pCommandBuffer->CmdBindMesh(ptrMesh, mtxTransforms) == false) {
+		return false;
+	}
+
+	if (pCommandBuffer->CmdBindDrawIndirectBuffer(ptrDrawIndirectBuffer, mtxTransforms.size()) == false) {
 		return false;
 	}
 

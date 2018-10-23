@@ -20,21 +20,37 @@ void CGfxRenderQueue::AddMesh(int indexThread, int indexQueue, const CGfxMateria
 	}
 }
 
+void CGfxRenderQueue::AddMeshIndirect(int indexThread, int indexQueue, const CGfxMaterialPtr &ptrMaterial, const CGfxMeshPtr &ptrMesh, const CGfxDrawIndirectBufferPtr &ptrDrawIndirectBuffer, const glm::mat4 &mtxTransform)
+{
+	if (indexThread >= 0 && indexThread < THREAD_COUNT) {
+		m_materialMeshIndirectQueue[indexThread][indexQueue][ptrMaterial][ptrMesh][ptrDrawIndirectBuffer].emplace_back(mtxTransform);
+	}
+}
+
 void CGfxRenderQueue::Clear(int indexQueue)
 {
 	for (int indexThread = 0; indexThread < THREAD_COUNT; indexThread++) {
 		m_materialMeshQueue[indexThread][indexQueue].clear();
+		m_materialMeshIndirectQueue[indexThread][indexQueue].clear();
 	}
 }
 
 void CGfxRenderQueue::CmdDraw(CGfxCamera *pCamera, CGfxCommandBuffer *pCommandBuffer, int indexThread, int indexQueue, uint32_t namePass)
 {
-	eastl::unordered_map<const CGfxPipelineBase*, eastl::vector<CGfxMaterialPtr>> pipelineQueue;
+	eastl::unordered_map<const CGfxPipelineBase*, eastl::unordered_map<CGfxMaterialPtr, CGfxMaterialPtr>> pipelineQueue;
 	{
 		for (const auto &itMaterialQueue : m_materialMeshQueue[indexThread][indexQueue]) {
 			if (const CGfxMaterialPass *pPass = itMaterialQueue.first->GetPass(namePass)) {
 				if (const CGfxPipelineBase *pPipeline = pPass->GetPipeline()) {
-					pipelineQueue[pPipeline].emplace_back(itMaterialQueue.first);
+					pipelineQueue[pPipeline][itMaterialQueue.first] = itMaterialQueue.first;
+				}
+			}
+		}
+
+		for (const auto &itMaterialQueue : m_materialMeshIndirectQueue[indexThread][indexQueue]) {
+			if (const CGfxMaterialPass *pPass = itMaterialQueue.first->GetPass(namePass)) {
+				if (const CGfxPipelineBase *pPipeline = pPass->GetPipeline()) {
+					pipelineQueue[pPipeline][itMaterialQueue.first] = itMaterialQueue.first;
 				}
 			}
 		}
@@ -49,10 +65,16 @@ void CGfxRenderQueue::CmdDraw(CGfxCamera *pCamera, CGfxCommandBuffer *pCommandBu
 		Renderer()->CmdBindCamera(pCommandBuffer, pCamera);
 
 		for (const auto &itMaterial : itPipelineQueue.second) {
-			Renderer()->CmdBindMaterialPass(pCommandBuffer, itMaterial, namePass);
+			Renderer()->CmdBindMaterialPass(pCommandBuffer, itMaterial.first, namePass);
 
-			for (const auto &itMeshQueue : m_materialMeshQueue[indexThread][indexQueue][itMaterial]) {
+			for (const auto &itMeshQueue : m_materialMeshQueue[indexThread][indexQueue][itMaterial.first]) {
 				Renderer()->CmdDrawInstance(pCommandBuffer, itMeshQueue.first, 0, itMeshQueue.first->GetIndexCount(), itMeshQueue.second);
+			}
+
+			for (const auto &itMeshIndirectQueue : m_materialMeshIndirectQueue[indexThread][indexQueue][itMaterial.first]) {
+				for (const auto &itIndirectQueue : itMeshIndirectQueue.second) {
+					Renderer()->CmdDrawIndirect(pCommandBuffer, itMeshIndirectQueue.first, itIndirectQueue.first, 0, itIndirectQueue.second);
+				}
 			}
 		}
 	}

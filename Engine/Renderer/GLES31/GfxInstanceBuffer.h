@@ -14,9 +14,7 @@ private:
 
 
 private:
-	void AddInstance(const glm::mat4 &mtxTransform);
 	void SetInstance(const eastl::vector<glm::mat4> &mtxTransforms);
-	void ClearInstance(void);
 	void UpdateInstance(void);
 
 private:

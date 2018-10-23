@@ -18,7 +18,7 @@ public:
 
 
 public:
-	void Bind(uint32_t instanceCount) const;
+	void Bind(uint32_t instanceCount);
 
 
 private:
@@ -31,4 +31,5 @@ private:
 	int m_baseVertex;
 	uint32_t m_firstIndex;
 	uint32_t m_indexCount;
+	uint32_t m_instanceCount;
 };

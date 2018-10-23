@@ -131,6 +131,11 @@ void CGfxCamera::AddMesh(int indexThread, int indexQueue, const CGfxMaterialPtr 
 	m_pRenderQueue->AddMesh(indexThread, indexQueue, ptrMaterial, ptrMesh, mtxTransform);
 }
 
+void CGfxCamera::AddMeshIndirect(int indexThread, int indexQueue, const CGfxMaterialPtr &ptrMaterial, const CGfxMeshPtr &ptrMesh, const CGfxDrawIndirectBufferPtr &ptrDrawIndirectBuffer, const glm::mat4 &mtxTransform)
+{
+	m_pRenderQueue->AddMeshIndirect(indexThread, indexQueue, ptrMaterial, ptrMesh, ptrDrawIndirectBuffer, mtxTransform);
+}
+
 void CGfxCamera::Clear(int indexQueue)
 {
 	m_pRenderQueue->Clear(indexQueue);
