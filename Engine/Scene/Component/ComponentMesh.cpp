@@ -69,7 +69,7 @@ void CComponentMesh::TaskUpdate(float gameTime, float deltaTime)
 void CComponentMesh::TaskUpdateCamera(CGfxCamera *pCamera, int indexThread, int indexQueue)
 {
 	if (pCamera->IsVisible(GetWorldAABB())) {
-		pCamera->AddMesh(indexThread, indexQueue, m_ptrMaterial, m_ptrMesh, m_pParentNode->GetWorldTransform());
-//		pCamera->AddMeshIndirect(indexThread, indexQueue, m_ptrMaterial, m_ptrMesh, m_ptrDrawIndirectBuffer, m_pParentNode->GetWorldTransform());
+//		pCamera->AddMesh(indexThread, indexQueue, m_ptrMaterial, m_ptrMesh, m_pParentNode->GetWorldTransform());
+		pCamera->AddMeshIndirect(indexThread, indexQueue, m_ptrMaterial, m_ptrMesh, m_ptrDrawIndirectBuffer, m_pParentNode->GetWorldTransform());
 	}
 }
