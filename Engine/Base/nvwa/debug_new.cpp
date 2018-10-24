@@ -386,3 +386,41 @@ int check_mem_corruption()
 	LogOutput(LOG_TAG_MEMORY, "*** Checking for memory corruption: %d FOUND\n", corrupt_cnt);
     return corrupt_cnt;
 }
+
+/**
+ * Get total memory allocated.
+ */
+size_t get_total_size()
+{
+	size_t total_size = 0;
+
+	fast_mutex_autolock lock_ptr(new_ptr_lock);
+	for (new_ptr_list_t* ptr = new_ptr_list.next; ptr != &new_ptr_list; ptr = ptr->next)
+	{
+		if (ptr->magic == DEBUG_NEW_MAGIC)
+		{
+			total_size += ptr->size;
+		}
+	}
+
+	return total_size;
+}
+
+/**
+ * Get total object count that allocated.
+ */
+size_t get_total_object()
+{
+	size_t object_cnt = 0;
+
+	fast_mutex_autolock lock_ptr(new_ptr_lock);
+	for (new_ptr_list_t* ptr = new_ptr_list.next; ptr != &new_ptr_list; ptr = ptr->next)
+	{
+		if (ptr->magic == DEBUG_NEW_MAGIC)
+		{
+			object_cnt++;
+		}
+	}
+
+	return object_cnt;
+}
