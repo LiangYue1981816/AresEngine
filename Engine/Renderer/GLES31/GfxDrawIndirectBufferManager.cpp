@@ -17,7 +17,7 @@ CGfxDrawIndirectBufferManager::~CGfxDrawIndirectBufferManager(void)
 	m_pBuffers.clear();
 }
 
-CGfxDrawIndirectBuffer* CGfxDrawIndirectBufferManager::CreateDrawIndirectBuffer(const CGfxMesh *pMesh, int baseVertex, uint32_t firstIndex, uint32_t indexCount)
+CGfxDrawIndirectBuffer* CGfxDrawIndirectBufferManager::CreateDrawIndirectBuffer(const CGfxMesh *pMesh, int baseVertex, int firstIndex, int indexCount)
 {
 	char szName[_MAX_STRING];
 	sprintf(szName, "%8.8X_%8.8X_%8.8X_%8.8X", pMesh->GetName(), baseVertex, firstIndex, indexCount);

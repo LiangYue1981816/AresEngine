@@ -238,7 +238,7 @@ bool CGfxShader::Uniform4f(uint32_t name, float v0, float v1, float v2, float v3
 	return false;
 }
 
-bool CGfxShader::Uniform1fv(uint32_t name, uint32_t count, const float *value) const
+bool CGfxShader::Uniform1fv(uint32_t name, int count, const float *value) const
 {
 	const auto &itLocation = m_uniformLocations.find(name);
 
@@ -250,7 +250,7 @@ bool CGfxShader::Uniform1fv(uint32_t name, uint32_t count, const float *value) c
 	return false;
 }
 
-bool CGfxShader::Uniform2fv(uint32_t name, uint32_t count, const float *value) const
+bool CGfxShader::Uniform2fv(uint32_t name, int count, const float *value) const
 {
 	const auto &itLocation = m_uniformLocations.find(name);
 
@@ -262,7 +262,7 @@ bool CGfxShader::Uniform2fv(uint32_t name, uint32_t count, const float *value) c
 	return false;
 }
 
-bool CGfxShader::Uniform3fv(uint32_t name, uint32_t count, const float *value) const
+bool CGfxShader::Uniform3fv(uint32_t name, int count, const float *value) const
 {
 	const auto &itLocation = m_uniformLocations.find(name);
 
@@ -274,7 +274,7 @@ bool CGfxShader::Uniform3fv(uint32_t name, uint32_t count, const float *value) c
 	return false;
 }
 
-bool CGfxShader::Uniform4fv(uint32_t name, uint32_t count, const float *value) const
+bool CGfxShader::Uniform4fv(uint32_t name, int count, const float *value) const
 {
 	const auto &itLocation = m_uniformLocations.find(name);
 
@@ -286,7 +286,7 @@ bool CGfxShader::Uniform4fv(uint32_t name, uint32_t count, const float *value) c
 	return false;
 }
 
-bool CGfxShader::UniformMatrix2fv(uint32_t name, uint32_t count, const float *value) const
+bool CGfxShader::UniformMatrix2fv(uint32_t name, int count, const float *value) const
 {
 	const auto &itLocation = m_uniformLocations.find(name);
 
@@ -298,7 +298,7 @@ bool CGfxShader::UniformMatrix2fv(uint32_t name, uint32_t count, const float *va
 	return false;
 }
 
-bool CGfxShader::UniformMatrix3fv(uint32_t name, uint32_t count, const float *value) const
+bool CGfxShader::UniformMatrix3fv(uint32_t name, int count, const float *value) const
 {
 	const auto &itLocation = m_uniformLocations.find(name);
 
@@ -310,7 +310,7 @@ bool CGfxShader::UniformMatrix3fv(uint32_t name, uint32_t count, const float *va
 	return false;
 }
 
-bool CGfxShader::UniformMatrix4fv(uint32_t name, uint32_t count, const float *value) const
+bool CGfxShader::UniformMatrix4fv(uint32_t name, int count, const float *value) const
 {
 	const auto &itLocation = m_uniformLocations.find(name);
 

@@ -1,7 +1,10 @@
 #include "utils.h"
-#include "stdio.h"
-#include "stdlib.h"
-#include "windows.h"
+#include <stdio.h>
+#include <stdlib.h>
+
+#ifdef _WINDOWS
+#include <windows.h>
+#endif
 
 
 unsigned int tick(void)

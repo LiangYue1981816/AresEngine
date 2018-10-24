@@ -140,7 +140,7 @@ public:
 	CGfxTextureCubeMapPtr CreateTextureCubeMap(uint32_t name);
 	CGfxRenderPassPtr CreateRenderPass(int numAttachments, int numSubpasses);
 	CGfxFrameBufferPtr CreateFrameBuffer(int width, int height);
-	CGfxDrawIndirectBufferPtr CreateDrawIndirectBuffer(const CGfxMesh *pMesh, int baseVertex, uint32_t firstIndex, uint32_t indexCount);
+	CGfxDrawIndirectBufferPtr CreateDrawIndirectBuffer(const CGfxMesh *pMesh, int baseVertex, int firstIndex, int indexCount);
 
 	CGfxMeshPtr LoadMesh(const char *szFileName);
 	CGfxMaterialPtr LoadMaterial(const char *szFileName);
@@ -200,17 +200,19 @@ public:
 	bool CmdUniform2f(CGfxCommandBuffer *pCommandBuffer, const char *szName, float v0, float v1);
 	bool CmdUniform3f(CGfxCommandBuffer *pCommandBuffer, const char *szName, float v0, float v1, float v2);
 	bool CmdUniform4f(CGfxCommandBuffer *pCommandBuffer, const char *szName, float v0, float v1, float v2, float v3);
-	bool CmdUniform1fv(CGfxCommandBuffer *pCommandBuffer, const char *szName, uint32_t count, const float *value);
-	bool CmdUniform2fv(CGfxCommandBuffer *pCommandBuffer, const char *szName, uint32_t count, const float *value);
-	bool CmdUniform3fv(CGfxCommandBuffer *pCommandBuffer, const char *szName, uint32_t count, const float *value);
-	bool CmdUniform4fv(CGfxCommandBuffer *pCommandBuffer, const char *szName, uint32_t count, const float *value);
-	bool CmdUniformMatrix2fv(CGfxCommandBuffer *pCommandBuffer, const char *szName, uint32_t count, const float *value);
-	bool CmdUniformMatrix3fv(CGfxCommandBuffer *pCommandBuffer, const char *szName, uint32_t count, const float *value);
-	bool CmdUniformMatrix4fv(CGfxCommandBuffer *pCommandBuffer, const char *szName, uint32_t count, const float *value);
+	bool CmdUniform1fv(CGfxCommandBuffer *pCommandBuffer, const char *szName, int count, const float *value);
+	bool CmdUniform2fv(CGfxCommandBuffer *pCommandBuffer, const char *szName, int count, const float *value);
+	bool CmdUniform3fv(CGfxCommandBuffer *pCommandBuffer, const char *szName, int count, const float *value);
+	bool CmdUniform4fv(CGfxCommandBuffer *pCommandBuffer, const char *szName, int count, const float *value);
+	bool CmdUniformMatrix2fv(CGfxCommandBuffer *pCommandBuffer, const char *szName, int count, const float *value);
+	bool CmdUniformMatrix3fv(CGfxCommandBuffer *pCommandBuffer, const char *szName, int count, const float *value);
+	bool CmdUniformMatrix4fv(CGfxCommandBuffer *pCommandBuffer, const char *szName, int count, const float *value);
 
 	bool CmdClearDepth(CGfxCommandBuffer *pCommandBuffer, float depth);
 	bool CmdClearColor(CGfxCommandBuffer *pCommandBuffer, float red, float green, float blue, float alpha);
+
 	bool CmdDrawInstance(CGfxCommandBuffer *pCommandBuffer, const CGfxMeshPtr &ptrMesh, uint32_t offset, int indexCount, const eastl::vector<glm::mat4> &mtxTransforms);
+	bool CmdDrawIndirect(CGfxCommandBuffer *pCommandBuffer, const CGfxMeshPtr &ptrMesh, int baseVertex, int firstIndex, int indexCount, const eastl::vector<glm::mat4> &mtxTransforms);
 	bool CmdDrawIndirect(CGfxCommandBuffer *pCommandBuffer, const CGfxMeshPtr &ptrMesh, const CGfxDrawIndirectBufferPtr &ptrDrawIndirectBuffer, uint32_t offset, const eastl::vector<glm::mat4> &mtxTransforms);
 	bool CmdDrawScreen(CGfxCommandBuffer *pCommandBuffer);
 
@@ -237,13 +239,13 @@ private:
 	void Uniform2f(uint32_t name, float v0, float v1) const;
 	void Uniform3f(uint32_t name, float v0, float v1, float v2) const;
 	void Uniform4f(uint32_t name, float v0, float v1, float v2, float v3) const;
-	void Uniform1fv(uint32_t name, uint32_t count, const float *value) const;
-	void Uniform2fv(uint32_t name, uint32_t count, const float *value) const;
-	void Uniform3fv(uint32_t name, uint32_t count, const float *value) const;
-	void Uniform4fv(uint32_t name, uint32_t count, const float *value) const;
-	void UniformMatrix2fv(uint32_t name, uint32_t count, const float *value) const;
-	void UniformMatrix3fv(uint32_t name, uint32_t count, const float *value) const;
-	void UniformMatrix4fv(uint32_t name, uint32_t count, const float *value) const;
+	void Uniform1fv(uint32_t name, int count, const float *value) const;
+	void Uniform2fv(uint32_t name, int count, const float *value) const;
+	void Uniform3fv(uint32_t name, int count, const float *value) const;
+	void Uniform4fv(uint32_t name, int count, const float *value) const;
+	void UniformMatrix2fv(uint32_t name, int count, const float *value) const;
+	void UniformMatrix3fv(uint32_t name, int count, const float *value) const;
+	void UniformMatrix4fv(uint32_t name, int count, const float *value) const;
 #pragma endregion
 
 

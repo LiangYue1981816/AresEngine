@@ -13,7 +13,7 @@ private:
 
 
 private:
-	CGfxDrawIndirectBuffer* CreateDrawIndirectBuffer(const CGfxMesh *pMesh, int baseVertex, uint32_t firstIndex, uint32_t indexCount);
+	CGfxDrawIndirectBuffer* CreateDrawIndirectBuffer(const CGfxMesh *pMesh, int baseVertex, int firstIndex, int indexCount);
 	void DestroyDrawIndirectBuffer(CGfxDrawIndirectBuffer *pBuffer);
 
 

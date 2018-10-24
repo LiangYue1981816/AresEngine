@@ -74,6 +74,7 @@ void CGfxRenderQueue::CmdDraw(CGfxCamera *pCamera, CGfxCommandBuffer *pCommandBu
 			for (const auto &itMeshIndirectQueue : m_materialMeshIndirectQueue[indexThread][indexQueue][itMaterial.first]) {
 				for (const auto &itIndirectQueue : itMeshIndirectQueue.second) {
 					Renderer()->CmdDrawIndirect(pCommandBuffer, itMeshIndirectQueue.first, itIndirectQueue.first, 0, itIndirectQueue.second);
+//					Renderer()->CmdDrawIndirect(pCommandBuffer, itMeshIndirectQueue.first, itIndirectQueue.first->GetBaseVertex(), itIndirectQueue.first->GetFirstIndex(), itIndirectQueue.first->GetIndexCount(), itIndirectQueue.second);
 				}
 			}
 		}

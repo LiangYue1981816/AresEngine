@@ -31,14 +31,14 @@ public:
 	virtual bool Uniform3f(uint32_t name, float v0, float v1, float v2) const;
 	virtual bool Uniform4f(uint32_t name, float v0, float v1, float v2, float v3) const;
 
-	virtual bool Uniform1fv(uint32_t name, uint32_t count, const float *value) const;
-	virtual bool Uniform2fv(uint32_t name, uint32_t count, const float *value) const;
-	virtual bool Uniform3fv(uint32_t name, uint32_t count, const float *value) const;
-	virtual bool Uniform4fv(uint32_t name, uint32_t count, const float *value) const;
+	virtual bool Uniform1fv(uint32_t name, int count, const float *value) const;
+	virtual bool Uniform2fv(uint32_t name, int count, const float *value) const;
+	virtual bool Uniform3fv(uint32_t name, int count, const float *value) const;
+	virtual bool Uniform4fv(uint32_t name, int count, const float *value) const;
 
-	virtual bool UniformMatrix2fv(uint32_t name, uint32_t count, const float *value) const;
-	virtual bool UniformMatrix3fv(uint32_t name, uint32_t count, const float *value) const;
-	virtual bool UniformMatrix4fv(uint32_t name, uint32_t count, const float *value) const;
+	virtual bool UniformMatrix2fv(uint32_t name, int count, const float *value) const;
+	virtual bool UniformMatrix3fv(uint32_t name, int count, const float *value) const;
+	virtual bool UniformMatrix4fv(uint32_t name, int count, const float *value) const;
 
 
 protected:

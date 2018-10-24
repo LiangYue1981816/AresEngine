@@ -175,7 +175,7 @@ CGfxFrameBufferPtr CGfxRenderer::CreateFrameBuffer(int width, int height)
 	return m_pFrameBufferManager->CreateFrameBuffer(width, height);
 }
 
-CGfxDrawIndirectBufferPtr CGfxRenderer::CreateDrawIndirectBuffer(const CGfxMesh *pMesh, int baseVertex, uint32_t firstIndex, uint32_t indexCount)
+CGfxDrawIndirectBufferPtr CGfxRenderer::CreateDrawIndirectBuffer(const CGfxMesh *pMesh, int baseVertex, int firstIndex, int indexCount)
 {
 	return m_pDrawIndirectBufferManager->CreateDrawIndirectBuffer(pMesh, baseVertex, firstIndex, indexCount);
 }
@@ -379,37 +379,37 @@ bool CGfxRenderer::CmdUniform4f(CGfxCommandBuffer *pCommandBuffer, const char *s
 	return pCommandBuffer->CmdUniform4f(szName, v0, v1, v2, v3);
 }
 
-bool CGfxRenderer::CmdUniform1fv(CGfxCommandBuffer *pCommandBuffer, const char *szName, uint32_t count, const float *value)
+bool CGfxRenderer::CmdUniform1fv(CGfxCommandBuffer *pCommandBuffer, const char *szName, int count, const float *value)
 {
 	return pCommandBuffer->CmdUniform1fv(szName, count, value);
 }
 
-bool CGfxRenderer::CmdUniform2fv(CGfxCommandBuffer *pCommandBuffer, const char *szName, uint32_t count, const float *value)
+bool CGfxRenderer::CmdUniform2fv(CGfxCommandBuffer *pCommandBuffer, const char *szName, int count, const float *value)
 {
 	return pCommandBuffer->CmdUniform2fv(szName, count, value);
 }
 
-bool CGfxRenderer::CmdUniform3fv(CGfxCommandBuffer *pCommandBuffer, const char *szName, uint32_t count, const float *value)
+bool CGfxRenderer::CmdUniform3fv(CGfxCommandBuffer *pCommandBuffer, const char *szName, int count, const float *value)
 {
 	return pCommandBuffer->CmdUniform3fv(szName, count, value);
 }
 
-bool CGfxRenderer::CmdUniform4fv(CGfxCommandBuffer *pCommandBuffer, const char *szName, uint32_t count, const float *value)
+bool CGfxRenderer::CmdUniform4fv(CGfxCommandBuffer *pCommandBuffer, const char *szName, int count, const float *value)
 {
 	return pCommandBuffer->CmdUniform4fv(szName, count, value);
 }
 
-bool CGfxRenderer::CmdUniformMatrix2fv(CGfxCommandBuffer *pCommandBuffer, const char *szName, uint32_t count, const float *value)
+bool CGfxRenderer::CmdUniformMatrix2fv(CGfxCommandBuffer *pCommandBuffer, const char *szName, int count, const float *value)
 {
 	return pCommandBuffer->CmdUniformMatrix2fv(szName, count, value);
 }
 
-bool CGfxRenderer::CmdUniformMatrix3fv(CGfxCommandBuffer *pCommandBuffer, const char *szName, uint32_t count, const float *value)
+bool CGfxRenderer::CmdUniformMatrix3fv(CGfxCommandBuffer *pCommandBuffer, const char *szName, int count, const float *value)
 {
 	return pCommandBuffer->CmdUniformMatrix3fv(szName, count, value);
 }
 
-bool CGfxRenderer::CmdUniformMatrix4fv(CGfxCommandBuffer *pCommandBuffer, const char *szName, uint32_t count, const float *value)
+bool CGfxRenderer::CmdUniformMatrix4fv(CGfxCommandBuffer *pCommandBuffer, const char *szName, int count, const float *value)
 {
 	return pCommandBuffer->CmdUniformMatrix4fv(szName, count, value);
 }
@@ -431,6 +431,19 @@ bool CGfxRenderer::CmdDrawInstance(CGfxCommandBuffer *pCommandBuffer, const CGfx
 	}
 
 	if (pCommandBuffer->CmdDrawInstance(GL_TRIANGLES, ptrMesh->GetIndexType(), offset, indexCount, (int)mtxTransforms.size()) == false) {
+		return false;
+	}
+
+	return true;
+}
+
+bool CGfxRenderer::CmdDrawIndirect(CGfxCommandBuffer *pCommandBuffer, const CGfxMeshPtr &ptrMesh, int baseVertex, int firstIndex, int indexCount, const eastl::vector<glm::mat4> &mtxTransforms)
+{
+	if (pCommandBuffer->CmdBindMesh(ptrMesh, mtxTransforms) == false) {
+		return false;
+	}
+
+	if (pCommandBuffer->CmdDrawIndirect(GL_TRIANGLES, ptrMesh->GetIndexType(), baseVertex, firstIndex, indexCount, mtxTransforms.size()) == false) {
 		return false;
 	}
 
@@ -566,49 +579,49 @@ void CGfxRenderer::Uniform4f(uint32_t name, float v0, float v1, float v2, float 
 	}
 }
 
-void CGfxRenderer::Uniform1fv(uint32_t name, uint32_t count, const float *value) const
+void CGfxRenderer::Uniform1fv(uint32_t name, int count, const float *value) const
 {
 	if (m_pCurrentPipeline) {
 		m_pCurrentPipeline->Uniform1fv(name, count, value);
 	}
 }
 
-void CGfxRenderer::Uniform2fv(uint32_t name, uint32_t count, const float *value) const
+void CGfxRenderer::Uniform2fv(uint32_t name, int count, const float *value) const
 {
 	if (m_pCurrentPipeline) {
 		m_pCurrentPipeline->Uniform2fv(name, count, value);
 	}
 }
 
-void CGfxRenderer::Uniform3fv(uint32_t name, uint32_t count, const float *value) const
+void CGfxRenderer::Uniform3fv(uint32_t name, int count, const float *value) const
 {
 	if (m_pCurrentPipeline) {
 		m_pCurrentPipeline->Uniform3fv(name, count, value);
 	}
 }
 
-void CGfxRenderer::Uniform4fv(uint32_t name, uint32_t count, const float *value) const
+void CGfxRenderer::Uniform4fv(uint32_t name, int count, const float *value) const
 {
 	if (m_pCurrentPipeline) {
 		m_pCurrentPipeline->Uniform4fv(name, count, value);
 	}
 }
 
-void CGfxRenderer::UniformMatrix2fv(uint32_t name, uint32_t count, const float *value) const
+void CGfxRenderer::UniformMatrix2fv(uint32_t name, int count, const float *value) const
 {
 	if (m_pCurrentPipeline) {
 		m_pCurrentPipeline->UniformMatrix2fv(name, count, value);
 	}
 }
 
-void CGfxRenderer::UniformMatrix3fv(uint32_t name, uint32_t count, const float *value) const
+void CGfxRenderer::UniformMatrix3fv(uint32_t name, int count, const float *value) const
 {
 	if (m_pCurrentPipeline) {
 		m_pCurrentPipeline->UniformMatrix3fv(name, count, value);
 	}
 }
 
-void CGfxRenderer::UniformMatrix4fv(uint32_t name, uint32_t count, const float *value) const
+void CGfxRenderer::UniformMatrix4fv(uint32_t name, int count, const float *value) const
 {
 	if (m_pCurrentPipeline) {
 		m_pCurrentPipeline->UniformMatrix4fv(name, count, value);

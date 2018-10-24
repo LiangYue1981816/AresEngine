@@ -51,19 +51,21 @@ public:
 	bool CmdUniform2f(const char *szName, float v0, float v1);
 	bool CmdUniform3f(const char *szName, float v0, float v1, float v2);
 	bool CmdUniform4f(const char *szName, float v0, float v1, float v2, float v3);
-	bool CmdUniform1fv(const char *szName, uint32_t count, const float *value);
-	bool CmdUniform2fv(const char *szName, uint32_t count, const float *value);
-	bool CmdUniform3fv(const char *szName, uint32_t count, const float *value);
-	bool CmdUniform4fv(const char *szName, uint32_t count, const float *value);
-	bool CmdUniformMatrix2fv(const char *szName, uint32_t count, const float *value);
-	bool CmdUniformMatrix3fv(const char *szName, uint32_t count, const float *value);
-	bool CmdUniformMatrix4fv(const char *szName, uint32_t count, const float *value);
+	bool CmdUniform1fv(const char *szName, int count, const float *value);
+	bool CmdUniform2fv(const char *szName, int count, const float *value);
+	bool CmdUniform3fv(const char *szName, int count, const float *value);
+	bool CmdUniform4fv(const char *szName, int count, const float *value);
+	bool CmdUniformMatrix2fv(const char *szName, int count, const float *value);
+	bool CmdUniformMatrix3fv(const char *szName, int count, const float *value);
+	bool CmdUniformMatrix4fv(const char *szName, int count, const float *value);
 
 	bool CmdClearDepth(float depth);
 	bool CmdClearColor(float red, float green, float blue, float alpha);
+
+	bool CmdDrawElements(uint32_t mode, uint32_t type, uint32_t offset, int count);
 	bool CmdDrawInstance(uint32_t mode, uint32_t type, uint32_t offset, int count, int instanceCount);
 	bool CmdDrawIndirect(uint32_t mode, uint32_t type, uint32_t offset);
-	bool CmdDrawElements(uint32_t mode, uint32_t type, uint32_t offset, int count);
+	bool CmdDrawIndirect(uint32_t mode, uint32_t type, int baseVertex, int firstIndex, int count, int instanceCount);
 
 	bool CmdExecute(CGfxCommandBuffer *pCommandBuffer);
 

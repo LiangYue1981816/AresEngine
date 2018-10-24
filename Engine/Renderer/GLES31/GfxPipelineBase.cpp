@@ -132,7 +132,7 @@ bool CGfxPipelineBase::Uniform4f(uint32_t name, float v0, float v1, float v2, fl
 	return rcode;
 }
 
-bool CGfxPipelineBase::Uniform1fv(uint32_t name, uint32_t count, const float *value) const
+bool CGfxPipelineBase::Uniform1fv(uint32_t name, int count, const float *value) const
 {
 	bool rcode = false;
 
@@ -145,7 +145,7 @@ bool CGfxPipelineBase::Uniform1fv(uint32_t name, uint32_t count, const float *va
 	return rcode;
 }
 
-bool CGfxPipelineBase::Uniform2fv(uint32_t name, uint32_t count, const float *value) const
+bool CGfxPipelineBase::Uniform2fv(uint32_t name, int count, const float *value) const
 {
 	bool rcode = false;
 
@@ -158,7 +158,7 @@ bool CGfxPipelineBase::Uniform2fv(uint32_t name, uint32_t count, const float *va
 	return rcode;
 }
 
-bool CGfxPipelineBase::Uniform3fv(uint32_t name, uint32_t count, const float *value) const
+bool CGfxPipelineBase::Uniform3fv(uint32_t name, int count, const float *value) const
 {
 	bool rcode = false;
 
@@ -171,7 +171,7 @@ bool CGfxPipelineBase::Uniform3fv(uint32_t name, uint32_t count, const float *va
 	return rcode;
 }
 
-bool CGfxPipelineBase::Uniform4fv(uint32_t name, uint32_t count, const float *value) const
+bool CGfxPipelineBase::Uniform4fv(uint32_t name, int count, const float *value) const
 {
 	bool rcode = false;
 
@@ -184,7 +184,7 @@ bool CGfxPipelineBase::Uniform4fv(uint32_t name, uint32_t count, const float *va
 	return rcode;
 }
 
-bool CGfxPipelineBase::UniformMatrix2fv(uint32_t name, uint32_t count, const float *value) const
+bool CGfxPipelineBase::UniformMatrix2fv(uint32_t name, int count, const float *value) const
 {
 	bool rcode = false;
 
@@ -197,7 +197,7 @@ bool CGfxPipelineBase::UniformMatrix2fv(uint32_t name, uint32_t count, const flo
 	return rcode;
 }
 
-bool CGfxPipelineBase::UniformMatrix3fv(uint32_t name, uint32_t count, const float *value) const
+bool CGfxPipelineBase::UniformMatrix3fv(uint32_t name, int count, const float *value) const
 {
 	bool rcode = false;
 
@@ -210,7 +210,7 @@ bool CGfxPipelineBase::UniformMatrix3fv(uint32_t name, uint32_t count, const flo
 	return rcode;
 }
 
-bool CGfxPipelineBase::UniformMatrix4fv(uint32_t name, uint32_t count, const float *value) const
+bool CGfxPipelineBase::UniformMatrix4fv(uint32_t name, int count, const float *value) const
 {
 	bool rcode = false;
 

@@ -5,7 +5,7 @@
 class CGfxCommandUniformMatrix2fv : public CGfxCommandBase
 {
 public:
-	CGfxCommandUniformMatrix2fv(const char *szName, uint32_t count, const float *value)
+	CGfxCommandUniformMatrix2fv(const char *szName, int count, const float *value)
 		: m_name(HashValue(szName))
 	{
 		m_value.resize(count);

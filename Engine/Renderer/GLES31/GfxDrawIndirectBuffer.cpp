@@ -4,14 +4,14 @@
 
 
 typedef struct {
-	uint32_t indexCount;
-	uint32_t instanceCount;
-	uint32_t firstIndex;
-	int      baseVertex;
-	uint32_t reservedMustBeZero;
+	int indexCount;
+	int instanceCount;
+	int firstIndex;
+	int baseVertex;
+	int reservedMustBeZero;
 } DrawCommand;
 
-CGfxDrawIndirectBuffer::CGfxDrawIndirectBuffer(uint32_t name, int baseVertex, uint32_t firstIndex, uint32_t indexCount)
+CGfxDrawIndirectBuffer::CGfxDrawIndirectBuffer(uint32_t name, int baseVertex, int firstIndex, int indexCount)
 	: m_name(name)
 	, m_buffer(0)
 	, m_baseVertex(baseVertex)
@@ -40,7 +40,27 @@ uint32_t CGfxDrawIndirectBuffer::GetName(void) const
 	return m_name;
 }
 
-void CGfxDrawIndirectBuffer::Bind(uint32_t instanceCount)
+int CGfxDrawIndirectBuffer::GetBaseVertex(void) const
+{
+	return m_baseVertex;
+}
+
+int CGfxDrawIndirectBuffer::GetFirstIndex(void) const
+{
+	return m_firstIndex;
+}
+
+int CGfxDrawIndirectBuffer::GetIndexCount(void) const
+{
+	return m_indexCount;
+}
+
+int CGfxDrawIndirectBuffer::GetInstanceCount(void) const
+{
+	return m_instanceCount;
+}
+
+void CGfxDrawIndirectBuffer::Bind(int instanceCount)
 {
 	GLBindBuffer(GL_DRAW_INDIRECT_BUFFER, m_buffer);
 

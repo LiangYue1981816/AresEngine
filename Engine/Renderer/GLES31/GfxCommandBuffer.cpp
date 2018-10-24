@@ -241,7 +241,7 @@ bool CGfxCommandBuffer::CmdUniform4f(const char *szName, float v0, float v1, flo
 	return false;
 }
 
-bool CGfxCommandBuffer::CmdUniform1fv(const char *szName, uint32_t count, const float *value)
+bool CGfxCommandBuffer::CmdUniform1fv(const char *szName, int count, const float *value)
 {
 	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
 		m_pCommands.emplace_back(new CGfxCommandUniform1fv(szName, count, value));
@@ -251,7 +251,7 @@ bool CGfxCommandBuffer::CmdUniform1fv(const char *szName, uint32_t count, const 
 	return false;
 }
 
-bool CGfxCommandBuffer::CmdUniform2fv(const char *szName, uint32_t count, const float *value)
+bool CGfxCommandBuffer::CmdUniform2fv(const char *szName, int count, const float *value)
 {
 	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
 		m_pCommands.emplace_back(new CGfxCommandUniform2fv(szName, count, value));
@@ -261,7 +261,7 @@ bool CGfxCommandBuffer::CmdUniform2fv(const char *szName, uint32_t count, const 
 	return false;
 }
 
-bool CGfxCommandBuffer::CmdUniform3fv(const char *szName, uint32_t count, const float *value)
+bool CGfxCommandBuffer::CmdUniform3fv(const char *szName, int count, const float *value)
 {
 	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
 		m_pCommands.emplace_back(new CGfxCommandUniform3fv(szName, count, value));
@@ -271,7 +271,7 @@ bool CGfxCommandBuffer::CmdUniform3fv(const char *szName, uint32_t count, const 
 	return false;
 }
 
-bool CGfxCommandBuffer::CmdUniform4fv(const char *szName, uint32_t count, const float *value)
+bool CGfxCommandBuffer::CmdUniform4fv(const char *szName, int count, const float *value)
 {
 	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
 		m_pCommands.emplace_back(new CGfxCommandUniform4fv(szName, count, value));
@@ -281,7 +281,7 @@ bool CGfxCommandBuffer::CmdUniform4fv(const char *szName, uint32_t count, const 
 	return false;
 }
 
-bool CGfxCommandBuffer::CmdUniformMatrix2fv(const char *szName, uint32_t count, const float *value)
+bool CGfxCommandBuffer::CmdUniformMatrix2fv(const char *szName, int count, const float *value)
 {
 	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
 		m_pCommands.emplace_back(new CGfxCommandUniformMatrix2fv(szName, count, value));
@@ -291,7 +291,7 @@ bool CGfxCommandBuffer::CmdUniformMatrix2fv(const char *szName, uint32_t count, 
 	return false;
 }
 
-bool CGfxCommandBuffer::CmdUniformMatrix3fv(const char *szName, uint32_t count, const float *value)
+bool CGfxCommandBuffer::CmdUniformMatrix3fv(const char *szName, int count, const float *value)
 {
 	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
 		m_pCommands.emplace_back(new CGfxCommandUniformMatrix3fv(szName, count, value));
@@ -301,7 +301,7 @@ bool CGfxCommandBuffer::CmdUniformMatrix3fv(const char *szName, uint32_t count, 
 	return false;
 }
 
-bool CGfxCommandBuffer::CmdUniformMatrix4fv(const char *szName, uint32_t count, const float *value)
+bool CGfxCommandBuffer::CmdUniformMatrix4fv(const char *szName, int count, const float *value)
 {
 	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
 		m_pCommands.emplace_back(new CGfxCommandUniformMatrix4fv(szName, count, value));
@@ -331,6 +331,16 @@ bool CGfxCommandBuffer::CmdClearColor(float red, float green, float blue, float 
 	return false;
 }
 
+bool CGfxCommandBuffer::CmdDrawElements(uint32_t mode, uint32_t type, uint32_t offset, int count)
+{
+	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
+		m_pCommands.emplace_back(new CGfxCommandDrawElements(mode, type, offset, count));
+		return true;
+	}
+
+	return false;
+}
+
 bool CGfxCommandBuffer::CmdDrawInstance(uint32_t mode, uint32_t type, uint32_t offset, int count, int instanceCount)
 {
 	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
@@ -351,10 +361,10 @@ bool CGfxCommandBuffer::CmdDrawIndirect(uint32_t mode, uint32_t type, uint32_t o
 	return false;
 }
 
-bool CGfxCommandBuffer::CmdDrawElements(uint32_t mode, uint32_t type, uint32_t offset, int count)
+bool CGfxCommandBuffer::CmdDrawIndirect(uint32_t mode, uint32_t type, int baseVertex, int firstIndex, int count, int instanceCount)
 {
 	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
-		m_pCommands.emplace_back(new CGfxCommandDrawElements(mode, type, offset, count));
+		m_pCommands.emplace_back(new CGfxCommandDrawIndirect(mode, type, baseVertex, firstIndex, count, instanceCount));
 		return true;
 	}
 
