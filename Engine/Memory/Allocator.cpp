@@ -39,6 +39,7 @@ static int GetThreadIndex(void)
 	pthread_t thread = pthread_self();
 
 	for (int index = 0; index < MAX_THREAD_COUNT; index++) {
+#ifdef _WINDOWS
 		if (threads[index].p == thread.p) {
 			indexThread = index;
 			break;
@@ -49,6 +50,18 @@ static int GetThreadIndex(void)
 			indexThread = index;
 			break;
 		}
+#else
+		if (threads[index] == thread) {
+			indexThread = index;
+			break;
+		}
+
+		if (threads[index] == NULL) {
+			threads[index] = thread;
+			indexThread = index;
+			break;
+		}
+#endif
 	}
 
 	return indexThread;

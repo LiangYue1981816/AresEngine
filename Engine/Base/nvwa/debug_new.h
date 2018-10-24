@@ -39,7 +39,7 @@
 
 #include <new>
 #include <stdio.h>
-#include "MemoryAllocator.h"
+#include "Allocator.h"
 
 #ifdef _MSC_VER
 #pragma warning(disable: 4074)

@@ -1,5 +1,6 @@
 #pragma once
-#include "MemoryAllocator.h"
+#include "Platform.h"
+#include "Allocator.h"
 #include "TaskGraph.h"
 #include "GfxRenderer.h"
 #include "SceneManager.h"

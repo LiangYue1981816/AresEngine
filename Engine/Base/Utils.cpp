@@ -189,11 +189,100 @@ void LogOutput(const char *szTag, const char *szFormat, ...)
 
 	OutputDebugString(szText);
 
-#endif
+#elif _ANDROID
+
+	if (szTag) {
+		__android_log_print(ANDROID_LOG_INFO, "", szTag);
+		__android_log_print(ANDROID_LOG_INFO, "", ": ");
+	}
+
+	__android_log_print(ANDROID_LOG_INFO, "", szText);
+
+#else
 
 	if (szTag) {
 		printf("%s: ", szTag);
 	}
 
 	printf("%s", szText);
+
+#endif
 }
+
+#if defined(_ANDROID) || defined(_IOS)
+
+int stricmp(const char *src, const char *dst)
+{
+	int f, l;
+
+	do {
+		f = (unsigned char)(*(dst++));
+		l = (unsigned char)(*(src++));
+
+		if ((f >= 'A') && (f <= 'Z')) f -= 'A' - 'a';
+		if ((l >= 'A') && (l <= 'Z')) l -= 'A' - 'a';
+	} while (f && (f == l));
+
+	return (f - l);
+}
+
+int strnicmp(const char *src, const char *dst, int count)
+{
+	int f, l;
+
+	do {
+		f = (unsigned char)(*(dst++));
+		l = (unsigned char)(*(src++));
+
+		if ((f >= 'A') && (f <= 'Z')) f -= 'A' - 'a';
+		if ((l >= 'A') && (l <= 'Z')) l -= 'A' - 'a';
+	} while (f && (f == l) && --count);
+
+	return (f - l);
+}
+
+static void _dirent2finddata(struct dirent *d, struct _finddata_t *data)
+{
+	data->attrib = 0;
+	strcpy(data->name, d->d_name);
+
+	switch (d->d_type) {
+	case DT_FIFO:break;
+	case DT_CHR: break;
+	case DT_DIR: data->attrib = _A_SUBDIR; break;
+	case DT_BLK: break;
+	case DT_REG: data->attrib = _A_NORMAL; break;
+	case DT_LNK: break;
+	case DT_SOCK:break;
+	case DT_WHT: break;
+	}
+}
+
+long _findfirst(const char *pattern, struct _finddata_t *data)
+{
+	DIR *id = opendir(pattern);
+	if (id == NULL) return -1;
+
+	struct dirent *d = readdir((DIR *)id);
+	if (d == NULL) return -1;
+
+	_dirent2finddata(d, data);
+	return (long)id;
+}
+
+long _findnext(long id, struct _finddata_t *data)
+{
+	struct dirent *d = readdir((DIR *)id);
+	if (d == NULL) return -1;
+
+	_dirent2finddata(d, data);
+	return 0;
+}
+
+long _findclose(long id)
+{
+	closedir((DIR *)id);
+	return 0;
+}
+
+#endif

@@ -378,9 +378,6 @@
     <ClInclude Include="..\..\ThirdParty\glslc\file_includer.h">
       <Filter>ThirdParty\glslc</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Engine\Memory\MemoryAllocator.h">
-      <Filter>Engine\Memory\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Engine\Memory\MemoryHeap.h">
       <Filter>Engine\Memory\Header Files</Filter>
     </ClInclude>
@@ -542,6 +539,12 @@
     </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxCommandBindDrawIndirectBuffer.h">
       <Filter>Engine\Renderer\GLES31\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Platform.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Memory\Allocator.h">
+      <Filter>Engine\Memory\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -743,9 +746,6 @@
     <ClCompile Include="..\..\ThirdParty\glslc\file_includer.cc">
       <Filter>ThirdParty\glslc</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Engine\Memory\MemoryAllocator.cpp">
-      <Filter>Engine\Memory\Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Engine\Memory\MemoryHeap.cpp">
       <Filter>Engine\Memory\Source Files</Filter>
     </ClCompile>
@@ -832,6 +832,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Engine\Renderer\GLES31\GfxDrawIndirectBufferManager.cpp">
       <Filter>Engine\Renderer\GLES31\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Memory\Allocator.cpp">
+      <Filter>Engine\Memory\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

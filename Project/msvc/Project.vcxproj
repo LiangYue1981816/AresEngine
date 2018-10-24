@@ -58,10 +58,11 @@
     <ClInclude Include="..\..\Engine\Base\TaskGraph.h" />
     <ClInclude Include="..\..\Engine\Base\Utils.h" />
     <ClInclude Include="..\..\Engine\Engine.h" />
-    <ClInclude Include="..\..\Engine\Memory\MemoryAllocator.h" />
+    <ClInclude Include="..\..\Engine\Memory\Allocator.h" />
     <ClInclude Include="..\..\Engine\Memory\MemoryHeap.h" />
     <ClInclude Include="..\..\Engine\Memory\MemoryPool.h" />
     <ClInclude Include="..\..\Engine\Memory\MemorySystem.h" />
+    <ClInclude Include="..\..\Engine\Platform.h" />
     <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxCamera.h" />
     <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxCommandBeginRenderPass.h" />
     <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxCommandBindCamera.h" />
@@ -194,7 +195,7 @@
     <ClCompile Include="..\..\Engine\Base\TaskGraph.cpp" />
     <ClCompile Include="..\..\Engine\Base\Utils.cpp" />
     <ClCompile Include="..\..\Engine\Engine.cpp" />
-    <ClCompile Include="..\..\Engine\Memory\MemoryAllocator.cpp" />
+    <ClCompile Include="..\..\Engine\Memory\Allocator.cpp" />
     <ClCompile Include="..\..\Engine\Memory\MemoryHeap.cpp" />
     <ClCompile Include="..\..\Engine\Memory\MemoryPool.cpp" />
     <ClCompile Include="..\..\Engine\Memory\MemorySystem.cpp" />

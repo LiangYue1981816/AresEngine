@@ -1,5 +1,4 @@
 #pragma once
-#include <io.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -19,7 +18,7 @@
 #include <eastl/vector.h>
 #include <eastl/unordered_map.h>
 
-#include "Engine.h"
+#include "Platform.h"
 #include "Utils.h"
 #include "Define.h"
 #include "SharedPtr.h"

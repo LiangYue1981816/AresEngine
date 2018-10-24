@@ -9,6 +9,10 @@
 #endif
 
 
+#ifndef NO_ERROR
+#define NO_ERROR                       0
+#endif
+
 #ifndef NULL
 #define NULL                           ((void *)0)
 #endif
