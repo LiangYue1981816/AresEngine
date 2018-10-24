@@ -2,13 +2,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include <gl31.h>
-#include <gli.hpp>
-#include <spirv_cfg.hpp>
-#include <spirv_glsl.hpp>
-#include <shaderc/shaderc.hpp>
-#include <glslc/file_includer.h>
-
 #include <string>
 #include <map>
 #include <vector>
@@ -17,6 +10,13 @@
 #include <eastl/map.h>
 #include <eastl/vector.h>
 #include <eastl/unordered_map.h>
+
+#include <gles3/gl31.h>
+#include <gli/gli.hpp>
+#include <shaderc/shaderc.hpp>
+#include <glslc/file_includer.h>
+#include <spirv-cross/spirv_cfg.hpp>
+#include <spirv-cross/spirv_glsl.hpp>
 
 #include "Platform.h"
 #include "Utils.h"
