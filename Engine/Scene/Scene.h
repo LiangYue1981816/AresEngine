@@ -1,6 +1,7 @@
 #pragma once
 #include <tinyxml.h>
 #include <tinystr.h>
+#include "SceneDefinition.h"
 
 
 class CScene

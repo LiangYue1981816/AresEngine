@@ -86,7 +86,7 @@ void event_wait(event_t *event)
 
 int event_wait_timeout(event_t *event, int msec)
 {
-	int rcode = NO_ERROR;
+	int rcode = 0;
 
 	pthread_mutex_lock(&event->mutex);
 	{

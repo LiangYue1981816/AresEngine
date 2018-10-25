@@ -48,6 +48,7 @@ MODULE_GfxRenderer_C_FLAGS := \
 	-Wno-psabi \
 	-fpermissive \
 	-DANDROID \
+	-DPLATFORM_ANDROID \
 	-DCORE_EXPORTS \
 	-std=c++14 \
 	-x c++

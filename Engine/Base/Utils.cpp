@@ -186,11 +186,11 @@ void LogOutput(const char *szTag, const char *szFormat, ...)
 #elif PLATFORM_ANDROID
 
 	if (szTag) {
-		__android_log_print(ANDROID_LOG_INFO, "", szTag);
-		__android_log_print(ANDROID_LOG_INFO, "", ": ");
+		__android_log_print(ANDROID_LOG_INFO, "", "%s", szTag);
+		__android_log_print(ANDROID_LOG_INFO, "", "%s", ": ");
 	}
 
-	__android_log_print(ANDROID_LOG_INFO, "", szText);
+	__android_log_print(ANDROID_LOG_INFO, "", "%s", szText);
 
 #else
 

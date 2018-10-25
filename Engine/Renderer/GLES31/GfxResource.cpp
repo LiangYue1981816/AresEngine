@@ -5,7 +5,6 @@
 
 CGfxResource::CGfxResource(void)
 	: refCount(0)
-	, lock(PTHREAD_SPINLOCK_INITIALIZER)
 {
 	pthread_spin_init(&lock, PTHREAD_PROCESS_PRIVATE);
 }

@@ -155,6 +155,7 @@
     <ClInclude Include="..\..\Engine\Scene\Component\ComponentPointLight.h" />
     <ClInclude Include="..\..\Engine\Scene\Component\ComponentSkin.h" />
     <ClInclude Include="..\..\Engine\Scene\Scene.h" />
+    <ClInclude Include="..\..\Engine\Scene\SceneDefinition.h" />
     <ClInclude Include="..\..\Engine\Scene\SceneManager.h" />
     <ClInclude Include="..\..\Engine\Scene\SceneNode.h" />
     <ClInclude Include="..\..\Engine\Scene\Task\TaskComponentUpdateCamera.h" />

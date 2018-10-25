@@ -235,10 +235,10 @@ template<class T> inline bool operator >= (const CComponentPtr<T> &ptrLeft, cons
 
 template<class T> struct eastl::hash<CComponentPtr<T>>
 {
-	inline size_t operator()(const CComponentPtr<T> &key) const
+	inline size_t operator()(const CComponentPtr<T> &ptr) const
 	{
-		size_t key = (size_t)key.GetKey();
-		size_t manager = (size_t)key.GetManager();
+		size_t key = (size_t)ptr.GetKey();
+		size_t manager = (size_t)ptr.GetManager();
 		key ^= manager + 0x9e3779b9 + (key << 6) + (key >> 2);
 		return key;
 	}

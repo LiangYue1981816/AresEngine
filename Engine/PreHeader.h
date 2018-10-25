@@ -8,6 +8,7 @@
 
 #elif PLATFORM_ANDROID
 
+#include <dirent.h>
 #include <sys/time.h>
 
 #include <jni.h>

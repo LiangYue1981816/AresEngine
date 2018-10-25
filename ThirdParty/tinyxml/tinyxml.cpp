@@ -26,6 +26,42 @@ distribution.
 #include <stdarg.h>
 #include "tinyxml.h"
 
+
+#if defined(PLATFORM_ANDROID) || defined(PLATFORM_IOS)
+
+int stricmp(const char *src, const char *dst)
+{
+	int f, l;
+
+	do {
+		f = (unsigned char)(*(dst++));
+		l = (unsigned char)(*(src++));
+
+		if ((f >= 'A') && (f <= 'Z')) f -= 'A' - 'a';
+		if ((l >= 'A') && (l <= 'Z')) l -= 'A' - 'a';
+	} while (f && (f == l));
+
+	return (f - l);
+}
+
+int strnicmp(const char *src, const char *dst, int count)
+{
+	int f, l;
+
+	do {
+		f = (unsigned char)(*(dst++));
+		l = (unsigned char)(*(src++));
+
+		if ((f >= 'A') && (f <= 'Z')) f -= 'A' - 'a';
+		if ((l >= 'A') && (l <= 'Z')) l -= 'A' - 'a';
+	} while (f && (f == l) && --count);
+
+	return (f - l);
+}
+
+#endif
+
+
 FILE* TiXmlFOpen(const char* filename, const char* mode);
 
 bool TiXmlBase::condenseWhiteSpace = true;

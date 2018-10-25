@@ -546,6 +546,9 @@
     <ClInclude Include="..\..\Engine\PreHeader.h">
       <Filter>Engine</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Engine\Scene\SceneDefinition.h">
+      <Filter>Engine\Scene\Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Engine\Base\TaskGraph.cpp">

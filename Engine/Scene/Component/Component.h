@@ -1,6 +1,7 @@
 #pragma once
-#include "utils.h"
-#include "define.h"
+#include "Utils.h"
+#include "Define.h"
+#include "SceneDefinition.h"
 
 
 class CComponent

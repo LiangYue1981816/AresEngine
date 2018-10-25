@@ -56,7 +56,7 @@ static int GetThreadIndex(void)
 			break;
 		}
 
-		if (threads[index] == nullptr) {
+		if (threads[index] == 0) {
 			threads[index] = thread;
 			indexThread = index;
 			break;
