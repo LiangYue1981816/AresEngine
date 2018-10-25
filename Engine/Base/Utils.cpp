@@ -1,15 +1,9 @@
-#include "utils.h"
-#include <stdio.h>
-#include <stdlib.h>
-
-#ifdef _WINDOWS
-#include <windows.h>
-#endif
+#include "Utils.h"
 
 
 unsigned int tick(void)
 {
-#ifdef _WINDOWS
+#ifdef PLATFORM_WINDOWS
 
 	LARGE_INTEGER freq;
 	LARGE_INTEGER count;
@@ -121,7 +115,7 @@ size_t freadline(char *buffer, size_t size, FILE *stream)
 	char c;
 	size_t count = 0;
 
-	while (feof(stream) == FALSE && count < size - 1) {
+	while (feof(stream) == 0 && count < size - 1) {
 		c = fgetc(stream);
 
 		if (c == '\r') {
@@ -180,7 +174,7 @@ void LogOutput(const char *szTag, const char *szFormat, ...)
 	vsprintf(szText, szFormat, vaList);
 	va_end(vaList);
 
-#ifdef _WINDOWS
+#ifdef PLATFORM_WINDOWS
 
 	if (szTag) {
 		OutputDebugString(szTag);
@@ -189,7 +183,7 @@ void LogOutput(const char *szTag, const char *szFormat, ...)
 
 	OutputDebugString(szText);
 
-#elif _ANDROID
+#elif PLATFORM_ANDROID
 
 	if (szTag) {
 		__android_log_print(ANDROID_LOG_INFO, "", szTag);
@@ -209,7 +203,7 @@ void LogOutput(const char *szTag, const char *szFormat, ...)
 #endif
 }
 
-#if defined(_ANDROID) || defined(_IOS)
+#if defined(PLATFORM_ANDROID) || defined(PLATFORM_IOS)
 
 int stricmp(const char *src, const char *dst)
 {

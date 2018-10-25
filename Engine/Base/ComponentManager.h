@@ -1,6 +1,4 @@
 #pragma once
-#include <eastl/vector.h>
-#include <eastl/unordered_map.h>
 
 
 template<class T> class CComponentManager

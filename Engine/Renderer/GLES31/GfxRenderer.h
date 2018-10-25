@@ -1,15 +1,7 @@
 #pragma once
 #include <stdio.h>
 #include <stdlib.h>
-
-#include <string>
-#include <map>
-#include <vector>
-#include <unordered_map>
-#include <eastl/string.h>
-#include <eastl/map.h>
-#include <eastl/vector.h>
-#include <eastl/unordered_map.h>
+#include "PreHeader.h"
 
 #include <gles3/gl31.h>
 #include <gli/gli.hpp>
@@ -18,9 +10,7 @@
 #include <spirv-cross/spirv_cfg.hpp>
 #include <spirv-cross/spirv_glsl.hpp>
 
-#include "Platform.h"
 #include "Utils.h"
-#include "Define.h"
 #include "SharedPtr.h"
 
 #include "GfxGLM.h"

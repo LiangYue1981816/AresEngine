@@ -540,11 +540,11 @@
     <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxCommandBindDrawIndirectBuffer.h">
       <Filter>Engine\Renderer\GLES31\Source Files\Commands</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Engine\Platform.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Engine\Memory\Allocator.h">
       <Filter>Engine\Memory\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\PreHeader.h">
+      <Filter>Engine</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

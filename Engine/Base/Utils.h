@@ -1,6 +1,7 @@
 #pragma once
 #include <stdio.h>
 #include <stdlib.h>
+#include "PreHeader.h"
 
 
 extern unsigned int tick(void);
@@ -14,7 +15,7 @@ extern size_t freadstring(char *buffer, size_t size, FILE *stream);
 extern size_t fwritestring(const char *buffer, size_t size, FILE *stream);
 extern void LogOutput(const char *szTag, const char *szFormat, ...);
 
-#if defined(_ANDROID) || defined(_IOS)
+#if defined(PLATFORM_ANDROID) || defined(PLATFORM_IOS)
 extern int stricmp(const char *src, const char *dst);
 extern int strnicmp(const char *src, const char *dst, int count);
 

@@ -39,7 +39,7 @@ static int GetThreadIndex(void)
 	pthread_t thread = pthread_self();
 
 	for (int index = 0; index < MAX_THREAD_COUNT; index++) {
-#ifdef _WINDOWS
+#ifdef PLATFORM_WINDOWS
 		if (threads[index].p == thread.p) {
 			indexThread = index;
 			break;

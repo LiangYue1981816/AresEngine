@@ -13,11 +13,11 @@ void* _malloc(size_t size)
 
 	void *ptr = NULL;
 
-#ifdef _WINDOWS
+#ifdef PLATFORM_WINDOWS
 
 	ptr = _aligned_malloc(size, 16);
 
-#elif _ANDROID
+#elif PLATFORM_ANDROID
 
 	ptr = memalign(16, size);
 
@@ -34,7 +34,7 @@ void _free(void *ptr)
 {
 	ASSERT(ptr);
 
-#ifdef _WINDOWS
+#ifdef PLATFORM_WINDOWS
 
 	_aligned_free(ptr);
 

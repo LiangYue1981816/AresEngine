@@ -42,7 +42,7 @@
 #if defined(__unix__) || defined(__unix) || (defined(__APPLE__) && defined(__MACH__))
 #include <alloca.h>
 #endif
-#ifdef _WINDOWS
+#ifdef PLATFORM_WINDOWS
 #include <malloc.h>
 #endif
 #include "engine.h"

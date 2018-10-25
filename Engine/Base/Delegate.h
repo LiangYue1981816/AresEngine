@@ -46,7 +46,6 @@
 //                * More optimal assignment,== and != operators for static function pointers.
 
 #pragma once
-#include <eastl/vector.h>
 
 
 ////////////////////////////////////////////////////////////////////////////////

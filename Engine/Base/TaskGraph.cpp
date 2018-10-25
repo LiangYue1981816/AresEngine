@@ -1,7 +1,7 @@
 #include "TaskGraph.h"
 
 
-#ifdef _WINDOWS
+#ifdef PLATFORM_WINDOWS
 #include <windows.h>
 
 #pragma pack(push,8)
@@ -34,7 +34,7 @@ static void SetThreadName(DWORD dwThreadID, const char* szName)
 
 static void pthread_set_name(pthread_t thread, const char *name)
 {
-#ifdef _WINDOWS
+#ifdef PLATFORM_WINDOWS
 	if (DWORD Win32ThreadID = pthread_getw32threadid_np(thread)) {
 		SetThreadName(Win32ThreadID, name);
 	}
@@ -45,7 +45,7 @@ static void pthread_set_name(pthread_t thread, const char *name)
 
 static int pthread_attr_create(pthread_attr_t *attr, sched_param *param, int policy, int priority)
 {
-#ifdef _WINDOWS
+#ifdef PLATFORM_WINDOWS
 	policy = SCHED_OTHER;
 #endif
 

@@ -1,6 +1,4 @@
 #pragma once
-#include <eastl/vector.h>
-#include <eastl/unordered_map.h>
 #include "ComponentMesh.h"
 #include "ComponentSkin.h"
 #include "ComponentParticle.h"

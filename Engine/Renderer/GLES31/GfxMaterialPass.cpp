@@ -355,7 +355,7 @@ bool CGfxMaterialPass::LoadPipelineShader(TiXmlNode *pPipelineNode, CGfxShader *
 			char szBinFileName[_MAX_STRING] = { 0 };
 			sprintf(szBinFileName, "%x.%s", HashValue(preprocess.c_str()), szExtName[kind]);
 
-#ifdef _WINDOWS
+#ifdef PLATFORM_WINDOWS
 			if (fexist(Renderer()->GetResourceFullName(szBinFileName)) == 0) {
 				Renderer()->GetShaderCompiler()->Compile(Renderer()->GetResourceFullName(szFileName), kind);
 			}

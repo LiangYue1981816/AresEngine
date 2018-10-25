@@ -50,7 +50,7 @@ void CGfxSwapChain::Present(void)
 
 	m_indexTexture = (m_indexTexture + 1) % 3;
 
-#ifdef _WINDOWS
+#ifdef PLATFORM_WINDOWS
 	::SwapBuffers((HDC)m_hDC);
 #endif
 }

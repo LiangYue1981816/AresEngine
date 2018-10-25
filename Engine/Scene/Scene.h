@@ -1,8 +1,6 @@
 #pragma once
 #include <tinyxml.h>
 #include <tinystr.h>
-#include <eastl/vector.h>
-#include <eastl/unordered_map.h>
 
 
 class CScene
