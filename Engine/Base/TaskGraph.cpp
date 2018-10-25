@@ -2,8 +2,6 @@
 
 
 #ifdef PLATFORM_WINDOWS
-#include <windows.h>
-
 #pragma pack(push,8)
 typedef struct tagTHREADNAME_INFO
 {
