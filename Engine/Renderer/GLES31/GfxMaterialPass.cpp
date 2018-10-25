@@ -169,7 +169,7 @@ static uint32_t StringToBlendDstFactor(const char *szString)
 
 CGfxMaterialPass::CGfxMaterialPass(uint32_t name)
 	: m_name(name)
-	, m_pPipeline(NULL)
+	, m_pPipeline(nullptr)
 {
 
 }
@@ -241,13 +241,13 @@ bool CGfxMaterialPass::LoadPipeline(TiXmlNode *pPassNode)
 		LogOutput(LOG_TAG_RENDERER, "\t\tLoadPipeline\n");
 		{
 			TiXmlNode *pPipelineNode = pPassNode->FirstChild("Pipeline");
-			if (pPipelineNode == NULL) throw 0;
+			if (pPipelineNode == nullptr) throw 0;
 
 			GLstate state;
 			LoadPipelineState(pPipelineNode, state);
 
-			CGfxShader *pVertexShader = NULL;
-			CGfxShader *pFragmentShader = NULL;
+			CGfxShader *pVertexShader = nullptr;
+			CGfxShader *pFragmentShader = nullptr;
 			LoadPipelineShader(pPipelineNode, pVertexShader, shaderc_vertex_shader);
 			LoadPipelineShader(pPipelineNode, pFragmentShader, shaderc_fragment_shader);
 
@@ -317,7 +317,7 @@ bool CGfxMaterialPass::LoadPipelineState(TiXmlNode *pPipelineNode, GLstate &stat
 				state.polygonOffsetUnits = pOffsetNode->ToElement()->AttributeFloat1("units");
 			}
 		}
-		LogOutput(NULL, "OK\n");
+		LogOutput(nullptr, "OK\n");
 	}
 	return true;
  }
@@ -330,12 +330,12 @@ bool CGfxMaterialPass::LoadPipelineShader(TiXmlNode *pPipelineNode, CGfxShader *
 		LogOutput(LOG_TAG_RENDERER, "\t\t\tLoad%sShader ", szShaderKind[kind]);
 		{
 			TiXmlNode *pShaderNode = pPipelineNode->FirstChild(szShaderKind[kind]);
-			if (pShaderNode == NULL) throw 0;
+			if (pShaderNode == nullptr) throw 0;
 
 			const char *szFileName = pShaderNode->ToElement()->AttributeString("file_name");
-			if (szFileName == NULL) throw 1;
+			if (szFileName == nullptr) throw 1;
 
-			LogOutput(NULL, "%s ... ", szFileName);
+			LogOutput(nullptr, "%s ... ", szFileName);
 
 			Renderer()->GetShaderCompiler()->ClearMacroDefinition();
 			{
@@ -363,11 +363,11 @@ bool CGfxMaterialPass::LoadPipelineShader(TiXmlNode *pPipelineNode, CGfxShader *
 			pShader = Renderer()->LoadShader(szBinFileName, kind);
 			if (pShader->IsValid() == false) throw 3;
 		}
-		LogOutput(NULL, "OK\n");
+		LogOutput(nullptr, "OK\n");
 		return true;
 	}
 	catch (int err) {
-		LogOutput(NULL, "Fail(%d)\n", err);
+		LogOutput(nullptr, "Fail(%d)\n", err);
 		return false;
 	}
 }
@@ -381,9 +381,9 @@ bool CGfxMaterialPass::LoadTexture2D(TiXmlNode *pPassNode)
 				{
 					const char *szName = pTextureNode->ToElement()->AttributeString("name");
 					const char *szFileName = pTextureNode->ToElement()->AttributeString("file_name");
-					if (szName == NULL || szFileName == NULL) throw 0;
+					if (szName == nullptr || szFileName == nullptr) throw 0;
 
-					LogOutput(NULL, "%s ... ", szFileName);
+					LogOutput(nullptr, "%s ... ", szFileName);
 
 					uint32_t minFilter = StringToMinFilter(pTextureNode->ToElement()->AttributeString("min_filter"));
 					uint32_t magFilter = StringToMagFilter(pTextureNode->ToElement()->AttributeString("mag_filter"));
@@ -393,13 +393,13 @@ bool CGfxMaterialPass::LoadTexture2D(TiXmlNode *pPassNode)
 					SetSampler(szName, minFilter, magFilter, addressMode);
 					SetTexture2D(szName, szFileName);
 				}
-				LogOutput(NULL, "OK\n");
+				LogOutput(nullptr, "OK\n");
 			} while (pTextureNode = pPassNode->IterateChildren("Texture2D", pTextureNode));
 		}
 		return true;
 	}
 	catch (int err) {
-		LogOutput(NULL, "Fail(%d)\n", err);
+		LogOutput(nullptr, "Fail(%d)\n", err);
 		return false;
 	}
 }
@@ -413,9 +413,9 @@ bool CGfxMaterialPass::LoadTexture2DArray(TiXmlNode *pPassNode)
 				{
 					const char *szName = pTextureNode->ToElement()->AttributeString("name");
 					const char *szFileName = pTextureNode->ToElement()->AttributeString("file_name");
-					if (szName == NULL || szFileName == NULL) throw 0;
+					if (szName == nullptr || szFileName == nullptr) throw 0;
 
-					LogOutput(NULL, "%s ... ", szFileName);
+					LogOutput(nullptr, "%s ... ", szFileName);
 
 					uint32_t minFilter = StringToMinFilter(pTextureNode->ToElement()->AttributeString("min_filter"));
 					uint32_t magFilter = StringToMagFilter(pTextureNode->ToElement()->AttributeString("mag_filter"));
@@ -425,13 +425,13 @@ bool CGfxMaterialPass::LoadTexture2DArray(TiXmlNode *pPassNode)
 					SetSampler(szName, minFilter, magFilter, addressMode);
 					SetTexture2DArray(szName, szFileName);
 				}
-				LogOutput(NULL, "OK\n");
+				LogOutput(nullptr, "OK\n");
 			} while (pTextureNode = pPassNode->IterateChildren("Texture2DArray", pTextureNode));
 		}
 		return true;
 	}
 	catch (int err) {
-		LogOutput(NULL, "Fail(%d)\n", err);
+		LogOutput(nullptr, "Fail(%d)\n", err);
 		return false;
 	}
 }
@@ -445,9 +445,9 @@ bool CGfxMaterialPass::LoadTextureCubeMap(TiXmlNode *pPassNode)
 				{
 					const char *szName = pTextureNode->ToElement()->AttributeString("name");
 					const char *szFileName = pTextureNode->ToElement()->AttributeString("file_name");
-					if (szName == NULL || szFileName == NULL) throw 0;
+					if (szName == nullptr || szFileName == nullptr) throw 0;
 
-					LogOutput(NULL, "%s ... ", szFileName);
+					LogOutput(nullptr, "%s ... ", szFileName);
 
 					uint32_t minFilter = StringToMinFilter(pTextureNode->ToElement()->AttributeString("min_filter"));
 					uint32_t magFilter = StringToMagFilter(pTextureNode->ToElement()->AttributeString("mag_filter"));
@@ -457,13 +457,13 @@ bool CGfxMaterialPass::LoadTextureCubeMap(TiXmlNode *pPassNode)
 					SetSampler(szName, minFilter, magFilter, addressMode);
 					SetTextureCubeMap(szName, szFileName);
 				}
-				LogOutput(NULL, "OK\n");
+				LogOutput(nullptr, "OK\n");
 			} while (pTextureNode = pPassNode->IterateChildren("TextureCubeMap", pTextureNode));
 		}
 		return true;
 	}
 	catch (int err) {
-		LogOutput(NULL, "Fail(%d)\n", err);
+		LogOutput(nullptr, "Fail(%d)\n", err);
 		return false;
 	}
 }
@@ -477,20 +477,20 @@ bool CGfxMaterialPass::LoadUniformVec1(TiXmlNode *pPassNode)
 				{
 					const char *szName = pUniformNode->ToElement()->AttributeString("name");
 					const char *szValue = pUniformNode->ToElement()->AttributeString("value");
-					if (szName == NULL || szValue == NULL) throw 0;
+					if (szName == nullptr || szValue == nullptr) throw 0;
 
-					LogOutput(NULL, "%s = \"%s\" ... ", szName, szValue);
+					LogOutput(nullptr, "%s = \"%s\" ... ", szName, szValue);
 
 					float value = pUniformNode->ToElement()->AttributeFloat1("value");
 					SetUniformVec1(szName, value);
 				}
-				LogOutput(NULL, "OK\n");
+				LogOutput(nullptr, "OK\n");
 			} while (pUniformNode = pPassNode->IterateChildren("Uniform1f", pUniformNode));
 		}
 		return true;
 	}
 	catch (int err) {
-		LogOutput(NULL, "Fail(%d)\n", err);
+		LogOutput(nullptr, "Fail(%d)\n", err);
 		return false;
 	}
 }
@@ -504,20 +504,20 @@ bool CGfxMaterialPass::LoadUniformVec2(TiXmlNode *pPassNode)
 				{
 					const char *szName = pUniformNode->ToElement()->AttributeString("name");
 					const char *szValue = pUniformNode->ToElement()->AttributeString("value");
-					if (szName == NULL || szValue == NULL) throw 0;
+					if (szName == nullptr || szValue == nullptr) throw 0;
 
-					LogOutput(NULL, "%s = \"%s\" ... ", szName, szValue);
+					LogOutput(nullptr, "%s = \"%s\" ... ", szName, szValue);
 
 					float value[2]; pUniformNode->ToElement()->AttributeFloat2("value", value);
 					SetUniformVec2(szName, value[0], value[1]);
 				}
-				LogOutput(NULL, "OK\n");
+				LogOutput(nullptr, "OK\n");
 			} while (pUniformNode = pPassNode->IterateChildren("Uniform2f", pUniformNode));
 		}
 		return true;
 	}
 	catch (int err) {
-		LogOutput(NULL, "Fail(%d)\n", err);
+		LogOutput(nullptr, "Fail(%d)\n", err);
 		return false;
 	}
 }
@@ -531,20 +531,20 @@ bool CGfxMaterialPass::LoadUniformVec3(TiXmlNode *pPassNode)
 				{
 					const char *szName = pUniformNode->ToElement()->AttributeString("name");
 					const char *szValue = pUniformNode->ToElement()->AttributeString("value");
-					if (szName == NULL || szValue == NULL) throw 0;
+					if (szName == nullptr || szValue == nullptr) throw 0;
 
-					LogOutput(NULL, "%s = \"%s\" ... ", szName, szValue);
+					LogOutput(nullptr, "%s = \"%s\" ... ", szName, szValue);
 
 					float value[3]; pUniformNode->ToElement()->AttributeFloat3("value", value);
 					SetUniformVec3(szName, value[0], value[1], value[2]);
 				}
-				LogOutput(NULL, "OK\n");
+				LogOutput(nullptr, "OK\n");
 			} while (pUniformNode = pPassNode->IterateChildren("Uniform3f", pUniformNode));
 		}
 		return true;
 	}
 	catch (int err) {
-		LogOutput(NULL, "Fail(%d)\n", err);
+		LogOutput(nullptr, "Fail(%d)\n", err);
 		return false;
 	}
 }
@@ -558,32 +558,32 @@ bool CGfxMaterialPass::LoadUniformVec4(TiXmlNode *pPassNode)
 				{
 					const char *szName = pUniformNode->ToElement()->AttributeString("name");
 					const char *szValue = pUniformNode->ToElement()->AttributeString("value");
-					if (szName == NULL || szValue == NULL) throw 0;
+					if (szName == nullptr || szValue == nullptr) throw 0;
 
-					LogOutput(NULL, "%s = \"%s\" ... ", szName, szValue);
+					LogOutput(nullptr, "%s = \"%s\" ... ", szName, szValue);
 
 					float value[4]; pUniformNode->ToElement()->AttributeFloat4("value", value);
 					SetUniformVec4(szName, value[0], value[1], value[2], value[3]);
 				}
-				LogOutput(NULL, "OK\n");
+				LogOutput(nullptr, "OK\n");
 			} while (pUniformNode = pPassNode->IterateChildren("Uniform4f", pUniformNode));
 		}
 		return true;
 	}
 	catch (int err) {
-		LogOutput(NULL, "Fail(%d)\n", err);
+		LogOutput(nullptr, "Fail(%d)\n", err);
 		return false;
 	}
 }
 
 bool CGfxMaterialPass::SetPipeline(const CGfxShader *pVertexShader, const CGfxShader *pFragmentShader, const GLstate &state)
 {
-	if (pVertexShader == NULL ||
+	if (pVertexShader == nullptr ||
 		pVertexShader->IsValid() == false) {
 		return false;
 	}
 
-	if (pFragmentShader == NULL ||
+	if (pFragmentShader == nullptr ||
 		pFragmentShader->IsValid() == false) {
 		return false;
 	}
@@ -596,7 +596,7 @@ bool CGfxMaterialPass::SetSampler(const char *szName, uint32_t minFilter, uint32
 {
 	uint32_t name = HashValue(szName);
 
-	if ((m_pPipeline == NULL) || (m_pPipeline && m_pPipeline->IsTextureValid(name))) {
+	if ((m_pPipeline == nullptr) || (m_pPipeline && m_pPipeline->IsTextureValid(name))) {
 		m_pSamplers[name] = Renderer()->CreateSampler(minFilter, magFilter, addressMode);
 		return true;
 	}
@@ -608,7 +608,7 @@ bool CGfxMaterialPass::SetTexture2D(const char *szName, uint32_t externTexture)
 {
 	uint32_t name = HashValue(szName);
 
-	if ((m_pPipeline == NULL) || (m_pPipeline && m_pPipeline->IsTextureValid(name))) {
+	if ((m_pPipeline == nullptr) || (m_pPipeline && m_pPipeline->IsTextureValid(name))) {
 		m_ptrTexture2ds[name] = Renderer()->CreateTexture2D(TEXTURE_INTERNAL_NAME(name));
 		m_ptrTexture2ds[name]->CreateExtern(externTexture);
 		return true;
@@ -621,7 +621,7 @@ bool CGfxMaterialPass::SetTexture2DArray(const char *szName, uint32_t externText
 {
 	uint32_t name = HashValue(szName);
 
-	if ((m_pPipeline == NULL) || (m_pPipeline && m_pPipeline->IsTextureValid(name))) {
+	if ((m_pPipeline == nullptr) || (m_pPipeline && m_pPipeline->IsTextureValid(name))) {
 		m_ptrTexture2dArrays[name] = Renderer()->CreateTexture2DArray(TEXTURE_INTERNAL_NAME(name));
 		m_ptrTexture2dArrays[name]->CreateExtern(externTexture);
 		return true;
@@ -634,7 +634,7 @@ bool CGfxMaterialPass::SetTextureCubeMap(const char *szName, uint32_t externText
 {
 	uint32_t name = HashValue(szName);
 
-	if ((m_pPipeline == NULL) || (m_pPipeline && m_pPipeline->IsTextureValid(name))) {
+	if ((m_pPipeline == nullptr) || (m_pPipeline && m_pPipeline->IsTextureValid(name))) {
 		m_ptrTextureCubeMaps[name] = Renderer()->CreateTextureCubeMap(TEXTURE_INTERNAL_NAME(name));
 		m_ptrTextureCubeMaps[name]->CreateExtern(externTexture);
 		return true;
@@ -647,7 +647,7 @@ bool CGfxMaterialPass::SetTexture2D(const char *szName, const char *szFileName)
 {
 	uint32_t name = HashValue(szName);
 
-	if ((m_pPipeline == NULL) || (m_pPipeline && m_pPipeline->IsTextureValid(name))) {
+	if ((m_pPipeline == nullptr) || (m_pPipeline && m_pPipeline->IsTextureValid(name))) {
 		m_ptrTexture2ds[name] = Renderer()->LoadTexture2D(szFileName);
 		return true;
 	}
@@ -659,7 +659,7 @@ bool CGfxMaterialPass::SetTexture2DArray(const char *szName, const char *szFileN
 {
 	uint32_t name = HashValue(szName);
 
-	if ((m_pPipeline == NULL) || (m_pPipeline && m_pPipeline->IsTextureValid(name))) {
+	if ((m_pPipeline == nullptr) || (m_pPipeline && m_pPipeline->IsTextureValid(name))) {
 		m_ptrTexture2dArrays[name] = Renderer()->LoadTexture2DArray(szFileName);
 		return true;
 	}
@@ -671,7 +671,7 @@ bool CGfxMaterialPass::SetTextureCubeMap(const char *szName, const char *szFileN
 {
 	uint32_t name = HashValue(szName);
 
-	if ((m_pPipeline == NULL) || (m_pPipeline && m_pPipeline->IsTextureValid(name))) {
+	if ((m_pPipeline == nullptr) || (m_pPipeline && m_pPipeline->IsTextureValid(name))) {
 		m_ptrTextureCubeMaps[name] = Renderer()->LoadTextureCubeMap(szFileName);
 		return true;
 	}
@@ -683,8 +683,8 @@ bool CGfxMaterialPass::SetUniformVec1(const char *szName, float x)
 {
 	uint32_t name = HashValue(szName);
 
-	if ((m_pPipeline == NULL) || (m_pPipeline && m_pPipeline->IsUniformBlockValid(name))) {
-		if (m_pUniformVec1s[name] == NULL) {
+	if ((m_pPipeline == nullptr) || (m_pPipeline && m_pPipeline->IsUniformBlockValid(name))) {
+		if (m_pUniformVec1s[name] == nullptr) {
 			m_pUniformVec1s[name] = new CGfxUniformVec1;
 		}
 
@@ -699,8 +699,8 @@ bool CGfxMaterialPass::SetUniformVec2(const char *szName, float x, float y)
 {
 	uint32_t name = HashValue(szName);
 
-	if ((m_pPipeline == NULL) || (m_pPipeline && m_pPipeline->IsUniformBlockValid(name))) {
-		if (m_pUniformVec2s[name] == NULL) {
+	if ((m_pPipeline == nullptr) || (m_pPipeline && m_pPipeline->IsUniformBlockValid(name))) {
+		if (m_pUniformVec2s[name] == nullptr) {
 			m_pUniformVec2s[name] = new CGfxUniformVec2;
 		}
 
@@ -715,8 +715,8 @@ bool CGfxMaterialPass::SetUniformVec3(const char *szName, float x, float y, floa
 {
 	uint32_t name = HashValue(szName);
 
-	if ((m_pPipeline == NULL) || (m_pPipeline && m_pPipeline->IsUniformBlockValid(name))) {
-		if (m_pUniformVec3s[name] == NULL) {
+	if ((m_pPipeline == nullptr) || (m_pPipeline && m_pPipeline->IsUniformBlockValid(name))) {
+		if (m_pUniformVec3s[name] == nullptr) {
 			m_pUniformVec3s[name] = new CGfxUniformVec3;
 		}
 
@@ -731,8 +731,8 @@ bool CGfxMaterialPass::SetUniformVec4(const char *szName, float x, float y, floa
 {
 	uint32_t name = HashValue(szName);
 
-	if ((m_pPipeline == NULL) || (m_pPipeline && m_pPipeline->IsUniformBlockValid(name))) {
-		if (m_pUniformVec4s[name] == NULL) {
+	if ((m_pPipeline == nullptr) || (m_pPipeline && m_pPipeline->IsUniformBlockValid(name))) {
+		if (m_pUniformVec4s[name] == nullptr) {
 			m_pUniformVec4s[name] = new CGfxUniformVec4;
 		}
 
@@ -747,8 +747,8 @@ bool CGfxMaterialPass::SetUniformMat4(const char *szName, const float *matrix)
 {
 	uint32_t name = HashValue(szName);
 
-	if ((m_pPipeline == NULL) || (m_pPipeline && m_pPipeline->IsUniformBlockValid(name))) {
-		if (m_pUniformMat4s[name] == NULL) {
+	if ((m_pPipeline == nullptr) || (m_pPipeline && m_pPipeline->IsUniformBlockValid(name))) {
+		if (m_pUniformMat4s[name] == nullptr) {
 			m_pUniformMat4s[name] = new CGfxUniformMat4;
 		}
 

@@ -289,12 +289,6 @@
 #endif
 #endif
 
-#if HAVE_CXX11_NULLPTR
-#define _NULLPTR nullptr
-#else
-#define _NULLPTR NULL
-#endif
-
 #if HAVE_CXX11_THREAD_LOCAL
 #define _THREAD_LOCAL thread_local
 #else

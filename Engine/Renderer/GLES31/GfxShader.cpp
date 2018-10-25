@@ -35,7 +35,7 @@ bool CGfxShader::Load(const char *szFileName, shaderc_shader_kind kind)
 
 bool CGfxShader::Create(const uint32_t *words, size_t numWords, shaderc_shader_kind kind)
 {
-	spirv_cross::CompilerGLSL *pShaderCompiler = NULL;
+	spirv_cross::CompilerGLSL *pShaderCompiler = nullptr;
 
 	try {
 		Destroy();
@@ -52,7 +52,7 @@ bool CGfxShader::Create(const uint32_t *words, size_t numWords, shaderc_shader_k
 		const char *szSource = strSource.c_str();
 
 #ifdef DEBUG
-		LogOutput(NULL, "\n");
+		LogOutput(nullptr, "\n");
 		LogOutput(LOG_TAG_RENDERER, "\n%s\n", szSource);
 #endif
 

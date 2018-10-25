@@ -77,7 +77,7 @@ void CGfxTexture2D::Destroy(void)
 
 bool CGfxTexture2D::TransferTexture2D(const gli::texture2d *texture)
 {
-	if (texture == NULL) {
+	if (texture == nullptr) {
 		return false;
 	}
 

@@ -70,13 +70,13 @@ public:
 
 	T* GetComponentByIndex(size_t index)
 	{
-		return index < m_components.size() ? &m_components[index] : NULL;
+		return index < m_components.size() ? &m_components[index] : nullptr;
 	}
 
 	T* GetComponentByKey(uint32_t key)
 	{
 		const auto &itKeyValue = m_keyIndex.find(key);
-		return itKeyValue != m_keyIndex.end() ? &m_components[itKeyValue->second] : NULL;
+		return itKeyValue != m_keyIndex.end() ? &m_components[itKeyValue->second] : nullptr;
 	}
 
 
@@ -91,22 +91,22 @@ template<class T> class CComponentPtr
 public:
 	CComponentPtr(void)
 		: m_key(0)
-		, m_pManager(NULL)
-		, m_pRefCount(NULL)
+		, m_pManager(nullptr)
+		, m_pRefCount(nullptr)
 	{
 
 	}
 	CComponentPtr(uint32_t key, CComponentManager<T> *pManager)
 		: m_key(0)
-		, m_pManager(NULL)
-		, m_pRefCount(NULL)
+		, m_pManager(nullptr)
+		, m_pRefCount(nullptr)
 	{
-		Set(key, pManager, NULL);
+		Set(key, pManager, nullptr);
 	}
 	CComponentPtr(const CComponentPtr<T> &ptr)
 		: m_key(0)
-		, m_pManager(NULL)
-		, m_pRefCount(NULL)
+		, m_pManager(nullptr)
+		, m_pRefCount(nullptr)
 	{
 		Set(ptr.m_key, ptr.m_pManager, ptr.m_pRefCount);
 	}
@@ -130,7 +130,7 @@ private:
 			m_pManager = pManager;
 			m_pRefCount = pRefCount;
 
-			if (m_pRefCount == NULL) {
+			if (m_pRefCount == nullptr) {
 				m_pRefCount = (uint32_t *)AllocMemory(sizeof(*m_pRefCount)); (*m_pRefCount) = 0;
 			}
 
@@ -149,8 +149,8 @@ public:
 		}
 
 		m_key = 0;
-		m_pManager = NULL;
-		m_pRefCount = NULL;
+		m_pManager = nullptr;
+		m_pRefCount = nullptr;
 	}
 
 	inline uint32_t GetKey(void) const
@@ -165,7 +165,7 @@ public:
 
 	inline T* GetPointer(void) const
 	{
-		return m_key && m_pManager ? m_pManager->GetComponentByKey(m_key) : NULL;
+		return m_key && m_pManager ? m_pManager->GetComponentByKey(m_key) : nullptr;
 	}
 
 	inline bool IsNull(void) const

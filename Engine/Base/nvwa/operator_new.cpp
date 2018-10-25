@@ -11,12 +11,12 @@ void* operator new(size_t size, const char* file, int line)
 
 void* operator new(size_t size)
 {
-	return alloc_mem(size, NULL, 0, false);
+	return alloc_mem(size, nullptr, 0, false);
 }
 
 void* operator new(size_t size, const std::nothrow_t&) noexcept
 {
-	return alloc_mem(size, NULL, 0, false);
+	return alloc_mem(size, nullptr, 0, false);
 }
 
 void* operator new[](size_t size, const char* file, int line)
@@ -26,42 +26,42 @@ void* operator new[](size_t size, const char* file, int line)
 
 void* operator new[](size_t size)
 {
-	return alloc_mem(size, NULL, 0, true);
+	return alloc_mem(size, nullptr, 0, true);
 }
 
 void* operator new[](size_t size, const std::nothrow_t&) noexcept
 {
-	return alloc_mem(size, NULL, 0, true);
+	return alloc_mem(size, nullptr, 0, true);
 }
 
 void operator delete(void* ptr, const char* file, int line)
 {
-	free_pointer(ptr, NULL, false);
+	free_pointer(ptr, nullptr, false);
 }
 
 void operator delete(void* ptr)
 {
-	free_pointer(ptr, NULL, false);
+	free_pointer(ptr, nullptr, false);
 }
 
 void operator delete(void* ptr, const std::nothrow_t&) noexcept
 {
-	free_pointer(ptr, NULL, false);
+	free_pointer(ptr, nullptr, false);
 }
 
 void operator delete[](void* ptr, const char* file, int line)
 {
-	free_pointer(ptr, NULL, true);
+	free_pointer(ptr, nullptr, true);
 }
 
 void operator delete[](void* ptr)
 {
-	free_pointer(ptr, NULL, true);
+	free_pointer(ptr, nullptr, true);
 }
 
 void operator delete[](void* ptr, const std::nothrow_t&) noexcept
 {
-	free_pointer(ptr, NULL, true);
+	free_pointer(ptr, nullptr, true);
 }
 #else
 void* operator new(size_t size)

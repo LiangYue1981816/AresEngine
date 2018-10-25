@@ -79,7 +79,7 @@ void CGfxTextureCubeMap::Destroy(void)
 
 bool CGfxTextureCubeMap::TransferTextureCubeMap(const gli::texture_cube *texture)
 {
-	if (texture == NULL) {
+	if (texture == nullptr) {
 		return false;
 	}
 
@@ -159,7 +159,7 @@ bool CGfxTextureCubeMap::TransferTextureCubeMap(const gli::texture_cube *texture
 
 bool CGfxTextureCubeMap::TransferTexture2D(int face, const gli::texture2d *texture)
 {
-	if (texture == NULL) {
+	if (texture == nullptr) {
 		return false;
 	}
 

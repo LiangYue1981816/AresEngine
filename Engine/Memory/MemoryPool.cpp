@@ -63,10 +63,10 @@ static BLOCK_POOL* POOL_CreatePool(HEAP_ALLOCATOR *pHeapAllocator, uint32_t dwMe
 	BLOCK_POOL *pBlockPool = (BLOCK_POOL *)HEAP_Alloc(pHeapAllocator, BLOCK_POOL_SIZE);
 	{
 		pBlockPool->pBlockHead = (BLOCK *)((uint8_t *)pBlockPool + ALIGN_16BYTE(sizeof(BLOCK_POOL)));
-		pBlockPool->pNext = NULL;
-		pBlockPool->pPrev = NULL;
-		pBlockPool->pFreeNext = NULL;
-		pBlockPool->pFreePrev = NULL;
+		pBlockPool->pNext = nullptr;
+		pBlockPool->pPrev = nullptr;
+		pBlockPool->pFreeNext = nullptr;
+		pBlockPool->pFreePrev = nullptr;
 		pBlockPool->dwBlockIndex = 0;
 		pBlockPool->dwBlockCount = dwBlockCount;
 	}
@@ -93,8 +93,8 @@ POOL_ALLOCATOR* POOL_Create(HEAP_ALLOCATOR *pHeapAllocator)
 	POOL_ALLOCATOR *pPoolAllocator = (POOL_ALLOCATOR *)HEAP_Alloc(pHeapAllocator, sizeof(POOL_ALLOCATOR));
 
 	for (uint32_t indexPool = 0; indexPool < BLOCK_POOL_COUNT; indexPool++) {
-		pPoolAllocator->pools[indexPool].pBlockPoolHead = NULL;
-		pPoolAllocator->pools[indexPool].pBlockPoolFreeHead = NULL;
+		pPoolAllocator->pools[indexPool].pBlockPoolHead = nullptr;
+		pPoolAllocator->pools[indexPool].pBlockPoolFreeHead = nullptr;
 	}
 	pthread_spin_init(&pPoolAllocator->lock, PTHREAD_PROCESS_PRIVATE);
 
@@ -105,7 +105,7 @@ void POOL_Destroy(HEAP_ALLOCATOR *pHeapAllocator, POOL_ALLOCATOR *pPoolAllocator
 {
 	for (uint32_t indexPool = 0; indexPool < BLOCK_POOL_COUNT; indexPool++) {
 		if (BLOCK_POOL *pBlockPool = pPoolAllocator->pools[indexPool].pBlockPoolHead) {
-			BLOCK_POOL *pBlockPoolNext = NULL;
+			BLOCK_POOL *pBlockPoolNext = nullptr;
 
 			do {
 				pBlockPoolNext = pBlockPool->pNext;
@@ -120,7 +120,7 @@ void POOL_Destroy(HEAP_ALLOCATOR *pHeapAllocator, POOL_ALLOCATOR *pPoolAllocator
 
 void* POOL_Alloc(HEAP_ALLOCATOR *pHeapAllocator, POOL_ALLOCATOR *pPoolAllocator, size_t size)
 {
-	uint32_t *pPointer = NULL;
+	uint32_t *pPointer = nullptr;
 
 	if (pHeapAllocator && pPoolAllocator) {
 		const uint32_t dwMemSize = (uint32_t)ALIGN_16BYTE(size);
@@ -131,7 +131,7 @@ void* POOL_Alloc(HEAP_ALLOCATOR *pHeapAllocator, POOL_ALLOCATOR *pPoolAllocator,
 			{
 				BLOCK_POOL_HEAD *pPoolHead = &pPoolAllocator->pools[dwIndexPool];
 
-				if (pPoolHead->pBlockPoolFreeHead == NULL) {
+				if (pPoolHead->pBlockPoolFreeHead == nullptr) {
 					pPoolHead->pBlockPoolFreeHead = POOL_CreatePool(pHeapAllocator, dwMemSize);
 
 					if (pPoolHead->pBlockPoolHead) {
@@ -173,8 +173,8 @@ bool POOL_Free(HEAP_ALLOCATOR *pHeapAllocator, POOL_ALLOCATOR *pPoolAllocator, v
 				BLOCK_POOL_HEAD *pPoolHead = &pPoolAllocator->pools[dwIndexPool];
 
 				if (pBlockPool->dwBlockIndex == pBlockPool->dwBlockCount) {
-					pBlockPool->pFreeNext = NULL;
-					pBlockPool->pFreePrev = NULL;
+					pBlockPool->pFreeNext = nullptr;
+					pBlockPool->pFreePrev = nullptr;
 
 					if (pPoolHead->pBlockPoolFreeHead) {
 						pPoolHead->pBlockPoolFreeHead->pFreePrev = pBlockPool;

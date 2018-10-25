@@ -4,7 +4,7 @@
 
 void* _malloc(size_t size)
 {
-	void *ptr = NULL;
+	void *ptr = nullptr;
 
 #ifdef PLATFORM_WINDOWS
 

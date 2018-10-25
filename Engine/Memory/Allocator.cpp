@@ -28,9 +28,9 @@
 
 #define MAX_THREAD_COUNT 64
 static bool bInitAllocator = false;
-static pthread_t threads[MAX_THREAD_COUNT] = { NULL };
-static POOL_ALLOCATOR *pPoolAllocators[MAX_THREAD_COUNT] = { NULL };
-static HEAP_ALLOCATOR *pHeapAllocator = NULL;
+static pthread_t threads[MAX_THREAD_COUNT] = { 0 };
+static POOL_ALLOCATOR *pPoolAllocators[MAX_THREAD_COUNT] = { nullptr };
+static HEAP_ALLOCATOR *pHeapAllocator = nullptr;
 
 
 static int GetThreadIndex(void)
@@ -45,7 +45,7 @@ static int GetThreadIndex(void)
 			break;
 		}
 
-		if (threads[index].p == NULL) {
+		if (threads[index].p == nullptr) {
 			threads[index].p = thread.p;
 			indexThread = index;
 			break;
@@ -56,7 +56,7 @@ static int GetThreadIndex(void)
 			break;
 		}
 
-		if (threads[index] == NULL) {
+		if (threads[index] == nullptr) {
 			threads[index] = thread;
 			indexThread = index;
 			break;
@@ -102,15 +102,15 @@ void* AllocMemory(size_t size)
 	size = ALIGN_4BYTE(size);
 
 #ifdef MEMORY_ALLOCATOR
-	uint32_t *pPointer = NULL;
+	uint32_t *pPointer = nullptr;
 	int indexThread = GetThreadIndex();
 
 	if (bInitAllocator && indexThread >= 0 && size < 0x01FFFFFF) {
-		if (pPointer == NULL) {
+		if (pPointer == nullptr) {
 			pPointer = (uint32_t *)POOL_Alloc(pHeapAllocator, pPoolAllocators[indexThread], size);
 		}
 
-		if (pPointer == NULL) {
+		if (pPointer == nullptr) {
 			pPointer = (uint32_t *)HEAP_Alloc(pHeapAllocator, size);
 		}
 
@@ -129,7 +129,7 @@ void* AllocMemory(size_t size)
 
 void FreeMemory(void *pPointer)
 {
-	if (pPointer == NULL) {
+	if (pPointer == nullptr) {
 		return;
 	}
 
@@ -139,13 +139,13 @@ void FreeMemory(void *pPointer)
 
 		if (pPointer) {
 			if (POOL_Free(pHeapAllocator, pPoolAllocators[indexThread], pPointer)) {
-				pPointer = NULL;
+				pPointer = nullptr;
 			}
 		}
 
 		if (pPointer) {
 			if (HEAP_Free(pHeapAllocator, pPointer)) {
-				pPointer = NULL;
+				pPointer = nullptr;
 			}
 		}
 	}

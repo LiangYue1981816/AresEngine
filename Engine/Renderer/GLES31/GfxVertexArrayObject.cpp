@@ -8,9 +8,9 @@
 
 CGfxVertexArrayObject::CGfxVertexArrayObject(void)
 	: m_vao(0)
-	, m_pIndexBuffer(NULL)
-	, m_pVertexBuffer(NULL)
-	, m_pInstanceBuffer(NULL)
+	, m_pIndexBuffer(nullptr)
+	, m_pVertexBuffer(nullptr)
+	, m_pInstanceBuffer(nullptr)
 {
 	glGenVertexArrays(1, &m_vao);
 }

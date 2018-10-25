@@ -7,7 +7,7 @@ class CTaskCommandBuffer : public CTask
 {
 public:
 	CTaskCommandBuffer(void)
-		: m_pCommandBuffer(NULL)
+		: m_pCommandBuffer(nullptr)
 
 		, m_indexThread(0)
 		, m_indexQueue(0)

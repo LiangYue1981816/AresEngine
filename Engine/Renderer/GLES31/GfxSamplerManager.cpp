@@ -24,7 +24,7 @@ CGfxSampler* CGfxSamplerManager::CreateSampler(uint32_t minFilter, uint32_t magF
 
 	uint32_t name = HashValue(szName);
 
-	if (m_pSamplers[name] == NULL) {
+	if (m_pSamplers[name] == nullptr) {
 		m_pSamplers[name] = new CGfxSampler(minFilter, magFilter, addressMode);
 	}
 

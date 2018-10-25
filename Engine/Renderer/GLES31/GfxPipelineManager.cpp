@@ -24,7 +24,7 @@ CGfxPipelineCompute* CGfxPipelineManager::CreatePipelineCompute(const CGfxShader
 
 	uint32_t name = HashValue(szName);
 
-	if (m_pPipelines[name] == NULL) {
+	if (m_pPipelines[name] == nullptr) {
 		m_pPipelines[name] = new CGfxPipelineCompute(name);
 		((CGfxPipelineCompute *)m_pPipelines[name])->Create(pComputeShader);
 	}
@@ -39,7 +39,7 @@ CGfxPipelineGraphics* CGfxPipelineManager::CreatePipelineGraphics(const CGfxShad
 
 	uint32_t name = HashValue(szName);
 
-	if (m_pPipelines[name] == NULL) {
+	if (m_pPipelines[name] == nullptr) {
 		m_pPipelines[name] = new CGfxPipelineGraphics(name);
 		((CGfxPipelineGraphics *)m_pPipelines[name])->Create(pVertexShader, pFragmentShader, state);
 	}

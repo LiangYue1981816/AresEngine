@@ -10,7 +10,7 @@ template<class T> class CTaskComponentUpdateLogic : public CTask
 public:
 	CTaskComponentUpdateLogic(void)
 		: m_indexThread(0)
-		, m_pComponentManager(NULL)
+		, m_pComponentManager(nullptr)
 	{
 
 	}

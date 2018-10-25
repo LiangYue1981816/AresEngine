@@ -21,7 +21,7 @@ CGfxMaterial* CGfxMaterialManager::LoadMaterial(const char *szFileName)
 {
 	uint32_t name = HashValue(szFileName);
 
-	if (m_pMaterials[name] == NULL) {
+	if (m_pMaterials[name] == nullptr) {
 		m_pMaterials[name] = new CGfxMaterial(name);
 		m_pMaterials[name]->Load(szFileName);
 	}

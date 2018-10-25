@@ -24,7 +24,7 @@ CGfxDrawIndirectBuffer* CGfxDrawIndirectBufferManager::CreateDrawIndirectBuffer(
 
 	uint32_t name = HashValue(szName);
 
-	if (m_pBuffers[name] == NULL) {
+	if (m_pBuffers[name] == nullptr) {
 		m_pBuffers[name] = new CGfxDrawIndirectBuffer(name, baseVertex, firstIndex, indexCount);
 	}
 

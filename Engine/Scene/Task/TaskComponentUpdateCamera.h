@@ -11,7 +11,7 @@ public:
 	CTaskComponentUpdateCamera(void)
 		: m_indexThread(0)
 		, m_indexQueue(0)
-		, m_pComponentManager(NULL)
+		, m_pComponentManager(nullptr)
 	{
 
 	}

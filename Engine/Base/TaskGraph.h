@@ -45,7 +45,7 @@ public:
 
 
 public:
-	void Task(CTask *pTask, void *pParams, event_t *pEventSignal, event_t *pEventWait = NULL);
+	void Task(CTask *pTask, void *pParams, event_t *pEventSignal, event_t *pEventWait = nullptr);
 	void Dispatch(void);
 	void Wait(void);
 

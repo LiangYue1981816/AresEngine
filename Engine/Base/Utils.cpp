@@ -50,8 +50,8 @@ unsigned int HashValue(const unsigned char *pBuffer, int length)
 
 void splitfilename(const char *name, char *fname, char *ext)
 {
-	const char *p = NULL;
-	const char *c = NULL;
+	const char *p = nullptr;
+	const char *c = nullptr;
 	const char *base = name;
 
 	for (p = base; *p; p++) {
@@ -255,10 +255,10 @@ static void _dirent2finddata(struct dirent *d, struct _finddata_t *data)
 long _findfirst(const char *pattern, struct _finddata_t *data)
 {
 	DIR *id = opendir(pattern);
-	if (id == NULL) return -1;
+	if (id == nullptr) return -1;
 
 	struct dirent *d = readdir((DIR *)id);
-	if (d == NULL) return -1;
+	if (d == nullptr) return -1;
 
 	_dirent2finddata(d, data);
 	return (long)id;
@@ -267,7 +267,7 @@ long _findfirst(const char *pattern, struct _finddata_t *data)
 long _findnext(long id, struct _finddata_t *data)
 {
 	struct dirent *d = readdir((DIR *)id);
-	if (d == NULL) return -1;
+	if (d == nullptr) return -1;
 
 	_dirent2finddata(d, data);
 	return 0;

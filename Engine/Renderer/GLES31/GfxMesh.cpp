@@ -11,10 +11,10 @@
 CGfxMesh::CGfxMesh(uint32_t name)
 	: m_name(name)
 
-	, m_pIndexBuffer(NULL)
-	, m_pVertexBuffer(NULL)
-	, m_pInstanceBuffer(NULL)
-	, m_pVertexArrayObject(NULL)
+	, m_pIndexBuffer(nullptr)
+	, m_pVertexBuffer(nullptr)
+	, m_pInstanceBuffer(nullptr)
+	, m_pVertexArrayObject(nullptr)
 {
 
 }
@@ -56,15 +56,15 @@ bool CGfxMesh::Load(const char *szFileName)
 
 	} MeshHeader;
 
-	FILE *pFile = NULL;
-	void *pIndexBuffer = NULL;
-	void *pVertexBuffer = NULL;
+	FILE *pFile = nullptr;
+	void *pIndexBuffer = nullptr;
+	void *pVertexBuffer = nullptr;
 
 	try {
 		Free();
 
 		pFile = fopen(Renderer()->GetResourceFullName(szFileName), "rb");
-		if (pFile == NULL) throw 0;
+		if (pFile == nullptr) throw 0;
 
 		MeshHeader header;
 		fread(&header, sizeof(header), 1, pFile);
@@ -130,10 +130,10 @@ void CGfxMesh::Free(void)
 	}
 
 	m_aabb.zero();
-	m_pIndexBuffer = NULL;
-	m_pVertexBuffer = NULL;
-	m_pInstanceBuffer = NULL;
-	m_pVertexArrayObject = NULL;
+	m_pIndexBuffer = nullptr;
+	m_pVertexBuffer = nullptr;
+	m_pInstanceBuffer = nullptr;
+	m_pVertexArrayObject = nullptr;
 }
 
 bool CGfxMesh::CreateIndexBuffer(size_t size, const void *pBuffer, bool bDynamic, uint32_t type)
@@ -146,8 +146,8 @@ bool CGfxMesh::CreateIndexBuffer(size_t size, const void *pBuffer, bool bDynamic
 		delete m_pVertexArrayObject;
 	}
 
-	m_pIndexBuffer = NULL;
-	m_pVertexArrayObject = NULL;
+	m_pIndexBuffer = nullptr;
+	m_pVertexArrayObject = nullptr;
 
 	m_pIndexBuffer = new CGfxIndexBuffer(type, size, bDynamic);
 	return m_pIndexBuffer->BufferData(0, size, pBuffer);
@@ -163,8 +163,8 @@ bool CGfxMesh::CreateVertexBuffer(size_t size, const void *pBuffer, bool bDynami
 		delete m_pVertexArrayObject;
 	}
 
-	m_pVertexBuffer = NULL;
-	m_pVertexArrayObject = NULL;
+	m_pVertexBuffer = nullptr;
+	m_pVertexArrayObject = nullptr;
 
 	m_pVertexBuffer = new CGfxVertexBuffer(format, size, bDynamic);
 	return m_pVertexBuffer->BufferData(0, size, pBuffer);
@@ -180,8 +180,8 @@ bool CGfxMesh::CreateInstanceBuffer(uint32_t format)
 		delete m_pVertexArrayObject;
 	}
 
-	m_pInstanceBuffer = NULL;
-	m_pVertexArrayObject = NULL;
+	m_pInstanceBuffer = nullptr;
+	m_pVertexArrayObject = nullptr;
 
 	m_pInstanceBuffer = new CGfxInstanceBuffer(format);
 	return true;

@@ -48,7 +48,7 @@ int CGfxFrameBuffer::GetHeight(void) const
 CGfxTexture2DPtr CGfxFrameBuffer::GetAttachmentTexture(int indexAttachment) const
 {
 	const auto &itAttachmentTexture = m_ptrAttachmentTextures.find(indexAttachment);
-	return itAttachmentTexture != m_ptrAttachmentTextures.end() ? itAttachmentTexture->second : NULL;
+	return itAttachmentTexture != m_ptrAttachmentTextures.end() ? itAttachmentTexture->second : nullptr;
 }
 
 void CGfxFrameBuffer::Bind(const AttachmentInformation *pAttachmentInformations, const SubPassInformation *pSubPassInformation) const

@@ -9,13 +9,13 @@ CSceneNode::CSceneNode(uint32_t name, CScene *pScene)
 	, m_bActive(true)
 	, m_bNeedUpdateTransform(false)
 
-	, m_pParentNode(NULL)
+	, m_pParentNode(nullptr)
 {
 	Identity();
 }
 
 CSceneNode::CSceneNode(uint32_t name)
-	: CSceneNode(name, NULL)
+	: CSceneNode(name, nullptr)
 {
 
 }
@@ -55,7 +55,7 @@ bool CSceneNode::IsActive(void) const
 
 bool CSceneNode::AttachNode(CSceneNode *pNode)
 {
-	if (pNode == NULL) {
+	if (pNode == nullptr) {
 		return false;
 	}
 
@@ -63,15 +63,15 @@ bool CSceneNode::AttachNode(CSceneNode *pNode)
 		return false;
 	}
 
-	if (pNode->m_pParentNode != NULL) {
+	if (pNode->m_pParentNode != nullptr) {
 		return false;
 	}
 
-	if (pNode->m_pScene != NULL) {
+	if (pNode->m_pScene != nullptr) {
 		return false;
 	}
 
-	if (m_pScene == NULL || m_pScene->AttachNode(pNode) == false) {
+	if (m_pScene == nullptr || m_pScene->AttachNode(pNode) == false) {
 		return false;
 	}
 
@@ -86,7 +86,7 @@ bool CSceneNode::AttachNode(CSceneNode *pNode)
 
 bool CSceneNode::DetachNode(CSceneNode *pNode)
 {
-	if (pNode == NULL) {
+	if (pNode == nullptr) {
 		return false;
 	}
 
@@ -102,12 +102,12 @@ bool CSceneNode::DetachNode(CSceneNode *pNode)
 		return false;
 	}
 
-	if (m_pScene == NULL || m_pScene->DetachNode(pNode) == false) {
+	if (m_pScene == nullptr || m_pScene->DetachNode(pNode) == false) {
 		return false;
 	}
 
-	pNode->m_pScene = NULL;
-	pNode->m_pParentNode = NULL;
+	pNode->m_pScene = nullptr;
+	pNode->m_pParentNode = nullptr;
 	pNode->m_bNeedUpdateTransform = true;
 
 	m_pChildNodes.erase(pNode->m_name);
@@ -122,8 +122,8 @@ void CSceneNode::DetachNodeAll(void)
 			m_pScene->DetachNode(itNode.second);
 		}
 
-		itNode.second->m_pScene = NULL;
-		itNode.second->m_pParentNode = NULL;
+		itNode.second->m_pScene = nullptr;
+		itNode.second->m_pParentNode = nullptr;
 		itNode.second->m_bNeedUpdateTransform = true;
 	}
 
@@ -133,7 +133,7 @@ void CSceneNode::DetachNodeAll(void)
 CSceneNode* CSceneNode::GetNode(uint32_t name) const
 {
 	const auto &itNode = m_pChildNodes.find(name);
-	return itNode != m_pChildNodes.end() ? itNode->second : NULL;
+	return itNode != m_pChildNodes.end() ? itNode->second : nullptr;
 }
 
 bool CSceneNode::AttachComponentMesh(CComponentMeshPtr &ptrComponentMesh)
@@ -222,7 +222,7 @@ template<class T> bool CSceneNode::AttachComponent(CComponentPtr<T> &ptrComponen
 		return false;
 	}
 
-	if (ptrComponent->m_pParentNode != NULL) {
+	if (ptrComponent->m_pParentNode != nullptr) {
 		return false;
 	}
 
@@ -242,7 +242,7 @@ template<class T> bool CSceneNode::DetachComponent(CComponentPtr<T> &ptrComponen
 		return false;
 	}
 
-	ptrComponent->m_pParentNode = NULL;
+	ptrComponent->m_pParentNode = nullptr;
 	container.erase(ptrComponent->m_name);
 
 	return true;

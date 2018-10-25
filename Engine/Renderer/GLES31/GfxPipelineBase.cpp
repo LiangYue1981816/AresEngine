@@ -6,7 +6,7 @@
 CGfxPipelineBase::CGfxPipelineBase(uint32_t name)
 	: m_name(name)
 	, m_pipeline(0)
-	, m_pShaders{ NULL }
+	, m_pShaders{ nullptr }
 {
 	glGenProgramPipelines(1, &m_pipeline);
 }

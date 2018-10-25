@@ -18,7 +18,7 @@ CGfxInstanceBuffer::CGfxInstanceBuffer(uint32_t format)
 
 	glGenBuffers(1, &m_instanceBuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, m_instanceBuffer);
-	glBufferData(GL_ARRAY_BUFFER, m_size, NULL, GL_DYNAMIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, m_size, nullptr, GL_DYNAMIC_DRAW);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
@@ -57,7 +57,7 @@ void CGfxInstanceBuffer::UpdateInstance(void)
 						m_size = INSTANCE_BUFFER_SIZE;
 						while (m_size < size) m_size <<= 1;
 
-						glBufferData(GL_ARRAY_BUFFER, m_size, NULL, GL_DYNAMIC_DRAW);
+						glBufferData(GL_ARRAY_BUFFER, m_size, nullptr, GL_DYNAMIC_DRAW);
 					}
 					CGfxProfiler::IncInstanceBufferSize(m_size);
 				}

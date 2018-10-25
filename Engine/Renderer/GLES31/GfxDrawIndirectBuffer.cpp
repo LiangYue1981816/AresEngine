@@ -21,7 +21,7 @@ CGfxDrawIndirectBuffer::CGfxDrawIndirectBuffer(uint32_t name, int baseVertex, in
 {
 	glGenBuffers(1, &m_buffer);
 	glBindBuffer(GL_DRAW_INDIRECT_BUFFER, m_buffer);
-	glBufferData(GL_DRAW_INDIRECT_BUFFER, sizeof(DrawCommand), NULL, GL_DYNAMIC_DRAW);
+	glBufferData(GL_DRAW_INDIRECT_BUFFER, sizeof(DrawCommand), nullptr, GL_DYNAMIC_DRAW);
 	glBindBuffer(GL_DRAW_INDIRECT_BUFFER, 0);
 }
 

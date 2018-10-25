@@ -80,7 +80,7 @@ void CGfxTexture2DArray::Destroy(void)
 
 bool CGfxTexture2DArray::TransferTexture2DArray(const gli::texture2d_array *texture)
 {
-	if (texture == NULL) {
+	if (texture == nullptr) {
 		return false;
 	}
 
@@ -141,7 +141,7 @@ bool CGfxTexture2DArray::TransferTexture2DArray(const gli::texture2d_array *text
 
 bool CGfxTexture2DArray::TransferTexture2D(int layer, const gli::texture2d *texture)
 {
-	if (texture == NULL) {
+	if (texture == nullptr) {
 		return false;
 	}
 

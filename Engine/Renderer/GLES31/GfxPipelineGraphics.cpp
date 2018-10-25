@@ -16,7 +16,7 @@ CGfxPipelineGraphics::~CGfxPipelineGraphics(void)
 
 bool CGfxPipelineGraphics::Create(const CGfxShader *pVertexShader, const CGfxShader *pFragmentShader, const GLstate &state)
 {
-	if (pVertexShader == NULL) {
+	if (pVertexShader == nullptr) {
 		return false;
 	}
 
@@ -28,7 +28,7 @@ bool CGfxPipelineGraphics::Create(const CGfxShader *pVertexShader, const CGfxSha
 		return false;
 	}
 
-	if (pFragmentShader == NULL) {
+	if (pFragmentShader == nullptr) {
 		return false;
 	}
 
@@ -63,8 +63,8 @@ void CGfxPipelineGraphics::CreateProgram(const CGfxShader *pVertexShader, const 
 
 void CGfxPipelineGraphics::Destroy(void)
 {
-	m_pShaders[shaderc_vertex_shader] = NULL;
-	m_pShaders[shaderc_fragment_shader] = NULL;
+	m_pShaders[shaderc_vertex_shader] = nullptr;
+	m_pShaders[shaderc_fragment_shader] = nullptr;
 
 	glUseProgramStages(m_pipeline, glGetProgramStage(shaderc_vertex_shader), 0);
 	glUseProgramStages(m_pipeline, glGetProgramStage(shaderc_fragment_shader), 0);

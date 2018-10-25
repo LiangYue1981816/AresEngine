@@ -7,34 +7,34 @@
 #define UNIFORM_CAMERA_NAME "Camera"
 
 
-CGfxRenderer* CGfxRenderer::pInstance = NULL;
+CGfxRenderer* CGfxRenderer::pInstance = nullptr;
 CGfxRenderer* CGfxRenderer::GetInstance(void)
 {
 	return pInstance;
 }
 
 CGfxRenderer::CGfxRenderer(void *hDC, const char *szShaderCachePath, int width, int height, uint32_t format)
-	: m_pSwapChain(NULL)
+	: m_pSwapChain(nullptr)
 
-	, m_pScreenMesh(NULL)
-	, m_pGlobalPass(NULL)
-	, m_pCurrentPass(NULL)
-	, m_pCurrentPipeline(NULL)
+	, m_pScreenMesh(nullptr)
+	, m_pGlobalPass(nullptr)
+	, m_pCurrentPass(nullptr)
+	, m_pCurrentPipeline(nullptr)
 
-	, m_pUniformEngine(NULL)
+	, m_pUniformEngine(nullptr)
 
-	, m_pResourceManager(NULL)
-	, m_pMeshManager(NULL)
-	, m_pShaderManager(NULL)
-	, m_pSamplerManager(NULL)
-	, m_pTextureManager(NULL)
-	, m_pPipelineManager(NULL)
-	, m_pMaterialManager(NULL)
-	, m_pRenderPassManager(NULL)
-	, m_pFrameBufferManager(NULL)
-	, m_pDrawIndirectBufferManager(NULL)
+	, m_pResourceManager(nullptr)
+	, m_pMeshManager(nullptr)
+	, m_pShaderManager(nullptr)
+	, m_pSamplerManager(nullptr)
+	, m_pTextureManager(nullptr)
+	, m_pPipelineManager(nullptr)
+	, m_pMaterialManager(nullptr)
+	, m_pRenderPassManager(nullptr)
+	, m_pFrameBufferManager(nullptr)
+	, m_pDrawIndirectBufferManager(nullptr)
 
-	, m_pShaderCompiler(NULL)
+	, m_pShaderCompiler(nullptr)
 {
 	pInstance = this;
 
@@ -499,8 +499,8 @@ void CGfxRenderer::Present(void)
 {
 	m_pSwapChain->Present();
 
-	m_pCurrentPass = NULL;
-	m_pCurrentPipeline = NULL;
+	m_pCurrentPass = nullptr;
+	m_pCurrentPipeline = nullptr;
 }
 #pragma endregion
 

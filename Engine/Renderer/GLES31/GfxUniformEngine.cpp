@@ -131,7 +131,7 @@ static void SHRotate(float shRedRotate[9], float shGreenRotate[9], float shBlueR
 CGfxUniformEngine::CGfxUniformEngine(void)
 	: m_bDirty(false)
 	, m_hash(INVALID_VALUE)
-	, m_pUniformBuffer(NULL)
+	, m_pUniformBuffer(nullptr)
 {
 	m_pUniformBuffer = new CGfxUniformBuffer(sizeof(m_params), true);
 

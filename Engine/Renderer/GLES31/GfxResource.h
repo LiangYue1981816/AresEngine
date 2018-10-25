@@ -28,17 +28,17 @@ template<class T> class CGfxResourcePtr
 {
 public:
 	CGfxResourcePtr(void)
-		: m_pPointer(NULL)
+		: m_pPointer(nullptr)
 	{
 
 	}
 	CGfxResourcePtr(const T *pPointer)
-		: m_pPointer(NULL)
+		: m_pPointer(nullptr)
 	{
 		Set((const T *)pPointer);
 	}
 	CGfxResourcePtr(const CGfxResourcePtr<T> &ptr)
-		: m_pPointer(NULL)
+		: m_pPointer(nullptr)
 	{
 		Set((const T *)ptr.m_pPointer);
 	}
@@ -78,7 +78,7 @@ public:
 			}
 		}
 
-		m_pPointer = NULL;
+		m_pPointer = nullptr;
 	}
 
 	inline bool IsValid(void) const

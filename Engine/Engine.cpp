@@ -5,7 +5,7 @@
 #include "RenderSolutionForwardPlus.h"
 
 
-CEngine* CEngine::pInstance = NULL;
+CEngine* CEngine::pInstance = nullptr;
 CEngine* CEngine::GetInstance(void)
 {
 	return pInstance;
@@ -13,7 +13,7 @@ CEngine* CEngine::GetInstance(void)
 
 void CEngine::Create(void *hDC, const char *szShaderCachePath, int screenWidth, int screenHeight, uint32_t screenPixelFormat)
 {
-	if (pInstance == NULL) {
+	if (pInstance == nullptr) {
 		pInstance = new CEngine(hDC, szShaderCachePath, screenWidth, screenHeight, screenPixelFormat);
 	}
 }
@@ -24,7 +24,7 @@ void CEngine::Destroy(void)
 		delete pInstance;
 	}
 
-	pInstance = NULL;
+	pInstance = nullptr;
 
 	CGfxProfiler::LogGfxMemory();
 
@@ -39,9 +39,9 @@ CEngine::CEngine(void *hDC, const char *szShaderCachePath, int screenWidth, int 
 	, m_totalLogicTime(0.0f)
 	, m_totalRenderTime(0.0f)
 
-	, m_pRenderer(NULL)
-	, m_pSceneManager(NULL)
-	, m_pRenderSolutions{ NULL }
+	, m_pRenderer(nullptr)
+	, m_pSceneManager(nullptr)
+	, m_pRenderSolutions{ nullptr }
 {
 	pInstance = this;
 
@@ -64,7 +64,7 @@ CEngine::~CEngine(void)
 	delete m_pSceneManager;
 	delete m_pRenderer;
 
-	pInstance = NULL;
+	pInstance = nullptr;
 }
 
 CGfxRenderer* CEngine::GetRenderer(void) const

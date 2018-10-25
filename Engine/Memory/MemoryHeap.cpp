@@ -84,13 +84,13 @@ static void HEAP_InitNodes(BLOCK_POOL *pBlockPool, uint32_t dwNodeCount)
 
 	for (uint32_t indexNode = 0; indexNode < dwNodeCount; indexNode++) {
 		pBlockPool->nodes[indexNode].dwSize = (indexNode + 1) * BLOCK_UNIT_SIZE;
-		pBlockPool->nodes[indexNode].pBlockHead = NULL;
+		pBlockPool->nodes[indexNode].pBlockHead = nullptr;
 	}
 }
 
 static BLOCK* HEAP_SearchBlock(BLOCK_POOL *pBlockPool, uint32_t dwSize)
 {
-	BLOCK_NODE *pBlockNode = NULL;
+	BLOCK_NODE *pBlockNode = nullptr;
 	rb_node *node = pBlockPool->root.rb_node;
 
 	while (node) {
@@ -115,7 +115,7 @@ static BLOCK* HEAP_SearchBlock(BLOCK_POOL *pBlockPool, uint32_t dwSize)
 		break;
 	}
 
-	return pBlockNode ? pBlockNode->pBlockHead : NULL;
+	return pBlockNode ? pBlockNode->pBlockHead : nullptr;
 }
 
 static void HEAP_InsertBlock(BLOCK_POOL *pBlockPool, BLOCK *pBlock)
@@ -124,7 +124,7 @@ static void HEAP_InsertBlock(BLOCK_POOL *pBlockPool, BLOCK *pBlock)
 
 	BLOCK_NODE *pBlockNode = &pBlockPool->nodes[NODE_INDEX(pBlock->dwSize)];
 	rb_node **node = &(pBlockPool->root.rb_node);
-	rb_node *parent = NULL;
+	rb_node *parent = nullptr;
 
 	while (*node) {
 		BLOCK_NODE *pBlockNodeCur = container_of(*node, BLOCK_NODE, node);
@@ -143,7 +143,7 @@ static void HEAP_InsertBlock(BLOCK_POOL *pBlockPool, BLOCK *pBlock)
 
 		ASSERT(pBlockNode == pBlockNodeCur);
 
-		pBlock->pFreePrev = NULL;
+		pBlock->pFreePrev = nullptr;
 		pBlock->pFreeNext = pBlockNode->pBlockHead;
 		pBlockNode->pBlockHead->pFreePrev = pBlock;
 		pBlockNode->pBlockHead = pBlock;
@@ -151,8 +151,8 @@ static void HEAP_InsertBlock(BLOCK_POOL *pBlockPool, BLOCK *pBlock)
 		return;
 	}
 
-	pBlock->pFreeNext = NULL;
-	pBlock->pFreePrev = NULL;
+	pBlock->pFreeNext = nullptr;
+	pBlock->pFreePrev = nullptr;
 	pBlockNode->pBlockHead = pBlock;
 
 	rb_init_node(&pBlockNode->node);
@@ -176,7 +176,7 @@ static void HEAP_RemoveBlock(BLOCK_POOL *pBlockPool, BLOCK *pBlock)
 	if (pBlockNode->pBlockHead == pBlock) {
 		pBlockNode->pBlockHead = pBlock->pFreeNext;
 
-		if (pBlockNode->pBlockHead == NULL) {
+		if (pBlockNode->pBlockHead == nullptr) {
 			rb_erase(&pBlockNode->node, &pBlockPool->root);
 		}
 	}
@@ -192,8 +192,8 @@ static BLOCK_POOL* HEAP_CreatePool(uint32_t dwMemSize)
 		pBlockPool->dwSize = dwBlockPoolSize;
 		pBlockPool->dwFullSize = dwBlockPoolSize;
 
-		pBlockPool->pNext = NULL;
-		pBlockPool->pPrev = NULL;
+		pBlockPool->pNext = nullptr;
+		pBlockPool->pPrev = nullptr;
 
 		pBlockPool->nodes = (BLOCK_NODE *)_malloc(sizeof(BLOCK_NODE) * dwNodeCount);
 		{
@@ -203,8 +203,8 @@ static BLOCK_POOL* HEAP_CreatePool(uint32_t dwMemSize)
 		BLOCK *pBlock = (BLOCK *)((uint8_t *)pBlockPool + ALIGN_16BYTE(sizeof(BLOCK_POOL)));
 		{
 			pBlock->pPool = pBlockPool;
-			pBlock->pNext = NULL;
-			pBlock->pPrev = NULL;
+			pBlock->pNext = nullptr;
+			pBlock->pPrev = nullptr;
 			pBlock->dwSize = dwBlockPoolSize;
 			pBlock->dwInUse = false;
 			HEAP_InsertBlock(pBlockPool, pBlock);
@@ -222,7 +222,7 @@ static void HEAP_DestroyPool(BLOCK_POOL *pBlockPool)
 
 static void* HEAP_PoolAlloc(BLOCK_POOL *pBlockPool, uint32_t dwMemSize)
 {
-	uint32_t *pPointer = NULL;
+	uint32_t *pPointer = nullptr;
 
 	if (pBlockPool->dwSize >= dwMemSize) {
 		if (BLOCK *pBlock = HEAP_SearchBlock(pBlockPool, dwMemSize)) {
@@ -295,8 +295,8 @@ HEAP_ALLOCATOR* HEAP_Create(void)
 {
 	HEAP_ALLOCATOR *pHeapAllocator = (HEAP_ALLOCATOR *)_malloc(sizeof(HEAP_ALLOCATOR));
 
-	pHeapAllocator->pBlockPoolHead = NULL;
-	pthread_mutex_init(&pHeapAllocator->mutex, NULL);
+	pHeapAllocator->pBlockPoolHead = nullptr;
+	pthread_mutex_init(&pHeapAllocator->mutex, nullptr);
 
 	return pHeapAllocator;
 }
@@ -304,14 +304,14 @@ HEAP_ALLOCATOR* HEAP_Create(void)
 void HEAP_Destroy(HEAP_ALLOCATOR *pHeapAllocator)
 {
 	if (BLOCK_POOL *pBlockPool = pHeapAllocator->pBlockPoolHead) {
-		BLOCK_POOL *pBlockPoolNext = NULL;
+		BLOCK_POOL *pBlockPoolNext = nullptr;
 		do {
 			pBlockPoolNext = pBlockPool->pNext;
 			HEAP_DestroyPool(pBlockPool);
 		} while (pBlockPool = pBlockPoolNext);
 	}
 
-	pHeapAllocator->pBlockPoolHead = NULL;
+	pHeapAllocator->pBlockPoolHead = nullptr;
 	pthread_mutex_destroy(&pHeapAllocator->mutex);
 
 	_free(pHeapAllocator);
@@ -319,7 +319,7 @@ void HEAP_Destroy(HEAP_ALLOCATOR *pHeapAllocator)
 
 void* HEAP_Alloc(HEAP_ALLOCATOR *pHeapAllocator, size_t size)
 {
-	uint32_t *pPointer = NULL;
+	uint32_t *pPointer = nullptr;
 
 	if (pHeapAllocator) {
 		pthread_mutex_lock(&pHeapAllocator->mutex);

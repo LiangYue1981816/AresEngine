@@ -142,7 +142,7 @@ static new_ptr_list_t new_ptr_list = {
     &new_ptr_list,
     0,
     {
-        NULL
+        nullptr
     },
     0,
     0,
@@ -177,7 +177,7 @@ static void print_position(const void* ptr, int line)
     {
         LogOutput(LOG_TAG_MEMORY, "%s:%d", (const char*)ptr, line);
     }
-    else if (ptr != NULL)   // Is caller address present?
+    else if (ptr != nullptr)   // Is caller address present?
     {
 		LogOutput(LOG_TAG_MEMORY, "%p", ptr);
     }
@@ -214,7 +214,7 @@ static bool check_tail(new_ptr_list_t* ptr)
  * @param file      null-terminated string of the file name
  * @param line      line number
  * @param is_array  boolean value whether this is an array operation
- * @return          pointer to the user-requested memory area; \c NULL
+ * @return          pointer to the user-requested memory area; \c nullptr
  *                  if memory allocation is not successful
  */
 void* alloc_mem(size_t size, const char* file, int line, bool is_array)
@@ -224,7 +224,7 @@ void* alloc_mem(size_t size, const char* file, int line, bool is_array)
     STATIC_ASSERT(_DEBUG_NEW_TAILCHECK >= 0, Invalid_tail_check_length);
     size_t s = size + ALIGNED_LIST_ITEM_SIZE + _DEBUG_NEW_TAILCHECK;
 	new_ptr_list_t* ptr = (new_ptr_list_t*)AllocMemory(s);
-    if (ptr == NULL)
+    if (ptr == nullptr)
     {
 		LogOutput(LOG_TAG_MEMORY, "Out of memory when allocating %lu bytes\n", (unsigned long)size);
         _DEBUG_NEW_ERROR_ACTION;
@@ -261,7 +261,7 @@ void* alloc_mem(size_t size, const char* file, int line, bool is_array)
  */
 void free_pointer(void* usr_ptr, void* addr, bool is_array)
 {
-    if (usr_ptr == NULL)
+    if (usr_ptr == nullptr)
         return;
     new_ptr_list_t* ptr = (new_ptr_list_t*)((char*)usr_ptr - ALIGNED_LIST_ITEM_SIZE);
     if (ptr->magic != DEBUG_NEW_MAGIC)

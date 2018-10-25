@@ -4,7 +4,7 @@
 
 CScene::CScene(uint32_t name)
 	: m_name(name)
-	, m_pRootNode(NULL)
+	, m_pRootNode(nullptr)
 {
 	m_pRootNode = new CSceneNode(HashValue("Root"), this);
 }
@@ -50,7 +50,7 @@ bool CScene::DetachNode(CSceneNode *pNode)
 CSceneNode* CScene::GetNode(uint32_t name) const
 {
 	const auto &itNode = m_pNodes.find(name);
-	return itNode != m_pNodes.end() ? itNode->second : NULL;
+	return itNode != m_pNodes.end() ? itNode->second : nullptr;
 }
 
 bool CScene::Load(const char *szFileName)
@@ -71,7 +71,7 @@ bool CScene::Load(const char *szFileName)
 		if (xmlDoc.LoadFile(Renderer()->GetResourceFullName(szFileName)) == false) throw 0;
 
 		TiXmlNode *pSceneNode = xmlDoc.FirstChild("Scene");
-		if (pSceneNode == NULL) throw 1;
+		if (pSceneNode == nullptr) throw 1;
 		if (LoadScene(pSceneNode) == false) throw 2;
 
 		return true;
@@ -143,7 +143,7 @@ bool CScene::LoadMesh(TiXmlNode *pNode, CSceneNode *pCurrentNode)
 		if (TiXmlNode *pMeshNode = pNode->FirstChild("Mesh")) {
 			const char *szMaterialFileName = pMeshNode->ToElement()->AttributeString("material");
 			const char *szMeshFileName = pMeshNode->ToElement()->AttributeString("mesh");
-			if (szMaterialFileName == NULL || szMeshFileName == NULL) throw 0;
+			if (szMaterialFileName == nullptr || szMeshFileName == nullptr) throw 0;
 
 			CGfxMaterialPtr ptrMaterial = Renderer()->LoadMaterial(szMaterialFileName);
 			CGfxMeshPtr ptrMesh = Renderer()->LoadMesh(szMeshFileName);

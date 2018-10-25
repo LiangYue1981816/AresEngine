@@ -6,20 +6,20 @@ template<class T> class CSharedPtr
 {
 public:
 	CSharedPtr(void)
-		: m_pPointer(NULL)
-		, m_pRefCount(NULL)
+		: m_pPointer(nullptr)
+		, m_pRefCount(nullptr)
 	{
 
 	}
 	CSharedPtr(const T *pPointer)
-		: m_pPointer(NULL)
-		, m_pRefCount(NULL)
+		: m_pPointer(nullptr)
+		, m_pRefCount(nullptr)
 	{
-		Set(pPointer, NULL);
+		Set(pPointer, nullptr);
 	}
 	CSharedPtr(const CSharedPtr<T> &ptr)
-		: m_pPointer(NULL)
-		, m_pRefCount(NULL)
+		: m_pPointer(nullptr)
+		, m_pRefCount(nullptr)
 	{
 		Set(ptr.m_pPointer, ptr.m_pRefCount);
 	}
@@ -42,7 +42,7 @@ protected:
 			m_pPointer = (T *)pPointer;
 			m_pRefCount = (uint32_t *)pRefCount;
 
-			if (m_pRefCount == NULL) {
+			if (m_pRefCount == nullptr) {
 				m_pRefCount = (uint32_t *)AllocMemory(sizeof(*m_pRefCount)); (*m_pRefCount) = 0;
 			}
 
@@ -63,8 +63,8 @@ public:
 			}
 		}
 
-		m_pPointer = NULL;
-		m_pRefCount = NULL;
+		m_pPointer = nullptr;
+		m_pRefCount = nullptr;
 	}
 
 	inline bool IsValid(void) const

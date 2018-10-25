@@ -6,7 +6,7 @@
 
 CGfxUniformVec2::CGfxUniformVec2(void)
 	: m_bDirty(false)
-	, m_pUniformBuffer(NULL)
+	, m_pUniformBuffer(nullptr)
 {
 	m_pUniformBuffer = new CGfxUniformBuffer(sizeof(m_value), true);
 }

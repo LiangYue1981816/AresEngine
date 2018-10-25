@@ -8,7 +8,7 @@ public:
 	typedef struct Sample {
 		Sample(void)
 		{
-			name = NULL;
+			name = nullptr;
 			Reset();
 		}
 

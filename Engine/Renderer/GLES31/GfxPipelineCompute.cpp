@@ -16,7 +16,7 @@ CGfxPipelineCompute::~CGfxPipelineCompute(void)
 
 bool CGfxPipelineCompute::Create(const CGfxShader *pComputeShader)
 {
-	if (pComputeShader == NULL) {
+	if (pComputeShader == nullptr) {
 		return false;
 	}
 
@@ -42,7 +42,7 @@ void CGfxPipelineCompute::CreateProgram(const CGfxShader *pComputeShader)
 
 void CGfxPipelineCompute::Destroy(void)
 {
-	m_pShaders[shaderc_compute_shader] = NULL;
+	m_pShaders[shaderc_compute_shader] = nullptr;
 	glUseProgramStages(m_pipeline, glGetProgramStage(shaderc_compute_shader), 0);
 }
 

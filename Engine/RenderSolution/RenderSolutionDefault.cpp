@@ -104,7 +104,7 @@ void CRenderSolutionDefault::Render(int indexQueue)
 			CGfxCommandBuffer *pCommandBuffer = &m_secondaryCommandBuffer[indexThread][indexQueue][m_secondaryCommandBuffer[indexThread][indexQueue].size() - 1];
 
 			taskCommandBuffers[indexThread].SetParams(pCommandBuffer, indexThread, indexQueue, namePass);
-			m_taskCommandBuffer.Task(&taskCommandBuffers[indexThread], MainCamera(), NULL, NULL);
+			m_taskCommandBuffer.Task(&taskCommandBuffers[indexThread], MainCamera(), nullptr, nullptr);
 		}
 	}
 	m_taskCommandBuffer.Dispatch();

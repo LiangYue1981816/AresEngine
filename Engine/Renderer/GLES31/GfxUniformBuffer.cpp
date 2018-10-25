@@ -11,7 +11,7 @@ CGfxUniformBuffer::CGfxUniformBuffer(size_t size, bool bDynamic)
 
 	glGenBuffers(1, &m_buffer);
 	glBindBuffer(GL_UNIFORM_BUFFER, m_buffer);
-	glBufferData(GL_UNIFORM_BUFFER, m_size, NULL, bDynamic ? GL_DYNAMIC_DRAW : GL_STATIC_DRAW);
+	glBufferData(GL_UNIFORM_BUFFER, m_size, nullptr, bDynamic ? GL_DYNAMIC_DRAW : GL_STATIC_DRAW);
 	glBindBuffer(GL_UNIFORM_BUFFER, 0);
 }
 

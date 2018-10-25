@@ -75,10 +75,10 @@ RET:
 
 
 CTask::CTask(void)
-	: m_pTaskParams(NULL)
-	, m_pTaskEventSignal(NULL)
+	: m_pTaskParams(nullptr)
+	, m_pTaskEventSignal(nullptr)
 
-	, pNext(NULL)
+	, pNext(nullptr)
 {
 
 }
@@ -122,7 +122,7 @@ CTaskGraph::CTaskGraph(const char *szName, int priority)
 	event_init(&m_eventReady, 1);
 	event_init(&m_eventFinish, 1);
 	event_init(&m_eventDispatch, 0);
-	pthread_mutex_init(&m_mutexTaskList, NULL);
+	pthread_mutex_init(&m_mutexTaskList, nullptr);
 
 	for (int indexThread = 0; indexThread < THREAD_COUNT; indexThread++) {
 		int rcode = NO_ERROR;
@@ -145,7 +145,7 @@ CTaskGraph::~CTaskGraph(void)
 	event_signal(&m_eventDispatch);
 
 	for (int indexThread = 0; indexThread < THREAD_COUNT; indexThread++) {
-		pthread_join(m_threads[indexThread], NULL);
+		pthread_join(m_threads[indexThread], nullptr);
 	}
 
 	event_destroy(&m_eventExit);
@@ -204,7 +204,7 @@ void* CTaskGraph::TaskThread(void *pParams)
 			event_wait(&pTaskGraph->m_eventReady);
 
 			// Run tasks
-			event_t *pEvent = NULL;
+			event_t *pEvent = nullptr;
 			do {
 				if (pEvent) {
 					event_wait(pEvent);
@@ -213,7 +213,7 @@ void* CTaskGraph::TaskThread(void *pParams)
 				if (CTask **ppTaskListHead = &pTaskGraph->m_pTaskListHeads[pEvent]) {
 					while (true) {
 						bool bFinish = false;
-						CTask *pTask = NULL;
+						CTask *pTask = nullptr;
 
 						pthread_mutex_lock(&pTaskGraph->m_mutexTaskList);
 						{
@@ -243,5 +243,5 @@ void* CTaskGraph::TaskThread(void *pParams)
 		event_signal(&pTaskGraph->m_eventFinish);
 	}
 
-	return NULL;
+	return nullptr;
 }

@@ -70,7 +70,7 @@ bool CGfxMaterial::Load(const char *szFileName)
 			if (xmlDoc.LoadFile(Renderer()->GetResourceFullName(szFileName)) == false) throw 0;
 
 			TiXmlNode *pMaterialNode = xmlDoc.FirstChild("Material");
-			if (pMaterialNode == NULL) throw 1;
+			if (pMaterialNode == nullptr) throw 1;
 
 			if (TiXmlNode *pPassNode = pMaterialNode->FirstChild("Pass")) {
 				do {
@@ -94,7 +94,7 @@ bool CGfxMaterial::LoadPass(TiXmlNode *pPassNode)
 {
 	uint32_t name = HashValue(pPassNode->ToElement()->AttributeString("name"));
 
-	if (m_pPasses[name] == NULL) {
+	if (m_pPasses[name] == nullptr) {
 		m_pPasses[name] = new CGfxMaterialPass(name);
 		return m_pPasses[name]->Load(pPassNode);
 	}
@@ -114,5 +114,5 @@ void CGfxMaterial::Destroy(void)
 const CGfxMaterialPass* CGfxMaterial::GetPass(uint32_t name) const
 {
 	const auto &itPass = m_pPasses.find(name);
-	return itPass != m_pPasses.end() ? itPass->second : NULL;
+	return itPass != m_pPasses.end() ? itPass->second : nullptr;
 }

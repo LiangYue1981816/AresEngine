@@ -11,7 +11,7 @@ class CComponent
 public:
 	CComponent(uint32_t name)
 		: m_name(name)
-		, m_pParentNode(NULL)
+		, m_pParentNode(nullptr)
 	{
 
 	}

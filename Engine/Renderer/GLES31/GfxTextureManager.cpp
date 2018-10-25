@@ -21,7 +21,7 @@ CGfxTexture2D* CGfxTextureManager::LoadTexture2D(const char *szFileName)
 {
 	uint32_t name = HashValue(szFileName);
 
-	if (m_pTextures[name] == NULL) {
+	if (m_pTextures[name] == nullptr) {
 		m_pTextures[name] = new CGfxTexture2D(name);
 		m_pTextures[name]->Load(szFileName);
 	}
@@ -33,7 +33,7 @@ CGfxTexture2DArray* CGfxTextureManager::LoadTexture2DArray(const char *szFileNam
 {
 	uint32_t name = HashValue(szFileName);
 
-	if (m_pTextures[name] == NULL) {
+	if (m_pTextures[name] == nullptr) {
 		m_pTextures[name] = new CGfxTexture2DArray(name);
 		m_pTextures[name]->Load(szFileName);
 	}
@@ -45,7 +45,7 @@ CGfxTextureCubeMap* CGfxTextureManager::LoadTextureCubeMap(const char *szFileNam
 {
 	uint32_t name = HashValue(szFileName);
 
-	if (m_pTextures[name] == NULL) {
+	if (m_pTextures[name] == nullptr) {
 		m_pTextures[name] = new CGfxTextureCubeMap(name);
 		m_pTextures[name]->Load(szFileName);
 	}
@@ -55,7 +55,7 @@ CGfxTextureCubeMap* CGfxTextureManager::LoadTextureCubeMap(const char *szFileNam
 
 CGfxTexture2D* CGfxTextureManager::CreateTexture2D(uint32_t name)
 {
-	if (m_pTextures[name] == NULL) {
+	if (m_pTextures[name] == nullptr) {
 		m_pTextures[name] = new CGfxTexture2D(name);
 	}
 
@@ -64,7 +64,7 @@ CGfxTexture2D* CGfxTextureManager::CreateTexture2D(uint32_t name)
 
 CGfxTexture2DArray* CGfxTextureManager::CreateTexture2DArray(uint32_t name)
 {
-	if (m_pTextures[name] == NULL) {
+	if (m_pTextures[name] == nullptr) {
 		m_pTextures[name] = new CGfxTexture2DArray(name);
 	}
 
@@ -73,7 +73,7 @@ CGfxTexture2DArray* CGfxTextureManager::CreateTexture2DArray(uint32_t name)
 
 CGfxTextureCubeMap* CGfxTextureManager::CreateTextureCubeMap(uint32_t name)
 {
-	if (m_pTextures[name] == NULL) {
+	if (m_pTextures[name] == nullptr) {
 		m_pTextures[name] = new CGfxTextureCubeMap(name);
 	}
 

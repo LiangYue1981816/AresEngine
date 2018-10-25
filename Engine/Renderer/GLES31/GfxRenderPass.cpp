@@ -121,7 +121,7 @@ const AttachmentInformation* CGfxRenderPass::GetAttachments(void) const
 
 const AttachmentInformation* CGfxRenderPass::GetAttachment(int indexAttachment) const
 {
-	return indexAttachment >= 0 && indexAttachment < (int)m_attachments.size() ? &m_attachments[indexAttachment] : NULL;
+	return indexAttachment >= 0 && indexAttachment < (int)m_attachments.size() ? &m_attachments[indexAttachment] : nullptr;
 }
 
 uint32_t CGfxRenderPass::GetSubPassCount(void) const
@@ -141,5 +141,5 @@ uint32_t CGfxRenderPass::GetSubpassOutputAttachmentCount(int indexSubPass) const
 
 const SubPassInformation* CGfxRenderPass::GetSubPass(int indexSubPass) const
 {
-	return indexSubPass >= 0 && indexSubPass < (int)m_subpasses.size() ? &m_subpasses[indexSubPass] : NULL;
+	return indexSubPass >= 0 && indexSubPass < (int)m_subpasses.size() ? &m_subpasses[indexSubPass] : nullptr;
 }

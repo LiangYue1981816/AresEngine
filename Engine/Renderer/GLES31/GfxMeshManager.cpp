@@ -21,7 +21,7 @@ CGfxMesh* CGfxMeshManager::LoadMesh(const char *szFileName)
 {
 	uint32_t name = HashValue(szFileName);
 
-	if (m_pMeshs[name] == NULL) {
+	if (m_pMeshs[name] == nullptr) {
 		m_pMeshs[name] = new CGfxMesh(name);
 		m_pMeshs[name]->Load(szFileName);
 	}
@@ -31,7 +31,7 @@ CGfxMesh* CGfxMeshManager::LoadMesh(const char *szFileName)
 
 CGfxMesh* CGfxMeshManager::CreateMesh(uint32_t name)
 {
-	if (m_pMeshs[name] == NULL) {
+	if (m_pMeshs[name] == nullptr) {
 		m_pMeshs[name] = new CGfxMesh(name);
 	}
 

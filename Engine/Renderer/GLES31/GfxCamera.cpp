@@ -4,8 +4,8 @@
 
 
 CGfxCamera::CGfxCamera(void)
-	: m_pRenderQueue(NULL)
-	, m_pUniformCamera(NULL)
+	: m_pRenderQueue(nullptr)
+	, m_pUniformCamera(nullptr)
 {
 	m_pRenderQueue = new CGfxRenderQueue;
 	m_pUniformCamera = new CGfxUniformCamera;
