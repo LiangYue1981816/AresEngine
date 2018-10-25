@@ -2,15 +2,8 @@
 #include <assert.h>
 
 
-#ifndef ASSERT
-#define ASSERT assert
-#endif
-
-
 void* _malloc(size_t size)
 {
-	ASSERT(size > 0);
-
 	void *ptr = NULL;
 
 #ifdef PLATFORM_WINDOWS
@@ -32,8 +25,6 @@ void* _malloc(size_t size)
 
 void _free(void *ptr)
 {
-	ASSERT(ptr);
-
 #ifdef PLATFORM_WINDOWS
 
 	_aligned_free(ptr);

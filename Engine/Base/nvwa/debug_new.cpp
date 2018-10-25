@@ -158,6 +158,7 @@ static fast_mutex new_ptr_lock;
  * Total memory allocated in bytes.
  */
 static size_t total_mem_alloc = 0;
+static size_t total_object_cnt = 0;
 
 /**
  * Prints the position information of a memory operation point.  When \c
@@ -236,6 +237,8 @@ void* alloc_mem(size_t size, const char* file, int line, bool is_array)
     ptr->magic = DEBUG_NEW_MAGIC;
     {
         fast_mutex_autolock lock(new_ptr_lock);
+		total_mem_alloc += size;
+		total_object_cnt += 1;
         ptr->prev = new_ptr_list.prev;
         ptr->next = &new_ptr_list;
         new_ptr_list.prev->next = ptr;
@@ -245,7 +248,6 @@ void* alloc_mem(size_t size, const char* file, int line, bool is_array)
     memset((char*)usr_ptr + size, _DEBUG_NEW_TAILCHECK_CHAR,
                                   _DEBUG_NEW_TAILCHECK);
 #endif
-    total_mem_alloc += size;
     return usr_ptr;
 }
 
@@ -299,6 +301,7 @@ void free_pointer(void* usr_ptr, void* addr, bool is_array)
     {
         fast_mutex_autolock lock(new_ptr_lock);
         total_mem_alloc -= ptr->size;
+		total_object_cnt -= 1;
         ptr->magic = 0;
         ptr->prev->next = ptr->next;
         ptr->next->prev = ptr->prev;
@@ -392,18 +395,8 @@ int check_mem_corruption()
  */
 size_t get_total_size()
 {
-	size_t total_size = 0;
-
-	fast_mutex_autolock lock_ptr(new_ptr_lock);
-	for (new_ptr_list_t* ptr = new_ptr_list.next; ptr != &new_ptr_list; ptr = ptr->next)
-	{
-		if (ptr->magic == DEBUG_NEW_MAGIC)
-		{
-			total_size += ptr->size;
-		}
-	}
-
-	return total_size;
+	fast_mutex_autolock lock(new_ptr_lock);
+	return total_mem_alloc;
 }
 
 /**
@@ -411,16 +404,6 @@ size_t get_total_size()
  */
 size_t get_total_object()
 {
-	size_t object_cnt = 0;
-
-	fast_mutex_autolock lock_ptr(new_ptr_lock);
-	for (new_ptr_list_t* ptr = new_ptr_list.next; ptr != &new_ptr_list; ptr = ptr->next)
-	{
-		if (ptr->magic == DEBUG_NEW_MAGIC)
-		{
-			object_cnt++;
-		}
-	}
-
-	return object_cnt;
+	fast_mutex_autolock lock(new_ptr_lock);
+	return total_object_cnt;
 }
