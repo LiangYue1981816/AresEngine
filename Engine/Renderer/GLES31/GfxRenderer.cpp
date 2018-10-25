@@ -324,6 +324,11 @@ bool CGfxRenderer::CmdBeginRenderPass(CGfxCommandBuffer *pCommandBuffer, const C
 	return pCommandBuffer->CmdBeginRenderPass(ptrFrameBuffer, ptrRenderPass);
 }
 
+bool CGfxRenderer::CmdNextSubpass(CGfxCommandBuffer *pCommandBuffer)
+{
+	return pCommandBuffer->CmdNextSubpass();
+}
+
 bool CGfxRenderer::CmdEndRenderPass(CGfxCommandBuffer *pCommandBuffer)
 {
 	return pCommandBuffer->CmdEndRenderPass();

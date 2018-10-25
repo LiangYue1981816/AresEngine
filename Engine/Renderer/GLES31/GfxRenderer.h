@@ -175,6 +175,7 @@ public:
 #pragma region Commands
 public:
 	bool CmdBeginRenderPass(CGfxCommandBuffer *pCommandBuffer, const CGfxFrameBufferPtr &ptrFrameBuffer, const CGfxRenderPassPtr &ptrRenderPass);
+	bool CmdNextSubpass(CGfxCommandBuffer *pCommandBuffer);
 	bool CmdEndRenderPass(CGfxCommandBuffer *pCommandBuffer);
 
 	bool CmdSetScissor(CGfxCommandBuffer *pCommandBuffer, int x, int y, int width, int height);
