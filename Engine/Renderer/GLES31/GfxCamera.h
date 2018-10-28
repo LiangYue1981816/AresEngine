@@ -45,6 +45,10 @@ public:
 public:
 	void AddMesh(int indexThread, int indexQueue, const CGfxMaterialPtr &ptrMaterial, const CGfxMeshPtr &ptrMesh, const glm::mat4 &mtxTransform);
 	void AddMeshIndirect(int indexThread, int indexQueue, const CGfxMaterialPtr &ptrMaterial, const CGfxMeshPtr &ptrMesh, const CGfxDrawIndirectBufferPtr &ptrDrawIndirectBuffer, const glm::mat4 &mtxTransform);
+
+	void AddPointLight(int indexThread, int indexQueue, const CGfxMaterialPtr &ptrMaterial, const CGfxMeshPtr &ptrMesh, const glm::mat4 &mtxTransform);
+	void AddPointLightIndirect(int indexThread, int indexQueue, const CGfxMaterialPtr &ptrMaterial, const CGfxMeshPtr &ptrMesh, const CGfxDrawIndirectBufferPtr &ptrDrawIndirectBuffer, const glm::mat4 &mtxTransform);
+
 	void Clear(int indexQueue);
 
 public:

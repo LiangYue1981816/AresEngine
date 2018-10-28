@@ -15,13 +15,24 @@ public:
 public:
 	void AddMesh(int indexThread, int indexQueue, const CGfxMaterialPtr &ptrMaterial, const CGfxMeshPtr &ptrMesh, const glm::mat4 &mtxTransform);
 	void AddMeshIndirect(int indexThread, int indexQueue, const CGfxMaterialPtr &ptrMaterial, const CGfxMeshPtr &ptrMesh, const CGfxDrawIndirectBufferPtr &ptrDrawIndirectBuffer, const glm::mat4 &mtxTransform);
+
+	void AddPointLight(int indexThread, int indexQueue, const CGfxMaterialPtr &ptrMaterial, const CGfxMeshPtr &ptrMesh, const glm::mat4 &mtxTransform);
+	void AddPointLightIndirect(int indexThread, int indexQueue, const CGfxMaterialPtr &ptrMaterial, const CGfxMeshPtr &ptrMesh, const CGfxDrawIndirectBufferPtr &ptrDrawIndirectBuffer, const glm::mat4 &mtxTransform);
+
 	void Clear(int indexQueue);
 
 public:
 	void CmdDraw(CGfxCamera *pCamera, CGfxCommandBuffer *pCommandBuffer, int indexThread, int indexQueue, uint32_t namePass);
 
+private:
+	void CmdDrawMesh(CGfxCamera *pCamera, CGfxCommandBuffer *pCommandBuffer, int indexThread, int indexQueue, uint32_t namePass);
+	void CmdDrawPointLight(CGfxCamera *pCamera, CGfxCommandBuffer *pCommandBuffer, int indexThread, int indexQueue, uint32_t namePass);
+
 
 private:
 	eastl::unordered_map<CGfxMaterialPtr, eastl::unordered_map<CGfxMeshPtr, eastl::vector<glm::mat4>>> m_materialMeshQueue[THREAD_COUNT][2];
 	eastl::unordered_map<CGfxMaterialPtr, eastl::unordered_map<CGfxMeshPtr, eastl::unordered_map<CGfxDrawIndirectBufferPtr, eastl::vector<glm::mat4>>>> m_materialMeshIndirectQueue[THREAD_COUNT][2];
+
+	eastl::unordered_map<CGfxMaterialPtr, eastl::unordered_map<CGfxMeshPtr, eastl::vector<glm::mat4>>> m_materialPointLightQueue[THREAD_COUNT][2];
+	eastl::unordered_map<CGfxMaterialPtr, eastl::unordered_map<CGfxMeshPtr, eastl::unordered_map<CGfxDrawIndirectBufferPtr, eastl::vector<glm::mat4>>>> m_materialPointLightIndirectQueue[THREAD_COUNT][2];
 };
