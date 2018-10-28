@@ -34,6 +34,7 @@ std::string CGfxShaderCompiler::LoadShader(const char *szFileName)
 		static char szSource[128 * 1024];
 		size_t size = fsize(pFile);
 
+		memset(szSource, 0, sizeof(szSource));
 		fread(szSource, sizeof(char), size, pFile);
 		fclose(pFile);
 
