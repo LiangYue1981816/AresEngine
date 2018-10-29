@@ -4,7 +4,7 @@
 #include "GfxVertexAttribute.h"
 
 
-static const int INSTANCE_BUFFER_SIZE = 128;
+static const int INSTANCE_BUFFER_SIZE = 64;
 
 CGfxInstanceBuffer::CGfxInstanceBuffer(uint32_t format)
 	: m_instanceFormat(format)
@@ -32,10 +32,10 @@ CGfxInstanceBuffer::~CGfxInstanceBuffer(void)
 	m_size = 0;
 }
 
-void CGfxInstanceBuffer::SetInstance(const eastl::vector<glm::mat4> &mtxTransforms)
+void CGfxInstanceBuffer::SetInstance(const uint8_t *pBuffer, uint32_t size)
 {
 	m_bDirty = true;
-	m_instances = mtxTransforms;
+	m_buffer.assign(pBuffer, pBuffer + size);
 }
 
 void CGfxInstanceBuffer::UpdateInstance(void)
@@ -43,35 +43,29 @@ void CGfxInstanceBuffer::UpdateInstance(void)
 	if (m_bDirty) {
 		m_bDirty = false;
 
-		uint32_t size = (uint32_t)m_instances.size() * sizeof(glm::mat4);
-		uint32_t hash = HashValue((unsigned char *)m_instances.data(), size);
+		uint32_t hash = HashValue(m_buffer.data(), m_buffer.size());
 
 		if (m_hash != hash) {
 			m_hash  = hash;
 
 			GLBindBuffer(GL_ARRAY_BUFFER, m_instanceBuffer);
 			{
-				if (m_size < size) {
+				if (m_size < m_buffer.size()) {
 					CGfxProfiler::DecInstanceBufferSize(m_size);
 					{
 						m_size = INSTANCE_BUFFER_SIZE;
-						while (m_size < size) m_size <<= 1;
+						while (m_size < m_buffer.size()) m_size <<= 1;
 
 						glBufferData(GL_ARRAY_BUFFER, m_size, nullptr, GL_DYNAMIC_DRAW);
 					}
 					CGfxProfiler::IncInstanceBufferSize(m_size);
 				}
 
-				glBufferSubData(GL_ARRAY_BUFFER, 0, size, m_instances.data());
+				glBufferSubData(GL_ARRAY_BUFFER, 0, m_buffer.size(), m_buffer.data());
 			}
 			GLBindBuffer(GL_ARRAY_BUFFER, 0);
 		}
 	}
-}
-
-uint32_t CGfxInstanceBuffer::GetInstanceCount(void) const
-{
-	return (uint32_t)m_instances.size();
 }
 
 uint32_t CGfxInstanceBuffer::GetInstanceFormat(void) const
@@ -84,9 +78,19 @@ uint32_t CGfxInstanceBuffer::GetInstanceBuffer(void) const
 	return m_instanceBuffer;
 }
 
-uint32_t CGfxInstanceBuffer::GetSize(void) const
+uint32_t CGfxInstanceBuffer::GetInstanceBufferSize(void) const
 {
-	return m_size;
+	return m_buffer.size();
+}
+
+uint32_t CGfxInstanceBuffer::GetInstanceCount(void) const
+{
+	return GetInstanceCount(GetInstanceBufferSize());
+}
+
+uint32_t CGfxInstanceBuffer::GetInstanceCount(uint32_t size) const
+{
+	return size / GetInstanceStride(m_instanceFormat);
 }
 
 void CGfxInstanceBuffer::Bind(void) const

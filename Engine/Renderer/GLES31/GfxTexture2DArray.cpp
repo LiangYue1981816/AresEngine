@@ -198,7 +198,7 @@ bool CGfxTexture2DArray::TransferTexture2D(int layer, const gli::texture2d *text
 	return true;
 }
 
-bool CGfxTexture2DArray::TransferTexture2D(int layer, int level, uint32_t format, int xoffset, int yoffset, int width, int height, uint32_t type, int size, const void *data)
+bool CGfxTexture2DArray::TransferTexture2D(int layer, int level, uint32_t format, int xoffset, int yoffset, int width, int height, uint32_t type, uint32_t size, const void *data)
 {
 	if (m_texture == 0) {
 		return false;
@@ -220,7 +220,7 @@ bool CGfxTexture2DArray::TransferTexture2D(int layer, int level, uint32_t format
 	{
 		CGfxProfiler::DecTextureDataSize(m_size[layer][level]);
 		{
-			m_size[layer][level] = (uint32_t)size;
+			m_size[layer][level] = size;
 			glTexSubImage3D(GL_TEXTURE_2D_ARRAY, level, xoffset, yoffset, layer, width, height, 1, format, type, data);
 		}
 		CGfxProfiler::IncTextureDataSize(m_size[layer][level]);
@@ -230,7 +230,7 @@ bool CGfxTexture2DArray::TransferTexture2D(int layer, int level, uint32_t format
 	return true;
 }
 
-bool CGfxTexture2DArray::TransferTexture2DCompressed(int layer, int level, uint32_t format, int xoffset, int yoffset, int width, int height, int size, const void *data)
+bool CGfxTexture2DArray::TransferTexture2DCompressed(int layer, int level, uint32_t format, int xoffset, int yoffset, int width, int height, uint32_t size, const void *data)
 {
 	if (m_texture == 0) {
 		return false;
@@ -252,7 +252,7 @@ bool CGfxTexture2DArray::TransferTexture2DCompressed(int layer, int level, uint3
 	{
 		CGfxProfiler::DecTextureDataSize(m_size[layer][level]);
 		{
-			m_size[layer][level] = (uint32_t)size;
+			m_size[layer][level] = size;
 			glCompressedTexSubImage3D(GL_TEXTURE_2D_ARRAY, level, xoffset, yoffset, layer, width, height, 1, format, size, data);
 		}
 		CGfxProfiler::IncTextureDataSize(m_size[layer][level]);

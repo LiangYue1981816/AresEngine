@@ -13,7 +13,7 @@ private:
 
 
 private:
-	bool Buffer(CGfxIndexBuffer *pIndexBuffer, CGfxVertexBuffer *pVertexBuffer, CGfxInstanceBuffer *pInstanceBuffer);
+	bool Buffer(CGfxIndexBuffer *pIndexBuffer, CGfxVertexBuffer *pVertexBuffer, CGfxInstanceBuffer *pInstanceBuffer) const;
 
 private:
 	void Bind(void) const;
@@ -21,7 +21,4 @@ private:
 
 private:
 	uint32_t m_vao;
-	CGfxIndexBuffer *m_pIndexBuffer;
-	CGfxVertexBuffer *m_pVertexBuffer;
-	CGfxInstanceBuffer *m_pInstanceBuffer;
 };

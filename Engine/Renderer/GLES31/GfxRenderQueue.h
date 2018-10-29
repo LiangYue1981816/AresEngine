@@ -13,8 +13,8 @@ public:
 
 
 public:
-	void AddMesh(int indexThread, int indexQueue, const CGfxMaterialPtr &ptrMaterial, const CGfxMeshPtr &ptrMesh, const glm::mat4 &mtxTransform);
-	void AddMeshIndirect(int indexThread, int indexQueue, const CGfxMaterialPtr &ptrMaterial, const CGfxMeshPtr &ptrMesh, const CGfxDrawIndirectBufferPtr &ptrDrawIndirectBuffer, const glm::mat4 &mtxTransform);
+	void AddMesh(int indexThread, int indexQueue, const CGfxMaterialPtr &ptrMaterial, const CGfxMeshPtr &ptrMesh, const uint8_t *pInstanceData, uint32_t size);
+	void AddMeshIndirect(int indexThread, int indexQueue, const CGfxMaterialPtr &ptrMaterial, const CGfxMeshPtr &ptrMesh, const CGfxDrawIndirectBufferPtr &ptrDrawIndirectBuffer, const uint8_t *pInstanceData, uint32_t size);
 	void Clear(int indexQueue);
 
 public:
@@ -22,6 +22,6 @@ public:
 
 
 private:
-	eastl::unordered_map<CGfxMaterialPtr, eastl::unordered_map<CGfxMeshPtr, eastl::vector<glm::mat4>>> m_materialMeshQueue[THREAD_COUNT][2];
-	eastl::unordered_map<CGfxMaterialPtr, eastl::unordered_map<CGfxMeshPtr, eastl::unordered_map<CGfxDrawIndirectBufferPtr, eastl::vector<glm::mat4>>>> m_materialMeshIndirectQueue[THREAD_COUNT][2];
+	eastl::unordered_map<CGfxMaterialPtr, eastl::unordered_map<CGfxMeshPtr, eastl::vector<uint8_t>>> m_materialMeshQueue[THREAD_COUNT][2];
+	eastl::unordered_map<CGfxMaterialPtr, eastl::unordered_map<CGfxMeshPtr, eastl::unordered_map<CGfxDrawIndirectBufferPtr, eastl::vector<uint8_t>>>> m_materialMeshIndirectQueue[THREAD_COUNT][2];
 };

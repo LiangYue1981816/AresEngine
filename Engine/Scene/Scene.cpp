@@ -146,7 +146,7 @@ bool CScene::LoadMesh(TiXmlNode *pNode, CSceneNode *pCurrentNode)
 			if (szMaterialFileName == nullptr || szMeshFileName == nullptr) throw 0;
 
 			CGfxMaterialPtr ptrMaterial = Renderer()->LoadMaterial(szMaterialFileName);
-			CGfxMeshPtr ptrMesh = Renderer()->LoadMesh(szMeshFileName);
+			CGfxMeshPtr ptrMesh = Renderer()->LoadMesh(szMeshFileName, INSTANCE_ATTRIBUTE_TRANSFORM);
 			CGfxDrawIndirectBufferPtr ptrDrawIndirectBuffer = Renderer()->CreateDrawIndirectBuffer(ptrMesh, 0, 0, ptrMesh->GetIndexCount());
 
 			CComponentMeshPtr ptrComponentMesh = SceneManager()->CreateComponentMesh(SceneManager()->GetNextComponentMeshName());

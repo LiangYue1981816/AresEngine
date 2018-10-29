@@ -14,7 +14,7 @@ private:
 
 
 private:
-	bool BufferData(size_t offset, size_t size, const void *pBuffer);
+	bool BufferData(size_t offset, size_t size, const void *pBuffer) const;
 
 private:
 	uint32_t GetVertexCount(void) const;

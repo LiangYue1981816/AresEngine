@@ -17,13 +17,16 @@ CGfxMeshManager::~CGfxMeshManager(void)
 	m_pMeshs.clear();
 }
 
-CGfxMesh* CGfxMeshManager::LoadMesh(const char *szFileName)
+CGfxMesh* CGfxMeshManager::LoadMesh(const char *szFileName, uint32_t instanceFormat)
 {
-	uint32_t name = HashValue(szFileName);
+	char szName[_MAX_STRING];
+	sprintf(szName, "%8.8X_%8.8X", HashValue(szFileName), instanceFormat);
+
+	uint32_t name = HashValue(szName);
 
 	if (m_pMeshs[name] == nullptr) {
 		m_pMeshs[name] = new CGfxMesh(name);
-		m_pMeshs[name]->Load(szFileName);
+		m_pMeshs[name]->Load(szFileName, instanceFormat);
 	}
 
 	return m_pMeshs[name];

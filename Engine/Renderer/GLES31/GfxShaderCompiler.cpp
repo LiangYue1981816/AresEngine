@@ -31,10 +31,9 @@ static bool CompileShader(std::string &source, shaderc_shader_kind kind, const s
 std::string CGfxShaderCompiler::LoadShader(const char *szFileName)
 {
 	if (FILE *pFile = fopen(szFileName, "rb")) {
-		static char szSource[128 * 1024];
 		size_t size = fsize(pFile);
+		char szSource[128 * 1024] = { 0 };
 
-		memset(szSource, 0, sizeof(szSource));
 		fread(szSource, sizeof(char), size, pFile);
 		fclose(pFile);
 

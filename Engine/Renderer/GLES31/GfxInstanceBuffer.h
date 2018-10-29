@@ -14,14 +14,15 @@ private:
 
 
 private:
-	void SetInstance(const eastl::vector<glm::mat4> &mtxTransforms);
+	void SetInstance(const uint8_t *pBuffer, uint32_t size);
 	void UpdateInstance(void);
 
 private:
-	uint32_t GetInstanceCount(void) const;
 	uint32_t GetInstanceFormat(void) const;
 	uint32_t GetInstanceBuffer(void) const;
-	uint32_t GetSize(void) const;
+	uint32_t GetInstanceBufferSize(void) const;
+	uint32_t GetInstanceCount(void) const;
+	uint32_t GetInstanceCount(uint32_t size) const;
 
 private:
 	void Bind(void) const;
@@ -36,5 +37,5 @@ private:
 private:
 	bool m_bDirty;
 	uint32_t m_hash;
-	eastl::vector<glm::mat4> m_instances;
+	eastl::vector<uint8_t> m_buffer;
 };

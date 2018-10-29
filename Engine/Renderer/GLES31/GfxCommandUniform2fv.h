@@ -8,8 +8,7 @@ public:
 	CGfxCommandUniform2fv(const char *szName, int count, const float *value)
 		: m_name(HashValue(szName))
 	{
-		m_value.resize(count);
-		memcpy(m_value.data(), value, sizeof(float) * count);
+		m_value.assign(value, value + count);
 	}
 	virtual ~CGfxCommandUniform2fv(void)
 	{

@@ -56,6 +56,7 @@
 #include "GfxRenderQueue.h"
 #include "GfxCommandBuffer.h"
 #include "GfxShaderCompiler.h"
+#include "GfxVertexAttribute.h"
 
 #include "GfxProfiler.h"
 
@@ -131,7 +132,7 @@ public:
 	CGfxFrameBufferPtr CreateFrameBuffer(int width, int height);
 	CGfxDrawIndirectBufferPtr CreateDrawIndirectBuffer(const CGfxMesh *pMesh, int baseVertex, int firstIndex, int indexCount);
 
-	CGfxMeshPtr LoadMesh(const char *szFileName);
+	CGfxMeshPtr LoadMesh(const char *szFileName, uint32_t instanceFormat);
 	CGfxMaterialPtr LoadMaterial(const char *szFileName);
 	CGfxTexture2DPtr LoadTexture2D(const char *szFileName);
 	CGfxTexture2DArrayPtr LoadTexture2DArray(const char *szFileName);
@@ -201,9 +202,9 @@ public:
 	bool CmdClearDepth(CGfxCommandBuffer *pCommandBuffer, float depth);
 	bool CmdClearColor(CGfxCommandBuffer *pCommandBuffer, float red, float green, float blue, float alpha);
 
-	bool CmdDrawInstance(CGfxCommandBuffer *pCommandBuffer, const CGfxMeshPtr &ptrMesh, uint32_t offset, int indexCount, const eastl::vector<glm::mat4> &mtxTransforms);
-	bool CmdDrawIndirect(CGfxCommandBuffer *pCommandBuffer, const CGfxMeshPtr &ptrMesh, int baseVertex, int firstIndex, int indexCount, const eastl::vector<glm::mat4> &mtxTransforms);
-	bool CmdDrawIndirect(CGfxCommandBuffer *pCommandBuffer, const CGfxMeshPtr &ptrMesh, const CGfxDrawIndirectBufferPtr &ptrDrawIndirectBuffer, uint32_t offset, const eastl::vector<glm::mat4> &mtxTransforms);
+	bool CmdDrawInstance(CGfxCommandBuffer *pCommandBuffer, const CGfxMeshPtr &ptrMesh, uint32_t offset, int indexCount, const uint8_t *pInstanceBuffer, uint32_t size);
+	bool CmdDrawIndirect(CGfxCommandBuffer *pCommandBuffer, const CGfxMeshPtr &ptrMesh, int baseVertex, int firstIndex, int indexCount, const uint8_t *pInstanceBuffer, uint32_t size);
+	bool CmdDrawIndirect(CGfxCommandBuffer *pCommandBuffer, const CGfxMeshPtr &ptrMesh, const CGfxDrawIndirectBufferPtr &ptrDrawIndirectBuffer, uint32_t offset, const uint8_t *pInstanceBuffer, uint32_t size);
 	bool CmdDrawScreen(CGfxCommandBuffer *pCommandBuffer);
 
 	bool CmdExecute(CGfxCommandBuffer *pCommandBuffer, CGfxCommandBuffer *pSecondaryCommandBuffer);

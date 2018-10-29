@@ -6,7 +6,7 @@ CComponentPointLight::CComponentPointLight(uint32_t name)
 	: CComponent(name)
 {
 	m_ptrMaterial = Renderer()->LoadMaterial("PointLight.material");
-	m_ptrMesh = Renderer()->LoadMesh("PointLight.mesh");
+	m_ptrMesh = Renderer()->LoadMesh("PointLight.mesh", INSTANCE_ATTRIBUTE_TRANSFORM);
 	m_ptrDrawIndirectBuffer = Renderer()->CreateDrawIndirectBuffer(m_ptrMesh, 0, 0, m_ptrMesh->GetIndexCount());
 }
 
@@ -41,7 +41,8 @@ void CComponentPointLight::TaskUpdate(float gameTime, float deltaTime)
 void CComponentPointLight::TaskUpdateCamera(CGfxCamera *pCamera, int indexThread, int indexQueue)
 {
 	if (pCamera->IsVisible(GetWorldAABB())) {
-//		pCamera->AddMesh(indexThread, indexQueue, m_ptrMaterial, m_ptrMesh, m_pParentNode->GetWorldTransform());
-		pCamera->AddMeshIndirect(indexThread, indexQueue, m_ptrMaterial, m_ptrMesh, m_ptrDrawIndirectBuffer, m_pParentNode->GetWorldTransform());
+		const glm::mat4 &mtxTransform = m_pParentNode->GetWorldTransform();
+//		pCamera->AddMesh(indexThread, indexQueue, m_ptrMaterial, m_ptrMesh, (const uint8_t *)&mtxTransform, sizeof(mtxTransform));
+		pCamera->AddMeshIndirect(indexThread, indexQueue, m_ptrMaterial, m_ptrMesh, m_ptrDrawIndirectBuffer, (const uint8_t *)&mtxTransform, sizeof(mtxTransform));
 	}
 }

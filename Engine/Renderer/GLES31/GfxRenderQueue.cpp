@@ -13,17 +13,17 @@ CGfxRenderQueue::~CGfxRenderQueue(void)
 
 }
 
-void CGfxRenderQueue::AddMesh(int indexThread, int indexQueue, const CGfxMaterialPtr &ptrMaterial, const CGfxMeshPtr &ptrMesh, const glm::mat4 &mtxTransform)
+void CGfxRenderQueue::AddMesh(int indexThread, int indexQueue, const CGfxMaterialPtr &ptrMaterial, const CGfxMeshPtr &ptrMesh, const uint8_t *pInstanceData, uint32_t size)
 {
 	if (indexThread >= 0 && indexThread < THREAD_COUNT) {
-		m_materialMeshQueue[indexThread][indexQueue][ptrMaterial][ptrMesh].emplace_back(mtxTransform);
+		m_materialMeshQueue[indexThread][indexQueue][ptrMaterial][ptrMesh].insert(m_materialMeshQueue[indexThread][indexQueue][ptrMaterial][ptrMesh].end(), pInstanceData, pInstanceData + size);
 	}
 }
 
-void CGfxRenderQueue::AddMeshIndirect(int indexThread, int indexQueue, const CGfxMaterialPtr &ptrMaterial, const CGfxMeshPtr &ptrMesh, const CGfxDrawIndirectBufferPtr &ptrDrawIndirectBuffer, const glm::mat4 &mtxTransform)
+void CGfxRenderQueue::AddMeshIndirect(int indexThread, int indexQueue, const CGfxMaterialPtr &ptrMaterial, const CGfxMeshPtr &ptrMesh, const CGfxDrawIndirectBufferPtr &ptrDrawIndirectBuffer, const uint8_t *pInstanceData, uint32_t size)
 {
 	if (indexThread >= 0 && indexThread < THREAD_COUNT) {
-		m_materialMeshIndirectQueue[indexThread][indexQueue][ptrMaterial][ptrMesh][ptrDrawIndirectBuffer].emplace_back(mtxTransform);
+		m_materialMeshIndirectQueue[indexThread][indexQueue][ptrMaterial][ptrMesh][ptrDrawIndirectBuffer].insert(m_materialMeshIndirectQueue[indexThread][indexQueue][ptrMaterial][ptrMesh][ptrDrawIndirectBuffer].end(), pInstanceData, pInstanceData + size);
 	}
 }
 
@@ -68,13 +68,13 @@ void CGfxRenderQueue::CmdDraw(CGfxCamera *pCamera, CGfxCommandBuffer *pCommandBu
 			Renderer()->CmdBindMaterialPass(pCommandBuffer, itMaterial.first, namePass);
 
 			for (const auto &itMeshQueue : m_materialMeshQueue[indexThread][indexQueue][itMaterial.first]) {
-				Renderer()->CmdDrawInstance(pCommandBuffer, itMeshQueue.first, 0, itMeshQueue.first->GetIndexCount(), itMeshQueue.second);
+				Renderer()->CmdDrawInstance(pCommandBuffer, itMeshQueue.first, 0, itMeshQueue.first->GetIndexCount(), itMeshQueue.second.data(), itMeshQueue.second.size());
 			}
 
 			for (const auto &itMeshIndirectQueue : m_materialMeshIndirectQueue[indexThread][indexQueue][itMaterial.first]) {
 				for (const auto &itIndirectQueue : itMeshIndirectQueue.second) {
-					Renderer()->CmdDrawIndirect(pCommandBuffer, itMeshIndirectQueue.first, itIndirectQueue.first, 0, itIndirectQueue.second);
-//					Renderer()->CmdDrawIndirect(pCommandBuffer, itMeshIndirectQueue.first, itIndirectQueue.first->GetBaseVertex(), itIndirectQueue.first->GetFirstIndex(), itIndirectQueue.first->GetIndexCount(), itIndirectQueue.second);
+					Renderer()->CmdDrawIndirect(pCommandBuffer, itMeshIndirectQueue.first, itIndirectQueue.first, 0, itIndirectQueue.second.data(), itIndirectQueue.second.size());
+//					Renderer()->CmdDrawIndirect(pCommandBuffer, itMeshIndirectQueue.first, itIndirectQueue.first->GetBaseVertex(), itIndirectQueue.first->GetFirstIndex(), itIndirectQueue.first->GetIndexCount(), itIndirectQueue.second.data(), itIndirectQueue.second.size());
 				}
 			}
 		}

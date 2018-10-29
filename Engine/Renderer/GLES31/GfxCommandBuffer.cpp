@@ -161,10 +161,20 @@ bool CGfxCommandBuffer::CmdBindPipeline(CGfxPipelineBase *pPipeline)
 	return false;
 }
 
-bool CGfxCommandBuffer::CmdBindMesh(const CGfxMeshPtr &ptrMesh, const eastl::vector<glm::mat4> &mtxTransforms)
+bool CGfxCommandBuffer::CmdBindMesh(const CGfxMeshPtr &ptrMesh)
 {
 	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
-		m_pCommands.emplace_back(new CGfxCommandBindMesh(ptrMesh, mtxTransforms));
+		m_pCommands.emplace_back(new CGfxCommandBindMesh(ptrMesh));
+		return true;
+	}
+
+	return false;
+}
+
+bool CGfxCommandBuffer::CmdBindMesh(const CGfxMeshPtr &ptrMesh, const uint8_t *pInstanceBuffer, uint32_t size)
+{
+	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
+		m_pCommands.emplace_back(new CGfxCommandBindMesh(ptrMesh, pInstanceBuffer, size));
 		return true;
 	}
 

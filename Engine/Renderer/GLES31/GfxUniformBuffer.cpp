@@ -24,7 +24,7 @@ CGfxUniformBuffer::~CGfxUniformBuffer(void)
 	m_size = 0;
 }
 
-bool CGfxUniformBuffer::BufferData(size_t offset, size_t size, const void *pBuffer)
+bool CGfxUniformBuffer::BufferData(size_t offset, size_t size, const void *pBuffer) const
 {
 	if (m_size < (uint32_t)(offset + size)) {
 		return false;

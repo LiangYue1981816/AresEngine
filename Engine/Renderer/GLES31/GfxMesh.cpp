@@ -1,9 +1,9 @@
 #include "Engine.h"
 #include "GfxRenderer.h"
 #include "GfxMesh.h"
+#include "GfxInstanceBuffer.h"
 #include "GfxIndexBuffer.h"
 #include "GfxVertexBuffer.h"
-#include "GfxInstanceBuffer.h"
 #include "GfxVertexArrayObject.h"
 #include "GfxVertexAttribute.h"
 
@@ -11,9 +11,9 @@
 CGfxMesh::CGfxMesh(uint32_t name)
 	: m_name(name)
 
+	, m_pInstanceBuffer(nullptr)
 	, m_pIndexBuffer(nullptr)
 	, m_pVertexBuffer(nullptr)
-	, m_pInstanceBuffer(nullptr)
 	, m_pVertexArrayObject(nullptr)
 {
 
@@ -34,7 +34,7 @@ uint32_t CGfxMesh::GetName(void) const
 	return m_name;
 }
 
-bool CGfxMesh::Load(const char *szFileName)
+bool CGfxMesh::Load(const char *szFileName, uint32_t instanceFormat)
 {
 	enum RawVertexAttribute
 	{
@@ -69,8 +69,8 @@ bool CGfxMesh::Load(const char *szFileName)
 		MeshHeader header;
 		fread(&header, sizeof(header), 1, pFile);
 
-		unsigned int format = 0;
-		fread(&format, sizeof(format), 1, pFile);
+		unsigned int vertexFormat = 0;
+		fread(&vertexFormat, sizeof(vertexFormat), 1, pFile);
 
 		fread(&m_aabb.minVertex.x, sizeof(m_aabb.minVertex.x), 1, pFile);
 		fread(&m_aabb.minVertex.y, sizeof(m_aabb.minVertex.y), 1, pFile);
@@ -90,8 +90,8 @@ bool CGfxMesh::Load(const char *szFileName)
 		fread(pVertexBuffer, header.vertexBufferSize, 1, pFile);
 
 		CreateIndexBuffer(header.indexBufferSize, pIndexBuffer, false, GL_UNSIGNED_INT);
-		CreateVertexBuffer(header.vertexBufferSize, pVertexBuffer, false, format);
-		CreateInstanceBuffer(INSTANCE_ATTRIBUTE_TRANSFORM);
+		CreateVertexBuffer(header.vertexBufferSize, pVertexBuffer, false, vertexFormat);
+		CreateInstanceBuffer(instanceFormat);
 		CreateVertexArrayObject();
 
 		FreeMemory(pVertexBuffer);
@@ -113,6 +113,10 @@ bool CGfxMesh::Load(const char *szFileName)
 
 void CGfxMesh::Free(void)
 {
+	if (m_pInstanceBuffer) {
+		delete m_pInstanceBuffer;
+	}
+
 	if (m_pIndexBuffer) {
 		delete m_pIndexBuffer;
 	}
@@ -121,6 +125,19 @@ void CGfxMesh::Free(void)
 		delete m_pVertexBuffer;
 	}
 
+	if (m_pVertexArrayObject) {
+		delete m_pVertexArrayObject;
+	}
+
+	m_aabb.zero();
+	m_pInstanceBuffer = nullptr;
+	m_pIndexBuffer = nullptr;
+	m_pVertexBuffer = nullptr;
+	m_pVertexArrayObject = nullptr;
+}
+
+bool CGfxMesh::CreateInstanceBuffer(uint32_t format)
+{
 	if (m_pInstanceBuffer) {
 		delete m_pInstanceBuffer;
 	}
@@ -129,11 +146,11 @@ void CGfxMesh::Free(void)
 		delete m_pVertexArrayObject;
 	}
 
-	m_aabb.zero();
-	m_pIndexBuffer = nullptr;
-	m_pVertexBuffer = nullptr;
 	m_pInstanceBuffer = nullptr;
 	m_pVertexArrayObject = nullptr;
+
+	m_pInstanceBuffer = new CGfxInstanceBuffer(format);
+	return true;
 }
 
 bool CGfxMesh::CreateIndexBuffer(size_t size, const void *pBuffer, bool bDynamic, uint32_t type)
@@ -170,23 +187,6 @@ bool CGfxMesh::CreateVertexBuffer(size_t size, const void *pBuffer, bool bDynami
 	return m_pVertexBuffer->BufferData(0, size, pBuffer);
 }
 
-bool CGfxMesh::CreateInstanceBuffer(uint32_t format)
-{
-	if (m_pInstanceBuffer) {
-		delete m_pInstanceBuffer;
-	}
-
-	if (m_pVertexArrayObject) {
-		delete m_pVertexArrayObject;
-	}
-
-	m_pInstanceBuffer = nullptr;
-	m_pVertexArrayObject = nullptr;
-
-	m_pInstanceBuffer = new CGfxInstanceBuffer(format);
-	return true;
-}
-
 bool CGfxMesh::CreateVertexArrayObject(void)
 {
 	if (m_pVertexArrayObject) {
@@ -197,10 +197,10 @@ bool CGfxMesh::CreateVertexArrayObject(void)
 	return m_pVertexArrayObject->Buffer(m_pIndexBuffer, m_pVertexBuffer, m_pInstanceBuffer);
 }
 
-void CGfxMesh::SetInstance(const eastl::vector<glm::mat4> &mtxTransforms)
+void CGfxMesh::SetInstance(const uint8_t *pBuffer, uint32_t size)
 {
 	if (m_pInstanceBuffer) {
-		m_pInstanceBuffer->SetInstance(mtxTransforms);
+		m_pInstanceBuffer->SetInstance(pBuffer, size);
 	}
 }
 
@@ -234,6 +234,11 @@ uint32_t CGfxMesh::GetVertexCount(void) const
 uint32_t CGfxMesh::GetInstanceCount(void) const
 {
 	return m_pInstanceBuffer ? m_pInstanceBuffer->GetInstanceCount() : 0;
+}
+
+uint32_t CGfxMesh::GetInstanceCount(uint32_t size) const
+{
+	return m_pInstanceBuffer ? m_pInstanceBuffer->GetInstanceCount(size) : 0;
 }
 
 const glm::aabb& CGfxMesh::GetLocalAABB(void) const

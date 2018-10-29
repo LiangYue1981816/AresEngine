@@ -5,11 +5,15 @@
 class CGfxCommandBindMesh : public CGfxCommandBase
 {
 public:
-	CGfxCommandBindMesh(const CGfxMeshPtr &ptrMesh, const eastl::vector<glm::mat4> &mtxTransforms)
+	CGfxCommandBindMesh(const CGfxMeshPtr &ptrMesh)
 		: m_ptrMesh(ptrMesh)
-		, m_mtxTransforms(mtxTransforms)
 	{
 
+	}
+	CGfxCommandBindMesh(const CGfxMeshPtr &ptrMesh, const uint8_t *pInstanceBuffer, uint32_t size)
+		: m_ptrMesh(ptrMesh)
+	{
+		m_buffer.assign(pInstanceBuffer, pInstanceBuffer + size);
 	}
 	virtual ~CGfxCommandBindMesh(void)
 	{
@@ -22,7 +26,7 @@ public:
 		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_BIND_MESH, "CommandBindMesh");
 		{
 			if (m_ptrMesh.IsValid()) {
-				m_ptrMesh->SetInstance(m_mtxTransforms);
+				m_ptrMesh->SetInstance(m_buffer.data(), m_buffer.size());
 				m_ptrMesh->UpdateInstance();
 				m_ptrMesh->Bind();
 			}
@@ -37,5 +41,5 @@ public:
 
 private:
 	CGfxMeshPtr m_ptrMesh;
-	eastl::vector<glm::mat4> m_mtxTransforms;
+	eastl::vector<uint8_t> m_buffer;
 };

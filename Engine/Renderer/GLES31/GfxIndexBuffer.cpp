@@ -26,7 +26,7 @@ CGfxIndexBuffer::~CGfxIndexBuffer(void)
 	m_size = 0;
 }
 
-bool CGfxIndexBuffer::BufferData(size_t offset, size_t size, const void *pBuffer)
+bool CGfxIndexBuffer::BufferData(size_t offset, size_t size, const void *pBuffer) const
 {
 	if (m_size < (uint32_t)(offset + size)) {
 		return false;

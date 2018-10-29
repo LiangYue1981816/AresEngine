@@ -10,7 +10,7 @@ public:
 
 
 public:
-	bool BufferData(size_t offset, size_t size, const void *pBuffer);
+	bool BufferData(size_t offset, size_t size, const void *pBuffer) const;
 
 public:
 	uint32_t GetBuffer(void) const;

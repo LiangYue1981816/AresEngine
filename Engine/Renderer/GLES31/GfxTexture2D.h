@@ -21,8 +21,8 @@ public:
 
 public:
 	bool TransferTexture2D(const gli::texture2d *texture);
-	bool TransferTexture2D(int level, uint32_t format, int xoffset, int yoffset, int width, int height, uint32_t type, int size, const void *data);
-	bool TransferTexture2DCompressed(int level, uint32_t format, int xoffset, int yoffset, int width, int height, int size, const void *data);
+	bool TransferTexture2D(int level, uint32_t format, int xoffset, int yoffset, int width, int height, uint32_t type, uint32_t size, const void *data);
+	bool TransferTexture2DCompressed(int level, uint32_t format, int xoffset, int yoffset, int width, int height, uint32_t size, const void *data);
 
 public:
 	uint32_t GetTarget(void) const;

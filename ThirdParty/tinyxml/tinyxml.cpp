@@ -29,7 +29,7 @@ distribution.
 
 #if defined(PLATFORM_ANDROID) || defined(PLATFORM_IOS)
 
-int stricmp(const char *src, const char *dst)
+static int stricmp(const char *src, const char *dst)
 {
 	int f, l;
 
@@ -44,7 +44,7 @@ int stricmp(const char *src, const char *dst)
 	return (f - l);
 }
 
-int strnicmp(const char *src, const char *dst, int count)
+static int strnicmp(const char *src, const char *dst, int count)
 {
 	int f, l;
 

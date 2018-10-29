@@ -27,7 +27,7 @@ CGfxVertexBuffer::~CGfxVertexBuffer(void)
 	m_size = 0;
 }
 
-bool CGfxVertexBuffer::BufferData(size_t offset, size_t size, const void *pBuffer)
+bool CGfxVertexBuffer::BufferData(size_t offset, size_t size, const void *pBuffer) const
 {
 	if (m_size < (uint32_t)(offset + size)) {
 		return false;

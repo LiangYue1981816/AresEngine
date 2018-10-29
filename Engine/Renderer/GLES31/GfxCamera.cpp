@@ -126,14 +126,14 @@ bool CGfxCamera::IsVisible(const glm::sphere &sphere) const
 	return m_camera.visible(sphere);
 }
 
-void CGfxCamera::AddMesh(int indexThread, int indexQueue, const CGfxMaterialPtr &ptrMaterial, const CGfxMeshPtr &ptrMesh, const glm::mat4 &mtxTransform)
+void CGfxCamera::AddMesh(int indexThread, int indexQueue, const CGfxMaterialPtr &ptrMaterial, const CGfxMeshPtr &ptrMesh, const uint8_t *pInstanceData, uint32_t size)
 {
-	m_pRenderQueue->AddMesh(indexThread, indexQueue, ptrMaterial, ptrMesh, mtxTransform);
+	m_pRenderQueue->AddMesh(indexThread, indexQueue, ptrMaterial, ptrMesh, pInstanceData, size);
 }
 
-void CGfxCamera::AddMeshIndirect(int indexThread, int indexQueue, const CGfxMaterialPtr &ptrMaterial, const CGfxMeshPtr &ptrMesh, const CGfxDrawIndirectBufferPtr &ptrDrawIndirectBuffer, const glm::mat4 &mtxTransform)
+void CGfxCamera::AddMeshIndirect(int indexThread, int indexQueue, const CGfxMaterialPtr &ptrMaterial, const CGfxMeshPtr &ptrMesh, const CGfxDrawIndirectBufferPtr &ptrDrawIndirectBuffer, const uint8_t *pInstanceData, uint32_t size)
 {
-	m_pRenderQueue->AddMeshIndirect(indexThread, indexQueue, ptrMaterial, ptrMesh, ptrDrawIndirectBuffer, mtxTransform);
+	m_pRenderQueue->AddMeshIndirect(indexThread, indexQueue, ptrMaterial, ptrMesh, ptrDrawIndirectBuffer, pInstanceData, size);
 }
 
 void CGfxCamera::Clear(int indexQueue)

@@ -42,7 +42,8 @@ public:
 
 	bool CmdBindCamera(CGfxCamera *pCamera);
 	bool CmdBindPipeline(CGfxPipelineBase *pPipeline);
-	bool CmdBindMesh(const CGfxMeshPtr &ptrMesh, const eastl::vector<glm::mat4> &mtxTransforms);
+	bool CmdBindMesh(const CGfxMeshPtr &ptrMesh);
+	bool CmdBindMesh(const CGfxMeshPtr &ptrMesh, const uint8_t *pInstanceBuffer, uint32_t size);
 	bool CmdBindDrawIndirectBuffer(const CGfxDrawIndirectBufferPtr &ptrDrawIndirectBuffer, uint32_t instanceCount);
 	bool CmdBindMaterialPass(const CGfxMaterialPtr &ptrMaterial, uint32_t namePass);
 	bool CmdBindInputTexture(const char *szName, uint32_t texture, uint32_t minFilter, uint32_t magFilter, uint32_t addressMode);
