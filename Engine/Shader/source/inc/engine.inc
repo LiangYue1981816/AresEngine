@@ -15,6 +15,9 @@
 #define USE_INSTANCE_ATTRIBUTE_TRANSFORM_MATRIX_COL2 layout (location = 10) in highp vec4 inInstanceTransformMatrixCol2
 #define USE_INSTANCE_ATTRIBUTE_TRANSFORM_MATRIX_COL3 layout (location = 11) in highp vec4 inInstanceTransformMatrixCol3
 
+#define USE_INSTANCE_ATTRIBUTE_POINTLIGHT_COLOR       layout (location = 12) in mediump vec4 inInstancePointLightColor
+#define USE_INSTANCE_ATTRIBUTE_POINTLIGHT_ATTENUATION layout (location = 13) in mediump vec4 inInstancePointLightAttenuation
+
 
 #ifdef GLES
 	#define DESCRIPTOR_SET_FRAME(b)  layout (binding = b)

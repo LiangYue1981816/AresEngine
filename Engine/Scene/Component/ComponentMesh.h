@@ -5,6 +5,12 @@
 
 class CComponentMesh : public CComponent
 {
+private:
+	typedef struct InstanceData {
+		glm::mat4 transformMatrix;
+	} InstanceData;
+
+
 public:
 	CComponentMesh(uint32_t name);
 	CComponentMesh(const CComponentMesh &component);
@@ -16,10 +22,6 @@ public:
 	void SetMesh(const CGfxMeshPtr &ptrMesh);
 	void SetDrawIndirectBuffer(const CGfxDrawIndirectBufferPtr &ptrDrawIndirectBuffer);
 
-	const CGfxMaterialPtr& GetMaterial(void) const;
-	const CGfxMeshPtr& GetMesh(void) const;
-	const CGfxDrawIndirectBufferPtr& GetDrawIndirectBuffer(void) const;
-
 public:
 	glm::aabb GetLocalAABB(void);
 	glm::aabb GetWorldAABB(void);
@@ -28,6 +30,9 @@ public:
 	virtual void TaskUpdate(float gameTime, float deltaTime);
 	virtual void TaskUpdateCamera(CGfxCamera *pCamera, int indexThread, int indexQueue);
 
+
+private:
+	InstanceData m_instanceData;
 
 private:
 	CGfxMaterialPtr m_ptrMaterial;

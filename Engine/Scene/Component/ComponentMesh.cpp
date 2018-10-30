@@ -11,9 +11,11 @@ CComponentMesh::CComponentMesh(uint32_t name)
 CComponentMesh::CComponentMesh(const CComponentMesh &component)
 	: CComponent(component)
 {
-	SetMaterial(component.m_ptrMaterial);
-	SetMesh(component.m_ptrMesh);
-	SetDrawIndirectBuffer(component.m_ptrDrawIndirectBuffer);
+	m_ptrMaterial = component.m_ptrMaterial;
+	m_ptrMesh = component.m_ptrMesh;
+	m_ptrDrawIndirectBuffer = component.m_ptrDrawIndirectBuffer;
+
+	m_instanceData.transformMatrix = glm::mat4();
 }
 
 CComponentMesh::~CComponentMesh(void)
@@ -36,21 +38,6 @@ void CComponentMesh::SetDrawIndirectBuffer(const CGfxDrawIndirectBufferPtr &ptrD
 	m_ptrDrawIndirectBuffer = ptrDrawIndirectBuffer;
 }
 
-const CGfxMaterialPtr& CComponentMesh::GetMaterial(void) const
-{
-	return m_ptrMaterial;
-}
-
-const CGfxMeshPtr& CComponentMesh::GetMesh(void) const
-{
-	return m_ptrMesh;
-}
-
-const CGfxDrawIndirectBufferPtr& CComponentMesh::GetDrawIndirectBuffer(void) const
-{
-	return m_ptrDrawIndirectBuffer;
-}
-
 glm::aabb CComponentMesh::GetLocalAABB(void)
 {
 	return m_ptrMesh.IsValid() ? m_ptrMesh->GetLocalAABB() : glm::aabb();
@@ -63,14 +50,13 @@ glm::aabb CComponentMesh::GetWorldAABB(void)
 
 void CComponentMesh::TaskUpdate(float gameTime, float deltaTime)
 {
-
+	m_instanceData.transformMatrix = m_pParentNode->GetWorldTransform();
 }
 
 void CComponentMesh::TaskUpdateCamera(CGfxCamera *pCamera, int indexThread, int indexQueue)
 {
 	if (pCamera->IsVisible(GetWorldAABB())) {
-		const glm::mat4 &mtxTransform = m_pParentNode->GetWorldTransform();
-//		pCamera->AddMesh(indexThread, indexQueue, m_ptrMaterial, m_ptrMesh, (const uint8_t *)&mtxTransform, sizeof(mtxTransform));
-		pCamera->AddMeshIndirect(indexThread, indexQueue, m_ptrMaterial, m_ptrMesh, m_ptrDrawIndirectBuffer, (const uint8_t *)&mtxTransform, sizeof(mtxTransform));
+//		pCamera->AddMesh(indexThread, indexQueue, m_ptrMaterial, m_ptrMesh, (const uint8_t *)&m_instanceData, sizeof(m_instanceData));
+		pCamera->AddMeshIndirect(indexThread, indexQueue, m_ptrMaterial, m_ptrMesh, m_ptrDrawIndirectBuffer, (const uint8_t *)&m_instanceData, sizeof(m_instanceData));
 	}
 }

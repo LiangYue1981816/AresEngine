@@ -142,6 +142,9 @@
     <Filter Include="ThirdParty\gl3w">
       <UniqueIdentifier>{b2235de6-cf3d-4c67-93c4-c2889efc4260}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Renderer\GLES30">
+      <UniqueIdentifier>{31b6d0c1-ec72-40e3-9de3-5e15232c6672}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Engine\Base\ComponentManager.h">

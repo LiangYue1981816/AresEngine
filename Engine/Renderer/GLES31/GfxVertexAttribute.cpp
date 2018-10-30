@@ -21,10 +21,15 @@ static const ATTRIBUTE vertexAttributes[VERTEX_ATTRIBUTE_COUNT] = {
 };
 
 static const ATTRIBUTE instanceAttributes[INSTANCE_ATTRIBUTE_COUNT] = {
+	// Transform
 	{ INSTANCE_ATTRIBUTE_TRANSFORM_MATRIX_COL0, 4, 4, 8,  "inInstanceTransformMatrixCol0" },
 	{ INSTANCE_ATTRIBUTE_TRANSFORM_MATRIX_COL1, 4, 4, 9,  "inInstanceTransformMatrixCol1" },
 	{ INSTANCE_ATTRIBUTE_TRANSFORM_MATRIX_COL2, 4, 4, 10, "inInstanceTransformMatrixCol2" },
 	{ INSTANCE_ATTRIBUTE_TRANSFORM_MATRIX_COL3, 4, 4, 11, "inInstanceTransformMatrixCol3" },
+
+	// PointLight
+	{ INSTANCE_ATTRIBUTE_POINTLIGHT_COLOR,      4, 4, 12, "inInstancePointLightColor"       },
+	{ INSTANCE_ATTRIBUTE_POINTLIGHT_ATTENUATION,4, 4, 13, "inInstancePointLightAttenuation" },
 };
 
 static uint32_t GetStride(uint32_t format, const ATTRIBUTE *attributes, uint32_t count)
