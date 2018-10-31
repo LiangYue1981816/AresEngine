@@ -99,6 +99,11 @@ private:
 	virtual ~CGfxRenderer(void);
 
 
+#pragma region Capability
+public:
+	bool IsSupportGLES31(void);
+#pragma endregion
+
 #pragma region SwapChain
 public:
 	CGfxSwapChain* GetSwapChain(void) const;

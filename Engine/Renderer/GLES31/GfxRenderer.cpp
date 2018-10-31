@@ -101,6 +101,13 @@ CGfxRenderer::~CGfxRenderer(void)
 	delete m_pDrawIndirectBufferManager;
 }
 
+#pragma region Capability
+bool CGfxRenderer::IsSupportGLES31(void)
+{
+	return true;
+}
+#pragma endregion
+
 #pragma region SwapChain
 CGfxSwapChain* CGfxRenderer::GetSwapChain(void) const
 {

@@ -15,8 +15,17 @@ CGfxResourceManager::~CGfxResourceManager(void)
 
 void CGfxResourceManager::SetResourcePath(const char *szPathName, const char *szExtName)
 {
+#ifdef PLATFORM_WINDOWS
+
 	char szFilter[_MAX_STRING];
 	sprintf(szFilter, "%s/*", szPathName);
+
+#else
+
+	char szFilter[_MAX_STRING];
+	sprintf(szFilter, "%s/", szPathName);
+
+#endif
 
 	struct _finddata_t fileData;
 	size_t hFile = (size_t)_findfirst(szFilter, &fileData);
