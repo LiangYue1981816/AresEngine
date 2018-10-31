@@ -137,7 +137,7 @@ std::string CGfxShaderCompiler::Preprocess(const char *szFileName, shaderc_shade
 	return PreprocessShader(source, kind, m_compiler, options);
 }
 
-std::vector<uint32_t> CGfxShaderCompiler::Compile(const char *szFileName, shaderc_shader_kind kind)
+std::vector<uint32_t> CGfxShaderCompiler::Compile(const char *szInputFileName, const char *szOutputFileName, shaderc_shader_kind kind)
 {
 	std::vector<uint32_t> words;
 
@@ -155,15 +155,11 @@ std::vector<uint32_t> CGfxShaderCompiler::Compile(const char *szFileName, shader
 		const char szKindDefine[3][_MAX_STRING] = { "VERTEX_SHADER", "FRAGMENT_SHADER", "COMPUTE_SHADER" };
 		options.AddMacroDefinition(szKindDefine[kind]);
 
-		std::string source = LoadShader(szFileName);
+		std::string source = LoadShader(szInputFileName);
 		if (source.empty()) break;
 
-		std::string preprocess = PreprocessShader(source, kind, m_compiler, options);
-		if (preprocess.empty()) break;
-
-		char szExtName[3][_MAX_STRING] = { "vert", "frag", "comp" };
 		char szBinFileName[_MAX_STRING] = { 0 };
-		sprintf(szBinFileName, "%s/%x.%s", m_szShaderCachePath, HashValue(preprocess.c_str()), szExtName[kind]);
+		sprintf(szBinFileName, "%s/%s", m_szShaderCachePath, szOutputFileName);
 
 		if (LoadShaderBinary(szBinFileName, words) == false) {
 			if (CompileShader(source, kind, m_compiler, options, words) == false) {

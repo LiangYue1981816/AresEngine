@@ -52,17 +52,8 @@
     <Filter Include="Engine\Resource\Source Files">
       <UniqueIdentifier>{abda98ed-3b53-412e-bcd1-d1dbc95d66c8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\Renderer\GLES31">
-      <UniqueIdentifier>{216efd2a-af7e-4ca0-9e30-f4b788b591ed}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine\Renderer\Vulkan">
       <UniqueIdentifier>{cc2ffa9f-d435-4289-addc-61ebee8a2422}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Renderer\GLES31\Header Files">
-      <UniqueIdentifier>{c8a7f08a-571e-499b-a9e8-bf63d2d24d8d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Renderer\GLES31\Source Files">
-      <UniqueIdentifier>{79cf6f71-2ce1-4364-bd1f-d8921ae0ddc1}</UniqueIdentifier>
     </Filter>
     <Filter Include="Engine\Renderer\Vulkan\Header Files">
       <UniqueIdentifier>{0578c6bf-8373-476c-94b5-879eea53d761}</UniqueIdentifier>
@@ -72,9 +63,6 @@
     </Filter>
     <Filter Include="Engine\Renderer\Gfx">
       <UniqueIdentifier>{3995f083-b95e-4e5e-b4a4-b64d0ea767ad}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Renderer\GLES31\Source Files\Commands">
-      <UniqueIdentifier>{aeda77ed-5e43-47af-81ae-ab4988918700}</UniqueIdentifier>
     </Filter>
     <Filter Include="Engine\Scene\Source Files\Component">
       <UniqueIdentifier>{35f4a36d-8094-4583-996d-4a1c059804e1}</UniqueIdentifier>
@@ -142,8 +130,17 @@
     <Filter Include="ThirdParty\gl3w">
       <UniqueIdentifier>{b2235de6-cf3d-4c67-93c4-c2889efc4260}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\Renderer\GLES30">
-      <UniqueIdentifier>{31b6d0c1-ec72-40e3-9de3-5e15232c6672}</UniqueIdentifier>
+    <Filter Include="Engine\Renderer\GLES">
+      <UniqueIdentifier>{216efd2a-af7e-4ca0-9e30-f4b788b591ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Renderer\GLES\Header Files">
+      <UniqueIdentifier>{c8a7f08a-571e-499b-a9e8-bf63d2d24d8d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Renderer\GLES\Source Files">
+      <UniqueIdentifier>{79cf6f71-2ce1-4364-bd1f-d8921ae0ddc1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Renderer\GLES\Source Files\Commands">
+      <UniqueIdentifier>{aeda77ed-5e43-47af-81ae-ab4988918700}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -166,130 +163,130 @@
       <Filter>Engine\Base\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxCommandBindCamera.h">
-      <Filter>Engine\Renderer\GLES31\Source Files\Commands</Filter>
+      <Filter>Engine\Renderer\GLES\Source Files\Commands</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxCommandBindInputTexture.h">
-      <Filter>Engine\Renderer\GLES31\Source Files\Commands</Filter>
+      <Filter>Engine\Renderer\GLES\Source Files\Commands</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxCommandBindMesh.h">
-      <Filter>Engine\Renderer\GLES31\Source Files\Commands</Filter>
+      <Filter>Engine\Renderer\GLES\Source Files\Commands</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxCommandClearColor.h">
-      <Filter>Engine\Renderer\GLES31\Source Files\Commands</Filter>
+      <Filter>Engine\Renderer\GLES\Source Files\Commands</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxCommandClearDepth.h">
-      <Filter>Engine\Renderer\GLES31\Source Files\Commands</Filter>
+      <Filter>Engine\Renderer\GLES\Source Files\Commands</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxCommandDrawElements.h">
-      <Filter>Engine\Renderer\GLES31\Source Files\Commands</Filter>
+      <Filter>Engine\Renderer\GLES\Source Files\Commands</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxCommandDrawIndirect.h">
-      <Filter>Engine\Renderer\GLES31\Source Files\Commands</Filter>
+      <Filter>Engine\Renderer\GLES\Source Files\Commands</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxCommandDrawInstance.h">
-      <Filter>Engine\Renderer\GLES31\Source Files\Commands</Filter>
+      <Filter>Engine\Renderer\GLES\Source Files\Commands</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxCommandExecute.h">
-      <Filter>Engine\Renderer\GLES31\Source Files\Commands</Filter>
+      <Filter>Engine\Renderer\GLES\Source Files\Commands</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxCommandSetScissor.h">
-      <Filter>Engine\Renderer\GLES31\Source Files\Commands</Filter>
+      <Filter>Engine\Renderer\GLES\Source Files\Commands</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxCommandSetViewport.h">
-      <Filter>Engine\Renderer\GLES31\Source Files\Commands</Filter>
+      <Filter>Engine\Renderer\GLES\Source Files\Commands</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxCamera.h">
-      <Filter>Engine\Renderer\GLES31\Header Files</Filter>
+      <Filter>Engine\Renderer\GLES\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxCommandBuffer.h">
-      <Filter>Engine\Renderer\GLES31\Header Files</Filter>
+      <Filter>Engine\Renderer\GLES\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxDefinition.h">
-      <Filter>Engine\Renderer\GLES31\Header Files</Filter>
+      <Filter>Engine\Renderer\GLES\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxFrameBuffer.h">
-      <Filter>Engine\Renderer\GLES31\Header Files</Filter>
+      <Filter>Engine\Renderer\GLES\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxFrameBufferManager.h">
-      <Filter>Engine\Renderer\GLES31\Header Files</Filter>
+      <Filter>Engine\Renderer\GLES\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxGLM.h">
-      <Filter>Engine\Renderer\GLES31\Header Files</Filter>
+      <Filter>Engine\Renderer\GLES\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxIndexBuffer.h">
-      <Filter>Engine\Renderer\GLES31\Header Files</Filter>
+      <Filter>Engine\Renderer\GLES\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxInstanceBuffer.h">
-      <Filter>Engine\Renderer\GLES31\Header Files</Filter>
+      <Filter>Engine\Renderer\GLES\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxMaterial.h">
-      <Filter>Engine\Renderer\GLES31\Header Files</Filter>
+      <Filter>Engine\Renderer\GLES\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxMaterialManager.h">
-      <Filter>Engine\Renderer\GLES31\Header Files</Filter>
+      <Filter>Engine\Renderer\GLES\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxMesh.h">
-      <Filter>Engine\Renderer\GLES31\Header Files</Filter>
+      <Filter>Engine\Renderer\GLES\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxMeshManager.h">
-      <Filter>Engine\Renderer\GLES31\Header Files</Filter>
+      <Filter>Engine\Renderer\GLES\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxRenderer.h">
-      <Filter>Engine\Renderer\GLES31\Header Files</Filter>
+      <Filter>Engine\Renderer\GLES\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxSampler.h">
-      <Filter>Engine\Renderer\GLES31\Header Files</Filter>
+      <Filter>Engine\Renderer\GLES\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxSamplerManager.h">
-      <Filter>Engine\Renderer\GLES31\Header Files</Filter>
+      <Filter>Engine\Renderer\GLES\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxTexture2D.h">
-      <Filter>Engine\Renderer\GLES31\Header Files</Filter>
+      <Filter>Engine\Renderer\GLES\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxTexture2DArray.h">
-      <Filter>Engine\Renderer\GLES31\Header Files</Filter>
+      <Filter>Engine\Renderer\GLES\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxTextureBase.h">
-      <Filter>Engine\Renderer\GLES31\Header Files</Filter>
+      <Filter>Engine\Renderer\GLES\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxTextureCubeMap.h">
-      <Filter>Engine\Renderer\GLES31\Header Files</Filter>
+      <Filter>Engine\Renderer\GLES\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxTextureManager.h">
-      <Filter>Engine\Renderer\GLES31\Header Files</Filter>
+      <Filter>Engine\Renderer\GLES\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxUniformBuffer.h">
-      <Filter>Engine\Renderer\GLES31\Header Files</Filter>
+      <Filter>Engine\Renderer\GLES\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxUniformCamera.h">
-      <Filter>Engine\Renderer\GLES31\Header Files</Filter>
+      <Filter>Engine\Renderer\GLES\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxUniformEngine.h">
-      <Filter>Engine\Renderer\GLES31\Header Files</Filter>
+      <Filter>Engine\Renderer\GLES\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxUniformMat4.h">
-      <Filter>Engine\Renderer\GLES31\Header Files</Filter>
+      <Filter>Engine\Renderer\GLES\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxUniformVec1.h">
-      <Filter>Engine\Renderer\GLES31\Header Files</Filter>
+      <Filter>Engine\Renderer\GLES\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxUniformVec2.h">
-      <Filter>Engine\Renderer\GLES31\Header Files</Filter>
+      <Filter>Engine\Renderer\GLES\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxUniformVec3.h">
-      <Filter>Engine\Renderer\GLES31\Header Files</Filter>
+      <Filter>Engine\Renderer\GLES\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxUniformVec4.h">
-      <Filter>Engine\Renderer\GLES31\Header Files</Filter>
+      <Filter>Engine\Renderer\GLES\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxVertexArrayObject.h">
-      <Filter>Engine\Renderer\GLES31\Header Files</Filter>
+      <Filter>Engine\Renderer\GLES\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxVertexAttribute.h">
-      <Filter>Engine\Renderer\GLES31\Header Files</Filter>
+      <Filter>Engine\Renderer\GLES\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxVertexBuffer.h">
-      <Filter>Engine\Renderer\GLES31\Header Files</Filter>
+      <Filter>Engine\Renderer\GLES\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Scene\Scene.h">
       <Filter>Engine\Scene\Header Files</Filter>
@@ -370,10 +367,10 @@
       <Filter>ThirdParty\lodepng</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxResource.h">
-      <Filter>Engine\Renderer\GLES31\Header Files</Filter>
+      <Filter>Engine\Renderer\GLES\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxProfiler.h">
-      <Filter>Engine\Renderer\GLES31\Header Files</Filter>
+      <Filter>Engine\Renderer\GLES\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Scene\Component\ComponentPointLight.h">
       <Filter>Engine\Scene\Source Files\Component\Header Files</Filter>
@@ -394,46 +391,46 @@
       <Filter>ThirdParty\rbtree</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxShaderCompiler.h">
-      <Filter>Engine\Renderer\GLES31\Header Files</Filter>
+      <Filter>Engine\Renderer\GLES\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxShader.h">
-      <Filter>Engine\Renderer\GLES31\Header Files</Filter>
+      <Filter>Engine\Renderer\GLES\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxShaderManager.h">
-      <Filter>Engine\Renderer\GLES31\Header Files</Filter>
+      <Filter>Engine\Renderer\GLES\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxExtension.h">
-      <Filter>Engine\Renderer\GLES31\Header Files</Filter>
+      <Filter>Engine\Renderer\GLES\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxMaterialPass.h">
-      <Filter>Engine\Renderer\GLES31\Header Files</Filter>
+      <Filter>Engine\Renderer\GLES\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxResourceManager.h">
-      <Filter>Engine\Renderer\GLES31\Header Files</Filter>
+      <Filter>Engine\Renderer\GLES\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxPipelineManager.h">
-      <Filter>Engine\Renderer\GLES31\Header Files</Filter>
+      <Filter>Engine\Renderer\GLES\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxPipelineCompute.h">
-      <Filter>Engine\Renderer\GLES31\Header Files</Filter>
+      <Filter>Engine\Renderer\GLES\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxPipelineGraphics.h">
-      <Filter>Engine\Renderer\GLES31\Header Files</Filter>
+      <Filter>Engine\Renderer\GLES\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxPipelineBase.h">
-      <Filter>Engine\Renderer\GLES31\Header Files</Filter>
+      <Filter>Engine\Renderer\GLES\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxCommandBeginRenderPass.h">
-      <Filter>Engine\Renderer\GLES31\Source Files\Commands</Filter>
+      <Filter>Engine\Renderer\GLES\Source Files\Commands</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxCommandEndRenderPass.h">
-      <Filter>Engine\Renderer\GLES31\Source Files\Commands</Filter>
+      <Filter>Engine\Renderer\GLES\Source Files\Commands</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxCommandBindMaterialPass.h">
-      <Filter>Engine\Renderer\GLES31\Source Files\Commands</Filter>
+      <Filter>Engine\Renderer\GLES\Source Files\Commands</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxCommandBindPipeline.h">
-      <Filter>Engine\Renderer\GLES31\Source Files\Commands</Filter>
+      <Filter>Engine\Renderer\GLES\Source Files\Commands</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Scene\Task\TaskComponentUpdateLogic.h">
       <Filter>Engine\Scene\Source Files\Task</Filter>
@@ -457,40 +454,40 @@
       <Filter>Engine\RenderSolution\Source Files\Task</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxCommandUniform1f.h">
-      <Filter>Engine\Renderer\GLES31\Source Files\Commands</Filter>
+      <Filter>Engine\Renderer\GLES\Source Files\Commands</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxCommandUniform2f.h">
-      <Filter>Engine\Renderer\GLES31\Source Files\Commands</Filter>
+      <Filter>Engine\Renderer\GLES\Source Files\Commands</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxCommandUniform3f.h">
-      <Filter>Engine\Renderer\GLES31\Source Files\Commands</Filter>
+      <Filter>Engine\Renderer\GLES\Source Files\Commands</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxCommandUniform4f.h">
-      <Filter>Engine\Renderer\GLES31\Source Files\Commands</Filter>
+      <Filter>Engine\Renderer\GLES\Source Files\Commands</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxCommandUniform1fv.h">
-      <Filter>Engine\Renderer\GLES31\Source Files\Commands</Filter>
+      <Filter>Engine\Renderer\GLES\Source Files\Commands</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxCommandUniform2fv.h">
-      <Filter>Engine\Renderer\GLES31\Source Files\Commands</Filter>
+      <Filter>Engine\Renderer\GLES\Source Files\Commands</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxCommandUniform3fv.h">
-      <Filter>Engine\Renderer\GLES31\Source Files\Commands</Filter>
+      <Filter>Engine\Renderer\GLES\Source Files\Commands</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxCommandUniform4fv.h">
-      <Filter>Engine\Renderer\GLES31\Source Files\Commands</Filter>
+      <Filter>Engine\Renderer\GLES\Source Files\Commands</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxCommandUniformMatrix2fv.h">
-      <Filter>Engine\Renderer\GLES31\Source Files\Commands</Filter>
+      <Filter>Engine\Renderer\GLES\Source Files\Commands</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxCommandUniformMatrix3fv.h">
-      <Filter>Engine\Renderer\GLES31\Source Files\Commands</Filter>
+      <Filter>Engine\Renderer\GLES\Source Files\Commands</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxCommandUniformMatrix4fv.h">
-      <Filter>Engine\Renderer\GLES31\Source Files\Commands</Filter>
+      <Filter>Engine\Renderer\GLES\Source Files\Commands</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxCommandResolve.h">
-      <Filter>Engine\Renderer\GLES31\Source Files\Commands</Filter>
+      <Filter>Engine\Renderer\GLES\Source Files\Commands</Filter>
     </ClInclude>
     <ClInclude Include="..\..\ThirdParty\gl3w\gl3w.h">
       <Filter>ThirdParty\gl3w</Filter>
@@ -499,25 +496,25 @@
       <Filter>ThirdParty\gl3w</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxRenderPass.h">
-      <Filter>Engine\Renderer\GLES31\Header Files</Filter>
+      <Filter>Engine\Renderer\GLES\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxRenderPassManager.h">
-      <Filter>Engine\Renderer\GLES31\Header Files</Filter>
+      <Filter>Engine\Renderer\GLES\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxCommandBindFrameBuffer.h">
-      <Filter>Engine\Renderer\GLES31\Source Files\Commands</Filter>
+      <Filter>Engine\Renderer\GLES\Source Files\Commands</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxCommandInvalidateFramebuffer.h">
-      <Filter>Engine\Renderer\GLES31\Source Files\Commands</Filter>
+      <Filter>Engine\Renderer\GLES\Source Files\Commands</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxRenderQueue.h">
-      <Filter>Engine\Renderer\GLES31\Header Files</Filter>
+      <Filter>Engine\Renderer\GLES\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxSwapChain.h">
-      <Filter>Engine\Renderer\GLES31\Header Files</Filter>
+      <Filter>Engine\Renderer\GLES\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxCommandBindSubPassInputTexture.h">
-      <Filter>Engine\Renderer\GLES31\Source Files\Commands</Filter>
+      <Filter>Engine\Renderer\GLES\Source Files\Commands</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Application\Windows\Main.h">
       <Filter>Application\Header Files</Filter>
@@ -535,13 +532,13 @@
       <Filter>Application\Resource FIles</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxDrawIndirectBuffer.h">
-      <Filter>Engine\Renderer\GLES31\Header Files</Filter>
+      <Filter>Engine\Renderer\GLES\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxDrawIndirectBufferManager.h">
-      <Filter>Engine\Renderer\GLES31\Header Files</Filter>
+      <Filter>Engine\Renderer\GLES\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxCommandBindDrawIndirectBuffer.h">
-      <Filter>Engine\Renderer\GLES31\Source Files\Commands</Filter>
+      <Filter>Engine\Renderer\GLES\Source Files\Commands</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Memory\Allocator.h">
       <Filter>Engine\Memory\Header Files</Filter>
@@ -561,91 +558,91 @@
       <Filter>Engine\Base\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\Renderer\GLES31\GfxCamera.cpp">
-      <Filter>Engine\Renderer\GLES31\Source Files</Filter>
+      <Filter>Engine\Renderer\GLES\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\Renderer\GLES31\GfxCommandBuffer.cpp">
-      <Filter>Engine\Renderer\GLES31\Source Files</Filter>
+      <Filter>Engine\Renderer\GLES\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\Renderer\GLES31\GfxFrameBuffer.cpp">
-      <Filter>Engine\Renderer\GLES31\Source Files</Filter>
+      <Filter>Engine\Renderer\GLES\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\Renderer\GLES31\GfxFrameBufferManager.cpp">
-      <Filter>Engine\Renderer\GLES31\Source Files</Filter>
+      <Filter>Engine\Renderer\GLES\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\Renderer\GLES31\GfxIndexBuffer.cpp">
-      <Filter>Engine\Renderer\GLES31\Source Files</Filter>
+      <Filter>Engine\Renderer\GLES\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\Renderer\GLES31\GfxInstanceBuffer.cpp">
-      <Filter>Engine\Renderer\GLES31\Source Files</Filter>
+      <Filter>Engine\Renderer\GLES\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\Renderer\GLES31\GfxMaterial.cpp">
-      <Filter>Engine\Renderer\GLES31\Source Files</Filter>
+      <Filter>Engine\Renderer\GLES\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\Renderer\GLES31\GfxMaterialManager.cpp">
-      <Filter>Engine\Renderer\GLES31\Source Files</Filter>
+      <Filter>Engine\Renderer\GLES\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\Renderer\GLES31\GfxMesh.cpp">
-      <Filter>Engine\Renderer\GLES31\Source Files</Filter>
+      <Filter>Engine\Renderer\GLES\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\Renderer\GLES31\GfxMeshManager.cpp">
-      <Filter>Engine\Renderer\GLES31\Source Files</Filter>
+      <Filter>Engine\Renderer\GLES\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\Renderer\GLES31\GfxRenderer.cpp">
-      <Filter>Engine\Renderer\GLES31\Source Files</Filter>
+      <Filter>Engine\Renderer\GLES\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\Renderer\GLES31\GfxSampler.cpp">
-      <Filter>Engine\Renderer\GLES31\Source Files</Filter>
+      <Filter>Engine\Renderer\GLES\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\Renderer\GLES31\GfxSamplerManager.cpp">
-      <Filter>Engine\Renderer\GLES31\Source Files</Filter>
+      <Filter>Engine\Renderer\GLES\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\Renderer\GLES31\GfxTexture2D.cpp">
-      <Filter>Engine\Renderer\GLES31\Source Files</Filter>
+      <Filter>Engine\Renderer\GLES\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\Renderer\GLES31\GfxTexture2DArray.cpp">
-      <Filter>Engine\Renderer\GLES31\Source Files</Filter>
+      <Filter>Engine\Renderer\GLES\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\Renderer\GLES31\GfxTextureBase.cpp">
-      <Filter>Engine\Renderer\GLES31\Source Files</Filter>
+      <Filter>Engine\Renderer\GLES\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\Renderer\GLES31\GfxTextureCubeMap.cpp">
-      <Filter>Engine\Renderer\GLES31\Source Files</Filter>
+      <Filter>Engine\Renderer\GLES\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\Renderer\GLES31\GfxTextureManager.cpp">
-      <Filter>Engine\Renderer\GLES31\Source Files</Filter>
+      <Filter>Engine\Renderer\GLES\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\Renderer\GLES31\GfxUniformBuffer.cpp">
-      <Filter>Engine\Renderer\GLES31\Source Files</Filter>
+      <Filter>Engine\Renderer\GLES\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\Renderer\GLES31\GfxUniformCamera.cpp">
-      <Filter>Engine\Renderer\GLES31\Source Files</Filter>
+      <Filter>Engine\Renderer\GLES\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\Renderer\GLES31\GfxUniformEngine.cpp">
-      <Filter>Engine\Renderer\GLES31\Source Files</Filter>
+      <Filter>Engine\Renderer\GLES\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\Renderer\GLES31\GfxUniformMat4.cpp">
-      <Filter>Engine\Renderer\GLES31\Source Files</Filter>
+      <Filter>Engine\Renderer\GLES\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\Renderer\GLES31\GfxUniformVec1.cpp">
-      <Filter>Engine\Renderer\GLES31\Source Files</Filter>
+      <Filter>Engine\Renderer\GLES\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\Renderer\GLES31\GfxUniformVec2.cpp">
-      <Filter>Engine\Renderer\GLES31\Source Files</Filter>
+      <Filter>Engine\Renderer\GLES\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\Renderer\GLES31\GfxUniformVec3.cpp">
-      <Filter>Engine\Renderer\GLES31\Source Files</Filter>
+      <Filter>Engine\Renderer\GLES\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\Renderer\GLES31\GfxUniformVec4.cpp">
-      <Filter>Engine\Renderer\GLES31\Source Files</Filter>
+      <Filter>Engine\Renderer\GLES\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\Renderer\GLES31\GfxVertexArrayObject.cpp">
-      <Filter>Engine\Renderer\GLES31\Source Files</Filter>
+      <Filter>Engine\Renderer\GLES\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\Renderer\GLES31\GfxVertexAttribute.cpp">
-      <Filter>Engine\Renderer\GLES31\Source Files</Filter>
+      <Filter>Engine\Renderer\GLES\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\Renderer\GLES31\GfxVertexBuffer.cpp">
-      <Filter>Engine\Renderer\GLES31\Source Files</Filter>
+      <Filter>Engine\Renderer\GLES\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\Scene\Scene.cpp">
       <Filter>Engine\Scene\Source Files</Filter>
@@ -741,10 +738,10 @@
       <Filter>ThirdParty\lodepng</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\Renderer\GLES31\GfxResource.cpp">
-      <Filter>Engine\Renderer\GLES31\Source Files</Filter>
+      <Filter>Engine\Renderer\GLES\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\Renderer\GLES31\GfxProfiler.cpp">
-      <Filter>Engine\Renderer\GLES31\Source Files</Filter>
+      <Filter>Engine\Renderer\GLES\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\Scene\Component\ComponentPointLight.cpp">
       <Filter>Engine\Scene\Source Files\Component\Source Files</Filter>
@@ -765,34 +762,34 @@
       <Filter>ThirdParty\rbtree</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\Renderer\GLES31\GfxShaderCompiler.cpp">
-      <Filter>Engine\Renderer\GLES31\Source Files</Filter>
+      <Filter>Engine\Renderer\GLES\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\Renderer\GLES31\GfxShader.cpp">
-      <Filter>Engine\Renderer\GLES31\Source Files</Filter>
+      <Filter>Engine\Renderer\GLES\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\Renderer\GLES31\GfxShaderManager.cpp">
-      <Filter>Engine\Renderer\GLES31\Source Files</Filter>
+      <Filter>Engine\Renderer\GLES\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\Renderer\GLES31\GfxExtension.cpp">
-      <Filter>Engine\Renderer\GLES31\Source Files</Filter>
+      <Filter>Engine\Renderer\GLES\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\Renderer\GLES31\GfxMaterialPass.cpp">
-      <Filter>Engine\Renderer\GLES31\Source Files</Filter>
+      <Filter>Engine\Renderer\GLES\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\Renderer\GLES31\GfxResourceManager.cpp">
-      <Filter>Engine\Renderer\GLES31\Source Files</Filter>
+      <Filter>Engine\Renderer\GLES\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\Renderer\GLES31\GfxPipelineManager.cpp">
-      <Filter>Engine\Renderer\GLES31\Source Files</Filter>
+      <Filter>Engine\Renderer\GLES\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\Renderer\GLES31\GfxPipelineCompute.cpp">
-      <Filter>Engine\Renderer\GLES31\Source Files</Filter>
+      <Filter>Engine\Renderer\GLES\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\Renderer\GLES31\GfxPipelineGraphics.cpp">
-      <Filter>Engine\Renderer\GLES31\Source Files</Filter>
+      <Filter>Engine\Renderer\GLES\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\Renderer\GLES31\GfxPipelineBase.cpp">
-      <Filter>Engine\Renderer\GLES31\Source Files</Filter>
+      <Filter>Engine\Renderer\GLES\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\RenderSolution\RenderSolutionBase.cpp">
       <Filter>Engine\RenderSolution\Source Files</Filter>
@@ -813,16 +810,16 @@
       <Filter>ThirdParty\gl3w</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\Renderer\GLES31\GfxRenderPass.cpp">
-      <Filter>Engine\Renderer\GLES31\Source Files</Filter>
+      <Filter>Engine\Renderer\GLES\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\Renderer\GLES31\GfxRenderPassManager.cpp">
-      <Filter>Engine\Renderer\GLES31\Source Files</Filter>
+      <Filter>Engine\Renderer\GLES\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\Renderer\GLES31\GfxRenderQueue.cpp">
-      <Filter>Engine\Renderer\GLES31\Source Files</Filter>
+      <Filter>Engine\Renderer\GLES\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\Renderer\GLES31\GfxSwapChain.cpp">
-      <Filter>Engine\Renderer\GLES31\Source Files</Filter>
+      <Filter>Engine\Renderer\GLES\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Application\Windows\Main.cpp">
       <Filter>Application\Source Files</Filter>
@@ -834,10 +831,10 @@
       <Filter>Application\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\Renderer\GLES31\GfxDrawIndirectBuffer.cpp">
-      <Filter>Engine\Renderer\GLES31\Source Files</Filter>
+      <Filter>Engine\Renderer\GLES\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\Renderer\GLES31\GfxDrawIndirectBufferManager.cpp">
-      <Filter>Engine\Renderer\GLES31\Source Files</Filter>
+      <Filter>Engine\Renderer\GLES\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\Memory\Allocator.cpp">
       <Filter>Engine\Memory\Source Files</Filter>

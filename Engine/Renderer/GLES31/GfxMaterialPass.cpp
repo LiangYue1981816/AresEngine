@@ -337,31 +337,34 @@ bool CGfxMaterialPass::LoadPipelineShader(TiXmlNode *pPipelineNode, CGfxShader *
 
 			LogOutput(nullptr, "%s ... ", szFileName);
 
+			char szHashName[128 * 1024] = { 0 };
+			strcat(szHashName, szFileName);
+
 			Renderer()->GetShaderCompiler()->ClearMacroDefinition();
 			{
 				if (TiXmlNode *pDefineNode = pShaderNode->FirstChild("Define")) {
 					do {
 						if (const char *szDefine = pDefineNode->ToElement()->AttributeString("name")) {
+							strcat(szHashName, "_");
+							strcat(szHashName, szDefine);
+
 							Renderer()->GetShaderCompiler()->AddMacroDefinition(szDefine);
 						}
 					} while (pDefineNode = pShaderNode->IterateChildren("Define", pDefineNode));
 				}
 			}
 
-			std::string preprocess = Renderer()->GetShaderCompiler()->Preprocess(Renderer()->GetResourceFullName(szFileName), kind);
-			if (preprocess.empty()) throw 2;
-
 			char szExtName[2][_MAX_STRING] = { "vert", "frag" };
 			char szBinFileName[_MAX_STRING] = { 0 };
-			sprintf(szBinFileName, "%x.%s", HashValue(preprocess.c_str()), szExtName[kind]);
+			sprintf(szBinFileName, "%x.%s", HashValue(szHashName), szExtName[kind]);
 
 #ifdef PLATFORM_WINDOWS
 			if (fexist(Renderer()->GetResourceFullName(szBinFileName)) == 0) {
-				Renderer()->GetShaderCompiler()->Compile(Renderer()->GetResourceFullName(szFileName), kind);
+				Renderer()->GetShaderCompiler()->Compile(Renderer()->GetResourceFullName(szFileName), szBinFileName, kind);
 			}
 #endif
 			pShader = Renderer()->LoadShader(szBinFileName, kind);
-			if (pShader->IsValid() == false) throw 3;
+			if (pShader->IsValid() == false) throw 2;
 		}
 		LogOutput(nullptr, "OK\n");
 		return true;

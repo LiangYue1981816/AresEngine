@@ -84,13 +84,23 @@ extern void GLActiveTexture(GLuint unit);
 extern void GLBindSampler(GLuint unit, GLuint sampler);
 extern void GLBindTexture(GLuint unit, GLenum target, GLuint texture);
 
-extern void GLBindProgramPipeline(GLuint pipeline);
 extern void GLBindFramebuffer(GLenum target, GLuint framebuffer);
 extern void GLBindFramebufferTexture2D(GLenum target, GLenum attachment, GLenum textarget, GLuint texture, GLint level);
 
 extern void GLReadBuffers(GLenum target, GLsizei n, const GLenum *bufs);
 extern void GLDrawBuffers(GLenum target, GLsizei n, const GLenum *bufs);
 
+extern void GLUseProgram(GLuint program);
+extern void GLUniform1i(GLint location, GLint v0);
+extern void GLUniform2i(GLint location, GLint v0, GLint v1);
+extern void GLUniform3i(GLint location, GLint v0, GLint v1, GLint v2);
+extern void GLUniform4i(GLint location, GLint v0, GLint v1, GLint v2, GLint v3);
+extern void GLUniform1f(GLint location, GLfloat v0);
+extern void GLUniform2f(GLint location, GLfloat v0, GLfloat v1);
+extern void GLUniform3f(GLint location, GLfloat v0, GLfloat v1, GLfloat v2);
+extern void GLUniform4f(GLint location, GLfloat v0, GLfloat v1, GLfloat v2, GLfloat v3);
+
+extern void GLBindProgramPipeline(GLuint pipeline);
 extern void GLProgramUniform1i(GLuint program, GLint location, GLint v0);
 extern void GLProgramUniform2i(GLuint program, GLint location, GLint v0, GLint v1);
 extern void GLProgramUniform3i(GLuint program, GLint location, GLint v0, GLint v1, GLint v2);

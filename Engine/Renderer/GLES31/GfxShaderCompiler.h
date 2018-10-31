@@ -19,7 +19,7 @@ public:
 	void ClearMacroDefinition(void);
 
 	std::string Preprocess(const char *szFileName, shaderc_shader_kind kind);
-	std::vector<uint32_t> Compile(const char *szFileName, shaderc_shader_kind kind);
+	std::vector<uint32_t> Compile(const char *szInputFileName, const char *szOutputFileName, shaderc_shader_kind kind);
 
 public:
 	static std::string LoadShader(const char *szFileName);
