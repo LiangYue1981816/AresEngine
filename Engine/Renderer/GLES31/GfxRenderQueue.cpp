@@ -22,15 +22,8 @@ void CGfxRenderQueue::AddMesh(int indexThread, int indexQueue, const CGfxMateria
 
 void CGfxRenderQueue::AddMeshIndirect(int indexThread, int indexQueue, const CGfxMaterialPtr &ptrMaterial, const CGfxMeshPtr &ptrMesh, const CGfxDrawIndirectBufferPtr &ptrDrawIndirectBuffer, const uint8_t *pInstanceData, uint32_t size)
 {
-	if (Renderer()->IsSupportGLES31()) {
-		if (indexThread >= 0 && indexThread < THREAD_COUNT) {
-			m_materialMeshIndirectQueue[indexThread][indexQueue][ptrMaterial][ptrMesh][ptrDrawIndirectBuffer].insert(m_materialMeshIndirectQueue[indexThread][indexQueue][ptrMaterial][ptrMesh][ptrDrawIndirectBuffer].end(), pInstanceData, pInstanceData + size);
-		}
-	}
-	else {
-		if (indexThread >= 0 && indexThread < THREAD_COUNT) {
-			m_materialMeshQueue[indexThread][indexQueue][ptrMaterial][ptrMesh].insert(m_materialMeshQueue[indexThread][indexQueue][ptrMaterial][ptrMesh].end(), pInstanceData, pInstanceData + size);
-		}
+	if (indexThread >= 0 && indexThread < THREAD_COUNT) {
+		m_materialMeshIndirectQueue[indexThread][indexQueue][ptrMaterial][ptrMesh][ptrDrawIndirectBuffer].insert(m_materialMeshIndirectQueue[indexThread][indexQueue][ptrMaterial][ptrMesh][ptrDrawIndirectBuffer].end(), pInstanceData, pInstanceData + size);
 	}
 }
 

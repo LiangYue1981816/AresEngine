@@ -48,10 +48,18 @@ public:
 	bool CmdBindMaterialPass(const CGfxMaterialPtr &ptrMaterial, uint32_t namePass);
 	bool CmdBindInputTexture(const char *szName, uint32_t texture, uint32_t minFilter, uint32_t magFilter, uint32_t addressMode);
 
+	bool CmdUniform1i(const char *szName, int v0);
+	bool CmdUniform2i(const char *szName, int v0, int v1);
+	bool CmdUniform3i(const char *szName, int v0, int v1, int v2);
+	bool CmdUniform4i(const char *szName, int v0, int v1, int v2, int v3);
 	bool CmdUniform1f(const char *szName, float v0);
 	bool CmdUniform2f(const char *szName, float v0, float v1);
 	bool CmdUniform3f(const char *szName, float v0, float v1, float v2);
 	bool CmdUniform4f(const char *szName, float v0, float v1, float v2, float v3);
+	bool CmdUniform1iv(const char *szName, int count, const int *value);
+	bool CmdUniform2iv(const char *szName, int count, const int *value);
+	bool CmdUniform3iv(const char *szName, int count, const int *value);
+	bool CmdUniform4iv(const char *szName, int count, const int *value);
 	bool CmdUniform1fv(const char *szName, int count, const float *value);
 	bool CmdUniform2fv(const char *szName, int count, const float *value);
 	bool CmdUniform3fv(const char *szName, int count, const float *value);

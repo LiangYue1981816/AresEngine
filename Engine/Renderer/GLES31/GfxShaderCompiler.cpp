@@ -3,6 +3,45 @@
 #include "GfxShaderCompiler.h"
 
 
+CGfxShaderCompiler::CGfxShaderCompiler(const char *szShaderCachePath)
+	: m_szShaderCachePath{ 0 }
+	, m_fileIncluder(new glslc::FileIncluder(&m_fileFinder))
+{
+	strcpy(m_szShaderCachePath, szShaderCachePath);
+
+	m_options.SetIncluder(std::move(m_fileIncluder));
+	m_options.SetWarningsAsErrors();
+	m_options.SetSourceLanguage(shaderc_source_language_glsl);
+	m_options.SetForcedVersionProfile(310, shaderc_profile_es);
+	m_options.AddMacroDefinition("GLES");
+}
+
+CGfxShaderCompiler::~CGfxShaderCompiler(void)
+{
+
+}
+
+void CGfxShaderCompiler::AddIncludePath(const char *szPath)
+{
+	m_fileFinder.search_path().emplace_back(szPath);
+}
+
+void CGfxShaderCompiler::AddMacroDefinition(const char *szName)
+{
+	m_strMacroDefinitionNames.emplace_back(szName);
+}
+
+void CGfxShaderCompiler::AddMacroDefinition(const char *szName, const char *szValue)
+{
+	m_strMacroDefinitionNameAndValues[szName] = szValue;
+}
+
+void CGfxShaderCompiler::ClearMacroDefinition(void)
+{
+	m_strMacroDefinitionNames.clear();
+	m_strMacroDefinitionNameAndValues.clear();
+}
+
 static std::string PreprocessShader(std::string &source, shaderc_shader_kind kind, const shaderc::Compiler &compiler, const shaderc::CompileOptions &options)
 {
 	shaderc::PreprocessedSourceCompilationResult module = compiler.PreprocessGlsl(source, kind, "SPIR-V Preprocess", options);
@@ -13,6 +52,27 @@ static std::string PreprocessShader(std::string &source, shaderc_shader_kind kin
 	}
 
 	return { module.cbegin(), module.cend() };
+}
+
+std::string CGfxShaderCompiler::Preprocess(const char *szFileName, shaderc_shader_kind kind)
+{
+	shaderc::CompileOptions options(m_options);
+
+	for (const auto &itMacroDefinition : m_strMacroDefinitionNames) {
+		options.AddMacroDefinition(itMacroDefinition);
+	}
+
+	for (const auto &itMacroDefinition : m_strMacroDefinitionNameAndValues) {
+		options.AddMacroDefinition(itMacroDefinition.first, itMacroDefinition.second);
+	}
+
+	const char szKindDefine[3][_MAX_STRING] = { "VERTEX_SHADER", "FRAGMENT_SHADER", "COMPUTE_SHADER" };
+	options.AddMacroDefinition(szKindDefine[kind]);
+
+	std::string source = LoadShader(szFileName);
+	if (source.empty()) return "";
+
+	return PreprocessShader(source, kind, m_compiler, options);
 }
 
 static bool CompileShader(std::string &source, shaderc_shader_kind kind, const shaderc::Compiler &compiler, const shaderc::CompileOptions &options, std::vector<uint32_t> &words)
@@ -26,6 +86,44 @@ static bool CompileShader(std::string &source, shaderc_shader_kind kind, const s
 
 	words = { module.cbegin(), module.cend() };
 	return true;
+}
+
+std::vector<uint32_t> CGfxShaderCompiler::Compile(const char *szInputFileName, const char *szOutputFileName, shaderc_shader_kind kind)
+{
+	std::vector<uint32_t> words;
+
+	do {
+		shaderc::CompileOptions options(m_options);
+
+		for (const auto &itMacroDefinition : m_strMacroDefinitionNames) {
+			options.AddMacroDefinition(itMacroDefinition);
+		}
+
+		for (const auto &itMacroDefinition : m_strMacroDefinitionNameAndValues) {
+			options.AddMacroDefinition(itMacroDefinition.first, itMacroDefinition.second);
+		}
+
+		const char szKindDefine[3][_MAX_STRING] = { "VERTEX_SHADER", "FRAGMENT_SHADER", "COMPUTE_SHADER" };
+		options.AddMacroDefinition(szKindDefine[kind]);
+
+		std::string source = LoadShader(szInputFileName);
+		if (source.empty()) break;
+
+		char szBinFileName[_MAX_STRING] = { 0 };
+		sprintf(szBinFileName, "%s/%s", m_szShaderCachePath, szOutputFileName);
+
+		if (LoadShaderBinary(szBinFileName, words) == false) {
+			if (CompileShader(source, kind, m_compiler, options, words) == false) {
+				break;
+			}
+
+			if (SaveShaderBinary(szBinFileName, words) == false) {
+				break;
+			}
+		}
+	} while (false);
+
+	return words;
 }
 
 std::string CGfxShaderCompiler::LoadShader(const char *szFileName)
@@ -74,103 +172,4 @@ bool CGfxShaderCompiler::SaveShaderBinary(const char *szFileName, const std::vec
 	}
 
 	return false;
-}
-
-
-CGfxShaderCompiler::CGfxShaderCompiler(const char *szShaderCachePath)
-	: m_szShaderCachePath{ 0 }
-	, m_fileIncluder(new glslc::FileIncluder(&m_fileFinder))
-{
-	strcpy(m_szShaderCachePath, szShaderCachePath);
-
-	m_options.SetIncluder(std::move(m_fileIncluder));
-	m_options.SetWarningsAsErrors();
-	m_options.SetSourceLanguage(shaderc_source_language_glsl);
-	m_options.SetForcedVersionProfile(310, shaderc_profile_es);
-	m_options.AddMacroDefinition("GLES");
-}
-
-CGfxShaderCompiler::~CGfxShaderCompiler(void)
-{
-
-}
-
-void CGfxShaderCompiler::AddIncludePath(const char *szPath)
-{
-	m_fileFinder.search_path().emplace_back(szPath);
-}
-
-void CGfxShaderCompiler::AddMacroDefinition(const char *szName)
-{
-	m_strMacroDefinitionNames.emplace_back(szName);
-}
-
-void CGfxShaderCompiler::AddMacroDefinition(const char *szName, const char *szValue)
-{
-	m_strMacroDefinitionNameAndValues[szName] = szValue;
-}
-
-void CGfxShaderCompiler::ClearMacroDefinition(void)
-{
-	m_strMacroDefinitionNames.clear();
-	m_strMacroDefinitionNameAndValues.clear();
-}
-
-std::string CGfxShaderCompiler::Preprocess(const char *szFileName, shaderc_shader_kind kind)
-{
-	shaderc::CompileOptions options(m_options);
-
-	for (const auto &itMacroDefinition : m_strMacroDefinitionNames) {
-		options.AddMacroDefinition(itMacroDefinition);
-	}
-
-	for (const auto &itMacroDefinition : m_strMacroDefinitionNameAndValues) {
-		options.AddMacroDefinition(itMacroDefinition.first, itMacroDefinition.second);
-	}
-
-	const char szKindDefine[3][_MAX_STRING] = { "VERTEX_SHADER", "FRAGMENT_SHADER", "COMPUTE_SHADER" };
-	options.AddMacroDefinition(szKindDefine[kind]);
-
-	std::string source = LoadShader(szFileName);
-	if (source.empty()) return "";
-
-	return PreprocessShader(source, kind, m_compiler, options);
-}
-
-std::vector<uint32_t> CGfxShaderCompiler::Compile(const char *szInputFileName, const char *szOutputFileName, shaderc_shader_kind kind)
-{
-	std::vector<uint32_t> words;
-
-	do {
-		shaderc::CompileOptions options(m_options);
-
-		for (const auto &itMacroDefinition : m_strMacroDefinitionNames) {
-			options.AddMacroDefinition(itMacroDefinition);
-		}
-
-		for (const auto &itMacroDefinition : m_strMacroDefinitionNameAndValues) {
-			options.AddMacroDefinition(itMacroDefinition.first, itMacroDefinition.second);
-		}
-
-		const char szKindDefine[3][_MAX_STRING] = { "VERTEX_SHADER", "FRAGMENT_SHADER", "COMPUTE_SHADER" };
-		options.AddMacroDefinition(szKindDefine[kind]);
-
-		std::string source = LoadShader(szInputFileName);
-		if (source.empty()) break;
-
-		char szBinFileName[_MAX_STRING] = { 0 };
-		sprintf(szBinFileName, "%s/%s", m_szShaderCachePath, szOutputFileName);
-
-		if (LoadShaderBinary(szBinFileName, words) == false) {
-			if (CompileShader(source, kind, m_compiler, options, words) == false) {
-				break;
-			}
-
-			if (SaveShaderBinary(szBinFileName, words) == false) {
-				break;
-			}
-		}
-	} while (false);
-
-	return words;
 }

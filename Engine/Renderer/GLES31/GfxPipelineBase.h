@@ -26,10 +26,20 @@ public:
 	virtual bool BindTexture(uint32_t name, uint32_t target, uint32_t texture, uint32_t sampler, uint32_t unit) const;
 	virtual bool BindUniformBuffer(uint32_t name, uint32_t buffer, uint32_t size, int offset = 0) const;
 
+	virtual bool Uniform1i(uint32_t name, int v0) const;
+	virtual bool Uniform2i(uint32_t name, int v0, int v1) const;
+	virtual bool Uniform3i(uint32_t name, int v0, int v1, int v2) const;
+	virtual bool Uniform4i(uint32_t name, int v0, int v1, int v2, int v3) const;
+
 	virtual bool Uniform1f(uint32_t name, float v0) const;
 	virtual bool Uniform2f(uint32_t name, float v0, float v1) const;
 	virtual bool Uniform3f(uint32_t name, float v0, float v1, float v2) const;
 	virtual bool Uniform4f(uint32_t name, float v0, float v1, float v2, float v3) const;
+
+	virtual bool Uniform1iv(uint32_t name, int count, const int *value) const;
+	virtual bool Uniform2iv(uint32_t name, int count, const int *value) const;
+	virtual bool Uniform3iv(uint32_t name, int count, const int *value) const;
+	virtual bool Uniform4iv(uint32_t name, int count, const int *value) const;
 
 	virtual bool Uniform1fv(uint32_t name, int count, const float *value) const;
 	virtual bool Uniform2fv(uint32_t name, int count, const float *value) const;

@@ -15,10 +15,18 @@
 #include "GfxCommandBindInputTexture.h"
 #include "GfxCommandBindSubPassInputTexture.h"
 #include "GfxCommandInvalidateFramebuffer.h"
+#include "GfxCommandUniform1i.h"
+#include "GfxCommandUniform2i.h"
+#include "GfxCommandUniform3i.h"
+#include "GfxCommandUniform4i.h"
 #include "GfxCommandUniform1f.h"
 #include "GfxCommandUniform2f.h"
 #include "GfxCommandUniform3f.h"
 #include "GfxCommandUniform4f.h"
+#include "GfxCommandUniform1iv.h"
+#include "GfxCommandUniform2iv.h"
+#include "GfxCommandUniform3iv.h"
+#include "GfxCommandUniform4iv.h"
 #include "GfxCommandUniform1fv.h"
 #include "GfxCommandUniform2fv.h"
 #include "GfxCommandUniform3fv.h"
@@ -211,6 +219,46 @@ bool CGfxCommandBuffer::CmdBindInputTexture(const char *szName, uint32_t texture
 	return false;
 }
 
+bool CGfxCommandBuffer::CmdUniform1i(const char *szName, int v0)
+{
+	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
+		m_pCommands.emplace_back(new CGfxCommandUniform1i(szName, v0));
+		return true;
+	}
+
+	return false;
+}
+
+bool CGfxCommandBuffer::CmdUniform2i(const char *szName, int v0, int v1)
+{
+	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
+		m_pCommands.emplace_back(new CGfxCommandUniform2i(szName, v0, v1));
+		return true;
+	}
+
+	return false;
+}
+
+bool CGfxCommandBuffer::CmdUniform3i(const char *szName, int v0, int v1, int v2)
+{
+	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
+		m_pCommands.emplace_back(new CGfxCommandUniform3i(szName, v0, v1, v2));
+		return true;
+	}
+
+	return false;
+}
+
+bool CGfxCommandBuffer::CmdUniform4i(const char *szName, int v0, int v1, int v2, int v3)
+{
+	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
+		m_pCommands.emplace_back(new CGfxCommandUniform4i(szName, v0, v1, v2, v3));
+		return true;
+	}
+
+	return false;
+}
+
 bool CGfxCommandBuffer::CmdUniform1f(const char *szName, float v0)
 {
 	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
@@ -245,6 +293,46 @@ bool CGfxCommandBuffer::CmdUniform4f(const char *szName, float v0, float v1, flo
 {
 	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
 		m_pCommands.emplace_back(new CGfxCommandUniform4f(szName, v0, v1, v2, v3));
+		return true;
+	}
+
+	return false;
+}
+
+bool CGfxCommandBuffer::CmdUniform1iv(const char *szName, int count, const int *value)
+{
+	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
+		m_pCommands.emplace_back(new CGfxCommandUniform1iv(szName, count, value));
+		return true;
+	}
+
+	return false;
+}
+
+bool CGfxCommandBuffer::CmdUniform2iv(const char *szName, int count, const int *value)
+{
+	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
+		m_pCommands.emplace_back(new CGfxCommandUniform2iv(szName, count, value));
+		return true;
+	}
+
+	return false;
+}
+
+bool CGfxCommandBuffer::CmdUniform3iv(const char *szName, int count, const int *value)
+{
+	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
+		m_pCommands.emplace_back(new CGfxCommandUniform3iv(szName, count, value));
+		return true;
+	}
+
+	return false;
+}
+
+bool CGfxCommandBuffer::CmdUniform4iv(const char *szName, int count, const int *value)
+{
+	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
+		m_pCommands.emplace_back(new CGfxCommandUniform4iv(szName, count, value));
 		return true;
 	}
 

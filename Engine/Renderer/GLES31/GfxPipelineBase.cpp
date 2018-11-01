@@ -80,6 +80,58 @@ bool CGfxPipelineBase::BindUniformBuffer(uint32_t name, uint32_t buffer, uint32_
 	return rcode;
 }
 
+bool CGfxPipelineBase::Uniform1i(uint32_t name, int v0) const
+{
+	bool rcode = false;
+
+	for (int index = 0; index < shaderc_compute_shader - shaderc_vertex_shader + 1; index++) {
+		if (m_pShaders[index]) {
+			rcode = m_pShaders[index]->Uniform1i(name, v0) || rcode;
+		}
+	}
+
+	return rcode;
+}
+
+bool CGfxPipelineBase::Uniform2i(uint32_t name, int v0, int v1) const
+{
+	bool rcode = false;
+
+	for (int index = 0; index < shaderc_compute_shader - shaderc_vertex_shader + 1; index++) {
+		if (m_pShaders[index]) {
+			rcode = m_pShaders[index]->Uniform2i(name, v0, v1) || rcode;
+		}
+	}
+
+	return rcode;
+}
+
+bool CGfxPipelineBase::Uniform3i(uint32_t name, int v0, int v1, int v2) const
+{
+	bool rcode = false;
+
+	for (int index = 0; index < shaderc_compute_shader - shaderc_vertex_shader + 1; index++) {
+		if (m_pShaders[index]) {
+			rcode = m_pShaders[index]->Uniform3i(name, v0, v1, v2) || rcode;
+		}
+	}
+
+	return rcode;
+}
+
+bool CGfxPipelineBase::Uniform4i(uint32_t name, int v0, int v1, int v2, int v3) const
+{
+	bool rcode = false;
+
+	for (int index = 0; index < shaderc_compute_shader - shaderc_vertex_shader + 1; index++) {
+		if (m_pShaders[index]) {
+			rcode = m_pShaders[index]->Uniform4i(name, v0, v1, v2, v3) || rcode;
+		}
+	}
+
+	return rcode;
+}
+
 bool CGfxPipelineBase::Uniform1f(uint32_t name, float v0) const
 {
 	bool rcode = false;
@@ -126,6 +178,58 @@ bool CGfxPipelineBase::Uniform4f(uint32_t name, float v0, float v1, float v2, fl
 	for (int index = 0; index < shaderc_compute_shader - shaderc_vertex_shader + 1; index++) {
 		if (m_pShaders[index]) {
 			rcode = m_pShaders[index]->Uniform4f(name, v0, v1, v2, v3) || rcode;
+		}
+	}
+
+	return rcode;
+}
+
+bool CGfxPipelineBase::Uniform1iv(uint32_t name, int count, const int *value) const
+{
+	bool rcode = false;
+
+	for (int index = 0; index < shaderc_compute_shader - shaderc_vertex_shader + 1; index++) {
+		if (m_pShaders[index]) {
+			rcode = m_pShaders[index]->Uniform1iv(name, count, value) || rcode;
+		}
+	}
+
+	return rcode;
+}
+
+bool CGfxPipelineBase::Uniform2iv(uint32_t name, int count, const int *value) const
+{
+	bool rcode = false;
+
+	for (int index = 0; index < shaderc_compute_shader - shaderc_vertex_shader + 1; index++) {
+		if (m_pShaders[index]) {
+			rcode = m_pShaders[index]->Uniform2iv(name, count, value) || rcode;
+		}
+	}
+
+	return rcode;
+}
+
+bool CGfxPipelineBase::Uniform3iv(uint32_t name, int count, const int *value) const
+{
+	bool rcode = false;
+
+	for (int index = 0; index < shaderc_compute_shader - shaderc_vertex_shader + 1; index++) {
+		if (m_pShaders[index]) {
+			rcode = m_pShaders[index]->Uniform3iv(name, count, value) || rcode;
+		}
+	}
+
+	return rcode;
+}
+
+bool CGfxPipelineBase::Uniform4iv(uint32_t name, int count, const int *value) const
+{
+	bool rcode = false;
+
+	for (int index = 0; index < shaderc_compute_shader - shaderc_vertex_shader + 1; index++) {
+		if (m_pShaders[index]) {
+			rcode = m_pShaders[index]->Uniform4iv(name, count, value) || rcode;
 		}
 	}
 

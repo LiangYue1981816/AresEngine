@@ -77,10 +77,18 @@ class CGfxRenderer
 	friend class CGfxCommandBindMaterialPass;
 	friend class CGfxCommandBindInputTexture;
 	friend class CGfxCommandBindSubPassInputTexture;
+	friend class CGfxCommandUniform1i;
+	friend class CGfxCommandUniform2i;
+	friend class CGfxCommandUniform3i;
+	friend class CGfxCommandUniform4i;
 	friend class CGfxCommandUniform1f;
 	friend class CGfxCommandUniform2f;
 	friend class CGfxCommandUniform3f;
 	friend class CGfxCommandUniform4f;
+	friend class CGfxCommandUniform1iv;
+	friend class CGfxCommandUniform2iv;
+	friend class CGfxCommandUniform3iv;
+	friend class CGfxCommandUniform4iv;
 	friend class CGfxCommandUniform1fv;
 	friend class CGfxCommandUniform2fv;
 	friend class CGfxCommandUniform3fv;
@@ -98,11 +106,6 @@ private:
 	CGfxRenderer(void *hDC, const char *szShaderCachePath, int width, int height, uint32_t format);
 	virtual ~CGfxRenderer(void);
 
-
-#pragma region Capability
-public:
-	bool IsSupportGLES31(void);
-#pragma endregion
 
 #pragma region SwapChain
 public:
@@ -192,10 +195,18 @@ public:
 	bool CmdBindMaterialPass(CGfxCommandBuffer *pCommandBuffer, const CGfxMaterialPtr &ptrMaterial, uint32_t namePass);
 	bool CmdBindInputTexture(CGfxCommandBuffer *pCommandBuffer, const char *szName, uint32_t texture, uint32_t minFilter, uint32_t magFilter, uint32_t addressMode);
 
+	bool CmdUniform1i(CGfxCommandBuffer *pCommandBuffer, const char *szName, int v0);
+	bool CmdUniform2i(CGfxCommandBuffer *pCommandBuffer, const char *szName, int v0, int v1);
+	bool CmdUniform3i(CGfxCommandBuffer *pCommandBuffer, const char *szName, int v0, int v1, int v2);
+	bool CmdUniform4i(CGfxCommandBuffer *pCommandBuffer, const char *szName, int v0, int v1, int v2, int v3);
 	bool CmdUniform1f(CGfxCommandBuffer *pCommandBuffer, const char *szName, float v0);
 	bool CmdUniform2f(CGfxCommandBuffer *pCommandBuffer, const char *szName, float v0, float v1);
 	bool CmdUniform3f(CGfxCommandBuffer *pCommandBuffer, const char *szName, float v0, float v1, float v2);
 	bool CmdUniform4f(CGfxCommandBuffer *pCommandBuffer, const char *szName, float v0, float v1, float v2, float v3);
+	bool CmdUniform1iv(CGfxCommandBuffer *pCommandBuffer, const char *szName, int count, const int *value);
+	bool CmdUniform2iv(CGfxCommandBuffer *pCommandBuffer, const char *szName, int count, const int *value);
+	bool CmdUniform3iv(CGfxCommandBuffer *pCommandBuffer, const char *szName, int count, const int *value);
+	bool CmdUniform4iv(CGfxCommandBuffer *pCommandBuffer, const char *szName, int count, const int *value);
 	bool CmdUniform1fv(CGfxCommandBuffer *pCommandBuffer, const char *szName, int count, const float *value);
 	bool CmdUniform2fv(CGfxCommandBuffer *pCommandBuffer, const char *szName, int count, const float *value);
 	bool CmdUniform3fv(CGfxCommandBuffer *pCommandBuffer, const char *szName, int count, const float *value);
@@ -231,10 +242,18 @@ private:
 
 #pragma region Uniform
 private:
+	void Uniform1i(uint32_t name, int v0) const;
+	void Uniform2i(uint32_t name, int v0, int v1) const;
+	void Uniform3i(uint32_t name, int v0, int v1, int v2) const;
+	void Uniform4i(uint32_t name, int v0, int v1, int v2, int v3) const;
 	void Uniform1f(uint32_t name, float v0) const;
 	void Uniform2f(uint32_t name, float v0, float v1) const;
 	void Uniform3f(uint32_t name, float v0, float v1, float v2) const;
 	void Uniform4f(uint32_t name, float v0, float v1, float v2, float v3) const;
+	void Uniform1iv(uint32_t name, int count, const int *value) const;
+	void Uniform2iv(uint32_t name, int count, const int *value) const;
+	void Uniform3iv(uint32_t name, int count, const int *value) const;
+	void Uniform4iv(uint32_t name, int count, const int *value) const;
 	void Uniform1fv(uint32_t name, int count, const float *value) const;
 	void Uniform2fv(uint32_t name, int count, const float *value) const;
 	void Uniform3fv(uint32_t name, int count, const float *value) const;

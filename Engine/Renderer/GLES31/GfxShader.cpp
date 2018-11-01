@@ -27,7 +27,7 @@ bool CGfxShader::Load(const char *szFileName, shaderc_shader_kind kind)
 	Destroy();
 
 	std::vector<uint32_t> words;
-	if (CGfxShaderCompiler::LoadShaderBinary(Renderer()->GetResourceFullName(szFileName), words) == false) return false;
+	if (Renderer()->GetShaderCompiler()->LoadShaderBinary(Renderer()->GetResourceFullName(szFileName), words) == false) return false;
 	if (Create(words.data(), words.size(), kind) == false) return false;
 
 	return true;
@@ -190,6 +190,54 @@ bool CGfxShader::BindUniformBuffer(uint32_t name, uint32_t buffer, uint32_t size
 	return false;
 }
 
+bool CGfxShader::Uniform1i(uint32_t name, int v0) const
+{
+	const auto &itLocation = m_uniformLocations.find(name);
+
+	if (itLocation != m_uniformLocations.end()) {
+		GLProgramUniform1i(m_program, itLocation->second, v0);
+		return true;
+	}
+
+	return false;
+}
+
+bool CGfxShader::Uniform2i(uint32_t name, int v0, int v1) const
+{
+	const auto &itLocation = m_uniformLocations.find(name);
+
+	if (itLocation != m_uniformLocations.end()) {
+		GLProgramUniform2i(m_program, itLocation->second, v0, v1);
+		return true;
+	}
+
+	return false;
+}
+
+bool CGfxShader::Uniform3i(uint32_t name, int v0, int v1, int v2) const
+{
+	const auto &itLocation = m_uniformLocations.find(name);
+
+	if (itLocation != m_uniformLocations.end()) {
+		GLProgramUniform3i(m_program, itLocation->second, v0, v1, v2);
+		return true;
+	}
+
+	return false;
+}
+
+bool CGfxShader::Uniform4i(uint32_t name, int v0, int v1, int v2, int v3) const
+{
+	const auto &itLocation = m_uniformLocations.find(name);
+
+	if (itLocation != m_uniformLocations.end()) {
+		GLProgramUniform4i(m_program, itLocation->second, v0, v1, v2, v3);
+		return true;
+	}
+
+	return false;
+}
+
 bool CGfxShader::Uniform1f(uint32_t name, float v0) const
 {
 	const auto &itLocation = m_uniformLocations.find(name);
@@ -238,12 +286,60 @@ bool CGfxShader::Uniform4f(uint32_t name, float v0, float v1, float v2, float v3
 	return false;
 }
 
+bool CGfxShader::Uniform1iv(uint32_t name, int count, const int *value) const
+{
+	const auto &itLocation = m_uniformLocations.find(name);
+
+	if (itLocation != m_uniformLocations.end()) {
+		GLProgramUniform1iv(m_program, itLocation->second, count, value);
+		return true;
+	}
+
+	return false;
+}
+
+bool CGfxShader::Uniform2iv(uint32_t name, int count, const int *value) const
+{
+	const auto &itLocation = m_uniformLocations.find(name);
+
+	if (itLocation != m_uniformLocations.end()) {
+		GLProgramUniform2iv(m_program, itLocation->second, count, value);
+		return true;
+	}
+
+	return false;
+}
+
+bool CGfxShader::Uniform3iv(uint32_t name, int count, const int *value) const
+{
+	const auto &itLocation = m_uniformLocations.find(name);
+
+	if (itLocation != m_uniformLocations.end()) {
+		GLProgramUniform3iv(m_program, itLocation->second, count, value);
+		return true;
+	}
+
+	return false;
+}
+
+bool CGfxShader::Uniform4iv(uint32_t name, int count, const int *value) const
+{
+	const auto &itLocation = m_uniformLocations.find(name);
+
+	if (itLocation != m_uniformLocations.end()) {
+		GLProgramUniform4iv(m_program, itLocation->second, count, value);
+		return true;
+	}
+
+	return false;
+}
+
 bool CGfxShader::Uniform1fv(uint32_t name, int count, const float *value) const
 {
 	const auto &itLocation = m_uniformLocations.find(name);
 
 	if (itLocation != m_uniformLocations.end()) {
-		glProgramUniform1fv(m_program, itLocation->second, count, value);
+		GLProgramUniform1fv(m_program, itLocation->second, count, value);
 		return true;
 	}
 
@@ -255,7 +351,7 @@ bool CGfxShader::Uniform2fv(uint32_t name, int count, const float *value) const
 	const auto &itLocation = m_uniformLocations.find(name);
 
 	if (itLocation != m_uniformLocations.end()) {
-		glProgramUniform2fv(m_program, itLocation->second, count, value);
+		GLProgramUniform2fv(m_program, itLocation->second, count, value);
 		return true;
 	}
 
@@ -267,7 +363,7 @@ bool CGfxShader::Uniform3fv(uint32_t name, int count, const float *value) const
 	const auto &itLocation = m_uniformLocations.find(name);
 
 	if (itLocation != m_uniformLocations.end()) {
-		glProgramUniform3fv(m_program, itLocation->second, count, value);
+		GLProgramUniform3fv(m_program, itLocation->second, count, value);
 		return true;
 	}
 
@@ -279,7 +375,7 @@ bool CGfxShader::Uniform4fv(uint32_t name, int count, const float *value) const
 	const auto &itLocation = m_uniformLocations.find(name);
 
 	if (itLocation != m_uniformLocations.end()) {
-		glProgramUniform4fv(m_program, itLocation->second, count, value);
+		GLProgramUniform4fv(m_program, itLocation->second, count, value);
 		return true;
 	}
 
@@ -291,7 +387,7 @@ bool CGfxShader::UniformMatrix2fv(uint32_t name, int count, const float *value) 
 	const auto &itLocation = m_uniformLocations.find(name);
 
 	if (itLocation != m_uniformLocations.end()) {
-		glProgramUniformMatrix2fv(m_program, itLocation->second, count, GL_FALSE, value);
+		GLProgramUniformMatrix2fv(m_program, itLocation->second, count, value);
 		return true;
 	}
 
@@ -303,7 +399,7 @@ bool CGfxShader::UniformMatrix3fv(uint32_t name, int count, const float *value) 
 	const auto &itLocation = m_uniformLocations.find(name);
 
 	if (itLocation != m_uniformLocations.end()) {
-		glProgramUniformMatrix3fv(m_program, itLocation->second, count, GL_FALSE, value);
+		GLProgramUniformMatrix3fv(m_program, itLocation->second, count, value);
 		return true;
 	}
 
@@ -315,7 +411,7 @@ bool CGfxShader::UniformMatrix4fv(uint32_t name, int count, const float *value) 
 	const auto &itLocation = m_uniformLocations.find(name);
 
 	if (itLocation != m_uniformLocations.end()) {
-		glProgramUniformMatrix4fv(m_program, itLocation->second, count, GL_FALSE, value);
+		GLProgramUniformMatrix4fv(m_program, itLocation->second, count, value);
 		return true;
 	}
 

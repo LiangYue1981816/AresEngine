@@ -549,6 +549,30 @@
     <ClInclude Include="..\..\Engine\Scene\SceneDefinition.h">
       <Filter>Engine\Scene\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxCommandUniform1i.h">
+      <Filter>Engine\Renderer\GLES\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxCommandUniform1iv.h">
+      <Filter>Engine\Renderer\GLES\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxCommandUniform2i.h">
+      <Filter>Engine\Renderer\GLES\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxCommandUniform2iv.h">
+      <Filter>Engine\Renderer\GLES\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxCommandUniform3i.h">
+      <Filter>Engine\Renderer\GLES\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxCommandUniform3iv.h">
+      <Filter>Engine\Renderer\GLES\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxCommandUniform4i.h">
+      <Filter>Engine\Renderer\GLES\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES31\GfxCommandUniform4iv.h">
+      <Filter>Engine\Renderer\GLES\Source Files\Commands</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Engine\Base\TaskGraph.cpp">

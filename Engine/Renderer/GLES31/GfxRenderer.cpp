@@ -101,13 +101,6 @@ CGfxRenderer::~CGfxRenderer(void)
 	delete m_pDrawIndirectBufferManager;
 }
 
-#pragma region Capability
-bool CGfxRenderer::IsSupportGLES31(void)
-{
-	return true;
-}
-#pragma endregion
-
 #pragma region SwapChain
 CGfxSwapChain* CGfxRenderer::GetSwapChain(void) const
 {
@@ -371,6 +364,26 @@ bool CGfxRenderer::CmdBindInputTexture(CGfxCommandBuffer *pCommandBuffer, const 
 	return pCommandBuffer->CmdBindInputTexture(szName, texture, minFilter, magFilter, addressMode);
 }
 
+bool CGfxRenderer::CmdUniform1i(CGfxCommandBuffer *pCommandBuffer, const char *szName, int v0)
+{
+	return pCommandBuffer->CmdUniform1i(szName, v0);
+}
+
+bool CGfxRenderer::CmdUniform2i(CGfxCommandBuffer *pCommandBuffer, const char *szName, int v0, int v1)
+{
+	return pCommandBuffer->CmdUniform2i(szName, v0, v1);
+}
+
+bool CGfxRenderer::CmdUniform3i(CGfxCommandBuffer *pCommandBuffer, const char *szName, int v0, int v1, int v2)
+{
+	return pCommandBuffer->CmdUniform3i(szName, v0, v1, v2);
+}
+
+bool CGfxRenderer::CmdUniform4i(CGfxCommandBuffer *pCommandBuffer, const char *szName, int v0, int v1, int v2, int v3)
+{
+	return pCommandBuffer->CmdUniform4i(szName, v0, v1, v2, v3);
+}
+
 bool CGfxRenderer::CmdUniform1f(CGfxCommandBuffer *pCommandBuffer, const char *szName, float v0)
 {
 	return pCommandBuffer->CmdUniform1f(szName, v0);
@@ -389,6 +402,26 @@ bool CGfxRenderer::CmdUniform3f(CGfxCommandBuffer *pCommandBuffer, const char *s
 bool CGfxRenderer::CmdUniform4f(CGfxCommandBuffer *pCommandBuffer, const char *szName, float v0, float v1, float v2, float v3)
 {
 	return pCommandBuffer->CmdUniform4f(szName, v0, v1, v2, v3);
+}
+
+bool CGfxRenderer::CmdUniform1iv(CGfxCommandBuffer *pCommandBuffer, const char *szName, int count, const int *value)
+{
+	return pCommandBuffer->CmdUniform1iv(szName, count, value);
+}
+
+bool CGfxRenderer::CmdUniform2iv(CGfxCommandBuffer *pCommandBuffer, const char *szName, int count, const int *value)
+{
+	return pCommandBuffer->CmdUniform2iv(szName, count, value);
+}
+
+bool CGfxRenderer::CmdUniform3iv(CGfxCommandBuffer *pCommandBuffer, const char *szName, int count, const int *value)
+{
+	return pCommandBuffer->CmdUniform3iv(szName, count, value);
+}
+
+bool CGfxRenderer::CmdUniform4iv(CGfxCommandBuffer *pCommandBuffer, const char *szName, int count, const int *value)
+{
+	return pCommandBuffer->CmdUniform4iv(szName, count, value);
 }
 
 bool CGfxRenderer::CmdUniform1fv(CGfxCommandBuffer *pCommandBuffer, const char *szName, int count, const float *value)
@@ -560,6 +593,34 @@ void CGfxRenderer::BindInputTexture(const char *szName, uint32_t texture, uint32
 #pragma endregion
 
 #pragma region Uniform
+void CGfxRenderer::Uniform1i(uint32_t name, int v0) const
+{
+	if (m_pCurrentPipeline) {
+		m_pCurrentPipeline->Uniform1i(name, v0);
+	}
+}
+
+void CGfxRenderer::Uniform2i(uint32_t name, int v0, int v1) const
+{
+	if (m_pCurrentPipeline) {
+		m_pCurrentPipeline->Uniform2i(name, v0, v1);
+	}
+}
+
+void CGfxRenderer::Uniform3i(uint32_t name, int v0, int v1, int v2) const
+{
+	if (m_pCurrentPipeline) {
+		m_pCurrentPipeline->Uniform3i(name, v0, v1, v2);
+	}
+}
+
+void CGfxRenderer::Uniform4i(uint32_t name, int v0, int v1, int v2, int v3) const
+{
+	if (m_pCurrentPipeline) {
+		m_pCurrentPipeline->Uniform4i(name, v0, v1, v2, v3);
+	}
+}
+
 void CGfxRenderer::Uniform1f(uint32_t name, float v0) const
 {
 	if (m_pCurrentPipeline) {
@@ -585,6 +646,34 @@ void CGfxRenderer::Uniform4f(uint32_t name, float v0, float v1, float v2, float 
 {
 	if (m_pCurrentPipeline) {
 		m_pCurrentPipeline->Uniform4f(name, v0, v1, v2, v3);
+	}
+}
+
+void CGfxRenderer::Uniform1iv(uint32_t name, int count, const int *value) const
+{
+	if (m_pCurrentPipeline) {
+		m_pCurrentPipeline->Uniform1iv(name, count, value);
+	}
+}
+
+void CGfxRenderer::Uniform2iv(uint32_t name, int count, const int *value) const
+{
+	if (m_pCurrentPipeline) {
+		m_pCurrentPipeline->Uniform2iv(name, count, value);
+	}
+}
+
+void CGfxRenderer::Uniform3iv(uint32_t name, int count, const int *value) const
+{
+	if (m_pCurrentPipeline) {
+		m_pCurrentPipeline->Uniform3iv(name, count, value);
+	}
+}
+
+void CGfxRenderer::Uniform4iv(uint32_t name, int count, const int *value) const
+{
+	if (m_pCurrentPipeline) {
+		m_pCurrentPipeline->Uniform4iv(name, count, value);
 	}
 }
 

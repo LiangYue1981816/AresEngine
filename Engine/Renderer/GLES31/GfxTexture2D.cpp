@@ -47,7 +47,7 @@ bool CGfxTexture2D::Create(uint32_t format, uint32_t internalFormat, int width, 
 	m_width = width;
 	m_height = height;
 
-	m_samples = Renderer()->IsSupportGLES31() ? samples : 0;
+	m_samples = samples;
 	m_mipLevels = mipLevels;
 
 	if (m_samples == 0) {

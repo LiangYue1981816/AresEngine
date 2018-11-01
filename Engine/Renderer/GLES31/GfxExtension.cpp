@@ -163,6 +163,17 @@ typedef struct ProgramPipelineParam {
 	eastl::unordered_map<int, eastl::unordered_map<int, float[2]>> uniform2f;
 	eastl::unordered_map<int, eastl::unordered_map<int, float[3]>> uniform3f;
 	eastl::unordered_map<int, eastl::unordered_map<int, float[4]>> uniform4f;
+	eastl::unordered_map<int, eastl::unordered_map<int, eastl::vector<int>>> uniform1iv;
+	eastl::unordered_map<int, eastl::unordered_map<int, eastl::vector<int>>> uniform2iv;
+	eastl::unordered_map<int, eastl::unordered_map<int, eastl::vector<int>>> uniform3iv;
+	eastl::unordered_map<int, eastl::unordered_map<int, eastl::vector<int>>> uniform4iv;
+	eastl::unordered_map<int, eastl::unordered_map<int, eastl::vector<float>>> uniform1fv;
+	eastl::unordered_map<int, eastl::unordered_map<int, eastl::vector<float>>> uniform2fv;
+	eastl::unordered_map<int, eastl::unordered_map<int, eastl::vector<float>>> uniform3fv;
+	eastl::unordered_map<int, eastl::unordered_map<int, eastl::vector<float>>> uniform4fv;
+	eastl::unordered_map<int, eastl::unordered_map<int, eastl::vector<float>>> uniformMatrix2fv;
+	eastl::unordered_map<int, eastl::unordered_map<int, eastl::vector<float>>> uniformMatrix3fv;
+	eastl::unordered_map<int, eastl::unordered_map<int, eastl::vector<float>>> uniformMatrix4fv;
 } ProgramPipelineParam;
 
 typedef struct VertexArrayParam {
@@ -343,6 +354,17 @@ void GLResetContext(void)
 	ProgramPipeline.uniform2f.clear();
 	ProgramPipeline.uniform3f.clear();
 	ProgramPipeline.uniform4f.clear();
+	ProgramPipeline.uniform1iv.clear();
+	ProgramPipeline.uniform2iv.clear();
+	ProgramPipeline.uniform3iv.clear();
+	ProgramPipeline.uniform4iv.clear();
+	ProgramPipeline.uniform1fv.clear();
+	ProgramPipeline.uniform2fv.clear();
+	ProgramPipeline.uniform3fv.clear();
+	ProgramPipeline.uniform4fv.clear();
+	ProgramPipeline.uniformMatrix2fv.clear();
+	ProgramPipeline.uniformMatrix3fv.clear();
+	ProgramPipeline.uniformMatrix4fv.clear();
 
 	Scissor.x = GL_INVALID_VALUE;
 	Scissor.y = GL_INVALID_VALUE;
@@ -805,6 +827,17 @@ void GLUseProgram(GLuint program)
 		ProgramPipeline.uniform2f[program].clear();
 		ProgramPipeline.uniform3f[program].clear();
 		ProgramPipeline.uniform4f[program].clear();
+		ProgramPipeline.uniform1iv[program].clear();
+		ProgramPipeline.uniform2iv[program].clear();
+		ProgramPipeline.uniform3iv[program].clear();
+		ProgramPipeline.uniform4iv[program].clear();
+		ProgramPipeline.uniform1fv[program].clear();
+		ProgramPipeline.uniform2fv[program].clear();
+		ProgramPipeline.uniform3fv[program].clear();
+		ProgramPipeline.uniform4fv[program].clear();
+		ProgramPipeline.uniformMatrix2fv[program].clear();
+		ProgramPipeline.uniformMatrix3fv[program].clear();
+		ProgramPipeline.uniformMatrix4fv[program].clear();
 		GLUseProgram(program);
 	}
 }
@@ -905,6 +938,116 @@ void GLUniform4f(GLint location, GLfloat v0, GLfloat v1, GLfloat v2, GLfloat v3)
 	}
 }
 
+void GLUniform1iv(GLint location, GLsizei count, const GLint *value)
+{
+	eastl::vector<int> values(value, value + count);
+	if (ProgramPipeline.uniform1iv[ProgramPipeline.program].find(location) == ProgramPipeline.uniform1iv[ProgramPipeline.program].end() ||
+		ProgramPipeline.uniform1iv[ProgramPipeline.program][location] != values) {
+		ProgramPipeline.uniform1iv[ProgramPipeline.program][location] = values;
+		glUniform1iv(location, count, value);
+	}
+}
+
+void GLUniform2iv(GLint location, GLsizei count, const GLint *value)
+{
+	eastl::vector<int> values(value, value + count);
+	if (ProgramPipeline.uniform2iv[ProgramPipeline.program].find(location) == ProgramPipeline.uniform2iv[ProgramPipeline.program].end() ||
+		ProgramPipeline.uniform2iv[ProgramPipeline.program][location] != values) {
+		ProgramPipeline.uniform2iv[ProgramPipeline.program][location] = values;
+		glUniform2iv(location, count, value);
+	}
+}
+
+void GLUniform3iv(GLint location, GLsizei count, const GLint *value)
+{
+	eastl::vector<int> values(value, value + count);
+	if (ProgramPipeline.uniform3iv[ProgramPipeline.program].find(location) == ProgramPipeline.uniform3iv[ProgramPipeline.program].end() ||
+		ProgramPipeline.uniform3iv[ProgramPipeline.program][location] != values) {
+		ProgramPipeline.uniform3iv[ProgramPipeline.program][location] = values;
+		glUniform3iv(location, count, value);
+	}
+}
+
+void GLUniform4iv(GLint location, GLsizei count, const GLint *value)
+{
+	eastl::vector<int> values(value, value + count);
+	if (ProgramPipeline.uniform4iv[ProgramPipeline.program].find(location) == ProgramPipeline.uniform4iv[ProgramPipeline.program].end() ||
+		ProgramPipeline.uniform4iv[ProgramPipeline.program][location] != values) {
+		ProgramPipeline.uniform4iv[ProgramPipeline.program][location] = values;
+		glUniform4iv(location, count, value);
+	}
+}
+
+void GLUniform1fv(GLint location, GLsizei count, const GLfloat *value)
+{
+	eastl::vector<float> values(value, value + count);
+	if (ProgramPipeline.uniform1fv[ProgramPipeline.program].find(location) == ProgramPipeline.uniform1fv[ProgramPipeline.program].end() ||
+		ProgramPipeline.uniform1fv[ProgramPipeline.program][location] != values) {
+		ProgramPipeline.uniform1fv[ProgramPipeline.program][location] = values;
+		glUniform1fv(location, count, value);
+	}
+}
+
+void GLUniform2fv(GLint location, GLsizei count, const GLfloat *value)
+{
+	eastl::vector<float> values(value, value + count);
+	if (ProgramPipeline.uniform2fv[ProgramPipeline.program].find(location) == ProgramPipeline.uniform2fv[ProgramPipeline.program].end() ||
+		ProgramPipeline.uniform2fv[ProgramPipeline.program][location] != values) {
+		ProgramPipeline.uniform2fv[ProgramPipeline.program][location] = values;
+		glUniform2fv(location, count, value);
+	}
+}
+
+void GLUniform3fv(GLint location, GLsizei count, const GLfloat *value)
+{
+	eastl::vector<float> values(value, value + count);
+	if (ProgramPipeline.uniform3fv[ProgramPipeline.program].find(location) == ProgramPipeline.uniform3fv[ProgramPipeline.program].end() ||
+		ProgramPipeline.uniform3fv[ProgramPipeline.program][location] != values) {
+		ProgramPipeline.uniform3fv[ProgramPipeline.program][location] = values;
+		glUniform3fv(location, count, value);
+	}
+}
+
+void GLUniform4fv(GLint location, GLsizei count, const GLfloat *value)
+{
+	eastl::vector<float> values(value, value + count);
+	if (ProgramPipeline.uniform4fv[ProgramPipeline.program].find(location) == ProgramPipeline.uniform4fv[ProgramPipeline.program].end() ||
+		ProgramPipeline.uniform4fv[ProgramPipeline.program][location] != values) {
+		ProgramPipeline.uniform4fv[ProgramPipeline.program][location] = values;
+		glUniform4fv(location, count, value);
+	}
+}
+
+void GLUniformMatrix2fv(GLint location, GLsizei count, const GLfloat *value)
+{
+	eastl::vector<float> values(value, value + count);
+	if (ProgramPipeline.uniformMatrix2fv[ProgramPipeline.program].find(location) == ProgramPipeline.uniformMatrix2fv[ProgramPipeline.program].end() ||
+		ProgramPipeline.uniformMatrix2fv[ProgramPipeline.program][location] != values) {
+		ProgramPipeline.uniformMatrix2fv[ProgramPipeline.program][location] = values;
+		glUniformMatrix2fv(location, count, GL_FALSE, value);
+	}
+}
+
+void GLUniformMatrix3fv(GLint location, GLsizei count, const GLfloat *value)
+{
+	eastl::vector<float> values(value, value + count);
+	if (ProgramPipeline.uniformMatrix3fv[ProgramPipeline.program].find(location) == ProgramPipeline.uniformMatrix3fv[ProgramPipeline.program].end() ||
+		ProgramPipeline.uniformMatrix3fv[ProgramPipeline.program][location] != values) {
+		ProgramPipeline.uniformMatrix3fv[ProgramPipeline.program][location] = values;
+		glUniformMatrix3fv(location, count, GL_FALSE, value);
+	}
+}
+
+void GLUniformMatrix4fv(GLint location, GLsizei count, const GLfloat *value)
+{
+	eastl::vector<float> values(value, value + count);
+	if (ProgramPipeline.uniformMatrix4fv[ProgramPipeline.program].find(location) == ProgramPipeline.uniformMatrix4fv[ProgramPipeline.program].end() ||
+		ProgramPipeline.uniformMatrix4fv[ProgramPipeline.program][location] != values) {
+		ProgramPipeline.uniformMatrix4fv[ProgramPipeline.program][location] = values;
+		glUniformMatrix4fv(location, count, GL_FALSE, value);
+	}
+}
+
 void GLBindProgramPipeline(GLuint pipeline)
 {
 	if (ProgramPipeline.pipeline != pipeline) {
@@ -917,6 +1060,17 @@ void GLBindProgramPipeline(GLuint pipeline)
 		ProgramPipeline.uniform2f.clear();
 		ProgramPipeline.uniform3f.clear();
 		ProgramPipeline.uniform4f.clear();
+		ProgramPipeline.uniform1iv.clear();
+		ProgramPipeline.uniform2iv.clear();
+		ProgramPipeline.uniform3iv.clear();
+		ProgramPipeline.uniform4iv.clear();
+		ProgramPipeline.uniform1fv.clear();
+		ProgramPipeline.uniform2fv.clear();
+		ProgramPipeline.uniform3fv.clear();
+		ProgramPipeline.uniform4fv.clear();
+		ProgramPipeline.uniformMatrix2fv.clear();
+		ProgramPipeline.uniformMatrix3fv.clear();
+		ProgramPipeline.uniformMatrix4fv.clear();
 		glBindProgramPipeline(pipeline);
 	}
 }
@@ -1014,6 +1168,116 @@ void GLProgramUniform4f(GLuint program, GLint location, GLfloat v0, GLfloat v1, 
 		ProgramPipeline.uniform4f[program][location][2] = v2;
 		ProgramPipeline.uniform4f[program][location][3] = v3;
 		glProgramUniform4f(program, location, v0, v1, v2, v3);
+	}
+}
+
+void GLProgramUniform1iv(GLuint program, GLint location, GLsizei count, const GLint *value)
+{
+	eastl::vector<int> values(value, value + count);
+	if (ProgramPipeline.uniform1iv[program].find(location) == ProgramPipeline.uniform1iv[program].end() ||
+		ProgramPipeline.uniform1iv[program][location] != values) {
+		ProgramPipeline.uniform1iv[program][location] = values;
+		glProgramUniform1iv(program, location, count, value);
+	}
+}
+
+void GLProgramUniform2iv(GLuint program, GLint location, GLsizei count, const GLint *value)
+{
+	eastl::vector<int> values(value, value + count);
+	if (ProgramPipeline.uniform2iv[program].find(location) == ProgramPipeline.uniform2iv[program].end() ||
+		ProgramPipeline.uniform2iv[program][location] != values) {
+		ProgramPipeline.uniform2iv[program][location] = values;
+		glProgramUniform2iv(program, location, count, value);
+	}
+}
+
+void GLProgramUniform3iv(GLuint program, GLint location, GLsizei count, const GLint *value)
+{
+	eastl::vector<int> values(value, value + count);
+	if (ProgramPipeline.uniform3iv[program].find(location) == ProgramPipeline.uniform3iv[program].end() ||
+		ProgramPipeline.uniform3iv[program][location] != values) {
+		ProgramPipeline.uniform3iv[program][location] = values;
+		glProgramUniform3iv(program, location, count, value);
+	}
+}
+
+void GLProgramUniform4iv(GLuint program, GLint location, GLsizei count, const GLint *value)
+{
+	eastl::vector<int> values(value, value + count);
+	if (ProgramPipeline.uniform4iv[program].find(location) == ProgramPipeline.uniform4iv[program].end() ||
+		ProgramPipeline.uniform4iv[program][location] != values) {
+		ProgramPipeline.uniform4iv[program][location] = values;
+		glProgramUniform4iv(program, location, count, value);
+	}
+}
+
+void GLProgramUniform1fv(GLuint program, GLint location, GLsizei count, const GLfloat *value)
+{
+	eastl::vector<float> values(value, value + count);
+	if (ProgramPipeline.uniform1fv[program].find(location) == ProgramPipeline.uniform1fv[program].end() ||
+		ProgramPipeline.uniform1fv[program][location] != values) {
+		ProgramPipeline.uniform1fv[program][location] = values;
+		glProgramUniform1fv(program, location, count, value);
+	}
+}
+
+void GLProgramUniform2fv(GLuint program, GLint location, GLsizei count, const GLfloat *value)
+{
+	eastl::vector<float> values(value, value + count);
+	if (ProgramPipeline.uniform2fv[program].find(location) == ProgramPipeline.uniform2fv[program].end() ||
+		ProgramPipeline.uniform2fv[program][location] != values) {
+		ProgramPipeline.uniform2fv[program][location] = values;
+		glProgramUniform2fv(program, location, count, value);
+	}
+}
+
+void GLProgramUniform3fv(GLuint program, GLint location, GLsizei count, const GLfloat *value)
+{
+	eastl::vector<float> values(value, value + count);
+	if (ProgramPipeline.uniform3fv[program].find(location) == ProgramPipeline.uniform3fv[program].end() ||
+		ProgramPipeline.uniform3fv[program][location] != values) {
+		ProgramPipeline.uniform3fv[program][location] = values;
+		glProgramUniform3fv(program, location, count, value);
+	}
+}
+
+void GLProgramUniform4fv(GLuint program, GLint location, GLsizei count, const GLfloat *value)
+{
+	eastl::vector<float> values(value, value + count);
+	if (ProgramPipeline.uniform4fv[program].find(location) == ProgramPipeline.uniform4fv[program].end() ||
+		ProgramPipeline.uniform4fv[program][location] != values) {
+		ProgramPipeline.uniform4fv[program][location] = values;
+		glProgramUniform4fv(program, location, count, value);
+	}
+}
+
+void GLProgramUniformMatrix2fv(GLuint program, GLint location, GLsizei count, const GLfloat *value)
+{
+	eastl::vector<float> values(value, value + count);
+	if (ProgramPipeline.uniformMatrix2fv[program].find(location) == ProgramPipeline.uniformMatrix2fv[program].end() ||
+		ProgramPipeline.uniformMatrix2fv[program][location] != values) {
+		ProgramPipeline.uniformMatrix2fv[program][location] = values;
+		glProgramUniformMatrix2fv(program, location, count, GL_FALSE, value);
+	}
+}
+
+void GLProgramUniformMatrix3fv(GLuint program, GLint location, GLsizei count, const GLfloat *value)
+{
+	eastl::vector<float> values(value, value + count);
+	if (ProgramPipeline.uniformMatrix3fv[program].find(location) == ProgramPipeline.uniformMatrix3fv[program].end() ||
+		ProgramPipeline.uniformMatrix3fv[program][location] != values) {
+		ProgramPipeline.uniformMatrix3fv[program][location] = values;
+		glProgramUniformMatrix3fv(program, location, count, GL_FALSE, value);
+	}
+}
+
+void GLProgramUniformMatrix4fv(GLuint program, GLint location, GLsizei count, const GLfloat *value)
+{
+	eastl::vector<float> values(value, value + count);
+	if (ProgramPipeline.uniformMatrix4fv[program].find(location) == ProgramPipeline.uniformMatrix4fv[program].end() ||
+		ProgramPipeline.uniformMatrix4fv[program][location] != values) {
+		ProgramPipeline.uniformMatrix4fv[program][location] = values;
+		glProgramUniformMatrix4fv(program, location, count, GL_FALSE, value);
 	}
 }
 #pragma endregion
