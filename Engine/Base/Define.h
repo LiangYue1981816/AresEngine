@@ -1,6 +1,13 @@
 #include <stdint.h>
 
 
+#ifdef PLATFORM_WINDOWS
+#define CALL_API                       __declspec(dllexport)
+#else
+#define CALL_API
+#endif
+
+
 #ifdef __LP64__
 #define POINTER_SIZE                   8         // 8BYTE
 #else
