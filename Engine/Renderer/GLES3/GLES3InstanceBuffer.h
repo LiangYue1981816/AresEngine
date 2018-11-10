@@ -1,0 +1,23 @@
+#pragma once
+#include "GLES3Renderer.h"
+
+
+class CGLES3InstanceBuffer : public CGfxInstanceBuffer
+{
+	friend class CGLES3Mesh;
+
+
+private:
+	CGLES3InstanceBuffer(uint32_t binding, uint32_t format);
+	virtual ~CGLES3InstanceBuffer(void);
+
+
+public:
+	bool BufferData(size_t size, const void *pBuffer);
+	void Bind(void *pParam);
+
+
+private:
+	uint32_t m_hash;
+	uint32_t m_buffer;
+};

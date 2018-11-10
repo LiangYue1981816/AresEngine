@@ -1,0 +1,29 @@
+#pragma once
+#include "GfxCommandBuffer.h"
+
+
+class CGLES3CommandExecute : public CGfxCommandBase
+{
+public:
+	CGLES3CommandExecute(CGfxCommandBufferPtr &ptrCommandBuffer)
+		: m_ptrCommandBuffer(ptrCommandBuffer)
+	{
+
+	}
+	virtual ~CGLES3CommandExecute(void)
+	{
+
+	}
+
+public:
+	virtual void Execute(void) const
+	{
+		if (m_ptrCommandBuffer.IsValid()) {
+			m_ptrCommandBuffer->Execute();
+		}
+	}
+
+
+private:
+	CGfxCommandBufferPtr m_ptrCommandBuffer;
+};
