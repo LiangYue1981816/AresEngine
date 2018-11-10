@@ -44,6 +44,6 @@ private:
 	CGfxFrameBufferPtr m_ptrFrameBufferScreenMSAA[CGfxSwapChain::SWAPCHAIN_IMAGE_COUNT];
 
 private:
-	CGfxCommandBuffer m_mainCommandBuffer[2];
-	eastl::vector<CGfxCommandBuffer> m_secondaryCommandBuffer[THREAD_COUNT][2];
+	CGfxCommandBuffer *m_pMainCommandBuffer[2];
+	CGfxCommandBuffer *m_pSecondaryCommandBuffer[THREAD_COUNT][2];
 };

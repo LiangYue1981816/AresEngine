@@ -3,9 +3,6 @@
 #include <stdlib.h>
 #include "PreHeader.h"
 
-#include "event.h"
-#include "pthread.h"
-
 
 class CTask
 {

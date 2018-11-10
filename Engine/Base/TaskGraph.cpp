@@ -131,7 +131,7 @@ CTaskGraph::CTaskGraph(const char *szName, int priority)
 		rcode = pthread_create(&m_threads[indexThread], &attr, TaskThread, this);
 		rcode = pthread_attr_destroy(&attr);
 
-		char szThreadName[260];
+		char szThreadName[_MAX_STRING];
 		sprintf(szThreadName, "%s_%d(%2.2d)", szName, indexThread, priority);
 		pthread_set_name(m_threads[indexThread], szThreadName);
 	}

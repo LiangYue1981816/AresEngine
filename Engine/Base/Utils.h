@@ -13,6 +13,7 @@ extern size_t fsize(FILE *stream);
 extern size_t freadline(char *buffer, size_t size, FILE *stream);
 extern size_t freadstring(char *buffer, size_t size, FILE *stream);
 extern size_t fwritestring(const char *buffer, size_t size, FILE *stream);
+
 extern void LogOutput(const char *szTag, const char *szFormat, ...);
 
 #if defined(PLATFORM_ANDROID) || defined(PLATFORM_IOS)
@@ -27,7 +28,7 @@ extern int strnicmp(const char *src, const char *dst, int count);
 #define _A_ARCH   0x20
 
 struct _finddata_t {
-	char name[260];
+	char name[_MAX_STRING];
 	unsigned int attrib;
 };
 

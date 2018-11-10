@@ -20,7 +20,6 @@ public:
 public:
 	void SetMaterial(const CGfxMaterialPtr &ptrMaterial);
 	void SetMesh(const CGfxMeshPtr &ptrMesh);
-	void SetDrawIndirectBuffer(const CGfxDrawIndirectBufferPtr &ptrDrawIndirectBuffer);
 
 public:
 	glm::aabb GetLocalAABB(void);
@@ -37,7 +36,6 @@ private:
 private:
 	CGfxMaterialPtr m_ptrMaterial;
 	CGfxMeshPtr m_ptrMesh;
-	CGfxDrawIndirectBufferPtr m_ptrDrawIndirectBuffer;
 };
 
 typedef CComponentPtr<CComponentMesh> CComponentMeshPtr;

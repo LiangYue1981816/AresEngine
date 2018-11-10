@@ -38,7 +38,6 @@ private:
 private:
 	CGfxMaterialPtr m_ptrMaterial;
 	CGfxMeshPtr m_ptrMesh;
-	CGfxDrawIndirectBufferPtr m_ptrDrawIndirectBuffer;
 };
 
 typedef CComponentPtr<CComponentPointLight> CComponentPointLightPtr;

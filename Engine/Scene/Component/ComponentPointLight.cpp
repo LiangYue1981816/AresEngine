@@ -7,7 +7,6 @@ CComponentPointLight::CComponentPointLight(uint32_t name)
 {
 	m_ptrMaterial = Renderer()->LoadMaterial("PointLight.material");
 	m_ptrMesh = Renderer()->LoadMesh("PointLight.mesh", INSTANCE_ATTRIBUTE_TRANSFORM | INSTANCE_ATTRIBUTE_POINTLIGHT_COLOR | INSTANCE_ATTRIBUTE_POINTLIGHT_ATTENUATION);
-	m_ptrDrawIndirectBuffer = Renderer()->CreateDrawIndirectBuffer(m_ptrMesh, 0, 0, m_ptrMesh->GetIndexCount());
 }
 
 CComponentPointLight::CComponentPointLight(const CComponentPointLight &component)
@@ -15,7 +14,6 @@ CComponentPointLight::CComponentPointLight(const CComponentPointLight &component
 {
 	m_ptrMaterial = component.m_ptrMaterial;
 	m_ptrMesh = component.m_ptrMesh;
-	m_ptrDrawIndirectBuffer = component.m_ptrDrawIndirectBuffer;
 
 	m_instanceData.transformMatrix = glm::mat4();
 	m_instanceData.color = component.m_instanceData.color;
@@ -56,6 +54,5 @@ void CComponentPointLight::TaskUpdateCamera(CGfxCamera *pCamera, int indexThread
 {
 	if (pCamera->IsVisible(GetWorldAABB())) {
 		pCamera->AddMesh(indexThread, indexQueue, m_ptrMaterial, m_ptrMesh, (const uint8_t *)&m_instanceData, sizeof(m_instanceData));
-//		pCamera->AddMeshIndirect(indexThread, indexQueue, m_ptrMaterial, m_ptrMesh, m_ptrDrawIndirectBuffer, (const uint8_t *)&m_instanceData, sizeof(m_instanceData));
 	}
 }

@@ -3,15 +3,32 @@
 
 
 CRenderSolutionDefault::CRenderSolutionDefault(void)
-	: m_mainCommandBuffer{ CGfxCommandBuffer(true), CGfxCommandBuffer(true) }
+	: m_pMainCommandBuffer{ nullptr }
+	, m_pSecondaryCommandBuffer{ nullptr }
 {
 	SetEnableMSAA(false);
+
+	m_pMainCommandBuffer[0] = Renderer()->CreateCommandBuffer(true);
+	m_pMainCommandBuffer[1] = Renderer()->CreateCommandBuffer(true);
+
+	for (int indexThread = 0; indexThread < THREAD_COUNT; indexThread) {
+		m_pSecondaryCommandBuffer[indexThread][0] = Renderer()->CreateCommandBuffer(false);
+		m_pSecondaryCommandBuffer[indexThread][1] = Renderer()->CreateCommandBuffer(false);
+	}
 }
 
 CRenderSolutionDefault::~CRenderSolutionDefault(void)
 {
 	Clearup(0);
 	Clearup(1);
+
+	Renderer()->DestroyCommandBuffer(m_pMainCommandBuffer[0]);
+	Renderer()->DestroyCommandBuffer(m_pMainCommandBuffer[1]);
+
+	for (int indexThread = 0; indexThread < THREAD_COUNT; indexThread) {
+		Renderer()->DestroyCommandBuffer(m_pSecondaryCommandBuffer[indexThread][0]);
+		Renderer()->DestroyCommandBuffer(m_pSecondaryCommandBuffer[indexThread][1]);
+	}
 }
 
 void CRenderSolutionDefault::SetEnableMSAA(bool bEnable, int samples)
@@ -100,10 +117,7 @@ void CRenderSolutionDefault::Render(int indexQueue)
 		static CTaskCommandBuffer taskCommandBuffers[THREAD_COUNT];
 
 		for (int indexThread = 0; indexThread < THREAD_COUNT; indexThread++) {
-			m_secondaryCommandBuffer[indexThread][indexQueue].emplace_back(false);
-			CGfxCommandBuffer *pCommandBuffer = &m_secondaryCommandBuffer[indexThread][indexQueue][m_secondaryCommandBuffer[indexThread][indexQueue].size() - 1];
-
-			taskCommandBuffers[indexThread].SetParams(pCommandBuffer, indexThread, indexQueue, namePass);
+			taskCommandBuffers[indexThread].SetParams(m_pSecondaryCommandBuffer[indexThread][indexQueue], indexThread, indexQueue, namePass);
 			m_taskCommandBuffer.Task(&taskCommandBuffers[indexThread], MainCamera(), nullptr, nullptr);
 		}
 	}
@@ -112,7 +126,7 @@ void CRenderSolutionDefault::Render(int indexQueue)
 
 void CRenderSolutionDefault::Present(int indexQueue)
 {
-	CGfxCommandBuffer *pMainCommandBuffer = &m_mainCommandBuffer[indexQueue];
+	CGfxCommandBuffer *pMainCommandBuffer = m_pMainCommandBuffer[indexQueue];
 
 	const CGfxRenderPassPtr &ptrRenderPass = m_bEnableMSAA ? m_ptrRenderPassMSAA : m_ptrRenderPass;
 	const CGfxFrameBufferPtr &ptrFrameBuffer = m_bEnableMSAA ? m_ptrFrameBufferScreenMSAA[Renderer()->GetSwapChain()->GetTextureIndex()] : m_ptrFrameBufferScreen[Renderer()->GetSwapChain()->GetTextureIndex()];
@@ -126,9 +140,7 @@ void CRenderSolutionDefault::Present(int indexQueue)
 		Renderer()->CmdSetViewport(pMainCommandBuffer, (int)viewport.x, (int)viewport.y, (int)viewport.z, (int)viewport.w);
 
 		for (int indexThread = 0; indexThread < THREAD_COUNT; indexThread++) {
-			for (const auto &itCommandBuffer : m_secondaryCommandBuffer[indexThread][indexQueue]) {
-				Renderer()->CmdExecute(pMainCommandBuffer, (CGfxCommandBuffer *)&itCommandBuffer);
-			}
+			Renderer()->CmdExecute(pMainCommandBuffer, m_pSecondaryCommandBuffer[indexThread][indexQueue]);
 		}
 	}
 	Renderer()->CmdEndRenderPass(pMainCommandBuffer);
@@ -139,10 +151,10 @@ void CRenderSolutionDefault::Present(int indexQueue)
 
 void CRenderSolutionDefault::Clearup(int indexQueue)
 {
-	m_mainCommandBuffer[indexQueue].Clearup();
+	m_pMainCommandBuffer[indexQueue]->Clearup();
 
 	for (int indexThread = 0; indexThread < THREAD_COUNT; indexThread++) {
-		m_secondaryCommandBuffer[indexThread][indexQueue].clear();
+		m_pSecondaryCommandBuffer[indexThread][indexQueue]->Clearup();
 	}
 
 	MainCamera()->Clear(indexQueue);

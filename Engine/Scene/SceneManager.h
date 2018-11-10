@@ -46,7 +46,7 @@ public:
 public:
 	void SetShadowOrtho(float left, float right, float bottom, float top, float zNear, float zFar);
 	void SetShadowLookat(float eyex, float eyey, float eyez, float centerx, float centery, float centerz, float upx, float upy, float upz);
-	void SetShadowDistance(float distance);
+	void SetShadowRange(float range);
 	void SetShadowResolution(float resolution);
 
 	void SetLightFactor(float ambientLightFactor, float pointLightFactor, float directLightFactor, float envLightFactor);
@@ -79,6 +79,7 @@ private:
 private:
 	CGfxCamera *m_pMainCamera;
 	CGfxCamera *m_pShadowCamera;
+	CGfxUniformEngine *m_pUniformEngine;
 
 	eastl::unordered_map<uint32_t, CScene*> m_pScenes;
 	eastl::unordered_map<uint32_t, CSceneNode*> m_pNodes;

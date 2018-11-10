@@ -4,7 +4,6 @@
 unsigned int tick(void)
 {
 #ifdef PLATFORM_WINDOWS
-
 	LARGE_INTEGER freq;
 	LARGE_INTEGER count;
 
@@ -12,13 +11,10 @@ unsigned int tick(void)
 	QueryPerformanceCounter(&count);
 
 	return (unsigned int)(((double)count.QuadPart / freq.QuadPart) * 1000000);
-
 #else
-
 	struct timeval curtime;
 	gettimeofday(&curtime, 0);
 	return (unsigned int)(curtime.tv_sec * 1000000 + curtime.tv_usec);
-
 #endif
 }
 
@@ -32,7 +28,7 @@ unsigned int HashValue(const char *szString)
 		dwHashValue = (dwHashValue << 4) - dwHashValue + (*c == '/' ? '\\' : *c); c++;
 	}
 
-	return dwHashValue ? dwHashValue : 0xffffffff;
+	return dwHashValue ? dwHashValue : INVALID_HASHVALUE;
 }
 
 unsigned int HashValue(const unsigned char *pBuffer, int length)
@@ -45,7 +41,7 @@ unsigned int HashValue(const unsigned char *pBuffer, int length)
 		dwHashValue = (dwHashValue << 4) - dwHashValue + (*c == '/' ? '\\' : *c); c++;
 	}
 
-	return dwHashValue ? dwHashValue : 0xffffffff;
+	return dwHashValue ? dwHashValue : INVALID_HASHVALUE;
 }
 
 void splitfilename(const char *name, char *fname, char *ext)
@@ -175,31 +171,25 @@ void LogOutput(const char *szTag, const char *szFormat, ...)
 	va_end(vaList);
 
 #ifdef PLATFORM_WINDOWS
-
 	if (szTag) {
 		OutputDebugString(szTag);
 		OutputDebugString(": ");
 	}
 
 	OutputDebugString(szText);
-
 #elif PLATFORM_ANDROID
-
 	if (szTag) {
 		__android_log_print(ANDROID_LOG_INFO, "", "%s", szTag);
 		__android_log_print(ANDROID_LOG_INFO, "", "%s", ": ");
 	}
 
 	__android_log_print(ANDROID_LOG_INFO, "", "%s", szText);
-
 #else
-
 	if (szTag) {
 		printf("%s: ", szTag);
 	}
 
 	printf("%s", szText);
-
 #endif
 }
 

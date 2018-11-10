@@ -7,12 +7,14 @@
 CSceneManager::CSceneManager(void)
 	: m_pMainCamera(nullptr)
 	, m_pShadowCamera(nullptr)
+	, m_pUniformEngine(nullptr)
 
 	, m_taskGraphUpdateLogic("TashGraph_UpdateLogic", 75)
 	, m_taskGraphUpdateCamera("TaskGraph_UpdateCamera", 75)
 {
-	m_pMainCamera = new CGfxCamera;
-	m_pShadowCamera = new CGfxCamera;
+	m_pMainCamera = Renderer()->CreateCamera();
+	m_pShadowCamera = Renderer()->CreateCamera();
+	m_pUniformEngine = Renderer()->CreateUniformEngine();
 
 	event_init(&m_eventUpdateLogicSkin, 1);
 	event_init(&m_eventUpdateLogicParticle, 1);
@@ -25,8 +27,9 @@ CSceneManager::CSceneManager(void)
 
 CSceneManager::~CSceneManager(void)
 {
-	delete m_pMainCamera;
-	delete m_pShadowCamera;
+	Renderer()->DestroyCamera(m_pMainCamera);
+	Renderer()->DestroyCamera(m_pShadowCamera);
+	Renderer()->DestroyUniformEngine(m_pUniformEngine);
 
 	event_destroy(&m_eventUpdateLogicSkin);
 	event_destroy(&m_eventUpdateLogicParticle);
@@ -40,7 +43,7 @@ CSceneManager::~CSceneManager(void)
 uint32_t CSceneManager::GetNextNodeName(void) const
 {
 	static uint32_t count = 0;
-	static char szName[260] = { 0 };
+	static char szName[_MAX_STRING] = { 0 };
 	sprintf(szName, "_NODE_%d", count++);
 	return HashValue(szName);
 }
@@ -48,7 +51,7 @@ uint32_t CSceneManager::GetNextNodeName(void) const
 uint32_t CSceneManager::GetNextComponentMeshName(void) const
 {
 	static uint32_t count = 0;
-	static char szName[260] = { 0 };
+	static char szName[_MAX_STRING] = { 0 };
 	sprintf(szName, "_MESH_%d", count++);
 	return HashValue(szName);
 }
@@ -56,7 +59,7 @@ uint32_t CSceneManager::GetNextComponentMeshName(void) const
 uint32_t CSceneManager::GetNextComponentSkinName(void) const
 {
 	static uint32_t count = 0;
-	static char szName[260] = { 0 };
+	static char szName[_MAX_STRING] = { 0 };
 	sprintf(szName, "_SKIN_%d", count++);
 	return HashValue(szName);
 }
@@ -64,7 +67,7 @@ uint32_t CSceneManager::GetNextComponentSkinName(void) const
 uint32_t CSceneManager::GetNextComponentParticleName(void) const
 {
 	static uint32_t count = 0;
-	static char szName[260] = { 0 };
+	static char szName[_MAX_STRING] = { 0 };
 	sprintf(szName, "_PARTICLE_%d", count++);
 	return HashValue(szName);
 }
@@ -72,7 +75,7 @@ uint32_t CSceneManager::GetNextComponentParticleName(void) const
 uint32_t CSceneManager::GetNextComponentPointLightName(void) const
 {
 	static uint32_t count = 0;
-	static char szName[260] = { 0 };
+	static char szName[_MAX_STRING] = { 0 };
 	sprintf(szName, "_POINTLIGHT_%d", count++);
 	return HashValue(szName);
 }
@@ -159,77 +162,77 @@ CComponentPointLightPtr CSceneManager::CreateComponentPointLight(uint32_t name)
 
 void CSceneManager::SetShadowOrtho(float left, float right, float bottom, float top, float zNear, float zFar)
 {
-	Renderer()->SetShadowOrtho(left, right, bottom, top, zNear, zFar);
+	m_pUniformEngine->SetShadowOrtho(left, right, bottom, top, zNear, zFar);
 }
 
 void CSceneManager::SetShadowLookat(float eyex, float eyey, float eyez, float centerx, float centery, float centerz, float upx, float upy, float upz)
 {
-	Renderer()->SetShadowLookat(eyex, eyey, eyez, centerx, centery, centerz, upx, upy, upz);
+	m_pUniformEngine->SetShadowLookat(eyex, eyey, eyez, centerx, centery, centerz, upx, upy, upz);
 }
 
-void CSceneManager::SetShadowDistance(float distance)
+void CSceneManager::SetShadowRange(float range)
 {
-	Renderer()->SetShadowDistance(distance);
+	m_pUniformEngine->SetShadowRange(range);
 }
 
 void CSceneManager::SetShadowResolution(float resolution)
 {
-	Renderer()->SetShadowResolution(resolution);
+	m_pUniformEngine->SetShadowResolution(resolution);
 }
 
 void CSceneManager::SetLightFactor(float ambientLightFactor, float pointLightFactor, float directLightFactor, float envLightFactor)
 {
-	Renderer()->SetLightFactor(ambientLightFactor, pointLightFactor, directLightFactor, envLightFactor);
+	m_pUniformEngine->SetLightFactor(ambientLightFactor, pointLightFactor, directLightFactor, envLightFactor);
 }
 
 void CSceneManager::SetAmbientLightSH(float shRed[9], float shGreen[9], float shBlue[9])
 {
-	Renderer()->SetAmbientLightSH(shRed, shGreen, shBlue);
+	m_pUniformEngine->SetAmbientLightSH(shRed, shGreen, shBlue);
 }
 
 void CSceneManager::SetAmbientLightRotation(float angle, float axisx, float axisy, float axisz)
 {
-	Renderer()->SetAmbientLightRotation(angle, axisx, axisy, axisz);
+	m_pUniformEngine->SetAmbientLightRotation(angle, axisx, axisy, axisz);
 }
 
 void CSceneManager::SetMainPointLightColor(float red, float green, float blue)
 {
-	Renderer()->SetPointLightColor(red, green, blue);
+	m_pUniformEngine->SetPointLightColor(red, green, blue);
 }
 
 void CSceneManager::SetMainPointLightPosition(float posx, float posy, float posz, float radius)
 {
-	Renderer()->SetPointLightPosition(posx, posy, posz, radius);
+	m_pUniformEngine->SetPointLightPosition(posx, posy, posz, radius);
 }
 
 void CSceneManager::SetMainPointLightAttenuation(float linear, float square, float constant)
 {
-	Renderer()->SetPointLightAttenuation(linear, square, constant);
+	m_pUniformEngine->SetPointLightAttenuation(linear, square, constant);
 }
 
 void CSceneManager::SetMainDirectLightColor(float red, float green, float blue)
 {
-	Renderer()->SetDirectLightColor(red, green, blue);
+	m_pUniformEngine->SetDirectLightColor(red, green, blue);
 }
 
 void CSceneManager::SetMainDirectLightDirection(float dirx, float diry, float dirz)
 {
-	Renderer()->SetDirectLightDirection(dirx, diry, dirz);
+	m_pUniformEngine->SetDirectLightDirection(dirx, diry, dirz);
 }
 
 void CSceneManager::SetFogColor(float red, float green, float blue)
 {
-	Renderer()->SetFogColor(red, green, blue);
+	m_pUniformEngine->SetFogColor(red, green, blue);
 }
 
 void CSceneManager::SetFogHeightDensity(float startHeight, float endHeight, float density)
 {
-	Renderer()->SetFogHeightDensity(startHeight, endHeight, density);
+	m_pUniformEngine->SetFogHeightDensity(startHeight, endHeight, density);
 }
 
 void CSceneManager::SetFogDistanceDensity(float startDistance, float endDistance, float density)
 {
-	Renderer()->SetFogDistanceDensity(startDistance, endDistance, density);
+	m_pUniformEngine->SetFogDistanceDensity(startDistance, endDistance, density);
 }
 
 void CSceneManager::UpdateLogic(float totalTime, float deltaTime)

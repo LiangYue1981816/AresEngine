@@ -9,15 +9,10 @@
 #include "SceneManager.h"
 
 
-#define LOG_TAG_MEMORY "Memory"
-#define LOG_TAG_RENDERER "GfxRenderer"
-
-
 #define CreateEngine(hDC, szShaderCachePath, nScreenWidth, nScreenHeight, nScreenPixelFormat) CEngine::Create((hDC), (szShaderCachePath), (nScreenWidth), (nScreenHeight), (nScreenPixelFormat))
 #define DestroyEngine() CEngine::Destroy()
 
 #define Engine() CEngine::GetInstance()
-#define Renderer() CGfxRenderer::GetInstance()
 #define SceneManager() CEngine::GetInstance()->GetSceneManager()
 #define MainCamera() CEngine::GetInstance()->GetSceneManager()->GetMainCamera()
 #define ShadowCamera() CEngine::GetInstance()->GetSceneManager()->GetShadowCamera()

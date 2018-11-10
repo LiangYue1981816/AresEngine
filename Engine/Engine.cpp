@@ -45,7 +45,7 @@ CEngine::CEngine(void *hDC, const char *szShaderCachePath, int screenWidth, int 
 {
 	pInstance = this;
 
-	m_pRenderer = new CGfxRenderer(hDC, szShaderCachePath, screenWidth, screenHeight, screenPixelFormat);
+//	m_pRenderer = new CGfxRenderer(hDC, szShaderCachePath, screenWidth, screenHeight, screenPixelFormat);
 	m_pSceneManager = new CSceneManager;
 
 	m_pRenderSolutions[RENDER_SOLUTION_DEFAULT] = new CRenderSolutionDefault;
@@ -96,7 +96,6 @@ void CEngine::UpdateCamera(CGfxCamera *pCamera)
 void CEngine::Render(float deltaTime, RenderSolution solution)
 {
 	m_totalRenderTime += deltaTime;
-	m_pRenderer->SetTime(m_totalRenderTime, deltaTime);
 
 	m_pRenderSolutions[solution]->Render(m_indexQueue);
 	m_pRenderSolutions[solution]->Present(1 - m_indexQueue);

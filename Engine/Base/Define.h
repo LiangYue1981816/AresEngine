@@ -20,7 +20,7 @@
 #endif
 
 #ifndef _MAX_STRING
-#define _MAX_STRING                    260
+#define _MAX_STRING                    1024
 #endif
 
 #ifndef FLT_MAX
@@ -33,6 +33,10 @@
 
 #ifndef INVALID_HASHNAME
 #define INVALID_HASHNAME               0xffffffff
+#endif
+
+#ifndef INVALID_HASHVALUE
+#define INVALID_HASHVALUE              0xffffffff
 #endif
 
 #ifndef INVALID_VALUE
@@ -78,3 +82,6 @@
 #define ALIGN_16BYTE(a)                ALIGN_BYTE(a, 16)
 #define ALIGN_1KBYTE(a)                ALIGN_BYTE(a, 1024)
 #define ALIGN_4KBYTE(a)                ALIGN_BYTE(a, 4096)
+
+#define LOG_TAG_MEMORY                 "Memory"
+#define LOG_TAG_RENDERER               "GfxRenderer"
