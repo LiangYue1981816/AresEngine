@@ -7,14 +7,13 @@
 CSceneManager::CSceneManager(void)
 	: m_pMainCamera(nullptr)
 	, m_pShadowCamera(nullptr)
-	, m_pUniformEngine(nullptr)
 
 	, m_taskGraphUpdateLogic("TashGraph_UpdateLogic", 75)
 	, m_taskGraphUpdateCamera("TaskGraph_UpdateCamera", 75)
 {
-	m_pMainCamera = Renderer()->CreateCamera();
-	m_pShadowCamera = Renderer()->CreateCamera();
-	m_pUniformEngine = Renderer()->CreateUniformEngine();
+	m_pMainCamera = new CGfxCamera;
+	m_pShadowCamera = new CGfxCamera;
+	m_ptrUniformEngine = Renderer()->NewUniformEngine(true);
 
 	event_init(&m_eventUpdateLogicSkin, 1);
 	event_init(&m_eventUpdateLogicParticle, 1);
@@ -27,9 +26,8 @@ CSceneManager::CSceneManager(void)
 
 CSceneManager::~CSceneManager(void)
 {
-	Renderer()->DestroyCamera(m_pMainCamera);
-	Renderer()->DestroyCamera(m_pShadowCamera);
-	Renderer()->DestroyUniformEngine(m_pUniformEngine);
+	delete m_pMainCamera;
+	delete m_pShadowCamera;
 
 	event_destroy(&m_eventUpdateLogicSkin);
 	event_destroy(&m_eventUpdateLogicParticle);
@@ -162,77 +160,77 @@ CComponentPointLightPtr CSceneManager::CreateComponentPointLight(uint32_t name)
 
 void CSceneManager::SetShadowOrtho(float left, float right, float bottom, float top, float zNear, float zFar)
 {
-	m_pUniformEngine->SetShadowOrtho(left, right, bottom, top, zNear, zFar);
+	m_ptrUniformEngine->SetShadowOrtho(left, right, bottom, top, zNear, zFar);
 }
 
 void CSceneManager::SetShadowLookat(float eyex, float eyey, float eyez, float centerx, float centery, float centerz, float upx, float upy, float upz)
 {
-	m_pUniformEngine->SetShadowLookat(eyex, eyey, eyez, centerx, centery, centerz, upx, upy, upz);
+	m_ptrUniformEngine->SetShadowLookat(eyex, eyey, eyez, centerx, centery, centerz, upx, upy, upz);
 }
 
 void CSceneManager::SetShadowRange(float range)
 {
-	m_pUniformEngine->SetShadowRange(range);
+	m_ptrUniformEngine->SetShadowRange(range);
 }
 
 void CSceneManager::SetShadowResolution(float resolution)
 {
-	m_pUniformEngine->SetShadowResolution(resolution);
+	m_ptrUniformEngine->SetShadowResolution(resolution);
 }
 
 void CSceneManager::SetLightFactor(float ambientLightFactor, float pointLightFactor, float directLightFactor, float envLightFactor)
 {
-	m_pUniformEngine->SetLightFactor(ambientLightFactor, pointLightFactor, directLightFactor, envLightFactor);
+	m_ptrUniformEngine->SetLightFactor(ambientLightFactor, pointLightFactor, directLightFactor, envLightFactor);
 }
 
 void CSceneManager::SetAmbientLightSH(float shRed[9], float shGreen[9], float shBlue[9])
 {
-	m_pUniformEngine->SetAmbientLightSH(shRed, shGreen, shBlue);
+	m_ptrUniformEngine->SetAmbientLightSH(shRed, shGreen, shBlue);
 }
 
 void CSceneManager::SetAmbientLightRotation(float angle, float axisx, float axisy, float axisz)
 {
-	m_pUniformEngine->SetAmbientLightRotation(angle, axisx, axisy, axisz);
+	m_ptrUniformEngine->SetAmbientLightRotation(angle, axisx, axisy, axisz);
 }
 
 void CSceneManager::SetMainPointLightColor(float red, float green, float blue)
 {
-	m_pUniformEngine->SetPointLightColor(red, green, blue);
+	m_ptrUniformEngine->SetPointLightColor(red, green, blue);
 }
 
 void CSceneManager::SetMainPointLightPosition(float posx, float posy, float posz, float radius)
 {
-	m_pUniformEngine->SetPointLightPosition(posx, posy, posz, radius);
+	m_ptrUniformEngine->SetPointLightPosition(posx, posy, posz, radius);
 }
 
 void CSceneManager::SetMainPointLightAttenuation(float linear, float square, float constant)
 {
-	m_pUniformEngine->SetPointLightAttenuation(linear, square, constant);
+	m_ptrUniformEngine->SetPointLightAttenuation(linear, square, constant);
 }
 
 void CSceneManager::SetMainDirectLightColor(float red, float green, float blue)
 {
-	m_pUniformEngine->SetDirectLightColor(red, green, blue);
+	m_ptrUniformEngine->SetDirectLightColor(red, green, blue);
 }
 
 void CSceneManager::SetMainDirectLightDirection(float dirx, float diry, float dirz)
 {
-	m_pUniformEngine->SetDirectLightDirection(dirx, diry, dirz);
+	m_ptrUniformEngine->SetDirectLightDirection(dirx, diry, dirz);
 }
 
 void CSceneManager::SetFogColor(float red, float green, float blue)
 {
-	m_pUniformEngine->SetFogColor(red, green, blue);
+	m_ptrUniformEngine->SetFogColor(red, green, blue);
 }
 
 void CSceneManager::SetFogHeightDensity(float startHeight, float endHeight, float density)
 {
-	m_pUniformEngine->SetFogHeightDensity(startHeight, endHeight, density);
+	m_ptrUniformEngine->SetFogHeightDensity(startHeight, endHeight, density);
 }
 
 void CSceneManager::SetFogDistanceDensity(float startDistance, float endDistance, float density)
 {
-	m_pUniformEngine->SetFogDistanceDensity(startDistance, endDistance, density);
+	m_ptrUniformEngine->SetFogDistanceDensity(startDistance, endDistance, density);
 }
 
 void CSceneManager::UpdateLogic(float totalTime, float deltaTime)

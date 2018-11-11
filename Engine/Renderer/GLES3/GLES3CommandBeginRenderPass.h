@@ -5,7 +5,7 @@
 class CGLES3CommandBeginRenderPass : public CGfxCommandBase
 {
 public:
-	CGLES3CommandBeginRenderPass(CGfxFrameBufferPtr &ptrFrameBuffer, CGfxRenderPassPtr &ptrRenderPass)
+	CGLES3CommandBeginRenderPass(const CGfxFrameBufferPtr &ptrFrameBuffer, const CGfxRenderPassPtr &ptrRenderPass)
 		: m_ptrFrameBuffer(ptrFrameBuffer)
 		, m_ptrRenderPass(ptrRenderPass)
 	{

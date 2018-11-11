@@ -5,7 +5,7 @@
 class CGLES3CommandBindEngine : public CGfxCommandBase
 {
 public:
-	CGLES3CommandBindEngine(CGfxUniformEnginePtr &ptrUniformEngine)
+	CGLES3CommandBindEngine(const CGfxUniformEnginePtr &ptrUniformEngine)
 		: m_ptrUniformEngine(ptrUniformEngine)
 	{
 

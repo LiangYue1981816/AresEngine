@@ -18,16 +18,16 @@ public:
 	bool Execute(void) const;
 
 public:
-	bool CmdBeginRenderPass(CGfxFrameBufferPtr &ptrFrameBuffer, CGfxRenderPassPtr &ptrRenderPass);
+	bool CmdBeginRenderPass(const CGfxFrameBufferPtr &ptrFrameBuffer, const CGfxRenderPassPtr &ptrRenderPass);
 	bool CmdNextSubpass(void);
 	bool CmdEndRenderPass(void);
 
-	bool CmdBindPipelineCompute(CGfxPipelineCompute *pPipelineCompute);
-	bool CmdBindPipelineGraphics(CGfxPipelineGraphics *pPipelineGraphics);
-	bool CmdBindMaterialPass(CGfxMaterialPtr &ptrMaterial, uint32_t namePass);
-	bool CmdBindUniformEngine(CGfxUniformEnginePtr &ptrUniformEngine);
-	bool CmdBindUniformCamera(CGfxUniformCameraPtr &ptrUniformCamera);
-	bool CmdBindMesh(CGfxMeshPtr &ptrMesh, const uint8_t *pInstanceBuffer, uint32_t size);
+	bool CmdBindPipelineCompute(const CGfxPipelineCompute *pPipelineCompute);
+	bool CmdBindPipelineGraphics(const CGfxPipelineGraphics *pPipelineGraphics);
+	bool CmdBindMaterialPass(const CGfxMaterialPtr &ptrMaterial, uint32_t namePass);
+	bool CmdBindUniformEngine(const CGfxUniformEnginePtr &ptrUniformEngine);
+	bool CmdBindUniformCamera(const CGfxUniformCameraPtr &ptrUniformCamera);
+	bool CmdBindMesh(const CGfxMeshPtr &ptrMesh, const uint8_t *pInstanceBuffer, uint32_t size);
 
 	bool CmdUniform1i(const char *szName, int v0);
 	bool CmdUniform2i(const char *szName, int v0, int v1);
@@ -59,7 +59,7 @@ public:
 	bool CmdDrawInstance(uint32_t mode, uint32_t type, int offset, int count, int instanceCount);
 	bool CmdDrawIndirect(uint32_t mode, uint32_t type, int offset);
 
-	bool CmdExecute(CGfxCommandBufferPtr &ptrCommandBuffer);
+	bool CmdExecute(const CGfxCommandBufferPtr &ptrCommandBuffer);
 
 
 private:

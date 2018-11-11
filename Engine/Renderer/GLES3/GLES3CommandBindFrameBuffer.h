@@ -5,7 +5,7 @@
 class CGLES3CommandBindFrameBuffer : public CGfxCommandBase
 {
 public:
-	CGLES3CommandBindFrameBuffer(CGfxFrameBufferPtr &ptrFrameBuffer, CGfxRenderPassPtr &ptrRenderPass, int indexSubPass)
+	CGLES3CommandBindFrameBuffer(const CGfxFrameBufferPtr &ptrFrameBuffer, const CGfxRenderPassPtr &ptrRenderPass, int indexSubPass)
 		: m_ptrFrameBuffer(ptrFrameBuffer)
 		, m_ptrRenderPass(ptrRenderPass)
 		, m_indexSubPass(indexSubPass)

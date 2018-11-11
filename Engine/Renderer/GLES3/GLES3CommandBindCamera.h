@@ -5,7 +5,7 @@
 class CGLES3CommandBindCamera : public CGfxCommandBase
 {
 public:
-	CGLES3CommandBindCamera(CGfxUniformCameraPtr &ptrUniformCamera)
+	CGLES3CommandBindCamera(const CGfxUniformCameraPtr &ptrUniformCamera)
 		: m_ptrUniformCamera(ptrUniformCamera)
 	{
 

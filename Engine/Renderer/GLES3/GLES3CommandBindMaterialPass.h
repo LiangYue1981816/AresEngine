@@ -5,7 +5,7 @@
 class CGLES3CommandBindMaterialPass : public CGfxCommandBase
 {
 public:
-	CGLES3CommandBindMaterialPass(CGfxMaterialPtr &ptrMaterial, uint32_t namePass)
+	CGLES3CommandBindMaterialPass(const CGfxMaterialPtr &ptrMaterial, uint32_t namePass)
 		: m_ptrMaterial(ptrMaterial)
 		, m_namePass(namePass)
 	{

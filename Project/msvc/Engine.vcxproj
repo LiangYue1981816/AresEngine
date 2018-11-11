@@ -405,6 +405,7 @@
     <ClCompile Include="..\..\Engine\Renderer\Compiler\ShaderCompiler.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Gfx\GfxCamera.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Gfx\GfxProfiler.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Gfx\GfxRenderer.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Gfx\GfxRenderQueue.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Gfx\GfxResource.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Gfx\GfxVertexAttribute.cpp" />

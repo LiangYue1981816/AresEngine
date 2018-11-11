@@ -57,16 +57,19 @@ bool CGLES3Material::Load(const char *szFileName)
 
 		LogOutput(LOG_TAG_RENDERER, "LoadMaterial(%s)\n", szFileName);
 		{
+			CStream stream;
+			if (FileManager()->LoadStream(szFileName, &stream) == false) throw 0;
+
 			TiXmlDocument xmlDoc;
-			if (xmlDoc.LoadFile(GLES3Renderer()->GetResourceFullName(szFileName)) == false) throw 0;
+			if (xmlDoc.LoadFile((char *)stream.GetAddress(), stream.GetFullSize()) == false) throw 1;
 
 			TiXmlNode *pMaterialNode = xmlDoc.FirstChild("Material");
-			if (pMaterialNode == nullptr) throw 1;
+			if (pMaterialNode == nullptr) throw 2;
 
 			if (TiXmlNode *pPassNode = pMaterialNode->FirstChild("Pass")) {
 				do {
 					if (LoadPass(pPassNode) == false) {
-						throw 2;
+						throw 3;
 					}
 				} while (pPassNode = pMaterialNode->IterateChildren("Pass", pPassNode));
 			}

@@ -5,7 +5,7 @@
 class CGLES3CommandBindSubPassInputTexture : public CGfxCommandBase
 {
 public:
-	CGLES3CommandBindSubPassInputTexture(CGfxFrameBufferPtr &ptrFrameBuffer, CGfxRenderPassPtr &ptrRenderPass, int indexSubPass)
+	CGLES3CommandBindSubPassInputTexture(const CGfxFrameBufferPtr &ptrFrameBuffer, const CGfxRenderPassPtr &ptrRenderPass, int indexSubPass)
 		: m_ptrFrameBuffer(ptrFrameBuffer)
 		, m_ptrRenderPass(ptrRenderPass)
 		, m_indexSubPass(indexSubPass)

@@ -83,21 +83,24 @@ public:
 
 
 public:
+	virtual CGfxSwapChain* GetSwapChain(void) const = 0;
+
+public:
 	virtual CGfxRenderPassPtr NewRenderPass(int numAttachments, int numSubpasses) = 0;
 	virtual CGfxFrameBufferPtr NewFrameBuffer(int width, int height) = 0;
 
 	virtual CGfxMaterialPtr NewMaterial(const char *szFileName) = 0;
 
-	virtual CGfxMeshPtr NewMesh(uint32_t instanceFormat) = 0;
+	virtual CGfxMeshPtr NewMesh(uint32_t name, uint32_t instanceFormat) = 0;
 	virtual CGfxMeshPtr NewMesh(const char *szFileName, uint32_t instanceFormat) = 0;
 
-	virtual CGfxTexture2DPtr NewTexture2D(void) = 0;
+	virtual CGfxTexture2DPtr NewTexture2D(uint32_t name) = 0;
 	virtual CGfxTexture2DPtr NewTexture2D(const char *szFileName) = 0;
 
-	virtual CGfxTexture2DArrayPtr NewTexture2DArray(void) = 0;
+	virtual CGfxTexture2DArrayPtr NewTexture2DArray(uint32_t name) = 0;
 	virtual CGfxTexture2DArrayPtr NewTexture2DArray(const char *szFileName) = 0;
 
-	virtual CGfxTextureCubeMapPtr NewTextureCubeMap(void) = 0;
+	virtual CGfxTextureCubeMapPtr NewTextureCubeMap(uint32_t name) = 0;
 	virtual CGfxTextureCubeMapPtr NewTextureCubeMap(const char *szFileName) = 0;
 
 	virtual CGfxUniformEnginePtr NewUniformEngine(bool bDynamic) = 0;
@@ -106,15 +109,15 @@ public:
 	virtual CGfxCommandBufferPtr NewCommandBuffer(bool bMainCommandBuffer) = 0;
 
 public:
-	virtual bool CmdBeginRenderPass(CGfxCommandBufferPtr &ptrCommandBuffer, CGfxFrameBufferPtr &ptrFrameBuffer, CGfxRenderPassPtr &ptrRenderPass) = 0;
+	virtual bool CmdBeginRenderPass(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxFrameBufferPtr &ptrFrameBuffer, const CGfxRenderPassPtr &ptrRenderPass) = 0;
 	virtual bool CmdNextSubpass(CGfxCommandBufferPtr &ptrCommandBuffer) = 0;
 	virtual bool CmdEndRenderPass(CGfxCommandBufferPtr &ptrCommandBuffer) = 0;
 
-	virtual bool CmdBindPipelineCompute(CGfxCommandBufferPtr &ptrCommandBuffer, CGfxPipelineCompute *pPipelineCompute) = 0;
-	virtual bool CmdBindPipelineGraphics(CGfxCommandBufferPtr &ptrCommandBuffer, CGfxPipelineGraphics *pPipelineGraphics) = 0;
-	virtual bool CmdBindMaterialPass(CGfxCommandBufferPtr &ptrCommandBuffer, CGfxMaterialPtr &ptrMaterial, uint32_t namePass) = 0;
-	virtual bool CmdBindUniformEngine(CGfxCommandBufferPtr &ptrCommandBuffer, CGfxUniformEnginePtr &ptrUniformEngine) = 0;
-	virtual bool CmdBindUniformCamera(CGfxCommandBufferPtr &ptrCommandBuffer, CGfxUniformCameraPtr &ptrUniformCamera) = 0;
+	virtual bool CmdBindPipelineCompute(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxPipelineCompute *pPipelineCompute) = 0;
+	virtual bool CmdBindPipelineGraphics(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxPipelineGraphics *pPipelineGraphics) = 0;
+	virtual bool CmdBindMaterialPass(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxMaterialPtr &ptrMaterial, uint32_t namePass) = 0;
+	virtual bool CmdBindUniformEngine(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxUniformEnginePtr &ptrUniformEngine) = 0;
+	virtual bool CmdBindUniformCamera(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxUniformCameraPtr &ptrUniformCamera) = 0;
 
 	virtual bool CmdUniform1i(CGfxCommandBufferPtr &ptrCommandBuffer, const char *szName, int v0) = 0;
 	virtual bool CmdUniform2i(CGfxCommandBufferPtr &ptrCommandBuffer, const char *szName, int v0, int v1) = 0;
@@ -142,11 +145,11 @@ public:
 	virtual bool CmdClearDepth(CGfxCommandBufferPtr &ptrCommandBuffer, float depth) = 0;
 	virtual bool CmdClearColor(CGfxCommandBufferPtr &ptrCommandBuffer, float red, float green, float blue, float alpha) = 0;
 
-	virtual bool CmdDrawInstance(CGfxCommandBufferPtr &ptrCommandBuffer, CGfxMeshPtr &ptrMesh, const uint8_t *pInstanceBuffer, uint32_t size) = 0;
-	virtual bool CmdDrawIndirect(CGfxCommandBufferPtr &ptrCommandBuffer, CGfxMeshPtr &ptrMesh, const uint8_t *pInstanceBuffer, uint32_t size) = 0;
+	virtual bool CmdDrawInstance(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxMeshPtr &ptrMesh, const uint8_t *pInstanceBuffer, uint32_t size) = 0;
+	virtual bool CmdDrawIndirect(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxMeshPtr &ptrMesh, const uint8_t *pInstanceBuffer, uint32_t size) = 0;
 	virtual bool CmdDrawScreen(CGfxCommandBufferPtr &ptrCommandBuffer) = 0;
 
-	virtual bool CmdExecute(CGfxCommandBufferPtr &ptrCommandBuffer, CGfxCommandBuffer &ptrSecondaryCommandBuffer) = 0;
+	virtual bool CmdExecute(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxCommandBufferPtr &ptrSecondaryCommandBuffer) = 0;
 
 public:
 	virtual void Submit(const CGfxCommandBufferPtr &ptrCommandBuffer) = 0;

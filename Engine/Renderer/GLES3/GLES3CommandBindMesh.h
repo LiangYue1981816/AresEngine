@@ -5,7 +5,7 @@
 class CGLES3CommandBindMesh : public CGfxCommandBase
 {
 public:
-	CGLES3CommandBindMesh(CGfxMeshPtr &ptrMesh, const uint8_t *pInstanceBuffer, uint32_t size)
+	CGLES3CommandBindMesh(const CGfxMeshPtr &ptrMesh, const uint8_t *pInstanceBuffer, uint32_t size)
 		: m_ptrMesh(ptrMesh)
 	{
 		m_buffer.assign(pInstanceBuffer, pInstanceBuffer + size);

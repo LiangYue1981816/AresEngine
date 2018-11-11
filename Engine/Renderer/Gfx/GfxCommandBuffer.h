@@ -43,16 +43,16 @@ public:
 	virtual bool Execute(void) const = 0;
 
 public:
-	virtual bool CmdBeginRenderPass(CGfxFrameBufferPtr &ptrFrameBuffer, CGfxRenderPassPtr &ptrRenderPass) = 0;
+	virtual bool CmdBeginRenderPass(const CGfxFrameBufferPtr &ptrFrameBuffer, const CGfxRenderPassPtr &ptrRenderPass) = 0;
 	virtual bool CmdNextSubpass(void) = 0;
 	virtual bool CmdEndRenderPass(void) = 0;
 
-	virtual bool CmdBindPipelineCompute(CGfxPipelineCompute *pPipelineCompute) = 0;
-	virtual bool CmdBindPipelineGraphics(CGfxPipelineGraphics *pPipelineGraphics) = 0;
-	virtual bool CmdBindMaterialPass(CGfxMaterialPtr &ptrMaterial, uint32_t namePass) = 0;
-	virtual bool CmdBindUniformEngine(CGfxUniformEnginePtr &ptrUniformEngine) = 0;
-	virtual bool CmdBindUniformCamera(CGfxUniformCameraPtr &ptrUniformCamera) = 0;
-	virtual bool CmdBindMesh(CGfxMeshPtr &ptrMesh, const uint8_t *pInstanceBuffer, uint32_t size) = 0;
+	virtual bool CmdBindPipelineCompute(const CGfxPipelineCompute *pPipelineCompute) = 0;
+	virtual bool CmdBindPipelineGraphics(const CGfxPipelineGraphics *pPipelineGraphics) = 0;
+	virtual bool CmdBindMaterialPass(const CGfxMaterialPtr &ptrMaterial, uint32_t namePass) = 0;
+	virtual bool CmdBindUniformEngine(const CGfxUniformEnginePtr &ptrUniformEngine) = 0;
+	virtual bool CmdBindUniformCamera(const CGfxUniformCameraPtr &ptrUniformCamera) = 0;
+	virtual bool CmdBindMesh(const CGfxMeshPtr &ptrMesh, const uint8_t *pInstanceBuffer, uint32_t size) = 0;
 
 	virtual bool CmdUniform1i(const char *szName, int v0) = 0;
 	virtual bool CmdUniform2i(const char *szName, int v0, int v1) = 0;
@@ -84,7 +84,7 @@ public:
 	virtual bool CmdDrawInstance(uint32_t mode, uint32_t type, int offset, int count, int instanceCount) = 0;
 	virtual bool CmdDrawIndirect(uint32_t mode, uint32_t type, int offset) = 0;
 
-	virtual bool CmdExecute(CGfxCommandBufferPtr &ptrCommandBuffer) = 0;
+	virtual bool CmdExecute(const CGfxCommandBufferPtr &ptrCommandBuffer) = 0;
 
 
 protected:

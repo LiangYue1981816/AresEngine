@@ -1109,5 +1109,8 @@
     <ClCompile Include="..\..\Engine\Base\File.cpp">
       <Filter>Engine\Base\Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Gfx\GfxRenderer.cpp">
+      <Filter>Engine\Renderer\Gfx\Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

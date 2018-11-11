@@ -3,17 +3,15 @@
 
 
 CRenderSolutionDefault::CRenderSolutionDefault(void)
-	: m_pMainCommandBuffer{ nullptr }
-	, m_pSecondaryCommandBuffer{ nullptr }
 {
 	SetEnableMSAA(false);
 
-	m_pMainCommandBuffer[0] = Renderer()->CreateCommandBuffer(true);
-	m_pMainCommandBuffer[1] = Renderer()->CreateCommandBuffer(true);
+	m_ptrMainCommandBuffer[0] = Renderer()->NewCommandBuffer(true);
+	m_ptrMainCommandBuffer[1] = Renderer()->NewCommandBuffer(true);
 
 	for (int indexThread = 0; indexThread < THREAD_COUNT; indexThread) {
-		m_pSecondaryCommandBuffer[indexThread][0] = Renderer()->CreateCommandBuffer(false);
-		m_pSecondaryCommandBuffer[indexThread][1] = Renderer()->CreateCommandBuffer(false);
+		m_ptrSecondaryCommandBuffer[indexThread][0] = Renderer()->NewCommandBuffer(false);
+		m_ptrSecondaryCommandBuffer[indexThread][1] = Renderer()->NewCommandBuffer(false);
 	}
 }
 
@@ -21,14 +19,6 @@ CRenderSolutionDefault::~CRenderSolutionDefault(void)
 {
 	Clearup(0);
 	Clearup(1);
-
-	Renderer()->DestroyCommandBuffer(m_pMainCommandBuffer[0]);
-	Renderer()->DestroyCommandBuffer(m_pMainCommandBuffer[1]);
-
-	for (int indexThread = 0; indexThread < THREAD_COUNT; indexThread) {
-		Renderer()->DestroyCommandBuffer(m_pSecondaryCommandBuffer[indexThread][0]);
-		Renderer()->DestroyCommandBuffer(m_pSecondaryCommandBuffer[indexThread][1]);
-	}
 }
 
 void CRenderSolutionDefault::SetEnableMSAA(bool bEnable, int samples)
@@ -48,17 +38,17 @@ void CRenderSolutionDefault::SetEnableMSAA(bool bEnable, int samples)
 
 void CRenderSolutionDefault::CreateFrameBuffer(void)
 {
-	m_ptrDepthStencilTexture = Renderer()->CreateTexture2D(HashValue("DepthStencilTexture"));
+	m_ptrDepthStencilTexture = Renderer()->NewTexture2D(HashValue("DepthStencilTexture"));
 	m_ptrDepthStencilTexture->Create(GL_DEPTH_STENCIL, GL_DEPTH24_STENCIL8, Renderer()->GetSwapChain()->GetWidth(), Renderer()->GetSwapChain()->GetHeight(), 1);
 
 	for (int index = 0; index < CGfxSwapChain::SWAPCHAIN_IMAGE_COUNT; index++) {
 		CGfxTexture2DPtr ptrColorTexture = Renderer()->GetSwapChain()->GetTexture(index);
-		m_ptrFrameBufferScreen[index] = Renderer()->CreateFrameBuffer(ptrColorTexture->GetWidth(), ptrColorTexture->GetHeight());
+		m_ptrFrameBufferScreen[index] = Renderer()->NewFrameBuffer(ptrColorTexture->GetWidth(), ptrColorTexture->GetHeight());
 		m_ptrFrameBufferScreen[index]->SetAttachmentTexture(0, m_ptrDepthStencilTexture);
 		m_ptrFrameBufferScreen[index]->SetAttachmentTexture(1, ptrColorTexture);
 	}
 
-	m_ptrRenderPass = Renderer()->CreateRenderPass(2, 1);
+	m_ptrRenderPass = Renderer()->NewRenderPass(2, 1);
 	m_ptrRenderPass->SetDepthStencilAttachment(0, true, true, 1.0f, 0);
 	m_ptrRenderPass->SetColorAttachment(1, false, true, 0.2f, 0.2f, 0.2f, 0.0f);
 	m_ptrRenderPass->SetSubpassOutputDepthStencilReference(0, 0);
@@ -76,21 +66,21 @@ void CRenderSolutionDefault::DestroyFrameBuffer(void)
 
 void CRenderSolutionDefault::CreateFrameBufferMSAA(int samples)
 {
-	m_ptrColorTextureMSAA = Renderer()->CreateTexture2D(HashValue("ColorTextureMSAA"));
+	m_ptrColorTextureMSAA = Renderer()->NewTexture2D(HashValue("ColorTextureMSAA"));
 	m_ptrColorTextureMSAA->Create(GL_RGBA, GL_RGBA8, Renderer()->GetSwapChain()->GetWidth(), Renderer()->GetSwapChain()->GetHeight(), 1, samples);
 
-	m_ptrDepthStencilTextureMSAA = Renderer()->CreateTexture2D(HashValue("DepthStencilTextureMSAA"));
+	m_ptrDepthStencilTextureMSAA = Renderer()->NewTexture2D(HashValue("DepthStencilTextureMSAA"));
 	m_ptrDepthStencilTextureMSAA->Create(GL_DEPTH_STENCIL, GL_DEPTH24_STENCIL8, Renderer()->GetSwapChain()->GetWidth(), Renderer()->GetSwapChain()->GetHeight(), 1, samples);
 
 	for (int index = 0; index < CGfxSwapChain::SWAPCHAIN_IMAGE_COUNT; index++) {
 		CGfxTexture2DPtr ptrColorTexture = Renderer()->GetSwapChain()->GetTexture(index);
-		m_ptrFrameBufferScreenMSAA[index] = Renderer()->CreateFrameBuffer(ptrColorTexture->GetWidth(), ptrColorTexture->GetHeight());
+		m_ptrFrameBufferScreenMSAA[index] = Renderer()->NewFrameBuffer(ptrColorTexture->GetWidth(), ptrColorTexture->GetHeight());
 		m_ptrFrameBufferScreenMSAA[index]->SetAttachmentTexture(0, m_ptrDepthStencilTextureMSAA);
 		m_ptrFrameBufferScreenMSAA[index]->SetAttachmentTexture(1, m_ptrColorTextureMSAA);
 		m_ptrFrameBufferScreenMSAA[index]->SetAttachmentTexture(2, ptrColorTexture);
 	}
 
-	m_ptrRenderPassMSAA = Renderer()->CreateRenderPass(3, 1);
+	m_ptrRenderPassMSAA = Renderer()->NewRenderPass(3, 1);
 	m_ptrRenderPassMSAA->SetDepthStencilAttachment(0, true, true, 1.0f, 0);
 	m_ptrRenderPassMSAA->SetColorAttachment(1, true, true, 0.2f, 0.2f, 0.2f, 0.0f);
 	m_ptrRenderPassMSAA->SetColorAttachment(2, false, true, 0.2f, 0.2f, 0.2f, 0.0f);
@@ -117,7 +107,7 @@ void CRenderSolutionDefault::Render(int indexQueue)
 		static CTaskCommandBuffer taskCommandBuffers[THREAD_COUNT];
 
 		for (int indexThread = 0; indexThread < THREAD_COUNT; indexThread++) {
-			taskCommandBuffers[indexThread].SetParams(m_pSecondaryCommandBuffer[indexThread][indexQueue], indexThread, indexQueue, namePass);
+			taskCommandBuffers[indexThread].SetParams(m_ptrSecondaryCommandBuffer[indexThread][indexQueue], indexThread, indexQueue, namePass);
 			m_taskCommandBuffer.Task(&taskCommandBuffers[indexThread], MainCamera(), nullptr, nullptr);
 		}
 	}
@@ -126,35 +116,35 @@ void CRenderSolutionDefault::Render(int indexQueue)
 
 void CRenderSolutionDefault::Present(int indexQueue)
 {
-	CGfxCommandBuffer *pMainCommandBuffer = m_pMainCommandBuffer[indexQueue];
+	CGfxCommandBufferPtr &ptrMainCommandBuffer = m_ptrMainCommandBuffer[indexQueue];
 
 	const CGfxRenderPassPtr &ptrRenderPass = m_bEnableMSAA ? m_ptrRenderPassMSAA : m_ptrRenderPass;
 	const CGfxFrameBufferPtr &ptrFrameBuffer = m_bEnableMSAA ? m_ptrFrameBufferScreenMSAA[Renderer()->GetSwapChain()->GetTextureIndex()] : m_ptrFrameBufferScreen[Renderer()->GetSwapChain()->GetTextureIndex()];
 
-	Renderer()->CmdBeginRenderPass(pMainCommandBuffer, ptrFrameBuffer, ptrRenderPass);
+	Renderer()->CmdBeginRenderPass(ptrMainCommandBuffer, ptrFrameBuffer, ptrRenderPass);
 	{
 		const glm::vec4 &scissor = MainCamera()->GetScissor();
 		const glm::vec4 &viewport = MainCamera()->GetViewport();
 
-		Renderer()->CmdSetScissor(pMainCommandBuffer, (int)scissor.x, (int)scissor.y, (int)scissor.z, (int)scissor.w);
-		Renderer()->CmdSetViewport(pMainCommandBuffer, (int)viewport.x, (int)viewport.y, (int)viewport.z, (int)viewport.w);
+		Renderer()->CmdSetScissor(ptrMainCommandBuffer, (int)scissor.x, (int)scissor.y, (int)scissor.z, (int)scissor.w);
+		Renderer()->CmdSetViewport(ptrMainCommandBuffer, (int)viewport.x, (int)viewport.y, (int)viewport.z, (int)viewport.w);
 
 		for (int indexThread = 0; indexThread < THREAD_COUNT; indexThread++) {
-			Renderer()->CmdExecute(pMainCommandBuffer, m_pSecondaryCommandBuffer[indexThread][indexQueue]);
+			Renderer()->CmdExecute(ptrMainCommandBuffer, m_ptrSecondaryCommandBuffer[indexThread][indexQueue]);
 		}
 	}
-	Renderer()->CmdEndRenderPass(pMainCommandBuffer);
+	Renderer()->CmdEndRenderPass(ptrMainCommandBuffer);
 
-	Renderer()->Submit(pMainCommandBuffer);
+	Renderer()->Submit(ptrMainCommandBuffer);
 	Renderer()->Present();
 }
 
 void CRenderSolutionDefault::Clearup(int indexQueue)
 {
-	m_pMainCommandBuffer[indexQueue]->Clearup();
+	m_ptrMainCommandBuffer[indexQueue]->Clearup();
 
 	for (int indexThread = 0; indexThread < THREAD_COUNT; indexThread++) {
-		m_pSecondaryCommandBuffer[indexThread][indexQueue]->Clearup();
+		m_ptrSecondaryCommandBuffer[indexThread][indexQueue]->Clearup();
 	}
 
 	MainCamera()->Clear(indexQueue);

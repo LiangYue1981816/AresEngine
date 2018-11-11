@@ -67,12 +67,15 @@ bool CScene::Load(const char *szFileName)
 	try {
 		Free();
 
+		CStream stream;
+		if (FileManager()->LoadStream(szFileName, &stream) == false) throw 0;
+
 		TiXmlDocument xmlDoc;
-		if (xmlDoc.LoadFile(Renderer()->GetResourceFullName(szFileName)) == false) throw 0;
+		if (xmlDoc.LoadFile((char *)stream.GetAddress(), stream.GetFullSize()) == false) throw 1;
 
 		TiXmlNode *pSceneNode = xmlDoc.FirstChild("Scene");
-		if (pSceneNode == nullptr) throw 1;
-		if (LoadScene(pSceneNode) == false) throw 2;
+		if (pSceneNode == nullptr) throw 2;
+		if (LoadScene(pSceneNode) == false) throw 3;
 
 		return true;
 	}
@@ -145,8 +148,8 @@ bool CScene::LoadMesh(TiXmlNode *pNode, CSceneNode *pCurrentNode)
 			const char *szMeshFileName = pMeshNode->ToElement()->AttributeString("mesh");
 			if (szMaterialFileName == nullptr || szMeshFileName == nullptr) throw 0;
 
-			CGfxMaterialPtr ptrMaterial = Renderer()->LoadMaterial(szMaterialFileName);
-			CGfxMeshPtr ptrMesh = Renderer()->LoadMesh(szMeshFileName, INSTANCE_ATTRIBUTE_TRANSFORM);
+			CGfxMaterialPtr ptrMaterial = Renderer()->NewMaterial(szMaterialFileName);
+			CGfxMeshPtr ptrMesh = Renderer()->NewMesh(szMeshFileName, INSTANCE_ATTRIBUTE_TRANSFORM);
 
 			CComponentMeshPtr ptrComponentMesh = SceneManager()->CreateComponentMesh(SceneManager()->GetNextComponentMeshName());
 			ptrComponentMesh->SetMaterial(ptrMaterial);

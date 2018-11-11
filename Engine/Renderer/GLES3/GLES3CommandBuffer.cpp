@@ -87,7 +87,7 @@ bool CGLES3CommandBuffer::Execute(void) const
 	return false;
 }
 
-bool CGLES3CommandBuffer::CmdBeginRenderPass(CGfxFrameBufferPtr &ptrFrameBuffer, CGfxRenderPassPtr &ptrRenderPass)
+bool CGLES3CommandBuffer::CmdBeginRenderPass(const CGfxFrameBufferPtr &ptrFrameBuffer, const CGfxRenderPassPtr &ptrRenderPass)
 {
 	if (m_bMainCommandBuffer == true && m_bInPassScope == false && m_pCommands.empty()) {
 		m_bInPassScope = true;
@@ -135,7 +135,7 @@ bool CGLES3CommandBuffer::CmdEndRenderPass(void)
 	return false;
 }
 
-bool CGLES3CommandBuffer::CmdBindPipelineCompute(CGfxPipelineCompute *pPipelineCompute)
+bool CGLES3CommandBuffer::CmdBindPipelineCompute(const CGfxPipelineCompute *pPipelineCompute)
 {
 	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
 		m_pCommands.emplace_back(new CGLES3CommandBindPipelineCompute(pPipelineCompute));
@@ -145,7 +145,7 @@ bool CGLES3CommandBuffer::CmdBindPipelineCompute(CGfxPipelineCompute *pPipelineC
 	return false;
 }
 
-bool CGLES3CommandBuffer::CmdBindPipelineGraphics(CGfxPipelineGraphics *pPipelineGraphics)
+bool CGLES3CommandBuffer::CmdBindPipelineGraphics(const CGfxPipelineGraphics *pPipelineGraphics)
 {
 	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
 		m_pCommands.emplace_back(new CGLES3CommandBindPipelineGraphics(pPipelineGraphics));
@@ -155,7 +155,7 @@ bool CGLES3CommandBuffer::CmdBindPipelineGraphics(CGfxPipelineGraphics *pPipelin
 	return false;
 }
 
-bool CGLES3CommandBuffer::CmdBindMaterialPass(CGfxMaterialPtr &ptrMaterial, uint32_t namePass)
+bool CGLES3CommandBuffer::CmdBindMaterialPass(const CGfxMaterialPtr &ptrMaterial, uint32_t namePass)
 {
 	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
 		m_pCommands.emplace_back(new CGLES3CommandBindMaterialPass(ptrMaterial, namePass));
@@ -165,7 +165,7 @@ bool CGLES3CommandBuffer::CmdBindMaterialPass(CGfxMaterialPtr &ptrMaterial, uint
 	return false;
 }
 
-bool CGLES3CommandBuffer::CmdBindUniformEngine(CGfxUniformEnginePtr &ptrUniformEngine)
+bool CGLES3CommandBuffer::CmdBindUniformEngine(const CGfxUniformEnginePtr &ptrUniformEngine)
 {
 	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
 		m_pCommands.emplace_back(new CGLES3CommandBindEngine(ptrUniformEngine));
@@ -175,7 +175,7 @@ bool CGLES3CommandBuffer::CmdBindUniformEngine(CGfxUniformEnginePtr &ptrUniformE
 	return false;
 }
 
-bool CGLES3CommandBuffer::CmdBindUniformCamera(CGfxUniformCameraPtr &ptrUniformCamera)
+bool CGLES3CommandBuffer::CmdBindUniformCamera(const CGfxUniformCameraPtr &ptrUniformCamera)
 {
 	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
 		m_pCommands.emplace_back(new CGLES3CommandBindCamera(ptrUniformCamera));
@@ -185,7 +185,7 @@ bool CGLES3CommandBuffer::CmdBindUniformCamera(CGfxUniformCameraPtr &ptrUniformC
 	return false;
 }
 
-bool CGLES3CommandBuffer::CmdBindMesh(CGfxMeshPtr &ptrMesh, const uint8_t *pInstanceBuffer, uint32_t size)
+bool CGLES3CommandBuffer::CmdBindMesh(const CGfxMeshPtr &ptrMesh, const uint8_t *pInstanceBuffer, uint32_t size)
 {
 	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
 		m_pCommands.emplace_back(new CGLES3CommandBindMesh(ptrMesh, pInstanceBuffer, size));
@@ -455,7 +455,7 @@ bool CGLES3CommandBuffer::CmdDrawIndirect(uint32_t mode, uint32_t type, int offs
 	return false;
 }
 
-bool CGLES3CommandBuffer::CmdExecute(CGfxCommandBufferPtr &ptrCommandBuffer)
+bool CGLES3CommandBuffer::CmdExecute(const CGfxCommandBufferPtr &ptrCommandBuffer)
 {
 	if (m_bMainCommandBuffer == true && m_bInPassScope == true && ptrCommandBuffer->IsMainCommandBuffer() == false) {
 		m_pCommands.emplace_back(new CGLES3CommandExecute(ptrCommandBuffer));

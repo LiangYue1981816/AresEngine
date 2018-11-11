@@ -112,16 +112,16 @@ public:
 
 	CGfxMaterialPtr NewMaterial(const char *szFileName);
 
-	CGfxMeshPtr NewMesh(uint32_t instanceFormat);
+	CGfxMeshPtr NewMesh(uint32_t name, uint32_t instanceFormat);
 	CGfxMeshPtr NewMesh(const char *szFileName, uint32_t instanceFormat);
 
-	CGfxTexture2DPtr NewTexture2D(void);
+	CGfxTexture2DPtr NewTexture2D(uint32_t name);
 	CGfxTexture2DPtr NewTexture2D(const char *szFileName);
 
-	CGfxTexture2DArrayPtr NewTexture2DArray(void);
+	CGfxTexture2DArrayPtr NewTexture2DArray(uint32_t name);
 	CGfxTexture2DArrayPtr NewTexture2DArray(const char *szFileName);
 
-	CGfxTextureCubeMapPtr NewTextureCubeMap(void);
+	CGfxTextureCubeMapPtr NewTextureCubeMap(uint32_t name);
 	CGfxTextureCubeMapPtr NewTextureCubeMap(const char *szFileName);
 
 	CGfxUniformEnginePtr NewUniformEngine(bool bDynamic);
@@ -130,15 +130,15 @@ public:
 	CGfxCommandBufferPtr NewCommandBuffer(bool bMainCommandBuffer);
 
 public:
-	bool CmdBeginRenderPass(CGfxCommandBufferPtr &ptrCommandBuffer, CGfxFrameBufferPtr &ptrFrameBuffer, CGfxRenderPassPtr &ptrRenderPass);
+	bool CmdBeginRenderPass(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxFrameBufferPtr &ptrFrameBuffer, const CGfxRenderPassPtr &ptrRenderPass);
 	bool CmdNextSubpass(CGfxCommandBufferPtr &ptrCommandBuffer);
 	bool CmdEndRenderPass(CGfxCommandBufferPtr &ptrCommandBuffer);
 
-	bool CmdBindPipelineCompute(CGfxCommandBufferPtr &ptrCommandBuffer, CGfxPipelineCompute *pPipelineCompute);
-	bool CmdBindPipelineGraphics(CGfxCommandBufferPtr &ptrCommandBuffer, CGfxPipelineGraphics *pPipelineGraphics);
-	bool CmdBindMaterialPass(CGfxCommandBufferPtr &ptrCommandBuffer, CGfxMaterialPtr &ptrMaterial, uint32_t namePass);
-	bool CmdBindUniformEngine(CGfxCommandBufferPtr &ptrCommandBuffer, CGfxUniformEnginePtr &ptrUniformEngine);
-	bool CmdBindUniformCamera(CGfxCommandBufferPtr &ptrCommandBuffer, CGfxUniformCameraPtr &ptrUniformCamera);
+	bool CmdBindPipelineCompute(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxPipelineCompute *pPipelineCompute);
+	bool CmdBindPipelineGraphics(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxPipelineGraphics *pPipelineGraphics);
+	bool CmdBindMaterialPass(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxMaterialPtr &ptrMaterial, uint32_t namePass);
+	bool CmdBindUniformEngine(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxUniformEnginePtr &ptrUniformEngine);
+	bool CmdBindUniformCamera(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxUniformCameraPtr &ptrUniformCamera);
 
 	bool CmdUniform1i(CGfxCommandBufferPtr &ptrCommandBuffer, const char *szName, int v0);
 	bool CmdUniform2i(CGfxCommandBufferPtr &ptrCommandBuffer, const char *szName, int v0, int v1);
@@ -166,11 +166,11 @@ public:
 	bool CmdClearDepth(CGfxCommandBufferPtr &ptrCommandBuffer, float depth);
 	bool CmdClearColor(CGfxCommandBufferPtr &ptrCommandBuffer, float red, float green, float blue, float alpha);
 
-	bool CmdDrawInstance(CGfxCommandBufferPtr &ptrCommandBuffer, CGfxMeshPtr &ptrMesh, const uint8_t *pInstanceBuffer, uint32_t size);
-	bool CmdDrawIndirect(CGfxCommandBufferPtr &ptrCommandBuffer, CGfxMeshPtr &ptrMesh, const uint8_t *pInstanceBuffer, uint32_t size);
+	bool CmdDrawInstance(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxMeshPtr &ptrMesh, const uint8_t *pInstanceBuffer, uint32_t size);
+	bool CmdDrawIndirect(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxMeshPtr &ptrMesh, const uint8_t *pInstanceBuffer, uint32_t size);
 	bool CmdDrawScreen(CGfxCommandBufferPtr &ptrCommandBuffer);
 
-	bool CmdExecute(CGfxCommandBufferPtr &ptrCommandBuffer, CGfxCommandBufferPtr &ptrSecondaryCommandBuffer);
+	bool CmdExecute(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxCommandBufferPtr &ptrSecondaryCommandBuffer);
 
 public:
 	void Submit(const CGfxCommandBufferPtr &ptrCommandBuffer);

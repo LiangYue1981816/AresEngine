@@ -21,8 +21,6 @@ CGLES3Renderer::CGLES3Renderer(void *hDC, const char *szShaderCachePath, int wid
 	, m_pCurrentPipelineCompute(nullptr)
 	, m_pCurrentPipelineGraphics(nullptr)
 {
-	pInstance = this;
-
 	m_pSwapChain = new CGLES3SwapChain(hDC, width, height, format);
 
 	m_pMeshManager = new CGLES3MeshManager;
@@ -97,12 +95,9 @@ CGfxMaterialPtr CGLES3Renderer::NewMaterial(const char *szFileName)
 	return m_pMaterialManager->LoadMaterial(szFileName);
 }
 
-CGfxMeshPtr CGLES3Renderer::NewMesh(uint32_t instanceFormat)
+CGfxMeshPtr CGLES3Renderer::NewMesh(uint32_t name, uint32_t instanceFormat)
 {
-	static uint32_t count = 0;
-	static char szName[_MAX_STRING] = { 0 };
-	sprintf(szName, "_MESH_%d", count++);
-	return m_pMeshManager->CreateMesh(HashValue(szName), instanceFormat);
+	return m_pMeshManager->CreateMesh(name, instanceFormat);
 }
 
 CGfxMeshPtr CGLES3Renderer::NewMesh(const char *szFileName, uint32_t instanceFormat)
@@ -110,12 +105,9 @@ CGfxMeshPtr CGLES3Renderer::NewMesh(const char *szFileName, uint32_t instanceFor
 	return m_pMeshManager->LoadMesh(szFileName, instanceFormat);
 }
 
-CGfxTexture2DPtr CGLES3Renderer::NewTexture2D(void)
+CGfxTexture2DPtr CGLES3Renderer::NewTexture2D(uint32_t name)
 {
-	static uint32_t count = 0;
-	static char szName[_MAX_STRING] = { 0 };
-	sprintf(szName, "_TEXTURE2D_%d", count++);
-	return m_pTextureManager->CreateTexture2D(HashValue(szName));
+	return m_pTextureManager->CreateTexture2D(name);
 }
 
 CGfxTexture2DPtr CGLES3Renderer::NewTexture2D(const char *szFileName)
@@ -123,12 +115,9 @@ CGfxTexture2DPtr CGLES3Renderer::NewTexture2D(const char *szFileName)
 	return m_pTextureManager->LoadTexture2D(szFileName);
 }
 
-CGfxTexture2DArrayPtr CGLES3Renderer::NewTexture2DArray(void)
+CGfxTexture2DArrayPtr CGLES3Renderer::NewTexture2DArray(uint32_t name)
 {
-	static uint32_t count = 0;
-	static char szName[_MAX_STRING] = { 0 };
-	sprintf(szName, "_TEXTURE2DARRAY_%d", count++);
-	return m_pTextureManager->CreateTexture2DArray(HashValue(szName));
+	return m_pTextureManager->CreateTexture2DArray(name);
 }
 
 CGfxTexture2DArrayPtr CGLES3Renderer::NewTexture2DArray(const char *szFileName)
@@ -136,12 +125,9 @@ CGfxTexture2DArrayPtr CGLES3Renderer::NewTexture2DArray(const char *szFileName)
 	return m_pTextureManager->LoadTexture2DArray(szFileName);
 }
 
-CGfxTextureCubeMapPtr CGLES3Renderer::NewTextureCubeMap(void)
+CGfxTextureCubeMapPtr CGLES3Renderer::NewTextureCubeMap(uint32_t name)
 {
-	static uint32_t count = 0;
-	static char szName[_MAX_STRING] = { 0 };
-	sprintf(szName, "_TEXTURECUBEMAP_%d", count++);
-	return m_pTextureManager->CreateTextureCubeMap(HashValue(szName));
+	return m_pTextureManager->CreateTextureCubeMap(name);
 }
 
 CGfxTextureCubeMapPtr CGLES3Renderer::NewTextureCubeMap(const char *szFileName)
@@ -164,7 +150,7 @@ CGfxCommandBufferPtr CGLES3Renderer::NewCommandBuffer(bool bMainCommandBuffer)
 	return m_pCommandBufferManager->CreateCommandBuffer(bMainCommandBuffer);
 }
 
-bool CGLES3Renderer::CmdBeginRenderPass(CGfxCommandBufferPtr &ptrCommandBuffer, CGfxFrameBufferPtr &ptrFrameBuffer, CGfxRenderPassPtr &ptrRenderPass)
+bool CGLES3Renderer::CmdBeginRenderPass(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxFrameBufferPtr &ptrFrameBuffer, const CGfxRenderPassPtr &ptrRenderPass)
 {
 	return ptrCommandBuffer->CmdBeginRenderPass(ptrFrameBuffer, ptrRenderPass);
 }
@@ -179,27 +165,27 @@ bool CGLES3Renderer::CmdEndRenderPass(CGfxCommandBufferPtr &ptrCommandBuffer)
 	return ptrCommandBuffer->CmdEndRenderPass();
 }
 
-bool CGLES3Renderer::CmdBindPipelineCompute(CGfxCommandBufferPtr &ptrCommandBuffer, CGfxPipelineCompute *pPipelineCompute)
+bool CGLES3Renderer::CmdBindPipelineCompute(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxPipelineCompute *pPipelineCompute)
 {
 	return ptrCommandBuffer->CmdBindPipelineCompute(pPipelineCompute);
 }
 
-bool CGLES3Renderer::CmdBindPipelineGraphics(CGfxCommandBufferPtr &ptrCommandBuffer, CGfxPipelineGraphics *pPipelineGraphics)
+bool CGLES3Renderer::CmdBindPipelineGraphics(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxPipelineGraphics *pPipelineGraphics)
 {
 	return ptrCommandBuffer->CmdBindPipelineGraphics(pPipelineGraphics);
 }
 
-bool CGLES3Renderer::CmdBindMaterialPass(CGfxCommandBufferPtr &ptrCommandBuffer, CGfxMaterialPtr &ptrMaterial, uint32_t namePass)
+bool CGLES3Renderer::CmdBindMaterialPass(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxMaterialPtr &ptrMaterial, uint32_t namePass)
 {
 	return ptrCommandBuffer->CmdBindMaterialPass(ptrMaterial, namePass);
 }
 
-bool CGLES3Renderer::CmdBindUniformEngine(CGfxCommandBufferPtr &ptrCommandBuffer, CGfxUniformEnginePtr &ptrUniformEngine)
+bool CGLES3Renderer::CmdBindUniformEngine(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxUniformEnginePtr &ptrUniformEngine)
 {
 	return ptrCommandBuffer->CmdBindUniformEngine(ptrUniformEngine);
 }
 
-bool CGLES3Renderer::CmdBindUniformCamera(CGfxCommandBufferPtr &ptrCommandBuffer, CGfxUniformCameraPtr &ptrUniformCamera)
+bool CGLES3Renderer::CmdBindUniformCamera(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxUniformCameraPtr &ptrUniformCamera)
 {
 	return ptrCommandBuffer->CmdBindUniformCamera(ptrUniformCamera);
 }
@@ -319,7 +305,7 @@ bool CGLES3Renderer::CmdClearColor(CGfxCommandBufferPtr &ptrCommandBuffer, float
 	return ptrCommandBuffer->CmdClearColor(red, green, blue, alpha);
 }
 
-bool CGLES3Renderer::CmdDrawInstance(CGfxCommandBufferPtr &ptrCommandBuffer, CGfxMeshPtr &ptrMesh, const uint8_t *pInstanceBuffer, uint32_t size)
+bool CGLES3Renderer::CmdDrawInstance(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxMeshPtr &ptrMesh, const uint8_t *pInstanceBuffer, uint32_t size)
 {
 	if (ptrCommandBuffer->CmdBindMesh(ptrMesh, pInstanceBuffer, size)) {
 		return false;
@@ -332,7 +318,7 @@ bool CGLES3Renderer::CmdDrawInstance(CGfxCommandBufferPtr &ptrCommandBuffer, CGf
 	return true;
 }
 
-bool CGLES3Renderer::CmdDrawIndirect(CGfxCommandBufferPtr &ptrCommandBuffer, CGfxMeshPtr &ptrMesh, const uint8_t *pInstanceBuffer, uint32_t size)
+bool CGLES3Renderer::CmdDrawIndirect(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxMeshPtr &ptrMesh, const uint8_t *pInstanceBuffer, uint32_t size)
 {
 	if (ptrCommandBuffer->CmdBindMesh(ptrMesh, pInstanceBuffer, size)) {
 		return false;
@@ -350,7 +336,7 @@ bool CGLES3Renderer::CmdDrawScreen(CGfxCommandBufferPtr &ptrCommandBuffer)
 	return true;
 }
 
-bool CGLES3Renderer::CmdExecute(CGfxCommandBufferPtr &ptrCommandBuffer, CGfxCommandBufferPtr &ptrSecondaryCommandBuffer)
+bool CGLES3Renderer::CmdExecute(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxCommandBufferPtr &ptrSecondaryCommandBuffer)
 {
 	return ptrCommandBuffer->CmdExecute(ptrSecondaryCommandBuffer);
 }

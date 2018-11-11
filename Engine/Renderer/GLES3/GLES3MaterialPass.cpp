@@ -353,7 +353,7 @@ bool CGLES3MaterialPass::LoadPipelineShader(TiXmlNode *pPipelineNode, CGfxShader
 			ShaderCompiler()->Compile(FileManager()->GetFullName(szFileName), szBinFileName, kind);
 #endif
 
-			pShader = GLES3Renderer()->LoadShader(szBinFileName, kind);
+			pShader = GLES3Renderer()->CreateShader(szBinFileName, kind);
 			if (pShader->IsValid() == false) throw 2;
 		}
 		LogOutput(nullptr, "OK\n");
@@ -616,7 +616,7 @@ bool CGLES3MaterialPass::SetTexture2D(const char *szName, uint32_t externTexture
 	uint32_t name = HashValue(szName);
 
 	if ((m_pPipeline == nullptr) || (m_pPipeline && m_pPipeline->IsTextureValid(name))) {
-		m_ptrTexture2Ds[name] = GLES3Renderer()->CreateTexture2D(TEXTURE_INTERNAL_NAME(name));
+		m_ptrTexture2Ds[name] = GLES3Renderer()->NewTexture2D(TEXTURE_INTERNAL_NAME(name));
 		((CGLES3TextureBase *)&m_ptrTexture2Ds[name])->Create(externTexture);
 		return true;
 	}
@@ -629,7 +629,7 @@ bool CGLES3MaterialPass::SetTexture2DArray(const char *szName, uint32_t externTe
 	uint32_t name = HashValue(szName);
 
 	if ((m_pPipeline == nullptr) || (m_pPipeline && m_pPipeline->IsTextureValid(name))) {
-		m_ptrTexture2DArrays[name] = GLES3Renderer()->CreateTexture2DArray(TEXTURE_INTERNAL_NAME(name));
+		m_ptrTexture2DArrays[name] = GLES3Renderer()->NewTexture2DArray(TEXTURE_INTERNAL_NAME(name));
 		((CGLES3TextureBase *)&m_ptrTexture2DArrays[name])->Create(externTexture);
 		return true;
 	}
@@ -642,7 +642,7 @@ bool CGLES3MaterialPass::SetTextureCubeMap(const char *szName, uint32_t externTe
 	uint32_t name = HashValue(szName);
 
 	if ((m_pPipeline == nullptr) || (m_pPipeline && m_pPipeline->IsTextureValid(name))) {
-		m_ptrTextureCubeMaps[name] = GLES3Renderer()->CreateTextureCubeMap(TEXTURE_INTERNAL_NAME(name));
+		m_ptrTextureCubeMaps[name] = GLES3Renderer()->NewTextureCubeMap(TEXTURE_INTERNAL_NAME(name));
 		((CGLES3TextureBase *)&m_ptrTextureCubeMaps[name])->Create(externTexture);
 		return true;
 	}
@@ -655,7 +655,7 @@ bool CGLES3MaterialPass::SetTexture2D(const char *szName, const char *szFileName
 	uint32_t name = HashValue(szName);
 
 	if ((m_pPipeline == nullptr) || (m_pPipeline && m_pPipeline->IsTextureValid(name))) {
-		m_ptrTexture2Ds[name] = GLES3Renderer()->LoadTexture2D(szFileName);
+		m_ptrTexture2Ds[name] = GLES3Renderer()->NewTexture2D(szFileName);
 		return true;
 	}
 
@@ -667,7 +667,7 @@ bool CGLES3MaterialPass::SetTexture2DArray(const char *szName, const char *szFil
 	uint32_t name = HashValue(szName);
 
 	if ((m_pPipeline == nullptr) || (m_pPipeline && m_pPipeline->IsTextureValid(name))) {
-		m_ptrTexture2DArrays[name] = GLES3Renderer()->LoadTexture2DArray(szFileName);
+		m_ptrTexture2DArrays[name] = GLES3Renderer()->NewTexture2DArray(szFileName);
 		return true;
 	}
 
@@ -679,7 +679,7 @@ bool CGLES3MaterialPass::SetTextureCubeMap(const char *szName, const char *szFil
 	uint32_t name = HashValue(szName);
 
 	if ((m_pPipeline == nullptr) || (m_pPipeline && m_pPipeline->IsTextureValid(name))) {
-		m_ptrTextureCubeMaps[name] = GLES3Renderer()->LoadTextureCubeMap(szFileName);
+		m_ptrTextureCubeMaps[name] = GLES3Renderer()->NewTextureCubeMap(szFileName);
 		return true;
 	}
 

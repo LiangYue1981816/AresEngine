@@ -21,7 +21,7 @@ CGLES3Material* CGLES3MaterialManager::LoadMaterial(const char *szFileName)
 	uint32_t name = HashValue(szFileName);
 
 	if (m_pMaterials[name] == nullptr) {
-		m_pMaterials[name] = new CGLES3Material(name);
+		m_pMaterials[name] = new CGLES3Material(this, name);
 		m_pMaterials[name]->Load(szFileName);
 	}
 

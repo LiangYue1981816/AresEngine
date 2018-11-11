@@ -79,7 +79,7 @@ private:
 private:
 	CGfxCamera *m_pMainCamera;
 	CGfxCamera *m_pShadowCamera;
-	CGfxUniformEngine *m_pUniformEngine;
+	CGfxUniformEnginePtr m_ptrUniformEngine;
 
 	eastl::unordered_map<uint32_t, CScene*> m_pScenes;
 	eastl::unordered_map<uint32_t, CSceneNode*> m_pNodes;
