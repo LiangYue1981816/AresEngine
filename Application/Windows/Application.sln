@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.28010.2048
+VisualStudioVersion = 15.0.28010.2050
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Application", "Application.vcxproj", "{35687B15-4868-4E64-A84F-0A5D23A30670}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Application", "Application.vcxproj", "{C63FC6DE-3CA6-4867-A920-000042107F9F}"
 	ProjectSection(ProjectDependencies) = postProject
 		{705A8E79-859B-4729-B34E-D4D029D92F6F} = {705A8E79-859B-4729-B34E-D4D029D92F6F}
 	EndProjectSection
@@ -18,14 +18,14 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{35687B15-4868-4E64-A84F-0A5D23A30670}.Debug|x64.ActiveCfg = Debug|x64
-		{35687B15-4868-4E64-A84F-0A5D23A30670}.Debug|x64.Build.0 = Debug|x64
-		{35687B15-4868-4E64-A84F-0A5D23A30670}.Debug|x86.ActiveCfg = Debug|Win32
-		{35687B15-4868-4E64-A84F-0A5D23A30670}.Debug|x86.Build.0 = Debug|Win32
-		{35687B15-4868-4E64-A84F-0A5D23A30670}.Release|x64.ActiveCfg = Release|x64
-		{35687B15-4868-4E64-A84F-0A5D23A30670}.Release|x64.Build.0 = Release|x64
-		{35687B15-4868-4E64-A84F-0A5D23A30670}.Release|x86.ActiveCfg = Release|Win32
-		{35687B15-4868-4E64-A84F-0A5D23A30670}.Release|x86.Build.0 = Release|Win32
+		{C63FC6DE-3CA6-4867-A920-000042107F9F}.Debug|x64.ActiveCfg = Debug|x64
+		{C63FC6DE-3CA6-4867-A920-000042107F9F}.Debug|x64.Build.0 = Debug|x64
+		{C63FC6DE-3CA6-4867-A920-000042107F9F}.Debug|x86.ActiveCfg = Debug|Win32
+		{C63FC6DE-3CA6-4867-A920-000042107F9F}.Debug|x86.Build.0 = Debug|Win32
+		{C63FC6DE-3CA6-4867-A920-000042107F9F}.Release|x64.ActiveCfg = Release|x64
+		{C63FC6DE-3CA6-4867-A920-000042107F9F}.Release|x64.Build.0 = Release|x64
+		{C63FC6DE-3CA6-4867-A920-000042107F9F}.Release|x86.ActiveCfg = Release|Win32
+		{C63FC6DE-3CA6-4867-A920-000042107F9F}.Release|x86.Build.0 = Release|Win32
 		{705A8E79-859B-4729-B34E-D4D029D92F6F}.Debug|x64.ActiveCfg = Debug|x64
 		{705A8E79-859B-4729-B34E-D4D029D92F6F}.Debug|x64.Build.0 = Debug|x64
 		{705A8E79-859B-4729-B34E-D4D029D92F6F}.Debug|x86.ActiveCfg = Debug|Win32
@@ -39,6 +39,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {DECE69FD-20D5-4529-AD4C-1E9BA352A865}
+		SolutionGuid = {915149A1-3C86-4A0E-9257-AA67E295A5F5}
 	EndGlobalSection
 EndGlobal

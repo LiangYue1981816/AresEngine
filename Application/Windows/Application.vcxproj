@@ -19,19 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\ThirdParty\gl3w\gl3w.h" />
-    <ClInclude Include="..\..\ThirdParty\gl3w\glcorearb.h" />
-    <ClInclude Include="Main.h" />
-    <ClInclude Include="nvwa\c++11.h" />
-    <ClInclude Include="nvwa\debug_new.h" />
-    <ClInclude Include="nvwa\fast_mutex.h" />
-    <ClInclude Include="nvwa\static_assert.h" />
-    <ClInclude Include="Resource.h" />
-    <ClInclude Include="stdafx.h" />
-    <ClInclude Include="targetver.h" />
-    <ClInclude Include="WGLExtensions.h" />
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="..\..\ThirdParty\eastl\source\allocator_eastl.cpp" />
     <ClCompile Include="..\..\ThirdParty\eastl\source\assert.cpp" />
     <ClCompile Include="..\..\ThirdParty\eastl\source\fixed_pool.cpp" />
@@ -50,6 +37,19 @@
     <ClCompile Include="WGLExtensions.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\ThirdParty\gl3w\gl3w.h" />
+    <ClInclude Include="..\..\ThirdParty\gl3w\glcorearb.h" />
+    <ClInclude Include="Main.h" />
+    <ClInclude Include="nvwa\c++11.h" />
+    <ClInclude Include="nvwa\debug_new.h" />
+    <ClInclude Include="nvwa\fast_mutex.h" />
+    <ClInclude Include="nvwa\static_assert.h" />
+    <ClInclude Include="Resource.h" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="targetver.h" />
+    <ClInclude Include="WGLExtensions.h" />
+  </ItemGroup>
+  <ItemGroup>
     <Image Include="Big.ico" />
     <Image Include="small.ico" />
   </ItemGroup>
@@ -58,7 +58,7 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{35687B15-4868-4E64-A84F-0A5D23A30670}</ProjectGuid>
+    <ProjectGuid>{C63FC6DE-3CA6-4867-A920-000042107F9F}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>Application</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
@@ -69,7 +69,6 @@
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
-    <WholeProgramOptimization>true</WholeProgramOptimization>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -83,7 +82,6 @@
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
-    <WholeProgramOptimization>true</WholeProgramOptimization>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -132,16 +130,14 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>HAVE_EASTL;MEMORY_ALLOCATOR;THREAD_COUNT=4;PLATFORM_WINDOWS;_DEBUG;_WINDOWS;WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>HAVE_EASTL;MEMORY_ALLOCATOR;THREAD_COUNT=4;PLATFORM_WINDOWS;WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(VULKAN_SDK)/include;$(VULKAN_SDK)/spirv-tools/include;$(VULKAN_SDK)/shaderc/libshaderc/include;$(VULKAN_SDK)/shaderc/libshaderc_util/include;../../ThirdParty;../../ThirdParty/es;../../ThirdParty/eastl;../../ThirdParty/event;../../ThirdParty/gli;../../ThirdParty/glm;../../ThirdParty/gl3w;../../ThirdParty/lodepng;../../ThirdParty/pthread;../../ThirdParty/spirv-cross;../../ThirdParty/tinyxml;../../ThirdParty/rbtree;../../ThirdParty/zlib;../../Engine;../../Engine/Base;../../Engine/Memory;../../Engine/Renderer;../../Engine/Renderer/Compiler;../../Engine/Renderer/Gfx;../../Engine/Renderer/GLES3;../../Engine/Renderer/Vulkan;../../Engine/RenderSolution;../../Engine/RenderSolution/Task;../../Engine/Scene;../../Engine/Scene/Task;../../Engine/Scene/Component;./;./nvwa</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4996;4312;4267;4251</DisableSpecificWarnings>
-      <WholeProgramOptimization>false</WholeProgramOptimization>
-      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -152,16 +148,14 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>HAVE_EASTL;MEMORY_ALLOCATOR;THREAD_COUNT=4;PLATFORM_WINDOWS;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>HAVE_EASTL;MEMORY_ALLOCATOR;THREAD_COUNT=4;PLATFORM_WINDOWS;__LP64__;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(VULKAN_SDK)/include;$(VULKAN_SDK)/spirv-tools/include;$(VULKAN_SDK)/shaderc/libshaderc/include;$(VULKAN_SDK)/shaderc/libshaderc_util/include;../../ThirdParty;../../ThirdParty/es;../../ThirdParty/eastl;../../ThirdParty/event;../../ThirdParty/gli;../../ThirdParty/glm;../../ThirdParty/gl3w;../../ThirdParty/lodepng;../../ThirdParty/pthread;../../ThirdParty/spirv-cross;../../ThirdParty/tinyxml;../../ThirdParty/rbtree;../../ThirdParty/zlib;../../Engine;../../Engine/Base;../../Engine/Memory;../../Engine/Renderer;../../Engine/Renderer/Compiler;../../Engine/Renderer/Gfx;../../Engine/Renderer/GLES3;../../Engine/Renderer/Vulkan;../../Engine/RenderSolution;../../Engine/RenderSolution/Task;../../Engine/Scene;../../Engine/Scene/Task;../../Engine/Scene/Component;./;./nvwa</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4996;4312;4267;4251</DisableSpecificWarnings>
-      <WholeProgramOptimization>false</WholeProgramOptimization>
-      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -172,17 +166,16 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>HAVE_EASTL;MEMORY_ALLOCATOR;THREAD_COUNT=4;PLATFORM_WINDOWS;NDEBUG;_WINDOWS;WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>HAVE_EASTL;MEMORY_ALLOCATOR;THREAD_COUNT=4;PLATFORM_WINDOWS;WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(VULKAN_SDK)/include;$(VULKAN_SDK)/spirv-tools/include;$(VULKAN_SDK)/shaderc/libshaderc/include;$(VULKAN_SDK)/shaderc/libshaderc_util/include;../../ThirdParty;../../ThirdParty/es;../../ThirdParty/eastl;../../ThirdParty/event;../../ThirdParty/gli;../../ThirdParty/glm;../../ThirdParty/gl3w;../../ThirdParty/lodepng;../../ThirdParty/pthread;../../ThirdParty/spirv-cross;../../ThirdParty/tinyxml;../../ThirdParty/rbtree;../../ThirdParty/zlib;../../Engine;../../Engine/Base;../../Engine/Memory;../../Engine/Renderer;../../Engine/Renderer/Compiler;../../Engine/Renderer/Gfx;../../Engine/Renderer/GLES3;../../Engine/Renderer/Vulkan;../../Engine/RenderSolution;../../Engine/RenderSolution/Task;../../Engine/Scene;../../Engine/Scene/Task;../../Engine/Scene/Component;./;./nvwa</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4996;4312;4267;4251</DisableSpecificWarnings>
-      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -195,17 +188,16 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>HAVE_EASTL;MEMORY_ALLOCATOR;THREAD_COUNT=4;PLATFORM_WINDOWS;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>HAVE_EASTL;MEMORY_ALLOCATOR;THREAD_COUNT=4;PLATFORM_WINDOWS;__LP64__;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(VULKAN_SDK)/include;$(VULKAN_SDK)/spirv-tools/include;$(VULKAN_SDK)/shaderc/libshaderc/include;$(VULKAN_SDK)/shaderc/libshaderc_util/include;../../ThirdParty;../../ThirdParty/es;../../ThirdParty/eastl;../../ThirdParty/event;../../ThirdParty/gli;../../ThirdParty/glm;../../ThirdParty/gl3w;../../ThirdParty/lodepng;../../ThirdParty/pthread;../../ThirdParty/spirv-cross;../../ThirdParty/tinyxml;../../ThirdParty/rbtree;../../ThirdParty/zlib;../../Engine;../../Engine/Base;../../Engine/Memory;../../Engine/Renderer;../../Engine/Renderer/Compiler;../../Engine/Renderer/Gfx;../../Engine/Renderer/GLES3;../../Engine/Renderer/Vulkan;../../Engine/RenderSolution;../../Engine/RenderSolution/Task;../../Engine/Scene;../../Engine/Scene/Task;../../Engine/Scene/Component;./;./nvwa</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4996;4312;4267;4251</DisableSpecificWarnings>
-      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
