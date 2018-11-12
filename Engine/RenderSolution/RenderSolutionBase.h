@@ -1,5 +1,19 @@
 #pragma once
-#include "Engine.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include "PreHeader.h"
+
+#include "Allocator.h"
+#include "TaskGraph.h"
+
+
+typedef enum RenderSolution {
+	RENDER_SOLUTION_DEFAULT = 0,
+	RENDER_SOLUTION_DEFERRED,
+	RENDER_SOLUTION_FORWARD,
+	RENDER_SOLUTION_FORWARD_PLUS,
+	RENDER_SOLUTION_COUNT
+} RenderSolution;
 
 
 class CRenderSolutionBase

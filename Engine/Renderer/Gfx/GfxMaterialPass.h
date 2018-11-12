@@ -2,7 +2,7 @@
 #include "GfxRenderer.h"
 
 
-class CGfxMaterialPass
+class CALL_API CGfxMaterialPass
 {
 public:
 	CGfxMaterialPass(uint32_t name)

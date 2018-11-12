@@ -2,7 +2,7 @@
 #include "GfxRenderer.h"
 
 
-class CGfxInstanceBuffer
+class CALL_API CGfxInstanceBuffer
 {
 public:
 	CGfxInstanceBuffer(uint32_t binding, uint32_t format)

@@ -23,7 +23,7 @@ public:
 		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_RESOLVE, "CommandResolve");
 		{
 			if (m_ptrFrameBuffer.IsValid() && m_ptrRenderPass.IsValid()) {
-				((CGLES3FrameBuffer *)&m_ptrFrameBuffer)->Resolve(m_ptrRenderPass->GetAttachments(), m_ptrRenderPass->GetSubPass(m_indexSubPass));
+				((CGLES3FrameBuffer *)m_ptrFrameBuffer.GetPointer())->Resolve(m_ptrRenderPass->GetAttachments(), m_ptrRenderPass->GetSubPass(m_indexSubPass));
 			}
 		}
 	}

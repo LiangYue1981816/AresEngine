@@ -16,7 +16,7 @@ CGLES3SwapChain::CGLES3SwapChain(void *hDC, int width, int height, uint32_t form
 		const float color[] = { 0.0f, 0.0f, 0.0f, 0.0f };
 		const eastl::vector<uint32_t> drawBuffers{ GL_COLOR_ATTACHMENT0 };
 
-		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, ((CGLES3Texture2D *)&m_ptrTexture)->GetTarget(), ((CGLES3Texture2D *)&m_ptrTexture)->GetTexture(), 0);
+		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, ((CGLES3Texture2D *)m_ptrTexture.GetPointer())->GetTarget(), ((CGLES3Texture2D *)m_ptrTexture.GetPointer())->GetTexture(), 0);
 		glClearBufferfv(GL_COLOR, 0, color);
 
 		glReadBuffers((int)drawBuffers.size(), drawBuffers.data());

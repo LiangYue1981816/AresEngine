@@ -12,7 +12,7 @@
 #define FileManager() CFileManager::GetInstance()
 
 
-class CFileManager
+class CALL_API CFileManager
 {
 private:
 	typedef struct File {

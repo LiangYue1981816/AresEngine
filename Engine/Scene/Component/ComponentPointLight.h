@@ -3,7 +3,7 @@
 #include "ComponentManager.h"
 
 
-class CComponentPointLight : public CComponent
+class CALL_API CComponentPointLight : public CComponent
 {
 private:
 	typedef struct InstanceData {

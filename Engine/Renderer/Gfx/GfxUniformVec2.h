@@ -2,7 +2,7 @@
 #include "GfxRenderer.h"
 
 
-class CGfxUniformVec2 : public CGfxResource
+class CALL_API CGfxUniformVec2 : public CGfxResource
 {
 public:
 	CGfxUniformVec2(void)

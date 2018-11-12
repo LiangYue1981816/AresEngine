@@ -4,21 +4,21 @@
 #include "PreHeader.h"
 
 
-extern unsigned int tick(void);
-extern unsigned int HashValue(const char *szString);
-extern unsigned int HashValue(const unsigned char *pBuffer, int length);
-extern void splitfilename(const char *name, char *fname, char *ext);
-extern int fexist(const char *name);
-extern size_t fsize(FILE *stream);
-extern size_t freadline(char *buffer, size_t size, FILE *stream);
-extern size_t freadstring(char *buffer, size_t size, FILE *stream);
-extern size_t fwritestring(const char *buffer, size_t size, FILE *stream);
+CALL_API unsigned int tick(void);
+CALL_API unsigned int HashValue(const char *szString);
+CALL_API unsigned int HashValue(const unsigned char *pBuffer, int length);
+CALL_API void splitfilename(const char *name, char *fname, char *ext);
+CALL_API int fexist(const char *name);
+CALL_API size_t fsize(FILE *stream);
+CALL_API size_t freadline(char *buffer, size_t size, FILE *stream);
+CALL_API size_t freadstring(char *buffer, size_t size, FILE *stream);
+CALL_API size_t fwritestring(const char *buffer, size_t size, FILE *stream);
 
-extern void LogOutput(const char *szTag, const char *szFormat, ...);
+CALL_API void LogOutput(const char *szTag, const char *szFormat, ...);
 
 #if defined(PLATFORM_ANDROID) || defined(PLATFORM_IOS)
-extern int stricmp(const char *src, const char *dst);
-extern int strnicmp(const char *src, const char *dst, int count);
+CALL_API int stricmp(const char *src, const char *dst);
+CALL_API int strnicmp(const char *src, const char *dst, int count);
 
 #define _A_NORMAL 0x00
 #define _A_RDONLY 0x01
@@ -32,7 +32,7 @@ struct _finddata_t {
 	unsigned int attrib;
 };
 
-extern long _findfirst(const char *pattern, struct _finddata_t *data);
-extern long _findnext(long id, struct _finddata_t *data);
-extern long _findclose(long id);
+CALL_API long _findfirst(const char *pattern, struct _finddata_t *data);
+CALL_API long _findnext(long id, struct _finddata_t *data);
+CALL_API long _findclose(long id);
 #endif

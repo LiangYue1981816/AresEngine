@@ -2,7 +2,7 @@
 #include "GfxRenderer.h"
 
 
-class CGfxUniformBuffer
+class CALL_API CGfxUniformBuffer
 {
 public:
 	CGfxUniformBuffer(size_t size, bool bDynamic)

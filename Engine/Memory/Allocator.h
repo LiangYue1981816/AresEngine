@@ -1,16 +1,14 @@
 #pragma once
+#include "Define.h"
 
 
-extern void InitAllocator(void);
-extern void ExitAllocator(void);
-extern void* AllocMemory(size_t size);
-extern void FreeMemory(void *pPointer);
+CALL_API void InitAllocator(void);
+CALL_API void ExitAllocator(void);
+CALL_API void* AllocMemory(size_t size);
+CALL_API void FreeMemory(void *pPointer);
 
-extern void* alloc_mem(size_t size, const char* file, int line, bool is_array);
-extern void free_pointer(void* usr_ptr, void* addr, bool is_array);
+int dump_memory_objects();
+int check_mem_corruption();
 
-extern int dump_memory_objects();
-extern int check_mem_corruption();
-
-extern size_t get_total_size();
-extern size_t get_total_object();
+size_t get_total_size();
+size_t get_total_object();

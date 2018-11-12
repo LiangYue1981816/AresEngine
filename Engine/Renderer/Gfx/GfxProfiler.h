@@ -2,7 +2,7 @@
 #include "GfxRenderer.h"
 
 
-class CGfxProfiler
+class CALL_API CGfxProfiler
 {
 public:
 	typedef struct Sample {
@@ -112,7 +112,7 @@ private:
 	static Sample samples[SampleType::SAMPLE_TYPE_COUNT];
 };
 
-class CGfxProfilerSample
+class CALL_API CGfxProfilerSample
 {
 public:
 	CGfxProfilerSample(CGfxProfiler::SampleType type, const char *name);

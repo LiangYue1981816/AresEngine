@@ -2,7 +2,7 @@
 #include "GfxRenderer.h"
 
 
-class CGfxCommandBase
+class CALL_API CGfxCommandBase
 {
 public:
 	CGfxCommandBase(void)

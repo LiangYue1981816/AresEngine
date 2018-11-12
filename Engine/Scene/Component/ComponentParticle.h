@@ -3,7 +3,7 @@
 #include "ComponentManager.h"
 
 
-class CComponentParticle : public CComponent
+class CALL_API CComponentParticle : public CComponent
 {
 public:
 	CComponentParticle(uint32_t name);

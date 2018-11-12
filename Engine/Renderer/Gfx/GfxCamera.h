@@ -2,11 +2,8 @@
 #include "GfxRenderer.h"
 
 
-class CGfxCamera
+class CALL_API CGfxCamera
 {
-	friend class CGfxRenderQueue;
-
-
 public:
 	CGfxCamera(void);
 	virtual ~CGfxCamera(void);
@@ -32,6 +29,8 @@ public:
 	const glm::mat4& GetViewInverseMatrix(void) const;
 	const glm::mat4& GetViewInverseTransposeMatrix(void) const;
 
+	const CGfxUniformCameraPtr& GetUniformCamera(void) const;
+
 public:
 	glm::vec3 WorldToScreen(const glm::vec3 &world) const;
 	glm::vec3 ScreenToWorld(const glm::vec3 &screen) const;
@@ -46,7 +45,7 @@ public:
 	void Clear(int indexQueue);
 
 public:
-	void CmdDraw(CGfxCommandBufferPtr &ptrCommandBuffer, int indexThread, int indexQueue, uint32_t namePass);
+	void CmdDraw(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxUniformEnginePtr &ptrUniformEngine, int indexThread, int indexQueue, uint32_t namePass);
 
 
 private:

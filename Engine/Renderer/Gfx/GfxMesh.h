@@ -2,7 +2,7 @@
 #include "GfxRenderer.h"
 
 
-class CGfxMesh : public CGfxResource
+class CALL_API CGfxMesh : public CGfxResource
 {
 public:
 	CGfxMesh(uint32_t name)

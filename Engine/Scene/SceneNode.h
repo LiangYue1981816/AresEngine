@@ -5,7 +5,7 @@
 #include "ComponentPointLight.h"
 
 
-class CSceneNode
+class CALL_API CSceneNode
 {
 	friend class CScene;
 	friend class CSceneManager;

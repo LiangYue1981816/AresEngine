@@ -1,7 +1,7 @@
 #include "Utils.h"
 
 
-unsigned int tick(void)
+CALL_API unsigned int tick(void)
 {
 #ifdef PLATFORM_WINDOWS
 	LARGE_INTEGER freq;
@@ -18,7 +18,7 @@ unsigned int tick(void)
 #endif
 }
 
-unsigned int HashValue(const char *szString)
+CALL_API unsigned int HashValue(const char *szString)
 {
 	const char *c = szString;
 	unsigned int dwHashValue = 0x00000000;
@@ -31,7 +31,7 @@ unsigned int HashValue(const char *szString)
 	return dwHashValue ? dwHashValue : INVALID_HASHVALUE;
 }
 
-unsigned int HashValue(const unsigned char *pBuffer, int length)
+CALL_API unsigned int HashValue(const unsigned char *pBuffer, int length)
 {
 	const unsigned char *c = pBuffer;
 	unsigned int dwHashValue = 0x00000000;
@@ -44,7 +44,7 @@ unsigned int HashValue(const unsigned char *pBuffer, int length)
 	return dwHashValue ? dwHashValue : INVALID_HASHVALUE;
 }
 
-void splitfilename(const char *name, char *fname, char *ext)
+CALL_API void splitfilename(const char *name, char *fname, char *ext)
 {
 	const char *p = nullptr;
 	const char *c = nullptr;
@@ -81,7 +81,7 @@ void splitfilename(const char *name, char *fname, char *ext)
 	}
 }
 
-int fexist(const char *name)
+CALL_API int fexist(const char *name)
 {
 	if (FILE *stream = fopen(name, "rb")) {
 		fclose(stream);
@@ -91,7 +91,7 @@ int fexist(const char *name)
 	return 0;
 }
 
-size_t fsize(FILE *stream)
+CALL_API size_t fsize(FILE *stream)
 {
 	long pos;
 	size_t size;
@@ -106,7 +106,7 @@ size_t fsize(FILE *stream)
 	return size;
 }
 
-size_t freadline(char *buffer, size_t size, FILE *stream)
+CALL_API size_t freadline(char *buffer, size_t size, FILE *stream)
 {
 	char c;
 	size_t count = 0;
@@ -137,7 +137,7 @@ size_t freadline(char *buffer, size_t size, FILE *stream)
 	return count;
 }
 
-size_t freadstring(char *buffer, size_t size, FILE *stream)
+CALL_API size_t freadstring(char *buffer, size_t size, FILE *stream)
 {
 	size_t len = 0;
 	size_t reads = 0;
@@ -149,7 +149,7 @@ size_t freadstring(char *buffer, size_t size, FILE *stream)
 	return reads;
 }
 
-size_t fwritestring(const char *buffer, size_t size, FILE *stream)
+CALL_API size_t fwritestring(const char *buffer, size_t size, FILE *stream)
 {
 	size_t len = 0;
 	size_t writes = 0;
@@ -161,7 +161,7 @@ size_t fwritestring(const char *buffer, size_t size, FILE *stream)
 	return writes;
 }
 
-void LogOutput(const char *szTag, const char *szFormat, ...)
+CALL_API void LogOutput(const char *szTag, const char *szFormat, ...)
 {
 	static char szText[128 * 1024];
 
@@ -195,7 +195,7 @@ void LogOutput(const char *szTag, const char *szFormat, ...)
 
 #if defined(PLATFORM_ANDROID) || defined(PLATFORM_IOS)
 
-int stricmp(const char *src, const char *dst)
+CALL_API int stricmp(const char *src, const char *dst)
 {
 	int f, l;
 
@@ -210,7 +210,7 @@ int stricmp(const char *src, const char *dst)
 	return (f - l);
 }
 
-int strnicmp(const char *src, const char *dst, int count)
+CALL_API int strnicmp(const char *src, const char *dst, int count)
 {
 	int f, l;
 
@@ -242,7 +242,7 @@ static void _dirent2finddata(struct dirent *d, struct _finddata_t *data)
 	}
 }
 
-long _findfirst(const char *pattern, struct _finddata_t *data)
+CALL_API long _findfirst(const char *pattern, struct _finddata_t *data)
 {
 	DIR *id = opendir(pattern);
 	if (id == nullptr) return -1;
@@ -254,7 +254,7 @@ long _findfirst(const char *pattern, struct _finddata_t *data)
 	return (long)id;
 }
 
-long _findnext(long id, struct _finddata_t *data)
+CALL_API long _findnext(long id, struct _finddata_t *data)
 {
 	struct dirent *d = readdir((DIR *)id);
 	if (d == nullptr) return -1;
@@ -263,7 +263,7 @@ long _findnext(long id, struct _finddata_t *data)
 	return 0;
 }
 
-long _findclose(long id)
+CALL_API long _findclose(long id)
 {
 	closedir((DIR *)id);
 	return 0;

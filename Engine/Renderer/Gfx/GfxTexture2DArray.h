@@ -2,7 +2,7 @@
 #include "GfxRenderer.h"
 
 
-class CGfxTexture2DArray : public CGfxResource
+class CALL_API CGfxTexture2DArray : public CGfxResource
 {
 public:
 	CGfxTexture2DArray(void)

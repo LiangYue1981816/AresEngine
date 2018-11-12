@@ -35,7 +35,7 @@ typedef struct PipelineState {
 	float polygonOffsetUnits = 0.0f;
 } PipelineState;
 
-class CGfxPipelineGraphics
+class CALL_API CGfxPipelineGraphics
 {
 public:
 	CGfxPipelineGraphics(void)

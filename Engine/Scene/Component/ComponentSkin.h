@@ -3,7 +3,7 @@
 #include "ComponentManager.h"
 
 
-class CComponentSkin : public CComponent
+class CALL_API CComponentSkin : public CComponent
 {
 public:
 	CComponentSkin(uint32_t name);

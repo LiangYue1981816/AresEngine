@@ -1,53 +1,53 @@
 #pragma once
 
-class CGfxRenderer;
+class CALL_API CGfxRenderer;
 
-class CGfxProfiler;
-class CGfxProfilerSample;
+class CALL_API CGfxProfiler;
+class CALL_API CGfxProfilerSample;
 
-class CGfxCamera;
-class CGfxRenderQueue;
+class CALL_API CGfxCamera;
+class CALL_API CGfxRenderQueue;
 
-class CGfxSwapChain;
-class CGfxRenderPass;
-class CGfxFrameBuffer;
+class CALL_API CGfxSwapChain;
+class CALL_API CGfxRenderPass;
+class CALL_API CGfxFrameBuffer;
 
-class CGfxMesh;
-class CGfxIndexBuffer;
-class CGfxVertexBuffer;
-class CGfxInstanceBuffer;
-class CGfxDrawIndirectBuffer;
+class CALL_API CGfxMesh;
+class CALL_API CGfxIndexBuffer;
+class CALL_API CGfxVertexBuffer;
+class CALL_API CGfxInstanceBuffer;
+class CALL_API CGfxDrawIndirectBuffer;
 
-class CGfxSampler;
-class CGfxTextureBase;
-class CGfxTexture2D;
-class CGfxTexture2DArray;
-class CGfxTextureCubeMap;
+class CALL_API CGfxSampler;
+class CALL_API CGfxTextureBase;
+class CALL_API CGfxTexture2D;
+class CALL_API CGfxTexture2DArray;
+class CALL_API CGfxTextureCubeMap;
 
-class CGfxShader;
-class CGfxPipelineBase;
-class CGfxPipelineCompute;
-class CGfxPipelineGraphics;
+class CALL_API CGfxShader;
+class CALL_API CGfxPipelineBase;
+class CALL_API CGfxPipelineCompute;
+class CALL_API CGfxPipelineGraphics;
 
-class CGfxMaterial;
-class CGfxMaterialPass;
+class CALL_API CGfxMaterial;
+class CALL_API CGfxMaterialPass;
 
-class CGfxUniformBase;
-class CGfxUniformVec1;
-class CGfxUniformVec2;
-class CGfxUniformVec3;
-class CGfxUniformVec4;
-class CGfxUniformMat4;
-class CGfxUniformCamera;
-class CGfxUniformEngine;
-class CGfxUniformBuffer;
+class CALL_API CGfxUniformBase;
+class CALL_API CGfxUniformVec1;
+class CALL_API CGfxUniformVec2;
+class CALL_API CGfxUniformVec3;
+class CALL_API CGfxUniformVec4;
+class CALL_API CGfxUniformMat4;
+class CALL_API CGfxUniformCamera;
+class CALL_API CGfxUniformEngine;
+class CALL_API CGfxUniformBuffer;
 
-class CGfxCommandBuffer;
+class CALL_API CGfxCommandBuffer;
 
 
 template<class T>
-class CGfxResourcePtr;
-class CGfxResource;
+class CALL_API CGfxResourcePtr;
+class CALL_API CGfxResource;
 
 typedef CGfxResourcePtr<CGfxRenderPass> CGfxRenderPassPtr;
 typedef CGfxResourcePtr<CGfxFrameBuffer> CGfxFrameBufferPtr;

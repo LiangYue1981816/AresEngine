@@ -2,7 +2,7 @@
 #include <stdint.h>
 
 
-template<class T> class CSharedPtr
+template<class T> class CALL_API CSharedPtr
 {
 public:
 	CSharedPtr(void)

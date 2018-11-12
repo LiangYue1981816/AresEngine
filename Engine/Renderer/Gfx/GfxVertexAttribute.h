@@ -21,14 +21,14 @@
 #define INSTANCE_ATTRIBUTE_TRANSFORM (INSTANCE_ATTRIBUTE_TRANSFORM_MATRIX_COL0 | INSTANCE_ATTRIBUTE_TRANSFORM_MATRIX_COL1 | INSTANCE_ATTRIBUTE_TRANSFORM_MATRIX_COL2 | INSTANCE_ATTRIBUTE_TRANSFORM_MATRIX_COL3)
 
 
-extern uint32_t GetVertexStride(uint32_t format);
-extern uint32_t GetVertexAttributeSize(uint32_t attribute);
-extern uint32_t GetVertexAttributeOffset(uint32_t format, uint32_t attribute);
-extern uint32_t GetVertexAttributeComponents(uint32_t attribute);
-extern uint32_t GetVertexAttributeLocation(uint32_t attribute);
+CALL_API uint32_t GetVertexStride(uint32_t format);
+CALL_API uint32_t GetVertexAttributeSize(uint32_t attribute);
+CALL_API uint32_t GetVertexAttributeOffset(uint32_t format, uint32_t attribute);
+CALL_API uint32_t GetVertexAttributeComponents(uint32_t attribute);
+CALL_API uint32_t GetVertexAttributeLocation(uint32_t attribute);
 
-extern uint32_t GetInstanceStride(uint32_t format);
-extern uint32_t GetInstanceAttributeSize(uint32_t attribute);
-extern uint32_t GetInstanceAttributeOffset(uint32_t format, uint32_t attribute);
-extern uint32_t GetInstanceAttributeComponents(uint32_t attribute);
-extern uint32_t GetInstanceAttributeLocation(uint32_t attribute);
+CALL_API uint32_t GetInstanceStride(uint32_t format);
+CALL_API uint32_t GetInstanceAttributeSize(uint32_t attribute);
+CALL_API uint32_t GetInstanceAttributeOffset(uint32_t format, uint32_t attribute);
+CALL_API uint32_t GetInstanceAttributeComponents(uint32_t attribute);
+CALL_API uint32_t GetInstanceAttributeLocation(uint32_t attribute);

@@ -1,8 +1,8 @@
 #include "GLES3Renderer.h"
 
 
-CGLES3Renderer::CGLES3Renderer(void *hDC, const char *szShaderCachePath, int width, int height, uint32_t format)
-	: CGfxRenderer(hDC, szShaderCachePath, width, height, format)
+CGLES3Renderer::CGLES3Renderer(void *hDC, int width, int height, uint32_t format)
+	: CGfxRenderer(hDC, width, height, format)
 	, m_pSwapChain(nullptr)
 
 	, m_pMeshManager(nullptr)
@@ -21,8 +21,6 @@ CGLES3Renderer::CGLES3Renderer(void *hDC, const char *szShaderCachePath, int wid
 	, m_pCurrentPipelineCompute(nullptr)
 	, m_pCurrentPipelineGraphics(nullptr)
 {
-	m_pSwapChain = new CGLES3SwapChain(hDC, width, height, format);
-
 	m_pMeshManager = new CGLES3MeshManager;
 	m_pShaderManager = new CGLES3ShaderManager;
 	m_pSamplerManager = new CGLES3SamplerManager;
@@ -34,6 +32,7 @@ CGLES3Renderer::CGLES3Renderer(void *hDC, const char *szShaderCachePath, int wid
 	m_pFrameBufferManager = new CGLES3FrameBufferManager;
 	m_pCommandBufferManager = new CGLES3CommandBufferManager;
 
+	m_pSwapChain = new CGLES3SwapChain(hDC, width, height, format);
 	m_pGlobalMaterialPass = new CGLES3MaterialPass(INVALID_HASHVALUE);
 }
 
@@ -307,7 +306,7 @@ bool CGLES3Renderer::CmdClearColor(CGfxCommandBufferPtr &ptrCommandBuffer, float
 
 bool CGLES3Renderer::CmdDrawInstance(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxMeshPtr &ptrMesh, const uint8_t *pInstanceBuffer, uint32_t size)
 {
-	if (ptrCommandBuffer->CmdBindMesh(ptrMesh, pInstanceBuffer, size)) {
+	if (ptrCommandBuffer->CmdBindMesh(ptrMesh, pInstanceBuffer, size) == false) {
 		return false;
 	}
 
@@ -320,11 +319,11 @@ bool CGLES3Renderer::CmdDrawInstance(CGfxCommandBufferPtr &ptrCommandBuffer, con
 
 bool CGLES3Renderer::CmdDrawIndirect(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxMeshPtr &ptrMesh, const uint8_t *pInstanceBuffer, uint32_t size)
 {
-	if (ptrCommandBuffer->CmdBindMesh(ptrMesh, pInstanceBuffer, size)) {
+	if (ptrCommandBuffer->CmdBindMesh(ptrMesh, pInstanceBuffer, size) == false) {
 		return false;
 	}
 
-	if (ptrCommandBuffer->CmdDrawIndirect(GL_TRIANGLES, ptrMesh->GetIndexType(), 0)) {
+	if (ptrCommandBuffer->CmdDrawIndirect(GL_TRIANGLES, ptrMesh->GetIndexType(), 0) == false) {
 		return false;
 	}
 

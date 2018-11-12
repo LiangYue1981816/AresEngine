@@ -2,7 +2,7 @@
 #include "GfxRenderer.h"
 
 
-class CGfxTextureCubeMap : public CGfxResource
+class CALL_API CGfxTextureCubeMap : public CGfxResource
 {
 public:
 	CGfxTextureCubeMap(void)

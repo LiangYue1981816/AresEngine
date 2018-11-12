@@ -1,7 +1,7 @@
 #pragma once
 
 
-template<class T> class CComponentManager
+template<class T> class CALL_API CComponentManager
 {
 public:
 	CComponentManager(void)
@@ -86,7 +86,7 @@ private:
 	eastl::unordered_map<size_t, uint32_t> m_indexKey;
 };
 
-template<class T> class CComponentPtr
+template<class T> class CALL_API CComponentPtr
 {
 public:
 	CComponentPtr(void)

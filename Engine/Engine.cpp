@@ -11,10 +11,10 @@ CEngine* CEngine::GetInstance(void)
 	return pInstance;
 }
 
-void CEngine::Create(void *hDC, const char *szShaderCachePath, int screenWidth, int screenHeight, uint32_t screenPixelFormat)
+void CEngine::Create(GfxApi api, void *hDC, int width, int height, uint32_t format)
 {
 	if (pInstance == nullptr) {
-		pInstance = new CEngine(hDC, szShaderCachePath, screenWidth, screenHeight, screenPixelFormat);
+		pInstance = new CEngine(api, hDC, width, height, format);
 	}
 }
 
@@ -22,9 +22,8 @@ void CEngine::Destroy(void)
 {
 	if (pInstance) {
 		delete pInstance;
+		pInstance = nullptr;
 	}
-
-	pInstance = nullptr;
 
 	CGfxProfiler::LogGfxMemory();
 
@@ -33,21 +32,20 @@ void CEngine::Destroy(void)
 #endif
 }
 
-CEngine::CEngine(void *hDC, const char *szShaderCachePath, int screenWidth, int screenHeight, uint32_t screenPixelFormat)
+CEngine::CEngine(GfxApi api, void *hDC, int width, int height, uint32_t format)
 	: m_indexQueue(0)
 
 	, m_totalLogicTime(0.0f)
 	, m_totalRenderTime(0.0f)
 
-	, m_pRenderer(nullptr)
 	, m_pSceneManager(nullptr)
 	, m_pRenderSolutions{ nullptr }
 {
 	pInstance = this;
 
-//	m_pRenderer = new CGfxRenderer(hDC, szShaderCachePath, screenWidth, screenHeight, screenPixelFormat);
-	m_pSceneManager = new CSceneManager;
+	RendererCreate(api, hDC, width, height, format);
 
+	m_pSceneManager = new CSceneManager;
 	m_pRenderSolutions[RENDER_SOLUTION_DEFAULT] = new CRenderSolutionDefault;
 	m_pRenderSolutions[RENDER_SOLUTION_DEFERRED] = new CRenderSolutionDeferred;
 	m_pRenderSolutions[RENDER_SOLUTION_FORWARD] = new CRenderSolutionForward;
@@ -60,16 +58,9 @@ CEngine::~CEngine(void)
 	delete m_pRenderSolutions[RENDER_SOLUTION_DEFERRED];
 	delete m_pRenderSolutions[RENDER_SOLUTION_FORWARD];
 	delete m_pRenderSolutions[RENDER_SOLUTION_FORWARD_PLUS];
-
 	delete m_pSceneManager;
-	delete m_pRenderer;
 
-	pInstance = nullptr;
-}
-
-CGfxRenderer* CEngine::GetRenderer(void) const
-{
-	return m_pRenderer;
+	RendererDestroy();
 }
 
 CSceneManager* CEngine::GetSceneManager(void) const

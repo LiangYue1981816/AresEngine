@@ -7,47 +7,33 @@
 #include "TaskGraph.h"
 #include "GfxRenderer.h"
 #include "SceneManager.h"
+#include "RenderSolutionBase.h"
 
 
-#define CreateEngine(hDC, szShaderCachePath, nScreenWidth, nScreenHeight, nScreenPixelFormat) CEngine::Create((hDC), (szShaderCachePath), (nScreenWidth), (nScreenHeight), (nScreenPixelFormat))
+#define CreateEngine(api, hDC, width, height, format) CEngine::Create((api), (hDC), (width), (height), (format))
 #define DestroyEngine() CEngine::Destroy()
-
 #define Engine() CEngine::GetInstance()
+
+
 #define SceneManager() CEngine::GetInstance()->GetSceneManager()
 #define MainCamera() CEngine::GetInstance()->GetSceneManager()->GetMainCamera()
 #define ShadowCamera() CEngine::GetInstance()->GetSceneManager()->GetShadowCamera()
 
 
-typedef enum RenderSolution {
-	RENDER_SOLUTION_DEFAULT = 0,
-	RENDER_SOLUTION_DEFERRED,
-	RENDER_SOLUTION_FORWARD,
-	RENDER_SOLUTION_FORWARD_PLUS,
-	RENDER_SOLUTION_COUNT
-} RenderSolution;
-
-class CRenderSolutionBase;
-class CRenderSolutionDefault;
-class CRenderSolutionDeferred;
-class CRenderSolutionForward;
-class CRenderSolutionForwardPlus;
-
-
-class CEngine
+class CALL_API CEngine
 {
 public:
 	static CEngine* GetInstance(void);
-	static void Create(void *hDC, const char *szShaderCachePath, int screenWidth, int screenHeight, uint32_t screenPixelFormat);
+	static void Create(GfxApi api, void *hDC, int width, int height, uint32_t format);
 	static void Destroy(void);
 
 
 private:
-	CEngine(void *hDC, const char *szShaderCachePath, int screenWidth, int screenHeight, uint32_t screenPixelFormat);
+	CEngine(GfxApi api, void *hDC, int width, int height, uint32_t format);
 	virtual ~CEngine(void);
 
 
 public:
-	CGfxRenderer* GetRenderer(void) const;
 	CSceneManager* GetSceneManager(void) const;
 	CRenderSolutionBase* GetRenderSolution(RenderSolution solution) const;
 
@@ -65,7 +51,6 @@ private:
 	float m_totalRenderTime;
 
 private:
-	CGfxRenderer *m_pRenderer;
 	CSceneManager *m_pSceneManager;
 	CRenderSolutionBase *m_pRenderSolutions[RENDER_SOLUTION_COUNT];
 

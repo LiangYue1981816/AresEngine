@@ -1,55 +1,127 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Header Files">
+    <Filter Include="ThirdParty">
+      <UniqueIdentifier>{f9510acd-cc64-46fe-9b43-dc2952b06233}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application">
+      <UniqueIdentifier>{e2936422-39cd-4115-89ff-973cdfe6ba56}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Header Files">
       <UniqueIdentifier>{98879eca-0e66-4bc2-9968-40349261d234}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files">
+    <Filter Include="Application\Resource Files">
+      <UniqueIdentifier>{6140abc7-8200-436c-bd7c-c4f1c667ca65}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Source Files">
       <UniqueIdentifier>{86bda21f-4ed7-404a-87ea-f9021db6752d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{6140abc7-8200-436c-bd7c-c4f1c667ca65}</UniqueIdentifier>
+    <Filter Include="ThirdParty\gl3w">
+      <UniqueIdentifier>{1b2c5291-15b7-49a7-852c-807cf4fd29a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\eastl">
+      <UniqueIdentifier>{41f25833-615f-426a-9e71-c8712897b87d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Source Files\nvwa">
+      <UniqueIdentifier>{bf4d7a4f-23be-4077-937f-320cdafbe84e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Main.h">
-      <Filter>Header Files</Filter>
+      <Filter>Application\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="stdafx.h">
-      <Filter>Header Files</Filter>
+      <Filter>Application\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="targetver.h">
-      <Filter>Header Files</Filter>
+      <Filter>Application\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="WGLExtensions.h">
-      <Filter>Header Files</Filter>
+      <Filter>Application\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Resource.h">
-      <Filter>Resource Files</Filter>
+      <Filter>Application\Resource Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ThirdParty\gl3w\gl3w.h">
+      <Filter>ThirdParty\gl3w</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ThirdParty\gl3w\glcorearb.h">
+      <Filter>ThirdParty\gl3w</Filter>
+    </ClInclude>
+    <ClInclude Include="nvwa\c++11.h">
+      <Filter>Application\Source Files\nvwa</Filter>
+    </ClInclude>
+    <ClInclude Include="nvwa\debug_new.h">
+      <Filter>Application\Source Files\nvwa</Filter>
+    </ClInclude>
+    <ClInclude Include="nvwa\fast_mutex.h">
+      <Filter>Application\Source Files\nvwa</Filter>
+    </ClInclude>
+    <ClInclude Include="nvwa\static_assert.h">
+      <Filter>Application\Source Files\nvwa</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Application\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="stdafx.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Application\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="WGLExtensions.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Application\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ThirdParty\gl3w\gl3w.c">
+      <Filter>ThirdParty\gl3w</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ThirdParty\eastl\source\allocator_eastl.cpp">
+      <Filter>ThirdParty\eastl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ThirdParty\eastl\source\assert.cpp">
+      <Filter>ThirdParty\eastl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ThirdParty\eastl\source\fixed_pool.cpp">
+      <Filter>ThirdParty\eastl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ThirdParty\eastl\source\hashtable.cpp">
+      <Filter>ThirdParty\eastl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ThirdParty\eastl\source\intrusive_list.cpp">
+      <Filter>ThirdParty\eastl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ThirdParty\eastl\source\new.cpp">
+      <Filter>ThirdParty\eastl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ThirdParty\eastl\source\numeric_limits.cpp">
+      <Filter>ThirdParty\eastl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ThirdParty\eastl\source\red_black_tree.cpp">
+      <Filter>ThirdParty\eastl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ThirdParty\eastl\source\string.cpp">
+      <Filter>ThirdParty\eastl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ThirdParty\eastl\source\thread_support.cpp">
+      <Filter>ThirdParty\eastl</Filter>
+    </ClCompile>
+    <ClCompile Include="nvwa\debug_new.cpp">
+      <Filter>Application\Source Files\nvwa</Filter>
+    </ClCompile>
+    <ClCompile Include="nvwa\operator_new.cpp">
+      <Filter>Application\Source Files\nvwa</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Big.ico">
-      <Filter>Resource Files</Filter>
+      <Filter>Application\Resource Files</Filter>
     </Image>
     <Image Include="small.ico">
-      <Filter>Resource Files</Filter>
+      <Filter>Application\Resource Files</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource.rc">
-      <Filter>Resource Files</Filter>
+      <Filter>Application\Resource Files</Filter>
     </ResourceCompile>
   </ItemGroup>
 </Project>

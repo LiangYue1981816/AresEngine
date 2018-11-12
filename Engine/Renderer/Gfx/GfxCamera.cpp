@@ -88,6 +88,11 @@ const glm::mat4& CGfxCamera::GetViewInverseTransposeMatrix(void) const
 	return m_camera.viewInverseTransposeMatrix;
 }
 
+const CGfxUniformCameraPtr& CGfxCamera::GetUniformCamera(void) const
+{
+	return m_ptrUniformCamera;
+}
+
 glm::vec3 CGfxCamera::WorldToScreen(const glm::vec3 &world) const
 {
 	return m_camera.worldToScreen(world);
@@ -123,7 +128,7 @@ void CGfxCamera::Clear(int indexQueue)
 	m_pRenderQueue->Clear(indexQueue);
 }
 
-void CGfxCamera::CmdDraw(CGfxCommandBufferPtr &ptrCommandBuffer, int indexThread, int indexQueue, uint32_t namePass)
+void CGfxCamera::CmdDraw(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxUniformEnginePtr &ptrUniformEngine, int indexThread, int indexQueue, uint32_t namePass)
 {
-	m_pRenderQueue->CmdDraw(this, ptrCommandBuffer, indexThread, indexQueue, namePass);
+	m_pRenderQueue->CmdDraw(ptrCommandBuffer, ptrUniformEngine, m_ptrUniformCamera, indexThread, indexQueue, namePass);
 }

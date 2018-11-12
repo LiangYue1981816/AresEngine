@@ -2,7 +2,7 @@
 #include "GfxRenderer.h"
 
 
-class CGfxIndexBuffer
+class CALL_API CGfxIndexBuffer
 {
 public:
 	CGfxIndexBuffer(uint32_t type, size_t size, bool bDynamic)

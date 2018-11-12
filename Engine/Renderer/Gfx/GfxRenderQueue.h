@@ -2,7 +2,7 @@
 #include "GfxRenderer.h"
 
 
-class CGfxRenderQueue
+class CALL_API CGfxRenderQueue
 {
 public:
 	CGfxRenderQueue(void);
@@ -14,7 +14,7 @@ public:
 	void Clear(int indexQueue);
 
 public:
-	void CmdDraw(CGfxCamera *pCamera, CGfxCommandBufferPtr &ptrCommandBuffer, int indexThread, int indexQueue, uint32_t namePass);
+	void CmdDraw(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxUniformEnginePtr &ptrUniformEngine, const CGfxUniformCameraPtr &ptrUniformCamera, int indexThread, int indexQueue, uint32_t namePass);
 
 
 private:

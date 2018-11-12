@@ -10,7 +10,7 @@ typedef struct DrawCommand {
 	int reservedMustBeZero;
 } DrawCommand;
 
-class CGfxDrawIndirectBuffer
+class CALL_API CGfxDrawIndirectBuffer
 {
 public:
 	CGfxDrawIndirectBuffer(size_t size)

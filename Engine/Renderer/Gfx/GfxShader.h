@@ -2,7 +2,7 @@
 #include "GfxRenderer.h"
 
 
-class CGfxShader
+class CALL_API CGfxShader
 {
 public:
 	CGfxShader(uint32_t name)

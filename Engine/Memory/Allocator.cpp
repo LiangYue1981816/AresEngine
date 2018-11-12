@@ -1,6 +1,8 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include "pthread.h"
+
+#include "Allocator.h"
 #include "MemoryPool.h"
 #include "MemoryHeap.h"
 #include "MemorySystem.h"
@@ -67,7 +69,7 @@ static int GetThreadIndex(void)
 	return indexThread;
 }
 
-void InitAllocator(void)
+CALL_API void InitAllocator(void)
 {
 #ifdef MEMORY_ALLOCATOR
 	if (bInitAllocator == false) {
@@ -82,7 +84,7 @@ void InitAllocator(void)
 #endif
 }
 
-void ExitAllocator(void)
+CALL_API void ExitAllocator(void)
 {
 #ifdef MEMORY_ALLOCATOR
 	if (bInitAllocator) {
@@ -97,7 +99,7 @@ void ExitAllocator(void)
 #endif
 }
 
-void* AllocMemory(size_t size)
+CALL_API void* AllocMemory(size_t size)
 {
 	size = ALIGN_4BYTE(size);
 
@@ -127,7 +129,7 @@ void* AllocMemory(size_t size)
 #endif
 }
 
-void FreeMemory(void *pPointer)
+CALL_API void FreeMemory(void *pPointer)
 {
 	if (pPointer == nullptr) {
 		return;

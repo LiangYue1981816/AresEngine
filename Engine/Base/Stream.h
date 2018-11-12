@@ -8,7 +8,7 @@
 #include "Allocator.h"
 
 
-class CStream
+class CALL_API CStream
 {
 public:
 	CStream(void);

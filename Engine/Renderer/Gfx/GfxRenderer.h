@@ -65,21 +65,38 @@
 #include "GfxCommandBuffer.h"
 
 
+#define RendererCreate(api, hDC, width, height, format) CGfxRenderer::Create((api), (hDC), (width), (height), (format))
+#define RendererDestroy() CGfxRenderer::Destroy()
 #define Renderer() CGfxRenderer::GetInstance()
+
 
 #define UNIFORM_ENGINE_NAME "Engine"
 #define UNIFORM_CAMERA_NAME "Camera"
 
 
-class CGfxRenderer
+typedef enum GfxApi {
+	GFX_API_GLES3 = 0,
+	GFX_API_VULKAN,
+	GFX_API_METAL
+} GfxApi;
+
+
+class CALL_API CGfxRenderer
 {
 public:
 	static CGfxRenderer* GetInstance(void);
+	static void Create(GfxApi api, void *hDC, int width, int height, uint32_t format);
+	static void Destroy(void);
+
+
+protected:
+	CGfxRenderer(void *hDC, int width, int height, uint32_t format);
+	virtual ~CGfxRenderer(void);
 
 
 public:
-	CGfxRenderer(void *hDC, const char *szShaderCachePath, int width, int height, uint32_t format);
-	virtual ~CGfxRenderer(void);
+	void SetShaderCachePath(const char *szPath) const;
+	void SetShaderIncludePath(const char *szPath) const;
 
 
 public:

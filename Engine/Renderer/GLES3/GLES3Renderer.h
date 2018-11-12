@@ -56,6 +56,8 @@
 
 class CGLES3Renderer : public CGfxRenderer
 {
+	friend class CGfxRenderer;
+
 	friend class CGLES3RenderPass;
 	friend class CGLES3FrameBuffer;
 	friend class CGLES3Mesh;
@@ -92,8 +94,8 @@ class CGLES3Renderer : public CGfxRenderer
 	friend class CGLES3CommandUniformMatrix4fv;
 
 
-public:
-	CGLES3Renderer(void *hDC, const char *szShaderCachePath, int width, int height, uint32_t format);
+private:
+	CGLES3Renderer(void *hDC, int width, int height, uint32_t format);
 	virtual ~CGLES3Renderer(void);
 
 

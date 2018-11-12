@@ -103,7 +103,7 @@
       <AdditionalIncludeDirectories>$(VULKAN_SDK)/include;$(VULKAN_SDK)/spirv-tools/include;$(VULKAN_SDK)/shaderc/libshaderc/include;$(VULKAN_SDK)/shaderc/libshaderc_util/include;../../ThirdParty;../../ThirdParty/es;../../ThirdParty/eastl;../../ThirdParty/event;../../ThirdParty/gli;../../ThirdParty/glm;../../ThirdParty/gl3w;../../ThirdParty/lodepng;../../ThirdParty/pthread;../../ThirdParty/spirv-cross;../../ThirdParty/tinyxml;../../ThirdParty/rbtree;../../ThirdParty/zlib;../../Engine;../../Engine/Base;../../Engine/Memory;../../Engine/Renderer;../../Engine/Renderer/Compiler;../../Engine/Renderer/Gfx;../../Engine/Renderer/GLES3;../../Engine/Renderer/Vulkan;../../Engine/RenderSolution;../../Engine/RenderSolution/Task;../../Engine/Scene;../../Engine/Scene/Task;../../Engine/Scene/Component</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <DisableSpecificWarnings>4996;4312;4267</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4996;4312;4267;4251</DisableSpecificWarnings>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -126,7 +126,7 @@
       <AdditionalIncludeDirectories>$(VULKAN_SDK)/include;$(VULKAN_SDK)/spirv-tools/include;$(VULKAN_SDK)/shaderc/libshaderc/include;$(VULKAN_SDK)/shaderc/libshaderc_util/include;../../ThirdParty;../../ThirdParty/es;../../ThirdParty/eastl;../../ThirdParty/event;../../ThirdParty/gli;../../ThirdParty/glm;../../ThirdParty/gl3w;../../ThirdParty/lodepng;../../ThirdParty/pthread;../../ThirdParty/spirv-cross;../../ThirdParty/tinyxml;../../ThirdParty/rbtree;../../ThirdParty/zlib;../../Engine;../../Engine/Base;../../Engine/Memory;../../Engine/Renderer;../../Engine/Renderer/Compiler;../../Engine/Renderer/Gfx;../../Engine/Renderer/GLES3;../../Engine/Renderer/Vulkan;../../Engine/RenderSolution;../../Engine/RenderSolution/Task;../../Engine/Scene;../../Engine/Scene/Task;../../Engine/Scene/Component</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <DisableSpecificWarnings>4996;4312;4267</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4996;4312;4267;4251</DisableSpecificWarnings>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <WholeProgramOptimization>false</WholeProgramOptimization>
     </ClCompile>
@@ -150,7 +150,7 @@
       <AdditionalIncludeDirectories>$(VULKAN_SDK)/include;$(VULKAN_SDK)/spirv-tools/include;$(VULKAN_SDK)/shaderc/libshaderc/include;$(VULKAN_SDK)/shaderc/libshaderc_util/include;../../ThirdParty;../../ThirdParty/es;../../ThirdParty/eastl;../../ThirdParty/event;../../ThirdParty/gli;../../ThirdParty/glm;../../ThirdParty/gl3w;../../ThirdParty/lodepng;../../ThirdParty/pthread;../../ThirdParty/spirv-cross;../../ThirdParty/tinyxml;../../ThirdParty/rbtree;../../ThirdParty/zlib;../../Engine;../../Engine/Base;../../Engine/Memory;../../Engine/Renderer;../../Engine/Renderer/Compiler;../../Engine/Renderer/Gfx;../../Engine/Renderer/GLES3;../../Engine/Renderer/Vulkan;../../Engine/RenderSolution;../../Engine/RenderSolution/Task;../../Engine/Scene;../../Engine/Scene/Task;../../Engine/Scene/Component</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <DisableSpecificWarnings>4996;4312;4267</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4996;4312;4267;4251</DisableSpecificWarnings>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -173,7 +173,7 @@
       <AdditionalIncludeDirectories>$(VULKAN_SDK)/include;$(VULKAN_SDK)/spirv-tools/include;$(VULKAN_SDK)/shaderc/libshaderc/include;$(VULKAN_SDK)/shaderc/libshaderc_util/include;../../ThirdParty;../../ThirdParty/es;../../ThirdParty/eastl;../../ThirdParty/event;../../ThirdParty/gli;../../ThirdParty/glm;../../ThirdParty/gl3w;../../ThirdParty/lodepng;../../ThirdParty/pthread;../../ThirdParty/spirv-cross;../../ThirdParty/tinyxml;../../ThirdParty/rbtree;../../ThirdParty/zlib;../../Engine;../../Engine/Base;../../Engine/Memory;../../Engine/Renderer;../../Engine/Renderer/Compiler;../../Engine/Renderer/Gfx;../../Engine/Renderer/GLES3;../../Engine/Renderer/Vulkan;../../Engine/RenderSolution;../../Engine/RenderSolution/Task;../../Engine/Scene;../../Engine/Scene/Task;../../Engine/Scene/Component</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <DisableSpecificWarnings>4996;4312;4267</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4996;4312;4267;4251</DisableSpecificWarnings>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <WholeProgramOptimization>false</WholeProgramOptimization>
     </ClCompile>

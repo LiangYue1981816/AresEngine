@@ -4,7 +4,7 @@
 #include "PreHeader.h"
 
 
-class CTask
+class CALL_API CTask
 {
 	friend class CTaskGraph;
 
@@ -34,7 +34,7 @@ private:
 };
 
 
-class CTaskGraph
+class CALL_API CTaskGraph
 {
 public:
 	CTaskGraph(const char *szName, int priority);

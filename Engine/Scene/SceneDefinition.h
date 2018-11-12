@@ -1,4 +1,5 @@
 #pragma once
 
-class CSceneNode;
-class CSceneManager;
+class CALL_API CScene;
+class CALL_API CSceneNode;
+class CALL_API CSceneManager;

@@ -3,7 +3,7 @@
 #include "ComponentManager.h"
 
 
-class CComponentMesh : public CComponent
+class CALL_API CComponentMesh : public CComponent
 {
 private:
 	typedef struct InstanceData {

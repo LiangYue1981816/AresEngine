@@ -4,7 +4,7 @@
 #include "PreHeader.h"
 
 
-class CFile
+class CALL_API CFile
 {
 public:
 	CFile(void);

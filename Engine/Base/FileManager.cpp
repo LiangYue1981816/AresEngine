@@ -110,7 +110,7 @@ void CFileManager::SetPack(const char *szPackName, const char *szExtName)
 const char* CFileManager::GetFullName(const char *szFileName)
 {
 	const auto &itFile = m_files.find(HashValue(szFileName));
-	return itFile != m_files.end() ? itFile->second.szFullName : nullptr;
+	return itFile != m_files.end() ? itFile->second.szFullName : "";
 }
 
 bool CFileManager::LoadStream(const char *szFileName, CStream *pStream)

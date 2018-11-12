@@ -27,7 +27,7 @@ public:
 					for (const auto &itInputAttachment : pSubPassInformation->inputAttachments) {
 						const CGfxTexture2DPtr ptrInputTexture = m_ptrFrameBuffer->GetAttachmentTexture(itInputAttachment.first);
 						if (ptrInputTexture.IsValid()) {
-							GLES3Renderer()->BindInputTexture(itInputAttachment.second.c_str(), (CGfxTextureBase *)&ptrInputTexture);
+							GLES3Renderer()->BindInputTexture(itInputAttachment.second.c_str(), (CGfxTextureBase *)ptrInputTexture.GetPointer());
 						}
 					}
 				}

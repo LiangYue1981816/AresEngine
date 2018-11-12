@@ -2,7 +2,7 @@
 #include "GfxRenderer.h"
 
 
-class CGfxFrameBuffer : public CGfxResource
+class CALL_API CGfxFrameBuffer : public CGfxResource
 {
 public:
 	CGfxFrameBuffer(int width, int height)

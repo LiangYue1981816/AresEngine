@@ -2,7 +2,7 @@
 #include "GfxRenderer.h"
 
 
-class CGfxUniformEngine : public CGfxResource
+class CALL_API CGfxUniformEngine : public CGfxResource
 {
 public:
 	typedef struct Params {

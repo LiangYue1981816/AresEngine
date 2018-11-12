@@ -233,6 +233,11 @@ void CSceneManager::SetFogDistanceDensity(float startDistance, float endDistance
 	m_ptrUniformEngine->SetFogDistanceDensity(startDistance, endDistance, density);
 }
 
+const CGfxUniformEnginePtr& CSceneManager::GetUniformEngine(void) const
+{
+	return m_ptrUniformEngine;
+}
+
 void CSceneManager::UpdateLogic(float totalTime, float deltaTime)
 {
 	for (const auto &itScene : m_pScenes) {

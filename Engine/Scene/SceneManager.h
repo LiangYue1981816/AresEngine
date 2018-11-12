@@ -1,5 +1,4 @@
 #pragma once
-#include "Engine.h"
 #include "Scene.h"
 #include "SceneNode.h"
 #include "ComponentMesh.h"
@@ -8,7 +7,7 @@
 #include "ComponentPointLight.h"
 
 
-class CSceneManager
+class CALL_API CSceneManager
 {
 	friend class CEngine;
 
@@ -64,6 +63,8 @@ public:
 	void SetFogColor(float red, float green, float blue);
 	void SetFogHeightDensity(float startHeight, float endHeight, float density);
 	void SetFogDistanceDensity(float startDistance, float endDistance, float density);
+
+	const CGfxUniformEnginePtr& GetUniformEngine(void) const;
 
 private:
 	void UpdateLogic(float totalTime, float deltaTime);

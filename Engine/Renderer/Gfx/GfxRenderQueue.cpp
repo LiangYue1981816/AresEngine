@@ -26,7 +26,7 @@ void CGfxRenderQueue::Clear(int indexQueue)
 	}
 }
 
-void CGfxRenderQueue::CmdDraw(CGfxCamera *pCamera, CGfxCommandBufferPtr &ptrCommandBuffer, int indexThread, int indexQueue, uint32_t namePass)
+void CGfxRenderQueue::CmdDraw(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxUniformEnginePtr &ptrUniformEngine, const CGfxUniformCameraPtr &ptrUniformCamera, int indexThread, int indexQueue, uint32_t namePass)
 {
 	eastl::unordered_map<const CGfxPipelineGraphics*, eastl::unordered_map<CGfxMaterialPtr, CGfxMaterialPtr>> pipelineQueue;
 	{
@@ -45,7 +45,8 @@ void CGfxRenderQueue::CmdDraw(CGfxCamera *pCamera, CGfxCommandBufferPtr &ptrComm
 
 	for (const auto &itPipelineQueue : pipelineQueue) {
 		Renderer()->CmdBindPipelineGraphics(ptrCommandBuffer, (CGfxPipelineGraphics *)itPipelineQueue.first);
-		Renderer()->CmdBindUniformCamera(ptrCommandBuffer, pCamera->m_ptrUniformCamera);
+		Renderer()->CmdBindUniformEngine(ptrCommandBuffer, ptrUniformEngine);
+		Renderer()->CmdBindUniformCamera(ptrCommandBuffer, ptrUniformCamera);
 
 		for (const auto &itMaterial : itPipelineQueue.second) {
 			Renderer()->CmdBindMaterialPass(ptrCommandBuffer, itMaterial.first, namePass);

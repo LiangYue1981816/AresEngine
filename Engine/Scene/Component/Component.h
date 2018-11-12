@@ -4,7 +4,7 @@
 #include "SceneDefinition.h"
 
 
-class CComponent
+class CALL_API CComponent
 {
 	friend class CSceneNode;
 

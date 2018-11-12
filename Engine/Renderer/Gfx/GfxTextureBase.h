@@ -2,7 +2,7 @@
 #include "GfxRenderer.h"
 
 
-class CGfxTextureBase
+class CALL_API CGfxTextureBase
 {
 public:
 	CGfxTextureBase(uint32_t name)

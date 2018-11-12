@@ -2,7 +2,7 @@
 #include "GfxRenderer.h"
 
 
-class CGfxVertexBuffer
+class CALL_API CGfxVertexBuffer
 {
 public:
 	CGfxVertexBuffer(uint32_t binding, uint32_t format, size_t size, bool bDynamic)

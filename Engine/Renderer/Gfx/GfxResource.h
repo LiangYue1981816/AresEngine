@@ -2,7 +2,7 @@
 #include "GfxRenderer.h"
 
 
-class CGfxResource
+class CALL_API CGfxResource
 {
 	template<class T>
 	friend class CGfxResourcePtr;
@@ -24,7 +24,7 @@ private:
 	pthread_mutex_t lock;
 };
 
-template<class T> class CGfxResourcePtr
+template<class T> class CALL_API CGfxResourcePtr
 {
 public:
 	CGfxResourcePtr(void)

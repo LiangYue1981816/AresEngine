@@ -2,7 +2,7 @@
 #include "GfxRenderer.h"
 
 
-class CGfxMaterial : public CGfxResource
+class CALL_API CGfxMaterial : public CGfxResource
 {
 public:
 	CGfxMaterial(uint32_t name)

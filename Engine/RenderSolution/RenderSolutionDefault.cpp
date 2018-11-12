@@ -9,7 +9,7 @@ CRenderSolutionDefault::CRenderSolutionDefault(void)
 	m_ptrMainCommandBuffer[0] = Renderer()->NewCommandBuffer(true);
 	m_ptrMainCommandBuffer[1] = Renderer()->NewCommandBuffer(true);
 
-	for (int indexThread = 0; indexThread < THREAD_COUNT; indexThread) {
+	for (int indexThread = 0; indexThread < THREAD_COUNT; indexThread++) {
 		m_ptrSecondaryCommandBuffer[indexThread][0] = Renderer()->NewCommandBuffer(false);
 		m_ptrSecondaryCommandBuffer[indexThread][1] = Renderer()->NewCommandBuffer(false);
 	}
@@ -107,7 +107,7 @@ void CRenderSolutionDefault::Render(int indexQueue)
 		static CTaskCommandBuffer taskCommandBuffers[THREAD_COUNT];
 
 		for (int indexThread = 0; indexThread < THREAD_COUNT; indexThread++) {
-			taskCommandBuffers[indexThread].SetParams(m_ptrSecondaryCommandBuffer[indexThread][indexQueue], indexThread, indexQueue, namePass);
+			taskCommandBuffers[indexThread].SetParams(m_ptrSecondaryCommandBuffer[indexThread][indexQueue], SceneManager()->GetUniformEngine(), indexThread, indexQueue, namePass);
 			m_taskCommandBuffer.Task(&taskCommandBuffers[indexThread], MainCamera(), nullptr, nullptr);
 		}
 	}

@@ -2,7 +2,7 @@
 #include "GfxRenderer.h"
 
 
-class CGfxPipelineBase
+class CALL_API CGfxPipelineBase
 {
 public:
 	CGfxPipelineBase(uint32_t name)
