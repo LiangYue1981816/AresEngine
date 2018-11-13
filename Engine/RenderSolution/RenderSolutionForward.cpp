@@ -43,6 +43,11 @@ void CRenderSolutionForward::Render(int indexQueue)
 
 }
 
+void CRenderSolutionForward::RenderThread(void)
+{
+
+}
+
 void CRenderSolutionForward::Present(int indexQueue)
 {
 

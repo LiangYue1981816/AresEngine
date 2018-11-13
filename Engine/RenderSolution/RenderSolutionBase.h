@@ -37,4 +37,18 @@ protected:
 	virtual void Render(int indexQueue) = 0;
 	virtual void Present(int indexQueue) = 0;
 	virtual void Clearup(int indexQueue) = 0;
+
+protected:
+	virtual void RenderThread(void) = 0;
+	static void* WorkerThread(void *pParams);
+
+
+protected:
+	int m_indexQueue;
+
+protected:
+	event_t m_eventExit;
+	event_t m_eventFinish;
+	event_t m_eventDispatch;
+	pthread_t m_thread;
 };

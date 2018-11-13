@@ -27,6 +27,9 @@ private:
 	virtual void Present(int indexQueue);
 	virtual void Clearup(int indexQueue);
 
+private:
+	virtual void RenderThread(void);
+
 
 private:
 	bool m_bEnableMSAA;
