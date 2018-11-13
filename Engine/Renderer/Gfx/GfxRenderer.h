@@ -13,6 +13,7 @@
 
 #include "Define.h"
 #include "Utils.h"
+#include "Mutex.h"
 #include "Allocator.h"
 #include "SharedPtr.h"
 #include "ShaderCompiler.h"
@@ -23,7 +24,9 @@
 #include "GfxVertexAttribute.h"
 
 #include "GfxProfiler.h"
+
 #include "GfxResource.h"
+#include "GfxResourceManager.h"
 
 #include "GfxCamera.h"
 #include "GfxRenderQueue.h"

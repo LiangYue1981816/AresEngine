@@ -2,7 +2,7 @@
 #include "GLES3Renderer.h"
 
 
-class CGLES3PipelineManager
+class CGLES3PipelineManager : public CGfxResourceManager
 {
 	friend class CGLES3Renderer;
 

@@ -18,14 +18,17 @@ CGLES3SamplerManager::~CGLES3SamplerManager(void)
 
 CGLES3Sampler* CGLES3SamplerManager::CreateSampler(uint32_t minFilter, uint32_t magFilter, uint32_t addressMode)
 {
-	char szName[_MAX_STRING];
-	sprintf(szName, "%8.8X_%8.8X_%8.8X", minFilter, magFilter, addressMode);
+	mutex_autolock mutex(&lock);
+	{
+		char szName[_MAX_STRING];
+		sprintf(szName, "%8.8X_%8.8X_%8.8X", minFilter, magFilter, addressMode);
 
-	uint32_t name = HashValue(szName);
+		uint32_t name = HashValue(szName);
 
-	if (m_pSamplers[name] == nullptr) {
-		m_pSamplers[name] = new CGLES3Sampler(minFilter, magFilter, addressMode);
+		if (m_pSamplers[name] == nullptr) {
+			m_pSamplers[name] = new CGLES3Sampler(minFilter, magFilter, addressMode);
+		}
+
+		return m_pSamplers[name];
 	}
-
-	return m_pSamplers[name];
 }

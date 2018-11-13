@@ -732,6 +732,12 @@
     <ClInclude Include="..\..\Engine\Renderer\GLES3\GLES3Renderer.h">
       <Filter>Engine\Renderer\GLES3\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\GfxResourceManager.h">
+      <Filter>Engine\Renderer\Gfx\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Base\Mutex.h">
+      <Filter>Engine\Base\Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Engine\Base\TaskGraph.cpp">
@@ -1096,6 +1102,12 @@
     </ClCompile>
     <ClCompile Include="..\..\Engine\Renderer\Gfx\GfxRenderer.cpp">
       <Filter>Engine\Renderer\Gfx\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Gfx\GfxResourceManager.cpp">
+      <Filter>Engine\Renderer\Gfx\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Base\Mutex.cpp">
+      <Filter>Engine\Base\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

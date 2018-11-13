@@ -15,26 +15,12 @@ CGfxResource::~CGfxResource(void)
 
 uint32_t CGfxResource::IncRefCount(void)
 {
-	uint32_t count;
-
-	pthread_mutex_lock(&lock);
-	{
-		count = ++refCount;
-	}
-	pthread_mutex_unlock(&lock);
-
-	return count;
+	mutex_autolock mutex(&lock);
+	return ++refCount;
 }
 
 uint32_t CGfxResource::DecRefCount(void)
 {
-	uint32_t count;
-
-	pthread_mutex_lock(&lock);
-	{
-		count = --refCount;
-	}
-	pthread_mutex_unlock(&lock);
-
-	return count;
+	mutex_autolock mutex(&lock);
+	return --refCount;
 }

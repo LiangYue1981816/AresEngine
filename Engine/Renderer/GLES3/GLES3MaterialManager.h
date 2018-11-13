@@ -2,7 +2,7 @@
 #include "GLES3Renderer.h"
 
 
-class CGLES3MaterialManager
+class CGLES3MaterialManager : public CGfxResourceManager
 {
 	friend class CGLES3Renderer;
 	friend class CGLES3Material;

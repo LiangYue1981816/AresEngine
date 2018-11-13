@@ -18,20 +18,26 @@ CGLES3MaterialManager::~CGLES3MaterialManager(void)
 
 CGLES3Material* CGLES3MaterialManager::LoadMaterial(const char *szFileName)
 {
-	uint32_t name = HashValue(szFileName);
+	mutex_autolock mutex(&lock);
+	{
+		uint32_t name = HashValue(szFileName);
 
-	if (m_pMaterials[name] == nullptr) {
-		m_pMaterials[name] = new CGLES3Material(this, name);
-		m_pMaterials[name]->Load(szFileName);
+		if (m_pMaterials[name] == nullptr) {
+			m_pMaterials[name] = new CGLES3Material(this, name);
+			m_pMaterials[name]->Load(szFileName);
+		}
+
+		return m_pMaterials[name];
 	}
-
-	return m_pMaterials[name];
 }
 
 void CGLES3MaterialManager::DestroyMaterial(CGLES3Material *pMaterial)
 {
-	if (pMaterial) {
-		m_pMaterials.erase(pMaterial->GetName());
-		delete pMaterial;
+	mutex_autolock mutex(&lock);
+	{
+		if (pMaterial) {
+			m_pMaterials.erase(pMaterial->GetName());
+			delete pMaterial;
+		}
 	}
 }

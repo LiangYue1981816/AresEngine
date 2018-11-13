@@ -192,6 +192,7 @@
     <ClInclude Include="..\..\Engine\Base\Delegate.h" />
     <ClInclude Include="..\..\Engine\Base\File.h" />
     <ClInclude Include="..\..\Engine\Base\FileManager.h" />
+    <ClInclude Include="..\..\Engine\Base\Mutex.h" />
     <ClInclude Include="..\..\Engine\Base\nvwa\c++11.h" />
     <ClInclude Include="..\..\Engine\Base\nvwa\debug_new.h" />
     <ClInclude Include="..\..\Engine\Base\nvwa\fast_mutex.h" />
@@ -226,6 +227,7 @@
     <ClInclude Include="..\..\Engine\Renderer\Gfx\GfxRenderPass.h" />
     <ClInclude Include="..\..\Engine\Renderer\Gfx\GfxRenderQueue.h" />
     <ClInclude Include="..\..\Engine\Renderer\Gfx\GfxResource.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\GfxResourceManager.h" />
     <ClInclude Include="..\..\Engine\Renderer\Gfx\GfxSampler.h" />
     <ClInclude Include="..\..\Engine\Renderer\Gfx\GfxShader.h" />
     <ClInclude Include="..\..\Engine\Renderer\Gfx\GfxSwapChain.h" />
@@ -391,6 +393,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\Engine\Base\File.cpp" />
     <ClCompile Include="..\..\Engine\Base\FileManager.cpp" />
+    <ClCompile Include="..\..\Engine\Base\Mutex.cpp" />
     <ClCompile Include="..\..\Engine\Base\nvwa\debug_new.cpp" />
     <ClCompile Include="..\..\Engine\Base\nvwa\operator_new.cpp" />
     <ClCompile Include="..\..\Engine\Base\Stream.cpp" />
@@ -407,6 +410,7 @@
     <ClCompile Include="..\..\Engine\Renderer\Gfx\GfxRenderer.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Gfx\GfxRenderQueue.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Gfx\GfxResource.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Gfx\GfxResourceManager.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Gfx\GfxVertexAttribute.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\GLES3\GLES3CommandBuffer.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\GLES3\GLES3CommandBufferManager.cpp" />

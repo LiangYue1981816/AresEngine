@@ -8,9 +8,6 @@ CRenderSolutionDefault::CRenderSolutionDefault(void)
 
 	m_ptrMainCommandBuffer[0] = Renderer()->NewCommandBuffer(true);
 	m_ptrMainCommandBuffer[1] = Renderer()->NewCommandBuffer(true);
-
-	m_ptrSecondaryCommandBuffer[0] = Renderer()->NewCommandBuffer(false);
-	m_ptrSecondaryCommandBuffer[1] = Renderer()->NewCommandBuffer(false);
 }
 
 CRenderSolutionDefault::~CRenderSolutionDefault(void)
@@ -99,37 +96,32 @@ void CRenderSolutionDefault::DestroyFrameBufferMSAA(void)
 
 void CRenderSolutionDefault::Render(int indexQueue)
 {
-	static uint32_t namePass = HashValue("Default");
-	MainCamera()->CmdDraw(indexQueue, m_ptrSecondaryCommandBuffer[indexQueue], SceneManager()->GetUniformEngine(), namePass);
-}
-
-void CRenderSolutionDefault::Present(int indexQueue)
-{
-	CGfxCommandBufferPtr &ptrMainCommandBuffer = m_ptrMainCommandBuffer[indexQueue];
+	const static uint32_t nameDefaultPass = HashValue("Default");
 
 	const CGfxRenderPassPtr &ptrRenderPass = m_bEnableMSAA ? m_ptrRenderPassMSAA : m_ptrRenderPass;
 	const CGfxFrameBufferPtr &ptrFrameBuffer = m_bEnableMSAA ? m_ptrFrameBufferScreenMSAA[Renderer()->GetSwapChain()->GetTextureIndex()] : m_ptrFrameBufferScreen[Renderer()->GetSwapChain()->GetTextureIndex()];
 
-	Renderer()->CmdBeginRenderPass(ptrMainCommandBuffer, ptrFrameBuffer, ptrRenderPass);
+	Renderer()->CmdBeginRenderPass(m_ptrMainCommandBuffer[indexQueue], ptrFrameBuffer, ptrRenderPass);
 	{
 		const glm::vec4 &scissor = MainCamera()->GetScissor();
 		const glm::vec4 &viewport = MainCamera()->GetViewport();
 
-		Renderer()->CmdSetScissor(ptrMainCommandBuffer, (int)scissor.x, (int)scissor.y, (int)scissor.z, (int)scissor.w);
-		Renderer()->CmdSetViewport(ptrMainCommandBuffer, (int)viewport.x, (int)viewport.y, (int)viewport.z, (int)viewport.w);
+		Renderer()->CmdSetScissor(m_ptrMainCommandBuffer[indexQueue], (int)scissor.x, (int)scissor.y, (int)scissor.z, (int)scissor.w);
+		Renderer()->CmdSetViewport(m_ptrMainCommandBuffer[indexQueue], (int)viewport.x, (int)viewport.y, (int)viewport.z, (int)viewport.w);
 
-		Renderer()->CmdExecute(ptrMainCommandBuffer, m_ptrSecondaryCommandBuffer[indexQueue]);
+		MainCamera()->CmdDraw(indexQueue, m_ptrMainCommandBuffer[indexQueue], SceneManager()->GetUniformEngine(), nameDefaultPass);
 	}
-	Renderer()->CmdEndRenderPass(ptrMainCommandBuffer);
+	Renderer()->CmdEndRenderPass(m_ptrMainCommandBuffer[indexQueue]);
+}
 
-	Renderer()->Submit(ptrMainCommandBuffer);
+void CRenderSolutionDefault::Present(int indexQueue)
+{
+	Renderer()->Submit(m_ptrMainCommandBuffer[indexQueue]);
 	Renderer()->Present();
 }
 
 void CRenderSolutionDefault::Clearup(int indexQueue)
 {
 	m_ptrMainCommandBuffer[indexQueue]->Clearup();
-	m_ptrSecondaryCommandBuffer[indexQueue]->Clearup();
-
 	MainCamera()->Clear(indexQueue);
 }
