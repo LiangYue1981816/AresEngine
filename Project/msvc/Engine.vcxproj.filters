@@ -19,9 +19,6 @@
     <Filter Include="Engine\RenderSolution">
       <UniqueIdentifier>{4cd3abe7-b164-4dbb-9923-8d03c08df70f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\Resource">
-      <UniqueIdentifier>{fe29daa8-0bea-4f25-8998-89c4cd164478}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine\Scene">
       <UniqueIdentifier>{35e2f3c0-88e0-422a-8e05-f856d122f053}</UniqueIdentifier>
     </Filter>
@@ -76,12 +73,6 @@
     <Filter Include="Engine\RenderSolution\Source Files">
       <UniqueIdentifier>{4e312de3-097a-43e3-86a9-fe59eb560e5c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\Resource\Header Files">
-      <UniqueIdentifier>{ac6a3ba0-87dd-412b-9d9a-30fb2e2f7518}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Resource\Source Files">
-      <UniqueIdentifier>{0409d762-3ad3-48bf-a5d5-4d4ca77c78e6}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine\Scene\Header Files">
       <UniqueIdentifier>{d3d8c327-4347-47f1-9f5a-b8cafd5f2a9b}</UniqueIdentifier>
     </Filter>
@@ -105,9 +96,6 @@
     </Filter>
     <Filter Include="Engine\Base\Source Files\nvwa\Source Files">
       <UniqueIdentifier>{634a8091-564d-4415-9d29-3b777ab16bac}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\RenderSolution\Source Files\Task">
-      <UniqueIdentifier>{cff669e5-b04e-4168-a4ba-7371011dd9d5}</UniqueIdentifier>
     </Filter>
     <Filter Include="Engine\SceneComponent">
       <UniqueIdentifier>{99bef4b5-9274-4044-9457-b0093d1cc718}</UniqueIdentifier>
@@ -200,9 +188,6 @@
     </ClInclude>
     <ClInclude Include="..\..\Engine\RenderSolution\RenderSolutionForwardPlus.h">
       <Filter>Engine\RenderSolution\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\RenderSolution\Task\TaskCommandBuffer.h">
-      <Filter>Engine\RenderSolution\Source Files\Task</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Scene\Scene.h">
       <Filter>Engine\Scene\Header Files</Filter>

@@ -136,10 +136,10 @@ bool CGLES3Mesh::CreateInstanceBuffer(uint32_t binding, uint32_t format)
 	}
 }
 
-bool CGLES3Mesh::CreateDrawIndirectBuffer(size_t size)
+bool CGLES3Mesh::CreateDrawIndirectBuffer(uint32_t count)
 {
 	if (m_pDrawIndirectBuffer == nullptr) {
-		m_pDrawIndirectBuffer = new CGLES3DrawIndirectBuffer(size);
+		m_pDrawIndirectBuffer = new CGLES3DrawIndirectBuffer(count);
 		return true;
 	}
 	else {
@@ -194,9 +194,19 @@ bool CGLES3Mesh::InstanceBufferData(size_t size, const void *pBuffer)
 	return m_pInstanceBuffer ? m_pInstanceBuffer->BufferData(size, pBuffer) : false;
 }
 
+bool CGLES3Mesh::DrawIndirectBufferData(int indexDraw, int instanceCount)
+{
+	return m_pDrawIndirectBuffer ? m_pDrawIndirectBuffer->BufferData(indexDraw, instanceCount) : false;
+}
+
 bool CGLES3Mesh::DrawIndirectBufferData(int indexDraw, int baseVertex, int firstIndex, int indexCount, int instanceCount)
 {
 	return m_pDrawIndirectBuffer ? m_pDrawIndirectBuffer->BufferData(indexDraw, baseVertex, firstIndex, indexCount, instanceCount) : false;
+}
+
+const glm::aabb& CGLES3Mesh::GetLocalAABB(void) const
+{
+	return m_aabb;
 }
 
 uint32_t CGLES3Mesh::GetIndexType(void) const
@@ -229,9 +239,9 @@ uint32_t CGLES3Mesh::GetInstanceCount(void) const
 	return m_pInstanceBuffer ? m_pInstanceBuffer->GetInstanceCount() : 0;
 }
 
-const glm::aabb& CGLES3Mesh::GetLocalAABB(void) const
+uint32_t CGLES3Mesh::GetDrawCommandCount(void) const
 {
-	return m_aabb;
+	return m_pDrawIndirectBuffer ? m_pDrawIndirectBuffer->GetDrawCommandCount() : 0;
 }
 
 void CGLES3Mesh::Bind(void *pParam)

@@ -19,13 +19,12 @@ CFileManager::~CFileManager(void)
 
 void CFileManager::Clearup(void)
 {
-	for (const auto &itFile : m_files) {
-		if (itFile.second.pPack) {
-			zzip_closedir(itFile.second.pPack);
-		}
+	for (const auto &itPack : m_packs) {
+		zzip_closedir(itPack.second);
 	}
 
 	m_files.clear();
+	m_packs.clear();
 }
 
 void CFileManager::SetPath(const char *szPathName, const char *szExtName)
@@ -80,11 +79,11 @@ void CFileManager::SetPack(const char *szPackName, const char *szExtName)
 	{
 		uint32_t name = HashValue(szPackName);
 
-		if (m_files[name].pPack == nullptr) {
-			m_files[name].pPack  = zzip_opendir(szPackName);
+		if (m_packs[name] == nullptr) {
+			m_packs[name] = zzip_opendir(szPackName);
 		}
 
-		pPack = m_files[name].pPack;
+		pPack = m_packs[name];
 	}
 
 	zzip_seekdir(pPack, 0);

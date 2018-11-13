@@ -2,8 +2,8 @@
 #include "GLES3DrawIndirectBuffer.h"
 
 
-CGLES3DrawIndirectBuffer::CGLES3DrawIndirectBuffer(size_t size)
-	: CGfxDrawIndirectBuffer(size)
+CGLES3DrawIndirectBuffer::CGLES3DrawIndirectBuffer(uint32_t count)
+	: CGfxDrawIndirectBuffer(count)
 	, m_buffer(0)
 {
 	glGenBuffers(1, &m_buffer);
@@ -17,13 +17,33 @@ CGLES3DrawIndirectBuffer::~CGLES3DrawIndirectBuffer(void)
 	glDeleteBuffers(1, &m_buffer);
 }
 
-bool CGLES3DrawIndirectBuffer::BufferData(int indexDraw, int baseVertex, int firstIndex, int indexCount, int instanceCount)
+bool CGLES3DrawIndirectBuffer::BufferData(size_t offset, size_t size, const void *pBuffer)
 {
-	if (indexDraw < 0) {
+	if (m_size < (uint32_t)(offset + size)) {
 		return false;
 	}
 
-	if (m_size < (indexDraw + 1) * sizeof(DrawCommand)) {
+	GLBindBuffer(GL_DRAW_INDIRECT_BUFFER, m_buffer);
+	glBufferSubData(GL_DRAW_INDIRECT_BUFFER, (int)offset, (uint32_t)size, pBuffer);
+
+	return true;
+}
+
+bool CGLES3DrawIndirectBuffer::BufferData(int indexDraw, int instanceCount)
+{
+	if (indexDraw < 0 || (uint32_t)indexDraw >= m_count) {
+		return false;
+	}
+
+	GLBindBuffer(GL_DRAW_INDIRECT_BUFFER, m_buffer);
+	glBufferSubData(GL_DRAW_INDIRECT_BUFFER, indexDraw * sizeof(DrawCommand) + offsetof(DrawCommand, instanceCount), sizeof(instanceCount), &instanceCount);
+
+	return true;
+}
+
+bool CGLES3DrawIndirectBuffer::BufferData(int indexDraw, int baseVertex, int firstIndex, int indexCount, int instanceCount)
+{
+	if (indexDraw < 0 || (uint32_t)indexDraw >= m_count) {
 		return false;
 	}
 
@@ -35,7 +55,7 @@ bool CGLES3DrawIndirectBuffer::BufferData(int indexDraw, int baseVertex, int fir
 	drawCommand.reservedMustBeZero = 0;
 
 	GLBindBuffer(GL_DRAW_INDIRECT_BUFFER, m_buffer);
-	glBufferSubData(GL_DRAW_INDIRECT_BUFFER, indexDraw * sizeof(DrawCommand), sizeof(DrawCommand), &drawCommand);
+	glBufferSubData(GL_DRAW_INDIRECT_BUFFER, indexDraw * sizeof(DrawCommand), sizeof(drawCommand), &drawCommand);
 
 	return true;
 }

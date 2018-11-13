@@ -3,9 +3,6 @@
 #include <stdlib.h>
 #include "PreHeader.h"
 
-#include "Allocator.h"
-#include "TaskGraph.h"
-
 
 typedef enum RenderSolution {
 	RENDER_SOLUTION_DEFAULT = 0,
@@ -40,8 +37,4 @@ protected:
 	virtual void Render(int indexQueue) = 0;
 	virtual void Present(int indexQueue) = 0;
 	virtual void Clearup(int indexQueue) = 0;
-
-
-protected:
-	CTaskGraph m_taskCommandBuffer;
 };

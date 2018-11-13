@@ -43,4 +43,5 @@ public:
 
 private:
 	eastl::unordered_map<uint32_t, File> m_files;
+	eastl::unordered_map<uint32_t, ZZIP_DIR*> m_packs;
 };

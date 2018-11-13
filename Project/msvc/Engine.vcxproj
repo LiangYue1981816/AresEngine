@@ -331,7 +331,6 @@
     <ClInclude Include="..\..\Engine\RenderSolution\RenderSolutionDeferred.h" />
     <ClInclude Include="..\..\Engine\RenderSolution\RenderSolutionForward.h" />
     <ClInclude Include="..\..\Engine\RenderSolution\RenderSolutionForwardPlus.h" />
-    <ClInclude Include="..\..\Engine\RenderSolution\Task\TaskCommandBuffer.h" />
     <ClInclude Include="..\..\Engine\Scene\Component\Component.h" />
     <ClInclude Include="..\..\Engine\Scene\Component\ComponentMesh.h" />
     <ClInclude Include="..\..\Engine\Scene\Component\ComponentParticle.h" />

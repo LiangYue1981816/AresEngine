@@ -118,17 +118,27 @@ bool CGfxCamera::IsVisible(const glm::sphere &sphere) const
 	return m_camera.visible(sphere);
 }
 
-void CGfxCamera::AddMesh(int indexThread, int indexQueue, const CGfxMaterialPtr &ptrMaterial, const CGfxMeshPtr &ptrMesh, const uint8_t *pInstanceData, uint32_t size)
-{
-	m_pRenderQueue->AddMesh(indexThread, indexQueue, ptrMaterial, ptrMesh, pInstanceData, size);
-}
-
 void CGfxCamera::Clear(int indexQueue)
 {
 	m_pRenderQueue->Clear(indexQueue);
 }
 
-void CGfxCamera::CmdDraw(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxUniformEnginePtr &ptrUniformEngine, int indexThread, int indexQueue, uint32_t namePass)
+void CGfxCamera::Begin(int indexQueue)
 {
-	m_pRenderQueue->CmdDraw(ptrCommandBuffer, ptrUniformEngine, m_ptrUniformCamera, indexThread, indexQueue, namePass);
+	m_pRenderQueue->Begin(indexQueue);
+}
+
+void CGfxCamera::End(int indexQueue)
+{
+	m_pRenderQueue->End(indexQueue);
+}
+
+void CGfxCamera::Add(int indexThread, int indexQueue, const CGfxMaterialPtr &ptrMaterial, const CGfxMeshPtr &ptrMesh, int indexDraw, const uint8_t *pInstanceData, uint32_t size)
+{
+	m_pRenderQueue->Add(indexThread, indexQueue, ptrMaterial, ptrMesh, indexDraw, pInstanceData, size);
+}
+
+void CGfxCamera::CmdDraw(int indexQueue, CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxUniformEnginePtr &ptrUniformEngine, uint32_t namePass)
+{
+	m_pRenderQueue->CmdDraw(indexQueue, ptrCommandBuffer, ptrUniformEngine, m_ptrUniformCamera, namePass);
 }

@@ -1,8 +1,8 @@
+#include "Engine.h"
 #include "RenderSolutionBase.h"
 
 
 CRenderSolutionBase::CRenderSolutionBase(void)
-	: m_taskCommandBuffer("TashGraph_CommandBuffer", 50)
 {
 
 }

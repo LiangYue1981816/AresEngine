@@ -4,15 +4,18 @@
 
 CComponentMesh::CComponentMesh(uint32_t name)
 	: CComponent(name)
+	, m_indexDraw(-1)
 {
 
 }
 
 CComponentMesh::CComponentMesh(const CComponentMesh &component)
 	: CComponent(component)
+	, m_indexDraw(-1)
 {
-	m_ptrMaterial = component.m_ptrMaterial;
+	m_indexDraw = component.m_indexDraw;
 	m_ptrMesh = component.m_ptrMesh;
+	m_ptrMaterial = component.m_ptrMaterial;
 
 	m_instanceData.transformMatrix = glm::mat4();
 }
@@ -22,14 +25,19 @@ CComponentMesh::~CComponentMesh(void)
 
 }
 
-void CComponentMesh::SetMaterial(const CGfxMaterialPtr &ptrMaterial)
+void CComponentMesh::SetIndexDraw(int indexDraw)
 {
-	m_ptrMaterial = ptrMaterial;
+	m_indexDraw = indexDraw;
 }
 
 void CComponentMesh::SetMesh(const CGfxMeshPtr &ptrMesh)
 {
 	m_ptrMesh = ptrMesh;
+}
+
+void CComponentMesh::SetMaterial(const CGfxMaterialPtr &ptrMaterial)
+{
+	m_ptrMaterial = ptrMaterial;
 }
 
 glm::aabb CComponentMesh::GetLocalAABB(void)
@@ -50,6 +58,6 @@ void CComponentMesh::TaskUpdate(float gameTime, float deltaTime)
 void CComponentMesh::TaskUpdateCamera(CGfxCamera *pCamera, int indexThread, int indexQueue)
 {
 	if (pCamera->IsVisible(GetWorldAABB())) {
-		pCamera->AddMesh(indexThread, indexQueue, m_ptrMaterial, m_ptrMesh, (const uint8_t *)&m_instanceData, sizeof(m_instanceData));
+		pCamera->Add(indexThread, indexQueue, m_ptrMaterial, m_ptrMesh, m_indexDraw, (const uint8_t *)&m_instanceData, sizeof(m_instanceData));
 	}
 }

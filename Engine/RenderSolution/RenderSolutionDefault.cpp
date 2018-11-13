@@ -1,4 +1,4 @@
-#include "TaskCommandBuffer.h"
+#include "Engine.h"
 #include "RenderSolutionDefault.h"
 
 
@@ -9,10 +9,8 @@ CRenderSolutionDefault::CRenderSolutionDefault(void)
 	m_ptrMainCommandBuffer[0] = Renderer()->NewCommandBuffer(true);
 	m_ptrMainCommandBuffer[1] = Renderer()->NewCommandBuffer(true);
 
-	for (int indexThread = 0; indexThread < THREAD_COUNT; indexThread++) {
-		m_ptrSecondaryCommandBuffer[indexThread][0] = Renderer()->NewCommandBuffer(false);
-		m_ptrSecondaryCommandBuffer[indexThread][1] = Renderer()->NewCommandBuffer(false);
-	}
+	m_ptrSecondaryCommandBuffer[0] = Renderer()->NewCommandBuffer(false);
+	m_ptrSecondaryCommandBuffer[1] = Renderer()->NewCommandBuffer(false);
 }
 
 CRenderSolutionDefault::~CRenderSolutionDefault(void)
@@ -101,17 +99,8 @@ void CRenderSolutionDefault::DestroyFrameBufferMSAA(void)
 
 void CRenderSolutionDefault::Render(int indexQueue)
 {
-	m_taskCommandBuffer.Wait();
-	{
-		static uint32_t namePass = HashValue("Default");
-		static CTaskCommandBuffer taskCommandBuffers[THREAD_COUNT];
-
-		for (int indexThread = 0; indexThread < THREAD_COUNT; indexThread++) {
-			taskCommandBuffers[indexThread].SetParams(m_ptrSecondaryCommandBuffer[indexThread][indexQueue], SceneManager()->GetUniformEngine(), indexThread, indexQueue, namePass);
-			m_taskCommandBuffer.Task(&taskCommandBuffers[indexThread], MainCamera(), nullptr, nullptr);
-		}
-	}
-	m_taskCommandBuffer.Dispatch();
+	static uint32_t namePass = HashValue("Default");
+	MainCamera()->CmdDraw(indexQueue, m_ptrSecondaryCommandBuffer[indexQueue], SceneManager()->GetUniformEngine(), namePass);
 }
 
 void CRenderSolutionDefault::Present(int indexQueue)
@@ -129,9 +118,7 @@ void CRenderSolutionDefault::Present(int indexQueue)
 		Renderer()->CmdSetScissor(ptrMainCommandBuffer, (int)scissor.x, (int)scissor.y, (int)scissor.z, (int)scissor.w);
 		Renderer()->CmdSetViewport(ptrMainCommandBuffer, (int)viewport.x, (int)viewport.y, (int)viewport.z, (int)viewport.w);
 
-		for (int indexThread = 0; indexThread < THREAD_COUNT; indexThread++) {
-			Renderer()->CmdExecute(ptrMainCommandBuffer, m_ptrSecondaryCommandBuffer[indexThread][indexQueue]);
-		}
+		Renderer()->CmdExecute(ptrMainCommandBuffer, m_ptrSecondaryCommandBuffer[indexQueue]);
 	}
 	Renderer()->CmdEndRenderPass(ptrMainCommandBuffer);
 
@@ -142,10 +129,7 @@ void CRenderSolutionDefault::Present(int indexQueue)
 void CRenderSolutionDefault::Clearup(int indexQueue)
 {
 	m_ptrMainCommandBuffer[indexQueue]->Clearup();
-
-	for (int indexThread = 0; indexThread < THREAD_COUNT; indexThread++) {
-		m_ptrSecondaryCommandBuffer[indexThread][indexQueue]->Clearup();
-	}
+	m_ptrSecondaryCommandBuffer[indexQueue]->Clearup();
 
 	MainCamera()->Clear(indexQueue);
 }

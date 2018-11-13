@@ -36,8 +36,8 @@ private:
 	InstanceData m_instanceData;
 
 private:
-	CGfxMaterialPtr m_ptrMaterial;
 	CGfxMeshPtr m_ptrMesh;
+	CGfxMaterialPtr m_ptrMaterial;
 };
 
 typedef CComponentPtr<CComponentPointLight> CComponentPointLightPtr;

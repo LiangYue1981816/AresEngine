@@ -19,13 +19,17 @@ public:
 	bool CreateIndexBuffer(uint32_t type, size_t size, bool bDynamic, const void *pBuffer);
 	bool CreateVertexBuffer(uint32_t binding, uint32_t format, size_t size, bool bDynamic, const void *pBuffer);
 	bool CreateInstanceBuffer(uint32_t binding, uint32_t format);
-	bool CreateDrawIndirectBuffer(size_t size);
+	bool CreateDrawIndirectBuffer(uint32_t count);
 	bool CreateVertexArrayObject(void);
 	void Destroy(void);
 
 public:
 	bool InstanceBufferData(size_t size, const void *pBuffer);
+	bool DrawIndirectBufferData(int indexDraw, int instanceCount);
 	bool DrawIndirectBufferData(int indexDraw, int baseVertex, int firstIndex, int indexCount, int instanceCount);
+
+public:
+	const glm::aabb& GetLocalAABB(void) const;
 
 public:
 	uint32_t GetIndexType(void) const;
@@ -37,7 +41,7 @@ public:
 	uint32_t GetInstanceFormat(void) const;
 	uint32_t GetInstanceCount(void) const;
 
-	const glm::aabb& GetLocalAABB(void) const;
+	uint32_t GetDrawCommandCount(void) const;
 
 public:
 	void Bind(void *pParam);

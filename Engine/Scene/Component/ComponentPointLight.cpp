@@ -53,6 +53,6 @@ void CComponentPointLight::TaskUpdate(float gameTime, float deltaTime)
 void CComponentPointLight::TaskUpdateCamera(CGfxCamera *pCamera, int indexThread, int indexQueue)
 {
 	if (pCamera->IsVisible(GetWorldAABB())) {
-		pCamera->AddMesh(indexThread, indexQueue, m_ptrMaterial, m_ptrMesh, (const uint8_t *)&m_instanceData, sizeof(m_instanceData));
+		pCamera->Add(indexThread, indexQueue, m_ptrMaterial, m_ptrMesh, -1, (const uint8_t *)&m_instanceData, sizeof(m_instanceData));
 	}
 }

@@ -44,5 +44,5 @@ private:
 
 private:
 	CGfxCommandBufferPtr m_ptrMainCommandBuffer[2];
-	CGfxCommandBufferPtr m_ptrSecondaryCommandBuffer[THREAD_COUNT][2];
+	CGfxCommandBufferPtr m_ptrSecondaryCommandBuffer[2];
 };
