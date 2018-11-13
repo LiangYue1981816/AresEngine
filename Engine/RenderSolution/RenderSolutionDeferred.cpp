@@ -43,11 +43,6 @@ void CRenderSolutionDeferred::Render(int indexQueue)
 
 }
 
-void CRenderSolutionDeferred::RenderThread(void)
-{
-
-}
-
 void CRenderSolutionDeferred::Present(int indexQueue)
 {
 

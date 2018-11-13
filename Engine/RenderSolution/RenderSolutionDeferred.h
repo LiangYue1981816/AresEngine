@@ -26,7 +26,4 @@ private:
 	virtual void Render(int indexQueue);
 	virtual void Present(int indexQueue);
 	virtual void Clearup(int indexQueue);
-
-private:
-	virtual void RenderThread(void);
 };
