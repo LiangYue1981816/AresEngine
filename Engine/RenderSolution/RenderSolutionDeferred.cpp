@@ -13,11 +13,6 @@ CRenderSolutionDeferred::~CRenderSolutionDeferred(void)
 	Clearup(1);
 }
 
-void CRenderSolutionDeferred::SetEnableMSAA(bool bEnable, int samples)
-{
-
-}
-
 void CRenderSolutionDeferred::CreateFrameBuffer(void)
 {
 
@@ -38,7 +33,12 @@ void CRenderSolutionDeferred::DestroyFrameBufferMSAA(void)
 
 }
 
-void CRenderSolutionDeferred::Render(int indexQueue)
+void CRenderSolutionDeferred::SetEnableMSAA(bool bEnable, int samples)
+{
+
+}
+
+void CRenderSolutionDeferred::Render(int indexQueue, float deltaTime)
 {
 
 }

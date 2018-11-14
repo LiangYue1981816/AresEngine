@@ -23,9 +23,6 @@ protected:
 	virtual ~CRenderSolutionBase(void);
 
 
-public:
-	virtual void SetEnableMSAA(bool bEnable, int samples = 4) = 0;
-
 protected:
 	virtual void CreateFrameBuffer(void) = 0;
 	virtual void DestroyFrameBuffer(void) = 0;
@@ -33,8 +30,11 @@ protected:
 	virtual void CreateFrameBufferMSAA(int samples) = 0;
 	virtual void DestroyFrameBufferMSAA(void) = 0;
 
-protected:
-	virtual void Render(int indexQueue) = 0;
+public:
+	virtual void SetEnableMSAA(bool bEnable, int samples = 4) = 0;
+
+public:
+	virtual void Render(int indexQueue, float deltaTime) = 0;
 	virtual void Present(int indexQueue) = 0;
 	virtual void Clearup(int indexQueue) = 0;
 };

@@ -16,21 +16,6 @@ CRenderSolutionDefault::~CRenderSolutionDefault(void)
 	Clearup(1);
 }
 
-void CRenderSolutionDefault::SetEnableMSAA(bool bEnable, int samples)
-{
-	m_bEnableMSAA = bEnable;
-
-	DestroyFrameBuffer();
-	DestroyFrameBufferMSAA();
-
-	if (m_bEnableMSAA) {
-		CreateFrameBufferMSAA(samples);
-	}
-	else {
-		CreateFrameBuffer();
-	}
-}
-
 void CRenderSolutionDefault::CreateFrameBuffer(void)
 {
 	m_ptrDepthStencilTexture = Renderer()->NewTexture2D(HashValue("DepthStencilTexture"));
@@ -94,24 +79,48 @@ void CRenderSolutionDefault::DestroyFrameBufferMSAA(void)
 	}
 }
 
-void CRenderSolutionDefault::Render(int indexQueue)
+void CRenderSolutionDefault::SetEnableMSAA(bool bEnable, int samples)
 {
-	const static uint32_t nameDefaultPass = HashValue("Default");
+	m_bEnableMSAA = bEnable;
 
-	const CGfxRenderPassPtr &ptrRenderPass = m_bEnableMSAA ? m_ptrRenderPassMSAA : m_ptrRenderPass;
-	const CGfxFrameBufferPtr &ptrFrameBuffer = m_bEnableMSAA ? m_ptrFrameBufferScreenMSAA[Renderer()->GetSwapChain()->GetTextureIndex()] : m_ptrFrameBufferScreen[Renderer()->GetSwapChain()->GetTextureIndex()];
+	DestroyFrameBuffer();
+	DestroyFrameBufferMSAA();
 
-	Renderer()->CmdBeginRenderPass(m_ptrMainCommandBuffer[indexQueue], ptrFrameBuffer, ptrRenderPass);
-	{
-		const glm::vec4 &scissor = MainCamera()->GetScissor();
-		const glm::vec4 &viewport = MainCamera()->GetViewport();
-
-		Renderer()->CmdSetScissor(m_ptrMainCommandBuffer[indexQueue], (int)scissor.x, (int)scissor.y, (int)scissor.z, (int)scissor.w);
-		Renderer()->CmdSetViewport(m_ptrMainCommandBuffer[indexQueue], (int)viewport.x, (int)viewport.y, (int)viewport.z, (int)viewport.w);
-
-		MainCamera()->CmdDraw(indexQueue, m_ptrMainCommandBuffer[indexQueue], SceneManager()->GetUniformEngine(), nameDefaultPass);
+	if (m_bEnableMSAA) {
+		CreateFrameBufferMSAA(samples);
 	}
-	Renderer()->CmdEndRenderPass(m_ptrMainCommandBuffer[indexQueue]);
+	else {
+		CreateFrameBuffer();
+	}
+}
+
+void CRenderSolutionDefault::Render(int indexQueue, float deltaTime)
+{
+	// Update logic & camera
+	{
+		Engine()->UpdateLogic(deltaTime);
+		Engine()->UpdateCamera(MainCamera(), indexQueue);
+	}
+
+	// Build command buffer
+	{
+		const static uint32_t nameDefaultPass = HashValue("Default");
+
+		const CGfxRenderPassPtr &ptrRenderPass = m_bEnableMSAA ? m_ptrRenderPassMSAA : m_ptrRenderPass;
+		const CGfxFrameBufferPtr &ptrFrameBuffer = m_bEnableMSAA ? m_ptrFrameBufferScreenMSAA[Renderer()->GetSwapChain()->GetTextureIndex()] : m_ptrFrameBufferScreen[Renderer()->GetSwapChain()->GetTextureIndex()];
+
+		Renderer()->CmdBeginRenderPass(m_ptrMainCommandBuffer[indexQueue], ptrFrameBuffer, ptrRenderPass);
+		{
+			const glm::vec4 &scissor = MainCamera()->GetScissor();
+			const glm::vec4 &viewport = MainCamera()->GetViewport();
+
+			Renderer()->CmdSetScissor(m_ptrMainCommandBuffer[indexQueue], (int)scissor.x, (int)scissor.y, (int)scissor.z, (int)scissor.w);
+			Renderer()->CmdSetViewport(m_ptrMainCommandBuffer[indexQueue], (int)viewport.x, (int)viewport.y, (int)viewport.z, (int)viewport.w);
+
+			MainCamera()->CmdDraw(indexQueue, m_ptrMainCommandBuffer[indexQueue], SceneManager()->GetUniformEngine(), nameDefaultPass);
+		}
+		Renderer()->CmdEndRenderPass(m_ptrMainCommandBuffer[indexQueue]);
+	}
 }
 
 void CRenderSolutionDefault::Present(int indexQueue)

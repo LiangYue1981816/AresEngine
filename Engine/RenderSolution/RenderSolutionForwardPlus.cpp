@@ -13,11 +13,6 @@ CRenderSolutionForwardPlus::~CRenderSolutionForwardPlus(void)
 	Clearup(1);
 }
 
-void CRenderSolutionForwardPlus::SetEnableMSAA(bool bEnable, int samples)
-{
-
-}
-
 void CRenderSolutionForwardPlus::CreateFrameBuffer(void)
 {
 
@@ -38,7 +33,12 @@ void CRenderSolutionForwardPlus::DestroyFrameBufferMSAA(void)
 
 }
 
-void CRenderSolutionForwardPlus::Render(int indexQueue)
+void CRenderSolutionForwardPlus::SetEnableMSAA(bool bEnable, int samples)
+{
+
+}
+
+void CRenderSolutionForwardPlus::Render(int indexQueue, float deltaTime)
 {
 
 }

@@ -10,7 +10,7 @@
 #include "RenderSolutionBase.h"
 
 
-#define CreateEngine(api, hDC, width, height, format) CEngine::Create((api), (hDC), (width), (height), (format))
+#define CreateEngine(api, solution, hDC, width, height, format) CEngine::Create((api), (solution), (hDC), (width), (height), (format))
 #define DestroyEngine() CEngine::Destroy()
 #define Engine() CEngine::GetInstance()
 
@@ -24,35 +24,48 @@ class CALL_API CEngine
 {
 public:
 	static CEngine* GetInstance(void);
-	static void Create(GfxApi api, void *hDC, int width, int height, uint32_t format);
+	static void Create(GfxApi api, RenderSolution solution, void *hDC, int width, int height, uint32_t format);
 	static void Destroy(void);
 
 
 private:
-	CEngine(GfxApi api, void *hDC, int width, int height, uint32_t format);
+	CEngine(GfxApi api, RenderSolution solution, void *hDC, int width, int height, uint32_t format);
 	virtual ~CEngine(void);
 
 
 public:
 	CSceneManager* GetSceneManager(void) const;
-	CRenderSolutionBase* GetRenderSolution(RenderSolution solution) const;
+	CRenderSolutionBase* GetRenderSolution(void) const;
 
 public:
 	void UpdateLogic(float deltaTime);
-	void UpdateCamera(CGfxCamera *pCamera);
-	void Render(float deltaTime, RenderSolution solution);
+	void UpdateCamera(CGfxCamera *pCamera, int indexQueue);
+
+public:
+	void Tick(void);
+	void Present(void);
+
+private:
+	void TickThread(void);
+	static void* WorkerThread(void *pParams);
 
 
 private:
 	int m_indexQueue;
 
 private:
-	float m_totalLogicTime;
-	float m_totalRenderTime;
+	float m_lastTime;
+	float m_totalTime;
 
 private:
 	CSceneManager *m_pSceneManager;
-	CRenderSolutionBase *m_pRenderSolutions[RENDER_SOLUTION_COUNT];
+	CRenderSolutionBase *m_pRenderSolution;
+
+private:
+	event_t m_eventExit;
+	event_t m_eventFinish;
+	event_t m_eventDispatch;
+	pthread_t m_thread;
 
 private:
 	static CEngine *pInstance;

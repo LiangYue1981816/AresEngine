@@ -7,13 +7,10 @@ class CRenderSolutionForwardPlus : public CRenderSolutionBase
 	friend class CEngine;
 
 
-private:
+protected:
 	CRenderSolutionForwardPlus(void);
 	virtual ~CRenderSolutionForwardPlus(void);
 
-
-public:
-	virtual void SetEnableMSAA(bool bEnable, int samples = 4);
 
 protected:
 	virtual void CreateFrameBuffer(void);
@@ -22,8 +19,11 @@ protected:
 	virtual void CreateFrameBufferMSAA(int samples);
 	virtual void DestroyFrameBufferMSAA(void);
 
-private:
-	virtual void Render(int indexQueue);
+public:
+	virtual void SetEnableMSAA(bool bEnable, int samples = 4);
+
+public:
+	virtual void Render(int indexQueue, float deltaTime);
 	virtual void Present(int indexQueue);
 	virtual void Clearup(int indexQueue);
 };
