@@ -5,24 +5,34 @@
 CComponentPointLight::CComponentPointLight(uint32_t name)
 	: CComponent(name)
 {
-	m_ptrMaterial = Renderer()->NewMaterial("PointLight.material");
-	m_ptrMesh = Renderer()->NewMesh("PointLight.mesh", INSTANCE_ATTRIBUTE_TRANSFORM | INSTANCE_ATTRIBUTE_POINTLIGHT_COLOR | INSTANCE_ATTRIBUTE_POINTLIGHT_ATTENUATION);
+	SetMaterial(Renderer()->NewMaterial("PointLight.material"));
+	SetMesh(Renderer()->NewMesh("PointLight.mesh", INSTANCE_ATTRIBUTE_TRANSFORM | INSTANCE_ATTRIBUTE_POINTLIGHT_COLOR | INSTANCE_ATTRIBUTE_POINTLIGHT_ATTENUATION));
 }
 
 CComponentPointLight::CComponentPointLight(const CComponentPointLight &component)
 	: CComponent(component)
 {
-	m_ptrMaterial = component.m_ptrMaterial;
-	m_ptrMesh = component.m_ptrMesh;
+	SetMaterial(component.m_ptrMaterial);
+	SetMesh(component.m_ptrMesh);
 
-	m_instanceData.transformMatrix = glm::mat4();
-	m_instanceData.color = component.m_instanceData.color;
-	m_instanceData.attenuation = component.m_instanceData.attenuation;
+	SetColor(component.m_instanceData.color.r, component.m_instanceData.color.g, component.m_instanceData.color.b);
+	SetAttenuation(component.m_instanceData.attenuation.x, component.m_instanceData.attenuation.y, component.m_instanceData.attenuation.z);
 }
 
 CComponentPointLight::~CComponentPointLight(void)
 {
 
+}
+
+void CComponentPointLight::SetMaterial(const CGfxMaterialPtr &ptrMaterial)
+{
+	m_ptrMaterial = ptrMaterial;
+}
+
+void CComponentPointLight::SetMesh(const CGfxMeshPtr &ptrMesh)
+{
+	m_ptrMesh = ptrMesh;
+	m_localAABB = ptrMesh.IsValid() ? ptrMesh->GetLocalAABB() : glm::aabb();
 }
 
 void CComponentPointLight::SetColor(float red, float green, float blue)
@@ -37,22 +47,23 @@ void CComponentPointLight::SetAttenuation(float linear, float square, float cons
 
 glm::aabb CComponentPointLight::GetLocalAABB(void)
 {
-	return m_ptrMesh.IsValid() ? m_ptrMesh->GetLocalAABB() : glm::aabb();
+	return m_localAABB;
 }
 
 glm::aabb CComponentPointLight::GetWorldAABB(void)
 {
-	return m_pParentNode && m_ptrMesh.IsValid() ? m_ptrMesh->GetLocalAABB() * m_pParentNode->GetWorldTransform() : glm::aabb();
+	return m_worldAABB;
 }
 
 void CComponentPointLight::TaskUpdate(float gameTime, float deltaTime)
 {
-	m_instanceData.transformMatrix = m_pParentNode->GetWorldTransform();
+	m_worldAABB = m_pParentNode ? m_localAABB * m_pParentNode->GetWorldTransform() : glm::aabb();
+	m_instanceData.transformMatrix = m_pParentNode ? m_pParentNode->GetWorldTransform() : glm::mat4();
 }
 
 void CComponentPointLight::TaskUpdateCamera(CGfxCamera *pCamera, int indexThread, int indexQueue)
 {
-	if (pCamera->IsVisible(GetWorldAABB())) {
+	if (pCamera->IsVisible(m_worldAABB)) {
 		pCamera->Add(indexThread, indexQueue, m_ptrMaterial, m_ptrMesh, -1, (const uint8_t *)&m_instanceData, sizeof(m_instanceData));
 	}
 }
