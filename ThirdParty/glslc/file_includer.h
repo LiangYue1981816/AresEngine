@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#ifdef PLATFORM_WINDOWS
+
 #ifndef GLSLC_FILE_INCLUDER_H_
 #define GLSLC_FILE_INCLUDER_H_
 
@@ -69,3 +71,5 @@ class FileIncluder : public shaderc::CompileOptions::IncluderInterface {
 }  // namespace glslc
 
 #endif  // GLSLC_FILE_INCLUDER_H_
+
+#endif

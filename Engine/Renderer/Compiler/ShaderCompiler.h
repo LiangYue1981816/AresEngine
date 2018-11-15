@@ -2,7 +2,9 @@
 #include <string>
 #include <map>
 #include <vector>
-#include <unordered_map>
+
+#ifdef PLATFORM_WINDOWS
+
 #include <shaderc/shaderc.hpp>
 #include <glslc/file_includer.h>
 
@@ -32,11 +34,6 @@ public:
 	std::string Preprocess(const char *szFileName, shaderc_shader_kind kind);
 	std::vector<uint32_t> Compile(const char *szInputFileName, const char *szOutputFileName, shaderc_shader_kind kind);
 
-public:
-	std::string LoadShader(const char *szFileName);
-	bool LoadShaderBinary(const char *szFileName, std::vector<uint32_t> &words, uint32_t hash);
-	bool SaveShaderBinary(const char *szFileName, const std::vector<uint32_t> &words, uint32_t hash);
-
 
 private:
 	char m_szCachePath[_MAX_STRING];
@@ -52,3 +49,9 @@ private:
 	shaderc_util::FileFinder m_fileFinder;
 	std::unique_ptr<glslc::FileIncluder> m_fileIncluder;
 };
+
+#endif
+
+extern std::string LoadShader(const char *szFileName);
+extern bool LoadShaderBinary(const char *szFileName, std::vector<uint32_t> &words, uint32_t hash);
+extern bool SaveShaderBinary(const char *szFileName, const std::vector<uint32_t> &words, uint32_t hash);

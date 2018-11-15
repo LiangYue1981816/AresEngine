@@ -28,6 +28,8 @@
 
 */
 
+#ifdef PLATFORM_WINDOWS
+
 #ifndef __gl3w_h_
 #define __gl3w_h_
 
@@ -1229,6 +1231,8 @@ extern PFNGLWAITSYNCPROC                                    gl3wWaitSync;
 
 #ifdef __cplusplus
 }
+#endif
+
 #endif
 
 #endif

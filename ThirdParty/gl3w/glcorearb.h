@@ -1,3 +1,5 @@
+#ifdef PLATFORM_WINDOWS
+
 #ifndef __glcorearb_h_
 #define __glcorearb_h_ 1
 
@@ -3260,6 +3262,8 @@ GLAPI void APIENTRY glTexPageCommitmentARB (GLenum target, GLint level, GLint xo
 
 #ifdef __cplusplus
 }
+#endif
+
 #endif
 
 #endif

@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#ifdef PLATFORM_WINDOWS
+
 #include "file_includer.h"
 
 #include <mutex>
@@ -62,3 +64,5 @@ void FileIncluder::ReleaseInclude(shaderc_include_result* include_result) {
 }
 
 }  // namespace glslc
+
+#endif

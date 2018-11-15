@@ -20,7 +20,7 @@ bool CGLES3Shader::Load(const char *szFileName, shaderc_shader_kind kind)
 	Destroy();
 
 	std::vector<uint32_t> words;
-	if (ShaderCompiler()->LoadShaderBinary(FileManager()->GetFullName(szFileName), words, INVALID_HASHVALUE) == false) return false;
+	if (LoadShaderBinary(FileManager()->GetFullName(szFileName), words, INVALID_HASHVALUE) == false) return false;
 	if (Create(words.data(), words.size(), kind) == false) return false;
 
 	return true;

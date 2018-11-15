@@ -2,6 +2,8 @@
 #include "ShaderCompiler.h"
 
 
+#ifdef PLATFORM_WINDOWS
+
 CShaderCompiler* CShaderCompiler::GetInstance(void)
 {
 	static CShaderCompiler instance;
@@ -139,7 +141,10 @@ std::vector<uint32_t> CShaderCompiler::Compile(const char *szInputFileName, cons
 	return words;
 }
 
-std::string CShaderCompiler::LoadShader(const char *szFileName)
+#endif
+
+
+std::string LoadShader(const char *szFileName)
 {
 	if (FILE *pFile = fopen(szFileName, "rb")) {
 		size_t size = fsize(pFile);
@@ -154,7 +159,7 @@ std::string CShaderCompiler::LoadShader(const char *szFileName)
 	return "";
 }
 
-bool CShaderCompiler::LoadShaderBinary(const char *szFileName, std::vector<uint32_t> &words, uint32_t hash)
+bool LoadShaderBinary(const char *szFileName, std::vector<uint32_t> &words, uint32_t hash)
 {
 	if (FILE *pFile = fopen(szFileName, "rb")) {
 		uint32_t dwHashValue;
@@ -178,7 +183,7 @@ bool CShaderCompiler::LoadShaderBinary(const char *szFileName, std::vector<uint3
 	return false;
 }
 
-bool CShaderCompiler::SaveShaderBinary(const char *szFileName, const std::vector<uint32_t> &words, uint32_t hash)
+bool SaveShaderBinary(const char *szFileName, const std::vector<uint32_t> &words, uint32_t hash)
 {
 	if (FILE *pFile = fopen(szFileName, "wb")) {
 		fwrite(&hash, sizeof(uint32_t), 1, pFile);
