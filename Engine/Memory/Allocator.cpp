@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include <stdint.h>
-#include "pthread.h"
+#include <thread>
 
 #include "Allocator.h"
 #include "MemoryPool.h"
@@ -16,57 +16,41 @@
 
 
 // ABBBBBBCCCCCCCCCCCCCCCCCCCCCCCCC
-// A: system memory or allocator memory
-// B: thread id. Max Thread Number 64
-// C: size. Max Size 32MB
+// A: system memory or allocator memory.
+// B: pool id. max pool number 64.
+// C: size. max size 32MB.
 #define GET_MEM_SIZE(ptr) (*((uint32_t *)(ptr) - 1) & 0x01FFFFFF)
 
 #define GET_MEM_SYSTEM(ptr) (*((uint32_t *)(ptr) - 1) & 0x80000000)
 #define SET_MEM_SYSTEM(ptr)  *((uint32_t *)(ptr) - 1) = (*((uint32_t *)(ptr) - 1) | 0x80000000)
 
-#define GET_MEM_THREAD_ID(ptr) ((*((uint32_t *)(ptr) - 1) & 0x7E000000) >> 25)
-#define SET_MEM_THREAD_ID(ptr)   *((uint32_t *)(ptr) - 1) = ((indexThread & 0x0000003F) << 25) | (*((uint32_t *)(ptr) - 1) & 0x81FFFFFF)
+#define GET_MEM_POOL_ID(ptr) ((*((uint32_t *)(ptr) - 1) & 0x7E000000) >> 25)
+#define SET_MEM_POOL_ID(ptr)   *((uint32_t *)(ptr) - 1) = ((indexPool & 0x0000003F) << 25) | (*((uint32_t *)(ptr) - 1) & 0x81FFFFFF)
 
 
-#define MAX_THREAD_COUNT 64
+#define MAX_POOL_COUNT 64
 static bool bInitAllocator = false;
-static pthread_t threads[MAX_THREAD_COUNT] = { 0 };
-static POOL_ALLOCATOR *pPoolAllocators[MAX_THREAD_COUNT] = { nullptr };
+static std::thread::id threads[MAX_POOL_COUNT];
+static POOL_ALLOCATOR *pPoolAllocators[MAX_POOL_COUNT] = { nullptr };
 static HEAP_ALLOCATOR *pHeapAllocator = nullptr;
 
 
-static int GetThreadIndex(void)
+static int GetPoolIndex(void)
 {
-	int indexThread = -1;
-	pthread_t thread = pthread_self();
+	std::thread::id thread = std::this_thread::get_id();
 
-	for (int index = 0; index < MAX_THREAD_COUNT; index++) {
-#ifdef PLATFORM_WINDOWS
-		if (threads[index].p == thread.p) {
-			indexThread = index;
-			break;
-		}
-
-		if (threads[index].p == nullptr) {
-			threads[index].p = thread.p;
-			indexThread = index;
-			break;
-		}
-#else
+	for (int index = 0; index < MAX_POOL_COUNT; index++) {
 		if (threads[index] == thread) {
-			indexThread = index;
-			break;
+			return index;
 		}
 
-		if (threads[index] == 0) {
+		if (threads[index] == std::thread::id()) {
 			threads[index] = thread;
-			indexThread = index;
-			break;
+			return index;
 		}
-#endif
 	}
 
-	return indexThread;
+	return -1;
 }
 
 CALL_API void InitAllocator(void)
@@ -75,8 +59,8 @@ CALL_API void InitAllocator(void)
 	if (bInitAllocator == false) {
 		pHeapAllocator = HEAP_Create();
 
-		for (int indexThread = 0; indexThread < MAX_THREAD_COUNT; indexThread++) {
-			pPoolAllocators[indexThread] = POOL_Create(pHeapAllocator);
+		for (int indexPool = 0; indexPool < MAX_POOL_COUNT; indexPool++) {
+			pPoolAllocators[indexPool] = POOL_Create(pHeapAllocator);
 		}
 
 		bInitAllocator = true;
@@ -90,8 +74,8 @@ CALL_API void ExitAllocator(void)
 	if (bInitAllocator) {
 		bInitAllocator = false;
 
-		for (int indexThread = 0; indexThread < MAX_THREAD_COUNT; indexThread++) {
-			POOL_Destroy(pHeapAllocator, pPoolAllocators[indexThread]);
+		for (int indexPool = 0; indexPool < MAX_POOL_COUNT; indexPool++) {
+			POOL_Destroy(pHeapAllocator, pPoolAllocators[indexPool]);
 		}
 
 		HEAP_Destroy(pHeapAllocator);
@@ -101,22 +85,21 @@ CALL_API void ExitAllocator(void)
 
 CALL_API void* AllocMemory(size_t size)
 {
-	size = ALIGN_4BYTE(size);
-
 #ifdef MEMORY_ALLOCATOR
 	uint32_t *pPointer = nullptr;
-	int indexThread = GetThreadIndex();
 
-	if (bInitAllocator && indexThread >= 0 && size < 0x01FFFFFF) {
+	if (bInitAllocator && size < 0x01FFFFFF) {
+		int indexPool = GetPoolIndex();
+
 		if (pPointer == nullptr) {
-			pPointer = (uint32_t *)POOL_Alloc(pHeapAllocator, pPoolAllocators[indexThread], size);
+			pPointer = (uint32_t *)POOL_Alloc(pHeapAllocator, pPoolAllocators[indexPool], size);
 		}
 
 		if (pPointer == nullptr) {
 			pPointer = (uint32_t *)HEAP_Alloc(pHeapAllocator, size);
 		}
 
-		SET_MEM_THREAD_ID(pPointer);
+		SET_MEM_POOL_ID(pPointer);
 	}
 	else {
 		pPointer = (uint32_t *)_malloc(size + 4); *pPointer++ = (uint32_t)size;
@@ -137,10 +120,10 @@ CALL_API void FreeMemory(void *pPointer)
 
 #ifdef MEMORY_ALLOCATOR
 	if (bInitAllocator && GET_MEM_SYSTEM(pPointer) == 0) {
-		uint32_t indexThread = GET_MEM_THREAD_ID(pPointer);
+		int indexPool = GET_MEM_POOL_ID(pPointer);
 
 		if (pPointer) {
-			if (POOL_Free(pHeapAllocator, pPoolAllocators[indexThread], pPointer)) {
+			if (POOL_Free(pHeapAllocator, pPoolAllocators[indexPool], pPointer)) {
 				pPointer = nullptr;
 			}
 		}

@@ -50,7 +50,7 @@ struct BLOCK_POOL_HEAD {
 };
 
 struct POOL_ALLOCATOR {
-	pthread_spinlock_t lock;
+	pthread_mutex_t lock;
 	BLOCK_POOL_HEAD pools[BLOCK_POOL_COUNT];
 };
 
@@ -96,7 +96,7 @@ POOL_ALLOCATOR* POOL_Create(HEAP_ALLOCATOR *pHeapAllocator)
 		pPoolAllocator->pools[indexPool].pBlockPoolHead = nullptr;
 		pPoolAllocator->pools[indexPool].pBlockPoolFreeHead = nullptr;
 	}
-	pthread_spin_init(&pPoolAllocator->lock, PTHREAD_PROCESS_PRIVATE);
+	pthread_mutex_init(&pPoolAllocator->lock, nullptr);
 
 	return pPoolAllocator;
 }
@@ -113,7 +113,7 @@ void POOL_Destroy(HEAP_ALLOCATOR *pHeapAllocator, POOL_ALLOCATOR *pPoolAllocator
 			} while (pBlockPool = pBlockPoolNext);
 		}
 	}
-	pthread_spin_destroy(&pPoolAllocator->lock);
+	pthread_mutex_destroy(&pPoolAllocator->lock);
 
 	HEAP_Free(pHeapAllocator, pPoolAllocator);
 }
@@ -127,7 +127,7 @@ void* POOL_Alloc(HEAP_ALLOCATOR *pHeapAllocator, POOL_ALLOCATOR *pPoolAllocator,
 		const uint32_t dwIndexPool = dwMemSize / 16;
 
 		if (dwIndexPool < BLOCK_POOL_COUNT) {
-			pthread_spin_lock(&pPoolAllocator->lock);
+			pthread_mutex_lock(&pPoolAllocator->lock);
 			{
 				BLOCK_POOL_HEAD *pPoolHead = &pPoolAllocator->pools[dwIndexPool];
 
@@ -152,7 +152,7 @@ void* POOL_Alloc(HEAP_ALLOCATOR *pHeapAllocator, POOL_ALLOCATOR *pPoolAllocator,
 
 				*pPointer++ = dwMemSize;
 			}
-			pthread_spin_unlock(&pPoolAllocator->lock);
+			pthread_mutex_unlock(&pPoolAllocator->lock);
 		}
 	}
 
@@ -166,7 +166,7 @@ bool POOL_Free(HEAP_ALLOCATOR *pHeapAllocator, POOL_ALLOCATOR *pPoolAllocator, v
 		const uint32_t dwIndexPool = dwMemSize / 16;
 
 		if (dwIndexPool < BLOCK_POOL_COUNT) {
-			pthread_spin_lock(&pPoolAllocator->lock);
+			pthread_mutex_lock(&pPoolAllocator->lock);
 			{
 				BLOCK *pBlock = GET_BLOCK(pPointer);
 				BLOCK_POOL *pBlockPool = GET_BLOCK_POOL(pBlock);
@@ -204,7 +204,7 @@ bool POOL_Free(HEAP_ALLOCATOR *pHeapAllocator, POOL_ALLOCATOR *pPoolAllocator, v
 					pBlockPool->pBlockHead = pBlock;
 				}
 			}
-			pthread_spin_unlock(&pPoolAllocator->lock);
+			pthread_mutex_unlock(&pPoolAllocator->lock);
 			return true;
 		}
 	}

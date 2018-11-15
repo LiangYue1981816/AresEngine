@@ -39,8 +39,7 @@ public:
 			size_t indexEnd = min(count * (m_indexThread + 1), m_pComponentManager->GetComponentCount());
 
 			for (size_t index = indexBegin; index < indexEnd; index++) {
-				CComponent *pComponent = (CComponent *)m_pComponentManager->GetComponentByIndex(index);
-				pComponent->TaskUpdateCamera(m_pCamera, m_indexThread, m_indexQueue);
+				m_pComponentManager->GetComponentByIndex(index)->TaskUpdateCamera(m_pCamera, m_indexThread, m_indexQueue);
 			}
 		}
 	}

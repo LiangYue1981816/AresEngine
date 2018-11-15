@@ -38,8 +38,7 @@ public:
 			size_t indexEnd = min(count * (m_indexThread + 1), m_pComponentManager->GetComponentCount());
 
 			for (size_t index = indexBegin; index < indexEnd; index++) {
-				CComponent *pComponent = (CComponent *)m_pComponentManager->GetComponentByIndex(index);
-				pComponent->TaskUpdate(m_gameTime, m_deltaTime);
+				m_pComponentManager->GetComponentByIndex(index)->TaskUpdate(m_gameTime, m_deltaTime);
 			}
 		}
 	}
