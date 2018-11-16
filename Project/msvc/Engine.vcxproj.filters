@@ -22,9 +22,6 @@
     <Filter Include="Engine\Scene">
       <UniqueIdentifier>{35e2f3c0-88e0-422a-8e05-f856d122f053}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ThirdParty\eastl">
-      <UniqueIdentifier>{721f853c-205f-4932-98a2-8b0ec010862a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ThirdParty\event">
       <UniqueIdentifier>{be289de3-d655-47e6-9e59-a4dc6007b92d}</UniqueIdentifier>
     </Filter>
@@ -129,6 +126,9 @@
     </Filter>
     <Filter Include="Engine\Renderer\GLES3\Header Files">
       <UniqueIdentifier>{74c2d916-bd47-4ba2-9680-6e7f712348f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\eastl">
+      <UniqueIdentifier>{0cb87225-90c0-4190-a7a8-d4ded44c1884}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -788,36 +788,6 @@
     <ClCompile Include="..\..\Engine\Scene\SceneNode.cpp">
       <Filter>Engine\Scene\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\ThirdParty\eastl\source\allocator_eastl.cpp">
-      <Filter>ThirdParty\eastl</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\ThirdParty\eastl\source\assert.cpp">
-      <Filter>ThirdParty\eastl</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\ThirdParty\eastl\source\fixed_pool.cpp">
-      <Filter>ThirdParty\eastl</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\ThirdParty\eastl\source\hashtable.cpp">
-      <Filter>ThirdParty\eastl</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\ThirdParty\eastl\source\intrusive_list.cpp">
-      <Filter>ThirdParty\eastl</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\ThirdParty\eastl\source\new.cpp">
-      <Filter>ThirdParty\eastl</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\ThirdParty\eastl\source\numeric_limits.cpp">
-      <Filter>ThirdParty\eastl</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\ThirdParty\eastl\source\red_black_tree.cpp">
-      <Filter>ThirdParty\eastl</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\ThirdParty\eastl\source\string.cpp">
-      <Filter>ThirdParty\eastl</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\ThirdParty\eastl\source\thread_support.cpp">
-      <Filter>ThirdParty\eastl</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\ThirdParty\event\event.c">
       <Filter>ThirdParty\event</Filter>
     </ClCompile>
@@ -1108,6 +1078,36 @@
     </ClCompile>
     <ClCompile Include="..\..\Engine\Base\Mutex.cpp">
       <Filter>Engine\Base\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\eastl\source\allocator_eastl.cpp">
+      <Filter>ThirdParty\eastl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\eastl\source\assert.cpp">
+      <Filter>ThirdParty\eastl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\eastl\source\fixed_pool.cpp">
+      <Filter>ThirdParty\eastl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\eastl\source\hashtable.cpp">
+      <Filter>ThirdParty\eastl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\eastl\source\intrusive_list.cpp">
+      <Filter>ThirdParty\eastl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\eastl\source\new.cpp">
+      <Filter>ThirdParty\eastl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\eastl\source\numeric_limits.cpp">
+      <Filter>ThirdParty\eastl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\eastl\source\red_black_tree.cpp">
+      <Filter>ThirdParty\eastl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\eastl\source\string.cpp">
+      <Filter>ThirdParty\eastl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\eastl\source\thread_support.cpp">
+      <Filter>ThirdParty\eastl</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
