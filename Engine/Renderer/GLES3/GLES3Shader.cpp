@@ -15,7 +15,7 @@ CGLES3Shader::~CGLES3Shader(void)
 	Destroy();
 }
 
-bool CGLES3Shader::Load(const char *szFileName, shaderc_shader_kind kind)
+bool CGLES3Shader::Load(const char *szFileName, shader_kind kind)
 {
 	Destroy();
 
@@ -26,7 +26,7 @@ bool CGLES3Shader::Load(const char *szFileName, shaderc_shader_kind kind)
 	return true;
 }
 
-bool CGLES3Shader::Create(const uint32_t *words, size_t numWords, shaderc_shader_kind kind)
+bool CGLES3Shader::Create(const uint32_t *words, size_t numWords, shader_kind kind)
 {
 	Destroy();
 	{

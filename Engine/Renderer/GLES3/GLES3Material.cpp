@@ -71,7 +71,7 @@ bool CGLES3Material::Load(const char *szFileName)
 					if (LoadPass(pPassNode) == false) {
 						throw 3;
 					}
-				} while (pPassNode = pMaterialNode->IterateChildren("Pass", pPassNode));
+				} while ((pPassNode = pMaterialNode->IterateChildren("Pass", pPassNode)) != nullptr);
 			}
 		}
 		LogOutput(LOG_TAG_RENDERER, "OK\n");

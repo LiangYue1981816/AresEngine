@@ -24,10 +24,10 @@
 #include <unordered_map>
 
 #ifdef HAVE_EASTL
-#include <eastl/string.h>
-#include <eastl/map.h>
-#include <eastl/vector.h>
-#include <eastl/unordered_map.h>
+#include <EASTL/string.h>
+#include <EASTL/map.h>
+#include <EASTL/vector.h>
+#include <EASTL/unordered_map.h>
 #else
 #define eastl std
 #endif

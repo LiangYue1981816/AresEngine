@@ -57,7 +57,7 @@ void CGLES3InstanceBuffer::Bind(void *pParam)
 			uint32_t stride = GetInstanceStride(m_format);
 			uint32_t location = GetInstanceAttributeLocation(attribute);
 			uint32_t components = GetInstanceAttributeComponents(attribute);
-			uint32_t offset = GetInstanceAttributeOffset(m_format, attribute);
+			uintptr_t offset = GetInstanceAttributeOffset(m_format, attribute);
 
 			glEnableVertexAttribArray(location);
 			glVertexAttribPointer(location, components, GL_FLOAT, GL_FALSE, stride, (const void *)offset);

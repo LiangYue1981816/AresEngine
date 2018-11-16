@@ -23,7 +23,7 @@ bool CGLES3PipelineGraphics::Create(const CGfxShader *pVertexShader, const CGfxS
 		return false;
 	}
 
-	if (pVertexShader->GetKind() != shaderc_vertex_shader) {
+	if (pVertexShader->GetKind() != vertex_shader) {
 		return false;
 	}
 
@@ -35,27 +35,27 @@ bool CGLES3PipelineGraphics::Create(const CGfxShader *pVertexShader, const CGfxS
 		return false;
 	}
 
-	if (pFragmentShader->GetKind() != shaderc_fragment_shader) {
+	if (pFragmentShader->GetKind() != fragment_shader) {
 		return false;
 	}
 
 	Destroy();
 
 	m_state = state;
-	m_pShaders[shaderc_vertex_shader] = (CGLES3Shader *)pVertexShader;
-	m_pShaders[shaderc_fragment_shader] = (CGLES3Shader *)pFragmentShader;
-	glUseProgramStages(m_pipeline, glGetProgramStage(shaderc_vertex_shader), m_pShaders[shaderc_vertex_shader]->GetProgram());
-	glUseProgramStages(m_pipeline, glGetProgramStage(shaderc_fragment_shader), m_pShaders[shaderc_fragment_shader]->GetProgram());
+	m_pShaders[vertex_shader] = (CGLES3Shader *)pVertexShader;
+	m_pShaders[fragment_shader] = (CGLES3Shader *)pFragmentShader;
+	glUseProgramStages(m_pipeline, glGetProgramStage(vertex_shader), m_pShaders[vertex_shader]->GetProgram());
+	glUseProgramStages(m_pipeline, glGetProgramStage(fragment_shader), m_pShaders[fragment_shader]->GetProgram());
 
 	return true;
 }
 
 void CGLES3PipelineGraphics::Destroy(void)
 {
-	m_pShaders[shaderc_vertex_shader] = nullptr;
-	m_pShaders[shaderc_fragment_shader] = nullptr;
-	glUseProgramStages(m_pipeline, glGetProgramStage(shaderc_vertex_shader), 0);
-	glUseProgramStages(m_pipeline, glGetProgramStage(shaderc_fragment_shader), 0);
+	m_pShaders[vertex_shader] = nullptr;
+	m_pShaders[fragment_shader] = nullptr;
+	glUseProgramStages(m_pipeline, glGetProgramStage(vertex_shader), 0);
+	glUseProgramStages(m_pipeline, glGetProgramStage(fragment_shader), 0);
 }
 
 void CGLES3PipelineGraphics::Bind(void *pParam)

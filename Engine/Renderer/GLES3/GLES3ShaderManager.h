@@ -13,7 +13,7 @@ private:
 
 
 private:
-	CGLES3Shader* LoadShader(const char *szFileName, shaderc_shader_kind kind);
+	CGLES3Shader* LoadShader(const char *szFileName, shader_kind kind);
 
 
 private:

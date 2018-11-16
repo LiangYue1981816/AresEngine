@@ -32,7 +32,7 @@ public:
 private:
 	uint32_t m_mode;
 	uint32_t m_type;
-	uint32_t m_offset;
+	uintptr_t m_offset;
 	int m_count;
 	int m_instanceCount;
 };

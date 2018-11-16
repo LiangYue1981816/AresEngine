@@ -242,8 +242,8 @@ bool CGLES3MaterialPass::LoadPipeline(TiXmlNode *pPassNode)
 
 			CGfxShader *pVertexShader = nullptr;
 			CGfxShader *pFragmentShader = nullptr;
-			LoadPipelineShader(pPipelineNode, pVertexShader, shaderc_vertex_shader);
-			LoadPipelineShader(pPipelineNode, pFragmentShader, shaderc_fragment_shader);
+			LoadPipelineShader(pPipelineNode, pVertexShader, vertex_shader);
+			LoadPipelineShader(pPipelineNode, pFragmentShader, fragment_shader);
 
 			if (SetPipeline(pVertexShader, pFragmentShader, state) == false) throw 1;
 		}
@@ -314,7 +314,7 @@ bool CGLES3MaterialPass::LoadPipelineState(TiXmlNode *pPipelineNode, PipelineSta
 	return true;
 }
 
-bool CGLES3MaterialPass::LoadPipelineShader(TiXmlNode *pPipelineNode, CGfxShader *&pShader, shaderc_shader_kind kind)
+bool CGLES3MaterialPass::LoadPipelineShader(TiXmlNode *pPipelineNode, CGfxShader *&pShader, shader_kind kind)
 {
 	try {
 		char szShaderKind[2][_MAX_STRING] = { "Vertex", "Fragment" };
@@ -331,7 +331,9 @@ bool CGLES3MaterialPass::LoadPipelineShader(TiXmlNode *pPipelineNode, CGfxShader
 			char szHashName[_MAX_STRING] = { 0 };
 			strcat(szHashName, szFileName);
 
+#ifdef PLATFORM_WINDOWS
 			ShaderCompiler()->ClearMacroDefinition();
+#endif
 			{
 				if (TiXmlNode *pDefineNode = pShaderNode->FirstChild("Define")) {
 					do {
@@ -339,9 +341,11 @@ bool CGLES3MaterialPass::LoadPipelineShader(TiXmlNode *pPipelineNode, CGfxShader
 							strcat(szHashName, "_");
 							strcat(szHashName, szDefine);
 
+#ifdef PLATFORM_WINDOWS
 							ShaderCompiler()->AddMacroDefinition(szDefine);
+#endif
 						}
-					} while (pDefineNode = pShaderNode->IterateChildren("Define", pDefineNode));
+					} while ((pDefineNode = pShaderNode->IterateChildren("Define", pDefineNode)) != nullptr);
 				}
 			}
 
@@ -350,7 +354,7 @@ bool CGLES3MaterialPass::LoadPipelineShader(TiXmlNode *pPipelineNode, CGfxShader
 			sprintf(szBinFileName, "%x.%s", HashValue(szHashName), szExtName[kind]);
 
 #ifdef PLATFORM_WINDOWS
-			ShaderCompiler()->Compile(FileManager()->GetFullName(szFileName), szBinFileName, kind);
+			ShaderCompiler()->Compile(FileManager()->GetFullName(szFileName), szBinFileName, (shaderc_shader_kind)kind);
 #endif
 
 			pShader = GLES3Renderer()->CreateShader(szBinFileName, kind);
@@ -387,7 +391,7 @@ bool CGLES3MaterialPass::LoadTexture2D(TiXmlNode *pPassNode)
 					SetTexture2D(szName, szFileName);
 				}
 				LogOutput(nullptr, "OK\n");
-			} while (pTextureNode = pPassNode->IterateChildren("Texture2D", pTextureNode));
+			} while ((pTextureNode = pPassNode->IterateChildren("Texture2D", pTextureNode)) != nullptr);
 		}
 		return true;
 	}
@@ -419,7 +423,7 @@ bool CGLES3MaterialPass::LoadTexture2DArray(TiXmlNode *pPassNode)
 					SetTexture2DArray(szName, szFileName);
 				}
 				LogOutput(nullptr, "OK\n");
-			} while (pTextureNode = pPassNode->IterateChildren("Texture2DArray", pTextureNode));
+			} while ((pTextureNode = pPassNode->IterateChildren("Texture2DArray", pTextureNode)) != nullptr);
 		}
 		return true;
 	}
@@ -451,7 +455,7 @@ bool CGLES3MaterialPass::LoadTextureCubeMap(TiXmlNode *pPassNode)
 					SetTextureCubeMap(szName, szFileName);
 				}
 				LogOutput(nullptr, "OK\n");
-			} while (pTextureNode = pPassNode->IterateChildren("TextureCubeMap", pTextureNode));
+			} while ((pTextureNode = pPassNode->IterateChildren("TextureCubeMap", pTextureNode)) != nullptr);
 		}
 		return true;
 	}
@@ -478,7 +482,7 @@ bool CGLES3MaterialPass::LoadUniformVec1(TiXmlNode *pPassNode)
 					SetUniformVec1(szName, value);
 				}
 				LogOutput(nullptr, "OK\n");
-			} while (pUniformNode = pPassNode->IterateChildren("Uniform1f", pUniformNode));
+			} while ((pUniformNode = pPassNode->IterateChildren("Uniform1f", pUniformNode)) != nullptr);
 		}
 		return true;
 	}
@@ -505,7 +509,7 @@ bool CGLES3MaterialPass::LoadUniformVec2(TiXmlNode *pPassNode)
 					SetUniformVec2(szName, value[0], value[1]);
 				}
 				LogOutput(nullptr, "OK\n");
-			} while (pUniformNode = pPassNode->IterateChildren("Uniform2f", pUniformNode));
+			} while ((pUniformNode = pPassNode->IterateChildren("Uniform2f", pUniformNode)) != nullptr);
 		}
 		return true;
 	}
@@ -532,7 +536,7 @@ bool CGLES3MaterialPass::LoadUniformVec3(TiXmlNode *pPassNode)
 					SetUniformVec3(szName, value[0], value[1], value[2]);
 				}
 				LogOutput(nullptr, "OK\n");
-			} while (pUniformNode = pPassNode->IterateChildren("Uniform3f", pUniformNode));
+			} while ((pUniformNode = pPassNode->IterateChildren("Uniform3f", pUniformNode)) != nullptr);
 		}
 		return true;
 	}
@@ -559,7 +563,7 @@ bool CGLES3MaterialPass::LoadUniformVec4(TiXmlNode *pPassNode)
 					SetUniformVec4(szName, value[0], value[1], value[2], value[3]);
 				}
 				LogOutput(nullptr, "OK\n");
-			} while (pUniformNode = pPassNode->IterateChildren("Uniform4f", pUniformNode));
+			} while ((pUniformNode = pPassNode->IterateChildren("Uniform4f", pUniformNode)) != nullptr);
 		}
 		return true;
 	}
@@ -579,7 +583,7 @@ bool CGLES3MaterialPass::SetPipeline(const CGfxShader *pVertexShader, const CGfx
 		return false;
 	}
 
-	if (pVertexShader->GetKind() != shaderc_vertex_shader) {
+	if (pVertexShader->GetKind() != vertex_shader) {
 		return false;
 	}
 
@@ -591,7 +595,7 @@ bool CGLES3MaterialPass::SetPipeline(const CGfxShader *pVertexShader, const CGfx
 		return false;
 	}
 
-	if (pFragmentShader->GetKind() != shaderc_fragment_shader) {
+	if (pFragmentShader->GetKind() != fragment_shader) {
 		return false;
 	}
 

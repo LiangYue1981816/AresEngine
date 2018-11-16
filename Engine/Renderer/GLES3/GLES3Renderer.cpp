@@ -59,7 +59,7 @@ CGfxSwapChain* CGLES3Renderer::GetSwapChain(void) const
 	return m_pSwapChain;
 }
 
-CGLES3Shader* CGLES3Renderer::CreateShader(const char *szFileName, shaderc_shader_kind kind)
+CGLES3Shader* CGLES3Renderer::CreateShader(const char *szFileName, shader_kind kind)
 {
 	return m_pShaderManager->LoadShader(szFileName, kind);
 }

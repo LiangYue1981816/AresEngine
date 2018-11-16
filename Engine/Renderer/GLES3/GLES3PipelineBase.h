@@ -48,5 +48,5 @@ public:
 
 protected:
 	uint32_t m_pipeline;
-	CGLES3Shader *m_pShaders[shaderc_compute_shader - shaderc_vertex_shader + 1];
+	CGLES3Shader *m_pShaders[compute_shader - vertex_shader + 1];
 };

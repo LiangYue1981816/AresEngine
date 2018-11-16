@@ -47,7 +47,7 @@ CEngine::CEngine(GfxApi api, RenderSolution solution, void *hDC, int width, int 
 
 	m_pSceneManager = new CSceneManager;
 
-	switch (solution) {
+	switch ((int)solution) {
 	case RENDER_SOLUTION_DEFAULT:
 		m_pRenderSolution = new CRenderSolutionDefault;
 		break;

@@ -61,27 +61,27 @@ int check_mem_corruption();
 #ifndef _DEBUG_NEW_REDEFINE_NEW
 #define _DEBUG_NEW_REDEFINE_NEW 1
 #endif
-void* operator new(size_t size, const char* file, int line);
-void* operator new(size_t size);
-void* operator new(size_t size, const std::nothrow_t&) noexcept;
-void* operator new[](size_t size, const char* file, int line);
-void* operator new[](size_t size);
-void* operator new[](size_t size, const std::nothrow_t&) noexcept;
-void operator delete(void* ptr, const char* file, int line);
-void operator delete(void* ptr);
-void operator delete(void* ptr, const std::nothrow_t&) noexcept;
-void operator delete[](void* ptr, const char* file, int line);
-void operator delete[](void* ptr);
-void operator delete[](void* ptr, const std::nothrow_t&) noexcept;
+void* operator new (size_t size, const char* file, int line) noexcept;
+void* operator new (size_t size);
+void* operator new (size_t size, const std::nothrow_t&) noexcept;
+void* operator new[] (size_t size, const char* file, int line) noexcept;
+void* operator new[] (size_t size);
+void* operator new[] (size_t size, const std::nothrow_t&) noexcept;
+void operator delete (void* ptr, const char* file, int line) noexcept;
+void operator delete (void* ptr) noexcept;
+void operator delete (void* ptr, const std::nothrow_t&) noexcept;
+void operator delete[] (void* ptr, const char* file, int line) noexcept;
+void operator delete[] (void* ptr) noexcept;
+void operator delete[] (void* ptr, const std::nothrow_t&) noexcept;
 #else
-void* operator new(size_t size);
-void* operator new(size_t size, const std::nothrow_t&) noexcept;
-void* operator new[](size_t size);
-void* operator new[](size_t size, const std::nothrow_t&) noexcept;
-void operator delete(void* ptr);
-void operator delete(void* ptr, const std::nothrow_t&) noexcept;
-void operator delete[](void* ptr);
-void operator delete[](void* ptr, const std::nothrow_t&) noexcept;
+void* operator new (size_t size);
+void* operator new (size_t size, const std::nothrow_t&) noexcept;
+void* operator new[] (size_t size);
+void* operator new[] (size_t size, const std::nothrow_t&) noexcept;
+void operator delete (void* ptr) noexcept;
+void operator delete (void* ptr, const std::nothrow_t&) noexcept;
+void operator delete[] (void* ptr) noexcept;
+void operator delete[] (void* ptr, const std::nothrow_t&) noexcept;
 #endif
 
 /**

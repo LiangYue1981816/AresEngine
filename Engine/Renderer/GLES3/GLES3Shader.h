@@ -13,8 +13,8 @@ private:
 
 
 private:
-	bool Load(const char *szFileName, shaderc_shader_kind kind);
-	bool Create(const uint32_t *words, size_t numWords, shaderc_shader_kind kind);
+	bool Load(const char *szFileName, shader_kind kind);
+	bool Create(const uint32_t *words, size_t numWords, shader_kind kind);
 	void Destroy(void);
 
 private:

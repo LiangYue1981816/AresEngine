@@ -108,7 +108,7 @@ CALL_API size_t fsize(FILE *stream)
 
 CALL_API size_t freadline(char *buffer, size_t size, FILE *stream)
 {
-	char c;
+	int c;
 	size_t count = 0;
 
 	while (feof(stream) == 0 && count < size - 1) {
@@ -122,11 +122,11 @@ CALL_API size_t freadline(char *buffer, size_t size, FILE *stream)
 			break;
 		}
 
-		if (c == -1) {
+		if (c == EOF) {
 			break;
 		}
 
-		*buffer = c;
+		*buffer = (char)c;
 
 		buffer++;
 		count++;

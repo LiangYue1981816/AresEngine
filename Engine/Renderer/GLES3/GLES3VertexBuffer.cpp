@@ -40,7 +40,7 @@ void CGLES3VertexBuffer::Bind(void *pParam)
 			uint32_t stride = GetVertexStride(m_format);
 			uint32_t location = GetVertexAttributeLocation(attribute);
 			uint32_t components = GetVertexAttributeComponents(attribute);
-			uint32_t offset = GetVertexAttributeOffset(m_format, attribute);
+			uintptr_t offset = GetVertexAttributeOffset(m_format, attribute);
 
 			glEnableVertexAttribArray(location);
 			glVertexAttribPointer(location, components, GL_FLOAT, GL_FALSE, stride, (const void *)offset);

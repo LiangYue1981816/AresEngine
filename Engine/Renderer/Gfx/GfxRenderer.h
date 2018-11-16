@@ -5,8 +5,6 @@
 
 #include <gles3/gl31.h>
 #include <gli/gli.hpp>
-#include <shaderc/shaderc.hpp>
-#include <glslc/file_includer.h>
 #include <spirv-cross/spirv_cfg.hpp>
 #include <spirv-cross/spirv_msl.hpp>
 #include <spirv-cross/spirv_glsl.hpp>

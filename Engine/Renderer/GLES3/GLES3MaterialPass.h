@@ -19,7 +19,7 @@ private:
 	bool Load(TiXmlNode *pPassNode);
 	bool LoadPipeline(TiXmlNode *pPassNode);
 	bool LoadPipelineState(TiXmlNode *pPipelineNode, PipelineState &state);
-	bool LoadPipelineShader(TiXmlNode *pPipelineNode, CGfxShader *&pShader, shaderc_shader_kind kind);
+	bool LoadPipelineShader(TiXmlNode *pPipelineNode, CGfxShader *&pShader, shader_kind kind);
 	bool LoadTexture2D(TiXmlNode *pPassNode);
 	bool LoadTexture2DArray(TiXmlNode *pPassNode);
 	bool LoadTextureCubeMap(TiXmlNode *pPassNode);

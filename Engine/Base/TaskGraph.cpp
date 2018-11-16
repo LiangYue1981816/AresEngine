@@ -235,7 +235,7 @@ void* CTaskGraph::TaskThread(void *pParams)
 						}
 					}
 				}
-			} while (pEvent = pTaskGraph->m_pTaskListDependence[pEvent]);
+			} while ((pEvent = pTaskGraph->m_pTaskListDependence[pEvent]) != nullptr);
 		}
 		event_reset(&pTaskGraph->m_eventDispatch);
 		event_signal(&pTaskGraph->m_eventFinish);

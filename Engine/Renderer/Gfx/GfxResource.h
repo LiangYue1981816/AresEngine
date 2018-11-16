@@ -35,12 +35,12 @@ public:
 	CGfxResourcePtr(const T *pPointer)
 		: m_pPointer(nullptr)
 	{
-		Set((const T *)pPointer);
+		Set(pPointer);
 	}
 	CGfxResourcePtr(const CGfxResourcePtr<T> &ptr)
 		: m_pPointer(nullptr)
 	{
-		Set((const T *)ptr.m_pPointer);
+		Set(ptr.m_pPointer);
 	}
 	virtual ~CGfxResourcePtr(void)
 	{
@@ -57,7 +57,7 @@ private:
 
 		Release();
 
-		if (m_pPointer = (T *)pPointer) {
+		if ((m_pPointer = (T *)pPointer) != nullptr) {
 			((CGfxResource *)m_pPointer)->IncRefCount();
 		}
 	}

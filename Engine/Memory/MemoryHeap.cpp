@@ -308,7 +308,7 @@ void HEAP_Destroy(HEAP_ALLOCATOR *pHeapAllocator)
 		do {
 			pBlockPoolNext = pBlockPool->pNext;
 			HEAP_DestroyPool(pBlockPool);
-		} while (pBlockPool = pBlockPoolNext);
+		} while ((pBlockPool = pBlockPoolNext) != nullptr);
 	}
 
 	pHeapAllocator->pBlockPoolHead = nullptr;
@@ -329,10 +329,10 @@ void* HEAP_Alloc(HEAP_ALLOCATOR *pHeapAllocator, size_t size)
 			do {
 				if (BLOCK_POOL *pBlockPool = pHeapAllocator->pBlockPoolHead) {
 					do {
-						if (pPointer = (uint32_t *)HEAP_PoolAlloc(pBlockPool, dwMemSize)) {
+						if ((pPointer = (uint32_t *)HEAP_PoolAlloc(pBlockPool, dwMemSize)) != nullptr) {
 							goto RET;
 						}
-					} while (pBlockPool = pBlockPool->pNext);
+					} while ((pBlockPool = pBlockPool->pNext) != nullptr);
 				}
 
 				BLOCK_POOL *pBlockPool = HEAP_CreatePool(dwMemSize);

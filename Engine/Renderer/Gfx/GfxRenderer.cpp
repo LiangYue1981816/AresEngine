@@ -49,10 +49,14 @@ CGfxRenderer::~CGfxRenderer(void)
 
 void CGfxRenderer::SetShaderCachePath(const char *szPath) const
 {
+#ifdef PLATFORM_WINDOWS
 	ShaderCompiler()->SetCachePath(szPath);
+#endif
 }
 
 void CGfxRenderer::SetShaderIncludePath(const char *szPath) const
 {
+#ifdef PLATFORM_WINDOWS
 	ShaderCompiler()->AddIncludePath(szPath);
+#endif
 }

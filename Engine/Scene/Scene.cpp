@@ -93,7 +93,7 @@ bool CScene::LoadScene(TiXmlNode *pSceneNode)
 				if (LoadNode(pNode, m_pRootNode) == false) {
 					throw 0;
 				}
-			} while (pNode = pSceneNode->IterateChildren("Node", pNode));
+			} while ((pNode = pSceneNode->IterateChildren("Node", pNode)) != nullptr);
 		}
 		return true;
 	}
@@ -130,7 +130,7 @@ bool CScene::LoadNode(TiXmlNode *pNode, CSceneNode *pParentNode)
 				if (LoadNode(pChildNode, pCurrentNode) == false) {
 					throw 2;
 				}
-			} while (pChildNode = pNode->IterateChildren("Node", pChildNode));
+			} while ((pChildNode = pNode->IterateChildren("Node", pChildNode)) != nullptr);
 		}
 
 		return true;

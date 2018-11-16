@@ -110,7 +110,7 @@ void POOL_Destroy(HEAP_ALLOCATOR *pHeapAllocator, POOL_ALLOCATOR *pPoolAllocator
 			do {
 				pBlockPoolNext = pBlockPool->pNext;
 				POOL_DestroyPool(pHeapAllocator, pBlockPool);
-			} while (pBlockPool = pBlockPoolNext);
+			} while ((pBlockPool = pBlockPoolNext) != nullptr);
 		}
 	}
 	pthread_mutex_destroy(&pPoolAllocator->lock);

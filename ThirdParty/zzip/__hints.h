@@ -160,7 +160,7 @@
 # define ZZIP_FUNC             __func__
 # define ZZIP_FUNCTION         ""
 # else
-# define ZZIP_FUNC             0
+# define ZZIP_FUNC             __func__
 # define ZZIP_FUNCTION         ""
 # endif
 #endif
