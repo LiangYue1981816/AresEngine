@@ -1,5 +1,4 @@
 #include "GfxRenderer.h"
-#include "GfxCamera.h"
 
 
 CGfxCamera::CGfxCamera(void)

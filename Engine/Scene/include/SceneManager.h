@@ -1,4 +1,5 @@
 #pragma once
+#include "PreHeader.h"
 #include "Scene.h"
 #include "SceneNode.h"
 #include "ComponentMesh.h"

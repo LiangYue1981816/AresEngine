@@ -45,7 +45,6 @@
 #ifdef PLATFORM_WINDOWS
 #include <malloc.h>
 #endif
-#include "Engine.h"
 #include "debug_new.h"
 #include "fast_mutex.h"
 #include "static_assert.h"

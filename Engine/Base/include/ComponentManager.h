@@ -1,7 +1,9 @@
 #pragma once
+#include "PreHeader.h"
 
 
-template<class T> class CALL_API CComponentManager
+template<class T>
+class CALL_API CComponentManager
 {
 public:
 	CComponentManager(void)
@@ -86,7 +88,8 @@ private:
 	eastl::unordered_map<size_t, uint32_t> m_indexKey;
 };
 
-template<class T> class CALL_API CComponentPtr
+template<class T>
+class CALL_API CComponentPtr
 {
 public:
 	CComponentPtr(void)
@@ -203,37 +206,44 @@ private:
 	uint32_t *m_pRefCount;
 };
 
-template<class T> inline bool operator == (const CComponentPtr<T> &ptrLeft, const CComponentPtr<T> &ptrRight)
+template<class T>
+inline bool operator == (const CComponentPtr<T> &ptrLeft, const CComponentPtr<T> &ptrRight)
 {
 	return ptrLeft.GetKey() == ptrRight.GetKey() && ptrLeft.GetManager() == ptrRight.GetManager();
 }
 
-template<class T> inline bool operator != (const CComponentPtr<T> &ptrLeft, const CComponentPtr<T> &ptrRight)
+template<class T>
+inline bool operator != (const CComponentPtr<T> &ptrLeft, const CComponentPtr<T> &ptrRight)
 {
 	return ptrLeft.GetKey() != ptrRight.GetKey() || ptrLeft.GetManager() != ptrRight.GetManager();
 }
 
-template<class T> inline bool operator < (const CComponentPtr<T> &ptrLeft, const CComponentPtr<T> &ptrRight)
+template<class T>
+inline bool operator < (const CComponentPtr<T> &ptrLeft, const CComponentPtr<T> &ptrRight)
 {
 	return ptrLeft.GetKey() < ptrRight.GetKey();
 }
 
-template<class T> inline bool operator <= (const CComponentPtr<T> &ptrLeft, const CComponentPtr<T> &ptrRight)
+template<class T>
+inline bool operator <= (const CComponentPtr<T> &ptrLeft, const CComponentPtr<T> &ptrRight)
 {
 	return ptrLeft.GetKey() <= ptrRight.GetKey();
 }
 
-template<class T> inline bool operator > (const CComponentPtr<T> &ptrLeft, const CComponentPtr<T> &ptrRight)
+template<class T>
+inline bool operator > (const CComponentPtr<T> &ptrLeft, const CComponentPtr<T> &ptrRight)
 {
 	return ptrLeft.GetKey() > ptrRight.GetKey();
 }
 
-template<class T> inline bool operator >= (const CComponentPtr<T> &ptrLeft, const CComponentPtr<T> &ptrRight)
+template<class T>
+inline bool operator >= (const CComponentPtr<T> &ptrLeft, const CComponentPtr<T> &ptrRight)
 {
 	return ptrLeft.GetKey() >= ptrRight.GetKey();
 }
 
-template<class T> struct eastl::hash<CComponentPtr<T>>
+template<class T>
+struct eastl::hash<CComponentPtr<T>>
 {
 	inline size_t operator()(const CComponentPtr<T> &ptr) const
 	{
@@ -244,7 +254,8 @@ template<class T> struct eastl::hash<CComponentPtr<T>>
 	}
 };
 
-template<class T> struct eastl::equal_to<CComponentPtr<T>>
+template<class T>
+struct eastl::equal_to<CComponentPtr<T>>
 {
 	inline bool operator()(const CComponentPtr<T> &ptrLeft, const CComponentPtr<T> &ptrRight) const
 	{

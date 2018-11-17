@@ -1,6 +1,6 @@
 #include <atomic>
+#include <stdio.h>
 #include <stdlib.h>
-#include <stdint.h>
 #include <assert.h>
 #include "rbtree.h"
 #include "pthread.h"

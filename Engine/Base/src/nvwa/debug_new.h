@@ -39,6 +39,7 @@
 
 #include <new>
 #include <stdio.h>
+#include "Utils.h"
 #include "Allocator.h"
 
 #ifdef _MSC_VER

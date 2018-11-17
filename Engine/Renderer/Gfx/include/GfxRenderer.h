@@ -1,21 +1,18 @@
 #pragma once
-#include <stdio.h>
-#include <stdlib.h>
 #include "PreHeader.h"
+
+#include "Lock.h"
+#include "Utils.h"
+#include "Stream.h"
+#include "TaskGraph.h"
+#include "FileManager.h"
+#include "ShaderCompiler.h"
 
 #include <gles3/gl31.h>
 #include <gli/gli.hpp>
 #include <spirv-cross/spirv_cfg.hpp>
 #include <spirv-cross/spirv_msl.hpp>
 #include <spirv-cross/spirv_glsl.hpp>
-
-#include "Define.h"
-#include "Utils.h"
-#include "Lock.h"
-#include "Allocator.h"
-#include "SharedPtr.h"
-#include "ShaderCompiler.h"
-#include "FileManager.h"
 
 #include "GfxGLM.h"
 #include "GfxDefinition.h"

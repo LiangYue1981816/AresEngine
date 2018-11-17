@@ -1,6 +1,5 @@
 #pragma once
-#include <tinyxml.h>
-#include <tinystr.h>
+#include "PreHeader.h"
 #include "SceneDefinition.h"
 
 

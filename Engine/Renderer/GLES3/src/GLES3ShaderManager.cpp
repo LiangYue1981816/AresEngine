@@ -1,5 +1,4 @@
 #include "GLES3Renderer.h"
-#include "GLES3ShaderManager.h"
 
 
 CGLES3ShaderManager::CGLES3ShaderManager(void)

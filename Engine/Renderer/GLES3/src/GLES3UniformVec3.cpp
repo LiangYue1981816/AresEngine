@@ -1,6 +1,4 @@
 #include "GLES3Renderer.h"
-#include "GLES3UniformVec3.h"
-#include "GLES3UniformBuffer.h"
 
 
 CGLES3UniformVec3::CGLES3UniformVec3(bool bDynamic)

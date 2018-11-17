@@ -1,3 +1,4 @@
+#include "Utils.h"
 #include "Stream.h"
 
 
@@ -31,7 +32,7 @@ bool CStream::IsValid(void) const
 void CStream::Free(void)
 {
 	if (m_bAlloced) {
-		FreeMemory(m_pAddress);
+		delete[] m_pAddress;
 	}
 
 	m_bAlloced = false;
@@ -52,7 +53,7 @@ bool CStream::Alloc(size_t size)
 	}
 
 	m_bAlloced = true;
-	m_pAddress = (uint8_t *)AllocMemory(size);
+	m_pAddress = new uint8_t[size];
 
 	m_size = size;
 	m_position = 0;

@@ -1,5 +1,4 @@
 #include "GLES3Renderer.h"
-#include "GLES3Material.h"
 
 
 CGLES3Material::CGLES3Material(CGLES3MaterialManager *pManager, uint32_t name)

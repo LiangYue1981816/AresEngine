@@ -1,5 +1,4 @@
 #include "GfxRenderer.h"
-#include "GfxVertexAttribute.h"
 
 
 struct ATTRIBUTE {

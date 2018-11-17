@@ -1,5 +1,4 @@
 #include "GLES3Renderer.h"
-#include "GLES3RenderPass.h"
 
 
 CGLES3RenderPass::CGLES3RenderPass(CGLES3RenderPassManager *pManager, int numAttachments, int numSubpasses)

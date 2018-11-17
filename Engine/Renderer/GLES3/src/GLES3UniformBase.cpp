@@ -1,5 +1,4 @@
 #include "GLES3Renderer.h"
-#include "GLES3UniformBase.h"
 
 
 CGLES3UniformBase::CGLES3UniformBase(CGLES3UniformManager *pManager, size_t size, bool bDynamic)

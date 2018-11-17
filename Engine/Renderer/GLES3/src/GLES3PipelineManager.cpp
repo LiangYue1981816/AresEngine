@@ -1,5 +1,4 @@
 #include "GLES3Renderer.h"
-#include "GLES3PipelineManager.h"
 
 
 CGLES3PipelineManager::CGLES3PipelineManager(void)

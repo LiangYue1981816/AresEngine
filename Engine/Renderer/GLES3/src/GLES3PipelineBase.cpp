@@ -1,5 +1,4 @@
 #include "GLES3Renderer.h"
-#include "GLES3PipelineBase.h"
 
 
 CGLES3PipelineBase::CGLES3PipelineBase(uint32_t name)

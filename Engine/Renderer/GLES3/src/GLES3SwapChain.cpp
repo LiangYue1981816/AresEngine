@@ -1,5 +1,4 @@
 #include "GLES3Renderer.h"
-#include "GLES3SwapChain.h"
 
 
 CGLES3SwapChain::CGLES3SwapChain(void *hDC, int width, int height, uint32_t format)

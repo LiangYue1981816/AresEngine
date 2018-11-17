@@ -216,7 +216,8 @@ CComponentPointLightPtr CSceneNode::GetComponentPointLight(uint32_t name)
 	return GetComponent(name, m_ptrComponentPointLights);
 }
 
-template<class T> bool CSceneNode::AttachComponent(CComponentPtr<T> &ptrComponent, eastl::unordered_map<uint32_t, CComponentPtr<T>> &container)
+template<class T>
+bool CSceneNode::AttachComponent(CComponentPtr<T> &ptrComponent, eastl::unordered_map<uint32_t, CComponentPtr<T>> &container)
 {
 	if (ptrComponent.IsNull()) {
 		return false;
@@ -232,7 +233,8 @@ template<class T> bool CSceneNode::AttachComponent(CComponentPtr<T> &ptrComponen
 	return true;
 }
 
-template<class T> bool CSceneNode::DetachComponent(CComponentPtr<T> &ptrComponent, eastl::unordered_map<uint32_t, CComponentPtr<T>> &container)
+template<class T>
+bool CSceneNode::DetachComponent(CComponentPtr<T> &ptrComponent, eastl::unordered_map<uint32_t, CComponentPtr<T>> &container)
 {
 	if (ptrComponent.IsNull()) {
 		return false;
@@ -248,12 +250,14 @@ template<class T> bool CSceneNode::DetachComponent(CComponentPtr<T> &ptrComponen
 	return true;
 }
 
-template<class T> void CSceneNode::DetachComponentAll(eastl::unordered_map<uint32_t, CComponentPtr<T>> &container)
+template<class T>
+void CSceneNode::DetachComponentAll(eastl::unordered_map<uint32_t, CComponentPtr<T>> &container)
 {
 	container.clear();
 }
 
-template<class T> CComponentPtr<T> CSceneNode::GetComponent(uint32_t name, eastl::unordered_map<uint32_t, CComponentPtr<T>> &container)
+template<class T>
+CComponentPtr<T> CSceneNode::GetComponent(uint32_t name, eastl::unordered_map<uint32_t, CComponentPtr<T>> &container)
 {
 	const auto &itComponent = container.find(name);
 	return itComponent != container.end() ? itComponent->second : CComponentPtr<T>();

@@ -1,5 +1,4 @@
 #include "GLES3Renderer.h"
-#include "GLES3Texture2D.h"
 
 
 CGLES3Texture2D::CGLES3Texture2D(CGLES3TextureManager *pManager, uint32_t name)

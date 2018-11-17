@@ -1,5 +1,4 @@
 #include "GLES3Renderer.h"
-#include "GLES3UniformManager.h"
 
 
 CGLES3UniformManager::CGLES3UniformManager(void)

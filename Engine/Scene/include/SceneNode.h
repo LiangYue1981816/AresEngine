@@ -1,4 +1,5 @@
 #pragma once
+#include "PreHeader.h"
 #include "ComponentMesh.h"
 #include "ComponentSkin.h"
 #include "ComponentParticle.h"
@@ -53,10 +54,17 @@ public:
 	CComponentPointLightPtr GetComponentPointLight(uint32_t name);
 
 private:
-	template<class T> bool AttachComponent(CComponentPtr<T> &ptrComponent, eastl::unordered_map<uint32_t, CComponentPtr<T>> &container);
-	template<class T> bool DetachComponent(CComponentPtr<T> &ptrComponent, eastl::unordered_map<uint32_t, CComponentPtr<T>> &container);
-	template<class T> void DetachComponentAll(eastl::unordered_map<uint32_t, CComponentPtr<T>> &container);
-	template<class T> CComponentPtr<T> GetComponent(uint32_t name, eastl::unordered_map<uint32_t, CComponentPtr<T>> &container);
+	template<class T>
+	bool AttachComponent(CComponentPtr<T> &ptrComponent, eastl::unordered_map<uint32_t, CComponentPtr<T>> &container);
+
+	template<class T>
+	bool DetachComponent(CComponentPtr<T> &ptrComponent, eastl::unordered_map<uint32_t, CComponentPtr<T>> &container);
+
+	template<class T>
+	void DetachComponentAll(eastl::unordered_map<uint32_t, CComponentPtr<T>> &container);
+
+	template<class T>
+	CComponentPtr<T> GetComponent(uint32_t name, eastl::unordered_map<uint32_t, CComponentPtr<T>> &container);
 
 public:
 	void Identity(void);

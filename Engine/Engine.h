@@ -1,8 +1,5 @@
 #pragma once
-#include <stdio.h>
-#include <stdlib.h>
 #include "PreHeader.h"
-
 #include "Allocator.h"
 #include "TaskGraph.h"
 #include "GfxRenderer.h"

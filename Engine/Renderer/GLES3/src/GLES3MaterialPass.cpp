@@ -1,5 +1,4 @@
 #include "GLES3Renderer.h"
-#include "GLES3MaterialPass.h"
 
 
 #define TEXTURE_INTERNAL_NAME(name) (uint32_t)(name ^ (size_t)this)

@@ -1,5 +1,4 @@
 #include "GfxRenderer.h"
-#include "GfxProfiler.h"
 
 
 bool CGfxProfiler::bEnableProfiler = false;

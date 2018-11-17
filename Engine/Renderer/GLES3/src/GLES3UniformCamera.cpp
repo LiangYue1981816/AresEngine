@@ -1,6 +1,4 @@
 #include "GLES3Renderer.h"
-#include "GLES3UniformCamera.h"
-#include "GLES3UniformBuffer.h"
 
 
 CGLES3UniformCamera::CGLES3UniformCamera(CGLES3UniformManager *pManager, bool bDynamic)

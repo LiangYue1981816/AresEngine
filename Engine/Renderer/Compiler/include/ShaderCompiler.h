@@ -1,7 +1,8 @@
 #pragma once
-#include <string>
 #include <map>
 #include <vector>
+#include <string>
+#include "Define.h"
 
 #ifdef PLATFORM_WINDOWS
 

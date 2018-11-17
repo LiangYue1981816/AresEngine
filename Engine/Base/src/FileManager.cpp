@@ -1,3 +1,5 @@
+#include "Utils.h"
+#include "Stream.h"
 #include "FileManager.h"
 
 

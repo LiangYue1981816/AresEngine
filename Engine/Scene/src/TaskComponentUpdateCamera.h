@@ -1,11 +1,12 @@
 #pragma once
-#include "Engine.h"
+#include "Define.h"
 #include "TaskGraph.h"
 #include "Component.h"
 #include "ComponentManager.h"
 
 
-template<class T> class CTaskComponentUpdateCamera : public CTask
+template<class T>
+class CTaskComponentUpdateCamera : public CTask
 {
 public:
 	CTaskComponentUpdateCamera(void)

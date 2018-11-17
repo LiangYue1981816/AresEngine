@@ -1,5 +1,4 @@
 #include "GLES3Renderer.h"
-#include "GLES3IndexBuffer.h"
 
 
 CGLES3IndexBuffer::CGLES3IndexBuffer(uint32_t type, size_t size, bool bDynamic)

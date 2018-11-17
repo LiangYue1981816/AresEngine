@@ -1,5 +1,4 @@
 #include "GLES3Renderer.h"
-#include "GLES3RenderPassManager.h"
 
 
 CGLES3RenderPassManager::CGLES3RenderPassManager(void)

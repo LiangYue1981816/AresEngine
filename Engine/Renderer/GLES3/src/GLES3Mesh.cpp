@@ -1,10 +1,4 @@
 #include "GLES3Renderer.h"
-#include "GLES3Mesh.h"
-#include "GLES3IndexBuffer.h"
-#include "GLES3VertexBuffer.h"
-#include "GLES3InstanceBuffer.h"
-#include "GLES3DrawIndirectBuffer.h"
-#include "GLES3VertexArrayObject.h"
 
 
 CGLES3Mesh::CGLES3Mesh(CGLES3MeshManager *pManager, uint32_t name)

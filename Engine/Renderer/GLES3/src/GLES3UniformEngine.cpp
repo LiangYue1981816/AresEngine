@@ -1,6 +1,4 @@
 #include "GLES3Renderer.h"
-#include "GLES3UniformEngine.h"
-#include "GLES3UniformBuffer.h"
 
 
 /*

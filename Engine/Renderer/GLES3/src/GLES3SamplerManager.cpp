@@ -1,5 +1,4 @@
 #include "GLES3Renderer.h"
-#include "GLES3SamplerManager.h"
 
 
 CGLES3SamplerManager::CGLES3SamplerManager(void)

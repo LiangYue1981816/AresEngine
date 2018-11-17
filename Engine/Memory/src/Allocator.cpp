@@ -1,7 +1,6 @@
-#include <stdlib.h>
-#include <stdint.h>
 #include <thread>
-
+#include <stdio.h>
+#include <stdlib.h>
 #include "Allocator.h"
 #include "MemoryPool.h"
 #include "MemoryHeap.h"

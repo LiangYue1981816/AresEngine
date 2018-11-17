@@ -1,6 +1,3 @@
-#include <stdint.h>
-
-
 #ifdef PLATFORM_WINDOWS
 #define CALL_API                       __declspec(dllexport)
 #else
@@ -16,7 +13,7 @@
 
 
 #ifndef NO_ERROR
-#define NO_ERROR                       0
+#define NO_ERROR                       0L
 #endif
 
 #ifndef _MAX_STRING
@@ -54,28 +51,6 @@
 #ifndef min
 #define min(a,b)                       (((a) < (b)) ? (a) : (b))
 #endif
-
-#ifndef RGB
-#define RGB(r,g,b)                     ((COLORREF)(((uint8_t)(r)|((uint16_t)((uint8_t)(g))<<8))|(((uint32_t)(uint8_t)(b))<<16)))
-#endif
-
-#ifndef RGBA
-#define RGBA(r,g,b,a)                  ((COLORREF)(((uint8_t)(r)|((uint16_t)((uint8_t)(g))<<8))|(((uint32_t)(uint8_t)(b))<<16))|(((uint32_t)(uint8_t)(a))<<24))
-#endif
-
-#ifndef GET_RED
-#define GET_RED(color)                 (uint8_t)((color)  &  0xff)
-#endif
-
-#ifndef GET_GRN
-#define GET_GRN(color)                 (uint8_t)(((color) >> 0x08) & 0xff)
-#endif
-
-#ifndef GET_BLU
-#define GET_BLU(color)                 (uint8_t)(((color) >> 0x10) & 0xff)
-#endif
-
-#define SWAP(a, b, tmp)                { (tmp) = (a); (a) = (b); (b) = (tmp); }
 
 #define ALIGN_BYTE(a, b)               ((((a) + (b) - 1) / (b)) * (b))
 #define ALIGN_4BYTE(a)                 ALIGN_BYTE(a, 4)

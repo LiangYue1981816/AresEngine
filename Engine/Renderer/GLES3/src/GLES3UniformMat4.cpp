@@ -1,6 +1,4 @@
 #include "GLES3Renderer.h"
-#include "GLES3UniformMat4.h"
-#include "GLES3UniformBuffer.h"
 
 
 CGLES3UniformMat4::CGLES3UniformMat4(bool bDynamic)

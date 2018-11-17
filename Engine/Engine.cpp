@@ -5,6 +5,10 @@
 #include "RenderSolutionForwardPlus.h"
 
 
+extern int dump_memory_objects();
+extern int check_mem_corruption();
+
+
 CEngine* CEngine::pInstance = nullptr;
 CEngine* CEngine::GetInstance(void)
 {

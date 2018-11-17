@@ -1,8 +1,4 @@
 #include "GLES3Renderer.h"
-#include "GLES3IndexBuffer.h"
-#include "GLES3VertexBuffer.h"
-#include "GLES3InstanceBuffer.h"
-#include "GLES3VertexArrayObject.h"
 
 
 CGLES3VertexArrayObject::CGLES3VertexArrayObject(void)

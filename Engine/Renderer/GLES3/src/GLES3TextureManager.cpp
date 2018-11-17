@@ -1,5 +1,4 @@
 #include "GLES3Renderer.h"
-#include "GLES3TextureManager.h"
 
 
 CGLES3TextureManager::CGLES3TextureManager(void)

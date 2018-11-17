@@ -1,6 +1,5 @@
 #pragma once
-#include "Utils.h"
-#include "Define.h"
+#include "PreHeader.h"
 #include "SceneDefinition.h"
 
 
