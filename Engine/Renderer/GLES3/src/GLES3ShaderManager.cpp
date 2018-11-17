@@ -18,7 +18,7 @@ CGLES3ShaderManager::~CGLES3ShaderManager(void)
 
 CGLES3Shader* CGLES3ShaderManager::LoadShader(const char *szFileName, shader_kind kind)
 {
-	mutex_autolock mutex(&lock);
+	mutex_autolock autolock(&lock);
 	{
 		uint32_t name = HashValue(szFileName);
 

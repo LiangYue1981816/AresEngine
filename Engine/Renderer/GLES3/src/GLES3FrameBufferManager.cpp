@@ -18,7 +18,7 @@ CGLES3FrameBufferManager::~CGLES3FrameBufferManager(void)
 
 CGLES3FrameBuffer* CGLES3FrameBufferManager::CreateFrameBuffer(int width, int height)
 {
-	mutex_autolock mutex(&lock);
+	mutex_autolock autolock(&lock);
 	{
 		CGLES3FrameBuffer *pFrameBuffer = new CGLES3FrameBuffer(this, width, height);
 		m_pFrameBuffers[pFrameBuffer] = pFrameBuffer;
@@ -28,7 +28,7 @@ CGLES3FrameBuffer* CGLES3FrameBufferManager::CreateFrameBuffer(int width, int he
 
 void CGLES3FrameBufferManager::DestroyFrameBuffer(CGLES3FrameBuffer *pFrameBuffer)
 {
-	mutex_autolock mutex(&lock);
+	mutex_autolock autolock(&lock);
 	{
 		if (pFrameBuffer) {
 			m_pFrameBuffers.erase(pFrameBuffer);

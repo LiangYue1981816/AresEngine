@@ -18,7 +18,7 @@ CGLES3UniformManager::~CGLES3UniformManager(void)
 
 CGLES3UniformEngine* CGLES3UniformManager::CreateUniformEngine(bool bDynamic)
 {
-	mutex_autolock mutex(&lock);
+	mutex_autolock autolock(&lock);
 	{
 		CGLES3UniformEngine *pUniformEngine = new CGLES3UniformEngine(this, bDynamic);
 		m_pUniforms[pUniformEngine] = pUniformEngine;
@@ -28,7 +28,7 @@ CGLES3UniformEngine* CGLES3UniformManager::CreateUniformEngine(bool bDynamic)
 
 CGLES3UniformCamera* CGLES3UniformManager::CreateUniformCamera(bool bDynamic)
 {
-	mutex_autolock mutex(&lock);
+	mutex_autolock autolock(&lock);
 	{
 		CGLES3UniformCamera *pUniformCamera = new CGLES3UniformCamera(this, bDynamic);
 		m_pUniforms[pUniformCamera] = pUniformCamera;
@@ -38,7 +38,7 @@ CGLES3UniformCamera* CGLES3UniformManager::CreateUniformCamera(bool bDynamic)
 
 void CGLES3UniformManager::DestroyUniform(CGLES3UniformBase *pUniform)
 {
-	mutex_autolock mutex(&lock);
+	mutex_autolock autolock(&lock);
 	{
 		if (pUniform) {
 			m_pUniforms.erase(pUniform);

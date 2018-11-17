@@ -1,3 +1,4 @@
+#include <atomic>
 #include <stdlib.h>
 #include <stdint.h>
 #include <assert.h>
@@ -73,9 +74,25 @@ struct BLOCK_POOL {
 };
 
 struct HEAP_ALLOCATOR {
-	pthread_mutex_t lock;
+	std::atomic_flag lock;
 	BLOCK_POOL *pBlockPoolHead;
 };
+
+
+static void atomic_spin_init(std::atomic_flag *flag)
+{
+	flag->clear();
+}
+
+static void atomic_spin_lock(std::atomic_flag *flag)
+{
+	while (flag->test_and_set(std::memory_order_acquire));
+}
+
+static void atomic_spin_unlock(std::atomic_flag *flag)
+{
+	flag->clear(std::memory_order_release);
+}
 
 
 static void HEAP_InitNodes(BLOCK_POOL *pBlockPool, uint32_t dwNodeCount)
@@ -294,9 +311,8 @@ static void HEAP_PoolFree(BLOCK_POOL *pBlockPool, BLOCK *pBlock)
 HEAP_ALLOCATOR* HEAP_Create(void)
 {
 	HEAP_ALLOCATOR *pHeapAllocator = (HEAP_ALLOCATOR *)_malloc(sizeof(HEAP_ALLOCATOR));
-
 	pHeapAllocator->pBlockPoolHead = nullptr;
-	pthread_mutex_init(&pHeapAllocator->lock, nullptr);
+	atomic_spin_init(&pHeapAllocator->lock);
 
 	return pHeapAllocator;
 }
@@ -311,9 +327,6 @@ void HEAP_Destroy(HEAP_ALLOCATOR *pHeapAllocator)
 		} while ((pBlockPool = pBlockPoolNext) != nullptr);
 	}
 
-	pHeapAllocator->pBlockPoolHead = nullptr;
-	pthread_mutex_destroy(&pHeapAllocator->lock);
-
 	_free(pHeapAllocator);
 }
 
@@ -322,7 +335,7 @@ void* HEAP_Alloc(HEAP_ALLOCATOR *pHeapAllocator, size_t size)
 	uint32_t *pPointer = nullptr;
 
 	if (pHeapAllocator) {
-		pthread_mutex_lock(&pHeapAllocator->lock);
+		atomic_spin_lock(&pHeapAllocator->lock);
 		{
 			const uint32_t dwMemSize = (uint32_t)ALIGN_BYTE(size, BLOCK_UNIT_SIZE);
 
@@ -347,7 +360,7 @@ void* HEAP_Alloc(HEAP_ALLOCATOR *pHeapAllocator, size_t size)
 		RET:
 			;
 		}
-		pthread_mutex_unlock(&pHeapAllocator->lock);
+		atomic_spin_unlock(&pHeapAllocator->lock);
 	}
 
 	return pPointer;
@@ -356,7 +369,7 @@ void* HEAP_Alloc(HEAP_ALLOCATOR *pHeapAllocator, size_t size)
 bool HEAP_Free(HEAP_ALLOCATOR *pHeapAllocator, void *pPointer)
 {
 	if (pHeapAllocator) {
-		pthread_mutex_lock(&pHeapAllocator->lock);
+		atomic_spin_lock(&pHeapAllocator->lock);
 		{
 			BLOCK *pBlock = (BLOCK *)((uint8_t *)pPointer - ALIGN_16BYTE(sizeof(BLOCK)));
 			BLOCK_POOL *pBlockPool = pBlock->pPool;
@@ -379,7 +392,7 @@ bool HEAP_Free(HEAP_ALLOCATOR *pHeapAllocator, void *pPointer)
 				HEAP_DestroyPool(pBlockPool);
 			}
 		}
-		pthread_mutex_unlock(&pHeapAllocator->lock);
+		atomic_spin_unlock(&pHeapAllocator->lock);
 		return true;
 	}
 

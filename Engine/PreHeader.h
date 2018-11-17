@@ -18,6 +18,7 @@
 #endif
 
 
+#include <atomic>
 #include <string>
 #include <map>
 #include <vector>

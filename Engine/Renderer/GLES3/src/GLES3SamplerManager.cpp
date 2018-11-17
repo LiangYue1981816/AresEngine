@@ -18,7 +18,7 @@ CGLES3SamplerManager::~CGLES3SamplerManager(void)
 
 CGLES3Sampler* CGLES3SamplerManager::CreateSampler(uint32_t minFilter, uint32_t magFilter, uint32_t addressMode)
 {
-	mutex_autolock mutex(&lock);
+	mutex_autolock autolock(&lock);
 	{
 		char szName[_MAX_STRING];
 		sprintf(szName, "%8.8X_%8.8X_%8.8X", minFilter, magFilter, addressMode);

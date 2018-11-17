@@ -21,7 +21,7 @@ private:
 
 private:
 	uint32_t refCount;
-	pthread_mutex_t lock;
+	std::atomic_flag lock;
 };
 
 template<class T> class CALL_API CGfxResourcePtr

@@ -18,7 +18,7 @@ CGLES3MeshManager::~CGLES3MeshManager(void)
 
 CGLES3Mesh* CGLES3MeshManager::LoadMesh(const char *szFileName, uint32_t instanceFormat)
 {
-	mutex_autolock mutex(&lock);
+	mutex_autolock autolock(&lock);
 	{
 		char szName[_MAX_STRING];
 		sprintf(szName, "%8.8X_%8.8X", HashValue(szFileName), instanceFormat);
@@ -36,7 +36,7 @@ CGLES3Mesh* CGLES3MeshManager::LoadMesh(const char *szFileName, uint32_t instanc
 
 CGLES3Mesh* CGLES3MeshManager::CreateMesh(uint32_t name, uint32_t instanceFormat)
 {
-	mutex_autolock mutex(&lock);
+	mutex_autolock autolock(&lock);
 	{
 		if (m_pMeshs[name] == nullptr) {
 			m_pMeshs[name] = new CGLES3Mesh(this, name, instanceFormat);
@@ -48,7 +48,7 @@ CGLES3Mesh* CGLES3MeshManager::CreateMesh(uint32_t name, uint32_t instanceFormat
 
 void CGLES3MeshManager::DestroyMesh(CGLES3Mesh *pMesh)
 {
-	mutex_autolock mutex(&lock);
+	mutex_autolock autolock(&lock);
 	{
 		if (pMesh) {
 			m_pMeshs.erase(pMesh->GetName());

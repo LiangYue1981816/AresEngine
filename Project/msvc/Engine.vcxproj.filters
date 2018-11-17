@@ -288,9 +288,6 @@
     <ClInclude Include="..\..\Engine\Base\include\FileManager.h">
       <Filter>Engine\Base\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Engine\Base\include\Mutex.h">
-      <Filter>Engine\Base\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Engine\Base\include\SharedPtr.h">
       <Filter>Engine\Base\Header Files</Filter>
     </ClInclude>
@@ -738,6 +735,9 @@
     <ClInclude Include="..\..\Engine\SceneComponent\include\ComponentSkin.h">
       <Filter>Engine\SceneComponent\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Engine\Base\include\Lock.h">
+      <Filter>Engine\Base\Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\ThirdParty\event\event.c">
@@ -891,9 +891,6 @@
       <Filter>Engine\Base\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\Base\src\FileManager.cpp">
-      <Filter>Engine\Base\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\Base\src\Mutex.cpp">
       <Filter>Engine\Base\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\Base\src\Stream.cpp">
@@ -1108,6 +1105,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Engine\SceneComponent\src\ComponentSkin.cpp">
       <Filter>Engine\SceneComponent\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Base\src\Lock.cpp">
+      <Filter>Engine\Base\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

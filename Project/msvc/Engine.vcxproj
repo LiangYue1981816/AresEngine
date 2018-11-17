@@ -192,7 +192,7 @@
     <ClInclude Include="..\..\Engine\Base\include\Delegate.h" />
     <ClInclude Include="..\..\Engine\Base\include\File.h" />
     <ClInclude Include="..\..\Engine\Base\include\FileManager.h" />
-    <ClInclude Include="..\..\Engine\Base\include\Mutex.h" />
+    <ClInclude Include="..\..\Engine\Base\include\Lock.h" />
     <ClInclude Include="..\..\Engine\Base\include\SharedPtr.h" />
     <ClInclude Include="..\..\Engine\Base\include\Stream.h" />
     <ClInclude Include="..\..\Engine\Base\include\TaskGraph.h" />
@@ -393,7 +393,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\Engine\Base\src\File.cpp" />
     <ClCompile Include="..\..\Engine\Base\src\FileManager.cpp" />
-    <ClCompile Include="..\..\Engine\Base\src\Mutex.cpp" />
+    <ClCompile Include="..\..\Engine\Base\src\Lock.cpp" />
     <ClCompile Include="..\..\Engine\Base\src\nvwa\debug_new.cpp" />
     <ClCompile Include="..\..\Engine\Base\src\nvwa\operator_new.cpp" />
     <ClCompile Include="..\..\Engine\Base\src\Stream.cpp" />

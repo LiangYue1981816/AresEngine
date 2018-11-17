@@ -11,7 +11,7 @@
 
 #include "Define.h"
 #include "Utils.h"
-#include "Mutex.h"
+#include "Lock.h"
 #include "Allocator.h"
 #include "SharedPtr.h"
 #include "ShaderCompiler.h"

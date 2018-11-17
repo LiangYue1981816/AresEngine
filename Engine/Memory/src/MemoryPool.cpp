@@ -1,3 +1,4 @@
+#include <atomic>
 #include <stdlib.h>
 #include <stdint.h>
 #include <assert.h>
@@ -50,9 +51,25 @@ struct BLOCK_POOL_HEAD {
 };
 
 struct POOL_ALLOCATOR {
-	pthread_mutex_t lock;
+	std::atomic_flag lock;
 	BLOCK_POOL_HEAD pools[BLOCK_POOL_COUNT];
 };
+
+
+static void atomic_spin_init(std::atomic_flag *flag)
+{
+	flag->clear();
+}
+
+static void atomic_spin_lock(std::atomic_flag *flag)
+{
+	while (flag->test_and_set(std::memory_order_acquire));
+}
+
+static void atomic_spin_unlock(std::atomic_flag *flag)
+{
+	flag->clear(std::memory_order_release);
+}
 
 
 static BLOCK_POOL* POOL_CreatePool(HEAP_ALLOCATOR *pHeapAllocator, uint32_t dwMemSize)
@@ -96,7 +113,7 @@ POOL_ALLOCATOR* POOL_Create(HEAP_ALLOCATOR *pHeapAllocator)
 		pPoolAllocator->pools[indexPool].pBlockPoolHead = nullptr;
 		pPoolAllocator->pools[indexPool].pBlockPoolFreeHead = nullptr;
 	}
-	pthread_mutex_init(&pPoolAllocator->lock, nullptr);
+	atomic_spin_init(&pPoolAllocator->lock);
 
 	return pPoolAllocator;
 }
@@ -113,7 +130,6 @@ void POOL_Destroy(HEAP_ALLOCATOR *pHeapAllocator, POOL_ALLOCATOR *pPoolAllocator
 			} while ((pBlockPool = pBlockPoolNext) != nullptr);
 		}
 	}
-	pthread_mutex_destroy(&pPoolAllocator->lock);
 
 	HEAP_Free(pHeapAllocator, pPoolAllocator);
 }
@@ -127,7 +143,7 @@ void* POOL_Alloc(HEAP_ALLOCATOR *pHeapAllocator, POOL_ALLOCATOR *pPoolAllocator,
 		const uint32_t dwIndexPool = dwMemSize / 16;
 
 		if (dwIndexPool < BLOCK_POOL_COUNT) {
-			pthread_mutex_lock(&pPoolAllocator->lock);
+			atomic_spin_lock(&pPoolAllocator->lock);
 			{
 				BLOCK_POOL_HEAD *pPoolHead = &pPoolAllocator->pools[dwIndexPool];
 
@@ -152,7 +168,7 @@ void* POOL_Alloc(HEAP_ALLOCATOR *pHeapAllocator, POOL_ALLOCATOR *pPoolAllocator,
 
 				*pPointer++ = dwMemSize;
 			}
-			pthread_mutex_unlock(&pPoolAllocator->lock);
+			atomic_spin_unlock(&pPoolAllocator->lock);
 		}
 	}
 
@@ -166,7 +182,7 @@ bool POOL_Free(HEAP_ALLOCATOR *pHeapAllocator, POOL_ALLOCATOR *pPoolAllocator, v
 		const uint32_t dwIndexPool = dwMemSize / 16;
 
 		if (dwIndexPool < BLOCK_POOL_COUNT) {
-			pthread_mutex_lock(&pPoolAllocator->lock);
+			atomic_spin_lock(&pPoolAllocator->lock);
 			{
 				BLOCK *pBlock = GET_BLOCK(pPointer);
 				BLOCK_POOL *pBlockPool = GET_BLOCK_POOL(pBlock);
@@ -204,7 +220,7 @@ bool POOL_Free(HEAP_ALLOCATOR *pHeapAllocator, POOL_ALLOCATOR *pPoolAllocator, v
 					pBlockPool->pBlockHead = pBlock;
 				}
 			}
-			pthread_mutex_unlock(&pPoolAllocator->lock);
+			atomic_spin_unlock(&pPoolAllocator->lock);
 			return true;
 		}
 	}

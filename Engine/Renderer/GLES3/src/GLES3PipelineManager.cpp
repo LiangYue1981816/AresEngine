@@ -18,7 +18,7 @@ CGLES3PipelineManager::~CGLES3PipelineManager(void)
 
 CGLES3PipelineCompute* CGLES3PipelineManager::CreatePipelineCompute(const CGfxShader *pComputeShader)
 {
-	mutex_autolock mutex(&lock);
+	mutex_autolock autolock(&lock);
 	{
 		char szName[_MAX_STRING];
 		sprintf(szName, "%8.8X", pComputeShader->GetName());
@@ -36,7 +36,7 @@ CGLES3PipelineCompute* CGLES3PipelineManager::CreatePipelineCompute(const CGfxSh
 
 CGLES3PipelineGraphics* CGLES3PipelineManager::CreatePipelineGraphics(const CGfxShader *pVertexShader, const CGfxShader *pFragmentShader, const PipelineState &state)
 {
-	mutex_autolock mutex(&lock);
+	mutex_autolock autolock(&lock);
 	{
 		char szName[_MAX_STRING];
 		sprintf(szName, "%8.8X_%8.8X_%8.8X", pVertexShader->GetName(), pFragmentShader->GetName(), HashValue((uint8_t *)&state, sizeof(state)));
@@ -54,7 +54,7 @@ CGLES3PipelineGraphics* CGLES3PipelineManager::CreatePipelineGraphics(const CGfx
 
 void CGLES3PipelineManager::DestroyPipeline(CGLES3PipelineBase *pPipeline)
 {
-	mutex_autolock mutex(&lock);
+	mutex_autolock autolock(&lock);
 	{
 		if (pPipeline) {
 			m_pPipelines.erase(pPipeline->GetName());
