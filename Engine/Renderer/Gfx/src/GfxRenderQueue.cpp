@@ -1,4 +1,4 @@
-#include "GfxRenderer.h"
+#include "GfxHeader.h"
 
 
 CTaskCommandBuffer::CTaskCommandBuffer(int indexQueue, const CGfxUniformEnginePtr &ptrUniformEngine, const CGfxUniformCameraPtr &ptrUniformCamera, CGfxPipelineGraphics *pPipeline, uint32_t namePass)

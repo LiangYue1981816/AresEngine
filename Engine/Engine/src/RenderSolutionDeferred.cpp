@@ -1,5 +1,4 @@
-#include "Engine.h"
-#include "RenderSolutionDeferred.h"
+#include "EngineHeader.h"
 
 
 CRenderSolutionDeferred::CRenderSolutionDeferred(void)

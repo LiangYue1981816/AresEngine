@@ -1,4 +1,4 @@
-#include "GfxRenderer.h"
+#include "GfxHeader.h"
 
 
 CGfxResourceManager::CGfxResourceManager(void)

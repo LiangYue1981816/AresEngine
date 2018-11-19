@@ -1,10 +1,11 @@
 #pragma once
 #include "PreHeader.h"
-#include "Allocator.h"
-#include "TaskGraph.h"
-#include "GfxRenderer.h"
-#include "SceneManager.h"
+
 #include "RenderSolutionBase.h"
+#include "RenderSolutionDefault.h"
+#include "RenderSolutionDeferred.h"
+#include "RenderSolutionForward.h"
+#include "RenderSolutionForwardPlus.h"
 
 
 #define CreateEngine(api, solution, hDC, width, height, format) CEngine::Create((api), (solution), (hDC), (width), (height), (format))

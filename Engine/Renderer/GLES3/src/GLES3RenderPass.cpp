@@ -1,4 +1,4 @@
-#include "GLES3Renderer.h"
+#include "GfxHeader.h"
 
 
 CGLES3RenderPass::CGLES3RenderPass(CGLES3RenderPassManager *pManager, int numAttachments, int numSubpasses)

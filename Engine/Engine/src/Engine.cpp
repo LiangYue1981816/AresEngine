@@ -1,8 +1,4 @@
-#include "Engine.h"
-#include "RenderSolutionDefault.h"
-#include "RenderSolutionDeferred.h"
-#include "RenderSolutionForward.h"
-#include "RenderSolutionForwardPlus.h"
+#include "EngineHeader.h"
 
 
 extern int dump_memory_objects();

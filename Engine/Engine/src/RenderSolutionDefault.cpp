@@ -1,5 +1,4 @@
-#include "Engine.h"
-#include "RenderSolutionDefault.h"
+#include "EngineHeader.h"
 
 
 CRenderSolutionDefault::CRenderSolutionDefault(void)

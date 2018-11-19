@@ -1,13 +1,6 @@
 #pragma once
 #include "PreHeader.h"
 
-#include "Lock.h"
-#include "Utils.h"
-#include "Stream.h"
-#include "TaskGraph.h"
-#include "FileManager.h"
-#include "ShaderCompiler.h"
-
 #include <gles3/gl31.h>
 #include <gli/gli.hpp>
 #include <spirv-cross/spirv_cfg.hpp>

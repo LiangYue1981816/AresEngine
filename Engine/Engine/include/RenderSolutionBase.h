@@ -1,6 +1,5 @@
 #pragma once
 #include "PreHeader.h"
-#include "GfxRenderer.h"
 
 
 typedef enum RenderSolution {

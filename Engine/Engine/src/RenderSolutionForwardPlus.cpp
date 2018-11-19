@@ -1,5 +1,4 @@
-#include "Engine.h"
-#include "RenderSolutionForwardPlus.h"
+#include "EngineHeader.h"
 
 
 CRenderSolutionForwardPlus::CRenderSolutionForwardPlus(void)

@@ -1,5 +1,4 @@
-#include "Engine.h"
-#include "SceneManager.h"
+#include "SceneHeader.h"
 #include "TaskComponentUpdateLogic.h"
 #include "TaskComponentUpdateCamera.h"
 
@@ -91,7 +90,7 @@ CGfxCamera* CSceneManager::GetShadowCamera(void) const
 CScene* CSceneManager::CreateScene(uint32_t name)
 {
 	if (m_pScenes[name] == nullptr) {
-		m_pScenes[name] = new CScene(name);
+		m_pScenes[name] = new CScene(name, this);
 	}
 
 	return m_pScenes[name];

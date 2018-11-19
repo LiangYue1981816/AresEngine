@@ -1,5 +1,4 @@
-#include "Engine.h"
-#include "ComponentSkin.h"
+#include "SceneHeader.h"
 
 
 CComponentSkin::CComponentSkin(uint32_t name)

@@ -100,7 +100,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>HAVE_EASTL;MEMORY_ALLOCATOR;THREAD_COUNT=4;PLATFORM_WINDOWS;WIN32;NDEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(VULKAN_SDK)/include;$(VULKAN_SDK)/spirv-tools/include;$(VULKAN_SDK)/shaderc/libshaderc/include;$(VULKAN_SDK)/shaderc/libshaderc_util/include;../../ThirdParty;../../ThirdParty/es;../../ThirdParty/event;../../ThirdParty/gl3w;../../ThirdParty/glslc;../../ThirdParty/lodepng;../../ThirdParty/pthread;../../ThirdParty/rbtree;../../ThirdParty/spirv-cross;../../ThirdParty/tinyxml;../../ThirdParty/zlib;../../Engine;../../Engine/Base/include;../../Engine/Base/src;../../Engine/Memory/include;../../Engine/Memory/src;../../Engine/Renderer/Compiler/include;../../Engine/Renderer/Compiler/src;../../Engine/Renderer/Gfx/include;../../Engine/Renderer/Gfx/src;../../Engine/Renderer/GLES3/include;../../Engine/Renderer/GLES3/src;../../Engine/Renderer/Vulkan/include;../../Engine/Renderer/Vulkan/src;../../Engine/RenderSolution/include;../../Engine/RenderSolution/src;../../Engine/Scene/include;../../Engine/Scene/src;../../Engine/SceneComponent/include;../../Engine/SceneComponent/src;../../Engine/ThirdParty;../../Engine/ThirdParty/eastl;../../Engine/ThirdParty/gli;../../Engine/ThirdParty/glm;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(VULKAN_SDK)/include;$(VULKAN_SDK)/spirv-tools/include;$(VULKAN_SDK)/shaderc/libshaderc/include;$(VULKAN_SDK)/shaderc/libshaderc_util/include;../../ThirdParty;../../ThirdParty/es;../../ThirdParty/event;../../ThirdParty/gl3w;../../ThirdParty/glslc;../../ThirdParty/lodepng;../../ThirdParty/pthread;../../ThirdParty/rbtree;../../ThirdParty/spirv-cross;../../ThirdParty/tinyxml;../../ThirdParty/zlib;../../Engine;../../Engine/Base/include;../../Engine/Memory/include;../../Engine/Renderer/Gfx/include;../../Engine/Renderer/GLES3/include;../../Engine/Renderer/Vulkan/include;../../Engine/Renderer/Compiler/include;../../Engine/Scene/include;../../Engine/Engine/include;../../Engine/ThirdParty;../../Engine/ThirdParty/eastl;../../Engine/ThirdParty/gli;../../Engine/ThirdParty/glm</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <DisableSpecificWarnings>4996;4312;4267;4251</DisableSpecificWarnings>
@@ -123,7 +123,7 @@
       <IntrinsicFunctions>false</IntrinsicFunctions>
       <PreprocessorDefinitions>HAVE_EASTL;MEMORY_ALLOCATOR;THREAD_COUNT=4;PLATFORM_WINDOWS;WIN32;DEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(VULKAN_SDK)/include;$(VULKAN_SDK)/spirv-tools/include;$(VULKAN_SDK)/shaderc/libshaderc/include;$(VULKAN_SDK)/shaderc/libshaderc_util/include;../../ThirdParty;../../ThirdParty/es;../../ThirdParty/event;../../ThirdParty/gl3w;../../ThirdParty/glslc;../../ThirdParty/lodepng;../../ThirdParty/pthread;../../ThirdParty/rbtree;../../ThirdParty/spirv-cross;../../ThirdParty/tinyxml;../../ThirdParty/zlib;../../Engine;../../Engine/Base/include;../../Engine/Base/src;../../Engine/Memory/include;../../Engine/Memory/src;../../Engine/Renderer/Compiler/include;../../Engine/Renderer/Compiler/src;../../Engine/Renderer/Gfx/include;../../Engine/Renderer/Gfx/src;../../Engine/Renderer/GLES3/include;../../Engine/Renderer/GLES3/src;../../Engine/Renderer/Vulkan/include;../../Engine/Renderer/Vulkan/src;../../Engine/RenderSolution/include;../../Engine/RenderSolution/src;../../Engine/Scene/include;../../Engine/Scene/src;../../Engine/SceneComponent/include;../../Engine/SceneComponent/src;../../Engine/ThirdParty;../../Engine/ThirdParty/eastl;../../Engine/ThirdParty/gli;../../Engine/ThirdParty/glm;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(VULKAN_SDK)/include;$(VULKAN_SDK)/spirv-tools/include;$(VULKAN_SDK)/shaderc/libshaderc/include;$(VULKAN_SDK)/shaderc/libshaderc_util/include;../../ThirdParty;../../ThirdParty/es;../../ThirdParty/event;../../ThirdParty/gl3w;../../ThirdParty/glslc;../../ThirdParty/lodepng;../../ThirdParty/pthread;../../ThirdParty/rbtree;../../ThirdParty/spirv-cross;../../ThirdParty/tinyxml;../../ThirdParty/zlib;../../Engine;../../Engine/Base/include;../../Engine/Memory/include;../../Engine/Renderer/Gfx/include;../../Engine/Renderer/GLES3/include;../../Engine/Renderer/Vulkan/include;../../Engine/Renderer/Compiler/include;../../Engine/Scene/include;../../Engine/Engine/include;../../Engine/ThirdParty;../../Engine/ThirdParty/eastl;../../Engine/ThirdParty/gli;../../Engine/ThirdParty/glm</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <DisableSpecificWarnings>4996;4312;4267;4251</DisableSpecificWarnings>
@@ -147,7 +147,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>HAVE_EASTL;MEMORY_ALLOCATOR;THREAD_COUNT=4;PLATFORM_WINDOWS;__LP64__;NDEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(VULKAN_SDK)/include;$(VULKAN_SDK)/spirv-tools/include;$(VULKAN_SDK)/shaderc/libshaderc/include;$(VULKAN_SDK)/shaderc/libshaderc_util/include;../../ThirdParty;../../ThirdParty/es;../../ThirdParty/event;../../ThirdParty/gl3w;../../ThirdParty/glslc;../../ThirdParty/lodepng;../../ThirdParty/pthread;../../ThirdParty/rbtree;../../ThirdParty/spirv-cross;../../ThirdParty/tinyxml;../../ThirdParty/zlib;../../Engine;../../Engine/Base/include;../../Engine/Base/src;../../Engine/Memory/include;../../Engine/Memory/src;../../Engine/Renderer/Compiler/include;../../Engine/Renderer/Compiler/src;../../Engine/Renderer/Gfx/include;../../Engine/Renderer/Gfx/src;../../Engine/Renderer/GLES3/include;../../Engine/Renderer/GLES3/src;../../Engine/Renderer/Vulkan/include;../../Engine/Renderer/Vulkan/src;../../Engine/RenderSolution/include;../../Engine/RenderSolution/src;../../Engine/Scene/include;../../Engine/Scene/src;../../Engine/SceneComponent/include;../../Engine/SceneComponent/src;../../Engine/ThirdParty;../../Engine/ThirdParty/eastl;../../Engine/ThirdParty/gli;../../Engine/ThirdParty/glm;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(VULKAN_SDK)/include;$(VULKAN_SDK)/spirv-tools/include;$(VULKAN_SDK)/shaderc/libshaderc/include;$(VULKAN_SDK)/shaderc/libshaderc_util/include;../../ThirdParty;../../ThirdParty/es;../../ThirdParty/event;../../ThirdParty/gl3w;../../ThirdParty/glslc;../../ThirdParty/lodepng;../../ThirdParty/pthread;../../ThirdParty/rbtree;../../ThirdParty/spirv-cross;../../ThirdParty/tinyxml;../../ThirdParty/zlib;../../Engine;../../Engine/Base/include;../../Engine/Memory/include;../../Engine/Renderer/Gfx/include;../../Engine/Renderer/GLES3/include;../../Engine/Renderer/Vulkan/include;../../Engine/Renderer/Compiler/include;../../Engine/Scene/include;../../Engine/Engine/include;../../Engine/ThirdParty;../../Engine/ThirdParty/eastl;../../Engine/ThirdParty/gli;../../Engine/ThirdParty/glm</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <DisableSpecificWarnings>4996;4312;4267;4251</DisableSpecificWarnings>
@@ -170,7 +170,7 @@
       <IntrinsicFunctions>false</IntrinsicFunctions>
       <PreprocessorDefinitions>HAVE_EASTL;MEMORY_ALLOCATOR;THREAD_COUNT=4;PLATFORM_WINDOWS;__LP64__;DEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(VULKAN_SDK)/include;$(VULKAN_SDK)/spirv-tools/include;$(VULKAN_SDK)/shaderc/libshaderc/include;$(VULKAN_SDK)/shaderc/libshaderc_util/include;../../ThirdParty;../../ThirdParty/es;../../ThirdParty/event;../../ThirdParty/gl3w;../../ThirdParty/glslc;../../ThirdParty/lodepng;../../ThirdParty/pthread;../../ThirdParty/rbtree;../../ThirdParty/spirv-cross;../../ThirdParty/tinyxml;../../ThirdParty/zlib;../../Engine;../../Engine/Base/include;../../Engine/Base/src;../../Engine/Memory/include;../../Engine/Memory/src;../../Engine/Renderer/Compiler/include;../../Engine/Renderer/Compiler/src;../../Engine/Renderer/Gfx/include;../../Engine/Renderer/Gfx/src;../../Engine/Renderer/GLES3/include;../../Engine/Renderer/GLES3/src;../../Engine/Renderer/Vulkan/include;../../Engine/Renderer/Vulkan/src;../../Engine/RenderSolution/include;../../Engine/RenderSolution/src;../../Engine/Scene/include;../../Engine/Scene/src;../../Engine/SceneComponent/include;../../Engine/SceneComponent/src;../../Engine/ThirdParty;../../Engine/ThirdParty/eastl;../../Engine/ThirdParty/gli;../../Engine/ThirdParty/glm;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(VULKAN_SDK)/include;$(VULKAN_SDK)/spirv-tools/include;$(VULKAN_SDK)/shaderc/libshaderc/include;$(VULKAN_SDK)/shaderc/libshaderc_util/include;../../ThirdParty;../../ThirdParty/es;../../ThirdParty/event;../../ThirdParty/gl3w;../../ThirdParty/glslc;../../ThirdParty/lodepng;../../ThirdParty/pthread;../../ThirdParty/rbtree;../../ThirdParty/spirv-cross;../../ThirdParty/tinyxml;../../ThirdParty/zlib;../../Engine;../../Engine/Base/include;../../Engine/Memory/include;../../Engine/Renderer/Gfx/include;../../Engine/Renderer/GLES3/include;../../Engine/Renderer/Vulkan/include;../../Engine/Renderer/Compiler/include;../../Engine/Scene/include;../../Engine/Engine/include;../../Engine/ThirdParty;../../Engine/ThirdParty/eastl;../../Engine/ThirdParty/gli;../../Engine/ThirdParty/glm</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <DisableSpecificWarnings>4996;4312;4267;4251</DisableSpecificWarnings>
@@ -187,8 +187,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Engine\Base\include\ComponentManager.h" />
-    <ClInclude Include="..\..\Engine\Base\include\Define.h" />
     <ClInclude Include="..\..\Engine\Base\include\Delegate.h" />
     <ClInclude Include="..\..\Engine\Base\include\File.h" />
     <ClInclude Include="..\..\Engine\Base\include\FileManager.h" />
@@ -201,7 +199,14 @@
     <ClInclude Include="..\..\Engine\Base\src\nvwa\debug_new.h" />
     <ClInclude Include="..\..\Engine\Base\src\nvwa\fast_mutex.h" />
     <ClInclude Include="..\..\Engine\Base\src\nvwa\static_assert.h" />
-    <ClInclude Include="..\..\Engine\Engine.h" />
+    <ClInclude Include="..\..\Engine\EngineHeader.h" />
+    <ClInclude Include="..\..\Engine\Engine\include\Engine.h" />
+    <ClInclude Include="..\..\Engine\Engine\include\RenderSolutionBase.h" />
+    <ClInclude Include="..\..\Engine\Engine\include\RenderSolutionDefault.h" />
+    <ClInclude Include="..\..\Engine\Engine\include\RenderSolutionDeferred.h" />
+    <ClInclude Include="..\..\Engine\Engine\include\RenderSolutionForward.h" />
+    <ClInclude Include="..\..\Engine\Engine\include\RenderSolutionForwardPlus.h" />
+    <ClInclude Include="..\..\Engine\GfxHeader.h" />
     <ClInclude Include="..\..\Engine\Memory\include\Allocator.h" />
     <ClInclude Include="..\..\Engine\Memory\src\MemoryHeap.h" />
     <ClInclude Include="..\..\Engine\Memory\src\MemoryPool.h" />
@@ -247,6 +252,7 @@
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxVertexAttribute.h" />
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxVertexBuffer.h" />
     <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3CommandBuffer.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3CommandBufferManager.h" />
     <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3Definition.h" />
     <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3DrawIndirectBuffer.h" />
     <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3Extension.h" />
@@ -297,7 +303,6 @@
     <ClInclude Include="..\..\Engine\Renderer\GLES3\src\GLES3CommandBindPipelineCompute.h" />
     <ClInclude Include="..\..\Engine\Renderer\GLES3\src\GLES3CommandBindPipelineGraphics.h" />
     <ClInclude Include="..\..\Engine\Renderer\GLES3\src\GLES3CommandBindSubPassInputTexture.h" />
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\GLES3CommandBufferManager.h" />
     <ClInclude Include="..\..\Engine\Renderer\GLES3\src\GLES3CommandClearColor.h" />
     <ClInclude Include="..\..\Engine\Renderer\GLES3\src\GLES3CommandClearDepth.h" />
     <ClInclude Include="..\..\Engine\Renderer\GLES3\src\GLES3CommandDrawElements.h" />
@@ -328,18 +333,14 @@
     <ClInclude Include="..\..\Engine\Renderer\GLES3\src\GLES3CommandUniformMatrix2fv.h" />
     <ClInclude Include="..\..\Engine\Renderer\GLES3\src\GLES3CommandUniformMatrix3fv.h" />
     <ClInclude Include="..\..\Engine\Renderer\GLES3\src\GLES3CommandUniformMatrix4fv.h" />
-    <ClInclude Include="..\..\Engine\RenderSolution\include\RenderSolutionBase.h" />
-    <ClInclude Include="..\..\Engine\RenderSolution\include\RenderSolutionDefault.h" />
-    <ClInclude Include="..\..\Engine\RenderSolution\include\RenderSolutionDeferred.h" />
-    <ClInclude Include="..\..\Engine\RenderSolution\include\RenderSolutionForward.h" />
-    <ClInclude Include="..\..\Engine\RenderSolution\include\RenderSolutionForwardPlus.h" />
-    <ClInclude Include="..\..\Engine\SceneComponent\include\Component.h" />
-    <ClInclude Include="..\..\Engine\SceneComponent\include\ComponentMesh.h" />
-    <ClInclude Include="..\..\Engine\SceneComponent\include\ComponentParticle.h" />
-    <ClInclude Include="..\..\Engine\SceneComponent\include\ComponentPointLight.h" />
-    <ClInclude Include="..\..\Engine\SceneComponent\include\ComponentSkin.h" />
+    <ClInclude Include="..\..\Engine\SceneHeader.h" />
+    <ClInclude Include="..\..\Engine\Scene\include\Component.h" />
+    <ClInclude Include="..\..\Engine\Scene\include\ComponentManager.h" />
+    <ClInclude Include="..\..\Engine\Scene\include\ComponentMesh.h" />
+    <ClInclude Include="..\..\Engine\Scene\include\ComponentParticle.h" />
+    <ClInclude Include="..\..\Engine\Scene\include\ComponentPointLight.h" />
+    <ClInclude Include="..\..\Engine\Scene\include\ComponentSkin.h" />
     <ClInclude Include="..\..\Engine\Scene\include\Scene.h" />
-    <ClInclude Include="..\..\Engine\Scene\include\SceneDefinition.h" />
     <ClInclude Include="..\..\Engine\Scene\include\SceneManager.h" />
     <ClInclude Include="..\..\Engine\Scene\include\SceneNode.h" />
     <ClInclude Include="..\..\Engine\Scene\src\TaskComponentUpdateCamera.h" />
@@ -399,7 +400,12 @@
     <ClCompile Include="..\..\Engine\Base\src\Stream.cpp" />
     <ClCompile Include="..\..\Engine\Base\src\TaskGraph.cpp" />
     <ClCompile Include="..\..\Engine\Base\src\Utils.cpp" />
-    <ClCompile Include="..\..\Engine\Engine.cpp" />
+    <ClCompile Include="..\..\Engine\Engine\src\Engine.cpp" />
+    <ClCompile Include="..\..\Engine\Engine\src\RenderSolutionBase.cpp" />
+    <ClCompile Include="..\..\Engine\Engine\src\RenderSolutionDefault.cpp" />
+    <ClCompile Include="..\..\Engine\Engine\src\RenderSolutionDeferred.cpp" />
+    <ClCompile Include="..\..\Engine\Engine\src\RenderSolutionForward.cpp" />
+    <ClCompile Include="..\..\Engine\Engine\src\RenderSolutionForwardPlus.cpp" />
     <ClCompile Include="..\..\Engine\Memory\src\Allocator.cpp" />
     <ClCompile Include="..\..\Engine\Memory\src\MemoryHeap.cpp" />
     <ClCompile Include="..\..\Engine\Memory\src\MemoryPool.cpp" />
@@ -454,15 +460,10 @@
     <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3UniformVec4.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3VertexArrayObject.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3VertexBuffer.cpp" />
-    <ClCompile Include="..\..\Engine\RenderSolution\src\RenderSolutionBase.cpp" />
-    <ClCompile Include="..\..\Engine\RenderSolution\src\RenderSolutionDefault.cpp" />
-    <ClCompile Include="..\..\Engine\RenderSolution\src\RenderSolutionDeferred.cpp" />
-    <ClCompile Include="..\..\Engine\RenderSolution\src\RenderSolutionForward.cpp" />
-    <ClCompile Include="..\..\Engine\RenderSolution\src\RenderSolutionForwardPlus.cpp" />
-    <ClCompile Include="..\..\Engine\SceneComponent\src\ComponentMesh.cpp" />
-    <ClCompile Include="..\..\Engine\SceneComponent\src\ComponentParticle.cpp" />
-    <ClCompile Include="..\..\Engine\SceneComponent\src\ComponentPointLight.cpp" />
-    <ClCompile Include="..\..\Engine\SceneComponent\src\ComponentSkin.cpp" />
+    <ClCompile Include="..\..\Engine\Scene\src\ComponentMesh.cpp" />
+    <ClCompile Include="..\..\Engine\Scene\src\ComponentParticle.cpp" />
+    <ClCompile Include="..\..\Engine\Scene\src\ComponentPointLight.cpp" />
+    <ClCompile Include="..\..\Engine\Scene\src\ComponentSkin.cpp" />
     <ClCompile Include="..\..\Engine\Scene\src\Scene.cpp" />
     <ClCompile Include="..\..\Engine\Scene\src\SceneManager.cpp" />
     <ClCompile Include="..\..\Engine\Scene\src\SceneNode.cpp" />

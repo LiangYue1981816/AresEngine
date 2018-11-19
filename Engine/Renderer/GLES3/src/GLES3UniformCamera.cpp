@@ -1,4 +1,4 @@
-#include "GLES3Renderer.h"
+#include "GfxHeader.h"
 
 
 CGLES3UniformCamera::CGLES3UniformCamera(CGLES3UniformManager *pManager, bool bDynamic)

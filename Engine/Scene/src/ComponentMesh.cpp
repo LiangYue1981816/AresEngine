@@ -1,5 +1,4 @@
-#include "Engine.h"
-#include "ComponentMesh.h"
+#include "SceneHeader.h"
 
 
 CComponentMesh::CComponentMesh(uint32_t name)

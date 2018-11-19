@@ -1,4 +1,4 @@
-#include "GLES3Renderer.h"
+#include "GfxHeader.h"
 
 
 CGLES3Renderer::CGLES3Renderer(void *hDC, int width, int height, uint32_t format)

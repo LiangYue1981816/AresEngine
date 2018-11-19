@@ -39,8 +39,7 @@
 
 #include <new>
 #include <stdio.h>
-#include "Utils.h"
-#include "Allocator.h"
+#include "EngineHeader.h"
 
 #ifdef _MSC_VER
 #pragma warning(disable: 4074)

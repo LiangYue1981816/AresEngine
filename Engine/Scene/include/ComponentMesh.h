@@ -1,30 +1,25 @@
 #pragma once
 #include "Component.h"
-#include "ComponentManager.h"
 
 
-class CALL_API CComponentPointLight : public CComponent
+class CALL_API CComponentMesh : public CComponent
 {
 private:
 	typedef struct InstanceData {
 		glm::mat4 transformMatrix;
-		glm::vec4 color;
-		glm::vec4 attenuation;
 	} InstanceData;
 
 
 public:
-	CComponentPointLight(uint32_t name);
-	CComponentPointLight(const CComponentPointLight &component);
-	virtual ~CComponentPointLight(void);
+	CComponentMesh(uint32_t name);
+	CComponentMesh(const CComponentMesh &component);
+	virtual ~CComponentMesh(void);
 
 
 public:
 	void SetMaterial(const CGfxMaterialPtr &ptrMaterial);
 	void SetMesh(const CGfxMeshPtr &ptrMesh);
-
-	void SetColor(float red, float green, float blue);
-	void SetAttenuation(float linear, float square, float constant);
+	void SetIndexDraw(int indexDraw);
 
 public:
 	glm::aabb GetLocalAABB(void);
@@ -45,6 +40,7 @@ private:
 private:
 	CGfxMaterialPtr m_ptrMaterial;
 	CGfxMeshPtr m_ptrMesh;
+	int m_indexDraw;
 };
 
-typedef CComponentPtr<CComponentPointLight> CComponentPointLightPtr;
+typedef CComponentPtr<CComponentMesh> CComponentMeshPtr;
