@@ -1,5 +1,4 @@
-#include "Engine.h"
-#include "RenderSolutionBase.h"
+#include "EngineHeader.h"
 
 
 CRenderSolutionBase::CRenderSolutionBase(void)

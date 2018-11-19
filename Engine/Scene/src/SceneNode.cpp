@@ -1,5 +1,4 @@
-#include "Engine.h"
-#include "SceneNode.h"
+#include "SceneHeader.h"
 
 
 CSceneNode::CSceneNode(uint32_t name, CScene *pScene)

@@ -1,5 +1,4 @@
-#include "GLES3Renderer.h"
-#include "GLES3CommandBuffer.h"
+#include "GfxHeader.h"
 #include "GLES3CommandBeginRenderPass.h"
 #include "GLES3CommandEndRenderPass.h"
 #include "GLES3CommandResolve.h"

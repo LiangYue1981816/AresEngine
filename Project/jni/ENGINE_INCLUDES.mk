@@ -9,23 +9,13 @@ ENGINE_INCLUDES := \
 	$(LOCAL_PATH)/../../ThirdParty/zlib \
 	$(LOCAL_PATH)/../../Engine \
 	$(LOCAL_PATH)/../../Engine/Base/include \
-	$(LOCAL_PATH)/../../Engine/Base/src \
 	$(LOCAL_PATH)/../../Engine/Memory/include \
-	$(LOCAL_PATH)/../../Engine/Memory/src \
-	$(LOCAL_PATH)/../../Engine/Renderer/Compiler/include \
-	$(LOCAL_PATH)/../../Engine/Renderer/Compiler/src \
 	$(LOCAL_PATH)/../../Engine/Renderer/Gfx/include \
-	$(LOCAL_PATH)/../../Engine/Renderer/Gfx/src \
 	$(LOCAL_PATH)/../../Engine/Renderer/GLES3/include \
-	$(LOCAL_PATH)/../../Engine/Renderer/GLES3/src \
 	$(LOCAL_PATH)/../../Engine/Renderer/Vulkan/include \
-	$(LOCAL_PATH)/../../Engine/Renderer/Vulkan/src \
-	$(LOCAL_PATH)/../../Engine/RenderSolution/include \
-	$(LOCAL_PATH)/../../Engine/RenderSolution/src \
+	$(LOCAL_PATH)/../../Engine/Renderer/Compiler/include \
 	$(LOCAL_PATH)/../../Engine/Scene/include \
-	$(LOCAL_PATH)/../../Engine/Scene/src \
-	$(LOCAL_PATH)/../../Engine/SceneComponent/include \
-	$(LOCAL_PATH)/../../Engine/SceneComponent/src \
+	$(LOCAL_PATH)/../../Engine/Engine/include \
 	$(LOCAL_PATH)/../../Engine/ThirdParty \
 	$(LOCAL_PATH)/../../Engine/ThirdParty/eastl \
 	$(LOCAL_PATH)/../../Engine/ThirdParty/gli \

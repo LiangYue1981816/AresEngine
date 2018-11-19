@@ -1,6 +1,5 @@
 #pragma once
 #include "PreHeader.h"
-#include "SceneDefinition.h"
 
 
 class CALL_API CScene
@@ -10,7 +9,7 @@ class CALL_API CScene
 
 
 private:
-	CScene(uint32_t name);
+	CScene(uint32_t name, CSceneManager *pSceneManager);
 	virtual ~CScene(void);
 
 
@@ -39,4 +38,7 @@ private:
 private:
 	CSceneNode *m_pRootNode;
 	eastl::unordered_map<uint32_t, CSceneNode*> m_pNodes;
+
+private:
+	CSceneManager *m_pSceneManager;
 };

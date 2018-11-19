@@ -1,10 +1,10 @@
-#include "Engine.h"
-#include "Scene.h"
+#include "SceneHeader.h"
 
 
-CScene::CScene(uint32_t name)
+CScene::CScene(uint32_t name, CSceneManager *pSceneManager)
 	: m_name(name)
 	, m_pRootNode(nullptr)
+	, m_pSceneManager(pSceneManager)
 {
 	m_pRootNode = new CSceneNode(HashValue("Root"), this);
 }
@@ -112,7 +112,7 @@ bool CScene::LoadNode(TiXmlNode *pNode, CSceneNode *pParentNode)
 		pNode->ToElement()->AttributeFloat4("rotation", rotation);
 		pNode->ToElement()->AttributeFloat3("translation", translation);
 
-		CSceneNode *pCurrentNode = SceneManager()->CreateNode(SceneManager()->GetNextNodeName());
+		CSceneNode *pCurrentNode = m_pSceneManager->CreateNode(m_pSceneManager->GetNextNodeName());
 		pCurrentNode->SetLocalPosition(translation[0], translation[1], translation[2]);
 		pCurrentNode->SetLocalOrientation(rotation[0], rotation[1], rotation[2], rotation[3]);
 		pCurrentNode->SetLocalScale(scale[0], scale[1], scale[2]);
@@ -151,7 +151,7 @@ bool CScene::LoadMesh(TiXmlNode *pNode, CSceneNode *pCurrentNode)
 			CGfxMaterialPtr ptrMaterial = Renderer()->NewMaterial(szMaterialFileName);
 			CGfxMeshPtr ptrMesh = Renderer()->NewMesh(szMeshFileName, INSTANCE_ATTRIBUTE_TRANSFORM);
 
-			CComponentMeshPtr ptrComponentMesh = SceneManager()->CreateComponentMesh(SceneManager()->GetNextComponentMeshName());
+			CComponentMeshPtr ptrComponentMesh = m_pSceneManager->CreateComponentMesh(m_pSceneManager->GetNextComponentMeshName());
 			ptrComponentMesh->SetMaterial(ptrMaterial);
 			ptrComponentMesh->SetMesh(ptrMesh);
 			pCurrentNode->AttachComponentMesh(ptrComponentMesh);
@@ -168,7 +168,7 @@ void CScene::Free(void)
 	const eastl::unordered_map<uint32_t, CSceneNode*> pNodes = m_pNodes;
 
 	for (const auto &itNode : pNodes) {
-		SceneManager()->DestroyNode(itNode.second);
+		m_pSceneManager->DestroyNode(itNode.second);
 	}
 
 	m_pNodes.clear();

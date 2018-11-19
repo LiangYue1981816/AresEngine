@@ -1,6 +1,5 @@
 #pragma once
 #include "Component.h"
-#include "ComponentManager.h"
 
 
 class CALL_API CComponentSkin : public CComponent

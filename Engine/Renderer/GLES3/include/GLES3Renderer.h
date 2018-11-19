@@ -1,5 +1,5 @@
 #pragma once
-#include "GfxRenderer.h"
+#include "PreHeader.h"
 
 #include "GLES3Extension.h"
 #include "GLES3Definition.h"

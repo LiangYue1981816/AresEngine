@@ -1,6 +1,6 @@
 #pragma once
 #include "PreHeader.h"
-#include "SceneDefinition.h"
+#include "ComponentManager.h"
 
 
 class CALL_API CComponent

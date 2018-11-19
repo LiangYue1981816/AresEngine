@@ -1,4 +1,4 @@
-#include "GLES3Renderer.h"
+#include "GfxHeader.h"
 
 
 CGLES3Sampler::CGLES3Sampler(uint32_t minFilter, uint32_t magFilter, uint32_t addressMode)

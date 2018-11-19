@@ -1,4 +1,4 @@
-#include "GLES3Renderer.h"
+#include "GfxHeader.h"
 
 
 CGLES3Texture2DArray::CGLES3Texture2DArray(CGLES3TextureManager *pManager, uint32_t name)

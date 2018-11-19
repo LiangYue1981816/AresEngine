@@ -16,9 +16,6 @@
     <Filter Include="Engine\Renderer">
       <UniqueIdentifier>{7b102c74-850b-41e3-b357-95b3f77b601b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\RenderSolution">
-      <UniqueIdentifier>{4cd3abe7-b164-4dbb-9923-8d03c08df70f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine\Scene">
       <UniqueIdentifier>{35e2f3c0-88e0-422a-8e05-f856d122f053}</UniqueIdentifier>
     </Filter>
@@ -64,12 +61,6 @@
     <Filter Include="Engine\Renderer\GLES3">
       <UniqueIdentifier>{724c4537-be92-492a-9695-9815b831d3a2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\RenderSolution\Header Files">
-      <UniqueIdentifier>{f715a6bc-a1bd-4181-84fe-75a49e4ab138}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\RenderSolution\Source Files">
-      <UniqueIdentifier>{4e312de3-097a-43e3-86a9-fe59eb560e5c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine\Scene\Header Files">
       <UniqueIdentifier>{d3d8c327-4347-47f1-9f5a-b8cafd5f2a9b}</UniqueIdentifier>
     </Filter>
@@ -87,15 +78,6 @@
     </Filter>
     <Filter Include="Engine\Base\Source Files\nvwa">
       <UniqueIdentifier>{91402fba-68fc-4dbb-9af9-fb34f1c5eacd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\SceneComponent">
-      <UniqueIdentifier>{99bef4b5-9274-4044-9457-b0093d1cc718}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\SceneComponent\Header Files">
-      <UniqueIdentifier>{8a74961e-c750-4f26-911b-69a7e71f924b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\SceneComponent\Source Files">
-      <UniqueIdentifier>{8dae8a18-5653-4d01-91c4-3bcb671572b2}</UniqueIdentifier>
     </Filter>
     <Filter Include="Engine\Renderer\Gfx\Source Files">
       <UniqueIdentifier>{4990b95a-d2a1-4b69-8809-3c08d624f5ef}</UniqueIdentifier>
@@ -129,6 +111,27 @@
     </Filter>
     <Filter Include="Engine\Renderer\Vulkan\Source Files">
       <UniqueIdentifier>{f890e2df-14d2-47d2-aaef-e9a1255e5baa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Engine">
+      <UniqueIdentifier>{25618813-b324-4816-8001-73568c2e5c2e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Engine\Header Files">
+      <UniqueIdentifier>{4cf8e78c-9261-401a-a5b9-6ce128b1fa28}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Engine\Source Files">
+      <UniqueIdentifier>{058a8d50-a3a9-4aa2-80f6-15fa825c43b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Scene\Header Files\Component">
+      <UniqueIdentifier>{dec25947-8e39-40ca-9df0-0b03a7a6d9e8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Scene\Source Files\Component">
+      <UniqueIdentifier>{62db9dfa-bcc2-4f53-9b28-9ffff503c1b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Engine\Header Files\RenderSolution">
+      <UniqueIdentifier>{3e97245d-f183-47a2-988a-71bd178cc25f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Engine\Source Files\RenderSolution">
+      <UniqueIdentifier>{6a1913a1-6349-4750-aaa0-5e438d40fdf3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -182,9 +185,6 @@
     </ClInclude>
     <ClInclude Include="..\..\ThirdParty\tinyxml\tinyxml.h">
       <Filter>ThirdParty\tinyxml</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\Engine.h">
-      <Filter>Engine</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\PreHeader.h">
       <Filter>Engine</Filter>
@@ -272,12 +272,6 @@
     </ClInclude>
     <ClInclude Include="..\..\ThirdParty\zzip\zzip32.h">
       <Filter>ThirdParty\zzip</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\Base\include\ComponentManager.h">
-      <Filter>Engine\Base\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\Base\include\Define.h">
-      <Filter>Engine\Base\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Base\include\Delegate.h">
       <Filter>Engine\Base\Header Files</Filter>
@@ -567,6 +561,30 @@
     <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3VertexBuffer.h">
       <Filter>Engine\Renderer\GLES3\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Engine\Scene\include\Scene.h">
+      <Filter>Engine\Scene\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Scene\include\SceneManager.h">
+      <Filter>Engine\Scene\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Scene\include\SceneNode.h">
+      <Filter>Engine\Scene\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Scene\src\TaskComponentUpdateCamera.h">
+      <Filter>Engine\Scene\Source Files\Task</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Scene\src\TaskComponentUpdateLogic.h">
+      <Filter>Engine\Scene\Source Files\Task</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Base\include\Lock.h">
+      <Filter>Engine\Base\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Engine\include\Engine.h">
+      <Filter>Engine\Engine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3CommandBufferManager.h">
+      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\GLES3\src\GLES3CommandBeginRenderPass.h">
       <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
     </ClInclude>
@@ -592,9 +610,6 @@
       <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\GLES3\src\GLES3CommandBindSubPassInputTexture.h">
-      <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\GLES3CommandBufferManager.h">
       <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\GLES3\src\GLES3CommandClearColor.h">
@@ -687,56 +702,47 @@
     <ClInclude Include="..\..\Engine\Renderer\GLES3\src\GLES3CommandUniformMatrix4fv.h">
       <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Engine\RenderSolution\include\RenderSolutionBase.h">
-      <Filter>Engine\RenderSolution\Header Files</Filter>
+    <ClInclude Include="..\..\Engine\GfxHeader.h">
+      <Filter>Engine</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Engine\RenderSolution\include\RenderSolutionDefault.h">
-      <Filter>Engine\RenderSolution\Header Files</Filter>
+    <ClInclude Include="..\..\Engine\SceneHeader.h">
+      <Filter>Engine</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Engine\RenderSolution\include\RenderSolutionDeferred.h">
-      <Filter>Engine\RenderSolution\Header Files</Filter>
+    <ClInclude Include="..\..\Engine\EngineHeader.h">
+      <Filter>Engine</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Engine\RenderSolution\include\RenderSolutionForward.h">
-      <Filter>Engine\RenderSolution\Header Files</Filter>
+    <ClInclude Include="..\..\Engine\Scene\include\Component.h">
+      <Filter>Engine\Scene\Header Files\Component</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Engine\RenderSolution\include\RenderSolutionForwardPlus.h">
-      <Filter>Engine\RenderSolution\Header Files</Filter>
+    <ClInclude Include="..\..\Engine\Scene\include\ComponentMesh.h">
+      <Filter>Engine\Scene\Header Files\Component</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Engine\Scene\include\Scene.h">
-      <Filter>Engine\Scene\Header Files</Filter>
+    <ClInclude Include="..\..\Engine\Scene\include\ComponentParticle.h">
+      <Filter>Engine\Scene\Header Files\Component</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Engine\Scene\include\SceneDefinition.h">
-      <Filter>Engine\Scene\Header Files</Filter>
+    <ClInclude Include="..\..\Engine\Scene\include\ComponentPointLight.h">
+      <Filter>Engine\Scene\Header Files\Component</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Engine\Scene\include\SceneManager.h">
-      <Filter>Engine\Scene\Header Files</Filter>
+    <ClInclude Include="..\..\Engine\Scene\include\ComponentSkin.h">
+      <Filter>Engine\Scene\Header Files\Component</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Engine\Scene\include\SceneNode.h">
-      <Filter>Engine\Scene\Header Files</Filter>
+    <ClInclude Include="..\..\Engine\Scene\include\ComponentManager.h">
+      <Filter>Engine\Scene\Header Files\Component</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Engine\Scene\src\TaskComponentUpdateCamera.h">
-      <Filter>Engine\Scene\Source Files\Task</Filter>
+    <ClInclude Include="..\..\Engine\Engine\include\RenderSolutionBase.h">
+      <Filter>Engine\Engine\Header Files\RenderSolution</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Engine\Scene\src\TaskComponentUpdateLogic.h">
-      <Filter>Engine\Scene\Source Files\Task</Filter>
+    <ClInclude Include="..\..\Engine\Engine\include\RenderSolutionDefault.h">
+      <Filter>Engine\Engine\Header Files\RenderSolution</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Engine\SceneComponent\include\Component.h">
-      <Filter>Engine\SceneComponent\Header Files</Filter>
+    <ClInclude Include="..\..\Engine\Engine\include\RenderSolutionDeferred.h">
+      <Filter>Engine\Engine\Header Files\RenderSolution</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Engine\SceneComponent\include\ComponentMesh.h">
-      <Filter>Engine\SceneComponent\Header Files</Filter>
+    <ClInclude Include="..\..\Engine\Engine\include\RenderSolutionForward.h">
+      <Filter>Engine\Engine\Header Files\RenderSolution</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Engine\SceneComponent\include\ComponentParticle.h">
-      <Filter>Engine\SceneComponent\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\SceneComponent\include\ComponentPointLight.h">
-      <Filter>Engine\SceneComponent\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\SceneComponent\include\ComponentSkin.h">
-      <Filter>Engine\SceneComponent\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\Base\include\Lock.h">
-      <Filter>Engine\Base\Header Files</Filter>
+    <ClInclude Include="..\..\Engine\Engine\include\RenderSolutionForwardPlus.h">
+      <Filter>Engine\Engine\Header Files\RenderSolution</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -784,9 +790,6 @@
     </ClCompile>
     <ClCompile Include="..\..\ThirdParty\tinyxml\tinyxmlparser.cpp">
       <Filter>ThirdParty\tinyxml</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\Engine.cpp">
-      <Filter>Engine</Filter>
     </ClCompile>
     <ClCompile Include="..\..\ThirdParty\zlib\adler32.c">
       <Filter>ThirdParty\zlib</Filter>
@@ -1070,21 +1073,6 @@
     <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3VertexBuffer.cpp">
       <Filter>Engine\Renderer\GLES3\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Engine\RenderSolution\src\RenderSolutionBase.cpp">
-      <Filter>Engine\RenderSolution\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\RenderSolution\src\RenderSolutionDefault.cpp">
-      <Filter>Engine\RenderSolution\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\RenderSolution\src\RenderSolutionDeferred.cpp">
-      <Filter>Engine\RenderSolution\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\RenderSolution\src\RenderSolutionForward.cpp">
-      <Filter>Engine\RenderSolution\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\RenderSolution\src\RenderSolutionForwardPlus.cpp">
-      <Filter>Engine\RenderSolution\Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Engine\Scene\src\Scene.cpp">
       <Filter>Engine\Scene\Source Files</Filter>
     </ClCompile>
@@ -1094,20 +1082,38 @@
     <ClCompile Include="..\..\Engine\Scene\src\SceneNode.cpp">
       <Filter>Engine\Scene\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Engine\SceneComponent\src\ComponentMesh.cpp">
-      <Filter>Engine\SceneComponent\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\SceneComponent\src\ComponentParticle.cpp">
-      <Filter>Engine\SceneComponent\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\SceneComponent\src\ComponentPointLight.cpp">
-      <Filter>Engine\SceneComponent\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\SceneComponent\src\ComponentSkin.cpp">
-      <Filter>Engine\SceneComponent\Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Engine\Base\src\Lock.cpp">
       <Filter>Engine\Base\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Engine\src\Engine.cpp">
+      <Filter>Engine\Engine\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Scene\src\ComponentMesh.cpp">
+      <Filter>Engine\Scene\Source Files\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Scene\src\ComponentParticle.cpp">
+      <Filter>Engine\Scene\Source Files\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Scene\src\ComponentPointLight.cpp">
+      <Filter>Engine\Scene\Source Files\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Scene\src\ComponentSkin.cpp">
+      <Filter>Engine\Scene\Source Files\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Engine\src\RenderSolutionBase.cpp">
+      <Filter>Engine\Engine\Source Files\RenderSolution</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Engine\src\RenderSolutionDefault.cpp">
+      <Filter>Engine\Engine\Source Files\RenderSolution</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Engine\src\RenderSolutionDeferred.cpp">
+      <Filter>Engine\Engine\Source Files\RenderSolution</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Engine\src\RenderSolutionForward.cpp">
+      <Filter>Engine\Engine\Source Files\RenderSolution</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Engine\src\RenderSolutionForwardPlus.cpp">
+      <Filter>Engine\Engine\Source Files\RenderSolution</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

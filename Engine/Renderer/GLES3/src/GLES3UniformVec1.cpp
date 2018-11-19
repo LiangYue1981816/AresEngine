@@ -1,4 +1,4 @@
-#include "GLES3Renderer.h"
+#include "GfxHeader.h"
 
 
 CGLES3UniformVec1::CGLES3UniformVec1(bool bDynamic)

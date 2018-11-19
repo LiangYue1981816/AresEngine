@@ -1,5 +1,4 @@
-#include "GfxRenderer.h"
-#include "GLES3Renderer.h"
+#include "GfxHeader.h"
 
 
 CGfxRenderer* CGfxRenderer::pInstance = nullptr;
