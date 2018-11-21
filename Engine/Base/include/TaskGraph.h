@@ -35,7 +35,7 @@ private:
 class CALL_API CTaskGraph
 {
 public:
-	CTaskGraph(const char *szName, int priority);
+	CTaskGraph(const char *szName);
 	virtual ~CTaskGraph(void);
 
 

@@ -7,8 +7,8 @@ CSceneManager::CSceneManager(void)
 	: m_pMainCamera(nullptr)
 	, m_pShadowCamera(nullptr)
 
-	, m_taskGraphUpdateLogic("TashGraph_UpdateLogic", 75)
-	, m_taskGraphUpdateCamera("TaskGraph_UpdateCamera", 75)
+	, m_taskGraphUpdateLogic("TashGraph_UpdateLogic")
+	, m_taskGraphUpdateCamera("TaskGraph_UpdateCamera")
 {
 	m_pMainCamera = new CGfxCamera;
 	m_pShadowCamera = new CGfxCamera;

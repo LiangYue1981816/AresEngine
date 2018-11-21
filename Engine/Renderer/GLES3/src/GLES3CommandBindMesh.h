@@ -22,8 +22,8 @@ public:
 		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_BIND_MESH, "CommandBindMesh");
 		{
 			if (m_ptrMesh.IsValid()) {
-				m_ptrMesh->InstanceBufferData(m_indexDraw, m_buffer.size(), m_buffer.data());
-				m_ptrMesh->DrawIndirectBufferData(m_indexDraw, m_buffer.size() / GetInstanceStride(m_ptrMesh->GetInstanceFormat()));
+				m_ptrMesh->InstanceBufferData((int)m_indexDraw, m_buffer.size(), m_buffer.data());
+				m_ptrMesh->DrawIndirectBufferData((int)m_indexDraw, m_buffer.size() / GetInstanceStride(m_ptrMesh->GetInstanceFormat()));
 				m_ptrMesh->Bind((void *)m_indexDraw);
 			}
 			else {

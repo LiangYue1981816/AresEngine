@@ -30,7 +30,7 @@ void CTaskCommandBuffer::TaskFunc(void *pParams)
 
 
 CGfxRenderQueue::CGfxRenderQueue(void)
-	: m_taskGraph("TashGraph_RenderQueue", 75)
+	: m_taskGraph("TashGraph_RenderQueue")
 {
 
 }

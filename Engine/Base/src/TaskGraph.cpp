@@ -114,7 +114,7 @@ void* CTask::GetTaskParams(void) const
 
 
 
-CTaskGraph::CTaskGraph(const char *szName, int priority)
+CTaskGraph::CTaskGraph(const char *szName)
 {
 	event_init(&m_eventExit, 0);
 	event_init(&m_eventReady, 1);
@@ -123,20 +123,9 @@ CTaskGraph::CTaskGraph(const char *szName, int priority)
 	pthread_mutex_init(&m_mutexTaskList, nullptr);
 
 	for (int indexThread = 0; indexThread < THREAD_COUNT; indexThread++) {
-		int rcode = NO_ERROR;
-
-		/*
-		sched_param param;
-		pthread_attr_t attr;
-		rcode = pthread_attr_create(&attr, &param, SCHED_RR, priority);
-		rcode = pthread_create(&m_threads[indexThread], &attr, TaskThread, this);
-		rcode = pthread_attr_destroy(&attr);
-		/*/
-		rcode = pthread_create(&m_threads[indexThread], nullptr, TaskThread, this);
-		//*/
-
 		char szThreadName[_MAX_STRING];
-		sprintf(szThreadName, "%s_%d(%2.2d)", szName, indexThread, priority);
+		sprintf(szThreadName, "%s_%d", szName, indexThread);
+		pthread_create(&m_threads[indexThread], nullptr, TaskThread, this);
 		pthread_set_name(m_threads[indexThread], szThreadName);
 	}
 }
