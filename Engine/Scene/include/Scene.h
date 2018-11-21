@@ -23,13 +23,14 @@ public:
 	CSceneNode* GetNode(uint32_t name) const;
 
 public:
-	bool Load(const char *szFileName);
+	bool LoadMesh(const char *szFileName);
+	void FreeNode(CSceneNode *pNode);
 	void Free(void);
 
 private:
-	bool LoadScene(TiXmlNode *pSceneNode);
-	bool LoadNode(TiXmlNode *pNode, CSceneNode *pParentNode);
-	bool LoadMesh(TiXmlNode *pNode, CSceneNode *pCurrentNode);
+	bool LoadMesh(TiXmlNode *pMeshNode);
+	bool LoadNode(const CGfxMeshPtr &ptrMesh, TiXmlNode *pNode, CSceneNode *pParentSceneNode);
+	bool LoadDraw(const CGfxMeshPtr &ptrMesh, TiXmlNode *pNode, CSceneNode *pCurrentSceneNode);
 
 
 private:

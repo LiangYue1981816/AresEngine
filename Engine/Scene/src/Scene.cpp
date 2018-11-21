@@ -3,6 +3,7 @@
 
 CScene::CScene(uint32_t name, CSceneManager *pSceneManager)
 	: m_name(name)
+
 	, m_pRootNode(nullptr)
 	, m_pSceneManager(pSceneManager)
 {
@@ -53,122 +54,165 @@ CSceneNode* CScene::GetNode(uint32_t name) const
 	return itNode != m_pNodes.end() ? itNode->second : nullptr;
 }
 
-bool CScene::Load(const char *szFileName)
+bool CScene::LoadMesh(const char *szFileName)
 {
 	/*
-	<Scene>
-		<Node translation = "0.000000 0.000000 0.000000" rotation = "0.000000 0.000000 0.000000 1.000000" scale = "1.000000 1.000000 1.000000">
-			<Node translation = "0.000000 0.000000 0.000000" rotation = "-0.707107 -0.000000 0.000000 0.707107" scale = "1.000000 1.000000 1.000000">
-				<Mesh mesh = "./sponza_00.mesh" material = "./leaf.material" / >
+	<Mesh mesh="sponza.mesh">
+		<Node translation="0.000000 0.000000 0.000000" rotation="0.000000 0.000000 0.000000 1.000000" scale="1.000000 1.000000 1.000000">
+			<Node translation="0.000000 0.000000 0.000000" rotation="-0.707107 -0.000000 0.000000 0.707107" scale="1.000000 1.000000 1.000000">
+				<Draw index="0" material="leaf.material" />
 			</Node>
 		</Node>
-	</Scene>
+	</<Mesh>
 	*/
-	try {
-		Free();
-
+	do {
 		CStream stream;
-		if (FileManager()->LoadStream(szFileName, &stream) == false) throw 0;
+		if (FileManager()->LoadStream(szFileName, &stream) == false) break;
 
 		TiXmlDocument xmlDoc;
-		if (xmlDoc.LoadFile((char *)stream.GetAddress(), stream.GetFullSize()) == false) throw 1;
+		if (xmlDoc.LoadFile((char *)stream.GetAddress(), stream.GetFullSize()) == false) break;
 
-		TiXmlNode *pSceneNode = xmlDoc.FirstChild("Scene");
-		if (pSceneNode == nullptr) throw 2;
-		if (LoadScene(pSceneNode) == false) throw 3;
+		TiXmlNode *pMeshNode = xmlDoc.FirstChild("Mesh");
+		if (pMeshNode == nullptr) break;
+		if (LoadMesh(pMeshNode) == false) break;
 
 		return true;
-	}
-	catch (int) {
-		Free();
-		return false;
-	}
+	} while (false);
+
+	return false;
 }
 
-bool CScene::LoadScene(TiXmlNode *pSceneNode)
+bool CScene::LoadMesh(TiXmlNode *pMeshNode)
 {
-	try {
-		if (TiXmlNode *pNode = pSceneNode->FirstChild("Node")) {
+	bool rcode = true;
+	CSceneNode *pCurrentSceneNode = nullptr;
+
+	do {
+		if (TiXmlNode *pNode = pMeshNode->FirstChild("Node")) {
+			const char *szMeshFileName = pMeshNode->ToElement()->AttributeString("mesh");
+			if (szMeshFileName == nullptr) {
+				rcode = false;
+				break;
+			}
+
+			CGfxMeshPtr ptrMesh = Renderer()->NewMesh(szMeshFileName, INSTANCE_ATTRIBUTE_TRANSFORM);
+			if (ptrMesh.IsValid() == false) {
+				rcode = false;
+				break;
+			}
+
+			pCurrentSceneNode = m_pSceneManager->CreateNode(m_pSceneManager->GetNextNodeName());
+			if (m_pRootNode->AttachNode(pCurrentSceneNode) == false) break;
+
 			do {
-				if (LoadNode(pNode, m_pRootNode) == false) {
-					throw 0;
+				if (LoadNode(ptrMesh, pNode, pCurrentSceneNode) == false) {
+					rcode = false;
+					break;
 				}
-			} while ((pNode = pSceneNode->IterateChildren("Node", pNode)) != nullptr);
+			} while ((pNode = pMeshNode->IterateChildren("Node", pNode)) != nullptr);
 		}
-		return true;
+		else {
+			rcode = false;
+			break;
+		}
+	} while (false);
+
+	if (rcode == false) {
+		FreeNode(pCurrentSceneNode);
 	}
-	catch (int) {
-		return false;
-	}
+
+	return rcode;
 }
 
-bool CScene::LoadNode(TiXmlNode *pNode, CSceneNode *pParentNode)
+bool CScene::LoadNode(const CGfxMeshPtr &ptrMesh, TiXmlNode *pNode, CSceneNode *pParentSceneNode)
 {
-	try {
-		float scale[3];
-		float rotation[4];
-		float translation[3];
-		pNode->ToElement()->AttributeFloat3("scale", scale);
-		pNode->ToElement()->AttributeFloat4("rotation", rotation);
-		pNode->ToElement()->AttributeFloat3("translation", translation);
+	bool rcode = true;
+	CSceneNode *pCurrentSceneNode = nullptr;
 
-		CSceneNode *pCurrentNode = m_pSceneManager->CreateNode(m_pSceneManager->GetNextNodeName());
-		pCurrentNode->SetLocalPosition(translation[0], translation[1], translation[2]);
-		pCurrentNode->SetLocalOrientation(rotation[0], rotation[1], rotation[2], rotation[3]);
-		pCurrentNode->SetLocalScale(scale[0], scale[1], scale[2]);
+	do {
+		pCurrentSceneNode = m_pSceneManager->CreateNode(m_pSceneManager->GetNextNodeName());
+		{
+			float scale[3];
+			float rotation[4];
+			float translation[3];
+			pNode->ToElement()->AttributeFloat3("scale", scale);
+			pNode->ToElement()->AttributeFloat4("rotation", rotation);
+			pNode->ToElement()->AttributeFloat3("translation", translation);
 
-		if (pParentNode->AttachNode(pCurrentNode) == false) {
-			throw 0;
+			pCurrentSceneNode->SetLocalScale(scale[0], scale[1], scale[2]);
+			pCurrentSceneNode->SetLocalOrientation(rotation[0], rotation[1], rotation[2], rotation[3]);
+			pCurrentSceneNode->SetLocalPosition(translation[0], translation[1], translation[2]);
 		}
 
-		if (LoadMesh(pNode, pCurrentNode) == false) {
-			throw 1;
+		if (pParentSceneNode->AttachNode(pCurrentSceneNode) == false) {
+			rcode = false;
+			break;
+		}
+
+		if (LoadDraw(ptrMesh, pNode, pCurrentSceneNode) == false) {
+			rcode = false;
+			break;
 		}
 
 		if (TiXmlNode *pChildNode = pNode->FirstChild("Node")) {
 			do {
-				if (LoadNode(pChildNode, pCurrentNode) == false) {
-					throw 2;
+				if (LoadNode(ptrMesh, pChildNode, pCurrentSceneNode) == false) {
+					rcode = false;
+					break;
 				}
 			} while ((pChildNode = pNode->IterateChildren("Node", pChildNode)) != nullptr);
 		}
+	} while (false);
 
-		return true;
+	if (rcode == false) {
+		FreeNode(pCurrentSceneNode);
 	}
-	catch (int) {
-		return false;
-	}
+
+	return rcode;
 }
 
-bool CScene::LoadMesh(TiXmlNode *pNode, CSceneNode *pCurrentNode)
+bool CScene::LoadDraw(const CGfxMeshPtr &ptrMesh, TiXmlNode *pNode, CSceneNode *pCurrentSceneNode)
 {
-	try {
-		if (TiXmlNode *pMeshNode = pNode->FirstChild("Mesh")) {
-			const char *szMaterialFileName = pMeshNode->ToElement()->AttributeString("material");
-			const char *szMeshFileName = pMeshNode->ToElement()->AttributeString("mesh");
-			if (szMaterialFileName == nullptr || szMeshFileName == nullptr) throw 0;
+	bool rcode = true;
 
-			CGfxMaterialPtr ptrMaterial = Renderer()->NewMaterial(szMaterialFileName);
-			CGfxMeshPtr ptrMesh = Renderer()->NewMesh(szMeshFileName, INSTANCE_ATTRIBUTE_TRANSFORM);
+	do {
+		if (TiXmlNode *pDrawNode = pNode->FirstChild("Draw")) {
+			do {
+				int indexDraw = pDrawNode->ToElement()->AttributeInt1("index");
+				const char *szMaterialFileName = pDrawNode->ToElement()->AttributeString("material");
+				if (szMaterialFileName == nullptr) {
+					rcode = false;
+					break;
+				}
 
-			CComponentMeshPtr ptrComponentMesh = m_pSceneManager->CreateComponentMesh(m_pSceneManager->GetNextComponentMeshName());
-			ptrComponentMesh->SetMaterial(ptrMaterial);
-			ptrComponentMesh->SetMesh(ptrMesh);
-			pCurrentNode->AttachComponentMesh(ptrComponentMesh);
+				CGfxMaterialPtr ptrMaterial = Renderer()->NewMaterial(szMaterialFileName);
+				if (ptrMaterial.IsValid() == false) {
+					rcode = false;
+					break;
+				}
+
+				CComponentMeshPtr ptrComponentMesh = m_pSceneManager->CreateComponentMesh(m_pSceneManager->GetNextComponentMeshName());
+				ptrComponentMesh->SetMaterial(ptrMaterial);
+				ptrComponentMesh->SetMesh(ptrMesh, indexDraw);
+				pCurrentSceneNode->AttachComponentMesh(ptrComponentMesh);
+			} while ((pDrawNode = pNode->IterateChildren("Draw", pDrawNode)) != nullptr);
 		}
-		return true;
-	}
-	catch (int) {
-		return false;
+	} while (false);
+
+	return rcode;
+}
+
+void CScene::FreeNode(CSceneNode *pNode)
+{
+	if (pNode) {
+		m_pSceneManager->DestroyNode(pNode);
 	}
 }
 
 void CScene::Free(void)
 {
-	const eastl::unordered_map<uint32_t, CSceneNode*> pNodes = m_pNodes;
-
-	for (const auto &itNode : pNodes) {
-		m_pSceneManager->DestroyNode(itNode.second);
+	for (const auto &itNode : m_pNodes) {
+		FreeNode(itNode.second);
 	}
 
 	m_pNodes.clear();

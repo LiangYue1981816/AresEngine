@@ -26,7 +26,6 @@ public:
 	void SetAttenuation(float linear, float square, float constant);
 
 public:
-	glm::aabb GetLocalAABB(void);
 	glm::aabb GetWorldAABB(void);
 
 public:
@@ -35,7 +34,6 @@ public:
 
 
 private:
-	glm::aabb m_localAABB;
 	glm::aabb m_worldAABB;
 
 private:

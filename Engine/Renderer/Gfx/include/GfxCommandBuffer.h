@@ -52,7 +52,7 @@ public:
 	virtual bool CmdBindMaterialPass(const CGfxMaterialPtr &ptrMaterial, uint32_t namePass) = 0;
 	virtual bool CmdBindUniformEngine(const CGfxUniformEnginePtr &ptrUniformEngine) = 0;
 	virtual bool CmdBindUniformCamera(const CGfxUniformCameraPtr &ptrUniformCamera) = 0;
-	virtual bool CmdBindMesh(const CGfxMeshPtr &ptrMesh, const uint8_t *pInstanceBuffer, uint32_t size) = 0;
+	virtual bool CmdBindMesh(const CGfxMeshPtr &ptrMesh, const int indexDraw, const uint8_t *pInstanceBuffer, uint32_t size) = 0;
 
 	virtual bool CmdUniform1i(const char *szName, int v0) = 0;
 	virtual bool CmdUniform2i(const char *szName, int v0, int v1) = 0;

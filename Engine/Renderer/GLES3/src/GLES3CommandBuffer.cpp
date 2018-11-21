@@ -184,10 +184,10 @@ bool CGLES3CommandBuffer::CmdBindUniformCamera(const CGfxUniformCameraPtr &ptrUn
 	return false;
 }
 
-bool CGLES3CommandBuffer::CmdBindMesh(const CGfxMeshPtr &ptrMesh, const uint8_t *pInstanceBuffer, uint32_t size)
+bool CGLES3CommandBuffer::CmdBindMesh(const CGfxMeshPtr &ptrMesh, const int indexDraw, const uint8_t *pInstanceBuffer, uint32_t size)
 {
 	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
-		m_pCommands.emplace_back(new CGLES3CommandBindMesh(ptrMesh, pInstanceBuffer, size));
+		m_pCommands.emplace_back(new CGLES3CommandBindMesh(ptrMesh, indexDraw, pInstanceBuffer, size));
 		return true;
 	}
 

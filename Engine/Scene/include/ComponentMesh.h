@@ -18,11 +18,9 @@ public:
 
 public:
 	void SetMaterial(const CGfxMaterialPtr &ptrMaterial);
-	void SetMesh(const CGfxMeshPtr &ptrMesh);
-	void SetIndexDraw(int indexDraw);
+	void SetMesh(const CGfxMeshPtr &ptrMesh, int indexDraw);
 
 public:
-	glm::aabb GetLocalAABB(void);
 	glm::aabb GetWorldAABB(void);
 
 public:
@@ -31,7 +29,6 @@ public:
 
 
 private:
-	glm::aabb m_localAABB;
 	glm::aabb m_worldAABB;
 
 private:

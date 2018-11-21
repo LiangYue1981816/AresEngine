@@ -15,7 +15,7 @@ private:
 
 private:
 	CGLES3Mesh* LoadMesh(const char *szFileName, uint32_t instanceFormat);
-	CGLES3Mesh* CreateMesh(uint32_t name, uint32_t instanceFormat);
+	CGLES3Mesh* CreateMesh(uint32_t name);
 	void DestroyMesh(CGLES3Mesh *pMesh);
 
 

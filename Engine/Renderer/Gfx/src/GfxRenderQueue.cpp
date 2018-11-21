@@ -126,12 +126,8 @@ void CGfxRenderQueue::CmdDrawThread(int indexQueue, CGfxCommandBufferPtr &ptrCom
 
 		for (const auto &itMeshQueue : m_materialMeshQueue[indexQueue][itMaterial.first]) {
 			for (const auto itDrawQueue : itMeshQueue.second) {
-				if (itDrawQueue.first == -1) {
-					Renderer()->CmdDrawInstance(ptrCommandBuffer, itMeshQueue.first, itDrawQueue.second.data(), itDrawQueue.second.size());
-				}
-				else {
-					Renderer()->CmdDrawIndirect(ptrCommandBuffer, itMeshQueue.first, itDrawQueue.second.data(), itDrawQueue.second.size());
-				}
+				Renderer()->CmdDrawInstance(ptrCommandBuffer, itMeshQueue.first, itDrawQueue.first, itDrawQueue.second.data(), itDrawQueue.second.size());
+//				Renderer()->CmdDrawIndirect(ptrCommandBuffer, itMeshQueue.first, itDrawQueue.first, itDrawQueue.second.data(), itDrawQueue.second.size());
 			}
 		}
 	}

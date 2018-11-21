@@ -33,12 +33,12 @@ CGLES3Mesh* CGLES3MeshManager::LoadMesh(const char *szFileName, uint32_t instanc
 	}
 }
 
-CGLES3Mesh* CGLES3MeshManager::CreateMesh(uint32_t name, uint32_t instanceFormat)
+CGLES3Mesh* CGLES3MeshManager::CreateMesh(uint32_t name)
 {
 	mutex_autolock autolock(&lock);
 	{
 		if (m_pMeshs[name] == nullptr) {
-			m_pMeshs[name] = new CGLES3Mesh(this, name, instanceFormat);
+			m_pMeshs[name] = new CGLES3Mesh(this, name);
 		}
 
 		return m_pMeshs[name];

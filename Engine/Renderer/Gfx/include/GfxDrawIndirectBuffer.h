@@ -36,6 +36,11 @@ public:
 		return m_count;
 	}
 
+	uint32_t GetDrawCommandOffset(int indexDraw) const
+	{
+		return indexDraw * sizeof(DrawCommand);
+	}
+
 	uint32_t GetSize(void) const
 	{
 		return m_size;

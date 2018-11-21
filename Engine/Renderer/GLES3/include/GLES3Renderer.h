@@ -119,7 +119,7 @@ public:
 
 	CGfxMaterialPtr NewMaterial(const char *szFileName);
 
-	CGfxMeshPtr NewMesh(uint32_t name, uint32_t instanceFormat);
+	CGfxMeshPtr NewMesh(uint32_t name);
 	CGfxMeshPtr NewMesh(const char *szFileName, uint32_t instanceFormat);
 
 	CGfxTexture2DPtr NewTexture2D(uint32_t name);
@@ -173,8 +173,8 @@ public:
 	bool CmdClearDepth(CGfxCommandBufferPtr &ptrCommandBuffer, float depth);
 	bool CmdClearColor(CGfxCommandBufferPtr &ptrCommandBuffer, float red, float green, float blue, float alpha);
 
-	bool CmdDrawInstance(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxMeshPtr &ptrMesh, const uint8_t *pInstanceBuffer, uint32_t size);
-	bool CmdDrawIndirect(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxMeshPtr &ptrMesh, const uint8_t *pInstanceBuffer, uint32_t size);
+	bool CmdDrawInstance(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxMeshPtr &ptrMesh, const int indexDraw, const uint8_t *pInstanceBuffer, uint32_t size);
+	bool CmdDrawIndirect(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxMeshPtr &ptrMesh, const int indexDraw, const uint8_t *pInstanceBuffer, uint32_t size);
 	bool CmdDrawScreen(CGfxCommandBufferPtr &ptrCommandBuffer);
 
 	bool CmdExecute(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxCommandBufferPtr &ptrSecondaryCommandBuffer);

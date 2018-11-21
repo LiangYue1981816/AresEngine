@@ -94,9 +94,9 @@ CGfxMaterialPtr CGLES3Renderer::NewMaterial(const char *szFileName)
 	return m_pMaterialManager->LoadMaterial(szFileName);
 }
 
-CGfxMeshPtr CGLES3Renderer::NewMesh(uint32_t name, uint32_t instanceFormat)
+CGfxMeshPtr CGLES3Renderer::NewMesh(uint32_t name)
 {
-	return m_pMeshManager->CreateMesh(name, instanceFormat);
+	return m_pMeshManager->CreateMesh(name);
 }
 
 CGfxMeshPtr CGLES3Renderer::NewMesh(const char *szFileName, uint32_t instanceFormat)
@@ -304,26 +304,26 @@ bool CGLES3Renderer::CmdClearColor(CGfxCommandBufferPtr &ptrCommandBuffer, float
 	return ptrCommandBuffer->CmdClearColor(red, green, blue, alpha);
 }
 
-bool CGLES3Renderer::CmdDrawInstance(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxMeshPtr &ptrMesh, const uint8_t *pInstanceBuffer, uint32_t size)
+bool CGLES3Renderer::CmdDrawInstance(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxMeshPtr &ptrMesh, const int indexDraw, const uint8_t *pInstanceBuffer, uint32_t size)
 {
-	if (ptrCommandBuffer->CmdBindMesh(ptrMesh, pInstanceBuffer, size) == false) {
+	if (ptrCommandBuffer->CmdBindMesh(ptrMesh, indexDraw, pInstanceBuffer, size) == false) {
 		return false;
 	}
 
-	if (ptrCommandBuffer->CmdDrawInstance(GL_TRIANGLES, ptrMesh->GetIndexType(), 0, ptrMesh->GetIndexCount(), size / GetInstanceStride(ptrMesh->GetInstanceFormat())) == false) {
+	if (ptrCommandBuffer->CmdDrawInstance(GL_TRIANGLES, ptrMesh->GetIndexType(), ptrMesh->GetIndexOffset(indexDraw), ptrMesh->GetIndexCount(indexDraw), size / GetInstanceStride(ptrMesh->GetInstanceFormat())) == false) {
 		return false;
 	}
 
 	return true;
 }
 
-bool CGLES3Renderer::CmdDrawIndirect(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxMeshPtr &ptrMesh, const uint8_t *pInstanceBuffer, uint32_t size)
+bool CGLES3Renderer::CmdDrawIndirect(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxMeshPtr &ptrMesh, const int indexDraw, const uint8_t *pInstanceBuffer, uint32_t size)
 {
-	if (ptrCommandBuffer->CmdBindMesh(ptrMesh, pInstanceBuffer, size) == false) {
+	if (ptrCommandBuffer->CmdBindMesh(ptrMesh, indexDraw, pInstanceBuffer, size) == false) {
 		return false;
 	}
 
-	if (ptrCommandBuffer->CmdDrawIndirect(GL_TRIANGLES, ptrMesh->GetIndexType(), 0) == false) {
+	if (ptrCommandBuffer->CmdDrawIndirect(GL_TRIANGLES, ptrMesh->GetIndexType(), ptrMesh->GetDrawCommandOffset(indexDraw)) == false) {
 		return false;
 	}
 

@@ -27,7 +27,7 @@ public:
 	bool CmdBindMaterialPass(const CGfxMaterialPtr &ptrMaterial, uint32_t namePass);
 	bool CmdBindUniformEngine(const CGfxUniformEnginePtr &ptrUniformEngine);
 	bool CmdBindUniformCamera(const CGfxUniformCameraPtr &ptrUniformCamera);
-	bool CmdBindMesh(const CGfxMeshPtr &ptrMesh, const uint8_t *pInstanceBuffer, uint32_t size);
+	bool CmdBindMesh(const CGfxMeshPtr &ptrMesh, const int indexDraw, const uint8_t *pInstanceBuffer, uint32_t size);
 
 	bool CmdUniform1i(const char *szName, int v0);
 	bool CmdUniform2i(const char *szName, int v0, int v1);

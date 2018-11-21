@@ -125,11 +125,15 @@ CTaskGraph::CTaskGraph(const char *szName, int priority)
 	for (int indexThread = 0; indexThread < THREAD_COUNT; indexThread++) {
 		int rcode = NO_ERROR;
 
+		/*
 		sched_param param;
 		pthread_attr_t attr;
 		rcode = pthread_attr_create(&attr, &param, SCHED_RR, priority);
 		rcode = pthread_create(&m_threads[indexThread], &attr, TaskThread, this);
 		rcode = pthread_attr_destroy(&attr);
+		/*/
+		rcode = pthread_create(&m_threads[indexThread], nullptr, TaskThread, this);
+		//*/
 
 		char szThreadName[_MAX_STRING];
 		sprintf(szThreadName, "%s_%d(%2.2d)", szName, indexThread, priority);

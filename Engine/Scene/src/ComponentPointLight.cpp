@@ -31,7 +31,6 @@ void CComponentPointLight::SetMaterial(const CGfxMaterialPtr &ptrMaterial)
 void CComponentPointLight::SetMesh(const CGfxMeshPtr &ptrMesh)
 {
 	m_ptrMesh = ptrMesh;
-	m_localAABB = ptrMesh.IsValid() ? ptrMesh->GetLocalAABB() : glm::aabb();
 }
 
 void CComponentPointLight::SetColor(float red, float green, float blue)
@@ -44,11 +43,6 @@ void CComponentPointLight::SetAttenuation(float linear, float square, float cons
 	m_instanceData.attenuation = glm::vec4(linear, square, constant, 0.0f);
 }
 
-glm::aabb CComponentPointLight::GetLocalAABB(void)
-{
-	return m_localAABB;
-}
-
 glm::aabb CComponentPointLight::GetWorldAABB(void)
 {
 	return m_worldAABB;
@@ -56,13 +50,13 @@ glm::aabb CComponentPointLight::GetWorldAABB(void)
 
 void CComponentPointLight::TaskUpdate(float gameTime, float deltaTime)
 {
-	m_worldAABB = m_pParentNode ? m_localAABB * m_pParentNode->GetWorldTransform() : glm::aabb();
+	m_worldAABB = m_pParentNode && m_ptrMesh.IsValid() ? m_ptrMesh->GetLocalAABB(0) * m_pParentNode->GetWorldTransform() : glm::aabb();
 	m_instanceData.transformMatrix = m_pParentNode ? m_pParentNode->GetWorldTransform() : glm::mat4();
 }
 
 void CComponentPointLight::TaskUpdateCamera(CGfxCamera *pCamera, int indexThread, int indexQueue)
 {
 	if (pCamera->IsVisible(m_worldAABB)) {
-		pCamera->Add(indexThread, indexQueue, m_ptrMaterial, m_ptrMesh, -1, (const uint8_t *)&m_instanceData, sizeof(m_instanceData));
+		pCamera->Add(indexThread, indexQueue, m_ptrMaterial, m_ptrMesh, 0, (const uint8_t *)&m_instanceData, sizeof(m_instanceData));
 	}
 }
