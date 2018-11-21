@@ -72,6 +72,22 @@ RET:
 }
 
 
+static void atomic_spin_init(std::atomic_flag *flag)
+{
+	flag->clear();
+}
+
+static void atomic_spin_lock(std::atomic_flag *flag)
+{
+	while (flag->test_and_set(std::memory_order_acquire));
+}
+
+static void atomic_spin_unlock(std::atomic_flag *flag)
+{
+	flag->clear(std::memory_order_release);
+}
+
+
 CTask::CTask(void)
 	: m_pTaskParams(nullptr)
 	, m_pTaskEventSignal(nullptr)
@@ -120,7 +136,7 @@ CTaskGraph::CTaskGraph(const char *szName)
 	event_init(&m_eventReady, 1);
 	event_init(&m_eventFinish, 1);
 	event_init(&m_eventDispatch, 0);
-	pthread_mutex_init(&m_mutexTaskList, nullptr);
+	atomic_spin_init(&m_lockTaskList);
 
 	for (int indexThread = 0; indexThread < THREAD_COUNT; indexThread++) {
 		char szThreadName[_MAX_STRING];
@@ -143,7 +159,6 @@ CTaskGraph::~CTaskGraph(void)
 	event_destroy(&m_eventReady);
 	event_destroy(&m_eventFinish);
 	event_destroy(&m_eventDispatch);
-	pthread_mutex_destroy(&m_mutexTaskList);
 }
 
 void CTaskGraph::Task(CTask *pTask, void *pParams, event_t *pEventSignal, event_t *pEventWait)
@@ -151,13 +166,13 @@ void CTaskGraph::Task(CTask *pTask, void *pParams, event_t *pEventSignal, event_
 	pTask->SetTaskParams(pParams);
 	pTask->SetTaskEventSignal(pEventSignal);
 
-	pthread_mutex_lock(&m_mutexTaskList);
+	atomic_spin_lock(&m_lockTaskList);
 	{
 		pTask->pNext = m_pTaskListHeads[pEventWait];
 		m_pTaskListHeads[pEventWait] = pTask;
 		m_pTaskListDependence[pEventWait] = pEventSignal;
 	}
-	pthread_mutex_unlock(&m_mutexTaskList);
+	atomic_spin_unlock(&m_lockTaskList);
 }
 
 void CTaskGraph::Dispatch(void)
@@ -206,7 +221,7 @@ void* CTaskGraph::TaskThread(void *pParams)
 						bool bFinish = false;
 						CTask *pTask = nullptr;
 
-						pthread_mutex_lock(&pTaskGraph->m_mutexTaskList);
+						atomic_spin_lock(&pTaskGraph->m_lockTaskList);
 						{
 							if (*ppTaskListHead) {
 								pTask = *ppTaskListHead;
@@ -216,7 +231,7 @@ void* CTaskGraph::TaskThread(void *pParams)
 								bFinish = true;
 							}
 						}
-						pthread_mutex_unlock(&pTaskGraph->m_mutexTaskList);
+						atomic_spin_unlock(&pTaskGraph->m_lockTaskList);
 
 						if (pTask) {
 							pTask->TaskFunc(pTask->GetTaskParams());

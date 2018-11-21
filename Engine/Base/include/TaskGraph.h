@@ -56,7 +56,7 @@ private:
 	pthread_t m_threads[THREAD_COUNT];
 
 private:
-	pthread_mutex_t m_mutexTaskList;
+	std::atomic_flag m_lockTaskList;
 	eastl::unordered_map<event_t*, CTask*> m_pTaskListHeads;
 	eastl::unordered_map<event_t*, event_t*> m_pTaskListDependence;
 };
