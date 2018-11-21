@@ -211,9 +211,12 @@ void CScene::FreeNode(CSceneNode *pNode)
 
 void CScene::Free(void)
 {
-	for (const auto &itNode : m_pNodes) {
-		FreeNode(itNode.second);
+	const eastl::unordered_map<uint32_t, CSceneNode*> pNodes = m_pNodes;
+
+	for (const auto &itNode : pNodes) {
+		m_pSceneManager->DestroyNode(itNode.second);
 	}
 
 	m_pNodes.clear();
+
 }
