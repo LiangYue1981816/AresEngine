@@ -26,6 +26,12 @@ CSceneNode* CScene::GetRootNode(void) const
 	return m_pRootNode;
 }
 
+CSceneNode* CScene::GetNode(uint32_t name) const
+{
+	const auto &itNode = m_pNodes.find(name);
+	return itNode != m_pNodes.end() ? itNode->second : nullptr;
+}
+
 bool CScene::AttachNode(CSceneNode *pNode)
 {
 	if (m_pNodes.find(pNode->GetName()) == m_pNodes.end()) {
@@ -46,12 +52,6 @@ bool CScene::DetachNode(CSceneNode *pNode)
 	else {
 		return false;
 	}
-}
-
-CSceneNode* CScene::GetNode(uint32_t name) const
-{
-	const auto &itNode = m_pNodes.find(name);
-	return itNode != m_pNodes.end() ? itNode->second : nullptr;
 }
 
 bool CScene::LoadMesh(const char *szFileName)

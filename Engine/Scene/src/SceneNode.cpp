@@ -21,11 +21,8 @@ CSceneNode::CSceneNode(uint32_t name)
 
 CSceneNode::~CSceneNode(void)
 {
-	DetachComponentMeshAll();
-	DetachComponentSkinAll();
-	DetachComponentParticleAll();
-
 	DetachNodeAll();
+	DetachComponentAll();
 
 	if (m_pParentNode) {
 		m_pParentNode->DetachNode(this);
@@ -150,7 +147,7 @@ void CSceneNode::DetachComponentMeshAll(void)
 	DetachComponentAll(m_ptrComponentMeshs);
 }
 
-CComponentMeshPtr CSceneNode::GetComponentMesh(uint32_t name)
+CComponentMeshPtr CSceneNode::GetComponentMesh(uint32_t name) const
 {
 	return GetComponent(name, m_ptrComponentMeshs);
 }
@@ -170,7 +167,7 @@ void CSceneNode::DetachComponentSkinAll(void)
 	DetachComponentAll(m_ptrComponentSkins);
 }
 
-CComponentSkinPtr CSceneNode::GetComponentSkin(uint32_t name)
+CComponentSkinPtr CSceneNode::GetComponentSkin(uint32_t name) const
 {
 	return GetComponent(name, m_ptrComponentSkins);
 }
@@ -190,7 +187,7 @@ void CSceneNode::DetachComponentParticleAll(void)
 	DetachComponentAll(m_ptrComponentParticles);
 }
 
-CComponentParticlePtr CSceneNode::GetComponentParticle(uint32_t name)
+CComponentParticlePtr CSceneNode::GetComponentParticle(uint32_t name) const
 {
 	return GetComponent(name, m_ptrComponentParticles);
 }
@@ -210,9 +207,17 @@ void CSceneNode::DetachComponentPointLightAll(void)
 	DetachComponentAll(m_ptrComponentPointLights);
 }
 
-CComponentPointLightPtr CSceneNode::GetComponentPointLight(uint32_t name)
+CComponentPointLightPtr CSceneNode::GetComponentPointLight(uint32_t name) const
 {
 	return GetComponent(name, m_ptrComponentPointLights);
+}
+
+void CSceneNode::DetachComponentAll(void)
+{
+	DetachComponentMeshAll();
+	DetachComponentSkinAll();
+	DetachComponentParticleAll();
+	DetachComponentPointLightAll();
 }
 
 template<class T>
@@ -256,7 +261,7 @@ void CSceneNode::DetachComponentAll(eastl::unordered_map<uint32_t, CComponentPtr
 }
 
 template<class T>
-CComponentPtr<T> CSceneNode::GetComponent(uint32_t name, eastl::unordered_map<uint32_t, CComponentPtr<T>> &container)
+CComponentPtr<T> CSceneNode::GetComponent(uint32_t name, const eastl::unordered_map<uint32_t, CComponentPtr<T>> &container) const
 {
 	const auto &itComponent = container.find(name);
 	return itComponent != container.end() ? itComponent->second : CComponentPtr<T>();

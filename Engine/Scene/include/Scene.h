@@ -16,11 +16,11 @@ private:
 public:
 	uint32_t GetName(void) const;
 	CSceneNode* GetRootNode(void) const;
+	CSceneNode* GetNode(uint32_t name) const;
 
-public:
+private:
 	bool AttachNode(CSceneNode *pNode);
 	bool DetachNode(CSceneNode *pNode);
-	CSceneNode* GetNode(uint32_t name) const;
 
 public:
 	bool LoadMesh(const char *szFileName);

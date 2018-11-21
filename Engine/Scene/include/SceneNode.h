@@ -37,22 +37,24 @@ public:
 	bool AttachComponentMesh(CComponentMeshPtr &ptrComponentMesh);
 	bool DetachComponentMesh(CComponentMeshPtr &ptrComponentMesh);
 	void DetachComponentMeshAll(void);
-	CComponentMeshPtr GetComponentMesh(uint32_t name);
+	CComponentMeshPtr GetComponentMesh(uint32_t name) const;
 
 	bool AttachComponentSkin(CComponentSkinPtr &ptrComponentSkin);
 	bool DetachComponentSkin(CComponentSkinPtr &ptrComponentSkin);
 	void DetachComponentSkinAll(void);
-	CComponentSkinPtr GetComponentSkin(uint32_t name);
+	CComponentSkinPtr GetComponentSkin(uint32_t name) const;
 
 	bool AttachComponentParticle(CComponentParticlePtr &ptrComponentParticle);
 	bool DetachComponentParticle(CComponentParticlePtr &ptrComponentParticle);
 	void DetachComponentParticleAll(void);
-	CComponentParticlePtr GetComponentParticle(uint32_t name);
+	CComponentParticlePtr GetComponentParticle(uint32_t name) const;
 
 	bool AttachComponentPointLight(CComponentPointLightPtr &ptrComponentPointLight);
 	bool DetachComponentPointLight(CComponentPointLightPtr &ptrComponentPointLight);
 	void DetachComponentPointLightAll(void);
-	CComponentPointLightPtr GetComponentPointLight(uint32_t name);
+	CComponentPointLightPtr GetComponentPointLight(uint32_t name) const;
+
+	void DetachComponentAll(void);
 
 private:
 	template<class T>
@@ -65,7 +67,7 @@ private:
 	void DetachComponentAll(eastl::unordered_map<uint32_t, CComponentPtr<T>> &container);
 
 	template<class T>
-	CComponentPtr<T> GetComponent(uint32_t name, eastl::unordered_map<uint32_t, CComponentPtr<T>> &container);
+	CComponentPtr<T> GetComponent(uint32_t name, const eastl::unordered_map<uint32_t, CComponentPtr<T>> &container) const;
 
 public:
 	void Identity(void);
