@@ -8,7 +8,9 @@ CSceneNode::CSceneNode(uint32_t name, CSceneManager *pSceneManager)
 	, m_pSceneManager(pSceneManager)
 
 	, m_bActive(true)
-	, m_bNeedUpdateTransform(false)
+	, m_bUpdateTransform(false)
+	, m_nUpdateTransformCount(0)
+	, m_nParentUpdateTransformCount(0)
 {
 	Identity();
 }
@@ -75,7 +77,7 @@ bool CSceneNode::AttachNode(CSceneNode *pNode)
 	m_pChildNodes.insert(eastl::pair<uint32_t, CSceneNode*>(pNode->m_name, pNode));
 
 	pNode->m_pParentNode = this;
-	pNode->m_bNeedUpdateTransform = true;
+	pNode->m_nParentUpdateTransformCount = 0;
 
 	return true;
 }
@@ -97,7 +99,7 @@ bool CSceneNode::DetachNode(CSceneNode *pNode, bool bDestroy)
 	m_pChildNodes.erase(pNode->m_name);
 
 	pNode->m_pParentNode = nullptr;
-	pNode->m_bNeedUpdateTransform = true;
+	pNode->m_nParentUpdateTransformCount = 0;
 
 	if (bDestroy) {
 		m_pSceneManager->DestroyNode(pNode);
@@ -110,7 +112,7 @@ void CSceneNode::DetachNodeAll(bool bDestroy)
 {
 	for (const auto &itNode : m_pChildNodes) {
 		itNode.second->m_pParentNode = nullptr;
-		itNode.second->m_bNeedUpdateTransform = true;
+		itNode.second->m_nParentUpdateTransformCount = 0;
 
 		if (bDestroy) {
 			m_pSceneManager->DestroyNode(itNode.second);
@@ -270,25 +272,25 @@ void CSceneNode::Identity(void)
 
 void CSceneNode::SetLocalScale(float x, float y, float z)
 {
-	m_bNeedUpdateTransform = true;
+	m_bUpdateTransform = true;
 	m_localScale = glm::vec3(x, y, z);
 }
 
 void CSceneNode::SetLocalPosition(float x, float y, float z)
 {
-	m_bNeedUpdateTransform = true;
+	m_bUpdateTransform = true;
 	m_localPosition = glm::vec3(x, y, z);
 }
 
 void CSceneNode::SetLocalOrientation(float x, float y, float z, float w)
 {
-	m_bNeedUpdateTransform = true;
+	m_bUpdateTransform = true;
 	m_localOrientation = glm::quat(w, x, y, z);
 }
 
 void CSceneNode::SetLocalDirection(float dirx, float diry, float dirz, float upx, float upy, float upz)
 {
-	m_bNeedUpdateTransform = true;
+	m_bUpdateTransform = true;
 	m_localOrientation = glm::toQuat(glm::lookAt(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(dirx, diry, dirz), glm::vec3(upx, upy, upz)));
 }
 
@@ -365,65 +367,41 @@ const glm::mat4& CSceneNode::GetLocalTransform(void) const
 
 const glm::vec3& CSceneNode::GetWorldScale(void)
 {
-	UpdateTransformImmediately();
+	UpdateTransform();
 	return m_worldScale;
 }
 
 const glm::vec3& CSceneNode::GetWorldPosition(void)
 {
-	UpdateTransformImmediately();
+	UpdateTransform();
 	return m_worldPosition;
 }
 
 const glm::quat& CSceneNode::GetWorldOrientation(void)
 {
-	UpdateTransformImmediately();
+	UpdateTransform();
 	return m_worldOrientation;
 }
 
 const glm::mat4& CSceneNode::GetWorldTransform(void)
 {
-	UpdateTransformImmediately();
+	UpdateTransform();
 	return m_worldTransform;
 }
 
-bool CSceneNode::UpdateTransform(bool bParentUpdate)
-{
-	bool bUpdate = bParentUpdate || m_bNeedUpdateTransform;
-
-	if (bUpdate) {
-		if (m_bNeedUpdateTransform) {
-			m_bNeedUpdateTransform = false;
-			m_localTransform = glm::translate(glm::mat4(), m_localPosition) * glm::toMat4(m_localOrientation) * glm::scale(glm::mat4(), m_localScale);
-		}
-
-		if (m_pParentNode) {
-			m_worldTransform = m_pParentNode->m_worldTransform * m_localTransform;
-		}
-		else {
-			m_worldTransform = m_localTransform;
-		}
-	}
-
-	for (const auto &itNode : m_pChildNodes) {
-		itNode.second->UpdateTransform(bUpdate);
-	}
-
-	return bUpdate;
-}
-
-bool CSceneNode::UpdateTransformImmediately(void)
+bool CSceneNode::UpdateTransform(void)
 {
 	bool bUpdateParent = false;
-	bool bUpdateCurrent = m_bNeedUpdateTransform;
+	bool bUpdateCurrent = false;
 
-	if (m_bNeedUpdateTransform) {
-		m_bNeedUpdateTransform = false;
+	if (m_bUpdateTransform) {
 		m_localTransform = glm::translate(glm::mat4(), m_localPosition) * glm::toMat4(m_localOrientation) * glm::scale(glm::mat4(), m_localScale);
+		bUpdateCurrent = m_bUpdateTransform;
 	}
 
 	if (m_pParentNode) {
-		bUpdateParent = m_pParentNode->UpdateTransformImmediately();
+		m_pParentNode->UpdateTransform();
+		bUpdateParent = m_nParentUpdateTransformCount != m_pParentNode->m_nUpdateTransformCount;
 	}
 
 	if (bUpdateParent || bUpdateCurrent) {
@@ -437,6 +415,10 @@ bool CSceneNode::UpdateTransformImmediately(void)
 		m_worldScale = glm::vec3(m_worldTransform * glm::vec4(1.0f, 1.0f, 1.0f, 0.0f));
 		m_worldPosition = glm::vec3(m_worldTransform * glm::vec4(0.0f, 0.0f, 0.0f, 1.0f));
 		m_worldOrientation = glm::toQuat(m_worldTransform);
+
+		m_bUpdateTransform = false;
+		m_nUpdateTransformCount += 1;
+		m_nParentUpdateTransformCount = m_pParentNode ? m_pParentNode->m_nUpdateTransformCount : m_nParentUpdateTransformCount;
 	}
 
 	return bUpdateParent || bUpdateCurrent;

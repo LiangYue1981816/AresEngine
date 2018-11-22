@@ -93,8 +93,7 @@ public:
 	const glm::mat4& GetWorldTransform(void);
 
 private:
-	bool UpdateTransform(bool bParentUpdate);
-	bool UpdateTransformImmediately(void);
+	bool UpdateTransform(void);
 
 
 private:
@@ -112,7 +111,10 @@ private:
 	glm::vec3 m_worldPosition;
 	glm::quat m_worldOrientation;
 	glm::mat4 m_worldTransform;
-	bool m_bNeedUpdateTransform;
+
+	bool m_bUpdateTransform;
+	uint32_t m_nUpdateTransformCount;
+	uint32_t m_nParentUpdateTransformCount;
 
 private:
 	eastl::unordered_map<uint32_t, CSceneNode*> m_pChildNodes;
