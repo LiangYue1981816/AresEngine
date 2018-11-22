@@ -1,27 +1,21 @@
 #include "SceneHeader.h"
 
 
-CSceneNode::CSceneNode(uint32_t name, CScene *pScene)
+CSceneNode::CSceneNode(uint32_t name, CSceneManager *pSceneManager)
 	: m_name(name)
-	, m_pScene(pScene)
+
+	, m_pParentNode(nullptr)
+	, m_pSceneManager(pSceneManager)
 
 	, m_bActive(true)
 	, m_bNeedUpdateTransform(false)
-
-	, m_pParentNode(nullptr)
 {
 	Identity();
 }
 
-CSceneNode::CSceneNode(uint32_t name)
-	: CSceneNode(name, nullptr)
-{
-
-}
-
 CSceneNode::~CSceneNode(void)
 {
-	DetachNodeAll();
+	DetachNodeAll(true);
 	DetachComponentAll();
 
 	if (m_pParentNode) {
@@ -39,6 +33,11 @@ CSceneNode* CSceneNode::GetParent(void) const
 	return m_pParentNode;
 }
 
+CSceneManager* CSceneNode::GetSceneManager(void) const
+{
+	return m_pSceneManager;
+}
+
 void CSceneNode::SetActive(bool bActive)
 {
 	m_bActive = bActive;
@@ -46,7 +45,17 @@ void CSceneNode::SetActive(bool bActive)
 
 bool CSceneNode::IsActive(void) const
 {
-	return m_pParentNode ? m_bActive && m_pParentNode->IsActive() : m_bActive;
+	if (m_bActive) {
+		if (m_pParentNode) {
+			return m_pParentNode->IsActive();
+		}
+		else {
+			return true;
+		}
+	}
+	else {
+		return false;
+	}
 }
 
 bool CSceneNode::AttachNode(CSceneNode *pNode)
@@ -63,24 +72,15 @@ bool CSceneNode::AttachNode(CSceneNode *pNode)
 		return false;
 	}
 
-	if (pNode->m_pScene != nullptr) {
-		return false;
-	}
+	m_pChildNodes.insert(eastl::pair<uint32_t, CSceneNode*>(pNode->m_name, pNode));
 
-	if (m_pScene == nullptr || m_pScene->AttachNode(pNode) == false) {
-		return false;
-	}
-
-	pNode->m_pScene = m_pScene;
 	pNode->m_pParentNode = this;
 	pNode->m_bNeedUpdateTransform = true;
-
-	m_pChildNodes.insert(eastl::pair<uint32_t, CSceneNode*>(pNode->m_name, pNode));
 
 	return true;
 }
 
-bool CSceneNode::DetachNode(CSceneNode *pNode)
+bool CSceneNode::DetachNode(CSceneNode *pNode, bool bDestroy)
 {
 	if (pNode == nullptr) {
 		return false;
@@ -94,33 +94,27 @@ bool CSceneNode::DetachNode(CSceneNode *pNode)
 		return false;
 	}
 
-	if (pNode->m_pScene != m_pScene) {
-		return false;
-	}
+	m_pChildNodes.erase(pNode->m_name);
 
-	if (m_pScene == nullptr || m_pScene->DetachNode(pNode) == false) {
-		return false;
-	}
-
-	pNode->m_pScene = nullptr;
 	pNode->m_pParentNode = nullptr;
 	pNode->m_bNeedUpdateTransform = true;
 
-	m_pChildNodes.erase(pNode->m_name);
+	if (bDestroy) {
+		m_pSceneManager->DestroyNode(pNode);
+	}
 
 	return true;
 }
 
-void CSceneNode::DetachNodeAll(void)
+void CSceneNode::DetachNodeAll(bool bDestroy)
 {
 	for (const auto &itNode : m_pChildNodes) {
-		if (m_pScene) {
-			m_pScene->DetachNode(itNode.second);
-		}
-
-		itNode.second->m_pScene = nullptr;
 		itNode.second->m_pParentNode = nullptr;
 		itNode.second->m_bNeedUpdateTransform = true;
+
+		if (bDestroy) {
+			m_pSceneManager->DestroyNode(itNode.second);
+		}
 	}
 
 	m_pChildNodes.clear();

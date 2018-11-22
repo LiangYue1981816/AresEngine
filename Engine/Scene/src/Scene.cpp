@@ -7,12 +7,11 @@ CScene::CScene(uint32_t name, CSceneManager *pSceneManager)
 	, m_pRootNode(nullptr)
 	, m_pSceneManager(pSceneManager)
 {
-	m_pRootNode = new CSceneNode(HashValue("Root"), this);
+	m_pRootNode = new CSceneNode(HashValue("Root"), m_pSceneManager);
 }
 
 CScene::~CScene(void)
 {
-	Free();
 	delete m_pRootNode;
 }
 
@@ -26,35 +25,12 @@ CSceneNode* CScene::GetRootNode(void) const
 	return m_pRootNode;
 }
 
-CSceneNode* CScene::GetNode(uint32_t name) const
+CSceneManager* CScene::GetSceneManager(void) const
 {
-	const auto &itNode = m_pNodes.find(name);
-	return itNode != m_pNodes.end() ? itNode->second : nullptr;
+	return m_pSceneManager;
 }
 
-bool CScene::AttachNode(CSceneNode *pNode)
-{
-	if (m_pNodes.find(pNode->GetName()) == m_pNodes.end()) {
-		m_pNodes.insert(eastl::pair<uint32_t, CSceneNode*>(pNode->GetName(), pNode));
-		return true;
-	}
-	else {
-		return false;
-	}
-}
-
-bool CScene::DetachNode(CSceneNode *pNode)
-{
-	if (m_pNodes.find(pNode->GetName()) != m_pNodes.end()) {
-		m_pNodes.erase(pNode->GetName());
-		return true;
-	}
-	else {
-		return false;
-	}
-}
-
-bool CScene::LoadMesh(const char *szFileName)
+CSceneNode* CScene::LoadMesh(const char *szFileName, CSceneNode *pParentSceneNode)
 {
 	/*
 	<Mesh mesh="sponza.mesh">
@@ -65,6 +41,13 @@ bool CScene::LoadMesh(const char *szFileName)
 		</Node>
 	</<Mesh>
 	*/
+
+	CSceneNode *pCurrentSceneNode = nullptr;
+
+	if (pParentSceneNode == nullptr) {
+		pParentSceneNode = m_pRootNode;
+	}
+
 	do {
 		CStream stream;
 		if (FileManager()->LoadStream(szFileName, &stream) == false) break;
@@ -74,18 +57,21 @@ bool CScene::LoadMesh(const char *szFileName)
 
 		TiXmlNode *pMeshNode = xmlDoc.FirstChild("Mesh");
 		if (pMeshNode == nullptr) break;
-		if (LoadMesh(pMeshNode) == false) break;
 
-		return true;
+		pCurrentSceneNode = m_pSceneManager->CreateNode(m_pSceneManager->GetNextNodeName());
+		if (LoadMesh(pMeshNode, pCurrentSceneNode) == false) break;
+		if (pParentSceneNode->AttachNode(pCurrentSceneNode) == false) break;
+
+		return pCurrentSceneNode;
 	} while (false);
 
-	return false;
+	FreeNode(pCurrentSceneNode);
+	return nullptr;
 }
 
-bool CScene::LoadMesh(TiXmlNode *pMeshNode)
+bool CScene::LoadMesh(TiXmlNode *pMeshNode, CSceneNode *pParentSceneNode)
 {
 	bool rcode = true;
-	CSceneNode *pCurrentSceneNode = nullptr;
 
 	do {
 		if (TiXmlNode *pNode = pMeshNode->FirstChild("Node")) {
@@ -101,11 +87,8 @@ bool CScene::LoadMesh(TiXmlNode *pMeshNode)
 				break;
 			}
 
-			pCurrentSceneNode = m_pSceneManager->CreateNode(m_pSceneManager->GetNextNodeName());
-			if (m_pRootNode->AttachNode(pCurrentSceneNode) == false) break;
-
 			do {
-				if (LoadNode(ptrMesh, pNode, pCurrentSceneNode) == false) {
+				if (LoadNode(ptrMesh, pNode, pParentSceneNode) == false) {
 					rcode = false;
 					break;
 				}
@@ -116,10 +99,6 @@ bool CScene::LoadMesh(TiXmlNode *pMeshNode)
 			break;
 		}
 	} while (false);
-
-	if (rcode == false) {
-		FreeNode(pCurrentSceneNode);
-	}
 
 	return rcode;
 }
@@ -144,12 +123,12 @@ bool CScene::LoadNode(const CGfxMeshPtr &ptrMesh, TiXmlNode *pNode, CSceneNode *
 			pCurrentSceneNode->SetLocalPosition(translation[0], translation[1], translation[2]);
 		}
 
-		if (pParentSceneNode->AttachNode(pCurrentSceneNode) == false) {
+		if (LoadDraw(ptrMesh, pNode, pCurrentSceneNode) == false) {
 			rcode = false;
 			break;
 		}
 
-		if (LoadDraw(ptrMesh, pNode, pCurrentSceneNode) == false) {
+		if (pParentSceneNode->AttachNode(pCurrentSceneNode) == false) {
 			rcode = false;
 			break;
 		}
@@ -204,19 +183,5 @@ bool CScene::LoadDraw(const CGfxMeshPtr &ptrMesh, TiXmlNode *pNode, CSceneNode *
 
 void CScene::FreeNode(CSceneNode *pNode)
 {
-	if (pNode) {
-		m_pSceneManager->DestroyNode(pNode);
-	}
-}
-
-void CScene::Free(void)
-{
-	const eastl::unordered_map<uint32_t, CSceneNode*> pNodes = m_pNodes;
-
-	for (const auto &itNode : pNodes) {
-		m_pSceneManager->DestroyNode(itNode.second);
-	}
-
-	m_pNodes.clear();
-
+	m_pSceneManager->DestroyNode(pNode);
 }

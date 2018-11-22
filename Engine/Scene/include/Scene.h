@@ -16,19 +16,14 @@ private:
 public:
 	uint32_t GetName(void) const;
 	CSceneNode* GetRootNode(void) const;
-	CSceneNode* GetNode(uint32_t name) const;
-
-private:
-	bool AttachNode(CSceneNode *pNode);
-	bool DetachNode(CSceneNode *pNode);
+	CSceneManager* GetSceneManager(void) const;
 
 public:
-	bool LoadMesh(const char *szFileName);
+	CSceneNode* LoadMesh(const char *szFileName, CSceneNode *pParentSceneNode = nullptr);
 	void FreeNode(CSceneNode *pNode);
-	void Free(void);
 
 private:
-	bool LoadMesh(TiXmlNode *pMeshNode);
+	bool LoadMesh(TiXmlNode *pMeshNode, CSceneNode *pParentSceneNode);
 	bool LoadNode(const CGfxMeshPtr &ptrMesh, TiXmlNode *pNode, CSceneNode *pParentSceneNode);
 	bool LoadDraw(const CGfxMeshPtr &ptrMesh, TiXmlNode *pNode, CSceneNode *pCurrentSceneNode);
 
@@ -38,8 +33,5 @@ private:
 
 private:
 	CSceneNode *m_pRootNode;
-	eastl::unordered_map<uint32_t, CSceneNode*> m_pNodes;
-
-private:
 	CSceneManager *m_pSceneManager;
 };

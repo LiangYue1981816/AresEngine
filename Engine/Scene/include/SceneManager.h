@@ -76,29 +76,28 @@ private:
 
 
 private:
+	CGfxCamera *m_pMainCamera;
+	CGfxCamera *m_pShadowCamera;
+
+	CGfxUniformEnginePtr m_ptrUniformEngine;
+
+private:
+	eastl::unordered_map<uint32_t, CScene*> m_pScenes;
+	eastl::unordered_map<uint32_t, CSceneNode*> m_pNodes;
+
 	CComponentManager<CComponentMesh> m_meshManager;
 	CComponentManager<CComponentSkin> m_skinManager;
 	CComponentManager<CComponentParticle> m_particleManager;
 	CComponentManager<CComponentPointLight> m_pointLightManager;
 
 private:
-	CGfxCamera *m_pMainCamera;
-	CGfxCamera *m_pShadowCamera;
-	CGfxUniformEnginePtr m_ptrUniformEngine;
-
-	eastl::unordered_map<uint32_t, CScene*> m_pScenes;
-	eastl::unordered_map<uint32_t, CSceneNode*> m_pNodes;
-
-private:
 	event_t m_eventUpdateLogicSkin;
 	event_t m_eventUpdateLogicParticle;
 	event_t m_eventUpdateLogicPointLight;
+	CTaskGraph m_taskGraphUpdateLogic;
 
 	event_t m_eventUpdateCameraSkin;
 	event_t m_eventUpdateCameraParticle;
 	event_t m_eventUpdateCameraPointLight;
-
-private:
-	CTaskGraph m_taskGraphUpdateLogic;
 	CTaskGraph m_taskGraphUpdateCamera;
 };

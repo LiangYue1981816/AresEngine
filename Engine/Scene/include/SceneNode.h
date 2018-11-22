@@ -13,15 +13,15 @@ class CALL_API CSceneNode
 	friend class CSceneManager;
 
 
-public:
-	CSceneNode(uint32_t name, CScene *pScene);
-	CSceneNode(uint32_t name);
+private:
+	CSceneNode(uint32_t name, CSceneManager *pSceneManager);
 	virtual ~CSceneNode(void);
 
 
 public:
 	uint32_t GetName(void) const;
 	CSceneNode* GetParent(void) const;
+	CSceneManager* GetSceneManager(void) const;
 
 public:
 	void SetActive(bool bActive);
@@ -29,8 +29,8 @@ public:
 
 public:
 	bool AttachNode(CSceneNode *pNode);
-	bool DetachNode(CSceneNode *pNode);
-	void DetachNodeAll(void);
+	bool DetachNode(CSceneNode *pNode, bool bDestroy = false);
+	void DetachNodeAll(bool bDestroy = false);
 	CSceneNode* GetNode(uint32_t name) const;
 
 public:
@@ -115,7 +115,6 @@ private:
 	bool m_bNeedUpdateTransform;
 
 private:
-	CSceneNode *m_pParentNode;
 	eastl::unordered_map<uint32_t, CSceneNode*> m_pChildNodes;
 	eastl::unordered_map<uint32_t, CComponentMeshPtr> m_ptrComponentMeshs;
 	eastl::unordered_map<uint32_t, CComponentSkinPtr> m_ptrComponentSkins;
@@ -123,5 +122,6 @@ private:
 	eastl::unordered_map<uint32_t, CComponentPointLightPtr> m_ptrComponentPointLights;
 
 private:
-	CScene *m_pScene;
+	CSceneNode *m_pParentNode;
+	CSceneManager *m_pSceneManager;
 };
