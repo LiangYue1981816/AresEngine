@@ -744,6 +744,9 @@
     <ClInclude Include="..\..\Engine\Engine\include\RenderSolutionForwardPlus.h">
       <Filter>Engine\Engine\Header Files\RenderSolution</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES31Shader.h">
+      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\ThirdParty\event\event.c">
@@ -1114,6 +1117,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Engine\Engine\src\RenderSolutionForwardPlus.cpp">
       <Filter>Engine\Engine\Source Files\RenderSolution</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES31Shader.cpp">
+      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
