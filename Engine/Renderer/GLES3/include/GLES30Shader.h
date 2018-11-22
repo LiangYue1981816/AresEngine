@@ -1,4 +1,4 @@
-#if GLES_VER == 310
+#if GLES_VER == 300
 
 #pragma once
 #include "GLES3Renderer.h"

@@ -1,3 +1,5 @@
+#if GLES_VER == 300
+
 #include "GfxHeader.h"
 
 
@@ -319,3 +321,5 @@ bool CGLES3PipelineBase::IsUniformBlockValid(uint32_t name) const
 
 	return false;
 }
+
+#endif

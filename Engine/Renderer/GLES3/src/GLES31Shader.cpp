@@ -1,3 +1,5 @@
+#if GLES_VER == 310
+
 #include "GfxHeader.h"
 
 
@@ -431,3 +433,5 @@ uint32_t CGLES3Shader::GetProgram(void) const
 {
 	return m_program;
 }
+
+#endif

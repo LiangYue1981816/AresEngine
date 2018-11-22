@@ -474,15 +474,6 @@
     <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3MeshManager.h">
       <Filter>Engine\Renderer\GLES3\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3PipelineBase.h">
-      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3PipelineCompute.h">
-      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3PipelineGraphics.h">
-      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3PipelineManager.h">
       <Filter>Engine\Renderer\GLES3\Header Files</Filter>
     </ClInclude>
@@ -499,9 +490,6 @@
       <Filter>Engine\Renderer\GLES3\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3SamplerManager.h">
-      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3Shader.h">
       <Filter>Engine\Renderer\GLES3\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3ShaderManager.h">
@@ -747,6 +735,27 @@
     <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES31Shader.h">
       <Filter>Engine\Renderer\GLES3\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES30Shader.h">
+      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES30PipelineBase.h">
+      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES30PipelineCompute.h">
+      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES30PipelineGraphics.h">
+      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES31PipelineBase.h">
+      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES31PipelineCompute.h">
+      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES31PipelineGraphics.h">
+      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\ThirdParty\event\event.c">
@@ -989,15 +998,6 @@
     <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3MeshManager.cpp">
       <Filter>Engine\Renderer\GLES3\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3PipelineBase.cpp">
-      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3PipelineCompute.cpp">
-      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3PipelineGraphics.cpp">
-      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3PipelineManager.cpp">
       <Filter>Engine\Renderer\GLES3\Source Files</Filter>
     </ClCompile>
@@ -1014,9 +1014,6 @@
       <Filter>Engine\Renderer\GLES3\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3SamplerManager.cpp">
-      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3Shader.cpp">
       <Filter>Engine\Renderer\GLES3\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3ShaderManager.cpp">
@@ -1119,6 +1116,27 @@
       <Filter>Engine\Engine\Source Files\RenderSolution</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES31Shader.cpp">
+      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES30Shader.cpp">
+      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES30PipelineBase.cpp">
+      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES30PipelineCompute.cpp">
+      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES30PipelineGraphics.cpp">
+      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES31PipelineBase.cpp">
+      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES31PipelineCompute.cpp">
+      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES31PipelineGraphics.cpp">
       <Filter>Engine\Renderer\GLES3\Source Files</Filter>
     </ClCompile>
   </ItemGroup>

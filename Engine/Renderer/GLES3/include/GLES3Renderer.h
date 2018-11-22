@@ -29,12 +29,16 @@
 #include "GLES3TextureCubeMap.h"
 #include "GLES3TextureManager.h"
 
-#include "GLES3Shader.h"
+#include "GLES30Shader.h"
+#include "GLES31Shader.h"
 #include "GLES3ShaderManager.h"
 
-#include "GLES3PipelineBase.h"
-#include "GLES3PipelineCompute.h"
-#include "GLES3PipelineGraphics.h"
+#include "GLES30PipelineBase.h"
+#include "GLES31PipelineBase.h"
+#include "GLES30PipelineCompute.h"
+#include "GLES31PipelineCompute.h"
+#include "GLES30PipelineGraphics.h"
+#include "GLES31PipelineGraphics.h"
 #include "GLES3PipelineManager.h"
 
 #include "GLES3Material.h"

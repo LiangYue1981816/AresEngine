@@ -1,3 +1,5 @@
+#if GLES_VER == 300
+
 #include "GfxHeader.h"
 
 
@@ -44,3 +46,5 @@ void CGLES3PipelineCompute::Bind(void *pParam)
 {
 	GLBindProgramPipeline(m_pipeline);
 }
+
+#endif
