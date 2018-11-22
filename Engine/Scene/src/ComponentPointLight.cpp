@@ -45,18 +45,21 @@ void CComponentPointLight::SetAttenuation(float linear, float square, float cons
 
 glm::aabb CComponentPointLight::GetWorldAABB(void)
 {
-	return m_worldAABB;
+	return m_pParentNode && m_ptrMesh.IsValid() ? m_ptrMesh->GetLocalAABB(0) * m_pParentNode->GetWorldTransform() : glm::aabb();
 }
 
 void CComponentPointLight::TaskUpdate(float gameTime, float deltaTime)
 {
-	m_worldAABB = m_pParentNode && m_ptrMesh.IsValid() ? m_ptrMesh->GetLocalAABB(0) * m_pParentNode->GetWorldTransform() : glm::aabb();
-	m_instanceData.transformMatrix = m_pParentNode ? m_pParentNode->GetWorldTransform() : glm::mat4();
+	if (m_pParentNode && m_pParentNode->IsActive()) {
+		m_instanceData.transformMatrix = m_pParentNode->GetWorldTransform();
+	}
 }
 
 void CComponentPointLight::TaskUpdateCamera(CGfxCamera *pCamera, int indexThread, int indexQueue)
 {
-	if (pCamera->IsVisible(m_worldAABB)) {
-		pCamera->Add(indexThread, indexQueue, m_ptrMaterial, m_ptrMesh, 0, (const uint8_t *)&m_instanceData, sizeof(m_instanceData));
+	if (m_pParentNode && m_pParentNode->IsActive()) {
+		if (pCamera->IsVisible(GetWorldAABB())) {
+			pCamera->Add(indexThread, indexQueue, m_ptrMaterial, m_ptrMesh, 0, (const uint8_t *)&m_instanceData, sizeof(m_instanceData));
+		}
 	}
 }

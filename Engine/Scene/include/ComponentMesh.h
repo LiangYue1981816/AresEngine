@@ -29,9 +29,6 @@ public:
 
 
 private:
-	glm::aabb m_worldAABB;
-
-private:
 	InstanceData m_instanceData;
 
 private:
