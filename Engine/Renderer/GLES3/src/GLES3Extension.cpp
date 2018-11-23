@@ -11,7 +11,7 @@ void glReadBuffers(int n, const uint32_t *bufs)
 
 uint32_t glGetShaderType(shader_kind kind)
 {
-	switch (kind) {
+	switch ((int)kind) {
 	case vertex_shader:
 		return GL_VERTEX_SHADER;
 	case fragment_shader:
@@ -27,7 +27,7 @@ uint32_t glGetShaderType(shader_kind kind)
 uint32_t glGetProgramStage(shader_kind kind)
 {
 #if GLES_VER == 310
-	switch (kind) {
+	switch ((int)kind) {
 	case vertex_shader:
 		return GL_VERTEX_SHADER_BIT;
 	case fragment_shader:
