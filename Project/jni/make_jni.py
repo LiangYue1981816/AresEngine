@@ -36,3 +36,4 @@ def ModuleFileList(moduleName, msvcProjectFileName, androidFileName):
 	return;
 	
 ModuleFileList("ENGINE_SRC_FILES", "../msvc/Engine.vcxproj", "./ENGINE_SRC_FILES.mk");
+ModuleFileList("GFX_RENDERER_SRC_FILES", "../msvc/GfxRenderer.vcxproj", "./GFX_RENDERER_SRC_FILES.mk");
