@@ -6,7 +6,7 @@ CGLES3DrawIndirectBuffer::CGLES3DrawIndirectBuffer(uint32_t count)
 	, m_buffer(0)
 {
 #if GLES_VER == 310
-	m_draws.resize(count);
+	m_draws.resize(m_count);
 
 	glGenBuffers(1, &m_buffer);
 	glBindBuffer(GL_DRAW_INDIRECT_BUFFER, m_buffer);
@@ -24,18 +24,7 @@ CGLES3DrawIndirectBuffer::~CGLES3DrawIndirectBuffer(void)
 
 bool CGLES3DrawIndirectBuffer::BufferData(size_t offset, size_t size, const void *pBuffer)
 {
-#if GLES_VER == 310
-	if (m_size < (uint32_t)(offset + size)) {
-		return false;
-	}
-
-	GLBindBuffer(GL_DRAW_INDIRECT_BUFFER, m_buffer);
-	glBufferSubData(GL_DRAW_INDIRECT_BUFFER, (int)offset, (uint32_t)size, pBuffer);
-
-	return true;
-#else
-	return true;
-#endif
+	return false;
 }
 
 bool CGLES3DrawIndirectBuffer::BufferData(int indexDraw, int instanceCount)
