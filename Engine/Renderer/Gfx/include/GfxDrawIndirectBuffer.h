@@ -3,11 +3,11 @@
 
 
 typedef struct DrawCommand {
-	int indexCount;
-	int instanceCount;
-	int firstIndex;
-	int baseVertex;
-	int reservedMustBeZero;
+	int indexCount = 0;
+	int instanceCount = 0;
+	int firstIndex = 0;
+	int baseVertex = 0;
+	int reservedMustBeZero = 0;
 } DrawCommand;
 
 class CALL_API CGfxDrawIndirectBuffer

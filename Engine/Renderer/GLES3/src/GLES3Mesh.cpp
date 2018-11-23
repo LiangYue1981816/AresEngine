@@ -84,7 +84,7 @@ bool CGLES3Mesh::Load(const char *szFileName, uint32_t instanceFormat)
 	CreateIndexBuffer(GL_UNSIGNED_INT, meshHeader.indexBufferSize, false, pIndexBuffer);
 	CreateVertexBuffer(0, meshHeader.format, meshHeader.vertexBufferSize, false, pVertexBuffer);
 	CreateVertexArrayObject(meshHeader.numDraws, 1, instanceFormat);
-//	CreateDrawIndirectBuffer(meshHeader.numDraws);
+	CreateDrawIndirectBuffer(meshHeader.numDraws);
 
 	for (int indexDraw = 0; indexDraw < (int)meshHeader.numDraws; indexDraw++) {
 		DrawIndirectBufferData(indexDraw, drawHeaders[indexDraw].baseVertex, drawHeaders[indexDraw].firstIndex, drawHeaders[indexDraw].indexCount, 0);

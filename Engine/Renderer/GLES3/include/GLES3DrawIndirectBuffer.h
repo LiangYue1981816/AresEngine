@@ -21,4 +21,5 @@ public:
 
 private:
 	uint32_t m_buffer;
+	eastl::vector<DrawCommand> m_draws;
 };

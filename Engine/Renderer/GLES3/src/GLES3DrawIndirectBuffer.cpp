@@ -6,6 +6,8 @@ CGLES3DrawIndirectBuffer::CGLES3DrawIndirectBuffer(uint32_t count)
 	, m_buffer(0)
 {
 #if GLES_VER == 310
+	m_draws.resize(count);
+
 	glGenBuffers(1, &m_buffer);
 	glBindBuffer(GL_DRAW_INDIRECT_BUFFER, m_buffer);
 	glBufferData(GL_DRAW_INDIRECT_BUFFER, m_size, nullptr, GL_DYNAMIC_DRAW);
@@ -43,8 +45,12 @@ bool CGLES3DrawIndirectBuffer::BufferData(int indexDraw, int instanceCount)
 		return false;
 	}
 
-	GLBindBuffer(GL_DRAW_INDIRECT_BUFFER, m_buffer);
-	glBufferSubData(GL_DRAW_INDIRECT_BUFFER, indexDraw * sizeof(DrawCommand) + offsetof(DrawCommand, instanceCount), sizeof(instanceCount), &instanceCount);
+	if (m_draws[indexDraw].instanceCount != instanceCount) {
+		m_draws[indexDraw].instanceCount  = instanceCount;
+
+		GLBindBuffer(GL_DRAW_INDIRECT_BUFFER, m_buffer);
+		glBufferSubData(GL_DRAW_INDIRECT_BUFFER, indexDraw * sizeof(DrawCommand) + offsetof(DrawCommand, instanceCount), sizeof(instanceCount), &instanceCount);
+	}
 
 	return true;
 #else
@@ -59,15 +65,18 @@ bool CGLES3DrawIndirectBuffer::BufferData(int indexDraw, int baseVertex, int fir
 		return false;
 	}
 
-	DrawCommand drawCommand;
-	drawCommand.baseVertex = baseVertex;
-	drawCommand.firstIndex = firstIndex;
-	drawCommand.indexCount = indexCount;
-	drawCommand.instanceCount = instanceCount;
-	drawCommand.reservedMustBeZero = 0;
+	if (m_draws[indexDraw].baseVertex != baseVertex ||
+		m_draws[indexDraw].firstIndex != firstIndex ||
+		m_draws[indexDraw].indexCount != indexCount ||
+		m_draws[indexDraw].instanceCount != instanceCount) {
+		m_draws[indexDraw].baseVertex = baseVertex;
+		m_draws[indexDraw].firstIndex = firstIndex;
+		m_draws[indexDraw].indexCount = indexCount;
+		m_draws[indexDraw].instanceCount = instanceCount;
 
-	GLBindBuffer(GL_DRAW_INDIRECT_BUFFER, m_buffer);
-	glBufferSubData(GL_DRAW_INDIRECT_BUFFER, indexDraw * sizeof(DrawCommand), sizeof(drawCommand), &drawCommand);
+		GLBindBuffer(GL_DRAW_INDIRECT_BUFFER, m_buffer);
+		glBufferSubData(GL_DRAW_INDIRECT_BUFFER, indexDraw * sizeof(DrawCommand), sizeof(m_draws[indexDraw]), &m_draws[indexDraw]);
+	}
 
 	return true;
 #else
