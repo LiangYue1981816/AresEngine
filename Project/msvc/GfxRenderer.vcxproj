@@ -5,13 +5,13 @@
       <Configuration>Debug</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="Release|Win32">
-      <Configuration>Release</Configuration>
-      <Platform>Win32</Platform>
-    </ProjectConfiguration>
     <ProjectConfiguration Include="Debug|x64">
       <Configuration>Debug</Configuration>
       <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="Release|x64">
       <Configuration>Release</Configuration>
@@ -26,13 +26,6 @@
     <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
-    <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
-    <CharacterSet>MultiByte</CharacterSet>
-    <WholeProgramOptimization>true</WholeProgramOptimization>
-  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
@@ -40,14 +33,21 @@
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
-    <UseDebugLibraries>true</UseDebugLibraries>
+    <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
-    <CharacterSet>MultiByte</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
@@ -59,30 +59,25 @@
   </ImportGroup>
   <ImportGroup Label="Shared">
   </ImportGroup>
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-  </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <LinkIncremental>false</LinkIncremental>
-    <OutDir>..\..\Bin\$(Platform)\</OutDir>
-    <IntDir>..\..\Bin\Temp\$(Platform)\$(TargetName)\$(Configuration)\</IntDir>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <LinkIncremental>false</LinkIncremental>
-    <OutDir>..\..\Bin\$(Platform)\</OutDir>
-    <IntDir>..\..\Bin\Temp\$(Platform)\$(TargetName)\$(Configuration)\</IntDir>
-  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>..\..\Bin\$(Platform)\</OutDir>
+    <IntDir>..\..\Bin\Temp\$(Platform)\$(TargetName)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>..\..\Bin\$(Platform)\</OutDir>
     <IntDir>..\..\Bin\Temp\$(Platform)\$(TargetName)\$(Configuration)\</IntDir>
@@ -92,65 +87,17 @@
     <OutDir>..\..\Bin\$(Platform)\</OutDir>
     <IntDir>..\..\Bin\Temp\$(Platform)\$(TargetName)\$(Configuration)\</IntDir>
   </PropertyGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
-      <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>HAVE_EASTL;GLES_VER=310;THREAD_COUNT=4;MEMORY_ALLOCATOR;PLATFORM_WINDOWS;WIN32;_DEBUG;GFXRENDERER_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(VULKAN_SDK)/include;$(VULKAN_SDK)/spirv-tools/include;$(VULKAN_SDK)/shaderc/libshaderc/include;$(VULKAN_SDK)/shaderc/libshaderc_util/include;../../ThirdParty;../../ThirdParty/es;../../ThirdParty/event;../../ThirdParty/gl3w;../../ThirdParty/glslc;../../ThirdParty/lodepng;../../ThirdParty/pthread;../../ThirdParty/rbtree;../../ThirdParty/spirv-cross;../../ThirdParty/tinyxml;../../ThirdParty/zlib;../../Engine;../../Engine/Base/include;../../Engine/Memory/include;../../Engine/Renderer/Gfx/include;../../Engine/Renderer/GLES3/include;../../Engine/Renderer/Vulkan/include;../../Engine/Renderer/Compiler/include;../../Engine/ThirdParty;../../Engine/ThirdParty/eastl;../../Engine/ThirdParty/gli;../../Engine/ThirdParty/glm</AdditionalIncludeDirectories>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <FunctionLevelLinking>true</FunctionLevelLinking>
-      <LanguageStandard>stdcpp17</LanguageStandard>
-      <DisableSpecificWarnings>4996;4312;4267;4251</DisableSpecificWarnings>
-      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <SupportJustMyCode>false</SupportJustMyCode>
-      <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <WholeProgramOptimization>false</WholeProgramOptimization>
-      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
-    </ClCompile>
-    <Link>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <SubSystem>Windows</SubSystem>
-      <AdditionalLibraryDirectories>$(VULKAN_SDK)/Lib32;../../ThirdParty/pthread/x86</AdditionalLibraryDirectories>
-      <AdditionalDependencies>vulkan-1.lib;shaderc_combined.lib;pthreadVC2.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OptimizeReferences>true</OptimizeReferences>
-      <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <ImageHasSafeExceptionHandlers>true</ImageHasSafeExceptionHandlers>
-    </Link>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
-      <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>HAVE_EASTL;GLES_VER=310;THREAD_COUNT=4;MEMORY_ALLOCATOR;PLATFORM_WINDOWS;_DEBUG;GFXRENDERER_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(VULKAN_SDK)/include;$(VULKAN_SDK)/spirv-tools/include;$(VULKAN_SDK)/shaderc/libshaderc/include;$(VULKAN_SDK)/shaderc/libshaderc_util/include;../../ThirdParty;../../ThirdParty/es;../../ThirdParty/event;../../ThirdParty/gl3w;../../ThirdParty/glslc;../../ThirdParty/lodepng;../../ThirdParty/pthread;../../ThirdParty/rbtree;../../ThirdParty/spirv-cross;../../ThirdParty/tinyxml;../../ThirdParty/zlib;../../Engine;../../Engine/Base/include;../../Engine/Memory/include;../../Engine/Renderer/Gfx/include;../../Engine/Renderer/GLES3/include;../../Engine/Renderer/Vulkan/include;../../Engine/Renderer/Compiler/include;../../Engine/ThirdParty;../../Engine/ThirdParty/eastl;../../Engine/ThirdParty/gli;../../Engine/ThirdParty/glm</AdditionalIncludeDirectories>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <FunctionLevelLinking>true</FunctionLevelLinking>
-      <LanguageStandard>stdcpp17</LanguageStandard>
-      <DisableSpecificWarnings>4996;4312;4267;4251</DisableSpecificWarnings>
-      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <SupportJustMyCode>false</SupportJustMyCode>
-      <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <WholeProgramOptimization>false</WholeProgramOptimization>
-      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
-    </ClCompile>
-    <Link>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <SubSystem>Windows</SubSystem>
-      <AdditionalLibraryDirectories>$(VULKAN_SDK)/Lib;../../ThirdParty/pthread/x64</AdditionalLibraryDirectories>
-      <AdditionalDependencies>vulkan-1.lib;shaderc_combined.lib;pthreadVC2.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OptimizeReferences>true</OptimizeReferences>
-      <EnableCOMDATFolding>true</EnableCOMDATFolding>
-    </Link>
-  </ItemDefinitionGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>..\..\Bin\$(Platform)\</OutDir>
+    <IntDir>..\..\Bin\Temp\$(Platform)\$(TargetName)\$(Configuration)\</IntDir>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
-      <Optimization>MaxSpeed</Optimization>
+      <Optimization>Disabled</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
-      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <IntrinsicFunctions>false</IntrinsicFunctions>
       <PreprocessorDefinitions>HAVE_EASTL;GLES_VER=310;THREAD_COUNT=4;MEMORY_ALLOCATOR;PLATFORM_WINDOWS;WIN32;NDEBUG;GFXRENDERER_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(VULKAN_SDK)/include;$(VULKAN_SDK)/spirv-tools/include;$(VULKAN_SDK)/shaderc/libshaderc/include;$(VULKAN_SDK)/shaderc/libshaderc_util/include;../../ThirdParty;../../ThirdParty/es;../../ThirdParty/event;../../ThirdParty/gl3w;../../ThirdParty/glslc;../../ThirdParty/lodepng;../../ThirdParty/pthread;../../ThirdParty/rbtree;../../ThirdParty/spirv-cross;../../ThirdParty/tinyxml;../../ThirdParty/zlib;../../Engine;../../Engine/Base/include;../../Engine/Memory/include;../../Engine/Renderer/Gfx/include;../../Engine/Renderer/GLES3/include;../../Engine/Renderer/Vulkan/include;../../Engine/Renderer/Compiler/include;../../Engine/ThirdParty;../../Engine/ThirdParty/eastl;../../Engine/ThirdParty/gli;../../Engine/ThirdParty/glm</AdditionalIncludeDirectories>
@@ -158,6 +105,31 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
       <DisableSpecificWarnings>4996;4312;4267;4251</DisableSpecificWarnings>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <AdditionalLibraryDirectories>$(VULKAN_SDK)/Lib32;../../ThirdParty/pthread/x86</AdditionalLibraryDirectories>
+      <AdditionalDependencies>vulkan-1.lib;shaderc_combined.lib;pthreadVC2.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>false</IntrinsicFunctions>
+      <PreprocessorDefinitions>HAVE_EASTL;GLES_VER=310;THREAD_COUNT=4;MEMORY_ALLOCATOR;PLATFORM_WINDOWS;WIN32;NDEBUG;GFXRENDERER_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(VULKAN_SDK)/include;$(VULKAN_SDK)/spirv-tools/include;$(VULKAN_SDK)/shaderc/libshaderc/include;$(VULKAN_SDK)/shaderc/libshaderc_util/include;../../ThirdParty;../../ThirdParty/es;../../ThirdParty/event;../../ThirdParty/gl3w;../../ThirdParty/glslc;../../ThirdParty/lodepng;../../ThirdParty/pthread;../../ThirdParty/rbtree;../../ThirdParty/spirv-cross;../../ThirdParty/tinyxml;../../ThirdParty/zlib;../../Engine;../../Engine/Base/include;../../Engine/Memory/include;../../Engine/Renderer/Gfx/include;../../Engine/Renderer/GLES3/include;../../Engine/Renderer/Vulkan/include;../../Engine/Renderer/Compiler/include;../../Engine/ThirdParty;../../Engine/ThirdParty/eastl;../../Engine/ThirdParty/gli;../../Engine/ThirdParty/glm</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <DisableSpecificWarnings>4996;4312;4267;4251</DisableSpecificWarnings>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -181,6 +153,31 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
       <DisableSpecificWarnings>4996;4312;4267;4251</DisableSpecificWarnings>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <AdditionalLibraryDirectories>$(VULKAN_SDK)/Lib;../../ThirdParty/pthread/x64</AdditionalLibraryDirectories>
+      <AdditionalDependencies>vulkan-1.lib;shaderc_combined.lib;pthreadVC2.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>false</IntrinsicFunctions>
+      <PreprocessorDefinitions>HAVE_EASTL;GLES_VER=310;THREAD_COUNT=4;MEMORY_ALLOCATOR;PLATFORM_WINDOWS;NDEBUG;GFXRENDERER_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(VULKAN_SDK)/include;$(VULKAN_SDK)/spirv-tools/include;$(VULKAN_SDK)/shaderc/libshaderc/include;$(VULKAN_SDK)/shaderc/libshaderc_util/include;../../ThirdParty;../../ThirdParty/es;../../ThirdParty/event;../../ThirdParty/gl3w;../../ThirdParty/glslc;../../ThirdParty/lodepng;../../ThirdParty/pthread;../../ThirdParty/rbtree;../../ThirdParty/spirv-cross;../../ThirdParty/tinyxml;../../ThirdParty/zlib;../../Engine;../../Engine/Base/include;../../Engine/Memory/include;../../Engine/Renderer/Gfx/include;../../Engine/Renderer/GLES3/include;../../Engine/Renderer/Vulkan/include;../../Engine/Renderer/Compiler/include;../../Engine/ThirdParty;../../Engine/ThirdParty/eastl;../../Engine/ThirdParty/gli;../../Engine/ThirdParty/glm</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <DisableSpecificWarnings>4996;4312;4267;4251</DisableSpecificWarnings>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <OmitFramePointers>false</OmitFramePointers>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>

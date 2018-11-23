@@ -176,6 +176,7 @@
       <DisableSpecificWarnings>4996;4312;4267;4251</DisableSpecificWarnings>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <WholeProgramOptimization>false</WholeProgramOptimization>
+      <OmitFramePointers>false</OmitFramePointers>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
