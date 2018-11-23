@@ -24,7 +24,11 @@ public:
 				GLES3Renderer()->BindPipelineGraphics(m_pPipelineGraphics);
 			}
 			else {
+#if GLES_VER == 310
 				GLBindProgramPipeline(0);
+#else
+				GLUseProgram(0);
+#endif
 			}
 		}
 	}

@@ -77,6 +77,7 @@ extern void GLUniformMatrix2fv(GLint location, GLsizei count, const GLfloat *val
 extern void GLUniformMatrix3fv(GLint location, GLsizei count, const GLfloat *value);
 extern void GLUniformMatrix4fv(GLint location, GLsizei count, const GLfloat *value);
 
+#if GLES_VER == 310
 extern void GLBindProgramPipeline(GLuint pipeline);
 extern void GLProgramUniform1i(GLuint program, GLint location, GLint v0);
 extern void GLProgramUniform2i(GLuint program, GLint location, GLint v0, GLint v1);
@@ -97,4 +98,5 @@ extern void GLProgramUniform4fv(GLuint program, GLint location, GLsizei count, c
 extern void GLProgramUniformMatrix2fv(GLuint program, GLint location, GLsizei count, const GLfloat *value);
 extern void GLProgramUniformMatrix3fv(GLuint program, GLint location, GLsizei count, const GLfloat *value);
 extern void GLProgramUniformMatrix4fv(GLuint program, GLint location, GLsizei count, const GLfloat *value);
+#endif
 #pragma endregion

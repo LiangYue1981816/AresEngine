@@ -22,7 +22,9 @@ public:
 	{
 		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_DRAW_INDIRECT, "CommandDrawIndirect");
 		{
+#if GLES_VER == 310
 			glDrawElementsIndirect(m_mode, m_type, (const void *)m_offset);
+#endif
 		}
 	}
 

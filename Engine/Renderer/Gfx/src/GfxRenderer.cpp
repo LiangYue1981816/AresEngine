@@ -1,5 +1,9 @@
 #include "GfxHeader.h"
 
+#ifdef PLATFORM_WINDOWS
+#  include <gl3w.h>
+#endif
+
 
 CGfxRenderer* CGfxRenderer::pInstance = nullptr;
 CGfxRenderer* CGfxRenderer::GetInstance(void)

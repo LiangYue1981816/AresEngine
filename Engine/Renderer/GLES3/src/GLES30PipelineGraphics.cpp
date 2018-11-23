@@ -41,28 +41,58 @@ bool CGLES3PipelineGraphics::Create(const CGfxShader *pVertexShader, const CGfxS
 	}
 
 	Destroy();
+	{
+		do {
+			m_state = state;
+			m_pShaders[vertex_shader] = (CGLES3Shader *)pVertexShader;
+			m_pShaders[fragment_shader] = (CGLES3Shader *)pFragmentShader;
 
-	m_state = state;
-	m_pShaders[vertex_shader] = (CGLES3Shader *)pVertexShader;
-	m_pShaders[fragment_shader] = (CGLES3Shader *)pFragmentShader;
-	glUseProgramStages(m_pipeline, glGetProgramStage(vertex_shader), m_pShaders[vertex_shader]->GetProgram());
-	glUseProgramStages(m_pipeline, glGetProgramStage(fragment_shader), m_pShaders[fragment_shader]->GetProgram());
+			m_program = glCreateProgram();
+			glAttachShader(m_program, m_pShaders[vertex_shader]->GetShader());
+			glAttachShader(m_program, m_pShaders[fragment_shader]->GetShader());
+			glLinkProgram(m_program);
 
+			GLint success;
+			glGetProgramiv(m_program, GL_LINK_STATUS, &success);
+
+			if (success == GL_FALSE) {
+				GLsizei length = 0;
+				char szError[128 * 1024] = { 0 };
+
+				glGetProgramInfoLog(m_program, sizeof(szError), &length, szError);
+
+				LogOutput(LOG_TAG_RENDERER, "Program Link Error:\n");
+				LogOutput(LOG_TAG_RENDERER, "%s\n", szError);
+
+				break;
+			}
+
+			if (CreateLayouts() == false) {
+				break;
+			}
+
+			return true;
+		} while (false);
+	}
+	Destroy();
 	return true;
 }
 
 void CGLES3PipelineGraphics::Destroy(void)
 {
+	if (m_program) {
+		glDeleteProgram(m_program);
+	}
+
+	m_program = 0;
 	m_pShaders[vertex_shader] = nullptr;
 	m_pShaders[fragment_shader] = nullptr;
-	glUseProgramStages(m_pipeline, glGetProgramStage(vertex_shader), 0);
-	glUseProgramStages(m_pipeline, glGetProgramStage(fragment_shader), 0);
 }
 
 void CGLES3PipelineGraphics::Bind(void *pParam)
 {
 	GLBindState(&m_state);
-	GLBindProgramPipeline(m_pipeline);
+	GLUseProgram(m_program);
 }
 
 #endif

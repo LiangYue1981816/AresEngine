@@ -8,7 +8,6 @@
 
 #ifdef PLATFORM_WINDOWS
 #  include <io.h>
-#  include <gl3w.h>
 #  include <windows.h>
 #elif PLATFORM_ANDROID
 #  include <dirent.h>

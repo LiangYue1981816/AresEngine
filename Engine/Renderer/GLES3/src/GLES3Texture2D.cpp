@@ -55,18 +55,24 @@ bool CGLES3Texture2D::Create(uint32_t format, uint32_t internalFormat, int width
 	m_levels = levels;
 	m_samples = samples;
 
-	if (m_samples == 0) {
+#if GLES_VER == 310
+	if (m_samples == 0)
+#endif
+	{
 		glGenTextures(1, &m_texture);
 		glBindTexture(GL_TEXTURE_2D, m_texture);
 		glTexStorage2D(GL_TEXTURE_2D, m_levels, m_internalFormat, m_width, m_height);
 		glBindTexture(GL_TEXTURE_2D, 0);
 	}
-	else {
+#if GLES_VER == 310
+	else
+	{
 		glGenTextures(1, &m_texture);
 		glBindTexture(GL_TEXTURE_2D_MULTISAMPLE, m_texture);
 		glTexStorage2DMultisample(GL_TEXTURE_2D_MULTISAMPLE, m_samples, m_internalFormat, m_width, m_height, GL_TRUE);
 		glBindTexture(GL_TEXTURE_2D_MULTISAMPLE, 0);
 	}
+#endif
 
 	return true;
 }
@@ -207,5 +213,9 @@ bool CGLES3Texture2D::TransferTexture2DCompressed(int level, uint32_t format, in
 
 uint32_t CGLES3Texture2D::GetTarget(void) const
 {
+#if GLES_VER == 310
 	return m_samples == 0 ? GL_TEXTURE_2D : GL_TEXTURE_2D_MULTISAMPLE;
+#else
+	return GL_TEXTURE_2D;
+#endif
 }

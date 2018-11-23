@@ -16,15 +16,17 @@ uint32_t glGetShaderType(shader_kind kind)
 		return GL_VERTEX_SHADER;
 	case fragment_shader:
 		return GL_FRAGMENT_SHADER;
+#if GLES_VER == 310
 	case compute_shader:
 		return GL_COMPUTE_SHADER;
-	default:
-		return GL_INVALID_ENUM;
+#endif
 	}
+	return GL_INVALID_ENUM;
 }
 
 uint32_t glGetProgramStage(shader_kind kind)
 {
+#if GLES_VER == 310
 	switch (kind) {
 	case vertex_shader:
 		return GL_VERTEX_SHADER_BIT;
@@ -32,9 +34,9 @@ uint32_t glGetProgramStage(shader_kind kind)
 		return GL_FRAGMENT_SHADER_BIT;
 	case compute_shader:
 		return GL_COMPUTE_SHADER_BIT;
-	default:
-		return GL_INVALID_ENUM;
 	}
+#endif
+	return GL_INVALID_ENUM;
 }
 #pragma endregion
 
@@ -314,9 +316,11 @@ void GLEnable(GLenum cap)
 	case GL_RASTERIZER_DISCARD:
 	case GL_SAMPLE_ALPHA_TO_COVERAGE:
 	case GL_SAMPLE_COVERAGE:
-	case GL_SAMPLE_MASK:
 	case GL_SCISSOR_TEST:
 	case GL_STENCIL_TEST:
+#if GLES_VER == 310
+	case GL_SAMPLE_MASK:
+#endif
 		if (Caps.find(cap) == Caps.end() || Caps[cap] != GL_TRUE) {
 			Caps[cap] = GL_TRUE;
 			glEnable(cap);
@@ -337,9 +341,11 @@ void GLDisable(GLenum cap)
 	case GL_RASTERIZER_DISCARD:
 	case GL_SAMPLE_ALPHA_TO_COVERAGE:
 	case GL_SAMPLE_COVERAGE:
-	case GL_SAMPLE_MASK:
 	case GL_SCISSOR_TEST:
 	case GL_STENCIL_TEST:
+#if GLES_VER == 310
+	case GL_SAMPLE_MASK:
+#endif
 		if (Caps.find(cap) == Caps.end() || Caps[cap] != GL_FALSE) {
 			Caps[cap] = GL_FALSE;
 			glDisable(cap);
@@ -602,17 +608,19 @@ void GLBindBuffer(GLenum target, GLuint buffer)
 {
 	switch (target) {
 	case GL_ARRAY_BUFFER:
-	case GL_ATOMIC_COUNTER_BUFFER:
 	case GL_COPY_READ_BUFFER:
 	case GL_COPY_WRITE_BUFFER:
-	case GL_DRAW_INDIRECT_BUFFER:
-	case GL_DISPATCH_INDIRECT_BUFFER:
 	case GL_ELEMENT_ARRAY_BUFFER:
 	case GL_PIXEL_PACK_BUFFER:
 	case GL_PIXEL_UNPACK_BUFFER:
-	case GL_SHADER_STORAGE_BUFFER:
 	case GL_TRANSFORM_FEEDBACK_BUFFER:
 	case GL_UNIFORM_BUFFER:
+#if GLES_VER == 310
+	case GL_ATOMIC_COUNTER_BUFFER:
+	case GL_DRAW_INDIRECT_BUFFER:
+	case GL_DISPATCH_INDIRECT_BUFFER:
+	case GL_SHADER_STORAGE_BUFFER:
+#endif
 		if (Buffers.find(target) == Buffers.end() || Buffers[target] != buffer) {
 			Buffers[target] = buffer;
 			glBindBuffer(target, buffer);
@@ -624,10 +632,12 @@ void GLBindBuffer(GLenum target, GLuint buffer)
 void GLBindBufferBase(GLenum target, GLuint index, GLuint buffer)
 {
 	switch (target) {
-	case GL_ATOMIC_COUNTER_BUFFER:
-	case GL_SHADER_STORAGE_BUFFER:
 	case GL_TRANSFORM_FEEDBACK_BUFFER:
 	case GL_UNIFORM_BUFFER:
+#if GLES_VER == 310
+	case GL_ATOMIC_COUNTER_BUFFER:
+	case GL_SHADER_STORAGE_BUFFER:
+#endif
 		if (BufferBases.find(target) == BufferBases.end() || BufferBases[target].index != index || BufferBases[target].buffer != buffer) {
 			BufferBases[target].index = index;
 			BufferBases[target].buffer = buffer;
@@ -640,10 +650,12 @@ void GLBindBufferBase(GLenum target, GLuint index, GLuint buffer)
 void GLBindBufferRange(GLenum target, GLuint index, GLuint buffer, GLint offset, GLsizei size)
 {
 	switch (target) {
-	case GL_ATOMIC_COUNTER_BUFFER:
-	case GL_SHADER_STORAGE_BUFFER:
 	case GL_TRANSFORM_FEEDBACK_BUFFER:
 	case GL_UNIFORM_BUFFER:
+#if GLES_VER == 310
+	case GL_ATOMIC_COUNTER_BUFFER:
+	case GL_SHADER_STORAGE_BUFFER:
+#endif
 		if (BufferRanges.find(target) == BufferRanges.end() || BufferRanges[target].index != index || BufferRanges[target].buffer != buffer || BufferRanges[target].offset != offset || BufferRanges[target].size != size) {
 			BufferRanges[target].index = index;
 			BufferRanges[target].buffer = buffer;
@@ -796,7 +808,7 @@ void GLUseProgram(GLuint program)
 		ProgramPipeline.uniformMatrix2fv[program].clear();
 		ProgramPipeline.uniformMatrix3fv[program].clear();
 		ProgramPipeline.uniformMatrix4fv[program].clear();
-		GLUseProgram(program);
+		glUseProgram(program);
 	}
 }
 
@@ -1006,6 +1018,7 @@ void GLUniformMatrix4fv(GLint location, GLsizei count, const GLfloat *value)
 	}
 }
 
+#if GLES_VER == 310
 void GLBindProgramPipeline(GLuint pipeline)
 {
 	if (ProgramPipeline.pipeline != pipeline) {
@@ -1238,4 +1251,5 @@ void GLProgramUniformMatrix4fv(GLuint program, GLint location, GLsizei count, co
 		glProgramUniformMatrix4fv(program, location, count, GL_FALSE, value);
 	}
 }
+#endif
 #pragma endregion
