@@ -89,11 +89,6 @@ CGfxFrameBufferPtr CGLES3Renderer::NewFrameBuffer(int width, int height)
 	return m_pFrameBufferManager->CreateFrameBuffer(width, height);
 }
 
-CGfxMaterialPtr CGLES3Renderer::NewMaterial(const char *szFileName)
-{
-	return m_pMaterialManager->LoadMaterial(szFileName);
-}
-
 CGfxMeshPtr CGLES3Renderer::NewMesh(uint32_t name)
 {
 	return m_pMeshManager->CreateMesh(name);
@@ -102,6 +97,11 @@ CGfxMeshPtr CGLES3Renderer::NewMesh(uint32_t name)
 CGfxMeshPtr CGLES3Renderer::NewMesh(const char *szFileName, uint32_t instanceFormat)
 {
 	return m_pMeshManager->LoadMesh(szFileName, instanceFormat);
+}
+
+CGfxMaterialPtr CGLES3Renderer::NewMaterial(const char *szFileName)
+{
+	return m_pMaterialManager->LoadMaterial(szFileName);
 }
 
 CGfxTexture2DPtr CGLES3Renderer::NewTexture2D(uint32_t name)

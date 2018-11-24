@@ -121,17 +121,15 @@ public:
 	CGfxRenderPassPtr NewRenderPass(int numAttachments, int numSubpasses);
 	CGfxFrameBufferPtr NewFrameBuffer(int width, int height);
 
-	CGfxMaterialPtr NewMaterial(const char *szFileName);
-
 	CGfxMeshPtr NewMesh(uint32_t name);
 	CGfxMeshPtr NewMesh(const char *szFileName, uint32_t instanceFormat);
 
+	CGfxMaterialPtr NewMaterial(const char *szFileName);
+
 	CGfxTexture2DPtr NewTexture2D(uint32_t name);
 	CGfxTexture2DPtr NewTexture2D(const char *szFileName);
-
 	CGfxTexture2DArrayPtr NewTexture2DArray(uint32_t name);
 	CGfxTexture2DArrayPtr NewTexture2DArray(const char *szFileName);
-
 	CGfxTextureCubeMapPtr NewTextureCubeMap(uint32_t name);
 	CGfxTextureCubeMapPtr NewTextureCubeMap(const char *szFileName);
 
