@@ -147,14 +147,17 @@ public:
 	virtual bool CmdUniformMatrix3fv(CGfxCommandBufferPtr &ptrCommandBuffer, const char *szName, int count, const float *value) = 0;
 	virtual bool CmdUniformMatrix4fv(CGfxCommandBufferPtr &ptrCommandBuffer, const char *szName, int count, const float *value) = 0;
 
-	virtual bool CmdSetScissor(CGfxCommandBufferPtr &ptrCommandBuffer, int x, int y, int width, int height) = 0;
-	virtual bool CmdSetViewport(CGfxCommandBufferPtr &ptrCommandBuffer, int x, int y, int width, int height) = 0;
-
 	virtual bool CmdClearDepth(CGfxCommandBufferPtr &ptrCommandBuffer, float depth) = 0;
 	virtual bool CmdClearColor(CGfxCommandBufferPtr &ptrCommandBuffer, float red, float green, float blue, float alpha) = 0;
 
-	virtual bool CmdDrawInstance(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxMeshPtr &ptrMesh, const int indexDraw, const uint8_t *pInstanceBuffer, uint32_t size) = 0;
-	virtual bool CmdDrawIndirect(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxMeshPtr &ptrMesh, const int indexDraw, const uint8_t *pInstanceBuffer, uint32_t size) = 0;
+	virtual bool CmdSetScissor(CGfxCommandBufferPtr &ptrCommandBuffer, int x, int y, int width, int height) = 0;
+	virtual bool CmdSetViewport(CGfxCommandBufferPtr &ptrCommandBuffer, int x, int y, int width, int height) = 0;
+
+	virtual bool CmdSetInstanceBufferData(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxMeshPtr &ptrMesh, const int indexDraw, const uint8_t *pInstanceBuffer, uint32_t size) = 0;
+	virtual bool CmdSetDrawIndirectBufferData(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxMeshPtr &ptrMesh, const int indexDraw, int instanceCount) = 0;
+
+	virtual bool CmdDrawInstance(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxMeshPtr &ptrMesh, const int indexDraw, int instanceCount) = 0;
+	virtual bool CmdDrawIndirect(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxMeshPtr &ptrMesh, const int indexDraw) = 0;
 	virtual bool CmdDrawScreen(CGfxCommandBufferPtr &ptrCommandBuffer) = 0;
 
 	virtual bool CmdExecute(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxCommandBufferPtr &ptrSecondaryCommandBuffer) = 0;

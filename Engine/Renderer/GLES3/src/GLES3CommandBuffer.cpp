@@ -30,6 +30,8 @@
 #include "GLES3CommandUniformMatrix2fv.h"
 #include "GLES3CommandUniformMatrix3fv.h"
 #include "GLES3CommandUniformMatrix4fv.h"
+#include "GLES3CommandSetInstanceBufferData.h"
+#include "GLES3CommandSetDrawIndirectBufferData.h"
 #include "GLES3CommandSetScissor.h"
 #include "GLES3CommandSetViewport.h"
 #include "GLES3CommandClearDepth.h"
@@ -184,10 +186,10 @@ bool CGLES3CommandBuffer::CmdBindUniformCamera(const CGfxUniformCameraPtr &ptrUn
 	return false;
 }
 
-bool CGLES3CommandBuffer::CmdBindMesh(const CGfxMeshPtr &ptrMesh, const int indexDraw, const uint8_t *pInstanceBuffer, uint32_t size)
+bool CGLES3CommandBuffer::CmdBindMesh(const CGfxMeshPtr &ptrMesh, const int indexDraw)
 {
 	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
-		m_pCommands.emplace_back(new CGLES3CommandBindMesh(ptrMesh, indexDraw, pInstanceBuffer, size));
+		m_pCommands.emplace_back(new CGLES3CommandBindMesh(ptrMesh, indexDraw));
 		return true;
 	}
 
@@ -384,6 +386,26 @@ bool CGLES3CommandBuffer::CmdUniformMatrix4fv(const char *szName, int count, con
 	return false;
 }
 
+bool CGLES3CommandBuffer::CmdClearDepth(float depth)
+{
+	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
+		m_pCommands.emplace_back(new CGLES3CommandClearDepth(depth));
+		return true;
+	}
+
+	return false;
+}
+
+bool CGLES3CommandBuffer::CmdClearColor(float red, float green, float blue, float alpha)
+{
+	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
+		m_pCommands.emplace_back(new CGLES3CommandClearColor(red, green, blue, alpha));
+		return true;
+	}
+
+	return false;
+}
+
 bool CGLES3CommandBuffer::CmdSetScissor(int x, int y, int width, int height)
 {
 	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
@@ -404,20 +426,20 @@ bool CGLES3CommandBuffer::CmdSetViewport(int x, int y, int width, int height)
 	return false;
 }
 
-bool CGLES3CommandBuffer::CmdClearDepth(float depth)
+bool CGLES3CommandBuffer::CmdSetInstanceBufferData(const CGfxMeshPtr &ptrMesh, const int indexDraw, const uint8_t *pInstanceBuffer, uint32_t size)
 {
 	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
-		m_pCommands.emplace_back(new CGLES3CommandClearDepth(depth));
+		m_pCommands.emplace_back(new CGLES3CommandSetInstanceBufferData(ptrMesh, indexDraw, pInstanceBuffer, size));
 		return true;
 	}
 
 	return false;
 }
 
-bool CGLES3CommandBuffer::CmdClearColor(float red, float green, float blue, float alpha)
+bool CGLES3CommandBuffer::CmdSetDrawIndirectBufferData(const CGfxMeshPtr &ptrMesh, const int indexDraw, int instanceCount)
 {
 	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
-		m_pCommands.emplace_back(new CGLES3CommandClearColor(red, green, blue, alpha));
+		m_pCommands.emplace_back(new CGLES3CommandSetDrawIndirectBufferData(ptrMesh, indexDraw, instanceCount));
 		return true;
 	}
 

@@ -66,8 +66,8 @@ void CGfxRenderQueue::End(int indexQueue)
 				eastl::unordered_map<int, eastl::vector<uint8_t>> &drawQueue = meshQueue[itMeshQueue.first];
 
 				for (const auto &itDrawQueue : itMeshQueue.second) {
-					eastl::vector<uint8_t> &instanceQueue = drawQueue[itDrawQueue.first];
-					instanceQueue.insert(instanceQueue.end(), itDrawQueue.second.begin(), itDrawQueue.second.end());
+					eastl::vector<uint8_t> &instanceBuffer = drawQueue[itDrawQueue.first];
+					instanceBuffer.insert(instanceBuffer.end(), itDrawQueue.second.begin(), itDrawQueue.second.end());
 				}
 			}
 		}
@@ -77,8 +77,8 @@ void CGfxRenderQueue::End(int indexQueue)
 void CGfxRenderQueue::Add(int indexThread, int indexQueue, const CGfxMaterialPtr &ptrMaterial, const CGfxMeshPtr &ptrMesh, int indexDraw, const uint8_t *pInstanceData, uint32_t size)
 {
 	if (indexThread >= 0 && indexThread < THREAD_COUNT) {
-		eastl::vector<uint8_t> &instanceQueue = m_materialMeshQueueThreads[indexThread][indexQueue][ptrMaterial][ptrMesh][indexDraw];
-		instanceQueue.insert(instanceQueue.end(), pInstanceData, pInstanceData + size);
+		eastl::vector<uint8_t> &instanceBuffer = m_materialMeshQueueThreads[indexThread][indexQueue][ptrMaterial][ptrMesh][indexDraw];
+		instanceBuffer.insert(instanceBuffer.end(), pInstanceData, pInstanceData + size);
 	}
 }
 
@@ -126,8 +126,14 @@ void CGfxRenderQueue::CmdDrawThread(int indexQueue, CGfxCommandBufferPtr &ptrCom
 
 		for (const auto &itMeshQueue : m_materialMeshQueue[indexQueue][itMaterial.first]) {
 			for (const auto itDrawQueue : itMeshQueue.second) {
-				Renderer()->CmdDrawInstance(ptrCommandBuffer, itMeshQueue.first, itDrawQueue.first, itDrawQueue.second.data(), itDrawQueue.second.size());
-//				Renderer()->CmdDrawIndirect(ptrCommandBuffer, itMeshQueue.first, itDrawQueue.first, itDrawQueue.second.data(), itDrawQueue.second.size());
+				//*
+				Renderer()->CmdSetInstanceBufferData(ptrCommandBuffer, itMeshQueue.first, itDrawQueue.first, itDrawQueue.second.data(), itDrawQueue.second.size());
+				Renderer()->CmdDrawInstance(ptrCommandBuffer, itMeshQueue.first, itDrawQueue.first, itDrawQueue.second.size() / GetInstanceStride(itMeshQueue.first->GetInstanceFormat()));
+				/*/
+				Renderer()->CmdSetInstanceBufferData(ptrCommandBuffer, itMeshQueue.first, itDrawQueue.first, itDrawQueue.second.data(), itDrawQueue.second.size());
+				Renderer()->CmdSetDrawIndirectBufferData(ptrCommandBuffer, itMeshQueue.first, itDrawQueue.first, itDrawQueue.second.size() / GetInstanceStride(itMeshQueue.first->GetInstanceFormat()));
+				Renderer()->CmdDrawIndirect(ptrCommandBuffer, itMeshQueue.first, itDrawQueue.first);
+				//*/
 			}
 		}
 	}

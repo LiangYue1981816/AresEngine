@@ -323,10 +323,8 @@ uint32_t CGLES3Mesh::GetDrawCommandOffset(int indexDraw) const
 	}
 }
 
-void CGLES3Mesh::Bind(void *pParam)
+void CGLES3Mesh::Bind(int indexDraw, void *pParam)
 {
-	uintptr_t indexDraw = (uintptr_t)pParam;
-
 	if (indexDraw >= 0 && indexDraw < (int)m_draws.size()) {
 		m_draws[indexDraw].pVertexArrayObject->Bind(nullptr);
 	}

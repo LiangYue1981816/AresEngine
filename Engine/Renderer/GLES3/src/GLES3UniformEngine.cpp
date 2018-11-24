@@ -265,7 +265,7 @@ void CGLES3UniformEngine::Apply(void)
 	if (m_bDirty) {
 		m_bDirty = false;
 
-		uint32_t hash = HashValue((uint8_t*)&m_params, sizeof(m_params));
+		uint32_t hash = HashValue((uint8_t*)&m_params, sizeof(m_params), 2);
 
 		if (m_hash != hash) {
 			m_hash  = hash;

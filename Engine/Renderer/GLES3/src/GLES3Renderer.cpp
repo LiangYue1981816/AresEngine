@@ -284,16 +284,6 @@ bool CGLES3Renderer::CmdUniformMatrix4fv(CGfxCommandBufferPtr &ptrCommandBuffer,
 	return ptrCommandBuffer->CmdUniformMatrix4fv(szName, count, value);
 }
 
-bool CGLES3Renderer::CmdSetScissor(CGfxCommandBufferPtr &ptrCommandBuffer, int x, int y, int width, int height)
-{
-	return ptrCommandBuffer->CmdSetScissor(x, y, width, height);
-}
-
-bool CGLES3Renderer::CmdSetViewport(CGfxCommandBufferPtr &ptrCommandBuffer, int x, int y, int width, int height)
-{
-	return ptrCommandBuffer->CmdSetViewport(x, y, width, height);
-}
-
 bool CGLES3Renderer::CmdClearDepth(CGfxCommandBufferPtr &ptrCommandBuffer, float depth)
 {
 	return ptrCommandBuffer->CmdClearDepth(depth);
@@ -304,22 +294,42 @@ bool CGLES3Renderer::CmdClearColor(CGfxCommandBufferPtr &ptrCommandBuffer, float
 	return ptrCommandBuffer->CmdClearColor(red, green, blue, alpha);
 }
 
-bool CGLES3Renderer::CmdDrawInstance(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxMeshPtr &ptrMesh, const int indexDraw, const uint8_t *pInstanceBuffer, uint32_t size)
+bool CGLES3Renderer::CmdSetScissor(CGfxCommandBufferPtr &ptrCommandBuffer, int x, int y, int width, int height)
 {
-	if (ptrCommandBuffer->CmdBindMesh(ptrMesh, indexDraw, pInstanceBuffer, size) == false) {
+	return ptrCommandBuffer->CmdSetScissor(x, y, width, height);
+}
+
+bool CGLES3Renderer::CmdSetViewport(CGfxCommandBufferPtr &ptrCommandBuffer, int x, int y, int width, int height)
+{
+	return ptrCommandBuffer->CmdSetViewport(x, y, width, height);
+}
+
+bool CGLES3Renderer::CmdSetInstanceBufferData(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxMeshPtr &ptrMesh, const int indexDraw, const uint8_t *pInstanceBuffer, uint32_t size)
+{
+	return ptrCommandBuffer->CmdSetInstanceBufferData(ptrMesh, indexDraw, pInstanceBuffer, size);
+}
+
+bool CGLES3Renderer::CmdSetDrawIndirectBufferData(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxMeshPtr &ptrMesh, const int indexDraw, int instanceCount)
+{
+	return ptrCommandBuffer->CmdSetDrawIndirectBufferData(ptrMesh, indexDraw, instanceCount);
+}
+
+bool CGLES3Renderer::CmdDrawInstance(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxMeshPtr &ptrMesh, const int indexDraw, int instanceCount)
+{
+	if (ptrCommandBuffer->CmdBindMesh(ptrMesh, indexDraw) == false) {
 		return false;
 	}
 
-	if (ptrCommandBuffer->CmdDrawInstance(GL_TRIANGLES, ptrMesh->GetIndexType(), ptrMesh->GetIndexOffset(indexDraw), ptrMesh->GetIndexCount(indexDraw), size / GetInstanceStride(ptrMesh->GetInstanceFormat())) == false) {
+	if (ptrCommandBuffer->CmdDrawInstance(GL_TRIANGLES, ptrMesh->GetIndexType(), ptrMesh->GetIndexOffset(indexDraw), ptrMesh->GetIndexCount(indexDraw), instanceCount) == false) {
 		return false;
 	}
 
 	return true;
 }
 
-bool CGLES3Renderer::CmdDrawIndirect(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxMeshPtr &ptrMesh, const int indexDraw, const uint8_t *pInstanceBuffer, uint32_t size)
+bool CGLES3Renderer::CmdDrawIndirect(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxMeshPtr &ptrMesh, const int indexDraw)
 {
-	if (ptrCommandBuffer->CmdBindMesh(ptrMesh, indexDraw, pInstanceBuffer, size) == false) {
+	if (ptrCommandBuffer->CmdBindMesh(ptrMesh, indexDraw) == false) {
 		return false;
 	}
 

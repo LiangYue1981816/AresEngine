@@ -58,7 +58,7 @@ public:
 	uint32_t GetDrawCommandOffset(int indexDraw) const;
 
 public:
-	void Bind(void *pParam);
+	void Bind(int indexDraw, void *pParam);
 
 
 private:

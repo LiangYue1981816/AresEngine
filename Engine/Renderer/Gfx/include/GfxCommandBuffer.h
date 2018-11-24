@@ -52,7 +52,7 @@ public:
 	virtual bool CmdBindMaterialPass(const CGfxMaterialPtr &ptrMaterial, uint32_t namePass) = 0;
 	virtual bool CmdBindUniformEngine(const CGfxUniformEnginePtr &ptrUniformEngine) = 0;
 	virtual bool CmdBindUniformCamera(const CGfxUniformCameraPtr &ptrUniformCamera) = 0;
-	virtual bool CmdBindMesh(const CGfxMeshPtr &ptrMesh, const int indexDraw, const uint8_t *pInstanceBuffer, uint32_t size) = 0;
+	virtual bool CmdBindMesh(const CGfxMeshPtr &ptrMesh, const int indexDraw) = 0;
 
 	virtual bool CmdUniform1i(const char *szName, int v0) = 0;
 	virtual bool CmdUniform2i(const char *szName, int v0, int v1) = 0;
@@ -74,11 +74,14 @@ public:
 	virtual bool CmdUniformMatrix3fv(const char *szName, int count, const float *value) = 0;
 	virtual bool CmdUniformMatrix4fv(const char *szName, int count, const float *value) = 0;
 
+	virtual bool CmdClearDepth(float depth) = 0;
+	virtual bool CmdClearColor(float red, float green, float blue, float alpha) = 0;
+
 	virtual bool CmdSetScissor(int x, int y, int width, int height) = 0;
 	virtual bool CmdSetViewport(int x, int y, int width, int height) = 0;
 
-	virtual bool CmdClearDepth(float depth) = 0;
-	virtual bool CmdClearColor(float red, float green, float blue, float alpha) = 0;
+	virtual bool CmdSetInstanceBufferData(const CGfxMeshPtr &ptrMesh, const int indexDraw, const uint8_t *pInstanceBuffer, uint32_t size) = 0;
+	virtual bool CmdSetDrawIndirectBufferData(const CGfxMeshPtr &ptrMesh, const int indexDraw, int instanceCount) = 0;
 
 	virtual bool CmdDrawElements(uint32_t mode, uint32_t type, int offset, int count) = 0;
 	virtual bool CmdDrawInstance(uint32_t mode, uint32_t type, int offset, int count, int instanceCount) = 0;

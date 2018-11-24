@@ -31,14 +31,14 @@ CALL_API unsigned int HashValue(const char *szString)
 	return dwHashValue ? dwHashValue : INVALID_HASHVALUE;
 }
 
-CALL_API unsigned int HashValue(const unsigned char *pBuffer, int length)
+CALL_API unsigned int HashValue(const unsigned char *pBuffer, int length, int stride)
 {
 	const unsigned char *c = pBuffer;
 	unsigned int dwHashValue = 0x00000000;
 
-	while (length--) {
-//		dwHashValue = (dwHashValue << 5) - dwHashValue + (*c == '/' ? '\\' : *c); c++;
-		dwHashValue = (dwHashValue << 4) - dwHashValue + (*c == '/' ? '\\' : *c); c++;
+	while (length > 0) {
+//		dwHashValue = (dwHashValue << 5) - dwHashValue + (*c); c += stride; length -= stride;
+		dwHashValue = (dwHashValue << 4) - dwHashValue + (*c); c += stride; length -= stride;
 	}
 
 	return dwHashValue ? dwHashValue : INVALID_HASHVALUE;

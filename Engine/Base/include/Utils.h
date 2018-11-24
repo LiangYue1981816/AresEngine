@@ -4,7 +4,7 @@
 
 CALL_API unsigned int tick(void);
 CALL_API unsigned int HashValue(const char *szString);
-CALL_API unsigned int HashValue(const unsigned char *pBuffer, int length);
+CALL_API unsigned int HashValue(const unsigned char *pBuffer, int length, int stride = 1);
 CALL_API void splitfilename(const char *name, char *fname, char *ext);
 CALL_API int fexist(const char *name);
 CALL_API size_t fsize(FILE *stream);

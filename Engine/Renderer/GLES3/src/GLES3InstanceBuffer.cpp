@@ -19,7 +19,7 @@ CGLES3InstanceBuffer::~CGLES3InstanceBuffer(void)
 
 bool CGLES3InstanceBuffer::BufferData(size_t size, const void *pBuffer)
 {
-	uint32_t hash = HashValue((uint8_t *)pBuffer, size);
+	uint32_t hash = HashValue((uint8_t *)pBuffer, size, 2);
 
 	if (m_hash != hash) {
 		m_hash  = hash;

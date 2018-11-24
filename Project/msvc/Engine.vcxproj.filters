@@ -756,6 +756,12 @@
     <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES31PipelineGraphics.h">
       <Filter>Engine\Renderer\GLES3\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\GLES3CommandSetDrawIndirectBufferData.h">
+      <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\GLES3CommandSetInstanceBufferData.h">
+      <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\ThirdParty\event\event.c">
