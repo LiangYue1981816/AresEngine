@@ -669,6 +669,12 @@
     <ClInclude Include="..\..\ThirdParty\zzip\zzip32.h">
       <Filter>ThirdParty\zzip</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\GLES3CommandSetDrawIndirectBufferData.h">
+      <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\GLES3CommandSetInstanceBufferData.h">
+      <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Engine\Base\src\File.cpp">

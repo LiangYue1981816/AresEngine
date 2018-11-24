@@ -18,6 +18,12 @@
 #define ShadowCamera() CEngine::GetInstance()->GetSceneManager()->GetShadowCamera()
 
 
+typedef enum GfxApi {
+	GFX_API_GLES3 = 0,
+	GFX_API_VULKAN,
+	GFX_API_METAL
+} GfxApi;
+
 class CALL_API CEngine
 {
 public:
@@ -56,6 +62,7 @@ private:
 	float m_totalTime;
 
 private:
+	CGfxRenderer *m_pRenderer;
 	CSceneManager *m_pSceneManager;
 	CRenderSolutionBase *m_pRenderSolution;
 

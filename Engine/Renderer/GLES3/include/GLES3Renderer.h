@@ -103,7 +103,7 @@ class CGLES3Renderer : public CGfxRenderer
 	friend class CGLES3CommandUniformMatrix4fv;
 
 
-private:
+public:
 	CGLES3Renderer(void *hDC, int width, int height, uint32_t format);
 	virtual ~CGLES3Renderer(void);
 

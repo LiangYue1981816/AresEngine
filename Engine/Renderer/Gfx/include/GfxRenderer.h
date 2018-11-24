@@ -56,8 +56,6 @@
 #include "GfxCommandBuffer.h"
 
 
-#define RendererCreate(api, hDC, width, height, format) CGfxRenderer::Create((api), (hDC), (width), (height), (format))
-#define RendererDestroy() CGfxRenderer::Destroy()
 #define Renderer() CGfxRenderer::GetInstance()
 
 
@@ -65,22 +63,13 @@
 #define UNIFORM_CAMERA_NAME "Camera"
 
 
-typedef enum GfxApi {
-	GFX_API_GLES3 = 0,
-	GFX_API_VULKAN,
-	GFX_API_METAL
-} GfxApi;
-
-
 class CALL_API CGfxRenderer
 {
 public:
 	static CGfxRenderer* GetInstance(void);
-	static void Create(GfxApi api, void *hDC, int width, int height, uint32_t format);
-	static void Destroy(void);
 
 
-protected:
+public:
 	CGfxRenderer(void *hDC, int width, int height, uint32_t format);
 	virtual ~CGfxRenderer(void);
 
