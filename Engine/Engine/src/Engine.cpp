@@ -91,8 +91,8 @@ CEngine::~CEngine(void)
 	event_destroy(&m_eventFinish);
 	event_destroy(&m_eventDispatch);
 
-	delete m_pSceneManager;
 	delete m_pRenderSolution;
+	delete m_pSceneManager;
 	delete m_pRenderer;
 }
 
