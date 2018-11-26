@@ -50,8 +50,7 @@ public:
 	virtual bool CmdBindPipelineCompute(const CGfxPipelineCompute *pPipelineCompute) = 0;
 	virtual bool CmdBindPipelineGraphics(const CGfxPipelineGraphics *pPipelineGraphics) = 0;
 	virtual bool CmdBindMaterialPass(const CGfxMaterialPtr &ptrMaterial, uint32_t namePass) = 0;
-	virtual bool CmdBindUniformEngine(const CGfxUniformEnginePtr &ptrUniformEngine) = 0;
-	virtual bool CmdBindUniformCamera(const CGfxUniformCameraPtr &ptrUniformCamera) = 0;
+	virtual bool CmdBindUniformBuffer(const CGfxUniformBufferPtr &ptrUniformBuffer, uint32_t nameUniform) = 0;
 	virtual bool CmdBindMesh(const CGfxMeshPtr &ptrMesh, const int indexDraw) = 0;
 
 	virtual bool CmdUniform1i(const char *szName, int v0) = 0;

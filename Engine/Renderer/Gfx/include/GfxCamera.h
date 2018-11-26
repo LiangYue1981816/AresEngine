@@ -17,6 +17,9 @@ public:
 	void SetOrtho(float left, float right, float bottom, float top, float zNear, float zFar);
 	void SetLookat(float eyex, float eyey, float eyez, float centerx, float centery, float centerz, float upx, float upy, float upz);
 
+	void Apply(void);
+
+public:
 	const glm::vec4& GetScissor(void) const;
 	const glm::vec4& GetViewport(void) const;
 
@@ -29,7 +32,7 @@ public:
 	const glm::mat4& GetViewInverseMatrix(void) const;
 	const glm::mat4& GetViewInverseTransposeMatrix(void) const;
 
-	const CGfxUniformCameraPtr& GetUniformCamera(void) const;
+	const CGfxUniformBufferPtr& GetUniformBuffer(void) const;
 
 public:
 	glm::vec3 WorldToScreen(const glm::vec3 &world) const;
@@ -43,11 +46,11 @@ public:
 public:
 	void Clear(int indexQueue);
 	void Begin(int indexQueue);
-	void End(int indexQueue);
 	void Add(int indexThread, int indexQueue, const CGfxMaterialPtr &ptrMaterial, const CGfxMeshPtr &ptrMesh, int indexDraw, const uint8_t *pInstanceData, uint32_t size);
+	void End(int indexQueue);
 
 public:
-	void CmdDraw(int indexQueue, CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxUniformEnginePtr &ptrUniformEngine, uint32_t namePass);
+	void CmdDraw(int indexQueue, CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxUniformBufferPtr &ptrUniformBufferEngine, uint32_t namePass);
 
 
 private:
@@ -55,5 +58,5 @@ private:
 
 private:
 	CGfxRenderQueue *m_pRenderQueue;
-	CGfxUniformCameraPtr m_ptrUniformCamera;
+	CGfxUniformCamera *m_pUniformCamera;
 };

@@ -2,7 +2,7 @@
 #include "GfxRenderer.h"
 
 
-class CALL_API CGfxUniformEngine : public CGfxResource
+class CALL_API CGfxUniformEngine
 {
 public:
 	typedef struct Params {
@@ -43,39 +43,45 @@ public:
 
 
 public:
-	CGfxUniformEngine(void)
-	{
-
-	}
-	virtual ~CGfxUniformEngine(void)
-	{
-
-	}
+	CGfxUniformEngine(bool bDynamic);
+	virtual ~CGfxUniformEngine(void);
 
 
 public:
-	virtual void SetTime(float t, float dt) = 0;
+	void SetTime(float t, float dt);
 
-	virtual void SetShadowOrtho(float left, float right, float bottom, float top, float zNear, float zFar) = 0;
-	virtual void SetShadowLookat(float eyex, float eyey, float eyez, float centerx, float centery, float centerz, float upx, float upy, float upz) = 0;
-	virtual void SetShadowRange(float range) = 0;
-	virtual void SetShadowResolution(float resolution) = 0;
+	void SetShadowOrtho(float left, float right, float bottom, float top, float zNear, float zFar);
+	void SetShadowLookat(float eyex, float eyey, float eyez, float centerx, float centery, float centerz, float upx, float upy, float upz);
+	void SetShadowRange(float range);
+	void SetShadowResolution(float resolution);
 
-	virtual void SetLightFactor(float ambientLightFactor, float pointLightFactor, float directLightFactor, float envLightFactor) = 0;
+	void SetLightFactor(float ambientLightFactor, float pointLightFactor, float directLightFactor, float envLightFactor);
 
-	virtual void SetAmbientLightSH(float shRed[9], float shGreen[9], float shBlue[9]) = 0;
-	virtual void SetAmbientLightRotation(float angle, float axisx, float axisy, float axisz) = 0;
+	void SetAmbientLightSH(float shRed[9], float shGreen[9], float shBlue[9]);
+	void SetAmbientLightRotation(float angle, float axisx, float axisy, float axisz);
 
-	virtual void SetPointLightColor(float red, float green, float blue) = 0;
-	virtual void SetPointLightPosition(float posx, float posy, float posz, float radius) = 0;
-	virtual void SetPointLightAttenuation(float linear, float square, float constant) = 0;
+	void SetPointLightColor(float red, float green, float blue);
+	void SetPointLightPosition(float posx, float posy, float posz, float radius);
+	void SetPointLightAttenuation(float linear, float square, float constant);
 
-	virtual void SetDirectLightColor(float red, float green, float blue) = 0;
-	virtual void SetDirectLightDirection(float dirx, float diry, float dirz) = 0;
+	void SetDirectLightColor(float red, float green, float blue);
+	void SetDirectLightDirection(float dirx, float diry, float dirz);
 
-	virtual void SetFogColor(float red, float green, float blue) = 0;
-	virtual void SetFogHeightDensity(float startHeight, float endHeight, float density) = 0;
-	virtual void SetFogDistanceDensity(float startDistance, float endDistance, float density) = 0;
+	void SetFogColor(float red, float green, float blue);
+	void SetFogHeightDensity(float startHeight, float endHeight, float density);
+	void SetFogDistanceDensity(float startDistance, float endDistance, float density);
 
-	virtual void Apply(void) = 0;
+	void Apply(void);
+
+public:
+	const CGfxUniformBufferPtr& GetUniformBuffer(void) const;
+
+
+private:
+	bool m_bDirty;
+	uint32_t m_hash;
+	Params m_params;
+
+private:
+	CGfxUniformBufferPtr m_ptrUniformBuffer;
 };

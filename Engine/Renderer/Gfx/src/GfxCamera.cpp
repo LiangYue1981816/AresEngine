@@ -3,14 +3,16 @@
 
 CGfxCamera::CGfxCamera(void)
 	: m_pRenderQueue(nullptr)
+	, m_pUniformCamera(nullptr)
 {
 	m_pRenderQueue = new CGfxRenderQueue;
-	m_ptrUniformCamera = Renderer()->NewUniformCamera(true);
+	m_pUniformCamera = new CGfxUniformCamera(true);
 }
 
 CGfxCamera::~CGfxCamera(void)
 {
 	delete m_pRenderQueue;
+	delete m_pUniformCamera;
 }
 
 void CGfxCamera::SetScissor(float x, float y, float width, float height)
@@ -21,25 +23,30 @@ void CGfxCamera::SetScissor(float x, float y, float width, float height)
 void CGfxCamera::SetViewport(float x, float y, float width, float height)
 {
 	m_camera.setViewport(x, y, width, height);
-	m_ptrUniformCamera->SetScreen(width, height);
+	m_pUniformCamera->SetScreen(width, height);
 }
 
 void CGfxCamera::SetPerspective(float fovy, float aspect, float zNear, float zFar)
 {
 	m_camera.setPerspective(fovy, aspect, zNear, zFar);
-	m_ptrUniformCamera->SetPerspective(fovy, aspect, zNear, zFar);
+	m_pUniformCamera->SetPerspective(fovy, aspect, zNear, zFar);
 }
 
 void CGfxCamera::SetOrtho(float left, float right, float bottom, float top, float zNear, float zFar)
 {
 	m_camera.setOrtho(left, right, bottom, top, zNear, zFar);
-	m_ptrUniformCamera->SetOrtho(left, right, bottom, top, zNear, zFar);
+	m_pUniformCamera->SetOrtho(left, right, bottom, top, zNear, zFar);
 }
 
 void CGfxCamera::SetLookat(float eyex, float eyey, float eyez, float centerx, float centery, float centerz, float upx, float upy, float upz)
 {
 	m_camera.setLookat(glm::vec3(eyex, eyey, eyez), glm::vec3(centerx, centery, centerz), glm::vec3(upx, upy, upz));
-	m_ptrUniformCamera->SetLookat(eyex, eyey, eyez, centerx, centery, centerz, upx, upy, upz);
+	m_pUniformCamera->SetLookat(eyex, eyey, eyez, centerx, centery, centerz, upx, upy, upz);
+}
+
+void CGfxCamera::Apply(void)
+{
+	m_pUniformCamera->Apply();
 }
 
 const glm::vec4& CGfxCamera::GetScissor(void) const
@@ -87,9 +94,9 @@ const glm::mat4& CGfxCamera::GetViewInverseTransposeMatrix(void) const
 	return m_camera.viewInverseTransposeMatrix;
 }
 
-const CGfxUniformCameraPtr& CGfxCamera::GetUniformCamera(void) const
+const CGfxUniformBufferPtr& CGfxCamera::GetUniformBuffer(void) const
 {
-	return m_ptrUniformCamera;
+	return m_pUniformCamera->GetUniformBuffer();
 }
 
 glm::vec3 CGfxCamera::WorldToScreen(const glm::vec3 &world) const
@@ -127,17 +134,17 @@ void CGfxCamera::Begin(int indexQueue)
 	m_pRenderQueue->Begin(indexQueue);
 }
 
-void CGfxCamera::End(int indexQueue)
-{
-	m_pRenderQueue->End(indexQueue);
-}
-
 void CGfxCamera::Add(int indexThread, int indexQueue, const CGfxMaterialPtr &ptrMaterial, const CGfxMeshPtr &ptrMesh, int indexDraw, const uint8_t *pInstanceData, uint32_t size)
 {
 	m_pRenderQueue->Add(indexThread, indexQueue, ptrMaterial, ptrMesh, indexDraw, pInstanceData, size);
 }
 
-void CGfxCamera::CmdDraw(int indexQueue, CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxUniformEnginePtr &ptrUniformEngine, uint32_t namePass)
+void CGfxCamera::End(int indexQueue)
 {
-	m_pRenderQueue->CmdDraw(indexQueue, ptrCommandBuffer, ptrUniformEngine, m_ptrUniformCamera, namePass);
+	m_pRenderQueue->End(indexQueue);
+}
+
+void CGfxCamera::CmdDraw(int indexQueue, CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxUniformBufferPtr &ptrUniformBufferEngine, uint32_t namePass)
+{
+	m_pRenderQueue->CmdDraw(indexQueue, ptrCommandBuffer, ptrUniformBufferEngine, m_pUniformCamera->GetUniformBuffer(), namePass);
 }

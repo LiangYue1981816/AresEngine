@@ -2,20 +2,25 @@
 #include "GfxRenderer.h"
 
 
-class CALL_API CGfxUniformMat4 : public CGfxResource
+class CALL_API CGfxUniformMat4
 {
 public:
-	CGfxUniformMat4(void)
-	{
-
-	}
-	virtual ~CGfxUniformMat4(void)
-	{
-
-	}
+	CGfxUniformMat4(bool bDynamic);
+	virtual ~CGfxUniformMat4(void);
 
 
 public:
-	virtual void SetValue(const float *value) = 0;
-	virtual void Apply(void) = 0;
+	void SetValue(const float *value);
+	void Apply(void);
+
+public:
+	const CGfxUniformBufferPtr& GetUniformBuffer(void) const;
+
+
+private:
+	bool m_bDirty;
+	glm::mat4 m_value;
+
+private:
+	CGfxUniformBufferPtr m_ptrUniformBuffer;
 };

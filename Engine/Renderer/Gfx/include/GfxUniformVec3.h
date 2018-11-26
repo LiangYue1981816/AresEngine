@@ -2,20 +2,25 @@
 #include "GfxRenderer.h"
 
 
-class CALL_API CGfxUniformVec3 : public CGfxResource
+class CALL_API CGfxUniformVec3
 {
 public:
-	CGfxUniformVec3(void)
-	{
-
-	}
-	virtual ~CGfxUniformVec3(void)
-	{
-
-	}
+	CGfxUniformVec3(bool bDynamic);
+	virtual ~CGfxUniformVec3(void);
 
 
 public:
-	virtual void SetValue(float v0, float v1, float v2) = 0;
-	virtual void Apply(void) = 0;
+	void SetValue(float v0, float v1, float v2);
+	void Apply(void);
+
+public:
+	const CGfxUniformBufferPtr& GetUniformBuffer(void) const;
+
+
+private:
+	bool m_bDirty;
+	glm::vec3 m_value;
+
+private:
+	CGfxUniformBufferPtr m_ptrUniformBuffer;
 };

@@ -1,24 +1,18 @@
 #include "GfxHeader.h"
 
 
-CGLES3UniformMat4::CGLES3UniformMat4(bool bDynamic)
-	: CGLES3UniformBase(nullptr, sizeof(m_value), bDynamic)
-	, m_bDirty(false)
+CGfxUniformMat4::CGfxUniformMat4(bool bDynamic)
+	: m_bDirty(false)
+{
+	m_ptrUniformBuffer = Renderer()->NewUniformBuffer(sizeof(m_value), bDynamic);
+}
+
+CGfxUniformMat4::~CGfxUniformMat4(void)
 {
 
 }
 
-CGLES3UniformMat4::~CGLES3UniformMat4(void)
-{
-
-}
-
-void CGLES3UniformMat4::Release(void)
-{
-	delete this;
-}
-
-void CGLES3UniformMat4::SetValue(const float *value)
+void CGfxUniformMat4::SetValue(const float *value)
 {
 	m_bDirty = true;
 	m_value[0][0] = value[0];
@@ -39,10 +33,15 @@ void CGLES3UniformMat4::SetValue(const float *value)
 	m_value[3][3] = value[15];
 }
 
-void CGLES3UniformMat4::Apply(void)
+void CGfxUniformMat4::Apply(void)
 {
 	if (m_bDirty) {
 		m_bDirty = false;
-		m_pUniformBuffer->BufferData(0, sizeof(m_value), &m_value);
+		m_ptrUniformBuffer->BufferData(0, sizeof(m_value), &m_value);
 	}
+}
+
+const CGfxUniformBufferPtr& CGfxUniformMat4::GetUniformBuffer(void) const
+{
+	return m_ptrUniformBuffer;
 }

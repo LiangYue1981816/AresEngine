@@ -32,7 +32,6 @@ class CALL_API CGfxPipelineGraphics;
 class CALL_API CGfxMaterial;
 class CALL_API CGfxMaterialPass;
 
-class CALL_API CGfxUniformBase;
 class CALL_API CGfxUniformVec1;
 class CALL_API CGfxUniformVec2;
 class CALL_API CGfxUniformVec3;
@@ -59,7 +58,5 @@ typedef CGfxResourcePtr<CGfxTexture2D> CGfxTexture2DPtr;
 typedef CGfxResourcePtr<CGfxTexture2DArray> CGfxTexture2DArrayPtr;
 typedef CGfxResourcePtr<CGfxTextureCubeMap> CGfxTextureCubeMapPtr;
 
-typedef CGfxResourcePtr<CGfxUniformEngine> CGfxUniformEnginePtr;
-typedef CGfxResourcePtr<CGfxUniformCamera> CGfxUniformCameraPtr;
-
+typedef CGfxResourcePtr<CGfxUniformBuffer> CGfxUniformBufferPtr;
 typedef CGfxResourcePtr<CGfxCommandBuffer> CGfxCommandBufferPtr;

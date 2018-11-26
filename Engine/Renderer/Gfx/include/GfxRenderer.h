@@ -43,7 +43,6 @@
 #include "GfxMaterial.h"
 #include "GfxMaterialPass.h"
 
-#include "GfxUniformBase.h"
 #include "GfxUniformVec1.h"
 #include "GfxUniformVec2.h"
 #include "GfxUniformVec3.h"
@@ -98,9 +97,7 @@ public:
 	virtual CGfxTextureCubeMapPtr NewTextureCubeMap(uint32_t name) = 0;
 	virtual CGfxTextureCubeMapPtr NewTextureCubeMap(const char *szFileName) = 0;
 
-	virtual CGfxUniformEnginePtr NewUniformEngine(bool bDynamic) = 0;
-	virtual CGfxUniformCameraPtr NewUniformCamera(bool bDynamic) = 0;
-
+	virtual CGfxUniformBufferPtr NewUniformBuffer(size_t size, bool bDynamic) = 0;
 	virtual CGfxCommandBufferPtr NewCommandBuffer(bool bMainCommandBuffer) = 0;
 
 public:
@@ -111,8 +108,7 @@ public:
 	virtual bool CmdBindPipelineCompute(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxPipelineCompute *pPipelineCompute) = 0;
 	virtual bool CmdBindPipelineGraphics(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxPipelineGraphics *pPipelineGraphics) = 0;
 	virtual bool CmdBindMaterialPass(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxMaterialPtr &ptrMaterial, uint32_t namePass) = 0;
-	virtual bool CmdBindUniformEngine(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxUniformEnginePtr &ptrUniformEngine) = 0;
-	virtual bool CmdBindUniformCamera(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxUniformCameraPtr &ptrUniformCamera) = 0;
+	virtual bool CmdBindUniformBuffer(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxUniformBufferPtr &ptrUniformBuffer, uint32_t nameUniform) = 0;
 
 	virtual bool CmdUniform1i(CGfxCommandBufferPtr &ptrCommandBuffer, const char *szName, int v0) = 0;
 	virtual bool CmdUniform2i(CGfxCommandBufferPtr &ptrCommandBuffer, const char *szName, int v0, int v1) = 0;

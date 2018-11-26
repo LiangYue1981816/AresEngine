@@ -2,7 +2,7 @@
 #include "GfxRenderer.h"
 
 
-class CALL_API CGfxUniformCamera : public CGfxResource
+class CALL_API CGfxUniformCamera
 {
 public:
 	typedef struct Params {
@@ -19,22 +19,28 @@ public:
 
 
 public:
-	CGfxUniformCamera(void)
-	{
-
-	}
-	virtual ~CGfxUniformCamera(void)
-	{
-
-	}
+	CGfxUniformCamera(bool bDynamic);
+	virtual ~CGfxUniformCamera(void);
 
 
 public:
-	virtual void SetScreen(float width, float height) = 0;
+	void SetScreen(float width, float height);
 
-	virtual void SetPerspective(float fovy, float aspect, float zNear, float zFar) = 0;
-	virtual void SetOrtho(float left, float right, float bottom, float top, float zNear, float zFar) = 0;
-	virtual void SetLookat(float eyex, float eyey, float eyez, float centerx, float centery, float centerz, float upx, float upy, float upz) = 0;
+	void SetPerspective(float fovy, float aspect, float zNear, float zFar);
+	void SetOrtho(float left, float right, float bottom, float top, float zNear, float zFar);
+	void SetLookat(float eyex, float eyey, float eyez, float centerx, float centery, float centerz, float upx, float upy, float upz);
 
-	virtual void Apply(void) = 0;
+	void Apply(void);
+
+public:
+	const CGfxUniformBufferPtr& GetUniformBuffer(void) const;
+
+
+private:
+	bool m_bDirty;
+	uint32_t m_hash;
+	Params m_params;
+
+private:
+	CGfxUniformBufferPtr m_ptrUniformBuffer;
 };

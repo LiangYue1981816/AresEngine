@@ -127,11 +127,12 @@ static void SHRotate(float shRedRotate[9], float shGreenRotate[9], float shBlueR
 */
 
 
-CGLES3UniformEngine::CGLES3UniformEngine(CGLES3UniformManager *pManager, bool bDynamic)
-	: CGLES3UniformBase(pManager, sizeof(m_params), bDynamic)
-	, m_bDirty(false)
+CGfxUniformEngine::CGfxUniformEngine(bool bDynamic)
+	: m_bDirty(false)
 	, m_hash(INVALID_HASHVALUE)
 {
+	m_ptrUniformBuffer = Renderer()->NewUniformBuffer(sizeof(m_params), bDynamic);
+
 	SetLightFactor(1.0f, 1.0f, 1.0f, 1.0f);
 	SetPointLightColor(0.0f, 0.0f, 0.0f);
 	SetPointLightPosition(0.0f, 0.0f, 0.0f, 0.0f);
@@ -139,17 +140,12 @@ CGLES3UniformEngine::CGLES3UniformEngine(CGLES3UniformManager *pManager, bool bD
 	SetDirectLightDirection(0.0f, -1.0f, 0.0f);
 }
 
-CGLES3UniformEngine::~CGLES3UniformEngine(void)
+CGfxUniformEngine::~CGfxUniformEngine(void)
 {
 
 }
 
-void CGLES3UniformEngine::Release(void)
-{
-	m_pManager->DestroyUniform(this);
-}
-
-void CGLES3UniformEngine::SetTime(float t, float dt)
+void CGfxUniformEngine::SetTime(float t, float dt)
 {
 	m_bDirty = true;
 	m_params.time = glm::vec4(t / 20.0f, t * 1.0f, t * 2.0f, t * 3.0f);
@@ -158,7 +154,7 @@ void CGLES3UniformEngine::SetTime(float t, float dt)
 	m_params.deltaTime = glm::vec4(dt, 1.0f / dt, 1.0f, 1.0f);
 }
 
-void CGLES3UniformEngine::SetShadowOrtho(float left, float right, float bottom, float top, float zNear, float zFar)
+void CGfxUniformEngine::SetShadowOrtho(float left, float right, float bottom, float top, float zNear, float zFar)
 {
 	m_bDirty = true;
 	m_params.shadowParams.x = zFar - zNear;
@@ -167,32 +163,32 @@ void CGLES3UniformEngine::SetShadowOrtho(float left, float right, float bottom, 
 	m_params.shadowProjectionViewMatrix = m_params.shadowProjectionMatrix * m_params.shadowViewMatrix;
 }
 
-void CGLES3UniformEngine::SetShadowLookat(float eyex, float eyey, float eyez, float centerx, float centery, float centerz, float upx, float upy, float upz)
+void CGfxUniformEngine::SetShadowLookat(float eyex, float eyey, float eyez, float centerx, float centery, float centerz, float upx, float upy, float upz)
 {
 	m_bDirty = true;
 	m_params.shadowViewMatrix = glm::lookAt(glm::vec3(eyex, eyey, eyez), glm::vec3(centerx, centery, centerz), glm::vec3(upx, upy, upz));
 	m_params.shadowProjectionViewMatrix = m_params.shadowProjectionMatrix * m_params.shadowViewMatrix;
 }
 
-void CGLES3UniformEngine::SetShadowRange(float range)
+void CGfxUniformEngine::SetShadowRange(float range)
 {
 	m_bDirty = true;
 	m_params.shadowParams.z = range;
 }
 
-void CGLES3UniformEngine::SetShadowResolution(float resolution)
+void CGfxUniformEngine::SetShadowResolution(float resolution)
 {
 	m_bDirty = true;
 	m_params.shadowParams.w = resolution;
 }
 
-void CGLES3UniformEngine::SetLightFactor(float ambientLightFactor, float pointLightFactor, float directLightFactor, float envLightFactor)
+void CGfxUniformEngine::SetLightFactor(float ambientLightFactor, float pointLightFactor, float directLightFactor, float envLightFactor)
 {
 	m_bDirty = true;
 	m_params.lightFactor = glm::vec4(ambientLightFactor, pointLightFactor, directLightFactor, envLightFactor);
 }
 
-void CGLES3UniformEngine::SetAmbientLightSH(float shRed[9], float shGreen[9], float shBlue[9])
+void CGfxUniformEngine::SetAmbientLightSH(float shRed[9], float shGreen[9], float shBlue[9])
 {
 	m_bDirty = true;
 	m_params.ambientLightSH0 = glm::vec4(shRed[0], shRed[1], shRed[2], 0.0);
@@ -206,61 +202,61 @@ void CGLES3UniformEngine::SetAmbientLightSH(float shRed[9], float shGreen[9], fl
 	m_params.ambientLightSH8 = glm::vec4(shBlue[6], shBlue[7], shBlue[8], 0.0);
 }
 
-void CGLES3UniformEngine::SetAmbientLightRotation(float angle, float axisx, float axisy, float axisz)
+void CGfxUniformEngine::SetAmbientLightRotation(float angle, float axisx, float axisy, float axisz)
 {
 	m_bDirty = true;
 	m_params.ambientLightRotationMatrix = glm::rotate(glm::mat4(), -angle, glm::vec3(axisx, axisy, axisz));
 }
 
-void CGLES3UniformEngine::SetPointLightColor(float red, float green, float blue)
+void CGfxUniformEngine::SetPointLightColor(float red, float green, float blue)
 {
 	m_bDirty = true;
 	m_params.pointLightColor = glm::vec4(red, green, blue, 0.0f);
 }
 
-void CGLES3UniformEngine::SetPointLightPosition(float posx, float posy, float posz, float radius)
+void CGfxUniformEngine::SetPointLightPosition(float posx, float posy, float posz, float radius)
 {
 	m_bDirty = true;
 	m_params.pointLightPosition = glm::vec4(posx, posy, posz, radius);
 }
 
-void CGLES3UniformEngine::SetPointLightAttenuation(float linear, float square, float constant)
+void CGfxUniformEngine::SetPointLightAttenuation(float linear, float square, float constant)
 {
 	m_bDirty = true;
 	m_params.pointLightAttenuation = glm::vec4(linear, square, constant, 0.0f);
 }
 
-void CGLES3UniformEngine::SetDirectLightColor(float red, float green, float blue)
+void CGfxUniformEngine::SetDirectLightColor(float red, float green, float blue)
 {
 	m_bDirty = true;
 	m_params.directLightColor = glm::vec4(red, green, blue, 0.0);
 }
 
-void CGLES3UniformEngine::SetDirectLightDirection(float dirx, float diry, float dirz)
+void CGfxUniformEngine::SetDirectLightDirection(float dirx, float diry, float dirz)
 {
 	m_bDirty = true;
 	m_params.directLightDirection = glm::vec4(glm::normalize(glm::vec3(-dirx, -diry, -dirz)), 0.0f);
 }
 
-void CGLES3UniformEngine::SetFogColor(float red, float green, float blue)
+void CGfxUniformEngine::SetFogColor(float red, float green, float blue)
 {
 	m_bDirty = true;
 	m_params.fogColor = glm::vec4(red, green, blue, 0.0f);
 }
 
-void CGLES3UniformEngine::SetFogHeightDensity(float startHeight, float endHeight, float density)
+void CGfxUniformEngine::SetFogHeightDensity(float startHeight, float endHeight, float density)
 {
 	m_bDirty = true;
 	m_params.fogHeightDensity = glm::vec4(startHeight, endHeight, density, 0.0f);
 }
 
-void CGLES3UniformEngine::SetFogDistanceDensity(float startDistance, float endDistance, float density)
+void CGfxUniformEngine::SetFogDistanceDensity(float startDistance, float endDistance, float density)
 {
 	m_bDirty = true;
 	m_params.fogDistanceDensity = glm::vec4(startDistance, endDistance, density, 0.0f);
 }
 
-void CGLES3UniformEngine::Apply(void)
+void CGfxUniformEngine::Apply(void)
 {
 	if (m_bDirty) {
 		m_bDirty = false;
@@ -269,7 +265,12 @@ void CGLES3UniformEngine::Apply(void)
 
 		if (m_hash != hash) {
 			m_hash  = hash;
-			m_pUniformBuffer->BufferData(0, sizeof(m_params), &m_params);
+			m_ptrUniformBuffer->BufferData(0, sizeof(m_params), &m_params);
 		}
 	}
+}
+
+const CGfxUniformBufferPtr& CGfxUniformEngine::GetUniformBuffer(void) const
+{
+	return m_ptrUniformBuffer;
 }

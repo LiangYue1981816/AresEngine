@@ -5,7 +5,7 @@
 class CALL_API CTaskCommandBuffer : public CTask
 {
 public:
-	CTaskCommandBuffer(int indexQueue, const CGfxUniformEnginePtr &ptrUniformEngine, const CGfxUniformCameraPtr &ptrUniformCamera, CGfxPipelineGraphics *pPipeline, uint32_t namePass);
+	CTaskCommandBuffer(int indexQueue, const CGfxUniformBufferPtr &ptrUniformBufferEngine, const CGfxUniformBufferPtr &ptrUniformBufferCamera, CGfxPipelineGraphics *pPipeline, uint32_t namePass);
 	virtual ~CTaskCommandBuffer(void);
 
 
@@ -17,8 +17,8 @@ public:
 private:
 	int m_indexQueue;
 	CGfxCommandBufferPtr m_ptrCommandBuffer;
-	CGfxUniformEnginePtr m_ptrUniformEngine;
-	CGfxUniformCameraPtr m_ptrUniformCamera;
+	CGfxUniformBufferPtr m_ptrUniformBufferEngine;
+	CGfxUniformBufferPtr m_ptrUniformBufferCamera;
 	CGfxPipelineGraphics*m_pPipeline;
 	uint32_t m_namePass;
 };
@@ -33,12 +33,12 @@ public:
 public:
 	void Clear(int indexQueue);
 	void Begin(int indexQueue);
-	void End(int indexQueue);
 	void Add(int indexThread, int indexQueue, const CGfxMaterialPtr &ptrMaterial, const CGfxMeshPtr &ptrMesh, int indexDraw, const uint8_t *pInstanceData, uint32_t size);
+	void End(int indexQueue);
 
 public:
-	void CmdDraw(int indexQueue, CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxUniformEnginePtr &ptrUniformEngine, const CGfxUniformCameraPtr &ptrUniformCamera, uint32_t namePass);
-	void CmdDrawThread(int indexQueue, CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxUniformEnginePtr &ptrUniformEngine, const CGfxUniformCameraPtr &ptrUniformCamera, CGfxPipelineGraphics *pPipeline, uint32_t namePass);
+	virtual void CmdDraw(int indexQueue, CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxUniformBufferPtr &ptrUniformBufferEngine, const CGfxUniformBufferPtr &ptrUniformBufferCamera, uint32_t namePass);
+	virtual void CmdDrawThread(int indexQueue, CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxUniformBufferPtr &ptrUniformBufferEngine, const CGfxUniformBufferPtr &ptrUniformBufferCamera, CGfxPipelineGraphics *pPipeline, uint32_t namePass);
 
 
 private:

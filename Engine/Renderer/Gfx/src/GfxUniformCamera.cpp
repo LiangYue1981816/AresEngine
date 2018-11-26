@@ -1,31 +1,25 @@
 #include "GfxHeader.h"
 
 
-CGLES3UniformCamera::CGLES3UniformCamera(CGLES3UniformManager *pManager, bool bDynamic)
-	: CGLES3UniformBase(pManager, sizeof(m_params), bDynamic)
-	, m_bDirty(false)
+CGfxUniformCamera::CGfxUniformCamera(bool bDynamic)
+	: m_bDirty(false)
 	, m_hash(INVALID_HASHVALUE)
 {
-
+	m_ptrUniformBuffer = Renderer()->NewUniformBuffer(sizeof(m_params), bDynamic);
 }
 
-CGLES3UniformCamera::~CGLES3UniformCamera(void)
+CGfxUniformCamera::~CGfxUniformCamera(void)
 {
 
 }
 
-void CGLES3UniformCamera::Release(void)
-{
-	m_pManager->DestroyUniform(this);
-}
-
-void CGLES3UniformCamera::SetScreen(float width, float height)
+void CGfxUniformCamera::SetScreen(float width, float height)
 {
 	m_bDirty = true;
 	m_params.screen = glm::vec4(width, height, 1.0f + 1.0f / width, 1.0f + 1.0f / height);
 }
 
-void CGLES3UniformCamera::SetPerspective(float fovy, float aspect, float zNear, float zFar)
+void CGfxUniformCamera::SetPerspective(float fovy, float aspect, float zNear, float zFar)
 {
 	// [-1 1]
 	//float x = (1.0f - zFar / zNear) / 2.0f;
@@ -42,7 +36,7 @@ void CGLES3UniformCamera::SetPerspective(float fovy, float aspect, float zNear, 
 	m_params.projectionViewMatrix = m_params.projectionMatrix * m_params.viewMatrix;
 }
 
-void CGLES3UniformCamera::SetOrtho(float left, float right, float bottom, float top, float zNear, float zFar)
+void CGfxUniformCamera::SetOrtho(float left, float right, float bottom, float top, float zNear, float zFar)
 {
 	// [-1 1]
 	//float x = (1.0f - zFar / zNear) / 2.0f;
@@ -59,7 +53,7 @@ void CGLES3UniformCamera::SetOrtho(float left, float right, float bottom, float 
 	m_params.projectionViewMatrix = m_params.projectionMatrix * m_params.viewMatrix;
 }
 
-void CGLES3UniformCamera::SetLookat(float eyex, float eyey, float eyez, float centerx, float centery, float centerz, float upx, float upy, float upz)
+void CGfxUniformCamera::SetLookat(float eyex, float eyey, float eyez, float centerx, float centery, float centerz, float upx, float upy, float upz)
 {
 	m_bDirty = true;
 	m_params.viewMatrix = glm::lookAt(glm::vec3(eyex, eyey, eyez), glm::vec3(centerx, centery, centerz), glm::vec3(upx, upy, upz));
@@ -68,7 +62,7 @@ void CGLES3UniformCamera::SetLookat(float eyex, float eyey, float eyez, float ce
 	m_params.projectionViewMatrix = m_params.projectionMatrix * m_params.viewMatrix;
 }
 
-void CGLES3UniformCamera::Apply(void)
+void CGfxUniformCamera::Apply(void)
 {
 	if (m_bDirty) {
 		m_bDirty = false;
@@ -77,7 +71,12 @@ void CGLES3UniformCamera::Apply(void)
 
 		if (m_hash != hash) {
 			m_hash  = hash;
-			m_pUniformBuffer->BufferData(0, sizeof(m_params), &m_params);
+			m_ptrUniformBuffer->BufferData(0, sizeof(m_params), &m_params);
 		}
 	}
+}
+
+const CGfxUniformBufferPtr& CGfxUniformCamera::GetUniformBuffer(void) const
+{
+	return m_ptrUniformBuffer;
 }
