@@ -132,12 +132,6 @@ CGfxUniformEngine::CGfxUniformEngine(bool bDynamic)
 	, m_hash(INVALID_HASHVALUE)
 {
 	m_ptrUniformBuffer = Renderer()->NewUniformBuffer(sizeof(m_params), bDynamic);
-
-	SetLightFactor(1.0f, 1.0f, 1.0f, 1.0f);
-	SetPointLightColor(0.0f, 0.0f, 0.0f);
-	SetPointLightPosition(0.0f, 0.0f, 0.0f, 0.0f);
-	SetPointLightAttenuation(0.0f, 0.0f, 1.0f);
-	SetDirectLightDirection(0.0f, -1.0f, 0.0f);
 }
 
 CGfxUniformEngine::~CGfxUniformEngine(void)
