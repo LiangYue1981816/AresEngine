@@ -134,6 +134,7 @@ void CRenderSolutionDefault::Present(int indexQueue)
 
 void CRenderSolutionDefault::Clearup(int indexQueue)
 {
-	m_ptrMainCommandBuffer[indexQueue]->Clearup();
 	m_pMainCamera->Clear(indexQueue);
+	m_pShadowCamera->Clear(indexQueue);
+	m_ptrMainCommandBuffer[indexQueue]->Clearup();
 }
