@@ -29,10 +29,6 @@ public:
 	uint32_t GetNextComponentPointLightName(void) const;
 
 public:
-	CGfxCamera* GetMainCamera(void) const;
-	CGfxCamera* GetShadowCamera(void) const;
-
-public:
 	CScene* CreateScene(uint32_t name);
 	void DestroyScene(CScene *pScene);
 
@@ -46,40 +42,10 @@ public:
 	CComponentParticlePtr CreateComponentParticle(uint32_t name);
 	CComponentPointLightPtr CreateComponentPointLight(uint32_t name);
 
-public:
-	void SetShadowOrtho(float left, float right, float bottom, float top, float zNear, float zFar);
-	void SetShadowLookat(float eyex, float eyey, float eyez, float centerx, float centery, float centerz, float upx, float upy, float upz);
-	void SetShadowRange(float range);
-	void SetShadowResolution(float resolution);
-
-	void SetLightFactor(float ambientLightFactor, float pointLightFactor, float directLightFactor, float envLightFactor);
-
-	void SetAmbientLightSH(float shRed[9], float shGreen[9], float shBlue[9]);
-	void SetAmbientLightRotation(float angle, float axisx, float axisy, float axisz);
-
-	void SetMainPointLightColor(float red, float green, float blue);
-	void SetMainPointLightPosition(float posx, float posy, float posz, float radius);
-	void SetMainPointLightAttenuation(float linear, float square, float constant);
-
-	void SetMainDirectLightColor(float red, float green, float blue);
-	void SetMainDirectLightDirection(float dirx, float diry, float dirz);
-
-	void SetFogColor(float red, float green, float blue);
-	void SetFogHeightDensity(float startHeight, float endHeight, float density);
-	void SetFogDistanceDensity(float startDistance, float endDistance, float density);
-
-	const CGfxUniformEnginePtr& GetUniformEngine(void) const;
-
 private:
 	void UpdateLogic(float totalTime, float deltaTime);
 	void UpdateCamera(CGfxCamera *pCamera, int indexQueue);
 
-
-private:
-	CGfxCamera *m_pMainCamera;
-	CGfxCamera *m_pShadowCamera;
-
-	CGfxUniformEnginePtr m_ptrUniformEngine;
 
 private:
 	eastl::unordered_map<uint32_t, CScene*> m_pScenes;

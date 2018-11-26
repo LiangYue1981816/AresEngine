@@ -98,25 +98,25 @@ void CRenderSolutionDefault::Render(int indexQueue, float deltaTime)
 	// Update logic & camera
 	{
 		Engine()->UpdateLogic(deltaTime);
-		Engine()->UpdateCamera(MainCamera(), indexQueue);
+		Engine()->UpdateCamera(m_pMainCamera, indexQueue);
 	}
 
 	// Build command buffer
 	{
-		const static uint32_t nameDefaultPass = HashValue("Default");
+		static const uint32_t nameDefaultPass = HashValue("Default");
 
 		const CGfxRenderPassPtr &ptrRenderPass = m_bEnableMSAA ? m_ptrRenderPassMSAA : m_ptrRenderPass;
 		const CGfxFrameBufferPtr &ptrFrameBuffer = m_bEnableMSAA ? m_ptrFrameBufferScreenMSAA[Renderer()->GetSwapChain()->GetTextureIndex()] : m_ptrFrameBufferScreen[Renderer()->GetSwapChain()->GetTextureIndex()];
 
 		Renderer()->CmdBeginRenderPass(m_ptrMainCommandBuffer[indexQueue], ptrFrameBuffer, ptrRenderPass);
 		{
-			const glm::vec4 &scissor = MainCamera()->GetScissor();
-			const glm::vec4 &viewport = MainCamera()->GetViewport();
+			const glm::vec4 &scissor = m_pMainCamera->GetScissor();
+			const glm::vec4 &viewport = m_pMainCamera->GetViewport();
 
 			Renderer()->CmdSetScissor(m_ptrMainCommandBuffer[indexQueue], (int)scissor.x, (int)scissor.y, (int)scissor.z, (int)scissor.w);
 			Renderer()->CmdSetViewport(m_ptrMainCommandBuffer[indexQueue], (int)viewport.x, (int)viewport.y, (int)viewport.z, (int)viewport.w);
 
-			MainCamera()->CmdDraw(indexQueue, m_ptrMainCommandBuffer[indexQueue], SceneManager()->GetUniformEngine(), nameDefaultPass);
+			m_pMainCamera->CmdDraw(indexQueue, m_ptrMainCommandBuffer[indexQueue], m_pUniformEngine->GetUniformBuffer(), nameDefaultPass);
 		}
 		Renderer()->CmdEndRenderPass(m_ptrMainCommandBuffer[indexQueue]);
 	}
@@ -124,6 +124,10 @@ void CRenderSolutionDefault::Render(int indexQueue, float deltaTime)
 
 void CRenderSolutionDefault::Present(int indexQueue)
 {
+	m_pMainCamera->Apply();
+	m_pShadowCamera->Apply();
+	m_pUniformEngine->Apply();
+
 	Renderer()->Submit(m_ptrMainCommandBuffer[indexQueue]);
 	Renderer()->Present();
 }
@@ -131,5 +135,5 @@ void CRenderSolutionDefault::Present(int indexQueue)
 void CRenderSolutionDefault::Clearup(int indexQueue)
 {
 	m_ptrMainCommandBuffer[indexQueue]->Clearup();
-	MainCamera()->Clear(indexQueue);
+	m_pMainCamera->Clear(indexQueue);
 }

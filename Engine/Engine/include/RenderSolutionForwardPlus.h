@@ -2,7 +2,7 @@
 #include "RenderSolutionBase.h"
 
 
-class CRenderSolutionForwardPlus : public CRenderSolutionBase
+class CALL_API CRenderSolutionForwardPlus : public CRenderSolutionBase
 {
 	friend class CEngine;
 

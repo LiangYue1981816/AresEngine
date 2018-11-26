@@ -14,8 +14,9 @@
 
 
 #define SceneManager() CEngine::GetInstance()->GetSceneManager()
-#define MainCamera() CEngine::GetInstance()->GetSceneManager()->GetMainCamera()
-#define ShadowCamera() CEngine::GetInstance()->GetSceneManager()->GetShadowCamera()
+#define RenderSolution() CEngine::GetInstance()->GetRenderSolution()
+#define MainCamera() CEngine::GetInstance()->GetRenderSolution()->GetMainCamera()
+#define ShadowCamera() CEngine::GetInstance()->GetRenderSolution()->GetShadowCamera()
 
 
 typedef enum GfxApi {

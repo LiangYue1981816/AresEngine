@@ -2,7 +2,7 @@
 #include "RenderSolutionBase.h"
 
 
-class CRenderSolutionDeferred : public CRenderSolutionBase
+class CALL_API CRenderSolutionDeferred : public CRenderSolutionBase
 {
 	friend class CEngine;
 

@@ -4,17 +4,9 @@
 
 
 CSceneManager::CSceneManager(void)
-	: m_pMainCamera(nullptr)
-	, m_pShadowCamera(nullptr)
-
-	, m_taskGraphUpdateLogic("TashGraph_UpdateLogic")
+	: m_taskGraphUpdateLogic("TashGraph_UpdateLogic")
 	, m_taskGraphUpdateCamera("TaskGraph_UpdateCamera")
 {
-	m_pMainCamera = new CGfxCamera;
-	m_pShadowCamera = new CGfxCamera;
-
-	m_ptrUniformEngine = Renderer()->NewUniformEngine(true);
-
 	event_init(&m_eventUpdateLogicSkin, 1);
 	event_init(&m_eventUpdateLogicParticle, 1);
 	event_init(&m_eventUpdateLogicPointLight, 1);
@@ -26,9 +18,6 @@ CSceneManager::CSceneManager(void)
 
 CSceneManager::~CSceneManager(void)
 {
-	delete m_pMainCamera;
-	delete m_pShadowCamera;
-
 	for (const auto &itScene : m_pScenes) {
 		delete itScene.second;
 	}
@@ -87,16 +76,6 @@ uint32_t CSceneManager::GetNextComponentPointLightName(void) const
 	static char szName[_MAX_STRING] = { 0 };
 	sprintf(szName, "_POINTLIGHT_%d", count++);
 	return HashValue(szName);
-}
-
-CGfxCamera* CSceneManager::GetMainCamera(void) const
-{
-	return m_pMainCamera;
-}
-
-CGfxCamera* CSceneManager::GetShadowCamera(void) const
-{
-	return m_pShadowCamera;
 }
 
 CScene* CSceneManager::CreateScene(uint32_t name)
@@ -171,86 +150,6 @@ CComponentPointLightPtr CSceneManager::CreateComponentPointLight(uint32_t name)
 	else {
 		return CComponentPointLightPtr();
 	}
-}
-
-void CSceneManager::SetShadowOrtho(float left, float right, float bottom, float top, float zNear, float zFar)
-{
-	m_ptrUniformEngine->SetShadowOrtho(left, right, bottom, top, zNear, zFar);
-}
-
-void CSceneManager::SetShadowLookat(float eyex, float eyey, float eyez, float centerx, float centery, float centerz, float upx, float upy, float upz)
-{
-	m_ptrUniformEngine->SetShadowLookat(eyex, eyey, eyez, centerx, centery, centerz, upx, upy, upz);
-}
-
-void CSceneManager::SetShadowRange(float range)
-{
-	m_ptrUniformEngine->SetShadowRange(range);
-}
-
-void CSceneManager::SetShadowResolution(float resolution)
-{
-	m_ptrUniformEngine->SetShadowResolution(resolution);
-}
-
-void CSceneManager::SetLightFactor(float ambientLightFactor, float pointLightFactor, float directLightFactor, float envLightFactor)
-{
-	m_ptrUniformEngine->SetLightFactor(ambientLightFactor, pointLightFactor, directLightFactor, envLightFactor);
-}
-
-void CSceneManager::SetAmbientLightSH(float shRed[9], float shGreen[9], float shBlue[9])
-{
-	m_ptrUniformEngine->SetAmbientLightSH(shRed, shGreen, shBlue);
-}
-
-void CSceneManager::SetAmbientLightRotation(float angle, float axisx, float axisy, float axisz)
-{
-	m_ptrUniformEngine->SetAmbientLightRotation(angle, axisx, axisy, axisz);
-}
-
-void CSceneManager::SetMainPointLightColor(float red, float green, float blue)
-{
-	m_ptrUniformEngine->SetPointLightColor(red, green, blue);
-}
-
-void CSceneManager::SetMainPointLightPosition(float posx, float posy, float posz, float radius)
-{
-	m_ptrUniformEngine->SetPointLightPosition(posx, posy, posz, radius);
-}
-
-void CSceneManager::SetMainPointLightAttenuation(float linear, float square, float constant)
-{
-	m_ptrUniformEngine->SetPointLightAttenuation(linear, square, constant);
-}
-
-void CSceneManager::SetMainDirectLightColor(float red, float green, float blue)
-{
-	m_ptrUniformEngine->SetDirectLightColor(red, green, blue);
-}
-
-void CSceneManager::SetMainDirectLightDirection(float dirx, float diry, float dirz)
-{
-	m_ptrUniformEngine->SetDirectLightDirection(dirx, diry, dirz);
-}
-
-void CSceneManager::SetFogColor(float red, float green, float blue)
-{
-	m_ptrUniformEngine->SetFogColor(red, green, blue);
-}
-
-void CSceneManager::SetFogHeightDensity(float startHeight, float endHeight, float density)
-{
-	m_ptrUniformEngine->SetFogHeightDensity(startHeight, endHeight, density);
-}
-
-void CSceneManager::SetFogDistanceDensity(float startDistance, float endDistance, float density)
-{
-	m_ptrUniformEngine->SetFogDistanceDensity(startDistance, endDistance, density);
-}
-
-const CGfxUniformEnginePtr& CSceneManager::GetUniformEngine(void) const
-{
-	return m_ptrUniformEngine;
 }
 
 void CSceneManager::UpdateLogic(float totalTime, float deltaTime)
