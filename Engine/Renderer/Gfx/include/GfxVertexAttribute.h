@@ -21,12 +21,23 @@
 #define INSTANCE_ATTRIBUTE_TRANSFORM (INSTANCE_ATTRIBUTE_TRANSFORM_MATRIX_COL0 | INSTANCE_ATTRIBUTE_TRANSFORM_MATRIX_COL1 | INSTANCE_ATTRIBUTE_TRANSFORM_MATRIX_COL2 | INSTANCE_ATTRIBUTE_TRANSFORM_MATRIX_COL3)
 
 
+struct ATTRIBUTE {
+	uint32_t flag;
+	uint32_t size;
+	uint32_t components;
+	uint32_t location;
+	const char *name;
+};
+
+
+CALL_API void SetVertexAttributes(ATTRIBUTE *pAttributes, uint32_t count);
 CALL_API uint32_t GetVertexStride(uint32_t format);
 CALL_API uint32_t GetVertexAttributeSize(uint32_t attribute);
 CALL_API uint32_t GetVertexAttributeOffset(uint32_t format, uint32_t attribute);
 CALL_API uint32_t GetVertexAttributeComponents(uint32_t attribute);
 CALL_API uint32_t GetVertexAttributeLocation(uint32_t attribute);
 
+CALL_API void SetInstanceAttributes(ATTRIBUTE *pAttributes, uint32_t count);
 CALL_API uint32_t GetInstanceStride(uint32_t format);
 CALL_API uint32_t GetInstanceAttributeSize(uint32_t attribute);
 CALL_API uint32_t GetInstanceAttributeOffset(uint32_t format, uint32_t attribute);
