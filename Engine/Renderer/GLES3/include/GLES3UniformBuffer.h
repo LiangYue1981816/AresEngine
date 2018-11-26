@@ -4,9 +4,13 @@
 
 class CGLES3UniformBuffer : public CGfxUniformBuffer
 {
-public:
-	CGLES3UniformBuffer(size_t size, bool bDynamic);
+	friend class CGLES3UniformBufferManager;
+
+
+private:
+	CGLES3UniformBuffer(CGLES3UniformBufferManager *pManager, size_t size, bool bDynamic);
 	virtual ~CGLES3UniformBuffer(void);
+	virtual void Release(void);
 
 
 public:
@@ -16,4 +20,7 @@ public:
 
 private:
 	uint32_t m_buffer;
+
+private:
+	CGLES3UniformBufferManager *m_pManager;
 };

@@ -1,8 +1,9 @@
 #include "GfxHeader.h"
 
 
-CGLES3UniformBuffer::CGLES3UniformBuffer(size_t size, bool bDynamic)
+CGLES3UniformBuffer::CGLES3UniformBuffer(CGLES3UniformBufferManager *pManager, size_t size, bool bDynamic)
 	: CGfxUniformBuffer(size, bDynamic)
+	, m_pManager(pManager)
 	, m_buffer(0)
 {
 	glGenBuffers(1, &m_buffer);
@@ -14,6 +15,11 @@ CGLES3UniformBuffer::CGLES3UniformBuffer(size_t size, bool bDynamic)
 CGLES3UniformBuffer::~CGLES3UniformBuffer(void)
 {
 	glDeleteBuffers(1, &m_buffer);
+}
+
+void CGLES3UniformBuffer::Release(void)
+{
+	m_pManager->DestroyUniformBuffer(this);
 }
 
 bool CGLES3UniformBuffer::BufferData(size_t offset, size_t size, const void *pBuffer)

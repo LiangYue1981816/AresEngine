@@ -25,8 +25,7 @@ public:
 	bool CmdBindPipelineCompute(const CGfxPipelineCompute *pPipelineCompute);
 	bool CmdBindPipelineGraphics(const CGfxPipelineGraphics *pPipelineGraphics);
 	bool CmdBindMaterialPass(const CGfxMaterialPtr &ptrMaterial, uint32_t namePass);
-	bool CmdBindUniformEngine(const CGfxUniformEnginePtr &ptrUniformEngine);
-	bool CmdBindUniformCamera(const CGfxUniformCameraPtr &ptrUniformCamera);
+	bool CmdBindUniformBuffer(const CGfxUniformBufferPtr &ptrUniformBuffer, uint32_t nameUniform);
 	bool CmdBindMesh(const CGfxMeshPtr &ptrMesh, const int indexDraw);
 
 	bool CmdUniform1i(const char *szName, int v0);

@@ -695,7 +695,7 @@ bool CGLES3MaterialPass::SetUniformVec1(const char *szName, float v0)
 
 	if ((m_pPipeline == nullptr) || (m_pPipeline && m_pPipeline->IsUniformBlockValid(name))) {
 		if (m_pUniformVec1s[name] == nullptr) {
-			m_pUniformVec1s[name] = new CGLES3UniformVec1(true);
+			m_pUniformVec1s[name] = new CGfxUniformVec1(true);
 		}
 
 		m_pUniformVec1s[name]->SetValue(v0);
@@ -711,7 +711,7 @@ bool CGLES3MaterialPass::SetUniformVec2(const char *szName, float v0, float v1)
 
 	if ((m_pPipeline == nullptr) || (m_pPipeline && m_pPipeline->IsUniformBlockValid(name))) {
 		if (m_pUniformVec2s[name] == nullptr) {
-			m_pUniformVec2s[name] = new CGLES3UniformVec2(true);
+			m_pUniformVec2s[name] = new CGfxUniformVec2(true);
 		}
 
 		m_pUniformVec2s[name]->SetValue(v0, v1);
@@ -727,7 +727,7 @@ bool CGLES3MaterialPass::SetUniformVec3(const char *szName, float v0, float v1, 
 
 	if ((m_pPipeline == nullptr) || (m_pPipeline && m_pPipeline->IsUniformBlockValid(name))) {
 		if (m_pUniformVec3s[name] == nullptr) {
-			m_pUniformVec3s[name] = new CGLES3UniformVec3(false);
+			m_pUniformVec3s[name] = new CGfxUniformVec3(false);
 		}
 
 		m_pUniformVec3s[name]->SetValue(v0, v1, v2);
@@ -743,7 +743,7 @@ bool CGLES3MaterialPass::SetUniformVec4(const char *szName, float v0, float v1, 
 
 	if ((m_pPipeline == nullptr) || (m_pPipeline && m_pPipeline->IsUniformBlockValid(name))) {
 		if (m_pUniformVec4s[name] == nullptr) {
-			m_pUniformVec4s[name] = new CGLES3UniformVec4(false);
+			m_pUniformVec4s[name] = new CGfxUniformVec4(false);
 		}
 
 		m_pUniformVec4s[name]->SetValue(v0, v1, v2, v3);
@@ -759,7 +759,7 @@ bool CGLES3MaterialPass::SetUniformMat4(const char *szName, const float *value)
 
 	if ((m_pPipeline == nullptr) || (m_pPipeline && m_pPipeline->IsUniformBlockValid(name))) {
 		if (m_pUniformMat4s[name] == nullptr) {
-			m_pUniformMat4s[name] = new CGLES3UniformMat4(false);
+			m_pUniformMat4s[name] = new CGfxUniformMat4(false);
 		}
 
 		m_pUniformMat4s[name]->SetValue(value);
@@ -785,27 +785,27 @@ void CGLES3MaterialPass::BindUniforms(CGLES3PipelineBase *pPipeline, const CGLES
 	if (pPipeline) {
 		for (const auto &itUniform : pPass->m_pUniformVec1s) {
 			itUniform.second->Apply();
-			pPipeline->BindUniformBuffer(itUniform.first, ((CGLES3UniformBase *)itUniform.second)->GetUniformBuffer(), ((CGLES3UniformBase *)itUniform.second)->GetUniformBuffer()->GetSize());
+			pPipeline->BindUniformBuffer(itUniform.first, (CGLES3UniformBuffer *)itUniform.second->GetUniformBuffer().GetPointer(), itUniform.second->GetUniformBuffer()->GetSize());
 		}
 
 		for (const auto &itUniform : pPass->m_pUniformVec2s) {
 			itUniform.second->Apply();
-			pPipeline->BindUniformBuffer(itUniform.first, ((CGLES3UniformBase *)itUniform.second)->GetUniformBuffer(), ((CGLES3UniformBase *)itUniform.second)->GetUniformBuffer()->GetSize());
+			pPipeline->BindUniformBuffer(itUniform.first, (CGLES3UniformBuffer *)itUniform.second->GetUniformBuffer().GetPointer(), itUniform.second->GetUniformBuffer()->GetSize());
 		}
 
 		for (const auto &itUniform : pPass->m_pUniformVec3s) {
 			itUniform.second->Apply();
-			pPipeline->BindUniformBuffer(itUniform.first, ((CGLES3UniformBase *)itUniform.second)->GetUniformBuffer(), ((CGLES3UniformBase *)itUniform.second)->GetUniformBuffer()->GetSize());
+			pPipeline->BindUniformBuffer(itUniform.first, (CGLES3UniformBuffer *)itUniform.second->GetUniformBuffer().GetPointer(), itUniform.second->GetUniformBuffer()->GetSize());
 		}
 
 		for (const auto &itUniform : pPass->m_pUniformVec4s) {
 			itUniform.second->Apply();
-			pPipeline->BindUniformBuffer(itUniform.first, ((CGLES3UniformBase *)itUniform.second)->GetUniformBuffer(), ((CGLES3UniformBase *)itUniform.second)->GetUniformBuffer()->GetSize());
+			pPipeline->BindUniformBuffer(itUniform.first, (CGLES3UniformBuffer *)itUniform.second->GetUniformBuffer().GetPointer(), itUniform.second->GetUniformBuffer()->GetSize());
 		}
 
 		for (const auto &itUniform : pPass->m_pUniformMat4s) {
 			itUniform.second->Apply();
-			pPipeline->BindUniformBuffer(itUniform.first, ((CGLES3UniformBase *)itUniform.second)->GetUniformBuffer(), ((CGLES3UniformBase *)itUniform.second)->GetUniformBuffer()->GetSize());
+			pPipeline->BindUniformBuffer(itUniform.first, (CGLES3UniformBuffer *)itUniform.second->GetUniformBuffer().GetPointer(), itUniform.second->GetUniformBuffer()->GetSize());
 		}
 	}
 }

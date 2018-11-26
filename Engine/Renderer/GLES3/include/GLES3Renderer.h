@@ -45,16 +45,8 @@
 #include "GLES3MaterialPass.h"
 #include "GLES3MaterialManager.h"
 
-#include "GLES3UniformBase.h"
-#include "GLES3UniformVec1.h"
-#include "GLES3UniformVec2.h"
-#include "GLES3UniformVec3.h"
-#include "GLES3UniformVec4.h"
-#include "GLES3UniformMat4.h"
-#include "GLES3UniformEngine.h"
-#include "GLES3UniformCamera.h"
 #include "GLES3UniformBuffer.h"
-#include "GLES3UniformManager.h"
+#include "GLES3UniformBufferManager.h"
 
 #include "GLES3CommandBuffer.h"
 #include "GLES3CommandBufferManager.h"
@@ -80,8 +72,7 @@ class CGLES3Renderer : public CGfxRenderer
 	friend class CGLES3CommandBindPipelineCompute;
 	friend class CGLES3CommandBindPipelineGraphics;
 	friend class CGLES3CommandBindMaterialPass;
-	friend class CGLES3CommandBindEngine;
-	friend class CGLES3CommandBindCamera;
+	friend class CGLES3CommandBindUniformBuffer;
 	friend class CGLES3CommandUniform1i;
 	friend class CGLES3CommandUniform2i;
 	friend class CGLES3CommandUniform3i;
@@ -133,9 +124,7 @@ public:
 	CGfxTextureCubeMapPtr NewTextureCubeMap(uint32_t name);
 	CGfxTextureCubeMapPtr NewTextureCubeMap(const char *szFileName);
 
-	CGfxUniformEnginePtr NewUniformEngine(bool bDynamic);
-	CGfxUniformCameraPtr NewUniformCamera(bool bDynamic);
-
+	CGfxUniformBufferPtr NewUniformBuffer(size_t size, bool bDynamic);
 	CGfxCommandBufferPtr NewCommandBuffer(bool bMainCommandBuffer);
 
 public:
@@ -146,8 +135,7 @@ public:
 	bool CmdBindPipelineCompute(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxPipelineCompute *pPipelineCompute);
 	bool CmdBindPipelineGraphics(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxPipelineGraphics *pPipelineGraphics);
 	bool CmdBindMaterialPass(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxMaterialPtr &ptrMaterial, uint32_t namePass);
-	bool CmdBindUniformEngine(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxUniformEnginePtr &ptrUniformEngine);
-	bool CmdBindUniformCamera(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxUniformCameraPtr &ptrUniformCamera);
+	bool CmdBindUniformBuffer(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxUniformBufferPtr &ptrUniformBuffer, uint32_t nameUniform);
 
 	bool CmdUniform1i(CGfxCommandBufferPtr &ptrCommandBuffer, const char *szName, int v0);
 	bool CmdUniform2i(CGfxCommandBufferPtr &ptrCommandBuffer, const char *szName, int v0, int v1);
@@ -191,9 +179,7 @@ public:
 private:
 	void BindPipelineCompute(CGfxPipelineCompute *pPipelineCompute);
 	void BindPipelineGraphics(CGfxPipelineGraphics *pPipelineGraphics);
-	void BindUniformEngine(CGfxUniformEngine *pUniformEngine);
-	void BindUniformCamera(CGfxUniformCamera *pUniformCamera);
-	void BindUniformBuffer(CGfxUniformBuffer *pUniformBuffer, uint32_t name);
+	void BindUniformBuffer(CGfxUniformBuffer *pUniformBuffer, uint32_t nameUniform);
 	void BindMaterialPass(CGfxMaterialPass *pPass);
 	void BindInputTexture(const char *szName, CGfxTextureBase *pTexture);
 
@@ -227,11 +213,11 @@ private:
 	CGLES3ShaderManager *m_pShaderManager;
 	CGLES3SamplerManager *m_pSamplerManager;
 	CGLES3TextureManager *m_pTextureManager;
-	CGLES3UniformManager *m_pUniformManager;
 	CGLES3PipelineManager *m_pPipelineManager;
 	CGLES3MaterialManager *m_pMaterialManager;
 	CGLES3RenderPassManager *m_pRenderPassManager;
 	CGLES3FrameBufferManager *m_pFrameBufferManager;
+	CGLES3UniformBufferManager *m_pUniformBufferManager;
 	CGLES3CommandBufferManager *m_pCommandBufferManager;
 
 private:

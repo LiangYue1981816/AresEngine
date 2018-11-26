@@ -9,11 +9,11 @@ CGLES3Renderer::CGLES3Renderer(void *hDC, int width, int height, uint32_t format
 	, m_pShaderManager(nullptr)
 	, m_pSamplerManager(nullptr)
 	, m_pTextureManager(nullptr)
-	, m_pUniformManager(nullptr)
 	, m_pPipelineManager(nullptr)
 	, m_pMaterialManager(nullptr)
 	, m_pRenderPassManager(nullptr)
 	, m_pFrameBufferManager(nullptr)
+	, m_pUniformBufferManager(nullptr)
 	, m_pCommandBufferManager(nullptr)
 
 	, m_pGlobalMaterialPass(nullptr)
@@ -25,11 +25,11 @@ CGLES3Renderer::CGLES3Renderer(void *hDC, int width, int height, uint32_t format
 	m_pShaderManager = new CGLES3ShaderManager;
 	m_pSamplerManager = new CGLES3SamplerManager;
 	m_pTextureManager = new CGLES3TextureManager;
-	m_pUniformManager = new CGLES3UniformManager;
 	m_pPipelineManager = new CGLES3PipelineManager;
 	m_pMaterialManager = new CGLES3MaterialManager;
 	m_pRenderPassManager = new CGLES3RenderPassManager;
 	m_pFrameBufferManager = new CGLES3FrameBufferManager;
+	m_pUniformBufferManager = new CGLES3UniformBufferManager;
 	m_pCommandBufferManager = new CGLES3CommandBufferManager;
 
 	m_pSwapChain = new CGLES3SwapChain(hDC, width, height, format);
@@ -44,11 +44,11 @@ CGLES3Renderer::~CGLES3Renderer(void)
 	delete m_pShaderManager;
 	delete m_pSamplerManager;
 	delete m_pTextureManager;
-	delete m_pUniformManager;
 	delete m_pPipelineManager;
 	delete m_pMaterialManager;
 	delete m_pRenderPassManager;
 	delete m_pFrameBufferManager;
+	delete m_pUniformBufferManager;
 	delete m_pCommandBufferManager;
 
 	delete m_pGlobalMaterialPass;
@@ -134,14 +134,9 @@ CGfxTextureCubeMapPtr CGLES3Renderer::NewTextureCubeMap(const char *szFileName)
 	return m_pTextureManager->LoadTextureCubeMap(szFileName);
 }
 
-CGfxUniformEnginePtr CGLES3Renderer::NewUniformEngine(bool bDynamic)
+CGfxUniformBufferPtr CGLES3Renderer::NewUniformBuffer(size_t size, bool bDynamic)
 {
-	return m_pUniformManager->CreateUniformEngine(bDynamic);
-}
-
-CGfxUniformCameraPtr CGLES3Renderer::NewUniformCamera(bool bDynamic)
-{
-	return m_pUniformManager->CreateUniformCamera(bDynamic);
+	return m_pUniformBufferManager->CreateUniformBuffer(size, bDynamic);
 }
 
 CGfxCommandBufferPtr CGLES3Renderer::NewCommandBuffer(bool bMainCommandBuffer)
@@ -179,14 +174,9 @@ bool CGLES3Renderer::CmdBindMaterialPass(CGfxCommandBufferPtr &ptrCommandBuffer,
 	return ptrCommandBuffer->CmdBindMaterialPass(ptrMaterial, namePass);
 }
 
-bool CGLES3Renderer::CmdBindUniformEngine(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxUniformEnginePtr &ptrUniformEngine)
+bool CGLES3Renderer::CmdBindUniformBuffer(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxUniformBufferPtr &ptrUniformBuffer, uint32_t nameUniform)
 {
-	return ptrCommandBuffer->CmdBindUniformEngine(ptrUniformEngine);
-}
-
-bool CGLES3Renderer::CmdBindUniformCamera(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxUniformCameraPtr &ptrUniformCamera)
-{
-	return ptrCommandBuffer->CmdBindUniformCamera(ptrUniformCamera);
+	return ptrCommandBuffer->CmdBindUniformBuffer(ptrUniformBuffer, nameUniform);
 }
 
 bool CGLES3Renderer::CmdUniform1i(CGfxCommandBufferPtr &ptrCommandBuffer, const char *szName, int v0)
@@ -386,30 +376,10 @@ void CGLES3Renderer::BindPipelineGraphics(CGfxPipelineGraphics *pPipelineGraphic
 	}
 }
 
-void CGLES3Renderer::BindUniformEngine(CGfxUniformEngine *pUniformEngine)
-{
-	static const uint32_t uniformEngineName = HashValue(UNIFORM_ENGINE_NAME);
-
-	if (pUniformEngine) {
-		pUniformEngine->Apply();
-		BindUniformBuffer(((CGLES3UniformEngine *)pUniformEngine)->GetUniformBuffer(), uniformEngineName);
-	}
-}
-
-void CGLES3Renderer::BindUniformCamera(CGfxUniformCamera *pUniformCamera)
-{
-	static const uint32_t uniformCameraName = HashValue(UNIFORM_CAMERA_NAME);
-
-	if (pUniformCamera) {
-		pUniformCamera->Apply();
-		BindUniformBuffer(((CGLES3UniformCamera *)pUniformCamera)->GetUniformBuffer(), uniformCameraName);
-	}
-}
-
-void CGLES3Renderer::BindUniformBuffer(CGfxUniformBuffer *pUniformBuffer, uint32_t name)
+void CGLES3Renderer::BindUniformBuffer(CGfxUniformBuffer *pUniformBuffer, uint32_t nameUniform)
 {
 	if (m_pCurrentPipelineGraphics) {
-		m_pCurrentPipelineGraphics->BindUniformBuffer(name, (CGLES3UniformBuffer *)pUniformBuffer, ((CGLES3UniformBuffer *)pUniformBuffer)->GetSize());
+		m_pCurrentPipelineGraphics->BindUniformBuffer(nameUniform, (CGLES3UniformBuffer *)pUniformBuffer, ((CGLES3UniformBuffer *)pUniformBuffer)->GetSize());
 	}
 }
 

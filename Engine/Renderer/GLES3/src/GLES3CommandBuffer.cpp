@@ -8,8 +8,7 @@
 #include "GLES3CommandBindPipelineCompute.h"
 #include "GLES3CommandBindPipelineGraphics.h"
 #include "GLES3CommandBindMaterialPass.h"
-#include "GLES3CommandBindEngine.h"
-#include "GLES3CommandBindCamera.h"
+#include "GLES3CommandBindUniformBuffer.h"
 #include "GLES3CommandBindMesh.h"
 #include "GLES3CommandUniform1i.h"
 #include "GLES3CommandUniform2i.h"
@@ -166,20 +165,10 @@ bool CGLES3CommandBuffer::CmdBindMaterialPass(const CGfxMaterialPtr &ptrMaterial
 	return false;
 }
 
-bool CGLES3CommandBuffer::CmdBindUniformEngine(const CGfxUniformEnginePtr &ptrUniformEngine)
+bool CGLES3CommandBuffer::CmdBindUniformBuffer(const CGfxUniformBufferPtr &ptrUniformBuffer, uint32_t nameUniform)
 {
 	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
-		m_pCommands.emplace_back(new CGLES3CommandBindEngine(ptrUniformEngine));
-		return true;
-	}
-
-	return false;
-}
-
-bool CGLES3CommandBuffer::CmdBindUniformCamera(const CGfxUniformCameraPtr &ptrUniformCamera)
-{
-	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
-		m_pCommands.emplace_back(new CGLES3CommandBindCamera(ptrUniformCamera));
+		m_pCommands.emplace_back(new CGLES3CommandBindUniformBuffer(ptrUniformBuffer, nameUniform));
 		return true;
 	}
 
