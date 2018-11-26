@@ -37,7 +37,7 @@ void CRenderSolutionForwardPlus::SetEnableMSAA(bool bEnable, int samples)
 
 }
 
-void CRenderSolutionForwardPlus::Render(int indexQueue, float deltaTime)
+void CRenderSolutionForwardPlus::Render(int indexQueue)
 {
 
 }

@@ -36,6 +36,7 @@ CEngine::CEngine(GfxApi api, RenderSolution solution, void *hDC, int width, int 
 	: m_indexQueue(0)
 
 	, m_lastTime(0.0f)
+	, m_deltaTime(0.0f)
 	, m_totalTime(0.0f)
 
 	, m_pRenderer(nullptr)
@@ -79,7 +80,7 @@ CEngine::CEngine(GfxApi api, RenderSolution solution, void *hDC, int width, int 
 	event_init(&m_eventExit, 0);
 	event_init(&m_eventFinish, 1);
 	event_init(&m_eventDispatch, 0);
-	pthread_create(&m_thread, nullptr, WorkerThread, this);
+	pthread_create(&m_thread, nullptr, WorkThread, this);
 }
 
 CEngine::~CEngine(void)
@@ -96,6 +97,11 @@ CEngine::~CEngine(void)
 	delete m_pRenderer;
 }
 
+CGfxRenderer* CEngine::GetRenderer(void) const
+{
+	return m_pRenderer;
+}
+
 CSceneManager* CEngine::GetSceneManager(void) const
 {
 	return m_pSceneManager;
@@ -106,14 +112,14 @@ CRenderSolutionBase* CEngine::GetRenderSolution(void) const
 	return m_pRenderSolution;
 }
 
-void CEngine::UpdateLogic(float deltaTime)
+float CEngine::GetDeltaTime(void) const
 {
-	m_pSceneManager->UpdateLogic(m_totalTime, deltaTime);
+	return m_deltaTime;
 }
 
-void CEngine::UpdateCamera(CGfxCamera *pCamera, int indexQueue)
+float CEngine::GetTotalTime(void) const
 {
-	m_pSceneManager->UpdateCamera(pCamera, indexQueue);
+	return m_totalTime;
 }
 
 void CEngine::Tick(void)
@@ -135,15 +141,15 @@ void CEngine::Present(void)
 void CEngine::TickThread(void)
 {
 	float currTime = tick() / 1000000.0f;
-	float deltaTime = currTime - m_lastTime;
 
+	m_deltaTime = currTime - m_lastTime;
+	m_totalTime = m_totalTime + m_deltaTime;
 	m_lastTime = currTime;
-	m_totalTime += deltaTime;
 
-	m_pRenderSolution->Render(m_indexQueue, deltaTime);
+	m_pRenderSolution->Render(m_indexQueue);
 }
 
-void* CEngine::WorkerThread(void *pParams)
+void* CEngine::WorkThread(void *pParams)
 {
 	if (CEngine *pEngine = (CEngine *)pParams) {
 		while (true) {

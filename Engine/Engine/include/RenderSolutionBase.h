@@ -21,15 +21,6 @@
 #define INSTANCE_ATTRIBUTE_TRANSFORM (INSTANCE_ATTRIBUTE_TRANSFORM_MATRIX_COL0 | INSTANCE_ATTRIBUTE_TRANSFORM_MATRIX_COL1 | INSTANCE_ATTRIBUTE_TRANSFORM_MATRIX_COL2 | INSTANCE_ATTRIBUTE_TRANSFORM_MATRIX_COL3)
 
 
-typedef enum RenderSolution {
-	RENDER_SOLUTION_DEFAULT = 0,
-	RENDER_SOLUTION_DEFERRED,
-	RENDER_SOLUTION_FORWARD,
-	RENDER_SOLUTION_FORWARD_PLUS,
-	RENDER_SOLUTION_COUNT
-} RenderSolution;
-
-
 class CALL_API CRenderSolutionBase
 {
 	friend class CEngine;
@@ -51,7 +42,7 @@ public:
 	virtual void SetEnableMSAA(bool bEnable, int samples = 4) = 0;
 
 public:
-	virtual void Render(int indexQueue, float deltaTime) = 0;
+	virtual void Render(int indexQueue) = 0;
 	virtual void Present(int indexQueue) = 0;
 	virtual void Clearup(int indexQueue) = 0;
 

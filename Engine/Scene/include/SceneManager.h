@@ -42,7 +42,7 @@ public:
 	CComponentParticlePtr CreateComponentParticle(uint32_t name);
 	CComponentPointLightPtr CreateComponentPointLight(uint32_t name);
 
-private:
+public:
 	void UpdateLogic(float totalTime, float deltaTime);
 	void UpdateCamera(CGfxCamera *pCamera, int indexQueue);
 

@@ -37,7 +37,7 @@ void CRenderSolutionDeferred::SetEnableMSAA(bool bEnable, int samples)
 
 }
 
-void CRenderSolutionDeferred::Render(int indexQueue, float deltaTime)
+void CRenderSolutionDeferred::Render(int indexQueue)
 {
 
 }

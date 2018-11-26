@@ -93,12 +93,12 @@ void CRenderSolutionDefault::SetEnableMSAA(bool bEnable, int samples)
 	}
 }
 
-void CRenderSolutionDefault::Render(int indexQueue, float deltaTime)
+void CRenderSolutionDefault::Render(int indexQueue)
 {
 	// Update logic & camera
 	{
-		Engine()->UpdateLogic(deltaTime);
-		Engine()->UpdateCamera(m_pMainCamera, indexQueue);
+		SceneManager()->UpdateLogic(Engine()->GetTotalTime(), Engine()->GetDeltaTime());
+		SceneManager()->UpdateCamera(m_pMainCamera, indexQueue);
 	}
 
 	// Build command buffer
@@ -124,6 +124,8 @@ void CRenderSolutionDefault::Render(int indexQueue, float deltaTime)
 
 void CRenderSolutionDefault::Present(int indexQueue)
 {
+	m_pUniformEngine->SetTime(Engine()->GetTotalTime(), Engine()->GetDeltaTime());
+
 	m_pMainCamera->Apply();
 	m_pShadowCamera->Apply();
 	m_pUniformEngine->Apply();

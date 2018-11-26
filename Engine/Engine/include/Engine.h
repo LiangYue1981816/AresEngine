@@ -25,6 +25,15 @@ typedef enum GfxApi {
 	GFX_API_METAL
 } GfxApi;
 
+typedef enum RenderSolution {
+	RENDER_SOLUTION_DEFAULT = 0,
+	RENDER_SOLUTION_DEFERRED,
+	RENDER_SOLUTION_FORWARD,
+	RENDER_SOLUTION_FORWARD_PLUS,
+	RENDER_SOLUTION_COUNT
+} RenderSolution;
+
+
 class CALL_API CEngine
 {
 public:
@@ -39,12 +48,13 @@ private:
 
 
 public:
+	CGfxRenderer* GetRenderer(void) const;
 	CSceneManager* GetSceneManager(void) const;
 	CRenderSolutionBase* GetRenderSolution(void) const;
 
 public:
-	void UpdateLogic(float deltaTime);
-	void UpdateCamera(CGfxCamera *pCamera, int indexQueue);
+	float GetDeltaTime(void) const;
+	float GetTotalTime(void) const;
 
 public:
 	void Tick(void);
@@ -52,7 +62,7 @@ public:
 
 private:
 	void TickThread(void);
-	static void* WorkerThread(void *pParams);
+	static void* WorkThread(void *pParams);
 
 
 private:
@@ -60,6 +70,7 @@ private:
 
 private:
 	float m_lastTime;
+	float m_deltaTime;
 	float m_totalTime;
 
 private:
