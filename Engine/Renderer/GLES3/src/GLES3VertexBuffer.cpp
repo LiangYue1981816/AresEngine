@@ -32,7 +32,7 @@ void CGLES3VertexBuffer::Bind(void *pParam)
 {
 	GLBindBuffer(GL_ARRAY_BUFFER, m_buffer);
 
-	for (uint32_t indexAttribute = 0; indexAttribute < VERTEX_ATTRIBUTE_COUNT; indexAttribute++) {
+	for (uint32_t indexAttribute = 0; indexAttribute < GetVertexAttributeCount(); indexAttribute++) {
 		uint32_t attribute = (1 << indexAttribute);
 
 		if (m_format & attribute) {

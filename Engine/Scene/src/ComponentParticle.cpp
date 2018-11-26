@@ -1,4 +1,5 @@
 #include "SceneHeader.h"
+#include "EngineHeader.h"
 
 
 CComponentParticle::CComponentParticle(uint32_t name)

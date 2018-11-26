@@ -49,7 +49,7 @@ void CGLES3InstanceBuffer::Bind(void *pParam)
 {
 	GLBindBuffer(GL_ARRAY_BUFFER, m_buffer);
 
-	for (uint32_t indexAttribute = 0; indexAttribute < INSTANCE_ATTRIBUTE_COUNT; indexAttribute++) {
+	for (uint32_t indexAttribute = 0; indexAttribute < GetInstanceAttributeCount(); indexAttribute++) {
 		uint32_t attribute = (1 << indexAttribute);
 
 		if (m_format & attribute) {

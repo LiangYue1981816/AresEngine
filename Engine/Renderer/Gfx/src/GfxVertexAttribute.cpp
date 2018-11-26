@@ -1,33 +1,11 @@
 #include "GfxHeader.h"
 
 
-static const ATTRIBUTE vertexAttributes[VERTEX_ATTRIBUTE_COUNT] = {
-	{ VERTEX_ATTRIBUTE_POSITION,  4, 3, 0, "inPosition"  },
-	{ VERTEX_ATTRIBUTE_NORMAL,    4, 3, 1, "inNormal"    },
-	{ VERTEX_ATTRIBUTE_BINORMAL,  4, 3, 2, "inBinormal"  },
-	{ VERTEX_ATTRIBUTE_COLOR,     4, 3, 3, "inColor"     },
-	{ VERTEX_ATTRIBUTE_TEXCOORD0, 4, 2, 4, "inTexcoord0" },
-	{ VERTEX_ATTRIBUTE_TEXCOORD1, 4, 2, 5, "inTexcoord1" },
-};
+static const ATTRIBUTE *pVertexAttributes = nullptr;
+static uint32_t numVertexAttributes = 0;
 
-static const ATTRIBUTE instanceAttributes[INSTANCE_ATTRIBUTE_COUNT] = {
-	// Transform
-	{ INSTANCE_ATTRIBUTE_TRANSFORM_MATRIX_COL0, 4, 4, 8,  "inInstanceTransformMatrixCol0" },
-	{ INSTANCE_ATTRIBUTE_TRANSFORM_MATRIX_COL1, 4, 4, 9,  "inInstanceTransformMatrixCol1" },
-	{ INSTANCE_ATTRIBUTE_TRANSFORM_MATRIX_COL2, 4, 4, 10, "inInstanceTransformMatrixCol2" },
-	{ INSTANCE_ATTRIBUTE_TRANSFORM_MATRIX_COL3, 4, 4, 11, "inInstanceTransformMatrixCol3" },
-
-	// PointLight
-	{ INSTANCE_ATTRIBUTE_POINTLIGHT_COLOR,      4, 4, 12, "inInstancePointLightColor"       },
-	{ INSTANCE_ATTRIBUTE_POINTLIGHT_ATTENUATION,4, 4, 13, "inInstancePointLightAttenuation" },
-};
-
-
-static const ATTRIBUTE *pVertexAttributes = vertexAttributes;
-static uint32_t numVertexAttributes = VERTEX_ATTRIBUTE_COUNT;
-
-static const ATTRIBUTE *pInstanceAttributes = instanceAttributes;
-static uint32_t numInstanceAttributes = INSTANCE_ATTRIBUTE_COUNT;
+static const ATTRIBUTE *pInstanceAttributes = nullptr;
+static uint32_t numInstanceAttributes = 0;
 
 
 static uint32_t GetStride(uint32_t format, const ATTRIBUTE *attributes, uint32_t count)
@@ -89,10 +67,15 @@ static uint32_t GetAttributeLocation(uint32_t attribute, const ATTRIBUTE *attrib
 }
 
 
-CALL_API void SetVertexAttributes(ATTRIBUTE *pAttributes, uint32_t count)
+CALL_API void SetVertexAttributes(const ATTRIBUTE *pAttributes, uint32_t count)
 {
 	pVertexAttributes = pAttributes;
 	numVertexAttributes = count;
+}
+
+CALL_API uint32_t GetVertexAttributeCount(void)
+{
+	return numVertexAttributes;
 }
 
 CALL_API uint32_t GetVertexStride(uint32_t format)
@@ -121,10 +104,15 @@ CALL_API uint32_t GetVertexAttributeLocation(uint32_t attribute)
 }
 
 
-CALL_API void SetInstanceAttributes(ATTRIBUTE *pAttributes, uint32_t count)
+CALL_API void SetInstanceAttributes(const ATTRIBUTE *pAttributes, uint32_t count)
 {
 	pInstanceAttributes = pAttributes;
 	numInstanceAttributes = count;
+}
+
+CALL_API uint32_t GetInstanceAttributeCount(void)
+{
+	return numInstanceAttributes;
 }
 
 CALL_API uint32_t GetInstanceStride(uint32_t format)

@@ -2,25 +2,6 @@
 #include "GfxRenderer.h"
 
 
-#define VERTEX_ATTRIBUTE_POSITION                          0x00000001
-#define VERTEX_ATTRIBUTE_NORMAL                            0x00000002
-#define VERTEX_ATTRIBUTE_BINORMAL                          0x00000004
-#define VERTEX_ATTRIBUTE_COLOR                             0x00000008
-#define VERTEX_ATTRIBUTE_TEXCOORD0                         0x00000010
-#define VERTEX_ATTRIBUTE_TEXCOORD1                         0x00000020
-#define VERTEX_ATTRIBUTE_COUNT                             6
-
-#define INSTANCE_ATTRIBUTE_TRANSFORM_MATRIX_COL0           0x00000001
-#define INSTANCE_ATTRIBUTE_TRANSFORM_MATRIX_COL1           0x00000002
-#define INSTANCE_ATTRIBUTE_TRANSFORM_MATRIX_COL2           0x00000004
-#define INSTANCE_ATTRIBUTE_TRANSFORM_MATRIX_COL3           0x00000008
-#define INSTANCE_ATTRIBUTE_POINTLIGHT_COLOR                0x00000010
-#define INSTANCE_ATTRIBUTE_POINTLIGHT_ATTENUATION          0x00000020
-#define INSTANCE_ATTRIBUTE_COUNT                           6
-
-#define INSTANCE_ATTRIBUTE_TRANSFORM (INSTANCE_ATTRIBUTE_TRANSFORM_MATRIX_COL0 | INSTANCE_ATTRIBUTE_TRANSFORM_MATRIX_COL1 | INSTANCE_ATTRIBUTE_TRANSFORM_MATRIX_COL2 | INSTANCE_ATTRIBUTE_TRANSFORM_MATRIX_COL3)
-
-
 struct ATTRIBUTE {
 	uint32_t flag;
 	uint32_t size;
@@ -30,14 +11,16 @@ struct ATTRIBUTE {
 };
 
 
-CALL_API void SetVertexAttributes(ATTRIBUTE *pAttributes, uint32_t count);
+CALL_API void SetVertexAttributes(const ATTRIBUTE *pAttributes, uint32_t count);
+CALL_API uint32_t GetVertexAttributeCount(void);
 CALL_API uint32_t GetVertexStride(uint32_t format);
 CALL_API uint32_t GetVertexAttributeSize(uint32_t attribute);
 CALL_API uint32_t GetVertexAttributeOffset(uint32_t format, uint32_t attribute);
 CALL_API uint32_t GetVertexAttributeComponents(uint32_t attribute);
 CALL_API uint32_t GetVertexAttributeLocation(uint32_t attribute);
 
-CALL_API void SetInstanceAttributes(ATTRIBUTE *pAttributes, uint32_t count);
+CALL_API void SetInstanceAttributes(const ATTRIBUTE *pAttributes, uint32_t count);
+CALL_API uint32_t GetInstanceAttributeCount(void);
 CALL_API uint32_t GetInstanceStride(uint32_t format);
 CALL_API uint32_t GetInstanceAttributeSize(uint32_t attribute);
 CALL_API uint32_t GetInstanceAttributeOffset(uint32_t format, uint32_t attribute);
