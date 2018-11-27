@@ -87,12 +87,21 @@ bool CGLES3Material::LoadPass(TiXmlNode *pPassNode)
 {
 	uint32_t name = HashValue(pPassNode->ToElement()->AttributeString("name"));
 
+	if (CreatePass(name)) {
+		return ((CGLES3MaterialPass *)GetPass(name))->Load(pPassNode);
+	}
+	
+	return false;
+}
+
+bool CGLES3Material::CreatePass(uint32_t name)
+{
 	if (m_pPasses[name] == nullptr) {
 		m_pPasses[name] = new CGLES3MaterialPass(name);
-		return m_pPasses[name]->Load(pPassNode);
+		return true;
 	}
 
-	return true;
+	return false;
 }
 
 void CGLES3Material::Destroy(void)
@@ -104,7 +113,7 @@ void CGLES3Material::Destroy(void)
 	m_pPasses.clear();
 }
 
-CGfxMaterialPass* CGLES3Material::GetPass(uint32_t name) const
+CGfxMaterialPass* CGLES3Material::GetPass(uint32_t name)
 {
 	const auto &itPass = m_pPasses.find(name);
 	return itPass != m_pPasses.end() ? itPass->second : nullptr;
