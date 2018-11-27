@@ -15,7 +15,7 @@ CGLES3MaterialManager::~CGLES3MaterialManager(void)
 	m_pMaterials.clear();
 }
 
-CGLES3Material* CGLES3MaterialManager::LoadMaterial(const char *szFileName)
+CGLES3Material* CGLES3MaterialManager::CreateMaterial(const char *szFileName)
 {
 	mutex_autolock autolock(&lock);
 	{

@@ -15,7 +15,7 @@ CGLES3TextureManager::~CGLES3TextureManager(void)
 	m_pTextures.clear();
 }
 
-CGLES3Texture2D* CGLES3TextureManager::LoadTexture2D(const char *szFileName)
+CGLES3Texture2D* CGLES3TextureManager::CreateTexture2D(const char *szFileName)
 {
 	mutex_autolock autolock(&lock);
 	{
@@ -30,7 +30,7 @@ CGLES3Texture2D* CGLES3TextureManager::LoadTexture2D(const char *szFileName)
 	}
 }
 
-CGLES3Texture2DArray* CGLES3TextureManager::LoadTexture2DArray(const char *szFileName)
+CGLES3Texture2DArray* CGLES3TextureManager::CreateTexture2DArray(const char *szFileName)
 {
 	mutex_autolock autolock(&lock);
 	{
@@ -45,7 +45,7 @@ CGLES3Texture2DArray* CGLES3TextureManager::LoadTexture2DArray(const char *szFil
 	}
 }
 
-CGLES3TextureCubeMap* CGLES3TextureManager::LoadTextureCubeMap(const char *szFileName)
+CGLES3TextureCubeMap* CGLES3TextureManager::CreateTextureCubeMap(const char *szFileName)
 {
 	mutex_autolock autolock(&lock);
 	{

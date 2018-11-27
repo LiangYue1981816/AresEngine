@@ -16,9 +16,9 @@ private:
 
 
 private:
-	CGLES3Texture2D* LoadTexture2D(const char *szFileName);
-	CGLES3Texture2DArray* LoadTexture2DArray(const char *szFileName);
-	CGLES3TextureCubeMap* LoadTextureCubeMap(const char *szFileName);
+	CGLES3Texture2D* CreateTexture2D(const char *szFileName);
+	CGLES3Texture2DArray* CreateTexture2DArray(const char *szFileName);
+	CGLES3TextureCubeMap* CreateTextureCubeMap(const char *szFileName);
 	CGLES3Texture2D* CreateTexture2D(uint32_t name);
 	CGLES3Texture2DArray* CreateTexture2DArray(uint32_t name);
 	CGLES3TextureCubeMap* CreateTextureCubeMap(uint32_t name);

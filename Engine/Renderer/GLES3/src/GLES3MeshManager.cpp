@@ -15,7 +15,7 @@ CGLES3MeshManager::~CGLES3MeshManager(void)
 	m_pMeshs.clear();
 }
 
-CGLES3Mesh* CGLES3MeshManager::LoadMesh(const char *szFileName, uint32_t instanceFormat)
+CGLES3Mesh* CGLES3MeshManager::CreateMesh(const char *szFileName, uint32_t instanceFormat)
 {
 	mutex_autolock autolock(&lock);
 	{

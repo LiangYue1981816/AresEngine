@@ -14,7 +14,7 @@ private:
 
 
 private:
-	CGLES3Material* LoadMaterial(const char *szFileName);
+	CGLES3Material* CreateMaterial(const char *szFileName);
 	void DestroyMaterial(CGLES3Material *pMaterial);
 
 
