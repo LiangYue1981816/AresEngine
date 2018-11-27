@@ -103,10 +103,10 @@ public:
 	CGfxSwapChain* GetSwapChain(void) const;
 
 private:
-	CGLES3Shader* CreateShader(const char *szFileName, shader_kind kind);
-	CGLES3PipelineCompute* CreatePipelineCompute(const CGfxShader *pComputeShader);
-	CGLES3PipelineGraphics* CreatePipelineGraphics(const CGfxShader *pVertexShader, const CGfxShader *pFragmentShader, const PipelineState &state);
-	CGLES3Sampler* CreateSampler(uint32_t minFilter, uint32_t magFilter, uint32_t addressMode);
+	CGfxShader* CreateShader(const char *szFileName, shader_kind kind);
+	CGfxPipelineCompute* CreatePipelineCompute(const CGfxShader *pComputeShader);
+	CGfxPipelineGraphics* CreatePipelineGraphics(const CGfxShader *pVertexShader, const CGfxShader *pFragmentShader, const PipelineState &state);
+	CGfxSampler* CreateSampler(uint32_t minFilter, uint32_t magFilter, uint32_t addressMode);
 
 public:
 	CGfxRenderPassPtr NewRenderPass(int numAttachments, int numSubpasses);

@@ -14,9 +14,14 @@ private:
 	virtual ~CGLES3PipelineGraphics(void);
 
 
-private:
+public:
 	bool Create(const CGfxShader *pVertexShader, const CGfxShader *pFragmentShader, const PipelineState &state);
 	void Destroy(void);
+
+public:
+	bool IsTextureValid(uint32_t name) const;
+	bool IsUniformValid(uint32_t name) const;
+	bool IsUniformBlockValid(uint32_t name) const;
 
 public:
 	void Bind(void *pParam);

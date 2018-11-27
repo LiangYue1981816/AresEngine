@@ -4,7 +4,7 @@
 
 class CALL_API CGfxMaterial : public CGfxResource
 {
-public:
+protected:
 	CGfxMaterial(uint32_t name)
 		: m_name(name)
 	{

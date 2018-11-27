@@ -59,22 +59,22 @@ CGfxSwapChain* CGLES3Renderer::GetSwapChain(void) const
 	return m_pSwapChain;
 }
 
-CGLES3Shader* CGLES3Renderer::CreateShader(const char *szFileName, shader_kind kind)
+CGfxShader* CGLES3Renderer::CreateShader(const char *szFileName, shader_kind kind)
 {
 	return m_pShaderManager->LoadShader(szFileName, kind);
 }
 
-CGLES3PipelineCompute* CGLES3Renderer::CreatePipelineCompute(const CGfxShader *pComputeShader)
+CGfxPipelineCompute* CGLES3Renderer::CreatePipelineCompute(const CGfxShader *pComputeShader)
 {
 	return m_pPipelineManager->CreatePipelineCompute(pComputeShader);
 }
 
-CGLES3PipelineGraphics* CGLES3Renderer::CreatePipelineGraphics(const CGfxShader *pVertexShader, const CGfxShader *pFragmentShader, const PipelineState &state)
+CGfxPipelineGraphics* CGLES3Renderer::CreatePipelineGraphics(const CGfxShader *pVertexShader, const CGfxShader *pFragmentShader, const PipelineState &state)
 {
 	return m_pPipelineManager->CreatePipelineGraphics(pVertexShader, pFragmentShader, state);
 }
 
-CGLES3Sampler* CGLES3Renderer::CreateSampler(uint32_t minFilter, uint32_t magFilter, uint32_t addressMode)
+CGfxSampler* CGLES3Renderer::CreateSampler(uint32_t minFilter, uint32_t magFilter, uint32_t addressMode)
 {
 	return m_pSamplerManager->CreateSampler(minFilter, magFilter, addressMode);
 }

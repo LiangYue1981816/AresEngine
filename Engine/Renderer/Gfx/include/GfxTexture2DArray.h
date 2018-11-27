@@ -4,7 +4,7 @@
 
 class CALL_API CGfxTexture2DArray : public CGfxResource
 {
-public:
+protected:
 	CGfxTexture2DArray(void)
 		: m_width(0)
 		, m_height(0)

@@ -4,7 +4,7 @@
 
 class CALL_API CGfxPipelineBase
 {
-public:
+protected:
 	CGfxPipelineBase(uint32_t name)
 		: m_name(name)
 	{

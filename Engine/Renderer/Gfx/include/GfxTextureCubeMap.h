@@ -4,7 +4,7 @@
 
 class CALL_API CGfxTextureCubeMap : public CGfxResource
 {
-public:
+protected:
 	CGfxTextureCubeMap(void)
 		: m_width(0)
 		, m_height(0)

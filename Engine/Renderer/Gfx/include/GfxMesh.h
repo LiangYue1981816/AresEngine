@@ -4,7 +4,7 @@
 
 class CALL_API CGfxMesh : public CGfxResource
 {
-public:
+protected:
 	CGfxMesh(uint32_t name)
 		: m_name(name)
 	{

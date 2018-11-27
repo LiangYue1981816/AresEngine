@@ -4,7 +4,7 @@
 
 class CALL_API CGfxSwapChain
 {
-public:
+protected:
 	CGfxSwapChain(void *hDC, int width, int height, uint32_t format)
 		: m_width(width)
 		, m_height(height)

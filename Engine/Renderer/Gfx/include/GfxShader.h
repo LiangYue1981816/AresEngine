@@ -36,7 +36,7 @@ typedef enum {
 
 class CALL_API CGfxShader
 {
-public:
+protected:
 	CGfxShader(uint32_t name)
 		: m_name(name)
 	{

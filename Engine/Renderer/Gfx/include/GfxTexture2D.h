@@ -4,7 +4,7 @@
 
 class CALL_API CGfxTexture2D : public CGfxResource
 {
-public:
+protected:
 	CGfxTexture2D(void)
 		: m_width(0)
 		, m_height(0)

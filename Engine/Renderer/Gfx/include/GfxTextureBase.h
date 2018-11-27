@@ -4,7 +4,7 @@
 
 class CALL_API CGfxTextureBase
 {
-public:
+protected:
 	CGfxTextureBase(uint32_t name)
 		: m_name(name)
 	{

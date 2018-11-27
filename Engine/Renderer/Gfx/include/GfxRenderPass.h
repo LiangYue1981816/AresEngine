@@ -19,7 +19,7 @@ typedef struct SubPassInformation {
 
 class CALL_API CGfxRenderPass : public CGfxResource
 {
-public:
+protected:
 	CGfxRenderPass(int numAttachments, int numSubpasses)
 	{
 

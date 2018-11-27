@@ -12,7 +12,7 @@ typedef struct DrawCommand {
 
 class CALL_API CGfxDrawIndirectBuffer
 {
-public:
+protected:
 	CGfxDrawIndirectBuffer(uint32_t count)
 		: m_size(count * sizeof(DrawCommand))
 		, m_count(count)

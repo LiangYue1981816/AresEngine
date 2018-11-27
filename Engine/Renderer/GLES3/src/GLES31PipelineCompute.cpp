@@ -42,6 +42,21 @@ void CGLES3PipelineCompute::Destroy(void)
 	glUseProgramStages(m_pipeline, glGetProgramStage(compute_shader), 0);
 }
 
+bool CGLES3PipelineCompute::IsTextureValid(uint32_t name) const
+{
+	return CGLES3PipelineBase::IsTextureValid(name);
+}
+
+bool CGLES3PipelineCompute::IsUniformValid(uint32_t name) const
+{
+	return CGLES3PipelineBase::IsUniformValid(name);
+}
+
+bool CGLES3PipelineCompute::IsUniformBlockValid(uint32_t name) const
+{
+	return CGLES3PipelineBase::IsUniformBlockValid(name);
+}
+
 void CGLES3PipelineCompute::Bind(void *pParam)
 {
 	GLBindProgramPipeline(m_pipeline);
