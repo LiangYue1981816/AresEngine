@@ -13,9 +13,9 @@ private:
 
 
 private:
-	CGfxShader* Create(const char *szFileName, shader_kind kind);
+	CGLES3Shader* Create(const char *szFileName, shader_kind kind);
 
 
 private:
-	eastl::unordered_map<uint32_t, CGfxShader*> m_pShaders;
+	eastl::unordered_map<uint32_t, CGLES3Shader*> m_pShaders;
 };

@@ -15,12 +15,15 @@ CGLES3MaterialManager::~CGLES3MaterialManager(void)
 	m_pMaterials.clear();
 }
 
-CGfxMaterial* CGLES3MaterialManager::Create(const char *szFileName)
+CGLES3Material* CGLES3MaterialManager::Create(const char *szFileName)
+{
+	return Create(HashValue(szFileName));
+}
+
+CGLES3Material* CGLES3MaterialManager::Create(uint32_t name)
 {
 	mutex_autolock autolock(&lock);
 	{
-		uint32_t name = HashValue(szFileName);
-
 		if (m_pMaterials[name] == nullptr) {
 			m_pMaterials[name] = new CGLES3Material(this, name);
 		}
@@ -29,7 +32,7 @@ CGfxMaterial* CGLES3MaterialManager::Create(const char *szFileName)
 	}
 }
 
-void CGLES3MaterialManager::Destroy(CGfxMaterial *pMaterial)
+void CGLES3MaterialManager::Destroy(CGLES3Material *pMaterial)
 {
 	mutex_autolock autolock(&lock);
 	{

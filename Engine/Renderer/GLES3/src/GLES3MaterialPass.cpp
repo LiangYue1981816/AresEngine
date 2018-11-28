@@ -167,6 +167,7 @@ static uint32_t StringToBlendDstFactor(const char *szString)
 
 CGLES3MaterialPass::CGLES3MaterialPass(uint32_t name)
 	: CGfxMaterialPass(name)
+
 	, m_pPipeline(nullptr)
 {
 
@@ -232,7 +233,7 @@ bool CGLES3MaterialPass::SetPipeline(const CGfxShader *pVertexShader, const CGfx
 	}
 
 	m_pPipeline = GLES3Renderer()->CreatePipelineGraphics(pVertexShader, pFragmentShader, state);
-	return m_pPipeline != nullptr;
+	return true;
 }
 
 bool CGLES3MaterialPass::SetSampler(const char *szName, uint32_t minFilter, uint32_t magFilter, uint32_t addressMode)
@@ -253,7 +254,7 @@ bool CGLES3MaterialPass::SetTexture2D(const char *szName, uint32_t externTexture
 
 	if ((m_pPipeline == nullptr) || (m_pPipeline && m_pPipeline->IsTextureValid(name))) {
 		m_ptrTexture2Ds[name] = GLES3Renderer()->NewTexture2D(TEXTURE_INTERNAL_NAME(name));
-		((CGLES3TextureBase *)m_ptrTexture2Ds[name].GetPointer())->Create(GL_TEXTURE_2D, externTexture);
+		m_ptrTexture2Ds[name]->Create(externTexture);
 		return true;
 	}
 
@@ -266,7 +267,7 @@ bool CGLES3MaterialPass::SetTexture2DArray(const char *szName, uint32_t externTe
 
 	if ((m_pPipeline == nullptr) || (m_pPipeline && m_pPipeline->IsTextureValid(name))) {
 		m_ptrTexture2DArrays[name] = GLES3Renderer()->NewTexture2DArray(TEXTURE_INTERNAL_NAME(name));
-		((CGLES3TextureBase *)m_ptrTexture2DArrays[name].GetPointer())->Create(GL_TEXTURE_2D_ARRAY, externTexture);
+		m_ptrTexture2DArrays[name]->Create(externTexture);
 		return true;
 	}
 
@@ -279,7 +280,7 @@ bool CGLES3MaterialPass::SetTextureCubeMap(const char *szName, uint32_t externTe
 
 	if ((m_pPipeline == nullptr) || (m_pPipeline && m_pPipeline->IsTextureValid(name))) {
 		m_ptrTextureCubeMaps[name] = GLES3Renderer()->NewTextureCubeMap(TEXTURE_INTERNAL_NAME(name));
-		((CGLES3TextureBase *)m_ptrTextureCubeMaps[name].GetPointer())->Create(GL_TEXTURE_CUBE_MAP, externTexture);
+		m_ptrTextureCubeMaps[name]->Create(externTexture);
 		return true;
 	}
 
@@ -447,19 +448,19 @@ void CGLES3MaterialPass::BindTextures(CGLES3PipelineBase *pPipeline, const CGLES
 {
 	if (pPipeline) {
 		for (const auto &itTexture : pPass->m_ptrTexture2Ds) {
-			if (pPipeline->BindTexture(itTexture.first, (CGLES3Texture2D *)itTexture.second.GetPointer(), (CGLES3Sampler *)pPass->m_pSamplers.find(itTexture.first)->second, indexTexUnit)) {
+			if (pPipeline->BindTexture(itTexture.first, (CGLES3TextureBase *)itTexture.second.GetPointer(), (CGLES3Sampler *)pPass->m_pSamplers.find(itTexture.first)->second, indexTexUnit)) {
 				indexTexUnit++;
 			}
 		}
 
 		for (const auto &itTexture : pPass->m_ptrTexture2DArrays) {
-			if (pPipeline->BindTexture(itTexture.first, (CGLES3Texture2DArray *)itTexture.second.GetPointer(), (CGLES3Sampler *)pPass->m_pSamplers.find(itTexture.first)->second, indexTexUnit)) {
+			if (pPipeline->BindTexture(itTexture.first, (CGLES3TextureBase *)itTexture.second.GetPointer(), (CGLES3Sampler *)pPass->m_pSamplers.find(itTexture.first)->second, indexTexUnit)) {
 				indexTexUnit++;
 			}
 		}
 
 		for (const auto &itTexture : pPass->m_ptrTextureCubeMaps) {
-			if (pPipeline->BindTexture(itTexture.first, (CGLES3TextureCubeMap *)itTexture.second.GetPointer(), (CGLES3Sampler *)pPass->m_pSamplers.find(itTexture.first)->second, indexTexUnit)) {
+			if (pPipeline->BindTexture(itTexture.first, (CGLES3TextureBase *)itTexture.second.GetPointer(), (CGLES3Sampler *)pPass->m_pSamplers.find(itTexture.first)->second, indexTexUnit)) {
 				indexTexUnit++;
 			}
 		}

@@ -22,7 +22,7 @@ public:
 		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_SET_INSTANCEBUFFERDATA, "CommandSetInstanceBufferData");
 		{
 			if (m_ptrMesh.IsValid()) {
-				m_ptrMesh->InstanceBufferData((int)m_indexDraw, m_buffer.size(), m_buffer.data());
+				m_ptrMesh->InstanceBufferData(m_indexDraw, m_buffer.size(), m_buffer.data());
 			}
 		}
 	}
@@ -30,6 +30,7 @@ public:
 
 private:
 	CGfxMeshPtr m_ptrMesh;
-	uintptr_t m_indexDraw;
+	int m_indexDraw;
+
 	eastl::vector<uint8_t> m_buffer;
 };

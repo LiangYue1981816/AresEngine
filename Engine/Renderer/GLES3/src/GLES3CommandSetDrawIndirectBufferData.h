@@ -23,7 +23,7 @@ public:
 		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_SET_DRAWINDIRECTBUFFERDATA, "CommandSetDrawIndirectBufferData");
 		{
 			if (m_ptrMesh.IsValid()) {
-				m_ptrMesh->DrawIndirectBufferData((int)m_indexDraw, m_instanceCount);
+				m_ptrMesh->DrawIndirectBufferData(m_indexDraw, m_instanceCount);
 			}
 		}
 	}
@@ -31,6 +31,6 @@ public:
 
 private:
 	CGfxMeshPtr m_ptrMesh;
-	uintptr_t m_indexDraw;
+	int m_indexDraw;
 	int m_instanceCount;
 };

@@ -5,6 +5,7 @@
 
 CGLES3Shader::CGLES3Shader(uint32_t name)
 	: CGfxShader(name)
+
 	, m_kind(-1)
 	, m_program(0)
 {

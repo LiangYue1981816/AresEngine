@@ -4,6 +4,7 @@
 CGLES3UniformBuffer::CGLES3UniformBuffer(CGLES3UniformBufferManager *pManager, size_t size, bool bDynamic)
 	: CGfxUniformBuffer(size, bDynamic)
 	, m_pManager(pManager)
+
 	, m_buffer(0)
 {
 	glGenBuffers(1, &m_buffer);
@@ -42,6 +43,5 @@ bool CGLES3UniformBuffer::Bind(int index, int offset, int size)
 	}
 
 	GLBindBufferRange(GL_UNIFORM_BUFFER, index, m_buffer, offset, size);
-
 	return true;
 }

@@ -3,6 +3,7 @@
 
 CGLES3DrawIndirectBuffer::CGLES3DrawIndirectBuffer(uint32_t count)
 	: CGfxDrawIndirectBuffer(count)
+
 	, m_buffer(0)
 {
 #if GLES_VER == 310

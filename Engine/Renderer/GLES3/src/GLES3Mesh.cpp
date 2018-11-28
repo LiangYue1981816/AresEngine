@@ -6,6 +6,7 @@ CGLES3Mesh::CGLES3Mesh(CGLES3MeshManager *pManager, uint32_t name)
 	, m_pManager(pManager)
 
 	, m_instanceFormat(0)
+
 	, m_pIndexBuffer(nullptr)
 	, m_pVertexBuffer(nullptr)
 	, m_pDrawIndirectBuffer(nullptr)
@@ -168,7 +169,7 @@ uint32_t CGLES3Mesh::GetIndexType(void) const
 		return m_pIndexBuffer->GetIndexType();
 	}
 	else {
-		return 0;
+		return GL_INVALID_ENUM;
 	}
 }
 

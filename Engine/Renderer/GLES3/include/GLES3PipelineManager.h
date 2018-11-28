@@ -13,8 +13,8 @@ private:
 
 
 private:
-	CGfxPipelineCompute* CreatePipelineCompute(const CGfxShader *pComputeShader);
-	CGfxPipelineGraphics* CreatePipelineGraphics(const CGfxShader *pVertexShader, const CGfxShader *pFragmentShader, const PipelineState &state);
+	CGLES3PipelineCompute* CreatePipelineCompute(const CGfxShader *pComputeShader);
+	CGLES3PipelineGraphics* CreatePipelineGraphics(const CGfxShader *pVertexShader, const CGfxShader *pFragmentShader, const PipelineState &state);
 	void Destroy(CGfxPipelineBase *pPipeline);
 
 

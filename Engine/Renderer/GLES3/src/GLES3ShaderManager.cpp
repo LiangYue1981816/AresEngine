@@ -15,7 +15,7 @@ CGLES3ShaderManager::~CGLES3ShaderManager(void)
 	m_pShaders.clear();
 }
 
-CGfxShader* CGLES3ShaderManager::Create(const char *szFileName, shader_kind kind)
+CGLES3Shader* CGLES3ShaderManager::Create(const char *szFileName, shader_kind kind)
 {
 	mutex_autolock autolock(&lock);
 	{

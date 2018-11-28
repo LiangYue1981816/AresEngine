@@ -38,5 +38,5 @@ public:
 
 private:
 	CGfxMeshPtr m_ptrMesh;
-	uintptr_t m_indexDraw;
+	int m_indexDraw;
 };

@@ -15,14 +15,14 @@ CGLES3MeshManager::~CGLES3MeshManager(void)
 	m_pMeshs.clear();
 }
 
-CGfxMesh* CGLES3MeshManager::Create(const char *szFileName, uint32_t instanceFormat)
+CGLES3Mesh* CGLES3MeshManager::Create(const char *szFileName, uint32_t instanceFormat)
 {
 	char szName[_MAX_STRING];
 	sprintf(szName, "%8.8X_%8.8X", HashValue(szFileName), instanceFormat);
 	return Create(HashValue(szName));
 }
 
-CGfxMesh* CGLES3MeshManager::Create(uint32_t name)
+CGLES3Mesh* CGLES3MeshManager::Create(uint32_t name)
 {
 	mutex_autolock autolock(&lock);
 	{
@@ -34,7 +34,7 @@ CGfxMesh* CGLES3MeshManager::Create(uint32_t name)
 	}
 }
 
-void CGLES3MeshManager::Destroy(CGfxMesh *pMesh)
+void CGLES3MeshManager::Destroy(CGLES3Mesh *pMesh)
 {
 	mutex_autolock autolock(&lock);
 	{

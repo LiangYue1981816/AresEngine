@@ -5,7 +5,7 @@
 class CALL_API CGfxSwapChain
 {
 public:
-	CGfxSwapChain(void *hDC, int width, int height, uint32_t format)
+	CGfxSwapChain(int width, int height, uint32_t format)
 		: m_width(width)
 		, m_height(height)
 	{

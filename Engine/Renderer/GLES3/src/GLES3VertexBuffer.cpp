@@ -3,6 +3,7 @@
 
 CGLES3VertexBuffer::CGLES3VertexBuffer(uint32_t binding, uint32_t format, size_t size, bool bDynamic)
 	: CGfxVertexBuffer(binding, format, size, bDynamic)
+
 	, m_buffer(0)
 {
 	glGenBuffers(1, &m_buffer);

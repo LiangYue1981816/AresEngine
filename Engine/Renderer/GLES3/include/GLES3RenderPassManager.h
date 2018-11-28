@@ -14,10 +14,10 @@ private:
 
 
 private:
-	CGfxRenderPass* Create(int numAttachments, int numSubpasses);
-	void Destroy(CGfxRenderPass *pRenderPass);
+	CGLES3RenderPass* Create(int numAttachments, int numSubpasses);
+	void Destroy(CGLES3RenderPass *pRenderPass);
 
 
 private:
-	eastl::unordered_map<CGfxRenderPass*, CGfxRenderPass*> m_pRenderPasses;
+	eastl::unordered_map<CGLES3RenderPass*, CGLES3RenderPass*> m_pRenderPasses;
 };

@@ -65,9 +65,9 @@ private:
 	eastl::vector<Draw> m_draws;
 
 private:
-	CGfxIndexBuffer *m_pIndexBuffer;
-	CGfxVertexBuffer *m_pVertexBuffer;
-	CGfxDrawIndirectBuffer *m_pDrawIndirectBuffer;
+	CGLES3IndexBuffer *m_pIndexBuffer;
+	CGLES3VertexBuffer *m_pVertexBuffer;
+	CGLES3DrawIndirectBuffer *m_pDrawIndirectBuffer;
 
 private:
 	CGLES3MeshManager *m_pManager;

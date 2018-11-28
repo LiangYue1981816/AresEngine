@@ -15,7 +15,7 @@ CGLES3UniformBufferManager::~CGLES3UniformBufferManager(void)
 	m_pUniformBuffers.clear();
 }
 
-CGfxUniformBuffer* CGLES3UniformBufferManager::Create(size_t size, bool bDynamic)
+CGLES3UniformBuffer* CGLES3UniformBufferManager::Create(size_t size, bool bDynamic)
 {
 	mutex_autolock autolock(&lock);
 	{
@@ -25,7 +25,7 @@ CGfxUniformBuffer* CGLES3UniformBufferManager::Create(size_t size, bool bDynamic
 	}
 }
 
-void CGLES3UniformBufferManager::Destroy(CGfxUniformBuffer *pUniformBuffer)
+void CGLES3UniformBufferManager::Destroy(CGLES3UniformBuffer *pUniformBuffer)
 {
 	mutex_autolock autolock(&lock);
 	{

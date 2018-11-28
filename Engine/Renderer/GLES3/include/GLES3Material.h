@@ -23,7 +23,7 @@ public:
 
 
 private:
-	eastl::unordered_map<uint32_t, CGfxMaterialPass*> m_pPasses;
+	eastl::unordered_map<uint32_t, CGLES3MaterialPass*> m_pPasses;
 
 private:
 	CGLES3MaterialManager *m_pManager;

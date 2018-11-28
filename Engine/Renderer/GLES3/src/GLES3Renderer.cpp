@@ -3,6 +3,7 @@
 
 CGLES3Renderer::CGLES3Renderer(void *hDC, int width, int height, uint32_t format)
 	: CGfxRenderer(hDC, width, height, format)
+
 	, m_pSwapChain(nullptr)
 
 	, m_pMeshManager(nullptr)
@@ -101,6 +102,11 @@ CGfxMeshPtr CGLES3Renderer::NewMesh(const char *szFileName, uint32_t instanceFor
 	CGfxMesh *pMesh = m_pMeshManager->Create(szFileName, instanceFormat);
 	ResourceLoader()->LoadMesh(szFileName, pMesh);
 	return pMesh;
+}
+
+CGfxMaterialPtr CGLES3Renderer::NewMaterial(uint32_t name)
+{
+	return m_pMaterialManager->Create(name);
 }
 
 CGfxMaterialPtr CGLES3Renderer::NewMaterial(const char *szFileName)

@@ -3,6 +3,7 @@
 
 CGLES3InstanceBuffer::CGLES3InstanceBuffer(uint32_t binding, uint32_t format)
 	: CGfxInstanceBuffer(binding, format)
+
 	, m_hash(INVALID_HASHVALUE)
 	, m_buffer(0)
 {

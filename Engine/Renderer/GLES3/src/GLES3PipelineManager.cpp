@@ -15,7 +15,7 @@ CGLES3PipelineManager::~CGLES3PipelineManager(void)
 	m_pPipelines.clear();
 }
 
-CGfxPipelineCompute* CGLES3PipelineManager::CreatePipelineCompute(const CGfxShader *pComputeShader)
+CGLES3PipelineCompute* CGLES3PipelineManager::CreatePipelineCompute(const CGfxShader *pComputeShader)
 {
 	mutex_autolock autolock(&lock);
 	{
@@ -29,11 +29,11 @@ CGfxPipelineCompute* CGLES3PipelineManager::CreatePipelineCompute(const CGfxShad
 			((CGLES3PipelineCompute *)m_pPipelines[name])->Create(pComputeShader);
 		}
 
-		return (CGfxPipelineCompute *)m_pPipelines[name];
+		return (CGLES3PipelineCompute *)m_pPipelines[name];
 	}
 }
 
-CGfxPipelineGraphics* CGLES3PipelineManager::CreatePipelineGraphics(const CGfxShader *pVertexShader, const CGfxShader *pFragmentShader, const PipelineState &state)
+CGLES3PipelineGraphics* CGLES3PipelineManager::CreatePipelineGraphics(const CGfxShader *pVertexShader, const CGfxShader *pFragmentShader, const PipelineState &state)
 {
 	mutex_autolock autolock(&lock);
 	{
@@ -47,7 +47,7 @@ CGfxPipelineGraphics* CGLES3PipelineManager::CreatePipelineGraphics(const CGfxSh
 			((CGLES3PipelineGraphics *)m_pPipelines[name])->Create(pVertexShader, pFragmentShader, state);
 		}
 
-		return (CGfxPipelineGraphics *)m_pPipelines[name];
+		return (CGLES3PipelineGraphics *)m_pPipelines[name];
 	}
 }
 

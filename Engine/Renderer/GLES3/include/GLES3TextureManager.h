@@ -16,12 +16,12 @@ private:
 
 
 private:
-	CGfxTexture2D* CreateTexture2D(const char *szFileName);
-	CGfxTexture2DArray* CreateTexture2DArray(const char *szFileName);
-	CGfxTextureCubeMap* CreateTextureCubeMap(const char *szFileName);
-	CGfxTexture2D* CreateTexture2D(uint32_t name);
-	CGfxTexture2DArray* CreateTexture2DArray(uint32_t name);
-	CGfxTextureCubeMap* CreateTextureCubeMap(uint32_t name);
+	CGLES3Texture2D* CreateTexture2D(const char *szFileName);
+	CGLES3Texture2DArray* CreateTexture2DArray(const char *szFileName);
+	CGLES3TextureCubeMap* CreateTextureCubeMap(const char *szFileName);
+	CGLES3Texture2D* CreateTexture2D(uint32_t name);
+	CGLES3Texture2DArray* CreateTexture2DArray(uint32_t name);
+	CGLES3TextureCubeMap* CreateTextureCubeMap(uint32_t name);
 	void Destroy(CGfxTextureBase *pTexture);
 
 

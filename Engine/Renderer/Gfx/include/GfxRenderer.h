@@ -98,6 +98,7 @@ public:
 	virtual CGfxMeshPtr NewMesh(uint32_t name) = 0;
 	virtual CGfxMeshPtr NewMesh(const char *szFileName, uint32_t instanceFormat) = 0;
 
+	virtual CGfxMaterialPtr NewMaterial(uint32_t name) = 0;
 	virtual CGfxMaterialPtr NewMaterial(const char *szFileName) = 0;
 
 	virtual CGfxTexture2DPtr NewTexture2D(uint32_t name) = 0;

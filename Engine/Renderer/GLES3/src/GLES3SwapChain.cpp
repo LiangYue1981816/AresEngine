@@ -2,7 +2,8 @@
 
 
 CGLES3SwapChain::CGLES3SwapChain(void *hDC, int width, int height, uint32_t format)
-	: CGfxSwapChain(hDC, width, height, format)
+	: CGfxSwapChain(width, height, format)
+
 	, m_hDC(hDC)
 	, m_fbo(0)
 {

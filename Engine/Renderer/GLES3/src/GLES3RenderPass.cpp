@@ -60,7 +60,6 @@ bool CGLES3RenderPass::SetSubpassInputColorReference(int indexSubPass, int index
 	}
 
 	m_subpasses[indexSubPass].inputAttachments[indexAttachment] = szName;
-
 	return true;
 }
 
@@ -75,7 +74,6 @@ bool CGLES3RenderPass::SetSubpassOutputColorReference(int indexSubPass, int inde
 	}
 
 	m_subpasses[indexSubPass].outputAttachments[indexAttachment] = indexAttachment;
-
 	return true;
 }
 
@@ -90,7 +88,6 @@ bool CGLES3RenderPass::SetSubpassOutputDepthStencilReference(int indexSubPass, i
 	}
 
 	m_subpasses[indexSubPass].depthStencilAttachment = indexAttachment;
-
 	return true;
 }
 
@@ -105,7 +102,6 @@ bool CGLES3RenderPass::SetSubpassResolveColorReference(int indexSubPass, int ind
 	}
 
 	m_subpasses[indexSubPass].resolveAttachments[indexAttachment] = indexAttachment;
-
 	return true;
 }
 

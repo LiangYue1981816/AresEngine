@@ -18,7 +18,7 @@ public:
 	virtual void Execute(void) const = 0;
 };
 
-class CGfxCommandBuffer : public CGfxResource
+class CALL_API CGfxCommandBuffer : public CGfxResource
 {
 public:
 	CGfxCommandBuffer(bool bMainCommandBuffer)

@@ -15,7 +15,7 @@ CGLES3RenderPassManager::~CGLES3RenderPassManager(void)
 	m_pRenderPasses.clear();
 }
 
-CGfxRenderPass* CGLES3RenderPassManager::Create(int numAttachments, int numSubpasses)
+CGLES3RenderPass* CGLES3RenderPassManager::Create(int numAttachments, int numSubpasses)
 {
 	mutex_autolock autolock(&lock);
 	{
@@ -25,7 +25,7 @@ CGfxRenderPass* CGLES3RenderPassManager::Create(int numAttachments, int numSubpa
 	}
 }
 
-void CGLES3RenderPassManager::Destroy(CGfxRenderPass *pRenderPass)
+void CGLES3RenderPassManager::Destroy(CGLES3RenderPass *pRenderPass)
 {
 	mutex_autolock autolock(&lock);
 	{

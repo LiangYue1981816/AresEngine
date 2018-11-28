@@ -81,6 +81,7 @@ bool CGLES3CommandBuffer::Execute(void) const
 		for (const auto &itCommand : m_pCommands) {
 			itCommand->Execute();
 		}
+
 		return true;
 	}
 

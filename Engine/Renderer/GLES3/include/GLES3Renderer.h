@@ -115,6 +115,7 @@ public:
 	CGfxMeshPtr NewMesh(uint32_t name);
 	CGfxMeshPtr NewMesh(const char *szFileName, uint32_t instanceFormat);
 
+	CGfxMaterialPtr NewMaterial(uint32_t name);
 	CGfxMaterialPtr NewMaterial(const char *szFileName);
 
 	CGfxTexture2DPtr NewTexture2D(uint32_t name);

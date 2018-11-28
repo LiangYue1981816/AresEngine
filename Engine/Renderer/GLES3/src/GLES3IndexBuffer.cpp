@@ -3,6 +3,7 @@
 
 CGLES3IndexBuffer::CGLES3IndexBuffer(uint32_t type, size_t size, bool bDynamic)
 	: CGfxIndexBuffer(type, size, bDynamic)
+
 	, m_buffer(0)
 {
 	glGenBuffers(1, &m_buffer);
