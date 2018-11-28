@@ -16,7 +16,7 @@ CGLES3RenderPass::~CGLES3RenderPass(void)
 
 void CGLES3RenderPass::Release(void)
 {
-	m_pManager->DestroyRenderPass(this);
+	m_pManager->Destroy(this);
 }
 
 bool CGLES3RenderPass::SetColorAttachment(int indexAttachment, bool bInvalidation, bool bClear, float red, float green, float blue, float alpha)

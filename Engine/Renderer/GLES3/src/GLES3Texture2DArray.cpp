@@ -2,7 +2,8 @@
 
 
 CGLES3Texture2DArray::CGLES3Texture2DArray(CGLES3TextureManager *pManager, uint32_t name)
-	: CGLES3TextureBase(pManager, name)
+	: CGLES3TextureBase(pManager)
+	, CGfxTexture2DArray(name)
 {
 
 }
@@ -14,58 +15,30 @@ CGLES3Texture2DArray::~CGLES3Texture2DArray(void)
 
 void CGLES3Texture2DArray::Release(void)
 {
-	m_pManager->DestroyTexture(this);
+	m_pManager->Destroy(this);
 }
 
-bool CGLES3Texture2DArray::Load(const char *szFileName)
+bool CGLES3Texture2DArray::Create(uint32_t texture)
 {
-	Destroy();
-	{
-		do {
-			CStream stream;
-			if (FileManager()->LoadStream(szFileName, &stream) == false) break;
-
-			const gli::texture texture = gli::load((const char *)stream.GetAddress(), stream.GetFullSize());
-			if (texture.empty()) break;
-			if (texture.target() != gli::TARGET_2D_ARRAY) break;
-
-			gli::gl GL(gli::gl::PROFILE_ES30);
-			gli::gl::format format = GL.translate(texture.format(), texture.swizzles());
-
-			if (Create(format.External, format.Internal, texture.extent().x, texture.extent().y, (int)texture.levels(), (int)texture.layers()) == false) break;
-			if (TransferTexture2DArray((const gli::texture2d_array *)&texture) == false) break;
-
-			return true;
-		} while (false);
-	}
-	Destroy();
-	return false;
+	return CGLES3TextureBase::Create(GL_TEXTURE_2D_ARRAY, texture);
 }
 
-bool CGLES3Texture2DArray::LoadLayer(const char *szFileName, int layer)
-{
-	CStream stream;
-	if (FileManager()->LoadStream(szFileName, &stream) == false) return false;
-
-	const gli::texture texture = gli::load((const char *)stream.GetAddress(), stream.GetFullSize());
-	if (texture.empty()) return false;
-	if (texture.target() != gli::TARGET_2D) return false;
-
-	return TransferTexture2D(layer, (const gli::texture2d *)&texture);
-}
-
-bool CGLES3Texture2DArray::Create(uint32_t format, uint32_t internalFormat, int width, int height, int levels, int layers)
+bool CGLES3Texture2DArray::Create(uint32_t format, int width, int height, int levels, int layers)
 {
 	Destroy();
 
-	m_format = format;
-	m_internalFormat = internalFormat;
+	gli::gl GL(gli::gl::PROFILE_ES30);
+	gli::gl::format gliFormat = GL.translate((gli::format)format);
+
+	m_format = gliFormat.External;
+	m_internalFormat = gliFormat.Internal;
 
 	m_width = width;
 	m_height = height;
-
 	m_levels = levels;
 	m_layers = layers;
+
+	m_target = GL_TEXTURE_2D_ARRAY;
 
 	glGenTextures(1, &m_texture);
 	glBindTexture(GL_TEXTURE_2D_ARRAY, m_texture);
@@ -88,133 +61,16 @@ void CGLES3Texture2DArray::Destroy(void)
 	m_size.clear();
 }
 
-bool CGLES3Texture2DArray::TransferTexture2DArray(const gli::texture2d_array *texture)
+bool CGLES3Texture2DArray::TransferTexture2D(uint32_t format, int layer, int level, int xoffset, int yoffset, int width, int height, uint32_t type, uint32_t size, const void *data)
 {
-	if (texture == nullptr) {
-		return false;
-	}
-
-	if (texture->target() != gli::TARGET_2D_ARRAY) {
-		return false;
-	}
-
-	if (m_texture == 0) {
-		return false;
-	}
-
-	if (m_bExtern == GL_TRUE) {
-		return false;
-	}
-
-	if (m_levels != texture->levels()) {
-		return false;
-	}
-
-	if (m_layers != texture->layers()) {
-		return false;
-	}
-
 	gli::gl GL(gli::gl::PROFILE_ES30);
-	gli::gl::format format = GL.translate(texture->format(), texture->swizzles());
-
-	if (format.External != m_format) {
-		return false;
-	}
-
-	if (format.Internal != m_internalFormat) {
-		return false;
-	}
-
-	glBindTexture(GL_TEXTURE_2D_ARRAY, m_texture);
-	{
-		for (int layer = 0; layer < (int)texture->layers(); layer++) {
-			for (int level = 0; level < (int)texture->levels(); level++) {
-				CGfxProfiler::DecTextureDataSize(m_size[layer][level]);
-				{
-					m_size[layer][level] = (uint32_t)texture->size(level);
-
-					if (gli::is_compressed(texture->format())) {
-						glCompressedTexSubImage3D(GL_TEXTURE_2D_ARRAY, level, 0, 0, layer, texture->extent(level).x, texture->extent(level).y, 1, format.Internal, (int)texture->size(level), texture->data(layer, 0, level));
-					}
-					else {
-						glTexSubImage3D(GL_TEXTURE_2D_ARRAY, level, 0, 0, layer, texture->extent(level).x, texture->extent(level).y, 1, format.External, format.Type, texture->data(layer, 0, level));
-					}
-				}
-				CGfxProfiler::IncTextureDataSize(m_size[layer][level]);
-			}
-		}
-	}
-	glBindTexture(GL_TEXTURE_2D_ARRAY, 0);
-
-	return true;
-}
-
-bool CGLES3Texture2DArray::TransferTexture2D(int layer, const gli::texture2d *texture)
-{
-	if (texture == nullptr) {
-		return false;
-	}
-
-	if (texture->target() != gli::TARGET_2D) {
-		return false;
-	}
+	gli::gl::format gliFormat = GL.translate((gli::format)format);
 
 	if (m_texture == 0) {
 		return false;
 	}
 
-	if (m_bExtern == GL_TRUE) {
-		return false;
-	}
-
-	if (m_levels != texture->levels()) {
-		return false;
-	}
-
-	if (m_layers < layer) {
-		return false;
-	}
-
-	gli::gl GL(gli::gl::PROFILE_ES30);
-	gli::gl::format format = GL.translate(texture->format(), texture->swizzles());
-
-	if (format.External != m_format) {
-		return false;
-	}
-
-	if (format.Internal != m_internalFormat) {
-		return false;
-	}
-
-	glBindTexture(GL_TEXTURE_2D_ARRAY, m_texture);
-	{
-		for (int level = 0; level < (int)texture->levels(); level++) {
-			CGfxProfiler::DecTextureDataSize(m_size[layer][level]);
-			{
-				m_size[layer][level] = (uint32_t)texture->size(level);
-
-				if (gli::is_compressed(texture->format())) {
-					glCompressedTexSubImage3D(GL_TEXTURE_2D_ARRAY, level, 0, 0, layer, texture->extent(level).x, texture->extent(level).y, 1, format.Internal, (int)texture->size(level), texture->data(layer, 0, level));
-				}
-				else {
-					glTexSubImage3D(GL_TEXTURE_2D_ARRAY, level, 0, 0, layer, texture->extent(level).x, texture->extent(level).y, 1, format.External, format.Type, texture->data(layer, 0, level));
-				}
-			}
-			CGfxProfiler::IncTextureDataSize(m_size[layer][level]);
-		}
-	}
-	glBindTexture(GL_TEXTURE_2D_ARRAY, 0);
-
-	return true;
-}
-
-bool CGLES3Texture2DArray::TransferTexture2D(int layer, int level, uint32_t format, int xoffset, int yoffset, int width, int height, uint32_t type, uint32_t size, const void *data)
-{
-	if (m_texture == 0) {
-		return false;
-	}
-
-	if (m_bExtern == GL_TRUE) {
+	if (m_bExtern == true) {
 		return false;
 	}
 
@@ -226,12 +82,20 @@ bool CGLES3Texture2DArray::TransferTexture2D(int layer, int level, uint32_t form
 		return false;
 	}
 
+	if (m_format != gliFormat.External) {
+		return false;
+	}
+
+	if (m_internalFormat != gliFormat.Internal) {
+		return false;
+	}
+
 	glBindTexture(GL_TEXTURE_2D_ARRAY, m_texture);
 	{
 		CGfxProfiler::DecTextureDataSize(m_size[layer][level]);
 		{
 			m_size[layer][level] = size;
-			glTexSubImage3D(GL_TEXTURE_2D_ARRAY, level, xoffset, yoffset, layer, width, height, 1, format, type, data);
+			glTexSubImage3D(GL_TEXTURE_2D_ARRAY, level, xoffset, yoffset, layer, width, height, 1, m_format, type, data);
 		}
 		CGfxProfiler::IncTextureDataSize(m_size[layer][level]);
 	}
@@ -240,13 +104,16 @@ bool CGLES3Texture2DArray::TransferTexture2D(int layer, int level, uint32_t form
 	return true;
 }
 
-bool CGLES3Texture2DArray::TransferTexture2DCompressed(int layer, int level, uint32_t format, int xoffset, int yoffset, int width, int height, uint32_t size, const void *data)
+bool CGLES3Texture2DArray::TransferTexture2DCompressed(uint32_t format, int layer, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void *data)
 {
+	gli::gl GL(gli::gl::PROFILE_ES30);
+	gli::gl::format gliFormat = GL.translate((gli::format)format);
+
 	if (m_texture == 0) {
 		return false;
 	}
 
-	if (m_bExtern == GL_TRUE) {
+	if (m_bExtern == true) {
 		return false;
 	}
 
@@ -258,21 +125,44 @@ bool CGLES3Texture2DArray::TransferTexture2DCompressed(int layer, int level, uin
 		return false;
 	}
 
+	if (m_format != gliFormat.External) {
+		return false;
+	}
+
+	if (m_internalFormat != gliFormat.Internal) {
+		return false;
+	}
+
 	glBindTexture(GL_TEXTURE_2D_ARRAY, m_texture);
 	{
 		CGfxProfiler::DecTextureDataSize(m_size[layer][level]);
 		{
 			m_size[layer][level] = size;
-			glCompressedTexSubImage3D(GL_TEXTURE_2D_ARRAY, level, xoffset, yoffset, layer, width, height, 1, format, size, data);
+			glCompressedTexSubImage3D(GL_TEXTURE_2D_ARRAY, level, xoffset, yoffset, layer, width, height, 1, m_format, size, data);
 		}
 		CGfxProfiler::IncTextureDataSize(m_size[layer][level]);
 	}
 	glBindTexture(GL_TEXTURE_2D_ARRAY, 0);
 
 	return true;
+}
+
+bool CGLES3Texture2DArray::IsExtern(void) const
+{
+	return CGLES3TextureBase::IsExtern();
 }
 
 uint32_t CGLES3Texture2DArray::GetTarget(void) const
 {
-	return GL_TEXTURE_2D_ARRAY;
+	return CGLES3TextureBase::GetTarget();
+}
+
+uint32_t CGLES3Texture2DArray::GetTexture(void) const
+{
+	return CGLES3TextureBase::GetTexture();
+}
+
+uint32_t CGLES3Texture2DArray::GetFormat(void) const
+{
+	return CGLES3TextureBase::GetFormat();
 }

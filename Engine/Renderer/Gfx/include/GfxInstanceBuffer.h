@@ -4,7 +4,7 @@
 
 class CALL_API CGfxInstanceBuffer
 {
-protected:
+public:
 	CGfxInstanceBuffer(uint32_t binding, uint32_t format)
 		: m_format(format)
 		, m_count(0)

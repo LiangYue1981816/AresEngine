@@ -19,7 +19,7 @@ CGLES3UniformBuffer::~CGLES3UniformBuffer(void)
 
 void CGLES3UniformBuffer::Release(void)
 {
-	m_pManager->DestroyUniformBuffer(this);
+	m_pManager->Destroy(this);
 }
 
 bool CGLES3UniformBuffer::BufferData(size_t offset, size_t size, const void *pBuffer)

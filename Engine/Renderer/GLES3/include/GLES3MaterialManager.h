@@ -14,10 +14,10 @@ private:
 
 
 private:
-	CGLES3Material* CreateMaterial(const char *szFileName);
-	void DestroyMaterial(CGLES3Material *pMaterial);
+	CGfxMaterial* Create(const char *szFileName);
+	void Destroy(CGfxMaterial *pMaterial);
 
 
 private:
-	eastl::unordered_map<uint32_t, CGLES3Material*> m_pMaterials;
+	eastl::unordered_map<uint32_t, CGfxMaterial*> m_pMaterials;
 };

@@ -4,7 +4,7 @@
 
 class CALL_API CGfxUniformBuffer : public CGfxResource
 {
-protected:
+public:
 	CGfxUniformBuffer(size_t size, bool bDynamic)
 		: m_size(size)
 	{

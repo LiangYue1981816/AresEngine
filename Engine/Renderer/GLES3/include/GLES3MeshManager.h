@@ -14,11 +14,11 @@ private:
 
 
 private:
-	CGLES3Mesh* CreateMesh(const char *szFileName, uint32_t instanceFormat);
-	CGLES3Mesh* CreateMesh(uint32_t name);
-	void DestroyMesh(CGLES3Mesh *pMesh);
+	CGfxMesh* Create(const char *szFileName, uint32_t instanceFormat);
+	CGfxMesh* Create(uint32_t name);
+	void Destroy(CGfxMesh *pMesh);
 
 
 private:
-	eastl::unordered_map<uint32_t, CGLES3Mesh*> m_pMeshs;
+	eastl::unordered_map<uint32_t, CGfxMesh*> m_pMeshs;
 };

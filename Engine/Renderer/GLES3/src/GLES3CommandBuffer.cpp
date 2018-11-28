@@ -58,7 +58,7 @@ CGLES3CommandBuffer::~CGLES3CommandBuffer(void)
 
 void CGLES3CommandBuffer::Release(void)
 {
-	m_pManager->DestroyCommandBuffer(this);
+	m_pManager->Destroy(this);
 }
 
 void CGLES3CommandBuffer::Clearup(void)

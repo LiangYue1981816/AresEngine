@@ -15,7 +15,7 @@ CGLES3CommandBufferManager::~CGLES3CommandBufferManager(void)
 	m_pCommandBuffers.clear();
 }
 
-CGLES3CommandBuffer* CGLES3CommandBufferManager::CreateCommandBuffer(bool bMainCommandBuffer)
+CGfxCommandBuffer* CGLES3CommandBufferManager::Create(bool bMainCommandBuffer)
 {
 	mutex_autolock autolock(&lock);
 	{
@@ -25,7 +25,7 @@ CGLES3CommandBuffer* CGLES3CommandBufferManager::CreateCommandBuffer(bool bMainC
 	}
 }
 
-void CGLES3CommandBufferManager::DestroyCommandBuffer(CGLES3CommandBuffer *pCommandBuffer)
+void CGLES3CommandBufferManager::Destroy(CGfxCommandBuffer *pCommandBuffer)
 {
 	mutex_autolock autolock(&lock);
 	{

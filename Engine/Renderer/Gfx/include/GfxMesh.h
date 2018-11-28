@@ -4,7 +4,7 @@
 
 class CALL_API CGfxMesh : public CGfxResource
 {
-protected:
+public:
 	CGfxMesh(uint32_t name)
 		: m_name(name)
 	{
@@ -15,7 +15,6 @@ protected:
 
 	}
 
-public:
 	uint32_t GetName(void) const
 	{
 		return m_name;
@@ -23,7 +22,6 @@ public:
 
 
 public:
-	virtual bool Load(const char *szFileName, uint32_t instanceFormat) = 0;
 	virtual bool CreateIndexBuffer(uint32_t type, size_t size, bool bDynamic, const void *pBuffer) = 0;
 	virtual bool CreateVertexBuffer(uint32_t binding, uint32_t format, size_t size, bool bDynamic, const void *pBuffer) = 0;
 	virtual bool CreateVertexArrayObject(uint32_t drawCount, uint32_t binding, uint32_t format) = 0;

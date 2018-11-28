@@ -2,34 +2,37 @@
 #include "GLES3Renderer.h"
 
 
-class CGLES3TextureBase : public CGfxTextureBase
+class CGLES3TextureBase
 {
 	friend class CGLES3TextureManager;
 
 
 protected:
-	CGLES3TextureBase(CGLES3TextureManager *pManager, uint32_t name);
+	CGLES3TextureBase(CGLES3TextureManager *pManager);
 	virtual ~CGLES3TextureBase(void);
 
 
 public:
-	virtual bool Create(uint32_t texture);
-	virtual void Destroy(void);
+	bool Create(uint32_t target, uint32_t texture);
+	void Destroy(void);
 
 public:
-	virtual void Bind(uint32_t unit);
+	void Bind(uint32_t unit);
 
 public:
-	virtual uint32_t GetTarget(void) const = 0;
-	virtual uint32_t GetTexture(void) const;
+	bool IsExtern(void) const;
 
-	virtual uint32_t GetFormat(void) const;
-	virtual uint32_t GetInternalFormat(void) const;
+	uint32_t GetTarget(void) const;
+	uint32_t GetTexture(void) const;
+
+	uint32_t GetFormat(void) const;
 
 
 protected:
+	bool m_bExtern;
+
+	uint32_t m_target;
 	uint32_t m_texture;
-	uint32_t m_bExtern;
 
 	uint32_t m_format;
 	uint32_t m_internalFormat;

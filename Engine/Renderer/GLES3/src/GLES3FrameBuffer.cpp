@@ -20,7 +20,7 @@ CGLES3FrameBuffer::~CGLES3FrameBuffer(void)
 
 void CGLES3FrameBuffer::Release(void)
 {
-	m_pManager->DestroyFrameBuffer(this);
+	m_pManager->Destroy(this);
 }
 
 bool CGLES3FrameBuffer::SetAttachmentTexture(int indexAttachment, CGfxTexture2DPtr &ptrAttachmentTexture)

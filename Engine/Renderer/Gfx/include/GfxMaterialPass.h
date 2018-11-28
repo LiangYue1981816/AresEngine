@@ -4,7 +4,7 @@
 
 class CALL_API CGfxMaterialPass
 {
-protected:
+public:
 	CGfxMaterialPass(uint32_t name)
 		: m_name(name)
 	{
@@ -15,7 +15,6 @@ protected:
 
 	}
 
-public:
 	uint32_t GetName(void) const
 	{
 		return m_name;

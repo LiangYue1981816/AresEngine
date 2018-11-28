@@ -46,10 +46,10 @@ void CRenderSolutionDefault::DestroyFrameBuffer(void)
 void CRenderSolutionDefault::CreateFrameBufferMSAA(int samples)
 {
 	m_ptrColorTextureMSAA = Renderer()->NewTexture2D(HashValue("ColorTextureMSAA"));
-	m_ptrColorTextureMSAA->Create(GL_RGBA, GL_RGBA8, Renderer()->GetSwapChain()->GetWidth(), Renderer()->GetSwapChain()->GetHeight(), 1, samples);
+	m_ptrColorTextureMSAA->Create(gli::FORMAT_RGBA8_UNORM_PACK8, Renderer()->GetSwapChain()->GetWidth(), Renderer()->GetSwapChain()->GetHeight(), 1, samples);
 
 	m_ptrDepthStencilTextureMSAA = Renderer()->NewTexture2D(HashValue("DepthStencilTextureMSAA"));
-	m_ptrDepthStencilTextureMSAA->Create(GL_DEPTH_STENCIL, GL_DEPTH24_STENCIL8, Renderer()->GetSwapChain()->GetWidth(), Renderer()->GetSwapChain()->GetHeight(), 1, samples);
+	m_ptrDepthStencilTextureMSAA->Create(gli::FORMAT_D24_UNORM_S8_UINT_PACK32, Renderer()->GetSwapChain()->GetWidth(), Renderer()->GetSwapChain()->GetHeight(), 1, samples);
 
 	for (int index = 0; index < CGfxSwapChain::SWAPCHAIN_IMAGE_COUNT; index++) {
 		CGfxTexture2DPtr ptrColorTexture = Renderer()->GetSwapChain()->GetTexture(index);

@@ -14,10 +14,10 @@ private:
 
 
 private:
-	CGLES3FrameBuffer* CreateFrameBuffer(int width, int height);
-	void DestroyFrameBuffer(CGLES3FrameBuffer *pFrameBuffer);
+	CGfxFrameBuffer* Create(int width, int height);
+	void Destroy(CGfxFrameBuffer *pFrameBuffer);
 
 
 private:
-	eastl::unordered_map<CGLES3FrameBuffer*, CGLES3FrameBuffer*> m_pFrameBuffers;
+	eastl::unordered_map<CGfxFrameBuffer*, CGfxFrameBuffer*> m_pFrameBuffers;
 };

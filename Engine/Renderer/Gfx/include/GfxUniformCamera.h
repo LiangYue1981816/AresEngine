@@ -4,7 +4,7 @@
 
 class CALL_API CGfxUniformCamera
 {
-protected:
+private:
 	typedef struct Params {
 		glm::vec4 screen;
 		glm::vec4 zbuffer;

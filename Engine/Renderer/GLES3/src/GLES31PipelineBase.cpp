@@ -3,9 +3,8 @@
 #include "GfxHeader.h"
 
 
-CGLES3PipelineBase::CGLES3PipelineBase(uint32_t name)
-	: CGfxPipelineBase(name)
-	, m_pipeline(0)
+CGLES3PipelineBase::CGLES3PipelineBase(void)
+	: m_pipeline(0)
 	, m_pShaders{ nullptr }
 {
 	glGenProgramPipelines(1, &m_pipeline);

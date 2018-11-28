@@ -4,7 +4,7 @@
 
 class CALL_API CGfxMaterial : public CGfxResource
 {
-protected:
+public:
 	CGfxMaterial(uint32_t name)
 		: m_name(name)
 	{
@@ -15,7 +15,6 @@ protected:
 
 	}
 
-public:
 	uint32_t GetName(void) const
 	{
 		return m_name;
@@ -23,7 +22,6 @@ public:
 
 	
 public:
-	virtual bool Load(const char *szFileName) = 0;
 	virtual bool CreatePass(uint32_t name) = 0;
 	virtual void Destroy(void) = 0;
 

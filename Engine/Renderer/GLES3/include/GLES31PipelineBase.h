@@ -4,13 +4,13 @@
 #include "GLES3Renderer.h"
 
 
-class CGLES3PipelineBase : public CGfxPipelineBase
+class CGLES3PipelineBase
 {
 	friend class CGLES3PipelineManager;
 
 
 protected:
-	CGLES3PipelineBase(uint32_t name);
+	CGLES3PipelineBase(void);
 	virtual ~CGLES3PipelineBase(void);
 
 

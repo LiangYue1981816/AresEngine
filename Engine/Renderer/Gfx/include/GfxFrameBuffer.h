@@ -4,7 +4,7 @@
 
 class CALL_API CGfxFrameBuffer : public CGfxResource
 {
-protected:
+public:
 	CGfxFrameBuffer(int width, int height)
 		: m_width(width)
 		, m_height(height)

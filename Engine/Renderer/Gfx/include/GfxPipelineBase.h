@@ -4,7 +4,7 @@
 
 class CALL_API CGfxPipelineBase
 {
-protected:
+public:
 	CGfxPipelineBase(uint32_t name)
 		: m_name(name)
 	{
@@ -15,11 +15,15 @@ protected:
 
 	}
 
-public:
 	uint32_t GetName(void) const
 	{
 		return m_name;
 	}
+
+public:
+	virtual bool IsTextureValid(uint32_t name) const = 0;
+	virtual bool IsUniformValid(uint32_t name) const = 0;
+	virtual bool IsUniformBlockValid(uint32_t name) const = 0;
 
 
 private:

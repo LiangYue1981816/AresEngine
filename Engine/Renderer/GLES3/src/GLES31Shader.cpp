@@ -16,17 +16,6 @@ CGLES3Shader::~CGLES3Shader(void)
 	Destroy();
 }
 
-bool CGLES3Shader::Load(const char *szFileName, shader_kind kind)
-{
-	Destroy();
-
-	std::vector<uint32_t> words;
-	if (LoadShaderBinary(FileManager()->GetFullName(szFileName), words, INVALID_HASHVALUE) == false) return false;
-	if (Create(words.data(), words.size(), kind) == false) return false;
-
-	return true;
-}
-
 bool CGLES3Shader::Create(const uint32_t *words, size_t numWords, shader_kind kind)
 {
 	Destroy();

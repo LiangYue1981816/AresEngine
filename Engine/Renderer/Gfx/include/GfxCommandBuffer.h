@@ -20,7 +20,7 @@ public:
 
 class CGfxCommandBuffer : public CGfxResource
 {
-protected:
+public:
 	CGfxCommandBuffer(bool bMainCommandBuffer)
 		: m_bMainCommandBuffer(bMainCommandBuffer)
 	{

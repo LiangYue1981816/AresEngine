@@ -13,9 +13,9 @@ private:
 
 
 private:
-	CGLES3Sampler* CreateSampler(uint32_t minFilter, uint32_t magFilter, uint32_t addressMode);
+	CGfxSampler* Create(uint32_t minFilter, uint32_t magFilter, uint32_t addressMode);
 
 
 private:
-	eastl::unordered_map<uint32_t, CGLES3Sampler*> m_pSamplers;
+	eastl::unordered_map<uint32_t, CGfxSampler*> m_pSamplers;
 };

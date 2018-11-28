@@ -4,7 +4,7 @@
 
 class CALL_API CGfxVertexBuffer
 {
-protected:
+public:
 	CGfxVertexBuffer(uint32_t binding, uint32_t format, size_t size, bool bDynamic)
 		: m_format(format)
 		, m_count(size / GetVertexStride(format))

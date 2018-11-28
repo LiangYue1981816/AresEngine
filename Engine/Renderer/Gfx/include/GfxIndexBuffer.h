@@ -4,7 +4,7 @@
 
 class CALL_API CGfxIndexBuffer
 {
-protected:
+public:
 	CGfxIndexBuffer(uint32_t type, size_t size, bool bDynamic)
 		: m_type(type)
 		, m_size(size)

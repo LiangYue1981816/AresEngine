@@ -4,7 +4,7 @@
 
 
 CGLES3PipelineGraphics::CGLES3PipelineGraphics(uint32_t name)
-	: CGLES3PipelineBase(name)
+	: CGfxPipelineGraphics(name)
 {
 
 }

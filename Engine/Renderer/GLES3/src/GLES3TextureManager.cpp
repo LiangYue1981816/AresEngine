@@ -15,7 +15,7 @@ CGLES3TextureManager::~CGLES3TextureManager(void)
 	m_pTextures.clear();
 }
 
-CGLES3Texture2D* CGLES3TextureManager::CreateTexture2D(const char *szFileName)
+CGfxTexture2D* CGLES3TextureManager::CreateTexture2D(const char *szFileName)
 {
 	mutex_autolock autolock(&lock);
 	{
@@ -23,14 +23,13 @@ CGLES3Texture2D* CGLES3TextureManager::CreateTexture2D(const char *szFileName)
 
 		if (m_pTextures[name] == nullptr) {
 			m_pTextures[name] = new CGLES3Texture2D(this, name);
-			((CGLES3Texture2D *)m_pTextures[name])->Load(szFileName);
 		}
 
-		return (CGLES3Texture2D *)m_pTextures[name];
+		return (CGfxTexture2D *)m_pTextures[name];
 	}
 }
 
-CGLES3Texture2DArray* CGLES3TextureManager::CreateTexture2DArray(const char *szFileName)
+CGfxTexture2DArray* CGLES3TextureManager::CreateTexture2DArray(const char *szFileName)
 {
 	mutex_autolock autolock(&lock);
 	{
@@ -38,14 +37,13 @@ CGLES3Texture2DArray* CGLES3TextureManager::CreateTexture2DArray(const char *szF
 
 		if (m_pTextures[name] == nullptr) {
 			m_pTextures[name] = new CGLES3Texture2DArray(this, name);
-			((CGLES3Texture2DArray *)m_pTextures[name])->Load(szFileName);
 		}
 
-		return (CGLES3Texture2DArray *)m_pTextures[name];
+		return (CGfxTexture2DArray *)m_pTextures[name];
 	}
 }
 
-CGLES3TextureCubeMap* CGLES3TextureManager::CreateTextureCubeMap(const char *szFileName)
+CGfxTextureCubeMap* CGLES3TextureManager::CreateTextureCubeMap(const char *szFileName)
 {
 	mutex_autolock autolock(&lock);
 	{
@@ -53,14 +51,13 @@ CGLES3TextureCubeMap* CGLES3TextureManager::CreateTextureCubeMap(const char *szF
 
 		if (m_pTextures[name] == nullptr) {
 			m_pTextures[name] = new CGLES3TextureCubeMap(this, name);
-			((CGLES3TextureCubeMap *)m_pTextures[name])->Load(szFileName);
 		}
 
-		return (CGLES3TextureCubeMap *)m_pTextures[name];
+		return (CGfxTextureCubeMap *)m_pTextures[name];
 	}
 }
 
-CGLES3Texture2D* CGLES3TextureManager::CreateTexture2D(uint32_t name)
+CGfxTexture2D* CGLES3TextureManager::CreateTexture2D(uint32_t name)
 {
 	mutex_autolock autolock(&lock);
 	{
@@ -68,11 +65,11 @@ CGLES3Texture2D* CGLES3TextureManager::CreateTexture2D(uint32_t name)
 			m_pTextures[name] = new CGLES3Texture2D(this, name);
 		}
 
-		return (CGLES3Texture2D *)m_pTextures[name];
+		return (CGfxTexture2D *)m_pTextures[name];
 	}
 }
 
-CGLES3Texture2DArray* CGLES3TextureManager::CreateTexture2DArray(uint32_t name)
+CGfxTexture2DArray* CGLES3TextureManager::CreateTexture2DArray(uint32_t name)
 {
 	mutex_autolock autolock(&lock);
 	{
@@ -80,11 +77,11 @@ CGLES3Texture2DArray* CGLES3TextureManager::CreateTexture2DArray(uint32_t name)
 			m_pTextures[name] = new CGLES3Texture2DArray(this, name);
 		}
 
-		return (CGLES3Texture2DArray *)m_pTextures[name];
+		return (CGfxTexture2DArray *)m_pTextures[name];
 	}
 }
 
-CGLES3TextureCubeMap* CGLES3TextureManager::CreateTextureCubeMap(uint32_t name)
+CGfxTextureCubeMap* CGLES3TextureManager::CreateTextureCubeMap(uint32_t name)
 {
 	mutex_autolock autolock(&lock);
 	{
@@ -92,11 +89,11 @@ CGLES3TextureCubeMap* CGLES3TextureManager::CreateTextureCubeMap(uint32_t name)
 			m_pTextures[name] = new CGLES3TextureCubeMap(this, name);
 		}
 
-		return (CGLES3TextureCubeMap *)m_pTextures[name];
+		return (CGfxTextureCubeMap *)m_pTextures[name];
 	}
 }
 
-void CGLES3TextureManager::DestroyTexture(CGLES3TextureBase *pTexture)
+void CGLES3TextureManager::Destroy(CGfxTextureBase *pTexture)
 {
 	mutex_autolock autolock(&lock);
 	{

@@ -20,78 +20,7 @@ CGLES3Mesh::~CGLES3Mesh(void)
 
 void CGLES3Mesh::Release(void)
 {
-	m_pManager->DestroyMesh(this);
-}
-
-bool CGLES3Mesh::Load(const char *szFileName, uint32_t instanceFormat)
-{
-	enum RawVertexAttribute
-	{
-		RAW_VERTEX_ATTRIBUTE_POSITION = 1 << 0,
-		RAW_VERTEX_ATTRIBUTE_NORMAL = 1 << 1,
-		RAW_VERTEX_ATTRIBUTE_BINORMAL = 1 << 3,
-		RAW_VERTEX_ATTRIBUTE_COLOR = 1 << 4,
-		RAW_VERTEX_ATTRIBUTE_UV0 = 1 << 5,
-		RAW_VERTEX_ATTRIBUTE_UV1 = 1 << 6,
-	};
-
-	typedef struct DrawHeader
-	{
-		float minx =  FLT_MAX;
-		float miny =  FLT_MAX;
-		float minz =  FLT_MAX;
-		float maxx = -FLT_MAX;
-		float maxy = -FLT_MAX;
-		float maxz = -FLT_MAX;
-
-		unsigned int baseVertex = 0;
-		unsigned int firstIndex = 0;
-		unsigned int indexCount = 0;
-
-	} DrawHeader;
-
-	typedef struct MeshHeader
-	{
-		unsigned int format = 0;
-		unsigned int numDraws = 0;
-
-		unsigned int indexBufferSize = 0;
-		unsigned int indexBufferOffset = 0;
-
-		unsigned int vertexBufferSize = 0;
-		unsigned int vertexBufferOffset = 0;
-
-	} MeshHeader;
-
-	Destroy();
-
-	CStream stream;
-	if (FileManager()->LoadStream(szFileName, &stream) == false) {
-		return false;
-	}
-
-	MeshHeader meshHeader;
-	stream.Read(&meshHeader, sizeof(meshHeader), 1);
-
-	DrawHeader *drawHeaders = (DrawHeader *)stream.GetCurrentAddress();
-
-	stream.Seek(meshHeader.indexBufferOffset, SEEK_SET);
-	void *pIndexBuffer = stream.GetCurrentAddress();
-
-	stream.Seek(meshHeader.vertexBufferOffset, SEEK_SET);
-	void *pVertexBuffer = stream.GetCurrentAddress();
-
-	CreateIndexBuffer(GL_UNSIGNED_INT, meshHeader.indexBufferSize, false, pIndexBuffer);
-	CreateVertexBuffer(0, meshHeader.format, meshHeader.vertexBufferSize, false, pVertexBuffer);
-	CreateVertexArrayObject(meshHeader.numDraws, 1, instanceFormat);
-	CreateDrawIndirectBuffer(meshHeader.numDraws);
-
-	for (int indexDraw = 0; indexDraw < (int)meshHeader.numDraws; indexDraw++) {
-		DrawIndirectBufferData(indexDraw, drawHeaders[indexDraw].baseVertex, drawHeaders[indexDraw].firstIndex, drawHeaders[indexDraw].indexCount, 0);
-		SetLocalAABB(indexDraw, glm::aabb(glm::vec3(drawHeaders[indexDraw].minx, drawHeaders[indexDraw].miny, drawHeaders[indexDraw].minz), glm::vec3(drawHeaders[indexDraw].maxx, drawHeaders[indexDraw].maxy, drawHeaders[indexDraw].maxz)));
-	}
-
-	return true;
+	m_pManager->Destroy(this);
 }
 
 bool CGLES3Mesh::CreateIndexBuffer(uint32_t type, size_t size, bool bDynamic, const void *pBuffer)

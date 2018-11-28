@@ -4,7 +4,7 @@
 
 
 CGLES3PipelineCompute::CGLES3PipelineCompute(uint32_t name)
-	: CGLES3PipelineBase(name)
+	: CGfxPipelineCompute(name)
 {
 
 }

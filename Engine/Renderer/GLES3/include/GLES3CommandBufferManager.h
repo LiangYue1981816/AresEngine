@@ -14,10 +14,10 @@ private:
 
 
 private:
-	CGLES3CommandBuffer* CreateCommandBuffer(bool bMainCommandBuffer);
-	void DestroyCommandBuffer(CGLES3CommandBuffer *pCommandBuffer);
+	CGfxCommandBuffer* Create(bool bMainCommandBuffer);
+	void Destroy(CGfxCommandBuffer *pCommandBuffer);
 
 
 private:
-	eastl::unordered_map<CGLES3CommandBuffer*, CGLES3CommandBuffer*> m_pCommandBuffers;
+	eastl::unordered_map<CGfxCommandBuffer*, CGfxCommandBuffer*> m_pCommandBuffers;
 };

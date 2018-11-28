@@ -14,6 +14,7 @@
 #include "GfxProfiler.h"
 
 #include "GfxResource.h"
+#include "GfxResourceLoader.h"
 #include "GfxResourceManager.h"
 
 #include "GfxCamera.h"

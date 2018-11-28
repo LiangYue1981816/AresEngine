@@ -15,8 +15,6 @@ private:
 
 	
 public:
-	bool Load(const char *szFileName);
-	bool LoadPass(TiXmlNode *pPassNode);
 	bool CreatePass(uint32_t name);
 	void Destroy(void);
 

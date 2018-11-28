@@ -36,7 +36,7 @@ typedef enum {
 
 class CALL_API CGfxShader
 {
-protected:
+public:
 	CGfxShader(uint32_t name)
 		: m_name(name)
 	{
@@ -47,7 +47,6 @@ protected:
 
 	}
 
-public:
 	uint32_t GetName(void) const
 	{
 		return m_name;
@@ -55,7 +54,6 @@ public:
 
 
 public:
-	virtual bool Load(const char *szFileName, shader_kind kind) = 0;
 	virtual bool Create(const uint32_t *words, size_t numWords, shader_kind kind) = 0;
 	virtual void Destroy(void) = 0;
 

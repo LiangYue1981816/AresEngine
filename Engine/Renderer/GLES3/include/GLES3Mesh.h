@@ -27,7 +27,6 @@ private:
 
 
 public:
-	bool Load(const char *szFileName, uint32_t instanceFormat);
 	bool CreateIndexBuffer(uint32_t type, size_t size, bool bDynamic, const void *pBuffer);
 	bool CreateVertexBuffer(uint32_t binding, uint32_t format, size_t size, bool bDynamic, const void *pBuffer);
 	bool CreateVertexArrayObject(uint32_t drawCount, uint32_t binding, uint32_t format);

@@ -13,19 +13,6 @@ private:
 	virtual ~CGLES3MaterialPass(void);
 
 	
-private:
-	bool Load(TiXmlNode *pPassNode);
-	bool LoadPipeline(TiXmlNode *pPassNode);
-	bool LoadPipelineState(TiXmlNode *pPipelineNode, PipelineState &state);
-	bool LoadPipelineShader(TiXmlNode *pPipelineNode, CGfxShader *&pShader, shader_kind kind);
-	bool LoadTexture2D(TiXmlNode *pPassNode);
-	bool LoadTexture2DArray(TiXmlNode *pPassNode);
-	bool LoadTextureCubeMap(TiXmlNode *pPassNode);
-	bool LoadUniformVec1(TiXmlNode *pPassNode);
-	bool LoadUniformVec2(TiXmlNode *pPassNode);
-	bool LoadUniformVec3(TiXmlNode *pPassNode);
-	bool LoadUniformVec4(TiXmlNode *pPassNode);
-
 public:
 	bool SetPipeline(const CGfxShader *pVertexShader, const CGfxShader *pFragmentShader, const PipelineState &state);
 
