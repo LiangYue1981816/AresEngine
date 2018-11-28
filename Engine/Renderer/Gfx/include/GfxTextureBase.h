@@ -7,6 +7,7 @@ class CALL_API CGfxTextureBase : public CGfxResource
 public:
 	CGfxTextureBase(uint32_t name)
 		: m_name(name)
+
 		, m_width(0)
 		, m_height(0)
 	{
@@ -21,6 +22,7 @@ public:
 	{
 		return m_name;
 	}
+
 
 public:
 	int GetWidth(void) const

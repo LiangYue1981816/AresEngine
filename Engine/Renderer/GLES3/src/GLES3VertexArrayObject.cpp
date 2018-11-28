@@ -12,7 +12,7 @@ CGLES3VertexArrayObject::~CGLES3VertexArrayObject(void)
 	glDeleteVertexArrays(1, &m_vao);
 }
 
-bool CGLES3VertexArrayObject::Buffer(CGLES3IndexBuffer *pIndexBuffer, CGLES3VertexBuffer *pVertexBuffer, CGLES3InstanceBuffer *pInstanceBuffer)
+bool CGLES3VertexArrayObject::Buffer(CGfxIndexBuffer *pIndexBuffer, CGfxVertexBuffer *pVertexBuffer, CGfxInstanceBuffer *pInstanceBuffer)
 {
 	GLBindBuffer(GL_ARRAY_BUFFER, 0);
 	GLBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);

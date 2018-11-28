@@ -71,8 +71,6 @@ private:
 	uint32_t m_indexSubPass;
 	CGfxRenderPassPtr m_ptrRenderPass;
 	CGfxFrameBufferPtr m_ptrFrameBuffer;
-
-private:
 	eastl::vector<CGfxCommandBase*> m_pCommands;
 
 private:

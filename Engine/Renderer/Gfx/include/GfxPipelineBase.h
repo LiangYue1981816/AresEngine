@@ -20,6 +20,7 @@ public:
 		return m_name;
 	}
 
+
 public:
 	virtual bool IsTextureValid(uint32_t name) const = 0;
 	virtual bool IsUniformValid(uint32_t name) const = 0;

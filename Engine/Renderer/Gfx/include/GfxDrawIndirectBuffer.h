@@ -10,6 +10,7 @@ typedef struct DrawCommand {
 	int reservedMustBeZero = 0;
 } DrawCommand;
 
+
 class CALL_API CGfxDrawIndirectBuffer
 {
 public:
@@ -29,6 +30,7 @@ public:
 	virtual bool BufferData(size_t offset, size_t size, const void *pBuffer) = 0;
 	virtual bool BufferData(int indexDraw, int instanceCount) = 0;
 	virtual bool BufferData(int indexDraw, int baseVertex, int firstIndex, int indexCount, int instanceCount) = 0;
+	virtual void Bind(void *pParam) = 0;
 
 public:
 	uint32_t GetDrawCommandCount(void) const

@@ -17,6 +17,7 @@ typedef struct SubPassInformation {
 	eastl::unordered_map<int, int> resolveAttachments;
 } SubPassInformation;
 
+
 class CALL_API CGfxRenderPass : public CGfxResource
 {
 public:

@@ -31,12 +31,11 @@ public:
 
 	}
 
-
-public:
 	bool IsMainCommandBuffer(void) const
 	{
 		return m_bMainCommandBuffer;
 	}
+
 
 public:
 	virtual void Clearup(void) = 0;
