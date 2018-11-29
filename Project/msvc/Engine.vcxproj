@@ -415,6 +415,10 @@
     <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxRenderQueue.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxResource.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxResourceLoader.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxResourceLoaderMaterial.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxResourceLoaderMesh.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxResourceLoaderShader.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxResourceLoaderTexture.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxResourceManager.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxUniformCamera.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxUniformEngine.cpp" />
