@@ -645,6 +645,9 @@
     <ClInclude Include="..\..\Engine\Renderer\GLES3\src\GLES3CommandUniformMatrix4fv.h">
       <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxResourceLoader.h">
+      <Filter>Engine\Renderer\Gfx\Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Engine\Base\src\File.cpp">
@@ -985,6 +988,21 @@
     </ClCompile>
     <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES31Shader.cpp">
       <Filter>Engine\Renderer\GLES3\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxResourceLoader.cpp">
+      <Filter>Engine\Renderer\Gfx\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxResourceLoaderMaterial.cpp">
+      <Filter>Engine\Renderer\Gfx\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxResourceLoaderMesh.cpp">
+      <Filter>Engine\Renderer\Gfx\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxResourceLoaderShader.cpp">
+      <Filter>Engine\Renderer\Gfx\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxResourceLoaderTexture.cpp">
+      <Filter>Engine\Renderer\Gfx\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

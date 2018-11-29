@@ -17,6 +17,11 @@ GFX_RENDERER_SRC_FILES := \
 ../../Engine/Renderer/Gfx/src/GfxRenderer.cpp \
 ../../Engine/Renderer/Gfx/src/GfxRenderQueue.cpp \
 ../../Engine/Renderer/Gfx/src/GfxResource.cpp \
+../../Engine/Renderer/Gfx/src/GfxResourceLoader.cpp \
+../../Engine/Renderer/Gfx/src/GfxResourceLoaderMaterial.cpp \
+../../Engine/Renderer/Gfx/src/GfxResourceLoaderMesh.cpp \
+../../Engine/Renderer/Gfx/src/GfxResourceLoaderShader.cpp \
+../../Engine/Renderer/Gfx/src/GfxResourceLoaderTexture.cpp \
 ../../Engine/Renderer/Gfx/src/GfxResourceManager.cpp \
 ../../Engine/Renderer/Gfx/src/GfxUniformCamera.cpp \
 ../../Engine/Renderer/Gfx/src/GfxUniformEngine.cpp \

@@ -228,6 +228,7 @@
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxRenderPass.h" />
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxRenderQueue.h" />
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxResource.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxResourceLoader.h" />
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxResourceManager.h" />
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxSampler.h" />
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxShader.h" />
@@ -390,6 +391,11 @@
     <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxRenderer.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxRenderQueue.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxResource.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxResourceLoader.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxResourceLoaderMaterial.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxResourceLoaderMesh.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxResourceLoaderShader.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxResourceLoaderTexture.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxResourceManager.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxUniformCamera.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxUniformEngine.cpp" />
