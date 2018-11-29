@@ -17,8 +17,8 @@ public:
 
 
 public:
-	virtual bool LoadShader(const char *szFileName, CGfxShader *pShader);
-	virtual bool LoadMesh(const char *szFileName, CGfxMesh *pMesh);
+	virtual bool LoadShader(const char *szFileName, CGfxShader *pShader, shader_kind kind);
+	virtual bool LoadMesh(const char *szFileName, CGfxMesh *pMesh, uint32_t instanceFormat);
 	virtual bool LoadMaterial(const char *szFileName, CGfxMaterial *pMaterial);
 	virtual bool LoadTexture2D(const char *szFileName, CGfxTexture2D *pTexture2D);
 	virtual bool LoadTexture2DArray(const char *szFileName, CGfxTexture2DArray *pTexture2DArray);

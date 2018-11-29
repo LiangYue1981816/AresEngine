@@ -23,6 +23,7 @@ CGLES3Shader* CGLES3ShaderManager::Create(const char *szFileName, shader_kind ki
 
 		if (m_pShaders[name] == nullptr) {
 			m_pShaders[name] = new CGLES3Shader(name);
+			ResourceLoader()->LoadShader(szFileName, m_pShaders[name], kind);
 		}
 
 		return (CGLES3Shader *)m_pShaders[name];

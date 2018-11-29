@@ -28,10 +28,10 @@ bool CGLES3TextureCubeMap::Create(uint32_t format, int width, int height, int le
 	Destroy();
 
 	gli::gl GL(gli::gl::PROFILE_ES30);
-	gli::gl::format gliFormat = GL.translate((gli::format)format);
+	gli::gl::format glFormat = GL.translate((gli::format)format);
 
-	m_format = gliFormat.External;
-	m_internalFormat = gliFormat.Internal;
+	m_format = glFormat.External;
+	m_internalFormat = glFormat.Internal;
 
 	m_width = width;
 	m_height = height;
@@ -63,7 +63,7 @@ void CGLES3TextureCubeMap::Destroy(void)
 bool CGLES3TextureCubeMap::TransferTexture2D(uint32_t format, int face, int level, int xoffset, int yoffset, int width, int height, uint32_t type, uint32_t size, const void *data)
 {
 	gli::gl GL(gli::gl::PROFILE_ES30);
-	gli::gl::format gliFormat = GL.translate((gli::format)format);
+	gli::gl::format glFormat = GL.translate((gli::format)format);
 
 	if (m_texture == 0) {
 		return false;
@@ -77,11 +77,11 @@ bool CGLES3TextureCubeMap::TransferTexture2D(uint32_t format, int face, int leve
 		return false;
 	}
 
-	if (m_format != gliFormat.External) {
+	if (m_format != glFormat.External) {
 		return false;
 	}
 
-	if (m_internalFormat != gliFormat.Internal) {
+	if (m_internalFormat != glFormat.Internal) {
 		return false;
 	}
 
@@ -102,7 +102,7 @@ bool CGLES3TextureCubeMap::TransferTexture2D(uint32_t format, int face, int leve
 bool CGLES3TextureCubeMap::TransferTexture2DCompressed(uint32_t format, int face, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void *data)
 {
 	gli::gl GL(gli::gl::PROFILE_ES30);
-	gli::gl::format gliFormat = GL.translate((gli::format)format);
+	gli::gl::format glFormat = GL.translate((gli::format)format);
 
 	if (m_texture == 0) {
 		return false;
@@ -116,11 +116,11 @@ bool CGLES3TextureCubeMap::TransferTexture2DCompressed(uint32_t format, int face
 		return false;
 	}
 
-	if (m_format != gliFormat.External) {
+	if (m_format != glFormat.External) {
 		return false;
 	}
 
-	if (m_internalFormat != gliFormat.Internal) {
+	if (m_internalFormat != glFormat.Internal) {
 		return false;
 	}
 
@@ -129,7 +129,7 @@ bool CGLES3TextureCubeMap::TransferTexture2DCompressed(uint32_t format, int face
 		CGfxProfiler::DecTextureDataSize(m_size[face][level]);
 		{
 			m_size[face][level] = size;
-			glCompressedTexSubImage2D(face, level, xoffset, yoffset, width, height, m_format, size, data);
+			glCompressedTexSubImage2D(face, level, xoffset, yoffset, width, height, m_internalFormat, size, data);
 		}
 		CGfxProfiler::IncTextureDataSize(m_size[face][level]);
 	}

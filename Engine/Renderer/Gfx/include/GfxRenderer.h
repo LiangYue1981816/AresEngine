@@ -7,15 +7,13 @@
 #include <spirv-cross/spirv_msl.hpp>
 #include <spirv-cross/spirv_glsl.hpp>
 
+#include "GfxProfiler.h"
+
 #include "GfxGLM.h"
 #include "GfxDefinition.h"
 #include "GfxVertexAttribute.h"
 
-#include "GfxProfiler.h"
-
 #include "GfxResource.h"
-#include "GfxResourceLoader.h"
-#include "GfxResourceManager.h"
 
 #include "GfxCamera.h"
 #include "GfxRenderQueue.h"
@@ -55,6 +53,9 @@
 
 #include "GfxCommandBuffer.h"
 
+#include "GfxResourceLoader.h"
+#include "GfxResourceManager.h"
+
 
 #define Renderer() CGfxRenderer::GetInstance()
 
@@ -85,7 +86,7 @@ public:
 public:
 	virtual CGfxSwapChain* GetSwapChain(void) const = 0;
 
-protected:
+public:
 	virtual CGfxShader* CreateShader(const char *szFileName, shader_kind kind) = 0;
 	virtual CGfxPipelineCompute* CreatePipelineCompute(const CGfxShader *pComputeShader) = 0;
 	virtual CGfxPipelineGraphics* CreatePipelineGraphics(const CGfxShader *pVertexShader, const CGfxShader *pFragmentShader, const PipelineState &state) = 0;

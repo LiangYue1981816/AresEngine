@@ -3,167 +3,6 @@
 
 #define TEXTURE_INTERNAL_NAME(name) (uint32_t)(name ^ (size_t)this)
 
-static uint32_t StringToCullFace(const char *szString)
-{
-	if (szString) {
-		if (!stricmp(szString, "GL_FRONT")) return GL_FRONT;
-		if (!stricmp(szString, "GL_BACK")) return GL_BACK;
-		if (!stricmp(szString, "GL_FRONT_AND_BACK ")) return GL_FRONT_AND_BACK;
-	}
-
-	return GL_BACK;
-}
-
-static uint32_t StringToFrontFace(const char *szString)
-{
-	if (szString) {
-		if (!stricmp(szString, "GL_CW")) return GL_CW;
-		if (!stricmp(szString, "GL_CCW")) return GL_CCW;
-	}
-
-	return GL_CCW;
-}
-
-static uint32_t StringToStencilFunc(const char *szString)
-{
-	if (szString) {
-		if (!stricmp(szString, "GL_NEVER")) return GL_NEVER;
-		if (!stricmp(szString, "GL_LESS")) return GL_LESS;
-		if (!stricmp(szString, "GL_LEQUAL")) return GL_LEQUAL;
-		if (!stricmp(szString, "GL_GREATER")) return GL_GREATER;
-		if (!stricmp(szString, "GL_GEQUAL")) return GL_GEQUAL;
-		if (!stricmp(szString, "GL_EQUAL")) return GL_EQUAL;
-		if (!stricmp(szString, "GL_NOTEQUAL")) return GL_NOTEQUAL;
-		if (!stricmp(szString, "GL_ALWAYS")) return GL_ALWAYS;
-	}
-
-	return GL_ALWAYS;
-}
-
-static uint32_t StringToStencilOp(const char *szString)
-{
-	if (szString) {
-		if (!stricmp(szString, "GL_KEEP")) return GL_KEEP;
-		if (!stricmp(szString, "GL_ZERO")) return GL_ZERO;
-		if (!stricmp(szString, "GL_REPLACE")) return GL_REPLACE;
-		if (!stricmp(szString, "GL_INCR")) return GL_INCR;
-		if (!stricmp(szString, "GL_INCR_WRAP")) return GL_INCR_WRAP;
-		if (!stricmp(szString, "GL_DECR")) return GL_DECR;
-		if (!stricmp(szString, "GL_DECR_WRAP")) return GL_DECR_WRAP;
-		if (!stricmp(szString, "GL_INVERT")) return GL_INVERT;
-	}
-
-	return GL_KEEP;
-}
-
-static uint32_t StringToDepthFunc(const char *szString)
-{
-	if (szString) {
-		if (!stricmp(szString, "GL_NEVER")) return GL_NEVER;
-		if (!stricmp(szString, "GL_LESS")) return GL_LESS;
-		if (!stricmp(szString, "GL_EQUAL")) return GL_EQUAL;
-		if (!stricmp(szString, "GL_LEQUAL")) return GL_LEQUAL;
-		if (!stricmp(szString, "GL_GREATER")) return GL_GREATER;
-		if (!stricmp(szString, "GL_NOTEQUAL")) return GL_NOTEQUAL;
-		if (!stricmp(szString, "GL_GEQUAL")) return GL_GEQUAL;
-	}
-
-	return GL_LESS;
-}
-
-static uint32_t StringToBlendEquation(const char *szString)
-{
-	if (szString) {
-		if (!stricmp(szString, "GL_FUNC_ADD")) return GL_FUNC_ADD;
-		if (!stricmp(szString, "GL_FUNC_SUBTRACT")) return GL_FUNC_SUBTRACT;
-		if (!stricmp(szString, "GL_FUNC_REVERSE_SUBTRACT")) return GL_FUNC_REVERSE_SUBTRACT;
-		if (!stricmp(szString, "GL_MIN")) return GL_MIN;
-		if (!stricmp(szString, "GL_MAX")) return GL_MAX;
-	}
-
-	return GL_FUNC_ADD;
-}
-
-static uint32_t StringToMinFilter(const char *szString)
-{
-	if (szString) {
-		if (!stricmp(szString, "GL_LINEAR")) return GL_LINEAR;
-		if (!stricmp(szString, "GL_LINEAR_MIPMAP_LINEAR")) return GL_LINEAR_MIPMAP_LINEAR;
-		if (!stricmp(szString, "GL_LINEAR_MIPMAP_NEAREST")) return GL_LINEAR_MIPMAP_NEAREST;
-		if (!stricmp(szString, "GL_NEAREST")) return GL_NEAREST;
-		if (!stricmp(szString, "GL_NEAREST_MIPMAP_LINEAR")) return GL_NEAREST_MIPMAP_LINEAR;
-		if (!stricmp(szString, "GL_NEAREST_MIPMAP_NEAREST")) return GL_NEAREST_MIPMAP_NEAREST;
-	}
-
-	return GL_LINEAR_MIPMAP_NEAREST;
-}
-
-static uint32_t StringToMagFilter(const char *szString)
-{
-	if (szString) {
-		if (!stricmp(szString, "GL_LINEAR")) return GL_LINEAR;
-		if (!stricmp(szString, "GL_NEAREST")) return GL_NEAREST;
-	}
-
-	return GL_LINEAR;
-}
-
-static uint32_t StringToAddressMode(const char *szString)
-{
-	if (szString) {
-		if (!stricmp(szString, "GL_REPEAT")) return GL_REPEAT;
-		if (!stricmp(szString, "GL_CLAMP_TO_EDGE")) return GL_CLAMP_TO_EDGE;
-	}
-
-	return GL_REPEAT;
-}
-
-static uint32_t StringToBlendSrcFactor(const char *szString)
-{
-	if (szString) {
-		if (!stricmp(szString, "GL_ZERO")) return GL_ZERO;
-		if (!stricmp(szString, "GL_ONE")) return GL_ONE;
-		if (!stricmp(szString, "GL_SRC_COLOR")) return GL_SRC_COLOR;
-		if (!stricmp(szString, "GL_ONE_MINUS_SRC_COLOR")) return GL_ONE_MINUS_SRC_COLOR;
-		if (!stricmp(szString, "GL_DST_COLOR")) return GL_DST_COLOR;
-		if (!stricmp(szString, "GL_ONE_MINUS_DST_COLOR")) return GL_ONE_MINUS_DST_COLOR;
-		if (!stricmp(szString, "GL_SRC_ALPHA")) return GL_SRC_ALPHA;
-		if (!stricmp(szString, "GL_ONE_MINUS_SRC_ALPHA")) return GL_ONE_MINUS_SRC_ALPHA;
-		if (!stricmp(szString, "GL_DST_ALPHA")) return GL_DST_ALPHA;
-		if (!stricmp(szString, "GL_ONE_MINUS_DST_ALPHA")) return GL_ONE_MINUS_DST_ALPHA;
-		if (!stricmp(szString, "GL_CONSTANT_COLOR")) return GL_CONSTANT_COLOR;
-		if (!stricmp(szString, "GL_ONE_MINUS_CONSTANT_COLOR")) return GL_ONE_MINUS_CONSTANT_COLOR;
-		if (!stricmp(szString, "GL_CONSTANT_ALPHA")) return GL_CONSTANT_ALPHA;
-		if (!stricmp(szString, "GL_ONE_MINUS_CONSTANT_ALPHA")) return GL_ONE_MINUS_CONSTANT_ALPHA;
-		if (!stricmp(szString, "GL_SRC_ALPHA_SATURATE")) return GL_SRC_ALPHA_SATURATE;
-	}
-
-	return GL_SRC_ALPHA;
-}
-
-static uint32_t StringToBlendDstFactor(const char *szString)
-{
-	if (szString) {
-		if (!stricmp(szString, "GL_ZERO")) return GL_ZERO;
-		if (!stricmp(szString, "GL_ONE")) return GL_ONE;
-		if (!stricmp(szString, "GL_SRC_COLOR")) return GL_SRC_COLOR;
-		if (!stricmp(szString, "GL_ONE_MINUS_SRC_COLOR")) return GL_ONE_MINUS_SRC_COLOR;
-		if (!stricmp(szString, "GL_DST_COLOR")) return GL_DST_COLOR;
-		if (!stricmp(szString, "GL_ONE_MINUS_DST_COLOR")) return GL_ONE_MINUS_DST_COLOR;
-		if (!stricmp(szString, "GL_SRC_ALPHA")) return GL_SRC_ALPHA;
-		if (!stricmp(szString, "GL_ONE_MINUS_SRC_ALPHA")) return GL_ONE_MINUS_SRC_ALPHA;
-		if (!stricmp(szString, "GL_DST_ALPHA")) return GL_DST_ALPHA;
-		if (!stricmp(szString, "GL_ONE_MINUS_DST_ALPHA")) return GL_ONE_MINUS_DST_ALPHA;
-		if (!stricmp(szString, "GL_CONSTANT_COLOR")) return GL_CONSTANT_COLOR;
-		if (!stricmp(szString, "GL_ONE_MINUS_CONSTANT_COLOR")) return GL_ONE_MINUS_CONSTANT_COLOR;
-		if (!stricmp(szString, "GL_CONSTANT_ALPHA")) return GL_CONSTANT_ALPHA;
-		if (!stricmp(szString, "GL_ONE_MINUS_CONSTANT_ALPHA")) return GL_ONE_MINUS_CONSTANT_ALPHA;
-		if (!stricmp(szString, "GL_SRC_ALPHA_SATURATE")) return GL_SRC_ALPHA_SATURATE;
-	}
-
-	return GL_ONE_MINUS_SRC_ALPHA;
-}
-
 
 CGLES3MaterialPass::CGLES3MaterialPass(uint32_t name)
 	: CGfxMaterialPass(name)
@@ -448,19 +287,19 @@ void CGLES3MaterialPass::BindTextures(CGLES3PipelineBase *pPipeline, const CGLES
 {
 	if (pPipeline) {
 		for (const auto &itTexture : pPass->m_ptrTexture2Ds) {
-			if (pPipeline->BindTexture(itTexture.first, (CGLES3TextureBase *)itTexture.second.GetPointer(), (CGLES3Sampler *)pPass->m_pSamplers.find(itTexture.first)->second, indexTexUnit)) {
+			if (pPipeline->BindTexture(itTexture.first, (CGLES3Texture2D *)itTexture.second.GetPointer(), (CGLES3Sampler *)pPass->m_pSamplers.find(itTexture.first)->second, indexTexUnit)) {
 				indexTexUnit++;
 			}
 		}
 
 		for (const auto &itTexture : pPass->m_ptrTexture2DArrays) {
-			if (pPipeline->BindTexture(itTexture.first, (CGLES3TextureBase *)itTexture.second.GetPointer(), (CGLES3Sampler *)pPass->m_pSamplers.find(itTexture.first)->second, indexTexUnit)) {
+			if (pPipeline->BindTexture(itTexture.first, (CGLES3Texture2DArray *)itTexture.second.GetPointer(), (CGLES3Sampler *)pPass->m_pSamplers.find(itTexture.first)->second, indexTexUnit)) {
 				indexTexUnit++;
 			}
 		}
 
 		for (const auto &itTexture : pPass->m_ptrTextureCubeMaps) {
-			if (pPipeline->BindTexture(itTexture.first, (CGLES3TextureBase *)itTexture.second.GetPointer(), (CGLES3Sampler *)pPass->m_pSamplers.find(itTexture.first)->second, indexTexUnit)) {
+			if (pPipeline->BindTexture(itTexture.first, (CGLES3TextureCubeMap *)itTexture.second.GetPointer(), (CGLES3Sampler *)pPass->m_pSamplers.find(itTexture.first)->second, indexTexUnit)) {
 				indexTexUnit++;
 			}
 		}

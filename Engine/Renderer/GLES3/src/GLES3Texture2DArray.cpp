@@ -28,10 +28,10 @@ bool CGLES3Texture2DArray::Create(uint32_t format, int width, int height, int le
 	Destroy();
 
 	gli::gl GL(gli::gl::PROFILE_ES30);
-	gli::gl::format gliFormat = GL.translate((gli::format)format);
+	gli::gl::format glFormat = GL.translate((gli::format)format);
 
-	m_format = gliFormat.External;
-	m_internalFormat = gliFormat.Internal;
+	m_format = glFormat.External;
+	m_internalFormat = glFormat.Internal;
 
 	m_width = width;
 	m_height = height;
@@ -64,7 +64,7 @@ void CGLES3Texture2DArray::Destroy(void)
 bool CGLES3Texture2DArray::TransferTexture2D(uint32_t format, int layer, int level, int xoffset, int yoffset, int width, int height, uint32_t type, uint32_t size, const void *data)
 {
 	gli::gl GL(gli::gl::PROFILE_ES30);
-	gli::gl::format gliFormat = GL.translate((gli::format)format);
+	gli::gl::format glFormat = GL.translate((gli::format)format);
 
 	if (m_texture == 0) {
 		return false;
@@ -82,11 +82,11 @@ bool CGLES3Texture2DArray::TransferTexture2D(uint32_t format, int layer, int lev
 		return false;
 	}
 
-	if (m_format != gliFormat.External) {
+	if (m_format != glFormat.External) {
 		return false;
 	}
 
-	if (m_internalFormat != gliFormat.Internal) {
+	if (m_internalFormat != glFormat.Internal) {
 		return false;
 	}
 
@@ -107,7 +107,7 @@ bool CGLES3Texture2DArray::TransferTexture2D(uint32_t format, int layer, int lev
 bool CGLES3Texture2DArray::TransferTexture2DCompressed(uint32_t format, int layer, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void *data)
 {
 	gli::gl GL(gli::gl::PROFILE_ES30);
-	gli::gl::format gliFormat = GL.translate((gli::format)format);
+	gli::gl::format glFormat = GL.translate((gli::format)format);
 
 	if (m_texture == 0) {
 		return false;
@@ -125,11 +125,11 @@ bool CGLES3Texture2DArray::TransferTexture2DCompressed(uint32_t format, int laye
 		return false;
 	}
 
-	if (m_format != gliFormat.External) {
+	if (m_format != glFormat.External) {
 		return false;
 	}
 
-	if (m_internalFormat != gliFormat.Internal) {
+	if (m_internalFormat != glFormat.Internal) {
 		return false;
 	}
 
@@ -138,7 +138,7 @@ bool CGLES3Texture2DArray::TransferTexture2DCompressed(uint32_t format, int laye
 		CGfxProfiler::DecTextureDataSize(m_size[layer][level]);
 		{
 			m_size[layer][level] = size;
-			glCompressedTexSubImage3D(GL_TEXTURE_2D_ARRAY, level, xoffset, yoffset, layer, width, height, 1, m_format, size, data);
+			glCompressedTexSubImage3D(GL_TEXTURE_2D_ARRAY, level, xoffset, yoffset, layer, width, height, 1, m_internalFormat, size, data);
 		}
 		CGfxProfiler::IncTextureDataSize(m_size[layer][level]);
 	}

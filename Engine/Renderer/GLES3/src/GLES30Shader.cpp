@@ -36,8 +36,8 @@ bool CGLES3Shader::Create(const uint32_t *words, size_t numWords, shader_kind ki
 			const char *szSource = strSource.c_str();
 
 #ifdef DEBUG
-			LogOutput(nullptr, "\n");
-			LogOutput(LOG_TAG_RENDERER, "\n%s\n", szSource);
+//			LogOutput(nullptr, "\n");
+//			LogOutput(LOG_TAG_RENDERER, "\n%s\n", szSource);
 #endif
 
 			m_kind = kind;

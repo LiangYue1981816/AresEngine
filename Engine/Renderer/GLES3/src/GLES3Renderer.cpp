@@ -62,9 +62,7 @@ CGfxSwapChain* CGLES3Renderer::GetSwapChain(void) const
 
 CGfxShader* CGLES3Renderer::CreateShader(const char *szFileName, shader_kind kind)
 {
-	CGfxShader *pShader = m_pShaderManager->Create(szFileName, kind);
-	ResourceLoader()->LoadShader(szFileName, pShader);
-	return pShader;
+	return m_pShaderManager->Create(szFileName, kind);
 }
 
 CGfxPipelineCompute* CGLES3Renderer::CreatePipelineCompute(const CGfxShader *pComputeShader)
@@ -99,9 +97,7 @@ CGfxMeshPtr CGLES3Renderer::NewMesh(uint32_t name)
 
 CGfxMeshPtr CGLES3Renderer::NewMesh(const char *szFileName, uint32_t instanceFormat)
 {
-	CGfxMesh *pMesh = m_pMeshManager->Create(szFileName, instanceFormat);
-	ResourceLoader()->LoadMesh(szFileName, pMesh);
-	return pMesh;
+	return m_pMeshManager->Create(szFileName, instanceFormat);
 }
 
 CGfxMaterialPtr CGLES3Renderer::NewMaterial(uint32_t name)
@@ -111,9 +107,7 @@ CGfxMaterialPtr CGLES3Renderer::NewMaterial(uint32_t name)
 
 CGfxMaterialPtr CGLES3Renderer::NewMaterial(const char *szFileName)
 {
-	CGfxMaterial *pMaterial = m_pMaterialManager->Create(szFileName);
-	ResourceLoader()->LoadMaterial(szFileName, pMaterial);
-	return pMaterial;
+	return m_pMaterialManager->Create(szFileName);
 }
 
 CGfxTexture2DPtr CGLES3Renderer::NewTexture2D(uint32_t name)
@@ -123,9 +117,7 @@ CGfxTexture2DPtr CGLES3Renderer::NewTexture2D(uint32_t name)
 
 CGfxTexture2DPtr CGLES3Renderer::NewTexture2D(const char *szFileName)
 {
-	CGfxTexture2D *pTexture2D = m_pTextureManager->CreateTexture2D(szFileName);
-	ResourceLoader()->LoadTexture2D(szFileName, pTexture2D);
-	return pTexture2D;
+	return m_pTextureManager->CreateTexture2D(szFileName);
 }
 
 CGfxTexture2DArrayPtr CGLES3Renderer::NewTexture2DArray(uint32_t name)
@@ -135,9 +127,7 @@ CGfxTexture2DArrayPtr CGLES3Renderer::NewTexture2DArray(uint32_t name)
 
 CGfxTexture2DArrayPtr CGLES3Renderer::NewTexture2DArray(const char *szFileName)
 {
-	CGfxTexture2DArray *pTexture2DArray = m_pTextureManager->CreateTexture2DArray(szFileName);
-	ResourceLoader()->LoadTexture2DArray(szFileName, pTexture2DArray);
-	return pTexture2DArray;
+	return m_pTextureManager->CreateTexture2DArray(szFileName);
 }
 
 CGfxTextureCubeMapPtr CGLES3Renderer::NewTextureCubeMap(uint32_t name)
@@ -147,9 +137,7 @@ CGfxTextureCubeMapPtr CGLES3Renderer::NewTextureCubeMap(uint32_t name)
 
 CGfxTextureCubeMapPtr CGLES3Renderer::NewTextureCubeMap(const char *szFileName)
 {
-	CGfxTextureCubeMap *pTextureCubeMap = m_pTextureManager->CreateTextureCubeMap(szFileName);
-	ResourceLoader()->LoadTextureCubeMap(szFileName, pTextureCubeMap);
-	return pTextureCubeMap;
+	return m_pTextureManager->CreateTextureCubeMap(szFileName);
 }
 
 CGfxUniformBufferPtr CGLES3Renderer::NewUniformBuffer(size_t size, bool bDynamic)

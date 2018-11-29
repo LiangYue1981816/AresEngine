@@ -102,7 +102,7 @@ public:
 public:
 	CGfxSwapChain* GetSwapChain(void) const;
 
-private:
+public:
 	CGfxShader* CreateShader(const char *szFileName, shader_kind kind);
 	CGfxPipelineCompute* CreatePipelineCompute(const CGfxShader *pComputeShader);
 	CGfxPipelineGraphics* CreatePipelineGraphics(const CGfxShader *pVertexShader, const CGfxShader *pFragmentShader, const PipelineState &state);
