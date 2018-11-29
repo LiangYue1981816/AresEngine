@@ -14,7 +14,7 @@ CGfxResourceLoader::CGfxResourceLoader(void)
 
 CGfxResourceLoader::~CGfxResourceLoader(void)
 {
-
+	pInstance = nullptr;
 }
 
 bool CGfxResourceLoader::LoadShader(const char *szFileName, CGfxShader *pShader)

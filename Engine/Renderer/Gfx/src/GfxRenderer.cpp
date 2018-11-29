@@ -22,7 +22,7 @@ CGfxRenderer::CGfxRenderer(void *hDC, int width, int height, uint32_t format)
 
 CGfxRenderer::~CGfxRenderer(void)
 {
-
+	pInstance = nullptr;
 }
 
 void CGfxRenderer::SetShaderCachePath(const char *szPath) const
