@@ -630,6 +630,19 @@ int TiXmlElement::AttributeInt1(const char* name) const
 }
 
 
+int* TiXmlElement::AttributeInt1(const char* name, int *result) const
+{
+	const TiXmlAttribute* attrib = attributeSet.Find(name);
+	memset(result, 0, sizeof(int) * 1);
+
+	if (attrib) {
+		attrib->QueryIntValue1(&result[0]);
+	}
+
+	return result;
+}
+
+
 int* TiXmlElement::AttributeInt2(const char* name, int *result) const
 {
 	const TiXmlAttribute* attrib = attributeSet.Find(name);
@@ -682,6 +695,19 @@ float TiXmlElement::AttributeFloat1(const char* name) const
 }
 
 
+float* TiXmlElement::AttributeFloat1(const char* name, float *result) const
+{
+	const TiXmlAttribute* attrib = attributeSet.Find(name);
+	memset(result, 0, sizeof(float) * 1);
+
+	if (attrib) {
+		attrib->QueryFloatValue1(&result[0]);
+	}
+
+	return result;
+}
+
+
 float* TiXmlElement::AttributeFloat2(const char* name, float *result) const
 {
 	const TiXmlAttribute* attrib = attributeSet.Find(name);
@@ -728,6 +754,19 @@ double TiXmlElement::AttributeDouble1(const char* name) const
 
 	if (attrib) {
 		attrib->QueryDoubleValue1(&result);
+	}
+
+	return result;
+}
+
+
+double* TiXmlElement::AttributeDouble1(const char* name, double *result) const
+{
+	const TiXmlAttribute* attrib = attributeSet.Find(name);
+	memset(result, 0, sizeof(double) * 1);
+
+	if (attrib) {
+		attrib->QueryDoubleValue1(&result[0]);
 	}
 
 	return result;

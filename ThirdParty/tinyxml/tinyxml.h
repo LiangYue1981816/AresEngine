@@ -871,7 +871,8 @@ public:
 		the integer value will be put in the return 'i', if 'i'
 		is non-null.
 		*/
-	int AttributeInt1(const char* name) const;
+	int  AttributeInt1(const char* name) const;
+	int* AttributeInt1(const char* name, int *result) const;
 	int* AttributeInt2(const char* name, int *result) const;
 	int* AttributeInt3(const char* name, int *result) const;
 	int* AttributeInt4(const char* name, int *result) const;
@@ -882,7 +883,8 @@ public:
 	the float value will be put in the return 'f', if 'f'
 	is non-null.
 	*/
-	float AttributeFloat1(const char* name) const;
+	float  AttributeFloat1(const char* name) const;
+	float* AttributeFloat1(const char* name, float *result) const;
 	float* AttributeFloat2(const char* name, float *result) const;
 	float* AttributeFloat3(const char* name, float *result) const;
 	float* AttributeFloat4(const char* name, float *result) const;
@@ -893,7 +895,8 @@ public:
 		the double value will be put in the return 'd', if 'd'
 		is non-null.
 		*/
-	double AttributeDouble1(const char* name) const;
+	double  AttributeDouble1(const char* name) const;
+	double* AttributeDouble1(const char* name, double *result) const;
 	double* AttributeDouble2(const char* name, double *result) const;
 	double* AttributeDouble3(const char* name, double *result) const;
 	double* AttributeDouble4(const char* name, double *result) const;
