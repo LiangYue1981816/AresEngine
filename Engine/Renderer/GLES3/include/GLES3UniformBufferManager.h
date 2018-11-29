@@ -15,9 +15,9 @@ private:
 
 private:
 	CGLES3UniformBuffer* Create(size_t size, bool bDynamic);
-	void Destroy(CGLES3UniformBuffer *pUniformBuffer);
+	void Destroy(CGfxUniformBuffer *pUniformBuffer);
 
 
 private:
-	eastl::unordered_map<CGLES3UniformBuffer*, CGLES3UniformBuffer*> m_pUniformBuffers;
+	eastl::unordered_map<CGfxUniformBuffer*, CGfxUniformBuffer*> m_pUniformBuffers;
 };

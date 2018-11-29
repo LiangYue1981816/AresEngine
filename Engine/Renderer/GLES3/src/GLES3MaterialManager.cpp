@@ -28,11 +28,11 @@ CGLES3Material* CGLES3MaterialManager::Create(uint32_t name)
 			m_pMaterials[name] = new CGLES3Material(this, name);
 		}
 
-		return m_pMaterials[name];
+		return (CGLES3Material *)m_pMaterials[name];
 	}
 }
 
-void CGLES3MaterialManager::Destroy(CGLES3Material *pMaterial)
+void CGLES3MaterialManager::Destroy(CGfxMaterial *pMaterial)
 {
 	mutex_autolock autolock(&lock);
 	{

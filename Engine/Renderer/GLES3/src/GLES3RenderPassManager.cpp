@@ -25,7 +25,7 @@ CGLES3RenderPass* CGLES3RenderPassManager::Create(int numAttachments, int numSub
 	}
 }
 
-void CGLES3RenderPassManager::Destroy(CGLES3RenderPass *pRenderPass)
+void CGLES3RenderPassManager::Destroy(CGfxRenderPass *pRenderPass)
 {
 	mutex_autolock autolock(&lock);
 	{

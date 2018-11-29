@@ -25,6 +25,6 @@ CGLES3Shader* CGLES3ShaderManager::Create(const char *szFileName, shader_kind ki
 			m_pShaders[name] = new CGLES3Shader(name);
 		}
 
-		return m_pShaders[name];
+		return (CGLES3Shader *)m_pShaders[name];
 	}
 }

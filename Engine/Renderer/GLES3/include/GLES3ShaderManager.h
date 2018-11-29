@@ -17,5 +17,5 @@ private:
 
 
 private:
-	eastl::unordered_map<uint32_t, CGLES3Shader*> m_pShaders;
+	eastl::unordered_map<uint32_t, CGfxShader*> m_pShaders;
 };

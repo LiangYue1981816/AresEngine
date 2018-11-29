@@ -30,11 +30,11 @@ CGLES3Mesh* CGLES3MeshManager::Create(uint32_t name)
 			m_pMeshs[name] = new CGLES3Mesh(this, name);
 		}
 
-		return m_pMeshs[name];
+		return (CGLES3Mesh *)m_pMeshs[name];
 	}
 }
 
-void CGLES3MeshManager::Destroy(CGLES3Mesh *pMesh)
+void CGLES3MeshManager::Destroy(CGfxMesh *pMesh)
 {
 	mutex_autolock autolock(&lock);
 	{

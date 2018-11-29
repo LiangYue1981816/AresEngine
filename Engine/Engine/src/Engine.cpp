@@ -40,6 +40,8 @@ CEngine::CEngine(GfxApi api, RenderSolution solution, void *hDC, int width, int 
 	, m_totalTime(0.0f)
 
 	, m_pRenderer(nullptr)
+	, m_pResourceLoader(nullptr)
+
 	, m_pSceneManager(nullptr)
 	, m_pRenderSolution(nullptr)
 {
@@ -56,6 +58,8 @@ CEngine::CEngine(GfxApi api, RenderSolution solution, void *hDC, int width, int 
 	case GFX_API_METAL:
 		break;
 	}
+
+	m_pResourceLoader = new CGfxResourceLoader;
 
 	switch ((int)solution) {
 	case RENDER_SOLUTION_DEFAULT:
@@ -94,6 +98,8 @@ CEngine::~CEngine(void)
 
 	delete m_pRenderSolution;
 	delete m_pSceneManager;
+
+	delete m_pResourceLoader;
 	delete m_pRenderer;
 }
 

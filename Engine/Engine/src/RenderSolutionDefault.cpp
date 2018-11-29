@@ -18,7 +18,7 @@ CRenderSolutionDefault::~CRenderSolutionDefault(void)
 void CRenderSolutionDefault::CreateFrameBuffer(void)
 {
 	m_ptrDepthStencilTexture = Renderer()->NewTexture2D(HashValue("DepthStencilTexture"));
-	m_ptrDepthStencilTexture->Create(GL_DEPTH_STENCIL, GL_DEPTH24_STENCIL8, Renderer()->GetSwapChain()->GetWidth(), Renderer()->GetSwapChain()->GetHeight(), 1);
+	m_ptrDepthStencilTexture->Create(gli::FORMAT_D24_UNORM_S8_UINT_PACK32, Renderer()->GetSwapChain()->GetWidth(), Renderer()->GetSwapChain()->GetHeight(), 1);
 
 	for (int index = 0; index < CGfxSwapChain::SWAPCHAIN_IMAGE_COUNT; index++) {
 		CGfxTexture2DPtr ptrColorTexture = Renderer()->GetSwapChain()->GetTexture(index);

@@ -28,6 +28,6 @@ CGLES3Sampler* CGLES3SamplerManager::Create(uint32_t minFilter, uint32_t magFilt
 			m_pSamplers[name] = new CGLES3Sampler(minFilter, magFilter, addressMode);
 		}
 
-		return m_pSamplers[name];
+		return (CGLES3Sampler *)m_pSamplers[name];
 	}
 }

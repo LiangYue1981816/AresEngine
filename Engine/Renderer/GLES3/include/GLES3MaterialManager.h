@@ -16,9 +16,9 @@ private:
 private:
 	CGLES3Material* Create(const char *szFileName);
 	CGLES3Material* Create(uint32_t name);
-	void Destroy(CGLES3Material *pMaterial);
+	void Destroy(CGfxMaterial *pMaterial);
 
 
 private:
-	eastl::unordered_map<uint32_t, CGLES3Material*> m_pMaterials;
+	eastl::unordered_map<uint32_t, CGfxMaterial*> m_pMaterials;
 };
