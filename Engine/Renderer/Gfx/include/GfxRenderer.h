@@ -66,9 +66,6 @@
 
 class CALL_API CGfxRenderer
 {
-	friend class CGfxResourceLoader;
-
-
 public:
 	static CGfxRenderer* GetInstance(void);
 

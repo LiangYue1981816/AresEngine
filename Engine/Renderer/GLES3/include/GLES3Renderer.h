@@ -57,8 +57,6 @@
 
 class CGLES3Renderer : public CGfxRenderer
 {
-	friend class CGfxRenderer;
-
 	friend class CGLES3RenderPass;
 	friend class CGLES3FrameBuffer;
 	friend class CGLES3Mesh;
