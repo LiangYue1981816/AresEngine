@@ -13,14 +13,13 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        // Example of a call to a native method
-        android.util.Log.d("MainActivity", stringFromJNI());
     }
 
     /**
      * A native method that is implemented by the 'native-lib' native library,
      * which is packaged with this application.
      */
-    public native String stringFromJNI();
+    public native void InitEngine();
+    public native void ExitEngine();
+    public native void Tick();
 }
