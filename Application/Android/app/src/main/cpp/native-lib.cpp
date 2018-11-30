@@ -3,7 +3,7 @@
 #include "EngineHeader.h"
 
 
-static const uint32_t loop = 1000;
+static const uint32_t loop = 10000;
 static const uint32_t count = 100000;
 static uint32_t size[count] = { 0 };
 static void *pointer[count] = { nullptr };
@@ -93,7 +93,6 @@ void TestAllocator(uint32_t threadCount, uint32_t minSize, uint32_t maxSize)
             threads[indexThread].join();
         }
     }
-
     {
         std::thread threads[64];
 
@@ -109,8 +108,7 @@ void TestAllocator(uint32_t threadCount, uint32_t minSize, uint32_t maxSize)
 
 void TestAllocator()
 {
-    TestAllocator(4, 4, 12);
-    TestAllocator(4, 12, 32);
+    TestAllocator(4, 4, 32);
     TestAllocator(4, 32, 64);
     TestAllocator(4, 64, 128);
 }
