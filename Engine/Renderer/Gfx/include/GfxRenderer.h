@@ -154,6 +154,8 @@ public:
 
 	virtual bool CmdExecute(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxCommandBufferPtr &ptrSecondaryCommandBuffer) = 0;
 
+	virtual bool CmdPresent(CGfxCommandBufferPtr &ptrCommandBuffer) = 0;
+
 public:
 	virtual void Submit(const CGfxCommandBufferPtr &ptrCommandBuffer) = 0;
 	virtual void Present(void) = 0;

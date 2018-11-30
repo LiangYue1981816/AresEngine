@@ -63,6 +63,8 @@ public:
 
 	bool CmdExecute(const CGfxCommandBufferPtr &ptrCommandBuffer);
 
+	bool CmdPresent(void);
+
 
 private:
 	bool m_bInPassScope;

@@ -475,3 +475,12 @@ bool CGLES3CommandBuffer::CmdExecute(const CGfxCommandBufferPtr &ptrCommandBuffe
 
 	return false;
 }
+
+bool CGLES3CommandBuffer::CmdPresent(void)
+{
+	if (m_bMainCommandBuffer == true && m_bInPassScope == false) {
+		return true;
+	}
+
+	return false;
+}

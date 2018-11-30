@@ -87,6 +87,8 @@ public:
 
 	virtual bool CmdExecute(const CGfxCommandBufferPtr &ptrCommandBuffer) = 0;
 
+	virtual bool CmdPresent(void) = 0;
+
 
 protected:
 	bool m_bMainCommandBuffer;

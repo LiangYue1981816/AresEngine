@@ -346,6 +346,11 @@ bool CGLES3Renderer::CmdExecute(CGfxCommandBufferPtr &ptrCommandBuffer, const CG
 	return ptrCommandBuffer->CmdExecute(ptrSecondaryCommandBuffer);
 }
 
+bool CGLES3Renderer::CmdPresent(CGfxCommandBufferPtr &ptrCommandBuffer)
+{
+	return ptrCommandBuffer->CmdPresent();
+}
+
 void CGLES3Renderer::Submit(const CGfxCommandBufferPtr &ptrCommandBuffer)
 {
 	ptrCommandBuffer->Execute();

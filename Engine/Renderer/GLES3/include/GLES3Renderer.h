@@ -171,6 +171,8 @@ public:
 
 	bool CmdExecute(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxCommandBufferPtr &ptrSecondaryCommandBuffer);
 
+	bool CmdPresent(CGfxCommandBufferPtr &ptrCommandBuffer);
+
 public:
 	void Submit(const CGfxCommandBufferPtr &ptrCommandBuffer);
 	void Present(void);
