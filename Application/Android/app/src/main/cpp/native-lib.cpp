@@ -4,7 +4,7 @@
 
 
 static const uint32_t loop = 10000;
-static const uint32_t count = 100000;
+static const uint32_t count = 50000;
 static uint32_t size[count] = { 0 };
 static void *pointer[count] = { nullptr };
 static bool allocate[count] = { false };
@@ -108,8 +108,8 @@ void TestAllocator(uint32_t threadCount, uint32_t minSize, uint32_t maxSize)
 
 void TestAllocator()
 {
-    TestAllocator(4, 4, 32);
-    TestAllocator(4, 32, 64);
+    TestAllocator(4, 4, 16);
+    TestAllocator(4, 16, 64);
     TestAllocator(4, 64, 128);
 }
 

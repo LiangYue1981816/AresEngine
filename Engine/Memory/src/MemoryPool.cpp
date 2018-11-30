@@ -21,7 +21,7 @@
 #define GET_BLOCK_NEXT(pBlock) (BLOCK *)((uint8_t *)GET_BLOCK_POOL(pBlock) + (pBlock)->dwOffsetNext + ALIGN_16BYTE(sizeof(BLOCK_POOL)))
 
 static const uint32_t BLOCK_POOL_COUNT = 4 * 1024 / 16;
-static const uint32_t BLOCK_POOL_SIZE = 16 * 1024;
+static const uint32_t BLOCK_POOL_SIZE = 32 * 1024;
 
 struct BLOCK;
 struct BLOCK_POOL;
