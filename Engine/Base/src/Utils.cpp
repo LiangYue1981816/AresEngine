@@ -174,22 +174,25 @@ CALL_API void LogOutput(const char *szTag, const char *szFormat, ...)
 	if (szTag) {
 		OutputDebugString(szTag);
 		OutputDebugString(": ");
+		OutputDebugString(szText);
 	}
-
-	OutputDebugString(szText);
+	else {
+		OutputDebugString(szText);
+	}
 #elif PLATFORM_ANDROID
 	if (szTag) {
-		__android_log_print(ANDROID_LOG_INFO, "", "%s", szTag);
-		__android_log_print(ANDROID_LOG_INFO, "", "%s", ": ");
+		__android_log_print(ANDROID_LOG_INFO, szTag, "%s", szText);
 	}
-
-	__android_log_print(ANDROID_LOG_INFO, "", "%s", szText);
+	else {
+		__android_log_print(ANDROID_LOG_INFO, "", "%s", szText);
+	}
 #else
 	if (szTag) {
-		printf("%s: ", szTag);
+		printf("%s: %s", szTag, szText);
 	}
-
-	printf("%s", szText);
+	else {
+		printf("%s", szText);
+}
 #endif
 }
 
