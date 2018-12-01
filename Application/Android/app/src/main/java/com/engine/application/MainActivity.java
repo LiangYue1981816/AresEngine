@@ -2,27 +2,42 @@ package com.engine.application;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.Window;
+import android.view.WindowManager;
 
 public class MainActivity extends Activity {
-
-    // Used to load the 'native-lib' library on application startup.
-    static {
-        System.loadLibrary("native-lib");
-    }
+    MainView mView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        InitEngine();
-        Tick();
-        ExitEngine();
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        mView = new MainView(getApplication());
+        setContentView(mView);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mView.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mView.onResume();
     }
 
     /**
      * A native method that is implemented by the 'native-lib' native library,
      * which is packaged with this application.
      */
-    public native void InitEngine();
-    public native void ExitEngine();
-    public native void Tick();
+    static {
+        System.loadLibrary("native-lib");
+    }
+
+    public static native void InitEngine(int width, int height, String strAssetsPath);
+    public static native void ExitEngine();
+    public static native void Tick();
 }
