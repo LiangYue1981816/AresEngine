@@ -7,7 +7,7 @@ bool CGfxResourceLoader::LoadShader(const char *szFileName, CGfxShader *pShader,
 	{
 		do {
 			std::vector<uint32_t> words;
-			if (LoadShaderBinary(FileManager()->GetFullName(szFileName), words, INVALID_HASHVALUE) == false) break;
+			if (LoadShaderStream(szFileName, words, INVALID_HASHVALUE) == false) break;
 			if (pShader->Create(words.data(), words.size(), kind) == false) break;
 			return true;
 		} while (false);

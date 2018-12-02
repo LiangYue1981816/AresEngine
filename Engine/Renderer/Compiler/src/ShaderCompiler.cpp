@@ -1,4 +1,6 @@
 #include "Utils.h"
+#include "Stream.h"
+#include "FileManager.h"
 #include "ShaderCompiler.h"
 
 
@@ -157,6 +159,30 @@ std::string LoadShader(const char *szFileName)
 	}
 
 	return "";
+}
+
+bool LoadShaderStream(const char *szFileName, std::vector<uint32_t> &words, uint32_t hash)
+{
+	CStream stream;
+	if (FileManager()->LoadStream(szFileName, &stream)) {
+		uint32_t dwHashValue;
+
+		words.clear();
+		words.resize((stream.GetFullSize() - sizeof(uint32_t)) / sizeof(uint32_t));
+
+		stream.Read(&dwHashValue, sizeof(uint32_t), 1);
+		stream.Read(words.data(), sizeof(uint32_t), words.size());
+
+#ifdef PLATFORM_WINDOWS
+		if (hash != INVALID_HASHVALUE) {
+			return dwHashValue == hash;
+		}
+#endif
+
+		return true;
+	}
+
+	return false;
 }
 
 bool LoadShaderBinary(const char *szFileName, std::vector<uint32_t> &words, uint32_t hash)

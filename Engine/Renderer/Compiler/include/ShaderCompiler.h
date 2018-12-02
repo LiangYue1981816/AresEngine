@@ -53,5 +53,6 @@ private:
 #endif
 
 extern std::string LoadShader(const char *szFileName);
+extern bool LoadShaderStream(const char *szFileName, std::vector<uint32_t> &words, uint32_t hash);
 extern bool LoadShaderBinary(const char *szFileName, std::vector<uint32_t> &words, uint32_t hash);
 extern bool SaveShaderBinary(const char *szFileName, const std::vector<uint32_t> &words, uint32_t hash);
