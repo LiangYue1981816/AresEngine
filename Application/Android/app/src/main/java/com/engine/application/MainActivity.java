@@ -1,32 +1,88 @@
 package com.engine.application;
 
 import android.app.Activity;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.content.Context;
+import android.content.pm.ActivityInfo;
+
+import android.util.DisplayMetrics;
+import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.FrameLayout;
 
 public class MainActivity extends Activity {
-    MainView mView;
+    private static MainActivity a;
+    private MainView mMainView;
 
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        a = this;
+
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        mView = new MainView(getApplication());
-        setContentView(mView);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+        LayoutParams layoutParams = new LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.FILL_PARENT);
+        FrameLayout frameLayout = new FrameLayout(this);
+        frameLayout.setLayoutParams(layoutParams);
+
+        mMainView = new MainView(this);
+        mMainView.setFocusable(true);
+        mMainView.setFocusableInTouchMode(true);
+        mMainView.setEGLContextClientVersion(3);
+        mMainView.setEGLConfigChooser(8, 8, 8, 8, 24, 0);
+        mMainView.setRenderer();
+
+        frameLayout.addView(mMainView);
+        setContentView(frameLayout);
     }
 
-    @Override
     protected void onPause() {
         super.onPause();
-        mView.onPause();
+        mMainView.onPause();
     }
 
-    @Override
     protected void onResume() {
         super.onResume();
-        mView.onResume();
+        mMainView.onResume();
+    }
+
+    public static int getDisplayPPI() {
+        DisplayMetrics dm = new DisplayMetrics();
+        a.getWindowManager().getDefaultDisplay().getMetrics(dm);
+
+        double ix = dm.widthPixels/dm.xdpi;
+        double iy = dm.heightPixels/dm.ydpi;
+        double p = Math.sqrt(dm.widthPixels*dm.widthPixels + dm.heightPixels*dm.heightPixels);
+        double i = Math.sqrt(ix*ix + iy*iy);
+        double ppi = p/i;
+
+        return Math.max((int)(ppi + 0.5f), dm.densityDpi);
+    }
+
+    public static String getCurrentLanguage() {
+        return java.util.Locale.getDefault().getLanguage();
+    }
+
+    public static String getApkFilePath() {
+        return a.getApplicationInfo().sourceDir;
+    }
+
+    public static String getAppFilePath() {
+        return a.getFilesDir().getAbsolutePath();
+    }
+
+    public static boolean isWifiConnect() {
+        ConnectivityManager manager = (ConnectivityManager)a.getSystemService(Context.CONNECTIVITY_SERVICE);
+        return manager.getActiveNetworkInfo().getType() == ConnectivityManager.TYPE_WIFI;
+    }
+
+    public static boolean isMobileConnect() {
+        ConnectivityManager manager = (ConnectivityManager)a.getSystemService(Context.CONNECTIVITY_SERVICE);
+        return manager.getActiveNetworkInfo().getType() == ConnectivityManager.TYPE_MOBILE;
     }
 
     /**
