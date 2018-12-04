@@ -46,7 +46,7 @@ class MainRenderer implements GLSurfaceView.Renderer {
                     mReload = false;
                 }
                 else {
-                    MainActivity.Tick();
+                    MainActivity.Update();
                 }
             }
 

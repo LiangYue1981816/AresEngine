@@ -41,7 +41,7 @@ public:
 private:
     void AllocatorThread(uint32_t minSize, uint32_t maxSize, uint32_t indexBegin, uint32_t indexEnd)
     {
-        uint32_t begin = tick();
+        uint32_t begin = Tick();
         {
             for (uint32_t indexLoop = 0; indexLoop < loop; indexLoop++) {
                 for (uint32_t index = indexBegin; index < indexEnd; index++) {
@@ -59,7 +59,7 @@ private:
                 }
             }
         }
-        uint32_t end = tick();
+        uint32_t end = Tick();
 
         for (uint32_t index = indexBegin; index < indexEnd; index++) {
             if (pointer[index]) {
@@ -73,7 +73,7 @@ private:
 
     void SystemOSThread(uint32_t minSize, uint32_t maxSize, uint32_t indexBegin, uint32_t indexEnd)
     {
-        uint32_t begin = tick();
+        uint32_t begin = Tick();
         {
             for (uint32_t indexLoop = 0; indexLoop < loop; indexLoop++) {
                 for (uint32_t index = indexBegin; index < indexEnd; index++) {
@@ -91,7 +91,7 @@ private:
                 }
             }
         }
-        uint32_t end = tick();
+        uint32_t end = Tick();
 
         for (uint32_t index = indexBegin; index < indexEnd; index++) {
             if (pointer[index]) {
@@ -112,7 +112,7 @@ private:
 
 void TestAllocator(uint32_t minSize, uint32_t maxSize)
 {
-    srand(tick());
+    srand(Tick());
     for (uint32_t index = 0; index < count; index++) {
         size[index] = (rand() % (maxSize - minSize)) + minSize;
         allocate[index] = (rand() % 2) == 0;

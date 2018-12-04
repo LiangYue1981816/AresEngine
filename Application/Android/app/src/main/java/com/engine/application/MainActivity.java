@@ -87,5 +87,5 @@ public class MainActivity extends Activity {
 
     public static native void InitEngine(int width, int height, String strAssetsPath);
     public static native void ExitEngine();
-    public static native void Tick();
+    public static native void Update();
 }

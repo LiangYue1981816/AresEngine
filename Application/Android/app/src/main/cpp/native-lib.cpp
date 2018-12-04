@@ -49,21 +49,21 @@ extern "C" JNIEXPORT void JNICALL Java_com_engine_application_MainActivity_ExitE
 
 }
 
-extern "C" JNIEXPORT void JNICALL Java_com_engine_application_MainActivity_Tick(JNIEnv *env, jobject /* this */)
+extern "C" JNIEXPORT void JNICALL Java_com_engine_application_MainActivity_Update(JNIEnv *env, jobject /* this */)
 {
     MainCamera()->SetLookat(-0.0412254706f, 54.6759644f, 32.0880432f, -0.0412254222f, 53.8372955f, 31.5434036f, 0.0f, 1.0f, 0.0f);
 
-    uint32_t begin = tick();
+    uint32_t begin = Tick();
     {
-        Engine()->Tick();
+        Engine()->Update();
         Engine()->Present();
     }
-    uint32_t end = tick();
+    uint32_t end = Tick();
 
     frameTime += end - begin;
     frameCount += 1;
 
-    uint32_t currTick = tick();
+    uint32_t currTick = Tick();
     float deltaProfilerTick = (currTick - lastProfilerTick) / 1000000.0f;
 
     if (deltaProfilerTick > 1.0f) {
