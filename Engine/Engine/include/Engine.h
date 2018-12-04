@@ -57,11 +57,11 @@ public:
 	float GetTotalTime(void) const;
 
 public:
-	void Tick(void);
+	void Update(void);
 	void Present(void);
 
 private:
-	void TickThread(void);
+	void UpdateThread(void);
 	static void* WorkThread(void *pParams);
 
 

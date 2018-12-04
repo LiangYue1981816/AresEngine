@@ -2,17 +2,18 @@
 #include "PreHeader.h"
 
 
-CALL_API unsigned int tick(void);
+CALL_API unsigned int NumCpuCores(void);
+CALL_API unsigned int Tick(void);
 CALL_API unsigned int HashValue(const char *szString);
 CALL_API unsigned int HashValue(const unsigned char *pBuffer, int length, int stride = 1);
+CALL_API void LogOutput(const char *szTag, const char *szFormat, ...);
+
 CALL_API void splitfilename(const char *name, char *fname, char *ext);
 CALL_API int fexist(const char *name);
 CALL_API size_t fsize(FILE *stream);
 CALL_API size_t freadline(char *buffer, size_t size, FILE *stream);
 CALL_API size_t freadstring(char *buffer, size_t size, FILE *stream);
 CALL_API size_t fwritestring(const char *buffer, size_t size, FILE *stream);
-
-CALL_API void LogOutput(const char *szTag, const char *szFormat, ...);
 
 #if defined(PLATFORM_ANDROID) || defined(PLATFORM_IOS)
 CALL_API int stricmp(const char *src, const char *dst);

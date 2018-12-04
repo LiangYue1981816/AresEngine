@@ -88,14 +88,14 @@ void CGfxProfiler::BeginSample(SampleType type, const char *name)
 {
 	if (bEnableProfiler) {
 		samples[type].name = name;
-		samples[type].timeBegin = tick();
+		samples[type].timeBegin = Tick();
 	}
 }
 
 void CGfxProfiler::EndSample(SampleType type)
 {
 	if (bEnableProfiler) {
-		samples[type].timeEnd = tick();
+		samples[type].timeEnd = Tick();
 		samples[type].timeTotal += samples[type].timeEnd - samples[type].timeBegin;
 		samples[type].count += 1;
 	}

@@ -1,7 +1,20 @@
 #include "Utils.h"
 
 
-CALL_API unsigned int tick(void)
+CALL_API unsigned int NumCpuCores(void)
+{
+#ifdef PLATFORM_WINDOWS
+	static SYSTEM_INFO sysInfo = {};
+	if (sysInfo.dwNumberOfProcessors == 0) {
+		GetSystemInfo(&sysInfo);
+	}
+	return sysInfo.dwNumberOfProcessors;
+#else
+	return sysconf(_SC_NPROCESSORS_CONF);
+#endif
+}
+
+CALL_API unsigned int Tick(void)
 {
 #ifdef PLATFORM_WINDOWS
 	LARGE_INTEGER freq;
@@ -42,6 +55,41 @@ CALL_API unsigned int HashValue(const unsigned char *pBuffer, int length, int st
 	}
 
 	return dwHashValue ? dwHashValue : INVALID_HASHVALUE;
+}
+
+CALL_API void LogOutput(const char *szTag, const char *szFormat, ...)
+{
+	static char szText[128 * 1024];
+
+	va_list vaList;
+	va_start(vaList, szFormat);
+	vsprintf(szText, szFormat, vaList);
+	va_end(vaList);
+
+#ifdef PLATFORM_WINDOWS
+	if (szTag) {
+		OutputDebugString(szTag);
+		OutputDebugString(": ");
+		OutputDebugString(szText);
+	}
+	else {
+		OutputDebugString(szText);
+	}
+#elif PLATFORM_ANDROID
+	if (szTag) {
+		__android_log_print(ANDROID_LOG_INFO, szTag, "%s", szText);
+	}
+	else {
+		__android_log_print(ANDROID_LOG_INFO, "", "%s", szText);
+	}
+#else
+	if (szTag) {
+		printf("%s: %s", szTag, szText);
+	}
+	else {
+		printf("%s", szText);
+	}
+#endif
 }
 
 CALL_API void splitfilename(const char *name, char *fname, char *ext)
@@ -159,41 +207,6 @@ CALL_API size_t fwritestring(const char *buffer, size_t size, FILE *stream)
 	writes += fwrite(buffer, sizeof(*buffer), len, stream);
 
 	return writes;
-}
-
-CALL_API void LogOutput(const char *szTag, const char *szFormat, ...)
-{
-	static char szText[128 * 1024];
-
-	va_list vaList;
-	va_start(vaList, szFormat);
-	vsprintf(szText, szFormat, vaList);
-	va_end(vaList);
-
-#ifdef PLATFORM_WINDOWS
-	if (szTag) {
-		OutputDebugString(szTag);
-		OutputDebugString(": ");
-		OutputDebugString(szText);
-	}
-	else {
-		OutputDebugString(szText);
-	}
-#elif PLATFORM_ANDROID
-	if (szTag) {
-		__android_log_print(ANDROID_LOG_INFO, szTag, "%s", szText);
-	}
-	else {
-		__android_log_print(ANDROID_LOG_INFO, "", "%s", szText);
-	}
-#else
-	if (szTag) {
-		printf("%s: %s", szTag, szText);
-	}
-	else {
-		printf("%s", szText);
-}
-#endif
 }
 
 #if defined(PLATFORM_ANDROID) || defined(PLATFORM_IOS)

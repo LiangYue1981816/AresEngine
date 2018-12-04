@@ -12,11 +12,13 @@
 #elif PLATFORM_ANDROID
 #  include <dirent.h>
 #  include <sys/time.h>
+#  include <sys/sysconf.h>
 #  include <jni.h>
 #  include <string.h>
 #  include <android/log.h>
 #elif PLATFORM_IOS
 #  include <sys/time.h>
+#  include <sys/sysconf.h>
 #else
 #  pragma message("Not support platform !!!")
 #endif

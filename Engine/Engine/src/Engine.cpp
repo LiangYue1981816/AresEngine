@@ -128,7 +128,7 @@ float CEngine::GetTotalTime(void) const
 	return m_totalTime;
 }
 
-void CEngine::Tick(void)
+void CEngine::Update(void)
 {
 	event_wait(&m_eventFinish);
 	{
@@ -144,9 +144,9 @@ void CEngine::Present(void)
 	m_pRenderSolution->Clearup(1 - m_indexQueue);
 }
 
-void CEngine::TickThread(void)
+void CEngine::UpdateThread(void)
 {
-	float currTime = tick() / 1000000.0f;
+	float currTime = Tick() / 1000000.0f;
 
 	m_deltaTime = currTime - m_lastTime;
 	m_totalTime = m_totalTime + m_deltaTime;
@@ -165,7 +165,7 @@ void* CEngine::WorkThread(void *pParams)
 					break;
 				}
 
-				pEngine->TickThread();
+				pEngine->UpdateThread();
 			}
 			event_reset(&pEngine->m_eventDispatch);
 			event_signal(&pEngine->m_eventFinish);
