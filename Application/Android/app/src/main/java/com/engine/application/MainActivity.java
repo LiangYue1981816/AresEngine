@@ -7,11 +7,8 @@ import android.content.Context;
 import android.content.pm.ActivityInfo;
 
 import android.util.DisplayMetrics;
-import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.FrameLayout;
 
 public class MainActivity extends Activity {
     private static MainActivity a;
@@ -25,19 +22,14 @@ public class MainActivity extends Activity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 
-        LayoutParams layoutParams = new LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.FILL_PARENT);
-        FrameLayout frameLayout = new FrameLayout(this);
-        frameLayout.setLayoutParams(layoutParams);
-
         mMainView = new MainView(this);
         mMainView.setFocusable(true);
         mMainView.setFocusableInTouchMode(true);
         mMainView.setEGLContextClientVersion(3);
-        mMainView.setEGLConfigChooser(8, 8, 8, 8, 24, 0);
+        mMainView.setEGLConfigChooser(8, 8, 8, 8, 24, 8);
         mMainView.setRenderer();
 
-        frameLayout.addView(mMainView);
-        setContentView(frameLayout);
+        setContentView(mMainView);
     }
 
     protected void onPause() {

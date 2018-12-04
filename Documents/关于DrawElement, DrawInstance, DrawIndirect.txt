@@ -1,0 +1,12 @@
+一. 概念
+DrawElement：普通渲染，一次渲染一个实例，每次调用就是一个DC
+DrawInstance：实例渲染，每次调用可以渲染若干个相同的实例，该实例可以有不同的属性（比如transform），而所有不同的属性组织在InstanceBuffer中。每次调用一个DC，实例属性变化需要更新InstanceBuffer。
+DrawIndirect：在DrawInstance基础上进一步将渲染参数保存在显存中，比如InstanceCount等。
+可以看出DrawInstance，DrawIndirect可以一次调用渲染若干个实例，相较于DrawElement可以降低DC的消耗，但与此同时如果实例属性发生变化，需要更新InstnaceBuffer以及IndirectBuffer，更新耗时也不可小视。
+
+二. 合理使用DrawInstance以及DrawIndirect
+1. 对于低端硬件（比如手机）更新InstanceBuffer和IndirecBuffer开销很大，因此要尽可能避免更新这些Buffer，也就是说实例数据创建好后避免修改。体现在使用上就是将场景划分为若干区域，每个区域内相同实例
+   可进行实例渲染，在场景载入之初这些实例数据就被创建好并且不再更改。运行时只要相机看到实例中任何一个对象则该实例所有对象都将被渲染反之则不渲染。可以看出虽然避免了剔除导致的数据更新但可能渲染更
+   多的实例。而此时场景划分的区域大小就至关重要了，区域太小DC太多，区域太大无效绘制就更多。
+   总结就是对于静态场景实现划分好区域，该区域内相同实例使用实例渲染，并且相同实例整体进行可见性剔除。
+2. 对于高端硬件（比如电脑）可以在GPU内完成剔除，并重新组织InstanceBuffer和IndirectBuffer，这样即避免了数据重新提交也没有渲染更多的东西
