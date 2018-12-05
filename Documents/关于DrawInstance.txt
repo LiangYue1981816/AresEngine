@@ -1,0 +1,77 @@
+一. 概念
+DrawInstance可以一次调用渲染多个实例，而实例数据单独保存在一个VertexBuffer中。
+可以看出一次DC调用就可以达成渲染多个实例的目的进而减少了消耗，但与此同时还需要注意如果实例数据需要更新VertexBuffer这也是有消耗的。
+
+二. 实例数据更新测试
+测试内容：Buffer数据更新性能测试
+测试平台：Huawei nova3, Google Pixel2
+测试数据：每贞380次glBufferSubData调用，共更新608096BYTE数据
+
+Google Pixel2
+Memcpy：0.4ms
+
+1. glBufferSubData
+CommandBindMesh time = 0.391ms count = 380
+CommandSetInstanceBufferData time = 16.512ms count = 380
+CommandDrawInstance time = 5.265ms count = 380
+Total time=22.749ms
+
+2. glBufferSubData Double Buffer
+CommandBindMesh time = 0.430ms count = 380
+CommandSetInstanceBufferData time = 16.463ms count = 380
+CommandDrawInstance time = 5.189ms count = 380
+Total time=22.664ms
+
+3. glMap/glUnmap
+CommandBindMesh time = 0.187ms count = 380
+CommandSetInstanceBufferData time = 62.566ms count = 380
+CommandDrawInstance time = 2.211ms count = 380
+Total time=65.275ms
+
+==========================================================================
+
+Huawei nova3
+Memcpy：0.4ms
+
+1. glBufferSubData
+CommandBindMesh time = 1.114ms count = 380
+CommandSetInstanceBufferData time = 3.869ms count = 380
+CommandDrawInstance time = 75.141ms count = 380
+Total time=80.616ms
+
+CommandBindMesh time = 1.103ms count = 380
+CommandSetInstanceBufferData time = 4.261ms count = 380
+CommandDrawInstance time = 148.203ms count = 380
+Total time=154.440ms
+
+2. glMap/glUnmap
+CommandBindMesh time = 1.034ms count = 380
+CommandSetInstanceBufferData time = 3.980ms count = 380
+CommandDrawInstance time = 77.379ms count = 380
+Total time=82.874ms
+
+CommandBindMesh time = 1.299ms count = 380
+CommandSetInstanceBufferData time = 4.690ms count = 380
+CommandDrawInstance time = 148.273ms count = 380
+Total time=154.755ms
+
+3. Double Buffer
+CommandBindMesh time = 1.368ms count = 380
+CommandSetInstanceBufferData time = 4.055ms count = 380
+CommandDrawInstance time = 75.299ms count = 380
+Total time=81.693ms
+
+CommandBindMesh time = 1.227ms count = 380
+CommandSetInstanceBufferData time = 4.472ms count = 380
+CommandDrawInstance time = 145.248ms count = 380
+Total time=152.085ms
+
+可以看出相比于memcpy的0.4ms不论是华为的4ms还是高通的16ms, 性能都是不可接受的
+华为手机的glBufferSubData性能较为稳定，基本都在4ms，但是DrawInstance性能实在是太差
+高通手机的glBufferSubData性能与传输数据量相关，而且DrawInstance非常快
+
+三. 建议
+1. 使用DrawInstance是正确的选择，同时要小心对待InstanceBuffer的更新
+2. 更新InstanceBuffer需要讲究策略，分为动态模型和静态模型
+2.1. 针对静态模型的InstanceBuffer不要更新！相同该模型的所有实例整体进行可见性剔除，这样就可以保证Transform不变以及无需重新组织InstanceBuffer，进而避免更新InstanceBuffer
+2.2. 针对动态模型的InstanceBuffer，没办法该更新还得更新
