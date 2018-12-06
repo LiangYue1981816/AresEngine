@@ -1,13 +1,16 @@
 ENGINE_INCLUDES := \
-	$(LOCAL_PATH)/../../ThirdParty \
-	$(LOCAL_PATH)/../../ThirdParty/event \
-	$(LOCAL_PATH)/../../ThirdParty/gl3w \
-	$(LOCAL_PATH)/../../ThirdParty/lodepng \
-	$(LOCAL_PATH)/../../ThirdParty/rbtree \
-	$(LOCAL_PATH)/../../ThirdParty/spirv-cross \
-	$(LOCAL_PATH)/../../ThirdParty/tinyxml \
-	$(LOCAL_PATH)/../../ThirdParty/zlib \
 	$(LOCAL_PATH)/../../Engine \
+	$(LOCAL_PATH)/../../Engine/ThirdParty \
+	$(LOCAL_PATH)/../../Engine/ThirdParty/eastl \
+	$(LOCAL_PATH)/../../Engine/ThirdParty/event \
+	$(LOCAL_PATH)/../../Engine/ThirdParty/gl3w \
+	$(LOCAL_PATH)/../../Engine/ThirdParty/gli \
+	$(LOCAL_PATH)/../../Engine/ThirdParty/glm \
+	$(LOCAL_PATH)/../../Engine/ThirdParty/lodepng \
+	$(LOCAL_PATH)/../../Engine/ThirdParty/rbtree \
+	$(LOCAL_PATH)/../../Engine/ThirdParty/spirv-cross \
+	$(LOCAL_PATH)/../../Engine/ThirdParty/tinyxml \
+	$(LOCAL_PATH)/../../Engine/ThirdParty/zlib \
 	$(LOCAL_PATH)/../../Engine/Base/include \
 	$(LOCAL_PATH)/../../Engine/Memory/include \
 	$(LOCAL_PATH)/../../Engine/Renderer/Gfx/include \
@@ -15,8 +18,4 @@ ENGINE_INCLUDES := \
 	$(LOCAL_PATH)/../../Engine/Renderer/Vulkan/include \
 	$(LOCAL_PATH)/../../Engine/Renderer/Compiler/include \
 	$(LOCAL_PATH)/../../Engine/Scene/include \
-	$(LOCAL_PATH)/../../Engine/Engine/include \
-	$(LOCAL_PATH)/../../Engine/ThirdParty \
-	$(LOCAL_PATH)/../../Engine/ThirdParty/eastl \
-	$(LOCAL_PATH)/../../Engine/ThirdParty/gli \
-	$(LOCAL_PATH)/../../Engine/ThirdParty/glm
+	$(LOCAL_PATH)/../../Engine/Engine/include
