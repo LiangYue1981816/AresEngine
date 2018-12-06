@@ -1,5 +1,10 @@
 #include "GfxHeader.h"
 
+#include "tinyxml.h"
+#include "tinystr.h"
+#include "Stream.h"
+#include "FileManager.h"
+
 
 static uint32_t StringToCullFace(const char *szString)
 {

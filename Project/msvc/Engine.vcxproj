@@ -471,6 +471,7 @@
     <ClCompile Include="..\..\Engine\Scene\src\ComponentPointLight.cpp" />
     <ClCompile Include="..\..\Engine\Scene\src\ComponentSkin.cpp" />
     <ClCompile Include="..\..\Engine\Scene\src\Scene.cpp" />
+    <ClCompile Include="..\..\Engine\Scene\src\SceneLoader.cpp" />
     <ClCompile Include="..\..\Engine\Scene\src\SceneManager.cpp" />
     <ClCompile Include="..\..\Engine\Scene\src\SceneNode.cpp" />
     <ClCompile Include="..\..\Engine\ThirdParty\eastl\source\allocator_eastl.cpp" />

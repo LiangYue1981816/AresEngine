@@ -1,5 +1,8 @@
 #include "GfxHeader.h"
 
+#include "Stream.h"
+#include "FileManager.h"
+
 
 static bool InternalLoadTexture2D(CGfxTexture2D *pTexture2D, const gli::texture *texture)
 {

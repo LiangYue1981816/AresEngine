@@ -44,8 +44,5 @@
 #include "pthread.h"
 #include "zzip/zzip.h"
 
-#include "tinyxml.h"
-#include "tinystr.h"
 
-
-#include "Memory/include/Allocator.h"
+#include "Define.h"

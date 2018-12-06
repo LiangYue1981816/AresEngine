@@ -1,5 +1,8 @@
 #include "GfxHeader.h"
 
+#include "Stream.h"
+#include "FileManager.h"
+
 
 enum RawVertexAttribute
 {

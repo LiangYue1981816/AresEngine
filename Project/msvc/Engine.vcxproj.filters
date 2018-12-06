@@ -1130,5 +1130,8 @@
     <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxResourceLoaderTexture.cpp">
       <Filter>Engine\Renderer\Gfx\Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Engine\Scene\src\SceneLoader.cpp">
+      <Filter>Engine\Scene\Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

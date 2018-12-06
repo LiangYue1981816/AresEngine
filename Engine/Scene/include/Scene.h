@@ -22,11 +22,6 @@ public:
 	CSceneNode* LoadMesh(const char *szFileName, CSceneNode *pParentSceneNode = nullptr);
 	void FreeNode(CSceneNode *pNode);
 
-private:
-	bool LoadMesh(TiXmlNode *pMeshNode, CSceneNode *pParentSceneNode);
-	bool LoadNode(const CGfxMeshPtr &ptrMesh, TiXmlNode *pNode, CSceneNode *pParentSceneNode);
-	bool LoadDraw(const CGfxMeshPtr &ptrMesh, TiXmlNode *pNode, CSceneNode *pCurrentSceneNode);
-
 
 private:
 	uint32_t m_name;
