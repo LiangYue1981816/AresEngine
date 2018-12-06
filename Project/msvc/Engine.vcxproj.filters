@@ -135,143 +135,8 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\ThirdParty\event\event.h">
-      <Filter>ThirdParty\event</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ThirdParty\gl3w\gl3w.h">
-      <Filter>ThirdParty\gl3w</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ThirdParty\gl3w\glcorearb.h">
-      <Filter>ThirdParty\gl3w</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ThirdParty\glslc\file_includer.h">
-      <Filter>ThirdParty\glslc</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ThirdParty\lodepng\lodepng.h">
-      <Filter>ThirdParty\lodepng</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ThirdParty\rbtree\rbtree.h">
-      <Filter>ThirdParty\rbtree</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ThirdParty\spirv-cross\GLSL.std.450.h">
-      <Filter>ThirdParty\spirv-cross</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ThirdParty\spirv-cross\spirv.hpp">
-      <Filter>ThirdParty\spirv-cross</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ThirdParty\spirv-cross\spirv_cfg.hpp">
-      <Filter>ThirdParty\spirv-cross</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ThirdParty\spirv-cross\spirv_common.hpp">
-      <Filter>ThirdParty\spirv-cross</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ThirdParty\spirv-cross\spirv_cpp.hpp">
-      <Filter>ThirdParty\spirv-cross</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ThirdParty\spirv-cross\spirv_cross.hpp">
-      <Filter>ThirdParty\spirv-cross</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ThirdParty\spirv-cross\spirv_glsl.hpp">
-      <Filter>ThirdParty\spirv-cross</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ThirdParty\spirv-cross\spirv_hlsl.hpp">
-      <Filter>ThirdParty\spirv-cross</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ThirdParty\spirv-cross\spirv_msl.hpp">
-      <Filter>ThirdParty\spirv-cross</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ThirdParty\tinyxml\tinystr.h">
-      <Filter>ThirdParty\tinyxml</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ThirdParty\tinyxml\tinyxml.h">
-      <Filter>ThirdParty\tinyxml</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Engine\PreHeader.h">
       <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ThirdParty\zlib\zutil.h">
-      <Filter>ThirdParty\zlib</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ThirdParty\zlib\crc32.h">
-      <Filter>ThirdParty\zlib</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ThirdParty\zlib\deflate.h">
-      <Filter>ThirdParty\zlib</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ThirdParty\zlib\gzguts.h">
-      <Filter>ThirdParty\zlib</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ThirdParty\zlib\inffast.h">
-      <Filter>ThirdParty\zlib</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ThirdParty\zlib\inffixed.h">
-      <Filter>ThirdParty\zlib</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ThirdParty\zlib\inflate.h">
-      <Filter>ThirdParty\zlib</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ThirdParty\zlib\inftrees.h">
-      <Filter>ThirdParty\zlib</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ThirdParty\zlib\trees.h">
-      <Filter>ThirdParty\zlib</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ThirdParty\zlib\zconf.h">
-      <Filter>ThirdParty\zlib</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ThirdParty\zlib\zlib.h">
-      <Filter>ThirdParty\zlib</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ThirdParty\zzip\__debug.h">
-      <Filter>ThirdParty\zzip</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ThirdParty\zzip\__dirent.h">
-      <Filter>ThirdParty\zzip</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ThirdParty\zzip\__hints.h">
-      <Filter>ThirdParty\zzip</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ThirdParty\zzip\__mmap.h">
-      <Filter>ThirdParty\zzip</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ThirdParty\zzip\_config.h">
-      <Filter>ThirdParty\zzip</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ThirdParty\zzip\_msvc.h">
-      <Filter>ThirdParty\zzip</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ThirdParty\zzip\conf.h">
-      <Filter>ThirdParty\zzip</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ThirdParty\zzip\fetch.h">
-      <Filter>ThirdParty\zzip</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ThirdParty\zzip\file.h">
-      <Filter>ThirdParty\zzip</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ThirdParty\zzip\format.h">
-      <Filter>ThirdParty\zzip</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ThirdParty\zzip\info.h">
-      <Filter>ThirdParty\zzip</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ThirdParty\zzip\lib.h">
-      <Filter>ThirdParty\zzip</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ThirdParty\zzip\plugin.h">
-      <Filter>ThirdParty\zzip</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ThirdParty\zzip\stdint.h">
-      <Filter>ThirdParty\zzip</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ThirdParty\zzip\types.h">
-      <Filter>ThirdParty\zzip</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ThirdParty\zzip\zzip.h">
-      <Filter>ThirdParty\zzip</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ThirdParty\zzip\zzip32.h">
-      <Filter>ThirdParty\zzip</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Base\include\Delegate.h">
       <Filter>Engine\Base\Header Files</Filter>
@@ -741,122 +606,143 @@
     <ClInclude Include="..\..\Engine\Scene\include\SceneDefinition.h">
       <Filter>Engine\Scene\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\event\event.h">
+      <Filter>ThirdParty\event</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\gl3w\gl3w.h">
+      <Filter>ThirdParty\gl3w</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\gl3w\glcorearb.h">
+      <Filter>ThirdParty\gl3w</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\glslc\file_includer.h">
+      <Filter>ThirdParty\glslc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\lodepng\lodepng.h">
+      <Filter>ThirdParty\lodepng</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rbtree\rbtree.h">
+      <Filter>ThirdParty\rbtree</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\spirv-cross\GLSL.std.450.h">
+      <Filter>ThirdParty\spirv-cross</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\spirv-cross\spirv.hpp">
+      <Filter>ThirdParty\spirv-cross</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\spirv-cross\spirv_cfg.hpp">
+      <Filter>ThirdParty\spirv-cross</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\spirv-cross\spirv_common.hpp">
+      <Filter>ThirdParty\spirv-cross</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\spirv-cross\spirv_cpp.hpp">
+      <Filter>ThirdParty\spirv-cross</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\spirv-cross\spirv_cross.hpp">
+      <Filter>ThirdParty\spirv-cross</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\spirv-cross\spirv_glsl.hpp">
+      <Filter>ThirdParty\spirv-cross</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\spirv-cross\spirv_hlsl.hpp">
+      <Filter>ThirdParty\spirv-cross</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\spirv-cross\spirv_msl.hpp">
+      <Filter>ThirdParty\spirv-cross</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\tinyxml\tinystr.h">
+      <Filter>ThirdParty\tinyxml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\tinyxml\tinyxml.h">
+      <Filter>ThirdParty\tinyxml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\zlib\crc32.h">
+      <Filter>ThirdParty\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\zlib\deflate.h">
+      <Filter>ThirdParty\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\zlib\gzguts.h">
+      <Filter>ThirdParty\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\zlib\inffast.h">
+      <Filter>ThirdParty\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\zlib\inffixed.h">
+      <Filter>ThirdParty\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\zlib\inflate.h">
+      <Filter>ThirdParty\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\zlib\inftrees.h">
+      <Filter>ThirdParty\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\zlib\trees.h">
+      <Filter>ThirdParty\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\zlib\zconf.h">
+      <Filter>ThirdParty\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\zlib\zlib.h">
+      <Filter>ThirdParty\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\zlib\zutil.h">
+      <Filter>ThirdParty\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\zzip\__debug.h">
+      <Filter>ThirdParty\zzip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\zzip\__dirent.h">
+      <Filter>ThirdParty\zzip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\zzip\__hints.h">
+      <Filter>ThirdParty\zzip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\zzip\__mmap.h">
+      <Filter>ThirdParty\zzip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\zzip\_config.h">
+      <Filter>ThirdParty\zzip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\zzip\_msvc.h">
+      <Filter>ThirdParty\zzip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\zzip\conf.h">
+      <Filter>ThirdParty\zzip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\zzip\fetch.h">
+      <Filter>ThirdParty\zzip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\zzip\file.h">
+      <Filter>ThirdParty\zzip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\zzip\format.h">
+      <Filter>ThirdParty\zzip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\zzip\info.h">
+      <Filter>ThirdParty\zzip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\zzip\lib.h">
+      <Filter>ThirdParty\zzip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\zzip\plugin.h">
+      <Filter>ThirdParty\zzip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\zzip\stdint.h">
+      <Filter>ThirdParty\zzip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\zzip\types.h">
+      <Filter>ThirdParty\zzip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\zzip\zzip.h">
+      <Filter>ThirdParty\zzip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\zzip\zzip32.h">
+      <Filter>ThirdParty\zzip</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\ThirdParty\event\event.c">
-      <Filter>ThirdParty\event</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\ThirdParty\gl3w\gl3w.c">
-      <Filter>ThirdParty\gl3w</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\ThirdParty\glslc\file_includer.cc">
-      <Filter>ThirdParty\glslc</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\ThirdParty\lodepng\lodepng.cpp">
-      <Filter>ThirdParty\lodepng</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\ThirdParty\rbtree\rbtree.cpp">
-      <Filter>ThirdParty\rbtree</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\ThirdParty\spirv-cross\spirv_cfg.cpp">
-      <Filter>ThirdParty\spirv-cross</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\ThirdParty\spirv-cross\spirv_cpp.cpp">
-      <Filter>ThirdParty\spirv-cross</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\ThirdParty\spirv-cross\spirv_cross.cpp">
-      <Filter>ThirdParty\spirv-cross</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\ThirdParty\spirv-cross\spirv_glsl.cpp">
-      <Filter>ThirdParty\spirv-cross</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\ThirdParty\spirv-cross\spirv_hlsl.cpp">
-      <Filter>ThirdParty\spirv-cross</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\ThirdParty\spirv-cross\spirv_msl.cpp">
-      <Filter>ThirdParty\spirv-cross</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\ThirdParty\tinyxml\tinystr.cpp">
-      <Filter>ThirdParty\tinyxml</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\ThirdParty\tinyxml\tinyxml.cpp">
-      <Filter>ThirdParty\tinyxml</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\ThirdParty\tinyxml\tinyxmlerror.cpp">
-      <Filter>ThirdParty\tinyxml</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\ThirdParty\tinyxml\tinyxmlparser.cpp">
-      <Filter>ThirdParty\tinyxml</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\ThirdParty\zlib\adler32.c">
-      <Filter>ThirdParty\zlib</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\ThirdParty\zlib\compress.c">
-      <Filter>ThirdParty\zlib</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\ThirdParty\zlib\crc32.c">
-      <Filter>ThirdParty\zlib</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\ThirdParty\zlib\deflate.c">
-      <Filter>ThirdParty\zlib</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\ThirdParty\zlib\gzclose.c">
-      <Filter>ThirdParty\zlib</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\ThirdParty\zlib\gzlib.c">
-      <Filter>ThirdParty\zlib</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\ThirdParty\zlib\gzread.c">
-      <Filter>ThirdParty\zlib</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\ThirdParty\zlib\gzwrite.c">
-      <Filter>ThirdParty\zlib</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\ThirdParty\zlib\infback.c">
-      <Filter>ThirdParty\zlib</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\ThirdParty\zlib\inffast.c">
-      <Filter>ThirdParty\zlib</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\ThirdParty\zlib\inflate.c">
-      <Filter>ThirdParty\zlib</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\ThirdParty\zlib\inftrees.c">
-      <Filter>ThirdParty\zlib</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\ThirdParty\zlib\trees.c">
-      <Filter>ThirdParty\zlib</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\ThirdParty\zlib\uncompr.c">
-      <Filter>ThirdParty\zlib</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\ThirdParty\zlib\zutil.c">
-      <Filter>ThirdParty\zlib</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\ThirdParty\zzip\dir.c">
-      <Filter>ThirdParty\zzip</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\ThirdParty\zzip\err.c">
-      <Filter>ThirdParty\zzip</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\ThirdParty\zzip\fetch.c">
-      <Filter>ThirdParty\zzip</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\ThirdParty\zzip\file.c">
-      <Filter>ThirdParty\zzip</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\ThirdParty\zzip\info.c">
-      <Filter>ThirdParty\zzip</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\ThirdParty\zzip\plugin.c">
-      <Filter>ThirdParty\zzip</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\ThirdParty\zzip\stat.c">
-      <Filter>ThirdParty\zzip</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\ThirdParty\zzip\zip.c">
-      <Filter>ThirdParty\zzip</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Engine\ThirdParty\eastl\source\allocator_eastl.cpp">
       <Filter>ThirdParty\eastl</Filter>
     </ClCompile>
@@ -1141,6 +1027,120 @@
     </ClCompile>
     <ClCompile Include="..\..\Engine\Scene\src\SceneLoaderMesh.cpp">
       <Filter>Engine\Scene\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\event\event.c">
+      <Filter>ThirdParty\event</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\gl3w\gl3w.c">
+      <Filter>ThirdParty\gl3w</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\glslc\file_includer.cc">
+      <Filter>ThirdParty\glslc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\lodepng\lodepng.cpp">
+      <Filter>ThirdParty\lodepng</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\rbtree\rbtree.cpp">
+      <Filter>ThirdParty\rbtree</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\spirv-cross\spirv_cfg.cpp">
+      <Filter>ThirdParty\spirv-cross</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\spirv-cross\spirv_cpp.cpp">
+      <Filter>ThirdParty\spirv-cross</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\spirv-cross\spirv_cross.cpp">
+      <Filter>ThirdParty\spirv-cross</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\spirv-cross\spirv_glsl.cpp">
+      <Filter>ThirdParty\spirv-cross</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\spirv-cross\spirv_hlsl.cpp">
+      <Filter>ThirdParty\spirv-cross</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\spirv-cross\spirv_msl.cpp">
+      <Filter>ThirdParty\spirv-cross</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\tinyxml\tinystr.cpp">
+      <Filter>ThirdParty\tinyxml</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\tinyxml\tinyxml.cpp">
+      <Filter>ThirdParty\tinyxml</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\tinyxml\tinyxmlerror.cpp">
+      <Filter>ThirdParty\tinyxml</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\tinyxml\tinyxmlparser.cpp">
+      <Filter>ThirdParty\tinyxml</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\zlib\adler32.c">
+      <Filter>ThirdParty\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\zlib\compress.c">
+      <Filter>ThirdParty\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\zlib\crc32.c">
+      <Filter>ThirdParty\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\zlib\deflate.c">
+      <Filter>ThirdParty\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\zlib\gzclose.c">
+      <Filter>ThirdParty\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\zlib\gzlib.c">
+      <Filter>ThirdParty\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\zlib\gzread.c">
+      <Filter>ThirdParty\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\zlib\gzwrite.c">
+      <Filter>ThirdParty\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\zlib\infback.c">
+      <Filter>ThirdParty\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\zlib\inffast.c">
+      <Filter>ThirdParty\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\zlib\inflate.c">
+      <Filter>ThirdParty\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\zlib\inftrees.c">
+      <Filter>ThirdParty\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\zlib\trees.c">
+      <Filter>ThirdParty\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\zlib\uncompr.c">
+      <Filter>ThirdParty\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\zlib\zutil.c">
+      <Filter>ThirdParty\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\zzip\dir.c">
+      <Filter>ThirdParty\zzip</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\zzip\err.c">
+      <Filter>ThirdParty\zzip</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\zzip\fetch.c">
+      <Filter>ThirdParty\zzip</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\zzip\file.c">
+      <Filter>ThirdParty\zzip</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\zzip\info.c">
+      <Filter>ThirdParty\zzip</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\zzip\plugin.c">
+      <Filter>ThirdParty\zzip</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\zzip\stat.c">
+      <Filter>ThirdParty\zzip</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\zzip\zip.c">
+      <Filter>ThirdParty\zzip</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -29,7 +29,7 @@
     <ClCompile Include="..\..\Engine\ThirdParty\eastl\source\red_black_tree.cpp" />
     <ClCompile Include="..\..\Engine\ThirdParty\eastl\source\string.cpp" />
     <ClCompile Include="..\..\Engine\ThirdParty\eastl\source\thread_support.cpp" />
-    <ClCompile Include="..\..\ThirdParty\gl3w\gl3w.c" />
+    <ClCompile Include="..\..\Engine\ThirdParty\gl3w\gl3w.c" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="nvwa\debug_new.cpp" />
     <ClCompile Include="nvwa\operator_new.cpp" />
@@ -37,8 +37,8 @@
     <ClCompile Include="WGLExtensions.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\ThirdParty\gl3w\gl3w.h" />
-    <ClInclude Include="..\..\ThirdParty\gl3w\glcorearb.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\gl3w\gl3w.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\gl3w\glcorearb.h" />
     <ClInclude Include="Main.h" />
     <ClInclude Include="nvwa\c++11.h" />
     <ClInclude Include="nvwa\debug_new.h" />
@@ -136,7 +136,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>HAVE_EASTL;GLES_VER=310;THREAD_COUNT=4;MEMORY_ALLOCATOR;PLATFORM_WINDOWS;WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(VULKAN_SDK)/include;$(VULKAN_SDK)/spirv-tools/include;$(VULKAN_SDK)/shaderc/libshaderc/include;$(VULKAN_SDK)/shaderc/libshaderc_util/include;../../ThirdParty;../../ThirdParty/es;../../ThirdParty/event;../../ThirdParty/gl3w;../../ThirdParty/glslc;../../ThirdParty/lodepng;../../ThirdParty/pthread/include;../../ThirdParty/rbtree;../../ThirdParty/spirv-cross;../../ThirdParty/tinyxml;../../ThirdParty/zlib;../../Engine;../../Engine/ThirdParty;../../Engine/ThirdParty/eastl;../../Engine/ThirdParty/gli;../../Engine/ThirdParty/glm;./;./nvwa</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(VULKAN_SDK)/include;$(VULKAN_SDK)/spirv-tools/include;$(VULKAN_SDK)/shaderc/libshaderc/include;$(VULKAN_SDK)/shaderc/libshaderc_util/include;../../Engine;../../Engine/ThirdParty;../../Engine/ThirdParty/eastl;../../Engine/ThirdParty/es;../../Engine/ThirdParty/event;../../Engine/ThirdParty/gl3w;../../Engine/ThirdParty/gli;../../Engine/ThirdParty/glm;../../Engine/ThirdParty/glslc;../../Engine/ThirdParty/lodepng;../../Engine/ThirdParty/pthread/include;../../Engine/ThirdParty/rbtree;../../Engine/ThirdParty/spirv-cross;../../Engine/ThirdParty/tinyxml;../../Engine/ThirdParty/zlib;./;./nvwa</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4996;4312;4267;4251</DisableSpecificWarnings>
     </ClCompile>
     <Link>
@@ -154,7 +154,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>HAVE_EASTL;GLES_VER=310;THREAD_COUNT=4;MEMORY_ALLOCATOR;PLATFORM_WINDOWS;__LP64__;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(VULKAN_SDK)/include;$(VULKAN_SDK)/spirv-tools/include;$(VULKAN_SDK)/shaderc/libshaderc/include;$(VULKAN_SDK)/shaderc/libshaderc_util/include;../../ThirdParty;../../ThirdParty/es;../../ThirdParty/event;../../ThirdParty/gl3w;../../ThirdParty/glslc;../../ThirdParty/lodepng;../../ThirdParty/pthread/include;../../ThirdParty/rbtree;../../ThirdParty/spirv-cross;../../ThirdParty/tinyxml;../../ThirdParty/zlib;../../Engine;../../Engine/ThirdParty;../../Engine/ThirdParty/eastl;../../Engine/ThirdParty/gli;../../Engine/ThirdParty/glm;./;./nvwa</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(VULKAN_SDK)/include;$(VULKAN_SDK)/spirv-tools/include;$(VULKAN_SDK)/shaderc/libshaderc/include;$(VULKAN_SDK)/shaderc/libshaderc_util/include;../../Engine;../../Engine/ThirdParty;../../Engine/ThirdParty/eastl;../../Engine/ThirdParty/es;../../Engine/ThirdParty/event;../../Engine/ThirdParty/gl3w;../../Engine/ThirdParty/gli;../../Engine/ThirdParty/glm;../../Engine/ThirdParty/glslc;../../Engine/ThirdParty/lodepng;../../Engine/ThirdParty/pthread/include;../../Engine/ThirdParty/rbtree;../../Engine/ThirdParty/spirv-cross;../../Engine/ThirdParty/tinyxml;../../Engine/ThirdParty/zlib;./;./nvwa</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4996;4312;4267;4251</DisableSpecificWarnings>
     </ClCompile>
     <Link>
@@ -174,7 +174,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>HAVE_EASTL;GLES_VER=310;THREAD_COUNT=4;MEMORY_ALLOCATOR;PLATFORM_WINDOWS;WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(VULKAN_SDK)/include;$(VULKAN_SDK)/spirv-tools/include;$(VULKAN_SDK)/shaderc/libshaderc/include;$(VULKAN_SDK)/shaderc/libshaderc_util/include;../../ThirdParty;../../ThirdParty/es;../../ThirdParty/event;../../ThirdParty/gl3w;../../ThirdParty/glslc;../../ThirdParty/lodepng;../../ThirdParty/pthread/include;../../ThirdParty/rbtree;../../ThirdParty/spirv-cross;../../ThirdParty/tinyxml;../../ThirdParty/zlib;../../Engine;../../Engine/ThirdParty;../../Engine/ThirdParty/eastl;../../Engine/ThirdParty/gli;../../Engine/ThirdParty/glm;./;./nvwa</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(VULKAN_SDK)/include;$(VULKAN_SDK)/spirv-tools/include;$(VULKAN_SDK)/shaderc/libshaderc/include;$(VULKAN_SDK)/shaderc/libshaderc_util/include;../../Engine;../../Engine/ThirdParty;../../Engine/ThirdParty/eastl;../../Engine/ThirdParty/es;../../Engine/ThirdParty/event;../../Engine/ThirdParty/gl3w;../../Engine/ThirdParty/gli;../../Engine/ThirdParty/glm;../../Engine/ThirdParty/glslc;../../Engine/ThirdParty/lodepng;../../Engine/ThirdParty/pthread/include;../../Engine/ThirdParty/rbtree;../../Engine/ThirdParty/spirv-cross;../../Engine/ThirdParty/tinyxml;../../Engine/ThirdParty/zlib;./;./nvwa</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4996;4312;4267;4251</DisableSpecificWarnings>
     </ClCompile>
     <Link>
@@ -196,7 +196,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>HAVE_EASTL;GLES_VER=310;THREAD_COUNT=4;MEMORY_ALLOCATOR;PLATFORM_WINDOWS;__LP64__;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(VULKAN_SDK)/include;$(VULKAN_SDK)/spirv-tools/include;$(VULKAN_SDK)/shaderc/libshaderc/include;$(VULKAN_SDK)/shaderc/libshaderc_util/include;../../ThirdParty;../../ThirdParty/es;../../ThirdParty/event;../../ThirdParty/gl3w;../../ThirdParty/glslc;../../ThirdParty/lodepng;../../ThirdParty/pthread/include;../../ThirdParty/rbtree;../../ThirdParty/spirv-cross;../../ThirdParty/tinyxml;../../ThirdParty/zlib;../../Engine;../../Engine/ThirdParty;../../Engine/ThirdParty/eastl;../../Engine/ThirdParty/gli;../../Engine/ThirdParty/glm;./;./nvwa</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(VULKAN_SDK)/include;$(VULKAN_SDK)/spirv-tools/include;$(VULKAN_SDK)/shaderc/libshaderc/include;$(VULKAN_SDK)/shaderc/libshaderc_util/include;../../Engine;../../Engine/ThirdParty;../../Engine/ThirdParty/eastl;../../Engine/ThirdParty/es;../../Engine/ThirdParty/event;../../Engine/ThirdParty/gl3w;../../Engine/ThirdParty/gli;../../Engine/ThirdParty/glm;../../Engine/ThirdParty/glslc;../../Engine/ThirdParty/lodepng;../../Engine/ThirdParty/pthread/include;../../Engine/ThirdParty/rbtree;../../Engine/ThirdParty/spirv-cross;../../Engine/ThirdParty/tinyxml;../../Engine/ThirdParty/zlib;./;./nvwa</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4996;4312;4267;4251</DisableSpecificWarnings>
     </ClCompile>
     <Link>

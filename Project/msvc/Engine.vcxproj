@@ -100,7 +100,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>HAVE_EASTL;GLES_VER=310;THREAD_COUNT=4;MEMORY_ALLOCATOR;PLATFORM_WINDOWS;WIN32;NDEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(VULKAN_SDK)/include;$(VULKAN_SDK)/spirv-tools/include;$(VULKAN_SDK)/shaderc/libshaderc/include;$(VULKAN_SDK)/shaderc/libshaderc_util/include;../../ThirdParty;../../ThirdParty/es;../../ThirdParty/event;../../ThirdParty/gl3w;../../ThirdParty/glslc;../../ThirdParty/lodepng;../../ThirdParty/pthread/include;../../ThirdParty/rbtree;../../ThirdParty/spirv-cross;../../ThirdParty/tinyxml;../../ThirdParty/zlib;../../Engine;../../Engine/Base/include;../../Engine/Memory/include;../../Engine/Renderer/Gfx/include;../../Engine/Renderer/GLES3/include;../../Engine/Renderer/Vulkan/include;../../Engine/Renderer/Compiler/include;../../Engine/Scene/include;../../Engine/Engine/include;../../Engine/ThirdParty;../../Engine/ThirdParty/eastl;../../Engine/ThirdParty/gli;../../Engine/ThirdParty/glm</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(VULKAN_SDK)/include;$(VULKAN_SDK)/spirv-tools/include;$(VULKAN_SDK)/shaderc/libshaderc/include;$(VULKAN_SDK)/shaderc/libshaderc_util/include;../../Engine;../../Engine/ThirdParty;../../Engine/ThirdParty/eastl;../../Engine/ThirdParty/es;../../Engine/ThirdParty/event;../../Engine/ThirdParty/gl3w;../../Engine/ThirdParty/gli;../../Engine/ThirdParty/glm;../../Engine/ThirdParty/glslc;../../Engine/ThirdParty/lodepng;../../Engine/ThirdParty/pthread/include;../../Engine/ThirdParty/rbtree;../../Engine/ThirdParty/spirv-cross;../../Engine/ThirdParty/tinyxml;../../Engine/ThirdParty/zlib;../../Engine/Base/include;../../Engine/Memory/include;../../Engine/Renderer/Gfx/include;../../Engine/Renderer/GLES3/include;../../Engine/Renderer/Vulkan/include;../../Engine/Renderer/Compiler/include;../../Engine/Scene/include;../../Engine/Engine/include</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <DisableSpecificWarnings>4996;4312;4267;4251</DisableSpecificWarnings>
@@ -123,7 +123,7 @@
       <IntrinsicFunctions>false</IntrinsicFunctions>
       <PreprocessorDefinitions>HAVE_EASTL;GLES_VER=310;THREAD_COUNT=4;MEMORY_ALLOCATOR;PLATFORM_WINDOWS;WIN32;DEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(VULKAN_SDK)/include;$(VULKAN_SDK)/spirv-tools/include;$(VULKAN_SDK)/shaderc/libshaderc/include;$(VULKAN_SDK)/shaderc/libshaderc_util/include;../../ThirdParty;../../ThirdParty/es;../../ThirdParty/event;../../ThirdParty/gl3w;../../ThirdParty/glslc;../../ThirdParty/lodepng;../../ThirdParty/pthread/include;../../ThirdParty/rbtree;../../ThirdParty/spirv-cross;../../ThirdParty/tinyxml;../../ThirdParty/zlib;../../Engine;../../Engine/Base/include;../../Engine/Memory/include;../../Engine/Renderer/Gfx/include;../../Engine/Renderer/GLES3/include;../../Engine/Renderer/Vulkan/include;../../Engine/Renderer/Compiler/include;../../Engine/Scene/include;../../Engine/Engine/include;../../Engine/ThirdParty;../../Engine/ThirdParty/eastl;../../Engine/ThirdParty/gli;../../Engine/ThirdParty/glm</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(VULKAN_SDK)/include;$(VULKAN_SDK)/spirv-tools/include;$(VULKAN_SDK)/shaderc/libshaderc/include;$(VULKAN_SDK)/shaderc/libshaderc_util/include;../../Engine;../../Engine/ThirdParty;../../Engine/ThirdParty/eastl;../../Engine/ThirdParty/es;../../Engine/ThirdParty/event;../../Engine/ThirdParty/gl3w;../../Engine/ThirdParty/gli;../../Engine/ThirdParty/glm;../../Engine/ThirdParty/glslc;../../Engine/ThirdParty/lodepng;../../Engine/ThirdParty/pthread/include;../../Engine/ThirdParty/rbtree;../../Engine/ThirdParty/spirv-cross;../../Engine/ThirdParty/tinyxml;../../Engine/ThirdParty/zlib;../../Engine/Base/include;../../Engine/Memory/include;../../Engine/Renderer/Gfx/include;../../Engine/Renderer/GLES3/include;../../Engine/Renderer/Vulkan/include;../../Engine/Renderer/Compiler/include;../../Engine/Scene/include;../../Engine/Engine/include</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <DisableSpecificWarnings>4996;4312;4267;4251</DisableSpecificWarnings>
@@ -147,7 +147,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>HAVE_EASTL;GLES_VER=310;THREAD_COUNT=4;MEMORY_ALLOCATOR;PLATFORM_WINDOWS;__LP64__;NDEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(VULKAN_SDK)/include;$(VULKAN_SDK)/spirv-tools/include;$(VULKAN_SDK)/shaderc/libshaderc/include;$(VULKAN_SDK)/shaderc/libshaderc_util/include;../../ThirdParty;../../ThirdParty/es;../../ThirdParty/event;../../ThirdParty/gl3w;../../ThirdParty/glslc;../../ThirdParty/lodepng;../../ThirdParty/pthread/include;../../ThirdParty/rbtree;../../ThirdParty/spirv-cross;../../ThirdParty/tinyxml;../../ThirdParty/zlib;../../Engine;../../Engine/Base/include;../../Engine/Memory/include;../../Engine/Renderer/Gfx/include;../../Engine/Renderer/GLES3/include;../../Engine/Renderer/Vulkan/include;../../Engine/Renderer/Compiler/include;../../Engine/Scene/include;../../Engine/Engine/include;../../Engine/ThirdParty;../../Engine/ThirdParty/eastl;../../Engine/ThirdParty/gli;../../Engine/ThirdParty/glm</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(VULKAN_SDK)/include;$(VULKAN_SDK)/spirv-tools/include;$(VULKAN_SDK)/shaderc/libshaderc/include;$(VULKAN_SDK)/shaderc/libshaderc_util/include;../../Engine;../../Engine/ThirdParty;../../Engine/ThirdParty/eastl;../../Engine/ThirdParty/es;../../Engine/ThirdParty/event;../../Engine/ThirdParty/gl3w;../../Engine/ThirdParty/gli;../../Engine/ThirdParty/glm;../../Engine/ThirdParty/glslc;../../Engine/ThirdParty/lodepng;../../Engine/ThirdParty/pthread/include;../../Engine/ThirdParty/rbtree;../../Engine/ThirdParty/spirv-cross;../../Engine/ThirdParty/tinyxml;../../Engine/ThirdParty/zlib;../../Engine/Base/include;../../Engine/Memory/include;../../Engine/Renderer/Gfx/include;../../Engine/Renderer/GLES3/include;../../Engine/Renderer/Vulkan/include;../../Engine/Renderer/Compiler/include;../../Engine/Scene/include;../../Engine/Engine/include</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <DisableSpecificWarnings>4996;4312;4267;4251</DisableSpecificWarnings>
@@ -170,7 +170,7 @@
       <IntrinsicFunctions>false</IntrinsicFunctions>
       <PreprocessorDefinitions>HAVE_EASTL;GLES_VER=310;THREAD_COUNT=4;MEMORY_ALLOCATOR;PLATFORM_WINDOWS;__LP64__;DEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(VULKAN_SDK)/include;$(VULKAN_SDK)/spirv-tools/include;$(VULKAN_SDK)/shaderc/libshaderc/include;$(VULKAN_SDK)/shaderc/libshaderc_util/include;../../ThirdParty;../../ThirdParty/es;../../ThirdParty/event;../../ThirdParty/gl3w;../../ThirdParty/glslc;../../ThirdParty/lodepng;../../ThirdParty/pthread/include;../../ThirdParty/rbtree;../../ThirdParty/spirv-cross;../../ThirdParty/tinyxml;../../ThirdParty/zlib;../../Engine;../../Engine/Base/include;../../Engine/Memory/include;../../Engine/Renderer/Gfx/include;../../Engine/Renderer/GLES3/include;../../Engine/Renderer/Vulkan/include;../../Engine/Renderer/Compiler/include;../../Engine/Scene/include;../../Engine/Engine/include;../../Engine/ThirdParty;../../Engine/ThirdParty/eastl;../../Engine/ThirdParty/gli;../../Engine/ThirdParty/glm</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(VULKAN_SDK)/include;$(VULKAN_SDK)/spirv-tools/include;$(VULKAN_SDK)/shaderc/libshaderc/include;$(VULKAN_SDK)/shaderc/libshaderc_util/include;../../Engine;../../Engine/ThirdParty;../../Engine/ThirdParty/eastl;../../Engine/ThirdParty/es;../../Engine/ThirdParty/event;../../Engine/ThirdParty/gl3w;../../Engine/ThirdParty/gli;../../Engine/ThirdParty/glm;../../Engine/ThirdParty/glslc;../../Engine/ThirdParty/lodepng;../../Engine/ThirdParty/pthread/include;../../Engine/ThirdParty/rbtree;../../Engine/ThirdParty/spirv-cross;../../Engine/ThirdParty/tinyxml;../../Engine/ThirdParty/zlib;../../Engine/Base/include;../../Engine/Memory/include;../../Engine/Renderer/Gfx/include;../../Engine/Renderer/GLES3/include;../../Engine/Renderer/Vulkan/include;../../Engine/Renderer/Compiler/include;../../Engine/Scene/include;../../Engine/Engine/include</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <DisableSpecificWarnings>4996;4312;4267;4251</DisableSpecificWarnings>
@@ -345,51 +345,51 @@
     <ClInclude Include="..\..\Engine\Scene\include\SceneNode.h" />
     <ClInclude Include="..\..\Engine\Scene\src\TaskComponentUpdateCamera.h" />
     <ClInclude Include="..\..\Engine\Scene\src\TaskComponentUpdateLogic.h" />
-    <ClInclude Include="..\..\ThirdParty\event\event.h" />
-    <ClInclude Include="..\..\ThirdParty\gl3w\gl3w.h" />
-    <ClInclude Include="..\..\ThirdParty\gl3w\glcorearb.h" />
-    <ClInclude Include="..\..\ThirdParty\glslc\file_includer.h" />
-    <ClInclude Include="..\..\ThirdParty\lodepng\lodepng.h" />
-    <ClInclude Include="..\..\ThirdParty\rbtree\rbtree.h" />
-    <ClInclude Include="..\..\ThirdParty\spirv-cross\GLSL.std.450.h" />
-    <ClInclude Include="..\..\ThirdParty\spirv-cross\spirv.hpp" />
-    <ClInclude Include="..\..\ThirdParty\spirv-cross\spirv_cfg.hpp" />
-    <ClInclude Include="..\..\ThirdParty\spirv-cross\spirv_common.hpp" />
-    <ClInclude Include="..\..\ThirdParty\spirv-cross\spirv_cpp.hpp" />
-    <ClInclude Include="..\..\ThirdParty\spirv-cross\spirv_cross.hpp" />
-    <ClInclude Include="..\..\ThirdParty\spirv-cross\spirv_glsl.hpp" />
-    <ClInclude Include="..\..\ThirdParty\spirv-cross\spirv_hlsl.hpp" />
-    <ClInclude Include="..\..\ThirdParty\spirv-cross\spirv_msl.hpp" />
-    <ClInclude Include="..\..\ThirdParty\tinyxml\tinystr.h" />
-    <ClInclude Include="..\..\ThirdParty\tinyxml\tinyxml.h" />
-    <ClInclude Include="..\..\ThirdParty\zlib\crc32.h" />
-    <ClInclude Include="..\..\ThirdParty\zlib\deflate.h" />
-    <ClInclude Include="..\..\ThirdParty\zlib\gzguts.h" />
-    <ClInclude Include="..\..\ThirdParty\zlib\inffast.h" />
-    <ClInclude Include="..\..\ThirdParty\zlib\inffixed.h" />
-    <ClInclude Include="..\..\ThirdParty\zlib\inflate.h" />
-    <ClInclude Include="..\..\ThirdParty\zlib\inftrees.h" />
-    <ClInclude Include="..\..\ThirdParty\zlib\trees.h" />
-    <ClInclude Include="..\..\ThirdParty\zlib\zconf.h" />
-    <ClInclude Include="..\..\ThirdParty\zlib\zlib.h" />
-    <ClInclude Include="..\..\ThirdParty\zlib\zutil.h" />
-    <ClInclude Include="..\..\ThirdParty\zzip\conf.h" />
-    <ClInclude Include="..\..\ThirdParty\zzip\fetch.h" />
-    <ClInclude Include="..\..\ThirdParty\zzip\file.h" />
-    <ClInclude Include="..\..\ThirdParty\zzip\format.h" />
-    <ClInclude Include="..\..\ThirdParty\zzip\info.h" />
-    <ClInclude Include="..\..\ThirdParty\zzip\lib.h" />
-    <ClInclude Include="..\..\ThirdParty\zzip\plugin.h" />
-    <ClInclude Include="..\..\ThirdParty\zzip\stdint.h" />
-    <ClInclude Include="..\..\ThirdParty\zzip\types.h" />
-    <ClInclude Include="..\..\ThirdParty\zzip\zzip.h" />
-    <ClInclude Include="..\..\ThirdParty\zzip\zzip32.h" />
-    <ClInclude Include="..\..\ThirdParty\zzip\_config.h" />
-    <ClInclude Include="..\..\ThirdParty\zzip\_msvc.h" />
-    <ClInclude Include="..\..\ThirdParty\zzip\__debug.h" />
-    <ClInclude Include="..\..\ThirdParty\zzip\__dirent.h" />
-    <ClInclude Include="..\..\ThirdParty\zzip\__hints.h" />
-    <ClInclude Include="..\..\ThirdParty\zzip\__mmap.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\event\event.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\gl3w\gl3w.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\gl3w\glcorearb.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\glslc\file_includer.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\lodepng\lodepng.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rbtree\rbtree.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\spirv-cross\GLSL.std.450.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\spirv-cross\spirv.hpp" />
+    <ClInclude Include="..\..\Engine\ThirdParty\spirv-cross\spirv_cfg.hpp" />
+    <ClInclude Include="..\..\Engine\ThirdParty\spirv-cross\spirv_common.hpp" />
+    <ClInclude Include="..\..\Engine\ThirdParty\spirv-cross\spirv_cpp.hpp" />
+    <ClInclude Include="..\..\Engine\ThirdParty\spirv-cross\spirv_cross.hpp" />
+    <ClInclude Include="..\..\Engine\ThirdParty\spirv-cross\spirv_glsl.hpp" />
+    <ClInclude Include="..\..\Engine\ThirdParty\spirv-cross\spirv_hlsl.hpp" />
+    <ClInclude Include="..\..\Engine\ThirdParty\spirv-cross\spirv_msl.hpp" />
+    <ClInclude Include="..\..\Engine\ThirdParty\tinyxml\tinystr.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\tinyxml\tinyxml.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\zlib\crc32.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\zlib\deflate.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\zlib\gzguts.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\zlib\inffast.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\zlib\inffixed.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\zlib\inflate.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\zlib\inftrees.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\zlib\trees.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\zlib\zconf.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\zlib\zlib.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\zlib\zutil.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\zzip\conf.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\zzip\fetch.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\zzip\file.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\zzip\format.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\zzip\info.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\zzip\lib.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\zzip\plugin.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\zzip\stdint.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\zzip\types.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\zzip\zzip.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\zzip\zzip32.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\zzip\_config.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\zzip\_msvc.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\zzip\__debug.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\zzip\__dirent.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\zzip\__hints.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\zzip\__mmap.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Engine\Base\src\File.cpp" />
@@ -487,44 +487,44 @@
     <ClCompile Include="..\..\Engine\ThirdParty\eastl\source\red_black_tree.cpp" />
     <ClCompile Include="..\..\Engine\ThirdParty\eastl\source\string.cpp" />
     <ClCompile Include="..\..\Engine\ThirdParty\eastl\source\thread_support.cpp" />
-    <ClCompile Include="..\..\ThirdParty\event\event.c" />
-    <ClCompile Include="..\..\ThirdParty\gl3w\gl3w.c" />
-    <ClCompile Include="..\..\ThirdParty\glslc\file_includer.cc" />
-    <ClCompile Include="..\..\ThirdParty\lodepng\lodepng.cpp" />
-    <ClCompile Include="..\..\ThirdParty\rbtree\rbtree.cpp" />
-    <ClCompile Include="..\..\ThirdParty\spirv-cross\spirv_cfg.cpp" />
-    <ClCompile Include="..\..\ThirdParty\spirv-cross\spirv_cpp.cpp" />
-    <ClCompile Include="..\..\ThirdParty\spirv-cross\spirv_cross.cpp" />
-    <ClCompile Include="..\..\ThirdParty\spirv-cross\spirv_glsl.cpp" />
-    <ClCompile Include="..\..\ThirdParty\spirv-cross\spirv_hlsl.cpp" />
-    <ClCompile Include="..\..\ThirdParty\spirv-cross\spirv_msl.cpp" />
-    <ClCompile Include="..\..\ThirdParty\tinyxml\tinystr.cpp" />
-    <ClCompile Include="..\..\ThirdParty\tinyxml\tinyxml.cpp" />
-    <ClCompile Include="..\..\ThirdParty\tinyxml\tinyxmlerror.cpp" />
-    <ClCompile Include="..\..\ThirdParty\tinyxml\tinyxmlparser.cpp" />
-    <ClCompile Include="..\..\ThirdParty\zlib\adler32.c" />
-    <ClCompile Include="..\..\ThirdParty\zlib\compress.c" />
-    <ClCompile Include="..\..\ThirdParty\zlib\crc32.c" />
-    <ClCompile Include="..\..\ThirdParty\zlib\deflate.c" />
-    <ClCompile Include="..\..\ThirdParty\zlib\gzclose.c" />
-    <ClCompile Include="..\..\ThirdParty\zlib\gzlib.c" />
-    <ClCompile Include="..\..\ThirdParty\zlib\gzread.c" />
-    <ClCompile Include="..\..\ThirdParty\zlib\gzwrite.c" />
-    <ClCompile Include="..\..\ThirdParty\zlib\infback.c" />
-    <ClCompile Include="..\..\ThirdParty\zlib\inffast.c" />
-    <ClCompile Include="..\..\ThirdParty\zlib\inflate.c" />
-    <ClCompile Include="..\..\ThirdParty\zlib\inftrees.c" />
-    <ClCompile Include="..\..\ThirdParty\zlib\trees.c" />
-    <ClCompile Include="..\..\ThirdParty\zlib\uncompr.c" />
-    <ClCompile Include="..\..\ThirdParty\zlib\zutil.c" />
-    <ClCompile Include="..\..\ThirdParty\zzip\dir.c" />
-    <ClCompile Include="..\..\ThirdParty\zzip\err.c" />
-    <ClCompile Include="..\..\ThirdParty\zzip\fetch.c" />
-    <ClCompile Include="..\..\ThirdParty\zzip\file.c" />
-    <ClCompile Include="..\..\ThirdParty\zzip\info.c" />
-    <ClCompile Include="..\..\ThirdParty\zzip\plugin.c" />
-    <ClCompile Include="..\..\ThirdParty\zzip\stat.c" />
-    <ClCompile Include="..\..\ThirdParty\zzip\zip.c" />
+    <ClCompile Include="..\..\Engine\ThirdParty\event\event.c" />
+    <ClCompile Include="..\..\Engine\ThirdParty\gl3w\gl3w.c" />
+    <ClCompile Include="..\..\Engine\ThirdParty\glslc\file_includer.cc" />
+    <ClCompile Include="..\..\Engine\ThirdParty\lodepng\lodepng.cpp" />
+    <ClCompile Include="..\..\Engine\ThirdParty\rbtree\rbtree.cpp" />
+    <ClCompile Include="..\..\Engine\ThirdParty\spirv-cross\spirv_cfg.cpp" />
+    <ClCompile Include="..\..\Engine\ThirdParty\spirv-cross\spirv_cpp.cpp" />
+    <ClCompile Include="..\..\Engine\ThirdParty\spirv-cross\spirv_cross.cpp" />
+    <ClCompile Include="..\..\Engine\ThirdParty\spirv-cross\spirv_glsl.cpp" />
+    <ClCompile Include="..\..\Engine\ThirdParty\spirv-cross\spirv_hlsl.cpp" />
+    <ClCompile Include="..\..\Engine\ThirdParty\spirv-cross\spirv_msl.cpp" />
+    <ClCompile Include="..\..\Engine\ThirdParty\tinyxml\tinystr.cpp" />
+    <ClCompile Include="..\..\Engine\ThirdParty\tinyxml\tinyxml.cpp" />
+    <ClCompile Include="..\..\Engine\ThirdParty\tinyxml\tinyxmlerror.cpp" />
+    <ClCompile Include="..\..\Engine\ThirdParty\tinyxml\tinyxmlparser.cpp" />
+    <ClCompile Include="..\..\Engine\ThirdParty\zlib\adler32.c" />
+    <ClCompile Include="..\..\Engine\ThirdParty\zlib\compress.c" />
+    <ClCompile Include="..\..\Engine\ThirdParty\zlib\crc32.c" />
+    <ClCompile Include="..\..\Engine\ThirdParty\zlib\deflate.c" />
+    <ClCompile Include="..\..\Engine\ThirdParty\zlib\gzclose.c" />
+    <ClCompile Include="..\..\Engine\ThirdParty\zlib\gzlib.c" />
+    <ClCompile Include="..\..\Engine\ThirdParty\zlib\gzread.c" />
+    <ClCompile Include="..\..\Engine\ThirdParty\zlib\gzwrite.c" />
+    <ClCompile Include="..\..\Engine\ThirdParty\zlib\infback.c" />
+    <ClCompile Include="..\..\Engine\ThirdParty\zlib\inffast.c" />
+    <ClCompile Include="..\..\Engine\ThirdParty\zlib\inflate.c" />
+    <ClCompile Include="..\..\Engine\ThirdParty\zlib\inftrees.c" />
+    <ClCompile Include="..\..\Engine\ThirdParty\zlib\trees.c" />
+    <ClCompile Include="..\..\Engine\ThirdParty\zlib\uncompr.c" />
+    <ClCompile Include="..\..\Engine\ThirdParty\zlib\zutil.c" />
+    <ClCompile Include="..\..\Engine\ThirdParty\zzip\dir.c" />
+    <ClCompile Include="..\..\Engine\ThirdParty\zzip\err.c" />
+    <ClCompile Include="..\..\Engine\ThirdParty\zzip\fetch.c" />
+    <ClCompile Include="..\..\Engine\ThirdParty\zzip\file.c" />
+    <ClCompile Include="..\..\Engine\ThirdParty\zzip\info.c" />
+    <ClCompile Include="..\..\Engine\ThirdParty\zzip\plugin.c" />
+    <ClCompile Include="..\..\Engine\ThirdParty\zzip\stat.c" />
+    <ClCompile Include="..\..\Engine\ThirdParty\zzip\zip.c" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
