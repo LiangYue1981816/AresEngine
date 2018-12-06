@@ -735,6 +735,12 @@
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxResourceLoader.h">
       <Filter>Engine\Renderer\Gfx\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Engine\Scene\include\SceneLoader.h">
+      <Filter>Engine\Scene\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Scene\include\SceneDefinition.h">
+      <Filter>Engine\Scene\Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\ThirdParty\event\event.c">
@@ -1131,6 +1137,9 @@
       <Filter>Engine\Renderer\Gfx\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\Scene\src\SceneLoader.cpp">
+      <Filter>Engine\Scene\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Scene\src\SceneLoaderMesh.cpp">
       <Filter>Engine\Scene\Source Files</Filter>
     </ClCompile>
   </ItemGroup>

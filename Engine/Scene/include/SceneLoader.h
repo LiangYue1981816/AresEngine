@@ -2,6 +2,9 @@
 #include "SceneHeader.h"
 
 
+#define SceneLoader() CSceneLoader::GetInstance()
+
+
 class CALL_API CSceneLoader
 {
 public:

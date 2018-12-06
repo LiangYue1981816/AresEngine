@@ -78,6 +78,8 @@ private:
 	CGfxResourceLoader *m_pResourceLoader;
 
 	CSceneManager *m_pSceneManager;
+	CSceneLoader *m_pSceneLoader;
+
 	CRenderSolutionBase *m_pRenderSolution;
 
 private:

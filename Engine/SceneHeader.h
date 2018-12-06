@@ -9,3 +9,4 @@
 #include "Base/include/TaskGraph.h"
 
 #include "Scene/include/SceneManager.h"
+#include "Scene/include/SceneLoader.h"

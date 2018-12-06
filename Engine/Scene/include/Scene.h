@@ -18,10 +18,6 @@ public:
 	CSceneNode* GetRootNode(void) const;
 	CSceneManager* GetSceneManager(void) const;
 
-public:
-	CSceneNode* LoadMesh(const char *szFileName, CSceneNode *pParentSceneNode = nullptr);
-	void FreeNode(CSceneNode *pNode);
-
 
 private:
 	uint32_t m_name;

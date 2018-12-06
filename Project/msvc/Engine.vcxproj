@@ -339,6 +339,8 @@
     <ClInclude Include="..\..\Engine\Scene\include\ComponentPointLight.h" />
     <ClInclude Include="..\..\Engine\Scene\include\ComponentSkin.h" />
     <ClInclude Include="..\..\Engine\Scene\include\Scene.h" />
+    <ClInclude Include="..\..\Engine\Scene\include\SceneDefinition.h" />
+    <ClInclude Include="..\..\Engine\Scene\include\SceneLoader.h" />
     <ClInclude Include="..\..\Engine\Scene\include\SceneManager.h" />
     <ClInclude Include="..\..\Engine\Scene\include\SceneNode.h" />
     <ClInclude Include="..\..\Engine\Scene\src\TaskComponentUpdateCamera.h" />
@@ -472,6 +474,7 @@
     <ClCompile Include="..\..\Engine\Scene\src\ComponentSkin.cpp" />
     <ClCompile Include="..\..\Engine\Scene\src\Scene.cpp" />
     <ClCompile Include="..\..\Engine\Scene\src\SceneLoader.cpp" />
+    <ClCompile Include="..\..\Engine\Scene\src\SceneLoaderMesh.cpp" />
     <ClCompile Include="..\..\Engine\Scene\src\SceneManager.cpp" />
     <ClCompile Include="..\..\Engine\Scene\src\SceneNode.cpp" />
     <ClCompile Include="..\..\Engine\ThirdParty\eastl\source\allocator_eastl.cpp" />
