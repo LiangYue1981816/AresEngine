@@ -55,7 +55,7 @@
 #define GLES3Renderer() ((CGLES3Renderer *)CGfxRenderer::GetInstance())
 
 
-class CGLES3Renderer : public CGfxRenderer
+class CALL_API CGLES3Renderer : public CGfxRenderer
 {
 	friend class CGLES3RenderPass;
 	friend class CGLES3FrameBuffer;
