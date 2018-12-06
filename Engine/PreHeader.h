@@ -40,9 +40,4 @@
 #endif
 
 
-#include "event.h"
-#include "pthread.h"
-#include "zzip/zzip.h"
-
-
 #include "Define.h"

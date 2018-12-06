@@ -1,5 +1,6 @@
 #pragma once
 #include "PreHeader.h"
+#include "zzip/zzip.h"
 
 
 #define FileManager() CFileManager::GetInstance()

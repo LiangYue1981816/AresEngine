@@ -1,11 +1,11 @@
 #pragma once
 #include "PreHeader.h"
 
-#include <gles3/gl31.h>
-#include <gli/gli.hpp>
-#include <spirv-cross/spirv_cfg.hpp>
-#include <spirv-cross/spirv_msl.hpp>
-#include <spirv-cross/spirv_glsl.hpp>
+#include "gles3/gl31.h"
+#include "gli/gli.hpp"
+#include "spirv-cross/spirv_cfg.hpp"
+#include "spirv-cross/spirv_msl.hpp"
+#include "spirv-cross/spirv_glsl.hpp"
 
 #include "GfxProfiler.h"
 

@@ -1,5 +1,6 @@
 #pragma once
 #include "PreHeader.h"
+#include "zzip/zzip.h"
 
 
 class CALL_API CStream

@@ -1,5 +1,6 @@
 #pragma once
 #include "PreHeader.h"
+#include "pthread.h"
 
 
 class CALL_API mutex_autolock

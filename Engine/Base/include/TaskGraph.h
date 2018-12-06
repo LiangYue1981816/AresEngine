@@ -1,5 +1,7 @@
 #pragma once
 #include "PreHeader.h"
+#include "event.h"
+#include "pthread.h"
 
 
 class CALL_API CTask
