@@ -1,6 +1,12 @@
 #pragma once
 #include "PreHeader.h"
 
+#include "gles3/gl31.h"
+#include "ThirdParty/gli/gli.hpp"
+#include "ThirdParty/spirv-cross/spirv_cfg.hpp"
+#include "ThirdParty/spirv-cross/spirv_msl.hpp"
+#include "ThirdParty/spirv-cross/spirv_glsl.hpp"
+
 #include "Memory/include/Allocator.h"
 
 #include "Base/include/Lock.h"
