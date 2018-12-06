@@ -35,9 +35,9 @@ extern "C" JNIEXPORT void JNICALL Java_com_engine_application_MainActivity_InitE
         for (int y = -2; y <= 2; y++) {
             for (int x = -2; x <= 2; x++) {
                 pMainScene[y + 2][x + 2] = SceneManager()->CreateScene((y + 2) * 5 + (x + 2));
-                pMainScene[y + 2][x + 2]->LoadMesh("sponza.xml");
                 pMainScene[y + 2][x + 2]->GetRootNode()->SetWorldScale(0.5f, 0.5f, 0.5f);
                 pMainScene[y + 2][x + 2]->GetRootNode()->SetWorldPosition(x * 17.5f, 0.0f, y * 10.0f);
+                SceneLoader()->LoadMesh("sponza.xml", pMainScene[y + 2][x + 2]->GetRootNode());
             }
         }
     }
