@@ -44,14 +44,6 @@
 #define ASSERT                         assert
 #endif
 
-#ifndef max
-#define max(a,b)                       (((a) > (b)) ? (a) : (b))
-#endif
-
-#ifndef min
-#define min(a,b)                       (((a) < (b)) ? (a) : (b))
-#endif
-
 #define ALIGN_BYTE(a, b)               ((((a) + (b) - 1) / (b)) * (b))
 #define ALIGN_4BYTE(a)                 ALIGN_BYTE(a, 4)
 #define ALIGN_16BYTE(a)                ALIGN_BYTE(a, 16)

@@ -1,5 +1,4 @@
 #pragma once
-#include "Define.h"
 #include "TaskGraph.h"
 #include "Component.h"
 #include "ComponentManager.h"
@@ -36,8 +35,8 @@ public:
 	{
 		if (m_pComponentManager) {
 			size_t count = (m_pComponentManager->GetComponentCount() + (THREAD_COUNT - m_pComponentManager->GetComponentCount() % THREAD_COUNT)) / THREAD_COUNT;
-			size_t indexBegin = max(count * m_indexThread, 0);
-			size_t indexEnd = min(count * (m_indexThread + 1), m_pComponentManager->GetComponentCount());
+			size_t indexBegin = std::max(count * m_indexThread, (size_t)0);
+			size_t indexEnd = std::min(count * (m_indexThread + 1), m_pComponentManager->GetComponentCount());
 
 			for (size_t index = indexBegin; index < indexEnd; index++) {
 				m_pComponentManager->GetComponentByIndex(index)->TaskUpdateCamera(m_pCamera, m_indexThread, m_indexQueue);

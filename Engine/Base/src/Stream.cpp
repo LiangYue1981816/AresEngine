@@ -359,7 +359,7 @@ size_t CStream::Read(void *pBuffer, size_t size, size_t count)
 	size_t readSize;
 
 	readSize = size * count;
-	readSize = min(readSize, GetFreeSize());
+	readSize = std::min(readSize, GetFreeSize());
 
 	memcpy(pBuffer, m_pAddress + m_position, readSize);
 	m_position += readSize;

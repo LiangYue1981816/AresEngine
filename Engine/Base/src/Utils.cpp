@@ -191,8 +191,8 @@ CALL_API size_t freadstring(char *buffer, size_t size, FILE *stream)
 	size_t reads = 0;
 
 	reads += fread(&len, sizeof(len), 1, stream);
-	reads += fread(buffer, sizeof(*buffer), min(len, size), stream);
-	buffer[min(len, size)] = 0;
+	reads += fread(buffer, sizeof(*buffer), std::min(len, size), stream);
+	buffer[std::min(len, size)] = 0;
 
 	return reads;
 }
@@ -202,7 +202,7 @@ CALL_API size_t fwritestring(const char *buffer, size_t size, FILE *stream)
 	size_t len = 0;
 	size_t writes = 0;
 
-	len = min(strlen(buffer), size);
+	len = std::min(strlen(buffer), size);
 	writes += fwrite(&len, sizeof(len), 1, stream);
 	writes += fwrite(buffer, sizeof(*buffer), len, stream);
 

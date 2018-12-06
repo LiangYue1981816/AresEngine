@@ -24,6 +24,7 @@
 #endif
 
 
+#include <algorithm>
 #include <atomic>
 #include <string>
 #include <map>
