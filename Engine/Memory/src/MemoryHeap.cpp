@@ -3,7 +3,6 @@
 #include <stdlib.h>
 #include <assert.h>
 #include "rbtree.h"
-#include "pthread.h"
 #include "MemoryHeap.h"
 #include "MemorySystem.h"
 
