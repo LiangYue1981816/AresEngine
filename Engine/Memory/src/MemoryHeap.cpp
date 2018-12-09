@@ -26,9 +26,16 @@
 #define ALIGN_4KBYTE(a)  ALIGN_BYTE(a, 4096)
 
 
+// XXXXXXXCCCCCCCCCCCCCCCCCCCCCCCCC
+// C: size. max size 32MB.
+// X: other.
+
+#define SET_BLOCK_DATA(pBlock, data) (pBlock)->dwAddress = uint32_t(data)
+#define SET_BLOCK_SIZE(pBlock, size) (pBlock)->dwAddress = ((pBlock)->dwAddress & 0xFE000000) | (uint32_t(size))
+
 #define NODE_INDEX(size) (((size) / BLOCK_UNIT_SIZE) - 1)
 
-static const uint32_t BLOCK_POOL_SIZE = 4 * 1024 * 1024;
+static const uint32_t BLOCK_POOL_SIZE = 8 * 1024 * 1024;
 static const uint32_t BLOCK_UNIT_SIZE = 4 * 1024;
 
 struct BLOCK;
@@ -268,7 +275,9 @@ static void* HEAP_PoolAlloc(BLOCK_POOL *pBlockPool, uint32_t dwMemSize)
 			pBlock->dwInUse = true;
 			pBlockPool->dwSize -= pBlock->dwSize;
 
-			pPointer = &pBlock->dwAddress; *pPointer++ = dwMemSize;
+			SET_BLOCK_DATA(pBlock, 0);
+			SET_BLOCK_SIZE(pBlock, dwMemSize);
+			pPointer = (uint32_t *)((uint8_t *)pBlock + sizeof(BLOCK));
 		}
 	}
 

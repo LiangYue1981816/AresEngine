@@ -18,24 +18,28 @@
 // A: system memory or allocator memory.
 // B: pool id. max pool number 64.
 // C: size. max size 32MB.
-#define GET_MEM_SIZE(ptr) (*((uint32_t *)(ptr) - 1) & 0x01FFFFFF)
 
-#define GET_MEM_SYSTEM(ptr) (*((uint32_t *)(ptr) - 1) & 0x80000000)
-#define SET_MEM_SYSTEM(ptr)  *((uint32_t *)(ptr) - 1) = (*((uint32_t *)(ptr) - 1) | 0x80000000)
-
-#define GET_MEM_POOL_ID(ptr) ((*((uint32_t *)(ptr) - 1) & 0x7E000000) >> 25)
-#define SET_MEM_POOL_ID(ptr)   *((uint32_t *)(ptr) - 1) = ((indexPool & 0x0000003F) << 25) | (*((uint32_t *)(ptr) - 1) & 0x81FFFFFF)
+#define SET_MEM_SYSTEM(ptr)     *((uint32_t *)(ptr) - 1) = (*((uint32_t *)(ptr) - 1) & 0x7FFFFFFF) | 0x80000000
+#define SET_MEM_POOLID(ptr)     *((uint32_t *)(ptr) - 1) = (*((uint32_t *)(ptr) - 1) & 0x81FFFFFF) | (uint32_t(indexPool) << 25)
+#define SET_MEM_SIZE(ptr, size) *((uint32_t *)(ptr) - 1) = (*((uint32_t *)(ptr) - 1) & 0xFE000000) | (uint32_t(size))
+#define GET_MEM_SYSTEM(ptr)   ((*((uint32_t *)(ptr) - 1) >> 31) & 0x00000001)
+#define GET_MEM_POOLID(ptr)   ((*((uint32_t *)(ptr) - 1) >> 25) & 0x0000003F)
+#define GET_MEM_SIZE(ptr)      (*((uint32_t *)(ptr) - 1) & 0x01FFFFFF)
 
 
 #define MAX_POOL_COUNT 64
 static bool bInitAllocator = false;
-static std::thread::id threads[MAX_POOL_COUNT];
 static POOL_ALLOCATOR *pPoolAllocators[MAX_POOL_COUNT] = { nullptr };
 static HEAP_ALLOCATOR *pHeapAllocator = nullptr;
 
 
 static int GetPoolIndex(void)
 {
+	/*
+	static uint32_t count = 0;
+	return (count++) % 4; // MAX_POOL_COUNT
+	/*/
+	static std::thread::id threads[MAX_POOL_COUNT];
 	std::thread::id thread = std::this_thread::get_id();
 
 	for (int index = 0; index < MAX_POOL_COUNT; index++) {
@@ -49,7 +53,8 @@ static int GetPoolIndex(void)
 		}
 	}
 
-	return -1;
+	return MAX_POOL_COUNT - 1;
+	//*/
 }
 
 CALL_API void InitAllocator(void)
@@ -87,7 +92,7 @@ CALL_API void* AllocMemory(size_t size)
 #ifdef MEMORY_ALLOCATOR
 	uint32_t *pPointer = nullptr;
 
-	if (bInitAllocator && size < 0x01FFFFFF) {
+	if (bInitAllocator && size <= 0x00400000) {
 		int indexPool = GetPoolIndex();
 
 		if (pPointer == nullptr) {
@@ -98,10 +103,12 @@ CALL_API void* AllocMemory(size_t size)
 			pPointer = (uint32_t *)HEAP_Alloc(pHeapAllocator, size);
 		}
 
-		SET_MEM_POOL_ID(pPointer);
+		SET_MEM_POOLID(pPointer);
 	}
 	else {
-		pPointer = (uint32_t *)_malloc(size + 4); *pPointer++ = (uint32_t)size;
+		pPointer = (uint32_t *)_malloc(size + 4) + 1;
+
+		SET_MEM_SIZE(pPointer, size);
 		SET_MEM_SYSTEM(pPointer);
 	}
 
@@ -119,7 +126,7 @@ CALL_API void FreeMemory(void *pPointer)
 
 #ifdef MEMORY_ALLOCATOR
 	if (bInitAllocator && GET_MEM_SYSTEM(pPointer) == 0) {
-		int indexPool = GET_MEM_POOL_ID(pPointer);
+		int indexPool = GET_MEM_POOLID(pPointer);
 
 		if (pPointer) {
 			if (POOL_Free(pHeapAllocator, pPoolAllocators[indexPool], pPointer)) {
@@ -134,7 +141,7 @@ CALL_API void FreeMemory(void *pPointer)
 		}
 	}
 	else {
-		_free((uint8_t *)pPointer - 4);
+		_free((uint32_t *)pPointer - 1);
 	}
 #else
 	_free(pPointer);

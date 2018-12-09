@@ -13,8 +13,14 @@
 #define ALIGN_4KBYTE(a)  ALIGN_BYTE(a, 4096)
 
 
-#define GET_MEM_SIZE(ptr) (*((uint32_t *)(ptr) - 1) & 0x01FFFFFF)
+// XXXXXXXCCCCCCCCCCCCCCCCCCCCCCCCC
+// C: size. max size 32MB.
+// X: other.
 
+#define SET_BLOCK_DATA(pBlock, data) (pBlock)->dwAddress = uint32_t(data)
+#define SET_BLOCK_SIZE(pBlock, size) (pBlock)->dwAddress = ((pBlock)->dwAddress & 0xFE000000) | (uint32_t(size))
+
+#define GET_MEM_SIZE(ptr) (*((uint32_t *)(ptr) - 1) & 0x01FFFFFF)
 #define GET_BLOCK(pBlock) (BLOCK *)((uint8_t *)pBlock - ALIGN_4BYTE(sizeof(BLOCK)))
 #define GET_BLOCK_POOL(pBlock) (BLOCK_POOL *)((uint8_t *)(pBlock) - (pBlock)->dwOffset - ALIGN_16BYTE(sizeof(BLOCK_POOL)))
 #define GET_BLOCK_NEXT(pBlock) (BLOCK *)((uint8_t *)GET_BLOCK_POOL(pBlock) + (pBlock)->dwOffsetNext + ALIGN_16BYTE(sizeof(BLOCK_POOL)))
@@ -415,15 +421,16 @@ void* POOL_Alloc(HEAP_ALLOCATOR *pHeapAllocator, POOL_ALLOCATOR *pPoolAllocator,
 					pPoolHead->pBlockPoolHead = pPoolHead->pBlockPoolFreeHead;
 				}
 
-				pPointer = &pPoolHead->pBlockPoolFreeHead->pBlockHead->dwAddress;
+				SET_BLOCK_DATA(pPoolHead->pBlockPoolFreeHead->pBlockHead, 0);
+				SET_BLOCK_SIZE(pPoolHead->pBlockPoolFreeHead->pBlockHead, dwMemSize);
+				pPointer = (uint32_t *)((uint8_t *)pPoolHead->pBlockPoolFreeHead->pBlockHead + sizeof(BLOCK));
+
 				pPoolHead->pBlockPoolFreeHead->pBlockHead = GET_BLOCK_NEXT(pPoolHead->pBlockPoolFreeHead->pBlockHead);
 				pPoolHead->pBlockPoolFreeHead->dwBlockIndex++;
 
 				if (pPoolHead->pBlockPoolFreeHead->dwBlockIndex == pPoolHead->pBlockPoolFreeHead->dwBlockCount) {
 					pPoolHead->pBlockPoolFreeHead = pPoolHead->pBlockPoolFreeHead->pFreeNext;
 				}
-
-				*pPointer++ = dwMemSize;
 			}
 			atomic_spin_unlock(&pPoolAllocator->lock);
 		}
