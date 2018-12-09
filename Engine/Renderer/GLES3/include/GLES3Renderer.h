@@ -99,6 +99,9 @@ public:
 
 
 public:
+	uint32_t GetLastError(void) const;
+
+public:
 	CGfxSwapChain* GetSwapChain(void) const;
 
 public:

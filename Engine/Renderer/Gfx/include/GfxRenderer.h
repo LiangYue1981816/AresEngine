@@ -76,6 +76,9 @@ public:
 
 
 public:
+	virtual uint32_t GetLastError(void) const = 0;
+
+public:
 	virtual CGfxSwapChain* GetSwapChain(void) const = 0;
 
 public:

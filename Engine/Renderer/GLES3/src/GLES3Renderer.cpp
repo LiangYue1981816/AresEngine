@@ -55,6 +55,11 @@ CGLES3Renderer::~CGLES3Renderer(void)
 	delete m_pGlobalMaterialPass;
 }
 
+uint32_t CGLES3Renderer::GetLastError(void) const
+{
+	return glGetError();
+}
+
 CGfxSwapChain* CGLES3Renderer::GetSwapChain(void) const
 {
 	return m_pSwapChain;

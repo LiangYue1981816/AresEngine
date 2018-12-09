@@ -141,7 +141,8 @@ CGfxProfilerSample::CGfxProfilerSample(CGfxProfiler::SampleType type, const char
 CGfxProfilerSample::~CGfxProfilerSample(void)
 {
 #ifdef DEBUG
-	uint32_t err = glGetError();
+	uint32_t err = Renderer()->GetLastError();
+
 	if (err != NO_ERROR) {
 		LogOutput(LOG_TAG_RENDERER, "%s error=0x%x\n", m_name, err);
 	}
