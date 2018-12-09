@@ -24,7 +24,7 @@ void CGLES3Mesh::Release(void)
 	m_pManager->Destroy(this);
 }
 
-bool CGLES3Mesh::CreateIndexBuffer(uint32_t type, size_t size, bool bDynamic, const void *pBuffer)
+bool CGLES3Mesh::CreateIndexBuffer(GfxIndexType type, size_t size, bool bDynamic, const void *pBuffer)
 {
 	if (m_pIndexBuffer == nullptr) {
 		m_pIndexBuffer = new CGLES3IndexBuffer(type, size, bDynamic);
@@ -36,10 +36,10 @@ bool CGLES3Mesh::CreateIndexBuffer(uint32_t type, size_t size, bool bDynamic, co
 	}
 }
 
-bool CGLES3Mesh::CreateVertexBuffer(uint32_t binding, uint32_t format, size_t size, bool bDynamic, const void *pBuffer)
+bool CGLES3Mesh::CreateVertexBuffer(uint32_t binding, uint32_t vertexFormat, size_t size, bool bDynamic, const void *pBuffer)
 {
 	if (m_pVertexBuffer == nullptr) {
-		m_pVertexBuffer = new CGLES3VertexBuffer(binding, format, size, bDynamic);
+		m_pVertexBuffer = new CGLES3VertexBuffer(binding, vertexFormat, size, bDynamic);
 		m_pVertexBuffer->BufferData(0, size, pBuffer);
 		return true;
 	}
@@ -48,14 +48,14 @@ bool CGLES3Mesh::CreateVertexBuffer(uint32_t binding, uint32_t format, size_t si
 	}
 }
 
-bool CGLES3Mesh::CreateVertexArrayObject(uint32_t drawCount, uint32_t binding, uint32_t format)
+bool CGLES3Mesh::CreateVertexArrayObject(uint32_t drawCount, uint32_t binding, uint32_t instanceFormat)
 {
 	if (m_draws.empty() && m_pIndexBuffer && m_pVertexBuffer) {
 		m_draws.resize(drawCount);
-		m_instanceFormat = format;
+		m_instanceFormat = instanceFormat;
 
 		for (int indexDraw = 0; indexDraw < (int)drawCount; indexDraw++) {
-			m_draws[indexDraw].pInstanceBuffer = new CGLES3InstanceBuffer(binding, format);
+			m_draws[indexDraw].pInstanceBuffer = new CGLES3InstanceBuffer(binding, instanceFormat);
 			m_draws[indexDraw].pVertexArrayObject = new CGLES3VertexArrayObject;
 			m_draws[indexDraw].pVertexArrayObject->Buffer(m_pIndexBuffer, m_pVertexBuffer, m_draws[indexDraw].pInstanceBuffer);
 		}
@@ -163,13 +163,13 @@ const glm::aabb CGLES3Mesh::GetLocalAABB(int indexDraw) const
 	}
 }
 
-uint32_t CGLES3Mesh::GetIndexType(void) const
+GfxIndexType CGLES3Mesh::GetIndexType(void) const
 {
 	if (m_pIndexBuffer) {
 		return m_pIndexBuffer->GetIndexType();
 	}
 	else {
-		return GL_INVALID_ENUM;
+		return GFX_INDEX_INVALID_ENUM;
 	}
 }
 

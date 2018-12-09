@@ -81,9 +81,9 @@ public:
 	virtual bool CmdSetInstanceBufferData(const CGfxMeshPtr &ptrMesh, const int indexDraw, const uint8_t *pInstanceBuffer, uint32_t size) = 0;
 	virtual bool CmdSetDrawIndirectBufferData(const CGfxMeshPtr &ptrMesh, const int indexDraw, int instanceCount) = 0;
 
-	virtual bool CmdDrawElements(uint32_t mode, uint32_t type, int offset, int count) = 0;
-	virtual bool CmdDrawInstance(uint32_t mode, uint32_t type, int offset, int count, int instanceCount) = 0;
-	virtual bool CmdDrawIndirect(uint32_t mode, uint32_t type, int offset) = 0;
+	virtual bool CmdDrawElements(GfxDrawMode mode, GfxIndexType type, int offset, int count) = 0;
+	virtual bool CmdDrawInstance(GfxDrawMode mode, GfxIndexType type, int offset, int count, int instanceCount) = 0;
+	virtual bool CmdDrawIndirect(GfxDrawMode mode, GfxIndexType type, int offset) = 0;
 
 	virtual bool CmdExecute(const CGfxCommandBufferPtr &ptrCommandBuffer) = 0;
 

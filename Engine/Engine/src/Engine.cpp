@@ -1,4 +1,5 @@
 #include "EngineHeader.h"
+#include "GLES3Renderer.h"
 
 
 extern int dump_memory_objects();
@@ -11,10 +12,10 @@ CEngine* CEngine::GetInstance(void)
 	return pInstance;
 }
 
-void CEngine::Create(GfxApi api, RenderSolution solution, void *hDC, int width, int height, uint32_t format)
+void CEngine::Create(GfxApi api, RenderSolution solution, void *hDC, int width, int height, GfxPixelFormat pixelFormat)
 {
 	if (pInstance == nullptr) {
-		pInstance = new CEngine(api, solution, hDC, width, height, format);
+		pInstance = new CEngine(api, solution, hDC, width, height, pixelFormat);
 	}
 }
 
@@ -32,7 +33,7 @@ void CEngine::Destroy(void)
 #endif
 }
 
-CEngine::CEngine(GfxApi api, RenderSolution solution, void *hDC, int width, int height, uint32_t format)
+CEngine::CEngine(GfxApi api, RenderSolution solution, void *hDC, int width, int height, GfxPixelFormat pixelFormat)
 	: m_indexQueue(0)
 
 	, m_lastTime(0.0f)
@@ -51,7 +52,7 @@ CEngine::CEngine(GfxApi api, RenderSolution solution, void *hDC, int width, int 
 
 	switch ((int)api) {
 	case GFX_API_GLES3:
-		m_pRenderer = new CGLES3Renderer(hDC, width, height, format);
+		m_pRenderer = new CGLES3Renderer(hDC, width, height, pixelFormat);
 		break;
 
 	case GFX_API_VULKAN:

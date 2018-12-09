@@ -436,7 +436,7 @@ bool CGLES3CommandBuffer::CmdSetDrawIndirectBufferData(const CGfxMeshPtr &ptrMes
 	return false;
 }
 
-bool CGLES3CommandBuffer::CmdDrawElements(uint32_t mode, uint32_t type, int offset, int count)
+bool CGLES3CommandBuffer::CmdDrawElements(GfxDrawMode mode, GfxIndexType type, int offset, int count)
 {
 	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
 		m_pCommands.emplace_back(new CGLES3CommandDrawElements(mode, type, offset, count));
@@ -446,7 +446,7 @@ bool CGLES3CommandBuffer::CmdDrawElements(uint32_t mode, uint32_t type, int offs
 	return false;
 }
 
-bool CGLES3CommandBuffer::CmdDrawInstance(uint32_t mode, uint32_t type, int offset, int count, int instanceCount)
+bool CGLES3CommandBuffer::CmdDrawInstance(GfxDrawMode mode, GfxIndexType type, int offset, int count, int instanceCount)
 {
 	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
 		m_pCommands.emplace_back(new CGLES3CommandDrawInstance(mode, type, offset, count, instanceCount));
@@ -456,7 +456,7 @@ bool CGLES3CommandBuffer::CmdDrawInstance(uint32_t mode, uint32_t type, int offs
 	return false;
 }
 
-bool CGLES3CommandBuffer::CmdDrawIndirect(uint32_t mode, uint32_t type, int offset)
+bool CGLES3CommandBuffer::CmdDrawIndirect(GfxDrawMode mode, GfxIndexType type, int offset)
 {
 	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
 		m_pCommands.emplace_back(new CGLES3CommandDrawIndirect(mode, type, offset));

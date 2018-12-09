@@ -24,7 +24,7 @@ public:
 	virtual bool LoadTexture2DArray(const char *szFileName, CGfxTexture2DArray *pTexture2DArray);
 	virtual bool LoadTexture2DArrayLayer(const char *szFileName, int layer, CGfxTexture2DArray *pTexture2DArray);
 	virtual bool LoadTextureCubeMap(const char *szFileName, CGfxTextureCubeMap *pTextureCubeMap);
-	virtual bool LoadTextureCubeMapFace(const char *szFileName, int face, CGfxTextureCubeMap *pTextureCubeMap);
+	virtual bool LoadTextureCubeMapFace(const char *szFileName, GfxTextureCubeMapFace face, CGfxTextureCubeMap *pTextureCubeMap);
 
 
 protected:

@@ -5,8 +5,8 @@
 class CALL_API CGfxInstanceBuffer
 {
 public:
-	CGfxInstanceBuffer(uint32_t binding, uint32_t format)
-		: m_format(format)
+	CGfxInstanceBuffer(uint32_t binding, uint32_t instanceFormat)
+		: m_format(instanceFormat)
 		, m_count(0)
 		, m_size(INSTANCE_BUFFER_SIZE)
 	{

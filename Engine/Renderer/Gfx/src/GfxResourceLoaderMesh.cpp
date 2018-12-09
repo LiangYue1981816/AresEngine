@@ -79,7 +79,7 @@ bool CGfxResourceLoader::LoadMesh(const char *szFileName, CGfxMesh *pMesh, uint3
 		stream.Seek(meshHeader.vertexBufferOffset, SEEK_SET);
 		void *pVertexBuffer = stream.GetCurrentAddress();
 
-		if (pMesh->CreateIndexBuffer(GL_UNSIGNED_INT, meshHeader.indexBufferSize, false, pIndexBuffer) == false) { err = -2; goto ERR; }
+		if (pMesh->CreateIndexBuffer(GFX_INDEX_UNSIGNED_INT, meshHeader.indexBufferSize, false, pIndexBuffer) == false) { err = -2; goto ERR; }
 		if (pMesh->CreateVertexBuffer(0, meshHeader.format, meshHeader.vertexBufferSize, false, pVertexBuffer) == false) { err = -3; goto ERR; }
 		if (pMesh->CreateVertexArrayObject(meshHeader.numDraws, 1, instanceFormat) == false) { err = -4; goto ERR; }
 		if (pMesh->CreateDrawIndirectBuffer(meshHeader.numDraws) == false) { err = -5; goto ERR; }

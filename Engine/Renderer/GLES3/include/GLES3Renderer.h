@@ -94,7 +94,7 @@ class CALL_API CGLES3Renderer : public CGfxRenderer
 
 
 public:
-	CGLES3Renderer(void *hDC, int width, int height, uint32_t format);
+	CGLES3Renderer(void *hDC, int width, int height, GfxPixelFormat pixelFormat);
 	virtual ~CGLES3Renderer(void);
 
 
@@ -105,7 +105,7 @@ public:
 	CGfxShader* CreateShader(const char *szFileName, shader_kind kind);
 	CGfxPipelineCompute* CreatePipelineCompute(const CGfxShader *pComputeShader);
 	CGfxPipelineGraphics* CreatePipelineGraphics(const CGfxShader *pVertexShader, const CGfxShader *pFragmentShader, const PipelineState &state);
-	CGfxSampler* CreateSampler(uint32_t minFilter, uint32_t magFilter, uint32_t addressMode);
+	CGfxSampler* CreateSampler(GfxMinFilter minFilter, GfxMagFilter magFilter, GfxAddressMode addressMode);
 
 public:
 	CGfxRenderPassPtr NewRenderPass(int numAttachments, int numSubpasses);

@@ -8,7 +8,7 @@ class CGLES3InstanceBuffer : public CGfxInstanceBuffer
 
 
 private:
-	CGLES3InstanceBuffer(uint32_t binding, uint32_t format);
+	CGLES3InstanceBuffer(uint32_t binding, uint32_t instanceFormat);
 	virtual ~CGLES3InstanceBuffer(void);
 
 

@@ -5,7 +5,7 @@
 class CGLES3CommandDrawInstance : public CGfxCommandBase
 {
 public:
-	CGLES3CommandDrawInstance(uint32_t mode, uint32_t type, uint32_t offset, int count, int instanceCount)
+	CGLES3CommandDrawInstance(GfxDrawMode mode, GfxIndexType type, uint32_t offset, int count, int instanceCount)
 		: m_mode(mode)
 		, m_type(type)
 		, m_offset(offset)
@@ -24,14 +24,14 @@ public:
 	{
 		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_DRAW_INSTANCE, "CommandDrawInstance");
 		{
-			glDrawElementsInstanced(m_mode, m_count, m_type, (const void *)m_offset, m_instanceCount);
+			glDrawElementsInstanced(GLDrawMode(m_mode), m_count, GLIndexType(m_type), (const void *)m_offset, m_instanceCount);
 		}
 	}
 
 
 private:
-	uint32_t m_mode;
-	uint32_t m_type;
+	GfxDrawMode m_mode;
+	GfxIndexType m_type;
 	uintptr_t m_offset;
 	int m_count;
 	int m_instanceCount;

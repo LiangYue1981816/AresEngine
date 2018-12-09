@@ -5,7 +5,7 @@
 class CGLES3CommandDrawElements : public CGfxCommandBase
 {
 public:
-	CGLES3CommandDrawElements(uint32_t mode, uint32_t type, uint32_t offset, int count)
+	CGLES3CommandDrawElements(GfxDrawMode mode, GfxIndexType type, uint32_t offset, int count)
 		: m_mode(mode)
 		, m_type(type)
 		, m_offset(offset)
@@ -23,14 +23,14 @@ public:
 	{
 		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_DRAW_ELEMENTS, "CommandDrawElements");
 		{
-			glDrawElements(m_mode, m_count, m_type, (const void *)m_offset);
+			glDrawElements(GLDrawMode(m_mode), m_count, GLIndexType(m_type), (const void *)m_offset);
 		}
 	}
 
 
 private:
-	uint32_t m_mode;
-	uint32_t m_type;
+	GfxDrawMode m_mode;
+	GfxIndexType m_type;
 	uintptr_t m_offset;
 	int m_count;
 };

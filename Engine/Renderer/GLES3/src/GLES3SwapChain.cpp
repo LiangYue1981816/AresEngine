@@ -1,15 +1,15 @@
 #include "GLES3Renderer.h"
 
 
-CGLES3SwapChain::CGLES3SwapChain(void *hDC, int width, int height, uint32_t format)
-	: CGfxSwapChain(width, height, format)
+CGLES3SwapChain::CGLES3SwapChain(void *hDC, int width, int height, GfxPixelFormat pixelFormat)
+	: CGfxSwapChain(width, height, pixelFormat)
 
 	, m_hDC(hDC)
 	, m_fbo(0)
 {
-	if (width != 0 && height != 0 && format != 0) {
+	if (width != 0 && height != 0 && pixelFormat != GFX_PIXELFORMAT_UNDEFINED) {
 		m_ptrTexture = GLES3Renderer()->NewTexture2D(HashValue("SwapChain Color Texture"));
-		m_ptrTexture->Create(format, width, height, 1, 0);
+		m_ptrTexture->Create(pixelFormat, width, height, 1, 0);
 
 		glGenFramebuffers(1, &m_fbo);
 		glBindFramebuffer(GL_FRAMEBUFFER, m_fbo);

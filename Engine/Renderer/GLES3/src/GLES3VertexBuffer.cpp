@@ -1,8 +1,8 @@
 #include "GLES3Renderer.h"
 
 
-CGLES3VertexBuffer::CGLES3VertexBuffer(uint32_t binding, uint32_t format, size_t size, bool bDynamic)
-	: CGfxVertexBuffer(binding, format, size, bDynamic)
+CGLES3VertexBuffer::CGLES3VertexBuffer(uint32_t binding, uint32_t vertexFormat, size_t size, bool bDynamic)
+	: CGfxVertexBuffer(binding, vertexFormat, size, bDynamic)
 
 	, m_buffer(0)
 {

@@ -8,6 +8,22 @@ extern uint32_t glGetShaderType(shader_kind kind);
 extern uint32_t glGetProgramStage(shader_kind kind);
 #pragma endregion
 
+#pragma region OpenGL convert
+extern GLenum GLDataType(GfxDataType dataType);
+extern GLenum GLIndexType(GfxIndexType indexType);
+extern GLenum GLCullFace(GfxCullFace cullFace);
+extern GLenum GLFrontFace(GfxFrontFace frontFace);
+extern GLenum GLFunc(GfxFunc func);
+extern GLenum GLStencilOp(GfxStencilOp stencilOp);
+extern GLenum GLMinFilter(GfxMinFilter minFilter);
+extern GLenum GLMagFilter(GfxMagFilter magFilter);
+extern GLenum GLAddressMode(GfxAddressMode addressMode);
+extern GLenum GLBlendFactor(GfxBlendFactor blendFactor);
+extern GLenum GLBlendEquation(GfxBlendEquation blendEquation);
+extern GLenum GLTextureCubeMapFace(GfxTextureCubeMapFace face);
+extern GLenum GLDrawMode(GfxDrawMode drawMode);
+#pragma endregion
+
 #pragma region OpenGL state cache
 extern void GLResetContext(void);
 

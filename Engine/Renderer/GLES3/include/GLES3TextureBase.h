@@ -25,7 +25,7 @@ public:
 	uint32_t GetTarget(void) const;
 	uint32_t GetTexture(void) const;
 
-	uint32_t GetFormat(void) const;
+	GfxPixelFormat GetFormat(void) const;
 
 
 protected:
@@ -34,10 +34,7 @@ protected:
 	uint32_t m_target;
 	uint32_t m_texture;
 
-	uint32_t m_format;
-	uint32_t m_internalFormat;
-
-	int m_levels;
+	GfxPixelFormat m_format;
 
 protected:
 	CGLES3TextureManager *m_pManager;

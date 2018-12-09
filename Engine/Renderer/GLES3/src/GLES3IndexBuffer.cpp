@@ -1,7 +1,7 @@
 #include "GLES3Renderer.h"
 
 
-CGLES3IndexBuffer::CGLES3IndexBuffer(uint32_t type, size_t size, bool bDynamic)
+CGLES3IndexBuffer::CGLES3IndexBuffer(GfxIndexType type, size_t size, bool bDynamic)
 	: CGfxIndexBuffer(type, size, bDynamic)
 
 	, m_buffer(0)

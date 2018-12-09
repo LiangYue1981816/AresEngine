@@ -10,6 +10,7 @@ public:
 
 		, m_width(0)
 		, m_height(0)
+		, m_levels(0)
 	{
 
 	}
@@ -35,12 +36,17 @@ public:
 		return m_height;
 	}
 
+	int GetLevels(void) const
+	{
+		return m_levels;
+	}
+
 	virtual bool IsExtern(void) const = 0;
 
 	virtual uint32_t GetTarget(void) const = 0;
 	virtual uint32_t GetTexture(void) const = 0;
 
-	virtual uint32_t GetFormat(void) const = 0;
+	virtual GfxPixelFormat GetFormat(void) const = 0;
 
 
 private:
@@ -49,4 +55,5 @@ private:
 protected:
 	int m_width;
 	int m_height;
+	int m_levels;
 };

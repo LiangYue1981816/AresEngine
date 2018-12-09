@@ -5,7 +5,7 @@
 class CALL_API CGfxIndexBuffer
 {
 public:
-	CGfxIndexBuffer(uint32_t type, size_t size, bool bDynamic)
+	CGfxIndexBuffer(GfxIndexType type, size_t size, bool bDynamic)
 		: m_type(type)
 		, m_size(size)
 	{
@@ -22,7 +22,7 @@ public:
 	virtual void Bind(void *pParam) = 0;
 
 public:
-	uint32_t GetIndexType(void) const
+	GfxIndexType GetIndexType(void) const
 	{
 		return m_type;
 	}
@@ -30,10 +30,10 @@ public:
 	uint32_t GetIndexCount(void) const
 	{
 		switch (m_type) {
-		case GL_UNSIGNED_BYTE:  return m_size / 1;
-		case GL_UNSIGNED_SHORT: return m_size / 2;
-		case GL_UNSIGNED_INT:   return m_size / 4;
-		default:                return 0;
+		case GFX_INDEX_UNSIGNED_BYTE:  return m_size / 1;
+		case GFX_INDEX_UNSIGNED_SHORT: return m_size / 2;
+		case GFX_INDEX_UNSIGNED_INT:   return m_size / 4;
+		default:                       return 0;
 		}
 	}
 
@@ -44,6 +44,6 @@ public:
 
 
 protected:
-	uint32_t m_type;
+	GfxIndexType m_type;
 	uint32_t m_size;
 };

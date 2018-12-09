@@ -11,7 +11,7 @@ CGfxRenderer* CGfxRenderer::GetInstance(void)
 	return pInstance;
 }
 
-CGfxRenderer::CGfxRenderer(void *hDC, int width, int height, uint32_t format)
+CGfxRenderer::CGfxRenderer(void *hDC, int width, int height, GfxPixelFormat pixelFormat)
 {
 	pInstance = this;
 

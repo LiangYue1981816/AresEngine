@@ -8,7 +8,7 @@ class CGLES3SwapChain : public CGfxSwapChain
 
 
 private:
-	CGLES3SwapChain(void *hDC, int width, int height, uint32_t format);
+	CGLES3SwapChain(void *hDC, int width, int height, GfxPixelFormat pixelFormat);
 	virtual ~CGLES3SwapChain(void);
 
 

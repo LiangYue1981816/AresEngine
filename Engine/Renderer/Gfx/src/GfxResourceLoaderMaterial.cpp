@@ -6,165 +6,175 @@
 #include "FileManager.h"
 
 
-static uint32_t StringToCullFace(const char *szString)
+static bool StringToBool(const char *szString)
 {
 	if (szString) {
-		if (!stricmp(szString, "GL_FRONT")) return GL_FRONT;
-		if (!stricmp(szString, "GL_BACK")) return GL_BACK;
-		if (!stricmp(szString, "GL_FRONT_AND_BACK")) return GL_FRONT_AND_BACK;
+		if (!stricmp(szString, "GFX_TRUE")) return true;
+		if (!stricmp(szString, "GFX_FALSE")) return false;
 	}
 
-	return GL_BACK;
+	return false;
 }
 
-static uint32_t StringToFrontFace(const char *szString)
+static GfxCullFace StringToCullFace(const char *szString)
 {
 	if (szString) {
-		if (!stricmp(szString, "GL_CW")) return GL_CW;
-		if (!stricmp(szString, "GL_CCW")) return GL_CCW;
+		if (!stricmp(szString, "GFX_FRONT")) return GFX_CULLFACE_FRONT;
+		if (!stricmp(szString, "GFX_BACK")) return GFX_CULLFACE_BACK;
+		if (!stricmp(szString, "GFX_FRONT_AND_BACK")) return GFX_CULLFACE_FRONT_AND_BACK;
 	}
 
-	return GL_CCW;
+	return GFX_CULLFACE_INVALID_ENUM;
 }
 
-static uint32_t StringToStencilFunc(const char *szString)
+static GfxFrontFace StringToFrontFace(const char *szString)
 {
 	if (szString) {
-		if (!stricmp(szString, "GL_NEVER")) return GL_NEVER;
-		if (!stricmp(szString, "GL_LESS")) return GL_LESS;
-		if (!stricmp(szString, "GL_LEQUAL")) return GL_LEQUAL;
-		if (!stricmp(szString, "GL_GREATER")) return GL_GREATER;
-		if (!stricmp(szString, "GL_GEQUAL")) return GL_GEQUAL;
-		if (!stricmp(szString, "GL_EQUAL")) return GL_EQUAL;
-		if (!stricmp(szString, "GL_NOTEQUAL")) return GL_NOTEQUAL;
-		if (!stricmp(szString, "GL_ALWAYS")) return GL_ALWAYS;
+		if (!stricmp(szString, "GFX_CW")) return GFX_FRONTFACE_CW;
+		if (!stricmp(szString, "GFX_CCW")) return GFX_FRONTFACE_CCW;
 	}
 
-	return GL_ALWAYS;
+	return GFX_FRONTFACE_INVALID_ENUM;
 }
 
-static uint32_t StringToStencilOp(const char *szString)
+static GfxFunc StringToStencilFunc(const char *szString)
 {
 	if (szString) {
-		if (!stricmp(szString, "GL_KEEP")) return GL_KEEP;
-		if (!stricmp(szString, "GL_ZERO")) return GL_ZERO;
-		if (!stricmp(szString, "GL_REPLACE")) return GL_REPLACE;
-		if (!stricmp(szString, "GL_INCR")) return GL_INCR;
-		if (!stricmp(szString, "GL_INCR_WRAP")) return GL_INCR_WRAP;
-		if (!stricmp(szString, "GL_DECR")) return GL_DECR;
-		if (!stricmp(szString, "GL_DECR_WRAP")) return GL_DECR_WRAP;
-		if (!stricmp(szString, "GL_INVERT")) return GL_INVERT;
+		if (!stricmp(szString, "GFX_NEVER")) return GFX_FUNC_NEVER;
+		if (!stricmp(szString, "GFX_LESS")) return GFX_FUNC_LESS;
+		if (!stricmp(szString, "GFX_LEQUAL")) return GFX_FUNC_LEQUAL;
+		if (!stricmp(szString, "GFX_GREATER")) return GFX_FUNC_GREATER;
+		if (!stricmp(szString, "GFX_GEQUAL")) return GFX_FUNC_GEQUAL;
+		if (!stricmp(szString, "GFX_EQUAL")) return GFX_FUNC_EQUAL;
+		if (!stricmp(szString, "GFX_NOTEQUAL")) return GFX_FUNC_NOTEQUAL;
+		if (!stricmp(szString, "GFX_ALWAYS")) return GFX_FUNC_ALWAYS;
 	}
 
-	return GL_KEEP;
+	return GFX_FUNC_INVALID_ENUM;
 }
 
-static uint32_t StringToDepthFunc(const char *szString)
+static GfxStencilOp StringToStencilOp(const char *szString)
 {
 	if (szString) {
-		if (!stricmp(szString, "GL_NEVER")) return GL_NEVER;
-		if (!stricmp(szString, "GL_LESS")) return GL_LESS;
-		if (!stricmp(szString, "GL_EQUAL")) return GL_EQUAL;
-		if (!stricmp(szString, "GL_LEQUAL")) return GL_LEQUAL;
-		if (!stricmp(szString, "GL_GREATER")) return GL_GREATER;
-		if (!stricmp(szString, "GL_NOTEQUAL")) return GL_NOTEQUAL;
-		if (!stricmp(szString, "GL_GEQUAL")) return GL_GEQUAL;
+		if (!stricmp(szString, "GFX_KEEP")) return GFX_STENCILOP_KEEP;
+		if (!stricmp(szString, "GFX_ZERO")) return GFX_STENCILOP_ZERO;
+		if (!stricmp(szString, "GFX_REPLACE")) return GFX_STENCILOP_REPLACE;
+		if (!stricmp(szString, "GFX_INCR")) return GFX_STENCILOP_INCR;
+		if (!stricmp(szString, "GFX_INCR_WRAP")) return GFX_STENCILOP_INCR_WRAP;
+		if (!stricmp(szString, "GFX_DECR")) return GFX_STENCILOP_DECR;
+		if (!stricmp(szString, "GFX_DECR_WRAP")) return GFX_STENCILOP_DECR_WRAP;
+		if (!stricmp(szString, "GFX_INVERT")) return GFX_STENCILOP_INVERT;
 	}
 
-	return GL_LESS;
+	return GFX_STENCILOP_INVALID_ENUM;
 }
 
-static uint32_t StringToMinFilter(const char *szString)
+static GfxFunc StringToDepthFunc(const char *szString)
 {
 	if (szString) {
-		if (!stricmp(szString, "GL_LINEAR")) return GL_LINEAR;
-		if (!stricmp(szString, "GL_LINEAR_MIPMAP_LINEAR")) return GL_LINEAR_MIPMAP_LINEAR;
-		if (!stricmp(szString, "GL_LINEAR_MIPMAP_NEAREST")) return GL_LINEAR_MIPMAP_NEAREST;
-		if (!stricmp(szString, "GL_NEAREST")) return GL_NEAREST;
-		if (!stricmp(szString, "GL_NEAREST_MIPMAP_LINEAR")) return GL_NEAREST_MIPMAP_LINEAR;
-		if (!stricmp(szString, "GL_NEAREST_MIPMAP_NEAREST")) return GL_NEAREST_MIPMAP_NEAREST;
+		if (!stricmp(szString, "GFX_NEVER")) return GFX_FUNC_NEVER;
+		if (!stricmp(szString, "GFX_LESS")) return GFX_FUNC_LESS;
+		if (!stricmp(szString, "GFX_EQUAL")) return GFX_FUNC_EQUAL;
+		if (!stricmp(szString, "GFX_LEQUAL")) return GFX_FUNC_LEQUAL;
+		if (!stricmp(szString, "GFX_GREATER")) return GFX_FUNC_GREATER;
+		if (!stricmp(szString, "GFX_NOTEQUAL")) return GFX_FUNC_NOTEQUAL;
+		if (!stricmp(szString, "GFX_GEQUAL")) return GFX_FUNC_GEQUAL;
 	}
 
-	return GL_LINEAR_MIPMAP_NEAREST;
+	return GFX_FUNC_INVALID_ENUM;
 }
 
-static uint32_t StringToMagFilter(const char *szString)
+static GfxMinFilter StringToMinFilter(const char *szString)
 {
 	if (szString) {
-		if (!stricmp(szString, "GL_LINEAR")) return GL_LINEAR;
-		if (!stricmp(szString, "GL_NEAREST")) return GL_NEAREST;
+		if (!stricmp(szString, "GFX_LINEAR")) return GFX_MINFILTER_LINEAR;
+		if (!stricmp(szString, "GFX_LINEAR_MIPMAP_LINEAR")) return GFX_MINFILTER_LINEAR_MIPMAP_LINEAR;
+		if (!stricmp(szString, "GFX_LINEAR_MIPMAP_NEAREST")) return GFX_MINFILTER_LINEAR_MIPMAP_NEAREST;
+		if (!stricmp(szString, "GFX_NEAREST")) return GFX_MINFILTER_NEAREST;
+		if (!stricmp(szString, "GFX_NEAREST_MIPMAP_LINEAR")) return GFX_MINFILTER_NEAREST_MIPMAP_LINEAR;
+		if (!stricmp(szString, "GFX_NEAREST_MIPMAP_NEAREST")) return GFX_MINFILTER_NEAREST_MIPMAP_NEAREST;
 	}
 
-	return GL_LINEAR;
+	return GFX_MINFILTER_INVALID_ENUM;
 }
 
-static uint32_t StringToAddressMode(const char *szString)
+static GfxMagFilter StringToMagFilter(const char *szString)
 {
 	if (szString) {
-		if (!stricmp(szString, "GL_REPEAT")) return GL_REPEAT;
-		if (!stricmp(szString, "GL_CLAMP_TO_EDGE")) return GL_CLAMP_TO_EDGE;
+		if (!stricmp(szString, "GFX_LINEAR")) return GFX_MAGFILTER_LINEAR;
+		if (!stricmp(szString, "GFX_NEAREST")) return GFX_MAGFILTER_NEAREST;
 	}
 
-	return GL_REPEAT;
+	return GFX_MAGFILTER_INVALID_ENUM;
 }
 
-static uint32_t StringToBlendSrcFactor(const char *szString)
+static GfxAddressMode StringToAddressMode(const char *szString)
 {
 	if (szString) {
-		if (!stricmp(szString, "GL_ZERO")) return GL_ZERO;
-		if (!stricmp(szString, "GL_ONE")) return GL_ONE;
-		if (!stricmp(szString, "GL_SRC_COLOR")) return GL_SRC_COLOR;
-		if (!stricmp(szString, "GL_ONE_MINUS_SRC_COLOR")) return GL_ONE_MINUS_SRC_COLOR;
-		if (!stricmp(szString, "GL_DST_COLOR")) return GL_DST_COLOR;
-		if (!stricmp(szString, "GL_ONE_MINUS_DST_COLOR")) return GL_ONE_MINUS_DST_COLOR;
-		if (!stricmp(szString, "GL_SRC_ALPHA")) return GL_SRC_ALPHA;
-		if (!stricmp(szString, "GL_ONE_MINUS_SRC_ALPHA")) return GL_ONE_MINUS_SRC_ALPHA;
-		if (!stricmp(szString, "GL_DST_ALPHA")) return GL_DST_ALPHA;
-		if (!stricmp(szString, "GL_ONE_MINUS_DST_ALPHA")) return GL_ONE_MINUS_DST_ALPHA;
-		if (!stricmp(szString, "GL_CONSTANT_COLOR")) return GL_CONSTANT_COLOR;
-		if (!stricmp(szString, "GL_ONE_MINUS_CONSTANT_COLOR")) return GL_ONE_MINUS_CONSTANT_COLOR;
-		if (!stricmp(szString, "GL_CONSTANT_ALPHA")) return GL_CONSTANT_ALPHA;
-		if (!stricmp(szString, "GL_ONE_MINUS_CONSTANT_ALPHA")) return GL_ONE_MINUS_CONSTANT_ALPHA;
-		if (!stricmp(szString, "GL_SRC_ALPHA_SATURATE")) return GL_SRC_ALPHA_SATURATE;
+		if (!stricmp(szString, "GFX_REPEAT")) return GFX_ADDRESS_REPEAT;
+		if (!stricmp(szString, "GFX_CLAMP_TO_EDGE")) return GFX_ADDRESS_CLAMP_TO_EDGE;
 	}
 
-	return GL_SRC_ALPHA;
+	return GFX_ADDRESS_INVALID_ENUM;
 }
 
-static uint32_t StringToBlendDstFactor(const char *szString)
+static GfxBlendFactor StringToBlendSrcFactor(const char *szString)
 {
 	if (szString) {
-		if (!stricmp(szString, "GL_ZERO")) return GL_ZERO;
-		if (!stricmp(szString, "GL_ONE")) return GL_ONE;
-		if (!stricmp(szString, "GL_SRC_COLOR")) return GL_SRC_COLOR;
-		if (!stricmp(szString, "GL_ONE_MINUS_SRC_COLOR")) return GL_ONE_MINUS_SRC_COLOR;
-		if (!stricmp(szString, "GL_DST_COLOR")) return GL_DST_COLOR;
-		if (!stricmp(szString, "GL_ONE_MINUS_DST_COLOR")) return GL_ONE_MINUS_DST_COLOR;
-		if (!stricmp(szString, "GL_SRC_ALPHA")) return GL_SRC_ALPHA;
-		if (!stricmp(szString, "GL_ONE_MINUS_SRC_ALPHA")) return GL_ONE_MINUS_SRC_ALPHA;
-		if (!stricmp(szString, "GL_DST_ALPHA")) return GL_DST_ALPHA;
-		if (!stricmp(szString, "GL_ONE_MINUS_DST_ALPHA")) return GL_ONE_MINUS_DST_ALPHA;
-		if (!stricmp(szString, "GL_CONSTANT_COLOR")) return GL_CONSTANT_COLOR;
-		if (!stricmp(szString, "GL_ONE_MINUS_CONSTANT_COLOR")) return GL_ONE_MINUS_CONSTANT_COLOR;
-		if (!stricmp(szString, "GL_CONSTANT_ALPHA")) return GL_CONSTANT_ALPHA;
-		if (!stricmp(szString, "GL_ONE_MINUS_CONSTANT_ALPHA")) return GL_ONE_MINUS_CONSTANT_ALPHA;
-		if (!stricmp(szString, "GL_SRC_ALPHA_SATURATE")) return GL_SRC_ALPHA_SATURATE;
+		if (!stricmp(szString, "GFX_ZERO")) return GFX_BLENDFACTOR_ZERO;
+		if (!stricmp(szString, "GFX_ONE")) return GFX_BLENDFACTOR_ONE;
+		if (!stricmp(szString, "GFX_SRC_COLOR")) return GFX_BLENDFACTOR_SRC_COLOR;
+		if (!stricmp(szString, "GFX_ONE_MINUS_SRC_COLOR")) return GFX_BLENDFACTOR_ONE_MINUS_SRC_COLOR;
+		if (!stricmp(szString, "GFX_DST_COLOR")) return GFX_BLENDFACTOR_DST_COLOR;
+		if (!stricmp(szString, "GFX_ONE_MINUS_DST_COLOR")) return GFX_BLENDFACTOR_ONE_MINUS_DST_COLOR;
+		if (!stricmp(szString, "GFX_SRC_ALPHA")) return GFX_BLENDFACTOR_SRC_ALPHA;
+		if (!stricmp(szString, "GFX_ONE_MINUS_SRC_ALPHA")) return GFX_BLENDFACTOR_ONE_MINUS_SRC_ALPHA;
+		if (!stricmp(szString, "GFX_DST_ALPHA")) return GFX_BLENDFACTOR_DST_ALPHA;
+		if (!stricmp(szString, "GFX_ONE_MINUS_DST_ALPHA")) return GFX_BLENDFACTOR_ONE_MINUS_DST_ALPHA;
+		if (!stricmp(szString, "GFX_CONSTANT_COLOR")) return GFX_BLENDFACTOR_CONSTANT_COLOR;
+		if (!stricmp(szString, "GFX_ONE_MINUS_CONSTANT_COLOR")) return GFX_BLENDFACTOR_ONE_MINUS_CONSTANT_COLOR;
+		if (!stricmp(szString, "GFX_CONSTANT_ALPHA")) return GFX_BLENDFACTOR_CONSTANT_ALPHA;
+		if (!stricmp(szString, "GFX_ONE_MINUS_CONSTANT_ALPHA")) return GFX_BLENDFACTOR_ONE_MINUS_CONSTANT_ALPHA;
+		if (!stricmp(szString, "GFX_SRC_ALPHA_SATURATE")) return GFX_BLENDFACTOR_SRC_ALPHA_SATURATE;
 	}
 
-	return GL_ONE_MINUS_SRC_ALPHA;
+	return GFX_BLENDFACTOR_INVALID_ENUM;
 }
 
-static uint32_t StringToBlendEquation(const char *szString)
+static GfxBlendFactor StringToBlendDstFactor(const char *szString)
 {
 	if (szString) {
-		if (!stricmp(szString, "GL_FUNC_ADD")) return GL_FUNC_ADD;
-		if (!stricmp(szString, "GL_FUNC_SUBTRACT")) return GL_FUNC_SUBTRACT;
-		if (!stricmp(szString, "GL_FUNC_REVERSE_SUBTRACT")) return GL_FUNC_REVERSE_SUBTRACT;
-		if (!stricmp(szString, "GL_MIN")) return GL_MIN;
-		if (!stricmp(szString, "GL_MAX")) return GL_MAX;
+		if (!stricmp(szString, "GFX_ZERO")) return GFX_BLENDFACTOR_ZERO;
+		if (!stricmp(szString, "GFX_ONE")) return GFX_BLENDFACTOR_ONE;
+		if (!stricmp(szString, "GFX_SRC_COLOR")) return GFX_BLENDFACTOR_SRC_COLOR;
+		if (!stricmp(szString, "GFX_ONE_MINUS_SRC_COLOR")) return GFX_BLENDFACTOR_ONE_MINUS_SRC_COLOR;
+		if (!stricmp(szString, "GFX_DST_COLOR")) return GFX_BLENDFACTOR_DST_COLOR;
+		if (!stricmp(szString, "GFX_ONE_MINUS_DST_COLOR")) return GFX_BLENDFACTOR_ONE_MINUS_DST_COLOR;
+		if (!stricmp(szString, "GFX_SRC_ALPHA")) return GFX_BLENDFACTOR_SRC_ALPHA;
+		if (!stricmp(szString, "GFX_ONE_MINUS_SRC_ALPHA")) return GFX_BLENDFACTOR_ONE_MINUS_SRC_ALPHA;
+		if (!stricmp(szString, "GFX_DST_ALPHA")) return GFX_BLENDFACTOR_DST_ALPHA;
+		if (!stricmp(szString, "GFX_ONE_MINUS_DST_ALPHA")) return GFX_BLENDFACTOR_ONE_MINUS_DST_ALPHA;
+		if (!stricmp(szString, "GFX_CONSTANT_COLOR")) return GFX_BLENDFACTOR_CONSTANT_COLOR;
+		if (!stricmp(szString, "GFX_ONE_MINUS_CONSTANT_COLOR")) return GFX_BLENDFACTOR_ONE_MINUS_CONSTANT_COLOR;
+		if (!stricmp(szString, "GFX_CONSTANT_ALPHA")) return GFX_BLENDFACTOR_CONSTANT_ALPHA;
+		if (!stricmp(szString, "GFX_ONE_MINUS_CONSTANT_ALPHA")) return GFX_BLENDFACTOR_ONE_MINUS_CONSTANT_ALPHA;
+		if (!stricmp(szString, "GFX_SRC_ALPHA_SATURATE")) return GFX_BLENDFACTOR_SRC_ALPHA_SATURATE;
 	}
 
-	return GL_FUNC_ADD;
+	return GFX_BLENDFACTOR_INVALID_ENUM;
+}
+
+static GfxBlendEquation StringToBlendEquation(const char *szString)
+{
+	if (szString) {
+		if (!stricmp(szString, "GFX_FUNC_ADD")) return GFX_BLENDEQUATION_FUNC_ADD;
+		if (!stricmp(szString, "GFX_FUNC_SUBTRACT")) return GFX_BLENDEQUATION_FUNC_SUBTRACT;
+		if (!stricmp(szString, "GFX_FUNC_REVERSE_SUBTRACT")) return GFX_BLENDEQUATION_FUNC_REVERSE_SUBTRACT;
+		if (!stricmp(szString, "GFX_MIN")) return GFX_BLENDEQUATION_MIN;
+		if (!stricmp(szString, "GFX_MAX")) return GFX_BLENDEQUATION_MAX;
+	}
+
+	return GFX_BLENDEQUATION_INVALID_ENUM;
 }
 
 
@@ -174,13 +184,13 @@ static bool InternalLoadPipelineState(TiXmlNode *pPipelineNode, PipelineState &s
 		LogOutput(LOG_TAG_RENDERER, "\t\t\tLoadState ... ");
 		{
 			if (TiXmlNode *pCullNode = pStateNode->FirstChild("Cull")) {
-				state.bEnableCullFace = pCullNode->ToElement()->AttributeBool("enable");
+				state.bEnableCullFace = StringToBool(pCullNode->ToElement()->AttributeString("enable"));
 				state.cullFace = StringToCullFace(pCullNode->ToElement()->AttributeString("cull_face"));
 				state.frontFace = StringToFrontFace(pCullNode->ToElement()->AttributeString("front_face"));
 			}
 
 			if (TiXmlNode *pStencilNode = pStateNode->FirstChild("Stencil")) {
-				state.bEnableStencilTest = pStencilNode->ToElement()->AttributeBool("enable");
+				state.bEnableStencilTest = StringToBool(pStencilNode->ToElement()->AttributeString("enable"));
 				state.stencilFunc = StringToStencilFunc(pStencilNode->ToElement()->AttributeString("func"));
 				state.stencilRef = pStencilNode->ToElement()->AttributeInt1("ref");
 				state.stencilMask = pStencilNode->ToElement()->AttributeInt1("mask");
@@ -190,33 +200,33 @@ static bool InternalLoadPipelineState(TiXmlNode *pPipelineNode, PipelineState &s
 			}
 
 			if (TiXmlNode *pDepthNode = pStateNode->FirstChild("Depth")) {
-				state.bEnableDepthTest = pDepthNode->ToElement()->AttributeBool("enable_test");
-				state.bEnableDepthWrite = pDepthNode->ToElement()->AttributeBool("enable_write");
+				state.bEnableDepthTest = StringToBool(pDepthNode->ToElement()->AttributeString("enable_test"));
+				state.bEnableDepthWrite = StringToBool(pDepthNode->ToElement()->AttributeString("enable_write"));
 				state.depthFunc = StringToDepthFunc(pDepthNode->ToElement()->AttributeString("func"));
 				state.depthRangeNear = pDepthNode->ToElement()->AttributeFloat1("range_near");
 				state.depthRangeFar = pDepthNode->ToElement()->AttributeFloat1("range_far");
 			}
 
 			if (TiXmlNode *pColorNode = pStateNode->FirstChild("Color")) {
-				state.bEnableColorWrite[0] = pColorNode->ToElement()->AttributeBool("enable_write_red");
-				state.bEnableColorWrite[1] = pColorNode->ToElement()->AttributeBool("enable_write_green");
-				state.bEnableColorWrite[2] = pColorNode->ToElement()->AttributeBool("enable_write_blue");
-				state.bEnableColorWrite[3] = pColorNode->ToElement()->AttributeBool("enable_write_alpha");
+				state.bEnableColorWrite[0] = StringToBool(pColorNode->ToElement()->AttributeString("enable_write_red"));
+				state.bEnableColorWrite[1] = StringToBool(pColorNode->ToElement()->AttributeString("enable_write_green"));
+				state.bEnableColorWrite[2] = StringToBool(pColorNode->ToElement()->AttributeString("enable_write_blue"));
+				state.bEnableColorWrite[3] = StringToBool(pColorNode->ToElement()->AttributeString("enable_write_alpha"));
 			}
 
 			if (TiXmlNode *pAlphaToCoverageNode = pStateNode->FirstChild("AlphaToCoverage")) {
-				state.bEnableAlphaToCoverage = pAlphaToCoverageNode->ToElement()->AttributeBool("enable");
+				state.bEnableAlphaToCoverage = StringToBool(pAlphaToCoverageNode->ToElement()->AttributeString("enable"));
 			}
 
 			if (TiXmlNode *pBlendNode = pStateNode->FirstChild("Blend")) {
-				state.bEnableBlend = pBlendNode->ToElement()->AttributeBool("enable");
+				state.bEnableBlend = StringToBool(pBlendNode->ToElement()->AttributeString("enable"));
 				state.blendSrcFactor = StringToBlendSrcFactor(pBlendNode->ToElement()->AttributeString("src_factor"));
 				state.blendDstFactor = StringToBlendDstFactor(pBlendNode->ToElement()->AttributeString("dst_factor"));
 				state.blendEquation = StringToBlendEquation(pBlendNode->ToElement()->AttributeString("equation"));
 			}
 
 			if (TiXmlNode *pOffsetNode = pStateNode->FirstChild("Offset")) {
-				state.bEnablePolygonOffset = pOffsetNode->ToElement()->AttributeBool("enable");
+				state.bEnablePolygonOffset = StringToBool(pOffsetNode->ToElement()->AttributeString("enable"));
 				state.polygonOffsetFactor = pOffsetNode->ToElement()->AttributeFloat1("factor");
 				state.polygonOffsetUnits = pOffsetNode->ToElement()->AttributeFloat1("units");
 			}
@@ -319,10 +329,10 @@ static bool InternalLoadTexture2D(TiXmlNode *pPassNode, CGfxMaterialPass *pPass)
 
 				LogOutput(nullptr, "%s ... ", szFileName);
 
-				uint32_t minFilter = StringToMinFilter(pTextureNode->ToElement()->AttributeString("min_filter"));
-				uint32_t magFilter = StringToMagFilter(pTextureNode->ToElement()->AttributeString("mag_filter"));
-				uint32_t addressMode = StringToAddressMode(pTextureNode->ToElement()->AttributeString("address_mode"));
-				if (minFilter == GL_INVALID_ENUM || magFilter == GL_INVALID_ENUM || addressMode == GL_INVALID_ENUM) { err = -2; goto ERR; }
+				GfxMinFilter minFilter = StringToMinFilter(pTextureNode->ToElement()->AttributeString("min_filter"));
+				GfxMagFilter magFilter = StringToMagFilter(pTextureNode->ToElement()->AttributeString("mag_filter"));
+				GfxAddressMode addressMode = StringToAddressMode(pTextureNode->ToElement()->AttributeString("address_mode"));
+				if (minFilter == GFX_MINFILTER_INVALID_ENUM || magFilter == GFX_MAGFILTER_INVALID_ENUM || addressMode == GFX_ADDRESS_INVALID_ENUM) { err = -2; goto ERR; }
 
 				pPass->SetSampler(szName, minFilter, magFilter, addressMode);
 				pPass->SetTexture2D(szName, szFileName);
@@ -350,10 +360,10 @@ static bool InternalLoadTexture2DArray(TiXmlNode *pPassNode, CGfxMaterialPass *p
 
 				LogOutput(nullptr, "%s ... ", szFileName);
 
-				uint32_t minFilter = StringToMinFilter(pTextureNode->ToElement()->AttributeString("min_filter"));
-				uint32_t magFilter = StringToMagFilter(pTextureNode->ToElement()->AttributeString("mag_filter"));
-				uint32_t addressMode = StringToAddressMode(pTextureNode->ToElement()->AttributeString("address_mode"));
-				if (minFilter == GL_INVALID_ENUM || magFilter == GL_INVALID_ENUM || addressMode == GL_INVALID_ENUM) { err = -2; goto ERR; }
+				GfxMinFilter minFilter = StringToMinFilter(pTextureNode->ToElement()->AttributeString("min_filter"));
+				GfxMagFilter magFilter = StringToMagFilter(pTextureNode->ToElement()->AttributeString("mag_filter"));
+				GfxAddressMode addressMode = StringToAddressMode(pTextureNode->ToElement()->AttributeString("address_mode"));
+				if (minFilter == GFX_MINFILTER_INVALID_ENUM || magFilter == GFX_MAGFILTER_INVALID_ENUM || addressMode == GFX_ADDRESS_INVALID_ENUM) { err = -2; goto ERR; }
 
 				pPass->SetSampler(szName, minFilter, magFilter, addressMode);
 				pPass->SetTexture2DArray(szName, szFileName);
@@ -381,10 +391,10 @@ static bool InternalLoadTextureCubeMap(TiXmlNode *pPassNode, CGfxMaterialPass *p
 
 				LogOutput(nullptr, "%s ... ", szFileName);
 
-				uint32_t minFilter = StringToMinFilter(pTextureNode->ToElement()->AttributeString("min_filter"));
-				uint32_t magFilter = StringToMagFilter(pTextureNode->ToElement()->AttributeString("mag_filter"));
-				uint32_t addressMode = StringToAddressMode(pTextureNode->ToElement()->AttributeString("address_mode"));
-				if (minFilter == GL_INVALID_ENUM || magFilter == GL_INVALID_ENUM || addressMode == GL_INVALID_ENUM) { err = -2; goto ERR; }
+				GfxMinFilter minFilter = StringToMinFilter(pTextureNode->ToElement()->AttributeString("min_filter"));
+				GfxMagFilter magFilter = StringToMagFilter(pTextureNode->ToElement()->AttributeString("mag_filter"));
+				GfxAddressMode addressMode = StringToAddressMode(pTextureNode->ToElement()->AttributeString("address_mode"));
+				if (minFilter == GFX_MINFILTER_INVALID_ENUM || magFilter == GFX_MAGFILTER_INVALID_ENUM || addressMode == GFX_ADDRESS_INVALID_ENUM) { err = -2; goto ERR; }
 
 				pPass->SetSampler(szName, minFilter, magFilter, addressMode);
 				pPass->SetTextureCubeMap(szName, szFileName);

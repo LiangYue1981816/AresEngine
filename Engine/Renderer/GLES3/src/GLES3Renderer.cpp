@@ -1,8 +1,8 @@
 #include "GLES3Renderer.h"
 
 
-CGLES3Renderer::CGLES3Renderer(void *hDC, int width, int height, uint32_t format)
-	: CGfxRenderer(hDC, width, height, format)
+CGLES3Renderer::CGLES3Renderer(void *hDC, int width, int height, GfxPixelFormat pixelFormat)
+	: CGfxRenderer(hDC, width, height, pixelFormat)
 
 	, m_pSwapChain(nullptr)
 
@@ -33,7 +33,7 @@ CGLES3Renderer::CGLES3Renderer(void *hDC, int width, int height, uint32_t format
 	m_pUniformBufferManager = new CGLES3UniformBufferManager;
 	m_pCommandBufferManager = new CGLES3CommandBufferManager;
 
-	m_pSwapChain = new CGLES3SwapChain(hDC, width, height, format);
+	m_pSwapChain = new CGLES3SwapChain(hDC, width, height, pixelFormat);
 	m_pGlobalMaterialPass = new CGLES3MaterialPass(INVALID_HASHVALUE);
 }
 
@@ -75,7 +75,7 @@ CGfxPipelineGraphics* CGLES3Renderer::CreatePipelineGraphics(const CGfxShader *p
 	return m_pPipelineManager->CreatePipelineGraphics(pVertexShader, pFragmentShader, state);
 }
 
-CGfxSampler* CGLES3Renderer::CreateSampler(uint32_t minFilter, uint32_t magFilter, uint32_t addressMode)
+CGfxSampler* CGLES3Renderer::CreateSampler(GfxMinFilter minFilter, GfxMagFilter magFilter, GfxAddressMode addressMode)
 {
 	return m_pSamplerManager->Create(minFilter, magFilter, addressMode);
 }
@@ -316,7 +316,7 @@ bool CGLES3Renderer::CmdDrawInstance(CGfxCommandBufferPtr &ptrCommandBuffer, con
 		return false;
 	}
 
-	if (ptrCommandBuffer->CmdDrawInstance(GL_TRIANGLES, ptrMesh->GetIndexType(), ptrMesh->GetIndexOffset(indexDraw), ptrMesh->GetIndexCount(indexDraw), instanceCount) == false) {
+	if (ptrCommandBuffer->CmdDrawInstance(GFX_DRAWMODE_TRIANGLES, ptrMesh->GetIndexType(), ptrMesh->GetIndexOffset(indexDraw), ptrMesh->GetIndexCount(indexDraw), instanceCount) == false) {
 		return false;
 	}
 
@@ -329,7 +329,7 @@ bool CGLES3Renderer::CmdDrawIndirect(CGfxCommandBufferPtr &ptrCommandBuffer, con
 		return false;
 	}
 
-	if (ptrCommandBuffer->CmdDrawIndirect(GL_TRIANGLES, ptrMesh->GetIndexType(), ptrMesh->GetDrawCommandOffset(indexDraw)) == false) {
+	if (ptrCommandBuffer->CmdDrawIndirect(GFX_DRAWMODE_TRIANGLES, ptrMesh->GetIndexType(), ptrMesh->GetDrawCommandOffset(indexDraw)) == false) {
 		return false;
 	}
 
@@ -410,7 +410,7 @@ void CGLES3Renderer::BindMaterialPass(CGfxMaterialPass *pPass)
 void CGLES3Renderer::BindInputTexture(const char *szName, CGfxTextureBase *pTexture)
 {
 	m_pGlobalMaterialPass->SetTexture2D(szName, ((CGLES3TextureBase *)pTexture)->GetTexture());
-	m_pGlobalMaterialPass->SetSampler(szName, GL_NEAREST, GL_LINEAR, GL_REPEAT);
+	m_pGlobalMaterialPass->SetSampler(szName, GFX_MINFILTER_NEAREST, GFX_MAGFILTER_LINEAR, GFX_ADDRESS_REPEAT);
 }
 
 void CGLES3Renderer::Uniform1i(uint32_t name, int v0) const

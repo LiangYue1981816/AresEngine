@@ -78,9 +78,9 @@ CALL_API uint32_t GetVertexAttributeCount(void)
 	return numVertexAttributes;
 }
 
-CALL_API uint32_t GetVertexStride(uint32_t format)
+CALL_API uint32_t GetVertexStride(uint32_t vertexFormat)
 {
-	return GetStride(format, pVertexAttributes, numVertexAttributes);
+	return GetStride(vertexFormat, pVertexAttributes, numVertexAttributes);
 }
 
 CALL_API uint32_t GetVertexAttributeSize(uint32_t attribute)
@@ -88,9 +88,9 @@ CALL_API uint32_t GetVertexAttributeSize(uint32_t attribute)
 	return GetAttributeSize(attribute, pVertexAttributes, numVertexAttributes);
 }
 
-CALL_API uint32_t GetVertexAttributeOffset(uint32_t format, uint32_t attribute)
+CALL_API uint32_t GetVertexAttributeOffset(uint32_t vertexFormat, uint32_t attribute)
 {
-	return GetAttributeOffset(format, attribute, pVertexAttributes, numVertexAttributes);
+	return GetAttributeOffset(vertexFormat, attribute, pVertexAttributes, numVertexAttributes);
 }
 
 CALL_API uint32_t GetVertexAttributeComponents(uint32_t attribute)
@@ -115,9 +115,9 @@ CALL_API uint32_t GetInstanceAttributeCount(void)
 	return numInstanceAttributes;
 }
 
-CALL_API uint32_t GetInstanceStride(uint32_t format)
+CALL_API uint32_t GetInstanceStride(uint32_t instanceFormat)
 {
-	return GetStride(format, pInstanceAttributes, numInstanceAttributes);
+	return GetStride(instanceFormat, pInstanceAttributes, numInstanceAttributes);
 }
 
 CALL_API uint32_t GetInstanceAttributeSize(uint32_t attribute)
@@ -125,9 +125,9 @@ CALL_API uint32_t GetInstanceAttributeSize(uint32_t attribute)
 	return GetAttributeSize(attribute, pInstanceAttributes, numInstanceAttributes);
 }
 
-CALL_API uint32_t GetInstanceAttributeOffset(uint32_t format, uint32_t attribute)
+CALL_API uint32_t GetInstanceAttributeOffset(uint32_t instanceFormat, uint32_t attribute)
 {
-	return GetAttributeOffset(format, attribute, pInstanceAttributes, numInstanceAttributes);
+	return GetAttributeOffset(instanceFormat, attribute, pInstanceAttributes, numInstanceAttributes);
 }
 
 CALL_API uint32_t GetInstanceAttributeComponents(uint32_t attribute)

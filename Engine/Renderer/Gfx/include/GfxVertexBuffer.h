@@ -5,9 +5,9 @@
 class CALL_API CGfxVertexBuffer
 {
 public:
-	CGfxVertexBuffer(uint32_t binding, uint32_t format, size_t size, bool bDynamic)
-		: m_format(format)
-		, m_count(size / GetVertexStride(format))
+	CGfxVertexBuffer(uint32_t binding, uint32_t vertexFormat, size_t size, bool bDynamic)
+		: m_format(vertexFormat)
+		, m_count(size / GetVertexStride(vertexFormat))
 		, m_size(size)
 	{
 		CGfxProfiler::IncVertexBufferSize(m_size);

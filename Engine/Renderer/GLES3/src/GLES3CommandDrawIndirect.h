@@ -5,7 +5,7 @@
 class CGLES3CommandDrawIndirect : public CGfxCommandBase
 {
 public:
-	CGLES3CommandDrawIndirect(uint32_t mode, uint32_t type, uint32_t offset)
+	CGLES3CommandDrawIndirect(GfxDrawMode mode, GfxIndexType type, uint32_t offset)
 		: m_mode(mode)
 		, m_type(type)
 		, m_offset(offset)
@@ -23,14 +23,14 @@ public:
 		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_DRAW_INDIRECT, "CommandDrawIndirect");
 		{
 #if GLES_VER == 310
-			glDrawElementsIndirect(m_mode, m_type, (const void *)m_offset);
+			glDrawElementsIndirect(GLDrawMode(m_mode), GLIndexType(m_type), (const void *)m_offset);
 #endif
 		}
 	}
 
 
 private:
-	uint32_t m_mode;
-	uint32_t m_type;
+	GfxDrawMode m_mode;
+	GfxIndexType m_type;
 	uintptr_t m_offset;
 };

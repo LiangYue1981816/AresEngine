@@ -22,9 +22,9 @@ public:
 
 
 public:
-	virtual bool CreateIndexBuffer(uint32_t type, size_t size, bool bDynamic, const void *pBuffer) = 0;
-	virtual bool CreateVertexBuffer(uint32_t binding, uint32_t format, size_t size, bool bDynamic, const void *pBuffer) = 0;
-	virtual bool CreateVertexArrayObject(uint32_t drawCount, uint32_t binding, uint32_t format) = 0;
+	virtual bool CreateIndexBuffer(GfxIndexType type, size_t size, bool bDynamic, const void *pBuffer) = 0;
+	virtual bool CreateVertexBuffer(uint32_t binding, uint32_t vertexFormat, size_t size, bool bDynamic, const void *pBuffer) = 0;
+	virtual bool CreateVertexArrayObject(uint32_t drawCount, uint32_t binding, uint32_t instanceFormat) = 0;
 	virtual bool CreateDrawIndirectBuffer(uint32_t drawCount) = 0;
 	virtual void Destroy(void) = 0;
 
@@ -38,7 +38,7 @@ public:
 	virtual const glm::aabb GetLocalAABB(int indexDraw) const = 0;
 
 public:
-	virtual uint32_t GetIndexType(void) const = 0;
+	virtual GfxIndexType GetIndexType(void) const = 0;
 	virtual uint32_t GetIndexCount(int indexDraw) const = 0;
 	virtual uint32_t GetIndexOffset(int indexDraw) const = 0;
 

@@ -3,34 +3,34 @@
 
 
 typedef struct PipelineState {
-	uint32_t bEnableCullFace = GL_TRUE;
-	uint32_t cullFace = GL_BACK;
-	uint32_t frontFace = GL_CCW;
+	bool bEnableCullFace = true;
+	GfxCullFace cullFace = GFX_CULLFACE_BACK;
+	GfxFrontFace frontFace = GFX_FRONTFACE_CCW;
 
-	uint32_t bEnableStencilTest = GL_FALSE;
-	uint32_t stencilFunc = GL_ALWAYS;
+	bool bEnableStencilTest = false;
 	uint32_t stencilRef = 0;
 	uint32_t stencilMask = 1;
-	uint32_t stencilOpSFail = GL_KEEP;
-	uint32_t stencilOpDFail = GL_KEEP;
-	uint32_t stencilOpDPass = GL_KEEP;
+	GfxFunc stencilFunc = GFX_FUNC_ALWAYS;
+	GfxStencilOp stencilOpSFail = GFX_STENCILOP_KEEP;
+	GfxStencilOp stencilOpDFail = GFX_STENCILOP_KEEP;
+	GfxStencilOp stencilOpDPass = GFX_STENCILOP_KEEP;
 
-	uint32_t bEnableDepthTest = GL_TRUE;
-	uint32_t bEnableDepthWrite = GL_TRUE;
-	uint32_t depthFunc = GL_LESS;
+	bool bEnableDepthTest = true;
+	bool bEnableDepthWrite = true;
 	float depthRangeNear = 0.0f;
 	float depthRangeFar = 1.0f;
+	GfxFunc depthFunc = GFX_FUNC_LESS;
 
-	uint32_t bEnableColorWrite[4] = { GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE };
+	bool bEnableColorWrite[4] = { true, true, true, true };
 
-	uint32_t bEnableAlphaToCoverage = GL_FALSE;
-	uint32_t bEnableBlend = GL_FALSE;
-	uint32_t blendSrcFactor = GL_ONE;
-	uint32_t blendDstFactor = GL_ZERO;
-	uint32_t blendEquation = GL_FUNC_ADD;
+	bool bEnableAlphaToCoverage = false;
+	bool bEnableBlend = false;
 	float blendColor[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
+	GfxBlendFactor blendSrcFactor = GFX_BLENDFACTOR_ONE;
+	GfxBlendFactor blendDstFactor = GFX_BLENDFACTOR_ZERO;
+	GfxBlendEquation blendEquation = GFX_BLENDEQUATION_FUNC_ADD;
 
-	uint32_t bEnablePolygonOffset = GL_FALSE;
+	bool bEnablePolygonOffset = false;
 	float polygonOffsetFactor = 0.0f;
 	float polygonOffsetUnits = 0.0f;
 } PipelineState;

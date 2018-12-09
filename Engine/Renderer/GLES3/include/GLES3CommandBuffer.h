@@ -57,9 +57,9 @@ public:
 	bool CmdSetInstanceBufferData(const CGfxMeshPtr &ptrMesh, const int indexDraw, const uint8_t *pInstanceBuffer, uint32_t size);
 	bool CmdSetDrawIndirectBufferData(const CGfxMeshPtr &ptrMesh, const int indexDraw, int instanceCount);
 
-	bool CmdDrawElements(uint32_t mode, uint32_t type, int offset, int count);
-	bool CmdDrawInstance(uint32_t mode, uint32_t type, int offset, int count, int instanceCount);
-	bool CmdDrawIndirect(uint32_t mode, uint32_t type, int offset);
+	bool CmdDrawElements(GfxDrawMode mode, GfxIndexType type, int offset, int count);
+	bool CmdDrawInstance(GfxDrawMode mode, GfxIndexType type, int offset, int count, int instanceCount);
+	bool CmdDrawIndirect(GfxDrawMode mode, GfxIndexType type, int offset);
 
 	bool CmdExecute(const CGfxCommandBufferPtr &ptrCommandBuffer);
 

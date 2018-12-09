@@ -8,7 +8,7 @@ class CGLES3IndexBuffer : public CGfxIndexBuffer
 
 
 private:
-	CGLES3IndexBuffer(uint32_t type, size_t size, bool bDynamic);
+	CGLES3IndexBuffer(GfxIndexType type, size_t size, bool bDynamic);
 	virtual ~CGLES3IndexBuffer(void);
 
 
