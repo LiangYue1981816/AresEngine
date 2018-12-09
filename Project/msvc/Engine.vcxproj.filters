@@ -741,6 +741,9 @@
     <ClInclude Include="..\..\Engine\ThirdParty\zzip\zzip32.h">
       <Filter>ThirdParty\zzip</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxEnum.h">
+      <Filter>Engine\Renderer\Gfx\Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Engine\ThirdParty\eastl\source\allocator_eastl.cpp">
