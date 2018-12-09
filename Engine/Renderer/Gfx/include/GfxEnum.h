@@ -246,27 +246,27 @@ typedef enum GfxPixelFormat {
 	GFX_PIXELFORMAT_BGR8_SRGB_PACK32,
 
 	GFX_PIXELFORMAT_RG3B2_UNORM_PACK8, GFX_PIXELFORMAT_LAST = GFX_PIXELFORMAT_RG3B2_UNORM_PACK8
-};
+} GfxPixelFormat;
 
 typedef enum GfxIndexType {
 	GFX_INDEX_INVALID_ENUM = -1,
 	GFX_INDEX_UNSIGNED_BYTE,
 	GFX_INDEX_UNSIGNED_SHORT,
 	GFX_INDEX_UNSIGNED_INT,
-};
+} GfxIndexType;
 
 typedef enum GfxCullFaceType {
 	GFX_CULLFACE_INVALID_ENUM = -1,
 	GFX_CULLFACE_FRONT,
 	GFX_CULLFACE_BACK,
 	GFX_CULLFACE_FRONT_AND_BACK,
-};
+} GfxCullFaceType;
 
 typedef enum GfxFrontFaceType {
 	GFX_FRONTFACE_INVALID_ENUM = -1,
 	GFX_FRONTFACE_CW,
 	GFX_FRONTFACE_CCW,
-};
+} GfxFrontFaceType;
 
 typedef enum GfxFuncType {
 	GFX_FUNC_INVALID_ENUM = -1,
@@ -278,7 +278,7 @@ typedef enum GfxFuncType {
 	GFX_FUNC_EQUAL,
 	GFX_FUNC_NOTEQUAL,
 	GFX_FUNC_ALWAYS,
-};
+} GfxFuncType;
 
 typedef enum GfxStencilOpType {
 	GFX_STENCILOP_INVALID_ENUM = -1,
@@ -290,7 +290,7 @@ typedef enum GfxStencilOpType {
 	GFX_STENCILOP_DECR,
 	GFX_STENCILOP_DECR_WRAP,
 	GFX_STENCILOP_INVERT,
-};
+} GfxStencilOpType;
 
 typedef enum GfxMinFilterType {
 	GFX_MINFILTER_INVALID_ENUM = -1,
@@ -300,19 +300,19 @@ typedef enum GfxMinFilterType {
 	GFX_MINFILTER_NEAREST,
 	GFX_MINFILTER_NEAREST_MIPMAP_LINEAR,
 	GFX_MINFILTER_NEAREST_MIPMAP_NEAREST,
-};
+} GfxMinFilterType;
 
 typedef enum GfxMagFilterType {
 	GFX_MAGFILTER_INVALID_ENUM = -1,
 	GFX_MAGFILTER_LINEAR,
 	GFX_MAGFILTER_NEAREST,
-};
+} GfxMagFilterType;
 
 typedef enum GfxAddressType {
 	GFX_ADDRESS_INVALID_ENUM = -1,
 	GFX_ADDRESS_REPEAT,
 	GFX_ADDRESS_CLAMP_TO_EDGE,
-};
+} GfxAddressType;
 
 typedef enum GfxBlendFactorType {
 	GFX_BLENDFACTOR_INVALID_ENUM = -1,
@@ -331,7 +331,7 @@ typedef enum GfxBlendFactorType {
 	GFX_BLENDFACTOR_CONSTANT_ALPHA,
 	GFX_BLENDFACTOR_ONE_MINUS_CONSTANT_ALPHA,
 	GFX_BLENDFACTOR_SRC_ALPHA_SATURATE,
-};
+} GfxBlendFactorType;
 
 typedef enum GfxBlendEquationType {
 	GFX_BLENDEQUATION_INVALID_ENUM = -1,
@@ -340,4 +340,4 @@ typedef enum GfxBlendEquationType {
 	GFX_BLENDEQUATION_FUNC_REVERSE_SUBTRACT,
 	GFX_BLENDEQUATION_MIN,
 	GFX_BLENDEQUATION_MAX,
-};
+} GfxBlendEquationType;
