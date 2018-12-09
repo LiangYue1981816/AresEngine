@@ -1,4 +1,4 @@
-#include "GfxHeader.h"
+#include "GLES3Renderer.h"
 
 
 CGLES3TextureCubeMap::CGLES3TextureCubeMap(CGLES3TextureManager *pManager, uint32_t name)

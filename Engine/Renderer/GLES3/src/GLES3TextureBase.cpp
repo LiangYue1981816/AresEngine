@@ -1,4 +1,4 @@
-#include "GfxHeader.h"
+#include "GLES3Renderer.h"
 
 
 CGLES3TextureBase::CGLES3TextureBase(CGLES3TextureManager *pManager)

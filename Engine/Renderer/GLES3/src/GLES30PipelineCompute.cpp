@@ -1,6 +1,6 @@
 #if GLES_VER == 300
 
-#include "GfxHeader.h"
+#include "GLES3Renderer.h"
 
 
 CGLES3PipelineCompute::CGLES3PipelineCompute(uint32_t name)

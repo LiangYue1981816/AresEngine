@@ -1,6 +1,7 @@
 #pragma once
-#include "PreHeader.h"
+#include "GfxHeader.h"
 
+#include "GLES3/GL31.h"
 #include "GLES3Extension.h"
 #include "GLES3Definition.h"
 

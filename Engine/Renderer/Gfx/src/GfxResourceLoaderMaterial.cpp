@@ -11,7 +11,7 @@ static uint32_t StringToCullFace(const char *szString)
 	if (szString) {
 		if (!stricmp(szString, "GL_FRONT")) return GL_FRONT;
 		if (!stricmp(szString, "GL_BACK")) return GL_BACK;
-		if (!stricmp(szString, "GL_FRONT_AND_BACK ")) return GL_FRONT_AND_BACK;
+		if (!stricmp(szString, "GL_FRONT_AND_BACK")) return GL_FRONT_AND_BACK;
 	}
 
 	return GL_BACK;
@@ -72,19 +72,6 @@ static uint32_t StringToDepthFunc(const char *szString)
 	}
 
 	return GL_LESS;
-}
-
-static uint32_t StringToBlendEquation(const char *szString)
-{
-	if (szString) {
-		if (!stricmp(szString, "GL_FUNC_ADD")) return GL_FUNC_ADD;
-		if (!stricmp(szString, "GL_FUNC_SUBTRACT")) return GL_FUNC_SUBTRACT;
-		if (!stricmp(szString, "GL_FUNC_REVERSE_SUBTRACT")) return GL_FUNC_REVERSE_SUBTRACT;
-		if (!stricmp(szString, "GL_MIN")) return GL_MIN;
-		if (!stricmp(szString, "GL_MAX")) return GL_MAX;
-	}
-
-	return GL_FUNC_ADD;
 }
 
 static uint32_t StringToMinFilter(const char *szString)
@@ -165,6 +152,19 @@ static uint32_t StringToBlendDstFactor(const char *szString)
 	}
 
 	return GL_ONE_MINUS_SRC_ALPHA;
+}
+
+static uint32_t StringToBlendEquation(const char *szString)
+{
+	if (szString) {
+		if (!stricmp(szString, "GL_FUNC_ADD")) return GL_FUNC_ADD;
+		if (!stricmp(szString, "GL_FUNC_SUBTRACT")) return GL_FUNC_SUBTRACT;
+		if (!stricmp(szString, "GL_FUNC_REVERSE_SUBTRACT")) return GL_FUNC_REVERSE_SUBTRACT;
+		if (!stricmp(szString, "GL_MIN")) return GL_MIN;
+		if (!stricmp(szString, "GL_MAX")) return GL_MAX;
+	}
+
+	return GL_FUNC_ADD;
 }
 
 
