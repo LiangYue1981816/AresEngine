@@ -77,6 +77,7 @@ private:
 	CGfxRenderer *m_pRenderer;
 	CRenderSolutionBase *m_pRenderSolution;
 
+	CFileManager *m_pFileManager;
 	CSceneManager *m_pSceneManager;
 	CResourceLoader *m_pResourceLoader;
 

@@ -3,15 +3,15 @@
 #include "FileManager.h"
 
 
+CFileManager* CFileManager::pInstance = nullptr;
 CFileManager* CFileManager::GetInstance(void)
 {
-	static CFileManager instance;
-	return &instance;
+	return pInstance;
 }
 
 CFileManager::CFileManager(void)
 {
-
+	pInstance = this;
 }
 
 CFileManager::~CFileManager(void)

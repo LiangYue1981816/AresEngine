@@ -21,7 +21,7 @@ public:
 	static CFileManager* GetInstance(void);
 
 
-private:
+public:
 	CFileManager(void);
 	virtual ~CFileManager(void);
 
@@ -39,4 +39,7 @@ public:
 private:
 	eastl::unordered_map<uint32_t, File> m_files;
 	eastl::unordered_map<uint32_t, ZZIP_DIR*> m_packs;
+
+private:
+	static CFileManager *pInstance;
 };

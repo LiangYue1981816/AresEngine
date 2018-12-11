@@ -43,6 +43,7 @@ CEngine::CEngine(GfxApi api, RenderSolution solution, void *hDC, int width, int 
 	, m_pRenderer(nullptr)
 	, m_pRenderSolution(nullptr)
 
+	, m_pFileManager(nullptr)
 	, m_pSceneManager(nullptr)
 	, m_pResourceLoader(nullptr)
 {
@@ -78,6 +79,7 @@ CEngine::CEngine(GfxApi api, RenderSolution solution, void *hDC, int width, int 
 		break;
 	}
 
+	m_pFileManager = new CFileManager;
 	m_pSceneManager = new CSceneManager;
 	m_pResourceLoader = new CResourceLoader;
 
@@ -98,6 +100,7 @@ CEngine::~CEngine(void)
 
 	delete m_pResourceLoader;
 	delete m_pSceneManager;
+	delete m_pFileManager;
 
 	delete m_pRenderSolution;
 	delete m_pRenderer;
