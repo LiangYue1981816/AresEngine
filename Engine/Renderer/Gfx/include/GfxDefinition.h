@@ -47,7 +47,6 @@ class CALL_API CGfxCommandBuffer;
 template<class T>
 class CALL_API CGfxResourcePtr;
 class CALL_API CGfxResource;
-class CALL_API CGfxResourceLoader;
 class CALL_API CGfxResourceManager;
 
 typedef CGfxResourcePtr<CGfxRenderPass> CGfxRenderPassPtr;

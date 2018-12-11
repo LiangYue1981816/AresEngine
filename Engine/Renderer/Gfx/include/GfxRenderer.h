@@ -48,7 +48,6 @@
 
 #include "GfxCommandBuffer.h"
 
-#include "GfxResourceLoader.h"
 #include "GfxResourceManager.h"
 
 

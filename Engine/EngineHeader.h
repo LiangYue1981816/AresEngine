@@ -11,4 +11,5 @@
 #include "Base/include/Stream.h"
 #include "Base/include/FileManager.h"
 
+#include "Resource/include/ResourceLoader.h"
 #include "Engine/include/Engine.h"

@@ -4,7 +4,6 @@
 #include "SceneDefinition.h"
 #include "Scene.h"
 #include "SceneNode.h"
-#include "SceneLoader.h"
 
 #include "ComponentMesh.h"
 #include "ComponentSkin.h"

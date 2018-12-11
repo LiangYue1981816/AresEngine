@@ -1,8 +1,9 @@
-#include "SceneHeader.h"
-#include "EngineHeader.h"
+#include "ResourceLoader.h"
 
 #include "tinyxml.h"
 #include "tinystr.h"
+#include "Stream.h"
+#include "FileManager.h"
 
 
 static bool LoadDraw(TiXmlNode *pNode, const CGfxMeshPtr &ptrMesh, CSceneNode *pCurrentSceneNode)
@@ -70,7 +71,7 @@ ERR:
 	return false;
 }
 
-static bool LoadMesh(TiXmlNode *pMeshNode, CSceneNode *pParentSceneNode)
+static bool LoadMesh(TiXmlNode *pMeshNode, CSceneNode *pParentSceneNode, uint32_t instanceFormat)
 {
 	int err = 0;
 	{
@@ -78,7 +79,7 @@ static bool LoadMesh(TiXmlNode *pMeshNode, CSceneNode *pParentSceneNode)
 			const char *szMeshFileName = pMeshNode->ToElement()->AttributeString("mesh");
 			if (szMeshFileName == nullptr) { err = -1; goto ERR; }
 
-			CGfxMeshPtr ptrMesh = GfxRenderer()->NewMesh(szMeshFileName, INSTANCE_ATTRIBUTE_TRANSFORM);
+			CGfxMeshPtr ptrMesh = GfxRenderer()->NewMesh(szMeshFileName, instanceFormat);
 			if (ptrMesh.IsValid() == false) { err = -2; goto ERR; }
 
 			do {
@@ -91,7 +92,7 @@ ERR:
 	return false;
 }
 
-static CSceneNode* LoadMesh(const char *szFileName, CSceneNode *pParentSceneNode)
+static CSceneNode* LoadMesh(const char *szFileName, CSceneNode *pParentSceneNode, uint32_t instanceFormat)
 {
 	/*
 	<Mesh mesh="sponza.mesh">
@@ -116,7 +117,7 @@ static CSceneNode* LoadMesh(const char *szFileName, CSceneNode *pParentSceneNode
 		if (pMeshNode == nullptr) { err = -3; goto ERR; }
 
 		pCurrentSceneNode = pParentSceneNode->GetSceneManager()->CreateNode(pParentSceneNode->GetSceneManager()->GetNextNodeName());
-		if (LoadMesh(pMeshNode, pCurrentSceneNode) == false) { err = -4; goto ERR; }
+		if (LoadMesh(pMeshNode, pCurrentSceneNode, instanceFormat) == false) { err = -4; goto ERR; }
 		if (pParentSceneNode->AttachNode(pCurrentSceneNode) == false) { err = -5; goto ERR; }
 	}
 	return pCurrentSceneNode;
@@ -125,7 +126,7 @@ ERR:
 	return nullptr;
 }
 
-CSceneNode* CSceneLoader::LoadMesh(const char *szFileName, CSceneNode *pParentSceneNode)
+CSceneNode* CResourceLoader::LoadSceneMesh(const char *szFileName, CSceneNode *pParentSceneNode, uint32_t instanceFormat)
 {
-	return ::LoadMesh(szFileName, pParentSceneNode);
+	return ::LoadMesh(szFileName, pParentSceneNode, instanceFormat);
 }

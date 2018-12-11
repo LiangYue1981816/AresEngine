@@ -75,12 +75,10 @@ private:
 
 private:
 	CGfxRenderer *m_pRenderer;
-	CGfxResourceLoader *m_pResourceLoader;
+	CRenderSolutionBase *m_pRenderSolution;
 
 	CSceneManager *m_pSceneManager;
-	CSceneLoader *m_pSceneLoader;
-
-	CRenderSolutionBase *m_pRenderSolution;
+	CResourceLoader *m_pResourceLoader;
 
 private:
 	event_t m_eventExit;

@@ -100,6 +100,15 @@
     <Filter Include="Engine\Renderer\Compiler\Source Files">
       <UniqueIdentifier>{05e83ed2-feb4-437d-8751-8c192021c699}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Resource">
+      <UniqueIdentifier>{b9e60ab8-e8d9-4403-9260-57ee918e1564}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Resource\Header Files">
+      <UniqueIdentifier>{ad2888d5-e108-411e-84da-1e84e6a81e01}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Resource\Source Files">
+      <UniqueIdentifier>{6f196a99-496f-454e-9cae-ef3e2305e3ed}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Engine\Define.h">
@@ -349,9 +358,6 @@
       <Filter>Engine\Renderer\Gfx\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxResource.h">
-      <Filter>Engine\Renderer\Gfx\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxResourceLoader.h">
       <Filter>Engine\Renderer\Gfx\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxResourceManager.h">
@@ -648,6 +654,9 @@
     <ClInclude Include="..\..\Engine\Renderer\Compiler\include\ShaderCompiler.h">
       <Filter>Engine\Renderer\Compiler\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Engine\Resource\include\ResourceLoader.h">
+      <Filter>Engine\Resource\Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Engine\ThirdParty\eastl\source\allocator_eastl.cpp">
@@ -845,21 +854,6 @@
     <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxResource.cpp">
       <Filter>Engine\Renderer\Gfx\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxResourceLoader.cpp">
-      <Filter>Engine\Renderer\Gfx\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxResourceLoaderMaterial.cpp">
-      <Filter>Engine\Renderer\Gfx\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxResourceLoaderMesh.cpp">
-      <Filter>Engine\Renderer\Gfx\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxResourceLoaderShader.cpp">
-      <Filter>Engine\Renderer\Gfx\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxResourceLoaderTexture.cpp">
-      <Filter>Engine\Renderer\Gfx\Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxResourceManager.cpp">
       <Filter>Engine\Renderer\Gfx\Source Files</Filter>
     </ClCompile>
@@ -1003,6 +997,24 @@
     </ClCompile>
     <ClCompile Include="..\..\Engine\Renderer\Compiler\src\ShaderCompiler.cpp">
       <Filter>Engine\Renderer\Compiler\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Resource\src\ResourceLoader.cpp">
+      <Filter>Engine\Resource\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Resource\src\ResourceLoaderMaterial.cpp">
+      <Filter>Engine\Resource\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Resource\src\ResourceLoaderMesh.cpp">
+      <Filter>Engine\Resource\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Resource\src\ResourceLoaderShader.cpp">
+      <Filter>Engine\Resource\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Resource\src\ResourceLoaderTexture.cpp">
+      <Filter>Engine\Resource\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Resource\src\ResourceLoaderSceneMesh.cpp">
+      <Filter>Engine\Resource\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
