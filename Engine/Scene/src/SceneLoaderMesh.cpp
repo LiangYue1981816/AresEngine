@@ -15,7 +15,7 @@ static bool LoadDraw(TiXmlNode *pNode, const CGfxMeshPtr &ptrMesh, CSceneNode *p
 			const char *szMaterialFileName = pDrawNode->ToElement()->AttributeString("material");
 			if (szMaterialFileName == nullptr) { err = -1; goto ERR; }
 
-			CGfxMaterialPtr ptrMaterial = Renderer()->NewMaterial(szMaterialFileName);
+			CGfxMaterialPtr ptrMaterial = GfxRenderer()->NewMaterial(szMaterialFileName);
 			if (ptrMaterial.IsValid() == false) { err = -2; goto ERR; }
 
 			CComponentMeshPtr ptrComponentMesh = pCurrentSceneNode->GetSceneManager()->CreateComponentMesh(pCurrentSceneNode->GetSceneManager()->GetNextComponentMeshName());
@@ -78,7 +78,7 @@ static bool LoadMesh(TiXmlNode *pMeshNode, CSceneNode *pParentSceneNode)
 			const char *szMeshFileName = pMeshNode->ToElement()->AttributeString("mesh");
 			if (szMeshFileName == nullptr) { err = -1; goto ERR; }
 
-			CGfxMeshPtr ptrMesh = Renderer()->NewMesh(szMeshFileName, INSTANCE_ATTRIBUTE_TRANSFORM);
+			CGfxMeshPtr ptrMesh = GfxRenderer()->NewMesh(szMeshFileName, INSTANCE_ATTRIBUTE_TRANSFORM);
 			if (ptrMesh.IsValid() == false) { err = -2; goto ERR; }
 
 			do {

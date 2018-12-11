@@ -5,7 +5,7 @@ CGfxUniformCamera::CGfxUniformCamera(bool bDynamic)
 	: m_bDirty(false)
 	, m_hash(INVALID_HASHVALUE)
 {
-	m_ptrUniformBuffer = Renderer()->NewUniformBuffer(sizeof(m_params), bDynamic);
+	m_ptrUniformBuffer = GfxRenderer()->NewUniformBuffer(sizeof(m_params), bDynamic);
 }
 
 CGfxUniformCamera::~CGfxUniformCamera(void)

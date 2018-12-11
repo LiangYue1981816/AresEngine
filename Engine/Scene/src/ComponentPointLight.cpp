@@ -5,8 +5,8 @@
 CComponentPointLight::CComponentPointLight(uint32_t name)
 	: CComponent(name)
 {
-	SetMaterial(Renderer()->NewMaterial("PointLight.material"));
-	SetMesh(Renderer()->NewMesh("PointLight.mesh", INSTANCE_ATTRIBUTE_TRANSFORM | INSTANCE_ATTRIBUTE_POINTLIGHT_COLOR | INSTANCE_ATTRIBUTE_POINTLIGHT_ATTENUATION));
+	SetMaterial(GfxRenderer()->NewMaterial("PointLight.material"));
+	SetMesh(GfxRenderer()->NewMesh("PointLight.mesh", INSTANCE_ATTRIBUTE_TRANSFORM | INSTANCE_ATTRIBUTE_POINTLIGHT_COLOR | INSTANCE_ATTRIBUTE_POINTLIGHT_ATTENUATION));
 }
 
 CComponentPointLight::CComponentPointLight(const CComponentPointLight &component)

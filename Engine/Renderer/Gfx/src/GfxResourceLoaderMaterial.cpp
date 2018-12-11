@@ -280,7 +280,7 @@ static bool InternalLoadPipelineShader(TiXmlNode *pPipelineNode, CGfxShader *&pS
 		ShaderCompiler()->Compile(FileManager()->GetFullName(szFileName), szBinFileName, (shaderc_shader_kind)kind);
 #endif
 
-		pShader = Renderer()->CreateShader(szBinFileName, kind);
+		pShader = GfxRenderer()->CreateShader(szBinFileName, kind);
 		if (pShader->IsValid() == false) { err = -3; goto ERR; }
 	}
 	LogOutput(nullptr, "OK\n");

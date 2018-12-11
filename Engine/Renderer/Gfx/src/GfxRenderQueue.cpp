@@ -8,7 +8,7 @@ CTaskCommandBuffer::CTaskCommandBuffer(int indexQueue, const CGfxUniformBufferPt
 	, m_pPipeline(pPipeline)
 	, m_namePass(namePass)
 {
-	m_ptrCommandBuffer = Renderer()->NewCommandBuffer(false);
+	m_ptrCommandBuffer = GfxRenderer()->NewCommandBuffer(false);
 }
 
 CTaskCommandBuffer::~CTaskCommandBuffer(void)
@@ -120,22 +120,22 @@ void CGfxRenderQueue::CmdDrawThread(int indexQueue, CGfxCommandBufferPtr &ptrCom
 	static const uint32_t nameUniformEngine = HashValue(UNIFORM_ENGINE_NAME);
 	static const uint32_t nameUniformCamera = HashValue(UNIFORM_CAMERA_NAME);
 
-	Renderer()->CmdBindPipelineGraphics(ptrCommandBuffer, (CGfxPipelineGraphics *)pPipeline);
-	Renderer()->CmdBindUniformBuffer(ptrCommandBuffer, ptrUniformBufferEngine, nameUniformEngine);
-	Renderer()->CmdBindUniformBuffer(ptrCommandBuffer, ptrUniformBufferCamera, nameUniformCamera);
+	GfxRenderer()->CmdBindPipelineGraphics(ptrCommandBuffer, (CGfxPipelineGraphics *)pPipeline);
+	GfxRenderer()->CmdBindUniformBuffer(ptrCommandBuffer, ptrUniformBufferEngine, nameUniformEngine);
+	GfxRenderer()->CmdBindUniformBuffer(ptrCommandBuffer, ptrUniformBufferCamera, nameUniformCamera);
 
 	for (const auto &itMaterial : m_pipelineMeshQueue[indexQueue][pPipeline]) {
-		Renderer()->CmdBindMaterialPass(ptrCommandBuffer, itMaterial.first, namePass);
+		GfxRenderer()->CmdBindMaterialPass(ptrCommandBuffer, itMaterial.first, namePass);
 
 		for (const auto &itMeshQueue : m_materialMeshQueue[indexQueue][itMaterial.first]) {
 			for (const auto itDrawQueue : itMeshQueue.second) {
 				//*
-				Renderer()->CmdSetInstanceBufferData(ptrCommandBuffer, itMeshQueue.first, itDrawQueue.first, itDrawQueue.second.data(), itDrawQueue.second.size());
-				Renderer()->CmdDrawInstance(ptrCommandBuffer, itMeshQueue.first, itDrawQueue.first, itDrawQueue.second.size() / GetInstanceStride(itMeshQueue.first->GetInstanceFormat()));
+				GfxRenderer()->CmdSetInstanceBufferData(ptrCommandBuffer, itMeshQueue.first, itDrawQueue.first, itDrawQueue.second.data(), itDrawQueue.second.size());
+				GfxRenderer()->CmdDrawInstance(ptrCommandBuffer, itMeshQueue.first, itDrawQueue.first, itDrawQueue.second.size() / GetInstanceStride(itMeshQueue.first->GetInstanceFormat()));
 				/*/
-				Renderer()->CmdSetInstanceBufferData(ptrCommandBuffer, itMeshQueue.first, itDrawQueue.first, itDrawQueue.second.data(), itDrawQueue.second.size());
-				Renderer()->CmdSetDrawIndirectBufferData(ptrCommandBuffer, itMeshQueue.first, itDrawQueue.first, itDrawQueue.second.size() / GetInstanceStride(itMeshQueue.first->GetInstanceFormat()));
-				Renderer()->CmdDrawIndirect(ptrCommandBuffer, itMeshQueue.first, itDrawQueue.first);
+				GfxRenderer()->CmdSetInstanceBufferData(ptrCommandBuffer, itMeshQueue.first, itDrawQueue.first, itDrawQueue.second.data(), itDrawQueue.second.size());
+				GfxRenderer()->CmdSetDrawIndirectBufferData(ptrCommandBuffer, itMeshQueue.first, itDrawQueue.first, itDrawQueue.second.size() / GetInstanceStride(itMeshQueue.first->GetInstanceFormat()));
+				GfxRenderer()->CmdDrawIndirect(ptrCommandBuffer, itMeshQueue.first, itDrawQueue.first);
 				//*/
 			}
 		}

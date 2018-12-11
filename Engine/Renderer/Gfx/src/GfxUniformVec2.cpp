@@ -4,7 +4,7 @@
 CGfxUniformVec2::CGfxUniformVec2(bool bDynamic)
 	: m_bDirty(false)
 {
-	m_ptrUniformBuffer = Renderer()->NewUniformBuffer(sizeof(m_value), bDynamic);
+	m_ptrUniformBuffer = GfxRenderer()->NewUniformBuffer(sizeof(m_value), bDynamic);
 }
 
 CGfxUniformVec2::~CGfxUniformVec2(void)

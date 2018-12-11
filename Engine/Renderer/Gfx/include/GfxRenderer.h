@@ -52,7 +52,7 @@
 #include "GfxResourceManager.h"
 
 
-#define Renderer() CGfxRenderer::GetInstance()
+#define GfxRenderer() CGfxRenderer::GetInstance()
 
 
 #define UNIFORM_ENGINE_NAME "Engine"
