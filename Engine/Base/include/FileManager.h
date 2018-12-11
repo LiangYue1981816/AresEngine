@@ -9,6 +9,9 @@
 class CALL_API CStream;
 class CALL_API CFileManager
 {
+	friend class CEngine;
+
+
 private:
 	typedef struct File {
 		ZZIP_DIR *pPack = nullptr;
@@ -21,7 +24,7 @@ public:
 	static CFileManager* GetInstance(void);
 
 
-public:
+private:
 	CFileManager(void);
 	virtual ~CFileManager(void);
 

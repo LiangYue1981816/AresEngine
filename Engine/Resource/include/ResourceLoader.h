@@ -8,11 +8,14 @@
 
 class CALL_API CResourceLoader
 {
+	friend class CEngine;
+
+
 public:
 	static CResourceLoader* GetInstance(void);
 
 
-public:
+private:
 	CResourceLoader(void);
 	virtual ~CResourceLoader(void);
 

@@ -81,6 +81,10 @@ private:
 	CSceneManager *m_pSceneManager;
 	CResourceLoader *m_pResourceLoader;
 
+#ifdef PLATFORM_WINDOWS
+	CShaderCompiler *m_pShaderCompiler;
+#endif
+
 private:
 	event_t m_eventExit;
 	event_t m_eventFinish;

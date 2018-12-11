@@ -46,6 +46,10 @@ CEngine::CEngine(GfxApi api, RenderSolution solution, void *hDC, int width, int 
 	, m_pFileManager(nullptr)
 	, m_pSceneManager(nullptr)
 	, m_pResourceLoader(nullptr)
+
+#ifdef PLATFORM_WINDOWS
+	, m_pShaderCompiler(nullptr)
+#endif
 {
 	pInstance = this;
 
@@ -83,6 +87,10 @@ CEngine::CEngine(GfxApi api, RenderSolution solution, void *hDC, int width, int 
 	m_pSceneManager = new CSceneManager;
 	m_pResourceLoader = new CResourceLoader;
 
+#ifdef PLATFORM_WINDOWS
+	m_pShaderCompiler = new CShaderCompiler;
+#endif
+
 	event_init(&m_eventExit, 0);
 	event_init(&m_eventFinish, 1);
 	event_init(&m_eventDispatch, 0);
@@ -97,6 +105,10 @@ CEngine::~CEngine(void)
 	event_destroy(&m_eventExit);
 	event_destroy(&m_eventFinish);
 	event_destroy(&m_eventDispatch);
+
+#ifdef PLATFORM_WINDOWS
+	delete m_pShaderCompiler;
+#endif
 
 	delete m_pResourceLoader;
 	delete m_pSceneManager;

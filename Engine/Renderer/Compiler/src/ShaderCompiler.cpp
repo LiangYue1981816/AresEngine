@@ -6,16 +6,18 @@
 
 #ifdef PLATFORM_WINDOWS
 
+CShaderCompiler* CShaderCompiler::pInstance = nullptr;
 CShaderCompiler* CShaderCompiler::GetInstance(void)
 {
-	static CShaderCompiler instance;
-	return &instance;
+	return pInstance;
 }
 
 CShaderCompiler::CShaderCompiler(void)
 	: m_szCachePath{ 0 }
 	, m_fileIncluder(new glslc::FileIncluder(&m_fileFinder))
 {
+	pInstance = this;
+
 	m_options.SetIncluder(std::move(m_fileIncluder));
 	m_options.SetWarningsAsErrors();
 	m_options.SetSourceLanguage(shaderc_source_language_glsl);

@@ -14,6 +14,9 @@
 
 class CShaderCompiler
 {
+	friend class CEngine;
+
+
 public:
 	static CShaderCompiler* GetInstance(void);
 
@@ -48,6 +51,9 @@ private:
 
 	shaderc_util::FileFinder m_fileFinder;
 	std::unique_ptr<glslc::FileIncluder> m_fileIncluder;
+
+private:
+	static CShaderCompiler *pInstance;
 };
 
 #endif
