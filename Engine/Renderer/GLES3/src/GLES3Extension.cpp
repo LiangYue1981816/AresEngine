@@ -43,7 +43,7 @@ uint32_t glGetProgramStage(shader_kind kind)
 #pragma region OpenGL convert
 GLenum GLDataType(GfxDataType dataType)
 {
-	switch (dataType) {
+	switch ((int)dataType) {
 	case GFX_DATA_UNSIGNED_BYTE:
 		return GL_UNSIGNED_BYTE;
 	case GFX_DATA_UNSIGNED_SHORT:
@@ -57,7 +57,7 @@ GLenum GLDataType(GfxDataType dataType)
 
 GLenum GLIndexType(GfxIndexType indexType)
 {
-	switch (indexType) {
+	switch ((int)indexType) {
 	case GFX_INDEX_UNSIGNED_BYTE:
 		return GL_UNSIGNED_BYTE;
 	case GFX_INDEX_UNSIGNED_SHORT:
@@ -71,7 +71,7 @@ GLenum GLIndexType(GfxIndexType indexType)
 
 GLenum GLCullFace(GfxCullFace cullFace)
 {
-	switch (cullFace) {
+	switch ((int)cullFace) {
 	case GFX_CULLFACE_FRONT:
 		return GL_FRONT;
 	case GFX_CULLFACE_BACK:
@@ -85,7 +85,7 @@ GLenum GLCullFace(GfxCullFace cullFace)
 
 GLenum GLFrontFace(GfxFrontFace frontFace)
 {
-	switch (frontFace) {
+	switch ((int)frontFace) {
 	case GFX_FRONTFACE_CW:
 		return GL_CW;
 	case GFX_FRONTFACE_CCW:
@@ -97,7 +97,7 @@ GLenum GLFrontFace(GfxFrontFace frontFace)
 
 GLenum GLFunc(GfxFunc func)
 {
-	switch (func) {
+	switch ((int)func) {
 	case GFX_FUNC_NEVER:
 		return GL_NEVER;
 	case GFX_FUNC_LESS:
@@ -121,7 +121,7 @@ GLenum GLFunc(GfxFunc func)
 
 GLenum GLStencilOp(GfxStencilOp stencilOp)
 {
-	switch (stencilOp) {
+	switch ((int)stencilOp) {
 	case GFX_STENCILOP_KEEP:
 		return GL_KEEP;
 	case GFX_STENCILOP_ZERO:
@@ -145,7 +145,7 @@ GLenum GLStencilOp(GfxStencilOp stencilOp)
 
 GLenum GLMinFilter(GfxMinFilter minFilter)
 {
-	switch (minFilter) {
+	switch ((int)minFilter) {
 	case GFX_MINFILTER_LINEAR:
 		return GL_LINEAR;
 	case GFX_MINFILTER_LINEAR_MIPMAP_LINEAR:
@@ -165,7 +165,7 @@ GLenum GLMinFilter(GfxMinFilter minFilter)
 
 GLenum GLMagFilter(GfxMagFilter magFilter)
 {
-	switch (magFilter) {
+	switch ((int)magFilter) {
 	case GFX_MAGFILTER_LINEAR:
 		return GL_LINEAR;
 	case GFX_MAGFILTER_NEAREST:
@@ -177,7 +177,7 @@ GLenum GLMagFilter(GfxMagFilter magFilter)
 
 GLenum GLAddressMode(GfxAddressMode addressMode)
 {
-	switch (addressMode) {
+	switch ((int)addressMode) {
 	case GFX_ADDRESS_REPEAT:
 		return GL_REPEAT;
 	case GFX_ADDRESS_CLAMP_TO_EDGE:
@@ -189,7 +189,7 @@ GLenum GLAddressMode(GfxAddressMode addressMode)
 
 GLenum GLBlendFactor(GfxBlendFactor blendFactor)
 {
-	switch (blendFactor) {
+	switch ((int)blendFactor) {
 	case GFX_BLENDFACTOR_ZERO:
 		return GL_ZERO;
 	case GFX_BLENDFACTOR_ONE:
@@ -227,7 +227,7 @@ GLenum GLBlendFactor(GfxBlendFactor blendFactor)
 
 GLenum GLBlendEquation(GfxBlendEquation blendEquation)
 {
-	switch (blendEquation) {
+	switch ((int)blendEquation) {
 	case GFX_BLENDEQUATION_FUNC_ADD:
 		return GL_FUNC_ADD;
 	case GFX_BLENDEQUATION_FUNC_SUBTRACT:
@@ -245,7 +245,7 @@ GLenum GLBlendEquation(GfxBlendEquation blendEquation)
 
 GLenum GLTextureCubeMapFace(GfxTextureCubeMapFace face)
 {
-	switch (face) {
+	switch ((int)face) {
 	case GFX_TEXTURE_CUBEMAP_POSITIVE_X:
 		return GL_TEXTURE_CUBE_MAP_POSITIVE_X;
 	case GFX_TEXTURE_CUBEMAP_NEGATIVE_X:
@@ -265,7 +265,7 @@ GLenum GLTextureCubeMapFace(GfxTextureCubeMapFace face)
 
 GLenum GLDrawMode(GfxDrawMode drawMode)
 {
-	switch (drawMode) {
+	switch ((int)drawMode) {
 	case GFX_DRAWMODE_POINTS:
 		return GL_POINTS;
 	case GFX_DRAWMODE_LINE_STRIP:
@@ -552,7 +552,7 @@ void GLResetContext(void)
 
 void GLEnable(GLenum cap)
 {
-	switch (cap) {
+	switch ((int)cap) {
 	case GL_BLEND:
 	case GL_CULL_FACE:
 	case GL_DEPTH_TEST:
@@ -577,7 +577,7 @@ void GLEnable(GLenum cap)
 
 void GLDisable(GLenum cap)
 {
-	switch (cap) {
+	switch ((int)cap) {
 	case GL_BLEND:
 	case GL_CULL_FACE:
 	case GL_DEPTH_TEST:
@@ -852,7 +852,7 @@ void GLBindVertexArray(GLuint array)
 
 void GLBindBuffer(GLenum target, GLuint buffer)
 {
-	switch (target) {
+	switch ((int)target) {
 	case GL_ARRAY_BUFFER:
 	case GL_COPY_READ_BUFFER:
 	case GL_COPY_WRITE_BUFFER:
@@ -877,7 +877,7 @@ void GLBindBuffer(GLenum target, GLuint buffer)
 
 void GLBindBufferBase(GLenum target, GLuint index, GLuint buffer)
 {
-	switch (target) {
+	switch ((int)target) {
 	case GL_TRANSFORM_FEEDBACK_BUFFER:
 	case GL_UNIFORM_BUFFER:
 #if GLES_VER == 310
@@ -895,7 +895,7 @@ void GLBindBufferBase(GLenum target, GLuint index, GLuint buffer)
 
 void GLBindBufferRange(GLenum target, GLuint index, GLuint buffer, GLint offset, GLsizei size)
 {
-	switch (target) {
+	switch ((int)target) {
 	case GL_TRANSFORM_FEEDBACK_BUFFER:
 	case GL_UNIFORM_BUFFER:
 #if GLES_VER == 310
@@ -940,7 +940,7 @@ void GLBindTexture(GLuint unit, GLenum target, GLuint texture)
 
 void GLBindFramebuffer(GLenum target, GLuint framebuffer)
 {
-	switch (target) {
+	switch ((int)target) {
 	case GL_FRAMEBUFFER:
 	case GL_DRAW_FRAMEBUFFER:
 	case GL_READ_FRAMEBUFFER:
