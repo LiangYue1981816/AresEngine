@@ -17,11 +17,6 @@ GFX_RENDERER_SRC_FILES := \
 ../../Engine/Renderer/Gfx/src/GfxRenderer.cpp \
 ../../Engine/Renderer/Gfx/src/GfxRenderQueue.cpp \
 ../../Engine/Renderer/Gfx/src/GfxResource.cpp \
-../../Engine/Renderer/Gfx/src/GfxResourceLoader.cpp \
-../../Engine/Renderer/Gfx/src/GfxResourceLoaderMaterial.cpp \
-../../Engine/Renderer/Gfx/src/GfxResourceLoaderMesh.cpp \
-../../Engine/Renderer/Gfx/src/GfxResourceLoaderShader.cpp \
-../../Engine/Renderer/Gfx/src/GfxResourceLoaderTexture.cpp \
 ../../Engine/Renderer/Gfx/src/GfxResourceManager.cpp \
 ../../Engine/Renderer/Gfx/src/GfxUniformCamera.cpp \
 ../../Engine/Renderer/Gfx/src/GfxUniformEngine.cpp \
@@ -69,6 +64,12 @@ GFX_RENDERER_SRC_FILES := \
 ../../Engine/Renderer/GLES3/src/GLES3UniformBufferManager.cpp \
 ../../Engine/Renderer/GLES3/src/GLES3VertexArrayObject.cpp \
 ../../Engine/Renderer/GLES3/src/GLES3VertexBuffer.cpp \
+../../Engine/Resource/src/ResourceLoader.cpp \
+../../Engine/Resource/src/ResourceLoaderMaterial.cpp \
+../../Engine/Resource/src/ResourceLoaderMesh.cpp \
+../../Engine/Resource/src/ResourceLoaderSceneMesh.cpp \
+../../Engine/Resource/src/ResourceLoaderShader.cpp \
+../../Engine/Resource/src/ResourceLoaderTexture.cpp \
 ../../Engine/ThirdParty/eastl/source/allocator_eastl.cpp \
 ../../Engine/ThirdParty/eastl/source/assert.cpp \
 ../../Engine/ThirdParty/eastl/source/fixed_pool.cpp \

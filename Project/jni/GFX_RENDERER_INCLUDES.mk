@@ -16,4 +16,5 @@ GFX_RENDERER_INCLUDES := \
 	$(LOCAL_PATH)/../../Engine/Renderer/Gfx/include \
 	$(LOCAL_PATH)/../../Engine/Renderer/GLES3/include \
 	$(LOCAL_PATH)/../../Engine/Renderer/Vulkan/include \
-	$(LOCAL_PATH)/../../Engine/Renderer/Compiler/include
+	$(LOCAL_PATH)/../../Engine/Renderer/Compiler/include \
+	$(LOCAL_PATH)/../../Engine/Resource/include

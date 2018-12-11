@@ -18,4 +18,5 @@ ENGINE_INCLUDES := \
 	$(LOCAL_PATH)/../../Engine/Renderer/Vulkan/include \
 	$(LOCAL_PATH)/../../Engine/Renderer/Compiler/include \
 	$(LOCAL_PATH)/../../Engine/Scene/include \
-	$(LOCAL_PATH)/../../Engine/Engine/include
+	$(LOCAL_PATH)/../../Engine/Engine/include \
+	$(LOCAL_PATH)/../../Engine/Resource/include
