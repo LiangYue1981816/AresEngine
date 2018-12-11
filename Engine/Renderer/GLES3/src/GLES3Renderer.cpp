@@ -100,6 +100,11 @@ CGfxMeshPtr CGLES3Renderer::NewMesh(uint32_t name)
 	return m_pMeshManager->Create(name);
 }
 
+CGfxMeshPtr CGLES3Renderer::NewMesh(uint32_t name, const char *szFileName, uint32_t instanceFormat)
+{
+	return m_pMeshManager->Create(name, szFileName, instanceFormat);
+}
+
 CGfxMeshPtr CGLES3Renderer::NewMesh(const char *szFileName, uint32_t instanceFormat)
 {
 	return m_pMeshManager->Create(szFileName, instanceFormat);
@@ -108,6 +113,11 @@ CGfxMeshPtr CGLES3Renderer::NewMesh(const char *szFileName, uint32_t instanceFor
 CGfxMaterialPtr CGLES3Renderer::NewMaterial(uint32_t name)
 {
 	return m_pMaterialManager->Create(name);
+}
+
+CGfxMaterialPtr CGLES3Renderer::NewMaterial(uint32_t name, const char *szFileName)
+{
+	return m_pMaterialManager->Create(name, szFileName);
 }
 
 CGfxMaterialPtr CGLES3Renderer::NewMaterial(const char *szFileName)
@@ -120,6 +130,11 @@ CGfxTexture2DPtr CGLES3Renderer::NewTexture2D(uint32_t name)
 	return m_pTextureManager->CreateTexture2D(name);
 }
 
+CGfxTexture2DPtr CGLES3Renderer::NewTexture2D(uint32_t name, const char *szFileName)
+{
+	return m_pTextureManager->CreateTexture2D(name, szFileName);
+}
+
 CGfxTexture2DPtr CGLES3Renderer::NewTexture2D(const char *szFileName)
 {
 	return m_pTextureManager->CreateTexture2D(szFileName);
@@ -130,6 +145,11 @@ CGfxTexture2DArrayPtr CGLES3Renderer::NewTexture2DArray(uint32_t name)
 	return m_pTextureManager->CreateTexture2DArray(name);
 }
 
+CGfxTexture2DArrayPtr CGLES3Renderer::NewTexture2DArray(uint32_t name, const char *szFileName)
+{
+	return m_pTextureManager->CreateTexture2DArray(name, szFileName);
+}
+
 CGfxTexture2DArrayPtr CGLES3Renderer::NewTexture2DArray(const char *szFileName)
 {
 	return m_pTextureManager->CreateTexture2DArray(szFileName);
@@ -138,6 +158,11 @@ CGfxTexture2DArrayPtr CGLES3Renderer::NewTexture2DArray(const char *szFileName)
 CGfxTextureCubeMapPtr CGLES3Renderer::NewTextureCubeMap(uint32_t name)
 {
 	return m_pTextureManager->CreateTextureCubeMap(name);
+}
+
+CGfxTextureCubeMapPtr CGLES3Renderer::NewTextureCubeMap(uint32_t name, const char *szFileName)
+{
+	return m_pTextureManager->CreateTextureCubeMap(name, szFileName);
 }
 
 CGfxTextureCubeMapPtr CGLES3Renderer::NewTextureCubeMap(const char *szFileName)
