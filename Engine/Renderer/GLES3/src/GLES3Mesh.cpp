@@ -187,10 +187,10 @@ uint32_t CGLES3Mesh::GetIndexOffset(int indexDraw) const
 {
 	if (indexDraw >= 0 && indexDraw < (int)m_draws.size() && m_pIndexBuffer) {
 		switch ((int)m_pIndexBuffer->GetIndexType()) {
-		case GL_UNSIGNED_BYTE:  return m_draws[indexDraw].firstIndex;
-		case GL_UNSIGNED_SHORT: return m_draws[indexDraw].firstIndex * 2;
-		case GL_UNSIGNED_INT:   return m_draws[indexDraw].firstIndex * 4;
-		default:                return 0;
+		case GFX_INDEX_UNSIGNED_BYTE:  return m_draws[indexDraw].firstIndex;
+		case GFX_INDEX_UNSIGNED_SHORT: return m_draws[indexDraw].firstIndex * 2;
+		case GFX_INDEX_UNSIGNED_INT:   return m_draws[indexDraw].firstIndex * 4;
+		default:                       return 0;
 		}
 	}
 	else {
