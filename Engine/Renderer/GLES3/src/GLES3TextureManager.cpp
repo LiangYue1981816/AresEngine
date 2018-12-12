@@ -20,7 +20,7 @@ bool CGLES3TextureManager::IsHaveTexture2D(uint32_t name)
 {
 	mutex_autolock autolock(&lock);
 	{
-		return m_pTextures.find(name) != m_pTextures.end() && typeid(m_pTextures[name]) == typeid(CGLES3Texture2D);
+		return m_pTextures.find(name) != m_pTextures.end() && m_pTextures[name]->GetTarget() == GL_TEXTURE_2D;
 	}
 }
 
@@ -28,7 +28,7 @@ bool CGLES3TextureManager::IsHaveTexture2DArray(uint32_t name)
 {
 	mutex_autolock autolock(&lock);
 	{
-		return m_pTextures.find(name) != m_pTextures.end() && typeid(m_pTextures[name]) == typeid(CGLES3Texture2DArray);
+		return m_pTextures.find(name) != m_pTextures.end() && m_pTextures[name]->GetTarget() == GL_TEXTURE_2D_ARRAY;
 	}
 }
 
@@ -36,7 +36,7 @@ bool CGLES3TextureManager::IsHaveTextureCubeMap(uint32_t name)
 {
 	mutex_autolock autolock(&lock);
 	{
-		return m_pTextures.find(name) != m_pTextures.end() && typeid(m_pTextures[name]) == typeid(CGLES3TextureCubeMap);
+		return m_pTextures.find(name) != m_pTextures.end() && m_pTextures[name]->GetTarget() == GL_TEXTURE_CUBE_MAP;
 	}
 }
 
