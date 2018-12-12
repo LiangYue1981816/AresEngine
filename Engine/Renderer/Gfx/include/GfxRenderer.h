@@ -90,22 +90,23 @@ public:
 	virtual CGfxRenderPassPtr NewRenderPass(int numAttachments, int numSubpasses) = 0;
 	virtual CGfxFrameBufferPtr NewFrameBuffer(int width, int height) = 0;
 
+	virtual bool IsHaveMesh(uint32_t name) = 0;
 	virtual CGfxMeshPtr NewMesh(uint32_t name) = 0;
 	virtual CGfxMeshPtr NewMesh(uint32_t name, const char *szFileName, uint32_t instanceFormat) = 0;
 	virtual CGfxMeshPtr NewMesh(const char *szFileName, uint32_t instanceFormat) = 0;
 
+	virtual bool IsHaveMaterial(uint32_t name) = 0;
 	virtual CGfxMaterialPtr NewMaterial(uint32_t name) = 0;
 	virtual CGfxMaterialPtr NewMaterial(uint32_t name, const char *szFileName) = 0;
 	virtual CGfxMaterialPtr NewMaterial(const char *szFileName) = 0;
 
+	virtual bool IsHaveTexture(uint32_t name) = 0;
 	virtual CGfxTexture2DPtr NewTexture2D(uint32_t name) = 0;
 	virtual CGfxTexture2DPtr NewTexture2D(uint32_t name, const char *szFileName) = 0;
 	virtual CGfxTexture2DPtr NewTexture2D(const char *szFileName) = 0;
-
 	virtual CGfxTexture2DArrayPtr NewTexture2DArray(uint32_t name) = 0;
 	virtual CGfxTexture2DArrayPtr NewTexture2DArray(uint32_t name, const char *szFileName) = 0;
 	virtual CGfxTexture2DArrayPtr NewTexture2DArray(const char *szFileName) = 0;
-
 	virtual CGfxTextureCubeMapPtr NewTextureCubeMap(uint32_t name) = 0;
 	virtual CGfxTextureCubeMapPtr NewTextureCubeMap(uint32_t name, const char *szFileName) = 0;
 	virtual CGfxTextureCubeMapPtr NewTextureCubeMap(const char *szFileName) = 0;

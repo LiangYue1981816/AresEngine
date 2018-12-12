@@ -95,6 +95,11 @@ CGfxFrameBufferPtr CGLES3Renderer::NewFrameBuffer(int width, int height)
 	return m_pFrameBufferManager->Create(width, height);
 }
 
+bool CGLES3Renderer::IsHaveMesh(uint32_t name)
+{
+	return m_pMeshManager->IsHave(name);
+}
+
 CGfxMeshPtr CGLES3Renderer::NewMesh(uint32_t name)
 {
 	return m_pMeshManager->Create(name);
@@ -110,6 +115,11 @@ CGfxMeshPtr CGLES3Renderer::NewMesh(const char *szFileName, uint32_t instanceFor
 	return m_pMeshManager->Create(szFileName, instanceFormat);
 }
 
+bool CGLES3Renderer::IsHaveMaterial(uint32_t name)
+{
+	return m_pMaterialManager->IsHave(name);
+}
+
 CGfxMaterialPtr CGLES3Renderer::NewMaterial(uint32_t name)
 {
 	return m_pMaterialManager->Create(name);
@@ -123,6 +133,11 @@ CGfxMaterialPtr CGLES3Renderer::NewMaterial(uint32_t name, const char *szFileNam
 CGfxMaterialPtr CGLES3Renderer::NewMaterial(const char *szFileName)
 {
 	return m_pMaterialManager->Create(szFileName);
+}
+
+bool CGLES3Renderer::IsHaveTexture(uint32_t name)
+{
+	return m_pTextureManager->IsHave(name);
 }
 
 CGfxTexture2DPtr CGLES3Renderer::NewTexture2D(uint32_t name)

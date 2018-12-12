@@ -16,15 +16,20 @@ CGLES3MaterialManager::~CGLES3MaterialManager(void)
 	m_pMaterials.clear();
 }
 
-CGLES3Material* CGLES3MaterialManager::Create(const char *szFileName)
+bool CGLES3MaterialManager::IsHave(uint32_t name)
 {
-	uint32_t name = HashValue(szFileName);
+	mutex_autolock autolock(&lock);
+	{
+		return m_pMaterials.find(name) != m_pMaterials.end();
+	}
+}
 
+CGLES3Material* CGLES3MaterialManager::Create(uint32_t name)
+{
 	mutex_autolock autolock(&lock);
 	{
 		if (m_pMaterials[name] == nullptr) {
 			m_pMaterials[name] = new CGLES3Material(this, name);
-			ResourceLoader()->LoadMaterial(szFileName, m_pMaterials[name]);
 		}
 
 		return (CGLES3Material *)m_pMaterials[name];
@@ -44,12 +49,15 @@ CGLES3Material* CGLES3MaterialManager::Create(uint32_t name, const char *szFileN
 	}
 }
 
-CGLES3Material* CGLES3MaterialManager::Create(uint32_t name)
+CGLES3Material* CGLES3MaterialManager::Create(const char *szFileName)
 {
+	uint32_t name = HashValue(szFileName);
+
 	mutex_autolock autolock(&lock);
 	{
 		if (m_pMaterials[name] == nullptr) {
 			m_pMaterials[name] = new CGLES3Material(this, name);
+			ResourceLoader()->LoadMaterial(szFileName, m_pMaterials[name]);
 		}
 
 		return (CGLES3Material *)m_pMaterials[name];

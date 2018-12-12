@@ -14,9 +14,10 @@ private:
 
 
 private:
-	CGLES3Material* Create(const char *szFileName);
-	CGLES3Material* Create(uint32_t name, const char *szFileName);
+	bool IsHave(uint32_t name);
 	CGLES3Material* Create(uint32_t name);
+	CGLES3Material* Create(uint32_t name, const char *szFileName);
+	CGLES3Material* Create(const char *szFileName);
 	void Destroy(CGfxMaterial *pMaterial);
 
 
