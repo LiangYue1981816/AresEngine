@@ -16,11 +16,27 @@ CGLES3TextureManager::~CGLES3TextureManager(void)
 	m_pTextures.clear();
 }
 
-bool CGLES3TextureManager::IsHave(uint32_t name)
+bool CGLES3TextureManager::IsHaveTexture2D(uint32_t name)
 {
 	mutex_autolock autolock(&lock);
 	{
-		return m_pTextures.find(name) != m_pTextures.end();
+		return m_pTextures.find(name) != m_pTextures.end() && typeid(m_pTextures[name]) == typeid(CGLES3Texture2D);
+	}
+}
+
+bool CGLES3TextureManager::IsHaveTexture2DArray(uint32_t name)
+{
+	mutex_autolock autolock(&lock);
+	{
+		return m_pTextures.find(name) != m_pTextures.end() && typeid(m_pTextures[name]) == typeid(CGLES3Texture2DArray);
+	}
+}
+
+bool CGLES3TextureManager::IsHaveTextureCubeMap(uint32_t name)
+{
+	mutex_autolock autolock(&lock);
+	{
+		return m_pTextures.find(name) != m_pTextures.end() && typeid(m_pTextures[name]) == typeid(CGLES3TextureCubeMap);
 	}
 }
 

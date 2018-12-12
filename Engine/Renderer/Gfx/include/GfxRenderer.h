@@ -100,7 +100,9 @@ public:
 	virtual CGfxMaterialPtr NewMaterial(uint32_t name, const char *szFileName) = 0;
 	virtual CGfxMaterialPtr NewMaterial(const char *szFileName) = 0;
 
-	virtual bool IsHaveTexture(uint32_t name) = 0;
+	virtual bool IsHaveTexture2D(uint32_t name) = 0;
+	virtual bool IsHaveTexture2DArray(uint32_t name) = 0;
+	virtual bool IsHaveTextureCubeMap(uint32_t name) = 0;
 	virtual CGfxTexture2DPtr NewTexture2D(uint32_t name) = 0;
 	virtual CGfxTexture2DPtr NewTexture2D(uint32_t name, const char *szFileName) = 0;
 	virtual CGfxTexture2DPtr NewTexture2D(const char *szFileName) = 0;

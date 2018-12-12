@@ -16,7 +16,9 @@ private:
 
 
 private:
-	bool IsHave(uint32_t name);
+	bool IsHaveTexture2D(uint32_t name);
+	bool IsHaveTexture2DArray(uint32_t name);
+	bool IsHaveTextureCubeMap(uint32_t name);
 	CGLES3Texture2D* CreateTexture2D(uint32_t name);
 	CGLES3Texture2D* CreateTexture2D(uint32_t name, const char *szFileName);
 	CGLES3Texture2D* CreateTexture2D(const char *szFileName);

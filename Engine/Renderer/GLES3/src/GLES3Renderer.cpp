@@ -135,9 +135,19 @@ CGfxMaterialPtr CGLES3Renderer::NewMaterial(const char *szFileName)
 	return m_pMaterialManager->Create(szFileName);
 }
 
-bool CGLES3Renderer::IsHaveTexture(uint32_t name)
+bool CGLES3Renderer::IsHaveTexture2D(uint32_t name)
 {
-	return m_pTextureManager->IsHave(name);
+	return m_pTextureManager->IsHaveTexture2D(name);
+}
+
+bool CGLES3Renderer::IsHaveTexture2DArray(uint32_t name)
+{
+	return m_pTextureManager->IsHaveTexture2DArray(name);
+}
+
+bool CGLES3Renderer::IsHaveTextureCubeMap(uint32_t name)
+{
+	return m_pTextureManager->IsHaveTextureCubeMap(name);
 }
 
 CGfxTexture2DPtr CGLES3Renderer::NewTexture2D(uint32_t name)

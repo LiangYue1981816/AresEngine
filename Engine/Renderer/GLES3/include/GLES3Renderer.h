@@ -124,7 +124,9 @@ public:
 	CGfxMaterialPtr NewMaterial(uint32_t name, const char *szFileName);
 	CGfxMaterialPtr NewMaterial(const char *szFileName);
 
-	bool IsHaveTexture(uint32_t name);
+	bool IsHaveTexture2D(uint32_t name);
+	bool IsHaveTexture2DArray(uint32_t name);
+	bool IsHaveTextureCubeMap(uint32_t name);
 	CGfxTexture2DPtr NewTexture2D(uint32_t name);
 	CGfxTexture2DPtr NewTexture2D(uint32_t name, const char *szFileName);
 	CGfxTexture2DPtr NewTexture2D(const char *szFileName);
