@@ -103,6 +103,7 @@ public:
 
 public:
 	CGfxSwapChain* GetSwapChain(void) const;
+	CGfxMaterialPass* GetGlobalPass(void) const;
 
 public:
 	CGfxShader* CreateShader(const char *szFileName, shader_kind kind);

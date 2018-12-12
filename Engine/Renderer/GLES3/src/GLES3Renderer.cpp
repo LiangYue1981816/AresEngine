@@ -65,6 +65,11 @@ CGfxSwapChain* CGLES3Renderer::GetSwapChain(void) const
 	return m_pSwapChain;
 }
 
+CGfxMaterialPass* CGLES3Renderer::GetGlobalPass(void) const
+{
+	return m_pGlobalMaterialPass;
+}
+
 CGfxShader* CGLES3Renderer::CreateShader(const char *szFileName, shader_kind kind)
 {
 	return m_pShaderManager->Create(szFileName, kind);

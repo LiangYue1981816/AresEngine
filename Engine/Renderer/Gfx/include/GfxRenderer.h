@@ -79,6 +79,7 @@ public:
 
 public:
 	virtual CGfxSwapChain* GetSwapChain(void) const = 0;
+	virtual CGfxMaterialPass* GetGlobalPass(void) const = 0;
 
 public:
 	virtual CGfxShader* CreateShader(const char *szFileName, shader_kind kind) = 0;

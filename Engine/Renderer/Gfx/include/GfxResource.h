@@ -123,6 +123,11 @@ public:
 		return m_pPointer;
 	}
 
+	inline operator bool (void) const
+	{
+		return m_pPointer ? true : false;
+	}
+
 
 private:
 	T *m_pPointer;
