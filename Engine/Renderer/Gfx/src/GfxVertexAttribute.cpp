@@ -21,6 +21,17 @@ static uint32_t GetStride(uint32_t format, const ATTRIBUTE *attributes, uint32_t
 	return stride;
 }
 
+static uint32_t GetAttribute(const char *szName, const ATTRIBUTE *attributes, uint32_t count)
+{
+	for (uint32_t indexAttribute = 0; indexAttribute < count; indexAttribute++) {
+		if (strcmp(attributes[indexAttribute].name, szName) == 0) {
+			return attributes[indexAttribute].flag;
+		}
+	}
+
+	return 0;
+}
+
 static uint32_t GetAttributeSize(uint32_t attribute, const ATTRIBUTE *attributes, uint32_t count)
 {
 	for (uint32_t indexAttribute = 0; indexAttribute < count; indexAttribute++) {
@@ -66,6 +77,17 @@ static uint32_t GetAttributeLocation(uint32_t attribute, const ATTRIBUTE *attrib
 	return -1;
 }
 
+static uint32_t GetAttributeFormat(uint32_t attribute, const ATTRIBUTE *attributes, uint32_t count)
+{
+	for (uint32_t indexAttribute = 0; indexAttribute < count; indexAttribute++) {
+		if (attribute == attributes[indexAttribute].flag) {
+			return attributes[indexAttribute].format;
+		}
+	}
+
+	return -1;
+}
+
 
 CALL_API void SetVertexAttributes(const ATTRIBUTE *pAttributes, uint32_t count)
 {
@@ -81,6 +103,11 @@ CALL_API uint32_t GetVertexAttributeCount(void)
 CALL_API uint32_t GetVertexStride(uint32_t vertexFormat)
 {
 	return GetStride(vertexFormat, pVertexAttributes, numVertexAttributes);
+}
+
+CALL_API uint32_t GetVertexAttribute(const char *szName)
+{
+	return GetAttribute(szName, pVertexAttributes, numVertexAttributes);
 }
 
 CALL_API uint32_t GetVertexAttributeSize(uint32_t attribute)
@@ -103,6 +130,11 @@ CALL_API uint32_t GetVertexAttributeLocation(uint32_t attribute)
 	return GetAttributeLocation(attribute, pVertexAttributes, numVertexAttributes);
 }
 
+CALL_API uint32_t GetVertexAttributeFormat(uint32_t attribute)
+{
+	return GetAttributeFormat(attribute, pVertexAttributes, numVertexAttributes);
+}
+
 
 CALL_API void SetInstanceAttributes(const ATTRIBUTE *pAttributes, uint32_t count)
 {
@@ -118,6 +150,11 @@ CALL_API uint32_t GetInstanceAttributeCount(void)
 CALL_API uint32_t GetInstanceStride(uint32_t instanceFormat)
 {
 	return GetStride(instanceFormat, pInstanceAttributes, numInstanceAttributes);
+}
+
+CALL_API uint32_t GetInstanceAttribute(const char *szName)
+{
+	return GetAttribute(szName, pInstanceAttributes, numInstanceAttributes);
 }
 
 CALL_API uint32_t GetInstanceAttributeSize(uint32_t attribute)
@@ -138,4 +175,9 @@ CALL_API uint32_t GetInstanceAttributeComponents(uint32_t attribute)
 CALL_API uint32_t GetInstanceAttributeLocation(uint32_t attribute)
 {
 	return GetAttributeLocation(attribute, pInstanceAttributes, numInstanceAttributes);
+}
+
+CALL_API uint32_t GetInstanceAttributeFormat(uint32_t attribute)
+{
+	return GetAttributeFormat(attribute, pInstanceAttributes, numInstanceAttributes);
 }
