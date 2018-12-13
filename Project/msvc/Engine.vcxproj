@@ -226,6 +226,7 @@
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxMaterial.h" />
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxMaterialPass.h" />
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxMesh.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxMeshDraw.h" />
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxPipelineBase.h" />
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxPipelineCompute.h" />
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxPipelineGraphics.h" />
