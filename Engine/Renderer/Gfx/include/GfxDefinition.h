@@ -13,6 +13,7 @@ class CALL_API CGfxRenderPass;
 class CALL_API CGfxFrameBuffer;
 
 class CALL_API CGfxMesh;
+class CALL_API CGfxMeshDraw;
 class CALL_API CGfxIndexBuffer;
 class CALL_API CGfxVertexBuffer;
 class CALL_API CGfxInstanceBuffer;
@@ -53,6 +54,7 @@ typedef CGfxResourcePtr<CGfxRenderPass> CGfxRenderPassPtr;
 typedef CGfxResourcePtr<CGfxFrameBuffer> CGfxFrameBufferPtr;
 
 typedef CGfxResourcePtr<CGfxMesh> CGfxMeshPtr;
+typedef CGfxResourcePtr<CGfxMeshDraw> CGfxMeshDrawPtr;
 typedef CGfxResourcePtr<CGfxMaterial> CGfxMaterialPtr;
 typedef CGfxResourcePtr<CGfxTexture2D> CGfxTexture2DPtr;
 typedef CGfxResourcePtr<CGfxTexture2DArray> CGfxTexture2DArrayPtr;

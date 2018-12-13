@@ -18,6 +18,7 @@
 #include "GfxFrameBuffer.h"
 
 #include "GfxMesh.h"
+#include "GfxMeshDraw.h"
 #include "GfxIndexBuffer.h"
 #include "GfxVertexBuffer.h"
 #include "GfxInstanceBuffer.h"
@@ -93,8 +94,9 @@ public:
 
 	virtual bool IsHaveMesh(uint32_t name) = 0;
 	virtual CGfxMeshPtr NewMesh(uint32_t name) = 0;
-	virtual CGfxMeshPtr NewMesh(uint32_t name, const char *szFileName, uint32_t instanceFormat) = 0;
-	virtual CGfxMeshPtr NewMesh(const char *szFileName, uint32_t instanceFormat) = 0;
+	virtual CGfxMeshPtr NewMesh(uint32_t name, const char *szFileName, uint32_t vertexBinding = 0) = 0;
+	virtual CGfxMeshPtr NewMesh(const char *szFileName, uint32_t vertexBinding = 0) = 0;
+	virtual CGfxMeshDrawPtr NewMeshDraw(const CGfxMeshPtr &ptrMesh, int indexDraw, uint32_t instanceFormat, uint32_t instanceBinding = 1) = 0;
 
 	virtual bool IsHaveMaterial(uint32_t name) = 0;
 	virtual CGfxMaterialPtr NewMaterial(uint32_t name) = 0;
