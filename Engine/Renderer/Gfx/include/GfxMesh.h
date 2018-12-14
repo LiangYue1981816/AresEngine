@@ -32,7 +32,7 @@ public:
 
 public:
 	virtual bool CreateIndexBuffer(GfxIndexType type, size_t size, bool bDynamic, const void *pBuffer) = 0;
-	virtual bool CreateVertexBuffer(uint32_t vertexBinding, uint32_t vertexFormat, size_t size, bool bDynamic, const void *pBuffer) = 0;
+	virtual bool CreateVertexBuffer(uint32_t vertexFormat, uint32_t vertexBinding, size_t size, bool bDynamic, const void *pBuffer) = 0;
 	virtual bool CreateDraw(int indexDraw, const glm::aabb &aabb, int baseVertex, int firstIndex, int indexCount) = 0;
 	virtual void Destroy(void) = 0;
 
