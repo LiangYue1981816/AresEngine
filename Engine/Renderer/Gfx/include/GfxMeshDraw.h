@@ -5,7 +5,7 @@
 class CALL_API CGfxMeshDraw : public CGfxResource
 {
 public:
-	CGfxMeshDraw(const CGfxMeshPtr &ptrMesh, int indexDraw, uint32_t instanceBinding, uint32_t instanceFormat)
+	CGfxMeshDraw(const CGfxMeshPtr &ptrMesh, int indexDraw, uint32_t instanceFormat, uint32_t instanceBinding)
 	{
 
 	}

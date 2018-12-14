@@ -14,7 +14,7 @@ private:
 
 
 private:
-	CGfxMeshDraw* Create(const CGfxMeshPtr &ptrMesh, int indexDraw, uint32_t instanceBinding, uint32_t instanceFormat);
+	CGfxMeshDraw* Create(const CGfxMeshPtr &ptrMesh, int indexDraw, uint32_t instanceFormat, uint32_t instanceBinding);
 	void Destroy(CGfxMeshDraw *pMeshDraw);
 
 

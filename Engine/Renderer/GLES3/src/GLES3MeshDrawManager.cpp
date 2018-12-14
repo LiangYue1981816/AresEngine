@@ -16,11 +16,11 @@ CGLES3MeshDrawManager::~CGLES3MeshDrawManager(void)
 	m_pMeshDraws.clear();
 }
 
-CGfxMeshDraw* CGLES3MeshDrawManager::Create(const CGfxMeshPtr &ptrMesh, int indexDraw, uint32_t instanceBinding, uint32_t instanceFormat)
+CGfxMeshDraw* CGLES3MeshDrawManager::Create(const CGfxMeshPtr &ptrMesh, int indexDraw, uint32_t instanceFormat, uint32_t instanceBinding)
 {
 	mutex_autolock autolock(&lock);
 	{
-		CGLES3MeshDraw *pMeshDraw = new CGLES3MeshDraw(this, ptrMesh, indexDraw, instanceBinding, instanceFormat);
+		CGLES3MeshDraw *pMeshDraw = new CGLES3MeshDraw(this, ptrMesh, indexDraw, instanceFormat, instanceBinding);
 		m_pMeshDraws[pMeshDraw] = pMeshDraw;
 		return pMeshDraw;
 	}

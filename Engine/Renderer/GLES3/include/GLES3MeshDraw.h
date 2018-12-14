@@ -8,7 +8,7 @@ class CGLES3MeshDraw : public CGfxMeshDraw
 
 
 private:
-	CGLES3MeshDraw(CGLES3MeshDrawManager *pManager, const CGfxMeshPtr &ptrMesh, int indexDraw, uint32_t instanceBinding, uint32_t instanceFormat);
+	CGLES3MeshDraw(CGLES3MeshDrawManager *pManager, const CGfxMeshPtr &ptrMesh, int indexDraw, uint32_t instanceFormat, uint32_t instanceBinding);
 	virtual ~CGLES3MeshDraw(void);
 	virtual void Release(void);
 
