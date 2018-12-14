@@ -16,7 +16,6 @@ private:
 private:
 	bool IsHave(uint32_t name);
 	CGLES3Mesh* Create(uint32_t name);
-	CGLES3Mesh* Create(uint32_t name, const char *szFileName, uint32_t instanceFormat);
 	CGLES3Mesh* Create(const char *szFileName, uint32_t instanceFormat);
 	void Destroy(CGfxMesh *pMesh);
 

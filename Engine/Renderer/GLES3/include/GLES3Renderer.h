@@ -118,25 +118,20 @@ public:
 
 	bool IsHaveMesh(uint32_t name);
 	CGfxMeshPtr NewMesh(uint32_t name);
-	CGfxMeshPtr NewMesh(uint32_t name, const char *szFileName, uint32_t instanceFormat);
 	CGfxMeshPtr NewMesh(const char *szFileName, uint32_t instanceFormat);
 
 	bool IsHaveMaterial(uint32_t name);
 	CGfxMaterialPtr NewMaterial(uint32_t name);
-	CGfxMaterialPtr NewMaterial(uint32_t name, const char *szFileName);
 	CGfxMaterialPtr NewMaterial(const char *szFileName);
 
 	bool IsHaveTexture2D(uint32_t name);
 	bool IsHaveTexture2DArray(uint32_t name);
 	bool IsHaveTextureCubeMap(uint32_t name);
 	CGfxTexture2DPtr NewTexture2D(uint32_t name);
-	CGfxTexture2DPtr NewTexture2D(uint32_t name, const char *szFileName);
 	CGfxTexture2DPtr NewTexture2D(const char *szFileName);
 	CGfxTexture2DArrayPtr NewTexture2DArray(uint32_t name);
-	CGfxTexture2DArrayPtr NewTexture2DArray(uint32_t name, const char *szFileName);
 	CGfxTexture2DArrayPtr NewTexture2DArray(const char *szFileName);
 	CGfxTextureCubeMapPtr NewTextureCubeMap(uint32_t name);
-	CGfxTextureCubeMapPtr NewTextureCubeMap(uint32_t name, const char *szFileName);
 	CGfxTextureCubeMapPtr NewTextureCubeMap(const char *szFileName);
 
 	CGfxUniformBufferPtr NewUniformBuffer(size_t size, bool bDynamic);

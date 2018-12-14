@@ -36,19 +36,6 @@ CGLES3Mesh* CGLES3MeshManager::Create(uint32_t name)
 	}
 }
 
-CGLES3Mesh* CGLES3MeshManager::Create(uint32_t name, const char *szFileName, uint32_t instanceFormat)
-{
-	mutex_autolock autolock(&lock);
-	{
-		if (m_pMeshs[name] == nullptr) {
-			m_pMeshs[name] = new CGLES3Mesh(this, name);
-		}
-
-		ResourceLoader()->LoadMesh(szFileName, m_pMeshs[name], instanceFormat);
-		return (CGLES3Mesh *)m_pMeshs[name];
-	}
-}
-
 CGLES3Mesh* CGLES3MeshManager::Create(const char *szFileName, uint32_t instanceFormat)
 {
 	char szName[_MAX_STRING];
