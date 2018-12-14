@@ -119,7 +119,8 @@ public:
 
 	bool IsHaveMesh(uint32_t name);
 	CGfxMeshPtr NewMesh(uint32_t name);
-	CGfxMeshPtr NewMesh(const char *szFileName, uint32_t instanceFormat);
+	CGfxMeshPtr NewMesh(const char *szFileName, uint32_t vertexBinding = 0);
+	CGfxMeshDrawPtr NewMeshDraw(const CGfxMeshPtr &ptrMesh, int indexDraw, uint32_t instanceFormat, uint32_t instanceBinding = 1);
 
 	bool IsHaveMaterial(uint32_t name);
 	CGfxMaterialPtr NewMaterial(uint32_t name);
@@ -223,6 +224,7 @@ private:
 
 private:
 	CGLES3MeshManager *m_pMeshManager;
+	CGLES3MeshDrawManager *m_pMeshDrawManager;
 	CGLES3ShaderManager *m_pShaderManager;
 	CGLES3SamplerManager *m_pSamplerManager;
 	CGLES3TextureManager *m_pTextureManager;

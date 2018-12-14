@@ -7,6 +7,7 @@ CGLES3Renderer::CGLES3Renderer(void *hDC, int width, int height, GfxPixelFormat 
 	, m_pSwapChain(nullptr)
 
 	, m_pMeshManager(nullptr)
+	, m_pMeshDrawManager(nullptr)
 	, m_pShaderManager(nullptr)
 	, m_pSamplerManager(nullptr)
 	, m_pTextureManager(nullptr)
@@ -23,6 +24,7 @@ CGLES3Renderer::CGLES3Renderer(void *hDC, int width, int height, GfxPixelFormat 
 	, m_pCurrentPipelineGraphics(nullptr)
 {
 	m_pMeshManager = new CGLES3MeshManager;
+	m_pMeshDrawManager = new CGLES3MeshDrawManager;
 	m_pShaderManager = new CGLES3ShaderManager;
 	m_pSamplerManager = new CGLES3SamplerManager;
 	m_pTextureManager = new CGLES3TextureManager;
@@ -39,9 +41,8 @@ CGLES3Renderer::CGLES3Renderer(void *hDC, int width, int height, GfxPixelFormat 
 
 CGLES3Renderer::~CGLES3Renderer(void)
 {
-	delete m_pSwapChain;
-
 	delete m_pMeshManager;
+	delete m_pMeshDrawManager;
 	delete m_pShaderManager;
 	delete m_pSamplerManager;
 	delete m_pTextureManager;
@@ -52,6 +53,7 @@ CGLES3Renderer::~CGLES3Renderer(void)
 	delete m_pUniformBufferManager;
 	delete m_pCommandBufferManager;
 
+	delete m_pSwapChain;
 	delete m_pGlobalMaterialPass;
 }
 
@@ -110,9 +112,14 @@ CGfxMeshPtr CGLES3Renderer::NewMesh(uint32_t name)
 	return m_pMeshManager->Create(name);
 }
 
-CGfxMeshPtr CGLES3Renderer::NewMesh(const char *szFileName, uint32_t instanceFormat)
+CGfxMeshPtr CGLES3Renderer::NewMesh(const char *szFileName, uint32_t vertexBinding)
 {
-	return m_pMeshManager->Create(szFileName, instanceFormat);
+	return m_pMeshManager->Create(szFileName, vertexBinding);
+}
+
+CGfxMeshDrawPtr CGLES3Renderer::NewMeshDraw(const CGfxMeshPtr &ptrMesh, int indexDraw, uint32_t instanceFormat, uint32_t instanceBinding)
+{
+	return m_pMeshDrawManager->Create(ptrMesh, indexDraw, instanceBinding, instanceFormat);
 }
 
 bool CGLES3Renderer::IsHaveMaterial(uint32_t name)
