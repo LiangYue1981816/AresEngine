@@ -753,6 +753,9 @@
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxMeshDraw.h">
       <Filter>Engine\Renderer\Gfx\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3MeshDraw.h">
+      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Engine\ThirdParty\eastl\source\allocator_eastl.cpp">
@@ -1150,6 +1153,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Engine\Resource\src\ResourceLoaderSceneMesh.cpp">
       <Filter>Engine\Resource\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3MeshDraw.cpp">
+      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

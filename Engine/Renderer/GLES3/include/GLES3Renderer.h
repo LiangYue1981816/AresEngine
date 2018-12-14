@@ -14,6 +14,7 @@
 #include "GLES3FrameBufferManager.h"
 
 #include "GLES3Mesh.h"
+#include "GLES3MeshDraw.h"
 #include "GLES3IndexBuffer.h"
 #include "GLES3VertexBuffer.h"
 #include "GLES3InstanceBuffer.h"

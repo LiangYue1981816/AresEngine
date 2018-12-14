@@ -274,6 +274,7 @@
     <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3MaterialManager.h" />
     <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3MaterialPass.h" />
     <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3Mesh.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3MeshDraw.h" />
     <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3MeshManager.h" />
     <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3PipelineManager.h" />
     <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3Renderer.h" />
@@ -446,6 +447,7 @@
     <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3MaterialManager.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3MaterialPass.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3Mesh.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3MeshDraw.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3MeshManager.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3PipelineManager.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3Renderer.cpp" />
