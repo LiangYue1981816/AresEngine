@@ -21,6 +21,7 @@
 #include "GLES3DrawIndirectBuffer.h"
 #include "GLES3VertexArrayObject.h"
 #include "GLES3MeshManager.h"
+#include "GLES3MeshDrawManager.h"
 
 #include "GLES3Sampler.h"
 #include "GLES3SamplerManager.h"

@@ -8,7 +8,7 @@ class CGLES3MeshDraw : public CGfxMeshDraw
 
 
 private:
-	CGLES3MeshDraw(CGLES3MeshManager *pManager);
+	CGLES3MeshDraw(CGLES3MeshDrawManager *pManager);
 	virtual ~CGLES3MeshDraw(void);
 	virtual void Release(void);
 
@@ -43,7 +43,7 @@ private:
 	CGLES3DrawIndirectBuffer *m_pDrawIndirectBuffer;
 
 private:
-	CGLES3MeshManager *m_pManager;
+	CGLES3MeshDrawManager *m_pManager;
 };
 /*
 class CGLES3Mesh : public CGfxMesh
