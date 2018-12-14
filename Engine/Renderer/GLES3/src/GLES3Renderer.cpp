@@ -41,20 +41,20 @@ CGLES3Renderer::CGLES3Renderer(void *hDC, int width, int height, GfxPixelFormat 
 
 CGLES3Renderer::~CGLES3Renderer(void)
 {
-	delete m_pMeshManager;
-	delete m_pMeshDrawManager;
-	delete m_pShaderManager;
+	delete m_pSwapChain;
+	delete m_pGlobalMaterialPass;
+
+	delete m_pCommandBufferManager;
+	delete m_pFrameBufferManager;
+	delete m_pRenderPassManager;
+	delete m_pMaterialManager;
 	delete m_pSamplerManager;
 	delete m_pTextureManager;
 	delete m_pPipelineManager;
-	delete m_pMaterialManager;
-	delete m_pRenderPassManager;
-	delete m_pFrameBufferManager;
+	delete m_pShaderManager;
+	delete m_pMeshDrawManager;
+	delete m_pMeshManager;
 	delete m_pUniformBufferManager;
-	delete m_pCommandBufferManager;
-
-	delete m_pSwapChain;
-	delete m_pGlobalMaterialPass;
 }
 
 uint32_t CGLES3Renderer::GetLastError(void) const
