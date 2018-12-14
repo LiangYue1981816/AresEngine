@@ -51,6 +51,10 @@ bool CGLES3MeshDraw::InstanceBufferData(size_t size, const void *pBuffer)
 {
 	if (m_pInstanceBuffer) {
 		m_pInstanceBuffer->BufferData(size, pBuffer);
+
+		if (m_pDrawIndirectBuffer) {
+			m_pDrawIndirectBuffer->BufferData(0, size / GetInstanceStride(m_pInstanceBuffer->GetInstanceFormat()));
+		}
 	}
 }
 
