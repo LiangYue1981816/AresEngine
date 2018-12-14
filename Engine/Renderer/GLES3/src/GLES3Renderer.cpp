@@ -342,36 +342,31 @@ bool CGLES3Renderer::CmdSetViewport(CGfxCommandBufferPtr &ptrCommandBuffer, int 
 	return ptrCommandBuffer->CmdSetViewport(x, y, width, height);
 }
 
-bool CGLES3Renderer::CmdSetInstanceBufferData(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxMeshPtr &ptrMesh, const int indexDraw, const uint8_t *pInstanceBuffer, uint32_t size)
+bool CGLES3Renderer::CmdSetInstanceBufferData(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxMeshDrawPtr &ptrMeshDraw, const uint8_t *pInstanceBuffer, uint32_t size)
 {
-	return ptrCommandBuffer->CmdSetInstanceBufferData(ptrMesh, indexDraw, pInstanceBuffer, size);
+	return ptrCommandBuffer->CmdSetInstanceBufferData(ptrMeshDraw, pInstanceBuffer, size);
 }
 
-bool CGLES3Renderer::CmdSetDrawIndirectBufferData(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxMeshPtr &ptrMesh, const int indexDraw, int instanceCount)
+bool CGLES3Renderer::CmdDrawInstance(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxMeshDrawPtr &ptrMeshDraw, int instanceCount)
 {
-	return ptrCommandBuffer->CmdSetDrawIndirectBufferData(ptrMesh, indexDraw, instanceCount);
-}
-
-bool CGLES3Renderer::CmdDrawInstance(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxMeshPtr &ptrMesh, const int indexDraw, int instanceCount)
-{
-	if (ptrCommandBuffer->CmdBindMesh(ptrMesh, indexDraw) == false) {
+	if (ptrCommandBuffer->CmdBindMeshDraw(ptrMeshDraw) == false) {
 		return false;
 	}
 
-	if (ptrCommandBuffer->CmdDrawInstance(GFX_DRAWMODE_TRIANGLES, ptrMesh->GetIndexType(), ptrMesh->GetIndexOffset(indexDraw), ptrMesh->GetIndexCount(indexDraw), instanceCount) == false) {
+	if (ptrCommandBuffer->CmdDrawInstance(GFX_DRAWMODE_TRIANGLES, ptrMeshDraw->GetIndexType(), ptrMeshDraw->GetIndexOffset(), ptrMeshDraw->GetIndexCount(), instanceCount) == false) {
 		return false;
 	}
 
 	return true;
 }
 
-bool CGLES3Renderer::CmdDrawIndirect(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxMeshPtr &ptrMesh, const int indexDraw)
+bool CGLES3Renderer::CmdDrawIndirect(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxMeshDrawPtr &ptrMeshDraw)
 {
-	if (ptrCommandBuffer->CmdBindMesh(ptrMesh, indexDraw) == false) {
+	if (ptrCommandBuffer->CmdBindMeshDraw(ptrMeshDraw) == false) {
 		return false;
 	}
 
-	if (ptrCommandBuffer->CmdDrawIndirect(GFX_DRAWMODE_TRIANGLES, ptrMesh->GetIndexType(), ptrMesh->GetDrawCommandOffset(indexDraw)) == false) {
+	if (ptrCommandBuffer->CmdDrawIndirect(GFX_DRAWMODE_TRIANGLES, ptrMeshDraw->GetIndexType(), 0) == false) {
 		return false;
 	}
 
