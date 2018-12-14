@@ -41,6 +41,9 @@ public:
 	virtual const CGfxVertexBuffer* GetVertexBuffer(void) const = 0;
 	virtual const Draw* GetDraw(int indexDraw) const = 0;
 
+	virtual GfxIndexType GetIndexType(void) const = 0;
+	virtual uint32_t GetVertexFormat(void) const = 0;
+
 
 private:
 	uint32_t m_name;
