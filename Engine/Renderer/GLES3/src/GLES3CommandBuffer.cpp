@@ -9,7 +9,7 @@
 #include "GLES3CommandBindPipelineGraphics.h"
 #include "GLES3CommandBindMaterialPass.h"
 #include "GLES3CommandBindUniformBuffer.h"
-#include "GLES3CommandBindMesh.h"
+#include "GLES3CommandBindMeshDraw.h"
 #include "GLES3CommandUniform1i.h"
 #include "GLES3CommandUniform2i.h"
 #include "GLES3CommandUniform3i.h"
@@ -30,7 +30,6 @@
 #include "GLES3CommandUniformMatrix3fv.h"
 #include "GLES3CommandUniformMatrix4fv.h"
 #include "GLES3CommandSetInstanceBufferData.h"
-#include "GLES3CommandSetDrawIndirectBufferData.h"
 #include "GLES3CommandSetScissor.h"
 #include "GLES3CommandSetViewport.h"
 #include "GLES3CommandClearDepth.h"
@@ -176,10 +175,10 @@ bool CGLES3CommandBuffer::CmdBindUniformBuffer(const CGfxUniformBufferPtr &ptrUn
 	return false;
 }
 
-bool CGLES3CommandBuffer::CmdBindMesh(const CGfxMeshPtr &ptrMesh, const int indexDraw)
+bool CGLES3CommandBuffer::CmdBindMeshDraw(const CGfxMeshDrawPtr &ptrMeshDraw)
 {
 	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
-		m_pCommands.emplace_back(new CGLES3CommandBindMesh(ptrMesh, indexDraw));
+		m_pCommands.emplace_back(new CGLES3CommandBindMeshDraw(ptrMeshDraw));
 		return true;
 	}
 
@@ -416,20 +415,10 @@ bool CGLES3CommandBuffer::CmdSetViewport(int x, int y, int width, int height)
 	return false;
 }
 
-bool CGLES3CommandBuffer::CmdSetInstanceBufferData(const CGfxMeshPtr &ptrMesh, const int indexDraw, const uint8_t *pInstanceBuffer, uint32_t size)
+bool CGLES3CommandBuffer::CmdSetInstanceBufferData(const CGfxMeshDrawPtr &ptrMeshDraw, const uint8_t *pInstanceBuffer, uint32_t size)
 {
 	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
-		m_pCommands.emplace_back(new CGLES3CommandSetInstanceBufferData(ptrMesh, indexDraw, pInstanceBuffer, size));
-		return true;
-	}
-
-	return false;
-}
-
-bool CGLES3CommandBuffer::CmdSetDrawIndirectBufferData(const CGfxMeshPtr &ptrMesh, const int indexDraw, int instanceCount)
-{
-	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
-		m_pCommands.emplace_back(new CGLES3CommandSetDrawIndirectBufferData(ptrMesh, indexDraw, instanceCount));
+		m_pCommands.emplace_back(new CGLES3CommandSetInstanceBufferData(ptrMeshDraw, pInstanceBuffer, size));
 		return true;
 	}
 

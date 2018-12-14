@@ -5,9 +5,8 @@
 class CGLES3CommandSetInstanceBufferData : public CGfxCommandBase
 {
 public:
-	CGLES3CommandSetInstanceBufferData(const CGfxMeshPtr &ptrMesh, const int indexDraw, const uint8_t *pInstanceBuffer, uint32_t size)
-		: m_ptrMesh(ptrMesh)
-		, m_indexDraw(indexDraw)
+	CGLES3CommandSetInstanceBufferData(const CGfxMeshDrawPtr &ptrMeshDraw, const uint8_t *pInstanceBuffer, uint32_t size)
+		: m_ptrMeshDraw(ptrMeshDraw)
 	{
 		m_buffer.assign(pInstanceBuffer, pInstanceBuffer + size);
 	}
@@ -21,16 +20,14 @@ public:
 	{
 		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_SET_INSTANCEBUFFERDATA, "CommandSetInstanceBufferData");
 		{
-			if (m_ptrMesh.IsValid()) {
-				m_ptrMesh->InstanceBufferData(m_indexDraw, m_buffer.size(), m_buffer.data());
+			if (m_ptrMeshDraw.IsValid()) {
+				m_ptrMeshDraw->InstanceBufferData(m_buffer.size(), m_buffer.data());
 			}
 		}
 	}
 
 
 private:
-	CGfxMeshPtr m_ptrMesh;
-	int m_indexDraw;
-
+	CGfxMeshDrawPtr m_ptrMeshDraw;
 	eastl::vector<uint8_t> m_buffer;
 };
