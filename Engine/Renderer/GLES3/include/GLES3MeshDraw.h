@@ -18,14 +18,13 @@ public:
 
 public:
 	GfxIndexType GetIndexType(void) const;
+	uint32_t GetVertexFormat(void) const;
+
 	uint32_t GetIndexCount(void) const;
 	uint32_t GetIndexOffset(void) const;
 
-	uint32_t GetVertexFormat(void) const;
-	uint32_t GetVertexCount(void) const;
-
-	uint32_t GetInstanceFormat(void) const;
 	uint32_t GetInstanceCount(void) const;
+	uint32_t GetInstanceFormat(void) const;
 
 public:
 	void Bind(void *pParam);

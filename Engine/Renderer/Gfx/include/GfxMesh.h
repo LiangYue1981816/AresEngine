@@ -37,9 +37,9 @@ public:
 	virtual void Destroy(void) = 0;
 
 public:
-	virtual const CGfxIndexBuffer* GetIndexBuffer(void) const = 0;
-	virtual const CGfxVertexBuffer* GetVertexBuffer(void) const = 0;
-	virtual const Draw* GetDraw(int indexDraw) const = 0;
+	virtual CGfxIndexBuffer* GetIndexBuffer(void) = 0;
+	virtual CGfxVertexBuffer* GetVertexBuffer(void) = 0;
+	virtual Draw* GetDraw(int indexDraw) = 0;
 
 	virtual GfxIndexType GetIndexType(void) const = 0;
 	virtual uint32_t GetVertexFormat(void) const = 0;

@@ -1,196 +1,96 @@
 #include "GLES3Renderer.h"
 
 
-/*
-CGLES3Mesh::CGLES3Mesh(CGLES3MeshManager *pManager, uint32_t name)
-	: CGfxMesh(name)
+CGLES3MeshDraw::CGLES3MeshDraw(CGLES3MeshDrawManager *pManager, const CGfxMeshPtr &ptrMesh, int indexDraw, uint32_t instanceBinding, uint32_t instanceFormat)
+	: CGfxMeshDraw(ptrMesh, indexDraw, instanceBinding, instanceFormat)
 	, m_pManager(pManager)
 
-	, m_instanceFormat(0)
-
-	, m_pIndexBuffer(nullptr)
-	, m_pVertexBuffer(nullptr)
+	, m_pMeshDraw(nullptr)
+	, m_pInstanceBuffer(nullptr)
+	, m_pVertexArrayObject(nullptr)
 	, m_pDrawIndirectBuffer(nullptr)
 {
+	if (ptrMesh.IsValid() && ptrMesh->GetDraw(indexDraw)) {
+		m_ptrMesh = ptrMesh;
+		m_pMeshDraw = ptrMesh->GetDraw(indexDraw);
 
-}
+		m_pInstanceBuffer = new CGLES3InstanceBuffer(instanceBinding, instanceFormat);
+		m_pVertexArrayObject = new CGLES3VertexArrayObject;
+		m_pVertexArrayObject->Buffer((CGLES3IndexBuffer*)ptrMesh->GetIndexBuffer(), (CGLES3VertexBuffer *)ptrMesh->GetVertexBuffer(), m_pInstanceBuffer);
 
-CGLES3Mesh::~CGLES3Mesh(void)
-{
-	Destroy();
-}
-
-void CGLES3Mesh::Release(void)
-{
-	m_pManager->Destroy(this);
-}
-
-bool CGLES3Mesh::CreateIndexBuffer(GfxIndexType type, size_t size, bool bDynamic, const void *pBuffer)
-{
-	if (m_pIndexBuffer == nullptr) {
-		m_pIndexBuffer = new CGLES3IndexBuffer(type, size, bDynamic);
-		m_pIndexBuffer->BufferData(0, size, pBuffer);
-		return true;
-	}
-	else {
-		return false;
+		m_pDrawIndirectBuffer = new CGLES3DrawIndirectBuffer(1);
+		m_pDrawIndirectBuffer->BufferData(0, m_pMeshDraw->baseVertex, m_pMeshDraw->firstIndex, m_pMeshDraw->indexCount, 0);
 	}
 }
 
-bool CGLES3Mesh::CreateVertexBuffer(uint32_t binding, uint32_t vertexFormat, size_t size, bool bDynamic, const void *pBuffer)
+CGLES3MeshDraw::~CGLES3MeshDraw(void)
 {
-	if (m_pVertexBuffer == nullptr) {
-		m_pVertexBuffer = new CGLES3VertexBuffer(binding, vertexFormat, size, bDynamic);
-		m_pVertexBuffer->BufferData(0, size, pBuffer);
-		return true;
-	}
-	else {
-		return false;
-	}
-}
-
-bool CGLES3Mesh::CreateVertexArrayObject(uint32_t drawCount, uint32_t binding, uint32_t instanceFormat)
-{
-	if (m_draws.empty() && m_pIndexBuffer && m_pVertexBuffer) {
-		m_draws.resize(drawCount);
-		m_instanceFormat = instanceFormat;
-
-		for (int indexDraw = 0; indexDraw < (int)drawCount; indexDraw++) {
-			m_draws[indexDraw].pInstanceBuffer = new CGLES3InstanceBuffer(binding, instanceFormat);
-			m_draws[indexDraw].pVertexArrayObject = new CGLES3VertexArrayObject;
-			m_draws[indexDraw].pVertexArrayObject->Buffer(m_pIndexBuffer, m_pVertexBuffer, m_draws[indexDraw].pInstanceBuffer);
-		}
-
-		return true;
-	}
-	else {
-		return false;
-	}
-}
-
-bool CGLES3Mesh::CreateDrawIndirectBuffer(uint32_t drawCount)
-{
-	if (m_pDrawIndirectBuffer == nullptr) {
-		m_pDrawIndirectBuffer = new CGLES3DrawIndirectBuffer(drawCount);
-		return true;
-	}
-	else {
-		return false;
-	}
-}
-
-void CGLES3Mesh::Destroy(void)
-{
-	if (m_pIndexBuffer) {
-		delete m_pIndexBuffer;
+	if (m_pInstanceBuffer) {
+		delete m_pInstanceBuffer;
 	}
 
-	if (m_pVertexBuffer) {
-		delete m_pVertexBuffer;
+	if (m_pVertexArrayObject) {
+		delete m_pVertexArrayObject;
 	}
 
 	if (m_pDrawIndirectBuffer) {
 		delete m_pDrawIndirectBuffer;
 	}
 
-	for (int indexDraw = 0; indexDraw < (int)m_draws.size(); indexDraw++) {
-		delete m_draws[indexDraw].pInstanceBuffer;
-		delete m_draws[indexDraw].pVertexArrayObject;
-	}
-
-	m_draws.clear();
-	m_instanceFormat = 0;
-	m_pIndexBuffer = nullptr;
-	m_pVertexBuffer = nullptr;
+	m_pInstanceBuffer = nullptr;
+	m_pVertexArrayObject = nullptr;
 	m_pDrawIndirectBuffer = nullptr;
 }
 
-bool CGLES3Mesh::InstanceBufferData(int indexDraw, size_t size, const void *pBuffer)
+void CGLES3MeshDraw::Release(void)
 {
-	if (indexDraw >= 0 && indexDraw < (int)m_draws.size()) {
-		return m_draws[indexDraw].pInstanceBuffer->BufferData(size, pBuffer);
-	}
-	else {
-		return false;
+	m_pManager->Destroy(this);
+}
+
+bool CGLES3MeshDraw::InstanceBufferData(size_t size, const void *pBuffer)
+{
+	if (m_pInstanceBuffer) {
+		m_pInstanceBuffer->BufferData(size, pBuffer);
 	}
 }
 
-bool CGLES3Mesh::DrawIndirectBufferData(int indexDraw, int instanceCount)
+GfxIndexType CGLES3MeshDraw::GetIndexType(void) const
 {
-	if (indexDraw >= 0 && indexDraw < (int)m_draws.size() && m_pDrawIndirectBuffer) {
-		return m_pDrawIndirectBuffer->BufferData(indexDraw, instanceCount);
-	}
-	else {
-		return false;
-	}
-}
-
-bool CGLES3Mesh::DrawIndirectBufferData(int indexDraw, int baseVertex, int firstIndex, int indexCount, int instanceCount)
-{
-	if (indexDraw >= 0 && indexDraw < (int)m_draws.size()) {
-		m_draws[indexDraw].baseVertex = baseVertex;
-		m_draws[indexDraw].firstIndex = firstIndex;
-		m_draws[indexDraw].indexCount = indexCount;
-
-		if (m_pDrawIndirectBuffer) {
-			m_pDrawIndirectBuffer->BufferData(indexDraw, baseVertex, firstIndex, indexCount, instanceCount);
-		}
-
-		return true;
-	}
-	else {
-		return false;
-	}
-}
-
-bool CGLES3Mesh::SetLocalAABB(int indexDraw, glm::aabb aabb)
-{
-	if (indexDraw >= 0 && indexDraw < (int)m_draws.size()) {
-		m_draws[indexDraw].aabb = aabb;
-		return true;
-	}
-	else {
-		return false;
-	}
-}
-
-const glm::aabb CGLES3Mesh::GetLocalAABB(int indexDraw) const
-{
-	if (indexDraw >= 0 && indexDraw < (int)m_draws.size()) {
-		return m_draws[indexDraw].aabb;
-	}
-	else {
-		return glm::aabb();
-	}
-}
-
-GfxIndexType CGLES3Mesh::GetIndexType(void) const
-{
-	if (m_pIndexBuffer) {
-		return m_pIndexBuffer->GetIndexType();
+	if (m_ptrMesh.IsValid()) {
+		return m_ptrMesh->GetIndexType();
 	}
 	else {
 		return GFX_INDEX_INVALID_ENUM;
 	}
 }
 
-uint32_t CGLES3Mesh::GetIndexCount(int indexDraw) const
+uint32_t CGLES3MeshDraw::GetVertexFormat(void) const
 {
-	if (indexDraw >= 0 && indexDraw < (int)m_draws.size() && m_pIndexBuffer) {
-		return m_draws[indexDraw].indexCount;
+	if (m_ptrMesh.IsValid()) {
+		return m_ptrMesh->GetVertexFormat();
 	}
 	else {
 		return 0;
 	}
 }
 
-uint32_t CGLES3Mesh::GetIndexOffset(int indexDraw) const
+uint32_t CGLES3MeshDraw::GetIndexCount(void) const
 {
-	if (indexDraw >= 0 && indexDraw < (int)m_draws.size() && m_pIndexBuffer) {
-		switch ((int)m_pIndexBuffer->GetIndexType()) {
-		case GFX_INDEX_UNSIGNED_BYTE:  return m_draws[indexDraw].firstIndex;
-		case GFX_INDEX_UNSIGNED_SHORT: return m_draws[indexDraw].firstIndex * 2;
-		case GFX_INDEX_UNSIGNED_INT:   return m_draws[indexDraw].firstIndex * 4;
+	if (m_pMeshDraw) {
+		return m_pMeshDraw->indexCount;
+	}
+	else {
+		return 0;
+	}
+}
+
+uint32_t CGLES3MeshDraw::GetIndexOffset(void) const
+{
+	if (m_pMeshDraw) {
+		switch ((int)GetIndexType()) {
+		case GFX_INDEX_UNSIGNED_BYTE:  return m_pMeshDraw->firstIndex;
+		case GFX_INDEX_UNSIGNED_SHORT: return m_pMeshDraw->firstIndex * 2;
+		case GFX_INDEX_UNSIGNED_INT:   return m_pMeshDraw->firstIndex * 4;
 		default:                       return 0;
 		}
 	}
@@ -199,69 +99,33 @@ uint32_t CGLES3Mesh::GetIndexOffset(int indexDraw) const
 	}
 }
 
-uint32_t CGLES3Mesh::GetVertexFormat(void) const
+uint32_t CGLES3MeshDraw::GetInstanceCount(void) const
 {
-	if (m_pVertexBuffer) {
-		return m_pVertexBuffer->GetVertexFormat();
+	if (m_pInstanceBuffer) {
+		return m_pInstanceBuffer->GetInstanceCount();
 	}
 	else {
 		return 0;
 	}
 }
 
-uint32_t CGLES3Mesh::GetVertexCount(int indexDraw) const
+uint32_t CGLES3MeshDraw::GetInstanceFormat(void) const
 {
-	if (m_pVertexBuffer) {
-		return m_pVertexBuffer->GetVertexCount();
+	if (m_pInstanceBuffer) {
+		return m_pInstanceBuffer->GetInstanceFormat();
 	}
 	else {
 		return 0;
 	}
 }
 
-uint32_t CGLES3Mesh::GetInstanceFormat(void) const
+void CGLES3MeshDraw::Bind(void *pParam)
 {
-	return m_instanceFormat;
-}
-
-uint32_t CGLES3Mesh::GetInstanceCount(int indexDraw) const
-{
-	if (indexDraw >= 0 && indexDraw < (int)m_draws.size()) {
-		return m_draws[indexDraw].pInstanceBuffer->GetInstanceCount();
-	}
-	else {
-		return 0;
-	}
-}
-
-uint32_t CGLES3Mesh::GetDrawCommandCount(void) const
-{
-	if (m_pDrawIndirectBuffer) {
-		return m_pDrawIndirectBuffer->GetDrawCommandCount();
-	}
-	else {
-		return 0;
-	}
-}
-
-uint32_t CGLES3Mesh::GetDrawCommandOffset(int indexDraw) const
-{
-	if (m_pDrawIndirectBuffer) {
-		return m_pDrawIndirectBuffer->GetDrawCommandOffset(indexDraw);
-	}
-	else {
-		return 0;
-	}
-}
-
-void CGLES3Mesh::Bind(int indexDraw, void *pParam)
-{
-	if (indexDraw >= 0 && indexDraw < (int)m_draws.size()) {
-		m_draws[indexDraw].pVertexArrayObject->Bind(nullptr);
+	if (m_pVertexArrayObject) {
+		m_pVertexArrayObject->Bind(nullptr);
 	}
 
 	if (m_pDrawIndirectBuffer) {
 		m_pDrawIndirectBuffer->Bind(nullptr);
 	}
 }
-*/
