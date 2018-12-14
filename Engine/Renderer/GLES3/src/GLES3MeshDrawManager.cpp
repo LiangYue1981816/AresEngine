@@ -20,7 +20,7 @@ CGfxMeshDraw* CGLES3MeshDrawManager::Create(const CGfxMeshPtr &ptrMesh, int inde
 {
 	mutex_autolock autolock(&lock);
 	{
-		CGLES3MeshDraw *pMeshDraw = new CGLES3MeshDraw(this);
+		CGLES3MeshDraw *pMeshDraw = new CGLES3MeshDraw(this, ptrMesh, indexDraw, instanceBinding, instanceFormat);
 		m_pMeshDraws[pMeshDraw] = pMeshDraw;
 		return pMeshDraw;
 	}

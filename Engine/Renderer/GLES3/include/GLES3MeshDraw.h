@@ -8,14 +8,10 @@ class CGLES3MeshDraw : public CGfxMeshDraw
 
 
 private:
-	CGLES3MeshDraw(CGLES3MeshDrawManager *pManager);
+	CGLES3MeshDraw(CGLES3MeshDrawManager *pManager, const CGfxMeshPtr &ptrMesh, int indexDraw, uint32_t instanceBinding, uint32_t instanceFormat);
 	virtual ~CGLES3MeshDraw(void);
 	virtual void Release(void);
 
-
-public:
-	bool Create(const CGfxMeshPtr &ptrMesh, int indexDraw, uint32_t instanceBinding, uint32_t instanceFormat);
-	void Destroy(void);
 
 public:
 	bool InstanceBufferData(size_t size, const void *pBuffer);

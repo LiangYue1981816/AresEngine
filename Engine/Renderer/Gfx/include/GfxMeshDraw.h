@@ -5,7 +5,7 @@
 class CALL_API CGfxMeshDraw : public CGfxResource
 {
 public:
-	CGfxMeshDraw(void)
+	CGfxMeshDraw(const CGfxMeshPtr &ptrMesh, int indexDraw, uint32_t instanceBinding, uint32_t instanceFormat)
 	{
 
 	}
@@ -14,10 +14,6 @@ public:
 
 	}
 
-
-public:
-	virtual bool Create(const CGfxMeshPtr &ptrMesh, int indexDraw, uint32_t instanceBinding, uint32_t instanceFormat) = 0;
-	virtual void Destroy(void) = 0;
 
 public:
 	virtual bool InstanceBufferData(size_t size, const void *pBuffer) = 0;
