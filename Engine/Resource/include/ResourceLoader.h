@@ -31,7 +31,7 @@ public:
 	virtual bool LoadTextureCubeMapFace(const char *szFileName, GfxTextureCubeMapFace face, CGfxTextureCubeMap *pTextureCubeMap);
 
 public:
-	virtual CSceneNode* LoadSceneMesh(const char *szFileName, CSceneNode *pParentSceneNode, uint32_t vertexBinding, uint32_t instanceBinding, uint32_t instanceFormat);
+	virtual CSceneNode* LoadSceneMesh(const char *szFileName, CSceneNode *pParentSceneNode, uint32_t instanceFormat, uint32_t vertexBinding, uint32_t instanceBinding);
 
 
 protected:
