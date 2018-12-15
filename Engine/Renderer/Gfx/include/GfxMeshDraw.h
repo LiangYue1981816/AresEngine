@@ -21,6 +21,7 @@ public:
 public:
 	virtual glm::aabb GetLocalAABB(void) const = 0;
 
+public:
 	virtual GfxIndexType GetIndexType(void) const = 0;
 	virtual uint32_t GetVertexFormat(void) const = 0;
 

@@ -2,24 +2,24 @@
 
 
 static const ATTRIBUTE vertexAttributes[VERTEX_ATTRIBUTE_COUNT] = {
-	{ VERTEX_ATTRIBUTE_POSITION,  4, 3, 0, "inPosition"  },
-	{ VERTEX_ATTRIBUTE_NORMAL,    4, 3, 1, "inNormal"    },
-	{ VERTEX_ATTRIBUTE_BINORMAL,  4, 3, 2, "inBinormal"  },
-	{ VERTEX_ATTRIBUTE_COLOR,     4, 3, 3, "inColor"     },
-	{ VERTEX_ATTRIBUTE_TEXCOORD0, 4, 2, 4, "inTexcoord0" },
-	{ VERTEX_ATTRIBUTE_TEXCOORD1, 4, 2, 5, "inTexcoord1" },
+	{ VERTEX_ATTRIBUTE_POSITION,  4, 3, 0, 0, "inPosition"  },
+	{ VERTEX_ATTRIBUTE_NORMAL,    4, 3, 1, 0, "inNormal"    },
+	{ VERTEX_ATTRIBUTE_BINORMAL,  4, 3, 2, 0, "inBinormal"  },
+	{ VERTEX_ATTRIBUTE_COLOR,     4, 3, 3, 0, "inColor"     },
+	{ VERTEX_ATTRIBUTE_TEXCOORD0, 4, 2, 4, 0, "inTexcoord0" },
+	{ VERTEX_ATTRIBUTE_TEXCOORD1, 4, 2, 5, 0, "inTexcoord1" },
 };
 
 static const ATTRIBUTE instanceAttributes[INSTANCE_ATTRIBUTE_COUNT] = {
 	// Transform
-	{ INSTANCE_ATTRIBUTE_TRANSFORM_MATRIX_COL0, 4, 4, 8,  "inInstanceTransformMatrixCol0" },
-	{ INSTANCE_ATTRIBUTE_TRANSFORM_MATRIX_COL1, 4, 4, 9,  "inInstanceTransformMatrixCol1" },
-	{ INSTANCE_ATTRIBUTE_TRANSFORM_MATRIX_COL2, 4, 4, 10, "inInstanceTransformMatrixCol2" },
-	{ INSTANCE_ATTRIBUTE_TRANSFORM_MATRIX_COL3, 4, 4, 11, "inInstanceTransformMatrixCol3" },
+	{ INSTANCE_ATTRIBUTE_TRANSFORM_MATRIX_COL0, 4, 4, 8,  0, "inInstanceTransformMatrixCol0" },
+	{ INSTANCE_ATTRIBUTE_TRANSFORM_MATRIX_COL1, 4, 4, 9,  0, "inInstanceTransformMatrixCol1" },
+	{ INSTANCE_ATTRIBUTE_TRANSFORM_MATRIX_COL2, 4, 4, 10, 0, "inInstanceTransformMatrixCol2" },
+	{ INSTANCE_ATTRIBUTE_TRANSFORM_MATRIX_COL3, 4, 4, 11, 0, "inInstanceTransformMatrixCol3" },
 
 	// PointLight
-	{ INSTANCE_ATTRIBUTE_POINTLIGHT_COLOR,      4, 4, 12, "inInstancePointLightColor"       },
-	{ INSTANCE_ATTRIBUTE_POINTLIGHT_ATTENUATION,4, 4, 13, "inInstancePointLightAttenuation" },
+	{ INSTANCE_ATTRIBUTE_POINTLIGHT_COLOR,      4, 4, 12, 0, "inInstancePointLightColor"       },
+	{ INSTANCE_ATTRIBUTE_POINTLIGHT_ATTENUATION,4, 4, 13, 0, "inInstancePointLightAttenuation" },
 };
 
 

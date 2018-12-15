@@ -19,6 +19,7 @@ public:
 public:
 	glm::aabb GetLocalAABB(void) const;
 
+public:
 	GfxIndexType GetIndexType(void) const;
 	uint32_t GetVertexFormat(void) const;
 
