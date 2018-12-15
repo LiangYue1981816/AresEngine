@@ -4,7 +4,7 @@
 
 class CGLES3MeshDraw : public CGfxMeshDraw
 {
-	friend class CGLES3MeshManager;
+	friend class CGLES3MeshDrawManager;
 
 
 private:
