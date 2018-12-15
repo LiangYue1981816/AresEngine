@@ -14,10 +14,11 @@ private:
 
 
 private:
-	CGfxMeshDraw* Create(const CGfxMeshPtr &ptrMesh, int indexDraw, uint32_t instanceFormat, uint32_t instanceBinding);
+	bool IsHave(uint32_t name);
+	CGfxMeshDraw* Create(uint32_t name, const CGfxMeshPtr &ptrMesh, int indexDraw, uint32_t instanceFormat, uint32_t instanceBinding);
 	void Destroy(CGfxMeshDraw *pMeshDraw);
 
 
 private:
-	eastl::unordered_map<CGfxMeshDraw*, CGfxMeshDraw*> m_pMeshDraws;
+	eastl::unordered_map<uint32_t, CGfxMeshDraw*> m_pMeshDraws;
 };

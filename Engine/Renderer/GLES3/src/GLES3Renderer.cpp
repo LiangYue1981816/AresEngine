@@ -117,9 +117,14 @@ CGfxMeshPtr CGLES3Renderer::NewMesh(const char *szFileName, uint32_t vertexBindi
 	return m_pMeshManager->Create(szFileName, vertexBinding);
 }
 
-CGfxMeshDrawPtr CGLES3Renderer::NewMeshDraw(const CGfxMeshPtr &ptrMesh, int indexDraw, uint32_t instanceFormat, uint32_t instanceBinding)
+bool CGLES3Renderer::IsHaveMeshDraw(uint32_t name)
 {
-	return m_pMeshDrawManager->Create(ptrMesh, indexDraw, instanceFormat, instanceBinding);
+	return m_pMeshDrawManager->IsHave(name);
+}
+
+CGfxMeshDrawPtr CGLES3Renderer::NewMeshDraw(uint32_t name, const CGfxMeshPtr &ptrMesh, int indexDraw, uint32_t instanceFormat, uint32_t instanceBinding)
+{
+	return m_pMeshDrawManager->Create(name, ptrMesh, indexDraw, instanceFormat, instanceBinding);
 }
 
 bool CGLES3Renderer::IsHaveMaterial(uint32_t name)

@@ -120,7 +120,9 @@ public:
 	bool IsHaveMesh(uint32_t name);
 	CGfxMeshPtr NewMesh(uint32_t name);
 	CGfxMeshPtr NewMesh(const char *szFileName, uint32_t vertexBinding = 0);
-	CGfxMeshDrawPtr NewMeshDraw(const CGfxMeshPtr &ptrMesh, int indexDraw, uint32_t instanceFormat, uint32_t instanceBinding = 1);
+
+	bool IsHaveMeshDraw(uint32_t name);
+	CGfxMeshDrawPtr NewMeshDraw(uint32_t name, const CGfxMeshPtr &ptrMesh, int indexDraw, uint32_t instanceFormat, uint32_t instanceBinding = 1);
 
 	bool IsHaveMaterial(uint32_t name);
 	CGfxMaterialPtr NewMaterial(uint32_t name);
