@@ -134,9 +134,9 @@ void CGfxCamera::Begin(int indexQueue)
 	m_pRenderQueue->Begin(indexQueue);
 }
 
-void CGfxCamera::Add(int indexThread, int indexQueue, const CGfxMaterialPtr &ptrMaterial, const CGfxMeshPtr &ptrMesh, int indexDraw, const uint8_t *pInstanceData, uint32_t size)
+void CGfxCamera::Add(int indexThread, int indexQueue, const CGfxMaterialPtr &ptrMaterial, const CGfxMeshDrawPtr &ptrMeshDraw, const uint8_t *pInstanceData, uint32_t size)
 {
-	m_pRenderQueue->Add(indexThread, indexQueue, ptrMaterial, ptrMesh, indexDraw, pInstanceData, size);
+	m_pRenderQueue->Add(indexThread, indexQueue, ptrMaterial, ptrMeshDraw, pInstanceData, size);
 }
 
 void CGfxCamera::End(int indexQueue)
