@@ -4,17 +4,16 @@
 
 CComponentMesh::CComponentMesh(uint32_t name)
 	: CComponent(name)
-	, m_indexDraw(-1)
 {
 
 }
 
 CComponentMesh::CComponentMesh(const CComponentMesh &component)
 	: CComponent(component)
-	, m_indexDraw(-1)
 {
-	SetMaterial(component.m_ptrMaterial);
-	SetMesh(component.m_ptrMesh, component.m_indexDraw);
+	m_localAABB = component.m_localAABB;
+	m_ptrMeshDraw = component.m_ptrMeshDraw;
+	m_ptrMaterial = component.m_ptrMaterial;
 }
 
 CComponentMesh::~CComponentMesh(void)
@@ -27,15 +26,15 @@ void CComponentMesh::SetMaterial(const CGfxMaterialPtr &ptrMaterial)
 	m_ptrMaterial = ptrMaterial;
 }
 
-void CComponentMesh::SetMesh(const CGfxMeshPtr &ptrMesh, int indexDraw)
+void CComponentMesh::SetMeshDraw(const CGfxMeshPtr &ptrMesh, int indexDraw, uint32_t instanceFormat, uint32_t instanceBinding)
 {
-	m_ptrMesh = ptrMesh;
-	m_indexDraw = indexDraw;
+	m_localAABB = ptrMesh->GetDraw(indexDraw)->aabb;
+	m_ptrMeshDraw = GfxRenderer()->NewMeshDraw(ptrMesh, indexDraw, instanceFormat, instanceBinding);
 }
 
 glm::aabb CComponentMesh::GetWorldAABB(void)
 {
-	return m_pParentNode && m_ptrMesh.IsValid() ? m_ptrMesh->GetLocalAABB(m_indexDraw) * m_pParentNode->GetWorldTransform() : glm::aabb();
+	return m_pParentNode ? m_localAABB * m_pParentNode->GetWorldTransform() : glm::aabb();
 }
 
 void CComponentMesh::TaskUpdate(float gameTime, float deltaTime)
@@ -49,7 +48,7 @@ void CComponentMesh::TaskUpdateCamera(CGfxCamera *pCamera, int indexThread, int 
 {
 	if (m_pParentNode && m_pParentNode->IsActive()) {
 		if (pCamera->IsVisible(GetWorldAABB())) {
-			pCamera->Add(indexThread, indexQueue, m_ptrMaterial, m_ptrMesh, m_indexDraw, (const uint8_t *)&m_instanceData, sizeof(m_instanceData));
+			pCamera->Add(indexThread, indexQueue, m_ptrMaterial, m_ptrMeshDraw, (const uint8_t *)&m_instanceData, sizeof(m_instanceData));
 		}
 	}
 }

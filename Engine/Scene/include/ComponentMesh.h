@@ -18,7 +18,7 @@ public:
 
 public:
 	void SetMaterial(const CGfxMaterialPtr &ptrMaterial);
-	void SetMesh(const CGfxMeshPtr &ptrMesh, int indexDraw);
+	void SetMeshDraw(const CGfxMeshPtr &ptrMesh, int indexDraw, uint32_t instanceFormat, uint32_t instanceBinding);
 
 public:
 	glm::aabb GetWorldAABB(void);
@@ -32,9 +32,9 @@ private:
 	InstanceData m_instanceData;
 
 private:
+	glm::aabb m_localAABB;
+	CGfxMeshDrawPtr m_ptrMeshDraw;
 	CGfxMaterialPtr m_ptrMaterial;
-	CGfxMeshPtr m_ptrMesh;
-	int m_indexDraw;
 };
 
 typedef CComponentPtr<CComponentMesh> CComponentMeshPtr;
