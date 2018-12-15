@@ -31,7 +31,9 @@ void CComponentPointLight::SetMaterial(const CGfxMaterialPtr &ptrMaterial)
 
 void CComponentPointLight::SetMeshDraw(const CGfxMeshPtr &ptrMesh)
 {
-	m_ptrMeshDraw = GfxRenderer()->NewMeshDraw(ptrMesh, 0, INSTANCE_ATTRIBUTE_TRANSFORM | INSTANCE_ATTRIBUTE_POINTLIGHT_COLOR | INSTANCE_ATTRIBUTE_POINTLIGHT_ATTENUATION, 1);
+	char szName[_MAX_STRING];
+	sprintf(szName, "%8.8X_%8.8X", ptrMesh->GetName(), 0);
+	m_ptrMeshDraw = GfxRenderer()->NewMeshDraw(HashValue(szName), ptrMesh, 0, INSTANCE_ATTRIBUTE_TRANSFORM | INSTANCE_ATTRIBUTE_POINTLIGHT_COLOR | INSTANCE_ATTRIBUTE_POINTLIGHT_ATTENUATION, 1);
 }
 
 void CComponentPointLight::SetColor(float red, float green, float blue)
