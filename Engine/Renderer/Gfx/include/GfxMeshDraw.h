@@ -19,6 +19,8 @@ public:
 	virtual bool InstanceBufferData(size_t size, const void *pBuffer) = 0;
 
 public:
+	virtual glm::aabb GetLocalAABB(void) const = 0;
+
 	virtual GfxIndexType GetIndexType(void) const = 0;
 	virtual uint32_t GetVertexFormat(void) const = 0;
 

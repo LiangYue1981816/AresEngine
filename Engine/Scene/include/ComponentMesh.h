@@ -32,9 +32,8 @@ private:
 	InstanceData m_instanceData;
 
 private:
-	glm::aabb m_localAABB;
-	CGfxMeshDrawPtr m_ptrMeshDraw;
 	CGfxMaterialPtr m_ptrMaterial;
+	CGfxMeshDrawPtr m_ptrMeshDraw;
 };
 
 typedef CComponentPtr<CComponentMesh> CComponentMeshPtr;

@@ -11,9 +11,8 @@ CComponentMesh::CComponentMesh(uint32_t name)
 CComponentMesh::CComponentMesh(const CComponentMesh &component)
 	: CComponent(component)
 {
-	m_localAABB = component.m_localAABB;
-	m_ptrMeshDraw = component.m_ptrMeshDraw;
 	m_ptrMaterial = component.m_ptrMaterial;
+	m_ptrMeshDraw = component.m_ptrMeshDraw;
 }
 
 CComponentMesh::~CComponentMesh(void)
@@ -28,13 +27,12 @@ void CComponentMesh::SetMaterial(const CGfxMaterialPtr &ptrMaterial)
 
 void CComponentMesh::SetMeshDraw(const CGfxMeshPtr &ptrMesh, int indexDraw, uint32_t instanceFormat, uint32_t instanceBinding)
 {
-	m_localAABB = ptrMesh->GetDraw(indexDraw)->aabb;
 	m_ptrMeshDraw = GfxRenderer()->NewMeshDraw(ptrMesh, indexDraw, instanceFormat, instanceBinding);
 }
 
 glm::aabb CComponentMesh::GetWorldAABB(void)
 {
-	return m_pParentNode ? m_localAABB * m_pParentNode->GetWorldTransform() : glm::aabb();
+	return m_pParentNode && m_ptrMeshDraw.IsValid() ? m_ptrMeshDraw->GetLocalAABB() * m_pParentNode->GetWorldTransform() : glm::aabb();
 }
 
 void CComponentMesh::TaskUpdate(float gameTime, float deltaTime)
