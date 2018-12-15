@@ -5,10 +5,11 @@
 class CGLES3InstanceBuffer : public CGfxInstanceBuffer
 {
 	friend class CGLES3Mesh;
+	friend class CGLES3MeshDraw;
 
 
 private:
-	CGLES3InstanceBuffer(uint32_t binding, uint32_t instanceFormat);
+	CGLES3InstanceBuffer(uint32_t instanceFormat, uint32_t instanceBinding);
 	virtual ~CGLES3InstanceBuffer(void);
 
 

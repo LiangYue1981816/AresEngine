@@ -45,11 +45,11 @@ typedef struct MeshHeader
 static bool InternalLoadDraws(CGfxMesh *pMesh, DrawHeader *drawHeaders, int numDraws)
 {
 	for (int indexDraw = 0; indexDraw < numDraws; indexDraw++) {
-		if (pMesh->DrawIndirectBufferData(indexDraw, drawHeaders[indexDraw].baseVertex, drawHeaders[indexDraw].firstIndex, drawHeaders[indexDraw].indexCount, 0) == false) {
-			return false;
-		}
+		const glm::aabb aabb(
+			glm::vec3(drawHeaders[indexDraw].minx, drawHeaders[indexDraw].miny, drawHeaders[indexDraw].minz), 
+			glm::vec3(drawHeaders[indexDraw].maxx, drawHeaders[indexDraw].maxy, drawHeaders[indexDraw].maxz));
 
-		if (pMesh->SetLocalAABB(indexDraw, glm::aabb(glm::vec3(drawHeaders[indexDraw].minx, drawHeaders[indexDraw].miny, drawHeaders[indexDraw].minz), glm::vec3(drawHeaders[indexDraw].maxx, drawHeaders[indexDraw].maxy, drawHeaders[indexDraw].maxz))) == false) {
+		if (pMesh->CreateDraw(indexDraw, aabb, drawHeaders[indexDraw].baseVertex, drawHeaders[indexDraw].firstIndex, drawHeaders[indexDraw].indexCount) == false) {
 			return false;
 		}
 	}
@@ -58,7 +58,7 @@ static bool InternalLoadDraws(CGfxMesh *pMesh, DrawHeader *drawHeaders, int numD
 }
 
 
-bool CResourceLoader::LoadMesh(const char *szFileName, CGfxMesh *pMesh, uint32_t instanceFormat)
+bool CResourceLoader::LoadMesh(const char *szFileName, CGfxMesh *pMesh, uint32_t vertexBinding)
 {
 	int err = 0;
 
@@ -80,10 +80,8 @@ bool CResourceLoader::LoadMesh(const char *szFileName, CGfxMesh *pMesh, uint32_t
 		void *pVertexBuffer = stream.GetCurrentAddress();
 
 		if (pMesh->CreateIndexBuffer(GFX_INDEX_UNSIGNED_INT, meshHeader.indexBufferSize, false, pIndexBuffer) == false) { err = -2; goto ERR; }
-		if (pMesh->CreateVertexBuffer(0, meshHeader.format, meshHeader.vertexBufferSize, false, pVertexBuffer) == false) { err = -3; goto ERR; }
-		if (pMesh->CreateVertexArrayObject(meshHeader.numDraws, 1, instanceFormat) == false) { err = -4; goto ERR; }
-		if (pMesh->CreateDrawIndirectBuffer(meshHeader.numDraws) == false) { err = -5; goto ERR; }
-		if (InternalLoadDraws(pMesh, drawHeaders, meshHeader.numDraws) == false) { err = -6; goto ERR; }
+		if (pMesh->CreateVertexBuffer(meshHeader.format, vertexBinding, meshHeader.vertexBufferSize, false, pVertexBuffer) == false) { err = -3; goto ERR; }
+		if (InternalLoadDraws(pMesh, drawHeaders, meshHeader.numDraws) == false) { err = -4; goto ERR; }
 	}
 	LogOutput(nullptr, "OK\n");
 	return true;

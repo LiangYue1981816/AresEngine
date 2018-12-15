@@ -6,14 +6,14 @@ CComponentPointLight::CComponentPointLight(uint32_t name)
 	: CComponent(name)
 {
 	SetMaterial(GfxRenderer()->NewMaterial("PointLight.material"));
-	SetMesh(GfxRenderer()->NewMesh("PointLight.mesh", INSTANCE_ATTRIBUTE_TRANSFORM | INSTANCE_ATTRIBUTE_POINTLIGHT_COLOR | INSTANCE_ATTRIBUTE_POINTLIGHT_ATTENUATION));
+	SetMeshDraw(GfxRenderer()->NewMesh("PointLight.mesh", 0));
 }
 
 CComponentPointLight::CComponentPointLight(const CComponentPointLight &component)
 	: CComponent(component)
 {
-	SetMaterial(component.m_ptrMaterial);
-	SetMesh(component.m_ptrMesh);
+	m_ptrMaterial = component.m_ptrMaterial;
+	m_ptrMeshDraw = component.m_ptrMeshDraw;
 
 	SetColor(component.m_instanceData.color.r, component.m_instanceData.color.g, component.m_instanceData.color.b);
 	SetAttenuation(component.m_instanceData.attenuation.x, component.m_instanceData.attenuation.y, component.m_instanceData.attenuation.z);
@@ -29,9 +29,9 @@ void CComponentPointLight::SetMaterial(const CGfxMaterialPtr &ptrMaterial)
 	m_ptrMaterial = ptrMaterial;
 }
 
-void CComponentPointLight::SetMesh(const CGfxMeshPtr &ptrMesh)
+void CComponentPointLight::SetMeshDraw(const CGfxMeshPtr &ptrMesh)
 {
-	m_ptrMesh = ptrMesh;
+	m_ptrMeshDraw = GfxRenderer()->NewMeshDraw(ptrMesh, 0, INSTANCE_ATTRIBUTE_TRANSFORM | INSTANCE_ATTRIBUTE_POINTLIGHT_COLOR | INSTANCE_ATTRIBUTE_POINTLIGHT_ATTENUATION, 1);
 }
 
 void CComponentPointLight::SetColor(float red, float green, float blue)
@@ -46,7 +46,7 @@ void CComponentPointLight::SetAttenuation(float linear, float square, float cons
 
 glm::aabb CComponentPointLight::GetWorldAABB(void)
 {
-	return m_pParentNode && m_ptrMesh.IsValid() ? m_ptrMesh->GetLocalAABB(0) * m_pParentNode->GetWorldTransform() : glm::aabb();
+	return m_pParentNode && m_ptrMeshDraw.IsValid() ? m_ptrMeshDraw->GetLocalAABB() * m_pParentNode->GetWorldTransform() : glm::aabb();
 }
 
 void CComponentPointLight::TaskUpdate(float gameTime, float deltaTime)
@@ -60,7 +60,7 @@ void CComponentPointLight::TaskUpdateCamera(CGfxCamera *pCamera, int indexThread
 {
 	if (m_pParentNode && m_pParentNode->IsActive()) {
 		if (pCamera->IsVisible(GetWorldAABB())) {
-			pCamera->Add(indexThread, indexQueue, m_ptrMaterial, m_ptrMesh, 0, (const uint8_t *)&m_instanceData, sizeof(m_instanceData));
+			pCamera->Add(indexThread, indexQueue, m_ptrMaterial, m_ptrMeshDraw, (const uint8_t *)&m_instanceData, sizeof(m_instanceData));
 		}
 	}
 }

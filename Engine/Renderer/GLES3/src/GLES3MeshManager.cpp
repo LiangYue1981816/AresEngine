@@ -36,31 +36,15 @@ CGLES3Mesh* CGLES3MeshManager::Create(uint32_t name)
 	}
 }
 
-CGLES3Mesh* CGLES3MeshManager::Create(uint32_t name, const char *szFileName, uint32_t instanceFormat)
+CGLES3Mesh* CGLES3MeshManager::Create(const char *szFileName, uint32_t vertexBinding)
 {
-	mutex_autolock autolock(&lock);
-	{
-		if (m_pMeshs[name] == nullptr) {
-			m_pMeshs[name] = new CGLES3Mesh(this, name);
-		}
-
-		ResourceLoader()->LoadMesh(szFileName, m_pMeshs[name], instanceFormat);
-		return (CGLES3Mesh *)m_pMeshs[name];
-	}
-}
-
-CGLES3Mesh* CGLES3MeshManager::Create(const char *szFileName, uint32_t instanceFormat)
-{
-	char szName[_MAX_STRING];
-	sprintf(szName, "%8.8X_%8.8X", HashValue(szFileName), instanceFormat);
-
-	uint32_t name = HashValue(szName);
+	uint32_t name = HashValue(szFileName);
 
 	mutex_autolock autolock(&lock);
 	{
 		if (m_pMeshs[name] == nullptr) {
 			m_pMeshs[name] = new CGLES3Mesh(this, name);
-			ResourceLoader()->LoadMesh(szFileName, m_pMeshs[name], instanceFormat);
+			ResourceLoader()->LoadMesh(szFileName, m_pMeshs[name], vertexBinding);
 		}
 
 		return (CGLES3Mesh *)m_pMeshs[name];

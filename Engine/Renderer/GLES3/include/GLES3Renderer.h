@@ -14,12 +14,14 @@
 #include "GLES3FrameBufferManager.h"
 
 #include "GLES3Mesh.h"
+#include "GLES3MeshDraw.h"
 #include "GLES3IndexBuffer.h"
 #include "GLES3VertexBuffer.h"
 #include "GLES3InstanceBuffer.h"
 #include "GLES3DrawIndirectBuffer.h"
 #include "GLES3VertexArrayObject.h"
 #include "GLES3MeshManager.h"
+#include "GLES3MeshDrawManager.h"
 
 #include "GLES3Sampler.h"
 #include "GLES3SamplerManager.h"
@@ -117,25 +119,21 @@ public:
 
 	bool IsHaveMesh(uint32_t name);
 	CGfxMeshPtr NewMesh(uint32_t name);
-	CGfxMeshPtr NewMesh(uint32_t name, const char *szFileName, uint32_t instanceFormat);
-	CGfxMeshPtr NewMesh(const char *szFileName, uint32_t instanceFormat);
+	CGfxMeshPtr NewMesh(const char *szFileName, uint32_t vertexBinding = 0);
+	CGfxMeshDrawPtr NewMeshDraw(const CGfxMeshPtr &ptrMesh, int indexDraw, uint32_t instanceFormat, uint32_t instanceBinding = 1);
 
 	bool IsHaveMaterial(uint32_t name);
 	CGfxMaterialPtr NewMaterial(uint32_t name);
-	CGfxMaterialPtr NewMaterial(uint32_t name, const char *szFileName);
 	CGfxMaterialPtr NewMaterial(const char *szFileName);
 
 	bool IsHaveTexture2D(uint32_t name);
 	bool IsHaveTexture2DArray(uint32_t name);
 	bool IsHaveTextureCubeMap(uint32_t name);
 	CGfxTexture2DPtr NewTexture2D(uint32_t name);
-	CGfxTexture2DPtr NewTexture2D(uint32_t name, const char *szFileName);
 	CGfxTexture2DPtr NewTexture2D(const char *szFileName);
 	CGfxTexture2DArrayPtr NewTexture2DArray(uint32_t name);
-	CGfxTexture2DArrayPtr NewTexture2DArray(uint32_t name, const char *szFileName);
 	CGfxTexture2DArrayPtr NewTexture2DArray(const char *szFileName);
 	CGfxTextureCubeMapPtr NewTextureCubeMap(uint32_t name);
-	CGfxTextureCubeMapPtr NewTextureCubeMap(uint32_t name, const char *szFileName);
 	CGfxTextureCubeMapPtr NewTextureCubeMap(const char *szFileName);
 
 	CGfxUniformBufferPtr NewUniformBuffer(size_t size, bool bDynamic);
@@ -177,11 +175,10 @@ public:
 	bool CmdSetScissor(CGfxCommandBufferPtr &ptrCommandBuffer, int x, int y, int width, int height);
 	bool CmdSetViewport(CGfxCommandBufferPtr &ptrCommandBuffer, int x, int y, int width, int height);
 
-	bool CmdSetInstanceBufferData(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxMeshPtr &ptrMesh, const int indexDraw, const uint8_t *pInstanceBuffer, uint32_t size);
-	bool CmdSetDrawIndirectBufferData(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxMeshPtr &ptrMesh, const int indexDraw, int instanceCount);
+	bool CmdSetInstanceBufferData(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxMeshDrawPtr &ptrMeshDraw, const uint8_t *pInstanceBuffer, uint32_t size);
 
-	bool CmdDrawInstance(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxMeshPtr &ptrMesh, const int indexDraw, int instanceCount);
-	bool CmdDrawIndirect(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxMeshPtr &ptrMesh, const int indexDraw);
+	bool CmdDrawInstance(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxMeshDrawPtr &ptrMeshDraw, int instanceCount);
+	bool CmdDrawIndirect(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxMeshDrawPtr &ptrMeshDraw);
 	bool CmdDrawScreen(CGfxCommandBufferPtr &ptrCommandBuffer);
 
 	bool CmdExecute(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxCommandBufferPtr &ptrSecondaryCommandBuffer);
@@ -226,6 +223,7 @@ private:
 
 private:
 	CGLES3MeshManager *m_pMeshManager;
+	CGLES3MeshDrawManager *m_pMeshDrawManager;
 	CGLES3ShaderManager *m_pShaderManager;
 	CGLES3SamplerManager *m_pSamplerManager;
 	CGLES3TextureManager *m_pTextureManager;

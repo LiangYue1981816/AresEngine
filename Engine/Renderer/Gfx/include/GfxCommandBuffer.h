@@ -50,7 +50,7 @@ public:
 	virtual bool CmdBindPipelineGraphics(const CGfxPipelineGraphics *pPipelineGraphics) = 0;
 	virtual bool CmdBindMaterialPass(const CGfxMaterialPtr &ptrMaterial, uint32_t namePass) = 0;
 	virtual bool CmdBindUniformBuffer(const CGfxUniformBufferPtr &ptrUniformBuffer, uint32_t nameUniform) = 0;
-	virtual bool CmdBindMesh(const CGfxMeshPtr &ptrMesh, const int indexDraw) = 0;
+	virtual bool CmdBindMeshDraw(const CGfxMeshDrawPtr &ptrMeshDraw) = 0;
 
 	virtual bool CmdUniform1i(const char *szName, int v0) = 0;
 	virtual bool CmdUniform2i(const char *szName, int v0, int v1) = 0;
@@ -78,8 +78,7 @@ public:
 	virtual bool CmdSetScissor(int x, int y, int width, int height) = 0;
 	virtual bool CmdSetViewport(int x, int y, int width, int height) = 0;
 
-	virtual bool CmdSetInstanceBufferData(const CGfxMeshPtr &ptrMesh, const int indexDraw, const uint8_t *pInstanceBuffer, uint32_t size) = 0;
-	virtual bool CmdSetDrawIndirectBufferData(const CGfxMeshPtr &ptrMesh, const int indexDraw, int instanceCount) = 0;
+	virtual bool CmdSetInstanceBufferData(const CGfxMeshDrawPtr &ptrMeshDraw, const uint8_t *pInstanceBuffer, uint32_t size) = 0;
 
 	virtual bool CmdDrawElements(GfxDrawMode mode, GfxIndexType type, int offset, int count) = 0;
 	virtual bool CmdDrawInstance(GfxDrawMode mode, GfxIndexType type, int offset, int count, int instanceCount) = 0;

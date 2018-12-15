@@ -18,6 +18,7 @@
 #include "GfxFrameBuffer.h"
 
 #include "GfxMesh.h"
+#include "GfxMeshDraw.h"
 #include "GfxIndexBuffer.h"
 #include "GfxVertexBuffer.h"
 #include "GfxInstanceBuffer.h"
@@ -93,25 +94,21 @@ public:
 
 	virtual bool IsHaveMesh(uint32_t name) = 0;
 	virtual CGfxMeshPtr NewMesh(uint32_t name) = 0;
-	virtual CGfxMeshPtr NewMesh(uint32_t name, const char *szFileName, uint32_t instanceFormat) = 0;
-	virtual CGfxMeshPtr NewMesh(const char *szFileName, uint32_t instanceFormat) = 0;
+	virtual CGfxMeshPtr NewMesh(const char *szFileName, uint32_t vertexBinding = 0) = 0;
+	virtual CGfxMeshDrawPtr NewMeshDraw(const CGfxMeshPtr &ptrMesh, int indexDraw, uint32_t instanceFormat, uint32_t instanceBinding = 1) = 0;
 
 	virtual bool IsHaveMaterial(uint32_t name) = 0;
 	virtual CGfxMaterialPtr NewMaterial(uint32_t name) = 0;
-	virtual CGfxMaterialPtr NewMaterial(uint32_t name, const char *szFileName) = 0;
 	virtual CGfxMaterialPtr NewMaterial(const char *szFileName) = 0;
 
 	virtual bool IsHaveTexture2D(uint32_t name) = 0;
 	virtual bool IsHaveTexture2DArray(uint32_t name) = 0;
 	virtual bool IsHaveTextureCubeMap(uint32_t name) = 0;
 	virtual CGfxTexture2DPtr NewTexture2D(uint32_t name) = 0;
-	virtual CGfxTexture2DPtr NewTexture2D(uint32_t name, const char *szFileName) = 0;
 	virtual CGfxTexture2DPtr NewTexture2D(const char *szFileName) = 0;
 	virtual CGfxTexture2DArrayPtr NewTexture2DArray(uint32_t name) = 0;
-	virtual CGfxTexture2DArrayPtr NewTexture2DArray(uint32_t name, const char *szFileName) = 0;
 	virtual CGfxTexture2DArrayPtr NewTexture2DArray(const char *szFileName) = 0;
 	virtual CGfxTextureCubeMapPtr NewTextureCubeMap(uint32_t name) = 0;
-	virtual CGfxTextureCubeMapPtr NewTextureCubeMap(uint32_t name, const char *szFileName) = 0;
 	virtual CGfxTextureCubeMapPtr NewTextureCubeMap(const char *szFileName) = 0;
 
 	virtual CGfxUniformBufferPtr NewUniformBuffer(size_t size, bool bDynamic) = 0;
@@ -153,11 +150,10 @@ public:
 	virtual bool CmdSetScissor(CGfxCommandBufferPtr &ptrCommandBuffer, int x, int y, int width, int height) = 0;
 	virtual bool CmdSetViewport(CGfxCommandBufferPtr &ptrCommandBuffer, int x, int y, int width, int height) = 0;
 
-	virtual bool CmdSetInstanceBufferData(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxMeshPtr &ptrMesh, const int indexDraw, const uint8_t *pInstanceBuffer, uint32_t size) = 0;
-	virtual bool CmdSetDrawIndirectBufferData(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxMeshPtr &ptrMesh, const int indexDraw, int instanceCount) = 0;
+	virtual bool CmdSetInstanceBufferData(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxMeshDrawPtr &ptrMeshDraw, const uint8_t *pInstanceBuffer, uint32_t size) = 0;
 
-	virtual bool CmdDrawInstance(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxMeshPtr &ptrMesh, const int indexDraw, int instanceCount) = 0;
-	virtual bool CmdDrawIndirect(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxMeshPtr &ptrMesh, const int indexDraw) = 0;
+	virtual bool CmdDrawInstance(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxMeshDrawPtr &ptrMeshDraw, int instanceCount) = 0;
+	virtual bool CmdDrawIndirect(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxMeshDrawPtr &ptrMeshDraw) = 0;
 	virtual bool CmdDrawScreen(CGfxCommandBufferPtr &ptrCommandBuffer) = 0;
 
 	virtual bool CmdExecute(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxCommandBufferPtr &ptrSecondaryCommandBuffer) = 0;

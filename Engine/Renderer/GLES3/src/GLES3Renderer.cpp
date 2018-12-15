@@ -7,6 +7,7 @@ CGLES3Renderer::CGLES3Renderer(void *hDC, int width, int height, GfxPixelFormat 
 	, m_pSwapChain(nullptr)
 
 	, m_pMeshManager(nullptr)
+	, m_pMeshDrawManager(nullptr)
 	, m_pShaderManager(nullptr)
 	, m_pSamplerManager(nullptr)
 	, m_pTextureManager(nullptr)
@@ -23,6 +24,7 @@ CGLES3Renderer::CGLES3Renderer(void *hDC, int width, int height, GfxPixelFormat 
 	, m_pCurrentPipelineGraphics(nullptr)
 {
 	m_pMeshManager = new CGLES3MeshManager;
+	m_pMeshDrawManager = new CGLES3MeshDrawManager;
 	m_pShaderManager = new CGLES3ShaderManager;
 	m_pSamplerManager = new CGLES3SamplerManager;
 	m_pTextureManager = new CGLES3TextureManager;
@@ -40,19 +42,19 @@ CGLES3Renderer::CGLES3Renderer(void *hDC, int width, int height, GfxPixelFormat 
 CGLES3Renderer::~CGLES3Renderer(void)
 {
 	delete m_pSwapChain;
+	delete m_pGlobalMaterialPass;
 
-	delete m_pMeshManager;
-	delete m_pShaderManager;
+	delete m_pCommandBufferManager;
+	delete m_pFrameBufferManager;
+	delete m_pRenderPassManager;
+	delete m_pMaterialManager;
 	delete m_pSamplerManager;
 	delete m_pTextureManager;
 	delete m_pPipelineManager;
-	delete m_pMaterialManager;
-	delete m_pRenderPassManager;
-	delete m_pFrameBufferManager;
+	delete m_pShaderManager;
+	delete m_pMeshDrawManager;
+	delete m_pMeshManager;
 	delete m_pUniformBufferManager;
-	delete m_pCommandBufferManager;
-
-	delete m_pGlobalMaterialPass;
 }
 
 uint32_t CGLES3Renderer::GetLastError(void) const
@@ -110,14 +112,14 @@ CGfxMeshPtr CGLES3Renderer::NewMesh(uint32_t name)
 	return m_pMeshManager->Create(name);
 }
 
-CGfxMeshPtr CGLES3Renderer::NewMesh(uint32_t name, const char *szFileName, uint32_t instanceFormat)
+CGfxMeshPtr CGLES3Renderer::NewMesh(const char *szFileName, uint32_t vertexBinding)
 {
-	return m_pMeshManager->Create(name, szFileName, instanceFormat);
+	return m_pMeshManager->Create(szFileName, vertexBinding);
 }
 
-CGfxMeshPtr CGLES3Renderer::NewMesh(const char *szFileName, uint32_t instanceFormat)
+CGfxMeshDrawPtr CGLES3Renderer::NewMeshDraw(const CGfxMeshPtr &ptrMesh, int indexDraw, uint32_t instanceFormat, uint32_t instanceBinding)
 {
-	return m_pMeshManager->Create(szFileName, instanceFormat);
+	return m_pMeshDrawManager->Create(ptrMesh, indexDraw, instanceFormat, instanceBinding);
 }
 
 bool CGLES3Renderer::IsHaveMaterial(uint32_t name)
@@ -128,11 +130,6 @@ bool CGLES3Renderer::IsHaveMaterial(uint32_t name)
 CGfxMaterialPtr CGLES3Renderer::NewMaterial(uint32_t name)
 {
 	return m_pMaterialManager->Create(name);
-}
-
-CGfxMaterialPtr CGLES3Renderer::NewMaterial(uint32_t name, const char *szFileName)
-{
-	return m_pMaterialManager->Create(name, szFileName);
 }
 
 CGfxMaterialPtr CGLES3Renderer::NewMaterial(const char *szFileName)
@@ -160,11 +157,6 @@ CGfxTexture2DPtr CGLES3Renderer::NewTexture2D(uint32_t name)
 	return m_pTextureManager->CreateTexture2D(name);
 }
 
-CGfxTexture2DPtr CGLES3Renderer::NewTexture2D(uint32_t name, const char *szFileName)
-{
-	return m_pTextureManager->CreateTexture2D(name, szFileName);
-}
-
 CGfxTexture2DPtr CGLES3Renderer::NewTexture2D(const char *szFileName)
 {
 	return m_pTextureManager->CreateTexture2D(szFileName);
@@ -175,11 +167,6 @@ CGfxTexture2DArrayPtr CGLES3Renderer::NewTexture2DArray(uint32_t name)
 	return m_pTextureManager->CreateTexture2DArray(name);
 }
 
-CGfxTexture2DArrayPtr CGLES3Renderer::NewTexture2DArray(uint32_t name, const char *szFileName)
-{
-	return m_pTextureManager->CreateTexture2DArray(name, szFileName);
-}
-
 CGfxTexture2DArrayPtr CGLES3Renderer::NewTexture2DArray(const char *szFileName)
 {
 	return m_pTextureManager->CreateTexture2DArray(szFileName);
@@ -188,11 +175,6 @@ CGfxTexture2DArrayPtr CGLES3Renderer::NewTexture2DArray(const char *szFileName)
 CGfxTextureCubeMapPtr CGLES3Renderer::NewTextureCubeMap(uint32_t name)
 {
 	return m_pTextureManager->CreateTextureCubeMap(name);
-}
-
-CGfxTextureCubeMapPtr CGLES3Renderer::NewTextureCubeMap(uint32_t name, const char *szFileName)
-{
-	return m_pTextureManager->CreateTextureCubeMap(name, szFileName);
 }
 
 CGfxTextureCubeMapPtr CGLES3Renderer::NewTextureCubeMap(const char *szFileName)
@@ -360,36 +342,31 @@ bool CGLES3Renderer::CmdSetViewport(CGfxCommandBufferPtr &ptrCommandBuffer, int 
 	return ptrCommandBuffer->CmdSetViewport(x, y, width, height);
 }
 
-bool CGLES3Renderer::CmdSetInstanceBufferData(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxMeshPtr &ptrMesh, const int indexDraw, const uint8_t *pInstanceBuffer, uint32_t size)
+bool CGLES3Renderer::CmdSetInstanceBufferData(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxMeshDrawPtr &ptrMeshDraw, const uint8_t *pInstanceBuffer, uint32_t size)
 {
-	return ptrCommandBuffer->CmdSetInstanceBufferData(ptrMesh, indexDraw, pInstanceBuffer, size);
+	return ptrCommandBuffer->CmdSetInstanceBufferData(ptrMeshDraw, pInstanceBuffer, size);
 }
 
-bool CGLES3Renderer::CmdSetDrawIndirectBufferData(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxMeshPtr &ptrMesh, const int indexDraw, int instanceCount)
+bool CGLES3Renderer::CmdDrawInstance(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxMeshDrawPtr &ptrMeshDraw, int instanceCount)
 {
-	return ptrCommandBuffer->CmdSetDrawIndirectBufferData(ptrMesh, indexDraw, instanceCount);
-}
-
-bool CGLES3Renderer::CmdDrawInstance(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxMeshPtr &ptrMesh, const int indexDraw, int instanceCount)
-{
-	if (ptrCommandBuffer->CmdBindMesh(ptrMesh, indexDraw) == false) {
+	if (ptrCommandBuffer->CmdBindMeshDraw(ptrMeshDraw) == false) {
 		return false;
 	}
 
-	if (ptrCommandBuffer->CmdDrawInstance(GFX_DRAWMODE_TRIANGLES, ptrMesh->GetIndexType(), ptrMesh->GetIndexOffset(indexDraw), ptrMesh->GetIndexCount(indexDraw), instanceCount) == false) {
+	if (ptrCommandBuffer->CmdDrawInstance(GFX_DRAWMODE_TRIANGLES, ptrMeshDraw->GetIndexType(), ptrMeshDraw->GetIndexOffset(), ptrMeshDraw->GetIndexCount(), instanceCount) == false) {
 		return false;
 	}
 
 	return true;
 }
 
-bool CGLES3Renderer::CmdDrawIndirect(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxMeshPtr &ptrMesh, const int indexDraw)
+bool CGLES3Renderer::CmdDrawIndirect(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxMeshDrawPtr &ptrMeshDraw)
 {
-	if (ptrCommandBuffer->CmdBindMesh(ptrMesh, indexDraw) == false) {
+	if (ptrCommandBuffer->CmdBindMeshDraw(ptrMeshDraw) == false) {
 		return false;
 	}
 
-	if (ptrCommandBuffer->CmdDrawIndirect(GFX_DRAWMODE_TRIANGLES, ptrMesh->GetIndexType(), ptrMesh->GetDrawCommandOffset(indexDraw)) == false) {
+	if (ptrCommandBuffer->CmdDrawIndirect(GFX_DRAWMODE_TRIANGLES, ptrMeshDraw->GetIndexType(), 0) == false) {
 		return false;
 	}
 

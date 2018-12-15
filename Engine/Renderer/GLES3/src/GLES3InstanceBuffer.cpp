@@ -1,8 +1,8 @@
 #include "GLES3Renderer.h"
 
 
-CGLES3InstanceBuffer::CGLES3InstanceBuffer(uint32_t binding, uint32_t instanceFormat)
-	: CGfxInstanceBuffer(binding, instanceFormat)
+CGLES3InstanceBuffer::CGLES3InstanceBuffer(uint32_t instanceFormat, uint32_t instanceBinding)
+	: CGfxInstanceBuffer(instanceFormat, instanceBinding)
 
 	, m_hash(INVALID_HASHVALUE)
 	, m_buffer(0)

@@ -20,7 +20,7 @@ public:
 
 public:
 	void SetMaterial(const CGfxMaterialPtr &ptrMaterial);
-	void SetMesh(const CGfxMeshPtr &ptrMesh);
+	void SetMeshDraw(const CGfxMeshPtr &ptrMesh);
 
 	void SetColor(float red, float green, float blue);
 	void SetAttenuation(float linear, float square, float constant);
@@ -38,7 +38,7 @@ private:
 
 private:
 	CGfxMaterialPtr m_ptrMaterial;
-	CGfxMeshPtr m_ptrMesh;
+	CGfxMeshDrawPtr m_ptrMeshDraw;
 };
 
 typedef CComponentPtr<CComponentPointLight> CComponentPointLightPtr;

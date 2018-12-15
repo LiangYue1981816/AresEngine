@@ -8,6 +8,41 @@ class CGLES3Mesh : public CGfxMesh
 
 
 private:
+	CGLES3Mesh(CGLES3MeshManager *pManager, uint32_t name);
+	virtual ~CGLES3Mesh(void);
+	virtual void Release(void);
+
+
+public:
+	bool CreateIndexBuffer(GfxIndexType type, size_t size, bool bDynamic, const void *pBuffer);
+	bool CreateVertexBuffer(uint32_t vertexFormat, uint32_t vertexBinding, size_t size, bool bDynamic, const void *pBuffer);
+	bool CreateDraw(int indexDraw, const glm::aabb &aabb, int baseVertex, int firstIndex, int indexCount);
+	void Destroy(void);
+
+public:
+	CGfxIndexBuffer* GetIndexBuffer(void);
+	CGfxVertexBuffer* GetVertexBuffer(void);
+	Draw* GetDraw(int indexDraw);
+
+	GfxIndexType GetIndexType(void) const;
+	uint32_t GetVertexFormat(void) const;
+
+
+private:
+	CGLES3IndexBuffer *m_pIndexBuffer;
+	CGLES3VertexBuffer *m_pVertexBuffer;
+	eastl::unordered_map<int, Draw> m_draws;
+
+private:
+	CGLES3MeshManager *m_pManager;
+};
+/*
+class CGLES3Mesh : public CGfxMesh
+{
+	friend class CGLES3MeshManager;
+
+
+private:
 	typedef struct Draw {
 		glm::aabb aabb;
 
@@ -72,3 +107,4 @@ private:
 private:
 	CGLES3MeshManager *m_pManager;
 };
+*/

@@ -331,3 +331,6 @@ ASALocalRun/
 .svn
 *.rar
 /Project/jni/ENGINE_SRC_FILES.mk
+
+# assets
+assets/

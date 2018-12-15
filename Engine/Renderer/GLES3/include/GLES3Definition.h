@@ -12,6 +12,8 @@ class CGLES3FrameBufferManager;
 
 class CGLES3Mesh;
 class CGLES3MeshManager;
+class CGLES3MeshDraw;
+class CGLES3MeshDrawManager;
 class CGLES3IndexBuffer;
 class CGLES3VertexBuffer;
 class CGLES3InstanceBuffer;
