@@ -10,11 +10,6 @@ public:
 	{
 
 	}
-	CGfxMeshDraw(const CGfxMeshPtr &ptrMesh, int indexDraw, uint32_t instanceFormat, uint32_t instanceBinding)
-		: m_name(INVALID_HASHNAME)
-	{
-
-	}
 	virtual ~CGfxMeshDraw(void)
 	{
 
