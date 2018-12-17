@@ -333,6 +333,8 @@
     <ClInclude Include="..\..\Engine\Renderer\GLES3\src\GLES3CommandUniformMatrix2fv.h" />
     <ClInclude Include="..\..\Engine\Renderer\GLES3\src\GLES3CommandUniformMatrix3fv.h" />
     <ClInclude Include="..\..\Engine\Renderer\GLES3\src\GLES3CommandUniformMatrix4fv.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKDevice.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKRenderer.h" />
     <ClInclude Include="..\..\Engine\Resource\include\ResourceLoader.h" />
     <ClInclude Include="..\..\Engine\SceneHeader.h" />
     <ClInclude Include="..\..\Engine\Scene\include\Component.h" />
@@ -467,6 +469,8 @@
     <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3UniformBufferManager.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3VertexArrayObject.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3VertexBuffer.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKDevice.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKRenderer.cpp" />
     <ClCompile Include="..\..\Engine\Resource\src\ResourceLoader.cpp" />
     <ClCompile Include="..\..\Engine\Resource\src\ResourceLoaderMaterial.cpp" />
     <ClCompile Include="..\..\Engine\Resource\src\ResourceLoaderMesh.cpp" />

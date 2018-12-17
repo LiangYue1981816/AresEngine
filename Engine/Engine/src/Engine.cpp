@@ -1,4 +1,5 @@
 #include "EngineHeader.h"
+#include "VKRenderer.h"
 #include "GLES3Renderer.h"
 
 
@@ -59,6 +60,7 @@ CEngine::CEngine(GfxApi api, RenderSolution solution, void *hDC, int width, int 
 		break;
 
 	case GFX_API_VULKAN:
+		m_pRenderer = new CVKRenderer(hDC, width, height, pixelFormat);
 		break;
 
 	case GFX_API_METAL:
