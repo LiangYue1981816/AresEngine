@@ -66,7 +66,7 @@ public:
 
 
 public:
-	CGfxRenderer(void *hDC, int width, int height, GfxPixelFormat pixelFormat);
+	CGfxRenderer(void *hInstance, void *hWnd, void *hDC, int width, int height, GfxPixelFormat pixelFormat);
 	virtual ~CGfxRenderer(void);
 
 

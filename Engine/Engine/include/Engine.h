@@ -8,7 +8,7 @@
 #include "RenderSolutionForwardPlus.h"
 
 
-#define CreateEngine(api, solution, hDC, width, height, format) CEngine::Create((api), (solution), (hDC), (width), (height), (format))
+#define CreateEngine(api, solution, hInstance, hWnd, hDC, width, height, format) CEngine::Create((api), (solution), (hInstance), (hWnd), (hDC), (width), (height), (format))
 #define DestroyEngine() CEngine::Destroy()
 #define Engine() CEngine::GetInstance()
 
@@ -38,12 +38,12 @@ class CALL_API CEngine
 {
 public:
 	static CEngine* GetInstance(void);
-	static void Create(GfxApi api, RenderSolution solution, void *hDC, int width, int height, GfxPixelFormat pixelFormat);
+	static void Create(GfxApi api, RenderSolution solution, void *hInstance, void *hWnd, void *hDC, int width, int height, GfxPixelFormat pixelFormat);
 	static void Destroy(void);
 
 
 private:
-	CEngine(GfxApi api, RenderSolution solution, void *hDC, int width, int height, GfxPixelFormat pixelFormat);
+	CEngine(GfxApi api, RenderSolution solution, void *hInstance, void *hWnd, void *hDC, int width, int height, GfxPixelFormat pixelFormat);
 	virtual ~CEngine(void);
 
 

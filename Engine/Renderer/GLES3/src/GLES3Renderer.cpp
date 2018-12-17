@@ -1,8 +1,8 @@
 #include "GLES3Renderer.h"
 
 
-CGLES3Renderer::CGLES3Renderer(void *hDC, int width, int height, GfxPixelFormat pixelFormat)
-	: CGfxRenderer(hDC, width, height, pixelFormat)
+CGLES3Renderer::CGLES3Renderer(void *hInstance, void *hWnd, void *hDC, int width, int height, GfxPixelFormat pixelFormat)
+	: CGfxRenderer(hInstance, hWnd, hDC, width, height, pixelFormat)
 
 	, m_pSwapChain(nullptr)
 

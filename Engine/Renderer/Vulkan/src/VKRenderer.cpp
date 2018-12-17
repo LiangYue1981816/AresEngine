@@ -1,8 +1,8 @@
 #include "VKRenderer.h"
 
 
-CVKRenderer::CVKRenderer(void *hDC, int width, int height, GfxPixelFormat pixelFormat)
-	: CGfxRenderer(hDC, width, height, pixelFormat)
+CVKRenderer::CVKRenderer(void *hInstance, void *hWnd, void *hDC, int width, int height, GfxPixelFormat pixelFormat)
+	: CGfxRenderer(hInstance, hWnd, hDC, width, height, pixelFormat)
 {
 
 }

@@ -96,7 +96,7 @@ class CALL_API CGLES3Renderer : public CGfxRenderer
 
 
 public:
-	CGLES3Renderer(void *hDC, int width, int height, GfxPixelFormat pixelFormat);
+	CGLES3Renderer(void *hInstance, void *hWnd, void *hDC, int width, int height, GfxPixelFormat pixelFormat);
 	virtual ~CGLES3Renderer(void);
 
 

@@ -13,10 +13,10 @@ CEngine* CEngine::GetInstance(void)
 	return pInstance;
 }
 
-void CEngine::Create(GfxApi api, RenderSolution solution, void *hDC, int width, int height, GfxPixelFormat pixelFormat)
+void CEngine::Create(GfxApi api, RenderSolution solution, void *hInstance, void *hWnd, void *hDC, int width, int height, GfxPixelFormat pixelFormat)
 {
 	if (pInstance == nullptr) {
-		pInstance = new CEngine(api, solution, hDC, width, height, pixelFormat);
+		pInstance = new CEngine(api, solution, hInstance, hWnd, hDC, width, height, pixelFormat);
 	}
 }
 
@@ -34,7 +34,7 @@ void CEngine::Destroy(void)
 #endif
 }
 
-CEngine::CEngine(GfxApi api, RenderSolution solution, void *hDC, int width, int height, GfxPixelFormat pixelFormat)
+CEngine::CEngine(GfxApi api, RenderSolution solution, void *hInstance, void *hWnd, void *hDC, int width, int height, GfxPixelFormat pixelFormat)
 	: m_indexQueue(0)
 
 	, m_lastTime(0.0f)
@@ -56,11 +56,11 @@ CEngine::CEngine(GfxApi api, RenderSolution solution, void *hDC, int width, int 
 
 	switch ((int)api) {
 	case GFX_API_GLES3:
-		m_pRenderer = new CGLES3Renderer(hDC, width, height, pixelFormat);
+		m_pRenderer = new CGLES3Renderer(hInstance, hWnd, hDC, width, height, pixelFormat);
 		break;
 
 	case GFX_API_VULKAN:
-		m_pRenderer = new CVKRenderer(hDC, width, height, pixelFormat);
+		m_pRenderer = new CVKRenderer(hInstance, hWnd, hDC, width, height, pixelFormat);
 		break;
 
 	case GFX_API_METAL:
