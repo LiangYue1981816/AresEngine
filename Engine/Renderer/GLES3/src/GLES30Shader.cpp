@@ -25,7 +25,7 @@ bool CGLES3Shader::Create(const uint32_t *words, size_t numWords, shader_kind ki
 	{
 		do {
 			spirv_cross::CompilerGLSL::Options options;
-			options.version = 310;
+			options.version = 300;
 			options.es = true;
 			options.vertex.fixup_clipspace = false;
 
