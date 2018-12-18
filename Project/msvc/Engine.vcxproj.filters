@@ -762,6 +762,15 @@
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKRenderer.h">
       <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKInstance.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKAllocator.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKDefinition.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Engine\ThirdParty\eastl\source\allocator_eastl.cpp">
@@ -1170,6 +1179,12 @@
       <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKRenderer.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKInstance.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKAllocator.cpp">
       <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
     </ClCompile>
   </ItemGroup>

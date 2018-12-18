@@ -3,13 +3,14 @@
 
 CVKRenderer::CVKRenderer(void *hInstance, void *hWnd, void *hDC, int width, int height, GfxPixelFormat pixelFormat)
 	: CGfxRenderer(hInstance, hWnd, hDC, width, height, pixelFormat)
+	, m_pInstance(nullptr)
 {
-
+	m_pInstance = new CVKInstance;
 }
 
 CVKRenderer::~CVKRenderer(void)
 {
-
+	delete m_pInstance;
 }
 
 uint32_t CVKRenderer::GetLastError(void) const

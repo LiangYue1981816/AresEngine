@@ -2,6 +2,11 @@
 #include "GfxHeader.h"
 
 #include "Vulkan/Vulkan.h"
+#include "VKDefinition.h"
+
+#include "VKAllocator.h"
+#include "VKInstance.h"
+#include "VKDevice.h"
 
 
 #define VKRenderer() ((CVKRenderer *)CGfxRenderer::GetInstance())
@@ -104,4 +109,8 @@ public:
 public:
 	void Submit(const CGfxCommandBufferPtr &ptrCommandBuffer);
 	void Present(void);
+
+
+private:
+	CVKInstance *m_pInstance;
 };

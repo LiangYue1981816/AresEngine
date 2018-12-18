@@ -24,7 +24,6 @@
 #define SET_MEM_SIZE(ptr, size) *((uint32_t *)(ptr) - 1) = (*((uint32_t *)(ptr) - 1) & 0xFE000000) | (uint32_t(size))
 #define GET_MEM_SYSTEM(ptr)   ((*((uint32_t *)(ptr) - 1) >> 31) & 0x00000001)
 #define GET_MEM_POOLID(ptr)   ((*((uint32_t *)(ptr) - 1) >> 25) & 0x0000003F)
-#define GET_MEM_SIZE(ptr)      (*((uint32_t *)(ptr) - 1) & 0x01FFFFFF)
 
 
 #define MAX_POOL_COUNT 64
