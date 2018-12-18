@@ -41,3 +41,4 @@ class CVKRenderer;
 class CVKAllocator;
 class CVKInstance;
 class CVKDevice;
+class CVKQueue;

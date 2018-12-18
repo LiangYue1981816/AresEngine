@@ -27,6 +27,10 @@ public:
 	VkDevice GetDevice(void) const;
 	VkPhysicalDevice GetPhysicalDevice(void) const;
 
+	CVKQueue* GetComputeQueue(void) const;
+	CVKQueue* GetGraphicsQueue(void) const;
+	CVKQueue* GetTransferQueue(void) const;
+
 public:
 	const VkPhysicalDeviceLimits& GetPhysicalDeviceLimits(void) const;
 	const VkPhysicalDeviceFeatures& GetPhysicalDeviceFeatures(void) const;
@@ -43,6 +47,9 @@ private:
 
 private:
 	uint32_t m_queueFamilyIndex;
+	CVKQueue *m_pComputeQueue;
+	CVKQueue *m_pGraphicsQueue;
+	CVKQueue *m_pTransferQueue;
 
 private:
 	CVKInstance *m_pInstance;

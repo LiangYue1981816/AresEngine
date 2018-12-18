@@ -7,6 +7,7 @@
 #include "VKAllocator.h"
 #include "VKInstance.h"
 #include "VKDevice.h"
+#include "VKQueue.h"
 
 
 #define VKRenderer() ((CVKRenderer *)CGfxRenderer::GetInstance())

@@ -8,6 +8,9 @@ CVKDevice::CVKDevice(CVKInstance *pInstance)
 	, m_vkPhysicalDevice(VK_NULL_HANDLE)
 
 	, m_queueFamilyIndex(0)
+	, m_pComputeQueue(nullptr)
+	, m_pGraphicsQueue(nullptr)
+	, m_pTransferQueue(nullptr)
 {
 	uint32_t queueFamilyIndex;
 	VkPhysicalDevice vkPhysicalDevice;
@@ -15,10 +18,18 @@ CVKDevice::CVKDevice(CVKInstance *pInstance)
 	CALL_BOOL_FUNCTION_RETURN(EnumeratePhysicalDevices(devices));
 	CALL_BOOL_FUNCTION_RETURN(SelectPhysicalDevices(devices, vkPhysicalDevice, queueFamilyIndex));
 	CALL_BOOL_FUNCTION_RETURN(CreateDevice(vkPhysicalDevice, queueFamilyIndex));
+
+	m_pComputeQueue = new CVKQueue(this, queueFamilyIndex, 0);
+	m_pGraphicsQueue = new CVKQueue(this, queueFamilyIndex, 1);
+	m_pTransferQueue = new CVKQueue(this, queueFamilyIndex, 2);
 }
 
 CVKDevice::~CVKDevice(void)
 {
+	delete m_pComputeQueue;
+	delete m_pGraphicsQueue;
+	delete m_pTransferQueue;
+
 	DestroyDevice();
 }
 
@@ -169,6 +180,21 @@ VkDevice CVKDevice::GetDevice(void) const
 VkPhysicalDevice CVKDevice::GetPhysicalDevice(void) const
 {
 	return m_vkPhysicalDevice;
+}
+
+CVKQueue* CVKDevice::GetComputeQueue(void) const
+{
+	return m_pComputeQueue;
+}
+
+CVKQueue* CVKDevice::GetGraphicsQueue(void) const
+{
+	return m_pGraphicsQueue;
+}
+
+CVKQueue* CVKDevice::GetTransferQueue(void) const
+{
+	return m_pTransferQueue;
 }
 
 const VkPhysicalDeviceLimits& CVKDevice::GetPhysicalDeviceLimits(void) const
