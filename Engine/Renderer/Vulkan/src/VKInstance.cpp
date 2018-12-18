@@ -32,7 +32,7 @@ VkBool32 VKAPI_PTR DebugReportCallback(VkDebugReportFlagsEXT flags, VkDebugRepor
 		LogOutput(LOG_TAG_RENDERER, "Vulkan Debug [%s] Code %d : %s\n", pLayerPrefix, messageCode, pMessage);
 	}
 
-	return TRUE;
+	return VK_TRUE;
 }
 
 void CVKInstance::SetLastError(VkResult err)
@@ -46,8 +46,9 @@ VkResult CVKInstance::GetLastError(void)
 }
 
 
-CVKInstance::CVKInstance(void)
+CVKInstance::CVKInstance(void *hInstance, void *hWnd)
 	: m_vkInstance(VK_NULL_HANDLE)
+	, m_vkSurface(VK_NULL_HANDLE)
 
 #ifdef DEBUG
 	, m_vkDebugReportCallback(VK_NULL_HANDLE)
@@ -59,15 +60,15 @@ CVKInstance::CVKInstance(void)
 
 	eastl::vector<const char *> enabledInstanceLayers;
 	eastl::vector<const char *> enabledInstanceExtensions;
-	if (EnumerateInstanceLayerProperties(enabledInstanceLayers) == false) return;
-	if (EnumerateInstanceExtensionProperties(enabledInstanceExtensions) == false) return;
-	if (CreateInstance(enabledInstanceLayers, enabledInstanceExtensions) == false) return;
-	if (CreateDebugReportCallback() == false) return;
+	CALL_BOOL_FUNCTION_RETURN(EnumerateInstanceLayerProperties(enabledInstanceLayers));
+	CALL_BOOL_FUNCTION_RETURN(EnumerateInstanceExtensionProperties(enabledInstanceExtensions));
+	CALL_BOOL_FUNCTION_RETURN(CreateInstance(enabledInstanceLayers, enabledInstanceExtensions));
+	CALL_BOOL_FUNCTION_RETURN(CreateSurface(hInstance, hWnd));
 }
 
 CVKInstance::~CVKInstance(void)
 {
-	DestroyDebugReportCallback();
+	DestroySurface();
 	DestroyInstance();
 
 	delete m_pAllocator;
@@ -178,11 +179,6 @@ bool CVKInstance::CreateInstance(const eastl::vector<const char *> &enabledInsta
 	createInfo.ppEnabledExtensionNames = enabledInstanceExtensions.data();
 	CALL_VK_FUNCTION_RETURN_BOOL(vkCreateInstance(&createInfo, m_pAllocator->GetAllocationCallbacks(), &m_vkInstance));
 
-	return true;
-}
-
-bool CVKInstance::CreateDebugReportCallback(void)
-{
 #ifdef DEBUG
 	vkCreateDebugReportCallback = (PFN_vkCreateDebugReportCallbackEXT)vkGetInstanceProcAddr(m_vkInstance, "vkCreateDebugReportCallbackEXT");
 	vkDestroyDebugReportCallback = (PFN_vkDestroyDebugReportCallbackEXT)vkGetInstanceProcAddr(m_vkInstance, "vkDestroyDebugReportCallbackEXT");
@@ -206,16 +202,31 @@ bool CVKInstance::CreateDebugReportCallback(void)
 	return true;
 }
 
-void CVKInstance::DestroyInstance(void)
+bool CVKInstance::CreateSurface(void *hInstance, void *hWnd)
 {
-	if (m_vkInstance) {
-		vkDestroyInstance(m_vkInstance, m_pAllocator->GetAllocationCallbacks());
-	}
+#ifdef PLATFORM_WINDOWS
+	VkWin32SurfaceCreateInfoKHR surfaceInfo = {};
+	surfaceInfo.sType = VK_STRUCTURE_TYPE_WIN32_SURFACE_CREATE_INFO_KHR;
+	surfaceInfo.pNext = nullptr;
+	surfaceInfo.flags = 0;
+	surfaceInfo.hinstance = (HINSTANCE)hInstance;
+	surfaceInfo.hwnd = (HWND)hWnd;
+	CALL_VK_FUNCTION_RETURN_BOOL(vkCreateWin32SurfaceKHR(m_vkInstance, &surfaceInfo, m_pAllocator->GetAllocationCallbacks(), &m_vkSurface));
+	return true;
+#endif
 
-	m_vkInstance = VK_NULL_HANDLE;
+#ifdef PLATFORM_ANDROID
+	VkAndroidSurfaceCreateInfoKHR surfaceInfo = {};
+	surfaceInfo.sType = VK_STRUCTURE_TYPE_ANDROID_SURFACE_CREATE_INFO_KHR;
+	surfaceInfo.pNext = nullptr;
+	surfaceInfo.flags = 0;
+	surfaceInfo.window = (ANativeWindow *)hWnd;
+	CALL_VK_FUNCTION_RETURN_BOOL(vkCreateAndroidSurfaceKHR(m_vkInstance, &surfaceInfo, m_pAllocator->GetAllocationCallbacks(), &m_vkSurface));
+	return true;
+#endif
 }
 
-void CVKInstance::DestroyDebugReportCallback(void)
+void CVKInstance::DestroyInstance(void)
 {
 #ifdef DEBUG
 	if (vkDestroyDebugReportCallback && m_vkDebugReportCallback) {
@@ -224,11 +235,31 @@ void CVKInstance::DestroyDebugReportCallback(void)
 
 	m_vkDebugReportCallback = VK_NULL_HANDLE;
 #endif
+
+	if (m_vkInstance) {
+		vkDestroyInstance(m_vkInstance, m_pAllocator->GetAllocationCallbacks());
+	}
+
+	m_vkInstance = VK_NULL_HANDLE;
+}
+
+void CVKInstance::DestroySurface(void)
+{
+	if (m_vkSurface) {
+		vkDestroySurfaceKHR(m_vkInstance, m_vkSurface, m_pAllocator->GetAllocationCallbacks());
+	}
+
+	m_vkSurface = VK_NULL_HANDLE;
 }
 
 VkInstance CVKInstance::GetInstance(void) const
 {
 	return m_vkInstance;
+}
+
+VkSurfaceKHR CVKInstance::GetSurface(void) const
+{
+	return m_vkSurface;
 }
 
 CVKAllocator* CVKInstance::GetAllocator(void) const

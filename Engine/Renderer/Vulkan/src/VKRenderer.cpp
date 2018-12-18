@@ -4,18 +4,21 @@
 CVKRenderer::CVKRenderer(void *hInstance, void *hWnd, void *hDC, int width, int height, GfxPixelFormat pixelFormat)
 	: CGfxRenderer(hInstance, hWnd, hDC, width, height, pixelFormat)
 	, m_pInstance(nullptr)
+	, m_pDevice(nullptr)
 {
-	m_pInstance = new CVKInstance;
+	m_pInstance = new CVKInstance(hInstance, hWnd);
+	m_pDevice = new CVKDevice(m_pInstance);
 }
 
 CVKRenderer::~CVKRenderer(void)
 {
+	delete m_pDevice;
 	delete m_pInstance;
 }
 
 uint32_t CVKRenderer::GetLastError(void) const
 {
-	return 0;
+	return CVKInstance::GetLastError();
 }
 
 CGfxSwapChain* CVKRenderer::GetSwapChain(void) const
