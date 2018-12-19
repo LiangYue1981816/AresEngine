@@ -9,6 +9,10 @@
 #include "VKDevice.h"
 #include "VKQueue.h"
 
+#include "VKMemory.h"
+#include "VKMemoryAllocator.h"
+#include "VKMemoryManager.h"
+
 
 #define VKRenderer() ((CVKRenderer *)CGfxRenderer::GetInstance())
 

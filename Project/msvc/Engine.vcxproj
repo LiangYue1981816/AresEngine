@@ -337,6 +337,9 @@
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKDefinition.h" />
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKDevice.h" />
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKInstance.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKMemory.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKMemoryAllocator.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKMemoryManager.h" />
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKQueue.h" />
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKRenderer.h" />
     <ClInclude Include="..\..\Engine\Resource\include\ResourceLoader.h" />
@@ -476,6 +479,9 @@
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKAllocator.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKDevice.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKInstance.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKMemory.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKMemoryAllocator.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKMemoryManager.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKQueue.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKRenderer.cpp" />
     <ClCompile Include="..\..\Engine\Resource\src\ResourceLoader.cpp" />

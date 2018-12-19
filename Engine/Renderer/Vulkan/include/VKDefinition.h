@@ -42,3 +42,6 @@ class CVKAllocator;
 class CVKInstance;
 class CVKDevice;
 class CVKQueue;
+class CVKMemory;
+class CVKMemoryAllocator;
+class CVKMemoryManager;
