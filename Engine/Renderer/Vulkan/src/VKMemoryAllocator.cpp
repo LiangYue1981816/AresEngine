@@ -1,15 +1,17 @@
 #include "VKRenderer.h"
 
 
-CVKMemoryAllocator::CVKMemoryAllocator(CVKDevice *pDevice, uint32_t memoryTypeIndex, VkDeviceSize memorySize, VkDeviceSize memoryAlignment)
+#define NODE_INDEX(size) (((size) / m_alignment) - 1)
+
+CVKMemoryAllocator::CVKMemoryAllocator(CVKDevice *pDevice, uint32_t memoryTypeIndex, VkDeviceSize memoryAlignment, VkDeviceSize memorySize)
 	: m_pDevice(pDevice)
 
 	, m_indexType(memoryTypeIndex)
-	, m_freeSize(memorySize)
-	, m_fullSize(memorySize)
 	, m_alignment(memoryAlignment)
+	, m_freeSize(ALIGN_BYTE(memorySize, memoryAlignment))
+	, m_fullSize(ALIGN_BYTE(memorySize, memoryAlignment))
 
-	, m_root{ nullptr }
+	, m_root{nullptr}
 	, m_nodes(nullptr)
 	, m_pListHead(nullptr)
 
@@ -25,7 +27,7 @@ CVKMemoryAllocator::CVKMemoryAllocator(CVKDevice *pDevice, uint32_t memoryTypeIn
 	allocateInfo.memoryTypeIndex = m_indexType;
 	CALL_VK_FUNCTION_RETURN(vkAllocateMemory(m_pDevice->GetDevice(), &allocateInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkMemory));
 
-	m_nodes = new mem_node[m_fullSize / m_alignment];
+	m_nodes = new mem_node[(uint32_t)(m_fullSize / m_alignment)];
 	m_pListHead = new CVKMemory(this, m_pDevice, m_vkMemory, m_pDevice->GetPhysicalDeviceMemoryProperties().memoryTypes[m_indexType].propertyFlags, m_alignment, 0, m_fullSize);
 }
 
@@ -44,27 +46,132 @@ CVKMemoryAllocator::~CVKMemoryAllocator(void)
 	}
 }
 
-void CVKMemoryAllocator::InitNodes(uint32_t numNodes)
+CVKMemory* CVKMemoryAllocator::AllocMemory(VkDeviceSize size)
+{
+	return nullptr;
+}
+
+void CVKMemoryAllocator::FreeMemory(CVKMemory *pMemory)
 {
 
+}
+
+void CVKMemoryAllocator::InitNodes(uint32_t numNodes)
+{
+	m_root = RB_ROOT;
+
+	for (uint32_t indexNode = 0; indexNode < numNodes; indexNode++) {
+		m_nodes[indexNode].size = (indexNode + 1) * m_alignment;
+		m_nodes[indexNode].pListHead = nullptr;
+	}
 }
 
 void CVKMemoryAllocator::InsertMemory(CVKMemory *pMemory)
 {
+	ASSERT(pMemory->bInUse == false);
 
+	mem_node *pMemoryNode = &m_nodes[NODE_INDEX(pMemory->m_size)];
+	rb_node **node = &m_root.rb_node;
+	rb_node *parent = nullptr;
+
+	while (*node) {
+		mem_node *pMemoryNodeCur = container_of(*node, mem_node, node);
+
+		parent = *node;
+
+		if (pMemoryNode->size > pMemoryNodeCur->size) {
+			node = &(*node)->rb_right;
+			continue;
+		}
+
+		if (pMemoryNode->size < pMemoryNodeCur->size) {
+			node = &(*node)->rb_left;
+			continue;
+		}
+
+		ASSERT(pMemoryNode == pMemoryNodeCur);
+
+		pMemory->pFreePrev = nullptr;
+		pMemory->pFreeNext = pMemoryNode->pListHead;
+		pMemoryNode->pListHead->pFreePrev = pMemory;
+		pMemoryNode->pListHead = pMemory;
+
+		return;
+	}
+
+	pMemory->pFreeNext = nullptr;
+	pMemory->pFreePrev = nullptr;
+	pMemoryNode->pListHead = pMemory;
+
+	rb_init_node(&pMemoryNode->node);
+	rb_link_node(&pMemoryNode->node, parent, node);
+	rb_insert_color(&pMemoryNode->node, &m_root);
 }
 
 void CVKMemoryAllocator::RemoveMemory(CVKMemory *pMemory)
 {
+	ASSERT(pMemory->bInUse == false);
+	mem_node *pMemoryNode = &m_nodes[NODE_INDEX(pMemory->m_size)];
 
+	if (pMemory->pFreeNext) {
+		pMemory->pFreeNext->pFreePrev = pMemory->pFreePrev;
+	}
+
+	if (pMemory->pFreePrev) {
+		pMemory->pFreePrev->pFreeNext = pMemory->pFreeNext;
+	}
+
+	if (pMemoryNode->pListHead == pMemory) {
+		pMemoryNode->pListHead = pMemory->pFreeNext;
+	}
+
+	if (pMemoryNode->pListHead == nullptr) {
+		rb_erase(&pMemoryNode->node, &m_root);
+	}
 }
 
 CVKMemory* CVKMemoryAllocator::MergeMemory(CVKMemory *pMemory, CVKMemory *pMemoryNext)
 {
-	return nullptr;
+	ASSERT(pMemory->m_offset + pMemory->m_size == pMemoryNext->m_offset);
+
+	pMemory->m_size = pMemory->m_size + pMemoryNext->m_size;
+	pMemory->pNext = pMemoryNext->pNext;
+
+	if (pMemoryNext->pNext) {
+		pMemoryNext->pNext->pPrev = pMemory;
+	}
+
+	delete pMemoryNext;
+
+	return pMemory;
 }
 
 CVKMemory* CVKMemoryAllocator::SearchMemory(VkDeviceSize size) const
 {
-	return nullptr;
+	mem_node *pMemoryNode = nullptr;
+	rb_node *node = m_root.rb_node;
+
+	while (node) {
+		mem_node *pMemoryNodeCur = container_of(node, mem_node, node);
+
+		if (size > pMemoryNodeCur->size) {
+			node = node->rb_right;
+			continue;
+		}
+
+		pMemoryNode = pMemoryNodeCur;
+
+		if (size < pMemoryNodeCur->size) {
+			node = node->rb_left;
+			continue;
+		}
+
+		ASSERT(pMemoryNode->pListHead);
+		ASSERT(pMemoryNode->pListHead->bInUse == false);
+		ASSERT(pMemoryNode->pListHead->m_size / m_alignment * m_alignment >= size);
+
+		break;
+	}
+
+	return pMemoryNode ? pMemoryNode->pListHead : nullptr;
 }

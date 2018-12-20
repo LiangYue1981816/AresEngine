@@ -9,7 +9,7 @@ class CVKMemory
 
 
 private:
-	CVKMemory(CVKMemoryAllocator *pAllocator, CVKDevice *pDevice, VkDeviceMemory vkMemory, VkFlags flags, VkDeviceSize alignment, VkDeviceSize alignmentOffset, VkDeviceSize size);
+	CVKMemory(CVKMemoryAllocator *pAllocator, CVKDevice *pDevice, VkDeviceMemory vkMemory, VkFlags flags, VkDeviceSize alignment, VkDeviceSize offset, VkDeviceSize size);
 	virtual ~CVKMemory(void);
 
 
@@ -41,7 +41,7 @@ public:
 private:
 	VkFlags m_flags;
 	VkDeviceSize m_alignment;
-	VkDeviceSize m_alignmentOffset;
+	VkDeviceSize m_offset;
 	VkDeviceSize m_size;
 
 private:

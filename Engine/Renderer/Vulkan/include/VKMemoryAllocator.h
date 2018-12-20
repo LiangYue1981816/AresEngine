@@ -17,9 +17,13 @@ private:
 
 
 private:
-	CVKMemoryAllocator(CVKDevice *pDevice, uint32_t memoryTypeIndex, VkDeviceSize memorySize, VkDeviceSize memoryAlignment);
+	CVKMemoryAllocator(CVKDevice *pDevice, uint32_t memoryTypeIndex, VkDeviceSize memoryAlignment, VkDeviceSize memorySize);
 	virtual ~CVKMemoryAllocator(void);
 
+
+private:
+	CVKMemory* AllocMemory(VkDeviceSize size);
+	void FreeMemory(CVKMemory *pMemory);
 
 private:
 	void InitNodes(uint32_t numNodes);
@@ -31,9 +35,9 @@ private:
 
 private:
 	uint32_t m_indexType;
+	VkDeviceSize m_alignment;
 	VkDeviceSize m_freeSize;
 	VkDeviceSize m_fullSize;
-	VkDeviceSize m_alignment;
 
 private:
 	rb_root m_root;
