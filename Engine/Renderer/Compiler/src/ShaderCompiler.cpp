@@ -139,6 +139,8 @@ std::vector<uint32_t> CShaderCompiler::Compile(const char *szInputFileName, cons
 				if (SaveShaderBinary(szBinFileName, words, hash) == false) {
 					break;
 				}
+
+				FileManager()->SetFile(szOutputFileName, szBinFileName);
 			}
 		} while (false);
 	}
