@@ -108,6 +108,14 @@ void CFileManager::SetPack(const char *szPackName, const char *szExtName)
 	}
 }
 
+void CFileManager::SetFile(const char *szFileName, const char *szFullName)
+{
+	uint32_t name = HashValue(szFileName);
+	m_files[name].pPack = nullptr;
+	strcpy(m_files[name].szFileName, szFileName);
+	strcpy(m_files[name].szFullName, szFullName);
+}
+
 const char* CFileManager::GetFullName(const char *szFileName)
 {
 	const auto &itFile = m_files.find(HashValue(szFileName));

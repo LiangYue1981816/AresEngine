@@ -34,6 +34,7 @@ public:
 
 	void SetPath(const char *szPathName, const char *szExtName);
 	void SetPack(const char *szPackName, const char *szExtName);
+	void SetFile(const char *szFileName, const char *szFullName);
 
 	const char* GetFullName(const char *szFileName);
 	bool LoadStream(const char *szFileName, CStream *pStream);
