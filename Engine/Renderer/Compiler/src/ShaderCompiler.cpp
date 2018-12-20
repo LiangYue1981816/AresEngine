@@ -97,6 +97,7 @@ static bool CompileShader(std::string &source, shaderc_shader_kind kind, const s
 
 	if (module.GetCompilationStatus() != shaderc_compilation_status_success) {
 		LogOutput(LOG_TAG_RENDERER, "\n");
+		LogOutput(LOG_TAG_RENDERER, "%s\n", source.c_str());
 		LogOutput(LOG_TAG_RENDERER, "Compile Fail:\n");
 		LogOutput(LOG_TAG_RENDERER, "%s\n", module.GetErrorMessage().c_str());
 		return false;
