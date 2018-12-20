@@ -182,6 +182,11 @@ VkPhysicalDevice CVKDevice::GetPhysicalDevice(void) const
 	return m_vkPhysicalDevice;
 }
 
+CVKInstance* CVKDevice::GetInstance(void) const
+{
+	return m_pInstance;
+}
+
 CVKQueue* CVKDevice::GetComputeQueue(void) const
 {
 	return m_pComputeQueue;

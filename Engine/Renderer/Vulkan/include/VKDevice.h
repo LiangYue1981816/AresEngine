@@ -27,6 +27,7 @@ public:
 	VkDevice GetDevice(void) const;
 	VkPhysicalDevice GetPhysicalDevice(void) const;
 
+	CVKInstance* GetInstance(void) const;
 	CVKQueue* GetComputeQueue(void) const;
 	CVKQueue* GetGraphicsQueue(void) const;
 	CVKQueue* GetTransferQueue(void) const;
