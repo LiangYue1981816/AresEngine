@@ -35,6 +35,7 @@ public:
 	bool BeginMap(VkDeviceSize offset, VkDeviceSize size, void **ppAddress) const;
 	bool EndMap(void) const;
 	bool Flush(VkDeviceSize offset, VkDeviceSize size) const;
+	bool Invalidate(VkDeviceSize offset, VkDeviceSize size) const;
 
 
 private:

@@ -117,6 +117,10 @@ bool CVKMemory::EndMap(void) const
 
 bool CVKMemory::Flush(VkDeviceSize offset, VkDeviceSize size) const
 {
+	if (IsHostVisible() == false) {
+		return false;
+	}
+
 	if (IsHostCoherent()) {
 		return true;
 	}
@@ -128,5 +132,25 @@ bool CVKMemory::Flush(VkDeviceSize offset, VkDeviceSize size) const
 	memoryRange.offset = m_alignmentOffset + offset;
 	memoryRange.size = size;
 	CALL_VK_FUNCTION_RETURN_BOOL(vkFlushMappedMemoryRanges(m_pDevice->GetDevice(), 1, &memoryRange));
+	return true;
+}
+
+bool CVKMemory::Invalidate(VkDeviceSize offset, VkDeviceSize size) const
+{
+	if (IsHostVisible() == false) {
+		return false;
+	}
+
+	if (IsHostCoherent()) {
+		return true;
+	}
+
+	VkMappedMemoryRange memoryRange = {};
+	memoryRange.sType = VK_STRUCTURE_TYPE_MAPPED_MEMORY_RANGE;
+	memoryRange.pNext = nullptr;
+	memoryRange.memory = m_vkMemory;
+	memoryRange.offset = m_alignmentOffset + offset;
+	memoryRange.size = size;
+	CALL_VK_FUNCTION_RETURN_BOOL(vkInvalidateMappedMemoryRanges(m_pDevice->GetDevice(), 1, &memoryRange));
 	return true;
 }
