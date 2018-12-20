@@ -368,9 +368,13 @@
     <ClInclude Include="..\..\Engine\ThirdParty\spirv-cross\spirv_common.hpp" />
     <ClInclude Include="..\..\Engine\ThirdParty\spirv-cross\spirv_cpp.hpp" />
     <ClInclude Include="..\..\Engine\ThirdParty\spirv-cross\spirv_cross.hpp" />
+    <ClInclude Include="..\..\Engine\ThirdParty\spirv-cross\spirv_cross_parsed_ir.hpp" />
+    <ClInclude Include="..\..\Engine\ThirdParty\spirv-cross\spirv_cross_util.hpp" />
     <ClInclude Include="..\..\Engine\ThirdParty\spirv-cross\spirv_glsl.hpp" />
     <ClInclude Include="..\..\Engine\ThirdParty\spirv-cross\spirv_hlsl.hpp" />
     <ClInclude Include="..\..\Engine\ThirdParty\spirv-cross\spirv_msl.hpp" />
+    <ClInclude Include="..\..\Engine\ThirdParty\spirv-cross\spirv_parser.hpp" />
+    <ClInclude Include="..\..\Engine\ThirdParty\spirv-cross\spirv_reflect.hpp" />
     <ClInclude Include="..\..\Engine\ThirdParty\tinyxml\tinystr.h" />
     <ClInclude Include="..\..\Engine\ThirdParty\tinyxml\tinyxml.h" />
     <ClInclude Include="..\..\Engine\ThirdParty\zlib\crc32.h" />
@@ -515,9 +519,13 @@
     <ClCompile Include="..\..\Engine\ThirdParty\spirv-cross\spirv_cfg.cpp" />
     <ClCompile Include="..\..\Engine\ThirdParty\spirv-cross\spirv_cpp.cpp" />
     <ClCompile Include="..\..\Engine\ThirdParty\spirv-cross\spirv_cross.cpp" />
+    <ClCompile Include="..\..\Engine\ThirdParty\spirv-cross\spirv_cross_parsed_ir.cpp" />
+    <ClCompile Include="..\..\Engine\ThirdParty\spirv-cross\spirv_cross_util.cpp" />
     <ClCompile Include="..\..\Engine\ThirdParty\spirv-cross\spirv_glsl.cpp" />
     <ClCompile Include="..\..\Engine\ThirdParty\spirv-cross\spirv_hlsl.cpp" />
     <ClCompile Include="..\..\Engine\ThirdParty\spirv-cross\spirv_msl.cpp" />
+    <ClCompile Include="..\..\Engine\ThirdParty\spirv-cross\spirv_parser.cpp" />
+    <ClCompile Include="..\..\Engine\ThirdParty\spirv-cross\spirv_reflect.cpp" />
     <ClCompile Include="..\..\Engine\ThirdParty\tinyxml\tinystr.cpp" />
     <ClCompile Include="..\..\Engine\ThirdParty\tinyxml\tinyxml.cpp" />
     <ClCompile Include="..\..\Engine\ThirdParty\tinyxml\tinyxmlerror.cpp" />
