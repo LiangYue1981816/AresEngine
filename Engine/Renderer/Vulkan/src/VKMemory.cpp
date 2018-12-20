@@ -93,6 +93,10 @@ bool CVKMemory::BindBuffer(VkBuffer vkBuffer) const
 
 bool CVKMemory::BeginMap(VkDeviceSize offset, VkDeviceSize size, void **ppAddress) const
 {
+	if (IsHostVisible() == false) {
+		return false;
+	}
+
 	if (m_size < offset + size) {
 		return false;
 	}
@@ -103,6 +107,10 @@ bool CVKMemory::BeginMap(VkDeviceSize offset, VkDeviceSize size, void **ppAddres
 
 bool CVKMemory::EndMap(void) const
 {
+	if (IsHostVisible() == false) {
+		return false;
+	}
+
 	vkUnmapMemory(m_pDevice->GetDevice(), m_vkMemory);
 	return true;
 }
