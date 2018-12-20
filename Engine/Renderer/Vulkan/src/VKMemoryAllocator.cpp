@@ -48,12 +48,69 @@ CVKMemoryAllocator::~CVKMemoryAllocator(void)
 
 CVKMemory* CVKMemoryAllocator::AllocMemory(VkDeviceSize size)
 {
+	//  Device Memory
+		//
+		//             Memory Handle 
+		//             |                Size                 |
+		//  --------------------------------------------------------------
+		// |           |               |      |              |            |
+		// |    ...    |  RequestSize  |      |    Memory    |     ...    |
+		// |___________|_______________|______|______________|____________|
+		//             |                      |              |
+		//             Offset                 |              Next Memory Handle
+	//                 |                      |
+		//             |   Align RequestSize  |
+		//                                    New Memory Handle
+
+	size = ALIGN_BYTE(size, m_alignment);
+
+	if (m_freeSize >= size) {
+		if (CVKMemory *pMemory = SearchMemory(size)) {
+			RemoveMemory(pMemory);
+
+			if (pMemory->m_size >= size + m_alignment) {
+				CVKMemory *pMemoryNext = new CVKMemory(this, m_pDevice, m_vkMemory, m_pDevice->GetPhysicalDeviceMemoryProperties().memoryTypes[m_indexType].propertyFlags, m_alignment, pMemory->m_offset + size, pMemory->m_size - size);
+				{
+					pMemoryNext->pNext = pMemory->pNext;
+					pMemoryNext->pPrev = pMemory;
+					pMemory->pNext = pMemoryNext;
+
+					if (pMemoryNext->pNext) {
+						pMemoryNext->pNext->pPrev = pMemoryNext;
+					}
+
+					InsertMemory(pMemoryNext);
+				}
+
+				pMemory->m_size = size;
+			}
+
+			pMemory->bInUse = true;
+			m_freeSize -= pMemory->m_size;
+
+			return pMemory;
+		}
+	}
+
 	return nullptr;
 }
 
 void CVKMemoryAllocator::FreeMemory(CVKMemory *pMemory)
 {
+	pMemory->bInUse = false;
+	m_freeSize += pMemory->m_size;
 
+	if (pMemory->pNext && pMemory->pNext->bInUse == false) {
+		RemoveMemory(pMemory->pNext);
+		pMemory = MergeMemory(pMemory, pMemory->pNext);
+	}
+
+	if (pMemory->pPrev && pMemory->pPrev->bInUse == false) {
+		RemoveMemory(pMemory->pPrev);
+		pMemory = MergeMemory(pMemory->pPrev, pMemory);
+	}
+
+	InsertMemory(pMemory);
 }
 
 void CVKMemoryAllocator::InitNodes(uint32_t numNodes)
@@ -174,4 +231,29 @@ CVKMemory* CVKMemoryAllocator::SearchMemory(VkDeviceSize size) const
 	}
 
 	return pMemoryNode ? pMemoryNode->pListHead : nullptr;
+}
+
+uint32_t CVKMemoryAllocator::GetMemoryAlignment(void) const
+{
+	return (uint32_t)m_alignment;
+}
+
+uint32_t CVKMemoryAllocator::GetMemoryTypeIndex(void) const
+{
+	return m_indexType;
+}
+
+VkMemoryPropertyFlags CVKMemoryAllocator::GetMemoryPropertyFlags(void) const
+{
+	return m_pDevice->GetPhysicalDeviceMemoryProperties().memoryTypes[m_indexType].propertyFlags;
+}
+
+VkDeviceSize CVKMemoryAllocator::GetFreeSize(void) const
+{
+	return m_freeSize;
+}
+
+VkDeviceSize CVKMemoryAllocator::GetFullSize(void) const
+{
+	return m_fullSize;
 }

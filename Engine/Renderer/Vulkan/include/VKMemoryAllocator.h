@@ -32,6 +32,15 @@ private:
 	CVKMemory* MergeMemory(CVKMemory *pMemory, CVKMemory *pMemoryNext);
 	CVKMemory* SearchMemory(VkDeviceSize size) const;
 
+private:
+	uint32_t GetMemoryAlignment(void) const;
+	uint32_t GetMemoryTypeIndex(void) const;
+	VkMemoryPropertyFlags GetMemoryPropertyFlags(void) const;
+
+private:
+	VkDeviceSize GetFreeSize(void) const;
+	VkDeviceSize GetFullSize(void) const;
+
 
 private:
 	uint32_t m_indexType;
