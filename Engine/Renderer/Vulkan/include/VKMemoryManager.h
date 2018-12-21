@@ -16,6 +16,9 @@ private:
 	CVKMemory* AllocMemory(VkDeviceSize memorySize, VkDeviceSize memoryAlignment, VkFlags memoryTypeBits, VkMemoryPropertyFlags memoryPropertyFlags);
 	void FreeMemory(CVKMemory *pMemory);
 
+private:
+	void Log(void) const;
+
 
 private:
 	std::atomic_flag m_lock;

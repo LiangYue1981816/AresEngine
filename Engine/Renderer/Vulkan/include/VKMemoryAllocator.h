@@ -33,6 +33,13 @@ private:
 	CVKMemory* SearchMemory(VkDeviceSize size) const;
 
 private:
+	bool IsDeviceLocal(void) const;
+	bool IsHostVisible(void) const;
+	bool IsHostCoherent(void) const;
+	bool IsHostCached(void) const;
+	bool IsLazilyAllocated(void) const;
+
+private:
 	uint32_t GetMemoryAlignment(void) const;
 	uint32_t GetMemoryTypeIndex(void) const;
 	VkMemoryPropertyFlags GetMemoryPropertyFlags(void) const;

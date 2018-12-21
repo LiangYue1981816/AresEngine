@@ -28,7 +28,7 @@ CVKMemoryAllocator::CVKMemoryAllocator(CVKDevice *pDevice, uint32_t memoryTypeIn
 	CALL_VK_FUNCTION_RETURN(vkAllocateMemory(m_pDevice->GetDevice(), &allocateInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkMemory));
 
 	m_nodes = new mem_node[(uint32_t)(m_fullSize / m_alignment)];
-	m_pListHead = new CVKMemory(this, m_pDevice, m_vkMemory, m_pDevice->GetPhysicalDeviceMemoryProperties().memoryTypes[m_indexType].propertyFlags, m_alignment, 0, m_fullSize);
+	m_pListHead = new CVKMemory(this, m_pDevice, m_vkMemory, GetMemoryPropertyFlags(), m_alignment, 0, m_fullSize);
 }
 
 CVKMemoryAllocator::~CVKMemoryAllocator(void)
@@ -69,7 +69,7 @@ CVKMemory* CVKMemoryAllocator::AllocMemory(VkDeviceSize size)
 			RemoveMemory(pMemory);
 
 			if (pMemory->m_size >= size + m_alignment) {
-				CVKMemory *pMemoryNext = new CVKMemory(this, m_pDevice, m_vkMemory, m_pDevice->GetPhysicalDeviceMemoryProperties().memoryTypes[m_indexType].propertyFlags, m_alignment, pMemory->m_offset + size, pMemory->m_size - size);
+				CVKMemory *pMemoryNext = new CVKMemory(this, m_pDevice, m_vkMemory, GetMemoryPropertyFlags(), m_alignment, pMemory->m_offset + size, pMemory->m_size - size);
 				{
 					pMemoryNext->pNext = pMemory->pNext;
 					pMemoryNext->pPrev = pMemory;
@@ -231,6 +231,31 @@ CVKMemory* CVKMemoryAllocator::SearchMemory(VkDeviceSize size) const
 	}
 
 	return pMemoryNode ? pMemoryNode->pListHead : nullptr;
+}
+
+bool CVKMemoryAllocator::IsDeviceLocal(void) const
+{
+	return GetMemoryPropertyFlags() & VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT ? true : false;
+}
+
+bool CVKMemoryAllocator::IsHostVisible(void) const
+{
+	return GetMemoryPropertyFlags() & VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT ? true : false;
+}
+
+bool CVKMemoryAllocator::IsHostCoherent(void) const
+{
+	return GetMemoryPropertyFlags() & VK_MEMORY_PROPERTY_HOST_COHERENT_BIT ? true : false;
+}
+
+bool CVKMemoryAllocator::IsHostCached(void) const
+{
+	return GetMemoryPropertyFlags() & VK_MEMORY_PROPERTY_HOST_CACHED_BIT ? true : false;
+}
+
+bool CVKMemoryAllocator::IsLazilyAllocated(void) const
+{
+	return GetMemoryPropertyFlags() & VK_MEMORY_PROPERTY_LAZILY_ALLOCATED_BIT ? true : false;
 }
 
 uint32_t CVKMemoryAllocator::GetMemoryAlignment(void) const

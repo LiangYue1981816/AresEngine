@@ -88,3 +88,8 @@ void CVKMemoryManager::FreeMemory(CVKMemory *pMemory)
 		}
 	}
 }
+
+void CVKMemoryManager::Log(void) const
+{
+
+}
