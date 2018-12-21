@@ -11,17 +11,14 @@ CVKDevice::CVKDevice(CVKInstance *pInstance)
 	, m_pComputeQueue(nullptr)
 	, m_pGraphicsQueue(nullptr)
 	, m_pTransferQueue(nullptr)
+	, m_pMemoryManager(nullptr)
 {
-	uint32_t queueFamilyIndex;
-	VkPhysicalDevice vkPhysicalDevice;
-	eastl::vector<VkPhysicalDevice> devices;
-	CALL_BOOL_FUNCTION_RETURN(EnumeratePhysicalDevices(devices));
-	CALL_BOOL_FUNCTION_RETURN(SelectPhysicalDevices(devices, vkPhysicalDevice, queueFamilyIndex));
-	CALL_BOOL_FUNCTION_RETURN(CreateDevice(vkPhysicalDevice, queueFamilyIndex));
+	CreateDevice();
 
-	m_pComputeQueue = new CVKQueue(this, queueFamilyIndex, 0);
-	m_pGraphicsQueue = new CVKQueue(this, queueFamilyIndex, 1);
-	m_pTransferQueue = new CVKQueue(this, queueFamilyIndex, 2);
+	m_pComputeQueue = new CVKQueue(this, m_queueFamilyIndex, 0);
+	m_pGraphicsQueue = new CVKQueue(this, m_queueFamilyIndex, 1);
+	m_pTransferQueue = new CVKQueue(this, m_queueFamilyIndex, 2);
+	m_pMemoryManager = new CVKMemoryManager(this);
 }
 
 CVKDevice::~CVKDevice(void)
@@ -29,6 +26,7 @@ CVKDevice::~CVKDevice(void)
 	delete m_pComputeQueue;
 	delete m_pGraphicsQueue;
 	delete m_pTransferQueue;
+	delete m_pMemoryManager;
 
 	DestroyDevice();
 }
@@ -161,6 +159,19 @@ bool CVKDevice::CreateDevice(VkPhysicalDevice vkPhysicalDevice, uint32_t queueFa
 	return true;
 }
 
+bool CVKDevice::CreateDevice(void)
+{
+	uint32_t queueFamilyIndex;
+	VkPhysicalDevice vkPhysicalDevice;
+	eastl::vector<VkPhysicalDevice> devices;
+
+	CALL_BOOL_FUNCTION_RETURN_BOOL(EnumeratePhysicalDevices(devices));
+	CALL_BOOL_FUNCTION_RETURN_BOOL(SelectPhysicalDevices(devices, vkPhysicalDevice, queueFamilyIndex));
+	CALL_BOOL_FUNCTION_RETURN_BOOL(CreateDevice(vkPhysicalDevice, queueFamilyIndex));
+
+	return true;
+}
+
 void CVKDevice::DestroyDevice(void)
 {
 	if (m_vkDevice) {
@@ -200,6 +211,11 @@ CVKQueue* CVKDevice::GetGraphicsQueue(void) const
 CVKQueue* CVKDevice::GetTransferQueue(void) const
 {
 	return m_pTransferQueue;
+}
+
+CVKMemoryManager* CVKDevice::GetMemoryManager(void) const
+{
+	return m_pMemoryManager;
 }
 
 const VkPhysicalDeviceLimits& CVKDevice::GetPhysicalDeviceLimits(void) const

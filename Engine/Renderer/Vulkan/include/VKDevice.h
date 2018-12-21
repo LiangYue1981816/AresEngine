@@ -21,6 +21,7 @@ private:
 	bool CheckPhysicalDeviceQueueFamilyProperties(VkPhysicalDevice vkPhysicalDevice, uint32_t &queueFamilyIndex) const;
 
 	bool CreateDevice(VkPhysicalDevice vkPhysicalDevice, uint32_t queueFamilyIndex);
+	bool CreateDevice(void);
 	void DestroyDevice(void);
 
 public:
@@ -31,6 +32,7 @@ public:
 	CVKQueue* GetComputeQueue(void) const;
 	CVKQueue* GetGraphicsQueue(void) const;
 	CVKQueue* GetTransferQueue(void) const;
+	CVKMemoryManager* GetMemoryManager(void) const;
 
 public:
 	const VkPhysicalDeviceLimits& GetPhysicalDeviceLimits(void) const;
@@ -51,6 +53,7 @@ private:
 	CVKQueue *m_pComputeQueue;
 	CVKQueue *m_pGraphicsQueue;
 	CVKQueue *m_pTransferQueue;
+	CVKMemoryManager *m_pMemoryManager;
 
 private:
 	CVKInstance *m_pInstance;
