@@ -25,7 +25,7 @@ bool CGLES3Shader::Create(const uint32_t *words, size_t numWords, shader_kind ki
 	{
 		do {
 			spirv_cross::CompilerGLSL::Options options;
-			options.version = 310;
+			options.version = 300;
 			options.es = true;
 			options.vertex.fixup_clipspace = false;
 
@@ -36,8 +36,8 @@ bool CGLES3Shader::Create(const uint32_t *words, size_t numWords, shader_kind ki
 			const char *szSource = strSource.c_str();
 
 #ifdef DEBUG
-//			LogOutput(nullptr, "\n");
-//			LogOutput(LOG_TAG_RENDERER, "\n%s\n", szSource);
+			LogOutput(nullptr, "\n");
+			LogOutput(nullptr, "\n%s\n", szSource);
 #endif
 
 			m_kind = kind;
@@ -54,9 +54,9 @@ bool CGLES3Shader::Create(const uint32_t *words, size_t numWords, shader_kind ki
 
 				glGetShaderInfoLog(m_shader, sizeof(szError), &length, szError);
 
-				LogOutput(LOG_TAG_RENDERER, "%s\n", szSource);
-				LogOutput(LOG_TAG_RENDERER, "Compile Error:\n");
-				LogOutput(LOG_TAG_RENDERER, "%s\n", szError);
+				LogOutput(nullptr, "%s\n", szSource);
+				LogOutput(nullptr, "Compile Error:\n");
+				LogOutput(nullptr, "%s\n", szError);
 
 				break;
 			}

@@ -61,8 +61,8 @@ bool CGLES3PipelineGraphics::Create(const CGfxShader *pVertexShader, const CGfxS
 
 				glGetProgramInfoLog(m_program, sizeof(szError), &length, szError);
 
-				LogOutput(LOG_TAG_RENDERER, "Program Link Error:\n");
-				LogOutput(LOG_TAG_RENDERER, "%s\n", szError);
+				LogOutput(nullptr, "Program Link Error:\n");
+				LogOutput(nullptr, "%s\n", szError);
 
 				break;
 			}
