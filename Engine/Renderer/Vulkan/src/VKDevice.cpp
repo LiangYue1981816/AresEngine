@@ -13,7 +13,7 @@ CVKDevice::CVKDevice(CVKInstance *pInstance)
 	, m_pTransferQueue(nullptr)
 	, m_pMemoryManager(nullptr)
 {
-	CreateDevice();
+	CALL_BOOL_FUNCTION_RETURN(CreateDevice());
 
 	m_pComputeQueue = new CVKQueue(this, m_queueFamilyIndex, 0);
 	m_pGraphicsQueue = new CVKQueue(this, m_queueFamilyIndex, 1);
@@ -133,14 +133,14 @@ bool CVKDevice::CreateDevice(VkPhysicalDevice vkPhysicalDevice, uint32_t queueFa
 	vkGetPhysicalDeviceProperties(m_vkPhysicalDevice, &m_vkPhysicalDeviceProperties);
 	vkGetPhysicalDeviceMemoryProperties(m_vkPhysicalDevice, &m_vkPhysicalDeviceMemoryProperties);
 
-	float queuePpriorities[3] = { 1.0f, 1.0f, 1.0f };
-	VkDeviceQueueCreateInfo queueCreateInfo[1] = {};
-	queueCreateInfo[0].sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
-	queueCreateInfo[0].pNext = nullptr;
-	queueCreateInfo[0].flags = 0;
-	queueCreateInfo[0].queueCount = 3;
-	queueCreateInfo[0].queueFamilyIndex = queueFamilyIndex;
-	queueCreateInfo[0].pQueuePriorities = queuePpriorities;
+	const float queuePpriorities[3] = { 1.0f, 1.0f, 1.0f };
+	VkDeviceQueueCreateInfo queueCreateInfo = {};
+	queueCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
+	queueCreateInfo.pNext = nullptr;
+	queueCreateInfo.flags = 0;
+	queueCreateInfo.queueCount = 3;
+	queueCreateInfo.queueFamilyIndex = queueFamilyIndex;
+	queueCreateInfo.pQueuePriorities = queuePpriorities;
 
 	const char *szSwapchainExtension = VK_KHR_SWAPCHAIN_EXTENSION_NAME;
 	VkDeviceCreateInfo deviceCreateInfo = {};
@@ -148,7 +148,7 @@ bool CVKDevice::CreateDevice(VkPhysicalDevice vkPhysicalDevice, uint32_t queueFa
 	deviceCreateInfo.pNext = nullptr;
 	deviceCreateInfo.flags = 0;
 	deviceCreateInfo.queueCreateInfoCount = 1;
-	deviceCreateInfo.pQueueCreateInfos = queueCreateInfo;
+	deviceCreateInfo.pQueueCreateInfos = &queueCreateInfo;
 	deviceCreateInfo.enabledLayerCount = 0;
 	deviceCreateInfo.ppEnabledLayerNames = nullptr;
 	deviceCreateInfo.enabledExtensionCount = 1;
@@ -193,6 +193,21 @@ VkPhysicalDevice CVKDevice::GetPhysicalDevice(void) const
 	return m_vkPhysicalDevice;
 }
 
+const VkPhysicalDeviceLimits& CVKDevice::GetPhysicalDeviceLimits(void) const
+{
+	return m_vkPhysicalDeviceProperties.limits;
+}
+
+const VkPhysicalDeviceFeatures& CVKDevice::GetPhysicalDeviceFeatures(void) const
+{
+	return m_vkPhysicalDeviceFeatures;
+}
+
+const VkPhysicalDeviceMemoryProperties& CVKDevice::GetPhysicalDeviceMemoryProperties(void) const
+{
+	return m_vkPhysicalDeviceMemoryProperties;
+}
+
 CVKInstance* CVKDevice::GetInstance(void) const
 {
 	return m_pInstance;
@@ -216,19 +231,4 @@ CVKQueue* CVKDevice::GetTransferQueue(void) const
 CVKMemoryManager* CVKDevice::GetMemoryManager(void) const
 {
 	return m_pMemoryManager;
-}
-
-const VkPhysicalDeviceLimits& CVKDevice::GetPhysicalDeviceLimits(void) const
-{
-	return m_vkPhysicalDeviceProperties.limits;
-}
-
-const VkPhysicalDeviceFeatures& CVKDevice::GetPhysicalDeviceFeatures(void) const
-{
-	return m_vkPhysicalDeviceFeatures;
-}
-
-const VkPhysicalDeviceMemoryProperties& CVKDevice::GetPhysicalDeviceMemoryProperties(void) const
-{
-	return m_vkPhysicalDeviceMemoryProperties;
 }

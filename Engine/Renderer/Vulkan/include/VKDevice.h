@@ -28,16 +28,16 @@ public:
 	VkDevice GetDevice(void) const;
 	VkPhysicalDevice GetPhysicalDevice(void) const;
 
+	const VkPhysicalDeviceLimits& GetPhysicalDeviceLimits(void) const;
+	const VkPhysicalDeviceFeatures& GetPhysicalDeviceFeatures(void) const;
+	const VkPhysicalDeviceMemoryProperties& GetPhysicalDeviceMemoryProperties(void) const;
+
+public:
 	CVKInstance* GetInstance(void) const;
 	CVKQueue* GetComputeQueue(void) const;
 	CVKQueue* GetGraphicsQueue(void) const;
 	CVKQueue* GetTransferQueue(void) const;
 	CVKMemoryManager* GetMemoryManager(void) const;
-
-public:
-	const VkPhysicalDeviceLimits& GetPhysicalDeviceLimits(void) const;
-	const VkPhysicalDeviceFeatures& GetPhysicalDeviceFeatures(void) const;
-	const VkPhysicalDeviceMemoryProperties& GetPhysicalDeviceMemoryProperties(void) const;
 
 
 private:
