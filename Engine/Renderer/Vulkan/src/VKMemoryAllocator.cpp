@@ -49,18 +49,18 @@ CVKMemoryAllocator::~CVKMemoryAllocator(void)
 CVKMemory* CVKMemoryAllocator::AllocMemory(VkDeviceSize size)
 {
 	//  Device Memory
-		//
-		//             Memory Handle 
-		//             |                Size                 |
-		//  --------------------------------------------------------------
-		// |           |               |      |              |            |
-		// |    ...    |  RequestSize  |      |    Memory    |     ...    |
-		// |___________|_______________|______|______________|____________|
-		//             |                      |              |
-		//             Offset                 |              Next Memory Handle
-	//                 |                      |
-		//             |   Align RequestSize  |
-		//                                    New Memory Handle
+	//
+	//             Memory Handle 
+	//             |                Size                 |
+	//  --------------------------------------------------------------
+	// |           |               |      |              |            |
+	// |    ...    |  RequestSize  |      |    Memory    |     ...    |
+	// |___________|_______________|______|______________|____________|
+	//             |                      |              |
+	//             Offset                 |              Next Memory Handle
+	//             |                      |
+	//             |   Align RequestSize  |
+	//                                    New Memory Handle
 
 	size = ALIGN_BYTE(size, m_alignment);
 
