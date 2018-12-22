@@ -4,8 +4,10 @@
 CVKBufferBase::CVKBufferBase(CVKDevice *pDevice, VkDeviceSize size, VkBufferUsageFlags usage, VkMemoryPropertyFlags memoryPropertyFlags)
 	: m_pDevice(pDevice)
 	, m_pMemory(nullptr)
+
 	, m_vkBuffer(VK_NULL_HANDLE)
 	, m_usage(0)
+	, m_flags(0)
 {
 	Create(size, usage, memoryPropertyFlags);
 }
@@ -34,6 +36,7 @@ bool CVKBufferBase::Create(VkDeviceSize size, VkBufferUsageFlags usage, VkMemory
 	CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->BindBuffer(m_vkBuffer));
 
 	m_usage = usage;
+	m_flags = memoryPropertyFlags;
 
 	return true;
 }

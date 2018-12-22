@@ -24,8 +24,10 @@ private:
 
 
 private:
-	VkBufferUsageFlags m_usage;
 	VkBuffer m_vkBuffer;
+	VkBufferUsageFlags m_usage;
+	VkMemoryPropertyFlags m_flags;
+
 	CVKMemory *m_pMemory;
 
 private:
