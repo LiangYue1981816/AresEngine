@@ -30,9 +30,8 @@ bool CVKBufferBase::Create(VkDeviceSize size, VkBufferUsageFlags usage, VkMemory
 
 	VkMemoryRequirements requirements;
 	vkGetBufferMemoryRequirements(m_pDevice->GetDevice(), m_vkBuffer, &requirements);
-
 	m_pMemory = m_pDevice->GetMemoryManager()->AllocMemory(size, requirements.alignment, requirements.memoryTypeBits, memoryPropertyFlags);
-	m_pMemory->BindBuffer(m_vkBuffer);
+	CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->BindBuffer(m_vkBuffer));
 
 	m_usage = usage;
 
