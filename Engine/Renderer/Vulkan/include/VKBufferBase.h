@@ -5,7 +5,9 @@
 class CVKBufferBase
 {
 	friend class CVKDevice;
+	friend class CVKIndexBuffer;
 	friend class CVKVertexBuffer;
+	friend class CVKInstanceBuffer;
 
 
 private:

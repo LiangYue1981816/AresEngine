@@ -47,4 +47,6 @@ class CVKMemoryAllocator;
 class CVKMemoryManager;
 
 class CVKBufferBase;
+class CVKIndexBuffer;
 class CVKVertexBuffer;
+class CVKInstanceBuffer;
