@@ -91,5 +91,23 @@ void CVKMemoryManager::FreeMemory(CVKMemory *pMemory)
 
 void CVKMemoryManager::Log(void) const
 {
+	LogOutput(LOG_TAG_RENDERER, "MemoryManager:\n");
 
+	for (const auto &itTypeAllocator : m_pAllocatorListHeads) {
+		for (const auto &itAligmentAllocator : itTypeAllocator.second) {
+			if (const CVKMemoryAllocator *pAllocator = itAligmentAllocator.second) {
+				do {
+					LogOutput(LOG_TAG_RENDERER, "\tAllocator: free=%d full=%d type=%d aligment=%d device_local=%s host_visible=%s host_coherent=%s host_cached=%s\n",
+						pAllocator->GetFreeSize(),
+						pAllocator->GetFullSize(),
+						pAllocator->GetMemoryTypeIndex(),
+						pAllocator->GetMemoryAlignment(),
+						pAllocator->IsDeviceLocal()  ? "true" : "false",
+						pAllocator->IsHostVisible()  ? "true" : "false",
+						pAllocator->IsHostCoherent() ? "true" : "false",
+						pAllocator->IsHostCached()   ? "true" : "false");
+				} while (pAllocator = pAllocator->pNext);
+			}
+		}
+	}
 }
