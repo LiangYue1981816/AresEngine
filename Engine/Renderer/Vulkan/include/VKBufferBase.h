@@ -16,10 +16,15 @@ private:
 
 
 private:
+	bool Create(VkDeviceSize size, VkBufferUsageFlags usage, VkMemoryPropertyFlags memoryPropertyFlags);
+	void Destroy(void);
+
+private:
 	bool BufferData(VkDeviceSize offset, VkDeviceSize size, const void *pBuffer) const;
 
 
 private:
+	VkBufferUsageFlags m_usage;
 	VkBuffer m_vkBuffer;
 	CVKMemory *m_pMemory;
 
