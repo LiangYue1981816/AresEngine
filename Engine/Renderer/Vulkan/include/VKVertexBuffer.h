@@ -2,7 +2,7 @@
 #include "VKRenderer.h"
 
 
-class CVKVertexBuffer : public CVKBuffer, public CGfxVertexBuffer
+class CVKVertexBuffer : public CVKBufferBase, public CGfxVertexBuffer
 {
 	friend class CVKDevice;
 
@@ -15,14 +15,4 @@ private:
 public:
 	bool BufferData(size_t offset, size_t size, const void *pBuffer);
 	void Bind(void *pParam);
-
-
-private:
-	VkBuffer m_vkBuffer;
-
-private:
-	CVKMemory *m_pMemory;
-
-private:
-	CVKDevice *m_pDevice;
 };

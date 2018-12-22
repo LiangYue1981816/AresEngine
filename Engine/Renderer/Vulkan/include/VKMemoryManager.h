@@ -12,11 +12,11 @@ private:
 	virtual ~CVKMemoryManager(void);
 
 
-private:
+public:
 	CVKMemory* AllocMemory(VkDeviceSize memorySize, VkDeviceSize memoryAlignment, VkFlags memoryTypeBits, VkMemoryPropertyFlags memoryPropertyFlags);
 	void FreeMemory(CVKMemory *pMemory);
 
-private:
+public:
 	void Log(void) const;
 
 

@@ -13,7 +13,7 @@
 #include "VKMemoryAllocator.h"
 #include "VKMemoryManager.h"
 
-#include "VKBuffer.h"
+#include "VKBufferBase.h"
 #include "VKVertexBuffer.h"
 
 
