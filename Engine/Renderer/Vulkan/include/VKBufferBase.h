@@ -28,6 +28,7 @@ private:
 	VkBufferUsageFlags m_usage;
 	VkMemoryPropertyFlags m_flags;
 
+private:
 	CVKMemory *m_pMemory;
 
 private:
