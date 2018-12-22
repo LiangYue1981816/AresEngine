@@ -17,7 +17,28 @@ CVKInstanceBuffer::~CVKInstanceBuffer(void)
 
 bool CVKInstanceBuffer::BufferData(size_t offset, size_t size, const void *pBuffer)
 {
-	return CVKBufferBase::BufferData(offset, size, pBuffer);
+	uint32_t hash = HashValue((uint8_t *)pBuffer, size, 2);
+
+	if (m_hash != hash) {
+		m_hash  = hash;
+		m_count = size / GetInstanceStride(m_format);
+
+		if (m_size < size) {
+			CGfxProfiler::DecInstanceBufferSize(m_size);
+			{
+				m_size = INSTANCE_BUFFER_SIZE;
+				while (m_size < size) m_size <<= 1;
+
+				Destroy();
+				Create(m_size, m_usage, m_flags);
+			}
+			CGfxProfiler::IncInstanceBufferSize(m_size);
+		}
+
+		return CVKBufferBase::BufferData(offset, size, pBuffer);
+	}
+
+	return true;
 }
 
 void CVKInstanceBuffer::Bind(void *pParam)
