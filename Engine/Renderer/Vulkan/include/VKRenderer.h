@@ -13,6 +13,9 @@
 #include "VKMemoryAllocator.h"
 #include "VKMemoryManager.h"
 
+#include "VKBuffer.h"
+#include "VKVertexBuffer.h"
+
 
 #define VKRenderer() ((CVKRenderer *)CGfxRenderer::GetInstance())
 

@@ -45,3 +45,6 @@ class CVKQueue;
 class CVKMemory;
 class CVKMemoryAllocator;
 class CVKMemoryManager;
+
+class CVKBuffer;
+class CVKVertexBuffer;
