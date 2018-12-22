@@ -11,12 +11,12 @@ class CVKBufferBase
 
 
 private:
-	CVKBufferBase(CVKDevice *pDevice, VkDeviceSize size, VkBufferUsageFlags usage, VkMemoryPropertyFlags memoryPropertyFlags);
+	CVKBufferBase(CVKDevice *pDevice, VkDeviceSize size, VkBufferUsageFlags bufferUsage, VkMemoryPropertyFlags memoryPropertyFlags);
 	virtual ~CVKBufferBase(void);
 
 
 private:
-	bool Create(VkDeviceSize size, VkBufferUsageFlags usage, VkMemoryPropertyFlags memoryPropertyFlags);
+	bool Create(VkDeviceSize size, VkBufferUsageFlags bufferUsage, VkMemoryPropertyFlags memoryPropertyFlags);
 	void Destroy(void);
 
 private:

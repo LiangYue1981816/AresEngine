@@ -1,7 +1,7 @@
 #include "VKRenderer.h"
 
 
-CVKBufferBase::CVKBufferBase(CVKDevice *pDevice, VkDeviceSize size, VkBufferUsageFlags usage, VkMemoryPropertyFlags memoryPropertyFlags)
+CVKBufferBase::CVKBufferBase(CVKDevice *pDevice, VkDeviceSize size, VkBufferUsageFlags bufferUsage, VkMemoryPropertyFlags memoryPropertyFlags)
 	: m_pDevice(pDevice)
 	, m_pMemory(nullptr)
 
@@ -9,7 +9,7 @@ CVKBufferBase::CVKBufferBase(CVKDevice *pDevice, VkDeviceSize size, VkBufferUsag
 	, m_usage(0)
 	, m_flags(0)
 {
-	Create(size, usage, memoryPropertyFlags);
+	Create(size, bufferUsage, memoryPropertyFlags);
 }
 
 CVKBufferBase::~CVKBufferBase(void)
@@ -17,14 +17,14 @@ CVKBufferBase::~CVKBufferBase(void)
 	Destroy();
 }
 
-bool CVKBufferBase::Create(VkDeviceSize size, VkBufferUsageFlags usage, VkMemoryPropertyFlags memoryPropertyFlags)
+bool CVKBufferBase::Create(VkDeviceSize size, VkBufferUsageFlags bufferUsage, VkMemoryPropertyFlags memoryPropertyFlags)
 {
 	VkBufferCreateInfo createInfo = {};
 	createInfo.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
 	createInfo.pNext = nullptr;
 	createInfo.flags = 0;
 	createInfo.size = size;
-	createInfo.usage = usage;
+	createInfo.usage = bufferUsage;
 	createInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
 	createInfo.queueFamilyIndexCount = 0;
 	createInfo.pQueueFamilyIndices = nullptr;
@@ -35,7 +35,7 @@ bool CVKBufferBase::Create(VkDeviceSize size, VkBufferUsageFlags usage, VkMemory
 	m_pMemory = m_pDevice->GetMemoryManager()->AllocMemory(size, requirements.alignment, requirements.memoryTypeBits, memoryPropertyFlags);
 	CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->BindBuffer(m_vkBuffer));
 
-	m_usage = usage;
+	m_usage = bufferUsage;
 	m_flags = memoryPropertyFlags;
 
 	return true;
