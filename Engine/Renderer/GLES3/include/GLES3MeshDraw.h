@@ -35,8 +35,8 @@ public:
 private:
 	CGfxMeshPtr m_ptrMesh;
 	CGfxMesh::Draw *m_pMeshDraw;
-	CGLES3IndirectBuffer *m_pIndirectBuffer;
 	CGLES3InstanceBuffer *m_pInstanceBuffer;
+	CGLES3IndirectBuffer *m_pIndirectBuffer;
 	CGLES3VertexArrayObject *m_pVertexArrayObject;
 
 private:

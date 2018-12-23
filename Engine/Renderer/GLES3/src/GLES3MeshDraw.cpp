@@ -6,8 +6,8 @@ CGLES3MeshDraw::CGLES3MeshDraw(CGLES3MeshDrawManager *pManager, uint32_t name, c
 	, m_pManager(pManager)
 
 	, m_pMeshDraw(nullptr)
-	, m_pIndirectBuffer(nullptr)
 	, m_pInstanceBuffer(nullptr)
+	, m_pIndirectBuffer(nullptr)
 	, m_pVertexArrayObject(nullptr)
 {
 	if (ptrMesh.IsValid() && ptrMesh->GetDraw(indexDraw) != nullptr) {
