@@ -39,6 +39,19 @@ public:
 	CVKQueue* GetTransferQueue(void) const;
 	CVKMemoryManager* GetMemoryManager(void) const;
 
+public:
+	CVKUniformBuffer* CreateUniformBuffer(size_t size, bool bDynamic) const;
+	CVKIndexBuffer* CreateIndexBuffer(GfxIndexType type, size_t size, bool bDynamic) const;
+	CVKVertexBuffer* CreateVertexBuffer(uint32_t vertexFormat, uint32_t vertexBinding, size_t size, bool bDynamic) const;
+	CVKInstanceBuffer* CreateInstanceBuffer(uint32_t instanceFormat, uint32_t instanceBinding) const;
+	CVKDrawIndirectBuffer* CreateDrawIndirectBuffer(uint32_t count) const;
+
+	void DestroyUniformBuffer(CVKUniformBuffer *pUniformBuffer) const;
+	void DestroyIndexBuffer(CVKIndexBuffer *pIndexBuffer) const;
+	void DestroyVertexBuffer(CVKVertexBuffer *pVertexBuffer) const;
+	void DestroyInstanceBuffer(CVKInstanceBuffer *pInstanceBuffer) const;
+	void DestroyDrawIndirectBuffer(CVKDrawIndirectBuffer *pDrawIndirectBuffer) const;
+
 
 private:
 	VkDevice m_vkDevice;
