@@ -2,7 +2,7 @@
 #include "VKRenderer.h"
 
 
-class CVKUniformBuffer : public CVKBufferBase, public CGfxUniformBuffer
+class CVKUniformBuffer : public CGfxUniformBuffer
 {
 	friend class CVKDevice;
 

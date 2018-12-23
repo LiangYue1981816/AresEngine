@@ -2,7 +2,7 @@
 #include "VKRenderer.h"
 
 
-class CVKInstanceBuffer : public CVKBufferBase, public CGfxInstanceBuffer
+class CVKInstanceBuffer : public CGfxInstanceBuffer
 {
 	friend class CVKDevice;
 

@@ -2,7 +2,7 @@
 #include "VKRenderer.h"
 
 
-class CVKIndirectBuffer : public CVKBufferBase, public CGfxIndirectBuffer
+class CVKIndirectBuffer : public CGfxIndirectBuffer
 {
 	friend class CVKDevice;
 
