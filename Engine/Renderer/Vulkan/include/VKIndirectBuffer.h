@@ -21,4 +21,11 @@ public:
 
 private:
 	eastl::vector<DrawCommand> m_draws;
+
+	
+private:
+	VkMemoryPropertyFlags m_memoryPropertyFlags;
+
+private:
+	CVKDevice *m_pDevice;
 };

@@ -3,6 +3,8 @@
 
 CVKIndirectBuffer::CVKIndirectBuffer(CVKDevice *pDevice, uint32_t count)
 	: CGfxIndirectBuffer(count)
+	, m_pDevice(pDevice)
+	, m_memoryPropertyFlags(VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT | VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT)
 {
 	m_draws.resize(m_count);
 }

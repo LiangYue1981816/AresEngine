@@ -19,4 +19,11 @@ public:
 
 private:
 	uint32_t m_hash;
+
+
+private:
+	VkMemoryPropertyFlags m_memoryPropertyFlags;
+
+private:
+	CVKDevice *m_pDevice;
 };
