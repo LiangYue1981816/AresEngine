@@ -6,25 +6,29 @@ CGLES3MeshDraw::CGLES3MeshDraw(CGLES3MeshDrawManager *pManager, uint32_t name, c
 	, m_pManager(pManager)
 
 	, m_pMeshDraw(nullptr)
+	, m_pIndirectBuffer(nullptr)
 	, m_pInstanceBuffer(nullptr)
 	, m_pVertexArrayObject(nullptr)
-	, m_pDrawIndirectBuffer(nullptr)
 {
 	if (ptrMesh.IsValid() && ptrMesh->GetDraw(indexDraw) != nullptr) {
 		m_ptrMesh = ptrMesh;
 		m_pMeshDraw = ptrMesh->GetDraw(indexDraw);
 
+		m_pIndirectBuffer = new CGLES3IndirectBuffer(1);
+		m_pIndirectBuffer->BufferData(0, m_pMeshDraw->baseVertex, m_pMeshDraw->firstIndex, m_pMeshDraw->indexCount, 0);
+
 		m_pInstanceBuffer = new CGLES3InstanceBuffer(instanceFormat, instanceBinding);
 		m_pVertexArrayObject = new CGLES3VertexArrayObject;
 		m_pVertexArrayObject->Buffer((CGLES3IndexBuffer*)ptrMesh->GetIndexBuffer(), (CGLES3VertexBuffer *)ptrMesh->GetVertexBuffer(), m_pInstanceBuffer);
-
-		m_pDrawIndirectBuffer = new CGLES3DrawIndirectBuffer(1);
-		m_pDrawIndirectBuffer->BufferData(0, m_pMeshDraw->baseVertex, m_pMeshDraw->firstIndex, m_pMeshDraw->indexCount, 0);
 	}
 }
 
 CGLES3MeshDraw::~CGLES3MeshDraw(void)
 {
+	if (m_pIndirectBuffer) {
+		delete m_pIndirectBuffer;
+	}
+
 	if (m_pInstanceBuffer) {
 		delete m_pInstanceBuffer;
 	}
@@ -33,13 +37,9 @@ CGLES3MeshDraw::~CGLES3MeshDraw(void)
 		delete m_pVertexArrayObject;
 	}
 
-	if (m_pDrawIndirectBuffer) {
-		delete m_pDrawIndirectBuffer;
-	}
-
+	m_pIndirectBuffer = nullptr;
 	m_pInstanceBuffer = nullptr;
 	m_pVertexArrayObject = nullptr;
-	m_pDrawIndirectBuffer = nullptr;
 }
 
 void CGLES3MeshDraw::Release(void)
@@ -52,8 +52,8 @@ bool CGLES3MeshDraw::InstanceBufferData(size_t size, const void *pBuffer)
 	if (m_pInstanceBuffer) {
 		m_pInstanceBuffer->BufferData(size, pBuffer);
 
-		if (m_pDrawIndirectBuffer) {
-			m_pDrawIndirectBuffer->BufferData(0, size / GetInstanceStride(m_pInstanceBuffer->GetInstanceFormat()));
+		if (m_pIndirectBuffer) {
+			m_pIndirectBuffer->BufferData(0, size / GetInstanceStride(m_pInstanceBuffer->GetInstanceFormat()));
 		}
 
 		return true;
@@ -144,7 +144,7 @@ void CGLES3MeshDraw::Bind(void *pParam)
 		m_pVertexArrayObject->Bind(nullptr);
 	}
 
-	if (m_pDrawIndirectBuffer) {
-		m_pDrawIndirectBuffer->Bind(nullptr);
+	if (m_pIndirectBuffer) {
+		m_pIndirectBuffer->Bind(nullptr);
 	}
 }

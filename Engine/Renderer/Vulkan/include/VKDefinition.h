@@ -51,4 +51,4 @@ class CVKUniformBuffer;
 class CVKIndexBuffer;
 class CVKVertexBuffer;
 class CVKInstanceBuffer;
-class CVKDrawIndirectBuffer;
+class CVKIndirectBuffer;

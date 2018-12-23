@@ -17,7 +17,7 @@ class CGLES3MeshDrawManager;
 class CGLES3IndexBuffer;
 class CGLES3VertexBuffer;
 class CGLES3InstanceBuffer;
-class CGLES3DrawIndirectBuffer;
+class CGLES3IndirectBuffer;
 class CGLES3VertexArrayObject;
 
 class CGLES3Sampler;

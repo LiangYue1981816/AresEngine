@@ -22,7 +22,7 @@
 #include "GfxIndexBuffer.h"
 #include "GfxVertexBuffer.h"
 #include "GfxInstanceBuffer.h"
-#include "GfxDrawIndirectBuffer.h"
+#include "GfxIndirectBuffer.h"
 
 #include "GfxSampler.h"
 #include "GfxTextureBase.h"

@@ -11,16 +11,16 @@ typedef struct DrawCommand {
 } DrawCommand;
 
 
-class CALL_API CGfxDrawIndirectBuffer
+class CALL_API CGfxIndirectBuffer
 {
 public:
-	CGfxDrawIndirectBuffer(uint32_t count)
+	CGfxIndirectBuffer(uint32_t count)
 		: m_size(count * sizeof(DrawCommand))
 		, m_count(count)
 	{
 		CGfxProfiler::IncDrawIndirectBufferSize(m_size);
 	}
-	virtual ~CGfxDrawIndirectBuffer(void)
+	virtual ~CGfxIndirectBuffer(void)
 	{
 		CGfxProfiler::DecDrawIndirectBufferSize(m_size);
 	}

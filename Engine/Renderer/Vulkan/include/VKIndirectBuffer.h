@@ -1,16 +1,15 @@
 #pragma once
-#include "GLES3Renderer.h"
+#include "VKRenderer.h"
 
 
-class CGLES3DrawIndirectBuffer : public CGfxDrawIndirectBuffer
+class CVKIndirectBuffer : public CVKBufferBase, public CGfxIndirectBuffer
 {
-	friend class CGLES3Mesh;
-	friend class CGLES3MeshDraw;
+	friend class CVKDevice;
 
 
 private:
-	CGLES3DrawIndirectBuffer(uint32_t count);
-	virtual ~CGLES3DrawIndirectBuffer(void);
+	CVKIndirectBuffer(CVKDevice *pDevice, uint32_t count);
+	virtual ~CVKIndirectBuffer(void);
 
 
 public:
@@ -21,6 +20,5 @@ public:
 
 
 private:
-	uint32_t m_buffer;
 	eastl::vector<DrawCommand> m_draws;
 };

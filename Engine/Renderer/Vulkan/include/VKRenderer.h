@@ -18,7 +18,7 @@
 #include "VKIndexBuffer.h"
 #include "VKVertexBuffer.h"
 #include "VKInstanceBuffer.h"
-#include "VKDrawIndirectBuffer.h"
+#include "VKIndirectBuffer.h"
 
 
 #define VKRenderer() ((CVKRenderer *)CGfxRenderer::GetInstance())

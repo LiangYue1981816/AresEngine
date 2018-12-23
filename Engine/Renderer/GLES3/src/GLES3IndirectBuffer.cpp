@@ -1,8 +1,8 @@
 #include "GLES3Renderer.h"
 
 
-CGLES3DrawIndirectBuffer::CGLES3DrawIndirectBuffer(uint32_t count)
-	: CGfxDrawIndirectBuffer(count)
+CGLES3IndirectBuffer::CGLES3IndirectBuffer(uint32_t count)
+	: CGfxIndirectBuffer(count)
 
 	, m_buffer(0)
 {
@@ -16,19 +16,19 @@ CGLES3DrawIndirectBuffer::CGLES3DrawIndirectBuffer(uint32_t count)
 #endif
 }
 
-CGLES3DrawIndirectBuffer::~CGLES3DrawIndirectBuffer(void)
+CGLES3IndirectBuffer::~CGLES3IndirectBuffer(void)
 {
 #if GLES_VER == 310
 	glDeleteBuffers(1, &m_buffer);
 #endif
 }
 
-bool CGLES3DrawIndirectBuffer::BufferData(size_t offset, size_t size, const void *pBuffer)
+bool CGLES3IndirectBuffer::BufferData(size_t offset, size_t size, const void *pBuffer)
 {
 	return false;
 }
 
-bool CGLES3DrawIndirectBuffer::BufferData(int indexDraw, int instanceCount)
+bool CGLES3IndirectBuffer::BufferData(int indexDraw, int instanceCount)
 {
 #if GLES_VER == 310
 	if (indexDraw < 0 || (uint32_t)indexDraw >= m_count) {
@@ -48,7 +48,7 @@ bool CGLES3DrawIndirectBuffer::BufferData(int indexDraw, int instanceCount)
 #endif
 }
 
-bool CGLES3DrawIndirectBuffer::BufferData(int indexDraw, int baseVertex, int firstIndex, int indexCount, int instanceCount)
+bool CGLES3IndirectBuffer::BufferData(int indexDraw, int baseVertex, int firstIndex, int indexCount, int instanceCount)
 {
 #if GLES_VER == 310
 	if (indexDraw < 0 || (uint32_t)indexDraw >= m_count) {
@@ -74,7 +74,7 @@ bool CGLES3DrawIndirectBuffer::BufferData(int indexDraw, int baseVertex, int fir
 #endif
 }
 
-void CGLES3DrawIndirectBuffer::Bind(void *pParam)
+void CGLES3IndirectBuffer::Bind(void *pParam)
 {
 #if GLES_VER == 310
 	GLBindBuffer(GL_DRAW_INDIRECT_BUFFER, m_buffer);
