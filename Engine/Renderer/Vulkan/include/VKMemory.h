@@ -9,23 +9,12 @@ class CVKMemory
 
 
 private:
-	CVKMemory(CVKMemoryAllocator *pAllocator, CVKDevice *pDevice, VkDeviceMemory vkMemory, VkFlags flags, VkDeviceSize alignment, VkDeviceSize offset, VkDeviceSize size);
+	CVKMemory(CVKMemoryAllocator *pAllocator, CVKDevice *pDevice, VkDeviceMemory vkMemory, VkFlags flags, VkDeviceSize offset, VkDeviceSize size);
 	virtual ~CVKMemory(void);
 
 
 private:
 	CVKMemoryAllocator* GetAllocator(void) const;
-
-public:
-	bool IsDeviceLocal(void) const;
-	bool IsHostVisible(void) const;
-	bool IsHostCoherent(void) const;
-	bool IsHostCached(void) const;
-	bool IsLazilyAllocated(void) const;
-
-public:
-	VkDeviceSize GetSize(void) const;
-	VkDeviceSize GetAlignment(void) const;
 
 public:
 	bool BindImage(VkImage vkImage) const;
@@ -37,10 +26,20 @@ public:
 	bool Flush(VkDeviceSize offset, VkDeviceSize size) const;
 	bool Invalidate(VkDeviceSize offset, VkDeviceSize size) const;
 
+public:
+	bool IsDeviceLocal(void) const;
+	bool IsHostVisible(void) const;
+	bool IsHostCoherent(void) const;
+	bool IsHostCached(void) const;
+	bool IsLazilyAllocated(void) const;
+
+public:
+	VkDeviceSize GetOffset(void) const;
+	VkDeviceSize GetSize(void) const;
+
 
 private:
 	VkFlags m_flags;
-	VkDeviceSize m_alignment;
 	VkDeviceSize m_offset;
 	VkDeviceSize m_size;
 

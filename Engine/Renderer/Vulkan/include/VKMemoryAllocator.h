@@ -17,12 +17,12 @@ private:
 
 
 private:
-	CVKMemoryAllocator(CVKDevice *pDevice, uint32_t memoryTypeIndex, VkDeviceSize memoryAlignment, VkDeviceSize memorySize);
+	CVKMemoryAllocator(CVKDevice *pDevice, uint32_t memoryTypeIndex, VkDeviceSize memorySize);
 	virtual ~CVKMemoryAllocator(void);
 
 
 private:
-	CVKMemory* AllocMemory(VkDeviceSize size);
+	CVKMemory* AllocMemory(VkDeviceSize alignment, VkDeviceSize size);
 	void FreeMemory(CVKMemory *pMemory);
 
 private:
@@ -40,18 +40,13 @@ private:
 	bool IsLazilyAllocated(void) const;
 
 private:
-	uint32_t GetMemoryAlignment(void) const;
 	uint32_t GetMemoryTypeIndex(void) const;
-	VkMemoryPropertyFlags GetMemoryPropertyFlags(void) const;
-
-private:
 	VkDeviceSize GetFreeSize(void) const;
 	VkDeviceSize GetFullSize(void) const;
 
 
 private:
 	uint32_t m_indexType;
-	VkDeviceSize m_alignment;
 	VkDeviceSize m_freeSize;
 	VkDeviceSize m_fullSize;
 

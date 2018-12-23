@@ -1,15 +1,15 @@
 #include "VKRenderer.h"
 
 
-#define NODE_INDEX(size) (((size) / m_alignment) - 1)
+#define MIN_ALIGNMENT 64
+#define NODE_INDEX(size) (((size) / MIN_ALIGNMENT) - 1)
 
-CVKMemoryAllocator::CVKMemoryAllocator(CVKDevice *pDevice, uint32_t memoryTypeIndex, VkDeviceSize memoryAlignment, VkDeviceSize memorySize)
+CVKMemoryAllocator::CVKMemoryAllocator(CVKDevice *pDevice, uint32_t memoryTypeIndex, VkDeviceSize memorySize)
 	: m_pDevice(pDevice)
 
 	, m_indexType(memoryTypeIndex)
-	, m_alignment(memoryAlignment)
-	, m_freeSize(ALIGN_BYTE(memorySize, memoryAlignment))
-	, m_fullSize(ALIGN_BYTE(memorySize, memoryAlignment))
+	, m_freeSize(ALIGN_BYTE(memorySize, MIN_ALIGNMENT))
+	, m_fullSize(ALIGN_BYTE(memorySize, MIN_ALIGNMENT))
 
 	, m_root{nullptr}
 	, m_nodes(nullptr)
@@ -27,8 +27,10 @@ CVKMemoryAllocator::CVKMemoryAllocator(CVKDevice *pDevice, uint32_t memoryTypeIn
 	allocateInfo.memoryTypeIndex = m_indexType;
 	CALL_VK_FUNCTION_RETURN(vkAllocateMemory(m_pDevice->GetDevice(), &allocateInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkMemory));
 
-	m_nodes = new mem_node[(uint32_t)(m_fullSize / m_alignment)];
-	m_pListHead = new CVKMemory(this, m_pDevice, m_vkMemory, GetMemoryPropertyFlags(), m_alignment, 0, m_fullSize);
+	m_pListHead = new CVKMemory(this, m_pDevice, m_vkMemory, m_pDevice->GetPhysicalDeviceMemoryProperties().memoryTypes[m_indexType].propertyFlags, 0, m_fullSize);
+
+	InitNodes((uint32_t)(m_fullSize / MIN_ALIGNMENT));
+	InsertMemory(m_pListHead);
 }
 
 CVKMemoryAllocator::~CVKMemoryAllocator(void)
@@ -46,7 +48,7 @@ CVKMemoryAllocator::~CVKMemoryAllocator(void)
 	}
 }
 
-CVKMemory* CVKMemoryAllocator::AllocMemory(VkDeviceSize size)
+CVKMemory* CVKMemoryAllocator::AllocMemory(VkDeviceSize alignment, VkDeviceSize size)
 {
 	//  Device Memory
 	//
@@ -62,14 +64,14 @@ CVKMemory* CVKMemoryAllocator::AllocMemory(VkDeviceSize size)
 	//             |   Align RequestSize  |
 	//                                    New Memory Handle
 
-	size = ALIGN_BYTE(size, m_alignment);
+	size = ALIGN_BYTE(size, MIN_ALIGNMENT);
 
 	if (m_freeSize >= size) {
 		if (CVKMemory *pMemory = SearchMemory(size)) {
 			RemoveMemory(pMemory);
 
-			if (pMemory->m_size >= size + m_alignment) {
-				CVKMemory *pMemoryNext = new CVKMemory(this, m_pDevice, m_vkMemory, GetMemoryPropertyFlags(), m_alignment, pMemory->m_offset + size, pMemory->m_size - size);
+			if (pMemory->m_size >= size + MIN_ALIGNMENT) {
+				CVKMemory *pMemoryNext = new CVKMemory(this, m_pDevice, m_vkMemory, m_pDevice->GetPhysicalDeviceMemoryProperties().memoryTypes[m_indexType].propertyFlags, pMemory->m_offset + size, pMemory->m_size - size);
 				{
 					pMemoryNext->pNext = pMemory->pNext;
 					pMemoryNext->pPrev = pMemory;
@@ -116,9 +118,10 @@ void CVKMemoryAllocator::FreeMemory(CVKMemory *pMemory)
 void CVKMemoryAllocator::InitNodes(uint32_t numNodes)
 {
 	m_root = RB_ROOT;
+	m_nodes = new mem_node[numNodes];
 
 	for (uint32_t indexNode = 0; indexNode < numNodes; indexNode++) {
-		m_nodes[indexNode].size = (indexNode + 1) * m_alignment;
+		m_nodes[indexNode].size = (indexNode + 1) * MIN_ALIGNMENT;
 		m_nodes[indexNode].pListHead = nullptr;
 	}
 }
@@ -225,7 +228,7 @@ CVKMemory* CVKMemoryAllocator::SearchMemory(VkDeviceSize size) const
 
 		ASSERT(pMemoryNode->pListHead);
 		ASSERT(pMemoryNode->pListHead->bInUse == false);
-		ASSERT(pMemoryNode->pListHead->m_size / m_alignment * m_alignment >= size);
+		ASSERT(pMemoryNode->pListHead->m_size / MIN_ALIGNMENT * MIN_ALIGNMENT >= size);
 
 		break;
 	}
@@ -235,42 +238,32 @@ CVKMemory* CVKMemoryAllocator::SearchMemory(VkDeviceSize size) const
 
 bool CVKMemoryAllocator::IsDeviceLocal(void) const
 {
-	return GetMemoryPropertyFlags() & VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT ? true : false;
+	return m_pDevice->GetPhysicalDeviceMemoryProperties().memoryTypes[m_indexType].propertyFlags & VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT ? true : false;
 }
 
 bool CVKMemoryAllocator::IsHostVisible(void) const
 {
-	return GetMemoryPropertyFlags() & VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT ? true : false;
+	return m_pDevice->GetPhysicalDeviceMemoryProperties().memoryTypes[m_indexType].propertyFlags & VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT ? true : false;
 }
 
 bool CVKMemoryAllocator::IsHostCoherent(void) const
 {
-	return GetMemoryPropertyFlags() & VK_MEMORY_PROPERTY_HOST_COHERENT_BIT ? true : false;
+	return m_pDevice->GetPhysicalDeviceMemoryProperties().memoryTypes[m_indexType].propertyFlags & VK_MEMORY_PROPERTY_HOST_COHERENT_BIT ? true : false;
 }
 
 bool CVKMemoryAllocator::IsHostCached(void) const
 {
-	return GetMemoryPropertyFlags() & VK_MEMORY_PROPERTY_HOST_CACHED_BIT ? true : false;
+	return m_pDevice->GetPhysicalDeviceMemoryProperties().memoryTypes[m_indexType].propertyFlags & VK_MEMORY_PROPERTY_HOST_CACHED_BIT ? true : false;
 }
 
 bool CVKMemoryAllocator::IsLazilyAllocated(void) const
 {
-	return GetMemoryPropertyFlags() & VK_MEMORY_PROPERTY_LAZILY_ALLOCATED_BIT ? true : false;
-}
-
-uint32_t CVKMemoryAllocator::GetMemoryAlignment(void) const
-{
-	return (uint32_t)m_alignment;
+	return m_pDevice->GetPhysicalDeviceMemoryProperties().memoryTypes[m_indexType].propertyFlags & VK_MEMORY_PROPERTY_LAZILY_ALLOCATED_BIT ? true : false;
 }
 
 uint32_t CVKMemoryAllocator::GetMemoryTypeIndex(void) const
 {
 	return m_indexType;
-}
-
-VkMemoryPropertyFlags CVKMemoryAllocator::GetMemoryPropertyFlags(void) const
-{
-	return m_pDevice->GetPhysicalDeviceMemoryProperties().memoryTypes[m_indexType].propertyFlags;
 }
 
 VkDeviceSize CVKMemoryAllocator::GetFreeSize(void) const
