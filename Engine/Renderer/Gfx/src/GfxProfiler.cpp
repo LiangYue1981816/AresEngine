@@ -8,7 +8,7 @@ size_t CGfxProfiler::uniformBufferSize = 0;
 size_t CGfxProfiler::vertexBufferSize = 0;
 size_t CGfxProfiler::indexBufferSize = 0;
 size_t CGfxProfiler::instanceBufferSize = 0;
-size_t CGfxProfiler::drawIndirectBufferSize = 0;
+size_t CGfxProfiler::indirectBufferSize = 0;
 
 CGfxProfiler::Sample CGfxProfiler::samples[SampleType::SAMPLE_TYPE_COUNT];
 
@@ -67,14 +67,14 @@ void CGfxProfiler::DecInstanceBufferSize(size_t size)
 	instanceBufferSize -= size;
 }
 
-void CGfxProfiler::IncDrawIndirectBufferSize(size_t size)
+void CGfxProfiler::IncIndirectBufferSize(size_t size)
 {
-	drawIndirectBufferSize += size;
+	indirectBufferSize += size;
 }
 
-void CGfxProfiler::DecDrawIndirectBufferSize(size_t size)
+void CGfxProfiler::DecIndirectBufferSize(size_t size)
 {
-	drawIndirectBufferSize -= size;
+	indirectBufferSize -= size;
 }
 
 void CGfxProfiler::ResetSamples(void)
@@ -109,7 +109,7 @@ void CGfxProfiler::LogGfxMemory(void)
 	LogOutput(LOG_TAG_RENDERER, "\tVertexBuffer = %dKB\n", vertexBufferSize / 1024);
 	LogOutput(LOG_TAG_RENDERER, "\tIndexBuffer = %dKB\n", indexBufferSize / 1024);
 	LogOutput(LOG_TAG_RENDERER, "\tInstanceBuffer = %dKB\n", instanceBufferSize / 1024);
-	LogOutput(LOG_TAG_RENDERER, "\tDrawIndirectBuffer = %dKB\n", drawIndirectBufferSize / 1024);
+	LogOutput(LOG_TAG_RENDERER, "\tIndirectBuffer = %dKB\n", indirectBufferSize / 1024);
 	LogOutput(LOG_TAG_RENDERER, "\tTotal memory = %dKB\n", (textureDataSize + uniformBufferSize + vertexBufferSize + indexBufferSize + instanceBufferSize) / 1024);
 }
 

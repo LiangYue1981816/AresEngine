@@ -18,11 +18,11 @@ public:
 		: m_size(count * sizeof(DrawCommand))
 		, m_count(count)
 	{
-		CGfxProfiler::IncDrawIndirectBufferSize(m_size);
+		CGfxProfiler::IncIndirectBufferSize(m_size);
 	}
 	virtual ~CGfxIndirectBuffer(void)
 	{
-		CGfxProfiler::DecDrawIndirectBufferSize(m_size);
+		CGfxProfiler::DecIndirectBufferSize(m_size);
 	}
 
 

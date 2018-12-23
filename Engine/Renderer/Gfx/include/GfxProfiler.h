@@ -89,8 +89,8 @@ public:
 	static void IncInstanceBufferSize(size_t size);
 	static void DecInstanceBufferSize(size_t size);
 
-	static void IncDrawIndirectBufferSize(size_t size);
-	static void DecDrawIndirectBufferSize(size_t size);
+	static void IncIndirectBufferSize(size_t size);
+	static void DecIndirectBufferSize(size_t size);
 
 	static void ResetSamples(void);
 	static void BeginSample(SampleType type, const char *name);
@@ -107,7 +107,7 @@ private:
 	static size_t vertexBufferSize;
 	static size_t indexBufferSize;
 	static size_t instanceBufferSize;
-	static size_t drawIndirectBufferSize;
+	static size_t indirectBufferSize;
 
 	static Sample samples[SampleType::SAMPLE_TYPE_COUNT];
 };
