@@ -41,16 +41,36 @@ CVKMemory* CVKMemoryManager::AllocMemory(VkDeviceSize memorySize, VkDeviceSize m
 				} while ((pAllocator = pAllocator->pNext) != nullptr);
 			}
 
-			VkDeviceSize ALLOCATOR_MEMORY_SIZE = 4 * 1024 * 1024;
-			VkDeviceSize allocatorMemorySize = std::max(ALLOCATOR_MEMORY_SIZE, memorySize);
-			CVKMemoryAllocator *pAllocator = new CVKMemoryAllocator(m_pDevice, memoryTypeIndex, memoryAlignment, allocatorMemorySize);
+			VkDeviceSize allocatorMemorySize = 0;
+			{
+				const VkDeviceSize ALLOCATOR_DEVICE_LOCAL_MEMORY_SIZE = 256 * 1024 * 1024;
+				const VkDeviceSize ALLOCATOR_HOST_VISIBLE_MEMORY_SIZE = 256 * 1024 * 1024;
+				const VkDeviceSize ALLOCATOR_HOST_VISIBLE_AND_DEVICE_LOCAL_MEMORY_SIZE = 64 * 1024 * 1024;
 
-			if (m_pAllocatorListHeads[memoryTypeIndex][memoryAlignment]) {
-				m_pAllocatorListHeads[memoryTypeIndex][memoryAlignment]->pPrev = pAllocator;
-				pAllocator->pNext = m_pAllocatorListHeads[memoryTypeIndex][memoryAlignment];
+				if ((memoryPropertyFlags & VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT) == 0 && (memoryPropertyFlags & VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT) != 0) {
+					allocatorMemorySize = ALLOCATOR_DEVICE_LOCAL_MEMORY_SIZE;
+				}
+
+				if ((memoryPropertyFlags & VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT) != 0 && (memoryPropertyFlags & VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT) == 0) {
+					allocatorMemorySize = ALLOCATOR_HOST_VISIBLE_MEMORY_SIZE;
+				}
+
+				if ((memoryPropertyFlags & VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT) != 0 && (memoryPropertyFlags & VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT) != 0) {
+					allocatorMemorySize = ALLOCATOR_HOST_VISIBLE_AND_DEVICE_LOCAL_MEMORY_SIZE;
+				}
+
+				allocatorMemorySize = std::max(allocatorMemorySize, memorySize);
 			}
 
-			m_pAllocatorListHeads[memoryTypeIndex][memoryAlignment] = pAllocator;
+			CVKMemoryAllocator *pAllocator = new CVKMemoryAllocator(m_pDevice, memoryTypeIndex, memoryAlignment, allocatorMemorySize);
+			{
+				if (m_pAllocatorListHeads[memoryTypeIndex][memoryAlignment]) {
+					m_pAllocatorListHeads[memoryTypeIndex][memoryAlignment]->pPrev = pAllocator;
+					pAllocator->pNext = m_pAllocatorListHeads[memoryTypeIndex][memoryAlignment];
+				}
+
+				m_pAllocatorListHeads[memoryTypeIndex][memoryAlignment] = pAllocator;
+			}
 		} while (true);
 	}
 
