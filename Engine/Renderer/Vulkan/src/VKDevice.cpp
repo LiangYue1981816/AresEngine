@@ -16,8 +16,8 @@ CVKDevice::CVKDevice(CVKInstance *pInstance)
 	CALL_BOOL_FUNCTION_RETURN(CreateDevice());
 
 	m_pComputeQueue = new CVKQueue(this, m_queueFamilyIndex, 0);
-	m_pGraphicsQueue = new CVKQueue(this, m_queueFamilyIndex, 1);
-	m_pTransferQueue = new CVKQueue(this, m_queueFamilyIndex, 2);
+	m_pGraphicsQueue = new CVKQueue(this, m_queueFamilyIndex, 0);
+	m_pTransferQueue = new CVKQueue(this, m_queueFamilyIndex, 0);
 	m_pMemoryManager = new CVKMemoryManager(this);
 }
 
@@ -133,13 +133,13 @@ bool CVKDevice::CreateDevice(VkPhysicalDevice vkPhysicalDevice, uint32_t queueFa
 	vkGetPhysicalDeviceProperties(m_vkPhysicalDevice, &m_vkPhysicalDeviceProperties);
 	vkGetPhysicalDeviceMemoryProperties(m_vkPhysicalDevice, &m_vkPhysicalDeviceMemoryProperties);
 
-	const float queuePpriorities[3] = { 1.0f, 1.0f, 1.0f };
+	const float queuePpriorities[1] = { 1.0f };
 	VkDeviceQueueCreateInfo queueCreateInfo = {};
 	queueCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
 	queueCreateInfo.pNext = nullptr;
 	queueCreateInfo.flags = 0;
-	queueCreateInfo.queueCount = 3;
 	queueCreateInfo.queueFamilyIndex = queueFamilyIndex;
+	queueCreateInfo.queueCount = 1;
 	queueCreateInfo.pQueuePriorities = queuePpriorities;
 
 	const char *szSwapchainExtension = VK_KHR_SWAPCHAIN_EXTENSION_NAME;
