@@ -1,7 +1,7 @@
 #include "VKRenderer.h"
 
 
-#define MIN_ALIGNMENT 64
+#define MIN_ALIGNMENT 16
 #define NODE_INDEX(size) (((size) / MIN_ALIGNMENT) - 1)
 
 CVKMemoryAllocator::CVKMemoryAllocator(CVKDevice *pDevice, uint32_t memoryTypeIndex, VkDeviceSize memorySize)
