@@ -27,6 +27,7 @@ private:
 
 private:
 	void InitNodes(uint32_t numNodes);
+	void FreeNodes(uint32_t numNodes);
 	void InsertMemory(CVKMemory *pMemory);
 	void RemoveMemory(CVKMemory *pMemory);
 	CVKMemory* MergeMemory(CVKMemory *pMemory, CVKMemory *pMemoryNext);
@@ -51,12 +52,11 @@ private:
 	VkDeviceSize m_fullSize;
 
 private:
-	rb_root m_root;
-	mem_node *m_nodes;
-	CVKMemory *m_pListHead;
+	VkDeviceMemory m_vkMemory;
 
 private:
-	VkDeviceMemory m_vkMemory;
+	rb_root m_root;
+	mem_node *m_nodes;
 
 private:
 	CVKDevice *m_pDevice;

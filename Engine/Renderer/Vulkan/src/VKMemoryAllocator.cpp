@@ -11,11 +11,10 @@ CVKMemoryAllocator::CVKMemoryAllocator(CVKDevice *pDevice, uint32_t memoryTypeIn
 	, m_freeSize(ALIGN_BYTE(memorySize, MIN_ALIGNMENT))
 	, m_fullSize(ALIGN_BYTE(memorySize, MIN_ALIGNMENT))
 
-	, m_root{nullptr}
-	, m_nodes(nullptr)
-	, m_pListHead(nullptr)
-
 	, m_vkMemory(VK_NULL_HANDLE)
+
+	, m_root{ nullptr }
+	, m_nodes(nullptr)
 
 	, pNext(nullptr)
 	, pPrev(nullptr)
@@ -27,21 +26,13 @@ CVKMemoryAllocator::CVKMemoryAllocator(CVKDevice *pDevice, uint32_t memoryTypeIn
 	allocateInfo.memoryTypeIndex = m_indexType;
 	CALL_VK_FUNCTION_RETURN(vkAllocateMemory(m_pDevice->GetDevice(), &allocateInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkMemory));
 
-	m_pListHead = new CVKMemory(this, m_pDevice, m_vkMemory, m_pDevice->GetPhysicalDeviceMemoryProperties().memoryTypes[m_indexType].propertyFlags, 0, m_fullSize);
-
 	InitNodes((uint32_t)(m_fullSize / MIN_ALIGNMENT));
-	InsertMemory(m_pListHead);
+	InsertMemory(new CVKMemory(this, m_pDevice, m_vkMemory, m_pDevice->GetPhysicalDeviceMemoryProperties().memoryTypes[m_indexType].propertyFlags, 0, 0, m_fullSize));
 }
 
 CVKMemoryAllocator::~CVKMemoryAllocator(void)
 {
-	if (m_nodes) {
-		delete[] m_nodes;
-	}
-
-	if (m_pListHead) {
-		delete m_pListHead;
-	}
+	FreeNodes((uint32_t)(m_fullSize / MIN_ALIGNMENT));
 
 	if (m_vkMemory) {
 		vkFreeMemory(m_pDevice->GetDevice(), m_vkMemory, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
@@ -52,17 +43,19 @@ CVKMemory* CVKMemoryAllocator::AllocMemory(VkDeviceSize alignment, VkDeviceSize 
 {
 	//  Device Memory
 	//
+	//
 	//             Memory Handle 
-	//             |                Size                 |
-	//  --------------------------------------------------------------
-	// |           |               |      |              |            |
-	// |    ...    |  RequestSize  |      |    Memory    |     ...    |
-	// |___________|_______________|______|______________|____________|
-	//             |                      |              |
-	//             Offset                 |              Next Memory Handle
-	//             |                      |
-	//             |   Align RequestSize  |
-	//                                    New Memory Handle
+	//             |                 Memory Size              |
+	//  -------------------------------------------------------------------
+	// |           |       |                |                 |            |
+	// |    ...    |       |   RequestSize  | New Memory Size |     ...    |
+	// |___________|_______|________________|_________________|____________|
+	//             |       |                |                 |
+	//             Offset  |                |                 Next Memory Handle
+	//                     |                |
+	//                     Alignment Offset |
+	//                                      |
+	//                                      New Memory Handle
 
 	size = ALIGN_BYTE(size, MIN_ALIGNMENT);
 
@@ -71,7 +64,7 @@ CVKMemory* CVKMemoryAllocator::AllocMemory(VkDeviceSize alignment, VkDeviceSize 
 			RemoveMemory(pMemory);
 
 			if (pMemory->m_size >= size + MIN_ALIGNMENT) {
-				CVKMemory *pMemoryNext = new CVKMemory(this, m_pDevice, m_vkMemory, m_pDevice->GetPhysicalDeviceMemoryProperties().memoryTypes[m_indexType].propertyFlags, pMemory->m_offset + size, pMemory->m_size - size);
+				CVKMemory *pMemoryNext = new CVKMemory(this, m_pDevice, m_vkMemory, m_pDevice->GetPhysicalDeviceMemoryProperties().memoryTypes[m_indexType].propertyFlags, pMemory->m_offset + size, 0, pMemory->m_size - size);
 				{
 					pMemoryNext->pNext = pMemory->pNext;
 					pMemoryNext->pPrev = pMemory;
@@ -123,6 +116,23 @@ void CVKMemoryAllocator::InitNodes(uint32_t numNodes)
 	for (uint32_t indexNode = 0; indexNode < numNodes; indexNode++) {
 		m_nodes[indexNode].size = (indexNode + 1) * MIN_ALIGNMENT;
 		m_nodes[indexNode].pListHead = nullptr;
+	}
+}
+
+void CVKMemoryAllocator::FreeNodes(uint32_t numNodes)
+{
+	if (m_nodes) {
+		for (uint32_t indexNode = 0; indexNode < numNodes; indexNode++) {
+			if (CVKMemory *pMemory = m_nodes[indexNode].pListHead) {
+				CVKMemory *pMemoryNext = nullptr;
+				do {
+					pMemoryNext = pMemory->pFreeNext;
+					delete pMemory;
+				} while  ((pMemory = pMemoryNext) != nullptr);
+			}
+		}
+
+		delete m_nodes;
 	}
 }
 
@@ -182,7 +192,7 @@ void CVKMemoryAllocator::RemoveMemory(CVKMemory *pMemory)
 	}
 
 	if (pMemoryNode->pListHead == pMemory) {
-		pMemoryNode->pListHead = pMemory->pFreeNext;
+		pMemoryNode->pListHead =  pMemory->pFreeNext;
 	}
 
 	if (pMemoryNode->pListHead == nullptr) {
@@ -202,7 +212,6 @@ CVKMemory* CVKMemoryAllocator::MergeMemory(CVKMemory *pMemory, CVKMemory *pMemor
 	}
 
 	delete pMemoryNext;
-
 	return pMemory;
 }
 

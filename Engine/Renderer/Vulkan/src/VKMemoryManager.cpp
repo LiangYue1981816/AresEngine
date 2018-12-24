@@ -89,10 +89,10 @@ void CVKMemoryManager::FreeMemory(CVKMemory *pMemory)
 		pAllocator->FreeMemory(pMemory);
 
 		if (pAllocator->GetFreeSize() == pAllocator->GetFullSize()) {
-			uint32_t memoryTypeIndex   = pAllocator->GetMemoryTypeIndex();
+			uint32_t memoryTypeIndex  =  pAllocator->GetMemoryTypeIndex();
 
 			if (m_pAllocatorListHeads[memoryTypeIndex] == pAllocator) {
-				m_pAllocatorListHeads[memoryTypeIndex]  = pAllocator->pNext;
+				m_pAllocatorListHeads[memoryTypeIndex] =  pAllocator->pNext;
 			}
 
 			if (pAllocator->pPrev) {
