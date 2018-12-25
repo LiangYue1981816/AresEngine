@@ -1,6 +1,14 @@
 #pragma once
 
 
+#define CALL_BOOL_FUNCTION_BREAK(func)       \
+{                                            \
+	bool err = func;                         \
+	if (err != true) {                       \
+		break;                               \
+	}                                        \
+}
+
 #define CALL_BOOL_FUNCTION_RETURN(func)      \
 {                                            \
 	bool err = func;                         \
@@ -14,6 +22,15 @@
 	bool err = func;                         \
 	if (err != true) {                       \
 		return false;                        \
+	}                                        \
+}
+
+#define CALL_VK_FUNCTION_BREAK(func)         \
+{                                            \
+	VkResult err = func;                     \
+	if (err != VK_SUCCESS) {                 \
+		CVKInstance::SetLastError(err);      \
+		break;                               \
 	}                                        \
 }
 
