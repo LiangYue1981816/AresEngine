@@ -23,6 +23,7 @@ public:
 	void WaitIdle(void) const;
 
 public:
+	VkQueue GetQueue(void) const;
 	uint32_t GetQueueFamilyIndex(void) const;
 
 

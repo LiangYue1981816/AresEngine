@@ -82,6 +82,11 @@ void CVKQueue::WaitIdle(void) const
 	vkQueueWaitIdle(m_vkQueue);
 }
 
+VkQueue CVKQueue::GetQueue(void) const
+{
+	return m_vkQueue;
+}
+
 uint32_t CVKQueue::GetQueueFamilyIndex(void) const
 {
 	return m_queueFamilyIndex;
