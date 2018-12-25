@@ -310,6 +310,8 @@
     <ClInclude Include="..\..\Engine\Renderer\GLES3\src\GLES3CommandEndRenderPass.h" />
     <ClInclude Include="..\..\Engine\Renderer\GLES3\src\GLES3CommandExecute.h" />
     <ClInclude Include="..\..\Engine\Renderer\GLES3\src\GLES3CommandInvalidateFramebuffer.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\GLES3CommandPopDebugGroup.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\GLES3CommandPushDebugGroup.h" />
     <ClInclude Include="..\..\Engine\Renderer\GLES3\src\GLES3CommandResolve.h" />
     <ClInclude Include="..\..\Engine\Renderer\GLES3\src\GLES3CommandSetInstanceBufferData.h" />
     <ClInclude Include="..\..\Engine\Renderer\GLES3\src\GLES3CommandSetScissor.h" />
