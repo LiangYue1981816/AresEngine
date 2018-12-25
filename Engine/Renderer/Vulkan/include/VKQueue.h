@@ -13,11 +13,23 @@ private:
 
 
 public:
+	bool ResetCommandBufferPool(uint32_t pool);
+	bool AllocCommandBuffer(uint32_t pool, VkCommandBufferLevel level, VkCommandBuffer *pvkCommandBuffer);
+	void FreeCommandBuffer(uint32_t pool, VkCommandBuffer vkCommandBuffer);
+
+public:
 	bool Submit(const CGfxCommandBufferPtr &ptrCommandBuffer) const;
 	bool Submit(const CGfxCommandBufferPtr &ptrCommandBuffer, VkSemaphore vkWaitSemaphore, VkPipelineStageFlags waitStageFlags, VkSemaphore vkSignalSemaphore) const;
 	void WaitIdle(void) const;
 
+public:
+	uint32_t GetQueueFamilyIndex(void) const;
+
 
 private:
 	VkQueue m_vkQueue;
+	uint32_t m_queueFamilyIndex;
+
+private:
+	eastl::unordered_map<uint32_t, VkCommandPool> m_vkCommandPools;
 };
