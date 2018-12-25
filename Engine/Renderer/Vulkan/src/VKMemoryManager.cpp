@@ -22,7 +22,15 @@ CVKMemoryManager::CVKMemoryManager(CVKDevice *pDevice)
 
 CVKMemoryManager::~CVKMemoryManager(void)
 {
-
+	for (const auto &itAllocatorListHead : m_pAllocatorListHeads) {
+		if (CVKMemoryAllocator *pAllocator = itAllocatorListHead.second) {
+			CVKMemoryAllocator *pAllocatorNext = nullptr;
+			do {
+				pAllocatorNext = pAllocator->pNext;
+				delete pAllocator;
+			} while ((pAllocator = pAllocatorNext) != nullptr);
+		}
+	}
 }
 
 CVKMemory* CVKMemoryManager::AllocMemory(VkDeviceSize memorySize, VkDeviceSize memoryAlignment, VkFlags memoryTypeBits, VkMemoryPropertyFlags memoryPropertyFlags)
@@ -43,9 +51,15 @@ CVKMemory* CVKMemoryManager::AllocMemory(VkDeviceSize memorySize, VkDeviceSize m
 
 			VkDeviceSize allocatorMemorySize = 0;
 			{
+#ifdef PLATFORM_WINDOWS
 				const VkDeviceSize ALLOCATOR_DEVICE_LOCAL_MEMORY_SIZE = 256 * 1024 * 1024;
 				const VkDeviceSize ALLOCATOR_HOST_VISIBLE_MEMORY_SIZE = 256 * 1024 * 1024;
 				const VkDeviceSize ALLOCATOR_HOST_VISIBLE_AND_DEVICE_LOCAL_MEMORY_SIZE = 64 * 1024 * 1024;
+#else
+				const VkDeviceSize ALLOCATOR_DEVICE_LOCAL_MEMORY_SIZE = 16 * 1024 * 1024;
+				const VkDeviceSize ALLOCATOR_HOST_VISIBLE_MEMORY_SIZE =  8 * 1024 * 1024;
+				const VkDeviceSize ALLOCATOR_HOST_VISIBLE_AND_DEVICE_LOCAL_MEMORY_SIZE = 8 * 1024 * 1024;
+#endif
 
 				if ((memoryPropertyFlags & VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT) == 0 && (memoryPropertyFlags & VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT) != 0) {
 					allocatorMemorySize = ALLOCATOR_DEVICE_LOCAL_MEMORY_SIZE;

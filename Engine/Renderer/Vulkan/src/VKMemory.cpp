@@ -90,6 +90,10 @@ bool CVKMemory::Flush(VkDeviceSize offset, VkDeviceSize size) const
 		return true;
 	}
 
+	if (m_size < offset + size) {
+		return false;
+	}
+
 	VkMappedMemoryRange memoryRange = {};
 	memoryRange.sType = VK_STRUCTURE_TYPE_MAPPED_MEMORY_RANGE;
 	memoryRange.pNext = nullptr;
@@ -108,6 +112,10 @@ bool CVKMemory::Invalidate(VkDeviceSize offset, VkDeviceSize size) const
 
 	if (IsHostCoherent()) {
 		return true;
+	}
+
+	if (m_size < offset + size) {
+		return false;
 	}
 
 	VkMappedMemoryRange memoryRange = {};

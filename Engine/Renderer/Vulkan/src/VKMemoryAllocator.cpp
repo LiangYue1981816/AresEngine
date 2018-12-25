@@ -10,7 +10,6 @@ CVKMemoryAllocator::CVKMemoryAllocator(CVKDevice *pDevice, uint32_t memoryTypeIn
 	, m_indexType(memoryTypeIndex)
 	, m_freeSize(ALIGN_BYTE(memorySize, MIN_ALIGNMENT))
 	, m_fullSize(ALIGN_BYTE(memorySize, MIN_ALIGNMENT))
-
 	, m_vkMemory(VK_NULL_HANDLE)
 
 	, m_root{ nullptr }
@@ -219,8 +218,8 @@ CVKMemory* CVKMemoryAllocator::MergeMemory(CVKMemory *pMemory, CVKMemory *pMemor
 
 	ASSERT(pMemory->m_offset + pMemory->m_size == pMemoryNext->m_offset);
 
-	pMemory->m_size = pMemory->m_size + pMemoryNext->m_size;
-	pMemory->pNext = pMemoryNext->pNext;
+	pMemory->m_size = pMemoryNext->m_size + pMemory->m_size;
+	pMemory->pNext =  pMemoryNext->pNext;
 
 	if (pMemoryNext->pNext) {
 		pMemoryNext->pNext->pPrev = pMemory;

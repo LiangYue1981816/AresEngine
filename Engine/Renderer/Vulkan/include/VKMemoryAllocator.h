@@ -50,8 +50,6 @@ private:
 	uint32_t m_indexType;
 	VkDeviceSize m_freeSize;
 	VkDeviceSize m_fullSize;
-
-private:
 	VkDeviceMemory m_vkMemory;
 
 private:
