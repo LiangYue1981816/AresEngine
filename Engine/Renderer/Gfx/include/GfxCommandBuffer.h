@@ -88,6 +88,9 @@ public:
 
 	virtual bool CmdPresent(void) = 0;
 
+	virtual bool CmdPushDebugGroup(const char *szMessage) = 0;
+	virtual bool CmdPopDebugGroup(void) = 0;
+
 
 protected:
 	bool m_bMainCommandBuffer;

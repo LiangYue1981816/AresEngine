@@ -45,26 +45,26 @@ CVKMemory* CVKMemoryAllocator::AllocMemory(VkDeviceSize alignment, VkDeviceSize 
 	//
 	//
 	//             Memory Handle 
-	//             |                 Memory Size              |
-	//  -------------------------------------------------------------------
-	// |           |       |                |                 |            |
-	// |    ...    |       |   RequestSize  | New Memory Size |     ...    |
-	// |___________|_______|________________|_________________|____________|
-	//             |       |                |                 |
-	//             Offset  |                |                 Next Memory Handle
-	//                     |                |
-	//                     Alignment Offset |
-	//                                      |
-	//                                      New Memory Handle
+	//             |                    Memory Size                 |
+	//  -------------------------------------------------------------------------
+	// |           |       |                  |                     |            |
+	// |    ...    |       |   Request Size   |   New Memory Size   |     ...    |
+	// |___________|_______|__________________|_____________________|____________|
+	//             |       |                  |                     |
+	//             Offset  |                  |                     Next Memory Handle
+	//             |       |                  |
+	//             |       Alignment Offset   |
+	//             |                          |
+	//             |       Alignment Size     New Memory Handle
 
-	size = ALIGN_BYTE(size, MIN_ALIGNMENT);
+	VkDeviceSize alignmentSize = ALIGN_BYTE(alignment + size, MIN_ALIGNMENT);
 
-	if (m_freeSize >= size) {
-		if (CVKMemory *pMemory = SearchMemory(size)) {
+	if (m_freeSize >= alignmentSize) {
+		if (CVKMemory *pMemory = SearchMemory(alignmentSize)) {
 			RemoveMemory(pMemory);
 
-			if (pMemory->m_size >= size + MIN_ALIGNMENT) {
-				CVKMemory *pMemoryNext = new CVKMemory(this, m_pDevice, m_vkMemory, m_pDevice->GetPhysicalDeviceMemoryProperties().memoryTypes[m_indexType].propertyFlags, pMemory->m_offset + size, 0, pMemory->m_size - size);
+			if (pMemory->m_size >= alignmentSize + MIN_ALIGNMENT) {
+				CVKMemory *pMemoryNext = new CVKMemory(this, m_pDevice, m_vkMemory, m_pDevice->GetPhysicalDeviceMemoryProperties().memoryTypes[m_indexType].propertyFlags, pMemory->m_offset + alignmentSize, 0, pMemory->m_size - alignmentSize);
 				{
 					pMemoryNext->pNext = pMemory->pNext;
 					pMemoryNext->pPrev = pMemory;
@@ -77,10 +77,13 @@ CVKMemory* CVKMemoryAllocator::AllocMemory(VkDeviceSize alignment, VkDeviceSize 
 					InsertMemory(pMemoryNext);
 				}
 
-				pMemory->m_size = size;
+				pMemory->m_size = alignmentSize;
 			}
 
 			pMemory->bInUse = true;
+			pMemory->m_aligmentOffset = ALIGN_BYTE(pMemory->m_offset, alignment) - pMemory->m_offset;
+			pMemory->m_size -= pMemory->m_aligmentOffset;
+
 			m_freeSize -= pMemory->m_size;
 
 			return pMemory;
@@ -93,6 +96,9 @@ CVKMemory* CVKMemoryAllocator::AllocMemory(VkDeviceSize alignment, VkDeviceSize 
 void CVKMemoryAllocator::FreeMemory(CVKMemory *pMemory)
 {
 	pMemory->bInUse = false;
+	pMemory->m_size += pMemory->m_aligmentOffset;
+	pMemory->m_aligmentOffset = 0;
+
 	m_freeSize += pMemory->m_size;
 
 	if (pMemory->pNext && pMemory->pNext->bInUse == false) {
@@ -139,6 +145,7 @@ void CVKMemoryAllocator::FreeNodes(uint32_t numNodes)
 void CVKMemoryAllocator::InsertMemory(CVKMemory *pMemory)
 {
 	ASSERT(pMemory->bInUse == false);
+	ASSERT(pMemory->m_aligmentOffset = 0);
 
 	mem_node *pMemoryNode = &m_nodes[NODE_INDEX(pMemory->m_size)];
 	rb_node **node = &m_root.rb_node;
@@ -181,6 +188,8 @@ void CVKMemoryAllocator::InsertMemory(CVKMemory *pMemory)
 void CVKMemoryAllocator::RemoveMemory(CVKMemory *pMemory)
 {
 	ASSERT(pMemory->bInUse == false);
+	ASSERT(pMemory->m_aligmentOffset = 0);
+
 	mem_node *pMemoryNode = &m_nodes[NODE_INDEX(pMemory->m_size)];
 
 	if (pMemory->pFreeNext) {
@@ -202,6 +211,12 @@ void CVKMemoryAllocator::RemoveMemory(CVKMemory *pMemory)
 
 CVKMemory* CVKMemoryAllocator::MergeMemory(CVKMemory *pMemory, CVKMemory *pMemoryNext)
 {
+	ASSERT(pMemory->bInUse == false);
+	ASSERT(pMemory->m_aligmentOffset = 0);
+
+	ASSERT(pMemoryNext->bInUse == false);
+	ASSERT(pMemoryNext->m_aligmentOffset = 0);
+
 	ASSERT(pMemory->m_offset + pMemory->m_size == pMemoryNext->m_offset);
 
 	pMemory->m_size = pMemory->m_size + pMemoryNext->m_size;
@@ -237,6 +252,7 @@ CVKMemory* CVKMemoryAllocator::SearchMemory(VkDeviceSize size) const
 
 		ASSERT(pMemoryNode->pListHead);
 		ASSERT(pMemoryNode->pListHead->bInUse == false);
+		ASSERT(pMemoryNode->pListHead->m_aligmentOffset == 0);
 		ASSERT(pMemoryNode->pListHead->m_size / MIN_ALIGNMENT * MIN_ALIGNMENT >= size);
 
 		break;

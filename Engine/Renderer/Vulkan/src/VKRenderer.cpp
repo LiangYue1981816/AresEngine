@@ -336,6 +336,16 @@ bool CVKRenderer::CmdPresent(CGfxCommandBufferPtr &ptrCommandBuffer)
 	return false;
 }
 
+bool CVKRenderer::CmdPushDebugGroup(CGfxCommandBufferPtr &ptrCommandBuffer, const char *szMessage)
+{
+	return false;
+}
+
+bool CVKRenderer::CmdPopDebugGroup(CGfxCommandBufferPtr &ptrCommandBuffer)
+{
+	return false;
+}
+
 void CVKRenderer::Submit(const CGfxCommandBufferPtr &ptrCommandBuffer)
 {
 

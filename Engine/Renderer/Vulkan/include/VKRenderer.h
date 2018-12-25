@@ -117,6 +117,9 @@ public:
 
 	bool CmdPresent(CGfxCommandBufferPtr &ptrCommandBuffer);
 
+	bool CmdPushDebugGroup(CGfxCommandBufferPtr &ptrCommandBuffer, const char *szMessage);
+	bool CmdPopDebugGroup(CGfxCommandBufferPtr &ptrCommandBuffer);
+
 public:
 	void Submit(const CGfxCommandBufferPtr &ptrCommandBuffer);
 	void Present(void);

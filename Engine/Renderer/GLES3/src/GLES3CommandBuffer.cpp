@@ -38,6 +38,8 @@
 #include "GLES3CommandDrawIndirect.h"
 #include "GLES3CommandDrawElements.h"
 #include "GLES3CommandExecute.h"
+#include "GLES3CommandPushDebugGroup.h"
+#include "GLES3CommandPopDebugGroup.h"
 
 
 CGLES3CommandBuffer::CGLES3CommandBuffer(CGLES3CommandBufferManager *pManager, bool bMainCommandBuffer)
@@ -472,4 +474,16 @@ bool CGLES3CommandBuffer::CmdPresent(void)
 	}
 
 	return false;
+}
+
+bool CGLES3CommandBuffer::CmdPushDebugGroup(const char *szMessage)
+{
+	m_pCommands.emplace_back(new CGLES3CommandPushDebugGroup(szMessage));
+	return true;
+}
+
+bool CGLES3CommandBuffer::CmdPopDebugGroup(void)
+{
+	m_pCommands.emplace_back(new CGLES3CommandPopDebugGroup());
+	return true;
 }

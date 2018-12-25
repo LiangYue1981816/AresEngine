@@ -64,6 +64,9 @@ public:
 
 	bool CmdPresent(void);
 
+	bool CmdPushDebugGroup(const char *szMessage);
+	bool CmdPopDebugGroup(void);
+
 
 private:
 	bool m_bInPassScope;

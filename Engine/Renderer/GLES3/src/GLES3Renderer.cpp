@@ -393,6 +393,16 @@ bool CGLES3Renderer::CmdPresent(CGfxCommandBufferPtr &ptrCommandBuffer)
 	return ptrCommandBuffer->CmdPresent();
 }
 
+bool CGLES3Renderer::CmdPushDebugGroup(CGfxCommandBufferPtr &ptrCommandBuffer, const char *szMessage)
+{
+	return ptrCommandBuffer->CmdPushDebugGroup(szMessage);
+}
+
+bool CGLES3Renderer::CmdPopDebugGroup(CGfxCommandBufferPtr &ptrCommandBuffer)
+{
+	return ptrCommandBuffer->CmdPopDebugGroup();
+}
+
 void CGLES3Renderer::Submit(const CGfxCommandBufferPtr &ptrCommandBuffer)
 {
 	ptrCommandBuffer->Execute();
