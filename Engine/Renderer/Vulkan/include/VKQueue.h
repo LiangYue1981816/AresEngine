@@ -31,5 +31,9 @@ private:
 	uint32_t m_queueFamilyIndex;
 
 private:
+	std::atomic_flag m_lock;
 	eastl::unordered_map<uint32_t, VkCommandPool> m_vkCommandPools;
+
+private:
+	CVKDevice *m_pDevice;
 };
