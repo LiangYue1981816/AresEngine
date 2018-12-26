@@ -147,41 +147,44 @@ void CVKMemoryAllocator::InsertMemory(CVKMemory *pMemory)
 	ASSERT(pMemory->m_aligmentOffset = 0);
 
 	mem_node *pMemoryNode = &m_nodes[NODE_INDEX(pMemory->m_size)];
+	ASSERT(pMemoryNode->size == pMemory->m_size);
+
 	rb_node **node = &m_root.rb_node;
 	rb_node *parent = nullptr;
 
-	while (*node) {
-		mem_node *pMemoryNodeCur = container_of(*node, mem_node, node);
+	if (pMemoryNode->pListHead == nullptr) {
+		while (*node) {
+			mem_node *pMemoryNodeCur = container_of(*node, mem_node, node);
 
-		parent = *node;
+			parent = *node;
 
-		if (pMemoryNode->size > pMemoryNodeCur->size) {
-			node = &(*node)->rb_right;
-			continue;
+			if (pMemoryNode->size > pMemoryNodeCur->size) {
+				node = &(*node)->rb_right;
+				continue;
+			}
+
+			if (pMemoryNode->size < pMemoryNodeCur->size) {
+				node = &(*node)->rb_left;
+				continue;
+			}
+
+			ASSERT(false);
 		}
 
-		if (pMemoryNode->size < pMemoryNodeCur->size) {
-			node = &(*node)->rb_left;
-			continue;
-		}
+		pMemory->pFreeNext = nullptr;
+		pMemory->pFreePrev = nullptr;
+		pMemoryNode->pListHead = pMemory;
 
-		ASSERT(pMemoryNode == pMemoryNodeCur);
-
+		rb_init_node(&pMemoryNode->node);
+		rb_link_node(&pMemoryNode->node, parent, node);
+		rb_insert_color(&pMemoryNode->node, &m_root);
+	}
+	else {
 		pMemory->pFreePrev = nullptr;
 		pMemory->pFreeNext = pMemoryNode->pListHead;
 		pMemoryNode->pListHead->pFreePrev = pMemory;
 		pMemoryNode->pListHead = pMemory;
-
-		return;
 	}
-
-	pMemory->pFreeNext = nullptr;
-	pMemory->pFreePrev = nullptr;
-	pMemoryNode->pListHead = pMemory;
-
-	rb_init_node(&pMemoryNode->node);
-	rb_link_node(&pMemoryNode->node, parent, node);
-	rb_insert_color(&pMemoryNode->node, &m_root);
 }
 
 void CVKMemoryAllocator::RemoveMemory(CVKMemory *pMemory)

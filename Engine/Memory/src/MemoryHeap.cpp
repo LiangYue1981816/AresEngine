@@ -35,9 +35,6 @@
 
 #define NODE_INDEX(size) (((size) / BLOCK_UNIT_SIZE) - 1)
 
-static const uint32_t BLOCK_POOL_SIZE = 8 * 1024 * 1024;
-static const uint32_t BLOCK_UNIT_SIZE = 4 * 1024;
-
 struct BLOCK;
 struct BLOCK_POOL;
 
@@ -83,6 +80,9 @@ struct HEAP_ALLOCATOR {
 	std::atomic_flag lock;
 	BLOCK_POOL *pBlockPoolHead;
 };
+
+static const uint32_t BLOCK_POOL_SIZE = 8 * 1024 * 1024;
+static const uint32_t BLOCK_UNIT_SIZE = sizeof(BLOCK);
 
 
 static void atomic_spin_init(std::atomic_flag *flag)
@@ -146,41 +146,44 @@ static void HEAP_InsertBlock(BLOCK_POOL *pBlockPool, BLOCK *pBlock)
 	ASSERT(pBlock->dwInUse == false);
 
 	BLOCK_NODE *pBlockNode = &pBlockPool->nodes[NODE_INDEX(pBlock->dwSize)];
+	ASSERT(pBlockNode->dwSize == pBlock->dwSize);
+
 	rb_node **node = &(pBlockPool->root.rb_node);
 	rb_node *parent = nullptr;
 
-	while (*node) {
-		BLOCK_NODE *pBlockNodeCur = container_of(*node, BLOCK_NODE, node);
+	if (pBlockNode->pBlockHead == nullptr) {
+		while (*node) {
+			BLOCK_NODE *pBlockNodeCur = container_of(*node, BLOCK_NODE, node);
 
-		parent = *node;
+			parent = *node;
 
-		if (pBlockNode->dwSize > pBlockNodeCur->dwSize) {
-			node = &(*node)->rb_right;
-			continue;
+			if (pBlockNode->dwSize > pBlockNodeCur->dwSize) {
+				node = &(*node)->rb_right;
+				continue;
+			}
+
+			if (pBlockNode->dwSize < pBlockNodeCur->dwSize) {
+				node = &(*node)->rb_left;
+				continue;
+			}
+
+			ASSERT(false);
 		}
 
-		if (pBlockNode->dwSize < pBlockNodeCur->dwSize) {
-			node = &(*node)->rb_left;
-			continue;
-		}
+		pBlock->pFreeNext = nullptr;
+		pBlock->pFreePrev = nullptr;
+		pBlockNode->pBlockHead = pBlock;
 
-		ASSERT(pBlockNode == pBlockNodeCur);
-
+		rb_init_node(&pBlockNode->node);
+		rb_link_node(&pBlockNode->node, parent, node);
+		rb_insert_color(&pBlockNode->node, &pBlockPool->root);
+	}
+	else {
 		pBlock->pFreePrev = nullptr;
 		pBlock->pFreeNext = pBlockNode->pBlockHead;
 		pBlockNode->pBlockHead->pFreePrev = pBlock;
 		pBlockNode->pBlockHead = pBlock;
-
-		return;
 	}
-
-	pBlock->pFreeNext = nullptr;
-	pBlock->pFreePrev = nullptr;
-	pBlockNode->pBlockHead = pBlock;
-
-	rb_init_node(&pBlockNode->node);
-	rb_link_node(&pBlockNode->node, parent, node);
-	rb_insert_color(&pBlockNode->node, &pBlockPool->root);
 }
 
 static void HEAP_RemoveBlock(BLOCK_POOL *pBlockPool, BLOCK *pBlock)
