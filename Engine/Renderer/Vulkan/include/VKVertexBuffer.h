@@ -16,18 +16,16 @@ public:
 	bool BufferData(size_t offset, size_t size, const void *pBuffer);
 	void Bind(void *pParam);
 
-private:
-	bool CopyData(size_t offset, size_t size, const void *pBuffer);
-	bool TransferData(size_t offset, size_t size, const void *pBuffer);
-
 
 private:
-	VkBuffer m_vkBuffer;
-	VkBufferUsageFlags m_usage;
-	VkMemoryPropertyFlags m_memoryPropertyFlags;
+	uint32_t m_binding;
+	CVKBuffer *m_pBuffer;
+	CVKBuffer *m_pBufferTransfer;
 
 private:
-	CVKMemory *m_pMemory;
+	bool m_bNeedTransfer;
+	VkDeviceSize m_transferOffset;
+	VkDeviceSize m_transferSize;
 
 private:
 	CVKDevice *m_pDevice;

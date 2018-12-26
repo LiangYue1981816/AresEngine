@@ -7,25 +7,23 @@ CVKDevice::CVKDevice(CVKInstance *pInstance)
 	, m_vkDevice(VK_NULL_HANDLE)
 	, m_vkPhysicalDevice(VK_NULL_HANDLE)
 
-	, m_queueFamilyIndex(0)
-	, m_pComputeQueue(nullptr)
-	, m_pGraphicsQueue(nullptr)
-	, m_pTransferQueue(nullptr)
+	, m_pQueue(nullptr)
 	, m_pMemoryManager(nullptr)
 {
-	CALL_BOOL_FUNCTION_RETURN(CreateDevice());
+	uint32_t deviceIndex;
+	uint32_t queueFamilyIndex;
+	eastl::vector<VkPhysicalDevice> devices;
+	CALL_BOOL_FUNCTION_RETURN(EnumeratePhysicalDevices(devices));
+	CALL_BOOL_FUNCTION_RETURN(SelectPhysicalDevices(devices, deviceIndex, queueFamilyIndex));
+	CALL_BOOL_FUNCTION_RETURN(CreateDevice(devices[deviceIndex], queueFamilyIndex));
 
-	m_pComputeQueue = new CVKQueue(this, m_queueFamilyIndex, 0);
-	m_pGraphicsQueue = new CVKQueue(this, m_queueFamilyIndex, 0);
-	m_pTransferQueue = new CVKQueue(this, m_queueFamilyIndex, 0);
 	m_pMemoryManager = new CVKMemoryManager(this);
+	m_pQueue = new CVKQueue(this, queueFamilyIndex, 0);
 }
 
 CVKDevice::~CVKDevice(void)
 {
-	delete m_pComputeQueue;
-	delete m_pGraphicsQueue;
-	delete m_pTransferQueue;
+	delete m_pQueue;
 	delete m_pMemoryManager;
 
 	DestroyDevice();
@@ -45,7 +43,7 @@ bool CVKDevice::EnumeratePhysicalDevices(eastl::vector<VkPhysicalDevice> &device
 	return true;
 }
 
-bool CVKDevice::SelectPhysicalDevices(eastl::vector<VkPhysicalDevice> &devices, VkPhysicalDevice &vkPhysicalDevice, uint32_t &queueFamilyIndex) const
+bool CVKDevice::SelectPhysicalDevices(eastl::vector<VkPhysicalDevice> &devices, uint32_t &deviceIndex, uint32_t &queueFamilyIndex) const
 {
 	uint32_t familyIndex = UINT32_MAX;
 
@@ -54,8 +52,8 @@ bool CVKDevice::SelectPhysicalDevices(eastl::vector<VkPhysicalDevice> &devices, 
 		if (CheckPhysicalDeviceExtensionProperties(devices[index]) == false) continue;
 		if (CheckPhysicalDeviceQueueFamilyProperties(devices[index], familyIndex) == false) continue;
 
+		deviceIndex = index;
 		queueFamilyIndex = familyIndex;
-		vkPhysicalDevice = devices[index];
 
 		return true;
 	}
@@ -108,9 +106,9 @@ bool CVKDevice::CheckPhysicalDeviceQueueFamilyProperties(VkPhysicalDevice vkPhys
 	vkGetPhysicalDeviceQueueFamilyProperties(vkPhysicalDevice, &numQueueFamilies, queueFamilies.data());
 
 	for (uint32_t index = 0; index < numQueueFamilies; index++) {
-		if (queueFamilies[index].queueFlags & VK_QUEUE_COMPUTE_BIT &&
-			queueFamilies[index].queueFlags & VK_QUEUE_GRAPHICS_BIT &&
-			queueFamilies[index].queueFlags & VK_QUEUE_TRANSFER_BIT) {
+		if ((queueFamilies[index].queueFlags & VK_QUEUE_COMPUTE_BIT)  != 0 &&
+			(queueFamilies[index].queueFlags & VK_QUEUE_GRAPHICS_BIT) != 0 &&
+			(queueFamilies[index].queueFlags & VK_QUEUE_TRANSFER_BIT) != 0) {
 			VkBool32 surfaceSupported;
 			CALL_VK_FUNCTION_RETURN_BOOL(vkGetPhysicalDeviceSurfaceSupportKHR(vkPhysicalDevice, index, m_pInstance->GetSurface(), &surfaceSupported));
 
@@ -126,7 +124,6 @@ bool CVKDevice::CheckPhysicalDeviceQueueFamilyProperties(VkPhysicalDevice vkPhys
 
 bool CVKDevice::CreateDevice(VkPhysicalDevice vkPhysicalDevice, uint32_t queueFamilyIndex)
 {
-	m_queueFamilyIndex = queueFamilyIndex;
 	m_vkPhysicalDevice = vkPhysicalDevice;
 
 	vkGetPhysicalDeviceFeatures(m_vkPhysicalDevice, &m_vkPhysicalDeviceFeatures);
@@ -154,20 +151,7 @@ bool CVKDevice::CreateDevice(VkPhysicalDevice vkPhysicalDevice, uint32_t queueFa
 	deviceCreateInfo.enabledExtensionCount = 1;
 	deviceCreateInfo.ppEnabledExtensionNames = &szSwapchainExtension;
 	deviceCreateInfo.pEnabledFeatures = &m_vkPhysicalDeviceFeatures;
-	CALL_VK_FUNCTION_RETURN_BOOL(vkCreateDevice(vkPhysicalDevice, &deviceCreateInfo, m_pInstance->GetAllocator()->GetAllocationCallbacks(), &m_vkDevice));
-
-	return true;
-}
-
-bool CVKDevice::CreateDevice(void)
-{
-	uint32_t queueFamilyIndex;
-	VkPhysicalDevice vkPhysicalDevice;
-	eastl::vector<VkPhysicalDevice> devices;
-
-	CALL_BOOL_FUNCTION_RETURN_BOOL(EnumeratePhysicalDevices(devices));
-	CALL_BOOL_FUNCTION_RETURN_BOOL(SelectPhysicalDevices(devices, vkPhysicalDevice, queueFamilyIndex));
-	CALL_BOOL_FUNCTION_RETURN_BOOL(CreateDevice(vkPhysicalDevice, queueFamilyIndex));
+	CALL_VK_FUNCTION_RETURN_BOOL(vkCreateDevice(m_vkPhysicalDevice, &deviceCreateInfo, m_pInstance->GetAllocator()->GetAllocationCallbacks(), &m_vkDevice));
 
 	return true;
 }
@@ -178,7 +162,6 @@ void CVKDevice::DestroyDevice(void)
 		vkDestroyDevice(m_vkDevice, m_pInstance->GetAllocator()->GetAllocationCallbacks());
 	}
 
-	m_queueFamilyIndex = 0;
 	m_vkDevice = VK_NULL_HANDLE;
 	m_vkPhysicalDevice = VK_NULL_HANDLE;
 }
@@ -213,19 +196,9 @@ CVKInstance* CVKDevice::GetInstance(void) const
 	return m_pInstance;
 }
 
-CVKQueue* CVKDevice::GetComputeQueue(void) const
+CVKQueue* CVKDevice::GetQueue(void) const
 {
-	return m_pComputeQueue;
-}
-
-CVKQueue* CVKDevice::GetGraphicsQueue(void) const
-{
-	return m_pGraphicsQueue;
-}
-
-CVKQueue* CVKDevice::GetTransferQueue(void) const
-{
-	return m_pTransferQueue;
+	return m_pQueue;
 }
 
 CVKMemoryManager* CVKDevice::GetMemoryManager(void) const

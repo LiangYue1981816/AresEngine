@@ -14,6 +14,7 @@
 #include "VKMemoryAllocator.h"
 #include "VKMemoryManager.h"
 
+#include "VKBuffer.h"
 #include "VKIndexBuffer.h"
 #include "VKVertexBuffer.h"
 #include "VKInstanceBuffer.h"
