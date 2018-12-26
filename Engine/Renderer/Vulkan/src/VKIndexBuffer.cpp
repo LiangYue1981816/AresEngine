@@ -49,12 +49,20 @@ bool CVKIndexBuffer::BufferData(size_t offset, size_t size, const void *pBuffer)
 	}
 }
 
-void CVKIndexBuffer::Bind(void *pParam)
+void CVKIndexBuffer::Bind(VkCommandBuffer vkCommandBuffer, VkDeviceSize offset)
 {
-	if (VkCommandBuffer *pvkCommandBuffer = (VkCommandBuffer *)pParam) {
-		if (m_bNeedTransfer) {
-			m_bNeedTransfer = false;
-			vkCmdTransferBuffer(*pvkCommandBuffer, m_pBufferTransfer->m_vkBuffer, m_pBuffer->m_vkBuffer, VK_ACCESS_VERTEX_ATTRIBUTE_READ_BIT, VK_PIPELINE_STAGE_VERTEX_INPUT_BIT, m_transferOffset, m_transferOffset, m_transferSize);
-		}
+	if (m_bNeedTransfer) {
+		m_bNeedTransfer = false;
+		vkCmdTransferBuffer(vkCommandBuffer, m_pBufferTransfer->m_vkBuffer, m_pBuffer->m_vkBuffer, VK_ACCESS_VERTEX_ATTRIBUTE_READ_BIT, VK_PIPELINE_STAGE_VERTEX_INPUT_BIT, m_transferOffset, m_transferOffset, m_transferSize);
+	}
+
+	switch ((int)GetIndexType()) {
+	case GFX_INDEX_UNSIGNED_SHORT:
+		vkCmdBindIndexBuffer(vkCommandBuffer, m_pBuffer->m_vkBuffer, offset, VK_INDEX_TYPE_UINT16);
+		break;
+
+	case GFX_INDEX_UNSIGNED_INT:
+		vkCmdBindIndexBuffer(vkCommandBuffer, m_pBuffer->m_vkBuffer, offset, VK_INDEX_TYPE_UINT32);
+		break;
 	}
 }

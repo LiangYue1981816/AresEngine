@@ -19,7 +19,6 @@ public:
 
 public:
 	virtual bool BufferData(size_t offset, size_t size, const void *pBuffer) = 0;
-	virtual void Bind(void *pParam) = 0;
 
 public:
 	GfxIndexType GetIndexType(void) const

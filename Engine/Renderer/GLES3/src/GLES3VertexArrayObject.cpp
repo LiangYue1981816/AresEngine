@@ -19,11 +19,11 @@ bool CGLES3VertexArrayObject::Buffer(CGLES3IndexBuffer *pIndexBuffer, CGLES3Vert
 	GLBindVertexArray(m_vao);
 	{
 		if (pIndexBuffer) {
-			pIndexBuffer->Bind(nullptr);
+			pIndexBuffer->Bind();
 		}
 
 		if (pVertexBuffer) {
-			pVertexBuffer->Bind(nullptr);
+			pVertexBuffer->Bind();
 		}
 
 		if (pInstanceBuffer) {

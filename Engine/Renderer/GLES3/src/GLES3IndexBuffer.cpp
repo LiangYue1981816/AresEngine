@@ -29,7 +29,7 @@ bool CGLES3IndexBuffer::BufferData(size_t offset, size_t size, const void *pBuff
 	return true;
 }
 
-void CGLES3IndexBuffer::Bind(void *pParam)
+void CGLES3IndexBuffer::Bind(void)
 {
 	GLBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_buffer);
 }
