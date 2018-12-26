@@ -19,12 +19,8 @@ public:
 
 private:
 	uint32_t m_hash;
-
-
-private:
-	VkBuffer m_vkBuffer;
-	VkBufferUsageFlags m_usage;
-	VkMemoryPropertyFlags m_memoryPropertyFlags;
+	uint32_t m_binding;
+	CVKBuffer *m_pBuffer;
 
 private:
 	CVKDevice *m_pDevice;

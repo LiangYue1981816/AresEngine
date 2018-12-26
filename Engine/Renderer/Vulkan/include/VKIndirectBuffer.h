@@ -20,13 +20,8 @@ public:
 
 
 private:
+	CVKBuffer *m_pBuffer;
 	eastl::vector<DrawCommand> m_draws;
-
-	
-private:
-	VkBuffer m_vkBuffer;
-	VkBufferUsageFlags m_usage;
-	VkMemoryPropertyFlags m_memoryPropertyFlags;
 
 private:
 	CVKDevice *m_pDevice;

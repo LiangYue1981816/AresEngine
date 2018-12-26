@@ -14,23 +14,18 @@ CVKVertexBuffer::CVKVertexBuffer(CVKDevice *pDevice, uint32_t vertexFormat, uint
 	, m_transferSize(0)
 {
 	if (bDynamic) {
-		m_pBuffer = new CVKBuffer(pDevice, VK_BUFFER_USAGE_VERTEX_BUFFER_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT | VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, CGfxSwapChain::SWAPCHAIN_IMAGE_COUNT * size);
+		m_pBuffer = new CVKBuffer(m_pDevice, VK_BUFFER_USAGE_VERTEX_BUFFER_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT | VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, CGfxSwapChain::SWAPCHAIN_IMAGE_COUNT * m_size);
 	}
 	else {
-		m_pBuffer = new CVKBuffer(pDevice, VK_BUFFER_USAGE_VERTEX_BUFFER_BIT | VK_BUFFER_USAGE_TRANSFER_DST_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, size);
-		m_pBufferTransfer = new CVKBuffer(pDevice, VK_BUFFER_USAGE_TRANSFER_SRC_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, size);
+		m_pBuffer = new CVKBuffer(m_pDevice, VK_BUFFER_USAGE_VERTEX_BUFFER_BIT | VK_BUFFER_USAGE_TRANSFER_DST_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, m_size);
+		m_pBufferTransfer = new CVKBuffer(m_pDevice, VK_BUFFER_USAGE_TRANSFER_SRC_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, m_size);
 	}
 }
 
 CVKVertexBuffer::~CVKVertexBuffer(void)
 {
-	if (m_pBuffer) {
-		delete m_pBuffer;
-	}
-
-	if (m_pBufferTransfer) {
-		delete m_pBufferTransfer;
-	}
+	delete m_pBuffer;
+	delete m_pBufferTransfer;
 }
 
 bool CVKVertexBuffer::BufferData(size_t offset, size_t size, const void *pBuffer)

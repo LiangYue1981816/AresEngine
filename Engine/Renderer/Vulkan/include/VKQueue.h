@@ -8,7 +8,7 @@ class CVKQueue
 
 
 private:
-	CVKQueue(CVKDevice *pDevice, uint32_t queueFamilyIndex, uint32_t queueIndex);
+	CVKQueue(CVKDevice *pDevice, uint32_t queueFamilyIndex);
 	virtual ~CVKQueue(void);
 
 

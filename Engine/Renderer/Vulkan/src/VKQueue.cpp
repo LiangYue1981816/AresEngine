@@ -1,13 +1,13 @@
 #include "VKRenderer.h"
 
 
-CVKQueue::CVKQueue(CVKDevice *pDevice, uint32_t queueFamilyIndex, uint32_t queueIndex)
+CVKQueue::CVKQueue(CVKDevice *pDevice, uint32_t queueFamilyIndex)
 	: m_pDevice(pDevice)
 
 	, m_vkQueue(VK_NULL_HANDLE)
 	, m_queueFamilyIndex(queueFamilyIndex)
 {
-	vkGetDeviceQueue(pDevice->GetDevice(), queueFamilyIndex, queueIndex, &m_vkQueue);
+	vkGetDeviceQueue(m_pDevice->GetDevice(), m_queueFamilyIndex, 0, &m_vkQueue);
 }
 
 CVKQueue::~CVKQueue(void)

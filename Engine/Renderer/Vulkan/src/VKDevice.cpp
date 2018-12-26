@@ -18,7 +18,7 @@ CVKDevice::CVKDevice(CVKInstance *pInstance)
 	CALL_BOOL_FUNCTION_RETURN(CreateDevice(devices[deviceIndex], queueFamilyIndex));
 
 	m_pMemoryManager = new CVKMemoryManager(this);
-	m_pQueue = new CVKQueue(this, queueFamilyIndex, 0);
+	m_pQueue = new CVKQueue(this, queueFamilyIndex);
 }
 
 CVKDevice::~CVKDevice(void)
