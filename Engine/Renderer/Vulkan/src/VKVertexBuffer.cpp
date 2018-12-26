@@ -57,8 +57,5 @@ void CVKVertexBuffer::Bind(void *pParam)
 			m_bNeedTransfer = false;
 			vkCmdTransferBuffer(*pvkCommandBuffer, m_pBufferTransfer->m_vkBuffer, m_pBuffer->m_vkBuffer, VK_ACCESS_VERTEX_ATTRIBUTE_READ_BIT, VK_PIPELINE_STAGE_VERTEX_INPUT_BIT, m_transferOffset, m_transferOffset, m_transferSize);
 		}
-
-		const VkDeviceSize offset = 0;
-		vkCmdBindVertexBuffers(*pvkCommandBuffer, m_binding, 1, &m_pBuffer->m_vkBuffer, &offset);
 	}
 }

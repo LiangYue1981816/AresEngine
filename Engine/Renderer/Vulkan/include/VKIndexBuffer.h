@@ -18,9 +18,13 @@ public:
 
 
 private:
-	VkBuffer m_vkBuffer;
-	VkBufferUsageFlags m_usage;
-	VkMemoryPropertyFlags m_memoryPropertyFlags;
+	CVKBuffer *m_pBuffer;
+	CVKBuffer *m_pBufferTransfer;
+
+private:
+	bool m_bNeedTransfer;
+	VkDeviceSize m_transferOffset;
+	VkDeviceSize m_transferSize;
 
 private:
 	CVKDevice *m_pDevice;
