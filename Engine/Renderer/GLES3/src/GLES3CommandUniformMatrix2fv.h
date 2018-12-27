@@ -7,8 +7,9 @@ class CGLES3CommandUniformMatrix2fv : public CGfxCommandBase
 public:
 	CGLES3CommandUniformMatrix2fv(const char *szName, int count, const float *value)
 		: m_name(HashValue(szName))
+		, m_value(value, value + count)
 	{
-		m_value.assign(value, value + count);
+
 	}
 	virtual ~CGLES3CommandUniformMatrix2fv(void)
 	{

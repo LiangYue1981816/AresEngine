@@ -8,6 +8,7 @@ public:
 	CGfxSwapChain(int width, int height, GfxPixelFormat pixelFormat)
 		: m_width(width)
 		, m_height(height)
+		, m_pixelFormat(pixelFormat)
 	{
 
 	}
@@ -36,10 +37,16 @@ public:
 		return m_height;
 	}
 
+	GfxPixelFormat GetPixelFormat(void) const
+	{
+		return m_pixelFormat;
+	}
+
 
 protected:
 	int m_width;
 	int m_height;
+	GfxPixelFormat m_pixelFormat;
 
 public:
 	static const uint32_t SWAPCHAIN_IMAGE_COUNT = 3;

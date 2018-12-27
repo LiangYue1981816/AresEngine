@@ -7,9 +7,9 @@ CGLES3SwapChain::CGLES3SwapChain(void *hDC, int width, int height, GfxPixelForma
 	, m_hDC(hDC)
 	, m_fbo(0)
 {
-	if (width != 0 && height != 0 && pixelFormat != GFX_PIXELFORMAT_UNDEFINED) {
+	if (m_width != 0 && m_height != 0 && m_pixelFormat != GFX_PIXELFORMAT_UNDEFINED) {
 		m_ptrTexture = GLES3Renderer()->NewTexture2D(HashValue("SwapChain Color Texture"));
-		m_ptrTexture->Create(pixelFormat, width, height, 1, 0);
+		m_ptrTexture->Create(m_pixelFormat, m_width, m_height, 1, 0);
 
 		glGenFramebuffers(1, &m_fbo);
 		glBindFramebuffer(GL_FRAMEBUFFER, m_fbo);
