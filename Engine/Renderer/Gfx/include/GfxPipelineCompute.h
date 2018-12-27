@@ -19,7 +19,4 @@ public:
 public:
 	virtual bool Create(const CGfxShader *pComputeShader) = 0;
 	virtual void Destroy(void) = 0;
-
-public:
-	virtual void Bind(void *pParam) = 0;
 };

@@ -39,7 +39,7 @@ bool CGLES3PipelineCompute::IsUniformBlockValid(uint32_t name) const
 	return CGLES3PipelineBase::IsUniformBlockValid(name);
 }
 
-void CGLES3PipelineCompute::Bind(void *pParam)
+void CGLES3PipelineCompute::Bind(void)
 {
 
 }

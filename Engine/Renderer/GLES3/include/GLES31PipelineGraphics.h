@@ -24,7 +24,7 @@ public:
 	bool IsUniformBlockValid(uint32_t name) const;
 
 public:
-	void Bind(void *pParam);
+	void Bind(void);
 
 
 private:

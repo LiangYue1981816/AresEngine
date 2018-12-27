@@ -74,7 +74,7 @@ bool CGLES3PipelineGraphics::IsUniformBlockValid(uint32_t name) const
 	return CGLES3PipelineBase::IsUniformBlockValid(name);
 }
 
-void CGLES3PipelineGraphics::Bind(void *pParam)
+void CGLES3PipelineGraphics::Bind(void)
 {
 	GLBindState(&m_state);
 	GLBindProgramPipeline(m_pipeline);

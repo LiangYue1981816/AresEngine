@@ -423,7 +423,7 @@ void CGLES3Renderer::BindPipelineCompute(CGfxPipelineCompute *pPipelineCompute)
 		m_pCurrentPipelineCompute  = (CGLES3PipelineCompute *)pPipelineCompute;
 
 		if (m_pCurrentPipelineCompute) {
-			m_pCurrentPipelineCompute->Bind(nullptr);
+			m_pCurrentPipelineCompute->Bind();
 		}
 	}
 }
@@ -434,7 +434,7 @@ void CGLES3Renderer::BindPipelineGraphics(CGfxPipelineGraphics *pPipelineGraphic
 		m_pCurrentPipelineGraphics  = (CGLES3PipelineGraphics *)pPipelineGraphics;
 
 		if (m_pCurrentPipelineGraphics) {
-			m_pCurrentPipelineGraphics->Bind(nullptr);
+			m_pCurrentPipelineGraphics->Bind();
 		}
 	}
 }
