@@ -23,11 +23,6 @@ CGLES3IndirectBuffer::~CGLES3IndirectBuffer(void)
 #endif
 }
 
-bool CGLES3IndirectBuffer::BufferData(size_t offset, size_t size, const void *pBuffer)
-{
-	return false;
-}
-
 bool CGLES3IndirectBuffer::BufferData(int indexDraw, int instanceCount)
 {
 #if GLES_VER == 310

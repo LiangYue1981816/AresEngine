@@ -27,7 +27,6 @@ public:
 
 
 public:
-	virtual bool BufferData(size_t offset, size_t size, const void *pBuffer) = 0;
 	virtual bool BufferData(int indexDraw, int instanceCount) = 0;
 	virtual bool BufferData(int indexDraw, int baseVertex, int firstIndex, int indexCount, int instanceCount) = 0;
 	virtual void Bind(void *pParam) = 0;

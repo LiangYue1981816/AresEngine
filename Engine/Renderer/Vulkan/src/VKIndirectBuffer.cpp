@@ -14,11 +14,6 @@ CVKIndirectBuffer::~CVKIndirectBuffer(void)
 
 }
 
-bool CVKIndirectBuffer::BufferData(size_t offset, size_t size, const void *pBuffer)
-{
-	return false;
-}
-
 bool CVKIndirectBuffer::BufferData(int indexDraw, int instanceCount)
 {
 	if (indexDraw < 0 || (uint32_t)indexDraw >= m_count) {
