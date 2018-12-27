@@ -15,7 +15,7 @@ private:
 
 public:
 	bool BufferData(size_t size, const void *pBuffer);
-	void Bind(void *pParam);
+	void Bind(void);
 
 
 private:

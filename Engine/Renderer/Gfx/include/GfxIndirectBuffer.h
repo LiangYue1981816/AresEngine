@@ -29,7 +29,6 @@ public:
 public:
 	virtual bool BufferData(int indexDraw, int instanceCount) = 0;
 	virtual bool BufferData(int indexDraw, int baseVertex, int firstIndex, int indexCount, int instanceCount) = 0;
-	virtual void Bind(void *pParam) = 0;
 
 public:
 	uint32_t GetDrawCommandCount(void) const

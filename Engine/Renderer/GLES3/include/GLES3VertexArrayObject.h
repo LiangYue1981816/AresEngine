@@ -15,7 +15,7 @@ private:
 
 public:
 	bool Buffer(CGLES3IndexBuffer *pIndexBuffer, CGLES3VertexBuffer *pVertexBuffer, CGLES3InstanceBuffer *pInstanceBuffer);
-	void Bind(void *pParam);
+	void Bind(void);
 
 
 private:

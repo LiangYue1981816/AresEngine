@@ -69,7 +69,7 @@ bool CGLES3IndirectBuffer::BufferData(int indexDraw, int baseVertex, int firstIn
 #endif
 }
 
-void CGLES3IndirectBuffer::Bind(void *pParam)
+void CGLES3IndirectBuffer::Bind(void)
 {
 #if GLES_VER == 310
 	GLBindBuffer(GL_DRAW_INDIRECT_BUFFER, m_buffer);

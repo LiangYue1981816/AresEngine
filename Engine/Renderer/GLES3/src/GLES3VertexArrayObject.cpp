@@ -27,7 +27,7 @@ bool CGLES3VertexArrayObject::Buffer(CGLES3IndexBuffer *pIndexBuffer, CGLES3Vert
 		}
 
 		if (pInstanceBuffer) {
-			pInstanceBuffer->Bind(nullptr);
+			pInstanceBuffer->Bind();
 		}
 	}
 	GLBindVertexArray(0);
@@ -37,7 +37,7 @@ bool CGLES3VertexArrayObject::Buffer(CGLES3IndexBuffer *pIndexBuffer, CGLES3Vert
 	return true;
 }
 
-void CGLES3VertexArrayObject::Bind(void *pParam)
+void CGLES3VertexArrayObject::Bind(void)
 {
 	GLBindVertexArray(m_vao);
 }

@@ -20,7 +20,6 @@ public:
 
 public:
 	virtual bool BufferData(size_t size, const void *pBuffer) = 0;
-	virtual void Bind(void *pParam) = 0;
 
 public:
 	uint32_t GetInstanceFormat(void) const

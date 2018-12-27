@@ -16,7 +16,7 @@ private:
 public:
 	bool BufferData(int indexDraw, int instanceCount);
 	bool BufferData(int indexDraw, int baseVertex, int firstIndex, int indexCount, int instanceCount);
-	void Bind(void *pParam);
+	void Bind(void);
 
 
 private:

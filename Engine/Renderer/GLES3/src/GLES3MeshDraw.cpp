@@ -140,10 +140,10 @@ glm::aabb CGLES3MeshDraw::GetLocalAABB(void) const
 void CGLES3MeshDraw::Bind(void *pParam)
 {
 	if (m_pVertexArrayObject) {
-		m_pVertexArrayObject->Bind(nullptr);
+		m_pVertexArrayObject->Bind();
 	}
 
 	if (m_pIndirectBuffer) {
-		m_pIndirectBuffer->Bind(nullptr);
+		m_pIndirectBuffer->Bind();
 	}
 }

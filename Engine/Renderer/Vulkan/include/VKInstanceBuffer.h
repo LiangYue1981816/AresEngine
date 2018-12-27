@@ -14,7 +14,7 @@ private:
 
 public:
 	bool BufferData(size_t size, const void *pBuffer);
-	void Bind(void *pParam);
+	void Bind(VkCommandBuffer vkCommandBuffer, VkDeviceSize offset);
 
 private:
 	CVKBufferPtr GetBuffer(void) const;
