@@ -97,7 +97,6 @@ uint32_t CGLES3MeshDraw::GetIndexOffset(void) const
 {
 	if (m_pMeshDraw) {
 		switch ((int)GetIndexType()) {
-		case GFX_INDEX_UNSIGNED_BYTE:  return m_pMeshDraw->firstIndex;
 		case GFX_INDEX_UNSIGNED_SHORT: return m_pMeshDraw->firstIndex * 2;
 		case GFX_INDEX_UNSIGNED_INT:   return m_pMeshDraw->firstIndex * 4;
 		default:                       return 0;

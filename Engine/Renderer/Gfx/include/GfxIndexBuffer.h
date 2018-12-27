@@ -29,7 +29,6 @@ public:
 	uint32_t GetIndexCount(void) const
 	{
 		switch (m_type) {
-		case GFX_INDEX_UNSIGNED_BYTE:  return m_size / 1;
 		case GFX_INDEX_UNSIGNED_SHORT: return m_size / 2;
 		case GFX_INDEX_UNSIGNED_INT:   return m_size / 4;
 		default:                       return 0;

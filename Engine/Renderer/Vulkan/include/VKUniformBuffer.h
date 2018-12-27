@@ -16,11 +16,12 @@ public:
 	bool BufferData(size_t offset, size_t size, const void *pBuffer);
 	void Bind(void *pParam);
 
+private:
+	CVKBufferPtr GetBuffer(void) const;
+
 
 private:
-	VkBuffer m_vkBuffer;
-	VkBufferUsageFlags m_usage;
-	VkMemoryPropertyFlags m_memoryPropertyFlags;
+	CVKBufferPtr m_ptrBuffer;
 
 private:
 	CVKDevice *m_pDevice;

@@ -39,6 +39,11 @@ CVKBuffer::~CVKBuffer(void)
 	}
 }
 
+void CVKBuffer::Release(void)
+{
+	delete this;
+}
+
 bool CVKBuffer::BufferData(size_t offset, size_t size, const void *pBuffer)
 {
 	if (m_size < offset + size) {

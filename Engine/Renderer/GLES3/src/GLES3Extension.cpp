@@ -58,8 +58,6 @@ GLenum GLDataType(GfxDataType dataType)
 GLenum GLIndexType(GfxIndexType indexType)
 {
 	switch ((int)indexType) {
-	case GFX_INDEX_UNSIGNED_BYTE:
-		return GL_UNSIGNED_BYTE;
 	case GFX_INDEX_UNSIGNED_SHORT:
 		return GL_UNSIGNED_SHORT;
 	case GFX_INDEX_UNSIGNED_INT:

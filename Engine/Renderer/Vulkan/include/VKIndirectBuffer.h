@@ -18,10 +18,15 @@ public:
 	bool BufferData(int indexDraw, int baseVertex, int firstIndex, int indexCount, int instanceCount);
 	void Bind(void *pParam);
 
+private:
+	CVKBufferPtr GetBuffer(void) const;
+
 
 private:
-	CVKBuffer *m_pBuffer;
 	eastl::vector<DrawCommand> m_draws;
+
+private:
+	CVKBufferPtr m_ptrBuffer;
 
 private:
 	CVKDevice *m_pDevice;

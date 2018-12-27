@@ -2,7 +2,7 @@
 #include "VKRenderer.h"
 
 
-class CVKBuffer
+class CVKBuffer : public CGfxResource
 {
 	friend class CVKDevice;
 	friend class CVKIndexBuffer;
@@ -15,6 +15,7 @@ class CVKBuffer
 private:
 	CVKBuffer(CVKDevice *pDevice, VkBufferUsageFlags usage, VkMemoryPropertyFlags memoryPropertyFlags, VkDeviceSize size);
 	virtual ~CVKBuffer(void);
+	virtual void Release(void);
 
 
 private:
@@ -33,3 +34,5 @@ private:
 private:
 	CVKDevice *m_pDevice;
 };
+
+typedef CGfxResourcePtr<CVKBuffer> CVKBufferPtr;
