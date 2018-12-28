@@ -6,6 +6,7 @@ class CVKIndexBuffer : public CGfxIndexBuffer
 {
 	friend class CVKDevice;
 	friend class CVKMesh;
+	friend class CVKMeshDraw;
 
 
 private:
