@@ -1,7 +1,7 @@
 #include "VKRenderer.h"
 
 
-#define MIN_ALIGNMENT 16
+#define MIN_ALIGNMENT 32
 #define NODE_INDEX(size) (((size) / MIN_ALIGNMENT) - 1)
 
 CVKMemoryAllocator::CVKMemoryAllocator(CVKDevice *pDevice, uint32_t memoryTypeIndex, VkDeviceSize memorySize)
@@ -56,7 +56,7 @@ CVKMemory* CVKMemoryAllocator::AllocMemory(VkDeviceSize alignment, VkDeviceSize 
 	//             |                          |
 	//             |       Alignment Size     New Memory Handle
 
-	VkDeviceSize alignmentSize = ALIGN_BYTE(alignment + size, MIN_ALIGNMENT);
+	VkDeviceSize alignmentSize = ALIGN_BYTE(size, MIN_ALIGNMENT);
 
 	if (m_freeSize >= alignmentSize) {
 		if (CVKMemory *pMemory = SearchMemory(alignmentSize)) {
@@ -116,7 +116,7 @@ void CVKMemoryAllocator::FreeMemory(CVKMemory *pMemory)
 void CVKMemoryAllocator::InitNodes(uint32_t numNodes)
 {
 	m_root = RB_ROOT;
-	m_nodes = new mem_node[numNodes];
+	m_nodes = (mem_node *)malloc(sizeof(mem_node) * numNodes);
 
 	for (uint32_t indexNode = 0; indexNode < numNodes; indexNode++) {
 		m_nodes[indexNode].size = (indexNode + 1) * MIN_ALIGNMENT;
@@ -137,7 +137,7 @@ void CVKMemoryAllocator::FreeNodes(uint32_t numNodes)
 			}
 		}
 
-		delete m_nodes;
+		free(m_nodes);
 	}
 }
 

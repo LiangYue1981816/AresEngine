@@ -11,7 +11,7 @@ class CVKMemoryAllocator
 private:
 	typedef struct mem_node {
 		rb_node node;
-		VkDeviceSize size;
+		uint32_t size;
 		CVKMemory *pListHead;
 	} mem_node;
 
