@@ -7,6 +7,10 @@ CVKDevice::CVKDevice(CVKInstance *pInstance)
 	, m_vkDevice(VK_NULL_HANDLE)
 	, m_vkPhysicalDevice(VK_NULL_HANDLE)
 
+	, m_vkPhysicalDeviceFeatures{}
+	, m_vkPhysicalDeviceProperties{}
+	, m_vkPhysicalDeviceMemoryProperties{}
+
 	, m_pQueue(nullptr)
 	, m_pMemoryManager(nullptr)
 {
@@ -17,8 +21,8 @@ CVKDevice::CVKDevice(CVKInstance *pInstance)
 	CALL_BOOL_FUNCTION_RETURN(SelectPhysicalDevices(devices, deviceIndex, queueFamilyIndex));
 	CALL_BOOL_FUNCTION_RETURN(CreateDevice(devices[deviceIndex], queueFamilyIndex));
 
-	m_pMemoryManager = new CVKMemoryManager(this);
 	m_pQueue = new CVKQueue(this, queueFamilyIndex);
+	m_pMemoryManager = new CVKMemoryManager(this);
 }
 
 CVKDevice::~CVKDevice(void)
@@ -73,6 +77,8 @@ bool CVKDevice::CheckPhysicalDeviceCapabilities(VkPhysicalDevice vkPhysicalDevic
 		return false;
 	}
 
+	// ...
+
 	return true;
 }
 
@@ -85,13 +91,23 @@ bool CVKDevice::CheckPhysicalDeviceExtensionProperties(VkPhysicalDevice vkPhysic
 	eastl::vector<VkExtensionProperties> extensions(numExtensions);
 	CALL_VK_FUNCTION_RETURN_BOOL(vkEnumerateDeviceExtensionProperties(vkPhysicalDevice, nullptr, &numExtensions, extensions.data()));
 
+	bool bSwapchainExtension = false;
 	for (uint32_t index = 0; index < numExtensions; index++) {
 		if (stricmp(extensions[index].extensionName, VK_KHR_SWAPCHAIN_EXTENSION_NAME) == 0) {
-			return true;
+			bSwapchainExtension = true;
+			continue;
 		}
+
+		// ...
 	}
 
-	return false;
+	if (bSwapchainExtension == false) {
+		return false;
+	}
+
+	// ...
+
+	return true;
 }
 
 bool CVKDevice::CheckPhysicalDeviceQueueFamilyProperties(VkPhysicalDevice vkPhysicalDevice, uint32_t &queueFamilyIndex) const

@@ -50,11 +50,11 @@ CVKInstance::CVKInstance(void *hInstance, void *hWnd)
 	: m_vkInstance(VK_NULL_HANDLE)
 	, m_vkSurface(VK_NULL_HANDLE)
 
+	, m_pAllocator(nullptr)
+
 #ifdef DEBUG
 	, m_vkDebugReportCallback(VK_NULL_HANDLE)
 #endif
-
-	, m_pAllocator(nullptr)
 {
 	m_pAllocator = new CVKAllocator;
 
