@@ -144,7 +144,7 @@ void CVKMemoryAllocator::FreeNodes(uint32_t numNodes)
 void CVKMemoryAllocator::InsertMemory(CVKMemory *pMemory)
 {
 	ASSERT(pMemory->bInUse == false);
-	ASSERT(pMemory->m_aligmentOffset = 0);
+	ASSERT(pMemory->m_aligmentOffset == 0);
 
 	mem_node *pMemoryNode = &m_nodes[NODE_INDEX(pMemory->m_size)];
 	ASSERT(pMemoryNode->size == pMemory->m_size);
@@ -190,7 +190,7 @@ void CVKMemoryAllocator::InsertMemory(CVKMemory *pMemory)
 void CVKMemoryAllocator::RemoveMemory(CVKMemory *pMemory)
 {
 	ASSERT(pMemory->bInUse == false);
-	ASSERT(pMemory->m_aligmentOffset = 0);
+	ASSERT(pMemory->m_aligmentOffset == 0);
 
 	mem_node *pMemoryNode = &m_nodes[NODE_INDEX(pMemory->m_size)];
 
@@ -214,10 +214,10 @@ void CVKMemoryAllocator::RemoveMemory(CVKMemory *pMemory)
 CVKMemory* CVKMemoryAllocator::MergeMemory(CVKMemory *pMemory, CVKMemory *pMemoryNext)
 {
 	ASSERT(pMemory->bInUse == false);
-	ASSERT(pMemory->m_aligmentOffset = 0);
+	ASSERT(pMemory->m_aligmentOffset == 0);
 
 	ASSERT(pMemoryNext->bInUse == false);
-	ASSERT(pMemoryNext->m_aligmentOffset = 0);
+	ASSERT(pMemoryNext->m_aligmentOffset == 0);
 
 	ASSERT(pMemory->m_offset + pMemory->m_size == pMemoryNext->m_offset);
 
