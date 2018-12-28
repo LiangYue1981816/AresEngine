@@ -8,7 +8,7 @@ class CGLES3UniformBuffer : public CGfxUniformBuffer
 
 
 private:
-	CGLES3UniformBuffer(CGLES3UniformBufferManager *pManager, size_t size, bool bDynamic);
+	CGLES3UniformBuffer(CGLES3UniformBufferManager *pManager, size_t size);
 	virtual ~CGLES3UniformBuffer(void);
 	virtual void Release(void);
 

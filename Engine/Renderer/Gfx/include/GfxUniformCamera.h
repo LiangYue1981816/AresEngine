@@ -19,7 +19,7 @@ private:
 
 
 public:
-	CGfxUniformCamera(bool bDynamic);
+	CGfxUniformCamera(void);
 	virtual ~CGfxUniformCamera(void);
 
 

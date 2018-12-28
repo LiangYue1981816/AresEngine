@@ -1,8 +1,8 @@
 #include "GLES3Renderer.h"
 
 
-CGLES3IndirectBuffer::CGLES3IndirectBuffer(uint32_t count)
-	: CGfxIndirectBuffer(count)
+CGLES3IndirectBuffer::CGLES3IndirectBuffer(uint32_t drawCommandCount)
+	: CGfxIndirectBuffer(drawCommandCount)
 
 	, m_buffer(0)
 {

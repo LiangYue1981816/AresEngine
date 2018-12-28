@@ -43,7 +43,7 @@ private:
 
 
 public:
-	CGfxUniformEngine(bool bDynamic);
+	CGfxUniformEngine(void);
 	virtual ~CGfxUniformEngine(void);
 
 

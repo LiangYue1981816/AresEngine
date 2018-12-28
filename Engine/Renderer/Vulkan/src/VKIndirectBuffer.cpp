@@ -1,8 +1,8 @@
 #include "VKRenderer.h"
 
 
-CVKIndirectBuffer::CVKIndirectBuffer(CVKDevice *pDevice, uint32_t count)
-	: CGfxIndirectBuffer(count)
+CVKIndirectBuffer::CVKIndirectBuffer(CVKDevice *pDevice, uint32_t drawCommandCount)
+	: CGfxIndirectBuffer(drawCommandCount)
 	, m_pDevice(pDevice)
 {
 	m_draws.resize(m_count);

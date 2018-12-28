@@ -1,11 +1,11 @@
 #include "GfxHeader.h"
 
 
-CGfxUniformCamera::CGfxUniformCamera(bool bDynamic)
+CGfxUniformCamera::CGfxUniformCamera(void)
 	: m_bDirty(false)
 	, m_hash(INVALID_HASHVALUE)
 {
-	m_ptrUniformBuffer = GfxRenderer()->NewUniformBuffer(sizeof(m_params), bDynamic);
+	m_ptrUniformBuffer = GfxRenderer()->NewUniformBuffer(sizeof(m_params));
 }
 
 CGfxUniformCamera::~CGfxUniformCamera(void)

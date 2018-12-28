@@ -127,11 +127,11 @@ static void SHRotate(float shRedRotate[9], float shGreenRotate[9], float shBlueR
 */
 
 
-CGfxUniformEngine::CGfxUniformEngine(bool bDynamic)
+CGfxUniformEngine::CGfxUniformEngine(void)
 	: m_bDirty(false)
 	, m_hash(INVALID_HASHVALUE)
 {
-	m_ptrUniformBuffer = GfxRenderer()->NewUniformBuffer(sizeof(m_params), bDynamic);
+	m_ptrUniformBuffer = GfxRenderer()->NewUniformBuffer(sizeof(m_params));
 }
 
 CGfxUniformEngine::~CGfxUniformEngine(void)

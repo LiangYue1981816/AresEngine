@@ -138,7 +138,7 @@ public:
 	CGfxTextureCubeMapPtr NewTextureCubeMap(uint32_t name);
 	CGfxTextureCubeMapPtr NewTextureCubeMap(const char *szFileName);
 
-	CGfxUniformBufferPtr NewUniformBuffer(size_t size, bool bDynamic);
+	CGfxUniformBufferPtr NewUniformBuffer(size_t size);
 	CGfxCommandBufferPtr NewCommandBuffer(bool bMainCommandBuffer);
 
 public:

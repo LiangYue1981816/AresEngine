@@ -187,9 +187,9 @@ CGfxTextureCubeMapPtr CGLES3Renderer::NewTextureCubeMap(const char *szFileName)
 	return m_pTextureManager->CreateTextureCubeMap(szFileName);
 }
 
-CGfxUniformBufferPtr CGLES3Renderer::NewUniformBuffer(size_t size, bool bDynamic)
+CGfxUniformBufferPtr CGLES3Renderer::NewUniformBuffer(size_t size)
 {
-	return m_pUniformBufferManager->Create(size, bDynamic);
+	return m_pUniformBufferManager->Create(size);
 }
 
 CGfxCommandBufferPtr CGLES3Renderer::NewCommandBuffer(bool bMainCommandBuffer)

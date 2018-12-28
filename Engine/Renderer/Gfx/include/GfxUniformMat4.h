@@ -5,7 +5,7 @@
 class CALL_API CGfxUniformMat4
 {
 public:
-	CGfxUniformMat4(bool bDynamic);
+	CGfxUniformMat4(void);
 	virtual ~CGfxUniformMat4(void);
 
 

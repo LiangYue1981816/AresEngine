@@ -168,7 +168,7 @@ bool CGLES3MaterialPass::SetUniformVec1(const char *szName, float v0)
 
 	if ((m_pPipeline == nullptr) || (m_pPipeline && m_pPipeline->IsUniformBlockValid(name))) {
 		if (m_pUniformVec1s[name] == nullptr) {
-			m_pUniformVec1s[name] = new CGfxUniformVec1(true);
+			m_pUniformVec1s[name] = new CGfxUniformVec1;
 		}
 
 		m_pUniformVec1s[name]->SetValue(v0);
@@ -184,7 +184,7 @@ bool CGLES3MaterialPass::SetUniformVec2(const char *szName, float v0, float v1)
 
 	if ((m_pPipeline == nullptr) || (m_pPipeline && m_pPipeline->IsUniformBlockValid(name))) {
 		if (m_pUniformVec2s[name] == nullptr) {
-			m_pUniformVec2s[name] = new CGfxUniformVec2(true);
+			m_pUniformVec2s[name] = new CGfxUniformVec2;
 		}
 
 		m_pUniformVec2s[name]->SetValue(v0, v1);
@@ -200,7 +200,7 @@ bool CGLES3MaterialPass::SetUniformVec3(const char *szName, float v0, float v1, 
 
 	if ((m_pPipeline == nullptr) || (m_pPipeline && m_pPipeline->IsUniformBlockValid(name))) {
 		if (m_pUniformVec3s[name] == nullptr) {
-			m_pUniformVec3s[name] = new CGfxUniformVec3(false);
+			m_pUniformVec3s[name] = new CGfxUniformVec3;
 		}
 
 		m_pUniformVec3s[name]->SetValue(v0, v1, v2);
@@ -216,7 +216,7 @@ bool CGLES3MaterialPass::SetUniformVec4(const char *szName, float v0, float v1, 
 
 	if ((m_pPipeline == nullptr) || (m_pPipeline && m_pPipeline->IsUniformBlockValid(name))) {
 		if (m_pUniformVec4s[name] == nullptr) {
-			m_pUniformVec4s[name] = new CGfxUniformVec4(false);
+			m_pUniformVec4s[name] = new CGfxUniformVec4;
 		}
 
 		m_pUniformVec4s[name]->SetValue(v0, v1, v2, v3);
@@ -232,7 +232,7 @@ bool CGLES3MaterialPass::SetUniformMat4(const char *szName, const float *value)
 
 	if ((m_pPipeline == nullptr) || (m_pPipeline && m_pPipeline->IsUniformBlockValid(name))) {
 		if (m_pUniformMat4s[name] == nullptr) {
-			m_pUniformMat4s[name] = new CGfxUniformMat4(false);
+			m_pUniformMat4s[name] = new CGfxUniformMat4;
 		}
 
 		m_pUniformMat4s[name]->SetValue(value);

@@ -113,7 +113,7 @@ public:
 	virtual CGfxTextureCubeMapPtr NewTextureCubeMap(uint32_t name) = 0;
 	virtual CGfxTextureCubeMapPtr NewTextureCubeMap(const char *szFileName) = 0;
 
-	virtual CGfxUniformBufferPtr NewUniformBuffer(size_t size, bool bDynamic) = 0;
+	virtual CGfxUniformBufferPtr NewUniformBuffer(size_t size) = 0;
 	virtual CGfxCommandBufferPtr NewCommandBuffer(bool bMainCommandBuffer) = 0;
 
 public:

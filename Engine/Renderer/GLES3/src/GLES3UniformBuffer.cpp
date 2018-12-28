@@ -1,15 +1,15 @@
 #include "GLES3Renderer.h"
 
 
-CGLES3UniformBuffer::CGLES3UniformBuffer(CGLES3UniformBufferManager *pManager, size_t size, bool bDynamic)
-	: CGfxUniformBuffer(size, bDynamic)
+CGLES3UniformBuffer::CGLES3UniformBuffer(CGLES3UniformBufferManager *pManager, size_t size)
+	: CGfxUniformBuffer(size)
 	, m_pManager(pManager)
 
 	, m_buffer(0)
 {
 	glGenBuffers(1, &m_buffer);
 	glBindBuffer(GL_UNIFORM_BUFFER, m_buffer);
-	glBufferData(GL_UNIFORM_BUFFER, m_size, nullptr, bDynamic ? GL_DYNAMIC_DRAW : GL_STATIC_DRAW);
+	glBufferData(GL_UNIFORM_BUFFER, m_size, nullptr, GL_DYNAMIC_DRAW);
 	glBindBuffer(GL_UNIFORM_BUFFER, 0);
 }
 

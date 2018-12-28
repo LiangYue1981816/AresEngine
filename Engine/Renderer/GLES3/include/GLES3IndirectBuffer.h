@@ -9,7 +9,7 @@ class CGLES3IndirectBuffer : public CGfxIndirectBuffer
 
 
 private:
-	CGLES3IndirectBuffer(uint32_t count);
+	CGLES3IndirectBuffer(uint32_t drawCommandCount);
 	virtual ~CGLES3IndirectBuffer(void);
 
 

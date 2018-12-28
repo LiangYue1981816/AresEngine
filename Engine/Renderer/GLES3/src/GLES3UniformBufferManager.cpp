@@ -15,11 +15,11 @@ CGLES3UniformBufferManager::~CGLES3UniformBufferManager(void)
 	m_pUniformBuffers.clear();
 }
 
-CGLES3UniformBuffer* CGLES3UniformBufferManager::Create(size_t size, bool bDynamic)
+CGLES3UniformBuffer* CGLES3UniformBufferManager::Create(size_t size)
 {
 	mutex_autolock autolock(&lock);
 	{
-		CGLES3UniformBuffer *pUniformBuffer = new CGLES3UniformBuffer(this, size, bDynamic);
+		CGLES3UniformBuffer *pUniformBuffer = new CGLES3UniformBuffer(this, size);
 		m_pUniformBuffers[pUniformBuffer] = pUniformBuffer;
 		return pUniformBuffer;
 	}

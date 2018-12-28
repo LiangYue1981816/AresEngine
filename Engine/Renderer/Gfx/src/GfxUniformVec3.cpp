@@ -1,10 +1,10 @@
 #include "GfxHeader.h"
 
 
-CGfxUniformVec3::CGfxUniformVec3(bool bDynamic)
+CGfxUniformVec3::CGfxUniformVec3(void)
 	: m_bDirty(false)
 {
-	m_ptrUniformBuffer = GfxRenderer()->NewUniformBuffer(sizeof(m_value), bDynamic);
+	m_ptrUniformBuffer = GfxRenderer()->NewUniformBuffer(sizeof(m_value));
 }
 
 CGfxUniformVec3::~CGfxUniformVec3(void)

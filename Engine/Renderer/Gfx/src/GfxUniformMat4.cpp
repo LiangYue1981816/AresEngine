@@ -1,10 +1,10 @@
 #include "GfxHeader.h"
 
 
-CGfxUniformMat4::CGfxUniformMat4(bool bDynamic)
+CGfxUniformMat4::CGfxUniformMat4(void)
 	: m_bDirty(false)
 {
-	m_ptrUniformBuffer = GfxRenderer()->NewUniformBuffer(sizeof(m_value), bDynamic);
+	m_ptrUniformBuffer = GfxRenderer()->NewUniformBuffer(sizeof(m_value));
 }
 
 CGfxUniformMat4::~CGfxUniformMat4(void)

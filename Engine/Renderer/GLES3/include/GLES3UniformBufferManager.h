@@ -14,7 +14,7 @@ private:
 
 
 private:
-	CGLES3UniformBuffer* Create(size_t size, bool bDynamic);
+	CGLES3UniformBuffer* Create(size_t size);
 	void Destroy(CGfxUniformBuffer *pUniformBuffer);
 
 

@@ -30,7 +30,7 @@ CRenderSolutionBase::CRenderSolutionBase(void)
 {
 	m_pMainCamera = new CGfxCamera;
 	m_pShadowCamera = new CGfxCamera;
-	m_pUniformEngine = new CGfxUniformEngine(true);
+	m_pUniformEngine = new CGfxUniformEngine;
 
 	SetVertexAttributes(vertexAttributes, VERTEX_ATTRIBUTE_COUNT);
 	SetInstanceAttributes(instanceAttributes, INSTANCE_ATTRIBUTE_COUNT);

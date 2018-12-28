@@ -5,7 +5,7 @@
 class CALL_API CGfxUniformVec4
 {
 public:
-	CGfxUniformVec4(bool bDynamic);
+	CGfxUniformVec4(void);
 	virtual ~CGfxUniformVec4(void);
 
 
