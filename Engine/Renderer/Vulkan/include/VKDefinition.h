@@ -64,6 +64,7 @@ class CVKMemoryAllocator;
 class CVKMemoryManager;
 
 class CVKBuffer;
+class CVKImage;
 
 class CVKMesh;
 class CVKMeshManager;

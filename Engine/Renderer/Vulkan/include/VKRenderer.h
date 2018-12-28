@@ -15,6 +15,7 @@
 #include "VKMemoryManager.h"
 
 #include "VKBuffer.h"
+#include "VKImage.h"
 
 #include "VKMesh.h"
 #include "VKMeshDraw.h"
