@@ -5,6 +5,7 @@
 class CVKInstanceBuffer : public CGfxInstanceBuffer
 {
 	friend class CVKDevice;
+	friend class CVKMeshDraw;
 
 
 private:

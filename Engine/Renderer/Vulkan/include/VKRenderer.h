@@ -15,10 +15,16 @@
 #include "VKMemoryManager.h"
 
 #include "VKBuffer.h"
+
+#include "VKMesh.h"
+#include "VKMeshDraw.h"
 #include "VKIndexBuffer.h"
 #include "VKVertexBuffer.h"
 #include "VKInstanceBuffer.h"
 #include "VKIndirectBuffer.h"
+#include "VKMeshManager.h"
+#include "VKMeshDrawManager.h"
+
 #include "VKUniformBuffer.h"
 
 

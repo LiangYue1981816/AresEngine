@@ -1,30 +1,26 @@
-#include "GLES3Renderer.h"
+#include "VKRenderer.h"
 
 
-CGLES3MeshDraw::CGLES3MeshDraw(CGLES3MeshDrawManager *pManager, uint32_t name, const CGfxMeshPtr &ptrMesh, int indexDraw, uint32_t instanceFormat, uint32_t instanceBinding)
+CVKMeshDraw::CVKMeshDraw(CVKMeshDrawManager *pManager, uint32_t name, const CGfxMeshPtr &ptrMesh, int indexDraw, uint32_t instanceFormat, uint32_t instanceBinding)
 	: CGfxMeshDraw(name, ptrMesh, indexDraw, instanceFormat, instanceBinding)
 	, m_pManager(pManager)
 
 	, m_pMeshDraw(nullptr)
 	, m_pInstanceBuffer(nullptr)
 	, m_pIndirectBuffer(nullptr)
-	, m_pVertexArrayObject(nullptr)
 {
 	if (ptrMesh.IsValid() && ptrMesh->GetDraw(indexDraw) != nullptr) {
 		m_ptrMesh = ptrMesh;
 		m_pMeshDraw = ptrMesh->GetDraw(indexDraw);
 
-		m_pInstanceBuffer = new CGLES3InstanceBuffer(instanceFormat, instanceBinding);
+		m_pInstanceBuffer = new CVKInstanceBuffer(m_pManager->GetDevice(), instanceFormat, instanceBinding);
 
-		m_pIndirectBuffer = new CGLES3IndirectBuffer(1);
+		m_pIndirectBuffer = new CVKIndirectBuffer(m_pManager->GetDevice(), 1);
 		m_pIndirectBuffer->BufferData(0, m_pMeshDraw->baseVertex, m_pMeshDraw->firstIndex, m_pMeshDraw->indexCount, 0);
-
-		m_pVertexArrayObject = new CGLES3VertexArrayObject;
-		m_pVertexArrayObject->Buffer((CGLES3IndexBuffer *)m_ptrMesh->GetIndexBuffer(), (CGLES3VertexBuffer *)m_ptrMesh->GetVertexBuffer(), m_pInstanceBuffer);
 	}
 }
 
-CGLES3MeshDraw::~CGLES3MeshDraw(void)
+CVKMeshDraw::~CVKMeshDraw(void)
 {
 	if (m_pIndirectBuffer) {
 		delete m_pIndirectBuffer;
@@ -34,21 +30,16 @@ CGLES3MeshDraw::~CGLES3MeshDraw(void)
 		delete m_pInstanceBuffer;
 	}
 
-	if (m_pVertexArrayObject) {
-		delete m_pVertexArrayObject;
-	}
-
 	m_pIndirectBuffer = nullptr;
 	m_pInstanceBuffer = nullptr;
-	m_pVertexArrayObject = nullptr;
 }
 
-void CGLES3MeshDraw::Release(void)
+void CVKMeshDraw::Release(void)
 {
 	m_pManager->Destroy(this);
 }
 
-bool CGLES3MeshDraw::InstanceBufferData(size_t size, const void *pBuffer)
+bool CVKMeshDraw::InstanceBufferData(size_t size, const void *pBuffer)
 {
 	if (m_pInstanceBuffer) {
 		m_pInstanceBuffer->BufferData(size, pBuffer);
@@ -64,7 +55,7 @@ bool CGLES3MeshDraw::InstanceBufferData(size_t size, const void *pBuffer)
 	}
 }
 
-GfxIndexType CGLES3MeshDraw::GetIndexType(void) const
+GfxIndexType CVKMeshDraw::GetIndexType(void) const
 {
 	if (m_ptrMesh.IsValid()) {
 		return m_ptrMesh->GetIndexType();
@@ -74,7 +65,7 @@ GfxIndexType CGLES3MeshDraw::GetIndexType(void) const
 	}
 }
 
-uint32_t CGLES3MeshDraw::GetVertexFormat(void) const
+uint32_t CVKMeshDraw::GetVertexFormat(void) const
 {
 	if (m_ptrMesh.IsValid()) {
 		return m_ptrMesh->GetVertexFormat();
@@ -84,7 +75,7 @@ uint32_t CGLES3MeshDraw::GetVertexFormat(void) const
 	}
 }
 
-uint32_t CGLES3MeshDraw::GetIndexCount(void) const
+uint32_t CVKMeshDraw::GetIndexCount(void) const
 {
 	if (m_pMeshDraw) {
 		return m_pMeshDraw->indexCount;
@@ -94,7 +85,7 @@ uint32_t CGLES3MeshDraw::GetIndexCount(void) const
 	}
 }
 
-uint32_t CGLES3MeshDraw::GetIndexOffset(void) const
+uint32_t CVKMeshDraw::GetIndexOffset(void) const
 {
 	if (m_pMeshDraw) {
 		switch ((int)GetIndexType()) {
@@ -108,7 +99,7 @@ uint32_t CGLES3MeshDraw::GetIndexOffset(void) const
 	}
 }
 
-uint32_t CGLES3MeshDraw::GetInstanceCount(void) const
+uint32_t CVKMeshDraw::GetInstanceCount(void) const
 {
 	if (m_pInstanceBuffer) {
 		return m_pInstanceBuffer->GetInstanceCount();
@@ -118,7 +109,7 @@ uint32_t CGLES3MeshDraw::GetInstanceCount(void) const
 	}
 }
 
-uint32_t CGLES3MeshDraw::GetInstanceFormat(void) const
+uint32_t CVKMeshDraw::GetInstanceFormat(void) const
 {
 	if (m_pInstanceBuffer) {
 		return m_pInstanceBuffer->GetInstanceFormat();
@@ -128,7 +119,7 @@ uint32_t CGLES3MeshDraw::GetInstanceFormat(void) const
 	}
 }
 
-glm::aabb CGLES3MeshDraw::GetLocalAABB(void) const
+glm::aabb CVKMeshDraw::GetLocalAABB(void) const
 {
 	if (m_pMeshDraw) {
 		return m_pMeshDraw->aabb;
@@ -138,13 +129,7 @@ glm::aabb CGLES3MeshDraw::GetLocalAABB(void) const
 	}
 }
 
-void CGLES3MeshDraw::Bind(void *pParam)
+void CVKMeshDraw::Bind(void *pParam)
 {
-	if (m_pVertexArrayObject) {
-		m_pVertexArrayObject->Bind();
-	}
-
-	if (m_pIndirectBuffer) {
-		m_pIndirectBuffer->Bind();
-	}
+	// ...
 }

@@ -347,6 +347,10 @@
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKMemory.h" />
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKMemoryAllocator.h" />
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKMemoryManager.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKMesh.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKMeshDraw.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKMeshDrawManager.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKMeshManager.h" />
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKQueue.h" />
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKRenderer.h" />
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKUniformBuffer.h" />
@@ -500,6 +504,10 @@
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKMemory.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKMemoryAllocator.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKMemoryManager.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKMesh.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKMeshDraw.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKMeshDrawManager.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKMeshManager.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKQueue.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKRenderer.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKUniformBuffer.cpp" />

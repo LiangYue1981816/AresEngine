@@ -64,8 +64,14 @@ class CVKMemoryAllocator;
 class CVKMemoryManager;
 
 class CVKBuffer;
+
+class CVKMesh;
+class CVKMeshManager;
+class CVKMeshDraw;
+class CVKMeshDrawManager;
 class CVKIndexBuffer;
 class CVKVertexBuffer;
 class CVKInstanceBuffer;
 class CVKIndirectBuffer;
+
 class CVKUniformBuffer;
