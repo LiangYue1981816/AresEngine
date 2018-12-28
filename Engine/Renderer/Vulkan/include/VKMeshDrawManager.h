@@ -4,7 +4,7 @@
 
 class CVKMeshDrawManager : public CGfxResourceManager
 {
-	friend class CVKRenderer;
+	friend class CVKDevice;
 	friend class CVKMeshDraw;
 
 

@@ -13,6 +13,9 @@ CVKDevice::CVKDevice(CVKInstance *pInstance)
 
 	, m_pQueue(nullptr)
 	, m_pMemoryManager(nullptr)
+
+	, m_pMeshManager(nullptr)
+	, m_pMeshDrawManager(nullptr)
 {
 	uint32_t deviceIndex;
 	uint32_t queueFamilyIndex;
@@ -23,12 +26,18 @@ CVKDevice::CVKDevice(CVKInstance *pInstance)
 
 	m_pQueue = new CVKQueue(this, queueFamilyIndex);
 	m_pMemoryManager = new CVKMemoryManager(this);
+
+	m_pMeshManager = new CVKMeshManager(this);
+	m_pMeshDrawManager = new CVKMeshDrawManager(this);
 }
 
 CVKDevice::~CVKDevice(void)
 {
-	delete m_pQueue;
+	delete m_pMeshDrawManager;
+	delete m_pMeshManager;
+
 	delete m_pMemoryManager;
+	delete m_pQueue;
 
 	DestroyDevice();
 }
@@ -220,4 +229,14 @@ CVKQueue* CVKDevice::GetQueue(void) const
 CVKMemoryManager* CVKDevice::GetMemoryManager(void) const
 {
 	return m_pMemoryManager;
+}
+
+CVKMeshManager* CVKDevice::GetMeshManager(void) const
+{
+	return m_pMeshManager;
+}
+
+CVKMeshDrawManager* CVKDevice::GetMeshDrawManager(void) const
+{
+	return m_pMeshDrawManager;
 }

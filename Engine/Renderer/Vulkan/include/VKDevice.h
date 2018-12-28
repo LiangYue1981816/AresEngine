@@ -37,6 +37,10 @@ public:
 	CVKQueue* GetQueue(void) const;
 	CVKMemoryManager* GetMemoryManager(void) const;
 
+private:
+	CVKMeshManager* GetMeshManager(void) const;
+	CVKMeshDrawManager* GetMeshDrawManager(void) const;
+
 
 private:
 	VkDevice m_vkDevice;
@@ -49,6 +53,10 @@ private:
 private:
 	CVKQueue *m_pQueue;
 	CVKMemoryManager *m_pMemoryManager;
+
+private:
+	CVKMeshManager *m_pMeshManager;
+	CVKMeshDrawManager *m_pMeshDrawManager;
 
 private:
 	CVKInstance *m_pInstance;
