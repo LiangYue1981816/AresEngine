@@ -13,6 +13,11 @@ CVKUniformBuffer::~CVKUniformBuffer(void)
 
 }
 
+void CVKUniformBuffer::Release(void)
+{
+
+}
+
 bool CVKUniformBuffer::BufferData(size_t offset, size_t size, const void *pBuffer)
 {
 	return true;
