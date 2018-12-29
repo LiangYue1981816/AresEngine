@@ -116,6 +116,10 @@ void CVKMemoryAllocator::InitNodes(uint32_t numNodes)
 {
 	m_root = RB_ROOT;
 	m_nodes = new mem_node* [numNodes];
+
+	for (uint32_t indexNode = 0; indexNode < numNodes; indexNode++) {
+		m_nodes[indexNode] = nullptr;
+	}
 }
 
 void CVKMemoryAllocator::FreeNodes(uint32_t numNodes)
