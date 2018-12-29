@@ -11,7 +11,7 @@ CVKMemoryAllocator::CVKMemoryAllocator(CVKDevice *pDevice, uint32_t memoryTypeIn
 	, m_fullSize(ALIGN_BYTE(memorySize, MIN_ALIGNMENT))
 	, m_vkMemory(VK_NULL_HANDLE)
 
-	, m_root{ nullptr }
+	, m_root{nullptr}
 	, m_nodes(nullptr)
 
 	, pNext(nullptr)
@@ -50,10 +50,10 @@ CVKMemory* CVKMemoryAllocator::AllocMemory(VkDeviceSize alignment, VkDeviceSize 
 	// |___________|_______|__________________|_____________________|____________|
 	//             |       |                  |                     |
 	//             Offset  |                  |                     Next Memory Handle
-	//             |       |                  |
-	//             |       Alignment Offset   |
-	//             |                          |
-	//             |       Alignment Size     New Memory Handle
+	//             |       |                  New Memory Handle     |
+	//             |       Alignment Offset   |                     |
+	//             |                          |                     |
+	//             |       Alignment Size     |  >= MIN_ALIGNMENT   |
 
 	VkDeviceSize alignmentSize = ALIGN_BYTE(size, MIN_ALIGNMENT);
 
