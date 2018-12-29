@@ -12,7 +12,6 @@ private:
 	typedef struct mem_node {
 		mem_node(uint32_t _index)
 		{
-			rb_init_node(&node);
 			index = _index;
 			pListHead = nullptr;
 		}
