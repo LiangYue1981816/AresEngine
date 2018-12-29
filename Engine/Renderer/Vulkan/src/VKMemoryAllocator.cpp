@@ -1,8 +1,7 @@
 #include "VKRenderer.h"
 
 
-#define MIN_ALIGNMENT 64
-#define NODE_INDEX(size) (((size) / MIN_ALIGNMENT) - 1)
+#define NODE_INDEX(size) (((uint32_t)(size) / MIN_ALIGNMENT) - 1)
 
 CVKMemoryAllocator::CVKMemoryAllocator(CVKDevice *pDevice, uint32_t memoryTypeIndex, VkDeviceSize memorySize)
 	: m_pDevice(pDevice)
@@ -116,28 +115,27 @@ void CVKMemoryAllocator::FreeMemory(CVKMemory *pMemory)
 void CVKMemoryAllocator::InitNodes(uint32_t numNodes)
 {
 	m_root = RB_ROOT;
-	m_nodes = (mem_node *)malloc(sizeof(mem_node) * numNodes);
-
-	for (uint32_t indexNode = 0; indexNode < numNodes; indexNode++) {
-		m_nodes[indexNode].size = (indexNode + 1) * MIN_ALIGNMENT;
-		m_nodes[indexNode].pListHead = nullptr;
-	}
+	m_nodes = new mem_node* [numNodes];
 }
 
 void CVKMemoryAllocator::FreeNodes(uint32_t numNodes)
 {
 	if (m_nodes) {
 		for (uint32_t indexNode = 0; indexNode < numNodes; indexNode++) {
-			if (CVKMemory *pMemory = m_nodes[indexNode].pListHead) {
-				CVKMemory *pMemoryNext = nullptr;
-				do {
-					pMemoryNext = pMemory->pFreeNext;
-					delete pMemory;
-				} while  ((pMemory = pMemoryNext) != nullptr);
+			if (m_nodes[indexNode]) {
+				if (CVKMemory *pMemory = m_nodes[indexNode]->pListHead) {
+					CVKMemory *pMemoryNext = nullptr;
+					do {
+						pMemoryNext = pMemory->pFreeNext;
+						delete pMemory;
+					} while ((pMemory = pMemoryNext) != nullptr);
+				}
+
+				delete m_nodes[indexNode];
 			}
 		}
 
-		free(m_nodes);
+		delete[] m_nodes;
 	}
 }
 
@@ -146,7 +144,13 @@ void CVKMemoryAllocator::InsertMemory(CVKMemory *pMemory)
 	ASSERT(pMemory->bInUse == false);
 	ASSERT(pMemory->m_aligmentOffset == 0);
 
-	mem_node *pMemoryNode = &m_nodes[NODE_INDEX(pMemory->m_size)];
+	uint32_t indexNode = NODE_INDEX(pMemory->m_size);
+
+	if (m_nodes[indexNode] == nullptr) {
+		m_nodes[indexNode] =  new mem_node(indexNode);
+	}
+
+	mem_node *pMemoryNode = m_nodes[indexNode];
 	ASSERT(pMemoryNode->size == pMemory->m_size);
 
 	rb_node **node = &m_root.rb_node;
@@ -192,7 +196,7 @@ void CVKMemoryAllocator::RemoveMemory(CVKMemory *pMemory)
 	ASSERT(pMemory->bInUse == false);
 	ASSERT(pMemory->m_aligmentOffset == 0);
 
-	mem_node *pMemoryNode = &m_nodes[NODE_INDEX(pMemory->m_size)];
+	mem_node *pMemoryNode = m_nodes[NODE_INDEX(pMemory->m_size)];
 
 	if (pMemory->pFreeNext) {
 		pMemory->pFreeNext->pFreePrev = pMemory->pFreePrev;
@@ -208,6 +212,7 @@ void CVKMemoryAllocator::RemoveMemory(CVKMemory *pMemory)
 
 	if (pMemoryNode->pListHead == nullptr) {
 		rb_erase(&pMemoryNode->node, &m_root);
+		delete pMemoryNode;
 	}
 }
 
@@ -222,7 +227,7 @@ CVKMemory* CVKMemoryAllocator::MergeMemory(CVKMemory *pMemory, CVKMemory *pMemor
 	ASSERT(pMemory->m_offset + pMemory->m_size == pMemoryNext->m_offset);
 
 	pMemory->m_size = pMemoryNext->m_size + pMemory->m_size;
-	pMemory->pNext =  pMemoryNext->pNext;
+	pMemory->pNext = pMemoryNext->pNext;
 
 	if (pMemoryNext->pNext) {
 		pMemoryNext->pNext->pPrev = pMemory;
