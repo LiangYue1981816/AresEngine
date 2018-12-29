@@ -30,6 +30,8 @@ CVKMemoryAllocator::CVKMemoryAllocator(CVKDevice *pDevice, uint32_t memoryTypeIn
 
 CVKMemoryAllocator::~CVKMemoryAllocator(void)
 {
+	ASSERT(m_freeSize == m_fullSize);
+
 	FreeNodes((uint32_t)(m_fullSize / MIN_ALIGNMENT));
 
 	if (m_vkMemory) {
