@@ -10,15 +10,20 @@ class CVKMemoryAllocator
 
 private:
 	typedef struct mem_node {
-		mem_node(uint32_t index)
+		mem_node(uint32_t _index)
 		{
 			rb_init_node(&node);
+			index = _index;
 			pListHead = nullptr;
-			size = (index + 1) * MIN_ALIGNMENT;
+		}
+
+		uint32_t size(void)
+		{
+			return (index + 1) * MIN_ALIGNMENT;
 		}
 
 		rb_node node;
-		uint32_t size;
+		uint32_t index;
 		CVKMemory *pListHead;
 	} mem_node;
 
