@@ -20,8 +20,8 @@ void CRenderSolutionDefault::CreateFrameBuffer(void)
 	m_ptrDepthStencilTexture = GfxRenderer()->NewRenderTexture(HashValue("DepthStencilTexture"));
 	m_ptrDepthStencilTexture->Create(GFX_PIXELFORMAT_D24_UNORM_S8_UINT_PACK32, GfxRenderer()->GetSwapChain()->GetWidth(), GfxRenderer()->GetSwapChain()->GetHeight());
 
-	for (int index = 0; index < CGfxSwapChain::SWAPCHAIN_IMAGE_COUNT; index++) {
-		CGfxRenderTexturePtr ptrColorTexture = GfxRenderer()->GetSwapChain()->GetRenderTexture(index);
+	for (int index = 0; index < CGfxSwapChain::SWAPCHAIN_FRAME_COUNT; index++) {
+		CGfxRenderTexturePtr ptrColorTexture = GfxRenderer()->GetSwapChain()->GetFrameTexture(index);
 		m_ptrFrameBufferScreen[index] = GfxRenderer()->NewFrameBuffer(ptrColorTexture->GetWidth(), ptrColorTexture->GetHeight());
 		m_ptrFrameBufferScreen[index]->SetAttachmentTexture(0, m_ptrDepthStencilTexture);
 		m_ptrFrameBufferScreen[index]->SetAttachmentTexture(1, ptrColorTexture);
@@ -38,7 +38,7 @@ void CRenderSolutionDefault::DestroyFrameBuffer(void)
 {
 	m_ptrDepthStencilTexture.Release();
 
-	for (int index = 0; index < CGfxSwapChain::SWAPCHAIN_IMAGE_COUNT; index++) {
+	for (int index = 0; index < CGfxSwapChain::SWAPCHAIN_FRAME_COUNT; index++) {
 		m_ptrFrameBufferScreen[index].Release();
 	}
 }
@@ -51,8 +51,8 @@ void CRenderSolutionDefault::CreateFrameBufferMSAA(int samples)
 	m_ptrDepthStencilTextureMSAA = GfxRenderer()->NewRenderTexture(HashValue("DepthStencilTextureMSAA"));
 	m_ptrDepthStencilTextureMSAA->Create(GFX_PIXELFORMAT_D24_UNORM_S8_UINT_PACK32, GfxRenderer()->GetSwapChain()->GetWidth(), GfxRenderer()->GetSwapChain()->GetHeight(), samples);
 
-	for (int index = 0; index < CGfxSwapChain::SWAPCHAIN_IMAGE_COUNT; index++) {
-		CGfxRenderTexturePtr ptrColorTexture = GfxRenderer()->GetSwapChain()->GetRenderTexture(index);
+	for (int index = 0; index < CGfxSwapChain::SWAPCHAIN_FRAME_COUNT; index++) {
+		CGfxRenderTexturePtr ptrColorTexture = GfxRenderer()->GetSwapChain()->GetFrameTexture(index);
 		m_ptrFrameBufferScreenMSAA[index] = GfxRenderer()->NewFrameBuffer(ptrColorTexture->GetWidth(), ptrColorTexture->GetHeight());
 		m_ptrFrameBufferScreenMSAA[index]->SetAttachmentTexture(0, m_ptrDepthStencilTextureMSAA);
 		m_ptrFrameBufferScreenMSAA[index]->SetAttachmentTexture(1, m_ptrColorTextureMSAA);
@@ -73,7 +73,7 @@ void CRenderSolutionDefault::DestroyFrameBufferMSAA(void)
 	m_ptrColorTextureMSAA.Release();
 	m_ptrDepthStencilTextureMSAA.Release();
 
-	for (int index = 0; index < CGfxSwapChain::SWAPCHAIN_IMAGE_COUNT; index++) {
+	for (int index = 0; index < CGfxSwapChain::SWAPCHAIN_FRAME_COUNT; index++) {
 		m_ptrFrameBufferScreenMSAA[index].Release();
 	}
 }
@@ -106,7 +106,7 @@ void CRenderSolutionDefault::Render(int indexQueue)
 		static const uint32_t nameDefaultPass = HashValue("Default");
 
 		const CGfxRenderPassPtr &ptrRenderPass = m_bEnableMSAA ? m_ptrRenderPassMSAA : m_ptrRenderPass;
-		const CGfxFrameBufferPtr &ptrFrameBuffer = m_bEnableMSAA ? m_ptrFrameBufferScreenMSAA[GfxRenderer()->GetSwapChain()->GetRenderTextureIndex()] : m_ptrFrameBufferScreen[GfxRenderer()->GetSwapChain()->GetRenderTextureIndex()];
+		const CGfxFrameBufferPtr &ptrFrameBuffer = m_bEnableMSAA ? m_ptrFrameBufferScreenMSAA[GfxRenderer()->GetSwapChain()->GetFrameIndex()] : m_ptrFrameBufferScreen[GfxRenderer()->GetSwapChain()->GetFrameIndex()];
 
 		GfxRenderer()->CmdBeginRenderPass(m_ptrMainCommandBuffer[indexQueue], ptrFrameBuffer, ptrRenderPass);
 		{

@@ -20,11 +20,11 @@ public:
 
 public:
 	virtual void Present(void) = 0;
-	virtual void AcquireNextTexture(void) = 0;
+	virtual void AcquireNextFrame(void) = 0;
 
 public:
-	virtual int GetRenderTextureIndex(void) const = 0;
-	virtual const CGfxRenderTexturePtr& GetRenderTexture(int index) const = 0;
+	virtual int GetFrameIndex(void) const = 0;
+	virtual const CGfxRenderTexturePtr& GetFrameTexture(int index) const = 0;
 
 public:
 	int GetWidth(void) const
@@ -49,5 +49,5 @@ protected:
 	GfxPixelFormat m_pixelFormat;
 
 public:
-	static const uint32_t SWAPCHAIN_IMAGE_COUNT = 3;
+	static const uint32_t SWAPCHAIN_FRAME_COUNT = 3;
 };

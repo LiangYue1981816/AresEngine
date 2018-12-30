@@ -10,7 +10,7 @@ CVKIndexBuffer::CVKIndexBuffer(CVKDevice *pDevice, GfxIndexType type, size_t siz
 	, m_transferSize(0)
 {
 	if (bDynamic) {
-		m_ptrBuffer = CVKBufferPtr(new CVKBuffer(m_pDevice, VK_BUFFER_USAGE_INDEX_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, CGfxSwapChain::SWAPCHAIN_IMAGE_COUNT * m_size));
+		m_ptrBuffer = CVKBufferPtr(new CVKBuffer(m_pDevice, VK_BUFFER_USAGE_INDEX_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, CGfxSwapChain::SWAPCHAIN_FRAME_COUNT * m_size));
 	}
 	else {
 		m_ptrBuffer = CVKBufferPtr(new CVKBuffer(m_pDevice, VK_BUFFER_USAGE_INDEX_BUFFER_BIT | VK_BUFFER_USAGE_TRANSFER_DST_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, m_size));
@@ -36,7 +36,7 @@ bool CVKIndexBuffer::BufferData(size_t offset, size_t size, const void *pBuffer)
 		return m_ptrBufferTransfer->BufferData(offset, size, pBuffer);
 	}
 	else {
-		return m_ptrBuffer->BufferData(VKRenderer()->GetSwapChain()->GetRenderTextureIndex() * m_size + offset, size, pBuffer);
+		return m_ptrBuffer->BufferData(VKRenderer()->GetSwapChain()->GetFrameIndex() * m_size + offset, size, pBuffer);
 	}
 }
 

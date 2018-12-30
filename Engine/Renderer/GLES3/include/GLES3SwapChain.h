@@ -14,20 +14,18 @@ private:
 
 public:
 	void Present(void);
-	void AcquireNextTexture(void);
+	void AcquireNextFrame(void);
 
 public:
-	int GetRenderTextureIndex(void) const;
-	const CGfxRenderTexturePtr& GetRenderTexture(int index) const;
+	int GetFrameIndex(void) const;
+	const CGfxRenderTexturePtr& GetFrameTexture(int index) const;
 
 
 private:
 	void *m_hDC;
-
-private:
 	uint32_t m_fbo;
 
 private:
-	int m_indexRenderTexture;
-	CGfxRenderTexturePtr m_ptrRenderTexture;
+	int m_indexFrame;
+	CGfxRenderTexturePtr m_ptrFrameTexture;
 };
