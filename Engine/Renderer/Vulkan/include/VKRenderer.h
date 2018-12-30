@@ -21,6 +21,7 @@
 #include "VKIndirectBuffer.h"
 
 #include "VKTexture.h"
+#include "VKTexture2D.h"
 #include "VKTextureManager.h"
 
 #include "VKUniformBuffer.h"

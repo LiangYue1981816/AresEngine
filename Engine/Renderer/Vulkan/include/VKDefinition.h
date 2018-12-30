@@ -71,6 +71,7 @@ class CVKInstanceBuffer;
 class CVKIndirectBuffer;
 
 class CVKTexture;
+class CVKTexture2D;
 class CVKTextureManager;
 
 class CVKUniformBuffer;

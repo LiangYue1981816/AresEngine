@@ -8,7 +8,7 @@ class CVKTexture
 	friend class CVKTextureManager;
 
 
-private:
+protected:
 	CVKTexture(CVKDevice *pDevice, CVKTextureManager *pManager);
 	virtual ~CVKTexture(void);
 
@@ -18,14 +18,14 @@ protected:
 	void Destroy(void);
 
 
-private:
+protected:
 	VkImage m_vkImage;
 	VkImageView m_vkImageView;
 	CVKMemory *m_pMemory;
 
-private:
+protected:
 	CVKTextureManager *m_pManager;
 
-private:
+protected:
 	CVKDevice *m_pDevice;
 };
