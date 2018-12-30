@@ -5,58 +5,47 @@
 #include "GLES3Extension.h"
 #include "GLES3Definition.h"
 
-#include "GLES3SwapChain.h"
-
-#include "GLES3RenderPass.h"
-#include "GLES3RenderPassManager.h"
-
-#include "GLES3FrameBuffer.h"
-#include "GLES3FrameBufferManager.h"
-
-#include "GLES3Mesh.h"
-#include "GLES3MeshManager.h"
-
-#include "GLES3MeshDraw.h"
-#include "GLES3MeshDrawManager.h"
-
 #include "GLES3IndexBuffer.h"
 #include "GLES3VertexBuffer.h"
 #include "GLES3InstanceBuffer.h"
 #include "GLES3IndirectBuffer.h"
 #include "GLES3VertexArrayObject.h"
-
 #include "GLES3Sampler.h"
-#include "GLES3SamplerManager.h"
-
 #include "GLES3Texture.h"
 #include "GLES3Texture2D.h"
 #include "GLES3Texture2DArray.h"
 #include "GLES3TextureCubeMap.h"
-#include "GLES3TextureManager.h"
-
 #include "GLES3RenderTexture.h"
-#include "GLES3RenderTextureManager.h"
-
 #include "GLES30Shader.h"
 #include "GLES31Shader.h"
-#include "GLES3ShaderManager.h"
-
 #include "GLES30Pipeline.h"
 #include "GLES31Pipeline.h"
 #include "GLES30PipelineCompute.h"
 #include "GLES31PipelineCompute.h"
 #include "GLES30PipelineGraphics.h"
 #include "GLES31PipelineGraphics.h"
-#include "GLES3PipelineManager.h"
 
+#include "GLES3SwapChain.h"
+#include "GLES3RenderPass.h"
+#include "GLES3FrameBuffer.h"
+#include "GLES3Mesh.h"
+#include "GLES3MeshDraw.h"
 #include "GLES3Material.h"
 #include "GLES3MaterialPass.h"
-#include "GLES3MaterialManager.h"
-
 #include "GLES3UniformBuffer.h"
-#include "GLES3UniformBufferManager.h"
-
 #include "GLES3CommandBuffer.h"
+
+#include "GLES3SamplerManager.h"
+#include "GLES3TextureManager.h"
+#include "GLES3RenderTextureManager.h"
+#include "GLES3ShaderManager.h"
+#include "GLES3PipelineManager.h"
+#include "GLES3RenderPassManager.h"
+#include "GLES3FrameBufferManager.h"
+#include "GLES3MeshManager.h"
+#include "GLES3MeshDrawManager.h"
+#include "GLES3MaterialManager.h"
+#include "GLES3UniformBufferManager.h"
 #include "GLES3CommandBufferManager.h"
 
 
