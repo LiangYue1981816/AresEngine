@@ -26,7 +26,7 @@
 #include "GLES3Sampler.h"
 #include "GLES3SamplerManager.h"
 
-#include "GLES3TextureBase.h"
+#include "GLES3Texture.h"
 #include "GLES3Texture2D.h"
 #include "GLES3Texture2DArray.h"
 #include "GLES3TextureCubeMap.h"
@@ -39,8 +39,8 @@
 #include "GLES31Shader.h"
 #include "GLES3ShaderManager.h"
 
-#include "GLES30PipelineBase.h"
-#include "GLES31PipelineBase.h"
+#include "GLES30Pipeline.h"
+#include "GLES31Pipeline.h"
 #include "GLES30PipelineCompute.h"
 #include "GLES31PipelineCompute.h"
 #include "GLES30PipelineGraphics.h"

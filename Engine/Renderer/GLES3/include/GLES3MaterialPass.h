@@ -34,9 +34,9 @@ public:
 	CGfxPipelineGraphics* GetPipeline(void) const;
 
 public:
-	static void Bind(CGLES3PipelineBase *pPipeline, const CGLES3MaterialPass *pPass, uint32_t &indexTexUnit);
-	static void BindUniforms(CGLES3PipelineBase *pPipeline, const CGLES3MaterialPass *pPass);
-	static void BindTextures(CGLES3PipelineBase *pPipeline, const CGLES3MaterialPass *pPass, uint32_t &indexTexUnit);
+	static void Bind(CGLES3Pipeline *pPipeline, const CGLES3MaterialPass *pPass, uint32_t &indexTexUnit);
+	static void BindUniforms(CGLES3Pipeline *pPipeline, const CGLES3MaterialPass *pPass);
+	static void BindTextures(CGLES3Pipeline *pPipeline, const CGLES3MaterialPass *pPass, uint32_t &indexTexUnit);
 
 
 private:

@@ -23,7 +23,7 @@ class CGLES3VertexArrayObject;
 class CGLES3Sampler;
 class CGLES3SamplerManager;
 
-class CGLES3TextureBase;
+class CGLES3Texture;
 class CGLES3Texture2D;
 class CGLES3Texture2DArray;
 class CGLES3TextureCubeMap;
@@ -35,7 +35,7 @@ class CGLES3RenderTextureManager;
 class CGLES3Shader;
 class CGLES3ShaderManager;
 
-class CGLES3PipelineBase;
+class CGLES3Pipeline;
 class CGLES3PipelineCompute;
 class CGLES3PipelineGraphics;
 class CGLES3PipelineManager;

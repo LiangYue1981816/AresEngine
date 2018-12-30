@@ -2,7 +2,7 @@
 
 
 CGLES3Texture2DArray::CGLES3Texture2DArray(CGLES3TextureManager *pManager, uint32_t name)
-	: CGLES3TextureBase(pManager)
+	: CGLES3Texture(pManager)
 	, CGfxTexture2DArray(name)
 {
 
@@ -20,12 +20,12 @@ void CGLES3Texture2DArray::Release(void)
 
 uint32_t CGLES3Texture2DArray::GetTarget(void) const
 {
-	return CGLES3TextureBase::GetTarget();
+	return CGLES3Texture::GetTarget();
 }
 
 bool CGLES3Texture2DArray::Create(uint32_t texture)
 {
-	return CGLES3TextureBase::Create(GL_TEXTURE_2D_ARRAY, texture);
+	return CGLES3Texture::Create(GL_TEXTURE_2D_ARRAY, texture);
 }
 
 bool CGLES3Texture2DArray::Create(GfxPixelFormat pixelFormat, int width, int height, int levels, int layers)
@@ -54,7 +54,7 @@ bool CGLES3Texture2DArray::Create(GfxPixelFormat pixelFormat, int width, int hei
 
 void CGLES3Texture2DArray::Destroy(void)
 {
-	CGLES3TextureBase::Destroy();
+	CGLES3Texture::Destroy();
 
 	for (const auto &itLayerSize : m_size) {
 		for (const auto &itLevelSize : itLayerSize.second) {

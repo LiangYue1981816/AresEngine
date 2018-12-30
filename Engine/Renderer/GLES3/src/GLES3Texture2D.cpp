@@ -2,7 +2,7 @@
 
 
 CGLES3Texture2D::CGLES3Texture2D(CGLES3TextureManager *pManager, uint32_t name)
-	: CGLES3TextureBase(pManager)
+	: CGLES3Texture(pManager)
 	, CGfxTexture2D(name)
 {
 
@@ -20,12 +20,12 @@ void CGLES3Texture2D::Release(void)
 
 uint32_t CGLES3Texture2D::GetTarget(void) const
 {
-	return CGLES3TextureBase::GetTarget();
+	return CGLES3Texture::GetTarget();
 }
 
 bool CGLES3Texture2D::Create(uint32_t texture)
 {
-	return CGLES3TextureBase::Create(GL_TEXTURE_2D, texture);
+	return CGLES3Texture::Create(GL_TEXTURE_2D, texture);
 }
 
 bool CGLES3Texture2D::Create(GfxPixelFormat pixelFormat, int width, int height, int levels, int samples)
@@ -70,7 +70,7 @@ bool CGLES3Texture2D::Create(GfxPixelFormat pixelFormat, int width, int height, 
 
 void CGLES3Texture2D::Destroy(void)
 {
-	CGLES3TextureBase::Destroy();
+	CGLES3Texture::Destroy();
 
 	for (const auto &itLevelSize : m_size) {
 		CGfxProfiler::DecTextureDataSize(itLevelSize.second);

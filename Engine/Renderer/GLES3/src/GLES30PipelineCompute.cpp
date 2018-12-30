@@ -26,17 +26,17 @@ void CGLES3PipelineCompute::Destroy(void)
 
 bool CGLES3PipelineCompute::IsTextureValid(uint32_t name) const
 {
-	return CGLES3PipelineBase::IsTextureValid(name);
+	return CGLES3Pipeline::IsTextureValid(name);
 }
 
 bool CGLES3PipelineCompute::IsUniformValid(uint32_t name) const
 {
-	return CGLES3PipelineBase::IsUniformValid(name);
+	return CGLES3Pipeline::IsUniformValid(name);
 }
 
 bool CGLES3PipelineCompute::IsUniformBlockValid(uint32_t name) const
 {
-	return CGLES3PipelineBase::IsUniformBlockValid(name);
+	return CGLES3Pipeline::IsUniformBlockValid(name);
 }
 
 void CGLES3PipelineCompute::Bind(void)

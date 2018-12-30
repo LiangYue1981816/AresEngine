@@ -2,7 +2,7 @@
 #include "GLES3Renderer.h"
 
 
-class CGLES3TextureCubeMap : public CGLES3TextureBase, public CGfxTextureCubeMap
+class CGLES3TextureCubeMap : public CGLES3Texture, public CGfxTextureCubeMap
 {
 	friend class CGLES3TextureManager;
 

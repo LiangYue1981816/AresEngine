@@ -2,7 +2,7 @@
 
 
 CGLES3TextureCubeMap::CGLES3TextureCubeMap(CGLES3TextureManager *pManager, uint32_t name)
-	: CGLES3TextureBase(pManager)
+	: CGLES3Texture(pManager)
 	, CGfxTextureCubeMap(name)
 {
 
@@ -20,12 +20,12 @@ void CGLES3TextureCubeMap::Release(void)
 
 uint32_t CGLES3TextureCubeMap::GetTarget(void) const
 {
-	return CGLES3TextureBase::GetTarget();
+	return CGLES3Texture::GetTarget();
 }
 
 bool CGLES3TextureCubeMap::Create(uint32_t texture)
 {
-	return CGLES3TextureBase::Create(GL_TEXTURE_CUBE_MAP, texture);
+	return CGLES3Texture::Create(GL_TEXTURE_CUBE_MAP, texture);
 }
 
 bool CGLES3TextureCubeMap::Create(GfxPixelFormat pixelFormat, int width, int height, int levels)
@@ -53,7 +53,7 @@ bool CGLES3TextureCubeMap::Create(GfxPixelFormat pixelFormat, int width, int hei
 
 void CGLES3TextureCubeMap::Destroy(void)
 {
-	CGLES3TextureBase::Destroy();
+	CGLES3Texture::Destroy();
 
 	for (const auto &itFaceSize : m_size) {
 		for (const auto &itLevelSize : itFaceSize.second) {

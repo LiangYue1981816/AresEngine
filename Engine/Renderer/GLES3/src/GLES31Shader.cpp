@@ -139,7 +139,7 @@ void CGLES3Shader::SetSampledImageLocation(const char *szName)
 	}
 }
 
-bool CGLES3Shader::BindTexture(uint32_t name, CGLES3TextureBase *pTexture, CGLES3Sampler *pSampler, uint32_t unit)
+bool CGLES3Shader::BindTexture(uint32_t name, CGLES3Texture *pTexture, CGLES3Sampler *pSampler, uint32_t unit)
 {
 	const auto &itLocation = m_sampledImageLocations.find(name);
 

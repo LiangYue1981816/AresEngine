@@ -4,7 +4,7 @@
 #include "GLES3Renderer.h"
 
 
-class CGLES3PipelineGraphics : public CGLES3PipelineBase, public CGfxPipelineGraphics
+class CGLES3PipelineGraphics : public CGLES3Pipeline, public CGfxPipelineGraphics
 {
 	friend class CGLES3PipelineManager;
 
