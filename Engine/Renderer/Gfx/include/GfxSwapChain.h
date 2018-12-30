@@ -23,8 +23,8 @@ public:
 	virtual void AcquireNextTexture(void) = 0;
 
 public:
-	virtual int GetTextureIndex(void) const = 0;
-	virtual const CGfxTexture2DPtr& GetTexture(int index) const = 0;
+	virtual int GetRenderTextureIndex(void) const = 0;
+	virtual const CGfxRenderTexturePtr& GetRenderTexture(int index) const = 0;
 
 public:
 	int GetWidth(void) const

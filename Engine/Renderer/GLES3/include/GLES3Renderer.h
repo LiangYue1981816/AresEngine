@@ -205,7 +205,7 @@ private:
 	void BindPipelineGraphics(CGfxPipelineGraphics *pPipelineGraphics);
 	void BindUniformBuffer(CGfxUniformBuffer *pUniformBuffer, uint32_t nameUniform);
 	void BindMaterialPass(CGfxMaterialPass *pPass);
-	void BindInputTexture(const char *szName, CGfxTextureBase *pTexture);
+	void BindInputTexture(const char *szName, CGfxRenderTexture *pTexture);
 
 private:
 	void Uniform1i(uint32_t name, int v0) const;

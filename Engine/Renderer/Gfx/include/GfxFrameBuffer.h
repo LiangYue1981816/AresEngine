@@ -18,8 +18,8 @@ public:
 
 
 public:
-	virtual bool SetAttachmentTexture(int indexAttachment, CGfxTexture2DPtr &ptrAttachmentTexture) = 0;
-	virtual CGfxTexture2DPtr GetAttachmentTexture(int indexAttachment) const = 0;
+	virtual bool SetAttachmentTexture(int indexAttachment, CGfxRenderTexturePtr &ptrAttachmentTexture) = 0;
+	virtual CGfxRenderTexturePtr GetAttachmentTexture(int indexAttachment) const = 0;
 
 public:
 	int GetWidth(void) const

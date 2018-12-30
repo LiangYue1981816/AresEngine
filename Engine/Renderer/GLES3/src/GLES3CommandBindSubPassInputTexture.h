@@ -25,9 +25,9 @@ public:
 			if (m_ptrFrameBuffer.IsValid() && m_ptrRenderPass.IsValid()) {
 				if (const SubPassInformation *pSubPassInformation = m_ptrRenderPass->GetSubPass(m_indexSubPass)) {
 					for (const auto &itInputAttachment : pSubPassInformation->inputAttachments) {
-						const CGfxTexture2DPtr ptrInputTexture = m_ptrFrameBuffer->GetAttachmentTexture(itInputAttachment.first);
+						const CGfxRenderTexturePtr ptrInputTexture = m_ptrFrameBuffer->GetAttachmentTexture(itInputAttachment.first);
 						if (ptrInputTexture.IsValid()) {
-							GLES3Renderer()->BindInputTexture(itInputAttachment.second.c_str(), (CGfxTextureBase *)ptrInputTexture.GetPointer());
+							GLES3Renderer()->BindInputTexture(itInputAttachment.second.c_str(), (CGfxRenderTexture *)ptrInputTexture.GetPointer());
 						}
 					}
 				}

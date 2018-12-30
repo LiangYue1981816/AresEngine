@@ -38,7 +38,7 @@ bool CVKVertexBuffer::BufferData(size_t offset, size_t size, const void *pBuffer
 		return m_ptrBufferTransfer->BufferData(offset, size, pBuffer);
 	}
 	else {
-		return m_ptrBuffer->BufferData(VKRenderer()->GetSwapChain()->GetTextureIndex() * m_size + offset, size, pBuffer);
+		return m_ptrBuffer->BufferData(VKRenderer()->GetSwapChain()->GetRenderTextureIndex() * m_size + offset, size, pBuffer);
 	}
 }
 

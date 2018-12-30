@@ -472,9 +472,9 @@ void CGLES3Renderer::BindMaterialPass(CGfxMaterialPass *pPass)
 	}
 }
 
-void CGLES3Renderer::BindInputTexture(const char *szName, CGfxTextureBase *pTexture)
+void CGLES3Renderer::BindInputTexture(const char *szName, CGfxRenderTexture *pTexture)
 {
-	m_pGlobalMaterialPass->SetTexture2D(szName, ((CGLES3TextureBase *)pTexture)->GetTexture());
+	m_pGlobalMaterialPass->SetTexture2D(szName, ((CGLES3RenderTexture *)pTexture)->GetTexture());
 	m_pGlobalMaterialPass->SetSampler(szName, GFX_MINFILTER_NEAREST, GFX_MAGFILTER_LINEAR, GFX_ADDRESS_REPEAT);
 }
 

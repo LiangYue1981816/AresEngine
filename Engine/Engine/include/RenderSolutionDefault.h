@@ -33,13 +33,13 @@ private:
 
 private:
 	CGfxRenderPassPtr m_ptrRenderPass;
-	CGfxTexture2DPtr m_ptrDepthStencilTexture;
+	CGfxRenderTexturePtr m_ptrDepthStencilTexture;
 	CGfxFrameBufferPtr m_ptrFrameBufferScreen[CGfxSwapChain::SWAPCHAIN_IMAGE_COUNT];
 
 private:
 	CGfxRenderPassPtr m_ptrRenderPassMSAA;
-	CGfxTexture2DPtr m_ptrColorTextureMSAA;
-	CGfxTexture2DPtr m_ptrDepthStencilTextureMSAA;
+	CGfxRenderTexturePtr m_ptrColorTextureMSAA;
+	CGfxRenderTexturePtr m_ptrDepthStencilTextureMSAA;
 	CGfxFrameBufferPtr m_ptrFrameBufferScreenMSAA[CGfxSwapChain::SWAPCHAIN_IMAGE_COUNT];
 
 private:

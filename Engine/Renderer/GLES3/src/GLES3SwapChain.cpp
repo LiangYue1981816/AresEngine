@@ -6,10 +6,12 @@ CGLES3SwapChain::CGLES3SwapChain(void *hDC, int width, int height, GfxPixelForma
 
 	, m_hDC(hDC)
 	, m_fbo(0)
+
+	, m_indexRenderTexture(0)
 {
 	if (m_width != 0 && m_height != 0 && m_pixelFormat != GFX_PIXELFORMAT_UNDEFINED) {
-		m_ptrTexture = GLES3Renderer()->NewTexture2D(HashValue("SwapChain Color Texture"));
-		m_ptrTexture->Create(m_pixelFormat, m_width, m_height, 1, 0);
+		m_ptrRenderTexture = GLES3Renderer()->NewRenderTexture(HashValue("SwapChain Color Texture"));
+		m_ptrRenderTexture->Create(m_pixelFormat, m_width, m_height);
 
 		glGenFramebuffers(1, &m_fbo);
 		glBindFramebuffer(GL_FRAMEBUFFER, m_fbo);
@@ -17,7 +19,7 @@ CGLES3SwapChain::CGLES3SwapChain(void *hDC, int width, int height, GfxPixelForma
 			const float color[] = { 0.0f, 0.0f, 0.0f, 0.0f };
 			const eastl::vector<uint32_t> drawBuffers{ GL_COLOR_ATTACHMENT0 };
 
-			glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, ((CGLES3Texture2D *)m_ptrTexture.GetPointer())->GetTarget(), ((CGLES3Texture2D *)m_ptrTexture.GetPointer())->GetTexture(), 0);
+			glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, ((CGLES3RenderTexture *)m_ptrRenderTexture.GetPointer())->GetTarget(), ((CGLES3RenderTexture *)m_ptrRenderTexture.GetPointer())->GetTexture(), 0);
 			glClearBufferfv(GL_COLOR, 0, color);
 
 			glReadBuffers((int)drawBuffers.size(), drawBuffers.data());
@@ -63,15 +65,15 @@ void CGLES3SwapChain::Present(void)
 
 void CGLES3SwapChain::AcquireNextTexture(void)
 {
-	m_indexTexture = (m_indexTexture + 1) % SWAPCHAIN_IMAGE_COUNT;
+	m_indexRenderTexture = (m_indexRenderTexture + 1) % SWAPCHAIN_IMAGE_COUNT;
 }
 
-int CGLES3SwapChain::GetTextureIndex(void) const
+int CGLES3SwapChain::GetRenderTextureIndex(void) const
 {
-	return m_indexTexture;
+	return m_indexRenderTexture;
 }
 
-const CGfxTexture2DPtr& CGLES3SwapChain::GetTexture(int index) const
+const CGfxRenderTexturePtr& CGLES3SwapChain::GetRenderTexture(int index) const
 {
-	return m_ptrTexture;
+	return m_ptrRenderTexture;
 }

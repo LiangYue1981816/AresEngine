@@ -17,8 +17,8 @@ public:
 	void AcquireNextTexture(void);
 
 public:
-	int GetTextureIndex(void) const;
-	const CGfxTexture2DPtr& GetTexture(int index) const;
+	int GetRenderTextureIndex(void) const;
+	const CGfxRenderTexturePtr& GetRenderTexture(int index) const;
 
 
 private:
@@ -28,6 +28,6 @@ private:
 	uint32_t m_fbo;
 
 private:
-	int m_indexTexture;
-	CGfxTexture2DPtr m_ptrTexture;
+	int m_indexRenderTexture;
+	CGfxRenderTexturePtr m_ptrRenderTexture;
 };

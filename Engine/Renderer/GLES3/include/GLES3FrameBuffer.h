@@ -14,8 +14,8 @@ private:
 
 
 public:
-	bool SetAttachmentTexture(int indexAttachment, CGfxTexture2DPtr &ptrAttachmentTexture);
-	CGfxTexture2DPtr GetAttachmentTexture(int indexAttachment) const;
+	bool SetAttachmentTexture(int indexAttachment, CGfxRenderTexturePtr &ptrAttachmentTexture);
+	CGfxRenderTexturePtr GetAttachmentTexture(int indexAttachment) const;
 
 public:
 	void Bind(const AttachmentInformation *pAttachmentInformations, const SubPassInformation *pSubPassInformation);
@@ -26,7 +26,7 @@ public:
 private:
 	uint32_t m_fbo;
 	uint32_t m_resolve;
-	eastl::unordered_map<int, CGfxTexture2DPtr> m_ptrAttachmentTextures;
+	eastl::unordered_map<int, CGfxRenderTexturePtr> m_ptrAttachmentTextures;
 
 private:
 	CGLES3FrameBufferManager *m_pManager;
