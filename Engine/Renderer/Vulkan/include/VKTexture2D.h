@@ -2,7 +2,7 @@
 #include "VKRenderer.h"
 
 
-class CVKTexture2D : public CVKTexture, public CGfxTexture2D
+class CVKTexture2D : public CGfxTexture2D
 {
 	friend class CVKDevice;
 	friend class CVKTextureManager;

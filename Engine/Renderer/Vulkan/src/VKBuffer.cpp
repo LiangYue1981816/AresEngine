@@ -46,15 +46,7 @@ void CVKBuffer::Release(void)
 
 bool CVKBuffer::BufferData(size_t offset, size_t size, const void *pBuffer)
 {
-	if (m_size < offset + size) {
-		return false;
-	}
-
 	if (m_pMemory == nullptr) {
-		return false;
-	}
-
-	if (m_vkBuffer == VK_NULL_HANDLE) {
 		return false;
 	}
 

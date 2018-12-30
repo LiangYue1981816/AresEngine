@@ -1,23 +1,12 @@
 #include "VKRenderer.h"
 
 
-CVKTexture::CVKTexture(CVKDevice *pDevice, CVKTextureManager *pManager)
+CVKTexture::CVKTexture(CVKDevice *pDevice, VkImageType imageType, VkImageViewType viewType, VkFormat format, int width, int height, int levels, int layers, VkSampleCountFlagBits samples, VkImageUsageFlags usage)
 	: m_pDevice(pDevice)
-	, m_pManager(pManager)
 
 	, m_vkImage(VK_NULL_HANDLE)
 	, m_vkImageView(VK_NULL_HANDLE)
 	, m_pMemory(nullptr)
-{
-
-}
-
-CVKTexture::~CVKTexture(void)
-{
-
-}
-
-bool CVKTexture::Create(VkImageType imageType, VkImageViewType viewType, VkFormat format, int width, int height, int levels, int layers, VkSampleCountFlagBits samples, VkImageUsageFlags usage)
 {
 	VkImageCreateInfo imageCreateInfo = {};
 	imageCreateInfo.sType = VK_STRUCTURE_TYPE_IMAGE_CREATE_INFO;
@@ -37,12 +26,12 @@ bool CVKTexture::Create(VkImageType imageType, VkImageViewType viewType, VkForma
 	imageCreateInfo.queueFamilyIndexCount = 0;
 	imageCreateInfo.pQueueFamilyIndices = nullptr;
 	imageCreateInfo.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
-	CALL_VK_FUNCTION_RETURN_BOOL(vkCreateImage(m_pDevice->GetDevice(), &imageCreateInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkImage));
+	CALL_VK_FUNCTION_RETURN(vkCreateImage(m_pDevice->GetDevice(), &imageCreateInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkImage));
 
 	VkMemoryRequirements requirements;
 	vkGetImageMemoryRequirements(m_pDevice->GetDevice(), m_vkImage, &requirements);
 	m_pMemory = m_pDevice->GetMemoryManager()->AllocMemory(requirements.size, requirements.alignment, requirements.memoryTypeBits, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT);
-	CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->BindImage(m_vkImage));
+	CALL_BOOL_FUNCTION_RETURN(m_pMemory->BindImage(m_vkImage));
 
 	VkImageViewCreateInfo viewCreateInfo = {};
 	viewCreateInfo.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
@@ -60,12 +49,10 @@ bool CVKTexture::Create(VkImageType imageType, VkImageViewType viewType, VkForma
 	viewCreateInfo.subresourceRange.levelCount = levels;
 	viewCreateInfo.subresourceRange.baseArrayLayer = 0;
 	viewCreateInfo.subresourceRange.layerCount = layers;
-	CALL_VK_FUNCTION_RETURN_BOOL(vkCreateImageView(m_pDevice->GetDevice(), &viewCreateInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkImageView));
-
-	return true;
+	CALL_VK_FUNCTION_RETURN(vkCreateImageView(m_pDevice->GetDevice(), &viewCreateInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkImageView));
 }
 
-void CVKTexture::Destroy(void)
+CVKTexture::~CVKTexture(void)
 {
 	if (m_vkImageView) {
 		vkDestroyImageView(m_pDevice->GetDevice(), m_vkImageView, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
@@ -78,4 +65,26 @@ void CVKTexture::Destroy(void)
 	if (m_pMemory) {
 		m_pDevice->GetMemoryManager()->FreeMemory(m_pMemory);
 	}
+}
+
+void CVKTexture::Release(void)
+{
+	delete this;
+}
+
+bool CVKTexture::BufferData(size_t offset, size_t size, const void *pBuffer)
+{
+	if (m_pMemory == nullptr) {
+		return false;
+	}
+
+	void *pAddress = nullptr;
+	CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->BeginMap(offset, size, &pAddress));
+	{
+		memcpy(pAddress, pBuffer, size);
+	}
+	CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->Flush(offset, size));
+	CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->EndMap());
+
+	return true;
 }

@@ -2,30 +2,28 @@
 #include "VKRenderer.h"
 
 
-class CVKTexture
+class CVKTexture : public CGfxResource
 {
 	friend class CVKDevice;
-	friend class CVKTextureManager;
+	friend class CVKTexture2D;
 
 
-protected:
-	CVKTexture(CVKDevice *pDevice, CVKTextureManager *pManager);
+private:
+	CVKTexture(CVKDevice *pDevice, VkImageType imageType, VkImageViewType viewType, VkFormat format, int width, int height, int levels, int layers, VkSampleCountFlagBits samples, VkImageUsageFlags usage);
 	virtual ~CVKTexture(void);
+	virtual void Release(void);
+
+private:
+	bool BufferData(size_t offset, size_t size, const void *pBuffer);
 
 
-protected:
-	bool Create(VkImageType imageType, VkImageViewType viewType, VkFormat format, int width, int height, int levels, int layers, VkSampleCountFlagBits samples, VkImageUsageFlags usage);
-	void Destroy(void);
-
-
-protected:
+private:
 	VkImage m_vkImage;
 	VkImageView m_vkImageView;
 	CVKMemory *m_pMemory;
 
-protected:
-	CVKTextureManager *m_pManager;
-
-protected:
+private:
 	CVKDevice *m_pDevice;
 };
+
+typedef CGfxResourcePtr<CVKTexture> CVKTexturePtr;
