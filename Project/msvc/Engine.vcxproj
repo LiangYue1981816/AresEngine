@@ -234,6 +234,7 @@
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxRenderer.h" />
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxRenderPass.h" />
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxRenderQueue.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxRenderTexture.h" />
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxResource.h" />
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxResourceManager.h" />
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxSampler.h" />
@@ -281,6 +282,8 @@
     <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3Renderer.h" />
     <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3RenderPass.h" />
     <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3RenderPassManager.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3RenderTexture.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3RenderTextureManager.h" />
     <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3Sampler.h" />
     <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3SamplerManager.h" />
     <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3ShaderManager.h" />
@@ -481,6 +484,8 @@
     <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3Renderer.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3RenderPass.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3RenderPassManager.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3RenderTexture.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3RenderTextureManager.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3Sampler.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3SamplerManager.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3ShaderManager.cpp" />

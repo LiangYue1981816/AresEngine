@@ -32,6 +32,9 @@
 #include "GLES3TextureCubeMap.h"
 #include "GLES3TextureManager.h"
 
+#include "GLES3RenderTexture.h"
+#include "GLES3RenderTextureManager.h"
+
 #include "GLES30Shader.h"
 #include "GLES31Shader.h"
 #include "GLES3ShaderManager.h"

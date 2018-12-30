@@ -18,6 +18,11 @@ void CGLES3TextureCubeMap::Release(void)
 	m_pManager->Destroy(this);
 }
 
+uint32_t CGLES3TextureCubeMap::GetTarget(void) const
+{
+	return CGLES3TextureBase::GetTarget();
+}
+
 bool CGLES3TextureCubeMap::Create(uint32_t texture)
 {
 	return CGLES3TextureBase::Create(GL_TEXTURE_CUBE_MAP, texture);
@@ -57,6 +62,11 @@ void CGLES3TextureCubeMap::Destroy(void)
 	}
 
 	m_size.clear();
+
+	m_width = 0;
+	m_height = 0;
+	m_levels = 0;
+	m_format = GFX_PIXELFORMAT_UNDEFINED;
 }
 
 bool CGLES3TextureCubeMap::TransferTexture2D(GfxPixelFormat pixelFormat, GfxTextureCubeMapFace face, int level, int xoffset, int yoffset, int width, int height, GfxDataType type, uint32_t size, const void *data)
@@ -127,24 +137,4 @@ bool CGLES3TextureCubeMap::TransferTexture2DCompressed(GfxPixelFormat pixelForma
 	glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
 
 	return true;
-}
-
-bool CGLES3TextureCubeMap::IsExtern(void) const
-{
-	return CGLES3TextureBase::IsExtern();
-}
-
-uint32_t CGLES3TextureCubeMap::GetTarget(void) const
-{
-	return CGLES3TextureBase::GetTarget();
-}
-
-uint32_t CGLES3TextureCubeMap::GetTexture(void) const
-{
-	return CGLES3TextureBase::GetTexture();
-}
-
-GfxPixelFormat CGLES3TextureCubeMap::GetFormat(void) const
-{
-	return CGLES3TextureBase::GetFormat();
 }

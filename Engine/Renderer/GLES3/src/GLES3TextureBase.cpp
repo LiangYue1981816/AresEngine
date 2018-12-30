@@ -8,8 +8,6 @@ CGLES3TextureBase::CGLES3TextureBase(CGLES3TextureManager *pManager)
 
 	, m_target(GL_INVALID_ENUM)
 	, m_texture(0)
-
-	, m_format(GFX_PIXELFORMAT_UNDEFINED)
 {
 
 }
@@ -43,8 +41,6 @@ void CGLES3TextureBase::Destroy(void)
 
 	m_target = GL_INVALID_ENUM;
 	m_texture = 0;
-
-	m_format = GFX_PIXELFORMAT_UNDEFINED;
 }
 
 void CGLES3TextureBase::Bind(uint32_t unit)
@@ -65,9 +61,4 @@ uint32_t CGLES3TextureBase::GetTarget(void) const
 uint32_t CGLES3TextureBase::GetTexture(void) const
 {
 	return m_texture;
-}
-
-GfxPixelFormat CGLES3TextureBase::GetFormat(void) const
-{
-	return m_format;
 }

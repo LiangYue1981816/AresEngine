@@ -2,21 +2,21 @@
 #include "GfxRenderer.h"
 
 
-class CALL_API CGfxTextureBase : public CGfxResource
+class CALL_API CGfxRenderTexture : public CGfxResource
 {
 public:
-	CGfxTextureBase(uint32_t name)
+	CGfxRenderTexture(uint32_t name)
 		: m_name(name)
 
 		, m_width(0)
 		, m_height(0)
-		, m_levels(0)
+		, m_samples(0)
 
 		, m_format(GFX_PIXELFORMAT_UNDEFINED)
 	{
 
 	}
-	virtual ~CGfxTextureBase(void)
+	virtual ~CGfxRenderTexture(void)
 	{
 
 	}
@@ -26,6 +26,10 @@ public:
 		return m_name;
 	}
 
+
+public:
+	virtual bool Create(GfxPixelFormat pixelFormat, int width, int height, int samples = 0) = 0;
+	virtual void Destroy(void) = 0;
 
 public:
 	int GetWidth(void) const
@@ -38,9 +42,9 @@ public:
 		return m_height;
 	}
 
-	int GetLevels(void) const
+	int GetSamples(void) const
 	{
-		return m_levels;
+		return m_samples;
 	}
 
 	GfxPixelFormat GetFormat(void) const
@@ -57,7 +61,7 @@ private:
 protected:
 	int m_width;
 	int m_height;
-	int m_levels;
+	int m_samples;
 
 	GfxPixelFormat m_format;
 };

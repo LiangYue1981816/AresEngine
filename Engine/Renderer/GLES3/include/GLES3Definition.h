@@ -29,6 +29,9 @@ class CGLES3Texture2DArray;
 class CGLES3TextureCubeMap;
 class CGLES3TextureManager;
 
+class CGLES3RenderTexture;
+class CGLES3RenderTextureManager;
+
 class CGLES3Shader;
 class CGLES3ShaderManager;
 

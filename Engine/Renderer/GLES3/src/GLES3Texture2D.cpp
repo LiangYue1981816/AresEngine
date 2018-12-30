@@ -18,6 +18,11 @@ void CGLES3Texture2D::Release(void)
 	m_pManager->Destroy(this);
 }
 
+uint32_t CGLES3Texture2D::GetTarget(void) const
+{
+	return CGLES3TextureBase::GetTarget();
+}
+
 bool CGLES3Texture2D::Create(uint32_t texture)
 {
 	return CGLES3TextureBase::Create(GL_TEXTURE_2D, texture);
@@ -72,6 +77,12 @@ void CGLES3Texture2D::Destroy(void)
 	}
 
 	m_size.clear();
+
+	m_width = 0;
+	m_height = 0;
+	m_levels = 0;
+	m_samples = 0;
+	m_format = GFX_PIXELFORMAT_UNDEFINED;
 }
 
 bool CGLES3Texture2D::TransferTexture2D(GfxPixelFormat pixelFormat, int level, int xoffset, int yoffset, int width, int height, GfxDataType type, uint32_t size, const void *data)
@@ -158,24 +169,4 @@ bool CGLES3Texture2D::TransferTexture2DCompressed(GfxPixelFormat pixelFormat, in
 	glBindTexture(GL_TEXTURE_2D, 0);
 
 	return true;
-}
-
-bool CGLES3Texture2D::IsExtern(void) const
-{
-	return CGLES3TextureBase::IsExtern();
-}
-
-uint32_t CGLES3Texture2D::GetTarget(void) const
-{
-	return CGLES3TextureBase::GetTarget();
-}
-
-uint32_t CGLES3Texture2D::GetTexture(void) const
-{
-	return CGLES3TextureBase::GetTexture();
-}
-
-GfxPixelFormat CGLES3Texture2D::GetFormat(void) const
-{
-	return CGLES3TextureBase::GetFormat();
 }
