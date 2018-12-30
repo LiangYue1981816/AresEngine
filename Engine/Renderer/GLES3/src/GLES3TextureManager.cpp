@@ -121,7 +121,7 @@ CGLES3TextureCubeMap* CGLES3TextureManager::CreateTextureCubeMap(const char *szF
 	}
 }
 
-void CGLES3TextureManager::Destroy(CGfxTextureBase *pTexture)
+void CGLES3TextureManager::Destroy(CGfxTexture *pTexture)
 {
 	mutex_autolock autolock(&lock);
 	{

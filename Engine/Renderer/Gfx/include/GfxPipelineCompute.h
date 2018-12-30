@@ -2,11 +2,11 @@
 #include "GfxRenderer.h"
 
 
-class CALL_API CGfxPipelineCompute : public CGfxPipelineBase
+class CALL_API CGfxPipelineCompute : public CGfxPipeline
 {
 public:
 	CGfxPipelineCompute(uint32_t name)
-		: CGfxPipelineBase(name)
+		: CGfxPipeline(name)
 	{
 
 	}

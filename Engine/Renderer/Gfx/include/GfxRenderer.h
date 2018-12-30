@@ -26,7 +26,7 @@
 
 #include "GfxSampler.h"
 
-#include "GfxTextureBase.h"
+#include "GfxTexture.h"
 #include "GfxTexture2D.h"
 #include "GfxTexture2DArray.h"
 #include "GfxTextureCubeMap.h"
@@ -34,7 +34,7 @@
 #include "GfxRenderTexture.h"
 
 #include "GfxShader.h"
-#include "GfxPipelineBase.h"
+#include "GfxPipeline.h"
 #include "GfxPipelineCompute.h"
 #include "GfxPipelineGraphics.h"
 

@@ -227,7 +227,7 @@
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxMaterialPass.h" />
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxMesh.h" />
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxMeshDraw.h" />
-    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxPipelineBase.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxPipeline.h" />
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxPipelineCompute.h" />
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxPipelineGraphics.h" />
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxProfiler.h" />
@@ -240,9 +240,9 @@
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxSampler.h" />
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxShader.h" />
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxSwapChain.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxTexture.h" />
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxTexture2D.h" />
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxTexture2DArray.h" />
-    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxTextureBase.h" />
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxTextureCubeMap.h" />
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxUniformBuffer.h" />
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxUniformCamera.h" />
@@ -254,11 +254,11 @@
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxUniformVec4.h" />
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxVertexAttribute.h" />
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxVertexBuffer.h" />
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES30PipelineBase.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES30Pipeline.h" />
     <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES30PipelineCompute.h" />
     <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES30PipelineGraphics.h" />
     <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES30Shader.h" />
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES31PipelineBase.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES31Pipeline.h" />
     <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES31PipelineCompute.h" />
     <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES31PipelineGraphics.h" />
     <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES31Shader.h" />
@@ -288,9 +288,9 @@
     <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3SamplerManager.h" />
     <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3ShaderManager.h" />
     <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3SwapChain.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3Texture.h" />
     <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3Texture2D.h" />
     <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3Texture2DArray.h" />
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3TextureBase.h" />
     <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3TextureCubeMap.h" />
     <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3TextureManager.h" />
     <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3UniformBuffer.h" />
@@ -343,7 +343,6 @@
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKDefinition.h" />
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKDevice.h" />
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKExtension.h" />
-    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKImage.h" />
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKIndexBuffer.h" />
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKIndirectBuffer.h" />
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKInstance.h" />
@@ -357,6 +356,7 @@
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKMeshManager.h" />
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKQueue.h" />
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKRenderer.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKTexture.h" />
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKUniformBuffer.h" />
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKVertexBuffer.h" />
     <ClInclude Include="..\..\Engine\Resource\include\ResourceLoader.h" />
@@ -457,11 +457,11 @@
     <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxUniformVec3.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxUniformVec4.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxVertexAttribute.cpp" />
-    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES30PipelineBase.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES30Pipeline.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES30PipelineCompute.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES30PipelineGraphics.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES30Shader.cpp" />
-    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES31PipelineBase.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES31Pipeline.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES31PipelineCompute.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES31PipelineGraphics.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES31Shader.cpp" />
@@ -490,9 +490,9 @@
     <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3SamplerManager.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3ShaderManager.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3SwapChain.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3Texture.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3Texture2D.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3Texture2DArray.cpp" />
-    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3TextureBase.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3TextureCubeMap.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3TextureManager.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3UniformBuffer.cpp" />
@@ -503,7 +503,6 @@
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKBuffer.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKDevice.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKExtension.cpp" />
-    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKImage.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKIndexBuffer.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKIndirectBuffer.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKInstance.cpp" />
@@ -517,6 +516,7 @@
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKMeshManager.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKQueue.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKRenderer.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKTexture.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKUniformBuffer.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKVertexBuffer.cpp" />
     <ClCompile Include="..\..\Engine\Resource\src\ResourceLoader.cpp" />

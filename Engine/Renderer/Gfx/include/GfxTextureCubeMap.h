@@ -2,11 +2,11 @@
 #include "GfxRenderer.h"
 
 
-class CALL_API CGfxTextureCubeMap : public CGfxTextureBase
+class CALL_API CGfxTextureCubeMap : public CGfxTexture
 {
 public:
 	CGfxTextureCubeMap(uint32_t name)
-		: CGfxTextureBase(name)
+		: CGfxTexture(name)
 	{
 
 	}

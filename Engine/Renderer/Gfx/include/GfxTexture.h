@@ -2,10 +2,10 @@
 #include "GfxRenderer.h"
 
 
-class CALL_API CGfxTextureBase : public CGfxResource
+class CALL_API CGfxTexture : public CGfxResource
 {
 public:
-	CGfxTextureBase(uint32_t name)
+	CGfxTexture(uint32_t name)
 		: m_name(name)
 
 		, m_width(0)
@@ -16,7 +16,7 @@ public:
 	{
 
 	}
-	virtual ~CGfxTextureBase(void)
+	virtual ~CGfxTexture(void)
 	{
 
 	}

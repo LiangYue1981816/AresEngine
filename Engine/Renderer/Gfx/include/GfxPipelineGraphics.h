@@ -36,11 +36,11 @@ typedef struct PipelineState {
 } PipelineState;
 
 
-class CALL_API CGfxPipelineGraphics : public CGfxPipelineBase
+class CALL_API CGfxPipelineGraphics : public CGfxPipeline
 {
 public:
 	CGfxPipelineGraphics(uint32_t name)
-		: CGfxPipelineBase(name)
+		: CGfxPipeline(name)
 	{
 
 	}

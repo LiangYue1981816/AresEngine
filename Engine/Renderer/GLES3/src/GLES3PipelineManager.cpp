@@ -51,7 +51,7 @@ CGLES3PipelineGraphics* CGLES3PipelineManager::CreatePipelineGraphics(const CGfx
 	}
 }
 
-void CGLES3PipelineManager::Destroy(CGfxPipelineBase *pPipeline)
+void CGLES3PipelineManager::Destroy(CGfxPipeline *pPipeline)
 {
 	mutex_autolock autolock(&lock);
 	{

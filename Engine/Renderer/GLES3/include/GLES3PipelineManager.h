@@ -15,9 +15,9 @@ private:
 private:
 	CGLES3PipelineCompute* CreatePipelineCompute(const CGfxShader *pComputeShader);
 	CGLES3PipelineGraphics* CreatePipelineGraphics(const CGfxShader *pVertexShader, const CGfxShader *pFragmentShader, const PipelineState &state);
-	void Destroy(CGfxPipelineBase *pPipeline);
+	void Destroy(CGfxPipeline *pPipeline);
 
 
 private:
-	eastl::unordered_map<uint32_t, CGfxPipelineBase*> m_pPipelines;
+	eastl::unordered_map<uint32_t, CGfxPipeline*> m_pPipelines;
 };

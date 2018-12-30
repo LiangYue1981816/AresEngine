@@ -2,15 +2,15 @@
 #include "GfxRenderer.h"
 
 
-class CALL_API CGfxPipelineBase
+class CALL_API CGfxPipeline
 {
 public:
-	CGfxPipelineBase(uint32_t name)
+	CGfxPipeline(uint32_t name)
 		: m_name(name)
 	{
 
 	}
-	virtual ~CGfxPipelineBase(void)
+	virtual ~CGfxPipeline(void)
 	{
 
 	}

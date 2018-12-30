@@ -21,7 +21,7 @@ class CALL_API CGfxIndirectBuffer;
 
 class CALL_API CGfxSampler;
 
-class CALL_API CGfxTextureBase;
+class CALL_API CGfxTexture;
 class CALL_API CGfxTexture2D;
 class CALL_API CGfxTexture2DArray;
 class CALL_API CGfxTextureCubeMap;
@@ -29,7 +29,7 @@ class CALL_API CGfxTextureCubeMap;
 class CALL_API CGfxRenderTexture;
 
 class CALL_API CGfxShader;
-class CALL_API CGfxPipelineBase;
+class CALL_API CGfxPipeline;
 class CALL_API CGfxPipelineCompute;
 class CALL_API CGfxPipelineGraphics;
 

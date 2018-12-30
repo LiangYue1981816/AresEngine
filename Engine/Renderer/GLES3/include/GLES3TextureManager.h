@@ -25,9 +25,9 @@ private:
 	CGLES3Texture2DArray* CreateTexture2DArray(const char *szFileName);
 	CGLES3TextureCubeMap* CreateTextureCubeMap(uint32_t name);
 	CGLES3TextureCubeMap* CreateTextureCubeMap(const char *szFileName);
-	void Destroy(CGfxTextureBase *pTexture);
+	void Destroy(CGfxTexture *pTexture);
 
 
 private:
-	eastl::unordered_map<uint32_t, CGfxTextureBase*> m_pTextures;
+	eastl::unordered_map<uint32_t, CGfxTexture*> m_pTextures;
 };
