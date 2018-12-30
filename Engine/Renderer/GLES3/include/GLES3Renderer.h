@@ -141,6 +141,9 @@ public:
 	CGfxTextureCubeMapPtr NewTextureCubeMap(uint32_t name);
 	CGfxTextureCubeMapPtr NewTextureCubeMap(const char *szFileName);
 
+	bool IsHaveRenderTexture(uint32_t name);
+	CGfxRenderTexturePtr NewRenderTexture(uint32_t name);
+
 	CGfxUniformBufferPtr NewUniformBuffer(size_t size);
 	CGfxCommandBufferPtr NewCommandBuffer(bool bMainCommandBuffer);
 
@@ -235,6 +238,7 @@ private:
 	CGLES3ShaderManager *m_pShaderManager;
 	CGLES3SamplerManager *m_pSamplerManager;
 	CGLES3TextureManager *m_pTextureManager;
+	CGLES3RenderTextureManager *m_pRenderTextureManager;
 	CGLES3PipelineManager *m_pPipelineManager;
 	CGLES3MaterialManager *m_pMaterialManager;
 	CGLES3RenderPassManager *m_pRenderPassManager;

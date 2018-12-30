@@ -146,6 +146,16 @@ CGfxTextureCubeMapPtr CVKRenderer::NewTextureCubeMap(const char *szFileName)
 	return nullptr;
 }
 
+bool CVKRenderer::IsHaveRenderTexture(uint32_t name)
+{
+	return false;
+}
+
+CGfxRenderTexturePtr CVKRenderer::NewRenderTexture(uint32_t name)
+{
+	return nullptr;
+}
+
 CGfxUniformBufferPtr CVKRenderer::NewUniformBuffer(size_t size)
 {
 	return nullptr;

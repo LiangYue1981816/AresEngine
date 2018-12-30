@@ -77,6 +77,9 @@ public:
 	CGfxTextureCubeMapPtr NewTextureCubeMap(uint32_t name);
 	CGfxTextureCubeMapPtr NewTextureCubeMap(const char *szFileName);
 
+	bool IsHaveRenderTexture(uint32_t name);
+	CGfxRenderTexturePtr NewRenderTexture(uint32_t name);
+
 	CGfxUniformBufferPtr NewUniformBuffer(size_t size);
 	CGfxCommandBufferPtr NewCommandBuffer(bool bMainCommandBuffer);
 

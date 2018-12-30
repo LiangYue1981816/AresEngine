@@ -11,6 +11,7 @@ CGLES3Renderer::CGLES3Renderer(void *hInstance, void *hWnd, void *hDC, int width
 	, m_pShaderManager(nullptr)
 	, m_pSamplerManager(nullptr)
 	, m_pTextureManager(nullptr)
+	, m_pRenderTextureManager(nullptr)
 	, m_pPipelineManager(nullptr)
 	, m_pMaterialManager(nullptr)
 	, m_pRenderPassManager(nullptr)
@@ -28,6 +29,7 @@ CGLES3Renderer::CGLES3Renderer(void *hInstance, void *hWnd, void *hDC, int width
 	m_pShaderManager = new CGLES3ShaderManager;
 	m_pSamplerManager = new CGLES3SamplerManager;
 	m_pTextureManager = new CGLES3TextureManager;
+	m_pRenderTextureManager = new CGLES3RenderTextureManager;
 	m_pPipelineManager = new CGLES3PipelineManager;
 	m_pMaterialManager = new CGLES3MaterialManager;
 	m_pRenderPassManager = new CGLES3RenderPassManager;
@@ -50,6 +52,7 @@ CGLES3Renderer::~CGLES3Renderer(void)
 	delete m_pMaterialManager;
 	delete m_pSamplerManager;
 	delete m_pTextureManager;
+	delete m_pRenderTextureManager;
 	delete m_pPipelineManager;
 	delete m_pShaderManager;
 	delete m_pMeshDrawManager;
@@ -185,6 +188,16 @@ CGfxTextureCubeMapPtr CGLES3Renderer::NewTextureCubeMap(uint32_t name)
 CGfxTextureCubeMapPtr CGLES3Renderer::NewTextureCubeMap(const char *szFileName)
 {
 	return m_pTextureManager->CreateTextureCubeMap(szFileName);
+}
+
+bool CGLES3Renderer::IsHaveRenderTexture(uint32_t name)
+{
+	return m_pRenderTextureManager->IsHaveRenderTexture(name);
+}
+
+CGfxRenderTexturePtr CGLES3Renderer::NewRenderTexture(uint32_t name)
+{
+	return m_pRenderTextureManager->CreateRenderTexture(name);
 }
 
 CGfxUniformBufferPtr CGLES3Renderer::NewUniformBuffer(size_t size)
