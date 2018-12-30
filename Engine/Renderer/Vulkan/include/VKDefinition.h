@@ -59,20 +59,24 @@ class CVKAllocator;
 class CVKInstance;
 class CVKDevice;
 class CVKQueue;
+
 class CVKMemory;
 class CVKMemoryAllocator;
 class CVKMemoryManager;
 
 class CVKBuffer;
-class CVKTexture;
-
-class CVKMesh;
-class CVKMeshManager;
-class CVKMeshDraw;
-class CVKMeshDrawManager;
 class CVKIndexBuffer;
 class CVKVertexBuffer;
 class CVKInstanceBuffer;
 class CVKIndirectBuffer;
 
+class CVKTexture;
+class CVKTextureManager;
+
 class CVKUniformBuffer;
+
+class CVKMesh;
+class CVKMeshManager;
+
+class CVKMeshDraw;
+class CVKMeshDrawManager;

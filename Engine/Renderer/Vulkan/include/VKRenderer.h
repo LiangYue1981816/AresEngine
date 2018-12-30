@@ -15,18 +15,21 @@
 #include "VKMemoryManager.h"
 
 #include "VKBuffer.h"
-#include "VKTexture.h"
-
-#include "VKMesh.h"
-#include "VKMeshDraw.h"
 #include "VKIndexBuffer.h"
 #include "VKVertexBuffer.h"
 #include "VKInstanceBuffer.h"
 #include "VKIndirectBuffer.h"
-#include "VKMeshManager.h"
-#include "VKMeshDrawManager.h"
+
+#include "VKTexture.h"
+#include "VKTextureManager.h"
 
 #include "VKUniformBuffer.h"
+
+#include "VKMesh.h"
+#include "VKMeshManager.h"
+
+#include "VKMeshDraw.h"
+#include "VKMeshDrawManager.h"
 
 
 #define VKRenderer() ((CVKRenderer *)CGfxRenderer::GetInstance())

@@ -14,6 +14,7 @@ class CALL_API CGfxFrameBuffer;
 
 class CALL_API CGfxMesh;
 class CALL_API CGfxMeshDraw;
+
 class CALL_API CGfxIndexBuffer;
 class CALL_API CGfxVertexBuffer;
 class CALL_API CGfxInstanceBuffer;

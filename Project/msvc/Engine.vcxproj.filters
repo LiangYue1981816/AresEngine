@@ -846,6 +846,9 @@
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxTexture.h">
       <Filter>Engine\Renderer\Gfx\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKTextureManager.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Engine\ThirdParty\eastl\source\allocator_eastl.cpp">
@@ -1327,6 +1330,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES31Pipeline.cpp">
       <Filter>Engine\Renderer\GLES3\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKTextureManager.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

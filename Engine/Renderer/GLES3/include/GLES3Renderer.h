@@ -14,14 +14,16 @@
 #include "GLES3FrameBufferManager.h"
 
 #include "GLES3Mesh.h"
+#include "GLES3MeshManager.h"
+
 #include "GLES3MeshDraw.h"
+#include "GLES3MeshDrawManager.h"
+
 #include "GLES3IndexBuffer.h"
 #include "GLES3VertexBuffer.h"
 #include "GLES3InstanceBuffer.h"
 #include "GLES3IndirectBuffer.h"
 #include "GLES3VertexArrayObject.h"
-#include "GLES3MeshManager.h"
-#include "GLES3MeshDrawManager.h"
 
 #include "GLES3Sampler.h"
 #include "GLES3SamplerManager.h"

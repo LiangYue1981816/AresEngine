@@ -2,21 +2,19 @@
 #include "VKRenderer.h"
 
 
-class CVKTexture : public CGfxResource
+class CVKTexture
 {
 	friend class CVKDevice;
+	friend class CVKTextureManager;
 
 
 private:
-	CVKTexture(CVKDevice *pDevice);
+	CVKTexture(CVKDevice *pDevice, CVKTextureManager *pManager);
 	virtual ~CVKTexture(void);
-	virtual void Release(void);
 
 
-private:
-	bool CreateTexture2D(VkFormat format, int width, int height, int levels, VkSampleCountFlagBits samples);
-	bool CreateTexture2DArray(VkFormat format, int width, int height, int levels, int layers, VkSampleCountFlagBits samples);
-	bool CreateTextureCubeMap(VkFormat format, int width, int height, int levels);
+protected:
+	bool Create(VkImageType imageType, VkImageViewType viewType, VkFormat format, int width, int height, int levels, int layers, VkSampleCountFlagBits samples, VkImageUsageFlags usage);
 	void Destroy(void);
 
 
@@ -26,7 +24,8 @@ private:
 	CVKMemory *m_pMemory;
 
 private:
+	CVKTextureManager *m_pManager;
+
+private:
 	CVKDevice *m_pDevice;
 };
-
-typedef CGfxResourcePtr<CVKTexture> CVKImagePtr;
