@@ -35,7 +35,7 @@ bool CVKTexture2D::Create(GfxPixelFormat pixelFormat, int width, int height, int
 
 void CVKTexture2D::Destroy(void)
 {
-	CVKTexture::Destroy();
+
 }
 
 bool CVKTexture2D::TransferTexture2D(GfxPixelFormat pixelFormat, int level, int xoffset, int yoffset, int width, int height, GfxDataType type, uint32_t size, const void *data)
