@@ -1,7 +1,7 @@
 #include "VKRenderer.h"
 
 
-CVKImage::CVKImage(CVKDevice *pDevice)
+CVKTexture::CVKTexture(CVKDevice *pDevice)
 	: m_pDevice(pDevice)
 
 	, m_vkImage(VK_NULL_HANDLE)
@@ -11,17 +11,17 @@ CVKImage::CVKImage(CVKDevice *pDevice)
 
 }
 
-CVKImage::~CVKImage(void)
+CVKTexture::~CVKTexture(void)
 {
 
 }
 
-void CVKImage::Release(void)
+void CVKTexture::Release(void)
 {
 	delete this;
 }
 
-bool CVKImage::CreateImage2D(VkFormat format, int width, int height, int levels, VkSampleCountFlagBits samples)
+bool CVKTexture::CreateTexture2D(VkFormat format, int width, int height, int levels, VkSampleCountFlagBits samples)
 {
 	VkImageCreateInfo imageCreateInfo = {};
 	imageCreateInfo.sType = VK_STRUCTURE_TYPE_IMAGE_CREATE_INFO;
@@ -69,17 +69,17 @@ bool CVKImage::CreateImage2D(VkFormat format, int width, int height, int levels,
 	return true;
 }
 
-bool CVKImage::CreateImage2DArray(VkFormat format, int width, int height, int levels, int layers, VkSampleCountFlagBits samples)
+bool CVKTexture::CreateTexture2DArray(VkFormat format, int width, int height, int levels, int layers, VkSampleCountFlagBits samples)
 {
 	return true;
 }
 
-bool CVKImage::CreateImageCubeMap(VkFormat format, int width, int height, int levels)
+bool CVKTexture::CreateTextureCubeMap(VkFormat format, int width, int height, int levels)
 {
 	return true;
 }
 
-void CVKImage::Destroy(void)
+void CVKTexture::Destroy(void)
 {
 
 }
