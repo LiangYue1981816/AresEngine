@@ -1,7 +1,7 @@
 #include "VKRenderer.h"
 
 
-CVKTexture::CVKTexture(CVKDevice *pDevice, VkImageType imageType, VkImageViewType viewType, VkFormat format, int width, int height, int levels, int layers, VkSampleCountFlagBits samples, VkImageUsageFlags usage)
+CVKImage::CVKImage(CVKDevice *pDevice, VkImageType imageType, VkImageViewType viewType, VkFormat format, int width, int height, int levels, int layers, VkSampleCountFlagBits samples, VkImageUsageFlags usage)
 	: m_pDevice(pDevice)
 
 	, m_vkImage(VK_NULL_HANDLE)
@@ -52,7 +52,7 @@ CVKTexture::CVKTexture(CVKDevice *pDevice, VkImageType imageType, VkImageViewTyp
 	CALL_VK_FUNCTION_RETURN(vkCreateImageView(m_pDevice->GetDevice(), &viewCreateInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkImageView));
 }
 
-CVKTexture::~CVKTexture(void)
+CVKImage::~CVKImage(void)
 {
 	if (m_vkImageView) {
 		vkDestroyImageView(m_pDevice->GetDevice(), m_vkImageView, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
@@ -67,12 +67,12 @@ CVKTexture::~CVKTexture(void)
 	}
 }
 
-void CVKTexture::Release(void)
+void CVKImage::Release(void)
 {
 	delete this;
 }
 
-bool CVKTexture::BufferData(size_t offset, size_t size, const void *pBuffer)
+bool CVKImage::BufferData(size_t offset, size_t size, const void *pBuffer)
 {
 	if (m_pMemory == nullptr) {
 		return false;

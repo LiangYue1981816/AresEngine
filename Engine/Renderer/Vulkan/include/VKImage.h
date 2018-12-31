@@ -2,15 +2,15 @@
 #include "VKRenderer.h"
 
 
-class CVKTexture : public CGfxResource
+class CVKImage : public CGfxResource
 {
 	friend class CVKDevice;
 	friend class CVKTexture2D;
 
 
 private:
-	CVKTexture(CVKDevice *pDevice, VkImageType imageType, VkImageViewType viewType, VkFormat format, int width, int height, int levels, int layers, VkSampleCountFlagBits samples, VkImageUsageFlags usage);
-	virtual ~CVKTexture(void);
+	CVKImage(CVKDevice *pDevice, VkImageType imageType, VkImageViewType viewType, VkFormat format, int width, int height, int levels, int layers, VkSampleCountFlagBits samples, VkImageUsageFlags usage);
+	virtual ~CVKImage(void);
 	virtual void Release(void);
 
 private:
@@ -26,4 +26,4 @@ private:
 	CVKDevice *m_pDevice;
 };
 
-typedef CGfxResourcePtr<CVKTexture> CVKTexturePtr;
+typedef CGfxResourcePtr<CVKImage> CVKImagePtr;

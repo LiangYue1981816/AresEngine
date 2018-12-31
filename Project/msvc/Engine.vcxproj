@@ -343,6 +343,7 @@
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKDefinition.h" />
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKDevice.h" />
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKExtension.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKImage.h" />
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKIndexBuffer.h" />
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKIndirectBuffer.h" />
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKInstance.h" />
@@ -356,7 +357,6 @@
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKMeshManager.h" />
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKQueue.h" />
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKRenderer.h" />
-    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKTexture.h" />
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKTexture2D.h" />
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKTextureManager.h" />
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKUniformBuffer.h" />
@@ -505,6 +505,7 @@
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKBuffer.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKDevice.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKExtension.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKImage.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKIndexBuffer.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKIndirectBuffer.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKInstance.cpp" />
@@ -518,7 +519,6 @@
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKMeshManager.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKQueue.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKRenderer.cpp" />
-    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKTexture.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKTexture2D.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKTextureManager.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKUniformBuffer.cpp" />

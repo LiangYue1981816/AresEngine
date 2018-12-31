@@ -67,7 +67,7 @@ class CVKIndexBuffer;
 class CVKVertexBuffer;
 class CVKInstanceBuffer;
 class CVKIndirectBuffer;
-class CVKTexture;
+class CVKImage;
 class CVKTexture2D;
 
 class CVKMesh;

@@ -17,7 +17,7 @@
 #include "VKVertexBuffer.h"
 #include "VKInstanceBuffer.h"
 #include "VKIndirectBuffer.h"
-#include "VKTexture.h"
+#include "VKImage.h"
 #include "VKTexture2D.h"
 
 #include "VKMesh.h"
