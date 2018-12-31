@@ -9,7 +9,7 @@ class CVKImage : public CGfxResource
 
 
 private:
-	CVKImage(CVKDevice *pDevice, VkImageType imageType, VkImageViewType viewType, VkFormat format, int width, int height, int levels, int layers, VkSampleCountFlagBits samples, VkImageUsageFlags usage);
+	CVKImage(CVKDevice *pDevice, VkImageType imageType, VkImageViewType viewType, VkImageAspectFlags aspectMask, VkFormat format, int width, int height, int levels, int layers, VkSampleCountFlagBits samples, VkImageTiling tiling, VkImageUsageFlags usage);
 	virtual ~CVKImage(void);
 	virtual void Release(void);
 

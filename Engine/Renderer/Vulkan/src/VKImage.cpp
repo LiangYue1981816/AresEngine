@@ -1,7 +1,7 @@
 #include "VKRenderer.h"
 
 
-CVKImage::CVKImage(CVKDevice *pDevice, VkImageType imageType, VkImageViewType viewType, VkFormat format, int width, int height, int levels, int layers, VkSampleCountFlagBits samples, VkImageUsageFlags usage)
+CVKImage::CVKImage(CVKDevice *pDevice, VkImageType imageType, VkImageViewType viewType, VkImageAspectFlags aspectMask, VkFormat format, int width, int height, int levels, int layers, VkSampleCountFlagBits samples, VkImageTiling tiling, VkImageUsageFlags usage)
 	: m_pDevice(pDevice)
 
 	, m_vkImage(VK_NULL_HANDLE)
@@ -20,7 +20,7 @@ CVKImage::CVKImage(CVKDevice *pDevice, VkImageType imageType, VkImageViewType vi
 	imageCreateInfo.mipLevels = levels;
 	imageCreateInfo.arrayLayers = layers;
 	imageCreateInfo.samples = samples;
-	imageCreateInfo.tiling = VK_IMAGE_TILING_OPTIMAL;
+	imageCreateInfo.tiling = tiling;
 	imageCreateInfo.usage = usage;
 	imageCreateInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
 	imageCreateInfo.queueFamilyIndexCount = 0;
@@ -28,10 +28,13 @@ CVKImage::CVKImage(CVKDevice *pDevice, VkImageType imageType, VkImageViewType vi
 	imageCreateInfo.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
 	CALL_VK_FUNCTION_RETURN(vkCreateImage(m_pDevice->GetDevice(), &imageCreateInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkImage));
 
+	VkMemoryPropertyFlags memoryPropertyFlags;
+	memoryPropertyFlags = tiling == VK_IMAGE_TILING_LINEAR ? VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT : VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT;
+
 	VkMemoryRequirements requirements;
 	vkGetImageMemoryRequirements(m_pDevice->GetDevice(), m_vkImage, &requirements);
-	m_pMemory = m_pDevice->GetMemoryManager()->AllocMemory(requirements.size, requirements.alignment, requirements.memoryTypeBits, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT);
-	CALL_BOOL_FUNCTION_RETURN(m_pMemory->BindImage(m_vkImage));
+	m_pMemory = m_pDevice->GetMemoryManager()->AllocMemory(requirements.size, requirements.alignment, requirements.memoryTypeBits, memoryPropertyFlags);
+	m_pMemory->BindImage(m_vkImage);
 
 	VkImageViewCreateInfo viewCreateInfo = {};
 	viewCreateInfo.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
@@ -44,7 +47,7 @@ CVKImage::CVKImage(CVKDevice *pDevice, VkImageType imageType, VkImageViewType vi
 	viewCreateInfo.components.g = VK_COMPONENT_SWIZZLE_G;
 	viewCreateInfo.components.b = VK_COMPONENT_SWIZZLE_B;
 	viewCreateInfo.components.a = VK_COMPONENT_SWIZZLE_A;
-	viewCreateInfo.subresourceRange.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT | VK_IMAGE_ASPECT_DEPTH_BIT | VK_IMAGE_ASPECT_STENCIL_BIT;
+	viewCreateInfo.subresourceRange.aspectMask = aspectMask;
 	viewCreateInfo.subresourceRange.baseMipLevel = 0;
 	viewCreateInfo.subresourceRange.levelCount = levels;
 	viewCreateInfo.subresourceRange.baseArrayLayer = 0;
