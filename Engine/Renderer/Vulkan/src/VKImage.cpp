@@ -1,7 +1,7 @@
 #include "VKRenderer.h"
 
 
-CVKImage::CVKImage(CVKDevice *pDevice, VkImageType imageType, VkImageViewType viewType, VkFormat format, int width, int height, int levels, int layers, VkSampleCountFlagBits samples, VkImageTiling imageTiling, VkImageUsageFlags imageUsageFlags)
+CVKImage::CVKImage(CVKDevice *pDevice, VkImageType imageType, VkFormat format, int width, int height, int levels, int layers, VkSampleCountFlagBits samples, VkImageTiling imageTiling, VkImageUsageFlags imageUsageFlags)
 	: m_pDevice(pDevice)
 
 	, m_vkImage(VK_NULL_HANDLE)
@@ -67,6 +67,11 @@ bool CVKImage::BufferData(size_t offset, size_t size, const void *pBuffer)
 	CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->EndMap());
 
 	return true;
+}
+
+VkImage CVKImage::GetImage(void) const
+{
+	return m_vkImage;
 }
 
 bool CVKImage::IsDeviceLocal(void) const

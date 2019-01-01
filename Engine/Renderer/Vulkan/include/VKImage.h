@@ -5,16 +5,20 @@
 class CVKImage : public CGfxResource
 {
 	friend class CVKDevice;
+	friend class CVKTexture;
 	friend class CVKTexture2D;
 
 
 private:
-	CVKImage(CVKDevice *pDevice, VkImageType imageType, VkImageViewType viewType, VkFormat format, int width, int height, int levels, int layers, VkSampleCountFlagBits samples, VkImageTiling imageTiling, VkImageUsageFlags imageUsageFlags);
+	CVKImage(CVKDevice *pDevice, VkImageType imageType, VkFormat format, int width, int height, int levels, int layers, VkSampleCountFlagBits samples, VkImageTiling imageTiling, VkImageUsageFlags imageUsageFlags);
 	virtual ~CVKImage(void);
 	virtual void Release(void);
 
 private:
 	bool BufferData(size_t offset, size_t size, const void *pBuffer);
+
+private:
+	VkImage GetImage(void) const;
 
 private:
 	bool IsDeviceLocal(void) const;
