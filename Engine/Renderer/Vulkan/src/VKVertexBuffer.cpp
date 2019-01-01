@@ -44,6 +44,9 @@ void CVKVertexBuffer::Bind(VkCommandBuffer vkCommandBuffer, VkDeviceSize offset)
 {
 	if (m_ptrBufferTransfer.IsValid()) {
 		vkCmdTransferBuffer(vkCommandBuffer, m_ptrBufferTransfer->m_vkBuffer, m_ptrBuffer->m_vkBuffer, VK_ACCESS_VERTEX_ATTRIBUTE_READ_BIT, VK_PIPELINE_STAGE_VERTEX_INPUT_BIT, 0, m_transferOffset, m_transferSize);
+
+		m_transferSize = 0;
+		m_transferOffset = 0;
 		m_ptrBufferTransfer.Release();
 	}
 
