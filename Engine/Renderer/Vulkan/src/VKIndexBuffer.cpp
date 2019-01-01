@@ -5,16 +5,14 @@ CVKIndexBuffer::CVKIndexBuffer(CVKDevice *pDevice, GfxIndexType type, size_t siz
 	: CGfxIndexBuffer(type, size, bDynamic)
 	, m_pDevice(pDevice)
 
-	, m_bNeedTransfer(false)
-	, m_transferOffset(0)
 	, m_transferSize(0)
+	, m_transferOffset(0)
 {
 	if (bDynamic) {
 		m_ptrBuffer = CVKBufferPtr(new CVKBuffer(m_pDevice, CGfxSwapChain::SWAPCHAIN_FRAME_COUNT * m_size, VK_BUFFER_USAGE_INDEX_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT));
 	}
 	else {
 		m_ptrBuffer = CVKBufferPtr(new CVKBuffer(m_pDevice, m_size, VK_BUFFER_USAGE_INDEX_BUFFER_BIT | VK_BUFFER_USAGE_TRANSFER_DST_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT));
-		m_ptrBufferTransfer = CVKBufferPtr(new CVKBuffer(m_pDevice, m_size, VK_BUFFER_USAGE_TRANSFER_SRC_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT));
 	}
 }
 
@@ -29,11 +27,11 @@ bool CVKIndexBuffer::BufferData(size_t offset, size_t size, const void *pBuffer)
 		return false;
 	}
 
-	if (m_ptrBufferTransfer.IsValid()) {
-		m_bNeedTransfer = true;
-		m_transferOffset = offset;
+	if (m_ptrBuffer->IsDeviceLocal()) {
 		m_transferSize = size;
-		return m_ptrBufferTransfer->BufferData(offset, size, pBuffer);
+		m_transferOffset = offset;
+		m_ptrBufferTransfer = CVKBufferPtr(new CVKBuffer(m_pDevice, m_transferSize, VK_BUFFER_USAGE_TRANSFER_SRC_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT));
+		return m_ptrBufferTransfer->BufferData(0, m_transferSize, pBuffer);
 	}
 	else {
 		return m_ptrBuffer->BufferData(VKRenderer()->GetSwapChain()->GetFrameIndex() * m_size + offset, size, pBuffer);
@@ -42,9 +40,9 @@ bool CVKIndexBuffer::BufferData(size_t offset, size_t size, const void *pBuffer)
 
 void CVKIndexBuffer::Bind(VkCommandBuffer vkCommandBuffer, VkDeviceSize offset)
 {
-	if (m_bNeedTransfer) {
-		m_bNeedTransfer = false;
-		vkCmdTransferBuffer(vkCommandBuffer, m_ptrBufferTransfer->m_vkBuffer, m_ptrBuffer->m_vkBuffer, VK_ACCESS_VERTEX_ATTRIBUTE_READ_BIT, VK_PIPELINE_STAGE_VERTEX_INPUT_BIT, m_transferOffset, m_transferOffset, m_transferSize);
+	if (m_ptrBufferTransfer.IsValid()) {
+		vkCmdTransferBuffer(vkCommandBuffer, m_ptrBufferTransfer->m_vkBuffer, m_ptrBuffer->m_vkBuffer, VK_ACCESS_VERTEX_ATTRIBUTE_READ_BIT, VK_PIPELINE_STAGE_VERTEX_INPUT_BIT, 0, m_transferOffset, m_transferSize);
+		m_ptrBufferTransfer.Release();
 	}
 
 	switch ((int)GetIndexType()) {

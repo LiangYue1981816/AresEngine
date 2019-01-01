@@ -27,9 +27,8 @@ private:
 	uint32_t m_binding;
 
 private:
-	bool m_bNeedTransfer;
-	VkDeviceSize m_transferOffset;
 	VkDeviceSize m_transferSize;
+	VkDeviceSize m_transferOffset;
 
 private:
 	CVKBufferPtr m_ptrBuffer;
