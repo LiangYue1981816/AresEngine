@@ -29,7 +29,7 @@ public:
 	glm::aabb GetLocalAABB(void) const;
 
 public:
-	void Bind(void *pParam);
+	void Bind(void *pParam, CVKBufferPtr &ptrVertexBufferTransfer, CVKBufferPtr &ptrIndexBufferTransfer);
 
 
 private:

@@ -134,11 +134,11 @@ glm::aabb CVKMeshDraw::GetLocalAABB(void) const
 	}
 }
 
-void CVKMeshDraw::Bind(void *pParam)
+void CVKMeshDraw::Bind(void *pParam, CVKBufferPtr &ptrVertexBufferTransfer, CVKBufferPtr &ptrIndexBufferTransfer)
 {
 	if (VkCommandBuffer vkCommandBuffer = (VkCommandBuffer)pParam) {
-		m_pIndexBuffer->Bind(vkCommandBuffer, 0);
-		m_pVertexBuffer->Bind(vkCommandBuffer, 0);
+		m_pIndexBuffer->Bind(vkCommandBuffer, 0, ptrIndexBufferTransfer);
+		m_pVertexBuffer->Bind(vkCommandBuffer, 0, ptrVertexBufferTransfer);
 		m_pInstanceBuffer->Bind(vkCommandBuffer, 0);
 	}
 }

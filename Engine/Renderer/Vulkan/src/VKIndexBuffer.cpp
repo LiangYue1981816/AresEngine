@@ -5,7 +5,6 @@ CVKIndexBuffer::CVKIndexBuffer(CVKDevice *pDevice, GfxIndexType type, size_t siz
 	: CGfxIndexBuffer(type, size, bDynamic)
 	, m_pDevice(pDevice)
 
-	, m_transferSize(0)
 	, m_transferOffset(0)
 {
 	if (bDynamic) {
@@ -28,24 +27,24 @@ bool CVKIndexBuffer::BufferData(size_t offset, size_t size, const void *pBuffer)
 	}
 
 	if (m_ptrBuffer->IsDeviceLocal()) {
-		m_transferSize = size;
 		m_transferOffset = offset;
-		m_ptrBufferTransfer = CVKBufferPtr(new CVKBuffer(m_pDevice, size, VK_BUFFER_USAGE_TRANSFER_SRC_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT));
-		return m_ptrBufferTransfer->BufferData(0, size, pBuffer);
+		m_transferBuffer.assign((uint8_t *)pBuffer, (uint8_t *)pBuffer + size);
+		return true;
 	}
 	else {
 		return m_ptrBuffer->BufferData(VKRenderer()->GetSwapChain()->GetFrameIndex() * m_size + offset, size, pBuffer);
 	}
 }
 
-void CVKIndexBuffer::Bind(VkCommandBuffer vkCommandBuffer, VkDeviceSize offset)
+void CVKIndexBuffer::Bind(VkCommandBuffer vkCommandBuffer, VkDeviceSize offset, CVKBufferPtr &ptrBufferTransfer)
 {
-	if (m_ptrBufferTransfer.IsValid()) {
-		vkCmdTransferBuffer(vkCommandBuffer, m_ptrBufferTransfer->GetBuffer(), m_ptrBuffer->GetBuffer(), VK_ACCESS_VERTEX_ATTRIBUTE_READ_BIT, VK_PIPELINE_STAGE_VERTEX_INPUT_BIT, 0, m_transferOffset, m_transferSize);
+	if (m_transferBuffer.size()) {
+		ptrBufferTransfer = CVKBufferPtr(new CVKBuffer(m_pDevice, m_transferBuffer.size(), VK_BUFFER_USAGE_TRANSFER_SRC_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT));
+		ptrBufferTransfer->BufferData(0, m_transferBuffer.size(), m_transferBuffer.data());
+		vkCmdTransferBuffer(vkCommandBuffer, ptrBufferTransfer->GetBuffer(), m_ptrBuffer->GetBuffer(), VK_ACCESS_VERTEX_ATTRIBUTE_READ_BIT, VK_PIPELINE_STAGE_VERTEX_INPUT_BIT, 0, m_transferOffset, m_transferBuffer.size());
 
-		m_transferSize = 0;
 		m_transferOffset = 0;
-		m_ptrBufferTransfer.Release();
+		m_transferBuffer.clear();
 	}
 
 	switch ((int)GetIndexType()) {

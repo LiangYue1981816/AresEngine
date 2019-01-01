@@ -36,9 +36,6 @@ public:
 
 	virtual glm::aabb GetLocalAABB(void) const = 0;
 
-public:
-	virtual void Bind(void *pParam) = 0;
-
 
 private:
 	uint32_t m_name;

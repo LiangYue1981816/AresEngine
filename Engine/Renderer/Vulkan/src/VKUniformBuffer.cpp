@@ -20,5 +20,9 @@ void CVKUniformBuffer::Release(void)
 
 bool CVKUniformBuffer::BufferData(size_t offset, size_t size, const void *pBuffer)
 {
-	return true;
+	if (m_size < (uint32_t)(offset + size)) {
+		return false;
+	}
+
+	return m_ptrBuffer->BufferData(VKRenderer()->GetSwapChain()->GetFrameIndex() * m_size, size, pBuffer);
 }

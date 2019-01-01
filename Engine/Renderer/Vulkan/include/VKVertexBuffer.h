@@ -16,19 +16,16 @@ private:
 
 public:
 	bool BufferData(size_t offset, size_t size, const void *pBuffer);
-	void Bind(VkCommandBuffer vkCommandBuffer, VkDeviceSize offset);
+	void Bind(VkCommandBuffer vkCommandBuffer, VkDeviceSize offset, CVKBufferPtr &ptrBufferTransfer);
 
 
 private:
 	uint32_t m_binding;
-
-private:
-	VkDeviceSize m_transferSize;
-	VkDeviceSize m_transferOffset;
-
-private:
 	CVKBufferPtr m_ptrBuffer;
-	CVKBufferPtr m_ptrBufferTransfer;
+
+private:
+	VkDeviceSize m_transferOffset;
+	eastl::vector<uint8_t> m_transferBuffer;
 
 private:
 	CVKDevice *m_pDevice;

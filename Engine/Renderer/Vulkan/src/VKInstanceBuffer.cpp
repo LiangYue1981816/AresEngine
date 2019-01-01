@@ -35,7 +35,7 @@ bool CVKInstanceBuffer::BufferData(size_t size, const void *pBuffer)
 			CGfxProfiler::IncInstanceBufferSize(m_size);
 		}
 
-		return m_ptrBuffer->BufferData(0, size, pBuffer);
+		return m_ptrBuffer->BufferData(VKRenderer()->GetSwapChain()->GetFrameIndex() * m_size, size, pBuffer);
 	}
 
 	return true;

@@ -138,7 +138,7 @@ glm::aabb CGLES3MeshDraw::GetLocalAABB(void) const
 	}
 }
 
-void CGLES3MeshDraw::Bind(void *pParam)
+void CGLES3MeshDraw::Bind(void)
 {
 	if (m_pVertexArrayObject) {
 		m_pVertexArrayObject->Bind();

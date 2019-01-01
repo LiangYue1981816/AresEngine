@@ -22,7 +22,7 @@ bool CVKIndirectBuffer::BufferData(int indexDraw, int instanceCount)
 
 	if (m_draws[indexDraw].instanceCount != instanceCount) {
 		m_draws[indexDraw].instanceCount  = instanceCount;
-		return m_ptrBuffer->BufferData(indexDraw * sizeof(DrawCommand) + offsetof(DrawCommand, instanceCount), sizeof(instanceCount), &instanceCount);
+		return m_ptrBuffer->BufferData(VKRenderer()->GetSwapChain()->GetFrameIndex() * m_size + indexDraw * sizeof(DrawCommand) + offsetof(DrawCommand, instanceCount), sizeof(instanceCount), &instanceCount);
 	}
 
 	return true;
@@ -42,7 +42,7 @@ bool CVKIndirectBuffer::BufferData(int indexDraw, int baseVertex, int firstIndex
 		m_draws[indexDraw].firstIndex = firstIndex;
 		m_draws[indexDraw].indexCount = indexCount;
 		m_draws[indexDraw].instanceCount = instanceCount;
-		return m_ptrBuffer->BufferData(indexDraw * sizeof(DrawCommand), sizeof(m_draws[indexDraw]), &m_draws[indexDraw]);
+		return m_ptrBuffer->BufferData(VKRenderer()->GetSwapChain()->GetFrameIndex() * m_size + indexDraw * sizeof(DrawCommand), sizeof(m_draws[indexDraw]), &m_draws[indexDraw]);
 	}
 
 	return true;
