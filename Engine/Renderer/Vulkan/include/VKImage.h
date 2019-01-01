@@ -9,17 +9,23 @@ class CVKImage : public CGfxResource
 
 
 private:
-	CVKImage(CVKDevice *pDevice, VkImageType imageType, VkImageViewType viewType, VkImageAspectFlags aspectMask, VkFormat format, int width, int height, int levels, int layers, VkSampleCountFlagBits samples, VkImageTiling tiling, VkImageUsageFlags usage);
+	CVKImage(CVKDevice *pDevice, VkImageType imageType, VkImageViewType viewType, VkFormat format, int width, int height, int levels, int layers, VkSampleCountFlagBits samples, VkImageTiling imageTiling, VkImageUsageFlags imageUsageFlags);
 	virtual ~CVKImage(void);
 	virtual void Release(void);
 
 private:
 	bool BufferData(size_t offset, size_t size, const void *pBuffer);
 
+private:
+	bool IsDeviceLocal(void) const;
+	bool IsHostVisible(void) const;
+	bool IsHostCoherent(void) const;
+	bool IsHostCached(void) const;
+	bool IsLazilyAllocated(void) const;
+
 
 private:
 	VkImage m_vkImage;
-	VkImageView m_vkImageView;
 	CVKMemory *m_pMemory;
 
 private:
