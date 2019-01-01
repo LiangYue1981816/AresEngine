@@ -53,6 +53,7 @@ private:
 
 private:
 	uint32_t GetMemoryTypeIndex(void) const;
+
 	VkDeviceSize GetFreeSize(void) const;
 	VkDeviceSize GetFullSize(void) const;
 
@@ -61,7 +62,9 @@ private:
 	static const uint32_t MIN_ALIGNMENT = 64;
 
 private:
-	uint32_t m_indexType;
+	uint32_t m_memoryTypeIndex;
+	VkMemoryPropertyFlags m_memoryPropertyFlags;
+
 	VkDeviceSize m_freeSize;
 	VkDeviceSize m_fullSize;
 	VkDeviceMemory m_vkMemory;

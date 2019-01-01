@@ -1,16 +1,17 @@
 #include "VKRenderer.h"
 
 
-CVKMemory::CVKMemory(CVKMemoryAllocator *pAllocator, CVKDevice *pDevice, VkDeviceMemory vkMemory, VkMemoryPropertyFlags flags, VkDeviceSize offset, VkDeviceSize aligmentOffset, VkDeviceSize size)
+CVKMemory::CVKMemory(CVKMemoryAllocator *pAllocator, CVKDevice *pDevice, VkDeviceMemory vkMemory, VkMemoryPropertyFlags memoryPropertyFlags, VkDeviceSize size, VkDeviceSize offset, VkDeviceSize aligmentOffset)
 	: m_pDevice(pDevice)
 
 	, m_pAllocator(pAllocator)
 	, m_vkMemory(vkMemory)
 
-	, m_flags(flags)
+	, m_memoryPropertyFlags(memoryPropertyFlags)
+
+	, m_size(size)
 	, m_offset(offset)
 	, m_aligmentOffset(aligmentOffset)
-	, m_size(size)
 
 	, bInUse(false)
 
@@ -68,7 +69,7 @@ bool CVKMemory::BeginMap(VkDeviceSize offset, VkDeviceSize size, void **ppAddres
 		return false;
 	}
 
-	CALL_VK_FUNCTION_RETURN_BOOL(vkMapMemory(m_pDevice->GetDevice(), m_vkMemory, m_offset + m_aligmentOffset + offset, size, m_flags, ppAddress));
+	CALL_VK_FUNCTION_RETURN_BOOL(vkMapMemory(m_pDevice->GetDevice(), m_vkMemory, m_offset + m_aligmentOffset + offset, size, m_memoryPropertyFlags, ppAddress));
 	return true;
 }
 
@@ -132,27 +133,32 @@ bool CVKMemory::Invalidate(VkDeviceSize offset, VkDeviceSize size) const
 
 bool CVKMemory::IsDeviceLocal(void) const
 {
-	return m_flags & VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT ? true : false;
+	return m_memoryPropertyFlags & VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT ? true : false;
 }
 
 bool CVKMemory::IsHostVisible(void) const
 {
-	return m_flags & VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT ? true : false;
+	return m_memoryPropertyFlags & VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT ? true : false;
 }
 
 bool CVKMemory::IsHostCoherent(void) const
 {
-	return m_flags & VK_MEMORY_PROPERTY_HOST_COHERENT_BIT ? true : false;
+	return m_memoryPropertyFlags & VK_MEMORY_PROPERTY_HOST_COHERENT_BIT ? true : false;
 }
 
 bool CVKMemory::IsHostCached(void) const
 {
-	return m_flags & VK_MEMORY_PROPERTY_HOST_CACHED_BIT ? true : false;
+	return m_memoryPropertyFlags & VK_MEMORY_PROPERTY_HOST_CACHED_BIT ? true : false;
 }
 
 bool CVKMemory::IsLazilyAllocated(void) const
 {
-	return m_flags & VK_MEMORY_PROPERTY_LAZILY_ALLOCATED_BIT ? true : false;
+	return m_memoryPropertyFlags & VK_MEMORY_PROPERTY_LAZILY_ALLOCATED_BIT ? true : false;
+}
+
+VkDeviceSize CVKMemory::GetSize(void) const
+{
+	return m_size;
 }
 
 VkDeviceSize CVKMemory::GetOffset(void) const
@@ -163,9 +169,4 @@ VkDeviceSize CVKMemory::GetOffset(void) const
 VkDeviceSize CVKMemory::GetAligmentOffset(void) const
 {
 	return m_aligmentOffset;
-}
-
-VkDeviceSize CVKMemory::GetSize(void) const
-{
-	return m_size;
 }

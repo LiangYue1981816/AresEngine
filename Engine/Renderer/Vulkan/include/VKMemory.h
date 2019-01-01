@@ -9,7 +9,7 @@ class CVKMemory
 
 
 private:
-	CVKMemory(CVKMemoryAllocator *pAllocator, CVKDevice *pDevice, VkDeviceMemory vkMemory, VkMemoryPropertyFlags flags, VkDeviceSize offset, VkDeviceSize aligmentOffset, VkDeviceSize size);
+	CVKMemory(CVKMemoryAllocator *pAllocator, CVKDevice *pDevice, VkDeviceMemory vkMemory, VkMemoryPropertyFlags memoryPropertyFlags, VkDeviceSize size, VkDeviceSize offset, VkDeviceSize aligmentOffset);
 	virtual ~CVKMemory(void);
 
 
@@ -34,16 +34,17 @@ public:
 	bool IsLazilyAllocated(void) const;
 
 public:
+	VkDeviceSize GetSize(void) const;
 	VkDeviceSize GetOffset(void) const;
 	VkDeviceSize GetAligmentOffset(void) const;
-	VkDeviceSize GetSize(void) const;
 
 
 private:
-	VkMemoryPropertyFlags m_flags;
+	VkMemoryPropertyFlags m_memoryPropertyFlags;
+
+	VkDeviceSize m_size;
 	VkDeviceSize m_offset;
 	VkDeviceSize m_aligmentOffset;
-	VkDeviceSize m_size;
 
 private:
 	VkDeviceMemory m_vkMemory;

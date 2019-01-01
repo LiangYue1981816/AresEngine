@@ -13,7 +13,7 @@ class CVKBuffer : public CGfxResource
 
 
 private:
-	CVKBuffer(CVKDevice *pDevice, VkBufferUsageFlags usage, VkMemoryPropertyFlags memoryPropertyFlags, VkDeviceSize size);
+	CVKBuffer(CVKDevice *pDevice, VkBufferUsageFlags bufferUsageFlags, VkMemoryPropertyFlags memoryPropertyFlags, VkDeviceSize size);
 	virtual ~CVKBuffer(void);
 	virtual void Release(void);
 
@@ -21,10 +21,17 @@ private:
 private:
 	bool BufferData(size_t offset, size_t size, const void *pBuffer);
 
+private:
+	bool IsDeviceLocal(void) const;
+	bool IsHostVisible(void) const;
+	bool IsHostCoherent(void) const;
+	bool IsHostCached(void) const;
+	bool IsLazilyAllocated(void) const;
+
 
 private:
 	VkDeviceSize m_size;
-	VkBufferUsageFlags m_usage;
+	VkBufferUsageFlags m_bufferUsageFlags;
 	VkMemoryPropertyFlags m_memoryPropertyFlags;
 
 private:
