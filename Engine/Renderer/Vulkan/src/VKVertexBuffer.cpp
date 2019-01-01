@@ -43,14 +43,14 @@ bool CVKVertexBuffer::BufferData(size_t offset, size_t size, const void *pBuffer
 void CVKVertexBuffer::Bind(VkCommandBuffer vkCommandBuffer, VkDeviceSize offset)
 {
 	if (m_ptrBufferTransfer.IsValid()) {
-		vkCmdTransferBuffer(vkCommandBuffer, m_ptrBufferTransfer->m_vkBuffer, m_ptrBuffer->m_vkBuffer, VK_ACCESS_VERTEX_ATTRIBUTE_READ_BIT, VK_PIPELINE_STAGE_VERTEX_INPUT_BIT, 0, m_transferOffset, m_transferSize);
+		vkCmdTransferBuffer(vkCommandBuffer, m_ptrBufferTransfer->GetBuffer(), m_ptrBuffer->GetBuffer(), VK_ACCESS_VERTEX_ATTRIBUTE_READ_BIT, VK_PIPELINE_STAGE_VERTEX_INPUT_BIT, 0, m_transferOffset, m_transferSize);
 
 		m_transferSize = 0;
 		m_transferOffset = 0;
 		m_ptrBufferTransfer.Release();
 	}
 
-	vkCmdBindVertexBuffers(vkCommandBuffer, m_binding, 1, &m_ptrBuffer->m_vkBuffer, &offset);
+	vkCmdBindVertexBuffer(vkCommandBuffer, m_binding, m_ptrBuffer->GetBuffer(), offset);
 }
 
 CVKBufferPtr CVKVertexBuffer::GetBuffer(void) const

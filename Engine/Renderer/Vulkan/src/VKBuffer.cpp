@@ -57,6 +57,11 @@ bool CVKBuffer::BufferData(size_t offset, size_t size, const void *pBuffer)
 	return true;
 }
 
+VkBuffer CVKBuffer::GetBuffer(void) const
+{
+	return m_vkBuffer;
+}
+
 bool CVKBuffer::IsDeviceLocal(void) const
 {
 	return m_pMemory ? m_pMemory->IsDeviceLocal() : false;

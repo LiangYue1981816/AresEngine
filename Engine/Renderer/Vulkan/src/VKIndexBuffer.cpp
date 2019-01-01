@@ -41,7 +41,7 @@ bool CVKIndexBuffer::BufferData(size_t offset, size_t size, const void *pBuffer)
 void CVKIndexBuffer::Bind(VkCommandBuffer vkCommandBuffer, VkDeviceSize offset)
 {
 	if (m_ptrBufferTransfer.IsValid()) {
-		vkCmdTransferBuffer(vkCommandBuffer, m_ptrBufferTransfer->m_vkBuffer, m_ptrBuffer->m_vkBuffer, VK_ACCESS_VERTEX_ATTRIBUTE_READ_BIT, VK_PIPELINE_STAGE_VERTEX_INPUT_BIT, 0, m_transferOffset, m_transferSize);
+		vkCmdTransferBuffer(vkCommandBuffer, m_ptrBufferTransfer->GetBuffer(), m_ptrBuffer->GetBuffer(), VK_ACCESS_VERTEX_ATTRIBUTE_READ_BIT, VK_PIPELINE_STAGE_VERTEX_INPUT_BIT, 0, m_transferOffset, m_transferSize);
 
 		m_transferSize = 0;
 		m_transferOffset = 0;
@@ -50,11 +50,11 @@ void CVKIndexBuffer::Bind(VkCommandBuffer vkCommandBuffer, VkDeviceSize offset)
 
 	switch ((int)GetIndexType()) {
 	case GFX_INDEX_UNSIGNED_SHORT:
-		vkCmdBindIndexBuffer(vkCommandBuffer, m_ptrBuffer->m_vkBuffer, offset, VK_INDEX_TYPE_UINT16);
+		vkCmdBindIndexBuffer(vkCommandBuffer, m_ptrBuffer->GetBuffer(), offset, VK_INDEX_TYPE_UINT16);
 		break;
 
 	case GFX_INDEX_UNSIGNED_INT:
-		vkCmdBindIndexBuffer(vkCommandBuffer, m_ptrBuffer->m_vkBuffer, offset, VK_INDEX_TYPE_UINT32);
+		vkCmdBindIndexBuffer(vkCommandBuffer, m_ptrBuffer->GetBuffer(), offset, VK_INDEX_TYPE_UINT32);
 		break;
 	}
 }
