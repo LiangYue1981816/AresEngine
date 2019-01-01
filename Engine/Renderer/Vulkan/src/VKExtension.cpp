@@ -67,7 +67,7 @@ VkPipelineStageFlags GetPipelineStageFlags(VkAccessFlags access)
 	}
 }
 
-void vkCmdSetImageLayout(VkCommandBuffer vkCommandBuffer, VkImage vkImage, VkImageLayout oldLayout, VkImageLayout newLayout, const VkImageSubresourceRange *range)
+void vkCmdSetImageLayout(VkCommandBuffer vkCommandBuffer, VkImage vkImage, VkImageLayout oldLayout, VkImageLayout newLayout, VkImageSubresourceRange range)
 {
 	VkImageMemoryBarrier barrier = {};
 	barrier.sType = VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER;
@@ -79,7 +79,7 @@ void vkCmdSetImageLayout(VkCommandBuffer vkCommandBuffer, VkImage vkImage, VkIma
 	barrier.srcQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
 	barrier.dstQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
 	barrier.image = vkImage;
-	barrier.subresourceRange = *range;
+	barrier.subresourceRange = range;
 
 	VkPipelineStageFlags srcStageMask = GetPipelineStageFlags(barrier.srcAccessMask);
 	VkPipelineStageFlags dstStageMask = GetPipelineStageFlags(barrier.dstAccessMask);
@@ -96,26 +96,40 @@ void vkCmdSetImageLayout(VkCommandBuffer vkCommandBuffer, VkImage vkImage, VkIma
 	vkCmdPipelineBarrier(vkCommandBuffer, srcStageMask, dstStageMask, 0, 0, nullptr, 0, nullptr, 1, &barrier);
 }
 
-void vkCmdTransferImage(VkCommandBuffer vkCommandBuffer, VkImage vkSrcImage, VkImage vkDstImage, const VkImageCopy *region)
+void vkCmdTransferImage(VkCommandBuffer vkCommandBuffer, VkImage vkSrcImage, VkImage vkDstImage, VkImageCopy region)
 {
 	VkImageSubresourceRange srcRange = {};
-	srcRange.aspectMask = region->srcSubresource.aspectMask;
+	srcRange.aspectMask = region.srcSubresource.aspectMask;
 	srcRange.baseMipLevel = 0;
-	srcRange.levelCount = region->srcSubresource.mipLevel;
-	srcRange.baseArrayLayer = region->srcSubresource.baseArrayLayer;
-	srcRange.layerCount = region->srcSubresource.layerCount;
+	srcRange.levelCount = region.srcSubresource.mipLevel;
+	srcRange.baseArrayLayer = region.srcSubresource.baseArrayLayer;
+	srcRange.layerCount = region.srcSubresource.layerCount;
 
 	VkImageSubresourceRange dstRange = {};
-	dstRange.aspectMask = region->dstSubresource.aspectMask;
+	dstRange.aspectMask = region.dstSubresource.aspectMask;
 	dstRange.baseMipLevel = 0;
-	dstRange.levelCount = region->dstSubresource.mipLevel;
-	dstRange.baseArrayLayer = region->dstSubresource.baseArrayLayer;
-	dstRange.layerCount = region->dstSubresource.layerCount;
+	dstRange.levelCount = region.dstSubresource.mipLevel;
+	dstRange.baseArrayLayer = region.dstSubresource.baseArrayLayer;
+	dstRange.layerCount = region.dstSubresource.layerCount;
 
-	vkCmdSetImageLayout(vkCommandBuffer, vkSrcImage, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL, &srcRange);
-	vkCmdSetImageLayout(vkCommandBuffer, vkDstImage, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, &dstRange);
-	vkCmdCopyImage(vkCommandBuffer, vkSrcImage, VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL, vkDstImage, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, 1, region);
-	vkCmdSetImageLayout(vkCommandBuffer, vkDstImage, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL, &dstRange);
+	vkCmdSetImageLayout(vkCommandBuffer, vkSrcImage, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL, srcRange);
+	vkCmdSetImageLayout(vkCommandBuffer, vkDstImage, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, dstRange);
+	vkCmdCopyImage(vkCommandBuffer, vkSrcImage, VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL, vkDstImage, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, 1, &region);
+	vkCmdSetImageLayout(vkCommandBuffer, vkDstImage, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL, dstRange);
+}
+
+void vkCmdTransferImage(VkCommandBuffer vkCommandBuffer, VkBuffer vkSrcBuffer, VkImage vkDstImage, uint32_t levels, uint32_t layers, const VkBufferImageCopy *regions, uint32_t count)
+{
+	VkImageSubresourceRange dstRange;
+	dstRange.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
+	dstRange.baseMipLevel = 0;
+	dstRange.levelCount = levels;
+	dstRange.baseArrayLayer = 0;
+	dstRange.layerCount = layers;
+
+	vkCmdSetImageLayout(vkCommandBuffer, vkDstImage, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, dstRange);
+	vkCmdCopyBufferToImage(vkCommandBuffer, vkSrcBuffer, vkDstImage, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, count, regions);
+	vkCmdSetImageLayout(vkCommandBuffer, vkDstImage, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL, dstRange);
 }
 
 void vkCmdTransferBuffer(VkCommandBuffer vkCommandBuffer, VkBuffer vkSrcBuffer, VkBuffer vkDstBuffer, VkAccessFlags dstAccessMask, VkPipelineStageFlags dstStageMask, VkDeviceSize srcOffset, VkDeviceSize dstOffset, VkDeviceSize size)
