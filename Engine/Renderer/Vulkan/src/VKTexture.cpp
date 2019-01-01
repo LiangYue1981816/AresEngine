@@ -38,3 +38,8 @@ void CVKTexture::Destroy(void)
 	m_vkImageView = VK_NULL_HANDLE;
 	m_ptrImage.Release();
 }
+
+VkImageView CVKTexture::GetImageView(void) const
+{
+	return m_vkImageView;
+}

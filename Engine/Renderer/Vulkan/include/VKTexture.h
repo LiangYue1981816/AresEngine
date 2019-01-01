@@ -17,6 +17,9 @@ public:
 	bool Create(VkImageView vkImageView);
 	void Destroy(void);
 
+public:
+	VkImageView GetImageView(void) const;
+
 
 protected:
 	eastl::vector<uint8_t> m_transferBuffer;

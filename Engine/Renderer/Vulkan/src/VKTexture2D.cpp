@@ -25,7 +25,7 @@ uint32_t CVKTexture2D::GetTarget(void) const
 
 bool CVKTexture2D::Create(uint64_t texture)
 {
-	return false;
+	return CVKTexture::Create((VkImageView)texture);
 }
 
 bool CVKTexture2D::Create(GfxPixelFormat pixelFormat, int width, int height, int levels, int samples)
@@ -46,6 +46,8 @@ bool CVKTexture2D::Create(GfxPixelFormat pixelFormat, int width, int height, int
 
 void CVKTexture2D::Destroy(void)
 {
+	CVKTexture::Destroy();
+
 	for (const auto &itLevelSize : m_size) {
 		CGfxProfiler::DecTextureDataSize(itLevelSize.second);
 	}
@@ -57,8 +59,6 @@ void CVKTexture2D::Destroy(void)
 	m_levels = 0;
 	m_samples = 0;
 	m_format = GFX_PIXELFORMAT_UNDEFINED;
-
-	m_ptrImage.Release();
 }
 
 bool CVKTexture2D::TransferTexture2D(GfxPixelFormat pixelFormat, int level, int xoffset, int yoffset, int width, int height, GfxDataType type, uint32_t size, const void *data)
