@@ -2,7 +2,8 @@
 
 
 CVKTexture2D::CVKTexture2D(CVKDevice *pDevice, CVKTextureManager *pManager, uint32_t name)
-	: CGfxTexture2D(name)
+	: CVKTexture(pDevice, pManager)
+	, CGfxTexture2D(name)
 {
 
 }
