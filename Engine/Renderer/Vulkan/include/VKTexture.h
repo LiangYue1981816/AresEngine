@@ -13,17 +13,8 @@ protected:
 	virtual ~CVKTexture(void);
 
 
-public:
-	CVKImagePtr GetImage(void) const;
-	CVKImagePtr GetImageTransfer(void) const;
-
-
-protected:
-	VkImageView m_vkImageView;
-
 protected:
 	CVKImagePtr m_ptrImage;
-	CVKImagePtr m_ptrImageTransfer;
 
 protected:
 	CVKDevice *m_pDevice;

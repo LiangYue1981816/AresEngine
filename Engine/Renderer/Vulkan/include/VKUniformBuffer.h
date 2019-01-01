@@ -16,9 +16,6 @@ private:
 public:
 	bool BufferData(size_t offset, size_t size, const void *pBuffer);
 
-private:
-	CVKBufferPtr GetBuffer(void) const;
-
 
 private:
 	CVKBufferPtr m_ptrBuffer;

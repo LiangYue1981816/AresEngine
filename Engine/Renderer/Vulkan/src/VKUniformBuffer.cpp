@@ -22,8 +22,3 @@ bool CVKUniformBuffer::BufferData(size_t offset, size_t size, const void *pBuffe
 {
 	return true;
 }
-
-CVKBufferPtr CVKUniformBuffer::GetBuffer(void) const
-{
-	return m_ptrBuffer;
-}

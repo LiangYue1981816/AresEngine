@@ -31,14 +31,6 @@ public:
 public:
 	void Bind(void *pParam);
 
-private:
-	CVKBufferPtr GetIndexBuffer(void) const;
-	CVKBufferPtr GetIndexBufferTransfer(void) const;
-	CVKBufferPtr GetVertexBuffer(void) const;
-	CVKBufferPtr GetVertexBufferTransfer(void) const;
-	CVKBufferPtr GetInstanceBuffer(void) const;
-	CVKBufferPtr GetIndirectBuffer(void) const;
-
 
 private:
 	CGfxMeshPtr m_ptrMesh;

@@ -47,8 +47,3 @@ bool CVKIndirectBuffer::BufferData(int indexDraw, int baseVertex, int firstIndex
 
 	return true;
 }
-
-CVKBufferPtr CVKIndirectBuffer::GetBuffer(void) const
-{
-	return m_ptrBuffer;
-}

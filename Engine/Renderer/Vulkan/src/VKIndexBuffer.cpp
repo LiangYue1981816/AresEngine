@@ -58,13 +58,3 @@ void CVKIndexBuffer::Bind(VkCommandBuffer vkCommandBuffer, VkDeviceSize offset)
 		break;
 	}
 }
-
-CVKBufferPtr CVKIndexBuffer::GetBuffer(void) const
-{
-	return m_ptrBuffer;
-}
-
-CVKBufferPtr CVKIndexBuffer::GetBufferTransfer(void) const
-{
-	return m_ptrBufferTransfer;
-}

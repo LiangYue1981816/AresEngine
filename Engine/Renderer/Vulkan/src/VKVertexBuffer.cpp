@@ -52,13 +52,3 @@ void CVKVertexBuffer::Bind(VkCommandBuffer vkCommandBuffer, VkDeviceSize offset)
 
 	vkCmdBindVertexBuffer(vkCommandBuffer, m_binding, m_ptrBuffer->GetBuffer(), offset);
 }
-
-CVKBufferPtr CVKVertexBuffer::GetBuffer(void) const
-{
-	return m_ptrBuffer;
-}
-
-CVKBufferPtr CVKVertexBuffer::GetBufferTransfer(void) const
-{
-	return m_ptrBufferTransfer;
-}

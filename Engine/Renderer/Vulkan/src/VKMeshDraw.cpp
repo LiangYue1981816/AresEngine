@@ -142,33 +142,3 @@ void CVKMeshDraw::Bind(void *pParam)
 		m_pInstanceBuffer->Bind(vkCommandBuffer, 0);
 	}
 }
-
-CVKBufferPtr CVKMeshDraw::GetIndexBuffer(void) const
-{
-	return m_pIndexBuffer->GetBuffer();
-}
-
-CVKBufferPtr CVKMeshDraw::GetIndexBufferTransfer(void) const
-{
-	return m_pIndexBuffer->GetBufferTransfer();
-}
-
-CVKBufferPtr CVKMeshDraw::GetVertexBuffer(void) const
-{
-	return m_pVertexBuffer->GetBuffer();
-}
-
-CVKBufferPtr CVKMeshDraw::GetVertexBufferTransfer(void) const
-{
-	return m_pVertexBuffer->GetBufferTransfer();
-}
-
-CVKBufferPtr CVKMeshDraw::GetInstanceBuffer(void) const
-{
-	return m_pInstanceBuffer->GetBuffer();
-}
-
-CVKBufferPtr CVKMeshDraw::GetIndirectBuffer(void) const
-{
-	return m_pIndirectBuffer->GetBuffer();
-}

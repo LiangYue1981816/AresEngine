@@ -17,9 +17,6 @@ public:
 	bool BufferData(int indexDraw, int instanceCount);
 	bool BufferData(int indexDraw, int baseVertex, int firstIndex, int indexCount, int instanceCount);
 
-private:
-	CVKBufferPtr GetBuffer(void) const;
-
 
 private:
 	eastl::vector<DrawCommand> m_draws;
