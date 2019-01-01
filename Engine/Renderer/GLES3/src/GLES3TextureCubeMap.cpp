@@ -23,9 +23,9 @@ uint32_t CGLES3TextureCubeMap::GetTarget(void) const
 	return CGLES3Texture::GetTarget();
 }
 
-bool CGLES3TextureCubeMap::Create(uint32_t texture)
+bool CGLES3TextureCubeMap::Create(uint64_t texture)
 {
-	return CGLES3Texture::Create(GL_TEXTURE_CUBE_MAP, texture);
+	return CGLES3Texture::Create(GL_TEXTURE_CUBE_MAP, (uint32_t)texture);
 }
 
 bool CGLES3TextureCubeMap::Create(GfxPixelFormat pixelFormat, int width, int height, int levels)

@@ -18,7 +18,7 @@ public:
 
 
 public:
-	virtual bool Create(uint32_t texture) = 0;
+	virtual bool Create(uint64_t texture) = 0;
 	virtual bool Create(GfxPixelFormat pixelFormat, int width, int height, int levels, int layers) = 0;
 	virtual void Destroy(void) = 0;
 

@@ -87,7 +87,7 @@ bool CGLES3MaterialPass::SetSampler(const char *szName, GfxMinFilter minFilter, 
 	return false;
 }
 
-bool CGLES3MaterialPass::SetTexture2D(const char *szName, uint32_t externTexture)
+bool CGLES3MaterialPass::SetTexture2D(const char *szName, uint64_t externTexture)
 {
 	uint32_t name = HashValue(szName);
 
@@ -100,7 +100,7 @@ bool CGLES3MaterialPass::SetTexture2D(const char *szName, uint32_t externTexture
 	return false;
 }
 
-bool CGLES3MaterialPass::SetTexture2DArray(const char *szName, uint32_t externTexture)
+bool CGLES3MaterialPass::SetTexture2DArray(const char *szName, uint64_t externTexture)
 {
 	uint32_t name = HashValue(szName);
 
@@ -113,7 +113,7 @@ bool CGLES3MaterialPass::SetTexture2DArray(const char *szName, uint32_t externTe
 	return false;
 }
 
-bool CGLES3MaterialPass::SetTextureCubeMap(const char *szName, uint32_t externTexture)
+bool CGLES3MaterialPass::SetTextureCubeMap(const char *szName, uint64_t externTexture)
 {
 	uint32_t name = HashValue(szName);
 

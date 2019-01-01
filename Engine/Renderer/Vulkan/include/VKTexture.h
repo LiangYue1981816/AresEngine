@@ -13,12 +13,19 @@ protected:
 	virtual ~CVKTexture(void);
 
 
+public:
+	bool Create(VkImageView vkImageView);
+	void Destroy(void);
+
+
 protected:
 	eastl::vector<uint8_t> m_transferBuffer;
 	eastl::vector<VkBufferImageCopy> m_transferRegions;
 
 protected:
+	bool m_bExtern;
 	CVKImagePtr m_ptrImage;
+	VkImageView m_vkImageView;
 
 protected:
 	CVKDevice *m_pDevice;

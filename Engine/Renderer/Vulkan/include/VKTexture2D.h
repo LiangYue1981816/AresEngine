@@ -18,7 +18,7 @@ public:
 	uint32_t GetTarget(void) const;
 
 public:
-	bool Create(uint32_t texture);
+	bool Create(uint64_t texture);
 	bool Create(GfxPixelFormat pixelFormat, int width, int height, int levels, int samples = 0);
 	void Destroy(void);
 

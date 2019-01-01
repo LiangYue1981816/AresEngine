@@ -23,9 +23,9 @@ uint32_t CGLES3Texture2D::GetTarget(void) const
 	return CGLES3Texture::GetTarget();
 }
 
-bool CGLES3Texture2D::Create(uint32_t texture)
+bool CGLES3Texture2D::Create(uint64_t texture)
 {
-	return CGLES3Texture::Create(GL_TEXTURE_2D, texture);
+	return CGLES3Texture::Create(GL_TEXTURE_2D, (uint32_t)texture);
 }
 
 bool CGLES3Texture2D::Create(GfxPixelFormat pixelFormat, int width, int height, int levels, int samples)
