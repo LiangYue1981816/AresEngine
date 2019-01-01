@@ -32,8 +32,8 @@ bool CVKVertexBuffer::BufferData(size_t offset, size_t size, const void *pBuffer
 	if (m_ptrBuffer->IsDeviceLocal()) {
 		m_transferSize = size;
 		m_transferOffset = offset;
-		m_ptrBufferTransfer = CVKBufferPtr(new CVKBuffer(m_pDevice, m_transferSize, VK_BUFFER_USAGE_TRANSFER_SRC_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT));
-		return m_ptrBufferTransfer->BufferData(0, m_transferSize, pBuffer);
+		m_ptrBufferTransfer = CVKBufferPtr(new CVKBuffer(m_pDevice, size, VK_BUFFER_USAGE_TRANSFER_SRC_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT));
+		return m_ptrBufferTransfer->BufferData(0, size, pBuffer);
 	}
 	else {
 		return m_ptrBuffer->BufferData(VKRenderer()->GetSwapChain()->GetFrameIndex() * m_size + offset, size, pBuffer);
