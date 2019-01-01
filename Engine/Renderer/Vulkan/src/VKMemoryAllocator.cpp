@@ -80,11 +80,11 @@ CVKMemory* CVKMemoryAllocator::AllocMemory(VkDeviceSize alignment, VkDeviceSize 
 				pMemory->m_size = alignmentSize;
 			}
 
+			m_freeSize -= pMemory->m_size;
+
 			pMemory->bInUse = true;
 			pMemory->m_aligmentOffset = ALIGN_BYTE(pMemory->m_offset, alignment) - pMemory->m_offset;
 			pMemory->m_size -= pMemory->m_aligmentOffset;
-
-			m_freeSize -= pMemory->m_size;
 
 			return pMemory;
 		}
