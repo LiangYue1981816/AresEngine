@@ -74,6 +74,11 @@ VkImage CVKImage::GetImage(void) const
 	return m_vkImage;
 }
 
+VkDeviceSize CVKImage::GetSize(void) const
+{
+	return m_pMemory ? m_pMemory->GetSize() : 0;
+}
+
 bool CVKImage::IsDeviceLocal(void) const
 {
 	return m_pMemory ? m_pMemory->IsDeviceLocal() : false;

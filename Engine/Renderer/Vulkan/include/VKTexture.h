@@ -14,6 +14,10 @@ protected:
 
 
 protected:
+	eastl::vector<uint8_t> m_transferBuffer;
+	eastl::vector<VkBufferImageCopy> m_transferRegions;
+
+protected:
 	CVKImagePtr m_ptrImage;
 
 protected:

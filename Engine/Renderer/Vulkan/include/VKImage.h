@@ -19,6 +19,7 @@ private:
 
 private:
 	VkImage GetImage(void) const;
+	VkDeviceSize GetSize(void) const;
 
 private:
 	bool IsDeviceLocal(void) const;

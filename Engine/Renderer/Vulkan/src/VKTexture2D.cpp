@@ -30,12 +30,34 @@ bool CVKTexture2D::Create(uint32_t texture)
 
 bool CVKTexture2D::Create(GfxPixelFormat pixelFormat, int width, int height, int levels, int samples)
 {
+	Destroy();
+
+	m_format = pixelFormat;
+
+	m_width = width;
+	m_height = height;
+	m_levels = levels;
+	m_samples = samples;
+
 	m_ptrImage = CVKImagePtr(new CVKImage(m_pDevice, VK_IMAGE_TYPE_2D, (VkFormat)pixelFormat, width, height, levels, 1, (VkSampleCountFlagBits)samples, VK_IMAGE_TILING_OPTIMAL, VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT));
+
 	return true;
 }
 
 void CVKTexture2D::Destroy(void)
 {
+	for (const auto &itLevelSize : m_size) {
+		CGfxProfiler::DecTextureDataSize(itLevelSize.second);
+	}
+
+	m_size.clear();
+
+	m_width = 0;
+	m_height = 0;
+	m_levels = 0;
+	m_samples = 0;
+	m_format = GFX_PIXELFORMAT_UNDEFINED;
+
 	m_ptrImage.Release();
 }
 

@@ -28,8 +28,5 @@ public:
 
 
 private:
-	VkOffset3D m_transferOffset;
-
-private:
 	eastl::unordered_map<int, uint32_t> m_size;
 };
