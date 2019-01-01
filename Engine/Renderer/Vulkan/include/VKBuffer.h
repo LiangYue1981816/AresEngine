@@ -23,6 +23,7 @@ private:
 
 private:
 	VkBuffer GetBuffer(void) const;
+	VkDeviceSize GetSize(void) const;
 
 private:
 	bool IsDeviceLocal(void) const;

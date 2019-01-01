@@ -15,14 +15,14 @@ private:
 
 public:
 	bool BufferData(size_t size, const void *pBuffer);
-	void Bind(VkCommandBuffer vkCommandBuffer, VkDeviceSize offset);
+	void Bind(VkCommandBuffer vkCommandBuffer, VkDeviceSize offset, CVKBufferPtr &ptrBuffer);
 
 
 private:
 	uint32_t m_hash;
-	uint32_t m_binding;
 
 private:
+	uint32_t m_binding;
 	CVKBufferPtr m_ptrBuffer;
 
 private:

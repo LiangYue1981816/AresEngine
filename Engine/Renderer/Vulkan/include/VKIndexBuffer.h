@@ -20,11 +20,11 @@ public:
 
 
 private:
-	CVKBufferPtr m_ptrBuffer;
-
-private:
 	VkDeviceSize m_transferOffset;
 	eastl::vector<uint8_t> m_transferBuffer;
+
+private:
+	CVKBufferPtr m_ptrBuffer;
 
 private:
 	CVKDevice *m_pDevice;
