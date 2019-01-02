@@ -55,7 +55,7 @@ void CVKTexture::Bind(VkCommandBuffer vkCommandBuffer, CVKBufferPtr &ptrBufferTr
 		for (auto &itTransferBuffer : m_transferBuffers) {
 			itTransferBuffer.second.region.bufferOffset = buffers.size();
 			regions.emplace_back(itTransferBuffer.second.region);
-			buffers.insert(buffers.end(), itTransferBuffer.second.buffer.data(), itTransferBuffer.second.buffer.size());
+			buffers.insert(buffers.end(), itTransferBuffer.second.buffer.data(), itTransferBuffer.second.buffer.data() + itTransferBuffer.second.buffer.size());
 		}
 
 		ptrBufferTransfer = CVKBufferPtr(new CVKBuffer(m_pDevice, buffers.size(), VK_BUFFER_USAGE_TRANSFER_SRC_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT));
