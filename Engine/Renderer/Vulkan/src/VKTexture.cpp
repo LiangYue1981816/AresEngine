@@ -19,13 +19,28 @@ CVKTexture::~CVKTexture(void)
 
 }
 
-bool CVKTexture::Create(VkImageView vkImageView)
+bool CVKTexture::CreateView(VkImageView vkImageView)
 {
 	Destroy();
 
 	m_bExtern = true;
 	m_vkImageView = vkImageView;
 
+	return true;
+}
+
+bool CVKTexture::CreateView(VkImageViewType viewType, VkImageAspectFlags aspectMask, VkFormat format, int levels, int layers)
+{
+	VkImageViewCreateInfo createInfo = {};
+	createInfo.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
+	createInfo.pNext = nullptr;
+	createInfo.flags = 0;
+	createInfo.image = m_ptrImage->GetImage();
+	createInfo.viewType = viewType;
+	createInfo.format = format;
+	createInfo.components = { VK_COMPONENT_SWIZZLE_R, VK_COMPONENT_SWIZZLE_G, VK_COMPONENT_SWIZZLE_B, VK_COMPONENT_SWIZZLE_A };
+	createInfo.subresourceRange = { aspectMask, 0, (uint32_t)levels, 0, (uint32_t)layers };
+	CALL_VK_FUNCTION_RETURN_BOOL(vkCreateImageView(m_pDevice->GetDevice(), &createInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkImageView));
 	return true;
 }
 
@@ -54,7 +69,7 @@ void CVKTexture::Bind(VkCommandBuffer vkCommandBuffer, CVKBufferPtr &ptrBufferTr
 
 		for (auto &itTransferBuffer : m_transferBuffers) {
 			itTransferBuffer.second.region.bufferOffset = buffers.size();
-			regions.emplace_back(itTransferBuffer.second.region);
+			regions.insert(regions.end(), itTransferBuffer.second.region);
 			buffers.insert(buffers.end(), itTransferBuffer.second.buffer.data(), itTransferBuffer.second.buffer.data() + itTransferBuffer.second.buffer.size());
 		}
 

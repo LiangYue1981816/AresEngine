@@ -21,7 +21,8 @@ protected:
 
 
 public:
-	bool Create(VkImageView vkImageView);
+	bool CreateView(VkImageView vkImageView);
+	bool CreateView(VkImageViewType viewType, VkImageAspectFlags aspectMask, VkFormat format, int levels, int layers);
 	void Destroy(void);
 
 public:

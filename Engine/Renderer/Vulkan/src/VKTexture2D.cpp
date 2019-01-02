@@ -25,7 +25,7 @@ uint32_t CVKTexture2D::GetTarget(void) const
 
 bool CVKTexture2D::Create(uint64_t texture)
 {
-	return CVKTexture::Create((VkImageView)texture);
+	return CVKTexture::CreateView((VkImageView)texture);
 }
 
 bool CVKTexture2D::Create(GfxPixelFormat pixelFormat, int width, int height, int levels, int samples)
@@ -40,8 +40,7 @@ bool CVKTexture2D::Create(GfxPixelFormat pixelFormat, int width, int height, int
 	m_samples = samples > 1 ? samples : 1;
 
 	m_ptrImage = CVKImagePtr(new CVKImage(m_pDevice, VK_IMAGE_TYPE_2D, (VkFormat)pixelFormat, width, height, levels, 1, (VkSampleCountFlagBits)samples, VK_IMAGE_TILING_OPTIMAL, VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT));
-
-	return true;
+	return CreateView(VK_IMAGE_VIEW_TYPE_2D, VK_IMAGE_ASPECT_COLOR_BIT, (VkFormat)pixelFormat, levels, 1);
 }
 
 void CVKTexture2D::Destroy(void)
