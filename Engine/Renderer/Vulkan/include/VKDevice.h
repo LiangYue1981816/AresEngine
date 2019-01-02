@@ -40,6 +40,7 @@ public:
 private:
 	CVKMeshManager* GetMeshManager(void) const;
 	CVKMeshDrawManager* GetMeshDrawManager(void) const;
+	CVKTextureManager* GetTextureManager(void) const;
 
 
 private:
@@ -57,6 +58,7 @@ private:
 private:
 	CVKMeshManager *m_pMeshManager;
 	CVKMeshDrawManager *m_pMeshDrawManager;
+	CVKTextureManager *m_pTextureManager;
 
 private:
 	CVKInstance *m_pInstance;
