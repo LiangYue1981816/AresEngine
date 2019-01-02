@@ -7,7 +7,7 @@ CVKMemoryAllocator::CVKMemoryAllocator(CVKDevice *pDevice, uint32_t memoryTypeIn
 	: m_pDevice(pDevice)
 
 	, m_memoryTypeIndex(memoryTypeIndex)
-	, m_memoryPropertyFlags(m_pDevice->GetPhysicalDeviceMemoryProperties().memoryTypes[memoryTypeIndex].propertyFlags)
+	, m_memoryPropertyFlags(pDevice->GetPhysicalDeviceMemoryProperties().memoryTypes[memoryTypeIndex].propertyFlags)
 
 	, m_freeSize(ALIGN_BYTE(memorySize, MIN_ALIGNMENT))
 	, m_fullSize(ALIGN_BYTE(memorySize, MIN_ALIGNMENT))
