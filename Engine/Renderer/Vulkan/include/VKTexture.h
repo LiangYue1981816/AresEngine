@@ -9,6 +9,13 @@ class CVKTexture
 
 
 protected:
+	typedef struct TransferBuffer {
+		VkBufferImageCopy region;
+		eastl::vector<uint8_t> buffer;
+	} TransferBuffer;
+
+
+protected:
 	CVKTexture(CVKDevice *pDevice, CVKTextureManager *pManager);
 	virtual ~CVKTexture(void);
 
@@ -18,12 +25,16 @@ public:
 	void Destroy(void);
 
 public:
+	void Bind(VkCommandBuffer vkCommandBuffer, CVKBufferPtr &ptrBufferTransfer);
+
+public:
 	VkImageView GetImageView(void) const;
 
 
 protected:
-	eastl::unordered_map<int, VkBufferImageCopy> m_transferRegions;
-	eastl::unordered_map<int, eastl::vector<uint8_t>> m_transferBuffer;
+	uint32_t m_transferLevels;
+	uint32_t m_transferLayers;
+	eastl::unordered_map<int, TransferBuffer> m_transferBuffers;
 
 protected:
 	bool m_bExtern;
