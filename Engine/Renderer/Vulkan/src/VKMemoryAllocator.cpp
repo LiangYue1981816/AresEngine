@@ -83,8 +83,8 @@ CVKMemory* CVKMemoryAllocator::AllocMemory(VkDeviceSize alignment, VkDeviceSize 
 			m_freeSize -= pMemory->m_size;
 
 			pMemory->bInUse = true;
-			pMemory->m_aligmentOffset = ALIGN_BYTE(pMemory->m_offset, alignment) - pMemory->m_offset;
-			pMemory->m_size -= pMemory->m_aligmentOffset;
+			pMemory->m_alignmentOffset = ALIGN_BYTE(pMemory->m_offset, alignment) - pMemory->m_offset;
+			pMemory->m_size -= pMemory->m_alignmentOffset;
 
 			return pMemory;
 		}
@@ -96,8 +96,8 @@ CVKMemory* CVKMemoryAllocator::AllocMemory(VkDeviceSize alignment, VkDeviceSize 
 void CVKMemoryAllocator::FreeMemory(CVKMemory *pMemory)
 {
 	pMemory->bInUse = false;
-	pMemory->m_size += pMemory->m_aligmentOffset;
-	pMemory->m_aligmentOffset = 0;
+	pMemory->m_size += pMemory->m_alignmentOffset;
+	pMemory->m_alignmentOffset = 0;
 
 	m_freeSize += pMemory->m_size;
 
@@ -148,7 +148,7 @@ void CVKMemoryAllocator::FreeNodes(uint32_t numNodes)
 void CVKMemoryAllocator::InsertMemory(CVKMemory *pMemory)
 {
 	ASSERT(pMemory->bInUse == false);
-	ASSERT(pMemory->m_aligmentOffset == 0);
+	ASSERT(pMemory->m_alignmentOffset == 0);
 
 	uint32_t indexNode = NODE_INDEX(pMemory->m_size);
 
@@ -200,7 +200,7 @@ void CVKMemoryAllocator::InsertMemory(CVKMemory *pMemory)
 void CVKMemoryAllocator::RemoveMemory(CVKMemory *pMemory)
 {
 	ASSERT(pMemory->bInUse == false);
-	ASSERT(pMemory->m_aligmentOffset == 0);
+	ASSERT(pMemory->m_alignmentOffset == 0);
 
 	mem_node *pMemoryNode = m_nodes[NODE_INDEX(pMemory->m_size)];
 
@@ -226,10 +226,10 @@ void CVKMemoryAllocator::RemoveMemory(CVKMemory *pMemory)
 CVKMemory* CVKMemoryAllocator::MergeMemory(CVKMemory *pMemory, CVKMemory *pMemoryNext)
 {
 	ASSERT(pMemory->bInUse == false);
-	ASSERT(pMemory->m_aligmentOffset == 0);
+	ASSERT(pMemory->m_alignmentOffset == 0);
 
 	ASSERT(pMemoryNext->bInUse == false);
-	ASSERT(pMemoryNext->m_aligmentOffset == 0);
+	ASSERT(pMemoryNext->m_alignmentOffset == 0);
 
 	ASSERT(pMemory->m_offset + pMemory->m_size == pMemoryNext->m_offset);
 
@@ -266,7 +266,7 @@ CVKMemory* CVKMemoryAllocator::SearchMemory(VkDeviceSize size) const
 
 		ASSERT(pMemoryNode->pListHead);
 		ASSERT(pMemoryNode->pListHead->bInUse == false);
-		ASSERT(pMemoryNode->pListHead->m_aligmentOffset == 0);
+		ASSERT(pMemoryNode->pListHead->m_alignmentOffset == 0);
 		ASSERT(pMemoryNode->pListHead->m_size / MIN_ALIGNMENT * MIN_ALIGNMENT >= size);
 
 		break;
