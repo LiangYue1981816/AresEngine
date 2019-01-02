@@ -79,14 +79,20 @@ bool CVKTexture2D::TransferTexture2D(GfxPixelFormat pixelFormat, int level, int 
 		return false;
 	}
 
-	m_transferLevels = m_levels;
-	m_transferBuffers[level].region.bufferOffset = 0;
-	m_transferBuffers[level].region.bufferRowLength = 0;
-	m_transferBuffers[level].region.bufferImageHeight = 0;
-	m_transferBuffers[level].region.imageSubresource = { VK_IMAGE_ASPECT_COLOR_BIT, (uint32_t)level, 0, 1 };
-	m_transferBuffers[level].region.imageOffset = { xoffset, yoffset, 0 };
-	m_transferBuffers[level].region.imageExtent = { (uint32_t)width, (uint32_t)height, 1 };
-	m_transferBuffers[level].buffer.assign((uint8_t *)data, (uint8_t *)data + size);
+	CGfxProfiler::DecTextureDataSize(m_size[level]);
+	{
+		m_size[level] = size;
+
+		m_transferLevels = m_levels;
+		m_transferBuffers[level].region.bufferOffset = 0;
+		m_transferBuffers[level].region.bufferRowLength = 0;
+		m_transferBuffers[level].region.bufferImageHeight = 0;
+		m_transferBuffers[level].region.imageSubresource = { VK_IMAGE_ASPECT_COLOR_BIT, (uint32_t)level, 0, 1 };
+		m_transferBuffers[level].region.imageOffset = { xoffset, yoffset, 0 };
+		m_transferBuffers[level].region.imageExtent = { (uint32_t)width, (uint32_t)height, 1 };
+		m_transferBuffers[level].buffer.assign((uint8_t *)data, (uint8_t *)data + size);
+	}
+	CGfxProfiler::IncTextureDataSize(m_size[level]);
 
 	return true;
 }
@@ -109,14 +115,20 @@ bool CVKTexture2D::TransferTexture2DCompressed(GfxPixelFormat pixelFormat, int l
 		return false;
 	}
 
-	m_transferLevels = m_levels;
-	m_transferBuffers[level].region.bufferOffset = 0;
-	m_transferBuffers[level].region.bufferRowLength = 0;
-	m_transferBuffers[level].region.bufferImageHeight = 0;
-	m_transferBuffers[level].region.imageSubresource = { VK_IMAGE_ASPECT_COLOR_BIT, (uint32_t)level, 0, 1 };
-	m_transferBuffers[level].region.imageOffset = { xoffset, yoffset, 0 };
-	m_transferBuffers[level].region.imageExtent = { (uint32_t)width, (uint32_t)height, 1 };
-	m_transferBuffers[level].buffer.assign((uint8_t *)data, (uint8_t *)data + size);
+	CGfxProfiler::DecTextureDataSize(m_size[level]);
+	{
+		m_size[level] = size;
+
+		m_transferLevels = m_levels;
+		m_transferBuffers[level].region.bufferOffset = 0;
+		m_transferBuffers[level].region.bufferRowLength = 0;
+		m_transferBuffers[level].region.bufferImageHeight = 0;
+		m_transferBuffers[level].region.imageSubresource = { VK_IMAGE_ASPECT_COLOR_BIT, (uint32_t)level, 0, 1 };
+		m_transferBuffers[level].region.imageOffset = { xoffset, yoffset, 0 };
+		m_transferBuffers[level].region.imageExtent = { (uint32_t)width, (uint32_t)height, 1 };
+		m_transferBuffers[level].buffer.assign((uint8_t *)data, (uint8_t *)data + size);
+	}
+	CGfxProfiler::IncTextureDataSize(m_size[level]);
 
 	return true;
 }
