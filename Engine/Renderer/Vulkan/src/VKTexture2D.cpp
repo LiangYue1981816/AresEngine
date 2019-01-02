@@ -15,7 +15,7 @@ CVKTexture2D::~CVKTexture2D(void)
 
 void CVKTexture2D::Release(void)
 {
-
+	m_pManager->Destroy(this);
 }
 
 bool CVKTexture2D::Create(uint64_t texture)

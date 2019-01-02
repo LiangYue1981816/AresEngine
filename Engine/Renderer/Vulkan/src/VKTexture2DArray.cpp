@@ -15,7 +15,7 @@ CVKTexture2DArray::~CVKTexture2DArray(void)
 
 void CVKTexture2DArray::Release(void)
 {
-
+	m_pManager->Destroy(this);
 }
 
 bool CVKTexture2DArray::Create(uint64_t texture)

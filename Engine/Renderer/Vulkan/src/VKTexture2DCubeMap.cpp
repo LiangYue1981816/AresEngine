@@ -15,7 +15,7 @@ CVKTextureCubeMap::~CVKTextureCubeMap(void)
 
 void CVKTextureCubeMap::Release(void)
 {
-
+	m_pManager->Destroy(this);
 }
 
 bool CVKTextureCubeMap::Create(uint64_t texture)
