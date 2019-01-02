@@ -110,7 +110,7 @@ bool CGLES3Texture2D::TransferTexture2D(GfxPixelFormat pixelFormat, int level, i
 		return false;
 	}
 
-	if (m_samples != 0) {
+	if (m_samples != 1) {
 		return false;
 	}
 
@@ -153,7 +153,7 @@ bool CGLES3Texture2D::TransferTexture2DCompressed(GfxPixelFormat pixelFormat, in
 		return false;
 	}
 
-	if (m_samples != 0) {
+	if (m_samples != 1) {
 		return false;
 	}
 
