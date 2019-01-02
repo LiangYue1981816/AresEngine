@@ -13,7 +13,7 @@ protected:
 
 
 protected:
-	bool Create(uint32_t texture);
+	bool Create(uint32_t target, uint32_t texture);
 	void Destroy(void);
 
 public:
@@ -25,6 +25,7 @@ public:
 
 protected:
 	bool m_bExtern;
+	uint32_t m_target;
 	uint32_t m_texture;
 
 protected:

@@ -21,7 +21,7 @@ void CGLES3Texture2D::Release(void)
 bool CGLES3Texture2D::Create(uint64_t texture)
 {
 	m_type = GFX_TEXTURE_2D;
-	return CGLES3Texture::Create((uint32_t)texture);
+	return CGLES3Texture::Create(GL_TEXTURE_2D, (uint32_t)texture);
 }
 
 bool CGLES3Texture2D::Create(GfxPixelFormat pixelFormat, int width, int height, int levels, int samples)
