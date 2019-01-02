@@ -20,6 +20,7 @@ extern GLenum GLMagFilter(GfxMagFilter magFilter);
 extern GLenum GLAddressMode(GfxAddressMode addressMode);
 extern GLenum GLBlendFactor(GfxBlendFactor blendFactor);
 extern GLenum GLBlendEquation(GfxBlendEquation blendEquation);
+extern GLenum GLTextureTarget(GfxTextureType type);
 extern GLenum GLTextureCubeMapFace(GfxTextureCubeMapFace face);
 extern GLenum GLDrawMode(GfxDrawMode drawMode);
 #pragma endregion

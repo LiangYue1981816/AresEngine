@@ -241,6 +241,22 @@ GLenum GLBlendEquation(GfxBlendEquation blendEquation)
 	return GL_INVALID_ENUM;
 }
 
+GLenum GLTextureTarget(GfxTextureType type)
+{
+	switch ((int)type) {
+	case GFX_TEXTURE_2D:
+		return GL_TEXTURE_2D;
+	case GFX_TEXTURE_2D_MULTISAMPLE:
+		return GL_TEXTURE_2D_MULTISAMPLE;
+	case GFX_TEXTURE_2D_ARRAY:
+		return GL_TEXTURE_2D_ARRAY;
+	case GFX_TEXTURE_CUBE_MAP:
+		return GL_TEXTURE_CUBE_MAP;
+	}
+
+	return GL_INVALID_ENUM;
+}
+
 GLenum GLTextureCubeMapFace(GfxTextureCubeMapFace face)
 {
 	switch ((int)face) {
