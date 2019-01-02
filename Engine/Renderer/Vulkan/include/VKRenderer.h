@@ -20,6 +20,8 @@
 #include "VKImage.h"
 #include "VKTexture.h"
 #include "VKTexture2D.h"
+#include "VKTexture2DArray.h"
+#include "VKTextureCubeMap.h"
 
 #include "VKMesh.h"
 #include "VKMeshDraw.h"

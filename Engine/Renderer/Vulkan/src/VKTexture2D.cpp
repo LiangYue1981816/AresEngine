@@ -20,7 +20,7 @@ void CVKTexture2D::Release(void)
 
 uint32_t CVKTexture2D::GetTarget(void) const
 {
-	return VK_IMAGE_TYPE_2D;
+	return VK_IMAGE_VIEW_TYPE_2D;
 }
 
 bool CVKTexture2D::Create(uint64_t texture)
