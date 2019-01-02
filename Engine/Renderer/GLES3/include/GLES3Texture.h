@@ -14,6 +14,7 @@ protected:
 
 protected:
 	bool Create(uint32_t target, uint32_t texture);
+	bool Create(uint32_t target, GfxPixelFormat pixelFormat, int width, int height, int levels, int layers, int samples = 1);
 	void Destroy(void);
 
 public:
