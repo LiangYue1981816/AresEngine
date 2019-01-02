@@ -31,12 +31,6 @@ CVKDevice::CVKDevice(CVKInstance *pInstance)
 	m_pMeshManager = new CVKMeshManager(this);
 	m_pMeshDrawManager = new CVKMeshDrawManager(this);
 	m_pTextureManager = new CVKTextureManager(this);
-
-	CVKBuffer *pBuffer = new CVKBuffer(this, 100, VK_BUFFER_USAGE_INDEX_BUFFER_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT);
-	CGfxTexture2DPtr ptrTexture0 = m_pTextureManager->CreateTexture2D(123);
-	CGfxTexture2DPtr ptrTexture1 = m_pTextureManager->CreateTexture2D(456);
-	ptrTexture0->Create(GfxPixelFormat::GFX_PIXELFORMAT_BGRA8_UNORM_PACK8, 200, 200, 1);
-	ptrTexture1->Create(GfxPixelFormat::GFX_PIXELFORMAT_BGRA8_UNORM_PACK8, 200, 200, 1);
 }
 
 CVKDevice::~CVKDevice(void)

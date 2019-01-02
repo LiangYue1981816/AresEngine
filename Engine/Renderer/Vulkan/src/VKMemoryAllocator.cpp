@@ -41,27 +41,30 @@ CVKMemoryAllocator::~CVKMemoryAllocator(void)
 
 CVKMemory* CVKMemoryAllocator::AllocMemory(VkDeviceSize alignment, VkDeviceSize size)
 {
-	//  Device Memory
+	//  Memory Pool
 	//
 	//
 	//             Memory Handle 
-	//             |                    Memory Size                 |
+	//             |                   Memory Size                  |
 	//  -------------------------------------------------------------------------
 	// |           |       |                  |                     |            |
-	// |    ...    |       |   Request Size   |   New Memory Size   |     ...    |
+	// |    ...    |       |       Size       |   New Memory Size   |     ...    |
 	// |___________|_______|__________________|_____________________|____________|
 	//             |       |                  |                     |
 	//             Offset  |                  |                     Next Memory Handle
 	//             |       |                  New Memory Handle     |
 	//             |       Alignment Offset   |                     |
 	//             |                          |                     |
-	//             |       Alignment Size     |  >= MIN_ALIGNMENT   |
+	//             |        Alignment Size    |  >= MIN_ALIGNMENT   |
 
-	VkDeviceSize alignmentSize = ALIGN_BYTE(size, MIN_ALIGNMENT);
+	VkDeviceSize requestSize = ALIGN_BYTE(alignment + size, MIN_ALIGNMENT);
 
-	if (m_freeSize >= alignmentSize) {
-		if (CVKMemory *pMemory = SearchMemory(alignmentSize)) {
+	if (m_freeSize >= requestSize) {
+		if (CVKMemory *pMemory = SearchMemory(requestSize)) {
 			RemoveMemory(pMemory);
+
+			VkDeviceSize alignmentOffset = ALIGN_BYTE(pMemory->m_offset, alignment) - pMemory->m_offset;
+			VkDeviceSize alignmentSize = alignmentOffset + size;
 
 			if (pMemory->m_size >= alignmentSize + MIN_ALIGNMENT) {
 				CVKMemory *pMemoryNext = new CVKMemory(this, m_pDevice, m_vkMemory, m_memoryPropertyFlags, pMemory->m_size - alignmentSize, pMemory->m_offset + alignmentSize, 0);
@@ -83,8 +86,8 @@ CVKMemory* CVKMemoryAllocator::AllocMemory(VkDeviceSize alignment, VkDeviceSize 
 			m_freeSize -= pMemory->m_size;
 
 			pMemory->bInUse = true;
-			pMemory->m_alignmentOffset = ALIGN_BYTE(pMemory->m_offset, alignment) - pMemory->m_offset;
-			pMemory->m_size -= pMemory->m_alignmentOffset;
+			pMemory->m_alignmentOffset = alignmentOffset;
+			pMemory->m_size -= alignmentOffset;
 
 			return pMemory;
 		}
