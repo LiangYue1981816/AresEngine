@@ -20,6 +20,8 @@ void CGLES3Texture2DArray::Release(void)
 
 bool CGLES3Texture2DArray::Create(uint64_t texture)
 {
+	Destroy();
+
 	m_type = GFX_TEXTURE_2D_ARRAY;
 	return CGLES3Texture::Create(GL_TEXTURE_2D_ARRAY, (uint32_t)texture);
 }
@@ -27,9 +29,6 @@ bool CGLES3Texture2DArray::Create(uint64_t texture)
 bool CGLES3Texture2DArray::Create(GfxPixelFormat pixelFormat, int width, int height, int levels, int layers)
 {
 	Destroy();
-
-	gli::gl GL(gli::gl::PROFILE_ES30);
-	gli::gl::format glFormat = GL.translate((gli::format)pixelFormat);
 
 	m_format = pixelFormat;
 	m_type = GFX_TEXTURE_2D_ARRAY;
@@ -39,12 +38,7 @@ bool CGLES3Texture2DArray::Create(GfxPixelFormat pixelFormat, int width, int hei
 	m_levels = levels;
 	m_layers = layers;
 
-	glGenTextures(1, &m_texture);
-	glBindTexture(GL_TEXTURE_2D_ARRAY, m_texture);
-	glTexStorage3D(GL_TEXTURE_2D_ARRAY, m_levels, glFormat.Internal, m_width, m_height, m_layers);
-	glBindTexture(GL_TEXTURE_2D_ARRAY, 0);
-
-	return true;
+	return CGLES3Texture::Create(GL_TEXTURE_2D_ARRAY, pixelFormat, width, height, levels, layers);
 }
 
 void CGLES3Texture2DArray::Destroy(void)

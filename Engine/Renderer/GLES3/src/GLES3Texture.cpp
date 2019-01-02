@@ -18,8 +18,6 @@ CGLES3Texture::~CGLES3Texture(void)
 
 bool CGLES3Texture::Create(uint32_t target, uint32_t texture)
 {
-	Destroy();
-
 	m_bExtern = true;
 	m_target = target;
 	m_texture = texture;

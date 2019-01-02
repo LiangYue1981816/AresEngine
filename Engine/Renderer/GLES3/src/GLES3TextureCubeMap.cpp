@@ -20,6 +20,8 @@ void CGLES3TextureCubeMap::Release(void)
 
 bool CGLES3TextureCubeMap::Create(uint64_t texture)
 {
+	Destroy();
+
 	m_type = GFX_TEXTURE_CUBE_MAP;
 	return CGLES3Texture::Create(GL_TEXTURE_CUBE_MAP, (uint32_t)texture);
 }
@@ -28,9 +30,6 @@ bool CGLES3TextureCubeMap::Create(GfxPixelFormat pixelFormat, int width, int hei
 {
 	Destroy();
 
-	gli::gl GL(gli::gl::PROFILE_ES30);
-	gli::gl::format glFormat = GL.translate((gli::format)pixelFormat);
-
 	m_format = pixelFormat;
 	m_type = GFX_TEXTURE_CUBE_MAP;
 
@@ -38,12 +37,7 @@ bool CGLES3TextureCubeMap::Create(GfxPixelFormat pixelFormat, int width, int hei
 	m_height = height;
 	m_levels = levels;
 
-	glGenTextures(1, &m_texture);
-	glBindTexture(GL_TEXTURE_CUBE_MAP, m_texture);
-	glTexStorage2D(GL_TEXTURE_CUBE_MAP, m_levels, glFormat.Internal, m_width, m_height);
-	glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
-
-	return true;
+	return CGLES3Texture::Create(GL_TEXTURE_CUBE_MAP, pixelFormat, width, height, levels, 0);
 }
 
 void CGLES3TextureCubeMap::Destroy(void)

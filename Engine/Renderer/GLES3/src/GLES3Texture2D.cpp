@@ -20,6 +20,8 @@ void CGLES3Texture2D::Release(void)
 
 bool CGLES3Texture2D::Create(uint64_t texture)
 {
+	Destroy();
+
 	m_type = GFX_TEXTURE_2D;
 	return CGLES3Texture::Create(GL_TEXTURE_2D, (uint32_t)texture);
 }
@@ -27,9 +29,6 @@ bool CGLES3Texture2D::Create(uint64_t texture)
 bool CGLES3Texture2D::Create(GfxPixelFormat pixelFormat, int width, int height, int levels, int samples)
 {
 	Destroy();
-
-	gli::gl GL(gli::gl::PROFILE_ES30);
-	gli::gl::format glFormat = GL.translate((gli::format)pixelFormat);
 
 	m_format = pixelFormat;
 
@@ -43,25 +42,15 @@ bool CGLES3Texture2D::Create(GfxPixelFormat pixelFormat, int width, int height, 
 #endif
 	{
 		m_type = GFX_TEXTURE_2D;
-
-		glGenTextures(1, &m_texture);
-		glBindTexture(GL_TEXTURE_2D, m_texture);
-		glTexStorage2D(GL_TEXTURE_2D, m_levels, glFormat.Internal, m_width, m_height);
-		glBindTexture(GL_TEXTURE_2D, 0);
+		return CGLES3Texture::Create(GL_TEXTURE_2D, pixelFormat, width, height, levels, 0, samples);
 	}
 #if GLES_VER == 310
 	else
 	{
 		m_type = GFX_TEXTURE_2D_MULTISAMPLE;
-
-		glGenTextures(1, &m_texture);
-		glBindTexture(GL_TEXTURE_2D_MULTISAMPLE, m_texture);
-		glTexStorage2DMultisample(GL_TEXTURE_2D_MULTISAMPLE, m_samples, glFormat.Internal, m_width, m_height, GL_TRUE);
-		glBindTexture(GL_TEXTURE_2D_MULTISAMPLE, 0);
+		return CGLES3Texture::Create(GL_TEXTURE_2D_MULTISAMPLE, pixelFormat, width, height, levels, 0, samples);
 	}
 #endif
-
-	return true;
 }
 
 void CGLES3Texture2D::Destroy(void)
