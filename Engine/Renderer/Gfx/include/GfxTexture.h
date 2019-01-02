@@ -34,7 +34,7 @@ public:
 		return m_format;
 	}
 
-	GfxTextureType GetTarget(void) const
+	GfxTextureType GetType(void) const
 	{
 		return m_type;
 	}
