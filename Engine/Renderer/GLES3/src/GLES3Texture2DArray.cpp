@@ -18,14 +18,10 @@ void CGLES3Texture2DArray::Release(void)
 	m_pManager->Destroy(this);
 }
 
-uint32_t CGLES3Texture2DArray::GetTarget(void) const
-{
-	return CGLES3Texture::GetTarget();
-}
-
 bool CGLES3Texture2DArray::Create(uint64_t texture)
 {
-	return CGLES3Texture::Create(GL_TEXTURE_2D_ARRAY, (uint32_t)texture);
+	m_type = GFX_TEXTURE_2D_ARRAY;
+	return CGLES3Texture::Create((uint32_t)texture);
 }
 
 bool CGLES3Texture2DArray::Create(GfxPixelFormat pixelFormat, int width, int height, int levels, int layers)
@@ -36,13 +32,12 @@ bool CGLES3Texture2DArray::Create(GfxPixelFormat pixelFormat, int width, int hei
 	gli::gl::format glFormat = GL.translate((gli::format)pixelFormat);
 
 	m_format = pixelFormat;
+	m_type = GFX_TEXTURE_2D_ARRAY;
 
 	m_width = width;
 	m_height = height;
 	m_levels = levels;
 	m_layers = layers;
-
-	m_target = GL_TEXTURE_2D_ARRAY;
 
 	glGenTextures(1, &m_texture);
 	glBindTexture(GL_TEXTURE_2D_ARRAY, m_texture);
@@ -64,11 +59,14 @@ void CGLES3Texture2DArray::Destroy(void)
 
 	m_size.clear();
 
+	m_format = GFX_PIXELFORMAT_UNDEFINED;
+	m_type = GFX_TEXTURE_INVALID_ENUM;
+	m_texture = 0;
+
 	m_width = 0;
 	m_height = 0;
 	m_levels = 0;
 	m_layers = 0;
-	m_format = GFX_PIXELFORMAT_UNDEFINED;
 }
 
 bool CGLES3Texture2DArray::TransferTexture2D(GfxPixelFormat pixelFormat, int layer, int level, int xoffset, int yoffset, int width, int height, GfxDataType type, uint32_t size, const void *data)

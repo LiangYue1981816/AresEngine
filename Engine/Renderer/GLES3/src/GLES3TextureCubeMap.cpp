@@ -18,14 +18,10 @@ void CGLES3TextureCubeMap::Release(void)
 	m_pManager->Destroy(this);
 }
 
-uint32_t CGLES3TextureCubeMap::GetTarget(void) const
-{
-	return CGLES3Texture::GetTarget();
-}
-
 bool CGLES3TextureCubeMap::Create(uint64_t texture)
 {
-	return CGLES3Texture::Create(GL_TEXTURE_CUBE_MAP, (uint32_t)texture);
+	m_type = GFX_TEXTURE_CUBE_MAP;
+	return CGLES3Texture::Create((uint32_t)texture);
 }
 
 bool CGLES3TextureCubeMap::Create(GfxPixelFormat pixelFormat, int width, int height, int levels)
@@ -36,12 +32,11 @@ bool CGLES3TextureCubeMap::Create(GfxPixelFormat pixelFormat, int width, int hei
 	gli::gl::format glFormat = GL.translate((gli::format)pixelFormat);
 
 	m_format = pixelFormat;
+	m_type = GFX_TEXTURE_CUBE_MAP;
 
 	m_width = width;
 	m_height = height;
 	m_levels = levels;
-
-	m_target = GL_TEXTURE_CUBE_MAP;
 
 	glGenTextures(1, &m_texture);
 	glBindTexture(GL_TEXTURE_CUBE_MAP, m_texture);
@@ -63,10 +58,13 @@ void CGLES3TextureCubeMap::Destroy(void)
 
 	m_size.clear();
 
+	m_format = GFX_PIXELFORMAT_UNDEFINED;
+	m_type = GFX_TEXTURE_INVALID_ENUM;
+	m_texture = 0;
+
 	m_width = 0;
 	m_height = 0;
 	m_levels = 0;
-	m_format = GFX_PIXELFORMAT_UNDEFINED;
 }
 
 bool CGLES3TextureCubeMap::TransferTexture2D(GfxPixelFormat pixelFormat, GfxTextureCubeMapFace face, int level, int xoffset, int yoffset, int width, int height, GfxDataType type, uint32_t size, const void *data)
