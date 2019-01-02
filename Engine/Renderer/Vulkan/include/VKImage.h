@@ -7,10 +7,12 @@ class CVKImage : public CGfxResource
 	friend class CVKDevice;
 	friend class CVKTexture;
 	friend class CVKTexture2D;
+	friend class CVKTexture2DArray;
+	friend class CVKTextureCubeMap;
 
 
 private:
-	CVKImage(CVKDevice *pDevice, VkImageType imageType, VkFormat format, int width, int height, int levels, int layers, VkSampleCountFlagBits samples, VkImageTiling imageTiling, VkImageUsageFlags imageUsageFlags);
+	CVKImage(CVKDevice *pDevice, VkImageType imageType, VkImageViewType viewType, VkFormat format, int width, int height, int levels, int layers, VkSampleCountFlagBits samples, VkImageTiling imageTiling, VkImageUsageFlags imageUsageFlags);
 	virtual ~CVKImage(void);
 	virtual void Release(void);
 

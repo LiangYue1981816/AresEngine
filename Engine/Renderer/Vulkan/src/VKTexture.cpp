@@ -44,6 +44,12 @@ bool CVKTexture::CreateView(VkImageViewType viewType, VkImageAspectFlags aspectM
 	return true;
 }
 
+bool CVKTexture::CreateImage(VkImageType imageType, VkImageViewType viewType, VkFormat format, int width, int height, int levels, int layers, VkSampleCountFlagBits samples, VkImageTiling imageTiling, VkImageUsageFlags imageUsageFlags)
+{
+	m_ptrImage = CVKImagePtr(new CVKImage(m_pDevice, imageType, viewType, format, width, height, levels, layers, samples, imageTiling, imageUsageFlags));
+	return m_ptrImage->GetImage() != VK_NULL_HANDLE;
+}
+
 void CVKTexture::Destroy(void)
 {
 	if (m_bExtern == false) {

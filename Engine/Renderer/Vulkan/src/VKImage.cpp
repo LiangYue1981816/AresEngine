@@ -1,7 +1,7 @@
 #include "VKRenderer.h"
 
 
-CVKImage::CVKImage(CVKDevice *pDevice, VkImageType imageType, VkFormat format, int width, int height, int levels, int layers, VkSampleCountFlagBits samples, VkImageTiling imageTiling, VkImageUsageFlags imageUsageFlags)
+CVKImage::CVKImage(CVKDevice *pDevice, VkImageType imageType, VkImageViewType viewType, VkFormat format, int width, int height, int levels, int layers, VkSampleCountFlagBits samples, VkImageTiling imageTiling, VkImageUsageFlags imageUsageFlags)
 	: m_pDevice(pDevice)
 
 	, m_vkImage(VK_NULL_HANDLE)
@@ -25,6 +25,10 @@ CVKImage::CVKImage(CVKDevice *pDevice, VkImageType imageType, VkFormat format, i
 	imageCreateInfo.queueFamilyIndexCount = 0;
 	imageCreateInfo.pQueueFamilyIndices = nullptr;
 	imageCreateInfo.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
+	switch (viewType) {
+	case VK_IMAGE_VIEW_TYPE_CUBE: imageCreateInfo.flags = VK_IMAGE_CREATE_CUBE_COMPATIBLE_BIT; break;
+	case VK_IMAGE_VIEW_TYPE_2D_ARRAY: imageCreateInfo.flags = VK_IMAGE_CREATE_2D_ARRAY_COMPATIBLE_BIT; break;
+	}
 	CALL_VK_FUNCTION_RETURN(vkCreateImage(m_pDevice->GetDevice(), &imageCreateInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkImage));
 
 	VkMemoryPropertyFlags memoryPropertyFlags;
