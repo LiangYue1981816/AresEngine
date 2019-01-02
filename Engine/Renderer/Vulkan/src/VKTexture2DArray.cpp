@@ -18,13 +18,11 @@ void CVKTexture2DArray::Release(void)
 
 }
 
-uint32_t CVKTexture2DArray::GetTarget(void) const
-{
-	return VK_IMAGE_VIEW_TYPE_2D_ARRAY;
-}
-
 bool CVKTexture2DArray::Create(uint64_t texture)
 {
+	Destroy();
+
+	m_type = GFX_TEXTURE_2D_ARRAY;
 	return CVKTexture::CreateView((VkImageView)texture);
 }
 
@@ -33,6 +31,7 @@ bool CVKTexture2DArray::Create(GfxPixelFormat pixelFormat, int width, int height
 	Destroy();
 
 	m_format = pixelFormat;
+	m_type = GFX_TEXTURE_2D_ARRAY;
 
 	m_width = width;
 	m_height = height;
@@ -57,11 +56,13 @@ void CVKTexture2DArray::Destroy(void)
 
 	m_size.clear();
 
+	m_format = GFX_PIXELFORMAT_UNDEFINED;
+	m_type = GFX_TEXTURE_INVALID_ENUM;
+
 	m_width = 0;
 	m_height = 0;
 	m_levels = 0;
 	m_layers = 0;
-	m_format = GFX_PIXELFORMAT_UNDEFINED;
 }
 
 bool CVKTexture2DArray::TransferTexture2D(GfxPixelFormat pixelFormat, int layer, int level, int xoffset, int yoffset, int width, int height, GfxDataType type, uint32_t size, const void *data)

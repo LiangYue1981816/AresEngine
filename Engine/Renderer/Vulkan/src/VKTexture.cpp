@@ -21,8 +21,6 @@ CVKTexture::~CVKTexture(void)
 
 bool CVKTexture::CreateView(VkImageView vkImageView)
 {
-	Destroy();
-
 	m_bExtern = true;
 	m_vkImageView = vkImageView;
 

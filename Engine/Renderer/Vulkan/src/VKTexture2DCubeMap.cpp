@@ -18,13 +18,11 @@ void CVKTextureCubeMap::Release(void)
 
 }
 
-uint32_t CVKTextureCubeMap::GetTarget(void) const
-{
-	return VK_IMAGE_VIEW_TYPE_CUBE;
-}
-
 bool CVKTextureCubeMap::Create(uint64_t texture)
 {
+	Destroy();
+
+	m_type = GFX_TEXTURE_CUBE_MAP;
 	return CVKTexture::CreateView((VkImageView)texture);
 }
 
@@ -33,6 +31,7 @@ bool CVKTextureCubeMap::Create(GfxPixelFormat pixelFormat, int width, int height
 	Destroy();
 
 	m_format = pixelFormat;
+	m_type = GFX_TEXTURE_CUBE_MAP;
 
 	m_width = width;
 	m_height = height;
@@ -56,10 +55,12 @@ void CVKTextureCubeMap::Destroy(void)
 
 	m_size.clear();
 
+	m_format = GFX_PIXELFORMAT_UNDEFINED;
+	m_type = GFX_TEXTURE_INVALID_ENUM;
+
 	m_width = 0;
 	m_height = 0;
 	m_levels = 0;
-	m_format = GFX_PIXELFORMAT_UNDEFINED;
 }
 
 bool CVKTextureCubeMap::TransferTexture2D(GfxPixelFormat pixelFormat, GfxTextureCubeMapFace face, int level, int xoffset, int yoffset, int width, int height, GfxDataType type, uint32_t size, const void *data)

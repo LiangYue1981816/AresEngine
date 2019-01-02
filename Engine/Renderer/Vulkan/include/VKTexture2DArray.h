@@ -15,9 +15,6 @@ private:
 
 
 public:
-	uint32_t GetTarget(void) const;
-
-public:
 	bool Create(uint64_t texture);
 	bool Create(GfxPixelFormat pixelFormat, int width, int height, int levels, int layers);
 	void Destroy(void);

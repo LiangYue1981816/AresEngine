@@ -18,13 +18,11 @@ void CVKTexture2D::Release(void)
 
 }
 
-uint32_t CVKTexture2D::GetTarget(void) const
-{
-	return VK_IMAGE_VIEW_TYPE_2D;
-}
-
 bool CVKTexture2D::Create(uint64_t texture)
 {
+	Destroy();
+
+	m_type = GFX_TEXTURE_2D;
 	return CVKTexture::CreateView((VkImageView)texture);
 }
 
@@ -33,6 +31,7 @@ bool CVKTexture2D::Create(GfxPixelFormat pixelFormat, int width, int height, int
 	Destroy();
 
 	m_format = pixelFormat;
+	m_type = GFX_TEXTURE_2D;
 
 	m_width = width;
 	m_height = height;
@@ -55,11 +54,13 @@ void CVKTexture2D::Destroy(void)
 
 	m_size.clear();
 
+	m_format = GFX_PIXELFORMAT_UNDEFINED;
+	m_type = GFX_TEXTURE_INVALID_ENUM;
+
 	m_width = 0;
 	m_height = 0;
 	m_levels = 0;
 	m_samples = 0;
-	m_format = GFX_PIXELFORMAT_UNDEFINED;
 }
 
 bool CVKTexture2D::TransferTexture2D(GfxPixelFormat pixelFormat, int level, int xoffset, int yoffset, int width, int height, GfxDataType type, uint32_t size, const void *data)
