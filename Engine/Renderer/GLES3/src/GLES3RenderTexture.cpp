@@ -26,6 +26,7 @@ bool CGLES3RenderTexture::Create(GfxPixelFormat pixelFormat, int width, int heig
 	gli::gl::format glFormat = GL.translate((gli::format)pixelFormat);
 
 	m_format = pixelFormat;
+	m_type = GFX_TEXTURE_2D;
 
 	m_width = width;
 	m_height = height;
@@ -66,10 +67,12 @@ void CGLES3RenderTexture::Destroy(void)
 	m_target = GL_INVALID_ENUM;
 	m_texture = 0;
 
+	m_format = GFX_PIXELFORMAT_UNDEFINED;
+	m_type = GFX_TEXTURE_INVALID_ENUM;
+
 	m_width = 0;
 	m_height = 0;
 	m_samples = 0;
-	m_format = GFX_PIXELFORMAT_UNDEFINED;
 }
 
 uint32_t CGLES3RenderTexture::GetTarget(void) const
