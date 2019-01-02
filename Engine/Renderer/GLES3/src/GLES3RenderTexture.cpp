@@ -26,7 +26,6 @@ bool CGLES3RenderTexture::Create(GfxPixelFormat pixelFormat, int width, int heig
 	gli::gl::format glFormat = GL.translate((gli::format)pixelFormat);
 
 	m_format = pixelFormat;
-	m_type = GFX_TEXTURE_2D;
 
 	m_width = width;
 	m_height = height;
@@ -36,7 +35,7 @@ bool CGLES3RenderTexture::Create(GfxPixelFormat pixelFormat, int width, int heig
 	if (m_samples == 1)
 #endif
 	{
-		m_target = GL_TEXTURE_2D;
+		m_type = GFX_TEXTURE_2D;
 
 		glGenTextures(1, &m_texture);
 		glBindTexture(GL_TEXTURE_2D, m_texture);
@@ -46,7 +45,7 @@ bool CGLES3RenderTexture::Create(GfxPixelFormat pixelFormat, int width, int heig
 #if GLES_VER == 310
 	else
 	{
-		m_target = GL_TEXTURE_2D_MULTISAMPLE;
+		m_type = GFX_TEXTURE_2D_MULTISAMPLE;
 
 		glGenTextures(1, &m_texture);
 		glBindTexture(GL_TEXTURE_2D_MULTISAMPLE, m_texture);
@@ -64,20 +63,13 @@ void CGLES3RenderTexture::Destroy(void)
 		glDeleteTextures(1, &m_texture);
 	}
 
-	m_target = GL_INVALID_ENUM;
-	m_texture = 0;
-
 	m_format = GFX_PIXELFORMAT_UNDEFINED;
 	m_type = GFX_TEXTURE_INVALID_ENUM;
+	m_texture = 0;
 
 	m_width = 0;
 	m_height = 0;
 	m_samples = 0;
-}
-
-uint32_t CGLES3RenderTexture::GetTarget(void) const
-{
-	return m_target;
 }
 
 uint32_t CGLES3RenderTexture::GetTexture(void) const

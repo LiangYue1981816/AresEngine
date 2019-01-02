@@ -18,12 +18,10 @@ public:
 	void Destroy(void);
 
 public:
-	uint32_t GetTarget(void) const;
 	uint32_t GetTexture(void) const;
 
 
 private:
-	uint32_t m_target;
 	uint32_t m_texture;
 
 private:
