@@ -14,7 +14,7 @@ private:
 
 
 public:
-	bool Create(GfxPixelFormat pixelFormat, int width, int height, int samples = 0);
+	bool Create(GfxPixelFormat pixelFormat, int width, int height, int samples = 1);
 	void Destroy(void);
 
 public:

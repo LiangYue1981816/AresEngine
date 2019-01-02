@@ -19,7 +19,7 @@ public:
 
 public:
 	virtual bool Create(uint64_t texture) = 0;
-	virtual bool Create(GfxPixelFormat pixelFormat, int width, int height, int levels, int samples = 0) = 0;
+	virtual bool Create(GfxPixelFormat pixelFormat, int width, int height, int levels, int samples = 1) = 0;
 	virtual void Destroy(void) = 0;
 
 public:

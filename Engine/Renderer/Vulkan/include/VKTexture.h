@@ -22,8 +22,8 @@ public:
 
 
 protected:
-	eastl::vector<uint8_t> m_transferBuffer;
-	eastl::vector<VkBufferImageCopy> m_transferRegions;
+	eastl::unordered_map<int, VkBufferImageCopy> m_transferRegions;
+	eastl::unordered_map<int, eastl::vector<uint8_t>> m_transferBuffer;
 
 protected:
 	bool m_bExtern;

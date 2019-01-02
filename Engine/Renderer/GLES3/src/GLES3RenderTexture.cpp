@@ -29,10 +29,10 @@ bool CGLES3RenderTexture::Create(GfxPixelFormat pixelFormat, int width, int heig
 
 	m_width = width;
 	m_height = height;
-	m_samples = samples;
+	m_samples = samples > 1 ? samples : 1;
 
 #if GLES_VER == 310
-	if (m_samples == 0)
+	if (m_samples == 1)
 #endif
 	{
 		m_target = GL_TEXTURE_2D;

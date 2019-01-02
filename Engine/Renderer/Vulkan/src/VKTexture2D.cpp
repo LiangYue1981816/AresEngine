@@ -37,7 +37,7 @@ bool CVKTexture2D::Create(GfxPixelFormat pixelFormat, int width, int height, int
 	m_width = width;
 	m_height = height;
 	m_levels = levels;
-	m_samples = samples;
+	m_samples = samples > 1 ? samples : 1;
 
 	m_ptrImage = CVKImagePtr(new CVKImage(m_pDevice, VK_IMAGE_TYPE_2D, (VkFormat)pixelFormat, width, height, levels, 1, (VkSampleCountFlagBits)samples, VK_IMAGE_TILING_OPTIMAL, VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT));
 
@@ -63,10 +63,58 @@ void CVKTexture2D::Destroy(void)
 
 bool CVKTexture2D::TransferTexture2D(GfxPixelFormat pixelFormat, int level, int xoffset, int yoffset, int width, int height, GfxDataType type, uint32_t size, const void *data)
 {
-	return false;
+	if (m_format != pixelFormat) {
+		return false;
+	}
+
+	if (m_bExtern == true) {
+		return false;
+	}
+
+	if (m_levels < level) {
+		return false;
+	}
+
+	if (m_samples != 1) {
+		return false;
+	}
+
+	m_transferRegions[level].bufferOffset = 0;
+	m_transferRegions[level].bufferRowLength = 0;
+	m_transferRegions[level].bufferImageHeight = 0;
+	m_transferRegions[level].imageSubresource = { VK_IMAGE_ASPECT_COLOR_BIT, level, 0, 1 };
+	m_transferRegions[level].imageOffset = { xoffset, yoffset, 0 };
+	m_transferRegions[level].imageExtent = { width, height, 1 };
+	m_transferBuffer[level].assign((uint8_t *)data, (uint8_t *)data + size);
+
+	return true;
 }
 
 bool CVKTexture2D::TransferTexture2DCompressed(GfxPixelFormat pixelFormat, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void *data)
 {
-	return false;
+	if (m_format != pixelFormat) {
+		return false;
+	}
+
+	if (m_bExtern == true) {
+		return false;
+	}
+
+	if (m_levels < level) {
+		return false;
+	}
+
+	if (m_samples != 1) {
+		return false;
+	}
+
+	m_transferRegions[level].bufferOffset = 0;
+	m_transferRegions[level].bufferRowLength = 0;
+	m_transferRegions[level].bufferImageHeight = 0;
+	m_transferRegions[level].imageSubresource = { VK_IMAGE_ASPECT_COLOR_BIT, level, 0, 1 };
+	m_transferRegions[level].imageOffset = { xoffset, yoffset, 0 };
+	m_transferRegions[level].imageExtent = { width, height, 1 };
+	m_transferBuffer[level].assign((uint8_t *)data, (uint8_t *)data + size);
+
+	return true;
 }
