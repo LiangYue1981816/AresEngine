@@ -20,7 +20,7 @@ protected:
 	virtual ~CVKTexture(void);
 
 
-public:
+protected:
 	bool CreateView(VkImageView vkImageView);
 	bool CreateView(VkImageViewType viewType, VkImageAspectFlags aspectMask, VkFormat format, int levels, int layers);
 	bool CreateImage(VkImageType imageType, VkImageViewType viewType, VkFormat format, int width, int height, int levels, int layers, VkSampleCountFlagBits samples, VkImageTiling imageTiling, VkImageUsageFlags imageUsageFlags);

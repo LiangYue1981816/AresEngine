@@ -12,7 +12,7 @@ protected:
 	virtual ~CGLES3Texture(void);
 
 
-public:
+protected:
 	bool Create(uint32_t target, uint32_t texture);
 	void Destroy(void);
 
