@@ -249,7 +249,6 @@ typedef enum GfxPixelFormat {
 typedef enum GfxTextureType {
 	GFX_TEXTURE_INVALID_ENUM = -1,
 	GFX_TEXTURE_2D,
-	GFX_TEXTURE_2D_MULTISAMPLE,
 	GFX_TEXTURE_2D_ARRAY,
 	GFX_TEXTURE_CUBE_MAP,
 } GfxTextureType;
