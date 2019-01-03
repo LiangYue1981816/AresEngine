@@ -33,6 +33,13 @@ CVKDevice::CVKDevice(CVKInstance *pInstance)
 	m_pMeshDrawManager = new CVKMeshDrawManager(this);
 	m_pTextureManager = new CVKTextureManager(this);
 	m_pRenderTextureManager = new CVKRenderTextureManager(this);
+
+	CGfxRenderTexturePtr ptrRenderTexture0 = m_pRenderTextureManager->CreateRenderTexture(0);
+	CGfxRenderTexturePtr ptrRenderTexture1 = m_pRenderTextureManager->CreateRenderTexture(1);
+	CGfxRenderTexturePtr ptrRenderTexture2 = m_pRenderTextureManager->CreateRenderTexture(2);
+	ptrRenderTexture0->Create(GFX_PIXELFORMAT_D24_UNORM_PACK32, 100, 100);
+	ptrRenderTexture1->Create(GFX_PIXELFORMAT_S8_UINT_PACK8, 200, 200);
+	ptrRenderTexture2->Create(GFX_PIXELFORMAT_D24_UNORM_S8_UINT_PACK32, 200, 200);
 }
 
 CVKDevice::~CVKDevice(void)

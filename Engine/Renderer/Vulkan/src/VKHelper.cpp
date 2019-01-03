@@ -75,6 +75,7 @@ VkBool32 CVKHelper::IsFormatDepthOnly(VkFormat format)
 {
 	switch (format) {
 	case VK_FORMAT_D16_UNORM: return VK_TRUE;
+	case VK_FORMAT_X8_D24_UNORM_PACK32: return VK_TRUE;
 	case VK_FORMAT_D32_SFLOAT: return VK_TRUE;
 	default: return VK_FALSE;
 	}
