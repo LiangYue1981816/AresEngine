@@ -72,11 +72,13 @@ class CVKTexture;
 class CVKTexture2D;
 class CVKTexture2DArray;
 class CVKTextureCubeMap;
+class CVKRenderTexture;
 
 class CVKMesh;
 class CVKMeshDraw;
 class CVKUniformBuffer;
 
 class CVKTextureManager;
+class CVKRenderTextureManager;
 class CVKMeshManager;
 class CVKMeshDrawManager;

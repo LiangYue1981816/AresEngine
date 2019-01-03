@@ -22,12 +22,14 @@
 #include "VKTexture2D.h"
 #include "VKTexture2DArray.h"
 #include "VKTextureCubeMap.h"
+#include "VKRenderTexture.h"
 
 #include "VKMesh.h"
 #include "VKMeshDraw.h"
 #include "VKUniformBuffer.h"
 
 #include "VKTextureManager.h"
+#include "VKRenderTextureManager.h"
 #include "VKMeshManager.h"
 #include "VKMeshDrawManager.h"
 

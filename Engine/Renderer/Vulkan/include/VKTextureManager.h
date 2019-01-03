@@ -4,6 +4,7 @@
 
 class CVKTextureManager : public CGfxResourceManager
 {
+	friend class CVKRenderer;
 	friend class CVKDevice;
 	friend class CVKTexture;
 	friend class CVKTexture2D;
