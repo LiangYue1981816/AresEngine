@@ -17,6 +17,7 @@ CVKDevice::CVKDevice(CVKInstance *pInstance)
 	, m_pMeshManager(nullptr)
 	, m_pMeshDrawManager(nullptr)
 	, m_pTextureManager(nullptr)
+	, m_pRenderTextureManager(nullptr)
 {
 	uint32_t deviceIndex;
 	uint32_t queueFamilyIndex;
@@ -31,10 +32,12 @@ CVKDevice::CVKDevice(CVKInstance *pInstance)
 	m_pMeshManager = new CVKMeshManager(this);
 	m_pMeshDrawManager = new CVKMeshDrawManager(this);
 	m_pTextureManager = new CVKTextureManager(this);
+	m_pRenderTextureManager = new CVKRenderTextureManager(this);
 }
 
 CVKDevice::~CVKDevice(void)
 {
+	delete m_pRenderTextureManager;
 	delete m_pTextureManager;
 	delete m_pMeshDrawManager;
 	delete m_pMeshManager;
@@ -247,4 +250,9 @@ CVKMeshDrawManager* CVKDevice::GetMeshDrawManager(void) const
 CVKTextureManager* CVKDevice::GetTextureManager(void) const
 {
 	return m_pTextureManager;
+}
+
+CVKRenderTextureManager* CVKDevice::GetRenderTextureManager(void) const
+{
+	return m_pRenderTextureManager;
 }
