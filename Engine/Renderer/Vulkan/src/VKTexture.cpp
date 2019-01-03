@@ -23,6 +23,7 @@ bool CVKTexture::CreateView(VkImageView vkImageView)
 {
 	m_bExtern = true;
 	m_vkImageView = vkImageView;
+
 	return true;
 }
 

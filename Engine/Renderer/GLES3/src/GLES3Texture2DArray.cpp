@@ -22,8 +22,10 @@ bool CGLES3Texture2DArray::Create(uint64_t texture)
 {
 	Destroy();
 
+	CGLES3Texture::Create(GL_TEXTURE_2D_ARRAY, (uint32_t)texture);
 	m_type = GFX_TEXTURE_2D_ARRAY;
-	return CGLES3Texture::Create(GL_TEXTURE_2D_ARRAY, (uint32_t)texture);
+
+	return true;
 }
 
 bool CGLES3Texture2DArray::Create(GfxPixelFormat pixelFormat, int width, int height, int levels, int layers)

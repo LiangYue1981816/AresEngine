@@ -22,15 +22,17 @@ bool CGLES3TextureCubeMap::Create(uint64_t texture)
 {
 	Destroy();
 
+	CGLES3Texture::Create(GL_TEXTURE_CUBE_MAP, (uint32_t)texture);
 	m_type = GFX_TEXTURE_CUBE_MAP;
-	return CGLES3Texture::Create(GL_TEXTURE_CUBE_MAP, (uint32_t)texture);
+
+	return true;
 }
 
 bool CGLES3TextureCubeMap::Create(GfxPixelFormat pixelFormat, int width, int height, int levels)
 {
 	Destroy();
 
-	if ((CGLES3Texture::Create(GL_TEXTURE_CUBE_MAP, pixelFormat, width, height, levels, 0) == false) {
+	if (CGLES3Texture::Create(GL_TEXTURE_CUBE_MAP, pixelFormat, width, height, levels, 0) == false) {
 		return false;
 	}
 

@@ -22,8 +22,10 @@ bool CGLES3Texture2D::Create(uint64_t texture)
 {
 	Destroy();
 
+	CGLES3Texture::Create(GL_TEXTURE_2D, (uint32_t)texture);
 	m_type = GFX_TEXTURE_2D;
-	return CGLES3Texture::Create(GL_TEXTURE_2D, (uint32_t)texture);
+
+	return true;
 }
 
 bool CGLES3Texture2D::Create(GfxPixelFormat pixelFormat, int width, int height, int levels, int samples)
