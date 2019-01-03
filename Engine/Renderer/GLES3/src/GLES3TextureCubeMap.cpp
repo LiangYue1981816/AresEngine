@@ -22,7 +22,10 @@ bool CGLES3TextureCubeMap::Create(uint64_t texture)
 {
 	Destroy();
 
-	CGLES3Texture::Create(GL_TEXTURE_CUBE_MAP, (uint32_t)texture);
+	if (CGLES3Texture::Create(GL_TEXTURE_CUBE_MAP, (uint32_t)texture) == false) {
+		return false;
+	}
+
 	m_type = GFX_TEXTURE_CUBE_MAP;
 
 	return true;
