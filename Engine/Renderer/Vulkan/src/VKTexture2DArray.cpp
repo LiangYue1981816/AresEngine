@@ -30,6 +30,10 @@ bool CVKTexture2DArray::Create(GfxPixelFormat pixelFormat, int width, int height
 {
 	Destroy();
 
+	CALL_BOOL_FUNCTION_RETURN_BOOL(CVKHelper::IsFormatSupported((VkFormat)pixelFormat));
+	CALL_BOOL_FUNCTION_RETURN_BOOL(CreateImage(VK_IMAGE_TYPE_2D, VK_IMAGE_VIEW_TYPE_2D_ARRAY, (VkFormat)pixelFormat, width, height, levels, layers, VK_SAMPLE_COUNT_1_BIT, VK_IMAGE_TILING_OPTIMAL, VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT));
+	CALL_BOOL_FUNCTION_RETURN_BOOL(CreateView(VK_IMAGE_VIEW_TYPE_2D_ARRAY, VK_IMAGE_ASPECT_COLOR_BIT, (VkFormat)pixelFormat, levels, layers));
+
 	m_format = pixelFormat;
 	m_type = GFX_TEXTURE_2D_ARRAY;
 
@@ -37,9 +41,6 @@ bool CVKTexture2DArray::Create(GfxPixelFormat pixelFormat, int width, int height
 	m_height = height;
 	m_levels = levels;
 	m_layers = layers;
-
-	CALL_BOOL_FUNCTION_RETURN_BOOL(CreateImage(VK_IMAGE_TYPE_2D, VK_IMAGE_VIEW_TYPE_2D_ARRAY, (VkFormat)pixelFormat, width, height, levels, layers, VK_SAMPLE_COUNT_1_BIT, VK_IMAGE_TILING_OPTIMAL, VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT));
-	CALL_BOOL_FUNCTION_RETURN_BOOL(CreateView(VK_IMAGE_VIEW_TYPE_2D_ARRAY, VK_IMAGE_ASPECT_COLOR_BIT, (VkFormat)pixelFormat, levels, layers));
 
 	return true;
 }
