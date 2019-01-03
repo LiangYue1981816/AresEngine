@@ -23,7 +23,6 @@ bool CVKTexture::CreateView(VkImageView vkImageView)
 {
 	m_bExtern = true;
 	m_vkImageView = vkImageView;
-
 	return true;
 }
 
@@ -36,7 +35,7 @@ bool CVKTexture::CreateView(VkImageViewType viewType, VkImageAspectFlags aspectM
 	createInfo.image = m_ptrImage->GetImage();
 	createInfo.viewType = viewType;
 	createInfo.format = format;
-	createInfo.components = { VK_COMPONENT_SWIZZLE_R, VK_COMPONENT_SWIZZLE_G, VK_COMPONENT_SWIZZLE_B, VK_COMPONENT_SWIZZLE_A };
+	createInfo.components = CVKHelper::GetFormatComponentMapping(format);
 	createInfo.subresourceRange = { aspectMask, 0, (uint32_t)levels, 0, (uint32_t)layers };
 	CALL_VK_FUNCTION_RETURN_BOOL(vkCreateImageView(m_pDevice->GetDevice(), &createInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkImageView));
 	return true;

@@ -2,6 +2,7 @@
 #include "GfxHeader.h"
 
 #include "Vulkan/Vulkan.h"
+#include "VKHelper.h"
 #include "VKExtension.h"
 #include "VKDefinition.h"
 
