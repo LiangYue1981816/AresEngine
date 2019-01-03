@@ -30,27 +30,37 @@ bool CGLES3Texture2D::Create(GfxPixelFormat pixelFormat, int width, int height, 
 {
 	Destroy();
 
+	samples = std::max(samples, 1);
+
+#if GLES_VER == 310
+	if (samples == 1)
+#endif
+	{
+		if (CGLES3Texture::Create(GL_TEXTURE_2D, pixelFormat, width, height, levels, 0, samples) == false) {
+			return false;
+		}
+
+		m_type = GFX_TEXTURE_2D;
+	}
+#if GLES_VER == 310
+	else
+	{
+		if (CGLES3Texture::Create(GL_TEXTURE_2D_MULTISAMPLE, pixelFormat, width, height, levels, 0, samples) == false) {
+			return false;
+		}
+
+		m_type = GFX_TEXTURE_2D_MULTISAMPLE;
+	}
+#endif
+
 	m_format = pixelFormat;
 
 	m_width = width;
 	m_height = height;
 	m_levels = levels;
-	m_samples = samples > 1 ? samples : 1;
+	m_samples = samples;
 
-#if GLES_VER == 310
-	if (m_samples == 1)
-#endif
-	{
-		m_type = GFX_TEXTURE_2D;
-		return CGLES3Texture::Create(GL_TEXTURE_2D, pixelFormat, width, height, levels, 0, samples);
-	}
-#if GLES_VER == 310
-	else
-	{
-		m_type = GFX_TEXTURE_2D_MULTISAMPLE;
-		return CGLES3Texture::Create(GL_TEXTURE_2D_MULTISAMPLE, pixelFormat, width, height, levels, 0, samples);
-	}
-#endif
+	return true;
 }
 
 void CGLES3Texture2D::Destroy(void)

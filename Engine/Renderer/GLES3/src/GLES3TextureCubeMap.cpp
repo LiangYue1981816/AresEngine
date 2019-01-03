@@ -30,6 +30,10 @@ bool CGLES3TextureCubeMap::Create(GfxPixelFormat pixelFormat, int width, int hei
 {
 	Destroy();
 
+	if ((CGLES3Texture::Create(GL_TEXTURE_CUBE_MAP, pixelFormat, width, height, levels, 0) == false) {
+		return false;
+	}
+
 	m_format = pixelFormat;
 	m_type = GFX_TEXTURE_CUBE_MAP;
 
@@ -37,7 +41,7 @@ bool CGLES3TextureCubeMap::Create(GfxPixelFormat pixelFormat, int width, int hei
 	m_height = height;
 	m_levels = levels;
 
-	return CGLES3Texture::Create(GL_TEXTURE_CUBE_MAP, pixelFormat, width, height, levels, 0);
+	return true;
 }
 
 void CGLES3TextureCubeMap::Destroy(void)

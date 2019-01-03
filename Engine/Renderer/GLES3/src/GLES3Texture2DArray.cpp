@@ -29,6 +29,10 @@ bool CGLES3Texture2DArray::Create(uint64_t texture)
 bool CGLES3Texture2DArray::Create(GfxPixelFormat pixelFormat, int width, int height, int levels, int layers)
 {
 	Destroy();
+	
+	if (CGLES3Texture::Create(GL_TEXTURE_2D_ARRAY, pixelFormat, width, height, levels, layers) == false) {
+		return false;
+	}
 
 	m_format = pixelFormat;
 	m_type = GFX_TEXTURE_2D_ARRAY;
@@ -38,7 +42,7 @@ bool CGLES3Texture2DArray::Create(GfxPixelFormat pixelFormat, int width, int hei
 	m_levels = levels;
 	m_layers = layers;
 
-	return CGLES3Texture::Create(GL_TEXTURE_2D_ARRAY, pixelFormat, width, height, levels, layers);
+	return true;
 }
 
 void CGLES3Texture2DArray::Destroy(void)
