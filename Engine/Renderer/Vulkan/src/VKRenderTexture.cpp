@@ -3,6 +3,8 @@
 
 CVKRenderTexture::CVKRenderTexture(CVKDevice *pDevice, CVKRenderTextureManager *pManager, uint32_t name)
 	: CGfxRenderTexture(name)
+	, m_pDevice(pDevice)
+	, m_pManager(pManager)
 {
 
 }

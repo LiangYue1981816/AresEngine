@@ -19,5 +19,12 @@ public:
 
 
 private:
+	CVKImagePtr m_ptrImage;
+	VkImageView m_vkImageView;
+
+private:
+	CVKDevice *m_pDevice;
+
+private:
 	CVKRenderTextureManager *m_pManager;
 };
