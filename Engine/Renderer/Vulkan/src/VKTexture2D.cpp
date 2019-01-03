@@ -22,8 +22,10 @@ bool CVKTexture2D::Create(uint64_t texture)
 {
 	Destroy();
 
+	CALL_BOOL_FUNCTION_RETURN_BOOL(CVKTexture::CreateView((VkImageView)texture));
 	m_type = GFX_TEXTURE_2D;
-	return CVKTexture::CreateView((VkImageView)texture);
+
+	return true;
 }
 
 bool CVKTexture2D::Create(GfxPixelFormat pixelFormat, int width, int height, int levels, int samples)

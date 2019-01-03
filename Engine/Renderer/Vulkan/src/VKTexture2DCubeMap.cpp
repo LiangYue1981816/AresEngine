@@ -22,8 +22,10 @@ bool CVKTextureCubeMap::Create(uint64_t texture)
 {
 	Destroy();
 
+	CALL_BOOL_FUNCTION_RETURN_BOOL(CVKTexture::CreateView((VkImageView)texture));
 	m_type = GFX_TEXTURE_CUBE_MAP;
-	return CVKTexture::CreateView((VkImageView)texture);
+
+	return true;
 }
 
 bool CVKTextureCubeMap::Create(GfxPixelFormat pixelFormat, int width, int height, int levels)

@@ -22,8 +22,10 @@ bool CVKTexture2DArray::Create(uint64_t texture)
 {
 	Destroy();
 
+	CALL_BOOL_FUNCTION_RETURN_BOOL(CVKTexture::CreateView((VkImageView)texture));
 	m_type = GFX_TEXTURE_2D_ARRAY;
-	return CVKTexture::CreateView((VkImageView)texture);
+
+	return true;
 }
 
 bool CVKTexture2DArray::Create(GfxPixelFormat pixelFormat, int width, int height, int levels, int layers)
