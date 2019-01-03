@@ -18,7 +18,7 @@ void CGLES3RenderTexture::Release(void)
 	m_pManager->Destroy(this);
 }
 
-bool CGLES3RenderTexture::Create(GfxPixelFormat pixelFormat, int width, int height, int samples)
+bool CGLES3RenderTexture::Create(GfxPixelFormat pixelFormat, int width, int height, int samples, bool bTransient)
 {
 	Destroy();
 
@@ -29,7 +29,7 @@ bool CGLES3RenderTexture::Create(GfxPixelFormat pixelFormat, int width, int heig
 
 	m_width = width;
 	m_height = height;
-	m_samples = samples > 1 ? samples : 1;
+	m_samples = std::max(samples, 1);;
 
 #if GLES_VER == 310
 	if (m_samples == 1)
