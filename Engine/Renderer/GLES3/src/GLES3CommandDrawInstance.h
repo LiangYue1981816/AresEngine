@@ -24,7 +24,7 @@ public:
 	{
 		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_DRAW_INSTANCE, "CommandDrawInstance");
 		{
-			glDrawElementsInstanced(GLDrawMode(m_mode), m_count, GLIndexType(m_type), (const void *)m_offset, m_instanceCount);
+			glDrawElementsInstanced(CGLES3Helper::TranslateDrawMode(m_mode), m_count, CGLES3Helper::TranslateIndexType(m_type), (const void *)m_offset, m_instanceCount);
 		}
 	}
 

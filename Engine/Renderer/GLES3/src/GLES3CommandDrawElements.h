@@ -23,7 +23,7 @@ public:
 	{
 		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_DRAW_ELEMENTS, "CommandDrawElements");
 		{
-			glDrawElements(GLDrawMode(m_mode), m_count, GLIndexType(m_type), (const void *)m_offset);
+			glDrawElements(CGLES3Helper::TranslateDrawMode(m_mode), m_count, CGLES3Helper::TranslateIndexType(m_type), (const void *)m_offset);
 		}
 	}
 

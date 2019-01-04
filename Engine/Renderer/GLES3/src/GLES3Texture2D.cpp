@@ -122,7 +122,7 @@ bool CGLES3Texture2D::TransferTexture2D(GfxPixelFormat pixelFormat, int level, i
 		CGfxProfiler::DecTextureDataSize(m_size[level]);
 		{
 			m_size[level] = size;
-			glTexSubImage2D(GL_TEXTURE_2D, level, xoffset, yoffset, width, height, glFormat.External, GLDataType(type), data);
+			glTexSubImage2D(GL_TEXTURE_2D, level, xoffset, yoffset, width, height, glFormat.External, CGLES3Helper::TranslateDataType(type), data);
 		}
 		CGfxProfiler::IncTextureDataSize(m_size[level]);
 	}

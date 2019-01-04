@@ -268,6 +268,7 @@
     <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3Extension.h" />
     <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3FrameBuffer.h" />
     <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3FrameBufferManager.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3Helper.h" />
     <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3IndexBuffer.h" />
     <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3IndirectBuffer.h" />
     <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3InstanceBuffer.h" />
@@ -478,6 +479,7 @@
     <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3Extension.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3FrameBuffer.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3FrameBufferManager.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3Helper.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3IndexBuffer.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3IndirectBuffer.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3InstanceBuffer.cpp" />

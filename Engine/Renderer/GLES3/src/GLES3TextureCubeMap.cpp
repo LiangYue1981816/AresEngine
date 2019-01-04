@@ -96,7 +96,7 @@ bool CGLES3TextureCubeMap::TransferTexture2D(GfxPixelFormat pixelFormat, GfxText
 		CGfxProfiler::DecTextureDataSize(m_size[face][level]);
 		{
 			m_size[face][level] = size;
-			glTexSubImage2D(GLTextureCubeMapFace(face), level, xoffset, yoffset, width, height, glFormat.External, GLDataType(type), data);
+			glTexSubImage2D(CGLES3Helper::TranslateTextureCubeMapFace(face), level, xoffset, yoffset, width, height, glFormat.External, CGLES3Helper::TranslateDataType(type), data);
 		}
 		CGfxProfiler::IncTextureDataSize(m_size[face][level]);
 	}
@@ -131,7 +131,7 @@ bool CGLES3TextureCubeMap::TransferTexture2DCompressed(GfxPixelFormat pixelForma
 		CGfxProfiler::DecTextureDataSize(m_size[face][level]);
 		{
 			m_size[face][level] = size;
-			glCompressedTexSubImage2D(GLTextureCubeMapFace(face), level, xoffset, yoffset, width, height, glFormat.Internal, size, data);
+			glCompressedTexSubImage2D(CGLES3Helper::TranslateTextureCubeMapFace(face), level, xoffset, yoffset, width, height, glFormat.Internal, size, data);
 		}
 		CGfxProfiler::IncTextureDataSize(m_size[face][level]);
 	}

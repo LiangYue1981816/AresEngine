@@ -2,6 +2,7 @@
 #include "GfxHeader.h"
 
 #include "GLES3/GL31.h"
+#include "GLES3Helper.h"
 #include "GLES3Extension.h"
 #include "GLES3Definition.h"
 
