@@ -3,11 +3,15 @@
 
 static uint32_t GetMemoryTypeIndex(const VkPhysicalDeviceMemoryProperties &memoryProperties, VkFlags memoryTypeBits, VkMemoryPropertyFlags memoryPropertyFlags)
 {
-	for (uint32_t indexMemoryType = 0; indexMemoryType < memoryProperties.memoryTypeCount; indexMemoryType++) {
-		if ((memoryTypeBits & (1 << indexMemoryType)) &&
-			(memoryProperties.memoryTypes[indexMemoryType].propertyFlags & memoryPropertyFlags) == memoryPropertyFlags) {
-			return indexMemoryType;
+	for (uint32_t index = 0; index < 2; index++) {
+		for (uint32_t indexMemoryType = 0; indexMemoryType < memoryProperties.memoryTypeCount; indexMemoryType++) {
+			if ((memoryTypeBits & (1 << indexMemoryType)) &&
+				(memoryProperties.memoryTypes[indexMemoryType].propertyFlags & memoryPropertyFlags) == memoryPropertyFlags) {
+				return indexMemoryType;
+			}
 		}
+
+		memoryPropertyFlags = memoryPropertyFlags & ~VK_MEMORY_PROPERTY_LAZILY_ALLOCATED_BIT;
 	}
 
 	return 0xffffffff;
