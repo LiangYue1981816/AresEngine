@@ -8,7 +8,7 @@ class CGLES3Sampler : public CGfxSampler
 
 
 private:
-	CGLES3Sampler(GfxMinFilter minFilter, GfxMagFilter magFilter, GfxAddressMode addressMode);
+	CGLES3Sampler(GfxFilter minFilter, GfxFilter magFilter, GfxMipmapMode mipmapMode, GfxAddressMode addressMode);
 	virtual ~CGLES3Sampler(void);
 
 

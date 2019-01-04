@@ -101,50 +101,6 @@ GLenum CGLES3Helper::TranslateStencilOp(GfxStencilOp stencilOp)
 	return GL_INVALID_ENUM;
 }
 
-GLenum CGLES3Helper::TranslateMinFilter(GfxMinFilter minFilter)
-{
-	switch ((int)minFilter) {
-	case GFX_MINFILTER_LINEAR:
-		return GL_LINEAR;
-	case GFX_MINFILTER_LINEAR_MIPMAP_LINEAR:
-		return GL_LINEAR_MIPMAP_LINEAR;
-	case GFX_MINFILTER_LINEAR_MIPMAP_NEAREST:
-		return GL_LINEAR_MIPMAP_NEAREST;
-	case GFX_MINFILTER_NEAREST:
-		return GL_NEAREST;
-	case GFX_MINFILTER_NEAREST_MIPMAP_LINEAR:
-		return GL_NEAREST_MIPMAP_LINEAR;
-	case GFX_MINFILTER_NEAREST_MIPMAP_NEAREST:
-		return GL_NEAREST_MIPMAP_NEAREST;
-	}
-
-	return GL_INVALID_ENUM;
-}
-
-GLenum CGLES3Helper::TranslateMagFilter(GfxMagFilter magFilter)
-{
-	switch ((int)magFilter) {
-	case GFX_MAGFILTER_LINEAR:
-		return GL_LINEAR;
-	case GFX_MAGFILTER_NEAREST:
-		return GL_NEAREST;
-	}
-
-	return GL_INVALID_ENUM;
-}
-
-GLenum CGLES3Helper::TranslateAddressMode(GfxAddressMode addressMode)
-{
-	switch ((int)addressMode) {
-	case GFX_ADDRESS_REPEAT:
-		return GL_REPEAT;
-	case GFX_ADDRESS_CLAMP_TO_EDGE:
-		return GL_CLAMP_TO_EDGE;
-	}
-
-	return GL_INVALID_ENUM;
-}
-
 GLenum CGLES3Helper::TranslateBlendFactor(GfxBlendFactor blendFactor)
 {
 	switch ((int)blendFactor) {
@@ -201,42 +157,6 @@ GLenum CGLES3Helper::TranslateBlendEquation(GfxBlendEquation blendEquation)
 	return GL_INVALID_ENUM;
 }
 
-GLenum CGLES3Helper::TranslateTextureTarget(GfxTextureType type)
-{
-	switch ((int)type) {
-	case GFX_TEXTURE_2D:
-		return GL_TEXTURE_2D;
-	case GFX_TEXTURE_2D_MULTISAMPLE:
-		return GL_TEXTURE_2D_MULTISAMPLE;
-	case GFX_TEXTURE_2D_ARRAY:
-		return GL_TEXTURE_2D_ARRAY;
-	case GFX_TEXTURE_CUBE_MAP:
-		return GL_TEXTURE_CUBE_MAP;
-	}
-
-	return GL_INVALID_ENUM;
-}
-
-GLenum CGLES3Helper::TranslateTextureCubeMapFace(GfxTextureCubeMapFace face)
-{
-	switch ((int)face) {
-	case GFX_TEXTURE_CUBEMAP_POSITIVE_X:
-		return GL_TEXTURE_CUBE_MAP_POSITIVE_X;
-	case GFX_TEXTURE_CUBEMAP_NEGATIVE_X:
-		return GL_TEXTURE_CUBE_MAP_NEGATIVE_X;
-	case GFX_TEXTURE_CUBEMAP_POSITIVE_Y:
-		return GL_TEXTURE_CUBE_MAP_POSITIVE_Y;
-	case GFX_TEXTURE_CUBEMAP_NEGATIVE_Y:
-		return GL_TEXTURE_CUBE_MAP_NEGATIVE_Y;
-	case GFX_TEXTURE_CUBEMAP_POSITIVE_Z:
-		return GL_TEXTURE_CUBE_MAP_POSITIVE_Z;
-	case GFX_TEXTURE_CUBEMAP_NEGATIVE_Z:
-		return GL_TEXTURE_CUBE_MAP_NEGATIVE_Z;
-	}
-
-	return GL_INVALID_ENUM;
-}
-
 GLenum CGLES3Helper::TranslateMagFilter(GfxFilter magFilter)
 {
 	switch (magFilter) {
@@ -268,6 +188,54 @@ GLenum CGLES3Helper::TranslateMinFilter(GfxFilter minFilter, GfxMipmapMode mipma
 			return GL_LINEAR_MIPMAP_LINEAR;
 		}
 		break;
+	}
+
+	return GL_INVALID_ENUM;
+}
+
+GLenum CGLES3Helper::TranslateAddressMode(GfxAddressMode addressMode)
+{
+	switch ((int)addressMode) {
+	case GFX_ADDRESS_REPEAT:
+		return GL_REPEAT;
+	case GFX_ADDRESS_CLAMP_TO_EDGE:
+		return GL_CLAMP_TO_EDGE;
+	}
+
+	return GL_INVALID_ENUM;
+}
+
+GLenum CGLES3Helper::TranslateTextureTarget(GfxTextureType type)
+{
+	switch ((int)type) {
+	case GFX_TEXTURE_2D:
+		return GL_TEXTURE_2D;
+	case GFX_TEXTURE_2D_MULTISAMPLE:
+		return GL_TEXTURE_2D_MULTISAMPLE;
+	case GFX_TEXTURE_2D_ARRAY:
+		return GL_TEXTURE_2D_ARRAY;
+	case GFX_TEXTURE_CUBE_MAP:
+		return GL_TEXTURE_CUBE_MAP;
+	}
+
+	return GL_INVALID_ENUM;
+}
+
+GLenum CGLES3Helper::TranslateTextureCubeMapFace(GfxTextureCubeMapFace face)
+{
+	switch ((int)face) {
+	case GFX_TEXTURE_CUBEMAP_POSITIVE_X:
+		return GL_TEXTURE_CUBE_MAP_POSITIVE_X;
+	case GFX_TEXTURE_CUBEMAP_NEGATIVE_X:
+		return GL_TEXTURE_CUBE_MAP_NEGATIVE_X;
+	case GFX_TEXTURE_CUBEMAP_POSITIVE_Y:
+		return GL_TEXTURE_CUBE_MAP_POSITIVE_Y;
+	case GFX_TEXTURE_CUBEMAP_NEGATIVE_Y:
+		return GL_TEXTURE_CUBE_MAP_NEGATIVE_Y;
+	case GFX_TEXTURE_CUBEMAP_POSITIVE_Z:
+		return GL_TEXTURE_CUBE_MAP_POSITIVE_Z;
+	case GFX_TEXTURE_CUBEMAP_NEGATIVE_Z:
+		return GL_TEXTURE_CUBE_MAP_NEGATIVE_Z;
 	}
 
 	return GL_INVALID_ENUM;

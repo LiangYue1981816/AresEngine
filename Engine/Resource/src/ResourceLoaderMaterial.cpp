@@ -84,28 +84,24 @@ static GfxFunc StringToDepthFunc(const char *szString)
 	return GFX_FUNC_INVALID_ENUM;
 }
 
-static GfxMinFilter StringToMinFilter(const char *szString)
+static GfxFilter StringToFilter(const char *szString)
 {
 	if (szString) {
-		if (!stricmp(szString, "GFX_LINEAR")) return GFX_MINFILTER_LINEAR;
-		if (!stricmp(szString, "GFX_LINEAR_MIPMAP_LINEAR")) return GFX_MINFILTER_LINEAR_MIPMAP_LINEAR;
-		if (!stricmp(szString, "GFX_LINEAR_MIPMAP_NEAREST")) return GFX_MINFILTER_LINEAR_MIPMAP_NEAREST;
-		if (!stricmp(szString, "GFX_NEAREST")) return GFX_MINFILTER_NEAREST;
-		if (!stricmp(szString, "GFX_NEAREST_MIPMAP_LINEAR")) return GFX_MINFILTER_NEAREST_MIPMAP_LINEAR;
-		if (!stricmp(szString, "GFX_NEAREST_MIPMAP_NEAREST")) return GFX_MINFILTER_NEAREST_MIPMAP_NEAREST;
+		if (!stricmp(szString, "GFX_FILTER_NEAREST")) return GFX_FILTER_NEAREST;
+		if (!stricmp(szString, "GFX_FILTER_LINEAR")) return GFX_FILTER_LINEAR;
 	}
 
-	return GFX_MINFILTER_INVALID_ENUM;
+	return GFX_FILTER_INVALID_ENUM;
 }
 
-static GfxMagFilter StringToMagFilter(const char *szString)
+static GfxMipmapMode StringToMipmapMode(const char *szString)
 {
 	if (szString) {
-		if (!stricmp(szString, "GFX_LINEAR")) return GFX_MAGFILTER_LINEAR;
-		if (!stricmp(szString, "GFX_NEAREST")) return GFX_MAGFILTER_NEAREST;
+		if (!stricmp(szString, "GFX_MIPMAP_MODE_NEAREST")) return GFX_MIPMAP_MODE_NEAREST;
+		if (!stricmp(szString, "GFX_MIPMAP_MODE_LINEAR")) return GFX_MIPMAP_MODE_LINEAR;
 	}
 
-	return GFX_MAGFILTER_INVALID_ENUM;
+	return GFX_MIPMAP_MODE_INVALID_ENUM;
 }
 
 static GfxAddressMode StringToAddressMode(const char *szString)
@@ -335,12 +331,13 @@ static bool InternalLoadTexture2D(TiXmlNode *pPassNode, CGfxMaterialPass *pPass)
 
 				LogOutput(nullptr, "%s ... ", szFileName);
 
-				GfxMinFilter minFilter = StringToMinFilter(pTextureNode->ToElement()->AttributeString("min_filter"));
-				GfxMagFilter magFilter = StringToMagFilter(pTextureNode->ToElement()->AttributeString("mag_filter"));
+				GfxFilter minFilter = StringToFilter(pTextureNode->ToElement()->AttributeString("min_filter"));
+				GfxFilter magFilter = StringToFilter(pTextureNode->ToElement()->AttributeString("mag_filter"));
+				GfxMipmapMode mipmapMode = StringToMipmapMode(pTextureNode->ToElement()->AttributeString("mipmap_mode"));
 				GfxAddressMode addressMode = StringToAddressMode(pTextureNode->ToElement()->AttributeString("address_mode"));
-				if (minFilter == GFX_MINFILTER_INVALID_ENUM || magFilter == GFX_MAGFILTER_INVALID_ENUM || addressMode == GFX_ADDRESS_INVALID_ENUM) { err = -2; goto ERR; }
+				if (minFilter == GFX_FILTER_INVALID_ENUM || magFilter == GFX_FILTER_INVALID_ENUM || mipmapMode == GFX_MIPMAP_MODE_INVALID_ENUM || addressMode == GFX_ADDRESS_INVALID_ENUM) { err = -2; goto ERR; }
 
-				pPass->SetSampler(szName, minFilter, magFilter, addressMode);
+				pPass->SetSampler(szName, minFilter, magFilter, mipmapMode, addressMode);
 				pPass->SetTexture2D(szName, szFileName);
 			}
 			LogOutput(nullptr, "OK\n");
@@ -366,12 +363,13 @@ static bool InternalLoadTexture2DArray(TiXmlNode *pPassNode, CGfxMaterialPass *p
 
 				LogOutput(nullptr, "%s ... ", szFileName);
 
-				GfxMinFilter minFilter = StringToMinFilter(pTextureNode->ToElement()->AttributeString("min_filter"));
-				GfxMagFilter magFilter = StringToMagFilter(pTextureNode->ToElement()->AttributeString("mag_filter"));
+				GfxFilter minFilter = StringToFilter(pTextureNode->ToElement()->AttributeString("min_filter"));
+				GfxFilter magFilter = StringToFilter(pTextureNode->ToElement()->AttributeString("mag_filter"));
+				GfxMipmapMode mipmapMode = StringToMipmapMode(pTextureNode->ToElement()->AttributeString("mipmap_mode"));
 				GfxAddressMode addressMode = StringToAddressMode(pTextureNode->ToElement()->AttributeString("address_mode"));
-				if (minFilter == GFX_MINFILTER_INVALID_ENUM || magFilter == GFX_MAGFILTER_INVALID_ENUM || addressMode == GFX_ADDRESS_INVALID_ENUM) { err = -2; goto ERR; }
+				if (minFilter == GFX_FILTER_INVALID_ENUM || magFilter == GFX_FILTER_INVALID_ENUM || mipmapMode == GFX_MIPMAP_MODE_INVALID_ENUM || addressMode == GFX_ADDRESS_INVALID_ENUM) { err = -2; goto ERR; }
 
-				pPass->SetSampler(szName, minFilter, magFilter, addressMode);
+				pPass->SetSampler(szName, minFilter, magFilter, mipmapMode, addressMode);
 				pPass->SetTexture2DArray(szName, szFileName);
 			}
 			LogOutput(nullptr, "OK\n");
@@ -397,12 +395,13 @@ static bool InternalLoadTextureCubeMap(TiXmlNode *pPassNode, CGfxMaterialPass *p
 
 				LogOutput(nullptr, "%s ... ", szFileName);
 
-				GfxMinFilter minFilter = StringToMinFilter(pTextureNode->ToElement()->AttributeString("min_filter"));
-				GfxMagFilter magFilter = StringToMagFilter(pTextureNode->ToElement()->AttributeString("mag_filter"));
+				GfxFilter minFilter = StringToFilter(pTextureNode->ToElement()->AttributeString("min_filter"));
+				GfxFilter magFilter = StringToFilter(pTextureNode->ToElement()->AttributeString("mag_filter"));
+				GfxMipmapMode mipmapMode = StringToMipmapMode(pTextureNode->ToElement()->AttributeString("mipmap_mode"));
 				GfxAddressMode addressMode = StringToAddressMode(pTextureNode->ToElement()->AttributeString("address_mode"));
-				if (minFilter == GFX_MINFILTER_INVALID_ENUM || magFilter == GFX_MAGFILTER_INVALID_ENUM || addressMode == GFX_ADDRESS_INVALID_ENUM) { err = -2; goto ERR; }
+				if (minFilter == GFX_FILTER_INVALID_ENUM || magFilter == GFX_FILTER_INVALID_ENUM || mipmapMode == GFX_MIPMAP_MODE_INVALID_ENUM || addressMode == GFX_ADDRESS_INVALID_ENUM) { err = -2; goto ERR; }
 
-				pPass->SetSampler(szName, minFilter, magFilter, addressMode);
+				pPass->SetSampler(szName, minFilter, magFilter, mipmapMode, addressMode);
 				pPass->SetTextureCubeMap(szName, szFileName);
 			}
 			LogOutput(nullptr, "OK\n");
@@ -426,7 +425,7 @@ static bool InternalLoadUniformVec1(TiXmlNode *pPassNode, CGfxMaterialPass *pPas
 				const char *szValue = pUniformNode->ToElement()->AttributeString("value");
 				if (szName == nullptr || szValue == nullptr) { err = -1; goto ERR; }
 
-				LogOutput(nullptr, "%s = \"%s\" ", szName, szValue);
+				LogOutput(nullptr, "%s = %s ", szName, szValue);
 
 				float value[1] = { 0.0f };
 				pUniformNode->ToElement()->AttributeFloat1("value", value);
@@ -453,7 +452,7 @@ static bool InternalLoadUniformVec2(TiXmlNode *pPassNode, CGfxMaterialPass *pPas
 				const char *szValue = pUniformNode->ToElement()->AttributeString("value");
 				if (szName == nullptr || szValue == nullptr) { err = -1; goto ERR; }
 
-				LogOutput(nullptr, "%s = \"%s\" ", szName, szValue);
+				LogOutput(nullptr, "%s = vec2(%s) ", szName, szValue);
 
 				float value[2] = { 0.0f };
 				pUniformNode->ToElement()->AttributeFloat2("value", value);
@@ -480,7 +479,7 @@ static bool InternalLoadUniformVec3(TiXmlNode *pPassNode, CGfxMaterialPass *pPas
 				const char *szValue = pUniformNode->ToElement()->AttributeString("value");
 				if (szName == nullptr || szValue == nullptr) { err = -1; goto ERR; }
 
-				LogOutput(nullptr, "%s = \"%s\" ", szName, szValue);
+				LogOutput(nullptr, "%s = vec3(%s) ", szName, szValue);
 
 				float value[3] = { 0.0f };
 				pUniformNode->ToElement()->AttributeFloat3("value", value);
@@ -507,7 +506,7 @@ static bool InternalLoadUniformVec4(TiXmlNode *pPassNode, CGfxMaterialPass *pPas
 				const char *szValue = pUniformNode->ToElement()->AttributeString("value");
 				if (szName == nullptr || szValue == nullptr) { err = -1; goto ERR; }
 
-				LogOutput(nullptr, "%s = \"%s\" ", szName, szValue);
+				LogOutput(nullptr, "%s = vec4(%s) ", szName, szValue);
 
 				float value[4] = { 0.0f };
 				pUniformNode->ToElement()->AttributeFloat4("value", value);

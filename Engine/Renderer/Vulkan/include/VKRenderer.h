@@ -56,7 +56,7 @@ public:
 	CGfxShader* CreateShader(const char *szFileName, shader_kind kind);
 	CGfxPipelineCompute* CreatePipelineCompute(const CGfxShader *pComputeShader);
 	CGfxPipelineGraphics* CreatePipelineGraphics(const CGfxShader *pVertexShader, const CGfxShader *pFragmentShader, const PipelineState &state);
-	CGfxSampler* CreateSampler(GfxMinFilter minFilter, GfxMagFilter magFilter, GfxAddressMode addressMode);
+	CGfxSampler* CreateSampler(GfxFilter minFilter, GfxFilter magFilter, GfxMipmapMode mipmapMode, GfxAddressMode addressMode);
 
 public:
 	CGfxRenderPassPtr NewRenderPass(int numAttachments, int numSubpasses);

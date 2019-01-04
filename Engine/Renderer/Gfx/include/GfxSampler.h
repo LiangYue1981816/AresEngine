@@ -5,7 +5,7 @@
 class CALL_API CGfxSampler
 {
 public:
-	CGfxSampler(GfxMinFilter minFilter, GfxMagFilter magFilter, GfxAddressMode addressMode)
+	CGfxSampler(GfxFilter minFilter, GfxFilter magFilter, GfxMipmapMode mipmapMode, GfxAddressMode addressMode)
 	{
 
 	}
