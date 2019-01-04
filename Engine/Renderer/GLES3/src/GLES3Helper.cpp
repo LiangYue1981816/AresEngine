@@ -237,6 +237,42 @@ GLenum CGLES3Helper::TranslateTextureCubeMapFace(GfxTextureCubeMapFace face)
 	return GL_INVALID_ENUM;
 }
 
+GLenum CGLES3Helper::TranslateMagFilter(GfxFilter magFilter)
+{
+	switch (magFilter) {
+	case GFX_FILTER_NEAREST:
+		return GL_NEAREST;
+	case GFX_FILTER_LINEAR:
+		return GL_LINEAR;
+	}
+
+	return GL_INVALID_ENUM;
+}
+
+GLenum CGLES3Helper::TranslateMinFilter(GfxFilter minFilter, GfxMipmapMode mipmapMode)
+{
+	switch (minFilter) {
+	case GFX_FILTER_NEAREST:
+		switch (mipmapMode) {
+		case GFX_MIPMAP_MODE_NEAREST:
+			return GL_NEAREST_MIPMAP_NEAREST;
+		case GFX_MIPMAP_MODE_LINEAR:
+			return GL_NEAREST_MIPMAP_LINEAR;
+		}
+		break;
+	case GFX_FILTER_LINEAR:
+		switch (mipmapMode) {
+		case GFX_MIPMAP_MODE_NEAREST:
+			return GL_LINEAR_MIPMAP_NEAREST;
+		case GFX_MIPMAP_MODE_LINEAR:
+			return GL_LINEAR_MIPMAP_LINEAR;
+		}
+		break;
+	}
+
+	return GL_INVALID_ENUM;
+}
+
 GLenum CGLES3Helper::TranslateDrawMode(GfxDrawMode drawMode)
 {
 	switch ((int)drawMode) {

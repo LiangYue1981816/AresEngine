@@ -254,6 +254,18 @@ typedef enum GfxTextureType {
 	GFX_TEXTURE_CUBE_MAP,
 } GfxTextureType;
 
+typedef enum GfxFilter {
+	GFX_FILTER_INVALID_ENUM = -1,
+	GFX_FILTER_NEAREST,
+	GFX_FILTER_LINEAR,
+} GfxFilter;
+
+typedef enum GfxMipmapMode {
+	GFX_MIPMAP_MODE_INVALID_ENUM = -1,
+	GFX_MIPMAP_MODE_NEAREST,
+	GFX_MIPMAP_MODE_LINEAR,
+} GfxMipmapMode;
+
 typedef enum GfxDataType {
 	GFX_DATA_INVALID_ENUM = -1,
 	GFX_DATA_UNSIGNED_BYTE,
