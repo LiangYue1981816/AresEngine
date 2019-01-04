@@ -5,6 +5,8 @@ CVKRenderTexture::CVKRenderTexture(CVKDevice *pDevice, CVKRenderTextureManager *
 	: CGfxRenderTexture(name)
 	, m_pDevice(pDevice)
 	, m_pManager(pManager)
+
+	, m_vkImageView(VK_NULL_HANDLE)
 {
 
 }
