@@ -45,6 +45,7 @@ void CVKIndexBuffer::Bind(VkCommandBuffer vkCommandBuffer, VkDeviceSize offset, 
 
 		m_transferOffset = 0;
 		m_transferBuffer.clear();
+		m_transferBuffer.shrink_to_fit();
 	}
 
 	switch ((int)GetIndexType()) {

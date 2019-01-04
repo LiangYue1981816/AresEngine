@@ -46,6 +46,7 @@ void CVKVertexBuffer::Bind(VkCommandBuffer vkCommandBuffer, VkDeviceSize offset,
 
 		m_transferOffset = 0;
 		m_transferBuffer.clear();
+		m_transferBuffer.shrink_to_fit();
 	}
 
 	vkCmdBindVertexBuffer(vkCommandBuffer, m_binding, m_ptrBuffer->GetBuffer(), offset);
