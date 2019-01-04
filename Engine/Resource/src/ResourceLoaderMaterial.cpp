@@ -426,7 +426,7 @@ static bool InternalLoadUniformVec1(TiXmlNode *pPassNode, CGfxMaterialPass *pPas
 				const char *szValue = pUniformNode->ToElement()->AttributeString("value");
 				if (szName == nullptr || szValue == nullptr) { err = -1; goto ERR; }
 
-				LogOutput(nullptr, "%s = \"%s\" ... ", szName, szValue);
+				LogOutput(nullptr, "%s = \"%s\" ", szName, szValue);
 
 				float value[1] = { 0.0f };
 				pUniformNode->ToElement()->AttributeFloat1("value", value);
@@ -447,13 +447,13 @@ static bool InternalLoadUniformVec2(TiXmlNode *pPassNode, CGfxMaterialPass *pPas
 
 	if (TiXmlNode *pUniformNode = pPassNode->FirstChild("Uniform2f")) {
 		do {
-			LogOutput(LOG_TAG_RENDERER, "\t\tLoadUniformVec2 ... ");
+			LogOutput(LOG_TAG_RENDERER, "\t\tLoadUniformVec2 ");
 			{
 				const char *szName = pUniformNode->ToElement()->AttributeString("name");
 				const char *szValue = pUniformNode->ToElement()->AttributeString("value");
 				if (szName == nullptr || szValue == nullptr) { err = -1; goto ERR; }
 
-				LogOutput(nullptr, "%s = \"%s\" ... ", szName, szValue);
+				LogOutput(nullptr, "%s = \"%s\" ", szName, szValue);
 
 				float value[2] = { 0.0f };
 				pUniformNode->ToElement()->AttributeFloat2("value", value);
@@ -474,13 +474,13 @@ static bool InternalLoadUniformVec3(TiXmlNode *pPassNode, CGfxMaterialPass *pPas
 
 	if (TiXmlNode *pUniformNode = pPassNode->FirstChild("Uniform3f")) {
 		do {
-			LogOutput(LOG_TAG_RENDERER, "\t\tLoadUniformVec3 ... ");
+			LogOutput(LOG_TAG_RENDERER, "\t\tLoadUniformVec3 ");
 			{
 				const char *szName = pUniformNode->ToElement()->AttributeString("name");
 				const char *szValue = pUniformNode->ToElement()->AttributeString("value");
 				if (szName == nullptr || szValue == nullptr) { err = -1; goto ERR; }
 
-				LogOutput(nullptr, "%s = \"%s\" ... ", szName, szValue);
+				LogOutput(nullptr, "%s = \"%s\" ", szName, szValue);
 
 				float value[3] = { 0.0f };
 				pUniformNode->ToElement()->AttributeFloat3("value", value);
@@ -501,13 +501,13 @@ static bool InternalLoadUniformVec4(TiXmlNode *pPassNode, CGfxMaterialPass *pPas
 
 	if (TiXmlNode *pUniformNode = pPassNode->FirstChild("Uniform4f")) {
 		do {
-			LogOutput(LOG_TAG_RENDERER, "\t\tLoadUniformVec4 ... ");
+			LogOutput(LOG_TAG_RENDERER, "\t\tLoadUniformVec4 ");
 			{
 				const char *szName = pUniformNode->ToElement()->AttributeString("name");
 				const char *szValue = pUniformNode->ToElement()->AttributeString("value");
 				if (szName == nullptr || szValue == nullptr) { err = -1; goto ERR; }
 
-				LogOutput(nullptr, "%s = \"%s\" ... ", szName, szValue);
+				LogOutput(nullptr, "%s = \"%s\" ", szName, szValue);
 
 				float value[4] = { 0.0f };
 				pUniformNode->ToElement()->AttributeFloat4("value", value);
