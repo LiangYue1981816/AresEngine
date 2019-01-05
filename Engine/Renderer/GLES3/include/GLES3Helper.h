@@ -14,8 +14,8 @@ public:
 	static GLenum TranslateBlendFactor(GfxBlendFactor blendFactor);
 	static GLenum TranslateBlendEquation(GfxBlendEquation blendEquation);
 	static GLenum TranslateMagFilter(GfxFilter magFilter);
-	static GLenum TranslateMinFilter(GfxFilter minFilter, GfxMipmapMode mipmapMode);
-	static GLenum TranslateAddressMode(GfxAddressMode addressMode);
+	static GLenum TranslateMinFilter(GfxFilter minFilter, GfxSamplerMipmapMode mipmapMode);
+	static GLenum TranslateAddressMode(GfxSamplerAddressMode addressMode);
 	static GLenum TranslateTextureTarget(GfxTextureType type);
 	static GLenum TranslateTextureCubeMapFace(GfxTextureCubeMapFace face);
 	static GLenum TranslateDrawMode(GfxDrawMode drawMode);

@@ -13,7 +13,7 @@ private:
 
 
 private:
-	CGLES3Sampler* Create(GfxFilter minFilter, GfxFilter magFilter, GfxMipmapMode mipmapMode, GfxAddressMode addressMode);
+	CGLES3Sampler* Create(GfxFilter minFilter, GfxFilter magFilter, GfxSamplerMipmapMode mipmapMode, GfxSamplerAddressMode addressMode);
 
 
 private:

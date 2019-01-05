@@ -1,5 +1,4 @@
 #include "VKRenderer.h"
-#include "ResourceLoader.h"
 
 
 CVKMeshDrawManager::CVKMeshDrawManager(CVKDevice *pDevice)

@@ -87,31 +87,33 @@ static GfxFunc StringToDepthFunc(const char *szString)
 static GfxFilter StringToFilter(const char *szString)
 {
 	if (szString) {
-		if (!stricmp(szString, "GFX_FILTER_NEAREST")) return GFX_FILTER_NEAREST;
-		if (!stricmp(szString, "GFX_FILTER_LINEAR")) return GFX_FILTER_LINEAR;
+		if (!stricmp(szString, "GFX_NEAREST")) return GFX_FILTER_NEAREST;
+		if (!stricmp(szString, "GFX_LINEAR")) return GFX_FILTER_LINEAR;
 	}
 
 	return GFX_FILTER_INVALID_ENUM;
 }
 
-static GfxMipmapMode StringToMipmapMode(const char *szString)
+static GfxSamplerMipmapMode StringToMipmapMode(const char *szString)
 {
 	if (szString) {
-		if (!stricmp(szString, "GFX_MIPMAP_MODE_NEAREST")) return GFX_MIPMAP_MODE_NEAREST;
-		if (!stricmp(szString, "GFX_MIPMAP_MODE_LINEAR")) return GFX_MIPMAP_MODE_LINEAR;
+		if (!stricmp(szString, "GFX_NEAREST")) return GFX_SAMPLER_MIPMAP_MODE_NEAREST;
+		if (!stricmp(szString, "GFX_LINEAR")) return GFX_SAMPLER_MIPMAP_MODE_LINEAR;
 	}
 
-	return GFX_MIPMAP_MODE_INVALID_ENUM;
+	return GFX_SAMPLER_MIPMAP_MODE_INVALID_ENUM;
 }
 
-static GfxAddressMode StringToAddressMode(const char *szString)
+static GfxSamplerAddressMode StringToAddressMode(const char *szString)
 {
 	if (szString) {
-		if (!stricmp(szString, "GFX_REPEAT")) return GFX_ADDRESS_REPEAT;
-		if (!stricmp(szString, "GFX_CLAMP_TO_EDGE")) return GFX_ADDRESS_CLAMP_TO_EDGE;
+		if (!stricmp(szString, "GFX_REPEAT")) return GFX_SAMPLER_ADDRESS_MODE_REPEAT;
+		if (!stricmp(szString, "GFX_MIRRORED_REPEAT")) return GFX_SAMPLER_ADDRESS_MODE_MIRRORED_REPEAT;
+		if (!stricmp(szString, "GFX_CLAMP_TO_EDGE")) return GFX_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE;
+		if (!stricmp(szString, "GFX_CLAMP_TO_BORDER")) return GFX_SAMPLER_ADDRESS_MODE_CLAMP_TO_BORDER;
 	}
 
-	return GFX_ADDRESS_INVALID_ENUM;
+	return GFX_SAMPLER_ADDRESS_MODE_INVALID_ENUM;
 }
 
 static GfxBlendFactor StringToBlendSrcFactor(const char *szString)
@@ -163,9 +165,9 @@ static GfxBlendFactor StringToBlendDstFactor(const char *szString)
 static GfxBlendEquation StringToBlendEquation(const char *szString)
 {
 	if (szString) {
-		if (!stricmp(szString, "GFX_FUNC_ADD")) return GFX_BLENDEQUATION_FUNC_ADD;
-		if (!stricmp(szString, "GFX_FUNC_SUBTRACT")) return GFX_BLENDEQUATION_FUNC_SUBTRACT;
-		if (!stricmp(szString, "GFX_FUNC_REVERSE_SUBTRACT")) return GFX_BLENDEQUATION_FUNC_REVERSE_SUBTRACT;
+		if (!stricmp(szString, "GFX_ADD")) return GFX_BLENDEQUATION_FUNC_ADD;
+		if (!stricmp(szString, "GFX_SUBTRACT")) return GFX_BLENDEQUATION_FUNC_SUBTRACT;
+		if (!stricmp(szString, "GFX_REVERSE_SUBTRACT")) return GFX_BLENDEQUATION_FUNC_REVERSE_SUBTRACT;
 		if (!stricmp(szString, "GFX_MIN")) return GFX_BLENDEQUATION_MIN;
 		if (!stricmp(szString, "GFX_MAX")) return GFX_BLENDEQUATION_MAX;
 	}
@@ -333,9 +335,9 @@ static bool InternalLoadTexture2D(TiXmlNode *pPassNode, CGfxMaterialPass *pPass)
 
 				GfxFilter minFilter = StringToFilter(pTextureNode->ToElement()->AttributeString("min_filter"));
 				GfxFilter magFilter = StringToFilter(pTextureNode->ToElement()->AttributeString("mag_filter"));
-				GfxMipmapMode mipmapMode = StringToMipmapMode(pTextureNode->ToElement()->AttributeString("mipmap_mode"));
-				GfxAddressMode addressMode = StringToAddressMode(pTextureNode->ToElement()->AttributeString("address_mode"));
-				if (minFilter == GFX_FILTER_INVALID_ENUM || magFilter == GFX_FILTER_INVALID_ENUM || mipmapMode == GFX_MIPMAP_MODE_INVALID_ENUM || addressMode == GFX_ADDRESS_INVALID_ENUM) { err = -2; goto ERR; }
+				GfxSamplerMipmapMode mipmapMode = StringToMipmapMode(pTextureNode->ToElement()->AttributeString("mipmap_mode"));
+				GfxSamplerAddressMode addressMode = StringToAddressMode(pTextureNode->ToElement()->AttributeString("address_mode"));
+				if (minFilter == GFX_FILTER_INVALID_ENUM || magFilter == GFX_FILTER_INVALID_ENUM || mipmapMode == GFX_SAMPLER_MIPMAP_MODE_INVALID_ENUM || addressMode == GFX_SAMPLER_ADDRESS_MODE_INVALID_ENUM) { err = -2; goto ERR; }
 
 				pPass->SetSampler(szName, minFilter, magFilter, mipmapMode, addressMode);
 				pPass->SetTexture2D(szName, szFileName);
@@ -365,9 +367,9 @@ static bool InternalLoadTexture2DArray(TiXmlNode *pPassNode, CGfxMaterialPass *p
 
 				GfxFilter minFilter = StringToFilter(pTextureNode->ToElement()->AttributeString("min_filter"));
 				GfxFilter magFilter = StringToFilter(pTextureNode->ToElement()->AttributeString("mag_filter"));
-				GfxMipmapMode mipmapMode = StringToMipmapMode(pTextureNode->ToElement()->AttributeString("mipmap_mode"));
-				GfxAddressMode addressMode = StringToAddressMode(pTextureNode->ToElement()->AttributeString("address_mode"));
-				if (minFilter == GFX_FILTER_INVALID_ENUM || magFilter == GFX_FILTER_INVALID_ENUM || mipmapMode == GFX_MIPMAP_MODE_INVALID_ENUM || addressMode == GFX_ADDRESS_INVALID_ENUM) { err = -2; goto ERR; }
+				GfxSamplerMipmapMode mipmapMode = StringToMipmapMode(pTextureNode->ToElement()->AttributeString("mipmap_mode"));
+				GfxSamplerAddressMode addressMode = StringToAddressMode(pTextureNode->ToElement()->AttributeString("address_mode"));
+				if (minFilter == GFX_FILTER_INVALID_ENUM || magFilter == GFX_FILTER_INVALID_ENUM || mipmapMode == GFX_SAMPLER_MIPMAP_MODE_INVALID_ENUM || addressMode == GFX_SAMPLER_ADDRESS_MODE_INVALID_ENUM) { err = -2; goto ERR; }
 
 				pPass->SetSampler(szName, minFilter, magFilter, mipmapMode, addressMode);
 				pPass->SetTexture2DArray(szName, szFileName);
@@ -397,9 +399,9 @@ static bool InternalLoadTextureCubeMap(TiXmlNode *pPassNode, CGfxMaterialPass *p
 
 				GfxFilter minFilter = StringToFilter(pTextureNode->ToElement()->AttributeString("min_filter"));
 				GfxFilter magFilter = StringToFilter(pTextureNode->ToElement()->AttributeString("mag_filter"));
-				GfxMipmapMode mipmapMode = StringToMipmapMode(pTextureNode->ToElement()->AttributeString("mipmap_mode"));
-				GfxAddressMode addressMode = StringToAddressMode(pTextureNode->ToElement()->AttributeString("address_mode"));
-				if (minFilter == GFX_FILTER_INVALID_ENUM || magFilter == GFX_FILTER_INVALID_ENUM || mipmapMode == GFX_MIPMAP_MODE_INVALID_ENUM || addressMode == GFX_ADDRESS_INVALID_ENUM) { err = -2; goto ERR; }
+				GfxSamplerMipmapMode mipmapMode = StringToMipmapMode(pTextureNode->ToElement()->AttributeString("mipmap_mode"));
+				GfxSamplerAddressMode addressMode = StringToAddressMode(pTextureNode->ToElement()->AttributeString("address_mode"));
+				if (minFilter == GFX_FILTER_INVALID_ENUM || magFilter == GFX_FILTER_INVALID_ENUM || mipmapMode == GFX_SAMPLER_MIPMAP_MODE_INVALID_ENUM || addressMode == GFX_SAMPLER_ADDRESS_MODE_INVALID_ENUM) { err = -2; goto ERR; }
 
 				pPass->SetSampler(szName, minFilter, magFilter, mipmapMode, addressMode);
 				pPass->SetTextureCubeMap(szName, szFileName);

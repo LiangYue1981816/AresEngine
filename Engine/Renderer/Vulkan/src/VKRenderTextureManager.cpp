@@ -1,5 +1,4 @@
 #include "VKRenderer.h"
-#include "ResourceLoader.h"
 
 
 CVKRenderTextureManager::CVKRenderTextureManager(CVKDevice *pDevice)

@@ -15,7 +15,7 @@ CGLES3SamplerManager::~CGLES3SamplerManager(void)
 	m_pSamplers.clear();
 }
 
-CGLES3Sampler* CGLES3SamplerManager::Create(GfxFilter minFilter, GfxFilter magFilter, GfxMipmapMode mipmapMode, GfxAddressMode addressMode)
+CGLES3Sampler* CGLES3SamplerManager::Create(GfxFilter minFilter, GfxFilter magFilter, GfxSamplerMipmapMode mipmapMode, GfxSamplerAddressMode addressMode)
 {
 	mutex_autolock autolock(&lock);
 	{

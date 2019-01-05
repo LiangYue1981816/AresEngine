@@ -19,6 +19,7 @@
 #include "VKInstanceBuffer.h"
 #include "VKIndirectBuffer.h"
 #include "VKImage.h"
+#include "VKSampler.h"
 #include "VKTexture.h"
 #include "VKTexture2D.h"
 #include "VKTexture2DArray.h"
@@ -29,6 +30,7 @@
 #include "VKMeshDraw.h"
 #include "VKUniformBuffer.h"
 
+#include "VKSamplerManager.h"
 #include "VKTextureManager.h"
 #include "VKRenderTextureManager.h"
 #include "VKMeshManager.h"
@@ -56,7 +58,7 @@ public:
 	CGfxShader* CreateShader(const char *szFileName, shader_kind kind);
 	CGfxPipelineCompute* CreatePipelineCompute(const CGfxShader *pComputeShader);
 	CGfxPipelineGraphics* CreatePipelineGraphics(const CGfxShader *pVertexShader, const CGfxShader *pFragmentShader, const PipelineState &state);
-	CGfxSampler* CreateSampler(GfxFilter minFilter, GfxFilter magFilter, GfxMipmapMode mipmapMode, GfxAddressMode addressMode);
+	CGfxSampler* CreateSampler(GfxFilter minFilter, GfxFilter magFilter, GfxSamplerMipmapMode mipmapMode, GfxSamplerAddressMode addressMode);
 
 public:
 	CGfxRenderPassPtr NewRenderPass(int numAttachments, int numSubpasses);

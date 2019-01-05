@@ -75,7 +75,7 @@ bool CGLES3MaterialPass::SetPipeline(const CGfxShader *pVertexShader, const CGfx
 	return true;
 }
 
-bool CGLES3MaterialPass::SetSampler(const char *szName, GfxFilter minFilter, GfxFilter magFilter, GfxMipmapMode mipmapMode, GfxAddressMode addressMode)
+bool CGLES3MaterialPass::SetSampler(const char *szName, GfxFilter minFilter, GfxFilter magFilter, GfxSamplerMipmapMode mipmapMode, GfxSamplerAddressMode addressMode)
 {
 	uint32_t name = HashValue(szName);
 

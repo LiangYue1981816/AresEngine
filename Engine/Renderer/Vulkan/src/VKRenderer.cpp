@@ -46,7 +46,7 @@ CGfxPipelineGraphics* CVKRenderer::CreatePipelineGraphics(const CGfxShader *pVer
 	return nullptr;
 }
 
-CGfxSampler* CVKRenderer::CreateSampler(GfxFilter minFilter, GfxFilter magFilter, GfxMipmapMode mipmapMode, GfxAddressMode addressMode)
+CGfxSampler* CVKRenderer::CreateSampler(GfxFilter minFilter, GfxFilter magFilter, GfxSamplerMipmapMode mipmapMode, GfxSamplerAddressMode addressMode)
 {
 	return nullptr;
 }

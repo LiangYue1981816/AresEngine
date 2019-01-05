@@ -169,22 +169,22 @@ GLenum CGLES3Helper::TranslateMagFilter(GfxFilter magFilter)
 	return GL_INVALID_ENUM;
 }
 
-GLenum CGLES3Helper::TranslateMinFilter(GfxFilter minFilter, GfxMipmapMode mipmapMode)
+GLenum CGLES3Helper::TranslateMinFilter(GfxFilter minFilter, GfxSamplerMipmapMode mipmapMode)
 {
 	switch (minFilter) {
 	case GFX_FILTER_NEAREST:
 		switch (mipmapMode) {
-		case GFX_MIPMAP_MODE_NEAREST:
+		case GFX_SAMPLER_MIPMAP_MODE_NEAREST:
 			return GL_NEAREST_MIPMAP_NEAREST;
-		case GFX_MIPMAP_MODE_LINEAR:
+		case GFX_SAMPLER_MIPMAP_MODE_LINEAR:
 			return GL_NEAREST_MIPMAP_LINEAR;
 		}
 		break;
 	case GFX_FILTER_LINEAR:
 		switch (mipmapMode) {
-		case GFX_MIPMAP_MODE_NEAREST:
+		case GFX_SAMPLER_MIPMAP_MODE_NEAREST:
 			return GL_LINEAR_MIPMAP_NEAREST;
-		case GFX_MIPMAP_MODE_LINEAR:
+		case GFX_SAMPLER_MIPMAP_MODE_LINEAR:
 			return GL_LINEAR_MIPMAP_LINEAR;
 		}
 		break;
@@ -193,12 +193,12 @@ GLenum CGLES3Helper::TranslateMinFilter(GfxFilter minFilter, GfxMipmapMode mipma
 	return GL_INVALID_ENUM;
 }
 
-GLenum CGLES3Helper::TranslateAddressMode(GfxAddressMode addressMode)
+GLenum CGLES3Helper::TranslateAddressMode(GfxSamplerAddressMode addressMode)
 {
 	switch ((int)addressMode) {
-	case GFX_ADDRESS_REPEAT:
+	case GFX_SAMPLER_ADDRESS_MODE_REPEAT:
 		return GL_REPEAT;
-	case GFX_ADDRESS_CLAMP_TO_EDGE:
+	case GFX_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE:
 		return GL_CLAMP_TO_EDGE;
 	}
 
