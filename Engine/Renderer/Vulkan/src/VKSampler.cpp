@@ -1,8 +1,8 @@
 #include "VKRenderer.h"
 
 
-CVKSampler::CVKSampler(CVKDevice *pDevice, GfxFilter minFilter, GfxFilter magFilter, GfxSamplerMipmapMode mipmapMode, GfxSamplerAddressMode addressMode)
-	: CGfxSampler(minFilter, magFilter, mipmapMode, addressMode)
+CVKSampler::CVKSampler(CVKDevice *pDevice, int mipLevels, GfxFilter minFilter, GfxFilter magFilter, GfxSamplerMipmapMode mipmapMode, GfxSamplerAddressMode addressMode)
+	: CGfxSampler(mipLevels, minFilter, magFilter, mipmapMode, addressMode)
 	, m_pDevice(pDevice)
 
 	, m_vkSampler(VK_NULL_HANDLE)
@@ -23,7 +23,7 @@ CVKSampler::CVKSampler(CVKDevice *pDevice, GfxFilter minFilter, GfxFilter magFil
 	createInfo.compareEnable = VK_FALSE;
 	createInfo.compareOp = VK_COMPARE_OP_NEVER;
 	createInfo.minLod = 0.0f;
-	createInfo.maxLod = 0.0f;
+	createInfo.maxLod = (float)mipLevels;
 	createInfo.borderColor = VK_BORDER_COLOR_FLOAT_OPAQUE_WHITE;
 	createInfo.unnormalizedCoordinates = VK_FALSE;
 	CALL_VK_FUNCTION_RETURN(vkCreateSampler(m_pDevice->GetDevice(), &createInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkSampler));

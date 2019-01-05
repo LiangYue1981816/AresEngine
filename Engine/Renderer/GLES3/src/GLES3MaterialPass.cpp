@@ -75,12 +75,12 @@ bool CGLES3MaterialPass::SetPipeline(const CGfxShader *pVertexShader, const CGfx
 	return true;
 }
 
-bool CGLES3MaterialPass::SetSampler(const char *szName, GfxFilter minFilter, GfxFilter magFilter, GfxSamplerMipmapMode mipmapMode, GfxSamplerAddressMode addressMode)
+bool CGLES3MaterialPass::SetSampler(const char *szName, int mipLevels, GfxFilter minFilter, GfxFilter magFilter, GfxSamplerMipmapMode mipmapMode, GfxSamplerAddressMode addressMode)
 {
 	uint32_t name = HashValue(szName);
 
 	if ((m_pPipeline == nullptr) || (m_pPipeline && m_pPipeline->IsTextureValid(name))) {
-		m_pSamplers[name] = GLES3Renderer()->CreateSampler(minFilter, magFilter, mipmapMode, addressMode);
+		m_pSamplers[name] = GLES3Renderer()->CreateSampler(mipLevels, minFilter, magFilter, mipmapMode, addressMode);
 		return true;
 	}
 

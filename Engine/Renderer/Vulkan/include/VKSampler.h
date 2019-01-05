@@ -8,7 +8,7 @@ class CVKSampler : public CGfxSampler
 
 
 private:
-	CVKSampler(CVKDevice *pDevice, GfxFilter minFilter, GfxFilter magFilter, GfxSamplerMipmapMode mipmapMode, GfxSamplerAddressMode addressMode);
+	CVKSampler(CVKDevice *pDevice, int mipLevels, GfxFilter minFilter, GfxFilter magFilter, GfxSamplerMipmapMode mipmapMode, GfxSamplerAddressMode addressMode);
 	virtual ~CVKSampler(void);
 
 
