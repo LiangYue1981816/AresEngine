@@ -32,6 +32,9 @@ public:
 
 public:
 	CGfxPipelineGraphics* GetPipeline(void) const;
+	CGfxTexture2DPtr GetTexture2D(const char *szName) const;
+	CGfxTexture2DArrayPtr GetTexture2DArray(const char *szName) const;
+	CGfxTextureCubeMapPtr GetTextureCubeMap(const char *szName) const;
 
 public:
 	static void Bind(CGLES3Pipeline *pPipeline, const CGLES3MaterialPass *pPass, uint32_t &indexTexUnit);

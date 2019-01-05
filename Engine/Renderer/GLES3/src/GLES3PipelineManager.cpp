@@ -50,14 +50,3 @@ CGLES3PipelineGraphics* CGLES3PipelineManager::CreatePipelineGraphics(const CGfx
 		return (CGLES3PipelineGraphics *)m_pPipelines[name];
 	}
 }
-
-void CGLES3PipelineManager::Destroy(CGfxPipeline *pPipeline)
-{
-	mutex_autolock autolock(&lock);
-	{
-		if (pPipeline) {
-			m_pPipelines.erase(pPipeline->GetName());
-			delete pPipeline;
-		}
-	}
-}

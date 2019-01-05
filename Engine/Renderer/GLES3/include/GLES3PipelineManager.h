@@ -15,7 +15,6 @@ private:
 private:
 	CGLES3PipelineCompute* CreatePipelineCompute(const CGfxShader *pComputeShader);
 	CGLES3PipelineGraphics* CreatePipelineGraphics(const CGfxShader *pVertexShader, const CGfxShader *pFragmentShader, const PipelineState &state);
-	void Destroy(CGfxPipeline *pPipeline);
 
 
 private:

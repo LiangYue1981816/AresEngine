@@ -247,6 +247,24 @@ CGfxPipelineGraphics* CGLES3MaterialPass::GetPipeline(void) const
 	return m_pPipeline;
 }
 
+CGfxTexture2DPtr CGLES3MaterialPass::GetTexture2D(const char *szName) const
+{
+	const auto &itTexture = m_ptrTexture2Ds.find(HashValue(szName));
+	return itTexture != m_ptrTexture2Ds.end() ? itTexture->second : nullptr;
+}
+
+CGfxTexture2DArrayPtr CGLES3MaterialPass::GetTexture2DArray(const char *szName) const
+{
+	const auto &itTexture = m_ptrTexture2DArrays.find(HashValue(szName));
+	return itTexture != m_ptrTexture2DArrays.end() ? itTexture->second : nullptr;
+}
+
+CGfxTextureCubeMapPtr CGLES3MaterialPass::GetTextureCubeMap(const char *szName) const
+{
+	const auto &itTexture = m_ptrTextureCubeMaps.find(HashValue(szName));
+	return itTexture != m_ptrTextureCubeMaps.end() ? itTexture->second : nullptr;
+}
+
 void CGLES3MaterialPass::Bind(CGLES3Pipeline *pPipeline, const CGLES3MaterialPass *pPass, uint32_t &indexTexUnit)
 {
 	BindUniforms(pPipeline, pPass);
