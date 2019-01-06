@@ -63,6 +63,7 @@ private:
 	CVKSamplerManager *m_pSamplerManager;
 	CVKTextureManager *m_pTextureManager;
 	CVKRenderTextureManager *m_pRenderTextureManager;
+	CVKShaderManager *m_pShaderManager;
 
 private:
 	CVKInstance *m_pInstance;

@@ -19,6 +19,7 @@ CVKDevice::CVKDevice(CVKInstance *pInstance)
 	, m_pSamplerManager(nullptr)
 	, m_pTextureManager(nullptr)
 	, m_pRenderTextureManager(nullptr)
+	, m_pShaderManager(nullptr)
 {
 	uint32_t deviceIndex;
 	uint32_t queueFamilyIndex;
@@ -35,10 +36,12 @@ CVKDevice::CVKDevice(CVKInstance *pInstance)
 	m_pSamplerManager = new CVKSamplerManager(this);
 	m_pTextureManager = new CVKTextureManager(this);
 	m_pRenderTextureManager = new CVKRenderTextureManager(this);
+	m_pShaderManager = new CVKShaderManager(this);
 }
 
 CVKDevice::~CVKDevice(void)
 {
+	delete m_pShaderManager;
 	delete m_pRenderTextureManager;
 	delete m_pTextureManager;
 	delete m_pSamplerManager;

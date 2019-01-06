@@ -27,7 +27,7 @@ bool CVKShader::Create(const uint32_t *words, size_t numWords, shader_kind kind)
 	createInfo.flags = 0;
 	createInfo.codeSize = sizeof(uint32_t)*numWords;
 	createInfo.pCode = words;
-	CALL_VK_FUNCTION_RETURN(vkCreateShaderModule(m_pDevice->GetDevice(), &createInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkShader));
+	CALL_VK_FUNCTION_RETURN_BOOL(vkCreateShaderModule(m_pDevice->GetDevice(), &createInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkShader));
 
 	m_kind = kind;
 	m_pShaderCompiler = new spirv_cross::CompilerGLSL(words, numWords);
