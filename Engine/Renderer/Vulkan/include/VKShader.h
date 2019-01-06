@@ -17,10 +17,12 @@ public:
 	void Destroy(void);
 
 public:
-	virtual bool IsValid(void) const;
+	bool IsValid(void) const;
 
 public:
-	virtual uint32_t GetKind(void) const;
+	uint32_t GetKind(void) const;
+	VkShaderModule GetShader(void) const;
+	const spirv_cross::CompilerGLSL* GetShaderCompiler(void) const;
 
 
 private:
