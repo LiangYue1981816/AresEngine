@@ -74,6 +74,7 @@ class CVKTexture2D;
 class CVKTexture2DArray;
 class CVKTextureCubeMap;
 class CVKRenderTexture;
+class CVKShader;
 
 class CVKMesh;
 class CVKMeshDraw;
@@ -82,5 +83,6 @@ class CVKUniformBuffer;
 class CVKSamplerManager;
 class CVKTextureManager;
 class CVKRenderTextureManager;
+class CVKShaderManager;
 class CVKMeshManager;
 class CVKMeshDrawManager;

@@ -25,6 +25,7 @@
 #include "VKTexture2DArray.h"
 #include "VKTextureCubeMap.h"
 #include "VKRenderTexture.h"
+#include "VKShader.h"
 
 #include "VKMesh.h"
 #include "VKMeshDraw.h"
@@ -33,6 +34,7 @@
 #include "VKSamplerManager.h"
 #include "VKTextureManager.h"
 #include "VKRenderTextureManager.h"
+#include "VKShaderManager.h"
 #include "VKMeshManager.h"
 #include "VKMeshDrawManager.h"
 
