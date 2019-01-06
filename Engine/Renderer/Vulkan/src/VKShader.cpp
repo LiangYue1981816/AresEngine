@@ -14,7 +14,7 @@ CVKShader::CVKShader(CVKDevice *pDevice, uint32_t name)
 
 CVKShader::~CVKShader(void)
 {
-
+	Destroy();
 }
 
 bool CVKShader::Create(const uint32_t *words, size_t numWords, shader_kind kind)

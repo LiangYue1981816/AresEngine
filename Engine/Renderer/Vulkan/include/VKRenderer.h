@@ -25,6 +25,7 @@
 #include "VKTexture2DArray.h"
 #include "VKTextureCubeMap.h"
 #include "VKRenderTexture.h"
+#include "VkDescriptorSet.h"
 #include "VKShader.h"
 #include "VKPipeline.h"
 

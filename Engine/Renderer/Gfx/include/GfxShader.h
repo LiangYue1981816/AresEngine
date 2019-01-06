@@ -2,7 +2,7 @@
 #include "GfxRenderer.h"
 
 
-typedef enum {
+typedef enum shader_kind {
 	// Forced shader kinds. These shader kinds force the compiler to compile the
 	// source code as the specified kind of shader.
 	vertex_shader,

@@ -10,11 +10,16 @@ private:
 
 
 private:
+	bool CreateLayouts(eastl::vector<VkDescriptorSetLayout> &layouts);
+
+
+private:
 	VkPipeline m_vkPipeline;
 	VkPipelineLayout m_vkPipelineLayout;
 
 private:
-	VkPipelineShaderStageCreateInfo m_shaders[compute_shader - vertex_shader + 1];
+	CVKShader *m_pShaders[compute_shader - vertex_shader + 1];
+	CVKDescriptorSetLayout *m_pLayouts[DESCRIPTOR_SET_COUNT];
 
 private:
 	CVKDevice *m_pDevice;
