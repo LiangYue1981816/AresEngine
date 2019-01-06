@@ -19,6 +19,8 @@ CVKShader::~CVKShader(void)
 
 bool CVKShader::Create(const uint32_t *words, size_t numWords, shader_kind kind)
 {
+	Destroy();
+
 	VkShaderModuleCreateInfo createInfo = {};
 	createInfo.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;
 	createInfo.pNext = nullptr;
