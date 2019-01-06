@@ -26,6 +26,7 @@
 #include "VKTextureCubeMap.h"
 #include "VKRenderTexture.h"
 #include "VKShader.h"
+#include "VKPipeline.h"
 
 #include "VKMesh.h"
 #include "VKMeshDraw.h"

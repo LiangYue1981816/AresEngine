@@ -74,7 +74,9 @@ class CVKTexture2D;
 class CVKTexture2DArray;
 class CVKTextureCubeMap;
 class CVKRenderTexture;
+class CVKDescriptorSetLayout;
 class CVKShader;
+class CVKPipeline;
 
 class CVKMesh;
 class CVKMeshDraw;
