@@ -14,6 +14,10 @@ private:
 
 
 public:
+	int GetWidth(void) const;
+	int GetHeight(void) const;
+
+public:
 	bool SetAttachmentTexture(int indexAttachment, CGfxRenderTexturePtr &ptrAttachmentTexture);
 	CGfxRenderTexturePtr GetAttachmentTexture(int indexAttachment) const;
 
@@ -22,6 +26,10 @@ public:
 	void Resolve(const AttachmentInformation *pAttachmentInformations, const SubPassInformation *pSubPassInformation);
 	void InvalidateFramebuffer(const AttachmentInformation *pAttachmentInformations, const SubPassInformation *pSubPassInformation);
 
+
+private:
+	int m_width;
+	int m_height;
 
 private:
 	uint32_t m_fbo;

@@ -14,6 +14,7 @@ public:
 
 	}
 
+
 public:
 	virtual void Execute(void) const = 0;
 };
@@ -22,7 +23,6 @@ class CALL_API CGfxCommandBuffer : public CGfxResource
 {
 public:
 	CGfxCommandBuffer(bool bMainCommandBuffer)
-		: m_bMainCommandBuffer(bMainCommandBuffer)
 	{
 
 	}
@@ -31,11 +31,9 @@ public:
 
 	}
 
-	bool IsMainCommandBuffer(void) const
-	{
-		return m_bMainCommandBuffer;
-	}
 
+public:
+	virtual bool IsMainCommandBuffer(void) const = 0;
 
 public:
 	virtual void Clearup(void) = 0;
@@ -90,8 +88,4 @@ public:
 
 	virtual bool CmdPushDebugGroup(const char *szMessage) = 0;
 	virtual bool CmdPopDebugGroup(void) = 0;
-
-
-protected:
-	bool m_bMainCommandBuffer;
 };

@@ -5,22 +5,31 @@ CGLES3UniformBuffer::CGLES3UniformBuffer(CGLES3UniformBufferManager *pManager, s
 	: CGfxUniformBuffer(size)
 	, m_pManager(pManager)
 
+	, m_size(size)
+
 	, m_buffer(0)
 {
 	glGenBuffers(1, &m_buffer);
 	glBindBuffer(GL_UNIFORM_BUFFER, m_buffer);
 	glBufferData(GL_UNIFORM_BUFFER, m_size, nullptr, GL_DYNAMIC_DRAW);
 	glBindBuffer(GL_UNIFORM_BUFFER, 0);
+	CGfxProfiler::IncUniformBufferSize(m_size);
 }
 
 CGLES3UniformBuffer::~CGLES3UniformBuffer(void)
 {
 	glDeleteBuffers(1, &m_buffer);
+	CGfxProfiler::DecUniformBufferSize(m_size);
 }
 
 void CGLES3UniformBuffer::Release(void)
 {
 	m_pManager->Destroy(this);
+}
+
+uint32_t CGLES3UniformBuffer::GetSize(void) const
+{
+	return m_size;
 }
 
 bool CGLES3UniformBuffer::BufferData(size_t offset, size_t size, const void *pBuffer)

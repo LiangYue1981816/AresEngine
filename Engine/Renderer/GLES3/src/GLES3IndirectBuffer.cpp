@@ -4,6 +4,9 @@
 CGLES3IndirectBuffer::CGLES3IndirectBuffer(uint32_t drawCommandCount)
 	: CGfxIndirectBuffer(drawCommandCount)
 
+	, m_size(drawCommandCount * sizeof(DrawCommand))
+	, m_count(drawCommandCount)
+
 	, m_buffer(0)
 {
 #if GLES_VER == 310
@@ -13,6 +16,7 @@ CGLES3IndirectBuffer::CGLES3IndirectBuffer(uint32_t drawCommandCount)
 	glBindBuffer(GL_DRAW_INDIRECT_BUFFER, m_buffer);
 	glBufferData(GL_DRAW_INDIRECT_BUFFER, m_size, nullptr, GL_DYNAMIC_DRAW);
 	glBindBuffer(GL_DRAW_INDIRECT_BUFFER, 0);
+	CGfxProfiler::IncIndirectBufferSize(m_size);
 #endif
 }
 
@@ -20,7 +24,23 @@ CGLES3IndirectBuffer::~CGLES3IndirectBuffer(void)
 {
 #if GLES_VER == 310
 	glDeleteBuffers(1, &m_buffer);
+	CGfxProfiler::DecIndirectBufferSize(m_size);
 #endif
+}
+
+uint32_t CGLES3IndirectBuffer::GetDrawCommandCount(void) const
+{
+	return m_count;
+}
+
+uint32_t CGLES3IndirectBuffer::GetDrawCommandOffset(int indexDraw) const
+{
+	return indexDraw * sizeof(DrawCommand);
+}
+
+uint32_t CGLES3IndirectBuffer::GetSize(void) const
+{
+	return m_size;
 }
 
 bool CGLES3IndirectBuffer::BufferData(int indexDraw, int instanceCount)

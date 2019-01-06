@@ -4,17 +4,38 @@
 CGLES3VertexBuffer::CGLES3VertexBuffer(uint32_t vertexFormat, uint32_t vertexBinding, size_t size, bool bDynamic)
 	: CGfxVertexBuffer(vertexFormat, vertexBinding, size, bDynamic)
 
+	, m_format(vertexFormat)
+	, m_count(size / GetVertexStride(vertexFormat))
+	, m_size(size)
+
 	, m_buffer(0)
 {
 	glGenBuffers(1, &m_buffer);
 	glBindBuffer(GL_ARRAY_BUFFER, m_buffer);
 	glBufferData(GL_ARRAY_BUFFER, m_size, nullptr, bDynamic ? GL_DYNAMIC_DRAW : GL_STATIC_DRAW);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	CGfxProfiler::IncVertexBufferSize(m_size);
 }
 
 CGLES3VertexBuffer::~CGLES3VertexBuffer(void)
 {
 	glDeleteBuffers(1, &m_buffer);
+	CGfxProfiler::DecVertexBufferSize(m_size);
+}
+
+uint32_t CGLES3VertexBuffer::GetVertexFormat(void) const
+{
+	return m_format;
+}
+
+uint32_t CGLES3VertexBuffer::GetVertexCount(void) const
+{
+	return m_count;
+}
+
+uint32_t CGLES3VertexBuffer::GetSize(void) const
+{
+	return m_size;
 }
 
 bool CGLES3VertexBuffer::BufferData(size_t offset, size_t size, const void *pBuffer)

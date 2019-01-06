@@ -46,6 +46,8 @@ CGLES3CommandBuffer::CGLES3CommandBuffer(CGLES3CommandBufferManager *pManager, b
 	: CGfxCommandBuffer(bMainCommandBuffer)
 	, m_pManager(pManager)
 
+	, m_bMainCommandBuffer(bMainCommandBuffer)
+
 	, m_bInPassScope(false)
 	, m_indexSubPass(0)
 {
@@ -60,6 +62,11 @@ CGLES3CommandBuffer::~CGLES3CommandBuffer(void)
 void CGLES3CommandBuffer::Release(void)
 {
 	m_pManager->Destroy(this);
+}
+
+bool CGLES3CommandBuffer::IsMainCommandBuffer(void) const
+{
+	return m_bMainCommandBuffer;
 }
 
 void CGLES3CommandBuffer::Clearup(void)

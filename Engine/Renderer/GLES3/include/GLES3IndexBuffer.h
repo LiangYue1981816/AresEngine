@@ -13,9 +13,18 @@ private:
 
 
 public:
+	GfxIndexType GetIndexType(void) const;
+	uint32_t GetIndexCount(void) const;
+	uint32_t GetSize(void) const;
+
+public:
 	bool BufferData(size_t offset, size_t size, const void *pBuffer);
 	void Bind(void);
 
+
+private:
+	GfxIndexType m_type;
+	uint32_t m_size;
 
 private:
 	uint32_t m_buffer;

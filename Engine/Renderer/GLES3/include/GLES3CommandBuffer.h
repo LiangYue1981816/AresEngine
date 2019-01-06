@@ -14,6 +14,9 @@ private:
 
 
 public:
+	bool IsMainCommandBuffer(void) const;
+
+public:
 	void Clearup(void);
 	bool Execute(void) const;
 
@@ -67,6 +70,9 @@ public:
 	bool CmdPushDebugGroup(const char *szMessage);
 	bool CmdPopDebugGroup(void);
 
+
+private:
+	bool m_bMainCommandBuffer;
 
 private:
 	bool m_bInPassScope;

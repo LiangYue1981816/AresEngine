@@ -5,6 +5,9 @@ CGLES3FrameBuffer::CGLES3FrameBuffer(CGLES3FrameBufferManager *pManager, int wid
 	: CGfxFrameBuffer(width, height)
 	, m_pManager(pManager)
 
+	, m_width(width)
+	, m_height(height)
+
 	, m_fbo(0)
 	, m_resolve(0)
 {
@@ -21,6 +24,16 @@ CGLES3FrameBuffer::~CGLES3FrameBuffer(void)
 void CGLES3FrameBuffer::Release(void)
 {
 	m_pManager->Destroy(this);
+}
+
+int CGLES3FrameBuffer::GetWidth(void) const
+{
+	return m_width;
+}
+
+int CGLES3FrameBuffer::GetHeight(void) const
+{
+	return m_height;
 }
 
 bool CGLES3FrameBuffer::SetAttachmentTexture(int indexAttachment, CGfxRenderTexturePtr &ptrAttachmentTexture)
