@@ -269,3 +269,8 @@ CVKRenderTextureManager* CVKDevice::GetRenderTextureManager(void) const
 {
 	return m_pRenderTextureManager;
 }
+
+CVKShaderManager* CVKDevice::GetShaderManager(void)
+{
+	return m_pShaderManager;
+}

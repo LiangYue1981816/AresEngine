@@ -43,6 +43,7 @@ private:
 	CVKTextureManager* GetTextureManager(void) const;
 	CVKSamplerManager* GetSamplerManager(void) const;
 	CVKRenderTextureManager* GetRenderTextureManager(void) const;
+	CVKShaderManager* GetShaderManager(void);
 
 
 private:
