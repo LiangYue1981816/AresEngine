@@ -15,12 +15,18 @@ private:
 
 	
 public:
+	uint32_t GetName(void) const;
+
+public:
 	bool CreatePass(uint32_t name);
 	void Destroy(void);
 
 public:
 	CGfxMaterialPass* GetPass(uint32_t name);
 
+
+private:
+	uint32_t m_name;
 
 private:
 	eastl::unordered_map<uint32_t, CGLES3MaterialPass*> m_pPasses;

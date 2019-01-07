@@ -3,6 +3,7 @@
 
 CGLES3MeshDraw::CGLES3MeshDraw(CGLES3MeshDrawManager *pManager, uint32_t name, const CGfxMeshPtr &ptrMesh, int indexDraw, uint32_t instanceFormat, uint32_t instanceBinding)
 	: CGfxMeshDraw(name, ptrMesh, indexDraw, instanceFormat, instanceBinding)
+	, m_name(name)
 	, m_pManager(pManager)
 
 	, m_pMeshDraw(nullptr)
@@ -46,6 +47,11 @@ CGLES3MeshDraw::~CGLES3MeshDraw(void)
 void CGLES3MeshDraw::Release(void)
 {
 	m_pManager->Destroy(this);
+}
+
+uint32_t CGLES3MeshDraw::GetName(void) const
+{
+	return m_name;
 }
 
 bool CGLES3MeshDraw::InstanceBufferData(size_t size, const void *pBuffer)

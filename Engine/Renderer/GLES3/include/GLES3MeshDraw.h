@@ -14,6 +14,9 @@ private:
 
 
 public:
+	uint32_t GetName(void) const;
+
+public:
 	bool InstanceBufferData(size_t size, const void *pBuffer);
 
 public:
@@ -31,6 +34,9 @@ public:
 public:
 	void Bind(void);
 
+
+private:
+	uint32_t m_name;
 
 private:
 	CGfxMeshPtr m_ptrMesh;

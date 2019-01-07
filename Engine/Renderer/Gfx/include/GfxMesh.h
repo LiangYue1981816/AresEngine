@@ -15,7 +15,6 @@ public:
 
 public:
 	CGfxMesh(uint32_t name)
-		: m_name(name)
 	{
 
 	}
@@ -24,11 +23,9 @@ public:
 
 	}
 
-	uint32_t GetName(void) const
-	{
-		return m_name;
-	}
 
+public:
+	virtual uint32_t GetName(void) const = 0;
 
 public:
 	virtual bool CreateIndexBuffer(GfxIndexType type, size_t size, bool bDynamic, const void *pBuffer) = 0;
@@ -43,8 +40,4 @@ public:
 
 	virtual GfxIndexType GetIndexType(void) const = 0;
 	virtual uint32_t GetVertexFormat(void) const = 0;
-
-
-private:
-	uint32_t m_name;
 };

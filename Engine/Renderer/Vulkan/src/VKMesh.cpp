@@ -3,6 +3,7 @@
 
 CVKMesh::CVKMesh(CVKMeshManager *pManager, uint32_t name)
 	: CGfxMesh(name)
+	, m_name(name)
 	, m_pManager(pManager)
 
 	, m_pIndexBuffer(nullptr)
@@ -19,6 +20,11 @@ CVKMesh::~CVKMesh(void)
 void CVKMesh::Release(void)
 {
 	m_pManager->Destroy(this);
+}
+
+uint32_t CVKMesh::GetName(void) const
+{
+	return m_name;
 }
 
 bool CVKMesh::CreateIndexBuffer(GfxIndexType type, size_t size, bool bDynamic, const void *pBuffer)

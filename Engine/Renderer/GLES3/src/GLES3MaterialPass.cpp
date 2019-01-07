@@ -6,6 +6,7 @@
 
 CGLES3MaterialPass::CGLES3MaterialPass(uint32_t name)
 	: CGfxMaterialPass(name)
+	, m_name(name)
 
 	, m_pPipeline(nullptr)
 {
@@ -43,6 +44,11 @@ CGLES3MaterialPass::~CGLES3MaterialPass(void)
 	m_pUniformVec3s.clear();
 	m_pUniformVec4s.clear();
 	m_pUniformMat4s.clear();
+}
+
+uint32_t CGLES3MaterialPass::GetName(void) const
+{
+	return m_name;
 }
 
 bool CGLES3MaterialPass::SetPipeline(const CGfxShader *pVertexShader, const CGfxShader *pFragmentShader, const PipelineState &state)

@@ -3,6 +3,7 @@
 
 CVKMeshDraw::CVKMeshDraw(CVKMeshDrawManager *pManager, uint32_t name, const CGfxMeshPtr &ptrMesh, int indexDraw, uint32_t instanceFormat, uint32_t instanceBinding)
 	: CGfxMeshDraw(name, ptrMesh, indexDraw, instanceFormat, instanceBinding)
+	, m_name(name)
 	, m_pManager(pManager)
 
 	, m_pMeshDraw(nullptr)
@@ -42,6 +43,11 @@ CVKMeshDraw::~CVKMeshDraw(void)
 void CVKMeshDraw::Release(void)
 {
 	m_pManager->Destroy(this);
+}
+
+uint32_t CVKMeshDraw::GetName(void) const
+{
+	return m_name;
 }
 
 bool CVKMeshDraw::InstanceBufferData(size_t size, const void *pBuffer)

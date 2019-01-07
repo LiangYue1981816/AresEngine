@@ -12,7 +12,10 @@ private:
 	CGLES3MaterialPass(uint32_t name);
 	virtual ~CGLES3MaterialPass(void);
 
-	
+
+public:
+	uint32_t GetName(void) const;
+
 public:
 	bool SetPipeline(const CGfxShader *pVertexShader, const CGfxShader *pFragmentShader, const PipelineState &state);
 
@@ -41,6 +44,9 @@ public:
 	static void BindUniforms(CGLES3Pipeline *pPipeline, const CGLES3MaterialPass *pPass);
 	static void BindTextures(CGLES3Pipeline *pPipeline, const CGLES3MaterialPass *pPass, uint32_t &indexTexUnit);
 
+
+private:
+	uint32_t m_name;
 
 private:
 	CGfxPipelineGraphics *m_pPipeline;

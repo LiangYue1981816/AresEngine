@@ -3,6 +3,7 @@
 
 CGLES3Material::CGLES3Material(CGLES3MaterialManager *pManager, uint32_t name)
 	: CGfxMaterial(name)
+	, m_name(name)
 	, m_pManager(pManager)
 {
 
@@ -16,6 +17,11 @@ CGLES3Material::~CGLES3Material(void)
 void CGLES3Material::Release(void)
 {
 	m_pManager->Destroy(this);
+}
+
+uint32_t CGLES3Material::GetName(void) const
+{
+	return m_name;
 }
 
 bool CGLES3Material::CreatePass(uint32_t name)

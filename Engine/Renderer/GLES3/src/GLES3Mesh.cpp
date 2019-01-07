@@ -3,6 +3,7 @@
 
 CGLES3Mesh::CGLES3Mesh(CGLES3MeshManager *pManager, uint32_t name)
 	: CGfxMesh(name)
+	, m_name(name)
 	, m_pManager(pManager)
 
 	, m_pIndexBuffer(nullptr)
@@ -19,6 +20,11 @@ CGLES3Mesh::~CGLES3Mesh(void)
 void CGLES3Mesh::Release(void)
 {
 	m_pManager->Destroy(this);
+}
+
+uint32_t CGLES3Mesh::GetName(void) const
+{
+	return m_name;
 }
 
 bool CGLES3Mesh::CreateIndexBuffer(GfxIndexType type, size_t size, bool bDynamic, const void *pBuffer)
