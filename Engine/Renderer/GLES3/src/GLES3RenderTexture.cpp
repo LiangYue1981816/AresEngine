@@ -3,7 +3,17 @@
 
 CGLES3RenderTexture::CGLES3RenderTexture(CGLES3RenderTextureManager *pManager, uint32_t name)
 	: CGfxRenderTexture(name)
+	, m_name(name)
 	, m_pManager(pManager)
+
+	, m_format(GFX_PIXELFORMAT_UNDEFINED)
+	, m_type(GFX_TEXTURE_INVALID_ENUM)
+
+	, m_width(0)
+	, m_height(0)
+	, m_samples(0)
+
+	, m_texture(0)
 {
 
 }
@@ -16,6 +26,41 @@ CGLES3RenderTexture::~CGLES3RenderTexture(void)
 void CGLES3RenderTexture::Release(void)
 {
 	m_pManager->Destroy(this);
+}
+
+uint32_t CGLES3RenderTexture::GetName(void) const
+{
+	return m_name;
+}
+
+GfxPixelFormat CGLES3RenderTexture::GetFormat(void) const
+{
+	return m_format;
+}
+
+GfxTextureType CGLES3RenderTexture::GetType(void) const
+{
+	return m_type;
+}
+
+int CGLES3RenderTexture::GetWidth(void) const
+{
+	return m_width;
+}
+
+int CGLES3RenderTexture::GetHeight(void) const
+{
+	return m_height;
+}
+
+int CGLES3RenderTexture::GetSamples(void) const
+{
+	return m_samples;
+}
+
+uint32_t CGLES3RenderTexture::GetTexture(void) const
+{
+	return m_texture;
 }
 
 bool CGLES3RenderTexture::Create(GfxPixelFormat pixelFormat, int width, int height, int samples, bool bTransient)
@@ -70,9 +115,4 @@ void CGLES3RenderTexture::Destroy(void)
 	m_width = 0;
 	m_height = 0;
 	m_samples = 0;
-}
-
-uint32_t CGLES3RenderTexture::GetTexture(void) const
-{
-	return m_texture;
 }

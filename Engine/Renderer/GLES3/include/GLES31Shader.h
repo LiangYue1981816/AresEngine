@@ -14,7 +14,14 @@ private:
 	virtual ~CGLES3Shader(void);
 
 
-private:
+public:
+	uint32_t GetName(void) const;
+
+public:
+	uint32_t GetKind(void) const;
+	uint32_t GetProgram(void) const;
+
+public:
 	bool Create(const uint32_t *words, size_t numWords, shader_kind kind);
 	void Destroy(void);
 
@@ -58,10 +65,9 @@ public:
 	bool IsUniformValid(uint32_t name) const;
 	bool IsUniformBlockValid(uint32_t name) const;
 
-public:
-	uint32_t GetKind(void) const;
-	uint32_t GetProgram(void) const;
 
+private:
+	uint32_t m_name;
 
 private:
 	uint32_t m_kind;

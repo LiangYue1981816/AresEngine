@@ -2,11 +2,10 @@
 #include "GfxRenderer.h"
 
 
-class CALL_API CGfxTextureCubeMap : public CGfxTexture
+class CALL_API CGfxTextureCubeMap : public CGfxResource
 {
 public:
 	CGfxTextureCubeMap(uint32_t name)
-		: CGfxTexture(name)
 	{
 
 	}
@@ -15,6 +14,17 @@ public:
 
 	}
 
+
+public:
+	virtual uint32_t GetName(void) const = 0;
+
+public:
+	virtual GfxPixelFormat GetFormat(void) const = 0;
+	virtual GfxTextureType GetType(void) const = 0;
+
+	virtual int GetWidth(void) const = 0;
+	virtual int GetHeight(void) const = 0;
+	virtual int GetLevels(void) const = 0;
 
 public:
 	virtual bool Create(uint64_t texture) = 0;

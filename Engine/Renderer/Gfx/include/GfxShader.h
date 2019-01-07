@@ -38,7 +38,6 @@ class CALL_API CGfxShader
 {
 public:
 	CGfxShader(uint32_t name)
-		: m_name(name)
 	{
 
 	}
@@ -47,11 +46,12 @@ public:
 
 	}
 
-	uint32_t GetName(void) const
-	{
-		return m_name;
-	}
 
+public:
+	virtual uint32_t GetName(void) const = 0;
+
+public:
+	virtual uint32_t GetKind(void) const = 0;
 
 public:
 	virtual bool Create(const uint32_t *words, size_t numWords, shader_kind kind) = 0;
@@ -59,11 +59,4 @@ public:
 
 public:
 	virtual bool IsValid(void) const = 0;
-
-public:
-	virtual uint32_t GetKind(void) const = 0;
-
-
-private:
-	uint32_t m_name;
 };

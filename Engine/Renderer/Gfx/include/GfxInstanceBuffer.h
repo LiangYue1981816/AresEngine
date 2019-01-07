@@ -24,6 +24,6 @@ public:
 	virtual bool BufferData(size_t size, const void *pBuffer) = 0;
 
 
-protected:
+public:
 	static const int INSTANCE_BUFFER_SIZE = 64;
 };

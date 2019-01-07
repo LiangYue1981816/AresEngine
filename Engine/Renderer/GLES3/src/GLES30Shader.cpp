@@ -5,6 +5,7 @@
 
 CGLES3Shader::CGLES3Shader(uint32_t name)
 	: CGfxShader(name)
+	, m_name(name)
 
 	, m_kind(-1)
 	, m_shader(0)
@@ -17,6 +18,26 @@ CGLES3Shader::CGLES3Shader(uint32_t name)
 CGLES3Shader::~CGLES3Shader(void)
 {
 	Destroy();
+}
+
+uint32_t CGLES3Shader::GetName(void) const
+{
+	return m_name;
+}
+
+uint32_t CGLES3Shader::GetKind(void) const
+{
+	return m_kind;
+}
+
+uint32_t CGLES3Shader::GetShader(void) const
+{
+	return m_shader;
+}
+
+const spirv_cross::CompilerGLSL* CGLES3Shader::GetShaderCompiler(void) const
+{
+	return m_pShaderCompiler;
 }
 
 bool CGLES3Shader::Create(const uint32_t *words, size_t numWords, shader_kind kind)
@@ -84,21 +105,6 @@ void CGLES3Shader::Destroy(void)
 bool CGLES3Shader::IsValid(void) const
 {
 	return m_shader != 0;
-}
-
-uint32_t CGLES3Shader::GetKind(void) const
-{
-	return m_kind;
-}
-
-uint32_t CGLES3Shader::GetShader(void) const
-{
-	return m_shader;
-}
-
-const spirv_cross::CompilerGLSL* CGLES3Shader::GetShaderCompiler(void) const
-{
-	return m_pShaderCompiler;
 }
 
 #endif

@@ -50,22 +50,6 @@ uint32_t CVKMeshDraw::GetName(void) const
 	return m_name;
 }
 
-bool CVKMeshDraw::InstanceBufferData(size_t size, const void *pBuffer)
-{
-	if (m_pInstanceBuffer) {
-		m_pInstanceBuffer->BufferData(size, pBuffer);
-
-		if (m_pIndirectBuffer) {
-			m_pIndirectBuffer->BufferData(0, size / GetInstanceStride(m_pInstanceBuffer->GetInstanceFormat()));
-		}
-
-		return true;
-	}
-	else {
-		return false;
-	}
-}
-
 GfxIndexType CVKMeshDraw::GetIndexType(void) const
 {
 	if (m_ptrMesh.IsValid()) {
@@ -137,6 +121,22 @@ glm::aabb CVKMeshDraw::GetLocalAABB(void) const
 	}
 	else {
 		return glm::aabb();
+	}
+}
+
+bool CVKMeshDraw::InstanceBufferData(size_t size, const void *pBuffer)
+{
+	if (m_pInstanceBuffer) {
+		m_pInstanceBuffer->BufferData(size, pBuffer);
+
+		if (m_pIndirectBuffer) {
+			m_pIndirectBuffer->BufferData(0, size / GetInstanceStride(m_pInstanceBuffer->GetInstanceFormat()));
+		}
+
+		return true;
+	}
+	else {
+		return false;
 	}
 }
 

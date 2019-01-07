@@ -139,6 +139,11 @@ CGfxUniformEngine::~CGfxUniformEngine(void)
 
 }
 
+const CGfxUniformBufferPtr& CGfxUniformEngine::GetUniformBuffer(void) const
+{
+	return m_ptrUniformBuffer;
+}
+
 void CGfxUniformEngine::SetTime(float t, float dt)
 {
 	m_bDirty = true;
@@ -262,9 +267,4 @@ void CGfxUniformEngine::Apply(void)
 			m_ptrUniformBuffer->BufferData(0, sizeof(m_params), &m_params);
 		}
 	}
-}
-
-const CGfxUniformBufferPtr& CGfxUniformEngine::GetUniformBuffer(void) const
-{
-	return m_ptrUniformBuffer;
 }

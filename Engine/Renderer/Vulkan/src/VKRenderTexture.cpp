@@ -3,8 +3,16 @@
 
 CVKRenderTexture::CVKRenderTexture(CVKDevice *pDevice, CVKRenderTextureManager *pManager, uint32_t name)
 	: CGfxRenderTexture(name)
+	, m_name(name)
 	, m_pDevice(pDevice)
 	, m_pManager(pManager)
+
+	, m_format(GFX_PIXELFORMAT_UNDEFINED)
+	, m_type(GFX_TEXTURE_INVALID_ENUM)
+
+	, m_width(0)
+	, m_height(0)
+	, m_samples(0)
 
 	, m_vkImageView(VK_NULL_HANDLE)
 {
@@ -19,6 +27,41 @@ CVKRenderTexture::~CVKRenderTexture(void)
 void CVKRenderTexture::Release(void)
 {
 	m_pManager->Destroy(this);
+}
+
+uint32_t CVKRenderTexture::GetName(void) const
+{
+	return m_name;
+}
+
+GfxPixelFormat CVKRenderTexture::GetFormat(void) const
+{
+	return m_format;
+}
+
+GfxTextureType CVKRenderTexture::GetType(void) const
+{
+	return m_type;
+}
+
+int CVKRenderTexture::GetWidth(void) const
+{
+	return m_width;
+}
+
+int CVKRenderTexture::GetHeight(void) const
+{
+	return m_height;
+}
+
+int CVKRenderTexture::GetSamples(void) const
+{
+	return m_samples;
+}
+
+VkImageView CVKRenderTexture::GetImageView(void) const
+{
+	return m_vkImageView;
 }
 
 bool CVKRenderTexture::Create(GfxPixelFormat pixelFormat, int width, int height, int samples, bool bTransient)

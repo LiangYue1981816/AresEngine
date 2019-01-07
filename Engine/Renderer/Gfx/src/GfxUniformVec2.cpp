@@ -12,6 +12,11 @@ CGfxUniformVec2::~CGfxUniformVec2(void)
 
 }
 
+const CGfxUniformBufferPtr& CGfxUniformVec2::GetUniformBuffer(void) const
+{
+	return m_ptrUniformBuffer;
+}
+
 void CGfxUniformVec2::SetValue(float v0, float v1)
 {
 	m_bDirty = true;
@@ -24,9 +29,4 @@ void CGfxUniformVec2::Apply(void)
 		m_bDirty = false;
 		m_ptrUniformBuffer->BufferData(0, sizeof(m_value), &m_value);
 	}
-}
-
-const CGfxUniformBufferPtr& CGfxUniformVec2::GetUniformBuffer(void) const
-{
-	return m_ptrUniformBuffer;
 }

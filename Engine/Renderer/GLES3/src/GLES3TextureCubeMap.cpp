@@ -4,6 +4,14 @@
 CGLES3TextureCubeMap::CGLES3TextureCubeMap(CGLES3TextureManager *pManager, uint32_t name)
 	: CGLES3Texture(pManager)
 	, CGfxTextureCubeMap(name)
+	, m_name(name)
+
+	, m_format(GFX_PIXELFORMAT_UNDEFINED)
+	, m_type(GFX_TEXTURE_INVALID_ENUM)
+
+	, m_width(0)
+	, m_height(0)
+	, m_levels(0)
 {
 
 }
@@ -15,7 +23,37 @@ CGLES3TextureCubeMap::~CGLES3TextureCubeMap(void)
 
 void CGLES3TextureCubeMap::Release(void)
 {
-	m_pManager->Destroy(this);
+	m_pManager->DestroyTextureCubeMap(this);
+}
+
+uint32_t CGLES3TextureCubeMap::GetName(void) const
+{
+	return m_name;
+}
+
+GfxPixelFormat CGLES3TextureCubeMap::GetFormat(void) const
+{
+	return m_format;
+}
+
+GfxTextureType CGLES3TextureCubeMap::GetType(void) const
+{
+	return m_type;
+}
+
+int CGLES3TextureCubeMap::GetWidth(void) const
+{
+	return m_width;
+}
+
+int CGLES3TextureCubeMap::GetHeight(void) const
+{
+	return m_height;
+}
+
+int CGLES3TextureCubeMap::GetLevels(void) const
+{
+	return m_levels;
 }
 
 bool CGLES3TextureCubeMap::Create(uint64_t texture)

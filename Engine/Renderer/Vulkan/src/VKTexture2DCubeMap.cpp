@@ -4,6 +4,14 @@
 CVKTextureCubeMap::CVKTextureCubeMap(CVKDevice *pDevice, CVKTextureManager *pManager, uint32_t name)
 	: CVKTexture(pDevice, pManager)
 	, CGfxTextureCubeMap(name)
+	, m_name(name)
+
+	, m_format(GFX_PIXELFORMAT_UNDEFINED)
+	, m_type(GFX_TEXTURE_INVALID_ENUM)
+
+	, m_width(0)
+	, m_height(0)
+	, m_levels(0)
 {
 
 }
@@ -15,7 +23,37 @@ CVKTextureCubeMap::~CVKTextureCubeMap(void)
 
 void CVKTextureCubeMap::Release(void)
 {
-	m_pManager->Destroy(this);
+	m_pManager->DestroyTextureCubeMap(this);
+}
+
+uint32_t CVKTextureCubeMap::GetName(void) const
+{
+	return m_name;
+}
+
+GfxPixelFormat CVKTextureCubeMap::GetFormat(void) const
+{
+	return m_format;
+}
+
+GfxTextureType CVKTextureCubeMap::GetType(void) const
+{
+	return m_type;
+}
+
+int CVKTextureCubeMap::GetWidth(void) const
+{
+	return m_width;
+}
+
+int CVKTextureCubeMap::GetHeight(void) const
+{
+	return m_height;
+}
+
+int CVKTextureCubeMap::GetLevels(void) const
+{
+	return m_levels;
 }
 
 bool CVKTextureCubeMap::Create(uint64_t texture)

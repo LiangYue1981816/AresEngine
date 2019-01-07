@@ -48,6 +48,9 @@ public:
 
 
 public:
+	const CGfxUniformBufferPtr& GetUniformBuffer(void) const;
+
+public:
 	void SetTime(float t, float dt);
 
 	void SetShadowOrtho(float left, float right, float bottom, float top, float zNear, float zFar);
@@ -72,9 +75,6 @@ public:
 	void SetFogDistanceDensity(float startDistance, float endDistance, float density);
 
 	void Apply(void);
-
-public:
-	const CGfxUniformBufferPtr& GetUniformBuffer(void) const;
 
 
 private:

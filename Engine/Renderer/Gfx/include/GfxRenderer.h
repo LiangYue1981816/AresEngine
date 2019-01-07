@@ -16,7 +16,6 @@
 #include "GfxInstanceBuffer.h"
 #include "GfxIndirectBuffer.h"
 #include "GfxSampler.h"
-#include "GfxTexture.h"
 #include "GfxTexture2D.h"
 #include "GfxTexture2DArray.h"
 #include "GfxTextureCubeMap.h"

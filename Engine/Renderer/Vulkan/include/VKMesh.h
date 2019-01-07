@@ -17,18 +17,18 @@ public:
 	uint32_t GetName(void) const;
 
 public:
-	bool CreateIndexBuffer(GfxIndexType type, size_t size, bool bDynamic, const void *pBuffer);
-	bool CreateVertexBuffer(uint32_t vertexFormat, uint32_t vertexBinding, size_t size, bool bDynamic, const void *pBuffer);
-	bool CreateDraw(int indexDraw, const glm::aabb &aabb, int baseVertex, int firstIndex, int indexCount);
-	void Destroy(void);
-
-public:
 	CGfxIndexBuffer* GetIndexBuffer(void);
 	CGfxVertexBuffer* GetVertexBuffer(void);
 	Draw* GetDraw(int indexDraw);
 
 	GfxIndexType GetIndexType(void) const;
 	uint32_t GetVertexFormat(void) const;
+
+public:
+	bool CreateIndexBuffer(GfxIndexType type, size_t size, bool bDynamic, const void *pBuffer);
+	bool CreateVertexBuffer(uint32_t vertexFormat, uint32_t vertexBinding, size_t size, bool bDynamic, const void *pBuffer);
+	bool CreateDraw(int indexDraw, const glm::aabb &aabb, int baseVertex, int firstIndex, int indexCount);
+	void Destroy(void);
 
 
 private:

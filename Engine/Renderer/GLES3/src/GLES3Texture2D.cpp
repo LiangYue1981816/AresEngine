@@ -4,6 +4,15 @@
 CGLES3Texture2D::CGLES3Texture2D(CGLES3TextureManager *pManager, uint32_t name)
 	: CGLES3Texture(pManager)
 	, CGfxTexture2D(name)
+	, m_name(name)
+
+	, m_format(GFX_PIXELFORMAT_UNDEFINED)
+	, m_type(GFX_TEXTURE_INVALID_ENUM)
+
+	, m_width(0)
+	, m_height(0)
+	, m_levels(0)
+	, m_samples(0)
 {
 
 }
@@ -15,7 +24,42 @@ CGLES3Texture2D::~CGLES3Texture2D(void)
 
 void CGLES3Texture2D::Release(void)
 {
-	m_pManager->Destroy(this);
+	m_pManager->DestroyTexture2D(this);
+}
+
+uint32_t CGLES3Texture2D::GetName(void) const
+{
+	return m_name;
+}
+
+GfxPixelFormat CGLES3Texture2D::GetFormat(void) const
+{
+	return m_format;
+}
+
+GfxTextureType CGLES3Texture2D::GetType(void) const
+{
+	return m_type;
+}
+
+int CGLES3Texture2D::GetWidth(void) const
+{
+	return m_width;
+}
+
+int CGLES3Texture2D::GetHeight(void) const
+{
+	return m_height;
+}
+
+int CGLES3Texture2D::GetLevels(void) const
+{
+	return m_levels;
+}
+
+int CGLES3Texture2D::GetSamples(void) const
+{
+	return m_samples;
 }
 
 bool CGLES3Texture2D::Create(uint64_t texture)

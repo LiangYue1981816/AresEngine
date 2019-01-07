@@ -14,7 +14,6 @@ class CALL_API CGfxVertexBuffer;
 class CALL_API CGfxInstanceBuffer;
 class CALL_API CGfxIndirectBuffer;
 class CALL_API CGfxSampler;
-class CALL_API CGfxTexture;
 class CALL_API CGfxTexture2D;
 class CALL_API CGfxTexture2DArray;
 class CALL_API CGfxTextureCubeMap;

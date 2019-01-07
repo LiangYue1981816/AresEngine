@@ -13,6 +13,11 @@ CGfxUniformCamera::~CGfxUniformCamera(void)
 
 }
 
+const CGfxUniformBufferPtr& CGfxUniformCamera::GetUniformBuffer(void) const
+{
+	return m_ptrUniformBuffer;
+}
+
 void CGfxUniformCamera::SetScreen(float width, float height)
 {
 	m_bDirty = true;
@@ -74,9 +79,4 @@ void CGfxUniformCamera::Apply(void)
 			m_ptrUniformBuffer->BufferData(0, sizeof(m_params), &m_params);
 		}
 	}
-}
-
-const CGfxUniformBufferPtr& CGfxUniformCamera::GetUniformBuffer(void) const
-{
-	return m_ptrUniformBuffer;
 }

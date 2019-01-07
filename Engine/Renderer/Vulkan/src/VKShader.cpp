@@ -3,6 +3,7 @@
 
 CVKShader::CVKShader(CVKDevice *pDevice, uint32_t name)
 	: CGfxShader(name)
+	, m_name(name)
 	, m_pDevice(pDevice)
 
 	, m_kind(-1)
@@ -15,6 +16,26 @@ CVKShader::CVKShader(CVKDevice *pDevice, uint32_t name)
 CVKShader::~CVKShader(void)
 {
 	Destroy();
+}
+
+uint32_t CVKShader::GetName(void) const
+{
+	return m_name;
+}
+
+uint32_t CVKShader::GetKind(void) const
+{
+	return m_kind;
+}
+
+VkShaderModule CVKShader::GetShader(void) const
+{
+	return m_vkShader;
+}
+
+const spirv_cross::CompilerGLSL* CVKShader::GetShaderCompiler(void) const
+{
+	return m_pShaderCompiler;
 }
 
 bool CVKShader::Create(const uint32_t *words, size_t numWords, shader_kind kind)
@@ -53,19 +74,4 @@ void CVKShader::Destroy(void)
 bool CVKShader::IsValid(void) const
 {
 	return m_vkShader != VK_NULL_HANDLE;
-}
-
-uint32_t CVKShader::GetKind(void) const
-{
-	return m_kind;
-}
-
-VkShaderModule CVKShader::GetShader(void) const
-{
-	return m_vkShader;
-}
-
-const spirv_cross::CompilerGLSL* CVKShader::GetShaderCompiler(void) const
-{
-	return m_pShaderCompiler;
 }

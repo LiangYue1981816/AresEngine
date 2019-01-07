@@ -13,13 +13,25 @@ private:
 
 
 public:
-	void Present(void);
-	void AcquireNextFrame(void);
+	GfxPixelFormat GetPixelFormat(void) const;
+
+	int GetWidth(void) const;
+	int GetHeight(void) const;
 
 public:
 	int GetFrameIndex(void) const;
 	const CGfxRenderTexturePtr& GetFrameTexture(int index) const;
 
+public:
+	void Present(void);
+	void AcquireNextFrame(void);
+
+
+private:
+	GfxPixelFormat m_pixelFormat;
+
+	int m_width;
+	int m_height;
 
 private:
 	void *m_hDC;

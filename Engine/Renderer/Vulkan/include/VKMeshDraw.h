@@ -17,9 +17,6 @@ public:
 	uint32_t GetName(void) const;
 
 public:
-	bool InstanceBufferData(size_t size, const void *pBuffer);
-
-public:
 	GfxIndexType GetIndexType(void) const;
 	uint32_t GetVertexFormat(void) const;
 
@@ -32,6 +29,7 @@ public:
 	glm::aabb GetLocalAABB(void) const;
 
 public:
+	bool InstanceBufferData(size_t size, const void *pBuffer);
 	void Bind(VkCommandBuffer vkCommandBuffer, CVKBufferPtr &ptrIndexBuffer, CVKBufferPtr &ptrVertexBuffer, CVKBufferPtr &ptrInstanceBuffer);
 
 

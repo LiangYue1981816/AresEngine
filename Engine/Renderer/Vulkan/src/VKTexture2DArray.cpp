@@ -4,6 +4,15 @@
 CVKTexture2DArray::CVKTexture2DArray(CVKDevice *pDevice, CVKTextureManager *pManager, uint32_t name)
 	: CVKTexture(pDevice, pManager)
 	, CGfxTexture2DArray(name)
+	, m_name(name)
+
+	, m_format(GFX_PIXELFORMAT_UNDEFINED)
+	, m_type(GFX_TEXTURE_INVALID_ENUM)
+
+	, m_width(0)
+	, m_height(0)
+	, m_levels(0)
+	, m_layers(0)
 {
 
 }
@@ -15,7 +24,42 @@ CVKTexture2DArray::~CVKTexture2DArray(void)
 
 void CVKTexture2DArray::Release(void)
 {
-	m_pManager->Destroy(this);
+	m_pManager->DestroyTexture2DArray(this);
+}
+
+uint32_t CVKTexture2DArray::GetName(void) const
+{
+	return m_name;
+}
+
+GfxPixelFormat CVKTexture2DArray::GetFormat(void) const
+{
+	return m_format;
+}
+
+GfxTextureType CVKTexture2DArray::GetType(void) const
+{
+	return m_type;
+}
+
+int CVKTexture2DArray::GetWidth(void) const
+{
+	return m_width;
+}
+
+int CVKTexture2DArray::GetHeight(void) const
+{
+	return m_height;
+}
+
+int CVKTexture2DArray::GetLevels(void) const
+{
+	return m_levels;
+}
+
+int CVKTexture2DArray::GetLayers(void) const
+{
+	return m_layers;
 }
 
 bool CVKTexture2DArray::Create(uint64_t texture)

@@ -4,6 +4,15 @@
 CGLES3Texture2DArray::CGLES3Texture2DArray(CGLES3TextureManager *pManager, uint32_t name)
 	: CGLES3Texture(pManager)
 	, CGfxTexture2DArray(name)
+	, m_name(name)
+
+	, m_format(GFX_PIXELFORMAT_UNDEFINED)
+	, m_type(GFX_TEXTURE_INVALID_ENUM)
+
+	, m_width(0)
+	, m_height(0)
+	, m_levels(0)
+	, m_layers(0)
 {
 
 }
@@ -15,7 +24,42 @@ CGLES3Texture2DArray::~CGLES3Texture2DArray(void)
 
 void CGLES3Texture2DArray::Release(void)
 {
-	m_pManager->Destroy(this);
+	m_pManager->DestroyTexture2DArray(this);
+}
+
+uint32_t CGLES3Texture2DArray::GetName(void) const
+{
+	return m_name;
+}
+
+GfxPixelFormat CGLES3Texture2DArray::GetFormat(void) const
+{
+	return m_format;
+}
+
+GfxTextureType CGLES3Texture2DArray::GetType(void) const
+{
+	return m_type;
+}
+
+int CGLES3Texture2DArray::GetWidth(void) const
+{
+	return m_width;
+}
+
+int CGLES3Texture2DArray::GetHeight(void) const
+{
+	return m_height;
+}
+
+int CGLES3Texture2DArray::GetLevels(void) const
+{
+	return m_levels;
+}
+
+int CGLES3Texture2DArray::GetLayers(void) const
+{
+	return m_layers;
 }
 
 bool CGLES3Texture2DArray::Create(uint64_t texture)

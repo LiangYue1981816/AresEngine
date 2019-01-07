@@ -4,6 +4,15 @@
 CVKTexture2D::CVKTexture2D(CVKDevice *pDevice, CVKTextureManager *pManager, uint32_t name)
 	: CVKTexture(pDevice, pManager)
 	, CGfxTexture2D(name)
+	, m_name(name)
+
+	, m_format(GFX_PIXELFORMAT_UNDEFINED)
+	, m_type(GFX_TEXTURE_INVALID_ENUM)
+
+	, m_width(0)
+	, m_height(0)
+	, m_levels(0)
+	, m_samples(0)
 {
 
 }
@@ -15,7 +24,42 @@ CVKTexture2D::~CVKTexture2D(void)
 
 void CVKTexture2D::Release(void)
 {
-	m_pManager->Destroy(this);
+	m_pManager->DestroyTexture2D(this);
+}
+
+uint32_t CVKTexture2D::GetName(void) const
+{
+	return m_name;
+}
+
+GfxPixelFormat CVKTexture2D::GetFormat(void) const
+{
+	return m_format;
+}
+
+GfxTextureType CVKTexture2D::GetType(void) const
+{
+	return m_type;
+}
+
+int CVKTexture2D::GetWidth(void) const
+{
+	return m_width;
+}
+
+int CVKTexture2D::GetHeight(void) const
+{
+	return m_height;
+}
+
+int CVKTexture2D::GetLevels(void) const
+{
+	return m_levels;
+}
+
+int CVKTexture2D::GetSamples(void) const
+{
+	return m_samples;
 }
 
 bool CVKTexture2D::Create(uint64_t texture)

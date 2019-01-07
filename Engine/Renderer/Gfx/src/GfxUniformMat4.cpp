@@ -12,6 +12,11 @@ CGfxUniformMat4::~CGfxUniformMat4(void)
 
 }
 
+const CGfxUniformBufferPtr& CGfxUniformMat4::GetUniformBuffer(void) const
+{
+	return m_ptrUniformBuffer;
+}
+
 void CGfxUniformMat4::SetValue(const float *value)
 {
 	m_bDirty = true;
@@ -39,9 +44,4 @@ void CGfxUniformMat4::Apply(void)
 		m_bDirty = false;
 		m_ptrUniformBuffer->BufferData(0, sizeof(m_value), &m_value);
 	}
-}
-
-const CGfxUniformBufferPtr& CGfxUniformMat4::GetUniformBuffer(void) const
-{
-	return m_ptrUniformBuffer;
 }

@@ -27,6 +27,48 @@ uint32_t CGLES3Mesh::GetName(void) const
 	return m_name;
 }
 
+CGfxIndexBuffer* CGLES3Mesh::GetIndexBuffer(void)
+{
+	return m_pIndexBuffer;
+}
+
+CGfxVertexBuffer* CGLES3Mesh::GetVertexBuffer(void)
+{
+	return m_pVertexBuffer;
+}
+
+CGfxMesh::Draw* CGLES3Mesh::GetDraw(int indexDraw)
+{
+	const auto &itDraw = m_draws.find(indexDraw);
+
+	if (itDraw != m_draws.end()) {
+		return &itDraw->second;
+	}
+	else {
+		return nullptr;
+	}
+}
+
+GfxIndexType CGLES3Mesh::GetIndexType(void) const
+{
+	if (m_pIndexBuffer) {
+		return m_pIndexBuffer->GetIndexType();
+	}
+	else {
+		return GFX_INDEX_INVALID_ENUM;
+	}
+}
+
+uint32_t CGLES3Mesh::GetVertexFormat(void) const
+{
+	if (m_pVertexBuffer) {
+		return m_pVertexBuffer->GetVertexFormat();
+	}
+	else {
+		return 0;
+	}
+}
+
 bool CGLES3Mesh::CreateIndexBuffer(GfxIndexType type, size_t size, bool bDynamic, const void *pBuffer)
 {
 	if (m_pIndexBuffer == nullptr) {
@@ -73,46 +115,4 @@ void CGLES3Mesh::Destroy(void)
 	m_draws.clear();
 	m_pIndexBuffer = nullptr;
 	m_pVertexBuffer = nullptr;
-}
-
-CGfxIndexBuffer* CGLES3Mesh::GetIndexBuffer(void)
-{
-	return m_pIndexBuffer;
-}
-
-CGfxVertexBuffer* CGLES3Mesh::GetVertexBuffer(void)
-{
-	return m_pVertexBuffer;
-}
-
-CGfxMesh::Draw* CGLES3Mesh::GetDraw(int indexDraw)
-{
-	const auto &itDraw = m_draws.find(indexDraw);
-
-	if (itDraw != m_draws.end()) {
-		return &itDraw->second;
-	}
-	else {
-		return nullptr;
-	}
-}
-
-GfxIndexType CGLES3Mesh::GetIndexType(void) const
-{
-	if (m_pIndexBuffer) {
-		return m_pIndexBuffer->GetIndexType();
-	}
-	else {
-		return GFX_INDEX_INVALID_ENUM;
-	}
-}
-
-uint32_t CGLES3Mesh::GetVertexFormat(void) const
-{
-	if (m_pVertexBuffer) {
-		return m_pVertexBuffer->GetVertexFormat();
-	}
-	else {
-		return 0;
-	}
 }

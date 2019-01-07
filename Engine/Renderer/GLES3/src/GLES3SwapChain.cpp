@@ -4,6 +4,10 @@
 CGLES3SwapChain::CGLES3SwapChain(void *hDC, int width, int height, GfxPixelFormat pixelFormat)
 	: CGfxSwapChain(width, height, pixelFormat)
 
+	, m_width(width)
+	, m_height(height)
+	, m_pixelFormat(pixelFormat)
+
 	, m_hDC(hDC)
 	, m_fbo(0)
 
@@ -39,6 +43,31 @@ CGLES3SwapChain::~CGLES3SwapChain(void)
 	}
 }
 
+GfxPixelFormat CGLES3SwapChain::GetPixelFormat(void) const
+{
+	return m_pixelFormat;
+}
+
+int CGLES3SwapChain::GetWidth(void) const
+{
+	return m_width;
+}
+
+int CGLES3SwapChain::GetHeight(void) const
+{
+	return m_height;
+}
+
+int CGLES3SwapChain::GetFrameIndex(void) const
+{
+	return m_indexFrame;
+}
+
+const CGfxRenderTexturePtr& CGLES3SwapChain::GetFrameTexture(int index) const
+{
+	return m_ptrFrameTexture;
+}
+
 void CGLES3SwapChain::Present(void)
 {
 	if (m_fbo) {
@@ -66,14 +95,4 @@ void CGLES3SwapChain::Present(void)
 void CGLES3SwapChain::AcquireNextFrame(void)
 {
 	m_indexFrame = (m_indexFrame + 1) % SWAPCHAIN_FRAME_COUNT;
-}
-
-int CGLES3SwapChain::GetFrameIndex(void) const
-{
-	return m_indexFrame;
-}
-
-const CGfxRenderTexturePtr& CGLES3SwapChain::GetFrameTexture(int index) const
-{
-	return m_ptrFrameTexture;
 }

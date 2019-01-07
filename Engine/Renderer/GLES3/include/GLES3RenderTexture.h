@@ -14,12 +14,33 @@ private:
 
 
 public:
+	uint32_t GetName(void) const;
+
+public:
+	GfxPixelFormat GetFormat(void) const;
+	GfxTextureType GetType(void) const;
+
+	int GetWidth(void) const;
+	int GetHeight(void) const;
+	int GetSamples(void) const;
+
+	uint32_t GetTexture(void) const;
+
+public:
 	bool Create(GfxPixelFormat pixelFormat, int width, int height, int samples = 1, bool bTransient = false);
 	void Destroy(void);
 
-public:
-	uint32_t GetTexture(void) const;
 
+private:
+	uint32_t m_name;
+
+private:
+	GfxPixelFormat m_format;
+	GfxTextureType m_type;
+
+	int m_width;
+	int m_height;
+	int m_samples;
 
 private:
 	uint32_t m_texture;

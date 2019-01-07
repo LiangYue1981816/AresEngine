@@ -24,6 +24,9 @@ public:
 
 
 public:
+	const CGfxUniformBufferPtr& GetUniformBuffer(void) const;
+
+public:
 	void SetScreen(float width, float height);
 
 	void SetPerspective(float fovy, float aspect, float zNear, float zFar);
@@ -31,9 +34,6 @@ public:
 	void SetLookat(float eyex, float eyey, float eyez, float centerx, float centery, float centerz, float upx, float upy, float upz);
 
 	void Apply(void);
-
-public:
-	const CGfxUniformBufferPtr& GetUniformBuffer(void) const;
 
 
 private:

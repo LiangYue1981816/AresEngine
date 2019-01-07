@@ -5,6 +5,7 @@
 
 CGLES3Shader::CGLES3Shader(uint32_t name)
 	: CGfxShader(name)
+	, m_name(name)
 
 	, m_kind(-1)
 	, m_program(0)
@@ -15,6 +16,21 @@ CGLES3Shader::CGLES3Shader(uint32_t name)
 CGLES3Shader::~CGLES3Shader(void)
 {
 	Destroy();
+}
+
+uint32_t CGLES3Shader::GetName(void) const
+{
+	return m_name;
+}
+
+uint32_t CGLES3Shader::GetKind(void) const
+{
+	return m_kind;
+}
+
+uint32_t CGLES3Shader::GetProgram(void) const
+{
+	return m_program;
 }
 
 bool CGLES3Shader::Create(const uint32_t *words, size_t numWords, shader_kind kind)
@@ -412,16 +428,6 @@ bool CGLES3Shader::IsUniformValid(uint32_t name) const
 bool CGLES3Shader::IsUniformBlockValid(uint32_t name) const
 {
 	return m_uniformBlockBindings.find(name) != m_uniformBlockBindings.end();
-}
-
-uint32_t CGLES3Shader::GetKind(void) const
-{
-	return m_kind;
-}
-
-uint32_t CGLES3Shader::GetProgram(void) const
-{
-	return m_program;
 }
 
 #endif

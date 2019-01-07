@@ -10,11 +10,11 @@ public:
 
 
 public:
-	void SetValue(float v0);
-	void Apply(void);
+	const CGfxUniformBufferPtr& GetUniformBuffer(void) const;
 
 public:
-	const CGfxUniformBufferPtr& GetUniformBuffer(void) const;
+	void SetValue(float v0);
+	void Apply(void);
 
 
 private:

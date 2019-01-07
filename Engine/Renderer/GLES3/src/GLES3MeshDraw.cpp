@@ -54,22 +54,6 @@ uint32_t CGLES3MeshDraw::GetName(void) const
 	return m_name;
 }
 
-bool CGLES3MeshDraw::InstanceBufferData(size_t size, const void *pBuffer)
-{
-	if (m_pInstanceBuffer) {
-		m_pInstanceBuffer->BufferData(size, pBuffer);
-
-		if (m_pIndirectBuffer) {
-			m_pIndirectBuffer->BufferData(0, size / GetInstanceStride(m_pInstanceBuffer->GetInstanceFormat()));
-		}
-
-		return true;
-	}
-	else {
-		return false;
-	}
-}
-
 GfxIndexType CGLES3MeshDraw::GetIndexType(void) const
 {
 	if (m_ptrMesh.IsValid()) {
@@ -141,6 +125,22 @@ glm::aabb CGLES3MeshDraw::GetLocalAABB(void) const
 	}
 	else {
 		return glm::aabb();
+	}
+}
+
+bool CGLES3MeshDraw::InstanceBufferData(size_t size, const void *pBuffer)
+{
+	if (m_pInstanceBuffer) {
+		m_pInstanceBuffer->BufferData(size, pBuffer);
+
+		if (m_pIndirectBuffer) {
+			m_pIndirectBuffer->BufferData(0, size / GetInstanceStride(m_pInstanceBuffer->GetInstanceFormat()));
+		}
+
+		return true;
+	}
+	else {
+		return false;
 	}
 }
 
