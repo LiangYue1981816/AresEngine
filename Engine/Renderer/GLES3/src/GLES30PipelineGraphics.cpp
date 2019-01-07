@@ -5,6 +5,7 @@
 
 CGLES3PipelineGraphics::CGLES3PipelineGraphics(uint32_t name)
 	: CGfxPipelineGraphics(name)
+	, m_name(name)
 {
 
 }
@@ -12,6 +13,11 @@ CGLES3PipelineGraphics::CGLES3PipelineGraphics(uint32_t name)
 CGLES3PipelineGraphics::~CGLES3PipelineGraphics(void)
 {
 	Destroy();
+}
+
+uint32_t CGLES3PipelineGraphics::GetName(void) const
+{
+	return m_name;
 }
 
 bool CGLES3PipelineGraphics::Create(const CGfxShader *pVertexShader, const CGfxShader *pFragmentShader, const PipelineState &state)

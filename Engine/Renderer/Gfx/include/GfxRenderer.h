@@ -22,7 +22,6 @@
 #include "GfxTextureCubeMap.h"
 #include "GfxRenderTexture.h"
 #include "GfxShader.h"
-#include "GfxPipeline.h"
 #include "GfxPipelineCompute.h"
 #include "GfxPipelineGraphics.h"
 #include "GfxUniformVec1.h"

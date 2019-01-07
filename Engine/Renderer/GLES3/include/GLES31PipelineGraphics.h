@@ -15,6 +15,9 @@ private:
 
 
 public:
+	uint32_t GetName(void) const;
+
+public:
 	bool Create(const CGfxShader *pVertexShader, const CGfxShader *pFragmentShader, const PipelineState &state);
 	void Destroy(void);
 
@@ -26,6 +29,9 @@ public:
 public:
 	void Bind(void);
 
+
+private:
+	uint32_t m_name;
 
 private:
 	PipelineState m_state;

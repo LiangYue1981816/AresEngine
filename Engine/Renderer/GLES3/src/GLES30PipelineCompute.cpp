@@ -5,6 +5,7 @@
 
 CGLES3PipelineCompute::CGLES3PipelineCompute(uint32_t name)
 	: CGfxPipelineCompute(name)
+	, m_name(name)
 {
 
 }
@@ -12,6 +13,11 @@ CGLES3PipelineCompute::CGLES3PipelineCompute(uint32_t name)
 CGLES3PipelineCompute::~CGLES3PipelineCompute(void)
 {
 	Destroy();
+}
+
+uint32_t CGLES3PipelineCompute::GetName(void) const
+{
+	return m_name;
 }
 
 bool CGLES3PipelineCompute::Create(const CGfxShader *pComputeShader)

@@ -36,11 +36,10 @@ typedef struct PipelineState {
 } PipelineState;
 
 
-class CALL_API CGfxPipelineGraphics : public CGfxPipeline
+class CALL_API CGfxPipelineGraphics
 {
 public:
 	CGfxPipelineGraphics(uint32_t name)
-		: CGfxPipeline(name)
 	{
 
 	}
@@ -51,6 +50,14 @@ public:
 
 
 public:
+	virtual uint32_t GetName(void) const = 0;
+
+public:
 	virtual bool Create(const CGfxShader *pVertexShader, const CGfxShader *pFragmentShader, const PipelineState &state) = 0;
 	virtual void Destroy(void) = 0;
+
+public:
+	virtual bool IsTextureValid(uint32_t name) const = 0;
+	virtual bool IsUniformValid(uint32_t name) const = 0;
+	virtual bool IsUniformBlockValid(uint32_t name) const = 0;
 };

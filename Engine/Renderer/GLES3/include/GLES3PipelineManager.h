@@ -18,5 +18,6 @@ private:
 
 
 private:
-	eastl::unordered_map<uint32_t, CGfxPipeline*> m_pPipelines;
+	eastl::unordered_map<uint32_t, CGfxPipelineCompute*> m_pPipelineComputes;
+	eastl::unordered_map<uint32_t, CGfxPipelineGraphics*> m_pPipelineGraphicses;
 };

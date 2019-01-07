@@ -15,6 +15,9 @@ private:
 
 
 public:
+	uint32_t GetName(void) const;
+
+public:
 	bool Create(const CGfxShader *pComputeShader);
 	void Destroy(void);
 
@@ -25,6 +28,10 @@ public:
 
 public:
 	void Bind(void);
+
+
+private:
+	uint32_t m_name;
 };
 
 #endif

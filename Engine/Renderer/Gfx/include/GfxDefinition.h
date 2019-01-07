@@ -20,7 +20,6 @@ class CALL_API CGfxTexture2DArray;
 class CALL_API CGfxTextureCubeMap;
 class CALL_API CGfxRenderTexture;
 class CALL_API CGfxShader;
-class CALL_API CGfxPipeline;
 class CALL_API CGfxPipelineCompute;
 class CALL_API CGfxPipelineGraphics;
 class CALL_API CGfxUniformVec1;
