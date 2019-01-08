@@ -11,6 +11,7 @@ private:
 
 private:
 	bool CreateLayouts(eastl::vector<VkDescriptorSetLayout> &layouts);
+	bool CreateShaderStages(eastl::vector<VkPipelineShaderStageCreateInfo> &shaders);
 
 
 private:

@@ -27,7 +27,7 @@ CVKPipeline::~CVKPipeline(void)
 bool CVKPipeline::CreateLayouts(eastl::vector<VkDescriptorSetLayout> &layouts)
 {
 	for (int index = 0; index < compute_shader - vertex_shader + 1; index++) {
-		if (m_pShaders[index]) {
+		if (m_pShaders[index] && m_pShaders[index]->GetShader() && m_pShaders[index]->GetShaderCompiler()) {
 			if (const spirv_cross::CompilerGLSL *pShaderCompiler = m_pShaders[index]->GetShaderCompiler()) {
 				const spirv_cross::ShaderResources shaderResources = pShaderCompiler->get_shader_resources();
 
@@ -85,4 +85,26 @@ bool CVKPipeline::CreateLayouts(eastl::vector<VkDescriptorSetLayout> &layouts)
 	}
 
 	return true;
+}
+
+bool CVKPipeline::CreateShaderStages(eastl::vector<VkPipelineShaderStageCreateInfo> &shaders)
+{
+	bool rcode = false;
+
+	for (int index = 0; index < compute_shader - vertex_shader + 1; index++) {
+		if (m_pShaders[index] && m_pShaders[index]->GetShader() && m_pShaders[index]->GetShaderCompiler()) {
+			VkPipelineShaderStageCreateInfo createInfo = {};
+			createInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
+			createInfo.pNext = nullptr;
+			createInfo.flags = 0;
+			createInfo.stage = vkGetShaderStageFlagBits((shader_kind)index);
+			createInfo.module = m_pShaders[index]->GetShader();
+			createInfo.pName = "main";
+			createInfo.pSpecializationInfo = nullptr;
+			shaders.emplace_back(createInfo);
+			rcode = true;
+		}
+	}
+
+	return rcode;
 }

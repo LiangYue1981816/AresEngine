@@ -77,6 +77,7 @@ class CVKDescriptorSetLayout;
 class CVKShader;
 class CVKPipeline;
 
+class CVKFrameBuffer;
 class CVKRenderTexture;
 class CVKMesh;
 class CVKMeshDraw;
@@ -85,6 +86,7 @@ class CVKUniformBuffer;
 class CVKSamplerManager;
 class CVKTextureManager;
 class CVKShaderManager;
+class CVKFrameBufferManager;
 class CVKMeshManager;
 class CVKMeshDrawManager;
 class CVKRenderTextureManager;
