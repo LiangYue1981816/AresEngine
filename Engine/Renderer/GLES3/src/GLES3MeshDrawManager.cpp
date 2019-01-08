@@ -1,5 +1,4 @@
 #include "GLES3Renderer.h"
-#include "ResourceLoader.h"
 
 
 CGLES3MeshDrawManager::CGLES3MeshDrawManager(void)
