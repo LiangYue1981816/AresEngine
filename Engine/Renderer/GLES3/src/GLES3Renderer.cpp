@@ -11,11 +11,11 @@ CGLES3Renderer::CGLES3Renderer(void *hInstance, void *hWnd, void *hDC, int width
 	, m_pShaderManager(nullptr)
 	, m_pSamplerManager(nullptr)
 	, m_pTextureManager(nullptr)
-	, m_pRenderTextureManager(nullptr)
 	, m_pPipelineManager(nullptr)
 	, m_pMaterialManager(nullptr)
 	, m_pRenderPassManager(nullptr)
 	, m_pFrameBufferManager(nullptr)
+	, m_pRenderTextureManager(nullptr)
 	, m_pUniformBufferManager(nullptr)
 	, m_pCommandBufferManager(nullptr)
 
@@ -29,11 +29,11 @@ CGLES3Renderer::CGLES3Renderer(void *hInstance, void *hWnd, void *hDC, int width
 	m_pShaderManager = new CGLES3ShaderManager;
 	m_pSamplerManager = new CGLES3SamplerManager;
 	m_pTextureManager = new CGLES3TextureManager;
-	m_pRenderTextureManager = new CGLES3RenderTextureManager;
 	m_pPipelineManager = new CGLES3PipelineManager;
 	m_pMaterialManager = new CGLES3MaterialManager;
 	m_pRenderPassManager = new CGLES3RenderPassManager;
 	m_pFrameBufferManager = new CGLES3FrameBufferManager;
+	m_pRenderTextureManager = new CGLES3RenderTextureManager;
 	m_pUniformBufferManager = new CGLES3UniformBufferManager;
 	m_pCommandBufferManager = new CGLES3CommandBufferManager;
 
@@ -47,17 +47,17 @@ CGLES3Renderer::~CGLES3Renderer(void)
 	delete m_pGlobalMaterialPass;
 
 	delete m_pCommandBufferManager;
+	delete m_pUniformBufferManager;
+	delete m_pRenderTextureManager;
 	delete m_pFrameBufferManager;
 	delete m_pRenderPassManager;
 	delete m_pMaterialManager;
 	delete m_pSamplerManager;
 	delete m_pTextureManager;
-	delete m_pRenderTextureManager;
 	delete m_pPipelineManager;
 	delete m_pShaderManager;
 	delete m_pMeshDrawManager;
 	delete m_pMeshManager;
-	delete m_pUniformBufferManager;
 }
 
 uint32_t CGLES3Renderer::GetLastError(void) const

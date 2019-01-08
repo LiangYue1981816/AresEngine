@@ -38,7 +38,6 @@
 
 #include "GLES3SamplerManager.h"
 #include "GLES3TextureManager.h"
-#include "GLES3RenderTextureManager.h"
 #include "GLES3ShaderManager.h"
 #include "GLES3PipelineManager.h"
 #include "GLES3RenderPassManager.h"
@@ -46,6 +45,7 @@
 #include "GLES3MeshManager.h"
 #include "GLES3MeshDrawManager.h"
 #include "GLES3MaterialManager.h"
+#include "GLES3RenderTextureManager.h"
 #include "GLES3UniformBufferManager.h"
 #include "GLES3CommandBufferManager.h"
 
@@ -230,11 +230,11 @@ private:
 	CGLES3ShaderManager *m_pShaderManager;
 	CGLES3SamplerManager *m_pSamplerManager;
 	CGLES3TextureManager *m_pTextureManager;
-	CGLES3RenderTextureManager *m_pRenderTextureManager;
 	CGLES3PipelineManager *m_pPipelineManager;
 	CGLES3MaterialManager *m_pMaterialManager;
 	CGLES3RenderPassManager *m_pRenderPassManager;
 	CGLES3FrameBufferManager *m_pFrameBufferManager;
+	CGLES3RenderTextureManager *m_pRenderTextureManager;
 	CGLES3UniformBufferManager *m_pUniformBufferManager;
 	CGLES3CommandBufferManager *m_pCommandBufferManager;
 
