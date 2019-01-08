@@ -17,7 +17,6 @@ class CALL_API CGfxSampler;
 class CALL_API CGfxTexture2D;
 class CALL_API CGfxTexture2DArray;
 class CALL_API CGfxTextureCubeMap;
-class CALL_API CGfxRenderTexture;
 class CALL_API CGfxShader;
 class CALL_API CGfxPipelineCompute;
 class CALL_API CGfxPipelineGraphics;
@@ -35,6 +34,7 @@ class CALL_API CGfxRenderQueue;
 class CALL_API CGfxSwapChain;
 class CALL_API CGfxRenderPass;
 class CALL_API CGfxFrameBuffer;
+class CALL_API CGfxRenderTexture;
 class CALL_API CGfxMesh;
 class CALL_API CGfxMeshDraw;
 class CALL_API CGfxMaterial;
@@ -47,6 +47,7 @@ class CALL_API CGfxResourcePtr;
 
 typedef CGfxResourcePtr<CGfxRenderPass> CGfxRenderPassPtr;
 typedef CGfxResourcePtr<CGfxFrameBuffer> CGfxFrameBufferPtr;
+typedef CGfxResourcePtr<CGfxRenderTexture> CGfxRenderTexturePtr;
 
 typedef CGfxResourcePtr<CGfxMesh> CGfxMeshPtr;
 typedef CGfxResourcePtr<CGfxMeshDraw> CGfxMeshDrawPtr;
@@ -55,7 +56,6 @@ typedef CGfxResourcePtr<CGfxMaterial> CGfxMaterialPtr;
 typedef CGfxResourcePtr<CGfxTexture2D> CGfxTexture2DPtr;
 typedef CGfxResourcePtr<CGfxTexture2DArray> CGfxTexture2DArrayPtr;
 typedef CGfxResourcePtr<CGfxTextureCubeMap> CGfxTextureCubeMapPtr;
-typedef CGfxResourcePtr<CGfxRenderTexture> CGfxRenderTexturePtr;
 
 typedef CGfxResourcePtr<CGfxUniformBuffer> CGfxUniformBufferPtr;
 typedef CGfxResourcePtr<CGfxCommandBuffer> CGfxCommandBufferPtr;
