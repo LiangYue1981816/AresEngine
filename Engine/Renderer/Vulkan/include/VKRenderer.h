@@ -28,6 +28,7 @@
 #include "VKShader.h"
 #include "VKPipeline.h"
 
+#include "VKRenderPass.h"
 #include "VKFrameBuffer.h"
 #include "VKRenderTexture.h"
 #include "VKMesh.h"
@@ -37,6 +38,7 @@
 #include "VKSamplerManager.h"
 #include "VKTextureManager.h"
 #include "VKShaderManager.h"
+#include "VKRenderPassManager.h"
 #include "VKFrameBufferManager.h"
 #include "VKMeshManager.h"
 #include "VKMeshDrawManager.h"
