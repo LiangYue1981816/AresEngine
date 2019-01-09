@@ -15,6 +15,7 @@ typedef struct SubPassInformation {
 	eastl::unordered_map<int, eastl::string> inputAttachments;
 	eastl::unordered_map<int, int> outputAttachments;
 	eastl::unordered_map<int, int> resolveAttachments;
+	eastl::unordered_map<int, int> preserveAttachments;
 } SubPassInformation;
 
 
@@ -38,7 +39,8 @@ public:
 	virtual bool SetSubpassInputColorReference(int indexSubPass, int indexAttachment, const char *szName) = 0;
 	virtual bool SetSubpassOutputColorReference(int indexSubPass, int indexAttachment) = 0;
 	virtual bool SetSubpassOutputDepthStencilReference(int indexSubPass, int indexAttachment) = 0;
-	virtual bool SetSubpassResolveColorReference(int indexSubPass, int indexAttachment) = 0;
+	virtual bool SetSubpassResolveReference(int indexSubPass, int indexAttachment) = 0;
+	virtual bool SetSubpassPreserveReference(int indexSubPass, int indexAttachment) = 0;
 
 public:
 	virtual uint32_t GetAttachmentCount(void) const = 0;

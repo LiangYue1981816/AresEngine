@@ -20,7 +20,8 @@ public:
 	bool SetSubpassInputColorReference(int indexSubPass, int indexAttachment, const char *szName);
 	bool SetSubpassOutputColorReference(int indexSubPass, int indexAttachment);
 	bool SetSubpassOutputDepthStencilReference(int indexSubPass, int indexAttachment);
-	bool SetSubpassResolveColorReference(int indexSubPass, int indexAttachment);
+	bool SetSubpassResolveReference(int indexSubPass, int indexAttachment);
+	bool SetSubpassPreserveReference(int indexSubPass, int indexAttachment);
 
 public:
 	uint32_t GetAttachmentCount(void) const;
@@ -34,6 +35,7 @@ public:
 
 
 private:
+	VkRenderPass m_vkRenderPass;
 	eastl::vector<AttachmentInformation> m_attachments;
 	eastl::vector<SubPassInformation> m_subpasses;
 

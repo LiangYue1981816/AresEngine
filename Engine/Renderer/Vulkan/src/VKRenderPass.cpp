@@ -5,6 +5,8 @@ CVKRenderPass::CVKRenderPass(CVKDevice *pDevice, CVKRenderPassManager *pManager,
 	: CGfxRenderPass(numAttachments, numSubpasses)
 	, m_pDevice(pDevice)
 	, m_pManager(pManager)
+
+	, m_vkRenderPass(VK_NULL_HANDLE)
 {
 	m_attachments.resize(numAttachments);
 	m_subpasses.resize(numAttachments);
@@ -92,7 +94,7 @@ bool CVKRenderPass::SetSubpassOutputDepthStencilReference(int indexSubPass, int 
 	return true;
 }
 
-bool CVKRenderPass::SetSubpassResolveColorReference(int indexSubPass, int indexAttachment)
+bool CVKRenderPass::SetSubpassResolveReference(int indexSubPass, int indexAttachment)
 {
 	if (indexSubPass >= (int)m_subpasses.size()) {
 		return false;
@@ -103,6 +105,20 @@ bool CVKRenderPass::SetSubpassResolveColorReference(int indexSubPass, int indexA
 	}
 
 	m_subpasses[indexSubPass].resolveAttachments[indexAttachment] = indexAttachment;
+	return true;
+}
+
+bool CVKRenderPass::SetSubpassPreserveReference(int indexSubPass, int indexAttachment)
+{
+	if (indexSubPass >= (int)m_subpasses.size()) {
+		return false;
+	}
+
+	if (indexAttachment >= (int)m_attachments.size()) {
+		return false;
+	}
+
+	m_subpasses[indexSubPass].preserveAttachments[indexAttachment] = indexAttachment;
 	return true;
 }
 

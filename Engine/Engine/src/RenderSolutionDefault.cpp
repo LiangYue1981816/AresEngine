@@ -71,7 +71,7 @@ void CRenderSolutionDefault::CreateFrameBufferMSAA(int samples)
 	m_ptrRenderPassMSAA->SetColorAttachment(2, false, true, 0.2f, 0.2f, 0.2f, 0.0f);
 	m_ptrRenderPassMSAA->SetSubpassOutputDepthStencilReference(0, 0);
 	m_ptrRenderPassMSAA->SetSubpassOutputColorReference(0, 1);
-	m_ptrRenderPassMSAA->SetSubpassResolveColorReference(0, 2);
+	m_ptrRenderPassMSAA->SetSubpassResolveReference(0, 2);
 }
 
 void CRenderSolutionDefault::DestroyFrameBufferMSAA(void)

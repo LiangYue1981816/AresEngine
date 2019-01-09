@@ -361,6 +361,8 @@
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKPipeline.h" />
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKQueue.h" />
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKRenderer.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKRenderPass.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKRenderPassManager.h" />
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKRenderTexture.h" />
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKRenderTextureManager.h" />
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKSampler.h" />
@@ -538,6 +540,8 @@
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKPipeline.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKQueue.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKRenderer.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKRenderPass.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKRenderPassManager.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKRenderTexture.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKRenderTextureManager.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKSampler.cpp" />
