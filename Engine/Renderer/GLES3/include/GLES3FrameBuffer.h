@@ -8,7 +8,7 @@ class CGLES3FrameBuffer : public CGfxFrameBuffer
 
 
 private:
-	CGLES3FrameBuffer(CGLES3FrameBufferManager *pManager, int width, int height);
+	CGLES3FrameBuffer(CGLES3FrameBufferManager *pManager, int width, int height, int numAttachments);
 	virtual ~CGLES3FrameBuffer(void);
 	virtual void Release(void);
 
@@ -34,7 +34,7 @@ private:
 private:
 	uint32_t m_fbo;
 	uint32_t m_resolve;
-	eastl::unordered_map<int, CGfxRenderTexturePtr> m_ptrAttachmentTextures;
+	eastl::vector<CGfxRenderTexturePtr> m_ptrAttachmentTextures;
 
 private:
 	CGLES3FrameBufferManager *m_pManager;

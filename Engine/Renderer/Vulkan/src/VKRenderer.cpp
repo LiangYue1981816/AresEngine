@@ -56,7 +56,7 @@ CGfxRenderPassPtr CVKRenderer::NewRenderPass(int numAttachments, int numSubpasse
 	return nullptr;
 }
 
-CGfxFrameBufferPtr CVKRenderer::NewFrameBuffer(int width, int height)
+CGfxFrameBufferPtr CVKRenderer::NewFrameBuffer(int width, int height, int numAttachments)
 {
 	return nullptr;
 }

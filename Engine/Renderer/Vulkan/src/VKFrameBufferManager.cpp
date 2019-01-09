@@ -16,11 +16,11 @@ CVKFrameBufferManager::~CVKFrameBufferManager(void)
 	m_pFrameBuffers.clear();
 }
 
-CVKFrameBuffer* CVKFrameBufferManager::Create(int width, int height)
+CVKFrameBuffer* CVKFrameBufferManager::Create(int width, int height, int numAttachments)
 {
 	mutex_autolock autolock(&lock);
 	{
-		CVKFrameBuffer *pFrameBuffer = new CVKFrameBuffer(m_pDevice, this, width, height);
+		CVKFrameBuffer *pFrameBuffer = new CVKFrameBuffer(m_pDevice, this, width, height, numAttachments);
 		m_pFrameBuffers[pFrameBuffer] = pFrameBuffer;
 		return pFrameBuffer;
 	}

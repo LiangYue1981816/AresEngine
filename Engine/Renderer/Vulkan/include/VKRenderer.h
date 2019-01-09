@@ -68,7 +68,7 @@ public:
 
 public:
 	CGfxRenderPassPtr NewRenderPass(int numAttachments, int numSubpasses);
-	CGfxFrameBufferPtr NewFrameBuffer(int width, int height);
+	CGfxFrameBufferPtr NewFrameBuffer(int width, int height, int numAttachments);
 
 	bool IsHaveMesh(uint32_t name);
 	CGfxMeshPtr NewMesh(uint32_t name);

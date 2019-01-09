@@ -82,7 +82,7 @@ public:
 
 public:
 	virtual CGfxRenderPassPtr NewRenderPass(int numAttachments, int numSubpasses) = 0;
-	virtual CGfxFrameBufferPtr NewFrameBuffer(int width, int height) = 0;
+	virtual CGfxFrameBufferPtr NewFrameBuffer(int width, int height, int numAttachments) = 0;
 
 	virtual bool IsHaveMesh(uint32_t name) = 0;
 	virtual CGfxMeshPtr NewMesh(uint32_t name) = 0;

@@ -15,11 +15,11 @@ CGLES3FrameBufferManager::~CGLES3FrameBufferManager(void)
 	m_pFrameBuffers.clear();
 }
 
-CGLES3FrameBuffer* CGLES3FrameBufferManager::Create(int width, int height)
+CGLES3FrameBuffer* CGLES3FrameBufferManager::Create(int width, int height, int numAttachments)
 {
 	mutex_autolock autolock(&lock);
 	{
-		CGLES3FrameBuffer *pFrameBuffer = new CGLES3FrameBuffer(this, width, height);
+		CGLES3FrameBuffer *pFrameBuffer = new CGLES3FrameBuffer(this, width, height, numAttachments);
 		m_pFrameBuffers[pFrameBuffer] = pFrameBuffer;
 		return pFrameBuffer;
 	}

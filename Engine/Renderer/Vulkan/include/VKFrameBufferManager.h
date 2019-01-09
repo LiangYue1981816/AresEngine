@@ -15,7 +15,7 @@ private:
 
 
 private:
-	CVKFrameBuffer* Create(int width, int height);
+	CVKFrameBuffer* Create(int width, int height, int numAttachments);
 	void Destroy(CGfxFrameBuffer *pFrameBuffer);
 
 

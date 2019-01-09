@@ -100,9 +100,9 @@ CGfxRenderPassPtr CGLES3Renderer::NewRenderPass(int numAttachments, int numSubpa
 	return m_pRenderPassManager->Create(numAttachments, numSubpasses);
 }
 
-CGfxFrameBufferPtr CGLES3Renderer::NewFrameBuffer(int width, int height)
+CGfxFrameBufferPtr CGLES3Renderer::NewFrameBuffer(int width, int height, int numAttachments)
 {
-	return m_pFrameBufferManager->Create(width, height);
+	return m_pFrameBufferManager->Create(width, height, numAttachments);
 }
 
 bool CGLES3Renderer::IsHaveMesh(uint32_t name)

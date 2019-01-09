@@ -1,8 +1,8 @@
 #include "GLES3Renderer.h"
 
 
-CGLES3FrameBuffer::CGLES3FrameBuffer(CGLES3FrameBufferManager *pManager, int width, int height)
-	: CGfxFrameBuffer(width, height)
+CGLES3FrameBuffer::CGLES3FrameBuffer(CGLES3FrameBufferManager *pManager, int width, int height, int numAttachments)
+	: CGfxFrameBuffer(width, height, numAttachments)
 	, m_pManager(pManager)
 
 	, m_width(width)
@@ -11,6 +11,8 @@ CGLES3FrameBuffer::CGLES3FrameBuffer(CGLES3FrameBufferManager *pManager, int wid
 	, m_fbo(0)
 	, m_resolve(0)
 {
+	m_ptrAttachmentTextures.resize(numAttachments);
+
 	glGenFramebuffers(1, &m_fbo);
 	glGenFramebuffers(1, &m_resolve);
 }
@@ -38,7 +40,8 @@ int CGLES3FrameBuffer::GetHeight(void) const
 
 bool CGLES3FrameBuffer::SetAttachmentTexture(int indexAttachment, CGfxRenderTexturePtr &ptrAttachmentTexture)
 {
-	if (ptrAttachmentTexture->GetWidth() == m_width && ptrAttachmentTexture->GetHeight() == m_height) {
+	if (ptrAttachmentTexture->GetWidth() == m_width && ptrAttachmentTexture->GetHeight() == m_height &&
+		indexAttachment >= 0 && indexAttachment < m_ptrAttachmentTextures.size()) {
 		m_ptrAttachmentTextures[indexAttachment] = ptrAttachmentTexture;
 		return true;
 	}
@@ -49,8 +52,12 @@ bool CGLES3FrameBuffer::SetAttachmentTexture(int indexAttachment, CGfxRenderText
 
 CGfxRenderTexturePtr CGLES3FrameBuffer::GetAttachmentTexture(int indexAttachment) const
 {
-	const auto &itAttachmentTexture = m_ptrAttachmentTextures.find(indexAttachment);
-	return itAttachmentTexture != m_ptrAttachmentTextures.end() ? itAttachmentTexture->second : nullptr;
+	if (indexAttachment >= 0 && indexAttachment < m_ptrAttachmentTextures.size()) {
+		return m_ptrAttachmentTextures[indexAttachment];
+	}
+	else {
+		return nullptr;
+	}
 }
 
 void CGLES3FrameBuffer::Bind(const AttachmentInformation *pAttachmentInformations, const SubPassInformation *pSubPassInformation)

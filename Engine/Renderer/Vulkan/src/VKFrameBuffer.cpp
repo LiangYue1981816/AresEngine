@@ -1,8 +1,8 @@
 #include "VKRenderer.h"
 
 
-CVKFrameBuffer::CVKFrameBuffer(CVKDevice *pDevice, CVKFrameBufferManager *pManager, int width, int height)
-	: CGfxFrameBuffer(width, height)
+CVKFrameBuffer::CVKFrameBuffer(CVKDevice *pDevice, CVKFrameBufferManager *pManager, int width, int height, int numAttachments)
+	: CGfxFrameBuffer(width, height, numAttachments)
 	, m_pManager(pManager)
 
 	, m_width(width)
@@ -10,7 +10,7 @@ CVKFrameBuffer::CVKFrameBuffer(CVKDevice *pDevice, CVKFrameBufferManager *pManag
 
 	, m_vkFrameBuffer(VK_NULL_HANDLE)
 {
-
+	m_ptrAttachmentTextures.resize(numAttachments);
 }
 
 CVKFrameBuffer::~CVKFrameBuffer(void)
@@ -35,7 +35,8 @@ int CVKFrameBuffer::GetHeight(void) const
 
 bool CVKFrameBuffer::SetAttachmentTexture(int indexAttachment, CGfxRenderTexturePtr &ptrAttachmentTexture)
 {
-	if (ptrAttachmentTexture->GetWidth() == m_width && ptrAttachmentTexture->GetHeight() == m_height) {
+	if (ptrAttachmentTexture->GetWidth() == m_width && ptrAttachmentTexture->GetHeight() == m_height &&
+		indexAttachment >= 0 && indexAttachment < m_ptrAttachmentTextures.size()) {
 		m_ptrAttachmentTextures[indexAttachment] = ptrAttachmentTexture;
 		return true;
 	}
@@ -46,6 +47,10 @@ bool CVKFrameBuffer::SetAttachmentTexture(int indexAttachment, CGfxRenderTexture
 
 CGfxRenderTexturePtr CVKFrameBuffer::GetAttachmentTexture(int indexAttachment) const
 {
-	const auto &itAttachmentTexture = m_ptrAttachmentTextures.find(indexAttachment);
-	return itAttachmentTexture != m_ptrAttachmentTextures.end() ? itAttachmentTexture->second : nullptr;
+	if (indexAttachment >= 0 && indexAttachment < m_ptrAttachmentTextures.size()) {
+		return m_ptrAttachmentTextures[indexAttachment];
+	}
+	else {
+		return nullptr;
+	}
 }

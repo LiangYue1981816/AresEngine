@@ -8,7 +8,7 @@ class CVKFrameBuffer : public CGfxFrameBuffer
 
 
 private:
-	CVKFrameBuffer(CVKDevice *pDevice, CVKFrameBufferManager *pManager, int width, int height);
+	CVKFrameBuffer(CVKDevice *pDevice, CVKFrameBufferManager *pManager, int width, int height, int numAttachments);
 	virtual ~CVKFrameBuffer(void);
 	virtual void Release(void);
 
@@ -28,7 +28,7 @@ private:
 
 private:
 	VkFramebuffer m_vkFrameBuffer;
-	eastl::unordered_map<int, CGfxRenderTexturePtr> m_ptrAttachmentTextures;
+	eastl::vector<CGfxRenderTexturePtr> m_ptrAttachmentTextures;
 
 private:
 	CVKFrameBufferManager *m_pManager;
