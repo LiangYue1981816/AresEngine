@@ -14,12 +14,22 @@ CVKRenderPass::CVKRenderPass(CVKDevice *pDevice, CVKRenderPassManager *pManager,
 
 CVKRenderPass::~CVKRenderPass(void)
 {
-
+	Destroy();
 }
 
 void CVKRenderPass::Release(void)
 {
 	m_pManager->Destroy(this);
+}
+
+bool CVKRenderPass::Create(void)
+{
+	return true;
+}
+
+void CVKRenderPass::Destroy(void)
+{
+
 }
 
 bool CVKRenderPass::SetColorAttachment(int indexAttachment, bool bInvalidation, bool bClear, float red, float green, float blue, float alpha)
