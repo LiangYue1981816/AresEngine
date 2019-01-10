@@ -24,7 +24,36 @@ void CVKRenderPass::Release(void)
 
 bool CVKRenderPass::Create(void)
 {
+	/*
+	eastl::vector<VkAttachmentDescription> attachments;
+	eastl::vector<VkSubpassDescription> subpasses;
+	eastl::vector<VkSubpassDependency> dependencies;
+
+	for (int index = 0; index < m_attachments.size(); index++) {
+		VkAttachmentDescription attachment;
+		attachment.flags = 0;
+		attachment.format;
+		attachment.samples;
+		attachment.loadOp;
+		attachment.storeOp;
+		attachment.stencilLoadOp;
+		attachment.stencilStoreOp;
+		attachment.initialLayout;
+		attachment.finalLayout;
+	}
+
+	VkRenderPassCreateInfo createInfo = {};
+	createInfo.sType;
+	createInfo.pNext;
+	createInfo.flags;
+	createInfo.attachmentCount;
+	createInfo.pAttachments;
+	createInfo.subpassCount;
+	createInfo.pSubpasses;
+	createInfo.dependencyCount;
+	createInfo.pDependencies;
 	return true;
+	*/
 }
 
 void CVKRenderPass::Destroy(void)
