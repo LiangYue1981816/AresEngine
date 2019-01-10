@@ -25,14 +25,16 @@ void CVKRenderPass::Release(void)
 bool CVKRenderPass::Create(void)
 {
 	eastl::vector<VkAttachmentDescription> attachments;
+	eastl::vector<VkSubpassDescription> subpasses;
 	eastl::vector<VkSubpassDependency> dependencies;
 
-	for (int indexAttachment = 0; indexAttachment < m_attachments.size(); indexAttachment++) {
-		bool isDepthStencil = 
-			CVKHelper::IsFormatStencilOnly((VkFormat)m_attachments[indexAttachment].pixelFormat) ||
-			CVKHelper::IsFormatDepthOnly((VkFormat)m_attachments[indexAttachment].pixelFormat) ||
-			CVKHelper::IsFormatDepthStencil((VkFormat)m_attachments[indexAttachment].pixelFormat);
+	eastl::unordered_map<int, VkAttachmentReference> depthStencilAttachmentReference;
+	eastl::unordered_map<int, eastl::vector<VkAttachmentReference>> inputAttachmentReferences;
+	eastl::unordered_map<int, eastl::vector<VkAttachmentReference>> outputAttachmentReferences;
+	eastl::unordered_map<int, eastl::vector<VkAttachmentReference>> resolveAttachmentReferences;
+	eastl::unordered_map<int, eastl::vector<uint32_t>> preserveAttachmentReferences;
 
+	for (int indexAttachment = 0; indexAttachment < m_attachments.size(); indexAttachment++) {
 		VkAttachmentDescription attachment = {};
 		attachment.flags = 0;
 		attachment.format = (VkFormat)m_attachments[indexAttachment].pixelFormat;
@@ -41,78 +43,90 @@ bool CVKRenderPass::Create(void)
 		attachment.storeOp = m_attachments[indexAttachment].bInvalidation ? VK_ATTACHMENT_STORE_OP_DONT_CARE : VK_ATTACHMENT_STORE_OP_STORE;
 		attachment.stencilLoadOp = m_attachments[indexAttachment].bClear ? VK_ATTACHMENT_LOAD_OP_CLEAR : VK_ATTACHMENT_LOAD_OP_LOAD;
 		attachment.stencilStoreOp = m_attachments[indexAttachment].bInvalidation ? VK_ATTACHMENT_STORE_OP_DONT_CARE : VK_ATTACHMENT_STORE_OP_STORE;
-		attachment.initialLayout = attachment.finalLayout = isDepthStencil ? VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL : VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
+		attachment.initialLayout = CVKHelper::IsFormatDepthOrStencil((VkFormat)m_attachments[indexAttachment].pixelFormat) ? VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL : VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
+		attachment.finalLayout = CVKHelper::IsFormatDepthOrStencil((VkFormat)m_attachments[indexAttachment].pixelFormat) ? VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL : VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
 		attachments.push_back(attachment);
 	}
 
-	eastl::vector<VkSubpassDescription> subpasses;
-	eastl::unordered_map<int, eastl::vector<VkAttachmentReference>> inputAttachmentReferences;
-	eastl::unordered_map<int, eastl::vector<VkAttachmentReference>> outputAttachmentReferences;
-	eastl::unordered_map<int, eastl::vector<VkAttachmentReference>> resolveAttachmentReferences;
-	eastl::unordered_map<int, eastl::vector<VkAttachmentReference>> preserveAttachmentReferences;
-
 	for (int indexSubpass = 0; indexSubpass < m_subpasses.size(); indexSubpass++) {
 		for (const auto &itInputAttachment : m_subpasses[indexSubpass].inputAttachments) {
-			bool isDepthStencil =
-				CVKHelper::IsFormatStencilOnly((VkFormat)m_attachments[itInputAttachment.first].pixelFormat) ||
-				CVKHelper::IsFormatDepthOnly((VkFormat)m_attachments[itInputAttachment.first].pixelFormat) ||
-				CVKHelper::IsFormatDepthStencil((VkFormat)m_attachments[itInputAttachment.first].pixelFormat);
-
 			VkAttachmentReference attachment = {};
 			attachment.attachment = itInputAttachment.first;
-			attachment.layout = isDepthStencil ? VK_IMAGE_LAYOUT_DEPTH_STENCIL_READ_ONLY_OPTIMAL : VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
+			attachment.layout = CVKHelper::IsFormatDepthOrStencil((VkFormat)m_attachments[itInputAttachment.first].pixelFormat) ? VK_IMAGE_LAYOUT_DEPTH_STENCIL_READ_ONLY_OPTIMAL : VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
 			inputAttachmentReferences[indexSubpass].emplace_back(attachment);
 		}
 
 		for (const auto &itOutputAttachment : m_subpasses[indexSubpass].outputAttachments) {
-			bool isDepthStencil =
-				CVKHelper::IsFormatStencilOnly((VkFormat)m_attachments[itOutputAttachment.first].pixelFormat) ||
-				CVKHelper::IsFormatDepthOnly((VkFormat)m_attachments[itOutputAttachment.first].pixelFormat) ||
-				CVKHelper::IsFormatDepthStencil((VkFormat)m_attachments[itOutputAttachment.first].pixelFormat);
-
 			VkAttachmentReference attachment = {};
 			attachment.attachment = itOutputAttachment.first;
-			attachment.layout = isDepthStencil ? VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL : VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
+			attachment.layout = CVKHelper::IsFormatDepthOrStencil((VkFormat)m_attachments[itOutputAttachment.first].pixelFormat) ? VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL : VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
 			outputAttachmentReferences[indexSubpass].emplace_back(attachment);
 		}
 
 		for (const auto &itResolveAttachment : m_subpasses[indexSubpass].resolveAttachments) {
-
+			VkAttachmentReference attachment = {};
+			attachment.attachment = itResolveAttachment.first;
+			attachment.layout = CVKHelper::IsFormatDepthOrStencil((VkFormat)m_attachments[itResolveAttachment.first].pixelFormat) ? VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL : VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
+			resolveAttachmentReferences[indexSubpass].emplace_back(attachment);
 		}
-		/*
+
+		for (const auto &itPreserveAttachment : m_subpasses[indexSubpass].preserveAttachments) {
+			preserveAttachmentReferences[indexSubpass].emplace_back(itPreserveAttachment.first);
+		}
+
+		if (m_subpasses[indexSubpass].depthStencilAttachment >= 0) {
+			depthStencilAttachmentReference[indexSubpass].attachment = m_subpasses[indexSubpass].depthStencilAttachment;
+			depthStencilAttachmentReference[indexSubpass].layout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
+		}
+
 		VkSubpassDescription subpass = {};
-		subpass.flags;
-		subpass.pipelineBindPoint;
-		subpass.inputAttachmentCount;
-		subpass.pInputAttachments;
-		subpass.colorAttachmentCount;
-		subpass.pColorAttachments;
-		subpass.pResolveAttachments;
-		subpass.pDepthStencilAttachment;
-		subpass.preserveAttachmentCount;
-		subpass.pPreserveAttachments;
-		*/
+		subpass.flags = 0;
+		subpass.pipelineBindPoint = VK_PIPELINE_BIND_POINT_GRAPHICS;
+		subpass.inputAttachmentCount = inputAttachmentReferences[indexSubpass].size();
+		subpass.pInputAttachments = inputAttachmentReferences[indexSubpass].data();
+		subpass.colorAttachmentCount = outputAttachmentReferences[indexSubpass].size();
+		subpass.pColorAttachments = outputAttachmentReferences[indexSubpass].data();
+		subpass.preserveAttachmentCount = preserveAttachmentReferences[indexSubpass].size();
+		subpass.pPreserveAttachments = preserveAttachmentReferences[indexSubpass].data();
+		subpass.pResolveAttachments = resolveAttachmentReferences[indexSubpass].data();
+		subpass.pDepthStencilAttachment = m_subpasses[indexSubpass].depthStencilAttachment >= 0 ? &depthStencilAttachmentReference[indexSubpass] : nullptr;
+		subpasses.emplace_back(subpass);
+
+		if (indexSubpass > 0) {
+			VkSubpassDependency dependency = {};
+			dependency.srcSubpass = indexSubpass - 1;
+			dependency.dstSubpass = indexSubpass;
+			dependency.srcStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT | VK_PIPELINE_STAGE_LATE_FRAGMENT_TESTS_BIT;
+			dependency.dstStageMask = VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT | VK_PIPELINE_STAGE_EARLY_FRAGMENT_TESTS_BIT;
+			dependency.srcAccessMask = VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT | VK_ACCESS_DEPTH_STENCIL_ATTACHMENT_WRITE_BIT;
+			dependency.dstAccessMask = VK_ACCESS_INPUT_ATTACHMENT_READ_BIT | VK_ACCESS_DEPTH_STENCIL_ATTACHMENT_READ_BIT;
+			dependency.dependencyFlags = VK_DEPENDENCY_BY_REGION_BIT;
+			dependencies.emplace_back(dependency);
+		}
 	}
 
-	/*
 	VkRenderPassCreateInfo createInfo = {};
-	createInfo.sType;
-	createInfo.pNext;
-	createInfo.flags;
-	createInfo.attachmentCount;
-	createInfo.pAttachments;
-	createInfo.subpassCount;
-	createInfo.pSubpasses;
-	createInfo.dependencyCount;
-	createInfo.pDependencies;
-	return true;
-	*/
+	createInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_CREATE_INFO;
+	createInfo.pNext = nullptr;
+	createInfo.flags = 0;
+	createInfo.attachmentCount = attachments.size();
+	createInfo.pAttachments = attachments.data();
+	createInfo.subpassCount = subpasses.size();
+	createInfo.pSubpasses = subpasses.data();
+	createInfo.dependencyCount = dependencies.size();
+	createInfo.pDependencies = dependencies.data();
+	CALL_VK_FUNCTION_RETURN_BOOL(vkCreateRenderPass(m_pDevice->GetDevice(), &createInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkRenderPass));
+
 	return true;
 }
 
 void CVKRenderPass::Destroy(void)
 {
+	if (m_vkRenderPass) {
+		vkDestroyRenderPass(m_pDevice->GetDevice(), m_vkRenderPass, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
+	}
 
+	m_vkRenderPass = VK_NULL_HANDLE;
 }
 
 bool CVKRenderPass::SetColorAttachment(int indexAttachment, GfxPixelFormat pixelFormat, int samples, bool bInvalidation, bool bClear, float red, float green, float blue, float alpha)
