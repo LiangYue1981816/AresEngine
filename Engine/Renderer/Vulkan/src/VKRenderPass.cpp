@@ -54,6 +54,7 @@ bool CVKRenderPass::Create(void)
 	createInfo.pDependencies;
 	return true;
 	*/
+	return true;
 }
 
 void CVKRenderPass::Destroy(void)

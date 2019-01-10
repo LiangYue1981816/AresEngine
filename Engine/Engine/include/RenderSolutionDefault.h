@@ -32,6 +32,9 @@ private:
 	bool m_bEnableMSAA;
 
 private:
+	CGfxRenderTexturePtr m_ptrColorTextures[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
+
+private:
 	CGfxRenderPassPtr m_ptrRenderPass;
 	CGfxRenderTexturePtr m_ptrDepthStencilTexture;
 	CGfxFrameBufferPtr m_ptrFrameBufferScreen[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
