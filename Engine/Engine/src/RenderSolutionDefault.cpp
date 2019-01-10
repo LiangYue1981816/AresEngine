@@ -17,15 +17,15 @@ CRenderSolutionDefault::~CRenderSolutionDefault(void)
 
 void CRenderSolutionDefault::CreateFrameBuffer(void)
 {
-	int numAttachments = 2;
-	int numSubpasses = 1;
-
 	m_ptrDepthStencilTexture = GfxRenderer()->NewRenderTexture(HashValue("DepthStencilTexture"));
 	m_ptrDepthStencilTexture->Create(GFX_PIXELFORMAT_D24_UNORM_S8_UINT_PACK32, GfxRenderer()->GetSwapChain()->GetWidth(), GfxRenderer()->GetSwapChain()->GetHeight());
 
 	for (int index = 0; index < CGfxSwapChain::SWAPCHAIN_FRAME_COUNT; index++) {
 		m_ptrColorTextures[index] = GfxRenderer()->GetSwapChain()->GetFrameTexture(index);
 	}
+
+	int numAttachments = 2;
+	int numSubpasses = 1;
 
 	m_ptrRenderPass = GfxRenderer()->NewRenderPass(numAttachments, numSubpasses);
 	m_ptrRenderPass->SetDepthStencilAttachment(0, m_ptrDepthStencilTexture->GetFormat(), m_ptrDepthStencilTexture->GetSamples(), true, true, 1.0f, 0);
@@ -58,9 +58,6 @@ void CRenderSolutionDefault::DestroyFrameBuffer(void)
 
 void CRenderSolutionDefault::CreateFrameBufferMSAA(int samples)
 {
-	int numAttachments = 3;
-	int numSubpasses = 1;
-
 	m_ptrColorTextureMSAA = GfxRenderer()->NewRenderTexture(HashValue("ColorTextureMSAA"));
 	m_ptrColorTextureMSAA->Create(GFX_PIXELFORMAT_RGBA8_UNORM_PACK8, GfxRenderer()->GetSwapChain()->GetWidth(), GfxRenderer()->GetSwapChain()->GetHeight(), samples);
 
@@ -70,6 +67,9 @@ void CRenderSolutionDefault::CreateFrameBufferMSAA(int samples)
 	for (int index = 0; index < CGfxSwapChain::SWAPCHAIN_FRAME_COUNT; index++) {
 		m_ptrColorTextures[index] = GfxRenderer()->GetSwapChain()->GetFrameTexture(index);
 	}
+
+	int numAttachments = 3;
+	int numSubpasses = 1;
 
 	m_ptrRenderPassMSAA = GfxRenderer()->NewRenderPass(numAttachments, numSubpasses);
 	m_ptrRenderPassMSAA->SetDepthStencilAttachment(0, m_ptrDepthStencilTextureMSAA->GetFormat(), m_ptrDepthStencilTextureMSAA->GetSamples(), true, true, 1.0f, 0);
