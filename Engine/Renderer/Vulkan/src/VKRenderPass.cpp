@@ -24,24 +24,53 @@ void CVKRenderPass::Release(void)
 
 bool CVKRenderPass::Create(void)
 {
-	/*
 	eastl::vector<VkAttachmentDescription> attachments;
 	eastl::vector<VkSubpassDescription> subpasses;
 	eastl::vector<VkSubpassDependency> dependencies;
 
 	for (int index = 0; index < m_attachments.size(); index++) {
-		VkAttachmentDescription attachment;
+		bool isDepthStencil = 
+			CVKHelper::IsFormatStencilOnly((VkFormat)m_attachments[index].pixelFormat) || 
+			CVKHelper::IsFormatDepthOnly((VkFormat)m_attachments[index].pixelFormat) || 
+			CVKHelper::IsFormatDepthStencil((VkFormat)m_attachments[index].pixelFormat);
+
+		VkAttachmentDescription attachment = {};
 		attachment.flags = 0;
-		attachment.format;
-		attachment.samples;
-		attachment.loadOp;
-		attachment.storeOp;
-		attachment.stencilLoadOp;
-		attachment.stencilStoreOp;
-		attachment.initialLayout;
-		attachment.finalLayout;
+		attachment.format = (VkFormat)m_attachments[index].pixelFormat;
+		attachment.samples = (VkSampleCountFlagBits)m_attachments[index].samples;
+		attachment.loadOp = m_attachments[index].bClear ? VK_ATTACHMENT_LOAD_OP_CLEAR : VK_ATTACHMENT_LOAD_OP_LOAD;
+		attachment.storeOp = m_attachments[index].bInvalidation ? VK_ATTACHMENT_STORE_OP_DONT_CARE : VK_ATTACHMENT_STORE_OP_STORE;
+		attachment.stencilLoadOp = m_attachments[index].bClear ? VK_ATTACHMENT_LOAD_OP_CLEAR : VK_ATTACHMENT_LOAD_OP_LOAD;
+		attachment.stencilStoreOp = m_attachments[index].bInvalidation ? VK_ATTACHMENT_STORE_OP_DONT_CARE : VK_ATTACHMENT_STORE_OP_STORE;
+		attachment.initialLayout = attachment.finalLayout = isDepthStencil ? VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL : VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
+		attachments.push_back(attachment);
 	}
 
+	eastl::unordered_map<int, eastl::vector<VkAttachmentReference>> inputAttachmentReferences;
+	eastl::unordered_map<int, eastl::vector<VkAttachmentReference>> outputAttachmentReferences;
+	eastl::unordered_map<int, eastl::vector<VkAttachmentReference>> resolveAttachmentReferences;
+	eastl::unordered_map<int, eastl::vector<VkAttachmentReference>> preserveAttachmentReferences;
+
+	for (int index = 0; index < m_subpasses.size(); index++) {
+		for (const auto &itInputAttachment : m_subpasses[index].inputAttachments) {
+
+		}
+		/*
+		VkSubpassDescription subpass = {};
+		subpass.flags;
+		subpass.pipelineBindPoint;
+		subpass.inputAttachmentCount;
+		subpass.pInputAttachments;
+		subpass.colorAttachmentCount;
+		subpass.pColorAttachments;
+		subpass.pResolveAttachments;
+		subpass.pDepthStencilAttachment;
+		subpass.preserveAttachmentCount;
+		subpass.pPreserveAttachments;
+		*/
+	}
+
+	/*
 	VkRenderPassCreateInfo createInfo = {};
 	createInfo.sType;
 	createInfo.pNext;
