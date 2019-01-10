@@ -61,12 +61,14 @@ void CVKRenderPass::Destroy(void)
 
 }
 
-bool CVKRenderPass::SetColorAttachment(int indexAttachment, bool bInvalidation, bool bClear, float red, float green, float blue, float alpha)
+bool CVKRenderPass::SetColorAttachment(int indexAttachment, GfxPixelFormat pixelFormat, int samples, bool bInvalidation, bool bClear, float red, float green, float blue, float alpha)
 {
 	if (indexAttachment >= (int)m_attachments.size()) {
 		return false;
 	}
 
+	m_attachments[indexAttachment].pixelFormat = pixelFormat;
+	m_attachments[indexAttachment].samples = samples;
 	m_attachments[indexAttachment].bInvalidation = bInvalidation;
 	m_attachments[indexAttachment].bClear = bClear;
 	m_attachments[indexAttachment].color[0] = red;
@@ -77,12 +79,14 @@ bool CVKRenderPass::SetColorAttachment(int indexAttachment, bool bInvalidation, 
 	return true;
 }
 
-bool CVKRenderPass::SetDepthStencilAttachment(int indexAttachment, bool bInvalidation, bool bClear, float depth, int stencil)
+bool CVKRenderPass::SetDepthStencilAttachment(int indexAttachment, GfxPixelFormat pixelFormat, int samples, bool bInvalidation, bool bClear, float depth, int stencil)
 {
 	if (indexAttachment >= (int)m_attachments.size()) {
 		return false;
 	}
 
+	m_attachments[indexAttachment].pixelFormat = pixelFormat;
+	m_attachments[indexAttachment].samples = samples;
 	m_attachments[indexAttachment].bInvalidation = bInvalidation;
 	m_attachments[indexAttachment].bClear = bClear;
 	m_attachments[indexAttachment].depth = depth;
