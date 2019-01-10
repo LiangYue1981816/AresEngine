@@ -66,37 +66,45 @@ const VkComponentMapping& CVKHelper::GetFormatComponentMapping(VkFormat format)
 	return vkFormatComponentMapping[format];
 }
 
-VkBool32 CVKHelper::IsFormatSupported(VkFormat format)
+bool CVKHelper::IsFormatSupported(VkFormat format)
 {
-	return vkFormatProperties[format].bufferFeatures || vkFormatProperties[format].linearTilingFeatures || vkFormatProperties[format].optimalTilingFeatures ? VK_TRUE : VK_FALSE;
+	return vkFormatProperties[format].bufferFeatures || vkFormatProperties[format].linearTilingFeatures || vkFormatProperties[format].optimalTilingFeatures;
 }
 
-VkBool32 CVKHelper::IsFormatDepthOnly(VkFormat format)
+bool CVKHelper::IsFormatDepthOnly(VkFormat format)
 {
 	switch (format) {
-	case VK_FORMAT_D16_UNORM: return VK_TRUE;
-	case VK_FORMAT_X8_D24_UNORM_PACK32: return VK_TRUE;
-	case VK_FORMAT_D32_SFLOAT: return VK_TRUE;
-	default: return VK_FALSE;
+	case VK_FORMAT_D16_UNORM:
+	case VK_FORMAT_X8_D24_UNORM_PACK32:
+	case VK_FORMAT_D32_SFLOAT:
+		return true;
 	}
+	return false;
 }
 
-VkBool32 CVKHelper::IsFormatStencilOnly(VkFormat format)
+bool CVKHelper::IsFormatStencilOnly(VkFormat format)
 {
 	switch (format) {
-	case VK_FORMAT_S8_UINT: return VK_TRUE;
-	default: return VK_FALSE;
+	case VK_FORMAT_S8_UINT:
+		return true;
 	}
+	return false;
 }
 
-VkBool32 CVKHelper::IsFormatDepthStencil(VkFormat format)
+bool CVKHelper::IsFormatDepthStencil(VkFormat format)
 {
 	switch (format) {
-	case VK_FORMAT_D16_UNORM_S8_UINT: return VK_TRUE;
-	case VK_FORMAT_D24_UNORM_S8_UINT: return VK_TRUE;
-	case VK_FORMAT_D32_SFLOAT_S8_UINT: return VK_TRUE;
-	default: return VK_FALSE;
+	case VK_FORMAT_D16_UNORM_S8_UINT:
+	case VK_FORMAT_D24_UNORM_S8_UINT:
+	case VK_FORMAT_D32_SFLOAT_S8_UINT:
+		return true;
 	}
+	return false;
+}
+
+bool CVKHelper::IsFormatDepthOrStencil(VkFormat format)
+{
+	return IsFormatStencilOnly(format) || IsFormatDepthOnly(format) || IsFormatDepthStencil(format);
 }
 
 VkAccessFlags CVKHelper::GetAccessMask(VkImageLayout layout)

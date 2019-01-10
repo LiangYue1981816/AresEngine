@@ -8,10 +8,11 @@ public:
 	static void SetupFormat(VkPhysicalDevice vkPhysicalDevice);
 	static const VkComponentMapping& GetFormatComponentMapping(VkFormat format);
 
-	static VkBool32 IsFormatSupported(VkFormat format);
-	static VkBool32 IsFormatDepthOnly(VkFormat format);
-	static VkBool32 IsFormatStencilOnly(VkFormat format);
-	static VkBool32 IsFormatDepthStencil(VkFormat format);
+	static bool IsFormatSupported(VkFormat format);
+	static bool IsFormatDepthOnly(VkFormat format);
+	static bool IsFormatStencilOnly(VkFormat format);
+	static bool IsFormatDepthStencil(VkFormat format);
+	static bool IsFormatDepthOrStencil(VkFormat format);
 
 	static VkAccessFlags GetAccessMask(VkImageLayout layout);
 	static VkPipelineStageFlags GetPipelineStageFlags(VkAccessFlags access);
