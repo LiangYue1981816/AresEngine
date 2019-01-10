@@ -18,6 +18,8 @@ CVKDevice::CVKDevice(CVKInstance *pInstance)
 	, m_pMeshDrawManager(nullptr)
 	, m_pSamplerManager(nullptr)
 	, m_pTextureManager(nullptr)
+	, m_pRenderPassManager(nullptr)
+	, m_pFrameBufferManager(nullptr)
 	, m_pRenderTextureManager(nullptr)
 	, m_pShaderManager(nullptr)
 {
@@ -35,6 +37,8 @@ CVKDevice::CVKDevice(CVKInstance *pInstance)
 	m_pMeshDrawManager = new CVKMeshDrawManager(this);
 	m_pSamplerManager = new CVKSamplerManager(this);
 	m_pTextureManager = new CVKTextureManager(this);
+	m_pRenderPassManager = new CVKRenderPassManager(this);
+	m_pFrameBufferManager = new CVKFrameBufferManager(this);
 	m_pRenderTextureManager = new CVKRenderTextureManager(this);
 	m_pShaderManager = new CVKShaderManager(this);
 }
@@ -43,6 +47,8 @@ CVKDevice::~CVKDevice(void)
 {
 	delete m_pShaderManager;
 	delete m_pRenderTextureManager;
+	delete m_pFrameBufferManager;
+	delete m_pRenderPassManager;
 	delete m_pTextureManager;
 	delete m_pSamplerManager;
 	delete m_pMeshDrawManager;

@@ -63,6 +63,8 @@ private:
 	CVKMeshDrawManager *m_pMeshDrawManager;
 	CVKSamplerManager *m_pSamplerManager;
 	CVKTextureManager *m_pTextureManager;
+	CVKRenderPassManager *m_pRenderPassManager;
+	CVKFrameBufferManager *m_pFrameBufferManager;
 	CVKRenderTextureManager *m_pRenderTextureManager;
 	CVKShaderManager *m_pShaderManager;
 
