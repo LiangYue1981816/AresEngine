@@ -33,6 +33,7 @@ public:
 	virtual bool SetUniformVec4(const char *szName, float v0, float v1, float v2, float v3) = 0;
 	virtual bool SetUniformMat4(const char *szName, const float *value) = 0;
 
+public:
 	virtual CGfxPipelineGraphics* GetPipeline(void) const = 0;
 	virtual CGfxTexture2DPtr GetTexture2D(const char *szName) const = 0;
 	virtual CGfxTexture2DArrayPtr GetTexture2DArray(const char *szName) const = 0;

@@ -31,6 +31,7 @@ public:
 	bool SetUniformVec4(const char *szName, float v0, float v1, float v2, float v3);
 	bool SetUniformMat4(const char *szName, const float *value);
 
+public:
 	CGfxPipelineGraphics* GetPipeline(void) const;
 	CGfxTexture2DPtr GetTexture2D(const char *szName) const;
 	CGfxTexture2DArrayPtr GetTexture2DArray(const char *szName) const;
