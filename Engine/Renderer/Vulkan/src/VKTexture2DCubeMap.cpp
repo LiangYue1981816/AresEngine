@@ -56,7 +56,7 @@ int CVKTextureCubeMap::GetLevels(void) const
 	return m_levels;
 }
 
-bool CVKTextureCubeMap::Create(uint64_t texture)
+bool CVKTextureCubeMap::Create(HANDLE texture)
 {
 	Destroy();
 

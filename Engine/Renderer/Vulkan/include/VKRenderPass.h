@@ -14,7 +14,7 @@ private:
 
 
 public:
-	uint64_t GetRenderPass(void) const;
+	HANDLE GetRenderPass(void) const;
 
 public:
 	bool Create(void);

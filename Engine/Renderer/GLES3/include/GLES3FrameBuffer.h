@@ -14,14 +14,14 @@ private:
 
 
 public:
-	uint64_t GetFrameBuffer(void);
+	HANDLE GetFrameBuffer(void);
 
 public:
 	int GetWidth(void) const;
 	int GetHeight(void) const;
 
 public:
-	bool Create(uint64_t hRenderPass);
+	bool Create(HANDLE hRenderPass);
 	void Destroy(void);
 
 public:

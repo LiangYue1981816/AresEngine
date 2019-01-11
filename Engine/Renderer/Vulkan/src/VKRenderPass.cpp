@@ -22,9 +22,9 @@ void CVKRenderPass::Release(void)
 	m_pManager->Destroy(this);
 }
 
-uint64_t CVKRenderPass::GetRenderPass(void) const
+HANDLE CVKRenderPass::GetRenderPass(void) const
 {
-	return (uint64_t)m_vkRenderPass;
+	return m_vkRenderPass;
 }
 
 bool CVKRenderPass::Create(void)

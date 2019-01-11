@@ -62,7 +62,7 @@ int CGLES3Texture2D::GetSamples(void) const
 	return m_samples;
 }
 
-bool CGLES3Texture2D::Create(uint64_t texture)
+bool CGLES3Texture2D::Create(HANDLE texture)
 {
 	Destroy();
 

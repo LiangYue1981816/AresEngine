@@ -24,9 +24,9 @@ void CGLES3FrameBuffer::Release(void)
 	m_pManager->Destroy(this);
 }
 
-uint64_t CGLES3FrameBuffer::GetFrameBuffer(void)
+HANDLE CGLES3FrameBuffer::GetFrameBuffer(void)
 {
-	return m_fbo;
+	return (HANDLE)m_fbo;
 }
 
 int CGLES3FrameBuffer::GetWidth(void) const
@@ -39,7 +39,7 @@ int CGLES3FrameBuffer::GetHeight(void) const
 	return m_height;
 }
 
-bool CGLES3FrameBuffer::Create(uint64_t hRenderPass)
+bool CGLES3FrameBuffer::Create(HANDLE hRenderPass)
 {
 	Destroy();
 

@@ -23,9 +23,9 @@ void CVKFrameBuffer::Release(void)
 	m_pManager->Destroy(this);
 }
 
-uint64_t CVKFrameBuffer::GetFrameBuffer(void)
+HANDLE CVKFrameBuffer::GetFrameBuffer(void)
 {
-	return (uint64_t)m_vkFrameBuffer;
+	return m_vkFrameBuffer;
 }
 
 int CVKFrameBuffer::GetWidth(void) const
@@ -38,7 +38,7 @@ int CVKFrameBuffer::GetHeight(void) const
 	return m_height;
 }
 
-bool CVKFrameBuffer::Create(uint64_t hRenderPass)
+bool CVKFrameBuffer::Create(HANDLE hRenderPass)
 {
 	VkFramebufferCreateInfo createInfo = {};
 	createInfo.sType = VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO;

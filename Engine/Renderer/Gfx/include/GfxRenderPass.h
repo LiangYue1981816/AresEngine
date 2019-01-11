@@ -35,7 +35,7 @@ public:
 
 
 public:
-	virtual uint64_t GetRenderPass(void) const = 0;
+	virtual HANDLE GetRenderPass(void) const = 0;
 
 public:
 	virtual bool Create(void) = 0;

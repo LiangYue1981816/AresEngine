@@ -62,7 +62,7 @@ int CVKTexture2D::GetSamples(void) const
 	return m_samples;
 }
 
-bool CVKTexture2D::Create(uint64_t texture)
+bool CVKTexture2D::Create(HANDLE texture)
 {
 	Destroy();
 

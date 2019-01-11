@@ -62,7 +62,7 @@ int CGLES3Texture2DArray::GetLayers(void) const
 	return m_layers;
 }
 
-bool CGLES3Texture2DArray::Create(uint64_t texture)
+bool CGLES3Texture2DArray::Create(HANDLE texture)
 {
 	Destroy();
 

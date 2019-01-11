@@ -62,7 +62,7 @@ int CVKTexture2DArray::GetLayers(void) const
 	return m_layers;
 }
 
-bool CVKTexture2DArray::Create(uint64_t texture)
+bool CVKTexture2DArray::Create(HANDLE texture)
 {
 	Destroy();
 

@@ -56,7 +56,7 @@ int CGLES3TextureCubeMap::GetLevels(void) const
 	return m_levels;
 }
 
-bool CGLES3TextureCubeMap::Create(uint64_t texture)
+bool CGLES3TextureCubeMap::Create(HANDLE texture)
 {
 	Destroy();
 
