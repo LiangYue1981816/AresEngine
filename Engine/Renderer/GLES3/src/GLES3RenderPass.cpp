@@ -24,15 +24,39 @@ HANDLE CGLES3RenderPass::GetRenderPass(void) const
 	return 0;
 }
 
-bool CGLES3RenderPass::Create(void)
+uint32_t CGLES3RenderPass::GetAttachmentCount(void) const
 {
-	Destroy();
-	return true;
+	return m_attachments.size();
 }
 
-void CGLES3RenderPass::Destroy(void)
+const AttachmentInformation* CGLES3RenderPass::GetAttachments(void) const
 {
+	return m_attachments.data();
+}
 
+const AttachmentInformation* CGLES3RenderPass::GetAttachment(int indexAttachment) const
+{
+	return indexAttachment >= 0 && indexAttachment < (int)m_attachments.size() ? &m_attachments[indexAttachment] : nullptr;
+}
+
+uint32_t CGLES3RenderPass::GetSubPassCount(void) const
+{
+	return m_subpasses.size();
+}
+
+uint32_t CGLES3RenderPass::GetSubpassInputAttachmentCount(int indexSubPass) const
+{
+	return indexSubPass >= 0 && indexSubPass < (int)m_subpasses.size() ? m_subpasses[indexSubPass].inputAttachments.size() : 0;
+}
+
+uint32_t CGLES3RenderPass::GetSubpassOutputAttachmentCount(int indexSubPass) const
+{
+	return indexSubPass >= 0 && indexSubPass < (int)m_subpasses.size() ? m_subpasses[indexSubPass].outputAttachments.size() : 0;
+}
+
+const SubPassInformation* CGLES3RenderPass::GetSubPass(int indexSubPass) const
+{
+	return indexSubPass >= 0 && indexSubPass < (int)m_subpasses.size() ? &m_subpasses[indexSubPass] : nullptr;
 }
 
 bool CGLES3RenderPass::SetColorAttachment(int indexAttachment, GfxPixelFormat pixelFormat, int samples, bool bInvalidation, bool bClear, float red, float green, float blue, float alpha)
@@ -130,37 +154,13 @@ bool CGLES3RenderPass::SetSubpassPreserveReference(int indexSubPass, int indexAt
 	return true;
 }
 
-uint32_t CGLES3RenderPass::GetAttachmentCount(void) const
+bool CGLES3RenderPass::Create(void)
 {
-	return m_attachments.size();
+	Destroy();
+	return true;
 }
 
-const AttachmentInformation* CGLES3RenderPass::GetAttachments(void) const
+void CGLES3RenderPass::Destroy(void)
 {
-	return m_attachments.data();
-}
 
-const AttachmentInformation* CGLES3RenderPass::GetAttachment(int indexAttachment) const
-{
-	return indexAttachment >= 0 && indexAttachment < (int)m_attachments.size() ? &m_attachments[indexAttachment] : nullptr;
-}
-
-uint32_t CGLES3RenderPass::GetSubPassCount(void) const
-{
-	return m_subpasses.size();
-}
-
-uint32_t CGLES3RenderPass::GetSubpassInputAttachmentCount(int indexSubPass) const
-{
-	return indexSubPass >= 0 && indexSubPass < (int)m_subpasses.size() ? m_subpasses[indexSubPass].inputAttachments.size() : 0;
-}
-
-uint32_t CGLES3RenderPass::GetSubpassOutputAttachmentCount(int indexSubPass) const
-{
-	return indexSubPass >= 0 && indexSubPass < (int)m_subpasses.size() ? m_subpasses[indexSubPass].outputAttachments.size() : 0;
-}
-
-const SubPassInformation* CGLES3RenderPass::GetSubPass(int indexSubPass) const
-{
-	return indexSubPass >= 0 && indexSubPass < (int)m_subpasses.size() ? &m_subpasses[indexSubPass] : nullptr;
 }

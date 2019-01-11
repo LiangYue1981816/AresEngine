@@ -38,8 +38,14 @@ public:
 	virtual HANDLE GetRenderPass(void) const = 0;
 
 public:
-	virtual bool Create(void) = 0;
-	virtual void Destroy(void) = 0;
+	virtual uint32_t GetAttachmentCount(void) const = 0;
+	virtual const AttachmentInformation* GetAttachments(void) const = 0;
+	virtual const AttachmentInformation* GetAttachment(int indexAttachment) const = 0;
+
+	virtual uint32_t GetSubPassCount(void) const = 0;
+	virtual uint32_t GetSubpassInputAttachmentCount(int indexSubPass) const = 0;
+	virtual uint32_t GetSubpassOutputAttachmentCount(int indexSubPass) const = 0;
+	virtual const SubPassInformation* GetSubPass(int indexSubPass) const = 0;
 
 public:
 	virtual bool SetColorAttachment(int indexAttachment, GfxPixelFormat pixelFormat, int samples, bool bInvalidation, bool bClear, float red = 0.0f, float green = 0.0f, float blue = 0.0f, float alpha = 0.0f) = 0;
@@ -52,12 +58,6 @@ public:
 	virtual bool SetSubpassPreserveReference(int indexSubPass, int indexAttachment) = 0;
 
 public:
-	virtual uint32_t GetAttachmentCount(void) const = 0;
-	virtual const AttachmentInformation* GetAttachments(void) const = 0;
-	virtual const AttachmentInformation* GetAttachment(int indexAttachment) const = 0;
-
-	virtual uint32_t GetSubPassCount(void) const = 0;
-	virtual uint32_t GetSubpassInputAttachmentCount(int indexSubPass) const = 0;
-	virtual uint32_t GetSubpassOutputAttachmentCount(int indexSubPass) const = 0;
-	virtual const SubPassInformation* GetSubPass(int indexSubPass) const = 0;
+	virtual bool Create(void) = 0;
+	virtual void Destroy(void) = 0;
 };

@@ -17,8 +17,14 @@ public:
 	HANDLE GetRenderPass(void) const;
 
 public:
-	bool Create(void);
-	void Destroy(void);
+	uint32_t GetAttachmentCount(void) const;
+	const AttachmentInformation* GetAttachments(void) const;
+	const AttachmentInformation* GetAttachment(int indexAttachment) const;
+
+	uint32_t GetSubPassCount(void) const;
+	uint32_t GetSubpassInputAttachmentCount(int indexSubPass) const;
+	uint32_t GetSubpassOutputAttachmentCount(int indexSubPass) const;
+	const SubPassInformation* GetSubPass(int indexSubPass) const;
 
 public:
 	bool SetColorAttachment(int indexAttachment, GfxPixelFormat pixelFormat, int samples, bool bInvalidation, bool bClear, float red = 0.0f, float green = 0.0f, float blue = 0.0f, float alpha = 0.0f);
@@ -31,14 +37,8 @@ public:
 	bool SetSubpassPreserveReference(int indexSubPass, int indexAttachment);
 
 public:
-	uint32_t GetAttachmentCount(void) const;
-	const AttachmentInformation* GetAttachments(void) const;
-	const AttachmentInformation* GetAttachment(int indexAttachment) const;
-
-	uint32_t GetSubPassCount(void) const;
-	uint32_t GetSubpassInputAttachmentCount(int indexSubPass) const;
-	uint32_t GetSubpassOutputAttachmentCount(int indexSubPass) const;
-	const SubPassInformation* GetSubPass(int indexSubPass) const;
+	bool Create(void);
+	void Destroy(void);
 
 
 private:

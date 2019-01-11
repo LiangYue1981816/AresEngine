@@ -22,10 +22,10 @@ public:
 	virtual int GetHeight(void) const = 0;
 
 public:
-	virtual bool Create(HANDLE hRenderPass) = 0;
-	virtual void Destroy(void) = 0;
-
-public:
 	virtual bool SetAttachmentTexture(int indexAttachment, CGfxRenderTexturePtr &ptrAttachmentTexture) = 0;
 	virtual CGfxRenderTexturePtr GetAttachmentTexture(int indexAttachment) const = 0;
+
+public:
+	virtual bool Create(HANDLE hRenderPass) = 0;
+	virtual void Destroy(void) = 0;
 };

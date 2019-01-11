@@ -38,26 +38,6 @@ int CVKFrameBuffer::GetHeight(void) const
 	return m_height;
 }
 
-bool CVKFrameBuffer::Create(HANDLE hRenderPass)
-{
-	VkFramebufferCreateInfo createInfo = {};
-	createInfo.sType = VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO;
-	createInfo.pNext = nullptr;
-	createInfo.flags;
-	createInfo.renderPass;
-	createInfo.attachmentCount;
-	createInfo.pAttachments;
-	createInfo.width;
-	createInfo.height;
-	createInfo.layers;
-	return true;
-}
-
-void CVKFrameBuffer::Destroy(void)
-{
-
-}
-
 bool CVKFrameBuffer::SetAttachmentTexture(int indexAttachment, CGfxRenderTexturePtr &ptrAttachmentTexture)
 {
 	if (ptrAttachmentTexture->GetWidth() == m_width && ptrAttachmentTexture->GetHeight() == m_height &&
@@ -78,4 +58,24 @@ CGfxRenderTexturePtr CVKFrameBuffer::GetAttachmentTexture(int indexAttachment) c
 	else {
 		return nullptr;
 	}
+}
+
+bool CVKFrameBuffer::Create(HANDLE hRenderPass)
+{
+	VkFramebufferCreateInfo createInfo = {};
+	createInfo.sType = VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO;
+	createInfo.pNext = nullptr;
+	createInfo.flags;
+	createInfo.renderPass;
+	createInfo.attachmentCount;
+	createInfo.pAttachments;
+	createInfo.width;
+	createInfo.height;
+	createInfo.layers;
+	return true;
+}
+
+void CVKFrameBuffer::Destroy(void)
+{
+
 }
