@@ -40,8 +40,10 @@ public:
 private:
 	CVKMeshManager* GetMeshManager(void) const;
 	CVKMeshDrawManager* GetMeshDrawManager(void) const;
-	CVKTextureManager* GetTextureManager(void) const;
 	CVKSamplerManager* GetSamplerManager(void) const;
+	CVKTextureManager* GetTextureManager(void) const;
+	CVKRenderPassManager* GetRenderPassManager(void) const;
+	CVKFrameBufferManager* GetFrameBufferManager(void) const;
 	CVKRenderTextureManager* GetRenderTextureManager(void) const;
 	CVKShaderManager* GetShaderManager(void);
 

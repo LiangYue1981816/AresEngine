@@ -266,6 +266,16 @@ CVKTextureManager* CVKDevice::GetTextureManager(void) const
 	return m_pTextureManager;
 }
 
+CVKRenderPassManager* CVKDevice::GetRenderPassManager(void) const
+{
+	return m_pRenderPassManager;
+}
+
+CVKFrameBufferManager* CVKDevice::GetFrameBufferManager(void) const
+{
+	return m_pFrameBufferManager;
+}
+
 CVKSamplerManager* CVKDevice::GetSamplerManager(void) const
 {
 	return m_pSamplerManager;
