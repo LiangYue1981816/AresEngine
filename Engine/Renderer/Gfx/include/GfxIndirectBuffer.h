@@ -2,17 +2,18 @@
 #include "GfxRenderer.h"
 
 
-typedef struct DrawCommand {
-	int indexCount = 0;
-	int instanceCount = 0;
-	int firstIndex = 0;
-	int baseVertex = 0;
-	int reservedMustBeZero = 0;
-} DrawCommand;
-
-
 class CALL_API CGfxIndirectBuffer
 {
+public:
+	typedef struct DrawCommand {
+		int indexCount = 0;
+		int instanceCount = 0;
+		int firstIndex = 0;
+		int baseVertex = 0;
+		int reservedMustBeZero = 0;
+	} DrawCommand;
+
+
 public:
 	CGfxIndirectBuffer(uint32_t drawCommandCount)
 	{
