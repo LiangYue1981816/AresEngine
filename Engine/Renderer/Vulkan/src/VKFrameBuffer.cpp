@@ -41,7 +41,7 @@ int CVKFrameBuffer::GetHeight(void) const
 bool CVKFrameBuffer::SetAttachmentTexture(int indexAttachment, CGfxRenderTexturePtr &ptrAttachmentTexture)
 {
 	if (ptrAttachmentTexture->GetWidth() == m_width && ptrAttachmentTexture->GetHeight() == m_height &&
-		indexAttachment >= 0 && indexAttachment < m_ptrAttachmentTextures.size()) {
+		indexAttachment >= 0 && indexAttachment < (int)m_ptrAttachmentTextures.size()) {
 		m_ptrAttachmentTextures[indexAttachment] = ptrAttachmentTexture;
 		return true;
 	}
@@ -52,7 +52,7 @@ bool CVKFrameBuffer::SetAttachmentTexture(int indexAttachment, CGfxRenderTexture
 
 CGfxRenderTexturePtr CVKFrameBuffer::GetAttachmentTexture(int indexAttachment) const
 {
-	if (indexAttachment >= 0 && indexAttachment < m_ptrAttachmentTextures.size()) {
+	if (indexAttachment >= 0 && indexAttachment < (int)m_ptrAttachmentTextures.size()) {
 		return m_ptrAttachmentTextures[indexAttachment];
 	}
 	else {

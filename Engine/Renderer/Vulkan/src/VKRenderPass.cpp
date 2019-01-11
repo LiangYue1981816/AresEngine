@@ -27,41 +27,6 @@ HANDLE CVKRenderPass::GetRenderPass(void) const
 	return (HANDLE)m_vkRenderPass;
 }
 
-uint32_t CVKRenderPass::GetAttachmentCount(void) const
-{
-	return m_attachments.size();
-}
-
-const AttachmentInformation* CVKRenderPass::GetAttachments(void) const
-{
-	return m_attachments.data();
-}
-
-const AttachmentInformation* CVKRenderPass::GetAttachment(int indexAttachment) const
-{
-	return indexAttachment >= 0 && indexAttachment < (int)m_attachments.size() ? &m_attachments[indexAttachment] : nullptr;
-}
-
-uint32_t CVKRenderPass::GetSubPassCount(void) const
-{
-	return m_subpasses.size();
-}
-
-uint32_t CVKRenderPass::GetSubpassInputAttachmentCount(int indexSubPass) const
-{
-	return indexSubPass >= 0 && indexSubPass < (int)m_subpasses.size() ? m_subpasses[indexSubPass].inputAttachments.size() : 0;
-}
-
-uint32_t CVKRenderPass::GetSubpassOutputAttachmentCount(int indexSubPass) const
-{
-	return indexSubPass >= 0 && indexSubPass < (int)m_subpasses.size() ? m_subpasses[indexSubPass].outputAttachments.size() : 0;
-}
-
-const SubPassInformation* CVKRenderPass::GetSubPass(int indexSubPass) const
-{
-	return indexSubPass >= 0 && indexSubPass < (int)m_subpasses.size() ? &m_subpasses[indexSubPass] : nullptr;
-}
-
 bool CVKRenderPass::SetColorAttachment(int indexAttachment, GfxPixelFormat pixelFormat, int samples, bool bInvalidation, bool bClear, float red, float green, float blue, float alpha)
 {
 	if (indexAttachment >= (int)m_attachments.size()) {
@@ -166,6 +131,61 @@ bool CVKRenderPass::SetSubpassPreserveReference(int indexSubPass, int indexAttac
 	return true;
 }
 
+uint32_t CVKRenderPass::GetAttachmentCount(void) const
+{
+	return m_attachments.size();
+}
+
+const AttachmentInformation* CVKRenderPass::GetAttachments(void) const
+{
+	return m_attachments.data();
+}
+
+const AttachmentInformation* CVKRenderPass::GetAttachment(int indexAttachment) const
+{
+	if (indexAttachment >= 0 && indexAttachment < (int)m_attachments.size()) {
+		return &m_attachments[indexAttachment];
+	}
+	else {
+		return nullptr;
+	}
+}
+
+uint32_t CVKRenderPass::GetSubPassCount(void) const
+{
+	return m_subpasses.size();
+}
+
+uint32_t CVKRenderPass::GetSubpassInputAttachmentCount(int indexSubPass) const
+{
+	if (indexSubPass >= 0 && indexSubPass < (int)m_subpasses.size()) {
+		return m_subpasses[indexSubPass].inputAttachments.size();
+	}
+	else {
+		return 0;
+	}
+}
+
+uint32_t CVKRenderPass::GetSubpassOutputAttachmentCount(int indexSubPass) const
+{
+	if (indexSubPass >= 0 && indexSubPass < (int)m_subpasses.size()) {
+		return m_subpasses[indexSubPass].outputAttachments.size();
+	}
+	else {
+		return 0;
+	}
+}
+
+const SubPassInformation* CVKRenderPass::GetSubPass(int indexSubPass) const
+{
+	if (indexSubPass >= 0 && indexSubPass < (int)m_subpasses.size()) {
+		return &m_subpasses[indexSubPass];
+	}
+	else {
+		return nullptr;
+	}
+}
+
 bool CVKRenderPass::Create(void)
 {
 	Destroy();
@@ -180,7 +200,7 @@ bool CVKRenderPass::Create(void)
 	eastl::unordered_map<int, eastl::vector<VkAttachmentReference>> resolveAttachmentReferences;
 	eastl::unordered_map<int, eastl::vector<uint32_t>> preserveAttachmentReferences;
 
-	for (int indexAttachment = 0; indexAttachment < m_attachments.size(); indexAttachment++) {
+	for (int indexAttachment = 0; indexAttachment < (int)m_attachments.size(); indexAttachment++) {
 		VkAttachmentDescription attachment = {};
 		attachment.flags = 0;
 		attachment.format = (VkFormat)m_attachments[indexAttachment].pixelFormat;
@@ -194,7 +214,7 @@ bool CVKRenderPass::Create(void)
 		attachments.push_back(attachment);
 	}
 
-	for (int indexSubpass = 0; indexSubpass < m_subpasses.size(); indexSubpass++) {
+	for (int indexSubpass = 0; indexSubpass < (int)m_subpasses.size(); indexSubpass++) {
 		for (const auto &itInputAttachment : m_subpasses[indexSubpass].inputAttachments) {
 			VkAttachmentReference attachment = {};
 			attachment.attachment = itInputAttachment.first;

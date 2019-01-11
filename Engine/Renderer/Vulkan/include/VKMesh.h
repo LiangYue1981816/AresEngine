@@ -17,11 +17,12 @@ public:
 	uint32_t GetName(void) const;
 
 public:
-	CGfxIndexBuffer* GetIndexBuffer(void);
-	CGfxVertexBuffer* GetVertexBuffer(void);
 	Draw* GetDraw(int indexDraw);
 
+	CGfxIndexBuffer* GetIndexBuffer(void);
 	GfxIndexType GetIndexType(void) const;
+
+	CGfxVertexBuffer* GetVertexBuffer(void);
 	uint32_t GetVertexFormat(void) const;
 
 public:

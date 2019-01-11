@@ -27,16 +27,6 @@ uint32_t CGLES3Mesh::GetName(void) const
 	return m_name;
 }
 
-CGfxIndexBuffer* CGLES3Mesh::GetIndexBuffer(void)
-{
-	return m_pIndexBuffer;
-}
-
-CGfxVertexBuffer* CGLES3Mesh::GetVertexBuffer(void)
-{
-	return m_pVertexBuffer;
-}
-
 CGfxMesh::Draw* CGLES3Mesh::GetDraw(int indexDraw)
 {
 	const auto &itDraw = m_draws.find(indexDraw);
@@ -49,6 +39,11 @@ CGfxMesh::Draw* CGLES3Mesh::GetDraw(int indexDraw)
 	}
 }
 
+CGfxIndexBuffer* CGLES3Mesh::GetIndexBuffer(void)
+{
+	return m_pIndexBuffer;
+}
+
 GfxIndexType CGLES3Mesh::GetIndexType(void) const
 {
 	if (m_pIndexBuffer) {
@@ -57,6 +52,11 @@ GfxIndexType CGLES3Mesh::GetIndexType(void) const
 	else {
 		return GFX_INDEX_INVALID_ENUM;
 	}
+}
+
+CGfxVertexBuffer* CGLES3Mesh::GetVertexBuffer(void)
+{
+	return m_pVertexBuffer;
 }
 
 uint32_t CGLES3Mesh::GetVertexFormat(void) const
