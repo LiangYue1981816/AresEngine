@@ -34,6 +34,11 @@ uint32_t CVKRenderTexture::GetName(void) const
 	return m_name;
 }
 
+HANDLE CVKRenderTexture::GetTexture(void) const
+{
+	return m_vkImageView;
+}
+
 GfxPixelFormat CVKRenderTexture::GetFormat(void) const
 {
 	return m_format;
@@ -57,11 +62,6 @@ int CVKRenderTexture::GetHeight(void) const
 int CVKRenderTexture::GetSamples(void) const
 {
 	return m_samples;
-}
-
-VkImageView CVKRenderTexture::GetImageView(void) const
-{
-	return m_vkImageView;
 }
 
 bool CVKRenderTexture::Create(GfxPixelFormat pixelFormat, int width, int height, int samples, bool bTransient)

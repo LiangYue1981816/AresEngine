@@ -17,14 +17,14 @@ public:
 	uint32_t GetName(void) const;
 
 public:
+	HANDLE GetTexture(void) const;
+
 	GfxPixelFormat GetFormat(void) const;
 	GfxTextureType GetType(void) const;
 
 	int GetWidth(void) const;
 	int GetHeight(void) const;
 	int GetSamples(void) const;
-
-	uint32_t GetTexture(void) const;
 
 public:
 	bool Create(GfxPixelFormat pixelFormat, int width, int height, int samples = 1, bool bTransient = false);

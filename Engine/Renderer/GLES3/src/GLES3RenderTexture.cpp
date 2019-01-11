@@ -33,6 +33,11 @@ uint32_t CGLES3RenderTexture::GetName(void) const
 	return m_name;
 }
 
+HANDLE CGLES3RenderTexture::GetTexture(void) const
+{
+	return (HANDLE)m_texture;
+}
+
 GfxPixelFormat CGLES3RenderTexture::GetFormat(void) const
 {
 	return m_format;
@@ -56,11 +61,6 @@ int CGLES3RenderTexture::GetHeight(void) const
 int CGLES3RenderTexture::GetSamples(void) const
 {
 	return m_samples;
-}
-
-uint32_t CGLES3RenderTexture::GetTexture(void) const
-{
-	return m_texture;
 }
 
 bool CGLES3RenderTexture::Create(GfxPixelFormat pixelFormat, int width, int height, int samples, bool bTransient)

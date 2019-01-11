@@ -19,6 +19,8 @@ public:
 	virtual uint32_t GetName(void) const = 0;
 
 public:
+	virtual HANDLE GetTexture(void) const = 0;
+
 	virtual GfxPixelFormat GetFormat(void) const = 0;
 	virtual GfxTextureType GetType(void) const = 0;
 
