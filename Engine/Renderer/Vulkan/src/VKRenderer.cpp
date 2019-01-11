@@ -61,6 +61,16 @@ CGfxFrameBufferPtr CVKRenderer::NewFrameBuffer(int width, int height, int numAtt
 	return nullptr;
 }
 
+bool CVKRenderer::IsHaveRenderTexture(uint32_t name)
+{
+	return false;
+}
+
+CGfxRenderTexturePtr CVKRenderer::NewRenderTexture(uint32_t name)
+{
+	return nullptr;
+}
+
 bool CVKRenderer::IsHaveMesh(uint32_t name)
 {
 	return false;
@@ -142,16 +152,6 @@ CGfxTextureCubeMapPtr CVKRenderer::NewTextureCubeMap(uint32_t name)
 }
 
 CGfxTextureCubeMapPtr CVKRenderer::NewTextureCubeMap(const char *szFileName)
-{
-	return nullptr;
-}
-
-bool CVKRenderer::IsHaveRenderTexture(uint32_t name)
-{
-	return false;
-}
-
-CGfxRenderTexturePtr CVKRenderer::NewRenderTexture(uint32_t name)
 {
 	return nullptr;
 }

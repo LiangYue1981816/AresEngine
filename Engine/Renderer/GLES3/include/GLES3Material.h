@@ -18,11 +18,11 @@ public:
 	uint32_t GetName(void) const;
 
 public:
-	bool CreatePass(uint32_t name);
-	void Destroy(void);
+	CGfxMaterialPass* GetPass(uint32_t name);
 
 public:
-	CGfxMaterialPass* GetPass(uint32_t name);
+	bool CreatePass(uint32_t name);
+	void Destroy(void);
 
 
 private:

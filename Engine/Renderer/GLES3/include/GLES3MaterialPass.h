@@ -17,6 +17,12 @@ public:
 	uint32_t GetName(void) const;
 
 public:
+	CGfxPipelineGraphics* GetPipeline(void) const;
+	CGfxTexture2DPtr GetTexture2D(const char *szName) const;
+	CGfxTexture2DArrayPtr GetTexture2DArray(const char *szName) const;
+	CGfxTextureCubeMapPtr GetTextureCubeMap(const char *szName) const;
+
+public:
 	bool SetPipeline(const CGfxShader *pVertexShader, const CGfxShader *pFragmentShader, const PipelineState &state);
 
 	bool SetSampler(const char *szName, int mipLevels, GfxFilter minFilter, GfxFilter magFilter, GfxSamplerMipmapMode mipmapMode, GfxSamplerAddressMode addressMode);
@@ -32,12 +38,6 @@ public:
 	bool SetUniformVec3(const char *szName, float v0, float v1, float v2);
 	bool SetUniformVec4(const char *szName, float v0, float v1, float v2, float v3);
 	bool SetUniformMat4(const char *szName, const float *value);
-
-public:
-	CGfxPipelineGraphics* GetPipeline(void) const;
-	CGfxTexture2DPtr GetTexture2D(const char *szName) const;
-	CGfxTexture2DArrayPtr GetTexture2DArray(const char *szName) const;
-	CGfxTextureCubeMapPtr GetTextureCubeMap(const char *szName) const;
 
 public:
 	static void Bind(CGLES3Pipeline *pPipeline, const CGLES3MaterialPass *pPass, uint32_t &indexTexUnit);

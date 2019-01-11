@@ -19,9 +19,9 @@ public:
 	virtual uint32_t GetName(void) const = 0;
 
 public:
-	virtual bool CreatePass(uint32_t name) = 0;
-	virtual void Destroy(void) = 0;
+	virtual CGfxMaterialPass* GetPass(uint32_t name) = 0;
 
 public:
-	virtual CGfxMaterialPass* GetPass(uint32_t name) = 0;
+	virtual bool CreatePass(uint32_t name) = 0;
+	virtual void Destroy(void) = 0;
 };

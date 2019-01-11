@@ -105,6 +105,16 @@ CGfxFrameBufferPtr CGLES3Renderer::NewFrameBuffer(int width, int height, int num
 	return m_pFrameBufferManager->Create(width, height, numAttachments);
 }
 
+bool CGLES3Renderer::IsHaveRenderTexture(uint32_t name)
+{
+	return m_pRenderTextureManager->IsHaveRenderTexture(name);
+}
+
+CGfxRenderTexturePtr CGLES3Renderer::NewRenderTexture(uint32_t name)
+{
+	return m_pRenderTextureManager->CreateRenderTexture(name);
+}
+
 bool CGLES3Renderer::IsHaveMesh(uint32_t name)
 {
 	return m_pMeshManager->IsHave(name);
@@ -188,16 +198,6 @@ CGfxTextureCubeMapPtr CGLES3Renderer::NewTextureCubeMap(uint32_t name)
 CGfxTextureCubeMapPtr CGLES3Renderer::NewTextureCubeMap(const char *szFileName)
 {
 	return m_pTextureManager->CreateTextureCubeMap(szFileName);
-}
-
-bool CGLES3Renderer::IsHaveRenderTexture(uint32_t name)
-{
-	return m_pRenderTextureManager->IsHaveRenderTexture(name);
-}
-
-CGfxRenderTexturePtr CGLES3Renderer::NewRenderTexture(uint32_t name)
-{
-	return m_pRenderTextureManager->CreateRenderTexture(name);
 }
 
 CGfxUniformBufferPtr CGLES3Renderer::NewUniformBuffer(size_t size)
