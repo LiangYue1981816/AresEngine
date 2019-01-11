@@ -24,7 +24,7 @@ void CVKRenderPass::Release(void)
 
 HANDLE CVKRenderPass::GetRenderPass(void) const
 {
-	return m_vkRenderPass;
+	return (HANDLE)m_vkRenderPass;
 }
 
 bool CVKRenderPass::Create(void)

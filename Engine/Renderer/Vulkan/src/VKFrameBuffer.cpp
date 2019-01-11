@@ -25,7 +25,7 @@ void CVKFrameBuffer::Release(void)
 
 HANDLE CVKFrameBuffer::GetFrameBuffer(void)
 {
-	return m_vkFrameBuffer;
+	return (HANDLE)m_vkFrameBuffer;
 }
 
 int CVKFrameBuffer::GetWidth(void) const

@@ -36,7 +36,7 @@ uint32_t CVKRenderTexture::GetName(void) const
 
 HANDLE CVKRenderTexture::GetTexture(void) const
 {
-	return m_vkImageView;
+	return (HANDLE)m_vkImageView;
 }
 
 GfxPixelFormat CVKRenderTexture::GetFormat(void) const

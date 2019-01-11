@@ -34,7 +34,7 @@ uint32_t CVKTexture2DArray::GetName(void) const
 
 HANDLE CVKTexture2DArray::GetTexture(void) const
 {
-	return m_vkImageView;
+	return (HANDLE)m_vkImageView;
 }
 
 GfxPixelFormat CVKTexture2DArray::GetFormat(void) const

@@ -30,7 +30,7 @@ uint32_t CVKShader::GetKind(void) const
 
 HANDLE CVKShader::GetShader(void) const
 {
-	return m_vkShader;
+	return (HANDLE)m_vkShader;
 }
 
 const spirv_cross::CompilerGLSL* CVKShader::GetShaderCompiler(void) const
