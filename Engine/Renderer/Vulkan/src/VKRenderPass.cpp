@@ -267,3 +267,8 @@ const SubPassInformation* CVKRenderPass::GetSubPass(int indexSubPass) const
 {
 	return indexSubPass >= 0 && indexSubPass < (int)m_subpasses.size() ? &m_subpasses[indexSubPass] : nullptr;
 }
+
+VkRenderPass CVKRenderPass::GetRenderPass(void) const
+{
+	return m_vkRenderPass;
+}

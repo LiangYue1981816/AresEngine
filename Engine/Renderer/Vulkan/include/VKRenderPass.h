@@ -37,6 +37,9 @@ public:
 	uint32_t GetSubpassOutputAttachmentCount(int indexSubPass) const;
 	const SubPassInformation* GetSubPass(int indexSubPass) const;
 
+public:
+	VkRenderPass GetRenderPass(void) const;
+
 
 private:
 	VkRenderPass m_vkRenderPass;
