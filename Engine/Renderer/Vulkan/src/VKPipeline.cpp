@@ -98,7 +98,7 @@ bool CVKPipeline::CreateShaderStages(eastl::vector<VkPipelineShaderStageCreateIn
 			createInfo.pNext = nullptr;
 			createInfo.flags = 0;
 			createInfo.stage = vkGetShaderStageFlagBits((shader_kind)index);
-			createInfo.module = m_pShaders[index]->GetShader();
+			createInfo.module = (VkShaderModule)m_pShaders[index]->GetShader();
 			createInfo.pName = "main";
 			createInfo.pSpecializationInfo = nullptr;
 			shaders.emplace_back(createInfo);

@@ -28,9 +28,9 @@ uint32_t CGLES3Shader::GetKind(void) const
 	return m_kind;
 }
 
-uint32_t CGLES3Shader::GetProgram(void) const
+HANDLE CGLES3Shader::GetShader(void) const
 {
-	return m_program;
+	return (HANDLE)m_program;
 }
 
 bool CGLES3Shader::Create(const uint32_t *words, size_t numWords, shader_kind kind)

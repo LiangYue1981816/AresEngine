@@ -19,7 +19,7 @@ public:
 
 public:
 	uint32_t GetKind(void) const;
-	uint32_t GetProgram(void) const;
+	HANDLE GetShader(void) const;
 
 public:
 	bool Create(const uint32_t *words, size_t numWords, shader_kind kind);

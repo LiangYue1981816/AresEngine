@@ -28,7 +28,7 @@ uint32_t CVKShader::GetKind(void) const
 	return m_kind;
 }
 
-VkShaderModule CVKShader::GetShader(void) const
+HANDLE CVKShader::GetShader(void) const
 {
 	return m_vkShader;
 }

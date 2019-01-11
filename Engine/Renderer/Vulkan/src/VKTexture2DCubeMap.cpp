@@ -31,6 +31,11 @@ uint32_t CVKTextureCubeMap::GetName(void) const
 	return m_name;
 }
 
+HANDLE CVKTextureCubeMap::GetTexture(void) const
+{
+	return m_vkImageView;
+}
+
 GfxPixelFormat CVKTextureCubeMap::GetFormat(void) const
 {
 	return m_format;

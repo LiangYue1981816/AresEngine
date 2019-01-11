@@ -19,7 +19,7 @@ public:
 
 public:
 	uint32_t GetKind(void) const;
-	uint32_t GetShader(void) const;
+	HANDLE GetShader(void) const;
 	const spirv_cross::CompilerGLSL* GetShaderCompiler(void) const;
 
 public:

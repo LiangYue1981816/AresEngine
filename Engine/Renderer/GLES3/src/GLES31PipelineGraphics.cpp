@@ -51,8 +51,8 @@ bool CGLES3PipelineGraphics::Create(const CGfxShader *pVertexShader, const CGfxS
 	m_state = state;
 	m_pShaders[vertex_shader] = (CGLES3Shader *)pVertexShader;
 	m_pShaders[fragment_shader] = (CGLES3Shader *)pFragmentShader;
-	glUseProgramStages(m_pipeline, glGetProgramStage(vertex_shader), m_pShaders[vertex_shader]->GetProgram());
-	glUseProgramStages(m_pipeline, glGetProgramStage(fragment_shader), m_pShaders[fragment_shader]->GetProgram());
+	glUseProgramStages(m_pipeline, glGetProgramStage(vertex_shader), (GLuint)m_pShaders[vertex_shader]->GetShader());
+	glUseProgramStages(m_pipeline, glGetProgramStage(fragment_shader), (GLuint)m_pShaders[fragment_shader]->GetShader());
 
 	return true;
 }

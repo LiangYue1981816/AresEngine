@@ -37,7 +37,7 @@ bool CGLES3PipelineCompute::Create(const CGfxShader *pComputeShader)
 	Destroy();
 
 	m_pShaders[compute_shader] = (CGLES3Shader *)pComputeShader;
-	glUseProgramStages(m_pipeline, glGetProgramStage(compute_shader), m_pShaders[compute_shader]->GetProgram());
+	glUseProgramStages(m_pipeline, glGetProgramStage(compute_shader), (GLuint)m_pShaders[compute_shader]->GetShader());
 
 	return true;
 }

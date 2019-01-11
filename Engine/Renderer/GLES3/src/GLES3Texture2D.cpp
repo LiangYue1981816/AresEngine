@@ -32,6 +32,11 @@ uint32_t CGLES3Texture2D::GetName(void) const
 	return m_name;
 }
 
+HANDLE CGLES3Texture2D::GetTexture(void) const
+{
+	return (HANDLE)m_texture;
+}
+
 GfxPixelFormat CGLES3Texture2D::GetFormat(void) const
 {
 	return m_format;

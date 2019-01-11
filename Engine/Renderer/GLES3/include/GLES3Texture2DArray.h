@@ -17,6 +17,8 @@ public:
 	uint32_t GetName(void) const;
 
 public:
+	HANDLE GetTexture(void) const;
+
 	GfxPixelFormat GetFormat(void) const;
 	GfxTextureType GetType(void) const;
 

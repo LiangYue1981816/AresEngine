@@ -52,6 +52,7 @@ public:
 
 public:
 	virtual uint32_t GetKind(void) const = 0;
+	virtual HANDLE GetShader(void) const = 0;
 
 public:
 	virtual bool Create(const uint32_t *words, size_t numWords, shader_kind kind) = 0;

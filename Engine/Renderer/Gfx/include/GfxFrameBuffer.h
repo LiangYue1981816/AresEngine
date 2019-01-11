@@ -18,7 +18,6 @@ public:
 public:
 	virtual HANDLE GetFrameBuffer(void) = 0;
 
-public:
 	virtual int GetWidth(void) const = 0;
 	virtual int GetHeight(void) const = 0;
 

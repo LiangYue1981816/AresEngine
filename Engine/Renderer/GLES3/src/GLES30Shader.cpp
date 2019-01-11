@@ -30,7 +30,7 @@ uint32_t CGLES3Shader::GetKind(void) const
 	return m_kind;
 }
 
-uint32_t CGLES3Shader::GetShader(void) const
+HANDLE CGLES3Shader::GetShader(void) const
 {
 	return m_shader;
 }
