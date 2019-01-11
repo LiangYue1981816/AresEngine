@@ -20,6 +20,7 @@ public:
 
 public:
 	virtual bool SetPipeline(const CGfxShader *pVertexShader, const CGfxShader *pFragmentShader, const PipelineState &state) = 0;
+
 	virtual bool SetSampler(const char *szName, int mipLevels, GfxFilter minFilter, GfxFilter magFilter, GfxSamplerMipmapMode mipmapMode, GfxSamplerAddressMode addressMode) = 0;
 	virtual bool SetTexture2D(const char *szName, HANDLE externTexture) = 0;
 	virtual bool SetTexture2DArray(const char *szName, HANDLE externTexture) = 0;
@@ -27,6 +28,7 @@ public:
 	virtual bool SetTexture2D(const char *szName, const char *szFileName) = 0;
 	virtual bool SetTexture2DArray(const char *szName, const char *szFileName) = 0;
 	virtual bool SetTextureCubeMap(const char *szName, const char *szFileName) = 0;
+
 	virtual bool SetUniformVec1(const char *szName, float v0) = 0;
 	virtual bool SetUniformVec2(const char *szName, float v0, float v1) = 0;
 	virtual bool SetUniformVec3(const char *szName, float v0, float v1, float v2) = 0;
@@ -35,6 +37,7 @@ public:
 
 public:
 	virtual CGfxPipelineGraphics* GetPipeline(void) const = 0;
+
 	virtual CGfxTexture2DPtr GetTexture2D(const char *szName) const = 0;
 	virtual CGfxTexture2DArrayPtr GetTexture2DArray(const char *szName) const = 0;
 	virtual CGfxTextureCubeMapPtr GetTextureCubeMap(const char *szName) const = 0;
