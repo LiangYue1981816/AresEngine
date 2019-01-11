@@ -39,7 +39,7 @@ int CGLES3FrameBuffer::GetHeight(void) const
 	return m_height;
 }
 
-bool CGLES3FrameBuffer::Create(void)
+bool CGLES3FrameBuffer::Create(uint64_t hRenderPass)
 {
 	Destroy();
 

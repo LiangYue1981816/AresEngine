@@ -21,7 +21,7 @@ public:
 	int GetHeight(void) const;
 
 public:
-	bool Create(void);
+	bool Create(uint64_t hRenderPass);
 	void Destroy(void);
 
 public:

@@ -38,8 +38,18 @@ int CVKFrameBuffer::GetHeight(void) const
 	return m_height;
 }
 
-bool CVKFrameBuffer::Create(void)
+bool CVKFrameBuffer::Create(uint64_t hRenderPass)
 {
+	VkFramebufferCreateInfo createInfo = {};
+	createInfo.sType = VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO;
+	createInfo.pNext = nullptr;
+	createInfo.flags;
+	createInfo.renderPass;
+	createInfo.attachmentCount;
+	createInfo.pAttachments;
+	createInfo.width;
+	createInfo.height;
+	createInfo.layers;
 	return true;
 }
 
