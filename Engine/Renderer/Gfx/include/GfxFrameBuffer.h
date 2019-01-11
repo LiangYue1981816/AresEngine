@@ -16,8 +16,15 @@ public:
 
 
 public:
+	virtual uint64_t GetFrameBuffer(void) = 0;
+
+public:
 	virtual int GetWidth(void) const = 0;
 	virtual int GetHeight(void) const = 0;
+
+public:
+	virtual bool Create(void) = 0;
+	virtual void Destroy(void) = 0;
 
 public:
 	virtual bool SetAttachmentTexture(int indexAttachment, CGfxRenderTexturePtr &ptrAttachmentTexture) = 0;

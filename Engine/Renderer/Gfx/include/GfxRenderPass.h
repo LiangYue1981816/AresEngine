@@ -35,6 +35,9 @@ public:
 
 
 public:
+	virtual uint64_t GetRenderPass(void) const = 0;
+
+public:
 	virtual bool Create(void) = 0;
 	virtual void Destroy(void) = 0;
 

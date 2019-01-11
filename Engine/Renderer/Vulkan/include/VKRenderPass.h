@@ -14,6 +14,9 @@ private:
 
 
 public:
+	uint64_t GetRenderPass(void) const;
+
+public:
 	bool Create(void);
 	void Destroy(void);
 
@@ -36,9 +39,6 @@ public:
 	uint32_t GetSubpassInputAttachmentCount(int indexSubPass) const;
 	uint32_t GetSubpassOutputAttachmentCount(int indexSubPass) const;
 	const SubPassInformation* GetSubPass(int indexSubPass) const;
-
-public:
-	VkRenderPass GetRenderPass(void) const;
 
 
 private:

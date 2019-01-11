@@ -14,6 +14,9 @@ private:
 
 
 public:
+	uint64_t GetRenderPass(void) const;
+
+public:
 	bool Create(void);
 	void Destroy(void);
 

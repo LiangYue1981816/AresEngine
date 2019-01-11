@@ -12,20 +12,21 @@ CGLES3FrameBuffer::CGLES3FrameBuffer(CGLES3FrameBufferManager *pManager, int wid
 	, m_resolve(0)
 {
 	m_ptrAttachmentTextures.resize(numAttachments);
-
-	glGenFramebuffers(1, &m_fbo);
-	glGenFramebuffers(1, &m_resolve);
 }
 
 CGLES3FrameBuffer::~CGLES3FrameBuffer(void)
 {
-	glDeleteFramebuffers(1, &m_fbo);
-	glDeleteFramebuffers(1, &m_resolve);
+	Destroy();
 }
 
 void CGLES3FrameBuffer::Release(void)
 {
 	m_pManager->Destroy(this);
+}
+
+uint64_t CGLES3FrameBuffer::GetFrameBuffer(void)
+{
+	return m_fbo;
 }
 
 int CGLES3FrameBuffer::GetWidth(void) const
@@ -36,6 +37,30 @@ int CGLES3FrameBuffer::GetWidth(void) const
 int CGLES3FrameBuffer::GetHeight(void) const
 {
 	return m_height;
+}
+
+bool CGLES3FrameBuffer::Create(void)
+{
+	Destroy();
+
+	glGenFramebuffers(1, &m_fbo);
+	glGenFramebuffers(1, &m_resolve);
+
+	return true;
+}
+
+void CGLES3FrameBuffer::Destroy(void)
+{
+	if (m_fbo) {
+		glDeleteFramebuffers(1, &m_fbo);
+	}
+
+	if (m_resolve) {
+		glDeleteFramebuffers(1, &m_resolve);
+	}
+
+	m_fbo = 0;
+	m_resolve = 0;
 }
 
 bool CGLES3FrameBuffer::SetAttachmentTexture(int indexAttachment, CGfxRenderTexturePtr &ptrAttachmentTexture)

@@ -15,12 +15,17 @@ CVKFrameBuffer::CVKFrameBuffer(CVKDevice *pDevice, CVKFrameBufferManager *pManag
 
 CVKFrameBuffer::~CVKFrameBuffer(void)
 {
-
+	Destroy();
 }
 
 void CVKFrameBuffer::Release(void)
 {
 	m_pManager->Destroy(this);
+}
+
+uint64_t CVKFrameBuffer::GetFrameBuffer(void)
+{
+	return (uint64_t)m_vkFrameBuffer;
 }
 
 int CVKFrameBuffer::GetWidth(void) const
@@ -31,6 +36,16 @@ int CVKFrameBuffer::GetWidth(void) const
 int CVKFrameBuffer::GetHeight(void) const
 {
 	return m_height;
+}
+
+bool CVKFrameBuffer::Create(void)
+{
+	return true;
+}
+
+void CVKFrameBuffer::Destroy(void)
+{
+
 }
 
 bool CVKFrameBuffer::SetAttachmentTexture(int indexAttachment, CGfxRenderTexturePtr &ptrAttachmentTexture)

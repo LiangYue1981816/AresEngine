@@ -14,8 +14,15 @@ private:
 
 
 public:
+	uint64_t GetFrameBuffer(void);
+
+public:
 	int GetWidth(void) const;
 	int GetHeight(void) const;
+
+public:
+	bool Create(void);
+	void Destroy(void);
 
 public:
 	bool SetAttachmentTexture(int indexAttachment, CGfxRenderTexturePtr &ptrAttachmentTexture);

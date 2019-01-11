@@ -19,8 +19,14 @@ void CGLES3RenderPass::Release(void)
 	m_pManager->Destroy(this);
 }
 
+uint64_t CGLES3RenderPass::GetRenderPass(void) const
+{
+	return 0;
+}
+
 bool CGLES3RenderPass::Create(void)
 {
+	Destroy();
 	return true;
 }
 

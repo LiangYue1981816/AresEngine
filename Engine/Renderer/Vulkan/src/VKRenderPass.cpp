@@ -22,8 +22,15 @@ void CVKRenderPass::Release(void)
 	m_pManager->Destroy(this);
 }
 
+uint64_t CVKRenderPass::GetRenderPass(void) const
+{
+	return (uint64_t)m_vkRenderPass;
+}
+
 bool CVKRenderPass::Create(void)
 {
+	Destroy();
+
 	eastl::vector<VkAttachmentDescription> attachments;
 	eastl::vector<VkSubpassDescription> subpasses;
 	eastl::vector<VkSubpassDependency> dependencies;
@@ -266,9 +273,4 @@ uint32_t CVKRenderPass::GetSubpassOutputAttachmentCount(int indexSubPass) const
 const SubPassInformation* CVKRenderPass::GetSubPass(int indexSubPass) const
 {
 	return indexSubPass >= 0 && indexSubPass < (int)m_subpasses.size() ? &m_subpasses[indexSubPass] : nullptr;
-}
-
-VkRenderPass CVKRenderPass::GetRenderPass(void) const
-{
-	return m_vkRenderPass;
 }
