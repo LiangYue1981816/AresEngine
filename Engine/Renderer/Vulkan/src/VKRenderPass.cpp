@@ -9,7 +9,7 @@ CVKRenderPass::CVKRenderPass(CVKDevice *pDevice, CVKRenderPassManager *pManager,
 	, m_vkRenderPass(VK_NULL_HANDLE)
 {
 	m_attachments.resize(numAttachments);
-	m_subpasses.resize(numAttachments);
+	m_subpasses.resize(numSubpasses);
 }
 
 CVKRenderPass::~CVKRenderPass(void)
