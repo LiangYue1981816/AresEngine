@@ -37,5 +37,8 @@ private:
 	eastl::vector<CGfxRenderTexturePtr> m_ptrAttachmentTextures;
 
 private:
+	CVKDevice *m_pDevice;
+
+private:
 	CVKFrameBufferManager *m_pManager;
 };

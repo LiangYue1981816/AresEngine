@@ -3,6 +3,7 @@
 
 CVKFrameBuffer::CVKFrameBuffer(CVKDevice *pDevice, CVKFrameBufferManager *pManager, int width, int height, int numAttachments)
 	: CGfxFrameBuffer(width, height, numAttachments)
+	, m_pDevice(pDevice)
 	, m_pManager(pManager)
 
 	, m_width(width)
@@ -62,20 +63,35 @@ CGfxRenderTexturePtr CVKFrameBuffer::GetAttachmentTexture(int indexAttachment) c
 
 bool CVKFrameBuffer::Create(HANDLE hRenderPass)
 {
+	eastl::vector<VkImageView> attachments(m_ptrAttachmentTextures.size());
+	for (int indexAttachment = 0; indexAttachment < (int)m_ptrAttachmentTextures.size(); indexAttachment++) {
+		attachments[indexAttachment] = (VkImageView)m_ptrAttachmentTextures[indexAttachment]->GetTexture();
+	}
+
 	VkFramebufferCreateInfo createInfo = {};
 	createInfo.sType = VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO;
 	createInfo.pNext = nullptr;
-	createInfo.flags;
-	createInfo.renderPass;
-	createInfo.attachmentCount;
-	createInfo.pAttachments;
-	createInfo.width;
-	createInfo.height;
-	createInfo.layers;
+	createInfo.flags = 0;
+	createInfo.renderPass = (VkRenderPass)hRenderPass;
+	createInfo.attachmentCount = attachments.size();
+	createInfo.pAttachments = attachments.data();
+	createInfo.width = m_width;
+	createInfo.height = m_height;
+	createInfo.layers = 1;
+	CALL_VK_FUNCTION_RETURN_BOOL(vkCreateFramebuffer(m_pDevice->GetDevice(), &createInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkFrameBuffer));
+
 	return true;
 }
 
 void CVKFrameBuffer::Destroy(void)
 {
+	if (m_vkFrameBuffer) {
+		vkDestroyFramebuffer(m_pDevice->GetDevice(), m_vkFrameBuffer, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
+	}
 
+	for (int indexAttachment = 0; indexAttachment < (int)m_ptrAttachmentTextures.size(); indexAttachment++) {
+		m_ptrAttachmentTextures[indexAttachment].Release();
+	}
+
+	m_vkFrameBuffer = VK_NULL_HANDLE;
 }
