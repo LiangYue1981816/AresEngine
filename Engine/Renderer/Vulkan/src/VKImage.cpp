@@ -67,7 +67,12 @@ VkImage CVKImage::GetImage(void) const
 
 VkDeviceSize CVKImage::GetSize(void) const
 {
-	return m_pMemory ? m_pMemory->GetSize() : 0;
+	if (m_pMemory) {
+		return m_pMemory->GetSize();
+	}
+	else {
+		return 0;
+	}
 }
 
 bool CVKImage::BufferData(size_t offset, size_t size, const void *pBuffer)
@@ -89,25 +94,50 @@ bool CVKImage::BufferData(size_t offset, size_t size, const void *pBuffer)
 
 bool CVKImage::IsDeviceLocal(void) const
 {
-	return m_pMemory ? m_pMemory->IsDeviceLocal() : false;
+	if (m_pMemory) {
+		return m_pMemory->IsDeviceLocal();
+	}
+	else {
+		return false;
+	}
 }
 
 bool CVKImage::IsHostVisible(void) const
 {
-	return m_pMemory ? m_pMemory->IsHostVisible() : false;
+	if (m_pMemory) {
+		return m_pMemory->IsHostVisible();
+	}
+	else {
+		return false;
+	}
 }
 
 bool CVKImage::IsHostCoherent(void) const
 {
-	return m_pMemory ? m_pMemory->IsHostCoherent() : false;
+	if (m_pMemory) {
+		return m_pMemory->IsHostCoherent();
+	}
+	else {
+		return false;
+	}
 }
 
 bool CVKImage::IsHostCached(void) const
 {
-	return m_pMemory ? m_pMemory->IsHostCached() : false;
+	if (m_pMemory) {
+		return m_pMemory->IsHostCached();
+	}
+	else {
+		return false;
+	}
 }
 
 bool CVKImage::IsLazilyAllocated(void) const
 {
-	return m_pMemory ? m_pMemory->IsLazilyAllocated() : false;
+	if (m_pMemory) {
+		return m_pMemory->IsLazilyAllocated();
+	}
+	else {
+		return false;
+	}
 }

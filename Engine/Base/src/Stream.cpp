@@ -26,7 +26,7 @@ CStream::~CStream(void)
 
 bool CStream::IsValid(void) const
 {
-	return (m_pAddress && m_size) ? true : false;
+	return m_pAddress != nullptr && m_size > 0;
 }
 
 void CStream::Free(void)

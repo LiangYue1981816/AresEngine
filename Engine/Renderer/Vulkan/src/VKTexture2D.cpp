@@ -91,7 +91,7 @@ bool CVKTexture2D::Create(GfxPixelFormat pixelFormat, int width, int height, int
 	m_width = width;
 	m_height = height;
 	m_levels = levels;
-	m_samples = samples > 1 ? samples : 1;
+	m_samples = std::max(samples, 1);
 
 	return true;
 }

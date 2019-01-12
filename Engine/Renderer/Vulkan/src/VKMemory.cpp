@@ -146,25 +146,25 @@ bool CVKMemory::Invalidate(VkDeviceSize offset, VkDeviceSize size) const
 
 bool CVKMemory::IsDeviceLocal(void) const
 {
-	return m_memoryPropertyFlags & VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT ? true : false;
+	return (m_memoryPropertyFlags & VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT) != 0;
 }
 
 bool CVKMemory::IsHostVisible(void) const
 {
-	return m_memoryPropertyFlags & VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT ? true : false;
+	return (m_memoryPropertyFlags & VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT) != 0;
 }
 
 bool CVKMemory::IsHostCoherent(void) const
 {
-	return m_memoryPropertyFlags & VK_MEMORY_PROPERTY_HOST_COHERENT_BIT ? true : false;
+	return (m_memoryPropertyFlags & VK_MEMORY_PROPERTY_HOST_COHERENT_BIT) != 0;
 }
 
 bool CVKMemory::IsHostCached(void) const
 {
-	return m_memoryPropertyFlags & VK_MEMORY_PROPERTY_HOST_CACHED_BIT ? true : false;
+	return (m_memoryPropertyFlags & VK_MEMORY_PROPERTY_HOST_CACHED_BIT) != 0;
 }
 
 bool CVKMemory::IsLazilyAllocated(void) const
 {
-	return m_memoryPropertyFlags & VK_MEMORY_PROPERTY_LAZILY_ALLOCATED_BIT ? true : false;
+	return (m_memoryPropertyFlags & VK_MEMORY_PROPERTY_LAZILY_ALLOCATED_BIT) != 0;
 }

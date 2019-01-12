@@ -99,7 +99,12 @@ public:
 
 	inline uint32_t GetRefCount(void) const
 	{
-		return m_pPointer ? ((CGfxResource *)m_pPointer)->refCount : 0;
+		if (m_pPointer) {
+			return ((CGfxResource *)m_pPointer)->refCount;
+		}
+		else {
+			return 0;
+		}
 	}
 
 	inline CGfxResourcePtr<T>& operator = (const CGfxResourcePtr<T> &ptr)

@@ -70,12 +70,12 @@ public:
 
 	inline bool IsValid(void) const
 	{
-		return m_pPointer && m_pRefCount ? true : false;
+		return m_pPointer != nullptr && m_pRefCount != nullptr;
 	}
 
 	inline bool IsNull(void) const
 	{
-		return m_pPointer && m_pRefCount ? false : true;
+		return m_pPointer == nullptr || m_pRefCount == nullptr;
 	}
 
 	inline T* GetPointer(void) const
