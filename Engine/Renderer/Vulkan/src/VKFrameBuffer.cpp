@@ -63,6 +63,8 @@ CGfxRenderTexturePtr CVKFrameBuffer::GetAttachmentTexture(int indexAttachment) c
 
 bool CVKFrameBuffer::Create(HANDLE hRenderPass)
 {
+	Destroy();
+
 	eastl::vector<VkImageView> attachments(m_ptrAttachmentTextures.size());
 	for (int indexAttachment = 0; indexAttachment < (int)m_ptrAttachmentTextures.size(); indexAttachment++) {
 		attachments[indexAttachment] = (VkImageView)m_ptrAttachmentTextures[indexAttachment]->GetTexture();
@@ -87,10 +89,6 @@ void CVKFrameBuffer::Destroy(void)
 {
 	if (m_vkFrameBuffer) {
 		vkDestroyFramebuffer(m_pDevice->GetDevice(), m_vkFrameBuffer, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
-	}
-
-	for (int indexAttachment = 0; indexAttachment < (int)m_ptrAttachmentTextures.size(); indexAttachment++) {
-		m_ptrAttachmentTextures[indexAttachment].Release();
 	}
 
 	m_vkFrameBuffer = VK_NULL_HANDLE;

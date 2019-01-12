@@ -81,10 +81,6 @@ void CGLES3FrameBuffer::Destroy(void)
 		glDeleteFramebuffers(1, &m_resolve);
 	}
 
-	for (int indexAttachment = 0; indexAttachment < (int)m_ptrAttachmentTextures.size(); indexAttachment++) {
-		m_ptrAttachmentTextures[indexAttachment].Release();
-	}
-
 	m_fbo = 0;
 	m_resolve = 0;
 }
