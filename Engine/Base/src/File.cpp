@@ -35,20 +35,40 @@ size_t CFile::Size(void)
 
 size_t CFile::Read(void *pBuffer, size_t size, size_t count)
 {
-	return m_pFile ? fread(pBuffer, size, count, m_pFile) : 0;
+	if (m_pFile) {
+		return fread(pBuffer, size, count, m_pFile);
+	}
+	else {
+		return 0;
+	}
 }
 
 size_t CFile::Write(void *pBuffer, size_t size, size_t count)
 {
-	return m_pFile ? fwrite(pBuffer, size, count, m_pFile) : 0;
+	if (m_pFile) {
+		return fwrite(pBuffer, size, count, m_pFile);
+	}
+	else {
+		return 0;
+	}
 }
 
 int CFile::Seek(long offset, int origin)
 {
-	return m_pFile ? fseek(m_pFile, offset, origin) : -1;
+	if (m_pFile) {
+		return fseek(m_pFile, offset, origin);
+	}
+	else {
+		return -1;
+	}
 }
 
 int CFile::Eof(void)
 {
-	return m_pFile ? feof(m_pFile) : -1;
+	if (m_pFile) {
+		return feof(m_pFile);
+	}
+	else {
+		return -1;
+	}
 }

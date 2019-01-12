@@ -119,7 +119,13 @@ void CFileManager::SetFile(const char *szFileName, const char *szFullName)
 const char* CFileManager::GetFullName(const char *szFileName)
 {
 	const auto &itFile = m_files.find(HashValue(szFileName));
-	return itFile != m_files.end() ? itFile->second.szFullName : "";
+
+	if (itFile != m_files.end()) {
+		return itFile->second.szFullName;
+	}
+	else {
+		return "";
+	}
 }
 
 bool CFileManager::LoadStream(const char *szFileName, CStream *pStream)

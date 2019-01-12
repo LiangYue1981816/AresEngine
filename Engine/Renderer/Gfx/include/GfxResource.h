@@ -84,12 +84,12 @@ public:
 
 	inline bool IsValid(void) const
 	{
-		return m_pPointer ? true : false;
+		return m_pPointer != nullptr;
 	}
 
 	inline bool IsNull(void) const
 	{
-		return m_pPointer ? false : true;
+		return m_pPointer == nullptr;
 	}
 
 	inline T* GetPointer(void) const
@@ -125,7 +125,7 @@ public:
 
 	inline operator bool (void) const
 	{
-		return m_pPointer ? true : false;
+		return m_pPointer != nullptr;
 	}
 
 

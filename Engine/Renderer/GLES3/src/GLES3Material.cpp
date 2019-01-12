@@ -27,7 +27,13 @@ uint32_t CGLES3Material::GetName(void) const
 CGfxMaterialPass* CGLES3Material::GetPass(uint32_t name)
 {
 	const auto &itPass = m_pPasses.find(name);
-	return itPass != m_pPasses.end() ? itPass->second : nullptr;
+
+	if (itPass != m_pPasses.end()) {
+		return itPass->second;
+	}
+	else {
+		return nullptr;
+	}
 }
 
 bool CGLES3Material::CreatePass(uint32_t name)
