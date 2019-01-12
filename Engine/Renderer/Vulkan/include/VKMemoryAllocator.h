@@ -35,6 +35,7 @@ private:
 private:
 	VkDeviceSize GetFreeSize(void) const;
 	VkDeviceSize GetFullSize(void) const;
+
 	uint32_t GetMemoryTypeIndex(void) const;
 
 private:

@@ -15,6 +15,16 @@ CVKQueue::~CVKQueue(void)
 
 }
 
+VkQueue CVKQueue::GetQueue(void) const
+{
+	return m_vkQueue;
+}
+
+uint32_t CVKQueue::GetQueueFamilyIndex(void) const
+{
+	return m_queueFamilyIndex;
+}
+
 bool CVKQueue::Submit(const CGfxCommandBufferPtr &ptrCommandBuffer) const
 {
 	return Submit(ptrCommandBuffer, VK_NULL_HANDLE, 0, VK_NULL_HANDLE);
@@ -28,14 +38,4 @@ bool CVKQueue::Submit(const CGfxCommandBufferPtr &ptrCommandBuffer, VkSemaphore 
 void CVKQueue::WaitIdle(void) const
 {
 	vkQueueWaitIdle(m_vkQueue);
-}
-
-VkQueue CVKQueue::GetQueue(void) const
-{
-	return m_vkQueue;
-}
-
-uint32_t CVKQueue::GetQueueFamilyIndex(void) const
-{
-	return m_queueFamilyIndex;
 }
