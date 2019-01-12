@@ -33,6 +33,21 @@ CVKMemoryAllocator* CVKMemory::GetAllocator(void) const
 	return m_pAllocator;
 }
 
+VkDeviceSize CVKMemory::GetSize(void) const
+{
+	return m_size;
+}
+
+VkDeviceSize CVKMemory::GetOffset(void) const
+{
+	return m_offset;
+}
+
+VkDeviceSize CVKMemory::GetAlignmentOffset(void) const
+{
+	return m_alignmentOffset;
+}
+
 bool CVKMemory::BindImage(VkImage vkImage) const
 {
 #ifdef DEBUG
@@ -152,19 +167,4 @@ bool CVKMemory::IsHostCached(void) const
 bool CVKMemory::IsLazilyAllocated(void) const
 {
 	return m_memoryPropertyFlags & VK_MEMORY_PROPERTY_LAZILY_ALLOCATED_BIT ? true : false;
-}
-
-VkDeviceSize CVKMemory::GetSize(void) const
-{
-	return m_size;
-}
-
-VkDeviceSize CVKMemory::GetOffset(void) const
-{
-	return m_offset;
-}
-
-VkDeviceSize CVKMemory::GetAlignmentOffset(void) const
-{
-	return m_alignmentOffset;
 }

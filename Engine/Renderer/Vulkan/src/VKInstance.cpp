@@ -74,6 +74,21 @@ CVKInstance::~CVKInstance(void)
 	delete m_pAllocator;
 }
 
+VkInstance CVKInstance::GetInstance(void) const
+{
+	return m_vkInstance;
+}
+
+VkSurfaceKHR CVKInstance::GetSurface(void) const
+{
+	return m_vkSurface;
+}
+
+CVKAllocator* CVKInstance::GetAllocator(void) const
+{
+	return m_pAllocator;
+}
+
 bool CVKInstance::EnumerateInstanceLayerProperties(eastl::vector<const char *> &enabledInstanceLayers) const
 {
 	enabledInstanceLayers.clear();
@@ -250,19 +265,4 @@ void CVKInstance::DestroySurface(void)
 	}
 
 	m_vkSurface = VK_NULL_HANDLE;
-}
-
-VkInstance CVKInstance::GetInstance(void) const
-{
-	return m_vkInstance;
-}
-
-VkSurfaceKHR CVKInstance::GetSurface(void) const
-{
-	return m_vkSurface;
-}
-
-CVKAllocator* CVKInstance::GetAllocator(void) const
-{
-	return m_pAllocator;
 }

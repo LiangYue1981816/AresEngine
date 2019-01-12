@@ -17,6 +17,11 @@ private:
 	CVKMemoryAllocator* GetAllocator(void) const;
 
 public:
+	VkDeviceSize GetSize(void) const;
+	VkDeviceSize GetOffset(void) const;
+	VkDeviceSize GetAlignmentOffset(void) const;
+
+public:
 	bool BindImage(VkImage vkImage) const;
 	bool BindBuffer(VkBuffer vkBuffer) const;
 
@@ -32,11 +37,6 @@ public:
 	bool IsHostCoherent(void) const;
 	bool IsHostCached(void) const;
 	bool IsLazilyAllocated(void) const;
-
-public:
-	VkDeviceSize GetSize(void) const;
-	VkDeviceSize GetOffset(void) const;
-	VkDeviceSize GetAlignmentOffset(void) const;
 
 
 private:

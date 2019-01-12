@@ -40,6 +40,16 @@ void CVKBuffer::Release(void)
 	delete this;
 }
 
+VkBuffer CVKBuffer::GetBuffer(void) const
+{
+	return m_vkBuffer;
+}
+
+VkDeviceSize CVKBuffer::GetSize(void) const
+{
+	return m_pMemory ? m_pMemory->GetSize() : 0;
+}
+
 bool CVKBuffer::BufferData(size_t offset, size_t size, const void *pBuffer)
 {
 	if (m_pMemory == nullptr) {
@@ -55,16 +65,6 @@ bool CVKBuffer::BufferData(size_t offset, size_t size, const void *pBuffer)
 	CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->EndMap());
 
 	return true;
-}
-
-VkBuffer CVKBuffer::GetBuffer(void) const
-{
-	return m_vkBuffer;
-}
-
-VkDeviceSize CVKBuffer::GetSize(void) const
-{
-	return m_pMemory ? m_pMemory->GetSize() : 0;
 }
 
 bool CVKBuffer::IsDeviceLocal(void) const

@@ -19,6 +19,11 @@ CVKTexture::~CVKTexture(void)
 
 }
 
+VkImageView CVKTexture::GetImageView(void) const
+{
+	return m_vkImageView;
+}
+
 bool CVKTexture::CreateView(VkImageView vkImageView)
 {
 	m_bExtern = true;
@@ -85,9 +90,4 @@ void CVKTexture::Bind(VkCommandBuffer vkCommandBuffer, CVKBufferPtr &ptrBufferTr
 		m_transferLayers = 1;
 		m_transferBuffers.clear();
 	}
-}
-
-VkImageView CVKTexture::GetImageView(void) const
-{
-	return m_vkImageView;
 }

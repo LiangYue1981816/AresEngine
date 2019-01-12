@@ -39,6 +39,21 @@ CVKMemoryAllocator::~CVKMemoryAllocator(void)
 	}
 }
 
+VkDeviceSize CVKMemoryAllocator::GetFreeSize(void) const
+{
+	return m_freeSize;
+}
+
+VkDeviceSize CVKMemoryAllocator::GetFullSize(void) const
+{
+	return m_fullSize;
+}
+
+uint32_t CVKMemoryAllocator::GetMemoryTypeIndex(void) const
+{
+	return m_memoryTypeIndex;
+}
+
 CVKMemory* CVKMemoryAllocator::AllocMemory(VkDeviceSize alignment, VkDeviceSize size)
 {
 	//  Memory Pool
@@ -301,19 +316,4 @@ bool CVKMemoryAllocator::IsHostCached(void) const
 bool CVKMemoryAllocator::IsLazilyAllocated(void) const
 {
 	return m_memoryPropertyFlags & VK_MEMORY_PROPERTY_LAZILY_ALLOCATED_BIT ? true : false;
-}
-
-uint32_t CVKMemoryAllocator::GetMemoryTypeIndex(void) const
-{
-	return m_memoryTypeIndex;
-}
-
-VkDeviceSize CVKMemoryAllocator::GetFreeSize(void) const
-{
-	return m_freeSize;
-}
-
-VkDeviceSize CVKMemoryAllocator::GetFullSize(void) const
-{
-	return m_fullSize;
 }

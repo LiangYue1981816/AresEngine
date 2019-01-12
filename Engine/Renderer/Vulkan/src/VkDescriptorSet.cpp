@@ -15,6 +15,16 @@ CVKDescriptorSetLayout::~CVKDescriptorSetLayout(void)
 	Destroy();
 }
 
+uint32_t CVKDescriptorSetLayout::GetSet(void) const
+{
+	return m_set;
+}
+
+VkDescriptorSetLayout CVKDescriptorSetLayout::GetLayout(void) const
+{
+	return m_vkDescriptorSetLayout;
+}
+
 bool CVKDescriptorSetLayout::Create(void)
 {
 	eastl::vector<VkDescriptorSetLayoutBinding> bindings;
@@ -97,14 +107,4 @@ bool CVKDescriptorSetLayout::SetInputAttachmentBinding(const char *szName, uint3
 	m_inputAttachmentBindings[name].stageFlags = flags;
 
 	return true;
-}
-
-uint32_t CVKDescriptorSetLayout::GetSet(void) const
-{
-	return m_set;
-}
-
-VkDescriptorSetLayout CVKDescriptorSetLayout::GetLayout(void) const
-{
-	return m_vkDescriptorSetLayout;
 }

@@ -20,6 +20,9 @@ protected:
 	virtual ~CVKTexture(void);
 
 
+public:
+	VkImageView GetImageView(void) const;
+
 protected:
 	bool CreateView(VkImageView vkImageView);
 	bool CreateView(VkImageViewType viewType, VkImageAspectFlags aspectMask, VkFormat format, int levels, int layers);
@@ -28,9 +31,6 @@ protected:
 
 public:
 	void Bind(VkCommandBuffer vkCommandBuffer, CVKBufferPtr &ptrBufferTransfer);
-
-public:
-	VkImageView GetImageView(void) const;
 
 
 protected:

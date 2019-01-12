@@ -16,6 +16,11 @@ CGLES3Texture::~CGLES3Texture(void)
 
 }
 
+uint32_t CGLES3Texture::GetTexture(void) const
+{
+	return m_texture;
+}
+
 bool CGLES3Texture::Create(uint32_t target, uint32_t texture)
 {
 	m_bExtern = true;
@@ -86,9 +91,4 @@ void CGLES3Texture::Destroy(void)
 void CGLES3Texture::Bind(uint32_t unit)
 {
 	GLBindTexture(unit, m_target, m_texture);
-}
-
-uint32_t CGLES3Texture::GetTexture(void) const
-{
-	return m_texture;
 }

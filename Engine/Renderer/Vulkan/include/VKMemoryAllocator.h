@@ -33,6 +33,11 @@ private:
 
 
 private:
+	VkDeviceSize GetFreeSize(void) const;
+	VkDeviceSize GetFullSize(void) const;
+	uint32_t GetMemoryTypeIndex(void) const;
+
+private:
 	CVKMemory* AllocMemory(VkDeviceSize alignment, VkDeviceSize size);
 	void FreeMemory(CVKMemory *pMemory);
 
@@ -50,12 +55,6 @@ private:
 	bool IsHostCoherent(void) const;
 	bool IsHostCached(void) const;
 	bool IsLazilyAllocated(void) const;
-
-private:
-	uint32_t GetMemoryTypeIndex(void) const;
-
-	VkDeviceSize GetFreeSize(void) const;
-	VkDeviceSize GetFullSize(void) const;
 
 
 private:

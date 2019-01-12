@@ -19,6 +19,10 @@ public:
 
 
 public:
+	uint32_t GetSet(void) const;
+	VkDescriptorSetLayout GetLayout(void) const;
+
+public:
 	bool Create(void);
 	void Destroy(void);
 
@@ -26,10 +30,6 @@ public:
 	bool SetUniformBlockBinding(const char *szName, uint32_t binding, VkShaderStageFlags flags);
 	bool SetSampledImageBinding(const char *szName, uint32_t binding, VkShaderStageFlags flags);
 	bool SetInputAttachmentBinding(const char *szName, uint32_t binding, VkShaderStageFlags flags);
-
-public:
-	uint32_t GetSet(void) const;
-	VkDescriptorSetLayout GetLayout(void) const;
 
 
 private:

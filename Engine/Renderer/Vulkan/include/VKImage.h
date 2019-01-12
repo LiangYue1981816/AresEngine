@@ -19,11 +19,11 @@ private:
 
 
 private:
-	bool BufferData(size_t offset, size_t size, const void *pBuffer);
-
-private:
 	VkImage GetImage(void) const;
 	VkDeviceSize GetSize(void) const;
+
+private:
+	bool BufferData(size_t offset, size_t size, const void *pBuffer);
 
 private:
 	bool IsDeviceLocal(void) const;

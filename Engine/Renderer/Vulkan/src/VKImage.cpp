@@ -60,6 +60,16 @@ void CVKImage::Release(void)
 	delete this;
 }
 
+VkImage CVKImage::GetImage(void) const
+{
+	return m_vkImage;
+}
+
+VkDeviceSize CVKImage::GetSize(void) const
+{
+	return m_pMemory ? m_pMemory->GetSize() : 0;
+}
+
 bool CVKImage::BufferData(size_t offset, size_t size, const void *pBuffer)
 {
 	if (m_pMemory == nullptr) {
@@ -75,16 +85,6 @@ bool CVKImage::BufferData(size_t offset, size_t size, const void *pBuffer)
 	CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->EndMap());
 
 	return true;
-}
-
-VkImage CVKImage::GetImage(void) const
-{
-	return m_vkImage;
-}
-
-VkDeviceSize CVKImage::GetSize(void) const
-{
-	return m_pMemory ? m_pMemory->GetSize() : 0;
 }
 
 bool CVKImage::IsDeviceLocal(void) const
