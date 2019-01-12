@@ -72,13 +72,24 @@ public:
 
 	T* GetComponentByIndex(size_t index)
 	{
-		return index < m_components.size() ? &m_components[index] : nullptr;
+		if (index < m_components.size()) {
+			return &m_components[index];
+		}
+		else {
+			return nullptr;
+		}
 	}
 
 	T* GetComponentByKey(uint32_t key)
 	{
 		const auto &itKeyValue = m_keyIndex.find(key);
-		return itKeyValue != m_keyIndex.end() ? &m_components[itKeyValue->second] : nullptr;
+
+		if (itKeyValue != m_keyIndex.end()) {
+			return &m_components[itKeyValue->second];
+		}
+		else {
+			return nullptr;
+		}
 	}
 
 
@@ -168,12 +179,17 @@ public:
 
 	inline T* GetPointer(void) const
 	{
-		return m_key && m_pManager ? m_pManager->GetComponentByKey(m_key) : nullptr;
+		if (m_key && m_pManager) {
+			return m_pManager->GetComponentByKey(m_key);
+		}
+		else {
+			return nullptr;
+		}
 	}
 
 	inline bool IsNull(void) const
 	{
-		return m_key && m_pManager ? false : true;
+		return m_key == 0 || m_pManager == nullptr;
 	}
 
 	inline CComponentPtr<T>& operator = (const CComponentPtr<T> &ptr)

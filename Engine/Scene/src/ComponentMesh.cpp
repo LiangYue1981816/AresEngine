@@ -34,7 +34,12 @@ void CComponentMesh::SetMeshDraw(const CGfxMeshPtr &ptrMesh, int indexDraw, uint
 
 glm::aabb CComponentMesh::GetWorldAABB(void)
 {
-	return m_pParentNode && m_ptrMeshDraw.IsValid() ? m_ptrMeshDraw->GetLocalAABB() * m_pParentNode->GetWorldTransform() : glm::aabb();
+	if (m_ptrMeshDraw.IsValid() && m_pParentNode) {
+		return m_ptrMeshDraw->GetLocalAABB() * m_pParentNode->GetWorldTransform();
+	}
+	else {
+		return glm::aabb();
+	}
 }
 
 void CComponentMesh::TaskUpdate(float gameTime, float deltaTime)

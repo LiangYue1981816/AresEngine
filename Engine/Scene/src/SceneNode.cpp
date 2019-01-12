@@ -126,7 +126,13 @@ void CSceneNode::DetachNodeAll(bool bDestroy)
 CSceneNode* CSceneNode::GetNode(uint32_t name) const
 {
 	const auto &itNode = m_pChildNodes.find(name);
-	return itNode != m_pChildNodes.end() ? itNode->second : nullptr;
+
+	if (itNode != m_pChildNodes.end()) {
+		return itNode->second;
+	}
+	else {
+		return nullptr;
+	}
 }
 
 bool CSceneNode::AttachComponentMesh(CComponentMeshPtr &ptrComponentMesh)
@@ -261,7 +267,13 @@ template<class T>
 CComponentPtr<T> CSceneNode::GetComponent(uint32_t name, const eastl::unordered_map<uint32_t, CComponentPtr<T>> &container) const
 {
 	const auto &itComponent = container.find(name);
-	return itComponent != container.end() ? itComponent->second : CComponentPtr<T>();
+
+	if (itComponent != container.end()) {
+		return itComponent->second;
+	}
+	else {
+		return CComponentPtr<T>();
+	}
 }
 
 void CSceneNode::Identity(void)
