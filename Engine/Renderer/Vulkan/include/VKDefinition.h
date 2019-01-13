@@ -77,6 +77,7 @@ class CVKDescriptorSetLayout;
 class CVKShader;
 class CVKPipeline;
 
+class CVKSwapChain;
 class CVKRenderPass;
 class CVKFrameBuffer;
 class CVKRenderTexture;

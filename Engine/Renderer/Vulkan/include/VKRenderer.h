@@ -28,6 +28,7 @@
 #include "VKShader.h"
 #include "VKPipeline.h"
 
+#include "VKSwapChain.h"
 #include "VKRenderPass.h"
 #include "VKFrameBuffer.h"
 #include "VKRenderTexture.h"
