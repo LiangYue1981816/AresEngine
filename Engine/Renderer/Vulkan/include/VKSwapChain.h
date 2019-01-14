@@ -40,8 +40,10 @@ private:
 	int m_width;
 	int m_height;
 
+private:
 	VkImage m_vkImages[SWAPCHAIN_FRAME_COUNT];
 	VkImageView m_vkImageViews[SWAPCHAIN_FRAME_COUNT];
+	CGfxRenderTexturePtr m_ptrRenderTextures[SWAPCHAIN_FRAME_COUNT];
 
 private:
 	VkSwapchainKHR m_vkSwapchain;

@@ -19,6 +19,11 @@ CVKTexture::~CVKTexture(void)
 
 }
 
+VkImageView CVKTexture::GetImageView(void) const
+{
+	return m_vkImageView;
+}
+
 bool CVKTexture::CreateView(VkImageView vkImageView)
 {
 	m_bExtern = true;
