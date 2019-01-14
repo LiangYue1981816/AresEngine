@@ -199,7 +199,7 @@ bool CVKSwapChain::CreateImagesAndImageViews(void)
 		char szName[_MAX_STRING] = { 0 };
 		sprintf(szName, "SwapChain Frame Texture %d", index);
 		m_ptrRenderTextures[index] = VKRenderer()->NewRenderTexture(HashValue(szName));
-		CALL_BOOL_FUNCTION_RETURN_BOOL(m_ptrRenderTextures[index]->Create(m_vkImageViews[index], m_pixelFormat, m_width, m_height));
+		CALL_BOOL_FUNCTION_RETURN_BOOL(m_ptrRenderTextures[index]->Create((HANDLE)m_vkImageViews[index], m_pixelFormat, m_width, m_height));
 	}
 
 	return true;
