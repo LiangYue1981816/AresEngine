@@ -12,9 +12,6 @@ protected:
 	virtual ~CGLES3Texture(void);
 
 
-public:
-	uint32_t GetTexture(void) const;
-
 protected:
 	bool Create(uint32_t target, uint32_t texture);
 	bool Create(uint32_t target, GfxPixelFormat pixelFormat, int width, int height, int levels, int layers, int samples = 1);
