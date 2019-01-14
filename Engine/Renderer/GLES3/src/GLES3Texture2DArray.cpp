@@ -109,16 +109,17 @@ void CGLES3Texture2DArray::Destroy(void)
 		}
 	}
 
-	m_size.clear();
+	m_texture = 0;
 
 	m_format = GFX_PIXELFORMAT_UNDEFINED;
 	m_type = GFX_TEXTURE_INVALID_ENUM;
-	m_texture = 0;
 
 	m_width = 0;
 	m_height = 0;
 	m_levels = 0;
 	m_layers = 0;
+
+	m_size.clear();
 }
 
 bool CGLES3Texture2DArray::TransferTexture2D(GfxPixelFormat pixelFormat, int layer, int level, int xoffset, int yoffset, int width, int height, GfxDataType type, uint32_t size, const void *data)

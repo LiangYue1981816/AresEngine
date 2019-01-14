@@ -13,8 +13,8 @@ CGLES3RenderTexture::CGLES3RenderTexture(CGLES3RenderTextureManager *pManager, u
 	, m_height(0)
 	, m_samples(0)
 
-	, m_texture(0)
 	, m_bExtern(false)
+	, m_texture(0)
 {
 
 }
@@ -68,8 +68,8 @@ bool CGLES3RenderTexture::Create(HANDLE texture, GfxPixelFormat pixelFormat, int
 {
 	Destroy();
 
-	m_texture = (uint32_t)texture;
 	m_bExtern = true;
+	m_texture = (uint32_t)texture;
 
 	m_format = pixelFormat;
 
@@ -140,10 +140,11 @@ void CGLES3RenderTexture::Destroy(void)
 		}
 	}
 
+	m_bExtern = false;
+	m_texture = 0;
+
 	m_format = GFX_PIXELFORMAT_UNDEFINED;
 	m_type = GFX_TEXTURE_INVALID_ENUM;
-	m_texture = 0;
-	m_bExtern = false;
 
 	m_width = 0;
 	m_height = 0;

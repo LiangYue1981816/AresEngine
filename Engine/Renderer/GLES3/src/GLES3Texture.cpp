@@ -4,9 +4,9 @@
 CGLES3Texture::CGLES3Texture(CGLES3TextureManager *pManager)
 	: m_pManager(pManager)
 
+	, m_bExtern(false)
 	, m_target(0)
 	, m_texture(0)
-	, m_bExtern(false)
 {
 
 }
@@ -23,9 +23,9 @@ uint32_t CGLES3Texture::GetTexture(void) const
 
 bool CGLES3Texture::Create(uint32_t target, uint32_t texture)
 {
+	m_bExtern = true;
 	m_target = target;
 	m_texture = texture;
-	m_bExtern = true;
 
 	return true;
 }
@@ -83,9 +83,9 @@ void CGLES3Texture::Destroy(void)
 		}
 	}
 
+	m_bExtern = false;
 	m_target = 0;
 	m_texture = 0;
-	m_bExtern = false;
 }
 
 void CGLES3Texture::Bind(uint32_t unit)
