@@ -61,7 +61,7 @@ uint32_t CVKRenderer::GetLastError(void) const
 
 CGfxSwapChain* CVKRenderer::GetSwapChain(void) const
 {
-	return nullptr;
+	return m_pSwapChain;
 }
 
 CGfxMaterialPass* CVKRenderer::GetGlobalPass(void) const
