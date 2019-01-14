@@ -5,7 +5,6 @@
 class CVKRenderTextureManager : public CGfxResourceManager
 {
 	friend class CVKRenderer;
-	friend class CVKDevice;
 	friend class CVKRenderTexture;
 
 

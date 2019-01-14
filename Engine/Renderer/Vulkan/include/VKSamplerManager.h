@@ -5,7 +5,7 @@
 class CVKSamplerManager : public CGfxResourceManager
 {
 	friend class CVKRenderer;
-	friend class CVKDevice;
+	friend class CVKSampler;
 
 
 private:

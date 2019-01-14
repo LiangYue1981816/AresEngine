@@ -5,7 +5,7 @@
 class CVKShaderManager : public CGfxResourceManager
 {
 	friend class CVKRenderer;
-	friend class CVKDevice;
+	friend class CVKShader;
 
 
 private:
