@@ -21,7 +21,7 @@ CVKDevice* CVKRenderTextureManager::GetDevice(void) const
 	return m_pDevice;
 }
 
-bool CVKRenderTextureManager::IsHaveRenderTexture(uint32_t name)
+bool CVKRenderTextureManager::IsHave(uint32_t name)
 {
 	mutex_autolock autolock(&lock);
 	{
@@ -29,7 +29,7 @@ bool CVKRenderTextureManager::IsHaveRenderTexture(uint32_t name)
 	}
 }
 
-CVKRenderTexture* CVKRenderTextureManager::CreateRenderTexture(uint32_t name)
+CVKRenderTexture* CVKRenderTextureManager::Create(uint32_t name)
 {
 	mutex_autolock autolock(&lock);
 	{

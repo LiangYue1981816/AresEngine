@@ -90,12 +90,12 @@ CGfxFrameBufferPtr CVKRenderer::NewFrameBuffer(int width, int height, int numAtt
 
 bool CVKRenderer::IsHaveRenderTexture(uint32_t name)
 {
-	return m_pRenderTextureManager->IsHaveRenderTexture(name);
+	return m_pRenderTextureManager->IsHave(name);
 }
 
 CGfxRenderTexturePtr CVKRenderer::NewRenderTexture(uint32_t name)
 {
-	return m_pRenderTextureManager->CreateRenderTexture(name);
+	return m_pRenderTextureManager->Create(name);
 }
 
 bool CVKRenderer::IsHaveMesh(uint32_t name)

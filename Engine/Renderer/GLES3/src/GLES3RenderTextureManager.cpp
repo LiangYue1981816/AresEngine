@@ -15,7 +15,7 @@ CGLES3RenderTextureManager::~CGLES3RenderTextureManager(void)
 	m_pTextures.clear();
 }
 
-bool CGLES3RenderTextureManager::IsHaveRenderTexture(uint32_t name)
+bool CGLES3RenderTextureManager::IsHave(uint32_t name)
 {
 	mutex_autolock autolock(&lock);
 	{
@@ -23,7 +23,7 @@ bool CGLES3RenderTextureManager::IsHaveRenderTexture(uint32_t name)
 	}
 }
 
-CGLES3RenderTexture* CGLES3RenderTextureManager::CreateRenderTexture(uint32_t name)
+CGLES3RenderTexture* CGLES3RenderTextureManager::Create(uint32_t name)
 {
 	mutex_autolock autolock(&lock);
 	{

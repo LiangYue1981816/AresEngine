@@ -19,8 +19,8 @@ private:
 
 
 private:
-	bool IsHaveRenderTexture(uint32_t name);
-	CVKRenderTexture* CreateRenderTexture(uint32_t name);
+	bool IsHave(uint32_t name);
+	CVKRenderTexture* Create(uint32_t name);
 	void Destroy(CGfxRenderTexture *pTexture);
 
 

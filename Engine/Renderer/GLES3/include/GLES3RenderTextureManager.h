@@ -14,8 +14,8 @@ private:
 
 
 private:
-	bool IsHaveRenderTexture(uint32_t name);
-	CGLES3RenderTexture* CreateRenderTexture(uint32_t name);
+	bool IsHave(uint32_t name);
+	CGLES3RenderTexture* Create(uint32_t name);
 	void Destroy(CGfxRenderTexture *pTexture);
 
 
