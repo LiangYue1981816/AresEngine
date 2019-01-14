@@ -27,6 +27,7 @@ public:
 	int GetSamples(void) const;
 
 public:
+	bool Create(HANDLE texture, GfxPixelFormat pixelFormat, int width, int height, int samples = 1);
 	bool Create(GfxPixelFormat pixelFormat, int width, int height, int samples = 1, bool bTransient = false);
 	void Destroy(void);
 
@@ -43,6 +44,7 @@ private:
 	int m_samples;
 
 private:
+	bool m_bExtern;
 	uint32_t m_texture;
 
 private:

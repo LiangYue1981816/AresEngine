@@ -14,6 +14,7 @@ CGLES3RenderTexture::CGLES3RenderTexture(CGLES3RenderTextureManager *pManager, u
 	, m_samples(0)
 
 	, m_texture(0)
+	, m_bExtern(false)
 {
 
 }
@@ -63,6 +64,35 @@ int CGLES3RenderTexture::GetSamples(void) const
 	return m_samples;
 }
 
+bool CGLES3RenderTexture::Create(HANDLE texture, GfxPixelFormat pixelFormat, int width, int height, int samples)
+{
+	Destroy();
+
+	m_texture = (uint32_t)texture;
+	m_bExtern = true;
+
+	m_format = pixelFormat;
+
+	m_width = width;
+	m_height = height;
+	m_samples = std::max(samples, 1);
+
+#if GLES_VER == 310
+	if (m_samples == 1)
+#endif
+	{
+		m_type = GFX_TEXTURE_2D;
+	}
+#if GLES_VER == 310
+	else
+	{
+		m_type = GFX_TEXTURE_2D_MULTISAMPLE;
+	}
+#endif
+
+	return true;
+}
+
 bool CGLES3RenderTexture::Create(GfxPixelFormat pixelFormat, int width, int height, int samples, bool bTransient)
 {
 	Destroy();
@@ -74,7 +104,7 @@ bool CGLES3RenderTexture::Create(GfxPixelFormat pixelFormat, int width, int heig
 
 	m_width = width;
 	m_height = height;
-	m_samples = std::max(samples, 1);;
+	m_samples = std::max(samples, 1);
 
 #if GLES_VER == 310
 	if (m_samples == 1)
@@ -104,13 +134,16 @@ bool CGLES3RenderTexture::Create(GfxPixelFormat pixelFormat, int width, int heig
 
 void CGLES3RenderTexture::Destroy(void)
 {
-	if (m_texture) {
-		glDeleteTextures(1, &m_texture);
+	if (m_bExtern == false) {
+		if (m_texture) {
+			glDeleteTextures(1, &m_texture);
+		}
 	}
 
 	m_format = GFX_PIXELFORMAT_UNDEFINED;
 	m_type = GFX_TEXTURE_INVALID_ENUM;
 	m_texture = 0;
+	m_bExtern = false;
 
 	m_width = 0;
 	m_height = 0;
