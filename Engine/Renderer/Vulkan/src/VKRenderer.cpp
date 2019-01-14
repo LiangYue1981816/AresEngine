@@ -5,6 +5,7 @@ CVKRenderer::CVKRenderer(void *hInstance, void *hWnd, void *hDC, int width, int 
 	: CGfxRenderer(hInstance, hWnd, hDC, width, height, pixelFormat)
 	, m_pInstance(nullptr)
 	, m_pDevice(nullptr)
+	, m_pSwapChain(nullptr)
 
 	, m_pMeshManager(nullptr)
 	, m_pMeshDrawManager(nullptr)
@@ -30,10 +31,14 @@ CVKRenderer::CVKRenderer(void *hInstance, void *hWnd, void *hDC, int width, int 
 	m_pFrameBufferManager = new CVKFrameBufferManager(m_pDevice);
 	m_pRenderTextureManager = new CVKRenderTextureManager(m_pDevice);
 	m_pShaderManager = new CVKShaderManager(m_pDevice);
+
+	m_pSwapChain = new CVKSwapChain(m_pDevice, width, height, pixelFormat);
 }
 
 CVKRenderer::~CVKRenderer(void)
 {
+	delete m_pSwapChain;
+
 	delete m_pShaderManager;
 	delete m_pRenderTextureManager;
 	delete m_pFrameBufferManager;

@@ -82,12 +82,20 @@ CVKSwapChain::CVKSwapChain(CVKDevice *pDevice, int width, int height, GfxPixelFo
 	, m_vkAcquireSemaphore(VK_NULL_HANDLE)
 	, m_vkRenderDoneSemaphores{ VK_NULL_HANDLE }
 {
-
+	eastl::vector<VkPresentModeKHR> modes;
+	eastl::vector<VkSurfaceFormatKHR> formats;
+	VkSurfaceCapabilitiesKHR capabilities;
+	CALL_BOOL_FUNCTION_RETURN(EnumDeviceSurfaceModes(modes));
+	CALL_BOOL_FUNCTION_RETURN(EnumDeviceSurfaceFormats(formats));
+	CALL_BOOL_FUNCTION_RETURN(EnumDeviceSurfaceCapabilities(capabilities));
+	CALL_BOOL_FUNCTION_RETURN(CreateSwapChain(modes, formats, capabilities));
+	CALL_BOOL_FUNCTION_RETURN(CreateImagesAndImageViews());
 }
 
 CVKSwapChain::~CVKSwapChain(void)
 {
-
+	DestroyImagesAndImageViews();
+	DestroySwapChain();
 }
 
 bool CVKSwapChain::EnumDeviceSurfaceModes(eastl::vector<VkPresentModeKHR> &modes) const

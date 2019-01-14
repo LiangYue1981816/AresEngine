@@ -4,6 +4,9 @@
 
 class CVKSwapChain : public CGfxSwapChain
 {
+	friend class CVKRenderer;
+
+
 private:
 	CVKSwapChain(CVKDevice *pDevice, int width, int height, GfxPixelFormat pixelFormat);
 	virtual ~CVKSwapChain(void);
