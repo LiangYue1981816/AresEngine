@@ -29,7 +29,9 @@ class CGLES3UniformBuffer;
 class CGLES3CommandBuffer;
 
 class CGLES3SamplerManager;
-class CGLES3TextureManager;
+class CGLES3Texture2DManager;
+class CGLES3Texture2DArrayManager;
+class CGLES3TextureCubeMapManager;
 class CGLES3ShaderManager;
 class CGLES3PipelineManager;
 class CGLES3RenderPassManager;

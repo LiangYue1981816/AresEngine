@@ -4,11 +4,8 @@
 
 class CGLES3Texture
 {
-	friend class CGLES3TextureManager;
-
-
 protected:
-	CGLES3Texture(CGLES3TextureManager *pManager);
+	CGLES3Texture(void);
 	virtual ~CGLES3Texture(void);
 
 
@@ -25,7 +22,4 @@ protected:
 	bool m_bExtern;
 	uint32_t m_target;
 	uint32_t m_texture;
-
-protected:
-	CGLES3TextureManager *m_pManager;
 };

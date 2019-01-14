@@ -1,10 +1,10 @@
 #include "GLES3Renderer.h"
 
 
-CGLES3Texture2D::CGLES3Texture2D(CGLES3TextureManager *pManager, uint32_t name)
-	: CGLES3Texture(pManager)
-	, CGfxTexture2D(name)
+CGLES3Texture2D::CGLES3Texture2D(CGLES3Texture2DManager *pManager, uint32_t name)
+	: CGfxTexture2D(name)
 	, m_name(name)
+	, m_pManager(pManager)
 
 	, m_format(GFX_PIXELFORMAT_UNDEFINED)
 	, m_type(GFX_TEXTURE_INVALID_ENUM)
@@ -24,7 +24,7 @@ CGLES3Texture2D::~CGLES3Texture2D(void)
 
 void CGLES3Texture2D::Release(void)
 {
-	m_pManager->DestroyTexture2D(this);
+	m_pManager->Destroy(this);
 }
 
 uint32_t CGLES3Texture2D::GetName(void) const

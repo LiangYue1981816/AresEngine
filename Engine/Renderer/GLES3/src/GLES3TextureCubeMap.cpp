@@ -1,10 +1,10 @@
 #include "GLES3Renderer.h"
 
 
-CGLES3TextureCubeMap::CGLES3TextureCubeMap(CGLES3TextureManager *pManager, uint32_t name)
-	: CGLES3Texture(pManager)
-	, CGfxTextureCubeMap(name)
+CGLES3TextureCubeMap::CGLES3TextureCubeMap(CGLES3TextureCubeMapManager *pManager, uint32_t name)
+	: CGfxTextureCubeMap(name)
 	, m_name(name)
+	, m_pManager(pManager)
 
 	, m_format(GFX_PIXELFORMAT_UNDEFINED)
 	, m_type(GFX_TEXTURE_INVALID_ENUM)
@@ -23,7 +23,7 @@ CGLES3TextureCubeMap::~CGLES3TextureCubeMap(void)
 
 void CGLES3TextureCubeMap::Release(void)
 {
-	m_pManager->DestroyTextureCubeMap(this);
+	m_pManager->Destroy(this);
 }
 
 uint32_t CGLES3TextureCubeMap::GetName(void) const

@@ -4,11 +4,11 @@
 
 class CGLES3Texture2D : public CGLES3Texture, public CGfxTexture2D
 {
-	friend class CGLES3TextureManager;
+	friend class CGLES3Texture2DManager;
 
 
 private:
-	CGLES3Texture2D(CGLES3TextureManager *pManager, uint32_t name);
+	CGLES3Texture2D(CGLES3Texture2DManager *pManager, uint32_t name);
 	virtual ~CGLES3Texture2D(void);
 	virtual void Release(void);
 
@@ -51,4 +51,7 @@ private:
 
 private:
 	eastl::unordered_map<int, uint32_t> m_size;
+
+private:
+	CGLES3Texture2DManager *m_pManager;
 };

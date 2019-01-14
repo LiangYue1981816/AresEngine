@@ -4,11 +4,11 @@
 
 class CGLES3Texture2DArray : public CGLES3Texture, public CGfxTexture2DArray
 {
-	friend class CGLES3TextureManager;
+	friend class CGLES3Texture2DArrayManager;
 
 
 private:
-	CGLES3Texture2DArray(CGLES3TextureManager *pManager, uint32_t name);
+	CGLES3Texture2DArray(CGLES3Texture2DArrayManager *pManager, uint32_t name);
 	virtual ~CGLES3Texture2DArray(void);
 	virtual void Release(void);
 
@@ -51,4 +51,7 @@ private:
 
 private:
 	eastl::unordered_map<int, eastl::unordered_map<int, uint32_t>> m_size;
+
+private:
+	CGLES3Texture2DArrayManager *m_pManager;
 };

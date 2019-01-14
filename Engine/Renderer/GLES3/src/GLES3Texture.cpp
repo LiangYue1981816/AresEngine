@@ -1,10 +1,8 @@
 #include "GLES3Renderer.h"
 
 
-CGLES3Texture::CGLES3Texture(CGLES3TextureManager *pManager)
-	: m_pManager(pManager)
-
-	, m_bExtern(false)
+CGLES3Texture::CGLES3Texture(void)
+	: m_bExtern(false)
 	, m_target(0)
 	, m_texture(0)
 {

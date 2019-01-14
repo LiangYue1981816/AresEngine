@@ -10,7 +10,9 @@ CGLES3Renderer::CGLES3Renderer(void *hInstance, void *hWnd, void *hDC, int width
 	, m_pMeshDrawManager(nullptr)
 	, m_pShaderManager(nullptr)
 	, m_pSamplerManager(nullptr)
-	, m_pTextureManager(nullptr)
+	, m_pTexture2DManager(nullptr)
+	, m_pTexture2DArrayManager(nullptr)
+	, m_pTextureCubeMapManager(nullptr)
 	, m_pPipelineManager(nullptr)
 	, m_pMaterialManager(nullptr)
 	, m_pRenderPassManager(nullptr)
@@ -28,7 +30,9 @@ CGLES3Renderer::CGLES3Renderer(void *hInstance, void *hWnd, void *hDC, int width
 	m_pMeshDrawManager = new CGLES3MeshDrawManager;
 	m_pShaderManager = new CGLES3ShaderManager;
 	m_pSamplerManager = new CGLES3SamplerManager;
-	m_pTextureManager = new CGLES3TextureManager;
+	m_pTexture2DManager = new CGLES3Texture2DManager;
+	m_pTexture2DArrayManager = new CGLES3Texture2DArrayManager;
+	m_pTextureCubeMapManager = new CGLES3TextureCubeMapManager;
 	m_pPipelineManager = new CGLES3PipelineManager;
 	m_pMaterialManager = new CGLES3MaterialManager;
 	m_pRenderPassManager = new CGLES3RenderPassManager;
@@ -53,7 +57,9 @@ CGLES3Renderer::~CGLES3Renderer(void)
 	delete m_pRenderPassManager;
 	delete m_pMaterialManager;
 	delete m_pSamplerManager;
-	delete m_pTextureManager;
+	delete m_pTexture2DManager;
+	delete m_pTexture2DArrayManager;
+	delete m_pTextureCubeMapManager;
 	delete m_pPipelineManager;
 	delete m_pShaderManager;
 	delete m_pMeshDrawManager;
@@ -157,47 +163,47 @@ CGfxMaterialPtr CGLES3Renderer::NewMaterial(const char *szFileName)
 
 bool CGLES3Renderer::IsHaveTexture2D(uint32_t name)
 {
-	return m_pTextureManager->IsHaveTexture2D(name);
+	return m_pTexture2DManager->IsHave(name);
 }
 
 bool CGLES3Renderer::IsHaveTexture2DArray(uint32_t name)
 {
-	return m_pTextureManager->IsHaveTexture2DArray(name);
+	return m_pTexture2DArrayManager->IsHave(name);
 }
 
 bool CGLES3Renderer::IsHaveTextureCubeMap(uint32_t name)
 {
-	return m_pTextureManager->IsHaveTextureCubeMap(name);
+	return m_pTextureCubeMapManager->IsHave(name);
 }
 
 CGfxTexture2DPtr CGLES3Renderer::NewTexture2D(uint32_t name)
 {
-	return m_pTextureManager->CreateTexture2D(name);
+	return m_pTexture2DManager->Create(name);
 }
 
 CGfxTexture2DPtr CGLES3Renderer::NewTexture2D(const char *szFileName)
 {
-	return m_pTextureManager->CreateTexture2D(szFileName);
+	return m_pTexture2DManager->Create(szFileName);
 }
 
 CGfxTexture2DArrayPtr CGLES3Renderer::NewTexture2DArray(uint32_t name)
 {
-	return m_pTextureManager->CreateTexture2DArray(name);
+	return m_pTexture2DArrayManager->Create(name);
 }
 
 CGfxTexture2DArrayPtr CGLES3Renderer::NewTexture2DArray(const char *szFileName)
 {
-	return m_pTextureManager->CreateTexture2DArray(szFileName);
+	return m_pTexture2DArrayManager->Create(szFileName);
 }
 
 CGfxTextureCubeMapPtr CGLES3Renderer::NewTextureCubeMap(uint32_t name)
 {
-	return m_pTextureManager->CreateTextureCubeMap(name);
+	return m_pTextureCubeMapManager->Create(name);
 }
 
 CGfxTextureCubeMapPtr CGLES3Renderer::NewTextureCubeMap(const char *szFileName)
 {
-	return m_pTextureManager->CreateTextureCubeMap(szFileName);
+	return m_pTextureCubeMapManager->Create(szFileName);
 }
 
 CGfxUniformBufferPtr CGLES3Renderer::NewUniformBuffer(size_t size)

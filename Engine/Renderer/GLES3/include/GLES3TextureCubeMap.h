@@ -4,11 +4,11 @@
 
 class CGLES3TextureCubeMap : public CGLES3Texture, public CGfxTextureCubeMap
 {
-	friend class CGLES3TextureManager;
+	friend class CGLES3TextureCubeMapManager;
 
 
 private:
-	CGLES3TextureCubeMap(CGLES3TextureManager *pManager, uint32_t name);
+	CGLES3TextureCubeMap(CGLES3TextureCubeMapManager *pManager, uint32_t name);
 	virtual ~CGLES3TextureCubeMap(void);
 	virtual void Release(void);
 
@@ -49,4 +49,7 @@ private:
 
 private:
 	eastl::unordered_map<int, eastl::unordered_map<int, uint32_t>> m_size;
+
+private:
+	CGLES3TextureCubeMapManager *m_pManager;
 };

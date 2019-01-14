@@ -1,10 +1,10 @@
 #include "GLES3Renderer.h"
 
 
-CGLES3Texture2DArray::CGLES3Texture2DArray(CGLES3TextureManager *pManager, uint32_t name)
-	: CGLES3Texture(pManager)
-	, CGfxTexture2DArray(name)
+CGLES3Texture2DArray::CGLES3Texture2DArray(CGLES3Texture2DArrayManager *pManager, uint32_t name)
+	: CGfxTexture2DArray(name)
 	, m_name(name)
+	, m_pManager(pManager)
 
 	, m_format(GFX_PIXELFORMAT_UNDEFINED)
 	, m_type(GFX_TEXTURE_INVALID_ENUM)
@@ -24,7 +24,7 @@ CGLES3Texture2DArray::~CGLES3Texture2DArray(void)
 
 void CGLES3Texture2DArray::Release(void)
 {
-	m_pManager->DestroyTexture2DArray(this);
+	m_pManager->Destroy(this);
 }
 
 uint32_t CGLES3Texture2DArray::GetName(void) const
