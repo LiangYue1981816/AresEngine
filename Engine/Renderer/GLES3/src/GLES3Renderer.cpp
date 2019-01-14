@@ -107,12 +107,12 @@ CGfxFrameBufferPtr CGLES3Renderer::NewFrameBuffer(int width, int height, int num
 
 bool CGLES3Renderer::IsHaveRenderTexture(uint32_t name)
 {
-	return m_pRenderTextureManager->IsHaveRenderTexture(name);
+	return m_pRenderTextureManager->IsHave(name);
 }
 
 CGfxRenderTexturePtr CGLES3Renderer::NewRenderTexture(uint32_t name)
 {
-	return m_pRenderTextureManager->CreateRenderTexture(name);
+	return m_pRenderTextureManager->Create(name);
 }
 
 bool CGLES3Renderer::IsHaveMesh(uint32_t name)
