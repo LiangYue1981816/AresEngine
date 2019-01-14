@@ -37,7 +37,9 @@
 #include "VKUniformBuffer.h"
 
 #include "VKSamplerManager.h"
-#include "VKTextureManager.h"
+#include "VKTexture2DManager.h"
+#include "VKTexture2DArrayManager.h"
+#include "VKTextureCubeMapManager.h"
 #include "VKShaderManager.h"
 #include "VKRenderPassManager.h"
 #include "VKFrameBufferManager.h"
@@ -153,7 +155,9 @@ private:
 	CVKMeshManager *m_pMeshManager;
 	CVKMeshDrawManager *m_pMeshDrawManager;
 	CVKSamplerManager *m_pSamplerManager;
-	CVKTextureManager *m_pTextureManager;
+	CVKTexture2DManager *m_pTexture2DManager;
+	CVKTexture2DArrayManager *m_pTexture2DArrayManager;
+	CVKTextureCubeMapManager *m_pTextureCubeMapManager;
 	CVKRenderPassManager *m_pRenderPassManager;
 	CVKFrameBufferManager *m_pFrameBufferManager;
 	CVKRenderTextureManager *m_pRenderTextureManager;

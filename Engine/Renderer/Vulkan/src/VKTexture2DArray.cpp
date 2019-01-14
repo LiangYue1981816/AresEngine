@@ -1,10 +1,11 @@
 #include "VKRenderer.h"
 
 
-CVKTexture2DArray::CVKTexture2DArray(CVKDevice *pDevice, CVKTextureManager *pManager, uint32_t name)
-	: CVKTexture(pDevice, pManager)
+CVKTexture2DArray::CVKTexture2DArray(CVKDevice *pDevice, CVKTexture2DArrayManager *pManager, uint32_t name)
+	: CVKTexture(pDevice)
 	, CGfxTexture2DArray(name)
 	, m_name(name)
+	, m_pManager(pManager)
 
 	, m_format(GFX_PIXELFORMAT_UNDEFINED)
 	, m_type(GFX_TEXTURE_INVALID_ENUM)
@@ -24,7 +25,7 @@ CVKTexture2DArray::~CVKTexture2DArray(void)
 
 void CVKTexture2DArray::Release(void)
 {
-	m_pManager->DestroyTexture2DArray(this);
+	m_pManager->Destroy(this);
 }
 
 uint32_t CVKTexture2DArray::GetName(void) const

@@ -9,7 +9,9 @@ CVKRenderer::CVKRenderer(void *hInstance, void *hWnd, void *hDC, int width, int 
 	, m_pMeshManager(nullptr)
 	, m_pMeshDrawManager(nullptr)
 	, m_pSamplerManager(nullptr)
-	, m_pTextureManager(nullptr)
+	, m_pTexture2DManager(nullptr)
+	, m_pTexture2DArrayManager(nullptr)
+	, m_pTextureCubeMapManager(nullptr)
 	, m_pRenderPassManager(nullptr)
 	, m_pFrameBufferManager(nullptr)
 	, m_pRenderTextureManager(nullptr)
@@ -21,7 +23,9 @@ CVKRenderer::CVKRenderer(void *hInstance, void *hWnd, void *hDC, int width, int 
 	m_pMeshManager = new CVKMeshManager(m_pDevice);
 	m_pMeshDrawManager = new CVKMeshDrawManager(m_pDevice);
 	m_pSamplerManager = new CVKSamplerManager(m_pDevice);
-	m_pTextureManager = new CVKTextureManager(m_pDevice);
+	m_pTexture2DManager = new CVKTexture2DManager(m_pDevice);
+	m_pTexture2DArrayManager = new CVKTexture2DArrayManager(m_pDevice);
+	m_pTextureCubeMapManager = new CVKTextureCubeMapManager(m_pDevice);
 	m_pRenderPassManager = new CVKRenderPassManager(m_pDevice);
 	m_pFrameBufferManager = new CVKFrameBufferManager(m_pDevice);
 	m_pRenderTextureManager = new CVKRenderTextureManager(m_pDevice);
@@ -34,7 +38,9 @@ CVKRenderer::~CVKRenderer(void)
 	delete m_pRenderTextureManager;
 	delete m_pFrameBufferManager;
 	delete m_pRenderPassManager;
-	delete m_pTextureManager;
+	delete m_pTexture2DManager;
+	delete m_pTexture2DArrayManager;
+	delete m_pTextureCubeMapManager;
 	delete m_pSamplerManager;
 	delete m_pMeshDrawManager;
 	delete m_pMeshManager;
@@ -140,47 +146,47 @@ CGfxMaterialPtr CVKRenderer::NewMaterial(const char *szFileName)
 
 bool CVKRenderer::IsHaveTexture2D(uint32_t name)
 {
-	return m_pTextureManager->IsHaveTexture2D(name);
+	return m_pTexture2DManager->IsHave(name);
 }
 
 bool CVKRenderer::IsHaveTexture2DArray(uint32_t name)
 {
-	return m_pTextureManager->IsHaveTexture2DArray(name);
+	return m_pTexture2DArrayManager->IsHave(name);
 }
 
 bool CVKRenderer::IsHaveTextureCubeMap(uint32_t name)
 {
-	return m_pTextureManager->IsHaveTextureCubeMap(name);
+	return m_pTextureCubeMapManager->IsHave(name);
 }
 
 CGfxTexture2DPtr CVKRenderer::NewTexture2D(uint32_t name)
 {
-	return m_pTextureManager->CreateTexture2D(name);
+	return m_pTexture2DManager->Create(name);
 }
 
 CGfxTexture2DPtr CVKRenderer::NewTexture2D(const char *szFileName)
 {
-	return m_pTextureManager->CreateTexture2D(szFileName);
+	return m_pTexture2DManager->Create(szFileName);
 }
 
 CGfxTexture2DArrayPtr CVKRenderer::NewTexture2DArray(uint32_t name)
 {
-	return m_pTextureManager->CreateTexture2DArray(name);
+	return m_pTexture2DArrayManager->Create(name);
 }
 
 CGfxTexture2DArrayPtr CVKRenderer::NewTexture2DArray(const char *szFileName)
 {
-	return m_pTextureManager->CreateTexture2DArray(szFileName);
+	return m_pTexture2DArrayManager->Create(szFileName);
 }
 
 CGfxTextureCubeMapPtr CVKRenderer::NewTextureCubeMap(uint32_t name)
 {
-	return m_pTextureManager->CreateTextureCubeMap(name);
+	return m_pTextureCubeMapManager->Create(name);
 }
 
 CGfxTextureCubeMapPtr CVKRenderer::NewTextureCubeMap(const char *szFileName)
 {
-	return m_pTextureManager->CreateTextureCubeMap(szFileName);
+	return m_pTextureCubeMapManager->Create(szFileName);
 }
 
 CGfxUniformBufferPtr CVKRenderer::NewUniformBuffer(size_t size)

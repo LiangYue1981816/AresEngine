@@ -5,11 +5,11 @@
 class CVKTextureCubeMap : public CVKTexture, public CGfxTextureCubeMap
 {
 	friend class CVKDevice;
-	friend class CVKTextureManager;
+	friend class CVKTextureCubeMapManager;
 
 
 private:
-	CVKTextureCubeMap(CVKDevice *pDevice, CVKTextureManager *pManager, uint32_t name);
+	CVKTextureCubeMap(CVKDevice *pDevice, CVKTextureCubeMapManager *pManager, uint32_t name);
 	virtual ~CVKTextureCubeMap(void);
 	virtual void Release(void);
 
@@ -50,4 +50,7 @@ private:
 
 private:
 	eastl::unordered_map<int, eastl::unordered_map<int, uint32_t>> m_size;
+
+private:
+	CVKTextureCubeMapManager *m_pManager;
 };

@@ -5,11 +5,11 @@
 class CVKTexture2D : public CVKTexture, public CGfxTexture2D
 {
 	friend class CVKDevice;
-	friend class CVKTextureManager;
+	friend class CVKTexture2DManager;
 
 
 private:
-	CVKTexture2D(CVKDevice *pDevice, CVKTextureManager *pManager, uint32_t name);
+	CVKTexture2D(CVKDevice *pDevice, CVKTexture2DManager *pManager, uint32_t name);
 	virtual ~CVKTexture2D(void);
 	virtual void Release(void);
 
@@ -52,4 +52,7 @@ private:
 
 private:
 	eastl::unordered_map<int, uint32_t> m_size;
+
+private:
+	CVKTexture2DManager *m_pManager;
 };

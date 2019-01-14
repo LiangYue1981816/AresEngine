@@ -1,10 +1,11 @@
 #include "VKRenderer.h"
 
 
-CVKTextureCubeMap::CVKTextureCubeMap(CVKDevice *pDevice, CVKTextureManager *pManager, uint32_t name)
-	: CVKTexture(pDevice, pManager)
+CVKTextureCubeMap::CVKTextureCubeMap(CVKDevice *pDevice, CVKTextureCubeMapManager *pManager, uint32_t name)
+	: CVKTexture(pDevice)
 	, CGfxTextureCubeMap(name)
 	, m_name(name)
+	, m_pManager(pManager)
 
 	, m_format(GFX_PIXELFORMAT_UNDEFINED)
 	, m_type(GFX_TEXTURE_INVALID_ENUM)
@@ -23,7 +24,7 @@ CVKTextureCubeMap::~CVKTextureCubeMap(void)
 
 void CVKTextureCubeMap::Release(void)
 {
-	m_pManager->DestroyTextureCubeMap(this);
+	m_pManager->Destroy(this);
 }
 
 uint32_t CVKTextureCubeMap::GetName(void) const

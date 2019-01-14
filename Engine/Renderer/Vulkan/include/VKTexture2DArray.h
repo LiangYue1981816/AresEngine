@@ -5,11 +5,11 @@
 class CVKTexture2DArray : public CVKTexture, public CGfxTexture2DArray
 {
 	friend class CVKDevice;
-	friend class CVKTextureManager;
+	friend class CVKTexture2DArrayManager;
 
 
 private:
-	CVKTexture2DArray(CVKDevice *pDevice, CVKTextureManager *pManager, uint32_t name);
+	CVKTexture2DArray(CVKDevice *pDevice, CVKTexture2DArrayManager *pManager, uint32_t name);
 	virtual ~CVKTexture2DArray(void);
 	virtual void Release(void);
 
@@ -52,4 +52,7 @@ private:
 
 private:
 	eastl::unordered_map<int, eastl::unordered_map<int, uint32_t>> m_size;
+
+private:
+	CVKTexture2DArrayManager *m_pManager;
 };

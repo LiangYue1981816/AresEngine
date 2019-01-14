@@ -1,9 +1,8 @@
 #include "VKRenderer.h"
 
 
-CVKTexture::CVKTexture(CVKDevice *pDevice, CVKTextureManager *pManager)
+CVKTexture::CVKTexture(CVKDevice *pDevice)
 	: m_pDevice(pDevice)
-	, m_pManager(pManager)
 
 	, m_bExtern(false)
 	, m_vkImageView(VK_NULL_HANDLE)

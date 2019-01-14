@@ -16,7 +16,7 @@ protected:
 
 
 protected:
-	CVKTexture(CVKDevice *pDevice, CVKTextureManager *pManager);
+	CVKTexture(CVKDevice *pDevice);
 	virtual ~CVKTexture(void);
 
 
@@ -42,7 +42,4 @@ protected:
 
 protected:
 	CVKDevice *m_pDevice;
-
-protected:
-	CVKTextureManager *m_pManager;
 };
