@@ -4,7 +4,6 @@
 
 class CVKImage : public CGfxResource
 {
-	friend class CVKDevice;
 	friend class CVKTexture;
 	friend class CVKTexture2D;
 	friend class CVKTexture2DArray;

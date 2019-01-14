@@ -4,7 +4,6 @@
 
 class CVKVertexBuffer : public CGfxVertexBuffer
 {
-	friend class CVKDevice;
 	friend class CVKMesh;
 	friend class CVKMeshDraw;
 

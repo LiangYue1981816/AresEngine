@@ -4,7 +4,6 @@
 
 class CVKBuffer : public CGfxResource
 {
-	friend class CVKDevice;
 	friend class CVKTexture;
 	friend class CVKIndexBuffer;
 	friend class CVKVertexBuffer;

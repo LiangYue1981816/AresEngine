@@ -4,10 +4,6 @@
 
 class CVKTexture
 {
-	friend class CVKDevice;
-	friend class CVKTextureManager;
-
-
 protected:
 	typedef struct TransferBuffer {
 		VkBufferImageCopy region;

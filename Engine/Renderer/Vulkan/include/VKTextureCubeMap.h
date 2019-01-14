@@ -4,7 +4,6 @@
 
 class CVKTextureCubeMap : public CVKTexture, public CGfxTextureCubeMap
 {
-	friend class CVKDevice;
 	friend class CVKTextureCubeMapManager;
 
 
