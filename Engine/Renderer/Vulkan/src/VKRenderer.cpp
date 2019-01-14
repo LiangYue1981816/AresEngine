@@ -5,13 +5,40 @@ CVKRenderer::CVKRenderer(void *hInstance, void *hWnd, void *hDC, int width, int 
 	: CGfxRenderer(hInstance, hWnd, hDC, width, height, pixelFormat)
 	, m_pInstance(nullptr)
 	, m_pDevice(nullptr)
+
+	, m_pMeshManager(nullptr)
+	, m_pMeshDrawManager(nullptr)
+	, m_pSamplerManager(nullptr)
+	, m_pTextureManager(nullptr)
+	, m_pRenderPassManager(nullptr)
+	, m_pFrameBufferManager(nullptr)
+	, m_pRenderTextureManager(nullptr)
+	, m_pShaderManager(nullptr)
 {
 	m_pInstance = new CVKInstance(hInstance, hWnd);
 	m_pDevice = new CVKDevice(m_pInstance);
+
+	m_pMeshManager = new CVKMeshManager(m_pDevice);
+	m_pMeshDrawManager = new CVKMeshDrawManager(m_pDevice);
+	m_pSamplerManager = new CVKSamplerManager(m_pDevice);
+	m_pTextureManager = new CVKTextureManager(m_pDevice);
+	m_pRenderPassManager = new CVKRenderPassManager(m_pDevice);
+	m_pFrameBufferManager = new CVKFrameBufferManager(m_pDevice);
+	m_pRenderTextureManager = new CVKRenderTextureManager(m_pDevice);
+	m_pShaderManager = new CVKShaderManager(m_pDevice);
 }
 
 CVKRenderer::~CVKRenderer(void)
 {
+	delete m_pShaderManager;
+	delete m_pRenderTextureManager;
+	delete m_pFrameBufferManager;
+	delete m_pRenderPassManager;
+	delete m_pTextureManager;
+	delete m_pSamplerManager;
+	delete m_pMeshDrawManager;
+	delete m_pMeshManager;
+
 	delete m_pDevice;
 	delete m_pInstance;
 }

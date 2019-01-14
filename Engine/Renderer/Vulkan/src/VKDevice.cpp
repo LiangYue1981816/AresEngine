@@ -13,15 +13,6 @@ CVKDevice::CVKDevice(CVKInstance *pInstance)
 
 	, m_pQueue(nullptr)
 	, m_pMemoryManager(nullptr)
-
-	, m_pMeshManager(nullptr)
-	, m_pMeshDrawManager(nullptr)
-	, m_pSamplerManager(nullptr)
-	, m_pTextureManager(nullptr)
-	, m_pRenderPassManager(nullptr)
-	, m_pFrameBufferManager(nullptr)
-	, m_pRenderTextureManager(nullptr)
-	, m_pShaderManager(nullptr)
 {
 	uint32_t deviceIndex;
 	uint32_t queueFamilyIndex;
@@ -32,28 +23,10 @@ CVKDevice::CVKDevice(CVKInstance *pInstance)
 
 	m_pQueue = new CVKQueue(this, queueFamilyIndex);
 	m_pMemoryManager = new CVKMemoryManager(this);
-
-	m_pMeshManager = new CVKMeshManager(this);
-	m_pMeshDrawManager = new CVKMeshDrawManager(this);
-	m_pSamplerManager = new CVKSamplerManager(this);
-	m_pTextureManager = new CVKTextureManager(this);
-	m_pRenderPassManager = new CVKRenderPassManager(this);
-	m_pFrameBufferManager = new CVKFrameBufferManager(this);
-	m_pRenderTextureManager = new CVKRenderTextureManager(this);
-	m_pShaderManager = new CVKShaderManager(this);
 }
 
 CVKDevice::~CVKDevice(void)
 {
-	delete m_pShaderManager;
-	delete m_pRenderTextureManager;
-	delete m_pFrameBufferManager;
-	delete m_pRenderPassManager;
-	delete m_pTextureManager;
-	delete m_pSamplerManager;
-	delete m_pMeshDrawManager;
-	delete m_pMeshManager;
-
 	delete m_pMemoryManager;
 	delete m_pQueue;
 
@@ -249,44 +222,4 @@ CVKQueue* CVKDevice::GetQueue(void) const
 CVKMemoryManager* CVKDevice::GetMemoryManager(void) const
 {
 	return m_pMemoryManager;
-}
-
-CVKMeshManager* CVKDevice::GetMeshManager(void) const
-{
-	return m_pMeshManager;
-}
-
-CVKMeshDrawManager* CVKDevice::GetMeshDrawManager(void) const
-{
-	return m_pMeshDrawManager;
-}
-
-CVKTextureManager* CVKDevice::GetTextureManager(void) const
-{
-	return m_pTextureManager;
-}
-
-CVKRenderPassManager* CVKDevice::GetRenderPassManager(void) const
-{
-	return m_pRenderPassManager;
-}
-
-CVKFrameBufferManager* CVKDevice::GetFrameBufferManager(void) const
-{
-	return m_pFrameBufferManager;
-}
-
-CVKSamplerManager* CVKDevice::GetSamplerManager(void) const
-{
-	return m_pSamplerManager;
-}
-
-CVKRenderTextureManager* CVKDevice::GetRenderTextureManager(void) const
-{
-	return m_pRenderTextureManager;
-}
-
-CVKShaderManager* CVKDevice::GetShaderManager(void)
-{
-	return m_pShaderManager;
 }

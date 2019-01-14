@@ -37,16 +37,6 @@ public:
 	CVKQueue* GetQueue(void) const;
 	CVKMemoryManager* GetMemoryManager(void) const;
 
-private:
-	CVKMeshManager* GetMeshManager(void) const;
-	CVKMeshDrawManager* GetMeshDrawManager(void) const;
-	CVKSamplerManager* GetSamplerManager(void) const;
-	CVKTextureManager* GetTextureManager(void) const;
-	CVKRenderPassManager* GetRenderPassManager(void) const;
-	CVKFrameBufferManager* GetFrameBufferManager(void) const;
-	CVKRenderTextureManager* GetRenderTextureManager(void) const;
-	CVKShaderManager* GetShaderManager(void);
-
 
 private:
 	VkDevice m_vkDevice;
@@ -59,16 +49,6 @@ private:
 private:
 	CVKQueue *m_pQueue;
 	CVKMemoryManager *m_pMemoryManager;
-
-private:
-	CVKMeshManager *m_pMeshManager;
-	CVKMeshDrawManager *m_pMeshDrawManager;
-	CVKSamplerManager *m_pSamplerManager;
-	CVKTextureManager *m_pTextureManager;
-	CVKRenderPassManager *m_pRenderPassManager;
-	CVKFrameBufferManager *m_pFrameBufferManager;
-	CVKRenderTextureManager *m_pRenderTextureManager;
-	CVKShaderManager *m_pShaderManager;
 
 private:
 	CVKInstance *m_pInstance;

@@ -148,4 +148,14 @@ public:
 private:
 	CVKInstance *m_pInstance;
 	CVKDevice *m_pDevice;
+
+private:
+	CVKMeshManager *m_pMeshManager;
+	CVKMeshDrawManager *m_pMeshDrawManager;
+	CVKSamplerManager *m_pSamplerManager;
+	CVKTextureManager *m_pTextureManager;
+	CVKRenderPassManager *m_pRenderPassManager;
+	CVKFrameBufferManager *m_pFrameBufferManager;
+	CVKRenderTextureManager *m_pRenderTextureManager;
+	CVKShaderManager *m_pShaderManager;
 };
