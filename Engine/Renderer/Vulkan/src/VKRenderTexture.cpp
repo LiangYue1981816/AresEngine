@@ -64,9 +64,33 @@ int CVKRenderTexture::GetSamples(void) const
 	return m_samples;
 }
 
+bool CVKRenderTexture::Create(HANDLE texture, GfxPixelFormat pixelFormat, int width, int height, int samples)
+{
+	Destroy();
+
+	m_bExtern = true;
+	m_vkImageView = (VkImageView)texture;
+
+	m_width = width;
+	m_height = height;
+	m_samples = std::max(samples, 1);
+
+	m_format = pixelFormat;
+	m_type = m_samples == 1 ? GFX_TEXTURE_2D : GFX_TEXTURE_2D_MULTISAMPLE;
+
+	return true;
+}
+
 bool CVKRenderTexture::Create(GfxPixelFormat pixelFormat, int width, int height, int samples, bool bTransient)
 {
 	Destroy();
+
+	m_width = width;
+	m_height = height;
+	m_samples = std::max(samples, 1);
+
+	m_format = pixelFormat;
+	m_type = m_samples == 1 ? GFX_TEXTURE_2D : GFX_TEXTURE_2D_MULTISAMPLE;
 
 	if (CVKHelper::IsFormatSupported((VkFormat)pixelFormat) && CVKHelper::IsFormatDepthOnly((VkFormat)pixelFormat)) {
 		CALL_BOOL_FUNCTION_RETURN_BOOL(CreateImage(VK_IMAGE_TYPE_2D, VK_IMAGE_VIEW_TYPE_2D, (VkFormat)pixelFormat, width, height, (VkSampleCountFlagBits)samples, VK_IMAGE_TILING_OPTIMAL, VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT | VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT | (bTransient ? VK_IMAGE_USAGE_TRANSIENT_ATTACHMENT_BIT : VK_IMAGE_USAGE_TRANSFER_SRC_BIT)));
@@ -118,10 +142,20 @@ bool CVKRenderTexture::CreateImage(VkImageType imageType, VkImageViewType viewTy
 
 void CVKRenderTexture::Destroy(void)
 {
-	if (m_vkImageView) {
-		vkDestroyImageView(m_pDevice->GetDevice(), m_vkImageView, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
+	if (m_bExtern == false) {
+		if (m_vkImageView) {
+			vkDestroyImageView(m_pDevice->GetDevice(), m_vkImageView, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
+		}
 	}
 
+	m_bExtern = false;
 	m_vkImageView = VK_NULL_HANDLE;
 	m_ptrImage.Release();
+
+	m_format = GFX_PIXELFORMAT_UNDEFINED;
+	m_type = GFX_TEXTURE_INVALID_ENUM;
+
+	m_width = 0;
+	m_height = 0;
+	m_samples = 0;
 }
