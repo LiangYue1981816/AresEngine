@@ -6,7 +6,7 @@
 
 class CGLES3PipelineGraphics : public CGLES3Pipeline, public CGfxPipelineGraphics
 {
-	friend class CGLES3PipelineManager;
+	friend class CGLES3PipelineGraphicsManager;
 
 
 private:

@@ -6,7 +6,8 @@
 
 class CGLES3Pipeline
 {
-	friend class CGLES3PipelineManager;
+	friend class CGLES3PipelineComputeManager;
+	friend class CGLES3PipelineGraphicsManager;
 
 
 protected:

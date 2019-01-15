@@ -13,7 +13,8 @@ CGLES3Renderer::CGLES3Renderer(void *hInstance, void *hWnd, void *hDC, int width
 	, m_pTexture2DManager(nullptr)
 	, m_pTexture2DArrayManager(nullptr)
 	, m_pTextureCubeMapManager(nullptr)
-	, m_pPipelineManager(nullptr)
+	, m_pPipelineComputeManager(nullptr)
+	, m_pPipelineGraphicsManager(nullptr)
 	, m_pMaterialManager(nullptr)
 	, m_pRenderPassManager(nullptr)
 	, m_pFrameBufferManager(nullptr)
@@ -33,7 +34,8 @@ CGLES3Renderer::CGLES3Renderer(void *hInstance, void *hWnd, void *hDC, int width
 	m_pTexture2DManager = new CGLES3Texture2DManager;
 	m_pTexture2DArrayManager = new CGLES3Texture2DArrayManager;
 	m_pTextureCubeMapManager = new CGLES3TextureCubeMapManager;
-	m_pPipelineManager = new CGLES3PipelineManager;
+	m_pPipelineComputeManager = new CGLES3PipelineComputeManager;
+	m_pPipelineGraphicsManager = new CGLES3PipelineGraphicsManager;
 	m_pMaterialManager = new CGLES3MaterialManager;
 	m_pRenderPassManager = new CGLES3RenderPassManager;
 	m_pFrameBufferManager = new CGLES3FrameBufferManager;
@@ -60,7 +62,8 @@ CGLES3Renderer::~CGLES3Renderer(void)
 	delete m_pTexture2DManager;
 	delete m_pTexture2DArrayManager;
 	delete m_pTextureCubeMapManager;
-	delete m_pPipelineManager;
+	delete m_pPipelineComputeManager;
+	delete m_pPipelineGraphicsManager;
 	delete m_pShaderManager;
 	delete m_pMeshDrawManager;
 	delete m_pMeshManager;
@@ -88,12 +91,12 @@ CGfxShader* CGLES3Renderer::CreateShader(const char *szFileName, shader_kind kin
 
 CGfxPipelineCompute* CGLES3Renderer::CreatePipelineCompute(const CGfxShader *pComputeShader)
 {
-	return m_pPipelineManager->CreatePipelineCompute(pComputeShader);
+	return m_pPipelineComputeManager->Create(pComputeShader);
 }
 
 CGfxPipelineGraphics* CGLES3Renderer::CreatePipelineGraphics(const CGfxShader *pVertexShader, const CGfxShader *pFragmentShader, const PipelineState &state)
 {
-	return m_pPipelineManager->CreatePipelineGraphics(pVertexShader, pFragmentShader, state);
+	return m_pPipelineGraphicsManager->Create(pVertexShader, pFragmentShader, state);
 }
 
 CGfxSampler* CGLES3Renderer::CreateSampler(int mipLevels, GfxFilter minFilter, GfxFilter magFilter, GfxSamplerMipmapMode mipmapMode, GfxSamplerAddressMode addressMode)
