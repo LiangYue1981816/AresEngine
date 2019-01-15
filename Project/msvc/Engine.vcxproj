@@ -376,6 +376,7 @@
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKTextureCubeMap.h" />
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKTextureManager.h" />
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKUniformBuffer.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKUniformBufferManager.h" />
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKVertexBuffer.h" />
     <ClInclude Include="..\..\Engine\Resource\include\ResourceLoader.h" />
     <ClInclude Include="..\..\Engine\SceneHeader.h" />
@@ -556,6 +557,7 @@
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKTexture2DCubeMap.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKTextureManager.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKUniformBuffer.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKUniformBufferManager.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKVertexBuffer.cpp" />
     <ClCompile Include="..\..\Engine\Resource\src\ResourceLoader.cpp" />
     <ClCompile Include="..\..\Engine\Resource\src\ResourceLoaderMaterial.cpp" />
