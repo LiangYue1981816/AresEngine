@@ -72,7 +72,10 @@ CVKMemory* CVKMemoryAllocator::AllocMemory(VkDeviceSize alignment, VkDeviceSize 
 	//             |                          |                     |
 	//             |        Alignment Size    |  >= MIN_ALIGNMENT   |
 
-	VkDeviceSize requestSize = ALIGN_BYTE(alignment + size, MIN_ALIGNMENT);
+	size = ALIGN_BYTE(size, MIN_ALIGNMENT);
+	alignment = ALIGN_BYTE(alignment, MIN_ALIGNMENT);
+
+	VkDeviceSize requestSize = alignment + size;
 
 	if (m_freeSize >= requestSize) {
 		if (CVKMemory *pMemory = SearchMemory(requestSize)) {

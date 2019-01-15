@@ -59,7 +59,7 @@ private:
 
 
 private:
-	static const uint32_t MIN_ALIGNMENT = 64;
+	static const uint32_t MIN_ALIGNMENT = 256;
 
 private:
 	uint32_t m_memoryTypeIndex;

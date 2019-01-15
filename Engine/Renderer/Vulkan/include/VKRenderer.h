@@ -44,6 +44,7 @@
 #include "VKMeshManager.h"
 #include "VKMeshDrawManager.h"
 #include "VKRenderTextureManager.h"
+#include "VKUniformBufferManager.h"
 
 
 #define VKRenderer() ((CVKRenderer *)CGfxRenderer::GetInstance())
@@ -153,6 +154,7 @@ private:
 private:
 	CVKMeshManager *m_pMeshManager;
 	CVKMeshDrawManager *m_pMeshDrawManager;
+	CVKShaderManager *m_pShaderManager;
 	CVKSamplerManager *m_pSamplerManager;
 	CVKTexture2DManager *m_pTexture2DManager;
 	CVKTexture2DArrayManager *m_pTexture2DArrayManager;
@@ -160,5 +162,5 @@ private:
 	CVKRenderPassManager *m_pRenderPassManager;
 	CVKFrameBufferManager *m_pFrameBufferManager;
 	CVKRenderTextureManager *m_pRenderTextureManager;
-	CVKShaderManager *m_pShaderManager;
+	CVKUniformBufferManager *m_pUniformBufferManager;
 };

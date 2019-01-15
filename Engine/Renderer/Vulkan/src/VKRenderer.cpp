@@ -9,6 +9,7 @@ CVKRenderer::CVKRenderer(void *hInstance, void *hWnd, void *hDC, int width, int 
 
 	, m_pMeshManager(nullptr)
 	, m_pMeshDrawManager(nullptr)
+	, m_pShaderManager(nullptr)
 	, m_pSamplerManager(nullptr)
 	, m_pTexture2DManager(nullptr)
 	, m_pTexture2DArrayManager(nullptr)
@@ -16,13 +17,14 @@ CVKRenderer::CVKRenderer(void *hInstance, void *hWnd, void *hDC, int width, int 
 	, m_pRenderPassManager(nullptr)
 	, m_pFrameBufferManager(nullptr)
 	, m_pRenderTextureManager(nullptr)
-	, m_pShaderManager(nullptr)
+	, m_pUniformBufferManager(nullptr)
 {
 	m_pInstance = new CVKInstance(hInstance, hWnd);
 	m_pDevice = new CVKDevice(m_pInstance);
 
 	m_pMeshManager = new CVKMeshManager(m_pDevice);
 	m_pMeshDrawManager = new CVKMeshDrawManager(m_pDevice);
+	m_pShaderManager = new CVKShaderManager(m_pDevice);
 	m_pSamplerManager = new CVKSamplerManager(m_pDevice);
 	m_pTexture2DManager = new CVKTexture2DManager(m_pDevice);
 	m_pTexture2DArrayManager = new CVKTexture2DArrayManager(m_pDevice);
@@ -30,7 +32,7 @@ CVKRenderer::CVKRenderer(void *hInstance, void *hWnd, void *hDC, int width, int 
 	m_pRenderPassManager = new CVKRenderPassManager(m_pDevice);
 	m_pFrameBufferManager = new CVKFrameBufferManager(m_pDevice);
 	m_pRenderTextureManager = new CVKRenderTextureManager(m_pDevice);
-	m_pShaderManager = new CVKShaderManager(m_pDevice);
+	m_pUniformBufferManager = new CVKUniformBufferManager(m_pDevice);
 
 	m_pSwapChain = new CVKSwapChain(m_pDevice, width, height, pixelFormat);
 }
@@ -39,7 +41,7 @@ CVKRenderer::~CVKRenderer(void)
 {
 	delete m_pSwapChain;
 
-	delete m_pShaderManager;
+	delete m_pUniformBufferManager;
 	delete m_pRenderTextureManager;
 	delete m_pFrameBufferManager;
 	delete m_pRenderPassManager;
@@ -47,6 +49,7 @@ CVKRenderer::~CVKRenderer(void)
 	delete m_pTexture2DArrayManager;
 	delete m_pTextureCubeMapManager;
 	delete m_pSamplerManager;
+	delete m_pShaderManager;
 	delete m_pMeshDrawManager;
 	delete m_pMeshManager;
 
@@ -71,7 +74,7 @@ CGfxMaterialPass* CVKRenderer::GetGlobalPass(void) const
 
 CGfxShader* CVKRenderer::CreateShader(const char *szFileName, shader_kind kind)
 {
-	return nullptr;
+	return m_pShaderManager->Create(szFileName, kind);
 }
 
 CGfxPipelineCompute* CVKRenderer::CreatePipelineCompute(const CGfxShader *pComputeShader)
@@ -196,7 +199,7 @@ CGfxTextureCubeMapPtr CVKRenderer::NewTextureCubeMap(const char *szFileName)
 
 CGfxUniformBufferPtr CVKRenderer::NewUniformBuffer(size_t size)
 {
-	return nullptr;
+	return m_pUniformBufferManager->Create(size);
 }
 
 CGfxCommandBufferPtr CVKRenderer::NewCommandBuffer(bool bMainCommandBuffer)

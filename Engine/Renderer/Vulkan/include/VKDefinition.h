@@ -95,3 +95,4 @@ class CVKFrameBufferManager;
 class CVKMeshManager;
 class CVKMeshDrawManager;
 class CVKRenderTextureManager;
+class CVKUniformBufferManager;
