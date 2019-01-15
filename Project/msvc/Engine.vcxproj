@@ -290,10 +290,8 @@
     <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3Texture.h" />
     <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3Texture2D.h" />
     <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3Texture2DArray.h" />
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3Texture2DArrayManager.h" />
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3Texture2DManager.h" />
     <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3TextureCubeMap.h" />
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3TextureCubeMapManager.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3TextureManager.h" />
     <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3UniformBuffer.h" />
     <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3UniformBufferManager.h" />
     <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3VertexArrayObject.h" />
@@ -375,10 +373,8 @@
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKTexture.h" />
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKTexture2D.h" />
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKTexture2DArray.h" />
-    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKTexture2DArrayManager.h" />
-    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKTexture2DManager.h" />
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKTextureCubeMap.h" />
-    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKTextureCubeMapManager.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKTextureManager.h" />
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKUniformBuffer.h" />
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKVertexBuffer.h" />
     <ClInclude Include="..\..\Engine\Resource\include\ResourceLoader.h" />
@@ -516,10 +512,8 @@
     <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3Texture.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3Texture2D.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3Texture2DArray.cpp" />
-    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3Texture2DArrayManager.cpp" />
-    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3Texture2DManager.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3TextureCubeMap.cpp" />
-    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3TextureCubeMapManager.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3TextureManager.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3UniformBuffer.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3UniformBufferManager.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3VertexArrayObject.cpp" />
@@ -559,10 +553,8 @@
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKTexture.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKTexture2D.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKTexture2DArray.cpp" />
-    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKTexture2DArrayManager.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKTexture2DCubeMap.cpp" />
-    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKTexture2DCubeMapManager.cpp" />
-    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKTexture2DManager.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKTextureManager.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKUniformBuffer.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKVertexBuffer.cpp" />
     <ClCompile Include="..\..\Engine\Resource\src\ResourceLoader.cpp" />

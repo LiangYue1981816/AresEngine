@@ -399,9 +399,6 @@
     <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3MeshManager.h">
       <Filter>Engine\Renderer\GLES3\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3PipelineManager.h">
-      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3Renderer.h">
       <Filter>Engine\Renderer\GLES3\Header Files</Filter>
     </ClInclude>
@@ -894,22 +891,13 @@
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKSwapChain.h">
       <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3Texture2DArrayManager.h">
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3TextureManager.h">
       <Filter>Engine\Renderer\GLES3\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3Texture2DManager.h">
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3PipelineManager.h">
       <Filter>Engine\Renderer\GLES3\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3TextureCubeMapManager.h">
-      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKTexture2DArrayManager.h">
-      <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKTexture2DManager.h">
-      <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKTextureCubeMapManager.h">
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKTextureManager.h">
       <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -1098,9 +1086,6 @@
       <Filter>Engine\Renderer\GLES3\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3MeshManager.cpp">
-      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3PipelineManager.cpp">
       <Filter>Engine\Renderer\GLES3\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3Renderer.cpp">
@@ -1448,22 +1433,13 @@
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKSwapChain.cpp">
       <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3Texture2DArrayManager.cpp">
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3TextureManager.cpp">
       <Filter>Engine\Renderer\GLES3\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3Texture2DManager.cpp">
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3PipelineManager.cpp">
       <Filter>Engine\Renderer\GLES3\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3TextureCubeMapManager.cpp">
-      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKTexture2DArrayManager.cpp">
-      <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKTexture2DCubeMapManager.cpp">
-      <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKTexture2DManager.cpp">
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKTextureManager.cpp">
       <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
