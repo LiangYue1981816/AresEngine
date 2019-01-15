@@ -6,10 +6,6 @@
 
 class CGLES3Pipeline
 {
-	friend class CGLES3PipelineComputeManager;
-	friend class CGLES3PipelineGraphicsManager;
-
-
 protected:
 	CGLES3Pipeline(void);
 	virtual ~CGLES3Pipeline(void);
