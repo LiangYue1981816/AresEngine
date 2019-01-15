@@ -81,6 +81,7 @@ CVKSwapChain::CVKSwapChain(CVKDevice *pDevice, int width, int height, GfxPixelFo
 	eastl::vector<VkPresentModeKHR> modes;
 	eastl::vector<VkSurfaceFormatKHR> formats;
 	VkSurfaceCapabilitiesKHR capabilities;
+	CALL_BOOL_FUNCTION_RETURN(IsSurfaceSupport());
 	CALL_BOOL_FUNCTION_RETURN(EnumDeviceSurfaceModes(modes));
 	CALL_BOOL_FUNCTION_RETURN(EnumDeviceSurfaceFormats(formats));
 	CALL_BOOL_FUNCTION_RETURN(EnumDeviceSurfaceCapabilities(capabilities));
@@ -92,6 +93,13 @@ CVKSwapChain::~CVKSwapChain(void)
 {
 	DestroyImagesAndImageViews();
 	DestroySwapChain();
+}
+
+bool CVKSwapChain::IsSurfaceSupport(void) const
+{
+	VkBool32 surfaceSupported;
+	CALL_VK_FUNCTION_RETURN_BOOL(vkGetPhysicalDeviceSurfaceSupportKHR(m_pDevice->GetPhysicalDevice(), m_pDevice->GetQueue()->GetQueueFamilyIndex(), m_pDevice->GetInstance()->GetSurface(), &surfaceSupported));
+	return surfaceSupported == VK_TRUE;
 }
 
 bool CVKSwapChain::EnumDeviceSurfaceModes(eastl::vector<VkPresentModeKHR> &modes) const

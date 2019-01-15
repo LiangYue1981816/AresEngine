@@ -13,6 +13,7 @@ private:
 
 
 private:
+	bool IsSurfaceSupport(void) const;
 	bool EnumDeviceSurfaceModes(eastl::vector<VkPresentModeKHR> &modes) const;
 	bool EnumDeviceSurfaceFormats(eastl::vector<VkSurfaceFormatKHR> &formats) const;
 	bool EnumDeviceSurfaceCapabilities(VkSurfaceCapabilitiesKHR &capabilities) const;
