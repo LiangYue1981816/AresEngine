@@ -37,9 +37,7 @@
 #include "VKUniformBuffer.h"
 
 #include "VKSamplerManager.h"
-#include "VKTexture2DManager.h"
-#include "VKTexture2DArrayManager.h"
-#include "VKTextureCubeMapManager.h"
+#include "VKTextureManager.h"
 #include "VKShaderManager.h"
 #include "VKRenderPassManager.h"
 #include "VKFrameBufferManager.h"
