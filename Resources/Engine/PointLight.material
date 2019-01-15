@@ -1,0 +1,9 @@
+<Material>
+	<Pass name="Default">
+		<Pipeline>
+			<Vertex file_name="Default.glsl" />
+			<Fragment file_name="Default.glsl" />
+		</Pipeline>
+		<Texture2D name="texAlbedo" file_name="sponza_arch.dds" min_filter="GFX_LINEAR" mag_filter="GFX_LINEAR" mipmap_mode="GFX_NEAREST" address_mode="GFX_REPEAT" />
+	</Pass>
+</Material>
