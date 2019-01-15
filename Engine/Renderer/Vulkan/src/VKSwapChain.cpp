@@ -51,19 +51,15 @@ static VkPresentModeKHR GetSwapchainPresentMode(const eastl::vector<VkPresentMod
 	return VK_PRESENT_MODE_IMMEDIATE_KHR;
 }
 
-static VkSurfaceFormatKHR GetSwapchainFormat(const eastl::vector<VkSurfaceFormatKHR> &formats)
+static VkSurfaceFormatKHR GetSwapchainFormat(const eastl::vector<VkSurfaceFormatKHR> &formats, VkFormat pixelFormat)
 {
-	if ((formats.size() == 1) && (formats[0].format == VK_FORMAT_UNDEFINED)) {
-		return { VK_FORMAT_B8G8R8A8_UNORM, VK_COLORSPACE_SRGB_NONLINEAR_KHR };
-	}
-
 	for (uint32_t index = 0; index < formats.size(); index++) {
-		if (formats[index].format == VK_FORMAT_B8G8R8A8_UNORM) {
+		if (formats[index].format == pixelFormat) {
 			return formats[index];
 		}
 	}
 
-	return formats[0];
+	return { VK_FORMAT_B8G8R8A8_UNORM, VK_COLORSPACE_SRGB_NONLINEAR_KHR };
 }
 
 
@@ -138,7 +134,7 @@ bool CVKSwapChain::CreateSwapChain(const eastl::vector<VkPresentModeKHR> &modes,
 	VkImageUsageFlags imageUsage = GetSwapchainUsageFlags(capabilities);
 	VkSurfaceTransformFlagBitsKHR preTransform = GetSwapchainTransform(capabilities, VK_SURFACE_TRANSFORM_IDENTITY_BIT_KHR);
 	VkPresentModeKHR presentMode = GetSwapchainPresentMode(modes);
-	VkSurfaceFormatKHR imageFormat = GetSwapchainFormat(formats);
+	VkSurfaceFormatKHR imageFormat = GetSwapchainFormat(formats, (VkFormat)m_pixelFormat);
 
 	VkSwapchainCreateInfoKHR swapchainCreateInfo = {};
 	swapchainCreateInfo.sType = VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR;
