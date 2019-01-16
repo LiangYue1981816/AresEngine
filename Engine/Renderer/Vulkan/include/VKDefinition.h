@@ -76,6 +76,8 @@ class CVKTextureCubeMap;
 class CVKDescriptorSetLayout;
 class CVKShader;
 class CVKPipeline;
+class CVKPipelineCompute;
+class CVKPipelineGraphics;
 
 class CVKSwapChain;
 class CVKRenderPass;
@@ -90,6 +92,8 @@ class CVKTexture2DManager;
 class CVKTexture2DArrayManager;
 class CVKTextureCubeMapManager;
 class CVKShaderManager;
+class CVKPipelineComputeManager;
+class CVKPipelineGraphicsManager;
 class CVKRenderPassManager;
 class CVKFrameBufferManager;
 class CVKMeshManager;

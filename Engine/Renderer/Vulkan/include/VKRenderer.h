@@ -27,6 +27,8 @@
 #include "VkDescriptorSet.h"
 #include "VKShader.h"
 #include "VKPipeline.h"
+#include "VKPipelineCompute.h"
+#include "VKPipelineGraphics.h"
 
 #include "VKSwapChain.h"
 #include "VKRenderPass.h"
@@ -39,6 +41,7 @@
 #include "VKSamplerManager.h"
 #include "VKTextureManager.h"
 #include "VKShaderManager.h"
+#include "VKPipelineManager.h"
 #include "VKRenderPassManager.h"
 #include "VKFrameBufferManager.h"
 #include "VKMeshManager.h"

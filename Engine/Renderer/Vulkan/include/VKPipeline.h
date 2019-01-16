@@ -4,7 +4,7 @@
 
 class CVKPipeline
 {
-private:
+protected:
 	CVKPipeline(CVKDevice *pDevice);
 	virtual ~CVKPipeline(void);
 
