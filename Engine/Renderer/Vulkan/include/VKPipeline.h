@@ -12,6 +12,7 @@ protected:
 private:
 	bool CreateLayouts(eastl::vector<VkDescriptorSetLayout> &layouts);
 	bool CreateShaderStages(eastl::vector<VkPipelineShaderStageCreateInfo> &shaders);
+	bool CreateVertexInputState(eastl::vector<VkVertexInputBindingDescription> &inputBindingDescriptions, eastl::vector<VkVertexInputAttributeDescription> &inputAttributeDescriptions);
 
 
 private:

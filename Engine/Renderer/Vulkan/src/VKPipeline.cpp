@@ -108,3 +108,8 @@ bool CVKPipeline::CreateShaderStages(eastl::vector<VkPipelineShaderStageCreateIn
 
 	return rcode;
 }
+
+bool CVKPipeline::CreateVertexInputState(eastl::vector<VkVertexInputBindingDescription> &inputBindingDescriptions, eastl::vector<VkVertexInputAttributeDescription> &inputAttributeDescriptions)
+{
+	return true;
+}

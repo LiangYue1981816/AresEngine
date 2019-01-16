@@ -22,6 +22,57 @@ uint32_t CVKPipelineGraphics::GetName(void) const
 
 bool CVKPipelineGraphics::Create(const CGfxRenderPass *pRenderPass, const CGfxShader *pVertexShader, const CGfxShader *pFragmentShader, const PipelineState &state)
 {
+	if (pRenderPass == nullptr) {
+		return false;
+	}
+
+	if (pVertexShader == nullptr) {
+		return false;
+	}
+
+	if (pVertexShader->IsValid() == false) {
+		return false;
+	}
+
+	if (pVertexShader->GetKind() != vertex_shader) {
+		return false;
+	}
+
+	if (pFragmentShader == nullptr) {
+		return false;
+	}
+
+	if (pFragmentShader->IsValid() == false) {
+		return false;
+	}
+
+	if (pFragmentShader->GetKind() != fragment_shader) {
+		return false;
+	}
+
+	Destroy();
+
+	VkGraphicsPipelineCreateInfo pipelineCreateInfo = {};
+	pipelineCreateInfo.sType;
+	pipelineCreateInfo.pNext;
+	pipelineCreateInfo.flags;
+	pipelineCreateInfo.stageCount;
+	pipelineCreateInfo.pStages;
+	pipelineCreateInfo.pVertexInputState;
+	pipelineCreateInfo.pInputAssemblyState;
+	pipelineCreateInfo.pTessellationState;
+	pipelineCreateInfo.pViewportState;
+	pipelineCreateInfo.pRasterizationState;
+	pipelineCreateInfo.pMultisampleState;
+	pipelineCreateInfo.pDepthStencilState;
+	pipelineCreateInfo.pColorBlendState;
+	pipelineCreateInfo.pDynamicState;
+	pipelineCreateInfo.layout;
+	pipelineCreateInfo.renderPass;
+	pipelineCreateInfo.subpass;
+	pipelineCreateInfo.basePipelineHandle;
+	pipelineCreateInfo.basePipelineIndex;
+
 	return true;
 }
 
