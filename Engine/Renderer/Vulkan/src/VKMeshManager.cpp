@@ -22,11 +22,18 @@ CVKDevice* CVKMeshManager::GetDevice(void) const
 	return m_pDevice;
 }
 
-bool CVKMeshManager::IsHave(uint32_t name)
+CVKMesh* CVKMeshManager::Get(uint32_t name)
 {
 	mutex_autolock autolock(&lock);
 	{
-		return m_pMeshs.find(name) != m_pMeshs.end();
+		const auto &itMesh = m_pMeshs.find(name);
+
+		if (itMesh != m_pMeshs.end()) {
+			return itMesh->second;
+		}
+		else {
+			return nullptr;
+		}
 	}
 }
 
@@ -38,7 +45,7 @@ CVKMesh* CVKMeshManager::Create(uint32_t name)
 			m_pMeshs[name] = new CVKMesh(this, name);
 		}
 
-		return (CVKMesh *)m_pMeshs[name];
+		return m_pMeshs[name];
 	}
 }
 
@@ -53,11 +60,11 @@ CVKMesh* CVKMeshManager::Create(const char *szFileName, uint32_t vertexBinding)
 			ResourceLoader()->LoadMesh(szFileName, m_pMeshs[name], vertexBinding);
 		}
 
-		return (CVKMesh *)m_pMeshs[name];
+		return m_pMeshs[name];
 	}
 }
 
-void CVKMeshManager::Destroy(CGfxMesh *pMesh)
+void CVKMeshManager::Destroy(CVKMesh *pMesh)
 {
 	mutex_autolock autolock(&lock);
 	{

@@ -14,14 +14,14 @@ private:
 
 
 private:
-	bool IsHave(uint32_t name);
+	CGLES3Texture2D* Get(uint32_t name);
 	CGLES3Texture2D* Create(uint32_t name);
 	CGLES3Texture2D* Create(const char *szFileName);
-	void Destroy(CGfxTexture2D *pTexture);
+	void Destroy(CGLES3Texture2D *pTexture);
 
 
 private:
-	eastl::unordered_map<uint32_t, CGfxTexture2D*> m_pTextures;
+	eastl::unordered_map<uint32_t, CGLES3Texture2D*> m_pTextures;
 };
 
 
@@ -37,14 +37,14 @@ private:
 
 
 private:
-	bool IsHave(uint32_t name);
+	CGLES3Texture2DArray* Get(uint32_t name);
 	CGLES3Texture2DArray* Create(uint32_t name);
 	CGLES3Texture2DArray* Create(const char *szFileName);
-	void Destroy(CGfxTexture2DArray *pTexture);
+	void Destroy(CGLES3Texture2DArray *pTexture);
 
 
 private:
-	eastl::unordered_map<uint32_t, CGfxTexture2DArray*> m_pTextures;
+	eastl::unordered_map<uint32_t, CGLES3Texture2DArray*> m_pTextures;
 };
 
 
@@ -60,12 +60,12 @@ private:
 
 
 private:
-	bool IsHave(uint32_t name);
+	CGLES3TextureCubeMap* Get(uint32_t name);
 	CGLES3TextureCubeMap* Create(uint32_t name);
 	CGLES3TextureCubeMap* Create(const char *szFileName);
-	void Destroy(CGfxTextureCubeMap *pTexture);
+	void Destroy(CGLES3TextureCubeMap *pTexture);
 
 
 private:
-	eastl::unordered_map<uint32_t, CGfxTextureCubeMap*> m_pTextures;
+	eastl::unordered_map<uint32_t, CGLES3TextureCubeMap*> m_pTextures;
 };

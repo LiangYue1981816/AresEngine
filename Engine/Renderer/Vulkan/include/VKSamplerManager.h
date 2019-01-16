@@ -18,7 +18,7 @@ private:
 
 
 private:
-	eastl::unordered_map<uint32_t, CGfxSampler*> m_pSamplers;
+	eastl::unordered_map<uint32_t, CVKSampler*> m_pSamplers;
 
 private:
 	CVKDevice *m_pDevice;

@@ -81,30 +81,34 @@ public:
 	virtual CGfxSampler* CreateSampler(int mipLevels, GfxFilter minFilter, GfxFilter magFilter, GfxSamplerMipmapMode mipmapMode, GfxSamplerAddressMode addressMode) = 0;
 
 public:
-	virtual CGfxRenderPassPtr NewRenderPass(int numAttachments, int numSubpasses) = 0;
 	virtual CGfxFrameBufferPtr NewFrameBuffer(int width, int height, int numAttachments) = 0;
 
-	virtual bool IsHaveRenderTexture(uint32_t name) = 0;
+	virtual CGfxRenderPassPtr GetRenderPass(uint32_t name) = 0;
+	virtual CGfxRenderPassPtr NewRenderPass(uint32_t name, int numAttachments, int numSubpasses) = 0;
+
+	virtual CGfxRenderTexturePtr GetRenderTexture(uint32_t name) = 0;
 	virtual CGfxRenderTexturePtr NewRenderTexture(uint32_t name) = 0;
 
-	virtual bool IsHaveMesh(uint32_t name) = 0;
+	virtual CGfxMeshPtr GetMesh(uint32_t name) = 0;
 	virtual CGfxMeshPtr NewMesh(uint32_t name) = 0;
 	virtual CGfxMeshPtr NewMesh(const char *szFileName, uint32_t vertexBinding = 0) = 0;
 
-	virtual bool IsHaveMeshDraw(uint32_t name) = 0;
+	virtual CGfxMeshDrawPtr GetMeshDraw(uint32_t name) = 0;
 	virtual CGfxMeshDrawPtr NewMeshDraw(uint32_t name, const CGfxMeshPtr &ptrMesh, int indexDraw, uint32_t instanceFormat, uint32_t instanceBinding = 1) = 0;
 
-	virtual bool IsHaveMaterial(uint32_t name) = 0;
+	virtual CGfxMaterialPtr GetMaterial(uint32_t name) = 0;
 	virtual CGfxMaterialPtr NewMaterial(uint32_t name) = 0;
 	virtual CGfxMaterialPtr NewMaterial(const char *szFileName) = 0;
 
-	virtual bool IsHaveTexture2D(uint32_t name) = 0;
-	virtual bool IsHaveTexture2DArray(uint32_t name) = 0;
-	virtual bool IsHaveTextureCubeMap(uint32_t name) = 0;
+	virtual CGfxTexture2DPtr GetTexture2D(uint32_t name) = 0;
 	virtual CGfxTexture2DPtr NewTexture2D(uint32_t name) = 0;
 	virtual CGfxTexture2DPtr NewTexture2D(const char *szFileName) = 0;
+
+	virtual CGfxTexture2DArrayPtr GetTexture2DArray(uint32_t name) = 0;
 	virtual CGfxTexture2DArrayPtr NewTexture2DArray(uint32_t name) = 0;
 	virtual CGfxTexture2DArrayPtr NewTexture2DArray(const char *szFileName) = 0;
+
+	virtual CGfxTextureCubeMapPtr GetTextureCubeMap(uint32_t name) = 0;
 	virtual CGfxTextureCubeMapPtr NewTextureCubeMap(uint32_t name) = 0;
 	virtual CGfxTextureCubeMapPtr NewTextureCubeMap(const char *szFileName) = 0;
 

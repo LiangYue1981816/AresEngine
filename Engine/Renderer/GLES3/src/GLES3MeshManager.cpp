@@ -16,11 +16,18 @@ CGLES3MeshManager::~CGLES3MeshManager(void)
 	m_pMeshs.clear();
 }
 
-bool CGLES3MeshManager::IsHave(uint32_t name)
+CGLES3Mesh* CGLES3MeshManager::Get(uint32_t name)
 {
 	mutex_autolock autolock(&lock);
 	{
-		return m_pMeshs.find(name) != m_pMeshs.end();
+		const auto &itMesh = m_pMeshs.find(name);
+
+		if (itMesh != m_pMeshs.end()) {
+			return itMesh->second;
+		}
+		else {
+			return nullptr;
+		}
 	}
 }
 
@@ -32,7 +39,7 @@ CGLES3Mesh* CGLES3MeshManager::Create(uint32_t name)
 			m_pMeshs[name] = new CGLES3Mesh(this, name);
 		}
 
-		return (CGLES3Mesh *)m_pMeshs[name];
+		return m_pMeshs[name];
 	}
 }
 
@@ -47,11 +54,11 @@ CGLES3Mesh* CGLES3MeshManager::Create(const char *szFileName, uint32_t vertexBin
 			ResourceLoader()->LoadMesh(szFileName, m_pMeshs[name], vertexBinding);
 		}
 
-		return (CGLES3Mesh *)m_pMeshs[name];
+		return m_pMeshs[name];
 	}
 }
 
-void CGLES3MeshManager::Destroy(CGfxMesh *pMesh)
+void CGLES3MeshManager::Destroy(CGLES3Mesh *pMesh)
 {
 	mutex_autolock autolock(&lock);
 	{

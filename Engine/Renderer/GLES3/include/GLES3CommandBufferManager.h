@@ -15,9 +15,9 @@ private:
 
 private:
 	CGLES3CommandBuffer* Create(bool bMainCommandBuffer);
-	void Destroy(CGfxCommandBuffer *pCommandBuffer);
+	void Destroy(CGLES3CommandBuffer *pCommandBuffer);
 
 
 private:
-	eastl::unordered_map<CGfxCommandBuffer*, CGfxCommandBuffer*> m_pCommandBuffers;
+	eastl::unordered_map<CGLES3CommandBuffer*, CGLES3CommandBuffer*> m_pCommandBuffers;
 };

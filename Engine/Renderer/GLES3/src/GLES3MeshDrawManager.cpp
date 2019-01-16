@@ -15,15 +15,22 @@ CGLES3MeshDrawManager::~CGLES3MeshDrawManager(void)
 	m_pMeshDraws.clear();
 }
 
-bool CGLES3MeshDrawManager::IsHave(uint32_t name)
+CGLES3MeshDraw* CGLES3MeshDrawManager::Get(uint32_t name)
 {
 	mutex_autolock autolock(&lock);
 	{
-		return m_pMeshDraws.find(name) != m_pMeshDraws.end();
+		const auto &itMeshDraw = m_pMeshDraws.find(name);
+
+		if (itMeshDraw != m_pMeshDraws.end()) {
+			return itMeshDraw->second;
+		}
+		else {
+			return nullptr;
+		}
 	}
 }
 
-CGfxMeshDraw* CGLES3MeshDrawManager::Create(uint32_t name, const CGfxMeshPtr &ptrMesh, int indexDraw, uint32_t instanceFormat, uint32_t instanceBinding)
+CGLES3MeshDraw* CGLES3MeshDrawManager::Create(uint32_t name, const CGfxMeshPtr &ptrMesh, int indexDraw, uint32_t instanceFormat, uint32_t instanceBinding)
 {
 	mutex_autolock autolock(&lock);
 	{
@@ -31,11 +38,11 @@ CGfxMeshDraw* CGLES3MeshDrawManager::Create(uint32_t name, const CGfxMeshPtr &pt
 			m_pMeshDraws[name] = new CGLES3MeshDraw(this, name, ptrMesh, indexDraw, instanceFormat, instanceBinding);
 		}
 
-		return (CGLES3MeshDraw *)m_pMeshDraws[name];
+		return m_pMeshDraws[name];
 	}
 }
 
-void CGLES3MeshDrawManager::Destroy(CGfxMeshDraw *pMeshDraw)
+void CGLES3MeshDrawManager::Destroy(CGLES3MeshDraw *pMeshDraw)
 {
 	mutex_autolock autolock(&lock);
 	{

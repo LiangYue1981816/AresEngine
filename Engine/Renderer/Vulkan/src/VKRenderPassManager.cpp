@@ -16,22 +16,39 @@ CVKRenderPassManager::~CVKRenderPassManager(void)
 	m_pRenderPasses.clear();
 }
 
-CVKRenderPass* CVKRenderPassManager::Create(int numAttachments, int numSubpasses)
+CVKRenderPass* CVKRenderPassManager::Get(uint32_t name)
 {
 	mutex_autolock autolock(&lock);
 	{
-		CVKRenderPass *pRenderPass = new CVKRenderPass(m_pDevice, this, numAttachments, numSubpasses);
-		m_pRenderPasses[pRenderPass] = pRenderPass;
-		return pRenderPass;
+		const auto &itRenderPass = m_pRenderPasses.find(name);
+
+		if (itRenderPass != m_pRenderPasses.end()) {
+			return itRenderPass->second;
+		}
+		else {
+			return nullptr;
+		}
 	}
 }
 
-void CVKRenderPassManager::Destroy(CGfxRenderPass *pRenderPass)
+CVKRenderPass* CVKRenderPassManager::Create(uint32_t name, int numAttachments, int numSubpasses)
+{
+	mutex_autolock autolock(&lock);
+	{
+		if (m_pRenderPasses[name] == nullptr) {
+			m_pRenderPasses[name] = new CVKRenderPass(m_pDevice, this, name, numAttachments, numSubpasses);
+		}
+
+		return m_pRenderPasses[name];
+	}
+}
+
+void CVKRenderPassManager::Destroy(CVKRenderPass *pRenderPass)
 {
 	mutex_autolock autolock(&lock);
 	{
 		if (pRenderPass) {
-			m_pRenderPasses.erase(pRenderPass);
+			m_pRenderPasses.erase(pRenderPass->GetName());
 			delete pRenderPass;
 		}
 	}

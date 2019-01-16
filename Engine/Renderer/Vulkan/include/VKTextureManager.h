@@ -18,14 +18,14 @@ private:
 
 
 private:
-	bool IsHave(uint32_t name);
+	CVKTexture2D* Get(uint32_t name);
 	CVKTexture2D* Create(uint32_t name);
 	CVKTexture2D* Create(const char *szFileName);
-	void Destroy(CGfxTexture2D *pTexture);
+	void Destroy(CVKTexture2D *pTexture);
 
 
 private:
-	eastl::unordered_map<uint32_t, CGfxTexture2D*> m_pTextures;
+	eastl::unordered_map<uint32_t, CVKTexture2D*> m_pTextures;
 
 private:
 	CVKDevice *m_pDevice;
@@ -48,14 +48,14 @@ private:
 
 
 private:
-	bool IsHave(uint32_t name);
+	CVKTexture2DArray* Get(uint32_t name);
 	CVKTexture2DArray* Create(uint32_t name);
 	CVKTexture2DArray* Create(const char *szFileName);
-	void Destroy(CGfxTexture2DArray *pTexture);
+	void Destroy(CVKTexture2DArray *pTexture);
 
 
 private:
-	eastl::unordered_map<uint32_t, CGfxTexture2DArray*> m_pTextures;
+	eastl::unordered_map<uint32_t, CVKTexture2DArray*> m_pTextures;
 
 private:
 	CVKDevice *m_pDevice;
@@ -78,14 +78,14 @@ private:
 
 
 private:
-	bool IsHave(uint32_t name);
+	CVKTextureCubeMap* Get(uint32_t name);
 	CVKTextureCubeMap* Create(uint32_t name);
 	CVKTextureCubeMap* Create(const char *szFileName);
-	void Destroy(CGfxTextureCubeMap *pTexture);
+	void Destroy(CVKTextureCubeMap *pTexture);
 
 
 private:
-	eastl::unordered_map<uint32_t, CGfxTextureCubeMap*> m_pTextures;
+	eastl::unordered_map<uint32_t, CVKTextureCubeMap*> m_pTextures;
 
 private:
 	CVKDevice *m_pDevice;

@@ -8,18 +8,25 @@ CGLES3RenderTextureManager::CGLES3RenderTextureManager(void)
 
 CGLES3RenderTextureManager::~CGLES3RenderTextureManager(void)
 {
-	for (const auto &itTexture : m_pTextures) {
-		delete itTexture.second;
+	for (const auto &itRenderTexture : m_pRenderTextures) {
+		delete itRenderTexture.second;
 	}
 
-	m_pTextures.clear();
+	m_pRenderTextures.clear();
 }
 
-bool CGLES3RenderTextureManager::IsHave(uint32_t name)
+CGLES3RenderTexture* CGLES3RenderTextureManager::Get(uint32_t name)
 {
 	mutex_autolock autolock(&lock);
 	{
-		return m_pTextures.find(name) != m_pTextures.end();
+		const auto &itRenderTexture = m_pRenderTextures.find(name);
+
+		if (itRenderTexture != m_pRenderTextures.end()) {
+			return itRenderTexture->second;
+		}
+		else {
+			return nullptr;
+		}
 	}
 }
 
@@ -27,21 +34,21 @@ CGLES3RenderTexture* CGLES3RenderTextureManager::Create(uint32_t name)
 {
 	mutex_autolock autolock(&lock);
 	{
-		if (m_pTextures[name] == nullptr) {
-			m_pTextures[name] = new CGLES3RenderTexture(this, name);
+		if (m_pRenderTextures[name] == nullptr) {
+			m_pRenderTextures[name] = new CGLES3RenderTexture(this, name);
 		}
 
-		return (CGLES3RenderTexture *)m_pTextures[name];
+		return m_pRenderTextures[name];
 	}
 }
 
-void CGLES3RenderTextureManager::Destroy(CGfxRenderTexture *pTexture)
+void CGLES3RenderTextureManager::Destroy(CGLES3RenderTexture *pRenderTexture)
 {
 	mutex_autolock autolock(&lock);
 	{
-		if (pTexture) {
-			m_pTextures.erase(pTexture->GetName());
-			delete pTexture;
+		if (pRenderTexture) {
+			m_pRenderTextures.erase(pRenderTexture->GetName());
+			delete pRenderTexture;
 		}
 	}
 }

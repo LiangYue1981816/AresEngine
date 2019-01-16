@@ -18,13 +18,13 @@ private:
 
 
 private:
-	bool IsHave(uint32_t name);
+	CVKRenderTexture* Get(uint32_t name);
 	CVKRenderTexture* Create(uint32_t name);
-	void Destroy(CGfxRenderTexture *pTexture);
+	void Destroy(CVKRenderTexture *pRenderTexture);
 
 
 private:
-	eastl::unordered_map<uint32_t, CGfxRenderTexture*> m_pTextures;
+	eastl::unordered_map<uint32_t, CVKRenderTexture*> m_pRenderTextures;
 
 private:
 	CVKDevice *m_pDevice;

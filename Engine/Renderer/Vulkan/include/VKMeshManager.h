@@ -17,14 +17,14 @@ private:
 	CVKDevice* GetDevice(void) const;
 
 private:
-	bool IsHave(uint32_t name);
+	CVKMesh* Get(uint32_t name);
 	CVKMesh* Create(uint32_t name);
 	CVKMesh* Create(const char *szFileName, uint32_t vertexBinding);
-	void Destroy(CGfxMesh *pMesh);
+	void Destroy(CVKMesh *pMesh);
 
 
 private:
-	eastl::unordered_map<uint32_t, CGfxMesh*> m_pMeshs;
+	eastl::unordered_map<uint32_t, CVKMesh*> m_pMeshs;
 
 private:
 	CVKDevice *m_pDevice;

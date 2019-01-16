@@ -16,11 +16,18 @@ CGLES3MaterialManager::~CGLES3MaterialManager(void)
 	m_pMaterials.clear();
 }
 
-bool CGLES3MaterialManager::IsHave(uint32_t name)
+CGLES3Material* CGLES3MaterialManager::Get(uint32_t name)
 {
 	mutex_autolock autolock(&lock);
 	{
-		return m_pMaterials.find(name) != m_pMaterials.end();
+		const auto &itMaterial = m_pMaterials.find(name);
+
+		if (itMaterial != m_pMaterials.end()) {
+			return itMaterial->second;
+		}
+		else {
+			return nullptr;
+		}
 	}
 }
 
@@ -32,7 +39,7 @@ CGLES3Material* CGLES3MaterialManager::Create(uint32_t name)
 			m_pMaterials[name] = new CGLES3Material(this, name);
 		}
 
-		return (CGLES3Material *)m_pMaterials[name];
+		return m_pMaterials[name];
 	}
 }
 
@@ -47,11 +54,11 @@ CGLES3Material* CGLES3MaterialManager::Create(const char *szFileName)
 			ResourceLoader()->LoadMaterial(szFileName, m_pMaterials[name]);
 		}
 
-		return (CGLES3Material *)m_pMaterials[name];
+		return m_pMaterials[name];
 	}
 }
 
-void CGLES3MaterialManager::Destroy(CGfxMaterial *pMaterial)
+void CGLES3MaterialManager::Destroy(CGLES3Material *pMaterial)
 {
 	mutex_autolock autolock(&lock);
 	{

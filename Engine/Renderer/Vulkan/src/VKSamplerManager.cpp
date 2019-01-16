@@ -29,6 +29,6 @@ CVKSampler* CVKSamplerManager::Create(int mipLevels, GfxFilter minFilter, GfxFil
 			m_pSamplers[name] = new CVKSampler(m_pDevice, mipLevels, minFilter, magFilter, mipmapMode, addressMode);
 		}
 
-		return (CVKSampler *)m_pSamplers[name];
+		return m_pSamplers[name];
 	}
 }

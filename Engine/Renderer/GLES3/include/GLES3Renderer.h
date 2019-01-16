@@ -109,30 +109,34 @@ public:
 	CGfxSampler* CreateSampler(int mipLevels, GfxFilter minFilter, GfxFilter magFilter, GfxSamplerMipmapMode mipmapMode, GfxSamplerAddressMode addressMode);
 
 public:
-	CGfxRenderPassPtr NewRenderPass(int numAttachments, int numSubpasses);
 	CGfxFrameBufferPtr NewFrameBuffer(int width, int height, int numAttachments);
 
-	bool IsHaveRenderTexture(uint32_t name);
+	CGfxRenderPassPtr GetRenderPass(uint32_t name);
+	CGfxRenderPassPtr NewRenderPass(uint32_t name, int numAttachments, int numSubpasses);
+
+	CGfxRenderTexturePtr GetRenderTexture(uint32_t name);
 	CGfxRenderTexturePtr NewRenderTexture(uint32_t name);
 
-	bool IsHaveMesh(uint32_t name);
+	CGfxMeshPtr GetMesh(uint32_t name);
 	CGfxMeshPtr NewMesh(uint32_t name);
 	CGfxMeshPtr NewMesh(const char *szFileName, uint32_t vertexBinding = 0);
 
-	bool IsHaveMeshDraw(uint32_t name);
+	CGfxMeshDrawPtr GetMeshDraw(uint32_t name);
 	CGfxMeshDrawPtr NewMeshDraw(uint32_t name, const CGfxMeshPtr &ptrMesh, int indexDraw, uint32_t instanceFormat, uint32_t instanceBinding = 1);
 
-	bool IsHaveMaterial(uint32_t name);
+	CGfxMaterialPtr GetMaterial(uint32_t name);
 	CGfxMaterialPtr NewMaterial(uint32_t name);
 	CGfxMaterialPtr NewMaterial(const char *szFileName);
 
-	bool IsHaveTexture2D(uint32_t name);
-	bool IsHaveTexture2DArray(uint32_t name);
-	bool IsHaveTextureCubeMap(uint32_t name);
+	CGfxTexture2DPtr GetTexture2D(uint32_t name);
 	CGfxTexture2DPtr NewTexture2D(uint32_t name);
 	CGfxTexture2DPtr NewTexture2D(const char *szFileName);
+
+	CGfxTexture2DArrayPtr GetTexture2DArray(uint32_t name);
 	CGfxTexture2DArrayPtr NewTexture2DArray(uint32_t name);
 	CGfxTexture2DArrayPtr NewTexture2DArray(const char *szFileName);
+
+	CGfxTextureCubeMapPtr GetTextureCubeMap(uint32_t name);
 	CGfxTextureCubeMapPtr NewTextureCubeMap(uint32_t name);
 	CGfxTextureCubeMapPtr NewTextureCubeMap(const char *szFileName);
 

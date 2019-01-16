@@ -104,19 +104,24 @@ CGfxSampler* CGLES3Renderer::CreateSampler(int mipLevels, GfxFilter minFilter, G
 	return m_pSamplerManager->Create(mipLevels, minFilter, magFilter, mipmapMode, addressMode);
 }
 
-CGfxRenderPassPtr CGLES3Renderer::NewRenderPass(int numAttachments, int numSubpasses)
-{
-	return m_pRenderPassManager->Create(numAttachments, numSubpasses);
-}
-
 CGfxFrameBufferPtr CGLES3Renderer::NewFrameBuffer(int width, int height, int numAttachments)
 {
 	return m_pFrameBufferManager->Create(width, height, numAttachments);
 }
 
-bool CGLES3Renderer::IsHaveRenderTexture(uint32_t name)
+CGfxRenderPassPtr CGLES3Renderer::GetRenderPass(uint32_t name)
 {
-	return m_pRenderTextureManager->IsHave(name);
+	return m_pRenderPassManager->Get(name);
+}
+
+CGfxRenderPassPtr CGLES3Renderer::NewRenderPass(uint32_t name, int numAttachments, int numSubpasses)
+{
+	return m_pRenderPassManager->Create(name, numAttachments, numSubpasses);
+}
+
+CGfxRenderTexturePtr CGLES3Renderer::GetRenderTexture(uint32_t name)
+{
+	return m_pRenderTextureManager->Get(name);
 }
 
 CGfxRenderTexturePtr CGLES3Renderer::NewRenderTexture(uint32_t name)
@@ -124,9 +129,9 @@ CGfxRenderTexturePtr CGLES3Renderer::NewRenderTexture(uint32_t name)
 	return m_pRenderTextureManager->Create(name);
 }
 
-bool CGLES3Renderer::IsHaveMesh(uint32_t name)
+CGfxMeshPtr CGLES3Renderer::GetMesh(uint32_t name)
 {
-	return m_pMeshManager->IsHave(name);
+	return m_pMeshManager->Get(name);
 }
 
 CGfxMeshPtr CGLES3Renderer::NewMesh(uint32_t name)
@@ -139,9 +144,9 @@ CGfxMeshPtr CGLES3Renderer::NewMesh(const char *szFileName, uint32_t vertexBindi
 	return m_pMeshManager->Create(szFileName, vertexBinding);
 }
 
-bool CGLES3Renderer::IsHaveMeshDraw(uint32_t name)
+CGfxMeshDrawPtr CGLES3Renderer::GetMeshDraw(uint32_t name)
 {
-	return m_pMeshDrawManager->IsHave(name);
+	return m_pMeshDrawManager->Get(name);
 }
 
 CGfxMeshDrawPtr CGLES3Renderer::NewMeshDraw(uint32_t name, const CGfxMeshPtr &ptrMesh, int indexDraw, uint32_t instanceFormat, uint32_t instanceBinding)
@@ -149,9 +154,9 @@ CGfxMeshDrawPtr CGLES3Renderer::NewMeshDraw(uint32_t name, const CGfxMeshPtr &pt
 	return m_pMeshDrawManager->Create(name, ptrMesh, indexDraw, instanceFormat, instanceBinding);
 }
 
-bool CGLES3Renderer::IsHaveMaterial(uint32_t name)
+CGfxMaterialPtr CGLES3Renderer::GetMaterial(uint32_t name)
 {
-	return m_pMaterialManager->IsHave(name);
+	return m_pMaterialManager->Get(name);
 }
 
 CGfxMaterialPtr CGLES3Renderer::NewMaterial(uint32_t name)
@@ -164,19 +169,9 @@ CGfxMaterialPtr CGLES3Renderer::NewMaterial(const char *szFileName)
 	return m_pMaterialManager->Create(szFileName);
 }
 
-bool CGLES3Renderer::IsHaveTexture2D(uint32_t name)
+CGfxTexture2DPtr CGLES3Renderer::GetTexture2D(uint32_t name)
 {
-	return m_pTexture2DManager->IsHave(name);
-}
-
-bool CGLES3Renderer::IsHaveTexture2DArray(uint32_t name)
-{
-	return m_pTexture2DArrayManager->IsHave(name);
-}
-
-bool CGLES3Renderer::IsHaveTextureCubeMap(uint32_t name)
-{
-	return m_pTextureCubeMapManager->IsHave(name);
+	return m_pTexture2DManager->Get(name);
 }
 
 CGfxTexture2DPtr CGLES3Renderer::NewTexture2D(uint32_t name)
@@ -189,6 +184,11 @@ CGfxTexture2DPtr CGLES3Renderer::NewTexture2D(const char *szFileName)
 	return m_pTexture2DManager->Create(szFileName);
 }
 
+CGfxTexture2DArrayPtr CGLES3Renderer::GetTexture2DArray(uint32_t name)
+{
+	return m_pTexture2DArrayManager->Get(name);
+}
+
 CGfxTexture2DArrayPtr CGLES3Renderer::NewTexture2DArray(uint32_t name)
 {
 	return m_pTexture2DArrayManager->Create(name);
@@ -197,6 +197,11 @@ CGfxTexture2DArrayPtr CGLES3Renderer::NewTexture2DArray(uint32_t name)
 CGfxTexture2DArrayPtr CGLES3Renderer::NewTexture2DArray(const char *szFileName)
 {
 	return m_pTexture2DArrayManager->Create(szFileName);
+}
+
+CGfxTextureCubeMapPtr CGLES3Renderer::GetTextureCubeMap(uint32_t name)
+{
+	return m_pTextureCubeMapManager->Get(name);
 }
 
 CGfxTextureCubeMapPtr CGLES3Renderer::NewTextureCubeMap(uint32_t name)

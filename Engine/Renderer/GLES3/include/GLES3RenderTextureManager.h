@@ -14,11 +14,11 @@ private:
 
 
 private:
-	bool IsHave(uint32_t name);
+	CGLES3RenderTexture* Get(uint32_t name);
 	CGLES3RenderTexture* Create(uint32_t name);
-	void Destroy(CGfxRenderTexture *pTexture);
+	void Destroy(CGLES3RenderTexture *pRenderTexture);
 
 
 private:
-	eastl::unordered_map<uint32_t, CGfxRenderTexture*> m_pTextures;
+	eastl::unordered_map<uint32_t, CGLES3RenderTexture*> m_pRenderTextures;
 };

@@ -27,10 +27,10 @@ CVKPipelineCompute* CVKPipelineComputeManager::Create(const CGfxShader *pCompute
 
 		if (m_pPipelines[name] == nullptr) {
 			m_pPipelines[name] = new CVKPipelineCompute(m_pDevice, this, name);
-			((CVKPipelineCompute *)m_pPipelines[name])->Create(pComputeShader);
+			m_pPipelines[name]->Create(pComputeShader);
 		}
 
-		return (CVKPipelineCompute *)m_pPipelines[name];
+		return m_pPipelines[name];
 	}
 }
 
@@ -61,9 +61,9 @@ CVKPipelineGraphics* CVKPipelineGraphicsManager::Create(const CGfxRenderPass *pR
 
 		if (m_pPipelines[name] == nullptr) {
 			m_pPipelines[name] = new CVKPipelineGraphics(m_pDevice, this, name);
-			((CVKPipelineGraphics *)m_pPipelines[name])->Create(pRenderPass, pVertexShader, pFragmentShader, state);
+			m_pPipelines[name]->Create(pRenderPass, pVertexShader, pFragmentShader, state);
 		}
 
-		return (CVKPipelineGraphics *)m_pPipelines[name];
+		return m_pPipelines[name];
 	}
 }

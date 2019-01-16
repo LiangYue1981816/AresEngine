@@ -26,7 +26,7 @@ CVKFrameBuffer* CVKFrameBufferManager::Create(int width, int height, int numAtta
 	}
 }
 
-void CVKFrameBufferManager::Destroy(CGfxFrameBuffer *pFrameBuffer)
+void CVKFrameBufferManager::Destroy(CVKFrameBuffer *pFrameBuffer)
 {
 	mutex_autolock autolock(&lock);
 	{

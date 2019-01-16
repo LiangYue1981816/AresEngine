@@ -28,6 +28,6 @@ CGLES3Sampler* CGLES3SamplerManager::Create(int mipLevels, GfxFilter minFilter, 
 			m_pSamplers[name] = new CGLES3Sampler(mipLevels, minFilter, magFilter, mipmapMode, addressMode);
 		}
 
-		return (CGLES3Sampler *)m_pSamplers[name];
+		return m_pSamplers[name];
 	}
 }

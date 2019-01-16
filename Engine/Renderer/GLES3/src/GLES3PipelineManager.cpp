@@ -26,10 +26,10 @@ CGLES3PipelineCompute* CGLES3PipelineComputeManager::Create(const CGfxShader *pC
 
 		if (m_pPipelines[name] == nullptr) {
 			m_pPipelines[name] = new CGLES3PipelineCompute(name);
-			((CGLES3PipelineCompute *)m_pPipelines[name])->Create(pComputeShader);
+			m_pPipelines[name]->Create(pComputeShader);
 		}
 
-		return (CGLES3PipelineCompute *)m_pPipelines[name];
+		return m_pPipelines[name];
 	}
 }
 
@@ -59,9 +59,9 @@ CGLES3PipelineGraphics* CGLES3PipelineGraphicsManager::Create(const CGfxRenderPa
 
 		if (m_pPipelines[name] == nullptr) {
 			m_pPipelines[name] = new CGLES3PipelineGraphics(name);
-			((CGLES3PipelineGraphics *)m_pPipelines[name])->Create(pRenderPass, pVertexShader, pFragmentShader, state);
+			m_pPipelines[name]->Create(pRenderPass, pVertexShader, pFragmentShader, state);
 		}
 
-		return (CGLES3PipelineGraphics *)m_pPipelines[name];
+		return m_pPipelines[name];
 	}
 }

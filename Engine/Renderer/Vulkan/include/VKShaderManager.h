@@ -18,7 +18,7 @@ private:
 
 
 private:
-	eastl::unordered_map<uint32_t, CGfxShader*> m_pShaders;
+	eastl::unordered_map<uint32_t, CVKShader*> m_pShaders;
 
 private:
 	CVKDevice *m_pDevice;

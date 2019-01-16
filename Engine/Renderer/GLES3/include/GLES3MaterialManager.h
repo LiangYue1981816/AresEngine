@@ -14,12 +14,12 @@ private:
 
 
 private:
-	bool IsHave(uint32_t name);
+	CGLES3Material* Get(uint32_t name);
 	CGLES3Material* Create(uint32_t name);
 	CGLES3Material* Create(const char *szFileName);
-	void Destroy(CGfxMaterial *pMaterial);
+	void Destroy(CGLES3Material *pMaterial);
 
 
 private:
-	eastl::unordered_map<uint32_t, CGfxMaterial*> m_pMaterials;
+	eastl::unordered_map<uint32_t, CGLES3Material*> m_pMaterials;
 };

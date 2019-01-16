@@ -26,7 +26,7 @@ CVKUniformBuffer* CVKUniformBufferManager::Create(size_t size)
 	}
 }
 
-void CVKUniformBufferManager::Destroy(CGfxUniformBuffer *pUniformBuffer)
+void CVKUniformBufferManager::Destroy(CVKUniformBuffer *pUniformBuffer)
 {
 	mutex_autolock autolock(&lock);
 	{

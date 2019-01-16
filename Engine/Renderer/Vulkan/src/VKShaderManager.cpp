@@ -28,6 +28,6 @@ CVKShader* CVKShaderManager::Create(const char *szFileName, shader_kind kind)
 			ResourceLoader()->LoadShader(szFileName, m_pShaders[name], kind);
 		}
 
-		return (CVKShader *)m_pShaders[name];
+		return m_pShaders[name];
 	}
 }

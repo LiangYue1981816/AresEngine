@@ -14,12 +14,12 @@ private:
 
 
 private:
-	bool IsHave(uint32_t name);
+	CGLES3Mesh* Get(uint32_t name);
 	CGLES3Mesh* Create(uint32_t name);
 	CGLES3Mesh* Create(const char *szFileName, uint32_t vertexBinding);
-	void Destroy(CGfxMesh *pMesh);
+	void Destroy(CGLES3Mesh *pMesh);
 
 
 private:
-	eastl::unordered_map<uint32_t, CGfxMesh*> m_pMeshs;
+	eastl::unordered_map<uint32_t, CGLES3Mesh*> m_pMeshs;
 };

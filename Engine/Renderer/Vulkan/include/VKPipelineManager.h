@@ -17,7 +17,7 @@ private:
 
 
 private:
-	eastl::unordered_map<uint32_t, CGfxPipelineCompute*> m_pPipelines;
+	eastl::unordered_map<uint32_t, CVKPipelineCompute*> m_pPipelines;
 
 private:
 	CVKDevice *m_pDevice;
@@ -39,7 +39,7 @@ private:
 
 
 private:
-	eastl::unordered_map<uint32_t, CGfxPipelineGraphics*> m_pPipelines;
+	eastl::unordered_map<uint32_t, CVKPipelineGraphics*> m_pPipelines;
 
 private:
 	CVKDevice *m_pDevice;

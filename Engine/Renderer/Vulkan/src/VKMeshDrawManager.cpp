@@ -21,15 +21,22 @@ CVKDevice* CVKMeshDrawManager::GetDevice(void) const
 	return m_pDevice;
 }
 
-bool CVKMeshDrawManager::IsHave(uint32_t name)
+CVKMeshDraw* CVKMeshDrawManager::Get(uint32_t name)
 {
 	mutex_autolock autolock(&lock);
 	{
-		return m_pMeshDraws.find(name) != m_pMeshDraws.end();
+		const auto &itMeshDraw = m_pMeshDraws.find(name);
+
+		if (itMeshDraw != m_pMeshDraws.end()) {
+			return itMeshDraw->second;
+		}
+		else {
+			return nullptr;
+		}
 	}
 }
 
-CGfxMeshDraw* CVKMeshDrawManager::Create(uint32_t name, const CGfxMeshPtr &ptrMesh, int indexDraw, uint32_t instanceFormat, uint32_t instanceBinding)
+CVKMeshDraw* CVKMeshDrawManager::Create(uint32_t name, const CGfxMeshPtr &ptrMesh, int indexDraw, uint32_t instanceFormat, uint32_t instanceBinding)
 {
 	mutex_autolock autolock(&lock);
 	{
@@ -37,11 +44,11 @@ CGfxMeshDraw* CVKMeshDrawManager::Create(uint32_t name, const CGfxMeshPtr &ptrMe
 			m_pMeshDraws[name] = new CVKMeshDraw(this, name, ptrMesh, indexDraw, instanceFormat, instanceBinding);
 		}
 
-		return (CVKMeshDraw *)m_pMeshDraws[name];
+		return m_pMeshDraws[name];
 	}
 }
 
-void CVKMeshDrawManager::Destroy(CGfxMeshDraw *pMeshDraw)
+void CVKMeshDrawManager::Destroy(CVKMeshDraw *pMeshDraw)
 {
 	mutex_autolock autolock(&lock);
 	{

@@ -17,13 +17,13 @@ private:
 	CVKDevice* GetDevice(void) const;
 
 private:
-	bool IsHave(uint32_t name);
-	CGfxMeshDraw* Create(uint32_t name, const CGfxMeshPtr &ptrMesh, int indexDraw, uint32_t instanceFormat, uint32_t instanceBinding);
-	void Destroy(CGfxMeshDraw *pMeshDraw);
+	CVKMeshDraw* Get(uint32_t name);
+	CVKMeshDraw* Create(uint32_t name, const CGfxMeshPtr &ptrMesh, int indexDraw, uint32_t instanceFormat, uint32_t instanceBinding);
+	void Destroy(CVKMeshDraw *pMeshDraw);
 
 
 private:
-	eastl::unordered_map<uint32_t, CGfxMeshDraw*> m_pMeshDraws;
+	eastl::unordered_map<uint32_t, CVKMeshDraw*> m_pMeshDraws;
 
 private:
 	CVKDevice *m_pDevice;

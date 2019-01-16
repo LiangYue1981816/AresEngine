@@ -15,22 +15,39 @@ CGLES3RenderPassManager::~CGLES3RenderPassManager(void)
 	m_pRenderPasses.clear();
 }
 
-CGLES3RenderPass* CGLES3RenderPassManager::Create(int numAttachments, int numSubpasses)
+CGLES3RenderPass* CGLES3RenderPassManager::Get(uint32_t name)
 {
 	mutex_autolock autolock(&lock);
 	{
-		CGLES3RenderPass *pRenderPass = new CGLES3RenderPass(this, numAttachments, numSubpasses);
-		m_pRenderPasses[pRenderPass] = pRenderPass;
-		return pRenderPass;
+		const auto &itRenderPass = m_pRenderPasses.find(name);
+
+		if (itRenderPass != m_pRenderPasses.end()) {
+			return itRenderPass->second;
+		}
+		else {
+			return nullptr;
+		}
 	}
 }
 
-void CGLES3RenderPassManager::Destroy(CGfxRenderPass *pRenderPass)
+CGLES3RenderPass* CGLES3RenderPassManager::Create(uint32_t name, int numAttachments, int numSubpasses)
+{
+	mutex_autolock autolock(&lock);
+	{
+		if (m_pRenderPasses[name] == nullptr) {
+			m_pRenderPasses[name] = new CGLES3RenderPass(this, name, numAttachments, numSubpasses);
+		}
+
+		return m_pRenderPasses[name];
+	}
+}
+
+void CGLES3RenderPassManager::Destroy(CGLES3RenderPass *pRenderPass)
 {
 	mutex_autolock autolock(&lock);
 	{
 		if (pRenderPass) {
-			m_pRenderPasses.erase(pRenderPass);
+			m_pRenderPasses.erase(pRenderPass->GetName());
 			delete pRenderPass;
 		}
 	}

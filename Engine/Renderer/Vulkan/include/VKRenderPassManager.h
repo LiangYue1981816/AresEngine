@@ -14,12 +14,13 @@ private:
 
 
 private:
-	CVKRenderPass* Create(int numAttachments, int numSubpasses);
-	void Destroy(CGfxRenderPass *pRenderPass);
+	CVKRenderPass* Get(uint32_t name);
+	CVKRenderPass* Create(uint32_t name, int numAttachments, int numSubpasses);
+	void Destroy(CVKRenderPass *pRenderPass);
 
 
 private:
-	eastl::unordered_map<CGfxRenderPass*, CGfxRenderPass*> m_pRenderPasses;
+	eastl::unordered_map<uint32_t, CVKRenderPass*> m_pRenderPasses;
 
 private:
 	CVKDevice *m_pDevice;
