@@ -40,13 +40,12 @@ bool CGLES3UniformBuffer::BufferData(size_t offset, size_t size, const void *pBu
 	}
 
 	uint32_t hash = HashValue((uint8_t*)pBuffer, size);
+	if (m_hash == hash) return true;
 
-	if (m_hash != hash) {
-		m_hash  = hash;
-		glBindBuffer(GL_UNIFORM_BUFFER, m_buffer);
-		glBufferSubData(GL_UNIFORM_BUFFER, (int)offset, (uint32_t)size, pBuffer);
-		glBindBuffer(GL_UNIFORM_BUFFER, 0);
-	}
+	m_hash = hash;
+	glBindBuffer(GL_UNIFORM_BUFFER, m_buffer);
+	glBufferSubData(GL_UNIFORM_BUFFER, (int)offset, (uint32_t)size, pBuffer);
+	glBindBuffer(GL_UNIFORM_BUFFER, 0);
 
 	return true;
 }

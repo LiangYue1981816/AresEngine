@@ -36,12 +36,8 @@ bool CVKUniformBuffer::BufferData(size_t offset, size_t size, const void *pBuffe
 	}
 
 	uint32_t hash = HashValue((uint8_t*)pBuffer, size);
+	if (m_hash == hash) return true;
 
-	if (m_hash != hash) {
-		m_hash  = hash;
-		return m_ptrBuffer->BufferData(VKRenderer()->GetSwapChain()->GetFrameIndex() * m_size + offset, size, pBuffer);
-	}
-	else {
-		return true;
-	}
+	m_hash = hash;
+	return m_ptrBuffer->BufferData(VKRenderer()->GetSwapChain()->GetFrameIndex() * m_size + offset, size, pBuffer);
 }
