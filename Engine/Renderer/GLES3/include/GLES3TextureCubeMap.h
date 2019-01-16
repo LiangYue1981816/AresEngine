@@ -27,7 +27,7 @@ public:
 	int GetLevels(void) const;
 
 public:
-	bool Create(HANDLE texture);
+	bool Create(HANDLE hTexture);
 	bool Create(GfxPixelFormat pixelFormat, int width, int height, int levels);
 	void Destroy(void);
 

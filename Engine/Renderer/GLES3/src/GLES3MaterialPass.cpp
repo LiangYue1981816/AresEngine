@@ -93,39 +93,39 @@ bool CGLES3MaterialPass::SetSampler(const char *szName, int mipLevels, GfxFilter
 	return false;
 }
 
-bool CGLES3MaterialPass::SetTexture2D(const char *szName, HANDLE externTexture)
+bool CGLES3MaterialPass::SetTexture2D(const char *szName, HANDLE hExternTexture)
 {
 	uint32_t name = HashValue(szName);
 
 	if ((m_pPipeline == nullptr) || (m_pPipeline && m_pPipeline->IsTextureValid(name))) {
 		m_ptrTexture2Ds[name] = GLES3Renderer()->NewTexture2D(TEXTURE_INTERNAL_NAME(name));
-		m_ptrTexture2Ds[name]->Create(externTexture);
+		m_ptrTexture2Ds[name]->Create(hExternTexture);
 		return true;
 	}
 
 	return false;
 }
 
-bool CGLES3MaterialPass::SetTexture2DArray(const char *szName, HANDLE externTexture)
+bool CGLES3MaterialPass::SetTexture2DArray(const char *szName, HANDLE hExternTexture)
 {
 	uint32_t name = HashValue(szName);
 
 	if ((m_pPipeline == nullptr) || (m_pPipeline && m_pPipeline->IsTextureValid(name))) {
 		m_ptrTexture2DArrays[name] = GLES3Renderer()->NewTexture2DArray(TEXTURE_INTERNAL_NAME(name));
-		m_ptrTexture2DArrays[name]->Create(externTexture);
+		m_ptrTexture2DArrays[name]->Create(hExternTexture);
 		return true;
 	}
 
 	return false;
 }
 
-bool CGLES3MaterialPass::SetTextureCubeMap(const char *szName, HANDLE externTexture)
+bool CGLES3MaterialPass::SetTextureCubeMap(const char *szName, HANDLE hExternTexture)
 {
 	uint32_t name = HashValue(szName);
 
 	if ((m_pPipeline == nullptr) || (m_pPipeline && m_pPipeline->IsTextureValid(name))) {
 		m_ptrTextureCubeMaps[name] = GLES3Renderer()->NewTextureCubeMap(TEXTURE_INTERNAL_NAME(name));
-		m_ptrTextureCubeMaps[name]->Create(externTexture);
+		m_ptrTextureCubeMaps[name]->Create(hExternTexture);
 		return true;
 	}
 

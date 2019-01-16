@@ -68,11 +68,11 @@ int CVKTexture2D::GetSamples(void) const
 	return m_samples;
 }
 
-bool CVKTexture2D::Create(HANDLE texture)
+bool CVKTexture2D::Create(HANDLE hTexture)
 {
 	Destroy();
 
-	CALL_BOOL_FUNCTION_RETURN_BOOL(CVKTexture::CreateView((VkImageView)texture));
+	CALL_BOOL_FUNCTION_RETURN_BOOL(CVKTexture::CreateView((VkImageView)hTexture));
 	m_type = GFX_TEXTURE_2D;
 
 	return true;

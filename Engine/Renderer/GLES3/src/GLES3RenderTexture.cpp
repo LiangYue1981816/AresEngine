@@ -64,12 +64,12 @@ int CGLES3RenderTexture::GetSamples(void) const
 	return m_samples;
 }
 
-bool CGLES3RenderTexture::Create(HANDLE texture, GfxPixelFormat pixelFormat, int width, int height, int samples)
+bool CGLES3RenderTexture::Create(HANDLE hTexture, GfxPixelFormat pixelFormat, int width, int height, int samples)
 {
 	Destroy();
 
 	m_bExtern = true;
-	m_texture = (uint32_t)texture;
+	m_texture = (uint32_t)hTexture;
 
 	m_format = pixelFormat;
 

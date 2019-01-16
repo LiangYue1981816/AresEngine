@@ -68,11 +68,11 @@ int CVKTexture2DArray::GetLayers(void) const
 	return m_layers;
 }
 
-bool CVKTexture2DArray::Create(HANDLE texture)
+bool CVKTexture2DArray::Create(HANDLE hTexture)
 {
 	Destroy();
 
-	CALL_BOOL_FUNCTION_RETURN_BOOL(CVKTexture::CreateView((VkImageView)texture));
+	CALL_BOOL_FUNCTION_RETURN_BOOL(CVKTexture::CreateView((VkImageView)hTexture));
 	m_type = GFX_TEXTURE_2D_ARRAY;
 
 	return true;

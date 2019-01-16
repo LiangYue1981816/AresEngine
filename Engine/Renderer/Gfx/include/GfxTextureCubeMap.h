@@ -29,7 +29,7 @@ public:
 	virtual int GetLevels(void) const = 0;
 
 public:
-	virtual bool Create(HANDLE texture) = 0;
+	virtual bool Create(HANDLE hTexture) = 0;
 	virtual bool Create(GfxPixelFormat pixelFormat, int width, int height, int levels) = 0;
 	virtual void Destroy(void) = 0;
 

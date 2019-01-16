@@ -62,11 +62,11 @@ int CVKTextureCubeMap::GetLevels(void) const
 	return m_levels;
 }
 
-bool CVKTextureCubeMap::Create(HANDLE texture)
+bool CVKTextureCubeMap::Create(HANDLE hTexture)
 {
 	Destroy();
 
-	CALL_BOOL_FUNCTION_RETURN_BOOL(CVKTexture::CreateView((VkImageView)texture));
+	CALL_BOOL_FUNCTION_RETURN_BOOL(CVKTexture::CreateView((VkImageView)hTexture));
 	m_type = GFX_TEXTURE_CUBE_MAP;
 
 	return true;

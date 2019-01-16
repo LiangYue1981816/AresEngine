@@ -61,11 +61,11 @@ int CGLES3TextureCubeMap::GetLevels(void) const
 	return m_levels;
 }
 
-bool CGLES3TextureCubeMap::Create(HANDLE texture)
+bool CGLES3TextureCubeMap::Create(HANDLE hTexture)
 {
 	Destroy();
 
-	if (CGLES3Texture::Create(GL_TEXTURE_CUBE_MAP, (uint32_t)texture) == false) {
+	if (CGLES3Texture::Create(GL_TEXTURE_CUBE_MAP, (uint32_t)hTexture) == false) {
 		return false;
 	}
 
