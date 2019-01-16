@@ -300,16 +300,17 @@ static bool InternalLoadPipeline(TiXmlNode *pPassNode, CGfxMaterialPass *pPass)
 		PipelineState state;
 		if (InternalLoadPipelineState(pPipelineNode, state) == false) { err = -2; goto ERR; }
 
+		CGfxRenderPass *pRenderPass = nullptr;
 		CGfxShader *pVertexShader = nullptr;
 		CGfxShader *pFragmentShader = nullptr;
 #ifdef PLATFORM_WINDOWS
 		InternalLoadPipelineShader(pPipelineNode, pVertexShader, vertex_shader);
 		InternalLoadPipelineShader(pPipelineNode, pFragmentShader, fragment_shader);
-		pPass->SetPipeline(pVertexShader, pFragmentShader, state);
+		pPass->SetPipeline(pRenderPass, pVertexShader, pFragmentShader, state);
 #else
 		if (InternalLoadPipelineShader(pPipelineNode, pVertexShader, vertex_shader) == false) { err = -3; goto ERR; }
 		if (InternalLoadPipelineShader(pPipelineNode, pFragmentShader, fragment_shader) == false) { err = -4; goto ERR; }
-		if (pPass->SetPipeline(pVertexShader, pFragmentShader, state) == false) { err = -5; goto ERR; }
+		if (pPass->SetPipeline(pRenderPass, pVertexShader, pFragmentShader, state) == false) { err = -5; goto ERR; }
 #endif
 	}
 	LogOutput(LOG_TAG_RENDERER, "\t\tOK\n");

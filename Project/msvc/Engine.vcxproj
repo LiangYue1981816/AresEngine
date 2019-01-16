@@ -359,6 +359,9 @@
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKMeshDrawManager.h" />
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKMeshManager.h" />
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKPipeline.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKPipelineCompute.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKPipelineGraphics.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKPipelineManager.h" />
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKQueue.h" />
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKRenderer.h" />
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKRenderPass.h" />
@@ -540,6 +543,9 @@
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKMeshDrawManager.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKMeshManager.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKPipeline.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKPipelineCompute.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKPipelineGraphics.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKPipelineManager.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKQueue.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKRenderer.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKRenderPass.cpp" />
