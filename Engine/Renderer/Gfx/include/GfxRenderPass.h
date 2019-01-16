@@ -24,7 +24,7 @@ typedef struct SubPassInformation {
 class CALL_API CGfxRenderPass : public CGfxResource
 {
 public:
-	CGfxRenderPass(int numAttachments, int numSubpasses)
+	CGfxRenderPass(uint32_t name, int numAttachments, int numSubpasses)
 	{
 
 	}
@@ -33,6 +33,9 @@ public:
 
 	}
 
+
+public:
+	virtual uint32_t GetName(void) const = 0;
 
 public:
 	virtual HANDLE GetRenderPass(void) const = 0;

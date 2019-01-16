@@ -8,10 +8,13 @@ class CVKRenderPass : public CGfxRenderPass
 
 
 private:
-	CVKRenderPass(CVKDevice *pDevice, CVKRenderPassManager *pManager, int numAttachments, int numSubpasses);
+	CVKRenderPass(CVKDevice *pDevice, CVKRenderPassManager *pManager, uint32_t name, int numAttachments, int numSubpasses);
 	virtual ~CVKRenderPass(void);
 	virtual void Release(void);
 
+
+public:
+	uint32_t GetName(void) const;
 
 public:
 	HANDLE GetRenderPass(void) const;
@@ -40,6 +43,9 @@ public:
 	bool Create(void);
 	void Destroy(void);
 
+
+private:
+	uint32_t m_name;
 
 private:
 	VkRenderPass m_vkRenderPass;

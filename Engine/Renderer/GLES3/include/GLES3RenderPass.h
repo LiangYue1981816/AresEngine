@@ -8,10 +8,13 @@ class CGLES3RenderPass : public CGfxRenderPass
 
 
 private:
-	CGLES3RenderPass(CGLES3RenderPassManager *pManager, int numAttachments, int numSubpasses);
+	CGLES3RenderPass(CGLES3RenderPassManager *pManager, uint32_t name, int numAttachments, int numSubpasses);
 	virtual ~CGLES3RenderPass(void);
 	virtual void Release(void);
 
+
+public:
+	uint32_t GetName(void) const;
 
 public:
 	HANDLE GetRenderPass(void) const;
@@ -40,6 +43,9 @@ public:
 	bool Create(void);
 	void Destroy(void);
 
+
+private:
+	uint32_t m_name;
 
 private:
 	eastl::vector<AttachmentInformation> m_attachments;

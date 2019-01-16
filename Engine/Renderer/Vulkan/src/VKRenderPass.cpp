@@ -1,8 +1,9 @@
 #include "VKRenderer.h"
 
 
-CVKRenderPass::CVKRenderPass(CVKDevice *pDevice, CVKRenderPassManager *pManager, int numAttachments, int numSubpasses)
-	: CGfxRenderPass(numAttachments, numSubpasses)
+CVKRenderPass::CVKRenderPass(CVKDevice *pDevice, CVKRenderPassManager *pManager, uint32_t name, int numAttachments, int numSubpasses)
+	: CGfxRenderPass(name, numAttachments, numSubpasses)
+	, m_name(name)
 	, m_pDevice(pDevice)
 	, m_pManager(pManager)
 
@@ -20,6 +21,11 @@ CVKRenderPass::~CVKRenderPass(void)
 void CVKRenderPass::Release(void)
 {
 	m_pManager->Destroy(this);
+}
+
+uint32_t CVKRenderPass::GetName(void) const
+{
+	return m_name;
 }
 
 HANDLE CVKRenderPass::GetRenderPass(void) const

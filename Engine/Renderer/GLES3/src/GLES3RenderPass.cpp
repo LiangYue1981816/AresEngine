@@ -1,8 +1,9 @@
 #include "GLES3Renderer.h"
 
 
-CGLES3RenderPass::CGLES3RenderPass(CGLES3RenderPassManager *pManager, int numAttachments, int numSubpasses)
-	: CGfxRenderPass(numAttachments, numSubpasses)
+CGLES3RenderPass::CGLES3RenderPass(CGLES3RenderPassManager *pManager, uint32_t name, int numAttachments, int numSubpasses)
+	: CGfxRenderPass(name, numAttachments, numSubpasses)
+	, m_name(name)
 	, m_pManager(pManager)
 {
 	m_attachments.resize(numAttachments);
@@ -17,6 +18,11 @@ CGLES3RenderPass::~CGLES3RenderPass(void)
 void CGLES3RenderPass::Release(void)
 {
 	m_pManager->Destroy(this);
+}
+
+uint32_t CGLES3RenderPass::GetName(void) const
+{
+	return m_name;
 }
 
 HANDLE CGLES3RenderPass::GetRenderPass(void) const
