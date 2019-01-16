@@ -50,7 +50,7 @@ CVKPipelineGraphicsManager::~CVKPipelineGraphicsManager(void)
 	m_pPipelines.clear();
 }
 
-CVKPipelineGraphics* CVKPipelineGraphicsManager::Create(const CGfxShader *pVertexShader, const CGfxShader *pFragmentShader, const PipelineState &state)
+CVKPipelineGraphics* CVKPipelineGraphicsManager::Create(const CGfxRenderPass *pRenderPass, const CGfxShader *pVertexShader, const CGfxShader *pFragmentShader, const PipelineState &state)
 {
 	mutex_autolock autolock(&lock);
 	{
@@ -61,7 +61,7 @@ CVKPipelineGraphics* CVKPipelineGraphicsManager::Create(const CGfxShader *pVerte
 
 		if (m_pPipelines[name] == nullptr) {
 			m_pPipelines[name] = new CVKPipelineGraphics(m_pDevice, this, name);
-			((CVKPipelineGraphics *)m_pPipelines[name])->Create(pVertexShader, pFragmentShader, state);
+			((CVKPipelineGraphics *)m_pPipelines[name])->Create(pRenderPass, pVertexShader, pFragmentShader, state);
 		}
 
 		return (CVKPipelineGraphics *)m_pPipelines[name];

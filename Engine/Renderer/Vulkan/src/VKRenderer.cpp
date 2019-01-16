@@ -82,7 +82,7 @@ CGfxPipelineCompute* CVKRenderer::CreatePipelineCompute(const CGfxShader *pCompu
 	return nullptr;
 }
 
-CGfxPipelineGraphics* CVKRenderer::CreatePipelineGraphics(const CGfxShader *pVertexShader, const CGfxShader *pFragmentShader, const PipelineState &state)
+CGfxPipelineGraphics* CVKRenderer::CreatePipelineGraphics(const CGfxRenderPass *pRenderPass, const CGfxShader *pVertexShader, const CGfxShader *pFragmentShader, const PipelineState &state)
 {
 	return nullptr;
 }

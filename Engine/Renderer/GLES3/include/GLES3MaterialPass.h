@@ -17,7 +17,7 @@ public:
 	uint32_t GetName(void) const;
 
 public:
-	bool SetPipeline(const CGfxShader *pVertexShader, const CGfxShader *pFragmentShader, const PipelineState &state);
+	bool SetPipeline(const CGfxRenderPass *pRenderPass, const CGfxShader *pVertexShader, const CGfxShader *pFragmentShader, const PipelineState &state);
 
 	bool SetSampler(const char *szName, int mipLevels, GfxFilter minFilter, GfxFilter magFilter, GfxSamplerMipmapMode mipmapMode, GfxSamplerAddressMode addressMode);
 	bool SetTexture2D(const char *szName, HANDLE hExternTexture);

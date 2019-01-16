@@ -32,7 +32,7 @@ private:
 
 
 private:
-	CGLES3PipelineGraphics* Create(const CGfxShader *pVertexShader, const CGfxShader *pFragmentShader, const PipelineState &state);
+	CGLES3PipelineGraphics* Create(const CGfxRenderPass *pRenderPass, const CGfxShader *pVertexShader, const CGfxShader *pFragmentShader, const PipelineState &state);
 
 
 private:

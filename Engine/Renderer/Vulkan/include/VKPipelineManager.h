@@ -35,7 +35,7 @@ private:
 
 
 private:
-	CVKPipelineGraphics* Create(const CGfxShader *pVertexShader, const CGfxShader *pFragmentShader, const PipelineState &state);
+	CVKPipelineGraphics* Create(const CGfxRenderPass *pRenderPass, const CGfxShader *pVertexShader, const CGfxShader *pFragmentShader, const PipelineState &state);
 
 
 private:

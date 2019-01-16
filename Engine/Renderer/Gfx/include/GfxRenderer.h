@@ -77,7 +77,7 @@ public:
 public:
 	virtual CGfxShader* CreateShader(const char *szFileName, shader_kind kind) = 0;
 	virtual CGfxPipelineCompute* CreatePipelineCompute(const CGfxShader *pComputeShader) = 0;
-	virtual CGfxPipelineGraphics* CreatePipelineGraphics(const CGfxShader *pVertexShader, const CGfxShader *pFragmentShader, const PipelineState &state) = 0;
+	virtual CGfxPipelineGraphics* CreatePipelineGraphics(const CGfxRenderPass *pRenderPass, const CGfxShader *pVertexShader, const CGfxShader *pFragmentShader, const PipelineState &state) = 0;
 	virtual CGfxSampler* CreateSampler(int mipLevels, GfxFilter minFilter, GfxFilter magFilter, GfxSamplerMipmapMode mipmapMode, GfxSamplerAddressMode addressMode) = 0;
 
 public:

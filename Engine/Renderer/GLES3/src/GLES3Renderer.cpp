@@ -94,9 +94,9 @@ CGfxPipelineCompute* CGLES3Renderer::CreatePipelineCompute(const CGfxShader *pCo
 	return m_pPipelineComputeManager->Create(pComputeShader);
 }
 
-CGfxPipelineGraphics* CGLES3Renderer::CreatePipelineGraphics(const CGfxShader *pVertexShader, const CGfxShader *pFragmentShader, const PipelineState &state)
+CGfxPipelineGraphics* CGLES3Renderer::CreatePipelineGraphics(const CGfxRenderPass *pRenderPass, const CGfxShader *pVertexShader, const CGfxShader *pFragmentShader, const PipelineState &state)
 {
-	return m_pPipelineGraphicsManager->Create(pVertexShader, pFragmentShader, state);
+	return m_pPipelineGraphicsManager->Create(pRenderPass, pVertexShader, pFragmentShader, state);
 }
 
 CGfxSampler* CGLES3Renderer::CreateSampler(int mipLevels, GfxFilter minFilter, GfxFilter magFilter, GfxSamplerMipmapMode mipmapMode, GfxSamplerAddressMode addressMode)
