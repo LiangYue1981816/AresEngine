@@ -24,6 +24,7 @@ private:
 	uint32_t m_size;
 
 private:
+	uint32_t m_hash;
 	CVKBufferPtr m_ptrBuffer;
 
 private:

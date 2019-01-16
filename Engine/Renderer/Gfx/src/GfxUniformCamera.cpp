@@ -3,7 +3,6 @@
 
 CGfxUniformCamera::CGfxUniformCamera(void)
 	: m_bDirty(false)
-	, m_hash(INVALID_HASHVALUE)
 {
 	m_ptrUniformBuffer = GfxRenderer()->NewUniformBuffer(sizeof(m_params));
 }
@@ -71,12 +70,6 @@ void CGfxUniformCamera::Apply(void)
 {
 	if (m_bDirty) {
 		m_bDirty = false;
-
-		uint32_t hash = HashValue((uint8_t*)&m_params, sizeof(m_params), 2);
-
-		if (m_hash != hash) {
-			m_hash  = hash;
-			m_ptrUniformBuffer->BufferData(0, sizeof(m_params), &m_params);
-		}
+		m_ptrUniformBuffer->BufferData(0, sizeof(m_params), &m_params);
 	}
 }

@@ -38,7 +38,6 @@ public:
 
 private:
 	bool m_bDirty;
-	uint32_t m_hash;
 	Params m_params;
 
 private:

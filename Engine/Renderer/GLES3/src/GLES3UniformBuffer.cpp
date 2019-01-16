@@ -7,6 +7,7 @@ CGLES3UniformBuffer::CGLES3UniformBuffer(CGLES3UniformBufferManager *pManager, s
 
 	, m_size(size)
 
+	, m_hash(INVALID_HASHVALUE)
 	, m_buffer(0)
 {
 	glGenBuffers(1, &m_buffer);
@@ -38,9 +39,14 @@ bool CGLES3UniformBuffer::BufferData(size_t offset, size_t size, const void *pBu
 		return false;
 	}
 
-	glBindBuffer(GL_UNIFORM_BUFFER, m_buffer);
-	glBufferSubData(GL_UNIFORM_BUFFER, (int)offset, (uint32_t)size, pBuffer);
-	glBindBuffer(GL_UNIFORM_BUFFER, 0);
+	uint32_t hash = HashValue((uint8_t*)pBuffer, size);
+
+	if (m_hash != hash) {
+		m_hash  = hash;
+		glBindBuffer(GL_UNIFORM_BUFFER, m_buffer);
+		glBufferSubData(GL_UNIFORM_BUFFER, (int)offset, (uint32_t)size, pBuffer);
+		glBindBuffer(GL_UNIFORM_BUFFER, 0);
+	}
 
 	return true;
 }
