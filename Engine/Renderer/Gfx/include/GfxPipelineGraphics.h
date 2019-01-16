@@ -53,7 +53,7 @@ public:
 	virtual uint32_t GetName(void) const = 0;
 
 public:
-	virtual bool Create(const CGfxShader *pVertexShader, const CGfxShader *pFragmentShader, const PipelineState &state) = 0;
+	virtual bool Create(HANDLE hRenderPass, const CGfxShader *pVertexShader, const CGfxShader *pFragmentShader, const PipelineState &state) = 0;
 	virtual void Destroy(void) = 0;
 
 public:

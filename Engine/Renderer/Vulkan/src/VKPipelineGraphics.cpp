@@ -20,7 +20,7 @@ uint32_t CVKPipelineGraphics::GetName(void) const
 	return m_name;
 }
 
-bool CVKPipelineGraphics::Create(const CGfxShader *pVertexShader, const CGfxShader *pFragmentShader, const PipelineState &state)
+bool CVKPipelineGraphics::Create(HANDLE hRenderPass, const CGfxShader *pVertexShader, const CGfxShader *pFragmentShader, const PipelineState &state)
 {
 	return true;
 }
