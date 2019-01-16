@@ -297,11 +297,14 @@ static bool InternalLoadPipeline(TiXmlNode *pPassNode, CGfxMaterialPass *pPass)
 		TiXmlNode *pPipelineNode = pPassNode->FirstChild("Pipeline");
 		if (pPipelineNode == nullptr) { err = -1; goto ERR; }
 
-		CGfxRenderPassPtr ptrRenderPass = GfxRenderer()->GetRenderPass(HashValue(pPipelineNode->ToElement()->AttributeString("render_pass")));
-		if (ptrRenderPass == nullptr) { err = -2; goto ERR; }
+		const char *szRenderPassName = pPipelineNode->ToElement()->AttributeString("render_pass");
+		if (szRenderPassName == nullptr) { err = -2; goto ERR; }
+
+		CGfxRenderPassPtr ptrRenderPass = GfxRenderer()->GetRenderPass(HashValue(szRenderPassName));
+		if (ptrRenderPass == nullptr) { err = -3; goto ERR; }
 
 		PipelineState state;
-		if (InternalLoadPipelineState(pPipelineNode, state) == false) { err = -3; goto ERR; }
+		if (InternalLoadPipelineState(pPipelineNode, state) == false) { err = -4; goto ERR; }
 
 		CGfxShader *pVertexShader = nullptr;
 		CGfxShader *pFragmentShader = nullptr;
@@ -310,9 +313,9 @@ static bool InternalLoadPipeline(TiXmlNode *pPassNode, CGfxMaterialPass *pPass)
 		InternalLoadPipelineShader(pPipelineNode, pFragmentShader, fragment_shader);
 		pPass->SetPipeline(ptrRenderPass, pVertexShader, pFragmentShader, state);
 #else
-		if (InternalLoadPipelineShader(pPipelineNode, pVertexShader, vertex_shader) == false) { err = -4; goto ERR; }
-		if (InternalLoadPipelineShader(pPipelineNode, pFragmentShader, fragment_shader) == false) { err = -5; goto ERR; }
-		if (pPass->SetPipeline(pRenderPass, pVertexShader, pFragmentShader, state) == false) { err = -6; goto ERR; }
+		if (InternalLoadPipelineShader(pPipelineNode, pVertexShader, vertex_shader) == false) { err = -5; goto ERR; }
+		if (InternalLoadPipelineShader(pPipelineNode, pFragmentShader, fragment_shader) == false) { err = -6; goto ERR; }
+		if (pPass->SetPipeline(ptrRenderPass, pVertexShader, pFragmentShader, state) == false) { err = -7; goto ERR; }
 #endif
 	}
 	LogOutput(LOG_TAG_RENDERER, "\t\tOK\n");

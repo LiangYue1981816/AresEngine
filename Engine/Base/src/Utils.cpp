@@ -36,8 +36,10 @@ CALL_API unsigned int HashValue(const char *szString)
 	const char *c = szString;
 	unsigned int dwHashValue = 0x00000000;
 
-	while (*c) {
-		dwHashValue = (dwHashValue << 5) - dwHashValue + (*c == '/' ? '\\' : *c); c++;
+	if (szString) {
+		while (*c) {
+			dwHashValue = (dwHashValue << 5) - dwHashValue + (*c == '/' ? '\\' : *c); c++;
+		}
 	}
 
 	return dwHashValue ? dwHashValue : INVALID_HASHVALUE;
@@ -48,8 +50,10 @@ CALL_API unsigned int HashValue(const unsigned char *pBuffer, int length, int st
 	const unsigned char *c = pBuffer;
 	unsigned int dwHashValue = 0x00000000;
 
-	while (length > 0) {
-		dwHashValue = (dwHashValue << 5) - dwHashValue + (*c); c += stride; length -= stride;
+	if (pBuffer) {
+		while (length > 0) {
+			dwHashValue = (dwHashValue << 5) - dwHashValue + (*c); c += stride; length -= stride;
+		}
 	}
 
 	return dwHashValue ? dwHashValue : INVALID_HASHVALUE;
