@@ -61,7 +61,7 @@ CGfxRenderTexturePtr CGLES3FrameBuffer::GetAttachmentTexture(int indexAttachment
 	}
 }
 
-bool CGLES3FrameBuffer::Create(HANDLE hRenderPass)
+bool CGLES3FrameBuffer::Create(const CGfxRenderPassPtr &ptrRenderPass)
 {
 	Destroy();
 

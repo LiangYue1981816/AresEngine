@@ -26,6 +26,6 @@ public:
 	virtual CGfxRenderTexturePtr GetAttachmentTexture(int indexAttachment) const = 0;
 
 public:
-	virtual bool Create(HANDLE hRenderPass) = 0;
+	virtual bool Create(const CGfxRenderPassPtr &ptrRenderPass) = 0;
 	virtual void Destroy(void) = 0;
 };

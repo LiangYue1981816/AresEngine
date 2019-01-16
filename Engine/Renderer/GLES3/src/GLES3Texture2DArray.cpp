@@ -67,11 +67,11 @@ int CGLES3Texture2DArray::GetLayers(void) const
 	return m_layers;
 }
 
-bool CGLES3Texture2DArray::Create(HANDLE hTexture)
+bool CGLES3Texture2DArray::Create(HANDLE hExternTexture)
 {
 	Destroy();
 
-	if (CGLES3Texture::Create(GL_TEXTURE_2D_ARRAY, (uint32_t)hTexture) == false) {
+	if (CGLES3Texture::Create(GL_TEXTURE_2D_ARRAY, (uint32_t)hExternTexture) == false) {
 		return false;
 	}
 

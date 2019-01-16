@@ -64,12 +64,12 @@ int CVKRenderTexture::GetSamples(void) const
 	return m_samples;
 }
 
-bool CVKRenderTexture::Create(HANDLE hTexture, GfxPixelFormat pixelFormat, int width, int height, int samples)
+bool CVKRenderTexture::Create(HANDLE hExternTexture, GfxPixelFormat pixelFormat, int width, int height, int samples)
 {
 	Destroy();
 
 	m_bExtern = true;
-	m_vkImageView = (VkImageView)hTexture;
+	m_vkImageView = (VkImageView)hExternTexture;
 
 	m_width = width;
 	m_height = height;

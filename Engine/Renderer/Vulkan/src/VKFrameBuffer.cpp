@@ -61,7 +61,7 @@ CGfxRenderTexturePtr CVKFrameBuffer::GetAttachmentTexture(int indexAttachment) c
 	}
 }
 
-bool CVKFrameBuffer::Create(HANDLE hRenderPass)
+bool CVKFrameBuffer::Create(const CGfxRenderPassPtr &ptrRenderPass)
 {
 	Destroy();
 
@@ -74,7 +74,7 @@ bool CVKFrameBuffer::Create(HANDLE hRenderPass)
 	createInfo.sType = VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO;
 	createInfo.pNext = nullptr;
 	createInfo.flags = 0;
-	createInfo.renderPass = (VkRenderPass)hRenderPass;
+	createInfo.renderPass = (VkRenderPass)ptrRenderPass->GetRenderPass();
 	createInfo.attachmentCount = attachments.size();
 	createInfo.pAttachments = attachments.data();
 	createInfo.width = m_width;

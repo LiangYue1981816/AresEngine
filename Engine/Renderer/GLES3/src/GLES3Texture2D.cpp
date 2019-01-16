@@ -67,11 +67,11 @@ int CGLES3Texture2D::GetSamples(void) const
 	return m_samples;
 }
 
-bool CGLES3Texture2D::Create(HANDLE hTexture)
+bool CGLES3Texture2D::Create(HANDLE hExternTexture)
 {
 	Destroy();
 
-	if (CGLES3Texture::Create(GL_TEXTURE_2D, (uint32_t)hTexture) == false) {
+	if (CGLES3Texture::Create(GL_TEXTURE_2D, (uint32_t)hExternTexture) == false) {
 		return false;
 	}
 

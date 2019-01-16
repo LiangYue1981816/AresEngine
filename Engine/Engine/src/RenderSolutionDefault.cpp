@@ -38,7 +38,7 @@ void CRenderSolutionDefault::CreateFrameBuffer(void)
 		m_ptrFrameBufferScreen[index] = GfxRenderer()->NewFrameBuffer(m_ptrColorTextures[index]->GetWidth(), m_ptrColorTextures[index]->GetHeight(), numAttachments);
 		m_ptrFrameBufferScreen[index]->SetAttachmentTexture(0, m_ptrDepthStencilTexture);
 		m_ptrFrameBufferScreen[index]->SetAttachmentTexture(1, m_ptrColorTextures[index]);
-		m_ptrFrameBufferScreen[index]->Create(m_ptrRenderPass->GetRenderPass());
+		m_ptrFrameBufferScreen[index]->Create(m_ptrRenderPass);
 	}
 }
 
@@ -86,7 +86,7 @@ void CRenderSolutionDefault::CreateFrameBufferMSAA(int samples)
 		m_ptrFrameBufferScreenMSAA[index]->SetAttachmentTexture(0, m_ptrDepthStencilTextureMSAA);
 		m_ptrFrameBufferScreenMSAA[index]->SetAttachmentTexture(1, m_ptrColorTextureMSAA);
 		m_ptrFrameBufferScreenMSAA[index]->SetAttachmentTexture(2, m_ptrColorTextures[index]);
-		m_ptrFrameBufferScreenMSAA[index]->Create(m_ptrRenderPassMSAA->GetRenderPass());
+		m_ptrFrameBufferScreenMSAA[index]->Create(m_ptrRenderPassMSAA);
 	}
 }
 

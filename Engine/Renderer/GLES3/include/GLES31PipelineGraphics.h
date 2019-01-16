@@ -18,7 +18,7 @@ public:
 	uint32_t GetName(void) const;
 
 public:
-	bool Create(const CGfxRenderPass *pRenderPass, const CGfxShader *pVertexShader, const CGfxShader *pFragmentShader, const PipelineState &state);
+	bool Create(const CGfxRenderPassPtr &ptrRenderPass, const CGfxShader *pVertexShader, const CGfxShader *pFragmentShader, const PipelineState &state);
 	void Destroy(void);
 
 public:

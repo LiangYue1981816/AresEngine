@@ -24,7 +24,7 @@ public:
 	CGfxRenderTexturePtr GetAttachmentTexture(int indexAttachment) const;
 
 public:
-	bool Create(HANDLE hRenderPass);
+	bool Create(const CGfxRenderPassPtr &ptrRenderPass);
 	void Destroy(void);
 
 public:

@@ -30,7 +30,7 @@ public:
 	virtual int GetSamples(void) const = 0;
 
 public:
-	virtual bool Create(HANDLE hTexture) = 0;
+	virtual bool Create(HANDLE hExternTexture) = 0;
 	virtual bool Create(GfxPixelFormat pixelFormat, int width, int height, int levels, int samples = 1) = 0;
 	virtual void Destroy(void) = 0;
 
