@@ -53,12 +53,11 @@ bool CGLES3UniformBuffer::BufferData(size_t offset, size_t size, const void *pBu
 	return true;
 }
 
-bool CGLES3UniformBuffer::Bind(int index, int offset, int size)
+void CGLES3UniformBuffer::Bind(int index, int offset, int size)
 {
 	if (m_size < (uint32_t)(offset + size)) {
-		return false;
+		return;
 	}
 
 	GLBindBufferRange(GL_UNIFORM_BUFFER, index, m_buffer, offset, size);
-	return true;
 }

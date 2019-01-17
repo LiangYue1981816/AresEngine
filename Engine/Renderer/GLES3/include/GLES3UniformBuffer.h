@@ -18,7 +18,7 @@ public:
 
 public:
 	bool BufferData(size_t offset, size_t size, const void *pBuffer);
-	bool Bind(int index, int offset, int size);
+	void Bind(int index, int offset, int size);
 
 
 private:
