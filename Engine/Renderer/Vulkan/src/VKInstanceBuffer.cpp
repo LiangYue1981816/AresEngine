@@ -1,6 +1,8 @@
 #include "VKRenderer.h"
 
 
+static const int INSTANCE_BUFFER_SIZE = 64;
+
 CVKInstanceBuffer::CVKInstanceBuffer(CVKDevice *pDevice, uint32_t instanceFormat, uint32_t instanceBinding)
 	: CGfxInstanceBuffer(instanceFormat, instanceBinding)
 	, m_pDevice(pDevice)

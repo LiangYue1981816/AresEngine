@@ -17,6 +17,8 @@ public:
 	uint32_t GetName(void) const;
 
 public:
+	glm::aabb GetLocalAABB(void) const;
+
 	GfxIndexType GetIndexType(void) const;
 	uint32_t GetVertexFormat(void) const;
 
@@ -25,8 +27,6 @@ public:
 
 	uint32_t GetInstanceCount(void) const;
 	uint32_t GetInstanceFormat(void) const;
-
-	glm::aabb GetLocalAABB(void) const;
 
 public:
 	bool InstanceBufferData(size_t size, const void *pBuffer);

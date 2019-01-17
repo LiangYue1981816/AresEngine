@@ -36,14 +36,13 @@ CGfxMaterialPass* CGLES3Material::GetPass(uint32_t name)
 	}
 }
 
-bool CGLES3Material::CreatePass(uint32_t name)
+CGfxMaterialPass* CGLES3Material::CreatePass(uint32_t name)
 {
 	if (m_pPasses[name] == nullptr) {
 		m_pPasses[name] = new CGLES3MaterialPass(name);
-		return true;
 	}
 
-	return false;
+	return m_pPasses[name];
 }
 
 void CGLES3Material::Destroy(void)

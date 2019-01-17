@@ -19,9 +19,7 @@ public:
 
 public:
 	CGfxMaterialPass* GetPass(uint32_t name);
-
-public:
-	bool CreatePass(uint32_t name);
+	CGfxMaterialPass* CreatePass(uint32_t name);
 	void Destroy(void);
 
 

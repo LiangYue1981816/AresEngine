@@ -54,6 +54,16 @@ uint32_t CGLES3MeshDraw::GetName(void) const
 	return m_name;
 }
 
+glm::aabb CGLES3MeshDraw::GetLocalAABB(void) const
+{
+	if (m_pMeshDraw) {
+		return m_pMeshDraw->aabb;
+	}
+	else {
+		return glm::aabb();
+	}
+}
+
 GfxIndexType CGLES3MeshDraw::GetIndexType(void) const
 {
 	if (m_ptrMesh.IsValid()) {
@@ -115,16 +125,6 @@ uint32_t CGLES3MeshDraw::GetInstanceFormat(void) const
 	}
 	else {
 		return 0;
-	}
-}
-
-glm::aabb CGLES3MeshDraw::GetLocalAABB(void) const
-{
-	if (m_pMeshDraw) {
-		return m_pMeshDraw->aabb;
-	}
-	else {
-		return glm::aabb();
 	}
 }
 

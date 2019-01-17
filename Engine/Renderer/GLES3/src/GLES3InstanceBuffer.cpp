@@ -1,6 +1,8 @@
 #include "GLES3Renderer.h"
 
 
+static const int INSTANCE_BUFFER_SIZE = 64;
+
 CGLES3InstanceBuffer::CGLES3InstanceBuffer(uint32_t instanceFormat, uint32_t instanceBinding)
 	: CGfxInstanceBuffer(instanceFormat, instanceBinding)
 

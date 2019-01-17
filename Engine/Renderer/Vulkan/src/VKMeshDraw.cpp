@@ -50,6 +50,16 @@ uint32_t CVKMeshDraw::GetName(void) const
 	return m_name;
 }
 
+glm::aabb CVKMeshDraw::GetLocalAABB(void) const
+{
+	if (m_pMeshDraw) {
+		return m_pMeshDraw->aabb;
+	}
+	else {
+		return glm::aabb();
+	}
+}
+
 GfxIndexType CVKMeshDraw::GetIndexType(void) const
 {
 	if (m_ptrMesh.IsValid()) {
@@ -111,16 +121,6 @@ uint32_t CVKMeshDraw::GetInstanceFormat(void) const
 	}
 	else {
 		return 0;
-	}
-}
-
-glm::aabb CVKMeshDraw::GetLocalAABB(void) const
-{
-	if (m_pMeshDraw) {
-		return m_pMeshDraw->aabb;
-	}
-	else {
-		return glm::aabb();
 	}
 }
 

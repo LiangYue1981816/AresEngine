@@ -23,7 +23,6 @@ private:
 	bool CreateDevice(VkPhysicalDevice vkPhysicalDevice, uint32_t queueFamilyIndex);
 	void DestroyDevice(void);
 
-
 public:
 	VkDevice GetDevice(void) const;
 	VkPhysicalDevice GetPhysicalDevice(void) const;
