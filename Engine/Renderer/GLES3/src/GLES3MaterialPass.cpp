@@ -132,6 +132,42 @@ bool CGLES3MaterialPass::SetTextureCubeMap(const char *szName, HANDLE hExternTex
 	return false;
 }
 
+bool CGLES3MaterialPass::SetTexture2D(const char *szName, const CGfxTexture2DPtr &ptrTexture)
+{
+	uint32_t name = HashValue(szName);
+
+	if ((m_pPipeline == nullptr) || (m_pPipeline && m_pPipeline->IsTextureValid(name))) {
+		m_ptrTexture2Ds[name] = ptrTexture;
+		return true;
+	}
+
+	return false;
+}
+
+bool CGLES3MaterialPass::SetTexture2DArray(const char *szName, const CGfxTexture2DArrayPtr &ptrTexture)
+{
+	uint32_t name = HashValue(szName);
+
+	if ((m_pPipeline == nullptr) || (m_pPipeline && m_pPipeline->IsTextureValid(name))) {
+		m_ptrTexture2DArrays[name] = ptrTexture;
+		return true;
+	}
+
+	return false;
+}
+
+bool CGLES3MaterialPass::SetTextureCubeMap(const char *szName, const CGfxTextureCubeMapPtr &ptrTexture)
+{
+	uint32_t name = HashValue(szName);
+
+	if ((m_pPipeline == nullptr) || (m_pPipeline && m_pPipeline->IsTextureValid(name))) {
+		m_ptrTextureCubeMaps[name] = ptrTexture;
+		return true;
+	}
+
+	return false;
+}
+
 bool CGLES3MaterialPass::SetTexture2D(const char *szName, const char *szFileName)
 {
 	uint32_t name = HashValue(szName);
