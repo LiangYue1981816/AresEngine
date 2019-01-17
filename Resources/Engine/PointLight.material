@@ -1,6 +1,6 @@
 <Material>
 	<Pass name="Default">
-		<Pipeline>
+		<Pipeline render_pass="Default">
 			<Vertex file_name="Default.glsl" />
 			<Fragment file_name="Default.glsl" />
 		</Pipeline>
