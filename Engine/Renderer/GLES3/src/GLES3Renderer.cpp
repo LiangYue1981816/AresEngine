@@ -444,6 +444,11 @@ void CGLES3Renderer::Present(void)
 	m_pCurrentPipelineGraphics = nullptr;
 }
 
+void CGLES3Renderer::BindMeshDraw(CGfxMeshDraw *pMeshDraw)
+{
+	((CGLES3MeshDraw *)pMeshDraw)->Bind();
+}
+
 void CGLES3Renderer::BindPipelineCompute(CGfxPipelineCompute *pPipelineCompute)
 {
 	if (m_pCurrentPipelineCompute != pPipelineCompute) {

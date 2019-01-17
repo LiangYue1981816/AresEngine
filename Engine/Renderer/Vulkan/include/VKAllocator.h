@@ -28,9 +28,9 @@ private:
 
 
 private:
-	VkAllocationCallbacks m_vkCallbacks;
-
-private:
 	uint32_t m_allocatedSize;
 	uint32_t m_maxAllocatedSize;
+
+private:
+	VkAllocationCallbacks m_vkCallbacks;
 };

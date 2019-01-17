@@ -4,7 +4,6 @@
 
 class CGLES3IndirectBuffer : public CGfxIndirectBuffer
 {
-	friend class CGLES3Mesh;
 	friend class CGLES3MeshDraw;
 
 

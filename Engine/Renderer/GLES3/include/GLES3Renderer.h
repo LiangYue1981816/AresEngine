@@ -64,6 +64,7 @@ class CALL_API CGLES3Renderer : public CGfxRenderer
 	friend class CGLES3Material;
 	friend class CGLES3MaterialPass;
 
+	friend class CGLES3CommandBindMeshDraw;
 	friend class CGLES3CommandBindSubPassInputTexture;
 	friend class CGLES3CommandBindPipelineCompute;
 	friend class CGLES3CommandBindPipelineGraphics;
@@ -188,6 +189,7 @@ public:
 	void Present(void);
 
 private:
+	void BindMeshDraw(CGfxMeshDraw *pMeshDraw);
 	void BindPipelineCompute(CGfxPipelineCompute *pPipelineCompute);
 	void BindPipelineGraphics(CGfxPipelineGraphics *pPipelineGraphics);
 	void BindUniformBuffer(CGfxUniformBuffer *pUniformBuffer, uint32_t nameUniform);

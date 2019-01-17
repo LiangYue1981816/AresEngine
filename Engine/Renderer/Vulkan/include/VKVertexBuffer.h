@@ -29,12 +29,12 @@ private:
 	uint32_t m_size;
 
 private:
-	VkDeviceSize m_transferOffset;
-	eastl::vector<uint8_t> m_transferBuffer;
-
-private:
 	uint32_t m_binding;
 	CVKBufferPtr m_ptrBuffer;
+
+private:
+	VkDeviceSize m_transferOffset;
+	eastl::vector<uint8_t> m_transferBuffer;
 
 private:
 	CVKDevice *m_pDevice;

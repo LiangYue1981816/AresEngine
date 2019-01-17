@@ -4,7 +4,6 @@
 
 class CGLES3InstanceBuffer : public CGfxInstanceBuffer
 {
-	friend class CGLES3Mesh;
 	friend class CGLES3MeshDraw;
 
 

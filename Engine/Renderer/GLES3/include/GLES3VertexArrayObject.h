@@ -4,7 +4,6 @@
 
 class CGLES3VertexArrayObject
 {
-	friend class CGLES3Mesh;
 	friend class CGLES3MeshDraw;
 
 

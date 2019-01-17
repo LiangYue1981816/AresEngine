@@ -21,7 +21,7 @@ public:
 		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_BIND_MESHDRAW, "CommandBindMeshDraw");
 		{
 			if (m_ptrMeshDraw.IsValid()) {
-				((CGLES3MeshDraw *)m_ptrMeshDraw.GetPointer())->Bind();
+				GLES3Renderer()->BindMeshDraw(m_ptrMeshDraw);
 			}
 			else {
 				GLBindVertexArray(0);
