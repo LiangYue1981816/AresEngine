@@ -53,20 +53,20 @@ CGLES3Renderer::~CGLES3Renderer(void)
 	delete m_pGlobalMaterialPass;
 
 	delete m_pCommandBufferManager;
-	delete m_pUniformBufferManager;
-	delete m_pRenderTextureManager;
-	delete m_pFrameBufferManager;
-	delete m_pRenderPassManager;
+	delete m_pMeshManager;
+	delete m_pMeshDrawManager;
 	delete m_pMaterialManager;
+	delete m_pPipelineComputeManager;
+	delete m_pPipelineGraphicsManager;
+	delete m_pShaderManager;
 	delete m_pSamplerManager;
 	delete m_pTexture2DManager;
 	delete m_pTexture2DArrayManager;
 	delete m_pTextureCubeMapManager;
-	delete m_pPipelineComputeManager;
-	delete m_pPipelineGraphicsManager;
-	delete m_pShaderManager;
-	delete m_pMeshDrawManager;
-	delete m_pMeshManager;
+	delete m_pUniformBufferManager;
+	delete m_pRenderPassManager;
+	delete m_pFrameBufferManager;
+	delete m_pRenderTextureManager;
 }
 
 uint32_t CGLES3Renderer::GetLastError(void) const
