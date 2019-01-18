@@ -288,7 +288,7 @@ ERR:
 	return false;
 }
 
-static bool InternalLoadPipeline(TiXmlNode *pPassNode, CGfxMaterialPass *pPass)
+static bool InternalLoadPipeline(TiXmlNode *pPassNode, CGfxMaterialPass *pPass, uint32_t vertexBinding, uint32_t instanceBinding)
 {
 	int err = 0;
 
@@ -311,11 +311,11 @@ static bool InternalLoadPipeline(TiXmlNode *pPassNode, CGfxMaterialPass *pPass)
 #ifdef PLATFORM_WINDOWS
 		InternalLoadPipelineShader(pPipelineNode, pVertexShader, vertex_shader);
 		InternalLoadPipelineShader(pPipelineNode, pFragmentShader, fragment_shader);
-		pPass->SetPipeline(ptrRenderPass, pVertexShader, pFragmentShader, state);
+		pPass->SetPipeline(ptrRenderPass, pVertexShader, pFragmentShader, state, vertexBinding, instanceBinding);
 #else
 		if (InternalLoadPipelineShader(pPipelineNode, pVertexShader, vertex_shader) == false) { err = -5; goto ERR; }
 		if (InternalLoadPipelineShader(pPipelineNode, pFragmentShader, fragment_shader) == false) { err = -6; goto ERR; }
-		if (pPass->SetPipeline(ptrRenderPass, pVertexShader, pFragmentShader, state) == false) { err = -7; goto ERR; }
+		if (pPass->SetPipeline(ptrRenderPass, pVertexShader, pFragmentShader, state, vertexBinding, instanceBinding) == false) { err = -7; goto ERR; }
 #endif
 	}
 	LogOutput(LOG_TAG_RENDERER, "\t\tOK\n");
@@ -532,13 +532,13 @@ ERR:
 	return false;
 }
 
-static bool InternalLoadPass(TiXmlNode *pPassNode, CGfxMaterialPass *pPass)
+static bool InternalLoadPass(TiXmlNode *pPassNode, CGfxMaterialPass *pPass, uint32_t vertexBinding, uint32_t instanceBinding)
 {
 	int err = 0;
 
 	LogOutput(LOG_TAG_RENDERER, "\tLoadPass(%s)\n", pPassNode->ToElement()->AttributeString("name"));
 	{
-		if (InternalLoadPipeline(pPassNode, pPass) == false) { err = -1; goto ERR; }
+		if (InternalLoadPipeline(pPassNode, pPass, vertexBinding, instanceBinding) == false) { err = -1; goto ERR; }
 		if (InternalLoadTexture2D(pPassNode, pPass) == false) { err = -2; goto ERR; }
 		if (InternalLoadTexture2DArray(pPassNode, pPass) == false) { err = -3; goto ERR; }
 		if (InternalLoadTextureCubeMap(pPassNode, pPass) == false) { err = -4; goto ERR; }
@@ -555,7 +555,7 @@ ERR:
 }
 
 
-bool CResourceLoader::LoadMaterial(const char *szFileName, CGfxMaterial *pMaterial)
+bool CResourceLoader::LoadMaterial(const char *szFileName, CGfxMaterial *pMaterial, uint32_t vertexBinding, uint32_t instanceBinding)
 {
 	//<Material>
 	//	<Pass name="">
@@ -606,7 +606,7 @@ bool CResourceLoader::LoadMaterial(const char *szFileName, CGfxMaterial *pMateri
 			do {
 				uint32_t name = HashValue(pPassNode->ToElement()->AttributeString("name"));
 				if (pMaterial->CreatePass(name) == false) { err = -4; goto ERR; }
-				if (InternalLoadPass(pPassNode, pMaterial->GetPass(name)) == false) { err = -5; goto ERR; }
+				if (InternalLoadPass(pPassNode, pMaterial->GetPass(name), vertexBinding, instanceBinding) == false) { err = -5; goto ERR; }
 			} while ((pPassNode = pMaterialNode->IterateChildren("Pass", pPassNode)) != nullptr);
 		}
 	}

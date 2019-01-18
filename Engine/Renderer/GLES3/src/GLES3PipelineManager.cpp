@@ -48,7 +48,7 @@ CGLES3PipelineGraphicsManager::~CGLES3PipelineGraphicsManager(void)
 	m_pPipelines.clear();
 }
 
-CGLES3PipelineGraphics* CGLES3PipelineGraphicsManager::Create(const CGfxRenderPass *pRenderPass, const CGfxShader *pVertexShader, const CGfxShader *pFragmentShader, const PipelineState &state)
+CGLES3PipelineGraphics* CGLES3PipelineGraphicsManager::Create(const CGfxRenderPass *pRenderPass, const CGfxShader *pVertexShader, const CGfxShader *pFragmentShader, const PipelineState &state, uint32_t vertexBinding, uint32_t instanceBinding)
 {
 	mutex_autolock autolock(&lock);
 	{
@@ -59,7 +59,7 @@ CGLES3PipelineGraphics* CGLES3PipelineGraphicsManager::Create(const CGfxRenderPa
 
 		if (m_pPipelines[name] == nullptr) {
 			m_pPipelines[name] = new CGLES3PipelineGraphics(name);
-			m_pPipelines[name]->Create(pRenderPass, pVertexShader, pFragmentShader, state);
+			m_pPipelines[name]->Create(pRenderPass, pVertexShader, pFragmentShader, state, vertexBinding, instanceBinding);
 		}
 
 		return m_pPipelines[name];

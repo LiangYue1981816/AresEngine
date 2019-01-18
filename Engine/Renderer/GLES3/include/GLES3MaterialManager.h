@@ -16,7 +16,7 @@ private:
 private:
 	CGLES3Material* Get(uint32_t name);
 	CGLES3Material* Create(uint32_t name);
-	CGLES3Material* Create(const char *szFileName);
+	CGLES3Material* Create(const char *szFileName, uint32_t vertexBinding, uint32_t instanceBinding);
 	void Destroy(CGLES3Material *pMaterial);
 
 

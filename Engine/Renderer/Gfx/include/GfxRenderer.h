@@ -77,7 +77,7 @@ public:
 public:
 	virtual CGfxShader* CreateShader(const char *szFileName, shader_kind kind) = 0;
 	virtual CGfxPipelineCompute* CreatePipelineCompute(const CGfxShader *pComputeShader) = 0;
-	virtual CGfxPipelineGraphics* CreatePipelineGraphics(const CGfxRenderPass *pRenderPass, const CGfxShader *pVertexShader, const CGfxShader *pFragmentShader, const PipelineState &state) = 0;
+	virtual CGfxPipelineGraphics* CreatePipelineGraphics(const CGfxRenderPass *pRenderPass, const CGfxShader *pVertexShader, const CGfxShader *pFragmentShader, const PipelineState &state, uint32_t vertexBinding = 0, uint32_t instanceBinding = 1) = 0;
 	virtual CGfxSampler* CreateSampler(int mipLevels, GfxFilter minFilter, GfxFilter magFilter, GfxSamplerMipmapMode mipmapMode, GfxSamplerAddressMode addressMode) = 0;
 
 public:
@@ -98,7 +98,7 @@ public:
 
 	virtual CGfxMaterialPtr GetMaterial(uint32_t name) = 0;
 	virtual CGfxMaterialPtr NewMaterial(uint32_t name) = 0;
-	virtual CGfxMaterialPtr NewMaterial(const char *szFileName) = 0;
+	virtual CGfxMaterialPtr NewMaterial(const char *szFileName, uint32_t vertexBinding = 0, uint32_t instanceBinding = 1) = 0;
 
 	virtual CGfxTexture2DPtr GetTexture2D(uint32_t name) = 0;
 	virtual CGfxTexture2DPtr NewTexture2D(uint32_t name) = 0;

@@ -94,9 +94,9 @@ CGfxPipelineCompute* CGLES3Renderer::CreatePipelineCompute(const CGfxShader *pCo
 	return m_pPipelineComputeManager->Create(pComputeShader);
 }
 
-CGfxPipelineGraphics* CGLES3Renderer::CreatePipelineGraphics(const CGfxRenderPass *pRenderPass, const CGfxShader *pVertexShader, const CGfxShader *pFragmentShader, const PipelineState &state)
+CGfxPipelineGraphics* CGLES3Renderer::CreatePipelineGraphics(const CGfxRenderPass *pRenderPass, const CGfxShader *pVertexShader, const CGfxShader *pFragmentShader, const PipelineState &state, uint32_t vertexBinding, uint32_t instanceBinding)
 {
-	return m_pPipelineGraphicsManager->Create(pRenderPass, pVertexShader, pFragmentShader, state);
+	return m_pPipelineGraphicsManager->Create(pRenderPass, pVertexShader, pFragmentShader, state, vertexBinding, instanceBinding);
 }
 
 CGfxSampler* CGLES3Renderer::CreateSampler(int mipLevels, GfxFilter minFilter, GfxFilter magFilter, GfxSamplerMipmapMode mipmapMode, GfxSamplerAddressMode addressMode)
@@ -164,9 +164,9 @@ CGfxMaterialPtr CGLES3Renderer::NewMaterial(uint32_t name)
 	return m_pMaterialManager->Create(name);
 }
 
-CGfxMaterialPtr CGLES3Renderer::NewMaterial(const char *szFileName)
+CGfxMaterialPtr CGLES3Renderer::NewMaterial(const char *szFileName, uint32_t vertexBinding, uint32_t instanceBinding)
 {
-	return m_pMaterialManager->Create(szFileName);
+	return m_pMaterialManager->Create(szFileName, vertexBinding, instanceBinding);
 }
 
 CGfxTexture2DPtr CGLES3Renderer::GetTexture2D(uint32_t name)

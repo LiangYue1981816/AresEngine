@@ -86,7 +86,7 @@ CGfxPipelineCompute* CVKRenderer::CreatePipelineCompute(const CGfxShader *pCompu
 	return nullptr;
 }
 
-CGfxPipelineGraphics* CVKRenderer::CreatePipelineGraphics(const CGfxRenderPass *pRenderPass, const CGfxShader *pVertexShader, const CGfxShader *pFragmentShader, const PipelineState &state)
+CGfxPipelineGraphics* CVKRenderer::CreatePipelineGraphics(const CGfxRenderPass *pRenderPass, const CGfxShader *pVertexShader, const CGfxShader *pFragmentShader, const PipelineState &state, uint32_t vertexBinding, uint32_t instanceBinding)
 {
 	return nullptr;
 }
@@ -156,7 +156,7 @@ CGfxMaterialPtr CVKRenderer::NewMaterial(uint32_t name)
 	return nullptr;
 }
 
-CGfxMaterialPtr CVKRenderer::NewMaterial(const char *szFileName)
+CGfxMaterialPtr CVKRenderer::NewMaterial(const char *szFileName, uint32_t vertexBinding, uint32_t instanceBinding)
 {
 	return nullptr;
 }
