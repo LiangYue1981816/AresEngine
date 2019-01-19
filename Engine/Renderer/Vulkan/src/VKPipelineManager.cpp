@@ -50,18 +50,18 @@ CVKPipelineGraphicsManager::~CVKPipelineGraphicsManager(void)
 	m_pPipelines.clear();
 }
 
-CVKPipelineGraphics* CVKPipelineGraphicsManager::Create(const CGfxRenderPass *pRenderPass, const CGfxShader *pVertexShader, const CGfxShader *pFragmentShader, const PipelineState &state, uint32_t vertexBinding, uint32_t instanceBinding)
+CVKPipelineGraphics* CVKPipelineGraphicsManager::Create(const CGfxRenderPass *pRenderPass, const CGfxShader *pVertexShader, const CGfxShader *pFragmentShader, const PipelineState &state, uint32_t indexSubpass, uint32_t vertexBinding, uint32_t instanceBinding)
 {
 	mutex_autolock autolock(&lock);
 	{
 		char szName[_MAX_STRING];
-		sprintf(szName, "%8.8X_%8.8X_%8.8X_%8.8X_%8.8X", pVertexShader->GetName(), pFragmentShader->GetName(), HashValue((uint8_t *)&state, sizeof(state)), vertexBinding, instanceBinding);
+		sprintf(szName, "%P_%8.8X_%8.8X_%8.8X_%8.8X_%8.8X_%8.8X", pRenderPass, pVertexShader->GetName(), pFragmentShader->GetName(), HashValue((uint8_t *)&state, sizeof(state)), indexSubpass, vertexBinding, instanceBinding);
 
 		uint32_t name = HashValue(szName);
 
 		if (m_pPipelines[name] == nullptr) {
 			m_pPipelines[name] = new CVKPipelineGraphics(m_pDevice, this, name);
-			m_pPipelines[name]->Create(pRenderPass, pVertexShader, pFragmentShader, state, vertexBinding, instanceBinding);
+			m_pPipelines[name]->Create(pRenderPass, pVertexShader, pFragmentShader, state, indexSubpass, vertexBinding, instanceBinding);
 		}
 
 		return m_pPipelines[name];
