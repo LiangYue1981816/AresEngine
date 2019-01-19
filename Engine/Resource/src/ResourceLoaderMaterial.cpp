@@ -297,6 +297,7 @@ static bool InternalLoadPipeline(TiXmlNode *pPassNode, CGfxMaterialPass *pPass, 
 		TiXmlNode *pPipelineNode = pPassNode->FirstChild("Pipeline");
 		if (pPipelineNode == nullptr) { err = -1; goto ERR; }
 
+		const uint32_t indexSubpass = pPipelineNode->ToElement()->AttributeInt1("sub_pass");
 		const char *szRenderPassName = pPipelineNode->ToElement()->AttributeString("render_pass");
 		if (szRenderPassName == nullptr) { err = -2; goto ERR; }
 
@@ -311,11 +312,11 @@ static bool InternalLoadPipeline(TiXmlNode *pPassNode, CGfxMaterialPass *pPass, 
 #ifdef PLATFORM_WINDOWS
 		InternalLoadPipelineShader(pPipelineNode, pVertexShader, vertex_shader);
 		InternalLoadPipelineShader(pPipelineNode, pFragmentShader, fragment_shader);
-		pPass->SetPipeline(ptrRenderPass, pVertexShader, pFragmentShader, state, vertexBinding, instanceBinding);
+		pPass->SetPipeline(ptrRenderPass, pVertexShader, pFragmentShader, state, indexSubpass, vertexBinding, instanceBinding);
 #else
 		if (InternalLoadPipelineShader(pPipelineNode, pVertexShader, vertex_shader) == false) { err = -5; goto ERR; }
 		if (InternalLoadPipelineShader(pPipelineNode, pFragmentShader, fragment_shader) == false) { err = -6; goto ERR; }
-		if (pPass->SetPipeline(ptrRenderPass, pVertexShader, pFragmentShader, state, vertexBinding, instanceBinding) == false) { err = -7; goto ERR; }
+		if (pPass->SetPipeline(ptrRenderPass, pVertexShader, pFragmentShader, state, indexSubpass, vertexBinding, instanceBinding) == false) { err = -7; goto ERR; }
 #endif
 	}
 	LogOutput(LOG_TAG_RENDERER, "\t\tOK\n");
@@ -559,7 +560,7 @@ bool CResourceLoader::LoadMaterial(const char *szFileName, CGfxMaterial *pMateri
 {
 	//<Material>
 	//	<Pass name="">
-	//		<Pipeline render_pass="">
+	//		<Pipeline render_pass="" sub_pass="">
 	//			<Vertex file_name="">
 	//				<Define name="" />
 	//				<Define name="" />
