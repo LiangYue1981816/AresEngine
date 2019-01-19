@@ -46,7 +46,6 @@ extern void GLBindBuffer(GLenum target, GLuint buffer);
 extern void GLBindBufferBase(GLenum target, GLuint index, GLuint buffer);
 extern void GLBindBufferRange(GLenum target, GLuint index, GLuint buffer, GLint offset, GLsizei size);
 
-extern void GLActiveTexture(GLuint unit);
 extern void GLBindSampler(GLuint unit, GLuint sampler);
 extern void GLBindTexture(GLuint unit, GLenum target, GLuint texture);
 

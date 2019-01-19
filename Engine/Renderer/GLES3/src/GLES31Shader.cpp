@@ -160,7 +160,6 @@ bool CGLES3Shader::BindTexture(uint32_t name, CGLES3Texture *pTexture, CGLES3Sam
 	const auto &itLocation = m_sampledImageLocations.find(name);
 
 	if (itLocation != m_sampledImageLocations.end()) {
-		GLActiveTexture(unit);
 		GLProgramUniform1i(m_program, itLocation->second, unit);
 		pSampler->Bind(unit);
 		pTexture->Bind(unit);

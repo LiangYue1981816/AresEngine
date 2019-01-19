@@ -226,7 +226,6 @@ static eastl::unordered_map<GLenum, BufferRangeParam> BufferRanges;
 static eastl::unordered_map<GLenum, FrameBufferParam> FrameBuffers;
 static eastl::unordered_map<GLuint, GLuint> Samplers;
 static eastl::unordered_map<GLuint, TextureParam> Textures;
-static eastl::unordered_map<GLuint, GLuint> ActiveTextures;
 
 void GLResetContext(void)
 {
@@ -237,7 +236,6 @@ void GLResetContext(void)
 	FrameBuffers.clear();
 	Samplers.clear();
 	Textures.clear();
-	ActiveTextures.clear();
 	ProgramPipeline.uniform1i.clear();
 	ProgramPipeline.uniform2i.clear();
 	ProgramPipeline.uniform3i.clear();
@@ -667,14 +665,6 @@ void GLBindBufferRange(GLenum target, GLuint index, GLuint buffer, GLint offset,
 	}
 }
 
-void GLActiveTexture(GLuint unit)
-{
-	if (ActiveTextures.find(unit) == ActiveTextures.end()) {
-		ActiveTextures[unit] = unit;
-		glActiveTexture(GL_TEXTURE0 + unit);
-	}
-}
-
 void GLBindSampler(GLuint unit, GLuint sampler)
 {
 	if (Samplers.find(unit) == Samplers.end() || Samplers[unit] != sampler) {
@@ -688,6 +678,7 @@ void GLBindTexture(GLuint unit, GLenum target, GLuint texture)
 	if (Textures.find(unit) == Textures.end() || Textures[unit].target != target || Textures[unit].texture != texture) {
 		Textures[unit].target = target;
 		Textures[unit].texture = texture;
+		glActiveTexture(GL_TEXTURE0 + unit);
 		glBindTexture(target, texture);
 	}
 }
