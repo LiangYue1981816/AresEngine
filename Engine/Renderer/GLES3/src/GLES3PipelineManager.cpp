@@ -20,7 +20,7 @@ CGLES3PipelineCompute* CGLES3PipelineComputeManager::Create(const CGfxShader *pC
 	mutex_autolock autolock(&lock);
 	{
 		char szName[_MAX_STRING];
-		sprintf(szName, "%8.8X", pComputeShader->GetName());
+		sprintf(szName, "%x", pComputeShader->GetName());
 
 		uint32_t name = HashValue(szName);
 
@@ -53,7 +53,7 @@ CGLES3PipelineGraphics* CGLES3PipelineGraphicsManager::Create(const CGfxRenderPa
 	mutex_autolock autolock(&lock);
 	{
 		char szName[_MAX_STRING];
-		sprintf(szName, "%8.8X_%8.8X_%8.8X", pVertexShader->GetName(), pFragmentShader->GetName(), HashValue((uint8_t *)&state, sizeof(state)));
+		sprintf(szName, "%x_%x_%x", pVertexShader->GetName(), pFragmentShader->GetName(), HashValue((uint8_t *)&state, sizeof(state)));
 
 		uint32_t name = HashValue(szName);
 

@@ -28,7 +28,7 @@ void CComponentMesh::SetMaterial(const CGfxMaterialPtr &ptrMaterial)
 void CComponentMesh::SetMeshDraw(const CGfxMeshPtr &ptrMesh, int indexDraw, uint32_t instanceFormat, uint32_t instanceBinding)
 {
 	char szName[_MAX_STRING] = { 0 };
-	sprintf(szName, "%8.8X_%8.8X", ptrMesh->GetName(), indexDraw);
+	sprintf(szName, "%x_%x", ptrMesh->GetName(), indexDraw);
 	m_ptrMeshDraw = GfxRenderer()->NewMeshDraw(HashValue(szName), ptrMesh, indexDraw, instanceFormat, instanceBinding);
 }
 

@@ -21,7 +21,7 @@ CVKPipelineCompute* CVKPipelineComputeManager::Create(const CGfxShader *pCompute
 	mutex_autolock autolock(&lock);
 	{
 		char szName[_MAX_STRING];
-		sprintf(szName, "%8.8X", pComputeShader->GetName());
+		sprintf(szName, "%x", pComputeShader->GetName());
 
 		uint32_t name = HashValue(szName);
 
@@ -55,7 +55,7 @@ CVKPipelineGraphics* CVKPipelineGraphicsManager::Create(const CGfxRenderPass *pR
 	mutex_autolock autolock(&lock);
 	{
 		char szName[_MAX_STRING];
-		sprintf(szName, "%P_%8.8X_%8.8X_%8.8X_%8.8X_%8.8X_%8.8X", pRenderPass, pVertexShader->GetName(), pFragmentShader->GetName(), HashValue((uint8_t *)&state, sizeof(state)), indexSubpass, vertexBinding, instanceBinding);
+		sprintf(szName, "%p_%x_%x_%x_%x_%x_%x", pRenderPass, pVertexShader->GetName(), pFragmentShader->GetName(), HashValue((uint8_t *)&state, sizeof(state)), indexSubpass, vertexBinding, instanceBinding);
 
 		uint32_t name = HashValue(szName);
 

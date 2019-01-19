@@ -20,7 +20,7 @@ CGLES3Sampler* CGLES3SamplerManager::Create(int mipLevels, GfxFilter minFilter, 
 	mutex_autolock autolock(&lock);
 	{
 		char szName[_MAX_STRING];
-		sprintf(szName, "%8.8X_%8.8X_%8.8X_%8.8X_%8.8X", mipLevels, minFilter, magFilter, mipmapMode, addressMode);
+		sprintf(szName, "%x_%x_%x_%x_%x", mipLevels, minFilter, magFilter, mipmapMode, addressMode);
 
 		uint32_t name = HashValue(szName);
 
