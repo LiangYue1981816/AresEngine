@@ -789,25 +789,6 @@ void GLUseProgram(GLuint program)
 {
 	if (ProgramPipeline.program != program) {
 		ProgramPipeline.program = program;
-		ProgramPipeline.uniform1i[program].clear();
-		ProgramPipeline.uniform2i[program].clear();
-		ProgramPipeline.uniform3i[program].clear();
-		ProgramPipeline.uniform4i[program].clear();
-		ProgramPipeline.uniform1f[program].clear();
-		ProgramPipeline.uniform2f[program].clear();
-		ProgramPipeline.uniform3f[program].clear();
-		ProgramPipeline.uniform4f[program].clear();
-		ProgramPipeline.uniform1iv[program].clear();
-		ProgramPipeline.uniform2iv[program].clear();
-		ProgramPipeline.uniform3iv[program].clear();
-		ProgramPipeline.uniform4iv[program].clear();
-		ProgramPipeline.uniform1fv[program].clear();
-		ProgramPipeline.uniform2fv[program].clear();
-		ProgramPipeline.uniform3fv[program].clear();
-		ProgramPipeline.uniform4fv[program].clear();
-		ProgramPipeline.uniformMatrix2fv[program].clear();
-		ProgramPipeline.uniformMatrix3fv[program].clear();
-		ProgramPipeline.uniformMatrix4fv[program].clear();
 		glUseProgram(program);
 	}
 }
@@ -1023,25 +1004,6 @@ void GLBindProgramPipeline(GLuint pipeline)
 {
 	if (ProgramPipeline.pipeline != pipeline) {
 		ProgramPipeline.pipeline = pipeline;
-		ProgramPipeline.uniform1i.clear();
-		ProgramPipeline.uniform2i.clear();
-		ProgramPipeline.uniform3i.clear();
-		ProgramPipeline.uniform4i.clear();
-		ProgramPipeline.uniform1f.clear();
-		ProgramPipeline.uniform2f.clear();
-		ProgramPipeline.uniform3f.clear();
-		ProgramPipeline.uniform4f.clear();
-		ProgramPipeline.uniform1iv.clear();
-		ProgramPipeline.uniform2iv.clear();
-		ProgramPipeline.uniform3iv.clear();
-		ProgramPipeline.uniform4iv.clear();
-		ProgramPipeline.uniform1fv.clear();
-		ProgramPipeline.uniform2fv.clear();
-		ProgramPipeline.uniform3fv.clear();
-		ProgramPipeline.uniform4fv.clear();
-		ProgramPipeline.uniformMatrix2fv.clear();
-		ProgramPipeline.uniformMatrix3fv.clear();
-		ProgramPipeline.uniformMatrix4fv.clear();
 		glBindProgramPipeline(pipeline);
 	}
 }
