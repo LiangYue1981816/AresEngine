@@ -9,20 +9,20 @@ protected:
 	virtual ~CVKPipeline(void);
 
 
-private:
+protected:
 	bool CreateLayouts(eastl::vector<VkDescriptorSetLayout> &layouts);
 	bool CreateShaderStages(eastl::vector<VkPipelineShaderStageCreateInfo> &shaders);
 	bool CreateVertexInputState(eastl::vector<VkVertexInputBindingDescription> &inputBindingDescriptions, eastl::vector<VkVertexInputAttributeDescription> &inputAttributeDescriptions, uint32_t vertexBinding, uint32_t instanceBinding);
 
 
-private:
+protected:
 	VkPipeline m_vkPipeline;
 	VkPipelineLayout m_vkPipelineLayout;
 
-private:
+protected:
 	CVKShader *m_pShaders[compute_shader - vertex_shader + 1];
 	CVKDescriptorSetLayout *m_pLayouts[DESCRIPTOR_SET_COUNT];
 
-private:
+protected:
 	CVKDevice *m_pDevice;
 };
