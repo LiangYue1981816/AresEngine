@@ -48,8 +48,8 @@ CGLES3CommandBuffer::CGLES3CommandBuffer(CGLES3CommandBufferManager *pManager, b
 
 	, m_bMainCommandBuffer(bMainCommandBuffer)
 
-	, m_bInPassScope(false)
 	, m_indexSubpass(0)
+	, m_bInRenderPass(false)
 {
 
 }
@@ -77,15 +77,15 @@ void CGLES3CommandBuffer::Clearup(void)
 
 	m_pCommands.clear();
 
-	m_bInPassScope = false;
 	m_indexSubpass = 0;
+	m_bInRenderPass = false;
 	m_ptrRenderPass.Release();
 	m_ptrFrameBuffer.Release();
 }
 
 bool CGLES3CommandBuffer::Execute(void) const
 {
-	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == false)) {
+	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInRenderPass == false)) {
 		for (const auto &itCommand : m_pCommands) {
 			itCommand->Execute();
 		}
@@ -98,9 +98,9 @@ bool CGLES3CommandBuffer::Execute(void) const
 
 bool CGLES3CommandBuffer::CmdBeginRenderPass(const CGfxFrameBufferPtr &ptrFrameBuffer, const CGfxRenderPassPtr &ptrRenderPass)
 {
-	if (m_bMainCommandBuffer == true && m_bInPassScope == false && m_pCommands.empty()) {
-		m_bInPassScope = true;
+	if (m_bMainCommandBuffer == true && m_bInRenderPass == false && m_pCommands.empty()) {
 		m_indexSubpass = 0;
+		m_bInRenderPass = true;
 		m_ptrRenderPass = ptrRenderPass;
 		m_ptrFrameBuffer = ptrFrameBuffer;
 
@@ -116,7 +116,7 @@ bool CGLES3CommandBuffer::CmdBeginRenderPass(const CGfxFrameBufferPtr &ptrFrameB
 
 bool CGLES3CommandBuffer::CmdNextSubpass(void)
 {
-	if (m_bMainCommandBuffer == true && m_bInPassScope == true) {
+	if (m_bMainCommandBuffer == true && m_bInRenderPass == true) {
 		m_pCommands.emplace_back(new CGLES3CommandInvalidateFramebuffer(m_ptrFrameBuffer, m_ptrRenderPass, m_indexSubpass));
 		m_pCommands.emplace_back(new CGLES3CommandResolve(m_ptrFrameBuffer, m_ptrRenderPass, m_indexSubpass));
 		m_indexSubpass += 1;
@@ -131,8 +131,8 @@ bool CGLES3CommandBuffer::CmdNextSubpass(void)
 
 bool CGLES3CommandBuffer::CmdEndRenderPass(void)
 {
-	if (m_bMainCommandBuffer == true && m_bInPassScope == true) {
-		m_bInPassScope = false;
+	if (m_bMainCommandBuffer == true && m_bInRenderPass == true) {
+		m_bInRenderPass = false;
 
 		m_pCommands.emplace_back(new CGLES3CommandInvalidateFramebuffer(m_ptrFrameBuffer, m_ptrRenderPass, m_indexSubpass));
 		m_pCommands.emplace_back(new CGLES3CommandResolve(m_ptrFrameBuffer, m_ptrRenderPass, m_indexSubpass));
@@ -146,7 +146,7 @@ bool CGLES3CommandBuffer::CmdEndRenderPass(void)
 
 bool CGLES3CommandBuffer::CmdBindPipelineCompute(const CGfxPipelineCompute *pPipelineCompute)
 {
-	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
+	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInRenderPass == true)) {
 		m_pCommands.emplace_back(new CGLES3CommandBindPipelineCompute(pPipelineCompute));
 		return true;
 	}
@@ -156,7 +156,7 @@ bool CGLES3CommandBuffer::CmdBindPipelineCompute(const CGfxPipelineCompute *pPip
 
 bool CGLES3CommandBuffer::CmdBindPipelineGraphics(const CGfxPipelineGraphics *pPipelineGraphics)
 {
-	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
+	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInRenderPass == true)) {
 		m_pCommands.emplace_back(new CGLES3CommandBindPipelineGraphics(pPipelineGraphics));
 		return true;
 	}
@@ -166,7 +166,7 @@ bool CGLES3CommandBuffer::CmdBindPipelineGraphics(const CGfxPipelineGraphics *pP
 
 bool CGLES3CommandBuffer::CmdBindMaterialPass(const CGfxMaterialPtr &ptrMaterial, uint32_t namePass)
 {
-	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
+	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInRenderPass == true)) {
 		m_pCommands.emplace_back(new CGLES3CommandBindMaterialPass(ptrMaterial, namePass));
 		return true;
 	}
@@ -176,7 +176,7 @@ bool CGLES3CommandBuffer::CmdBindMaterialPass(const CGfxMaterialPtr &ptrMaterial
 
 bool CGLES3CommandBuffer::CmdBindUniformBuffer(const CGfxUniformBufferPtr &ptrUniformBuffer, uint32_t nameUniform)
 {
-	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
+	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInRenderPass == true)) {
 		m_pCommands.emplace_back(new CGLES3CommandBindUniformBuffer(ptrUniformBuffer, nameUniform));
 		return true;
 	}
@@ -186,7 +186,7 @@ bool CGLES3CommandBuffer::CmdBindUniformBuffer(const CGfxUniformBufferPtr &ptrUn
 
 bool CGLES3CommandBuffer::CmdBindMeshDraw(const CGfxMeshDrawPtr &ptrMeshDraw)
 {
-	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
+	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInRenderPass == true)) {
 		m_pCommands.emplace_back(new CGLES3CommandBindMeshDraw(ptrMeshDraw));
 		return true;
 	}
@@ -196,7 +196,7 @@ bool CGLES3CommandBuffer::CmdBindMeshDraw(const CGfxMeshDrawPtr &ptrMeshDraw)
 
 bool CGLES3CommandBuffer::CmdUniform1i(const char *szName, int v0)
 {
-	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
+	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInRenderPass == true)) {
 		m_pCommands.emplace_back(new CGLES3CommandUniform1i(szName, v0));
 		return true;
 	}
@@ -206,7 +206,7 @@ bool CGLES3CommandBuffer::CmdUniform1i(const char *szName, int v0)
 
 bool CGLES3CommandBuffer::CmdUniform2i(const char *szName, int v0, int v1)
 {
-	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
+	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInRenderPass == true)) {
 		m_pCommands.emplace_back(new CGLES3CommandUniform2i(szName, v0, v1));
 		return true;
 	}
@@ -216,7 +216,7 @@ bool CGLES3CommandBuffer::CmdUniform2i(const char *szName, int v0, int v1)
 
 bool CGLES3CommandBuffer::CmdUniform3i(const char *szName, int v0, int v1, int v2)
 {
-	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
+	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInRenderPass == true)) {
 		m_pCommands.emplace_back(new CGLES3CommandUniform3i(szName, v0, v1, v2));
 		return true;
 	}
@@ -226,7 +226,7 @@ bool CGLES3CommandBuffer::CmdUniform3i(const char *szName, int v0, int v1, int v
 
 bool CGLES3CommandBuffer::CmdUniform4i(const char *szName, int v0, int v1, int v2, int v3)
 {
-	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
+	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInRenderPass == true)) {
 		m_pCommands.emplace_back(new CGLES3CommandUniform4i(szName, v0, v1, v2, v3));
 		return true;
 	}
@@ -236,7 +236,7 @@ bool CGLES3CommandBuffer::CmdUniform4i(const char *szName, int v0, int v1, int v
 
 bool CGLES3CommandBuffer::CmdUniform1f(const char *szName, float v0)
 {
-	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
+	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInRenderPass == true)) {
 		m_pCommands.emplace_back(new CGLES3CommandUniform1f(szName, v0));
 		return true;
 	}
@@ -246,7 +246,7 @@ bool CGLES3CommandBuffer::CmdUniform1f(const char *szName, float v0)
 
 bool CGLES3CommandBuffer::CmdUniform2f(const char *szName, float v0, float v1)
 {
-	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
+	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInRenderPass == true)) {
 		m_pCommands.emplace_back(new CGLES3CommandUniform2f(szName, v0, v1));
 		return true;
 	}
@@ -256,7 +256,7 @@ bool CGLES3CommandBuffer::CmdUniform2f(const char *szName, float v0, float v1)
 
 bool CGLES3CommandBuffer::CmdUniform3f(const char *szName, float v0, float v1, float v2)
 {
-	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
+	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInRenderPass == true)) {
 		m_pCommands.emplace_back(new CGLES3CommandUniform3f(szName, v0, v1, v2));
 		return true;
 	}
@@ -266,7 +266,7 @@ bool CGLES3CommandBuffer::CmdUniform3f(const char *szName, float v0, float v1, f
 
 bool CGLES3CommandBuffer::CmdUniform4f(const char *szName, float v0, float v1, float v2, float v3)
 {
-	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
+	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInRenderPass == true)) {
 		m_pCommands.emplace_back(new CGLES3CommandUniform4f(szName, v0, v1, v2, v3));
 		return true;
 	}
@@ -276,7 +276,7 @@ bool CGLES3CommandBuffer::CmdUniform4f(const char *szName, float v0, float v1, f
 
 bool CGLES3CommandBuffer::CmdUniform1iv(const char *szName, int count, const int *value)
 {
-	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
+	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInRenderPass == true)) {
 		m_pCommands.emplace_back(new CGLES3CommandUniform1iv(szName, count, value));
 		return true;
 	}
@@ -286,7 +286,7 @@ bool CGLES3CommandBuffer::CmdUniform1iv(const char *szName, int count, const int
 
 bool CGLES3CommandBuffer::CmdUniform2iv(const char *szName, int count, const int *value)
 {
-	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
+	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInRenderPass == true)) {
 		m_pCommands.emplace_back(new CGLES3CommandUniform2iv(szName, count, value));
 		return true;
 	}
@@ -296,7 +296,7 @@ bool CGLES3CommandBuffer::CmdUniform2iv(const char *szName, int count, const int
 
 bool CGLES3CommandBuffer::CmdUniform3iv(const char *szName, int count, const int *value)
 {
-	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
+	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInRenderPass == true)) {
 		m_pCommands.emplace_back(new CGLES3CommandUniform3iv(szName, count, value));
 		return true;
 	}
@@ -306,7 +306,7 @@ bool CGLES3CommandBuffer::CmdUniform3iv(const char *szName, int count, const int
 
 bool CGLES3CommandBuffer::CmdUniform4iv(const char *szName, int count, const int *value)
 {
-	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
+	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInRenderPass == true)) {
 		m_pCommands.emplace_back(new CGLES3CommandUniform4iv(szName, count, value));
 		return true;
 	}
@@ -316,7 +316,7 @@ bool CGLES3CommandBuffer::CmdUniform4iv(const char *szName, int count, const int
 
 bool CGLES3CommandBuffer::CmdUniform1fv(const char *szName, int count, const float *value)
 {
-	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
+	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInRenderPass == true)) {
 		m_pCommands.emplace_back(new CGLES3CommandUniform1fv(szName, count, value));
 		return true;
 	}
@@ -326,7 +326,7 @@ bool CGLES3CommandBuffer::CmdUniform1fv(const char *szName, int count, const flo
 
 bool CGLES3CommandBuffer::CmdUniform2fv(const char *szName, int count, const float *value)
 {
-	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
+	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInRenderPass == true)) {
 		m_pCommands.emplace_back(new CGLES3CommandUniform2fv(szName, count, value));
 		return true;
 	}
@@ -336,7 +336,7 @@ bool CGLES3CommandBuffer::CmdUniform2fv(const char *szName, int count, const flo
 
 bool CGLES3CommandBuffer::CmdUniform3fv(const char *szName, int count, const float *value)
 {
-	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
+	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInRenderPass == true)) {
 		m_pCommands.emplace_back(new CGLES3CommandUniform3fv(szName, count, value));
 		return true;
 	}
@@ -346,7 +346,7 @@ bool CGLES3CommandBuffer::CmdUniform3fv(const char *szName, int count, const flo
 
 bool CGLES3CommandBuffer::CmdUniform4fv(const char *szName, int count, const float *value)
 {
-	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
+	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInRenderPass == true)) {
 		m_pCommands.emplace_back(new CGLES3CommandUniform4fv(szName, count, value));
 		return true;
 	}
@@ -356,7 +356,7 @@ bool CGLES3CommandBuffer::CmdUniform4fv(const char *szName, int count, const flo
 
 bool CGLES3CommandBuffer::CmdUniformMatrix2fv(const char *szName, int count, const float *value)
 {
-	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
+	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInRenderPass == true)) {
 		m_pCommands.emplace_back(new CGLES3CommandUniformMatrix2fv(szName, count, value));
 		return true;
 	}
@@ -366,7 +366,7 @@ bool CGLES3CommandBuffer::CmdUniformMatrix2fv(const char *szName, int count, con
 
 bool CGLES3CommandBuffer::CmdUniformMatrix3fv(const char *szName, int count, const float *value)
 {
-	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
+	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInRenderPass == true)) {
 		m_pCommands.emplace_back(new CGLES3CommandUniformMatrix3fv(szName, count, value));
 		return true;
 	}
@@ -376,7 +376,7 @@ bool CGLES3CommandBuffer::CmdUniformMatrix3fv(const char *szName, int count, con
 
 bool CGLES3CommandBuffer::CmdUniformMatrix4fv(const char *szName, int count, const float *value)
 {
-	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
+	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInRenderPass == true)) {
 		m_pCommands.emplace_back(new CGLES3CommandUniformMatrix4fv(szName, count, value));
 		return true;
 	}
@@ -386,7 +386,7 @@ bool CGLES3CommandBuffer::CmdUniformMatrix4fv(const char *szName, int count, con
 
 bool CGLES3CommandBuffer::CmdClearDepth(float depth)
 {
-	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
+	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInRenderPass == true)) {
 		m_pCommands.emplace_back(new CGLES3CommandClearDepth(depth));
 		return true;
 	}
@@ -396,7 +396,7 @@ bool CGLES3CommandBuffer::CmdClearDepth(float depth)
 
 bool CGLES3CommandBuffer::CmdClearColor(float red, float green, float blue, float alpha)
 {
-	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
+	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInRenderPass == true)) {
 		m_pCommands.emplace_back(new CGLES3CommandClearColor(red, green, blue, alpha));
 		return true;
 	}
@@ -406,7 +406,7 @@ bool CGLES3CommandBuffer::CmdClearColor(float red, float green, float blue, floa
 
 bool CGLES3CommandBuffer::CmdSetScissor(int x, int y, int width, int height)
 {
-	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
+	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInRenderPass == true)) {
 		m_pCommands.emplace_back(new CGLES3CommandSetScissor(x, y, width, height));
 		return true;
 	}
@@ -416,7 +416,7 @@ bool CGLES3CommandBuffer::CmdSetScissor(int x, int y, int width, int height)
 
 bool CGLES3CommandBuffer::CmdSetViewport(int x, int y, int width, int height)
 {
-	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
+	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInRenderPass == true)) {
 		m_pCommands.emplace_back(new CGLES3CommandSetViewport(x, y, width, height));
 		return true;
 	}
@@ -426,7 +426,7 @@ bool CGLES3CommandBuffer::CmdSetViewport(int x, int y, int width, int height)
 
 bool CGLES3CommandBuffer::CmdSetInstanceBufferData(const CGfxMeshDrawPtr &ptrMeshDraw, const uint8_t *pInstanceBuffer, uint32_t size)
 {
-	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
+	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInRenderPass == true)) {
 		m_pCommands.emplace_back(new CGLES3CommandSetInstanceBufferData(ptrMeshDraw, pInstanceBuffer, size));
 		return true;
 	}
@@ -436,7 +436,7 @@ bool CGLES3CommandBuffer::CmdSetInstanceBufferData(const CGfxMeshDrawPtr &ptrMes
 
 bool CGLES3CommandBuffer::CmdDrawElements(GfxDrawMode mode, GfxIndexType type, int offset, int count)
 {
-	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
+	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInRenderPass == true)) {
 		m_pCommands.emplace_back(new CGLES3CommandDrawElements(mode, type, offset, count));
 		return true;
 	}
@@ -446,7 +446,7 @@ bool CGLES3CommandBuffer::CmdDrawElements(GfxDrawMode mode, GfxIndexType type, i
 
 bool CGLES3CommandBuffer::CmdDrawInstance(GfxDrawMode mode, GfxIndexType type, int offset, int count, int instanceCount)
 {
-	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
+	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInRenderPass == true)) {
 		m_pCommands.emplace_back(new CGLES3CommandDrawInstance(mode, type, offset, count, instanceCount));
 		return true;
 	}
@@ -456,7 +456,7 @@ bool CGLES3CommandBuffer::CmdDrawInstance(GfxDrawMode mode, GfxIndexType type, i
 
 bool CGLES3CommandBuffer::CmdDrawIndirect(GfxDrawMode mode, GfxIndexType type, int offset)
 {
-	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInPassScope == true)) {
+	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInRenderPass == true)) {
 		m_pCommands.emplace_back(new CGLES3CommandDrawIndirect(mode, type, offset));
 		return true;
 	}
@@ -466,7 +466,7 @@ bool CGLES3CommandBuffer::CmdDrawIndirect(GfxDrawMode mode, GfxIndexType type, i
 
 bool CGLES3CommandBuffer::CmdExecute(const CGfxCommandBufferPtr &ptrCommandBuffer)
 {
-	if (m_bMainCommandBuffer == true && m_bInPassScope == true && ptrCommandBuffer->IsMainCommandBuffer() == false) {
+	if (m_bMainCommandBuffer == true && m_bInRenderPass == true && ptrCommandBuffer->IsMainCommandBuffer() == false) {
 		m_pCommands.emplace_back(new CGLES3CommandExecute(ptrCommandBuffer));
 		return true;
 	}
@@ -476,7 +476,7 @@ bool CGLES3CommandBuffer::CmdExecute(const CGfxCommandBufferPtr &ptrCommandBuffe
 
 bool CGLES3CommandBuffer::CmdPresent(void)
 {
-	if (m_bMainCommandBuffer == true && m_bInPassScope == false) {
+	if (m_bMainCommandBuffer == true && m_bInRenderPass == false) {
 		return true;
 	}
 
