@@ -51,7 +51,7 @@ uint32_t CGLES3MaterialPass::GetName(void) const
 	return m_name;
 }
 
-bool CGLES3MaterialPass::SetPipeline(const CGfxRenderPass *pRenderPass, const CGfxShader *pVertexShader, const CGfxShader *pFragmentShader, const PipelineState &state, uint32_t vertexBinding, uint32_t instanceBinding)
+bool CGLES3MaterialPass::SetPipeline(const CGfxRenderPass *pRenderPass, const CGfxShader *pVertexShader, const CGfxShader *pFragmentShader, const PipelineState &state, uint32_t indexSubpass, uint32_t vertexBinding, uint32_t instanceBinding)
 {
 	if (pRenderPass == nullptr) {
 		return false;
@@ -81,7 +81,7 @@ bool CGLES3MaterialPass::SetPipeline(const CGfxRenderPass *pRenderPass, const CG
 		return false;
 	}
 
-	m_pPipeline = GLES3Renderer()->CreatePipelineGraphics(pRenderPass, pVertexShader, pFragmentShader, state, vertexBinding, instanceBinding);
+	m_pPipeline = GLES3Renderer()->CreatePipelineGraphics(pRenderPass, pVertexShader, pFragmentShader, state, indexSubpass, vertexBinding, instanceBinding);
 	return true;
 }
 
