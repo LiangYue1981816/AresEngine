@@ -67,9 +67,9 @@ bool CVKRenderPass::SetDepthStencilAttachment(int indexAttachment, GfxPixelForma
 	return true;
 }
 
-bool CVKRenderPass::SetSubpassInputColorReference(int indexSubPass, int indexAttachment, const char *szName)
+bool CVKRenderPass::SetSubpassInputColorReference(int indexSubpass, int indexAttachment, const char *szName)
 {
-	if (indexSubPass >= (int)m_subpasses.size()) {
+	if (indexSubpass >= (int)m_subpasses.size()) {
 		return false;
 	}
 
@@ -77,13 +77,13 @@ bool CVKRenderPass::SetSubpassInputColorReference(int indexSubPass, int indexAtt
 		return false;
 	}
 
-	m_subpasses[indexSubPass].inputAttachments[indexAttachment] = szName;
+	m_subpasses[indexSubpass].inputAttachments[indexAttachment] = szName;
 	return true;
 }
 
-bool CVKRenderPass::SetSubpassOutputColorReference(int indexSubPass, int indexAttachment)
+bool CVKRenderPass::SetSubpassOutputColorReference(int indexSubpass, int indexAttachment)
 {
-	if (indexSubPass >= (int)m_subpasses.size()) {
+	if (indexSubpass >= (int)m_subpasses.size()) {
 		return false;
 	}
 
@@ -91,13 +91,13 @@ bool CVKRenderPass::SetSubpassOutputColorReference(int indexSubPass, int indexAt
 		return false;
 	}
 
-	m_subpasses[indexSubPass].outputAttachments[indexAttachment] = indexAttachment;
+	m_subpasses[indexSubpass].outputAttachments[indexAttachment] = indexAttachment;
 	return true;
 }
 
-bool CVKRenderPass::SetSubpassOutputDepthStencilReference(int indexSubPass, int indexAttachment)
+bool CVKRenderPass::SetSubpassOutputDepthStencilReference(int indexSubpass, int indexAttachment)
 {
-	if (indexSubPass >= (int)m_subpasses.size()) {
+	if (indexSubpass >= (int)m_subpasses.size()) {
 		return false;
 	}
 
@@ -105,13 +105,13 @@ bool CVKRenderPass::SetSubpassOutputDepthStencilReference(int indexSubPass, int 
 		return false;
 	}
 
-	m_subpasses[indexSubPass].depthStencilAttachment = indexAttachment;
+	m_subpasses[indexSubpass].depthStencilAttachment = indexAttachment;
 	return true;
 }
 
-bool CVKRenderPass::SetSubpassResolveReference(int indexSubPass, int indexAttachment)
+bool CVKRenderPass::SetSubpassResolveReference(int indexSubpass, int indexAttachment)
 {
-	if (indexSubPass >= (int)m_subpasses.size()) {
+	if (indexSubpass >= (int)m_subpasses.size()) {
 		return false;
 	}
 
@@ -119,13 +119,13 @@ bool CVKRenderPass::SetSubpassResolveReference(int indexSubPass, int indexAttach
 		return false;
 	}
 
-	m_subpasses[indexSubPass].resolveAttachments[indexAttachment] = indexAttachment;
+	m_subpasses[indexSubpass].resolveAttachments[indexAttachment] = indexAttachment;
 	return true;
 }
 
-bool CVKRenderPass::SetSubpassPreserveReference(int indexSubPass, int indexAttachment)
+bool CVKRenderPass::SetSubpassPreserveReference(int indexSubpass, int indexAttachment)
 {
-	if (indexSubPass >= (int)m_subpasses.size()) {
+	if (indexSubpass >= (int)m_subpasses.size()) {
 		return false;
 	}
 
@@ -133,7 +133,7 @@ bool CVKRenderPass::SetSubpassPreserveReference(int indexSubPass, int indexAttac
 		return false;
 	}
 
-	m_subpasses[indexSubPass].preserveAttachments[indexAttachment] = indexAttachment;
+	m_subpasses[indexSubpass].preserveAttachments[indexAttachment] = indexAttachment;
 	return true;
 }
 
@@ -157,35 +157,35 @@ const AttachmentInformation* CVKRenderPass::GetAttachment(int indexAttachment) c
 	}
 }
 
-uint32_t CVKRenderPass::GetSubPassCount(void) const
+uint32_t CVKRenderPass::GetSubpassCount(void) const
 {
 	return m_subpasses.size();
 }
 
-uint32_t CVKRenderPass::GetSubpassInputAttachmentCount(int indexSubPass) const
+uint32_t CVKRenderPass::GetSubpassInputAttachmentCount(int indexSubpass) const
 {
-	if (indexSubPass >= 0 && indexSubPass < (int)m_subpasses.size()) {
-		return m_subpasses[indexSubPass].inputAttachments.size();
+	if (indexSubpass >= 0 && indexSubpass < (int)m_subpasses.size()) {
+		return m_subpasses[indexSubpass].inputAttachments.size();
 	}
 	else {
 		return 0;
 	}
 }
 
-uint32_t CVKRenderPass::GetSubpassOutputAttachmentCount(int indexSubPass) const
+uint32_t CVKRenderPass::GetSubpassOutputAttachmentCount(int indexSubpass) const
 {
-	if (indexSubPass >= 0 && indexSubPass < (int)m_subpasses.size()) {
-		return m_subpasses[indexSubPass].outputAttachments.size();
+	if (indexSubpass >= 0 && indexSubpass < (int)m_subpasses.size()) {
+		return m_subpasses[indexSubpass].outputAttachments.size();
 	}
 	else {
 		return 0;
 	}
 }
 
-const SubPassInformation* CVKRenderPass::GetSubPass(int indexSubPass) const
+const SubpassInformation* CVKRenderPass::GetSubpass(int indexSubpass) const
 {
-	if (indexSubPass >= 0 && indexSubPass < (int)m_subpasses.size()) {
-		return &m_subpasses[indexSubPass];
+	if (indexSubpass >= 0 && indexSubpass < (int)m_subpasses.size()) {
+		return &m_subpasses[indexSubpass];
 	}
 	else {
 		return nullptr;

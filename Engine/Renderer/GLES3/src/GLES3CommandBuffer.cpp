@@ -4,7 +4,7 @@
 #include "GLES3CommandResolve.h"
 #include "GLES3CommandInvalidateFramebuffer.h"
 #include "GLES3CommandBindFrameBuffer.h"
-#include "GLES3CommandBindSubPassInputTexture.h"
+#include "GLES3CommandBindSubpassInputTexture.h"
 #include "GLES3CommandBindPipelineCompute.h"
 #include "GLES3CommandBindPipelineGraphics.h"
 #include "GLES3CommandBindMaterialPass.h"
@@ -49,7 +49,7 @@ CGLES3CommandBuffer::CGLES3CommandBuffer(CGLES3CommandBufferManager *pManager, b
 	, m_bMainCommandBuffer(bMainCommandBuffer)
 
 	, m_bInPassScope(false)
-	, m_indexSubPass(0)
+	, m_indexSubpass(0)
 {
 
 }
@@ -78,7 +78,7 @@ void CGLES3CommandBuffer::Clearup(void)
 	m_pCommands.clear();
 
 	m_bInPassScope = false;
-	m_indexSubPass = 0;
+	m_indexSubpass = 0;
 	m_ptrRenderPass.Release();
 	m_ptrFrameBuffer.Release();
 }
@@ -100,13 +100,13 @@ bool CGLES3CommandBuffer::CmdBeginRenderPass(const CGfxFrameBufferPtr &ptrFrameB
 {
 	if (m_bMainCommandBuffer == true && m_bInPassScope == false && m_pCommands.empty()) {
 		m_bInPassScope = true;
-		m_indexSubPass = 0;
+		m_indexSubpass = 0;
 		m_ptrRenderPass = ptrRenderPass;
 		m_ptrFrameBuffer = ptrFrameBuffer;
 
 		m_pCommands.emplace_back(new CGLES3CommandBeginRenderPass(m_ptrFrameBuffer, m_ptrRenderPass));
-		m_pCommands.emplace_back(new CGLES3CommandBindFrameBuffer(m_ptrFrameBuffer, m_ptrRenderPass, m_indexSubPass));
-		m_pCommands.emplace_back(new CGLES3CommandBindSubPassInputTexture(m_ptrFrameBuffer, m_ptrRenderPass, m_indexSubPass));
+		m_pCommands.emplace_back(new CGLES3CommandBindFrameBuffer(m_ptrFrameBuffer, m_ptrRenderPass, m_indexSubpass));
+		m_pCommands.emplace_back(new CGLES3CommandBindSubpassInputTexture(m_ptrFrameBuffer, m_ptrRenderPass, m_indexSubpass));
 
 		return true;
 	}
@@ -117,11 +117,11 @@ bool CGLES3CommandBuffer::CmdBeginRenderPass(const CGfxFrameBufferPtr &ptrFrameB
 bool CGLES3CommandBuffer::CmdNextSubpass(void)
 {
 	if (m_bMainCommandBuffer == true && m_bInPassScope == true) {
-		m_pCommands.emplace_back(new CGLES3CommandInvalidateFramebuffer(m_ptrFrameBuffer, m_ptrRenderPass, m_indexSubPass));
-		m_pCommands.emplace_back(new CGLES3CommandResolve(m_ptrFrameBuffer, m_ptrRenderPass, m_indexSubPass));
-		m_indexSubPass += 1;
-		m_pCommands.emplace_back(new CGLES3CommandBindFrameBuffer(m_ptrFrameBuffer, m_ptrRenderPass, m_indexSubPass));
-		m_pCommands.emplace_back(new CGLES3CommandBindSubPassInputTexture(m_ptrFrameBuffer, m_ptrRenderPass, m_indexSubPass));
+		m_pCommands.emplace_back(new CGLES3CommandInvalidateFramebuffer(m_ptrFrameBuffer, m_ptrRenderPass, m_indexSubpass));
+		m_pCommands.emplace_back(new CGLES3CommandResolve(m_ptrFrameBuffer, m_ptrRenderPass, m_indexSubpass));
+		m_indexSubpass += 1;
+		m_pCommands.emplace_back(new CGLES3CommandBindFrameBuffer(m_ptrFrameBuffer, m_ptrRenderPass, m_indexSubpass));
+		m_pCommands.emplace_back(new CGLES3CommandBindSubpassInputTexture(m_ptrFrameBuffer, m_ptrRenderPass, m_indexSubpass));
 
 		return true;
 	}
@@ -134,8 +134,8 @@ bool CGLES3CommandBuffer::CmdEndRenderPass(void)
 	if (m_bMainCommandBuffer == true && m_bInPassScope == true) {
 		m_bInPassScope = false;
 
-		m_pCommands.emplace_back(new CGLES3CommandInvalidateFramebuffer(m_ptrFrameBuffer, m_ptrRenderPass, m_indexSubPass));
-		m_pCommands.emplace_back(new CGLES3CommandResolve(m_ptrFrameBuffer, m_ptrRenderPass, m_indexSubPass));
+		m_pCommands.emplace_back(new CGLES3CommandInvalidateFramebuffer(m_ptrFrameBuffer, m_ptrRenderPass, m_indexSubpass));
+		m_pCommands.emplace_back(new CGLES3CommandResolve(m_ptrFrameBuffer, m_ptrRenderPass, m_indexSubpass));
 		m_pCommands.emplace_back(new CGLES3CommandEndRenderPass(m_ptrFrameBuffer, m_ptrRenderPass));
 
 		return true;

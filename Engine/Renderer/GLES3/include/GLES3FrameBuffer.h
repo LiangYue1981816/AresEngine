@@ -28,9 +28,9 @@ public:
 	void Destroy(void);
 
 public:
-	void Bind(const AttachmentInformation *pAttachmentInformations, const SubPassInformation *pSubPassInformation);
-	void Resolve(const AttachmentInformation *pAttachmentInformations, const SubPassInformation *pSubPassInformation);
-	void InvalidateFramebuffer(const AttachmentInformation *pAttachmentInformations, const SubPassInformation *pSubPassInformation);
+	void Bind(const AttachmentInformation *pAttachmentInformations, const SubpassInformation *pSubpassInformation);
+	void Resolve(const AttachmentInformation *pAttachmentInformations, const SubpassInformation *pSubpassInformation);
+	void InvalidateFramebuffer(const AttachmentInformation *pAttachmentInformations, const SubpassInformation *pSubpassInformation);
 
 
 private:

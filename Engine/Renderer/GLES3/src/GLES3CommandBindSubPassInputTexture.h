@@ -2,17 +2,17 @@
 #include "GfxCommandBuffer.h"
 
 
-class CGLES3CommandBindSubPassInputTexture : public CGfxCommandBase
+class CGLES3CommandBindSubpassInputTexture : public CGfxCommandBase
 {
 public:
-	CGLES3CommandBindSubPassInputTexture(const CGfxFrameBufferPtr &ptrFrameBuffer, const CGfxRenderPassPtr &ptrRenderPass, int indexSubPass)
+	CGLES3CommandBindSubpassInputTexture(const CGfxFrameBufferPtr &ptrFrameBuffer, const CGfxRenderPassPtr &ptrRenderPass, int indexSubpass)
 		: m_ptrFrameBuffer(ptrFrameBuffer)
 		, m_ptrRenderPass(ptrRenderPass)
-		, m_indexSubPass(indexSubPass)
+		, m_indexSubpass(indexSubpass)
 	{
 
 	}
-	virtual ~CGLES3CommandBindSubPassInputTexture(void)
+	virtual ~CGLES3CommandBindSubpassInputTexture(void)
 	{
 
 	}
@@ -20,11 +20,11 @@ public:
 public:
 	virtual void Execute(void) const
 	{
-		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_BIND_SUBPASSINPUTTEXTURE, "CommandBindSubPassInputTexture");
+		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_BIND_SUBPASSINPUTTEXTURE, "CommandBindSubpassInputTexture");
 		{
 			if (m_ptrFrameBuffer.IsValid() && m_ptrRenderPass.IsValid()) {
-				if (const SubPassInformation *pSubPassInformation = m_ptrRenderPass->GetSubPass(m_indexSubPass)) {
-					for (const auto &itInputAttachment : pSubPassInformation->inputAttachments) {
+				if (const SubpassInformation *pSubpassInformation = m_ptrRenderPass->GetSubpass(m_indexSubpass)) {
+					for (const auto &itInputAttachment : pSubpassInformation->inputAttachments) {
 						const CGfxRenderTexturePtr ptrInputTexture = m_ptrFrameBuffer->GetAttachmentTexture(itInputAttachment.first);
 						if (ptrInputTexture.IsValid()) {
 							GLES3Renderer()->BindInputTexture(itInputAttachment.second.c_str(), (CGfxRenderTexture *)ptrInputTexture.GetPointer());
@@ -39,5 +39,5 @@ public:
 private:
 	CGfxFrameBufferPtr m_ptrFrameBuffer;
 	CGfxRenderPassPtr m_ptrRenderPass;
-	int m_indexSubPass;
+	int m_indexSubpass;
 };

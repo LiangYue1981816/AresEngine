@@ -67,7 +67,7 @@ private:
 
 private:
 	bool m_bInPassScope;
-	uint32_t m_indexSubPass;
+	uint32_t m_indexSubpass;
 	CGfxRenderPassPtr m_ptrRenderPass;
 	CGfxFrameBufferPtr m_ptrFrameBuffer;
 

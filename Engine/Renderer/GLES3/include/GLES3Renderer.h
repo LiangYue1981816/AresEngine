@@ -65,7 +65,7 @@ class CALL_API CGLES3Renderer : public CGfxRenderer
 	friend class CGLES3MaterialPass;
 
 	friend class CGLES3CommandBindMeshDraw;
-	friend class CGLES3CommandBindSubPassInputTexture;
+	friend class CGLES3CommandBindSubpassInputTexture;
 	friend class CGLES3CommandBindPipelineCompute;
 	friend class CGLES3CommandBindPipelineGraphics;
 	friend class CGLES3CommandBindMaterialPass;

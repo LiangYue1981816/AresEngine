@@ -85,14 +85,14 @@ void CGLES3FrameBuffer::Destroy(void)
 	m_resolve = 0;
 }
 
-void CGLES3FrameBuffer::Bind(const AttachmentInformation *pAttachmentInformations, const SubPassInformation *pSubPassInformation)
+void CGLES3FrameBuffer::Bind(const AttachmentInformation *pAttachmentInformations, const SubpassInformation *pSubpassInformation)
 {
 	GLBindFramebuffer(GL_FRAMEBUFFER, m_fbo);
 	{
 		uint32_t indexAttachment = 0;
 		eastl::vector<uint32_t> drawBuffers;
 
-		for (const auto &itOutputAttachment : pSubPassInformation->outputAttachments) {
+		for (const auto &itOutputAttachment : pSubpassInformation->outputAttachments) {
 			const CGfxRenderTexturePtr ptrOutputTexture = GetAttachmentTexture(itOutputAttachment.first);
 			if (ptrOutputTexture.IsValid()) {
 				drawBuffers.emplace_back(GL_COLOR_ATTACHMENT0 + indexAttachment);
@@ -106,12 +106,12 @@ void CGLES3FrameBuffer::Bind(const AttachmentInformation *pAttachmentInformation
 			}
 		}
 
-		const CGfxRenderTexturePtr ptrDepthStencilTexture = GetAttachmentTexture(pSubPassInformation->depthStencilAttachment);
+		const CGfxRenderTexturePtr ptrDepthStencilTexture = GetAttachmentTexture(pSubpassInformation->depthStencilAttachment);
 		if (ptrDepthStencilTexture.IsValid()) {
 			GLBindFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, CGLES3Helper::TranslateTextureTarget(((CGLES3RenderTexture *)ptrDepthStencilTexture.GetPointer())->GetType()), (GLuint)((CGLES3RenderTexture *)ptrDepthStencilTexture.GetPointer())->GetTexture(), 0);
 
-			if (pAttachmentInformations[pSubPassInformation->depthStencilAttachment].bClear) {
-				glClearBufferfi(GL_DEPTH_STENCIL, 0, pAttachmentInformations[pSubPassInformation->depthStencilAttachment].depth, pAttachmentInformations[pSubPassInformation->depthStencilAttachment].stencil);
+			if (pAttachmentInformations[pSubpassInformation->depthStencilAttachment].bClear) {
+				glClearBufferfi(GL_DEPTH_STENCIL, 0, pAttachmentInformations[pSubpassInformation->depthStencilAttachment].depth, pAttachmentInformations[pSubpassInformation->depthStencilAttachment].stencil);
 			}
 		}
 
@@ -123,9 +123,9 @@ void CGLES3FrameBuffer::Bind(const AttachmentInformation *pAttachmentInformation
 	}
 }
 
-void CGLES3FrameBuffer::Resolve(const AttachmentInformation *pAttachmentInformations, const SubPassInformation *pSubPassInformation)
+void CGLES3FrameBuffer::Resolve(const AttachmentInformation *pAttachmentInformations, const SubpassInformation *pSubpassInformation)
 {
-	if (pSubPassInformation->resolveAttachments.empty()) {
+	if (pSubpassInformation->resolveAttachments.empty()) {
 		return;
 	}
 
@@ -134,7 +134,7 @@ void CGLES3FrameBuffer::Resolve(const AttachmentInformation *pAttachmentInformat
 		uint32_t indexAttachment = 0;
 		eastl::vector<uint32_t> drawBuffers;
 
-		for (const auto &itResolveAttachment : pSubPassInformation->resolveAttachments) {
+		for (const auto &itResolveAttachment : pSubpassInformation->resolveAttachments) {
 			const CGfxRenderTexturePtr ptrResolveTexture = GetAttachmentTexture(itResolveAttachment.first);
 			if (ptrResolveTexture.IsValid()) {
 				drawBuffers.emplace_back(GL_COLOR_ATTACHMENT0 + indexAttachment);
@@ -165,13 +165,13 @@ void CGLES3FrameBuffer::Resolve(const AttachmentInformation *pAttachmentInformat
 	}
 }
 
-void CGLES3FrameBuffer::InvalidateFramebuffer(const AttachmentInformation *pAttachmentInformations, const SubPassInformation *pSubPassInformation)
+void CGLES3FrameBuffer::InvalidateFramebuffer(const AttachmentInformation *pAttachmentInformations, const SubpassInformation *pSubpassInformation)
 {
 	eastl::vector<uint32_t> discardBuffers;
 	{
 		uint32_t indexAttachment = 0;
 
-		for (const auto &itOutputAttachment : pSubPassInformation->outputAttachments) {
+		for (const auto &itOutputAttachment : pSubpassInformation->outputAttachments) {
 			const CGfxRenderTexturePtr ptrOutputTexture = GetAttachmentTexture(itOutputAttachment.first);
 			if (ptrOutputTexture.IsValid()) {
 				if (pAttachmentInformations[itOutputAttachment.first].bInvalidation) {
@@ -182,9 +182,9 @@ void CGLES3FrameBuffer::InvalidateFramebuffer(const AttachmentInformation *pAtta
 			}
 		}
 
-		const CGfxRenderTexturePtr ptrDepthStencilTexture = GetAttachmentTexture(pSubPassInformation->depthStencilAttachment);
+		const CGfxRenderTexturePtr ptrDepthStencilTexture = GetAttachmentTexture(pSubpassInformation->depthStencilAttachment);
 		if (ptrDepthStencilTexture.IsValid()) {
-			if (pAttachmentInformations[pSubPassInformation->depthStencilAttachment].bInvalidation) {
+			if (pAttachmentInformations[pSubpassInformation->depthStencilAttachment].bInvalidation) {
 				discardBuffers.emplace_back(GL_DEPTH_STENCIL_ATTACHMENT);
 			}
 		}
