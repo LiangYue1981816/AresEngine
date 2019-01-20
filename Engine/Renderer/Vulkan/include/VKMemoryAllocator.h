@@ -10,41 +10,37 @@ class CVKMemoryAllocator
 
 private:
 	typedef struct mem_node {
-		mem_node(uint32_t _index)
+		mem_node(uint32_t index, VkDeviceSize alignment)
 		{
-			index = _index;
+			size = (index + 1) * alignment;
 			pListHead = nullptr;
 		}
 
-		uint32_t size(void)
-		{
-			return (index + 1) * MIN_ALIGNMENT;
-		}
-
 		rb_node node;
-		uint32_t index;
+		VkDeviceSize size;
 		CVKMemory *pListHead;
 	} mem_node;
 
 
 private:
-	CVKMemoryAllocator(CVKDevice *pDevice, uint32_t memoryTypeIndex, VkDeviceSize memorySize);
+	CVKMemoryAllocator(CVKDevice *pDevice, uint32_t memoryTypeIndex, VkDeviceSize memorySize, VkDeviceSize memoryAlignment);
 	virtual ~CVKMemoryAllocator(void);
 
 
 private:
-	VkDeviceSize GetFreeSize(void) const;
-	VkDeviceSize GetFullSize(void) const;
-
 	uint32_t GetMemoryTypeIndex(void) const;
 
+	VkDeviceSize GetFreeSize(void) const;
+	VkDeviceSize GetFullSize(void) const;
+	VkDeviceSize GetAlignment(void) const;
+
 private:
-	CVKMemory* AllocMemory(VkDeviceSize alignment, VkDeviceSize size);
+	CVKMemory* AllocMemory(VkDeviceSize size);
 	void FreeMemory(CVKMemory *pMemory);
 
 private:
-	void InitNodes(uint32_t numNodes);
-	void FreeNodes(uint32_t numNodes);
+	void InitNodes(void);
+	void FreeNodes(void);
 	void InsertMemory(CVKMemory *pMemory);
 	void RemoveMemory(CVKMemory *pMemory);
 	CVKMemory* MergeMemory(CVKMemory *pMemory, CVKMemory *pMemoryNext);
@@ -59,14 +55,13 @@ private:
 
 
 private:
-	static const uint32_t MIN_ALIGNMENT = 256;
-
-private:
 	uint32_t m_memoryTypeIndex;
 	VkMemoryPropertyFlags m_memoryPropertyFlags;
 
 	VkDeviceSize m_freeSize;
 	VkDeviceSize m_fullSize;
+	VkDeviceSize m_alignment;
+
 	VkDeviceMemory m_vkMemory;
 
 private:

@@ -1,7 +1,7 @@
 #include "VKRenderer.h"
 
 
-CVKMemory::CVKMemory(CVKMemoryAllocator *pAllocator, CVKDevice *pDevice, VkDeviceMemory vkMemory, VkMemoryPropertyFlags memoryPropertyFlags, VkDeviceSize size, VkDeviceSize offset, VkDeviceSize alignmentOffset)
+CVKMemory::CVKMemory(CVKMemoryAllocator *pAllocator, CVKDevice *pDevice, VkDeviceMemory vkMemory, VkMemoryPropertyFlags memoryPropertyFlags, VkDeviceSize memorySize, VkDeviceSize memoryOffset)
 	: m_pDevice(pDevice)
 
 	, m_pAllocator(pAllocator)
@@ -9,9 +9,8 @@ CVKMemory::CVKMemory(CVKMemoryAllocator *pAllocator, CVKDevice *pDevice, VkDevic
 
 	, m_memoryPropertyFlags(memoryPropertyFlags)
 
-	, m_size(size)
-	, m_offset(offset)
-	, m_alignmentOffset(alignmentOffset)
+	, m_size(memorySize)
+	, m_offset(memoryOffset)
 
 	, bInUse(false)
 
@@ -43,20 +42,15 @@ VkDeviceSize CVKMemory::GetOffset(void) const
 	return m_offset;
 }
 
-VkDeviceSize CVKMemory::GetAlignmentOffset(void) const
-{
-	return m_alignmentOffset;
-}
-
 bool CVKMemory::BindImage(VkImage vkImage) const
 {
 #ifdef DEBUG
 	VkMemoryRequirements requirements;
 	vkGetImageMemoryRequirements(m_pDevice->GetDevice(), vkImage, &requirements);
 	ASSERT(m_size >= requirements.size);
-	ASSERT(ALIGN_BYTE(m_offset + m_alignmentOffset, requirements.alignment) == m_offset + m_alignmentOffset);
+	ASSERT(ALIGN_BYTE(m_offset, requirements.alignment) == m_offset);
 #endif
-	CALL_VK_FUNCTION_RETURN_BOOL(vkBindImageMemory(m_pDevice->GetDevice(), vkImage, m_vkMemory, m_offset + m_alignmentOffset));
+	CALL_VK_FUNCTION_RETURN_BOOL(vkBindImageMemory(m_pDevice->GetDevice(), vkImage, m_vkMemory, m_offset));
 	return true;
 }
 
@@ -66,9 +60,9 @@ bool CVKMemory::BindBuffer(VkBuffer vkBuffer) const
 	VkMemoryRequirements requirements;
 	vkGetBufferMemoryRequirements(m_pDevice->GetDevice(), vkBuffer, &requirements);
 	ASSERT(m_size >= requirements.size);
-	ASSERT(ALIGN_BYTE(m_offset + m_alignmentOffset, requirements.alignment) == m_offset + m_alignmentOffset);
+	ASSERT(ALIGN_BYTE(m_offset, requirements.alignment) == m_offset);
 #endif
-	CALL_VK_FUNCTION_RETURN_BOOL(vkBindBufferMemory(m_pDevice->GetDevice(), vkBuffer, m_vkMemory, m_offset + m_alignmentOffset));
+	CALL_VK_FUNCTION_RETURN_BOOL(vkBindBufferMemory(m_pDevice->GetDevice(), vkBuffer, m_vkMemory, m_offset));
 	return true;
 }
 
@@ -82,7 +76,7 @@ bool CVKMemory::BeginMap(VkDeviceSize offset, VkDeviceSize size, void **ppAddres
 		return false;
 	}
 
-	CALL_VK_FUNCTION_RETURN_BOOL(vkMapMemory(m_pDevice->GetDevice(), m_vkMemory, m_offset + m_alignmentOffset + offset, size, m_memoryPropertyFlags, ppAddress));
+	CALL_VK_FUNCTION_RETURN_BOOL(vkMapMemory(m_pDevice->GetDevice(), m_vkMemory, m_offset + offset, size, m_memoryPropertyFlags, ppAddress));
 	return true;
 }
 
@@ -114,7 +108,7 @@ bool CVKMemory::Flush(VkDeviceSize offset, VkDeviceSize size) const
 	memoryRange.sType = VK_STRUCTURE_TYPE_MAPPED_MEMORY_RANGE;
 	memoryRange.pNext = nullptr;
 	memoryRange.memory = m_vkMemory;
-	memoryRange.offset = m_offset + m_alignmentOffset + offset;
+	memoryRange.offset = m_offset + offset;
 	memoryRange.size = size;
 	CALL_VK_FUNCTION_RETURN_BOOL(vkFlushMappedMemoryRanges(m_pDevice->GetDevice(), 1, &memoryRange));
 	return true;
@@ -138,7 +132,7 @@ bool CVKMemory::Invalidate(VkDeviceSize offset, VkDeviceSize size) const
 	memoryRange.sType = VK_STRUCTURE_TYPE_MAPPED_MEMORY_RANGE;
 	memoryRange.pNext = nullptr;
 	memoryRange.memory = m_vkMemory;
-	memoryRange.offset = m_offset + m_alignmentOffset + offset;
+	memoryRange.offset = m_offset + offset;
 	memoryRange.size = size;
 	CALL_VK_FUNCTION_RETURN_BOOL(vkInvalidateMappedMemoryRanges(m_pDevice->GetDevice(), 1, &memoryRange));
 	return true;

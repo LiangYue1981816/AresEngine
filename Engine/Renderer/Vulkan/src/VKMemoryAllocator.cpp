@@ -1,17 +1,18 @@
 #include "VKRenderer.h"
 
 
-#define NODE_INDEX(size) (((uint32_t)(size) / MIN_ALIGNMENT) - 1)
+#define NODE_INDEX(size) ((uint32_t)((size) / m_alignment) - 1)
 
-CVKMemoryAllocator::CVKMemoryAllocator(CVKDevice *pDevice, uint32_t memoryTypeIndex, VkDeviceSize memorySize)
+CVKMemoryAllocator::CVKMemoryAllocator(CVKDevice *pDevice, uint32_t memoryTypeIndex, VkDeviceSize memorySize, VkDeviceSize memoryAlignment)
 	: m_pDevice(pDevice)
+	, m_vkMemory(VK_NULL_HANDLE)
 
 	, m_memoryTypeIndex(memoryTypeIndex)
 	, m_memoryPropertyFlags(pDevice->GetPhysicalDeviceMemoryProperties().memoryTypes[memoryTypeIndex].propertyFlags)
 
-	, m_freeSize(ALIGN_BYTE(memorySize, MIN_ALIGNMENT))
-	, m_fullSize(ALIGN_BYTE(memorySize, MIN_ALIGNMENT))
-	, m_vkMemory(VK_NULL_HANDLE)
+	, m_freeSize(memorySize)
+	, m_fullSize(memorySize)
+	, m_alignment(memoryAlignment)
 
 	, m_root{nullptr}
 	, m_nodes(nullptr)
@@ -24,19 +25,21 @@ CVKMemoryAllocator::CVKMemoryAllocator(CVKDevice *pDevice, uint32_t memoryTypeIn
 	allocateInfo.pNext = nullptr;
 	allocateInfo.allocationSize = m_fullSize;
 	allocateInfo.memoryTypeIndex = m_memoryTypeIndex;
-	CALL_VK_FUNCTION_RETURN(vkAllocateMemory(m_pDevice->GetDevice(), &allocateInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkMemory));
+	vkAllocateMemory(m_pDevice->GetDevice(), &allocateInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkMemory);
 
-	InitNodes((uint32_t)(m_fullSize / MIN_ALIGNMENT));
-	InsertMemory(new CVKMemory(this, m_pDevice, m_vkMemory, m_memoryPropertyFlags, m_fullSize, 0, 0));
+	InitNodes();
+	InsertMemory(new CVKMemory(this, m_pDevice, m_vkMemory, m_memoryPropertyFlags, m_freeSize, 0));
 }
 
 CVKMemoryAllocator::~CVKMemoryAllocator(void)
 {
-	FreeNodes((uint32_t)(m_fullSize / MIN_ALIGNMENT));
+	FreeNodes();
+	vkFreeMemory(m_pDevice->GetDevice(), m_vkMemory, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
+}
 
-	if (m_vkMemory) {
-		vkFreeMemory(m_pDevice->GetDevice(), m_vkMemory, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
-	}
+uint32_t CVKMemoryAllocator::GetMemoryTypeIndex(void) const
+{
+	return m_memoryTypeIndex;
 }
 
 VkDeviceSize CVKMemoryAllocator::GetFreeSize(void) const
@@ -49,43 +52,34 @@ VkDeviceSize CVKMemoryAllocator::GetFullSize(void) const
 	return m_fullSize;
 }
 
-uint32_t CVKMemoryAllocator::GetMemoryTypeIndex(void) const
+VkDeviceSize CVKMemoryAllocator::GetAlignment(void) const
 {
-	return m_memoryTypeIndex;
+	return m_alignment;
 }
 
-CVKMemory* CVKMemoryAllocator::AllocMemory(VkDeviceSize alignment, VkDeviceSize size)
+CVKMemory* CVKMemoryAllocator::AllocMemory(VkDeviceSize size)
 {
 	//  Memory Pool
 	//
 	//
 	//             Memory Handle 
-	//             |                   Memory Size                  |
-	//  -------------------------------------------------------------------------
-	// |           |       |                  |                     |            |
-	// |    ...    |       |       Size       |   New Memory Size   |     ...    |
-	// |___________|_______|__________________|_____________________|____________|
-	//             |       |                  |                     |
-	//             Offset  |                  |                     Next Memory Handle
-	//             |       |                  New Memory Handle     |
-	//             |       Alignment Offset   |                     |
-	//             |                          |                     |
-	//             |        Alignment Size    |  >= MIN_ALIGNMENT   |
+	//             |                      Memory Size                      |
+	//  -------------------------------------------------------------------
+	// |           |                    |                     |            |
+	// |    ...    |    Request Size    |   New Memory Size   |     ...    |
+	// |___________|____________________|_____________________|____________|
+	//             |                    |                     |
+	//             Offset               |                     Next Memory Handle
+	//                                  New Memory Handle
 
-	size = ALIGN_BYTE(size, MIN_ALIGNMENT);
-	alignment = ALIGN_BYTE(alignment, MIN_ALIGNMENT);
-
-	VkDeviceSize requestSize = alignment + size;
+	VkDeviceSize requestSize = ALIGN_BYTE(size, m_alignment);
 
 	if (m_freeSize >= requestSize) {
 		if (CVKMemory *pMemory = SearchMemory(requestSize)) {
 			RemoveMemory(pMemory);
 
-			VkDeviceSize alignmentOffset = ALIGN_BYTE(pMemory->m_offset, alignment) - pMemory->m_offset;
-			VkDeviceSize alignmentSize = alignmentOffset + size;
-
-			if (pMemory->m_size >= alignmentSize + MIN_ALIGNMENT) {
-				CVKMemory *pMemoryNext = new CVKMemory(this, m_pDevice, m_vkMemory, m_memoryPropertyFlags, pMemory->m_size - alignmentSize, pMemory->m_offset + alignmentSize, 0);
+			if (pMemory->m_size >= requestSize + m_alignment) {
+				CVKMemory *pMemoryNext = new CVKMemory(this, m_pDevice, m_vkMemory, m_memoryPropertyFlags, pMemory->m_size - requestSize, pMemory->m_offset + requestSize);
 				{
 					pMemoryNext->pNext = pMemory->pNext;
 					pMemoryNext->pPrev = pMemory;
@@ -98,14 +92,11 @@ CVKMemory* CVKMemoryAllocator::AllocMemory(VkDeviceSize alignment, VkDeviceSize 
 					InsertMemory(pMemoryNext);
 				}
 
-				pMemory->m_size = alignmentSize;
+				pMemory->m_size = requestSize;
 			}
 
-			m_freeSize -= pMemory->m_size;
-
 			pMemory->bInUse = true;
-			pMemory->m_alignmentOffset = alignmentOffset;
-			pMemory->m_size -= alignmentOffset;
+			m_freeSize -= pMemory->m_size;
 
 			return pMemory;
 		}
@@ -117,9 +108,6 @@ CVKMemory* CVKMemoryAllocator::AllocMemory(VkDeviceSize alignment, VkDeviceSize 
 void CVKMemoryAllocator::FreeMemory(CVKMemory *pMemory)
 {
 	pMemory->bInUse = false;
-	pMemory->m_size += pMemory->m_alignmentOffset;
-	pMemory->m_alignmentOffset = 0;
-
 	m_freeSize += pMemory->m_size;
 
 	if (pMemory->pNext && pMemory->pNext->bInUse == false) {
@@ -135,8 +123,10 @@ void CVKMemoryAllocator::FreeMemory(CVKMemory *pMemory)
 	InsertMemory(pMemory);
 }
 
-void CVKMemoryAllocator::InitNodes(uint32_t numNodes)
+void CVKMemoryAllocator::InitNodes(void)
 {
+	uint32_t numNodes = (uint32_t)(m_fullSize / m_alignment);
+
 	m_root = RB_ROOT;
 	m_nodes = new mem_node* [numNodes];
 
@@ -145,40 +135,37 @@ void CVKMemoryAllocator::InitNodes(uint32_t numNodes)
 	}
 }
 
-void CVKMemoryAllocator::FreeNodes(uint32_t numNodes)
+void CVKMemoryAllocator::FreeNodes(void)
 {
-	if (m_nodes) {
-		for (uint32_t indexNode = 0; indexNode < numNodes; indexNode++) {
-			if (m_nodes[indexNode]) {
-				if (CVKMemory *pMemory = m_nodes[indexNode]->pListHead) {
-					CVKMemory *pMemoryNext = nullptr;
-					do {
-						pMemoryNext = pMemory->pFreeNext;
-						delete pMemory;
-					} while ((pMemory = pMemoryNext) != nullptr);
-				}
+	uint32_t numNodes = (uint32_t)(m_fullSize / m_alignment);
 
-				delete m_nodes[indexNode];
+	for (uint32_t indexNode = 0; indexNode < numNodes; indexNode++) {
+		if (m_nodes[indexNode]) {
+			if (CVKMemory *pMemory = m_nodes[indexNode]->pListHead) {
+				CVKMemory *pMemoryNext = nullptr;
+				do {
+					pMemoryNext = pMemory->pFreeNext;
+					delete pMemory;
+				} while ((pMemory = pMemoryNext) != nullptr);
 			}
-		}
 
-		delete[] m_nodes;
+			delete m_nodes[indexNode];
+		}
 	}
+
+	delete[] m_nodes;
 }
 
 void CVKMemoryAllocator::InsertMemory(CVKMemory *pMemory)
 {
-	ASSERT(pMemory->bInUse == false);
-	ASSERT(pMemory->m_alignmentOffset == 0);
-
 	uint32_t indexNode = NODE_INDEX(pMemory->m_size);
 
 	if (m_nodes[indexNode] == nullptr) {
-		m_nodes[indexNode] =  new mem_node(indexNode);
+		m_nodes[indexNode] =  new mem_node(indexNode, m_alignment);
 	}
 
 	mem_node *pMemoryNode = m_nodes[indexNode];
-	ASSERT(pMemoryNode->size() == pMemory->m_size);
+	ASSERT(pMemoryNode->size == pMemory->m_size);
 
 	rb_node **node = &m_root.rb_node;
 	rb_node *parent = nullptr;
@@ -189,12 +176,12 @@ void CVKMemoryAllocator::InsertMemory(CVKMemory *pMemory)
 
 			parent = *node;
 
-			if (pMemoryNode->size() > pMemoryNodeCur->size()) {
+			if (pMemoryNode->size > pMemoryNodeCur->size) {
 				node = &(*node)->rb_right;
 				continue;
 			}
 
-			if (pMemoryNode->size() < pMemoryNodeCur->size()) {
+			if (pMemoryNode->size < pMemoryNodeCur->size) {
 				node = &(*node)->rb_left;
 				continue;
 			}
@@ -202,13 +189,13 @@ void CVKMemoryAllocator::InsertMemory(CVKMemory *pMemory)
 			ASSERT(false);
 		}
 
-		pMemory->pFreeNext = nullptr;
-		pMemory->pFreePrev = nullptr;
-		pMemoryNode->pListHead = pMemory;
-
 		rb_init_node(&pMemoryNode->node);
 		rb_link_node(&pMemoryNode->node, parent, node);
 		rb_insert_color(&pMemoryNode->node, &m_root);
+
+		pMemory->pFreeNext = nullptr;
+		pMemory->pFreePrev = nullptr;
+		pMemoryNode->pListHead = pMemory;
 	}
 	else {
 		pMemory->pFreePrev = nullptr;
@@ -220,10 +207,10 @@ void CVKMemoryAllocator::InsertMemory(CVKMemory *pMemory)
 
 void CVKMemoryAllocator::RemoveMemory(CVKMemory *pMemory)
 {
-	ASSERT(pMemory->bInUse == false);
-	ASSERT(pMemory->m_alignmentOffset == 0);
+	uint32_t indexNode = NODE_INDEX(pMemory->m_size);
 
-	mem_node *pMemoryNode = m_nodes[NODE_INDEX(pMemory->m_size)];
+	mem_node *pMemoryNode = m_nodes[indexNode];
+	ASSERT(pMemoryNode->size == pMemory->m_size);
 
 	if (pMemory->pFreeNext) {
 		pMemory->pFreeNext->pFreePrev = pMemory->pFreePrev;
@@ -239,19 +226,14 @@ void CVKMemoryAllocator::RemoveMemory(CVKMemory *pMemory)
 
 	if (pMemoryNode->pListHead == nullptr) {
 		rb_erase(&pMemoryNode->node, &m_root);
-		m_nodes[pMemoryNode->index] = nullptr;
 		delete pMemoryNode;
+
+		m_nodes[indexNode] = nullptr;
 	}
 }
 
 CVKMemory* CVKMemoryAllocator::MergeMemory(CVKMemory *pMemory, CVKMemory *pMemoryNext)
 {
-	ASSERT(pMemory->bInUse == false);
-	ASSERT(pMemory->m_alignmentOffset == 0);
-
-	ASSERT(pMemoryNext->bInUse == false);
-	ASSERT(pMemoryNext->m_alignmentOffset == 0);
-
 	ASSERT(pMemory->m_offset + pMemory->m_size == pMemoryNext->m_offset);
 
 	pMemory->m_size = pMemoryNext->m_size + pMemory->m_size;
@@ -273,22 +255,21 @@ CVKMemory* CVKMemoryAllocator::SearchMemory(VkDeviceSize size) const
 	while (node) {
 		mem_node *pMemoryNodeCur = container_of(node, mem_node, node);
 
-		if (size > pMemoryNodeCur->size()) {
+		if (size > pMemoryNodeCur->size) {
 			node = node->rb_right;
 			continue;
 		}
 
 		pMemoryNode = pMemoryNodeCur;
 
-		if (size < pMemoryNodeCur->size()) {
+		if (size < pMemoryNodeCur->size) {
 			node = node->rb_left;
 			continue;
 		}
 
 		ASSERT(pMemoryNode->pListHead);
 		ASSERT(pMemoryNode->pListHead->bInUse == false);
-		ASSERT(pMemoryNode->pListHead->m_alignmentOffset == 0);
-		ASSERT(pMemoryNode->pListHead->m_size / MIN_ALIGNMENT * MIN_ALIGNMENT >= size);
+		ASSERT(pMemoryNode->pListHead->m_size >= size);
 
 		break;
 	}
