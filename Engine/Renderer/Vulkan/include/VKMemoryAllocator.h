@@ -5,6 +5,7 @@
 
 class CVKMemoryAllocator
 {
+	friend class CVKMemory;
 	friend class CVKMemoryManager;
 
 
@@ -28,11 +29,14 @@ private:
 
 
 private:
-	uint32_t GetMemoryTypeIndex(void) const;
+	VkDeviceMemory GetMemory(void) const;
 
 	VkDeviceSize GetFreeSize(void) const;
 	VkDeviceSize GetFullSize(void) const;
 	VkDeviceSize GetAlignment(void) const;
+
+	uint32_t GetMemoryTypeIndex(void) const;
+	VkMemoryPropertyFlags GetMemoryPropertyFlags(void) const;
 
 private:
 	CVKMemory* AllocMemory(VkDeviceSize size);
@@ -41,6 +45,7 @@ private:
 private:
 	void InitNodes(void);
 	void FreeNodes(void);
+
 	void InsertMemory(CVKMemory *pMemory);
 	void RemoveMemory(CVKMemory *pMemory);
 	CVKMemory* MergeMemory(CVKMemory *pMemory, CVKMemory *pMemoryNext);
@@ -55,14 +60,14 @@ private:
 
 
 private:
+	VkDeviceMemory m_vkMemory;
+
+	VkDeviceSize m_memoryFreeSize;
+	VkDeviceSize m_memoryFullSize;
+	VkDeviceSize m_memoryAlignment;
+
 	uint32_t m_memoryTypeIndex;
 	VkMemoryPropertyFlags m_memoryPropertyFlags;
-
-	VkDeviceSize m_freeSize;
-	VkDeviceSize m_fullSize;
-	VkDeviceSize m_alignment;
-
-	VkDeviceMemory m_vkMemory;
 
 private:
 	rb_root m_root;

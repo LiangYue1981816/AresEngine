@@ -43,14 +43,14 @@ CVKMemoryManager::~CVKMemoryManager(void)
 
 CVKMemory* CVKMemoryManager::AllocMemory(VkDeviceSize memorySize, VkDeviceSize memoryAlignment, VkFlags memoryTypeBits, VkMemoryPropertyFlags memoryPropertyFlags)
 {
-	memoryAlignment = ALIGN_BYTE(memoryAlignment, 256);
-	memorySize = ALIGN_BYTE(memorySize, memoryAlignment);
-
 	uint32_t memoryTypeIndex = GetMemoryTypeIndex(m_pDevice->GetPhysicalDeviceMemoryProperties(), memoryTypeBits, memoryPropertyFlags);
 	if (memoryTypeIndex == 0xffffffff) return nullptr;
 
 	atomic_spin_autolock autolock(&m_lock);
 	{
+		memoryAlignment = ALIGN_BYTE(memoryAlignment, 256);
+		memorySize = ALIGN_BYTE(memorySize, memoryAlignment);
+
 		do {
 			if (CVKMemoryAllocator *pAllocator = m_pAllocatorListHeads[memoryAlignment][memoryTypeIndex]) {
 				do {
