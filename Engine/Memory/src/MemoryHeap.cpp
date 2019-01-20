@@ -160,13 +160,13 @@ static void HEAP_InsertBlock(BLOCK_POOL *pBlockPool, BLOCK *pBlock)
 			ASSERT(false);
 		}
 
-		pBlock->pFreeNext = nullptr;
-		pBlock->pFreePrev = nullptr;
-		pBlockNode->pBlockHead = pBlock;
-
 		rb_init_node(&pBlockNode->node);
 		rb_link_node(&pBlockNode->node, parent, node);
 		rb_insert_color(&pBlockNode->node, &pBlockPool->root);
+
+		pBlock->pFreeNext = nullptr;
+		pBlock->pFreePrev = nullptr;
+		pBlockNode->pBlockHead = pBlock;
 	}
 	else {
 		pBlock->pFreePrev = nullptr;
