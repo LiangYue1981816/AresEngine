@@ -28,16 +28,16 @@ CVKMeshDraw::CVKMeshDraw(CVKMeshDrawManager *pManager, uint32_t name, const CGfx
 
 CVKMeshDraw::~CVKMeshDraw(void)
 {
-	if (m_pIndirectBuffer) {
-		delete m_pIndirectBuffer;
-	}
-
 	if (m_pInstanceBuffer) {
 		delete m_pInstanceBuffer;
 	}
 
-	m_pIndirectBuffer = nullptr;
+	if (m_pIndirectBuffer) {
+		delete m_pIndirectBuffer;
+	}
+
 	m_pInstanceBuffer = nullptr;
+	m_pIndirectBuffer = nullptr;
 }
 
 void CVKMeshDraw::Release(void)
@@ -128,11 +128,7 @@ bool CVKMeshDraw::InstanceBufferData(size_t size, const void *pBuffer)
 {
 	if (m_pInstanceBuffer) {
 		m_pInstanceBuffer->BufferData(size, pBuffer);
-
-		if (m_pIndirectBuffer) {
-			m_pIndirectBuffer->BufferData(0, size / GetInstanceStride(m_pInstanceBuffer->GetInstanceFormat()));
-		}
-
+		m_pIndirectBuffer->BufferData(0, size / GetInstanceStride(m_pInstanceBuffer->GetInstanceFormat()));
 		return true;
 	}
 	else {

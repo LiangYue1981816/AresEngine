@@ -19,10 +19,7 @@ CGLES3Sampler* CGLES3SamplerManager::Create(int mipLevels, GfxFilter minFilter, 
 {
 	mutex_autolock autolock(&lock);
 	{
-		char szName[_MAX_STRING];
-		sprintf(szName, "%x_%x_%x_%x_%x", mipLevels, minFilter, magFilter, mipmapMode, addressMode);
-
-		uint32_t name = HashValue(szName);
+		uint32_t name = HashValueFormat("%x_%x_%x_%x_%x", mipLevels, minFilter, magFilter, mipmapMode, addressMode);
 
 		if (m_pSamplers[name] == nullptr) {
 			m_pSamplers[name] = new CGLES3Sampler(mipLevels, minFilter, magFilter, mipmapMode, addressMode);

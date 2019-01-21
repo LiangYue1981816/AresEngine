@@ -45,6 +45,18 @@ CALL_API unsigned int HashValue(const char *szString)
 	return dwHashValue ? dwHashValue : INVALID_HASHVALUE;
 }
 
+CALL_API unsigned int HashValueFormat(const char *szFormat, ...)
+{
+	va_list vaList;
+	char szText[128 * 1024] = { 0 };
+
+	va_start(vaList, szFormat);
+	vsprintf(szText, szFormat, vaList);
+	va_end(vaList);
+
+	return HashValue(szText);
+}
+
 CALL_API unsigned int HashValue(const unsigned char *pBuffer, int length, int stride)
 {
 	const unsigned char *c = pBuffer;
@@ -61,9 +73,9 @@ CALL_API unsigned int HashValue(const unsigned char *pBuffer, int length, int st
 
 CALL_API void LogOutput(const char *szTag, const char *szFormat, ...)
 {
-	static char szText[128 * 1024];
-
 	va_list vaList;
+	char szText[128 * 1024] = { 0 };
+
 	va_start(vaList, szFormat);
 	vsprintf(szText, szFormat, vaList);
 	va_end(vaList);

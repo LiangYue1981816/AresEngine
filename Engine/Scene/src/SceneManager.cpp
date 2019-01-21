@@ -43,41 +43,31 @@ CSceneManager::~CSceneManager(void)
 uint32_t CSceneManager::GetNextNodeName(void) const
 {
 	static uint32_t count = 0;
-	static char szName[_MAX_STRING] = { 0 };
-	sprintf(szName, "_NODE_%d", count++);
-	return HashValue(szName);
+	return HashValueFormat("_NODE_%d", count++);
 }
 
 uint32_t CSceneManager::GetNextComponentMeshName(void) const
 {
 	static uint32_t count = 0;
-	static char szName[_MAX_STRING] = { 0 };
-	sprintf(szName, "_MESH_%d", count++);
-	return HashValue(szName);
+	return HashValueFormat("_MESH_%d", count++);
 }
 
 uint32_t CSceneManager::GetNextComponentSkinName(void) const
 {
 	static uint32_t count = 0;
-	static char szName[_MAX_STRING] = { 0 };
-	sprintf(szName, "_SKIN_%d", count++);
-	return HashValue(szName);
+	return HashValueFormat("_SKIN_%d", count++);
 }
 
 uint32_t CSceneManager::GetNextComponentParticleName(void) const
 {
 	static uint32_t count = 0;
-	static char szName[_MAX_STRING] = { 0 };
-	sprintf(szName, "_PARTICLE_%d", count++);
-	return HashValue(szName);
+	return HashValueFormat("_PARTICLE_%d", count++);
 }
 
 uint32_t CSceneManager::GetNextComponentPointLightName(void) const
 {
 	static uint32_t count = 0;
-	static char szName[_MAX_STRING] = { 0 };
-	sprintf(szName, "_POINTLIGHT_%d", count++);
-	return HashValue(szName);
+	return HashValueFormat("_POINTLIGHT_%d", count++);
 }
 
 CScene* CSceneManager::CreateScene(uint32_t name)

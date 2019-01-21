@@ -27,10 +27,10 @@ private:
 	uint32_t m_count;
 
 private:
-	eastl::vector<DrawCommand> m_draws;
+	CVKBufferPtr m_ptrBuffer;
 
 private:
-	CVKBufferPtr m_ptrBuffer;
+	eastl::vector<DrawCommand> m_draws;
 
 private:
 	CVKDevice *m_pDevice;

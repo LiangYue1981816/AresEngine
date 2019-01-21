@@ -20,10 +20,7 @@ CVKPipelineCompute* CVKPipelineComputeManager::Create(const CGfxShader *pCompute
 {
 	mutex_autolock autolock(&lock);
 	{
-		char szName[_MAX_STRING];
-		sprintf(szName, "%x", pComputeShader->GetName());
-
-		uint32_t name = HashValue(szName);
+		uint32_t name = HashValueFormat("%x", pComputeShader->GetName());
 
 		if (m_pPipelines[name] == nullptr) {
 			m_pPipelines[name] = new CVKPipelineCompute(m_pDevice, this, name);
@@ -54,10 +51,7 @@ CVKPipelineGraphics* CVKPipelineGraphicsManager::Create(const CGfxRenderPass *pR
 {
 	mutex_autolock autolock(&lock);
 	{
-		char szName[_MAX_STRING];
-		sprintf(szName, "%p_%x_%x_%x_%x_%x_%x", pRenderPass, pVertexShader->GetName(), pFragmentShader->GetName(), HashValue((uint8_t *)&state, sizeof(state)), indexSubpass, vertexBinding, instanceBinding);
-
-		uint32_t name = HashValue(szName);
+		uint32_t name = HashValueFormat("%p_%x_%x_%x_%x_%x_%x", pRenderPass, pVertexShader->GetName(), pFragmentShader->GetName(), HashValue((uint8_t *)&state, sizeof(state)), indexSubpass, vertexBinding, instanceBinding);
 
 		if (m_pPipelines[name] == nullptr) {
 			m_pPipelines[name] = new CVKPipelineGraphics(m_pDevice, this, name);

@@ -200,9 +200,8 @@ bool CVKSwapChain::CreateImagesAndImageViews(void)
 		imageViewCreateInfo.subresourceRange = { VK_IMAGE_ASPECT_COLOR_BIT, 0, 1, 0, 1 };
 		CALL_VK_FUNCTION_RETURN_BOOL(vkCreateImageView(m_pDevice->GetDevice(), &imageViewCreateInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkImageViews[index]));
 
-		char szName[_MAX_STRING] = { 0 };
-		sprintf(szName, "SwapChain Frame Texture %d", index);
-		m_ptrRenderTextures[index] = VKRenderer()->NewRenderTexture(HashValue(szName));
+		uint32_t name = HashValueFormat("SwapChain Frame Texture %d", index);
+		m_ptrRenderTextures[index] = VKRenderer()->NewRenderTexture(name);
 		CALL_BOOL_FUNCTION_RETURN_BOOL(m_ptrRenderTextures[index]->Create((HANDLE)m_vkImageViews[index], m_pixelFormat, m_width, m_height));
 	}
 

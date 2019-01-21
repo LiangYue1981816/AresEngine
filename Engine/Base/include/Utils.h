@@ -5,6 +5,7 @@
 CALL_API unsigned int NumCpuCores(void);
 CALL_API unsigned int Tick(void);
 CALL_API unsigned int HashValue(const char *szString);
+CALL_API unsigned int HashValueFormat(const char *szFormat, ...);
 CALL_API unsigned int HashValue(const unsigned char *pBuffer, int length, int stride = 1);
 CALL_API void LogOutput(const char *szTag, const char *szFormat, ...);
 

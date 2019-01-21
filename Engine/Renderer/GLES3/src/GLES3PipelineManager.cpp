@@ -19,10 +19,7 @@ CGLES3PipelineCompute* CGLES3PipelineComputeManager::Create(const CGfxShader *pC
 {
 	mutex_autolock autolock(&lock);
 	{
-		char szName[_MAX_STRING];
-		sprintf(szName, "%x", pComputeShader->GetName());
-
-		uint32_t name = HashValue(szName);
+		uint32_t name = HashValueFormat("%x", pComputeShader->GetName());
 
 		if (m_pPipelines[name] == nullptr) {
 			m_pPipelines[name] = new CGLES3PipelineCompute(name);
@@ -52,10 +49,7 @@ CGLES3PipelineGraphics* CGLES3PipelineGraphicsManager::Create(const CGfxRenderPa
 {
 	mutex_autolock autolock(&lock);
 	{
-		char szName[_MAX_STRING];
-		sprintf(szName, "%x_%x_%x", pVertexShader->GetName(), pFragmentShader->GetName(), HashValue((uint8_t *)&state, sizeof(state)));
-
-		uint32_t name = HashValue(szName);
+		uint32_t name = HashValueFormat("%x_%x_%x", pVertexShader->GetName(), pFragmentShader->GetName(), HashValue((uint8_t *)&state, sizeof(state)));
 
 		if (m_pPipelines[name] == nullptr) {
 			m_pPipelines[name] = new CGLES3PipelineGraphics(name);

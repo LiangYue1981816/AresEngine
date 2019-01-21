@@ -41,7 +41,10 @@ CVKImage::CVKImage(CVKDevice *pDevice, VkImageType imageType, VkImageViewType vi
 	VkMemoryRequirements requirements;
 	vkGetImageMemoryRequirements(m_pDevice->GetDevice(), m_vkImage, &requirements);
 	m_pMemory = m_pDevice->GetMemoryManager()->AllocMemory(requirements.size, requirements.alignment, requirements.memoryTypeBits, memoryPropertyFlags);
-	m_pMemory->BindImage(m_vkImage);
+
+	if (m_pMemory) {
+		m_pMemory->BindImage(m_vkImage);
+	}
 }
 
 CVKImage::~CVKImage(void)
