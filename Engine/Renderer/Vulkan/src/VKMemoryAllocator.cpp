@@ -89,31 +89,33 @@ CVKMemory* CVKMemoryAllocator::AllocMemory(VkDeviceSize size)
 
 	VkDeviceSize requestSize = ALIGN_BYTE(size, m_memoryAlignment);
 
-	if (m_memoryFreeSize >= requestSize) {
-		if (CVKMemory *pMemory = SearchMemory(requestSize)) {
-			RemoveMemory(pMemory);
+	if (m_vkMemory != VK_NULL_HANDLE) {
+		if (m_memoryFreeSize >= requestSize) {
+			if (CVKMemory *pMemory = SearchMemory(requestSize)) {
+				RemoveMemory(pMemory);
 
-			if (pMemory->m_memorySize >= requestSize + m_memoryAlignment) {
-				CVKMemory *pMemoryNext = new CVKMemory(this, m_pDevice, pMemory->m_memorySize - requestSize, pMemory->m_memoryOffset + requestSize);
-				{
-					pMemoryNext->pNext = pMemory->pNext;
-					pMemoryNext->pPrev = pMemory;
-					pMemory->pNext = pMemoryNext;
+				if (pMemory->m_memorySize >= requestSize + m_memoryAlignment) {
+					CVKMemory *pMemoryNext = new CVKMemory(this, m_pDevice, pMemory->m_memorySize - requestSize, pMemory->m_memoryOffset + requestSize);
+					{
+						pMemoryNext->pNext = pMemory->pNext;
+						pMemoryNext->pPrev = pMemory;
+						pMemory->pNext = pMemoryNext;
 
-					if (pMemoryNext->pNext) {
-						pMemoryNext->pNext->pPrev = pMemoryNext;
+						if (pMemoryNext->pNext) {
+							pMemoryNext->pNext->pPrev = pMemoryNext;
+						}
+
+						InsertMemory(pMemoryNext);
 					}
 
-					InsertMemory(pMemoryNext);
+					pMemory->m_memorySize = requestSize;
 				}
 
-				pMemory->m_memorySize = requestSize;
+				pMemory->bInUse = true;
+				m_memoryFreeSize -= pMemory->m_memorySize;
+
+				return pMemory;
 			}
-
-			pMemory->bInUse = true;
-			m_memoryFreeSize -= pMemory->m_memorySize;
-
-			return pMemory;
 		}
 	}
 
