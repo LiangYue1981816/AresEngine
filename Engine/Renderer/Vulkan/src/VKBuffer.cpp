@@ -21,7 +21,10 @@ CVKBuffer::CVKBuffer(CVKDevice *pDevice, VkDeviceSize size, VkBufferUsageFlags b
 	VkMemoryRequirements requirements;
 	vkGetBufferMemoryRequirements(m_pDevice->GetDevice(), m_vkBuffer, &requirements);
 	m_pMemory = m_pDevice->GetMemoryManager()->AllocMemory(requirements.size, requirements.alignment, requirements.memoryTypeBits, memoryPropertyFlags);
-	m_pMemory->BindBuffer(m_vkBuffer);
+
+	if (m_pMemory) {
+		m_pMemory->BindBuffer(m_vkBuffer);
+	}
 }
 
 CVKBuffer::~CVKBuffer(void)
