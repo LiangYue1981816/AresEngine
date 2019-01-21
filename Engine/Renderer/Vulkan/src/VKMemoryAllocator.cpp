@@ -81,7 +81,8 @@ CVKMemory* CVKMemoryAllocator::AllocMemory(VkDeviceSize size)
 	// |___________|____________________|_____________________|____________|
 	//             |                    |                     |
 	//             Offset               |                     Next Memory Handle
-	//                                  New Memory Handle
+	//             |                    New Memory Handle
+	//             Allocated Memory Handle
 
 	VkDeviceSize requestSize = ALIGN_BYTE(size, m_memoryAlignment);
 
