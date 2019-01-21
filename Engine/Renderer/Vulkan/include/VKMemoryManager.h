@@ -17,7 +17,7 @@ public:
 	void FreeMemory(CVKMemory *pMemory);
 
 public:
-	void Log(void) const;
+	void Log(void);
 
 
 private:

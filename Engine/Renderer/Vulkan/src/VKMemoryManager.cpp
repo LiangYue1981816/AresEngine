@@ -130,7 +130,7 @@ void CVKMemoryManager::FreeMemory(CVKMemory *pMemory)
 	}
 }
 
-void CVKMemoryManager::Log(void) const
+void CVKMemoryManager::Log(void)
 {
 	atomic_spin_autolock autolock(&m_lock);
 	{
