@@ -27,6 +27,8 @@ CGLES3Renderer::CGLES3Renderer(void *hInstance, void *hWnd, void *hDC, int width
 	, m_pCurrentPipelineCompute(nullptr)
 	, m_pCurrentPipelineGraphics(nullptr)
 {
+	CGLES3Helper::SetupExtensions();
+
 	m_pMeshManager = new CGLES3MeshManager;
 	m_pMeshDrawManager = new CGLES3MeshDrawManager;
 	m_pShaderManager = new CGLES3ShaderManager;

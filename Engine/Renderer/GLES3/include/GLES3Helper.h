@@ -5,6 +5,9 @@
 class CGLES3Helper
 {
 public:
+	static void SetupExtensions(void);
+	static bool IsSupportExtension(const char *extension);
+
 	static GLenum TranslateDataType(GfxDataType dataType);
 	static GLenum TranslateIndexType(GfxIndexType indexType);
 	static GLenum TranslateCullFace(GfxCullFace cullFace);
@@ -19,4 +22,8 @@ public:
 	static GLenum TranslateTextureTarget(GfxTextureType type);
 	static GLenum TranslateTextureCubeMapFace(GfxTextureCubeMapFace face);
 	static GLenum TranslateDrawMode(GfxDrawMode drawMode);
+
+
+private:
+	static eastl::unordered_map<uint32_t, eastl::string> extensions;
 };

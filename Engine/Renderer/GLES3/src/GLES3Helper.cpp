@@ -1,6 +1,24 @@
 #include "GLES3Renderer.h"
 
 
+eastl::unordered_map<uint32_t, eastl::string> CGLES3Helper::extensions;
+
+void CGLES3Helper::SetupExtensions(void)
+{
+	int numExtensions;
+	glGetIntegerv(GL_NUM_EXTENSIONS, &numExtensions);
+
+	for (int index = 0; index < numExtensions; index++) {
+		const char *extension = (const char *)glGetStringi(GL_EXTENSIONS, index);
+		extensions[HashValue(extension)] = extension;
+	}
+}
+
+bool CGLES3Helper::IsSupportExtension(const char *extension)
+{
+	return extensions.find(HashValue(extension)) != extensions.end();
+}
+
 GLenum CGLES3Helper::TranslateDataType(GfxDataType dataType)
 {
 	switch ((int)dataType) {
