@@ -76,6 +76,11 @@ uint32_t CGLES3Renderer::GetLastError(void) const
 	return glGetError();
 }
 
+bool CGLES3Renderer::IsSupportExtension(const char *extension) const
+{
+	return CGLES3Helper::IsSupportExtension(extension);
+}
+
 CGfxSwapChain* CGLES3Renderer::GetSwapChain(void) const
 {
 	return m_pSwapChain;

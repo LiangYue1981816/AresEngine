@@ -71,6 +71,9 @@ public:
 	virtual uint32_t GetLastError(void) const = 0;
 
 public:
+	virtual bool IsSupportExtension(const char *extension) const = 0;
+
+public:
 	virtual CGfxSwapChain* GetSwapChain(void) const = 0;
 	virtual CGfxMaterialPass* GetGlobalPass(void) const = 0;
 

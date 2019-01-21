@@ -66,6 +66,11 @@ uint32_t CVKRenderer::GetLastError(void) const
 	return CVKInstance::GetLastError();
 }
 
+bool CVKRenderer::IsSupportExtension(const char *extension) const
+{
+	return false;
+}
+
 CGfxSwapChain* CVKRenderer::GetSwapChain(void) const
 {
 	return m_pSwapChain;

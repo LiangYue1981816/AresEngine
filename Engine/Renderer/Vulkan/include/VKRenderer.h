@@ -64,6 +64,9 @@ public:
 	uint32_t GetLastError(void) const;
 
 public:
+	bool IsSupportExtension(const char *extension) const;
+
+public:
 	CGfxSwapChain* GetSwapChain(void) const;
 	CGfxMaterialPass* GetGlobalPass(void) const;
 
