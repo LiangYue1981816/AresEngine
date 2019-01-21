@@ -24,7 +24,7 @@ CVKMemoryAllocator::CVKMemoryAllocator(CVKDevice *pDevice, uint32_t memoryTypeIn
 	allocateInfo.pNext = nullptr;
 	allocateInfo.allocationSize = m_memoryFullSize;
 	allocateInfo.memoryTypeIndex = m_memoryTypeIndex;
-	vkAllocateMemory(m_pDevice->GetDevice(), &allocateInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkMemory);
+	CALL_VK_FUNCTION_RETURN(vkAllocateMemory(m_pDevice->GetDevice(), &allocateInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkMemory));
 
 	InitNodes();
 	InsertMemory(new CVKMemory(this, m_pDevice, m_memoryFreeSize, 0));
@@ -35,7 +35,10 @@ CVKMemoryAllocator::~CVKMemoryAllocator(void)
 	ASSERT(m_memoryFreeSize == m_memoryFullSize);
 
 	FreeNodes();
-	vkFreeMemory(m_pDevice->GetDevice(), m_vkMemory, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
+
+	if (m_vkMemory) {
+		vkFreeMemory(m_pDevice->GetDevice(), m_vkMemory, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
+	}
 }
 
 VkDeviceMemory CVKMemoryAllocator::GetMemory(void) const
