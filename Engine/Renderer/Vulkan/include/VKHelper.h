@@ -17,8 +17,8 @@ public:
 	static VkAccessFlags GetAccessMask(VkImageLayout layout);
 	static VkPipelineStageFlags GetPipelineStageFlags(VkAccessFlags access);
 
-	static VkCullModeFlags GetCullModeFlags(bool bEnableCullFace, GfxCullFace cullFace);
-	static VkFrontFace GetFrontFace(GfxFrontFace frontFace);
+	static VkCullModeFlags TranslateCullModeFlags(bool bEnableCullFace, GfxCullFace cullFace);
+	static VkFrontFace TranslateFrontFace(GfxFrontFace frontFace);
 
 
 private:

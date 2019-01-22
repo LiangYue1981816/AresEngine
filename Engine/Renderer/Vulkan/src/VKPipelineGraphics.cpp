@@ -96,8 +96,8 @@ bool CVKPipelineGraphics::Create(const CGfxRenderPass *pRenderPass, const CGfxSh
 	rasterizationState.depthClampEnable = VK_FALSE;
 	rasterizationState.rasterizerDiscardEnable = VK_FALSE;
 	rasterizationState.polygonMode = VK_POLYGON_MODE_FILL;
-	rasterizationState.cullMode = CVKHelper::GetCullModeFlags(state.bEnableCullFace, state.cullFace);
-	rasterizationState.frontFace = CVKHelper::GetFrontFace(state.frontFace);
+	rasterizationState.cullMode = CVKHelper::TranslateCullModeFlags(state.bEnableCullFace, state.cullFace);
+	rasterizationState.frontFace = CVKHelper::TranslateFrontFace(state.frontFace);
 	rasterizationState.depthBiasEnable;
 	rasterizationState.depthBiasConstantFactor;
 	rasterizationState.depthBiasClamp;

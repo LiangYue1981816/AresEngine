@@ -143,7 +143,7 @@ VkPipelineStageFlags CVKHelper::GetPipelineStageFlags(VkAccessFlags access)
 	}
 }
 
-VkCullModeFlags CVKHelper::GetCullModeFlags(bool bEnableCullFace, GfxCullFace cullFace)
+VkCullModeFlags CVKHelper::TranslateCullModeFlags(bool bEnableCullFace, GfxCullFace cullFace)
 {
 	if (bEnableCullFace) {
 		switch (cullFace) {
@@ -156,7 +156,7 @@ VkCullModeFlags CVKHelper::GetCullModeFlags(bool bEnableCullFace, GfxCullFace cu
 	return VK_CULL_MODE_NONE;
 }
 
-VkFrontFace CVKHelper::GetFrontFace(GfxFrontFace frontFace)
+VkFrontFace CVKHelper::TranslateFrontFace(GfxFrontFace frontFace)
 {
 	switch (frontFace) {
 	case GFX_FRONTFACE_CW: return VK_FRONT_FACE_CLOCKWISE;
