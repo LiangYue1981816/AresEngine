@@ -10,6 +10,8 @@ public:
 
 	static GLenum TranslateDataType(GfxDataType dataType);
 	static GLenum TranslateIndexType(GfxIndexType indexType);
+	static GLenum TranslatePrimitiveTopology(GfxPrimitiveTopology topology);
+	static GLenum TranslatePolytonMode(GfxPolygonMode polygonMode);
 	static GLenum TranslateCullFace(GfxCullFace cullFace);
 	static GLenum TranslateFrontFace(GfxFrontFace frontFace);
 	static GLenum TranslateFunc(GfxFunc func);
@@ -21,7 +23,6 @@ public:
 	static GLenum TranslateAddressMode(GfxSamplerAddressMode addressMode);
 	static GLenum TranslateTextureTarget(GfxTextureType type);
 	static GLenum TranslateTextureCubeMapFace(GfxTextureCubeMapFace face);
-	static GLenum TranslateDrawMode(GfxDrawMode drawMode);
 
 
 private:

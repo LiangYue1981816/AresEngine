@@ -21,7 +21,7 @@ public:
 	{
 		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_UNIFORMMATRIX2FV, "CommandUniformMatrix2fv");
 		{
-			GLES3Renderer()->UniformMatrix2fv(m_name, m_value.size(), m_value.data());
+			GLES3Renderer()->GetCurrentPipelineGraphics()->UniformMatrix2fv(m_name, m_value.size(), m_value.data());
 		}
 	}
 

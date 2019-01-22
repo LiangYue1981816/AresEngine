@@ -21,7 +21,7 @@ public:
 	{
 		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_UNIFORM3IV, "CommandUniform3iv");
 		{
-			GLES3Renderer()->Uniform3iv(m_name, m_value.size(), m_value.data());
+			GLES3Renderer()->GetCurrentPipelineGraphics()->Uniform3iv(m_name, m_value.size(), m_value.data());
 		}
 	}
 

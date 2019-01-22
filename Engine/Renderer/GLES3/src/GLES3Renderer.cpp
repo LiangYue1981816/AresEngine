@@ -392,7 +392,7 @@ bool CGLES3Renderer::CmdDrawInstance(CGfxCommandBufferPtr &ptrCommandBuffer, con
 		return false;
 	}
 
-	if (ptrCommandBuffer->CmdDrawInstance(GFX_DRAWMODE_TRIANGLES, ptrMeshDraw->GetIndexType(), ptrMeshDraw->GetIndexOffset(), ptrMeshDraw->GetIndexCount(), instanceCount) == false) {
+	if (ptrCommandBuffer->CmdDrawInstance(ptrMeshDraw->GetIndexType(), ptrMeshDraw->GetIndexOffset(), ptrMeshDraw->GetIndexCount(), instanceCount) == false) {
 		return false;
 	}
 
@@ -405,7 +405,7 @@ bool CGLES3Renderer::CmdDrawIndirect(CGfxCommandBufferPtr &ptrCommandBuffer, con
 		return false;
 	}
 
-	if (ptrCommandBuffer->CmdDrawIndirect(GFX_DRAWMODE_TRIANGLES, ptrMeshDraw->GetIndexType(), 0) == false) {
+	if (ptrCommandBuffer->CmdDrawIndirect(ptrMeshDraw->GetIndexType(), 0) == false) {
 		return false;
 	}
 
@@ -504,135 +504,22 @@ void CGLES3Renderer::BindInputTexture(const char *szName, CGfxRenderTexture *pTe
 	m_pGlobalMaterialPass->SetSampler(szName, 0, GFX_FILTER_NEAREST, GFX_FILTER_LINEAR, GFX_SAMPLER_MIPMAP_MODE_NEAREST, GFX_SAMPLER_ADDRESS_MODE_REPEAT);
 }
 
-void CGLES3Renderer::Uniform1i(uint32_t name, int v0) const
+CGLES3MaterialPass* CGLES3Renderer::GetGlobalMaterialPass(void) const
 {
-	if (m_pCurrentPipelineGraphics) {
-		m_pCurrentPipelineGraphics->Uniform1i(name, v0);
-	}
+	return m_pGlobalMaterialPass;
 }
 
-void CGLES3Renderer::Uniform2i(uint32_t name, int v0, int v1) const
+CGLES3MaterialPass* CGLES3Renderer::GetCurrentMaterialPass(void) const
 {
-	if (m_pCurrentPipelineGraphics) {
-		m_pCurrentPipelineGraphics->Uniform2i(name, v0, v1);
-	}
+	return m_pCurrentMaterialPass;
 }
 
-void CGLES3Renderer::Uniform3i(uint32_t name, int v0, int v1, int v2) const
+CGLES3PipelineCompute* CGLES3Renderer::GetCurrentPipelineCompute(void) const
 {
-	if (m_pCurrentPipelineGraphics) {
-		m_pCurrentPipelineGraphics->Uniform3i(name, v0, v1, v2);
-	}
+	return m_pCurrentPipelineCompute;
 }
 
-void CGLES3Renderer::Uniform4i(uint32_t name, int v0, int v1, int v2, int v3) const
+CGLES3PipelineGraphics* CGLES3Renderer::GetCurrentPipelineGraphics(void) const
 {
-	if (m_pCurrentPipelineGraphics) {
-		m_pCurrentPipelineGraphics->Uniform4i(name, v0, v1, v2, v3);
-	}
-}
-
-void CGLES3Renderer::Uniform1f(uint32_t name, float v0) const
-{
-	if (m_pCurrentPipelineGraphics) {
-		m_pCurrentPipelineGraphics->Uniform1f(name, v0);
-	}
-}
-
-void CGLES3Renderer::Uniform2f(uint32_t name, float v0, float v1) const
-{
-	if (m_pCurrentPipelineGraphics) {
-		m_pCurrentPipelineGraphics->Uniform2f(name, v0, v1);
-	}
-}
-
-void CGLES3Renderer::Uniform3f(uint32_t name, float v0, float v1, float v2) const
-{
-	if (m_pCurrentPipelineGraphics) {
-		m_pCurrentPipelineGraphics->Uniform3f(name, v0, v1, v2);
-	}
-}
-
-void CGLES3Renderer::Uniform4f(uint32_t name, float v0, float v1, float v2, float v3) const
-{
-	if (m_pCurrentPipelineGraphics) {
-		m_pCurrentPipelineGraphics->Uniform4f(name, v0, v1, v2, v3);
-	}
-}
-
-void CGLES3Renderer::Uniform1iv(uint32_t name, int count, const int *value) const
-{
-	if (m_pCurrentPipelineGraphics) {
-		m_pCurrentPipelineGraphics->Uniform1iv(name, count, value);
-	}
-}
-
-void CGLES3Renderer::Uniform2iv(uint32_t name, int count, const int *value) const
-{
-	if (m_pCurrentPipelineGraphics) {
-		m_pCurrentPipelineGraphics->Uniform2iv(name, count, value);
-	}
-}
-
-void CGLES3Renderer::Uniform3iv(uint32_t name, int count, const int *value) const
-{
-	if (m_pCurrentPipelineGraphics) {
-		m_pCurrentPipelineGraphics->Uniform3iv(name, count, value);
-	}
-}
-
-void CGLES3Renderer::Uniform4iv(uint32_t name, int count, const int *value) const
-{
-	if (m_pCurrentPipelineGraphics) {
-		m_pCurrentPipelineGraphics->Uniform4iv(name, count, value);
-	}
-}
-
-void CGLES3Renderer::Uniform1fv(uint32_t name, int count, const float *value) const
-{
-	if (m_pCurrentPipelineGraphics) {
-		m_pCurrentPipelineGraphics->Uniform1fv(name, count, value);
-	}
-}
-
-void CGLES3Renderer::Uniform2fv(uint32_t name, int count, const float *value) const
-{
-	if (m_pCurrentPipelineGraphics) {
-		m_pCurrentPipelineGraphics->Uniform2fv(name, count, value);
-	}
-}
-
-void CGLES3Renderer::Uniform3fv(uint32_t name, int count, const float *value) const
-{
-	if (m_pCurrentPipelineGraphics) {
-		m_pCurrentPipelineGraphics->Uniform3fv(name, count, value);
-	}
-}
-
-void CGLES3Renderer::Uniform4fv(uint32_t name, int count, const float *value) const
-{
-	if (m_pCurrentPipelineGraphics) {
-		m_pCurrentPipelineGraphics->Uniform4fv(name, count, value);
-	}
-}
-
-void CGLES3Renderer::UniformMatrix2fv(uint32_t name, int count, const float *value) const
-{
-	if (m_pCurrentPipelineGraphics) {
-		m_pCurrentPipelineGraphics->UniformMatrix2fv(name, count, value);
-	}
-}
-
-void CGLES3Renderer::UniformMatrix3fv(uint32_t name, int count, const float *value) const
-{
-	if (m_pCurrentPipelineGraphics) {
-		m_pCurrentPipelineGraphics->UniformMatrix3fv(name, count, value);
-	}
-}
-
-void CGLES3Renderer::UniformMatrix4fv(uint32_t name, int count, const float *value) const
-{
-	if (m_pCurrentPipelineGraphics) {
-		m_pCurrentPipelineGraphics->UniformMatrix4fv(name, count, value);
-	}
+	return m_pCurrentPipelineGraphics;
 }

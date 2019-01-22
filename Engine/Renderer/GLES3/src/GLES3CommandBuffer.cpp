@@ -434,30 +434,30 @@ bool CGLES3CommandBuffer::CmdSetInstanceBufferData(const CGfxMeshDrawPtr &ptrMes
 	return false;
 }
 
-bool CGLES3CommandBuffer::CmdDrawElements(GfxDrawMode mode, GfxIndexType type, int offset, int count)
+bool CGLES3CommandBuffer::CmdDrawElements(GfxIndexType type, int offset, int count)
 {
 	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInRenderPass == true)) {
-		m_pCommands.emplace_back(new CGLES3CommandDrawElements(mode, type, offset, count));
+		m_pCommands.emplace_back(new CGLES3CommandDrawElements(type, offset, count));
 		return true;
 	}
 
 	return false;
 }
 
-bool CGLES3CommandBuffer::CmdDrawInstance(GfxDrawMode mode, GfxIndexType type, int offset, int count, int instanceCount)
+bool CGLES3CommandBuffer::CmdDrawInstance(GfxIndexType type, int offset, int count, int instanceCount)
 {
 	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInRenderPass == true)) {
-		m_pCommands.emplace_back(new CGLES3CommandDrawInstance(mode, type, offset, count, instanceCount));
+		m_pCommands.emplace_back(new CGLES3CommandDrawInstance(type, offset, count, instanceCount));
 		return true;
 	}
 
 	return false;
 }
 
-bool CGLES3CommandBuffer::CmdDrawIndirect(GfxDrawMode mode, GfxIndexType type, int offset)
+bool CGLES3CommandBuffer::CmdDrawIndirect(GfxIndexType type, int offset)
 {
 	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInRenderPass == true)) {
-		m_pCommands.emplace_back(new CGLES3CommandDrawIndirect(mode, type, offset));
+		m_pCommands.emplace_back(new CGLES3CommandDrawIndirect(type, offset));
 		return true;
 	}
 

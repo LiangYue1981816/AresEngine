@@ -20,6 +20,11 @@ uint32_t CGLES3PipelineGraphics::GetName(void) const
 	return m_name;
 }
 
+const PipelineState& CGLES3PipelineGraphics::GetPipelineState(void) const
+{
+	return m_state;
+}
+
 bool CGLES3PipelineGraphics::Create(const CGfxRenderPass *pRenderPass, const CGfxShader *pVertexShader, const CGfxShader *pFragmentShader, const PipelineState &state, uint32_t indexSubpass, uint32_t vertexBinding, uint32_t instanceBinding)
 {
 	if (pRenderPass == nullptr) {

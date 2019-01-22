@@ -22,7 +22,7 @@ public:
 	{
 		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_UNIFORM2I, "CommandUniform2i");
 		{
-			GLES3Renderer()->Uniform2i(m_name, m_v0, m_v1);
+			GLES3Renderer()->GetCurrentPipelineGraphics()->Uniform2i(m_name, m_v0, m_v1);
 		}
 	}
 

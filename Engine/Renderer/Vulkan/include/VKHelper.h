@@ -17,6 +17,8 @@ public:
 	static VkAccessFlags GetAccessMask(VkImageLayout layout);
 	static VkPipelineStageFlags GetPipelineStageFlags(VkAccessFlags access);
 
+	static VkPrimitiveTopology TranslatePrimitiveTopology(GfxPrimitiveTopology topology);
+	static VkPolygonMode TranslatePolytonMode(GfxPolygonMode polygonMode);
 	static VkCullModeFlags TranslateCullModeFlags(bool bEnableCullFace, GfxCullFace cullFace);
 	static VkFrontFace TranslateFrontFace(GfxFrontFace frontFace);
 

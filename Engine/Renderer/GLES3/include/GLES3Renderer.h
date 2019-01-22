@@ -89,6 +89,9 @@ class CALL_API CGLES3Renderer : public CGfxRenderer
 	friend class CGLES3CommandUniformMatrix2fv;
 	friend class CGLES3CommandUniformMatrix3fv;
 	friend class CGLES3CommandUniformMatrix4fv;
+	friend class CGLES3CommandDrawElements;
+	friend class CGLES3CommandDrawInstance;
+	friend class CGLES3CommandDrawIndirect;
 
 
 public:
@@ -200,25 +203,10 @@ private:
 	void BindInputTexture(const char *szName, CGfxRenderTexture *pTexture);
 
 private:
-	void Uniform1i(uint32_t name, int v0) const;
-	void Uniform2i(uint32_t name, int v0, int v1) const;
-	void Uniform3i(uint32_t name, int v0, int v1, int v2) const;
-	void Uniform4i(uint32_t name, int v0, int v1, int v2, int v3) const;
-	void Uniform1f(uint32_t name, float v0) const;
-	void Uniform2f(uint32_t name, float v0, float v1) const;
-	void Uniform3f(uint32_t name, float v0, float v1, float v2) const;
-	void Uniform4f(uint32_t name, float v0, float v1, float v2, float v3) const;
-	void Uniform1iv(uint32_t name, int count, const int *value) const;
-	void Uniform2iv(uint32_t name, int count, const int *value) const;
-	void Uniform3iv(uint32_t name, int count, const int *value) const;
-	void Uniform4iv(uint32_t name, int count, const int *value) const;
-	void Uniform1fv(uint32_t name, int count, const float *value) const;
-	void Uniform2fv(uint32_t name, int count, const float *value) const;
-	void Uniform3fv(uint32_t name, int count, const float *value) const;
-	void Uniform4fv(uint32_t name, int count, const float *value) const;
-	void UniformMatrix2fv(uint32_t name, int count, const float *value) const;
-	void UniformMatrix3fv(uint32_t name, int count, const float *value) const;
-	void UniformMatrix4fv(uint32_t name, int count, const float *value) const;
+	CGLES3MaterialPass* GetGlobalMaterialPass(void) const;
+	CGLES3MaterialPass* GetCurrentMaterialPass(void) const;
+	CGLES3PipelineCompute* GetCurrentPipelineCompute(void) const;
+	CGLES3PipelineGraphics* GetCurrentPipelineGraphics(void) const;
 
 
 private:

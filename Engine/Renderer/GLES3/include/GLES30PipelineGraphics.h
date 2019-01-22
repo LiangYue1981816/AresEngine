@@ -18,6 +18,9 @@ public:
 	uint32_t GetName(void) const;
 
 public:
+	const PipelineState& GetPipelineState(void) const;
+
+public:
 	bool Create(const CGfxRenderPass *pRenderPass, const CGfxShader *pVertexShader, const CGfxShader *pFragmentShader, const PipelineState &state, uint32_t indexSubpass, uint32_t vertexBinding, uint32_t instanceBinding);
 	void Destroy(void);
 

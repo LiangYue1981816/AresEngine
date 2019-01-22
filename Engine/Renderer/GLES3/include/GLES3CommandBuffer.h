@@ -53,9 +53,9 @@ public:
 	bool CmdSetScissor(int x, int y, int width, int height);
 	bool CmdSetViewport(int x, int y, int width, int height);
 	bool CmdSetInstanceBufferData(const CGfxMeshDrawPtr &ptrMeshDraw, const uint8_t *pInstanceBuffer, uint32_t size);
-	bool CmdDrawElements(GfxDrawMode mode, GfxIndexType type, int offset, int count);
-	bool CmdDrawInstance(GfxDrawMode mode, GfxIndexType type, int offset, int count, int instanceCount);
-	bool CmdDrawIndirect(GfxDrawMode mode, GfxIndexType type, int offset);
+	bool CmdDrawElements(GfxIndexType type, int offset, int count);
+	bool CmdDrawInstance(GfxIndexType type, int offset, int count, int instanceCount);
+	bool CmdDrawIndirect(GfxIndexType type, int offset);
 	bool CmdExecute(const CGfxCommandBufferPtr &ptrCommandBuffer);
 	bool CmdPresent(void);
 	bool CmdPushDebugGroup(const char *szMessage);

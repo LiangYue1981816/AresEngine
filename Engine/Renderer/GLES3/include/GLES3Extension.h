@@ -21,6 +21,7 @@ extern void GLClearColor(GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha
 extern void GLClearDepthf(GLfloat depth);
 extern void GLClearStencil(GLint stencil);
 
+extern void GLPolygonMode(GLenum mode);
 extern void GLCullFace(GLenum mode);
 extern void GLFrontFace(GLenum mode);
 extern void GLLineWidth(GLfloat width);

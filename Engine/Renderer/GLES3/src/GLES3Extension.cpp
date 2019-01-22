@@ -70,6 +70,10 @@ typedef struct ClearStencilParam {
 	int stencil;
 } ClearStencilParam;
 
+typedef struct PolygonModeParam {
+	uint32_t mode;
+} PolygonModeParam;
+
 typedef struct CullFaceParam {
 	uint32_t mode;
 } CullFaceParam;
@@ -202,6 +206,7 @@ static ViewportParam Viewport;
 static ClearColorParam ClearColor;
 static ClearDepthParam ClearDepth;
 static ClearStencilParam ClearStencil;
+static PolygonModeParam PolygonMode;
 static CullFaceParam CullFace;
 static FrontFaceParam FrontFace;
 static LineWidthParam LineWidth;
@@ -270,6 +275,7 @@ void GLResetContext(void)
 	ClearColor.alpha = GL_INVALID_VALUE;
 	ClearDepth.depth = GL_INVALID_VALUE;
 	ClearStencil.stencil = GL_INVALID_VALUE;
+	PolygonMode.mode = GL_INVALID_ENUM;
 	CullFace.mode = GL_INVALID_ENUM;
 	FrontFace.mode = GL_INVALID_ENUM;
 	LineWidth.width = GL_INVALID_VALUE;
@@ -401,6 +407,14 @@ void GLClearStencil(GLint stencil)
 	}
 }
 
+void GLPolygonMode(GLenum mode)
+{
+	if (PolygonMode.mode != mode) {
+		PolygonMode.mode = mode;
+		glPolygonMode(GL_FRONT_AND_BACK, mode);
+	}
+}
+
 void GLCullFace(GLenum mode)
 {
 	if (CullFace.mode != mode) {
@@ -528,6 +542,15 @@ void GLBlendColor(GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha)
 
 void GLBindState(const PipelineState *state)
 {
+	GLPolygonMode(CGLES3Helper::TranslatePolytonMode(state->polygonMode));
+
+	if (state->bEnableRasterizerDiscard) {
+		GLEnable(GL_RASTERIZER_DISCARD);
+	}
+	else {
+		GLDisable(GL_RASTERIZER_DISCARD);
+	}
+
 	if (state->bEnableCullFace) {
 		GLEnable(GL_CULL_FACE);
 		GLCullFace(CGLES3Helper::TranslateCullFace(state->cullFace));

@@ -23,7 +23,7 @@ public:
 	{
 		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_UNIFORM3F, "CommandUniform3f");
 		{
-			GLES3Renderer()->Uniform3f(m_name, m_v0, m_v1, m_v2);
+			GLES3Renderer()->GetCurrentPipelineGraphics()->Uniform3f(m_name, m_v0, m_v1, m_v2);
 		}
 	}
 

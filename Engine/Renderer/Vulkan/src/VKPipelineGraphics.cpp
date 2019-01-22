@@ -73,7 +73,7 @@ bool CVKPipelineGraphics::Create(const CGfxRenderPass *pRenderPass, const CGfxSh
 	inputAssemblyState.sType = VK_STRUCTURE_TYPE_PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO;
 	inputAssemblyState.pNext = nullptr;
 	inputAssemblyState.flags = 0;
-	inputAssemblyState.topology = VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST;
+	inputAssemblyState.topology = CVKHelper::TranslatePrimitiveTopology(state.topology);
 	inputAssemblyState.primitiveRestartEnable = VK_FALSE;
 
 	VkPipelineTessellationStateCreateInfo tessellationState = {};
@@ -94,8 +94,8 @@ bool CVKPipelineGraphics::Create(const CGfxRenderPass *pRenderPass, const CGfxSh
 	rasterizationState.pNext = nullptr;
 	rasterizationState.flags = 0;
 	rasterizationState.depthClampEnable = VK_FALSE;
-	rasterizationState.rasterizerDiscardEnable = VK_FALSE;
-	rasterizationState.polygonMode = VK_POLYGON_MODE_FILL;
+	rasterizationState.rasterizerDiscardEnable = state.bEnableRasterizerDiscard ? VK_TRUE : VK_FALSE;
+	rasterizationState.polygonMode = CVKHelper::TranslatePolytonMode(state.polygonMode);
 	rasterizationState.cullMode = CVKHelper::TranslateCullModeFlags(state.bEnableCullFace, state.cullFace);
 	rasterizationState.frontFace = CVKHelper::TranslateFrontFace(state.frontFace);
 	rasterizationState.depthBiasEnable;

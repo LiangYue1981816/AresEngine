@@ -3,6 +3,10 @@
 
 
 typedef struct PipelineState {
+	GfxPrimitiveTopology topology = GFX_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST;
+	GfxPolygonMode polygonMode = GFX_POLYGON_MODE_FILL;
+	bool bEnableRasterizerDiscard = false;
+
 	bool bEnableCullFace = true;
 	GfxCullFace cullFace = GFX_CULLFACE_BACK;
 	GfxFrontFace frontFace = GFX_FRONTFACE_CCW;
