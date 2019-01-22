@@ -17,6 +17,9 @@ public:
 	static VkAccessFlags GetAccessMask(VkImageLayout layout);
 	static VkPipelineStageFlags GetPipelineStageFlags(VkAccessFlags access);
 
+	static VkCullModeFlags GetCullModeFlags(bool bEnableCullFace, GfxCullFace cullFace);
+	static VkFrontFace GetFrontFace(GfxFrontFace frontFace);
+
 
 private:
 	static VkFormatProperties vkFormatProperties[VK_FORMAT_RANGE_SIZE];

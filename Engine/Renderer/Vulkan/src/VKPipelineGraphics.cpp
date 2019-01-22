@@ -77,34 +77,32 @@ bool CVKPipelineGraphics::Create(const CGfxRenderPass *pRenderPass, const CGfxSh
 	inputAssemblyState.primitiveRestartEnable = VK_FALSE;
 
 	VkPipelineTessellationStateCreateInfo tessellationState = {};
-	tessellationState.sType;
-	tessellationState.pNext;
-	tessellationState.flags;
-	tessellationState.patchControlPoints;
+	tessellationState.sType = VK_STRUCTURE_TYPE_PIPELINE_TESSELLATION_STATE_CREATE_INFO;
+	tessellationState.pNext = nullptr;
+	tessellationState.flags = 0;
+	tessellationState.patchControlPoints = 0;
 
 	VkPipelineViewportStateCreateInfo viewportState = {};
-	viewportState.sType;
-	viewportState.pNext;
-	viewportState.flags;
-	viewportState.viewportCount;
-	viewportState.pViewports;
-	viewportState.scissorCount;
-	viewportState.pScissors;
+	viewportState.sType = VK_STRUCTURE_TYPE_PIPELINE_VIEWPORT_STATE_CREATE_INFO;
+	viewportState.pNext = nullptr;
+	viewportState.flags = 0;
+	viewportState.viewportCount = 1;
+	viewportState.scissorCount = 1;
 
 	VkPipelineRasterizationStateCreateInfo rasterizationState = {};
-	rasterizationState.sType;
-	rasterizationState.pNext;
-	rasterizationState.flags;
-	rasterizationState.depthClampEnable;
-	rasterizationState.rasterizerDiscardEnable;
-	rasterizationState.polygonMode;
-	rasterizationState.cullMode;
-	rasterizationState.frontFace;
+	rasterizationState.sType = VK_STRUCTURE_TYPE_PIPELINE_RASTERIZATION_STATE_CREATE_INFO;
+	rasterizationState.pNext = nullptr;
+	rasterizationState.flags = 0;
+	rasterizationState.depthClampEnable = VK_FALSE;
+	rasterizationState.rasterizerDiscardEnable = VK_FALSE;
+	rasterizationState.polygonMode = VK_POLYGON_MODE_FILL;
+	rasterizationState.cullMode = CVKHelper::GetCullModeFlags(state.bEnableCullFace, state.cullFace);
+	rasterizationState.frontFace = CVKHelper::GetFrontFace(state.frontFace);
 	rasterizationState.depthBiasEnable;
 	rasterizationState.depthBiasConstantFactor;
 	rasterizationState.depthBiasClamp;
 	rasterizationState.depthBiasSlopeFactor;
-	rasterizationState.lineWidth;
+	rasterizationState.lineWidth = 1.0f;
 
 	VkPipelineMultisampleStateCreateInfo multisampleState = {};
 	multisampleState.sType;

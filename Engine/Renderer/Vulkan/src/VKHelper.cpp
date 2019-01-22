@@ -142,3 +142,25 @@ VkPipelineStageFlags CVKHelper::GetPipelineStageFlags(VkAccessFlags access)
 	default: return VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT;
 	}
 }
+
+VkCullModeFlags CVKHelper::GetCullModeFlags(bool bEnableCullFace, GfxCullFace cullFace)
+{
+	if (bEnableCullFace) {
+		switch (cullFace) {
+		case GFX_CULLFACE_FRONT: return VK_CULL_MODE_FRONT_BIT;
+		case GFX_CULLFACE_BACK: return VK_CULL_MODE_BACK_BIT;
+		case GFX_CULLFACE_FRONT_AND_BACK: return VK_CULL_MODE_FRONT_AND_BACK;
+		}
+	}
+	
+	return VK_CULL_MODE_NONE;
+}
+
+VkFrontFace CVKHelper::GetFrontFace(GfxFrontFace frontFace)
+{
+	switch (frontFace) {
+	case GFX_FRONTFACE_CW: return VK_FRONT_FACE_CLOCKWISE;
+	case GFX_FRONTFACE_CCW: return VK_FRONT_FACE_COUNTER_CLOCKWISE;
+	default: return VK_FRONT_FACE_COUNTER_CLOCKWISE;
+	}
+}
