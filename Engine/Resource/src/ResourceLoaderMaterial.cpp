@@ -206,10 +206,10 @@ static bool InternalLoadPipelineState(TiXmlNode *pPipelineNode, PipelineState &s
 			}
 
 			if (TiXmlNode *pColorNode = pStateNode->FirstChild("Color")) {
-				state.bEnableColorWrite[0] = StringToBool(pColorNode->ToElement()->AttributeString("enable_write_red"));
-				state.bEnableColorWrite[1] = StringToBool(pColorNode->ToElement()->AttributeString("enable_write_green"));
-				state.bEnableColorWrite[2] = StringToBool(pColorNode->ToElement()->AttributeString("enable_write_blue"));
-				state.bEnableColorWrite[3] = StringToBool(pColorNode->ToElement()->AttributeString("enable_write_alpha"));
+				state.bEnableRedWrite = StringToBool(pColorNode->ToElement()->AttributeString("enable_write_red"));
+				state.bEnableGreenWrite = StringToBool(pColorNode->ToElement()->AttributeString("enable_write_green"));
+				state.bEnableBlueWrite = StringToBool(pColorNode->ToElement()->AttributeString("enable_write_blue"));
+				state.bEnableAlphaWrite = StringToBool(pColorNode->ToElement()->AttributeString("enable_write_alpha"));
 			}
 
 			if (TiXmlNode *pAlphaToCoverageNode = pStateNode->FirstChild("AlphaToCoverage")) {
@@ -223,10 +223,10 @@ static bool InternalLoadPipelineState(TiXmlNode *pPipelineNode, PipelineState &s
 				state.blendEquation = StringToBlendEquation(pBlendNode->ToElement()->AttributeString("equation"));
 			}
 
-			if (TiXmlNode *pOffsetNode = pStateNode->FirstChild("Offset")) {
-				state.bEnablePolygonOffset = StringToBool(pOffsetNode->ToElement()->AttributeString("enable"));
-				state.polygonOffsetFactor = pOffsetNode->ToElement()->AttributeFloat1("factor");
-				state.polygonOffsetUnits = pOffsetNode->ToElement()->AttributeFloat1("units");
+			if (TiXmlNode *pDepthBiasNode = pStateNode->FirstChild("DepthBias")) {
+				state.bEnableDepthBias = StringToBool(pDepthBiasNode->ToElement()->AttributeString("enable"));
+				state.depthBiasSlopeFactor = pDepthBiasNode->ToElement()->AttributeFloat1("slope_factor");
+				state.depthBiasConstantFactor = pDepthBiasNode->ToElement()->AttributeFloat1("constant_factor");
 			}
 		}
 		LogOutput(nullptr, "OK\n");
@@ -576,7 +576,7 @@ bool CResourceLoader::LoadMaterial(const char *szFileName, CGfxMaterial *pMateri
 	//				<Color enable_write_red="" enable_write_green="" enable_write_blue="" enable_write_alpha="" />
 	//				<AlphaToCoverage enable="" />
 	//				<Blend enable="" src_factor="" dst_factor="" equation="" />
-	//				<Offset enable="" factor="" units="" />
+	//				<DepthBias enable="" slope_factor="" constant_factor="" />
 	//			</State>
 	//		</Pipeline>
 	//		<Texture2D file_name="" name="" min_filter="" mag_filter="" mipmap_mode="" address_mode="" />

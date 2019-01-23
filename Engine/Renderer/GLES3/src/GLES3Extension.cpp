@@ -602,19 +602,15 @@ void GLBindState(const PipelineState *state)
 		GLDisable(GL_BLEND);
 	}
 
-	if (state->bEnablePolygonOffset) {
+	if (state->bEnableDepthBias) {
 		GLEnable(GL_POLYGON_OFFSET_FILL);
-		GLPolygonOffset(state->polygonOffsetFactor, state->polygonOffsetUnits);
+		GLPolygonOffset(state->depthBiasSlopeFactor, state->depthBiasConstantFactor);
 	}
 	else {
 		GLDisable(GL_POLYGON_OFFSET_FILL);
 	}
 
-	GLColorMask(
-		state->bEnableColorWrite[0],
-		state->bEnableColorWrite[1],
-		state->bEnableColorWrite[2],
-		state->bEnableColorWrite[3]);
+	GLColorMask(state->bEnableRedWrite, state->bEnableGreenWrite, state->bEnableBlueWrite, state->bEnableAlphaWrite);
 }
 
 void GLBindVertexArray(GLuint array)
