@@ -109,8 +109,8 @@ bool CVKPipelineGraphics::Create(const CGfxRenderPass *pRenderPass, const CGfxSh
 	multisampleState.pNext = nullptr;
 	multisampleState.flags = 0;
 	multisampleState.rasterizationSamples;
-	multisampleState.sampleShadingEnable;
-	multisampleState.minSampleShading;
+	multisampleState.sampleShadingEnable = VK_FALSE;
+	multisampleState.minSampleShading = 0.0f;
 	multisampleState.pSampleMask;
 	multisampleState.alphaToCoverageEnable;
 	multisampleState.alphaToOneEnable;
