@@ -98,16 +98,16 @@ bool CVKPipelineGraphics::Create(const CGfxRenderPass *pRenderPass, const CGfxSh
 	rasterizationState.polygonMode = CVKHelper::TranslatePolytonMode(state.polygonMode);
 	rasterizationState.cullMode = CVKHelper::TranslateCullModeFlags(state.bEnableCullFace, state.cullFace);
 	rasterizationState.frontFace = CVKHelper::TranslateFrontFace(state.frontFace);
-	rasterizationState.depthBiasEnable;
-	rasterizationState.depthBiasConstantFactor;
-	rasterizationState.depthBiasClamp;
-	rasterizationState.depthBiasSlopeFactor;
+	rasterizationState.depthBiasEnable = state.bEnablePolygonOffset ? VK_TRUE : VK_FALSE;
+	rasterizationState.depthBiasSlopeFactor = state.polygonOffsetFactor;
+	rasterizationState.depthBiasConstantFactor = state.polygonOffsetUnits;
+	rasterizationState.depthBiasClamp = 0.0f;
 	rasterizationState.lineWidth = 1.0f;
 
 	VkPipelineMultisampleStateCreateInfo multisampleState = {};
-	multisampleState.sType;
-	multisampleState.pNext;
-	multisampleState.flags;
+	multisampleState.sType = VK_STRUCTURE_TYPE_PIPELINE_MULTISAMPLE_STATE_CREATE_INFO;
+	multisampleState.pNext = nullptr;
+	multisampleState.flags = 0;
 	multisampleState.rasterizationSamples;
 	multisampleState.sampleShadingEnable;
 	multisampleState.minSampleShading;
