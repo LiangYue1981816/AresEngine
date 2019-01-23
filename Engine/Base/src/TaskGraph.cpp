@@ -36,7 +36,7 @@ static void pthread_set_name(pthread_t thread, const char *name)
 	if (DWORD Win32ThreadID = pthread_getw32threadid_np(thread)) {
 		SetThreadName(Win32ThreadID, name);
 	}
-#else
+#elif PLATFORM_ANDROID
 	pthread_setname_np(thread, name);
 #endif
 }

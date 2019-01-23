@@ -17,8 +17,9 @@
 #  include <string.h>
 #  include <android/log.h>
 #elif PLATFORM_IOS
+#  include <unistd.h>
+#  include <dirent.h>
 #  include <sys/time.h>
-#  include <sys/sysconf.h>
 #else
 #  pragma message("Not support platform !!!")
 #endif

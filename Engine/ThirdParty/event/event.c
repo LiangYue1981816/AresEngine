@@ -1,7 +1,9 @@
 #include "event.h"
 
 #ifdef _WIN32
-#include "windows.h"
+#  include <windows.h>
+#else
+#  include <sys/time.h>
 #endif
 
 

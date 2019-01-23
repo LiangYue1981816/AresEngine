@@ -35,6 +35,7 @@ extern "C" {
 **
 ** Khronos $Revision$ on $Date$
 */
+#ifdef PLATFORM_WINDOWS
 
 #include <windows.h>
 #include <gl/gl.h>
@@ -1866,6 +1867,9 @@ GL_FUN_EXPORT PFNGLVERTEXATTRIBBINDINGPROC gl3wVertexAttribBinding;
 GL_FUN_EXPORT PFNGLVERTEXBINDINGDIVISORPROC gl3wVertexBindingDivisor;
 #endif
 #endif /* GL_ES_VERSION_3_1 */
+#elif PLATFORM_IOS
+#include <OpenGLES/ES3/gl.h>
+#endif
 
 #ifdef __cplusplus
 }
