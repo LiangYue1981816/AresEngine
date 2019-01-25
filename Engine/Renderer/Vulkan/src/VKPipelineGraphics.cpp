@@ -74,7 +74,7 @@ bool CVKPipelineGraphics::Create(const CGfxRenderPass *pRenderPass, const CGfxSh
 	inputAssemblyState.pNext = nullptr;
 	inputAssemblyState.flags = 0;
 	inputAssemblyState.topology = CVKHelper::TranslatePrimitiveTopology(state.topology);
-	inputAssemblyState.primitiveRestartEnable = VK_FALSE;
+	inputAssemblyState.primitiveRestartEnable = state.bEnablePrimitiveRestart ? VK_TRUE : VK_FALSE;
 
 	VkPipelineTessellationStateCreateInfo tessellationState = {};
 	tessellationState.sType = VK_STRUCTURE_TYPE_PIPELINE_TESSELLATION_STATE_CREATE_INFO;
@@ -108,26 +108,26 @@ bool CVKPipelineGraphics::Create(const CGfxRenderPass *pRenderPass, const CGfxSh
 	multisampleState.sType = VK_STRUCTURE_TYPE_PIPELINE_MULTISAMPLE_STATE_CREATE_INFO;
 	multisampleState.pNext = nullptr;
 	multisampleState.flags = 0;
-	multisampleState.rasterizationSamples;
+	multisampleState.rasterizationSamples = (VkSampleCountFlagBits)state.samples;
 	multisampleState.sampleShadingEnable = VK_FALSE;
-	multisampleState.minSampleShading = 0.0f;
-	multisampleState.pSampleMask;
-	multisampleState.alphaToCoverageEnable;
-	multisampleState.alphaToOneEnable;
+	multisampleState.minSampleShading = 1.0f;
+	multisampleState.pSampleMask = nullptr;
+	multisampleState.alphaToCoverageEnable = state.bEnableAlphaToCoverage ? VK_TRUE : VK_FALSE;
+	multisampleState.alphaToOneEnable = VK_FALSE;
 
 	VkPipelineDepthStencilStateCreateInfo depthStencilState = {};
-	depthStencilState.sType;
-	depthStencilState.pNext;
-	depthStencilState.flags;
-	depthStencilState.depthTestEnable;
-	depthStencilState.depthWriteEnable;
-	depthStencilState.depthCompareOp;
-	depthStencilState.depthBoundsTestEnable;
-	depthStencilState.stencilTestEnable;
+	depthStencilState.sType = VK_STRUCTURE_TYPE_PIPELINE_DEPTH_STENCIL_STATE_CREATE_INFO;
+	depthStencilState.pNext = nullptr;
+	depthStencilState.flags = 0;
+	depthStencilState.depthTestEnable = state.bEnableDepthTest ? VK_TRUE : VK_FALSE;
+	depthStencilState.depthWriteEnable = state.bEnableDepthWrite ? VK_TRUE : VK_FALSE;
+	depthStencilState.depthCompareOp = CVKHelper::TranslateCompareOp(state.depthFunc);
+	depthStencilState.depthBoundsTestEnable = VK_FALSE;
+	depthStencilState.minDepthBounds = 0.0f;
+	depthStencilState.maxDepthBounds = 1.0f;
+	depthStencilState.stencilTestEnable = state.bEnableStencilTest ? VK_TRUE : VK_FALSE;
 	depthStencilState.front;
 	depthStencilState.back;
-	depthStencilState.minDepthBounds;
-	depthStencilState.maxDepthBounds;
 
 	VkPipelineColorBlendStateCreateInfo colorBlendState = {};
 	colorBlendState.sType;

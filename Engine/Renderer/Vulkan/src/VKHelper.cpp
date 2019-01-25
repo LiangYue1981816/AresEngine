@@ -273,3 +273,35 @@ VkFrontFace CVKHelper::TranslateFrontFace(GfxFrontFace frontFace)
 		return VK_FRONT_FACE_COUNTER_CLOCKWISE;
 	}
 }
+
+VkCompareOp CVKHelper::TranslateCompareOp(GfxFunc func)
+{
+	switch ((int)func) {
+	case GFX_FUNC_NEVER:
+		return VK_COMPARE_OP_NEVER;
+
+	case GFX_FUNC_LESS:
+		return VK_COMPARE_OP_LESS;
+
+	case GFX_FUNC_LEQUAL:
+		return VK_COMPARE_OP_LESS_OR_EQUAL;
+
+	case GFX_FUNC_GREATER:
+		return VK_COMPARE_OP_GREATER;
+
+	case GFX_FUNC_GEQUAL:
+		return VK_COMPARE_OP_GREATER_OR_EQUAL;
+
+	case GFX_FUNC_EQUAL:
+		return VK_COMPARE_OP_EQUAL;
+
+	case GFX_FUNC_NOTEQUAL:
+		return VK_COMPARE_OP_NOT_EQUAL;
+
+	case GFX_FUNC_ALWAYS:
+		return VK_COMPARE_OP_ALWAYS;
+
+	default:
+		return VK_COMPARE_OP_ALWAYS;
+	}
+}

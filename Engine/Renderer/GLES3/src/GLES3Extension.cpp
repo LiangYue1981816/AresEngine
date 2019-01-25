@@ -297,7 +297,7 @@ void GLResetContext(void)
 	StencilOp.sfail = GL_INVALID_ENUM;
 	StencilMask.mask = GL_INVALID_ENUM;
 	BlendFunc.sfactor = GL_INVALID_ENUM;
-	BlendFunc.dfactor = GL_INVALID_ENUM;;
+	BlendFunc.dfactor = GL_INVALID_ENUM;
 	BlendEquation.mode = GL_INVALID_ENUM;
 	BlendColor.red = GL_INVALID_VALUE;
 	BlendColor.green = GL_INVALID_VALUE;
@@ -572,7 +572,6 @@ void GLBindState(const PipelineState *state)
 	if (state->bEnableDepthTest) {
 		GLEnable(GL_DEPTH_TEST);
 		GLDepthFunc(CGLES3Helper::TranslateFunc(state->depthFunc));
-		GLDepthRangef(state->depthRangeNear, state->depthRangeFar);
 	}
 	else {
 		GLDisable(GL_DEPTH_TEST);

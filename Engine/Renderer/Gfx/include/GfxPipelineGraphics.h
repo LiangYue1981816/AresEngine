@@ -8,12 +8,12 @@ typedef struct PipelineState {
 	GfxPrimitiveTopology topology = GFX_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST;
 
 	// Rasterization State
+	bool bEnableRasterizerDiscard = false;
+	GfxPolygonMode polygonMode = GFX_POLYGON_MODE_FILL;
+
 	bool bEnableCullFace = true;
 	GfxCullFace cullFace = GFX_CULLFACE_BACK;
 	GfxFrontFace frontFace = GFX_FRONTFACE_CCW;
-
-	bool bEnableRasterizerDiscard = false;
-	GfxPolygonMode polygonMode = GFX_POLYGON_MODE_FILL;
 
 	bool bEnableDepthBias = false;
 	float depthBiasSlopeFactor = 0.0f;
@@ -27,9 +27,7 @@ typedef struct PipelineState {
 	// Depth Stencil State
 	bool bEnableDepthTest = true;
 	bool bEnableDepthWrite = true;
-	float depthRangeNear = 0.0f;
-	float depthRangeFar = 1.0f;
-	GfxFunc depthFunc = GFX_FUNC_LESS;
+	GfxFunc depthFunc = GFX_FUNC_LEQUAL;
 
 	bool bEnableStencilTest = false;
 	uint32_t stencilRef = 0;

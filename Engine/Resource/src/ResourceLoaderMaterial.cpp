@@ -201,8 +201,6 @@ static bool InternalLoadPipelineState(TiXmlNode *pPipelineNode, PipelineState &s
 				state.bEnableDepthTest = StringToBool(pDepthNode->ToElement()->AttributeString("enable_test"));
 				state.bEnableDepthWrite = StringToBool(pDepthNode->ToElement()->AttributeString("enable_write"));
 				state.depthFunc = StringToDepthFunc(pDepthNode->ToElement()->AttributeString("func"));
-				state.depthRangeNear = pDepthNode->ToElement()->AttributeFloat1("range_near");
-				state.depthRangeFar = pDepthNode->ToElement()->AttributeFloat1("range_far");
 			}
 
 			if (TiXmlNode *pColorNode = pStateNode->FirstChild("Color")) {
@@ -572,7 +570,7 @@ bool CResourceLoader::LoadMaterial(const char *szFileName, CGfxMaterial *pMateri
 	//			<State>
 	//				<Cull enable="" cull_face="" front_face="" />
 	//				<Stencil enable="" func="" ref="" mask="" sfail="" dfail="" dpass="" />
-	//				<Depth enable_test="" enable_write="" func="" range_near="" range_far="" />
+	//				<Depth enable_test="" enable_write="" func="" />
 	//				<Color enable_write_red="" enable_write_green="" enable_write_blue="" enable_write_alpha="" />
 	//				<AlphaToCoverage enable="" />
 	//				<Blend enable="" src_factor="" dst_factor="" equation="" />
