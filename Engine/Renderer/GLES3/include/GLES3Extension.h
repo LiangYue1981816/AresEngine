@@ -31,11 +31,11 @@ extern void GLDepthFunc(GLenum func);
 extern void GLDepthMask(GLboolean flag);
 extern void GLColorMask(GLboolean red, GLboolean green, GLboolean blue, GLboolean alpha);
 
-extern void GLStencilFrontFunc(GLenum func, GLint ref, GLuint mask);
 extern void GLStencilFrontOp(GLenum sfail, GLenum dpfail, GLenum dppass);
+extern void GLStencilFrontFunc(GLenum func, GLint ref, GLuint mask);
 extern void GLStencilFrontMask(GLuint mask);
-extern void GLStencilBackFunc(GLenum func, GLint ref, GLuint mask);
 extern void GLStencilBackOp(GLenum sfail, GLenum dpfail, GLenum dppass);
+extern void GLStencilBackFunc(GLenum func, GLint ref, GLuint mask);
 extern void GLStencilBackMask(GLuint mask);
 
 extern void GLBlendFunc(GLenum sfactor, GLenum dfactor);
