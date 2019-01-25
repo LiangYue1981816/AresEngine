@@ -121,7 +121,7 @@ bool CVKPipelineGraphics::Create(const CGfxRenderPass *pRenderPass, const CGfxSh
 	depthStencilState.flags = 0;
 	depthStencilState.depthTestEnable = state.bEnableDepthTest ? VK_TRUE : VK_FALSE;
 	depthStencilState.depthWriteEnable = state.bEnableDepthWrite ? VK_TRUE : VK_FALSE;
-	depthStencilState.depthCompareOp = CVKHelper::TranslateCompareOp(state.depthFunc);
+	depthStencilState.depthCompareOp = CVKHelper::TranslateCompareOp(state.depthCompareOp);
 	depthStencilState.depthBoundsTestEnable = VK_FALSE;
 	depthStencilState.minDepthBounds = 0.0f;
 	depthStencilState.maxDepthBounds = 1.0f;

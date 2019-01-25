@@ -37,20 +37,20 @@ static GfxFrontFace StringToFrontFace(const char *szString)
 	return GFX_FRONTFACE_INVALID_ENUM;
 }
 
-static GfxFunc StringToStencilFunc(const char *szString)
+static GfxCompareOp StringToCompareOp(const char *szString)
 {
 	if (szString) {
-		if (!stricmp(szString, "GFX_NEVER")) return GFX_FUNC_NEVER;
-		if (!stricmp(szString, "GFX_LESS")) return GFX_FUNC_LESS;
-		if (!stricmp(szString, "GFX_LEQUAL")) return GFX_FUNC_LEQUAL;
-		if (!stricmp(szString, "GFX_GREATER")) return GFX_FUNC_GREATER;
-		if (!stricmp(szString, "GFX_GEQUAL")) return GFX_FUNC_GEQUAL;
-		if (!stricmp(szString, "GFX_EQUAL")) return GFX_FUNC_EQUAL;
-		if (!stricmp(szString, "GFX_NOTEQUAL")) return GFX_FUNC_NOTEQUAL;
-		if (!stricmp(szString, "GFX_ALWAYS")) return GFX_FUNC_ALWAYS;
+		if (!stricmp(szString, "GFX_COMPAREOP_NEVER")) return GFX_COMPAREOP_NEVER;
+		if (!stricmp(szString, "GFX_COMPAREOP_LESS")) return GFX_COMPAREOP_LESS;
+		if (!stricmp(szString, "GFX_COMPAREOP_LEQUAL")) return GFX_COMPAREOP_LEQUAL;
+		if (!stricmp(szString, "GFX_COMPAREOP_GREATER")) return GFX_COMPAREOP_GREATER;
+		if (!stricmp(szString, "GFX_COMPAREOP_GEQUAL")) return GFX_COMPAREOP_GEQUAL;
+		if (!stricmp(szString, "GFX_COMPAREOP_EQUAL")) return GFX_COMPAREOP_EQUAL;
+		if (!stricmp(szString, "GFX_COMPAREOP_NOTEQUAL")) return GFX_COMPAREOP_NOTEQUAL;
+		if (!stricmp(szString, "GFX_COMPAREOP_ALWAYS")) return GFX_COMPAREOP_ALWAYS;
 	}
 
-	return GFX_FUNC_INVALID_ENUM;
+	return GFX_COMPAREOP_INVALID_ENUM;
 }
 
 static GfxStencilOp StringToStencilOp(const char *szString)
@@ -67,21 +67,6 @@ static GfxStencilOp StringToStencilOp(const char *szString)
 	}
 
 	return GFX_STENCILOP_INVALID_ENUM;
-}
-
-static GfxFunc StringToDepthFunc(const char *szString)
-{
-	if (szString) {
-		if (!stricmp(szString, "GFX_NEVER")) return GFX_FUNC_NEVER;
-		if (!stricmp(szString, "GFX_LESS")) return GFX_FUNC_LESS;
-		if (!stricmp(szString, "GFX_EQUAL")) return GFX_FUNC_EQUAL;
-		if (!stricmp(szString, "GFX_LEQUAL")) return GFX_FUNC_LEQUAL;
-		if (!stricmp(szString, "GFX_GREATER")) return GFX_FUNC_GREATER;
-		if (!stricmp(szString, "GFX_NOTEQUAL")) return GFX_FUNC_NOTEQUAL;
-		if (!stricmp(szString, "GFX_GEQUAL")) return GFX_FUNC_GEQUAL;
-	}
-
-	return GFX_FUNC_INVALID_ENUM;
 }
 
 static GfxFilter StringToFilter(const char *szString)
@@ -189,15 +174,15 @@ static bool InternalLoadPipelineState(TiXmlNode *pPipelineNode, PipelineState &s
 
 			if (TiXmlNode *pStencilNode = pStateNode->FirstChild("Stencil")) {
 				state.bEnableStencilTest = StringToBool(pStencilNode->ToElement()->AttributeString("enable"));
-				state.stencilFrontFunc = StringToStencilFunc(pStencilNode->ToElement()->AttributeString("front_func"));
 				state.stencilFrontRef = pStencilNode->ToElement()->AttributeInt1("front_ref");
 				state.stencilFrontMask = pStencilNode->ToElement()->AttributeInt1("front_mask");
+				state.stencilFrontCompareOp = StringToCompareOp(pStencilNode->ToElement()->AttributeString("front_func"));
 				state.stencilFrontOpSFail = StringToStencilOp(pStencilNode->ToElement()->AttributeString("front_sfail"));
 				state.stencilFrontOpDFail = StringToStencilOp(pStencilNode->ToElement()->AttributeString("front_dfail"));
 				state.stencilFrontOpDPass = StringToStencilOp(pStencilNode->ToElement()->AttributeString("front_dpass"));
-				state.stencilBackFunc = StringToStencilFunc(pStencilNode->ToElement()->AttributeString("back_func"));
 				state.stencilBackRef = pStencilNode->ToElement()->AttributeInt1("back_ref");
 				state.stencilBackMask = pStencilNode->ToElement()->AttributeInt1("back_mask");
+				state.stencilBackCompareOp = StringToCompareOp(pStencilNode->ToElement()->AttributeString("back_func"));
 				state.stencilBackOpSFail = StringToStencilOp(pStencilNode->ToElement()->AttributeString("back_sfail"));
 				state.stencilBackOpDFail = StringToStencilOp(pStencilNode->ToElement()->AttributeString("back_dfail"));
 				state.stencilBackOpDPass = StringToStencilOp(pStencilNode->ToElement()->AttributeString("back_dpass"));
@@ -206,7 +191,7 @@ static bool InternalLoadPipelineState(TiXmlNode *pPipelineNode, PipelineState &s
 			if (TiXmlNode *pDepthNode = pStateNode->FirstChild("Depth")) {
 				state.bEnableDepthTest = StringToBool(pDepthNode->ToElement()->AttributeString("enable_test"));
 				state.bEnableDepthWrite = StringToBool(pDepthNode->ToElement()->AttributeString("enable_write"));
-				state.depthFunc = StringToDepthFunc(pDepthNode->ToElement()->AttributeString("func"));
+				state.depthCompareOp = StringToCompareOp(pDepthNode->ToElement()->AttributeString("func"));
 			}
 
 			if (TiXmlNode *pColorNode = pStateNode->FirstChild("Color")) {

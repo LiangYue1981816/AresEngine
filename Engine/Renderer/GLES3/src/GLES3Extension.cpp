@@ -600,12 +600,12 @@ void GLBindState(const PipelineState *state)
 
 	if (state->bEnableStencilTest) {
 		GLEnable(GL_STENCIL_TEST);
-		GLStencilFrontFunc(CGLES3Helper::TranslateFunc(state->stencilFrontFunc), state->stencilFrontRef, state->stencilFrontMask);
-		GLStencilFrontOp(CGLES3Helper::TranslateStencilOp(state->stencilFrontOpSFail), CGLES3Helper::TranslateStencilOp(state->stencilFrontOpDFail), CGLES3Helper::TranslateStencilOp(state->stencilFrontOpDPass));
 		GLStencilFrontMask(state->stencilFrontMask);
-		GLStencilBackFunc(CGLES3Helper::TranslateFunc(state->stencilBackFunc), state->stencilBackRef, state->stencilBackMask);
-		GLStencilBackOp(CGLES3Helper::TranslateStencilOp(state->stencilBackOpSFail), CGLES3Helper::TranslateStencilOp(state->stencilBackOpDFail), CGLES3Helper::TranslateStencilOp(state->stencilBackOpDPass));
+		GLStencilFrontFunc(CGLES3Helper::TranslateCompareOp(state->stencilFrontCompareOp), state->stencilFrontRef, state->stencilFrontMask);
+		GLStencilFrontOp(CGLES3Helper::TranslateStencilOp(state->stencilFrontOpSFail), CGLES3Helper::TranslateStencilOp(state->stencilFrontOpDFail), CGLES3Helper::TranslateStencilOp(state->stencilFrontOpDPass));
 		GLStencilBackMask(state->stencilBackMask);
+		GLStencilBackFunc(CGLES3Helper::TranslateCompareOp(state->stencilBackCompareOp), state->stencilBackRef, state->stencilBackMask);
+		GLStencilBackOp(CGLES3Helper::TranslateStencilOp(state->stencilBackOpSFail), CGLES3Helper::TranslateStencilOp(state->stencilBackOpDFail), CGLES3Helper::TranslateStencilOp(state->stencilBackOpDPass));
 	}
 	else {
 		GLDisable(GL_STENCIL_TEST);
@@ -613,7 +613,7 @@ void GLBindState(const PipelineState *state)
 
 	if (state->bEnableDepthTest) {
 		GLEnable(GL_DEPTH_TEST);
-		GLDepthFunc(CGLES3Helper::TranslateFunc(state->depthFunc));
+		GLDepthFunc(CGLES3Helper::TranslateCompareOp(state->depthCompareOp));
 	}
 	else {
 		GLDisable(GL_DEPTH_TEST);
