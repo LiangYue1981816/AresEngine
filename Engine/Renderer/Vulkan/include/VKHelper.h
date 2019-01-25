@@ -22,6 +22,7 @@ public:
 	static VkCullModeFlags TranslateCullModeFlags(bool bEnableCullFace, GfxCullFace cullFace);
 	static VkFrontFace TranslateFrontFace(GfxFrontFace frontFace);
 	static VkCompareOp TranslateCompareOp(GfxFunc func);
+	static VkStencilOp TranslateStencilOp(GfxStencilOp op);
 
 
 private:

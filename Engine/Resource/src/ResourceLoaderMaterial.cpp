@@ -189,12 +189,18 @@ static bool InternalLoadPipelineState(TiXmlNode *pPipelineNode, PipelineState &s
 
 			if (TiXmlNode *pStencilNode = pStateNode->FirstChild("Stencil")) {
 				state.bEnableStencilTest = StringToBool(pStencilNode->ToElement()->AttributeString("enable"));
-				state.stencilFunc = StringToStencilFunc(pStencilNode->ToElement()->AttributeString("func"));
-				state.stencilRef = pStencilNode->ToElement()->AttributeInt1("ref");
-				state.stencilMask = pStencilNode->ToElement()->AttributeInt1("mask");
-				state.stencilOpSFail = StringToStencilOp(pStencilNode->ToElement()->AttributeString("sfail"));
-				state.stencilOpDFail = StringToStencilOp(pStencilNode->ToElement()->AttributeString("dfail"));
-				state.stencilOpDPass = StringToStencilOp(pStencilNode->ToElement()->AttributeString("dpass"));
+				state.stencilFrontFunc = StringToStencilFunc(pStencilNode->ToElement()->AttributeString("front_func"));
+				state.stencilFrontRef = pStencilNode->ToElement()->AttributeInt1("front_ref");
+				state.stencilFrontMask = pStencilNode->ToElement()->AttributeInt1("front_mask");
+				state.stencilFrontOpSFail = StringToStencilOp(pStencilNode->ToElement()->AttributeString("front_sfail"));
+				state.stencilFrontOpDFail = StringToStencilOp(pStencilNode->ToElement()->AttributeString("front_dfail"));
+				state.stencilFrontOpDPass = StringToStencilOp(pStencilNode->ToElement()->AttributeString("front_dpass"));
+				state.stencilBackFunc = StringToStencilFunc(pStencilNode->ToElement()->AttributeString("back_func"));
+				state.stencilBackRef = pStencilNode->ToElement()->AttributeInt1("back_ref");
+				state.stencilBackMask = pStencilNode->ToElement()->AttributeInt1("back_mask");
+				state.stencilBackOpSFail = StringToStencilOp(pStencilNode->ToElement()->AttributeString("back_sfail"));
+				state.stencilBackOpDFail = StringToStencilOp(pStencilNode->ToElement()->AttributeString("back_dfail"));
+				state.stencilBackOpDPass = StringToStencilOp(pStencilNode->ToElement()->AttributeString("back_dpass"));
 			}
 
 			if (TiXmlNode *pDepthNode = pStateNode->FirstChild("Depth")) {
@@ -569,7 +575,7 @@ bool CResourceLoader::LoadMaterial(const char *szFileName, CGfxMaterial *pMateri
 	//			</Fragment>
 	//			<State>
 	//				<Cull enable="" cull_face="" front_face="" />
-	//				<Stencil enable="" func="" ref="" mask="" sfail="" dfail="" dpass="" />
+	//				<Stencil enable="" front_func="" front_ref="" front_mask="" front_sfail="" front_dfail="" front_dpass="" back_func="" back_ref="" back_mask="" back_sfail="" back_dfail="" back_dpass="" />
 	//				<Depth enable_test="" enable_write="" func="" />
 	//				<Color enable_write_red="" enable_write_green="" enable_write_blue="" enable_write_alpha="" />
 	//				<AlphaToCoverage enable="" />

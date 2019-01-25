@@ -126,8 +126,20 @@ bool CVKPipelineGraphics::Create(const CGfxRenderPass *pRenderPass, const CGfxSh
 	depthStencilState.minDepthBounds = 0.0f;
 	depthStencilState.maxDepthBounds = 1.0f;
 	depthStencilState.stencilTestEnable = state.bEnableStencilTest ? VK_TRUE : VK_FALSE;
-	depthStencilState.front;
-	depthStencilState.back;
+	depthStencilState.front.failOp;
+	depthStencilState.front.passOp;
+	depthStencilState.front.depthFailOp;
+	depthStencilState.front.compareOp;
+	depthStencilState.front.compareMask;
+	depthStencilState.front.writeMask;
+	depthStencilState.front.reference;
+	depthStencilState.back.failOp;
+	depthStencilState.back.passOp;
+	depthStencilState.back.depthFailOp;
+	depthStencilState.back.compareOp;
+	depthStencilState.back.compareMask;
+	depthStencilState.back.writeMask;
+	depthStencilState.back.reference;
 
 	VkPipelineColorBlendStateCreateInfo colorBlendState = {};
 	colorBlendState.sType;

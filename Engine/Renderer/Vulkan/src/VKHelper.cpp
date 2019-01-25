@@ -305,3 +305,35 @@ VkCompareOp CVKHelper::TranslateCompareOp(GfxFunc func)
 		return VK_COMPARE_OP_ALWAYS;
 	}
 }
+
+VkStencilOp CVKHelper::TranslateStencilOp(GfxStencilOp op)
+{
+	switch ((int)op) {
+	case GFX_STENCILOP_KEEP:
+		return VK_STENCIL_OP_KEEP;
+
+	case GFX_STENCILOP_ZERO:
+		return VK_STENCIL_OP_ZERO;
+
+	case GFX_STENCILOP_REPLACE:
+		return VK_STENCIL_OP_REPLACE;
+
+	case GFX_STENCILOP_INCR:
+		return VK_STENCIL_OP_INCREMENT_AND_CLAMP;
+
+	case GFX_STENCILOP_INCR_WRAP:
+		return VK_STENCIL_OP_INCREMENT_AND_WRAP;
+
+	case GFX_STENCILOP_DECR:
+		return VK_STENCIL_OP_DECREMENT_AND_CLAMP;
+
+	case GFX_STENCILOP_DECR_WRAP:
+		return VK_STENCIL_OP_DECREMENT_AND_WRAP;
+
+	case GFX_STENCILOP_INVERT:
+		return VK_STENCIL_OP_INVERT;
+
+	default:
+		return VK_STENCIL_OP_KEEP;
+	}
+}

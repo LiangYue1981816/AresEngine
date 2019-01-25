@@ -215,9 +215,12 @@ static DepthRangefParam DepthRangef;
 static DepthFuncParam DepthFunc;
 static DepthMaskParam DepthMask;
 static ColorMaskParam ColorMask;
-static StencilFuncParam StencilFunc;
-static StencilOpParam StencilOp;
-static StencilMaskParam StencilMask;
+static StencilFuncParam StencilFrontFunc;
+static StencilOpParam StencilFrontOp;
+static StencilMaskParam StencilFrontMask;
+static StencilFuncParam StencilBackFunc;
+static StencilOpParam StencilBackOp;
+static StencilMaskParam StencilBackMask;
 static BlendFuncParam BlendFunc;
 static BlendEquationParam BlendEquation;
 static BlendColorParam BlendColor;
@@ -235,12 +238,12 @@ static eastl::unordered_map<GLuint, TextureParam> Textures;
 void GLResetContext(void)
 {
 	Caps.clear();
+	Samplers.clear();
+	Textures.clear();
 	Buffers.clear();
 	BufferBases.clear();
 	BufferRanges.clear();
 	FrameBuffers.clear();
-	Samplers.clear();
-	Textures.clear();
 	ProgramPipeline.uniform1i.clear();
 	ProgramPipeline.uniform2i.clear();
 	ProgramPipeline.uniform3i.clear();
@@ -289,13 +292,20 @@ void GLResetContext(void)
 	ColorMask.green = GL_INVALID_VALUE;
 	ColorMask.blue = GL_INVALID_VALUE;
 	ColorMask.alpha = GL_INVALID_VALUE;
-	StencilFunc.func = GL_INVALID_ENUM;
-	StencilFunc.mask = GL_INVALID_ENUM;
-	StencilFunc.ref = GL_INVALID_ENUM;
-	StencilOp.dpfail = GL_INVALID_ENUM;
-	StencilOp.dppass = GL_INVALID_ENUM;
-	StencilOp.sfail = GL_INVALID_ENUM;
-	StencilMask.mask = GL_INVALID_ENUM;
+	StencilFrontFunc.func = GL_INVALID_ENUM;
+	StencilFrontFunc.mask = GL_INVALID_ENUM;
+	StencilFrontFunc.ref = GL_INVALID_ENUM;
+	StencilFrontOp.dpfail = GL_INVALID_ENUM;
+	StencilFrontOp.dppass = GL_INVALID_ENUM;
+	StencilFrontOp.sfail = GL_INVALID_ENUM;
+	StencilFrontMask.mask = GL_INVALID_ENUM;
+	StencilBackFunc.func = GL_INVALID_ENUM;
+	StencilBackFunc.mask = GL_INVALID_ENUM;
+	StencilBackFunc.ref = GL_INVALID_ENUM;
+	StencilBackOp.dpfail = GL_INVALID_ENUM;
+	StencilBackOp.dppass = GL_INVALID_ENUM;
+	StencilBackOp.sfail = GL_INVALID_ENUM;
+	StencilBackMask.mask = GL_INVALID_ENUM;
 	BlendFunc.sfactor = GL_INVALID_ENUM;
 	BlendFunc.dfactor = GL_INVALID_ENUM;
 	BlendEquation.mode = GL_INVALID_ENUM;
@@ -484,31 +494,59 @@ void GLColorMask(GLboolean red, GLboolean green, GLboolean blue, GLboolean alpha
 	}
 }
 
-void GLStencilFunc(GLenum func, GLint ref, GLuint mask)
+void GLStencilFrontFunc(GLenum func, GLint ref, GLuint mask)
 {
-	if (StencilFunc.func != func || StencilFunc.ref != ref || StencilFunc.mask != mask) {
-		StencilFunc.func = func;
-		StencilFunc.ref = ref;
-		StencilFunc.mask = mask;
-		glStencilFunc(func, ref, mask);
+	if (StencilFrontFunc.func != func || StencilFrontFunc.ref != ref || StencilFrontFunc.mask != mask) {
+		StencilFrontFunc.func = func;
+		StencilFrontFunc.ref = ref;
+		StencilFrontFunc.mask = mask;
+		glStencilFuncSeparate(GL_FRONT, func, ref, mask);
 	}
 }
 
-void GLStencilOp(GLenum sfail, GLenum dpfail, GLenum dppass)
+void GLStencilFrontOp(GLenum sfail, GLenum dpfail, GLenum dppass)
 {
-	if (StencilOp.sfail != sfail || StencilOp.dpfail != dpfail || StencilOp.dppass != dppass) {
-		StencilOp.sfail = sfail;
-		StencilOp.dpfail = dpfail;
-		StencilOp.dppass = dppass;
-		glStencilOp(sfail, dpfail, dppass);
+	if (StencilFrontOp.sfail != sfail || StencilFrontOp.dpfail != dpfail || StencilFrontOp.dppass != dppass) {
+		StencilFrontOp.sfail = sfail;
+		StencilFrontOp.dpfail = dpfail;
+		StencilFrontOp.dppass = dppass;
+		glStencilOpSeparate(GL_FRONT, sfail, dpfail, dppass);
 	}
 }
 
-void GLStencilMask(GLuint mask)
+void GLStencilFrontMask(GLuint mask)
 {
-	if (StencilMask.mask != mask) {
-		StencilMask.mask = mask;
-		glStencilMask(mask);
+	if (StencilFrontMask.mask != mask) {
+		StencilFrontMask.mask = mask;
+		glStencilMaskSeparate(GL_FRONT, mask);
+	}
+}
+
+void GLStencilBackFunc(GLenum func, GLint ref, GLuint mask)
+{
+	if (StencilBackFunc.func != func || StencilBackFunc.ref != ref || StencilBackFunc.mask != mask) {
+		StencilBackFunc.func = func;
+		StencilBackFunc.ref = ref;
+		StencilBackFunc.mask = mask;
+		glStencilFuncSeparate(GL_BACK, func, ref, mask);
+	}
+}
+
+void GLStencilBackOp(GLenum sfail, GLenum dpfail, GLenum dppass)
+{
+	if (StencilBackOp.sfail != sfail || StencilBackOp.dpfail != dpfail || StencilBackOp.dppass != dppass) {
+		StencilBackOp.sfail = sfail;
+		StencilBackOp.dpfail = dpfail;
+		StencilBackOp.dppass = dppass;
+		glStencilOpSeparate(GL_BACK, sfail, dpfail, dppass);
+	}
+}
+
+void GLStencilBackMask(GLuint mask)
+{
+	if (StencilBackMask.mask != mask) {
+		StencilBackMask.mask = mask;
+		glStencilMaskSeparate(GL_BACK, mask);
 	}
 }
 
@@ -562,8 +600,12 @@ void GLBindState(const PipelineState *state)
 
 	if (state->bEnableStencilTest) {
 		GLEnable(GL_STENCIL_TEST);
-		GLStencilFunc(CGLES3Helper::TranslateFunc(state->stencilFunc), state->stencilRef, state->stencilMask);
-		GLStencilOp(CGLES3Helper::TranslateStencilOp(state->stencilOpSFail), CGLES3Helper::TranslateStencilOp(state->stencilOpDFail), CGLES3Helper::TranslateStencilOp(state->stencilOpDPass));
+		GLStencilFrontFunc(CGLES3Helper::TranslateFunc(state->stencilFrontFunc), state->stencilFrontRef, state->stencilFrontMask);
+		GLStencilFrontOp(CGLES3Helper::TranslateStencilOp(state->stencilFrontOpSFail), CGLES3Helper::TranslateStencilOp(state->stencilFrontOpDFail), CGLES3Helper::TranslateStencilOp(state->stencilFrontOpDPass));
+		GLStencilFrontMask(state->stencilFrontMask);
+		GLStencilBackFunc(CGLES3Helper::TranslateFunc(state->stencilBackFunc), state->stencilBackRef, state->stencilBackMask);
+		GLStencilBackOp(CGLES3Helper::TranslateStencilOp(state->stencilBackOpSFail), CGLES3Helper::TranslateStencilOp(state->stencilBackOpDFail), CGLES3Helper::TranslateStencilOp(state->stencilBackOpDPass));
+		GLStencilBackMask(state->stencilBackMask);
 	}
 	else {
 		GLDisable(GL_STENCIL_TEST);
