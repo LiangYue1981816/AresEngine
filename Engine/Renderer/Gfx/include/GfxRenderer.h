@@ -72,6 +72,8 @@ public:
 
 public:
 	virtual CGfxSwapChain* GetSwapChain(void) const = 0;
+	virtual CGfxMaterialPass* GetGlobalMaterialPass(void) const = 0;
+	virtual CGfxMaterialPass* GetCurrentMaterialPass(void) const = 0;
 
 public:
 	virtual bool IsSupportExtension(const char *extension) const = 0;

@@ -81,6 +81,16 @@ CGfxSwapChain* CGLES3Renderer::GetSwapChain(void) const
 	return m_pSwapChain;
 }
 
+CGfxMaterialPass* CGLES3Renderer::GetGlobalMaterialPass(void) const
+{
+	return m_pGlobalMaterialPass;
+}
+
+CGfxMaterialPass* CGLES3Renderer::GetCurrentMaterialPass(void) const
+{
+	return m_pCurrentMaterialPass;
+}
+
 bool CGLES3Renderer::IsSupportExtension(const char *extension) const
 {
 	return CGLES3Helper::IsSupportExtension(extension);
@@ -497,16 +507,6 @@ void CGLES3Renderer::BindInputTexture(const char *szName, CGfxRenderTexture *pTe
 {
 	m_pGlobalMaterialPass->SetTexture2D(szName, ((CGLES3RenderTexture *)pTexture)->GetTexture());
 	m_pGlobalMaterialPass->SetSampler(szName, 0, GFX_FILTER_NEAREST, GFX_FILTER_LINEAR, GFX_SAMPLER_MIPMAP_MODE_NEAREST, GFX_SAMPLER_ADDRESS_MODE_REPEAT);
-}
-
-CGLES3MaterialPass* CGLES3Renderer::GetGlobalMaterialPass(void) const
-{
-	return m_pGlobalMaterialPass;
-}
-
-CGLES3MaterialPass* CGLES3Renderer::GetCurrentMaterialPass(void) const
-{
-	return m_pCurrentMaterialPass;
 }
 
 CGLES3PipelineCompute* CGLES3Renderer::GetCurrentPipelineCompute(void) const

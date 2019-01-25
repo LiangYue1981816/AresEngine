@@ -104,6 +104,8 @@ public:
 
 public:
 	CGfxSwapChain* GetSwapChain(void) const;
+	CGfxMaterialPass* GetGlobalMaterialPass(void) const;
+	CGfxMaterialPass* GetCurrentMaterialPass(void) const;
 
 public:
 	bool IsSupportExtension(const char *extension) const;
@@ -202,8 +204,6 @@ private:
 	void BindInputTexture(const char *szName, CGfxRenderTexture *pTexture);
 
 private:
-	CGLES3MaterialPass* GetGlobalMaterialPass(void) const;
-	CGLES3MaterialPass* GetCurrentMaterialPass(void) const;
 	CGLES3PipelineCompute* GetCurrentPipelineCompute(void) const;
 	CGLES3PipelineGraphics* GetCurrentPipelineGraphics(void) const;
 
