@@ -76,19 +76,14 @@ uint32_t CGLES3Renderer::GetLastError(void) const
 	return glGetError();
 }
 
-bool CGLES3Renderer::IsSupportExtension(const char *extension) const
-{
-	return CGLES3Helper::IsSupportExtension(extension);
-}
-
 CGfxSwapChain* CGLES3Renderer::GetSwapChain(void) const
 {
 	return m_pSwapChain;
 }
 
-CGfxMaterialPass* CGLES3Renderer::GetGlobalPass(void) const
+bool CGLES3Renderer::IsSupportExtension(const char *extension) const
 {
-	return m_pGlobalMaterialPass;
+	return CGLES3Helper::IsSupportExtension(extension);
 }
 
 CGfxShader* CGLES3Renderer::CreateShader(const char *szFileName, shader_kind kind)

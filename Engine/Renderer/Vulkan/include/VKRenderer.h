@@ -64,11 +64,10 @@ public:
 	uint32_t GetLastError(void) const;
 
 public:
-	bool IsSupportExtension(const char *extension) const;
+	CGfxSwapChain* GetSwapChain(void) const;
 
 public:
-	CGfxSwapChain* GetSwapChain(void) const;
-	CGfxMaterialPass* GetGlobalPass(void) const;
+	bool IsSupportExtension(const char *extension) const;
 
 public:
 	CGfxShader* CreateShader(const char *szFileName, shader_kind kind);

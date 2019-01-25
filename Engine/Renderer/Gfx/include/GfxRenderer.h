@@ -71,11 +71,10 @@ public:
 	virtual uint32_t GetLastError(void) const = 0;
 
 public:
-	virtual bool IsSupportExtension(const char *extension) const = 0;
+	virtual CGfxSwapChain* GetSwapChain(void) const = 0;
 
 public:
-	virtual CGfxSwapChain* GetSwapChain(void) const = 0;
-	virtual CGfxMaterialPass* GetGlobalPass(void) const = 0;
+	virtual bool IsSupportExtension(const char *extension) const = 0;
 
 public:
 	virtual CGfxShader* CreateShader(const char *szFileName, shader_kind kind) = 0;
