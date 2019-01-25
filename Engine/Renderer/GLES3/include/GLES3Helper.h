@@ -14,8 +14,8 @@ public:
 	static GLenum TranslatePolytonMode(GfxPolygonMode polygonMode);
 	static GLenum TranslateCullFace(GfxCullFace cullFace);
 	static GLenum TranslateFrontFace(GfxFrontFace frontFace);
-	static GLenum TranslateFunc(GfxFunc func);
-	static GLenum TranslateStencilOp(GfxStencilOp stencilOp);
+	static GLenum TranslateCompareOp(GfxCompareOp op);
+	static GLenum TranslateStencilOp(GfxStencilOp op);
 	static GLenum TranslateBlendFactor(GfxBlendFactor blendFactor);
 	static GLenum TranslateBlendEquation(GfxBlendEquation blendEquation);
 	static GLenum TranslateMagFilter(GfxFilter magFilter);

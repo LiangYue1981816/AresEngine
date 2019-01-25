@@ -27,21 +27,21 @@ typedef struct PipelineState {
 	// Depth Stencil State
 	bool bEnableDepthTest = true;
 	bool bEnableDepthWrite = true;
-	GfxFunc depthFunc = GFX_FUNC_LEQUAL;
+	GfxCompareOp depthCompareOp = GFX_COMPAREOP_LEQUAL;
 
 	bool bEnableStencilTest = false;
 	uint32_t stencilFrontRef = 0;
 	uint32_t stencilFrontMask = 1;
-	GfxFunc stencilFrontFunc = GFX_FUNC_ALWAYS;
 	GfxStencilOp stencilFrontOpSFail = GFX_STENCILOP_KEEP;
 	GfxStencilOp stencilFrontOpDFail = GFX_STENCILOP_KEEP;
 	GfxStencilOp stencilFrontOpDPass = GFX_STENCILOP_KEEP;
+	GfxCompareOp stencilFrontCompareOp = GFX_COMPAREOP_ALWAYS;
 	uint32_t stencilBackRef = 0;
 	uint32_t stencilBackMask = 1;
-	GfxFunc stencilBackFunc = GFX_FUNC_ALWAYS;
 	GfxStencilOp stencilBackOpSFail = GFX_STENCILOP_KEEP;
 	GfxStencilOp stencilBackOpDFail = GFX_STENCILOP_KEEP;
 	GfxStencilOp stencilBackOpDPass = GFX_STENCILOP_KEEP;
+	GfxCompareOp stencilBackCompareOp = GFX_COMPAREOP_ALWAYS;
 
 	// Color Blend State
 	bool bEnableBlend = false;

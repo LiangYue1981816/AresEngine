@@ -191,7 +191,7 @@ VkPipelineStageFlags CVKHelper::GetPipelineStageFlags(VkAccessFlags access)
 		return VK_PIPELINE_STAGE_HOST_BIT;
 
 	default:
-		return VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT;
+		return VK_PIPELINE_STAGE_FLAG_BITS_MAX_ENUM;
 	}
 }
 
@@ -274,35 +274,35 @@ VkFrontFace CVKHelper::TranslateFrontFace(GfxFrontFace frontFace)
 	}
 }
 
-VkCompareOp CVKHelper::TranslateCompareOp(GfxFunc func)
+VkCompareOp CVKHelper::TranslateCompareOp(GfxCompareOp op)
 {
-	switch ((int)func) {
-	case GFX_FUNC_NEVER:
+	switch ((int)op) {
+	case GFX_COMPAREOP_NEVER:
 		return VK_COMPARE_OP_NEVER;
 
-	case GFX_FUNC_LESS:
+	case GFX_COMPAREOP_LESS:
 		return VK_COMPARE_OP_LESS;
 
-	case GFX_FUNC_LEQUAL:
+	case GFX_COMPAREOP_LEQUAL:
 		return VK_COMPARE_OP_LESS_OR_EQUAL;
 
-	case GFX_FUNC_GREATER:
+	case GFX_COMPAREOP_GREATER:
 		return VK_COMPARE_OP_GREATER;
 
-	case GFX_FUNC_GEQUAL:
+	case GFX_COMPAREOP_GEQUAL:
 		return VK_COMPARE_OP_GREATER_OR_EQUAL;
 
-	case GFX_FUNC_EQUAL:
+	case GFX_COMPAREOP_EQUAL:
 		return VK_COMPARE_OP_EQUAL;
 
-	case GFX_FUNC_NOTEQUAL:
+	case GFX_COMPAREOP_NOTEQUAL:
 		return VK_COMPARE_OP_NOT_EQUAL;
 
-	case GFX_FUNC_ALWAYS:
+	case GFX_COMPAREOP_ALWAYS:
 		return VK_COMPARE_OP_ALWAYS;
 
 	default:
-		return VK_COMPARE_OP_ALWAYS;
+		return VK_COMPARE_OP_MAX_ENUM;
 	}
 }
 
@@ -334,6 +334,6 @@ VkStencilOp CVKHelper::TranslateStencilOp(GfxStencilOp op)
 		return VK_STENCIL_OP_INVERT;
 
 	default:
-		return VK_STENCIL_OP_KEEP;
+		return VK_STENCIL_OP_MAX_ENUM;
 	}
 }

@@ -124,31 +124,31 @@ GLenum CGLES3Helper::TranslateFrontFace(GfxFrontFace frontFace)
 	}
 }
 
-GLenum CGLES3Helper::TranslateFunc(GfxFunc func)
+GLenum CGLES3Helper::TranslateCompareOp(GfxCompareOp op)
 {
-	switch ((int)func) {
-	case GFX_FUNC_NEVER:
+	switch ((int)op) {
+	case GFX_COMPAREOP_NEVER:
 		return GL_NEVER;
 
-	case GFX_FUNC_LESS:
+	case GFX_COMPAREOP_LESS:
 		return GL_LESS;
 
-	case GFX_FUNC_LEQUAL:
+	case GFX_COMPAREOP_LEQUAL:
 		return GL_LEQUAL;
 
-	case GFX_FUNC_GREATER:
+	case GFX_COMPAREOP_GREATER:
 		return GL_GREATER;
 
-	case GFX_FUNC_GEQUAL:
+	case GFX_COMPAREOP_GEQUAL:
 		return GL_GEQUAL;
 
-	case GFX_FUNC_EQUAL:
+	case GFX_COMPAREOP_EQUAL:
 		return GL_EQUAL;
 
-	case GFX_FUNC_NOTEQUAL:
+	case GFX_COMPAREOP_NOTEQUAL:
 		return GL_NOTEQUAL;
 
-	case GFX_FUNC_ALWAYS:
+	case GFX_COMPAREOP_ALWAYS:
 		return GL_ALWAYS;
 
 	default:
@@ -156,9 +156,9 @@ GLenum CGLES3Helper::TranslateFunc(GfxFunc func)
 	}
 }
 
-GLenum CGLES3Helper::TranslateStencilOp(GfxStencilOp stencilOp)
+GLenum CGLES3Helper::TranslateStencilOp(GfxStencilOp op)
 {
-	switch ((int)stencilOp) {
+	switch ((int)op) {
 	case GFX_STENCILOP_KEEP:
 		return GL_KEEP;
 
