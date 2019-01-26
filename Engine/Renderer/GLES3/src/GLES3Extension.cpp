@@ -680,8 +680,8 @@ void GLBindState(const PipelineState *state)
 			CGLES3Helper::TranslateBlendFactor(state->blendSrcAlpha), 
 			CGLES3Helper::TranslateBlendFactor(state->blendDstAlpha));
 		GLBlendEquation(
-			CGLES3Helper::TranslateBlendEquation(state->blendEquationRGB), 
-			CGLES3Helper::TranslateBlendEquation(state->blendEquationAlpha));
+			CGLES3Helper::TranslateBlendOp(state->blendOpRGB),
+			CGLES3Helper::TranslateBlendOp(state->blendOpAlpha));
 		GLBlendColor(
 			state->blendColorRed, 
 			state->blendColorGreen, 

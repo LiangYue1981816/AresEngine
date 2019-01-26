@@ -24,8 +24,8 @@ public:
 	static VkFrontFace TranslateFrontFace(GfxFrontFace frontFace);
 	static VkCompareOp TranslateCompareOp(GfxCompareOp op);
 	static VkStencilOp TranslateStencilOp(GfxStencilOp op);
+	static VkBlendOp TranslateBlendOp(GfxBlendOp op);
 	static VkBlendFactor TranslateBlendFactor(GfxBlendFactor blendFactor);
-	static VkBlendOp TranslateBlendEquation(GfxBlendEquation blendEquation);
 
 
 private:

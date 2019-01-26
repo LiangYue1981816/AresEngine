@@ -142,15 +142,15 @@ bool CVKPipelineGraphics::Create(const CGfxRenderPass *pRenderPass, const CGfxSh
 	depthStencilState.back.reference = state.stencilBackCompareRef;
 
 	eastl::vector<VkPipelineColorBlendAttachmentState> colorBlendAttachments(pRenderPass->GetSubpassOutputAttachmentCount(indexSubpass));
-	for (int indexAttachment = 0; indexAttachment < pRenderPass->GetSubpassOutputAttachmentCount(indexSubpass); indexAttachment++) {
+	for (uint32_t indexAttachment = 0; indexAttachment < pRenderPass->GetSubpassOutputAttachmentCount(indexSubpass); indexAttachment++) {
 		VkPipelineColorBlendAttachmentState colorBlendAttachment = {};
 		colorBlendAttachment.blendEnable = state.bEnableBlend ? VK_TRUE : VK_FALSE;
 		colorBlendAttachment.srcColorBlendFactor = CVKHelper::TranslateBlendFactor(state.blendSrcRGB);
 		colorBlendAttachment.dstColorBlendFactor = CVKHelper::TranslateBlendFactor(state.blendDstRGB);
-		colorBlendAttachment.colorBlendOp = CVKHelper::TranslateBlendEquation(state.blendEquationRGB);
+		colorBlendAttachment.colorBlendOp = CVKHelper::TranslateBlendOp(state.blendOpRGB);
 		colorBlendAttachment.srcAlphaBlendFactor = CVKHelper::TranslateBlendFactor(state.blendSrcAlpha);
 		colorBlendAttachment.dstAlphaBlendFactor = CVKHelper::TranslateBlendFactor(state.blendDstAlpha);
-		colorBlendAttachment.alphaBlendOp = CVKHelper::TranslateBlendEquation(state.blendEquationAlpha);
+		colorBlendAttachment.alphaBlendOp = CVKHelper::TranslateBlendOp(state.blendOpAlpha);
 		colorBlendAttachment.colorWriteMask = (state.bEnableColorRedWrite ? VK_COLOR_COMPONENT_R_BIT : 0) | (state.bEnableColorGreenWrite ? VK_COLOR_COMPONENT_G_BIT : 0) | (state.bEnableColorBlueWrite ? VK_COLOR_COMPONENT_B_BIT : 0) | (state.bEnableColorAlphaWrite ? VK_COLOR_COMPONENT_A_BIT : 0);
 		colorBlendAttachments.emplace_back(colorBlendAttachment);
 	}

@@ -16,8 +16,8 @@ public:
 	static GLenum TranslateFrontFace(GfxFrontFace frontFace);
 	static GLenum TranslateCompareOp(GfxCompareOp op);
 	static GLenum TranslateStencilOp(GfxStencilOp op);
+	static GLenum TranslateBlendOp(GfxBlendOp op);
 	static GLenum TranslateBlendFactor(GfxBlendFactor blendFactor);
-	static GLenum TranslateBlendEquation(GfxBlendEquation blendEquation);
 	static GLenum TranslateMagFilter(GfxFilter magFilter);
 	static GLenum TranslateMinFilter(GfxFilter minFilter, GfxSamplerMipmapMode mipmapMode);
 	static GLenum TranslateAddressMode(GfxSamplerAddressMode addressMode);

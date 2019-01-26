@@ -367,6 +367,29 @@ VkStencilOp CVKHelper::TranslateStencilOp(GfxStencilOp op)
 	}
 }
 
+VkBlendOp CVKHelper::TranslateBlendOp(GfxBlendOp op)
+{
+	switch ((int)op) {
+	case GFX_BLENDOP_ADD:
+		return VK_BLEND_OP_ADD;
+
+	case GFX_BLENDOP_SUBTRACT:
+		return VK_BLEND_OP_SUBTRACT;
+
+	case GFX_BLENDOP_REVERSE_SUBTRACT:
+		return VK_BLEND_OP_REVERSE_SUBTRACT;
+
+	case GFX_BLENDOP_MIN:
+		return VK_BLEND_OP_MIN;
+
+	case GFX_BLENDOP_MAX:
+		return VK_BLEND_OP_MAX;
+
+	default:
+		return VK_BLEND_OP_MAX_ENUM;
+	}
+}
+
 VkBlendFactor CVKHelper::TranslateBlendFactor(GfxBlendFactor blendFactor)
 {
 	switch ((int)blendFactor) {
@@ -417,28 +440,5 @@ VkBlendFactor CVKHelper::TranslateBlendFactor(GfxBlendFactor blendFactor)
 
 	default:
 		return VK_BLEND_FACTOR_MAX_ENUM;
-	}
-}
-
-VkBlendOp CVKHelper::TranslateBlendEquation(GfxBlendEquation blendEquation)
-{
-	switch ((int)blendEquation) {
-	case GFX_BLENDEQUATION_FUNC_ADD:
-		return VK_BLEND_OP_ADD;
-
-	case GFX_BLENDEQUATION_FUNC_SUBTRACT:
-		return VK_BLEND_OP_SUBTRACT;
-
-	case GFX_BLENDEQUATION_FUNC_REVERSE_SUBTRACT:
-		return VK_BLEND_OP_REVERSE_SUBTRACT;
-
-	case GFX_BLENDEQUATION_MIN:
-		return VK_BLEND_OP_MIN;
-
-	case GFX_BLENDEQUATION_MAX:
-		return VK_BLEND_OP_MAX;
-
-	default:
-		return VK_BLEND_OP_MAX_ENUM;
 	}
 }

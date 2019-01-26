@@ -188,6 +188,29 @@ GLenum CGLES3Helper::TranslateStencilOp(GfxStencilOp op)
 	}
 }
 
+GLenum CGLES3Helper::TranslateBlendOp(GfxBlendOp op)
+{
+	switch ((int)op) {
+	case GFX_BLENDOP_ADD:
+		return GL_FUNC_ADD;
+
+	case GFX_BLENDOP_SUBTRACT:
+		return GL_FUNC_SUBTRACT;
+
+	case GFX_BLENDOP_REVERSE_SUBTRACT:
+		return GL_FUNC_REVERSE_SUBTRACT;
+
+	case GFX_BLENDOP_MIN:
+		return GL_MIN;
+
+	case GFX_BLENDOP_MAX:
+		return GL_MAX;
+
+	default:
+		return GL_INVALID_ENUM;
+	}
+}
+
 GLenum CGLES3Helper::TranslateBlendFactor(GfxBlendFactor blendFactor)
 {
 	switch ((int)blendFactor) {
@@ -235,29 +258,6 @@ GLenum CGLES3Helper::TranslateBlendFactor(GfxBlendFactor blendFactor)
 
 	case GFX_BLENDFACTOR_SRC_ALPHA_SATURATE:
 		return GL_SRC_ALPHA_SATURATE;
-
-	default:
-		return GL_INVALID_ENUM;
-	}
-}
-
-GLenum CGLES3Helper::TranslateBlendEquation(GfxBlendEquation blendEquation)
-{
-	switch ((int)blendEquation) {
-	case GFX_BLENDEQUATION_FUNC_ADD:
-		return GL_FUNC_ADD;
-
-	case GFX_BLENDEQUATION_FUNC_SUBTRACT:
-		return GL_FUNC_SUBTRACT;
-
-	case GFX_BLENDEQUATION_FUNC_REVERSE_SUBTRACT:
-		return GL_FUNC_REVERSE_SUBTRACT;
-
-	case GFX_BLENDEQUATION_MIN:
-		return GL_MIN;
-
-	case GFX_BLENDEQUATION_MAX:
-		return GL_MAX;
 
 	default:
 		return GL_INVALID_ENUM;
