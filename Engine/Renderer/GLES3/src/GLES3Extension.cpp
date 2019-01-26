@@ -656,7 +656,8 @@ void GLBindState(const PipelineState *state)
 			CGLES3Helper::TranslateStencilOp(state->stencilFrontOpDPass));
 		GLStencilFrontFunc(
 			CGLES3Helper::TranslateCompareOp(state->stencilFrontCompareOp), 
-			state->stencilFrontCompareRef, state->stencilFrontCompareMask);
+			state->stencilFrontCompareRef,
+			state->stencilFrontCompareMask);
 		GLStencilFrontMask(state->stencilFrontWriteMask);
 		GLStencilBackOp(
 			CGLES3Helper::TranslateStencilOp(state->stencilBackOpSFail), 
@@ -664,7 +665,8 @@ void GLBindState(const PipelineState *state)
 			CGLES3Helper::TranslateStencilOp(state->stencilBackOpDPass));
 		GLStencilBackFunc(
 			CGLES3Helper::TranslateCompareOp(state->stencilBackCompareOp), 
-			state->stencilBackCompareRef, state->stencilBackCompareMask);
+			state->stencilBackCompareRef,
+			state->stencilBackCompareMask);
 		GLStencilBackMask(state->stencilBackWriteMask);
 	}
 	else {

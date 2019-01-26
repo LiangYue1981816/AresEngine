@@ -154,6 +154,7 @@ bool CVKPipelineGraphics::Create(const CGfxRenderPass *pRenderPass, const CGfxSh
 		colorBlendAttachment.colorWriteMask = (state.bEnableColorRedWrite ? VK_COLOR_COMPONENT_R_BIT : 0) | (state.bEnableColorGreenWrite ? VK_COLOR_COMPONENT_G_BIT : 0) | (state.bEnableColorBlueWrite ? VK_COLOR_COMPONENT_B_BIT : 0) | (state.bEnableColorAlphaWrite ? VK_COLOR_COMPONENT_A_BIT : 0);
 		colorBlendAttachments.emplace_back(colorBlendAttachment);
 	}
+
 	VkPipelineColorBlendStateCreateInfo colorBlendState = {};
 	colorBlendState.sType = VK_STRUCTURE_TYPE_PIPELINE_COLOR_BLEND_STATE_CREATE_INFO;
 	colorBlendState.pNext = nullptr;
@@ -167,12 +168,16 @@ bool CVKPipelineGraphics::Create(const CGfxRenderPass *pRenderPass, const CGfxSh
 	colorBlendState.blendConstants[2] = state.blendColorBlue;
 	colorBlendState.blendConstants[3] = state.blendColorAlpha;
 
+	eastl::vector<VkDynamicState> dynamicStates;
+	dynamicStates.emplace_back(VK_DYNAMIC_STATE_VIEWPORT);
+	dynamicStates.emplace_back(VK_DYNAMIC_STATE_SCISSOR);
+
 	VkPipelineDynamicStateCreateInfo dynamicState = {};
-	dynamicState.sType;
-	dynamicState.pNext;
-	dynamicState.flags;
-	dynamicState.dynamicStateCount;
-	dynamicState.pDynamicStates;
+	dynamicState.sType = VK_STRUCTURE_TYPE_PIPELINE_DYNAMIC_STATE_CREATE_INFO;
+	dynamicState.pNext = nullptr;
+	dynamicState.flags = 0;
+	dynamicState.dynamicStateCount = dynamicStates.size();
+	dynamicState.pDynamicStates = dynamicStates.data();
 
 	VkPipelineLayoutCreateInfo layoutCreateInfo = {};
 	layoutCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
