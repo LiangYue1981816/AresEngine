@@ -108,7 +108,7 @@ bool CVKPipelineGraphics::Create(const CGfxRenderPass *pRenderPass, const CGfxSh
 	multisampleState.sType = VK_STRUCTURE_TYPE_PIPELINE_MULTISAMPLE_STATE_CREATE_INFO;
 	multisampleState.pNext = nullptr;
 	multisampleState.flags = 0;
-	multisampleState.rasterizationSamples = (VkSampleCountFlagBits)state.samples;
+	multisampleState.rasterizationSamples = CVKHelper::TranslateSampleCount(state.samples);
 	multisampleState.sampleShadingEnable = VK_FALSE;
 	multisampleState.minSampleShading = 1.0f;
 	multisampleState.pSampleMask = nullptr;
@@ -141,18 +141,31 @@ bool CVKPipelineGraphics::Create(const CGfxRenderPass *pRenderPass, const CGfxSh
 	depthStencilState.back.writeMask = state.stencilBackWriteMask;
 	depthStencilState.back.reference = state.stencilBackCompareRef;
 
+	eastl::vector<VkPipelineColorBlendAttachmentState> colorBlendAttachments(pRenderPass->GetSubpassOutputAttachmentCount(indexSubpass));
+	for (int indexAttachment = 0; indexAttachment < pRenderPass->GetSubpassOutputAttachmentCount(indexSubpass); indexAttachment++) {
+		VkPipelineColorBlendAttachmentState colorBlendAttachment = {};
+		colorBlendAttachment.blendEnable = state.bEnableBlend ? VK_TRUE : VK_FALSE;
+		colorBlendAttachment.srcColorBlendFactor = CVKHelper::TranslateBlendFactor(state.blendSrcRGB);
+		colorBlendAttachment.dstColorBlendFactor = CVKHelper::TranslateBlendFactor(state.blendDstRGB);
+		colorBlendAttachment.colorBlendOp = CVKHelper::TranslateBlendEquation(state.blendEquationRGB);
+		colorBlendAttachment.srcAlphaBlendFactor = CVKHelper::TranslateBlendFactor(state.blendSrcAlpha);
+		colorBlendAttachment.dstAlphaBlendFactor = CVKHelper::TranslateBlendFactor(state.blendDstAlpha);
+		colorBlendAttachment.alphaBlendOp = CVKHelper::TranslateBlendEquation(state.blendEquationAlpha);
+		colorBlendAttachment.colorWriteMask = (state.bEnableColorRedWrite ? VK_COLOR_COMPONENT_R_BIT : 0) | (state.bEnableColorGreenWrite ? VK_COLOR_COMPONENT_G_BIT : 0) | (state.bEnableColorBlueWrite ? VK_COLOR_COMPONENT_B_BIT : 0) | (state.bEnableColorAlphaWrite ? VK_COLOR_COMPONENT_A_BIT : 0);
+		colorBlendAttachments.emplace_back(colorBlendAttachment);
+	}
 	VkPipelineColorBlendStateCreateInfo colorBlendState = {};
-	colorBlendState.sType;
-	colorBlendState.pNext;
-	colorBlendState.flags;
-	colorBlendState.logicOpEnable;
-	colorBlendState.logicOp;
-	colorBlendState.attachmentCount;
-	colorBlendState.pAttachments;
-	colorBlendState.blendConstants[0];
-	colorBlendState.blendConstants[1];
-	colorBlendState.blendConstants[2];
-	colorBlendState.blendConstants[3];
+	colorBlendState.sType = VK_STRUCTURE_TYPE_PIPELINE_COLOR_BLEND_STATE_CREATE_INFO;
+	colorBlendState.pNext = nullptr;
+	colorBlendState.flags = 0;
+	colorBlendState.logicOpEnable = VK_FALSE;
+	colorBlendState.logicOp = VK_LOGIC_OP_COPY;
+	colorBlendState.attachmentCount = colorBlendAttachments.size();
+	colorBlendState.pAttachments = colorBlendAttachments.data();
+	colorBlendState.blendConstants[0] = state.blendColorRed;
+	colorBlendState.blendConstants[1] = state.blendColorGreen;
+	colorBlendState.blendConstants[2] = state.blendColorBlue;
+	colorBlendState.blendConstants[3] = state.blendColorAlpha;
 
 	VkPipelineDynamicStateCreateInfo dynamicState = {};
 	dynamicState.sType;

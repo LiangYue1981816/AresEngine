@@ -38,8 +38,8 @@ extern void GLStencilBackOp(GLenum sfail, GLenum dpfail, GLenum dppass);
 extern void GLStencilBackFunc(GLenum func, GLint ref, GLuint mask);
 extern void GLStencilBackMask(GLuint mask);
 
-extern void GLBlendFunc(GLenum sfactor, GLenum dfactor);
-extern void GLBlendEquation(GLenum mode);
+extern void GLBlendFunc(GLenum srcRGB, GLenum dstRGB, GLenum srcAlpha, GLenum dstAlpha);
+extern void GLBlendEquation(GLenum modeRGB, GLenum modeAlpha);
 extern void GLBlendColor(GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha);
 
 extern void GLBindState(const PipelineState *state);

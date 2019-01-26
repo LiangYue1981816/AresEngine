@@ -128,12 +128,15 @@ typedef struct StencilMaskParam {
 } StencilMaskParam;
 
 typedef struct BlendFuncParam {
-	uint32_t sfactor;
-	uint32_t dfactor;
+	uint32_t srcRGB;
+	uint32_t dstRGB;
+	uint32_t srcAlpha;
+	uint32_t dstAlpha;
 } BlendFuncParam;
 
 typedef struct BlendEquationParam {
-	uint32_t mode;
+	uint32_t modeRGB;
+	uint32_t modeAlpha;
 } BlendEquationParam;
 
 typedef struct BlendColorParam {
@@ -306,9 +309,12 @@ void GLResetContext(void)
 	StencilBackFunc.mask = GL_INVALID_ENUM;
 	StencilBackFunc.ref = GL_INVALID_ENUM;
 	StencilBackMask.mask = GL_INVALID_ENUM;
-	BlendFunc.sfactor = GL_INVALID_ENUM;
-	BlendFunc.dfactor = GL_INVALID_ENUM;
-	BlendEquation.mode = GL_INVALID_ENUM;
+	BlendFunc.srcRGB = GL_INVALID_ENUM;
+	BlendFunc.dstRGB = GL_INVALID_ENUM;
+	BlendFunc.srcAlpha = GL_INVALID_ENUM;
+	BlendFunc.dstAlpha = GL_INVALID_ENUM;
+	BlendEquation.modeRGB = GL_INVALID_ENUM;
+	BlendEquation.modeAlpha = GL_INVALID_ENUM;
 	BlendColor.red = GL_INVALID_VALUE;
 	BlendColor.green = GL_INVALID_VALUE;
 	BlendColor.blue = GL_INVALID_VALUE;
@@ -550,20 +556,23 @@ void GLStencilBackMask(GLuint mask)
 	}
 }
 
-void GLBlendFunc(GLenum sfactor, GLenum dfactor)
+void GLBlendFunc(GLenum srcRGB, GLenum dstRGB, GLenum srcAlpha, GLenum dstAlpha)
 {
-	if (BlendFunc.sfactor != sfactor || BlendFunc.dfactor != dfactor) {
-		BlendFunc.sfactor = sfactor;
-		BlendFunc.dfactor = dfactor;
-		glBlendFunc(sfactor, dfactor);
+	if (BlendFunc.srcRGB != srcRGB || BlendFunc.dstRGB != dstRGB || BlendFunc.srcAlpha != srcAlpha || BlendFunc.dstAlpha != dstAlpha) {
+		BlendFunc.srcRGB = srcRGB;
+		BlendFunc.dstRGB = dstRGB;
+		BlendFunc.srcAlpha = srcAlpha;
+		BlendFunc.dstAlpha = dstAlpha;
+		glBlendFuncSeparate(srcRGB, dstRGB, srcAlpha, dstAlpha);
 	}
 }
 
-void GLBlendEquation(GLenum mode)
+void GLBlendEquation(GLenum modeRGB, GLenum modeAlpha)
 {
-	if (BlendEquation.mode != mode) {
-		BlendEquation.mode = mode;
-		glBlendEquation(mode);
+	if (BlendEquation.modeRGB != modeRGB || BlendEquation.modeAlpha != modeAlpha) {
+		BlendEquation.modeRGB = modeRGB;
+		BlendEquation.modeAlpha = modeAlpha;
+		glBlendEquationSeparate(modeRGB, modeAlpha);
 	}
 }
 
@@ -641,11 +650,21 @@ void GLBindState(const PipelineState *state)
 
 	if (state->bEnableStencilTest) {
 		GLEnable(GL_STENCIL_TEST);
-		GLStencilFrontOp(CGLES3Helper::TranslateStencilOp(state->stencilFrontOpSFail), CGLES3Helper::TranslateStencilOp(state->stencilFrontOpDFail), CGLES3Helper::TranslateStencilOp(state->stencilFrontOpDPass));
-		GLStencilFrontFunc(CGLES3Helper::TranslateCompareOp(state->stencilFrontCompareOp), state->stencilFrontCompareRef, state->stencilFrontCompareMask);
+		GLStencilFrontOp(
+			CGLES3Helper::TranslateStencilOp(state->stencilFrontOpSFail), 
+			CGLES3Helper::TranslateStencilOp(state->stencilFrontOpDFail), 
+			CGLES3Helper::TranslateStencilOp(state->stencilFrontOpDPass));
+		GLStencilFrontFunc(
+			CGLES3Helper::TranslateCompareOp(state->stencilFrontCompareOp), 
+			state->stencilFrontCompareRef, state->stencilFrontCompareMask);
 		GLStencilFrontMask(state->stencilFrontWriteMask);
-		GLStencilBackOp(CGLES3Helper::TranslateStencilOp(state->stencilBackOpSFail), CGLES3Helper::TranslateStencilOp(state->stencilBackOpDFail), CGLES3Helper::TranslateStencilOp(state->stencilBackOpDPass));
-		GLStencilBackFunc(CGLES3Helper::TranslateCompareOp(state->stencilBackCompareOp), state->stencilBackCompareRef, state->stencilBackCompareMask);
+		GLStencilBackOp(
+			CGLES3Helper::TranslateStencilOp(state->stencilBackOpSFail), 
+			CGLES3Helper::TranslateStencilOp(state->stencilBackOpDFail), 
+			CGLES3Helper::TranslateStencilOp(state->stencilBackOpDPass));
+		GLStencilBackFunc(
+			CGLES3Helper::TranslateCompareOp(state->stencilBackCompareOp), 
+			state->stencilBackCompareRef, state->stencilBackCompareMask);
 		GLStencilBackMask(state->stencilBackWriteMask);
 	}
 	else {
@@ -655,15 +674,25 @@ void GLBindState(const PipelineState *state)
 	// Color Blend State
 	if (state->bEnableBlend) {
 		GLEnable(GL_BLEND);
-		GLBlendFunc(CGLES3Helper::TranslateBlendFactor(state->blendSrcFactor), CGLES3Helper::TranslateBlendFactor(state->blendDstFactor));
-		GLBlendEquation(CGLES3Helper::TranslateBlendEquation(state->blendEquation));
-		GLBlendColor(state->blendColor[0], state->blendColor[1], state->blendColor[2], state->blendColor[3]);
+		GLBlendFunc(
+			CGLES3Helper::TranslateBlendFactor(state->blendSrcRGB), 
+			CGLES3Helper::TranslateBlendFactor(state->blendDstRGB), 
+			CGLES3Helper::TranslateBlendFactor(state->blendSrcAlpha), 
+			CGLES3Helper::TranslateBlendFactor(state->blendDstAlpha));
+		GLBlendEquation(
+			CGLES3Helper::TranslateBlendEquation(state->blendEquationRGB), 
+			CGLES3Helper::TranslateBlendEquation(state->blendEquationAlpha));
+		GLBlendColor(
+			state->blendColorRed, 
+			state->blendColorGreen, 
+			state->blendColorBlue, 
+			state->blendColorAlpha);
 	}
 	else {
 		GLDisable(GL_BLEND);
 	}
 
-	GLColorMask(state->bEnableRedWrite, state->bEnableGreenWrite, state->bEnableBlueWrite, state->bEnableAlphaWrite);
+	GLColorMask(state->bEnableColorRedWrite, state->bEnableColorGreenWrite, state->bEnableColorBlueWrite, state->bEnableColorAlphaWrite);
 }
 
 void GLBindVertexArray(GLuint array)

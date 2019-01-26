@@ -195,6 +195,35 @@ VkPipelineStageFlags CVKHelper::GetPipelineStageFlags(VkAccessFlags access)
 	}
 }
 
+VkSampleCountFlagBits CVKHelper::TranslateSampleCount(int samples)
+{
+	switch (samples) {
+	case 1:
+		return VK_SAMPLE_COUNT_1_BIT;
+
+	case 2:
+		return VK_SAMPLE_COUNT_2_BIT;
+
+	case 4:
+		return VK_SAMPLE_COUNT_4_BIT;
+
+	case 8:
+		return VK_SAMPLE_COUNT_8_BIT;
+
+	case 16:
+		return VK_SAMPLE_COUNT_16_BIT;
+
+	case 32:
+		return VK_SAMPLE_COUNT_32_BIT;
+
+	case 64:
+		return VK_SAMPLE_COUNT_64_BIT;
+
+	default:
+		return VK_SAMPLE_COUNT_1_BIT;
+	}
+}
+
 VkPrimitiveTopology CVKHelper::TranslatePrimitiveTopology(GfxPrimitiveTopology topology)
 {
 	switch ((int)topology) {
@@ -335,5 +364,81 @@ VkStencilOp CVKHelper::TranslateStencilOp(GfxStencilOp op)
 
 	default:
 		return VK_STENCIL_OP_MAX_ENUM;
+	}
+}
+
+VkBlendFactor CVKHelper::TranslateBlendFactor(GfxBlendFactor blendFactor)
+{
+	switch ((int)blendFactor) {
+	case GFX_BLENDFACTOR_ZERO:
+		return VK_BLEND_FACTOR_ZERO;
+
+	case GFX_BLENDFACTOR_ONE:
+		return VK_BLEND_FACTOR_ONE;
+
+	case GFX_BLENDFACTOR_SRC_COLOR:
+		return VK_BLEND_FACTOR_SRC_COLOR;
+
+	case GFX_BLENDFACTOR_ONE_MINUS_SRC_COLOR:
+		return VK_BLEND_FACTOR_ONE_MINUS_SRC_COLOR;
+
+	case GFX_BLENDFACTOR_DST_COLOR:
+		return VK_BLEND_FACTOR_DST_COLOR;
+
+	case GFX_BLENDFACTOR_ONE_MINUS_DST_COLOR:
+		return VK_BLEND_FACTOR_ONE_MINUS_DST_COLOR;
+
+	case GFX_BLENDFACTOR_SRC_ALPHA:
+		return VK_BLEND_FACTOR_SRC_ALPHA;
+
+	case GFX_BLENDFACTOR_ONE_MINUS_SRC_ALPHA:
+		return VK_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA;
+
+	case GFX_BLENDFACTOR_DST_ALPHA:
+		return VK_BLEND_FACTOR_DST_ALPHA;
+
+	case GFX_BLENDFACTOR_ONE_MINUS_DST_ALPHA:
+		return VK_BLEND_FACTOR_ONE_MINUS_DST_ALPHA;
+
+	case GFX_BLENDFACTOR_CONSTANT_COLOR:
+		return VK_BLEND_FACTOR_CONSTANT_COLOR;
+
+	case GFX_BLENDFACTOR_ONE_MINUS_CONSTANT_COLOR:
+		return VK_BLEND_FACTOR_ONE_MINUS_CONSTANT_COLOR;
+
+	case GFX_BLENDFACTOR_CONSTANT_ALPHA:
+		return VK_BLEND_FACTOR_CONSTANT_ALPHA;
+
+	case GFX_BLENDFACTOR_ONE_MINUS_CONSTANT_ALPHA:
+		return VK_BLEND_FACTOR_ONE_MINUS_CONSTANT_ALPHA;
+
+	case GFX_BLENDFACTOR_SRC_ALPHA_SATURATE:
+		return VK_BLEND_FACTOR_SRC_ALPHA_SATURATE;
+
+	default:
+		return VK_BLEND_FACTOR_MAX_ENUM;
+	}
+}
+
+VkBlendOp CVKHelper::TranslateBlendEquation(GfxBlendEquation blendEquation)
+{
+	switch ((int)blendEquation) {
+	case GFX_BLENDEQUATION_FUNC_ADD:
+		return VK_BLEND_OP_ADD;
+
+	case GFX_BLENDEQUATION_FUNC_SUBTRACT:
+		return VK_BLEND_OP_SUBTRACT;
+
+	case GFX_BLENDEQUATION_FUNC_REVERSE_SUBTRACT:
+		return VK_BLEND_OP_REVERSE_SUBTRACT;
+
+	case GFX_BLENDEQUATION_MIN:
+		return VK_BLEND_OP_MIN;
+
+	case GFX_BLENDEQUATION_MAX:
+		return VK_BLEND_OP_MAX;
+
+	default:
+		return VK_BLEND_OP_MAX_ENUM;
 	}
 }

@@ -17,12 +17,15 @@ public:
 	static VkAccessFlags GetAccessMask(VkImageLayout layout);
 	static VkPipelineStageFlags GetPipelineStageFlags(VkAccessFlags access);
 
+	static VkSampleCountFlagBits TranslateSampleCount(int samples);
 	static VkPrimitiveTopology TranslatePrimitiveTopology(GfxPrimitiveTopology topology);
 	static VkPolygonMode TranslatePolytonMode(GfxPolygonMode polygonMode);
 	static VkCullModeFlags TranslateCullModeFlags(bool bEnableCullFace, GfxCullFace cullFace);
 	static VkFrontFace TranslateFrontFace(GfxFrontFace frontFace);
 	static VkCompareOp TranslateCompareOp(GfxCompareOp op);
 	static VkStencilOp TranslateStencilOp(GfxStencilOp op);
+	static VkBlendFactor TranslateBlendFactor(GfxBlendFactor blendFactor);
+	static VkBlendOp TranslateBlendEquation(GfxBlendEquation blendEquation);
 
 
 private:

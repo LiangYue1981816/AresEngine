@@ -210,7 +210,7 @@ bool CVKRenderPass::Create(void)
 		VkAttachmentDescription attachment = {};
 		attachment.flags = 0;
 		attachment.format = (VkFormat)m_attachments[indexAttachment].pixelFormat;
-		attachment.samples = (VkSampleCountFlagBits)m_attachments[indexAttachment].samples;
+		attachment.samples = CVKHelper::TranslateSampleCount(m_attachments[indexAttachment].samples);
 		attachment.loadOp = m_attachments[indexAttachment].bClear ? VK_ATTACHMENT_LOAD_OP_CLEAR : VK_ATTACHMENT_LOAD_OP_LOAD;
 		attachment.storeOp = m_attachments[indexAttachment].bInvalidation ? VK_ATTACHMENT_STORE_OP_DONT_CARE : VK_ATTACHMENT_STORE_OP_STORE;
 		attachment.stencilLoadOp = m_attachments[indexAttachment].bClear ? VK_ATTACHMENT_LOAD_OP_CLEAR : VK_ATTACHMENT_LOAD_OP_LOAD;

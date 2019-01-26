@@ -49,15 +49,21 @@ typedef struct PipelineState {
 
 	// Color Blend State
 	bool bEnableBlend = false;
-	float blendColor[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
-	GfxBlendFactor blendSrcFactor = GFX_BLENDFACTOR_ONE;
-	GfxBlendFactor blendDstFactor = GFX_BLENDFACTOR_ZERO;
-	GfxBlendEquation blendEquation = GFX_BLENDEQUATION_FUNC_ADD;
+	float blendColorRed = 0.0f;
+	float blendColorGreen = 0.0f;
+	float blendColorBlue = 0.0f;
+	float blendColorAlpha = 0.0f;
+	GfxBlendFactor blendSrcRGB = GFX_BLENDFACTOR_ONE;
+	GfxBlendFactor blendDstRGB = GFX_BLENDFACTOR_ZERO;
+	GfxBlendFactor blendSrcAlpha = GFX_BLENDFACTOR_ONE;
+	GfxBlendFactor blendDstAlpha = GFX_BLENDFACTOR_ZERO;
+	GfxBlendEquation blendEquationRGB = GFX_BLENDEQUATION_FUNC_ADD;
+	GfxBlendEquation blendEquationAlpha = GFX_BLENDEQUATION_FUNC_ADD;
 
-	bool bEnableRedWrite = true;
-	bool bEnableGreenWrite = true;
-	bool bEnableBlueWrite = true;
-	bool bEnableAlphaWrite = true;
+	bool bEnableColorRedWrite = true;
+	bool bEnableColorGreenWrite = true;
+	bool bEnableColorBlueWrite = true;
+	bool bEnableColorAlphaWrite = true;
 } PipelineState;
 
 
