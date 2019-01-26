@@ -9,7 +9,6 @@ typedef struct PipelineState {
 
 	// Rasterization State
 	bool bEnableRasterizerDiscard = false;
-	GfxPolygonMode polygonMode = GFX_POLYGON_MODE_FILL;
 
 	bool bEnableCullFace = true;
 	GfxCullFace cullFace = GFX_CULLFACE_BACK;
@@ -19,6 +18,8 @@ typedef struct PipelineState {
 	float depthBiasSlopeFactor = 0.0f;
 	float depthBiasConstantFactor = 0.0f;
 
+	GfxPolygonMode polygonMode = GFX_POLYGON_MODE_FILL;
+
 	// Multisample State
 	int samples = 1;
 	bool bEnableAlphaToCoverage = false;
@@ -27,21 +28,24 @@ typedef struct PipelineState {
 	// Depth Stencil State
 	bool bEnableDepthTest = true;
 	bool bEnableDepthWrite = true;
-	GfxCompareOp depthCompareOp = GFX_COMPAREOP_LEQUAL;
+	GfxCompareOp depthCompareOp = GFX_COMPAREOP_LESS;
 
 	bool bEnableStencilTest = false;
-	uint32_t stencilFrontRef = 0;
-	uint32_t stencilFrontMask = 1;
+	uint32_t stencilFrontCompareRef = 0;
+	uint32_t stencilFrontCompareMask = 0xFFFFFFFF;
 	GfxCompareOp stencilFrontCompareOp = GFX_COMPAREOP_ALWAYS;
 	GfxStencilOp stencilFrontOpSFail = GFX_STENCILOP_KEEP;
 	GfxStencilOp stencilFrontOpDFail = GFX_STENCILOP_KEEP;
 	GfxStencilOp stencilFrontOpDPass = GFX_STENCILOP_KEEP;
-	uint32_t stencilBackRef = 0;
-	uint32_t stencilBackMask = 1;
+	uint32_t stencilFrontWriteMask = 0xFFFFFFFF;
+
+	uint32_t stencilBackCompareRef = 0;
+	uint32_t stencilBackCompareMask = 0xFFFFFFFF;
 	GfxCompareOp stencilBackCompareOp = GFX_COMPAREOP_ALWAYS;
 	GfxStencilOp stencilBackOpSFail = GFX_STENCILOP_KEEP;
 	GfxStencilOp stencilBackOpDFail = GFX_STENCILOP_KEEP;
 	GfxStencilOp stencilBackOpDPass = GFX_STENCILOP_KEEP;
+	uint32_t stencilBackWriteMask = 0xFFFFFFFF;
 
 	// Color Blend State
 	bool bEnableBlend = false;

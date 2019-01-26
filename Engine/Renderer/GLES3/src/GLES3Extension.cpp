@@ -580,8 +580,15 @@ void GLBlendColor(GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha)
 
 void GLBindState(const PipelineState *state)
 {
-	GLPolygonMode(CGLES3Helper::TranslatePolytonMode(state->polygonMode));
+	// Input Assembly State
+	if (state->bEnablePrimitiveRestart) {
+		GLEnable(GL_PRIMITIVE_RESTART_FIXED_INDEX);
+	}
+	else {
+		GLDisable(GL_PRIMITIVE_RESTART_FIXED_INDEX);
+	}
 
+	// Rasterization State
 	if (state->bEnableRasterizerDiscard) {
 		GLEnable(GL_RASTERIZER_DISCARD);
 	}
@@ -598,19 +605,25 @@ void GLBindState(const PipelineState *state)
 		GLDisable(GL_CULL_FACE);
 	}
 
-	if (state->bEnableStencilTest) {
-		GLEnable(GL_STENCIL_TEST);
-		GLStencilFrontOp(CGLES3Helper::TranslateStencilOp(state->stencilFrontOpSFail), CGLES3Helper::TranslateStencilOp(state->stencilFrontOpDFail), CGLES3Helper::TranslateStencilOp(state->stencilFrontOpDPass));
-		GLStencilFrontFunc(CGLES3Helper::TranslateCompareOp(state->stencilFrontCompareOp), state->stencilFrontRef, state->stencilFrontMask);
-		GLStencilFrontMask(state->stencilFrontMask);
-		GLStencilBackOp(CGLES3Helper::TranslateStencilOp(state->stencilBackOpSFail), CGLES3Helper::TranslateStencilOp(state->stencilBackOpDFail), CGLES3Helper::TranslateStencilOp(state->stencilBackOpDPass));
-		GLStencilBackFunc(CGLES3Helper::TranslateCompareOp(state->stencilBackCompareOp), state->stencilBackRef, state->stencilBackMask);
-		GLStencilBackMask(state->stencilBackMask);
+	if (state->bEnableDepthBias) {
+		GLEnable(GL_POLYGON_OFFSET_FILL);
+		GLPolygonOffset(state->depthBiasSlopeFactor, state->depthBiasConstantFactor);
 	}
 	else {
-		GLDisable(GL_STENCIL_TEST);
+		GLDisable(GL_POLYGON_OFFSET_FILL);
 	}
 
+	GLPolygonMode(CGLES3Helper::TranslatePolytonMode(state->polygonMode));
+
+	// Multisample State
+	if (state->bEnableAlphaToCoverage) {
+		GLEnable(GL_SAMPLE_ALPHA_TO_COVERAGE);
+	}
+	else {
+		GLDisable(GL_SAMPLE_ALPHA_TO_COVERAGE);
+	}
+
+	// Depth Stencil State
 	if (state->bEnableDepthTest) {
 		GLEnable(GL_DEPTH_TEST);
 		GLDepthFunc(CGLES3Helper::TranslateCompareOp(state->depthCompareOp));
@@ -626,13 +639,20 @@ void GLBindState(const PipelineState *state)
 		GLDepthMask(GL_FALSE);
 	}
 
-	if (state->bEnableAlphaToCoverage) {
-		GLEnable(GL_SAMPLE_ALPHA_TO_COVERAGE);
+	if (state->bEnableStencilTest) {
+		GLEnable(GL_STENCIL_TEST);
+		GLStencilFrontOp(CGLES3Helper::TranslateStencilOp(state->stencilFrontOpSFail), CGLES3Helper::TranslateStencilOp(state->stencilFrontOpDFail), CGLES3Helper::TranslateStencilOp(state->stencilFrontOpDPass));
+		GLStencilFrontFunc(CGLES3Helper::TranslateCompareOp(state->stencilFrontCompareOp), state->stencilFrontCompareRef, state->stencilFrontCompareMask);
+		GLStencilFrontMask(state->stencilFrontWriteMask);
+		GLStencilBackOp(CGLES3Helper::TranslateStencilOp(state->stencilBackOpSFail), CGLES3Helper::TranslateStencilOp(state->stencilBackOpDFail), CGLES3Helper::TranslateStencilOp(state->stencilBackOpDPass));
+		GLStencilBackFunc(CGLES3Helper::TranslateCompareOp(state->stencilBackCompareOp), state->stencilBackCompareRef, state->stencilBackCompareMask);
+		GLStencilBackMask(state->stencilBackWriteMask);
 	}
 	else {
-		GLDisable(GL_SAMPLE_ALPHA_TO_COVERAGE);
+		GLDisable(GL_STENCIL_TEST);
 	}
 
+	// Color Blend State
 	if (state->bEnableBlend) {
 		GLEnable(GL_BLEND);
 		GLBlendFunc(CGLES3Helper::TranslateBlendFactor(state->blendSrcFactor), CGLES3Helper::TranslateBlendFactor(state->blendDstFactor));
@@ -641,14 +661,6 @@ void GLBindState(const PipelineState *state)
 	}
 	else {
 		GLDisable(GL_BLEND);
-	}
-
-	if (state->bEnableDepthBias) {
-		GLEnable(GL_POLYGON_OFFSET_FILL);
-		GLPolygonOffset(state->depthBiasSlopeFactor, state->depthBiasConstantFactor);
-	}
-	else {
-		GLDisable(GL_POLYGON_OFFSET_FILL);
 	}
 
 	GLColorMask(state->bEnableRedWrite, state->bEnableGreenWrite, state->bEnableBlueWrite, state->bEnableAlphaWrite);
