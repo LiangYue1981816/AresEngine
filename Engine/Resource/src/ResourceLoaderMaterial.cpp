@@ -101,7 +101,7 @@ static GfxSamplerAddressMode StringToAddressMode(const char *szString)
 	return GFX_SAMPLER_ADDRESS_MODE_INVALID_ENUM;
 }
 
-static GfxBlendFactor StringToBlendSrcFactor(const char *szString)
+static GfxBlendFactor StringToBlendFactor(const char *szString)
 {
 	if (szString) {
 		if (!stricmp(szString, "GFX_ZERO")) return GFX_BLENDFACTOR_ZERO;
@@ -124,45 +124,23 @@ static GfxBlendFactor StringToBlendSrcFactor(const char *szString)
 	return GFX_BLENDFACTOR_INVALID_ENUM;
 }
 
-static GfxBlendFactor StringToBlendDstFactor(const char *szString)
+static GfxBlendOp StringToBlendOp(const char *szString)
 {
 	if (szString) {
-		if (!stricmp(szString, "GFX_ZERO")) return GFX_BLENDFACTOR_ZERO;
-		if (!stricmp(szString, "GFX_ONE")) return GFX_BLENDFACTOR_ONE;
-		if (!stricmp(szString, "GFX_SRC_COLOR")) return GFX_BLENDFACTOR_SRC_COLOR;
-		if (!stricmp(szString, "GFX_ONE_MINUS_SRC_COLOR")) return GFX_BLENDFACTOR_ONE_MINUS_SRC_COLOR;
-		if (!stricmp(szString, "GFX_DST_COLOR")) return GFX_BLENDFACTOR_DST_COLOR;
-		if (!stricmp(szString, "GFX_ONE_MINUS_DST_COLOR")) return GFX_BLENDFACTOR_ONE_MINUS_DST_COLOR;
-		if (!stricmp(szString, "GFX_SRC_ALPHA")) return GFX_BLENDFACTOR_SRC_ALPHA;
-		if (!stricmp(szString, "GFX_ONE_MINUS_SRC_ALPHA")) return GFX_BLENDFACTOR_ONE_MINUS_SRC_ALPHA;
-		if (!stricmp(szString, "GFX_DST_ALPHA")) return GFX_BLENDFACTOR_DST_ALPHA;
-		if (!stricmp(szString, "GFX_ONE_MINUS_DST_ALPHA")) return GFX_BLENDFACTOR_ONE_MINUS_DST_ALPHA;
-		if (!stricmp(szString, "GFX_CONSTANT_COLOR")) return GFX_BLENDFACTOR_CONSTANT_COLOR;
-		if (!stricmp(szString, "GFX_ONE_MINUS_CONSTANT_COLOR")) return GFX_BLENDFACTOR_ONE_MINUS_CONSTANT_COLOR;
-		if (!stricmp(szString, "GFX_CONSTANT_ALPHA")) return GFX_BLENDFACTOR_CONSTANT_ALPHA;
-		if (!stricmp(szString, "GFX_ONE_MINUS_CONSTANT_ALPHA")) return GFX_BLENDFACTOR_ONE_MINUS_CONSTANT_ALPHA;
-		if (!stricmp(szString, "GFX_SRC_ALPHA_SATURATE")) return GFX_BLENDFACTOR_SRC_ALPHA_SATURATE;
+		if (!stricmp(szString, "GFX_ADD")) return GFX_BLENDOP_ADD;
+		if (!stricmp(szString, "GFX_SUBTRACT")) return GFX_BLENDOP_SUBTRACT;
+		if (!stricmp(szString, "GFX_REVERSE_SUBTRACT")) return GFX_BLENDOP_REVERSE_SUBTRACT;
+		if (!stricmp(szString, "GFX_MIN")) return GFX_BLENDOP_MIN;
+		if (!stricmp(szString, "GFX_MAX")) return GFX_BLENDOP_MAX;
 	}
 
-	return GFX_BLENDFACTOR_INVALID_ENUM;
-}
-
-static GfxBlendEquation StringToBlendEquation(const char *szString)
-{
-	if (szString) {
-		if (!stricmp(szString, "GFX_ADD")) return GFX_BLENDEQUATION_FUNC_ADD;
-		if (!stricmp(szString, "GFX_SUBTRACT")) return GFX_BLENDEQUATION_FUNC_SUBTRACT;
-		if (!stricmp(szString, "GFX_REVERSE_SUBTRACT")) return GFX_BLENDEQUATION_FUNC_REVERSE_SUBTRACT;
-		if (!stricmp(szString, "GFX_MIN")) return GFX_BLENDEQUATION_MIN;
-		if (!stricmp(szString, "GFX_MAX")) return GFX_BLENDEQUATION_MAX;
-	}
-
-	return GFX_BLENDEQUATION_INVALID_ENUM;
+	return GFX_BLENDOP_INVALID_ENUM;
 }
 
 
 static bool InternalLoadPipelineState(TiXmlNode *pPipelineNode, PipelineState &state)
 {
+	/*
 	if (TiXmlNode *pStateNode = pPipelineNode->FirstChild("State")) {
 		LogOutput(LOG_TAG_RENDERER, "\t\t\tLoadState ... ");
 		{
@@ -220,6 +198,7 @@ static bool InternalLoadPipelineState(TiXmlNode *pPipelineNode, PipelineState &s
 		}
 		LogOutput(nullptr, "OK\n");
 	}
+	*/
 	return true;
 }
 
