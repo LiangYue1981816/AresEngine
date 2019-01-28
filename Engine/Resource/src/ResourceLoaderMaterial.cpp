@@ -154,65 +154,104 @@ static GfxSamplerAddressMode StringToAddressMode(const char *szString)
 
 static bool InternalLoadPipelineState(TiXmlNode *pPipelineNode, PipelineState &state)
 {
-	/*
 	if (TiXmlNode *pStateNode = pPipelineNode->FirstChild("State")) {
 		LogOutput(LOG_TAG_RENDERER, "\t\t\tLoadState ... ");
 		{
-			if (TiXmlNode *pCullNode = pStateNode->FirstChild("Cull")) {
-				state.bEnableCullFace = StringToBool(pCullNode->ToElement()->AttributeString("enable"));
-				state.cullFace = StringToCullFace(pCullNode->ToElement()->AttributeString("cull_face"));
-				state.frontFace = StringToFrontFace(pCullNode->ToElement()->AttributeString("front_face"));
+			if (TiXmlNode *pInputAssemblyNode = pStateNode->FirstChild("InputAssembly")) {
+				if (TiXmlNode *pPrimitiveRestart = pInputAssemblyNode->FirstChild("PrimitiveRestart")) {
+					state.bEnablePrimitiveRestart = StringToBool(pPrimitiveRestart->ToElement()->AttributeString("enable"));
+				}
+				if (TiXmlNode *pPrimitiveTopology = pInputAssemblyNode->FirstChild("PrimitiveTopology")) {
+					state.topology = StringToTopology(pPrimitiveTopology->ToElement()->AttributeString("topology"));
+				}
 			}
 
-			if (TiXmlNode *pStencilNode = pStateNode->FirstChild("Stencil")) {
-				state.bEnableStencilTest = StringToBool(pStencilNode->ToElement()->AttributeString("enable"));
-				state.stencilFrontRef = pStencilNode->ToElement()->AttributeInt1("front_ref");
-				state.stencilFrontMask = pStencilNode->ToElement()->AttributeInt1("front_mask");
-				state.stencilFrontCompareOp = StringToCompareOp(pStencilNode->ToElement()->AttributeString("front_func"));
-				state.stencilFrontOpSFail = StringToStencilOp(pStencilNode->ToElement()->AttributeString("front_sfail"));
-				state.stencilFrontOpDFail = StringToStencilOp(pStencilNode->ToElement()->AttributeString("front_dfail"));
-				state.stencilFrontOpDPass = StringToStencilOp(pStencilNode->ToElement()->AttributeString("front_dpass"));
-				state.stencilBackRef = pStencilNode->ToElement()->AttributeInt1("back_ref");
-				state.stencilBackMask = pStencilNode->ToElement()->AttributeInt1("back_mask");
-				state.stencilBackCompareOp = StringToCompareOp(pStencilNode->ToElement()->AttributeString("back_func"));
-				state.stencilBackOpSFail = StringToStencilOp(pStencilNode->ToElement()->AttributeString("back_sfail"));
-				state.stencilBackOpDFail = StringToStencilOp(pStencilNode->ToElement()->AttributeString("back_dfail"));
-				state.stencilBackOpDPass = StringToStencilOp(pStencilNode->ToElement()->AttributeString("back_dpass"));
+			if (TiXmlNode *pRasterizationNode = pStateNode->FirstChild("Rasterization")) {
+				if (TiXmlNode *pCullNode = pRasterizationNode->FirstChild("Cull")) {
+					state.bEnableCullFace = StringToBool(pCullNode->ToElement()->AttributeString("enable"));
+					state.cullFace = StringToCullFace(pCullNode->ToElement()->AttributeString("cull_face"));
+					state.frontFace = StringToFrontFace(pCullNode->ToElement()->AttributeString("front_face"));
+				}
+				if (TiXmlNode *pDepthBiasNode = pRasterizationNode->FirstChild("DepthBias")) {
+					state.bEnableDepthBias = StringToBool(pDepthBiasNode->ToElement()->AttributeString("enable"));
+					state.depthBiasSlopeFactor = pDepthBiasNode->ToElement()->AttributeFloat1("slope_factor");
+					state.depthBiasConstantFactor = pDepthBiasNode->ToElement()->AttributeFloat1("constant_factor");
+				}
+			}
+
+			if (TiXmlNode *pMultisampleNode = pStateNode->FirstChild("Multisample")) {
+				if (TiXmlNode *pSampleNode = pMultisampleNode->FirstChild("Sample")) {
+					state.samples = pSampleNode->ToElement()->AttributeInt1("count");
+				}
+				if (TiXmlNode *pAlphaToCoverageNode = pMultisampleNode->FirstChild("AlphaToCoverage")) {
+					state.bEnableAlphaToCoverage = StringToBool(pAlphaToCoverageNode->ToElement()->AttributeString("enable"));
+				}
 			}
 
 			if (TiXmlNode *pDepthNode = pStateNode->FirstChild("Depth")) {
-				state.bEnableDepthTest = StringToBool(pDepthNode->ToElement()->AttributeString("enable_test"));
-				state.bEnableDepthWrite = StringToBool(pDepthNode->ToElement()->AttributeString("enable_write"));
-				state.depthCompareOp = StringToCompareOp(pDepthNode->ToElement()->AttributeString("func"));
+				if (TiXmlNode *pDepthTestNode = pDepthNode->FirstChild("DepthTest")) {
+					state.bEnableDepthTest = StringToBool(pDepthTestNode->ToElement()->AttributeString("enable"));
+					state.depthCompareOp = StringToCompareOp(pDepthTestNode->ToElement()->AttributeString("compare_op"));
+				}
+				if (TiXmlNode *pDepthWriteNode = pDepthNode->FirstChild("DepthWrite")) {
+					state.bEnableDepthWrite = StringToBool(pDepthWriteNode->ToElement()->AttributeString("enable"));
+				}
 			}
 
-			if (TiXmlNode *pColorNode = pStateNode->FirstChild("Color")) {
-				state.bEnableRedWrite = StringToBool(pColorNode->ToElement()->AttributeString("enable_write_red"));
-				state.bEnableGreenWrite = StringToBool(pColorNode->ToElement()->AttributeString("enable_write_green"));
-				state.bEnableBlueWrite = StringToBool(pColorNode->ToElement()->AttributeString("enable_write_blue"));
-				state.bEnableAlphaWrite = StringToBool(pColorNode->ToElement()->AttributeString("enable_write_alpha"));
+			if (TiXmlNode *pStencilNode = pStateNode->FirstChild("Stencil")) {
+				if (TiXmlNode *pStencilTestNode = pStencilNode->FirstChild("StencilTest")) {
+					state.bEnableStencilTest = StringToBool(pStencilTestNode->ToElement()->AttributeString("enable"));
+				}
+				if (TiXmlNode *pFrontNode = pStencilNode->FirstChild("Front")) {
+					state.stencilFrontWriteMask = pFrontNode->ToElement()->AttributeInt1("write_mask");
+					state.stencilFrontCompareMask = pFrontNode->ToElement()->AttributeInt1("compare_mask");
+					state.stencilFrontCompareRef = pFrontNode->ToElement()->AttributeInt1("compare_ref");
+					state.stencilFrontCompareOp = StringToCompareOp(pFrontNode->ToElement()->AttributeString("compare_op"));
+					state.stencilFrontOpSFail = StringToStencilOp(pFrontNode->ToElement()->AttributeString("stencil_fail"));
+					state.stencilFrontOpDFail = StringToStencilOp(pFrontNode->ToElement()->AttributeString("depth_fail"));
+					state.stencilFrontOpDPass = StringToStencilOp(pFrontNode->ToElement()->AttributeString("pass"));
+				}
+				if (TiXmlNode *pBackNode = pStencilNode->FirstChild("Back")) {
+					state.stencilBackWriteMask = pBackNode->ToElement()->AttributeInt1("write_mask");
+					state.stencilBackCompareMask = pBackNode->ToElement()->AttributeInt1("compare_mask");
+					state.stencilBackCompareRef = pBackNode->ToElement()->AttributeInt1("compare_ref");
+					state.stencilBackCompareOp = StringToCompareOp(pBackNode->ToElement()->AttributeString("compare_op"));
+					state.stencilBackOpSFail = StringToStencilOp(pBackNode->ToElement()->AttributeString("stencil_fail"));
+					state.stencilBackOpDFail = StringToStencilOp(pBackNode->ToElement()->AttributeString("depth_fail"));
+					state.stencilBackOpDPass = StringToStencilOp(pBackNode->ToElement()->AttributeString("pass"));
+				}
 			}
 
-			if (TiXmlNode *pAlphaToCoverageNode = pStateNode->FirstChild("AlphaToCoverage")) {
-				state.bEnableAlphaToCoverage = StringToBool(pAlphaToCoverageNode->ToElement()->AttributeString("enable"));
-			}
-
-			if (TiXmlNode *pBlendNode = pStateNode->FirstChild("Blend")) {
-				state.bEnableBlend = StringToBool(pBlendNode->ToElement()->AttributeString("enable"));
-				state.blendSrcFactor = StringToBlendSrcFactor(pBlendNode->ToElement()->AttributeString("src_factor"));
-				state.blendDstFactor = StringToBlendDstFactor(pBlendNode->ToElement()->AttributeString("dst_factor"));
-				state.blendEquation = StringToBlendEquation(pBlendNode->ToElement()->AttributeString("equation"));
-			}
-
-			if (TiXmlNode *pDepthBiasNode = pStateNode->FirstChild("DepthBias")) {
-				state.bEnableDepthBias = StringToBool(pDepthBiasNode->ToElement()->AttributeString("enable"));
-				state.depthBiasSlopeFactor = pDepthBiasNode->ToElement()->AttributeFloat1("slope_factor");
-				state.depthBiasConstantFactor = pDepthBiasNode->ToElement()->AttributeFloat1("constant_factor");
+			if (TiXmlNode *pColorBlendNode = pStateNode->FirstChild("ColorBlend")) {
+				if (TiXmlNode *pBlendNode = pColorBlendNode->FirstChild("Blend")) {
+					state.bEnableBlend = StringToBool(pBlendNode->ToElement()->AttributeString("enable"));
+				}
+				if (TiXmlNode *pConstantNode = pColorBlendNode->FirstChild("Constant")) {
+					state.blendColorRed = pConstantNode->ToElement()->AttributeFloat1("red");
+					state.blendColorGreen = pConstantNode->ToElement()->AttributeFloat1("green");
+					state.blendColorBlue = pConstantNode->ToElement()->AttributeFloat1("blue");
+					state.blendColorAlpha = pConstantNode->ToElement()->AttributeFloat1("alpha");
+				}
+				if (TiXmlNode *pRGBBlendNode = pColorBlendNode->FirstChild("RGBBlend")) {
+					state.blendOpRGB = StringToBlendOp(pRGBBlendNode->ToElement()->AttributeString("blend_op"));
+					state.blendSrcRGB = StringToBlendFactor(pRGBBlendNode->ToElement()->AttributeString("src_factor"));
+					state.blendDstRGB = StringToBlendFactor(pRGBBlendNode->ToElement()->AttributeString("dst_factor"));
+				}
+				if (TiXmlNode *pAlphaBlendNode = pColorBlendNode->FirstChild("AlphaBlend")) {
+					state.blendOpAlpha = StringToBlendOp(pAlphaBlendNode->ToElement()->AttributeString("blend_op"));
+					state.blendSrcAlpha = StringToBlendFactor(pAlphaBlendNode->ToElement()->AttributeString("src_factor"));
+					state.blendDstAlpha = StringToBlendFactor(pAlphaBlendNode->ToElement()->AttributeString("dst_factor"));
+				}
+				if (TiXmlNode *pColorMaskNode = pColorBlendNode->FirstChild("ColorMask")) {
+					state.bEnableColorRedWrite = StringToBool(pColorMaskNode->ToElement()->AttributeString("enable_write_red"));
+					state.bEnableColorGreenWrite = StringToBool(pColorMaskNode->ToElement()->AttributeString("enable_write_green"));
+					state.bEnableColorBlueWrite = StringToBool(pColorMaskNode->ToElement()->AttributeString("enable_write_blue"));
+					state.bEnableColorAlphaWrite = StringToBool(pColorMaskNode->ToElement()->AttributeString("enable_write_alpha"));
+				}
 			}
 		}
 		LogOutput(nullptr, "OK\n");
 	}
-	*/
 	return true;
 }
 
@@ -571,13 +610,13 @@ bool CResourceLoader::LoadMaterial(const char *szFileName, CGfxMaterial *pMateri
 	//					<Front write_mask="" compare_mask="" compare_ref="" compare_op="" stencil_fail="" depth_fail="" pass="" />
 	//					<Back write_mask="" compare_mask="" compare_ref="" compare_op="" stencil_fail="" depth_fail="" pass="" />
 	//				</Stencil>
-	//				<Blend>
+	//				<ColorBlend>
 	//					<Blend enable="" />
 	//					<Constant red="" green="" blue="" alpha="" />
-	//					<ColorBlend blend_op="" src_factor="" dst_factor="" />
+	//					<RGBBlend blend_op="" src_factor="" dst_factor="" />
 	//					<AlphaBlend blend_op="" src_factor="" dst_factor="" />
 	//					<ColorMask enable_write_red="" enable_write_green="" enable_write_blue="" enable_write_alpha="" />
-	//				</Blend>
+	//				</ColorBlend>
 	//			</State>
 	//		</Pipeline>
 	//		<Texture2D file_name="" name="" min_filter="" mag_filter="" mipmap_mode="" address_mode="" />
