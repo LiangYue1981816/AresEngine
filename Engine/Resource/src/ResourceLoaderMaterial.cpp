@@ -16,6 +16,20 @@ static bool StringToBool(const char *szString)
 	return false;
 }
 
+static GfxPrimitiveTopology StringToTopology(const char *szString)
+{
+	if (szString) {
+		if (!stricmp(szString, "GFX_POINT_LIST")) return GFX_PRIMITIVE_TOPOLOGY_POINT_LIST;
+		if (!stricmp(szString, "GFX_LINE_LIST")) return GFX_PRIMITIVE_TOPOLOGY_LINE_LIST;
+		if (!stricmp(szString, "GFX_LINE_STRIP")) return GFX_PRIMITIVE_TOPOLOGY_LINE_STRIP;
+		if (!stricmp(szString, "GFX_TRIANGLE_LIST")) return GFX_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST;
+		if (!stricmp(szString, "GFX_TRIANGLE_STRIP")) return GFX_PRIMITIVE_TOPOLOGY_TRIANGLE_STRIP;
+		if (!stricmp(szString, "GFX_TRIANGLE_FAN")) return GFX_PRIMITIVE_TOPOLOGY_TRIANGLE_FAN;
+	}
+
+	return GFX_PRIMITIVE_TOPOLOGY_INVALID_ENUM;
+}
+
 static GfxCullFace StringToCullFace(const char *szString)
 {
 	if (szString) {
@@ -69,38 +83,6 @@ static GfxStencilOp StringToStencilOp(const char *szString)
 	return GFX_STENCILOP_INVALID_ENUM;
 }
 
-static GfxFilter StringToFilter(const char *szString)
-{
-	if (szString) {
-		if (!stricmp(szString, "GFX_NEAREST")) return GFX_FILTER_NEAREST;
-		if (!stricmp(szString, "GFX_LINEAR")) return GFX_FILTER_LINEAR;
-	}
-
-	return GFX_FILTER_INVALID_ENUM;
-}
-
-static GfxSamplerMipmapMode StringToMipmapMode(const char *szString)
-{
-	if (szString) {
-		if (!stricmp(szString, "GFX_NEAREST")) return GFX_SAMPLER_MIPMAP_MODE_NEAREST;
-		if (!stricmp(szString, "GFX_LINEAR")) return GFX_SAMPLER_MIPMAP_MODE_LINEAR;
-	}
-
-	return GFX_SAMPLER_MIPMAP_MODE_INVALID_ENUM;
-}
-
-static GfxSamplerAddressMode StringToAddressMode(const char *szString)
-{
-	if (szString) {
-		if (!stricmp(szString, "GFX_REPEAT")) return GFX_SAMPLER_ADDRESS_MODE_REPEAT;
-		if (!stricmp(szString, "GFX_MIRRORED_REPEAT")) return GFX_SAMPLER_ADDRESS_MODE_MIRRORED_REPEAT;
-		if (!stricmp(szString, "GFX_CLAMP_TO_EDGE")) return GFX_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE;
-		if (!stricmp(szString, "GFX_CLAMP_TO_BORDER")) return GFX_SAMPLER_ADDRESS_MODE_CLAMP_TO_BORDER;
-	}
-
-	return GFX_SAMPLER_ADDRESS_MODE_INVALID_ENUM;
-}
-
 static GfxBlendFactor StringToBlendFactor(const char *szString)
 {
 	if (szString) {
@@ -135,6 +117,38 @@ static GfxBlendOp StringToBlendOp(const char *szString)
 	}
 
 	return GFX_BLENDOP_INVALID_ENUM;
+}
+
+static GfxFilter StringToFilter(const char *szString)
+{
+	if (szString) {
+		if (!stricmp(szString, "GFX_NEAREST")) return GFX_FILTER_NEAREST;
+		if (!stricmp(szString, "GFX_LINEAR")) return GFX_FILTER_LINEAR;
+	}
+
+	return GFX_FILTER_INVALID_ENUM;
+}
+
+static GfxSamplerMipmapMode StringToMipmapMode(const char *szString)
+{
+	if (szString) {
+		if (!stricmp(szString, "GFX_NEAREST")) return GFX_SAMPLER_MIPMAP_MODE_NEAREST;
+		if (!stricmp(szString, "GFX_LINEAR")) return GFX_SAMPLER_MIPMAP_MODE_LINEAR;
+	}
+
+	return GFX_SAMPLER_MIPMAP_MODE_INVALID_ENUM;
+}
+
+static GfxSamplerAddressMode StringToAddressMode(const char *szString)
+{
+	if (szString) {
+		if (!stricmp(szString, "GFX_REPEAT")) return GFX_SAMPLER_ADDRESS_MODE_REPEAT;
+		if (!stricmp(szString, "GFX_MIRRORED_REPEAT")) return GFX_SAMPLER_ADDRESS_MODE_MIRRORED_REPEAT;
+		if (!stricmp(szString, "GFX_CLAMP_TO_EDGE")) return GFX_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE;
+		if (!stricmp(szString, "GFX_CLAMP_TO_BORDER")) return GFX_SAMPLER_ADDRESS_MODE_CLAMP_TO_BORDER;
+	}
+
+	return GFX_SAMPLER_ADDRESS_MODE_INVALID_ENUM;
 }
 
 
@@ -531,20 +545,39 @@ bool CResourceLoader::LoadMaterial(const char *szFileName, CGfxMaterial *pMateri
 	//		<Pipeline render_pass="" sub_pass="">
 	//			<Vertex file_name="">
 	//				<Define name="" />
-	//				<Define name="" />
 	//			</Vertex>
 	//			<Fragment file_name="">
 	//				<Define name="" />
-	//				<Define name="" />
 	//			</Fragment>
 	//			<State>
-	//				<Cull enable="" cull_face="" front_face="" />
-	//				<Stencil enable="" front_func="" front_ref="" front_mask="" front_sfail="" front_dfail="" front_dpass="" back_func="" back_ref="" back_mask="" back_sfail="" back_dfail="" back_dpass="" />
-	//				<Depth enable_test="" enable_write="" func="" />
-	//				<Color enable_write_red="" enable_write_green="" enable_write_blue="" enable_write_alpha="" />
-	//				<AlphaToCoverage enable="" />
-	//				<Blend enable="" src_factor="" dst_factor="" equation="" />
-	//				<DepthBias enable="" slope_factor="" constant_factor="" />
+	//				<InputAssembly>
+	//					<PrimitiveRestart enable="" />
+	//					<PrimitiveTopology topology="" />
+	//				</InputAssembly>
+	//				<Rasterization>
+	//					<Cull enable="" cull_face="" front_face="" />
+	//					<DepthBias enable="" slope_factor="" constant_factor="" />
+	//				</Rasterization>
+	//				<Multisample>
+	//					<Sample count="" />
+	//					<AlphaToCoverage enable="" />
+	//				</Multisample>
+	//				<Depth>
+	//					<DepthTest enable="" compare_op="" />
+	//					<DepthWrite enable="" />
+	//				</Depth>
+	//				<Stencil>
+	//					<StencilTest enable="" />
+	//					<Front write_mask="" compare_mask="" compare_ref="" compare_op="" stencil_fail="" depth_fail="" pass="" />
+	//					<Back write_mask="" compare_mask="" compare_ref="" compare_op="" stencil_fail="" depth_fail="" pass="" />
+	//				</Stencil>
+	//				<Blend>
+	//					<Blend enable="" />
+	//					<Constant red="" green="" blue="" alpha="" />
+	//					<ColorBlend blend_op="" src_factor="" dst_factor="" />
+	//					<AlphaBlend blend_op="" src_factor="" dst_factor="" />
+	//					<ColorMask enable_write_red="" enable_write_green="" enable_write_blue="" enable_write_alpha="" />
+	//				</Blend>
 	//			</State>
 	//		</Pipeline>
 	//		<Texture2D file_name="" name="" min_filter="" mag_filter="" mipmap_mode="" address_mode="" />
