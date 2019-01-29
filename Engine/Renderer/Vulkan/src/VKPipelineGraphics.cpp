@@ -216,7 +216,16 @@ bool CVKPipelineGraphics::Create(const CGfxRenderPass *pRenderPass, const CGfxSh
 
 void CVKPipelineGraphics::Destroy(void)
 {
+	if (m_vkPipeline) {
+		vkDestroyPipeline(m_pDevice->GetDevice(), m_vkPipeline, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
+	}
 
+	if (m_vkPipelineLayout) {
+		vkDestroyPipelineLayout(m_pDevice->GetDevice(), m_vkPipelineLayout, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
+	}
+
+	m_vkPipeline = VK_NULL_HANDLE;
+	m_vkPipelineLayout = VK_NULL_HANDLE;
 }
 
 bool CVKPipelineGraphics::IsTextureValid(uint32_t name) const
