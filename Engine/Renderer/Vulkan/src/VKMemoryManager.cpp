@@ -1,23 +1,6 @@
 #include "VKRenderer.h"
 
 
-static uint32_t GetMemoryTypeIndex(const VkPhysicalDeviceMemoryProperties &memoryProperties, VkFlags memoryTypeBits, VkMemoryPropertyFlags &memoryPropertyFlags)
-{
-	for (uint32_t index = 0; index < 2; index++) {
-		for (uint32_t indexMemoryType = 0; indexMemoryType < memoryProperties.memoryTypeCount; indexMemoryType++) {
-			if ((memoryTypeBits & (1 << indexMemoryType)) &&
-				(memoryProperties.memoryTypes[indexMemoryType].propertyFlags & memoryPropertyFlags) == memoryPropertyFlags) {
-				return indexMemoryType;
-			}
-		}
-
-		memoryPropertyFlags = memoryPropertyFlags & ~VK_MEMORY_PROPERTY_LAZILY_ALLOCATED_BIT;
-	}
-
-	return 0xffffffff;
-}
-
-
 CVKMemoryManager::CVKMemoryManager(CVKDevice *pDevice)
 	: m_pDevice(pDevice)
 {
@@ -41,9 +24,38 @@ CVKMemoryManager::~CVKMemoryManager(void)
 	m_pAllocatorListHeads.clear();
 }
 
+uint32_t CVKMemoryManager::GetMemoryTypeIndex(const VkPhysicalDeviceMemoryProperties &memoryProperties, VkFlags memoryTypeBits, VkMemoryPropertyFlags &memoryPropertyFlags, VkDeviceSize memorySize)
+{
+	uint32_t indexTry = 0;
+
+	do {
+		for (uint32_t indexMemoryType = 0; indexMemoryType < memoryProperties.memoryTypeCount; indexMemoryType++) {
+			if ((memoryTypeBits & (1 << indexMemoryType)) &&
+				(memoryProperties.memoryTypes[indexMemoryType].propertyFlags & memoryPropertyFlags) == memoryPropertyFlags &&
+				(memoryProperties.memoryHeaps[memoryProperties.memoryTypes[indexMemoryType].heapIndex].size * 80 / 100) > (m_allocatedMemoryHeapSize[memoryProperties.memoryTypes[indexMemoryType].heapIndex] + memorySize)) {
+				return indexMemoryType;
+			}
+		}
+
+		switch (indexTry) {
+		case 0:
+			memoryPropertyFlags &= ~VK_MEMORY_PROPERTY_LAZILY_ALLOCATED_BIT;
+			break;
+
+		case 1:
+			memoryPropertyFlags &= ~VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT;
+			memoryPropertyFlags |=  VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT;
+			break;
+
+		default:
+			return 0xffffffff;
+		}
+	} while (true);
+}
+
 CVKMemory* CVKMemoryManager::AllocMemory(VkDeviceSize memorySize, VkDeviceSize memoryAlignment, VkFlags memoryTypeBits, VkMemoryPropertyFlags memoryPropertyFlags)
 {
-	uint32_t memoryTypeIndex = GetMemoryTypeIndex(m_pDevice->GetPhysicalDeviceMemoryProperties(), memoryTypeBits, memoryPropertyFlags);
+	uint32_t memoryTypeIndex = GetMemoryTypeIndex(m_pDevice->GetPhysicalDeviceMemoryProperties(), memoryTypeBits, memoryPropertyFlags, 0);
 	if (memoryTypeIndex == 0xffffffff) return nullptr;
 
 	atomic_spin_autolock autolock(&m_lock);
@@ -81,6 +93,9 @@ CVKMemory* CVKMemoryManager::AllocMemory(VkDeviceSize memorySize, VkDeviceSize m
 
 				memoryAllocatorSize = std::max(memoryAllocatorSize, memorySize);
 				memoryAllocatorSize = ALIGN_BYTE(memoryAllocatorSize, MEMORY_POOL_ALIGNMENT);
+
+				memoryTypeIndex = GetMemoryTypeIndex(m_pDevice->GetPhysicalDeviceMemoryProperties(), memoryTypeBits, memoryPropertyFlags, memoryAllocatorSize);
+				if (memoryTypeIndex == 0xffffffff) return nullptr;
 			}
 
 			CVKMemoryAllocator *pAllocator = new CVKMemoryAllocator(m_pDevice, memoryTypeIndex, memoryAllocatorSize, memoryAlignment);
@@ -92,7 +107,7 @@ CVKMemory* CVKMemoryManager::AllocMemory(VkDeviceSize memorySize, VkDeviceSize m
 
 				m_pAllocatorListHeads[memoryAlignment][memoryTypeIndex] = pAllocator;
 			}
-			m_allocatedMemoryHeapSize[memoryTypeIndex] += pAllocator->GetFullSize();
+			m_allocatedMemoryHeapSize[m_pDevice->GetPhysicalDeviceMemoryProperties().memoryTypes[memoryTypeIndex].heapIndex] += pAllocator->GetFullSize();
 		} while (true);
 	}
 
@@ -114,7 +129,7 @@ void CVKMemoryManager::FreeMemory(CVKMemory *pMemory)
 			uint32_t memoryAlignment = pAllocator->GetAlignment();
 			uint32_t memoryTypeIndex = pAllocator->GetMemoryTypeIndex();
 
-			m_allocatedMemoryHeapSize[memoryTypeIndex] -= pAllocator->GetFullSize();
+			m_allocatedMemoryHeapSize[m_pDevice->GetPhysicalDeviceMemoryProperties().memoryTypes[memoryTypeIndex].heapIndex] -= pAllocator->GetFullSize();
 			{
 				if (m_pAllocatorListHeads[memoryAlignment][memoryTypeIndex] == pAllocator) {
 					m_pAllocatorListHeads[memoryAlignment][memoryTypeIndex] = pAllocator->pNext;
