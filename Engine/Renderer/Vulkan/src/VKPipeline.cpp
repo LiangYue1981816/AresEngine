@@ -78,9 +78,9 @@ bool CVKPipeline::CreateLayouts(eastl::vector<VkDescriptorSetLayout> &layouts)
 		}
 	}
 
-	for (int indexLayout = 0; indexLayout < DESCRIPTOR_SET_COUNT; indexLayout++) {
-		if (m_pLayouts[indexLayout]->Create()) {
-			layouts.emplace_back(m_pLayouts[indexLayout]->GetLayout());
+	for (int indexDescriptorSet = 0; indexDescriptorSet < DESCRIPTOR_SET_COUNT; indexDescriptorSet++) {
+		if (m_pLayouts[indexDescriptorSet]->Create()) {
+			layouts.emplace_back(m_pLayouts[indexDescriptorSet]->GetLayout());
 		}
 	}
 
