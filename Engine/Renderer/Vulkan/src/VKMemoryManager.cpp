@@ -60,7 +60,7 @@ CVKMemory* CVKMemoryManager::AllocMemory(VkDeviceSize memorySize, VkDeviceSize m
 				} while ((pAllocator = pAllocator->pNext) != nullptr);
 			}
 
-			VkDeviceSize memoryPoolSize = 0;
+			VkDeviceSize memoryAllocatorSize = 0;
 			{
 				const VkDeviceSize MEMORY_POOL_ALIGNMENT = 8 * 1024 * 1024;
 				const VkDeviceSize MEMORY_POOL_DEVICE_LOCAL_MEMORY_SIZE = 64 * 1024 * 1024;
@@ -68,22 +68,22 @@ CVKMemory* CVKMemoryManager::AllocMemory(VkDeviceSize memorySize, VkDeviceSize m
 				const VkDeviceSize MEMORY_POOL_HOST_VISIBLE_AND_DEVICE_LOCAL_MEMORY_SIZE = 8 * 1024 * 1024;
 
 				if ((memoryPropertyFlags & VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT) == 0 && (memoryPropertyFlags & VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT) != 0) {
-					memoryPoolSize = MEMORY_POOL_DEVICE_LOCAL_MEMORY_SIZE;
+					memoryAllocatorSize = MEMORY_POOL_DEVICE_LOCAL_MEMORY_SIZE;
 				}
 
 				if ((memoryPropertyFlags & VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT) != 0 && (memoryPropertyFlags & VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT) == 0) {
-					memoryPoolSize = MEMORY_POOL_HOST_VISIBLE_MEMORY_SIZE;
+					memoryAllocatorSize = MEMORY_POOL_HOST_VISIBLE_MEMORY_SIZE;
 				}
 
 				if ((memoryPropertyFlags & VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT) != 0 && (memoryPropertyFlags & VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT) != 0) {
-					memoryPoolSize = MEMORY_POOL_HOST_VISIBLE_AND_DEVICE_LOCAL_MEMORY_SIZE;
+					memoryAllocatorSize = MEMORY_POOL_HOST_VISIBLE_AND_DEVICE_LOCAL_MEMORY_SIZE;
 				}
 
-				memoryPoolSize = std::max(memoryPoolSize, memorySize);
-				memoryPoolSize = ALIGN_BYTE(memoryPoolSize, MEMORY_POOL_ALIGNMENT);
+				memoryAllocatorSize = std::max(memoryAllocatorSize, memorySize);
+				memoryAllocatorSize = ALIGN_BYTE(memoryAllocatorSize, MEMORY_POOL_ALIGNMENT);
 			}
 
-			CVKMemoryAllocator *pAllocator = new CVKMemoryAllocator(m_pDevice, memoryTypeIndex, memoryPoolSize, memoryAlignment);
+			CVKMemoryAllocator *pAllocator = new CVKMemoryAllocator(m_pDevice, memoryTypeIndex, memoryAllocatorSize, memoryAlignment);
 			{
 				if (m_pAllocatorListHeads[memoryAlignment][memoryTypeIndex]) {
 					m_pAllocatorListHeads[memoryAlignment][memoryTypeIndex]->pPrev = pAllocator;
@@ -92,6 +92,7 @@ CVKMemory* CVKMemoryManager::AllocMemory(VkDeviceSize memorySize, VkDeviceSize m
 
 				m_pAllocatorListHeads[memoryAlignment][memoryTypeIndex] = pAllocator;
 			}
+			m_allocatedMemoryHeapSize[memoryTypeIndex] += pAllocator->GetFullSize();
 		} while (true);
 	}
 
@@ -113,18 +114,20 @@ void CVKMemoryManager::FreeMemory(CVKMemory *pMemory)
 			uint32_t memoryAlignment = pAllocator->GetAlignment();
 			uint32_t memoryTypeIndex = pAllocator->GetMemoryTypeIndex();
 
-			if (m_pAllocatorListHeads[memoryAlignment][memoryTypeIndex] == pAllocator) {
-				m_pAllocatorListHeads[memoryAlignment][memoryTypeIndex] =  pAllocator->pNext;
-			}
+			m_allocatedMemoryHeapSize[memoryTypeIndex] -= pAllocator->GetFullSize();
+			{
+				if (m_pAllocatorListHeads[memoryAlignment][memoryTypeIndex] == pAllocator) {
+					m_pAllocatorListHeads[memoryAlignment][memoryTypeIndex] = pAllocator->pNext;
+				}
 
-			if (pAllocator->pPrev) {
-				pAllocator->pPrev->pNext = pAllocator->pNext;
-			}
+				if (pAllocator->pPrev) {
+					pAllocator->pPrev->pNext = pAllocator->pNext;
+				}
 
-			if (pAllocator->pNext) {
-				pAllocator->pNext->pPrev = pAllocator->pPrev;
+				if (pAllocator->pNext) {
+					pAllocator->pNext->pPrev = pAllocator->pPrev;
+				}
 			}
-
 			delete pAllocator;
 		}
 	}
