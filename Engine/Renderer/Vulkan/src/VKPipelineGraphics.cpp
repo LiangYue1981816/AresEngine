@@ -52,6 +52,9 @@ bool CVKPipelineGraphics::Create(const CGfxRenderPass *pRenderPass, const CGfxSh
 
 	Destroy();
 
+	m_pShaders[vertex_shader] = (CVKShader *)pVertexShader;
+	m_pShaders[fragment_shader] = (CVKShader *)pFragmentShader;
+
 	eastl::vector<VkPipelineShaderStageCreateInfo> shaders;
 	CALL_BOOL_FUNCTION_RETURN_BOOL(CreateShaderStages(shaders));
 
@@ -233,15 +236,15 @@ void CVKPipelineGraphics::Destroy(void)
 
 bool CVKPipelineGraphics::IsTextureValid(uint32_t name) const
 {
-	return true;
+	return CVKPipeline::IsTextureValid(name);
 }
 
 bool CVKPipelineGraphics::IsUniformValid(uint32_t name) const
 {
-	return true;
+	return CVKPipeline::IsUniformValid(name);
 }
 
 bool CVKPipelineGraphics::IsUniformBlockValid(uint32_t name) const
 {
-	return true;
+	return CVKPipeline::IsUniformBlockValid(name);
 }
