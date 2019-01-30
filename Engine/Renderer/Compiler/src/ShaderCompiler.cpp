@@ -22,6 +22,7 @@ CShaderCompiler::CShaderCompiler(void)
 	m_options.SetWarningsAsErrors();
 	m_options.SetSourceLanguage(shaderc_source_language_glsl);
 	m_options.SetForcedVersionProfile(310, shaderc_profile_es);
+	m_options.SetAutoBindUniforms(true);
 	m_options.AddMacroDefinition("GLES");
 }
 
