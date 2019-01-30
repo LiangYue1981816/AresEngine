@@ -14,6 +14,11 @@ protected:
 	bool CreateShaderStages(eastl::vector<VkPipelineShaderStageCreateInfo> &shaders);
 	bool CreateVertexInputState(eastl::vector<VkVertexInputBindingDescription> &inputBindingDescriptions, eastl::vector<VkVertexInputAttributeDescription> &inputAttributeDescriptions, uint32_t vertexBinding, uint32_t instanceBinding);
 
+public:
+	bool IsTextureValid(uint32_t name) const;
+	bool IsUniformValid(uint32_t name) const;
+	bool IsUniformBlockValid(uint32_t name) const;
+
 
 protected:
 	VkPipeline m_vkPipeline;

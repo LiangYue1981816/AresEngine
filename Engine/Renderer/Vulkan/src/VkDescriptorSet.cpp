@@ -25,6 +25,40 @@ VkDescriptorSetLayout CVKDescriptorSetLayout::GetLayout(void) const
 	return m_vkDescriptorSetLayout;
 }
 
+bool CVKDescriptorSetLayout::IsTextureValid(uint32_t name) const
+{
+	return m_sampledImageBindings.find(name) != m_sampledImageBindings.end();
+}
+
+bool CVKDescriptorSetLayout::IsUniformBlockValid(uint32_t name) const
+{
+	return m_uniformBlockBindings.find(name) != m_uniformBlockBindings.end();
+}
+
+VkDescriptorSetLayoutBinding CVKDescriptorSetLayout::GetTextureBinding(uint32_t name) const
+{
+	const auto &itBinding = m_sampledImageBindings.find(name);
+
+	if (itBinding != m_sampledImageBindings.end()) {
+		return itBinding->second;
+	}
+	else {
+		return VkDescriptorSetLayoutBinding{};
+	}
+}
+
+VkDescriptorSetLayoutBinding CVKDescriptorSetLayout::GetUniformBlockBinding(uint32_t name) const
+{
+	const auto &itBinding = m_uniformBlockBindings.find(name);
+
+	if (itBinding != m_uniformBlockBindings.end()) {
+		return itBinding->second;
+	}
+	else {
+		return VkDescriptorSetLayoutBinding{};
+	}
+}
+
 bool CVKDescriptorSetLayout::SetUniformBlockBinding(const char *szName, uint32_t binding, VkShaderStageFlags flags)
 {
 	uint32_t name = HashValue(szName);

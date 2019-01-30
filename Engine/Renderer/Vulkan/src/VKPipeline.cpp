@@ -169,3 +169,30 @@ bool CVKPipeline::CreateVertexInputState(eastl::vector<VkVertexInputBindingDescr
 
 	return true;
 }
+
+bool CVKPipeline::IsTextureValid(uint32_t name) const
+{
+	for (int indexDescriptorSet = 0; indexDescriptorSet < DESCRIPTOR_SET_COUNT; indexDescriptorSet++) {
+		if (m_pLayouts[indexDescriptorSet]->IsTextureValid(name)) {
+			return true;
+		}
+	}
+
+	return false;
+}
+
+bool CVKPipeline::IsUniformBlockValid(uint32_t name) const
+{
+	for (int indexDescriptorSet = 0; indexDescriptorSet < DESCRIPTOR_SET_COUNT; indexDescriptorSet++) {
+		if (m_pLayouts[indexDescriptorSet]->IsUniformBlockValid(name)) {
+			return true;
+		}
+	}
+
+	return false;
+}
+
+bool CVKPipeline::IsUniformValid(uint32_t name) const
+{
+	return m_pushConstantRanges.find(name) != m_pushConstantRanges.end();
+}

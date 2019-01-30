@@ -25,6 +25,13 @@ public:
 	uint32_t GetSet(void) const;
 	VkDescriptorSetLayout GetLayout(void) const;
 
+public:
+	bool IsTextureValid(uint32_t name) const;
+	bool IsUniformBlockValid(uint32_t name) const;
+
+	VkDescriptorSetLayoutBinding GetTextureBinding(uint32_t name) const;
+	VkDescriptorSetLayoutBinding GetUniformBlockBinding(uint32_t name) const;
+
 protected:
 	bool SetUniformBlockBinding(const char *szName, uint32_t binding, VkShaderStageFlags flags);
 	bool SetSampledImageBinding(const char *szName, uint32_t binding, VkShaderStageFlags flags);
