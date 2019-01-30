@@ -24,6 +24,10 @@ public:
 	bool IsUniformValid(uint32_t name) const;
 	bool IsUniformBlockValid(uint32_t name) const;
 
+public:
+	uint32_t GetTextureBinding(uint32_t set, uint32_t name) const;
+	uint32_t GetUniformBlockBinding(uint32_t set, uint32_t name) const;
+
 
 private:
 	uint32_t m_name;

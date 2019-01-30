@@ -248,3 +248,23 @@ bool CVKPipelineGraphics::IsUniformBlockValid(uint32_t name) const
 {
 	return CVKPipeline::IsUniformBlockValid(name);
 }
+
+uint32_t CVKPipelineGraphics::GetTextureBinding(uint32_t set, uint32_t name) const
+{
+	if (set >= 0 && set < DESCRIPTOR_SET_COUNT) {
+		return m_pLayouts[set]->GetTextureBinding(name).binding;
+	}
+	else {
+		return 0xffffffff;
+	}
+}
+
+uint32_t CVKPipelineGraphics::GetUniformBlockBinding(uint32_t set, uint32_t name) const
+{
+	if (set >= 0 && set < DESCRIPTOR_SET_COUNT) {
+		return m_pLayouts[set]->GetUniformBlockBinding(name).binding;
+	}
+	else {
+		return 0xffffffff;
+	}
+}
