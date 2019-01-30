@@ -20,9 +20,10 @@ CShaderCompiler::CShaderCompiler(void)
 
 	m_options.SetIncluder(std::move(m_fileIncluder));
 	m_options.SetWarningsAsErrors();
+	m_options.SetAutoBindUniforms(true);
 	m_options.SetSourceLanguage(shaderc_source_language_glsl);
 	m_options.SetForcedVersionProfile(310, shaderc_profile_es);
-	m_options.SetAutoBindUniforms(true);
+	m_options.SetOptimizationLevel(shaderc_optimization_level_performance);
 	m_options.AddMacroDefinition("GLES");
 }
 
