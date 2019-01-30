@@ -13,6 +13,9 @@ typedef enum DescriptorSetType {
 
 class CVKDescriptorSetLayout
 {
+	friend class CVKPipeline;
+
+
 public:
 	CVKDescriptorSetLayout(CVKDevice *pDevice, uint32_t set);
 	virtual ~CVKDescriptorSetLayout(void);
@@ -22,12 +25,12 @@ public:
 	uint32_t GetSet(void) const;
 	VkDescriptorSetLayout GetLayout(void) const;
 
-public:
+protected:
 	bool SetUniformBlockBinding(const char *szName, uint32_t binding, VkShaderStageFlags flags);
 	bool SetSampledImageBinding(const char *szName, uint32_t binding, VkShaderStageFlags flags);
 	bool SetInputAttachmentBinding(const char *szName, uint32_t binding, VkShaderStageFlags flags);
 
-public:
+protected:
 	bool Create(void);
 	void Destroy(void);
 
