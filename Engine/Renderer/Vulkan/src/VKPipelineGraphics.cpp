@@ -52,12 +52,15 @@ bool CVKPipelineGraphics::Create(const CGfxRenderPass *pRenderPass, const CGfxSh
 
 	Destroy();
 
-	eastl::vector<VkDescriptorSetLayout> layouts;
 	eastl::vector<VkPipelineShaderStageCreateInfo> shaders;
+	CALL_BOOL_FUNCTION_RETURN_BOOL(CreateShaderStages(shaders));
+
+	eastl::vector<VkDescriptorSetLayout> layouts;
+	eastl::vector<VkPushConstantRange> pushConstantRanges;
+	CALL_BOOL_FUNCTION_RETURN_BOOL(CreateLayouts(layouts, pushConstantRanges));
+
 	eastl::vector<VkVertexInputBindingDescription> inputBindingDescriptions;
 	eastl::vector<VkVertexInputAttributeDescription> inputAttributeDescriptions;
-	CALL_BOOL_FUNCTION_RETURN_BOOL(CreateLayouts(layouts));
-	CALL_BOOL_FUNCTION_RETURN_BOOL(CreateShaderStages(shaders));
 	CALL_BOOL_FUNCTION_RETURN_BOOL(CreateVertexInputState(inputBindingDescriptions, inputAttributeDescriptions, vertexBinding, instanceBinding));
 
 	VkPipelineVertexInputStateCreateInfo vertexInputeState = {};
@@ -185,8 +188,8 @@ bool CVKPipelineGraphics::Create(const CGfxRenderPass *pRenderPass, const CGfxSh
 	layoutCreateInfo.flags = 0;
 	layoutCreateInfo.setLayoutCount = layouts.size();
 	layoutCreateInfo.pSetLayouts = layouts.data();
-	layoutCreateInfo.pushConstantRangeCount = 0;
-	layoutCreateInfo.pPushConstantRanges = nullptr;
+	layoutCreateInfo.pushConstantRangeCount = pushConstantRanges.size();
+	layoutCreateInfo.pPushConstantRanges = pushConstantRanges.data();
 	CALL_VK_FUNCTION_RETURN_BOOL(vkCreatePipelineLayout(m_pDevice->GetDevice(), &layoutCreateInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkPipelineLayout));
 
 	VkGraphicsPipelineCreateInfo pipelineCreateInfo = {};

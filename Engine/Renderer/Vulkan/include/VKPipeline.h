@@ -10,7 +10,7 @@ protected:
 
 
 protected:
-	bool CreateLayouts(eastl::vector<VkDescriptorSetLayout> &layouts);
+	bool CreateLayouts(eastl::vector<VkDescriptorSetLayout> &layouts, eastl::vector<VkPushConstantRange> &pushConstantRanges);
 	bool CreateShaderStages(eastl::vector<VkPipelineShaderStageCreateInfo> &shaders);
 	bool CreateVertexInputState(eastl::vector<VkVertexInputBindingDescription> &inputBindingDescriptions, eastl::vector<VkVertexInputAttributeDescription> &inputAttributeDescriptions, uint32_t vertexBinding, uint32_t instanceBinding);
 

@@ -24,7 +24,7 @@ CVKPipeline::~CVKPipeline(void)
 	delete m_pLayouts[DESCRIPTOR_SET_DRAW];
 }
 
-bool CVKPipeline::CreateLayouts(eastl::vector<VkDescriptorSetLayout> &layouts)
+bool CVKPipeline::CreateLayouts(eastl::vector<VkDescriptorSetLayout> &layouts, eastl::vector<VkPushConstantRange> &pushConstantRanges)
 {
 	for (int index = 0; index < compute_shader - vertex_shader + 1; index++) {
 		if (m_pShaders[index] && m_pShaders[index]->GetShader() && m_pShaders[index]->GetShaderCompiler()) {
@@ -82,6 +82,10 @@ bool CVKPipeline::CreateLayouts(eastl::vector<VkDescriptorSetLayout> &layouts)
 		if (m_pLayouts[indexDescriptorSet]->Create()) {
 			layouts.emplace_back(m_pLayouts[indexDescriptorSet]->GetLayout());
 		}
+	}
+
+	for (const auto &itPushConstantRange : m_pushConstantRanges) {
+		pushConstantRanges.emplace_back(itPushConstantRange.second);
 	}
 
 	return true;
