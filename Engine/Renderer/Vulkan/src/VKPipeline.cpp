@@ -32,15 +32,16 @@ bool CVKPipeline::CreateLayouts(eastl::vector<VkDescriptorSetLayout> &layouts)
 				const spirv_cross::ShaderResources shaderResources = pShaderCompiler->get_shader_resources();
 
 				for (const auto &itPushConstant : shaderResources.push_constant_buffers) {
-					if (pShaderCompiler->get_type(itPushConstant.base_type_id).basetype == spirv_cross::SPIRType::Struct) {
-						for (uint32_t index = 0; index < pShaderCompiler->get_member_count(itPushConstant.base_type_id); index++) {
-							const std::string member = pShaderCompiler->get_member_name(itPushConstant.base_type_id, index);
-							const std::string name = itPushConstant.name + "." + member;
+					const std::vector<spirv_cross::BufferRange> ranges = pShaderCompiler->get_active_buffer_ranges(itPushConstant.id);
+					for (uint32_t index = 0; index < ranges.size(); index++) {
+						const std::string member = pShaderCompiler->get_member_name(itPushConstant.base_type_id, ranges[index].index);
+						const std::string name = itPushConstant.name + "." + member;
 
-							const spirv_cross::SPIRType type = pShaderCompiler->get_type(itPushConstant.base_type_id);
-							const uint32_t offset = pShaderCompiler->type_struct_member_offset(type, index);
-							const uint32_t size = pShaderCompiler->get_declared_struct_member_size(type, index);
-						}
+						VkPushConstantRange range = {};
+						range.stageFlags = VK_SHADER_STAGE_ALL;
+						range.offset = ranges[index].offset;
+						range.size = ranges[index].range;
+						m_pushConstantRanges[HashValue(name.c_str())] = range;
 					}
 				}
 

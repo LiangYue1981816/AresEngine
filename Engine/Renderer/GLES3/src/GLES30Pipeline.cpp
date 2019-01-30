@@ -23,12 +23,11 @@ bool CGLES3Pipeline::CreateLayouts(void)
 				const spirv_cross::ShaderResources shaderResources = pShaderCompiler->get_shader_resources();
 
 				for (const auto &itPushConstant : shaderResources.push_constant_buffers) {
-					if (pShaderCompiler->get_type(itPushConstant.base_type_id).basetype == spirv_cross::SPIRType::Struct) {
-						for (uint32_t index = 0; index < pShaderCompiler->get_member_count(itPushConstant.base_type_id); index++) {
-							const std::string member = pShaderCompiler->get_member_name(itPushConstant.base_type_id, index);
-							const std::string name = itPushConstant.name + "." + member;
-							SetUniformLocation(name.c_str());
-						}
+					const std::vector<spirv_cross::BufferRange> ranges = pShaderCompiler->get_active_buffer_ranges(itPushConstant.id);
+					for (uint32_t index = 0; index < ranges.size(); index++) {
+						const std::string member = pShaderCompiler->get_member_name(itPushConstant.base_type_id, ranges[index].index);
+						const std::string name = itPushConstant.name + "." + member;
+						SetUniformLocation(name.c_str());
 					}
 				}
 
