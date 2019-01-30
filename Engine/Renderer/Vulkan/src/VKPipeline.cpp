@@ -31,19 +31,18 @@ bool CVKPipeline::CreateLayouts(eastl::vector<VkDescriptorSetLayout> &layouts)
 			if (const spirv_cross::CompilerGLSL *pShaderCompiler = m_pShaders[index]->GetShaderCompiler()) {
 				const spirv_cross::ShaderResources shaderResources = pShaderCompiler->get_shader_resources();
 
-				/*
 				for (const auto &itPushConstant : shaderResources.push_constant_buffers) {
 					if (pShaderCompiler->get_type(itPushConstant.base_type_id).basetype == spirv_cross::SPIRType::Struct) {
-						const uint32_t set = pShaderCompiler->get_decoration(itUniform.id, spv::DecorationDescriptorSet);
-						if (set >= DESCRIPTOR_SET_COUNT) return false;
-
 						for (uint32_t index = 0; index < pShaderCompiler->get_member_count(itPushConstant.base_type_id); index++) {
 							const std::string member = pShaderCompiler->get_member_name(itPushConstant.base_type_id, index);
 							const std::string name = itPushConstant.name + "." + member;
+
+							const spirv_cross::SPIRType type = pShaderCompiler->get_type(itPushConstant.base_type_id);
+							const uint32_t offset = pShaderCompiler->type_struct_member_offset(type, index);
+							const uint32_t size = pShaderCompiler->get_declared_struct_member_size(type, index);
 						}
 					}
 				}
-				*/
 
 				for (const auto &itUniform : shaderResources.uniform_buffers) {
 					if (pShaderCompiler->get_type(itUniform.base_type_id).basetype == spirv_cross::SPIRType::Struct) {
