@@ -12,7 +12,7 @@ CVKPipelineGraphics::CVKPipelineGraphics(CVKDevice *pDevice, CVKPipelineGraphics
 
 CVKPipelineGraphics::~CVKPipelineGraphics(void)
 {
-
+	Destroy();
 }
 
 uint32_t CVKPipelineGraphics::GetName(void) const
