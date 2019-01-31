@@ -170,6 +170,261 @@ bool CVKPipeline::CreateVertexInputState(eastl::vector<VkVertexInputBindingDescr
 	return true;
 }
 
+bool CVKPipeline::Uniform1i(VkCommandBuffer vkCommandBuffer, uint32_t name, int v0) const
+{
+	const auto &itPushConstant = m_pushConstantRanges.find(name);
+
+	if (itPushConstant != m_pushConstantRanges.end()) {
+		glm::ivec4 vec(v0, 0, 0, 0);
+		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, VK_SHADER_STAGE_ALL, itPushConstant->second.offset, itPushConstant->second.size, &vec);
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+bool CVKPipeline::Uniform2i(VkCommandBuffer vkCommandBuffer, uint32_t name, int v0, int v1) const
+{
+	const auto &itPushConstant = m_pushConstantRanges.find(name);
+
+	if (itPushConstant != m_pushConstantRanges.end()) {
+		glm::ivec4 vec(v0, v1, 0, 0);
+		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, VK_SHADER_STAGE_ALL, itPushConstant->second.offset, itPushConstant->second.size, &vec);
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+bool CVKPipeline::Uniform3i(VkCommandBuffer vkCommandBuffer, uint32_t name, int v0, int v1, int v2) const
+{
+	const auto &itPushConstant = m_pushConstantRanges.find(name);
+
+	if (itPushConstant != m_pushConstantRanges.end()) {
+		glm::ivec4 vec(v0, v1, v2, 0);
+		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, VK_SHADER_STAGE_ALL, itPushConstant->second.offset, itPushConstant->second.size, &vec);
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+bool CVKPipeline::Uniform4i(VkCommandBuffer vkCommandBuffer, uint32_t name, int v0, int v1, int v2, int v3) const
+{
+	const auto &itPushConstant = m_pushConstantRanges.find(name);
+
+	if (itPushConstant != m_pushConstantRanges.end()) {
+		glm::ivec4 vec(v0, v1, v2, v3);
+		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, VK_SHADER_STAGE_ALL, itPushConstant->second.offset, itPushConstant->second.size, &vec);
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+bool CVKPipeline::Uniform1f(VkCommandBuffer vkCommandBuffer, uint32_t name, float v0) const
+{
+	const auto &itPushConstant = m_pushConstantRanges.find(name);
+
+	if (itPushConstant != m_pushConstantRanges.end()) {
+		glm::vec4 vec(v0, 0.0f, 0.0f, 0.0f);
+		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, VK_SHADER_STAGE_ALL, itPushConstant->second.offset, itPushConstant->second.size, &vec);
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+bool CVKPipeline::Uniform2f(VkCommandBuffer vkCommandBuffer, uint32_t name, float v0, float v1) const
+{
+	const auto &itPushConstant = m_pushConstantRanges.find(name);
+
+	if (itPushConstant != m_pushConstantRanges.end()) {
+		glm::vec4 vec(v0, v1, 0.0f, 0.0f);
+		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, VK_SHADER_STAGE_ALL, itPushConstant->second.offset, itPushConstant->second.size, &vec);
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+bool CVKPipeline::Uniform3f(VkCommandBuffer vkCommandBuffer, uint32_t name, float v0, float v1, float v2) const
+{
+	const auto &itPushConstant = m_pushConstantRanges.find(name);
+
+	if (itPushConstant != m_pushConstantRanges.end()) {
+		glm::vec4 vec(v0, v1, v2, 0.0f);
+		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, VK_SHADER_STAGE_ALL, itPushConstant->second.offset, itPushConstant->second.size, &vec);
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+bool CVKPipeline::Uniform4f(VkCommandBuffer vkCommandBuffer, uint32_t name, float v0, float v1, float v2, float v3) const
+{
+	const auto &itPushConstant = m_pushConstantRanges.find(name);
+
+	if (itPushConstant != m_pushConstantRanges.end()) {
+		glm::vec4 vec(v0, v1, v2, v3);
+		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, VK_SHADER_STAGE_ALL, itPushConstant->second.offset, itPushConstant->second.size, &vec);
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+bool CVKPipeline::Uniform1iv(VkCommandBuffer vkCommandBuffer, uint32_t name, int count, const int *value) const
+{
+	const auto &itPushConstant = m_pushConstantRanges.find(name);
+
+	if (itPushConstant != m_pushConstantRanges.end()) {
+		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, VK_SHADER_STAGE_ALL, itPushConstant->second.offset, itPushConstant->second.size, value);
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+bool CVKPipeline::Uniform2iv(VkCommandBuffer vkCommandBuffer, uint32_t name, int count, const int *value) const
+{
+	const auto &itPushConstant = m_pushConstantRanges.find(name);
+
+	if (itPushConstant != m_pushConstantRanges.end()) {
+		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, VK_SHADER_STAGE_ALL, itPushConstant->second.offset, itPushConstant->second.size, value);
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+bool CVKPipeline::Uniform3iv(VkCommandBuffer vkCommandBuffer, uint32_t name, int count, const int *value) const
+{
+	const auto &itPushConstant = m_pushConstantRanges.find(name);
+
+	if (itPushConstant != m_pushConstantRanges.end()) {
+		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, VK_SHADER_STAGE_ALL, itPushConstant->second.offset, itPushConstant->second.size, value);
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+bool CVKPipeline::Uniform4iv(VkCommandBuffer vkCommandBuffer, uint32_t name, int count, const int *value) const
+{
+	const auto &itPushConstant = m_pushConstantRanges.find(name);
+
+	if (itPushConstant != m_pushConstantRanges.end()) {
+		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, VK_SHADER_STAGE_ALL, itPushConstant->second.offset, itPushConstant->second.size, value);
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+bool CVKPipeline::Uniform1fv(VkCommandBuffer vkCommandBuffer, uint32_t name, int count, const float *value) const
+{
+	const auto &itPushConstant = m_pushConstantRanges.find(name);
+
+	if (itPushConstant != m_pushConstantRanges.end()) {
+		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, VK_SHADER_STAGE_ALL, itPushConstant->second.offset, itPushConstant->second.size, value);
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+bool CVKPipeline::Uniform2fv(VkCommandBuffer vkCommandBuffer, uint32_t name, int count, const float *value) const
+{
+	const auto &itPushConstant = m_pushConstantRanges.find(name);
+
+	if (itPushConstant != m_pushConstantRanges.end()) {
+		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, VK_SHADER_STAGE_ALL, itPushConstant->second.offset, itPushConstant->second.size, value);
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+bool CVKPipeline::Uniform3fv(VkCommandBuffer vkCommandBuffer, uint32_t name, int count, const float *value) const
+{
+	const auto &itPushConstant = m_pushConstantRanges.find(name);
+
+	if (itPushConstant != m_pushConstantRanges.end()) {
+		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, VK_SHADER_STAGE_ALL, itPushConstant->second.offset, itPushConstant->second.size, value);
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+bool CVKPipeline::Uniform4fv(VkCommandBuffer vkCommandBuffer, uint32_t name, int count, const float *value) const
+{
+	const auto &itPushConstant = m_pushConstantRanges.find(name);
+
+	if (itPushConstant != m_pushConstantRanges.end()) {
+		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, VK_SHADER_STAGE_ALL, itPushConstant->second.offset, itPushConstant->second.size, value);
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+bool CVKPipeline::UniformMatrix2fv(VkCommandBuffer vkCommandBuffer, uint32_t name, int count, const float *value) const
+{
+	const auto &itPushConstant = m_pushConstantRanges.find(name);
+
+	if (itPushConstant != m_pushConstantRanges.end()) {
+		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, VK_SHADER_STAGE_ALL, itPushConstant->second.offset, itPushConstant->second.size, value);
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+bool CVKPipeline::UniformMatrix3fv(VkCommandBuffer vkCommandBuffer, uint32_t name, int count, const float *value) const
+{
+	const auto &itPushConstant = m_pushConstantRanges.find(name);
+
+	if (itPushConstant != m_pushConstantRanges.end()) {
+		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, VK_SHADER_STAGE_ALL, itPushConstant->second.offset, itPushConstant->second.size, value);
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+bool CVKPipeline::UniformMatrix4fv(VkCommandBuffer vkCommandBuffer, uint32_t name, int count, const float *value) const
+{
+	const auto &itPushConstant = m_pushConstantRanges.find(name);
+
+	if (itPushConstant != m_pushConstantRanges.end()) {
+		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, VK_SHADER_STAGE_ALL, itPushConstant->second.offset, itPushConstant->second.size, value);
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
 bool CVKPipeline::IsTextureValid(uint32_t name) const
 {
 	for (int indexDescriptorSet = 0; indexDescriptorSet < DESCRIPTOR_SET_COUNT; indexDescriptorSet++) {
