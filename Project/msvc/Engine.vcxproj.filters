@@ -921,6 +921,9 @@
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VkDescriptorSetLayout.h">
       <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VkDescriptorSet.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Engine\ThirdParty\eastl\source\allocator_eastl.cpp">
@@ -1482,6 +1485,9 @@
       <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VkDescriptorSetLayout.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VkDescriptorSet.cpp">
       <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
