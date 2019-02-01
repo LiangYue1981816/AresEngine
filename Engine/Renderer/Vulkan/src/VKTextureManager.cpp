@@ -17,11 +17,6 @@ CVKTexture2DManager::~CVKTexture2DManager(void)
 	m_pTextures.clear();
 }
 
-CVKDevice* CVKTexture2DManager::GetDevice(void) const
-{
-	return m_pDevice;
-}
-
 CVKTexture2D* CVKTexture2DManager::Get(uint32_t name)
 {
 	mutex_autolock autolock(&lock);
@@ -91,11 +86,6 @@ CVKTexture2DArrayManager::~CVKTexture2DArrayManager(void)
 	m_pTextures.clear();
 }
 
-CVKDevice* CVKTexture2DArrayManager::GetDevice(void) const
-{
-	return m_pDevice;
-}
-
 CVKTexture2DArray* CVKTexture2DArrayManager::Get(uint32_t name)
 {
 	mutex_autolock autolock(&lock);
@@ -163,11 +153,6 @@ CVKTextureCubeMapManager::~CVKTextureCubeMapManager(void)
 	}
 
 	m_pTextures.clear();
-}
-
-CVKDevice* CVKTextureCubeMapManager::GetDevice(void) const
-{
-	return m_pDevice;
 }
 
 CVKTextureCubeMap* CVKTextureCubeMapManager::Get(uint32_t name)

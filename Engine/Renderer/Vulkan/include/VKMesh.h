@@ -8,7 +8,7 @@ class CVKMesh : public CGfxMesh
 
 
 private:
-	CVKMesh(CVKMeshManager *pManager, uint32_t name);
+	CVKMesh(CVKDevice *pDevice, CVKMeshManager *pManager, uint32_t name);
 	virtual ~CVKMesh(void);
 	virtual void Release(void);
 
@@ -39,6 +39,9 @@ private:
 	CVKIndexBuffer *m_pIndexBuffer;
 	CVKVertexBuffer *m_pVertexBuffer;
 	eastl::unordered_map<int, Draw> m_draws;
+
+private:
+	CVKDevice *m_pDevice;
 
 private:
 	CVKMeshManager *m_pManager;

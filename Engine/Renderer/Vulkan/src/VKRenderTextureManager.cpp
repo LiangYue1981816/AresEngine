@@ -16,11 +16,6 @@ CVKRenderTextureManager::~CVKRenderTextureManager(void)
 	m_pRenderTextures.clear();
 }
 
-CVKDevice* CVKRenderTextureManager::GetDevice(void) const
-{
-	return m_pDevice;
-}
-
 CVKRenderTexture* CVKRenderTextureManager::Get(uint32_t name)
 {
 	mutex_autolock autolock(&lock);

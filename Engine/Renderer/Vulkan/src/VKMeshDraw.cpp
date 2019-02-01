@@ -1,9 +1,10 @@
 #include "VKRenderer.h"
 
 
-CVKMeshDraw::CVKMeshDraw(CVKMeshDrawManager *pManager, uint32_t name, const CGfxMeshPtr &ptrMesh, int indexDraw, uint32_t instanceFormat, uint32_t instanceBinding)
+CVKMeshDraw::CVKMeshDraw(CVKDevice *pDevice, CVKMeshDrawManager *pManager, uint32_t name, const CGfxMeshPtr &ptrMesh, int indexDraw, uint32_t instanceFormat, uint32_t instanceBinding)
 	: CGfxMeshDraw(name, ptrMesh, indexDraw, instanceFormat, instanceBinding)
 	, m_name(name)
+	, m_pDevice(pDevice)
 	, m_pManager(pManager)
 
 	, m_pMeshDraw(nullptr)
@@ -19,9 +20,9 @@ CVKMeshDraw::CVKMeshDraw(CVKMeshDrawManager *pManager, uint32_t name, const CGfx
 		m_pIndexBuffer = (CVKIndexBuffer *)ptrMesh->GetIndexBuffer();
 		m_pVertexBuffer = (CVKVertexBuffer *)ptrMesh->GetVertexBuffer();
 
-		m_pInstanceBuffer = new CVKInstanceBuffer(m_pManager->GetDevice(), instanceFormat, instanceBinding);
+		m_pInstanceBuffer = new CVKInstanceBuffer(m_pDevice, instanceFormat, instanceBinding);
 
-		m_pIndirectBuffer = new CVKIndirectBuffer(m_pManager->GetDevice(), 1);
+		m_pIndirectBuffer = new CVKIndirectBuffer(m_pDevice, 1);
 		m_pIndirectBuffer->BufferData(0, m_pMeshDraw->baseVertex, m_pMeshDraw->firstIndex, m_pMeshDraw->indexCount, 0);
 	}
 }

@@ -14,9 +14,6 @@ private:
 
 
 private:
-	CVKDevice* GetDevice(void) const;
-
-private:
 	CVKMeshDraw* Get(uint32_t name);
 	CVKMeshDraw* Create(uint32_t name, const CGfxMeshPtr &ptrMesh, int indexDraw, uint32_t instanceFormat, uint32_t instanceBinding);
 	void Destroy(CVKMeshDraw *pMeshDraw);

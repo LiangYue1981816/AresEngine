@@ -14,10 +14,6 @@ private:
 
 
 private:
-	CVKDevice* GetDevice(void) const;
-
-
-private:
 	CVKTexture2D* Get(uint32_t name);
 	CVKTexture2D* Create(uint32_t name);
 	CVKTexture2D* Create(const char *szFileName);
@@ -44,10 +40,6 @@ private:
 
 
 private:
-	CVKDevice* GetDevice(void) const;
-
-
-private:
 	CVKTexture2DArray* Get(uint32_t name);
 	CVKTexture2DArray* Create(uint32_t name);
 	CVKTexture2DArray* Create(const char *szFileName);
@@ -71,10 +63,6 @@ class CVKTextureCubeMapManager : public CGfxResourceManager
 private:
 	CVKTextureCubeMapManager(CVKDevice *pDevice);
 	virtual ~CVKTextureCubeMapManager(void);
-
-
-private:
-	CVKDevice* GetDevice(void) const;
 
 
 private:

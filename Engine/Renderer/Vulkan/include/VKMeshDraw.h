@@ -8,7 +8,7 @@ class CVKMeshDraw : public CGfxMeshDraw
 
 
 private:
-	CVKMeshDraw(CVKMeshDrawManager *pManager, uint32_t name, const CGfxMeshPtr &ptrMesh, int indexDraw, uint32_t instanceFormat, uint32_t instanceBinding);
+	CVKMeshDraw(CVKDevice *pDevice, CVKMeshDrawManager *pManager, uint32_t name, const CGfxMeshPtr &ptrMesh, int indexDraw, uint32_t instanceFormat, uint32_t instanceBinding);
 	virtual ~CVKMeshDraw(void);
 	virtual void Release(void);
 
@@ -43,6 +43,9 @@ private:
 	CVKVertexBuffer *m_pVertexBuffer;
 	CVKInstanceBuffer *m_pInstanceBuffer;
 	CVKIndirectBuffer *m_pIndirectBuffer;
+
+private:
+	CVKDevice *m_pDevice;
 
 private:
 	CVKMeshDrawManager *m_pManager;

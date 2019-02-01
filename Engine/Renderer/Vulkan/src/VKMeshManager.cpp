@@ -17,11 +17,6 @@ CVKMeshManager::~CVKMeshManager(void)
 	m_pMeshs.clear();
 }
 
-CVKDevice* CVKMeshManager::GetDevice(void) const
-{
-	return m_pDevice;
-}
-
 CVKMesh* CVKMeshManager::Get(uint32_t name)
 {
 	mutex_autolock autolock(&lock);
@@ -42,7 +37,7 @@ CVKMesh* CVKMeshManager::Create(uint32_t name)
 	mutex_autolock autolock(&lock);
 	{
 		if (m_pMeshs[name] == nullptr) {
-			m_pMeshs[name] = new CVKMesh(this, name);
+			m_pMeshs[name] = new CVKMesh(m_pDevice, this, name);
 		}
 
 		return m_pMeshs[name];
@@ -56,7 +51,7 @@ CVKMesh* CVKMeshManager::Create(const char *szFileName, uint32_t vertexBinding)
 	mutex_autolock autolock(&lock);
 	{
 		if (m_pMeshs[name] == nullptr) {
-			m_pMeshs[name] = new CVKMesh(this, name);
+			m_pMeshs[name] = new CVKMesh(m_pDevice, this, name);
 			ResourceLoader()->LoadMesh(szFileName, m_pMeshs[name], vertexBinding);
 		}
 

@@ -14,9 +14,6 @@ private:
 
 
 private:
-	CVKDevice* GetDevice(void) const;
-
-private:
 	CVKMesh* Get(uint32_t name);
 	CVKMesh* Create(uint32_t name);
 	CVKMesh* Create(const char *szFileName, uint32_t vertexBinding);

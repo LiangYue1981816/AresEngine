@@ -14,10 +14,6 @@ private:
 
 
 private:
-	CVKDevice* GetDevice(void) const;
-
-
-private:
 	CVKRenderTexture* Get(uint32_t name);
 	CVKRenderTexture* Create(uint32_t name);
 	void Destroy(CVKRenderTexture *pRenderTexture);

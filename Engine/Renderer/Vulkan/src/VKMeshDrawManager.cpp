@@ -16,11 +16,6 @@ CVKMeshDrawManager::~CVKMeshDrawManager(void)
 	m_pMeshDraws.clear();
 }
 
-CVKDevice* CVKMeshDrawManager::GetDevice(void) const
-{
-	return m_pDevice;
-}
-
 CVKMeshDraw* CVKMeshDrawManager::Get(uint32_t name)
 {
 	mutex_autolock autolock(&lock);
@@ -41,7 +36,7 @@ CVKMeshDraw* CVKMeshDrawManager::Create(uint32_t name, const CGfxMeshPtr &ptrMes
 	mutex_autolock autolock(&lock);
 	{
 		if (m_pMeshDraws[name] == nullptr) {
-			m_pMeshDraws[name] = new CVKMeshDraw(this, name, ptrMesh, indexDraw, instanceFormat, instanceBinding);
+			m_pMeshDraws[name] = new CVKMeshDraw(m_pDevice, this, name, ptrMesh, indexDraw, instanceFormat, instanceBinding);
 		}
 
 		return m_pMeshDraws[name];
