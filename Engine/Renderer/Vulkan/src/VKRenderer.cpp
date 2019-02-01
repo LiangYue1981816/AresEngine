@@ -14,6 +14,9 @@ CVKRenderer::CVKRenderer(void *hInstance, void *hWnd, void *hDC, int width, int 
 	, m_pTexture2DManager(nullptr)
 	, m_pTexture2DArrayManager(nullptr)
 	, m_pTextureCubeMapManager(nullptr)
+	, m_pPipelineComputeManager(nullptr)
+	, m_pPipelineGraphicsManager(nullptr)
+	, m_pMaterialManager(nullptr)
 	, m_pRenderPassManager(nullptr)
 	, m_pFrameBufferManager(nullptr)
 	, m_pRenderTextureManager(nullptr)
@@ -29,6 +32,9 @@ CVKRenderer::CVKRenderer(void *hInstance, void *hWnd, void *hDC, int width, int 
 	m_pTexture2DManager = new CVKTexture2DManager(m_pDevice);
 	m_pTexture2DArrayManager = new CVKTexture2DArrayManager(m_pDevice);
 	m_pTextureCubeMapManager = new CVKTextureCubeMapManager(m_pDevice);
+	m_pPipelineComputeManager = new CVKPipelineComputeManager(m_pDevice);
+	m_pPipelineGraphicsManager = new CVKPipelineGraphicsManager(m_pDevice);
+	m_pMaterialManager = new CVKMaterialManager(m_pDevice);
 	m_pRenderPassManager = new CVKRenderPassManager(m_pDevice);
 	m_pFrameBufferManager = new CVKFrameBufferManager(m_pDevice);
 	m_pRenderTextureManager = new CVKRenderTextureManager(m_pDevice);
@@ -44,9 +50,9 @@ CVKRenderer::~CVKRenderer(void)
 //	delete m_pCommandBufferManager;
 	delete m_pMeshManager;
 	delete m_pMeshDrawManager;
-//	delete m_pMaterialManager;
-//	delete m_pPipelineComputeManager;
-//	delete m_pPipelineGraphicsManager;
+	delete m_pMaterialManager;
+	delete m_pPipelineComputeManager;
+	delete m_pPipelineGraphicsManager;
 	delete m_pShaderManager;
 	delete m_pSamplerManager;
 	delete m_pTexture2DManager;
@@ -93,12 +99,12 @@ CGfxShader* CVKRenderer::CreateShader(const char *szFileName, shader_kind kind)
 
 CGfxPipelineCompute* CVKRenderer::CreatePipelineCompute(const CGfxShader *pComputeShader)
 {
-	return nullptr;
+	return m_pPipelineComputeManager->Create(pComputeShader);
 }
 
 CGfxPipelineGraphics* CVKRenderer::CreatePipelineGraphics(const CGfxRenderPass *pRenderPass, const CGfxShader *pVertexShader, const CGfxShader *pFragmentShader, const PipelineState &state, uint32_t indexSubpass, uint32_t vertexBinding, uint32_t instanceBinding)
 {
-	return nullptr;
+	return m_pPipelineGraphicsManager->Create(pRenderPass, pVertexShader, pFragmentShader, state, indexSubpass, vertexBinding, instanceBinding);
 }
 
 CGfxSampler* CVKRenderer::CreateSampler(int mipLevels, GfxFilter minFilter, GfxFilter magFilter, GfxSamplerMipmapMode mipmapMode, GfxSamplerAddressMode addressMode)
@@ -158,17 +164,17 @@ CGfxMeshDrawPtr CVKRenderer::NewMeshDraw(uint32_t name, const CGfxMeshPtr &ptrMe
 
 CGfxMaterialPtr CVKRenderer::GetMaterial(uint32_t name)
 {
-	return nullptr;
+	return m_pMaterialManager->Get(name);
 }
 
 CGfxMaterialPtr CVKRenderer::NewMaterial(uint32_t name)
 {
-	return nullptr;
+	return m_pMaterialManager->Create(name);
 }
 
 CGfxMaterialPtr CVKRenderer::NewMaterial(const char *szFileName, uint32_t vertexBinding, uint32_t instanceBinding)
 {
-	return nullptr;
+	return m_pMaterialManager->Create(szFileName, vertexBinding, instanceBinding);
 }
 
 CGfxTexture2DPtr CVKRenderer::GetTexture2D(uint32_t name)
