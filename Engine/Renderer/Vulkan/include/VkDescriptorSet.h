@@ -16,7 +16,7 @@ class CVKDescriptorSetLayout
 	friend class CVKPipeline;
 
 
-public:
+private:
 	CVKDescriptorSetLayout(CVKDevice *pDevice, uint32_t set);
 	virtual ~CVKDescriptorSetLayout(void);
 
@@ -32,12 +32,12 @@ public:
 	VkDescriptorSetLayoutBinding GetTextureBinding(uint32_t name) const;
 	VkDescriptorSetLayoutBinding GetUniformBlockBinding(uint32_t name) const;
 
-protected:
+private:
 	bool SetUniformBlockBinding(const char *szName, uint32_t binding, VkShaderStageFlags flags);
 	bool SetSampledImageBinding(const char *szName, uint32_t binding, VkShaderStageFlags flags);
 	bool SetInputAttachmentBinding(const char *szName, uint32_t binding, VkShaderStageFlags flags);
 
-protected:
+private:
 	bool Create(void);
 	void Destroy(void);
 
