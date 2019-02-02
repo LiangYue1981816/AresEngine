@@ -147,4 +147,6 @@ void CVKDescriptorSetLayout::Destroy(void)
 	m_uniformBlockBindings.clear();
 	m_sampledImageBindings.clear();
 	m_inputAttachmentBindings.clear();
+
+	memset(m_numDescriptors, 0, sizeof(m_numDescriptors));
 }
