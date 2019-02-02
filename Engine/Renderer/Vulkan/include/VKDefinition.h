@@ -73,6 +73,8 @@ class CVKTexture;
 class CVKTexture2D;
 class CVKTexture2DArray;
 class CVKTextureCubeMap;
+class CVKDescriptorPool;
+class CVKDescriptorSet;
 class CVKDescriptorSetLayout;
 class CVKShader;
 class CVKPipeline;
