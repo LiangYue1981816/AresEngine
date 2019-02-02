@@ -13,6 +13,9 @@ const uint32_t numInputAttachments = 32;
 CVKDescriptorPool::CVKDescriptorPool(CVKDevice *pDevice)
 	: m_pDevice(pDevice)
 	, m_vkDescriptorPool(VK_NULL_HANDLE)
+
+	, m_numSets(0)
+	, m_numDescriptors{ 0 }
 {
 	VkDescriptorPoolSize poolSizes[] = {
 		{ VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, numUniformBuffers },
@@ -32,7 +35,17 @@ CVKDescriptorPool::CVKDescriptorPool(CVKDevice *pDevice)
 	createInfo.maxSets = numMaxSets;
 	createInfo.poolSizeCount = sizeof(poolSizes) / sizeof(VkDescriptorPoolSize);
 	createInfo.pPoolSizes = poolSizes;
-	vkCreateDescriptorPool(m_pDevice->GetDevice(), &createInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkDescriptorPool);
+	CALL_VK_FUNCTION_RETURN(vkCreateDescriptorPool(m_pDevice->GetDevice(), &createInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkDescriptorPool));
+
+	m_numSets = numMaxSets;
+	m_numDescriptors[VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER] = numUniformBuffers;
+	m_numDescriptors[VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER_DYNAMIC] = numUniformBuffers;
+	m_numDescriptors[VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER] = numCombinedImageSamplers;
+	m_numDescriptors[VK_DESCRIPTOR_TYPE_STORAGE_IMAGE] = numStorageImages;
+	m_numDescriptors[VK_DESCRIPTOR_TYPE_STORAGE_BUFFER] = numStorageBuffers;
+	m_numDescriptors[VK_DESCRIPTOR_TYPE_STORAGE_TEXEL_BUFFER] = numStorageTexelBuffers;
+	m_numDescriptors[VK_DESCRIPTOR_TYPE_UNIFORM_TEXEL_BUFFER] = numUniformTexelBuffers;
+	m_numDescriptors[VK_DESCRIPTOR_TYPE_INPUT_ATTACHMENT] = numInputAttachments;
 }
 
 CVKDescriptorPool::~CVKDescriptorPool(void)
