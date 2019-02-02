@@ -26,6 +26,11 @@ VkDescriptorSetLayout CVKDescriptorSetLayout::GetLayout(void) const
 	return m_vkDescriptorSetLayout;
 }
 
+const uint32_t* CVKDescriptorSetLayout::GetNumDescriptors(void) const
+{
+	return m_numDescriptors;
+}
+
 bool CVKDescriptorSetLayout::IsTextureValid(uint32_t name) const
 {
 	return m_sampledImageBindings.find(name) != m_sampledImageBindings.end();
