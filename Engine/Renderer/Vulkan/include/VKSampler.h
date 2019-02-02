@@ -12,6 +12,10 @@ private:
 	virtual ~CVKSampler(void);
 
 
+public:
+	HANDLE GetSampler(void) const;
+
+
 private:
 	VkSampler m_vkSampler;
 
