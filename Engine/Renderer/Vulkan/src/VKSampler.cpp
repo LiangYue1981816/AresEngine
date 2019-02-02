@@ -36,7 +36,7 @@ CVKSampler::~CVKSampler(void)
 	}
 }
 
-HANDLE CVKSampler::GetSampler(void) const;
+HANDLE CVKSampler::GetSampler(void) const
 {
 	return (HANDLE)m_vkSampler;
 }
