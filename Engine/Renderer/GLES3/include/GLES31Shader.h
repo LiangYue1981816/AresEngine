@@ -18,8 +18,10 @@ public:
 	uint32_t GetName(void) const;
 
 public:
-	uint32_t GetKind(void) const;
 	HANDLE GetShader(void) const;
+
+public:
+	uint32_t GetKind(void) const;
 
 public:
 	bool Create(const uint32_t *words, size_t numWords, shader_kind kind);

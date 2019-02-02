@@ -16,8 +16,10 @@ public:
 	uint32_t GetName(void) const;
 
 public:
-	uint32_t GetKind(void) const;
 	HANDLE GetShader(void) const;
+
+public:
+	uint32_t GetKind(void) const;
 	const spirv_cross::CompilerGLSL* GetShaderCompiler(void) const;
 
 public:

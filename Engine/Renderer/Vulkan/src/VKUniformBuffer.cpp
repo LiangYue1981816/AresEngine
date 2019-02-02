@@ -23,6 +23,11 @@ void CVKUniformBuffer::Release(void)
 	m_pManager->Destroy(this);
 }
 
+HANDLE CVKUniformBuffer::GetBuffer(void) const
+{
+	return (HANDLE)m_ptrBuffer->GetBuffer();
+}
+
 uint32_t CVKUniformBuffer::GetSize(void) const
 {
 	return m_size;

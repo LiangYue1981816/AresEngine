@@ -26,14 +26,15 @@ private:
 
 public:
 	VkDescriptorSet GetDescriptorSet(void) const;
+	CVKDescriptorSetLayout* GetDescriptorSetLayout(void) const;
 
 public:
-	bool SetTexture2D(uint32_t name, const CGfxTexture2DPtr ptrTexture, const CGfxSampler *pSampler);
-	bool SetTexture2DArray(uint32_t name, const CGfxTexture2DArrayPtr ptrTexture, const CGfxSampler *pSampler);
-	bool SetTextureCubeMap(uint32_t name, const CGfxTextureCubeMapPtr ptrTexture, const CGfxSampler *pSampler);
-	bool SetRenderTexture(uint32_t name, const CGfxRenderTexturePtr ptrRenderTexture, const CGfxSampler *pSampler);
-	bool SetUniformBuffer(uint32_t name, const CGfxUniformBufferPtr ptrUniformBuffer);
-	bool Update(void);
+	bool SetTexture2D(uint32_t name, const CGfxTexture2DPtr &ptrTexture, const CGfxSampler *pSampler);
+	bool SetTexture2DArray(uint32_t name, const CGfxTexture2DArrayPtr &ptrTexture, const CGfxSampler *pSampler);
+	bool SetTextureCubeMap(uint32_t name, const CGfxTextureCubeMapPtr &ptrTexture, const CGfxSampler *pSampler);
+	bool SetRenderTexture(uint32_t name, const CGfxRenderTexturePtr &ptrRenderTexture, const CGfxSampler *pSampler);
+	bool SetUniformBuffer(uint32_t name, const CGfxUniformBufferPtr &ptrUniformBuffer);
+	void Update(void);
 
 
 private:

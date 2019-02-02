@@ -14,6 +14,9 @@ private:
 
 
 public:
+	HANDLE GetBuffer(void) const;
+
+public:
 	uint32_t GetSize(void) const;
 
 public:

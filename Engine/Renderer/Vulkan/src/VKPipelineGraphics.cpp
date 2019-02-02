@@ -20,6 +20,11 @@ uint32_t CVKPipelineGraphics::GetName(void) const
 	return m_name;
 }
 
+HANDLE CVKPipelineGraphics::GetPipeline(void) const
+{
+	return (HANDLE)m_vkPipeline;
+}
+
 bool CVKPipelineGraphics::Create(const CGfxRenderPass *pRenderPass, const CGfxShader *pVertexShader, const CGfxShader *pFragmentShader, const PipelineState &state, uint32_t indexSubpass, uint32_t vertexBinding, uint32_t instanceBinding)
 {
 	if (pRenderPass == nullptr) {

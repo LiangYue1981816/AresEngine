@@ -19,6 +19,9 @@ public:
 	virtual uint32_t GetName(void) const = 0;
 
 public:
+	virtual HANDLE GetPipeline(void) const = 0;
+
+public:
 	virtual bool Create(const CGfxShader *pComputeShader) = 0;
 	virtual void Destroy(void) = 0;
 

@@ -19,6 +19,7 @@ public:
 public:
 	HANDLE GetTexture(void) const;
 
+public:
 	GfxPixelFormat GetFormat(void) const;
 	GfxTextureType GetType(void) const;
 

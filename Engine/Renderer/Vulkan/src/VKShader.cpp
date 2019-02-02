@@ -23,14 +23,14 @@ uint32_t CVKShader::GetName(void) const
 	return m_name;
 }
 
-uint32_t CVKShader::GetKind(void) const
-{
-	return m_kind;
-}
-
 HANDLE CVKShader::GetShader(void) const
 {
 	return (HANDLE)m_vkShader;
+}
+
+uint32_t CVKShader::GetKind(void) const
+{
+	return m_kind;
 }
 
 const spirv_cross::CompilerGLSL* CVKShader::GetShaderCompiler(void) const

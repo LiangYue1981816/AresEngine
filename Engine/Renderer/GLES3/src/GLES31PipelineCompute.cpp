@@ -20,6 +20,11 @@ uint32_t CGLES3PipelineCompute::GetName(void) const
 	return m_name;
 }
 
+HANDLE CGLES3PipelineCompute::GetPipeline(void) const
+{
+	return (HANDLE)m_pipeline;
+}
+
 bool CGLES3PipelineCompute::Create(const CGfxShader *pComputeShader)
 {
 	if (pComputeShader == nullptr) {

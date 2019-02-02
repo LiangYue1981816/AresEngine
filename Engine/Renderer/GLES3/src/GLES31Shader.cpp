@@ -23,14 +23,14 @@ uint32_t CGLES3Shader::GetName(void) const
 	return m_name;
 }
 
-uint32_t CGLES3Shader::GetKind(void) const
-{
-	return m_kind;
-}
-
 HANDLE CGLES3Shader::GetShader(void) const
 {
 	return (HANDLE)m_program;
+}
+
+uint32_t CGLES3Shader::GetKind(void) const
+{
+	return m_kind;
 }
 
 bool CGLES3Shader::Create(const uint32_t *words, size_t numWords, shader_kind kind)

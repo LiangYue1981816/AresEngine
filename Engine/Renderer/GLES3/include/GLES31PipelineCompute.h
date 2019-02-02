@@ -18,6 +18,9 @@ public:
 	uint32_t GetName(void) const;
 
 public:
+	HANDLE GetPipeline(void) const;
+
+public:
 	bool Create(const CGfxShader *pComputeShader);
 	void Destroy(void);
 

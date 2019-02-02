@@ -25,14 +25,14 @@ uint32_t CGLES3Shader::GetName(void) const
 	return m_name;
 }
 
-uint32_t CGLES3Shader::GetKind(void) const
-{
-	return m_kind;
-}
-
 HANDLE CGLES3Shader::GetShader(void) const
 {
 	return m_shader;
+}
+
+uint32_t CGLES3Shader::GetKind(void) const
+{
+	return m_kind;
 }
 
 const spirv_cross::CompilerGLSL* CGLES3Shader::GetShaderCompiler(void) const

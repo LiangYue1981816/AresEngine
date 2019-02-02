@@ -20,6 +20,11 @@ uint32_t CVKPipelineCompute::GetName(void) const
 	return m_name;
 }
 
+HANDLE CVKPipelineCompute::GetPipeline(void) const
+{
+	return (HANDLE)m_vkPipeline;
+}
+
 bool CVKPipelineCompute::Create(const CGfxShader *pComputeShader)
 {
 	if (pComputeShader == nullptr) {

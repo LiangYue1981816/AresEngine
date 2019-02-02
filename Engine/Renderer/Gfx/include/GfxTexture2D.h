@@ -21,6 +21,7 @@ public:
 public:
 	virtual HANDLE GetTexture(void) const = 0;
 
+public:
 	virtual GfxPixelFormat GetFormat(void) const = 0;
 	virtual GfxTextureType GetType(void) const = 0;
 

@@ -20,6 +20,11 @@ uint32_t CGLES3PipelineGraphics::GetName(void) const
 	return m_name;
 }
 
+HANDLE CGLES3PipelineGraphics::GetPipeline(void) const
+{
+	return (HANDLE)m_pipeline;
+}
+
 const PipelineState& CGLES3PipelineGraphics::GetPipelineState(void) const
 {
 	return m_state;
