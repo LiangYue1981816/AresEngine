@@ -26,6 +26,8 @@ public:
 	VkDescriptorSetLayout GetLayout(void) const;
 
 public:
+	const uint32_t* GetNumDescriptors(void) const;
+
 	bool IsTextureValid(uint32_t name) const;
 	bool IsUniformBlockValid(uint32_t name) const;
 
