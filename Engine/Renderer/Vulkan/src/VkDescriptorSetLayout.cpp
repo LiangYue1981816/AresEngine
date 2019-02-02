@@ -5,6 +5,7 @@ CVKDescriptorSetLayout::CVKDescriptorSetLayout(CVKDevice *pDevice, uint32_t set)
 	: m_pDevice(pDevice)
 
 	, m_set(set)
+	, m_numDescriptors{ 0 }
 	, m_vkDescriptorSetLayout(VK_NULL_HANDLE)
 {
 
@@ -127,6 +128,10 @@ bool CVKDescriptorSetLayout::Create(void)
 	createInfo.bindingCount = bindings.size();
 	createInfo.pBindings = bindings.data();
 	CALL_VK_FUNCTION_RETURN_BOOL(vkCreateDescriptorSetLayout(m_pDevice->GetDevice(), &createInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkDescriptorSetLayout));
+
+	m_numDescriptors[VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER_DYNAMIC] = m_uniformBlockBindings.size();
+	m_numDescriptors[VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER] = m_sampledImageBindings.size();
+	m_numDescriptors[VK_DESCRIPTOR_TYPE_INPUT_ATTACHMENT] = m_inputAttachmentBindings.size();
 
 	return true;
 }
