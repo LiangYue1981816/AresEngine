@@ -16,12 +16,12 @@ CVKDescriptorSetLayout::~CVKDescriptorSetLayout(void)
 	Destroy();
 }
 
-uint32_t CVKDescriptorSetLayout::GetSet(void) const
+uint32_t CVKDescriptorSetLayout::GetSetIndex(void) const
 {
 	return m_set;
 }
 
-VkDescriptorSetLayout CVKDescriptorSetLayout::GetLayout(void) const
+VkDescriptorSetLayout CVKDescriptorSetLayout::GetDescriptorSetLayout(void) const
 {
 	return m_vkDescriptorSetLayout;
 }

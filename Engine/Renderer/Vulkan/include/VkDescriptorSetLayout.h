@@ -22,8 +22,8 @@ private:
 
 
 public:
-	uint32_t GetSet(void) const;
-	VkDescriptorSetLayout GetLayout(void) const;
+	uint32_t GetSetIndex(void) const;
+	VkDescriptorSetLayout GetDescriptorSetLayout(void) const;
 
 public:
 	const uint32_t* GetNumDescriptors(void) const;
