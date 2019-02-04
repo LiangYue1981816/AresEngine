@@ -51,7 +51,7 @@ protected:
 
 protected:
 	CVKShader *m_pShaders[compute_shader - vertex_shader + 1];
-	CVKDescriptorSetLayout *m_pLayouts[DESCRIPTOR_SET_COUNT];
+	CVKDescriptorSetLayout *m_pDescriptorSetLayouts[DESCRIPTOR_SET_COUNT];
 	eastl::unordered_map<uint32_t, VkPushConstantRange> m_pushConstantRanges;
 
 protected:
