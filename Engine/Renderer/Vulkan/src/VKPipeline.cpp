@@ -78,9 +78,9 @@ bool CVKPipeline::CreateLayouts(eastl::vector<VkDescriptorSetLayout> &layouts, e
 		}
 	}
 
-	for (int indexDescriptorSet = 0; indexDescriptorSet < DESCRIPTOR_SET_COUNT; indexDescriptorSet++) {
-		if (m_pLayouts[indexDescriptorSet]->Create()) {
-			layouts.emplace_back(m_pLayouts[indexDescriptorSet]->GetLayout());
+	for (int index = 0; index < DESCRIPTOR_SET_COUNT; index++) {
+		if (m_pLayouts[index]->Create()) {
+			layouts.emplace_back(m_pLayouts[index]->GetLayout());
 		}
 	}
 
@@ -427,8 +427,8 @@ bool CVKPipeline::UniformMatrix4fv(VkCommandBuffer vkCommandBuffer, uint32_t nam
 
 bool CVKPipeline::IsTextureValid(uint32_t name) const
 {
-	for (int indexDescriptorSet = 0; indexDescriptorSet < DESCRIPTOR_SET_COUNT; indexDescriptorSet++) {
-		if (m_pLayouts[indexDescriptorSet]->IsTextureValid(name)) {
+	for (int index = 0; index < DESCRIPTOR_SET_COUNT; index++) {
+		if (m_pLayouts[index]->IsTextureValid(name)) {
 			return true;
 		}
 	}
@@ -438,8 +438,8 @@ bool CVKPipeline::IsTextureValid(uint32_t name) const
 
 bool CVKPipeline::IsUniformBlockValid(uint32_t name) const
 {
-	for (int indexDescriptorSet = 0; indexDescriptorSet < DESCRIPTOR_SET_COUNT; indexDescriptorSet++) {
-		if (m_pLayouts[indexDescriptorSet]->IsUniformBlockValid(name)) {
+	for (int index = 0; index < DESCRIPTOR_SET_COUNT; index++) {
+		if (m_pLayouts[index]->IsUniformBlockValid(name)) {
 			return true;
 		}
 	}
