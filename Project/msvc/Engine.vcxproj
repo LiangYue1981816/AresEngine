@@ -340,9 +340,9 @@
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKAllocator.h" />
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKBuffer.h" />
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKDefinition.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VkDescriptorLayout.h" />
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VkDescriptorPool.h" />
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VkDescriptorSet.h" />
-    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VkDescriptorSetLayout.h" />
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKDevice.h" />
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKExtension.h" />
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKFrameBuffer.h" />
@@ -529,9 +529,9 @@
     <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3VertexBuffer.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKAllocator.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKBuffer.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VkDescriptorLayout.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VkDescriptorPool.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VkDescriptorSet.cpp" />
-    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VkDescriptorSetLayout.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKDevice.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKExtension.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKFrameBuffer.cpp" />

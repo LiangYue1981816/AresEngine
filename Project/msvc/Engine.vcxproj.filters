@@ -918,13 +918,13 @@
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKMaterialPass.h">
       <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VkDescriptorSetLayout.h">
-      <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VkDescriptorSet.h">
       <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VkDescriptorPool.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VkDescriptorLayout.h">
       <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -1487,13 +1487,13 @@
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKMaterialPass.cpp">
       <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VkDescriptorSetLayout.cpp">
-      <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VkDescriptorSet.cpp">
       <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VkDescriptorPool.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VkDescriptorLayout.cpp">
       <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
