@@ -1,9 +1,9 @@
 #include "VKRenderer.h"
 
 
-CVKDescriptorSet::CVKDescriptorSet(CVKDevice *pDevice, CVKDescriptorSetLayout *pDescriptorSetLayout, VkDescriptorSet vkDescriptorSet)
+CVKDescriptorSet::CVKDescriptorSet(CVKDevice *pDevice, CVKDescriptorLayout *pDescriptorLayout, VkDescriptorSet vkDescriptorSet)
 	: m_pDevice(pDevice)
-	, m_pDescriptorSetLayout(pDescriptorSetLayout)
+	, m_pDescriptorLayout(pDescriptorLayout)
 	, m_vkDescriptorSet(vkDescriptorSet)
 {
 
@@ -19,18 +19,18 @@ VkDescriptorSet CVKDescriptorSet::GetDescriptorSet(void) const
 	return m_vkDescriptorSet;
 }
 
-CVKDescriptorSetLayout* CVKDescriptorSet::GetDescriptorSetLayout(void) const
+CVKDescriptorLayout* CVKDescriptorSet::GetDescriptorLayout(void) const
 {
-	return m_pDescriptorSetLayout;
+	return m_pDescriptorLayout;
 }
 
 bool CVKDescriptorSet::SetTexture2D(uint32_t name, const CGfxTexture2DPtr &ptrTexture, const CGfxSampler *pSampler)
 {
-	if (m_pDescriptorSetLayout->IsTextureValid(name) && m_imageInfos.find(name) == m_imageInfos.end()) {
-		m_imageInfos[name].ptrTexture2D = ptrTexture;
-		m_imageInfos[name].imageInfo.sampler = (VkSampler)pSampler->GetSampler();
-		m_imageInfos[name].imageInfo.imageView = (VkImageView)ptrTexture->GetTexture();
-		m_imageInfos[name].imageInfo.imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
+	if (m_pDescriptorLayout->IsTextureValid(name) && m_imageDescriptors.find(name) == m_imageDescriptors.end()) {
+		m_imageDescriptors[name].ptrTexture2D = ptrTexture;
+		m_imageDescriptors[name].imageInfo.sampler = (VkSampler)pSampler->GetSampler();
+		m_imageDescriptors[name].imageInfo.imageView = (VkImageView)ptrTexture->GetTexture();
+		m_imageDescriptors[name].imageInfo.imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
 		return true;
 	}
 	else {
@@ -40,11 +40,11 @@ bool CVKDescriptorSet::SetTexture2D(uint32_t name, const CGfxTexture2DPtr &ptrTe
 
 bool CVKDescriptorSet::SetTexture2DArray(uint32_t name, const CGfxTexture2DArrayPtr &ptrTexture, const CGfxSampler *pSampler)
 {
-	if (m_pDescriptorSetLayout->IsTextureValid(name) && m_imageInfos.find(name) == m_imageInfos.end()) {
-		m_imageInfos[name].ptrTexture2DArray = ptrTexture;
-		m_imageInfos[name].imageInfo.sampler = (VkSampler)pSampler->GetSampler();
-		m_imageInfos[name].imageInfo.imageView = (VkImageView)ptrTexture->GetTexture();
-		m_imageInfos[name].imageInfo.imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
+	if (m_pDescriptorLayout->IsTextureValid(name) && m_imageDescriptors.find(name) == m_imageDescriptors.end()) {
+		m_imageDescriptors[name].ptrTexture2DArray = ptrTexture;
+		m_imageDescriptors[name].imageInfo.sampler = (VkSampler)pSampler->GetSampler();
+		m_imageDescriptors[name].imageInfo.imageView = (VkImageView)ptrTexture->GetTexture();
+		m_imageDescriptors[name].imageInfo.imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
 		return true;
 	}
 	else {
@@ -54,11 +54,11 @@ bool CVKDescriptorSet::SetTexture2DArray(uint32_t name, const CGfxTexture2DArray
 
 bool CVKDescriptorSet::SetTextureCubeMap(uint32_t name, const CGfxTextureCubeMapPtr &ptrTexture, const CGfxSampler *pSampler)
 {
-	if (m_pDescriptorSetLayout->IsTextureValid(name) && m_imageInfos.find(name) == m_imageInfos.end()) {
-		m_imageInfos[name].ptrTextureCubeMap = ptrTexture;
-		m_imageInfos[name].imageInfo.sampler = (VkSampler)pSampler->GetSampler();
-		m_imageInfos[name].imageInfo.imageView = (VkImageView)ptrTexture->GetTexture();
-		m_imageInfos[name].imageInfo.imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
+	if (m_pDescriptorLayout->IsTextureValid(name) && m_imageDescriptors.find(name) == m_imageDescriptors.end()) {
+		m_imageDescriptors[name].ptrTextureCubeMap = ptrTexture;
+		m_imageDescriptors[name].imageInfo.sampler = (VkSampler)pSampler->GetSampler();
+		m_imageDescriptors[name].imageInfo.imageView = (VkImageView)ptrTexture->GetTexture();
+		m_imageDescriptors[name].imageInfo.imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
 		return true;
 	}
 	else {
@@ -68,11 +68,11 @@ bool CVKDescriptorSet::SetTextureCubeMap(uint32_t name, const CGfxTextureCubeMap
 
 bool CVKDescriptorSet::SetRenderTexture(uint32_t name, const CGfxRenderTexturePtr &ptrRenderTexture, const CGfxSampler *pSampler)
 {
-	if (m_pDescriptorSetLayout->IsTextureValid(name) && m_imageInfos.find(name) == m_imageInfos.end()) {
-		m_imageInfos[name].ptrRenderTexture = ptrRenderTexture;
-		m_imageInfos[name].imageInfo.sampler = (VkSampler)pSampler->GetSampler();
-		m_imageInfos[name].imageInfo.imageView = (VkImageView)ptrRenderTexture->GetTexture();
-		m_imageInfos[name].imageInfo.imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
+	if (m_pDescriptorLayout->IsTextureValid(name) && m_imageDescriptors.find(name) == m_imageDescriptors.end()) {
+		m_imageDescriptors[name].ptrRenderTexture = ptrRenderTexture;
+		m_imageDescriptors[name].imageInfo.sampler = (VkSampler)pSampler->GetSampler();
+		m_imageDescriptors[name].imageInfo.imageView = (VkImageView)ptrRenderTexture->GetTexture();
+		m_imageDescriptors[name].imageInfo.imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
 		return true;
 	}
 	else {
@@ -82,10 +82,10 @@ bool CVKDescriptorSet::SetRenderTexture(uint32_t name, const CGfxRenderTexturePt
 
 bool CVKDescriptorSet::SetUniformBuffer(uint32_t name, const CGfxUniformBufferPtr &ptrUniformBuffer)
 {
-	if (m_pDescriptorSetLayout->IsUniformBlockValid(name) && m_bufferInfos.find(name) == m_bufferInfos.end()) {
-		m_bufferInfos[name].ptrUniformBuffer = ptrUniformBuffer;
-		m_bufferInfos[name].bufferInfo.range = ptrUniformBuffer->GetSize();
-		m_bufferInfos[name].bufferInfo.buffer = (VkBuffer)ptrUniformBuffer->GetBuffer();
+	if (m_pDescriptorLayout->IsUniformBlockValid(name) && m_bufferDescriptors.find(name) == m_bufferDescriptors.end()) {
+		m_bufferDescriptors[name].ptrUniformBuffer = ptrUniformBuffer;
+		m_bufferDescriptors[name].bufferInfo.range = ptrUniformBuffer->GetSize();
+		m_bufferDescriptors[name].bufferInfo.buffer = (VkBuffer)ptrUniformBuffer->GetBuffer();
 		return true;
 	}
 	else {
@@ -97,12 +97,12 @@ void CVKDescriptorSet::Update(void)
 {
 	eastl::vector<VkWriteDescriptorSet> writes;
 
-	for (const auto &itImage : m_imageInfos) {
+	for (const auto &itImage : m_imageDescriptors) {
 		VkWriteDescriptorSet write = {};
 		write.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
 		write.pNext = nullptr;
 		write.dstSet = m_vkDescriptorSet;
-		write.dstBinding = m_pDescriptorSetLayout->GetTextureBinding(itImage.first).binding;
+		write.dstBinding = m_pDescriptorLayout->GetTextureBinding(itImage.first).binding;
 		write.dstArrayElement = 0;
 		write.descriptorCount = 1;
 		write.descriptorType = itImage.second.ptrRenderTexture.IsValid() ? VK_DESCRIPTOR_TYPE_INPUT_ATTACHMENT : VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
@@ -112,12 +112,12 @@ void CVKDescriptorSet::Update(void)
 		writes.emplace_back(write);
 	}
 
-	for (const auto &itBuffer : m_bufferInfos) {
+	for (const auto &itBuffer : m_bufferDescriptors) {
 		VkWriteDescriptorSet write = {};
 		write.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
 		write.pNext = nullptr;
 		write.dstSet = m_vkDescriptorSet;
-		write.dstBinding = m_pDescriptorSetLayout->GetUniformBlockBinding(itBuffer.first).binding;
+		write.dstBinding = m_pDescriptorLayout->GetUniformBlockBinding(itBuffer.first).binding;
 		write.dstArrayElement = 0;
 		write.descriptorCount = 1;
 		write.descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER_DYNAMIC;

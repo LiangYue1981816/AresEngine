@@ -1,7 +1,7 @@
 #include "VKRenderer.h"
 
 
-CVKDescriptorSetLayout::CVKDescriptorSetLayout(CVKDevice *pDevice, uint32_t set)
+CVKDescriptorLayout::CVKDescriptorLayout(CVKDevice *pDevice, uint32_t set)
 	: m_pDevice(pDevice)
 
 	, m_set(set)
@@ -11,37 +11,37 @@ CVKDescriptorSetLayout::CVKDescriptorSetLayout(CVKDevice *pDevice, uint32_t set)
 
 }
 
-CVKDescriptorSetLayout::~CVKDescriptorSetLayout(void)
+CVKDescriptorLayout::~CVKDescriptorLayout(void)
 {
 	Destroy();
 }
 
-uint32_t CVKDescriptorSetLayout::GetSetIndex(void) const
+uint32_t CVKDescriptorLayout::GetSetIndex(void) const
 {
 	return m_set;
 }
 
-VkDescriptorSetLayout CVKDescriptorSetLayout::GetDescriptorSetLayout(void) const
+VkDescriptorSetLayout CVKDescriptorLayout::GetDescriptorSetLayout(void) const
 {
 	return m_vkDescriptorSetLayout;
 }
 
-const uint32_t* CVKDescriptorSetLayout::GetNumDescriptors(void) const
+const uint32_t* CVKDescriptorLayout::GetNumDescriptors(void) const
 {
 	return m_numDescriptors;
 }
 
-bool CVKDescriptorSetLayout::IsTextureValid(uint32_t name) const
+bool CVKDescriptorLayout::IsTextureValid(uint32_t name) const
 {
 	return m_sampledImageBindings.find(name) != m_sampledImageBindings.end();
 }
 
-bool CVKDescriptorSetLayout::IsUniformBlockValid(uint32_t name) const
+bool CVKDescriptorLayout::IsUniformBlockValid(uint32_t name) const
 {
 	return m_uniformBlockBindings.find(name) != m_uniformBlockBindings.end();
 }
 
-VkDescriptorSetLayoutBinding CVKDescriptorSetLayout::GetTextureBinding(uint32_t name) const
+VkDescriptorSetLayoutBinding CVKDescriptorLayout::GetTextureBinding(uint32_t name) const
 {
 	const auto &itBinding = m_sampledImageBindings.find(name);
 
@@ -53,7 +53,7 @@ VkDescriptorSetLayoutBinding CVKDescriptorSetLayout::GetTextureBinding(uint32_t 
 	}
 }
 
-VkDescriptorSetLayoutBinding CVKDescriptorSetLayout::GetUniformBlockBinding(uint32_t name) const
+VkDescriptorSetLayoutBinding CVKDescriptorLayout::GetUniformBlockBinding(uint32_t name) const
 {
 	const auto &itBinding = m_uniformBlockBindings.find(name);
 
@@ -65,7 +65,7 @@ VkDescriptorSetLayoutBinding CVKDescriptorSetLayout::GetUniformBlockBinding(uint
 	}
 }
 
-bool CVKDescriptorSetLayout::SetUniformBlockBinding(const char *szName, uint32_t binding, VkShaderStageFlags flags)
+bool CVKDescriptorLayout::SetUniformBlockBinding(const char *szName, uint32_t binding, VkShaderStageFlags flags)
 {
 	uint32_t name = HashValue(szName);
 
@@ -82,7 +82,7 @@ bool CVKDescriptorSetLayout::SetUniformBlockBinding(const char *szName, uint32_t
 	return true;
 }
 
-bool CVKDescriptorSetLayout::SetSampledImageBinding(const char *szName, uint32_t binding, VkShaderStageFlags flags)
+bool CVKDescriptorLayout::SetSampledImageBinding(const char *szName, uint32_t binding, VkShaderStageFlags flags)
 {
 	uint32_t name = HashValue(szName);
 
@@ -99,7 +99,7 @@ bool CVKDescriptorSetLayout::SetSampledImageBinding(const char *szName, uint32_t
 	return true;
 }
 
-bool CVKDescriptorSetLayout::SetInputAttachmentBinding(const char *szName, uint32_t binding, VkShaderStageFlags flags)
+bool CVKDescriptorLayout::SetInputAttachmentBinding(const char *szName, uint32_t binding, VkShaderStageFlags flags)
 {
 	uint32_t name = HashValue(szName);
 
@@ -116,7 +116,7 @@ bool CVKDescriptorSetLayout::SetInputAttachmentBinding(const char *szName, uint3
 	return true;
 }
 
-bool CVKDescriptorSetLayout::Create(void)
+bool CVKDescriptorLayout::Create(void)
 {
 	eastl::vector<VkDescriptorSetLayoutBinding> bindings;
 	{
@@ -141,7 +141,7 @@ bool CVKDescriptorSetLayout::Create(void)
 	return true;
 }
 
-void CVKDescriptorSetLayout::Destroy(void)
+void CVKDescriptorLayout::Destroy(void)
 {
 	if (m_vkDescriptorSetLayout) {
 		vkDestroyDescriptorSetLayout(m_pDevice->GetDevice(), m_vkDescriptorSetLayout, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());

@@ -2,6 +2,15 @@
 #include "VKRenderer.h"
 
 
+typedef enum DescriptorSetType {
+	DESCRIPTOR_SET_FRAME = 0,
+	DESCRIPTOR_SET_CAMERA,
+	DESCRIPTOR_SET_PASS,
+	DESCRIPTOR_SET_DRAW,
+	DESCRIPTOR_SET_COUNT
+} DescriptorSetType;
+
+
 class CVKPipeline
 {
 protected:
@@ -51,7 +60,7 @@ protected:
 
 protected:
 	CVKShader *m_pShaders[compute_shader - vertex_shader + 1];
-	CVKDescriptorSetLayout *m_pDescriptorSetLayouts[DESCRIPTOR_SET_COUNT];
+	CVKDescriptorLayout *m_pDescriptorLayouts[DESCRIPTOR_SET_COUNT];
 	eastl::unordered_map<uint32_t, VkPushConstantRange> m_pushConstantRanges;
 
 protected:

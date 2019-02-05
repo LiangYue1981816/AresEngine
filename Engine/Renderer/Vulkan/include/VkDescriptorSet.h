@@ -20,13 +20,13 @@ private:
 
 
 private:
-	CVKDescriptorSet(CVKDevice *pDevice, CVKDescriptorSetLayout *pDescriptorSetLayout, VkDescriptorSet vkDescriptorSet);
+	CVKDescriptorSet(CVKDevice *pDevice, CVKDescriptorLayout *pDescriptorLayout, VkDescriptorSet vkDescriptorSet);
 	virtual ~CVKDescriptorSet(void);
 
 
 public:
 	VkDescriptorSet GetDescriptorSet(void) const;
-	CVKDescriptorSetLayout* GetDescriptorSetLayout(void) const;
+	CVKDescriptorLayout* GetDescriptorLayout(void) const;
 
 public:
 	bool SetTexture2D(uint32_t name, const CGfxTexture2DPtr &ptrTexture, const CGfxSampler *pSampler);
@@ -38,12 +38,12 @@ public:
 
 
 private:
-	eastl::unordered_map<uint32_t, DescriptorImageInfo> m_imageInfos;
-	eastl::unordered_map<uint32_t, DescriptorBufferInfo> m_bufferInfos;
+	eastl::unordered_map<uint32_t, DescriptorImageInfo> m_imageDescriptors;
+	eastl::unordered_map<uint32_t, DescriptorBufferInfo> m_bufferDescriptors;
 
 private:
 	VkDescriptorSet m_vkDescriptorSet;
-	CVKDescriptorSetLayout *m_pDescriptorSetLayout;
+	CVKDescriptorLayout *m_pDescriptorLayout;
 
 private:
 	CVKDevice *m_pDevice;

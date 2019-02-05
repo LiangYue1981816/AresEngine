@@ -101,7 +101,7 @@ bool CVKPipelineCompute::IsUniformBlockValid(uint32_t name) const
 uint32_t CVKPipelineCompute::GetTextureBinding(uint32_t set, uint32_t name) const
 {
 	if (set >= 0 && set < DESCRIPTOR_SET_COUNT) {
-		return m_pDescriptorSetLayouts[set]->GetTextureBinding(name).binding;
+		return m_pDescriptorLayouts[set]->GetTextureBinding(name).binding;
 	}
 	else {
 		return 0xffffffff;
@@ -111,7 +111,7 @@ uint32_t CVKPipelineCompute::GetTextureBinding(uint32_t set, uint32_t name) cons
 uint32_t CVKPipelineCompute::GetUniformBlockBinding(uint32_t set, uint32_t name) const
 {
 	if (set >= 0 && set < DESCRIPTOR_SET_COUNT) {
-		return m_pDescriptorSetLayouts[set]->GetUniformBlockBinding(name).binding;
+		return m_pDescriptorLayouts[set]->GetUniformBlockBinding(name).binding;
 	}
 	else {
 		return 0xffffffff;

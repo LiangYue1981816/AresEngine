@@ -2,23 +2,14 @@
 #include "VKRenderer.h"
 
 
-typedef enum DescriptorSetType {
-	DESCRIPTOR_SET_FRAME = 0,
-	DESCRIPTOR_SET_CAMERA,
-	DESCRIPTOR_SET_PASS,
-	DESCRIPTOR_SET_DRAW,
-	DESCRIPTOR_SET_COUNT
-} DescriptorSetType;
-
-
-class CVKDescriptorSetLayout
+class CVKDescriptorLayout
 {
 	friend class CVKPipeline;
 
 
 private:
-	CVKDescriptorSetLayout(CVKDevice *pDevice, uint32_t set);
-	virtual ~CVKDescriptorSetLayout(void);
+	CVKDescriptorLayout(CVKDevice *pDevice, uint32_t set);
+	virtual ~CVKDescriptorLayout(void);
 
 
 public:

@@ -8,20 +8,20 @@ CVKPipeline::CVKPipeline(CVKDevice *pDevice)
 	, m_vkPipelineLayout(VK_NULL_HANDLE)
 
 	, m_pShaders{ NULL }
-	, m_pDescriptorSetLayouts{ NULL }
+	, m_pDescriptorLayouts{ NULL }
 {
-	m_pDescriptorSetLayouts[DESCRIPTOR_SET_CAMERA] = new CVKDescriptorSetLayout(m_pDevice, DESCRIPTOR_SET_CAMERA);
-	m_pDescriptorSetLayouts[DESCRIPTOR_SET_FRAME] = new CVKDescriptorSetLayout(m_pDevice, DESCRIPTOR_SET_FRAME);
-	m_pDescriptorSetLayouts[DESCRIPTOR_SET_PASS] = new CVKDescriptorSetLayout(m_pDevice, DESCRIPTOR_SET_PASS);
-	m_pDescriptorSetLayouts[DESCRIPTOR_SET_DRAW] = new CVKDescriptorSetLayout(m_pDevice, DESCRIPTOR_SET_DRAW);
+	m_pDescriptorLayouts[DESCRIPTOR_SET_CAMERA] = new CVKDescriptorLayout(m_pDevice, DESCRIPTOR_SET_CAMERA);
+	m_pDescriptorLayouts[DESCRIPTOR_SET_FRAME] = new CVKDescriptorLayout(m_pDevice, DESCRIPTOR_SET_FRAME);
+	m_pDescriptorLayouts[DESCRIPTOR_SET_PASS] = new CVKDescriptorLayout(m_pDevice, DESCRIPTOR_SET_PASS);
+	m_pDescriptorLayouts[DESCRIPTOR_SET_DRAW] = new CVKDescriptorLayout(m_pDevice, DESCRIPTOR_SET_DRAW);
 }
 
 CVKPipeline::~CVKPipeline(void)
 {
-	delete m_pDescriptorSetLayouts[DESCRIPTOR_SET_CAMERA];
-	delete m_pDescriptorSetLayouts[DESCRIPTOR_SET_FRAME];
-	delete m_pDescriptorSetLayouts[DESCRIPTOR_SET_PASS];
-	delete m_pDescriptorSetLayouts[DESCRIPTOR_SET_DRAW];
+	delete m_pDescriptorLayouts[DESCRIPTOR_SET_CAMERA];
+	delete m_pDescriptorLayouts[DESCRIPTOR_SET_FRAME];
+	delete m_pDescriptorLayouts[DESCRIPTOR_SET_PASS];
+	delete m_pDescriptorLayouts[DESCRIPTOR_SET_DRAW];
 }
 
 bool CVKPipeline::CreateLayouts(eastl::vector<VkDescriptorSetLayout> &layouts, eastl::vector<VkPushConstantRange> &pushConstantRanges)
@@ -51,7 +51,7 @@ bool CVKPipeline::CreateLayouts(eastl::vector<VkDescriptorSetLayout> &layouts, e
 						const uint32_t binding = pShaderCompiler->get_decoration(itUniform.id, spv::DecorationBinding);
 						if (set >= DESCRIPTOR_SET_COUNT) return false;
 
-						m_pDescriptorSetLayouts[set]->SetUniformBlockBinding(itUniform.name.c_str(), binding, VK_SHADER_STAGE_ALL);
+						m_pDescriptorLayouts[set]->SetUniformBlockBinding(itUniform.name.c_str(), binding, VK_SHADER_STAGE_ALL);
 					}
 				}
 
@@ -61,7 +61,7 @@ bool CVKPipeline::CreateLayouts(eastl::vector<VkDescriptorSetLayout> &layouts, e
 						const uint32_t binding = pShaderCompiler->get_decoration(itSampledImage.id, spv::DecorationBinding);
 						if (set >= DESCRIPTOR_SET_COUNT) return false;
 
-						m_pDescriptorSetLayouts[set]->SetSampledImageBinding(itSampledImage.name.c_str(), binding, VK_SHADER_STAGE_ALL);
+						m_pDescriptorLayouts[set]->SetSampledImageBinding(itSampledImage.name.c_str(), binding, VK_SHADER_STAGE_ALL);
 					}
 				}
 
@@ -71,7 +71,7 @@ bool CVKPipeline::CreateLayouts(eastl::vector<VkDescriptorSetLayout> &layouts, e
 						const uint32_t binding = pShaderCompiler->get_decoration(itSubpassInput.id, spv::DecorationBinding);
 						if (set >= DESCRIPTOR_SET_COUNT) return false;
 
-						m_pDescriptorSetLayouts[set]->SetInputAttachmentBinding(itSubpassInput.name.c_str(), binding, VK_SHADER_STAGE_ALL);
+						m_pDescriptorLayouts[set]->SetInputAttachmentBinding(itSubpassInput.name.c_str(), binding, VK_SHADER_STAGE_ALL);
 					}
 				}
 			}
@@ -79,8 +79,8 @@ bool CVKPipeline::CreateLayouts(eastl::vector<VkDescriptorSetLayout> &layouts, e
 	}
 
 	for (int index = 0; index < DESCRIPTOR_SET_COUNT; index++) {
-		if (m_pDescriptorSetLayouts[index]->Create()) {
-			layouts.emplace_back(m_pDescriptorSetLayouts[index]->GetDescriptorSetLayout());
+		if (m_pDescriptorLayouts[index]->Create()) {
+			layouts.emplace_back(m_pDescriptorLayouts[index]->GetDescriptorSetLayout());
 		}
 	}
 
@@ -428,7 +428,7 @@ bool CVKPipeline::UniformMatrix4fv(VkCommandBuffer vkCommandBuffer, uint32_t nam
 bool CVKPipeline::IsTextureValid(uint32_t name) const
 {
 	for (int index = 0; index < DESCRIPTOR_SET_COUNT; index++) {
-		if (m_pDescriptorSetLayouts[index]->IsTextureValid(name)) {
+		if (m_pDescriptorLayouts[index]->IsTextureValid(name)) {
 			return true;
 		}
 	}
@@ -439,7 +439,7 @@ bool CVKPipeline::IsTextureValid(uint32_t name) const
 bool CVKPipeline::IsUniformBlockValid(uint32_t name) const
 {
 	for (int index = 0; index < DESCRIPTOR_SET_COUNT; index++) {
-		if (m_pDescriptorSetLayouts[index]->IsUniformBlockValid(name)) {
+		if (m_pDescriptorLayouts[index]->IsUniformBlockValid(name)) {
 			return true;
 		}
 	}
