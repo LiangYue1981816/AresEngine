@@ -32,7 +32,5 @@ private:
 
 private:
 	CVKDevice *m_pDevice;
-
-private:
 	CVKUniformBufferManager *m_pManager;
 };

@@ -31,7 +31,5 @@ private:
 
 private:
 	CVKDevice *m_pDevice;
-
-private:
 	CVKMaterialManager *m_pManager;
 };

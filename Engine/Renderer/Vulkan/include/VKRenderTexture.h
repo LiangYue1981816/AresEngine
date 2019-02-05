@@ -55,7 +55,5 @@ private:
 
 private:
 	CVKDevice *m_pDevice;
-
-private:
 	CVKRenderTextureManager *m_pManager;
 };

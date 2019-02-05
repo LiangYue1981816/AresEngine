@@ -6,15 +6,15 @@
 CVKMemoryAllocator::CVKMemoryAllocator(CVKDevice *pDevice, uint32_t memoryTypeIndex, VkDeviceSize memorySize, VkDeviceSize memoryAlignment)
 	: m_pDevice(pDevice)
 
+	, m_root{nullptr}
+	, m_nodes(nullptr)
+
 	, m_vkMemory(VK_NULL_HANDLE)
 	, m_memoryFreeSize(memorySize)
 	, m_memoryFullSize(memorySize)
 	, m_memoryAlignment(memoryAlignment)
 	, m_memoryTypeIndex(memoryTypeIndex)
 	, m_memoryPropertyFlags(pDevice->GetPhysicalDeviceMemoryProperties().memoryTypes[memoryTypeIndex].propertyFlags)
-
-	, m_root{nullptr}
-	, m_nodes(nullptr)
 
 	, pNext(nullptr)
 	, pPrev(nullptr)

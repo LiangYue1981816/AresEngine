@@ -27,14 +27,14 @@ public:
 
 
 protected:
-	bool m_bExtern;
-	CVKImagePtr m_ptrImage;
-	VkImageView m_vkImageView;
-
-protected:
 	uint32_t m_transferLevels;
 	uint32_t m_transferLayers;
 	eastl::unordered_map<int, TransferBuffer> m_transferBuffers;
+
+protected:
+	bool m_bExtern;
+	CVKImagePtr m_ptrImage;
+	VkImageView m_vkImageView;
 
 protected:
 	CVKDevice *m_pDevice;

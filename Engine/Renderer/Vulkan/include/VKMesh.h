@@ -42,7 +42,5 @@ private:
 
 private:
 	CVKDevice *m_pDevice;
-
-private:
 	CVKMeshManager *m_pManager;
 };

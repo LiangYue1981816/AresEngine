@@ -33,13 +33,12 @@ private:
 	int m_width;
 	int m_height;
 
-private:
-	VkFramebuffer m_vkFrameBuffer;
 	eastl::vector<CGfxRenderTexturePtr> m_ptrAttachmentTextures;
 
 private:
-	CVKDevice *m_pDevice;
+	VkFramebuffer m_vkFrameBuffer;
 
 private:
+	CVKDevice *m_pDevice;
 	CVKFrameBufferManager *m_pManager;
 };

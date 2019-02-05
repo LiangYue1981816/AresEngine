@@ -48,13 +48,13 @@ private:
 	uint32_t m_name;
 
 private:
-	VkRenderPass m_vkRenderPass;
 	eastl::vector<AttachmentInformation> m_attachments;
 	eastl::vector<SubpassInformation> m_subpasses;
 
 private:
-	CVKDevice *m_pDevice;
+	VkRenderPass m_vkRenderPass;
 
 private:
+	CVKDevice *m_pDevice;
 	CVKRenderPassManager *m_pManager;
 };

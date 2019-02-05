@@ -38,12 +38,12 @@ public:
 
 
 private:
-	VkDescriptorSet m_vkDescriptorSet;
-	CVKDescriptorLayout *m_pDescriptorLayout;
-
-private:
 	eastl::unordered_map<uint32_t, DescriptorImageInfo> m_imageDescriptors;
 	eastl::unordered_map<uint32_t, DescriptorBufferInfo> m_bufferDescriptors;
+
+private:
+	VkDescriptorSet m_vkDescriptorSet;
+	CVKDescriptorLayout *m_pDescriptorLayout;
 
 private:
 	CVKDevice *m_pDevice;

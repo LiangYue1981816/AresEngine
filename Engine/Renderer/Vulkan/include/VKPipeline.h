@@ -55,13 +55,13 @@ public:
 
 
 protected:
-	VkPipeline m_vkPipeline;
-	VkPipelineLayout m_vkPipelineLayout;
-
-protected:
 	CVKShader *m_pShaders[compute_shader - vertex_shader + 1];
 	CVKDescriptorLayout *m_pDescriptorLayouts[DESCRIPTOR_SET_COUNT];
 	eastl::unordered_map<uint32_t, VkPushConstantRange> m_pushConstantRanges;
+
+protected:
+	VkPipeline m_vkPipeline;
+	VkPipelineLayout m_vkPipelineLayout;
 
 protected:
 	CVKDevice *m_pDevice;

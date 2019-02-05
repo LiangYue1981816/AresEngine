@@ -60,6 +60,10 @@ private:
 
 
 private:
+	rb_root m_root;
+	mem_node **m_nodes;
+
+private:
 	VkDeviceMemory m_vkMemory;
 
 	VkDeviceSize m_memoryFreeSize;
@@ -68,10 +72,6 @@ private:
 
 	uint32_t m_memoryTypeIndex;
 	VkMemoryPropertyFlags m_memoryPropertyFlags;
-
-private:
-	rb_root m_root;
-	mem_node **m_nodes;
 
 private:
 	CVKDevice *m_pDevice;

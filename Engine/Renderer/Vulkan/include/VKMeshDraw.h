@@ -46,7 +46,5 @@ private:
 
 private:
 	CVKDevice *m_pDevice;
-
-private:
 	CVKMeshDrawManager *m_pManager;
 };
