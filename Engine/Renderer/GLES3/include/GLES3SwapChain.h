@@ -28,16 +28,17 @@ public:
 
 
 private:
+	void *m_hDC;
+
+private:
 	GfxPixelFormat m_pixelFormat;
 
 	int m_width;
 	int m_height;
 
-private:
-	void *m_hDC;
-	uint32_t m_fbo;
+	int m_indexFrame;
 
 private:
-	int m_indexFrame;
+	uint32_t m_fbo;
 	CGfxRenderTexturePtr m_ptrFrameTexture;
 };

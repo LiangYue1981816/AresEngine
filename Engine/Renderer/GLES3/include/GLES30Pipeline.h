@@ -51,14 +51,14 @@ public:
 	bool IsUniformBlockValid(uint32_t name) const;
 
 
-protected:
-	uint32_t m_program;
-	CGLES3Shader *m_pShaders[compute_shader - vertex_shader + 1];
-
 private:
 	eastl::unordered_map<uint32_t, uint32_t> m_uniformLocations;      // [name, location]
 	eastl::unordered_map<uint32_t, uint32_t> m_uniformBlockBindings;  // [name, binding]
 	eastl::unordered_map<uint32_t, uint32_t> m_sampledImageLocations; // [name, location]
+
+protected:
+	uint32_t m_program;
+	CGLES3Shader *m_pShaders[compute_shader - vertex_shader + 1];
 };
 
 #endif

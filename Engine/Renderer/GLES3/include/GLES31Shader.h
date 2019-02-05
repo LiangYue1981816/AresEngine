@@ -72,13 +72,13 @@ private:
 	uint32_t m_name;
 
 private:
-	uint32_t m_kind;
-	uint32_t m_program;
-
-private:
 	eastl::unordered_map<uint32_t, uint32_t> m_uniformLocations;      // [name, location]
 	eastl::unordered_map<uint32_t, uint32_t> m_uniformBlockBindings;  // [name, binding]
 	eastl::unordered_map<uint32_t, uint32_t> m_sampledImageLocations; // [name, location]
+
+private:
+	uint32_t m_kind;
+	uint32_t m_program;
 };
 
 #endif
