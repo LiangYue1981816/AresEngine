@@ -25,8 +25,8 @@ private:
 
 
 public:
+	uint32_t GetSetIndex(void) const;
 	VkDescriptorSet GetDescriptorSet(void) const;
-	CVKDescriptorLayout* GetDescriptorLayout(void) const;
 
 public:
 	bool SetTexture2D(uint32_t name, const CGfxTexture2DPtr &ptrTexture, const CGfxSampler *pSampler);
@@ -38,12 +38,12 @@ public:
 
 
 private:
-	eastl::unordered_map<uint32_t, DescriptorImageInfo> m_imageDescriptors;
-	eastl::unordered_map<uint32_t, DescriptorBufferInfo> m_bufferDescriptors;
-
-private:
 	VkDescriptorSet m_vkDescriptorSet;
 	CVKDescriptorLayout *m_pDescriptorLayout;
+
+private:
+	eastl::unordered_map<uint32_t, DescriptorImageInfo> m_imageDescriptors;
+	eastl::unordered_map<uint32_t, DescriptorBufferInfo> m_bufferDescriptors;
 
 private:
 	CVKDevice *m_pDevice;

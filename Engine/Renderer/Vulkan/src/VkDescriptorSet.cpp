@@ -14,14 +14,14 @@ CVKDescriptorSet::~CVKDescriptorSet(void)
 
 }
 
+uint32_t CVKDescriptorSet::GetSetIndex(void) const
+{
+	return m_pDescriptorLayout->GetSetIndex();
+}
+
 VkDescriptorSet CVKDescriptorSet::GetDescriptorSet(void) const
 {
 	return m_vkDescriptorSet;
-}
-
-CVKDescriptorLayout* CVKDescriptorSet::GetDescriptorLayout(void) const
-{
-	return m_pDescriptorLayout;
 }
 
 bool CVKDescriptorSet::SetTexture2D(uint32_t name, const CGfxTexture2DPtr &ptrTexture, const CGfxSampler *pSampler)
