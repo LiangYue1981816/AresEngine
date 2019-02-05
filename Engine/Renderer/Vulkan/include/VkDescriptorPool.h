@@ -15,9 +15,9 @@ private:
 
 
 private:
-	uint32_t m_numSets;
 	uint32_t m_numFreeSets;
 	uint32_t m_numFreeDescriptors[VK_DESCRIPTOR_TYPE_RANGE_SIZE];
+	eastl::unordered_map<CVKDescriptorSet*, CVKDescriptorSet*> m_pDescriptorSets;
 
 private:
 	VkDescriptorPool m_vkDescriptorPool;

@@ -4,6 +4,9 @@
 
 class CVKDescriptorSet
 {
+	friend class CVKDescriptorPool;
+
+
 private:
 	typedef struct DescriptorImageInfo {
 		VkDescriptorImageInfo imageInfo;
@@ -20,13 +23,15 @@ private:
 
 
 private:
-	CVKDescriptorSet(CVKDevice *pDevice, CVKDescriptorLayout *pDescriptorLayout, VkDescriptorSet vkDescriptorSet);
+	CVKDescriptorSet(CVKDevice *pDevice, CVKDescriptorPool *pDescriptorPool, CVKDescriptorLayout *pDescriptorLayout, VkDescriptorSet vkDescriptorSet);
 	virtual ~CVKDescriptorSet(void);
 
 
 public:
 	uint32_t GetSetIndex(void) const;
 	VkDescriptorSet GetDescriptorSet(void) const;
+	CVKDescriptorPool* GetDescriptorPool(void) const;
+	CVKDescriptorLayout* GetDescriptorLayout(void) const;
 
 public:
 	bool SetTexture2D(uint32_t name, const CGfxTexture2DPtr &ptrTexture, const CGfxSampler *pSampler);
@@ -43,6 +48,7 @@ private:
 
 private:
 	VkDescriptorSet m_vkDescriptorSet;
+	CVKDescriptorPool *m_pDescriptorPool;
 	CVKDescriptorLayout *m_pDescriptorLayout;
 
 private:

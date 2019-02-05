@@ -1,8 +1,9 @@
 #include "VKRenderer.h"
 
 
-CVKDescriptorSet::CVKDescriptorSet(CVKDevice *pDevice, CVKDescriptorLayout *pDescriptorLayout, VkDescriptorSet vkDescriptorSet)
+CVKDescriptorSet::CVKDescriptorSet(CVKDevice *pDevice, CVKDescriptorPool *pDescriptorPool, CVKDescriptorLayout *pDescriptorLayout, VkDescriptorSet vkDescriptorSet)
 	: m_pDevice(pDevice)
+	, m_pDescriptorPool(pDescriptorPool)
 	, m_pDescriptorLayout(pDescriptorLayout)
 	, m_vkDescriptorSet(vkDescriptorSet)
 {
@@ -22,6 +23,16 @@ uint32_t CVKDescriptorSet::GetSetIndex(void) const
 VkDescriptorSet CVKDescriptorSet::GetDescriptorSet(void) const
 {
 	return m_vkDescriptorSet;
+}
+
+CVKDescriptorPool* CVKDescriptorSet::GetDescriptorPool(void) const
+{
+	return m_pDescriptorPool;
+}
+
+CVKDescriptorLayout* CVKDescriptorSet::GetDescriptorLayout(void) const
+{
+	return m_pDescriptorLayout;
 }
 
 bool CVKDescriptorSet::SetTexture2D(uint32_t name, const CGfxTexture2DPtr &ptrTexture, const CGfxSampler *pSampler)
