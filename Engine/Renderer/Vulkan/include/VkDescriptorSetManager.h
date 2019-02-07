@@ -13,5 +13,8 @@ public:
 
 
 private:
+	pthread_mutex_t m_lock;
+
+private:
 	CVKDevice *m_pDevice;
 };
