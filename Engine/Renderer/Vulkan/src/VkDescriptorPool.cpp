@@ -16,6 +16,9 @@ CVKDescriptorPool::CVKDescriptorPool(CVKDevice *pDevice)
 
 	, m_numSets(0)
 	, m_numDescriptors{ 0 }
+
+	, pNext(nullptr)
+	, pPrev(nullptr)
 {
 	VkDescriptorPoolSize poolSizes[] = {
 		{ VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, numUniformBuffers },

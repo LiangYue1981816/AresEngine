@@ -24,4 +24,8 @@ private:
 
 private:
 	CVKDevice *m_pDevice;
+
+private:
+	CVKDescriptorPool *pNext;
+	CVKDescriptorPool *pPrev;
 };
