@@ -10,10 +10,13 @@ private:
 
 
 public:
+	CVKDescriptorSet* AllocDescriptorSet(CVKDescriptorLayout *pDescriptorLayout);
+	void FreeDescriptorSet(CVKDescriptorSet *pDescriptorSet);
 
 
 private:
 	pthread_mutex_t m_lock;
+	CVKDescriptorPool *m_pDescriptorPoolListHead;
 
 private:
 	CVKDevice *m_pDevice;
