@@ -4,7 +4,7 @@
 CVKMemoryManager::CVKMemoryManager(CVKDevice *pDevice)
 	: m_pDevice(pDevice)
 {
-	atomic_spin_init(&m_lock);
+	pthread_mutex_init(&m_lock, nullptr);
 }
 
 CVKMemoryManager::~CVKMemoryManager(void)
@@ -22,6 +22,7 @@ CVKMemoryManager::~CVKMemoryManager(void)
 	}
 
 	m_pAllocatorListHeads.clear();
+	pthread_mutex_destroy(&m_lock);
 }
 
 uint32_t CVKMemoryManager::GetMemoryTypeIndex(const VkPhysicalDeviceMemoryProperties &memoryProperties, VkFlags memoryTypeBits, VkMemoryPropertyFlags &memoryPropertyFlags, VkDeviceSize memorySize)
@@ -58,7 +59,7 @@ CVKMemory* CVKMemoryManager::AllocMemory(VkDeviceSize memorySize, VkDeviceSize m
 	uint32_t memoryTypeIndex = GetMemoryTypeIndex(m_pDevice->GetPhysicalDeviceMemoryProperties(), memoryTypeBits, memoryPropertyFlags, 0);
 	if (memoryTypeIndex == 0xffffffff) return nullptr;
 
-	atomic_spin_autolock autolock(&m_lock);
+	mutex_autolock autolock(&m_lock);
 	{
 		memoryAlignment = ALIGN_BYTE(memoryAlignment, 256); // The min alignment size is 256B
 		memorySize = ALIGN_BYTE(memorySize, memoryAlignment);
@@ -120,7 +121,7 @@ void CVKMemoryManager::FreeMemory(CVKMemory *pMemory)
 		return;
 	}
 
-	atomic_spin_autolock autolock(&m_lock);
+	mutex_autolock autolock(&m_lock);
 	{
 		CVKMemoryAllocator *pAllocator = pMemory->GetAllocator();
 		pAllocator->FreeMemory(pMemory);
@@ -150,7 +151,7 @@ void CVKMemoryManager::FreeMemory(CVKMemory *pMemory)
 
 void CVKMemoryManager::Log(void)
 {
-	atomic_spin_autolock autolock(&m_lock);
+	mutex_autolock autolock(&m_lock);
 	{
 		LogOutput(LOG_TAG_RENDERER, "MemoryManager:\n");
 
