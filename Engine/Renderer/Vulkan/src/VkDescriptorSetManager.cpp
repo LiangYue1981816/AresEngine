@@ -47,5 +47,22 @@ CVKDescriptorSet* CVKDescriptorSetManager::AllocDescriptorSet(CVKDescriptorLayou
 
 void CVKDescriptorSetManager::FreeDescriptorSet(CVKDescriptorSet *pDescriptorSet)
 {
+	mutex_autolock autolock(&m_lock);
+	{
+		CVKDescriptorPool *pDescriptorPool = pDescriptorSet->GetDescriptorPool();
 
+		if (pDescriptorPool->FreeDescriptorSet(pDescriptorSet)) {
+			if (pDescriptorPool->pPrev) {
+				pDescriptorPool->pPrev->pNext = pDescriptorPool->pNext;
+			}
+
+			if (pDescriptorPool->pNext) {
+				pDescriptorPool->pNext->pPrev = pDescriptorPool->pPrev;
+			}
+
+			pDescriptorPool->pPrev = nullptr;
+			pDescriptorPool->pNext = m_pListHead;
+			m_pListHead = pDescriptorPool;
+		}
+	}
 }
