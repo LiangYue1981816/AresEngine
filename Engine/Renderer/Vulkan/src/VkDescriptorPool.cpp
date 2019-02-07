@@ -97,7 +97,7 @@ CVKDescriptorSet* CVKDescriptorPool::AllocDescriptorSet(CVKDescriptorLayout *pDe
 	return pDescriptorSet;
 }
 
-void CVKDescriptorPool::FreeDescriptorSet(CVKDescriptorSet *pDescriptorSet)
+bool CVKDescriptorPool::FreeDescriptorSet(CVKDescriptorSet *pDescriptorSet)
 {
 	m_pDescriptorSets.erase(pDescriptorSet);
 	delete pDescriptorSet;
@@ -113,5 +113,9 @@ void CVKDescriptorPool::FreeDescriptorSet(CVKDescriptorSet *pDescriptorSet)
 		m_numDescriptors[VK_DESCRIPTOR_TYPE_UNIFORM_TEXEL_BUFFER] = numUniformTexelBuffers;
 		m_numDescriptors[VK_DESCRIPTOR_TYPE_INPUT_ATTACHMENT] = numInputAttachments;
 		vkResetDescriptorPool(m_pDevice->GetDevice(), m_vkDescriptorPool, 0);
+		return true;
+	}
+	else {
+		return false;
 	}
 }

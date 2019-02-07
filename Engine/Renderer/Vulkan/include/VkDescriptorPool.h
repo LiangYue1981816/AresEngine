@@ -11,7 +11,7 @@ private:
 
 private:
 	CVKDescriptorSet* AllocDescriptorSet(CVKDescriptorLayout *pDescriptorLayout);
-	void FreeDescriptorSet(CVKDescriptorSet *pDescriptorSet);
+	bool FreeDescriptorSet(CVKDescriptorSet *pDescriptorSet);
 
 
 private:
