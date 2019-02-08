@@ -4,12 +4,15 @@
 
 class CVKDescriptorSetManager
 {
+	friend class CVKRenderer;
+
+
 private:
 	CVKDescriptorSetManager(CVKDevice *pDevice);
 	virtual ~CVKDescriptorSetManager(void);
 
 
-public:
+private:
 	CVKDescriptorSet* AllocDescriptorSet(CVKDescriptorLayout *pDescriptorLayout);
 	void FreeDescriptorSet(CVKDescriptorSet *pDescriptorSet);
 
