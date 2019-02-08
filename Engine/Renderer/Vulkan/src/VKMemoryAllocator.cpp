@@ -32,8 +32,6 @@ CVKMemoryAllocator::CVKMemoryAllocator(CVKDevice *pDevice, uint32_t memoryTypeIn
 
 CVKMemoryAllocator::~CVKMemoryAllocator(void)
 {
-	ASSERT(m_memoryFreeSize == m_memoryFullSize);
-
 	FreeNodes();
 
 	if (m_vkMemory) {
@@ -154,13 +152,21 @@ void CVKMemoryAllocator::InitNodes(void)
 
 void CVKMemoryAllocator::FreeNodes(void)
 {
-#ifdef DEBUG
 	uint32_t numNodes = (uint32_t)(m_memoryFullSize / m_memoryAlignment);
 
 	for (uint32_t indexNode = 0; indexNode < numNodes; indexNode++) {
-		ASSERT(m_nodes[indexNode] == nullptr);
+		if (m_nodes[indexNode]) {
+			if (CVKMemory *pMemory = m_nodes[indexNode]->pListHead) {
+				CVKMemory *pMemoryNext = nullptr;
+				do {
+					pMemoryNext = pMemory->pFreeNext;
+					delete pMemory;
+				} while (pMemory = pMemoryNext);
+			}
+
+			delete m_nodes[indexNode];
+		}
 	}
-#endif
 
 	delete[] m_nodes;
 }
