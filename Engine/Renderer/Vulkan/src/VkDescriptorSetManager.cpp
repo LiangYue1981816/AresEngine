@@ -3,30 +3,31 @@
 
 CVKDescriptorSetManager::CVKDescriptorSetManager(CVKDevice *pDevice)
 	: m_pDevice(pDevice)
-	, m_pListHead(nullptr)
 {
 	pthread_mutex_init(&m_lock, nullptr);
-	m_pListHead = new CVKDescriptorPool(m_pDevice);
 }
 
 CVKDescriptorSetManager::~CVKDescriptorSetManager(void)
 {
-	if (CVKDescriptorPool *pDescriptorPool = m_pListHead) {
-		CVKDescriptorPool *pDescriptorPoolNext = nullptr;
-		do {
-			pDescriptorPoolNext = pDescriptorPool->pNext;
-			delete pDescriptorPool;
-		} while (pDescriptorPool = pDescriptorPoolNext);
+	for (const auto &itPool : m_pPoolListHeads) {
+		if (CVKDescriptorPool *pDescriptorPool = itPool.second) {
+			CVKDescriptorPool *pDescriptorPoolNext = nullptr;
+			do {
+				pDescriptorPoolNext = pDescriptorPool->pNext;
+				delete pDescriptorPool;
+			} while (pDescriptorPool = pDescriptorPoolNext);
+		}
 	}
 
-	m_pListHead = nullptr;
+	m_pPoolListHeads.clear();
 	pthread_mutex_destroy(&m_lock);
 }
 
-CVKDescriptorSet* CVKDescriptorSetManager::AllocDescriptorSet(CVKDescriptorLayout *pDescriptorLayout)
+CVKDescriptorSet* CVKDescriptorSetManager::AllocDescriptorSet(uint32_t pool, CVKDescriptorLayout *pDescriptorLayout)
 {
 	mutex_autolock autolock(&m_lock);
 	{
+		/*
 		CVKDescriptorPool *pDescriptorPool = m_pListHead;
 
 		do {
@@ -40,6 +41,7 @@ CVKDescriptorSet* CVKDescriptorSetManager::AllocDescriptorSet(CVKDescriptorLayou
 
 			pDescriptorPool = pDescriptorPool->pNext;
 		} while (true);
+		*/
 	}
 
 	return nullptr;
@@ -47,6 +49,7 @@ CVKDescriptorSet* CVKDescriptorSetManager::AllocDescriptorSet(CVKDescriptorLayou
 
 void CVKDescriptorSetManager::FreeDescriptorSet(CVKDescriptorSet *pDescriptorSet)
 {
+	/*
 	if (pDescriptorSet == nullptr) {
 		return;
 	}
@@ -69,4 +72,5 @@ void CVKDescriptorSetManager::FreeDescriptorSet(CVKDescriptorSet *pDescriptorSet
 			m_pListHead = pDescriptorPool;
 		}
 	}
+	*/
 }
