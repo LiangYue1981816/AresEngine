@@ -47,6 +47,10 @@ CVKDescriptorSet* CVKDescriptorSetManager::AllocDescriptorSet(CVKDescriptorLayou
 
 void CVKDescriptorSetManager::FreeDescriptorSet(CVKDescriptorSet *pDescriptorSet)
 {
+	if (pDescriptorSet == nullptr) {
+		return;
+	}
+
 	mutex_autolock autolock(&m_lock);
 	{
 		CVKDescriptorPool *pDescriptorPool = pDescriptorSet->GetDescriptorPool();

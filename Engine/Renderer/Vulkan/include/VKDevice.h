@@ -35,6 +35,7 @@ public:
 	CVKInstance* GetInstance(void) const;
 	CVKQueue* GetQueue(void) const;
 	CVKMemoryManager* GetMemoryManager(void) const;
+	CVKDescriptorSetManager* GetDescriptorSetManager(void) const;
 
 
 private:
@@ -48,6 +49,7 @@ private:
 private:
 	CVKQueue *m_pQueue;
 	CVKMemoryManager *m_pMemoryManager;
+	CVKDescriptorSetManager *m_pDescriptorSetManager;
 
 private:
 	CVKInstance *m_pInstance;

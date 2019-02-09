@@ -21,7 +21,6 @@ CVKRenderer::CVKRenderer(void *hInstance, void *hWnd, void *hDC, int width, int 
 	, m_pFrameBufferManager(nullptr)
 	, m_pRenderTextureManager(nullptr)
 	, m_pUniformBufferManager(nullptr)
-	, m_pDescriptorSetManager(nullptr)
 {
 	m_pInstance = new CVKInstance(hInstance, hWnd);
 	m_pDevice = new CVKDevice(m_pInstance);
@@ -40,7 +39,6 @@ CVKRenderer::CVKRenderer(void *hInstance, void *hWnd, void *hDC, int width, int 
 	m_pFrameBufferManager = new CVKFrameBufferManager(m_pDevice);
 	m_pRenderTextureManager = new CVKRenderTextureManager(m_pDevice);
 	m_pUniformBufferManager = new CVKUniformBufferManager(m_pDevice);
-	m_pDescriptorSetManager = new CVKDescriptorSetManager(m_pDevice);
 
 	m_pSwapChain = new CVKSwapChain(m_pDevice, width, height, pixelFormat);
 }
@@ -64,7 +62,6 @@ CVKRenderer::~CVKRenderer(void)
 	delete m_pRenderPassManager;
 	delete m_pFrameBufferManager;
 	delete m_pRenderTextureManager;
-	delete m_pDescriptorSetManager;
 
 	delete m_pDevice;
 	delete m_pInstance;

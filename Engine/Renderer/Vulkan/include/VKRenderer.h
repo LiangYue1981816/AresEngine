@@ -183,5 +183,4 @@ private:
 	CVKFrameBufferManager *m_pFrameBufferManager;
 	CVKRenderTextureManager *m_pRenderTextureManager;
 	CVKUniformBufferManager *m_pUniformBufferManager;
-	CVKDescriptorSetManager *m_pDescriptorSetManager;
 };
