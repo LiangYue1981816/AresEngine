@@ -3,32 +3,31 @@
 
 CVKDescriptorSetManager::CVKDescriptorSetManager(CVKDevice *pDevice)
 	: m_pDevice(pDevice)
+	, m_pPoolListHead(nullptr)
 {
 	pthread_mutex_init(&m_lock, nullptr);
+	m_pPoolListHead = new CVKDescriptorPool(m_pDevice);
 }
 
 CVKDescriptorSetManager::~CVKDescriptorSetManager(void)
 {
-	for (const auto &itPool : m_pPoolListHeads) {
-		if (CVKDescriptorPool *pDescriptorPool = itPool.second) {
-			CVKDescriptorPool *pDescriptorPoolNext = nullptr;
-			do {
-				pDescriptorPoolNext = pDescriptorPool->pNext;
-				delete pDescriptorPool;
-			} while (pDescriptorPool = pDescriptorPoolNext);
-		}
+	if (CVKDescriptorPool *pDescriptorPool = m_pPoolListHead) {
+		CVKDescriptorPool *pDescriptorPoolNext = nullptr;
+		do {
+			pDescriptorPoolNext = pDescriptorPool->pNext;
+			delete pDescriptorPool;
+		} while (pDescriptorPool = pDescriptorPoolNext);
 	}
 
-	m_pPoolListHeads.clear();
+	m_pPoolListHead = nullptr;
 	pthread_mutex_destroy(&m_lock);
 }
 
-CVKDescriptorSet* CVKDescriptorSetManager::AllocDescriptorSet(uint32_t pool, CVKDescriptorLayout *pDescriptorLayout)
+CVKDescriptorSet* CVKDescriptorSetManager::AllocDescriptorSet(CVKDescriptorLayout *pDescriptorLayout)
 {
 	mutex_autolock autolock(&m_lock);
 	{
-		/*
-		CVKDescriptorPool *pDescriptorPool = m_pListHead;
+		CVKDescriptorPool *pDescriptorPool = m_pPoolListHead;
 
 		do {
 			if (CVKDescriptorSet *DescriptorSet = pDescriptorPool->AllocDescriptorSet(pDescriptorLayout)) {
@@ -41,7 +40,6 @@ CVKDescriptorSet* CVKDescriptorSetManager::AllocDescriptorSet(uint32_t pool, CVK
 
 			pDescriptorPool = pDescriptorPool->pNext;
 		} while (true);
-		*/
 	}
 
 	return nullptr;
@@ -49,7 +47,6 @@ CVKDescriptorSet* CVKDescriptorSetManager::AllocDescriptorSet(uint32_t pool, CVK
 
 void CVKDescriptorSetManager::FreeDescriptorSet(CVKDescriptorSet *pDescriptorSet)
 {
-	/*
 	if (pDescriptorSet == nullptr) {
 		return;
 	}
@@ -68,9 +65,8 @@ void CVKDescriptorSetManager::FreeDescriptorSet(CVKDescriptorSet *pDescriptorSet
 			}
 
 			pDescriptorPool->pPrev = nullptr;
-			pDescriptorPool->pNext = m_pListHead;
-			m_pListHead = pDescriptorPool;
+			pDescriptorPool->pNext = m_pPoolListHead;
+			m_pPoolListHead = pDescriptorPool;
 		}
 	}
-	*/
 }

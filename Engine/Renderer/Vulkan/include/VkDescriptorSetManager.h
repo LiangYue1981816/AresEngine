@@ -13,13 +13,13 @@ private:
 
 
 public:
-	CVKDescriptorSet* AllocDescriptorSet(uint32_t pool, CVKDescriptorLayout *pDescriptorLayout);
+	CVKDescriptorSet* AllocDescriptorSet(CVKDescriptorLayout *pDescriptorLayout);
 	void FreeDescriptorSet(CVKDescriptorSet *pDescriptorSet);
 
 
 private:
 	pthread_mutex_t m_lock;
-	eastl::unordered_map<uint32_t, CVKDescriptorPool*> m_pPoolListHeads;
+	CVKDescriptorPool *m_pPoolListHead;
 
 private:
 	CVKDevice *m_pDevice;
