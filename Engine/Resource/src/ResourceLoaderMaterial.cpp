@@ -367,8 +367,8 @@ static bool InternalLoadTexture2D(TiXmlNode *pPassNode, CGfxMaterialPass *pPass)
 				GfxSamplerAddressMode addressMode = StringToAddressMode(pTextureNode->ToElement()->AttributeString("address_mode"));
 				if (minFilter == GFX_FILTER_INVALID_ENUM || magFilter == GFX_FILTER_INVALID_ENUM || mipmapMode == GFX_SAMPLER_MIPMAP_MODE_INVALID_ENUM || addressMode == GFX_SAMPLER_ADDRESS_MODE_INVALID_ENUM) { err = -2; goto ERR; }
 
-				if (pPass->SetTexture2D(szName, szFileName)) {
-					pPass->SetSampler(szName, pPass->GetTexture2D(szName)->GetLevels(), minFilter, magFilter, mipmapMode, addressMode);
+				if (pPass->SetSampler(szName, minFilter, magFilter, mipmapMode, addressMode)) {
+					pPass->SetTexture2D(szName, szFileName);
 				}
 			}
 			LogOutput(nullptr, "OK\n");
@@ -400,8 +400,8 @@ static bool InternalLoadTexture2DArray(TiXmlNode *pPassNode, CGfxMaterialPass *p
 				GfxSamplerAddressMode addressMode = StringToAddressMode(pTextureNode->ToElement()->AttributeString("address_mode"));
 				if (minFilter == GFX_FILTER_INVALID_ENUM || magFilter == GFX_FILTER_INVALID_ENUM || mipmapMode == GFX_SAMPLER_MIPMAP_MODE_INVALID_ENUM || addressMode == GFX_SAMPLER_ADDRESS_MODE_INVALID_ENUM) { err = -2; goto ERR; }
 
-				if (pPass->SetTexture2DArray(szName, szFileName)) {
-					pPass->SetSampler(szName, pPass->GetTexture2DArray(szName)->GetLevels(), minFilter, magFilter, mipmapMode, addressMode);
+				if (pPass->SetSampler(szName, minFilter, magFilter, mipmapMode, addressMode)) {
+					pPass->SetTexture2DArray(szName, szFileName);
 				}
 			}
 			LogOutput(nullptr, "OK\n");
@@ -433,8 +433,8 @@ static bool InternalLoadTextureCubeMap(TiXmlNode *pPassNode, CGfxMaterialPass *p
 				GfxSamplerAddressMode addressMode = StringToAddressMode(pTextureNode->ToElement()->AttributeString("address_mode"));
 				if (minFilter == GFX_FILTER_INVALID_ENUM || magFilter == GFX_FILTER_INVALID_ENUM || mipmapMode == GFX_SAMPLER_MIPMAP_MODE_INVALID_ENUM || addressMode == GFX_SAMPLER_ADDRESS_MODE_INVALID_ENUM) { err = -2; goto ERR; }
 
-				if (pPass->SetTextureCubeMap(szName, szFileName)) {
-					pPass->SetSampler(szName, pPass->GetTextureCubeMap(szName)->GetLevels(), minFilter, magFilter, mipmapMode, addressMode);
+				if (pPass->SetSampler(szName, minFilter, magFilter, mipmapMode, addressMode)) {
+					pPass->SetTextureCubeMap(szName, szFileName);
 				}
 			}
 			LogOutput(nullptr, "OK\n");

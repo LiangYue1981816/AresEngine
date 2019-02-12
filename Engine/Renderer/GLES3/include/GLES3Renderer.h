@@ -114,7 +114,7 @@ public:
 	CGfxShader* CreateShader(const char *szFileName, shader_kind kind);
 	CGfxPipelineCompute* CreatePipelineCompute(const CGfxShader *pComputeShader);
 	CGfxPipelineGraphics* CreatePipelineGraphics(const CGfxRenderPass *pRenderPass, const CGfxShader *pVertexShader, const CGfxShader *pFragmentShader, const PipelineState &state, uint32_t indexSubpass, uint32_t vertexBinding = 0, uint32_t instanceBinding = 1);
-	CGfxSampler* CreateSampler(int mipLevels, GfxFilter minFilter, GfxFilter magFilter, GfxSamplerMipmapMode mipmapMode, GfxSamplerAddressMode addressMode);
+	CGfxSampler* CreateSampler(GfxFilter minFilter, GfxFilter magFilter, GfxSamplerMipmapMode mipmapMode, GfxSamplerAddressMode addressMode);
 
 public:
 	CGfxFrameBufferPtr NewFrameBuffer(int width, int height, int numAttachments);

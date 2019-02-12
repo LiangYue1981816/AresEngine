@@ -1,8 +1,8 @@
 #include "GLES3Renderer.h"
 
 
-CGLES3Sampler::CGLES3Sampler(int mipLevels, GfxFilter minFilter, GfxFilter magFilter, GfxSamplerMipmapMode mipmapMode, GfxSamplerAddressMode addressMode)
-	: CGfxSampler(mipLevels, minFilter, magFilter, mipmapMode, addressMode)
+CGLES3Sampler::CGLES3Sampler(GfxFilter minFilter, GfxFilter magFilter, GfxSamplerMipmapMode mipmapMode, GfxSamplerAddressMode addressMode)
+	: CGfxSampler(minFilter, magFilter, mipmapMode, addressMode)
 
 	, m_sampler(0)
 {

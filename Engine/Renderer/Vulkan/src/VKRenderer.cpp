@@ -107,9 +107,9 @@ CGfxPipelineGraphics* CVKRenderer::CreatePipelineGraphics(const CGfxRenderPass *
 	return m_pPipelineGraphicsManager->Create(pRenderPass, pVertexShader, pFragmentShader, state, indexSubpass, vertexBinding, instanceBinding);
 }
 
-CGfxSampler* CVKRenderer::CreateSampler(int mipLevels, GfxFilter minFilter, GfxFilter magFilter, GfxSamplerMipmapMode mipmapMode, GfxSamplerAddressMode addressMode)
+CGfxSampler* CVKRenderer::CreateSampler(GfxFilter minFilter, GfxFilter magFilter, GfxSamplerMipmapMode mipmapMode, GfxSamplerAddressMode addressMode)
 {
-	return m_pSamplerManager->Create(mipLevels, minFilter, magFilter, mipmapMode, addressMode);
+	return m_pSamplerManager->Create(minFilter, magFilter, mipmapMode, addressMode);
 }
 
 CGfxFrameBufferPtr CVKRenderer::NewFrameBuffer(int width, int height, int numAttachments)

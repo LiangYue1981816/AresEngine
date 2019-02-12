@@ -111,9 +111,9 @@ CGfxPipelineGraphics* CGLES3Renderer::CreatePipelineGraphics(const CGfxRenderPas
 	return m_pPipelineGraphicsManager->Create(pRenderPass, pVertexShader, pFragmentShader, state, indexSubpass, vertexBinding, instanceBinding);
 }
 
-CGfxSampler* CGLES3Renderer::CreateSampler(int mipLevels, GfxFilter minFilter, GfxFilter magFilter, GfxSamplerMipmapMode mipmapMode, GfxSamplerAddressMode addressMode)
+CGfxSampler* CGLES3Renderer::CreateSampler(GfxFilter minFilter, GfxFilter magFilter, GfxSamplerMipmapMode mipmapMode, GfxSamplerAddressMode addressMode)
 {
-	return m_pSamplerManager->Create(mipLevels, minFilter, magFilter, mipmapMode, addressMode);
+	return m_pSamplerManager->Create(minFilter, magFilter, mipmapMode, addressMode);
 }
 
 CGfxFrameBufferPtr CGLES3Renderer::NewFrameBuffer(int width, int height, int numAttachments)
@@ -505,8 +505,8 @@ void CGLES3Renderer::BindMaterialPass(CGfxMaterialPass *pPass)
 
 void CGLES3Renderer::BindInputTexture(const char *szName, CGfxRenderTexture *pTexture)
 {
+	m_pGlobalMaterialPass->SetSampler(szName, GFX_FILTER_NEAREST, GFX_FILTER_LINEAR, GFX_SAMPLER_MIPMAP_MODE_NEAREST, GFX_SAMPLER_ADDRESS_MODE_REPEAT);
 	m_pGlobalMaterialPass->SetTexture2D(szName, ((CGLES3RenderTexture *)pTexture)->GetTexture());
-	m_pGlobalMaterialPass->SetSampler(szName, 0, GFX_FILTER_NEAREST, GFX_FILTER_LINEAR, GFX_SAMPLER_MIPMAP_MODE_NEAREST, GFX_SAMPLER_ADDRESS_MODE_REPEAT);
 }
 
 CGLES3PipelineCompute* CGLES3Renderer::GetCurrentPipelineCompute(void) const
