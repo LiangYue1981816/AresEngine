@@ -218,6 +218,7 @@ bool CGLES3MaterialPass::SetUniformVec1(const char *szName, float v0)
 		}
 
 		m_pUniformVec1s[name]->SetValue(v0);
+
 		return true;
 	}
 
@@ -234,6 +235,7 @@ bool CGLES3MaterialPass::SetUniformVec2(const char *szName, float v0, float v1)
 		}
 
 		m_pUniformVec2s[name]->SetValue(v0, v1);
+
 		return true;
 	}
 
@@ -250,6 +252,7 @@ bool CGLES3MaterialPass::SetUniformVec3(const char *szName, float v0, float v1, 
 		}
 
 		m_pUniformVec3s[name]->SetValue(v0, v1, v2);
+
 		return true;
 	}
 
@@ -266,6 +269,7 @@ bool CGLES3MaterialPass::SetUniformVec4(const char *szName, float v0, float v1, 
 		}
 
 		m_pUniformVec4s[name]->SetValue(v0, v1, v2, v3);
+
 		return true;
 	}
 
@@ -282,6 +286,7 @@ bool CGLES3MaterialPass::SetUniformMat4(const char *szName, const float *value)
 		}
 
 		m_pUniformMat4s[name]->SetValue(value);
+
 		return true;
 	}
 
