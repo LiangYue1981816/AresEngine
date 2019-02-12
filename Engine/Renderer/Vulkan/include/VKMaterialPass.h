@@ -49,6 +49,7 @@ private:
 
 private:
 	CGfxPipelineGraphics *m_pPipeline;
+	CVKDescriptorSet *m_pDescriptorSet;
 
 	eastl::unordered_map<uint32_t, CGfxSampler*> m_pSamplers;
 	eastl::unordered_map<uint32_t, CGfxTexture2DPtr> m_ptrTexture2Ds;

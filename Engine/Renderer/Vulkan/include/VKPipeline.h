@@ -53,6 +53,9 @@ public:
 	bool IsUniformValid(uint32_t name) const;
 	bool IsUniformBlockValid(uint32_t name) const;
 
+public:
+	CVKDescriptorLayout* GetDescriptorLayout(uint32_t set) const;
+
 
 protected:
 	CVKShader *m_pShaders[compute_shader - vertex_shader + 1];

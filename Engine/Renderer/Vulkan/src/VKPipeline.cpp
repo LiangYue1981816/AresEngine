@@ -451,3 +451,13 @@ bool CVKPipeline::IsUniformValid(uint32_t name) const
 {
 	return m_pushConstantRanges.find(name) != m_pushConstantRanges.end();
 }
+
+CVKDescriptorLayout* CVKPipeline::GetDescriptorLayout(uint32_t set) const
+{
+	if (set < DESCRIPTOR_SET_COUNT) {
+		return m_pDescriptorLayouts[set];
+	}
+	else {
+		return nullptr;
+	}
+}

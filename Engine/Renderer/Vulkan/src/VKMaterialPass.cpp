@@ -10,12 +10,17 @@ CVKMaterialPass::CVKMaterialPass(CVKDevice *pDevice, uint32_t name)
 	, m_pDevice(pDevice)
 
 	, m_pPipeline(nullptr)
+	, m_pDescriptorSet(nullptr)
 {
 
 }
 
 CVKMaterialPass::~CVKMaterialPass(void)
 {
+	if (m_pDescriptorSet) {
+		m_pDevice->GetDescriptorSetManager()->FreeDescriptorSet(m_pDescriptorSet);
+	}
+
 	for (auto &itUniform : m_pUniformVec1s) {
 		delete itUniform.second;
 	}
@@ -36,6 +41,7 @@ CVKMaterialPass::~CVKMaterialPass(void)
 		delete itUniform.second;
 	}
 
+	m_pDescriptorSet = nullptr;
 	m_pSamplers.clear();
 	m_ptrTexture2Ds.clear();
 	m_ptrTexture2DArrays.clear();
@@ -83,6 +89,8 @@ bool CVKMaterialPass::SetPipeline(const CGfxRenderPass *pRenderPass, const CGfxS
 	}
 
 	m_pPipeline = VKRenderer()->CreatePipelineGraphics(pRenderPass, pVertexShader, pFragmentShader, state, indexSubpass, vertexBinding, instanceBinding);
+	m_pDescriptorSet = m_pDevice->GetDescriptorSetManager()->AllocDescriptorSet(((CVKPipeline *)m_pPipeline)->GetDescriptorLayout(DESCRIPTOR_SET_PASS));
+
 	return true;
 }
 
