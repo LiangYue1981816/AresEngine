@@ -568,6 +568,7 @@ static bool InternalLoadPass(TiXmlNode *pPassNode, CGfxMaterialPass *pPass, uint
 		if (InternalLoadUniformVec2(pPassNode, pPass) == false) { err = -6; goto ERR; }
 		if (InternalLoadUniformVec3(pPassNode, pPass) == false) { err = -7; goto ERR; }
 		if (InternalLoadUniformVec4(pPassNode, pPass) == false) { err = -8; goto ERR; }
+		pPass->Update();
 	}
 	LogOutput(LOG_TAG_RENDERER, "\tOK\n");
 	return true;

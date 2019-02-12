@@ -297,6 +297,11 @@ bool CVKMaterialPass::SetUniformMat4(const char *szName, const float *value)
 	return false;
 }
 
+void CVKMaterialPass::Update(void)
+{
+
+}
+
 CGfxPipelineGraphics* CVKMaterialPass::GetPipeline(void) const
 {
 	return m_pPipeline;

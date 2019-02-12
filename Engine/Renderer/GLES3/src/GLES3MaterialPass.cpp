@@ -288,6 +288,11 @@ bool CGLES3MaterialPass::SetUniformMat4(const char *szName, const float *value)
 	return false;
 }
 
+void CGLES3MaterialPass::Update(void)
+{
+
+}
+
 CGfxPipelineGraphics* CGLES3MaterialPass::GetPipeline(void) const
 {
 	return m_pPipeline;

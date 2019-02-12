@@ -36,6 +36,8 @@ public:
 	bool SetUniformVec4(const char *szName, float v0, float v1, float v2, float v3);
 	bool SetUniformMat4(const char *szName, const float *value);
 
+	void Update(void);
+
 public:
 	CGfxPipelineGraphics* GetPipeline(void) const;
 
