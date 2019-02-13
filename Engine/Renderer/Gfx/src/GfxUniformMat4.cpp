@@ -12,7 +12,7 @@ CGfxUniformMat4::~CGfxUniformMat4(void)
 
 }
 
-const CGfxUniformBufferPtr& CGfxUniformMat4::GetUniformBuffer(void) const
+CGfxUniformBufferPtr CGfxUniformMat4::GetUniformBuffer(void) const
 {
 	return m_ptrUniformBuffer;
 }

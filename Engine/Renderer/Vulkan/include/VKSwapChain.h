@@ -31,7 +31,7 @@ public:
 
 public:
 	int GetFrameIndex(void) const;
-	const CGfxRenderTexturePtr& GetFrameTexture(int index) const;
+	CGfxRenderTexturePtr GetFrameTexture(int index) const;
 
 public:
 	void Present(void);

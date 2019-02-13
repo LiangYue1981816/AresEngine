@@ -12,7 +12,7 @@ CGfxUniformVec3::~CGfxUniformVec3(void)
 
 }
 
-const CGfxUniformBufferPtr& CGfxUniformVec3::GetUniformBuffer(void) const
+CGfxUniformBufferPtr CGfxUniformVec3::GetUniformBuffer(void) const
 {
 	return m_ptrUniformBuffer;
 }

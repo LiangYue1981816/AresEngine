@@ -58,10 +58,10 @@ public:
 
 private:
 	template<class T>
-	bool AttachComponent(CComponentPtr<T> &ptrComponent, eastl::unordered_map<uint32_t, CComponentPtr<T>> &container);
+	bool AttachComponent(CComponentPtr<T> ptrComponent, eastl::unordered_map<uint32_t, CComponentPtr<T>> &container);
 
 	template<class T>
-	bool DetachComponent(CComponentPtr<T> &ptrComponent, eastl::unordered_map<uint32_t, CComponentPtr<T>> &container);
+	bool DetachComponent(CComponentPtr<T> ptrComponent, eastl::unordered_map<uint32_t, CComponentPtr<T>> &container);
 
 	template<class T>
 	void DetachComponentAll(eastl::unordered_map<uint32_t, CComponentPtr<T>> &container);

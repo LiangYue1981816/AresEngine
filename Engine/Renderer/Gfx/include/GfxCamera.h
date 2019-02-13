@@ -32,7 +32,7 @@ public:
 	const glm::mat4& GetViewInverseMatrix(void) const;
 	const glm::mat4& GetViewInverseTransposeMatrix(void) const;
 
-	const CGfxUniformBufferPtr& GetUniformBuffer(void) const;
+	CGfxUniformBufferPtr GetUniformBuffer(void) const;
 
 public:
 	glm::vec3 WorldToScreen(const glm::vec3 &world) const;

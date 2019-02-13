@@ -94,7 +94,7 @@ const glm::mat4& CGfxCamera::GetViewInverseTransposeMatrix(void) const
 	return m_camera.viewInverseTransposeMatrix;
 }
 
-const CGfxUniformBufferPtr& CGfxCamera::GetUniformBuffer(void) const
+CGfxUniformBufferPtr CGfxCamera::GetUniformBuffer(void) const
 {
 	return m_pUniformCamera->GetUniformBuffer();
 }

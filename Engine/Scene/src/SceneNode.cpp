@@ -224,7 +224,7 @@ void CSceneNode::DetachComponentAll(void)
 }
 
 template<class T>
-bool CSceneNode::AttachComponent(CComponentPtr<T> &ptrComponent, eastl::unordered_map<uint32_t, CComponentPtr<T>> &container)
+bool CSceneNode::AttachComponent(CComponentPtr<T> ptrComponent, eastl::unordered_map<uint32_t, CComponentPtr<T>> &container)
 {
 	if (ptrComponent.IsNull()) {
 		return false;
@@ -241,7 +241,7 @@ bool CSceneNode::AttachComponent(CComponentPtr<T> &ptrComponent, eastl::unordere
 }
 
 template<class T>
-bool CSceneNode::DetachComponent(CComponentPtr<T> &ptrComponent, eastl::unordered_map<uint32_t, CComponentPtr<T>> &container)
+bool CSceneNode::DetachComponent(CComponentPtr<T> ptrComponent, eastl::unordered_map<uint32_t, CComponentPtr<T>> &container)
 {
 	if (ptrComponent.IsNull()) {
 		return false;

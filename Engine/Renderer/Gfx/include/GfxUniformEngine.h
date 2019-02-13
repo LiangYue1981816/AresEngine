@@ -48,7 +48,7 @@ public:
 
 
 public:
-	const CGfxUniformBufferPtr& GetUniformBuffer(void) const;
+	CGfxUniformBufferPtr GetUniformBuffer(void) const;
 
 public:
 	void SetTime(float t, float dt);

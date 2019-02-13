@@ -259,7 +259,7 @@ int CVKSwapChain::GetFrameIndex(void) const
 	return 0;
 }
 
-const CGfxRenderTexturePtr& CVKSwapChain::GetFrameTexture(int index) const
+CGfxRenderTexturePtr CVKSwapChain::GetFrameTexture(int index) const
 {
 	return m_ptrRenderTextures[index];
 }

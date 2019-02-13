@@ -10,7 +10,7 @@ public:
 
 
 public:
-	const CGfxCommandBufferPtr& GetCommandBuffer(void) const;
+	CGfxCommandBufferPtr GetCommandBuffer(void) const;
 	void TaskFunc(void *pParams);
 
 

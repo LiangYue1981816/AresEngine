@@ -62,7 +62,7 @@ int CGLES3SwapChain::GetFrameIndex(void) const
 	return m_indexFrame;
 }
 
-const CGfxRenderTexturePtr& CGLES3SwapChain::GetFrameTexture(int index) const
+CGfxRenderTexturePtr CGLES3SwapChain::GetFrameTexture(int index) const
 {
 	return m_ptrFrameTexture;
 }

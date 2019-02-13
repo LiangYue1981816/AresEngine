@@ -23,7 +23,7 @@ public:
 
 public:
 	virtual int GetFrameIndex(void) const = 0;
-	virtual const CGfxRenderTexturePtr& GetFrameTexture(int index) const = 0;
+	virtual CGfxRenderTexturePtr GetFrameTexture(int index) const = 0;
 
 public:
 	virtual void Present(void) = 0;

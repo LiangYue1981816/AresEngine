@@ -16,7 +16,7 @@ CTaskCommandBuffer::~CTaskCommandBuffer(void)
 
 }
 
-const CGfxCommandBufferPtr& CTaskCommandBuffer::GetCommandBuffer(void) const
+CGfxCommandBufferPtr CTaskCommandBuffer::GetCommandBuffer(void) const
 {
 	return m_ptrCommandBuffer;
 }
