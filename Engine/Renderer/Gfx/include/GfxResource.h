@@ -9,14 +9,37 @@ class CALL_API CGfxResource
 
 
 public:
-	CGfxResource(void);
-	virtual ~CGfxResource(void);
+	CGfxResource(void)
+		: refCount(0)
+	{
+		atomic_spin_init(&lock);
+	}
+	virtual ~CGfxResource(void)
+	{
+		ASSERT(refCount == 0);
+	}
 	virtual void Release(void) = 0;
 
 
+public:
+	uint32_t GetRefCount(void)
+	{
+		atomic_spin_autolock autolock(&lock);
+		return refCount;
+	}
+
 private:
-	uint32_t IncRefCount(void);
-	uint32_t DecRefCount(void);
+	uint32_t IncRefCount(void)
+	{
+		atomic_spin_autolock autolock(&lock);
+		return ++refCount;
+	}
+
+	uint32_t DecRefCount(void)
+	{
+		atomic_spin_autolock autolock(&lock);
+		return --refCount;
+	}
 
 
 private:
