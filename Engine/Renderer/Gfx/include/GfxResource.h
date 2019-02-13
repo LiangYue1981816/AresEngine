@@ -63,19 +63,12 @@ private:
 		}
 	}
 
-	virtual void FreePointer(void)
-	{
-		if (m_pPointer) {
-			((CGfxResource *)m_pPointer)->Release();
-		}
-	}
-
 public:
 	inline void Release(void)
 	{
 		if (m_pPointer) {
 			if (((CGfxResource *)m_pPointer)->DecRefCount() == 0) {
-				FreePointer();
+				((CGfxResource *)m_pPointer)->Release();
 			}
 		}
 
