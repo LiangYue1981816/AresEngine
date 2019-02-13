@@ -5,7 +5,7 @@
 class CGLES3CommandSetInstanceBufferData : public CGfxCommandBase
 {
 public:
-	CGLES3CommandSetInstanceBufferData(const CGfxMeshDrawPtr &ptrMeshDraw, const uint8_t *pInstanceBuffer, uint32_t size)
+	CGLES3CommandSetInstanceBufferData(const CGfxMeshDrawPtr ptrMeshDraw, const uint8_t *pInstanceBuffer, uint32_t size)
 		: m_ptrMeshDraw(ptrMeshDraw)
 		, m_buffer(pInstanceBuffer, pInstanceBuffer + size)
 	{

@@ -5,7 +5,7 @@
 class CGLES3CommandInvalidateFramebuffer : public CGfxCommandBase
 {
 public:
-	CGLES3CommandInvalidateFramebuffer(const CGfxFrameBufferPtr &ptrFrameBuffer, const CGfxRenderPassPtr &ptrRenderPass, int indexSubpass)
+	CGLES3CommandInvalidateFramebuffer(const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass, int indexSubpass)
 		: m_ptrFrameBuffer(ptrFrameBuffer)
 		, m_ptrRenderPass(ptrRenderPass)
 		, m_indexSubpass(indexSubpass)

@@ -64,7 +64,7 @@ void CVKTexture::Destroy(void)
 	m_transferBuffers.clear();
 }
 
-void CVKTexture::Bind(VkCommandBuffer vkCommandBuffer, CVKBufferPtr &ptrBufferTransfer)
+void CVKTexture::Bind(VkCommandBuffer vkCommandBuffer, CVKBufferPtr ptrBufferTransfer)
 {
 	if (m_transferBuffers.size()) {
 		eastl::vector<uint8_t> buffers;

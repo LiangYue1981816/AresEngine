@@ -5,7 +5,7 @@
 class CGLES3CommandBindUniformBuffer : public CGfxCommandBase
 {
 public:
-	CGLES3CommandBindUniformBuffer(const CGfxUniformBufferPtr &ptrUniformBuffer, uint32_t nameUniform)
+	CGLES3CommandBindUniformBuffer(const CGfxUniformBufferPtr ptrUniformBuffer, uint32_t nameUniform)
 		: m_ptrUniformBuffer(ptrUniformBuffer)
 		, m_nameUniform(nameUniform)
 	{

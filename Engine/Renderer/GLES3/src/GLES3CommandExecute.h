@@ -5,7 +5,7 @@
 class CGLES3CommandExecute : public CGfxCommandBase
 {
 public:
-	CGLES3CommandExecute(const CGfxCommandBufferPtr &ptrCommandBuffer)
+	CGLES3CommandExecute(const CGfxCommandBufferPtr ptrCommandBuffer)
 		: m_ptrCommandBuffer(ptrCommandBuffer)
 	{
 

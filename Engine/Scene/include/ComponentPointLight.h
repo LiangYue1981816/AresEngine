@@ -19,8 +19,8 @@ public:
 
 
 public:
-	void SetMaterial(const CGfxMaterialPtr &ptrMaterial);
-	void SetMeshDraw(const CGfxMeshPtr &ptrMesh);
+	void SetMaterial(const CGfxMaterialPtr ptrMaterial);
+	void SetMeshDraw(const CGfxMeshPtr ptrMesh);
 
 	void SetColor(float red, float green, float blue);
 	void SetAttenuation(float linear, float square, float constant);

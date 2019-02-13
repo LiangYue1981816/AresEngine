@@ -20,12 +20,12 @@ CComponentMesh::~CComponentMesh(void)
 
 }
 
-void CComponentMesh::SetMaterial(const CGfxMaterialPtr &ptrMaterial)
+void CComponentMesh::SetMaterial(const CGfxMaterialPtr ptrMaterial)
 {
 	m_ptrMaterial = ptrMaterial;
 }
 
-void CComponentMesh::SetMeshDraw(const CGfxMeshPtr &ptrMesh, int indexDraw, uint32_t instanceFormat, uint32_t instanceBinding)
+void CComponentMesh::SetMeshDraw(const CGfxMeshPtr ptrMesh, int indexDraw, uint32_t instanceFormat, uint32_t instanceBinding)
 {
 	uint32_t name = HashValueFormat("%x_%x", ptrMesh->GetName(), indexDraw);
 	m_ptrMeshDraw = GfxRenderer()->NewMeshDraw(name, ptrMesh, indexDraw, instanceFormat, instanceBinding);

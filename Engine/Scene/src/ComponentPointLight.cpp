@@ -24,12 +24,12 @@ CComponentPointLight::~CComponentPointLight(void)
 
 }
 
-void CComponentPointLight::SetMaterial(const CGfxMaterialPtr &ptrMaterial)
+void CComponentPointLight::SetMaterial(const CGfxMaterialPtr ptrMaterial)
 {
 	m_ptrMaterial = ptrMaterial;
 }
 
-void CComponentPointLight::SetMeshDraw(const CGfxMeshPtr &ptrMesh)
+void CComponentPointLight::SetMeshDraw(const CGfxMeshPtr ptrMesh)
 {
 	m_ptrMeshDraw = GfxRenderer()->NewMeshDraw(ptrMesh->GetName(), ptrMesh, 0, INSTANCE_ATTRIBUTE_TRANSFORM | INSTANCE_ATTRIBUTE_POINTLIGHT_COLOR | INSTANCE_ATTRIBUTE_POINTLIGHT_ATTENUATION, 1);
 }

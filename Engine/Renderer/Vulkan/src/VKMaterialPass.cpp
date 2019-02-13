@@ -160,7 +160,7 @@ bool CVKMaterialPass::SetTextureCubeMap(const char *szName, HANDLE hExternTextur
 	return false;
 }
 
-bool CVKMaterialPass::SetTexture2D(const char *szName, const CGfxTexture2DPtr &ptrTexture)
+bool CVKMaterialPass::SetTexture2D(const char *szName, const CGfxTexture2DPtr ptrTexture)
 {
 	uint32_t name = HashValue(szName);
 
@@ -177,7 +177,7 @@ bool CVKMaterialPass::SetTexture2D(const char *szName, const CGfxTexture2DPtr &p
 	return false;
 }
 
-bool CVKMaterialPass::SetTexture2DArray(const char *szName, const CGfxTexture2DArrayPtr &ptrTexture)
+bool CVKMaterialPass::SetTexture2DArray(const char *szName, const CGfxTexture2DArrayPtr ptrTexture)
 {
 	uint32_t name = HashValue(szName);
 
@@ -194,7 +194,7 @@ bool CVKMaterialPass::SetTexture2DArray(const char *szName, const CGfxTexture2DA
 	return false;
 }
 
-bool CVKMaterialPass::SetTextureCubeMap(const char *szName, const CGfxTextureCubeMapPtr &ptrTexture)
+bool CVKMaterialPass::SetTextureCubeMap(const char *szName, const CGfxTextureCubeMapPtr ptrTexture)
 {
 	uint32_t name = HashValue(szName);
 

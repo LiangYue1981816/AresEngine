@@ -5,7 +5,7 @@
 class CGLES3CommandBindMeshDraw : public CGfxCommandBase
 {
 public:
-	CGLES3CommandBindMeshDraw(const CGfxMeshDrawPtr &ptrMeshDraw)
+	CGLES3CommandBindMeshDraw(const CGfxMeshDrawPtr ptrMeshDraw)
 		: m_ptrMeshDraw(ptrMeshDraw)
 	{
 

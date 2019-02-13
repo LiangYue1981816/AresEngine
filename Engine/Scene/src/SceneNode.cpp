@@ -135,12 +135,12 @@ CSceneNode* CSceneNode::GetNode(uint32_t name) const
 	}
 }
 
-bool CSceneNode::AttachComponentMesh(CComponentMeshPtr &ptrComponentMesh)
+bool CSceneNode::AttachComponentMesh(CComponentMeshPtr ptrComponentMesh)
 {
 	return AttachComponent(ptrComponentMesh, m_ptrComponentMeshs);
 }
 
-bool CSceneNode::DetachComponentMesh(CComponentMeshPtr &ptrComponentMesh)
+bool CSceneNode::DetachComponentMesh(CComponentMeshPtr ptrComponentMesh)
 {
 	return DetachComponent(ptrComponentMesh, m_ptrComponentMeshs);
 }
@@ -155,12 +155,12 @@ CComponentMeshPtr CSceneNode::GetComponentMesh(uint32_t name) const
 	return GetComponent(name, m_ptrComponentMeshs);
 }
 
-bool CSceneNode::AttachComponentSkin(CComponentSkinPtr &ptrComponentSkin)
+bool CSceneNode::AttachComponentSkin(CComponentSkinPtr ptrComponentSkin)
 {
 	return AttachComponent(ptrComponentSkin, m_ptrComponentSkins);
 }
 
-bool CSceneNode::DetachComponentSkin(CComponentSkinPtr &ptrComponentSkin)
+bool CSceneNode::DetachComponentSkin(CComponentSkinPtr ptrComponentSkin)
 {
 	return DetachComponent(ptrComponentSkin, m_ptrComponentSkins);
 }
@@ -175,12 +175,12 @@ CComponentSkinPtr CSceneNode::GetComponentSkin(uint32_t name) const
 	return GetComponent(name, m_ptrComponentSkins);
 }
 
-bool CSceneNode::AttachComponentParticle(CComponentParticlePtr &ptrComponentParticle)
+bool CSceneNode::AttachComponentParticle(CComponentParticlePtr ptrComponentParticle)
 {
 	return AttachComponent(ptrComponentParticle, m_ptrComponentParticles);
 }
 
-bool CSceneNode::DetachComponentParticle(CComponentParticlePtr &ptrComponentParticle)
+bool CSceneNode::DetachComponentParticle(CComponentParticlePtr ptrComponentParticle)
 {
 	return DetachComponent(ptrComponentParticle, m_ptrComponentParticles);
 }
@@ -195,12 +195,12 @@ CComponentParticlePtr CSceneNode::GetComponentParticle(uint32_t name) const
 	return GetComponent(name, m_ptrComponentParticles);
 }
 
-bool CSceneNode::AttachComponentPointLight(CComponentPointLightPtr &ptrComponentPointLight)
+bool CSceneNode::AttachComponentPointLight(CComponentPointLightPtr ptrComponentPointLight)
 {
 	return AttachComponent(ptrComponentPointLight, m_ptrComponentPointLights);
 }
 
-bool CSceneNode::DetachComponentPointLight(CComponentPointLightPtr &ptrComponentPointLight)
+bool CSceneNode::DetachComponentPointLight(CComponentPointLightPtr ptrComponentPointLight)
 {
 	return DetachComponent(ptrComponentPointLight, m_ptrComponentPointLights);
 }

@@ -8,7 +8,7 @@ class CVKMeshDraw : public CGfxMeshDraw
 
 
 private:
-	CVKMeshDraw(CVKDevice *pDevice, CVKMeshDrawManager *pManager, uint32_t name, const CGfxMeshPtr &ptrMesh, int indexDraw, uint32_t instanceFormat, uint32_t instanceBinding);
+	CVKMeshDraw(CVKDevice *pDevice, CVKMeshDrawManager *pManager, uint32_t name, const CGfxMeshPtr ptrMesh, int indexDraw, uint32_t instanceFormat, uint32_t instanceBinding);
 	virtual ~CVKMeshDraw(void);
 	virtual void Release(void);
 
@@ -30,7 +30,7 @@ public:
 
 public:
 	bool InstanceBufferData(size_t size, const void *pBuffer);
-	void Bind(VkCommandBuffer vkCommandBuffer, CVKBufferPtr &ptrIndexBuffer, CVKBufferPtr &ptrVertexBuffer, CVKBufferPtr &ptrInstanceBuffer);
+	void Bind(VkCommandBuffer vkCommandBuffer, CVKBufferPtr ptrIndexBuffer, CVKBufferPtr ptrVertexBuffer, CVKBufferPtr ptrInstanceBuffer);
 
 
 private:

@@ -134,7 +134,7 @@ void CGfxCamera::Begin(int indexQueue)
 	m_pRenderQueue->Begin(indexQueue);
 }
 
-void CGfxCamera::Add(int indexThread, int indexQueue, const CGfxMaterialPtr &ptrMaterial, const CGfxMeshDrawPtr &ptrMeshDraw, const uint8_t *pInstanceData, uint32_t size)
+void CGfxCamera::Add(int indexThread, int indexQueue, const CGfxMaterialPtr ptrMaterial, const CGfxMeshDrawPtr ptrMeshDraw, const uint8_t *pInstanceData, uint32_t size)
 {
 	m_pRenderQueue->Add(indexThread, indexQueue, ptrMaterial, ptrMeshDraw, pInstanceData, size);
 }
@@ -144,7 +144,7 @@ void CGfxCamera::End(int indexQueue)
 	m_pRenderQueue->End(indexQueue);
 }
 
-void CGfxCamera::CmdDraw(int indexQueue, CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxUniformBufferPtr &ptrUniformBufferEngine, uint32_t namePass)
+void CGfxCamera::CmdDraw(int indexQueue, CGfxCommandBufferPtr ptrCommandBuffer, const CGfxUniformBufferPtr ptrUniformBufferEngine, uint32_t namePass)
 {
 	m_pRenderQueue->CmdDraw(indexQueue, ptrCommandBuffer, ptrUniformBufferEngine, m_pUniformCamera->GetUniformBuffer(), namePass);
 }

@@ -34,23 +34,23 @@ public:
 	CSceneNode* GetNode(uint32_t name) const;
 
 public:
-	bool AttachComponentMesh(CComponentMeshPtr &ptrComponentMesh);
-	bool DetachComponentMesh(CComponentMeshPtr &ptrComponentMesh);
+	bool AttachComponentMesh(CComponentMeshPtr ptrComponentMesh);
+	bool DetachComponentMesh(CComponentMeshPtr ptrComponentMesh);
 	void DetachComponentMeshAll(void);
 	CComponentMeshPtr GetComponentMesh(uint32_t name) const;
 
-	bool AttachComponentSkin(CComponentSkinPtr &ptrComponentSkin);
-	bool DetachComponentSkin(CComponentSkinPtr &ptrComponentSkin);
+	bool AttachComponentSkin(CComponentSkinPtr ptrComponentSkin);
+	bool DetachComponentSkin(CComponentSkinPtr ptrComponentSkin);
 	void DetachComponentSkinAll(void);
 	CComponentSkinPtr GetComponentSkin(uint32_t name) const;
 
-	bool AttachComponentParticle(CComponentParticlePtr &ptrComponentParticle);
-	bool DetachComponentParticle(CComponentParticlePtr &ptrComponentParticle);
+	bool AttachComponentParticle(CComponentParticlePtr ptrComponentParticle);
+	bool DetachComponentParticle(CComponentParticlePtr ptrComponentParticle);
 	void DetachComponentParticleAll(void);
 	CComponentParticlePtr GetComponentParticle(uint32_t name) const;
 
-	bool AttachComponentPointLight(CComponentPointLightPtr &ptrComponentPointLight);
-	bool DetachComponentPointLight(CComponentPointLightPtr &ptrComponentPointLight);
+	bool AttachComponentPointLight(CComponentPointLightPtr ptrComponentPointLight);
+	bool DetachComponentPointLight(CComponentPointLightPtr ptrComponentPointLight);
 	void DetachComponentPointLightAll(void);
 	CComponentPointLightPtr GetComponentPointLight(uint32_t name) const;
 

@@ -161,7 +161,7 @@ CGfxMeshDrawPtr CGLES3Renderer::GetMeshDraw(uint32_t name)
 	return m_pMeshDrawManager->Get(name);
 }
 
-CGfxMeshDrawPtr CGLES3Renderer::NewMeshDraw(uint32_t name, const CGfxMeshPtr &ptrMesh, int indexDraw, uint32_t instanceFormat, uint32_t instanceBinding)
+CGfxMeshDrawPtr CGLES3Renderer::NewMeshDraw(uint32_t name, const CGfxMeshPtr ptrMesh, int indexDraw, uint32_t instanceFormat, uint32_t instanceBinding)
 {
 	return m_pMeshDrawManager->Create(name, ptrMesh, indexDraw, instanceFormat, instanceBinding);
 }
@@ -236,162 +236,162 @@ CGfxCommandBufferPtr CGLES3Renderer::NewCommandBuffer(bool bMainCommandBuffer)
 	return m_pCommandBufferManager->Create(bMainCommandBuffer);
 }
 
-bool CGLES3Renderer::CmdBeginRenderPass(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxFrameBufferPtr &ptrFrameBuffer, const CGfxRenderPassPtr &ptrRenderPass)
+bool CGLES3Renderer::CmdBeginRenderPass(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass)
 {
 	return ptrCommandBuffer->CmdBeginRenderPass(ptrFrameBuffer, ptrRenderPass);
 }
 
-bool CGLES3Renderer::CmdNextSubpass(CGfxCommandBufferPtr &ptrCommandBuffer)
+bool CGLES3Renderer::CmdNextSubpass(CGfxCommandBufferPtr ptrCommandBuffer)
 {
 	return ptrCommandBuffer->CmdNextSubpass();
 }
 
-bool CGLES3Renderer::CmdEndRenderPass(CGfxCommandBufferPtr &ptrCommandBuffer)
+bool CGLES3Renderer::CmdEndRenderPass(CGfxCommandBufferPtr ptrCommandBuffer)
 {
 	return ptrCommandBuffer->CmdEndRenderPass();
 }
 
-bool CGLES3Renderer::CmdBindPipelineCompute(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxPipelineCompute *pPipelineCompute)
+bool CGLES3Renderer::CmdBindPipelineCompute(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxPipelineCompute *pPipelineCompute)
 {
 	return ptrCommandBuffer->CmdBindPipelineCompute(pPipelineCompute);
 }
 
-bool CGLES3Renderer::CmdBindPipelineGraphics(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxPipelineGraphics *pPipelineGraphics)
+bool CGLES3Renderer::CmdBindPipelineGraphics(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxPipelineGraphics *pPipelineGraphics)
 {
 	return ptrCommandBuffer->CmdBindPipelineGraphics(pPipelineGraphics);
 }
 
-bool CGLES3Renderer::CmdBindMaterialPass(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxMaterialPtr &ptrMaterial, uint32_t namePass)
+bool CGLES3Renderer::CmdBindMaterialPass(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxMaterialPtr ptrMaterial, uint32_t namePass)
 {
 	return ptrCommandBuffer->CmdBindMaterialPass(ptrMaterial, namePass);
 }
 
-bool CGLES3Renderer::CmdBindUniformBuffer(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxUniformBufferPtr &ptrUniformBuffer, uint32_t nameUniform)
+bool CGLES3Renderer::CmdBindUniformBuffer(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxUniformBufferPtr ptrUniformBuffer, uint32_t nameUniform)
 {
 	return ptrCommandBuffer->CmdBindUniformBuffer(ptrUniformBuffer, nameUniform);
 }
 
-bool CGLES3Renderer::CmdUniform1i(CGfxCommandBufferPtr &ptrCommandBuffer, const char *szName, int v0)
+bool CGLES3Renderer::CmdUniform1i(CGfxCommandBufferPtr ptrCommandBuffer, const char *szName, int v0)
 {
 	return ptrCommandBuffer->CmdUniform1i(szName, v0);
 }
 
-bool CGLES3Renderer::CmdUniform2i(CGfxCommandBufferPtr &ptrCommandBuffer, const char *szName, int v0, int v1)
+bool CGLES3Renderer::CmdUniform2i(CGfxCommandBufferPtr ptrCommandBuffer, const char *szName, int v0, int v1)
 {
 	return ptrCommandBuffer->CmdUniform2i(szName, v0, v1);
 }
 
-bool CGLES3Renderer::CmdUniform3i(CGfxCommandBufferPtr &ptrCommandBuffer, const char *szName, int v0, int v1, int v2)
+bool CGLES3Renderer::CmdUniform3i(CGfxCommandBufferPtr ptrCommandBuffer, const char *szName, int v0, int v1, int v2)
 {
 	return ptrCommandBuffer->CmdUniform3i(szName, v0, v1, v2);
 }
 
-bool CGLES3Renderer::CmdUniform4i(CGfxCommandBufferPtr &ptrCommandBuffer, const char *szName, int v0, int v1, int v2, int v3)
+bool CGLES3Renderer::CmdUniform4i(CGfxCommandBufferPtr ptrCommandBuffer, const char *szName, int v0, int v1, int v2, int v3)
 {
 	return ptrCommandBuffer->CmdUniform4i(szName, v0, v1, v2, v3);
 }
 
-bool CGLES3Renderer::CmdUniform1f(CGfxCommandBufferPtr &ptrCommandBuffer, const char *szName, float v0)
+bool CGLES3Renderer::CmdUniform1f(CGfxCommandBufferPtr ptrCommandBuffer, const char *szName, float v0)
 {
 	return ptrCommandBuffer->CmdUniform1f(szName, v0);
 }
 
-bool CGLES3Renderer::CmdUniform2f(CGfxCommandBufferPtr &ptrCommandBuffer, const char *szName, float v0, float v1)
+bool CGLES3Renderer::CmdUniform2f(CGfxCommandBufferPtr ptrCommandBuffer, const char *szName, float v0, float v1)
 {
 	return ptrCommandBuffer->CmdUniform2f(szName, v0, v1);
 }
 
-bool CGLES3Renderer::CmdUniform3f(CGfxCommandBufferPtr &ptrCommandBuffer, const char *szName, float v0, float v1, float v2)
+bool CGLES3Renderer::CmdUniform3f(CGfxCommandBufferPtr ptrCommandBuffer, const char *szName, float v0, float v1, float v2)
 {
 	return ptrCommandBuffer->CmdUniform3f(szName, v0, v1, v2);
 }
 
-bool CGLES3Renderer::CmdUniform4f(CGfxCommandBufferPtr &ptrCommandBuffer, const char *szName, float v0, float v1, float v2, float v3)
+bool CGLES3Renderer::CmdUniform4f(CGfxCommandBufferPtr ptrCommandBuffer, const char *szName, float v0, float v1, float v2, float v3)
 {
 	return ptrCommandBuffer->CmdUniform4f(szName, v0, v1, v2, v3);
 }
 
-bool CGLES3Renderer::CmdUniform1iv(CGfxCommandBufferPtr &ptrCommandBuffer, const char *szName, int count, const int *value)
+bool CGLES3Renderer::CmdUniform1iv(CGfxCommandBufferPtr ptrCommandBuffer, const char *szName, int count, const int *value)
 {
 	return ptrCommandBuffer->CmdUniform1iv(szName, count, value);
 }
 
-bool CGLES3Renderer::CmdUniform2iv(CGfxCommandBufferPtr &ptrCommandBuffer, const char *szName, int count, const int *value)
+bool CGLES3Renderer::CmdUniform2iv(CGfxCommandBufferPtr ptrCommandBuffer, const char *szName, int count, const int *value)
 {
 	return ptrCommandBuffer->CmdUniform2iv(szName, count, value);
 }
 
-bool CGLES3Renderer::CmdUniform3iv(CGfxCommandBufferPtr &ptrCommandBuffer, const char *szName, int count, const int *value)
+bool CGLES3Renderer::CmdUniform3iv(CGfxCommandBufferPtr ptrCommandBuffer, const char *szName, int count, const int *value)
 {
 	return ptrCommandBuffer->CmdUniform3iv(szName, count, value);
 }
 
-bool CGLES3Renderer::CmdUniform4iv(CGfxCommandBufferPtr &ptrCommandBuffer, const char *szName, int count, const int *value)
+bool CGLES3Renderer::CmdUniform4iv(CGfxCommandBufferPtr ptrCommandBuffer, const char *szName, int count, const int *value)
 {
 	return ptrCommandBuffer->CmdUniform4iv(szName, count, value);
 }
 
-bool CGLES3Renderer::CmdUniform1fv(CGfxCommandBufferPtr &ptrCommandBuffer, const char *szName, int count, const float *value)
+bool CGLES3Renderer::CmdUniform1fv(CGfxCommandBufferPtr ptrCommandBuffer, const char *szName, int count, const float *value)
 {
 	return ptrCommandBuffer->CmdUniform1fv(szName, count, value);
 }
 
-bool CGLES3Renderer::CmdUniform2fv(CGfxCommandBufferPtr &ptrCommandBuffer, const char *szName, int count, const float *value)
+bool CGLES3Renderer::CmdUniform2fv(CGfxCommandBufferPtr ptrCommandBuffer, const char *szName, int count, const float *value)
 {
 	return ptrCommandBuffer->CmdUniform2fv(szName, count, value);
 }
 
-bool CGLES3Renderer::CmdUniform3fv(CGfxCommandBufferPtr &ptrCommandBuffer, const char *szName, int count, const float *value)
+bool CGLES3Renderer::CmdUniform3fv(CGfxCommandBufferPtr ptrCommandBuffer, const char *szName, int count, const float *value)
 {
 	return ptrCommandBuffer->CmdUniform3fv(szName, count, value);
 }
 
-bool CGLES3Renderer::CmdUniform4fv(CGfxCommandBufferPtr &ptrCommandBuffer, const char *szName, int count, const float *value)
+bool CGLES3Renderer::CmdUniform4fv(CGfxCommandBufferPtr ptrCommandBuffer, const char *szName, int count, const float *value)
 {
 	return ptrCommandBuffer->CmdUniform4fv(szName, count, value);
 }
 
-bool CGLES3Renderer::CmdUniformMatrix2fv(CGfxCommandBufferPtr &ptrCommandBuffer, const char *szName, int count, const float *value)
+bool CGLES3Renderer::CmdUniformMatrix2fv(CGfxCommandBufferPtr ptrCommandBuffer, const char *szName, int count, const float *value)
 {
 	return ptrCommandBuffer->CmdUniformMatrix2fv(szName, count, value);
 }
 
-bool CGLES3Renderer::CmdUniformMatrix3fv(CGfxCommandBufferPtr &ptrCommandBuffer, const char *szName, int count, const float *value)
+bool CGLES3Renderer::CmdUniformMatrix3fv(CGfxCommandBufferPtr ptrCommandBuffer, const char *szName, int count, const float *value)
 {
 	return ptrCommandBuffer->CmdUniformMatrix3fv(szName, count, value);
 }
 
-bool CGLES3Renderer::CmdUniformMatrix4fv(CGfxCommandBufferPtr &ptrCommandBuffer, const char *szName, int count, const float *value)
+bool CGLES3Renderer::CmdUniformMatrix4fv(CGfxCommandBufferPtr ptrCommandBuffer, const char *szName, int count, const float *value)
 {
 	return ptrCommandBuffer->CmdUniformMatrix4fv(szName, count, value);
 }
 
-bool CGLES3Renderer::CmdClearDepth(CGfxCommandBufferPtr &ptrCommandBuffer, float depth)
+bool CGLES3Renderer::CmdClearDepth(CGfxCommandBufferPtr ptrCommandBuffer, float depth)
 {
 	return ptrCommandBuffer->CmdClearDepth(depth);
 }
 
-bool CGLES3Renderer::CmdClearColor(CGfxCommandBufferPtr &ptrCommandBuffer, float red, float green, float blue, float alpha)
+bool CGLES3Renderer::CmdClearColor(CGfxCommandBufferPtr ptrCommandBuffer, float red, float green, float blue, float alpha)
 {
 	return ptrCommandBuffer->CmdClearColor(red, green, blue, alpha);
 }
 
-bool CGLES3Renderer::CmdSetScissor(CGfxCommandBufferPtr &ptrCommandBuffer, int x, int y, int width, int height)
+bool CGLES3Renderer::CmdSetScissor(CGfxCommandBufferPtr ptrCommandBuffer, int x, int y, int width, int height)
 {
 	return ptrCommandBuffer->CmdSetScissor(x, y, width, height);
 }
 
-bool CGLES3Renderer::CmdSetViewport(CGfxCommandBufferPtr &ptrCommandBuffer, int x, int y, int width, int height)
+bool CGLES3Renderer::CmdSetViewport(CGfxCommandBufferPtr ptrCommandBuffer, int x, int y, int width, int height)
 {
 	return ptrCommandBuffer->CmdSetViewport(x, y, width, height);
 }
 
-bool CGLES3Renderer::CmdSetInstanceBufferData(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxMeshDrawPtr &ptrMeshDraw, const uint8_t *pInstanceBuffer, uint32_t size)
+bool CGLES3Renderer::CmdSetInstanceBufferData(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxMeshDrawPtr ptrMeshDraw, const uint8_t *pInstanceBuffer, uint32_t size)
 {
 	return ptrCommandBuffer->CmdSetInstanceBufferData(ptrMeshDraw, pInstanceBuffer, size);
 }
 
-bool CGLES3Renderer::CmdDrawInstance(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxMeshDrawPtr &ptrMeshDraw, int instanceCount)
+bool CGLES3Renderer::CmdDrawInstance(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxMeshDrawPtr ptrMeshDraw, int instanceCount)
 {
 	if (ptrCommandBuffer->CmdBindMeshDraw(ptrMeshDraw) == false) {
 		return false;
@@ -404,7 +404,7 @@ bool CGLES3Renderer::CmdDrawInstance(CGfxCommandBufferPtr &ptrCommandBuffer, con
 	return true;
 }
 
-bool CGLES3Renderer::CmdDrawIndirect(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxMeshDrawPtr &ptrMeshDraw)
+bool CGLES3Renderer::CmdDrawIndirect(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxMeshDrawPtr ptrMeshDraw)
 {
 	if (ptrCommandBuffer->CmdBindMeshDraw(ptrMeshDraw) == false) {
 		return false;
@@ -417,32 +417,32 @@ bool CGLES3Renderer::CmdDrawIndirect(CGfxCommandBufferPtr &ptrCommandBuffer, con
 	return true;
 }
 
-bool CGLES3Renderer::CmdDrawScreen(CGfxCommandBufferPtr &ptrCommandBuffer)
+bool CGLES3Renderer::CmdDrawScreen(CGfxCommandBufferPtr ptrCommandBuffer)
 {
 	return true;
 }
 
-bool CGLES3Renderer::CmdExecute(CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxCommandBufferPtr &ptrSecondaryCommandBuffer)
+bool CGLES3Renderer::CmdExecute(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxCommandBufferPtr ptrSecondaryCommandBuffer)
 {
 	return ptrCommandBuffer->CmdExecute(ptrSecondaryCommandBuffer);
 }
 
-bool CGLES3Renderer::CmdPresent(CGfxCommandBufferPtr &ptrCommandBuffer)
+bool CGLES3Renderer::CmdPresent(CGfxCommandBufferPtr ptrCommandBuffer)
 {
 	return ptrCommandBuffer->CmdPresent();
 }
 
-bool CGLES3Renderer::CmdPushDebugGroup(CGfxCommandBufferPtr &ptrCommandBuffer, const char *szMessage)
+bool CGLES3Renderer::CmdPushDebugGroup(CGfxCommandBufferPtr ptrCommandBuffer, const char *szMessage)
 {
 	return ptrCommandBuffer->CmdPushDebugGroup(szMessage);
 }
 
-bool CGLES3Renderer::CmdPopDebugGroup(CGfxCommandBufferPtr &ptrCommandBuffer)
+bool CGLES3Renderer::CmdPopDebugGroup(CGfxCommandBufferPtr ptrCommandBuffer)
 {
 	return ptrCommandBuffer->CmdPopDebugGroup();
 }
 
-void CGLES3Renderer::Submit(const CGfxCommandBufferPtr &ptrCommandBuffer)
+void CGLES3Renderer::Submit(const CGfxCommandBufferPtr ptrCommandBuffer)
 {
 	ptrCommandBuffer->Execute();
 }

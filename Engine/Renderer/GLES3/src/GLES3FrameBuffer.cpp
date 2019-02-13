@@ -39,7 +39,7 @@ int CGLES3FrameBuffer::GetHeight(void) const
 	return m_height;
 }
 
-bool CGLES3FrameBuffer::SetAttachmentTexture(int indexAttachment, CGfxRenderTexturePtr &ptrAttachmentTexture)
+bool CGLES3FrameBuffer::SetAttachmentTexture(int indexAttachment, CGfxRenderTexturePtr ptrAttachmentTexture)
 {
 	if (ptrAttachmentTexture->GetWidth() == m_width && ptrAttachmentTexture->GetHeight() == m_height &&
 		indexAttachment >= 0 && indexAttachment < (int)m_ptrAttachmentTextures.size()) {
@@ -61,7 +61,7 @@ CGfxRenderTexturePtr CGLES3FrameBuffer::GetAttachmentTexture(int indexAttachment
 	}
 }
 
-bool CGLES3FrameBuffer::Create(const CGfxRenderPassPtr &ptrRenderPass)
+bool CGLES3FrameBuffer::Create(const CGfxRenderPassPtr ptrRenderPass)
 {
 	Destroy();
 

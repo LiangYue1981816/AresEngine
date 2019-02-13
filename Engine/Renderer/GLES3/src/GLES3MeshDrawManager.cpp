@@ -30,7 +30,7 @@ CGLES3MeshDraw* CGLES3MeshDrawManager::Get(uint32_t name)
 	}
 }
 
-CGLES3MeshDraw* CGLES3MeshDrawManager::Create(uint32_t name, const CGfxMeshPtr &ptrMesh, int indexDraw, uint32_t instanceFormat, uint32_t instanceBinding)
+CGLES3MeshDraw* CGLES3MeshDrawManager::Create(uint32_t name, const CGfxMeshPtr ptrMesh, int indexDraw, uint32_t instanceFormat, uint32_t instanceBinding)
 {
 	mutex_autolock autolock(&lock);
 	{

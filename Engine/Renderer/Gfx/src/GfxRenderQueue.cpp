@@ -1,7 +1,7 @@
 #include "GfxHeader.h"
 
 
-CTaskCommandBuffer::CTaskCommandBuffer(int indexQueue, const CGfxUniformBufferPtr &ptrUniformBufferEngine, const CGfxUniformBufferPtr &ptrUniformBufferCamera, CGfxPipelineGraphics *pPipeline, uint32_t namePass)
+CTaskCommandBuffer::CTaskCommandBuffer(int indexQueue, const CGfxUniformBufferPtr ptrUniformBufferEngine, const CGfxUniformBufferPtr ptrUniformBufferCamera, CGfxPipelineGraphics *pPipeline, uint32_t namePass)
 	: m_indexQueue(indexQueue)
 	, m_ptrUniformBufferEngine(ptrUniformBufferEngine)
 	, m_ptrUniformBufferCamera(ptrUniformBufferCamera)
@@ -56,7 +56,7 @@ void CGfxRenderQueue::Begin(int indexQueue)
 	Clear(indexQueue);
 }
 
-void CGfxRenderQueue::Add(int indexThread, int indexQueue, const CGfxMaterialPtr &ptrMaterial, const CGfxMeshDrawPtr &ptrMeshDraw, const uint8_t *pInstanceData, uint32_t size)
+void CGfxRenderQueue::Add(int indexThread, int indexQueue, const CGfxMaterialPtr ptrMaterial, const CGfxMeshDrawPtr ptrMeshDraw, const uint8_t *pInstanceData, uint32_t size)
 {
 	if (indexThread >= 0 && indexThread < THREAD_COUNT) {
 		eastl::vector<uint8_t> &meshDrawInstanceBuffer = m_materialMeshDrawQueueThreads[indexThread][indexQueue][ptrMaterial][ptrMeshDraw];
@@ -82,7 +82,7 @@ void CGfxRenderQueue::End(int indexQueue)
 	}
 }
 
-void CGfxRenderQueue::CmdDraw(int indexQueue, CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxUniformBufferPtr &ptrUniformBufferEngine, const CGfxUniformBufferPtr &ptrUniformBufferCamera, uint32_t namePass)
+void CGfxRenderQueue::CmdDraw(int indexQueue, CGfxCommandBufferPtr ptrCommandBuffer, const CGfxUniformBufferPtr ptrUniformBufferEngine, const CGfxUniformBufferPtr ptrUniformBufferCamera, uint32_t namePass)
 {
 	m_tasks[indexQueue].clear();
 	m_pipelineMaterialQueue[indexQueue].clear();
@@ -115,7 +115,7 @@ void CGfxRenderQueue::CmdDraw(int indexQueue, CGfxCommandBufferPtr &ptrCommandBu
 	}
 }
 
-void CGfxRenderQueue::CmdDrawThread(int indexQueue, CGfxCommandBufferPtr &ptrCommandBuffer, const CGfxUniformBufferPtr &ptrUniformBufferEngine, const CGfxUniformBufferPtr &ptrUniformBufferCamera, CGfxPipelineGraphics *pPipeline, uint32_t namePass)
+void CGfxRenderQueue::CmdDrawThread(int indexQueue, CGfxCommandBufferPtr ptrCommandBuffer, const CGfxUniformBufferPtr ptrUniformBufferEngine, const CGfxUniformBufferPtr ptrUniformBufferCamera, CGfxPipelineGraphics *pPipeline, uint32_t namePass)
 {
 	static const uint32_t nameUniformEngine = HashValue(UNIFORM_ENGINE_NAME);
 	static const uint32_t nameUniformCamera = HashValue(UNIFORM_CAMERA_NAME);

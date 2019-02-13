@@ -1,7 +1,7 @@
 #include "VKRenderer.h"
 
 
-CVKMeshDraw::CVKMeshDraw(CVKDevice *pDevice, CVKMeshDrawManager *pManager, uint32_t name, const CGfxMeshPtr &ptrMesh, int indexDraw, uint32_t instanceFormat, uint32_t instanceBinding)
+CVKMeshDraw::CVKMeshDraw(CVKDevice *pDevice, CVKMeshDrawManager *pManager, uint32_t name, const CGfxMeshPtr ptrMesh, int indexDraw, uint32_t instanceFormat, uint32_t instanceBinding)
 	: CGfxMeshDraw(name, ptrMesh, indexDraw, instanceFormat, instanceBinding)
 	, m_name(name)
 	, m_pDevice(pDevice)
@@ -137,7 +137,7 @@ bool CVKMeshDraw::InstanceBufferData(size_t size, const void *pBuffer)
 	}
 }
 
-void CVKMeshDraw::Bind(VkCommandBuffer vkCommandBuffer, CVKBufferPtr &ptrIndexBuffer, CVKBufferPtr &ptrVertexBuffer, CVKBufferPtr &ptrInstanceBuffer)
+void CVKMeshDraw::Bind(VkCommandBuffer vkCommandBuffer, CVKBufferPtr ptrIndexBuffer, CVKBufferPtr ptrVertexBuffer, CVKBufferPtr ptrInstanceBuffer)
 {
 	m_pIndexBuffer->Bind(vkCommandBuffer, 0, ptrIndexBuffer);
 	m_pVertexBuffer->Bind(vkCommandBuffer, 0, ptrVertexBuffer);

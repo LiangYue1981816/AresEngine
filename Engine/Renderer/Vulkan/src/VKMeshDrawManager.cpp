@@ -31,7 +31,7 @@ CVKMeshDraw* CVKMeshDrawManager::Get(uint32_t name)
 	}
 }
 
-CVKMeshDraw* CVKMeshDrawManager::Create(uint32_t name, const CGfxMeshPtr &ptrMesh, int indexDraw, uint32_t instanceFormat, uint32_t instanceBinding)
+CVKMeshDraw* CVKMeshDrawManager::Create(uint32_t name, const CGfxMeshPtr ptrMesh, int indexDraw, uint32_t instanceFormat, uint32_t instanceBinding)
 {
 	mutex_autolock autolock(&lock);
 	{

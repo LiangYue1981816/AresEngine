@@ -35,7 +35,7 @@ CVKDescriptorLayout* CVKDescriptorSet::GetDescriptorLayout(void) const
 	return m_pDescriptorLayout;
 }
 
-bool CVKDescriptorSet::SetTexture2D(uint32_t name, const CGfxTexture2DPtr &ptrTexture, const CGfxSampler *pSampler)
+bool CVKDescriptorSet::SetTexture2D(uint32_t name, const CGfxTexture2DPtr ptrTexture, const CGfxSampler *pSampler)
 {
 	if (m_pDescriptorLayout->IsTextureValid(name) && m_imageDescriptors.find(name) == m_imageDescriptors.end()) {
 		m_imageDescriptors[name].ptrTexture2D = ptrTexture;
@@ -49,7 +49,7 @@ bool CVKDescriptorSet::SetTexture2D(uint32_t name, const CGfxTexture2DPtr &ptrTe
 	}
 }
 
-bool CVKDescriptorSet::SetTexture2DArray(uint32_t name, const CGfxTexture2DArrayPtr &ptrTexture, const CGfxSampler *pSampler)
+bool CVKDescriptorSet::SetTexture2DArray(uint32_t name, const CGfxTexture2DArrayPtr ptrTexture, const CGfxSampler *pSampler)
 {
 	if (m_pDescriptorLayout->IsTextureValid(name) && m_imageDescriptors.find(name) == m_imageDescriptors.end()) {
 		m_imageDescriptors[name].ptrTexture2DArray = ptrTexture;
@@ -63,7 +63,7 @@ bool CVKDescriptorSet::SetTexture2DArray(uint32_t name, const CGfxTexture2DArray
 	}
 }
 
-bool CVKDescriptorSet::SetTextureCubeMap(uint32_t name, const CGfxTextureCubeMapPtr &ptrTexture, const CGfxSampler *pSampler)
+bool CVKDescriptorSet::SetTextureCubeMap(uint32_t name, const CGfxTextureCubeMapPtr ptrTexture, const CGfxSampler *pSampler)
 {
 	if (m_pDescriptorLayout->IsTextureValid(name) && m_imageDescriptors.find(name) == m_imageDescriptors.end()) {
 		m_imageDescriptors[name].ptrTextureCubeMap = ptrTexture;
@@ -77,7 +77,7 @@ bool CVKDescriptorSet::SetTextureCubeMap(uint32_t name, const CGfxTextureCubeMap
 	}
 }
 
-bool CVKDescriptorSet::SetRenderTexture(uint32_t name, const CGfxRenderTexturePtr &ptrRenderTexture, const CGfxSampler *pSampler)
+bool CVKDescriptorSet::SetRenderTexture(uint32_t name, const CGfxRenderTexturePtr ptrRenderTexture, const CGfxSampler *pSampler)
 {
 	if (m_pDescriptorLayout->IsTextureValid(name) && m_imageDescriptors.find(name) == m_imageDescriptors.end()) {
 		m_imageDescriptors[name].ptrRenderTexture = ptrRenderTexture;
@@ -91,7 +91,7 @@ bool CVKDescriptorSet::SetRenderTexture(uint32_t name, const CGfxRenderTexturePt
 	}
 }
 
-bool CVKDescriptorSet::SetUniformBuffer(uint32_t name, const CGfxUniformBufferPtr &ptrUniformBuffer)
+bool CVKDescriptorSet::SetUniformBuffer(uint32_t name, const CGfxUniformBufferPtr ptrUniformBuffer)
 {
 	if (m_pDescriptorLayout->IsUniformBlockValid(name) && m_bufferDescriptors.find(name) == m_bufferDescriptors.end()) {
 		m_bufferDescriptors[name].ptrUniformBuffer = ptrUniformBuffer;

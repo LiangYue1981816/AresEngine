@@ -6,7 +6,7 @@
 #include "FileManager.h"
 
 
-static bool InternalLoadDraw(TiXmlNode *pNode, const CGfxMeshPtr &ptrMesh, CSceneNode *pCurrentSceneNode, uint32_t instanceFormat, uint32_t vertexBinding, uint32_t instanceBinding)
+static bool InternalLoadDraw(TiXmlNode *pNode, const CGfxMeshPtr ptrMesh, CSceneNode *pCurrentSceneNode, uint32_t instanceFormat, uint32_t vertexBinding, uint32_t instanceBinding)
 {
 	int err = 0;
 
@@ -30,7 +30,7 @@ ERR:
 	return false;
 }
 
-static bool InternalLoadNode(TiXmlNode *pNode, const CGfxMeshPtr &ptrMesh, CSceneNode *pParentSceneNode, uint32_t instanceFormat, uint32_t vertexBinding, uint32_t instanceBinding)
+static bool InternalLoadNode(TiXmlNode *pNode, const CGfxMeshPtr ptrMesh, CSceneNode *pParentSceneNode, uint32_t instanceFormat, uint32_t vertexBinding, uint32_t instanceBinding)
 {
 	int err = 0;
 	CSceneNode *pCurrentSceneNode = nullptr;

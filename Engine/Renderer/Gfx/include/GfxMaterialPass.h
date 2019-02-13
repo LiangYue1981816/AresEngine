@@ -25,9 +25,9 @@ public:
 	virtual bool SetTexture2D(const char *szName, HANDLE hExternTexture) = 0;
 	virtual bool SetTexture2DArray(const char *szName, HANDLE hExternTexture) = 0;
 	virtual bool SetTextureCubeMap(const char *szName, HANDLE hExternTexture) = 0;
-	virtual bool SetTexture2D(const char *szName, const CGfxTexture2DPtr &ptrTexture) = 0;
-	virtual bool SetTexture2DArray(const char *szName, const CGfxTexture2DArrayPtr &ptrTexture) = 0;
-	virtual bool SetTextureCubeMap(const char *szName, const CGfxTextureCubeMapPtr &ptrTexture) = 0;
+	virtual bool SetTexture2D(const char *szName, const CGfxTexture2DPtr ptrTexture) = 0;
+	virtual bool SetTexture2DArray(const char *szName, const CGfxTexture2DArrayPtr ptrTexture) = 0;
+	virtual bool SetTextureCubeMap(const char *szName, const CGfxTextureCubeMapPtr ptrTexture) = 0;
 	virtual bool SetTexture2D(const char *szName, const char *szFileName) = 0;
 	virtual bool SetTexture2DArray(const char *szName, const char *szFileName) = 0;
 	virtual bool SetTextureCubeMap(const char *szName, const char *szFileName) = 0;
