@@ -43,6 +43,7 @@ public:
 
 
 private:
+	bool m_bDirty;
 	eastl::unordered_map<uint32_t, DescriptorImageInfo> m_imageDescriptors;
 	eastl::unordered_map<uint32_t, DescriptorBufferInfo> m_bufferDescriptors;
 
