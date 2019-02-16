@@ -123,6 +123,11 @@ void CRenderSolutionDefault::SetEnableMSAA(bool bEnable, int samples)
 
 void CRenderSolutionDefault::Render(int indexQueue)
 {
+	// Uniform
+	{
+		m_pUniformEngine->SetTime(Engine()->GetTotalTime(), Engine()->GetDeltaTime());
+	}
+
 	// Update logic & camera
 	{
 		SceneManager()->UpdateLogic(Engine()->GetTotalTime(), Engine()->GetDeltaTime());
@@ -152,8 +157,6 @@ void CRenderSolutionDefault::Render(int indexQueue)
 
 void CRenderSolutionDefault::Present(int indexQueue)
 {
-	m_pUniformEngine->SetTime(Engine()->GetTotalTime(), Engine()->GetDeltaTime());
-
 	m_pMainCamera->Apply();
 	m_pShadowCamera->Apply();
 	m_pUniformEngine->Apply();
