@@ -17,8 +17,18 @@ CRenderSolutionDefault::~CRenderSolutionDefault(void)
 
 void CRenderSolutionDefault::CreateFrameBuffer(void)
 {
+	const GfxPixelFormat formatDepthStencils[] = {
+		GFX_PIXELFORMAT_D24_UNORM_S8_UINT_PACK32,
+		GFX_PIXELFORMAT_D32_SFLOAT_S8_UINT_PACK64,
+		GFX_PIXELFORMAT_D16_UNORM_S8_UINT_PACK32,
+	};
+
 	m_ptrDepthStencilTexture = GfxRenderer()->NewRenderTexture(HashValue("DepthStencilTexture"));
-	m_ptrDepthStencilTexture->Create(GFX_PIXELFORMAT_D24_UNORM_S8_UINT_PACK32, GfxRenderer()->GetSwapChain()->GetWidth(), GfxRenderer()->GetSwapChain()->GetHeight());
+	for (int indexFormat = 0; indexFormat < sizeof(formatDepthStencils) / sizeof(GfxPixelFormat); indexFormat++) {
+		if (m_ptrDepthStencilTexture->Create(formatDepthStencils[indexFormat], GfxRenderer()->GetSwapChain()->GetWidth(), GfxRenderer()->GetSwapChain()->GetHeight())) {
+			break;
+		}
+	}
 
 	for (int index = 0; index < CGfxSwapChain::SWAPCHAIN_FRAME_COUNT; index++) {
 		m_ptrColorTextures[index] = GfxRenderer()->GetSwapChain()->GetFrameTexture(index);
@@ -59,11 +69,21 @@ void CRenderSolutionDefault::DestroyFrameBuffer(void)
 
 void CRenderSolutionDefault::CreateFrameBufferMSAA(int samples)
 {
+	const GfxPixelFormat formatDepthStencils[] = {
+		GFX_PIXELFORMAT_D24_UNORM_S8_UINT_PACK32,
+		GFX_PIXELFORMAT_D32_SFLOAT_S8_UINT_PACK64,
+		GFX_PIXELFORMAT_D16_UNORM_S8_UINT_PACK32,
+	};
+
 	m_ptrColorTextureMSAA = GfxRenderer()->NewRenderTexture(HashValue("ColorTextureMSAA"));
 	m_ptrColorTextureMSAA->Create(GFX_PIXELFORMAT_RGBA8_UNORM_PACK8, GfxRenderer()->GetSwapChain()->GetWidth(), GfxRenderer()->GetSwapChain()->GetHeight(), samples);
 
 	m_ptrDepthStencilTextureMSAA = GfxRenderer()->NewRenderTexture(HashValue("DepthStencilTextureMSAA"));
-	m_ptrDepthStencilTextureMSAA->Create(GFX_PIXELFORMAT_D24_UNORM_S8_UINT_PACK32, GfxRenderer()->GetSwapChain()->GetWidth(), GfxRenderer()->GetSwapChain()->GetHeight(), samples);
+	for (int indexFormat = 0; indexFormat < sizeof(formatDepthStencils) / sizeof(GfxPixelFormat); indexFormat++) {
+		if (m_ptrDepthStencilTextureMSAA->Create(formatDepthStencils[indexFormat], GfxRenderer()->GetSwapChain()->GetWidth(), GfxRenderer()->GetSwapChain()->GetHeight(), samples)) {
+			break;
+		}
+	}
 
 	for (int index = 0; index < CGfxSwapChain::SWAPCHAIN_FRAME_COUNT; index++) {
 		m_ptrColorTextures[index] = GfxRenderer()->GetSwapChain()->GetFrameTexture(index);
