@@ -38,15 +38,7 @@ bool CGLES3Shader::Create(const uint32_t *words, size_t numWords, shader_kind ki
 	Destroy();
 	{
 		do {
-			spirv_cross::CompilerGLSL::Options options;
-			options.version = 310;
-			options.es = true;
-			options.vertex.fixup_clipspace = false;
-
-			spirv_cross::CompilerGLSL compiler(words, numWords);
-			compiler.set_options(options);
-
-			const std::string strSource = compiler.compile();
+			const std::string strSource = m_spriv.Create(words, numWords, 310);
 			const char *szSource = strSource.c_str();
 
 #ifdef DEBUG
@@ -57,7 +49,7 @@ bool CGLES3Shader::Create(const uint32_t *words, size_t numWords, shader_kind ki
 			m_kind = kind;
 			m_program = glCreateShaderProgramv(glGetShaderType(kind), 1, &szSource);
 			if (m_program == 0) break;
-			if (CreateLayouts(&compiler) == false) break;
+			if (CreateLayouts() == false) break;
 
 			return true;
 		} while (false);
@@ -80,35 +72,27 @@ void CGLES3Shader::Destroy(void)
 	m_sampledImageLocations.clear();
 }
 
-bool CGLES3Shader::CreateLayouts(const spirv_cross::CompilerGLSL *pShaderCompiler)
+bool CGLES3Shader::CreateLayouts(void)
 {
-	const spirv_cross::ShaderResources shaderResources = pShaderCompiler->get_shader_resources();
+	const eastl::unordered_map<eastl::string, PushConstantRange> &pushConstantRanges = m_spriv.GetPushConstantRanges();
+	const eastl::unordered_map<eastl::string, DescriptorSetBinding> &uniformBlockBindings = m_spriv.GetUniformBlockBindings();
+	const eastl::unordered_map<eastl::string, DescriptorSetBinding> &sampledImageBindings = m_spriv.GetSampledImageBindings();
+	const eastl::unordered_map<eastl::string, DescriptorSetBinding> &inputAttachmentBindings = m_spriv.GetInputAttachmentBindings();
 
-	for (const auto &itPushConstant : shaderResources.push_constant_buffers) {
-		const std::vector<spirv_cross::BufferRange> ranges = pShaderCompiler->get_active_buffer_ranges(itPushConstant.id);
-		for (uint32_t index = 0; index < ranges.size(); index++) {
-			const std::string member = pShaderCompiler->get_member_name(itPushConstant.base_type_id, ranges[index].index);
-			const std::string name = itPushConstant.name + "." + member;
-			SetUniformLocation(name.c_str());
-		}
+	for (const auto &itPushConstant : pushConstantRanges) {
+		SetUniformLocation(itPushConstant.first.c_str());
 	}
 
-	for (const auto &itUniform : shaderResources.uniform_buffers) {
-		if (pShaderCompiler->get_type(itUniform.base_type_id).basetype == spirv_cross::SPIRType::Struct) {
-			SetUniformBlockBinding(itUniform.name.c_str(), pShaderCompiler->get_decoration(itUniform.id, spv::DecorationBinding));
-		}
+	for (const auto &itUniform : uniformBlockBindings) {
+		SetUniformBlockBinding(itUniform.first.c_str(), itUniform.second.binding);
 	}
 
-	for (const auto &itSampledImage : shaderResources.sampled_images) {
-		if (pShaderCompiler->get_type(itSampledImage.base_type_id).basetype == spirv_cross::SPIRType::SampledImage) {
-			SetSampledImageLocation(itSampledImage.name.c_str());
-		}
+	for (const auto &itSampledImage : sampledImageBindings) {
+		SetSampledImageLocation(itSampledImage.first.c_str());
 	}
 
-	for (const auto &itSubpassInput : shaderResources.subpass_inputs) {
-		if (pShaderCompiler->get_type(itSubpassInput.base_type_id).basetype == spirv_cross::SPIRType::Image) {
-			SetSampledImageLocation(itSubpassInput.name.c_str());
-		}
+	for (const auto &itInputAttachment : inputAttachmentBindings) {
+		SetSampledImageLocation(itInputAttachment.first.c_str());
 	}
 
 	return true;

@@ -28,7 +28,7 @@ public:
 	void Destroy(void);
 
 private:
-	bool CreateLayouts(const spirv_cross::CompilerGLSL *pShaderCompiler);
+	bool CreateLayouts(void);
 	void SetUniformLocation(const char *szName);
 	void SetUniformBlockBinding(const char *szName, uint32_t binding);
 	void SetSampledImageLocation(const char *szName);
@@ -72,6 +72,7 @@ private:
 	uint32_t m_name;
 
 private:
+	CGfxSprivCross m_spriv;
 	eastl::unordered_map<uint32_t, uint32_t> m_uniformLocations;      // [name, location]
 	eastl::unordered_map<uint32_t, uint32_t> m_uniformBlockBindings;  // [name, binding]
 	eastl::unordered_map<uint32_t, uint32_t> m_sampledImageLocations; // [name, location]
