@@ -238,6 +238,7 @@
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxResourceManager.h" />
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxSampler.h" />
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxShader.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxSprivCross.h" />
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxSwapChain.h" />
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxTexture2D.h" />
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxTexture2DArray.h" />
@@ -477,6 +478,7 @@
     <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxRenderQueue.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxResource.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxResourceManager.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxSprivCross.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxUniformCamera.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxUniformEngine.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxUniformMat4.cpp" />

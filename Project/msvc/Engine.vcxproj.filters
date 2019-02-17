@@ -930,6 +930,9 @@
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VkDescriptorSetManager.h">
       <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxSprivCross.h">
+      <Filter>Engine\Renderer\Gfx\Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Engine\ThirdParty\eastl\source\allocator_eastl.cpp">
@@ -1501,6 +1504,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VkDescriptorSetManager.cpp">
       <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxSprivCross.cpp">
+      <Filter>Engine\Renderer\Gfx\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
