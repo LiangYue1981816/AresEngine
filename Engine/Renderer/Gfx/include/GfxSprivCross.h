@@ -24,6 +24,7 @@ public:
 
 public:
 	const eastl::string& GetSource(void) const;
+	const eastl::vector<eastl::string>& GetVertexAttributes(void) const;
 	const eastl::unordered_map<eastl::string, PushConstantRange>& GetPushConstantRanges(void) const;
 	const eastl::unordered_map<eastl::string, DescriptorSetBinding>& GetUniformBlockBindings(void) const;
 	const eastl::unordered_map<eastl::string, DescriptorSetBinding>& GetSampledImageBindings(void) const;
@@ -32,6 +33,7 @@ public:
 
 private:
 	eastl::string m_source;
+	eastl::vector<eastl::string> m_vertexAttributes;
 	eastl::unordered_map<eastl::string, PushConstantRange> m_pushConstantRanges;
 	eastl::unordered_map<eastl::string, DescriptorSetBinding> m_uniformBlockBindings;
 	eastl::unordered_map<eastl::string, DescriptorSetBinding> m_sampledImageBindings;
