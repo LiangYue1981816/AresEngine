@@ -20,7 +20,7 @@ public:
 
 public:
 	uint32_t GetKind(void) const;
-	const spirv_cross::CompilerGLSL* GetShaderCompiler(void) const;
+	const CGfxSprivCross& GetSprivCross(void) const;
 
 public:
 	bool Create(const uint32_t *words, size_t numWords, shader_kind kind);

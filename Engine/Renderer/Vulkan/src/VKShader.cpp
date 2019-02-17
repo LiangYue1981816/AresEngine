@@ -32,6 +32,11 @@ uint32_t CVKShader::GetKind(void) const
 	return m_kind;
 }
 
+const CGfxSprivCross& CVKShader::GetSprivCross(void) const
+{
+	return m_spriv;
+}
+
 bool CVKShader::Create(const uint32_t *words, size_t numWords, shader_kind kind)
 {
 	Destroy();
