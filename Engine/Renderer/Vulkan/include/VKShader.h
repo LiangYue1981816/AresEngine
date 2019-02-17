@@ -38,7 +38,7 @@ private:
 	VkShaderModule m_vkShader;
 
 private:
-	spirv_cross::CompilerGLSL *m_pShaderCompiler;
+	CGfxSprivCross m_spriv;
 
 private:
 	CVKDevice *m_pDevice;

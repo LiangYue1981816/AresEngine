@@ -8,7 +8,6 @@ CVKShader::CVKShader(CVKDevice *pDevice, uint32_t name)
 
 	, m_kind(-1)
 	, m_vkShader(VK_NULL_HANDLE)
-	, m_pShaderCompiler(nullptr)
 {
 
 }
@@ -33,11 +32,6 @@ uint32_t CVKShader::GetKind(void) const
 	return m_kind;
 }
 
-const spirv_cross::CompilerGLSL* CVKShader::GetShaderCompiler(void) const
-{
-	return m_pShaderCompiler;
-}
-
 bool CVKShader::Create(const uint32_t *words, size_t numWords, shader_kind kind)
 {
 	Destroy();
@@ -51,7 +45,7 @@ bool CVKShader::Create(const uint32_t *words, size_t numWords, shader_kind kind)
 	CALL_VK_FUNCTION_RETURN_BOOL(vkCreateShaderModule(m_pDevice->GetDevice(), &createInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkShader));
 
 	m_kind = kind;
-	m_pShaderCompiler = new spirv_cross::CompilerGLSL(words, numWords);
+	m_spriv.Create(words, numWords, 310);
 
 	return true;
 }
@@ -62,13 +56,8 @@ void CVKShader::Destroy(void)
 		vkDestroyShaderModule(m_pDevice->GetDevice(), m_vkShader, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
 	}
 
-	if (m_pShaderCompiler) {
-		delete m_pShaderCompiler;
-	}
-
 	m_kind = -1;
 	m_vkShader = VK_NULL_HANDLE;
-	m_pShaderCompiler = nullptr;
 }
 
 bool CVKShader::IsValid(void) const
