@@ -97,17 +97,16 @@ bool CVKPipeline::CreateVertexInputState(eastl::vector<VkVertexInputBindingDescr
 	uint32_t vertexFormat = 0;
 	uint32_t instanceFormat = 0;
 
-	const spirv_cross::CompilerGLSL *pShaderCompiler = m_pShaders[vertex_shader]->GetShaderCompiler();
-	const spirv_cross::ShaderResources shaderResources = pShaderCompiler->get_shader_resources();
+	const eastl::vector<eastl::string> &vertexAttributes = m_pShaders[vertex_shader]->GetSprivCross().GetVertexAttributes();
 
-	for (const auto &itInput : shaderResources.stage_inputs) {
-		vertexFormat |= GetVertexAttribute(itInput.name.c_str());
-		instanceFormat |= GetInstanceAttribute(itInput.name.c_str());
+	for (const auto &itVertexAttribute : vertexAttributes) {
+		vertexFormat |= GetVertexAttribute(itVertexAttribute.c_str());
+		instanceFormat |= GetInstanceAttribute(itVertexAttribute.c_str());
 	}
 
 	if (vertexFormat || instanceFormat) {
-		for (const auto &itInput : shaderResources.stage_inputs) {
-			if (uint32_t attribute = GetVertexAttribute(itInput.name.c_str())) {
+		for (const auto &itVertexAttribute : vertexAttributes) {
+			if (uint32_t attribute = GetVertexAttribute(itVertexAttribute.c_str())) {
 				VkVertexInputAttributeDescription inputAttributeDescription = {};
 				inputAttributeDescription.binding = vertexBinding;
 				inputAttributeDescription.location = GetVertexAttributeLocation(attribute);
@@ -116,7 +115,7 @@ bool CVKPipeline::CreateVertexInputState(eastl::vector<VkVertexInputBindingDescr
 				inputAttributeDescriptions.emplace_back(inputAttributeDescription);
 			}
 
-			if (uint32_t attribute = GetInstanceAttribute(itInput.name.c_str())) {
+			if (uint32_t attribute = GetInstanceAttribute(itVertexAttribute.c_str())) {
 				VkVertexInputAttributeDescription inputAttributeDescription = {};
 				inputAttributeDescription.binding = instanceBinding;
 				inputAttributeDescription.location = GetInstanceAttributeLocation(attribute);
