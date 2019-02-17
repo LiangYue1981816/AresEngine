@@ -9,6 +9,12 @@ protected:
 	virtual ~CGLES3Pipeline(void);
 
 
+protected:
+	bool CreateLayouts(void);
+	void SetUniformLocation(const CGLES3Shader *pShader, const char *szName);
+	void SetUniformBlockBinding(const CGLES3Shader *pShader, const char *szName, uint32_t binding);
+	void SetSampledImageLocation(const CGLES3Shader *pShader, const char *szName);
+
 public:
 	void BindTexture(uint32_t name, CGLES3Texture *pTexture, CGLES3Sampler *pSampler, uint32_t unit);
 	void BindUniformBuffer(uint32_t name, CGLES3UniformBuffer *pUniformBuffer, uint32_t size, int offset = 0);
@@ -46,4 +52,9 @@ public:
 protected:
 	uint32_t m_pipeline;
 	CGLES3Shader *m_pShaders[compute_shader - vertex_shader + 1];
+
+protected:
+	eastl::unordered_map<uint32_t, uint32_t> m_uniformLocations;      // [name, location]
+	eastl::unordered_map<uint32_t, uint32_t> m_uniformBlockBindings;  // [name, binding]
+	eastl::unordered_map<uint32_t, uint32_t> m_sampledImageLocations; // [name, location]
 };
