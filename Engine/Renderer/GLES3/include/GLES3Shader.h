@@ -17,6 +17,8 @@ public:
 
 public:
 	HANDLE GetShader(void) const;
+
+public:
 	uint32_t GetKind(void) const;
 
 public:

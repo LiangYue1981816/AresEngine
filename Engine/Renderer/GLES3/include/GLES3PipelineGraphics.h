@@ -17,6 +17,8 @@ public:
 
 public:
 	HANDLE GetPipeline(void) const;
+
+public:
 	const PipelineState& GetPipelineState(void) const;
 
 public:
