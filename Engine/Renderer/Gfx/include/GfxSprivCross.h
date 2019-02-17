@@ -10,11 +10,13 @@ typedef struct BufferRange {
 class CALL_API CGfxSprivCross
 {
 public:
-	CGfxSprivCross(const uint32_t *words, size_t numWords, uint32_t version = 450);
+	CGfxSprivCross(void);
 	virtual ~CGfxSprivCross(void);
 
 
 public:
+	bool Load(const uint32_t *words, size_t numWords, uint32_t version = 450);
+
 	const eastl::string& GetSource(void) const;
 	const eastl::unordered_map<eastl::string, BufferRange>& GetPushConstantRanges(void) const;
 	const eastl::unordered_map<eastl::string, eastl::unordered_map<uint32_t, uint32_t>>& GetUniformBlockBindings(void) const;

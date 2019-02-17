@@ -1,7 +1,17 @@
 #include "GfxHeader.h"
 
 
-CGfxSprivCross::CGfxSprivCross(const uint32_t *words, size_t numWords, uint32_t version)
+CGfxSprivCross::CGfxSprivCross(void)
+{
+
+}
+
+CGfxSprivCross::~CGfxSprivCross(void)
+{
+
+}
+
+bool CGfxSprivCross::Load(const uint32_t *words, size_t numWords, uint32_t version)
 {
 	spirv_cross::CompilerGLSL::Options options;
 	options.version = version;
@@ -48,11 +58,8 @@ CGfxSprivCross::CGfxSprivCross(const uint32_t *words, size_t numWords, uint32_t 
 			}
 		}
 	}
-}
 
-CGfxSprivCross::~CGfxSprivCross(void)
-{
-
+	return true;
 }
 
 const eastl::string& CGfxSprivCross::GetSource(void) const
