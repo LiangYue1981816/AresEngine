@@ -15,8 +15,10 @@ public:
 
 
 public:
-	bool Load(const uint32_t *words, size_t numWords, uint32_t version = 450);
+	bool Create(const uint32_t *words, size_t numWords, uint32_t version = 450);
+	void Destroy(void);
 
+public:
 	const eastl::string& GetSource(void) const;
 	const eastl::unordered_map<eastl::string, BufferRange>& GetPushConstantRanges(void) const;
 	const eastl::unordered_map<eastl::string, eastl::unordered_map<uint32_t, uint32_t>>& GetUniformBlockBindings(void) const;

@@ -8,11 +8,13 @@ CGfxSprivCross::CGfxSprivCross(void)
 
 CGfxSprivCross::~CGfxSprivCross(void)
 {
-
+	Destroy();
 }
 
-bool CGfxSprivCross::Load(const uint32_t *words, size_t numWords, uint32_t version)
+bool CGfxSprivCross::Create(const uint32_t *words, size_t numWords, uint32_t version)
 {
+	Destroy();
+
 	spirv_cross::CompilerGLSL::Options options;
 	options.version = version;
 	options.es = true;
@@ -60,6 +62,15 @@ bool CGfxSprivCross::Load(const uint32_t *words, size_t numWords, uint32_t versi
 	}
 
 	return true;
+}
+
+void CGfxSprivCross::Destroy(void)
+{
+	m_source = "";
+	m_pushConstantRanges.clear();
+	m_uniformBlockBindings.clear();
+	m_sampledImageBindings.clear();
+	m_inputAttachmentBindings.clear();
 }
 
 const eastl::string& CGfxSprivCross::GetSource(void) const
