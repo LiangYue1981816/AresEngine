@@ -51,6 +51,42 @@ bool CGLES3Shader::IsUniformBlockValid(uint32_t name) const
 	return m_uniformBlockBindings.find(name) != m_uniformBlockBindings.end();
 }
 
+uint32_t CGLES3Shader::GetTextureLocation(uint32_t name) const
+{
+	const auto &itSampledImageLocation = m_sampledImageLocations.find(name);
+
+	if (itSampledImageLocation != m_sampledImageLocations.end()) {
+		return itSampledImageLocation->second;
+	}
+	else {
+		return -1;
+	}
+}
+
+uint32_t CGLES3Shader::GetUniformLocation(uint32_t name) const
+{
+	const auto &itUniformLocation = m_uniformLocations.find(name);
+
+	if (itUniformLocation != m_uniformLocations.end()) {
+		return itUniformLocation->second;
+	}
+	else {
+		return -1;
+	}
+}
+
+uint32_t CGLES3Shader::GetUniformBlockBinding(uint32_t name) const
+{
+	const auto &itUniformBlockBinding = m_uniformBlockBindings.find(name);
+
+	if (itUniformBlockBinding != m_uniformBlockBindings.end()) {
+		return itUniformBlockBinding->second;
+	}
+	else {
+		return -1;
+	}
+}
+
 bool CGLES3Shader::Create(const uint32_t *words, size_t numWords, shader_kind kind)
 {
 	Destroy();
