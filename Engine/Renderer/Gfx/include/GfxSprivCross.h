@@ -2,10 +2,15 @@
 #include "GfxRenderer.h"
 
 
-typedef struct BufferRange {
+typedef struct PushConstantRange {
 	uint32_t offset;
 	uint32_t range;
-} BufferRange;
+} PushConstantRange;
+
+typedef struct DescriptorSetBinding {
+	uint32_t set;
+	uint32_t binding;
+} DescriptorSetBinding;
 
 class CALL_API CGfxSprivCross
 {
@@ -19,16 +24,16 @@ public:
 
 public:
 	const eastl::string& GetSource(void) const;
-	const eastl::unordered_map<eastl::string, BufferRange>& GetPushConstantRanges(void) const;
-	const eastl::unordered_map<eastl::string, eastl::unordered_map<uint32_t, uint32_t>>& GetUniformBlockBindings(void) const;
-	const eastl::unordered_map<eastl::string, eastl::unordered_map<uint32_t, uint32_t>>& GetSampledImageBindings(void) const;
-	const eastl::unordered_map<eastl::string, eastl::unordered_map<uint32_t, uint32_t>>& GetInputAttachmentBindings(void) const;
+	const eastl::unordered_map<eastl::string, PushConstantRange>& GetPushConstantRanges(void) const;
+	const eastl::unordered_map<eastl::string, DescriptorSetBinding>& GetUniformBlockBindings(void) const;
+	const eastl::unordered_map<eastl::string, DescriptorSetBinding>& GetSampledImageBindings(void) const;
+	const eastl::unordered_map<eastl::string, DescriptorSetBinding>& GetInputAttachmentBindings(void) const;
 
 
 private:
 	eastl::string m_source;
-	eastl::unordered_map<eastl::string, BufferRange> m_pushConstantRanges;
-	eastl::unordered_map<eastl::string, eastl::unordered_map<uint32_t, uint32_t>> m_uniformBlockBindings;
-	eastl::unordered_map<eastl::string, eastl::unordered_map<uint32_t, uint32_t>> m_sampledImageBindings;
-	eastl::unordered_map<eastl::string, eastl::unordered_map<uint32_t, uint32_t>> m_inputAttachmentBindings;
+	eastl::unordered_map<eastl::string, PushConstantRange> m_pushConstantRanges;
+	eastl::unordered_map<eastl::string, DescriptorSetBinding> m_uniformBlockBindings;
+	eastl::unordered_map<eastl::string, DescriptorSetBinding> m_sampledImageBindings;
+	eastl::unordered_map<eastl::string, DescriptorSetBinding> m_inputAttachmentBindings;
 };

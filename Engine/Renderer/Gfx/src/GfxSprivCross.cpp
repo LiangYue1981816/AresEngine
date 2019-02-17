@@ -41,25 +41,22 @@ const eastl::string& CGfxSprivCross::Create(const uint32_t *words, size_t numWor
 
 		for (const auto &itUniform : shaderResources.uniform_buffers) {
 			if (compiler.get_type(itUniform.base_type_id).basetype == spirv_cross::SPIRType::Struct) {
-				const uint32_t set = compiler.get_decoration(itUniform.id, spv::DecorationDescriptorSet);
-				const uint32_t binding = compiler.get_decoration(itUniform.id, spv::DecorationBinding);
-				m_uniformBlockBindings[itUniform.name][set] = binding;
+				m_uniformBlockBindings[itUniform.name].set = compiler.get_decoration(itUniform.id, spv::DecorationDescriptorSet);
+				m_uniformBlockBindings[itUniform.name].binding = compiler.get_decoration(itUniform.id, spv::DecorationBinding);
 			}
 		}
 
 		for (const auto &itSampledImage : shaderResources.sampled_images) {
 			if (compiler.get_type(itSampledImage.base_type_id).basetype == spirv_cross::SPIRType::SampledImage) {
-				const uint32_t set = compiler.get_decoration(itSampledImage.id, spv::DecorationDescriptorSet);
-				const uint32_t binding = compiler.get_decoration(itSampledImage.id, spv::DecorationBinding);
-				m_sampledImageBindings[itSampledImage.name][set] = binding;
+				m_sampledImageBindings[itSampledImage.name].set = compiler.get_decoration(itSampledImage.id, spv::DecorationDescriptorSet);
+				m_sampledImageBindings[itSampledImage.name].binding = compiler.get_decoration(itSampledImage.id, spv::DecorationBinding);
 			}
 		}
 
 		for (const auto &itSubpassInput : shaderResources.subpass_inputs) {
 			if (compiler.get_type(itSubpassInput.base_type_id).basetype == spirv_cross::SPIRType::Image) {
-				const uint32_t set = compiler.get_decoration(itSubpassInput.id, spv::DecorationDescriptorSet);
-				const uint32_t binding = compiler.get_decoration(itSubpassInput.id, spv::DecorationBinding);
-				m_inputAttachmentBindings[itSubpassInput.name][set] = binding;
+				m_inputAttachmentBindings[itSubpassInput.name].set = compiler.get_decoration(itSubpassInput.id, spv::DecorationDescriptorSet);
+				m_inputAttachmentBindings[itSubpassInput.name].binding = compiler.get_decoration(itSubpassInput.id, spv::DecorationBinding);
 			}
 		}
 	}
@@ -72,22 +69,22 @@ const eastl::string& CGfxSprivCross::GetSource(void) const
 	return m_source;
 }
 
-const eastl::unordered_map<eastl::string, BufferRange>& CGfxSprivCross::GetPushConstantRanges(void) const
+const eastl::unordered_map<eastl::string, PushConstantRange>& CGfxSprivCross::GetPushConstantRanges(void) const
 {
 	return m_pushConstantRanges;
 }
 
-const eastl::unordered_map<eastl::string, eastl::unordered_map<uint32_t, uint32_t>>& CGfxSprivCross::GetUniformBlockBindings(void) const
+const eastl::unordered_map<eastl::string, DescriptorSetBinding>& CGfxSprivCross::GetUniformBlockBindings(void) const
 {
 	return m_uniformBlockBindings;
 }
 
-const eastl::unordered_map<eastl::string, eastl::unordered_map<uint32_t, uint32_t>>& CGfxSprivCross::GetSampledImageBindings(void) const
+const eastl::unordered_map<eastl::string, DescriptorSetBinding>& CGfxSprivCross::GetSampledImageBindings(void) const
 {
 	return m_sampledImageBindings;
 }
 
-const eastl::unordered_map<eastl::string, eastl::unordered_map<uint32_t, uint32_t>>& CGfxSprivCross::GetInputAttachmentBindings(void) const
+const eastl::unordered_map<eastl::string, DescriptorSetBinding>& CGfxSprivCross::GetInputAttachmentBindings(void) const
 {
 	return m_inputAttachmentBindings;
 }
