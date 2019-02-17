@@ -1,5 +1,3 @@
-#if GLES_VER == 310
-
 #include "GLES3Renderer.h"
 
 
@@ -320,5 +318,3 @@ bool CGLES3Pipeline::IsUniformBlockValid(uint32_t name) const
 
 	return false;
 }
-
-#endif

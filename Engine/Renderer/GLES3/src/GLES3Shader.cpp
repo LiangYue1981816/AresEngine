@@ -1,5 +1,3 @@
-#if GLES_VER == 310
-
 #include "GLES3Renderer.h"
 
 
@@ -411,5 +409,3 @@ bool CGLES3Shader::IsUniformBlockValid(uint32_t name) const
 {
 	return m_uniformBlockBindings.find(name) != m_uniformBlockBindings.end();
 }
-
-#endif

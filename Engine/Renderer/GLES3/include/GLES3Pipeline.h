@@ -1,5 +1,3 @@
-#if GLES_VER == 310
-
 #pragma once
 #include "GLES3Renderer.h"
 
@@ -49,5 +47,3 @@ protected:
 	uint32_t m_pipeline;
 	CGLES3Shader *m_pShaders[compute_shader - vertex_shader + 1];
 };
-
-#endif

@@ -1,5 +1,3 @@
-#if GLES_VER == 310
-
 #pragma once
 #include "GLES3Renderer.h"
 
@@ -81,5 +79,3 @@ private:
 	uint32_t m_kind;
 	uint32_t m_program;
 };
-
-#endif

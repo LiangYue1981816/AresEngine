@@ -9,7 +9,6 @@ CGLES3IndirectBuffer::CGLES3IndirectBuffer(uint32_t drawCommandCount)
 
 	, m_buffer(0)
 {
-#if GLES_VER == 310
 	m_draws.resize(m_count);
 
 	glGenBuffers(1, &m_buffer);
@@ -17,15 +16,12 @@ CGLES3IndirectBuffer::CGLES3IndirectBuffer(uint32_t drawCommandCount)
 	glBufferData(GL_DRAW_INDIRECT_BUFFER, m_size, nullptr, GL_DYNAMIC_DRAW);
 	glBindBuffer(GL_DRAW_INDIRECT_BUFFER, 0);
 	CGfxProfiler::IncIndirectBufferSize(m_size);
-#endif
 }
 
 CGLES3IndirectBuffer::~CGLES3IndirectBuffer(void)
 {
-#if GLES_VER == 310
 	glDeleteBuffers(1, &m_buffer);
 	CGfxProfiler::DecIndirectBufferSize(m_size);
-#endif
 }
 
 uint32_t CGLES3IndirectBuffer::GetDrawCommandCount(void) const
@@ -45,7 +41,6 @@ uint32_t CGLES3IndirectBuffer::GetSize(void) const
 
 bool CGLES3IndirectBuffer::BufferData(int indexDraw, int instanceCount)
 {
-#if GLES_VER == 310
 	if (indexDraw < 0 || (uint32_t)indexDraw >= m_count) {
 		return false;
 	}
@@ -58,14 +53,10 @@ bool CGLES3IndirectBuffer::BufferData(int indexDraw, int instanceCount)
 	}
 
 	return true;
-#else
-	return true;
-#endif
 }
 
 bool CGLES3IndirectBuffer::BufferData(int indexDraw, int baseVertex, int firstIndex, int indexCount, int instanceCount)
 {
-#if GLES_VER == 310
 	if (indexDraw < 0 || (uint32_t)indexDraw >= m_count) {
 		return false;
 	}
@@ -84,14 +75,9 @@ bool CGLES3IndirectBuffer::BufferData(int indexDraw, int baseVertex, int firstIn
 	}
 
 	return true;
-#else
-	return true;
-#endif
 }
 
 void CGLES3IndirectBuffer::Bind(void)
 {
-#if GLES_VER == 310
 	GLBindBuffer(GL_DRAW_INDIRECT_BUFFER, m_buffer);
-#endif
 }

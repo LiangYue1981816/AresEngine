@@ -1,5 +1,3 @@
-#if GLES_VER == 310
-
 #pragma once
 #include "GLES3Renderer.h"
 
@@ -42,5 +40,3 @@ private:
 private:
 	PipelineState m_state;
 };
-
-#endif

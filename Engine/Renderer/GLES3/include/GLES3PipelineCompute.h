@@ -1,5 +1,3 @@
-#if GLES_VER == 310
-
 #pragma once
 #include "GLES3Renderer.h"
 
@@ -36,5 +34,3 @@ public:
 private:
 	uint32_t m_name;
 };
-
-#endif
