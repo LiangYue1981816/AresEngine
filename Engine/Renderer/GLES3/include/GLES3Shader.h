@@ -20,27 +20,14 @@ public:
 
 public:
 	uint32_t GetKind(void) const;
-
-public:
-	bool IsValid(void) const;
-	bool IsTextureValid(uint32_t name) const;
-	bool IsUniformValid(uint32_t name) const;
-	bool IsUniformBlockValid(uint32_t name) const;
-
-public:
-	uint32_t GetTextureLocation(uint32_t name) const;
-	uint32_t GetUniformLocation(uint32_t name) const;
-	uint32_t GetUniformBlockBinding(uint32_t name) const;
+	const CGfxSprivCross& GetSprivCross(void) const;
 
 public:
 	bool Create(const uint32_t *words, size_t numWords, shader_kind kind);
 	void Destroy(void);
 
-private:
-	bool CreateLayouts(void);
-	void SetUniformLocation(const char *szName);
-	void SetUniformBlockBinding(const char *szName, uint32_t binding);
-	void SetSampledImageLocation(const char *szName);
+public:
+	bool IsValid(void) const;
 
 
 private:
@@ -52,7 +39,4 @@ private:
 
 private:
 	CGfxSprivCross m_spriv;
-	eastl::unordered_map<uint32_t, uint32_t> m_uniformLocations;      // [name, location]
-	eastl::unordered_map<uint32_t, uint32_t> m_uniformBlockBindings;  // [name, binding]
-	eastl::unordered_map<uint32_t, uint32_t> m_sampledImageLocations; // [name, location]
 };
