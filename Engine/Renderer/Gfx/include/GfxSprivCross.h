@@ -15,8 +15,7 @@ public:
 
 
 public:
-	bool Create(const uint32_t *words, size_t numWords, uint32_t version = 450);
-	void Destroy(void);
+	const eastl::string& Create(const uint32_t *words, size_t numWords, uint32_t version = 450);
 
 public:
 	const eastl::string& GetSource(void) const;

@@ -8,13 +8,11 @@ CGfxSprivCross::CGfxSprivCross(void)
 
 CGfxSprivCross::~CGfxSprivCross(void)
 {
-	Destroy();
+
 }
 
-bool CGfxSprivCross::Create(const uint32_t *words, size_t numWords, uint32_t version)
+const eastl::string& CGfxSprivCross::Create(const uint32_t *words, size_t numWords, uint32_t version)
 {
-	Destroy();
-
 	spirv_cross::CompilerGLSL::Options options;
 	options.version = version;
 	options.es = true;
@@ -26,6 +24,11 @@ bool CGfxSprivCross::Create(const uint32_t *words, size_t numWords, uint32_t ver
 
 	const spirv_cross::ShaderResources shaderResources = compiler.get_shader_resources();
 	{
+		m_pushConstantRanges.clear();
+		m_uniformBlockBindings.clear();
+		m_sampledImageBindings.clear();
+		m_inputAttachmentBindings.clear();
+
 		for (const auto &itPushConstant : shaderResources.push_constant_buffers) {
 			const std::vector<spirv_cross::BufferRange> ranges = compiler.get_active_buffer_ranges(itPushConstant.id);
 			for (uint32_t index = 0; index < ranges.size(); index++) {
@@ -61,16 +64,7 @@ bool CGfxSprivCross::Create(const uint32_t *words, size_t numWords, uint32_t ver
 		}
 	}
 
-	return true;
-}
-
-void CGfxSprivCross::Destroy(void)
-{
-	m_source = "";
-	m_pushConstantRanges.clear();
-	m_uniformBlockBindings.clear();
-	m_sampledImageBindings.clear();
-	m_inputAttachmentBindings.clear();
+	return m_source;
 }
 
 const eastl::string& CGfxSprivCross::GetSource(void) const
