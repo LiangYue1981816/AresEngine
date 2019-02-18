@@ -59,6 +59,27 @@ extern void GLBindFramebufferTexture2D(GLenum target, GLenum attachment, GLenum 
 extern void GLReadBuffers(GLenum target, GLsizei n, const GLenum *bufs);
 extern void GLDrawBuffers(GLenum target, GLsizei n, const GLenum *bufs);
 
+extern void GLUseProgram(GLuint program);
+extern void GLUniform1i(GLint location, GLint v0);
+extern void GLUniform2i(GLint location, GLint v0, GLint v1);
+extern void GLUniform3i(GLint location, GLint v0, GLint v1, GLint v2);
+extern void GLUniform4i(GLint location, GLint v0, GLint v1, GLint v2, GLint v3);
+extern void GLUniform1f(GLint location, GLfloat v0);
+extern void GLUniform2f(GLint location, GLfloat v0, GLfloat v1);
+extern void GLUniform3f(GLint location, GLfloat v0, GLfloat v1, GLfloat v2);
+extern void GLUniform4f(GLint location, GLfloat v0, GLfloat v1, GLfloat v2, GLfloat v3);
+extern void GLUniform1iv(GLint location, GLsizei count, const GLint *value);
+extern void GLUniform2iv(GLint location, GLsizei count, const GLint *value);
+extern void GLUniform3iv(GLint location, GLsizei count, const GLint *value);
+extern void GLUniform4iv(GLint location, GLsizei count, const GLint *value);
+extern void GLUniform1fv(GLint location, GLsizei count, const GLfloat *value);
+extern void GLUniform2fv(GLint location, GLsizei count, const GLfloat *value);
+extern void GLUniform3fv(GLint location, GLsizei count, const GLfloat *value);
+extern void GLUniform4fv(GLint location, GLsizei count, const GLfloat *value);
+extern void GLUniformMatrix2fv(GLint location, GLsizei count, const GLfloat *value);
+extern void GLUniformMatrix3fv(GLint location, GLsizei count, const GLfloat *value);
+extern void GLUniformMatrix4fv(GLint location, GLsizei count, const GLfloat *value);
+
 extern void GLBindProgramPipeline(GLuint pipeline);
 extern void GLProgramUniform1i(GLuint program, GLint location, GLint v0);
 extern void GLProgramUniform2i(GLuint program, GLint location, GLint v0, GLint v1);
