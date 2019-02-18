@@ -37,12 +37,53 @@ bool CGLES3PipelineCompute::Create(const CGfxShader *pComputeShader)
 		return false;
 	}
 
+	Destroy();
+	{
+		do {
+			m_pShaders[compute_shader] = (CGLES3Shader *)pComputeShader;
+
+			m_program = glCreateProgram();
+			glAttachShader(m_program, (uint32_t)m_pShaders[compute_shader]->GetShader());
+			glLinkProgram(m_program);
+
+			GLint success;
+			glGetProgramiv(m_program, GL_LINK_STATUS, &success);
+
+			if (success == GL_FALSE) {
+				GLsizei length = 0;
+				char szError[128 * 1024] = { 0 };
+
+				glGetProgramInfoLog(m_program, sizeof(szError), &length, szError);
+
+				LogOutput(nullptr, "Program Link Error:\n");
+				LogOutput(nullptr, "%s\n", szError);
+
+				break;
+			}
+
+			if (CreateLayouts() == false) {
+				break;
+			}
+
+			return true;
+		} while (false);
+	}
+	Destroy();
 	return true;
 }
 
 void CGLES3PipelineCompute::Destroy(void)
 {
+	if (m_program) {
+		glDeleteProgram(m_program);
+	}
 
+	m_program = 0;
+	m_pShaders[compute_shader] = nullptr;
+
+	m_uniformLocations.clear();
+	m_uniformBlockBindings.clear();
+	m_sampledImageLocations.clear();
 }
 
 bool CGLES3PipelineCompute::IsTextureValid(uint32_t name) const
@@ -62,5 +103,5 @@ bool CGLES3PipelineCompute::IsUniformBlockValid(uint32_t name) const
 
 void CGLES3PipelineCompute::Bind(void)
 {
-
+	GLUseProgram(m_program);
 }
