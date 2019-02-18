@@ -11,9 +11,9 @@ protected:
 
 protected:
 	bool CreateLayouts(void);
-	void SetUniformLocation(const CGLES3Shader *pShader, const char *szName);
-	void SetUniformBlockBinding(const CGLES3Shader *pShader, const char *szName, uint32_t binding);
-	void SetSampledImageLocation(const CGLES3Shader *pShader, const char *szName);
+	void SetUniformLocation(const char *szName);
+	void SetUniformBlockBinding(const char *szName, uint32_t binding);
+	void SetSampledImageLocation(const char *szName);
 
 public:
 	void BindTexture(uint32_t name, CGLES3Texture *pTexture, CGLES3Sampler *pSampler, uint32_t unit);
@@ -50,7 +50,7 @@ public:
 
 
 protected:
-	uint32_t m_pipeline;
+	uint32_t m_program;
 	CGLES3Shader *m_pShaders[compute_shader - vertex_shader + 1];
 
 protected:
