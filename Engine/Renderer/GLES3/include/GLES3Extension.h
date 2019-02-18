@@ -79,25 +79,4 @@ extern void GLUniform4fv(GLint location, GLsizei count, const GLfloat *value);
 extern void GLUniformMatrix2fv(GLint location, GLsizei count, const GLfloat *value);
 extern void GLUniformMatrix3fv(GLint location, GLsizei count, const GLfloat *value);
 extern void GLUniformMatrix4fv(GLint location, GLsizei count, const GLfloat *value);
-
-extern void GLBindProgramPipeline(GLuint pipeline);
-extern void GLProgramUniform1i(GLuint program, GLint location, GLint v0);
-extern void GLProgramUniform2i(GLuint program, GLint location, GLint v0, GLint v1);
-extern void GLProgramUniform3i(GLuint program, GLint location, GLint v0, GLint v1, GLint v2);
-extern void GLProgramUniform4i(GLuint program, GLint location, GLint v0, GLint v1, GLint v2, GLint v3);
-extern void GLProgramUniform1f(GLuint program, GLint location, GLfloat v0);
-extern void GLProgramUniform2f(GLuint program, GLint location, GLfloat v0, GLfloat v1);
-extern void GLProgramUniform3f(GLuint program, GLint location, GLfloat v0, GLfloat v1, GLfloat v2);
-extern void GLProgramUniform4f(GLuint program, GLint location, GLfloat v0, GLfloat v1, GLfloat v2, GLfloat v3);
-extern void GLProgramUniform1iv(GLuint program, GLint location, GLsizei count, const GLint *value);
-extern void GLProgramUniform2iv(GLuint program, GLint location, GLsizei count, const GLint *value);
-extern void GLProgramUniform3iv(GLuint program, GLint location, GLsizei count, const GLint *value);
-extern void GLProgramUniform4iv(GLuint program, GLint location, GLsizei count, const GLint *value);
-extern void GLProgramUniform1fv(GLuint program, GLint location, GLsizei count, const GLfloat *value);
-extern void GLProgramUniform2fv(GLuint program, GLint location, GLsizei count, const GLfloat *value);
-extern void GLProgramUniform3fv(GLuint program, GLint location, GLsizei count, const GLfloat *value);
-extern void GLProgramUniform4fv(GLuint program, GLint location, GLsizei count, const GLfloat *value);
-extern void GLProgramUniformMatrix2fv(GLuint program, GLint location, GLsizei count, const GLfloat *value);
-extern void GLProgramUniformMatrix3fv(GLuint program, GLint location, GLsizei count, const GLfloat *value);
-extern void GLProgramUniformMatrix4fv(GLuint program, GLint location, GLsizei count, const GLfloat *value);
 #pragma endregion

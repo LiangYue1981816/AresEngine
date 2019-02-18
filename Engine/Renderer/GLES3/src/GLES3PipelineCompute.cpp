@@ -20,7 +20,7 @@ uint32_t CGLES3PipelineCompute::GetName(void) const
 
 HANDLE CGLES3PipelineCompute::GetPipeline(void) const
 {
-	return (HANDLE)m_pipeline;
+	return (HANDLE)m_program;
 }
 
 bool CGLES3PipelineCompute::Create(const CGfxShader *pComputeShader)
@@ -37,18 +37,12 @@ bool CGLES3PipelineCompute::Create(const CGfxShader *pComputeShader)
 		return false;
 	}
 
-	Destroy();
-
-	m_pShaders[compute_shader] = (CGLES3Shader *)pComputeShader;
-	glUseProgramStages(m_pipeline, glGetProgramStage(compute_shader), (GLuint)m_pShaders[compute_shader]->GetShader());
-
 	return true;
 }
 
 void CGLES3PipelineCompute::Destroy(void)
 {
-	m_pShaders[compute_shader] = nullptr;
-	glUseProgramStages(m_pipeline, glGetProgramStage(compute_shader), 0);
+
 }
 
 bool CGLES3PipelineCompute::IsTextureValid(uint32_t name) const
@@ -68,5 +62,5 @@ bool CGLES3PipelineCompute::IsUniformBlockValid(uint32_t name) const
 
 void CGLES3PipelineCompute::Bind(void)
 {
-	GLBindProgramPipeline(m_pipeline);
+
 }

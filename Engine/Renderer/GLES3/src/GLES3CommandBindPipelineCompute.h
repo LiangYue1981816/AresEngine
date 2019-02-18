@@ -24,7 +24,7 @@ public:
 				GLES3Renderer()->BindPipelineCompute(m_pPipelineCompute);
 			}
 			else {
-				GLBindProgramPipeline(0);
+				GLUseProgram(0);
 			}
 		}
 	}
