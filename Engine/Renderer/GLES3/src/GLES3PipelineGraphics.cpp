@@ -20,7 +20,7 @@ uint32_t CGLES3PipelineGraphics::GetName(void) const
 
 HANDLE CGLES3PipelineGraphics::GetPipeline(void) const
 {
-	return (HANDLE)m_pipeline;
+	return (HANDLE)m_program;
 }
 
 const PipelineState& CGLES3PipelineGraphics::GetPipelineState(void) const
@@ -59,22 +59,56 @@ bool CGLES3PipelineGraphics::Create(const CGfxRenderPass *pRenderPass, const CGf
 	}
 
 	Destroy();
+	{
+		do {
+			m_state = state;
+			m_pShaders[vertex_shader] = (CGLES3Shader *)pVertexShader;
+			m_pShaders[fragment_shader] = (CGLES3Shader *)pFragmentShader;
 
-	m_state = state;
-	m_pShaders[vertex_shader] = (CGLES3Shader *)pVertexShader;
-	m_pShaders[fragment_shader] = (CGLES3Shader *)pFragmentShader;
-	glUseProgramStages(m_pipeline, glGetProgramStage(vertex_shader), (GLuint)m_pShaders[vertex_shader]->GetShader());
-	glUseProgramStages(m_pipeline, glGetProgramStage(fragment_shader), (GLuint)m_pShaders[fragment_shader]->GetShader());
+			m_program = glCreateProgram();
+			glAttachShader(m_program, (uint32_t)m_pShaders[vertex_shader]->GetShader());
+			glAttachShader(m_program, (uint32_t)m_pShaders[fragment_shader]->GetShader());
+			glLinkProgram(m_program);
 
+			GLint success;
+			glGetProgramiv(m_program, GL_LINK_STATUS, &success);
+
+			if (success == GL_FALSE) {
+				GLsizei length = 0;
+				char szError[128 * 1024] = { 0 };
+
+				glGetProgramInfoLog(m_program, sizeof(szError), &length, szError);
+
+				LogOutput(nullptr, "Program Link Error:\n");
+				LogOutput(nullptr, "%s\n", szError);
+
+				break;
+			}
+
+			if (CreateLayouts() == false) {
+				break;
+			}
+
+			return true;
+		} while (false);
+	}
+	Destroy();
 	return true;
 }
 
 void CGLES3PipelineGraphics::Destroy(void)
 {
+	if (m_program) {
+		glDeleteProgram(m_program);
+	}
+
+	m_program = 0;
 	m_pShaders[vertex_shader] = nullptr;
 	m_pShaders[fragment_shader] = nullptr;
-	glUseProgramStages(m_pipeline, glGetProgramStage(vertex_shader), 0);
-	glUseProgramStages(m_pipeline, glGetProgramStage(fragment_shader), 0);
+
+	m_uniformLocations.clear();
+	m_uniformBlockBindings.clear();
+	m_sampledImageLocations.clear();
 }
 
 bool CGLES3PipelineGraphics::IsTextureValid(uint32_t name) const
@@ -95,5 +129,5 @@ bool CGLES3PipelineGraphics::IsUniformBlockValid(uint32_t name) const
 void CGLES3PipelineGraphics::Bind(void)
 {
 	GLBindState(&m_state);
-	GLBindProgramPipeline(m_pipeline);
+	GLUseProgram(m_program);
 }

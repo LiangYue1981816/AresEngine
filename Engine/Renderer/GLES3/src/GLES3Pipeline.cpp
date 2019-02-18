@@ -15,10 +15,6 @@ CGLES3Pipeline::~CGLES3Pipeline(void)
 
 bool CGLES3Pipeline::CreateLayouts(void)
 {
-	m_uniformLocations.clear();
-	m_uniformBlockBindings.clear();
-	m_sampledImageLocations.clear();
-
 	for (int index = 0; index < compute_shader - vertex_shader + 1; index++) {
 		if (m_pShaders[index]) {
 			const eastl::unordered_map<eastl::string, PushConstantRange> &pushConstantRanges = m_pShaders[index]->GetSprivCross().GetPushConstantRanges();
