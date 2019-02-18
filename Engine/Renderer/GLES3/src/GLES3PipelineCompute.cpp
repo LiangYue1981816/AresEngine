@@ -1,5 +1,3 @@
-#if GLES_VER == 310
-
 #include "GLES3Renderer.h"
 
 
@@ -72,5 +70,3 @@ void CGLES3PipelineCompute::Bind(void)
 {
 	GLBindProgramPipeline(m_pipeline);
 }
-
-#endif

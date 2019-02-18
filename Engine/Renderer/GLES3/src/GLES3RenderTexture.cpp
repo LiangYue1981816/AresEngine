@@ -76,19 +76,7 @@ bool CGLES3RenderTexture::Create(HANDLE hExternTexture, GfxPixelFormat pixelForm
 	m_width = width;
 	m_height = height;
 	m_samples = std::max(samples, 1);
-
-#if GLES_VER == 310
-	if (m_samples == 1)
-#endif
-	{
-		m_type = GFX_TEXTURE_2D;
-	}
-#if GLES_VER == 310
-	else
-	{
-		m_type = GFX_TEXTURE_2D_MULTISAMPLE;
-	}
-#endif
+	m_type = m_samples == 1 ? GFX_TEXTURE_2D : GFX_TEXTURE_2D_MULTISAMPLE;
 
 	return true;
 }
@@ -105,29 +93,20 @@ bool CGLES3RenderTexture::Create(GfxPixelFormat pixelFormat, int width, int heig
 	m_width = width;
 	m_height = height;
 	m_samples = std::max(samples, 1);
+	m_type = m_samples == 1 ? GFX_TEXTURE_2D : GFX_TEXTURE_2D_MULTISAMPLE;
 
-#if GLES_VER == 310
-	if (m_samples == 1)
-#endif
-	{
-		m_type = GFX_TEXTURE_2D;
-
+	if (m_samples == 1) {
 		glGenTextures(1, &m_texture);
 		glBindTexture(GL_TEXTURE_2D, m_texture);
 		glTexStorage2D(GL_TEXTURE_2D, 1, glFormat.Internal, m_width, m_height);
 		glBindTexture(GL_TEXTURE_2D, 0);
 	}
-#if GLES_VER == 310
-	else
-	{
-		m_type = GFX_TEXTURE_2D_MULTISAMPLE;
-
+	else {
 		glGenTextures(1, &m_texture);
 		glBindTexture(GL_TEXTURE_2D_MULTISAMPLE, m_texture);
 		glTexStorage2DMultisample(GL_TEXTURE_2D_MULTISAMPLE, m_samples, glFormat.Internal, m_width, m_height, GL_TRUE);
 		glBindTexture(GL_TEXTURE_2D_MULTISAMPLE, 0);
 	}
-#endif
 
 	return true;
 }

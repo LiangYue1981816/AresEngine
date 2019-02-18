@@ -1,15 +1,15 @@
 #pragma once
-#include "VKRenderer.h"
+#include "GLES3Renderer.h"
 
 
-class CVKShader : public CGfxShader
+class CGLES3Shader : public CGfxShader
 {
-	friend class CVKShaderManager;
+	friend class CGLES3ShaderManager;
 
 
 private:
-	CVKShader(CVKDevice *pDevice, uint32_t name);
-	virtual ~CVKShader(void);
+	CGLES3Shader(uint32_t name);
+	virtual ~CGLES3Shader(void);
 
 
 public:
@@ -35,11 +35,8 @@ private:
 
 private:
 	uint32_t m_kind;
-	VkShaderModule m_vkShader;
+	uint32_t m_program;
 
 private:
 	CGfxSprivCross m_spriv;
-
-private:
-	CVKDevice *m_pDevice;
 };

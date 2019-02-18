@@ -1,5 +1,3 @@
-#if GLES_VER == 310
-
 #include "GLES3Renderer.h"
 
 
@@ -99,5 +97,3 @@ void CGLES3PipelineGraphics::Bind(void)
 	GLBindState(&m_state);
 	GLBindProgramPipeline(m_pipeline);
 }
-
-#endif

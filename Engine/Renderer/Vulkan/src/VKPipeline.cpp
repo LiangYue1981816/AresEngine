@@ -27,53 +27,29 @@ CVKPipeline::~CVKPipeline(void)
 bool CVKPipeline::CreateLayouts(eastl::vector<VkDescriptorSetLayout> &layouts, eastl::vector<VkPushConstantRange> &pushConstantRanges)
 {
 	for (int index = 0; index < compute_shader - vertex_shader + 1; index++) {
-		if (m_pShaders[index] && m_pShaders[index]->GetShader() && m_pShaders[index]->GetShaderCompiler()) {
-			if (const spirv_cross::CompilerGLSL *pShaderCompiler = m_pShaders[index]->GetShaderCompiler()) {
-				const spirv_cross::ShaderResources shaderResources = pShaderCompiler->get_shader_resources();
+		if (m_pShaders[index]) {
+			const eastl::unordered_map<eastl::string, PushConstantRange> &pushConstantRanges = m_pShaders[index]->GetSprivCross().GetPushConstantRanges();
+			const eastl::unordered_map<eastl::string, DescriptorSetBinding> &uniformBlockBindings = m_pShaders[index]->GetSprivCross().GetUniformBlockBindings();
+			const eastl::unordered_map<eastl::string, DescriptorSetBinding> &sampledImageBindings = m_pShaders[index]->GetSprivCross().GetSampledImageBindings();
+			const eastl::unordered_map<eastl::string, DescriptorSetBinding> &inputAttachmentBindings = m_pShaders[index]->GetSprivCross().GetInputAttachmentBindings();
 
-				for (const auto &itPushConstant : shaderResources.push_constant_buffers) {
-					const std::vector<spirv_cross::BufferRange> ranges = pShaderCompiler->get_active_buffer_ranges(itPushConstant.id);
-					for (uint32_t index = 0; index < ranges.size(); index++) {
-						const std::string member = pShaderCompiler->get_member_name(itPushConstant.base_type_id, ranges[index].index);
-						const std::string name = itPushConstant.name + "." + member;
+			for (const auto &itPushConstant : pushConstantRanges) {
+				uint32_t name = HashValue(itPushConstant.first.c_str());
+				m_pushConstantRanges[name].stageFlags = VK_SHADER_STAGE_ALL;
+				m_pushConstantRanges[name].offset = itPushConstant.second.offset;
+				m_pushConstantRanges[name].size = itPushConstant.second.range;
+			}
 
-						VkPushConstantRange range = {};
-						range.stageFlags = VK_SHADER_STAGE_ALL;
-						range.offset = ranges[index].offset;
-						range.size = ranges[index].range;
-						m_pushConstantRanges[HashValue(name.c_str())] = range;
-					}
-				}
+			for (const auto &itUniform : uniformBlockBindings) {
+				m_pDescriptorLayouts[itUniform.second.set]->SetUniformBlockBinding(itUniform.first.c_str(), itUniform.second.binding, VK_SHADER_STAGE_ALL);
+			}
 
-				for (const auto &itUniform : shaderResources.uniform_buffers) {
-					if (pShaderCompiler->get_type(itUniform.base_type_id).basetype == spirv_cross::SPIRType::Struct) {
-						const uint32_t set = pShaderCompiler->get_decoration(itUniform.id, spv::DecorationDescriptorSet);
-						const uint32_t binding = pShaderCompiler->get_decoration(itUniform.id, spv::DecorationBinding);
-						if (set >= DESCRIPTOR_SET_COUNT) return false;
+			for (const auto &itSampledImage : sampledImageBindings) {
+				m_pDescriptorLayouts[itSampledImage.second.set]->SetSampledImageBinding(itSampledImage.first.c_str(), itSampledImage.second.binding, VK_SHADER_STAGE_ALL);
+			}
 
-						m_pDescriptorLayouts[set]->SetUniformBlockBinding(itUniform.name.c_str(), binding, VK_SHADER_STAGE_ALL);
-					}
-				}
-
-				for (const auto &itSampledImage : shaderResources.sampled_images) {
-					if (pShaderCompiler->get_type(itSampledImage.base_type_id).basetype == spirv_cross::SPIRType::SampledImage) {
-						const uint32_t set = pShaderCompiler->get_decoration(itSampledImage.id, spv::DecorationDescriptorSet);
-						const uint32_t binding = pShaderCompiler->get_decoration(itSampledImage.id, spv::DecorationBinding);
-						if (set >= DESCRIPTOR_SET_COUNT) return false;
-
-						m_pDescriptorLayouts[set]->SetSampledImageBinding(itSampledImage.name.c_str(), binding, VK_SHADER_STAGE_ALL);
-					}
-				}
-
-				for (const auto &itSubpassInput : shaderResources.subpass_inputs) {
-					if (pShaderCompiler->get_type(itSubpassInput.base_type_id).basetype == spirv_cross::SPIRType::Image) {
-						const uint32_t set = pShaderCompiler->get_decoration(itSubpassInput.id, spv::DecorationDescriptorSet);
-						const uint32_t binding = pShaderCompiler->get_decoration(itSubpassInput.id, spv::DecorationBinding);
-						if (set >= DESCRIPTOR_SET_COUNT) return false;
-
-						m_pDescriptorLayouts[set]->SetInputAttachmentBinding(itSubpassInput.name.c_str(), binding, VK_SHADER_STAGE_ALL);
-					}
-				}
+			for (const auto &itInputAttachment : inputAttachmentBindings) {
+				m_pDescriptorLayouts[itInputAttachment.second.set]->SetInputAttachmentBinding(itInputAttachment.first.c_str(), itInputAttachment.second.binding, VK_SHADER_STAGE_ALL);
 			}
 		}
 	}
@@ -96,7 +72,7 @@ bool CVKPipeline::CreateShaderStages(eastl::vector<VkPipelineShaderStageCreateIn
 	bool rcode = false;
 
 	for (int index = 0; index < compute_shader - vertex_shader + 1; index++) {
-		if (m_pShaders[index] && m_pShaders[index]->GetShader() && m_pShaders[index]->GetShaderCompiler()) {
+		if (m_pShaders[index] && m_pShaders[index]->GetShader()) {
 			VkPipelineShaderStageCreateInfo createInfo = {};
 			createInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
 			createInfo.pNext = nullptr;
@@ -121,17 +97,16 @@ bool CVKPipeline::CreateVertexInputState(eastl::vector<VkVertexInputBindingDescr
 	uint32_t vertexFormat = 0;
 	uint32_t instanceFormat = 0;
 
-	const spirv_cross::CompilerGLSL *pShaderCompiler = m_pShaders[vertex_shader]->GetShaderCompiler();
-	const spirv_cross::ShaderResources shaderResources = pShaderCompiler->get_shader_resources();
+	const eastl::vector<eastl::string> &vertexAttributes = m_pShaders[vertex_shader]->GetSprivCross().GetVertexAttributes();
 
-	for (const auto &itInput : shaderResources.stage_inputs) {
-		vertexFormat |= GetVertexAttribute(itInput.name.c_str());
-		instanceFormat |= GetInstanceAttribute(itInput.name.c_str());
+	for (const auto &itVertexAttribute : vertexAttributes) {
+		vertexFormat |= GetVertexAttribute(itVertexAttribute.c_str());
+		instanceFormat |= GetInstanceAttribute(itVertexAttribute.c_str());
 	}
 
 	if (vertexFormat || instanceFormat) {
-		for (const auto &itInput : shaderResources.stage_inputs) {
-			if (uint32_t attribute = GetVertexAttribute(itInput.name.c_str())) {
+		for (const auto &itVertexAttribute : vertexAttributes) {
+			if (uint32_t attribute = GetVertexAttribute(itVertexAttribute.c_str())) {
 				VkVertexInputAttributeDescription inputAttributeDescription = {};
 				inputAttributeDescription.binding = vertexBinding;
 				inputAttributeDescription.location = GetVertexAttributeLocation(attribute);
@@ -140,7 +115,7 @@ bool CVKPipeline::CreateVertexInputState(eastl::vector<VkVertexInputBindingDescr
 				inputAttributeDescriptions.emplace_back(inputAttributeDescription);
 			}
 
-			if (uint32_t attribute = GetInstanceAttribute(itInput.name.c_str())) {
+			if (uint32_t attribute = GetInstanceAttribute(itVertexAttribute.c_str())) {
 				VkVertexInputAttributeDescription inputAttributeDescription = {};
 				inputAttributeDescription.binding = instanceBinding;
 				inputAttributeDescription.location = GetInstanceAttributeLocation(attribute);

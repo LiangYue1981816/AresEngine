@@ -4,6 +4,7 @@
 #include "GfxGLM.h"
 #include "GfxEnum.h"
 #include "GfxDefinition.h"
+#include "GfxSprivCross.h"
 #include "GfxVertexAttribute.h"
 
 #include "GfxProfiler.h"

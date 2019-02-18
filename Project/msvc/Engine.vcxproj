@@ -238,6 +238,7 @@
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxResourceManager.h" />
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxSampler.h" />
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxShader.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxSprivCross.h" />
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxSwapChain.h" />
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxTexture2D.h" />
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxTexture2DArray.h" />
@@ -252,14 +253,6 @@
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxUniformVec4.h" />
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxVertexAttribute.h" />
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxVertexBuffer.h" />
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES30Pipeline.h" />
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES30PipelineCompute.h" />
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES30PipelineGraphics.h" />
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES30Shader.h" />
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES31Pipeline.h" />
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES31PipelineCompute.h" />
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES31PipelineGraphics.h" />
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES31Shader.h" />
     <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3CommandBuffer.h" />
     <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3CommandBufferManager.h" />
     <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3Definition.h" />
@@ -277,6 +270,9 @@
     <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3MeshDraw.h" />
     <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3MeshDrawManager.h" />
     <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3MeshManager.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3Pipeline.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3PipelineCompute.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3PipelineGraphics.h" />
     <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3PipelineManager.h" />
     <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3Renderer.h" />
     <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3RenderPass.h" />
@@ -285,6 +281,7 @@
     <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3RenderTextureManager.h" />
     <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3Sampler.h" />
     <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3SamplerManager.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3Shader.h" />
     <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3ShaderManager.h" />
     <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3SwapChain.h" />
     <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3Texture.h" />
@@ -477,6 +474,7 @@
     <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxRenderQueue.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxResource.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxResourceManager.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxSprivCross.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxUniformCamera.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxUniformEngine.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxUniformMat4.cpp" />
@@ -485,14 +483,6 @@
     <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxUniformVec3.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxUniformVec4.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxVertexAttribute.cpp" />
-    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES30Pipeline.cpp" />
-    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES30PipelineCompute.cpp" />
-    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES30PipelineGraphics.cpp" />
-    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES30Shader.cpp" />
-    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES31Pipeline.cpp" />
-    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES31PipelineCompute.cpp" />
-    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES31PipelineGraphics.cpp" />
-    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES31Shader.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3CommandBuffer.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3CommandBufferManager.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3Extension.cpp" />
@@ -509,6 +499,9 @@
     <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3MeshDraw.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3MeshDrawManager.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3MeshManager.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3Pipeline.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3PipelineCompute.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3PipelineGraphics.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3PipelineManager.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3Renderer.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3RenderPass.cpp" />
@@ -517,6 +510,7 @@
     <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3RenderTextureManager.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3Sampler.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3SamplerManager.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3Shader.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3ShaderManager.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3SwapChain.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3Texture.cpp" />
