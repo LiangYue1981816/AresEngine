@@ -35,7 +35,7 @@ private:
 
 private:
 	uint32_t m_kind;
-	uint32_t m_program;
+	uint32_t m_shader;
 
 private:
 	CGfxSprivCross m_spriv;
