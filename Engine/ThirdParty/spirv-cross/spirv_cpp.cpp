@@ -1,5 +1,5 @@
 /*
- * Copyright 2015-2018 ARM Limited
+ * Copyright 2015-2019 Arm Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -143,6 +143,30 @@ void CompilerCPP::emit_block_struct(SPIRType &type)
 
 void CompilerCPP::emit_resources()
 {
+	for (auto &id : ir.ids)
+	{
+		if (id.get_type() == TypeConstant)
+		{
+			auto &c = id.get<SPIRConstant>();
+
+			bool needs_declaration = c.specialization || c.is_used_as_lut;
+
+			if (needs_declaration)
+			{
+				if (!options.vulkan_semantics && c.specialization)
+				{
+					c.specialization_constant_macro_name =
+					    constant_value_macro_name(get_decoration(c.self, DecorationSpecId));
+				}
+				emit_constant(c);
+			}
+		}
+		else if (id.get_type() == TypeConstantOp)
+		{
+			emit_specialization_constant_op(id.get<SPIRConstantOp>());
+		}
+	}
+
 	// Output all basic struct types which are not Block or BufferBlock as these are declared inplace
 	// when such variables are instantiated.
 	for (auto &id : ir.ids)

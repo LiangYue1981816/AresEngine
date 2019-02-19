@@ -24,24 +24,6 @@ CStream::~CStream(void)
 	Free();
 }
 
-bool CStream::IsValid(void) const
-{
-	return m_pAddress != nullptr && m_size > 0;
-}
-
-void CStream::Free(void)
-{
-	if (m_bAlloced) {
-		delete[] m_pAddress;
-	}
-
-	m_bAlloced = false;
-	m_pAddress = nullptr;
-
-	m_size = 0;
-	m_position = 0;
-}
-
 bool CStream::Alloc(size_t size)
 {
 	if (size == 0) {
@@ -59,6 +41,24 @@ bool CStream::Alloc(size_t size)
 	m_position = 0;
 
 	return true;
+}
+
+void CStream::Free(void)
+{
+	if (m_bAlloced) {
+		delete[] m_pAddress;
+	}
+
+	m_bAlloced = false;
+	m_pAddress = nullptr;
+
+	m_size = 0;
+	m_position = 0;
+}
+
+bool CStream::IsValid(void) const
+{
+	return m_pAddress != nullptr && m_size > 0;
 }
 
 bool CStream::SetStream(uint8_t *pAddress, size_t size)

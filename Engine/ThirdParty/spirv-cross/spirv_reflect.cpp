@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Bradley Austin Davis
+ * Copyright 2018-2019 Bradley Austin Davis
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -264,18 +264,11 @@ string CompilerReflection::compile()
 void CompilerReflection::emit_types()
 {
 	bool emitted_open_tag = false;
-	for (auto &id : ir.ids)
-	{
-		auto idType = id.get_type();
-		if (idType == TypeType)
-		{
-			auto &type = id.get<SPIRType>();
-			if (type.basetype == SPIRType::Struct && !type.pointer && type.array.empty())
-			{
-				emit_type(type, emitted_open_tag);
-			}
-		}
-	}
+
+	ir.for_each_typed_id<SPIRType>([&](uint32_t, SPIRType &type) {
+		if (type.basetype == SPIRType::Struct && !type.pointer && type.array.empty())
+			emit_type(type, emitted_open_tag);
+	});
 
 	if (emitted_open_tag)
 	{
@@ -482,7 +475,8 @@ void CompilerReflection::emit_resources(const char *tag, const vector<Resource> 
 
 		{
 			bool is_sized_block = is_block && (get_storage_class(res.id) == StorageClassUniform ||
-			                                   get_storage_class(res.id) == StorageClassUniformConstant);
+			                                   get_storage_class(res.id) == StorageClassUniformConstant ||
+			                                   get_storage_class(res.id) == StorageClassStorageBuffer);
 			if (is_sized_block)
 			{
 				uint32_t block_size = uint32_t(get_declared_struct_size(get_type(res.base_type_id)));
@@ -565,9 +559,16 @@ void CompilerReflection::emit_specialization_constants()
 
 string CompilerReflection::to_member_name(const SPIRType &type, uint32_t index) const
 {
-	auto &memb = ir.meta[type.self].members;
-	if (index < memb.size() && !memb[index].alias.empty())
-		return memb[index].alias;
+	auto *type_meta = ir.find_meta(type.self);
+
+	if (type_meta)
+	{
+		auto &memb = type_meta->members;
+		if (index < memb.size() && !memb[index].alias.empty())
+			return memb[index].alias;
+		else
+			return join("_m", index);
+	}
 	else
 		return join("_m", index);
 }
