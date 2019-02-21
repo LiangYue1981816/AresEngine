@@ -25,6 +25,10 @@ CVKDescriptorSetManager::~CVKDescriptorSetManager(void)
 
 CVKDescriptorSet* CVKDescriptorSetManager::AllocDescriptorSet(CVKDescriptorLayout *pDescriptorLayout)
 {
+	if (pDescriptorLayout->GetDescriptorSetLayout() == VK_NULL_HANDLE) {
+		return nullptr;
+	}
+
 	mutex_autolock autolock(&m_lock);
 	{
 		CVKDescriptorPool *pDescriptorPool = m_pPoolListHead;
