@@ -74,7 +74,7 @@ bool CVKMemory::BeginMap(VkDeviceSize offset, VkDeviceSize size, void **ppAddres
 		return false;
 	}
 
-	CALL_VK_FUNCTION_RETURN_BOOL(vkMapMemory(m_pDevice->GetDevice(), m_pAllocator->GetMemory(), m_memoryOffset + offset, size, m_pAllocator->GetMemoryPropertyFlags(), ppAddress));
+	CALL_VK_FUNCTION_RETURN_BOOL(vkMapMemory(m_pDevice->GetDevice(), m_pAllocator->GetMemory(), m_memoryOffset + offset, size, 0, ppAddress));
 	return true;
 }
 
