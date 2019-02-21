@@ -5,6 +5,7 @@
 class CVKVertexBuffer : public CGfxVertexBuffer
 {
 	friend class CVKMesh;
+	friend class CVKMeshDraw;
 
 
 private:
@@ -19,9 +20,11 @@ public:
 
 public:
 	bool BufferData(size_t offset, size_t size, const void *pBuffer);
+
+private:
 	void Bind(VkCommandBuffer vkCommandBuffer, VkDeviceSize offset);
 
-public:
+private:
 	CVKBufferPtr BufferTransfer(VkCommandBuffer vkCommandBuffer);
 
 

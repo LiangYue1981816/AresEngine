@@ -22,7 +22,7 @@ protected:
 	bool CreateImage(VkImageType imageType, VkImageViewType viewType, VkFormat format, int width, int height, int levels, int layers, VkSampleCountFlagBits samples, VkImageTiling imageTiling, VkImageUsageFlags imageUsageFlags);
 	void Destroy(void);
 
-public:
+protected:
 	CVKBufferPtr BufferTransfer(VkCommandBuffer vkCommandBuffer);
 
 
