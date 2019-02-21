@@ -137,9 +137,9 @@ bool CVKMeshDraw::InstanceBufferData(size_t size, const void *pBuffer)
 	}
 }
 
-void CVKMeshDraw::Bind(VkCommandBuffer vkCommandBuffer, CVKBufferPtr ptrIndexBuffer, CVKBufferPtr ptrVertexBuffer, CVKBufferPtr ptrInstanceBuffer)
+void CVKMeshDraw::Bind(VkCommandBuffer vkCommandBuffer, CVKBufferPtr ptrIndexBufferTransfer, CVKBufferPtr ptrVertexBufferTransfer)
 {
-	m_pIndexBuffer->Bind(vkCommandBuffer, 0, ptrIndexBuffer);
-	m_pVertexBuffer->Bind(vkCommandBuffer, 0, ptrVertexBuffer);
-	m_pInstanceBuffer->Bind(vkCommandBuffer, 0, ptrInstanceBuffer);
+	m_pIndexBuffer->Bind(vkCommandBuffer, 0, ptrIndexBufferTransfer);
+	m_pVertexBuffer->Bind(vkCommandBuffer, 0, ptrVertexBufferTransfer);
+	m_pInstanceBuffer->Bind(vkCommandBuffer, 0);
 }
