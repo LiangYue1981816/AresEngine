@@ -89,7 +89,7 @@ bool CVKMaterialPass::SetPipeline(const CGfxRenderPass *pRenderPass, const CGfxS
 	}
 
 	m_pPipeline = VKRenderer()->CreatePipelineGraphics(pRenderPass, pVertexShader, pFragmentShader, state, indexSubpass, vertexBinding, instanceBinding);
-	m_pDescriptorSet = m_pDevice->GetDescriptorSetManager()->AllocDescriptorSet(((CVKPipeline *)m_pPipeline)->GetDescriptorLayout(DESCRIPTOR_SET_PASS));
+	m_pDescriptorSet = m_pDevice->GetDescriptorSetManager()->AllocDescriptorSet(((CVKPipelineGraphics *)m_pPipeline)->GetDescriptorLayout(DESCRIPTOR_SET_PASS));
 
 	return true;
 }
