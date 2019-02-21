@@ -5,6 +5,7 @@
 class CGLES3VertexBuffer : public CGfxVertexBuffer
 {
 	friend class CGLES3Mesh;
+	friend class CGLES3VertexArrayObject;
 
 
 private:
@@ -19,6 +20,8 @@ public:
 
 public:
 	bool BufferData(size_t offset, size_t size, const void *pBuffer);
+
+private:
 	void Bind(void);
 
 
