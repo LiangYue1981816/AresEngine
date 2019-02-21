@@ -38,6 +38,7 @@ public:
 
 public:
 	CGfxPipelineGraphics* GetPipeline(void) const;
+	CVKDescriptorSet* GetDescriptorSet(void) const;
 
 	CGfxTexture2DPtr GetTexture2D(const char *szName) const;
 	CGfxTexture2DArrayPtr GetTexture2DArray(const char *szName) const;

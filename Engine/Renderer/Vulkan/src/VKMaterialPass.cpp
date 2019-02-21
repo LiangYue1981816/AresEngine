@@ -372,6 +372,11 @@ CGfxPipelineGraphics* CVKMaterialPass::GetPipeline(void) const
 	return m_pPipeline;
 }
 
+CVKDescriptorSet* CVKMaterialPass::GetDescriptorSet(void) const
+{
+	return m_pDescriptorSet;
+}
+
 CGfxTexture2DPtr CVKMaterialPass::GetTexture2D(const char *szName) const
 {
 	const auto &itTexture = m_ptrTexture2Ds.find(HashValue(szName));
