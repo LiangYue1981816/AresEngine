@@ -30,7 +30,11 @@ public:
 
 public:
 	bool InstanceBufferData(size_t size, const void *pBuffer);
-	void Bind(VkCommandBuffer vkCommandBuffer, CVKBufferPtr ptrIndexBufferTransfer, CVKBufferPtr ptrVertexBufferTransfer);
+	void Bind(VkCommandBuffer vkCommandBuffer);
+
+public:
+	CVKBufferPtr IndexBufferTransfer(VkCommandBuffer vkCommandBuffer);
+	CVKBufferPtr VertexBufferTransfer(VkCommandBuffer vkCommandBuffer);
 
 
 private:

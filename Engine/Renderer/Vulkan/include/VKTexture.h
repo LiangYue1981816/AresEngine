@@ -23,7 +23,7 @@ protected:
 	void Destroy(void);
 
 public:
-	void Bind(VkCommandBuffer vkCommandBuffer, CVKBufferPtr ptrBufferTransfer);
+	CVKBufferPtr BufferTransfer(VkCommandBuffer vkCommandBuffer);
 
 
 protected:

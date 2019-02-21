@@ -60,8 +60,23 @@ bool CVKIndexBuffer::BufferData(size_t offset, size_t size, const void *pBuffer)
 	}
 }
 
-void CVKIndexBuffer::Bind(VkCommandBuffer vkCommandBuffer, VkDeviceSize offset, CVKBufferPtr ptrBufferTransfer)
+void CVKIndexBuffer::Bind(VkCommandBuffer vkCommandBuffer, VkDeviceSize offset)
 {
+	switch ((int)GetIndexType()) {
+	case GFX_INDEX_UNSIGNED_SHORT:
+		vkCmdBindIndexBuffer(vkCommandBuffer, m_ptrBuffer->GetBuffer(), offset, VK_INDEX_TYPE_UINT16);
+		break;
+
+	case GFX_INDEX_UNSIGNED_INT:
+		vkCmdBindIndexBuffer(vkCommandBuffer, m_ptrBuffer->GetBuffer(), offset, VK_INDEX_TYPE_UINT32);
+		break;
+	}
+}
+
+CVKBufferPtr CVKIndexBuffer::BufferTransfer(VkCommandBuffer vkCommandBuffer)
+{
+	CVKBufferPtr ptrBufferTransfer;
+
 	if (m_transferBuffer.size()) {
 		ptrBufferTransfer = CVKBufferPtr(new CVKBuffer(m_pDevice, m_transferBuffer.size(), VK_BUFFER_USAGE_TRANSFER_SRC_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT));
 		ptrBufferTransfer->BufferData(0, m_transferBuffer.size(), m_transferBuffer.data());
@@ -72,13 +87,5 @@ void CVKIndexBuffer::Bind(VkCommandBuffer vkCommandBuffer, VkDeviceSize offset, 
 		m_transferBuffer.shrink_to_fit();
 	}
 
-	switch ((int)GetIndexType()) {
-	case GFX_INDEX_UNSIGNED_SHORT:
-		vkCmdBindIndexBuffer(vkCommandBuffer, m_ptrBuffer->GetBuffer(), offset, VK_INDEX_TYPE_UINT16);
-		break;
-
-	case GFX_INDEX_UNSIGNED_INT:
-		vkCmdBindIndexBuffer(vkCommandBuffer, m_ptrBuffer->GetBuffer(), offset, VK_INDEX_TYPE_UINT32);
-		break;
-	}
+	return ptrBufferTransfer;
 }

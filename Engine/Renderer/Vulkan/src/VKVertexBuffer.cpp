@@ -58,8 +58,15 @@ bool CVKVertexBuffer::BufferData(size_t offset, size_t size, const void *pBuffer
 	}
 }
 
-void CVKVertexBuffer::Bind(VkCommandBuffer vkCommandBuffer, VkDeviceSize offset, CVKBufferPtr ptrBufferTransfer)
+void CVKVertexBuffer::Bind(VkCommandBuffer vkCommandBuffer, VkDeviceSize offset)
 {
+	vkCmdBindVertexBuffer(vkCommandBuffer, m_binding, m_ptrBuffer->GetBuffer(), offset);
+}
+
+CVKBufferPtr CVKVertexBuffer::BufferTransfer(VkCommandBuffer vkCommandBuffer)
+{
+	CVKBufferPtr ptrBufferTransfer;
+
 	if (m_transferBuffer.size()) {
 		ptrBufferTransfer = CVKBufferPtr(new CVKBuffer(m_pDevice, m_transferBuffer.size(), VK_BUFFER_USAGE_TRANSFER_SRC_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT));
 		ptrBufferTransfer->BufferData(0, m_transferBuffer.size(), m_transferBuffer.data());
@@ -70,5 +77,5 @@ void CVKVertexBuffer::Bind(VkCommandBuffer vkCommandBuffer, VkDeviceSize offset,
 		m_transferBuffer.shrink_to_fit();
 	}
 
-	vkCmdBindVertexBuffer(vkCommandBuffer, m_binding, m_ptrBuffer->GetBuffer(), offset);
+	return ptrBufferTransfer;
 }
