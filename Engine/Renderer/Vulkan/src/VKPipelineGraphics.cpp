@@ -152,7 +152,7 @@ bool CVKPipelineGraphics::Create(const CGfxRenderPass *pRenderPass, const CGfxSh
 	depthStencilState.back.writeMask = state.stencilBackWriteMask;
 	depthStencilState.back.reference = state.stencilBackCompareRef;
 
-	eastl::vector<VkPipelineColorBlendAttachmentState> colorBlendAttachments(pRenderPass->GetSubpassOutputAttachmentCount(indexSubpass));
+	eastl::vector<VkPipelineColorBlendAttachmentState> colorBlendAttachments;
 	for (uint32_t indexAttachment = 0; indexAttachment < pRenderPass->GetSubpassOutputAttachmentCount(indexSubpass); indexAttachment++) {
 		VkPipelineColorBlendAttachmentState colorBlendAttachment = {};
 		colorBlendAttachment.blendEnable = state.bEnableBlend ? VK_TRUE : VK_FALSE;
