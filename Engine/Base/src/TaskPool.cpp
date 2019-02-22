@@ -27,15 +27,27 @@ CTaskPool::~CTaskPool(void)
 	event_destroy(&m_eventExit);
 }
 
-void CTaskPool::Task(CTask *pTask, void *pParams, event_t *pEventSignal)
+void CTaskPool::Task(CTask *pTask, void *pParams, event_t *pEventSignal, bool bHighPriority)
 {
 	pTask->SetTaskParams(pParams);
 	pTask->SetTaskEventSignal(pEventSignal);
 
 	atomic_spin_lock(&m_lockTaskList);
 	{
-		pTask->pNext = m_pTaskListHead;
-		m_pTaskListHead = pTask;
+		if (bHighPriority == false && m_pTaskListHead) {
+			CTask *pLastTask = m_pTaskListHead;
+
+			while (pLastTask->pNext) {
+				pLastTask = pLastTask->pNext;
+			}
+
+			pTask->pNext = nullptr;
+			pLastTask->pNext = pTask;
+		}
+		else {
+			pTask->pNext = m_pTaskListHead;
+			m_pTaskListHead = pTask;
+		}
 	}
 	atomic_spin_unlock(&m_lockTaskList);
 }

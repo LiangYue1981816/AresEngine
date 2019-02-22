@@ -14,7 +14,7 @@ public:
 
 
 public:
-	void Task(CTask *pTask, void *pParams, event_t *pEventSignal);
+	void Task(CTask *pTask, void *pParams, event_t *pEventSignal, bool bHighPriority = false);
 
 private:
 	static void* TaskThread(void *pParams);
