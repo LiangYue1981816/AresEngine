@@ -921,6 +921,9 @@
     <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3Shader.h">
       <Filter>Engine\Renderer\GLES3\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Engine\Base\include\Task.h">
+      <Filter>Engine\Base\Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Engine\ThirdParty\eastl\source\allocator_eastl.cpp">
@@ -1483,6 +1486,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3Shader.cpp">
       <Filter>Engine\Renderer\GLES3\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Base\src\Task.cpp">
+      <Filter>Engine\Base\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

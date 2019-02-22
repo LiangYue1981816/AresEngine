@@ -194,6 +194,7 @@
     <ClInclude Include="..\..\Engine\Base\include\Lock.h" />
     <ClInclude Include="..\..\Engine\Base\include\SharedPtr.h" />
     <ClInclude Include="..\..\Engine\Base\include\Stream.h" />
+    <ClInclude Include="..\..\Engine\Base\include\Task.h" />
     <ClInclude Include="..\..\Engine\Base\include\TaskGraph.h" />
     <ClInclude Include="..\..\Engine\Base\include\Utils.h" />
     <ClInclude Include="..\..\Engine\Base\src\nvwa\c++11.h" />
@@ -455,6 +456,7 @@
     <ClCompile Include="..\..\Engine\Base\src\nvwa\debug_new.cpp" />
     <ClCompile Include="..\..\Engine\Base\src\nvwa\operator_new.cpp" />
     <ClCompile Include="..\..\Engine\Base\src\Stream.cpp" />
+    <ClCompile Include="..\..\Engine\Base\src\Task.cpp" />
     <ClCompile Include="..\..\Engine\Base\src\TaskGraph.cpp" />
     <ClCompile Include="..\..\Engine\Base\src\Utils.cpp" />
     <ClCompile Include="..\..\Engine\Engine\src\Engine.cpp" />
