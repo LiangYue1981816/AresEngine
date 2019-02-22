@@ -1,8 +1,9 @@
 #pragma once
 #include "PreHeader.h"
+#include "Lock.h"
 #include "Task.h"
 #include "event.h"
-#include "pthread.h"
+#include "pthreadex.h"
 
 
 class CALL_API CTaskGraph

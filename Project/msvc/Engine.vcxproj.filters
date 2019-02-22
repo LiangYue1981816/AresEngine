@@ -142,6 +142,9 @@
     <Filter Include="Engine\Resource\Source Files">
       <UniqueIdentifier>{b3bf7d81-c5d2-45ca-8a57-59508640a86d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ThirdParty\pthreadex">
+      <UniqueIdentifier>{cdb9f99d-dace-41cb-b46e-688cec1cf9e5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Engine\PreHeader.h">
@@ -924,6 +927,12 @@
     <ClInclude Include="..\..\Engine\Base\include\Task.h">
       <Filter>Engine\Base\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Engine\Base\include\TaskPool.h">
+      <Filter>Engine\Base\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\pthreadex\pthreadex.h">
+      <Filter>ThirdParty\pthreadex</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Engine\ThirdParty\eastl\source\allocator_eastl.cpp">
@@ -1489,6 +1498,12 @@
     </ClCompile>
     <ClCompile Include="..\..\Engine\Base\src\Task.cpp">
       <Filter>Engine\Base\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Base\src\TaskPool.cpp">
+      <Filter>Engine\Base\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\pthreadex\pthreadex.c">
+      <Filter>ThirdParty\pthreadex</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
