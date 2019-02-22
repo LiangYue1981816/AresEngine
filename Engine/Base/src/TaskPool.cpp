@@ -133,25 +133,36 @@ void* CTaskPool::TaskThread(void *pParams)
 
 	while (true) {
 		// Check if the thread needs to exit
-		if (event_wait_timeout(&pTaskPool->m_eventExit, 0) == 0) {
+		if (event_wait_timeout(&pTaskPool->m_eventExit, 1) == 0) {
 			break;
 		}
 
 		// Run tasks
-		CTask *pTask = nullptr;
-		atomic_spin_lock(&pTaskPool->m_lockTaskList);
-		{
-			if (pTaskPool->m_pTaskListHead) {
-				pTask = pTaskPool->m_pTaskListHead;
-				pTaskPool->m_pTaskListHead = pTask->pNext;
-			}
-		}
-		atomic_spin_unlock(&pTaskPool->m_lockTaskList);
+		do {
+			bool bFinish = false;
+			CTask *pTask = nullptr;
 
-		if (pTask) {
-			pTask->TaskFunc(pTask->GetTaskParams());
-			pTask->SetTaskSignal();
-		}
+			atomic_spin_lock(&pTaskPool->m_lockTaskList);
+			{
+				if (pTaskPool->m_pTaskListHead) {
+					pTask = pTaskPool->m_pTaskListHead;
+					pTaskPool->m_pTaskListHead = pTask->pNext;
+				}
+				else {
+					bFinish = true;
+				}
+			}
+			atomic_spin_unlock(&pTaskPool->m_lockTaskList);
+
+			if (pTask) {
+				pTask->TaskFunc(pTask->GetTaskParams());
+				pTask->SetTaskSignal();
+			}
+
+			if (bFinish) {
+				break;
+			}
+		} while (true);
 	}
 
 	return nullptr;
