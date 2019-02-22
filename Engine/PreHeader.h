@@ -25,8 +25,10 @@
 #endif
 
 
-#include <algorithm>
 #include <atomic>
+#include <algorithm>
+#include <functional>
+
 #include <string>
 #include <map>
 #include <vector>

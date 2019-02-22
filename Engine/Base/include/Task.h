@@ -32,3 +32,29 @@ private:
 private:
 	CTask *pNext;
 };
+
+
+class CALL_API CTaskLambda : public CTask
+{
+public:
+	template<class Func, class... Args>
+	CTaskLambda(Func&& func, Args&&... args)
+	{
+		m_function = [=]() { func(args...); };
+	}
+	virtual ~CTaskLambda(void)
+	{
+
+	}
+
+
+public:
+	virtual void TaskFunc(void *pParams)
+	{
+		m_function();
+	}
+
+
+private:
+	std::function<void()> m_function;
+};
