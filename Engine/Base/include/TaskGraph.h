@@ -8,7 +8,7 @@
 class CALL_API CTaskGraph
 {
 public:
-	CTaskGraph(const char *szName);
+	CTaskGraph(const char *szName, int numThreads = THREAD_COUNT);
 	virtual ~CTaskGraph(void);
 
 
@@ -26,7 +26,7 @@ private:
 	event_t m_eventReady;
 	event_t m_eventFinish;
 	event_t m_eventDispatch;
-	pthread_t m_threads[THREAD_COUNT];
+	eastl::vector<pthread_t> m_threads;
 
 private:
 	std::atomic_flag m_lockTaskList;

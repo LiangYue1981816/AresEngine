@@ -89,7 +89,7 @@ static void atomic_spin_unlock(std::atomic_flag *flag)
 
 
 
-CTaskGraph::CTaskGraph(const char *szName)
+CTaskGraph::CTaskGraph(const char *szName, int numThreads)
 {
 	event_init(&m_eventExit, 0);
 	event_init(&m_eventReady, 1);
@@ -97,7 +97,8 @@ CTaskGraph::CTaskGraph(const char *szName)
 	event_init(&m_eventDispatch, 0);
 	atomic_spin_init(&m_lockTaskList);
 
-	for (int indexThread = 0; indexThread < THREAD_COUNT; indexThread++) {
+	m_threads.resize(numThreads);
+	for (int indexThread = 0; indexThread < m_threads.size(); indexThread++) {
 		char szThreadName[_MAX_STRING];
 		sprintf(szThreadName, "%s_%d", szName, indexThread);
 		pthread_create(&m_threads[indexThread], nullptr, TaskThread, this);
@@ -110,7 +111,7 @@ CTaskGraph::~CTaskGraph(void)
 	event_signal(&m_eventExit);
 	event_signal(&m_eventDispatch);
 
-	for (int indexThread = 0; indexThread < THREAD_COUNT; indexThread++) {
+	for (int indexThread = 0; indexThread < m_threads.size(); indexThread++) {
 		pthread_join(m_threads[indexThread], nullptr);
 	}
 
@@ -136,7 +137,7 @@ void CTaskGraph::Task(CTask *pTask, void *pParams, event_t *pEventSignal, event_
 
 void CTaskGraph::Dispatch(void)
 {
-	for (int indexThread = 0; indexThread < THREAD_COUNT; indexThread++) {
+	for (int indexThread = 0; indexThread < m_threads.size(); indexThread++) {
 		event_unsignal(&m_eventReady);
 		event_unsignal(&m_eventFinish);
 	}
