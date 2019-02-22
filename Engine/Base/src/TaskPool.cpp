@@ -2,6 +2,7 @@
 
 
 CTaskPool::CTaskPool(const char *szName, int numThreads)
+	: m_pTaskListHead(nullptr)
 {
 	event_init(&m_eventExit, 0);
 	atomic_spin_init(&m_lockTaskList);
