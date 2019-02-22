@@ -6,6 +6,7 @@
 
 class CALL_API CTask
 {
+	friend class CTaskPool;
 	friend class CTaskGraph;
 
 
