@@ -20,7 +20,7 @@ const eastl::string& CGfxSprivCross::Create(const uint32_t *words, size_t numWor
 
 	spirv_cross::CompilerGLSL compiler(words, numWords);
 	compiler.set_options(options);
-	m_source = compiler.compile();
+	m_source = compiler.compile().c_str();
 
 	const spirv_cross::ShaderResources shaderResources = compiler.get_shader_resources();
 	{

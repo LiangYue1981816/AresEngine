@@ -41,7 +41,7 @@ bool CGLES3Shader::Create(const uint32_t *words, size_t numWords, shader_kind ki
 	Destroy();
 	{
 		do {
-			const std::string strSource = m_spriv.Create(words, numWords, 310);
+			const eastl::string strSource = m_spriv.Create(words, numWords, 310);
 			const char *szSource = strSource.c_str();
 
 			m_kind = kind;
