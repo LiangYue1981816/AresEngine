@@ -21,6 +21,7 @@ CVKRenderer::CVKRenderer(void *hInstance, void *hWnd, void *hDC, int width, int 
 	, m_pFrameBufferManager(nullptr)
 	, m_pRenderTextureManager(nullptr)
 	, m_pUniformBufferManager(nullptr)
+	, m_pCommandBufferManager(nullptr)
 {
 	m_pInstance = new CVKInstance(hInstance, hWnd);
 	m_pDevice = new CVKDevice(m_pInstance);
@@ -39,6 +40,7 @@ CVKRenderer::CVKRenderer(void *hInstance, void *hWnd, void *hDC, int width, int 
 	m_pFrameBufferManager = new CVKFrameBufferManager(m_pDevice);
 	m_pRenderTextureManager = new CVKRenderTextureManager(m_pDevice);
 	m_pUniformBufferManager = new CVKUniformBufferManager(m_pDevice);
+	m_pCommandBufferManager = new CVKCommandBufferManager(m_pDevice);
 
 	m_pSwapChain = new CVKSwapChain(m_pDevice, width, height, pixelFormat);
 }
@@ -47,7 +49,7 @@ CVKRenderer::~CVKRenderer(void)
 {
 	delete m_pSwapChain;
 
-//	delete m_pCommandBufferManager;
+	delete m_pCommandBufferManager;
 	delete m_pMeshManager;
 	delete m_pMeshDrawManager;
 	delete m_pMaterialManager;
@@ -229,202 +231,218 @@ CGfxUniformBufferPtr CVKRenderer::NewUniformBuffer(size_t size)
 
 CGfxCommandBufferPtr CVKRenderer::NewCommandBuffer(bool bMainCommandBuffer)
 {
-	return nullptr;
+	return m_pCommandBufferManager->Create(bMainCommandBuffer);
 }
 
 bool CVKRenderer::CmdBeginRenderPass(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass)
 {
-	return false;
+	return ptrCommandBuffer->CmdBeginRenderPass(ptrFrameBuffer, ptrRenderPass);
 }
 
 bool CVKRenderer::CmdNextSubpass(CGfxCommandBufferPtr ptrCommandBuffer)
 {
-	return false;
+	return ptrCommandBuffer->CmdNextSubpass();
 }
 
 bool CVKRenderer::CmdEndRenderPass(CGfxCommandBufferPtr ptrCommandBuffer)
 {
-	return false;
+	return ptrCommandBuffer->CmdEndRenderPass();
 }
 
 bool CVKRenderer::CmdBindPipelineCompute(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxPipelineCompute *pPipelineCompute)
 {
-	return false;
+	return ptrCommandBuffer->CmdBindPipelineCompute(pPipelineCompute);
 }
 
 bool CVKRenderer::CmdBindPipelineGraphics(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxPipelineGraphics *pPipelineGraphics)
 {
-	return false;
+	return ptrCommandBuffer->CmdBindPipelineGraphics(pPipelineGraphics);
 }
 
 bool CVKRenderer::CmdBindMaterialPass(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxMaterialPtr ptrMaterial, uint32_t namePass)
 {
-	return false;
+	return ptrCommandBuffer->CmdBindMaterialPass(ptrMaterial, namePass);
 }
 
 bool CVKRenderer::CmdBindUniformBuffer(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxUniformBufferPtr ptrUniformBuffer, uint32_t nameUniform)
 {
-	return false;
+	return ptrCommandBuffer->CmdBindUniformBuffer(ptrUniformBuffer, nameUniform);
 }
 
 bool CVKRenderer::CmdUniform1i(CGfxCommandBufferPtr ptrCommandBuffer, const char *szName, int v0)
 {
-	return false;
+	return ptrCommandBuffer->CmdUniform1i(szName, v0);
 }
 
 bool CVKRenderer::CmdUniform2i(CGfxCommandBufferPtr ptrCommandBuffer, const char *szName, int v0, int v1)
 {
-	return false;
+	return ptrCommandBuffer->CmdUniform2i(szName, v0, v1);
 }
 
 bool CVKRenderer::CmdUniform3i(CGfxCommandBufferPtr ptrCommandBuffer, const char *szName, int v0, int v1, int v2)
 {
-	return false;
+	return ptrCommandBuffer->CmdUniform3i(szName, v0, v1, v2);
 }
 
 bool CVKRenderer::CmdUniform4i(CGfxCommandBufferPtr ptrCommandBuffer, const char *szName, int v0, int v1, int v2, int v3)
 {
-	return false;
+	return ptrCommandBuffer->CmdUniform4i(szName, v0, v1, v2, v3);
 }
 
 bool CVKRenderer::CmdUniform1f(CGfxCommandBufferPtr ptrCommandBuffer, const char *szName, float v0)
 {
-	return false;
+	return ptrCommandBuffer->CmdUniform1f(szName, v0);
 }
 
 bool CVKRenderer::CmdUniform2f(CGfxCommandBufferPtr ptrCommandBuffer, const char *szName, float v0, float v1)
 {
-	return false;
+	return ptrCommandBuffer->CmdUniform2f(szName, v0, v1);
 }
 
 bool CVKRenderer::CmdUniform3f(CGfxCommandBufferPtr ptrCommandBuffer, const char *szName, float v0, float v1, float v2)
 {
-	return false;
+	return ptrCommandBuffer->CmdUniform3f(szName, v0, v1, v2);
 }
 
 bool CVKRenderer::CmdUniform4f(CGfxCommandBufferPtr ptrCommandBuffer, const char *szName, float v0, float v1, float v2, float v3)
 {
-	return false;
+	return ptrCommandBuffer->CmdUniform4f(szName, v0, v1, v2, v3);
 }
 
 bool CVKRenderer::CmdUniform1iv(CGfxCommandBufferPtr ptrCommandBuffer, const char *szName, int count, const int *value)
 {
-	return false;
+	return ptrCommandBuffer->CmdUniform1iv(szName, count, value);
 }
 
 bool CVKRenderer::CmdUniform2iv(CGfxCommandBufferPtr ptrCommandBuffer, const char *szName, int count, const int *value)
 {
-	return false;
+	return ptrCommandBuffer->CmdUniform2iv(szName, count, value);
 }
 
 bool CVKRenderer::CmdUniform3iv(CGfxCommandBufferPtr ptrCommandBuffer, const char *szName, int count, const int *value)
 {
-	return false;
+	return ptrCommandBuffer->CmdUniform3iv(szName, count, value);
 }
 
 bool CVKRenderer::CmdUniform4iv(CGfxCommandBufferPtr ptrCommandBuffer, const char *szName, int count, const int *value)
 {
-	return false;
+	return ptrCommandBuffer->CmdUniform4iv(szName, count, value);
 }
 
 bool CVKRenderer::CmdUniform1fv(CGfxCommandBufferPtr ptrCommandBuffer, const char *szName, int count, const float *value)
 {
-	return false;
+	return ptrCommandBuffer->CmdUniform1fv(szName, count, value);
 }
 
 bool CVKRenderer::CmdUniform2fv(CGfxCommandBufferPtr ptrCommandBuffer, const char *szName, int count, const float *value)
 {
-	return false;
+	return ptrCommandBuffer->CmdUniform2fv(szName, count, value);
 }
 
 bool CVKRenderer::CmdUniform3fv(CGfxCommandBufferPtr ptrCommandBuffer, const char *szName, int count, const float *value)
 {
-	return false;
+	return ptrCommandBuffer->CmdUniform3fv(szName, count, value);
 }
 
 bool CVKRenderer::CmdUniform4fv(CGfxCommandBufferPtr ptrCommandBuffer, const char *szName, int count, const float *value)
 {
-	return false;
+	return ptrCommandBuffer->CmdUniform4fv(szName, count, value);
 }
 
 bool CVKRenderer::CmdUniformMatrix2fv(CGfxCommandBufferPtr ptrCommandBuffer, const char *szName, int count, const float *value)
 {
-	return false;
+	return ptrCommandBuffer->CmdUniformMatrix2fv(szName, count, value);
 }
 
 bool CVKRenderer::CmdUniformMatrix3fv(CGfxCommandBufferPtr ptrCommandBuffer, const char *szName, int count, const float *value)
 {
-	return false;
+	return ptrCommandBuffer->CmdUniformMatrix3fv(szName, count, value);
 }
 
 bool CVKRenderer::CmdUniformMatrix4fv(CGfxCommandBufferPtr ptrCommandBuffer, const char *szName, int count, const float *value)
 {
-	return false;
+	return ptrCommandBuffer->CmdUniformMatrix4fv(szName, count, value);
 }
 
 bool CVKRenderer::CmdClearDepth(CGfxCommandBufferPtr ptrCommandBuffer, float depth)
 {
-	return false;
+	return ptrCommandBuffer->CmdClearDepth(depth);
 }
 
 bool CVKRenderer::CmdClearColor(CGfxCommandBufferPtr ptrCommandBuffer, float red, float green, float blue, float alpha)
 {
-	return false;
+	return ptrCommandBuffer->CmdClearColor(red, green, blue, alpha);
 }
 
 bool CVKRenderer::CmdSetScissor(CGfxCommandBufferPtr ptrCommandBuffer, int x, int y, int width, int height)
 {
-	return false;
+	return ptrCommandBuffer->CmdSetScissor(x, y, width, height);
 }
 
 bool CVKRenderer::CmdSetViewport(CGfxCommandBufferPtr ptrCommandBuffer, int x, int y, int width, int height)
 {
-	return false;
+	return ptrCommandBuffer->CmdSetViewport(x, y, width, height);
 }
 
 bool CVKRenderer::CmdSetInstanceBufferData(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxMeshDrawPtr ptrMeshDraw, const uint8_t *pInstanceBuffer, uint32_t size)
 {
-	return false;
+	return ptrCommandBuffer->CmdSetInstanceBufferData(ptrMeshDraw, pInstanceBuffer, size);
 }
 
 bool CVKRenderer::CmdDrawInstance(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxMeshDrawPtr ptrMeshDraw, int instanceCount)
 {
-	return false;
+	if (ptrCommandBuffer->CmdBindMeshDraw(ptrMeshDraw) == false) {
+		return false;
+	}
+
+	if (ptrCommandBuffer->CmdDrawInstance(ptrMeshDraw->GetIndexType(), ptrMeshDraw->GetIndexOffset(), ptrMeshDraw->GetIndexCount(), instanceCount) == false) {
+		return false;
+	}
+
+	return true;
 }
 
 bool CVKRenderer::CmdDrawIndirect(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxMeshDrawPtr ptrMeshDraw)
 {
-	return false;
+	if (ptrCommandBuffer->CmdBindMeshDraw(ptrMeshDraw) == false) {
+		return false;
+	}
+
+	if (ptrCommandBuffer->CmdDrawIndirect(ptrMeshDraw->GetIndexType(), 0) == false) {
+		return false;
+	}
+
+	return true;
 }
 
 bool CVKRenderer::CmdDrawScreen(CGfxCommandBufferPtr ptrCommandBuffer)
 {
-	return false;
+	return true;
 }
 
 bool CVKRenderer::CmdExecute(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxCommandBufferPtr ptrSecondaryCommandBuffer)
 {
-	return false;
+	return ptrCommandBuffer->CmdExecute(ptrSecondaryCommandBuffer);
 }
 
 bool CVKRenderer::CmdPresent(CGfxCommandBufferPtr ptrCommandBuffer)
 {
-	return false;
+	return ptrCommandBuffer->CmdPresent();
 }
 
 bool CVKRenderer::CmdPushDebugGroup(CGfxCommandBufferPtr ptrCommandBuffer, const char *szMessage)
 {
-	return false;
+	return ptrCommandBuffer->CmdPushDebugGroup(szMessage);
 }
 
 bool CVKRenderer::CmdPopDebugGroup(CGfxCommandBufferPtr ptrCommandBuffer)
 {
-	return false;
+	return ptrCommandBuffer->CmdPopDebugGroup();
 }
 
 void CVKRenderer::Submit(const CGfxCommandBufferPtr ptrCommandBuffer)
 {
-
+	ptrCommandBuffer->Execute();
 }
 
 void CVKRenderer::Present(void)

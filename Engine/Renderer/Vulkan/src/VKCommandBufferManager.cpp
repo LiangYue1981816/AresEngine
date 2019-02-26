@@ -1,38 +1,38 @@
 #include "VKRenderer.h"
 
 
-CVKFrameBufferManager::CVKFrameBufferManager(CVKDevice *pDevice)
+CVKCommandBufferManager::CVKCommandBufferManager(CVKDevice *pDevice)
 	: m_pDevice(pDevice)
 {
 
 }
 
-CVKFrameBufferManager::~CVKFrameBufferManager(void)
+CVKCommandBufferManager::~CVKCommandBufferManager(void)
 {
-	for (const auto &itFrameBuffer : m_pFrameBuffers) {
-		delete itFrameBuffer.second;
+	for (const auto &itCommandBuffer : m_pCommandBuffers) {
+		delete itCommandBuffer.second;
 	}
 
-	m_pFrameBuffers.clear();
+	m_pCommandBuffers.clear();
 }
 
-CVKFrameBuffer* CVKFrameBufferManager::Create(int width, int height, int numAttachments)
+CVKCommandBuffer* CVKCommandBufferManager::Create(bool bMainCommandBuffer)
 {
 	mutex_autolock autolock(&lock);
 	{
-		CVKFrameBuffer *pFrameBuffer = new CVKFrameBuffer(m_pDevice, this, width, height, numAttachments);
-		m_pFrameBuffers[pFrameBuffer] = pFrameBuffer;
-		return pFrameBuffer;
+		CVKCommandBuffer *pCommandBuffer = new CVKCommandBuffer(m_pDevice, this, bMainCommandBuffer);
+		m_pCommandBuffers[pCommandBuffer] = pCommandBuffer;
+		return pCommandBuffer;
 	}
 }
 
-void CVKFrameBufferManager::Destroy(CVKFrameBuffer *pFrameBuffer)
+void CVKCommandBufferManager::Destroy(CVKCommandBuffer *pCommandBuffer)
 {
 	mutex_autolock autolock(&lock);
 	{
-		if (pFrameBuffer) {
-			m_pFrameBuffers.erase(pFrameBuffer);
-			delete pFrameBuffer;
+		if (pCommandBuffer) {
+			m_pCommandBuffers.erase(pCommandBuffer);
+			delete pCommandBuffer;
 		}
 	}
 }

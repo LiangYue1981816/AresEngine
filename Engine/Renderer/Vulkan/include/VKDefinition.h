@@ -108,6 +108,7 @@ class CVKMeshDraw;
 class CVKMaterial;
 class CVKMaterialPass;
 class CVKUniformBuffer;
+class CVKCommandBuffer;
 
 class CVKSamplerManager;
 class CVKTexture2DManager;
@@ -123,3 +124,4 @@ class CVKMeshDrawManager;
 class CVKMaterialManager;
 class CVKRenderTextureManager;
 class CVKUniformBufferManager;
+class CVKCommandBufferManager;

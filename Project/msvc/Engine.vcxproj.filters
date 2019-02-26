@@ -933,6 +933,12 @@
     <ClInclude Include="..\..\Engine\ThirdParty\pthreadex\pthreadex.h">
       <Filter>ThirdParty\pthreadex</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKCommandBuffer.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKCommandBufferManager.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Engine\ThirdParty\eastl\source\allocator_eastl.cpp">
@@ -1504,6 +1510,12 @@
     </ClCompile>
     <ClCompile Include="..\..\Engine\ThirdParty\pthreadex\pthreadex.c">
       <Filter>ThirdParty\pthreadex</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKCommandBuffer.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKCommandBufferManager.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

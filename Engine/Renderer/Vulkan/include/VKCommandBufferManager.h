@@ -2,24 +2,24 @@
 #include "VKRenderer.h"
 
 
-class CVKFrameBufferManager : public CGfxResourceManager
+class CVKCommandBufferManager : public CGfxResourceManager
 {
 	friend class CVKRenderer;
-	friend class CVKFrameBuffer;
+	friend class CVKCommandBuffer;
 
 
 private:
-	CVKFrameBufferManager(CVKDevice *pDevice);
-	virtual ~CVKFrameBufferManager(void);
+	CVKCommandBufferManager(CVKDevice *pDevice);
+	virtual ~CVKCommandBufferManager(void);
 
 
 private:
-	CVKFrameBuffer* Create(int width, int height, int numAttachments);
-	void Destroy(CVKFrameBuffer *pFrameBuffer);
+	CVKCommandBuffer* Create(bool bMainCommandBuffer);
+	void Destroy(CVKCommandBuffer *pCommandBuffer);
 
 
 private:
-	eastl::unordered_map<CVKFrameBuffer*, CVKFrameBuffer*> m_pFrameBuffers;
+	eastl::unordered_map<CVKCommandBuffer*, CVKCommandBuffer*> m_pCommandBuffers;
 
 private:
 	CVKDevice *m_pDevice;

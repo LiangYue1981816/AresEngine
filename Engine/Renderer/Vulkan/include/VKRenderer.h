@@ -42,6 +42,7 @@
 #include "VKMaterial.h"
 #include "VKMaterialPass.h"
 #include "VKUniformBuffer.h"
+#include "VKCommandBuffer.h"
 
 #include "VKSamplerManager.h"
 #include "VKTextureManager.h"
@@ -54,6 +55,7 @@
 #include "VKMaterialManager.h"
 #include "VKRenderTextureManager.h"
 #include "VKUniformBufferManager.h"
+#include "VKCommandBufferManager.h"
 
 
 #define VKRenderer() ((CVKRenderer *)CGfxRenderer::GetInstance())
@@ -183,4 +185,5 @@ private:
 	CVKFrameBufferManager *m_pFrameBufferManager;
 	CVKRenderTextureManager *m_pRenderTextureManager;
 	CVKUniformBufferManager *m_pUniformBufferManager;
+	CVKCommandBufferManager *m_pCommandBufferManager;
 };
