@@ -1,0 +1,38 @@
+#include "VKRenderer.h"
+
+
+CVKFrameBufferManager::CVKFrameBufferManager(CVKDevice *pDevice)
+	: m_pDevice(pDevice)
+{
+
+}
+
+CVKFrameBufferManager::~CVKFrameBufferManager(void)
+{
+	for (const auto &itFrameBuffer : m_pFrameBuffers) {
+		delete itFrameBuffer.second;
+	}
+
+	m_pFrameBuffers.clear();
+}
+
+CVKFrameBuffer* CVKFrameBufferManager::Create(int width, int height, int numAttachments)
+{
+	mutex_autolock autolock(&lock);
+	{
+		CVKFrameBuffer *pFrameBuffer = new CVKFrameBuffer(m_pDevice, this, width, height, numAttachments);
+		m_pFrameBuffers[pFrameBuffer] = pFrameBuffer;
+		return pFrameBuffer;
+	}
+}
+
+void CVKFrameBufferManager::Destroy(CVKFrameBuffer *pFrameBuffer)
+{
+	mutex_autolock autolock(&lock);
+	{
+		if (pFrameBuffer) {
+			m_pFrameBuffers.erase(pFrameBuffer);
+			delete pFrameBuffer;
+		}
+	}
+}
