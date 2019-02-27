@@ -10,17 +10,24 @@
 #include "GLES3RenderPass.h"
 #include "GLES3FrameBuffer.h"
 #include "GLES3RenderTexture.h"
+#include "GLES3RenderPassManager.h"
+#include "GLES3FrameBufferManager.h"
+#include "GLES3RenderTextureManager.h"
 
 #include "GLES3Shader.h"
 #include "GLES3Pipeline.h"
 #include "GLES3PipelineCompute.h"
 #include "GLES3PipelineGraphics.h"
+#include "GLES3ShaderManager.h"
+#include "GLES3PipelineManager.h"
 
 #include "GLES3Sampler.h"
 #include "GLES3Texture.h"
 #include "GLES3Texture2D.h"
 #include "GLES3Texture2DArray.h"
 #include "GLES3TextureCubeMap.h"
+#include "GLES3SamplerManager.h"
+#include "GLES3TextureManager.h"
 
 #include "GLES3Buffer.h"
 #include "GLES3IndexBuffer.h"
@@ -31,21 +38,15 @@
 
 #include "GLES3Mesh.h"
 #include "GLES3MeshDraw.h"
-#include "GLES3Material.h"
-#include "GLES3MaterialPass.h"
-#include "GLES3UniformBuffer.h"
-#include "GLES3CommandBuffer.h"
-
 #include "GLES3MeshManager.h"
 #include "GLES3MeshDrawManager.h"
+
+#include "GLES3Material.h"
+#include "GLES3MaterialPass.h"
 #include "GLES3MaterialManager.h"
-#include "GLES3SamplerManager.h"
-#include "GLES3TextureManager.h"
-#include "GLES3ShaderManager.h"
-#include "GLES3PipelineManager.h"
-#include "GLES3RenderPassManager.h"
-#include "GLES3FrameBufferManager.h"
-#include "GLES3RenderTextureManager.h"
+
+#include "GLES3UniformBuffer.h"
+#include "GLES3CommandBuffer.h"
 #include "GLES3UniformBufferManager.h"
 #include "GLES3CommandBufferManager.h"
 
@@ -212,19 +213,20 @@ private:
 	CGLES3SwapChain *m_pSwapChain;
 
 private:
-	CGLES3MeshManager *m_pMeshManager;
-	CGLES3MeshDrawManager *m_pMeshDrawManager;
-	CGLES3MaterialManager *m_pMaterialManager;
 	CGLES3SamplerManager *m_pSamplerManager;
 	CGLES3Texture2DManager *m_pTexture2DManager;
 	CGLES3Texture2DArrayManager *m_pTexture2DArrayManager;
 	CGLES3TextureCubeMapManager *m_pTextureCubeMapManager;
+	CGLES3RenderTextureManager *m_pRenderTextureManager;
 	CGLES3ShaderManager *m_pShaderManager;
 	CGLES3PipelineComputeManager *m_pPipelineComputeManager;
 	CGLES3PipelineGraphicsManager *m_pPipelineGraphicsManager;
+
+	CGLES3MeshManager *m_pMeshManager;
+	CGLES3MeshDrawManager *m_pMeshDrawManager;
+	CGLES3MaterialManager *m_pMaterialManager;
 	CGLES3RenderPassManager *m_pRenderPassManager;
 	CGLES3FrameBufferManager *m_pFrameBufferManager;
-	CGLES3RenderTextureManager *m_pRenderTextureManager;
 	CGLES3UniformBufferManager *m_pUniformBufferManager;
 	CGLES3CommandBufferManager *m_pCommandBufferManager;
 
