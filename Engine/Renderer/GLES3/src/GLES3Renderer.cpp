@@ -8,14 +8,14 @@ CGLES3Renderer::CGLES3Renderer(void *hInstance, void *hWnd, void *hDC, int width
 
 	, m_pMeshManager(nullptr)
 	, m_pMeshDrawManager(nullptr)
-	, m_pShaderManager(nullptr)
+	, m_pMaterialManager(nullptr)
 	, m_pSamplerManager(nullptr)
 	, m_pTexture2DManager(nullptr)
 	, m_pTexture2DArrayManager(nullptr)
 	, m_pTextureCubeMapManager(nullptr)
+	, m_pShaderManager(nullptr)
 	, m_pPipelineComputeManager(nullptr)
 	, m_pPipelineGraphicsManager(nullptr)
-	, m_pMaterialManager(nullptr)
 	, m_pRenderPassManager(nullptr)
 	, m_pFrameBufferManager(nullptr)
 	, m_pRenderTextureManager(nullptr)
@@ -31,14 +31,14 @@ CGLES3Renderer::CGLES3Renderer(void *hInstance, void *hWnd, void *hDC, int width
 
 	m_pMeshManager = new CGLES3MeshManager;
 	m_pMeshDrawManager = new CGLES3MeshDrawManager;
-	m_pShaderManager = new CGLES3ShaderManager;
+	m_pMaterialManager = new CGLES3MaterialManager;
 	m_pSamplerManager = new CGLES3SamplerManager;
 	m_pTexture2DManager = new CGLES3Texture2DManager;
 	m_pTexture2DArrayManager = new CGLES3Texture2DArrayManager;
 	m_pTextureCubeMapManager = new CGLES3TextureCubeMapManager;
+	m_pShaderManager = new CGLES3ShaderManager;
 	m_pPipelineComputeManager = new CGLES3PipelineComputeManager;
 	m_pPipelineGraphicsManager = new CGLES3PipelineGraphicsManager;
-	m_pMaterialManager = new CGLES3MaterialManager;
 	m_pRenderPassManager = new CGLES3RenderPassManager;
 	m_pFrameBufferManager = new CGLES3FrameBufferManager;
 	m_pRenderTextureManager = new CGLES3RenderTextureManager;
@@ -54,21 +54,21 @@ CGLES3Renderer::~CGLES3Renderer(void)
 	delete m_pSwapChain;
 	delete m_pGlobalMaterialPass;
 
-	delete m_pCommandBufferManager;
 	delete m_pMeshManager;
 	delete m_pMeshDrawManager;
 	delete m_pMaterialManager;
-	delete m_pPipelineComputeManager;
-	delete m_pPipelineGraphicsManager;
-	delete m_pShaderManager;
 	delete m_pSamplerManager;
 	delete m_pTexture2DManager;
 	delete m_pTexture2DArrayManager;
 	delete m_pTextureCubeMapManager;
-	delete m_pUniformBufferManager;
+	delete m_pShaderManager;
+	delete m_pPipelineComputeManager;
+	delete m_pPipelineGraphicsManager;
 	delete m_pRenderPassManager;
 	delete m_pFrameBufferManager;
 	delete m_pRenderTextureManager;
+	delete m_pUniformBufferManager;
+	delete m_pCommandBufferManager;
 }
 
 uint32_t CGLES3Renderer::GetLastError(void) const
