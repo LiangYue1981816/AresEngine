@@ -2,6 +2,7 @@
 
 class CGLES3Renderer;
 
+class CGLES3Buffer;
 class CGLES3IndexBuffer;
 class CGLES3VertexBuffer;
 class CGLES3InstanceBuffer;

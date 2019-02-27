@@ -255,6 +255,7 @@
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxUniformVec4.h" />
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxVertexAttribute.h" />
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxVertexBuffer.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3Buffer.h" />
     <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3CommandBuffer.h" />
     <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3CommandBufferManager.h" />
     <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3Definition.h" />
@@ -491,6 +492,7 @@
     <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxUniformVec3.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxUniformVec4.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxVertexAttribute.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3Buffer.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3CommandBuffer.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3CommandBufferManager.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3Extension.cpp" />
