@@ -6,12 +6,16 @@ VkShaderStageFlagBits vkGetShaderStageFlagBits(shader_kind kind)
 	switch ((int)kind) {
 	case vertex_shader:
 		return VK_SHADER_STAGE_VERTEX_BIT;
+
 	case fragment_shader:
 		return VK_SHADER_STAGE_FRAGMENT_BIT;
+
 	case compute_shader:
 		return VK_SHADER_STAGE_COMPUTE_BIT;
+
+	default:
+		return VK_SHADER_STAGE_ALL;
 	}
-	return VK_SHADER_STAGE_ALL;
 }
 
 VkResult vkBeginCommandBufferPrimary(VkCommandBuffer vkCommandBuffer, VkCommandBufferUsageFlags flags)
