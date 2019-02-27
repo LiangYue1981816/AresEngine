@@ -340,6 +340,7 @@
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKBuffer.h" />
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKCommandBuffer.h" />
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKCommandBufferManager.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKCommandBufferPool.h" />
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKDefinition.h" />
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VkDescriptorLayout.h" />
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VkDescriptorPool.h" />
@@ -533,6 +534,7 @@
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKBuffer.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKCommandBuffer.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKCommandBufferManager.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKCommandBufferPool.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VkDescriptorLayout.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VkDescriptorPool.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VkDescriptorSet.cpp" />

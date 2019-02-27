@@ -69,6 +69,7 @@ private:
 	bool m_bInRenderPass;
 
 private:
+	VkFence m_vkFence;
 	VkCommandBuffer m_vkCommandBuffer;
 	eastl::vector<CGfxCommandBase*> m_pCommands;
 

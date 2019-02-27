@@ -8,6 +8,9 @@ CVKCommandBuffer::CVKCommandBuffer(CVKDevice *pDevice, CVKCommandBufferManager *
 
 	, m_bMainCommandBuffer(bMainCommandBuffer)
 	, m_bInRenderPass(false)
+
+	, m_vkFence(VK_NULL_HANDLE)
+	, m_vkCommandBuffer(VK_NULL_HANDLE)
 {
 
 }
