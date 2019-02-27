@@ -2,7 +2,7 @@
 #include "GLES3Renderer.h"
 
 
-class CGLES3IndexBuffer : public CGfxIndexBuffer
+class CGLES3IndexBuffer : public CGLES3Buffer, public CGfxIndexBuffer
 {
 	friend class CGLES3Mesh;
 	friend class CGLES3VertexArrayObject;
@@ -21,14 +21,7 @@ public:
 public:
 	bool BufferData(size_t offset, size_t size, const void *pBuffer);
 
-private:
-	void Bind(void);
-
 
 private:
 	GfxIndexType m_type;
-	uint32_t m_size;
-
-private:
-	uint32_t m_buffer;
 };

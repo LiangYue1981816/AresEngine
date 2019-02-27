@@ -2,25 +2,17 @@
 
 
 CGLES3IndirectBuffer::CGLES3IndirectBuffer(uint32_t drawCommandCount)
-	: CGfxIndirectBuffer(drawCommandCount)
+	: CGLES3Buffer(GL_DRAW_INDIRECT_BUFFER, drawCommandCount * sizeof(DrawCommand), true)
+	, CGfxIndirectBuffer(drawCommandCount)
 
-	, m_size(drawCommandCount * sizeof(DrawCommand))
 	, m_count(drawCommandCount)
-
-	, m_buffer(0)
 {
 	m_draws.resize(m_count);
-
-	glGenBuffers(1, &m_buffer);
-	glBindBuffer(GL_DRAW_INDIRECT_BUFFER, m_buffer);
-	glBufferData(GL_DRAW_INDIRECT_BUFFER, m_size, nullptr, GL_DYNAMIC_DRAW);
-	glBindBuffer(GL_DRAW_INDIRECT_BUFFER, 0);
 	CGfxProfiler::IncIndirectBufferSize(m_size);
 }
 
 CGLES3IndirectBuffer::~CGLES3IndirectBuffer(void)
 {
-	glDeleteBuffers(1, &m_buffer);
 	CGfxProfiler::DecIndirectBufferSize(m_size);
 }
 
@@ -36,7 +28,7 @@ uint32_t CGLES3IndirectBuffer::GetDrawCommandOffset(int indexDraw) const
 
 uint32_t CGLES3IndirectBuffer::GetSize(void) const
 {
-	return m_size;
+	return CGLES3Buffer::GetSize();
 }
 
 bool CGLES3IndirectBuffer::BufferData(int indexDraw, int instanceCount)
@@ -75,9 +67,4 @@ bool CGLES3IndirectBuffer::BufferData(int indexDraw, int baseVertex, int firstIn
 	}
 
 	return true;
-}
-
-void CGLES3IndirectBuffer::Bind(void)
-{
-	GLBindBuffer(GL_DRAW_INDIRECT_BUFFER, m_buffer);
 }

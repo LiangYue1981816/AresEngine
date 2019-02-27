@@ -2,7 +2,7 @@
 #include "GLES3Renderer.h"
 
 
-class CGLES3IndirectBuffer : public CGfxIndirectBuffer
+class CGLES3IndirectBuffer : public CGLES3Buffer, public CGfxIndirectBuffer
 {
 	friend class CGLES3MeshDraw;
 	friend class CGLES3VertexArrayObject;
@@ -22,16 +22,8 @@ public:
 	bool BufferData(int indexDraw, int instanceCount);
 	bool BufferData(int indexDraw, int baseVertex, int firstIndex, int indexCount, int instanceCount);
 
-private:
-	void Bind(void);
-
 
 private:
 	uint32_t m_count;
-	uint32_t m_size;
-
 	eastl::vector<DrawCommand> m_draws;
-
-private:
-	uint32_t m_buffer;
 };

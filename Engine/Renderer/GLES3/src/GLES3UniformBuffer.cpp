@@ -2,24 +2,15 @@
 
 
 CGLES3UniformBuffer::CGLES3UniformBuffer(CGLES3UniformBufferManager *pManager, size_t size)
-	: CGfxUniformBuffer(size)
+	: CGLES3Buffer(GL_UNIFORM_BUFFER, size, true)
+	, CGfxUniformBuffer(size)
 	, m_pManager(pManager)
-
-	, m_size(size)
-
-	, m_hash(INVALID_HASHVALUE)
-	, m_buffer(0)
 {
-	glGenBuffers(1, &m_buffer);
-	glBindBuffer(GL_UNIFORM_BUFFER, m_buffer);
-	glBufferData(GL_UNIFORM_BUFFER, m_size, nullptr, GL_DYNAMIC_DRAW);
-	glBindBuffer(GL_UNIFORM_BUFFER, 0);
 	CGfxProfiler::IncUniformBufferSize(m_size);
 }
 
 CGLES3UniformBuffer::~CGLES3UniformBuffer(void)
 {
-	glDeleteBuffers(1, &m_buffer);
 	CGfxProfiler::DecUniformBufferSize(m_size);
 }
 
@@ -35,27 +26,12 @@ HANDLE CGLES3UniformBuffer::GetBuffer(void) const
 
 uint32_t CGLES3UniformBuffer::GetSize(void) const
 {
-	return m_size;
+	return CGLES3Buffer::GetSize();
 }
 
 bool CGLES3UniformBuffer::BufferData(size_t offset, size_t size, const void *pBuffer)
 {
-	if (m_size < (uint32_t)(offset + size)) {
-		return false;
-	}
-
-	uint32_t hash = HashValue((uint8_t*)pBuffer, size);
-
-	if (m_hash == hash) {
-		return true;
-	}
-
-	m_hash = hash;
-	glBindBuffer(GL_UNIFORM_BUFFER, m_buffer);
-	glBufferSubData(GL_UNIFORM_BUFFER, (int)offset, (uint32_t)size, pBuffer);
-	glBindBuffer(GL_UNIFORM_BUFFER, 0);
-
-	return true;
+	return CGLES3Buffer::BufferData(offset, size, pBuffer);
 }
 
 void CGLES3UniformBuffer::Bind(int index, int offset, int size)
