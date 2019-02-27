@@ -18,6 +18,13 @@ class CGLES3PipelineComputeManager;
 class CGLES3PipelineGraphics;
 class CGLES3PipelineGraphicsManager;
 
+class CGLES3Buffer;
+class CGLES3IndexBuffer;
+class CGLES3VertexBuffer;
+class CGLES3InstanceBuffer;
+class CGLES3IndirectBuffer;
+class CGLES3VertexArrayObject;
+
 class CGLES3Sampler;
 class CGLES3SamplerManager;
 class CGLES3Texture;
@@ -27,13 +34,6 @@ class CGLES3Texture2DArray;
 class CGLES3Texture2DArrayManager;
 class CGLES3TextureCubeMap;
 class CGLES3TextureCubeMapManager;
-
-class CGLES3Buffer;
-class CGLES3IndexBuffer;
-class CGLES3VertexBuffer;
-class CGLES3InstanceBuffer;
-class CGLES3IndirectBuffer;
-class CGLES3VertexArrayObject;
 
 class CGLES3Mesh;
 class CGLES3MeshManager;

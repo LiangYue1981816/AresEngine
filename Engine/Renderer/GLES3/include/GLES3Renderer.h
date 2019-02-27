@@ -21,6 +21,13 @@
 #include "GLES3PipelineGraphics.h"
 #include "GLES3PipelineManager.h"
 
+#include "GLES3Buffer.h"
+#include "GLES3IndexBuffer.h"
+#include "GLES3VertexBuffer.h"
+#include "GLES3InstanceBuffer.h"
+#include "GLES3IndirectBuffer.h"
+#include "GLES3VertexArrayObject.h"
+
 #include "GLES3Sampler.h"
 #include "GLES3SamplerManager.h"
 #include "GLES3Texture.h"
@@ -28,13 +35,6 @@
 #include "GLES3Texture2DArray.h"
 #include "GLES3TextureCubeMap.h"
 #include "GLES3TextureManager.h"
-
-#include "GLES3Buffer.h"
-#include "GLES3IndexBuffer.h"
-#include "GLES3VertexBuffer.h"
-#include "GLES3InstanceBuffer.h"
-#include "GLES3IndirectBuffer.h"
-#include "GLES3VertexArrayObject.h"
 
 #include "GLES3Mesh.h"
 #include "GLES3MeshManager.h"

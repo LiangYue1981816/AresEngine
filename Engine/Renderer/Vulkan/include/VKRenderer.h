@@ -7,12 +7,31 @@
 #include "VKDefinition.h"
 
 #include "VKAllocator.h"
+
 #include "VKInstance.h"
 #include "VKDevice.h"
 #include "VKQueue.h"
+
 #include "VKMemory.h"
 #include "VKMemoryAllocator.h"
 #include "VKMemoryManager.h"
+
+#include "VKImage.h"
+
+#include "VKSwapChain.h"
+#include "VKRenderPass.h"
+#include "VKRenderPassManager.h"
+#include "VKFrameBuffer.h"
+#include "VKFrameBufferManager.h"
+#include "VKRenderTexture.h"
+#include "VKRenderTextureManager.h"
+
+#include "VKShader.h"
+#include "VKShaderManager.h"
+#include "VKPipeline.h"
+#include "VKPipelineCompute.h"
+#include "VKPipelineGraphics.h"
+#include "VKPipelineManager.h"
 
 #include "VKBuffer.h"
 #include "VKIndexBuffer.h"
@@ -20,45 +39,33 @@
 #include "VKInstanceBuffer.h"
 #include "VKIndirectBuffer.h"
 
-#include "VKImage.h"
 #include "VKSampler.h"
+#include "VKSamplerManager.h"
 #include "VKTexture.h"
 #include "VKTexture2D.h"
 #include "VKTexture2DArray.h"
 #include "VKTextureCubeMap.h"
+#include "VKTextureManager.h"
+
+#include "VKMesh.h"
+#include "VKMeshManager.h"
+#include "VKMeshDraw.h"
+#include "VKMeshDrawManager.h"
+
+#include "VKMaterial.h"
+#include "VKMaterialPass.h"
+#include "VKMaterialManager.h"
+
+#include "VKUniformBuffer.h"
+#include "VKUniformBufferManager.h"
 
 #include "VKDescriptorLayout.h"
 #include "VKDescriptorPool.h"
 #include "VKDescriptorSet.h"
 #include "VKDescriptorSetManager.h"
-#include "VKShader.h"
-#include "VKPipeline.h"
-#include "VKPipelineCompute.h"
-#include "VKPipelineGraphics.h"
 
-#include "VKSwapChain.h"
-#include "VKRenderPass.h"
-#include "VKFrameBuffer.h"
-#include "VKRenderTexture.h"
-#include "VKMesh.h"
-#include "VKMeshDraw.h"
-#include "VKMaterial.h"
-#include "VKMaterialPass.h"
-#include "VKUniformBuffer.h"
 #include "VKCommandBuffer.h"
 #include "VKCommandBufferPool.h"
-
-#include "VKSamplerManager.h"
-#include "VKTextureManager.h"
-#include "VKShaderManager.h"
-#include "VKPipelineManager.h"
-#include "VKRenderPassManager.h"
-#include "VKFrameBufferManager.h"
-#include "VKMeshManager.h"
-#include "VKMeshDrawManager.h"
-#include "VKMaterialManager.h"
-#include "VKRenderTextureManager.h"
-#include "VKUniformBufferManager.h"
 #include "VKCommandBufferManager.h"
 
 
@@ -175,19 +182,19 @@ private:
 	CVKSwapChain *m_pSwapChain;
 
 private:
-	CVKMeshManager *m_pMeshManager;
-	CVKMeshDrawManager *m_pMeshDrawManager;
 	CVKShaderManager *m_pShaderManager;
+	CVKPipelineComputeManager *m_pPipelineComputeManager;
+	CVKPipelineGraphicsManager *m_pPipelineGraphicsManager;
 	CVKSamplerManager *m_pSamplerManager;
 	CVKTexture2DManager *m_pTexture2DManager;
 	CVKTexture2DArrayManager *m_pTexture2DArrayManager;
 	CVKTextureCubeMapManager *m_pTextureCubeMapManager;
-	CVKPipelineComputeManager *m_pPipelineComputeManager;
-	CVKPipelineGraphicsManager *m_pPipelineGraphicsManager;
+	CVKMeshManager *m_pMeshManager;
+	CVKMeshDrawManager *m_pMeshDrawManager;
 	CVKMaterialManager *m_pMaterialManager;
 	CVKRenderPassManager *m_pRenderPassManager;
-	CVKFrameBufferManager *m_pFrameBufferManager;
 	CVKRenderTextureManager *m_pRenderTextureManager;
+	CVKFrameBufferManager *m_pFrameBufferManager;
 	CVKUniformBufferManager *m_pUniformBufferManager;
 	CVKCommandBufferManager *m_pCommandBufferManager;
 };

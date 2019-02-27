@@ -73,55 +73,66 @@
 class CVKRenderer;
 
 class CVKAllocator;
+
 class CVKInstance;
 class CVKDevice;
 class CVKQueue;
+
 class CVKMemory;
 class CVKMemoryAllocator;
 class CVKMemoryManager;
+
+class CVKImage;
+
+class CVKSwapChain;
+class CVKRenderPass;
+class CVKRenderPassManager;
+class CVKFrameBuffer;
+class CVKFrameBufferManager;
+class CVKRenderTexture;
+class CVKRenderTextureManager;
+
+class CVKShader;
+class CVKShaderManager;
+class CVKPipeline;
+class CVKPipelineCompute;
+class CVKPipelineComputeManager;
+class CVKPipelineGraphics;
+class CVKPipelineGraphicsManager;
+
 class CVKBuffer;
 class CVKIndexBuffer;
 class CVKVertexBuffer;
 class CVKInstanceBuffer;
 class CVKIndirectBuffer;
-class CVKImage;
+
 class CVKSampler;
+class CVKSamplerManager;
 class CVKTexture;
 class CVKTexture2D;
+class CVKTexture2DManager;
 class CVKTexture2DArray;
+class CVKTexture2DArrayManager;
 class CVKTextureCubeMap;
+class CVKTextureCubeMapManager;
+
+class CVKMesh;
+class CVKMeshManager;
+class CVKMeshDraw;
+class CVKMeshDrawManager;
+
+class CVKMaterial;
+class CVKMaterialPass;
+class CVKMaterialManager;
+
+class CVKUniformBuffer;
+class CVKUniformBufferManager;
+
 class CVKDescriptorLayout;
 class CVKDescriptorPool;
 class CVKDescriptorSet;
 class CVKDescriptorSetManager;
-class CVKShader;
-class CVKPipeline;
-class CVKPipelineCompute;
-class CVKPipelineGraphics;
 
-class CVKSwapChain;
-class CVKRenderPass;
-class CVKFrameBuffer;
-class CVKRenderTexture;
-class CVKMesh;
-class CVKMeshDraw;
-class CVKMaterial;
-class CVKMaterialPass;
-class CVKUniformBuffer;
 class CVKCommandBuffer;
-
-class CVKSamplerManager;
-class CVKTexture2DManager;
-class CVKTexture2DArrayManager;
-class CVKTextureCubeMapManager;
-class CVKShaderManager;
-class CVKPipelineComputeManager;
-class CVKPipelineGraphicsManager;
-class CVKRenderPassManager;
-class CVKFrameBufferManager;
-class CVKMeshManager;
-class CVKMeshDrawManager;
-class CVKMaterialManager;
-class CVKRenderTextureManager;
-class CVKUniformBufferManager;
+class CVKCommandBufferPool;
 class CVKCommandBufferManager;
