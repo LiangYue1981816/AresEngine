@@ -26,12 +26,19 @@ HANDLE CGLES3UniformBuffer::GetBuffer(void) const
 
 uint32_t CGLES3UniformBuffer::GetSize(void) const
 {
-	return CGLES3Buffer::GetSize();
+	return m_size;
 }
 
 bool CGLES3UniformBuffer::BufferData(size_t offset, size_t size, const void *pBuffer)
 {
-	return CGLES3Buffer::BufferData(offset, size, pBuffer);
+	if (m_size < (uint32_t)(offset + size)) {
+		return false;
+	}
+
+	GLBindBuffer(m_target, m_buffer);
+	glBufferSubData(m_target, (int)offset, (uint32_t)size, pBuffer);
+
+	return true;
 }
 
 void CGLES3UniformBuffer::Bind(int index, int offset, int size)
@@ -40,5 +47,5 @@ void CGLES3UniformBuffer::Bind(int index, int offset, int size)
 		return;
 	}
 
-	GLBindBufferRange(GL_UNIFORM_BUFFER, index, m_buffer, offset, size);
+	GLBindBufferRange(m_target, index, m_buffer, offset, size);
 }

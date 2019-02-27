@@ -28,17 +28,24 @@ uint32_t CGLES3VertexBuffer::GetVertexCount(void) const
 
 uint32_t CGLES3VertexBuffer::GetSize(void) const
 {
-	return CGLES3Buffer::GetSize();
+	return m_size;
 }
 
 bool CGLES3VertexBuffer::BufferData(size_t offset, size_t size, const void *pBuffer)
 {
-	return CGLES3Buffer::BufferData(offset, size, pBuffer);
+	if (m_size < (uint32_t)(offset + size)) {
+		return false;
+	}
+
+	GLBindBuffer(m_target, m_buffer);
+	glBufferSubData(m_target, (int)offset, (uint32_t)size, pBuffer);
+
+	return true;
 }
 
 void CGLES3VertexBuffer::Bind(void)
 {
-	CGLES3Buffer::Bind();
+	GLBindBuffer(m_target, m_buffer);
 
 	for (uint32_t indexAttribute = 0; indexAttribute < GetVertexAttributeCount(); indexAttribute++) {
 		uint32_t attribute = (1 << indexAttribute);

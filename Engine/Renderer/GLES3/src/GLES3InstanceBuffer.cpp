@@ -32,7 +32,7 @@ uint32_t CGLES3InstanceBuffer::GetInstanceCount(void) const
 
 uint32_t CGLES3InstanceBuffer::GetSize(void) const
 {
-	return CGLES3Buffer::GetSize();
+	return m_size;
 }
 
 bool CGLES3InstanceBuffer::BufferData(size_t size, const void *pBuffer)
@@ -43,7 +43,7 @@ bool CGLES3InstanceBuffer::BufferData(size_t size, const void *pBuffer)
 		m_hash  = hash;
 		m_count = size / GetInstanceStride(m_format);
 
-		GLBindBuffer(GL_ARRAY_BUFFER, m_buffer);
+		GLBindBuffer(m_target, m_buffer);
 		{
 			if (m_size < size) {
 				CGfxProfiler::DecInstanceBufferSize(m_size);
@@ -51,12 +51,12 @@ bool CGLES3InstanceBuffer::BufferData(size_t size, const void *pBuffer)
 					m_size = INSTANCE_BUFFER_SIZE;
 					while (m_size < size) m_size <<= 1;
 
-					glBufferData(GL_ARRAY_BUFFER, m_size, nullptr, GL_DYNAMIC_DRAW);
+					glBufferData(m_target, m_size, nullptr, GL_DYNAMIC_DRAW);
 				}
 				CGfxProfiler::IncInstanceBufferSize(m_size);
 			}
 
-			glBufferSubData(GL_ARRAY_BUFFER, 0, size, pBuffer);
+			glBufferSubData(m_target, 0, size, pBuffer);
 		}
 	}
 
@@ -65,7 +65,7 @@ bool CGLES3InstanceBuffer::BufferData(size_t size, const void *pBuffer)
 
 void CGLES3InstanceBuffer::Bind(void)
 {
-	CGLES3Buffer::Bind();
+	GLBindBuffer(m_target, m_buffer);
 
 	for (uint32_t indexAttribute = 0; indexAttribute < GetInstanceAttributeCount(); indexAttribute++) {
 		uint32_t attribute = (1 << indexAttribute);

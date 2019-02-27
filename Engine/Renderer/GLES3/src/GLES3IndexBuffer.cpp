@@ -31,10 +31,22 @@ uint32_t CGLES3IndexBuffer::GetIndexCount(void) const
 
 uint32_t CGLES3IndexBuffer::GetSize(void) const
 {
-	return CGLES3Buffer::GetSize();
+	return m_size;
 }
 
 bool CGLES3IndexBuffer::BufferData(size_t offset, size_t size, const void *pBuffer)
 {
-	return CGLES3Buffer::BufferData(offset, size, pBuffer);
+	if (m_size < (uint32_t)(offset + size)) {
+		return false;
+	}
+
+	GLBindBuffer(m_target, m_buffer);
+	glBufferSubData(m_target, (int)offset, (uint32_t)size, pBuffer);
+
+	return true;
+}
+
+void CGLES3IndexBuffer::Bind(void)
+{
+	GLBindBuffer(m_target, m_buffer);
 }
