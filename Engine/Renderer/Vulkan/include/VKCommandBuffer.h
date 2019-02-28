@@ -4,11 +4,12 @@
 
 class CVKCommandBuffer : public CGfxCommandBuffer
 {
+	friend class CVKCommandPool;
 	friend class CVKCommandBufferManager;
 
 
 private:
-	CVKCommandBuffer(CVKDevice *pDevice, CVKCommandBufferManager *pManager, bool bMainCommandBuffer);
+	CVKCommandBuffer(CVKDevice *pDevice, CVKCommandPool *pCommandPool, VkCommandBuffer vkCommandBuffer, bool bMainCommandBuffer);
 	virtual ~CVKCommandBuffer(void);
 	virtual void Release(void);
 
@@ -75,5 +76,5 @@ private:
 
 private:
 	CVKDevice *m_pDevice;
-	CVKCommandBufferManager *m_pManager;
+	CVKCommandPool *m_pCommandPool;
 };

@@ -4,6 +4,7 @@
 
 class CVKCommandPool
 {
+	friend class CVKCommandBuffer;
 	friend class CVKCommandBufferManager;
 
 

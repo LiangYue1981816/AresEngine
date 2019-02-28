@@ -29,7 +29,19 @@ CVKCommandPool::~CVKCommandPool(void)
 
 CVKCommandBuffer* CVKCommandPool::AllocCommandBuffer(bool bMainCommandBuffer)
 {
-	return nullptr;
+	VkCommandBuffer vkCommandBuffer = VK_NULL_HANDLE;
+	VkCommandBufferAllocateInfo allocateInfo = {};
+	allocateInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
+	allocateInfo.pNext = nullptr;
+	allocateInfo.commandPool = m_vkCommandPool;
+	allocateInfo.level = bMainCommandBuffer ? VK_COMMAND_BUFFER_LEVEL_PRIMARY : VK_COMMAND_BUFFER_LEVEL_SECONDARY;
+	allocateInfo.commandBufferCount = 1;
+	CALL_VK_FUNCTION_RETURN_NULLPTR(vkAllocateCommandBuffers(m_pDevice->GetDevice(), &allocateInfo, &vkCommandBuffer));
+
+	CVKCommandBuffer *pCommandBuffer = new CVKCommandBuffer(m_pDevice, this, vkCommandBuffer, bMainCommandBuffer);
+	m_pCommandBuffers[pCommandBuffer] = pCommandBuffer;
+
+	return pCommandBuffer;
 }
 
 void CVKCommandPool::FreeCommandBuffer(CVKCommandBuffer *pCommandBuffer)

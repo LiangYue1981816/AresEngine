@@ -1,16 +1,16 @@
 #include "VKRenderer.h"
 
 
-CVKCommandBuffer::CVKCommandBuffer(CVKDevice *pDevice, CVKCommandBufferManager *pManager, bool bMainCommandBuffer)
+CVKCommandBuffer::CVKCommandBuffer(CVKDevice *pDevice, CVKCommandPool *pCommandPool, VkCommandBuffer vkCommandBuffer, bool bMainCommandBuffer)
 	: CGfxCommandBuffer(bMainCommandBuffer)
 	, m_pDevice(pDevice)
-	, m_pManager(pManager)
+	, m_pCommandPool(pCommandPool)
 
 	, m_bMainCommandBuffer(bMainCommandBuffer)
 	, m_bInRenderPass(false)
 
 	, m_vkFence(VK_NULL_HANDLE)
-	, m_vkCommandBuffer(VK_NULL_HANDLE)
+	, m_vkCommandBuffer(vkCommandBuffer)
 {
 
 }
@@ -22,7 +22,7 @@ CVKCommandBuffer::~CVKCommandBuffer(void)
 
 void CVKCommandBuffer::Release(void)
 {
-	m_pManager->Destroy(this);
+	m_pCommandPool->FreeCommandBuffer(this);
 }
 
 bool CVKCommandBuffer::IsMainCommandBuffer(void) const
