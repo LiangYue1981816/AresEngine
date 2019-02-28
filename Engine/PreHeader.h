@@ -25,6 +25,7 @@
 #endif
 
 
+#include <thread>
 #include <atomic>
 #include <algorithm>
 #include <functional>
