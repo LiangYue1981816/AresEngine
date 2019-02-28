@@ -21,6 +21,8 @@ public:
 public:
 	bool BufferData(int indexDraw, int instanceCount);
 	bool BufferData(int indexDraw, int baseVertex, int firstIndex, int indexCount, int instanceCount);
+
+private:
 	void Bind(void);
 
 
