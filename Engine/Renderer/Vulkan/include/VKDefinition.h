@@ -1,4 +1,4 @@
-pragma once
+#pragma once
 
 
 #define CALL_BOOL_FUNCTION_BREAK(func)       \
