@@ -9,7 +9,7 @@ class CVKCommandBuffer : public CGfxCommandBuffer
 
 
 private:
-	CVKCommandBuffer(CVKDevice *pDevice, CVKCommandPool *pCommandPool, VkCommandBuffer vkCommandBuffer, bool bMainCommandBuffer);
+	CVKCommandBuffer(CVKDevice *pDevice, CVKCommandPool *pCommandPool, bool bMainCommandBuffer);
 	virtual ~CVKCommandBuffer(void);
 	virtual void Release(void);
 

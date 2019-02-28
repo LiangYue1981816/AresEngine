@@ -1,20 +1,33 @@
 #include "VKRenderer.h"
 
 
-CVKDescriptorSet::CVKDescriptorSet(CVKDevice *pDevice, CVKDescriptorPool *pDescriptorPool, CVKDescriptorLayout *pDescriptorLayout, VkDescriptorSet vkDescriptorSet)
+CVKDescriptorSet::CVKDescriptorSet(CVKDevice *pDevice, CVKDescriptorPool *pDescriptorPool, CVKDescriptorLayout *pDescriptorLayout)
 	: m_pDevice(pDevice)
 	, m_pDescriptorPool(pDescriptorPool)
 	, m_pDescriptorLayout(pDescriptorLayout)
-	, m_vkDescriptorSet(vkDescriptorSet)
+	, m_vkDescriptorSet(VK_NULL_HANDLE)
 
 	, m_bDirty(false)
 {
-
+	VkDescriptorSetLayout vkDescriptorLayout = m_pDescriptorLayout->GetDescriptorSetLayout();
+	VkDescriptorSetAllocateInfo allocateInfo = {};
+	allocateInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO;
+	allocateInfo.pNext = nullptr;
+	allocateInfo.descriptorPool = m_pDescriptorPool->GetDescriptorPool();
+	allocateInfo.descriptorSetCount = 1;
+	allocateInfo.pSetLayouts = &vkDescriptorLayout;
+	vkAllocateDescriptorSets(m_pDevice->GetDevice(), &allocateInfo, &m_vkDescriptorSet);
 }
 
 CVKDescriptorSet::~CVKDescriptorSet(void)
 {
+	/*
+	if (m_vkDescriptorSet) {
+		vkFreeDescriptorSets(m_pDevice->GetDevice(), m_pDescriptorPool->GetDescriptorPool(), 1, &m_vkDescriptorSet);
+	}
+	*/
 
+	m_vkDescriptorSet = VK_NULL_HANDLE;
 }
 
 uint32_t CVKDescriptorSet::GetSetIndex(void) const

@@ -23,7 +23,7 @@ private:
 
 
 private:
-	CVKDescriptorSet(CVKDevice *pDevice, CVKDescriptorPool *pDescriptorPool, CVKDescriptorLayout *pDescriptorLayout, VkDescriptorSet vkDescriptorSet);
+	CVKDescriptorSet(CVKDevice *pDevice, CVKDescriptorPool *pDescriptorPool, CVKDescriptorLayout *pDescriptorLayout);
 	virtual ~CVKDescriptorSet(void);
 
 

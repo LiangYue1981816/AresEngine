@@ -83,24 +83,14 @@ CVKDescriptorSet* CVKDescriptorPool::AllocDescriptorSet(CVKDescriptorLayout *pDe
 		}
 	}
 
-	VkDescriptorSet vkDescriptorSet = VK_NULL_HANDLE;
-	VkDescriptorSetLayout vkDescriptorLayout = pDescriptorLayout->GetDescriptorSetLayout();
-	VkDescriptorSetAllocateInfo allocateInfo = {};
-	allocateInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO;
-	allocateInfo.pNext = nullptr;
-	allocateInfo.descriptorPool = m_vkDescriptorPool;
-	allocateInfo.descriptorSetCount = 1;
-	allocateInfo.pSetLayouts = &vkDescriptorLayout;
-	CALL_VK_FUNCTION_RETURN_NULLPTR(vkAllocateDescriptorSets(m_pDevice->GetDevice(), &allocateInfo, &vkDescriptorSet));
+	CVKDescriptorSet *pDescriptorSet = new CVKDescriptorSet(m_pDevice, this, pDescriptorLayout);
+	m_pDescriptorSets[pDescriptorSet] = pDescriptorSet;
 
 	m_numSets -= 1;
 
 	for (int index = 0; index < VK_DESCRIPTOR_TYPE_RANGE_SIZE; index++) {
 		m_numDescriptors[index] -= pDescriptorLayout->GetNumDescriptors()[index];
 	}
-
-	CVKDescriptorSet *pDescriptorSet = new CVKDescriptorSet(m_pDevice, this, pDescriptorLayout, vkDescriptorSet);
-	m_pDescriptorSets[pDescriptorSet] = pDescriptorSet;
 
 	return pDescriptorSet;
 }

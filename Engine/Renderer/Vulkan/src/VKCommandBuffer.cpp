@@ -1,7 +1,7 @@
 #include "VKRenderer.h"
 
 
-CVKCommandBuffer::CVKCommandBuffer(CVKDevice *pDevice, CVKCommandPool *pCommandPool, VkCommandBuffer vkCommandBuffer, bool bMainCommandBuffer)
+CVKCommandBuffer::CVKCommandBuffer(CVKDevice *pDevice, CVKCommandPool *pCommandPool, bool bMainCommandBuffer)
 	: CGfxCommandBuffer(bMainCommandBuffer)
 	, m_pDevice(pDevice)
 	, m_pCommandPool(pCommandPool)
@@ -10,14 +10,26 @@ CVKCommandBuffer::CVKCommandBuffer(CVKDevice *pDevice, CVKCommandPool *pCommandP
 	, m_bInRenderPass(false)
 
 	, m_vkFence(VK_NULL_HANDLE)
-	, m_vkCommandBuffer(vkCommandBuffer)
+	, m_vkCommandBuffer(VK_NULL_HANDLE)
 {
-
+	VkCommandBufferAllocateInfo allocateInfo = {};
+	allocateInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
+	allocateInfo.pNext = nullptr;
+	allocateInfo.commandPool = m_pCommandPool->GetCommandPool();
+	allocateInfo.level = m_bMainCommandBuffer ? VK_COMMAND_BUFFER_LEVEL_PRIMARY : VK_COMMAND_BUFFER_LEVEL_SECONDARY;
+	allocateInfo.commandBufferCount = 1;
+	vkAllocateCommandBuffers(m_pDevice->GetDevice(), &allocateInfo, &m_vkCommandBuffer);
 }
 
 CVKCommandBuffer::~CVKCommandBuffer(void)
 {
 	Clearup();
+
+	if (m_vkCommandBuffer) {
+		vkFreeCommandBuffers(m_pDevice->GetDevice(), m_pCommandPool->GetCommandPool(), 1, &m_vkCommandBuffer);
+	}
+
+	m_vkCommandBuffer = VK_NULL_HANDLE;
 }
 
 void CVKCommandBuffer::Release(void)

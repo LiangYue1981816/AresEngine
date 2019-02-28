@@ -27,29 +27,25 @@ CVKCommandPool::~CVKCommandPool(void)
 	m_vkCommandPool = VK_NULL_HANDLE;
 }
 
+VkCommandPool CVKCommandPool::GetCommandPool(void) const
+{
+	return m_vkCommandPool;
+}
+
 CVKCommandBuffer* CVKCommandPool::AllocCommandBuffer(bool bMainCommandBuffer)
 {
-	VkCommandBuffer vkCommandBuffer = VK_NULL_HANDLE;
-	VkCommandBufferAllocateInfo allocateInfo = {};
-	allocateInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
-	allocateInfo.pNext = nullptr;
-	allocateInfo.commandPool = m_vkCommandPool;
-	allocateInfo.level = bMainCommandBuffer ? VK_COMMAND_BUFFER_LEVEL_PRIMARY : VK_COMMAND_BUFFER_LEVEL_SECONDARY;
-	allocateInfo.commandBufferCount = 1;
-	CALL_VK_FUNCTION_RETURN_NULLPTR(vkAllocateCommandBuffers(m_pDevice->GetDevice(), &allocateInfo, &vkCommandBuffer));
-
-	CVKCommandBuffer *pCommandBuffer = new CVKCommandBuffer(m_pDevice, this, vkCommandBuffer, bMainCommandBuffer);
+	CVKCommandBuffer *pCommandBuffer = new CVKCommandBuffer(m_pDevice, this, bMainCommandBuffer);
 	m_pCommandBuffers[pCommandBuffer] = pCommandBuffer;
-
 	return pCommandBuffer;
 }
 
 void CVKCommandPool::FreeCommandBuffer(CVKCommandBuffer *pCommandBuffer)
 {
-
+	m_pCommandBuffers.erase(pCommandBuffer);
+	delete pCommandBuffer;
 }
 
 void CVKCommandPool::ResetCommandPool(void)
 {
-
+	vkResetCommandPool(m_pDevice->GetDevice(), m_vkCommandPool, VK_COMMAND_POOL_RESET_RELEASE_RESOURCES_BIT);
 }

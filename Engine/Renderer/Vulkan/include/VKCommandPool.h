@@ -14,6 +14,9 @@ private:
 
 
 private:
+	VkCommandPool GetCommandPool(void) const;
+
+private:
 	CVKCommandBuffer* AllocCommandBuffer(bool bMainCommandBuffer);
 	void FreeCommandBuffer(CVKCommandBuffer *pCommandBuffer);
 	void ResetCommandPool(void);
