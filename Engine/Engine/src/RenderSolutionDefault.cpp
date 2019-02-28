@@ -5,8 +5,8 @@ CRenderSolutionDefault::CRenderSolutionDefault(void)
 {
 	SetEnableMSAA(false);
 
-	m_ptrMainCommandBuffer[0] = GfxRenderer()->NewCommandBuffer(true);
-	m_ptrMainCommandBuffer[1] = GfxRenderer()->NewCommandBuffer(true);
+	m_ptrMainCommandBuffer[0] = GfxRenderer()->NewCommandBuffer(0, true);
+	m_ptrMainCommandBuffer[1] = GfxRenderer()->NewCommandBuffer(0, true);
 }
 
 CRenderSolutionDefault::~CRenderSolutionDefault(void)

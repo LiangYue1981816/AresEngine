@@ -8,7 +8,7 @@ CTaskCommandBuffer::CTaskCommandBuffer(int indexQueue, const CGfxUniformBufferPt
 	, m_pPipeline(pPipeline)
 	, m_namePass(namePass)
 {
-	m_ptrCommandBuffer = GfxRenderer()->NewCommandBuffer(false);
+
 }
 
 CTaskCommandBuffer::~CTaskCommandBuffer(void)
@@ -23,6 +23,8 @@ CGfxCommandBufferPtr CTaskCommandBuffer::GetCommandBuffer(void) const
 
 void CTaskCommandBuffer::TaskFunc(void *pParams)
 {
+	m_ptrCommandBuffer = GfxRenderer()->NewCommandBuffer(0, false);
+
 	if (CGfxRenderQueue *pRenderQueue = (CGfxRenderQueue *)pParams) {
 		pRenderQueue->CmdDrawThread(m_indexQueue, m_ptrCommandBuffer, m_ptrUniformBufferEngine, m_ptrUniformBufferCamera, m_pPipeline, m_namePass);
 	}
