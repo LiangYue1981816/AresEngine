@@ -231,7 +231,7 @@ CGfxUniformBufferPtr CGLES3Renderer::NewUniformBuffer(size_t size)
 	return m_pUniformBufferManager->Create(size);
 }
 
-CGfxCommandBufferPtr CGLES3Renderer::NewCommandBuffer(bool bMainCommandBuffer)
+CGfxCommandBufferPtr CGLES3Renderer::NewCommandBuffer(uint32_t pool, bool bMainCommandBuffer)
 {
 	return m_pCommandBufferManager->Create(bMainCommandBuffer);
 }

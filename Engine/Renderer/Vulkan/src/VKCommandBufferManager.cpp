@@ -9,21 +9,21 @@ CVKCommandBufferManager::CVKCommandBufferManager(CVKDevice *pDevice)
 
 CVKCommandBufferManager::~CVKCommandBufferManager(void)
 {
-
-}
-
-CVKCommandBuffer* CVKCommandBufferManager::Create(bool bMainCommandBuffer)
-{
-	mutex_autolock autolock(&lock);
-	{
-		return nullptr;
+	for (const auto &itCommandPool : m_pCommandPools) {
+		delete itCommandPool.second;
 	}
+
+	m_pCommandPools.clear();
 }
 
-void CVKCommandBufferManager::Destroy(CVKCommandBuffer *pCommandBuffer)
+CVKCommandBuffer* CVKCommandBufferManager::Create(uint32_t pool, bool bMainCommandBuffer)
 {
 	mutex_autolock autolock(&lock);
 	{
+		if (m_pCommandPools[pool] == nullptr) {
+			m_pCommandPools[pool] = new CVKCommandPool(m_pDevice);
+		}
 
+		return m_pCommandPools[pool]->AllocCommandBuffer(bMainCommandBuffer);
 	}
 }

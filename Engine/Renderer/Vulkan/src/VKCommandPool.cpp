@@ -1,7 +1,7 @@
 #include "VKRenderer.h"
 
 
-CVKCommandPool::CVKCommandPool(CVKDevice *pDevice, uint32_t queueFamilyIndex)
+CVKCommandPool::CVKCommandPool(CVKDevice *pDevice)
 	: m_pDevice(pDevice)
 	, m_vkCommandPool(VK_NULL_HANDLE)
 {
@@ -9,7 +9,7 @@ CVKCommandPool::CVKCommandPool(CVKDevice *pDevice, uint32_t queueFamilyIndex)
 	createInfo.sType = VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO;
 	createInfo.pNext = nullptr;
 	createInfo.flags = VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT;
-	createInfo.queueFamilyIndex = queueFamilyIndex;
+	createInfo.queueFamilyIndex = m_pDevice->GetQueue()->GetQueueFamilyIndex();
 	vkCreateCommandPool(m_pDevice->GetDevice(), &createInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkCommandPool);
 }
 

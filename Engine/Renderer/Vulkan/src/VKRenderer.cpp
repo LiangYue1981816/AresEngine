@@ -229,9 +229,9 @@ CGfxUniformBufferPtr CVKRenderer::NewUniformBuffer(size_t size)
 	return m_pUniformBufferManager->Create(size);
 }
 
-CGfxCommandBufferPtr CVKRenderer::NewCommandBuffer(bool bMainCommandBuffer)
+CGfxCommandBufferPtr CVKRenderer::NewCommandBuffer(uint32_t pool, bool bMainCommandBuffer)
 {
-	return m_pCommandBufferManager->Create(bMainCommandBuffer);
+	return m_pCommandBufferManager->Create(pool, bMainCommandBuffer);
 }
 
 bool CVKRenderer::CmdBeginRenderPass(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass)

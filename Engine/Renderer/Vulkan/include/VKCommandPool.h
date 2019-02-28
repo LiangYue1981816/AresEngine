@@ -9,7 +9,7 @@ class CVKCommandPool
 
 
 private:
-	CVKCommandPool(CVKDevice *pDevice, uint32_t queueFamilyIndex);
+	CVKCommandPool(CVKDevice *pDevice);
 	virtual ~CVKCommandPool(void);
 
 

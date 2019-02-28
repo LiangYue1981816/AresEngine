@@ -151,7 +151,7 @@ public:
 	CGfxTextureCubeMapPtr NewTextureCubeMap(const char *szFileName);
 
 	CGfxUniformBufferPtr NewUniformBuffer(size_t size);
-	CGfxCommandBufferPtr NewCommandBuffer(bool bMainCommandBuffer);
+	CGfxCommandBufferPtr NewCommandBuffer(uint32_t pool, bool bMainCommandBuffer);
 
 public:
 	bool CmdBeginRenderPass(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass);

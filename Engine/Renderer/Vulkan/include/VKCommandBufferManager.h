@@ -14,9 +14,12 @@ private:
 
 
 private:
-	CVKCommandBuffer* Create(bool bMainCommandBuffer);
-	void Destroy(CVKCommandBuffer *pCommandBuffer);
+	CVKCommandBuffer* Create(uint32_t pool, bool bMainCommandBuffer);
 
+
+private:
+	pthread_mutex_t m_lock;
+	eastl::unordered_map<uint32_t, CVKCommandPool*> m_pCommandPools;
 
 private:
 	CVKDevice *m_pDevice;
