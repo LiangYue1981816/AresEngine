@@ -1,4 +1,4 @@
-#pragma once
+pragma once
 
 
 #define CALL_BOOL_FUNCTION_BREAK(func)       \
@@ -133,6 +133,6 @@ class CVKDescriptorPool;
 class CVKDescriptorSet;
 class CVKDescriptorSetManager;
 
+class CVKCommandPool;
 class CVKCommandBuffer;
-class CVKCommandBufferPool;
 class CVKCommandBufferManager;

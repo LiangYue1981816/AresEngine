@@ -64,8 +64,8 @@
 #include "VKDescriptorSet.h"
 #include "VKDescriptorSetManager.h"
 
+#include "VKCommandPool.h"
 #include "VKCommandBuffer.h"
-#include "VKCommandBufferPool.h"
 #include "VKCommandBufferManager.h"
 
 
