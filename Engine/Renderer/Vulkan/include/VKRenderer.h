@@ -47,6 +47,9 @@
 #include "VKTextureCubeMap.h"
 #include "VKTextureManager.h"
 
+#include "VKUniformBuffer.h"
+#include "VKUniformBufferManager.h"
+
 #include "VKMesh.h"
 #include "VKMeshManager.h"
 #include "VKMeshDraw.h"
@@ -55,9 +58,6 @@
 #include "VKMaterial.h"
 #include "VKMaterialPass.h"
 #include "VKMaterialManager.h"
-
-#include "VKUniformBuffer.h"
-#include "VKUniformBufferManager.h"
 
 #include "VKDescriptorLayout.h"
 #include "VKDescriptorPool.h"
@@ -189,12 +189,12 @@ private:
 	CVKTexture2DManager *m_pTexture2DManager;
 	CVKTexture2DArrayManager *m_pTexture2DArrayManager;
 	CVKTextureCubeMapManager *m_pTextureCubeMapManager;
+	CVKUniformBufferManager *m_pUniformBufferManager;
 	CVKMeshManager *m_pMeshManager;
 	CVKMeshDrawManager *m_pMeshDrawManager;
 	CVKMaterialManager *m_pMaterialManager;
 	CVKRenderPassManager *m_pRenderPassManager;
 	CVKRenderTextureManager *m_pRenderTextureManager;
 	CVKFrameBufferManager *m_pFrameBufferManager;
-	CVKUniformBufferManager *m_pUniformBufferManager;
 	CVKCommandBufferManager *m_pCommandBufferManager;
 };

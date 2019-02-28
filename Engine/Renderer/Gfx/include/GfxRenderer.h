@@ -12,17 +12,25 @@
 #include "GfxResource.h"
 #include "GfxResourceManager.h"
 
+#include "GfxSwapChain.h"
+#include "GfxRenderPass.h"
+#include "GfxFrameBuffer.h"
+#include "GfxRenderTexture.h"
+
+#include "GfxShader.h"
+#include "GfxPipelineCompute.h"
+#include "GfxPipelineGraphics.h"
+
 #include "GfxIndexBuffer.h"
 #include "GfxVertexBuffer.h"
 #include "GfxInstanceBuffer.h"
 #include "GfxIndirectBuffer.h"
+
 #include "GfxSampler.h"
 #include "GfxTexture2D.h"
 #include "GfxTexture2DArray.h"
 #include "GfxTextureCubeMap.h"
-#include "GfxShader.h"
-#include "GfxPipelineCompute.h"
-#include "GfxPipelineGraphics.h"
+
 #include "GfxUniformVec1.h"
 #include "GfxUniformVec2.h"
 #include "GfxUniformVec3.h"
@@ -32,17 +40,16 @@
 #include "GfxUniformCamera.h"
 #include "GfxUniformBuffer.h"
 
-#include "GfxCamera.h"
-#include "GfxRenderQueue.h"
-#include "GfxSwapChain.h"
-#include "GfxRenderPass.h"
-#include "GfxFrameBuffer.h"
-#include "GfxRenderTexture.h"
 #include "GfxMesh.h"
 #include "GfxMeshDraw.h"
+
 #include "GfxMaterial.h"
 #include "GfxMaterialPass.h"
+
 #include "GfxCommandBuffer.h"
+
+#include "GfxCamera.h"
+#include "GfxRenderQueue.h"
 
 
 #define GfxRenderer() CGfxRenderer::GetInstance()

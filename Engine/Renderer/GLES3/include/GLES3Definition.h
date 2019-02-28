@@ -35,6 +35,9 @@ class CGLES3Texture2DArrayManager;
 class CGLES3TextureCubeMap;
 class CGLES3TextureCubeMapManager;
 
+class CGLES3UniformBuffer;
+class CGLES3UniformBufferManager;
+
 class CGLES3Mesh;
 class CGLES3MeshManager;
 class CGLES3MeshDraw;
@@ -43,9 +46,6 @@ class CGLES3MeshDrawManager;
 class CGLES3Material;
 class CGLES3MaterialPass;
 class CGLES3MaterialManager;
-
-class CGLES3UniformBuffer;
-class CGLES3UniformBufferManager;
 
 class CGLES3CommandBuffer;
 class CGLES3CommandBufferManager;

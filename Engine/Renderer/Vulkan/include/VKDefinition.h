@@ -116,6 +116,9 @@ class CVKTexture2DArrayManager;
 class CVKTextureCubeMap;
 class CVKTextureCubeMapManager;
 
+class CVKUniformBuffer;
+class CVKUniformBufferManager;
+
 class CVKMesh;
 class CVKMeshManager;
 class CVKMeshDraw;
@@ -124,9 +127,6 @@ class CVKMeshDrawManager;
 class CVKMaterial;
 class CVKMaterialPass;
 class CVKMaterialManager;
-
-class CVKUniformBuffer;
-class CVKUniformBufferManager;
 
 class CVKDescriptorLayout;
 class CVKDescriptorPool;

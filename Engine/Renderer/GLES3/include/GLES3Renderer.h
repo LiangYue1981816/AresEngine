@@ -36,6 +36,9 @@
 #include "GLES3TextureCubeMap.h"
 #include "GLES3TextureManager.h"
 
+#include "GLES3UniformBuffer.h"
+#include "GLES3UniformBufferManager.h"
+
 #include "GLES3Mesh.h"
 #include "GLES3MeshManager.h"
 #include "GLES3MeshDraw.h"
@@ -44,9 +47,6 @@
 #include "GLES3Material.h"
 #include "GLES3MaterialPass.h"
 #include "GLES3MaterialManager.h"
-
-#include "GLES3UniformBuffer.h"
-#include "GLES3UniformBufferManager.h"
 
 #include "GLES3CommandBuffer.h"
 #include "GLES3CommandBufferManager.h"
@@ -221,13 +221,13 @@ private:
 	CGLES3Texture2DManager *m_pTexture2DManager;
 	CGLES3Texture2DArrayManager *m_pTexture2DArrayManager;
 	CGLES3TextureCubeMapManager *m_pTextureCubeMapManager;
+	CGLES3UniformBufferManager *m_pUniformBufferManager;
 	CGLES3MeshManager *m_pMeshManager;
 	CGLES3MeshDrawManager *m_pMeshDrawManager;
 	CGLES3MaterialManager *m_pMaterialManager;
 	CGLES3RenderPassManager *m_pRenderPassManager;
 	CGLES3RenderTextureManager *m_pRenderTextureManager;
 	CGLES3FrameBufferManager *m_pFrameBufferManager;
-	CGLES3UniformBufferManager *m_pUniformBufferManager;
 	CGLES3CommandBufferManager *m_pCommandBufferManager;
 
 private:

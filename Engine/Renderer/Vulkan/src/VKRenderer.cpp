@@ -14,13 +14,13 @@ CVKRenderer::CVKRenderer(void *hInstance, void *hWnd, void *hDC, int width, int 
 	, m_pTexture2DManager(nullptr)
 	, m_pTexture2DArrayManager(nullptr)
 	, m_pTextureCubeMapManager(nullptr)
+	, m_pUniformBufferManager(nullptr)
 	, m_pMeshManager(nullptr)
 	, m_pMeshDrawManager(nullptr)
 	, m_pMaterialManager(nullptr)
 	, m_pRenderPassManager(nullptr)
 	, m_pRenderTextureManager(nullptr)
 	, m_pFrameBufferManager(nullptr)
-	, m_pUniformBufferManager(nullptr)
 	, m_pCommandBufferManager(nullptr)
 {
 	m_pInstance = new CVKInstance(hInstance, hWnd);
@@ -33,13 +33,13 @@ CVKRenderer::CVKRenderer(void *hInstance, void *hWnd, void *hDC, int width, int 
 	m_pTexture2DManager = new CVKTexture2DManager(m_pDevice);
 	m_pTexture2DArrayManager = new CVKTexture2DArrayManager(m_pDevice);
 	m_pTextureCubeMapManager = new CVKTextureCubeMapManager(m_pDevice);
+	m_pUniformBufferManager = new CVKUniformBufferManager(m_pDevice);
 	m_pMeshManager = new CVKMeshManager(m_pDevice);
 	m_pMeshDrawManager = new CVKMeshDrawManager(m_pDevice);
 	m_pMaterialManager = new CVKMaterialManager(m_pDevice);
 	m_pRenderPassManager = new CVKRenderPassManager(m_pDevice);
 	m_pRenderTextureManager = new CVKRenderTextureManager(m_pDevice);
 	m_pFrameBufferManager = new CVKFrameBufferManager(m_pDevice);
-	m_pUniformBufferManager = new CVKUniformBufferManager(m_pDevice);
 	m_pCommandBufferManager = new CVKCommandBufferManager(m_pDevice);
 
 	m_pSwapChain = new CVKSwapChain(m_pDevice, width, height, pixelFormat);
@@ -50,13 +50,13 @@ CVKRenderer::~CVKRenderer(void)
 	delete m_pSwapChain;
 
 	delete m_pCommandBufferManager;
-	delete m_pUniformBufferManager;
 	delete m_pFrameBufferManager;
 	delete m_pRenderTextureManager;
 	delete m_pRenderPassManager;
 	delete m_pMaterialManager;
 	delete m_pMeshDrawManager;
 	delete m_pMeshManager;
+	delete m_pUniformBufferManager;
 	delete m_pSamplerManager;
 	delete m_pTexture2DManager;
 	delete m_pTexture2DArrayManager;
