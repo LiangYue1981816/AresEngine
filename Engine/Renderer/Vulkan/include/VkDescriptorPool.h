@@ -4,6 +4,7 @@
 
 class CVKDescriptorPool
 {
+	friend class CVKDescriptorSet;
 	friend class CVKDescriptorSetManager;
 
 
@@ -11,6 +12,9 @@ private:
 	CVKDescriptorPool(CVKDevice *pDevice);
 	virtual ~CVKDescriptorPool(void);
 
+
+private:
+	VkDescriptorPool GetDescriptorPool(void) const;
 
 private:
 	CVKDescriptorSet* AllocDescriptorSet(CVKDescriptorLayout *pDescriptorLayout);

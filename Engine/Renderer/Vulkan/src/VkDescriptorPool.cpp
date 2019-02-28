@@ -66,6 +66,11 @@ CVKDescriptorPool::~CVKDescriptorPool(void)
 	m_vkDescriptorPool = VK_NULL_HANDLE;
 }
 
+VkDescriptorPool CVKDescriptorPool::GetDescriptorPool(void) const
+{
+	return m_vkDescriptorPool;
+}
+
 CVKDescriptorSet* CVKDescriptorPool::AllocDescriptorSet(CVKDescriptorLayout *pDescriptorLayout)
 {
 	if (m_numSets == 0) {
