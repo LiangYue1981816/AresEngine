@@ -1,3 +1,4 @@
+#include "Utils.h"
 #include "TaskGraph.h"
 
 
@@ -9,12 +10,15 @@ CTaskGraph::CTaskGraph(const char *szName, int numThreads)
 	event_init(&m_eventDispatch, 0);
 	atomic_spin_init(&m_lockTaskList);
 
+	m_params.resize(numThreads);
 	m_threads.resize(numThreads);
+
 	for (int indexThread = 0; indexThread < m_threads.size(); indexThread++) {
-		char szThreadName[_MAX_STRING];
-		sprintf(szThreadName, "%s_%d", szName, indexThread);
-		pthread_create(&m_threads[indexThread], nullptr, TaskThread, this);
-		pthread_set_name(m_threads[indexThread], szThreadName);
+		m_params[indexThread].pTaskGraph = this;
+		sprintf(m_params[indexThread].szThreadName, "%s_%d", szName, indexThread);
+
+		pthread_create(&m_threads[indexThread], nullptr, TaskThread, &m_params[indexThread]);
+		pthread_set_name(m_threads[indexThread], m_params[indexThread].szThreadName);
 	}
 }
 
@@ -67,7 +71,8 @@ void CTaskGraph::Wait(void)
 
 void* CTaskGraph::TaskThread(void *pParams)
 {
-	CTaskGraph *pTaskGraph = (CTaskGraph *)pParams;
+	CTaskGraph *pTaskGraph = ((ThreadParam *)pParams)->pTaskGraph;
+	uint32_t threadName = HashValue(((ThreadParam *)pParams)->szThreadName);
 
 	while (true) {
 		event_wait(&pTaskGraph->m_eventDispatch);

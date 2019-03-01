@@ -1,3 +1,4 @@
+#include "Utils.h"
 #include "TaskPool.h"
 
 
@@ -7,12 +8,15 @@ CTaskPool::CTaskPool(const char *szName, int numThreads)
 	event_init(&m_eventExit, 0);
 	atomic_spin_init(&m_lockTaskList);
 
+	m_params.resize(numThreads);
 	m_threads.resize(numThreads);
+
 	for (int indexThread = 0; indexThread < m_threads.size(); indexThread++) {
-		char szThreadName[_MAX_STRING];
-		sprintf(szThreadName, "%s_%d", szName, indexThread);
-		pthread_create(&m_threads[indexThread], nullptr, TaskThread, this);
-		pthread_set_name(m_threads[indexThread], szThreadName);
+		m_params[indexThread].pTaskPool = this;
+		sprintf(m_params[indexThread].szThreadName, "%s_%d", szName, indexThread);
+
+		pthread_create(&m_threads[indexThread], nullptr, TaskThread, &m_params[indexThread]);
+		pthread_set_name(m_threads[indexThread], m_params[indexThread].szThreadName);
 	}
 }
 
@@ -54,7 +58,8 @@ void CTaskPool::Task(CTask *pTask, void *pParams, event_t *pEventSignal, bool bH
 
 void* CTaskPool::TaskThread(void *pParams)
 {
-	CTaskPool *pTaskPool = (CTaskPool *)pParams;
+	CTaskPool *pTaskPool = ((ThreadParam *)pParams)->pTaskPool;
+	uint32_t threadName = HashValue(((ThreadParam *)pParams)->szThreadName);
 
 	while (true) {
 		// Check if the thread needs to exit

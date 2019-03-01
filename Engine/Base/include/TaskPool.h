@@ -8,6 +8,13 @@
 
 class CALL_API CTaskPool
 {
+private:
+	typedef struct ThreadParam {
+		CTaskPool *pTaskPool;
+		char szThreadName[260];
+	} ThreadParam;
+
+
 public:
 	CTaskPool(const char *szName, int numThreads = THREAD_COUNT);
 	virtual ~CTaskPool(void);
@@ -23,6 +30,7 @@ private:
 private:
 	event_t m_eventExit;
 	eastl::vector<pthread_t> m_threads;
+	eastl::vector<ThreadParam> m_params;
 
 private:
 	std::atomic_flag m_lockTaskList;

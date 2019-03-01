@@ -8,6 +8,13 @@
 
 class CALL_API CTaskGraph
 {
+private:
+	typedef struct ThreadParam {
+		CTaskGraph *pTaskGraph;
+		char szThreadName[260];
+	} ThreadParam;
+
+
 public:
 	CTaskGraph(const char *szName, int numThreads = THREAD_COUNT);
 	virtual ~CTaskGraph(void);
@@ -28,6 +35,7 @@ private:
 	event_t m_eventFinish;
 	event_t m_eventDispatch;
 	eastl::vector<pthread_t> m_threads;
+	eastl::vector<ThreadParam> m_params;
 
 private:
 	std::atomic_flag m_lockTaskList;
