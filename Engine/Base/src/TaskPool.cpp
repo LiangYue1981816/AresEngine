@@ -85,7 +85,7 @@ void* CTaskPool::TaskThread(void *pParams)
 			atomic_spin_unlock(&pTaskPool->m_lockTaskList);
 
 			if (pTask) {
-				pTask->TaskFunc(pTask->GetTaskParams());
+				pTask->TaskFunc(threadName, pTask->GetTaskParams());
 				pTask->SetTaskSignal();
 			}
 

@@ -30,7 +30,7 @@ public:
 		m_pComponentManager = pComponentManager;
 	}
 
-	void TaskFunc(void *pParams)
+	void TaskFunc(uint32_t threadName, void *pParams)
 	{
 		if (m_pComponentManager) {
 			size_t count = (m_pComponentManager->GetComponentCount() + (THREAD_COUNT - m_pComponentManager->GetComponentCount() % THREAD_COUNT)) / THREAD_COUNT;

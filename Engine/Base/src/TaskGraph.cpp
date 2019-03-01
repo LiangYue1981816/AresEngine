@@ -111,7 +111,7 @@ void* CTaskGraph::TaskThread(void *pParams)
 						atomic_spin_unlock(&pTaskGraph->m_lockTaskList);
 
 						if (pTask) {
-							pTask->TaskFunc(pTask->GetTaskParams());
+							pTask->TaskFunc(threadName, pTask->GetTaskParams());
 							pTask->SetTaskSignal();
 						}
 
