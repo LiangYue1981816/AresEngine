@@ -65,7 +65,13 @@ void CVKCommandBuffer::Clearup(void)
 
 bool CVKCommandBuffer::Execute(void) const
 {
+	vkResetFences(m_pDevice->GetDevice(), 1, &m_vkFence);
 	return true;
+}
+
+bool CVKCommandBuffer::Wait(uint64_t timeout) const
+{
+	return vkWaitForFences(m_pDevice->GetDevice(), 1, &m_vkFence, VK_TRUE, timeout) == VK_SUCCESS;
 }
 
 bool CVKCommandBuffer::CmdBeginRenderPass(const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass)
