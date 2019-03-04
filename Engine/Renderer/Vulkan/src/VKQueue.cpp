@@ -32,8 +32,6 @@ bool CVKQueue::Submit(const CGfxCommandBufferPtr ptrCommandBuffer) const
 
 bool CVKQueue::Submit(const CGfxCommandBufferPtr ptrCommandBuffer, VkSemaphore vkWaitSemaphore, VkPipelineStageFlags waitStageFlags, VkSemaphore vkSignalSemaphore) const
 {
-	ptrCommandBuffer->Wait(UINT64_MAX);
-
 	VkFence vkFence = (VkFence)ptrCommandBuffer->GetFence();
 	VkCommandBuffer vkCommandBuffer = (VkCommandBuffer)ptrCommandBuffer->GetCommandBuffer();
 

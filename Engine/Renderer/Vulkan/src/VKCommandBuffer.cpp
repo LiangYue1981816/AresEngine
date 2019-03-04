@@ -65,6 +65,8 @@ bool CVKCommandBuffer::IsMainCommandBuffer(void) const
 
 void CVKCommandBuffer::Clearup(void)
 {
+	vkWaitForFences(m_pDevice->GetDevice(), 1, &m_vkFence, VK_TRUE, UINT64_MAX);
+
 	for (const auto &itCommand : m_pCommands) {
 		delete itCommand;
 	}
@@ -75,6 +77,7 @@ void CVKCommandBuffer::Clearup(void)
 
 bool CVKCommandBuffer::Execute(void) const
 {
+	vkWaitForFences(m_pDevice->GetDevice(), 1, &m_vkFence, VK_TRUE, UINT64_MAX);
 	vkResetFences(m_pDevice->GetDevice(), 1, &m_vkFence);
 	return true;
 }
