@@ -239,6 +239,8 @@ void CVKSwapChain::DestroyImagesAndImageViews(void)
 		m_vkImageViews[index] = VK_NULL_HANDLE;
 		m_ptrRenderTextures[index].Release();
 	}
+
+	m_indexImage = 0;
 }
 
 GfxPixelFormat CVKSwapChain::GetPixelFormat(void) const
@@ -283,7 +285,7 @@ void CVKSwapChain::Present(void)
 void CVKSwapChain::AcquireNextFrame(void)
 {
 	m_indexImage = -1;
-	vkAcquireNextImageKHR(m_pDevice->GetDevice(), m_vkSwapchain, 0, m_vkAcquireSemaphore, VK_NULL_HANDLE, &m_indexImage);
+	vkAcquireNextImageKHR(m_pDevice->GetDevice(), m_vkSwapchain, UINT64_MAX, m_vkAcquireSemaphore, VK_NULL_HANDLE, &m_indexImage);
 }
 
 VkSemaphore CVKSwapChain::GetAcquireSemaphore(void) const
