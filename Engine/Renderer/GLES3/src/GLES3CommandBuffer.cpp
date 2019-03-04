@@ -63,6 +63,11 @@ void CGLES3CommandBuffer::Release(void)
 	m_pManager->Destroy(this);
 }
 
+HANDLE CGLES3CommandBuffer::GetCommandBuffer(void) const
+{
+	return nullptr;
+}
+
 bool CGLES3CommandBuffer::IsMainCommandBuffer(void) const
 {
 	return m_bMainCommandBuffer;

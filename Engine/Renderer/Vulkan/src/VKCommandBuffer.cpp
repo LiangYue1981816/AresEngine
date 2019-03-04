@@ -48,6 +48,11 @@ void CVKCommandBuffer::Release(void)
 	m_pCommandPool->FreeCommandBuffer(this);
 }
 
+HANDLE CVKCommandBuffer::GetCommandBuffer(void) const
+{
+	return (HANDLE)m_vkCommandBuffer;
+}
+
 bool CVKCommandBuffer::IsMainCommandBuffer(void) const
 {
 	return m_bMainCommandBuffer;

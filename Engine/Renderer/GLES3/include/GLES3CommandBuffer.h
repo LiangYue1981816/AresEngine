@@ -14,6 +14,9 @@ private:
 
 
 public:
+	HANDLE GetCommandBuffer(void) const;
+
+public:
 	bool IsMainCommandBuffer(void) const;
 
 public:

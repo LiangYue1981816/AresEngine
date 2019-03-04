@@ -33,6 +33,9 @@ public:
 
 
 public:
+	virtual HANDLE GetCommandBuffer(void) const = 0;
+
+public:
 	virtual bool IsMainCommandBuffer(void) const = 0;
 
 public:
