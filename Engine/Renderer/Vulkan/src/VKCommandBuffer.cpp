@@ -31,16 +31,8 @@ CVKCommandBuffer::~CVKCommandBuffer(void)
 {
 	Clearup();
 
-	if (m_vkFence) {
-		vkDestroyFence(m_pDevice->GetDevice(), m_vkFence, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
-	}
-
-	if (m_vkCommandBuffer) {
-		vkFreeCommandBuffers(m_pDevice->GetDevice(), m_pCommandPool->GetCommandPool(), 1, &m_vkCommandBuffer);
-	}
-
-	m_vkFence = VK_NULL_HANDLE;
-	m_vkCommandBuffer = VK_NULL_HANDLE;
+	vkDestroyFence(m_pDevice->GetDevice(), m_vkFence, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
+	vkFreeCommandBuffers(m_pDevice->GetDevice(), m_pCommandPool->GetCommandPool(), 1, &m_vkCommandBuffer);
 }
 
 void CVKCommandBuffer::Release(void)

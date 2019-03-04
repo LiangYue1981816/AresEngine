@@ -13,8 +13,6 @@ CVKShaderManager::~CVKShaderManager(void)
 	for (const auto &itShader : m_pShaders) {
 		delete itShader.second;
 	}
-
-	m_pShaders.clear();
 }
 
 CVKShader* CVKShaderManager::Create(const char *szFileName, shader_kind kind)

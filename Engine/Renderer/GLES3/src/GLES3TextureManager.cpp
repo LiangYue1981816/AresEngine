@@ -12,8 +12,6 @@ CGLES3Texture2DManager::~CGLES3Texture2DManager(void)
 	for (const auto &itTexture : m_pTextures) {
 		delete itTexture.second;
 	}
-
-	m_pTextures.clear();
 }
 
 CGLES3Texture2D* CGLES3Texture2DManager::Get(uint32_t name)
@@ -80,8 +78,6 @@ CGLES3Texture2DArrayManager::~CGLES3Texture2DArrayManager(void)
 	for (const auto &itTexture : m_pTextures) {
 		delete itTexture.second;
 	}
-
-	m_pTextures.clear();
 }
 
 CGLES3Texture2DArray* CGLES3Texture2DArrayManager::Get(uint32_t name)
@@ -148,8 +144,6 @@ CGLES3TextureCubeMapManager::~CGLES3TextureCubeMapManager(void)
 	for (const auto &itTexture : m_pTextures) {
 		delete itTexture.second;
 	}
-
-	m_pTextures.clear();
 }
 
 CGLES3TextureCubeMap* CGLES3TextureCubeMapManager::Get(uint32_t name)

@@ -12,8 +12,6 @@ CVKFrameBufferManager::~CVKFrameBufferManager(void)
 	for (const auto &itFrameBuffer : m_pFrameBuffers) {
 		delete itFrameBuffer.second;
 	}
-
-	m_pFrameBuffers.clear();
 }
 
 CVKFrameBuffer* CVKFrameBufferManager::Create(int width, int height, int numAttachments)

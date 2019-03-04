@@ -29,7 +29,7 @@ CShaderCompiler::CShaderCompiler(void)
 
 CShaderCompiler::~CShaderCompiler(void)
 {
-
+	pInstance = nullptr;
 }
 
 void CShaderCompiler::SetCachePath(const char *szPath)

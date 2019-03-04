@@ -40,33 +40,38 @@ bool CVKPipelineCompute::Create(const CGfxShader *pComputeShader)
 	}
 
 	Destroy();
+	{
+		do {
+			m_pShaders[compute_shader] = (CVKShader *)pComputeShader;
 
-	m_pShaders[compute_shader] = (CVKShader *)pComputeShader;
+			eastl::vector<VkDescriptorSetLayout> layouts;
+			eastl::vector<VkPushConstantRange> pushConstantRanges;
+			CALL_BOOL_FUNCTION_BREAK(CreateLayouts(layouts, pushConstantRanges));
 
-	eastl::vector<VkDescriptorSetLayout> layouts;
-	eastl::vector<VkPushConstantRange> pushConstantRanges;
-	CALL_BOOL_FUNCTION_RETURN_BOOL(CreateLayouts(layouts, pushConstantRanges));
+			VkPipelineShaderStageCreateInfo shaderStageCreateInfo = {};
+			shaderStageCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
+			shaderStageCreateInfo.pNext = nullptr;
+			shaderStageCreateInfo.flags = 0;
+			shaderStageCreateInfo.stage = VK_SHADER_STAGE_COMPUTE_BIT;
+			shaderStageCreateInfo.module = (VkShaderModule)m_pShaders[compute_shader]->GetShader();
+			shaderStageCreateInfo.pName = "main";
+			shaderStageCreateInfo.pSpecializationInfo = nullptr;
 
-	VkPipelineShaderStageCreateInfo shaderStageCreateInfo = {};
-	shaderStageCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
-	shaderStageCreateInfo.pNext = nullptr;
-	shaderStageCreateInfo.flags = 0;
-	shaderStageCreateInfo.stage = VK_SHADER_STAGE_COMPUTE_BIT;
-	shaderStageCreateInfo.module = (VkShaderModule)m_pShaders[compute_shader]->GetShader();
-	shaderStageCreateInfo.pName = "main";
-	shaderStageCreateInfo.pSpecializationInfo = nullptr;
+			VkComputePipelineCreateInfo pipelineCreateInfo = {};
+			pipelineCreateInfo.sType = VK_STRUCTURE_TYPE_COMPUTE_PIPELINE_CREATE_INFO;
+			pipelineCreateInfo.pNext = nullptr;
+			pipelineCreateInfo.flags = 0;
+			pipelineCreateInfo.stage = shaderStageCreateInfo;
+			pipelineCreateInfo.layout = m_vkPipelineLayout;
+			pipelineCreateInfo.basePipelineHandle = VK_NULL_HANDLE;
+			pipelineCreateInfo.basePipelineIndex = 0;
+			CALL_VK_FUNCTION_BREAK(vkCreateComputePipelines(m_pDevice->GetDevice(), VK_NULL_HANDLE, 1, &pipelineCreateInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkPipeline));
 
-	VkComputePipelineCreateInfo pipelineCreateInfo = {};
-	pipelineCreateInfo.sType = VK_STRUCTURE_TYPE_COMPUTE_PIPELINE_CREATE_INFO;
-	pipelineCreateInfo.pNext = nullptr;
-	pipelineCreateInfo.flags = 0;
-	pipelineCreateInfo.stage = shaderStageCreateInfo;
-	pipelineCreateInfo.layout = m_vkPipelineLayout;
-	pipelineCreateInfo.basePipelineHandle = VK_NULL_HANDLE;
-	pipelineCreateInfo.basePipelineIndex = 0;
-	CALL_VK_FUNCTION_RETURN_BOOL(vkCreateComputePipelines(m_pDevice->GetDevice(), VK_NULL_HANDLE, 1, &pipelineCreateInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkPipeline));
-
-	return true;
+			return true;
+		} while (false);
+	}
+	Destroy();
+	return false;
 }
 
 void CVKPipelineCompute::Destroy(void)

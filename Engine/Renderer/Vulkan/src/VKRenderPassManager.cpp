@@ -12,8 +12,6 @@ CVKRenderPassManager::~CVKRenderPassManager(void)
 	for (const auto &itRenderPasses : m_pRenderPasses) {
 		delete itRenderPasses.second;
 	}
-
-	m_pRenderPasses.clear();
 }
 
 CVKRenderPass* CVKRenderPassManager::Get(uint32_t name)

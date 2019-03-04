@@ -19,12 +19,7 @@ CVKCommandPool::~CVKCommandPool(void)
 		delete itCommandBuffer.second;
 	}
 
-	if (m_vkCommandPool) {
-		vkDestroyCommandPool(m_pDevice->GetDevice(), m_vkCommandPool, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
-	}
-
-	m_pCommandBuffers.clear();
-	m_vkCommandPool = VK_NULL_HANDLE;
+	vkDestroyCommandPool(m_pDevice->GetDevice(), m_vkCommandPool, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
 }
 
 VkCommandPool CVKCommandPool::GetCommandPool(void) const

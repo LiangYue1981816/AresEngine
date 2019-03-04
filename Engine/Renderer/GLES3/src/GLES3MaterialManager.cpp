@@ -12,8 +12,6 @@ CGLES3MaterialManager::~CGLES3MaterialManager(void)
 	for (const auto &itMaterial : m_pMaterials) {
 		delete itMaterial.second;
 	}
-
-	m_pMaterials.clear();
 }
 
 CGLES3Material* CGLES3MaterialManager::Get(uint32_t name)

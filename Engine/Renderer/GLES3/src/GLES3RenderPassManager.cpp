@@ -11,8 +11,6 @@ CGLES3RenderPassManager::~CGLES3RenderPassManager(void)
 	for (const auto &itRenderPasses : m_pRenderPasses) {
 		delete itRenderPasses.second;
 	}
-
-	m_pRenderPasses.clear();
 }
 
 CGLES3RenderPass* CGLES3RenderPassManager::Get(uint32_t name)

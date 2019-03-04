@@ -26,14 +26,12 @@ CVKSampler::CVKSampler(CVKDevice *pDevice, GfxFilter minFilter, GfxFilter magFil
 	createInfo.maxLod = FLT_MAX;
 	createInfo.borderColor = VK_BORDER_COLOR_FLOAT_OPAQUE_WHITE;
 	createInfo.unnormalizedCoordinates = VK_FALSE;
-	CALL_VK_FUNCTION_RETURN(vkCreateSampler(m_pDevice->GetDevice(), &createInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkSampler));
+	vkCreateSampler(m_pDevice->GetDevice(), &createInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkSampler);
 }
 
 CVKSampler::~CVKSampler(void)
 {
-	if (m_vkSampler) {
-		vkDestroySampler(m_pDevice->GetDevice(), m_vkSampler, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
-	}
+	vkDestroySampler(m_pDevice->GetDevice(), m_vkSampler, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
 }
 
 HANDLE CVKSampler::GetSampler(void) const

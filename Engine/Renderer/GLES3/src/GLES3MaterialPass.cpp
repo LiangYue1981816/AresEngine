@@ -34,16 +34,6 @@ CGLES3MaterialPass::~CGLES3MaterialPass(void)
 	for (auto &itUniform : m_pUniformMat4s) {
 		delete itUniform.second;
 	}
-
-	m_pSamplers.clear();
-	m_ptrTexture2Ds.clear();
-	m_ptrTexture2DArrays.clear();
-	m_ptrTextureCubeMaps.clear();
-	m_pUniformVec1s.clear();
-	m_pUniformVec2s.clear();
-	m_pUniformVec3s.clear();
-	m_pUniformVec4s.clear();
-	m_pUniformMat4s.clear();
 }
 
 uint32_t CGLES3MaterialPass::GetName(void) const

@@ -182,7 +182,6 @@ const SubpassInformation* CGLES3RenderPass::GetSubpass(int indexSubpass) const
 
 bool CGLES3RenderPass::Create(void)
 {
-	Destroy();
 	return true;
 }
 

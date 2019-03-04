@@ -109,8 +109,6 @@ void CGLES3Texture2DArray::Destroy(void)
 		}
 	}
 
-	m_texture = 0;
-
 	m_format = GFX_PIXELFORMAT_UNDEFINED;
 	m_type = GFX_TEXTURE_INVALID_ENUM;
 

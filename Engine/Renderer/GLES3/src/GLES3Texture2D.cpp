@@ -116,8 +116,6 @@ void CGLES3Texture2D::Destroy(void)
 		CGfxProfiler::DecTextureDataSize(itLevelSize.second);
 	}
 	
-	m_texture = 0;
-
 	m_format = GFX_PIXELFORMAT_UNDEFINED;
 	m_type = GFX_TEXTURE_INVALID_ENUM;
 

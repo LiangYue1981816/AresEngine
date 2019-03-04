@@ -12,8 +12,6 @@ CVKRenderTextureManager::~CVKRenderTextureManager(void)
 	for (const auto &itRenderTexture : m_pRenderTextures) {
 		delete itRenderTexture.second;
 	}
-
-	m_pRenderTextures.clear();
 }
 
 CVKRenderTexture* CVKRenderTextureManager::Get(uint32_t name)

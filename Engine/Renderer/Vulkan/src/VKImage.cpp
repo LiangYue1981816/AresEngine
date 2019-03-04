@@ -29,7 +29,7 @@ CVKImage::CVKImage(CVKDevice *pDevice, VkImageType imageType, VkImageViewType vi
 	case VK_IMAGE_VIEW_TYPE_CUBE: imageCreateInfo.flags = VK_IMAGE_CREATE_CUBE_COMPATIBLE_BIT; break;
 	case VK_IMAGE_VIEW_TYPE_2D_ARRAY: imageCreateInfo.flags = VK_IMAGE_CREATE_2D_ARRAY_COMPATIBLE_BIT; break;
 	}
-	CALL_VK_FUNCTION_RETURN(vkCreateImage(m_pDevice->GetDevice(), &imageCreateInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkImage));
+	vkCreateImage(m_pDevice->GetDevice(), &imageCreateInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkImage);
 
 	VkMemoryPropertyFlags memoryPropertyFlags = 
 		imageTiling == VK_IMAGE_TILING_LINEAR ? 
@@ -41,21 +41,13 @@ CVKImage::CVKImage(CVKDevice *pDevice, VkImageType imageType, VkImageViewType vi
 	VkMemoryRequirements requirements;
 	vkGetImageMemoryRequirements(m_pDevice->GetDevice(), m_vkImage, &requirements);
 	m_pMemory = m_pDevice->GetMemoryManager()->AllocMemory(requirements.size, requirements.alignment, requirements.memoryTypeBits, memoryPropertyFlags);
-
-	if (m_pMemory) {
-		m_pMemory->BindImage(m_vkImage);
-	}
+	m_pMemory->BindImage(m_vkImage);
 }
 
 CVKImage::~CVKImage(void)
 {
-	if (m_vkImage) {
-		vkDestroyImage(m_pDevice->GetDevice(), m_vkImage, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
-	}
-
-	if (m_pMemory) {
-		m_pDevice->GetMemoryManager()->FreeMemory(m_pMemory);
-	}
+	vkDestroyImage(m_pDevice->GetDevice(), m_vkImage, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
+	m_pDevice->GetMemoryManager()->FreeMemory(m_pMemory);
 }
 
 void CVKImage::Release(void)

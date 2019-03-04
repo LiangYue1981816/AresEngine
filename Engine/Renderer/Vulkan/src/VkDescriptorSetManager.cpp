@@ -19,7 +19,6 @@ CVKDescriptorSetManager::~CVKDescriptorSetManager(void)
 		} while (pDescriptorPool = pDescriptorPoolNext);
 	}
 
-	m_pPoolListHead = nullptr;
 	pthread_mutex_destroy(&m_lock);
 }
 

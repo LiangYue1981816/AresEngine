@@ -12,8 +12,6 @@ CVKMeshDrawManager::~CVKMeshDrawManager(void)
 	for (const auto &itMeshDraw : m_pMeshDraws) {
 		delete itMeshDraw.second;
 	}
-
-	m_pMeshDraws.clear();
 }
 
 CVKMeshDraw* CVKMeshDrawManager::Get(uint32_t name)

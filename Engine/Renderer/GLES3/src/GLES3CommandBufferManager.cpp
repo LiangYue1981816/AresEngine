@@ -11,8 +11,6 @@ CGLES3CommandBufferManager::~CGLES3CommandBufferManager(void)
 	for (const auto &itCommandBuffer : m_pCommandBuffers) {
 		delete itCommandBuffer.second;
 	}
-
-	m_pCommandBuffers.clear();
 }
 
 CGLES3CommandBuffer* CGLES3CommandBufferManager::Create(bool bMainCommandBuffer)

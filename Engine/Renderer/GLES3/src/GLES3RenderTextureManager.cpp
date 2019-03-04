@@ -11,8 +11,6 @@ CGLES3RenderTextureManager::~CGLES3RenderTextureManager(void)
 	for (const auto &itRenderTexture : m_pRenderTextures) {
 		delete itRenderTexture.second;
 	}
-
-	m_pRenderTextures.clear();
 }
 
 CGLES3RenderTexture* CGLES3RenderTextureManager::Get(uint32_t name)

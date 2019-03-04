@@ -40,17 +40,6 @@ CVKMaterialPass::~CVKMaterialPass(void)
 	for (auto &itUniform : m_pUniformMat4s) {
 		delete itUniform.second;
 	}
-
-	m_pDescriptorSet = nullptr;
-	m_pSamplers.clear();
-	m_ptrTexture2Ds.clear();
-	m_ptrTexture2DArrays.clear();
-	m_ptrTextureCubeMaps.clear();
-	m_pUniformVec1s.clear();
-	m_pUniformVec2s.clear();
-	m_pUniformVec3s.clear();
-	m_pUniformVec4s.clear();
-	m_pUniformMat4s.clear();
 }
 
 uint32_t CVKMaterialPass::GetName(void) const

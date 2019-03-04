@@ -11,8 +11,6 @@ CGLES3UniformBufferManager::~CGLES3UniformBufferManager(void)
 	for (const auto &UniformBuffer : m_pUniformBuffers) {
 		delete UniformBuffer.second;
 	}
-
-	m_pUniformBuffers.clear();
 }
 
 CGLES3UniformBuffer* CGLES3UniformBufferManager::Create(size_t size)

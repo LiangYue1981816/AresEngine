@@ -12,8 +12,6 @@ CVKUniformBufferManager::~CVKUniformBufferManager(void)
 	for (const auto &UniformBuffer : m_pUniformBuffers) {
 		delete UniformBuffer.second;
 	}
-
-	m_pUniformBuffers.clear();
 }
 
 CVKUniformBuffer* CVKUniformBufferManager::Create(size_t size)

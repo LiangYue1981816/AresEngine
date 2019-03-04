@@ -11,37 +11,23 @@ CGLES3MeshDraw::CGLES3MeshDraw(CGLES3MeshDrawManager *pManager, uint32_t name, c
 	, m_pIndirectBuffer(nullptr)
 	, m_pVertexArrayObject(nullptr)
 {
-	if (ptrMesh.IsValid() && ptrMesh->GetDraw(indexDraw) != nullptr) {
-		m_ptrMesh = ptrMesh;
-		m_pMeshDraw = ptrMesh->GetDraw(indexDraw);
+	m_ptrMesh = ptrMesh;
+	m_pMeshDraw = ptrMesh->GetDraw(indexDraw);
 
-		m_pInstanceBuffer = new CGLES3InstanceBuffer(instanceFormat, instanceBinding);
+	m_pInstanceBuffer = new CGLES3InstanceBuffer(instanceFormat, instanceBinding);
 
-		m_pIndirectBuffer = new CGLES3IndirectBuffer(1);
-		m_pIndirectBuffer->BufferData(0, m_pMeshDraw->baseVertex, m_pMeshDraw->firstIndex, m_pMeshDraw->indexCount, 0);
+	m_pIndirectBuffer = new CGLES3IndirectBuffer(1);
+	m_pIndirectBuffer->BufferData(0, m_pMeshDraw->baseVertex, m_pMeshDraw->firstIndex, m_pMeshDraw->indexCount, 0);
 
-		m_pVertexArrayObject = new CGLES3VertexArrayObject;
-		m_pVertexArrayObject->Buffer((CGLES3IndexBuffer *)m_ptrMesh->GetIndexBuffer(), (CGLES3VertexBuffer *)m_ptrMesh->GetVertexBuffer(), m_pInstanceBuffer);
-	}
+	m_pVertexArrayObject = new CGLES3VertexArrayObject;
+	m_pVertexArrayObject->Buffer((CGLES3IndexBuffer *)m_ptrMesh->GetIndexBuffer(), (CGLES3VertexBuffer *)m_ptrMesh->GetVertexBuffer(), m_pInstanceBuffer);
 }
 
 CGLES3MeshDraw::~CGLES3MeshDraw(void)
 {
-	if (m_pIndirectBuffer) {
-		delete m_pIndirectBuffer;
-	}
-
-	if (m_pInstanceBuffer) {
-		delete m_pInstanceBuffer;
-	}
-
-	if (m_pVertexArrayObject) {
-		delete m_pVertexArrayObject;
-	}
-
-	m_pIndirectBuffer = nullptr;
-	m_pInstanceBuffer = nullptr;
-	m_pVertexArrayObject = nullptr;
+	delete m_pIndirectBuffer;
+	delete m_pInstanceBuffer;
+	delete m_pVertexArrayObject;
 }
 
 void CGLES3MeshDraw::Release(void)

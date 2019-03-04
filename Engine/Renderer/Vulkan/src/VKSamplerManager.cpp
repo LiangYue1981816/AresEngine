@@ -12,8 +12,6 @@ CVKSamplerManager::~CVKSamplerManager(void)
 	for (const auto &itSampler : m_pSamplers) {
 		delete itSampler.second;
 	}
-
-	m_pSamplers.clear();
 }
 
 CVKSampler* CVKSamplerManager::Create(GfxFilter minFilter, GfxFilter magFilter, GfxSamplerMipmapMode mipmapMode, GfxSamplerAddressMode addressMode)

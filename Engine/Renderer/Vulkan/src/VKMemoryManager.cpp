@@ -21,7 +21,6 @@ CVKMemoryManager::~CVKMemoryManager(void)
 		}
 	}
 
-	m_pAllocatorListHeads.clear();
 	pthread_mutex_destroy(&m_lock);
 }
 

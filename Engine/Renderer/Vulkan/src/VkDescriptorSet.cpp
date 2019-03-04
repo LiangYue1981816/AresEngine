@@ -26,8 +26,6 @@ CVKDescriptorSet::~CVKDescriptorSet(void)
 		vkFreeDescriptorSets(m_pDevice->GetDevice(), m_pDescriptorPool->GetDescriptorPool(), 1, &m_vkDescriptorSet);
 	}
 	*/
-
-	m_vkDescriptorSet = VK_NULL_HANDLE;
 }
 
 uint32_t CVKDescriptorSet::GetSetIndex(void) const

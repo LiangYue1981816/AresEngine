@@ -11,8 +11,6 @@ CGLES3FrameBufferManager::~CGLES3FrameBufferManager(void)
 	for (const auto &itFrameBuffer : m_pFrameBuffers) {
 		delete itFrameBuffer.second;
 	}
-
-	m_pFrameBuffers.clear();
 }
 
 CGLES3FrameBuffer* CGLES3FrameBufferManager::Create(int width, int height, int numAttachments)

@@ -11,8 +11,6 @@ CGLES3SamplerManager::~CGLES3SamplerManager(void)
 	for (const auto &itSampler : m_pSamplers) {
 		delete itSampler.second;
 	}
-
-	m_pSamplers.clear();
 }
 
 CGLES3Sampler* CGLES3SamplerManager::Create(GfxFilter minFilter, GfxFilter magFilter, GfxSamplerMipmapMode mipmapMode, GfxSamplerAddressMode addressMode)

@@ -219,9 +219,6 @@ void CVKSwapChain::DestroySwapChain(void)
 	if (m_vkAcquireSemaphore) {
 		vkDestroySemaphore(m_pDevice->GetDevice(), m_vkAcquireSemaphore, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
 	}
-
-	m_vkSwapchain = VK_NULL_HANDLE;
-	m_vkAcquireSemaphore = VK_NULL_HANDLE;
 }
 
 void CVKSwapChain::DestroyImagesAndImageViews(void)
@@ -235,12 +232,8 @@ void CVKSwapChain::DestroyImagesAndImageViews(void)
 			vkDestroySemaphore(m_pDevice->GetDevice(), m_vkRenderDoneSemaphores[index], m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
 		}
 
-		m_vkImages[index] = VK_NULL_HANDLE;
-		m_vkImageViews[index] = VK_NULL_HANDLE;
 		m_ptrRenderTextures[index].Release();
 	}
-
-	m_indexImage = 0;
 }
 
 GfxPixelFormat CVKSwapChain::GetPixelFormat(void) const

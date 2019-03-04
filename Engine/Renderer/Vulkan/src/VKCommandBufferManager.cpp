@@ -12,8 +12,6 @@ CVKCommandBufferManager::~CVKCommandBufferManager(void)
 	for (const auto &itCommandPool : m_pCommandPools) {
 		delete itCommandPool.second;
 	}
-
-	m_pCommandPools.clear();
 }
 
 CVKCommandBuffer* CVKCommandBufferManager::Create(uint32_t pool, bool bMainCommandBuffer)

@@ -17,6 +17,7 @@ CFileManager::CFileManager(void)
 CFileManager::~CFileManager(void)
 {
 	Clearup();
+	pInstance = nullptr;
 }
 
 void CFileManager::Clearup(void)

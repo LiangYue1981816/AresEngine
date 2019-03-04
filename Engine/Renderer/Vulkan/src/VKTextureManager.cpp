@@ -13,8 +13,6 @@ CVKTexture2DManager::~CVKTexture2DManager(void)
 	for (const auto &itTexture : m_pTextures) {
 		delete itTexture.second;
 	}
-
-	m_pTextures.clear();
 }
 
 CVKTexture2D* CVKTexture2DManager::Get(uint32_t name)
@@ -82,8 +80,6 @@ CVKTexture2DArrayManager::~CVKTexture2DArrayManager(void)
 	for (const auto &itTexture : m_pTextures) {
 		delete itTexture.second;
 	}
-
-	m_pTextures.clear();
 }
 
 CVKTexture2DArray* CVKTexture2DArrayManager::Get(uint32_t name)
@@ -151,8 +147,6 @@ CVKTextureCubeMapManager::~CVKTextureCubeMapManager(void)
 	for (const auto &itTexture : m_pTextures) {
 		delete itTexture.second;
 	}
-
-	m_pTextures.clear();
 }
 
 CVKTextureCubeMap* CVKTextureCubeMapManager::Get(uint32_t name)

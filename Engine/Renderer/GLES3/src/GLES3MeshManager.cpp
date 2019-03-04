@@ -12,8 +12,6 @@ CGLES3MeshManager::~CGLES3MeshManager(void)
 	for (const auto &itMesh : m_pMeshs) {
 		delete itMesh.second;
 	}
-
-	m_pMeshs.clear();
 }
 
 CGLES3Mesh* CGLES3MeshManager::Get(uint32_t name)

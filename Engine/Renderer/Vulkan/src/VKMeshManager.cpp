@@ -13,8 +13,6 @@ CVKMeshManager::~CVKMeshManager(void)
 	for (const auto &itMesh : m_pMeshs) {
 		delete itMesh.second;
 	}
-
-	m_pMeshs.clear();
 }
 
 CVKMesh* CVKMeshManager::Get(uint32_t name)

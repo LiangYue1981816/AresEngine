@@ -13,8 +13,6 @@ CVKMaterialManager::~CVKMaterialManager(void)
 	for (const auto &itMaterial : m_pMaterials) {
 		delete itMaterial.second;
 	}
-
-	m_pMaterials.clear();
 }
 
 CVKMaterial* CVKMaterialManager::Get(uint32_t name)

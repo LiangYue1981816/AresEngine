@@ -11,8 +11,6 @@ CGLES3MeshDrawManager::~CGLES3MeshDrawManager(void)
 	for (const auto &itMeshDraw : m_pMeshDraws) {
 		delete itMeshDraw.second;
 	}
-
-	m_pMeshDraws.clear();
 }
 
 CGLES3MeshDraw* CGLES3MeshDrawManager::Get(uint32_t name)

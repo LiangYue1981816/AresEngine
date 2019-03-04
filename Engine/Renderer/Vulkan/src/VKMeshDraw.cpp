@@ -13,32 +13,22 @@ CVKMeshDraw::CVKMeshDraw(CVKDevice *pDevice, CVKMeshDrawManager *pManager, uint3
 	, m_pInstanceBuffer(nullptr)
 	, m_pIndirectBuffer(nullptr)
 {
-	if (ptrMesh.IsValid() && ptrMesh->GetDraw(indexDraw) != nullptr) {
-		m_ptrMesh = ptrMesh;
-		m_pMeshDraw = ptrMesh->GetDraw(indexDraw);
+	m_ptrMesh = ptrMesh;
+	m_pMeshDraw = ptrMesh->GetDraw(indexDraw);
 
-		m_pIndexBuffer = (CVKIndexBuffer *)ptrMesh->GetIndexBuffer();
-		m_pVertexBuffer = (CVKVertexBuffer *)ptrMesh->GetVertexBuffer();
+	m_pIndexBuffer = (CVKIndexBuffer *)ptrMesh->GetIndexBuffer();
+	m_pVertexBuffer = (CVKVertexBuffer *)ptrMesh->GetVertexBuffer();
 
-		m_pInstanceBuffer = new CVKInstanceBuffer(m_pDevice, instanceFormat, instanceBinding);
+	m_pInstanceBuffer = new CVKInstanceBuffer(m_pDevice, instanceFormat, instanceBinding);
 
-		m_pIndirectBuffer = new CVKIndirectBuffer(m_pDevice, 1);
-		m_pIndirectBuffer->BufferData(0, m_pMeshDraw->baseVertex, m_pMeshDraw->firstIndex, m_pMeshDraw->indexCount, 0);
-	}
+	m_pIndirectBuffer = new CVKIndirectBuffer(m_pDevice, 1);
+	m_pIndirectBuffer->BufferData(0, m_pMeshDraw->baseVertex, m_pMeshDraw->firstIndex, m_pMeshDraw->indexCount, 0);
 }
 
 CVKMeshDraw::~CVKMeshDraw(void)
 {
-	if (m_pInstanceBuffer) {
-		delete m_pInstanceBuffer;
-	}
-
-	if (m_pIndirectBuffer) {
-		delete m_pIndirectBuffer;
-	}
-
-	m_pInstanceBuffer = nullptr;
-	m_pIndirectBuffer = nullptr;
+	delete m_pInstanceBuffer;
+	delete m_pIndirectBuffer;
 }
 
 void CVKMeshDraw::Release(void)

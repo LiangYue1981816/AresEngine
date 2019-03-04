@@ -12,8 +12,6 @@ CVKPipelineComputeManager::~CVKPipelineComputeManager(void)
 	for (const auto &itPipeline : m_pPipelines) {
 		delete itPipeline.second;
 	}
-
-	m_pPipelines.clear();
 }
 
 CVKPipelineCompute* CVKPipelineComputeManager::Create(const CGfxShader *pComputeShader)
@@ -43,8 +41,6 @@ CVKPipelineGraphicsManager::~CVKPipelineGraphicsManager(void)
 	for (const auto &itPipeline : m_pPipelines) {
 		delete itPipeline.second;
 	}
-
-	m_pPipelines.clear();
 }
 
 CVKPipelineGraphics* CVKPipelineGraphicsManager::Create(const CGfxRenderPass *pRenderPass, const CGfxShader *pVertexShader, const CGfxShader *pFragmentShader, const PipelineState &state, uint32_t indexSubpass, uint32_t vertexBinding, uint32_t instanceBinding)
