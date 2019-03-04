@@ -32,6 +32,23 @@ bool CVKQueue::Submit(const CGfxCommandBufferPtr ptrCommandBuffer) const
 
 bool CVKQueue::Submit(const CGfxCommandBufferPtr ptrCommandBuffer, VkSemaphore vkWaitSemaphore, VkPipelineStageFlags waitStageFlags, VkSemaphore vkSignalSemaphore) const
 {
+	ptrCommandBuffer->Wait(UINT64_MAX);
+
+	VkFence vkFence = (VkFence)ptrCommandBuffer->GetFence();
+	VkCommandBuffer vkCommandBuffer = (VkCommandBuffer)ptrCommandBuffer->GetCommandBuffer();
+
+	VkSubmitInfo submitInfo = {};
+	submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
+	submitInfo.pNext = nullptr;
+	submitInfo.waitSemaphoreCount = vkWaitSemaphore != VK_NULL_HANDLE ? 1 : 0;
+	submitInfo.pWaitSemaphores = vkWaitSemaphore != VK_NULL_HANDLE ? &vkWaitSemaphore : nullptr;
+	submitInfo.pWaitDstStageMask = vkWaitSemaphore != VK_NULL_HANDLE ? &waitStageFlags : nullptr;
+	submitInfo.commandBufferCount = 1;
+	submitInfo.pCommandBuffers = &vkCommandBuffer;
+	submitInfo.signalSemaphoreCount = vkSignalSemaphore != VK_NULL_HANDLE ? 1 : 0;
+	submitInfo.pSignalSemaphores = vkSignalSemaphore != VK_NULL_HANDLE ? &vkSignalSemaphore : nullptr;
+	CALL_VK_FUNCTION_RETURN_BOOL(vkQueueSubmit(m_vkQueue, 1, &submitInfo, vkFence));
+
 	return true;
 }
 

@@ -14,6 +14,7 @@ private:
 
 
 public:
+	HANDLE GetFence(void) const;
 	HANDLE GetCommandBuffer(void) const;
 
 public:
@@ -22,6 +23,7 @@ public:
 public:
 	void Clearup(void);
 	bool Execute(void) const;
+	bool Wait(uint64_t timeout) const;
 
 public:
 	bool CmdBeginRenderPass(const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass);

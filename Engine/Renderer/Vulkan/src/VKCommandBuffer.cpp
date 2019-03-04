@@ -48,6 +48,11 @@ void CVKCommandBuffer::Release(void)
 	m_pCommandPool->FreeCommandBuffer(this);
 }
 
+HANDLE CVKCommandBuffer::GetFence(void) const
+{
+	return (HANDLE)m_vkFence;
+}
+
 HANDLE CVKCommandBuffer::GetCommandBuffer(void) const
 {
 	return (HANDLE)m_vkCommandBuffer;

@@ -63,6 +63,11 @@ void CGLES3CommandBuffer::Release(void)
 	m_pManager->Destroy(this);
 }
 
+HANDLE CGLES3CommandBuffer::GetFence(void) const
+{
+	return nullptr;
+}
+
 HANDLE CGLES3CommandBuffer::GetCommandBuffer(void) const
 {
 	return nullptr;
@@ -98,6 +103,11 @@ bool CGLES3CommandBuffer::Execute(void) const
 	}
 
 	return false;
+}
+
+bool CGLES3CommandBuffer::Wait(uint64_t timeout) const
+{
+	return true;
 }
 
 bool CGLES3CommandBuffer::CmdBeginRenderPass(const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass)
