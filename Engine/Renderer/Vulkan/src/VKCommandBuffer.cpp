@@ -77,9 +77,13 @@ void CVKCommandBuffer::Clearup(void)
 
 bool CVKCommandBuffer::Execute(void) const
 {
-	vkWaitForFences(m_pDevice->GetDevice(), 1, &m_vkFence, VK_TRUE, UINT64_MAX);
-	vkResetFences(m_pDevice->GetDevice(), 1, &m_vkFence);
-	return true;
+	if (vkWaitForFences(m_pDevice->GetDevice(), 1, &m_vkFence, VK_TRUE, UINT64_MAX) == VK_SUCCESS) {
+		vkResetFences(m_pDevice->GetDevice(), 1, &m_vkFence);
+		return true;
+	}
+	else {
+		return false;
+	}
 }
 
 bool CVKCommandBuffer::CmdBeginRenderPass(const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass)
