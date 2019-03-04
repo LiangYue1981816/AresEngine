@@ -195,6 +195,7 @@ public:
 
 public:
 	void Submit(const CGfxCommandBufferPtr ptrCommandBuffer);
+	void AcquireNextFrame(void);
 	void Present(void);
 
 private:

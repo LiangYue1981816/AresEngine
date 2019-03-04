@@ -443,9 +443,15 @@ bool CVKRenderer::CmdPopDebugGroup(CGfxCommandBufferPtr ptrCommandBuffer)
 void CVKRenderer::Submit(const CGfxCommandBufferPtr ptrCommandBuffer)
 {
 	ptrCommandBuffer->Execute();
+	m_pDevice->GetQueue()->Submit(ptrCommandBuffer, m_pSwapChain->GetAcquireSemaphore(), VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT, m_pSwapChain->GetRenderDoneSemaphore());
+}
+
+void CVKRenderer::AcquireNextFrame(void)
+{
+	m_pSwapChain->AcquireNextFrame();
 }
 
 void CVKRenderer::Present(void)
 {
-
+	m_pSwapChain->Present();
 }

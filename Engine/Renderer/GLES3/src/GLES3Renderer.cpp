@@ -447,6 +447,11 @@ void CGLES3Renderer::Submit(const CGfxCommandBufferPtr ptrCommandBuffer)
 	ptrCommandBuffer->Execute();
 }
 
+void CGLES3Renderer::AcquireNextFrame(void)
+{
+	m_pSwapChain->AcquireNextFrame();
+}
+
 void CGLES3Renderer::Present(void)
 {
 	m_pSwapChain->Present();
