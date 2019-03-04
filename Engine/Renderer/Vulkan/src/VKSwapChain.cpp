@@ -71,6 +71,8 @@ CVKSwapChain::CVKSwapChain(CVKDevice *pDevice, int width, int height, GfxPixelFo
 	, m_width(width)
 	, m_height(height)
 
+	, m_indexImage(0)
+
 	, m_vkImages{ VK_NULL_HANDLE }
 	, m_vkImageViews{ VK_NULL_HANDLE }
 
@@ -266,10 +268,30 @@ CGfxRenderTexturePtr CVKSwapChain::GetFrameTexture(int index) const
 
 void CVKSwapChain::Present(void)
 {
-
+	VkPresentInfoKHR presentInfo = {};
+	presentInfo.sType = VK_STRUCTURE_TYPE_PRESENT_INFO_KHR;
+	presentInfo.pNext = nullptr;
+	presentInfo.waitSemaphoreCount = 1;
+	presentInfo.pWaitSemaphores = &m_vkRenderDoneSemaphores[m_indexImage];
+	presentInfo.swapchainCount = 1;
+	presentInfo.pSwapchains = &m_vkSwapchain;
+	presentInfo.pImageIndices = &m_indexImage;
+	presentInfo.pResults = nullptr;
+	vkQueuePresentKHR(m_pDevice->GetQueue()->GetQueue(), &presentInfo);
 }
 
 void CVKSwapChain::AcquireNextFrame(void)
 {
+	m_indexImage = -1;
+	vkAcquireNextImageKHR(m_pDevice->GetDevice(), m_vkSwapchain, 0, m_vkAcquireSemaphore, VK_NULL_HANDLE, &m_indexImage);
+}
 
+VkSemaphore CVKSwapChain::GetAcquireSemaphore(void) const
+{
+	return m_vkAcquireSemaphore;
+}
+
+VkSemaphore CVKSwapChain::GetRenderDoneSemaphore(void) const
+{
+	return m_vkRenderDoneSemaphores[m_indexImage];
 }

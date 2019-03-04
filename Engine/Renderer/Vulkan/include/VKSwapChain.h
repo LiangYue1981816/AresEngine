@@ -37,6 +37,9 @@ public:
 	void Present(void);
 	void AcquireNextFrame(void);
 
+	VkSemaphore GetAcquireSemaphore(void) const;
+	VkSemaphore GetRenderDoneSemaphore(void) const;
+
 
 private:
 	GfxPixelFormat m_pixelFormat;
@@ -45,6 +48,7 @@ private:
 	int m_height;
 
 private:
+	uint32_t m_indexImage;
 	VkImage m_vkImages[SWAPCHAIN_FRAME_COUNT];
 	VkImageView m_vkImageViews[SWAPCHAIN_FRAME_COUNT];
 	CGfxRenderTexturePtr m_ptrRenderTextures[SWAPCHAIN_FRAME_COUNT];
