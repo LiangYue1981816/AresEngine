@@ -42,7 +42,6 @@ public:
 public:
 	virtual void Clearup(void) = 0;
 	virtual bool Execute(void) const = 0;
-	virtual bool Wait(uint64_t timeout) const = 0;
 
 public:
 	virtual bool CmdBeginRenderPass(const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass) = 0;

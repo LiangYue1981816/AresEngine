@@ -24,7 +24,6 @@ public:
 public:
 	void Clearup(void);
 	bool Execute(void) const;
-	bool Wait(uint64_t timeout) const;
 
 public:
 	bool CmdBeginRenderPass(const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass);

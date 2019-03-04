@@ -105,11 +105,6 @@ bool CGLES3CommandBuffer::Execute(void) const
 	return false;
 }
 
-bool CGLES3CommandBuffer::Wait(uint64_t timeout) const
-{
-	return true;
-}
-
 bool CGLES3CommandBuffer::CmdBeginRenderPass(const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass)
 {
 	if (m_bMainCommandBuffer == true && m_bInRenderPass == false && m_pCommands.empty()) {
