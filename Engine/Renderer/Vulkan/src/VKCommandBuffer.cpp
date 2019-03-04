@@ -71,7 +71,13 @@ bool CVKCommandBuffer::Execute(void) const
 
 bool CVKCommandBuffer::Wait(uint64_t timeout) const
 {
-	return vkWaitForFences(m_pDevice->GetDevice(), 1, &m_vkFence, VK_TRUE, timeout) == VK_SUCCESS;
+	if (vkWaitForFences(m_pDevice->GetDevice(), 1, &m_vkFence, VK_TRUE, timeout) == VK_SUCCESS) {
+		vkResetFences(m_pDevice->GetDevice(), 1, &m_vkFence);
+		return true;
+	}
+	else {
+		return false;
+	}
 }
 
 bool CVKCommandBuffer::CmdBeginRenderPass(const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass)
