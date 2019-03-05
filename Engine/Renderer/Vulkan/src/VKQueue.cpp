@@ -27,14 +27,15 @@ uint32_t CVKQueue::GetQueueFamilyIndex(void) const
 
 bool CVKQueue::Submit(const CGfxCommandBufferPtr ptrCommandBuffer) const
 {
-	return Submit(ptrCommandBuffer, VK_NULL_HANDLE, 0, VK_NULL_HANDLE);
+	return Submit(ptrCommandBuffer, VK_NULL_HANDLE, 0, VK_NULL_HANDLE, VK_NULL_HANDLE);
 }
 
-bool CVKQueue::Submit(const CGfxCommandBufferPtr ptrCommandBuffer, VkSemaphore vkWaitSemaphore, VkPipelineStageFlags waitStageFlags, VkSemaphore vkSignalSemaphore) const
+bool CVKQueue::Submit(const CGfxCommandBufferPtr ptrCommandBuffer, VkSemaphore vkWaitSemaphore, VkPipelineStageFlags waitStageFlags, VkSemaphore vkSignalSemaphore, VkFence vkFence) const
 {
-	VkFence vkFence = (VkFence)ptrCommandBuffer->GetFence();
-	VkCommandBuffer vkCommandBuffer = (VkCommandBuffer)ptrCommandBuffer->GetCommandBuffer();
+	vkWaitForFences(m_pDevice->GetDevice(), 1, &vkFence, VK_TRUE, UINT64_MAX);
+	vkResetFences(m_pDevice->GetDevice(), 1, &vkFence);
 
+	VkCommandBuffer vkCommandBuffer = (VkCommandBuffer)ptrCommandBuffer->GetCommandBuffer();
 	VkSubmitInfo submitInfo = {};
 	submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
 	submitInfo.pNext = nullptr;
