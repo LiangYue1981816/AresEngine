@@ -64,11 +64,6 @@ void CGLES3CommandBuffer::Release(void)
 	m_pManager->Destroy(this);
 }
 
-HANDLE CGLES3CommandBuffer::GetFence(void) const
-{
-	return nullptr;
-}
-
 HANDLE CGLES3CommandBuffer::GetCommandBuffer(void) const
 {
 	return nullptr;

@@ -33,7 +33,6 @@ public:
 
 
 public:
-	virtual HANDLE GetFence(void) const = 0;
 	virtual HANDLE GetCommandBuffer(void) const = 0;
 
 public:

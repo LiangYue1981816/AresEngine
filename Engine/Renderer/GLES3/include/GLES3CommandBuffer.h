@@ -14,7 +14,6 @@ private:
 
 
 public:
-	HANDLE GetFence(void) const;
 	HANDLE GetCommandBuffer(void) const;
 
 public:

@@ -9,15 +9,8 @@ CVKCommandBuffer::CVKCommandBuffer(CVKDevice *pDevice, CVKCommandPool *pCommandP
 	, m_bMainCommandBuffer(bMainCommandBuffer)
 	, m_bInRenderPass(false)
 
-	, m_vkFence(VK_NULL_HANDLE)
 	, m_vkCommandBuffer(VK_NULL_HANDLE)
 {
-	VkFenceCreateInfo createInfo = {};
-	createInfo.sType = VK_STRUCTURE_TYPE_FENCE_CREATE_INFO;
-	createInfo.pNext = nullptr;
-	createInfo.flags = VK_FENCE_CREATE_SIGNALED_BIT;
-	vkCreateFence(m_pDevice->GetDevice(), &createInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkFence);
-
 	VkCommandBufferAllocateInfo allocateInfo = {};
 	allocateInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
 	allocateInfo.pNext = nullptr;
@@ -30,19 +23,12 @@ CVKCommandBuffer::CVKCommandBuffer(CVKDevice *pDevice, CVKCommandPool *pCommandP
 CVKCommandBuffer::~CVKCommandBuffer(void)
 {
 	Clearup();
-
-	vkDestroyFence(m_pDevice->GetDevice(), m_vkFence, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
 	vkFreeCommandBuffers(m_pDevice->GetDevice(), m_pCommandPool->GetCommandPool(), 1, &m_vkCommandBuffer);
 }
 
 void CVKCommandBuffer::Release(void)
 {
 	m_pCommandPool->FreeCommandBuffer(this);
-}
-
-HANDLE CVKCommandBuffer::GetFence(void) const
-{
-	return (HANDLE)m_vkFence;
 }
 
 HANDLE CVKCommandBuffer::GetCommandBuffer(void) const
@@ -57,8 +43,6 @@ bool CVKCommandBuffer::IsMainCommandBuffer(void) const
 
 void CVKCommandBuffer::Clearup(void)
 {
-	vkWaitForFences(m_pDevice->GetDevice(), 1, &m_vkFence, VK_TRUE, UINT64_MAX);
-
 	for (const auto &itCommand : m_pCommands) {
 		delete itCommand;
 	}
@@ -69,13 +53,7 @@ void CVKCommandBuffer::Clearup(void)
 
 bool CVKCommandBuffer::Execute(void) const
 {
-	if (vkWaitForFences(m_pDevice->GetDevice(), 1, &m_vkFence, VK_TRUE, UINT64_MAX) == VK_SUCCESS) {
-		vkResetFences(m_pDevice->GetDevice(), 1, &m_vkFence);
-		return true;
-	}
-	else {
-		return false;
-	}
+	return true;
 }
 
 bool CVKCommandBuffer::CmdBeginRenderPass(const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass)
