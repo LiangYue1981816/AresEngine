@@ -443,30 +443,30 @@ bool CGLES3CommandBuffer::CmdSetInstanceBufferData(const CGfxMeshDrawPtr ptrMesh
 	return false;
 }
 
-bool CGLES3CommandBuffer::CmdDrawElements(GfxIndexType type, int offset, int count)
+bool CGLES3CommandBuffer::CmdDrawElements(const CGfxMeshDrawPtr ptrMeshDraw)
 {
 	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInRenderPass == true)) {
-		m_pCommands.emplace_back(new CGLES3CommandDrawElements(type, offset, count));
+		m_pCommands.emplace_back(new CGLES3CommandDrawElements(ptrMeshDraw));
 		return true;
 	}
 
 	return false;
 }
 
-bool CGLES3CommandBuffer::CmdDrawInstance(GfxIndexType type, int offset, int count, int instanceCount)
+bool CGLES3CommandBuffer::CmdDrawInstance(const CGfxMeshDrawPtr ptrMeshDraw)
 {
 	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInRenderPass == true)) {
-		m_pCommands.emplace_back(new CGLES3CommandDrawInstance(type, offset, count, instanceCount));
+		m_pCommands.emplace_back(new CGLES3CommandDrawInstance(ptrMeshDraw));
 		return true;
 	}
 
 	return false;
 }
 
-bool CGLES3CommandBuffer::CmdDrawIndirect(GfxIndexType type, int offset)
+bool CGLES3CommandBuffer::CmdDrawIndirect(const CGfxMeshDrawPtr ptrMeshDraw)
 {
 	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInRenderPass == true)) {
-		m_pCommands.emplace_back(new CGLES3CommandDrawIndirect(type, offset));
+		m_pCommands.emplace_back(new CGLES3CommandDrawIndirect(ptrMeshDraw));
 		return true;
 	}
 

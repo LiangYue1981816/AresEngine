@@ -5,10 +5,8 @@
 class CGLES3CommandDrawElements : public CGfxCommandBase
 {
 public:
-	CGLES3CommandDrawElements(GfxIndexType type, uint32_t offset, int count)
-		: m_type(type)
-		, m_offset(offset)
-		, m_count(count)
+	CGLES3CommandDrawElements(const CGfxMeshDrawPtr ptrMeshDraw)
+		: m_ptrMeshDraw(ptrMeshDraw)
 	{
 
 	}
@@ -22,13 +20,17 @@ public:
 	{
 		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_DRAW_ELEMENTS, "CommandDrawElements");
 		{
-			glDrawElements(CGLES3Helper::TranslatePrimitiveTopology(GLES3Renderer()->GetCurrentPipelineGraphics()->GetPipelineState().topology), m_count, CGLES3Helper::TranslateIndexType(m_type), (const void *)m_offset);
+			if (m_ptrMeshDraw.IsValid()) {
+				glDrawElements(
+					CGLES3Helper::TranslatePrimitiveTopology(GLES3Renderer()->GetCurrentPipelineGraphics()->GetPipelineState().topology), 
+					m_ptrMeshDraw->GetIndexCount(), 
+					CGLES3Helper::TranslateIndexType(m_ptrMeshDraw->GetIndexType()), 
+					(const void *)m_ptrMeshDraw->GetIndexOffset());
+			}
 		}
 	}
 
 
 private:
-	GfxIndexType m_type;
-	uintptr_t m_offset;
-	int m_count;
+	CGfxMeshDrawPtr m_ptrMeshDraw;
 };

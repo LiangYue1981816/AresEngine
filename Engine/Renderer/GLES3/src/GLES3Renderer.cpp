@@ -391,13 +391,13 @@ bool CGLES3Renderer::CmdSetInstanceBufferData(CGfxCommandBufferPtr ptrCommandBuf
 	return ptrCommandBuffer->CmdSetInstanceBufferData(ptrMeshDraw, pInstanceBuffer, size);
 }
 
-bool CGLES3Renderer::CmdDrawInstance(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxMeshDrawPtr ptrMeshDraw, int instanceCount)
+bool CGLES3Renderer::CmdDrawInstance(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxMeshDrawPtr ptrMeshDraw)
 {
 	if (ptrCommandBuffer->CmdBindMeshDraw(ptrMeshDraw) == false) {
 		return false;
 	}
 
-	if (ptrCommandBuffer->CmdDrawInstance(ptrMeshDraw->GetIndexType(), ptrMeshDraw->GetIndexOffset(), ptrMeshDraw->GetIndexCount(), instanceCount) == false) {
+	if (ptrCommandBuffer->CmdDrawInstance(ptrMeshDraw) == false) {
 		return false;
 	}
 
@@ -410,7 +410,7 @@ bool CGLES3Renderer::CmdDrawIndirect(CGfxCommandBufferPtr ptrCommandBuffer, cons
 		return false;
 	}
 
-	if (ptrCommandBuffer->CmdDrawIndirect(ptrMeshDraw->GetIndexType(), 0) == false) {
+	if (ptrCommandBuffer->CmdDrawIndirect(ptrMeshDraw) == false) {
 		return false;
 	}
 

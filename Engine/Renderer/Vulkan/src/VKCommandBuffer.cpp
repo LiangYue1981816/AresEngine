@@ -368,7 +368,7 @@ bool CVKCommandBuffer::CmdSetInstanceBufferData(const CGfxMeshDrawPtr ptrMeshDra
 	return false;
 }
 
-bool CVKCommandBuffer::CmdDrawElements(GfxIndexType type, int offset, int count)
+bool CVKCommandBuffer::CmdDrawElements(const CGfxMeshDrawPtr ptrMeshDraw)
 {
 	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInRenderPass == true)) {
 		return true;
@@ -377,7 +377,7 @@ bool CVKCommandBuffer::CmdDrawElements(GfxIndexType type, int offset, int count)
 	return false;
 }
 
-bool CVKCommandBuffer::CmdDrawInstance(GfxIndexType type, int offset, int count, int instanceCount)
+bool CVKCommandBuffer::CmdDrawInstance(const CGfxMeshDrawPtr ptrMeshDraw)
 {
 	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInRenderPass == true)) {
 		return true;
@@ -386,7 +386,7 @@ bool CVKCommandBuffer::CmdDrawInstance(GfxIndexType type, int offset, int count,
 	return false;
 }
 
-bool CVKCommandBuffer::CmdDrawIndirect(GfxIndexType type, int offset)
+bool CVKCommandBuffer::CmdDrawIndirect(const CGfxMeshDrawPtr ptrMeshDraw)
 {
 	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInRenderPass == true)) {
 		return true;

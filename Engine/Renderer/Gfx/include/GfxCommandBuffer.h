@@ -76,9 +76,9 @@ public:
 	virtual bool CmdSetScissor(int x, int y, int width, int height) = 0;
 	virtual bool CmdSetViewport(int x, int y, int width, int height) = 0;
 	virtual bool CmdSetInstanceBufferData(const CGfxMeshDrawPtr ptrMeshDraw, const uint8_t *pInstanceBuffer, uint32_t size) = 0;
-	virtual bool CmdDrawElements(GfxIndexType type, int offset, int count) = 0;
-	virtual bool CmdDrawInstance(GfxIndexType type, int offset, int count, int instanceCount) = 0;
-	virtual bool CmdDrawIndirect(GfxIndexType type, int offset) = 0;
+	virtual bool CmdDrawElements(const CGfxMeshDrawPtr ptrMeshDraw) = 0;
+	virtual bool CmdDrawInstance(const CGfxMeshDrawPtr ptrMeshDraw) = 0;
+	virtual bool CmdDrawIndirect(const CGfxMeshDrawPtr ptrMeshDraw) = 0;
 	virtual bool CmdExecute(const CGfxCommandBufferPtr ptrCommandBuffer) = 0;
 	virtual bool CmdPresent(void) = 0;
 	virtual bool CmdPushDebugGroup(const char *szMessage) = 0;

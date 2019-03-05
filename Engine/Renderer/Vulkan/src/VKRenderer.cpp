@@ -389,13 +389,13 @@ bool CVKRenderer::CmdSetInstanceBufferData(CGfxCommandBufferPtr ptrCommandBuffer
 	return ptrCommandBuffer->CmdSetInstanceBufferData(ptrMeshDraw, pInstanceBuffer, size);
 }
 
-bool CVKRenderer::CmdDrawInstance(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxMeshDrawPtr ptrMeshDraw, int instanceCount)
+bool CVKRenderer::CmdDrawInstance(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxMeshDrawPtr ptrMeshDraw)
 {
 	if (ptrCommandBuffer->CmdBindMeshDraw(ptrMeshDraw) == false) {
 		return false;
 	}
 
-	if (ptrCommandBuffer->CmdDrawInstance(ptrMeshDraw->GetIndexType(), ptrMeshDraw->GetIndexOffset(), ptrMeshDraw->GetIndexCount(), instanceCount) == false) {
+	if (ptrCommandBuffer->CmdDrawInstance(ptrMeshDraw) == false) {
 		return false;
 	}
 
@@ -408,7 +408,7 @@ bool CVKRenderer::CmdDrawIndirect(CGfxCommandBufferPtr ptrCommandBuffer, const C
 		return false;
 	}
 
-	if (ptrCommandBuffer->CmdDrawIndirect(ptrMeshDraw->GetIndexType(), 0) == false) {
+	if (ptrCommandBuffer->CmdDrawIndirect(ptrMeshDraw) == false) {
 		return false;
 	}
 

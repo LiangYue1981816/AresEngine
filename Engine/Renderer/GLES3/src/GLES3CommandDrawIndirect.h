@@ -5,9 +5,8 @@
 class CGLES3CommandDrawIndirect : public CGfxCommandBase
 {
 public:
-	CGLES3CommandDrawIndirect(GfxIndexType type, uint32_t offset)
-		: m_type(type)
-		, m_offset(offset)
+	CGLES3CommandDrawIndirect(const CGfxMeshDrawPtr ptrMeshDraw)
+		: m_ptrMeshDraw(ptrMeshDraw)
 	{
 
 	}
@@ -21,12 +20,16 @@ public:
 	{
 		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_DRAW_INDIRECT, "CommandDrawIndirect");
 		{
-			glDrawElementsIndirect(CGLES3Helper::TranslatePrimitiveTopology(GLES3Renderer()->GetCurrentPipelineGraphics()->GetPipelineState().topology), CGLES3Helper::TranslateIndexType(m_type), (const void *)m_offset);
+			if (m_ptrMeshDraw.IsValid()) {
+				glDrawElementsIndirect(
+					CGLES3Helper::TranslatePrimitiveTopology(GLES3Renderer()->GetCurrentPipelineGraphics()->GetPipelineState().topology), 
+					CGLES3Helper::TranslateIndexType(m_ptrMeshDraw->GetIndexType()),
+					(const void *)0);
+			}
 		}
 	}
 
 
 private:
-	GfxIndexType m_type;
-	uintptr_t m_offset;
+	CGfxMeshDrawPtr m_ptrMeshDraw;
 };
