@@ -79,6 +79,7 @@ CVKSwapChain::CVKSwapChain(CVKDevice *pDevice, int width, int height, GfxPixelFo
 	, m_vkSwapchain(VK_NULL_HANDLE)
 	, m_vkAcquireSemaphore(VK_NULL_HANDLE)
 	, m_vkRenderDoneSemaphores{ VK_NULL_HANDLE }
+	, m_vkRenderDoneFences{ VK_NULL_HANDLE }
 {
 	eastl::vector<VkPresentModeKHR> modes;
 	eastl::vector<VkSurfaceFormatKHR> formats;
@@ -191,6 +192,12 @@ bool CVKSwapChain::CreateImagesAndImageViews(void)
 		semaphoreCreateInfo.flags = 0;
 		CALL_VK_FUNCTION_RETURN_BOOL(vkCreateSemaphore(m_pDevice->GetDevice(), &semaphoreCreateInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkRenderDoneSemaphores[index]));
 
+		VkFenceCreateInfo fenceCreateInfo = {};
+		fenceCreateInfo.sType = VK_STRUCTURE_TYPE_FENCE_CREATE_INFO;
+		fenceCreateInfo.pNext = nullptr;
+		fenceCreateInfo.flags = VK_FENCE_CREATE_SIGNALED_BIT;
+		CALL_VK_FUNCTION_RETURN_BOOL(vkCreateFence(m_pDevice->GetDevice(), &fenceCreateInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkRenderDoneFences[index]));
+
 		VkImageViewCreateInfo imageViewCreateInfo = {};
 		imageViewCreateInfo.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
 		imageViewCreateInfo.pNext = nullptr;
@@ -230,6 +237,10 @@ void CVKSwapChain::DestroyImagesAndImageViews(void)
 
 		if (m_vkRenderDoneSemaphores[index]) {
 			vkDestroySemaphore(m_pDevice->GetDevice(), m_vkRenderDoneSemaphores[index], m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
+		}
+
+		if (m_vkRenderDoneFences[index]) {
+			vkDestroyFence(m_pDevice->GetDevice(), m_vkRenderDoneFences[index], m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
 		}
 
 		m_ptrRenderTextures[index].Release();
@@ -289,4 +300,9 @@ VkSemaphore CVKSwapChain::GetAcquireSemaphore(void) const
 VkSemaphore CVKSwapChain::GetRenderDoneSemaphore(void) const
 {
 	return m_vkRenderDoneSemaphores[m_indexImage];
+}
+
+VkFence CVKSwapChain::GetRenderDoneFence(void) const
+{
+	return m_vkRenderDoneFences[m_indexImage];
 }
