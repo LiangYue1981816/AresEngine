@@ -64,25 +64,33 @@ CGfxRenderTexturePtr CVKFrameBuffer::GetAttachmentTexture(int indexAttachment) c
 bool CVKFrameBuffer::Create(const CGfxRenderPassPtr ptrRenderPass)
 {
 	Destroy();
+	{
+		do {
+			eastl::vector<VkImageView> attachments;
+			{
+				for (int indexAttachment = 0; indexAttachment < (int)m_ptrAttachmentTextures.size(); indexAttachment++) {
+					attachments.emplace_back((VkImageView)m_ptrAttachmentTextures[indexAttachment]->GetTexture());
+				}
+			}
+			if (attachments.empty()) break;
 
-	eastl::vector<VkImageView> attachments(m_ptrAttachmentTextures.size());
-	for (int indexAttachment = 0; indexAttachment < (int)m_ptrAttachmentTextures.size(); indexAttachment++) {
-		attachments[indexAttachment] = (VkImageView)m_ptrAttachmentTextures[indexAttachment]->GetTexture();
+			VkFramebufferCreateInfo createInfo = {};
+			createInfo.sType = VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO;
+			createInfo.pNext = nullptr;
+			createInfo.flags = 0;
+			createInfo.renderPass = (VkRenderPass)ptrRenderPass->GetRenderPass();
+			createInfo.attachmentCount = attachments.size();
+			createInfo.pAttachments = attachments.data();
+			createInfo.width = m_width;
+			createInfo.height = m_height;
+			createInfo.layers = 1;
+			CALL_VK_FUNCTION_BREAK(vkCreateFramebuffer(m_pDevice->GetDevice(), &createInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkFrameBuffer));
+
+			return true;
+		} while (false);
 	}
-
-	VkFramebufferCreateInfo createInfo = {};
-	createInfo.sType = VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO;
-	createInfo.pNext = nullptr;
-	createInfo.flags = 0;
-	createInfo.renderPass = (VkRenderPass)ptrRenderPass->GetRenderPass();
-	createInfo.attachmentCount = attachments.size();
-	createInfo.pAttachments = attachments.data();
-	createInfo.width = m_width;
-	createInfo.height = m_height;
-	createInfo.layers = 1;
-	CALL_VK_FUNCTION_RETURN_BOOL(vkCreateFramebuffer(m_pDevice->GetDevice(), &createInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkFrameBuffer));
-
-	return true;
+	Destroy();
+	return false;
 }
 
 void CVKFrameBuffer::Destroy(void)

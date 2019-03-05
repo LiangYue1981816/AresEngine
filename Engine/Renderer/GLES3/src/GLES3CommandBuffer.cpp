@@ -47,8 +47,8 @@ CGLES3CommandBuffer::CGLES3CommandBuffer(CGLES3CommandBufferManager *pManager, b
 	, m_pManager(pManager)
 
 	, m_bMainCommandBuffer(bMainCommandBuffer)
-
 	, m_bInRenderPass(false)
+
 	, m_indexSubpass(0)
 {
 

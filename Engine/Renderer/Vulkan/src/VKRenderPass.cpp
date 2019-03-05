@@ -218,7 +218,7 @@ bool CVKRenderPass::Create(void)
 				attachment.stencilStoreOp = m_attachments[indexAttachment].bInvalidation ? VK_ATTACHMENT_STORE_OP_DONT_CARE : VK_ATTACHMENT_STORE_OP_STORE;
 				attachment.initialLayout = CVKHelper::IsFormatDepthOrStencil((VkFormat)m_attachments[indexAttachment].pixelFormat) ? VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL : VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
 				attachment.finalLayout = CVKHelper::IsFormatDepthOrStencil((VkFormat)m_attachments[indexAttachment].pixelFormat) ? VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL : VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
-				attachments.push_back(attachment);
+				attachments.emplace_back(attachment);
 			}
 
 			for (int indexSubpass = 0; indexSubpass < (int)m_subpasses.size(); indexSubpass++) {

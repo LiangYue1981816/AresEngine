@@ -65,29 +65,39 @@ int CVKTextureCubeMap::GetLevels(void) const
 bool CVKTextureCubeMap::Create(HANDLE hExternTexture)
 {
 	Destroy();
+	{
+		do {
+			CALL_BOOL_FUNCTION_BREAK(CVKTexture::CreateView((VkImageView)hExternTexture));
+			m_type = GFX_TEXTURE_CUBE_MAP;
 
-	CALL_BOOL_FUNCTION_RETURN_BOOL(CVKTexture::CreateView((VkImageView)hExternTexture));
-	m_type = GFX_TEXTURE_CUBE_MAP;
-
-	return true;
+			return true;
+		} while (false);
+	}
+	Destroy();
+	return false;
 }
 
 bool CVKTextureCubeMap::Create(GfxPixelFormat pixelFormat, int width, int height, int levels)
 {
 	Destroy();
+	{
+		do {
+			CALL_BOOL_FUNCTION_BREAK(CVKHelper::IsFormatSupported((VkFormat)pixelFormat));
+			CALL_BOOL_FUNCTION_BREAK(CreateImage(VK_IMAGE_TYPE_2D, VK_IMAGE_VIEW_TYPE_CUBE, (VkFormat)pixelFormat, width, height, levels, 1, VK_SAMPLE_COUNT_1_BIT, VK_IMAGE_TILING_OPTIMAL, VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT));
+			CALL_BOOL_FUNCTION_BREAK(CreateView(VK_IMAGE_VIEW_TYPE_CUBE, VK_IMAGE_ASPECT_COLOR_BIT, (VkFormat)pixelFormat, levels, 1));
 
-	CALL_BOOL_FUNCTION_RETURN_BOOL(CVKHelper::IsFormatSupported((VkFormat)pixelFormat));
-	CALL_BOOL_FUNCTION_RETURN_BOOL(CreateImage(VK_IMAGE_TYPE_2D, VK_IMAGE_VIEW_TYPE_CUBE, (VkFormat)pixelFormat, width, height, levels, 1, VK_SAMPLE_COUNT_1_BIT, VK_IMAGE_TILING_OPTIMAL, VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT));
-	CALL_BOOL_FUNCTION_RETURN_BOOL(CreateView(VK_IMAGE_VIEW_TYPE_CUBE, VK_IMAGE_ASPECT_COLOR_BIT, (VkFormat)pixelFormat, levels, 1));
+			m_format = pixelFormat;
+			m_type = GFX_TEXTURE_CUBE_MAP;
 
-	m_format = pixelFormat;
-	m_type = GFX_TEXTURE_CUBE_MAP;
+			m_width = width;
+			m_height = height;
+			m_levels = levels;
 
-	m_width = width;
-	m_height = height;
-	m_levels = levels;
-
-	return true;
+			return true;
+		} while (false);
+	}
+	Destroy();
+	return false;
 }
 
 void CVKTextureCubeMap::Destroy(void)

@@ -9,7 +9,6 @@ CVKIndirectBuffer::CVKIndirectBuffer(CVKDevice *pDevice, uint32_t drawCommandCou
 	, m_count(drawCommandCount)
 {
 	m_draws.resize(m_count);
-
 	m_ptrBuffer = CVKBufferPtr(new CVKBuffer(m_pDevice, CGfxSwapChain::SWAPCHAIN_FRAME_COUNT * m_size, VK_BUFFER_USAGE_INDIRECT_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT));
 	CGfxProfiler::IncIndirectBufferSize(m_ptrBuffer->GetSize());
 }
