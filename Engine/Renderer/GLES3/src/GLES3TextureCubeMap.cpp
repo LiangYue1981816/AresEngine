@@ -64,32 +64,42 @@ int CGLES3TextureCubeMap::GetLevels(void) const
 bool CGLES3TextureCubeMap::Create(HANDLE hExternTexture)
 {
 	Destroy();
+	{
+		do {
+			if (CGLES3Texture::Create(GL_TEXTURE_CUBE_MAP, (uint32_t)hExternTexture) == false) {
+				break;
+			}
 
-	if (CGLES3Texture::Create(GL_TEXTURE_CUBE_MAP, (uint32_t)hExternTexture) == false) {
-		return false;
+			m_type = GFX_TEXTURE_CUBE_MAP;
+
+			return true;
+		} while (false);
 	}
-
-	m_type = GFX_TEXTURE_CUBE_MAP;
-
-	return true;
+	Destroy();
+	return false;
 }
 
 bool CGLES3TextureCubeMap::Create(GfxPixelFormat pixelFormat, int width, int height, int levels)
 {
 	Destroy();
+	{
+		do {
+			if (CGLES3Texture::Create(GL_TEXTURE_CUBE_MAP, pixelFormat, width, height, levels, 0) == false) {
+				break;
+			}
 
-	if (CGLES3Texture::Create(GL_TEXTURE_CUBE_MAP, pixelFormat, width, height, levels, 0) == false) {
-		return false;
+			m_format = pixelFormat;
+			m_type = GFX_TEXTURE_CUBE_MAP;
+
+			m_width = width;
+			m_height = height;
+			m_levels = levels;
+
+			return true;
+		} while (false);
 	}
-
-	m_format = pixelFormat;
-	m_type = GFX_TEXTURE_CUBE_MAP;
-
-	m_width = width;
-	m_height = height;
-	m_levels = levels;
-
-	return true;
+	Destroy();
+	return false;
 }
 
 void CGLES3TextureCubeMap::Destroy(void)

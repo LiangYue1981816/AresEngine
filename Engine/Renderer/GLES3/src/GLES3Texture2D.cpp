@@ -70,42 +70,52 @@ int CGLES3Texture2D::GetSamples(void) const
 bool CGLES3Texture2D::Create(HANDLE hExternTexture)
 {
 	Destroy();
+	{
+		do {
+			if (CGLES3Texture::Create(GL_TEXTURE_2D, (uint32_t)hExternTexture) == false) {
+				break;
+			}
 
-	if (CGLES3Texture::Create(GL_TEXTURE_2D, (uint32_t)hExternTexture) == false) {
-		return false;
+			m_type = GFX_TEXTURE_2D;
+
+			return true;
+		} while (false);
 	}
-
-	m_type = GFX_TEXTURE_2D;
-
-	return true;
+	Destroy();
+	return false;
 }
 
 bool CGLES3Texture2D::Create(GfxPixelFormat pixelFormat, int width, int height, int levels, int samples)
 {
 	Destroy();
+	{
+		do {
+			samples = std::max(samples, 1);
 
-	samples = std::max(samples, 1);
+			if (samples == 1) {
+				if (CGLES3Texture::Create(GL_TEXTURE_2D, pixelFormat, width, height, levels, 0, samples) == false) {
+					break;
+				}
+			}
+			else {
+				if (CGLES3Texture::Create(GL_TEXTURE_2D_MULTISAMPLE, pixelFormat, width, height, levels, 0, samples) == false) {
+					break;
+				}
+			}
 
-	if (samples == 1) {
-		if (CGLES3Texture::Create(GL_TEXTURE_2D, pixelFormat, width, height, levels, 0, samples) == false) {
-			return false;
-		}
+			m_format = pixelFormat;
+
+			m_width = width;
+			m_height = height;
+			m_levels = levels;
+			m_samples = samples;
+			m_type = m_samples == 1 ? GFX_TEXTURE_2D : GFX_TEXTURE_2D_MULTISAMPLE;
+
+			return true;
+		} while (false);
 	}
-	else {
-		if (CGLES3Texture::Create(GL_TEXTURE_2D_MULTISAMPLE, pixelFormat, width, height, levels, 0, samples) == false) {
-			return false;
-		}
-	}
-
-	m_format = pixelFormat;
-
-	m_width = width;
-	m_height = height;
-	m_levels = levels;
-	m_samples = samples;
-	m_type = m_samples == 1 ? GFX_TEXTURE_2D : GFX_TEXTURE_2D_MULTISAMPLE;
-
-	return true;
+	Destroy();
+	return false;
 }
 
 void CGLES3Texture2D::Destroy(void)

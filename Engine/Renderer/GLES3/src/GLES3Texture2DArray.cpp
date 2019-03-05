@@ -70,33 +70,43 @@ int CGLES3Texture2DArray::GetLayers(void) const
 bool CGLES3Texture2DArray::Create(HANDLE hExternTexture)
 {
 	Destroy();
+	{
+		do {
+			if (CGLES3Texture::Create(GL_TEXTURE_2D_ARRAY, (uint32_t)hExternTexture) == false) {
+				break;
+			}
 
-	if (CGLES3Texture::Create(GL_TEXTURE_2D_ARRAY, (uint32_t)hExternTexture) == false) {
-		return false;
+			m_type = GFX_TEXTURE_2D_ARRAY;
+
+			return true;
+		} while (false);
 	}
-
-	m_type = GFX_TEXTURE_2D_ARRAY;
-
-	return true;
+	Destroy();
+	return false;
 }
 
 bool CGLES3Texture2DArray::Create(GfxPixelFormat pixelFormat, int width, int height, int levels, int layers)
 {
 	Destroy();
-	
-	if (CGLES3Texture::Create(GL_TEXTURE_2D_ARRAY, pixelFormat, width, height, levels, layers) == false) {
-		return false;
+	{
+		do {
+			if (CGLES3Texture::Create(GL_TEXTURE_2D_ARRAY, pixelFormat, width, height, levels, layers) == false) {
+				break;
+			}
+
+			m_format = pixelFormat;
+			m_type = GFX_TEXTURE_2D_ARRAY;
+
+			m_width = width;
+			m_height = height;
+			m_levels = levels;
+			m_layers = layers;
+
+			return true;
+		} while (false);
 	}
-
-	m_format = pixelFormat;
-	m_type = GFX_TEXTURE_2D_ARRAY;
-
-	m_width = width;
-	m_height = height;
-	m_levels = levels;
-	m_layers = layers;
-
-	return true;
+	Destroy();
+	return false;
 }
 
 void CGLES3Texture2DArray::Destroy(void)
