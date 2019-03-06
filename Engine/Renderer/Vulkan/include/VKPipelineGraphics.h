@@ -28,8 +28,7 @@ public:
 	bool IsUniformBlockValid(uint32_t name) const;
 
 public:
-	uint32_t GetTextureBinding(uint32_t set, uint32_t name) const;
-	uint32_t GetUniformBlockBinding(uint32_t set, uint32_t name) const;
+	void Bind(VkCommandBuffer vkCommandBuffer);
 
 
 private:

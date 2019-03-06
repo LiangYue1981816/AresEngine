@@ -103,22 +103,7 @@ bool CVKPipelineCompute::IsUniformBlockValid(uint32_t name) const
 	return CVKPipeline::IsUniformBlockValid(name);
 }
 
-uint32_t CVKPipelineCompute::GetTextureBinding(uint32_t set, uint32_t name) const
+void CVKPipelineCompute::Bind(VkCommandBuffer vkCommandBuffer)
 {
-	if (set >= 0 && set < DESCRIPTOR_SET_COUNT) {
-		return m_pDescriptorLayouts[set]->GetTextureBinding(name).binding;
-	}
-	else {
-		return 0xffffffff;
-	}
-}
-
-uint32_t CVKPipelineCompute::GetUniformBlockBinding(uint32_t set, uint32_t name) const
-{
-	if (set >= 0 && set < DESCRIPTOR_SET_COUNT) {
-		return m_pDescriptorLayouts[set]->GetUniformBlockBinding(name).binding;
-	}
-	else {
-		return 0xffffffff;
-	}
+	vkCmdBindPipeline(vkCommandBuffer, VK_PIPELINE_BIND_POINT_COMPUTE, m_vkPipeline);
 }
