@@ -451,10 +451,22 @@ void CVKRenderer::Present(void)
 
 void CVKRenderer::BindPipelineCompute(CGfxPipelineCompute *pPipelineCompute)
 {
-	m_pCurrentPipelineCompute = (CVKPipelineCompute *)pPipelineCompute;
+	if (m_pCurrentPipelineCompute != pPipelineCompute) {
+		m_pCurrentPipelineCompute  = (CVKPipelineCompute *)pPipelineCompute;
+
+		if (m_pCurrentPipelineCompute) {
+
+		}
+	}
 }
 
 void CVKRenderer::BindPipelineGraphics(CGfxPipelineGraphics *pPipelineGraphics)
 {
-	m_pCurrentPipelineGraphics = (CVKPipelineGraphics *)pPipelineGraphics;
+	if (m_pCurrentPipelineGraphics != pPipelineGraphics) {
+		m_pCurrentPipelineGraphics  = (CVKPipelineGraphics *)pPipelineGraphics;
+
+		if (m_pCurrentPipelineGraphics) {
+
+		}
+	}
 }
