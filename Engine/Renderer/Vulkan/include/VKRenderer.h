@@ -174,6 +174,11 @@ public:
 	void AcquireNextFrame(void);
 	void Present(void);
 
+private:
+	void BindPipelineCompute(CGfxPipelineCompute *pPipelineCompute);
+	void BindPipelineGraphics(CGfxPipelineGraphics *pPipelineGraphics);
+	void BindUniformBuffer(CGfxUniformBuffer *pUniformBuffer, uint32_t nameUniform);
+
 
 private:
 	CVKInstance *m_pInstance;

@@ -448,3 +448,20 @@ void CVKRenderer::Present(void)
 {
 	m_pSwapChain->Present();
 }
+
+void CVKRenderer::BindPipelineCompute(CGfxPipelineCompute *pPipelineCompute)
+{
+	m_pCurrentPipelineCompute = (CVKPipelineCompute *)pPipelineCompute;
+}
+
+void CVKRenderer::BindPipelineGraphics(CGfxPipelineGraphics *pPipelineGraphics)
+{
+	m_pCurrentPipelineGraphics = (CVKPipelineGraphics *)pPipelineGraphics;
+}
+
+void CVKRenderer::BindUniformBuffer(CGfxUniformBuffer *pUniformBuffer, uint32_t nameUniform)
+{
+	if (m_pCurrentPipelineGraphics) {
+
+	}
+}
