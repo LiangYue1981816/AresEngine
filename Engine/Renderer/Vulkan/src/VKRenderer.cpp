@@ -458,10 +458,3 @@ void CVKRenderer::BindPipelineGraphics(CGfxPipelineGraphics *pPipelineGraphics)
 {
 	m_pCurrentPipelineGraphics = (CVKPipelineGraphics *)pPipelineGraphics;
 }
-
-void CVKRenderer::BindUniformBuffer(CGfxUniformBuffer *pUniformBuffer, uint32_t nameUniform)
-{
-	if (m_pCurrentPipelineGraphics) {
-
-	}
-}
