@@ -81,16 +81,6 @@ CGfxSwapChain* CGLES3Renderer::GetSwapChain(void) const
 	return m_pSwapChain;
 }
 
-CGfxMaterialPass* CGLES3Renderer::GetGlobalMaterialPass(void) const
-{
-	return m_pGlobalMaterialPass;
-}
-
-CGfxMaterialPass* CGLES3Renderer::GetCurrentMaterialPass(void) const
-{
-	return m_pCurrentMaterialPass;
-}
-
 bool CGLES3Renderer::IsSupportExtension(const char *extension) const
 {
 	return CGLES3Helper::IsSupportExtension(extension);

@@ -86,16 +86,6 @@ CGfxSwapChain* CVKRenderer::GetSwapChain(void) const
 	return m_pSwapChain;
 }
 
-CGfxMaterialPass* CVKRenderer::GetGlobalMaterialPass(void) const
-{
-	return nullptr;
-}
-
-CGfxMaterialPass* CVKRenderer::GetCurrentMaterialPass(void) const
-{
-	return nullptr;
-}
-
 bool CVKRenderer::IsSupportExtension(const char *extension) const
 {
 	return false;

@@ -84,8 +84,6 @@ public:
 
 public:
 	CGfxSwapChain* GetSwapChain(void) const;
-	CGfxMaterialPass* GetGlobalMaterialPass(void) const;
-	CGfxMaterialPass* GetCurrentMaterialPass(void) const;
 
 public:
 	bool IsSupportExtension(const char *extension) const;
