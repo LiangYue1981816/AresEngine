@@ -198,7 +198,6 @@ private:
 	CVKCommandBufferManager *m_pCommandBufferManager;
 
 private:
-	CVKMaterialPass *m_pGlobalMaterialPass;
 	CVKMaterialPass *m_pCurrentMaterialPass;
 	CVKPipelineCompute *m_pCurrentPipelineCompute;
 	CVKPipelineGraphics *m_pCurrentPipelineGraphics;

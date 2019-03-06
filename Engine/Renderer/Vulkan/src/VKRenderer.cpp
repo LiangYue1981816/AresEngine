@@ -23,7 +23,6 @@ CVKRenderer::CVKRenderer(void *hInstance, void *hWnd, void *hDC, int width, int 
 	, m_pFrameBufferManager(nullptr)
 	, m_pCommandBufferManager(nullptr)
 
-	, m_pGlobalMaterialPass(nullptr)
 	, m_pCurrentMaterialPass(nullptr)
 	, m_pCurrentPipelineCompute(nullptr)
 	, m_pCurrentPipelineGraphics(nullptr)
@@ -48,13 +47,11 @@ CVKRenderer::CVKRenderer(void *hInstance, void *hWnd, void *hDC, int width, int 
 	m_pCommandBufferManager = new CVKCommandBufferManager(m_pDevice);
 
 	m_pSwapChain = new CVKSwapChain(m_pDevice, width, height, pixelFormat);
-	m_pGlobalMaterialPass = new CVKMaterialPass(m_pDevice, INVALID_HASHVALUE);
 }
 
 CVKRenderer::~CVKRenderer(void)
 {
 	delete m_pSwapChain;
-	delete m_pGlobalMaterialPass;
 
 	delete m_pCommandBufferManager;
 	delete m_pFrameBufferManager;
