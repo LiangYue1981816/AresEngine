@@ -25,20 +25,27 @@ uint32_t CVKQueue::GetQueueFamilyIndex(void) const
 	return m_queueFamilyIndex;
 }
 
-bool CVKQueue::Submit(const CGfxCommandBufferPtr ptrCommandBuffer, VkSemaphore vkWaitSemaphore, VkPipelineStageFlags waitStageFlags, VkSemaphore vkSignalSemaphore, VkFence vkFence) const
+bool CVKQueue::Submit(const eastl::vector<CGfxCommandBufferPtr> &ptrCommandBuffers, VkSemaphore vkWaitSemaphore, VkPipelineStageFlags waitStageFlags, VkSemaphore vkSignalSemaphore, VkFence vkFence) const
 {
+	eastl::vector<VkCommandBuffer> vkCommandBuffers;
+	{
+		for (int index = 0; index < ptrCommandBuffers.size(); index++) {
+			vkCommandBuffers.emplace_back((VkCommandBuffer)ptrCommandBuffers[index]->GetCommandBuffer());
+		}
+	}
+	if (vkCommandBuffers.empty()) return false;
+
 	vkWaitForFences(m_pDevice->GetDevice(), 1, &vkFence, VK_TRUE, UINT64_MAX);
 	vkResetFences(m_pDevice->GetDevice(), 1, &vkFence);
 
-	VkCommandBuffer vkCommandBuffer = (VkCommandBuffer)ptrCommandBuffer->GetCommandBuffer();
 	VkSubmitInfo submitInfo = {};
 	submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
 	submitInfo.pNext = nullptr;
 	submitInfo.waitSemaphoreCount = vkWaitSemaphore != VK_NULL_HANDLE ? 1 : 0;
 	submitInfo.pWaitSemaphores = vkWaitSemaphore != VK_NULL_HANDLE ? &vkWaitSemaphore : nullptr;
 	submitInfo.pWaitDstStageMask = vkWaitSemaphore != VK_NULL_HANDLE ? &waitStageFlags : nullptr;
-	submitInfo.commandBufferCount = 1;
-	submitInfo.pCommandBuffers = &vkCommandBuffer;
+	submitInfo.commandBufferCount = vkCommandBuffers.size();
+	submitInfo.pCommandBuffers = vkCommandBuffers.data();
 	submitInfo.signalSemaphoreCount = vkSignalSemaphore != VK_NULL_HANDLE ? 1 : 0;
 	submitInfo.pSignalSemaphores = vkSignalSemaphore != VK_NULL_HANDLE ? &vkSignalSemaphore : nullptr;
 	CALL_VK_FUNCTION_RETURN_BOOL(vkQueueSubmit(m_vkQueue, 1, &submitInfo, vkFence));

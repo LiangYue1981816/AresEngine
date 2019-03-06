@@ -440,10 +440,9 @@ bool CVKRenderer::CmdPopDebugGroup(CGfxCommandBufferPtr ptrCommandBuffer)
 	return ptrCommandBuffer->CmdPopDebugGroup();
 }
 
-void CVKRenderer::Submit(const CGfxCommandBufferPtr ptrCommandBuffer)
+void CVKRenderer::Submit(const eastl::vector<CGfxCommandBufferPtr> &ptrCommandBuffers)
 {
-	ptrCommandBuffer->Execute();
-	m_pDevice->GetQueue()->Submit(ptrCommandBuffer, m_pSwapChain->GetAcquireSemaphore(), VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT, m_pSwapChain->GetRenderDoneSemaphore(), m_pSwapChain->GetRenderDoneFence());
+	m_pDevice->GetQueue()->Submit(ptrCommandBuffers, m_pSwapChain->GetAcquireSemaphore(), VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT, m_pSwapChain->GetRenderDoneSemaphore(), m_pSwapChain->GetRenderDoneFence());
 }
 
 void CVKRenderer::AcquireNextFrame(void)

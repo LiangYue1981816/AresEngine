@@ -442,9 +442,11 @@ bool CGLES3Renderer::CmdPopDebugGroup(CGfxCommandBufferPtr ptrCommandBuffer)
 	return ptrCommandBuffer->CmdPopDebugGroup();
 }
 
-void CGLES3Renderer::Submit(const CGfxCommandBufferPtr ptrCommandBuffer)
+void CGLES3Renderer::Submit(const eastl::vector<CGfxCommandBufferPtr> &ptrCommandBuffers)
 {
-	ptrCommandBuffer->Execute();
+	for (int index = 0; index < ptrCommandBuffers.size(); index++) {
+		ptrCommandBuffers[index]->Execute();
+	}
 }
 
 void CGLES3Renderer::AcquireNextFrame(void)

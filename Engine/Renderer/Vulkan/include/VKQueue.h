@@ -17,7 +17,7 @@ public:
 	uint32_t GetQueueFamilyIndex(void) const;
 
 public:
-	bool Submit(const CGfxCommandBufferPtr ptrCommandBuffer, VkSemaphore vkWaitSemaphore, VkPipelineStageFlags waitStageFlags, VkSemaphore vkSignalSemaphore, VkFence vkFence) const;
+	bool Submit(const eastl::vector<CGfxCommandBufferPtr> &ptrCommandBuffers, VkSemaphore vkWaitSemaphore, VkPipelineStageFlags waitStageFlags, VkSemaphore vkSignalSemaphore, VkFence vkFence) const;
 	void WaitIdle(void) const;
 
 
