@@ -175,8 +175,9 @@ public:
 	void Present(void);
 
 private:
-	void BindPipelineCompute(CGfxPipelineCompute *pPipelineCompute, VkCommandBuffer vkCommandBuffer);
-	void BindPipelineGraphics(CGfxPipelineGraphics *pPipelineGraphics, VkCommandBuffer vkCommandBuffer);
+	void BindPipelineCompute(VkCommandBuffer vkCommandBuffer, CGfxPipelineCompute *pPipelineCompute);
+	void BindPipelineGraphics(VkCommandBuffer vkCommandBuffer, CGfxPipelineGraphics *pPipelineGraphics);
+	void BindMaterialPass(VkCommandBuffer vkCommandBuffer, CGfxMaterialPass *pPass);
 
 
 private:

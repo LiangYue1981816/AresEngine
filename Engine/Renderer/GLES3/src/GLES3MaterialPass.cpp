@@ -324,13 +324,13 @@ CGfxTextureCubeMapPtr CGLES3MaterialPass::GetTextureCubeMap(const char *szName) 
 	}
 }
 
-void CGLES3MaterialPass::Bind(CGLES3Pipeline *pPipeline, const CGLES3MaterialPass *pPass, uint32_t &indexTexUnit)
+void CGLES3MaterialPass::Bind(const CGLES3Pipeline *pPipeline, const CGLES3MaterialPass *pPass, uint32_t &indexTexUnit)
 {
 	BindUniforms(pPipeline, pPass);
 	BindTextures(pPipeline, pPass, indexTexUnit);
 }
 
-void CGLES3MaterialPass::BindUniforms(CGLES3Pipeline *pPipeline, const CGLES3MaterialPass *pPass)
+void CGLES3MaterialPass::BindUniforms(const CGLES3Pipeline *pPipeline, const CGLES3MaterialPass *pPass)
 {
 	if (pPipeline) {
 		for (const auto &itUniform : pPass->m_pUniformVec1s) {
@@ -360,7 +360,7 @@ void CGLES3MaterialPass::BindUniforms(CGLES3Pipeline *pPipeline, const CGLES3Mat
 	}
 }
 
-void CGLES3MaterialPass::BindTextures(CGLES3Pipeline *pPipeline, const CGLES3MaterialPass *pPass, uint32_t &indexTexUnit)
+void CGLES3MaterialPass::BindTextures(const CGLES3Pipeline *pPipeline, const CGLES3MaterialPass *pPass, uint32_t &indexTexUnit)
 {
 	if (pPipeline) {
 		for (const auto &itTexture : pPass->m_ptrTexture2Ds) {

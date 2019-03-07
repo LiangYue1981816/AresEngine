@@ -83,7 +83,7 @@ void CGLES3Pipeline::SetSampledImageLocation(const char *szName)
 	}
 }
 
-void CGLES3Pipeline::BindTexture(uint32_t name, CGLES3Texture *pTexture, CGLES3Sampler *pSampler, uint32_t unit)
+void CGLES3Pipeline::BindTexture(uint32_t name, CGLES3Texture *pTexture, CGLES3Sampler *pSampler, uint32_t unit) const
 {
 	const auto &itLocation = m_sampledImageLocations.find(name);
 
@@ -94,7 +94,7 @@ void CGLES3Pipeline::BindTexture(uint32_t name, CGLES3Texture *pTexture, CGLES3S
 	}
 }
 
-void CGLES3Pipeline::BindUniformBuffer(uint32_t name, CGLES3UniformBuffer *pUniformBuffer, uint32_t size, int offset)
+void CGLES3Pipeline::BindUniformBuffer(uint32_t name, CGLES3UniformBuffer *pUniformBuffer, uint32_t size, int offset) const
 {
 	const auto &itBinding = m_uniformBlockBindings.find(name);
 

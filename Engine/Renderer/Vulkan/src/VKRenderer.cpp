@@ -449,7 +449,7 @@ void CVKRenderer::Present(void)
 	m_pSwapChain->Present();
 }
 
-void CVKRenderer::BindPipelineCompute(CGfxPipelineCompute *pPipelineCompute, VkCommandBuffer vkCommandBuffer)
+void CVKRenderer::BindPipelineCompute(VkCommandBuffer vkCommandBuffer, CGfxPipelineCompute *pPipelineCompute)
 {
 	if (m_pCurrentPipelineCompute != pPipelineCompute) {
 		m_pCurrentPipelineCompute  = (CVKPipelineCompute *)pPipelineCompute;
@@ -460,13 +460,24 @@ void CVKRenderer::BindPipelineCompute(CGfxPipelineCompute *pPipelineCompute, VkC
 	}
 }
 
-void CVKRenderer::BindPipelineGraphics(CGfxPipelineGraphics *pPipelineGraphics, VkCommandBuffer vkCommandBuffer)
+void CVKRenderer::BindPipelineGraphics(VkCommandBuffer vkCommandBuffer, CGfxPipelineGraphics *pPipelineGraphics)
 {
 	if (m_pCurrentPipelineGraphics != pPipelineGraphics) {
 		m_pCurrentPipelineGraphics  = (CVKPipelineGraphics *)pPipelineGraphics;
 
 		if (m_pCurrentPipelineGraphics) {
 			m_pCurrentPipelineGraphics->Bind(vkCommandBuffer);
+		}
+	}
+}
+
+void CVKRenderer::BindMaterialPass(VkCommandBuffer vkCommandBuffer, CGfxMaterialPass *pPass)
+{
+	if (m_pCurrentMaterialPass != pPass) {
+		m_pCurrentMaterialPass  = (CVKMaterialPass *)pPass;
+
+		if (m_pCurrentMaterialPass && m_pCurrentPipelineGraphics) {
+			CVKMaterialPass::Bind(vkCommandBuffer, m_pCurrentPipelineGraphics, m_pCurrentMaterialPass);
 		}
 	}
 }
