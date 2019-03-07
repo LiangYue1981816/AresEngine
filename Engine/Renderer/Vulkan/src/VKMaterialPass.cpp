@@ -401,3 +401,8 @@ CGfxTextureCubeMapPtr CVKMaterialPass::GetTextureCubeMap(const char *szName) con
 		return nullptr;
 	}
 }
+
+void CVKMaterialPass::Bind(VkCommandBuffer vkCommandBuffer, const CVKPipeline *pPipeline, const CVKMaterialPass *pPass)
+{
+
+}
