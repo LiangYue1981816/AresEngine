@@ -427,6 +427,11 @@ bool CVKPipeline::IsUniformValid(uint32_t name) const
 	return m_pushConstantRanges.find(name) != m_pushConstantRanges.end();
 }
 
+VkPipelineLayout CVKPipeline::GetPipelineLayout(void) const
+{
+	return m_vkPipelineLayout;
+}
+
 CVKDescriptorLayout* CVKPipeline::GetDescriptorLayout(uint32_t set) const
 {
 	if (set < DESCRIPTOR_SET_COUNT) {

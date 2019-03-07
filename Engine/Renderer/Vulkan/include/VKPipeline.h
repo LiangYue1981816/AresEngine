@@ -54,6 +54,7 @@ public:
 	bool IsUniformBlockValid(uint32_t name) const;
 
 public:
+	VkPipelineLayout GetPipelineLayout(void) const;
 	CVKDescriptorLayout* GetDescriptorLayout(uint32_t set) const;
 
 
