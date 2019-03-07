@@ -132,7 +132,7 @@ bool CVKDescriptorSet::SetUniformBuffer(uint32_t name, const CGfxUniformBufferPt
 	}
 }
 
-void CVKDescriptorSet::Bind(VkCommandBuffer vkCommandBuffer, VkPipelineBindPoint vkPipelineBindPoint)
+void CVKDescriptorSet::Bind(VkCommandBuffer vkCommandBuffer, VkPipelineBindPoint vkPipelineBindPoint, VkPipelineLayout vkPipelineLayout)
 {
 	if (m_bDirty) {
 		m_bDirty = false;
@@ -177,5 +177,5 @@ void CVKDescriptorSet::Bind(VkCommandBuffer vkCommandBuffer, VkPipelineBindPoint
 		offsets.emplace_back(((CVKUniformBuffer *)itBuffer.second.ptrUniformBuffer.GetPointer())->GetBaseOffset());
 	}
 
-	vkCmdBindDescriptorSets(vkCommandBuffer, vkPipelineBindPoint, m_pDescriptorLayout->GetDescriptorSetLayout(), m_pDescriptorLayout->GetSetIndex(), 1, m_vkDescriptorSet, offsets.size(), offsets.data());
+	vkCmdBindDescriptorSets(vkCommandBuffer, vkPipelineBindPoint, vkPipelineLayout, m_pDescriptorLayout->GetSetIndex(), 1, &m_vkDescriptorSet, offsets.size(), offsets.data());
 }
