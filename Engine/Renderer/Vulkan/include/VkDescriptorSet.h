@@ -39,7 +39,9 @@ public:
 	bool SetTextureCubeMap(uint32_t name, const CGfxTextureCubeMapPtr ptrTexture, const CGfxSampler *pSampler);
 	bool SetRenderTexture(uint32_t name, const CGfxRenderTexturePtr ptrRenderTexture, const CGfxSampler *pSampler);
 	bool SetUniformBuffer(uint32_t name, const CGfxUniformBufferPtr ptrUniformBuffer);
-	void Update(void);
+
+public:
+	void Bind(VkCommandBuffer vkCommandBuffer, VkPipelineBindPoint vkPipelineBindPoint);
 
 
 private:

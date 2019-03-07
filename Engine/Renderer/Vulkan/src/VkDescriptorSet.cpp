@@ -132,7 +132,7 @@ bool CVKDescriptorSet::SetUniformBuffer(uint32_t name, const CGfxUniformBufferPt
 	}
 }
 
-void CVKDescriptorSet::Update(void)
+void CVKDescriptorSet::Bind(VkCommandBuffer vkCommandBuffer, VkPipelineBindPoint vkPipelineBindPoint)
 {
 	if (m_bDirty) {
 		m_bDirty = false;
@@ -171,4 +171,11 @@ void CVKDescriptorSet::Update(void)
 
 		vkUpdateDescriptorSets(m_pDevice->GetDevice(), writes.size(), writes.data(), 0, nullptr);
 	}
+
+	eastl::vector<uint32_t> offsets;
+	for (const auto &itBuffer : m_bufferDescriptors) {
+		offsets.emplace_back(((CVKUniformBuffer *)itBuffer.second.ptrUniformBuffer.GetPointer())->GetBaseOffset());
+	}
+
+	vkCmdBindDescriptorSets(vkCommandBuffer, vkPipelineBindPoint, m_pDescriptorLayout->GetDescriptorSetLayout(), m_pDescriptorLayout->GetSetIndex(), 1, m_vkDescriptorSet, offsets.size(), offsets.data());
 }
