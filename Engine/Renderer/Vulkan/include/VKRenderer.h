@@ -175,6 +175,7 @@ public:
 	void Present(void);
 
 private:
+	void BindMeshDraw(VkCommandBuffer vkCommandBuffer, CGfxMeshDraw *pMeshDraw);
 	void BindPipelineCompute(VkCommandBuffer vkCommandBuffer, CGfxPipelineCompute *pPipelineCompute);
 	void BindPipelineGraphics(VkCommandBuffer vkCommandBuffer, CGfxPipelineGraphics *pPipelineGraphics);
 	void BindMaterialPass(VkCommandBuffer vkCommandBuffer, CGfxMaterialPass *pPass);

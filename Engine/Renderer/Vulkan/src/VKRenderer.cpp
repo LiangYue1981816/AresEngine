@@ -449,6 +449,11 @@ void CVKRenderer::Present(void)
 	m_pSwapChain->Present();
 }
 
+void CVKRenderer::BindMeshDraw(VkCommandBuffer vkCommandBuffer, CGfxMeshDraw *pMeshDraw)
+{
+	((CVKMeshDraw *)pMeshDraw)->Bind(vkCommandBuffer);
+}
+
 void CVKRenderer::BindPipelineCompute(VkCommandBuffer vkCommandBuffer, CGfxPipelineCompute *pPipelineCompute)
 {
 	if (m_pCurrentPipelineCompute != pPipelineCompute) {
