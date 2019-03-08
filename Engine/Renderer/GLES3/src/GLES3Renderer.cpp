@@ -480,10 +480,10 @@ void CGLES3Renderer::BindPipelineGraphics(CGfxPipelineGraphics *pPipelineGraphic
 	}
 }
 
-void CGLES3Renderer::BindMaterialPass(CGfxMaterialPass *pPass)
+void CGLES3Renderer::BindMaterialPass(CGfxMaterialPass *pMaterialPass)
 {
-	if (m_pCurrentMaterialPass != pPass) {
-		m_pCurrentMaterialPass  = (CGLES3MaterialPass *)pPass;
+	if (m_pCurrentMaterialPass != pMaterialPass) {
+		m_pCurrentMaterialPass  = (CGLES3MaterialPass *)pMaterialPass;
 
 		uint32_t indexTexUnit = 0;
 

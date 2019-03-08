@@ -178,7 +178,7 @@ private:
 	void BindMeshDraw(VkCommandBuffer vkCommandBuffer, CGfxMeshDraw *pMeshDraw);
 	void BindPipelineCompute(VkCommandBuffer vkCommandBuffer, CGfxPipelineCompute *pPipelineCompute);
 	void BindPipelineGraphics(VkCommandBuffer vkCommandBuffer, CGfxPipelineGraphics *pPipelineGraphics);
-	void BindMaterialPass(VkCommandBuffer vkCommandBuffer, CGfxMaterialPass *pPass);
+	void BindMaterialPass(VkCommandBuffer vkCommandBuffer, CGfxMaterialPass *pMaterialPass);
 
 
 private:
