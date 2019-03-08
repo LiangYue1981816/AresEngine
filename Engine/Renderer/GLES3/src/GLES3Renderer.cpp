@@ -492,10 +492,14 @@ void CGLES3Renderer::BindMaterialPass(CGfxMaterialPass *pPass)
 	if (m_pCurrentMaterialPass != pPass) {
 		m_pCurrentMaterialPass  = (CGLES3MaterialPass *)pPass;
 
+		uint32_t indexTexUnit = 0;
+
 		if (m_pCurrentMaterialPass && m_pCurrentPipelineGraphics) {
-			uint32_t indexTexUnit = 0;
-			CGLES3MaterialPass::Bind(m_pCurrentPipelineGraphics, m_pCurrentMaterialPass, indexTexUnit);
-			CGLES3MaterialPass::Bind(m_pCurrentPipelineGraphics, m_pGlobalMaterialPass, indexTexUnit);
+			m_pCurrentMaterialPass->Bind(m_pCurrentPipelineGraphics, indexTexUnit);
+		}
+
+		if (m_pGlobalMaterialPass && m_pCurrentPipelineGraphics) {
+			m_pGlobalMaterialPass->Bind(m_pCurrentPipelineGraphics, indexTexUnit);
 		}
 	}
 }

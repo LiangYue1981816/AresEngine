@@ -402,9 +402,9 @@ CGfxTextureCubeMapPtr CVKMaterialPass::GetTextureCubeMap(const char *szName) con
 	}
 }
 
-void CVKMaterialPass::Bind(VkCommandBuffer vkCommandBuffer, const CVKPipeline *pPipeline, const CVKMaterialPass *pPass)
+void CVKMaterialPass::Bind(VkCommandBuffer vkCommandBuffer, const CVKPipeline *pPipeline) const
 {
-	if (pPass->m_pDescriptorSet) {
-		pPass->m_pDescriptorSet->Bind(vkCommandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, pPipeline->GetPipelineLayout());
+	if (m_pDescriptorSet) {
+		m_pDescriptorSet->Bind(vkCommandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, pPipeline->GetPipelineLayout());
 	}
 }

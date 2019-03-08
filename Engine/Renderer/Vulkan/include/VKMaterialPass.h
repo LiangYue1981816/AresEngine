@@ -45,7 +45,7 @@ public:
 	CGfxTextureCubeMapPtr GetTextureCubeMap(const char *szName) const;
 
 public:
-	static void Bind(VkCommandBuffer vkCommandBuffer, const CVKPipeline *pPipeline, const CVKMaterialPass *pPass);
+	void Bind(VkCommandBuffer vkCommandBuffer, const CVKPipeline *pPipeline) const;
 
 
 private:

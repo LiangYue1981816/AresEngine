@@ -477,7 +477,8 @@ void CVKRenderer::BindMaterialPass(VkCommandBuffer vkCommandBuffer, CGfxMaterial
 		m_pCurrentMaterialPass  = (CVKMaterialPass *)pPass;
 
 		if (m_pCurrentMaterialPass && m_pCurrentPipelineGraphics) {
-			CVKMaterialPass::Bind(vkCommandBuffer, m_pCurrentPipelineGraphics, m_pCurrentMaterialPass);
+			m_pCurrentMaterialPass->GetDescriptorSet()->Update();
+			m_pCurrentMaterialPass->Bind(vkCommandBuffer, m_pCurrentPipelineGraphics);
 		}
 	}
 }
