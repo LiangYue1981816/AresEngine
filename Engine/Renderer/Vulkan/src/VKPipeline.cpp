@@ -11,7 +11,7 @@ CVKPipeline::CVKPipeline(CVKDevice *pDevice)
 	, m_pDescriptorLayouts{ NULL }
 {
 	m_pDescriptorLayouts[DESCRIPTOR_SET_CAMERA] = new CVKDescriptorLayout(m_pDevice, DESCRIPTOR_SET_CAMERA);
-	m_pDescriptorLayouts[DESCRIPTOR_SET_FRAME] = new CVKDescriptorLayout(m_pDevice, DESCRIPTOR_SET_FRAME);
+	m_pDescriptorLayouts[DESCRIPTOR_SET_ENGINE] = new CVKDescriptorLayout(m_pDevice, DESCRIPTOR_SET_ENGINE);
 	m_pDescriptorLayouts[DESCRIPTOR_SET_PASS] = new CVKDescriptorLayout(m_pDevice, DESCRIPTOR_SET_PASS);
 	m_pDescriptorLayouts[DESCRIPTOR_SET_DRAW] = new CVKDescriptorLayout(m_pDevice, DESCRIPTOR_SET_DRAW);
 }
@@ -19,7 +19,7 @@ CVKPipeline::CVKPipeline(CVKDevice *pDevice)
 CVKPipeline::~CVKPipeline(void)
 {
 	delete m_pDescriptorLayouts[DESCRIPTOR_SET_CAMERA];
-	delete m_pDescriptorLayouts[DESCRIPTOR_SET_FRAME];
+	delete m_pDescriptorLayouts[DESCRIPTOR_SET_ENGINE];
 	delete m_pDescriptorLayouts[DESCRIPTOR_SET_PASS];
 	delete m_pDescriptorLayouts[DESCRIPTOR_SET_DRAW];
 }
