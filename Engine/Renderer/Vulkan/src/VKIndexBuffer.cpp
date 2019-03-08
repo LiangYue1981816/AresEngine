@@ -60,7 +60,7 @@ bool CVKIndexBuffer::BufferData(size_t offset, size_t size, const void *pBuffer)
 	}
 }
 
-void CVKIndexBuffer::Bind(VkCommandBuffer vkCommandBuffer, VkDeviceSize offset)
+void CVKIndexBuffer::Bind(VkCommandBuffer vkCommandBuffer, VkDeviceSize offset) const
 {
 	switch ((int)GetIndexType()) {
 	case GFX_INDEX_UNSIGNED_SHORT:

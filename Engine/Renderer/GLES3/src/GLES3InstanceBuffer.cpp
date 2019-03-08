@@ -63,7 +63,7 @@ bool CGLES3InstanceBuffer::BufferData(size_t size, const void *pBuffer)
 	return true;
 }
 
-void CGLES3InstanceBuffer::Bind(void)
+void CGLES3InstanceBuffer::Bind(void) const
 {
 	GLBindBuffer(m_target, m_buffer);
 

@@ -79,7 +79,7 @@ void CGLES3Texture::Destroy(void)
 	m_texture = 0;
 }
 
-void CGLES3Texture::Bind(uint32_t unit)
+void CGLES3Texture::Bind(uint32_t unit) const
 {
 	GLBindTexture(unit, m_target, m_texture);
 }

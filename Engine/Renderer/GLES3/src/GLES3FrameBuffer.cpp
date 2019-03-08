@@ -84,7 +84,7 @@ void CGLES3FrameBuffer::Destroy(void)
 	m_resolve = 0;
 }
 
-void CGLES3FrameBuffer::Bind(const AttachmentInformation *pAttachmentInformations, const SubpassInformation *pSubpassInformation)
+void CGLES3FrameBuffer::Bind(const AttachmentInformation *pAttachmentInformations, const SubpassInformation *pSubpassInformation) const
 {
 	GLBindFramebuffer(GL_FRAMEBUFFER, m_fbo);
 	{
@@ -122,7 +122,7 @@ void CGLES3FrameBuffer::Bind(const AttachmentInformation *pAttachmentInformation
 	}
 }
 
-void CGLES3FrameBuffer::Resolve(const AttachmentInformation *pAttachmentInformations, const SubpassInformation *pSubpassInformation)
+void CGLES3FrameBuffer::Resolve(const AttachmentInformation *pAttachmentInformations, const SubpassInformation *pSubpassInformation) const
 {
 	if (pSubpassInformation->resolveAttachments.empty()) {
 		return;
@@ -164,7 +164,7 @@ void CGLES3FrameBuffer::Resolve(const AttachmentInformation *pAttachmentInformat
 	}
 }
 
-void CGLES3FrameBuffer::InvalidateFramebuffer(const AttachmentInformation *pAttachmentInformations, const SubpassInformation *pSubpassInformation)
+void CGLES3FrameBuffer::InvalidateFramebuffer(const AttachmentInformation *pAttachmentInformations, const SubpassInformation *pSubpassInformation) const
 {
 	eastl::vector<uint32_t> discardBuffers;
 	{

@@ -24,7 +24,7 @@ HANDLE CGLES3Sampler::GetSampler(void) const
 	return (HANDLE)m_sampler;
 }
 
-void CGLES3Sampler::Bind(uint32_t unit)
+void CGLES3Sampler::Bind(uint32_t unit) const
 {
 	GLBindSampler(unit, m_sampler);
 }

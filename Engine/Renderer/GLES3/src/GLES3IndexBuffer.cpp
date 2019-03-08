@@ -46,7 +46,7 @@ bool CGLES3IndexBuffer::BufferData(size_t offset, size_t size, const void *pBuff
 	return true;
 }
 
-void CGLES3IndexBuffer::Bind(void)
+void CGLES3IndexBuffer::Bind(void) const
 {
 	GLBindBuffer(m_target, m_buffer);
 }

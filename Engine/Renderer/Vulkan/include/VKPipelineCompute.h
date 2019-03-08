@@ -28,7 +28,7 @@ public:
 	bool IsUniformBlockValid(uint32_t name) const;
 
 public:
-	void Bind(VkCommandBuffer vkCommandBuffer);
+	void Bind(VkCommandBuffer vkCommandBuffer) const;
 
 
 private:

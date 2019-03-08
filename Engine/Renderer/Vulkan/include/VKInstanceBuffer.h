@@ -19,7 +19,7 @@ public:
 
 public:
 	bool BufferData(size_t size, const void *pBuffer);
-	void Bind(VkCommandBuffer vkCommandBuffer, VkDeviceSize offset);
+	void Bind(VkCommandBuffer vkCommandBuffer, VkDeviceSize offset) const;
 
 
 private:

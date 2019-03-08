@@ -38,7 +38,7 @@ bool CGLES3VertexArrayObject::Buffer(CGLES3IndexBuffer *pIndexBuffer, CGLES3Vert
 	return true;
 }
 
-void CGLES3VertexArrayObject::Bind(void)
+void CGLES3VertexArrayObject::Bind(void) const
 {
 	GLBindVertexArray(m_vao);
 }

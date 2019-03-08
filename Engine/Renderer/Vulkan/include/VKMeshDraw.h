@@ -32,7 +32,7 @@ public:
 	bool InstanceBufferData(size_t size, const void *pBuffer);
 
 public:
-	void Bind(VkCommandBuffer vkCommandBuffer);
+	void Bind(VkCommandBuffer vkCommandBuffer) const;
 
 public:
 	CVKBufferPtr IndexBufferTransfer(VkCommandBuffer vkCommandBuffer);

@@ -22,7 +22,7 @@ public:
 	bool BufferData(size_t offset, size_t size, const void *pBuffer);
 
 private:
-	void Bind(VkCommandBuffer vkCommandBuffer, VkDeviceSize offset);
+	void Bind(VkCommandBuffer vkCommandBuffer, VkDeviceSize offset) const;
 
 private:
 	CVKBufferPtr BufferTransfer(VkCommandBuffer vkCommandBuffer);

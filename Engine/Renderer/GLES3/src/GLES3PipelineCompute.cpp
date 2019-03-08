@@ -101,7 +101,7 @@ bool CGLES3PipelineCompute::IsUniformBlockValid(uint32_t name) const
 	return CGLES3Pipeline::IsUniformBlockValid(name);
 }
 
-void CGLES3PipelineCompute::Bind(void)
+void CGLES3PipelineCompute::Bind(void) const
 {
 	GLUseProgram(m_program);
 }

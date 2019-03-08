@@ -130,7 +130,7 @@ bool CGLES3MeshDraw::InstanceBufferData(size_t size, const void *pBuffer)
 	}
 }
 
-void CGLES3MeshDraw::Bind(void)
+void CGLES3MeshDraw::Bind(void) const
 {
 	if (m_pVertexArrayObject) {
 		m_pVertexArrayObject->Bind();

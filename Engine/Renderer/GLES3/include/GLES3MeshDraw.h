@@ -32,7 +32,7 @@ public:
 	bool InstanceBufferData(size_t size, const void *pBuffer);
 
 public:
-	void Bind(void);
+	void Bind(void) const;
 
 
 private:

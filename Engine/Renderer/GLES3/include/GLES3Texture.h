@@ -15,7 +15,7 @@ protected:
 	void Destroy(void);
 
 public:
-	void Bind(uint32_t unit);
+	void Bind(uint32_t unit) const;
 
 
 protected:

@@ -127,7 +127,7 @@ bool CVKMeshDraw::InstanceBufferData(size_t size, const void *pBuffer)
 	}
 }
 
-void CVKMeshDraw::Bind(VkCommandBuffer vkCommandBuffer)
+void CVKMeshDraw::Bind(VkCommandBuffer vkCommandBuffer) const
 {
 	m_pIndexBuffer->Bind(vkCommandBuffer, 0);
 	m_pVertexBuffer->Bind(vkCommandBuffer, 0);

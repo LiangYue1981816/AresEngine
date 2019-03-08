@@ -126,7 +126,7 @@ bool CGLES3PipelineGraphics::IsUniformBlockValid(uint32_t name) const
 	return CGLES3Pipeline::IsUniformBlockValid(name);
 }
 
-void CGLES3PipelineGraphics::Bind(void)
+void CGLES3PipelineGraphics::Bind(void) const
 {
 	GLBindState(&m_state);
 	GLUseProgram(m_program);

@@ -67,7 +67,7 @@ bool CGLES3IndirectBuffer::BufferData(int indexDraw, int baseVertex, int firstIn
 	return true;
 }
 
-void CGLES3IndirectBuffer::Bind(void)
+void CGLES3IndirectBuffer::Bind(void) const
 {
 	GLBindBuffer(m_target, m_buffer);
 }

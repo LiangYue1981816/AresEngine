@@ -22,7 +22,7 @@ public:
 	bool BufferData(size_t size, const void *pBuffer);
 
 private:
-	void Bind(void);
+	void Bind(void) const;
 
 
 private:

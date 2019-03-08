@@ -259,7 +259,7 @@ bool CVKPipelineGraphics::IsUniformBlockValid(uint32_t name) const
 	return CVKPipeline::IsUniformBlockValid(name);
 }
 
-void CVKPipelineGraphics::Bind(VkCommandBuffer vkCommandBuffer)
+void CVKPipelineGraphics::Bind(VkCommandBuffer vkCommandBuffer) const
 {
 	vkCmdBindPipeline(vkCommandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, m_vkPipeline);
 }

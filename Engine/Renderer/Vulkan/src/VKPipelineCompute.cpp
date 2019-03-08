@@ -103,7 +103,7 @@ bool CVKPipelineCompute::IsUniformBlockValid(uint32_t name) const
 	return CVKPipeline::IsUniformBlockValid(name);
 }
 
-void CVKPipelineCompute::Bind(VkCommandBuffer vkCommandBuffer)
+void CVKPipelineCompute::Bind(VkCommandBuffer vkCommandBuffer) const
 {
 	vkCmdBindPipeline(vkCommandBuffer, VK_PIPELINE_BIND_POINT_COMPUTE, m_vkPipeline);
 }

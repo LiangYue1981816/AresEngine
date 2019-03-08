@@ -16,7 +16,7 @@ public:
 	HANDLE GetSampler(void) const;
 
 public:
-	void Bind(uint32_t unit);
+	void Bind(uint32_t unit) const;
 
 
 private:

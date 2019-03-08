@@ -43,7 +43,7 @@ bool CGLES3VertexBuffer::BufferData(size_t offset, size_t size, const void *pBuf
 	return true;
 }
 
-void CGLES3VertexBuffer::Bind(void)
+void CGLES3VertexBuffer::Bind(void) const
 {
 	GLBindBuffer(m_target, m_buffer);
 

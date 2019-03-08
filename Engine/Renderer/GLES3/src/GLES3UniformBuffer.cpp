@@ -41,7 +41,7 @@ bool CGLES3UniformBuffer::BufferData(size_t offset, size_t size, const void *pBu
 	return true;
 }
 
-void CGLES3UniformBuffer::Bind(int index, int offset, int size)
+void CGLES3UniformBuffer::Bind(int index, int offset, int size) const
 {
 	if (m_size < (uint32_t)(offset + size)) {
 		return;
