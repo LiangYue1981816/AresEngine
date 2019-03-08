@@ -480,13 +480,6 @@ void CGLES3Renderer::BindPipelineGraphics(CGfxPipelineGraphics *pPipelineGraphic
 	}
 }
 
-void CGLES3Renderer::BindUniformBuffer(CGfxUniformBuffer *pUniformBuffer, uint32_t nameUniform)
-{
-	if (m_pCurrentPipelineGraphics) {
-		m_pCurrentPipelineGraphics->BindUniformBuffer(nameUniform, (CGLES3UniformBuffer *)pUniformBuffer, ((CGLES3UniformBuffer *)pUniformBuffer)->GetSize());
-	}
-}
-
 void CGLES3Renderer::BindMaterialPass(CGfxMaterialPass *pPass)
 {
 	if (m_pCurrentMaterialPass != pPass) {
@@ -501,6 +494,13 @@ void CGLES3Renderer::BindMaterialPass(CGfxMaterialPass *pPass)
 		if (m_pGlobalMaterialPass && m_pCurrentPipelineGraphics) {
 			m_pGlobalMaterialPass->Bind(m_pCurrentPipelineGraphics, indexTexUnit);
 		}
+	}
+}
+
+void CGLES3Renderer::BindUniformBuffer(CGfxUniformBuffer *pUniformBuffer, uint32_t nameUniform)
+{
+	if (m_pCurrentPipelineGraphics) {
+		m_pCurrentPipelineGraphics->BindUniformBuffer(nameUniform, (CGLES3UniformBuffer *)pUniformBuffer, ((CGLES3UniformBuffer *)pUniformBuffer)->GetSize());
 	}
 }
 
