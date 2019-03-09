@@ -17,6 +17,7 @@ protected:
 
 public:
 	void BindTexture(uint32_t name, CGLES3Texture *pTexture, CGLES3Sampler *pSampler, uint32_t unit) const;
+	void BindRenderTexture(uint32_t name, CGLES3RenderTexture *pRenderTexture, CGLES3Sampler *pSampler, uint32_t unit) const;
 	void BindUniformBuffer(uint32_t name, CGLES3UniformBuffer *pUniformBuffer, uint32_t size, int offset = 0) const;
 
 	void Uniform1i(uint32_t name, int v0) const;
