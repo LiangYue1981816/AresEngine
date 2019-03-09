@@ -22,7 +22,6 @@ CGLES3Renderer::CGLES3Renderer(void *hInstance, void *hWnd, void *hDC, int width
 	, m_pFrameBufferManager(nullptr)
 	, m_pCommandBufferManager(nullptr)
 
-	, m_pGlobalMaterialPass(nullptr)
 	, m_pCurrentMaterialPass(nullptr)
 	, m_pCurrentPipelineCompute(nullptr)
 	, m_pCurrentPipelineGraphics(nullptr)
@@ -46,13 +45,11 @@ CGLES3Renderer::CGLES3Renderer(void *hInstance, void *hWnd, void *hDC, int width
 	m_pCommandBufferManager = new CGLES3CommandBufferManager;
 
 	m_pSwapChain = new CGLES3SwapChain(hDC, width, height, pixelFormat);
-	m_pGlobalMaterialPass = new CGLES3MaterialPass(INVALID_HASHVALUE);
 }
 
 CGLES3Renderer::~CGLES3Renderer(void)
 {
 	delete m_pSwapChain;
-	delete m_pGlobalMaterialPass;
 
 	delete m_pCommandBufferManager;
 	delete m_pFrameBufferManager;
@@ -490,10 +487,6 @@ void CGLES3Renderer::BindMaterialPass(CGfxMaterialPass *pMaterialPass)
 		if (m_pCurrentMaterialPass && m_pCurrentPipelineGraphics) {
 			m_pCurrentMaterialPass->Bind(m_pCurrentPipelineGraphics, indexTexUnit);
 		}
-
-		if (m_pGlobalMaterialPass && m_pCurrentPipelineGraphics) {
-			m_pGlobalMaterialPass->Bind(m_pCurrentPipelineGraphics, indexTexUnit);
-		}
 	}
 }
 
@@ -506,8 +499,10 @@ void CGLES3Renderer::BindUniformBuffer(CGfxUniformBuffer *pUniformBuffer, uint32
 
 void CGLES3Renderer::BindInputTexture(const char *szName, CGfxRenderTexture *pTexture)
 {
+	/*
 	m_pGlobalMaterialPass->SetSampler(szName, GFX_FILTER_NEAREST, GFX_FILTER_LINEAR, GFX_SAMPLER_MIPMAP_MODE_NEAREST, GFX_SAMPLER_ADDRESS_MODE_REPEAT);
 	m_pGlobalMaterialPass->SetTexture2D(szName, ((CGLES3RenderTexture *)pTexture)->GetTexture());
+	*/
 }
 
 CGLES3PipelineCompute* CGLES3Renderer::GetCurrentPipelineCompute(void) const

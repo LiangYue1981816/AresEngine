@@ -230,7 +230,6 @@ private:
 	CGLES3CommandBufferManager *m_pCommandBufferManager;
 
 private:
-	CGLES3MaterialPass *m_pGlobalMaterialPass;
 	CGLES3MaterialPass *m_pCurrentMaterialPass;
 	CGLES3PipelineCompute *m_pCurrentPipelineCompute;
 	CGLES3PipelineGraphics *m_pCurrentPipelineGraphics;
