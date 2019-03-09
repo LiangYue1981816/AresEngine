@@ -16,8 +16,8 @@ protected:
 	void SetSampledImageLocation(const char *szName);
 
 public:
-	void BindTexture(uint32_t name, CGLES3Texture *pTexture, CGLES3Sampler *pSampler, uint32_t unit) const;
-	void BindRenderTexture(uint32_t name, CGLES3RenderTexture *pRenderTexture, CGLES3Sampler *pSampler, uint32_t unit) const;
+	void BindTexture(uint32_t name, CGLES3Texture *pTexture, CGLES3Sampler *pSampler) const;
+	void BindRenderTexture(uint32_t name, CGLES3RenderTexture *pRenderTexture, CGLES3Sampler *pSampler) const;
 	void BindUniformBuffer(uint32_t name, CGLES3UniformBuffer *pUniformBuffer, uint32_t size, int offset = 0) const;
 
 	void Uniform1i(uint32_t name, int v0) const;
@@ -55,7 +55,8 @@ protected:
 	CGLES3Shader *m_pShaders[compute_shader - vertex_shader + 1];
 
 protected:
-	eastl::unordered_map<uint32_t, uint32_t> m_uniformLocations;      // [name, location]
-	eastl::unordered_map<uint32_t, uint32_t> m_uniformBlockBindings;  // [name, binding]
-	eastl::unordered_map<uint32_t, uint32_t> m_sampledImageLocations; // [name, location]
+	eastl::unordered_map<uint32_t, uint32_t> m_uniformLocations;         // [name, location]
+	eastl::unordered_map<uint32_t, uint32_t> m_uniformBlockBindings;     // [name, binding]
+	eastl::unordered_map<uint32_t, uint32_t> m_sampledImageLocations;    // [name, location]
+	eastl::unordered_map<uint32_t, uint32_t> m_sampledImageTextureUnits; // [name, texture unit]
 };

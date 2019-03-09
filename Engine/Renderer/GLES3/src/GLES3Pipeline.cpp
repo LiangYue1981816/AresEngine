@@ -78,30 +78,33 @@ void CGLES3Pipeline::SetSampledImageLocation(const char *szName)
 		uint32_t location = glGetUniformLocation(m_program, szName);
 
 		if (location != GL_INVALID_INDEX) {
+			m_sampledImageTextureUnits[name] = m_sampledImageLocations.size();
 			m_sampledImageLocations[name] = location;
 		}
 	}
 }
 
-void CGLES3Pipeline::BindTexture(uint32_t name, CGLES3Texture *pTexture, CGLES3Sampler *pSampler, uint32_t unit) const
+void CGLES3Pipeline::BindTexture(uint32_t name, CGLES3Texture *pTexture, CGLES3Sampler *pSampler) const
 {
 	const auto &itLocation = m_sampledImageLocations.find(name);
+	const auto &itTextureUnit = m_sampledImageTextureUnits.find(name);
 
-	if (itLocation != m_sampledImageLocations.end()) {
-		GLUniform1i(itLocation->second, unit);
-		pSampler->Bind(unit);
-		pTexture->Bind(unit);
+	if (itLocation != m_sampledImageLocations.end() && itTextureUnit != m_sampledImageTextureUnits.end()) {
+		GLUniform1i(itLocation->second, itTextureUnit->second);
+		pSampler->Bind(itTextureUnit->second);
+		pTexture->Bind(itTextureUnit->second);
 	}
 }
 
-void CGLES3Pipeline::BindRenderTexture(uint32_t name, CGLES3RenderTexture *pRenderTexture, CGLES3Sampler *pSampler, uint32_t unit) const
+void CGLES3Pipeline::BindRenderTexture(uint32_t name, CGLES3RenderTexture *pRenderTexture, CGLES3Sampler *pSampler) const
 {
 	const auto &itLocation = m_sampledImageLocations.find(name);
+	const auto &itTextureUnit = m_sampledImageTextureUnits.find(name);
 
-	if (itLocation != m_sampledImageLocations.end()) {
-		GLUniform1i(itLocation->second, unit);
-		pSampler->Bind(unit);
-		pRenderTexture->Bind(unit);
+	if (itLocation != m_sampledImageLocations.end() && itTextureUnit != m_sampledImageTextureUnits.end()) {
+		GLUniform1i(itLocation->second, itTextureUnit->second);
+		pSampler->Bind(itTextureUnit->second);
+		pRenderTexture->Bind(itTextureUnit->second);
 	}
 }
 

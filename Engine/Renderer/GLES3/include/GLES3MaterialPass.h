@@ -44,7 +44,7 @@ public:
 	CGfxTextureCubeMapPtr GetTextureCubeMap(const char *szName) const;
 
 public:
-	void Bind(const CGLES3Pipeline *pPipeline, uint32_t &indexTexUnit) const;
+	void Bind(const CGLES3Pipeline *pPipeline) const;
 
 
 private:
