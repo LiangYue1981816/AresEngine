@@ -129,3 +129,8 @@ void CGLES3RenderTexture::Destroy(void)
 	m_height = 0;
 	m_samples = 0;
 }
+
+void CGLES3RenderTexture::Bind(uint32_t unit) const
+{
+	GLBindTexture(unit, GL_TEXTURE_2D, m_texture);
+}

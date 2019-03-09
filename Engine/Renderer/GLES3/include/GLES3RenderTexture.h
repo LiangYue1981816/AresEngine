@@ -32,6 +32,9 @@ public:
 	bool Create(GfxPixelFormat pixelFormat, int width, int height, int samples = 1, bool bTransient = false);
 	void Destroy(void);
 
+public:
+	void Bind(uint32_t unit) const;
+
 
 private:
 	uint32_t m_name;
