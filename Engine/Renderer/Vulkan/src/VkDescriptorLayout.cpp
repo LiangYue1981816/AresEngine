@@ -16,6 +16,27 @@ CVKDescriptorLayout::~CVKDescriptorLayout(void)
 	Destroy();
 }
 
+bool CVKDescriptorLayout::IsCompatible(const CVKDescriptorLayout &layout) const
+{
+	if (m_set != layout.m_set) {
+		return false;
+	}
+
+	if (m_uniformBlockBindings != layout.m_uniformBlockBindings) {
+		return false;
+	}
+
+	if (m_sampledImageBindings != layout.m_sampledImageBindings) {
+		return false;
+	}
+
+	if (m_inputAttachmentBindings != layout.m_inputAttachmentBindings) {
+		return false;
+	}
+
+	return true;
+}
+
 uint32_t CVKDescriptorLayout::GetSetIndex(void) const
 {
 	return m_set;

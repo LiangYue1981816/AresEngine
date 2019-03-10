@@ -13,6 +13,9 @@ public:
 
 
 public:
+	bool IsCompatible(const CVKDescriptorLayout &layout) const;
+
+public:
 	uint32_t GetSetIndex(void) const;
 	VkDescriptorSetLayout GetDescriptorSetLayout(void) const;
 
