@@ -6,8 +6,7 @@
 
 
 CSceneManager::CSceneManager(void)
-	: m_taskGraphUpdateLogic("TashGraph_UpdateLogic")
-	, m_taskGraphUpdateCamera("TaskGraph_UpdateCamera")
+	: m_taskGraphUpdate("TashGraph_Update")
 {
 	event_init(&m_eventUpdateLogicSkin, 1);
 	event_init(&m_eventUpdateLogicParticle, 1);
@@ -153,26 +152,26 @@ void CSceneManager::UpdateLogic(float totalTime, float deltaTime)
 
 	for (int indexThread = 0; indexThread < THREAD_COUNT; indexThread++) {
 		taskUpdateLogicMeshs[indexThread].SetParams(indexThread, &m_meshManager, totalTime, deltaTime);
-		m_taskGraphUpdateLogic.Task(&taskUpdateLogicMeshs[indexThread], nullptr, &m_eventUpdateLogicSkin, nullptr);
+		m_taskGraphUpdate.Task(&taskUpdateLogicMeshs[indexThread], nullptr, &m_eventUpdateLogicSkin, nullptr);
 	}
 
 	for (int indexThread = 0; indexThread < THREAD_COUNT; indexThread++) {
 		taskUpdateLogicSkins[indexThread].SetParams(indexThread, &m_skinManager, totalTime, deltaTime);
-		m_taskGraphUpdateLogic.Task(&taskUpdateLogicSkins[indexThread], nullptr, &m_eventUpdateLogicParticle, &m_eventUpdateLogicSkin);
+		m_taskGraphUpdate.Task(&taskUpdateLogicSkins[indexThread], nullptr, &m_eventUpdateLogicParticle, &m_eventUpdateLogicSkin);
 	}
 
 	for (int indexThread = 0; indexThread < THREAD_COUNT; indexThread++) {
 		taskUpdateLogicParticles[indexThread].SetParams(indexThread, &m_particleManager, totalTime, deltaTime);
-		m_taskGraphUpdateLogic.Task(&taskUpdateLogicParticles[indexThread], nullptr, &m_eventUpdateLogicPointLight, &m_eventUpdateLogicParticle);
+		m_taskGraphUpdate.Task(&taskUpdateLogicParticles[indexThread], nullptr, &m_eventUpdateLogicPointLight, &m_eventUpdateLogicParticle);
 	}
 
 	for (int indexThread = 0; indexThread < THREAD_COUNT; indexThread++) {
 		taskUpdateLogicPointLights[indexThread].SetParams(indexThread, &m_pointLightManager, totalTime, deltaTime);
-		m_taskGraphUpdateLogic.Task(&taskUpdateLogicPointLights[indexThread], nullptr, nullptr, &m_eventUpdateLogicPointLight);
+		m_taskGraphUpdate.Task(&taskUpdateLogicPointLights[indexThread], nullptr, nullptr, &m_eventUpdateLogicPointLight);
 	}
 
-	m_taskGraphUpdateLogic.Dispatch();
-	m_taskGraphUpdateLogic.Wait();
+	m_taskGraphUpdate.Dispatch();
+	m_taskGraphUpdate.Wait();
 }
 
 void CSceneManager::UpdateCamera(CGfxCamera *pCamera, int indexQueue)
@@ -187,26 +186,26 @@ void CSceneManager::UpdateCamera(CGfxCamera *pCamera, int indexQueue)
 
 			for (int indexThread = 0; indexThread < THREAD_COUNT; indexThread++) {
 				taskUpdateCameraMeshs[indexThread].SetParams(indexThread, indexQueue, &m_meshManager, pCamera);
-				m_taskGraphUpdateCamera.Task(&taskUpdateCameraMeshs[indexThread], nullptr, &m_eventUpdateCameraSkin, nullptr);
+				m_taskGraphUpdate.Task(&taskUpdateCameraMeshs[indexThread], nullptr, &m_eventUpdateCameraSkin, nullptr);
 			}
 
 			for (int indexThread = 0; indexThread < THREAD_COUNT; indexThread++) {
 				taskUpdateCameraSkins[indexThread].SetParams(indexThread, indexQueue, &m_skinManager, pCamera);
-				m_taskGraphUpdateCamera.Task(&taskUpdateCameraSkins[indexThread], nullptr, &m_eventUpdateCameraParticle, &m_eventUpdateCameraSkin);
+				m_taskGraphUpdate.Task(&taskUpdateCameraSkins[indexThread], nullptr, &m_eventUpdateCameraParticle, &m_eventUpdateCameraSkin);
 			}
 
 			for (int indexThread = 0; indexThread < THREAD_COUNT; indexThread++) {
 				taskUpdateCameraParticles[indexThread].SetParams(indexThread, indexQueue, &m_particleManager, pCamera);
-				m_taskGraphUpdateCamera.Task(&taskUpdateCameraParticles[indexThread], nullptr, &m_eventUpdateCameraPointLight, &m_eventUpdateCameraParticle);
+				m_taskGraphUpdate.Task(&taskUpdateCameraParticles[indexThread], nullptr, &m_eventUpdateCameraPointLight, &m_eventUpdateCameraParticle);
 			}
 
 			for (int indexThread = 0; indexThread < THREAD_COUNT; indexThread++) {
 				taskUpdateCameraPointLights[indexThread].SetParams(indexThread, indexQueue, &m_pointLightManager, pCamera);
-				m_taskGraphUpdateCamera.Task(&taskUpdateCameraPointLights[indexThread], nullptr, nullptr, &m_eventUpdateCameraPointLight);
+				m_taskGraphUpdate.Task(&taskUpdateCameraPointLights[indexThread], nullptr, nullptr, &m_eventUpdateCameraPointLight);
 			}
 
-			m_taskGraphUpdateCamera.Dispatch();
-			m_taskGraphUpdateCamera.Wait();
+			m_taskGraphUpdate.Dispatch();
+			m_taskGraphUpdate.Wait();
 		}
 		pCamera->End(indexQueue);
 	}
