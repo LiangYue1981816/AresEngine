@@ -65,5 +65,5 @@ private:
 	event_t m_eventUpdateCameraParticle;
 	event_t m_eventUpdateCameraPointLight;
 
-	CTaskGraph m_taskGraphUpdate;
+	CTaskGraph m_taskGraph;
 };
