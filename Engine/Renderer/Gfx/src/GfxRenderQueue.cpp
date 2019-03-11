@@ -44,7 +44,6 @@ CGfxRenderQueue::~CGfxRenderQueue(void)
 
 void CGfxRenderQueue::Clear(int indexQueue)
 {
-	m_tasks[indexQueue].clear();
 	m_pipelineMaterialQueue[indexQueue].clear();
 	m_materialMeshDrawQueue[indexQueue].clear();
 
@@ -86,34 +85,37 @@ void CGfxRenderQueue::End(int indexQueue)
 
 void CGfxRenderQueue::CmdDraw(int indexQueue, CGfxCommandBufferPtr ptrCommandBuffer, const CGfxUniformBufferPtr ptrUniformBufferEngine, const CGfxUniformBufferPtr ptrUniformBufferCamera, uint32_t namePass)
 {
-	m_tasks[indexQueue].clear();
 	m_pipelineMaterialQueue[indexQueue].clear();
-
-	for (const auto &itMaterialQueue : m_materialMeshDrawQueue[indexQueue]) {
-		if (CGfxMaterialPass *pPass = itMaterialQueue.first->GetPass(namePass)) {
-			if (CGfxPipelineGraphics *pPipeline = pPass->GetPipeline()) {
-				m_pipelineMaterialQueue[indexQueue][pPipeline][itMaterialQueue.first] = itMaterialQueue.first;
+	{
+		for (const auto &itMaterialQueue : m_materialMeshDrawQueue[indexQueue]) {
+			if (CGfxMaterialPass *pPass = itMaterialQueue.first->GetPass(namePass)) {
+				if (CGfxPipelineGraphics *pPipeline = pPass->GetPipeline()) {
+					m_pipelineMaterialQueue[indexQueue][pPipeline][itMaterialQueue.first] = itMaterialQueue.first;
+				}
 			}
+		}
+
+		if (m_pipelineMaterialQueue[indexQueue].empty()) {
+			return;
 		}
 	}
 
-	if (m_pipelineMaterialQueue[indexQueue].empty()) {
-		return;
-	}
+	eastl::vector<CTaskCommandBuffer> tasks;
+	{
+		for (const auto &itPipelineQueue : m_pipelineMaterialQueue[indexQueue]) {
+			tasks.emplace_back(indexQueue, ptrUniformBufferEngine, ptrUniformBufferCamera, itPipelineQueue.first, namePass);
+		}
 
-	for (const auto &itPipelineQueue : m_pipelineMaterialQueue[indexQueue]) {
-		m_tasks[indexQueue].emplace_back(indexQueue, ptrUniformBufferEngine, ptrUniformBufferCamera, itPipelineQueue.first, namePass);
-	}
+		for (int indexTask = 0; indexTask < (int)tasks.size(); indexTask++) {
+			m_taskGraph.Task(&tasks[indexTask], this, nullptr);
+		}
 
-	for (int indexTask = 0; indexTask < (int)m_tasks[indexQueue].size(); indexTask++) {
-		m_taskGraph.Task(&m_tasks[indexQueue][indexTask], this, nullptr);
-	}
+		m_taskGraph.Dispatch();
+		m_taskGraph.Wait();
 
-	m_taskGraph.Dispatch();
-	m_taskGraph.Wait();
-
-	for (int indexTask = 0; indexTask < (int)m_tasks[indexQueue].size(); indexTask++) {
-		ptrCommandBuffer->CmdExecute(m_tasks[indexQueue][indexTask].GetCommandBuffer());
+		for (int indexTask = 0; indexTask < (int)tasks.size(); indexTask++) {
+			ptrCommandBuffer->CmdExecute(tasks[indexTask].GetCommandBuffer());
+		}
 	}
 }
 
