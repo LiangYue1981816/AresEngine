@@ -11,7 +11,7 @@ public:
 
 public:
 	CGfxCommandBufferPtr GetCommandBuffer(void) const;
-	void TaskFunc(uint32_t threadName, void *pParams);
+	void TaskFunc(int indexThread, void *pParams);
 
 
 private:

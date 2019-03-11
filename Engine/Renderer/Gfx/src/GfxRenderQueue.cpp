@@ -21,7 +21,7 @@ CGfxCommandBufferPtr CTaskCommandBuffer::GetCommandBuffer(void) const
 	return m_ptrCommandBuffer;
 }
 
-void CTaskCommandBuffer::TaskFunc(uint32_t threadName, void *pParams)
+void CTaskCommandBuffer::TaskFunc(int indexThread, void *pParams)
 {
 	m_ptrCommandBuffer = GfxRenderer()->NewCommandBuffer(0, false);
 
