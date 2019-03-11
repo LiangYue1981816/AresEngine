@@ -52,7 +52,7 @@ private:
 	CVKDevice *m_pDevice;
 };
 
-bool operator == (const VkDescriptorSetLayoutBinding &left, const VkDescriptorSetLayoutBinding &right)
+inline bool operator == (const VkDescriptorSetLayoutBinding &left, const VkDescriptorSetLayoutBinding &right)
 {
 	if (left.binding != right.binding) {
 		return false;
