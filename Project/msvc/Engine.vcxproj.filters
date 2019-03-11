@@ -145,6 +145,75 @@
     <Filter Include="ThirdParty\pthreadex">
       <UniqueIdentifier>{cdb9f99d-dace-41cb-b46e-688cec1cf9e5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ThirdParty\rttr">
+      <UniqueIdentifier>{d077d794-148e-4593-8c46-f18a049941fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\rttr\detail">
+      <UniqueIdentifier>{47feaefd-7e0c-4900-8b2c-f947ae1887af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\rttr\detail\base">
+      <UniqueIdentifier>{e4788eec-b6f9-4f03-9a45-3a3adb7d7409}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\rttr\detail\comparison">
+      <UniqueIdentifier>{febb9247-2706-44e5-aeae-6b7dd998f209}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\rttr\detail\constructor">
+      <UniqueIdentifier>{757984f7-a6a4-4b42-8a3a-387510ff1459}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\rttr\detail\conversion">
+      <UniqueIdentifier>{95112021-8f17-44e0-a0bf-6a9f3cc02141}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\rttr\detail\default_arguments">
+      <UniqueIdentifier>{ce3a9fb6-6c28-4b92-bedc-27e1ff1c3d9c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\rttr\detail\destructor">
+      <UniqueIdentifier>{cb94cf02-92a8-4e72-95db-9285fb523e05}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\rttr\detail\enumeration">
+      <UniqueIdentifier>{f6d2cc3f-fb6c-44eb-9d26-94a75f81c18d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\rttr\detail\filter">
+      <UniqueIdentifier>{b1c9c993-ad58-4825-b5db-a124e36445f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\rttr\detail\impl">
+      <UniqueIdentifier>{a15c7ac2-9517-4f91-861d-18af757c0b01}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\rttr\detail\metadata">
+      <UniqueIdentifier>{998dd417-0f31-4429-bcff-552c4887c598}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\rttr\detail\method">
+      <UniqueIdentifier>{ce03adc5-9ab2-41f9-88cb-4052a65cdb1e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\rttr\detail\misc">
+      <UniqueIdentifier>{d5b54c09-0783-40eb-a0f6-a7c80718c359}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\rttr\detail\parameter_info">
+      <UniqueIdentifier>{183e023e-8098-4b08-9162-64d6c65378f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\rttr\detail\policies">
+      <UniqueIdentifier>{50056bce-081a-405f-8795-692eaf26458b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\rttr\detail\property">
+      <UniqueIdentifier>{56cdd5ac-2ab8-4d98-a773-a0225019580d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\rttr\detail\registration">
+      <UniqueIdentifier>{dd31ee6e-c8f8-4e43-9128-8eea664ce1ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\rttr\detail\type">
+      <UniqueIdentifier>{e4dc5a10-6342-4c45-9b7f-2ae7313efde4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\rttr\detail\variant">
+      <UniqueIdentifier>{817e050e-f683-4de1-9b5a-da9d38510381}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\rttr\detail\variant_associative_view">
+      <UniqueIdentifier>{df72ab45-6429-48e7-9151-37a9c2f967a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\rttr\detail\variant_sequential_view">
+      <UniqueIdentifier>{7d36962d-9015-44fd-9c69-32bbb79c3cf3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\rttr\detail\visitor">
+      <UniqueIdentifier>{4d64e732-6475-43a7-8f74-fe936428aa1d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Engine\PreHeader.h">
@@ -945,6 +1014,420 @@
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKCommandPool.h">
       <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\access_levels.h">
+      <Filter>ThirdParty\rttr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\argument.h">
+      <Filter>ThirdParty\rttr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\array_range.h">
+      <Filter>ThirdParty\rttr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\associative_mapper.h">
+      <Filter>ThirdParty\rttr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\constructor.h">
+      <Filter>ThirdParty\rttr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\destructor.h">
+      <Filter>ThirdParty\rttr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\enum_flags.h">
+      <Filter>ThirdParty\rttr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\enumeration.h">
+      <Filter>ThirdParty\rttr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\filter_item.h">
+      <Filter>ThirdParty\rttr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\instance.h">
+      <Filter>ThirdParty\rttr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\method.h">
+      <Filter>ThirdParty\rttr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\parameter_info.h">
+      <Filter>ThirdParty\rttr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\policy.h">
+      <Filter>ThirdParty\rttr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\property.h">
+      <Filter>ThirdParty\rttr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\registration.h">
+      <Filter>ThirdParty\rttr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\registration_friend.h">
+      <Filter>ThirdParty\rttr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\rttr_cast.h">
+      <Filter>ThirdParty\rttr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\rttr_enable.h">
+      <Filter>ThirdParty\rttr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\sequential_mapper.h">
+      <Filter>ThirdParty\rttr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\string_view.h">
+      <Filter>ThirdParty\rttr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\type.h">
+      <Filter>ThirdParty\rttr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\type_list.h">
+      <Filter>ThirdParty\rttr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\variant.h">
+      <Filter>ThirdParty\rttr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\variant_associative_view.h">
+      <Filter>ThirdParty\rttr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\variant_sequential_view.h">
+      <Filter>ThirdParty\rttr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\visitor.h">
+      <Filter>ThirdParty\rttr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\wrapper_mapper.h">
+      <Filter>ThirdParty\rttr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\base\core_prerequisites.h">
+      <Filter>ThirdParty\rttr\detail\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\base\pch.h">
+      <Filter>ThirdParty\rttr\detail\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\base\version.h">
+      <Filter>ThirdParty\rttr\detail\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\comparison\comparable_types.h">
+      <Filter>ThirdParty\rttr\detail\comparison</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\comparison\compare_array_equal.h">
+      <Filter>ThirdParty\rttr\detail\comparison</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\comparison\compare_array_equal_impl.h">
+      <Filter>ThirdParty\rttr\detail\comparison</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\comparison\compare_array_less.h">
+      <Filter>ThirdParty\rttr\detail\comparison</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\comparison\compare_array_less_impl.h">
+      <Filter>ThirdParty\rttr\detail\comparison</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\comparison\compare_equal.h">
+      <Filter>ThirdParty\rttr\detail\comparison</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\comparison\compare_equal_impl.h">
+      <Filter>ThirdParty\rttr\detail\comparison</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\comparison\compare_less.h">
+      <Filter>ThirdParty\rttr\detail\comparison</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\comparison\compare_less_impl.h">
+      <Filter>ThirdParty\rttr\detail\comparison</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\constructor\constructor_invoker.h">
+      <Filter>ThirdParty\rttr\detail\constructor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\constructor\constructor_wrapper.h">
+      <Filter>ThirdParty\rttr\detail\constructor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\constructor\constructor_wrapper_base.h">
+      <Filter>ThirdParty\rttr\detail\constructor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\constructor\constructor_wrapper_defaults.h">
+      <Filter>ThirdParty\rttr\detail\constructor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\conversion\number_conversion.h">
+      <Filter>ThirdParty\rttr\detail\conversion</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\conversion\std_conversion_functions.h">
+      <Filter>ThirdParty\rttr\detail\conversion</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\default_arguments\default_arguments.h">
+      <Filter>ThirdParty\rttr\detail\default_arguments</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\default_arguments\invoke_with_defaults.h">
+      <Filter>ThirdParty\rttr\detail\default_arguments</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\destructor\destructor_wrapper.h">
+      <Filter>ThirdParty\rttr\detail\destructor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\destructor\destructor_wrapper_base.h">
+      <Filter>ThirdParty\rttr\detail\destructor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\enumeration\enum_data.h">
+      <Filter>ThirdParty\rttr\detail\enumeration</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\enumeration\enumeration_helper.h">
+      <Filter>ThirdParty\rttr\detail\enumeration</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\enumeration\enumeration_wrapper.h">
+      <Filter>ThirdParty\rttr\detail\enumeration</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\enumeration\enumeration_wrapper_base.h">
+      <Filter>ThirdParty\rttr\detail\enumeration</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\filter\filter_item_funcs.h">
+      <Filter>ThirdParty\rttr\detail\filter</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\impl\argument_impl.h">
+      <Filter>ThirdParty\rttr\detail\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\impl\array_range_impl.h">
+      <Filter>ThirdParty\rttr\detail\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\impl\associative_mapper_impl.h">
+      <Filter>ThirdParty\rttr\detail\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\impl\enum_flags_impl.h">
+      <Filter>ThirdParty\rttr\detail\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\impl\instance_impl.h">
+      <Filter>ThirdParty\rttr\detail\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\impl\rttr_cast_impl.h">
+      <Filter>ThirdParty\rttr\detail\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\impl\sequential_mapper_impl.h">
+      <Filter>ThirdParty\rttr\detail\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\impl\string_view_impl.h">
+      <Filter>ThirdParty\rttr\detail\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\impl\wrapper_mapper_impl.h">
+      <Filter>ThirdParty\rttr\detail\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\metadata\metadata.h">
+      <Filter>ThirdParty\rttr\detail\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\metadata\metadata_handler.h">
+      <Filter>ThirdParty\rttr\detail\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\method\method_accessor.h">
+      <Filter>ThirdParty\rttr\detail\method</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\method\method_invoker.h">
+      <Filter>ThirdParty\rttr\detail\method</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\method\method_wrapper.h">
+      <Filter>ThirdParty\rttr\detail\method</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\method\method_wrapper_base.h">
+      <Filter>ThirdParty\rttr\detail\method</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\misc\argument_extractor.h">
+      <Filter>ThirdParty\rttr\detail\misc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\misc\argument_wrapper.h">
+      <Filter>ThirdParty\rttr\detail\misc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\misc\class_item_mapper.h">
+      <Filter>ThirdParty\rttr\detail\misc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\misc\data_address_container.h">
+      <Filter>ThirdParty\rttr\detail\misc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\misc\flat_map.h">
+      <Filter>ThirdParty\rttr\detail\misc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\misc\flat_multimap.h">
+      <Filter>ThirdParty\rttr\detail\misc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\misc\function_traits.h">
+      <Filter>ThirdParty\rttr\detail\misc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\misc\iterator_wrapper.h">
+      <Filter>ThirdParty\rttr\detail\misc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\misc\misc_type_traits.h">
+      <Filter>ThirdParty\rttr\detail\misc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\misc\register_wrapper_mapper_conversion.h">
+      <Filter>ThirdParty\rttr\detail\misc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\misc\sequential_container_type_traits.h">
+      <Filter>ThirdParty\rttr\detail\misc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\misc\std_type_traits.h">
+      <Filter>ThirdParty\rttr\detail\misc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\misc\template_type_trait.h">
+      <Filter>ThirdParty\rttr\detail\misc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\misc\template_type_trait_impl.h">
+      <Filter>ThirdParty\rttr\detail\misc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\misc\utility.h">
+      <Filter>ThirdParty\rttr\detail\misc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\parameter_info\parameter_info_wrapper.h">
+      <Filter>ThirdParty\rttr\detail\parameter_info</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\parameter_info\parameter_info_wrapper_base.h">
+      <Filter>ThirdParty\rttr\detail\parameter_info</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\parameter_info\parameter_infos.h">
+      <Filter>ThirdParty\rttr\detail\parameter_info</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\parameter_info\parameter_infos_compare.h">
+      <Filter>ThirdParty\rttr\detail\parameter_info</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\parameter_info\parameter_names.h">
+      <Filter>ThirdParty\rttr\detail\parameter_info</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\policies\ctor_policies.h">
+      <Filter>ThirdParty\rttr\detail\policies</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\policies\meth_policies.h">
+      <Filter>ThirdParty\rttr\detail\policies</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\policies\prop_policies.h">
+      <Filter>ThirdParty\rttr\detail\policies</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\property\property_accessor.h">
+      <Filter>ThirdParty\rttr\detail\property</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\property\property_wrapper.h">
+      <Filter>ThirdParty\rttr\detail\property</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\property\property_wrapper_base.h">
+      <Filter>ThirdParty\rttr\detail\property</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\property\property_wrapper_func.h">
+      <Filter>ThirdParty\rttr\detail\property</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\property\property_wrapper_member_func.h">
+      <Filter>ThirdParty\rttr\detail\property</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\property\property_wrapper_member_object.h">
+      <Filter>ThirdParty\rttr\detail\property</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\property\property_wrapper_object.h">
+      <Filter>ThirdParty\rttr\detail\property</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\registration\bind_impl.h">
+      <Filter>ThirdParty\rttr\detail\registration</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\registration\bind_types.h">
+      <Filter>ThirdParty\rttr\detail\registration</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\registration\register_base_class_from_accessor.h">
+      <Filter>ThirdParty\rttr\detail\registration</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\registration\registration_executer.h">
+      <Filter>ThirdParty\rttr\detail\registration</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\registration\registration_impl.h">
+      <Filter>ThirdParty\rttr\detail\registration</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\registration\registration_manager.h">
+      <Filter>ThirdParty\rttr\detail\registration</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\registration\registration_state_saver.h">
+      <Filter>ThirdParty\rttr\detail\registration</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\type\accessor_type.h">
+      <Filter>ThirdParty\rttr\detail\type</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\type\base_classes.h">
+      <Filter>ThirdParty\rttr\detail\type</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\type\get_create_variant_func.h">
+      <Filter>ThirdParty\rttr\detail\type</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\type\get_derived_info_func.h">
+      <Filter>ThirdParty\rttr\detail\type</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\type\type_comparator.h">
+      <Filter>ThirdParty\rttr\detail\type</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\type\type_converter.h">
+      <Filter>ThirdParty\rttr\detail\type</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\type\type_data.h">
+      <Filter>ThirdParty\rttr\detail\type</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\type\type_impl.h">
+      <Filter>ThirdParty\rttr\detail\type</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\type\type_name.h">
+      <Filter>ThirdParty\rttr\detail\type</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\type\type_register.h">
+      <Filter>ThirdParty\rttr\detail\type</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\type\type_register_p.h">
+      <Filter>ThirdParty\rttr\detail\type</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\type\type_string_utils.h">
+      <Filter>ThirdParty\rttr\detail\type</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\variant\variant_compare.h">
+      <Filter>ThirdParty\rttr\detail\variant</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\variant\variant_data.h">
+      <Filter>ThirdParty\rttr\detail\variant</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\variant\variant_data_converter.h">
+      <Filter>ThirdParty\rttr\detail\variant</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\variant\variant_data_policy.h">
+      <Filter>ThirdParty\rttr\detail\variant</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\variant\variant_impl.h">
+      <Filter>ThirdParty\rttr\detail\variant</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\variant_associative_view\variant_associative_view_creator.h">
+      <Filter>ThirdParty\rttr\detail\variant_associative_view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\variant_associative_view\variant_associative_view_creator_impl.h">
+      <Filter>ThirdParty\rttr\detail\variant_associative_view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\variant_associative_view\variant_associative_view_private.h">
+      <Filter>ThirdParty\rttr\detail\variant_associative_view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\variant_sequential_view\variant_sequential_view_creator.h">
+      <Filter>ThirdParty\rttr\detail\variant_sequential_view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\variant_sequential_view\variant_sequential_view_creator_impl.h">
+      <Filter>ThirdParty\rttr\detail\variant_sequential_view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\variant_sequential_view\variant_sequential_view_private.h">
+      <Filter>ThirdParty\rttr\detail\variant_sequential_view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\visitor\constructor_visitor_invoker.h">
+      <Filter>ThirdParty\rttr\detail\visitor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\visitor\create_type_visitor_func.h">
+      <Filter>ThirdParty\rttr\detail\visitor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\visitor\create_type_visitor_func_impl.h">
+      <Filter>ThirdParty\rttr\detail\visitor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\visitor\method_visitor_invoker.h">
+      <Filter>ThirdParty\rttr\detail\visitor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\visitor\property_visitor_invoker.h">
+      <Filter>ThirdParty\rttr\detail\visitor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\visitor\type_visitor_invoker.h">
+      <Filter>ThirdParty\rttr\detail\visitor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\visitor\visitor_impl.h">
+      <Filter>ThirdParty\rttr\detail\visitor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\visitor\visitor_iterator.h">
+      <Filter>ThirdParty\rttr\detail\visitor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\visitor\visitor_registration.h">
+      <Filter>ThirdParty\rttr\detail\visitor</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Engine\ThirdParty\eastl\source\allocator_eastl.cpp">
@@ -1529,5 +2012,111 @@
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKCommandPool.cpp">
       <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\rttr\constructor.cpp">
+      <Filter>ThirdParty\rttr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\rttr\destructor.cpp">
+      <Filter>ThirdParty\rttr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\rttr\enumeration.cpp">
+      <Filter>ThirdParty\rttr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\rttr\method.cpp">
+      <Filter>ThirdParty\rttr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\rttr\parameter_info.cpp">
+      <Filter>ThirdParty\rttr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\rttr\policy.cpp">
+      <Filter>ThirdParty\rttr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\rttr\property.cpp">
+      <Filter>ThirdParty\rttr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\rttr\registration.cpp">
+      <Filter>ThirdParty\rttr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\rttr\type.cpp">
+      <Filter>ThirdParty\rttr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\rttr\variant.cpp">
+      <Filter>ThirdParty\rttr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\rttr\variant_associative_view.cpp">
+      <Filter>ThirdParty\rttr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\rttr\variant_sequential_view.cpp">
+      <Filter>ThirdParty\rttr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\rttr\visitor.cpp">
+      <Filter>ThirdParty\rttr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\rttr\detail\comparison\compare_equal.cpp">
+      <Filter>ThirdParty\rttr\detail\comparison</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\rttr\detail\comparison\compare_less.cpp">
+      <Filter>ThirdParty\rttr\detail\comparison</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\rttr\detail\constructor\constructor_wrapper_base.cpp">
+      <Filter>ThirdParty\rttr\detail\constructor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\rttr\detail\conversion\std_conversion_functions.cpp">
+      <Filter>ThirdParty\rttr\detail\conversion</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\rttr\detail\destructor\destructor_wrapper_base.cpp">
+      <Filter>ThirdParty\rttr\detail\destructor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\rttr\detail\enumeration\enumeration_helper.cpp">
+      <Filter>ThirdParty\rttr\detail\enumeration</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\rttr\detail\enumeration\enumeration_wrapper_base.cpp">
+      <Filter>ThirdParty\rttr\detail\enumeration</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\rttr\detail\method\method_wrapper_base.cpp">
+      <Filter>ThirdParty\rttr\detail\method</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\rttr\detail\misc\standard_types.cpp">
+      <Filter>ThirdParty\rttr\detail\misc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\rttr\detail\parameter_info\parameter_info_wrapper_base.cpp">
+      <Filter>ThirdParty\rttr\detail\parameter_info</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\rttr\detail\property\property_wrapper_base.cpp">
+      <Filter>ThirdParty\rttr\detail\property</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\rttr\detail\registration\registration_executer.cpp">
+      <Filter>ThirdParty\rttr\detail\registration</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\rttr\detail\registration\registration_state_saver.cpp">
+      <Filter>ThirdParty\rttr\detail\registration</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\rttr\detail\type\type_data.cpp">
+      <Filter>ThirdParty\rttr\detail\type</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\rttr\detail\type\type_register.cpp">
+      <Filter>ThirdParty\rttr\detail\type</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\rttr\detail\variant\variant_compare.cpp">
+      <Filter>ThirdParty\rttr\detail\variant</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\..\Engine\ThirdParty\rttr\CMakeLists.txt">
+      <Filter>ThirdParty\rttr</Filter>
+    </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\Engine\ThirdParty\rttr\registration">
+      <Filter>ThirdParty\rttr</Filter>
+    </None>
+    <None Include="..\..\Engine\ThirdParty\rttr\registration_friend">
+      <Filter>ThirdParty\rttr</Filter>
+    </None>
+    <None Include="..\..\Engine\ThirdParty\rttr\rttr.cmake">
+      <Filter>ThirdParty\rttr</Filter>
+    </None>
+    <None Include="..\..\Engine\ThirdParty\rttr\type">
+      <Filter>ThirdParty\rttr</Filter>
+    </None>
   </ItemGroup>
 </Project>

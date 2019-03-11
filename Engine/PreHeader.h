@@ -46,3 +46,4 @@
 
 
 #include "Define.h"
+#include "rttr/registration"
