@@ -16,11 +16,14 @@ CTaskPool::CTaskPool(const char *szName, int numThreads)
 	m_threads.resize(numThreads);
 
 	for (int indexThread = 0; indexThread < m_threads.size(); indexThread++) {
+		char szThreadName[_MAX_STRING];
+		sprintf(szThreadName, "%s_%d", szName, indexThread);
+
 		m_params[indexThread].pTaskPool = this;
-		sprintf(m_params[indexThread].szThreadName, "%s_%d", szName, indexThread);
+		m_params[indexThread].indexThread = indexThread;
 
 		pthread_create(&m_threads[indexThread], nullptr, TaskThread, &m_params[indexThread]);
-		pthread_set_name(m_threads[indexThread], m_params[indexThread].szThreadName);
+		pthread_set_name(m_threads[indexThread], szThreadName);
 	}
 }
 
@@ -68,7 +71,7 @@ void CTaskPool::Task(CTask *pTask, void *pParams, event_t *pEventSignal, bool bH
 void* CTaskPool::TaskThread(void *pParams)
 {
 	CTaskPool *pTaskPool = ((ThreadParam *)pParams)->pTaskPool;
-	uint32_t threadName = HashValue(((ThreadParam *)pParams)->szThreadName);
+	int indexThread = ((ThreadParam *)pParams)->indexThread;
 
 	while (true) {
 		// Check if the thread needs to exit
@@ -94,7 +97,7 @@ void* CTaskPool::TaskThread(void *pParams)
 			atomic_spin_unlock(&pTaskPool->m_lockTaskList);
 
 			if (pTask) {
-				pTask->TaskFunc(threadName, pTask->GetTaskParams());
+				pTask->TaskFunc(indexThread, pTask->GetTaskParams());
 				pTask->SetTaskSignal();
 			}
 

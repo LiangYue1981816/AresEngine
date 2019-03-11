@@ -15,7 +15,7 @@ public:
 
 
 public:
-	virtual void TaskFunc(uint32_t threadName, void *pParams) = 0;
+	virtual void TaskFunc(int indexThread, void *pParams) = 0;
 
 private:
 	inline void SetTaskSignal(void);
@@ -49,7 +49,7 @@ public:
 
 
 public:
-	virtual void TaskFunc(uint32_t threadName, void *pParams)
+	virtual void TaskFunc(int indexThread, void *pParams)
 	{
 		m_function();
 	}

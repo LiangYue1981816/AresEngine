@@ -11,7 +11,7 @@ class CALL_API CTaskPool
 private:
 	typedef struct ThreadParam {
 		CTaskPool *pTaskPool;
-		char szThreadName[260];
+		int indexThread;
 	} ThreadParam;
 
 

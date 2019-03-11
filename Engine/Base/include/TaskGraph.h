@@ -11,7 +11,7 @@ class CALL_API CTaskGraph
 private:
 	typedef struct ThreadParam {
 		CTaskGraph *pTaskGraph;
-		char szThreadName[260];
+		int indexThread;
 	} ThreadParam;
 
 

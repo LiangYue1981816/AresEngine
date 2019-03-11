@@ -18,11 +18,14 @@ CTaskGraph::CTaskGraph(const char *szName, int numThreads)
 	m_threads.resize(numThreads);
 
 	for (int indexThread = 0; indexThread < m_threads.size(); indexThread++) {
+		char szThreadName[_MAX_STRING];
+		sprintf(szThreadName, "%s_%d", szName, indexThread);
+
 		m_params[indexThread].pTaskGraph = this;
-		sprintf(m_params[indexThread].szThreadName, "%s_%d", szName, indexThread);
+		m_params[indexThread].indexThread = indexThread;
 
 		pthread_create(&m_threads[indexThread], nullptr, TaskThread, &m_params[indexThread]);
-		pthread_set_name(m_threads[indexThread], m_params[indexThread].szThreadName);
+		pthread_set_name(m_threads[indexThread], szThreadName);
 	}
 }
 
@@ -81,7 +84,7 @@ void CTaskGraph::Wait(void)
 void* CTaskGraph::TaskThread(void *pParams)
 {
 	CTaskGraph *pTaskGraph = ((ThreadParam *)pParams)->pTaskGraph;
-	uint32_t threadName = HashValue(((ThreadParam *)pParams)->szThreadName);
+	int indexThread = ((ThreadParam *)pParams)->indexThread;
 
 	while (true) {
 		event_wait(&pTaskGraph->m_eventDispatch);
@@ -120,7 +123,7 @@ void* CTaskGraph::TaskThread(void *pParams)
 						atomic_spin_unlock(&pTaskGraph->m_lockTaskList);
 
 						if (pTask) {
-							pTask->TaskFunc(threadName, pTask->GetTaskParams());
+							pTask->TaskFunc(indexThread, pTask->GetTaskParams());
 							pTask->SetTaskSignal();
 						}
 
