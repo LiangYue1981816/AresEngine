@@ -160,7 +160,7 @@ void CSceneManager::UpdateCamera(CGfxCamera *pCamera, int indexQueue)
 			eastl::vector<CTaskComponentUpdateCamera<CComponentParticle>> taskUpdateCameraParticles(m_taskGraph.GetNumThreads());
 			eastl::vector<CTaskComponentUpdateCamera<CComponentPointLight>> taskUpdateCameraPointLights(m_taskGraph.GetNumThreads());
 
-			for (int indexThread = 0; indexThread < THREAD_COUNT; indexThread++) {
+			for (int indexThread = 0; indexThread < m_taskGraph.GetNumThreads(); indexThread++) {
 				taskUpdateCameraMeshs[indexThread].SetParams(m_taskGraph.GetNumThreads(), indexThread, indexQueue, &m_meshManager, pCamera);
 				taskUpdateCameraSkins[indexThread].SetParams(m_taskGraph.GetNumThreads(), indexThread, indexQueue, &m_skinManager, pCamera);
 				taskUpdateCameraParticles[indexThread].SetParams(m_taskGraph.GetNumThreads(), indexThread, indexQueue, &m_particleManager, pCamera);
