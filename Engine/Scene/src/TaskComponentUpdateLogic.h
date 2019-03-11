@@ -9,7 +9,8 @@ class CTaskComponentUpdateLogic : public CTask
 {
 public:
 	CTaskComponentUpdateLogic(void)
-		: m_indexThread(0)
+		: m_numThreads(0)
+		, m_indexThread(0)
 		, m_pComponentManager(nullptr)
 	{
 
@@ -21,11 +22,12 @@ public:
 
 
 public:
-	void SetParams(int indexThread, CComponentManager<T> *pComponentManager, float gameTime, float deltaTime)
+	void SetParams(int numThreads, int indexThread, CComponentManager<T> *pComponentManager, float gameTime, float deltaTime)
 	{
 		m_gameTime = gameTime;
 		m_deltaTime = deltaTime;
 
+		m_numThreads = numThreads;
 		m_indexThread = indexThread;
 		m_pComponentManager = pComponentManager;
 	}
@@ -33,7 +35,7 @@ public:
 	void TaskFunc(uint32_t threadName, void *pParams)
 	{
 		if (m_pComponentManager) {
-			size_t count = (m_pComponentManager->GetComponentCount() + (THREAD_COUNT - m_pComponentManager->GetComponentCount() % THREAD_COUNT)) / THREAD_COUNT;
+			size_t count = (m_pComponentManager->GetComponentCount() + (m_numThreads - m_pComponentManager->GetComponentCount() % m_numThreads)) / m_numThreads;
 			size_t indexBegin = std::max(count * m_indexThread, (size_t)0);
 			size_t indexEnd = std::min(count * (m_indexThread + 1), m_pComponentManager->GetComponentCount());
 
@@ -49,6 +51,7 @@ private:
 	float m_deltaTime;
 
 private:
+	int m_numThreads;
 	int m_indexThread;
 	CComponentManager<T> *m_pComponentManager;
 };
