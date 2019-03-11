@@ -6,7 +6,7 @@
 
 
 CSceneManager::CSceneManager(void)
-	: m_taskGraph("SceneManager_TashGraph")
+	: m_taskGraph("TashGraph_SceneManager")
 {
 
 }

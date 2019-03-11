@@ -16,7 +16,7 @@ private:
 
 
 public:
-	CTaskGraph(const char *szName, int numThreads = THREAD_COUNT);
+	CTaskGraph(const char *szName, int numThreads = -1);
 	virtual ~CTaskGraph(void);
 
 

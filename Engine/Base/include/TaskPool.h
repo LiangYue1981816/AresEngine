@@ -16,7 +16,7 @@ private:
 
 
 public:
-	CTaskPool(const char *szName, int numThreads = THREAD_COUNT);
+	CTaskPool(const char *szName, int numThreads = -1);
 	virtual ~CTaskPool(void);
 
 

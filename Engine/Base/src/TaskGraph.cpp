@@ -4,6 +4,10 @@
 
 CTaskGraph::CTaskGraph(const char *szName, int numThreads)
 {
+	if (numThreads == -1) {
+		numThreads = NumCpuCores();
+	}
+
 	event_init(&m_eventExit, 0);
 	event_init(&m_eventReady, 1);
 	event_init(&m_eventFinish, 1);

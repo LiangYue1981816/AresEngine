@@ -47,7 +47,7 @@ void CGfxRenderQueue::Clear(int indexQueue)
 	m_pipelineMaterialQueue[indexQueue].clear();
 	m_materialMeshDrawQueue[indexQueue].clear();
 
-	for (int indexThread = 0; indexThread < THREAD_COUNT; indexThread++) {
+	for (int indexThread = 0; indexThread < MAX_THREAD_COUNT; indexThread++) {
 		m_materialMeshDrawQueueThreads[indexThread][indexQueue].clear();
 	}
 }
@@ -59,9 +59,12 @@ void CGfxRenderQueue::Begin(int indexQueue)
 
 void CGfxRenderQueue::Add(int indexThread, int indexQueue, const CGfxMaterialPtr ptrMaterial, const CGfxMeshDrawPtr ptrMeshDraw, const uint8_t *pInstanceData, uint32_t size)
 {
-	if (indexThread >= 0 && indexThread < THREAD_COUNT) {
+	if (indexThread >= 0 && indexThread < MAX_THREAD_COUNT) {
 		eastl::vector<uint8_t> &meshDrawInstanceBuffer = m_materialMeshDrawQueueThreads[indexThread][indexQueue][ptrMaterial][ptrMeshDraw];
 		meshDrawInstanceBuffer.insert(meshDrawInstanceBuffer.end(), pInstanceData, pInstanceData + size);
+	}
+	else {
+		ASSERT(false);
 	}
 }
 
@@ -69,7 +72,7 @@ void CGfxRenderQueue::End(int indexQueue)
 {
 	m_materialMeshDrawQueue[indexQueue].clear();
 
-	for (int indexThread = 0; indexThread < THREAD_COUNT; indexThread++) {
+	for (int indexThread = 0; indexThread < MAX_THREAD_COUNT; indexThread++) {
 		for (const auto &itMaterialMeshDrawQueueThread : m_materialMeshDrawQueueThreads[indexThread][indexQueue]) {
 			eastl::unordered_map<CGfxMeshDrawPtr, eastl::vector<uint8_t>> &meshDrawQueue = m_materialMeshDrawQueue[indexQueue][itMaterialMeshDrawQueueThread.first];
 
