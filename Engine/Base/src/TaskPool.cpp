@@ -31,6 +31,11 @@ CTaskPool::~CTaskPool(void)
 	event_destroy(&m_eventExit);
 }
 
+int CTaskPool::GetNumThreads(void) const
+{
+	return m_threads.size();
+}
+
 void CTaskPool::Task(CTask *pTask, void *pParams, event_t *pEventSignal, bool bHighPriority)
 {
 	pTask->SetTaskParams(pParams);

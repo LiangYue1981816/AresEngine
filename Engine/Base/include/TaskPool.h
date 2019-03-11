@@ -21,6 +21,9 @@ public:
 
 
 public:
+	int GetNumThreads(void) const;
+
+public:
 	void Task(CTask *pTask, void *pParams, event_t *pEventSignal, bool bHighPriority = false);
 
 private:

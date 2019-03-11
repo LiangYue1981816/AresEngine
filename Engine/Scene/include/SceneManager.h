@@ -57,13 +57,5 @@ private:
 	CComponentManager<CComponentPointLight> m_pointLightManager;
 
 private:
-	event_t m_eventUpdateLogicSkin;
-	event_t m_eventUpdateLogicParticle;
-	event_t m_eventUpdateLogicPointLight;
-
-	event_t m_eventUpdateCameraSkin;
-	event_t m_eventUpdateCameraParticle;
-	event_t m_eventUpdateCameraPointLight;
-
 	CTaskGraph m_taskGraph;
 };
