@@ -9,9 +9,11 @@ class CTaskComponentUpdateCamera : public CTask
 {
 public:
 	CTaskComponentUpdateCamera(void)
-		: m_numThreads(0)
-		, m_indexThread(0)
+		: m_pCamera(nullptr)
 		, m_indexQueue(0)
+
+		, m_indexBegin(0)
+		, m_indexEnd(0)
 		, m_pComponentManager(nullptr)
 	{
 
@@ -23,36 +25,31 @@ public:
 
 
 public:
-	void SetParams(int numThreads, int indexThread, int indexQueue, CComponentManager<T> *pComponentManager, CGfxCamera *pCamera)
+	void SetParams(CComponentManager<T> *pComponentManager, int numThreads, int indexThread, CGfxCamera *pCamera, int indexQueue)
 	{
 		m_pCamera = pCamera;
-
-		m_numThreads = numThreads;
-		m_indexThread = indexThread;
 		m_indexQueue = indexQueue;
+
+		int count = (pComponentManager->GetComponentCount() + (numThreads - pComponentManager->GetComponentCount() % numThreads)) / numThreads;
+		m_indexBegin = std::max(count * indexThread, 0);
+		m_indexEnd = std::min(count * (indexThread + 1), (int)pComponentManager->GetComponentCount());
 		m_pComponentManager = pComponentManager;
 	}
 
-	void TaskFunc(uint32_t threadName, void *pParams)
+	void TaskFunc(int indexThread, void *pParams)
 	{
-		if (m_pComponentManager) {
-			size_t count = (m_pComponentManager->GetComponentCount() + (m_numThreads - m_pComponentManager->GetComponentCount() % m_numThreads)) / m_numThreads;
-			size_t indexBegin = std::max(count * m_indexThread, (size_t)0);
-			size_t indexEnd = std::min(count * (m_indexThread + 1), m_pComponentManager->GetComponentCount());
-
-			for (size_t index = indexBegin; index < indexEnd; index++) {
-				m_pComponentManager->GetComponentByIndex(index)->TaskUpdateCamera(m_pCamera, m_indexThread, m_indexQueue);
-			}
+		for (int index = m_indexBegin; index < m_indexEnd; index++) {
+			m_pComponentManager->GetComponentByIndex(index)->TaskUpdateCamera(m_pCamera, indexThread, m_indexQueue);
 		}
 	}
 
 
 private:
 	CGfxCamera *m_pCamera;
+	int m_indexQueue;
 
 private:
-	int m_numThreads;
-	int m_indexThread;
-	int m_indexQueue;
+	int m_indexBegin;
+	int m_indexEnd;
 	CComponentManager<T> *m_pComponentManager;
 };

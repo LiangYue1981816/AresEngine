@@ -137,9 +137,9 @@ void CSceneManager::UpdateLogic(float totalTime, float deltaTime)
 	eastl::vector<CTaskComponentUpdateLogic<CComponentPointLight>> taskUpdateLogicPointLights(m_taskGraph.GetNumThreads());
 
 	for (int indexThread = 0; indexThread < m_taskGraph.GetNumThreads(); indexThread++) {
-		taskUpdateLogicMeshs[indexThread].SetParams(m_taskGraph.GetNumThreads(), indexThread, &m_meshManager, totalTime, deltaTime);
-		taskUpdateLogicSkins[indexThread].SetParams(m_taskGraph.GetNumThreads(), indexThread, &m_skinManager, totalTime, deltaTime);
-		taskUpdateLogicParticles[indexThread].SetParams(m_taskGraph.GetNumThreads(), indexThread, &m_particleManager, totalTime, deltaTime);
+		taskUpdateLogicMeshs[indexThread].SetParams(&m_meshManager, m_taskGraph.GetNumThreads(), indexThread, totalTime, deltaTime);
+		taskUpdateLogicSkins[indexThread].SetParams(&m_skinManager, m_taskGraph.GetNumThreads(), indexThread, totalTime, deltaTime);
+		taskUpdateLogicParticles[indexThread].SetParams(&m_particleManager, m_taskGraph.GetNumThreads(), indexThread, totalTime, deltaTime);
 
 		m_taskGraph.Task(&taskUpdateLogicMeshs[indexThread], nullptr, nullptr, nullptr);
 		m_taskGraph.Task(&taskUpdateLogicSkins[indexThread], nullptr, nullptr, nullptr);
@@ -161,10 +161,10 @@ void CSceneManager::UpdateCamera(CGfxCamera *pCamera, int indexQueue)
 			eastl::vector<CTaskComponentUpdateCamera<CComponentPointLight>> taskUpdateCameraPointLights(m_taskGraph.GetNumThreads());
 
 			for (int indexThread = 0; indexThread < m_taskGraph.GetNumThreads(); indexThread++) {
-				taskUpdateCameraMeshs[indexThread].SetParams(m_taskGraph.GetNumThreads(), indexThread, indexQueue, &m_meshManager, pCamera);
-				taskUpdateCameraSkins[indexThread].SetParams(m_taskGraph.GetNumThreads(), indexThread, indexQueue, &m_skinManager, pCamera);
-				taskUpdateCameraParticles[indexThread].SetParams(m_taskGraph.GetNumThreads(), indexThread, indexQueue, &m_particleManager, pCamera);
-				taskUpdateCameraPointLights[indexThread].SetParams(m_taskGraph.GetNumThreads(), indexThread, indexQueue, &m_pointLightManager, pCamera);
+				taskUpdateCameraMeshs[indexThread].SetParams(&m_meshManager, m_taskGraph.GetNumThreads(), indexThread, pCamera, indexQueue);
+				taskUpdateCameraSkins[indexThread].SetParams(&m_skinManager, m_taskGraph.GetNumThreads(), indexThread, pCamera, indexQueue);
+				taskUpdateCameraParticles[indexThread].SetParams(&m_particleManager, m_taskGraph.GetNumThreads(), indexThread, pCamera, indexQueue);
+				taskUpdateCameraPointLights[indexThread].SetParams(&m_pointLightManager, m_taskGraph.GetNumThreads(), indexThread, pCamera, indexQueue);
 
 				m_taskGraph.Task(&taskUpdateCameraMeshs[indexThread], nullptr, nullptr, nullptr);
 				m_taskGraph.Task(&taskUpdateCameraSkins[indexThread], nullptr, nullptr, nullptr);
