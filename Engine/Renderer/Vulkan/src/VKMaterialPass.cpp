@@ -95,60 +95,6 @@ bool CVKMaterialPass::SetSampler(const char *szName, GfxFilter minFilter, GfxFil
 	return false;
 }
 
-bool CVKMaterialPass::SetTexture2D(const char *szName, HANDLE hExternTexture)
-{
-	uint32_t name = HashValue(szName);
-
-	if (m_pPipeline && m_pPipeline->IsTextureValid(name)) {
-		m_ptrTexture2Ds[name] = VKRenderer()->NewTexture2D(TEXTURE_INTERNAL_NAME(name));
-		m_ptrTexture2Ds[name]->Create(hExternTexture);
-
-		if (m_pDescriptorSet) {
-			m_pDescriptorSet->SetTexture2D(name, m_ptrTexture2Ds[name], m_pSamplers[name]);
-		}
-
-		return true;
-	}
-
-	return false;
-}
-
-bool CVKMaterialPass::SetTexture2DArray(const char *szName, HANDLE hExternTexture)
-{
-	uint32_t name = HashValue(szName);
-
-	if (m_pPipeline && m_pPipeline->IsTextureValid(name)) {
-		m_ptrTexture2DArrays[name] = VKRenderer()->NewTexture2DArray(TEXTURE_INTERNAL_NAME(name));
-		m_ptrTexture2DArrays[name]->Create(hExternTexture);
-
-		if (m_pDescriptorSet) {
-			m_pDescriptorSet->SetTexture2DArray(name, m_ptrTexture2DArrays[name], m_pSamplers[name]);
-		}
-
-		return true;
-	}
-
-	return false;
-}
-
-bool CVKMaterialPass::SetTextureCubeMap(const char *szName, HANDLE hExternTexture)
-{
-	uint32_t name = HashValue(szName);
-
-	if (m_pPipeline && m_pPipeline->IsTextureValid(name)) {
-		m_ptrTextureCubeMaps[name] = VKRenderer()->NewTextureCubeMap(TEXTURE_INTERNAL_NAME(name));
-		m_ptrTextureCubeMaps[name]->Create(hExternTexture);
-
-		if (m_pDescriptorSet) {
-			m_pDescriptorSet->SetTextureCubeMap(name, m_ptrTextureCubeMaps[name], m_pSamplers[name]);
-		}
-
-		return true;
-	}
-
-	return false;
-}
-
 bool CVKMaterialPass::SetTexture2D(const char *szName, const CGfxTexture2DPtr ptrTexture)
 {
 	uint32_t name = HashValue(szName);

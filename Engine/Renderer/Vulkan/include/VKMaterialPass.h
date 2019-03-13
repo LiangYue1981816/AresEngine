@@ -20,9 +20,6 @@ public:
 	bool SetPipeline(const CGfxRenderPass *pRenderPass, const CGfxShader *pVertexShader, const CGfxShader *pFragmentShader, const PipelineState &state, uint32_t indexSubpass, uint32_t vertexBinding, uint32_t instanceBinding);
 
 	bool SetSampler(const char *szName, GfxFilter minFilter, GfxFilter magFilter, GfxSamplerMipmapMode mipmapMode, GfxSamplerAddressMode addressMode);
-	bool SetTexture2D(const char *szName, HANDLE hExternTexture);
-	bool SetTexture2DArray(const char *szName, HANDLE hExternTexture);
-	bool SetTextureCubeMap(const char *szName, HANDLE hExternTexture);
 	bool SetTexture2D(const char *szName, const CGfxTexture2DPtr ptrTexture);
 	bool SetTexture2DArray(const char *szName, const CGfxTexture2DArrayPtr ptrTexture);
 	bool SetTextureCubeMap(const char *szName, const CGfxTextureCubeMapPtr ptrTexture);
