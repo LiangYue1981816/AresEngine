@@ -132,6 +132,54 @@ bool CVKDescriptorSet::SetUniformBuffer(uint32_t name, const CGfxUniformBufferPt
 	}
 }
 
+CGfxTexture2DPtr CVKDescriptorSet::GetTexture2D(uint32_t name) const
+{
+	const auto &itImageDescriptor = m_imageDescriptors.find(name);
+
+	if (itImageDescriptor != m_imageDescriptors.end()) {
+		return itImageDescriptor->second.ptrTexture2D;
+	}
+	else {
+		return nullptr;
+	}
+}
+
+CGfxTexture2DArrayPtr CVKDescriptorSet::GetTexture2DArray(uint32_t name) const
+{
+	const auto &itImageDescriptor = m_imageDescriptors.find(name);
+
+	if (itImageDescriptor != m_imageDescriptors.end()) {
+		return itImageDescriptor->second.ptrTexture2DArray;
+	}
+	else {
+		return nullptr;
+	}
+}
+
+CGfxTextureCubeMapPtr CVKDescriptorSet::GetTextureCubeMap(uint32_t name) const
+{
+	const auto &itImageDescriptor = m_imageDescriptors.find(name);
+
+	if (itImageDescriptor != m_imageDescriptors.end()) {
+		return itImageDescriptor->second.ptrTextureCubeMap;
+	}
+	else {
+		return nullptr;
+	}
+}
+
+CGfxRenderTexturePtr CVKDescriptorSet::GetRenderTexture(uint32_t name) const
+{
+	const auto &itImageDescriptor = m_imageDescriptors.find(name);
+
+	if (itImageDescriptor != m_imageDescriptors.end()) {
+		return itImageDescriptor->second.ptrRenderTexture;
+	}
+	else {
+		return nullptr;
+	}
+}
+
 void CVKDescriptorSet::Update(void)
 {
 	if (m_bDirty) {

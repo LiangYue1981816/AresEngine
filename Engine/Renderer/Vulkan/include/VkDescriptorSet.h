@@ -41,6 +41,12 @@ public:
 	bool SetUniformBuffer(uint32_t name, const CGfxUniformBufferPtr ptrUniformBuffer);
 
 public:
+	CGfxTexture2DPtr GetTexture2D(uint32_t name) const;
+	CGfxTexture2DArrayPtr GetTexture2DArray(uint32_t name) const;
+	CGfxTextureCubeMapPtr GetTextureCubeMap(uint32_t name) const;
+	CGfxRenderTexturePtr GetRenderTexture(uint32_t name) const;
+
+public:
 	void Update(void);
 	void Bind(VkCommandBuffer vkCommandBuffer, VkPipelineBindPoint vkPipelineBindPoint, VkPipelineLayout vkPipelineLayout) const;
 
