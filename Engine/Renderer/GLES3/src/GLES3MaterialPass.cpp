@@ -79,7 +79,7 @@ bool CGLES3MaterialPass::SetSampler(const char *szName, GfxFilter minFilter, Gfx
 {
 	uint32_t name = HashValue(szName);
 
-	if ((m_pPipeline == nullptr) || (m_pPipeline && m_pPipeline->IsTextureValid(name))) {
+	if (m_pPipeline && m_pPipeline->IsTextureValid(name)) {
 		m_pSamplers[name] = GLES3Renderer()->CreateSampler(minFilter, magFilter, mipmapMode, addressMode);
 		return true;
 	}
@@ -91,7 +91,7 @@ bool CGLES3MaterialPass::SetTexture2D(const char *szName, HANDLE hExternTexture)
 {
 	uint32_t name = HashValue(szName);
 
-	if ((m_pPipeline == nullptr) || (m_pPipeline && m_pPipeline->IsTextureValid(name))) {
+	if (m_pPipeline && m_pPipeline->IsTextureValid(name)) {
 		m_ptrTexture2Ds[name] = GLES3Renderer()->NewTexture2D(TEXTURE_INTERNAL_NAME(name));
 		m_ptrTexture2Ds[name]->Create(hExternTexture);
 		return true;
@@ -104,7 +104,7 @@ bool CGLES3MaterialPass::SetTexture2DArray(const char *szName, HANDLE hExternTex
 {
 	uint32_t name = HashValue(szName);
 
-	if ((m_pPipeline == nullptr) || (m_pPipeline && m_pPipeline->IsTextureValid(name))) {
+	if (m_pPipeline && m_pPipeline->IsTextureValid(name)) {
 		m_ptrTexture2DArrays[name] = GLES3Renderer()->NewTexture2DArray(TEXTURE_INTERNAL_NAME(name));
 		m_ptrTexture2DArrays[name]->Create(hExternTexture);
 		return true;
@@ -117,7 +117,7 @@ bool CGLES3MaterialPass::SetTextureCubeMap(const char *szName, HANDLE hExternTex
 {
 	uint32_t name = HashValue(szName);
 
-	if ((m_pPipeline == nullptr) || (m_pPipeline && m_pPipeline->IsTextureValid(name))) {
+	if (m_pPipeline && m_pPipeline->IsTextureValid(name)) {
 		m_ptrTextureCubeMaps[name] = GLES3Renderer()->NewTextureCubeMap(TEXTURE_INTERNAL_NAME(name));
 		m_ptrTextureCubeMaps[name]->Create(hExternTexture);
 		return true;
@@ -130,7 +130,7 @@ bool CGLES3MaterialPass::SetTexture2D(const char *szName, const CGfxTexture2DPtr
 {
 	uint32_t name = HashValue(szName);
 
-	if ((m_pPipeline == nullptr) || (m_pPipeline && m_pPipeline->IsTextureValid(name))) {
+	if (m_pPipeline && m_pPipeline->IsTextureValid(name)) {
 		m_ptrTexture2Ds[name] = ptrTexture;
 		return true;
 	}
@@ -142,7 +142,7 @@ bool CGLES3MaterialPass::SetTexture2DArray(const char *szName, const CGfxTexture
 {
 	uint32_t name = HashValue(szName);
 
-	if ((m_pPipeline == nullptr) || (m_pPipeline && m_pPipeline->IsTextureValid(name))) {
+	if (m_pPipeline && m_pPipeline->IsTextureValid(name)) {
 		m_ptrTexture2DArrays[name] = ptrTexture;
 		return true;
 	}
@@ -154,7 +154,7 @@ bool CGLES3MaterialPass::SetTextureCubeMap(const char *szName, const CGfxTexture
 {
 	uint32_t name = HashValue(szName);
 
-	if ((m_pPipeline == nullptr) || (m_pPipeline && m_pPipeline->IsTextureValid(name))) {
+	if (m_pPipeline && m_pPipeline->IsTextureValid(name)) {
 		m_ptrTextureCubeMaps[name] = ptrTexture;
 		return true;
 	}
@@ -166,7 +166,7 @@ bool CGLES3MaterialPass::SetTexture2D(const char *szName, const char *szFileName
 {
 	uint32_t name = HashValue(szName);
 
-	if ((m_pPipeline == nullptr) || (m_pPipeline && m_pPipeline->IsTextureValid(name))) {
+	if (m_pPipeline && m_pPipeline->IsTextureValid(name)) {
 		m_ptrTexture2Ds[name] = GLES3Renderer()->NewTexture2D(szFileName);
 		return true;
 	}
@@ -178,7 +178,7 @@ bool CGLES3MaterialPass::SetTexture2DArray(const char *szName, const char *szFil
 {
 	uint32_t name = HashValue(szName);
 
-	if ((m_pPipeline == nullptr) || (m_pPipeline && m_pPipeline->IsTextureValid(name))) {
+	if (m_pPipeline && m_pPipeline->IsTextureValid(name)) {
 		m_ptrTexture2DArrays[name] = GLES3Renderer()->NewTexture2DArray(szFileName);
 		return true;
 	}
@@ -190,7 +190,7 @@ bool CGLES3MaterialPass::SetTextureCubeMap(const char *szName, const char *szFil
 {
 	uint32_t name = HashValue(szName);
 
-	if ((m_pPipeline == nullptr) || (m_pPipeline && m_pPipeline->IsTextureValid(name))) {
+	if (m_pPipeline && m_pPipeline->IsTextureValid(name)) {
 		m_ptrTextureCubeMaps[name] = GLES3Renderer()->NewTextureCubeMap(szFileName);
 		return true;
 	}
@@ -202,7 +202,7 @@ bool CGLES3MaterialPass::SetUniformVec1(const char *szName, float v0)
 {
 	uint32_t name = HashValue(szName);
 
-	if ((m_pPipeline == nullptr) || (m_pPipeline && m_pPipeline->IsUniformBlockValid(name))) {
+	if (m_pPipeline && m_pPipeline->IsUniformBlockValid(name)) {
 		if (m_pUniformVec1s[name] == nullptr) {
 			m_pUniformVec1s[name] = new CGfxUniformVec1;
 		}
@@ -219,7 +219,7 @@ bool CGLES3MaterialPass::SetUniformVec2(const char *szName, float v0, float v1)
 {
 	uint32_t name = HashValue(szName);
 
-	if ((m_pPipeline == nullptr) || (m_pPipeline && m_pPipeline->IsUniformBlockValid(name))) {
+	if (m_pPipeline && m_pPipeline->IsUniformBlockValid(name)) {
 		if (m_pUniformVec2s[name] == nullptr) {
 			m_pUniformVec2s[name] = new CGfxUniformVec2;
 		}
@@ -236,7 +236,7 @@ bool CGLES3MaterialPass::SetUniformVec3(const char *szName, float v0, float v1, 
 {
 	uint32_t name = HashValue(szName);
 
-	if ((m_pPipeline == nullptr) || (m_pPipeline && m_pPipeline->IsUniformBlockValid(name))) {
+	if (m_pPipeline && m_pPipeline->IsUniformBlockValid(name)) {
 		if (m_pUniformVec3s[name] == nullptr) {
 			m_pUniformVec3s[name] = new CGfxUniformVec3;
 		}
@@ -253,7 +253,7 @@ bool CGLES3MaterialPass::SetUniformVec4(const char *szName, float v0, float v1, 
 {
 	uint32_t name = HashValue(szName);
 
-	if ((m_pPipeline == nullptr) || (m_pPipeline && m_pPipeline->IsUniformBlockValid(name))) {
+	if (m_pPipeline && m_pPipeline->IsUniformBlockValid(name)) {
 		if (m_pUniformVec4s[name] == nullptr) {
 			m_pUniformVec4s[name] = new CGfxUniformVec4;
 		}
@@ -270,7 +270,7 @@ bool CGLES3MaterialPass::SetUniformMat4(const char *szName, const float *value)
 {
 	uint32_t name = HashValue(szName);
 
-	if ((m_pPipeline == nullptr) || (m_pPipeline && m_pPipeline->IsUniformBlockValid(name))) {
+	if (m_pPipeline && m_pPipeline->IsUniformBlockValid(name)) {
 		if (m_pUniformMat4s[name] == nullptr) {
 			m_pUniformMat4s[name] = new CGfxUniformMat4;
 		}

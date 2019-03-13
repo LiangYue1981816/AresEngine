@@ -87,7 +87,7 @@ bool CVKMaterialPass::SetSampler(const char *szName, GfxFilter minFilter, GfxFil
 {
 	uint32_t name = HashValue(szName);
 
-	if ((m_pPipeline == nullptr) || (m_pPipeline && m_pPipeline->IsTextureValid(name))) {
+	if (m_pPipeline && m_pPipeline->IsTextureValid(name)) {
 		m_pSamplers[name] = VKRenderer()->CreateSampler(minFilter, magFilter, mipmapMode, addressMode);
 		return true;
 	}
@@ -99,7 +99,7 @@ bool CVKMaterialPass::SetTexture2D(const char *szName, HANDLE hExternTexture)
 {
 	uint32_t name = HashValue(szName);
 
-	if ((m_pPipeline == nullptr) || (m_pPipeline && m_pPipeline->IsTextureValid(name))) {
+	if (m_pPipeline && m_pPipeline->IsTextureValid(name)) {
 		m_ptrTexture2Ds[name] = VKRenderer()->NewTexture2D(TEXTURE_INTERNAL_NAME(name));
 		m_ptrTexture2Ds[name]->Create(hExternTexture);
 
@@ -117,7 +117,7 @@ bool CVKMaterialPass::SetTexture2DArray(const char *szName, HANDLE hExternTextur
 {
 	uint32_t name = HashValue(szName);
 
-	if ((m_pPipeline == nullptr) || (m_pPipeline && m_pPipeline->IsTextureValid(name))) {
+	if (m_pPipeline && m_pPipeline->IsTextureValid(name)) {
 		m_ptrTexture2DArrays[name] = VKRenderer()->NewTexture2DArray(TEXTURE_INTERNAL_NAME(name));
 		m_ptrTexture2DArrays[name]->Create(hExternTexture);
 
@@ -135,7 +135,7 @@ bool CVKMaterialPass::SetTextureCubeMap(const char *szName, HANDLE hExternTextur
 {
 	uint32_t name = HashValue(szName);
 
-	if ((m_pPipeline == nullptr) || (m_pPipeline && m_pPipeline->IsTextureValid(name))) {
+	if (m_pPipeline && m_pPipeline->IsTextureValid(name)) {
 		m_ptrTextureCubeMaps[name] = VKRenderer()->NewTextureCubeMap(TEXTURE_INTERNAL_NAME(name));
 		m_ptrTextureCubeMaps[name]->Create(hExternTexture);
 
@@ -153,7 +153,7 @@ bool CVKMaterialPass::SetTexture2D(const char *szName, const CGfxTexture2DPtr pt
 {
 	uint32_t name = HashValue(szName);
 
-	if ((m_pPipeline == nullptr) || (m_pPipeline && m_pPipeline->IsTextureValid(name))) {
+	if (m_pPipeline && m_pPipeline->IsTextureValid(name)) {
 		m_ptrTexture2Ds[name] = ptrTexture;
 
 		if (m_pDescriptorSet) {
@@ -170,7 +170,7 @@ bool CVKMaterialPass::SetTexture2DArray(const char *szName, const CGfxTexture2DA
 {
 	uint32_t name = HashValue(szName);
 
-	if ((m_pPipeline == nullptr) || (m_pPipeline && m_pPipeline->IsTextureValid(name))) {
+	if (m_pPipeline && m_pPipeline->IsTextureValid(name)) {
 		m_ptrTexture2DArrays[name] = ptrTexture;
 
 		if (m_pDescriptorSet) {
@@ -187,7 +187,7 @@ bool CVKMaterialPass::SetTextureCubeMap(const char *szName, const CGfxTextureCub
 {
 	uint32_t name = HashValue(szName);
 
-	if ((m_pPipeline == nullptr) || (m_pPipeline && m_pPipeline->IsTextureValid(name))) {
+	if (m_pPipeline && m_pPipeline->IsTextureValid(name)) {
 		m_ptrTextureCubeMaps[name] = ptrTexture;
 
 		if (m_pDescriptorSet) {
@@ -204,7 +204,7 @@ bool CVKMaterialPass::SetTexture2D(const char *szName, const char *szFileName)
 {
 	uint32_t name = HashValue(szName);
 
-	if ((m_pPipeline == nullptr) || (m_pPipeline && m_pPipeline->IsTextureValid(name))) {
+	if (m_pPipeline && m_pPipeline->IsTextureValid(name)) {
 		m_ptrTexture2Ds[name] = VKRenderer()->NewTexture2D(szFileName);
 
 		if (m_pDescriptorSet) {
@@ -221,7 +221,7 @@ bool CVKMaterialPass::SetTexture2DArray(const char *szName, const char *szFileNa
 {
 	uint32_t name = HashValue(szName);
 
-	if ((m_pPipeline == nullptr) || (m_pPipeline && m_pPipeline->IsTextureValid(name))) {
+	if (m_pPipeline && m_pPipeline->IsTextureValid(name)) {
 		m_ptrTexture2DArrays[name] = VKRenderer()->NewTexture2DArray(szFileName);
 
 		if (m_pDescriptorSet) {
@@ -238,7 +238,7 @@ bool CVKMaterialPass::SetTextureCubeMap(const char *szName, const char *szFileNa
 {
 	uint32_t name = HashValue(szName);
 
-	if ((m_pPipeline == nullptr) || (m_pPipeline && m_pPipeline->IsTextureValid(name))) {
+	if (m_pPipeline && m_pPipeline->IsTextureValid(name)) {
 		m_ptrTextureCubeMaps[name] = VKRenderer()->NewTextureCubeMap(szFileName);
 
 		if (m_pDescriptorSet) {
@@ -255,7 +255,7 @@ bool CVKMaterialPass::SetUniformVec1(const char *szName, float v0)
 {
 	uint32_t name = HashValue(szName);
 
-	if ((m_pPipeline == nullptr) || (m_pPipeline && m_pPipeline->IsUniformBlockValid(name))) {
+	if (m_pPipeline && m_pPipeline->IsUniformBlockValid(name)) {
 		if (m_pUniformVec1s[name] == nullptr) {
 			m_pUniformVec1s[name] = new CGfxUniformVec1;
 
@@ -276,7 +276,7 @@ bool CVKMaterialPass::SetUniformVec2(const char *szName, float v0, float v1)
 {
 	uint32_t name = HashValue(szName);
 
-	if ((m_pPipeline == nullptr) || (m_pPipeline && m_pPipeline->IsUniformBlockValid(name))) {
+	if (m_pPipeline && m_pPipeline->IsUniformBlockValid(name)) {
 		if (m_pUniformVec2s[name] == nullptr) {
 			m_pUniformVec2s[name] = new CGfxUniformVec2;
 
@@ -297,7 +297,7 @@ bool CVKMaterialPass::SetUniformVec3(const char *szName, float v0, float v1, flo
 {
 	uint32_t name = HashValue(szName);
 
-	if ((m_pPipeline == nullptr) || (m_pPipeline && m_pPipeline->IsUniformBlockValid(name))) {
+	if (m_pPipeline && m_pPipeline->IsUniformBlockValid(name)) {
 		if (m_pUniformVec3s[name] == nullptr) {
 			m_pUniformVec3s[name] = new CGfxUniformVec3;
 
@@ -318,7 +318,7 @@ bool CVKMaterialPass::SetUniformVec4(const char *szName, float v0, float v1, flo
 {
 	uint32_t name = HashValue(szName);
 
-	if ((m_pPipeline == nullptr) || (m_pPipeline && m_pPipeline->IsUniformBlockValid(name))) {
+	if (m_pPipeline && m_pPipeline->IsUniformBlockValid(name)) {
 		if (m_pUniformVec4s[name] == nullptr) {
 			m_pUniformVec4s[name] = new CGfxUniformVec4;
 
@@ -339,7 +339,7 @@ bool CVKMaterialPass::SetUniformMat4(const char *szName, const float *value)
 {
 	uint32_t name = HashValue(szName);
 
-	if ((m_pPipeline == nullptr) || (m_pPipeline && m_pPipeline->IsUniformBlockValid(name))) {
+	if (m_pPipeline && m_pPipeline->IsUniformBlockValid(name)) {
 		if (m_pUniformMat4s[name] == nullptr) {
 			m_pUniformMat4s[name] = new CGfxUniformMat4;
 
