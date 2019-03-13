@@ -10,7 +10,7 @@ class CVKDescriptorSet
 private:
 	typedef struct DescriptorImageInfo {
 		VkDescriptorImageInfo imageInfo;
-		CGfxSampler *pSampler;
+		CVKSampler *pSampler;
 		CGfxTexture2DPtr ptrTexture2D;
 		CGfxTexture2DArrayPtr ptrTexture2DArray;
 		CGfxTextureCubeMapPtr ptrTextureCubeMap;
@@ -35,10 +35,10 @@ public:
 	CVKDescriptorLayout* GetDescriptorLayout(void) const;
 
 public:
-	bool SetTexture2D(uint32_t name, const CGfxTexture2DPtr ptrTexture, CGfxSampler *pSampler);
-	bool SetTexture2DArray(uint32_t name, const CGfxTexture2DArrayPtr ptrTexture, CGfxSampler *pSampler);
-	bool SetTextureCubeMap(uint32_t name, const CGfxTextureCubeMapPtr ptrTexture, CGfxSampler *pSampler);
-	bool SetRenderTexture(uint32_t name, const CGfxRenderTexturePtr ptrRenderTexture, CGfxSampler *pSampler);
+	bool SetTexture2D(uint32_t name, const CGfxTexture2DPtr ptrTexture, const CGfxSampler *pSampler);
+	bool SetTexture2DArray(uint32_t name, const CGfxTexture2DArrayPtr ptrTexture, const CGfxSampler *pSampler);
+	bool SetTextureCubeMap(uint32_t name, const CGfxTextureCubeMapPtr ptrTexture, const CGfxSampler *pSampler);
+	bool SetRenderTexture(uint32_t name, const CGfxRenderTexturePtr ptrRenderTexture, const CGfxSampler *pSampler);
 	bool SetUniformBuffer(uint32_t name, const CGfxUniformBufferPtr ptrUniformBuffer);
 
 public:
