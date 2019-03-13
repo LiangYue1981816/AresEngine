@@ -17,6 +17,9 @@ public:
 	uint32_t GetName(void) const;
 
 public:
+	CGfxPipelineGraphics* GetPipeline(void) const;
+
+public:
 	bool SetPipeline(const CGfxRenderPass *pRenderPass, const CGfxShader *pVertexShader, const CGfxShader *pFragmentShader, const PipelineState &state, uint32_t indexSubpass, uint32_t vertexBinding, uint32_t instanceBinding);
 
 	bool SetSampler(const char *szName, GfxFilter minFilter, GfxFilter magFilter, GfxSamplerMipmapMode mipmapMode, GfxSamplerAddressMode addressMode);
@@ -34,8 +37,6 @@ public:
 	bool SetUniformMat4(const char *szName, const float *value);
 
 public:
-	CGfxPipelineGraphics* GetPipeline(void) const;
-
 	CGfxTexture2DPtr GetTexture2D(const char *szName) const;
 	CGfxTexture2DArrayPtr GetTexture2DArray(const char *szName) const;
 	CGfxTextureCubeMapPtr GetTextureCubeMap(const char *szName) const;

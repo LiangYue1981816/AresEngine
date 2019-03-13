@@ -17,6 +17,10 @@ public:
 	uint32_t GetName(void) const;
 
 public:
+	CGfxPipelineGraphics* GetPipeline(void) const;
+	CVKDescriptorSet* GetDescriptorSet(void) const;
+
+public:
 	bool SetPipeline(const CGfxRenderPass *pRenderPass, const CGfxShader *pVertexShader, const CGfxShader *pFragmentShader, const PipelineState &state, uint32_t indexSubpass, uint32_t vertexBinding, uint32_t instanceBinding);
 
 	bool SetSampler(const char *szName, GfxFilter minFilter, GfxFilter magFilter, GfxSamplerMipmapMode mipmapMode, GfxSamplerAddressMode addressMode);
@@ -34,9 +38,6 @@ public:
 	bool SetUniformMat4(const char *szName, const float *value);
 
 public:
-	CGfxPipelineGraphics* GetPipeline(void) const;
-	CVKDescriptorSet* GetDescriptorSet(void) const;
-
 	CGfxTexture2DPtr GetTexture2D(const char *szName) const;
 	CGfxTexture2DArrayPtr GetTexture2DArray(const char *szName) const;
 	CGfxTextureCubeMapPtr GetTextureCubeMap(const char *szName) const;
@@ -52,11 +53,8 @@ private:
 	CGfxPipelineGraphics *m_pPipeline;
 	CVKDescriptorSet *m_pDescriptorSet;
 
+private:
 	eastl::unordered_map<uint32_t, CGfxSampler*> m_pSamplers;
-	eastl::unordered_map<uint32_t, CGfxTexture2DPtr> m_ptrTexture2Ds;
-	eastl::unordered_map<uint32_t, CGfxTexture2DArrayPtr> m_ptrTexture2DArrays;
-	eastl::unordered_map<uint32_t, CGfxTextureCubeMapPtr> m_ptrTextureCubeMaps;
-
 	eastl::unordered_map<uint32_t, CGfxUniformVec1*> m_pUniformVec1s;
 	eastl::unordered_map<uint32_t, CGfxUniformVec2*> m_pUniformVec2s;
 	eastl::unordered_map<uint32_t, CGfxUniformVec3*> m_pUniformVec3s;

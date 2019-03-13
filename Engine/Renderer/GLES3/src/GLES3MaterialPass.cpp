@@ -41,6 +41,11 @@ uint32_t CGLES3MaterialPass::GetName(void) const
 	return m_name;
 }
 
+CGfxPipelineGraphics* CGLES3MaterialPass::GetPipeline(void) const
+{
+	return m_pPipeline;
+}
+
 bool CGLES3MaterialPass::SetPipeline(const CGfxRenderPass *pRenderPass, const CGfxShader *pVertexShader, const CGfxShader *pFragmentShader, const PipelineState &state, uint32_t indexSubpass, uint32_t vertexBinding, uint32_t instanceBinding)
 {
 	if (pRenderPass == nullptr) {
@@ -242,11 +247,6 @@ bool CGLES3MaterialPass::SetUniformMat4(const char *szName, const float *value)
 	}
 
 	return false;
-}
-
-CGfxPipelineGraphics* CGLES3MaterialPass::GetPipeline(void) const
-{
-	return m_pPipeline;
 }
 
 CGfxTexture2DPtr CGLES3MaterialPass::GetTexture2D(const char *szName) const
