@@ -36,8 +36,8 @@ public:
 	void Bind(VkCommandBuffer vkCommandBuffer) const;
 
 public:
-	CVKBufferPtr IndexBufferTransfer(VkCommandBuffer vkCommandBuffer);
-	CVKBufferPtr VertexBufferTransfer(VkCommandBuffer vkCommandBuffer);
+	CVKBufferPtr TransferIndexBuffer(VkCommandBuffer vkCommandBuffer);
+	CVKBufferPtr TransferVertexBuffer(VkCommandBuffer vkCommandBuffer);
 
 
 private:

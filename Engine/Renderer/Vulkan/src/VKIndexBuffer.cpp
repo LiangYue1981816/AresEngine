@@ -73,19 +73,19 @@ void CVKIndexBuffer::Bind(VkCommandBuffer vkCommandBuffer, VkDeviceSize offset) 
 	}
 }
 
-CVKBufferPtr CVKIndexBuffer::BufferTransfer(VkCommandBuffer vkCommandBuffer)
+CVKBufferPtr CVKIndexBuffer::TransferBuffer(VkCommandBuffer vkCommandBuffer)
 {
-	CVKBufferPtr ptrBufferTransfer;
+	CVKBufferPtr ptrBuffer;
 
 	if (m_transferBuffer.size()) {
-		ptrBufferTransfer = CVKBufferPtr(new CVKBuffer(m_pDevice, m_transferBuffer.size(), VK_BUFFER_USAGE_TRANSFER_SRC_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT));
-		ptrBufferTransfer->BufferData(0, m_transferBuffer.size(), m_transferBuffer.data());
-		vkCmdTransferBuffer(vkCommandBuffer, ptrBufferTransfer->GetBuffer(), m_ptrBuffer->GetBuffer(), VK_ACCESS_VERTEX_ATTRIBUTE_READ_BIT, VK_PIPELINE_STAGE_VERTEX_INPUT_BIT, 0, m_transferOffset, m_transferBuffer.size());
+		ptrBuffer = CVKBufferPtr(new CVKBuffer(m_pDevice, m_transferBuffer.size(), VK_BUFFER_USAGE_TRANSFER_SRC_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT));
+		ptrBuffer->BufferData(0, m_transferBuffer.size(), m_transferBuffer.data());
+		vkCmdTransferBuffer(vkCommandBuffer, ptrBuffer->GetBuffer(), m_ptrBuffer->GetBuffer(), VK_ACCESS_VERTEX_ATTRIBUTE_READ_BIT, VK_PIPELINE_STAGE_VERTEX_INPUT_BIT, 0, m_transferOffset, m_transferBuffer.size());
 
 		m_transferOffset = 0;
 		m_transferBuffer.clear();
 		m_transferBuffer.shrink_to_fit();
 	}
 
-	return ptrBufferTransfer;
+	return ptrBuffer;
 }
