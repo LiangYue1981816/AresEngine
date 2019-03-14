@@ -18,12 +18,8 @@ public:
 
 public:
 	Draw* GetDraw(int indexDraw);
-
 	CGfxIndexBuffer* GetIndexBuffer(void);
-	GfxIndexType GetIndexType(void) const;
-
 	CGfxVertexBuffer* GetVertexBuffer(void);
-	uint32_t GetVertexFormat(void) const;
 
 public:
 	bool CreateIndexBuffer(GfxIndexType type, size_t size, bool bDynamic, const void *pBuffer);
