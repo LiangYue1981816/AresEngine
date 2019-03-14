@@ -42,8 +42,13 @@
 
 #include "GfxMesh.h"
 #include "GfxMeshDraw.h"
+
 #include "GfxMaterial.h"
 #include "GfxMaterialPass.h"
+
+#include "GfxDescriptorSet.h"
+#include "GfxDescriptorLayout.h"
+
 #include "GfxCommandBuffer.h"
 
 #include "GfxCamera.h"
