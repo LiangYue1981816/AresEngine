@@ -41,6 +41,10 @@ public:
 	virtual HANDLE GetRenderPass(void) const = 0;
 
 public:
+	virtual bool Create(void) = 0;
+	virtual void Destroy(void) = 0;
+
+public:
 	virtual bool SetColorAttachment(int indexAttachment, GfxPixelFormat pixelFormat, int samples, bool bInvalidation, bool bClear, float red = 0.0f, float green = 0.0f, float blue = 0.0f, float alpha = 0.0f) = 0;
 	virtual bool SetDepthStencilAttachment(int indexAttachment, GfxPixelFormat pixelFormat, int samples, bool bInvalidation, bool bClear, float depth = 1.0f, int stencil = 0) = 0;
 
@@ -59,8 +63,4 @@ public:
 	virtual uint32_t GetSubpassInputAttachmentCount(int indexSubpass) const = 0;
 	virtual uint32_t GetSubpassOutputAttachmentCount(int indexSubpass) const = 0;
 	virtual const SubpassInformation* GetSubpass(int indexSubpass) const = 0;
-
-public:
-	virtual bool Create(void) = 0;
-	virtual void Destroy(void) = 0;
 };

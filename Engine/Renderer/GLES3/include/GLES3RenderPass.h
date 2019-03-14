@@ -20,6 +20,10 @@ public:
 	HANDLE GetRenderPass(void) const;
 
 public:
+	bool Create(void);
+	void Destroy(void);
+
+public:
 	bool SetColorAttachment(int indexAttachment, GfxPixelFormat pixelFormat, int samples, bool bInvalidation, bool bClear, float red = 0.0f, float green = 0.0f, float blue = 0.0f, float alpha = 0.0f);
 	bool SetDepthStencilAttachment(int indexAttachment, GfxPixelFormat pixelFormat, int samples, bool bInvalidation, bool bClear, float depth = 1.0f, int stencil = 0);
 
@@ -38,10 +42,6 @@ public:
 	uint32_t GetSubpassInputAttachmentCount(int indexSubpass) const;
 	uint32_t GetSubpassOutputAttachmentCount(int indexSubpass) const;
 	const SubpassInformation* GetSubpass(int indexSubpass) const;
-
-public:
-	bool Create(void);
-	void Destroy(void);
 
 
 private:

@@ -39,28 +39,6 @@ int CVKFrameBuffer::GetHeight(void) const
 	return m_height;
 }
 
-bool CVKFrameBuffer::SetAttachmentTexture(int indexAttachment, CGfxRenderTexturePtr ptrAttachmentTexture)
-{
-	if (ptrAttachmentTexture->GetWidth() == m_width && ptrAttachmentTexture->GetHeight() == m_height &&
-		indexAttachment >= 0 && indexAttachment < (int)m_ptrAttachmentTextures.size()) {
-		m_ptrAttachmentTextures[indexAttachment] = ptrAttachmentTexture;
-		return true;
-	}
-	else {
-		return false;
-	}
-}
-
-CGfxRenderTexturePtr CVKFrameBuffer::GetAttachmentTexture(int indexAttachment) const
-{
-	if (indexAttachment >= 0 && indexAttachment < (int)m_ptrAttachmentTextures.size()) {
-		return m_ptrAttachmentTextures[indexAttachment];
-	}
-	else {
-		return nullptr;
-	}
-}
-
 bool CVKFrameBuffer::Create(const CGfxRenderPassPtr ptrRenderPass)
 {
 	Destroy();
@@ -100,4 +78,26 @@ void CVKFrameBuffer::Destroy(void)
 	}
 
 	m_vkFrameBuffer = VK_NULL_HANDLE;
+}
+
+bool CVKFrameBuffer::SetAttachmentTexture(int indexAttachment, CGfxRenderTexturePtr ptrAttachmentTexture)
+{
+	if (ptrAttachmentTexture->GetWidth() == m_width && ptrAttachmentTexture->GetHeight() == m_height &&
+		indexAttachment >= 0 && indexAttachment < (int)m_ptrAttachmentTextures.size()) {
+		m_ptrAttachmentTextures[indexAttachment] = ptrAttachmentTexture;
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+CGfxRenderTexturePtr CVKFrameBuffer::GetAttachmentTexture(int indexAttachment) const
+{
+	if (indexAttachment >= 0 && indexAttachment < (int)m_ptrAttachmentTextures.size()) {
+		return m_ptrAttachmentTextures[indexAttachment];
+	}
+	else {
+		return nullptr;
+	}
 }

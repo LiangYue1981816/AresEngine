@@ -21,12 +21,12 @@ public:
 	int GetHeight(void) const;
 
 public:
-	bool SetAttachmentTexture(int indexAttachment, CGfxRenderTexturePtr ptrAttachmentTexture);
-	CGfxRenderTexturePtr GetAttachmentTexture(int indexAttachment) const;
-
-public:
 	bool Create(const CGfxRenderPassPtr ptrRenderPass);
 	void Destroy(void);
+
+public:
+	bool SetAttachmentTexture(int indexAttachment, CGfxRenderTexturePtr ptrAttachmentTexture);
+	CGfxRenderTexturePtr GetAttachmentTexture(int indexAttachment) const;
 
 
 private:
