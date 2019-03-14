@@ -30,6 +30,16 @@ HANDLE CGLES3RenderPass::GetRenderPass(void) const
 	return 0;
 }
 
+bool CGLES3RenderPass::Create(void)
+{
+	return true;
+}
+
+void CGLES3RenderPass::Destroy(void)
+{
+
+}
+
 bool CGLES3RenderPass::SetColorAttachment(int indexAttachment, GfxPixelFormat pixelFormat, int samples, bool bInvalidation, bool bClear, float red, float green, float blue, float alpha)
 {
 	if (indexAttachment >= (int)m_attachments.size()) {
@@ -178,14 +188,4 @@ const SubpassInformation* CGLES3RenderPass::GetSubpass(int indexSubpass) const
 	else {
 		return nullptr;
 	}
-}
-
-bool CGLES3RenderPass::Create(void)
-{
-	return true;
-}
-
-void CGLES3RenderPass::Destroy(void)
-{
-
 }

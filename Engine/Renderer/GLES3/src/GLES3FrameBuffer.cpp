@@ -39,27 +39,6 @@ int CGLES3FrameBuffer::GetHeight(void) const
 	return m_height;
 }
 
-bool CGLES3FrameBuffer::SetAttachmentTexture(int indexAttachment, CGfxRenderTexturePtr ptrAttachmentTexture)
-{
-	if (ptrAttachmentTexture->GetWidth() == m_width && ptrAttachmentTexture->GetHeight() == m_height && indexAttachment >= 0 && indexAttachment < (int)m_ptrAttachmentTextures.size()) {
-		m_ptrAttachmentTextures[indexAttachment] = ptrAttachmentTexture;
-		return true;
-	}
-	else {
-		return false;
-	}
-}
-
-CGfxRenderTexturePtr CGLES3FrameBuffer::GetAttachmentTexture(int indexAttachment) const
-{
-	if (indexAttachment >= 0 && indexAttachment < (int)m_ptrAttachmentTextures.size()) {
-		return m_ptrAttachmentTextures[indexAttachment];
-	}
-	else {
-		return nullptr;
-	}
-}
-
 bool CGLES3FrameBuffer::Create(const CGfxRenderPassPtr ptrRenderPass)
 {
 	Destroy();
@@ -82,6 +61,27 @@ void CGLES3FrameBuffer::Destroy(void)
 
 	m_fbo = 0;
 	m_resolve = 0;
+}
+
+bool CGLES3FrameBuffer::SetAttachmentTexture(int indexAttachment, CGfxRenderTexturePtr ptrAttachmentTexture)
+{
+	if (ptrAttachmentTexture->GetWidth() == m_width && ptrAttachmentTexture->GetHeight() == m_height && indexAttachment >= 0 && indexAttachment < (int)m_ptrAttachmentTextures.size()) {
+		m_ptrAttachmentTextures[indexAttachment] = ptrAttachmentTexture;
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+CGfxRenderTexturePtr CGLES3FrameBuffer::GetAttachmentTexture(int indexAttachment) const
+{
+	if (indexAttachment >= 0 && indexAttachment < (int)m_ptrAttachmentTextures.size()) {
+		return m_ptrAttachmentTextures[indexAttachment];
+	}
+	else {
+		return nullptr;
+	}
 }
 
 void CGLES3FrameBuffer::Bind(const AttachmentInformation *pAttachmentInformations, const SubpassInformation *pSubpassInformation) const
