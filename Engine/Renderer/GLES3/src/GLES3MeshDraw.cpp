@@ -40,30 +40,10 @@ uint32_t CGLES3MeshDraw::GetName(void) const
 	return m_name;
 }
 
-glm::aabb CGLES3MeshDraw::GetLocalAABB(void) const
-{
-	if (m_pMeshDraw) {
-		return m_pMeshDraw->aabb;
-	}
-	else {
-		return glm::aabb();
-	}
-}
-
-GfxIndexType CGLES3MeshDraw::GetIndexType(void) const
-{
-	if (m_ptrMesh.IsValid()) {
-		return m_ptrMesh->GetIndexType();
-	}
-	else {
-		return GFX_INDEX_INVALID_ENUM;
-	}
-}
-
 uint32_t CGLES3MeshDraw::GetVertexFormat(void) const
 {
 	if (m_ptrMesh.IsValid()) {
-		return m_ptrMesh->GetVertexFormat();
+		return m_ptrMesh->GetVertexBuffer()->GetVertexFormat();
 	}
 	else {
 		return 0;
@@ -94,6 +74,16 @@ uint32_t CGLES3MeshDraw::GetIndexOffset(void) const
 	}
 }
 
+GfxIndexType CGLES3MeshDraw::GetIndexType(void) const
+{
+	if (m_ptrMesh.IsValid()) {
+		return m_ptrMesh->GetIndexBuffer()->GetIndexType();
+	}
+	else {
+		return GFX_INDEX_INVALID_ENUM;
+	}
+}
+
 uint32_t CGLES3MeshDraw::GetInstanceCount(void) const
 {
 	if (m_pInstanceBuffer) {
@@ -111,6 +101,16 @@ uint32_t CGLES3MeshDraw::GetInstanceFormat(void) const
 	}
 	else {
 		return 0;
+	}
+}
+
+glm::aabb CGLES3MeshDraw::GetLocalAABB(void) const
+{
+	if (m_pMeshDraw) {
+		return m_pMeshDraw->aabb;
+	}
+	else {
+		return glm::aabb();
 	}
 }
 
