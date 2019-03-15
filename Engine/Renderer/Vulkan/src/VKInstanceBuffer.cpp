@@ -11,7 +11,6 @@ CVKInstanceBuffer::CVKInstanceBuffer(CVKDevice *pDevice, uint32_t instanceFormat
 	, m_count(0)
 	, m_size(INSTANCE_BUFFER_SIZE)
 
-	, m_hash(INVALID_HASHVALUE)
 	, m_binding(instanceBinding)
 {
 	m_ptrBuffer = CVKBufferPtr(new CVKBuffer(m_pDevice, CGfxSwapChain::SWAPCHAIN_FRAME_COUNT * m_size, VK_BUFFER_USAGE_VERTEX_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT));
@@ -40,27 +39,20 @@ uint32_t CVKInstanceBuffer::GetSize(void) const
 
 bool CVKInstanceBuffer::BufferData(size_t size, const void *pBuffer)
 {
-	uint32_t hash = HashValue((uint8_t *)pBuffer, size, 2);
+	m_count = size / GetInstanceStride(m_format);
 
-	if (m_hash != hash) {
-		m_hash  = hash;
-		m_count = size / GetInstanceStride(m_format);
+	if (m_size < size) {
+		CGfxProfiler::DecInstanceBufferSize(m_size);
+		{
+			m_size = INSTANCE_BUFFER_SIZE;
+			while (m_size < size) m_size <<= 1;
 
-		if (m_size < size) {
-			CGfxProfiler::DecInstanceBufferSize(m_size);
-			{
-				m_size = INSTANCE_BUFFER_SIZE;
-				while (m_size < size) m_size <<= 1;
-
-				m_ptrBuffer = CVKBufferPtr(new CVKBuffer(m_pDevice, CGfxSwapChain::SWAPCHAIN_FRAME_COUNT * m_size, VK_BUFFER_USAGE_VERTEX_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT));
-			}
-			CGfxProfiler::IncInstanceBufferSize(m_size);
+			m_ptrBuffer = CVKBufferPtr(new CVKBuffer(m_pDevice, CGfxSwapChain::SWAPCHAIN_FRAME_COUNT * m_size, VK_BUFFER_USAGE_VERTEX_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT));
 		}
-
-		return m_ptrBuffer->BufferData(VKRenderer()->GetSwapChain()->GetFrameIndex() * m_size, size, pBuffer);
+		CGfxProfiler::IncInstanceBufferSize(m_size);
 	}
 
-	return true;
+	return m_ptrBuffer->BufferData(VKRenderer()->GetSwapChain()->GetFrameIndex() * m_size, size, pBuffer);
 }
 
 void CVKInstanceBuffer::Bind(VkCommandBuffer vkCommandBuffer, VkDeviceSize offset) const

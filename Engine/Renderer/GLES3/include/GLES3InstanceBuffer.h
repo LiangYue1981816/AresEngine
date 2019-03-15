@@ -28,7 +28,4 @@ private:
 private:
 	uint32_t m_format;
 	uint32_t m_count;
-
-private:
-	uint32_t m_hash;
 };
