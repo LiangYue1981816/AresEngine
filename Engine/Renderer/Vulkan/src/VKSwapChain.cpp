@@ -67,7 +67,7 @@ CVKSwapChain::CVKSwapChain(CVKDevice *pDevice, int width, int height, GfxPixelFo
 	: CGfxSwapChain(width, height, pixelFormat)
 	, m_pDevice(pDevice)
 
-	, m_pixelFormat(pixelFormat)
+	, m_format(pixelFormat)
 	, m_width(width)
 	, m_height(height)
 
@@ -145,7 +145,7 @@ bool CVKSwapChain::CreateSwapChain(const eastl::vector<VkPresentModeKHR> &modes,
 	VkImageUsageFlags imageUsage = GetSwapchainUsageFlags(capabilities);
 	VkSurfaceTransformFlagBitsKHR preTransform = GetSwapchainTransform(capabilities, VK_SURFACE_TRANSFORM_IDENTITY_BIT_KHR);
 	VkPresentModeKHR presentMode = GetSwapchainPresentMode(modes);
-	VkSurfaceFormatKHR imageFormat = GetSwapchainFormat(formats, (VkFormat)m_pixelFormat);
+	VkSurfaceFormatKHR imageFormat = GetSwapchainFormat(formats, (VkFormat)m_format);
 
 	VkSwapchainCreateInfoKHR swapchainCreateInfo = {};
 	swapchainCreateInfo.sType = VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR;
@@ -204,14 +204,14 @@ bool CVKSwapChain::CreateImagesAndImageViews(void)
 		imageViewCreateInfo.flags = 0;
 		imageViewCreateInfo.image = m_vkImages[index];
 		imageViewCreateInfo.viewType = VK_IMAGE_VIEW_TYPE_2D;
-		imageViewCreateInfo.format = (VkFormat)m_pixelFormat;
-		imageViewCreateInfo.components = CVKHelper::GetFormatComponentMapping((VkFormat)m_pixelFormat);
+		imageViewCreateInfo.format = (VkFormat)m_format;
+		imageViewCreateInfo.components = CVKHelper::GetFormatComponentMapping((VkFormat)m_format);
 		imageViewCreateInfo.subresourceRange = { VK_IMAGE_ASPECT_COLOR_BIT, 0, 1, 0, 1 };
 		CALL_VK_FUNCTION_RETURN_BOOL(vkCreateImageView(m_pDevice->GetDevice(), &imageViewCreateInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkImageViews[index]));
 
 		uint32_t name = HashValueFormat("SwapChain Frame Texture %d", index);
 		m_ptrRenderTextures[index] = VKRenderer()->NewRenderTexture(name);
-		CALL_BOOL_FUNCTION_RETURN_BOOL(m_ptrRenderTextures[index]->Create((HANDLE)m_vkImageViews[index], m_pixelFormat, m_width, m_height));
+		CALL_BOOL_FUNCTION_RETURN_BOOL(m_ptrRenderTextures[index]->Create((HANDLE)m_vkImageViews[index], m_format, m_width, m_height));
 	}
 
 	return true;
@@ -247,9 +247,9 @@ void CVKSwapChain::DestroyImagesAndImageViews(void)
 	}
 }
 
-GfxPixelFormat CVKSwapChain::GetPixelFormat(void) const
+GfxPixelFormat CVKSwapChain::GetFormat(void) const
 {
-	return m_pixelFormat;
+	return m_format;
 }
 
 int CVKSwapChain::GetWidth(void) const

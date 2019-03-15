@@ -29,7 +29,6 @@ private:
 	uint32_t m_baseOffset;
 
 private:
-	uint32_t m_hash;
 	CVKBufferPtr m_ptrBuffer;
 
 private:

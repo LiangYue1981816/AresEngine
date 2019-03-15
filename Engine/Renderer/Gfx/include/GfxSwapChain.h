@@ -16,7 +16,7 @@ public:
 
 
 public:
-	virtual GfxPixelFormat GetPixelFormat(void) const = 0;
+	virtual GfxPixelFormat GetFormat(void) const = 0;
 
 	virtual int GetWidth(void) const = 0;
 	virtual int GetHeight(void) const = 0;

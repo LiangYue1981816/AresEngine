@@ -7,14 +7,14 @@ CGLES3SwapChain::CGLES3SwapChain(void *hDC, int width, int height, GfxPixelForma
 
 	, m_width(width)
 	, m_height(height)
-	, m_pixelFormat(pixelFormat)
+	, m_format(pixelFormat)
 
 	, m_fbo(0)
 	, m_indexFrame(0)
 {
-	if (m_width != 0 && m_height != 0 && m_pixelFormat != GFX_PIXELFORMAT_UNDEFINED) {
+	if (m_width != 0 && m_height != 0 && m_format != GFX_PIXELFORMAT_UNDEFINED) {
 		m_ptrFrameTexture = GLES3Renderer()->NewRenderTexture(HashValue("SwapChain Frame Texture"));
-		m_ptrFrameTexture->Create(m_pixelFormat, m_width, m_height);
+		m_ptrFrameTexture->Create(m_format, m_width, m_height);
 
 		glGenFramebuffers(1, &m_fbo);
 		glBindFramebuffer(GL_FRAMEBUFFER, m_fbo);
@@ -42,9 +42,9 @@ CGLES3SwapChain::~CGLES3SwapChain(void)
 	}
 }
 
-GfxPixelFormat CGLES3SwapChain::GetPixelFormat(void) const
+GfxPixelFormat CGLES3SwapChain::GetFormat(void) const
 {
-	return m_pixelFormat;
+	return m_format;
 }
 
 int CGLES3SwapChain::GetWidth(void) const

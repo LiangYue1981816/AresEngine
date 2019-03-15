@@ -13,7 +13,7 @@ private:
 
 
 public:
-	GfxPixelFormat GetPixelFormat(void) const;
+	GfxPixelFormat GetFormat(void) const;
 
 	int GetWidth(void) const;
 	int GetHeight(void) const;
@@ -31,7 +31,7 @@ private:
 	void *m_hDC;
 
 private:
-	GfxPixelFormat m_pixelFormat;
+	GfxPixelFormat m_format;
 
 	int m_width;
 	int m_height;

@@ -9,8 +9,6 @@ CGLES3InstanceBuffer::CGLES3InstanceBuffer(uint32_t instanceFormat, uint32_t ins
 
 	, m_format(instanceFormat)
 	, m_count(0)
-
-	, m_hash(INVALID_HASHVALUE)
 {
 	CGfxProfiler::IncInstanceBufferSize(m_size);
 }
@@ -37,27 +35,22 @@ uint32_t CGLES3InstanceBuffer::GetSize(void) const
 
 bool CGLES3InstanceBuffer::BufferData(size_t size, const void *pBuffer)
 {
-	uint32_t hash = HashValue((uint8_t *)pBuffer, size, 2);
+	m_count = size / GetInstanceStride(m_format);
 
-	if (m_hash != hash) {
-		m_hash  = hash;
-		m_count = size / GetInstanceStride(m_format);
+	GLBindBuffer(m_target, m_buffer);
+	{
+		if (m_size < size) {
+			CGfxProfiler::DecInstanceBufferSize(m_size);
+			{
+				m_size = INSTANCE_BUFFER_SIZE;
+				while (m_size < size) m_size <<= 1;
 
-		GLBindBuffer(m_target, m_buffer);
-		{
-			if (m_size < size) {
-				CGfxProfiler::DecInstanceBufferSize(m_size);
-				{
-					m_size = INSTANCE_BUFFER_SIZE;
-					while (m_size < size) m_size <<= 1;
-
-					glBufferData(m_target, m_size, nullptr, GL_DYNAMIC_DRAW);
-				}
-				CGfxProfiler::IncInstanceBufferSize(m_size);
+				glBufferData(m_target, m_size, nullptr, GL_DYNAMIC_DRAW);
 			}
-
-			glBufferSubData(m_target, 0, size, pBuffer);
+			CGfxProfiler::IncInstanceBufferSize(m_size);
 		}
+
+		glBufferSubData(m_target, 0, size, pBuffer);
 	}
 
 	return true;
