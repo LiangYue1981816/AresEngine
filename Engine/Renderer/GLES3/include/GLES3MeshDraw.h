@@ -26,7 +26,6 @@ public:
 	uint32_t GetInstanceCount(void) const;
 	uint32_t GetInstanceFormat(void) const;
 
-public:
 	glm::aabb GetLocalAABB(void) const;
 
 public:
