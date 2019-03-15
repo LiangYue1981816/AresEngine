@@ -2,7 +2,7 @@
 #include "GLES3Renderer.h"
 
 
-class CGLES3UniformBuffer : public CGLES3Buffer, public CGfxUniformBuffer
+class CGLES3UniformBuffer : public CGfxUniformBuffer
 {
 	friend class CGLES3Pipeline;
 	friend class CGLES3UniformBufferManager;
@@ -26,6 +26,9 @@ public:
 private:
 	void Bind(int index, int offset, int size) const;
 
+
+private:
+	CGLES3BufferPtr m_ptrBuffer;
 
 private:
 	CGLES3UniformBufferManager *m_pManager;

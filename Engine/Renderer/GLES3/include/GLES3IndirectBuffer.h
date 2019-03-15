@@ -2,7 +2,7 @@
 #include "GLES3Renderer.h"
 
 
-class CGLES3IndirectBuffer : public CGLES3Buffer, public CGfxIndirectBuffer
+class CGLES3IndirectBuffer : public CGfxIndirectBuffer
 {
 	friend class CGLES3MeshDraw;
 	friend class CGLES3VertexArrayObject;
@@ -28,4 +28,7 @@ private:
 
 private:
 	eastl::vector<DrawCommand> m_draws;
+
+private:
+	CGLES3BufferPtr m_ptrBuffer;
 };

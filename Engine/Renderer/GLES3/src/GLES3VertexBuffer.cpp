@@ -2,18 +2,17 @@
 
 
 CGLES3VertexBuffer::CGLES3VertexBuffer(uint32_t vertexFormat, uint32_t vertexBinding, size_t size, bool bDynamic)
-	: CGLES3Buffer(GL_ARRAY_BUFFER, size, bDynamic)
-	, CGfxVertexBuffer(vertexFormat, vertexBinding, size, bDynamic)
-
+	: CGfxVertexBuffer(vertexFormat, vertexBinding, size, bDynamic)
 	, m_format(vertexFormat)
 	, m_count(size / GetVertexStride(vertexFormat))
 {
-	CGfxProfiler::IncVertexBufferSize(m_size);
+	m_ptrBuffer = CGLES3BufferPtr(new CGLES3Buffer(GL_ARRAY_BUFFER, size, bDynamic));
+	CGfxProfiler::IncVertexBufferSize(m_ptrBuffer->GetSize());
 }
 
 CGLES3VertexBuffer::~CGLES3VertexBuffer(void)
 {
-	CGfxProfiler::DecVertexBufferSize(m_size);
+	CGfxProfiler::DecVertexBufferSize(m_ptrBuffer->GetSize());
 }
 
 uint32_t CGLES3VertexBuffer::GetVertexFormat(void) const
@@ -28,24 +27,17 @@ uint32_t CGLES3VertexBuffer::GetVertexCount(void) const
 
 uint32_t CGLES3VertexBuffer::GetSize(void) const
 {
-	return m_size;
+	return m_ptrBuffer->GetSize();
 }
 
 bool CGLES3VertexBuffer::BufferData(size_t offset, size_t size, const void *pBuffer)
 {
-	if (m_size < (uint32_t)(offset + size)) {
-		return false;
-	}
-
-	GLBindBuffer(m_target, m_buffer);
-	glBufferSubData(m_target, (int)offset, (uint32_t)size, pBuffer);
-
-	return true;
+	return m_ptrBuffer->BufferData(offset, size, pBuffer);
 }
 
 void CGLES3VertexBuffer::Bind(void) const
 {
-	GLBindBuffer(m_target, m_buffer);
+	m_ptrBuffer->Bind();
 
 	for (uint32_t indexAttribute = 0; indexAttribute < GetVertexAttributeCount(); indexAttribute++) {
 		uint32_t attribute = (1 << indexAttribute);

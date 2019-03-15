@@ -2,16 +2,16 @@
 
 
 CGLES3UniformBuffer::CGLES3UniformBuffer(CGLES3UniformBufferManager *pManager, size_t size)
-	: CGLES3Buffer(GL_UNIFORM_BUFFER, size, true)
-	, CGfxUniformBuffer(size)
+	: CGfxUniformBuffer(size)
 	, m_pManager(pManager)
 {
-	CGfxProfiler::IncUniformBufferSize(m_size);
+	m_ptrBuffer = CGLES3BufferPtr(new CGLES3Buffer(GL_UNIFORM_BUFFER, size, true));
+	CGfxProfiler::IncUniformBufferSize(m_ptrBuffer->GetSize());
 }
 
 CGLES3UniformBuffer::~CGLES3UniformBuffer(void)
 {
-	CGfxProfiler::DecUniformBufferSize(m_size);
+	CGfxProfiler::DecUniformBufferSize(m_ptrBuffer->GetSize());
 }
 
 void CGLES3UniformBuffer::Release(void)
@@ -21,31 +21,20 @@ void CGLES3UniformBuffer::Release(void)
 
 HANDLE CGLES3UniformBuffer::GetBuffer(void) const
 {
-	return (HANDLE)m_buffer;
+	return (HANDLE)m_ptrBuffer->GetBuffer();
 }
 
 uint32_t CGLES3UniformBuffer::GetSize(void) const
 {
-	return m_size;
+	return m_ptrBuffer->GetSize();
 }
 
 bool CGLES3UniformBuffer::BufferData(size_t offset, size_t size, const void *pBuffer)
 {
-	if (m_size < (uint32_t)(offset + size)) {
-		return false;
-	}
-
-	GLBindBuffer(m_target, m_buffer);
-	glBufferSubData(m_target, (int)offset, (uint32_t)size, pBuffer);
-
-	return true;
+	return m_ptrBuffer->BufferData(offset, size, pBuffer);
 }
 
 void CGLES3UniformBuffer::Bind(int index, int offset, int size) const
 {
-	if (m_size < (uint32_t)(offset + size)) {
-		return;
-	}
-
-	GLBindBufferRange(m_target, index, m_buffer, offset, size);
+	m_ptrBuffer->Bind(index, offset, size);
 }

@@ -4,18 +4,17 @@
 static const int INSTANCE_BUFFER_SIZE = 64;
 
 CGLES3InstanceBuffer::CGLES3InstanceBuffer(uint32_t instanceFormat, uint32_t instanceBinding)
-	: CGLES3Buffer(GL_ARRAY_BUFFER, INSTANCE_BUFFER_SIZE, true)
-	, CGfxInstanceBuffer(instanceFormat, instanceBinding)
-
+	: CGfxInstanceBuffer(instanceFormat, instanceBinding)
 	, m_format(instanceFormat)
 	, m_count(0)
 {
-	CGfxProfiler::IncInstanceBufferSize(m_size);
+	m_ptrBuffer = CGLES3BufferPtr(new CGLES3Buffer(GL_ARRAY_BUFFER, INSTANCE_BUFFER_SIZE, true));
+	CGfxProfiler::IncInstanceBufferSize(m_ptrBuffer->GetSize());
 }
 
 CGLES3InstanceBuffer::~CGLES3InstanceBuffer(void)
 {
-	CGfxProfiler::DecInstanceBufferSize(m_size);
+	CGfxProfiler::DecInstanceBufferSize(m_ptrBuffer->GetSize());
 }
 
 uint32_t CGLES3InstanceBuffer::GetInstanceFormat(void) const
@@ -30,35 +29,30 @@ uint32_t CGLES3InstanceBuffer::GetInstanceCount(void) const
 
 uint32_t CGLES3InstanceBuffer::GetSize(void) const
 {
-	return m_size;
+	return m_ptrBuffer->GetSize();
 }
 
 bool CGLES3InstanceBuffer::BufferData(size_t size, const void *pBuffer)
 {
 	m_count = size / GetInstanceStride(m_format);
 
-	GLBindBuffer(m_target, m_buffer);
-	{
-		if (m_size < size) {
-			CGfxProfiler::DecInstanceBufferSize(m_size);
-			{
-				m_size = INSTANCE_BUFFER_SIZE;
-				while (m_size < size) m_size <<= 1;
+	if (m_ptrBuffer->GetSize() < size) {
+		CGfxProfiler::DecInstanceBufferSize(m_ptrBuffer->GetSize());
+		{
+			size_t newSize = INSTANCE_BUFFER_SIZE;
+			while (newSize < size) newSize <<= 1;
 
-				glBufferData(m_target, m_size, nullptr, GL_DYNAMIC_DRAW);
-			}
-			CGfxProfiler::IncInstanceBufferSize(m_size);
+			m_ptrBuffer->BufferData(newSize, true);
 		}
-
-		glBufferSubData(m_target, 0, size, pBuffer);
+		CGfxProfiler::IncInstanceBufferSize(m_ptrBuffer->GetSize());
 	}
 
-	return true;
+	return m_ptrBuffer->BufferData(0, size, pBuffer);
 }
 
 void CGLES3InstanceBuffer::Bind(void) const
 {
-	GLBindBuffer(m_target, m_buffer);
+	m_ptrBuffer->Bind();
 
 	for (uint32_t indexAttribute = 0; indexAttribute < GetInstanceAttributeCount(); indexAttribute++) {
 		uint32_t attribute = (1 << indexAttribute);

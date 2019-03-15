@@ -2,7 +2,7 @@
 #include "GLES3Renderer.h"
 
 
-class CGLES3InstanceBuffer : public CGLES3Buffer, public CGfxInstanceBuffer
+class CGLES3InstanceBuffer : public CGfxInstanceBuffer
 {
 	friend class CGLES3MeshDraw;
 	friend class CGLES3VertexArrayObject;
@@ -28,4 +28,7 @@ private:
 private:
 	uint32_t m_format;
 	uint32_t m_count;
+
+private:
+	CGLES3BufferPtr m_ptrBuffer;
 };

@@ -2,17 +2,16 @@
 
 
 CGLES3IndexBuffer::CGLES3IndexBuffer(GfxIndexType type, size_t size, bool bDynamic)
-	: CGLES3Buffer(GL_ELEMENT_ARRAY_BUFFER, size, bDynamic)
-	, CGfxIndexBuffer(type, size, bDynamic)
-
+	: CGfxIndexBuffer(type, size, bDynamic)
 	, m_type(type)
 {
-	CGfxProfiler::IncIndexBufferSize(m_size);
+	m_ptrBuffer = CGLES3BufferPtr(new CGLES3Buffer(GL_ELEMENT_ARRAY_BUFFER, size, bDynamic));
+	CGfxProfiler::IncIndexBufferSize(m_ptrBuffer->GetSize());
 }
 
 CGLES3IndexBuffer::~CGLES3IndexBuffer(void)
 {
-	CGfxProfiler::DecIndexBufferSize(m_size);
+	CGfxProfiler::DecIndexBufferSize(m_ptrBuffer->GetSize());
 }
 
 GfxIndexType CGLES3IndexBuffer::GetIndexType(void) const
@@ -23,30 +22,23 @@ GfxIndexType CGLES3IndexBuffer::GetIndexType(void) const
 uint32_t CGLES3IndexBuffer::GetIndexCount(void) const
 {
 	switch (m_type) {
-	case GFX_INDEX_UNSIGNED_SHORT: return m_size / 2;
-	case GFX_INDEX_UNSIGNED_INT:   return m_size / 4;
+	case GFX_INDEX_UNSIGNED_SHORT: return m_ptrBuffer->GetSize() / 2;
+	case GFX_INDEX_UNSIGNED_INT:   return m_ptrBuffer->GetSize() / 4;
 	default:                       return 0;
 	}
 }
 
 uint32_t CGLES3IndexBuffer::GetSize(void) const
 {
-	return m_size;
+	return m_ptrBuffer->GetSize();
 }
 
 bool CGLES3IndexBuffer::BufferData(size_t offset, size_t size, const void *pBuffer)
 {
-	if (m_size < (uint32_t)(offset + size)) {
-		return false;
-	}
-
-	GLBindBuffer(m_target, m_buffer);
-	glBufferSubData(m_target, (int)offset, (uint32_t)size, pBuffer);
-
-	return true;
+	return m_ptrBuffer->BufferData(offset, size, pBuffer);
 }
 
 void CGLES3IndexBuffer::Bind(void) const
 {
-	GLBindBuffer(m_target, m_buffer);
+	m_ptrBuffer->Bind();
 }
