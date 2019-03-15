@@ -12,6 +12,9 @@
 #include "GfxResource.h"
 #include "GfxResourceManager.h"
 
+#include "GfxCamera.h"
+#include "GfxRenderQueue.h"
+
 #include "GfxSwapChain.h"
 #include "GfxRenderPass.h"
 #include "GfxFrameBuffer.h"
@@ -50,9 +53,6 @@
 #include "GfxDescriptorLayout.h"
 
 #include "GfxCommandBuffer.h"
-
-#include "GfxCamera.h"
-#include "GfxRenderQueue.h"
 
 
 #define GfxRenderer() CGfxRenderer::GetInstance()
