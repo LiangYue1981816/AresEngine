@@ -28,7 +28,7 @@ public:
 	virtual uint32_t GetName(void) const = 0;
 
 public:
-	virtual Draw* GetDraw(int indexDraw) = 0;
+	virtual CGfxMesh::Draw* GetDraw(int indexDraw) = 0;
 	virtual CGfxIndexBuffer* GetIndexBuffer(void) = 0;
 	virtual CGfxVertexBuffer* GetVertexBuffer(void) = 0;
 

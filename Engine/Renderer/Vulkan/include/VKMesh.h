@@ -17,7 +17,7 @@ public:
 	uint32_t GetName(void) const;
 
 public:
-	Draw* GetDraw(int indexDraw);
+	CGfxMesh::Draw* GetDraw(int indexDraw);
 	CGfxIndexBuffer* GetIndexBuffer(void);
 	CGfxVertexBuffer* GetVertexBuffer(void);
 
@@ -34,7 +34,7 @@ private:
 private:
 	CVKIndexBuffer *m_pIndexBuffer;
 	CVKVertexBuffer *m_pVertexBuffer;
-	eastl::unordered_map<int, Draw> m_draws;
+	eastl::unordered_map<int, CGfxMesh::Draw> m_draws;
 
 private:
 	CVKDevice *m_pDevice;
