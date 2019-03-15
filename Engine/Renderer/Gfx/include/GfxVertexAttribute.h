@@ -2,15 +2,14 @@
 #include "GfxRenderer.h"
 
 
-struct ATTRIBUTE {
+typedef struct ATTRIBUTE {
 	uint32_t flag;
 	uint32_t size;
 	uint32_t components;
 	uint32_t location;
 	uint32_t format;
 	const char *name;
-};
-
+} ATTRIBUTE;
 
 CALL_API void SetVertexAttributes(const ATTRIBUTE *pAttributes, uint32_t count);
 CALL_API uint32_t GetVertexAttributeCount(void);

@@ -66,7 +66,6 @@ typedef struct PipelineState {
 	bool bEnableColorAlphaWrite = true;
 } PipelineState;
 
-
 class CALL_API CGfxPipelineGraphics
 {
 public:

@@ -33,7 +33,6 @@ typedef enum shader_kind {
 	spirv_assembly,
 } shader_kind;
 
-
 class CALL_API CGfxShader
 {
 public:
