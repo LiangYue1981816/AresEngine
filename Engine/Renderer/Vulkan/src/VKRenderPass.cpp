@@ -51,14 +51,14 @@ bool CVKRenderPass::Create(void)
 			for (int indexAttachment = 0; indexAttachment < (int)m_attachments.size(); indexAttachment++) {
 				VkAttachmentDescription attachment = {};
 				attachment.flags = 0;
-				attachment.format = (VkFormat)m_attachments[indexAttachment].pixelFormat;
+				attachment.format = (VkFormat)m_attachments[indexAttachment].format;
 				attachment.samples = CVKHelper::TranslateSampleCount(m_attachments[indexAttachment].samples);
 				attachment.loadOp = m_attachments[indexAttachment].bClear ? VK_ATTACHMENT_LOAD_OP_CLEAR : VK_ATTACHMENT_LOAD_OP_LOAD;
 				attachment.storeOp = m_attachments[indexAttachment].bInvalidation ? VK_ATTACHMENT_STORE_OP_DONT_CARE : VK_ATTACHMENT_STORE_OP_STORE;
 				attachment.stencilLoadOp = m_attachments[indexAttachment].bClear ? VK_ATTACHMENT_LOAD_OP_CLEAR : VK_ATTACHMENT_LOAD_OP_LOAD;
 				attachment.stencilStoreOp = m_attachments[indexAttachment].bInvalidation ? VK_ATTACHMENT_STORE_OP_DONT_CARE : VK_ATTACHMENT_STORE_OP_STORE;
-				attachment.initialLayout = CVKHelper::IsFormatDepthOrStencil((VkFormat)m_attachments[indexAttachment].pixelFormat) ? VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL : VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
-				attachment.finalLayout = CVKHelper::IsFormatDepthOrStencil((VkFormat)m_attachments[indexAttachment].pixelFormat) ? VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL : VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
+				attachment.initialLayout = CVKHelper::IsFormatDepthOrStencil((VkFormat)m_attachments[indexAttachment].format) ? VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL : VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
+				attachment.finalLayout = CVKHelper::IsFormatDepthOrStencil((VkFormat)m_attachments[indexAttachment].format) ? VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL : VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
 				attachments.emplace_back(attachment);
 			}
 
@@ -66,21 +66,21 @@ bool CVKRenderPass::Create(void)
 				for (const auto &itInputAttachment : m_subpasses[indexSubpass].inputAttachments) {
 					VkAttachmentReference attachment = {};
 					attachment.attachment = itInputAttachment.first;
-					attachment.layout = CVKHelper::IsFormatDepthOrStencil((VkFormat)m_attachments[itInputAttachment.first].pixelFormat) ? VK_IMAGE_LAYOUT_DEPTH_STENCIL_READ_ONLY_OPTIMAL : VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
+					attachment.layout = CVKHelper::IsFormatDepthOrStencil((VkFormat)m_attachments[itInputAttachment.first].format) ? VK_IMAGE_LAYOUT_DEPTH_STENCIL_READ_ONLY_OPTIMAL : VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
 					inputAttachmentReferences[indexSubpass].emplace_back(attachment);
 				}
 
 				for (const auto &itOutputAttachment : m_subpasses[indexSubpass].outputAttachments) {
 					VkAttachmentReference attachment = {};
 					attachment.attachment = itOutputAttachment.first;
-					attachment.layout = CVKHelper::IsFormatDepthOrStencil((VkFormat)m_attachments[itOutputAttachment.first].pixelFormat) ? VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL : VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
+					attachment.layout = CVKHelper::IsFormatDepthOrStencil((VkFormat)m_attachments[itOutputAttachment.first].format) ? VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL : VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
 					outputAttachmentReferences[indexSubpass].emplace_back(attachment);
 				}
 
 				for (const auto &itResolveAttachment : m_subpasses[indexSubpass].resolveAttachments) {
 					VkAttachmentReference attachment = {};
 					attachment.attachment = itResolveAttachment.first;
-					attachment.layout = CVKHelper::IsFormatDepthOrStencil((VkFormat)m_attachments[itResolveAttachment.first].pixelFormat) ? VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL : VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
+					attachment.layout = CVKHelper::IsFormatDepthOrStencil((VkFormat)m_attachments[itResolveAttachment.first].format) ? VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL : VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
 					resolveAttachmentReferences[indexSubpass].emplace_back(attachment);
 				}
 
@@ -147,13 +147,13 @@ void CVKRenderPass::Destroy(void)
 	m_vkRenderPass = VK_NULL_HANDLE;
 }
 
-bool CVKRenderPass::SetColorAttachment(int indexAttachment, GfxPixelFormat pixelFormat, int samples, bool bInvalidation, bool bClear, float red, float green, float blue, float alpha)
+bool CVKRenderPass::SetColorAttachment(int indexAttachment, GfxPixelFormat format, int samples, bool bInvalidation, bool bClear, float red, float green, float blue, float alpha)
 {
 	if (indexAttachment >= (int)m_attachments.size()) {
 		return false;
 	}
 
-	m_attachments[indexAttachment].pixelFormat = pixelFormat;
+	m_attachments[indexAttachment].format = format;
 	m_attachments[indexAttachment].samples = samples;
 	m_attachments[indexAttachment].bInvalidation = bInvalidation;
 	m_attachments[indexAttachment].bClear = bClear;
@@ -165,13 +165,13 @@ bool CVKRenderPass::SetColorAttachment(int indexAttachment, GfxPixelFormat pixel
 	return true;
 }
 
-bool CVKRenderPass::SetDepthStencilAttachment(int indexAttachment, GfxPixelFormat pixelFormat, int samples, bool bInvalidation, bool bClear, float depth, int stencil)
+bool CVKRenderPass::SetDepthStencilAttachment(int indexAttachment, GfxPixelFormat format, int samples, bool bInvalidation, bool bClear, float depth, int stencil)
 {
 	if (indexAttachment >= (int)m_attachments.size()) {
 		return false;
 	}
 
-	m_attachments[indexAttachment].pixelFormat = pixelFormat;
+	m_attachments[indexAttachment].format = format;
 	m_attachments[indexAttachment].samples = samples;
 	m_attachments[indexAttachment].bInvalidation = bInvalidation;
 	m_attachments[indexAttachment].bClear = bClear;

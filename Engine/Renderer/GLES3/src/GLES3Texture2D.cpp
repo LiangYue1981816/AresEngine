@@ -85,7 +85,7 @@ bool CGLES3Texture2D::Create(HANDLE hExternTexture)
 	return false;
 }
 
-bool CGLES3Texture2D::Create(GfxPixelFormat pixelFormat, int width, int height, int levels, int samples)
+bool CGLES3Texture2D::Create(GfxPixelFormat format, int width, int height, int levels, int samples)
 {
 	Destroy();
 	{
@@ -93,17 +93,17 @@ bool CGLES3Texture2D::Create(GfxPixelFormat pixelFormat, int width, int height, 
 			samples = std::max(samples, 1);
 
 			if (samples == 1) {
-				if (CGLES3Texture::Create(GL_TEXTURE_2D, pixelFormat, width, height, levels, 0, samples) == false) {
+				if (CGLES3Texture::Create(GL_TEXTURE_2D, format, width, height, levels, 0, samples) == false) {
 					break;
 				}
 			}
 			else {
-				if (CGLES3Texture::Create(GL_TEXTURE_2D_MULTISAMPLE, pixelFormat, width, height, levels, 0, samples) == false) {
+				if (CGLES3Texture::Create(GL_TEXTURE_2D_MULTISAMPLE, format, width, height, levels, 0, samples) == false) {
 					break;
 				}
 			}
 
-			m_format = pixelFormat;
+			m_format = format;
 
 			m_width = width;
 			m_height = height;
@@ -137,16 +137,16 @@ void CGLES3Texture2D::Destroy(void)
 	m_size.clear();
 }
 
-bool CGLES3Texture2D::TransferTexture2D(GfxPixelFormat pixelFormat, int level, int xoffset, int yoffset, int width, int height, GfxDataType type, uint32_t size, const void *data)
+bool CGLES3Texture2D::TransferTexture2D(GfxPixelFormat format, int level, int xoffset, int yoffset, int width, int height, GfxDataType type, uint32_t size, const void *data)
 {
 	gli::gl GL(gli::gl::PROFILE_ES30);
-	gli::gl::format glFormat = GL.translate((gli::format)pixelFormat);
+	gli::gl::format glFormat = GL.translate((gli::format)format);
 
 	if (m_type != GFX_TEXTURE_2D) {
 		return false;
 	}
 
-	if (m_format != pixelFormat) {
+	if (m_format != format) {
 		return false;
 	}
 
@@ -180,16 +180,16 @@ bool CGLES3Texture2D::TransferTexture2D(GfxPixelFormat pixelFormat, int level, i
 	return true;
 }
 
-bool CGLES3Texture2D::TransferTexture2DCompressed(GfxPixelFormat pixelFormat, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void *data)
+bool CGLES3Texture2D::TransferTexture2DCompressed(GfxPixelFormat format, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void *data)
 {
 	gli::gl GL(gli::gl::PROFILE_ES30);
-	gli::gl::format glFormat = GL.translate((gli::format)pixelFormat);
+	gli::gl::format glFormat = GL.translate((gli::format)format);
 
 	if (m_type != GFX_TEXTURE_2D) {
 		return false;
 	}
 
-	if (m_format != pixelFormat) {
+	if (m_format != format) {
 		return false;
 	}
 

@@ -1,8 +1,8 @@
 #include "VKRenderer.h"
 
 
-CVKRenderer::CVKRenderer(void *hInstance, void *hWnd, void *hDC, int width, int height, GfxPixelFormat pixelFormat)
-	: CGfxRenderer(hInstance, hWnd, hDC, width, height, pixelFormat)
+CVKRenderer::CVKRenderer(void *hInstance, void *hWnd, void *hDC, int width, int height, GfxPixelFormat format)
+	: CGfxRenderer(hInstance, hWnd, hDC, width, height, format)
 	, m_pInstance(nullptr)
 	, m_pDevice(nullptr)
 	, m_pSwapChain(nullptr)
@@ -46,7 +46,7 @@ CVKRenderer::CVKRenderer(void *hInstance, void *hWnd, void *hDC, int width, int 
 	m_pFrameBufferManager = new CVKFrameBufferManager(m_pDevice);
 	m_pCommandBufferManager = new CVKCommandBufferManager(m_pDevice);
 
-	m_pSwapChain = new CVKSwapChain(m_pDevice, width, height, pixelFormat);
+	m_pSwapChain = new CVKSwapChain(m_pDevice, width, height, format);
 }
 
 CVKRenderer::~CVKRenderer(void)

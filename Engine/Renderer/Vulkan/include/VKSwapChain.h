@@ -8,7 +8,7 @@ class CVKSwapChain : public CGfxSwapChain
 
 
 private:
-	CVKSwapChain(CVKDevice *pDevice, int width, int height, GfxPixelFormat pixelFormat);
+	CVKSwapChain(CVKDevice *pDevice, int width, int height, GfxPixelFormat format);
 	virtual ~CVKSwapChain(void);
 
 

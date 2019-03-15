@@ -65,7 +65,7 @@ int CVKRenderTexture::GetSamples(void) const
 	return m_samples;
 }
 
-bool CVKRenderTexture::Create(HANDLE hExternTexture, GfxPixelFormat pixelFormat, int width, int height, int samples)
+bool CVKRenderTexture::Create(HANDLE hExternTexture, GfxPixelFormat format, int width, int height, int samples)
 {
 	Destroy();
 
@@ -76,13 +76,13 @@ bool CVKRenderTexture::Create(HANDLE hExternTexture, GfxPixelFormat pixelFormat,
 	m_height = height;
 	m_samples = std::max(samples, 1);
 
-	m_format = pixelFormat;
+	m_format = format;
 	m_type = m_samples == 1 ? GFX_TEXTURE_2D : GFX_TEXTURE_2D_MULTISAMPLE;
 
 	return true;
 }
 
-bool CVKRenderTexture::Create(GfxPixelFormat pixelFormat, int width, int height, int samples, bool bTransient)
+bool CVKRenderTexture::Create(GfxPixelFormat format, int width, int height, int samples, bool bTransient)
 {
 	Destroy();
 	{
@@ -91,30 +91,30 @@ bool CVKRenderTexture::Create(GfxPixelFormat pixelFormat, int width, int height,
 			m_height = height;
 			m_samples = std::max(samples, 1);
 
-			m_format = pixelFormat;
+			m_format = format;
 			m_type = m_samples == 1 ? GFX_TEXTURE_2D : GFX_TEXTURE_2D_MULTISAMPLE;
 
-			if (CVKHelper::IsFormatSupported((VkFormat)pixelFormat)) {
-				if (CVKHelper::IsFormatDepthOnly((VkFormat)pixelFormat)) {
-					CALL_BOOL_FUNCTION_BREAK(CreateImage(VK_IMAGE_TYPE_2D, VK_IMAGE_VIEW_TYPE_2D, (VkFormat)pixelFormat, width, height, CVKHelper::TranslateSampleCount(samples), VK_IMAGE_TILING_OPTIMAL, VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT | VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT | (bTransient ? VK_IMAGE_USAGE_TRANSIENT_ATTACHMENT_BIT : VK_IMAGE_USAGE_TRANSFER_SRC_BIT)));
-					CALL_BOOL_FUNCTION_BREAK(CreateView(VK_IMAGE_VIEW_TYPE_2D, VK_IMAGE_ASPECT_DEPTH_BIT, (VkFormat)pixelFormat));
+			if (CVKHelper::IsFormatSupported((VkFormat)format)) {
+				if (CVKHelper::IsFormatDepthOnly((VkFormat)format)) {
+					CALL_BOOL_FUNCTION_BREAK(CreateImage(VK_IMAGE_TYPE_2D, VK_IMAGE_VIEW_TYPE_2D, (VkFormat)format, width, height, CVKHelper::TranslateSampleCount(samples), VK_IMAGE_TILING_OPTIMAL, VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT | VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT | (bTransient ? VK_IMAGE_USAGE_TRANSIENT_ATTACHMENT_BIT : VK_IMAGE_USAGE_TRANSFER_SRC_BIT)));
+					CALL_BOOL_FUNCTION_BREAK(CreateView(VK_IMAGE_VIEW_TYPE_2D, VK_IMAGE_ASPECT_DEPTH_BIT, (VkFormat)format));
 					return true;
 				}
 
-				if (CVKHelper::IsFormatStencilOnly((VkFormat)pixelFormat)) {
-					CALL_BOOL_FUNCTION_BREAK(CreateImage(VK_IMAGE_TYPE_2D, VK_IMAGE_VIEW_TYPE_2D, (VkFormat)pixelFormat, width, height, CVKHelper::TranslateSampleCount(samples), VK_IMAGE_TILING_OPTIMAL, VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT | VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT | (bTransient ? VK_IMAGE_USAGE_TRANSIENT_ATTACHMENT_BIT : VK_IMAGE_USAGE_TRANSFER_SRC_BIT)));
-					CALL_BOOL_FUNCTION_BREAK(CreateView(VK_IMAGE_VIEW_TYPE_2D, VK_IMAGE_ASPECT_STENCIL_BIT, (VkFormat)pixelFormat));
+				if (CVKHelper::IsFormatStencilOnly((VkFormat)format)) {
+					CALL_BOOL_FUNCTION_BREAK(CreateImage(VK_IMAGE_TYPE_2D, VK_IMAGE_VIEW_TYPE_2D, (VkFormat)format, width, height, CVKHelper::TranslateSampleCount(samples), VK_IMAGE_TILING_OPTIMAL, VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT | VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT | (bTransient ? VK_IMAGE_USAGE_TRANSIENT_ATTACHMENT_BIT : VK_IMAGE_USAGE_TRANSFER_SRC_BIT)));
+					CALL_BOOL_FUNCTION_BREAK(CreateView(VK_IMAGE_VIEW_TYPE_2D, VK_IMAGE_ASPECT_STENCIL_BIT, (VkFormat)format));
 					return true;
 				}
 
-				if (CVKHelper::IsFormatDepthStencil((VkFormat)pixelFormat)) {
-					CALL_BOOL_FUNCTION_BREAK(CreateImage(VK_IMAGE_TYPE_2D, VK_IMAGE_VIEW_TYPE_2D, (VkFormat)pixelFormat, width, height, CVKHelper::TranslateSampleCount(samples), VK_IMAGE_TILING_OPTIMAL, VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT | VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT | (bTransient ? VK_IMAGE_USAGE_TRANSIENT_ATTACHMENT_BIT : VK_IMAGE_USAGE_TRANSFER_SRC_BIT)));
-					CALL_BOOL_FUNCTION_BREAK(CreateView(VK_IMAGE_VIEW_TYPE_2D, VK_IMAGE_ASPECT_DEPTH_BIT | VK_IMAGE_ASPECT_STENCIL_BIT, (VkFormat)pixelFormat));
+				if (CVKHelper::IsFormatDepthStencil((VkFormat)format)) {
+					CALL_BOOL_FUNCTION_BREAK(CreateImage(VK_IMAGE_TYPE_2D, VK_IMAGE_VIEW_TYPE_2D, (VkFormat)format, width, height, CVKHelper::TranslateSampleCount(samples), VK_IMAGE_TILING_OPTIMAL, VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT | VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT | (bTransient ? VK_IMAGE_USAGE_TRANSIENT_ATTACHMENT_BIT : VK_IMAGE_USAGE_TRANSFER_SRC_BIT)));
+					CALL_BOOL_FUNCTION_BREAK(CreateView(VK_IMAGE_VIEW_TYPE_2D, VK_IMAGE_ASPECT_DEPTH_BIT | VK_IMAGE_ASPECT_STENCIL_BIT, (VkFormat)format));
 					return true;
 				}
 
-				CALL_BOOL_FUNCTION_BREAK(CreateImage(VK_IMAGE_TYPE_2D, VK_IMAGE_VIEW_TYPE_2D, (VkFormat)pixelFormat, width, height, CVKHelper::TranslateSampleCount(samples), VK_IMAGE_TILING_OPTIMAL, VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT | VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | (bTransient ? VK_IMAGE_USAGE_TRANSIENT_ATTACHMENT_BIT : VK_IMAGE_USAGE_TRANSFER_SRC_BIT)));
-				CALL_BOOL_FUNCTION_BREAK(CreateView(VK_IMAGE_VIEW_TYPE_2D, VK_IMAGE_ASPECT_COLOR_BIT, (VkFormat)pixelFormat));
+				CALL_BOOL_FUNCTION_BREAK(CreateImage(VK_IMAGE_TYPE_2D, VK_IMAGE_VIEW_TYPE_2D, (VkFormat)format, width, height, CVKHelper::TranslateSampleCount(samples), VK_IMAGE_TILING_OPTIMAL, VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT | VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | (bTransient ? VK_IMAGE_USAGE_TRANSIENT_ATTACHMENT_BIT : VK_IMAGE_USAGE_TRANSFER_SRC_BIT)));
+				CALL_BOOL_FUNCTION_BREAK(CreateView(VK_IMAGE_VIEW_TYPE_2D, VK_IMAGE_ASPECT_COLOR_BIT, (VkFormat)format));
 				return true;
 			}
 		} while (false);

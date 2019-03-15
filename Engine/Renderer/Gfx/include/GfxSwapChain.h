@@ -5,7 +5,7 @@
 class CALL_API CGfxSwapChain
 {
 public:
-	CGfxSwapChain(int width, int height, GfxPixelFormat pixelFormat)
+	CGfxSwapChain(int width, int height, GfxPixelFormat format)
 	{
 
 	}

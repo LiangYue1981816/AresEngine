@@ -75,7 +75,7 @@
 class CALL_API CVKRenderer : public CGfxRenderer
 {
 public:
-	CVKRenderer(void *hInstance, void *hWnd, void *hDC, int width, int height, GfxPixelFormat pixelFormat);
+	CVKRenderer(void *hInstance, void *hWnd, void *hDC, int width, int height, GfxPixelFormat format);
 	virtual ~CVKRenderer(void);
 
 

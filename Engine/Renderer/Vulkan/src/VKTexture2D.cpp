@@ -83,16 +83,16 @@ bool CVKTexture2D::Create(HANDLE hExternTexture)
 	return false;
 }
 
-bool CVKTexture2D::Create(GfxPixelFormat pixelFormat, int width, int height, int levels, int samples)
+bool CVKTexture2D::Create(GfxPixelFormat format, int width, int height, int levels, int samples)
 {
 	Destroy();
 	{
 		do {
-			CALL_BOOL_FUNCTION_BREAK(CVKHelper::IsFormatSupported((VkFormat)pixelFormat));
-			CALL_BOOL_FUNCTION_BREAK(CreateImage(VK_IMAGE_TYPE_2D, VK_IMAGE_VIEW_TYPE_2D, (VkFormat)pixelFormat, width, height, levels, 1, CVKHelper::TranslateSampleCount(samples), VK_IMAGE_TILING_OPTIMAL, VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT));
-			CALL_BOOL_FUNCTION_BREAK(CreateView(VK_IMAGE_VIEW_TYPE_2D, VK_IMAGE_ASPECT_COLOR_BIT, (VkFormat)pixelFormat, levels, 1));
+			CALL_BOOL_FUNCTION_BREAK(CVKHelper::IsFormatSupported((VkFormat)format));
+			CALL_BOOL_FUNCTION_BREAK(CreateImage(VK_IMAGE_TYPE_2D, VK_IMAGE_VIEW_TYPE_2D, (VkFormat)format, width, height, levels, 1, CVKHelper::TranslateSampleCount(samples), VK_IMAGE_TILING_OPTIMAL, VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT));
+			CALL_BOOL_FUNCTION_BREAK(CreateView(VK_IMAGE_VIEW_TYPE_2D, VK_IMAGE_ASPECT_COLOR_BIT, (VkFormat)format, levels, 1));
 
-			m_format = pixelFormat;
+			m_format = format;
 			m_type = GFX_TEXTURE_2D;
 
 			m_width = width;
@@ -126,9 +126,9 @@ void CVKTexture2D::Destroy(void)
 	m_size.clear();
 }
 
-bool CVKTexture2D::TransferTexture2D(GfxPixelFormat pixelFormat, int level, int xoffset, int yoffset, int width, int height, GfxDataType type, uint32_t size, const void *data)
+bool CVKTexture2D::TransferTexture2D(GfxPixelFormat format, int level, int xoffset, int yoffset, int width, int height, GfxDataType type, uint32_t size, const void *data)
 {
-	if (m_format != pixelFormat) {
+	if (m_format != format) {
 		return false;
 	}
 
@@ -162,9 +162,9 @@ bool CVKTexture2D::TransferTexture2D(GfxPixelFormat pixelFormat, int level, int 
 	return true;
 }
 
-bool CVKTexture2D::TransferTexture2DCompressed(GfxPixelFormat pixelFormat, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void *data)
+bool CVKTexture2D::TransferTexture2DCompressed(GfxPixelFormat format, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void *data)
 {
-	if (m_format != pixelFormat) {
+	if (m_format != format) {
 		return false;
 	}
 

@@ -64,14 +64,14 @@ int CGLES3RenderTexture::GetSamples(void) const
 	return m_samples;
 }
 
-bool CGLES3RenderTexture::Create(HANDLE hExternTexture, GfxPixelFormat pixelFormat, int width, int height, int samples)
+bool CGLES3RenderTexture::Create(HANDLE hExternTexture, GfxPixelFormat format, int width, int height, int samples)
 {
 	Destroy();
 
 	m_bExtern = true;
 	m_texture = (uint32_t)hExternTexture;
 
-	m_format = pixelFormat;
+	m_format = format;
 
 	m_width = width;
 	m_height = height;
@@ -81,14 +81,14 @@ bool CGLES3RenderTexture::Create(HANDLE hExternTexture, GfxPixelFormat pixelForm
 	return true;
 }
 
-bool CGLES3RenderTexture::Create(GfxPixelFormat pixelFormat, int width, int height, int samples, bool bTransient)
+bool CGLES3RenderTexture::Create(GfxPixelFormat format, int width, int height, int samples, bool bTransient)
 {
 	Destroy();
 
 	gli::gl GL(gli::gl::PROFILE_ES30);
-	gli::gl::format glFormat = GL.translate((gli::format)pixelFormat);
+	gli::gl::format glFormat = GL.translate((gli::format)format);
 
-	m_format = pixelFormat;
+	m_format = format;
 
 	m_width = width;
 	m_height = height;

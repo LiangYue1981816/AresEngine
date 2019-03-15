@@ -77,16 +77,16 @@ bool CVKTextureCubeMap::Create(HANDLE hExternTexture)
 	return false;
 }
 
-bool CVKTextureCubeMap::Create(GfxPixelFormat pixelFormat, int width, int height, int levels)
+bool CVKTextureCubeMap::Create(GfxPixelFormat format, int width, int height, int levels)
 {
 	Destroy();
 	{
 		do {
-			CALL_BOOL_FUNCTION_BREAK(CVKHelper::IsFormatSupported((VkFormat)pixelFormat));
-			CALL_BOOL_FUNCTION_BREAK(CreateImage(VK_IMAGE_TYPE_2D, VK_IMAGE_VIEW_TYPE_CUBE, (VkFormat)pixelFormat, width, height, levels, 1, VK_SAMPLE_COUNT_1_BIT, VK_IMAGE_TILING_OPTIMAL, VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT));
-			CALL_BOOL_FUNCTION_BREAK(CreateView(VK_IMAGE_VIEW_TYPE_CUBE, VK_IMAGE_ASPECT_COLOR_BIT, (VkFormat)pixelFormat, levels, 1));
+			CALL_BOOL_FUNCTION_BREAK(CVKHelper::IsFormatSupported((VkFormat)format));
+			CALL_BOOL_FUNCTION_BREAK(CreateImage(VK_IMAGE_TYPE_2D, VK_IMAGE_VIEW_TYPE_CUBE, (VkFormat)format, width, height, levels, 1, VK_SAMPLE_COUNT_1_BIT, VK_IMAGE_TILING_OPTIMAL, VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT));
+			CALL_BOOL_FUNCTION_BREAK(CreateView(VK_IMAGE_VIEW_TYPE_CUBE, VK_IMAGE_ASPECT_COLOR_BIT, (VkFormat)format, levels, 1));
 
-			m_format = pixelFormat;
+			m_format = format;
 			m_type = GFX_TEXTURE_CUBE_MAP;
 
 			m_width = width;
@@ -120,9 +120,9 @@ void CVKTextureCubeMap::Destroy(void)
 	m_size.clear();
 }
 
-bool CVKTextureCubeMap::TransferTexture2D(GfxPixelFormat pixelFormat, GfxTextureCubeMapFace face, int level, int xoffset, int yoffset, int width, int height, GfxDataType type, uint32_t size, const void *data)
+bool CVKTextureCubeMap::TransferTexture2D(GfxPixelFormat format, GfxTextureCubeMapFace face, int level, int xoffset, int yoffset, int width, int height, GfxDataType type, uint32_t size, const void *data)
 {
-	if (m_format != pixelFormat) {
+	if (m_format != format) {
 		return false;
 	}
 
@@ -152,9 +152,9 @@ bool CVKTextureCubeMap::TransferTexture2D(GfxPixelFormat pixelFormat, GfxTexture
 	return true;
 }
 
-bool CVKTextureCubeMap::TransferTexture2DCompressed(GfxPixelFormat pixelFormat, GfxTextureCubeMapFace face, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void *data)
+bool CVKTextureCubeMap::TransferTexture2DCompressed(GfxPixelFormat format, GfxTextureCubeMapFace face, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void *data)
 {
-	if (m_format != pixelFormat) {
+	if (m_format != format) {
 		return false;
 	}
 

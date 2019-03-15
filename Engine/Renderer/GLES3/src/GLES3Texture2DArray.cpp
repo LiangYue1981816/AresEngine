@@ -85,16 +85,16 @@ bool CGLES3Texture2DArray::Create(HANDLE hExternTexture)
 	return false;
 }
 
-bool CGLES3Texture2DArray::Create(GfxPixelFormat pixelFormat, int width, int height, int levels, int layers)
+bool CGLES3Texture2DArray::Create(GfxPixelFormat format, int width, int height, int levels, int layers)
 {
 	Destroy();
 	{
 		do {
-			if (CGLES3Texture::Create(GL_TEXTURE_2D_ARRAY, pixelFormat, width, height, levels, layers) == false) {
+			if (CGLES3Texture::Create(GL_TEXTURE_2D_ARRAY, format, width, height, levels, layers) == false) {
 				break;
 			}
 
-			m_format = pixelFormat;
+			m_format = format;
 			m_type = GFX_TEXTURE_2D_ARRAY;
 
 			m_width = width;
@@ -130,12 +130,12 @@ void CGLES3Texture2DArray::Destroy(void)
 	m_size.clear();
 }
 
-bool CGLES3Texture2DArray::TransferTexture2D(GfxPixelFormat pixelFormat, int layer, int level, int xoffset, int yoffset, int width, int height, GfxDataType type, uint32_t size, const void *data)
+bool CGLES3Texture2DArray::TransferTexture2D(GfxPixelFormat format, int layer, int level, int xoffset, int yoffset, int width, int height, GfxDataType type, uint32_t size, const void *data)
 {
 	gli::gl GL(gli::gl::PROFILE_ES30);
-	gli::gl::format glFormat = GL.translate((gli::format)pixelFormat);
+	gli::gl::format glFormat = GL.translate((gli::format)format);
 
-	if (m_format != pixelFormat) {
+	if (m_format != format) {
 		return false;
 	}
 
@@ -169,12 +169,12 @@ bool CGLES3Texture2DArray::TransferTexture2D(GfxPixelFormat pixelFormat, int lay
 	return true;
 }
 
-bool CGLES3Texture2DArray::TransferTexture2DCompressed(GfxPixelFormat pixelFormat, int layer, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void *data)
+bool CGLES3Texture2DArray::TransferTexture2DCompressed(GfxPixelFormat format, int layer, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void *data)
 {
 	gli::gl GL(gli::gl::PROFILE_ES30);
-	gli::gl::format glFormat = GL.translate((gli::format)pixelFormat);
+	gli::gl::format glFormat = GL.translate((gli::format)format);
 
-	if (m_format != pixelFormat) {
+	if (m_format != format) {
 		return false;
 	}
 

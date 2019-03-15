@@ -79,16 +79,16 @@ bool CGLES3TextureCubeMap::Create(HANDLE hExternTexture)
 	return false;
 }
 
-bool CGLES3TextureCubeMap::Create(GfxPixelFormat pixelFormat, int width, int height, int levels)
+bool CGLES3TextureCubeMap::Create(GfxPixelFormat format, int width, int height, int levels)
 {
 	Destroy();
 	{
 		do {
-			if (CGLES3Texture::Create(GL_TEXTURE_CUBE_MAP, pixelFormat, width, height, levels, 0) == false) {
+			if (CGLES3Texture::Create(GL_TEXTURE_CUBE_MAP, format, width, height, levels, 0) == false) {
 				break;
 			}
 
-			m_format = pixelFormat;
+			m_format = format;
 			m_type = GFX_TEXTURE_CUBE_MAP;
 
 			m_width = width;
@@ -122,12 +122,12 @@ void CGLES3TextureCubeMap::Destroy(void)
 	m_size.clear();
 }
 
-bool CGLES3TextureCubeMap::TransferTexture2D(GfxPixelFormat pixelFormat, GfxTextureCubeMapFace face, int level, int xoffset, int yoffset, int width, int height, GfxDataType type, uint32_t size, const void *data)
+bool CGLES3TextureCubeMap::TransferTexture2D(GfxPixelFormat format, GfxTextureCubeMapFace face, int level, int xoffset, int yoffset, int width, int height, GfxDataType type, uint32_t size, const void *data)
 {
 	gli::gl GL(gli::gl::PROFILE_ES30);
-	gli::gl::format glFormat = GL.translate((gli::format)pixelFormat);
+	gli::gl::format glFormat = GL.translate((gli::format)format);
 
-	if (m_format != pixelFormat) {
+	if (m_format != format) {
 		return false;
 	}
 
@@ -157,12 +157,12 @@ bool CGLES3TextureCubeMap::TransferTexture2D(GfxPixelFormat pixelFormat, GfxText
 	return true;
 }
 
-bool CGLES3TextureCubeMap::TransferTexture2DCompressed(GfxPixelFormat pixelFormat, GfxTextureCubeMapFace face, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void *data)
+bool CGLES3TextureCubeMap::TransferTexture2DCompressed(GfxPixelFormat format, GfxTextureCubeMapFace face, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void *data)
 {
 	gli::gl GL(gli::gl::PROFILE_ES30);
-	gli::gl::format glFormat = GL.translate((gli::format)pixelFormat);
+	gli::gl::format glFormat = GL.translate((gli::format)format);
 
-	if (m_format != pixelFormat) {
+	if (m_format != format) {
 		return false;
 	}
 

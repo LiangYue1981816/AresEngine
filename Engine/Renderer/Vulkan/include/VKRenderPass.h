@@ -24,8 +24,8 @@ public:
 	void Destroy(void);
 
 public:
-	bool SetColorAttachment(int indexAttachment, GfxPixelFormat pixelFormat, int samples, bool bInvalidation, bool bClear, float red = 0.0f, float green = 0.0f, float blue = 0.0f, float alpha = 0.0f);
-	bool SetDepthStencilAttachment(int indexAttachment, GfxPixelFormat pixelFormat, int samples, bool bInvalidation, bool bClear, float depth = 1.0f, int stencil = 0);
+	bool SetColorAttachment(int indexAttachment, GfxPixelFormat format, int samples, bool bInvalidation, bool bClear, float red = 0.0f, float green = 0.0f, float blue = 0.0f, float alpha = 0.0f);
+	bool SetDepthStencilAttachment(int indexAttachment, GfxPixelFormat format, int samples, bool bInvalidation, bool bClear, float depth = 1.0f, int stencil = 0);
 
 	bool SetSubpassInputColorReference(int indexSubpass, int indexAttachment, const char *szName);
 	bool SetSubpassOutputColorReference(int indexSubpass, int indexAttachment);

@@ -38,12 +38,12 @@ class CALL_API CEngine
 {
 public:
 	static CEngine* GetInstance(void);
-	static void Create(GfxApi api, RenderSolution solution, void *hInstance, void *hWnd, void *hDC, int width, int height, GfxPixelFormat pixelFormat);
+	static void Create(GfxApi api, RenderSolution solution, void *hInstance, void *hWnd, void *hDC, int width, int height, GfxPixelFormat format);
 	static void Destroy(void);
 
 
 private:
-	CEngine(GfxApi api, RenderSolution solution, void *hInstance, void *hWnd, void *hDC, int width, int height, GfxPixelFormat pixelFormat);
+	CEngine(GfxApi api, RenderSolution solution, void *hInstance, void *hWnd, void *hDC, int width, int height, GfxPixelFormat format);
 	virtual ~CEngine(void);
 
 

@@ -28,8 +28,8 @@ public:
 	int GetSamples(void) const;
 
 public:
-	bool Create(HANDLE hExternTexture, GfxPixelFormat pixelFormat, int width, int height, int samples = 1);
-	bool Create(GfxPixelFormat pixelFormat, int width, int height, int samples = 1, bool bTransient = false);
+	bool Create(HANDLE hExternTexture, GfxPixelFormat format, int width, int height, int samples = 1);
+	bool Create(GfxPixelFormat format, int width, int height, int samples = 1, bool bTransient = false);
 	void Destroy(void);
 
 private:

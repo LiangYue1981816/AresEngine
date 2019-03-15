@@ -23,10 +23,10 @@ bool CGLES3Texture::Create(uint32_t target, uint32_t texture)
 	return true;
 }
 
-bool CGLES3Texture::Create(uint32_t target, GfxPixelFormat pixelFormat, int width, int height, int levels, int layers, int samples)
+bool CGLES3Texture::Create(uint32_t target, GfxPixelFormat format, int width, int height, int levels, int layers, int samples)
 {
 	gli::gl GL(gli::gl::PROFILE_ES30);
-	gli::gl::format glFormat = GL.translate((gli::format)pixelFormat);
+	gli::gl::format glFormat = GL.translate((gli::format)format);
 
 	switch (target) {
 	case GL_TEXTURE_2D:

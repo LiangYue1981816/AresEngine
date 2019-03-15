@@ -1,13 +1,13 @@
 #include "GLES3Renderer.h"
 
 
-CGLES3SwapChain::CGLES3SwapChain(void *hDC, int width, int height, GfxPixelFormat pixelFormat)
-	: CGfxSwapChain(width, height, pixelFormat)
+CGLES3SwapChain::CGLES3SwapChain(void *hDC, int width, int height, GfxPixelFormat format)
+	: CGfxSwapChain(width, height, format)
 	, m_hDC(hDC)
 
 	, m_width(width)
 	, m_height(height)
-	, m_format(pixelFormat)
+	, m_format(format)
 
 	, m_fbo(0)
 	, m_indexFrame(0)

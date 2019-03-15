@@ -51,10 +51,10 @@ static VkPresentModeKHR GetSwapchainPresentMode(const eastl::vector<VkPresentMod
 	return VK_PRESENT_MODE_IMMEDIATE_KHR;
 }
 
-static VkSurfaceFormatKHR GetSwapchainFormat(const eastl::vector<VkSurfaceFormatKHR> &formats, VkFormat pixelFormat)
+static VkSurfaceFormatKHR GetSwapchainFormat(const eastl::vector<VkSurfaceFormatKHR> &formats, VkFormat format)
 {
 	for (uint32_t index = 0; index < formats.size(); index++) {
-		if (formats[index].format == pixelFormat) {
+		if (formats[index].format == format) {
 			return formats[index];
 		}
 	}
@@ -63,11 +63,11 @@ static VkSurfaceFormatKHR GetSwapchainFormat(const eastl::vector<VkSurfaceFormat
 }
 
 
-CVKSwapChain::CVKSwapChain(CVKDevice *pDevice, int width, int height, GfxPixelFormat pixelFormat)
-	: CGfxSwapChain(width, height, pixelFormat)
+CVKSwapChain::CVKSwapChain(CVKDevice *pDevice, int width, int height, GfxPixelFormat format)
+	: CGfxSwapChain(width, height, format)
 	, m_pDevice(pDevice)
 
-	, m_format(pixelFormat)
+	, m_format(format)
 	, m_width(width)
 	, m_height(height)
 
