@@ -3,9 +3,9 @@
 
 
 #pragma region OpenGL extension
-extern void GLReadBuffers(int n, const uint32_t *bufs);
-extern uint32_t GLGetShaderType(shader_kind kind);
-extern uint32_t GLGetProgramStage(shader_kind kind);
+extern void glReadBuffers(int n, const uint32_t *bufs);
+extern uint32_t glGetShaderType(shader_kind kind);
+extern uint32_t glGetProgramStage(shader_kind kind);
 #pragma endregion
 
 #pragma region OpenGL state cache

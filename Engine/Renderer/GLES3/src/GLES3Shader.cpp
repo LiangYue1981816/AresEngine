@@ -45,7 +45,7 @@ bool CGLES3Shader::Create(const uint32_t *words, size_t numWords, shader_kind ki
 			const char *szSource = strSource.c_str();
 
 			m_kind = kind;
-			m_shader = glCreateShader(GLGetShaderType(kind));
+			m_shader = glCreateShader(glGetShaderType(kind));
 			glShaderSource(m_shader, 1, &szSource, nullptr);
 			glCompileShader(m_shader);
 
