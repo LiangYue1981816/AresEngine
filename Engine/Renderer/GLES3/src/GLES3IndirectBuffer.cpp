@@ -1,11 +1,11 @@
 #include "GLES3Renderer.h"
 
 
-CGLES3IndirectBuffer::CGLES3IndirectBuffer(uint32_t drawCommandCount)
-	: CGLES3Buffer(GL_DRAW_INDIRECT_BUFFER, drawCommandCount * sizeof(DrawCommand), true)
-	, CGfxIndirectBuffer(drawCommandCount)
+CGLES3IndirectBuffer::CGLES3IndirectBuffer(uint32_t numDrawCommands)
+	: CGLES3Buffer(GL_DRAW_INDIRECT_BUFFER, numDrawCommands * sizeof(DrawCommand), true)
+	, CGfxIndirectBuffer(numDrawCommands)
 {
-	m_draws.resize(drawCommandCount);
+	m_draws.resize(numDrawCommands);
 	CGfxProfiler::IncIndirectBufferSize(m_size);
 }
 

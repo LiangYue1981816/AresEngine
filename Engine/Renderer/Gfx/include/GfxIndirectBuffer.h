@@ -15,7 +15,7 @@ public:
 
 
 public:
-	CGfxIndirectBuffer(uint32_t drawCommandCount)
+	CGfxIndirectBuffer(uint32_t numDrawCommands)
 	{
 
 	}
