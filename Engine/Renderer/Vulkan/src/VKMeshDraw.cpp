@@ -41,30 +41,10 @@ uint32_t CVKMeshDraw::GetName(void) const
 	return m_name;
 }
 
-glm::aabb CVKMeshDraw::GetLocalAABB(void) const
-{
-	if (m_pMeshDraw) {
-		return m_pMeshDraw->aabb;
-	}
-	else {
-		return glm::aabb();
-	}
-}
-
-GfxIndexType CVKMeshDraw::GetIndexType(void) const
-{
-	if (m_ptrMesh.IsValid()) {
-		return m_ptrMesh->GetIndexType();
-	}
-	else {
-		return GFX_INDEX_INVALID_ENUM;
-	}
-}
-
 uint32_t CVKMeshDraw::GetVertexFormat(void) const
 {
 	if (m_ptrMesh.IsValid()) {
-		return m_ptrMesh->GetVertexFormat();
+		return m_ptrMesh->GetVertexBuffer()->GetVertexFormat();
 	}
 	else {
 		return 0;
@@ -95,6 +75,16 @@ uint32_t CVKMeshDraw::GetIndexOffset(void) const
 	}
 }
 
+GfxIndexType CVKMeshDraw::GetIndexType(void) const
+{
+	if (m_ptrMesh.IsValid()) {
+		return m_ptrMesh->GetIndexBuffer()->GetIndexType();
+	}
+	else {
+		return GFX_INDEX_INVALID_ENUM;
+	}
+}
+
 uint32_t CVKMeshDraw::GetInstanceCount(void) const
 {
 	if (m_pInstanceBuffer) {
@@ -112,6 +102,16 @@ uint32_t CVKMeshDraw::GetInstanceFormat(void) const
 	}
 	else {
 		return 0;
+	}
+}
+
+glm::aabb CVKMeshDraw::GetLocalAABB(void) const
+{
+	if (m_pMeshDraw) {
+		return m_pMeshDraw->aabb;
+	}
+	else {
+		return glm::aabb();
 	}
 }
 
@@ -134,12 +134,12 @@ void CVKMeshDraw::Bind(VkCommandBuffer vkCommandBuffer) const
 	m_pInstanceBuffer->Bind(vkCommandBuffer, 0);
 }
 
-CVKBufferPtr CVKMeshDraw::IndexBufferTransfer(VkCommandBuffer vkCommandBuffer)
+CVKBufferPtr CVKMeshDraw::TransferIndexBuffer(VkCommandBuffer vkCommandBuffer)
 {
-	return m_pIndexBuffer->BufferTransfer(vkCommandBuffer);
+	return m_pIndexBuffer->TransferBuffer(vkCommandBuffer);
 }
 
-CVKBufferPtr CVKMeshDraw::VertexBufferTransfer(VkCommandBuffer vkCommandBuffer)
+CVKBufferPtr CVKMeshDraw::TransferVertexBuffer(VkCommandBuffer vkCommandBuffer)
 {
-	return m_pVertexBuffer->BufferTransfer(vkCommandBuffer);
+	return m_pVertexBuffer->TransferBuffer(vkCommandBuffer);
 }

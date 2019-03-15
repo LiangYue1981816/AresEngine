@@ -29,12 +29,8 @@ public:
 
 public:
 	virtual Draw* GetDraw(int indexDraw) = 0;
-
 	virtual CGfxIndexBuffer* GetIndexBuffer(void) = 0;
-	virtual GfxIndexType GetIndexType(void) const = 0;
-
 	virtual CGfxVertexBuffer* GetVertexBuffer(void) = 0;
-	virtual uint32_t GetVertexFormat(void) const = 0;
 
 public:
 	virtual bool CreateIndexBuffer(GfxIndexType type, size_t size, bool bDynamic, const void *pBuffer) = 0;

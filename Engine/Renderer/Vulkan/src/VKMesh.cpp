@@ -45,29 +45,9 @@ CGfxIndexBuffer* CVKMesh::GetIndexBuffer(void)
 	return m_pIndexBuffer;
 }
 
-GfxIndexType CVKMesh::GetIndexType(void) const
-{
-	if (m_pIndexBuffer) {
-		return m_pIndexBuffer->GetIndexType();
-	}
-	else {
-		return GFX_INDEX_INVALID_ENUM;
-	}
-}
-
 CGfxVertexBuffer* CVKMesh::GetVertexBuffer(void)
 {
 	return m_pVertexBuffer;
-}
-
-uint32_t CVKMesh::GetVertexFormat(void) const
-{
-	if (m_pVertexBuffer) {
-		return m_pVertexBuffer->GetVertexFormat();
-	}
-	else {
-		return 0;
-	}
 }
 
 bool CVKMesh::CreateIndexBuffer(GfxIndexType type, size_t size, bool bDynamic, const void *pBuffer)

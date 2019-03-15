@@ -17,11 +17,9 @@ public:
 	HANDLE GetCommandBuffer(void) const;
 
 public:
-	bool IsMainCommandBuffer(void) const;
-
-public:
 	void Clearup(void);
 	bool Execute(void) const;
+	bool IsMainCommandBuffer(void) const;
 
 public:
 	bool CmdBeginRenderPass(const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass);

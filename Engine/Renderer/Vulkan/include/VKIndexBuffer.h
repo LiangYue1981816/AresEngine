@@ -25,7 +25,7 @@ private:
 	void Bind(VkCommandBuffer vkCommandBuffer, VkDeviceSize offset) const;
 
 private:
-	CVKBufferPtr BufferTransfer(VkCommandBuffer vkCommandBuffer);
+	CVKBufferPtr TransferBuffer(VkCommandBuffer vkCommandBuffer);
 
 
 private:

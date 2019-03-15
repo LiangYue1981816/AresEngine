@@ -36,11 +36,6 @@ HANDLE CVKCommandBuffer::GetCommandBuffer(void) const
 	return (HANDLE)m_vkCommandBuffer;
 }
 
-bool CVKCommandBuffer::IsMainCommandBuffer(void) const
-{
-	return m_bMainCommandBuffer;
-}
-
 void CVKCommandBuffer::Clearup(void)
 {
 	for (const auto &itCommand : m_pCommands) {
@@ -54,6 +49,11 @@ void CVKCommandBuffer::Clearup(void)
 bool CVKCommandBuffer::Execute(void) const
 {
 	return true;
+}
+
+bool CVKCommandBuffer::IsMainCommandBuffer(void) const
+{
+	return m_bMainCommandBuffer;
 }
 
 bool CVKCommandBuffer::CmdBeginRenderPass(const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass)

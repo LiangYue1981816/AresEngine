@@ -44,29 +44,9 @@ CGfxIndexBuffer* CGLES3Mesh::GetIndexBuffer(void)
 	return m_pIndexBuffer;
 }
 
-GfxIndexType CGLES3Mesh::GetIndexType(void) const
-{
-	if (m_pIndexBuffer) {
-		return m_pIndexBuffer->GetIndexType();
-	}
-	else {
-		return GFX_INDEX_INVALID_ENUM;
-	}
-}
-
 CGfxVertexBuffer* CGLES3Mesh::GetVertexBuffer(void)
 {
 	return m_pVertexBuffer;
-}
-
-uint32_t CGLES3Mesh::GetVertexFormat(void) const
-{
-	if (m_pVertexBuffer) {
-		return m_pVertexBuffer->GetVertexFormat();
-	}
-	else {
-		return 0;
-	}
 }
 
 bool CGLES3Mesh::CreateIndexBuffer(GfxIndexType type, size_t size, bool bDynamic, const void *pBuffer)
