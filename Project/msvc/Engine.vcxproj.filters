@@ -1431,7 +1431,7 @@
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxDescriptorLayout.h">
       <Filter>Engine\Renderer\Gfx\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxDescriptorSet.h.h">
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxDescriptorSet.h">
       <Filter>Engine\Renderer\Gfx\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
