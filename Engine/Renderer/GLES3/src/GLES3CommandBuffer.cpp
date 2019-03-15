@@ -69,6 +69,16 @@ HANDLE CGLES3CommandBuffer::GetCommandBuffer(void) const
 	return nullptr;
 }
 
+bool CGLES3CommandBuffer::IsMainCommandBuffer(void) const
+{
+	return m_bMainCommandBuffer;
+}
+
+uint32_t CGLES3CommandBuffer::GetCommandCount(void) const
+{
+	return m_pCommands.size();
+}
+
 void CGLES3CommandBuffer::Clearup(void)
 {
 	for (const auto &itCommand : m_pCommands) {
@@ -94,11 +104,6 @@ bool CGLES3CommandBuffer::Execute(void) const
 	}
 
 	return false;
-}
-
-bool CGLES3CommandBuffer::IsMainCommandBuffer(void) const
-{
-	return m_bMainCommandBuffer;
 }
 
 bool CGLES3CommandBuffer::CmdBeginRenderPass(const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass)
