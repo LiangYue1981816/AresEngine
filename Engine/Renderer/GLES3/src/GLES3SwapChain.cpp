@@ -25,7 +25,7 @@ CGLES3SwapChain::CGLES3SwapChain(void *hDC, int width, int height, GfxPixelForma
 			glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, CGLES3Helper::TranslateTextureTarget(((CGLES3RenderTexture *)m_ptrFrameTexture.GetPointer())->GetType()), (GLuint)((CGLES3RenderTexture *)m_ptrFrameTexture.GetPointer())->GetTexture(), 0);
 			glClearBufferfv(GL_COLOR, 0, color);
 
-			glReadBuffers((int)drawBuffers.size(), drawBuffers.data());
+			GLReadBuffers((int)drawBuffers.size(), drawBuffers.data());
 			glDrawBuffers((int)drawBuffers.size(), drawBuffers.data());
 
 			uint32_t status = glCheckFramebufferStatus(GL_FRAMEBUFFER);

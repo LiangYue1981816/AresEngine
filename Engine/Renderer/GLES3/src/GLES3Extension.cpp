@@ -2,14 +2,14 @@
 
 
 #pragma region OpenGL extension
-void glReadBuffers(int n, const uint32_t *bufs)
+void GLReadBuffers(int n, const uint32_t *bufs)
 {
 	for (int index = 0; index < n; index++) {
 		glReadBuffer(bufs[index]);
 	}
 }
 
-uint32_t glGetShaderType(shader_kind kind)
+uint32_t GLGetShaderType(shader_kind kind)
 {
 	switch ((int)kind) {
 	case vertex_shader:
@@ -26,7 +26,7 @@ uint32_t glGetShaderType(shader_kind kind)
 	}
 }
 
-uint32_t glGetProgramStage(shader_kind kind)
+uint32_t GLGetProgramStage(shader_kind kind)
 {
 	switch ((int)kind) {
 	case vertex_shader:
@@ -830,11 +830,11 @@ void GLReadBuffers(GLenum target, GLsizei n, const GLenum *bufs)
 				FrameBuffers[target].readbuffers[framebuffer].emplace_back(bufs[index]);
 			}
 
-			glReadBuffers(n, bufs);
+			GLReadBuffers(n, bufs);
 		}
 	}
 	else {
-		glReadBuffers(n, bufs);
+		GLReadBuffers(n, bufs);
 	}
 }
 
