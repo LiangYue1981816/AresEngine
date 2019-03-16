@@ -2,7 +2,7 @@
 #include "GLES3Renderer.h"
 
 
-class CGLES3Texture2DArray : public CGLES3Texture, public CGfxTexture2DArray
+class CGLES3Texture2DArray : public CGfxTexture2DArray
 {
 	friend class CGLES3Texture2DArrayManager;
 
@@ -25,8 +25,8 @@ public:
 
 	int GetWidth(void) const;
 	int GetHeight(void) const;
-	int GetLevels(void) const;
 	int GetLayers(void) const;
+	int GetLevels(void) const;
 
 public:
 	bool Create(HANDLE hExternTexture);
@@ -45,10 +45,7 @@ private:
 	GfxPixelFormat m_format;
 	GfxTextureType m_type;
 
-	int m_width;
-	int m_height;
-	int m_levels;
-	int m_layers;
+	CGLES3TexturePtr m_ptrTexture;
 
 private:
 	eastl::unordered_map<int, eastl::unordered_map<int, uint32_t>> m_size;

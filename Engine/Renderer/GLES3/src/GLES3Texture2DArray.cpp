@@ -8,11 +8,6 @@ CGLES3Texture2DArray::CGLES3Texture2DArray(CGLES3Texture2DArrayManager *pManager
 
 	, m_format(GFX_PIXELFORMAT_UNDEFINED)
 	, m_type(GFX_TEXTURE_INVALID_ENUM)
-
-	, m_width(0)
-	, m_height(0)
-	, m_levels(0)
-	, m_layers(0)
 {
 
 }
@@ -34,7 +29,7 @@ uint32_t CGLES3Texture2DArray::GetName(void) const
 
 HANDLE CGLES3Texture2DArray::GetTexture(void) const
 {
-	return (HANDLE)m_texture;
+	return (HANDLE)m_ptrTexture->GetTexture();
 }
 
 GfxPixelFormat CGLES3Texture2DArray::GetFormat(void) const
@@ -49,22 +44,22 @@ GfxTextureType CGLES3Texture2DArray::GetType(void) const
 
 int CGLES3Texture2DArray::GetWidth(void) const
 {
-	return m_width;
+	return m_ptrTexture->GetWidth();
 }
 
 int CGLES3Texture2DArray::GetHeight(void) const
 {
-	return m_height;
-}
-
-int CGLES3Texture2DArray::GetLevels(void) const
-{
-	return m_levels;
+	return m_ptrTexture->GetHeight();
 }
 
 int CGLES3Texture2DArray::GetLayers(void) const
 {
-	return m_layers;
+	return m_ptrTexture->GetLayers();
+}
+
+int CGLES3Texture2DArray::GetLevels(void) const
+{
+	return m_ptrTexture->GetLevels();
 }
 
 bool CGLES3Texture2DArray::Create(HANDLE hExternTexture)
@@ -72,11 +67,12 @@ bool CGLES3Texture2DArray::Create(HANDLE hExternTexture)
 	Destroy();
 	{
 		do {
-			if (CGLES3Texture::Create(GL_TEXTURE_2D_ARRAY, (uint32_t)hExternTexture) == false) {
+			m_format = GFX_PIXELFORMAT_UNDEFINED;
+			m_type = GFX_TEXTURE_2D_ARRAY;
+
+			if (m_ptrTexture->Create(GL_TEXTURE_2D_ARRAY, (uint32_t)hExternTexture) == false) {
 				break;
 			}
-
-			m_type = GFX_TEXTURE_2D_ARRAY;
 
 			return true;
 		} while (false);
@@ -90,17 +86,12 @@ bool CGLES3Texture2DArray::Create(GfxPixelFormat format, int width, int height, 
 	Destroy();
 	{
 		do {
-			if (CGLES3Texture::Create(GL_TEXTURE_2D_ARRAY, format, width, height, levels, layers) == false) {
-				break;
-			}
-
 			m_format = format;
 			m_type = GFX_TEXTURE_2D_ARRAY;
 
-			m_width = width;
-			m_height = height;
-			m_levels = levels;
-			m_layers = layers;
+			if (m_ptrTexture->Create(GL_TEXTURE_2D_ARRAY, format, width, height, 1, levels) == false) {
+				break;
+			}
 
 			return true;
 		} while (false);
@@ -111,99 +102,42 @@ bool CGLES3Texture2DArray::Create(GfxPixelFormat format, int width, int height, 
 
 void CGLES3Texture2DArray::Destroy(void)
 {
-	CGLES3Texture::Destroy();
-
 	for (const auto &itLayerSize : m_size) {
 		for (const auto &itLevelSize : itLayerSize.second) {
 			CGfxProfiler::DecTextureDataSize(itLevelSize.second);
 		}
 	}
 
+	m_size.clear();
+
 	m_format = GFX_PIXELFORMAT_UNDEFINED;
 	m_type = GFX_TEXTURE_INVALID_ENUM;
 
-	m_width = 0;
-	m_height = 0;
-	m_levels = 0;
-	m_layers = 0;
-
-	m_size.clear();
+	m_ptrTexture->Destroy();
 }
 
 bool CGLES3Texture2DArray::TransferTexture2D(GfxPixelFormat format, int layer, int level, int xoffset, int yoffset, int width, int height, GfxDataType type, uint32_t size, const void *data)
 {
-	gli::gl GL(gli::gl::PROFILE_ES30);
-	gli::gl::format glFormat = GL.translate((gli::format)format);
-
-	if (m_format != format) {
-		return false;
-	}
-
-	if (m_texture == 0) {
-		return false;
-	}
-
-	if (m_bExtern == true) {
-		return false;
-	}
-
-	if (m_levels < level) {
-		return false;
-	}
-
-	if (m_layers < layer) {
-		return false;
-	}
-
-	glBindTexture(GL_TEXTURE_2D_ARRAY, m_texture);
-	{
+	if (m_ptrTexture->TransferTexture2DArray(format, layer, level, xoffset, yoffset, width, height, type, size, data)) {
 		CGfxProfiler::DecTextureDataSize(m_size[layer][level]);
-		{
-			m_size[layer][level] = size;
-			glTexSubImage3D(GL_TEXTURE_2D_ARRAY, level, xoffset, yoffset, layer, width, height, 1, glFormat.External, CGLES3Helper::TranslateDataType(type), data);
-		}
+		m_size[layer][level] = size;
 		CGfxProfiler::IncTextureDataSize(m_size[layer][level]);
+		return true;
 	}
-	glBindTexture(GL_TEXTURE_2D_ARRAY, 0);
-
-	return true;
+	else {
+		return false;
+	}
 }
 
 bool CGLES3Texture2DArray::TransferTexture2DCompressed(GfxPixelFormat format, int layer, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void *data)
 {
-	gli::gl GL(gli::gl::PROFILE_ES30);
-	gli::gl::format glFormat = GL.translate((gli::format)format);
-
-	if (m_format != format) {
-		return false;
-	}
-
-	if (m_texture == 0) {
-		return false;
-	}
-
-	if (m_bExtern == true) {
-		return false;
-	}
-
-	if (m_levels < level) {
-		return false;
-	}
-
-	if (m_layers < layer) {
-		return false;
-	}
-
-	glBindTexture(GL_TEXTURE_2D_ARRAY, m_texture);
-	{
+	if (m_ptrTexture->TransferTexture2DArrayCompressed(format, layer, level, xoffset, yoffset, width, height, size, data)) {
 		CGfxProfiler::DecTextureDataSize(m_size[layer][level]);
-		{
-			m_size[layer][level] = size;
-			glCompressedTexSubImage3D(GL_TEXTURE_2D_ARRAY, level, xoffset, yoffset, layer, width, height, 1, glFormat.Internal, size, data);
-		}
+		m_size[layer][level] = size;
 		CGfxProfiler::IncTextureDataSize(m_size[layer][level]);
+		return true;
 	}
-	glBindTexture(GL_TEXTURE_2D_ARRAY, 0);
-
-	return true;
+	else {
+		return false;
+	}
 }

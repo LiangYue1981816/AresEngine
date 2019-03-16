@@ -27,8 +27,8 @@ public:
 
 	virtual int GetWidth(void) const = 0;
 	virtual int GetHeight(void) const = 0;
-	virtual int GetLevels(void) const = 0;
 	virtual int GetLayers(void) const = 0;
+	virtual int GetLevels(void) const = 0;
 
 public:
 	virtual bool Create(HANDLE hExternTexture) = 0;
