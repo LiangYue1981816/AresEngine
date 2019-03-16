@@ -8,12 +8,8 @@ CGLES3TextureCubeMap::CGLES3TextureCubeMap(CGLES3TextureCubeMapManager *pManager
 
 	, m_format(GFX_PIXELFORMAT_UNDEFINED)
 	, m_type(GFX_TEXTURE_INVALID_ENUM)
-
-	, m_width(0)
-	, m_height(0)
-	, m_levels(0)
 {
-
+	m_ptrTexture = CGLES3TexturePtr(new CGLES3Texture);
 }
 
 CGLES3TextureCubeMap::~CGLES3TextureCubeMap(void)
@@ -33,7 +29,7 @@ uint32_t CGLES3TextureCubeMap::GetName(void) const
 
 HANDLE CGLES3TextureCubeMap::GetTexture(void) const
 {
-	return (HANDLE)m_texture;
+	return (HANDLE)m_ptrTexture->GetTexture();
 }
 
 GfxPixelFormat CGLES3TextureCubeMap::GetFormat(void) const
@@ -48,17 +44,17 @@ GfxTextureType CGLES3TextureCubeMap::GetType(void) const
 
 int CGLES3TextureCubeMap::GetWidth(void) const
 {
-	return m_width;
+	return m_ptrTexture->GetWidth();
 }
 
 int CGLES3TextureCubeMap::GetHeight(void) const
 {
-	return m_height;
+	return m_ptrTexture->GetHeight();
 }
 
 int CGLES3TextureCubeMap::GetLevels(void) const
 {
-	return m_levels;
+	return m_ptrTexture->GetLevels();
 }
 
 bool CGLES3TextureCubeMap::Create(HANDLE hExternTexture)
@@ -66,11 +62,12 @@ bool CGLES3TextureCubeMap::Create(HANDLE hExternTexture)
 	Destroy();
 	{
 		do {
-			if (CGLES3Texture::Create(GL_TEXTURE_CUBE_MAP, (uint32_t)hExternTexture) == false) {
+			m_format = GFX_PIXELFORMAT_UNDEFINED;
+			m_type = GFX_TEXTURE_CUBE_MAP;
+
+			if (m_ptrTexture->Create(GL_TEXTURE_CUBE_MAP, (uint32_t)hExternTexture) == false) {
 				break;
 			}
-
-			m_type = GFX_TEXTURE_CUBE_MAP;
 
 			return true;
 		} while (false);
@@ -84,16 +81,12 @@ bool CGLES3TextureCubeMap::Create(GfxPixelFormat format, int width, int height, 
 	Destroy();
 	{
 		do {
-			if (CGLES3Texture::Create(GL_TEXTURE_CUBE_MAP, format, width, height, levels, 0) == false) {
-				break;
-			}
-
 			m_format = format;
 			m_type = GFX_TEXTURE_CUBE_MAP;
 
-			m_width = width;
-			m_height = height;
-			m_levels = levels;
+			if (m_ptrTexture->Create(GL_TEXTURE_CUBE_MAP, format, width, height, 1, levels) == false) {
+				break;
+			}
 
 			return true;
 		} while (false);
@@ -104,90 +97,47 @@ bool CGLES3TextureCubeMap::Create(GfxPixelFormat format, int width, int height, 
 
 void CGLES3TextureCubeMap::Destroy(void)
 {
-	CGLES3Texture::Destroy();
-
 	for (const auto &itFaceSize : m_size) {
 		for (const auto &itLevelSize : itFaceSize.second) {
 			CGfxProfiler::DecTextureDataSize(itLevelSize.second);
 		}
 	}
 
+	m_size.clear();
+
 	m_format = GFX_PIXELFORMAT_UNDEFINED;
 	m_type = GFX_TEXTURE_INVALID_ENUM;
 
-	m_width = 0;
-	m_height = 0;
-	m_levels = 0;
-
-	m_size.clear();
+	m_ptrTexture->Destroy();
 }
 
 bool CGLES3TextureCubeMap::TransferTexture2D(GfxPixelFormat format, GfxTextureCubeMapFace face, int level, int xoffset, int yoffset, int width, int height, GfxDataType type, uint32_t size, const void *data)
 {
-	gli::gl GL(gli::gl::PROFILE_ES30);
-	gli::gl::format glFormat = GL.translate((gli::format)format);
-
-	if (m_format != format) {
-		return false;
-	}
-
-	if (m_texture == 0) {
-		return false;
-	}
-
-	if (m_bExtern == true) {
-		return false;
-	}
-
-	if (m_levels < level) {
-		return false;
-	}
-
-	glBindTexture(GL_TEXTURE_CUBE_MAP, m_texture);
-	{
+	if (m_ptrTexture->TransferTextureCubeMap(format, face, level, xoffset, yoffset, width, height, type, size, data)) {
 		CGfxProfiler::DecTextureDataSize(m_size[face][level]);
-		{
-			m_size[face][level] = size;
-			glTexSubImage2D(CGLES3Helper::TranslateTextureCubeMapFace(face), level, xoffset, yoffset, width, height, glFormat.External, CGLES3Helper::TranslateDataType(type), data);
-		}
+		m_size[face][level] = size;
 		CGfxProfiler::IncTextureDataSize(m_size[face][level]);
+		return true;
 	}
-	glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
-
-	return true;
+	else {
+		return false;
+	}
 }
 
 bool CGLES3TextureCubeMap::TransferTexture2DCompressed(GfxPixelFormat format, GfxTextureCubeMapFace face, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void *data)
 {
-	gli::gl GL(gli::gl::PROFILE_ES30);
-	gli::gl::format glFormat = GL.translate((gli::format)format);
-
-	if (m_format != format) {
-		return false;
-	}
-
-	if (m_texture == 0) {
-		return false;
-	}
-
-	if (m_bExtern == true) {
-		return false;
-	}
-
-	if (m_levels < level) {
-		return false;
-	}
-
-	glBindTexture(GL_TEXTURE_CUBE_MAP, m_texture);
-	{
+	if (m_ptrTexture->TransferTextureCubeMapCompressed(format, face, level, xoffset, yoffset, width, height, size, data)) {
 		CGfxProfiler::DecTextureDataSize(m_size[face][level]);
-		{
-			m_size[face][level] = size;
-			glCompressedTexSubImage2D(CGLES3Helper::TranslateTextureCubeMapFace(face), level, xoffset, yoffset, width, height, glFormat.Internal, size, data);
-		}
+		m_size[face][level] = size;
 		CGfxProfiler::IncTextureDataSize(m_size[face][level]);
+		return true;
 	}
-	glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
+	else {
+		return false;
+	}
+}
 
-	return true;
+void CGLES3TextureCubeMap::Bind(uint32_t unit) const
+{
+	m_ptrTexture->Bind(unit);
 }

@@ -9,7 +9,7 @@ CGLES3Texture2DArray::CGLES3Texture2DArray(CGLES3Texture2DArrayManager *pManager
 	, m_format(GFX_PIXELFORMAT_UNDEFINED)
 	, m_type(GFX_TEXTURE_INVALID_ENUM)
 {
-
+	m_ptrTexture = CGLES3TexturePtr(new CGLES3Texture);
 }
 
 CGLES3Texture2DArray::~CGLES3Texture2DArray(void)
