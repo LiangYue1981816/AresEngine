@@ -2,8 +2,8 @@
 
 
 CGLES3Buffer::CGLES3Buffer(uint32_t target, size_t size, bool bDynamic)
-	: m_size(size)
-	, m_target(target)
+	: m_target(target)
+	, m_size(size)
 {
 	glGenBuffers(1, &m_buffer);
 	glBindBuffer(m_target, m_buffer);
