@@ -3,8 +3,8 @@
 
 CGLES3IndirectBuffer::CGLES3IndirectBuffer(uint32_t numDrawCommands)
 	: CGfxIndirectBuffer(numDrawCommands)
+	, m_draws(numDrawCommands)
 {
-	m_draws.resize(numDrawCommands);
 	m_ptrBuffer = CGLES3BufferPtr(new CGLES3Buffer(GL_DRAW_INDIRECT_BUFFER, numDrawCommands * sizeof(DrawCommand), true));
 	CGfxProfiler::IncIndirectBufferSize(m_ptrBuffer->GetSize());
 }
