@@ -101,11 +101,6 @@ const glm::mat4& CGfxCamera::GetViewInverseTransposeMatrix(void) const
 	return m_camera.viewInverseTransposeMatrix;
 }
 
-CGfxUniformBufferPtr CGfxCamera::GetUniformBuffer(void) const
-{
-	return m_pUniformCamera->GetUniformBuffer();
-}
-
 glm::vec3 CGfxCamera::WorldToScreen(const glm::vec3 &world) const
 {
 	return m_camera.worldToScreen(world);
