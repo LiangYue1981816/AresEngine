@@ -49,9 +49,7 @@ public:
 	virtual bool CmdEndRenderPass(void) = 0;
 	virtual bool CmdBindPipelineCompute(const CGfxPipelineCompute *pPipelineCompute) = 0;
 	virtual bool CmdBindPipelineGraphics(const CGfxPipelineGraphics *pPipelineGraphics) = 0;
-	virtual bool CmdBindMaterialPass(const CGfxMaterialPtr ptrMaterial, uint32_t namePass) = 0;
-	virtual bool CmdBindUniformBuffer(const CGfxUniformBufferPtr ptrUniformBuffer, uint32_t nameUniform) = 0;
-	virtual bool CmdBindMeshDraw(const CGfxMeshDrawPtr ptrMeshDraw) = 0;
+	virtual bool CmdBindDescriptorSet(const CGfxDescriptorSetPtr ptrDescriptorSet) = 0;
 	virtual bool CmdUniform1i(const char *szName, int v0) = 0;
 	virtual bool CmdUniform2i(const char *szName, int v0, int v1) = 0;
 	virtual bool CmdUniform3i(const char *szName, int v0, int v1, int v2) = 0;
@@ -75,10 +73,9 @@ public:
 	virtual bool CmdClearColor(float red, float green, float blue, float alpha) = 0;
 	virtual bool CmdSetScissor(int x, int y, int width, int height) = 0;
 	virtual bool CmdSetViewport(int x, int y, int width, int height) = 0;
-	virtual bool CmdSetInstanceBufferData(const CGfxMeshDrawPtr ptrMeshDraw, const uint8_t *pInstanceBuffer, uint32_t size) = 0;
 	virtual bool CmdDrawElements(const CGfxMeshDrawPtr ptrMeshDraw) = 0;
-	virtual bool CmdDrawInstance(const CGfxMeshDrawPtr ptrMeshDraw) = 0;
-	virtual bool CmdDrawIndirect(const CGfxMeshDrawPtr ptrMeshDraw) = 0;
+	virtual bool CmdDrawInstance(const CGfxMeshDrawPtr ptrMeshDraw, const uint8_t *pInstanceBuffer, uint32_t size) = 0;
+	virtual bool CmdDrawIndirect(const CGfxMeshDrawPtr ptrMeshDraw, const uint8_t *pInstanceBuffer, uint32_t size) = 0;
 	virtual bool CmdExecute(const CGfxCommandBufferPtr ptrCommandBuffer) = 0;
 	virtual bool CmdPresent(void) = 0;
 	virtual bool CmdPushDebugGroup(const char *szMessage) = 0;
