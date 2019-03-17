@@ -20,11 +20,11 @@ public:
 	virtual CGfxDescriptorLayoutPtr GetDescriptorLayout(void) const = 0;
 
 public:
-	virtual bool SetUniformBuffer(uint32_t name, const CGfxUniformBufferPtr ptrUniformBuffer) = 0;
-	virtual bool SetTexture2D(uint32_t name, const CGfxTexture2DPtr ptrTexture, const CGfxSampler *pSampler) = 0;
-	virtual bool SetTexture2DArray(uint32_t name, const CGfxTexture2DArrayPtr ptrTexture, const CGfxSampler *pSampler) = 0;
-	virtual bool SetTextureCubeMap(uint32_t name, const CGfxTextureCubeMapPtr ptrTexture, const CGfxSampler *pSampler) = 0;
-	virtual bool SetRenderTexture(uint32_t name, const CGfxRenderTexturePtr ptrRenderTexture, const CGfxSampler *pSampler) = 0;
+	virtual bool SetUniformBuffer(const char *szName, const CGfxUniformBufferPtr ptrUniformBuffer) = 0;
+	virtual bool SetTexture2D(const char *szName, const CGfxTexture2DPtr ptrTexture, const CGfxSampler *pSampler) = 0;
+	virtual bool SetTexture2DArray(const char *szName, const CGfxTexture2DArrayPtr ptrTexture, const CGfxSampler *pSampler) = 0;
+	virtual bool SetTextureCubeMap(const char *szName, const CGfxTextureCubeMapPtr ptrTexture, const CGfxSampler *pSampler) = 0;
+	virtual bool SetRenderTexture(const char *szName, const CGfxRenderTexturePtr ptrRenderTexture, const CGfxSampler *pSampler) = 0;
 
 public:
 	virtual CGfxSampler* GetSampler(uint32_t name) const = 0;

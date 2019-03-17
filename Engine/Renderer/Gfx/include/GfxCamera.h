@@ -50,7 +50,7 @@ public:
 	void End(int indexQueue);
 
 public:
-	void CmdDraw(int indexQueue, CGfxCommandBufferPtr ptrCommandBuffer, const CGfxUniformBufferPtr ptrUniformBufferEngine, uint32_t namePass);
+	void CmdDraw(int indexQueue, CGfxCommandBufferPtr ptrCommandBuffer, const CGfxDescriptorSetPtr ptrDescriptorSetEngine, uint32_t namePass);
 
 
 private:
@@ -59,4 +59,8 @@ private:
 private:
 	CGfxRenderQueue *m_pRenderQueue;
 	CGfxUniformCamera *m_pUniformCamera;
+
+private:
+	CGfxDescriptorSetPtr m_ptrDescriptorSet;
+	CGfxDescriptorLayoutPtr m_ptrDescriptorLayout;
 };
