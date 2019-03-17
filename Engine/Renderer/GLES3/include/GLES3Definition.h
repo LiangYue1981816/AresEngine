@@ -7,8 +7,6 @@ class CGLES3RenderPass;
 class CGLES3RenderPassManager;
 class CGLES3FrameBuffer;
 class CGLES3FrameBufferManager;
-class CGLES3RenderTexture;
-class CGLES3RenderTextureManager;
 
 class CGLES3Shader;
 class CGLES3ShaderManager;
@@ -34,6 +32,8 @@ class CGLES3Texture2DArray;
 class CGLES3Texture2DArrayManager;
 class CGLES3TextureCubeMap;
 class CGLES3TextureCubeMapManager;
+class CGLES3RenderTexture;
+class CGLES3RenderTextureManager;
 
 class CGLES3UniformBuffer;
 class CGLES3UniformBufferManager;

@@ -89,8 +89,6 @@ class CVKRenderPass;
 class CVKRenderPassManager;
 class CVKFrameBuffer;
 class CVKFrameBufferManager;
-class CVKRenderTexture;
-class CVKRenderTextureManager;
 
 class CVKShader;
 class CVKShaderManager;
@@ -115,6 +113,8 @@ class CVKTexture2DArray;
 class CVKTexture2DArrayManager;
 class CVKTextureCubeMap;
 class CVKTextureCubeMapManager;
+class CVKRenderTexture;
+class CVKRenderTextureManager;
 
 class CVKUniformBuffer;
 class CVKUniformBufferManager;

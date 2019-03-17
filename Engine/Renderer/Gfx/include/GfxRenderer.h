@@ -4,6 +4,7 @@
 #include "GfxGLM.h"
 #include "GfxEnum.h"
 #include "GfxDefinition.h"
+
 #include "GfxSprivCross.h"
 #include "GfxVertexAttribute.h"
 
@@ -18,7 +19,6 @@
 #include "GfxSwapChain.h"
 #include "GfxRenderPass.h"
 #include "GfxFrameBuffer.h"
-#include "GfxRenderTexture.h"
 
 #include "GfxShader.h"
 #include "GfxPipelineCompute.h"
@@ -33,6 +33,7 @@
 #include "GfxTexture2D.h"
 #include "GfxTexture2DArray.h"
 #include "GfxTextureCubeMap.h"
+#include "GfxRenderTexture.h"
 
 #include "GfxUniformVec1.h"
 #include "GfxUniformVec2.h"

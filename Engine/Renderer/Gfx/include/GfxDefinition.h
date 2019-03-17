@@ -15,7 +15,6 @@ class CALL_API CGfxRenderQueue;
 class CALL_API CGfxSwapChain;
 class CALL_API CGfxRenderPass;
 class CALL_API CGfxFrameBuffer;
-class CALL_API CGfxRenderTexture;
 
 class CALL_API CGfxShader;
 class CALL_API CGfxPipelineCompute;
@@ -30,6 +29,7 @@ class CALL_API CGfxSampler;
 class CALL_API CGfxTexture2D;
 class CALL_API CGfxTexture2DArray;
 class CALL_API CGfxTextureCubeMap;
+class CALL_API CGfxRenderTexture;
 
 class CALL_API CGfxUniformVec1;
 class CALL_API CGfxUniformVec2;

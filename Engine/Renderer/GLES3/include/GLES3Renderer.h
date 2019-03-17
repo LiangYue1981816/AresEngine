@@ -11,8 +11,6 @@
 #include "GLES3RenderPassManager.h"
 #include "GLES3FrameBuffer.h"
 #include "GLES3FrameBufferManager.h"
-#include "GLES3RenderTexture.h"
-#include "GLES3RenderTextureManager.h"
 
 #include "GLES3Shader.h"
 #include "GLES3ShaderManager.h"
@@ -35,6 +33,8 @@
 #include "GLES3Texture2DArray.h"
 #include "GLES3TextureCubeMap.h"
 #include "GLES3TextureManager.h"
+#include "GLES3RenderTexture.h"
+#include "GLES3RenderTextureManager.h"
 
 #include "GLES3UniformBuffer.h"
 #include "GLES3UniformBufferManager.h"

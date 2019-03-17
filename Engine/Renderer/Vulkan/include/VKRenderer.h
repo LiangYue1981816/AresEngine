@@ -23,8 +23,6 @@
 #include "VKRenderPassManager.h"
 #include "VKFrameBuffer.h"
 #include "VKFrameBufferManager.h"
-#include "VKRenderTexture.h"
-#include "VKRenderTextureManager.h"
 
 #include "VKShader.h"
 #include "VKShaderManager.h"
@@ -46,6 +44,8 @@
 #include "VKTexture2DArray.h"
 #include "VKTextureCubeMap.h"
 #include "VKTextureManager.h"
+#include "VKRenderTexture.h"
+#include "VKRenderTextureManager.h"
 
 #include "VKUniformBuffer.h"
 #include "VKUniformBufferManager.h"
