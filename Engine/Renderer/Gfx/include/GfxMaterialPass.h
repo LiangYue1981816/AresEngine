@@ -42,4 +42,7 @@ public:
 	virtual CGfxTexture2DPtr GetTexture2D(const char *szName) const = 0;
 	virtual CGfxTexture2DArrayPtr GetTexture2DArray(const char *szName) const = 0;
 	virtual CGfxTextureCubeMapPtr GetTextureCubeMap(const char *szName) const = 0;
+
+public:
+	virtual CGfxDescriptorSetPtr GetDescriptorSet(void) const = 0;
 };
