@@ -2,7 +2,7 @@
 #include "GfxRenderer.h"
 
 
-class CALL_API CGfxDescriptorLayout
+class CALL_API CGfxDescriptorLayout : public CGfxResource
 {
 public:
 	CGfxDescriptorLayout(uint32_t set)

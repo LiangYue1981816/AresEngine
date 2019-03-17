@@ -5,7 +5,7 @@
 class CALL_API CGfxDescriptorSet : public CGfxResource
 {
 public:
-	CGfxDescriptorSet(const CGfxDescriptorLayout *pDescriptorLayout)
+	CGfxDescriptorSet(const CGfxDescriptorLayoutPtr ptrDescriptorLayout)
 	{
 
 	}
@@ -17,7 +17,7 @@ public:
 
 public:
 	virtual HANDLE GetDescriptorSet(void) const = 0;
-	virtual CGfxDescriptorLayout* GetDescriptorLayout(void) const = 0;
+	virtual CGfxDescriptorLayoutPtr GetDescriptorLayout(void) const = 0;
 
 public:
 	virtual bool SetUniformBuffer(uint32_t name, const CGfxUniformBufferPtr ptrUniformBuffer) = 0;
