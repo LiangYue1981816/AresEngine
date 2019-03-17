@@ -68,21 +68,6 @@ int CVKTexture2D::GetSamples(void) const
 	return m_samples;
 }
 
-bool CVKTexture2D::Create(HANDLE hExternTexture)
-{
-	Destroy();
-	{
-		do {
-			CALL_BOOL_FUNCTION_BREAK(CVKTexture::CreateView((VkImageView)hExternTexture));
-			m_type = GFX_TEXTURE_2D;
-
-			return true;
-		} while (false);
-	}
-	Destroy();
-	return false;
-}
-
 bool CVKTexture2D::Create(GfxPixelFormat format, int width, int height, int levels, int samples)
 {
 	Destroy();

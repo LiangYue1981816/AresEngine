@@ -68,21 +68,6 @@ int CVKTexture2DArray::GetLayers(void) const
 	return m_layers;
 }
 
-bool CVKTexture2DArray::Create(HANDLE hExternTexture)
-{
-	Destroy();
-	{
-		do {
-			CALL_BOOL_FUNCTION_BREAK(CVKTexture::CreateView((VkImageView)hExternTexture));
-			m_type = GFX_TEXTURE_2D_ARRAY;
-
-			return true;
-		} while (false);
-	}
-	Destroy();
-	return false;
-}
-
 bool CVKTexture2DArray::Create(GfxPixelFormat format, int width, int height, int levels, int layers)
 {
 	Destroy();

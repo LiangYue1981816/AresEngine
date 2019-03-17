@@ -29,7 +29,6 @@ public:
 	int GetLayers(void) const;
 
 public:
-	bool Create(HANDLE hExternTexture);
 	bool Create(GfxPixelFormat format, int width, int height, int levels, int layers);
 	void Destroy(void);
 

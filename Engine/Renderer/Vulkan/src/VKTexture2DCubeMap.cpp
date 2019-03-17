@@ -62,21 +62,6 @@ int CVKTextureCubeMap::GetLevels(void) const
 	return m_levels;
 }
 
-bool CVKTextureCubeMap::Create(HANDLE hExternTexture)
-{
-	Destroy();
-	{
-		do {
-			CALL_BOOL_FUNCTION_BREAK(CVKTexture::CreateView((VkImageView)hExternTexture));
-			m_type = GFX_TEXTURE_CUBE_MAP;
-
-			return true;
-		} while (false);
-	}
-	Destroy();
-	return false;
-}
-
 bool CVKTextureCubeMap::Create(GfxPixelFormat format, int width, int height, int levels)
 {
 	Destroy();

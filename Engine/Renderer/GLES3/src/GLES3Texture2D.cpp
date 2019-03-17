@@ -62,25 +62,6 @@ int CGLES3Texture2D::GetSamples(void) const
 	return m_ptrTexture->GetSamples();
 }
 
-bool CGLES3Texture2D::Create(HANDLE hExternTexture)
-{
-	Destroy();
-	{
-		do {
-			m_format = GFX_PIXELFORMAT_UNDEFINED;
-			m_type = GFX_TEXTURE_2D;
-
-			if (m_ptrTexture->Create(GL_TEXTURE_2D, (uint32_t)hExternTexture) == false) {
-				break;
-			}
-
-			return true;
-		} while (false);
-	}
-	Destroy();
-	return false;
-}
-
 bool CGLES3Texture2D::Create(GfxPixelFormat format, int width, int height, int levels, int samples)
 {
 	Destroy();

@@ -60,13 +60,19 @@ int CGLES3Texture::GetSamples(void) const
 	return m_samples;
 }
 
-bool CGLES3Texture::Create(uint32_t target, uint32_t texture)
+bool CGLES3Texture::Create(uint32_t target, uint32_t texture, int width, int height, int layers, int levels, int samples)
 {
 	Destroy();
 
 	m_bExtern = true;
 	m_target = target;
 	m_texture = texture;
+
+	m_width = width;
+	m_height = height;
+	m_layers = layers;
+	m_levels = levels;
+	m_samples = samples;
 
 	return true;
 }

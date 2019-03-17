@@ -28,7 +28,6 @@ public:
 	int GetSamples(void) const;
 
 public:
-	bool Create(HANDLE hExternTexture, GfxPixelFormat format, int width, int height, int samples = 1);
 	bool Create(GfxPixelFormat format, int width, int height, int samples = 1, bool bTransient = false);
 	void Destroy(void);
 
@@ -43,13 +42,7 @@ private:
 	GfxPixelFormat m_format;
 	GfxTextureType m_type;
 
-	int m_width;
-	int m_height;
-	int m_samples;
-
-private:
-	bool m_bExtern;
-	uint32_t m_texture;
+	CGLES3TexturePtr m_ptrTexture;
 
 private:
 	CGLES3RenderTextureManager *m_pManager;

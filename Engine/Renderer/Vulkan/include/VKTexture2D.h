@@ -29,7 +29,6 @@ public:
 	int GetSamples(void) const;
 
 public:
-	bool Create(HANDLE hExternTexture);
 	bool Create(GfxPixelFormat format, int width, int height, int levels, int samples = 1);
 	void Destroy(void);
 

@@ -65,23 +65,6 @@ int CVKRenderTexture::GetSamples(void) const
 	return m_samples;
 }
 
-bool CVKRenderTexture::Create(HANDLE hExternTexture, GfxPixelFormat format, int width, int height, int samples)
-{
-	Destroy();
-
-	m_bExtern = true;
-	m_vkImageView = (VkImageView)hExternTexture;
-
-	m_width = width;
-	m_height = height;
-	m_samples = std::max(samples, 1);
-
-	m_format = format;
-	m_type = m_samples == 1 ? GFX_TEXTURE_2D : GFX_TEXTURE_2D_MULTISAMPLE;
-
-	return true;
-}
-
 bool CVKRenderTexture::Create(GfxPixelFormat format, int width, int height, int samples, bool bTransient)
 {
 	Destroy();
