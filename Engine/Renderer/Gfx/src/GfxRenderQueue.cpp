@@ -23,7 +23,7 @@ CGfxCommandBufferPtr CTaskCommandBuffer::GetCommandBuffer(void) const
 
 void CTaskCommandBuffer::TaskFunc(int indexThread, void *pParams)
 {
-	m_ptrCommandBuffer = GfxRenderer()->NewCommandBuffer(0, false);
+	m_ptrCommandBuffer = GfxRenderer()->NewCommandBuffer(indexThread, false);
 
 	if (CGfxRenderQueue *pRenderQueue = (CGfxRenderQueue *)pParams) {
 		pRenderQueue->CmdDrawThread(m_indexQueue, m_ptrCommandBuffer, m_ptrDescriptorSetEngine, m_ptrDescriptorSetCamera, m_pPipeline, m_namePass);
