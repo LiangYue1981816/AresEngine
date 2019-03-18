@@ -39,7 +39,7 @@ public:
 	void TaskFunc(int indexThread, void *pParams)
 	{
 		for (int index = m_indexBegin; index < m_indexEnd; index++) {
-			m_pComponentManager->GetComponentByIndex(index)->TaskUpdateCamera(m_pCamera, indexThread, m_indexQueue);
+			m_pComponentManager->GetComponentByIndex(index)->TaskUpdateCamera(m_pCamera, m_indexQueue, indexThread);
 		}
 	}
 

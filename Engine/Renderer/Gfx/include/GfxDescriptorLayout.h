@@ -35,5 +35,8 @@ public:
 	virtual uint32_t GetUniformLocation(uint32_t name) const = 0;
 
 public:
-	virtual bool IsCompatible(const CGfxDescriptorLayout *pLayout) const = 0;
+	virtual bool IsTextureValid(uint32_t name) const = 0;
+	virtual bool IsUniformValid(uint32_t name) const = 0;
+	virtual bool IsUniformBlockValid(uint32_t name) const = 0;
+	virtual bool IsCompatible(const CGfxDescriptorLayoutPtr ptrLayout) const = 0;
 };

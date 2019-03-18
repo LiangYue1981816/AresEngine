@@ -20,6 +20,7 @@ public:
 
 public:
 	virtual CGfxPipelineGraphics* GetPipeline(void) const = 0;
+	virtual CGfxDescriptorSetPtr GetDescriptorSet(void) const = 0;
 
 public:
 	virtual bool SetPipeline(const CGfxRenderPass *pRenderPass, const CGfxShader *pVertexShader, const CGfxShader *pFragmentShader, const PipelineState &state, uint32_t indexSubpass, uint32_t vertexBinding, uint32_t instanceBinding) = 0;
@@ -42,7 +43,4 @@ public:
 	virtual CGfxTexture2DPtr GetTexture2D(uint32_t name) const = 0;
 	virtual CGfxTexture2DArrayPtr GetTexture2DArray(uint32_t name) const = 0;
 	virtual CGfxTextureCubeMapPtr GetTextureCubeMap(uint32_t name) const = 0;
-
-public:
-	virtual CGfxDescriptorSetPtr GetDescriptorSet(void) const = 0;
 };

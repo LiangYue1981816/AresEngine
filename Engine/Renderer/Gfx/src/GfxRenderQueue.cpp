@@ -57,7 +57,7 @@ void CGfxRenderQueue::Begin(int indexQueue)
 	Clear(indexQueue);
 }
 
-void CGfxRenderQueue::Add(int indexThread, int indexQueue, const CGfxMaterialPtr ptrMaterial, const CGfxMeshDrawPtr ptrMeshDraw, const uint8_t *pInstanceData, uint32_t size)
+void CGfxRenderQueue::Add(int indexQueue, int indexThread, const CGfxMaterialPtr ptrMaterial, const CGfxMeshDrawPtr ptrMeshDraw, const uint8_t *pInstanceData, uint32_t size)
 {
 	if (indexThread >= 0 && indexThread < MAX_THREAD_COUNT) {
 		eastl::vector<uint8_t> &meshDrawInstanceBuffer = m_materialMeshDrawQueueThreads[indexThread][indexQueue][ptrMaterial][ptrMeshDraw];

@@ -24,7 +24,7 @@ void CComponentParticle::TaskUpdate(float gameTime, float deltaTime)
 
 }
 
-void CComponentParticle::TaskUpdateCamera(CGfxCamera *pCamera, int indexThread, int indexQueue)
+void CComponentParticle::TaskUpdateCamera(CGfxCamera *pCamera, int indexQueue, int indexThread)
 {
 
 }

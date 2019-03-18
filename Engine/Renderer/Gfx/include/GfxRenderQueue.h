@@ -33,7 +33,7 @@ public:
 public:
 	void Clear(int indexQueue);
 	void Begin(int indexQueue);
-	void Add(int indexThread, int indexQueue, const CGfxMaterialPtr ptrMaterial, const CGfxMeshDrawPtr ptrMeshDraw, const uint8_t *pInstanceData, uint32_t size);
+	void Add(int indexQueue, int indexThread, const CGfxMaterialPtr ptrMaterial, const CGfxMeshDrawPtr ptrMeshDraw, const uint8_t *pInstanceData, uint32_t size);
 	void End(int indexQueue);
 
 public:
