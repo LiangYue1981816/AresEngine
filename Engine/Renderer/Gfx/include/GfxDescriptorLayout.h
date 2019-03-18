@@ -16,8 +16,8 @@ public:
 
 
 public:
-	virtual uint32_t GetSetIndex(void) const = 0;
 	virtual HANDLE GetDescriptorLayout(void) const = 0;
+	virtual uint32_t GetSetIndex(void) const = 0;
 
 public:
 	virtual bool Create(void) = 0;
