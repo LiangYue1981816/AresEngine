@@ -6,6 +6,7 @@ class CALL_API CGfxMeshDraw : public CGfxResource
 {
 public:
 	CGfxMeshDraw(uint32_t name, const CGfxMeshPtr ptrMesh, int indexDraw, uint32_t instanceFormat, uint32_t instanceBinding)
+		: m_name(name)
 	{
 
 	}
@@ -14,9 +15,11 @@ public:
 
 	}
 
+	uint32_t GetName(void) const
+	{
+		return m_name;
+	}
 
-public:
-	virtual uint32_t GetName(void) const = 0;
 
 public:
 	virtual glm::aabb GetLocalAABB(void) const = 0;
@@ -29,4 +32,8 @@ public:
 
 public:
 	virtual bool InstanceBufferData(size_t size, const void *pBuffer) = 0;
+
+
+private:
+	uint32_t m_name;
 };

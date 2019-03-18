@@ -24,6 +24,7 @@ class CALL_API CGfxRenderPass : public CGfxResource
 {
 public:
 	CGfxRenderPass(uint32_t name, int numAttachments, int numSubpasses)
+		: m_name(name)
 	{
 
 	}
@@ -32,9 +33,11 @@ public:
 
 	}
 
+	uint32_t GetName(void) const
+	{
+		return m_name;
+	}
 
-public:
-	virtual uint32_t GetName(void) const = 0;
 
 public:
 	virtual HANDLE GetRenderPass(void) const = 0;
@@ -62,4 +65,8 @@ public:
 	virtual uint32_t GetSubpassInputAttachmentCount(int indexSubpass) const = 0;
 	virtual uint32_t GetSubpassOutputAttachmentCount(int indexSubpass) const = 0;
 	virtual const SubpassInformation* GetSubpass(int indexSubpass) const = 0;
+
+
+private:
+	uint32_t m_name;
 };

@@ -6,6 +6,7 @@ class CALL_API CGfxMaterialPass
 {
 public:
 	CGfxMaterialPass(uint32_t name)
+		: m_name(name)
 	{
 
 	}
@@ -14,9 +15,11 @@ public:
 
 	}
 
+	uint32_t GetName(void) const
+	{
+		return m_name;
+	}
 
-public:
-	virtual uint32_t GetName(void) const = 0;
 
 public:
 	virtual CGfxPipelineGraphics* GetPipeline(void) const = 0;
@@ -43,4 +46,8 @@ public:
 	virtual CGfxTexture2DPtr GetTexture2D(uint32_t name) const = 0;
 	virtual CGfxTexture2DArrayPtr GetTexture2DArray(uint32_t name) const = 0;
 	virtual CGfxTextureCubeMapPtr GetTextureCubeMap(uint32_t name) const = 0;
+
+
+private:
+	uint32_t m_name;
 };

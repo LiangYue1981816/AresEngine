@@ -34,10 +34,7 @@ public:
 
 public:
 	virtual HANDLE GetCommandBuffer(void) const = 0;
-
-public:
 	virtual bool IsMainCommandBuffer(void) const = 0;
-	virtual uint32_t GetCommandCount(void) const = 0;
 
 public:
 	virtual void Clearup(void) = 0;

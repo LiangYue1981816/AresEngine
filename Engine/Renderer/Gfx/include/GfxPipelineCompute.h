@@ -6,6 +6,7 @@ class CALL_API CGfxPipelineCompute
 {
 public:
 	CGfxPipelineCompute(uint32_t name)
+		: m_name(name)
 	{
 
 	}
@@ -14,9 +15,11 @@ public:
 
 	}
 
+	uint32_t GetName(void) const
+	{
+		return m_name;
+	}
 
-public:
-	virtual uint32_t GetName(void) const = 0;
 
 public:
 	virtual HANDLE GetPipeline(void) const = 0;
@@ -29,4 +32,8 @@ public:
 	virtual bool IsTextureValid(uint32_t name) const = 0;
 	virtual bool IsUniformValid(uint32_t name) const = 0;
 	virtual bool IsUniformBlockValid(uint32_t name) const = 0;
+
+
+private:
+	uint32_t m_name;
 };

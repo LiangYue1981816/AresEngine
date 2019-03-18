@@ -17,8 +17,6 @@ public:
 
 public:
 	virtual HANDLE GetBuffer(void) const = 0;
-
-public:
 	virtual uint32_t GetSize(void) const = 0;
 
 public:
