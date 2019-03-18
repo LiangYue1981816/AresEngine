@@ -24,16 +24,12 @@ public:
 	virtual void Destroy(void) = 0;
 
 public:
-	virtual bool SetUniformLocation(const char *szName, uint32_t location, uint32_t offset, uint32_t size) = 0;
-	virtual bool SetUniformBlockBinding(const char *szName, uint32_t binding) = 0;
-	virtual bool SetSampledImageBinding(const char *szName, uint32_t binding) = 0;
-	virtual bool SetInputAttachmentBinding(const char *szName, uint32_t binding) = 0;
+	virtual bool SetUniformLocation(uint32_t name, uint32_t location, uint32_t offset, uint32_t size) = 0;
+	virtual bool SetUniformBlockBinding(uint32_t name, uint32_t binding) = 0;
+	virtual bool SetSampledImageBinding(uint32_t name, uint32_t binding) = 0;
+	virtual bool SetInputAttachmentBinding(uint32_t name, uint32_t binding) = 0;
 
 public:
-	virtual bool IsTextureValid(uint32_t name) const = 0;
-	virtual bool IsUniformValid(uint32_t name) const = 0;
-	virtual bool IsUniformBlockValid(uint32_t name) const = 0;
-
 	virtual uint32_t GetTextureBinding(uint32_t name) const = 0;
 	virtual uint32_t GetUniformBlockBinding(uint32_t name) const = 0;
 	virtual uint32_t GetUniformLocation(uint32_t name) const = 0;
