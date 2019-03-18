@@ -60,17 +60,17 @@ public:
 	virtual bool CmdUniform2f(uint32_t name, float v0, float v1) = 0;
 	virtual bool CmdUniform3f(uint32_t name, float v0, float v1, float v2) = 0;
 	virtual bool CmdUniform4f(uint32_t name, float v0, float v1, float v2, float v3) = 0;
-	virtual bool CmdUniform1iv(uint32_t name, int count, const int *value) = 0;
-	virtual bool CmdUniform2iv(uint32_t name, int count, const int *value) = 0;
-	virtual bool CmdUniform3iv(uint32_t name, int count, const int *value) = 0;
-	virtual bool CmdUniform4iv(uint32_t name, int count, const int *value) = 0;
-	virtual bool CmdUniform1fv(uint32_t name, int count, const float *value) = 0;
-	virtual bool CmdUniform2fv(uint32_t name, int count, const float *value) = 0;
-	virtual bool CmdUniform3fv(uint32_t name, int count, const float *value) = 0;
-	virtual bool CmdUniform4fv(uint32_t name, int count, const float *value) = 0;
-	virtual bool CmdUniformMatrix2fv(uint32_t name, int count, const float *value) = 0;
-	virtual bool CmdUniformMatrix3fv(uint32_t name, int count, const float *value) = 0;
-	virtual bool CmdUniformMatrix4fv(uint32_t name, int count, const float *value) = 0;
+	virtual bool CmdUniform1iv(uint32_t name, int count, const int *values) = 0;
+	virtual bool CmdUniform2iv(uint32_t name, int count, const int *values) = 0;
+	virtual bool CmdUniform3iv(uint32_t name, int count, const int *values) = 0;
+	virtual bool CmdUniform4iv(uint32_t name, int count, const int *values) = 0;
+	virtual bool CmdUniform1fv(uint32_t name, int count, const float *values) = 0;
+	virtual bool CmdUniform2fv(uint32_t name, int count, const float *values) = 0;
+	virtual bool CmdUniform3fv(uint32_t name, int count, const float *values) = 0;
+	virtual bool CmdUniform4fv(uint32_t name, int count, const float *values) = 0;
+	virtual bool CmdUniformMatrix2fv(uint32_t name, int count, const float *values) = 0;
+	virtual bool CmdUniformMatrix3fv(uint32_t name, int count, const float *values) = 0;
+	virtual bool CmdUniformMatrix4fv(uint32_t name, int count, const float *values) = 0;
 
 	virtual bool CmdSetScissor(int x, int y, int width, int height) = 0;
 	virtual bool CmdSetViewport(int x, int y, int width, int height) = 0;
@@ -78,7 +78,6 @@ public:
 	virtual bool CmdClearDepth(float depth) = 0;
 	virtual bool CmdClearColor(float red, float green, float blue, float alpha) = 0;
 
-	virtual bool CmdDrawElements(const CGfxMeshDrawPtr ptrMeshDraw) = 0;
 	virtual bool CmdDrawInstance(const CGfxMeshDrawPtr ptrMeshDraw, const uint8_t *pInstanceBuffer, uint32_t size) = 0;
 	virtual bool CmdDrawIndirect(const CGfxMeshDrawPtr ptrMeshDraw, const uint8_t *pInstanceBuffer, uint32_t size) = 0;
 
