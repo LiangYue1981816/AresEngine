@@ -89,27 +89,29 @@ bool CGLES3Texture::Create(uint32_t target, GfxPixelFormat format, int width, in
 	m_height = height;
 	m_layers = layers;
 	m_levels = levels;
-	m_samples = samples;
 
 	gli::gl GL(gli::gl::PROFILE_ES30);
 	gli::gl::format glFormat = GL.translate((gli::format)format);
 
 	switch (m_target) {
-	case GL_TEXTURE_2D:
-		glGenTextures(1, &m_texture);
-		glBindTexture(GL_TEXTURE_2D, m_texture);
-		glTexStorage2D(GL_TEXTURE_2D, m_levels, glFormat.Internal, m_width, m_height);
-		glBindTexture(GL_TEXTURE_2D, 0);
-		return true;
-
 	case GL_TEXTURE_2D_MULTISAMPLE:
+		m_samples = samples;
 		glGenTextures(1, &m_texture);
 		glBindTexture(GL_TEXTURE_2D_MULTISAMPLE, m_texture);
 		glTexStorage2DMultisample(GL_TEXTURE_2D_MULTISAMPLE, m_samples, glFormat.Internal, m_width, m_height, GL_TRUE);
 		glBindTexture(GL_TEXTURE_2D_MULTISAMPLE, 0);
 		return true;
 
+	case GL_TEXTURE_2D:
+		m_samples = 1;
+		glGenTextures(1, &m_texture);
+		glBindTexture(GL_TEXTURE_2D, m_texture);
+		glTexStorage2D(GL_TEXTURE_2D, m_levels, glFormat.Internal, m_width, m_height);
+		glBindTexture(GL_TEXTURE_2D, 0);
+		return true;
+
 	case GL_TEXTURE_2D_ARRAY:
+		m_samples = 1;
 		glGenTextures(1, &m_texture);
 		glBindTexture(GL_TEXTURE_2D_ARRAY, m_texture);
 		glTexStorage3D(GL_TEXTURE_2D_ARRAY, m_levels, glFormat.Internal, m_width, m_height, m_layers);
@@ -117,6 +119,7 @@ bool CGLES3Texture::Create(uint32_t target, GfxPixelFormat format, int width, in
 		return true;
 
 	case GL_TEXTURE_CUBE_MAP:
+		m_samples = 1;
 		glGenTextures(1, &m_texture);
 		glBindTexture(GL_TEXTURE_CUBE_MAP, m_texture);
 		glTexStorage2D(GL_TEXTURE_CUBE_MAP, m_levels, glFormat.Internal, m_width, m_height);
