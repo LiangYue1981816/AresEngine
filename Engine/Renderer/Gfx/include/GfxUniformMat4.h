@@ -13,7 +13,7 @@ public:
 	CGfxUniformBufferPtr GetUniformBuffer(void) const;
 
 public:
-	void SetValue(const float *values);
+	void SetValue(const float *value);
 	void Apply(void);
 
 
