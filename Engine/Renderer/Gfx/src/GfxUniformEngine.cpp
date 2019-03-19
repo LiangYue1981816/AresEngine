@@ -11,17 +11,17 @@ static void SHRotationMatrix1(float rotation1[3][3], float angle, const glm::vec
 {
 	glm::mat4 rotation = glm::rotate(glm::mat4(), angle, axis);
 
-	rotation1[0][0] = rotation[2][2];
+	rotation1[0][0] =  rotation[2][2];
 	rotation1[0][1] = -rotation[2][0];
 	rotation1[0][2] = -rotation[2][1];
 
 	rotation1[1][0] = -rotation[0][2];
-	rotation1[1][1] = rotation[0][0];
+	rotation1[1][1] =  rotation[0][0];
 	rotation1[1][2] = -rotation[0][1];
 
 	rotation1[2][0] = -rotation[1][2];
 	rotation1[2][1] = -rotation[1][0];
-	rotation1[2][2] = rotation[1][1];
+	rotation1[2][2] =  rotation[1][1];
 }
 
 static void SHRotationMatrix2(float rotation2[5][5], const float rotation1[3][3])
