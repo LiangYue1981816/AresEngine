@@ -3,7 +3,6 @@
 
 CGLES3TextureCubeMap::CGLES3TextureCubeMap(CGLES3TextureCubeMapManager *pManager, uint32_t name)
 	: CGfxTextureCubeMap(name)
-	, m_name(name)
 	, m_pManager(pManager)
 
 	, m_format(GFX_PIXELFORMAT_UNDEFINED)
@@ -20,11 +19,6 @@ CGLES3TextureCubeMap::~CGLES3TextureCubeMap(void)
 void CGLES3TextureCubeMap::Release(void)
 {
 	m_pManager->Destroy(this);
-}
-
-uint32_t CGLES3TextureCubeMap::GetName(void) const
-{
-	return m_name;
 }
 
 HANDLE CGLES3TextureCubeMap::GetTexture(void) const

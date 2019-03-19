@@ -3,7 +3,6 @@
 
 CGLES3Texture2D::CGLES3Texture2D(CGLES3Texture2DManager *pManager, uint32_t name)
 	: CGfxTexture2D(name)
-	, m_name(name)
 	, m_pManager(pManager)
 
 	, m_format(GFX_PIXELFORMAT_UNDEFINED)
@@ -20,11 +19,6 @@ CGLES3Texture2D::~CGLES3Texture2D(void)
 void CGLES3Texture2D::Release(void)
 {
 	m_pManager->Destroy(this);
-}
-
-uint32_t CGLES3Texture2D::GetName(void) const
-{
-	return m_name;
 }
 
 HANDLE CGLES3Texture2D::GetTexture(void) const

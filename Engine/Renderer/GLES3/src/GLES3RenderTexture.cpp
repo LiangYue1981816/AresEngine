@@ -3,7 +3,6 @@
 
 CGLES3RenderTexture::CGLES3RenderTexture(CGLES3RenderTextureManager *pManager, uint32_t name)
 	: CGfxRenderTexture(name)
-	, m_name(name)
 	, m_pManager(pManager)
 
 	, m_format(GFX_PIXELFORMAT_UNDEFINED)
@@ -20,11 +19,6 @@ CGLES3RenderTexture::~CGLES3RenderTexture(void)
 void CGLES3RenderTexture::Release(void)
 {
 	m_pManager->Destroy(this);
-}
-
-uint32_t CGLES3RenderTexture::GetName(void) const
-{
-	return m_name;
 }
 
 HANDLE CGLES3RenderTexture::GetTexture(void) const

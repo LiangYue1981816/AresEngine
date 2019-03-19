@@ -14,12 +14,8 @@ private:
 
 
 public:
-	uint32_t GetName(void) const;
-
-public:
 	HANDLE GetTexture(void) const;
 
-public:
 	GfxPixelFormat GetFormat(void) const;
 	GfxTextureType GetType(void) const;
 
@@ -28,15 +24,13 @@ public:
 	int GetSamples(void) const;
 
 public:
+	bool Create(HANDLE hExternalTexture, GfxPixelFormat format, int width, int height, int samples = 1);
 	bool Create(GfxPixelFormat format, int width, int height, int samples = 1, bool bTransient = false);
 	void Destroy(void);
 
 public:
 	void Bind(uint32_t unit) const;
 
-
-private:
-	uint32_t m_name;
 
 private:
 	GfxPixelFormat m_format;

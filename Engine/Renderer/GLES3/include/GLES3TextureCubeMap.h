@@ -14,12 +14,8 @@ private:
 
 
 public:
-	uint32_t GetName(void) const;
-
-public:
 	HANDLE GetTexture(void) const;
 
-public:
 	GfxPixelFormat GetFormat(void) const;
 	GfxTextureType GetType(void) const;
 
@@ -40,17 +36,14 @@ public:
 
 
 private:
-	uint32_t m_name;
-
-private:
 	GfxPixelFormat m_format;
 	GfxTextureType m_type;
 
 	CGLES3TexturePtr m_ptrTexture;
 
 private:
-	eastl::unordered_map<int, eastl::unordered_map<int, uint32_t>> m_size;
+	CGLES3TextureCubeMapManager *m_pManager;
 
 private:
-	CGLES3TextureCubeMapManager *m_pManager;
+	eastl::unordered_map<int, eastl::unordered_map<int, uint32_t>> m_size;
 };

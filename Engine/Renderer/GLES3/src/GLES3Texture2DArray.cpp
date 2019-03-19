@@ -3,7 +3,6 @@
 
 CGLES3Texture2DArray::CGLES3Texture2DArray(CGLES3Texture2DArrayManager *pManager, uint32_t name)
 	: CGfxTexture2DArray(name)
-	, m_name(name)
 	, m_pManager(pManager)
 
 	, m_format(GFX_PIXELFORMAT_UNDEFINED)
@@ -20,11 +19,6 @@ CGLES3Texture2DArray::~CGLES3Texture2DArray(void)
 void CGLES3Texture2DArray::Release(void)
 {
 	m_pManager->Destroy(this);
-}
-
-uint32_t CGLES3Texture2DArray::GetName(void) const
-{
-	return m_name;
 }
 
 HANDLE CGLES3Texture2DArray::GetTexture(void) const
