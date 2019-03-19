@@ -39,6 +39,6 @@ private:
 	int m_indexFrame;
 
 private:
-	uint32_t m_fbo;
+	uint32_t m_surface;
 	CGfxRenderTexturePtr m_ptrFrameTexture;
 };

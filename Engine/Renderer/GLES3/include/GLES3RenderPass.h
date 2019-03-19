@@ -14,9 +14,6 @@ private:
 
 
 public:
-	uint32_t GetName(void) const;
-
-public:
 	HANDLE GetRenderPass(void) const;
 
 public:
@@ -43,9 +40,6 @@ public:
 	uint32_t GetSubpassOutputAttachmentCount(int indexSubpass) const;
 	const SubpassInformation* GetSubpass(int indexSubpass) const;
 
-
-private:
-	uint32_t m_name;
 
 private:
 	eastl::vector<AttachmentInformation> m_attachments;

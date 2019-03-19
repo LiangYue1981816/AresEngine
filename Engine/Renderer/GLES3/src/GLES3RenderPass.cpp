@@ -3,7 +3,6 @@
 
 CGLES3RenderPass::CGLES3RenderPass(CGLES3RenderPassManager *pManager, uint32_t name, int numAttachments, int numSubpasses)
 	: CGfxRenderPass(name, numAttachments, numSubpasses)
-	, m_name(name)
 	, m_pManager(pManager)
 {
 	m_attachments.resize(numAttachments);
@@ -20,14 +19,9 @@ void CGLES3RenderPass::Release(void)
 	m_pManager->Destroy(this);
 }
 
-uint32_t CGLES3RenderPass::GetName(void) const
-{
-	return m_name;
-}
-
 HANDLE CGLES3RenderPass::GetRenderPass(void) const
 {
-	return 0;
+	return nullptr;
 }
 
 bool CGLES3RenderPass::Create(void)
@@ -42,7 +36,7 @@ void CGLES3RenderPass::Destroy(void)
 
 bool CGLES3RenderPass::SetColorAttachment(int indexAttachment, GfxPixelFormat format, int samples, bool bInvalidation, bool bClear, float red, float green, float blue, float alpha)
 {
-	if (indexAttachment >= (int)m_attachments.size()) {
+	if (indexAttachment < 0 || indexAttachment >= (int)m_attachments.size()) {
 		return false;
 	}
 
@@ -60,7 +54,7 @@ bool CGLES3RenderPass::SetColorAttachment(int indexAttachment, GfxPixelFormat fo
 
 bool CGLES3RenderPass::SetDepthStencilAttachment(int indexAttachment, GfxPixelFormat format, int samples, bool bInvalidation, bool bClear, float depth, int stencil)
 {
-	if (indexAttachment >= (int)m_attachments.size()) {
+	if (indexAttachment < 0 || indexAttachment >= (int)m_attachments.size()) {
 		return false;
 	}
 
@@ -76,11 +70,11 @@ bool CGLES3RenderPass::SetDepthStencilAttachment(int indexAttachment, GfxPixelFo
 
 bool CGLES3RenderPass::SetSubpassInputColorReference(int indexSubpass, int indexAttachment, const char *szName)
 {
-	if (indexSubpass >= (int)m_subpasses.size()) {
+	if (indexSubpass < 0 || indexSubpass >= (int)m_subpasses.size()) {
 		return false;
 	}
 
-	if (indexAttachment >= (int)m_attachments.size()) {
+	if (indexAttachment < 0 || indexAttachment >= (int)m_attachments.size()) {
 		return false;
 	}
 
@@ -90,11 +84,11 @@ bool CGLES3RenderPass::SetSubpassInputColorReference(int indexSubpass, int index
 
 bool CGLES3RenderPass::SetSubpassOutputColorReference(int indexSubpass, int indexAttachment)
 {
-	if (indexSubpass >= (int)m_subpasses.size()) {
+	if (indexSubpass < 0 || indexSubpass >= (int)m_subpasses.size()) {
 		return false;
 	}
 
-	if (indexAttachment >= (int)m_attachments.size()) {
+	if (indexAttachment < 0 || indexAttachment >= (int)m_attachments.size()) {
 		return false;
 	}
 
@@ -104,11 +98,11 @@ bool CGLES3RenderPass::SetSubpassOutputColorReference(int indexSubpass, int inde
 
 bool CGLES3RenderPass::SetSubpassOutputDepthStencilReference(int indexSubpass, int indexAttachment)
 {
-	if (indexSubpass >= (int)m_subpasses.size()) {
+	if (indexSubpass < 0 || indexSubpass >= (int)m_subpasses.size()) {
 		return false;
 	}
 
-	if (indexAttachment >= (int)m_attachments.size()) {
+	if (indexAttachment < 0 || indexAttachment >= (int)m_attachments.size()) {
 		return false;
 	}
 
@@ -118,11 +112,11 @@ bool CGLES3RenderPass::SetSubpassOutputDepthStencilReference(int indexSubpass, i
 
 bool CGLES3RenderPass::SetSubpassResolveReference(int indexSubpass, int indexAttachment)
 {
-	if (indexSubpass >= (int)m_subpasses.size()) {
+	if (indexSubpass < 0 || indexSubpass >= (int)m_subpasses.size()) {
 		return false;
 	}
 
-	if (indexAttachment >= (int)m_attachments.size()) {
+	if (indexAttachment < 0 || indexAttachment >= (int)m_attachments.size()) {
 		return false;
 	}
 
