@@ -3,7 +3,6 @@
 
 CGLES3Mesh::CGLES3Mesh(CGLES3MeshManager *pManager, uint32_t name)
 	: CGfxMesh(name)
-	, m_name(name)
 	, m_pManager(pManager)
 
 	, m_pIndexBuffer(nullptr)
@@ -20,11 +19,6 @@ CGLES3Mesh::~CGLES3Mesh(void)
 void CGLES3Mesh::Release(void)
 {
 	m_pManager->Destroy(this);
-}
-
-uint32_t CGLES3Mesh::GetName(void) const
-{
-	return m_name;
 }
 
 CGfxMesh::Draw* CGLES3Mesh::GetDraw(int indexDraw)
@@ -49,6 +43,15 @@ CGfxVertexBuffer* CGLES3Mesh::GetVertexBuffer(void)
 	return m_pVertexBuffer;
 }
 
+bool CGLES3Mesh::CreateDraw(int indexDraw, const glm::aabb &aabb, int baseVertex, int firstIndex, int indexCount)
+{
+	m_draws[indexDraw].aabb = aabb;
+	m_draws[indexDraw].baseVertex = baseVertex;
+	m_draws[indexDraw].firstIndex = firstIndex;
+	m_draws[indexDraw].indexCount = indexCount;
+	return true;
+}
+
 bool CGLES3Mesh::CreateIndexBuffer(GfxIndexType type, size_t size, bool bDynamic, const void *pBuffer)
 {
 	if (m_pIndexBuffer == nullptr) {
@@ -71,15 +74,6 @@ bool CGLES3Mesh::CreateVertexBuffer(uint32_t vertexFormat, uint32_t vertexBindin
 	else {
 		return false;
 	}
-}
-
-bool CGLES3Mesh::CreateDraw(int indexDraw, const glm::aabb &aabb, int baseVertex, int firstIndex, int indexCount)
-{
-	m_draws[indexDraw].aabb = aabb;
-	m_draws[indexDraw].baseVertex = baseVertex;
-	m_draws[indexDraw].firstIndex = firstIndex;
-	m_draws[indexDraw].indexCount = indexCount;
-	return true;
 }
 
 void CGLES3Mesh::Destroy(void)

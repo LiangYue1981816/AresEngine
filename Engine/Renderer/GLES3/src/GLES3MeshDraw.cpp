@@ -3,12 +3,11 @@
 
 CGLES3MeshDraw::CGLES3MeshDraw(CGLES3MeshDrawManager *pManager, uint32_t name, const CGfxMeshPtr ptrMesh, int indexDraw, uint32_t instanceFormat, uint32_t instanceBinding)
 	: CGfxMeshDraw(name, ptrMesh, indexDraw, instanceFormat, instanceBinding)
-	, m_name(name)
 	, m_pManager(pManager)
 
 	, m_pMeshDraw(nullptr)
-	, m_pInstanceBuffer(nullptr)
 	, m_pIndirectBuffer(nullptr)
+	, m_pInstanceBuffer(nullptr)
 	, m_pVertexArrayObject(nullptr)
 {
 	m_ptrMesh = ptrMesh;
@@ -35,18 +34,13 @@ void CGLES3MeshDraw::Release(void)
 	m_pManager->Destroy(this);
 }
 
-uint32_t CGLES3MeshDraw::GetName(void) const
+glm::aabb CGLES3MeshDraw::GetLocalAABB(void) const
 {
-	return m_name;
-}
-
-uint32_t CGLES3MeshDraw::GetVertexFormat(void) const
-{
-	if (m_ptrMesh.IsValid()) {
-		return m_ptrMesh->GetVertexBuffer()->GetVertexFormat();
+	if (m_pMeshDraw) {
+		return m_pMeshDraw->aabb;
 	}
 	else {
-		return 0;
+		return glm::aabb();
 	}
 }
 
@@ -84,6 +78,26 @@ GfxIndexType CGLES3MeshDraw::GetIndexType(void) const
 	}
 }
 
+uint32_t CGLES3MeshDraw::GetVertexCount(void) const
+{
+	if (m_ptrMesh.IsValid()) {
+		return m_ptrMesh->GetVertexBuffer()->GetVertexCount();
+	}
+	else {
+		return 0;
+	}
+}
+
+uint32_t CGLES3MeshDraw::GetVertexFormat(void) const
+{
+	if (m_ptrMesh.IsValid()) {
+		return m_ptrMesh->GetVertexBuffer()->GetVertexFormat();
+	}
+	else {
+		return 0;
+	}
+}
+
 uint32_t CGLES3MeshDraw::GetInstanceCount(void) const
 {
 	if (m_pInstanceBuffer) {
@@ -101,16 +115,6 @@ uint32_t CGLES3MeshDraw::GetInstanceFormat(void) const
 	}
 	else {
 		return 0;
-	}
-}
-
-glm::aabb CGLES3MeshDraw::GetLocalAABB(void) const
-{
-	if (m_pMeshDraw) {
-		return m_pMeshDraw->aabb;
-	}
-	else {
-		return glm::aabb();
 	}
 }
 

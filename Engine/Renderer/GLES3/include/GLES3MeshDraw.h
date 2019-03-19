@@ -14,19 +14,17 @@ private:
 
 
 public:
-	uint32_t GetName(void) const;
-
-public:
-	uint32_t GetVertexFormat(void) const;
+	glm::aabb GetLocalAABB(void) const;
 
 	uint32_t GetIndexCount(void) const;
 	uint32_t GetIndexOffset(void) const;
 	GfxIndexType GetIndexType(void) const;
 
+	uint32_t GetVertexCount(void) const;
+	uint32_t GetVertexFormat(void) const;
+
 	uint32_t GetInstanceCount(void) const;
 	uint32_t GetInstanceFormat(void) const;
-
-	glm::aabb GetLocalAABB(void) const;
 
 public:
 	bool InstanceBufferData(size_t size, const void *pBuffer);
@@ -36,13 +34,10 @@ public:
 
 
 private:
-	uint32_t m_name;
-
-private:
 	CGfxMeshPtr m_ptrMesh;
 	CGfxMesh::Draw *m_pMeshDraw;
-	CGLES3InstanceBuffer *m_pInstanceBuffer;
 	CGLES3IndirectBuffer *m_pIndirectBuffer;
+	CGLES3InstanceBuffer *m_pInstanceBuffer;
 	CGLES3VertexArrayObject *m_pVertexArrayObject;
 
 private:
