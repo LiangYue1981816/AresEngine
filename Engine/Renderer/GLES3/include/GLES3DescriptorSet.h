@@ -51,5 +51,8 @@ private:
 	eastl::unordered_map<uint32_t, DescriptorBufferInfo> m_bufferDescriptors;
 
 private:
+	CGfxDescriptorLayoutPtr m_ptrDescriptorLayout;
+
+private:
 	CGLES3DescriptorSetManager *m_pManager;
 };
