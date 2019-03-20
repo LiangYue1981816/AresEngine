@@ -49,7 +49,9 @@
 #include "GLES3MaterialManager.h"
 
 #include "GLES3DescriptorSet.h"
+#include "GLES3DescriptorSetManager.h"
 #include "GLES3DescriptorLayout.h"
+#include "GLES3DescriptorLayoutManager.h"
 
 #include "GLES3CommandBuffer.h"
 #include "GLES3CommandBufferManager.h"
