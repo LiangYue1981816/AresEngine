@@ -4,6 +4,9 @@
 
 class CALL_API CGLES3DescriptorSet : public CGfxDescriptorSet
 {
+	friend class CGLES3DescriptorSetManager;
+
+
 private:
 	typedef struct DescriptorImageInfo {
 		CGfxSampler *pSampler;
@@ -19,7 +22,7 @@ private:
 
 
 private:
-	CGLES3DescriptorSet(const CGfxDescriptorLayoutPtr ptrDescriptorLayout);
+	CGLES3DescriptorSet(CGLES3DescriptorSetManager *pManager, const CGfxDescriptorLayoutPtr ptrDescriptorLayout);
 	virtual ~CGLES3DescriptorSet(void);
 	virtual void Release(void);
 
@@ -46,4 +49,7 @@ public:
 private:
 	eastl::unordered_map<uint32_t, DescriptorImageInfo> m_imageDescriptors;
 	eastl::unordered_map<uint32_t, DescriptorBufferInfo> m_bufferDescriptors;
+
+private:
+	CGLES3DescriptorSetManager *m_pManager;
 };
