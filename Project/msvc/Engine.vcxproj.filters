@@ -1440,6 +1440,12 @@
     <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandUniformMatrix4fv.h">
       <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3DescriptorLayoutManager.h">
+      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3DescriptorSetManager.h">
+      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Engine\ThirdParty\eastl\source\allocator_eastl.cpp">
@@ -2115,6 +2121,12 @@
       <Filter>Engine\Renderer\GLES3\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3DescriptorSet.cpp">
+      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3DescriptorLayoutManager.cpp">
+      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3DescriptorSetManager.cpp">
       <Filter>Engine\Renderer\GLES3\Source Files</Filter>
     </ClCompile>
   </ItemGroup>

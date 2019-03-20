@@ -262,7 +262,9 @@
     <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3CommandBufferManager.h" />
     <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3Definition.h" />
     <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3DescriptorLayout.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3DescriptorLayoutManager.h" />
     <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3DescriptorSet.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3DescriptorSetManager.h" />
     <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3Extension.h" />
     <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3FrameBuffer.h" />
     <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3FrameBufferManager.h" />
@@ -638,7 +640,9 @@
     <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3CommandBuffer.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3CommandBufferManager.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3DescriptorLayout.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3DescriptorLayoutManager.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3DescriptorSet.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3DescriptorSetManager.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3Extension.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3FrameBuffer.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3FrameBufferManager.cpp" />
