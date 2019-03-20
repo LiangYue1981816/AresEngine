@@ -25,17 +25,14 @@ public:
 	bool SetInputAttachmentBinding(uint32_t name, uint32_t binding);
 	bool SetSampledImageBinding(uint32_t name, uint32_t binding);
 	bool SetUniformBlockBinding(uint32_t name, uint32_t binding);
-	bool SetPushConstantBinding(uint32_t name, uint32_t binding, uint32_t offset, uint32_t size);
 
 public:
 	uint32_t GetTextureBinding(uint32_t name) const;
 	uint32_t GetUniformBlockBinding(uint32_t name) const;
-	uint32_t GetPushConstantBinding(uint32_t name) const;
 
 public:
 	bool IsTextureValid(uint32_t name) const;
 	bool IsUniformBlockValid(uint32_t name) const;
-	bool IsPushConstantValid(uint32_t name) const;
 	bool IsCompatible(const CGfxDescriptorLayoutPtr ptrLayout) const;
 
 
@@ -43,7 +40,6 @@ private:
 	uint32_t m_set;
 	eastl::unordered_map<uint32_t, uint32_t> m_sampledImageBindings; // [name, binding]
 	eastl::unordered_map<uint32_t, uint32_t> m_uniformBlockBindings; // [name, binding]
-	eastl::unordered_map<uint32_t, uint32_t> m_pushConstantBindings; // [name, binding]
 
 private:
 	CGLES3DescriptorLayoutManager *m_pManager;

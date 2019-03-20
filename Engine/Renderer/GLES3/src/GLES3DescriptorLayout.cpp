@@ -57,12 +57,6 @@ bool CGLES3DescriptorLayout::SetUniformBlockBinding(uint32_t name, uint32_t bind
 	return true;
 }
 
-bool CGLES3DescriptorLayout::SetPushConstantBinding(uint32_t name, uint32_t binding, uint32_t offset, uint32_t size)
-{
-	m_pushConstantBindings[name] = binding;
-	return true;
-}
-
 uint32_t CGLES3DescriptorLayout::GetTextureBinding(uint32_t name) const
 {
 	const auto &itBinding = m_sampledImageBindings.find(name);
@@ -87,18 +81,6 @@ uint32_t CGLES3DescriptorLayout::GetUniformBlockBinding(uint32_t name) const
 	}
 }
 
-uint32_t CGLES3DescriptorLayout::GetPushConstantBinding(uint32_t name) const
-{
-	const auto &itBinding = m_pushConstantBindings.find(name);
-
-	if (itBinding != m_pushConstantBindings.end()) {
-		return itBinding->second;
-	}
-	else {
-		return -1;
-	}
-}
-
 bool CGLES3DescriptorLayout::IsTextureValid(uint32_t name) const
 {
 	return GetTextureBinding(name) != -1;
@@ -107,11 +89,6 @@ bool CGLES3DescriptorLayout::IsTextureValid(uint32_t name) const
 bool CGLES3DescriptorLayout::IsUniformBlockValid(uint32_t name) const
 {
 	return GetUniformBlockBinding(name) != -1;
-}
-
-bool CGLES3DescriptorLayout::IsPushConstantValid(uint32_t name) const
-{
-	return GetPushConstantBinding(name) != -1;
 }
 
 bool CGLES3DescriptorLayout::IsCompatible(const CGfxDescriptorLayoutPtr ptrLayout) const
@@ -125,10 +102,6 @@ bool CGLES3DescriptorLayout::IsCompatible(const CGfxDescriptorLayoutPtr ptrLayou
 	}
 
 	if (m_uniformBlockBindings != ((CGLES3DescriptorLayout *)ptrLayout.GetPointer())->m_uniformBlockBindings) {
-		return false;
-	}
-
-	if (m_pushConstantBindings != ((CGLES3DescriptorLayout *)ptrLayout.GetPointer())->m_pushConstantBindings) {
 		return false;
 	}
 
