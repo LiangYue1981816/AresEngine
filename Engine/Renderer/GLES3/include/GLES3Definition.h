@@ -47,5 +47,8 @@ class CGLES3Material;
 class CGLES3MaterialPass;
 class CGLES3MaterialManager;
 
+class CGLES3DescriptorSet;
+class CGLES3DescriptorLayout;
+
 class CGLES3CommandBuffer;
 class CGLES3CommandBufferManager;

@@ -1,0 +1,44 @@
+#pragma once
+#include "GLES3Renderer.h"
+
+
+class CALL_API CGLES3DescriptorLayout : public CGfxDescriptorLayout
+{
+private:
+	CGLES3DescriptorLayout(uint32_t set);
+	virtual ~CGLES3DescriptorLayout(void);
+	virtual void Release(void);
+
+
+public:
+	HANDLE GetDescriptorLayout(void) const;
+	uint32_t GetSetIndex(void) const;
+
+public:
+	bool Create(void);
+	void Destroy(void);
+
+public:
+	bool SetUniformLocation(uint32_t name, uint32_t location, uint32_t offset, uint32_t size);
+	bool SetUniformBlockBinding(uint32_t name, uint32_t binding);
+	bool SetSampledImageBinding(uint32_t name, uint32_t binding);
+	bool SetInputAttachmentBinding(uint32_t name, uint32_t binding);
+
+public:
+	uint32_t GetTextureBinding(uint32_t name) const;
+	uint32_t GetUniformBlockBinding(uint32_t name) const;
+	uint32_t GetUniformLocation(uint32_t name) const;
+
+public:
+	bool IsTextureValid(uint32_t name) const;
+	bool IsUniformValid(uint32_t name) const;
+	bool IsUniformBlockValid(uint32_t name) const;
+	bool IsCompatible(const CGfxDescriptorLayoutPtr ptrLayout) const;
+
+
+private:
+	uint32_t m_set;
+	eastl::unordered_map<uint32_t, uint32_t> m_uniformBlockBindings;    // [name, binding]
+	eastl::unordered_map<uint32_t, uint32_t> m_sampledImageBindings;    // [name, binding]
+	eastl::unordered_map<uint32_t, uint32_t> m_inputAttachmentBindings; // [name, binding]
+};
