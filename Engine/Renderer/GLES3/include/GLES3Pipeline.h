@@ -30,19 +30,19 @@ public:
 	void Uniform3f(uint32_t name, float v0, float v1, float v2) const;
 	void Uniform4f(uint32_t name, float v0, float v1, float v2, float v3) const;
 
-	void Uniform1iv(uint32_t name, int count, const int *values) const;
-	void Uniform2iv(uint32_t name, int count, const int *values) const;
-	void Uniform3iv(uint32_t name, int count, const int *values) const;
-	void Uniform4iv(uint32_t name, int count, const int *values) const;
+	void Uniform1iv(uint32_t name, int count, const int *value) const;
+	void Uniform2iv(uint32_t name, int count, const int *value) const;
+	void Uniform3iv(uint32_t name, int count, const int *value) const;
+	void Uniform4iv(uint32_t name, int count, const int *value) const;
 
-	void Uniform1fv(uint32_t name, int count, const float *values) const;
-	void Uniform2fv(uint32_t name, int count, const float *values) const;
-	void Uniform3fv(uint32_t name, int count, const float *values) const;
-	void Uniform4fv(uint32_t name, int count, const float *values) const;
+	void Uniform1fv(uint32_t name, int count, const float *value) const;
+	void Uniform2fv(uint32_t name, int count, const float *value) const;
+	void Uniform3fv(uint32_t name, int count, const float *value) const;
+	void Uniform4fv(uint32_t name, int count, const float *value) const;
 
-	void UniformMatrix2fv(uint32_t name, int count, const float *values) const;
-	void UniformMatrix3fv(uint32_t name, int count, const float *values) const;
-	void UniformMatrix4fv(uint32_t name, int count, const float *values) const;
+	void UniformMatrix2fv(uint32_t name, int count, const float *value) const;
+	void UniformMatrix3fv(uint32_t name, int count, const float *value) const;
+	void UniformMatrix4fv(uint32_t name, int count, const float *value) const;
 
 
 protected:

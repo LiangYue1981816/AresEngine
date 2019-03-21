@@ -40,7 +40,7 @@ public:
 	virtual bool SetUniformVec2(uint32_t name, float v0, float v1) = 0;
 	virtual bool SetUniformVec3(uint32_t name, float v0, float v1, float v2) = 0;
 	virtual bool SetUniformVec4(uint32_t name, float v0, float v1, float v2, float v3) = 0;
-	virtual bool SetUniformMat4(uint32_t name, const float *values) = 0;
+	virtual bool SetUniformMat4(uint32_t name, const float *value) = 0;
 
 public:
 	virtual CGfxTexture2DPtr GetTexture2D(uint32_t name) const = 0;

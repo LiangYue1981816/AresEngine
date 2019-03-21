@@ -127,218 +127,6 @@ void CGLES3Pipeline::BindDescriptorSet(const CGfxDescriptorSetPtr ptrDescriptorS
 
 void CGLES3Pipeline::Uniform1i(uint32_t name, int v0) const
 {
-
-}
-
-void CGLES3Pipeline::Uniform2i(uint32_t name, int v0, int v1) const
-{
-
-}
-
-void CGLES3Pipeline::Uniform3i(uint32_t name, int v0, int v1, int v2) const
-{
-
-}
-
-void CGLES3Pipeline::Uniform4i(uint32_t name, int v0, int v1, int v2, int v3) const
-{
-
-}
-
-void CGLES3Pipeline::Uniform1f(uint32_t name, float v0) const
-{
-
-}
-
-void CGLES3Pipeline::Uniform2f(uint32_t name, float v0, float v1) const
-{
-
-}
-
-void CGLES3Pipeline::Uniform3f(uint32_t name, float v0, float v1, float v2) const
-{
-
-}
-
-void CGLES3Pipeline::Uniform4f(uint32_t name, float v0, float v1, float v2, float v3) const
-{
-
-}
-
-void CGLES3Pipeline::Uniform1iv(uint32_t name, int count, const int *values) const
-{
-
-}
-
-void CGLES3Pipeline::Uniform2iv(uint32_t name, int count, const int *values) const
-{
-
-}
-
-void CGLES3Pipeline::Uniform3iv(uint32_t name, int count, const int *values) const
-{
-
-}
-
-void CGLES3Pipeline::Uniform4iv(uint32_t name, int count, const int *values) const
-{
-
-}
-
-void CGLES3Pipeline::Uniform1fv(uint32_t name, int count, const float *values) const
-{
-
-}
-
-void CGLES3Pipeline::Uniform2fv(uint32_t name, int count, const float *values) const
-{
-
-}
-
-void CGLES3Pipeline::Uniform3fv(uint32_t name, int count, const float *values) const
-{
-
-}
-
-void CGLES3Pipeline::Uniform4fv(uint32_t name, int count, const float *values) const
-{
-
-}
-
-void CGLES3Pipeline::UniformMatrix2fv(uint32_t name, int count, const float *values) const
-{
-
-}
-
-void CGLES3Pipeline::UniformMatrix3fv(uint32_t name, int count, const float *values) const
-{
-
-}
-
-void CGLES3Pipeline::UniformMatrix4fv(uint32_t name, int count, const float *values) const
-{
-
-}
-
-/*
-CGLES3Pipeline::CGLES3Pipeline(void)
-	: m_program(0)
-	, m_pShaders{ nullptr }
-{
-
-}
-
-CGLES3Pipeline::~CGLES3Pipeline(void)
-{
-
-}
-
-bool CGLES3Pipeline::CreateLayouts(void)
-{
-	for (int index = 0; index < compute_shader - vertex_shader + 1; index++) {
-		if (m_pShaders[index]) {
-			const eastl::unordered_map<eastl::string, PushConstantRange> &pushConstantRanges = m_pShaders[index]->GetSprivCross().GetPushConstantRanges();
-			const eastl::unordered_map<eastl::string, DescriptorSetBinding> &uniformBlockBindings = m_pShaders[index]->GetSprivCross().GetUniformBlockBindings();
-			const eastl::unordered_map<eastl::string, DescriptorSetBinding> &sampledImageBindings = m_pShaders[index]->GetSprivCross().GetSampledImageBindings();
-			const eastl::unordered_map<eastl::string, DescriptorSetBinding> &inputAttachmentBindings = m_pShaders[index]->GetSprivCross().GetInputAttachmentBindings();
-
-			for (const auto &itPushConstant : pushConstantRanges) {
-				SetUniformLocation(itPushConstant.first.c_str());
-			}
-
-			for (const auto &itUniform : uniformBlockBindings) {
-				SetUniformBlockBinding(itUniform.first.c_str(), itUniform.second.binding);
-			}
-
-			for (const auto &itSampledImage : sampledImageBindings) {
-				SetSampledImageLocation(itSampledImage.first.c_str());
-			}
-
-			for (const auto &itInputAttachment : inputAttachmentBindings) {
-				SetSampledImageLocation(itInputAttachment.first.c_str());
-			}
-		}
-	}
-
-	return true;
-}
-
-void CGLES3Pipeline::SetUniformLocation(const char *szName)
-{
-	uint32_t name = HashValue(szName);
-
-	if (m_uniformLocations.find(name) == m_uniformLocations.end()) {
-		uint32_t location = glGetUniformLocation(m_program, szName);
-
-		if (location != GL_INVALID_INDEX) {
-			m_uniformLocations[name] = location;
-		}
-	}
-}
-
-void CGLES3Pipeline::SetUniformBlockBinding(const char *szName, uint32_t binding)
-{
-	uint32_t name = HashValue(szName);
-
-	if (m_uniformBlockBindings.find(name) == m_uniformBlockBindings.end()) {
-		uint32_t indexBinding = glGetUniformBlockIndex(m_program, szName);
-
-		if (indexBinding != GL_INVALID_INDEX) {
-			m_uniformBlockBindings[name] = binding;
-			glUniformBlockBinding(m_program, indexBinding, binding);
-		}
-	}
-}
-
-void CGLES3Pipeline::SetSampledImageLocation(const char *szName)
-{
-	uint32_t name = HashValue(szName);
-
-	if (m_sampledImageLocations.find(name) == m_sampledImageLocations.end()) {
-		uint32_t location = glGetUniformLocation(m_program, szName);
-
-		if (location != GL_INVALID_INDEX) {
-			m_sampledImageTextureUnits[name] = m_sampledImageLocations.size();
-			m_sampledImageLocations[name] = location;
-		}
-	}
-}
-
-void CGLES3Pipeline::BindTexture(uint32_t name, CGLES3Texture *pTexture, CGLES3Sampler *pSampler) const
-{
-	const auto &itLocation = m_sampledImageLocations.find(name);
-	const auto &itTextureUnit = m_sampledImageTextureUnits.find(name);
-
-	if (itLocation != m_sampledImageLocations.end() && itTextureUnit != m_sampledImageTextureUnits.end()) {
-		GLUniform1i(itLocation->second, itTextureUnit->second);
-		pSampler->Bind(itTextureUnit->second);
-		pTexture->Bind(itTextureUnit->second);
-	}
-}
-
-void CGLES3Pipeline::BindRenderTexture(uint32_t name, CGLES3RenderTexture *pRenderTexture, CGLES3Sampler *pSampler) const
-{
-	const auto &itLocation = m_sampledImageLocations.find(name);
-	const auto &itTextureUnit = m_sampledImageTextureUnits.find(name);
-
-	if (itLocation != m_sampledImageLocations.end() && itTextureUnit != m_sampledImageTextureUnits.end()) {
-		GLUniform1i(itLocation->second, itTextureUnit->second);
-		pSampler->Bind(itTextureUnit->second);
-		pRenderTexture->Bind(itTextureUnit->second);
-	}
-}
-
-void CGLES3Pipeline::BindUniformBuffer(uint32_t name, CGLES3UniformBuffer *pUniformBuffer, uint32_t size, int offset) const
-{
-	const auto &itBinding = m_uniformBlockBindings.find(name);
-
-	if (itBinding != m_uniformBlockBindings.end()) {
-		pUniformBuffer->Bind(itBinding->second, offset, size);
-	}
-}
-
-void CGLES3Pipeline::Uniform1i(uint32_t name, int v0) const
-{
 	const auto &itLocation = m_uniformLocations.find(name);
 
 	if (itLocation != m_uniformLocations.end()) {
@@ -506,6 +294,218 @@ void CGLES3Pipeline::UniformMatrix4fv(uint32_t name, int count, const float *val
 	if (itLocation != m_uniformLocations.end()) {
 		GLUniformMatrix4fv(itLocation->second, count, value);
 	}
+}
+
+/*
+CGLES3Pipeline::CGLES3Pipeline(void)
+	: m_program(0)
+	, m_pShaders{ nullptr }
+{
+
+}
+
+CGLES3Pipeline::~CGLES3Pipeline(void)
+{
+
+}
+
+bool CGLES3Pipeline::CreateLayouts(void)
+{
+	for (int index = 0; index < compute_shader - vertex_shader + 1; index++) {
+		if (m_pShaders[index]) {
+			const eastl::unordered_map<eastl::string, PushConstantRange> &pushConstantRanges = m_pShaders[index]->GetSprivCross().GetPushConstantRanges();
+			const eastl::unordered_map<eastl::string, DescriptorSetBinding> &uniformBlockBindings = m_pShaders[index]->GetSprivCross().GetUniformBlockBindings();
+			const eastl::unordered_map<eastl::string, DescriptorSetBinding> &sampledImageBindings = m_pShaders[index]->GetSprivCross().GetSampledImageBindings();
+			const eastl::unordered_map<eastl::string, DescriptorSetBinding> &inputAttachmentBindings = m_pShaders[index]->GetSprivCross().GetInputAttachmentBindings();
+
+			for (const auto &itPushConstant : pushConstantRanges) {
+				SetUniformLocation(itPushConstant.first.c_str());
+			}
+
+			for (const auto &itUniform : uniformBlockBindings) {
+				SetUniformBlockBinding(itUniform.first.c_str(), itUniform.second.binding);
+			}
+
+			for (const auto &itSampledImage : sampledImageBindings) {
+				SetSampledImageLocation(itSampledImage.first.c_str());
+			}
+
+			for (const auto &itInputAttachment : inputAttachmentBindings) {
+				SetSampledImageLocation(itInputAttachment.first.c_str());
+			}
+		}
+	}
+
+	return true;
+}
+
+void CGLES3Pipeline::SetUniformLocation(const char *szName)
+{
+	uint32_t name = HashValue(szName);
+
+	if (m_uniformLocations.find(name) == m_uniformLocations.end()) {
+		uint32_t location = glGetUniformLocation(m_program, szName);
+
+		if (location != GL_INVALID_INDEX) {
+			m_uniformLocations[name] = location;
+		}
+	}
+}
+
+void CGLES3Pipeline::SetUniformBlockBinding(const char *szName, uint32_t binding)
+{
+	uint32_t name = HashValue(szName);
+
+	if (m_uniformBlockBindings.find(name) == m_uniformBlockBindings.end()) {
+		uint32_t indexBinding = glGetUniformBlockIndex(m_program, szName);
+
+		if (indexBinding != GL_INVALID_INDEX) {
+			m_uniformBlockBindings[name] = binding;
+			glUniformBlockBinding(m_program, indexBinding, binding);
+		}
+	}
+}
+
+void CGLES3Pipeline::SetSampledImageLocation(const char *szName)
+{
+	uint32_t name = HashValue(szName);
+
+	if (m_sampledImageLocations.find(name) == m_sampledImageLocations.end()) {
+		uint32_t location = glGetUniformLocation(m_program, szName);
+
+		if (location != GL_INVALID_INDEX) {
+			m_sampledImageTextureUnits[name] = m_sampledImageLocations.size();
+			m_sampledImageLocations[name] = location;
+		}
+	}
+}
+
+void CGLES3Pipeline::BindTexture(uint32_t name, CGLES3Texture *pTexture, CGLES3Sampler *pSampler) const
+{
+	const auto &itLocation = m_sampledImageLocations.find(name);
+	const auto &itTextureUnit = m_sampledImageTextureUnits.find(name);
+
+	if (itLocation != m_sampledImageLocations.end() && itTextureUnit != m_sampledImageTextureUnits.end()) {
+		GLUniform1i(itLocation->second, itTextureUnit->second);
+		pSampler->Bind(itTextureUnit->second);
+		pTexture->Bind(itTextureUnit->second);
+	}
+}
+
+void CGLES3Pipeline::BindRenderTexture(uint32_t name, CGLES3RenderTexture *pRenderTexture, CGLES3Sampler *pSampler) const
+{
+	const auto &itLocation = m_sampledImageLocations.find(name);
+	const auto &itTextureUnit = m_sampledImageTextureUnits.find(name);
+
+	if (itLocation != m_sampledImageLocations.end() && itTextureUnit != m_sampledImageTextureUnits.end()) {
+		GLUniform1i(itLocation->second, itTextureUnit->second);
+		pSampler->Bind(itTextureUnit->second);
+		pRenderTexture->Bind(itTextureUnit->second);
+	}
+}
+
+void CGLES3Pipeline::BindUniformBuffer(uint32_t name, CGLES3UniformBuffer *pUniformBuffer, uint32_t size, int offset) const
+{
+	const auto &itBinding = m_uniformBlockBindings.find(name);
+
+	if (itBinding != m_uniformBlockBindings.end()) {
+		pUniformBuffer->Bind(itBinding->second, offset, size);
+	}
+}
+
+void CGLES3Pipeline::Uniform1i(uint32_t name, int v0) const
+{
+	
+}
+
+void CGLES3Pipeline::Uniform2i(uint32_t name, int v0, int v1) const
+{
+	
+}
+
+void CGLES3Pipeline::Uniform3i(uint32_t name, int v0, int v1, int v2) const
+{
+	
+}
+
+void CGLES3Pipeline::Uniform4i(uint32_t name, int v0, int v1, int v2, int v3) const
+{
+	
+}
+
+void CGLES3Pipeline::Uniform1f(uint32_t name, float v0) const
+{
+	
+}
+
+void CGLES3Pipeline::Uniform2f(uint32_t name, float v0, float v1) const
+{
+	
+}
+
+void CGLES3Pipeline::Uniform3f(uint32_t name, float v0, float v1, float v2) const
+{
+	
+}
+
+void CGLES3Pipeline::Uniform4f(uint32_t name, float v0, float v1, float v2, float v3) const
+{
+	
+}
+
+void CGLES3Pipeline::Uniform1iv(uint32_t name, int count, const int *value) const
+{
+	
+}
+
+void CGLES3Pipeline::Uniform2iv(uint32_t name, int count, const int *value) const
+{
+	
+}
+
+void CGLES3Pipeline::Uniform3iv(uint32_t name, int count, const int *value) const
+{
+	
+}
+
+void CGLES3Pipeline::Uniform4iv(uint32_t name, int count, const int *value) const
+{
+	
+}
+
+void CGLES3Pipeline::Uniform1fv(uint32_t name, int count, const float *value) const
+{
+	
+}
+
+void CGLES3Pipeline::Uniform2fv(uint32_t name, int count, const float *value) const
+{
+	
+}
+
+void CGLES3Pipeline::Uniform3fv(uint32_t name, int count, const float *value) const
+{
+	
+}
+
+void CGLES3Pipeline::Uniform4fv(uint32_t name, int count, const float *value) const
+{
+	
+}
+
+void CGLES3Pipeline::UniformMatrix2fv(uint32_t name, int count, const float *value) const
+{
+	
+}
+
+void CGLES3Pipeline::UniformMatrix3fv(uint32_t name, int count, const float *value) const
+{
+	
+}
+
+void CGLES3Pipeline::UniformMatrix4fv(uint32_t name, int count, const float *value) const
+{
+	
 }
 
 bool CGLES3Pipeline::IsTextureValid(uint32_t name) const
