@@ -30,22 +30,11 @@ CGfxDescriptorLayoutPtr CGLES3DescriptorSet::GetDescriptorLayout(void) const
 	return m_ptrDescriptorLayout;
 }
 
-bool CGLES3DescriptorSet::SetUniformBuffer(uint32_t name, const CGfxUniformBufferPtr ptrUniformBuffer)
-{
-	if (m_ptrDescriptorLayout->IsUniformBlockValid(name)) {
-		m_bufferDescriptors[name].ptrUniformBuffer = ptrUniformBuffer;
-		return true;
-	}
-	else {
-		return false;
-	}
-}
-
 bool CGLES3DescriptorSet::SetTexture2D(uint32_t name, const CGfxTexture2DPtr ptrTexture, const CGfxSampler *pSampler)
 {
 	if (m_ptrDescriptorLayout->IsTextureValid(name)) {
-		m_imageDescriptors[name].pSampler = (CGfxSampler *)pSampler;
-		m_imageDescriptors[name].ptrTexture2D = ptrTexture;
+		m_imageDescriptorInfos[name].pSampler = (CGfxSampler *)pSampler;
+		m_imageDescriptorInfos[name].ptrTexture2D = ptrTexture;
 		return true;
 	}
 	else {
@@ -56,8 +45,8 @@ bool CGLES3DescriptorSet::SetTexture2D(uint32_t name, const CGfxTexture2DPtr ptr
 bool CGLES3DescriptorSet::SetTexture2DArray(uint32_t name, const CGfxTexture2DArrayPtr ptrTexture, const CGfxSampler *pSampler)
 {
 	if (m_ptrDescriptorLayout->IsTextureValid(name)) {
-		m_imageDescriptors[name].pSampler = (CGfxSampler *)pSampler;
-		m_imageDescriptors[name].ptrTexture2DArray = ptrTexture;
+		m_imageDescriptorInfos[name].pSampler = (CGfxSampler *)pSampler;
+		m_imageDescriptorInfos[name].ptrTexture2DArray = ptrTexture;
 		return true;
 	}
 	else {
@@ -68,8 +57,8 @@ bool CGLES3DescriptorSet::SetTexture2DArray(uint32_t name, const CGfxTexture2DAr
 bool CGLES3DescriptorSet::SetTextureCubeMap(uint32_t name, const CGfxTextureCubeMapPtr ptrTexture, const CGfxSampler *pSampler)
 {
 	if (m_ptrDescriptorLayout->IsTextureValid(name)) {
-		m_imageDescriptors[name].pSampler = (CGfxSampler *)pSampler;
-		m_imageDescriptors[name].ptrTextureCubeMap = ptrTexture;
+		m_imageDescriptorInfos[name].pSampler = (CGfxSampler *)pSampler;
+		m_imageDescriptorInfos[name].ptrTextureCubeMap = ptrTexture;
 		return true;
 	}
 	else {
@@ -80,8 +69,8 @@ bool CGLES3DescriptorSet::SetTextureCubeMap(uint32_t name, const CGfxTextureCube
 bool CGLES3DescriptorSet::SetRenderTexture(uint32_t name, const CGfxRenderTexturePtr ptrRenderTexture, const CGfxSampler *pSampler)
 {
 	if (m_ptrDescriptorLayout->IsTextureValid(name)) {
-		m_imageDescriptors[name].pSampler = (CGfxSampler *)pSampler;
-		m_imageDescriptors[name].ptrRenderTexture = ptrRenderTexture;
+		m_imageDescriptorInfos[name].pSampler = (CGfxSampler *)pSampler;
+		m_imageDescriptorInfos[name].ptrRenderTexture = ptrRenderTexture;
 		return true;
 	}
 	else {
@@ -89,62 +78,39 @@ bool CGLES3DescriptorSet::SetRenderTexture(uint32_t name, const CGfxRenderTextur
 	}
 }
 
-CGfxSampler* CGLES3DescriptorSet::GetSampler(uint32_t name) const
+bool CGLES3DescriptorSet::SetUniformBuffer(uint32_t name, const CGfxUniformBufferPtr ptrUniformBuffer, uint32_t offset, uint32_t range)
 {
-	const auto &itDescriptor = m_imageDescriptors.find(name);
-
-	if (itDescriptor != m_imageDescriptors.end()) {
-		return itDescriptor->second.pSampler;
+	if (m_ptrDescriptorLayout->IsUniformBlockValid(name)) {
+		m_bufferDescriptorInfos[name].offset = offset;
+		m_bufferDescriptorInfos[name].range = range;
+		m_bufferDescriptorInfos[name].ptrUniformBuffer = ptrUniformBuffer;
+		return true;
 	}
 	else {
 		return false;
 	}
 }
 
-CGfxTexture2DPtr CGLES3DescriptorSet::GetTexture2D(uint32_t name) const
+const CGfxDescriptorSet::DescriptorImageInfo* CGLES3DescriptorSet::GetDescriptorImageInfo(uint32_t name) const
 {
-	const auto &itDescriptor = m_imageDescriptors.find(name);
+	const auto &itDescriptorInfo = m_imageDescriptorInfos.find(name);
 
-	if (itDescriptor != m_imageDescriptors.end()) {
-		return itDescriptor->second.ptrTexture2D;
+	if (itDescriptorInfo != m_imageDescriptorInfos.end()) {
+		return &itDescriptorInfo->second;
 	}
 	else {
-		return false;
+		return nullptr;
 	}
 }
 
-CGfxTexture2DArrayPtr CGLES3DescriptorSet::GetTexture2DArray(uint32_t name) const
+const CGfxDescriptorSet::DescriptorBufferInfo* CGLES3DescriptorSet::GetDescriptorBufferInfo(uint32_t name) const
 {
-	const auto &itDescriptor = m_imageDescriptors.find(name);
+	const auto &itDescriptorInfo = m_bufferDescriptorInfos.find(name);
 
-	if (itDescriptor != m_imageDescriptors.end()) {
-		return itDescriptor->second.ptrTexture2DArray;
+	if (itDescriptorInfo != m_bufferDescriptorInfos.end()) {
+		return &itDescriptorInfo->second;
 	}
 	else {
-		return false;
-	}
-}
-
-CGfxTextureCubeMapPtr CGLES3DescriptorSet::GetTextureCubeMap(uint32_t name) const
-{
-	const auto &itDescriptor = m_imageDescriptors.find(name);
-
-	if (itDescriptor != m_imageDescriptors.end()) {
-		return itDescriptor->second.ptrTextureCubeMap;
-	}
-	else {
-		return false;
-	}
-}
-
-CGfxRenderTexturePtr CGLES3DescriptorSet::GetRenderTexture(uint32_t name) const
-{
-	const auto &itDescriptor = m_imageDescriptors.find(name);
-
-	if (itDescriptor != m_imageDescriptors.end()) {
-		return itDescriptor->second.ptrRenderTexture;
-	}
-	else {
-		return false;
+		return nullptr;
 	}
 }
