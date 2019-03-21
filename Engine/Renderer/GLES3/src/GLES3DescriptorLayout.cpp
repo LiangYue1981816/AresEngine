@@ -36,7 +36,8 @@ bool CGLES3DescriptorLayout::Create(void)
 
 void CGLES3DescriptorLayout::Destroy(void)
 {
-
+	m_sampledImageBindings.clear();
+	m_uniformBlockBindings.clear();
 }
 
 bool CGLES3DescriptorLayout::SetInputAttachmentBinding(uint32_t name, uint32_t binding)
