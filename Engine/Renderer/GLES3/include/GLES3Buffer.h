@@ -28,7 +28,7 @@ private:
 
 private:
 	void Bind(void) const;
-	void Bind(int index, int offset, int size) const;
+	void Bind(int binding, int offset, int size) const;
 
 
 private:

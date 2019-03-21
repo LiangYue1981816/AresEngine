@@ -34,7 +34,7 @@ bool CGLES3UniformBuffer::BufferData(size_t offset, size_t size, const void *pBu
 	return m_ptrBuffer->BufferData(offset, size, pBuffer);
 }
 
-void CGLES3UniformBuffer::Bind(int index, int offset, int size) const
+void CGLES3UniformBuffer::Bind(int binding, int offset, int size) const
 {
-	m_ptrBuffer->Bind(index, offset, size);
+	m_ptrBuffer->Bind(binding, offset, size);
 }

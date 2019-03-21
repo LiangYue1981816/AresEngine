@@ -63,11 +63,11 @@ void CGLES3Buffer::Bind(void) const
 	GLBindBuffer(m_target, m_buffer);
 }
 
-void CGLES3Buffer::Bind(int index, int offset, int size) const
+void CGLES3Buffer::Bind(int binding, int offset, int size) const
 {
 	if (m_size < (uint32_t)(offset + size)) {
 		return;
 	}
 
-	GLBindBufferRange(m_target, index, m_buffer, offset, size);
+	GLBindBufferRange(m_target, binding, m_buffer, offset, size);
 }
