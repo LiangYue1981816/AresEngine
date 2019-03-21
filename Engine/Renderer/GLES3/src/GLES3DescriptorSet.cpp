@@ -32,7 +32,7 @@ CGfxDescriptorLayoutPtr CGLES3DescriptorSet::GetDescriptorLayout(void) const
 
 bool CGLES3DescriptorSet::SetTexture2D(uint32_t name, const CGfxTexture2DPtr ptrTexture, const CGfxSampler *pSampler)
 {
-	if (m_ptrDescriptorLayout->IsTextureValid(name)) {
+	if (m_ptrDescriptorLayout->IsSampledImageValid(name)) {
 		m_imageDescriptorInfos[name].pSampler = (CGfxSampler *)pSampler;
 		m_imageDescriptorInfos[name].ptrTexture2D = ptrTexture;
 		return true;
@@ -44,7 +44,7 @@ bool CGLES3DescriptorSet::SetTexture2D(uint32_t name, const CGfxTexture2DPtr ptr
 
 bool CGLES3DescriptorSet::SetTexture2DArray(uint32_t name, const CGfxTexture2DArrayPtr ptrTexture, const CGfxSampler *pSampler)
 {
-	if (m_ptrDescriptorLayout->IsTextureValid(name)) {
+	if (m_ptrDescriptorLayout->IsSampledImageValid(name)) {
 		m_imageDescriptorInfos[name].pSampler = (CGfxSampler *)pSampler;
 		m_imageDescriptorInfos[name].ptrTexture2DArray = ptrTexture;
 		return true;
@@ -56,7 +56,7 @@ bool CGLES3DescriptorSet::SetTexture2DArray(uint32_t name, const CGfxTexture2DAr
 
 bool CGLES3DescriptorSet::SetTextureCubeMap(uint32_t name, const CGfxTextureCubeMapPtr ptrTexture, const CGfxSampler *pSampler)
 {
-	if (m_ptrDescriptorLayout->IsTextureValid(name)) {
+	if (m_ptrDescriptorLayout->IsSampledImageValid(name)) {
 		m_imageDescriptorInfos[name].pSampler = (CGfxSampler *)pSampler;
 		m_imageDescriptorInfos[name].ptrTextureCubeMap = ptrTexture;
 		return true;
@@ -66,11 +66,11 @@ bool CGLES3DescriptorSet::SetTextureCubeMap(uint32_t name, const CGfxTextureCube
 	}
 }
 
-bool CGLES3DescriptorSet::SetRenderTexture(uint32_t name, const CGfxRenderTexturePtr ptrRenderTexture, const CGfxSampler *pSampler)
+bool CGLES3DescriptorSet::SetRenderTexture(uint32_t name, const CGfxRenderTexturePtr ptrTexture, const CGfxSampler *pSampler)
 {
-	if (m_ptrDescriptorLayout->IsTextureValid(name)) {
+	if (m_ptrDescriptorLayout->IsSampledImageValid(name)) {
 		m_imageDescriptorInfos[name].pSampler = (CGfxSampler *)pSampler;
-		m_imageDescriptorInfos[name].ptrRenderTexture = ptrRenderTexture;
+		m_imageDescriptorInfos[name].ptrRenderTexture = ptrTexture;
 		return true;
 	}
 	else {
