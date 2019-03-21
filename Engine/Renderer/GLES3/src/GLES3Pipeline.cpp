@@ -122,7 +122,23 @@ void CGLES3Pipeline::SetSampledImageLocation(const char *szName)
 
 void CGLES3Pipeline::BindDescriptorSet(const CGfxDescriptorSetPtr ptrDescriptorSet)
 {
+	CGfxDescriptorLayoutPtr ptrDescriptorLayout = ptrDescriptorSet->GetDescriptorLayout();
 
+	if (ptrDescriptorLayout->GetSetIndex() < 0 || ptrDescriptorLayout->GetSetIndex() >= DESCRIPTOR_SET_COUNT) {
+		return;
+	}
+
+	if (ptrDescriptorLayout->IsCompatible(m_ptrDescriptorLayouts[ptrDescriptorLayout->GetSetIndex()]) == false) {
+		return;
+	}
+
+	for (const auto &itUniform : m_uniformLocations) {
+
+	}
+
+	for (const auto &itSampledImage : m_sampledImageLocations) {
+
+	}
 }
 
 void CGLES3Pipeline::Uniform1i(uint32_t name, int v0) const
