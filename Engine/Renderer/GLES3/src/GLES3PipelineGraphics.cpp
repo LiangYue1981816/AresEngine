@@ -3,7 +3,6 @@
 
 CGLES3PipelineGraphics::CGLES3PipelineGraphics(uint32_t name)
 	: CGfxPipelineGraphics(name)
-	, m_name(name)
 {
 
 }
@@ -13,19 +12,14 @@ CGLES3PipelineGraphics::~CGLES3PipelineGraphics(void)
 	Destroy();
 }
 
-uint32_t CGLES3PipelineGraphics::GetName(void) const
-{
-	return m_name;
-}
-
 HANDLE CGLES3PipelineGraphics::GetPipeline(void) const
 {
 	return (HANDLE)m_program;
 }
 
-const PipelineState& CGLES3PipelineGraphics::GetPipelineState(void) const
+const PipelineState* CGLES3PipelineGraphics::GetPipelineState(void) const
 {
-	return m_state;
+	return &m_state;
 }
 
 bool CGLES3PipelineGraphics::Create(const CGfxRenderPass *pRenderPass, const CGfxShader *pVertexShader, const CGfxShader *pFragmentShader, const PipelineState &state, uint32_t indexSubpass, uint32_t vertexBinding, uint32_t instanceBinding)
@@ -62,26 +56,11 @@ bool CGLES3PipelineGraphics::Create(const CGfxRenderPass *pRenderPass, const CGf
 	{
 		do {
 			m_state = state;
+
 			m_pShaders[vertex_shader] = (CGLES3Shader *)pVertexShader;
 			m_pShaders[fragment_shader] = (CGLES3Shader *)pFragmentShader;
 
-			m_program = glCreateProgram();
-			glAttachShader(m_program, (uint32_t)m_pShaders[vertex_shader]->GetShader());
-			glAttachShader(m_program, (uint32_t)m_pShaders[fragment_shader]->GetShader());
-			glLinkProgram(m_program);
-
-			GLint success;
-			glGetProgramiv(m_program, GL_LINK_STATUS, &success);
-
-			if (success == GL_FALSE) {
-				GLsizei length = 0;
-				char szError[128 * 1024] = { 0 };
-
-				glGetProgramInfoLog(m_program, sizeof(szError), &length, szError);
-
-				LogOutput(nullptr, "Program Link Error:\n");
-				LogOutput(nullptr, "%s\n", szError);
-
+			if (CreateProgram() == false) {
 				break;
 			}
 
@@ -98,32 +77,7 @@ bool CGLES3PipelineGraphics::Create(const CGfxRenderPass *pRenderPass, const CGf
 
 void CGLES3PipelineGraphics::Destroy(void)
 {
-	if (m_program) {
-		glDeleteProgram(m_program);
-	}
-
-	m_program = 0;
-	m_pShaders[vertex_shader] = nullptr;
-	m_pShaders[fragment_shader] = nullptr;
-
-	m_uniformLocations.clear();
-	m_uniformBlockBindings.clear();
-	m_sampledImageLocations.clear();
-}
-
-bool CGLES3PipelineGraphics::IsTextureValid(uint32_t name) const
-{
-	return CGLES3Pipeline::IsTextureValid(name);
-}
-
-bool CGLES3PipelineGraphics::IsUniformValid(uint32_t name) const
-{
-	return CGLES3Pipeline::IsUniformValid(name);
-}
-
-bool CGLES3PipelineGraphics::IsUniformBlockValid(uint32_t name) const
-{
-	return CGLES3Pipeline::IsUniformBlockValid(name);
+	CGLES3Pipeline::Destroy();
 }
 
 void CGLES3PipelineGraphics::Bind(void) const

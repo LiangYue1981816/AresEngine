@@ -92,11 +92,6 @@ public:
 	virtual bool Create(const CGfxRenderPass *pRenderPass, const CGfxShader *pVertexShader, const CGfxShader *pFragmentShader, const PipelineState &state, uint32_t indexSubpass, uint32_t vertexBinding, uint32_t instanceBinding) = 0;
 	virtual void Destroy(void) = 0;
 
-public:
-	virtual bool IsTextureValid(uint32_t name) const = 0;
-	virtual bool IsUniformValid(uint32_t name) const = 0;
-	virtual bool IsUniformBlockValid(uint32_t name) const = 0;
-
 
 private:
 	uint32_t m_name;

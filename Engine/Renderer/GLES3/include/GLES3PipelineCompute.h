@@ -13,9 +13,6 @@ private:
 
 
 public:
-	uint32_t GetName(void) const;
-
-public:
 	HANDLE GetPipeline(void) const;
 
 public:
@@ -23,14 +20,5 @@ public:
 	void Destroy(void);
 
 public:
-	bool IsTextureValid(uint32_t name) const;
-	bool IsUniformValid(uint32_t name) const;
-	bool IsUniformBlockValid(uint32_t name) const;
-
-public:
 	void Bind(void) const;
-
-
-private:
-	uint32_t m_name;
 };

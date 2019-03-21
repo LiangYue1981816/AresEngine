@@ -3,7 +3,6 @@
 
 CGLES3PipelineCompute::CGLES3PipelineCompute(uint32_t name)
 	: CGfxPipelineCompute(name)
-	, m_name(name)
 {
 
 }
@@ -11,11 +10,6 @@ CGLES3PipelineCompute::CGLES3PipelineCompute(uint32_t name)
 CGLES3PipelineCompute::~CGLES3PipelineCompute(void)
 {
 	Destroy();
-}
-
-uint32_t CGLES3PipelineCompute::GetName(void) const
-{
-	return m_name;
 }
 
 HANDLE CGLES3PipelineCompute::GetPipeline(void) const
@@ -42,22 +36,7 @@ bool CGLES3PipelineCompute::Create(const CGfxShader *pComputeShader)
 		do {
 			m_pShaders[compute_shader] = (CGLES3Shader *)pComputeShader;
 
-			m_program = glCreateProgram();
-			glAttachShader(m_program, (uint32_t)m_pShaders[compute_shader]->GetShader());
-			glLinkProgram(m_program);
-
-			GLint success;
-			glGetProgramiv(m_program, GL_LINK_STATUS, &success);
-
-			if (success == GL_FALSE) {
-				GLsizei length = 0;
-				char szError[128 * 1024] = { 0 };
-
-				glGetProgramInfoLog(m_program, sizeof(szError), &length, szError);
-
-				LogOutput(nullptr, "Program Link Error:\n");
-				LogOutput(nullptr, "%s\n", szError);
-
+			if (CreateProgram() == false) {
 				break;
 			}
 
@@ -74,31 +53,7 @@ bool CGLES3PipelineCompute::Create(const CGfxShader *pComputeShader)
 
 void CGLES3PipelineCompute::Destroy(void)
 {
-	if (m_program) {
-		glDeleteProgram(m_program);
-	}
-
-	m_program = 0;
-	m_pShaders[compute_shader] = nullptr;
-
-	m_uniformLocations.clear();
-	m_uniformBlockBindings.clear();
-	m_sampledImageLocations.clear();
-}
-
-bool CGLES3PipelineCompute::IsTextureValid(uint32_t name) const
-{
-	return CGLES3Pipeline::IsTextureValid(name);
-}
-
-bool CGLES3PipelineCompute::IsUniformValid(uint32_t name) const
-{
-	return CGLES3Pipeline::IsUniformValid(name);
-}
-
-bool CGLES3PipelineCompute::IsUniformBlockValid(uint32_t name) const
-{
-	return CGLES3Pipeline::IsUniformBlockValid(name);
+	CGLES3Pipeline::Destroy();
 }
 
 void CGLES3PipelineCompute::Bind(void) const
