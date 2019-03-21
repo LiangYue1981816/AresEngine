@@ -14,7 +14,7 @@ private:
 
 
 private:
-	CGLES3DescriptorSet* Create(uint32_t set);
+	CGLES3DescriptorSet* Create(const CGfxDescriptorLayoutPtr ptrDescriptorLayout);
 	void Destroy(CGLES3DescriptorSet *pDescriptorSet);
 
 
