@@ -42,20 +42,35 @@ void CGLES3DescriptorLayout::Destroy(void)
 
 bool CGLES3DescriptorLayout::SetInputAttachmentBinding(uint32_t name, uint32_t binding)
 {
-	m_sampledImageBindings[name] = binding;
-	return true;
+	if (m_sampledImageBindings.find(name) == m_sampledImageBindings.end()) {
+		m_sampledImageBindings[name] = binding;
+		return true;
+	}
+	else {
+		return false;
+	}
 }
 
 bool CGLES3DescriptorLayout::SetSampledImageBinding(uint32_t name, uint32_t binding)
 {
-	m_sampledImageBindings[name] = binding;
-	return true;
+	if (m_sampledImageBindings.find(name) == m_sampledImageBindings.end()) {
+		m_sampledImageBindings[name] = binding;
+		return true;
+	}
+	else {
+		return false;
+	}
 }
 
 bool CGLES3DescriptorLayout::SetUniformBlockBinding(uint32_t name, uint32_t binding)
 {
-	m_uniformBlockBindings[name] = binding;
-	return true;
+	if (m_uniformBlockBindings.find(name) == m_uniformBlockBindings.end()) {
+		m_uniformBlockBindings[name] = binding;
+		return true;
+	}
+	else {
+		return false;
+	}
 }
 
 uint32_t CGLES3DescriptorLayout::GetTextureBinding(uint32_t name) const

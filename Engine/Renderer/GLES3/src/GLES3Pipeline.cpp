@@ -13,7 +13,7 @@ CGLES3Pipeline::CGLES3Pipeline(void)
 
 CGLES3Pipeline::~CGLES3Pipeline(void)
 {
-
+	Destroy();
 }
 
 bool CGLES3Pipeline::CreateProgram(void)
@@ -87,7 +87,6 @@ void CGLES3Pipeline::Destroy(void)
 	m_pShaders[vertex_shader] = nullptr;
 	m_pShaders[fragment_shader] = nullptr;
 	m_pShaders[compute_shader] = nullptr;
-
 	m_ptrDescriptorLayouts[DESCRIPTOR_SET_ENGINE]->Destroy();
 	m_ptrDescriptorLayouts[DESCRIPTOR_SET_CAMERA]->Destroy();
 	m_ptrDescriptorLayouts[DESCRIPTOR_SET_PASS]->Destroy();
