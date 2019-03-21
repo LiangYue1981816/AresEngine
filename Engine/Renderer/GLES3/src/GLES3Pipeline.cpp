@@ -149,7 +149,7 @@ void CGLES3Pipeline::SetSampledImageLocation(const char *szName)
 
 void CGLES3Pipeline::BindDescriptorSet(const CGfxDescriptorSetPtr ptrDescriptorSet)
 {
-	CGfxDescriptorLayoutPtr ptrDescriptorLayout = ptrDescriptorSet->GetDescriptorLayout();
+	const CGfxDescriptorLayoutPtr ptrDescriptorLayout = ptrDescriptorSet->GetDescriptorLayout();
 
 	if (ptrDescriptorLayout->GetSetIndex() < 0 || ptrDescriptorLayout->GetSetIndex() >= DESCRIPTOR_SET_COUNT) {
 		return;
@@ -160,11 +160,43 @@ void CGLES3Pipeline::BindDescriptorSet(const CGfxDescriptorSetPtr ptrDescriptorS
 	}
 
 	for (const auto &itUniformBlock : m_uniformBlockBindings) {
-
+		if (const CGfxDescriptorSet::DescriptorBufferInfo *pDescriptorBufferInfo = ptrDescriptorSet->GetDescriptorBufferInfo(itUniformBlock.first)) {
+			((CGLES3UniformBuffer *)pDescriptorBufferInfo->ptrUniformBuffer.GetPointer())->Bind(itUniformBlock.second, pDescriptorBufferInfo->offset, pDescriptorBufferInfo->range);
+		}
 	}
 
 	for (const auto &itSampledImage : m_sampledImageLocations) {
+		if (const CGfxDescriptorSet::DescriptorImageInfo *pDescriptorImageInfo = ptrDescriptorSet->GetDescriptorImageInfo(itSampledImage.first)) {
+			uint32_t indexTextureUnit = m_sampledImageTextureUnits[itSampledImage.first];
 
+			if (pDescriptorImageInfo->ptrTexture2D.IsValid()) {
+				GLUniform1i(itSampledImage.second, indexTextureUnit);
+				((CGLES3Sampler *)pDescriptorImageInfo->pSampler)->Bind(indexTextureUnit);
+				((CGLES3Texture2D *)pDescriptorImageInfo->ptrTexture2D.GetPointer())->Bind(indexTextureUnit);
+				continue;
+			}
+
+			if (pDescriptorImageInfo->ptrTexture2DArray.IsValid()) {
+				GLUniform1i(itSampledImage.second, indexTextureUnit);
+				((CGLES3Sampler *)pDescriptorImageInfo->pSampler)->Bind(indexTextureUnit);
+				((CGLES3Texture2DArray *)pDescriptorImageInfo->ptrTexture2DArray.GetPointer())->Bind(indexTextureUnit);
+				continue;
+			}
+
+			if (pDescriptorImageInfo->ptrTextureCubeMap.IsValid()) {
+				GLUniform1i(itSampledImage.second, indexTextureUnit);
+				((CGLES3Sampler *)pDescriptorImageInfo->pSampler)->Bind(indexTextureUnit);
+				((CGLES3TextureCubeMap *)pDescriptorImageInfo->ptrTextureCubeMap.GetPointer())->Bind(indexTextureUnit);
+				continue;
+			}
+
+			if (pDescriptorImageInfo->ptrRenderTexture.IsValid()) {
+				GLUniform1i(itSampledImage.second, indexTextureUnit);
+				((CGLES3Sampler *)pDescriptorImageInfo->pSampler)->Bind(indexTextureUnit);
+				((CGLES3RenderTexture *)pDescriptorImageInfo->ptrRenderTexture.GetPointer())->Bind(indexTextureUnit);
+				continue;
+			}
+		}
 	}
 }
 

@@ -116,3 +116,8 @@ bool CGLES3Texture2DArray::TransferTexture2DCompressed(GfxPixelFormat format, in
 		return false;
 	}
 }
+
+void CGLES3Texture2DArray::Bind(uint32_t unit) const
+{
+	m_ptrTexture->Bind(unit);
+}

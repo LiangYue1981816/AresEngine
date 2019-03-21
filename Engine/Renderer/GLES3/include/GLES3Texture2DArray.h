@@ -32,6 +32,9 @@ public:
 	bool TransferTexture2D(GfxPixelFormat format, int layer, int level, int xoffset, int yoffset, int width, int height, GfxDataType type, uint32_t size, const void *data);
 	bool TransferTexture2DCompressed(GfxPixelFormat format, int layer, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void *data);
 
+public:
+	void Bind(uint32_t unit) const;
+
 
 private:
 	GfxPixelFormat m_format;
