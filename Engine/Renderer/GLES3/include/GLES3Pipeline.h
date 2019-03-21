@@ -15,6 +15,7 @@ protected:
 	void Destroy(void);
 
 	void SetUniformLocation(const char *szName);
+	void SetUniformBlockBinding(const char *szName, uint32_t binding);
 	void SetSampledImageLocation(const char *szName);
 
 public:
@@ -48,10 +49,11 @@ public:
 protected:
 	uint32_t m_program;
 	CGLES3Shader *m_pShaders[compute_shader - vertex_shader + 1];
+	CGfxDescriptorLayoutPtr m_ptrDescriptorLayouts[DESCRIPTOR_SET_COUNT];
 
 protected:
-	CGfxDescriptorLayoutPtr m_ptrDescriptorLayouts[DESCRIPTOR_SET_COUNT];
 	eastl::unordered_map<uint32_t, uint32_t> m_uniformLocations;         // [name, location]
+	eastl::unordered_map<uint32_t, uint32_t> m_uniformBlockBindings;     // [name, binding]
 	eastl::unordered_map<uint32_t, uint32_t> m_sampledImageLocations;    // [name, location]
 	eastl::unordered_map<uint32_t, uint32_t> m_sampledImageTextureUnits; // [name, texture unit]
 };

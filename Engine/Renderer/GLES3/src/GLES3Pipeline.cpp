@@ -59,6 +59,7 @@ bool CGLES3Pipeline::CreateLayouts(void)
 			}
 
 			for (const auto &itUniformBlock : uniformBlockBindings) {
+				SetUniformBlockBinding(itUniformBlock.first.c_str(), itUniformBlock.second.binding);
 				m_ptrDescriptorLayouts[itUniformBlock.second.set]->SetUniformBlockBinding(HashValue(itUniformBlock.first.c_str()), itUniformBlock.second.binding);
 			}
 
@@ -74,6 +75,11 @@ bool CGLES3Pipeline::CreateLayouts(void)
 		}
 	}
 
+	m_ptrDescriptorLayouts[DESCRIPTOR_SET_ENGINE]->Create();
+	m_ptrDescriptorLayouts[DESCRIPTOR_SET_CAMERA]->Create();
+	m_ptrDescriptorLayouts[DESCRIPTOR_SET_PASS]->Create();
+	m_ptrDescriptorLayouts[DESCRIPTOR_SET_DRAW]->Create();
+
 	return true;
 }
 
@@ -84,13 +90,20 @@ void CGLES3Pipeline::Destroy(void)
 	}
 
 	m_program = 0;
+
 	m_pShaders[vertex_shader] = nullptr;
 	m_pShaders[fragment_shader] = nullptr;
 	m_pShaders[compute_shader] = nullptr;
+
 	m_ptrDescriptorLayouts[DESCRIPTOR_SET_ENGINE]->Destroy();
 	m_ptrDescriptorLayouts[DESCRIPTOR_SET_CAMERA]->Destroy();
 	m_ptrDescriptorLayouts[DESCRIPTOR_SET_PASS]->Destroy();
 	m_ptrDescriptorLayouts[DESCRIPTOR_SET_DRAW]->Destroy();
+
+	m_uniformLocations.clear();
+	m_uniformBlockBindings.clear();
+	m_sampledImageLocations.clear();
+	m_sampledImageTextureUnits.clear();
 }
 
 void CGLES3Pipeline::SetUniformLocation(const char *szName)
@@ -102,6 +115,20 @@ void CGLES3Pipeline::SetUniformLocation(const char *szName)
 
 		if (location != GL_INVALID_INDEX) {
 			m_uniformLocations[name] = location;
+		}
+	}
+}
+
+void CGLES3Pipeline::SetUniformBlockBinding(const char *szName, uint32_t binding)
+{
+	uint32_t name = HashValue(szName);
+
+	if (m_uniformBlockBindings.find(name) == m_uniformBlockBindings.end()) {
+		uint32_t indexBinding = glGetUniformBlockIndex(m_program, szName);
+
+		if (indexBinding != GL_INVALID_INDEX) {
+			m_uniformBlockBindings[name] = binding;
+			glUniformBlockBinding(m_program, indexBinding, binding);
 		}
 	}
 }
@@ -132,7 +159,7 @@ void CGLES3Pipeline::BindDescriptorSet(const CGfxDescriptorSetPtr ptrDescriptorS
 		return;
 	}
 
-	for (const auto &itUniform : m_uniformLocations) {
+	for (const auto &itUniformBlock : m_uniformBlockBindings) {
 
 	}
 
