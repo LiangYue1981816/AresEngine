@@ -13,7 +13,7 @@ CGfxCamera::CGfxCamera(void)
 	m_ptrDescriptorLayout->Create();
 
 	m_ptrDescriptorSet = GfxRenderer()->NewDescriptorSet(m_ptrDescriptorLayout);
-	m_ptrDescriptorSet->SetUniformBuffer(UNIFORM_CAMERA_NAME, m_pUniformCamera->GetUniformBuffer());
+	m_ptrDescriptorSet->SetUniformBuffer(UNIFORM_CAMERA_NAME, m_pUniformCamera->GetUniformBuffer(), 0, m_pUniformCamera->GetUniformBuffer()->GetSize());
 }
 
 CGfxCamera::~CGfxCamera(void)
