@@ -7,11 +7,12 @@ CGLES3FrameBuffer::CGLES3FrameBuffer(CGLES3FrameBufferManager *pManager, int wid
 
 	, m_width(width)
 	, m_height(height)
+	, m_ptrAttachmentTextures(numAttachments)
 
 	, m_fbo(0)
 	, m_resolve(0)
 {
-	m_ptrAttachmentTextures.resize(numAttachments);
+
 }
 
 CGLES3FrameBuffer::~CGLES3FrameBuffer(void)

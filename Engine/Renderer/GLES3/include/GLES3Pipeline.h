@@ -19,7 +19,7 @@ protected:
 	void SetSampledImageLocation(const char *szName);
 
 public:
-	void BindDescriptorSet(const CGfxDescriptorSetPtr ptrDescriptorSet);
+	void BindDescriptorSet(const CGfxDescriptorSetPtr ptrDescriptorSet) const;
 
 	void Uniform1i(uint32_t name, int v0) const;
 	void Uniform2i(uint32_t name, int v0, int v1) const;
