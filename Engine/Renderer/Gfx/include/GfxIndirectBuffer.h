@@ -31,6 +31,5 @@ public:
 	virtual uint32_t GetSize(void) const = 0;
 
 public:
-	virtual bool BufferData(int indexDraw, int instanceCount) = 0;
 	virtual bool BufferData(int indexDraw, int baseVertex, int firstIndex, int indexCount, int instanceCount) = 0;
 };
