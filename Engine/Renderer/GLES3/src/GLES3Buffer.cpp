@@ -36,7 +36,7 @@ uint32_t CGLES3Buffer::GetSize(void) const
 	return m_size;
 }
 
-void CGLES3Buffer::BufferData(size_t size, bool bDynamic)
+void CGLES3Buffer::BufferSize(size_t size, bool bDynamic)
 {
 	m_size = size;
 
