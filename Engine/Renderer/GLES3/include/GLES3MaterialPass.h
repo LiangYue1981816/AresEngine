@@ -14,48 +14,41 @@ private:
 
 
 public:
-	uint32_t GetName(void) const;
-
-public:
 	CGfxPipelineGraphics* GetPipeline(void) const;
+	CGfxDescriptorSetPtr GetDescriptorSet(void) const;
 
 public:
 	bool SetPipeline(const CGfxRenderPass *pRenderPass, const CGfxShader *pVertexShader, const CGfxShader *pFragmentShader, const PipelineState &state, uint32_t indexSubpass, uint32_t vertexBinding, uint32_t instanceBinding);
 
-	bool SetSampler(const char *szName, GfxFilter minFilter, GfxFilter magFilter, GfxSamplerMipmapMode mipmapMode, GfxSamplerAddressMode addressMode);
-	bool SetTexture2D(const char *szName, const CGfxTexture2DPtr ptrTexture);
-	bool SetTexture2DArray(const char *szName, const CGfxTexture2DArrayPtr ptrTexture);
-	bool SetTextureCubeMap(const char *szName, const CGfxTextureCubeMapPtr ptrTexture);
-	bool SetTexture2D(const char *szName, const char *szFileName);
-	bool SetTexture2DArray(const char *szName, const char *szFileName);
-	bool SetTextureCubeMap(const char *szName, const char *szFileName);
+	bool SetSampler(uint32_t name, GfxFilter minFilter, GfxFilter magFilter, GfxSamplerMipmapMode mipmapMode, GfxSamplerAddressMode addressMode);
+	bool SetTexture2D(uint32_t name, const CGfxTexture2DPtr ptrTexture);
+	bool SetTexture2DArray(uint32_t name, const CGfxTexture2DArrayPtr ptrTexture);
+	bool SetTextureCubeMap(uint32_t name, const CGfxTextureCubeMapPtr ptrTexture);
+	bool SetTexture2D(uint32_t name, const char *szFileName);
+	bool SetTexture2DArray(uint32_t name, const char *szFileName);
+	bool SetTextureCubeMap(uint32_t name, const char *szFileName);
 
-	bool SetUniformVec1(const char *szName, float v0);
-	bool SetUniformVec2(const char *szName, float v0, float v1);
-	bool SetUniformVec3(const char *szName, float v0, float v1, float v2);
-	bool SetUniformVec4(const char *szName, float v0, float v1, float v2, float v3);
-	bool SetUniformMat4(const char *szName, const float *value);
+	bool SetUniformVec1(uint32_t name, float v0);
+	bool SetUniformVec2(uint32_t name, float v0, float v1);
+	bool SetUniformVec3(uint32_t name, float v0, float v1, float v2);
+	bool SetUniformVec4(uint32_t name, float v0, float v1, float v2, float v3);
+	bool SetUniformMat4(uint32_t name, const float *value);
 
 public:
-	CGfxTexture2DPtr GetTexture2D(const char *szName) const;
-	CGfxTexture2DArrayPtr GetTexture2DArray(const char *szName) const;
-	CGfxTextureCubeMapPtr GetTextureCubeMap(const char *szName) const;
+	CGfxTexture2DPtr GetTexture2D(uint32_t name) const;
+	CGfxTexture2DArrayPtr GetTexture2DArray(uint32_t name) const;
+	CGfxTextureCubeMapPtr GetTextureCubeMap(uint32_t name) const;
 
 public:
 	void Bind(const CGLES3Pipeline *pPipeline) const;
 
 
 private:
-	uint32_t m_name;
+	CGfxPipelineGraphics *m_pPipeline;
+	CGfxDescriptorSetPtr m_ptrDescriptorSet;
 
 private:
-	CGfxPipelineGraphics *m_pPipeline;
-
 	eastl::unordered_map<uint32_t, CGfxSampler*> m_pSamplers;
-	eastl::unordered_map<uint32_t, CGfxTexture2DPtr> m_ptrTexture2Ds;
-	eastl::unordered_map<uint32_t, CGfxTexture2DArrayPtr> m_ptrTexture2DArrays;
-	eastl::unordered_map<uint32_t, CGfxTextureCubeMapPtr> m_ptrTextureCubeMaps;
-
 	eastl::unordered_map<uint32_t, CGfxUniformVec1*> m_pUniformVec1s;
 	eastl::unordered_map<uint32_t, CGfxUniformVec2*> m_pUniformVec2s;
 	eastl::unordered_map<uint32_t, CGfxUniformVec3*> m_pUniformVec3s;
