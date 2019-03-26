@@ -42,7 +42,7 @@ bool CGLES3InstanceBuffer::BufferData(size_t size, const void *pBuffer)
 			size_t newSize = INSTANCE_BUFFER_SIZE;
 			while (newSize < size) newSize <<= 1;
 
-			m_ptrBuffer->BufferData(newSize, true);
+			m_ptrBuffer->BufferSize(newSize, true);
 		}
 		CGfxProfiler::IncInstanceBufferSize(m_ptrBuffer->GetSize());
 	}

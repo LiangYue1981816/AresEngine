@@ -30,11 +30,11 @@ public:
 
 
 private:
-	eastl::unordered_map<uint32_t, DescriptorImageInfo> m_imageDescriptorInfos;
-	eastl::unordered_map<uint32_t, DescriptorBufferInfo> m_bufferDescriptorInfos;
+	CGfxDescriptorLayoutPtr m_ptrDescriptorLayout;
 
 private:
-	CGfxDescriptorLayoutPtr m_ptrDescriptorLayout;
+	eastl::unordered_map<uint32_t, DescriptorImageInfo> m_imageDescriptorInfos;
+	eastl::unordered_map<uint32_t, DescriptorBufferInfo> m_bufferDescriptorInfos;
 
 private:
 	CGLES3DescriptorSetManager *m_pManager;
