@@ -16,15 +16,15 @@ private:
 public:
 	glm::aabb GetLocalAABB(void) const;
 
+	GfxIndexType GetIndexType(void) const;
 	uint32_t GetIndexCount(void) const;
 	uint32_t GetIndexOffset(void) const;
-	GfxIndexType GetIndexType(void) const;
 
-	uint32_t GetVertexCount(void) const;
 	uint32_t GetVertexFormat(void) const;
+	uint32_t GetVertexCount(void) const;
 
-	uint32_t GetInstanceCount(void) const;
 	uint32_t GetInstanceFormat(void) const;
+	uint32_t GetInstanceCount(void) const;
 
 public:
 	bool InstanceBufferData(size_t size, const void *pBuffer);
