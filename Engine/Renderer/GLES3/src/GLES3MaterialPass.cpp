@@ -75,6 +75,8 @@ bool CGLES3MaterialPass::SetPipeline(const CGfxRenderPass *pRenderPass, const CG
 	}
 
 	m_pPipeline = GLES3Renderer()->CreatePipelineGraphics(pRenderPass, pVertexShader, pFragmentShader, state, indexSubpass, vertexBinding, instanceBinding);
+	m_ptrDescriptorSet = GLES3Renderer()->NewDescriptorSet(m_pPipeline->GetDescriptorLayout(DESCRIPTOR_SET_PASS));
+
 	return true;
 }
 
