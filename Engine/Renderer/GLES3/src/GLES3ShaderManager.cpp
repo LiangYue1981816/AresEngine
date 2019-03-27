@@ -16,10 +16,10 @@ CGLES3ShaderManager::~CGLES3ShaderManager(void)
 
 CGLES3Shader* CGLES3ShaderManager::Create(const char *szFileName, shader_kind kind)
 {
+	uint32_t name = HashValue(szFileName);
+
 	mutex_autolock autolock(&lock);
 	{
-		uint32_t name = HashValue(szFileName);
-
 		if (m_pShaders[name] == nullptr) {
 			m_pShaders[name] = new CGLES3Shader(name);
 			ResourceLoader()->LoadShader(szFileName, m_pShaders[name], kind);

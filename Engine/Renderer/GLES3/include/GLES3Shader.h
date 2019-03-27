@@ -13,12 +13,8 @@ private:
 
 
 public:
-	uint32_t GetName(void) const;
-
-public:
 	HANDLE GetShader(void) const;
 
-public:
 	uint32_t GetKind(void) const;
 	const CGfxSprivCross& GetSprivCross(void) const;
 
@@ -29,9 +25,6 @@ public:
 public:
 	bool IsValid(void) const;
 
-
-private:
-	uint32_t m_name;
 
 private:
 	uint32_t m_kind;

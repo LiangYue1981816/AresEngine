@@ -3,7 +3,6 @@
 
 CGLES3Shader::CGLES3Shader(uint32_t name)
 	: CGfxShader(name)
-	, m_name(name)
 
 	, m_kind(-1)
 	, m_shader(0)
@@ -14,11 +13,6 @@ CGLES3Shader::CGLES3Shader(uint32_t name)
 CGLES3Shader::~CGLES3Shader(void)
 {
 	Destroy();
-}
-
-uint32_t CGLES3Shader::GetName(void) const
-{
-	return m_name;
 }
 
 HANDLE CGLES3Shader::GetShader(void) const
