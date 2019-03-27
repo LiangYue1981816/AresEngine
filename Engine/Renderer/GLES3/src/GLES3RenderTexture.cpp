@@ -51,6 +51,27 @@ int CGLES3RenderTexture::GetSamples(void) const
 	return m_ptrTexture->GetSamples();
 }
 
+bool CGLES3RenderTexture::Create(HANDLE hExternalTexture, GfxPixelFormat format, int width, int height, int samples)
+{
+	Destroy();
+	{
+		do {
+			samples = std::max(samples, 1);
+
+			m_format = format;
+			m_type = samples == 1 ? GFX_TEXTURE_2D : GFX_TEXTURE_2D_MULTISAMPLE;
+
+			if (m_ptrTexture->Create(samples == 1 ? GL_TEXTURE_2D : GL_TEXTURE_2D_MULTISAMPLE, (uint32_t)hExternalTexture, width, height, 1, 1, samples) == false) {
+				break;
+			}
+
+			return true;
+		} while (false);
+	}
+	Destroy();
+	return false;
+}
+
 bool CGLES3RenderTexture::Create(GfxPixelFormat format, int width, int height, int samples, bool bTransient)
 {
 	Destroy();
