@@ -17,6 +17,11 @@ HANDLE CGLES3PipelineCompute::GetPipeline(void) const
 	return (HANDLE)m_program;
 }
 
+CGfxDescriptorLayoutPtr CGLES3PipelineCompute::GetDescriptorLayout(uint32_t indexDescriptorSet) const
+{
+	return m_ptrDescriptorLayouts[indexDescriptorSet];
+}
+
 bool CGLES3PipelineCompute::Create(const CGfxShader *pComputeShader)
 {
 	if (pComputeShader == nullptr) {

@@ -14,6 +14,7 @@ private:
 
 public:
 	HANDLE GetPipeline(void) const;
+	CGfxDescriptorLayoutPtr GetDescriptorLayout(uint32_t indexDescriptorSet) const;
 
 public:
 	bool Create(const CGfxShader *pComputeShader);
