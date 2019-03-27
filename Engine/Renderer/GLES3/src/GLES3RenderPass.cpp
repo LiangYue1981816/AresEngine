@@ -4,9 +4,11 @@
 CGLES3RenderPass::CGLES3RenderPass(CGLES3RenderPassManager *pManager, uint32_t name, int numAttachments, int numSubpasses)
 	: CGfxRenderPass(name, numAttachments, numSubpasses)
 	, m_pManager(pManager)
+
+	, m_attachments(numAttachments)
+	, m_subpasses(numAttachments)
 {
-	m_attachments.resize(numAttachments);
-	m_subpasses.resize(numAttachments);
+
 }
 
 CGLES3RenderPass::~CGLES3RenderPass(void)
@@ -31,7 +33,8 @@ bool CGLES3RenderPass::Create(void)
 
 void CGLES3RenderPass::Destroy(void)
 {
-
+	m_attachments.clear();
+	m_subpasses.clear();
 }
 
 bool CGLES3RenderPass::SetColorAttachment(int indexAttachment, GfxPixelFormat format, int samples, bool bInvalidation, bool bClear, float red, float green, float blue, float alpha)
