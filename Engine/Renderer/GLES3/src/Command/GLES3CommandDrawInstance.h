@@ -22,7 +22,7 @@ public:
 		{
 			if (m_ptrMeshDraw.IsValid()) {
 				glDrawElementsInstanced(
-					CGLES3Helper::TranslatePrimitiveTopology(GLES3Renderer()->GetCurrentPipelineGraphics()->GetPipelineState().topology), 
+					CGLES3Helper::TranslatePrimitiveTopology(GLES3Renderer()->GetCurrentPipelineGraphics()->GetPipelineState()->topology), 
 					m_ptrMeshDraw->GetIndexCount(),
 					CGLES3Helper::TranslateIndexType(m_ptrMeshDraw->GetIndexType()),
 					(const void *)m_ptrMeshDraw->GetIndexOffset(), 

@@ -20,6 +20,9 @@ public:
 	virtual void Execute(void) const
 	{
 		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_BEGIN_RENDERPASS, "CommandBeginRenderPass");
+		{
+
+		}
 	}
 
 
