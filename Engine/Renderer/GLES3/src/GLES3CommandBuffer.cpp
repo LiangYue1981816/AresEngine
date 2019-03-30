@@ -91,10 +91,12 @@ bool CGLES3CommandBuffer::CmdBeginRenderPass(const CGfxFrameBufferPtr ptrFrameBu
 bool CGLES3CommandBuffer::CmdNextSubpass(void)
 {
 	if (m_bMainCommandBuffer == true && m_bInRenderPass == true) {
-		m_pCommands.emplace_back(new CGLES3CommandNextSubPass(m_ptrFrameBuffer, m_ptrRenderPass, m_indexSubpass));
 		m_pCommands.emplace_back(new CGLES3CommandInvalidateFramebuffer(m_ptrFrameBuffer, m_ptrRenderPass, m_indexSubpass));
 		m_pCommands.emplace_back(new CGLES3CommandResolve(m_ptrFrameBuffer, m_ptrRenderPass, m_indexSubpass));
+
 		m_indexSubpass += 1;
+
+		m_pCommands.emplace_back(new CGLES3CommandNextSubPass(m_ptrFrameBuffer, m_ptrRenderPass, m_indexSubpass));
 		m_pCommands.emplace_back(new CGLES3CommandBindFrameBuffer(m_ptrFrameBuffer, m_ptrRenderPass, m_indexSubpass));
 		m_pCommands.emplace_back(new CGLES3CommandBindSubpassInputTexture(m_ptrFrameBuffer, m_ptrRenderPass, m_indexSubpass));
 
