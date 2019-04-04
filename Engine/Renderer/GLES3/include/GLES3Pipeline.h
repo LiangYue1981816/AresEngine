@@ -14,6 +14,7 @@ protected:
 	bool CreateLayouts(void);
 	void Destroy(void);
 
+private:
 	void SetUniformLocation(const char *szName);
 	void SetUniformBlockBinding(const char *szName, uint32_t binding);
 	void SetSampledImageLocation(const char *szName);
