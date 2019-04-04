@@ -16,7 +16,7 @@ public:
 		CGfxTexture2DPtr ptrTexture2D;
 		CGfxTexture2DArrayPtr ptrTexture2DArray;
 		CGfxTextureCubeMapPtr ptrTextureCubeMap;
-		CGfxRenderTexturePtr ptrRenderTexture;
+		CGfxRenderTexturePtr ptrTextureInputAttachment;
 	} DescriptorImageInfo;
 
 
@@ -39,7 +39,7 @@ public:
 	virtual bool SetTexture2D(uint32_t name, const CGfxTexture2DPtr ptrTexture, const CGfxSampler *pSampler) = 0;
 	virtual bool SetTexture2DArray(uint32_t name, const CGfxTexture2DArrayPtr ptrTexture, const CGfxSampler *pSampler) = 0;
 	virtual bool SetTextureCubeMap(uint32_t name, const CGfxTextureCubeMapPtr ptrTexture, const CGfxSampler *pSampler) = 0;
-	virtual bool SetRenderTexture(uint32_t name, const CGfxRenderTexturePtr ptrTexture, const CGfxSampler *pSampler) = 0;
+	virtual bool SetTextureInputAttachment(uint32_t name, const CGfxRenderTexturePtr ptrTexture, const CGfxSampler *pSampler) = 0;
 	virtual bool SetUniformBuffer(uint32_t name, const CGfxUniformBufferPtr ptrUniformBuffer, uint32_t offset, uint32_t range) = 0;
 
 public:

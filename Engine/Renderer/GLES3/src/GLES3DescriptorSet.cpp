@@ -66,11 +66,11 @@ bool CGLES3DescriptorSet::SetTextureCubeMap(uint32_t name, const CGfxTextureCube
 	}
 }
 
-bool CGLES3DescriptorSet::SetRenderTexture(uint32_t name, const CGfxRenderTexturePtr ptrTexture, const CGfxSampler *pSampler)
+bool CGLES3DescriptorSet::SetTextureInputAttachment(uint32_t name, const CGfxRenderTexturePtr ptrTexture, const CGfxSampler *pSampler)
 {
 	if (m_ptrDescriptorLayout->IsSampledImageValid(name)) {
 		m_imageDescriptorInfos[name].pSampler = (CGfxSampler *)pSampler;
-		m_imageDescriptorInfos[name].ptrRenderTexture = ptrTexture;
+		m_imageDescriptorInfos[name].ptrTextureInputAttachment = ptrTexture;
 		return true;
 	}
 	else {
