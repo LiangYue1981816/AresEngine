@@ -7,7 +7,7 @@ class CGLES3CommandUniformMatrix3fv : public CGfxCommandBase
 public:
 	CGLES3CommandUniformMatrix3fv(const char *szName, int count, const float *value)
 		: m_name(HashValue(szName))
-		, m_value(value, value + count)
+		, m_value(value, value + 9 * count)
 	{
 
 	}
@@ -21,7 +21,7 @@ public:
 	{
 		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_UNIFORMMATRIX3FV, "CommandUniformMatrix3fv");
 		{
-			GLES3Renderer()->GetCurrentPipelineGraphics()->UniformMatrix3fv(m_name, m_value.size(), m_value.data());
+			GLES3Renderer()->GetCurrentPipelineGraphics()->UniformMatrix3fv(m_name, m_value.size() / 9, m_value.data());
 		}
 	}
 
