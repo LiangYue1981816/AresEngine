@@ -19,7 +19,6 @@ void CGLES3DescriptorSet::Release(void)
 	m_pManager->Destroy(this);
 }
 
-
 HANDLE CGLES3DescriptorSet::GetDescriptorSet(void) const
 {
 	return nullptr;
