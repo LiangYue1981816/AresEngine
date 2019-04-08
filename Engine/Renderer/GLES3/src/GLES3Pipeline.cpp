@@ -53,7 +53,7 @@ bool CGLES3Pipeline::CreateLayouts(void)
 			const eastl::unordered_map<eastl::string, PushConstantRange> &pushConstantRanges = m_pShaders[index]->GetSprivCross().GetPushConstantRanges();
 			const eastl::unordered_map<eastl::string, DescriptorSetBinding> &uniformBlockBindings = m_pShaders[index]->GetSprivCross().GetUniformBlockBindings();
 			const eastl::unordered_map<eastl::string, DescriptorSetBinding> &sampledImageBindings = m_pShaders[index]->GetSprivCross().GetSampledImageBindings();
-			const eastl::unordered_map<eastl::string, DescriptorSetBinding> &inputAttachmentBindings = m_pShaders[index]->GetSprivCross().GetInputAttachmentBindings();
+			const eastl::unordered_map<eastl::string, InputAttachmentBinding> &inputAttachmentBindings = m_pShaders[index]->GetSprivCross().GetInputAttachmentBindings();
 
 			for (const auto &itPushConstant : pushConstantRanges) {
 				SetUniformLocation(itPushConstant.first.c_str());
@@ -74,6 +74,7 @@ bool CGLES3Pipeline::CreateLayouts(void)
 			for (const auto &itInputAttachment : inputAttachmentBindings) {
 				if (m_ptrDescriptorLayouts[itInputAttachment.second.set]->SetInputAttachmentBinding(HashValue(itInputAttachment.first.c_str()), itInputAttachment.second.binding)) {
 					SetSampledImageLocation(itInputAttachment.first.c_str());
+					SetInputAttachmentIndex(itInputAttachment.first.c_str(), itInputAttachment.second.inputAttachmentIndex);
 				}
 			}
 		}
@@ -149,6 +150,11 @@ void CGLES3Pipeline::SetSampledImageLocation(const char *szName)
 			m_sampledImageLocations[name] = location;
 		}
 	}
+}
+
+void CGLES3Pipeline::SetInputAttachmentIndex(const char *szName, uint32_t inputAttachmentIndex)
+{
+	m_inputAttachmentIndices[HashValue(szName)] = inputAttachmentIndex;
 }
 
 bool CGLES3Pipeline::BindDescriptorSet(const CGfxDescriptorSetPtr ptrDescriptorSet) const

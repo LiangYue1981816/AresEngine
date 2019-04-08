@@ -18,6 +18,7 @@ private:
 	void SetUniformLocation(const char *szName);
 	void SetUniformBlockBinding(const char *szName, uint32_t binding);
 	void SetSampledImageLocation(const char *szName);
+	void SetInputAttachmentIndex(const char *szName, uint32_t inputAttachmentIndex);
 
 public:
 	bool BindDescriptorSet(const CGfxDescriptorSetPtr ptrDescriptorSet) const;
@@ -57,4 +58,5 @@ protected:
 	eastl::unordered_map<uint32_t, uint32_t> m_uniformBlockBindings;     // [name, binding]
 	eastl::unordered_map<uint32_t, uint32_t> m_sampledImageLocations;    // [name, location]
 	eastl::unordered_map<uint32_t, uint32_t> m_sampledImageTextureUnits; // [name, texture unit]
+	eastl::unordered_map<uint32_t, uint32_t> m_inputAttachmentIndices;   // [input attachment index, name]
 };
