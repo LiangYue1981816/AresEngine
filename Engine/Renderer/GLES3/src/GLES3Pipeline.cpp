@@ -19,15 +19,16 @@ CGLES3Pipeline::~CGLES3Pipeline(void)
 bool CGLES3Pipeline::CreateProgram(void)
 {
 	m_program = glCreateProgram();
-
-	for (int index = 0; index < compute_shader - vertex_shader + 1; index++) {
-		if (m_pShaders[index]) {
-			glAttachShader(m_program, (uint32_t)m_pShaders[index]->GetShader());
+	{
+		for (int index = 0; index < compute_shader - vertex_shader + 1; index++) {
+			if (m_pShaders[index]) {
+				glAttachShader(m_program, (uint32_t)m_pShaders[index]->GetShader());
+			}
 		}
 	}
+	glLinkProgram(m_program);
 
 	GLint success;
-	glLinkProgram(m_program);
 	glGetProgramiv(m_program, GL_LINK_STATUS, &success);
 
 	if (success == GL_FALSE) {
@@ -98,15 +99,15 @@ void CGLES3Pipeline::Destroy(void)
 	m_pShaders[fragment_shader] = nullptr;
 	m_pShaders[compute_shader] = nullptr;
 
-	m_ptrDescriptorLayouts[DESCRIPTOR_SET_ENGINE]->Destroy();
-	m_ptrDescriptorLayouts[DESCRIPTOR_SET_CAMERA]->Destroy();
-	m_ptrDescriptorLayouts[DESCRIPTOR_SET_PASS]->Destroy();
-	m_ptrDescriptorLayouts[DESCRIPTOR_SET_DRAW]->Destroy();
-
 	m_uniformLocations.clear();
 	m_uniformBlockBindings.clear();
 	m_sampledImageLocations.clear();
 	m_sampledImageTextureUnits.clear();
+
+	m_ptrDescriptorLayouts[DESCRIPTOR_SET_ENGINE]->Destroy();
+	m_ptrDescriptorLayouts[DESCRIPTOR_SET_CAMERA]->Destroy();
+	m_ptrDescriptorLayouts[DESCRIPTOR_SET_PASS]->Destroy();
+	m_ptrDescriptorLayouts[DESCRIPTOR_SET_DRAW]->Destroy();
 }
 
 void CGLES3Pipeline::SetUniformLocation(const char *szName)
@@ -150,16 +151,16 @@ void CGLES3Pipeline::SetSampledImageLocation(const char *szName)
 	}
 }
 
-void CGLES3Pipeline::BindDescriptorSet(const CGfxDescriptorSetPtr ptrDescriptorSet) const
+bool CGLES3Pipeline::BindDescriptorSet(const CGfxDescriptorSetPtr ptrDescriptorSet) const
 {
 	const CGfxDescriptorLayoutPtr ptrDescriptorLayout = ptrDescriptorSet->GetDescriptorLayout();
 
 	if (ptrDescriptorLayout->GetSetIndex() < 0 || ptrDescriptorLayout->GetSetIndex() >= DESCRIPTOR_SET_COUNT) {
-		return;
+		return false;
 	}
 
 	if (ptrDescriptorLayout->IsCompatible(m_ptrDescriptorLayouts[ptrDescriptorLayout->GetSetIndex()]) == false) {
-		return;
+		return false;
 	}
 
 	for (const auto &itUniformBlock : m_uniformBlockBindings) {
@@ -201,6 +202,8 @@ void CGLES3Pipeline::BindDescriptorSet(const CGfxDescriptorSetPtr ptrDescriptorS
 			}
 		}
 	}
+
+	return true;
 }
 
 void CGLES3Pipeline::Uniform1i(uint32_t name, int v0) const
