@@ -14,7 +14,7 @@ typedef struct AttachmentInformation {
 
 typedef struct SubpassInformation {
 	int depthStencilAttachment = -1;
-	eastl::unordered_map<int, eastl::string> inputAttachments;
+	eastl::unordered_map<int, int> inputAttachments;
 	eastl::unordered_map<int, int> outputAttachments;
 	eastl::unordered_map<int, int> resolveAttachments;
 	eastl::unordered_map<int, int> preserveAttachments;
@@ -50,7 +50,7 @@ public:
 	virtual bool SetColorAttachment(int indexAttachment, GfxPixelFormat format, int samples, bool bInvalidation, bool bClear, float red = 0.0f, float green = 0.0f, float blue = 0.0f, float alpha = 0.0f) = 0;
 	virtual bool SetDepthStencilAttachment(int indexAttachment, GfxPixelFormat format, int samples, bool bInvalidation, bool bClear, float depth = 1.0f, int stencil = 0) = 0;
 
-	virtual bool SetSubpassInputColorReference(int indexSubpass, int indexAttachment, const char *szName) = 0;
+	virtual bool SetSubpassInputColorReference(int indexSubpass, int indexAttachment) = 0;
 	virtual bool SetSubpassOutputColorReference(int indexSubpass, int indexAttachment) = 0;
 	virtual bool SetSubpassOutputDepthStencilReference(int indexSubpass, int indexAttachment) = 0;
 	virtual bool SetSubpassResolveReference(int indexSubpass, int indexAttachment) = 0;

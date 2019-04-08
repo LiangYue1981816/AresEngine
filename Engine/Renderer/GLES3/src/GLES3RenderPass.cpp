@@ -71,7 +71,7 @@ bool CGLES3RenderPass::SetDepthStencilAttachment(int indexAttachment, GfxPixelFo
 	return true;
 }
 
-bool CGLES3RenderPass::SetSubpassInputColorReference(int indexSubpass, int indexAttachment, const char *szName)
+bool CGLES3RenderPass::SetSubpassInputColorReference(int indexSubpass, int indexAttachment)
 {
 	if (indexSubpass < 0 || indexSubpass >= (int)m_subpasses.size()) {
 		return false;
@@ -81,7 +81,7 @@ bool CGLES3RenderPass::SetSubpassInputColorReference(int indexSubpass, int index
 		return false;
 	}
 
-	m_subpasses[indexSubpass].inputAttachments[indexAttachment] = szName;
+	m_subpasses[indexSubpass].inputAttachments[indexAttachment] = indexAttachment;
 	return true;
 }
 
