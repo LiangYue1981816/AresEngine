@@ -1057,7 +1057,7 @@ void GLUniform4fv(GLint location, GLsizei count, const GLfloat *value)
 
 void GLUniformMatrix2fv(GLint location, GLsizei count, const GLfloat *value)
 {
-	eastl::vector<float> values(value, value + count);
+	eastl::vector<float> values(value, value + 4 * count);
 	if (Program.uniformMatrix2fv[Program.program].find(location) == Program.uniformMatrix2fv[Program.program].end() ||
 		Program.uniformMatrix2fv[Program.program][location] != values) {
 		Program.uniformMatrix2fv[Program.program][location] = values;
@@ -1067,7 +1067,7 @@ void GLUniformMatrix2fv(GLint location, GLsizei count, const GLfloat *value)
 
 void GLUniformMatrix3fv(GLint location, GLsizei count, const GLfloat *value)
 {
-	eastl::vector<float> values(value, value + count);
+	eastl::vector<float> values(value, value + 9 * count);
 	if (Program.uniformMatrix3fv[Program.program].find(location) == Program.uniformMatrix3fv[Program.program].end() ||
 		Program.uniformMatrix3fv[Program.program][location] != values) {
 		Program.uniformMatrix3fv[Program.program][location] = values;
@@ -1077,7 +1077,7 @@ void GLUniformMatrix3fv(GLint location, GLsizei count, const GLfloat *value)
 
 void GLUniformMatrix4fv(GLint location, GLsizei count, const GLfloat *value)
 {
-	eastl::vector<float> values(value, value + count);
+	eastl::vector<float> values(value, value + 16 * count);
 	if (Program.uniformMatrix4fv[Program.program].find(location) == Program.uniformMatrix4fv[Program.program].end() ||
 		Program.uniformMatrix4fv[Program.program][location] != values) {
 		Program.uniformMatrix4fv[Program.program][location] = values;
