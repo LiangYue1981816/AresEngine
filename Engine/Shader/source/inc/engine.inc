@@ -20,15 +20,15 @@
 
 
 #ifdef GLES
-	#define DESCRIPTOR_SET_ENGINE(b) layout (binding = b)
-	#define DESCRIPTOR_SET_CAMERA(b) layout (binding = b)
-	#define DESCRIPTOR_SET_PASS(b)   layout (binding = b)
-	#define DESCRIPTOR_SET_DRAW(b)   layout (binding = b)
+	#define DESCRIPTOR_SET_ENGINE(b)          layout (binding = b)
+	#define DESCRIPTOR_SET_CAMERA(b)          layout (binding = b)
+	#define DESCRIPTOR_SET_PASS(b)            layout (binding = b)
+	#define DESCRIPTOR_SET_INPUTATTACHMENT(b) layout (binding = b)
 #else
-	#define DESCRIPTOR_SET_ENGINE(b) layout (set = 0, binding = b)
-	#define DESCRIPTOR_SET_CAMERA(b) layout (set = 1, binding = b)
-	#define DESCRIPTOR_SET_PASS(b)   layout (set = 2, binding = b)
-	#define DESCRIPTOR_SET_DRAW(b)   layout (set = 3, binding = b)
+	#define DESCRIPTOR_SET_ENGINE(b)          layout (set = 0, binding = b)
+	#define DESCRIPTOR_SET_CAMERA(b)          layout (set = 1, binding = b)
+	#define DESCRIPTOR_SET_PASS(b)            layout (set = 2, binding = b)
+	#define DESCRIPTOR_SET_INPUTATTACHMENT(b) layout (set = 3, binding = b)
 #endif
 
 #define DESCRIPTOR_BIND_ENGINE 0
