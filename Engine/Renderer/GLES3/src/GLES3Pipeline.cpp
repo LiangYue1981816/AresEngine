@@ -8,7 +8,7 @@ CGLES3Pipeline::CGLES3Pipeline(void)
 	m_ptrDescriptorLayouts[DESCRIPTOR_SET_ENGINE] = GLES3Renderer()->NewDescriptorLayout(DESCRIPTOR_SET_ENGINE);
 	m_ptrDescriptorLayouts[DESCRIPTOR_SET_CAMERA] = GLES3Renderer()->NewDescriptorLayout(DESCRIPTOR_SET_CAMERA);
 	m_ptrDescriptorLayouts[DESCRIPTOR_SET_PASS] = GLES3Renderer()->NewDescriptorLayout(DESCRIPTOR_SET_PASS);
-	m_ptrDescriptorLayouts[DESCRIPTOR_SET_DRAW] = GLES3Renderer()->NewDescriptorLayout(DESCRIPTOR_SET_DRAW);
+	m_ptrDescriptorLayouts[DESCRIPTOR_SET_INPUTATTACHMENT] = GLES3Renderer()->NewDescriptorLayout(DESCRIPTOR_SET_INPUTATTACHMENT);
 }
 
 CGLES3Pipeline::~CGLES3Pipeline(void)
@@ -82,7 +82,7 @@ bool CGLES3Pipeline::CreateLayouts(void)
 	m_ptrDescriptorLayouts[DESCRIPTOR_SET_ENGINE]->Create();
 	m_ptrDescriptorLayouts[DESCRIPTOR_SET_CAMERA]->Create();
 	m_ptrDescriptorLayouts[DESCRIPTOR_SET_PASS]->Create();
-	m_ptrDescriptorLayouts[DESCRIPTOR_SET_DRAW]->Create();
+	m_ptrDescriptorLayouts[DESCRIPTOR_SET_INPUTATTACHMENT]->Create();
 
 	return true;
 }
@@ -107,7 +107,7 @@ void CGLES3Pipeline::Destroy(void)
 	m_ptrDescriptorLayouts[DESCRIPTOR_SET_ENGINE]->Destroy();
 	m_ptrDescriptorLayouts[DESCRIPTOR_SET_CAMERA]->Destroy();
 	m_ptrDescriptorLayouts[DESCRIPTOR_SET_PASS]->Destroy();
-	m_ptrDescriptorLayouts[DESCRIPTOR_SET_DRAW]->Destroy();
+	m_ptrDescriptorLayouts[DESCRIPTOR_SET_INPUTATTACHMENT]->Destroy();
 }
 
 void CGLES3Pipeline::SetUniformLocation(const char *szName)
