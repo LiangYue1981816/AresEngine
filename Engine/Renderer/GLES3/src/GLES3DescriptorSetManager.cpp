@@ -23,6 +23,31 @@ CGLES3DescriptorSet* CGLES3DescriptorSetManager::Create(const CGfxDescriptorLayo
 	}
 }
 
+CGLES3DescriptorSet* CGLES3DescriptorSetManager::Create(const CGfxPipelineGraphics *pPipelineGraphics, const CGfxFrameBuffer *pFrameBuffer, const CGfxRenderPass *pRenderPass, int indexSubpass)
+{
+	mutex_autolock autolock(&lock);
+	{
+		if (const SubpassInformation* pSubpassInformation = pRenderPass->GetSubpass(indexSubpass)) {
+			if (pSubpassInformation->inputAttachments.size()) {
+				if (m_pInputAttachmentDescriptorSets[(CGLES3FrameBuffer *)pFrameBuffer][(SubpassInformation *)pSubpassInformation][(CGLES3PipelineGraphics *)pPipelineGraphics] == nullptr) {
+					m_pInputAttachmentDescriptorSets[(CGLES3FrameBuffer *)pFrameBuffer][(SubpassInformation *)pSubpassInformation][(CGLES3PipelineGraphics *)pPipelineGraphics] = new CGLES3DescriptorSet(this, pPipelineGraphics->GetDescriptorLayout(DESCRIPTOR_SET_INPUTATTACHMENT));
+
+					for (const auto &itInputAttachment : pSubpassInformation->inputAttachments) {
+						m_pInputAttachmentDescriptorSets[(CGLES3FrameBuffer *)pFrameBuffer][(SubpassInformation *)pSubpassInformation][(CGLES3PipelineGraphics *)pPipelineGraphics]->SetTextureInputAttachment(
+							pPipelineGraphics->GetInputAttachmentName(itInputAttachment.first),
+							pFrameBuffer->GetAttachmentTexture(itInputAttachment.first),
+							GLES3Renderer()->CreateSampler(GFX_FILTER_NEAREST, GFX_FILTER_NEAREST, GFX_SAMPLER_MIPMAP_MODE_NEAREST, GFX_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE));
+					}
+				}
+
+				return m_pInputAttachmentDescriptorSets[(CGLES3FrameBuffer *)pFrameBuffer][(SubpassInformation *)pSubpassInformation][(CGLES3PipelineGraphics *)pPipelineGraphics];
+			}
+		}
+
+		return nullptr;
+	}
+}
+
 void CGLES3DescriptorSetManager::Destroy(CGLES3DescriptorSet *pDescriptorSet)
 {
 	mutex_autolock autolock(&lock);

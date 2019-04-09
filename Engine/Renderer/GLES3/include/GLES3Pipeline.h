@@ -21,7 +21,7 @@ private:
 	void SetInputAttachmentLocation(const char *szName, uint32_t inputAttachmentIndex);
 
 public:
-	uint32_t GetInputAttachmentName(uint32_t inputAttachmentIndex);
+	uint32_t GetInputAttachmentName(uint32_t inputAttachmentIndex) const;
 
 public:
 	bool BindDescriptorSet(const CGfxDescriptorSetPtr ptrDescriptorSet) const;

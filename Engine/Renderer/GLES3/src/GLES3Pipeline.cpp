@@ -166,7 +166,7 @@ void CGLES3Pipeline::SetInputAttachmentLocation(const char *szName, uint32_t inp
 	}
 }
 
-uint32_t CGLES3Pipeline::GetInputAttachmentName(uint32_t inputAttachmentIndex)
+uint32_t CGLES3Pipeline::GetInputAttachmentName(uint32_t inputAttachmentIndex) const
 {
 	const auto &itInputAttachmentName = m_inputAttachmentNames.find(inputAttachmentIndex);
 
