@@ -15,7 +15,12 @@ private:
 
 public:
 	HANDLE GetCommandBuffer(void) const;
-	bool IsMainCommandBuffer(void) const;
+
+	CGfxFrameBufferPtr GetFrameBuffer(void) const;
+	CGfxRenderPassPtr GetRenderPass(void) const;
+
+	bool IsInRenderPass(void) const;
+	uint32_t GetSubpassIndex(void) const;
 
 public:
 	void Clearup(void);
@@ -67,14 +72,13 @@ public:
 
 
 private:
-	bool m_bMainCommandBuffer;
-	eastl::vector<CGfxCommandBase*> m_pCommands;
-
-private:
 	bool m_bInRenderPass;
 	uint32_t m_indexSubpass;
+
 	CGfxRenderPassPtr m_ptrRenderPass;
 	CGfxFrameBufferPtr m_ptrFrameBuffer;
+
+	eastl::vector<CGfxCommandBase*> m_pCommands;
 
 private:
 	CGLES3CommandBufferManager *m_pManager;

@@ -23,6 +23,7 @@ class CALL_API CGfxCommandBuffer : public CGfxResource
 {
 public:
 	CGfxCommandBuffer(bool bMainCommandBuffer)
+		: m_bMainCommandBuffer(bMainCommandBuffer)
 	{
 
 	}
@@ -31,10 +32,20 @@ public:
 
 	}
 
+	bool IsMainCommandBuffer(void) const
+	{
+		return m_bMainCommandBuffer;
+	}
+
 
 public:
 	virtual HANDLE GetCommandBuffer(void) const = 0;
-	virtual bool IsMainCommandBuffer(void) const = 0;
+
+	virtual CGfxFrameBufferPtr GetFrameBuffer(void) const = 0;
+	virtual CGfxRenderPassPtr GetRenderPass(void) const = 0;
+
+	virtual bool IsInRenderPass(void) const = 0;
+	virtual uint32_t GetSubpassIndex(void) const = 0;
 
 public:
 	virtual void Clearup(void) = 0;
@@ -83,4 +94,8 @@ public:
 
 	virtual bool CmdPushDebugGroup(const char *szMessage) = 0;
 	virtual bool CmdPopDebugGroup(void) = 0;
+
+
+private:
+	bool m_bMainCommandBuffer;
 };
