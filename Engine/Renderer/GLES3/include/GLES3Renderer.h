@@ -211,12 +211,9 @@ public:
 	void Present(void);
 
 private:
-	void BindMeshDraw(CGfxMeshDraw *pMeshDraw);
 	void BindPipelineCompute(CGfxPipelineCompute *pPipelineCompute);
 	void BindPipelineGraphics(CGfxPipelineGraphics *pPipelineGraphics);
 	void BindMaterialPass(CGfxMaterialPass *pMaterialPass);
-	void BindUniformBuffer(CGfxUniformBuffer *pUniformBuffer, uint32_t nameUniform);
-	void BindInputTexture(const char *szName, CGfxRenderTexture *pTexture);
 
 private:
 	CGLES3PipelineCompute* GetCurrentPipelineCompute(void) const;

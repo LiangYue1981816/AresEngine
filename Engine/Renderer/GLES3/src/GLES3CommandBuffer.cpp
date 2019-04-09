@@ -5,6 +5,8 @@
 #include "./Command/GLES3CommandResolve.h"
 #include "./Command/GLES3CommandInvalidateFramebuffer.h"
 #include "./Command/GLES3CommandBindFrameBuffer.h"
+#include "./Command/GLES3CommandBindPipelineCompute.h"
+#include "./Command/GLES3CommandBindPipelineGraphics.h"
 #include "./Command/GLES3CommandPushDebugGroup.h"
 #include "./Command/GLES3CommandPopDebugGroup.h"
 
@@ -140,6 +142,7 @@ bool CGLES3CommandBuffer::CmdEndRenderPass(void)
 bool CGLES3CommandBuffer::CmdBindPipelineCompute(const CGfxPipelineCompute *pPipelineCompute)
 {
 	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
+		m_pCommands.emplace_back(new CGLES3CommandBindPipelineCompute(pPipelineCompute));
 		return true;
 	}
 	else {
@@ -150,6 +153,7 @@ bool CGLES3CommandBuffer::CmdBindPipelineCompute(const CGfxPipelineCompute *pPip
 bool CGLES3CommandBuffer::CmdBindPipelineGraphics(const CGfxPipelineGraphics *pPipelineGraphics)
 {
 	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
+		m_pCommands.emplace_back(new CGLES3CommandBindPipelineGraphics(pPipelineGraphics));
 		return true;
 	}
 	else {

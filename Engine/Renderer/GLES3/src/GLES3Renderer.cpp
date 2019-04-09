@@ -450,11 +450,6 @@ void CGLES3Renderer::Present(void)
 	m_pCurrentPipelineGraphics = nullptr;
 }
 
-void CGLES3Renderer::BindMeshDraw(CGfxMeshDraw *pMeshDraw)
-{
-	((CGLES3MeshDraw *)pMeshDraw)->Bind();
-}
-
 void CGLES3Renderer::BindPipelineCompute(CGfxPipelineCompute *pPipelineCompute)
 {
 	if (m_pCurrentPipelineCompute != pPipelineCompute) {
@@ -486,21 +481,6 @@ void CGLES3Renderer::BindMaterialPass(CGfxMaterialPass *pMaterialPass)
 			m_pCurrentMaterialPass->Bind(m_pCurrentPipelineGraphics);
 		}
 	}
-}
-
-void CGLES3Renderer::BindUniformBuffer(CGfxUniformBuffer *pUniformBuffer, uint32_t nameUniform)
-{
-	if (m_pCurrentPipelineGraphics) {
-		m_pCurrentPipelineGraphics->BindUniformBuffer(nameUniform, (CGLES3UniformBuffer *)pUniformBuffer, ((CGLES3UniformBuffer *)pUniformBuffer)->GetSize());
-	}
-}
-
-void CGLES3Renderer::BindInputTexture(const char *szName, CGfxRenderTexture *pTexture)
-{
-	/*
-	m_pGlobalMaterialPass->SetSampler(szName, GFX_FILTER_NEAREST, GFX_FILTER_LINEAR, GFX_SAMPLER_MIPMAP_MODE_NEAREST, GFX_SAMPLER_ADDRESS_MODE_REPEAT);
-	m_pGlobalMaterialPass->SetTexture2D(szName, ((CGLES3RenderTexture *)pTexture)->GetTexture());
-	*/
 }
 
 CGLES3PipelineCompute* CGLES3Renderer::GetCurrentPipelineCompute(void) const
