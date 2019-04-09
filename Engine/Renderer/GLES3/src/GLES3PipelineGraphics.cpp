@@ -22,9 +22,16 @@ CGfxDescriptorLayoutPtr CGLES3PipelineGraphics::GetDescriptorLayout(uint32_t ind
 	return m_ptrDescriptorLayouts[indexDescriptorSet];
 }
 
-const PipelineState* CGLES3PipelineGraphics::GetPipelineState(void) const
+uint32_t CGLES3PipelineGraphics::GetInputAttachmentName(uint32_t inputAttachmentIndex) const
 {
-	return &m_state;
+	const auto &itInputAttachmentName = m_inputAttachmentNames.find(inputAttachmentIndex);
+
+	if (itInputAttachmentName != m_inputAttachmentNames.end()) {
+		return itInputAttachmentName->second;
+	}
+	else {
+		return INVALID_HASHNAME;
+	}
 }
 
 bool CGLES3PipelineGraphics::Create(const CGfxRenderPass *pRenderPass, const CGfxShader *pVertexShader, const CGfxShader *pFragmentShader, const PipelineState &state, uint32_t indexSubpass, uint32_t vertexBinding, uint32_t instanceBinding)
