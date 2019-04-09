@@ -166,6 +166,18 @@ void CGLES3Pipeline::SetInputAttachmentLocation(const char *szName, uint32_t inp
 	}
 }
 
+uint32_t CGLES3Pipeline::GetInputAttachmentName(uint32_t inputAttachmentIndex) const
+{
+	const auto &itInputAttachmentName = m_inputAttachmentNames.find(inputAttachmentIndex);
+
+	if (itInputAttachmentName != m_inputAttachmentNames.end()) {
+		return itInputAttachmentName->second;
+	}
+	else {
+		return INVALID_HASHNAME;
+	}
+}
+
 bool CGLES3Pipeline::BindDescriptorSet(const CGfxDescriptorSetPtr ptrDescriptorSet) const
 {
 	const CGfxDescriptorLayoutPtr ptrDescriptorLayout = ptrDescriptorSet->GetDescriptorLayout();

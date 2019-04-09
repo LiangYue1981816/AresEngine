@@ -15,7 +15,6 @@ private:
 public:
 	HANDLE GetPipeline(void) const;
 	CGfxDescriptorLayoutPtr GetDescriptorLayout(uint32_t indexDescriptorSet) const;
-	uint32_t GetInputAttachmentName(uint32_t inputAttachmentIndex) const;
 
 public:
 	bool Create(const CGfxRenderPass *pRenderPass, const CGfxShader *pVertexShader, const CGfxShader *pFragmentShader, const PipelineState &state, uint32_t indexSubpass, uint32_t vertexBinding, uint32_t instanceBinding);
