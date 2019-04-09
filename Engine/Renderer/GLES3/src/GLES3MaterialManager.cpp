@@ -61,8 +61,10 @@ void CGLES3MaterialManager::Destroy(CGLES3Material *pMaterial)
 	mutex_autolock autolock(&lock);
 	{
 		if (pMaterial) {
-			m_pMaterials.erase(pMaterial->GetName());
-			delete pMaterial;
+			if (m_pMaterials.find(pMaterial->GetName()) != m_pMaterials.end()) {
+				m_pMaterials.erase(pMaterial->GetName());
+				delete pMaterial;
+			}
 		}
 	}
 }

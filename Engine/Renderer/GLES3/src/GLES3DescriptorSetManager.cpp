@@ -34,8 +34,8 @@ CGLES3DescriptorSet* CGLES3DescriptorSetManager::Create(const CGfxPipelineGraphi
 
 					for (const auto &itInputAttachment : pSubpassInformation->inputAttachments) {
 						m_pInputAttachmentDescriptorSets[(CGLES3FrameBuffer *)pFrameBuffer][(SubpassInformation *)pSubpassInformation][(CGLES3PipelineGraphics *)pPipelineGraphics]->SetTextureInputAttachment(
-							pPipelineGraphics->GetInputAttachmentName(itInputAttachment.first),
-							pFrameBuffer->GetAttachmentTexture(itInputAttachment.first),
+							((CGLES3PipelineGraphics *)pPipelineGraphics)->GetInputAttachmentName(itInputAttachment.first),
+							((CGLES3FrameBuffer *)pFrameBuffer)->GetAttachmentTexture(itInputAttachment.first),
 							GLES3Renderer()->CreateSampler(GFX_FILTER_NEAREST, GFX_FILTER_NEAREST, GFX_SAMPLER_MIPMAP_MODE_NEAREST, GFX_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE));
 					}
 				}
@@ -53,8 +53,10 @@ void CGLES3DescriptorSetManager::Destroy(CGLES3DescriptorSet *pDescriptorSet)
 	mutex_autolock autolock(&lock);
 	{
 		if (pDescriptorSet) {
-			m_pDescriptorSets.erase(pDescriptorSet);
-			delete pDescriptorSet;
+			if (m_pDescriptorSets.find(pDescriptorSet) != m_pDescriptorSets.end()) {
+				m_pDescriptorSets.erase(pDescriptorSet);
+				delete pDescriptorSet;
+			}
 		}
 	}
 }

@@ -28,8 +28,10 @@ void CGLES3DescriptorLayoutManager::Destroy(CGLES3DescriptorLayout *pDescriptorL
 	mutex_autolock autolock(&lock);
 	{
 		if (pDescriptorLayout) {
-			m_pDescriptorLayouts.erase(pDescriptorLayout);
-			delete pDescriptorLayout;
+			if (m_pDescriptorLayouts.find(pDescriptorLayout) != m_pDescriptorLayouts.end()) {
+				m_pDescriptorLayouts.erase(pDescriptorLayout);
+				delete pDescriptorLayout;
+			}
 		}
 	}
 }

@@ -28,8 +28,10 @@ void CGLES3CommandBufferManager::Destroy(CGLES3CommandBuffer *pCommandBuffer)
 	mutex_autolock autolock(&lock);
 	{
 		if (pCommandBuffer) {
-			m_pCommandBuffers.erase(pCommandBuffer);
-			delete pCommandBuffer;
+			if (m_pCommandBuffers.find(pCommandBuffer) != m_pCommandBuffers.end()) {
+				m_pCommandBuffers.erase(pCommandBuffer);
+				delete pCommandBuffer;
+			}
 		}
 	}
 }
