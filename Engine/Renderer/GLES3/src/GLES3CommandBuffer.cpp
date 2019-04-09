@@ -5,7 +5,6 @@
 #include "./Command/GLES3CommandResolve.h"
 #include "./Command/GLES3CommandInvalidateFramebuffer.h"
 #include "./Command/GLES3CommandBindFrameBuffer.h"
-#include "./Command/GLES3CommandBindSubpassInputTexture.h"
 #include "./Command/GLES3CommandPushDebugGroup.h"
 #include "./Command/GLES3CommandPopDebugGroup.h"
 
@@ -95,7 +94,6 @@ bool CGLES3CommandBuffer::CmdBeginRenderPass(const CGfxFrameBufferPtr ptrFrameBu
 
 		m_pCommands.emplace_back(new CGLES3CommandBeginRenderPass(m_ptrFrameBuffer, m_ptrRenderPass));
 		m_pCommands.emplace_back(new CGLES3CommandBindFrameBuffer(m_ptrFrameBuffer, m_ptrRenderPass, m_indexSubpass));
-		m_pCommands.emplace_back(new CGLES3CommandBindSubpassInputTexture(m_ptrFrameBuffer, m_ptrRenderPass, m_indexSubpass));
 
 		return true;
 	}
@@ -114,7 +112,6 @@ bool CGLES3CommandBuffer::CmdNextSubpass(void)
 
 		m_pCommands.emplace_back(new CGLES3CommandNextSubPass(m_ptrFrameBuffer, m_ptrRenderPass, m_indexSubpass));
 		m_pCommands.emplace_back(new CGLES3CommandBindFrameBuffer(m_ptrFrameBuffer, m_ptrRenderPass, m_indexSubpass));
-		m_pCommands.emplace_back(new CGLES3CommandBindSubpassInputTexture(m_ptrFrameBuffer, m_ptrRenderPass, m_indexSubpass));
 
 		return true;
 	}
