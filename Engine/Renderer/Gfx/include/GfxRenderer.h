@@ -137,8 +137,9 @@ public:
 	virtual CGfxMaterialPtr NewMaterial(uint32_t name) = 0;
 	virtual CGfxMaterialPtr NewMaterial(const char *szFileName, uint32_t vertexBinding = 0, uint32_t instanceBinding = 1) = 0;
 
-	virtual CGfxDescriptorSetPtr NewDescriptorSet(const CGfxDescriptorLayoutPtr ptrDescriptorLayout) = 0;
 	virtual CGfxDescriptorLayoutPtr NewDescriptorLayout(uint32_t set) = 0;
+	virtual CGfxDescriptorSetPtr NewDescriptorSet(const CGfxDescriptorLayoutPtr ptrDescriptorLayout) = 0;
+	virtual CGfxDescriptorSetPtr NewDescriptorSet(const CGfxPipelineGraphics *pPipelineGraphics, const CGfxFrameBuffer *pFrameBuffer, const CGfxRenderPass *pRenderPass, int indexSubpass) = 0;
 
 	virtual CGfxCommandBufferPtr NewCommandBuffer(uint32_t pool, bool bMainCommandBuffer) = 0;
 
