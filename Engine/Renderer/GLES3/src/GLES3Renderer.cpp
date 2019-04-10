@@ -20,6 +20,454 @@ CGLES3Renderer::CGLES3Renderer(void *hInstance, void *hWnd, void *hDC, int width
 	, m_pRenderPassManager(nullptr)
 	, m_pRenderTextureManager(nullptr)
 	, m_pFrameBufferManager(nullptr)
+	, m_pDescriptorLayoutManager(nullptr)
+	, m_pDescriptorSetManager(nullptr)
+	, m_pCommandBufferManager(nullptr)
+
+	, m_pCurrentPipelineCompute(nullptr)
+	, m_pCurrentPipelineGraphics(nullptr)
+{
+	CGLES3Helper::SetupExtensions();
+
+	m_pShaderManager = new CGLES3ShaderManager;
+	m_pPipelineComputeManager = new CGLES3PipelineComputeManager;
+	m_pPipelineGraphicsManager = new CGLES3PipelineGraphicsManager;
+	m_pSamplerManager = new CGLES3SamplerManager;
+	m_pTexture2DManager = new CGLES3Texture2DManager;
+	m_pTexture2DArrayManager = new CGLES3Texture2DArrayManager;
+	m_pTextureCubeMapManager = new CGLES3TextureCubeMapManager;
+	m_pUniformBufferManager = new CGLES3UniformBufferManager;
+	m_pMeshManager = new CGLES3MeshManager;
+	m_pMeshDrawManager = new CGLES3MeshDrawManager;
+	m_pMaterialManager = new CGLES3MaterialManager;
+	m_pRenderPassManager = new CGLES3RenderPassManager;
+	m_pRenderTextureManager = new CGLES3RenderTextureManager;
+	m_pFrameBufferManager = new CGLES3FrameBufferManager;
+	m_pDescriptorLayoutManager = new CGLES3DescriptorLayoutManager;
+	m_pDescriptorSetManager = new CGLES3DescriptorSetManager;
+	m_pCommandBufferManager = new CGLES3CommandBufferManager;
+
+	m_pSwapChain = new CGLES3SwapChain(hDC, width, height, format);
+}
+
+CGLES3Renderer::~CGLES3Renderer(void)
+{
+	delete m_pSwapChain;
+
+	delete m_pCommandBufferManager;
+	delete m_pDescriptorSetManager;
+	delete m_pDescriptorLayoutManager;
+	delete m_pFrameBufferManager;
+	delete m_pRenderTextureManager;
+	delete m_pRenderPassManager;
+	delete m_pMaterialManager;
+	delete m_pMeshDrawManager;
+	delete m_pMeshManager;
+	delete m_pUniformBufferManager;
+	delete m_pTextureCubeMapManager;
+	delete m_pTexture2DArrayManager;
+	delete m_pTexture2DManager;
+	delete m_pSamplerManager;
+	delete m_pPipelineGraphicsManager;
+	delete m_pPipelineComputeManager;
+	delete m_pShaderManager;
+}
+
+uint32_t CGLES3Renderer::GetLastError(void) const
+{
+	return glGetError();
+}
+
+CGfxSwapChain* CGLES3Renderer::GetSwapChain(void) const
+{
+	return m_pSwapChain;
+}
+
+bool CGLES3Renderer::IsSupportExtension(const char *extension) const
+{
+	return CGLES3Helper::IsSupportExtension(extension);
+}
+
+CGfxShader* CGLES3Renderer::CreateShader(const char *szFileName, shader_kind kind)
+{
+
+}
+
+CGfxPipelineCompute* CGLES3Renderer::CreatePipelineCompute(const CGfxShader *pComputeShader)
+{
+
+}
+
+CGfxPipelineGraphics* CGLES3Renderer::CreatePipelineGraphics(const CGfxRenderPass *pRenderPass, const CGfxShader *pVertexShader, const CGfxShader *pFragmentShader, const PipelineState &state, uint32_t indexSubpass, uint32_t vertexBinding, uint32_t instanceBinding)
+{
+
+}
+
+CGfxSampler* CGLES3Renderer::CreateSampler(GfxFilter minFilter, GfxFilter magFilter, GfxSamplerMipmapMode mipmapMode, GfxSamplerAddressMode addressMode)
+{
+
+}
+
+CGfxFrameBufferPtr CGLES3Renderer::NewFrameBuffer(int width, int height, int numAttachments)
+{
+
+}
+
+CGfxRenderPassPtr CGLES3Renderer::GetRenderPass(uint32_t name)
+{
+
+}
+
+CGfxRenderPassPtr CGLES3Renderer::NewRenderPass(uint32_t name, int numAttachments, int numSubpasses)
+{
+
+}
+
+CGfxTexture2DPtr CGLES3Renderer::GetTexture2D(uint32_t name)
+{
+
+}
+
+CGfxTexture2DPtr CGLES3Renderer::NewTexture2D(uint32_t name)
+{
+
+}
+
+CGfxTexture2DPtr CGLES3Renderer::NewTexture2D(const char *szFileName)
+{
+
+}
+
+CGfxTexture2DArrayPtr CGLES3Renderer::GetTexture2DArray(uint32_t name)
+{
+
+}
+
+CGfxTexture2DArrayPtr CGLES3Renderer::NewTexture2DArray(uint32_t name)
+{
+
+}
+
+CGfxTexture2DArrayPtr CGLES3Renderer::NewTexture2DArray(const char *szFileName)
+{
+
+}
+
+CGfxTextureCubeMapPtr CGLES3Renderer::GetTextureCubeMap(uint32_t name)
+{
+
+}
+
+CGfxTextureCubeMapPtr CGLES3Renderer::NewTextureCubeMap(uint32_t name)
+{
+
+}
+
+CGfxTextureCubeMapPtr CGLES3Renderer::NewTextureCubeMap(const char *szFileName)
+{
+
+}
+
+CGfxRenderTexturePtr CGLES3Renderer::GetRenderTexture(uint32_t name)
+{
+
+}
+
+CGfxRenderTexturePtr CGLES3Renderer::NewRenderTexture(uint32_t name)
+{
+
+}
+
+CGfxUniformBufferPtr CGLES3Renderer::NewUniformBuffer(size_t size)
+{
+
+}
+
+CGfxMeshPtr CGLES3Renderer::GetMesh(uint32_t name)
+{
+
+}
+
+CGfxMeshPtr CGLES3Renderer::NewMesh(uint32_t name)
+{
+
+}
+
+CGfxMeshPtr CGLES3Renderer::NewMesh(const char *szFileName, uint32_t vertexBinding)
+{
+
+}
+
+CGfxMeshDrawPtr CGLES3Renderer::GetMeshDraw(uint32_t name)
+{
+
+}
+
+CGfxMeshDrawPtr CGLES3Renderer::NewMeshDraw(uint32_t name, const CGfxMeshPtr ptrMesh, int indexDraw, uint32_t instanceFormat, uint32_t instanceBinding)
+{
+
+}
+
+CGfxMaterialPtr CGLES3Renderer::GetMaterial(uint32_t name)
+{
+
+}
+
+CGfxMaterialPtr CGLES3Renderer::NewMaterial(uint32_t name)
+{
+
+}
+
+CGfxMaterialPtr CGLES3Renderer::NewMaterial(const char *szFileName, uint32_t vertexBinding, uint32_t instanceBinding)
+{
+
+}
+
+CGfxDescriptorLayoutPtr CGLES3Renderer::NewDescriptorLayout(uint32_t set)
+{
+
+}
+
+CGfxDescriptorSetPtr CGLES3Renderer::NewDescriptorSet(const CGfxDescriptorLayoutPtr ptrDescriptorLayout)
+{
+
+}
+
+CGfxDescriptorSetPtr CGLES3Renderer::NewDescriptorSet(const CGfxPipelineGraphics *pPipelineGraphics, const CGfxFrameBuffer *pFrameBuffer, const CGfxRenderPass *pRenderPass, int indexSubpass)
+{
+
+}
+
+CGfxCommandBufferPtr CGLES3Renderer::NewCommandBuffer(uint32_t pool, bool bMainCommandBuffer)
+{
+
+}
+
+bool CGLES3Renderer::CmdBeginRenderPass(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass)
+{
+
+}
+
+bool CGLES3Renderer::CmdNextSubpass(CGfxCommandBufferPtr ptrCommandBuffer)
+{
+
+}
+
+bool CGLES3Renderer::CmdEndRenderPass(CGfxCommandBufferPtr ptrCommandBuffer)
+{
+
+}
+
+bool CGLES3Renderer::CmdBindPipelineCompute(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxPipelineCompute *pPipelineCompute)
+{
+
+}
+
+bool CGLES3Renderer::CmdBindPipelineGraphics(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxPipelineGraphics *pPipelineGraphics)
+{
+
+}
+
+bool CGLES3Renderer::CmdBindDescriptorSet(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxDescriptorSetPtr ptrDescriptorSet)
+{
+
+}
+
+bool CGLES3Renderer::CmdUniform1i(CGfxCommandBufferPtr ptrCommandBuffer, uint32_t name, int v0)
+{
+
+}
+
+bool CGLES3Renderer::CmdUniform2i(CGfxCommandBufferPtr ptrCommandBuffer, uint32_t name, int v0, int v1)
+{
+
+}
+
+bool CGLES3Renderer::CmdUniform3i(CGfxCommandBufferPtr ptrCommandBuffer, uint32_t name, int v0, int v1, int v2)
+{
+
+}
+
+bool CGLES3Renderer::CmdUniform4i(CGfxCommandBufferPtr ptrCommandBuffer, uint32_t name, int v0, int v1, int v2, int v3)
+{
+
+}
+
+bool CGLES3Renderer::CmdUniform1f(CGfxCommandBufferPtr ptrCommandBuffer, uint32_t name, float v0)
+{
+
+}
+
+bool CGLES3Renderer::CmdUniform2f(CGfxCommandBufferPtr ptrCommandBuffer, uint32_t name, float v0, float v1)
+{
+
+}
+
+bool CGLES3Renderer::CmdUniform3f(CGfxCommandBufferPtr ptrCommandBuffer, uint32_t name, float v0, float v1, float v2)
+{
+
+}
+
+bool CGLES3Renderer::CmdUniform4f(CGfxCommandBufferPtr ptrCommandBuffer, uint32_t name, float v0, float v1, float v2, float v3)
+{
+
+}
+
+bool CGLES3Renderer::CmdUniform1iv(CGfxCommandBufferPtr ptrCommandBuffer, uint32_t name, int count, const int *value)
+{
+
+}
+
+bool CGLES3Renderer::CmdUniform2iv(CGfxCommandBufferPtr ptrCommandBuffer, uint32_t name, int count, const int *value)
+{
+
+}
+
+bool CGLES3Renderer::CmdUniform3iv(CGfxCommandBufferPtr ptrCommandBuffer, uint32_t name, int count, const int *value)
+{
+
+}
+
+bool CGLES3Renderer::CmdUniform4iv(CGfxCommandBufferPtr ptrCommandBuffer, uint32_t name, int count, const int *value)
+{
+
+}
+
+bool CGLES3Renderer::CmdUniform1fv(CGfxCommandBufferPtr ptrCommandBuffer, uint32_t name, int count, const float *value)
+{
+
+}
+
+bool CGLES3Renderer::CmdUniform2fv(CGfxCommandBufferPtr ptrCommandBuffer, uint32_t name, int count, const float *value)
+{
+
+}
+
+bool CGLES3Renderer::CmdUniform3fv(CGfxCommandBufferPtr ptrCommandBuffer, uint32_t name, int count, const float *value)
+{
+
+}
+
+bool CGLES3Renderer::CmdUniform4fv(CGfxCommandBufferPtr ptrCommandBuffer, uint32_t name, int count, const float *value)
+{
+
+}
+
+bool CGLES3Renderer::CmdUniformMatrix2fv(CGfxCommandBufferPtr ptrCommandBuffer, uint32_t name, int count, const float *value)
+{
+
+}
+
+bool CGLES3Renderer::CmdUniformMatrix3fv(CGfxCommandBufferPtr ptrCommandBuffer, uint32_t name, int count, const float *value)
+{
+
+}
+
+bool CGLES3Renderer::CmdUniformMatrix4fv(CGfxCommandBufferPtr ptrCommandBuffer, uint32_t name, int count, const float *value)
+{
+
+}
+
+bool CGLES3Renderer::CmdSetScissor(CGfxCommandBufferPtr ptrCommandBuffer, int x, int y, int width, int height)
+{
+
+}
+
+bool CGLES3Renderer::CmdSetViewport(CGfxCommandBufferPtr ptrCommandBuffer, int x, int y, int width, int height)
+{
+
+}
+
+bool CGLES3Renderer::CmdClearDepth(CGfxCommandBufferPtr ptrCommandBuffer, float depth)
+{
+
+}
+
+bool CGLES3Renderer::CmdClearColor(CGfxCommandBufferPtr ptrCommandBuffer, float red, float green, float blue, float alpha)
+{
+
+}
+
+bool CGLES3Renderer::CmdDrawInstance(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxMeshDrawPtr ptrMeshDraw, const uint8_t *pInstanceBuffer, uint32_t size)
+{
+
+}
+
+bool CGLES3Renderer::CmdDrawIndirect(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxMeshDrawPtr ptrMeshDraw, const uint8_t *pInstanceBuffer, uint32_t size)
+{
+
+}
+
+bool CGLES3Renderer::CmdExecute(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxCommandBufferPtr ptrSecondaryCommandBuffer)
+{
+
+}
+
+bool CGLES3Renderer::CmdPresent(CGfxCommandBufferPtr ptrCommandBuffer)
+{
+
+}
+
+bool CGLES3Renderer::CmdPushDebugGroup(CGfxCommandBufferPtr ptrCommandBuffer, const char *szMessage)
+{
+
+}
+
+bool CGLES3Renderer::CmdPopDebugGroup(CGfxCommandBufferPtr ptrCommandBuffer)
+{
+
+}
+
+void CGLES3Renderer::Submit(const eastl::vector<CGfxCommandBufferPtr> &ptrCommandBuffers)
+{
+
+}
+
+void CGLES3Renderer::AcquireNextFrame(void)
+{
+
+}
+
+void CGLES3Renderer::Present(void)
+{
+
+}
+
+void CGLES3Renderer::BindPipelineCompute(CGfxPipelineCompute *pPipelineCompute)
+{
+
+}
+
+void CGLES3Renderer::BindPipelineGraphics(CGfxPipelineGraphics *pPipelineGraphics)
+{
+
+}
+
+void CGLES3Renderer::BindDescriptorSet(CGfxDescriptorSet *pDescriptorSet)
+{
+
+}
+
+/*
+CGLES3Renderer::CGLES3Renderer(void *hInstance, void *hWnd, void *hDC, int width, int height, GfxPixelFormat format)
+	: CGfxRenderer(hInstance, hWnd, hDC, width, height, format)
+
+	, m_pSwapChain(nullptr)
+
+	, m_pShaderManager(nullptr)
+	, m_pPipelineComputeManager(nullptr)
+	, m_pPipelineGraphicsManager(nullptr)
+	, m_pSamplerManager(nullptr)
+	, m_pTexture2DManager(nullptr)
+	, m_pTexture2DArrayManager(nullptr)
+	, m_pTextureCubeMapManager(nullptr)
+	, m_pUniformBufferManager(nullptr)
+	, m_pMeshManager(nullptr)
+	, m_pMeshDrawManager(nullptr)
+	, m_pMaterialManager(nullptr)
+	, m_pRenderPassManager(nullptr)
+	, m_pRenderTextureManager(nullptr)
+	, m_pFrameBufferManager(nullptr)
 	, m_pCommandBufferManager(nullptr)
 
 	, m_pCurrentMaterialPass(nullptr)
@@ -492,3 +940,4 @@ CGLES3PipelineGraphics* CGLES3Renderer::GetCurrentPipelineGraphics(void) const
 {
 	return m_pCurrentPipelineGraphics;
 }
+*/

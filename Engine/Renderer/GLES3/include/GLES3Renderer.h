@@ -213,11 +213,7 @@ public:
 private:
 	void BindPipelineCompute(CGfxPipelineCompute *pPipelineCompute);
 	void BindPipelineGraphics(CGfxPipelineGraphics *pPipelineGraphics);
-	void BindMaterialPass(CGfxMaterialPass *pMaterialPass);
-
-private:
-	CGLES3PipelineCompute* GetCurrentPipelineCompute(void) const;
-	CGLES3PipelineGraphics* GetCurrentPipelineGraphics(void) const;
+	void BindDescriptorSet(CGfxDescriptorSet *pDescriptorSet);
 
 
 private:
@@ -238,10 +234,11 @@ private:
 	CGLES3RenderPassManager *m_pRenderPassManager;
 	CGLES3RenderTextureManager *m_pRenderTextureManager;
 	CGLES3FrameBufferManager *m_pFrameBufferManager;
+	CGLES3DescriptorLayoutManager *m_pDescriptorLayoutManager;
+	CGLES3DescriptorSetManager *m_pDescriptorSetManager;
 	CGLES3CommandBufferManager *m_pCommandBufferManager;
 
 private:
-	CGLES3MaterialPass *m_pCurrentMaterialPass;
 	CGLES3PipelineCompute *m_pCurrentPipelineCompute;
 	CGLES3PipelineGraphics *m_pCurrentPipelineGraphics;
 };
