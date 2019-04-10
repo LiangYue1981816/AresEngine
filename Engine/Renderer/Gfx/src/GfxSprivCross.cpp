@@ -36,7 +36,7 @@ const eastl::string& CGfxSprivCross::Create(const uint32_t *words, size_t numWor
 
 		for (const auto &itPushConstant : shaderResources.push_constant_buffers) {
 			const std::vector<spirv_cross::BufferRange> ranges = compiler.get_active_buffer_ranges(itPushConstant.id);
-			for (uint32_t index = 0; index < ranges.size(); index++) {
+			for (int index = 0; index < ranges.size(); index++) {
 				const std::string member = compiler.get_member_name(itPushConstant.base_type_id, ranges[index].index);
 				const std::string name = itPushConstant.name + "." + member;
 				m_pushConstantRanges[name.c_str()].offset = ranges[index].offset;

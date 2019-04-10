@@ -54,7 +54,7 @@ bool CVKDevice::SelectPhysicalDevices(eastl::vector<VkPhysicalDevice> &devices, 
 {
 	uint32_t familyIndex = UINT32_MAX;
 
-	for (uint32_t index = 0; index < devices.size(); index++) {
+	for (int index = 0; index < devices.size(); index++) {
 		if (CheckPhysicalDeviceCapabilities(devices[index]) == false) continue;
 		if (CheckPhysicalDeviceExtensionProperties(devices[index]) == false) continue;
 		if (CheckPhysicalDeviceQueueFamilyProperties(devices[index], familyIndex) == false) continue;

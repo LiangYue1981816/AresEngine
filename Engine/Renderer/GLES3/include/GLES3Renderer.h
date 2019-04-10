@@ -213,7 +213,7 @@ public:
 private:
 	void BindPipelineCompute(CGfxPipelineCompute *pPipelineCompute);
 	void BindPipelineGraphics(CGfxPipelineGraphics *pPipelineGraphics);
-	void BindDescriptorSet(CGfxDescriptorSet *pDescriptorSet);
+	void BindDescriptorSet(const CGfxDescriptorSetPtr ptrDescriptorSet);
 
 
 private:

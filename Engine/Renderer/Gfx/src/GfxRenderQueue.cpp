@@ -109,14 +109,14 @@ void CGfxRenderQueue::CmdDraw(int indexQueue, CGfxCommandBufferPtr ptrCommandBuf
 			tasks.emplace_back(indexQueue, ptrDescriptorSetEngine, ptrDescriptorSetCamera, itPipelineQueue.first, namePass);
 		}
 
-		for (int indexTask = 0; indexTask < (int)tasks.size(); indexTask++) {
+		for (int indexTask = 0; indexTask < tasks.size(); indexTask++) {
 			m_taskGraph.Task(&tasks[indexTask], this, nullptr);
 		}
 
 		m_taskGraph.Dispatch();
 		m_taskGraph.Wait();
 
-		for (int indexTask = 0; indexTask < (int)tasks.size(); indexTask++) {
+		for (int indexTask = 0; indexTask < tasks.size(); indexTask++) {
 			ptrCommandBuffer->CmdExecute(tasks[indexTask].GetCommandBuffer());
 		}
 	}

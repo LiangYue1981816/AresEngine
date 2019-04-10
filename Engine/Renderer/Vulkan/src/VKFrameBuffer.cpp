@@ -46,7 +46,7 @@ bool CVKFrameBuffer::Create(const CGfxRenderPassPtr ptrRenderPass)
 		do {
 			eastl::vector<VkImageView> attachments;
 			{
-				for (int indexAttachment = 0; indexAttachment < (int)m_ptrAttachmentTextures.size(); indexAttachment++) {
+				for (int indexAttachment = 0; indexAttachment < m_ptrAttachmentTextures.size(); indexAttachment++) {
 					attachments.emplace_back((VkImageView)m_ptrAttachmentTextures[indexAttachment]->GetTexture());
 				}
 			}

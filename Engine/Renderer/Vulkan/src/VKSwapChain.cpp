@@ -36,13 +36,13 @@ static VkSurfaceTransformFlagBitsKHR GetSwapchainTransform(const VkSurfaceCapabi
 
 static VkPresentModeKHR GetSwapchainPresentMode(const eastl::vector<VkPresentModeKHR> &modes)
 {
-	for (uint32_t index = 0; index < modes.size(); index++) {
+	for (int index = 0; index < modes.size(); index++) {
 		if (modes[index] == VK_PRESENT_MODE_FIFO_KHR) {
 			return modes[index];
 		}
 	}
 
-	for (uint32_t index = 0; index < modes.size(); index++) {
+	for (int index = 0; index < modes.size(); index++) {
 		if (modes[index] == VK_PRESENT_MODE_MAILBOX_KHR) {
 			return modes[index];
 		}
@@ -53,7 +53,7 @@ static VkPresentModeKHR GetSwapchainPresentMode(const eastl::vector<VkPresentMod
 
 static VkSurfaceFormatKHR GetSwapchainFormat(const eastl::vector<VkSurfaceFormatKHR> &formats, VkFormat format)
 {
-	for (uint32_t index = 0; index < formats.size(); index++) {
+	for (int index = 0; index < formats.size(); index++) {
 		if (formats[index].format == format) {
 			return formats[index];
 		}

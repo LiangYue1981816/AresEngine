@@ -48,7 +48,7 @@ bool CVKRenderPass::Create(void)
 			eastl::unordered_map<int, eastl::vector<VkAttachmentReference>> resolveAttachmentReferences;
 			eastl::unordered_map<int, eastl::vector<uint32_t>> preserveAttachmentReferences;
 
-			for (int indexAttachment = 0; indexAttachment < (int)m_attachments.size(); indexAttachment++) {
+			for (int indexAttachment = 0; indexAttachment < m_attachments.size(); indexAttachment++) {
 				VkAttachmentDescription attachment = {};
 				attachment.flags = 0;
 				attachment.format = (VkFormat)m_attachments[indexAttachment].format;
@@ -62,7 +62,7 @@ bool CVKRenderPass::Create(void)
 				attachments.emplace_back(attachment);
 			}
 
-			for (int indexSubpass = 0; indexSubpass < (int)m_subpasses.size(); indexSubpass++) {
+			for (int indexSubpass = 0; indexSubpass < m_subpasses.size(); indexSubpass++) {
 				for (const auto &itInputAttachment : m_subpasses[indexSubpass].inputAttachments) {
 					VkAttachmentReference attachment = {};
 					attachment.attachment = itInputAttachment.first;
