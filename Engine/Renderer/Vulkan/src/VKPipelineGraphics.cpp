@@ -154,7 +154,7 @@ bool CVKPipelineGraphics::Create(const CGfxRenderPass *pRenderPass, const CGfxSh
 			depthStencilState.back.reference = state.stencilBackCompareRef;
 
 			eastl::vector<VkPipelineColorBlendAttachmentState> colorBlendAttachments;
-			for (uint32_t indexAttachment = 0; indexAttachment < pRenderPass->GetSubpassOutputAttachmentCount(indexSubpass); indexAttachment++) {
+			for (int indexAttachment = 0; indexAttachment < pRenderPass->GetSubpassOutputAttachmentCount(indexSubpass); indexAttachment++) {
 				VkPipelineColorBlendAttachmentState colorBlendAttachment = {};
 				colorBlendAttachment.blendEnable = state.bEnableBlend ? VK_TRUE : VK_FALSE;
 				colorBlendAttachment.srcColorBlendFactor = CVKHelper::TranslateBlendFactor(state.blendSrcRGB);

@@ -6,7 +6,7 @@ VkComponentMapping CVKHelper::vkFormatComponentMapping[VK_FORMAT_RANGE_SIZE];
 
 void CVKHelper::SetupFormat(VkPhysicalDevice vkPhysicalDevice)
 {
-	for (uint32_t indexFormat = 0; indexFormat < VK_FORMAT_RANGE_SIZE; indexFormat++) {
+	for (int indexFormat = 0; indexFormat < VK_FORMAT_RANGE_SIZE; indexFormat++) {
 		vkGetPhysicalDeviceFormatProperties(vkPhysicalDevice, (VkFormat)indexFormat, &vkFormatProperties[indexFormat]);
 		vkFormatComponentMapping[indexFormat].r = VK_COMPONENT_SWIZZLE_R;
 		vkFormatComponentMapping[indexFormat].g = VK_COMPONENT_SWIZZLE_G;

@@ -353,7 +353,7 @@ static BLOCK_POOL* POOL_CreatePool(HEAP_ALLOCATOR *pHeapAllocator, uint32_t dwMe
 
 	BLOCK *pBlock = pBlockPool->pBlockHead;
 	{
-		for (uint32_t indexBlock = 0; indexBlock < dwBlockCount; indexBlock++) {
+		for (int indexBlock = 0; indexBlock < dwBlockCount; indexBlock++) {
 			pBlock->dwOffset = indexBlock * dwBlockSize;
 			pBlock->dwOffsetNext = pBlock->dwOffset + dwBlockSize;
 			pBlock = GET_BLOCK_NEXT(pBlock);
@@ -372,7 +372,7 @@ POOL_ALLOCATOR* POOL_Create(HEAP_ALLOCATOR *pHeapAllocator)
 {
 	POOL_ALLOCATOR *pPoolAllocator = (POOL_ALLOCATOR *)HEAP_Alloc(pHeapAllocator, sizeof(POOL_ALLOCATOR));
 
-	for (uint32_t indexPool = 0; indexPool < BLOCK_POOL_COUNT; indexPool++) {
+	for (int indexPool = 0; indexPool < BLOCK_POOL_COUNT; indexPool++) {
 		pPoolAllocator->pools[indexPool].pBlockPoolHead = nullptr;
 		pPoolAllocator->pools[indexPool].pBlockPoolFreeHead = nullptr;
 	}
@@ -383,7 +383,7 @@ POOL_ALLOCATOR* POOL_Create(HEAP_ALLOCATOR *pHeapAllocator)
 
 void POOL_Destroy(HEAP_ALLOCATOR *pHeapAllocator, POOL_ALLOCATOR *pPoolAllocator)
 {
-	for (uint32_t indexPool = 0; indexPool < BLOCK_POOL_COUNT; indexPool++) {
+	for (int indexPool = 0; indexPool < BLOCK_POOL_COUNT; indexPool++) {
 		if (BLOCK_POOL *pBlockPool = pPoolAllocator->pools[indexPool].pBlockPoolHead) {
 			BLOCK_POOL *pBlockPoolNext = nullptr;
 
