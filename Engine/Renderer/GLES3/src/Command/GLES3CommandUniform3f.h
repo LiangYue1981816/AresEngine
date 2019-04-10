@@ -5,8 +5,8 @@
 class CGLES3CommandUniform3f : public CGfxCommandBase
 {
 public:
-	CGLES3CommandUniform3f(const char *szName, float v0, float v1, float v2)
-		: m_name(HashValue(szName))
+	CGLES3CommandUniform3f(uint32_t name, float v0, float v1, float v2)
+		: m_name(name)
 		, m_v0(v0)
 		, m_v1(v1)
 		, m_v2(v2)
@@ -23,7 +23,13 @@ public:
 	{
 		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_UNIFORM3F, "CommandUniform3f");
 		{
-			GLES3Renderer()->GetCurrentPipelineGraphics()->Uniform3f(m_name, m_v0, m_v1, m_v2);
+			if (CGLES3PipelineCompute *pPipeline = GLES3Renderer()->GetCurrentPipelineCompute()) {
+				pPipeline->Uniform3f(m_name, m_v0, m_v1, m_v2);
+			}
+
+			if (CGLES3PipelineGraphics *pPipeline = GLES3Renderer()->GetCurrentPipelineGraphics()) {
+				pPipeline->Uniform3f(m_name, m_v0, m_v1, m_v2);
+			}
 		}
 	}
 

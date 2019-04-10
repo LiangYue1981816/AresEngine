@@ -469,3 +469,13 @@ void CGLES3Renderer::BindDescriptorSet(const CGfxDescriptorSetPtr ptrDescriptorS
 		m_pCurrentPipelineGraphics->BindDescriptorSet(ptrDescriptorSet);
 	}
 }
+
+CGLES3PipelineCompute* CGLES3Renderer::GetCurrentPipelineCompute(void) const
+{
+	return m_pCurrentPipelineCompute;
+}
+
+CGLES3PipelineGraphics* CGLES3Renderer::GetCurrentPipelineGraphics(void) const
+{
+	return m_pCurrentPipelineGraphics;
+}
