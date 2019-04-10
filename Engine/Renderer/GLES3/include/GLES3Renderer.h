@@ -62,43 +62,9 @@
 
 class CALL_API CGLES3Renderer : public CGfxRenderer
 {
-	friend class CGLES3RenderPass;
-	friend class CGLES3FrameBuffer;
-	friend class CGLES3Mesh;
-	friend class CGLES3Texture2D;
-	friend class CGLES3Texture2DArray;
-	friend class CGLES3TextureCubeMap;
-	friend class CGLES3Material;
-	friend class CGLES3MaterialPass;
-
-	friend class CGLES3CommandBindMeshDraw;
-	friend class CGLES3CommandBindSubpassInputTexture;
 	friend class CGLES3CommandBindPipelineCompute;
 	friend class CGLES3CommandBindPipelineGraphics;
-	friend class CGLES3CommandBindMaterialPass;
-	friend class CGLES3CommandBindUniformBuffer;
-	friend class CGLES3CommandUniform1i;
-	friend class CGLES3CommandUniform2i;
-	friend class CGLES3CommandUniform3i;
-	friend class CGLES3CommandUniform4i;
-	friend class CGLES3CommandUniform1f;
-	friend class CGLES3CommandUniform2f;
-	friend class CGLES3CommandUniform3f;
-	friend class CGLES3CommandUniform4f;
-	friend class CGLES3CommandUniform1iv;
-	friend class CGLES3CommandUniform2iv;
-	friend class CGLES3CommandUniform3iv;
-	friend class CGLES3CommandUniform4iv;
-	friend class CGLES3CommandUniform1fv;
-	friend class CGLES3CommandUniform2fv;
-	friend class CGLES3CommandUniform3fv;
-	friend class CGLES3CommandUniform4fv;
-	friend class CGLES3CommandUniformMatrix2fv;
-	friend class CGLES3CommandUniformMatrix3fv;
-	friend class CGLES3CommandUniformMatrix4fv;
-	friend class CGLES3CommandDrawElements;
-	friend class CGLES3CommandDrawInstance;
-	friend class CGLES3CommandDrawIndirect;
+	friend class CGLES3CommandBindDescriptorSet;
 
 
 public:
@@ -211,8 +177,8 @@ public:
 	void Present(void);
 
 private:
-	void BindPipelineCompute(CGfxPipelineCompute *pPipelineCompute);
-	void BindPipelineGraphics(CGfxPipelineGraphics *pPipelineGraphics);
+	void BindPipelineCompute(const CGfxPipelineCompute *pPipelineCompute);
+	void BindPipelineGraphics(const CGfxPipelineGraphics *pPipelineGraphics);
 	void BindDescriptorSet(const CGfxDescriptorSetPtr ptrDescriptorSet);
 
 

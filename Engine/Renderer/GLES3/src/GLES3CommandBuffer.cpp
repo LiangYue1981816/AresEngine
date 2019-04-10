@@ -7,6 +7,7 @@
 #include "./Command/GLES3CommandBindFrameBuffer.h"
 #include "./Command/GLES3CommandBindPipelineCompute.h"
 #include "./Command/GLES3CommandBindPipelineGraphics.h"
+#include "./Command/GLES3CommandBindDescriptorSet.h"
 #include "./Command/GLES3CommandPushDebugGroup.h"
 #include "./Command/GLES3CommandPopDebugGroup.h"
 
@@ -164,6 +165,7 @@ bool CGLES3CommandBuffer::CmdBindPipelineGraphics(const CGfxPipelineGraphics *pP
 bool CGLES3CommandBuffer::CmdBindDescriptorSet(const CGfxDescriptorSetPtr ptrDescriptorSet)
 {
 	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
+		m_pCommands.emplace_back(new CGLES3CommandBindDescriptorSet(ptrDescriptorSet));
 		return true;
 	}
 	else {
