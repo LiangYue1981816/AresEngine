@@ -56,9 +56,9 @@ private:
 
 private:
 	CGfxRenderQueue *m_pRenderQueue;
-	CGfxUniformCamera *m_pUniformCamera;
 
 private:
-	CGfxDescriptorSetPtr m_ptrDescriptorSet;
-	CGfxDescriptorLayoutPtr m_ptrDescriptorLayout;
+	CGfxUniformCamera *m_pUniformCamera;
+	CGfxDescriptorSetPtr m_ptrDescriptorSetCamera;
+	CGfxDescriptorLayoutPtr m_ptrDescriptorLayoutCamera;
 };

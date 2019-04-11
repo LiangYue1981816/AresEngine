@@ -8,12 +8,12 @@ CGfxCamera::CGfxCamera(void)
 	m_pRenderQueue = new CGfxRenderQueue;
 	m_pUniformCamera = new CGfxUniformCamera;
 
-	m_ptrDescriptorLayout = GfxRenderer()->NewDescriptorLayout(DESCRIPTOR_SET_CAMERA);
-	m_ptrDescriptorLayout->SetUniformBlockBinding(UNIFORM_CAMERA_NAME, DESCRIPTOR_BIND_CAMERA);
-	m_ptrDescriptorLayout->Create();
+	m_ptrDescriptorLayoutCamera = GfxRenderer()->NewDescriptorLayout(DESCRIPTOR_SET_CAMERA);
+	m_ptrDescriptorLayoutCamera->SetUniformBlockBinding(UNIFORM_CAMERA_NAME, DESCRIPTOR_BIND_CAMERA);
+	m_ptrDescriptorLayoutCamera->Create();
 
-	m_ptrDescriptorSet = GfxRenderer()->NewDescriptorSet(m_ptrDescriptorLayout);
-	m_ptrDescriptorSet->SetUniformBuffer(UNIFORM_CAMERA_NAME, m_pUniformCamera->GetUniformBuffer(), 0, m_pUniformCamera->GetUniformBuffer()->GetSize());
+	m_ptrDescriptorSetCamera = GfxRenderer()->NewDescriptorSet(m_ptrDescriptorLayoutCamera);
+	m_ptrDescriptorSetCamera->SetUniformBuffer(UNIFORM_CAMERA_NAME, m_pUniformCamera->GetUniformBuffer(), 0, m_pUniformCamera->GetUniformBuffer()->GetSize());
 }
 
 CGfxCamera::~CGfxCamera(void)
@@ -148,5 +148,5 @@ void CGfxCamera::End(int indexQueue)
 
 void CGfxCamera::CmdDraw(int indexQueue, CGfxCommandBufferPtr ptrCommandBuffer, const CGfxDescriptorSetPtr ptrDescriptorSetEngine, uint32_t namePass)
 {
-	m_pRenderQueue->CmdDraw(indexQueue, ptrCommandBuffer, ptrDescriptorSetEngine, m_ptrDescriptorSet, namePass);
+	m_pRenderQueue->CmdDraw(indexQueue, ptrCommandBuffer, ptrDescriptorSetEngine, m_ptrDescriptorSetCamera, namePass);
 }

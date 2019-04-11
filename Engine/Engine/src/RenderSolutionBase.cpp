@@ -28,12 +28,19 @@ CRenderSolutionBase::CRenderSolutionBase(void)
 	, m_pShadowCamera(nullptr)
 	, m_pUniformEngine(nullptr)
 {
+	SetVertexAttributes(vertexAttributes, VERTEX_ATTRIBUTE_COUNT);
+	SetInstanceAttributes(instanceAttributes, INSTANCE_ATTRIBUTE_COUNT);
+
 	m_pMainCamera = new CGfxCamera;
 	m_pShadowCamera = new CGfxCamera;
 	m_pUniformEngine = new CGfxUniformEngine;
 
-	SetVertexAttributes(vertexAttributes, VERTEX_ATTRIBUTE_COUNT);
-	SetInstanceAttributes(instanceAttributes, INSTANCE_ATTRIBUTE_COUNT);
+	m_ptrDescriptorLayoutEngine = GfxRenderer()->NewDescriptorLayout(DESCRIPTOR_SET_ENGINE);
+	m_ptrDescriptorLayoutEngine->SetUniformBlockBinding(UNIFORM_ENGINE_NAME, DESCRIPTOR_BIND_ENGINE);
+	m_ptrDescriptorLayoutEngine->Create();
+
+	m_ptrDescriptorSetEngine = GfxRenderer()->NewDescriptorSet(m_ptrDescriptorLayoutEngine);
+	m_ptrDescriptorSetEngine->SetUniformBuffer(UNIFORM_ENGINE_NAME, m_pUniformEngine->GetUniformBuffer(), 0, m_pUniformEngine->GetUniformBuffer()->GetSize());
 }
 
 CRenderSolutionBase::~CRenderSolutionBase(void)

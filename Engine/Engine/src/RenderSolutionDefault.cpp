@@ -169,7 +169,7 @@ void CRenderSolutionDefault::Render(int indexQueue)
 			GfxRenderer()->CmdSetScissor(m_ptrMainCommandBuffer[indexQueue], (int)scissor.x, (int)scissor.y, (int)scissor.z, (int)scissor.w);
 			GfxRenderer()->CmdSetViewport(m_ptrMainCommandBuffer[indexQueue], (int)viewport.x, (int)viewport.y, (int)viewport.z, (int)viewport.w);
 
-			m_pMainCamera->CmdDraw(indexQueue, m_ptrMainCommandBuffer[indexQueue], m_pUniformEngine->GetUniformBuffer(), nameDefaultPass);
+			m_pMainCamera->CmdDraw(indexQueue, m_ptrMainCommandBuffer[indexQueue], m_ptrDescriptorSetEngine, nameDefaultPass);
 		}
 		GfxRenderer()->CmdEndRenderPass(m_ptrMainCommandBuffer[indexQueue]);
 	}

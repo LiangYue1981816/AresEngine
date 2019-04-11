@@ -79,5 +79,9 @@ public:
 protected:
 	CGfxCamera *m_pMainCamera;
 	CGfxCamera *m_pShadowCamera;
+
+protected:
 	CGfxUniformEngine *m_pUniformEngine;
+	CGfxDescriptorSetPtr m_ptrDescriptorSetEngine;
+	CGfxDescriptorLayoutPtr m_ptrDescriptorLayoutEngine;
 };
