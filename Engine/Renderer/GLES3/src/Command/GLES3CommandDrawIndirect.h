@@ -21,10 +21,8 @@ public:
 		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_DRAW_INDIRECT, "CommandDrawIndirect");
 		{
 			if (m_ptrMeshDraw.IsValid()) {
-				glDrawElementsIndirect(
-					CGLES3Helper::TranslatePrimitiveTopology(GLES3Renderer()->GetCurrentPipelineGraphics()->GetPipelineState().topology), 
-					CGLES3Helper::TranslateIndexType(m_ptrMeshDraw->GetIndexType()),
-					(const void *)0);
+				((CGLES3MeshDraw *)m_ptrMeshDraw.GetPointer())->Bind();
+				glDrawElementsIndirect(GL_TRIANGLES, CGLES3Helper::TranslateIndexType(m_ptrMeshDraw->GetIndexType()), (const void *)0);
 			}
 		}
 	}
