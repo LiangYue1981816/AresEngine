@@ -59,11 +59,6 @@ void CGLES3CommandBuffer::Release(void)
 	m_pManager->Destroy(this);
 }
 
-HANDLE CGLES3CommandBuffer::GetCommandBuffer(void) const
-{
-	return nullptr;
-}
-
 CGfxFrameBufferPtr CGLES3CommandBuffer::GetFrameBuffer(void) const
 {
 	return m_ptrFrameBuffer;

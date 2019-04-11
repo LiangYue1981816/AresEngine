@@ -14,8 +14,6 @@ private:
 
 
 public:
-	HANDLE GetCommandBuffer(void) const;
-
 	CGfxFrameBufferPtr GetFrameBuffer(void) const;
 	CGfxRenderPassPtr GetRenderPass(void) const;
 

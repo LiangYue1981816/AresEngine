@@ -39,8 +39,6 @@ public:
 
 
 public:
-	virtual HANDLE GetCommandBuffer(void) const = 0;
-
 	virtual CGfxFrameBufferPtr GetFrameBuffer(void) const = 0;
 	virtual CGfxRenderPassPtr GetRenderPass(void) const = 0;
 
