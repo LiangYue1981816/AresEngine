@@ -367,8 +367,8 @@ static bool InternalLoadTexture2D(TiXmlNode *pPassNode, CGfxMaterialPass *pPass)
 				GfxSamplerAddressMode addressMode = StringToAddressMode(pTextureNode->ToElement()->AttributeString("address_mode"));
 				if (minFilter == GFX_FILTER_INVALID_ENUM || magFilter == GFX_FILTER_INVALID_ENUM || mipmapMode == GFX_SAMPLER_MIPMAP_MODE_INVALID_ENUM || addressMode == GFX_SAMPLER_ADDRESS_MODE_INVALID_ENUM) { err = -2; goto ERR; }
 
-				if (pPass->SetSampler(szName, minFilter, magFilter, mipmapMode, addressMode)) {
-					pPass->SetTexture2D(szName, szFileName);
+				if (pPass->SetSampler(HashValue(szName), minFilter, magFilter, mipmapMode, addressMode)) {
+					pPass->SetTexture2D(HashValue(szName), szFileName);
 				}
 			}
 			LogOutput(nullptr, "OK\n");
@@ -400,8 +400,8 @@ static bool InternalLoadTexture2DArray(TiXmlNode *pPassNode, CGfxMaterialPass *p
 				GfxSamplerAddressMode addressMode = StringToAddressMode(pTextureNode->ToElement()->AttributeString("address_mode"));
 				if (minFilter == GFX_FILTER_INVALID_ENUM || magFilter == GFX_FILTER_INVALID_ENUM || mipmapMode == GFX_SAMPLER_MIPMAP_MODE_INVALID_ENUM || addressMode == GFX_SAMPLER_ADDRESS_MODE_INVALID_ENUM) { err = -2; goto ERR; }
 
-				if (pPass->SetSampler(szName, minFilter, magFilter, mipmapMode, addressMode)) {
-					pPass->SetTexture2DArray(szName, szFileName);
+				if (pPass->SetSampler(HashValue(szName), minFilter, magFilter, mipmapMode, addressMode)) {
+					pPass->SetTexture2DArray(HashValue(szName), szFileName);
 				}
 			}
 			LogOutput(nullptr, "OK\n");
@@ -433,8 +433,8 @@ static bool InternalLoadTextureCubeMap(TiXmlNode *pPassNode, CGfxMaterialPass *p
 				GfxSamplerAddressMode addressMode = StringToAddressMode(pTextureNode->ToElement()->AttributeString("address_mode"));
 				if (minFilter == GFX_FILTER_INVALID_ENUM || magFilter == GFX_FILTER_INVALID_ENUM || mipmapMode == GFX_SAMPLER_MIPMAP_MODE_INVALID_ENUM || addressMode == GFX_SAMPLER_ADDRESS_MODE_INVALID_ENUM) { err = -2; goto ERR; }
 
-				if (pPass->SetSampler(szName, minFilter, magFilter, mipmapMode, addressMode)) {
-					pPass->SetTextureCubeMap(szName, szFileName);
+				if (pPass->SetSampler(HashValue(szName), minFilter, magFilter, mipmapMode, addressMode)) {
+					pPass->SetTextureCubeMap(HashValue(szName), szFileName);
 				}
 			}
 			LogOutput(nullptr, "OK\n");
@@ -462,7 +462,8 @@ static bool InternalLoadUniformVec1(TiXmlNode *pPassNode, CGfxMaterialPass *pPas
 
 				float value[1] = { 0.0f };
 				pUniformNode->ToElement()->AttributeFloat1("value", value);
-				pPass->SetUniformVec1(szName, value[0]);
+
+				pPass->SetUniformVec1(HashValue(szName), value[0]);
 			}
 			LogOutput(nullptr, "OK\n");
 		} while ((pUniformNode = pPassNode->IterateChildren("Uniform1f", pUniformNode)) != nullptr);
@@ -489,7 +490,8 @@ static bool InternalLoadUniformVec2(TiXmlNode *pPassNode, CGfxMaterialPass *pPas
 
 				float value[2] = { 0.0f };
 				pUniformNode->ToElement()->AttributeFloat2("value", value);
-				pPass->SetUniformVec2(szName, value[0], value[1]);
+
+				pPass->SetUniformVec2(HashValue(szName), value[0], value[1]);
 			}
 			LogOutput(nullptr, "OK\n");
 		} while ((pUniformNode = pPassNode->IterateChildren("Uniform2f", pUniformNode)) != nullptr);
@@ -516,7 +518,8 @@ static bool InternalLoadUniformVec3(TiXmlNode *pPassNode, CGfxMaterialPass *pPas
 
 				float value[3] = { 0.0f };
 				pUniformNode->ToElement()->AttributeFloat3("value", value);
-				pPass->SetUniformVec3(szName, value[0], value[1], value[2]);
+
+				pPass->SetUniformVec3(HashValue(szName), value[0], value[1], value[2]);
 			}
 			LogOutput(nullptr, "OK\n");
 		} while ((pUniformNode = pPassNode->IterateChildren("Uniform3f", pUniformNode)) != nullptr);
@@ -543,7 +546,8 @@ static bool InternalLoadUniformVec4(TiXmlNode *pPassNode, CGfxMaterialPass *pPas
 
 				float value[4] = { 0.0f };
 				pUniformNode->ToElement()->AttributeFloat4("value", value);
-				pPass->SetUniformVec4(szName, value[0], value[1], value[2], value[3]);
+
+				pPass->SetUniformVec4(HashValue(szName), value[0], value[1], value[2], value[3]);
 			}
 			LogOutput(nullptr, "OK\n");
 		} while ((pUniformNode = pPassNode->IterateChildren("Uniform4f", pUniformNode)) != nullptr);

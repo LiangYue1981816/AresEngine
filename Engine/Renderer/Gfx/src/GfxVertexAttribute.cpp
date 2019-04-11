@@ -12,7 +12,7 @@ static uint32_t GetStride(uint32_t format, const ATTRIBUTE *attributes, uint32_t
 {
 	uint32_t stride = 0;
 
-	for (int indexAttribute = 0; indexAttribute < count; indexAttribute++) {
+	for (uint32_t indexAttribute = 0; indexAttribute < count; indexAttribute++) {
 		if (format & attributes[indexAttribute].flag) {
 			stride += attributes[indexAttribute].components * attributes[indexAttribute].size;
 		}
@@ -23,7 +23,7 @@ static uint32_t GetStride(uint32_t format, const ATTRIBUTE *attributes, uint32_t
 
 static uint32_t GetAttribute(const char *szName, const ATTRIBUTE *attributes, uint32_t count)
 {
-	for (int indexAttribute = 0; indexAttribute < count; indexAttribute++) {
+	for (uint32_t indexAttribute = 0; indexAttribute < count; indexAttribute++) {
 		if (strcmp(attributes[indexAttribute].name, szName) == 0) {
 			return attributes[indexAttribute].flag;
 		}
@@ -34,7 +34,7 @@ static uint32_t GetAttribute(const char *szName, const ATTRIBUTE *attributes, ui
 
 static uint32_t GetAttributeSize(uint32_t attribute, const ATTRIBUTE *attributes, uint32_t count)
 {
-	for (int indexAttribute = 0; indexAttribute < count; indexAttribute++) {
+	for (uint32_t indexAttribute = 0; indexAttribute < count; indexAttribute++) {
 		if (attribute == attributes[indexAttribute].flag) {
 			return attributes[indexAttribute].size;
 		}
@@ -47,7 +47,7 @@ static uint32_t GetAttributeOffset(uint32_t format, uint32_t attribute, const AT
 {
 	uint32_t offset = 0;
 
-	for (int indexAttribute = 0; indexAttribute < count; indexAttribute++) {
+	for (uint32_t indexAttribute = 0; indexAttribute < count; indexAttribute++) {
 		if (attribute == attributes[indexAttribute].flag) return offset;
 		if (format & attributes[indexAttribute].flag) offset += attributes[indexAttribute].components * attributes[indexAttribute].size;
 	}
@@ -57,7 +57,7 @@ static uint32_t GetAttributeOffset(uint32_t format, uint32_t attribute, const AT
 
 static uint32_t GetAttributeComponents(uint32_t attribute, const ATTRIBUTE *attributes, uint32_t count)
 {
-	for (int indexAttribute = 0; indexAttribute < count; indexAttribute++) {
+	for (uint32_t indexAttribute = 0; indexAttribute < count; indexAttribute++) {
 		if (attribute == attributes[indexAttribute].flag) {
 			return attributes[indexAttribute].components;
 		}
@@ -68,7 +68,7 @@ static uint32_t GetAttributeComponents(uint32_t attribute, const ATTRIBUTE *attr
 
 static uint32_t GetAttributeLocation(uint32_t attribute, const ATTRIBUTE *attributes, uint32_t count)
 {
-	for (int indexAttribute = 0; indexAttribute < count; indexAttribute++) {
+	for (uint32_t indexAttribute = 0; indexAttribute < count; indexAttribute++) {
 		if (attribute == attributes[indexAttribute].flag) {
 			return attributes[indexAttribute].location;
 		}
@@ -79,7 +79,7 @@ static uint32_t GetAttributeLocation(uint32_t attribute, const ATTRIBUTE *attrib
 
 static uint32_t GetAttributeFormat(uint32_t attribute, const ATTRIBUTE *attributes, uint32_t count)
 {
-	for (int indexAttribute = 0; indexAttribute < count; indexAttribute++) {
+	for (uint32_t indexAttribute = 0; indexAttribute < count; indexAttribute++) {
 		if (attribute == attributes[indexAttribute].flag) {
 			return attributes[indexAttribute].format;
 		}

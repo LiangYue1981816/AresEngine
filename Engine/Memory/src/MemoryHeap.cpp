@@ -215,7 +215,7 @@ static BLOCK_POOL* HEAP_CreatePool(uint32_t dwMemSize)
 		{
 			pBlockPool->root = RB_ROOT;
 
-			for (int indexNode = 0; indexNode < dwNodeCount; indexNode++) {
+			for (uint32_t indexNode = 0; indexNode < dwNodeCount; indexNode++) {
 				pBlockPool->nodes[indexNode].dwSize = (indexNode + 1) * BLOCK_UNIT_SIZE;
 				pBlockPool->nodes[indexNode].pBlockHead = nullptr;
 			}

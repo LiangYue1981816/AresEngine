@@ -353,7 +353,7 @@ static BLOCK_POOL* POOL_CreatePool(HEAP_ALLOCATOR *pHeapAllocator, uint32_t dwMe
 
 	BLOCK *pBlock = pBlockPool->pBlockHead;
 	{
-		for (int indexBlock = 0; indexBlock < dwBlockCount; indexBlock++) {
+		for (uint32_t indexBlock = 0; indexBlock < dwBlockCount; indexBlock++) {
 			pBlock->dwOffset = indexBlock * dwBlockSize;
 			pBlock->dwOffsetNext = pBlock->dwOffset + dwBlockSize;
 			pBlock = GET_BLOCK_NEXT(pBlock);
