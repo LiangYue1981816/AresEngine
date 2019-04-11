@@ -90,7 +90,7 @@ bool CGLES3DescriptorSet::SetUniformBuffer(uint32_t name, const CGfxUniformBuffe
 	}
 }
 
-const CGfxDescriptorSet::DescriptorImageInfo* CGLES3DescriptorSet::GetDescriptorImageInfo(uint32_t name) const
+const DescriptorImageInfo* CGLES3DescriptorSet::GetDescriptorImageInfo(uint32_t name) const
 {
 	const auto &itDescriptorInfo = m_imageDescriptorInfos.find(name);
 
@@ -102,7 +102,7 @@ const CGfxDescriptorSet::DescriptorImageInfo* CGLES3DescriptorSet::GetDescriptor
 	}
 }
 
-const CGfxDescriptorSet::DescriptorBufferInfo* CGLES3DescriptorSet::GetDescriptorBufferInfo(uint32_t name) const
+const DescriptorBufferInfo* CGLES3DescriptorSet::GetDescriptorBufferInfo(uint32_t name) const
 {
 	const auto &itDescriptorInfo = m_bufferDescriptorInfos.find(name);
 

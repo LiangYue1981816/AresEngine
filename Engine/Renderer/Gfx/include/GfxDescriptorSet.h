@@ -2,24 +2,22 @@
 #include "GfxRenderer.h"
 
 
+typedef struct DescriptorBufferInfo {
+	uint32_t offset;
+	uint32_t range;
+	CGfxUniformBufferPtr ptrUniformBuffer;
+} DescriptorBufferInfo;
+
+typedef struct DescriptorImageInfo {
+	CGfxSampler *pSampler;
+	CGfxTexture2DPtr ptrTexture2D;
+	CGfxTexture2DArrayPtr ptrTexture2DArray;
+	CGfxTextureCubeMapPtr ptrTextureCubeMap;
+	CGfxRenderTexturePtr ptrTextureInputAttachment;
+} DescriptorImageInfo;
+
 class CALL_API CGfxDescriptorSet : public CGfxResource
 {
-public:
-	typedef struct DescriptorBufferInfo {
-		uint32_t offset;
-		uint32_t range;
-		CGfxUniformBufferPtr ptrUniformBuffer;
-	} DescriptorBufferInfo;
-
-	typedef struct DescriptorImageInfo {
-		CGfxSampler *pSampler;
-		CGfxTexture2DPtr ptrTexture2D;
-		CGfxTexture2DArrayPtr ptrTexture2DArray;
-		CGfxTextureCubeMapPtr ptrTextureCubeMap;
-		CGfxRenderTexturePtr ptrTextureInputAttachment;
-	} DescriptorImageInfo;
-
-
 public:
 	CGfxDescriptorSet(const CGfxDescriptorLayoutPtr ptrDescriptorLayout)
 	{
