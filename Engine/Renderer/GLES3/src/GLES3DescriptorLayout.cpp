@@ -19,11 +19,6 @@ void CGLES3DescriptorLayout::Release(void)
 	m_pManager->Destroy(this);
 }
 
-HANDLE CGLES3DescriptorLayout::GetDescriptorLayout(void) const
-{
-	return nullptr;
-}
-
 uint32_t CGLES3DescriptorLayout::GetSetIndex(void) const
 {
 	return m_set;

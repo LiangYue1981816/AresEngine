@@ -14,7 +14,6 @@ private:
 
 
 public:
-	HANDLE GetDescriptorLayout(void) const;
 	uint32_t GetSetIndex(void) const;
 
 public:

@@ -86,7 +86,6 @@ public:
 
 
 public:
-	virtual HANDLE GetPipeline(void) const = 0;
 	virtual CGfxDescriptorLayoutPtr GetDescriptorLayout(uint32_t indexDescriptorSet) const = 0;
 
 public:

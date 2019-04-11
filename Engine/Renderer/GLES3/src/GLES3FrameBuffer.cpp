@@ -25,11 +25,6 @@ void CGLES3FrameBuffer::Release(void)
 	m_pManager->Destroy(this);
 }
 
-HANDLE CGLES3FrameBuffer::GetFrameBuffer(void)
-{
-	return (HANDLE)m_fbo;
-}
-
 int CGLES3FrameBuffer::GetWidth(void) const
 {
 	return m_width;

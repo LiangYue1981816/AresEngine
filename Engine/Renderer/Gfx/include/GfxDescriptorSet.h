@@ -30,7 +30,6 @@ public:
 
 
 public:
-	virtual HANDLE GetDescriptorSet(void) const = 0;
 	virtual CGfxDescriptorLayoutPtr GetDescriptorLayout(void) const = 0;
 
 public:

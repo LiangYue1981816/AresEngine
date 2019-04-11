@@ -16,7 +16,6 @@ public:
 
 
 public:
-	virtual HANDLE GetDescriptorLayout(void) const = 0;
 	virtual uint32_t GetSetIndex(void) const = 0;
 
 public:

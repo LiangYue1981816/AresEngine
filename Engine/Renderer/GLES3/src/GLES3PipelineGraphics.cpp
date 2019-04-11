@@ -12,11 +12,6 @@ CGLES3PipelineGraphics::~CGLES3PipelineGraphics(void)
 	Destroy();
 }
 
-HANDLE CGLES3PipelineGraphics::GetPipeline(void) const
-{
-	return (HANDLE)m_program;
-}
-
 CGfxDescriptorLayoutPtr CGLES3PipelineGraphics::GetDescriptorLayout(uint32_t indexDescriptorSet) const
 {
 	return m_ptrDescriptorLayouts[indexDescriptorSet];

@@ -14,8 +14,6 @@ private:
 
 
 public:
-	HANDLE GetFrameBuffer(void);
-
 	int GetWidth(void) const;
 	int GetHeight(void) const;
 

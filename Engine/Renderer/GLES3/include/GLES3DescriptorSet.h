@@ -14,7 +14,6 @@ private:
 
 
 public:
-	HANDLE GetDescriptorSet(void) const;
 	CGfxDescriptorLayoutPtr GetDescriptorLayout(void) const;
 
 public:
