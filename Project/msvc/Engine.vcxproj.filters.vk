@@ -1,0 +1,2152 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Engine">
+      <UniqueIdentifier>{a769e6a3-57f3-4959-aee3-cdcfc6af4afe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty">
+      <UniqueIdentifier>{998e0688-9d19-43ab-b81d-275021ca03f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Base">
+      <UniqueIdentifier>{fad09662-88ad-471a-bbd2-f2a4b6e9c844}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Memory">
+      <UniqueIdentifier>{a4f1f28c-079e-49ba-8dee-664e01201174}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Renderer">
+      <UniqueIdentifier>{7b102c74-850b-41e3-b357-95b3f77b601b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Scene">
+      <UniqueIdentifier>{35e2f3c0-88e0-422a-8e05-f856d122f053}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\event">
+      <UniqueIdentifier>{be289de3-d655-47e6-9e59-a4dc6007b92d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\gl3w">
+      <UniqueIdentifier>{a5d6eca7-ba61-4126-8c97-c80b7e9799ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\glslc">
+      <UniqueIdentifier>{dec8c4e8-70b6-4647-94b1-79c97f81908d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\lodepng">
+      <UniqueIdentifier>{d2b1a832-0f8e-4786-843d-316039613f05}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\rbtree">
+      <UniqueIdentifier>{27c5af2e-4c4c-4fb5-a8d0-eecad5ab211c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\spirv-cross">
+      <UniqueIdentifier>{a7f6a5fd-4018-45a4-978e-85836d50648b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\tinyxml">
+      <UniqueIdentifier>{8bb19fd6-3f54-4de4-907c-ae12cef23ed5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Base\Header Files">
+      <UniqueIdentifier>{67c643ea-cb47-49d4-8a92-cc063e979ece}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Base\Source Files">
+      <UniqueIdentifier>{fe6d9847-e070-4c83-aa84-3227ed146757}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Memory\Header Files">
+      <UniqueIdentifier>{27a210f8-4630-4792-962a-5d0c01630dd1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Memory\Source Files">
+      <UniqueIdentifier>{0b9d1d26-72fe-46d0-933d-fcd1824c3570}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Renderer\Gfx">
+      <UniqueIdentifier>{1b244f2d-d387-4731-b3a9-208e0f2f8e3c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Renderer\Vulkan">
+      <UniqueIdentifier>{3c6bc9f9-f770-41b7-a732-91e9f4e6ffcc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Renderer\GLES3">
+      <UniqueIdentifier>{724c4537-be92-492a-9695-9815b831d3a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Scene\Header Files">
+      <UniqueIdentifier>{d3d8c327-4347-47f1-9f5a-b8cafd5f2a9b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Scene\Source Files">
+      <UniqueIdentifier>{4c67112e-2ad6-4533-bc40-50b7ce756fcd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Scene\Source Files\Task">
+      <UniqueIdentifier>{c9d2405f-5972-418e-9f6e-20063beca15f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Renderer\GLES3\Source Files">
+      <UniqueIdentifier>{f5b7790c-132f-4b57-8dfd-851bc96c4eec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Renderer\GLES3\Source Files\Commands">
+      <UniqueIdentifier>{abc92e7c-8319-42c2-8570-1970e1aa2ae1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Base\Source Files\nvwa">
+      <UniqueIdentifier>{91402fba-68fc-4dbb-9af9-fb34f1c5eacd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Renderer\Gfx\Source Files">
+      <UniqueIdentifier>{4990b95a-d2a1-4b69-8809-3c08d624f5ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Renderer\Compiler">
+      <UniqueIdentifier>{e6ac4e15-6f01-4c34-ad0b-c1b3ca24d3e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Renderer\Compiler\Header Files">
+      <UniqueIdentifier>{cd751952-dbb5-484c-b869-19b018f5cdd0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Renderer\Compiler\Source Files">
+      <UniqueIdentifier>{d938ce05-beaa-4bfe-b8d1-afa96fc944a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Renderer\Gfx\Header Files">
+      <UniqueIdentifier>{2647a4c1-1e81-438b-8eab-305eaee15dfd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\zlib">
+      <UniqueIdentifier>{8bd6bd70-11b7-4e86-9b88-7396e861b44f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\zzip">
+      <UniqueIdentifier>{352143c8-88bf-40da-a4e6-e568baf4780c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Renderer\GLES3\Header Files">
+      <UniqueIdentifier>{74c2d916-bd47-4ba2-9680-6e7f712348f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\eastl">
+      <UniqueIdentifier>{0cb87225-90c0-4190-a7a8-d4ded44c1884}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Renderer\Vulkan\Header Files">
+      <UniqueIdentifier>{53717ef7-be2c-480b-8a01-fa65270a3e05}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Renderer\Vulkan\Source Files">
+      <UniqueIdentifier>{f890e2df-14d2-47d2-aaef-e9a1255e5baa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Engine">
+      <UniqueIdentifier>{25618813-b324-4816-8001-73568c2e5c2e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Engine\Header Files">
+      <UniqueIdentifier>{4cf8e78c-9261-401a-a5b9-6ce128b1fa28}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Engine\Source Files">
+      <UniqueIdentifier>{058a8d50-a3a9-4aa2-80f6-15fa825c43b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Scene\Header Files\Component">
+      <UniqueIdentifier>{dec25947-8e39-40ca-9df0-0b03a7a6d9e8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Scene\Source Files\Component">
+      <UniqueIdentifier>{62db9dfa-bcc2-4f53-9b28-9ffff503c1b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Engine\Header Files\RenderSolution">
+      <UniqueIdentifier>{3e97245d-f183-47a2-988a-71bd178cc25f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Engine\Source Files\RenderSolution">
+      <UniqueIdentifier>{6a1913a1-6349-4750-aaa0-5e438d40fdf3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Resource">
+      <UniqueIdentifier>{4fecd33d-9718-4b29-a32f-706757651d2d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Resource\Header Files">
+      <UniqueIdentifier>{5fdf5873-9311-4e9e-9a53-998ab71f0351}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Resource\Source Files">
+      <UniqueIdentifier>{b3bf7d81-c5d2-45ca-8a57-59508640a86d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\pthreadex">
+      <UniqueIdentifier>{cdb9f99d-dace-41cb-b46e-688cec1cf9e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\rttr">
+      <UniqueIdentifier>{d077d794-148e-4593-8c46-f18a049941fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\rttr\detail">
+      <UniqueIdentifier>{47feaefd-7e0c-4900-8b2c-f947ae1887af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\rttr\detail\base">
+      <UniqueIdentifier>{e4788eec-b6f9-4f03-9a45-3a3adb7d7409}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\rttr\detail\comparison">
+      <UniqueIdentifier>{febb9247-2706-44e5-aeae-6b7dd998f209}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\rttr\detail\constructor">
+      <UniqueIdentifier>{757984f7-a6a4-4b42-8a3a-387510ff1459}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\rttr\detail\conversion">
+      <UniqueIdentifier>{95112021-8f17-44e0-a0bf-6a9f3cc02141}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\rttr\detail\default_arguments">
+      <UniqueIdentifier>{ce3a9fb6-6c28-4b92-bedc-27e1ff1c3d9c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\rttr\detail\destructor">
+      <UniqueIdentifier>{cb94cf02-92a8-4e72-95db-9285fb523e05}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\rttr\detail\enumeration">
+      <UniqueIdentifier>{f6d2cc3f-fb6c-44eb-9d26-94a75f81c18d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\rttr\detail\filter">
+      <UniqueIdentifier>{b1c9c993-ad58-4825-b5db-a124e36445f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\rttr\detail\impl">
+      <UniqueIdentifier>{a15c7ac2-9517-4f91-861d-18af757c0b01}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\rttr\detail\metadata">
+      <UniqueIdentifier>{998dd417-0f31-4429-bcff-552c4887c598}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\rttr\detail\method">
+      <UniqueIdentifier>{ce03adc5-9ab2-41f9-88cb-4052a65cdb1e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\rttr\detail\misc">
+      <UniqueIdentifier>{d5b54c09-0783-40eb-a0f6-a7c80718c359}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\rttr\detail\parameter_info">
+      <UniqueIdentifier>{183e023e-8098-4b08-9162-64d6c65378f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\rttr\detail\policies">
+      <UniqueIdentifier>{50056bce-081a-405f-8795-692eaf26458b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\rttr\detail\property">
+      <UniqueIdentifier>{56cdd5ac-2ab8-4d98-a773-a0225019580d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\rttr\detail\registration">
+      <UniqueIdentifier>{dd31ee6e-c8f8-4e43-9128-8eea664ce1ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\rttr\detail\type">
+      <UniqueIdentifier>{e4dc5a10-6342-4c45-9b7f-2ae7313efde4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\rttr\detail\variant">
+      <UniqueIdentifier>{817e050e-f683-4de1-9b5a-da9d38510381}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\rttr\detail\variant_associative_view">
+      <UniqueIdentifier>{df72ab45-6429-48e7-9151-37a9c2f967a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\rttr\detail\variant_sequential_view">
+      <UniqueIdentifier>{7d36962d-9015-44fd-9c69-32bbb79c3cf3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\rttr\detail\visitor">
+      <UniqueIdentifier>{4d64e732-6475-43a7-8f74-fe936428aa1d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\Engine\PreHeader.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Base\include\Delegate.h">
+      <Filter>Engine\Base\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Base\include\File.h">
+      <Filter>Engine\Base\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Base\include\FileManager.h">
+      <Filter>Engine\Base\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Base\include\SharedPtr.h">
+      <Filter>Engine\Base\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Base\include\Stream.h">
+      <Filter>Engine\Base\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Base\include\TaskGraph.h">
+      <Filter>Engine\Base\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Base\include\Utils.h">
+      <Filter>Engine\Base\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Base\src\nvwa\c++11.h">
+      <Filter>Engine\Base\Source Files\nvwa</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Base\src\nvwa\debug_new.h">
+      <Filter>Engine\Base\Source Files\nvwa</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Base\src\nvwa\fast_mutex.h">
+      <Filter>Engine\Base\Source Files\nvwa</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Base\src\nvwa\static_assert.h">
+      <Filter>Engine\Base\Source Files\nvwa</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Memory\include\Allocator.h">
+      <Filter>Engine\Memory\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Memory\src\MemoryHeap.h">
+      <Filter>Engine\Memory\Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Memory\src\MemoryPool.h">
+      <Filter>Engine\Memory\Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Memory\src\MemorySystem.h">
+      <Filter>Engine\Memory\Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Compiler\include\ShaderCompiler.h">
+      <Filter>Engine\Renderer\Compiler\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Scene\include\Scene.h">
+      <Filter>Engine\Scene\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Scene\include\SceneManager.h">
+      <Filter>Engine\Scene\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Scene\include\SceneNode.h">
+      <Filter>Engine\Scene\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Scene\src\TaskComponentUpdateCamera.h">
+      <Filter>Engine\Scene\Source Files\Task</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Scene\src\TaskComponentUpdateLogic.h">
+      <Filter>Engine\Scene\Source Files\Task</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Base\include\Lock.h">
+      <Filter>Engine\Base\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Engine\include\Engine.h">
+      <Filter>Engine\Engine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\GfxHeader.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\SceneHeader.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\EngineHeader.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Scene\include\Component.h">
+      <Filter>Engine\Scene\Header Files\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Scene\include\ComponentMesh.h">
+      <Filter>Engine\Scene\Header Files\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Scene\include\ComponentParticle.h">
+      <Filter>Engine\Scene\Header Files\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Scene\include\ComponentPointLight.h">
+      <Filter>Engine\Scene\Header Files\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Scene\include\ComponentSkin.h">
+      <Filter>Engine\Scene\Header Files\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Scene\include\ComponentManager.h">
+      <Filter>Engine\Scene\Header Files\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Engine\include\RenderSolutionBase.h">
+      <Filter>Engine\Engine\Header Files\RenderSolution</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Engine\include\RenderSolutionDefault.h">
+      <Filter>Engine\Engine\Header Files\RenderSolution</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Engine\include\RenderSolutionDeferred.h">
+      <Filter>Engine\Engine\Header Files\RenderSolution</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Engine\include\RenderSolutionForward.h">
+      <Filter>Engine\Engine\Header Files\RenderSolution</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Engine\include\RenderSolutionForwardPlus.h">
+      <Filter>Engine\Engine\Header Files\RenderSolution</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxCamera.h">
+      <Filter>Engine\Renderer\Gfx\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxCommandBuffer.h">
+      <Filter>Engine\Renderer\Gfx\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxDefinition.h">
+      <Filter>Engine\Renderer\Gfx\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxFrameBuffer.h">
+      <Filter>Engine\Renderer\Gfx\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxGLM.h">
+      <Filter>Engine\Renderer\Gfx\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxIndexBuffer.h">
+      <Filter>Engine\Renderer\Gfx\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxInstanceBuffer.h">
+      <Filter>Engine\Renderer\Gfx\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxMaterial.h">
+      <Filter>Engine\Renderer\Gfx\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxMaterialPass.h">
+      <Filter>Engine\Renderer\Gfx\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxMesh.h">
+      <Filter>Engine\Renderer\Gfx\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxPipelineCompute.h">
+      <Filter>Engine\Renderer\Gfx\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxPipelineGraphics.h">
+      <Filter>Engine\Renderer\Gfx\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxProfiler.h">
+      <Filter>Engine\Renderer\Gfx\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxRenderer.h">
+      <Filter>Engine\Renderer\Gfx\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxRenderPass.h">
+      <Filter>Engine\Renderer\Gfx\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxRenderQueue.h">
+      <Filter>Engine\Renderer\Gfx\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxResource.h">
+      <Filter>Engine\Renderer\Gfx\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxResourceManager.h">
+      <Filter>Engine\Renderer\Gfx\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxSampler.h">
+      <Filter>Engine\Renderer\Gfx\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxShader.h">
+      <Filter>Engine\Renderer\Gfx\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxSwapChain.h">
+      <Filter>Engine\Renderer\Gfx\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxTexture2D.h">
+      <Filter>Engine\Renderer\Gfx\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxTexture2DArray.h">
+      <Filter>Engine\Renderer\Gfx\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxTextureCubeMap.h">
+      <Filter>Engine\Renderer\Gfx\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxUniformBuffer.h">
+      <Filter>Engine\Renderer\Gfx\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxUniformCamera.h">
+      <Filter>Engine\Renderer\Gfx\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxUniformEngine.h">
+      <Filter>Engine\Renderer\Gfx\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxUniformMat4.h">
+      <Filter>Engine\Renderer\Gfx\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxUniformVec1.h">
+      <Filter>Engine\Renderer\Gfx\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxUniformVec2.h">
+      <Filter>Engine\Renderer\Gfx\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxUniformVec3.h">
+      <Filter>Engine\Renderer\Gfx\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxUniformVec4.h">
+      <Filter>Engine\Renderer\Gfx\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxVertexAttribute.h">
+      <Filter>Engine\Renderer\Gfx\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxVertexBuffer.h">
+      <Filter>Engine\Renderer\Gfx\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3CommandBuffer.h">
+      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3CommandBufferManager.h">
+      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3Definition.h">
+      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3Extension.h">
+      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3FrameBuffer.h">
+      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3FrameBufferManager.h">
+      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3IndexBuffer.h">
+      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3InstanceBuffer.h">
+      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3Material.h">
+      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3MaterialManager.h">
+      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3MaterialPass.h">
+      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3Mesh.h">
+      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3MeshManager.h">
+      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3Renderer.h">
+      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3RenderPass.h">
+      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3RenderPassManager.h">
+      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3Sampler.h">
+      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3SamplerManager.h">
+      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3ShaderManager.h">
+      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3SwapChain.h">
+      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3Texture2D.h">
+      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3Texture2DArray.h">
+      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3TextureCubeMap.h">
+      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3UniformBuffer.h">
+      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3UniformBufferManager.h">
+      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3VertexArrayObject.h">
+      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3VertexBuffer.h">
+      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Scene\include\SceneDefinition.h">
+      <Filter>Engine\Scene\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\event\event.h">
+      <Filter>ThirdParty\event</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\gl3w\gl3w.h">
+      <Filter>ThirdParty\gl3w</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\gl3w\glcorearb.h">
+      <Filter>ThirdParty\gl3w</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\glslc\file_includer.h">
+      <Filter>ThirdParty\glslc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\lodepng\lodepng.h">
+      <Filter>ThirdParty\lodepng</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rbtree\rbtree.h">
+      <Filter>ThirdParty\rbtree</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\tinyxml\tinystr.h">
+      <Filter>ThirdParty\tinyxml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\tinyxml\tinyxml.h">
+      <Filter>ThirdParty\tinyxml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\zlib\crc32.h">
+      <Filter>ThirdParty\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\zlib\deflate.h">
+      <Filter>ThirdParty\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\zlib\gzguts.h">
+      <Filter>ThirdParty\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\zlib\inffast.h">
+      <Filter>ThirdParty\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\zlib\inffixed.h">
+      <Filter>ThirdParty\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\zlib\inflate.h">
+      <Filter>ThirdParty\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\zlib\inftrees.h">
+      <Filter>ThirdParty\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\zlib\trees.h">
+      <Filter>ThirdParty\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\zlib\zconf.h">
+      <Filter>ThirdParty\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\zlib\zlib.h">
+      <Filter>ThirdParty\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\zlib\zutil.h">
+      <Filter>ThirdParty\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\zzip\__debug.h">
+      <Filter>ThirdParty\zzip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\zzip\__dirent.h">
+      <Filter>ThirdParty\zzip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\zzip\__hints.h">
+      <Filter>ThirdParty\zzip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\zzip\__mmap.h">
+      <Filter>ThirdParty\zzip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\zzip\_config.h">
+      <Filter>ThirdParty\zzip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\zzip\_msvc.h">
+      <Filter>ThirdParty\zzip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\zzip\conf.h">
+      <Filter>ThirdParty\zzip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\zzip\fetch.h">
+      <Filter>ThirdParty\zzip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\zzip\file.h">
+      <Filter>ThirdParty\zzip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\zzip\format.h">
+      <Filter>ThirdParty\zzip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\zzip\info.h">
+      <Filter>ThirdParty\zzip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\zzip\lib.h">
+      <Filter>ThirdParty\zzip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\zzip\plugin.h">
+      <Filter>ThirdParty\zzip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\zzip\stdint.h">
+      <Filter>ThirdParty\zzip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\zzip\types.h">
+      <Filter>ThirdParty\zzip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\zzip\zzip.h">
+      <Filter>ThirdParty\zzip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\zzip\zzip32.h">
+      <Filter>ThirdParty\zzip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxEnum.h">
+      <Filter>Engine\Renderer\Gfx\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Resource\include\ResourceLoader.h">
+      <Filter>Engine\Resource\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxMeshDraw.h">
+      <Filter>Engine\Renderer\Gfx\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3MeshDraw.h">
+      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3MeshDrawManager.h">
+      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKDevice.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKRenderer.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKInstance.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKAllocator.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKDefinition.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKQueue.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKMemory.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKMemoryAllocator.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKMemoryManager.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\spirv-cross\GLSL.std.450.h">
+      <Filter>ThirdParty\spirv-cross</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\spirv-cross\spirv.hpp">
+      <Filter>ThirdParty\spirv-cross</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\spirv-cross\spirv_cfg.hpp">
+      <Filter>ThirdParty\spirv-cross</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\spirv-cross\spirv_common.hpp">
+      <Filter>ThirdParty\spirv-cross</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\spirv-cross\spirv_cpp.hpp">
+      <Filter>ThirdParty\spirv-cross</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\spirv-cross\spirv_cross.hpp">
+      <Filter>ThirdParty\spirv-cross</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\spirv-cross\spirv_cross_parsed_ir.hpp">
+      <Filter>ThirdParty\spirv-cross</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\spirv-cross\spirv_cross_util.hpp">
+      <Filter>ThirdParty\spirv-cross</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\spirv-cross\spirv_glsl.hpp">
+      <Filter>ThirdParty\spirv-cross</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\spirv-cross\spirv_hlsl.hpp">
+      <Filter>ThirdParty\spirv-cross</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\spirv-cross\spirv_msl.hpp">
+      <Filter>ThirdParty\spirv-cross</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\spirv-cross\spirv_parser.hpp">
+      <Filter>ThirdParty\spirv-cross</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\spirv-cross\spirv_reflect.hpp">
+      <Filter>ThirdParty\spirv-cross</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKVertexBuffer.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKIndexBuffer.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKInstanceBuffer.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKUniformBuffer.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxIndirectBuffer.h">
+      <Filter>Engine\Renderer\Gfx\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3IndirectBuffer.h">
+      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKIndirectBuffer.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKExtension.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKBuffer.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKMesh.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKMeshDraw.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKMeshDrawManager.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKMeshManager.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxRenderTexture.h">
+      <Filter>Engine\Renderer\Gfx\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3RenderTexture.h">
+      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3RenderTextureManager.h">
+      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3Texture.h">
+      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKTexture2D.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKImage.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKTexture.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKTexture2DArray.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKTextureCubeMap.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKRenderTexture.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKRenderTextureManager.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKHelper.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3Helper.h">
+      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKSampler.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKSamplerManager.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKShader.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKShaderManager.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKPipeline.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKFrameBuffer.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKFrameBufferManager.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKRenderPass.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKRenderPassManager.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKSwapChain.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3TextureManager.h">
+      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3PipelineManager.h">
+      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKTextureManager.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKUniformBufferManager.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKPipelineCompute.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKPipelineGraphics.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKPipelineManager.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKMaterial.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKMaterialManager.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKMaterialPass.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VkDescriptorSet.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VkDescriptorPool.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VkDescriptorLayout.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VkDescriptorSetManager.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxSprivCross.h">
+      <Filter>Engine\Renderer\Gfx\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3Pipeline.h">
+      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3PipelineCompute.h">
+      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3PipelineGraphics.h">
+      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3Shader.h">
+      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Base\include\Task.h">
+      <Filter>Engine\Base\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Base\include\TaskPool.h">
+      <Filter>Engine\Base\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\pthreadex\pthreadex.h">
+      <Filter>ThirdParty\pthreadex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKCommandBuffer.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKCommandBufferManager.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3Buffer.h">
+      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKCommandPool.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\access_levels.h">
+      <Filter>ThirdParty\rttr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\argument.h">
+      <Filter>ThirdParty\rttr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\array_range.h">
+      <Filter>ThirdParty\rttr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\associative_mapper.h">
+      <Filter>ThirdParty\rttr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\constructor.h">
+      <Filter>ThirdParty\rttr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\destructor.h">
+      <Filter>ThirdParty\rttr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\enum_flags.h">
+      <Filter>ThirdParty\rttr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\enumeration.h">
+      <Filter>ThirdParty\rttr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\filter_item.h">
+      <Filter>ThirdParty\rttr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\instance.h">
+      <Filter>ThirdParty\rttr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\method.h">
+      <Filter>ThirdParty\rttr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\parameter_info.h">
+      <Filter>ThirdParty\rttr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\policy.h">
+      <Filter>ThirdParty\rttr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\property.h">
+      <Filter>ThirdParty\rttr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\registration.h">
+      <Filter>ThirdParty\rttr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\registration_friend.h">
+      <Filter>ThirdParty\rttr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\rttr_cast.h">
+      <Filter>ThirdParty\rttr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\rttr_enable.h">
+      <Filter>ThirdParty\rttr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\sequential_mapper.h">
+      <Filter>ThirdParty\rttr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\string_view.h">
+      <Filter>ThirdParty\rttr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\type.h">
+      <Filter>ThirdParty\rttr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\type_list.h">
+      <Filter>ThirdParty\rttr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\variant.h">
+      <Filter>ThirdParty\rttr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\variant_associative_view.h">
+      <Filter>ThirdParty\rttr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\variant_sequential_view.h">
+      <Filter>ThirdParty\rttr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\visitor.h">
+      <Filter>ThirdParty\rttr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\wrapper_mapper.h">
+      <Filter>ThirdParty\rttr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\base\core_prerequisites.h">
+      <Filter>ThirdParty\rttr\detail\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\base\pch.h">
+      <Filter>ThirdParty\rttr\detail\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\base\version.h">
+      <Filter>ThirdParty\rttr\detail\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\comparison\comparable_types.h">
+      <Filter>ThirdParty\rttr\detail\comparison</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\comparison\compare_array_equal.h">
+      <Filter>ThirdParty\rttr\detail\comparison</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\comparison\compare_array_equal_impl.h">
+      <Filter>ThirdParty\rttr\detail\comparison</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\comparison\compare_array_less.h">
+      <Filter>ThirdParty\rttr\detail\comparison</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\comparison\compare_array_less_impl.h">
+      <Filter>ThirdParty\rttr\detail\comparison</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\comparison\compare_equal.h">
+      <Filter>ThirdParty\rttr\detail\comparison</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\comparison\compare_equal_impl.h">
+      <Filter>ThirdParty\rttr\detail\comparison</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\comparison\compare_less.h">
+      <Filter>ThirdParty\rttr\detail\comparison</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\comparison\compare_less_impl.h">
+      <Filter>ThirdParty\rttr\detail\comparison</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\constructor\constructor_invoker.h">
+      <Filter>ThirdParty\rttr\detail\constructor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\constructor\constructor_wrapper.h">
+      <Filter>ThirdParty\rttr\detail\constructor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\constructor\constructor_wrapper_base.h">
+      <Filter>ThirdParty\rttr\detail\constructor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\constructor\constructor_wrapper_defaults.h">
+      <Filter>ThirdParty\rttr\detail\constructor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\conversion\number_conversion.h">
+      <Filter>ThirdParty\rttr\detail\conversion</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\conversion\std_conversion_functions.h">
+      <Filter>ThirdParty\rttr\detail\conversion</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\default_arguments\default_arguments.h">
+      <Filter>ThirdParty\rttr\detail\default_arguments</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\default_arguments\invoke_with_defaults.h">
+      <Filter>ThirdParty\rttr\detail\default_arguments</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\destructor\destructor_wrapper.h">
+      <Filter>ThirdParty\rttr\detail\destructor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\destructor\destructor_wrapper_base.h">
+      <Filter>ThirdParty\rttr\detail\destructor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\enumeration\enum_data.h">
+      <Filter>ThirdParty\rttr\detail\enumeration</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\enumeration\enumeration_helper.h">
+      <Filter>ThirdParty\rttr\detail\enumeration</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\enumeration\enumeration_wrapper.h">
+      <Filter>ThirdParty\rttr\detail\enumeration</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\enumeration\enumeration_wrapper_base.h">
+      <Filter>ThirdParty\rttr\detail\enumeration</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\filter\filter_item_funcs.h">
+      <Filter>ThirdParty\rttr\detail\filter</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\impl\argument_impl.h">
+      <Filter>ThirdParty\rttr\detail\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\impl\array_range_impl.h">
+      <Filter>ThirdParty\rttr\detail\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\impl\associative_mapper_impl.h">
+      <Filter>ThirdParty\rttr\detail\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\impl\enum_flags_impl.h">
+      <Filter>ThirdParty\rttr\detail\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\impl\instance_impl.h">
+      <Filter>ThirdParty\rttr\detail\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\impl\rttr_cast_impl.h">
+      <Filter>ThirdParty\rttr\detail\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\impl\sequential_mapper_impl.h">
+      <Filter>ThirdParty\rttr\detail\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\impl\string_view_impl.h">
+      <Filter>ThirdParty\rttr\detail\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\impl\wrapper_mapper_impl.h">
+      <Filter>ThirdParty\rttr\detail\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\metadata\metadata.h">
+      <Filter>ThirdParty\rttr\detail\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\metadata\metadata_handler.h">
+      <Filter>ThirdParty\rttr\detail\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\method\method_accessor.h">
+      <Filter>ThirdParty\rttr\detail\method</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\method\method_invoker.h">
+      <Filter>ThirdParty\rttr\detail\method</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\method\method_wrapper.h">
+      <Filter>ThirdParty\rttr\detail\method</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\method\method_wrapper_base.h">
+      <Filter>ThirdParty\rttr\detail\method</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\misc\argument_extractor.h">
+      <Filter>ThirdParty\rttr\detail\misc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\misc\argument_wrapper.h">
+      <Filter>ThirdParty\rttr\detail\misc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\misc\class_item_mapper.h">
+      <Filter>ThirdParty\rttr\detail\misc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\misc\data_address_container.h">
+      <Filter>ThirdParty\rttr\detail\misc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\misc\flat_map.h">
+      <Filter>ThirdParty\rttr\detail\misc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\misc\flat_multimap.h">
+      <Filter>ThirdParty\rttr\detail\misc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\misc\function_traits.h">
+      <Filter>ThirdParty\rttr\detail\misc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\misc\iterator_wrapper.h">
+      <Filter>ThirdParty\rttr\detail\misc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\misc\misc_type_traits.h">
+      <Filter>ThirdParty\rttr\detail\misc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\misc\register_wrapper_mapper_conversion.h">
+      <Filter>ThirdParty\rttr\detail\misc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\misc\sequential_container_type_traits.h">
+      <Filter>ThirdParty\rttr\detail\misc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\misc\std_type_traits.h">
+      <Filter>ThirdParty\rttr\detail\misc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\misc\template_type_trait.h">
+      <Filter>ThirdParty\rttr\detail\misc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\misc\template_type_trait_impl.h">
+      <Filter>ThirdParty\rttr\detail\misc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\misc\utility.h">
+      <Filter>ThirdParty\rttr\detail\misc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\parameter_info\parameter_info_wrapper.h">
+      <Filter>ThirdParty\rttr\detail\parameter_info</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\parameter_info\parameter_info_wrapper_base.h">
+      <Filter>ThirdParty\rttr\detail\parameter_info</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\parameter_info\parameter_infos.h">
+      <Filter>ThirdParty\rttr\detail\parameter_info</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\parameter_info\parameter_infos_compare.h">
+      <Filter>ThirdParty\rttr\detail\parameter_info</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\parameter_info\parameter_names.h">
+      <Filter>ThirdParty\rttr\detail\parameter_info</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\policies\ctor_policies.h">
+      <Filter>ThirdParty\rttr\detail\policies</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\policies\meth_policies.h">
+      <Filter>ThirdParty\rttr\detail\policies</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\policies\prop_policies.h">
+      <Filter>ThirdParty\rttr\detail\policies</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\property\property_accessor.h">
+      <Filter>ThirdParty\rttr\detail\property</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\property\property_wrapper.h">
+      <Filter>ThirdParty\rttr\detail\property</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\property\property_wrapper_base.h">
+      <Filter>ThirdParty\rttr\detail\property</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\property\property_wrapper_func.h">
+      <Filter>ThirdParty\rttr\detail\property</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\property\property_wrapper_member_func.h">
+      <Filter>ThirdParty\rttr\detail\property</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\property\property_wrapper_member_object.h">
+      <Filter>ThirdParty\rttr\detail\property</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\property\property_wrapper_object.h">
+      <Filter>ThirdParty\rttr\detail\property</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\registration\bind_impl.h">
+      <Filter>ThirdParty\rttr\detail\registration</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\registration\bind_types.h">
+      <Filter>ThirdParty\rttr\detail\registration</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\registration\register_base_class_from_accessor.h">
+      <Filter>ThirdParty\rttr\detail\registration</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\registration\registration_executer.h">
+      <Filter>ThirdParty\rttr\detail\registration</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\registration\registration_impl.h">
+      <Filter>ThirdParty\rttr\detail\registration</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\registration\registration_manager.h">
+      <Filter>ThirdParty\rttr\detail\registration</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\registration\registration_state_saver.h">
+      <Filter>ThirdParty\rttr\detail\registration</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\type\accessor_type.h">
+      <Filter>ThirdParty\rttr\detail\type</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\type\base_classes.h">
+      <Filter>ThirdParty\rttr\detail\type</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\type\get_create_variant_func.h">
+      <Filter>ThirdParty\rttr\detail\type</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\type\get_derived_info_func.h">
+      <Filter>ThirdParty\rttr\detail\type</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\type\type_comparator.h">
+      <Filter>ThirdParty\rttr\detail\type</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\type\type_converter.h">
+      <Filter>ThirdParty\rttr\detail\type</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\type\type_data.h">
+      <Filter>ThirdParty\rttr\detail\type</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\type\type_impl.h">
+      <Filter>ThirdParty\rttr\detail\type</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\type\type_name.h">
+      <Filter>ThirdParty\rttr\detail\type</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\type\type_register.h">
+      <Filter>ThirdParty\rttr\detail\type</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\type\type_register_p.h">
+      <Filter>ThirdParty\rttr\detail\type</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\type\type_string_utils.h">
+      <Filter>ThirdParty\rttr\detail\type</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\variant\variant_compare.h">
+      <Filter>ThirdParty\rttr\detail\variant</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\variant\variant_data.h">
+      <Filter>ThirdParty\rttr\detail\variant</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\variant\variant_data_converter.h">
+      <Filter>ThirdParty\rttr\detail\variant</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\variant\variant_data_policy.h">
+      <Filter>ThirdParty\rttr\detail\variant</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\variant\variant_impl.h">
+      <Filter>ThirdParty\rttr\detail\variant</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\variant_associative_view\variant_associative_view_creator.h">
+      <Filter>ThirdParty\rttr\detail\variant_associative_view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\variant_associative_view\variant_associative_view_creator_impl.h">
+      <Filter>ThirdParty\rttr\detail\variant_associative_view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\variant_associative_view\variant_associative_view_private.h">
+      <Filter>ThirdParty\rttr\detail\variant_associative_view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\variant_sequential_view\variant_sequential_view_creator.h">
+      <Filter>ThirdParty\rttr\detail\variant_sequential_view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\variant_sequential_view\variant_sequential_view_creator_impl.h">
+      <Filter>ThirdParty\rttr\detail\variant_sequential_view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\variant_sequential_view\variant_sequential_view_private.h">
+      <Filter>ThirdParty\rttr\detail\variant_sequential_view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\visitor\constructor_visitor_invoker.h">
+      <Filter>ThirdParty\rttr\detail\visitor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\visitor\create_type_visitor_func.h">
+      <Filter>ThirdParty\rttr\detail\visitor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\visitor\create_type_visitor_func_impl.h">
+      <Filter>ThirdParty\rttr\detail\visitor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\visitor\method_visitor_invoker.h">
+      <Filter>ThirdParty\rttr\detail\visitor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\visitor\property_visitor_invoker.h">
+      <Filter>ThirdParty\rttr\detail\visitor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\visitor\type_visitor_invoker.h">
+      <Filter>ThirdParty\rttr\detail\visitor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\visitor\visitor_impl.h">
+      <Filter>ThirdParty\rttr\detail\visitor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\visitor\visitor_iterator.h">
+      <Filter>ThirdParty\rttr\detail\visitor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\visitor\visitor_registration.h">
+      <Filter>ThirdParty\rttr\detail\visitor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxDescriptorLayout.h">
+      <Filter>Engine\Renderer\Gfx\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxDescriptorSet.h">
+      <Filter>Engine\Renderer\Gfx\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3DescriptorLayout.h">
+      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3DescriptorSet.h">
+      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandBeginRenderPass.h">
+      <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandBindFrameBuffer.h">
+      <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandBindMaterialPass.h">
+      <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandBindMeshDraw.h">
+      <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandBindPipelineCompute.h">
+      <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandBindPipelineGraphics.h">
+      <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandBindSubPassInputTexture.h">
+      <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandBindUniformBuffer.h">
+      <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandClearColor.h">
+      <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandClearDepth.h">
+      <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandDrawElements.h">
+      <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandDrawIndirect.h">
+      <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandDrawInstance.h">
+      <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandEndRenderPass.h">
+      <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandExecute.h">
+      <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandInvalidateFramebuffer.h">
+      <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandPopDebugGroup.h">
+      <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandPushDebugGroup.h">
+      <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandResolve.h">
+      <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandSetInstanceBufferData.h">
+      <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandSetScissor.h">
+      <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandSetViewport.h">
+      <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandUniform1f.h">
+      <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandUniform1fv.h">
+      <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandUniform1i.h">
+      <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandUniform1iv.h">
+      <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandUniform2f.h">
+      <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandUniform2fv.h">
+      <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandUniform2i.h">
+      <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandUniform2iv.h">
+      <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandUniform3f.h">
+      <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandUniform3fv.h">
+      <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandUniform3i.h">
+      <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandUniform3iv.h">
+      <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandUniform4f.h">
+      <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandUniform4fv.h">
+      <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandUniform4i.h">
+      <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandUniform4iv.h">
+      <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandUniformMatrix2fv.h">
+      <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandUniformMatrix3fv.h">
+      <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandUniformMatrix4fv.h">
+      <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3DescriptorLayoutManager.h">
+      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3DescriptorSetManager.h">
+      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\Engine\ThirdParty\eastl\source\allocator_eastl.cpp">
+      <Filter>ThirdParty\eastl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\eastl\source\assert.cpp">
+      <Filter>ThirdParty\eastl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\eastl\source\fixed_pool.cpp">
+      <Filter>ThirdParty\eastl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\eastl\source\hashtable.cpp">
+      <Filter>ThirdParty\eastl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\eastl\source\intrusive_list.cpp">
+      <Filter>ThirdParty\eastl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\eastl\source\new.cpp">
+      <Filter>ThirdParty\eastl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\eastl\source\numeric_limits.cpp">
+      <Filter>ThirdParty\eastl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\eastl\source\red_black_tree.cpp">
+      <Filter>ThirdParty\eastl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\eastl\source\string.cpp">
+      <Filter>ThirdParty\eastl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\eastl\source\thread_support.cpp">
+      <Filter>ThirdParty\eastl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Base\src\File.cpp">
+      <Filter>Engine\Base\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Base\src\FileManager.cpp">
+      <Filter>Engine\Base\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Base\src\Stream.cpp">
+      <Filter>Engine\Base\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Base\src\TaskGraph.cpp">
+      <Filter>Engine\Base\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Base\src\Utils.cpp">
+      <Filter>Engine\Base\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Base\src\nvwa\debug_new.cpp">
+      <Filter>Engine\Base\Source Files\nvwa</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Base\src\nvwa\operator_new.cpp">
+      <Filter>Engine\Base\Source Files\nvwa</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Memory\src\Allocator.cpp">
+      <Filter>Engine\Memory\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Memory\src\MemoryHeap.cpp">
+      <Filter>Engine\Memory\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Memory\src\MemoryPool.cpp">
+      <Filter>Engine\Memory\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Memory\src\MemorySystem.cpp">
+      <Filter>Engine\Memory\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Compiler\src\ShaderCompiler.cpp">
+      <Filter>Engine\Renderer\Compiler\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Scene\src\Scene.cpp">
+      <Filter>Engine\Scene\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Scene\src\SceneManager.cpp">
+      <Filter>Engine\Scene\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Scene\src\SceneNode.cpp">
+      <Filter>Engine\Scene\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Base\src\Lock.cpp">
+      <Filter>Engine\Base\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Engine\src\Engine.cpp">
+      <Filter>Engine\Engine\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Scene\src\ComponentMesh.cpp">
+      <Filter>Engine\Scene\Source Files\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Scene\src\ComponentParticle.cpp">
+      <Filter>Engine\Scene\Source Files\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Scene\src\ComponentPointLight.cpp">
+      <Filter>Engine\Scene\Source Files\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Scene\src\ComponentSkin.cpp">
+      <Filter>Engine\Scene\Source Files\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Engine\src\RenderSolutionBase.cpp">
+      <Filter>Engine\Engine\Source Files\RenderSolution</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Engine\src\RenderSolutionDefault.cpp">
+      <Filter>Engine\Engine\Source Files\RenderSolution</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Engine\src\RenderSolutionDeferred.cpp">
+      <Filter>Engine\Engine\Source Files\RenderSolution</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Engine\src\RenderSolutionForward.cpp">
+      <Filter>Engine\Engine\Source Files\RenderSolution</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Engine\src\RenderSolutionForwardPlus.cpp">
+      <Filter>Engine\Engine\Source Files\RenderSolution</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxCamera.cpp">
+      <Filter>Engine\Renderer\Gfx\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxProfiler.cpp">
+      <Filter>Engine\Renderer\Gfx\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxRenderer.cpp">
+      <Filter>Engine\Renderer\Gfx\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxRenderQueue.cpp">
+      <Filter>Engine\Renderer\Gfx\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxResource.cpp">
+      <Filter>Engine\Renderer\Gfx\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxResourceManager.cpp">
+      <Filter>Engine\Renderer\Gfx\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxUniformCamera.cpp">
+      <Filter>Engine\Renderer\Gfx\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxUniformEngine.cpp">
+      <Filter>Engine\Renderer\Gfx\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxUniformMat4.cpp">
+      <Filter>Engine\Renderer\Gfx\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxUniformVec1.cpp">
+      <Filter>Engine\Renderer\Gfx\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxUniformVec2.cpp">
+      <Filter>Engine\Renderer\Gfx\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxUniformVec3.cpp">
+      <Filter>Engine\Renderer\Gfx\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxUniformVec4.cpp">
+      <Filter>Engine\Renderer\Gfx\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxVertexAttribute.cpp">
+      <Filter>Engine\Renderer\Gfx\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3CommandBuffer.cpp">
+      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3CommandBufferManager.cpp">
+      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3Extension.cpp">
+      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3FrameBuffer.cpp">
+      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3FrameBufferManager.cpp">
+      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3IndexBuffer.cpp">
+      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3InstanceBuffer.cpp">
+      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3Material.cpp">
+      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3MaterialManager.cpp">
+      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3MaterialPass.cpp">
+      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3Mesh.cpp">
+      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3MeshManager.cpp">
+      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3Renderer.cpp">
+      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3RenderPass.cpp">
+      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3RenderPassManager.cpp">
+      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3Sampler.cpp">
+      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3SamplerManager.cpp">
+      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3ShaderManager.cpp">
+      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3SwapChain.cpp">
+      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3Texture2D.cpp">
+      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3Texture2DArray.cpp">
+      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3TextureCubeMap.cpp">
+      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3UniformBuffer.cpp">
+      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3UniformBufferManager.cpp">
+      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3VertexArrayObject.cpp">
+      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3VertexBuffer.cpp">
+      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\event\event.c">
+      <Filter>ThirdParty\event</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\gl3w\gl3w.c">
+      <Filter>ThirdParty\gl3w</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\glslc\file_includer.cc">
+      <Filter>ThirdParty\glslc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\lodepng\lodepng.cpp">
+      <Filter>ThirdParty\lodepng</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\rbtree\rbtree.cpp">
+      <Filter>ThirdParty\rbtree</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\tinyxml\tinystr.cpp">
+      <Filter>ThirdParty\tinyxml</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\tinyxml\tinyxml.cpp">
+      <Filter>ThirdParty\tinyxml</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\tinyxml\tinyxmlerror.cpp">
+      <Filter>ThirdParty\tinyxml</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\tinyxml\tinyxmlparser.cpp">
+      <Filter>ThirdParty\tinyxml</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\zlib\adler32.c">
+      <Filter>ThirdParty\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\zlib\compress.c">
+      <Filter>ThirdParty\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\zlib\crc32.c">
+      <Filter>ThirdParty\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\zlib\deflate.c">
+      <Filter>ThirdParty\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\zlib\gzclose.c">
+      <Filter>ThirdParty\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\zlib\gzlib.c">
+      <Filter>ThirdParty\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\zlib\gzread.c">
+      <Filter>ThirdParty\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\zlib\gzwrite.c">
+      <Filter>ThirdParty\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\zlib\infback.c">
+      <Filter>ThirdParty\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\zlib\inffast.c">
+      <Filter>ThirdParty\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\zlib\inflate.c">
+      <Filter>ThirdParty\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\zlib\inftrees.c">
+      <Filter>ThirdParty\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\zlib\trees.c">
+      <Filter>ThirdParty\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\zlib\uncompr.c">
+      <Filter>ThirdParty\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\zlib\zutil.c">
+      <Filter>ThirdParty\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\zzip\dir.c">
+      <Filter>ThirdParty\zzip</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\zzip\err.c">
+      <Filter>ThirdParty\zzip</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\zzip\fetch.c">
+      <Filter>ThirdParty\zzip</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\zzip\file.c">
+      <Filter>ThirdParty\zzip</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\zzip\info.c">
+      <Filter>ThirdParty\zzip</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\zzip\plugin.c">
+      <Filter>ThirdParty\zzip</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\zzip\stat.c">
+      <Filter>ThirdParty\zzip</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\zzip\zip.c">
+      <Filter>ThirdParty\zzip</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Resource\src\ResourceLoader.cpp">
+      <Filter>Engine\Resource\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Resource\src\ResourceLoaderMaterial.cpp">
+      <Filter>Engine\Resource\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Resource\src\ResourceLoaderMesh.cpp">
+      <Filter>Engine\Resource\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Resource\src\ResourceLoaderShader.cpp">
+      <Filter>Engine\Resource\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Resource\src\ResourceLoaderTexture.cpp">
+      <Filter>Engine\Resource\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Resource\src\ResourceLoaderSceneMesh.cpp">
+      <Filter>Engine\Resource\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3MeshDraw.cpp">
+      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3MeshDrawManager.cpp">
+      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKDevice.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKRenderer.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKInstance.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKAllocator.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKQueue.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKMemory.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKMemoryAllocator.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKMemoryManager.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\spirv-cross\spirv_cfg.cpp">
+      <Filter>ThirdParty\spirv-cross</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\spirv-cross\spirv_cpp.cpp">
+      <Filter>ThirdParty\spirv-cross</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\spirv-cross\spirv_cross.cpp">
+      <Filter>ThirdParty\spirv-cross</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\spirv-cross\spirv_cross_parsed_ir.cpp">
+      <Filter>ThirdParty\spirv-cross</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\spirv-cross\spirv_cross_util.cpp">
+      <Filter>ThirdParty\spirv-cross</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\spirv-cross\spirv_glsl.cpp">
+      <Filter>ThirdParty\spirv-cross</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\spirv-cross\spirv_hlsl.cpp">
+      <Filter>ThirdParty\spirv-cross</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\spirv-cross\spirv_msl.cpp">
+      <Filter>ThirdParty\spirv-cross</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\spirv-cross\spirv_parser.cpp">
+      <Filter>ThirdParty\spirv-cross</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\spirv-cross\spirv_reflect.cpp">
+      <Filter>ThirdParty\spirv-cross</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKVertexBuffer.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKIndexBuffer.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKInstanceBuffer.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKUniformBuffer.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3IndirectBuffer.cpp">
+      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKIndirectBuffer.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKExtension.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKBuffer.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKMesh.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKMeshDraw.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKMeshDrawManager.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKMeshManager.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3RenderTexture.cpp">
+      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3RenderTextureManager.cpp">
+      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3Texture.cpp">
+      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKTexture2D.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKImage.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKTexture.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKTexture2DArray.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKTexture2DCubeMap.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKRenderTexture.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKRenderTextureManager.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKHelper.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3Helper.cpp">
+      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKSampler.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKSamplerManager.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKShader.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKShaderManager.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKPipeline.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKFrameBuffer.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKFrameBufferManager.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKRenderPass.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKRenderPassManager.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKSwapChain.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3TextureManager.cpp">
+      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3PipelineManager.cpp">
+      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKTextureManager.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKUniformBufferManager.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKPipelineCompute.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKPipelineGraphics.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKPipelineManager.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKMaterial.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKMaterialManager.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKMaterialPass.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VkDescriptorSet.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VkDescriptorPool.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VkDescriptorLayout.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VkDescriptorSetManager.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxSprivCross.cpp">
+      <Filter>Engine\Renderer\Gfx\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3Pipeline.cpp">
+      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3PipelineCompute.cpp">
+      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3PipelineGraphics.cpp">
+      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3Shader.cpp">
+      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Base\src\Task.cpp">
+      <Filter>Engine\Base\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Base\src\TaskPool.cpp">
+      <Filter>Engine\Base\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\pthreadex\pthreadex.c">
+      <Filter>ThirdParty\pthreadex</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKCommandBuffer.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKCommandBufferManager.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3Buffer.cpp">
+      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKCommandPool.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\rttr\constructor.cpp">
+      <Filter>ThirdParty\rttr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\rttr\destructor.cpp">
+      <Filter>ThirdParty\rttr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\rttr\enumeration.cpp">
+      <Filter>ThirdParty\rttr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\rttr\method.cpp">
+      <Filter>ThirdParty\rttr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\rttr\parameter_info.cpp">
+      <Filter>ThirdParty\rttr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\rttr\policy.cpp">
+      <Filter>ThirdParty\rttr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\rttr\property.cpp">
+      <Filter>ThirdParty\rttr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\rttr\registration.cpp">
+      <Filter>ThirdParty\rttr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\rttr\type.cpp">
+      <Filter>ThirdParty\rttr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\rttr\variant.cpp">
+      <Filter>ThirdParty\rttr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\rttr\variant_associative_view.cpp">
+      <Filter>ThirdParty\rttr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\rttr\variant_sequential_view.cpp">
+      <Filter>ThirdParty\rttr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\rttr\visitor.cpp">
+      <Filter>ThirdParty\rttr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\rttr\detail\comparison\compare_equal.cpp">
+      <Filter>ThirdParty\rttr\detail\comparison</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\rttr\detail\comparison\compare_less.cpp">
+      <Filter>ThirdParty\rttr\detail\comparison</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\rttr\detail\constructor\constructor_wrapper_base.cpp">
+      <Filter>ThirdParty\rttr\detail\constructor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\rttr\detail\conversion\std_conversion_functions.cpp">
+      <Filter>ThirdParty\rttr\detail\conversion</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\rttr\detail\destructor\destructor_wrapper_base.cpp">
+      <Filter>ThirdParty\rttr\detail\destructor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\rttr\detail\enumeration\enumeration_helper.cpp">
+      <Filter>ThirdParty\rttr\detail\enumeration</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\rttr\detail\enumeration\enumeration_wrapper_base.cpp">
+      <Filter>ThirdParty\rttr\detail\enumeration</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\rttr\detail\method\method_wrapper_base.cpp">
+      <Filter>ThirdParty\rttr\detail\method</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\rttr\detail\misc\standard_types.cpp">
+      <Filter>ThirdParty\rttr\detail\misc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\rttr\detail\parameter_info\parameter_info_wrapper_base.cpp">
+      <Filter>ThirdParty\rttr\detail\parameter_info</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\rttr\detail\property\property_wrapper_base.cpp">
+      <Filter>ThirdParty\rttr\detail\property</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\rttr\detail\registration\registration_executer.cpp">
+      <Filter>ThirdParty\rttr\detail\registration</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\rttr\detail\registration\registration_state_saver.cpp">
+      <Filter>ThirdParty\rttr\detail\registration</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\rttr\detail\type\type_data.cpp">
+      <Filter>ThirdParty\rttr\detail\type</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\rttr\detail\type\type_register.cpp">
+      <Filter>ThirdParty\rttr\detail\type</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\rttr\detail\variant\variant_compare.cpp">
+      <Filter>ThirdParty\rttr\detail\variant</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3DescriptorLayout.cpp">
+      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3DescriptorSet.cpp">
+      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3DescriptorLayoutManager.cpp">
+      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3DescriptorSetManager.cpp">
+      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\..\Engine\ThirdParty\rttr\CMakeLists.txt">
+      <Filter>ThirdParty\rttr</Filter>
+    </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\Engine\ThirdParty\rttr\registration">
+      <Filter>ThirdParty\rttr</Filter>
+    </None>
+    <None Include="..\..\Engine\ThirdParty\rttr\registration_friend">
+      <Filter>ThirdParty\rttr</Filter>
+    </None>
+    <None Include="..\..\Engine\ThirdParty\rttr\rttr.cmake">
+      <Filter>ThirdParty\rttr</Filter>
+    </None>
+    <None Include="..\..\Engine\ThirdParty\rttr\type">
+      <Filter>ThirdParty\rttr</Filter>
+    </None>
+  </ItemGroup>
+</Project>

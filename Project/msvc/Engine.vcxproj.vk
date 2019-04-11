@@ -1,0 +1,843 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>15.0</VCProjectVersion>
+    <ProjectGuid>{705A8E79-859B-4729-B34E-D4D029D92F6F}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>Engine</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>..\..\Bin\$(Platform)\</OutDir>
+    <IntDir>..\..\Bin\Temp\$(Platform)\$(TargetName)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>..\..\Bin\$(Platform)\</OutDir>
+    <IntDir>..\..\Bin\Temp\$(Platform)\$(TargetName)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>..\..\Bin\$(Platform)\</OutDir>
+    <IntDir>..\..\Bin\Temp\$(Platform)\$(TargetName)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>..\..\Bin\$(Platform)\</OutDir>
+    <IntDir>..\..\Bin\Temp\$(Platform)\$(TargetName)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>GLES_VER=310;HAVE_EASTL;MEMORY_ALLOCATOR;PLATFORM_WINDOWS;VK_USE_PLATFORM_WIN32_KHR;WIN32;NDEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(VULKAN_SDK)/include;$(VULKAN_SDK)/spirv-tools/include;$(VULKAN_SDK)/shaderc/libshaderc/include;$(VULKAN_SDK)/shaderc/libshaderc_util/include;../../Engine;../../Engine/ThirdParty;../../Engine/ThirdParty/eastl;../../Engine/ThirdParty/es;../../Engine/ThirdParty/event;../../Engine/ThirdParty/gl3w;../../Engine/ThirdParty/gli;../../Engine/ThirdParty/glm;../../Engine/ThirdParty/glslc;../../Engine/ThirdParty/lodepng;../../Engine/ThirdParty/pthread/include;../../Engine/ThirdParty/pthreadex;../../Engine/ThirdParty/rbtree;../../Engine/ThirdParty/spirv-cross;../../Engine/ThirdParty/tinyxml;../../Engine/ThirdParty/zlib;../../Engine/Base/include;../../Engine/Memory/include;../../Engine/Renderer/Gfx/include;../../Engine/Renderer/GLES3/include;../../Engine/Renderer/Vulkan/include;../../Engine/Renderer/Compiler/include;../../Engine/Resource/include;../../Engine/Scene/include;../../Engine/Engine/include</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <DisableSpecificWarnings>4996;4312;4267;4251;4244;4311;4302</DisableSpecificWarnings>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <AdditionalLibraryDirectories>$(VULKAN_SDK)/Lib32;../../Engine/ThirdParty/pthread/x86</AdditionalLibraryDirectories>
+      <AdditionalDependencies>vulkan-1.lib;shaderc_combined.lib;pthreadVC2.lib;opengl32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>false</IntrinsicFunctions>
+      <PreprocessorDefinitions>GLES_VER=310;NOMINMAX;MEMORY_ALLOCATOR;PLATFORM_WINDOWS;VK_USE_PLATFORM_WIN32_KHR;WIN32;DEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(VULKAN_SDK)/include;$(VULKAN_SDK)/spirv-tools/include;$(VULKAN_SDK)/shaderc/libshaderc/include;$(VULKAN_SDK)/shaderc/libshaderc_util/include;../../Engine;../../Engine/ThirdParty;../../Engine/ThirdParty/eastl;../../Engine/ThirdParty/es;../../Engine/ThirdParty/event;../../Engine/ThirdParty/gl3w;../../Engine/ThirdParty/gli;../../Engine/ThirdParty/glm;../../Engine/ThirdParty/glslc;../../Engine/ThirdParty/lodepng;../../Engine/ThirdParty/pthread/include;../../Engine/ThirdParty/pthreadex;../../Engine/ThirdParty/rbtree;../../Engine/ThirdParty/spirv-cross;../../Engine/ThirdParty/tinyxml;../../Engine/ThirdParty/zlib;../../Engine/Base/include;../../Engine/Memory/include;../../Engine/Renderer/Gfx/include;../../Engine/Renderer/GLES3/include;../../Engine/Renderer/Vulkan/include;../../Engine/Renderer/Compiler/include;../../Engine/Resource/include;../../Engine/Scene/include;../../Engine/Engine/include</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <DisableSpecificWarnings>4996;4312;4267;4251;4244;4311;4302</DisableSpecificWarnings>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <AdditionalLibraryDirectories>$(VULKAN_SDK)/Lib32;../../Engine/ThirdParty/pthread/x86</AdditionalLibraryDirectories>
+      <AdditionalDependencies>vulkan-1.lib;shaderc_combined.lib;pthreadVC2.lib;opengl32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>GLES_VER=310;HAVE_EASTL;MEMORY_ALLOCATOR;PLATFORM_WINDOWS;VK_USE_PLATFORM_WIN32_KHR;__LP64__;NDEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(VULKAN_SDK)/include;$(VULKAN_SDK)/spirv-tools/include;$(VULKAN_SDK)/shaderc/libshaderc/include;$(VULKAN_SDK)/shaderc/libshaderc_util/include;../../Engine;../../Engine/ThirdParty;../../Engine/ThirdParty/eastl;../../Engine/ThirdParty/es;../../Engine/ThirdParty/event;../../Engine/ThirdParty/gl3w;../../Engine/ThirdParty/gli;../../Engine/ThirdParty/glm;../../Engine/ThirdParty/glslc;../../Engine/ThirdParty/lodepng;../../Engine/ThirdParty/pthread/include;../../Engine/ThirdParty/pthreadex;../../Engine/ThirdParty/rbtree;../../Engine/ThirdParty/spirv-cross;../../Engine/ThirdParty/tinyxml;../../Engine/ThirdParty/zlib;../../Engine/Base/include;../../Engine/Memory/include;../../Engine/Renderer/Gfx/include;../../Engine/Renderer/GLES3/include;../../Engine/Renderer/Vulkan/include;../../Engine/Renderer/Compiler/include;../../Engine/Resource/include;../../Engine/Scene/include;../../Engine/Engine/include</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <DisableSpecificWarnings>4996;4312;4267;4251;4244;4311;4302</DisableSpecificWarnings>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <AdditionalLibraryDirectories>$(VULKAN_SDK)/Lib;../../Engine/ThirdParty/pthread/x64</AdditionalLibraryDirectories>
+      <AdditionalDependencies>vulkan-1.lib;shaderc_combined.lib;pthreadVC2.lib;opengl32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>false</IntrinsicFunctions>
+      <PreprocessorDefinitions>GLES_VER=310;NOMINMAX;MEMORY_ALLOCATOR;PLATFORM_WINDOWS;VK_USE_PLATFORM_WIN32_KHR;__LP64__;DEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(VULKAN_SDK)/include;$(VULKAN_SDK)/spirv-tools/include;$(VULKAN_SDK)/shaderc/libshaderc/include;$(VULKAN_SDK)/shaderc/libshaderc_util/include;../../Engine;../../Engine/ThirdParty;../../Engine/ThirdParty/eastl;../../Engine/ThirdParty/es;../../Engine/ThirdParty/event;../../Engine/ThirdParty/gl3w;../../Engine/ThirdParty/gli;../../Engine/ThirdParty/glm;../../Engine/ThirdParty/glslc;../../Engine/ThirdParty/lodepng;../../Engine/ThirdParty/pthread/include;../../Engine/ThirdParty/pthreadex;../../Engine/ThirdParty/rbtree;../../Engine/ThirdParty/spirv-cross;../../Engine/ThirdParty/tinyxml;../../Engine/ThirdParty/zlib;../../Engine/Base/include;../../Engine/Memory/include;../../Engine/Renderer/Gfx/include;../../Engine/Renderer/GLES3/include;../../Engine/Renderer/Vulkan/include;../../Engine/Renderer/Compiler/include;../../Engine/Resource/include;../../Engine/Scene/include;../../Engine/Engine/include</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <DisableSpecificWarnings>4996;4312;4267;4251;4244;4311;4302</DisableSpecificWarnings>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <OmitFramePointers>false</OmitFramePointers>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <AdditionalLibraryDirectories>$(VULKAN_SDK)/Lib;../../Engine/ThirdParty/pthread/x64</AdditionalLibraryDirectories>
+      <AdditionalDependencies>vulkan-1.lib;shaderc_combined.lib;pthreadVC2.lib;opengl32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\Engine\Base\include\Delegate.h" />
+    <ClInclude Include="..\..\Engine\Base\include\File.h" />
+    <ClInclude Include="..\..\Engine\Base\include\FileManager.h" />
+    <ClInclude Include="..\..\Engine\Base\include\Lock.h" />
+    <ClInclude Include="..\..\Engine\Base\include\SharedPtr.h" />
+    <ClInclude Include="..\..\Engine\Base\include\Stream.h" />
+    <ClInclude Include="..\..\Engine\Base\include\Task.h" />
+    <ClInclude Include="..\..\Engine\Base\include\TaskGraph.h" />
+    <ClInclude Include="..\..\Engine\Base\include\TaskPool.h" />
+    <ClInclude Include="..\..\Engine\Base\include\Utils.h" />
+    <ClInclude Include="..\..\Engine\Base\src\nvwa\c++11.h" />
+    <ClInclude Include="..\..\Engine\Base\src\nvwa\debug_new.h" />
+    <ClInclude Include="..\..\Engine\Base\src\nvwa\fast_mutex.h" />
+    <ClInclude Include="..\..\Engine\Base\src\nvwa\static_assert.h" />
+    <ClInclude Include="..\..\Engine\EngineHeader.h" />
+    <ClInclude Include="..\..\Engine\Engine\include\Engine.h" />
+    <ClInclude Include="..\..\Engine\Engine\include\RenderSolutionBase.h" />
+    <ClInclude Include="..\..\Engine\Engine\include\RenderSolutionDefault.h" />
+    <ClInclude Include="..\..\Engine\Engine\include\RenderSolutionDeferred.h" />
+    <ClInclude Include="..\..\Engine\Engine\include\RenderSolutionForward.h" />
+    <ClInclude Include="..\..\Engine\Engine\include\RenderSolutionForwardPlus.h" />
+    <ClInclude Include="..\..\Engine\GfxHeader.h" />
+    <ClInclude Include="..\..\Engine\Memory\include\Allocator.h" />
+    <ClInclude Include="..\..\Engine\Memory\src\MemoryHeap.h" />
+    <ClInclude Include="..\..\Engine\Memory\src\MemoryPool.h" />
+    <ClInclude Include="..\..\Engine\Memory\src\MemorySystem.h" />
+    <ClInclude Include="..\..\Engine\PreHeader.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Compiler\include\ShaderCompiler.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxCamera.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxCommandBuffer.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxDefinition.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxDescriptorLayout.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxDescriptorSet.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxEnum.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxFrameBuffer.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxGLM.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxIndexBuffer.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxIndirectBuffer.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxInstanceBuffer.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxMaterial.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxMaterialPass.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxMesh.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxMeshDraw.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxPipelineCompute.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxPipelineGraphics.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxProfiler.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxRenderer.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxRenderPass.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxRenderQueue.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxRenderTexture.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxResource.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxResourceManager.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxSampler.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxShader.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxSprivCross.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxSwapChain.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxTexture2D.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxTexture2DArray.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxTextureCubeMap.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxUniformBuffer.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxUniformCamera.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxUniformEngine.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxUniformMat4.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxUniformVec1.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxUniformVec2.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxUniformVec3.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxUniformVec4.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxVertexAttribute.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxVertexBuffer.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3Buffer.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3CommandBuffer.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3CommandBufferManager.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3Definition.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3DescriptorLayout.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3DescriptorLayoutManager.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3DescriptorSet.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3DescriptorSetManager.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3Extension.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3FrameBuffer.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3FrameBufferManager.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3Helper.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3IndexBuffer.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3IndirectBuffer.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3InstanceBuffer.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3Material.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3MaterialManager.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3MaterialPass.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3Mesh.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3MeshDraw.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3MeshDrawManager.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3MeshManager.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3Pipeline.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3PipelineCompute.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3PipelineGraphics.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3PipelineManager.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3Renderer.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3RenderPass.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3RenderPassManager.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3RenderTexture.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3RenderTextureManager.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3Sampler.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3SamplerManager.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3Shader.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3ShaderManager.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3SwapChain.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3Texture.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3Texture2D.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3Texture2DArray.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3TextureCubeMap.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3TextureManager.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3UniformBuffer.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3UniformBufferManager.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3VertexArrayObject.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3VertexBuffer.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandBeginRenderPass.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandBindFrameBuffer.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandBindMaterialPass.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandBindMeshDraw.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandBindPipelineCompute.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandBindPipelineGraphics.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandBindSubPassInputTexture.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandBindUniformBuffer.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandClearColor.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandClearDepth.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandDrawElements.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandDrawIndirect.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandDrawInstance.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandEndRenderPass.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandExecute.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandInvalidateFramebuffer.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandPopDebugGroup.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandPushDebugGroup.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandResolve.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandSetInstanceBufferData.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandSetScissor.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandSetViewport.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandUniform1f.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandUniform1fv.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandUniform1i.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandUniform1iv.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandUniform2f.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandUniform2fv.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandUniform2i.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandUniform2iv.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandUniform3f.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandUniform3fv.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandUniform3i.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandUniform3iv.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandUniform4f.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandUniform4fv.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandUniform4i.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandUniform4iv.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandUniformMatrix2fv.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandUniformMatrix3fv.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandUniformMatrix4fv.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKAllocator.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKBuffer.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKCommandBuffer.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKCommandBufferManager.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKCommandPool.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKDefinition.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VkDescriptorLayout.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VkDescriptorPool.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VkDescriptorSet.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VkDescriptorSetManager.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKDevice.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKExtension.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKFrameBuffer.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKFrameBufferManager.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKHelper.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKImage.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKIndexBuffer.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKIndirectBuffer.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKInstance.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKInstanceBuffer.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKMaterial.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKMaterialManager.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKMaterialPass.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKMemory.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKMemoryAllocator.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKMemoryManager.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKMesh.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKMeshDraw.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKMeshDrawManager.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKMeshManager.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKPipeline.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKPipelineCompute.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKPipelineGraphics.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKPipelineManager.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKQueue.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKRenderer.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKRenderPass.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKRenderPassManager.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKRenderTexture.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKRenderTextureManager.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKSampler.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKSamplerManager.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKShader.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKShaderManager.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKSwapChain.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKTexture.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKTexture2D.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKTexture2DArray.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKTextureCubeMap.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKTextureManager.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKUniformBuffer.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKUniformBufferManager.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKVertexBuffer.h" />
+    <ClInclude Include="..\..\Engine\Resource\include\ResourceLoader.h" />
+    <ClInclude Include="..\..\Engine\SceneHeader.h" />
+    <ClInclude Include="..\..\Engine\Scene\include\Component.h" />
+    <ClInclude Include="..\..\Engine\Scene\include\ComponentManager.h" />
+    <ClInclude Include="..\..\Engine\Scene\include\ComponentMesh.h" />
+    <ClInclude Include="..\..\Engine\Scene\include\ComponentParticle.h" />
+    <ClInclude Include="..\..\Engine\Scene\include\ComponentPointLight.h" />
+    <ClInclude Include="..\..\Engine\Scene\include\ComponentSkin.h" />
+    <ClInclude Include="..\..\Engine\Scene\include\Scene.h" />
+    <ClInclude Include="..\..\Engine\Scene\include\SceneDefinition.h" />
+    <ClInclude Include="..\..\Engine\Scene\include\SceneManager.h" />
+    <ClInclude Include="..\..\Engine\Scene\include\SceneNode.h" />
+    <ClInclude Include="..\..\Engine\Scene\src\TaskComponentUpdateCamera.h" />
+    <ClInclude Include="..\..\Engine\Scene\src\TaskComponentUpdateLogic.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\event\event.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\gl3w\gl3w.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\gl3w\glcorearb.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\glslc\file_includer.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\lodepng\lodepng.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\pthreadex\pthreadex.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rbtree\rbtree.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\access_levels.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\argument.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\array_range.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\associative_mapper.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\constructor.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\destructor.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\base\core_prerequisites.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\base\pch.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\base\version.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\comparison\comparable_types.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\comparison\compare_array_equal.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\comparison\compare_array_equal_impl.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\comparison\compare_array_less.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\comparison\compare_array_less_impl.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\comparison\compare_equal.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\comparison\compare_equal_impl.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\comparison\compare_less.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\comparison\compare_less_impl.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\constructor\constructor_invoker.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\constructor\constructor_wrapper.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\constructor\constructor_wrapper_base.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\constructor\constructor_wrapper_defaults.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\conversion\number_conversion.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\conversion\std_conversion_functions.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\default_arguments\default_arguments.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\default_arguments\invoke_with_defaults.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\destructor\destructor_wrapper.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\destructor\destructor_wrapper_base.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\enumeration\enumeration_helper.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\enumeration\enumeration_wrapper.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\enumeration\enumeration_wrapper_base.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\enumeration\enum_data.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\filter\filter_item_funcs.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\impl\argument_impl.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\impl\array_range_impl.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\impl\associative_mapper_impl.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\impl\enum_flags_impl.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\impl\instance_impl.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\impl\rttr_cast_impl.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\impl\sequential_mapper_impl.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\impl\string_view_impl.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\impl\wrapper_mapper_impl.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\metadata\metadata.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\metadata\metadata_handler.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\method\method_accessor.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\method\method_invoker.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\method\method_wrapper.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\method\method_wrapper_base.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\misc\argument_extractor.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\misc\argument_wrapper.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\misc\class_item_mapper.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\misc\data_address_container.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\misc\flat_map.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\misc\flat_multimap.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\misc\function_traits.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\misc\iterator_wrapper.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\misc\misc_type_traits.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\misc\register_wrapper_mapper_conversion.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\misc\sequential_container_type_traits.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\misc\std_type_traits.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\misc\template_type_trait.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\misc\template_type_trait_impl.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\misc\utility.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\parameter_info\parameter_infos.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\parameter_info\parameter_infos_compare.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\parameter_info\parameter_info_wrapper.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\parameter_info\parameter_info_wrapper_base.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\parameter_info\parameter_names.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\policies\ctor_policies.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\policies\meth_policies.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\policies\prop_policies.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\property\property_accessor.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\property\property_wrapper.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\property\property_wrapper_base.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\property\property_wrapper_func.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\property\property_wrapper_member_func.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\property\property_wrapper_member_object.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\property\property_wrapper_object.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\registration\bind_impl.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\registration\bind_types.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\registration\register_base_class_from_accessor.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\registration\registration_executer.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\registration\registration_impl.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\registration\registration_manager.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\registration\registration_state_saver.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\type\accessor_type.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\type\base_classes.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\type\get_create_variant_func.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\type\get_derived_info_func.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\type\type_comparator.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\type\type_converter.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\type\type_data.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\type\type_impl.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\type\type_name.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\type\type_register.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\type\type_register_p.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\type\type_string_utils.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\variant\variant_compare.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\variant\variant_data.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\variant\variant_data_converter.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\variant\variant_data_policy.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\variant\variant_impl.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\variant_associative_view\variant_associative_view_creator.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\variant_associative_view\variant_associative_view_creator_impl.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\variant_associative_view\variant_associative_view_private.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\variant_sequential_view\variant_sequential_view_creator.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\variant_sequential_view\variant_sequential_view_creator_impl.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\variant_sequential_view\variant_sequential_view_private.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\visitor\constructor_visitor_invoker.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\visitor\create_type_visitor_func.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\visitor\create_type_visitor_func_impl.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\visitor\method_visitor_invoker.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\visitor\property_visitor_invoker.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\visitor\type_visitor_invoker.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\visitor\visitor_impl.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\visitor\visitor_iterator.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\detail\visitor\visitor_registration.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\enumeration.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\enum_flags.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\filter_item.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\instance.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\method.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\parameter_info.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\policy.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\property.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\registration.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\registration_friend.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\rttr_cast.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\rttr_enable.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\sequential_mapper.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\string_view.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\type.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\type_list.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\variant.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\variant_associative_view.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\variant_sequential_view.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\visitor.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\rttr\wrapper_mapper.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\spirv-cross\GLSL.std.450.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\spirv-cross\spirv.hpp" />
+    <ClInclude Include="..\..\Engine\ThirdParty\spirv-cross\spirv_cfg.hpp" />
+    <ClInclude Include="..\..\Engine\ThirdParty\spirv-cross\spirv_common.hpp" />
+    <ClInclude Include="..\..\Engine\ThirdParty\spirv-cross\spirv_cpp.hpp" />
+    <ClInclude Include="..\..\Engine\ThirdParty\spirv-cross\spirv_cross.hpp" />
+    <ClInclude Include="..\..\Engine\ThirdParty\spirv-cross\spirv_cross_parsed_ir.hpp" />
+    <ClInclude Include="..\..\Engine\ThirdParty\spirv-cross\spirv_cross_util.hpp" />
+    <ClInclude Include="..\..\Engine\ThirdParty\spirv-cross\spirv_glsl.hpp" />
+    <ClInclude Include="..\..\Engine\ThirdParty\spirv-cross\spirv_hlsl.hpp" />
+    <ClInclude Include="..\..\Engine\ThirdParty\spirv-cross\spirv_msl.hpp" />
+    <ClInclude Include="..\..\Engine\ThirdParty\spirv-cross\spirv_parser.hpp" />
+    <ClInclude Include="..\..\Engine\ThirdParty\spirv-cross\spirv_reflect.hpp" />
+    <ClInclude Include="..\..\Engine\ThirdParty\tinyxml\tinystr.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\tinyxml\tinyxml.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\zlib\crc32.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\zlib\deflate.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\zlib\gzguts.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\zlib\inffast.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\zlib\inffixed.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\zlib\inflate.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\zlib\inftrees.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\zlib\trees.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\zlib\zconf.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\zlib\zlib.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\zlib\zutil.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\zzip\conf.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\zzip\fetch.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\zzip\file.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\zzip\format.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\zzip\info.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\zzip\lib.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\zzip\plugin.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\zzip\stdint.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\zzip\types.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\zzip\zzip.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\zzip\zzip32.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\zzip\_config.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\zzip\_msvc.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\zzip\__debug.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\zzip\__dirent.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\zzip\__hints.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\zzip\__mmap.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\Engine\Base\src\File.cpp" />
+    <ClCompile Include="..\..\Engine\Base\src\FileManager.cpp" />
+    <ClCompile Include="..\..\Engine\Base\src\Lock.cpp" />
+    <ClCompile Include="..\..\Engine\Base\src\nvwa\debug_new.cpp" />
+    <ClCompile Include="..\..\Engine\Base\src\nvwa\operator_new.cpp" />
+    <ClCompile Include="..\..\Engine\Base\src\Stream.cpp" />
+    <ClCompile Include="..\..\Engine\Base\src\Task.cpp" />
+    <ClCompile Include="..\..\Engine\Base\src\TaskGraph.cpp" />
+    <ClCompile Include="..\..\Engine\Base\src\TaskPool.cpp" />
+    <ClCompile Include="..\..\Engine\Base\src\Utils.cpp" />
+    <ClCompile Include="..\..\Engine\Engine\src\Engine.cpp" />
+    <ClCompile Include="..\..\Engine\Engine\src\RenderSolutionBase.cpp" />
+    <ClCompile Include="..\..\Engine\Engine\src\RenderSolutionDefault.cpp" />
+    <ClCompile Include="..\..\Engine\Engine\src\RenderSolutionDeferred.cpp" />
+    <ClCompile Include="..\..\Engine\Engine\src\RenderSolutionForward.cpp" />
+    <ClCompile Include="..\..\Engine\Engine\src\RenderSolutionForwardPlus.cpp" />
+    <ClCompile Include="..\..\Engine\Memory\src\Allocator.cpp" />
+    <ClCompile Include="..\..\Engine\Memory\src\MemoryHeap.cpp" />
+    <ClCompile Include="..\..\Engine\Memory\src\MemoryPool.cpp" />
+    <ClCompile Include="..\..\Engine\Memory\src\MemorySystem.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Compiler\src\ShaderCompiler.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxCamera.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxProfiler.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxRenderer.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxRenderQueue.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxResource.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxResourceManager.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxSprivCross.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxUniformCamera.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxUniformEngine.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxUniformMat4.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxUniformVec1.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxUniformVec2.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxUniformVec3.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxUniformVec4.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxVertexAttribute.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3Buffer.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3CommandBuffer.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3CommandBufferManager.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3DescriptorLayout.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3DescriptorLayoutManager.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3DescriptorSet.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3DescriptorSetManager.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3Extension.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3FrameBuffer.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3FrameBufferManager.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3Helper.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3IndexBuffer.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3IndirectBuffer.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3InstanceBuffer.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3Material.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3MaterialManager.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3MaterialPass.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3Mesh.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3MeshDraw.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3MeshDrawManager.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3MeshManager.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3Pipeline.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3PipelineCompute.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3PipelineGraphics.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3PipelineManager.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3Renderer.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3RenderPass.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3RenderPassManager.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3RenderTexture.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3RenderTextureManager.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3Sampler.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3SamplerManager.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3Shader.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3ShaderManager.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3SwapChain.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3Texture.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3Texture2D.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3Texture2DArray.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3TextureCubeMap.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3TextureManager.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3UniformBuffer.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3UniformBufferManager.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3VertexArrayObject.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3VertexBuffer.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKAllocator.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKBuffer.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKCommandBuffer.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKCommandBufferManager.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKCommandPool.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VkDescriptorLayout.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VkDescriptorPool.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VkDescriptorSet.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VkDescriptorSetManager.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKDevice.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKExtension.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKFrameBuffer.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKFrameBufferManager.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKHelper.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKImage.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKIndexBuffer.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKIndirectBuffer.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKInstance.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKInstanceBuffer.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKMaterial.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKMaterialManager.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKMaterialPass.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKMemory.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKMemoryAllocator.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKMemoryManager.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKMesh.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKMeshDraw.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKMeshDrawManager.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKMeshManager.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKPipeline.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKPipelineCompute.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKPipelineGraphics.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKPipelineManager.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKQueue.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKRenderer.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKRenderPass.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKRenderPassManager.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKRenderTexture.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKRenderTextureManager.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKSampler.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKSamplerManager.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKShader.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKShaderManager.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKSwapChain.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKTexture.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKTexture2D.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKTexture2DArray.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKTexture2DCubeMap.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKTextureManager.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKUniformBuffer.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKUniformBufferManager.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKVertexBuffer.cpp" />
+    <ClCompile Include="..\..\Engine\Resource\src\ResourceLoader.cpp" />
+    <ClCompile Include="..\..\Engine\Resource\src\ResourceLoaderMaterial.cpp" />
+    <ClCompile Include="..\..\Engine\Resource\src\ResourceLoaderMesh.cpp" />
+    <ClCompile Include="..\..\Engine\Resource\src\ResourceLoaderSceneMesh.cpp" />
+    <ClCompile Include="..\..\Engine\Resource\src\ResourceLoaderShader.cpp" />
+    <ClCompile Include="..\..\Engine\Resource\src\ResourceLoaderTexture.cpp" />
+    <ClCompile Include="..\..\Engine\Scene\src\ComponentMesh.cpp" />
+    <ClCompile Include="..\..\Engine\Scene\src\ComponentParticle.cpp" />
+    <ClCompile Include="..\..\Engine\Scene\src\ComponentPointLight.cpp" />
+    <ClCompile Include="..\..\Engine\Scene\src\ComponentSkin.cpp" />
+    <ClCompile Include="..\..\Engine\Scene\src\Scene.cpp" />
+    <ClCompile Include="..\..\Engine\Scene\src\SceneManager.cpp" />
+    <ClCompile Include="..\..\Engine\Scene\src\SceneNode.cpp" />
+    <ClCompile Include="..\..\Engine\ThirdParty\eastl\source\allocator_eastl.cpp" />
+    <ClCompile Include="..\..\Engine\ThirdParty\eastl\source\assert.cpp" />
+    <ClCompile Include="..\..\Engine\ThirdParty\eastl\source\fixed_pool.cpp" />
+    <ClCompile Include="..\..\Engine\ThirdParty\eastl\source\hashtable.cpp" />
+    <ClCompile Include="..\..\Engine\ThirdParty\eastl\source\intrusive_list.cpp" />
+    <ClCompile Include="..\..\Engine\ThirdParty\eastl\source\new.cpp" />
+    <ClCompile Include="..\..\Engine\ThirdParty\eastl\source\numeric_limits.cpp" />
+    <ClCompile Include="..\..\Engine\ThirdParty\eastl\source\red_black_tree.cpp" />
+    <ClCompile Include="..\..\Engine\ThirdParty\eastl\source\string.cpp" />
+    <ClCompile Include="..\..\Engine\ThirdParty\eastl\source\thread_support.cpp" />
+    <ClCompile Include="..\..\Engine\ThirdParty\event\event.c" />
+    <ClCompile Include="..\..\Engine\ThirdParty\gl3w\gl3w.c" />
+    <ClCompile Include="..\..\Engine\ThirdParty\glslc\file_includer.cc" />
+    <ClCompile Include="..\..\Engine\ThirdParty\lodepng\lodepng.cpp" />
+    <ClCompile Include="..\..\Engine\ThirdParty\pthreadex\pthreadex.c" />
+    <ClCompile Include="..\..\Engine\ThirdParty\rbtree\rbtree.cpp" />
+    <ClCompile Include="..\..\Engine\ThirdParty\rttr\constructor.cpp" />
+    <ClCompile Include="..\..\Engine\ThirdParty\rttr\destructor.cpp" />
+    <ClCompile Include="..\..\Engine\ThirdParty\rttr\detail\comparison\compare_equal.cpp" />
+    <ClCompile Include="..\..\Engine\ThirdParty\rttr\detail\comparison\compare_less.cpp" />
+    <ClCompile Include="..\..\Engine\ThirdParty\rttr\detail\constructor\constructor_wrapper_base.cpp" />
+    <ClCompile Include="..\..\Engine\ThirdParty\rttr\detail\conversion\std_conversion_functions.cpp" />
+    <ClCompile Include="..\..\Engine\ThirdParty\rttr\detail\destructor\destructor_wrapper_base.cpp" />
+    <ClCompile Include="..\..\Engine\ThirdParty\rttr\detail\enumeration\enumeration_helper.cpp" />
+    <ClCompile Include="..\..\Engine\ThirdParty\rttr\detail\enumeration\enumeration_wrapper_base.cpp" />
+    <ClCompile Include="..\..\Engine\ThirdParty\rttr\detail\method\method_wrapper_base.cpp" />
+    <ClCompile Include="..\..\Engine\ThirdParty\rttr\detail\misc\standard_types.cpp" />
+    <ClCompile Include="..\..\Engine\ThirdParty\rttr\detail\parameter_info\parameter_info_wrapper_base.cpp" />
+    <ClCompile Include="..\..\Engine\ThirdParty\rttr\detail\property\property_wrapper_base.cpp" />
+    <ClCompile Include="..\..\Engine\ThirdParty\rttr\detail\registration\registration_executer.cpp" />
+    <ClCompile Include="..\..\Engine\ThirdParty\rttr\detail\registration\registration_state_saver.cpp" />
+    <ClCompile Include="..\..\Engine\ThirdParty\rttr\detail\type\type_data.cpp" />
+    <ClCompile Include="..\..\Engine\ThirdParty\rttr\detail\type\type_register.cpp" />
+    <ClCompile Include="..\..\Engine\ThirdParty\rttr\detail\variant\variant_compare.cpp" />
+    <ClCompile Include="..\..\Engine\ThirdParty\rttr\enumeration.cpp" />
+    <ClCompile Include="..\..\Engine\ThirdParty\rttr\method.cpp" />
+    <ClCompile Include="..\..\Engine\ThirdParty\rttr\parameter_info.cpp" />
+    <ClCompile Include="..\..\Engine\ThirdParty\rttr\policy.cpp" />
+    <ClCompile Include="..\..\Engine\ThirdParty\rttr\property.cpp" />
+    <ClCompile Include="..\..\Engine\ThirdParty\rttr\registration.cpp" />
+    <ClCompile Include="..\..\Engine\ThirdParty\rttr\type.cpp" />
+    <ClCompile Include="..\..\Engine\ThirdParty\rttr\variant.cpp" />
+    <ClCompile Include="..\..\Engine\ThirdParty\rttr\variant_associative_view.cpp" />
+    <ClCompile Include="..\..\Engine\ThirdParty\rttr\variant_sequential_view.cpp" />
+    <ClCompile Include="..\..\Engine\ThirdParty\rttr\visitor.cpp" />
+    <ClCompile Include="..\..\Engine\ThirdParty\spirv-cross\spirv_cfg.cpp" />
+    <ClCompile Include="..\..\Engine\ThirdParty\spirv-cross\spirv_cpp.cpp" />
+    <ClCompile Include="..\..\Engine\ThirdParty\spirv-cross\spirv_cross.cpp" />
+    <ClCompile Include="..\..\Engine\ThirdParty\spirv-cross\spirv_cross_parsed_ir.cpp" />
+    <ClCompile Include="..\..\Engine\ThirdParty\spirv-cross\spirv_cross_util.cpp" />
+    <ClCompile Include="..\..\Engine\ThirdParty\spirv-cross\spirv_glsl.cpp" />
+    <ClCompile Include="..\..\Engine\ThirdParty\spirv-cross\spirv_hlsl.cpp" />
+    <ClCompile Include="..\..\Engine\ThirdParty\spirv-cross\spirv_msl.cpp" />
+    <ClCompile Include="..\..\Engine\ThirdParty\spirv-cross\spirv_parser.cpp" />
+    <ClCompile Include="..\..\Engine\ThirdParty\spirv-cross\spirv_reflect.cpp" />
+    <ClCompile Include="..\..\Engine\ThirdParty\tinyxml\tinystr.cpp" />
+    <ClCompile Include="..\..\Engine\ThirdParty\tinyxml\tinyxml.cpp" />
+    <ClCompile Include="..\..\Engine\ThirdParty\tinyxml\tinyxmlerror.cpp" />
+    <ClCompile Include="..\..\Engine\ThirdParty\tinyxml\tinyxmlparser.cpp" />
+    <ClCompile Include="..\..\Engine\ThirdParty\zlib\adler32.c" />
+    <ClCompile Include="..\..\Engine\ThirdParty\zlib\compress.c" />
+    <ClCompile Include="..\..\Engine\ThirdParty\zlib\crc32.c" />
+    <ClCompile Include="..\..\Engine\ThirdParty\zlib\deflate.c" />
+    <ClCompile Include="..\..\Engine\ThirdParty\zlib\gzclose.c" />
+    <ClCompile Include="..\..\Engine\ThirdParty\zlib\gzlib.c" />
+    <ClCompile Include="..\..\Engine\ThirdParty\zlib\gzread.c" />
+    <ClCompile Include="..\..\Engine\ThirdParty\zlib\gzwrite.c" />
+    <ClCompile Include="..\..\Engine\ThirdParty\zlib\infback.c" />
+    <ClCompile Include="..\..\Engine\ThirdParty\zlib\inffast.c" />
+    <ClCompile Include="..\..\Engine\ThirdParty\zlib\inflate.c" />
+    <ClCompile Include="..\..\Engine\ThirdParty\zlib\inftrees.c" />
+    <ClCompile Include="..\..\Engine\ThirdParty\zlib\trees.c" />
+    <ClCompile Include="..\..\Engine\ThirdParty\zlib\uncompr.c" />
+    <ClCompile Include="..\..\Engine\ThirdParty\zlib\zutil.c" />
+    <ClCompile Include="..\..\Engine\ThirdParty\zzip\dir.c" />
+    <ClCompile Include="..\..\Engine\ThirdParty\zzip\err.c" />
+    <ClCompile Include="..\..\Engine\ThirdParty\zzip\fetch.c" />
+    <ClCompile Include="..\..\Engine\ThirdParty\zzip\file.c" />
+    <ClCompile Include="..\..\Engine\ThirdParty\zzip\info.c" />
+    <ClCompile Include="..\..\Engine\ThirdParty\zzip\plugin.c" />
+    <ClCompile Include="..\..\Engine\ThirdParty\zzip\stat.c" />
+    <ClCompile Include="..\..\Engine\ThirdParty\zzip\zip.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\..\Engine\ThirdParty\rttr\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\Engine\ThirdParty\rttr\registration" />
+    <None Include="..\..\Engine\ThirdParty\rttr\registration_friend" />
+    <None Include="..\..\Engine\ThirdParty\rttr\rttr.cmake" />
+    <None Include="..\..\Engine\ThirdParty\rttr\type" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
