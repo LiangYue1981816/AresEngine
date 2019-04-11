@@ -27,6 +27,11 @@
 #include "./Command/GLES3CommandUniformMatrix2fv.h"
 #include "./Command/GLES3CommandUniformMatrix3fv.h"
 #include "./Command/GLES3CommandUniformMatrix4fv.h"
+#include "./Command/GLES3CommandSetScissor.h"
+#include "./Command/GLES3CommandSetViewport.h"
+#include "./Command/GLES3CommandClearDepth.h"
+#include "./Command/GLES3CommandClearColor.h"
+#include "./Command/GLES3CommandDrawInstance.h"
 #include "./Command/GLES3CommandPushDebugGroup.h"
 #include "./Command/GLES3CommandPopDebugGroup.h"
 
@@ -404,6 +409,7 @@ bool CGLES3CommandBuffer::CmdUniformMatrix4fv(uint32_t name, int count, const fl
 bool CGLES3CommandBuffer::CmdSetScissor(int x, int y, int width, int height)
 {
 	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
+		m_pCommands.emplace_back(new CGLES3CommandSetScissor(x, y, width, height));
 		return true;
 	}
 	else {
@@ -414,6 +420,7 @@ bool CGLES3CommandBuffer::CmdSetScissor(int x, int y, int width, int height)
 bool CGLES3CommandBuffer::CmdSetViewport(int x, int y, int width, int height)
 {
 	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
+		m_pCommands.emplace_back(new CGLES3CommandSetViewport(x, y, width, height));
 		return true;
 	}
 	else {
@@ -424,6 +431,7 @@ bool CGLES3CommandBuffer::CmdSetViewport(int x, int y, int width, int height)
 bool CGLES3CommandBuffer::CmdClearDepth(float depth)
 {
 	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
+		m_pCommands.emplace_back(new CGLES3CommandClearDepth(depth));
 		return true;
 	}
 	else {
@@ -434,6 +442,7 @@ bool CGLES3CommandBuffer::CmdClearDepth(float depth)
 bool CGLES3CommandBuffer::CmdClearColor(float red, float green, float blue, float alpha)
 {
 	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
+		m_pCommands.emplace_back(new CGLES3CommandClearColor(red, green, blue, alpha));
 		return true;
 	}
 	else {
@@ -444,6 +453,7 @@ bool CGLES3CommandBuffer::CmdClearColor(float red, float green, float blue, floa
 bool CGLES3CommandBuffer::CmdDrawInstance(const CGfxMeshDrawPtr ptrMeshDraw, const uint8_t *pInstanceBuffer, uint32_t size)
 {
 	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
+		m_pCommands.emplace_back(new CGLES3CommandDrawInstance(ptrMeshDraw, pInstanceBuffer, size));
 		return true;
 	}
 	else {
