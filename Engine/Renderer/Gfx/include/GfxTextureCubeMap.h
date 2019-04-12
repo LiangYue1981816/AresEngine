@@ -22,10 +22,7 @@ public:
 
 
 public:
-	virtual HANDLE GetTexture(void) const = 0;
-
 	virtual GfxPixelFormat GetFormat(void) const = 0;
-	virtual GfxTextureType GetType(void) const = 0;
 
 	virtual int GetWidth(void) const = 0;
 	virtual int GetHeight(void) const = 0;

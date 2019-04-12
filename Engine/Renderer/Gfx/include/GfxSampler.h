@@ -13,8 +13,4 @@ public:
 	{
 
 	}
-
-
-public:
-	virtual HANDLE GetSampler(void) const = 0;
 };

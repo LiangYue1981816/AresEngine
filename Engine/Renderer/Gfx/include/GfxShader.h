@@ -53,8 +53,6 @@ public:
 
 
 public:
-	virtual HANDLE GetShader(void) const = 0;
-
 	virtual uint32_t GetKind(void) const = 0;
 	virtual const CGfxSprivCross& GetSprivCross(void) const = 0;
 
