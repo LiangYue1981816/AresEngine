@@ -91,7 +91,7 @@ void CGLES3FrameBuffer::Bind(const AttachmentInformation *pAttachmentInformation
 			const CGfxRenderTexturePtr ptrOutputTexture = GetAttachmentTexture(itOutputAttachment.first);
 			if (ptrOutputTexture.IsValid()) {
 				drawBuffers.emplace_back(GL_COLOR_ATTACHMENT0 + indexAttachment);
-				GLBindFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + indexAttachment, CGLES3Helper::TranslateTextureTarget(ptrOutputTexture->GetType()), (GLuint)ptrOutputTexture->GetTexture(), 0);
+				GLBindFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + indexAttachment, CGLES3Helper::TranslateTextureTarget(((CGLES3RenderTexture *)ptrOutputTexture.GetPointer())->GetType()), (GLuint)((CGLES3RenderTexture *)ptrOutputTexture.GetPointer())->GetTexture(), 0);
 
 				if (pAttachmentInformations[itOutputAttachment.first].bClear) {
 					glClearBufferfv(GL_COLOR, indexAttachment, pAttachmentInformations[itOutputAttachment.first].color);
@@ -103,7 +103,7 @@ void CGLES3FrameBuffer::Bind(const AttachmentInformation *pAttachmentInformation
 
 		const CGfxRenderTexturePtr ptrDepthStencilTexture = GetAttachmentTexture(pSubpassInformation->depthStencilAttachment);
 		if (ptrDepthStencilTexture.IsValid()) {
-			GLBindFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, CGLES3Helper::TranslateTextureTarget(ptrDepthStencilTexture->GetType()), (GLuint)ptrDepthStencilTexture->GetTexture(), 0);
+			GLBindFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, CGLES3Helper::TranslateTextureTarget(((CGLES3RenderTexture *)ptrDepthStencilTexture.GetPointer())->GetType()), (GLuint)((CGLES3RenderTexture *)ptrDepthStencilTexture.GetPointer())->GetTexture(), 0);
 
 			if (pAttachmentInformations[pSubpassInformation->depthStencilAttachment].bClear) {
 				glClearBufferfi(GL_DEPTH_STENCIL, 0, pAttachmentInformations[pSubpassInformation->depthStencilAttachment].depth, pAttachmentInformations[pSubpassInformation->depthStencilAttachment].stencil);
@@ -133,7 +133,7 @@ void CGLES3FrameBuffer::Resolve(const AttachmentInformation *pAttachmentInformat
 			const CGfxRenderTexturePtr ptrResolveTexture = GetAttachmentTexture(itResolveAttachment.first);
 			if (ptrResolveTexture.IsValid()) {
 				drawBuffers.emplace_back(GL_COLOR_ATTACHMENT0 + indexAttachment);
-				GLBindFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + indexAttachment, CGLES3Helper::TranslateTextureTarget(ptrResolveTexture->GetType()), (GLuint)ptrResolveTexture->GetTexture(), 0);
+				GLBindFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + indexAttachment, CGLES3Helper::TranslateTextureTarget(((CGLES3RenderTexture *)ptrResolveTexture.GetPointer())->GetType()), (GLuint)((CGLES3RenderTexture *)ptrResolveTexture.GetPointer())->GetTexture(), 0);
 
 				if (pAttachmentInformations[itResolveAttachment.first].bClear) {
 					glClearBufferfv(GL_COLOR, indexAttachment, pAttachmentInformations[itResolveAttachment.first].color);

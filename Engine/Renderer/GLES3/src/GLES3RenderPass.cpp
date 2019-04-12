@@ -21,11 +21,6 @@ void CGLES3RenderPass::Release(void)
 	m_pManager->Destroy(this);
 }
 
-HANDLE CGLES3RenderPass::GetRenderPass(void) const
-{
-	return nullptr;
-}
-
 bool CGLES3RenderPass::Create(void)
 {
 	return true;

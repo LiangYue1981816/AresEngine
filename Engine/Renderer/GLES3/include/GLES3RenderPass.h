@@ -14,9 +14,6 @@ private:
 
 
 public:
-	HANDLE GetRenderPass(void) const;
-
-public:
 	bool Create(void);
 	void Destroy(void);
 
