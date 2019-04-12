@@ -34,11 +34,6 @@ CGLES3MaterialPass::~CGLES3MaterialPass(void)
 	}
 }
 
-CGfxPipelineGraphics* CGLES3MaterialPass::GetPipeline(void) const
-{
-	return m_pPipeline;
-}
-
 CGfxDescriptorSetPtr CGLES3MaterialPass::GetDescriptorSet(void) const
 {
 	return m_ptrDescriptorSet;
@@ -78,6 +73,11 @@ bool CGLES3MaterialPass::SetPipeline(const CGfxRenderPass *pRenderPass, const CG
 	m_ptrDescriptorSet = GLES3Renderer()->NewDescriptorSet(m_pPipeline->GetDescriptorLayout(DESCRIPTOR_SET_PASS));
 
 	return true;
+}
+
+CGfxPipelineGraphics* CGLES3MaterialPass::GetPipeline(void) const
+{
+	return m_pPipeline;
 }
 
 bool CGLES3MaterialPass::SetSampler(uint32_t name, GfxFilter minFilter, GfxFilter magFilter, GfxSamplerMipmapMode mipmapMode, GfxSamplerAddressMode addressMode)
@@ -235,39 +235,6 @@ bool CGLES3MaterialPass::SetUniformMat4(uint32_t name, const float *value)
 	else {
 		return false;
 	}
-}
-
-CGfxTexture2DPtr CGLES3MaterialPass::GetTexture2D(uint32_t name) const
-{
-	if (m_ptrDescriptorSet.IsValid()) {
-		if (const CGfxDescriptorSet::DescriptorImageInfo *pDescriptorImageInfo = m_ptrDescriptorSet->GetDescriptorImageInfo(name)) {
-			return pDescriptorImageInfo->ptrTexture2D;
-		}
-	}
-
-	return nullptr;
-}
-
-CGfxTexture2DArrayPtr CGLES3MaterialPass::GetTexture2DArray(uint32_t name) const
-{
-	if (m_ptrDescriptorSet.IsValid()) {
-		if (const CGfxDescriptorSet::DescriptorImageInfo *pDescriptorImageInfo = m_ptrDescriptorSet->GetDescriptorImageInfo(name)) {
-			return pDescriptorImageInfo->ptrTexture2DArray;
-		}
-	}
-
-	return nullptr;
-}
-
-CGfxTextureCubeMapPtr CGLES3MaterialPass::GetTextureCubeMap(uint32_t name) const
-{
-	if (m_ptrDescriptorSet.IsValid()) {
-		if (const CGfxDescriptorSet::DescriptorImageInfo *pDescriptorImageInfo = m_ptrDescriptorSet->GetDescriptorImageInfo(name)) {
-			return pDescriptorImageInfo->ptrTextureCubeMap;
-		}
-	}
-
-	return nullptr;
 }
 
 void CGLES3MaterialPass::Bind(const CGLES3Pipeline *pPipeline) const

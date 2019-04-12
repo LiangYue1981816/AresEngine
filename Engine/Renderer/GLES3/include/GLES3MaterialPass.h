@@ -14,12 +14,13 @@ private:
 
 
 public:
-	CGfxPipelineGraphics* GetPipeline(void) const;
 	CGfxDescriptorSetPtr GetDescriptorSet(void) const;
 
 public:
 	bool SetPipeline(const CGfxRenderPass *pRenderPass, const CGfxShader *pVertexShader, const CGfxShader *pFragmentShader, const PipelineState &state, uint32_t indexSubpass, uint32_t vertexBinding, uint32_t instanceBinding);
+	CGfxPipelineGraphics* GetPipeline(void) const;
 
+public:
 	bool SetSampler(uint32_t name, GfxFilter minFilter, GfxFilter magFilter, GfxSamplerMipmapMode mipmapMode, GfxSamplerAddressMode addressMode);
 	bool SetTexture2D(uint32_t name, const CGfxTexture2DPtr ptrTexture);
 	bool SetTexture2DArray(uint32_t name, const CGfxTexture2DArrayPtr ptrTexture);
@@ -33,11 +34,6 @@ public:
 	bool SetUniformVec3(uint32_t name, float v0, float v1, float v2);
 	bool SetUniformVec4(uint32_t name, float v0, float v1, float v2, float v3);
 	bool SetUniformMat4(uint32_t name, const float *value);
-
-public:
-	CGfxTexture2DPtr GetTexture2D(uint32_t name) const;
-	CGfxTexture2DArrayPtr GetTexture2DArray(uint32_t name) const;
-	CGfxTextureCubeMapPtr GetTextureCubeMap(uint32_t name) const;
 
 public:
 	void Bind(const CGLES3Pipeline *pPipeline) const;
