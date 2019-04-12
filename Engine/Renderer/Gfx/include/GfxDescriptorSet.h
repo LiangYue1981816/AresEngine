@@ -30,9 +30,6 @@ public:
 
 
 public:
-	virtual CGfxDescriptorLayoutPtr GetDescriptorLayout(void) const = 0;
-
-public:
 	virtual bool SetTexture2D(uint32_t name, const CGfxTexture2DPtr ptrTexture, const CGfxSampler *pSampler) = 0;
 	virtual bool SetTexture2DArray(uint32_t name, const CGfxTexture2DArrayPtr ptrTexture, const CGfxSampler *pSampler) = 0;
 	virtual bool SetTextureCubeMap(uint32_t name, const CGfxTextureCubeMapPtr ptrTexture, const CGfxSampler *pSampler) = 0;
@@ -40,6 +37,7 @@ public:
 	virtual bool SetUniformBuffer(uint32_t name, const CGfxUniformBufferPtr ptrUniformBuffer, uint32_t offset, uint32_t range) = 0;
 
 public:
+	virtual const CGfxDescriptorLayoutPtr GetDescriptorLayout(void) const = 0;
 	virtual const DescriptorImageInfo* GetDescriptorImageInfo(uint32_t name) const = 0;
 	virtual const DescriptorBufferInfo* GetDescriptorBufferInfo(uint32_t name) const = 0;
 };

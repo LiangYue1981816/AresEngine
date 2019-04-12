@@ -25,5 +25,5 @@ public:
 
 public:
 	virtual bool SetAttachmentTexture(int indexAttachment, CGfxRenderTexturePtr ptrAttachmentTexture) = 0;
-	virtual CGfxRenderTexturePtr GetAttachmentTexture(int indexAttachment) const = 0;
+	virtual const CGfxRenderTexturePtr GetAttachmentTexture(int indexAttachment) const = 0;
 };

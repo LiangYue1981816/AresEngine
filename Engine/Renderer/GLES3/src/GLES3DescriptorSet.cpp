@@ -19,11 +19,6 @@ void CGLES3DescriptorSet::Release(void)
 	m_pManager->Destroy(this);
 }
 
-CGfxDescriptorLayoutPtr CGLES3DescriptorSet::GetDescriptorLayout(void) const
-{
-	return m_ptrDescriptorLayout;
-}
-
 bool CGLES3DescriptorSet::SetTexture2D(uint32_t name, const CGfxTexture2DPtr ptrTexture, const CGfxSampler *pSampler)
 {
 	if (m_ptrDescriptorLayout->IsSampledImageValid(name)) {
@@ -83,6 +78,11 @@ bool CGLES3DescriptorSet::SetUniformBuffer(uint32_t name, const CGfxUniformBuffe
 	else {
 		return false;
 	}
+}
+
+const CGfxDescriptorLayoutPtr CGLES3DescriptorSet::GetDescriptorLayout(void) const
+{
+	return m_ptrDescriptorLayout;
 }
 
 const DescriptorImageInfo* CGLES3DescriptorSet::GetDescriptorImageInfo(uint32_t name) const

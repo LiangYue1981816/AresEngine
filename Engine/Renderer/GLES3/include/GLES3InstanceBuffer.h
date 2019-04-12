@@ -5,7 +5,6 @@
 class CGLES3InstanceBuffer : public CGfxInstanceBuffer
 {
 	friend class CGLES3MeshDraw;
-	friend class CGLES3VertexArrayObject;
 
 
 private:
@@ -21,7 +20,7 @@ public:
 public:
 	bool BufferData(size_t size, const void *pBuffer);
 
-private:
+public:
 	void Bind(void) const;
 
 

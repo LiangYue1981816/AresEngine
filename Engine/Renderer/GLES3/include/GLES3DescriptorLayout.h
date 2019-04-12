@@ -14,9 +14,6 @@ private:
 
 
 public:
-	uint32_t GetSetIndex(void) const;
-
-public:
 	bool Create(void);
 	void Destroy(void);
 
@@ -26,6 +23,7 @@ public:
 	bool SetInputAttachmentBinding(uint32_t name, uint32_t binding);
 
 public:
+	uint32_t GetSetIndex(void) const;
 	uint32_t GetUniformBlockBinding(uint32_t name) const;
 	uint32_t GetSampledImageBinding(uint32_t name) const;
 

@@ -5,7 +5,6 @@
 class CGLES3IndirectBuffer : public CGfxIndirectBuffer
 {
 	friend class CGLES3MeshDraw;
-	friend class CGLES3VertexArrayObject;
 
 
 private:
@@ -21,7 +20,7 @@ public:
 public:
 	bool BufferData(int indexDraw, int baseVertex, int firstIndex, int indexCount, int instanceCount);
 
-private:
+public:
 	void Bind(void) const;
 
 

@@ -23,7 +23,7 @@ public:
 
 public:
 	bool SetAttachmentTexture(int indexAttachment, CGfxRenderTexturePtr ptrAttachmentTexture);
-	CGfxRenderTexturePtr GetAttachmentTexture(int indexAttachment) const;
+	const CGfxRenderTexturePtr GetAttachmentTexture(int indexAttachment) const;
 
 public:
 	void Bind(const AttachmentInformation *pAttachmentInformations, const SubpassInformation *pSubpassInformation) const;

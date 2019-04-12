@@ -16,9 +16,6 @@ public:
 
 
 public:
-	virtual uint32_t GetSetIndex(void) const = 0;
-
-public:
 	virtual bool Create(void) = 0;
 	virtual void Destroy(void) = 0;
 
@@ -28,6 +25,7 @@ public:
 	virtual bool SetInputAttachmentBinding(uint32_t name, uint32_t binding) = 0;
 
 public:
+	virtual uint32_t GetSetIndex(void) const = 0;
 	virtual uint32_t GetUniformBlockBinding(uint32_t name) const = 0;
 	virtual uint32_t GetSampledImageBinding(uint32_t name) const = 0;
 

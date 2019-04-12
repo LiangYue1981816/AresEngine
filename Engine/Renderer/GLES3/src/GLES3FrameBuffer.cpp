@@ -70,7 +70,7 @@ bool CGLES3FrameBuffer::SetAttachmentTexture(int indexAttachment, CGfxRenderText
 	}
 }
 
-CGfxRenderTexturePtr CGLES3FrameBuffer::GetAttachmentTexture(int indexAttachment) const
+const CGfxRenderTexturePtr CGLES3FrameBuffer::GetAttachmentTexture(int indexAttachment) const
 {
 	if (indexAttachment >= 0 && indexAttachment < (int)m_ptrAttachmentTextures.size()) {
 		return m_ptrAttachmentTextures[indexAttachment];

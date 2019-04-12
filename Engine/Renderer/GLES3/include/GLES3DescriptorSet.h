@@ -14,9 +14,6 @@ private:
 
 
 public:
-	CGfxDescriptorLayoutPtr GetDescriptorLayout(void) const;
-
-public:
 	bool SetTexture2D(uint32_t name, const CGfxTexture2DPtr ptrTexture, const CGfxSampler *pSampler);
 	bool SetTexture2DArray(uint32_t name, const CGfxTexture2DArrayPtr ptrTexture, const CGfxSampler *pSampler);
 	bool SetTextureCubeMap(uint32_t name, const CGfxTextureCubeMapPtr ptrTexture, const CGfxSampler *pSampler);
@@ -24,6 +21,7 @@ public:
 	bool SetUniformBuffer(uint32_t name, const CGfxUniformBufferPtr ptrUniformBuffer, uint32_t offset, uint32_t range);
 
 public:
+	const CGfxDescriptorLayoutPtr GetDescriptorLayout(void) const;
 	const DescriptorImageInfo* GetDescriptorImageInfo(uint32_t name) const;
 	const DescriptorBufferInfo* GetDescriptorBufferInfo(uint32_t name) const;
 

@@ -19,11 +19,6 @@ void CGLES3DescriptorLayout::Release(void)
 	m_pManager->Destroy(this);
 }
 
-uint32_t CGLES3DescriptorLayout::GetSetIndex(void) const
-{
-	return m_set;
-}
-
 bool CGLES3DescriptorLayout::Create(void)
 {
 	return true;
@@ -66,6 +61,11 @@ bool CGLES3DescriptorLayout::SetInputAttachmentBinding(uint32_t name, uint32_t b
 	else {
 		return false;
 	}
+}
+
+uint32_t CGLES3DescriptorLayout::GetSetIndex(void) const
+{
+	return m_set;
 }
 
 uint32_t CGLES3DescriptorLayout::GetUniformBlockBinding(uint32_t name) const
