@@ -4,13 +4,17 @@
 
 class CGLES3Pipeline
 {
-protected:
+	friend class CGLES3PipelineCompute;
+	friend class CGLES3PipelineGraphics;
+
+
+private:
 	CGLES3Pipeline(void);
 	virtual ~CGLES3Pipeline(void);
 
 
-protected:
-	bool CreateProgram(void);
+private:
+	bool CreateProgram(const CGLES3Shader *pVertexShader, const CGLES3Shader *pFragmentShader, const CGLES3Shader *pComputeShader);
 	bool CreateLayouts(void);
 	void Destroy(void);
 
@@ -20,10 +24,9 @@ private:
 	void SetSampledImageLocation(const char *szName);
 	void SetInputAttachmentLocation(const char *szName, uint32_t inputAttachmentIndex);
 
-public:
 	uint32_t GetInputAttachmentName(uint32_t inputAttachmentIndex) const;
 
-public:
+private:
 	bool BindDescriptorSet(const CGfxDescriptorSetPtr ptrDescriptorSet) const;
 
 	void Uniform1i(uint32_t name, int v0) const;
@@ -51,12 +54,12 @@ public:
 	void UniformMatrix4fv(uint32_t name, int count, const float *value) const;
 
 
-protected:
+private:
 	uint32_t m_program;
 	CGLES3Shader *m_pShaders[compute_shader - vertex_shader + 1];
 	CGfxDescriptorLayoutPtr m_ptrDescriptorLayouts[DESCRIPTOR_SET_COUNT];
 
-protected:
+private:
 	eastl::unordered_map<uint32_t, uint32_t> m_uniformLocations;         // [name, location]
 	eastl::unordered_map<uint32_t, uint32_t> m_uniformBlockBindings;     // [name, binding]
 	eastl::unordered_map<uint32_t, uint32_t> m_sampledImageLocations;    // [name, location]
