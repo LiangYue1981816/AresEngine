@@ -24,9 +24,11 @@ bool CGLES3Pipeline::CreateProgram(const CGLES3Shader *pVertexShader, const CGLE
 
 	m_program = glCreateProgram();
 	{
-		if (m_pShaders[vertex_shader]) glAttachShader(m_program, (uint32_t)m_pShaders[vertex_shader]->GetShader());
-		if (m_pShaders[fragment_shader]) glAttachShader(m_program, (uint32_t)m_pShaders[fragment_shader]->GetShader());
-		if (m_pShaders[compute_shader]) glAttachShader(m_program, (uint32_t)m_pShaders[compute_shader]->GetShader());
+		for (int index = 0; index < compute_shader - vertex_shader + 1; index++) {
+			if (m_pShaders[index]) {
+				glAttachShader(m_program, (uint32_t)m_pShaders[index]->GetShader());
+			}
+		}
 	}
 
 	GLint success;
