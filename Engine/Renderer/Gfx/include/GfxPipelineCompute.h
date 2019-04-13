@@ -22,7 +22,7 @@ public:
 
 
 public:
-	virtual CGfxDescriptorLayoutPtr GetDescriptorLayout(uint32_t indexDescriptorSet) const = 0;
+	virtual const CGfxDescriptorLayoutPtr GetDescriptorLayout(uint32_t indexDescriptorSet) const = 0;
 
 public:
 	virtual bool Create(const CGfxShader *pComputeShader) = 0;
