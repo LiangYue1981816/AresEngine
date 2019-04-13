@@ -27,6 +27,7 @@ private:
 	uint32_t GetInputAttachmentName(uint32_t inputAttachmentIndex) const;
 
 private:
+	void Bind(void) const;
 	bool BindDescriptorSet(const CGfxDescriptorSetPtr ptrDescriptorSet) const;
 
 	void Uniform1i(uint32_t name, int v0) const;

@@ -180,6 +180,11 @@ uint32_t CGLES3Pipeline::GetInputAttachmentName(uint32_t inputAttachmentIndex) c
 	}
 }
 
+void CGLES3Pipeline::Bind(void) const
+{
+	GLUseProgram(m_program);
+}
+
 bool CGLES3Pipeline::BindDescriptorSet(const CGfxDescriptorSetPtr ptrDescriptorSet) const
 {
 	const CGfxDescriptorLayoutPtr ptrDescriptorLayout = ptrDescriptorSet->GetDescriptorLayout();
