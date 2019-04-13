@@ -59,12 +59,12 @@ void CGLES3CommandBuffer::Release(void)
 	m_pManager->Destroy(this);
 }
 
-CGfxFrameBufferPtr CGLES3CommandBuffer::GetFrameBuffer(void) const
+const CGfxFrameBufferPtr CGLES3CommandBuffer::GetFrameBuffer(void) const
 {
 	return m_ptrFrameBuffer;
 }
 
-CGfxRenderPassPtr CGLES3CommandBuffer::GetRenderPass(void) const
+const CGfxRenderPassPtr CGLES3CommandBuffer::GetRenderPass(void) const
 {
 	return m_ptrRenderPass;
 }

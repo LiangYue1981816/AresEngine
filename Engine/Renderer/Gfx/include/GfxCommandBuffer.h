@@ -39,8 +39,8 @@ public:
 
 
 public:
-	virtual CGfxFrameBufferPtr GetFrameBuffer(void) const = 0;
-	virtual CGfxRenderPassPtr GetRenderPass(void) const = 0;
+	virtual const CGfxFrameBufferPtr GetFrameBuffer(void) const = 0;
+	virtual const CGfxRenderPassPtr GetRenderPass(void) const = 0;
 
 	virtual bool IsInRenderPass(void) const = 0;
 	virtual uint32_t GetSubpassIndex(void) const = 0;

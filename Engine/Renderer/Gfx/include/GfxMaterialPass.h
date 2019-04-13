@@ -26,7 +26,7 @@ public:
 
 public:
 	virtual bool SetPipeline(const CGfxRenderPass *pRenderPass, const CGfxShader *pVertexShader, const CGfxShader *pFragmentShader, const PipelineState &state, uint32_t indexSubpass, uint32_t vertexBinding, uint32_t instanceBinding) = 0;
-	virtual CGfxPipelineGraphics* GetPipeline(void) const = 0;
+	virtual const CGfxPipelineGraphics* GetPipeline(void) const = 0;
 
 public:
 	virtual bool SetSampler(uint32_t name, GfxFilter minFilter, GfxFilter magFilter, GfxSamplerMipmapMode mipmapMode, GfxSamplerAddressMode addressMode) = 0;

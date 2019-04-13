@@ -18,7 +18,7 @@ public:
 
 public:
 	bool SetPipeline(const CGfxRenderPass *pRenderPass, const CGfxShader *pVertexShader, const CGfxShader *pFragmentShader, const PipelineState &state, uint32_t indexSubpass, uint32_t vertexBinding, uint32_t instanceBinding);
-	CGfxPipelineGraphics* GetPipeline(void) const;
+	const CGfxPipelineGraphics* GetPipeline(void) const;
 
 public:
 	bool SetSampler(uint32_t name, GfxFilter minFilter, GfxFilter magFilter, GfxSamplerMipmapMode mipmapMode, GfxSamplerAddressMode addressMode);
@@ -36,7 +36,7 @@ public:
 	bool SetUniformMat4(uint32_t name, const float *value);
 
 public:
-	void Bind(const CGLES3Pipeline *pPipeline) const;
+	void Bind(const CGLES3PipelineGraphics *pPipeline) const;
 
 
 private:

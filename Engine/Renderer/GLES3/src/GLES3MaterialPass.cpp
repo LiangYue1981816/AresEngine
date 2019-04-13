@@ -75,7 +75,7 @@ bool CGLES3MaterialPass::SetPipeline(const CGfxRenderPass *pRenderPass, const CG
 	return true;
 }
 
-CGfxPipelineGraphics* CGLES3MaterialPass::GetPipeline(void) const
+const CGfxPipelineGraphics* CGLES3MaterialPass::GetPipeline(void) const
 {
 	return m_pPipeline;
 }
@@ -237,7 +237,7 @@ bool CGLES3MaterialPass::SetUniformMat4(uint32_t name, const float *value)
 	}
 }
 
-void CGLES3MaterialPass::Bind(const CGLES3Pipeline *pPipeline) const
+void CGLES3MaterialPass::Bind(const CGLES3PipelineGraphics *pPipeline) const
 {
 	pPipeline->BindDescriptorSet(m_ptrDescriptorSet);
 }
