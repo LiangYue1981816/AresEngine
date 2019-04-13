@@ -65,24 +65,24 @@ bool CGLES3Pipeline::CreateLayouts(void)
 			const eastl::unordered_map<eastl::string, InputAttachmentBinding> &inputAttachmentBindings = m_pShaders[index]->GetSprivCross().GetInputAttachmentBindings();
 
 			for (const auto &itPushConstant : pushConstantRanges) {
-				SetUniformLocation(itPushConstant.first.c_str());
+				SetUniformLocation(HashValue(itPushConstant.first.c_str()));
 			}
 
 			for (const auto &itUniformBlock : uniformBlockBindings) {
 				if (m_ptrDescriptorLayouts[itUniformBlock.second.set]->SetUniformBlockBinding(HashValue(itUniformBlock.first.c_str()), itUniformBlock.second.binding)) {
-					SetUniformBlockBinding(itUniformBlock.first.c_str(), itUniformBlock.second.binding);
+					SetUniformBlockBinding(HashValue(itUniformBlock.first.c_str()), itUniformBlock.second.binding);
 				}
 			}
 
 			for (const auto &itSampledImage : sampledImageBindings) {
 				if (m_ptrDescriptorLayouts[itSampledImage.second.set]->SetSampledImageBinding(HashValue(itSampledImage.first.c_str()), itSampledImage.second.binding)) {
-					SetSampledImageLocation(itSampledImage.first.c_str());
+					SetSampledImageLocation(HashValue(itSampledImage.first.c_str()));
 				}
 			}
 
 			for (const auto &itInputAttachment : inputAttachmentBindings) {
 				if (m_ptrDescriptorLayouts[itInputAttachment.second.set]->SetInputAttachmentBinding(HashValue(itInputAttachment.first.c_str()), itInputAttachment.second.binding)) {
-					SetInputAttachmentLocation(itInputAttachment.first.c_str(), itInputAttachment.second.inputAttachmentIndex);
+					SetInputAttachmentLocation(HashValue(itInputAttachment.first.c_str()), itInputAttachment.second.inputAttachmentIndex);
 				}
 			}
 		}
@@ -119,10 +119,8 @@ void CGLES3Pipeline::Destroy(void)
 	m_ptrDescriptorLayouts[DESCRIPTOR_SET_INPUTATTACHMENT]->Destroy();
 }
 
-void CGLES3Pipeline::SetUniformBlockBinding(const char *szName, uint32_t binding)
+void CGLES3Pipeline::SetUniformBlockBinding(uint32_t name, uint32_t binding)
 {
-	uint32_t name = HashValue(szName);
-
 	if (m_uniformBlockBindings.find(name) == m_uniformBlockBindings.end()) {
 		uint32_t indexBinding = glGetUniformBlockIndex(m_program, szName);
 
@@ -133,10 +131,8 @@ void CGLES3Pipeline::SetUniformBlockBinding(const char *szName, uint32_t binding
 	}
 }
 
-void CGLES3Pipeline::SetUniformLocation(const char *szName)
+void CGLES3Pipeline::SetUniformLocation(uint32_t name)
 {
-	uint32_t name = HashValue(szName);
-
 	if (m_uniformLocations.find(name) == m_uniformLocations.end()) {
 		uint32_t location = glGetUniformLocation(m_program, szName);
 
@@ -146,10 +142,8 @@ void CGLES3Pipeline::SetUniformLocation(const char *szName)
 	}
 }
 
-void CGLES3Pipeline::SetSampledImageLocation(const char *szName)
+void CGLES3Pipeline::SetSampledImageLocation(uint32_t name)
 {
-	uint32_t name = HashValue(szName);
-
 	if (m_sampledImageLocations.find(name) == m_sampledImageLocations.end()) {
 		uint32_t location = glGetUniformLocation(m_program, szName);
 
@@ -160,10 +154,8 @@ void CGLES3Pipeline::SetSampledImageLocation(const char *szName)
 	}
 }
 
-void CGLES3Pipeline::SetInputAttachmentLocation(const char *szName, uint32_t inputAttachmentIndex)
+void CGLES3Pipeline::SetInputAttachmentLocation(uint32_t name, uint32_t inputAttachmentIndex)
 {
-	uint32_t name = HashValue(szName);
-
 	if (m_sampledImageLocations.find(name) == m_sampledImageLocations.end()) {
 		uint32_t location = glGetUniformLocation(m_program, szName);
 
@@ -175,9 +167,9 @@ void CGLES3Pipeline::SetInputAttachmentLocation(const char *szName, uint32_t inp
 	}
 }
 
-uint32_t CGLES3Pipeline::GetUniformBlockBinding(const char *szName) const
+uint32_t CGLES3Pipeline::GetUniformBlockBinding(uint32_t name) const
 {
-	const auto &itUniformBlockBinding = m_uniformBlockBindings.find(HashValue(szName));
+	const auto &itUniformBlockBinding = m_uniformBlockBindings.find(name);
 
 	if (itUniformBlockBinding != m_uniformBlockBindings.end()) {
 		return itUniformBlockBinding->second;
@@ -187,9 +179,9 @@ uint32_t CGLES3Pipeline::GetUniformBlockBinding(const char *szName) const
 	}
 }
 
-uint32_t CGLES3Pipeline::GetUniformLocation(const char *szName) const
+uint32_t CGLES3Pipeline::GetUniformLocation(uint32_t name) const
 {
-	const auto &itUniformLocation = m_uniformLocations.find(HashValue(szName));
+	const auto &itUniformLocation = m_uniformLocations.find(name);
 
 	if (itUniformLocation != m_uniformLocations.end()) {
 		return itUniformLocation->second;
@@ -199,9 +191,9 @@ uint32_t CGLES3Pipeline::GetUniformLocation(const char *szName) const
 	}
 }
 
-uint32_t CGLES3Pipeline::GetSampledImageLocation(const char *szName) const
+uint32_t CGLES3Pipeline::GetSampledImageLocation(uint32_t name) const
 {
-	const auto &itSampledImageLocation = m_sampledImageLocations.find(HashValue(szName));
+	const auto &itSampledImageLocation = m_sampledImageLocations.find(name);
 
 	if (itSampledImageLocation != m_sampledImageLocations.end()) {
 		return itSampledImageLocation->second;
