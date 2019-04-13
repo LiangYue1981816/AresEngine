@@ -91,8 +91,8 @@ void CGfxRenderQueue::CmdDraw(int indexQueue, CGfxCommandBufferPtr ptrCommandBuf
 	m_pipelineMaterialQueue[indexQueue].clear();
 	{
 		for (const auto &itMaterialQueue : m_materialMeshDrawQueue[indexQueue]) {
-			if (CGfxMaterialPass *pPass = itMaterialQueue.first->GetPass(namePass)) {
-				if (CGfxPipelineGraphics *pPipeline = pPass->GetPipeline()) {
+			if (CGfxMaterialPass *pPass = (CGfxMaterialPass *)itMaterialQueue.first->GetPass(namePass)) {
+				if (CGfxPipelineGraphics *pPipeline = (CGfxPipelineGraphics *)pPass->GetPipeline()) {
 					m_pipelineMaterialQueue[indexQueue][pPipeline][itMaterialQueue.first] = itMaterialQueue.first;
 				}
 			}
