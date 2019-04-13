@@ -16,6 +16,11 @@ CGLES3Pipeline::~CGLES3Pipeline(void)
 	Destroy();
 }
 
+const CGfxDescriptorLayoutPtr CGLES3Pipeline::GetDescriptorLayout(uint32_t indexDescriptorSet) const
+{
+	return m_ptrDescriptorLayouts[indexDescriptorSet];
+}
+
 bool CGLES3Pipeline::CreateProgram(const CGLES3Shader *pVertexShader, const CGLES3Shader *pFragmentShader, const CGLES3Shader *pComputeShader)
 {
 	m_pShaders[vertex_shader] = (CGLES3Shader *)pVertexShader;
@@ -167,6 +172,42 @@ void CGLES3Pipeline::SetInputAttachmentLocation(const char *szName, uint32_t inp
 			m_sampledImageLocations[name] = location;
 			m_inputAttachmentNames[inputAttachmentIndex] = name;
 		}
+	}
+}
+
+uint32_t CGLES3Pipeline::GetUniformBlockBinding(const char *szName) const
+{
+	const auto &itUniformBlockBinding = m_uniformBlockBindings.find(HashValue(szName));
+
+	if (itUniformBlockBinding != m_uniformBlockBindings.end()) {
+		return itUniformBlockBinding->second;
+	}
+	else {
+		return -1;
+	}
+}
+
+uint32_t CGLES3Pipeline::GetUniformLocation(const char *szName) const
+{
+	const auto &itUniformLocation = m_uniformLocations.find(HashValue(szName));
+
+	if (itUniformLocation != m_uniformLocations.end()) {
+		return itUniformLocation->second;
+	}
+	else {
+		return -1;
+	}
+}
+
+uint32_t CGLES3Pipeline::GetSampledImageLocation(const char *szName) const
+{
+	const auto &itSampledImageLocation = m_sampledImageLocations.find(HashValue(szName));
+
+	if (itSampledImageLocation != m_sampledImageLocations.end()) {
+		return itSampledImageLocation->second;
+	}
+	else {
+		return -1;
 	}
 }
 

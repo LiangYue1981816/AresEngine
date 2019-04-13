@@ -14,6 +14,9 @@ private:
 
 
 private:
+	const CGfxDescriptorLayoutPtr GetDescriptorLayout(uint32_t indexDescriptorSet) const;
+
+private:
 	bool CreateProgram(const CGLES3Shader *pVertexShader, const CGLES3Shader *pFragmentShader, const CGLES3Shader *pComputeShader);
 	bool CreateLayouts(void);
 	void Destroy(void);
@@ -24,6 +27,9 @@ private:
 	void SetSampledImageLocation(const char *szName);
 	void SetInputAttachmentLocation(const char *szName, uint32_t inputAttachmentIndex);
 
+	uint32_t GetUniformBlockBinding(const char *szName) const;
+	uint32_t GetUniformLocation(const char *szName) const;
+	uint32_t GetSampledImageLocation(const char *szName) const;
 	uint32_t GetInputAttachmentName(uint32_t inputAttachmentIndex) const;
 
 private:
