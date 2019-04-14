@@ -87,7 +87,6 @@ public:
 
 public:
 	virtual const CGfxDescriptorLayoutPtr GetDescriptorLayout(uint32_t indexDescriptorSet) const = 0;
-	virtual uint32_t GetInputAttachmentName(uint32_t inputAttachmentIndex) const = 0;
 
 public:
 	virtual bool Create(const CGfxRenderPass *pRenderPass, const CGfxShader *pVertexShader, const CGfxShader *pFragmentShader, const PipelineState &state, uint32_t indexSubpass, uint32_t vertexBinding, uint32_t instanceBinding) = 0;
