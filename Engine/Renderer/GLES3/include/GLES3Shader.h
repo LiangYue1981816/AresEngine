@@ -15,6 +15,7 @@ private:
 public:
 	HANDLE GetShader(void) const;
 
+public:
 	uint32_t GetKind(void) const;
 	const CGfxSprivCross& GetSprivCross(void) const;
 

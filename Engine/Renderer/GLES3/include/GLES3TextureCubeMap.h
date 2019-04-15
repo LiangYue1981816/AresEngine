@@ -15,9 +15,10 @@ private:
 
 public:
 	HANDLE GetTexture(void) const;
-
-	GfxPixelFormat GetFormat(void) const;
 	GfxTextureType GetType(void) const;
+
+public:
+	GfxPixelFormat GetFormat(void) const;
 
 	int GetWidth(void) const;
 	int GetHeight(void) const;

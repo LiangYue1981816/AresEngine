@@ -26,14 +26,14 @@ HANDLE CGLES3TextureCubeMap::GetTexture(void) const
 	return (HANDLE)m_ptrTexture->GetTexture();
 }
 
-GfxPixelFormat CGLES3TextureCubeMap::GetFormat(void) const
-{
-	return m_format;
-}
-
 GfxTextureType CGLES3TextureCubeMap::GetType(void) const
 {
 	return m_type;
+}
+
+GfxPixelFormat CGLES3TextureCubeMap::GetFormat(void) const
+{
+	return m_format;
 }
 
 int CGLES3TextureCubeMap::GetWidth(void) const

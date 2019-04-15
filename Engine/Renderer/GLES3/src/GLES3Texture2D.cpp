@@ -26,14 +26,14 @@ HANDLE CGLES3Texture2D::GetTexture(void) const
 	return (HANDLE)m_ptrTexture->GetTexture();
 }
 
-GfxPixelFormat CGLES3Texture2D::GetFormat(void) const
-{
-	return m_format;
-}
-
 GfxTextureType CGLES3Texture2D::GetType(void) const
 {
 	return m_type;
+}
+
+GfxPixelFormat CGLES3Texture2D::GetFormat(void) const
+{
+	return m_format;
 }
 
 int CGLES3Texture2D::GetWidth(void) const
