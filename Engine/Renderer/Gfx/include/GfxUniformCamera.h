@@ -24,7 +24,7 @@ public:
 
 
 public:
-	CGfxUniformBufferPtr GetUniformBuffer(void) const;
+	const CGfxUniformBufferPtr GetUniformBuffer(void) const;
 
 public:
 	void SetScreen(float width, float height);

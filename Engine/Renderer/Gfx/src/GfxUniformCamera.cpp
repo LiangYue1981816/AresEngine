@@ -12,7 +12,7 @@ CGfxUniformCamera::~CGfxUniformCamera(void)
 
 }
 
-CGfxUniformBufferPtr CGfxUniformCamera::GetUniformBuffer(void) const
+const CGfxUniformBufferPtr CGfxUniformCamera::GetUniformBuffer(void) const
 {
 	return m_ptrUniformBuffer;
 }

@@ -138,7 +138,7 @@ CGfxUniformEngine::~CGfxUniformEngine(void)
 
 }
 
-CGfxUniformBufferPtr CGfxUniformEngine::GetUniformBuffer(void) const
+const CGfxUniformBufferPtr CGfxUniformEngine::GetUniformBuffer(void) const
 {
 	return m_ptrUniformBuffer;
 }
