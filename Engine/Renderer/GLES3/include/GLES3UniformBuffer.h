@@ -16,10 +16,12 @@ private:
 
 public:
 	HANDLE GetBuffer(void) const;
+
+public:
 	uint32_t GetSize(void) const;
 
 public:
-	bool BufferData(size_t offset, size_t size, const void *pBuffer);
+	bool BufferData(size_t offset, size_t size, const void* pBuffer);
 
 private:
 	void Bind(int binding, int offset, int size) const;
