@@ -875,6 +875,25 @@ void GLUseProgram(GLuint program)
 {
 	if (Program.program != program) {
 		Program.program = program;
+		Program.uniform1i.clear();
+		Program.uniform2i.clear();
+		Program.uniform3i.clear();
+		Program.uniform4i.clear();
+		Program.uniform1f.clear();
+		Program.uniform2f.clear();
+		Program.uniform3f.clear();
+		Program.uniform4f.clear();
+		Program.uniform1iv.clear();
+		Program.uniform2iv.clear();
+		Program.uniform3iv.clear();
+		Program.uniform4iv.clear();
+		Program.uniform1fv.clear();
+		Program.uniform2fv.clear();
+		Program.uniform3fv.clear();
+		Program.uniform4fv.clear();
+		Program.uniformMatrix2fv.clear();
+		Program.uniformMatrix3fv.clear();
+		Program.uniformMatrix4fv.clear();
 		glUseProgram(program);
 	}
 }
