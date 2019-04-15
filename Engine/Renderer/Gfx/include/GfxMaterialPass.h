@@ -22,7 +22,7 @@ public:
 
 
 public:
-	virtual CGfxDescriptorSetPtr GetDescriptorSet(void) const = 0;
+	virtual const CGfxDescriptorSetPtr GetDescriptorSet(void) const = 0;
 
 public:
 	virtual bool SetPipeline(const CGfxRenderPass *pRenderPass, const CGfxShader *pVertexShader, const CGfxShader *pFragmentShader, const PipelineState &state, uint32_t indexSubpass, uint32_t vertexBinding, uint32_t instanceBinding) = 0;

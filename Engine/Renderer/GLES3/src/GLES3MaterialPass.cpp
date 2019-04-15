@@ -34,7 +34,7 @@ CGLES3MaterialPass::~CGLES3MaterialPass(void)
 	}
 }
 
-CGfxDescriptorSetPtr CGLES3MaterialPass::GetDescriptorSet(void) const
+const CGfxDescriptorSetPtr CGLES3MaterialPass::GetDescriptorSet(void) const
 {
 	return m_ptrDescriptorSet;
 }
