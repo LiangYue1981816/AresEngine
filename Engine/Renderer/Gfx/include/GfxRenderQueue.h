@@ -5,7 +5,7 @@
 class CALL_API CTaskCommandBuffer : public CTask
 {
 public:
-	CTaskCommandBuffer(int indexQueue, const CGfxDescriptorSetPtr ptrDescriptorSetEngine, const CGfxDescriptorSetPtr ptrDescriptorSetCamera, const CGfxDescriptorSetPtr ptrDescriptorSetInputAttachment, CGfxPipelineGraphics *pPipeline, uint32_t namePass);
+	CTaskCommandBuffer(int indexQueue, const CGfxDescriptorSetPtr ptrDescriptorSetEngine, const CGfxDescriptorSetPtr ptrDescriptorSetCamera, CGfxPipelineGraphics *pPipeline, uint32_t namePass);
 	virtual ~CTaskCommandBuffer(void);
 
 
@@ -19,7 +19,6 @@ private:
 	CGfxCommandBufferPtr m_ptrCommandBuffer;
 	CGfxDescriptorSetPtr m_ptrDescriptorSetEngine;
 	CGfxDescriptorSetPtr m_ptrDescriptorSetCamera;
-	CGfxDescriptorSetPtr m_ptrDescriptorSetInputAttachment;
 	CGfxPipelineGraphics*m_pPipeline;
 	uint32_t m_namePass;
 };
@@ -38,8 +37,8 @@ public:
 	void End(int indexQueue);
 
 public:
-	virtual void CmdDraw(int indexQueue, CGfxCommandBufferPtr ptrCommandBuffer, const CGfxDescriptorSetPtr ptrDescriptorSetEngine, const CGfxDescriptorSetPtr ptrDescriptorSetCamera, const CGfxDescriptorSetPtr ptrDescriptorSetInputAttachment, uint32_t namePass);
-	virtual void CmdDrawThread(int indexQueue, CGfxCommandBufferPtr ptrCommandBuffer, const CGfxDescriptorSetPtr ptrDescriptorSetEngine, const CGfxDescriptorSetPtr ptrDescriptorSetCamera, const CGfxDescriptorSetPtr ptrDescriptorSetInputAttachment, CGfxPipelineGraphics *pPipeline, uint32_t namePass);
+	virtual void CmdDraw(int indexQueue, CGfxCommandBufferPtr ptrCommandBuffer, const CGfxDescriptorSetPtr ptrDescriptorSetEngine, const CGfxDescriptorSetPtr ptrDescriptorSetCamera, uint32_t namePass);
+	virtual void CmdDrawThread(int indexQueue, CGfxCommandBufferPtr ptrCommandBuffer, const CGfxDescriptorSetPtr ptrDescriptorSetEngine, const CGfxDescriptorSetPtr ptrDescriptorSetCamera, CGfxPipelineGraphics *pPipeline, uint32_t namePass);
 
 
 private:
