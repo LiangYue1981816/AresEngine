@@ -2,34 +2,6 @@
 #include "GfxRenderer.h"
 
 
-class CALL_API CTaskCommandBuffer : public CTask
-{
-public:
-	CTaskCommandBuffer(int indexQueue, const CGfxDescriptorSetPtr ptrDescriptorSetEngine, const CGfxDescriptorSetPtr ptrDescriptorSetCamera, const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass, uint32_t indexSubpass, CGfxPipelineGraphics* pPipeline, uint32_t namePass);
-	virtual ~CTaskCommandBuffer(void);
-
-
-public:
-	CGfxCommandBufferPtr GetCommandBuffer(void) const;
-	void TaskFunc(int indexThread, void *pParams);
-
-
-private:
-	int m_indexQueue;
-	CGfxCommandBufferPtr m_ptrCommandBuffer;
-
-	CGfxDescriptorSetPtr m_ptrDescriptorSetEngine;
-	CGfxDescriptorSetPtr m_ptrDescriptorSetCamera;
-	CGfxDescriptorSetPtr m_ptrDescriptorSetInputAttachment;
-
-	CGfxFrameBufferPtr m_ptrFrameBuffer;
-	CGfxRenderPassPtr m_ptrRenderPass;
-	uint32_t m_indexSubpass;
-
-	CGfxPipelineGraphics *m_pPipeline;
-	uint32_t m_namePass;
-};
-
 class CALL_API CGfxRenderQueue
 {
 public:

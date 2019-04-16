@@ -1,41 +1,59 @@
 #include "GfxHeader.h"
 
 
-CTaskCommandBuffer::CTaskCommandBuffer(int indexQueue, const CGfxDescriptorSetPtr ptrDescriptorSetEngine, const CGfxDescriptorSetPtr ptrDescriptorSetCamera, const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass, uint32_t indexSubpass, CGfxPipelineGraphics* pPipeline, uint32_t namePass)
-	: m_indexQueue(indexQueue)
-
-	, m_ptrDescriptorSetEngine(ptrDescriptorSetEngine)
-	, m_ptrDescriptorSetCamera(ptrDescriptorSetCamera)
-
-	, m_ptrFrameBuffer(ptrFrameBuffer)
-	, m_ptrRenderPass(ptrRenderPass)
-	, m_indexSubpass(indexSubpass)
-
-	, m_pPipeline(pPipeline)
-	, m_namePass(namePass)
+class CALL_API CTaskCommandBuffer : public CTask
 {
+public:
+	CTaskCommandBuffer(int indexQueue, const CGfxDescriptorSetPtr ptrDescriptorSetEngine, const CGfxDescriptorSetPtr ptrDescriptorSetCamera, const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass, uint32_t indexSubpass, CGfxPipelineGraphics* pPipeline, uint32_t namePass)
+		: m_indexQueue(indexQueue)
 
-}
+		, m_ptrDescriptorSetEngine(ptrDescriptorSetEngine)
+		, m_ptrDescriptorSetCamera(ptrDescriptorSetCamera)
 
-CTaskCommandBuffer::~CTaskCommandBuffer(void)
-{
+		, m_ptrFrameBuffer(ptrFrameBuffer)
+		, m_ptrRenderPass(ptrRenderPass)
+		, m_indexSubpass(indexSubpass)
 
-}
+		, m_pPipeline(pPipeline)
+		, m_namePass(namePass)
+	{
 
-CGfxCommandBufferPtr CTaskCommandBuffer::GetCommandBuffer(void) const
-{
-	return m_ptrCommandBuffer;
-}
-
-void CTaskCommandBuffer::TaskFunc(int indexThread, void *pParams)
-{
-	m_ptrCommandBuffer = GfxRenderer()->NewCommandBuffer(indexThread, false);
-	m_ptrDescriptorSetInputAttachment = GfxRenderer()->NewDescriptorSet(m_pPipeline, m_ptrFrameBuffer, m_ptrRenderPass, m_indexSubpass);
-
-	if (CGfxRenderQueue *pRenderQueue = (CGfxRenderQueue *)pParams) {
-		pRenderQueue->CmdDrawThread(m_indexQueue, m_ptrCommandBuffer, m_ptrDescriptorSetEngine, m_ptrDescriptorSetCamera, m_ptrDescriptorSetInputAttachment, m_pPipeline, m_namePass);
 	}
-}
+	virtual ~CTaskCommandBuffer(void);
+
+
+public:
+	CGfxCommandBufferPtr GetCommandBuffer(void) const
+	{
+		return m_ptrCommandBuffer;
+	}
+
+	void TaskFunc(int indexThread, void* pParams)
+	{
+		m_ptrCommandBuffer = GfxRenderer()->NewCommandBuffer(indexThread, false);
+		m_ptrDescriptorSetInputAttachment = GfxRenderer()->NewDescriptorSet(m_pPipeline, m_ptrFrameBuffer, m_ptrRenderPass, m_indexSubpass);
+
+		if (CGfxRenderQueue * pRenderQueue = (CGfxRenderQueue*)pParams) {
+			pRenderQueue->CmdDrawThread(m_indexQueue, m_ptrCommandBuffer, m_ptrDescriptorSetEngine, m_ptrDescriptorSetCamera, m_ptrDescriptorSetInputAttachment, m_pPipeline, m_namePass);
+		}
+	}
+
+
+private:
+	int m_indexQueue;
+	CGfxCommandBufferPtr m_ptrCommandBuffer;
+
+	CGfxDescriptorSetPtr m_ptrDescriptorSetEngine;
+	CGfxDescriptorSetPtr m_ptrDescriptorSetCamera;
+	CGfxDescriptorSetPtr m_ptrDescriptorSetInputAttachment;
+
+	CGfxFrameBufferPtr m_ptrFrameBuffer;
+	CGfxRenderPassPtr m_ptrRenderPass;
+	uint32_t m_indexSubpass;
+
+	CGfxPipelineGraphics* m_pPipeline;
+	uint32_t m_namePass;
+};
 
 
 CGfxRenderQueue::CGfxRenderQueue(void)
