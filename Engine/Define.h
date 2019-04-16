@@ -52,3 +52,5 @@
 
 #define LOG_TAG_MEMORY                 "Memory"
 #define LOG_TAG_RENDERER               "GfxRenderer"
+
+#define MAX_THREAD_COUNT               32

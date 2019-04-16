@@ -8,6 +8,10 @@ CTaskGraph::CTaskGraph(const char *szName, int numThreads)
 		numThreads = NumCpuCores();
 	}
 
+	if (numThreads > MAX_THREAD_COUNT) {
+		numThreads = MAX_THREAD_COUNT;
+	}
+
 	event_init(&m_eventExit, 0);
 	event_init(&m_eventReady, 1);
 	event_init(&m_eventFinish, 1);

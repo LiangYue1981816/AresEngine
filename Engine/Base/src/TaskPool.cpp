@@ -9,6 +9,10 @@ CTaskPool::CTaskPool(const char *szName, int numThreads)
 		numThreads = NumCpuCores();
 	}
 
+	if (numThreads > MAX_THREAD_COUNT) {
+		numThreads = MAX_THREAD_COUNT;
+	}
+
 	event_init(&m_eventExit, 0);
 	atomic_spin_init(&m_lockTaskList);
 
