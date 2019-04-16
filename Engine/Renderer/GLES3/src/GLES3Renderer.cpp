@@ -9,6 +9,7 @@ CGLES3Renderer::CGLES3Renderer(void *hInstance, void *hWnd, void *hDC, int width
 	, m_pShaderManager(nullptr)
 	, m_pPipelineComputeManager(nullptr)
 	, m_pPipelineGraphicsManager(nullptr)
+	, m_pDescriptorLayoutManager(nullptr)
 	, m_pSamplerManager(nullptr)
 	, m_pTexture2DManager(nullptr)
 	, m_pTexture2DArrayManager(nullptr)
@@ -20,7 +21,6 @@ CGLES3Renderer::CGLES3Renderer(void *hInstance, void *hWnd, void *hDC, int width
 	, m_pRenderPassManager(nullptr)
 	, m_pRenderTextureManager(nullptr)
 	, m_pFrameBufferManager(nullptr)
-	, m_pDescriptorLayoutManager(nullptr)
 	, m_pDescriptorSetManager(nullptr)
 	, m_pCommandBufferManager(nullptr)
 
@@ -32,6 +32,7 @@ CGLES3Renderer::CGLES3Renderer(void *hInstance, void *hWnd, void *hDC, int width
 	m_pShaderManager = new CGLES3ShaderManager;
 	m_pPipelineComputeManager = new CGLES3PipelineComputeManager;
 	m_pPipelineGraphicsManager = new CGLES3PipelineGraphicsManager;
+	m_pDescriptorLayoutManager = new CGLES3DescriptorLayoutManager;
 	m_pSamplerManager = new CGLES3SamplerManager;
 	m_pTexture2DManager = new CGLES3Texture2DManager;
 	m_pTexture2DArrayManager = new CGLES3Texture2DArrayManager;
@@ -43,7 +44,6 @@ CGLES3Renderer::CGLES3Renderer(void *hInstance, void *hWnd, void *hDC, int width
 	m_pRenderPassManager = new CGLES3RenderPassManager;
 	m_pRenderTextureManager = new CGLES3RenderTextureManager;
 	m_pFrameBufferManager = new CGLES3FrameBufferManager;
-	m_pDescriptorLayoutManager = new CGLES3DescriptorLayoutManager;
 	m_pDescriptorSetManager = new CGLES3DescriptorSetManager;
 	m_pCommandBufferManager = new CGLES3CommandBufferManager;
 
@@ -67,10 +67,10 @@ CGLES3Renderer::~CGLES3Renderer(void)
 	delete m_pTexture2DArrayManager;
 	delete m_pTexture2DManager;
 	delete m_pSamplerManager;
+	delete m_pShaderManager;
 	delete m_pPipelineComputeManager;
 	delete m_pPipelineGraphicsManager;
 	delete m_pDescriptorLayoutManager;
-	delete m_pShaderManager;
 }
 
 uint32_t CGLES3Renderer::GetLastError(void) const

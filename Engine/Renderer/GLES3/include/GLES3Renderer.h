@@ -211,6 +211,7 @@ private:
 	CGLES3ShaderManager *m_pShaderManager;
 	CGLES3PipelineComputeManager *m_pPipelineComputeManager;
 	CGLES3PipelineGraphicsManager *m_pPipelineGraphicsManager;
+	CGLES3DescriptorLayoutManager* m_pDescriptorLayoutManager;
 	CGLES3SamplerManager *m_pSamplerManager;
 	CGLES3Texture2DManager *m_pTexture2DManager;
 	CGLES3Texture2DArrayManager *m_pTexture2DArrayManager;
@@ -222,7 +223,6 @@ private:
 	CGLES3RenderPassManager *m_pRenderPassManager;
 	CGLES3RenderTextureManager *m_pRenderTextureManager;
 	CGLES3FrameBufferManager *m_pFrameBufferManager;
-	CGLES3DescriptorLayoutManager *m_pDescriptorLayoutManager;
 	CGLES3DescriptorSetManager *m_pDescriptorSetManager;
 	CGLES3CommandBufferManager *m_pCommandBufferManager;
 
