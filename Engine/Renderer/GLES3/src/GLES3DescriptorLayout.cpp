@@ -52,17 +52,6 @@ bool CGLES3DescriptorLayout::SetSampledImageBinding(uint32_t name, uint32_t bind
 	}
 }
 
-bool CGLES3DescriptorLayout::SetInputAttachmentBinding(uint32_t name, uint32_t binding)
-{
-	if (m_sampledImageBindings.find(name) == m_sampledImageBindings.end()) {
-		m_sampledImageBindings[name] = binding;
-		return true;
-	}
-	else {
-		return false;
-	}
-}
-
 uint32_t CGLES3DescriptorLayout::GetSetIndex(void) const
 {
 	return m_set;

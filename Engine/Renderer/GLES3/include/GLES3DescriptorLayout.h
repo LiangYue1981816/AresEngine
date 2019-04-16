@@ -20,7 +20,6 @@ public:
 public:
 	bool SetUniformBlockBinding(uint32_t name, uint32_t binding);
 	bool SetSampledImageBinding(uint32_t name, uint32_t binding);
-	bool SetInputAttachmentBinding(uint32_t name, uint32_t binding);
 
 public:
 	uint32_t GetSetIndex(void) const;
