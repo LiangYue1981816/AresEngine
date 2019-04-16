@@ -56,7 +56,6 @@ CGLES3Renderer::~CGLES3Renderer(void)
 
 	delete m_pCommandBufferManager;
 	delete m_pDescriptorSetManager;
-	delete m_pDescriptorLayoutManager;
 	delete m_pFrameBufferManager;
 	delete m_pRenderTextureManager;
 	delete m_pRenderPassManager;
@@ -68,8 +67,9 @@ CGLES3Renderer::~CGLES3Renderer(void)
 	delete m_pTexture2DArrayManager;
 	delete m_pTexture2DManager;
 	delete m_pSamplerManager;
-	delete m_pPipelineGraphicsManager;
 	delete m_pPipelineComputeManager;
+	delete m_pPipelineGraphicsManager;
+	delete m_pDescriptorLayoutManager;
 	delete m_pShaderManager;
 }
 
