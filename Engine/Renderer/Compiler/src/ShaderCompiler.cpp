@@ -131,7 +131,7 @@ std::vector<uint32_t> CShaderCompiler::Compile(const char *szInputFileName, cons
 			if (source.empty()) break;
 
 			std::string preprocess = PreprocessShader(source, kind, m_compiler, options);
-			if (source.empty()) break;
+			if (preprocess.empty()) break;
 
 			uint32_t hash = HashValue(preprocess.c_str());
 
