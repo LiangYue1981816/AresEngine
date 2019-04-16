@@ -18,18 +18,10 @@
 #define USE_INSTANCE_ATTRIBUTE_POINTLIGHT_COLOR       layout (location = 12) in mediump vec4 inInstancePointLightColor
 #define USE_INSTANCE_ATTRIBUTE_POINTLIGHT_ATTENUATION layout (location = 13) in mediump vec4 inInstancePointLightAttenuation
 
-
-#ifdef GLES
-	#define DESCRIPTOR_SET_ENGINE(b)          layout (binding = b)
-	#define DESCRIPTOR_SET_CAMERA(b)          layout (binding = b)
-	#define DESCRIPTOR_SET_PASS(b)            layout (binding = b)
-	#define DESCRIPTOR_SET_INPUTATTACHMENT(b) layout (binding = b)
-#else
-	#define DESCRIPTOR_SET_ENGINE(b)          layout (set = 0, binding = b)
-	#define DESCRIPTOR_SET_CAMERA(b)          layout (set = 1, binding = b)
-	#define DESCRIPTOR_SET_PASS(b)            layout (set = 2, binding = b)
-	#define DESCRIPTOR_SET_INPUTATTACHMENT(b) layout (set = 3, binding = b)
-#endif
+#define DESCRIPTOR_SET_ENGINE(b)          layout (set = 0, binding = b)
+#define DESCRIPTOR_SET_CAMERA(b)          layout (set = 1, binding = b)
+#define DESCRIPTOR_SET_PASS(b)            layout (set = 2, binding = b)
+#define DESCRIPTOR_SET_INPUTATTACHMENT(b) layout (set = 3, binding = b)
 
 #define DESCRIPTOR_BIND_ENGINE 0
 #define DESCRIPTOR_BIND_CAMERA 1
