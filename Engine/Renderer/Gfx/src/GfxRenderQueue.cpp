@@ -1,10 +1,16 @@
 #include "GfxHeader.h"
 
 
-CTaskCommandBuffer::CTaskCommandBuffer(int indexQueue, const CGfxDescriptorSetPtr ptrDescriptorSetEngine, const CGfxDescriptorSetPtr ptrDescriptorSetCamera, CGfxPipelineGraphics* pPipeline, uint32_t namePass)
+CTaskCommandBuffer::CTaskCommandBuffer(int indexQueue, const CGfxDescriptorSetPtr ptrDescriptorSetEngine, const CGfxDescriptorSetPtr ptrDescriptorSetCamera, const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass, uint32_t indexSubpass, CGfxPipelineGraphics* pPipeline, uint32_t namePass)
 	: m_indexQueue(indexQueue)
+
 	, m_ptrDescriptorSetEngine(ptrDescriptorSetEngine)
 	, m_ptrDescriptorSetCamera(ptrDescriptorSetCamera)
+
+	, m_ptrFrameBuffer(ptrFrameBuffer)
+	, m_ptrRenderPass(ptrRenderPass)
+	, m_indexSubpass(indexSubpass)
+
 	, m_pPipeline(pPipeline)
 	, m_namePass(namePass)
 {
@@ -24,9 +30,10 @@ CGfxCommandBufferPtr CTaskCommandBuffer::GetCommandBuffer(void) const
 void CTaskCommandBuffer::TaskFunc(int indexThread, void *pParams)
 {
 	m_ptrCommandBuffer = GfxRenderer()->NewCommandBuffer(indexThread, false);
+	m_ptrDescriptorSetInputAttachment = GfxRenderer()->NewDescriptorSet(m_pPipeline, m_ptrFrameBuffer, m_ptrRenderPass, m_indexSubpass);
 
 	if (CGfxRenderQueue *pRenderQueue = (CGfxRenderQueue *)pParams) {
-		pRenderQueue->CmdDrawThread(m_indexQueue, m_ptrCommandBuffer, m_ptrDescriptorSetEngine, m_ptrDescriptorSetCamera, m_pPipeline, m_namePass);
+		pRenderQueue->CmdDrawThread(m_indexQueue, m_ptrCommandBuffer, m_ptrDescriptorSetEngine, m_ptrDescriptorSetCamera, m_ptrDescriptorSetInputAttachment, m_pPipeline, m_namePass);
 	}
 }
 
@@ -106,7 +113,7 @@ void CGfxRenderQueue::CmdDraw(int indexQueue, CGfxCommandBufferPtr ptrCommandBuf
 	eastl::vector<CTaskCommandBuffer> tasks;
 	{
 		for (const auto &itPipelineQueue : m_pipelineMaterialQueue[indexQueue]) {
-			tasks.emplace_back(indexQueue, ptrDescriptorSetEngine, ptrDescriptorSetCamera, itPipelineQueue.first, namePass);
+			tasks.emplace_back(indexQueue, ptrDescriptorSetEngine, ptrDescriptorSetCamera, ptrCommandBuffer->GetFrameBuffer(), ptrCommandBuffer->GetRenderPass(), ptrCommandBuffer->GetSubpassIndex(), itPipelineQueue.first, namePass);
 		}
 
 		for (int indexTask = 0; indexTask < tasks.size(); indexTask++) {
@@ -122,14 +129,12 @@ void CGfxRenderQueue::CmdDraw(int indexQueue, CGfxCommandBufferPtr ptrCommandBuf
 	}
 }
 
-void CGfxRenderQueue::CmdDrawThread(int indexQueue, CGfxCommandBufferPtr ptrCommandBuffer, const CGfxDescriptorSetPtr ptrDescriptorSetEngine, const CGfxDescriptorSetPtr ptrDescriptorSetCamera, CGfxPipelineGraphics *pPipeline, uint32_t namePass)
+void CGfxRenderQueue::CmdDrawThread(int indexQueue, CGfxCommandBufferPtr ptrCommandBuffer, const CGfxDescriptorSetPtr ptrDescriptorSetEngine, const CGfxDescriptorSetPtr ptrDescriptorSetCamera, const CGfxDescriptorSetPtr ptrDescriptorSetInputAttachment, CGfxPipelineGraphics* pPipeline, uint32_t namePass)
 {
-//	CGfxDescriptorSetPtr ptrDescriptorSetInputAttachment = GfxRenderer()->NewDescriptorSet(pPipeline, ptrCommandBuffer->GetFrameBuffer(), ptrCommandBuffer->GetRenderPass(), ptrCommandBuffer->GetSubpassIndex());
-
 	GfxRenderer()->CmdBindPipelineGraphics(ptrCommandBuffer, pPipeline);
 	GfxRenderer()->CmdBindDescriptorSet(ptrCommandBuffer, ptrDescriptorSetEngine);
 	GfxRenderer()->CmdBindDescriptorSet(ptrCommandBuffer, ptrDescriptorSetCamera);
-//	GfxRenderer()->CmdBindDescriptorSet(ptrCommandBuffer, ptrDescriptorSetInputAttachment);
+	GfxRenderer()->CmdBindDescriptorSet(ptrCommandBuffer, ptrDescriptorSetInputAttachment);
 
 	for (const auto &itMaterial : m_pipelineMaterialQueue[indexQueue][pPipeline]) {
 		GfxRenderer()->CmdBindDescriptorSet(ptrCommandBuffer, itMaterial.first->GetPass(namePass)->GetDescriptorSet());
