@@ -335,3 +335,6 @@ ASALocalRun/
 # assets
 assets/
 /Engine/ThirdParty/shaderc/build_overrides
+
+# shaderc
+/Engine/ThirdParty/shaderc/build
