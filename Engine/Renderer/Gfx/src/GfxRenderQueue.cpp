@@ -19,7 +19,10 @@ public:
 	{
 
 	}
-	virtual ~CTaskCommandBuffer(void);
+	virtual ~CTaskCommandBuffer(void)
+	{
+
+	}
 
 
 public:
