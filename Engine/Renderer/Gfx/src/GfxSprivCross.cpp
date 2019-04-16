@@ -30,8 +30,8 @@ const eastl::string& CGfxSprivCross::Create(const uint32_t *words, size_t numWor
 		m_sampledImageBindings.clear();
 		m_inputAttachmentBindings.clear();
 
-		for (const auto &itInput : shaderResources.stage_inputs) {
-			m_vertexAttributes.emplace_back(itInput.name.c_str());
+		for (const auto &itVertexAttribute : shaderResources.stage_inputs) {
+			m_vertexAttributes.emplace_back(itVertexAttribute.name.c_str());
 		}
 
 		for (const auto &itPushConstant : shaderResources.push_constant_buffers) {
