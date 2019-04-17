@@ -23,7 +23,7 @@ private:
 	uint32_t GetSize(void) const;
 
 private:
-	void BufferSize(size_t size, bool bDynamic);
+	bool BufferSize(size_t size, bool bDynamic);
 	bool BufferData(size_t offset, size_t size, const void *pBuffer);
 
 private:
