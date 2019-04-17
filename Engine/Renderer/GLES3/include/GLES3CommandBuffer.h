@@ -18,7 +18,7 @@ public:
 	const CGfxRenderPassPtr GetRenderPass(void) const;
 
 	bool IsInRenderPass(void) const;
-	uint32_t GetSubpassIndex(void) const;
+	int GetSubpassIndex(void) const;
 
 public:
 	void Clearup(void);
@@ -71,7 +71,7 @@ public:
 
 private:
 	bool m_bInRenderPass;
-	uint32_t m_indexSubpass;
+	int m_indexSubpass;
 
 	CGfxRenderPassPtr m_ptrRenderPass;
 	CGfxFrameBufferPtr m_ptrFrameBuffer;

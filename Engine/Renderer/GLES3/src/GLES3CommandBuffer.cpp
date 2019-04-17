@@ -74,7 +74,7 @@ bool CGLES3CommandBuffer::IsInRenderPass(void) const
 	return m_bInRenderPass;
 }
 
-uint32_t CGLES3CommandBuffer::GetSubpassIndex(void) const
+int CGLES3CommandBuffer::GetSubpassIndex(void) const
 {
 	return m_indexSubpass;
 }
