@@ -12,7 +12,7 @@ public:
 	CGfxResource(void)
 		: refCount(0)
 	{
-		atomic_spin_init(&lock);
+
 	}
 	virtual ~CGfxResource(void)
 	{
@@ -24,27 +24,23 @@ public:
 public:
 	uint32_t GetRefCount(void)
 	{
-		atomic_spin_autolock autolock(&lock);
 		return refCount;
 	}
 
 private:
 	uint32_t IncRefCount(void)
 	{
-		atomic_spin_autolock autolock(&lock);
 		return ++refCount;
 	}
 
 	uint32_t DecRefCount(void)
 	{
-		atomic_spin_autolock autolock(&lock);
 		return --refCount;
 	}
 
 
 private:
-	uint32_t refCount;
-	std::atomic_flag lock;
+	std::atomic_uint refCount;
 };
 
 template<class T>
