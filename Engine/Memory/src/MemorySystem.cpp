@@ -9,10 +9,8 @@ void* _malloc(size_t size)
 
 #ifdef PLATFORM_WINDOWS
 	ptr = _aligned_malloc(size, 16);
-#elif PLATFORM_ANDROID
-	ptr = memalign(16, size);
 #else
-	ptr = malloc(size);
+	posix_memalign(&ptr, 16, size);
 #endif
 
 	return ptr;
