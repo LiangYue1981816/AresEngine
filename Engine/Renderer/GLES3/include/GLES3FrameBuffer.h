@@ -22,7 +22,7 @@ public:
 	void Destroy(void);
 
 public:
-	bool SetAttachmentTexture(int indexAttachment, CGfxRenderTexturePtr ptrAttachmentTexture);
+	bool SetAttachmentTexture(int indexAttachment, const CGfxRenderTexturePtr ptrAttachmentTexture);
 	const CGfxRenderTexturePtr GetAttachmentTexture(int indexAttachment) const;
 
 public:

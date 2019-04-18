@@ -24,6 +24,6 @@ public:
 	virtual void Destroy(void) = 0;
 
 public:
-	virtual bool SetAttachmentTexture(int indexAttachment, CGfxRenderTexturePtr ptrAttachmentTexture) = 0;
+	virtual bool SetAttachmentTexture(int indexAttachment, const CGfxRenderTexturePtr ptrAttachmentTexture) = 0;
 	virtual const CGfxRenderTexturePtr GetAttachmentTexture(int indexAttachment) const = 0;
 };

@@ -59,7 +59,7 @@ void CGLES3FrameBuffer::Destroy(void)
 	m_resolve = 0;
 }
 
-bool CGLES3FrameBuffer::SetAttachmentTexture(int indexAttachment, CGfxRenderTexturePtr ptrAttachmentTexture)
+bool CGLES3FrameBuffer::SetAttachmentTexture(int indexAttachment, const CGfxRenderTexturePtr ptrAttachmentTexture)
 {
 	if (ptrAttachmentTexture->GetWidth() == m_width && ptrAttachmentTexture->GetHeight() == m_height && indexAttachment >= 0 && indexAttachment < (int)m_ptrAttachmentTextures.size()) {
 		m_ptrAttachmentTextures[indexAttachment] = ptrAttachmentTexture;
