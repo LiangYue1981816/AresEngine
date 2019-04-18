@@ -13,7 +13,7 @@ CGLES3PipelineCompute::~CGLES3PipelineCompute(void)
 	delete m_pPipeline;
 }
 
-const CGfxDescriptorLayoutPtr CGLES3PipelineCompute::GetDescriptorLayout(uint32_t indexDescriptorSet) const
+const CGfxDescriptorLayoutPtr CGLES3PipelineCompute::GetDescriptorLayout(int indexDescriptorSet) const
 {
 	return m_pPipeline->GetDescriptorLayout(indexDescriptorSet);
 }

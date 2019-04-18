@@ -13,7 +13,7 @@ CGLES3PipelineGraphics::~CGLES3PipelineGraphics(void)
 	delete m_pPipeline;
 }
 
-const CGfxDescriptorLayoutPtr CGLES3PipelineGraphics::GetDescriptorLayout(uint32_t indexDescriptorSet) const
+const CGfxDescriptorLayoutPtr CGLES3PipelineGraphics::GetDescriptorLayout(int indexDescriptorSet) const
 {
 	return m_pPipeline->GetDescriptorLayout(indexDescriptorSet);
 }

@@ -13,7 +13,7 @@ private:
 
 
 public:
-	const CGfxDescriptorLayoutPtr GetDescriptorLayout(uint32_t indexDescriptorSet) const;
+	const CGfxDescriptorLayoutPtr GetDescriptorLayout(int indexDescriptorSet) const;
 
 public:
 	bool Create(const CGfxShader *pComputeShader);
