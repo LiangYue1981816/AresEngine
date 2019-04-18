@@ -1,19 +1,11 @@
 #include "GLES3Renderer.h"
 
 
-CGLES3VertexArrayObject::CGLES3VertexArrayObject(void)
+CGLES3VertexArrayObject::CGLES3VertexArrayObject(CGLES3IndexBuffer *pIndexBuffer, CGLES3VertexBuffer *pVertexBuffer, CGLES3InstanceBuffer *pInstanceBuffer)
 	: m_vao(0)
 {
 	glGenVertexArrays(1, &m_vao);
-}
 
-CGLES3VertexArrayObject::~CGLES3VertexArrayObject(void)
-{
-	glDeleteVertexArrays(1, &m_vao);
-}
-
-bool CGLES3VertexArrayObject::Buffer(CGLES3IndexBuffer *pIndexBuffer, CGLES3VertexBuffer *pVertexBuffer, CGLES3InstanceBuffer *pInstanceBuffer)
-{
 	GLBindVertexArray(0);
 	GLBindBuffer(GL_ARRAY_BUFFER, 0);
 	GLBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
@@ -34,8 +26,11 @@ bool CGLES3VertexArrayObject::Buffer(CGLES3IndexBuffer *pIndexBuffer, CGLES3Vert
 	GLBindVertexArray(0);
 	GLBindBuffer(GL_ARRAY_BUFFER, 0);
 	GLBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+}
 
-	return true;
+CGLES3VertexArrayObject::~CGLES3VertexArrayObject(void)
+{
+	glDeleteVertexArrays(1, &m_vao);
 }
 
 void CGLES3VertexArrayObject::Bind(void) const

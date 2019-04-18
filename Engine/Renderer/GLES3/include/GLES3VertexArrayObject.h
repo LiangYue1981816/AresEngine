@@ -9,12 +9,9 @@ class CGLES3VertexArrayObject
 
 
 private:
-	CGLES3VertexArrayObject(void);
+	CGLES3VertexArrayObject(CGLES3IndexBuffer *pIndexBuffer, CGLES3VertexBuffer *pVertexBuffer, CGLES3InstanceBuffer *pInstanceBuffer);
 	virtual ~CGLES3VertexArrayObject(void);
 
-
-public:
-	bool Buffer(CGLES3IndexBuffer *pIndexBuffer, CGLES3VertexBuffer *pVertexBuffer, CGLES3InstanceBuffer *pInstanceBuffer);
 
 private:
 	void Bind(void) const;
