@@ -1,7 +1,7 @@
 #include "GLES3Renderer.h"
 
 
-CGLES3VertexArrayObject::CGLES3VertexArrayObject(CGLES3IndexBuffer *pIndexBuffer, CGLES3VertexBuffer *pVertexBuffer, CGLES3InstanceBuffer *pInstanceBuffer)
+CGLES3VertexArrayObject::CGLES3VertexArrayObject(const CGLES3IndexBuffer *pIndexBuffer, const CGLES3VertexBuffer *pVertexBuffer, const CGLES3InstanceBuffer *pInstanceBuffer)
 	: m_vao(0)
 {
 	glGenVertexArrays(1, &m_vao);

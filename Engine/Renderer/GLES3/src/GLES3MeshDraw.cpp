@@ -15,7 +15,7 @@ CGLES3MeshDraw::CGLES3MeshDraw(CGLES3MeshDrawManager* pManager, uint32_t name, c
 
 	m_pIndirectBuffer = new CGLES3IndirectBuffer(1);
 	m_pInstanceBuffer = new CGLES3InstanceBuffer(instanceFormat, instanceBinding);
-	m_pVertexArrayObject = new CGLES3VertexArrayObject((CGLES3IndexBuffer *)m_ptrMesh->GetIndexBuffer(), (CGLES3VertexBuffer *)m_ptrMesh->GetVertexBuffer(), m_pInstanceBuffer);
+	m_pVertexArrayObject = new CGLES3VertexArrayObject((const CGLES3IndexBuffer *)m_ptrMesh->GetIndexBuffer(), (const CGLES3VertexBuffer *)m_ptrMesh->GetVertexBuffer(), (const CGLES3InstanceBuffer *)m_pInstanceBuffer);
 }
 
 CGLES3MeshDraw::~CGLES3MeshDraw(void)
