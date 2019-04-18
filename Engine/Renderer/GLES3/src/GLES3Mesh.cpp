@@ -21,9 +21,9 @@ void CGLES3Mesh::Release(void)
 	m_pManager->Destroy(this);
 }
 
-CGfxMesh::Draw* CGLES3Mesh::GetDraw(int indexDraw)
+CGfxMesh::Draw* CGLES3Mesh::GetDraw(uint32_t name)
 {
-	const auto &itDraw = m_draws.find(indexDraw);
+	const auto &itDraw = m_draws.find(name);
 
 	if (itDraw != m_draws.end()) {
 		return &itDraw->second;
@@ -43,12 +43,12 @@ CGfxVertexBuffer* CGLES3Mesh::GetVertexBuffer(void)
 	return m_pVertexBuffer;
 }
 
-bool CGLES3Mesh::CreateDraw(int indexDraw, const glm::aabb &aabb, int baseVertex, int firstIndex, int indexCount)
+bool CGLES3Mesh::CreateDraw(uint32_t name, const glm::aabb &aabb, int baseVertex, int firstIndex, int indexCount)
 {
-	m_draws[indexDraw].aabb = aabb;
-	m_draws[indexDraw].baseVertex = baseVertex;
-	m_draws[indexDraw].firstIndex = firstIndex;
-	m_draws[indexDraw].indexCount = indexCount;
+	m_draws[name].aabb = aabb;
+	m_draws[name].baseVertex = baseVertex;
+	m_draws[name].firstIndex = firstIndex;
+	m_draws[name].indexCount = indexCount;
 	return true;
 }
 

@@ -1,8 +1,8 @@
 #include "GLES3Renderer.h"
 
 
-CGLES3MeshDraw::CGLES3MeshDraw(CGLES3MeshDrawManager *pManager, uint32_t name, const CGfxMeshPtr ptrMesh, int indexDraw, uint32_t instanceFormat, uint32_t instanceBinding)
-	: CGfxMeshDraw(name, ptrMesh, indexDraw, instanceFormat, instanceBinding)
+CGLES3MeshDraw::CGLES3MeshDraw(CGLES3MeshDrawManager* pManager, uint32_t name, const CGfxMeshPtr ptrMesh, uint32_t nameDraw, uint32_t instanceFormat, uint32_t instanceBinding)
+	: CGfxMeshDraw(name, ptrMesh, nameDraw, instanceFormat, instanceBinding)
 	, m_pManager(pManager)
 
 	, m_pMeshDraw(nullptr)
@@ -11,7 +11,7 @@ CGLES3MeshDraw::CGLES3MeshDraw(CGLES3MeshDrawManager *pManager, uint32_t name, c
 	, m_pVertexArrayObject(nullptr)
 {
 	m_ptrMesh = ptrMesh;
-	m_pMeshDraw = ptrMesh->GetDraw(indexDraw);
+	m_pMeshDraw = ptrMesh->GetDraw(nameDraw);
 
 	m_pIndirectBuffer = new CGLES3IndirectBuffer(1);
 	m_pInstanceBuffer = new CGLES3InstanceBuffer(instanceFormat, instanceBinding);

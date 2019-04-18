@@ -25,10 +25,10 @@ void CComponentMesh::SetMaterial(const CGfxMaterialPtr ptrMaterial)
 	m_ptrMaterial = ptrMaterial;
 }
 
-void CComponentMesh::SetMeshDraw(const CGfxMeshPtr ptrMesh, int indexDraw, uint32_t instanceFormat, uint32_t instanceBinding)
+void CComponentMesh::SetMeshDraw(const CGfxMeshPtr ptrMesh, uint32_t nameDraw, uint32_t instanceFormat, uint32_t instanceBinding)
 {
-	uint32_t name = HashValueFormat("%x_%x", ptrMesh->GetName(), indexDraw);
-	m_ptrMeshDraw = GfxRenderer()->NewMeshDraw(name, ptrMesh, indexDraw, instanceFormat, instanceBinding);
+	uint32_t name = HashValueFormat("%x_%x", ptrMesh->GetName(), nameDraw);
+	m_ptrMeshDraw = GfxRenderer()->NewMeshDraw(name, ptrMesh, nameDraw, instanceFormat, instanceBinding);
 }
 
 glm::aabb CComponentMesh::GetWorldAABB(void)
