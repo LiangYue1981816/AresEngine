@@ -22,7 +22,7 @@ public:
 	{
 		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_UPDATE_INSTANCEBUFFER, "CommandUpdateInstanceBuffer");
 		{
-			if (m_ptrMeshDraw.IsValid() && m_buffer.empty() == false) {
+			if (m_ptrMeshDraw && m_buffer.empty() == false) {
 				m_ptrMeshDraw->InstanceBufferData(m_buffer.size(), m_buffer.data());
 			}
 		}

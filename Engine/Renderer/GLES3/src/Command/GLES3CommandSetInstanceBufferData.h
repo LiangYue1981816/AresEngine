@@ -21,7 +21,7 @@ public:
 	{
 		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_SET_INSTANCEBUFFERDATA, "CommandSetInstanceBufferData");
 		{
-			if (m_ptrMeshDraw.IsValid()) {
+			if (m_ptrMeshDraw) {
 				m_ptrMeshDraw->InstanceBufferData(m_buffer.size(), m_buffer.data());
 			}
 		}

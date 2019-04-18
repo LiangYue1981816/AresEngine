@@ -22,7 +22,7 @@ public:
 	{
 		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_BIND_FRAMEBUFFER, "CommandBindFrameBuffer");
 		{
-			if (m_ptrFrameBuffer.IsValid() && m_ptrRenderPass.IsValid()) {
+			if (m_ptrFrameBuffer && m_ptrRenderPass) {
 				((CGLES3FrameBuffer *)m_ptrFrameBuffer.GetPointer())->Bind(m_ptrRenderPass->GetAttachments(), m_ptrRenderPass->GetSubpass(m_indexSubpass));
 			}
 			else {

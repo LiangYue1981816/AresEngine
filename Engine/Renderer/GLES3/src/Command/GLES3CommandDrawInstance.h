@@ -20,7 +20,7 @@ public:
 	{
 		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_DRAW_INSTANCE, "CommandDrawInstance");
 		{
-			if (m_ptrMeshDraw.IsValid()) {
+			if (m_ptrMeshDraw) {
 				((CGLES3MeshDraw *)m_ptrMeshDraw.GetPointer())->Bind();
 				glDrawElementsInstanced(GL_TRIANGLES, m_ptrMeshDraw->GetIndexCount(), CGLES3Helper::TranslateIndexType(m_ptrMeshDraw->GetIndexType()), (const void *)m_ptrMeshDraw->GetIndexOffset(), m_ptrMeshDraw->GetInstanceCount());
 			}

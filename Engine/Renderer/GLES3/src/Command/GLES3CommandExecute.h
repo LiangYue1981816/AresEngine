@@ -18,7 +18,7 @@ public:
 public:
 	virtual void Execute(void) const
 	{
-		if (m_ptrCommandBuffer.IsValid()) {
+		if (m_ptrCommandBuffer) {
 			m_ptrCommandBuffer->Execute();
 		}
 	}

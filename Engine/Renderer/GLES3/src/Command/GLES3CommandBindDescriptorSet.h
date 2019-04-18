@@ -20,7 +20,7 @@ public:
 	{
 		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_BIND_DESCRIPTORSET, "CommandBindDescriptorSet");
 		{
-			if (m_ptrDescriptorSet.IsValid()) {
+			if (m_ptrDescriptorSet) {
 				GLES3Renderer()->BindDescriptorSet(m_ptrDescriptorSet);
 			}
 		}

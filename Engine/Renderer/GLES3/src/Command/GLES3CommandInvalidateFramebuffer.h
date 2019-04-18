@@ -22,7 +22,7 @@ public:
 	{
 		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_INVALIDATE_FRAMEBUFFER, "CommandInvalidateFramebuffer");
 		{
-			if (m_ptrFrameBuffer.IsValid() && m_ptrRenderPass.IsValid()) {
+			if (m_ptrFrameBuffer && m_ptrRenderPass) {
 				((CGLES3FrameBuffer *)m_ptrFrameBuffer.GetPointer())->InvalidateFramebuffer(m_ptrRenderPass->GetAttachments(), m_ptrRenderPass->GetSubpass(m_indexSubpass));
 			}
 		}
