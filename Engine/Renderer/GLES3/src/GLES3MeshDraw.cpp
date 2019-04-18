@@ -44,7 +44,7 @@ glm::aabb CGLES3MeshDraw::GetLocalAABB(void) const
 
 GfxIndexType CGLES3MeshDraw::GetIndexType(void) const
 {
-	if (m_ptrMesh.IsValid()) {
+	if (m_ptrMesh) {
 		return m_ptrMesh->GetIndexBuffer()->GetIndexType();
 	}
 	else {
@@ -78,7 +78,7 @@ uint32_t CGLES3MeshDraw::GetIndexOffset(void) const
 
 uint32_t CGLES3MeshDraw::GetVertexFormat(void) const
 {
-	if (m_ptrMesh.IsValid()) {
+	if (m_ptrMesh) {
 		return m_ptrMesh->GetVertexBuffer()->GetVertexFormat();
 	}
 	else {
@@ -88,7 +88,7 @@ uint32_t CGLES3MeshDraw::GetVertexFormat(void) const
 
 uint32_t CGLES3MeshDraw::GetVertexCount(void) const
 {
-	if (m_ptrMesh.IsValid()) {
+	if (m_ptrMesh) {
 		return m_ptrMesh->GetVertexBuffer()->GetVertexCount();
 	}
 	else {

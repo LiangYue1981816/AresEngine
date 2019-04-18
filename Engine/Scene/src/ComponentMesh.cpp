@@ -33,7 +33,7 @@ void CComponentMesh::SetMeshDraw(const CGfxMeshPtr ptrMesh, int indexDraw, uint3
 
 glm::aabb CComponentMesh::GetWorldAABB(void)
 {
-	if (m_ptrMeshDraw.IsValid() && m_pParentNode) {
+	if (m_ptrMeshDraw && m_pParentNode) {
 		return m_ptrMeshDraw->GetLocalAABB() * m_pParentNode->GetWorldTransform();
 	}
 	else {

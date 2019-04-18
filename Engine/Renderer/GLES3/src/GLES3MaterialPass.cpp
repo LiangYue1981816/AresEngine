@@ -82,7 +82,7 @@ const CGfxPipelineGraphics* CGLES3MaterialPass::GetPipeline(void) const
 
 bool CGLES3MaterialPass::SetSampler(uint32_t name, GfxFilter minFilter, GfxFilter magFilter, GfxSamplerMipmapMode mipmapMode, GfxSamplerAddressMode addressMode)
 {
-	if (m_ptrDescriptorSet.IsValid() && m_ptrDescriptorSet->GetDescriptorLayout()->IsSampledImageValid(name)) {
+	if (m_ptrDescriptorSet && m_ptrDescriptorSet->GetDescriptorLayout()->IsSampledImageValid(name)) {
 		m_pSamplers[name] = GLES3Renderer()->CreateSampler(minFilter, magFilter, mipmapMode, addressMode);
 		return true;
 	}
@@ -93,7 +93,7 @@ bool CGLES3MaterialPass::SetSampler(uint32_t name, GfxFilter minFilter, GfxFilte
 
 bool CGLES3MaterialPass::SetTexture2D(uint32_t name, const CGfxTexture2DPtr ptrTexture)
 {
-	if (m_ptrDescriptorSet.IsValid() && m_ptrDescriptorSet->GetDescriptorLayout()->IsSampledImageValid(name)) {
+	if (m_ptrDescriptorSet && m_ptrDescriptorSet->GetDescriptorLayout()->IsSampledImageValid(name)) {
 		m_ptrDescriptorSet->SetTexture2D(name, ptrTexture, m_pSamplers[name]);
 		return true;
 	}
@@ -104,7 +104,7 @@ bool CGLES3MaterialPass::SetTexture2D(uint32_t name, const CGfxTexture2DPtr ptrT
 
 bool CGLES3MaterialPass::SetTexture2DArray(uint32_t name, const CGfxTexture2DArrayPtr ptrTexture)
 {
-	if (m_ptrDescriptorSet.IsValid() && m_ptrDescriptorSet->GetDescriptorLayout()->IsSampledImageValid(name)) {
+	if (m_ptrDescriptorSet && m_ptrDescriptorSet->GetDescriptorLayout()->IsSampledImageValid(name)) {
 		m_ptrDescriptorSet->SetTexture2DArray(name, ptrTexture, m_pSamplers[name]);
 		return true;
 	}
@@ -115,7 +115,7 @@ bool CGLES3MaterialPass::SetTexture2DArray(uint32_t name, const CGfxTexture2DArr
 
 bool CGLES3MaterialPass::SetTextureCubeMap(uint32_t name, const CGfxTextureCubeMapPtr ptrTexture)
 {
-	if (m_ptrDescriptorSet.IsValid() && m_ptrDescriptorSet->GetDescriptorLayout()->IsSampledImageValid(name)) {
+	if (m_ptrDescriptorSet && m_ptrDescriptorSet->GetDescriptorLayout()->IsSampledImageValid(name)) {
 		m_ptrDescriptorSet->SetTextureCubeMap(name, ptrTexture, m_pSamplers[name]);
 		return true;
 	}
@@ -126,7 +126,7 @@ bool CGLES3MaterialPass::SetTextureCubeMap(uint32_t name, const CGfxTextureCubeM
 
 bool CGLES3MaterialPass::SetTexture2D(uint32_t name, const char *szFileName, uint32_t baseLevel)
 {
-	if (m_ptrDescriptorSet.IsValid() && m_ptrDescriptorSet->GetDescriptorLayout()->IsSampledImageValid(name)) {
+	if (m_ptrDescriptorSet && m_ptrDescriptorSet->GetDescriptorLayout()->IsSampledImageValid(name)) {
 		m_ptrDescriptorSet->SetTexture2D(name, GLES3Renderer()->NewTexture2D(szFileName, baseLevel), m_pSamplers[name]);
 		return true;
 	}
@@ -137,7 +137,7 @@ bool CGLES3MaterialPass::SetTexture2D(uint32_t name, const char *szFileName, uin
 
 bool CGLES3MaterialPass::SetTexture2DArray(uint32_t name, const char *szFileName, uint32_t baseLevel)
 {
-	if (m_ptrDescriptorSet.IsValid() && m_ptrDescriptorSet->GetDescriptorLayout()->IsSampledImageValid(name)) {
+	if (m_ptrDescriptorSet && m_ptrDescriptorSet->GetDescriptorLayout()->IsSampledImageValid(name)) {
 		m_ptrDescriptorSet->SetTexture2DArray(name, GLES3Renderer()->NewTexture2DArray(szFileName, baseLevel), m_pSamplers[name]);
 		return true;
 	}
@@ -148,7 +148,7 @@ bool CGLES3MaterialPass::SetTexture2DArray(uint32_t name, const char *szFileName
 
 bool CGLES3MaterialPass::SetTextureCubeMap(uint32_t name, const char *szFileName, uint32_t baseLevel)
 {
-	if (m_ptrDescriptorSet.IsValid() && m_ptrDescriptorSet->GetDescriptorLayout()->IsSampledImageValid(name)) {
+	if (m_ptrDescriptorSet && m_ptrDescriptorSet->GetDescriptorLayout()->IsSampledImageValid(name)) {
 		m_ptrDescriptorSet->SetTextureCubeMap(name, GLES3Renderer()->NewTextureCubeMap(szFileName, baseLevel), m_pSamplers[name]);
 		return true;
 	}
@@ -159,7 +159,7 @@ bool CGLES3MaterialPass::SetTextureCubeMap(uint32_t name, const char *szFileName
 
 bool CGLES3MaterialPass::SetUniformVec1(uint32_t name, float v0)
 {
-	if (m_ptrDescriptorSet.IsValid() && m_ptrDescriptorSet->GetDescriptorLayout()->IsUniformBlockValid(name)) {
+	if (m_ptrDescriptorSet && m_ptrDescriptorSet->GetDescriptorLayout()->IsUniformBlockValid(name)) {
 		if (m_pUniformVec1s[name] == nullptr) {
 			m_pUniformVec1s[name] = new CGfxUniformVec1;
 			m_ptrDescriptorSet->SetUniformBuffer(name, m_pUniformVec1s[name]->GetUniformBuffer(), 0, m_pUniformVec1s[name]->GetUniformBuffer()->GetSize());
@@ -175,7 +175,7 @@ bool CGLES3MaterialPass::SetUniformVec1(uint32_t name, float v0)
 
 bool CGLES3MaterialPass::SetUniformVec2(uint32_t name, float v0, float v1)
 {
-	if (m_ptrDescriptorSet.IsValid() && m_ptrDescriptorSet->GetDescriptorLayout()->IsUniformBlockValid(name)) {
+	if (m_ptrDescriptorSet && m_ptrDescriptorSet->GetDescriptorLayout()->IsUniformBlockValid(name)) {
 		if (m_pUniformVec2s[name] == nullptr) {
 			m_pUniformVec2s[name] = new CGfxUniformVec2;
 			m_ptrDescriptorSet->SetUniformBuffer(name, m_pUniformVec2s[name]->GetUniformBuffer(), 0, m_pUniformVec2s[name]->GetUniformBuffer()->GetSize());
@@ -191,7 +191,7 @@ bool CGLES3MaterialPass::SetUniformVec2(uint32_t name, float v0, float v1)
 
 bool CGLES3MaterialPass::SetUniformVec3(uint32_t name, float v0, float v1, float v2)
 {
-	if (m_ptrDescriptorSet.IsValid() && m_ptrDescriptorSet->GetDescriptorLayout()->IsUniformBlockValid(name)) {
+	if (m_ptrDescriptorSet && m_ptrDescriptorSet->GetDescriptorLayout()->IsUniformBlockValid(name)) {
 		if (m_pUniformVec3s[name] == nullptr) {
 			m_pUniformVec3s[name] = new CGfxUniformVec3;
 			m_ptrDescriptorSet->SetUniformBuffer(name, m_pUniformVec3s[name]->GetUniformBuffer(), 0, m_pUniformVec3s[name]->GetUniformBuffer()->GetSize());
@@ -207,7 +207,7 @@ bool CGLES3MaterialPass::SetUniformVec3(uint32_t name, float v0, float v1, float
 
 bool CGLES3MaterialPass::SetUniformVec4(uint32_t name, float v0, float v1, float v2, float v3)
 {
-	if (m_ptrDescriptorSet.IsValid() && m_ptrDescriptorSet->GetDescriptorLayout()->IsUniformBlockValid(name)) {
+	if (m_ptrDescriptorSet && m_ptrDescriptorSet->GetDescriptorLayout()->IsUniformBlockValid(name)) {
 		if (m_pUniformVec4s[name] == nullptr) {
 			m_pUniformVec4s[name] = new CGfxUniformVec4;
 			m_ptrDescriptorSet->SetUniformBuffer(name, m_pUniformVec4s[name]->GetUniformBuffer(), 0, m_pUniformVec4s[name]->GetUniformBuffer()->GetSize());
@@ -223,7 +223,7 @@ bool CGLES3MaterialPass::SetUniformVec4(uint32_t name, float v0, float v1, float
 
 bool CGLES3MaterialPass::SetUniformMat4(uint32_t name, const float *value)
 {
-	if (m_ptrDescriptorSet.IsValid() && m_ptrDescriptorSet->GetDescriptorLayout()->IsUniformBlockValid(name)) {
+	if (m_ptrDescriptorSet && m_ptrDescriptorSet->GetDescriptorLayout()->IsUniformBlockValid(name)) {
 		if (m_pUniformMat4s[name] == nullptr) {
 			m_pUniformMat4s[name] = new CGfxUniformMat4;
 			m_ptrDescriptorSet->SetUniformBuffer(name, m_pUniformMat4s[name]->GetUniformBuffer(), 0, m_pUniformMat4s[name]->GetUniformBuffer()->GetSize());

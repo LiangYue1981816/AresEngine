@@ -46,7 +46,7 @@ void CComponentPointLight::SetAttenuation(float linear, float square, float cons
 
 glm::aabb CComponentPointLight::GetWorldAABB(void)
 {
-	if (m_ptrMeshDraw.IsValid() && m_pParentNode) {
+	if (m_ptrMeshDraw && m_pParentNode) {
 		return m_ptrMeshDraw->GetLocalAABB() * m_pParentNode->GetWorldTransform();
 	}
 	else {
