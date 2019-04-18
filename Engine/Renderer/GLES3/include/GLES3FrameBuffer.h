@@ -35,11 +35,11 @@ private:
 	int m_width;
 	int m_height;
 
-	eastl::vector<CGfxRenderTexturePtr> m_ptrAttachmentTextures;
-
 private:
 	uint32_t m_fbo;
 	uint32_t m_resolve;
+
+	eastl::vector<CGfxRenderTexturePtr> m_ptrAttachmentTextures;
 
 private:
 	CGLES3FrameBufferManager *m_pManager;
