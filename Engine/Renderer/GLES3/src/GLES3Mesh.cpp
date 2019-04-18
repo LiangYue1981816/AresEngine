@@ -56,8 +56,7 @@ bool CGLES3Mesh::CreateIndexBuffer(GfxIndexType type, size_t size, bool bDynamic
 {
 	if (m_pIndexBuffer == nullptr) {
 		m_pIndexBuffer = new CGLES3IndexBuffer(type, size, bDynamic);
-		m_pIndexBuffer->BufferData(0, size, pBuffer);
-		return true;
+		return m_pIndexBuffer->BufferData(0, size, pBuffer);
 	}
 	else {
 		return false;
@@ -68,8 +67,7 @@ bool CGLES3Mesh::CreateVertexBuffer(uint32_t vertexFormat, uint32_t vertexBindin
 {
 	if (m_pVertexBuffer == nullptr) {
 		m_pVertexBuffer = new CGLES3VertexBuffer(vertexFormat, vertexBinding, size, bDynamic);
-		m_pVertexBuffer->BufferData(0, size, pBuffer);
-		return true;
+		return m_pVertexBuffer->BufferData(0, size, pBuffer);
 	}
 	else {
 		return false;
@@ -86,7 +84,7 @@ void CGLES3Mesh::Destroy(void)
 		delete m_pVertexBuffer;
 	}
 
-	m_draws.clear();
 	m_pIndexBuffer = nullptr;
 	m_pVertexBuffer = nullptr;
+	m_draws.clear();
 }
