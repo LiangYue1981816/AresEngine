@@ -16,9 +16,14 @@ CGLES3Pipeline::~CGLES3Pipeline(void)
 	Destroy();
 }
 
-const CGfxDescriptorLayoutPtr CGLES3Pipeline::GetDescriptorLayout(uint32_t indexDescriptorSet) const
+const CGfxDescriptorLayoutPtr CGLES3Pipeline::GetDescriptorLayout(int indexDescriptorSet) const
 {
-	return m_ptrDescriptorLayouts[indexDescriptorSet];
+	if (indexDescriptorSet >= 0 && indexDescriptorSet < DESCRIPTOR_SET_COUNT) {
+		return m_ptrDescriptorLayouts[indexDescriptorSet];
+	}
+	else {
+		return nullptr;
+	}
 }
 
 bool CGLES3Pipeline::CreateProgram(const CGLES3Shader *pVertexShader, const CGLES3Shader *pFragmentShader, const CGLES3Shader *pComputeShader)
@@ -35,9 +40,9 @@ bool CGLES3Pipeline::CreateProgram(const CGLES3Shader *pVertexShader, const CGLE
 			}
 		}
 	}
+	glLinkProgram(m_program);
 
 	GLint success;
-	glLinkProgram(m_program);
 	glGetProgramiv(m_program, GL_LINK_STATUS, &success);
 
 	if (success == GL_FALSE) {

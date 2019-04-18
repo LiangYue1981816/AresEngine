@@ -14,7 +14,7 @@ private:
 
 
 private:
-	const CGfxDescriptorLayoutPtr GetDescriptorLayout(uint32_t indexDescriptorSet) const;
+	const CGfxDescriptorLayoutPtr GetDescriptorLayout(int indexDescriptorSet) const;
 
 private:
 	bool CreateProgram(const CGLES3Shader *pVertexShader, const CGLES3Shader *pFragmentShader, const CGLES3Shader *pComputeShader);
