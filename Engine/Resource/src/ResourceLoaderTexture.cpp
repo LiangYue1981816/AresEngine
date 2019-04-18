@@ -9,19 +9,23 @@ static bool InternalLoadTexture2D(CGfxTexture2D *pTexture2D, const gli::texture 
 	gli::gl GL(gli::gl::PROFILE_ES30);
 	gli::gl::format format = GL.translate(texture->format(), texture->swizzles());
 
-	if (pTexture2D->Create((GfxPixelFormat)texture->format(), texture->extent().x, texture->extent().y, (int)texture->levels()) == false) {
+	if (baseLevel > (int)texture->levels() - 1) {
+		baseLevel = (int)texture->levels() - 1;
+	}
+
+	if (pTexture2D->Create((GfxPixelFormat)texture->format(), texture->extent(baseLevel).x, texture->extent(baseLevel).y, (int)texture->levels() - baseLevel) == false) {
 		return false;
 	}
 
 	if (gli::is_compressed(texture->format())) {
-		for (int level = 0; level < (int)texture->levels(); level++) {
+		for (int level = baseLevel; level < (int)texture->levels(); level++) {
 			if (pTexture2D->TransferTexture2DCompressed((GfxPixelFormat)texture->format(), level, 0, 0, texture->extent(level).x, texture->extent(level).y, texture->size(level), texture->data(0, 0, level)) == false) {
 				return false;
 			}
 		}
 	}
 	else {
-		for (int level = 0; level < (int)texture->levels(); level++) {
+		for (int level = baseLevel; level < (int)texture->levels(); level++) {
 			if (pTexture2D->TransferTexture2D((GfxPixelFormat)texture->format(), level, 0, 0, texture->extent(level).x, texture->extent(level).y, GFX_DATA_UNSIGNED_BYTE, texture->size(level), texture->data(0, 0, level)) == false) {
 				return false;
 			}
@@ -36,13 +40,17 @@ static bool InternalLoadTexture2DArray(CGfxTexture2DArray *pTexture2DArray, cons
 	gli::gl GL(gli::gl::PROFILE_ES30);
 	gli::gl::format format = GL.translate(texture->format(), texture->swizzles());
 
-	if (pTexture2DArray->Create((GfxPixelFormat)texture->format(), texture->extent().x, texture->extent().y, (int)texture->levels(), (int)texture->layers()) == false) {
+	if (baseLevel > (int)texture->levels() - 1) {
+		baseLevel = (int)texture->levels() - 1;
+	}
+
+	if (pTexture2DArray->Create((GfxPixelFormat)texture->format(), texture->extent(baseLevel).x, texture->extent(baseLevel).y, (int)texture->levels() - baseLevel, (int)texture->layers()) == false) {
 		return false;
 	}
 
 	if (gli::is_compressed(texture->format())) {
 		for (int layer = 0; layer < (int)texture->layers(); layer++) {
-			for (int level = 0; level < (int)texture->levels(); level++) {
+			for (int level = baseLevel; level < (int)texture->levels(); level++) {
 				if (pTexture2DArray->TransferTexture2DCompressed((GfxPixelFormat)texture->format(), layer, level, 0, 0, texture->extent(level).x, texture->extent(level).y, texture->size(level), texture->data(layer, 0, level)) == false) {
 					return false;
 				}
@@ -51,7 +59,7 @@ static bool InternalLoadTexture2DArray(CGfxTexture2DArray *pTexture2DArray, cons
 	}
 	else {
 		for (int layer = 0; layer < (int)texture->layers(); layer++) {
-			for (int level = 0; level < (int)texture->levels(); level++) {
+			for (int level = baseLevel; level < (int)texture->levels(); level++) {
 				if (pTexture2DArray->TransferTexture2D((GfxPixelFormat)texture->format(), layer, level, 0, 0, texture->extent(level).x, texture->extent(level).y, GFX_DATA_UNSIGNED_BYTE, texture->size(level), texture->data(layer, 0, level)) == false) {
 					return false;
 				}
@@ -67,15 +75,19 @@ static bool InternalLoadTexture2DArrayLayer(CGfxTexture2DArray *pTexture2DArray,
 	gli::gl GL(gli::gl::PROFILE_ES30);
 	gli::gl::format format = GL.translate(texture->format(), texture->swizzles());
 
+	if (baseLevel > (int)texture->levels() - 1) {
+		baseLevel = (int)texture->levels() - 1;
+	}
+
 	if (gli::is_compressed(texture->format())) {
-		for (int level = 0; level < (int)texture->levels(); level++) {
+		for (int level = baseLevel; level < (int)texture->levels(); level++) {
 			if (pTexture2DArray->TransferTexture2DCompressed((GfxPixelFormat)texture->format(), layer, level, 0, 0, texture->extent(level).x, texture->extent(level).y, texture->size(level), texture->data(0, 0, level)) == false) {
 				return false;
 			}
 		}
 	}
 	else {
-		for (int level = 0; level < (int)texture->levels(); level++) {
+		for (int level = baseLevel; level < (int)texture->levels(); level++) {
 			if (pTexture2DArray->TransferTexture2D((GfxPixelFormat)texture->format(), layer, level, 0, 0, texture->extent(level).x, texture->extent(level).y, GFX_DATA_UNSIGNED_BYTE, texture->size(level), texture->data(0, 0, level)) == false) {
 				return false;
 			}
@@ -90,12 +102,16 @@ static bool InternalLoadTextureCubeMap(CGfxTextureCubeMap *pTextureCubeMap, cons
 	gli::gl GL(gli::gl::PROFILE_ES30);
 	gli::gl::format format = GL.translate(texture->format(), texture->swizzles());
 
-	if (pTextureCubeMap->Create((GfxPixelFormat)texture->format(), texture->extent().x, texture->extent().y, (int)texture->levels()) == false) {
+	if (baseLevel > (int)texture->levels() - 1) {
+		baseLevel = (int)texture->levels() - 1;
+	}
+
+	if (pTextureCubeMap->Create((GfxPixelFormat)texture->format(), texture->extent(baseLevel).x, texture->extent(baseLevel).y, (int)texture->levels() - baseLevel) == false) {
 		return false;
 	}
 
 	if (gli::is_compressed(texture->format())) {
-		for (int level = 0; level < (int)texture->levels(); level++) {
+		for (int level = baseLevel; level < (int)texture->levels(); level++) {
 			if (pTextureCubeMap->TransferTexture2DCompressed((GfxPixelFormat)texture->format(), GFX_TEXTURE_CUBEMAP_POSITIVE_X, level, 0, 0, texture->extent(level).x, texture->extent(level).y, texture->size(level), texture->data(0, 0, level)) == false) {
 				return false;
 			}
@@ -117,7 +133,7 @@ static bool InternalLoadTextureCubeMap(CGfxTextureCubeMap *pTextureCubeMap, cons
 		}
 	}
 	else {
-		for (int level = 0; level < (int)texture->levels(); level++) {
+		for (int level = baseLevel; level < (int)texture->levels(); level++) {
 			if (pTextureCubeMap->TransferTexture2D((GfxPixelFormat)texture->format(), GFX_TEXTURE_CUBEMAP_POSITIVE_X, level, 0, 0, texture->extent(level).x, texture->extent(level).y, GFX_DATA_UNSIGNED_BYTE, texture->size(level), texture->data(0, 0, level)) == false) {
 				return false;
 			}
@@ -147,15 +163,19 @@ static bool InternalLoadTextureCubeMapFace(CGfxTextureCubeMap *pTextureCubeMap, 
 	gli::gl GL(gli::gl::PROFILE_ES30);
 	gli::gl::format format = GL.translate(texture->format(), texture->swizzles());
 
+	if (baseLevel > (int)texture->levels() - 1) {
+		baseLevel = (int)texture->levels() - 1;
+	}
+
 	if (gli::is_compressed(texture->format())) {
-		for (int level = 0; level < (int)texture->levels(); level++) {
+		for (int level = baseLevel; level < (int)texture->levels(); level++) {
 			if (pTextureCubeMap->TransferTexture2DCompressed((GfxPixelFormat)texture->format(), face, level, 0, 0, texture->extent(level).x, texture->extent(level).y, texture->size(level), texture->data(0, 0, level)) == false) {
 				return false;
 			}
 		}
 	}
 	else {
-		for (int level = 0; level < (int)texture->levels(); level++) {
+		for (int level = baseLevel; level < (int)texture->levels(); level++) {
 			if (pTextureCubeMap->TransferTexture2D((GfxPixelFormat)texture->format(), face, level, 0, 0, texture->extent(level).x, texture->extent(level).y, GFX_DATA_UNSIGNED_BYTE, texture->size(level), texture->data(0, 0, level)) == false) {
 				return false;
 			}
