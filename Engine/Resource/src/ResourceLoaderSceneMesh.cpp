@@ -17,7 +17,7 @@ static bool InternalLoadDraw(TiXmlNode *pNode, const CGfxMeshPtr ptrMesh, CScene
 			if (szMaterialFileName == nullptr) { err = -1; goto ERR; }
 
 			CGfxMaterialPtr ptrMaterial = GfxRenderer()->NewMaterial(szMaterialFileName, vertexBinding, instanceBinding, baseLevel);
-			if (ptrMaterial.IsValid() == false) { err = -2; goto ERR; }
+			if (ptrMaterial == nullptr) { err = -2; goto ERR; }
 
 			CComponentMeshPtr ptrComponentMesh = pCurrentSceneNode->GetSceneManager()->CreateComponentMesh(pCurrentSceneNode->GetSceneManager()->GetNextComponentMeshName());
 			ptrComponentMesh->SetMaterial(ptrMaterial);
@@ -80,7 +80,7 @@ static bool InternalLoadMesh(TiXmlNode *pMeshNode, CSceneNode *pParentSceneNode,
 			if (szMeshFileName == nullptr) { err = -1; goto ERR; }
 
 			CGfxMeshPtr ptrMesh = GfxRenderer()->NewMesh(szMeshFileName, vertexBinding);
-			if (ptrMesh.IsValid() == false) { err = -2; goto ERR; }
+			if (ptrMesh == nullptr) { err = -2; goto ERR; }
 
 			do {
 				if (InternalLoadNode(pNode, ptrMesh, pParentSceneNode, instanceFormat, vertexBinding, instanceBinding, baseLevel) == false) { err = -3; goto ERR; }
