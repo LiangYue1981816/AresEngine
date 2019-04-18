@@ -41,7 +41,7 @@ CGLES3Texture2D* CGLES3Texture2DManager::Create(uint32_t name)
 	}
 }
 
-CGLES3Texture2D* CGLES3Texture2DManager::Create(const char *szFileName)
+CGLES3Texture2D* CGLES3Texture2DManager::Create(const char *szFileName, int baseLevel)
 {
 	uint32_t name = HashValue(szFileName);
 
@@ -49,7 +49,7 @@ CGLES3Texture2D* CGLES3Texture2DManager::Create(const char *szFileName)
 	{
 		if (m_pTextures[name] == nullptr) {
 			m_pTextures[name] = new CGLES3Texture2D(this, name);
-			ResourceLoader()->LoadTexture2D(szFileName, m_pTextures[name]);
+			ResourceLoader()->LoadTexture2D(szFileName, m_pTextures[name], baseLevel);
 		}
 
 		return m_pTextures[name];
@@ -109,7 +109,7 @@ CGLES3Texture2DArray* CGLES3Texture2DArrayManager::Create(uint32_t name)
 	}
 }
 
-CGLES3Texture2DArray* CGLES3Texture2DArrayManager::Create(const char *szFileName)
+CGLES3Texture2DArray* CGLES3Texture2DArrayManager::Create(const char *szFileName, int baseLevel)
 {
 	uint32_t name = HashValue(szFileName);
 
@@ -117,7 +117,7 @@ CGLES3Texture2DArray* CGLES3Texture2DArrayManager::Create(const char *szFileName
 	{
 		if (m_pTextures[name] == nullptr) {
 			m_pTextures[name] = new CGLES3Texture2DArray(this, name);
-			ResourceLoader()->LoadTexture2DArray(szFileName, m_pTextures[name]);
+			ResourceLoader()->LoadTexture2DArray(szFileName, m_pTextures[name], baseLevel);
 		}
 
 		return m_pTextures[name];
@@ -177,7 +177,7 @@ CGLES3TextureCubeMap* CGLES3TextureCubeMapManager::Create(uint32_t name)
 	}
 }
 
-CGLES3TextureCubeMap* CGLES3TextureCubeMapManager::Create(const char *szFileName)
+CGLES3TextureCubeMap* CGLES3TextureCubeMapManager::Create(const char *szFileName, int baseLevel)
 {
 	uint32_t name = HashValue(szFileName);
 
@@ -185,7 +185,7 @@ CGLES3TextureCubeMap* CGLES3TextureCubeMapManager::Create(const char *szFileName
 	{
 		if (m_pTextures[name] == nullptr) {
 			m_pTextures[name] = new CGLES3TextureCubeMap(this, name);
-			ResourceLoader()->LoadTextureCubeMap(szFileName, m_pTextures[name]);
+			ResourceLoader()->LoadTextureCubeMap(szFileName, m_pTextures[name], baseLevel);
 		}
 
 		return m_pTextures[name];

@@ -133,9 +133,9 @@ CGfxTexture2DPtr CGLES3Renderer::NewTexture2D(uint32_t name)
 	return m_pTexture2DManager->Create(name);
 }
 
-CGfxTexture2DPtr CGLES3Renderer::NewTexture2D(const char *szFileName)
+CGfxTexture2DPtr CGLES3Renderer::NewTexture2D(const char *szFileName, int baseLevel)
 {
-	return m_pTexture2DManager->Create(szFileName);
+	return m_pTexture2DManager->Create(szFileName, baseLevel);
 }
 
 CGfxTexture2DArrayPtr CGLES3Renderer::GetTexture2DArray(uint32_t name)
@@ -148,9 +148,9 @@ CGfxTexture2DArrayPtr CGLES3Renderer::NewTexture2DArray(uint32_t name)
 	return m_pTexture2DArrayManager->Create(name);
 }
 
-CGfxTexture2DArrayPtr CGLES3Renderer::NewTexture2DArray(const char *szFileName)
+CGfxTexture2DArrayPtr CGLES3Renderer::NewTexture2DArray(const char *szFileName, int baseLevel)
 {
-	return m_pTexture2DArrayManager->Create(szFileName);
+	return m_pTexture2DArrayManager->Create(szFileName, baseLevel);
 }
 
 CGfxTextureCubeMapPtr CGLES3Renderer::GetTextureCubeMap(uint32_t name)
@@ -163,9 +163,9 @@ CGfxTextureCubeMapPtr CGLES3Renderer::NewTextureCubeMap(uint32_t name)
 	return m_pTextureCubeMapManager->Create(name);
 }
 
-CGfxTextureCubeMapPtr CGLES3Renderer::NewTextureCubeMap(const char *szFileName)
+CGfxTextureCubeMapPtr CGLES3Renderer::NewTextureCubeMap(const char *szFileName, int baseLevel)
 {
-	return m_pTextureCubeMapManager->Create(szFileName);
+	return m_pTextureCubeMapManager->Create(szFileName, baseLevel);
 }
 
 CGfxRenderTexturePtr CGLES3Renderer::GetRenderTexture(uint32_t name)

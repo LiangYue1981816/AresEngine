@@ -114,15 +114,15 @@ public:
 
 	CGfxTexture2DPtr GetTexture2D(uint32_t name);
 	CGfxTexture2DPtr NewTexture2D(uint32_t name);
-	CGfxTexture2DPtr NewTexture2D(const char *szFileName);
+	CGfxTexture2DPtr NewTexture2D(const char *szFileName, int baseLevel = 0);
 
 	CGfxTexture2DArrayPtr GetTexture2DArray(uint32_t name);
 	CGfxTexture2DArrayPtr NewTexture2DArray(uint32_t name);
-	CGfxTexture2DArrayPtr NewTexture2DArray(const char *szFileName);
+	CGfxTexture2DArrayPtr NewTexture2DArray(const char *szFileName, int baseLevel = 0);
 
 	CGfxTextureCubeMapPtr GetTextureCubeMap(uint32_t name);
 	CGfxTextureCubeMapPtr NewTextureCubeMap(uint32_t name);
-	CGfxTextureCubeMapPtr NewTextureCubeMap(const char *szFileName);
+	CGfxTextureCubeMapPtr NewTextureCubeMap(const char *szFileName, int baseLevel = 0);
 
 	CGfxRenderTexturePtr GetRenderTexture(uint32_t name);
 	CGfxRenderTexturePtr NewRenderTexture(uint32_t name);

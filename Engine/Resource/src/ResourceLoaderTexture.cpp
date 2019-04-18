@@ -4,7 +4,7 @@
 #include "FileManager.h"
 
 
-static bool InternalLoadTexture2D(CGfxTexture2D *pTexture2D, const gli::texture *texture)
+static bool InternalLoadTexture2D(CGfxTexture2D *pTexture2D, const gli::texture *texture, int baseLevel)
 {
 	gli::gl GL(gli::gl::PROFILE_ES30);
 	gli::gl::format format = GL.translate(texture->format(), texture->swizzles());
@@ -31,7 +31,7 @@ static bool InternalLoadTexture2D(CGfxTexture2D *pTexture2D, const gli::texture 
 	return true;
 }
 
-static bool InternalLoadTexture2DArray(CGfxTexture2DArray *pTexture2DArray, const gli::texture *texture)
+static bool InternalLoadTexture2DArray(CGfxTexture2DArray *pTexture2DArray, const gli::texture *texture, int baseLevel)
 {
 	gli::gl GL(gli::gl::PROFILE_ES30);
 	gli::gl::format format = GL.translate(texture->format(), texture->swizzles());
@@ -62,7 +62,7 @@ static bool InternalLoadTexture2DArray(CGfxTexture2DArray *pTexture2DArray, cons
 	return true;
 }
 
-static bool InternalLoadTexture2DArrayLayer(CGfxTexture2DArray *pTexture2DArray, const gli::texture *texture, int layer)
+static bool InternalLoadTexture2DArrayLayer(CGfxTexture2DArray *pTexture2DArray, const gli::texture *texture, int layer, int baseLevel)
 {
 	gli::gl GL(gli::gl::PROFILE_ES30);
 	gli::gl::format format = GL.translate(texture->format(), texture->swizzles());
@@ -85,7 +85,7 @@ static bool InternalLoadTexture2DArrayLayer(CGfxTexture2DArray *pTexture2DArray,
 	return true;
 }
 
-static bool InternalLoadTextureCubeMap(CGfxTextureCubeMap *pTextureCubeMap, const gli::texture *texture)
+static bool InternalLoadTextureCubeMap(CGfxTextureCubeMap *pTextureCubeMap, const gli::texture *texture, int baseLevel)
 {
 	gli::gl GL(gli::gl::PROFILE_ES30);
 	gli::gl::format format = GL.translate(texture->format(), texture->swizzles());
@@ -142,7 +142,7 @@ static bool InternalLoadTextureCubeMap(CGfxTextureCubeMap *pTextureCubeMap, cons
 	return true;
 }
 
-static bool InternalLoadTextureCubeMapFace(CGfxTextureCubeMap *pTextureCubeMap, const gli::texture *texture, GfxTextureCubeMapFace face)
+static bool InternalLoadTextureCubeMapFace(CGfxTextureCubeMap *pTextureCubeMap, const gli::texture *texture, GfxTextureCubeMapFace face, int baseLevel)
 {
 	gli::gl GL(gli::gl::PROFILE_ES30);
 	gli::gl::format format = GL.translate(texture->format(), texture->swizzles());
@@ -166,7 +166,7 @@ static bool InternalLoadTextureCubeMapFace(CGfxTextureCubeMap *pTextureCubeMap, 
 }
 
 
-bool CResourceLoader::LoadTexture2D(const char *szFileName, CGfxTexture2D *pTexture2D)
+bool CResourceLoader::LoadTexture2D(const char *szFileName, CGfxTexture2D *pTexture2D, int baseLevel)
 {
 	pTexture2D->Destroy();
 	{
@@ -177,7 +177,7 @@ bool CResourceLoader::LoadTexture2D(const char *szFileName, CGfxTexture2D *pText
 			const gli::texture texture = gli::load((const char *)stream.GetAddress(), stream.GetFullSize());
 			if (texture.empty()) break;
 			if (texture.target() != gli::TARGET_2D) break;
-			if (InternalLoadTexture2D(pTexture2D, &texture) == false) break;
+			if (InternalLoadTexture2D(pTexture2D, &texture, baseLevel) == false) break;
 
 			return true;
 		} while (false);
@@ -186,7 +186,7 @@ bool CResourceLoader::LoadTexture2D(const char *szFileName, CGfxTexture2D *pText
 	return false;
 }
 
-bool CResourceLoader::LoadTexture2DArray(const char *szFileName, CGfxTexture2DArray *pTexture2DArray)
+bool CResourceLoader::LoadTexture2DArray(const char *szFileName, CGfxTexture2DArray *pTexture2DArray, int baseLevel)
 {
 	pTexture2DArray->Destroy();
 	{
@@ -197,7 +197,7 @@ bool CResourceLoader::LoadTexture2DArray(const char *szFileName, CGfxTexture2DAr
 			const gli::texture texture = gli::load((const char *)stream.GetAddress(), stream.GetFullSize());
 			if (texture.empty()) break;
 			if (texture.target() != gli::TARGET_2D_ARRAY) break;
-			if (InternalLoadTexture2DArray(pTexture2DArray, &texture)) break;
+			if (InternalLoadTexture2DArray(pTexture2DArray, &texture, baseLevel)) break;
 
 			return true;
 		} while (false);
@@ -206,7 +206,7 @@ bool CResourceLoader::LoadTexture2DArray(const char *szFileName, CGfxTexture2DAr
 	return false;
 }
 
-bool CResourceLoader::LoadTexture2DArrayLayer(const char *szFileName, int layer, CGfxTexture2DArray *pTexture2DArray)
+bool CResourceLoader::LoadTexture2DArrayLayer(const char *szFileName, int layer, CGfxTexture2DArray *pTexture2DArray, int baseLevel)
 {
 	do {
 		CStream stream;
@@ -215,7 +215,7 @@ bool CResourceLoader::LoadTexture2DArrayLayer(const char *szFileName, int layer,
 		const gli::texture texture = gli::load((const char *)stream.GetAddress(), stream.GetFullSize());
 		if (texture.empty()) break;
 		if (texture.target() != gli::TARGET_2D) break;
-		if (InternalLoadTexture2DArrayLayer(pTexture2DArray, &texture, layer) == false) break;
+		if (InternalLoadTexture2DArrayLayer(pTexture2DArray, &texture, layer, baseLevel) == false) break;
 
 		return true;
 	} while (false);
@@ -223,7 +223,7 @@ bool CResourceLoader::LoadTexture2DArrayLayer(const char *szFileName, int layer,
 	return false;
 }
 
-bool CResourceLoader::LoadTextureCubeMap(const char *szFileName, CGfxTextureCubeMap *pTextureCubeMap)
+bool CResourceLoader::LoadTextureCubeMap(const char *szFileName, CGfxTextureCubeMap *pTextureCubeMap, int baseLevel)
 {
 	pTextureCubeMap->Destroy();
 	{
@@ -234,7 +234,7 @@ bool CResourceLoader::LoadTextureCubeMap(const char *szFileName, CGfxTextureCube
 			const gli::texture texture = gli::load((const char *)stream.GetAddress(), stream.GetFullSize());
 			if (texture.empty()) break;
 			if (texture.target() != gli::TARGET_CUBE) break;
-			if (InternalLoadTextureCubeMap(pTextureCubeMap, &texture) == false) break;
+			if (InternalLoadTextureCubeMap(pTextureCubeMap, &texture, baseLevel) == false) break;
 
 			return true;
 		} while (false);
@@ -243,7 +243,7 @@ bool CResourceLoader::LoadTextureCubeMap(const char *szFileName, CGfxTextureCube
 	return false;
 }
 
-bool CResourceLoader::LoadTextureCubeMapFace(const char *szFileName, GfxTextureCubeMapFace face, CGfxTextureCubeMap *pTextureCubeMap)
+bool CResourceLoader::LoadTextureCubeMapFace(const char *szFileName, GfxTextureCubeMapFace face, CGfxTextureCubeMap *pTextureCubeMap, int baseLevel)
 {
 	do {
 		CStream stream;
@@ -252,7 +252,7 @@ bool CResourceLoader::LoadTextureCubeMapFace(const char *szFileName, GfxTextureC
 		const gli::texture texture = gli::load((const char *)stream.GetAddress(), stream.GetFullSize());
 		if (texture.empty()) break;
 		if (texture.target() != gli::TARGET_2D) break;
-		if (InternalLoadTextureCubeMapFace(pTextureCubeMap, &texture, face) == false) break;
+		if (InternalLoadTextureCubeMapFace(pTextureCubeMap, &texture, face, baseLevel) == false) break;
 
 		return true;
 	} while (false);
