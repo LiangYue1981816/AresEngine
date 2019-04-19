@@ -3,7 +3,6 @@
 
 CGLES3Sampler::CGLES3Sampler(GfxFilter minFilter, GfxFilter magFilter, GfxSamplerMipmapMode mipmapMode, GfxSamplerAddressMode addressMode)
 	: CGfxSampler(minFilter, magFilter, mipmapMode, addressMode)
-
 	, m_sampler(0)
 {
 	glGenSamplers(1, &m_sampler);

@@ -34,7 +34,7 @@ void CGLES3RenderPass::Destroy(void)
 
 bool CGLES3RenderPass::SetColorAttachment(int indexAttachment, GfxPixelFormat format, int samples, bool bInvalidation, bool bClear, float red, float green, float blue, float alpha)
 {
-	if (indexAttachment < 0 || indexAttachment >= (int)m_attachments.size()) {
+	if (indexAttachment < 0 || indexAttachment >= m_attachments.size()) {
 		return false;
 	}
 
@@ -52,7 +52,7 @@ bool CGLES3RenderPass::SetColorAttachment(int indexAttachment, GfxPixelFormat fo
 
 bool CGLES3RenderPass::SetDepthStencilAttachment(int indexAttachment, GfxPixelFormat format, int samples, bool bInvalidation, bool bClear, float depth, int stencil)
 {
-	if (indexAttachment < 0 || indexAttachment >= (int)m_attachments.size()) {
+	if (indexAttachment < 0 || indexAttachment >= m_attachments.size()) {
 		return false;
 	}
 
@@ -68,11 +68,11 @@ bool CGLES3RenderPass::SetDepthStencilAttachment(int indexAttachment, GfxPixelFo
 
 bool CGLES3RenderPass::SetSubpassInputColorReference(int indexSubpass, int indexAttachment)
 {
-	if (indexSubpass < 0 || indexSubpass >= (int)m_subpasses.size()) {
+	if (indexSubpass < 0 || indexSubpass >= m_subpasses.size()) {
 		return false;
 	}
 
-	if (indexAttachment < 0 || indexAttachment >= (int)m_attachments.size()) {
+	if (indexAttachment < 0 || indexAttachment >= m_attachments.size()) {
 		return false;
 	}
 
@@ -82,11 +82,11 @@ bool CGLES3RenderPass::SetSubpassInputColorReference(int indexSubpass, int index
 
 bool CGLES3RenderPass::SetSubpassOutputColorReference(int indexSubpass, int indexAttachment)
 {
-	if (indexSubpass < 0 || indexSubpass >= (int)m_subpasses.size()) {
+	if (indexSubpass < 0 || indexSubpass >= m_subpasses.size()) {
 		return false;
 	}
 
-	if (indexAttachment < 0 || indexAttachment >= (int)m_attachments.size()) {
+	if (indexAttachment < 0 || indexAttachment >= m_attachments.size()) {
 		return false;
 	}
 
@@ -96,11 +96,11 @@ bool CGLES3RenderPass::SetSubpassOutputColorReference(int indexSubpass, int inde
 
 bool CGLES3RenderPass::SetSubpassOutputDepthStencilReference(int indexSubpass, int indexAttachment)
 {
-	if (indexSubpass < 0 || indexSubpass >= (int)m_subpasses.size()) {
+	if (indexSubpass < 0 || indexSubpass >= m_subpasses.size()) {
 		return false;
 	}
 
-	if (indexAttachment < 0 || indexAttachment >= (int)m_attachments.size()) {
+	if (indexAttachment < 0 || indexAttachment >= m_attachments.size()) {
 		return false;
 	}
 
@@ -110,11 +110,11 @@ bool CGLES3RenderPass::SetSubpassOutputDepthStencilReference(int indexSubpass, i
 
 bool CGLES3RenderPass::SetSubpassResolveReference(int indexSubpass, int indexAttachment)
 {
-	if (indexSubpass < 0 || indexSubpass >= (int)m_subpasses.size()) {
+	if (indexSubpass < 0 || indexSubpass >= m_subpasses.size()) {
 		return false;
 	}
 
-	if (indexAttachment < 0 || indexAttachment >= (int)m_attachments.size()) {
+	if (indexAttachment < 0 || indexAttachment >= m_attachments.size()) {
 		return false;
 	}
 
@@ -139,7 +139,7 @@ const AttachmentInformation* CGLES3RenderPass::GetAttachments(void) const
 
 const AttachmentInformation* CGLES3RenderPass::GetAttachment(int indexAttachment) const
 {
-	if (indexAttachment >= 0 && indexAttachment < (int)m_attachments.size()) {
+	if (indexAttachment >= 0 && indexAttachment < m_attachments.size()) {
 		return &m_attachments[indexAttachment];
 	}
 	else {
@@ -154,7 +154,7 @@ uint32_t CGLES3RenderPass::GetSubpassCount(void) const
 
 uint32_t CGLES3RenderPass::GetSubpassInputAttachmentCount(int indexSubpass) const
 {
-	if (indexSubpass >= 0 && indexSubpass < (int)m_subpasses.size()) {
+	if (indexSubpass >= 0 && indexSubpass < m_subpasses.size()) {
 		return m_subpasses[indexSubpass].inputAttachments.size();
 	}
 	else {
@@ -164,7 +164,7 @@ uint32_t CGLES3RenderPass::GetSubpassInputAttachmentCount(int indexSubpass) cons
 
 uint32_t CGLES3RenderPass::GetSubpassOutputAttachmentCount(int indexSubpass) const
 {
-	if (indexSubpass >= 0 && indexSubpass < (int)m_subpasses.size()) {
+	if (indexSubpass >= 0 && indexSubpass < m_subpasses.size()) {
 		return m_subpasses[indexSubpass].outputAttachments.size();
 	}
 	else {
@@ -174,7 +174,7 @@ uint32_t CGLES3RenderPass::GetSubpassOutputAttachmentCount(int indexSubpass) con
 
 const SubpassInformation* CGLES3RenderPass::GetSubpass(int indexSubpass) const
 {
-	if (indexSubpass >= 0 && indexSubpass < (int)m_subpasses.size()) {
+	if (indexSubpass >= 0 && indexSubpass < m_subpasses.size()) {
 		return &m_subpasses[indexSubpass];
 	}
 	else {
