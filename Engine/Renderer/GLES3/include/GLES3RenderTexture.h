@@ -37,6 +37,7 @@ private:
 	GfxPixelFormat m_format;
 	GfxTextureType m_type;
 
+private:
 	CGLES3TexturePtr m_ptrTexture;
 
 private:

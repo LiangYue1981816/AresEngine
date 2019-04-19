@@ -18,7 +18,7 @@ const CGfxDescriptorLayoutPtr CGLES3PipelineGraphics::GetDescriptorLayout(int in
 	return m_pPipeline->GetDescriptorLayout(indexDescriptorSet);
 }
 
-uint32_t CGLES3PipelineGraphics::GetInputAttachmentName(uint32_t inputAttachmentIndex) const
+const uint32_t CGLES3PipelineGraphics::GetInputAttachmentName(uint32_t inputAttachmentIndex) const
 {
 	return m_pPipeline->GetInputAttachmentName(inputAttachmentIndex);
 }

@@ -205,6 +205,18 @@
     <Filter Include="ThirdParty\rttr\detail\visitor">
       <UniqueIdentifier>{4d64e732-6475-43a7-8f74-fe936428aa1d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Renderer\Vulkan">
+      <UniqueIdentifier>{30c01631-2b19-4ef1-94fc-2520be312063}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Renderer\Vulkan\Header Files">
+      <UniqueIdentifier>{47a20540-a89e-4487-bfba-5718fcccfec0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Renderer\Vulkan\Source Files">
+      <UniqueIdentifier>{a568b597-bd22-4b83-b5c2-0e8f1a8a78fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Renderer\Vulkan\Source Files\Commands">
+      <UniqueIdentifier>{19cef04b-3e17-494d-a98d-d672a39129b3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Engine\PreHeader.h">
