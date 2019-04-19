@@ -22,14 +22,14 @@ private:
 	void Destroy(void);
 
 private:
-	void SetUniformBlockBinding(const char* szName, uint32_t binding);
-	void SetUniformLocation(const char* szName);
-	void SetSampledImageLocation(const char* szName);
-	void SetInputAttachmentLocation(const char* szName, uint32_t inputAttachmentIndex);
+	void SetUniformBlockBinding(const char *szName, uint32_t binding);
+	void SetUniformLocation(const char *szName);
+	void SetSampledImageLocation(const char *szName);
+	void SetInputAttachmentLocation(const char *szName, uint32_t inputAttachmentIndex);
 
-	uint32_t GetUniformBlockBinding(const char* szName) const;
-	uint32_t GetUniformLocation(const char* szName) const;
-	uint32_t GetSampledImageLocation(const char* szName) const;
+	uint32_t GetUniformBlockBinding(const char *szName) const;
+	uint32_t GetUniformLocation(const char *szName) const;
+	uint32_t GetSampledImageLocation(const char *szName) const;
 	uint32_t GetInputAttachmentName(uint32_t inputAttachmentIndex) const;
 
 private:

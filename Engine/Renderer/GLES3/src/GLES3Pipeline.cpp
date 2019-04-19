@@ -124,7 +124,7 @@ void CGLES3Pipeline::Destroy(void)
 	m_ptrDescriptorLayouts[DESCRIPTOR_SET_INPUTATTACHMENT]->Destroy();
 }
 
-void CGLES3Pipeline::SetUniformBlockBinding(const char* szName, uint32_t binding)
+void CGLES3Pipeline::SetUniformBlockBinding(const char *szName, uint32_t binding)
 {
 	uint32_t name = HashValue(szName);
 
@@ -138,7 +138,7 @@ void CGLES3Pipeline::SetUniformBlockBinding(const char* szName, uint32_t binding
 	}
 }
 
-void CGLES3Pipeline::SetUniformLocation(const char* szName)
+void CGLES3Pipeline::SetUniformLocation(const char *szName)
 {
 	uint32_t name = HashValue(szName);
 
@@ -151,7 +151,7 @@ void CGLES3Pipeline::SetUniformLocation(const char* szName)
 	}
 }
 
-void CGLES3Pipeline::SetSampledImageLocation(const char* szName)
+void CGLES3Pipeline::SetSampledImageLocation(const char *szName)
 {
 	uint32_t name = HashValue(szName);
 
@@ -165,7 +165,7 @@ void CGLES3Pipeline::SetSampledImageLocation(const char* szName)
 	}
 }
 
-void CGLES3Pipeline::SetInputAttachmentLocation(const char* szName, uint32_t inputAttachmentIndex)
+void CGLES3Pipeline::SetInputAttachmentLocation(const char *szName, uint32_t inputAttachmentIndex)
 {
 	uint32_t name = HashValue(szName);
 
@@ -180,7 +180,7 @@ void CGLES3Pipeline::SetInputAttachmentLocation(const char* szName, uint32_t inp
 	}
 }
 
-uint32_t CGLES3Pipeline::GetUniformBlockBinding(const char* szName) const
+uint32_t CGLES3Pipeline::GetUniformBlockBinding(const char *szName) const
 {
 	const auto &itUniformBlockBinding = m_uniformBlockBindings.find(HashValue(szName));
 
@@ -192,7 +192,7 @@ uint32_t CGLES3Pipeline::GetUniformBlockBinding(const char* szName) const
 	}
 }
 
-uint32_t CGLES3Pipeline::GetUniformLocation(const char* szName) const
+uint32_t CGLES3Pipeline::GetUniformLocation(const char *szName) const
 {
 	const auto &itUniformLocation = m_uniformLocations.find(HashValue(szName));
 
@@ -204,7 +204,7 @@ uint32_t CGLES3Pipeline::GetUniformLocation(const char* szName) const
 	}
 }
 
-uint32_t CGLES3Pipeline::GetSampledImageLocation(const char* szName) const
+uint32_t CGLES3Pipeline::GetSampledImageLocation(const char *szName) const
 {
 	const auto &itSampledImageLocation = m_sampledImageLocations.find(HashValue(szName));
 
