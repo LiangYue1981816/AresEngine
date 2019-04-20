@@ -81,106 +81,106 @@ public:
 
 
 public:
-	uint32_t GetLastError(void) const = 0;
+	uint32_t GetLastError(void) const;
 
 public:
-	CGfxSwapChain* GetSwapChain(void) const = 0;
+	CGfxSwapChain* GetSwapChain(void) const;
 
 public:
-	bool IsSupportExtension(const char* extension) const = 0;
+	bool IsSupportExtension(const char* extension) const;
 
 public:
-	CGfxShader* CreateShader(const char* szFileName, shader_kind kind) = 0;
-	CGfxPipelineCompute* CreatePipelineCompute(const CGfxShader* pComputeShader) = 0;
-	CGfxPipelineGraphics* CreatePipelineGraphics(const CGfxRenderPass* pRenderPass, const CGfxShader* pVertexShader, const CGfxShader* pFragmentShader, const PipelineState& state, uint32_t indexSubpass, uint32_t vertexBinding = 0, uint32_t instanceBinding = 1) = 0;
-	CGfxSampler* CreateSampler(GfxFilter minFilter, GfxFilter magFilter, GfxSamplerMipmapMode mipmapMode, GfxSamplerAddressMode addressMode) = 0;
+	CGfxShader* CreateShader(const char* szFileName, shader_kind kind);
+	CGfxPipelineCompute* CreatePipelineCompute(const CGfxShader* pComputeShader);
+	CGfxPipelineGraphics* CreatePipelineGraphics(const CGfxRenderPass* pRenderPass, const CGfxShader* pVertexShader, const CGfxShader* pFragmentShader, const PipelineState& state, uint32_t indexSubpass, uint32_t vertexBinding = 0, uint32_t instanceBinding = 1);
+	CGfxSampler* CreateSampler(GfxFilter minFilter, GfxFilter magFilter, GfxSamplerMipmapMode mipmapMode, GfxSamplerAddressMode addressMode);
 
 public:
-	CGfxFrameBufferPtr NewFrameBuffer(int width, int height, int numAttachments) = 0;
+	CGfxFrameBufferPtr NewFrameBuffer(int width, int height, int numAttachments);
 
-	CGfxRenderPassPtr GetRenderPass(uint32_t name) = 0;
-	CGfxRenderPassPtr NewRenderPass(uint32_t name, int numAttachments, int numSubpasses) = 0;
+	CGfxRenderPassPtr GetRenderPass(uint32_t name);
+	CGfxRenderPassPtr NewRenderPass(uint32_t name, int numAttachments, int numSubpasses);
 
-	CGfxTexture2DPtr GetTexture2D(uint32_t name) = 0;
-	CGfxTexture2DPtr NewTexture2D(uint32_t name) = 0;
-	CGfxTexture2DPtr NewTexture2D(const char* szFileName, uint32_t baseLevel = 0) = 0;
+	CGfxTexture2DPtr GetTexture2D(uint32_t name);
+	CGfxTexture2DPtr NewTexture2D(uint32_t name);
+	CGfxTexture2DPtr NewTexture2D(const char* szFileName, uint32_t baseLevel = 0);
 
-	CGfxTexture2DArrayPtr GetTexture2DArray(uint32_t name) = 0;
-	CGfxTexture2DArrayPtr NewTexture2DArray(uint32_t name) = 0;
-	CGfxTexture2DArrayPtr NewTexture2DArray(const char* szFileName, uint32_t baseLevel = 0) = 0;
+	CGfxTexture2DArrayPtr GetTexture2DArray(uint32_t name);
+	CGfxTexture2DArrayPtr NewTexture2DArray(uint32_t name);
+	CGfxTexture2DArrayPtr NewTexture2DArray(const char* szFileName, uint32_t baseLevel = 0);
 
-	CGfxTextureCubeMapPtr GetTextureCubeMap(uint32_t name) = 0;
-	CGfxTextureCubeMapPtr NewTextureCubeMap(uint32_t name) = 0;
-	CGfxTextureCubeMapPtr NewTextureCubeMap(const char* szFileName, uint32_t baseLevel = 0) = 0;
+	CGfxTextureCubeMapPtr GetTextureCubeMap(uint32_t name);
+	CGfxTextureCubeMapPtr NewTextureCubeMap(uint32_t name);
+	CGfxTextureCubeMapPtr NewTextureCubeMap(const char* szFileName, uint32_t baseLevel = 0);
 
-	CGfxRenderTexturePtr GetRenderTexture(uint32_t name) = 0;
-	CGfxRenderTexturePtr NewRenderTexture(uint32_t name) = 0;
+	CGfxRenderTexturePtr GetRenderTexture(uint32_t name);
+	CGfxRenderTexturePtr NewRenderTexture(uint32_t name);
 
-	CGfxUniformBufferPtr NewUniformBuffer(size_t size) = 0;
+	CGfxUniformBufferPtr NewUniformBuffer(size_t size);
 
-	CGfxMeshPtr GetMesh(uint32_t name) = 0;
-	CGfxMeshPtr NewMesh(uint32_t name) = 0;
-	CGfxMeshPtr NewMesh(const char* szFileName, uint32_t vertexBinding = 0) = 0;
+	CGfxMeshPtr GetMesh(uint32_t name);
+	CGfxMeshPtr NewMesh(uint32_t name);
+	CGfxMeshPtr NewMesh(const char* szFileName, uint32_t vertexBinding = 0);
 
-	CGfxMeshDrawPtr GetMeshDraw(uint32_t name) = 0;
-	CGfxMeshDrawPtr NewMeshDraw(uint32_t name, const CGfxMeshPtr ptrMesh, uint32_t nameDraw, uint32_t instanceFormat, uint32_t instanceBinding = 1) = 0;
+	CGfxMeshDrawPtr GetMeshDraw(uint32_t name);
+	CGfxMeshDrawPtr NewMeshDraw(uint32_t name, const CGfxMeshPtr ptrMesh, uint32_t nameDraw, uint32_t instanceFormat, uint32_t instanceBinding = 1);
 
-	CGfxMaterialPtr GetMaterial(uint32_t name) = 0;
-	CGfxMaterialPtr NewMaterial(uint32_t name) = 0;
-	CGfxMaterialPtr NewMaterial(const char* szFileName, uint32_t vertexBinding = 0, uint32_t instanceBinding = 1, uint32_t baseLevel = 0) = 0;
+	CGfxMaterialPtr GetMaterial(uint32_t name);
+	CGfxMaterialPtr NewMaterial(uint32_t name);
+	CGfxMaterialPtr NewMaterial(const char* szFileName, uint32_t vertexBinding = 0, uint32_t instanceBinding = 1, uint32_t baseLevel = 0);
 
-	CGfxDescriptorLayoutPtr NewDescriptorLayout(uint32_t set) = 0;
-	CGfxDescriptorSetPtr NewDescriptorSet(const CGfxDescriptorLayoutPtr ptrDescriptorLayout) = 0;
-	CGfxDescriptorSetPtr NewDescriptorSet(const CGfxPipelineGraphics* pPipelineGraphics, const CGfxFrameBuffer* pFrameBuffer, const CGfxRenderPass* pRenderPass, int indexSubpass) = 0;
+	CGfxDescriptorLayoutPtr NewDescriptorLayout(uint32_t set);
+	CGfxDescriptorSetPtr NewDescriptorSet(const CGfxDescriptorLayoutPtr ptrDescriptorLayout);
+	CGfxDescriptorSetPtr NewDescriptorSet(const CGfxPipelineGraphics* pPipelineGraphics, const CGfxFrameBuffer* pFrameBuffer, const CGfxRenderPass* pRenderPass, int indexSubpass);
 
-	CGfxCommandBufferPtr NewCommandBuffer(uint32_t pool, bool bMainCommandBuffer) = 0;
-
-public:
-	virtual bool CmdBeginRenderPass(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass) = 0;
-	virtual bool CmdNextSubpass(CGfxCommandBufferPtr ptrCommandBuffer) = 0;
-	virtual bool CmdEndRenderPass(CGfxCommandBufferPtr ptrCommandBuffer) = 0;
-
-	virtual bool CmdBindPipelineCompute(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxPipelineCompute* pPipelineCompute) = 0;
-	virtual bool CmdBindPipelineGraphics(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxPipelineGraphics* pPipelineGraphics) = 0;
-	virtual bool CmdBindDescriptorSet(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxDescriptorSetPtr ptrDescriptorSet) = 0;
-
-	virtual bool CmdUniform1i(CGfxCommandBufferPtr ptrCommandBuffer, uint32_t name, int v0) = 0;
-	virtual bool CmdUniform2i(CGfxCommandBufferPtr ptrCommandBuffer, uint32_t name, int v0, int v1) = 0;
-	virtual bool CmdUniform3i(CGfxCommandBufferPtr ptrCommandBuffer, uint32_t name, int v0, int v1, int v2) = 0;
-	virtual bool CmdUniform4i(CGfxCommandBufferPtr ptrCommandBuffer, uint32_t name, int v0, int v1, int v2, int v3) = 0;
-	virtual bool CmdUniform1f(CGfxCommandBufferPtr ptrCommandBuffer, uint32_t name, float v0) = 0;
-	virtual bool CmdUniform2f(CGfxCommandBufferPtr ptrCommandBuffer, uint32_t name, float v0, float v1) = 0;
-	virtual bool CmdUniform3f(CGfxCommandBufferPtr ptrCommandBuffer, uint32_t name, float v0, float v1, float v2) = 0;
-	virtual bool CmdUniform4f(CGfxCommandBufferPtr ptrCommandBuffer, uint32_t name, float v0, float v1, float v2, float v3) = 0;
-	virtual bool CmdUniform1iv(CGfxCommandBufferPtr ptrCommandBuffer, uint32_t name, int count, const int* value) = 0;
-	virtual bool CmdUniform2iv(CGfxCommandBufferPtr ptrCommandBuffer, uint32_t name, int count, const int* value) = 0;
-	virtual bool CmdUniform3iv(CGfxCommandBufferPtr ptrCommandBuffer, uint32_t name, int count, const int* value) = 0;
-	virtual bool CmdUniform4iv(CGfxCommandBufferPtr ptrCommandBuffer, uint32_t name, int count, const int* value) = 0;
-	virtual bool CmdUniform1fv(CGfxCommandBufferPtr ptrCommandBuffer, uint32_t name, int count, const float* value) = 0;
-	virtual bool CmdUniform2fv(CGfxCommandBufferPtr ptrCommandBuffer, uint32_t name, int count, const float* value) = 0;
-	virtual bool CmdUniform3fv(CGfxCommandBufferPtr ptrCommandBuffer, uint32_t name, int count, const float* value) = 0;
-	virtual bool CmdUniform4fv(CGfxCommandBufferPtr ptrCommandBuffer, uint32_t name, int count, const float* value) = 0;
-	virtual bool CmdUniformMatrix2fv(CGfxCommandBufferPtr ptrCommandBuffer, uint32_t name, int count, const float* value) = 0;
-	virtual bool CmdUniformMatrix3fv(CGfxCommandBufferPtr ptrCommandBuffer, uint32_t name, int count, const float* value) = 0;
-	virtual bool CmdUniformMatrix4fv(CGfxCommandBufferPtr ptrCommandBuffer, uint32_t name, int count, const float* value) = 0;
-
-	virtual bool CmdSetScissor(CGfxCommandBufferPtr ptrCommandBuffer, int x, int y, int width, int height) = 0;
-	virtual bool CmdSetViewport(CGfxCommandBufferPtr ptrCommandBuffer, int x, int y, int width, int height) = 0;
-
-	virtual bool CmdClearDepth(CGfxCommandBufferPtr ptrCommandBuffer, float depth) = 0;
-	virtual bool CmdClearColor(CGfxCommandBufferPtr ptrCommandBuffer, float red, float green, float blue, float alpha) = 0;
-
-	virtual bool CmdDrawInstance(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxMeshDrawPtr ptrMeshDraw, const uint8_t* pInstanceBuffer, uint32_t size) = 0;
-	virtual bool CmdDrawIndirect(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxMeshDrawPtr ptrMeshDraw, const uint8_t* pInstanceBuffer, uint32_t size) = 0;
-
-	virtual bool CmdExecute(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxCommandBufferPtr ptrSecondaryCommandBuffer) = 0;
-	virtual bool CmdPresent(CGfxCommandBufferPtr ptrCommandBuffer) = 0;
-
-	virtual bool CmdPushDebugGroup(CGfxCommandBufferPtr ptrCommandBuffer, const char* szMessage) = 0;
-	virtual bool CmdPopDebugGroup(CGfxCommandBufferPtr ptrCommandBuffer) = 0;
+	CGfxCommandBufferPtr NewCommandBuffer(uint32_t pool, bool bMainCommandBuffer);
 
 public:
-	virtual void Submit(const eastl::vector<CGfxCommandBufferPtr>& ptrCommandBuffers) = 0;
-	virtual void AcquireNextFrame(void) = 0;
-	virtual void Present(void) = 0;
+	bool CmdBeginRenderPass(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass);
+	bool CmdNextSubpass(CGfxCommandBufferPtr ptrCommandBuffer);
+	bool CmdEndRenderPass(CGfxCommandBufferPtr ptrCommandBuffer);
+
+	bool CmdBindPipelineCompute(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxPipelineCompute* pPipelineCompute);
+	bool CmdBindPipelineGraphics(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxPipelineGraphics* pPipelineGraphics);
+	bool CmdBindDescriptorSet(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxDescriptorSetPtr ptrDescriptorSet);
+
+	bool CmdUniform1i(CGfxCommandBufferPtr ptrCommandBuffer, uint32_t name, int v0);
+	bool CmdUniform2i(CGfxCommandBufferPtr ptrCommandBuffer, uint32_t name, int v0, int v1);
+	bool CmdUniform3i(CGfxCommandBufferPtr ptrCommandBuffer, uint32_t name, int v0, int v1, int v2);
+	bool CmdUniform4i(CGfxCommandBufferPtr ptrCommandBuffer, uint32_t name, int v0, int v1, int v2, int v3);
+	bool CmdUniform1f(CGfxCommandBufferPtr ptrCommandBuffer, uint32_t name, float v0);
+	bool CmdUniform2f(CGfxCommandBufferPtr ptrCommandBuffer, uint32_t name, float v0, float v1);
+	bool CmdUniform3f(CGfxCommandBufferPtr ptrCommandBuffer, uint32_t name, float v0, float v1, float v2);
+	bool CmdUniform4f(CGfxCommandBufferPtr ptrCommandBuffer, uint32_t name, float v0, float v1, float v2, float v3);
+	bool CmdUniform1iv(CGfxCommandBufferPtr ptrCommandBuffer, uint32_t name, int count, const int* value);
+	bool CmdUniform2iv(CGfxCommandBufferPtr ptrCommandBuffer, uint32_t name, int count, const int* value);
+	bool CmdUniform3iv(CGfxCommandBufferPtr ptrCommandBuffer, uint32_t name, int count, const int* value);
+	bool CmdUniform4iv(CGfxCommandBufferPtr ptrCommandBuffer, uint32_t name, int count, const int* value);
+	bool CmdUniform1fv(CGfxCommandBufferPtr ptrCommandBuffer, uint32_t name, int count, const float* value);
+	bool CmdUniform2fv(CGfxCommandBufferPtr ptrCommandBuffer, uint32_t name, int count, const float* value);
+	bool CmdUniform3fv(CGfxCommandBufferPtr ptrCommandBuffer, uint32_t name, int count, const float* value);
+	bool CmdUniform4fv(CGfxCommandBufferPtr ptrCommandBuffer, uint32_t name, int count, const float* value);
+	bool CmdUniformMatrix2fv(CGfxCommandBufferPtr ptrCommandBuffer, uint32_t name, int count, const float* value);
+	bool CmdUniformMatrix3fv(CGfxCommandBufferPtr ptrCommandBuffer, uint32_t name, int count, const float* value);
+	bool CmdUniformMatrix4fv(CGfxCommandBufferPtr ptrCommandBuffer, uint32_t name, int count, const float* value);
+
+	bool CmdSetScissor(CGfxCommandBufferPtr ptrCommandBuffer, int x, int y, int width, int height);
+	bool CmdSetViewport(CGfxCommandBufferPtr ptrCommandBuffer, int x, int y, int width, int height);
+
+	bool CmdClearDepth(CGfxCommandBufferPtr ptrCommandBuffer, float depth);
+	bool CmdClearColor(CGfxCommandBufferPtr ptrCommandBuffer, float red, float green, float blue, float alpha);
+
+	bool CmdDrawInstance(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxMeshDrawPtr ptrMeshDraw, const uint8_t* pInstanceBuffer, uint32_t size);
+	bool CmdDrawIndirect(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxMeshDrawPtr ptrMeshDraw, const uint8_t* pInstanceBuffer, uint32_t size);
+
+	bool CmdExecute(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxCommandBufferPtr ptrSecondaryCommandBuffer);
+	bool CmdPresent(CGfxCommandBufferPtr ptrCommandBuffer);
+
+	bool CmdPushDebugGroup(CGfxCommandBufferPtr ptrCommandBuffer, const char* szMessage);
+	bool CmdPopDebugGroup(CGfxCommandBufferPtr ptrCommandBuffer);
+
+public:
+	void Submit(const eastl::vector<CGfxCommandBufferPtr>& ptrCommandBuffers);
+	void AcquireNextFrame(void);
+	void Present(void);
 };
