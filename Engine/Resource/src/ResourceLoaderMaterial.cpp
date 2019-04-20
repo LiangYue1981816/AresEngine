@@ -6,7 +6,7 @@
 #include "FileManager.h"
 
 
-static bool StringToBool(const char *szString)
+static bool StringToBool(const char* szString)
 {
 	if (szString) {
 		if (!stricmp(szString, "GFX_TRUE")) return true;
@@ -16,7 +16,7 @@ static bool StringToBool(const char *szString)
 	return false;
 }
 
-static GfxPrimitiveTopology StringToTopology(const char *szString)
+static GfxPrimitiveTopology StringToTopology(const char* szString)
 {
 	if (szString) {
 		if (!stricmp(szString, "GFX_POINT_LIST")) return GFX_PRIMITIVE_TOPOLOGY_POINT_LIST;
@@ -30,7 +30,7 @@ static GfxPrimitiveTopology StringToTopology(const char *szString)
 	return GFX_PRIMITIVE_TOPOLOGY_INVALID_ENUM;
 }
 
-static GfxCullFace StringToCullFace(const char *szString)
+static GfxCullFace StringToCullFace(const char* szString)
 {
 	if (szString) {
 		if (!stricmp(szString, "GFX_FRONT")) return GFX_CULLFACE_FRONT;
@@ -41,7 +41,7 @@ static GfxCullFace StringToCullFace(const char *szString)
 	return GFX_CULLFACE_INVALID_ENUM;
 }
 
-static GfxFrontFace StringToFrontFace(const char *szString)
+static GfxFrontFace StringToFrontFace(const char* szString)
 {
 	if (szString) {
 		if (!stricmp(szString, "GFX_CW")) return GFX_FRONTFACE_CW;
@@ -51,7 +51,7 @@ static GfxFrontFace StringToFrontFace(const char *szString)
 	return GFX_FRONTFACE_INVALID_ENUM;
 }
 
-static GfxCompareOp StringToCompareOp(const char *szString)
+static GfxCompareOp StringToCompareOp(const char* szString)
 {
 	if (szString) {
 		if (!stricmp(szString, "GFX_COMPAREOP_NEVER")) return GFX_COMPAREOP_NEVER;
@@ -67,7 +67,7 @@ static GfxCompareOp StringToCompareOp(const char *szString)
 	return GFX_COMPAREOP_INVALID_ENUM;
 }
 
-static GfxStencilOp StringToStencilOp(const char *szString)
+static GfxStencilOp StringToStencilOp(const char* szString)
 {
 	if (szString) {
 		if (!stricmp(szString, "GFX_KEEP")) return GFX_STENCILOP_KEEP;
@@ -83,7 +83,7 @@ static GfxStencilOp StringToStencilOp(const char *szString)
 	return GFX_STENCILOP_INVALID_ENUM;
 }
 
-static GfxBlendFactor StringToBlendFactor(const char *szString)
+static GfxBlendFactor StringToBlendFactor(const char* szString)
 {
 	if (szString) {
 		if (!stricmp(szString, "GFX_ZERO")) return GFX_BLENDFACTOR_ZERO;
@@ -106,7 +106,7 @@ static GfxBlendFactor StringToBlendFactor(const char *szString)
 	return GFX_BLENDFACTOR_INVALID_ENUM;
 }
 
-static GfxBlendOp StringToBlendOp(const char *szString)
+static GfxBlendOp StringToBlendOp(const char* szString)
 {
 	if (szString) {
 		if (!stricmp(szString, "GFX_ADD")) return GFX_BLENDOP_ADD;
@@ -119,7 +119,7 @@ static GfxBlendOp StringToBlendOp(const char *szString)
 	return GFX_BLENDOP_INVALID_ENUM;
 }
 
-static GfxFilter StringToFilter(const char *szString)
+static GfxFilter StringToFilter(const char* szString)
 {
 	if (szString) {
 		if (!stricmp(szString, "GFX_NEAREST")) return GFX_FILTER_NEAREST;
@@ -129,7 +129,7 @@ static GfxFilter StringToFilter(const char *szString)
 	return GFX_FILTER_INVALID_ENUM;
 }
 
-static GfxSamplerMipmapMode StringToMipmapMode(const char *szString)
+static GfxSamplerMipmapMode StringToMipmapMode(const char* szString)
 {
 	if (szString) {
 		if (!stricmp(szString, "GFX_NEAREST")) return GFX_SAMPLER_MIPMAP_MODE_NEAREST;
@@ -139,7 +139,7 @@ static GfxSamplerMipmapMode StringToMipmapMode(const char *szString)
 	return GFX_SAMPLER_MIPMAP_MODE_INVALID_ENUM;
 }
 
-static GfxSamplerAddressMode StringToAddressMode(const char *szString)
+static GfxSamplerAddressMode StringToAddressMode(const char* szString)
 {
 	if (szString) {
 		if (!stricmp(szString, "GFX_REPEAT")) return GFX_SAMPLER_ADDRESS_MODE_REPEAT;
@@ -152,57 +152,57 @@ static GfxSamplerAddressMode StringToAddressMode(const char *szString)
 }
 
 
-static bool InternalLoadPipelineState(TiXmlNode *pPipelineNode, PipelineState &state)
+static bool InternalLoadPipelineState(TiXmlNode* pPipelineNode, PipelineState& state)
 {
-	if (TiXmlNode *pStateNode = pPipelineNode->FirstChild("State")) {
+	if (TiXmlNode * pStateNode = pPipelineNode->FirstChild("State")) {
 		LogOutput(LOG_TAG_RENDERER, "\t\t\tLoadState ... ");
 		{
-			if (TiXmlNode *pInputAssemblyNode = pStateNode->FirstChild("InputAssembly")) {
-				if (TiXmlNode *pPrimitiveRestart = pInputAssemblyNode->FirstChild("PrimitiveRestart")) {
+			if (TiXmlNode * pInputAssemblyNode = pStateNode->FirstChild("InputAssembly")) {
+				if (TiXmlNode * pPrimitiveRestart = pInputAssemblyNode->FirstChild("PrimitiveRestart")) {
 					state.bEnablePrimitiveRestart = StringToBool(pPrimitiveRestart->ToElement()->AttributeString("enable"));
 				}
-				if (TiXmlNode *pPrimitiveTopology = pInputAssemblyNode->FirstChild("PrimitiveTopology")) {
+				if (TiXmlNode * pPrimitiveTopology = pInputAssemblyNode->FirstChild("PrimitiveTopology")) {
 					state.topology = StringToTopology(pPrimitiveTopology->ToElement()->AttributeString("topology"));
 				}
 			}
 
-			if (TiXmlNode *pRasterizationNode = pStateNode->FirstChild("Rasterization")) {
-				if (TiXmlNode *pCullNode = pRasterizationNode->FirstChild("Cull")) {
+			if (TiXmlNode * pRasterizationNode = pStateNode->FirstChild("Rasterization")) {
+				if (TiXmlNode * pCullNode = pRasterizationNode->FirstChild("Cull")) {
 					state.bEnableCullFace = StringToBool(pCullNode->ToElement()->AttributeString("enable"));
 					state.cullFace = StringToCullFace(pCullNode->ToElement()->AttributeString("cull_face"));
 					state.frontFace = StringToFrontFace(pCullNode->ToElement()->AttributeString("front_face"));
 				}
-				if (TiXmlNode *pDepthBiasNode = pRasterizationNode->FirstChild("DepthBias")) {
+				if (TiXmlNode * pDepthBiasNode = pRasterizationNode->FirstChild("DepthBias")) {
 					state.bEnableDepthBias = StringToBool(pDepthBiasNode->ToElement()->AttributeString("enable"));
 					state.depthBiasSlopeFactor = pDepthBiasNode->ToElement()->AttributeFloat1("slope_factor");
 					state.depthBiasConstantFactor = pDepthBiasNode->ToElement()->AttributeFloat1("constant_factor");
 				}
 			}
 
-			if (TiXmlNode *pMultisampleNode = pStateNode->FirstChild("Multisample")) {
-				if (TiXmlNode *pSampleNode = pMultisampleNode->FirstChild("Sample")) {
+			if (TiXmlNode * pMultisampleNode = pStateNode->FirstChild("Multisample")) {
+				if (TiXmlNode * pSampleNode = pMultisampleNode->FirstChild("Sample")) {
 					state.samples = pSampleNode->ToElement()->AttributeInt1("count");
 				}
-				if (TiXmlNode *pAlphaToCoverageNode = pMultisampleNode->FirstChild("AlphaToCoverage")) {
+				if (TiXmlNode * pAlphaToCoverageNode = pMultisampleNode->FirstChild("AlphaToCoverage")) {
 					state.bEnableAlphaToCoverage = StringToBool(pAlphaToCoverageNode->ToElement()->AttributeString("enable"));
 				}
 			}
 
-			if (TiXmlNode *pDepthNode = pStateNode->FirstChild("Depth")) {
-				if (TiXmlNode *pDepthTestNode = pDepthNode->FirstChild("DepthTest")) {
+			if (TiXmlNode * pDepthNode = pStateNode->FirstChild("Depth")) {
+				if (TiXmlNode * pDepthTestNode = pDepthNode->FirstChild("DepthTest")) {
 					state.bEnableDepthTest = StringToBool(pDepthTestNode->ToElement()->AttributeString("enable"));
 					state.depthCompareOp = StringToCompareOp(pDepthTestNode->ToElement()->AttributeString("compare_op"));
 				}
-				if (TiXmlNode *pDepthWriteNode = pDepthNode->FirstChild("DepthWrite")) {
+				if (TiXmlNode * pDepthWriteNode = pDepthNode->FirstChild("DepthWrite")) {
 					state.bEnableDepthWrite = StringToBool(pDepthWriteNode->ToElement()->AttributeString("enable"));
 				}
 			}
 
-			if (TiXmlNode *pStencilNode = pStateNode->FirstChild("Stencil")) {
-				if (TiXmlNode *pStencilTestNode = pStencilNode->FirstChild("StencilTest")) {
+			if (TiXmlNode * pStencilNode = pStateNode->FirstChild("Stencil")) {
+				if (TiXmlNode * pStencilTestNode = pStencilNode->FirstChild("StencilTest")) {
 					state.bEnableStencilTest = StringToBool(pStencilTestNode->ToElement()->AttributeString("enable"));
 				}
-				if (TiXmlNode *pFrontNode = pStencilNode->FirstChild("Front")) {
+				if (TiXmlNode * pFrontNode = pStencilNode->FirstChild("Front")) {
 					state.stencilFrontWriteMask = pFrontNode->ToElement()->AttributeInt1("write_mask");
 					state.stencilFrontCompareMask = pFrontNode->ToElement()->AttributeInt1("compare_mask");
 					state.stencilFrontCompareRef = pFrontNode->ToElement()->AttributeInt1("compare_ref");
@@ -211,7 +211,7 @@ static bool InternalLoadPipelineState(TiXmlNode *pPipelineNode, PipelineState &s
 					state.stencilFrontOpDFail = StringToStencilOp(pFrontNode->ToElement()->AttributeString("depth_fail"));
 					state.stencilFrontOpDPass = StringToStencilOp(pFrontNode->ToElement()->AttributeString("pass"));
 				}
-				if (TiXmlNode *pBackNode = pStencilNode->FirstChild("Back")) {
+				if (TiXmlNode * pBackNode = pStencilNode->FirstChild("Back")) {
 					state.stencilBackWriteMask = pBackNode->ToElement()->AttributeInt1("write_mask");
 					state.stencilBackCompareMask = pBackNode->ToElement()->AttributeInt1("compare_mask");
 					state.stencilBackCompareRef = pBackNode->ToElement()->AttributeInt1("compare_ref");
@@ -222,27 +222,27 @@ static bool InternalLoadPipelineState(TiXmlNode *pPipelineNode, PipelineState &s
 				}
 			}
 
-			if (TiXmlNode *pColorBlendNode = pStateNode->FirstChild("ColorBlend")) {
-				if (TiXmlNode *pBlendNode = pColorBlendNode->FirstChild("Blend")) {
+			if (TiXmlNode * pColorBlendNode = pStateNode->FirstChild("ColorBlend")) {
+				if (TiXmlNode * pBlendNode = pColorBlendNode->FirstChild("Blend")) {
 					state.bEnableBlend = StringToBool(pBlendNode->ToElement()->AttributeString("enable"));
 				}
-				if (TiXmlNode *pConstantNode = pColorBlendNode->FirstChild("Constant")) {
+				if (TiXmlNode * pConstantNode = pColorBlendNode->FirstChild("Constant")) {
 					state.blendColorRed = pConstantNode->ToElement()->AttributeFloat1("red");
 					state.blendColorGreen = pConstantNode->ToElement()->AttributeFloat1("green");
 					state.blendColorBlue = pConstantNode->ToElement()->AttributeFloat1("blue");
 					state.blendColorAlpha = pConstantNode->ToElement()->AttributeFloat1("alpha");
 				}
-				if (TiXmlNode *pRGBBlendNode = pColorBlendNode->FirstChild("RGBBlend")) {
+				if (TiXmlNode * pRGBBlendNode = pColorBlendNode->FirstChild("RGBBlend")) {
 					state.blendOpRGB = StringToBlendOp(pRGBBlendNode->ToElement()->AttributeString("blend_op"));
 					state.blendSrcRGB = StringToBlendFactor(pRGBBlendNode->ToElement()->AttributeString("src_factor"));
 					state.blendDstRGB = StringToBlendFactor(pRGBBlendNode->ToElement()->AttributeString("dst_factor"));
 				}
-				if (TiXmlNode *pAlphaBlendNode = pColorBlendNode->FirstChild("AlphaBlend")) {
+				if (TiXmlNode * pAlphaBlendNode = pColorBlendNode->FirstChild("AlphaBlend")) {
 					state.blendOpAlpha = StringToBlendOp(pAlphaBlendNode->ToElement()->AttributeString("blend_op"));
 					state.blendSrcAlpha = StringToBlendFactor(pAlphaBlendNode->ToElement()->AttributeString("src_factor"));
 					state.blendDstAlpha = StringToBlendFactor(pAlphaBlendNode->ToElement()->AttributeString("dst_factor"));
 				}
-				if (TiXmlNode *pColorMaskNode = pColorBlendNode->FirstChild("ColorMask")) {
+				if (TiXmlNode * pColorMaskNode = pColorBlendNode->FirstChild("ColorMask")) {
 					state.bEnableColorRedWrite = StringToBool(pColorMaskNode->ToElement()->AttributeString("enable_write_red"));
 					state.bEnableColorGreenWrite = StringToBool(pColorMaskNode->ToElement()->AttributeString("enable_write_green"));
 					state.bEnableColorBlueWrite = StringToBool(pColorMaskNode->ToElement()->AttributeString("enable_write_blue"));
@@ -255,17 +255,17 @@ static bool InternalLoadPipelineState(TiXmlNode *pPipelineNode, PipelineState &s
 	return true;
 }
 
-static bool InternalLoadPipelineShader(TiXmlNode *pPipelineNode, CGfxShader *&pShader, shader_kind kind)
+static bool InternalLoadPipelineShader(TiXmlNode* pPipelineNode, CGfxShader*& pShader, shader_kind kind)
 {
 	int err = 0;
 
 	char szShaderKind[2][_MAX_STRING] = { "Vertex", "Fragment" };
 	LogOutput(LOG_TAG_RENDERER, "\t\t\tLoad%sShader ", szShaderKind[kind]);
 	{
-		TiXmlNode *pShaderNode = pPipelineNode->FirstChild(szShaderKind[kind]);
+		TiXmlNode* pShaderNode = pPipelineNode->FirstChild(szShaderKind[kind]);
 		if (pShaderNode == nullptr) { err = -1; goto ERR; }
 
-		const char *szFileName = pShaderNode->ToElement()->AttributeString("file_name");
+		const char* szFileName = pShaderNode->ToElement()->AttributeString("file_name");
 		if (szFileName == nullptr) { err = -2; goto ERR; }
 
 		LogOutput(nullptr, "%s ... ", szFileName);
@@ -277,9 +277,9 @@ static bool InternalLoadPipelineShader(TiXmlNode *pPipelineNode, CGfxShader *&pS
 		ShaderCompiler()->ClearMacroDefinition();
 #endif
 		{
-			if (TiXmlNode *pDefineNode = pShaderNode->FirstChild("Define")) {
+			if (TiXmlNode * pDefineNode = pShaderNode->FirstChild("Define")) {
 				do {
-					if (const char *szDefine = pDefineNode->ToElement()->AttributeString("name")) {
+					if (const char* szDefine = pDefineNode->ToElement()->AttributeString("name")) {
 						strcat(szHashName, "_");
 						strcat(szHashName, szDefine);
 
@@ -309,17 +309,17 @@ ERR:
 	return false;
 }
 
-static bool InternalLoadPipeline(TiXmlNode *pPassNode, CGfxMaterialPass *pPass, uint32_t vertexBinding, uint32_t instanceBinding)
+static bool InternalLoadPipeline(TiXmlNode * pPassNode, CGfxMaterialPass * pPass, uint32_t vertexBinding, uint32_t instanceBinding)
 {
 	int err = 0;
 
 	LogOutput(LOG_TAG_RENDERER, "\t\tLoadPipeline\n");
 	{
-		TiXmlNode *pPipelineNode = pPassNode->FirstChild("Pipeline");
+		TiXmlNode* pPipelineNode = pPassNode->FirstChild("Pipeline");
 		if (pPipelineNode == nullptr) { err = -1; goto ERR; }
 
 		const uint32_t indexSubpass = pPipelineNode->ToElement()->AttributeInt1("sub_pass");
-		const char *szRenderPassName = pPipelineNode->ToElement()->AttributeString("render_pass");
+		const char* szRenderPassName = pPipelineNode->ToElement()->AttributeString("render_pass");
 		if (szRenderPassName == nullptr) { err = -2; goto ERR; }
 
 		CGfxRenderPassPtr ptrRenderPass = GfxRenderer()->GetRenderPass(HashValue(szRenderPassName));
@@ -328,8 +328,8 @@ static bool InternalLoadPipeline(TiXmlNode *pPassNode, CGfxMaterialPass *pPass, 
 		PipelineState state;
 		if (InternalLoadPipelineState(pPipelineNode, state) == false) { err = -4; goto ERR; }
 
-		CGfxShader *pVertexShader = nullptr;
-		CGfxShader *pFragmentShader = nullptr;
+		CGfxShader* pVertexShader = nullptr;
+		CGfxShader* pFragmentShader = nullptr;
 #ifdef PLATFORM_WINDOWS
 		InternalLoadPipelineShader(pPipelineNode, pVertexShader, vertex_shader);
 		InternalLoadPipelineShader(pPipelineNode, pFragmentShader, fragment_shader);
@@ -347,16 +347,16 @@ ERR:
 	return false;
 }
 
-static bool InternalLoadTexture2D(TiXmlNode *pPassNode, CGfxMaterialPass *pPass, uint32_t baseLevel)
+static bool InternalLoadTexture2D(TiXmlNode * pPassNode, CGfxMaterialPass * pPass, uint32_t baseLevel)
 {
 	int err = 0;
 
-	if (TiXmlNode *pTextureNode = pPassNode->FirstChild("Texture2D")) {
+	if (TiXmlNode * pTextureNode = pPassNode->FirstChild("Texture2D")) {
 		do {
 			LogOutput(LOG_TAG_RENDERER, "\t\tLoadTexture2D ");
 			{
-				const char *szName = pTextureNode->ToElement()->AttributeString("name");
-				const char *szFileName = pTextureNode->ToElement()->AttributeString("file_name");
+				const char* szName = pTextureNode->ToElement()->AttributeString("name");
+				const char* szFileName = pTextureNode->ToElement()->AttributeString("file_name");
 				if (szName == nullptr || szFileName == nullptr) { err = -1; goto ERR; }
 
 				LogOutput(nullptr, "%s ... ", szFileName);
@@ -380,16 +380,16 @@ ERR:
 	return false;
 }
 
-static bool InternalLoadTexture2DArray(TiXmlNode *pPassNode, CGfxMaterialPass *pPass, uint32_t baseLevel)
+static bool InternalLoadTexture2DArray(TiXmlNode * pPassNode, CGfxMaterialPass * pPass, uint32_t baseLevel)
 {
 	int err = 0;
 
-	if (TiXmlNode *pTextureNode = pPassNode->FirstChild("Texture2DArray")) {
+	if (TiXmlNode * pTextureNode = pPassNode->FirstChild("Texture2DArray")) {
 		do {
 			LogOutput(LOG_TAG_RENDERER, "\t\tLoadTexture2DArray ");
 			{
-				const char *szName = pTextureNode->ToElement()->AttributeString("name");
-				const char *szFileName = pTextureNode->ToElement()->AttributeString("file_name");
+				const char* szName = pTextureNode->ToElement()->AttributeString("name");
+				const char* szFileName = pTextureNode->ToElement()->AttributeString("file_name");
 				if (szName == nullptr || szFileName == nullptr) { err = -1; goto ERR; }
 
 				LogOutput(nullptr, "%s ... ", szFileName);
@@ -413,16 +413,16 @@ ERR:
 	return false;
 }
 
-static bool InternalLoadTextureCubeMap(TiXmlNode *pPassNode, CGfxMaterialPass *pPass, uint32_t baseLevel)
+static bool InternalLoadTextureCubeMap(TiXmlNode * pPassNode, CGfxMaterialPass * pPass, uint32_t baseLevel)
 {
 	int err = 0;
 
-	if (TiXmlNode *pTextureNode = pPassNode->FirstChild("TextureCubeMap")) {
+	if (TiXmlNode * pTextureNode = pPassNode->FirstChild("TextureCubeMap")) {
 		do {
 			LogOutput(LOG_TAG_RENDERER, "\t\tLoadTextureCubeMap ");
 			{
-				const char *szName = pTextureNode->ToElement()->AttributeString("name");
-				const char *szFileName = pTextureNode->ToElement()->AttributeString("file_name");
+				const char* szName = pTextureNode->ToElement()->AttributeString("name");
+				const char* szFileName = pTextureNode->ToElement()->AttributeString("file_name");
 				if (szName == nullptr || szFileName == nullptr) { err = -1; goto ERR; }
 
 				LogOutput(nullptr, "%s ... ", szFileName);
@@ -446,16 +446,16 @@ ERR:
 	return false;
 }
 
-static bool InternalLoadUniformVec1(TiXmlNode *pPassNode, CGfxMaterialPass *pPass)
+static bool InternalLoadUniformVec1(TiXmlNode * pPassNode, CGfxMaterialPass * pPass)
 {
 	int err = 0;
 
-	if (TiXmlNode *pUniformNode = pPassNode->FirstChild("Uniform1f")) {
+	if (TiXmlNode * pUniformNode = pPassNode->FirstChild("Uniform1f")) {
 		do {
 			LogOutput(LOG_TAG_RENDERER, "\t\tLoadUniformVec1 ");
 			{
-				const char *szName = pUniformNode->ToElement()->AttributeString("name");
-				const char *szValue = pUniformNode->ToElement()->AttributeString("value");
+				const char* szName = pUniformNode->ToElement()->AttributeString("name");
+				const char* szValue = pUniformNode->ToElement()->AttributeString("value");
 				if (szName == nullptr || szValue == nullptr) { err = -1; goto ERR; }
 
 				LogOutput(nullptr, "%s = %s ", szName, szValue);
@@ -474,16 +474,16 @@ ERR:
 	return false;
 }
 
-static bool InternalLoadUniformVec2(TiXmlNode *pPassNode, CGfxMaterialPass *pPass)
+static bool InternalLoadUniformVec2(TiXmlNode * pPassNode, CGfxMaterialPass * pPass)
 {
 	int err = 0;
 
-	if (TiXmlNode *pUniformNode = pPassNode->FirstChild("Uniform2f")) {
+	if (TiXmlNode * pUniformNode = pPassNode->FirstChild("Uniform2f")) {
 		do {
 			LogOutput(LOG_TAG_RENDERER, "\t\tLoadUniformVec2 ");
 			{
-				const char *szName = pUniformNode->ToElement()->AttributeString("name");
-				const char *szValue = pUniformNode->ToElement()->AttributeString("value");
+				const char* szName = pUniformNode->ToElement()->AttributeString("name");
+				const char* szValue = pUniformNode->ToElement()->AttributeString("value");
 				if (szName == nullptr || szValue == nullptr) { err = -1; goto ERR; }
 
 				LogOutput(nullptr, "%s = vec2(%s) ", szName, szValue);
@@ -502,16 +502,16 @@ ERR:
 	return false;
 }
 
-static bool InternalLoadUniformVec3(TiXmlNode *pPassNode, CGfxMaterialPass *pPass)
+static bool InternalLoadUniformVec3(TiXmlNode * pPassNode, CGfxMaterialPass * pPass)
 {
 	int err = 0;
 
-	if (TiXmlNode *pUniformNode = pPassNode->FirstChild("Uniform3f")) {
+	if (TiXmlNode * pUniformNode = pPassNode->FirstChild("Uniform3f")) {
 		do {
 			LogOutput(LOG_TAG_RENDERER, "\t\tLoadUniformVec3 ");
 			{
-				const char *szName = pUniformNode->ToElement()->AttributeString("name");
-				const char *szValue = pUniformNode->ToElement()->AttributeString("value");
+				const char* szName = pUniformNode->ToElement()->AttributeString("name");
+				const char* szValue = pUniformNode->ToElement()->AttributeString("value");
 				if (szName == nullptr || szValue == nullptr) { err = -1; goto ERR; }
 
 				LogOutput(nullptr, "%s = vec3(%s) ", szName, szValue);
@@ -530,16 +530,16 @@ ERR:
 	return false;
 }
 
-static bool InternalLoadUniformVec4(TiXmlNode *pPassNode, CGfxMaterialPass *pPass)
+static bool InternalLoadUniformVec4(TiXmlNode * pPassNode, CGfxMaterialPass * pPass)
 {
 	int err = 0;
 
-	if (TiXmlNode *pUniformNode = pPassNode->FirstChild("Uniform4f")) {
+	if (TiXmlNode * pUniformNode = pPassNode->FirstChild("Uniform4f")) {
 		do {
 			LogOutput(LOG_TAG_RENDERER, "\t\tLoadUniformVec4 ");
 			{
-				const char *szName = pUniformNode->ToElement()->AttributeString("name");
-				const char *szValue = pUniformNode->ToElement()->AttributeString("value");
+				const char* szName = pUniformNode->ToElement()->AttributeString("name");
+				const char* szValue = pUniformNode->ToElement()->AttributeString("value");
 				if (szName == nullptr || szValue == nullptr) { err = -1; goto ERR; }
 
 				LogOutput(nullptr, "%s = vec4(%s) ", szName, szValue);
@@ -558,7 +558,7 @@ ERR:
 	return false;
 }
 
-static bool InternalLoadPass(TiXmlNode *pPassNode, CGfxMaterialPass *pPass, uint32_t vertexBinding, uint32_t instanceBinding, uint32_t baseLevel)
+static bool InternalLoadPass(TiXmlNode * pPassNode, CGfxMaterialPass * pPass, uint32_t vertexBinding, uint32_t instanceBinding, uint32_t baseLevel)
 {
 	int err = 0;
 
@@ -581,7 +581,7 @@ ERR:
 }
 
 
-bool CResourceLoader::LoadMaterial(const char *szFileName, CGfxMaterial *pMaterial, uint32_t vertexBinding, uint32_t instanceBinding, uint32_t baseLevel)
+bool CResourceLoader::LoadMaterial(const char* szFileName, CGfxMaterial * pMaterial, uint32_t vertexBinding, uint32_t instanceBinding, uint32_t baseLevel)
 {
 	//<Material>
 	//	<Pass name="">
@@ -642,12 +642,12 @@ bool CResourceLoader::LoadMaterial(const char *szFileName, CGfxMaterial *pMateri
 		if (FileManager()->LoadStream(szFileName, &stream) == false) { err = -1; goto ERR; }
 
 		TiXmlDocument xmlDoc;
-		if (xmlDoc.LoadFile((char *)stream.GetAddress(), stream.GetFullSize()) == false) { err = -2; goto ERR; }
+		if (xmlDoc.LoadFile((char*)stream.GetAddress(), stream.GetFullSize()) == false) { err = -2; goto ERR; }
 
-		TiXmlNode *pMaterialNode = xmlDoc.FirstChild("Material");
+		TiXmlNode* pMaterialNode = xmlDoc.FirstChild("Material");
 		if (pMaterialNode == nullptr) { err = -3; goto ERR; }
 
-		if (TiXmlNode *pPassNode = pMaterialNode->FirstChild("Pass")) {
+		if (TiXmlNode * pPassNode = pMaterialNode->FirstChild("Pass")) {
 			do {
 				uint32_t name = HashValue(pPassNode->ToElement()->AttributeString("name"));
 				if (pMaterial->CreatePass(name) == false) { err = -4; goto ERR; }

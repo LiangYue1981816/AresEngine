@@ -42,11 +42,11 @@ typedef struct MeshHeader
 
 } MeshHeader;
 
-static bool InternalLoadDraws(CGfxMesh *pMesh, DrawHeader *drawHeaders, int numDraws)
+static bool InternalLoadDraws(CGfxMesh* pMesh, DrawHeader* drawHeaders, int numDraws)
 {
 	for (int indexDraw = 0; indexDraw < numDraws; indexDraw++) {
 		const glm::aabb aabb(
-			glm::vec3(drawHeaders[indexDraw].minx, drawHeaders[indexDraw].miny, drawHeaders[indexDraw].minz), 
+			glm::vec3(drawHeaders[indexDraw].minx, drawHeaders[indexDraw].miny, drawHeaders[indexDraw].minz),
 			glm::vec3(drawHeaders[indexDraw].maxx, drawHeaders[indexDraw].maxy, drawHeaders[indexDraw].maxz));
 
 		if (pMesh->CreateDraw(indexDraw, aabb, drawHeaders[indexDraw].baseVertex, drawHeaders[indexDraw].firstIndex, drawHeaders[indexDraw].indexCount) == false) {
@@ -58,7 +58,7 @@ static bool InternalLoadDraws(CGfxMesh *pMesh, DrawHeader *drawHeaders, int numD
 }
 
 
-bool CResourceLoader::LoadMesh(const char *szFileName, CGfxMesh *pMesh, uint32_t vertexBinding)
+bool CResourceLoader::LoadMesh(const char* szFileName, CGfxMesh* pMesh, uint32_t vertexBinding)
 {
 	int err = 0;
 
@@ -71,13 +71,13 @@ bool CResourceLoader::LoadMesh(const char *szFileName, CGfxMesh *pMesh, uint32_t
 		MeshHeader meshHeader;
 		stream.Read(&meshHeader, sizeof(meshHeader), 1);
 
-		DrawHeader *drawHeaders = (DrawHeader *)stream.GetCurrentAddress();
+		DrawHeader* drawHeaders = (DrawHeader*)stream.GetCurrentAddress();
 
 		stream.Seek(meshHeader.indexBufferOffset, SEEK_SET);
-		void *pIndexBuffer = stream.GetCurrentAddress();
+		void* pIndexBuffer = stream.GetCurrentAddress();
 
 		stream.Seek(meshHeader.vertexBufferOffset, SEEK_SET);
-		void *pVertexBuffer = stream.GetCurrentAddress();
+		void* pVertexBuffer = stream.GetCurrentAddress();
 
 		if (pMesh->CreateIndexBuffer(GFX_INDEX_UNSIGNED_INT, meshHeader.indexBufferSize, false, pIndexBuffer) == false) { err = -2; goto ERR; }
 		if (pMesh->CreateVertexBuffer(meshHeader.format, vertexBinding, meshHeader.vertexBufferSize, false, pVertexBuffer) == false) { err = -3; goto ERR; }

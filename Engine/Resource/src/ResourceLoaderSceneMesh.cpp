@@ -6,14 +6,14 @@
 #include "FileManager.h"
 
 
-static bool InternalLoadDraw(TiXmlNode *pNode, const CGfxMeshPtr ptrMesh, CSceneNode *pCurrentSceneNode, uint32_t instanceFormat, uint32_t vertexBinding, uint32_t instanceBinding, uint32_t baseLevel)
+static bool InternalLoadDraw(TiXmlNode* pNode, const CGfxMeshPtr ptrMesh, CSceneNode* pCurrentSceneNode, uint32_t instanceFormat, uint32_t vertexBinding, uint32_t instanceBinding, uint32_t baseLevel)
 {
 	int err = 0;
 
-	if (TiXmlNode *pDrawNode = pNode->FirstChild("Draw")) {
+	if (TiXmlNode * pDrawNode = pNode->FirstChild("Draw")) {
 		do {
 			int indexDraw = pDrawNode->ToElement()->AttributeInt1("index");
-			const char *szMaterialFileName = pDrawNode->ToElement()->AttributeString("material");
+			const char* szMaterialFileName = pDrawNode->ToElement()->AttributeString("material");
 			if (szMaterialFileName == nullptr) { err = -1; goto ERR; }
 
 			CGfxMaterialPtr ptrMaterial = GfxRenderer()->NewMaterial(szMaterialFileName, vertexBinding, instanceBinding, baseLevel);
@@ -30,10 +30,10 @@ ERR:
 	return false;
 }
 
-static bool InternalLoadNode(TiXmlNode *pNode, const CGfxMeshPtr ptrMesh, CSceneNode *pParentSceneNode, uint32_t instanceFormat, uint32_t vertexBinding, uint32_t instanceBinding, uint32_t baseLevel)
+static bool InternalLoadNode(TiXmlNode * pNode, const CGfxMeshPtr ptrMesh, CSceneNode * pParentSceneNode, uint32_t instanceFormat, uint32_t vertexBinding, uint32_t instanceBinding, uint32_t baseLevel)
 {
 	int err = 0;
-	CSceneNode *pCurrentSceneNode = nullptr;
+	CSceneNode* pCurrentSceneNode = nullptr;
 	{
 		pCurrentSceneNode = pParentSceneNode->GetSceneManager()->CreateNode(pParentSceneNode->GetSceneManager()->GetNextNodeName());
 		{
@@ -57,7 +57,7 @@ static bool InternalLoadNode(TiXmlNode *pNode, const CGfxMeshPtr ptrMesh, CScene
 			err = -2; goto ERR;
 		}
 
-		if (TiXmlNode *pChildNode = pNode->FirstChild("Node")) {
+		if (TiXmlNode * pChildNode = pNode->FirstChild("Node")) {
 			do {
 				if (InternalLoadNode(pChildNode, ptrMesh, pCurrentSceneNode, instanceFormat, vertexBinding, instanceBinding, baseLevel) == false) {
 					err = -3; goto ERR;
@@ -71,12 +71,12 @@ ERR:
 	return false;
 }
 
-static bool InternalLoadMesh(TiXmlNode *pMeshNode, CSceneNode *pParentSceneNode, uint32_t instanceFormat, uint32_t vertexBinding, uint32_t instanceBinding, uint32_t baseLevel)
+static bool InternalLoadMesh(TiXmlNode * pMeshNode, CSceneNode * pParentSceneNode, uint32_t instanceFormat, uint32_t vertexBinding, uint32_t instanceBinding, uint32_t baseLevel)
 {
 	int err = 0;
 	{
-		if (TiXmlNode *pNode = pMeshNode->FirstChild("Node")) {
-			const char *szMeshFileName = pMeshNode->ToElement()->AttributeString("mesh");
+		if (TiXmlNode * pNode = pMeshNode->FirstChild("Node")) {
+			const char* szMeshFileName = pMeshNode->ToElement()->AttributeString("mesh");
 			if (szMeshFileName == nullptr) { err = -1; goto ERR; }
 
 			CGfxMeshPtr ptrMesh = GfxRenderer()->NewMesh(szMeshFileName, vertexBinding);
@@ -92,7 +92,7 @@ ERR:
 	return false;
 }
 
-static CSceneNode* InternalLoadMesh(const char *szFileName, CSceneNode *pParentSceneNode, uint32_t instanceFormat, uint32_t vertexBinding, uint32_t instanceBinding, uint32_t baseLevel)
+static CSceneNode* InternalLoadMesh(const char* szFileName, CSceneNode * pParentSceneNode, uint32_t instanceFormat, uint32_t vertexBinding, uint32_t instanceBinding, uint32_t baseLevel)
 {
 	/*
 	<Mesh mesh="sponza.mesh">
@@ -105,15 +105,15 @@ static CSceneNode* InternalLoadMesh(const char *szFileName, CSceneNode *pParentS
 	*/
 
 	int err = 0;
-	CSceneNode *pCurrentSceneNode = nullptr;
+	CSceneNode* pCurrentSceneNode = nullptr;
 	{
 		CStream stream;
 		if (FileManager()->LoadStream(szFileName, &stream) == false) { err = -1; goto ERR; }
 
 		TiXmlDocument xmlDoc;
-		if (xmlDoc.LoadFile((char *)stream.GetAddress(), stream.GetFullSize()) == false) { err = -2; goto ERR; }
+		if (xmlDoc.LoadFile((char*)stream.GetAddress(), stream.GetFullSize()) == false) { err = -2; goto ERR; }
 
-		TiXmlNode *pMeshNode = xmlDoc.FirstChild("Mesh");
+		TiXmlNode* pMeshNode = xmlDoc.FirstChild("Mesh");
 		if (pMeshNode == nullptr) { err = -3; goto ERR; }
 
 		pCurrentSceneNode = pParentSceneNode->GetSceneManager()->CreateNode(pParentSceneNode->GetSceneManager()->GetNextNodeName());
@@ -126,7 +126,7 @@ ERR:
 	return nullptr;
 }
 
-CSceneNode* CResourceLoader::LoadSceneMesh(const char *szFileName, CSceneNode *pParentSceneNode, uint32_t instanceFormat, uint32_t vertexBinding, uint32_t instanceBinding, uint32_t baseLevel)
+CSceneNode* CResourceLoader::LoadSceneMesh(const char* szFileName, CSceneNode * pParentSceneNode, uint32_t instanceFormat, uint32_t vertexBinding, uint32_t instanceBinding, uint32_t baseLevel)
 {
 	return InternalLoadMesh(szFileName, pParentSceneNode, instanceFormat, vertexBinding, instanceBinding, baseLevel);
 }

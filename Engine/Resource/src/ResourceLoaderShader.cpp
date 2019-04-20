@@ -1,7 +1,7 @@
 #include "ResourceLoader.h"
 
 
-bool CResourceLoader::LoadShader(const char *szFileName, CGfxShader *pShader, shader_kind kind)
+bool CResourceLoader::LoadShader(const char* szFileName, CGfxShader* pShader, shader_kind kind)
 {
 	pShader->Destroy();
 	{
