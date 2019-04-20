@@ -30,11 +30,11 @@ public:
 
 public:
 	CScene* CreateScene(uint32_t name);
-	void DestroyScene(CScene *pScene);
+	void DestroyScene(CScene* pScene);
 
 public:
 	CSceneNode* CreateNode(uint32_t name);
-	void DestroyNode(CSceneNode *pNode);
+	void DestroyNode(CSceneNode* pNode);
 
 public:
 	CComponentMeshPtr CreateComponentMesh(uint32_t name);
@@ -44,7 +44,7 @@ public:
 
 public:
 	void UpdateLogic(float totalTime, float deltaTime);
-	void UpdateCamera(CGfxCamera *pCamera, int indexQueue);
+	void UpdateCamera(CGfxCamera* pCamera, int indexQueue);
 
 
 private:

@@ -9,7 +9,7 @@ CComponentPointLight::CComponentPointLight(uint32_t name)
 	SetMeshDraw(GfxRenderer()->NewMesh("PointLight.mesh", 0));
 }
 
-CComponentPointLight::CComponentPointLight(const CComponentPointLight &component)
+CComponentPointLight::CComponentPointLight(const CComponentPointLight& component)
 	: CComponent(component)
 {
 	m_ptrMaterial = component.m_ptrMaterial;
@@ -47,7 +47,7 @@ void CComponentPointLight::SetAttenuation(float linear, float square, float cons
 glm::aabb CComponentPointLight::GetWorldAABB(void)
 {
 	if (m_ptrMeshDraw && m_pParentNode) {
-		return m_ptrMeshDraw->GetLocalAABB() * m_pParentNode->GetWorldTransform();
+		return m_ptrMeshDraw->GetLocalAABB()* m_pParentNode->GetWorldTransform();
 	}
 	else {
 		return glm::aabb();
@@ -61,11 +61,11 @@ void CComponentPointLight::TaskUpdate(float gameTime, float deltaTime)
 	}
 }
 
-void CComponentPointLight::TaskUpdateCamera(CGfxCamera *pCamera, int indexQueue, int indexThread)
+void CComponentPointLight::TaskUpdateCamera(CGfxCamera* pCamera, int indexQueue, int indexThread)
 {
 	if (m_pParentNode && m_pParentNode->IsActive()) {
 		if (pCamera->IsVisible(GetWorldAABB())) {
-			pCamera->Add(indexQueue, indexThread, m_ptrMaterial, m_ptrMeshDraw, (const uint8_t *)&m_instanceData, sizeof(m_instanceData));
+			pCamera->Add(indexQueue, indexThread, m_ptrMaterial, m_ptrMeshDraw, (const uint8_t*)& m_instanceData, sizeof(m_instanceData));
 		}
 	}
 }

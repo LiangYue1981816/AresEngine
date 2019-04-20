@@ -14,7 +14,7 @@ class CALL_API CSceneNode
 
 
 private:
-	CSceneNode(uint32_t name, CSceneManager *pSceneManager);
+	CSceneNode(uint32_t name, CSceneManager* pSceneManager);
 	virtual ~CSceneNode(void);
 
 
@@ -28,8 +28,8 @@ public:
 	bool IsActive(void) const;
 
 public:
-	bool AttachNode(CSceneNode *pNode);
-	bool DetachNode(CSceneNode *pNode, bool bDestroy = false);
+	bool AttachNode(CSceneNode* pNode);
+	bool DetachNode(CSceneNode* pNode, bool bDestroy = false);
 	void DetachNodeAll(bool bDestroy = false);
 	CSceneNode* GetNode(uint32_t name) const;
 
@@ -58,16 +58,16 @@ public:
 
 private:
 	template<class T>
-	bool AttachComponent(CComponentPtr<T> ptrComponent, eastl::unordered_map<uint32_t, CComponentPtr<T>> &container);
+	bool AttachComponent(CComponentPtr<T> ptrComponent, eastl::unordered_map<uint32_t, CComponentPtr<T>>& container);
 
 	template<class T>
-	bool DetachComponent(CComponentPtr<T> ptrComponent, eastl::unordered_map<uint32_t, CComponentPtr<T>> &container);
+	bool DetachComponent(CComponentPtr<T> ptrComponent, eastl::unordered_map<uint32_t, CComponentPtr<T>>& container);
 
 	template<class T>
-	void DetachComponentAll(eastl::unordered_map<uint32_t, CComponentPtr<T>> &container);
+	void DetachComponentAll(eastl::unordered_map<uint32_t, CComponentPtr<T>>& container);
 
 	template<class T>
-	CComponentPtr<T> GetComponent(uint32_t name, const eastl::unordered_map<uint32_t, CComponentPtr<T>> &container) const;
+	CComponentPtr<T> GetComponent(uint32_t name, const eastl::unordered_map<uint32_t, CComponentPtr<T>>& container) const;
 
 public:
 	void Identity(void);
@@ -124,6 +124,6 @@ private:
 	eastl::unordered_map<uint32_t, CComponentPointLightPtr> m_ptrComponentPointLights;
 
 private:
-	CSceneNode *m_pParentNode;
-	CSceneManager *m_pSceneManager;
+	CSceneNode* m_pParentNode;
+	CSceneManager* m_pSceneManager;
 };

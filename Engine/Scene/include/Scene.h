@@ -9,7 +9,7 @@ class CALL_API CScene
 
 
 private:
-	CScene(uint32_t name, CSceneManager *pSceneManager);
+	CScene(uint32_t name, CSceneManager* pSceneManager);
 	virtual ~CScene(void);
 
 
@@ -23,6 +23,6 @@ private:
 	uint32_t m_name;
 
 private:
-	CSceneNode *m_pRootNode;
-	CSceneManager *m_pSceneManager;
+	CSceneNode* m_pRootNode;
+	CSceneManager* m_pSceneManager;
 };

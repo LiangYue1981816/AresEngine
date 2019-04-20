@@ -12,7 +12,7 @@ private:
 
 public:
 	CComponentMesh(uint32_t name);
-	CComponentMesh(const CComponentMesh &component);
+	CComponentMesh(const CComponentMesh& component);
 	virtual ~CComponentMesh(void);
 
 
@@ -25,7 +25,7 @@ public:
 
 public:
 	virtual void TaskUpdate(float gameTime, float deltaTime);
-	virtual void TaskUpdateCamera(CGfxCamera *pCamera, int indexQueue, int indexThread);
+	virtual void TaskUpdateCamera(CGfxCamera* pCamera, int indexQueue, int indexThread);
 
 
 private:

@@ -82,7 +82,7 @@ public:
 
 	T* GetComponentByKey(uint32_t key)
 	{
-		const auto &itKeyValue = m_keyIndex.find(key);
+		const auto& itKeyValue = m_keyIndex.find(key);
 
 		if (itKeyValue != m_keyIndex.end()) {
 			return &m_components[itKeyValue->second];
@@ -110,14 +110,14 @@ public:
 	{
 
 	}
-	CComponentPtr(uint32_t key, CComponentManager<T> *pManager)
+	CComponentPtr(uint32_t key, CComponentManager<T>* pManager)
 		: m_key(0)
 		, m_pManager(nullptr)
 		, m_pRefCount(nullptr)
 	{
 		Set(key, pManager, nullptr);
 	}
-	CComponentPtr(const CComponentPtr<T> &ptr)
+	CComponentPtr(const CComponentPtr<T>& ptr)
 		: m_key(0)
 		, m_pManager(nullptr)
 		, m_pRefCount(nullptr)
@@ -131,7 +131,7 @@ public:
 
 
 private:
-	inline void Set(uint32_t key, CComponentManager<T> *pManager, uint32_t *pRefCount)
+	inline void Set(uint32_t key, CComponentManager<T>* pManager, uint32_t* pRefCount)
 	{
 		if (m_key == key && m_pManager == pManager) {
 			return;
@@ -145,7 +145,7 @@ private:
 			m_pRefCount = pRefCount;
 
 			if (m_pRefCount == nullptr) {
-				m_pRefCount = (uint32_t *)AllocMemory(sizeof(*m_pRefCount)); (*m_pRefCount) = 0;
+				m_pRefCount = (uint32_t*)AllocMemory(sizeof(*m_pRefCount)); (*m_pRefCount) = 0;
 			}
 
 			++(*m_pRefCount);
@@ -156,7 +156,7 @@ public:
 	inline void Release(void)
 	{
 		if (m_pRefCount) {
-			if (-- (*m_pRefCount) == 0) {
+			if (--(*m_pRefCount) == 0) {
 				FreeMemory(m_pRefCount);
 				m_pManager->DeleteComponent(m_key);
 			}
@@ -192,7 +192,7 @@ public:
 		return m_key == 0 || m_pManager == nullptr;
 	}
 
-	inline CComponentPtr<T>& operator = (const CComponentPtr<T> &ptr)
+	inline CComponentPtr<T>& operator = (const CComponentPtr<T>& ptr)
 	{
 		Set(ptr.m_key, ptr.m_pManager, ptr.m_pRefCount);
 		return *this;
@@ -216,44 +216,44 @@ public:
 
 private:
 	uint32_t m_key;
-	CComponentManager<T> *m_pManager;
+	CComponentManager<T>* m_pManager;
 
 private:
-	uint32_t *m_pRefCount;
+	uint32_t* m_pRefCount;
 };
 
 template<class T>
-inline bool operator == (const CComponentPtr<T> &ptrLeft, const CComponentPtr<T> &ptrRight)
+inline bool operator == (const CComponentPtr<T>& ptrLeft, const CComponentPtr<T>& ptrRight)
 {
 	return ptrLeft.GetKey() == ptrRight.GetKey() && ptrLeft.GetManager() == ptrRight.GetManager();
 }
 
 template<class T>
-inline bool operator != (const CComponentPtr<T> &ptrLeft, const CComponentPtr<T> &ptrRight)
+inline bool operator != (const CComponentPtr<T>& ptrLeft, const CComponentPtr<T>& ptrRight)
 {
 	return ptrLeft.GetKey() != ptrRight.GetKey() || ptrLeft.GetManager() != ptrRight.GetManager();
 }
 
 template<class T>
-inline bool operator < (const CComponentPtr<T> &ptrLeft, const CComponentPtr<T> &ptrRight)
+inline bool operator < (const CComponentPtr<T>& ptrLeft, const CComponentPtr<T>& ptrRight)
 {
 	return ptrLeft.GetKey() < ptrRight.GetKey();
 }
 
 template<class T>
-inline bool operator <= (const CComponentPtr<T> &ptrLeft, const CComponentPtr<T> &ptrRight)
+inline bool operator <= (const CComponentPtr<T>& ptrLeft, const CComponentPtr<T>& ptrRight)
 {
 	return ptrLeft.GetKey() <= ptrRight.GetKey();
 }
 
 template<class T>
-inline bool operator > (const CComponentPtr<T> &ptrLeft, const CComponentPtr<T> &ptrRight)
+inline bool operator > (const CComponentPtr<T>& ptrLeft, const CComponentPtr<T>& ptrRight)
 {
 	return ptrLeft.GetKey() > ptrRight.GetKey();
 }
 
 template<class T>
-inline bool operator >= (const CComponentPtr<T> &ptrLeft, const CComponentPtr<T> &ptrRight)
+inline bool operator >= (const CComponentPtr<T>& ptrLeft, const CComponentPtr<T>& ptrRight)
 {
 	return ptrLeft.GetKey() >= ptrRight.GetKey();
 }
@@ -261,7 +261,7 @@ inline bool operator >= (const CComponentPtr<T> &ptrLeft, const CComponentPtr<T>
 template<class T>
 struct eastl::hash<CComponentPtr<T>>
 {
-	inline size_t operator()(const CComponentPtr<T> &ptr) const
+	inline size_t operator()(const CComponentPtr<T>& ptr) const
 	{
 		size_t key = (size_t)ptr.GetKey();
 		size_t manager = (size_t)ptr.GetManager();
@@ -273,7 +273,7 @@ struct eastl::hash<CComponentPtr<T>>
 template<class T>
 struct eastl::equal_to<CComponentPtr<T>>
 {
-	inline bool operator()(const CComponentPtr<T> &ptrLeft, const CComponentPtr<T> &ptrRight) const
+	inline bool operator()(const CComponentPtr<T>& ptrLeft, const CComponentPtr<T>& ptrRight) const
 	{
 		return ptrLeft.GetKey() == ptrRight.GetKey() && ptrLeft.GetManager() == ptrRight.GetManager();
 	}

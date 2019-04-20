@@ -2,7 +2,7 @@
 #include "EngineHeader.h"
 
 
-CScene::CScene(uint32_t name, CSceneManager *pSceneManager)
+CScene::CScene(uint32_t name, CSceneManager* pSceneManager)
 	: m_name(name)
 
 	, m_pRootNode(nullptr)

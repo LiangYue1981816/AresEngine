@@ -15,7 +15,7 @@ public:
 	{
 
 	}
-	CComponent(const CComponent &component)
+	CComponent(const CComponent& component)
 		: m_name(component.m_name)
 		, m_pParentNode(component.m_pParentNode)
 	{
@@ -29,10 +29,10 @@ public:
 
 public:
 	virtual void TaskUpdate(float gameTime, float deltaTime) = 0;
-	virtual void TaskUpdateCamera(CGfxCamera *pCamera, int indexQueue, int indexThread) = 0;
+	virtual void TaskUpdateCamera(CGfxCamera* pCamera, int indexQueue, int indexThread) = 0;
 
 
 protected:
 	uint32_t m_name;
-	CSceneNode *m_pParentNode;
+	CSceneNode* m_pParentNode;
 };

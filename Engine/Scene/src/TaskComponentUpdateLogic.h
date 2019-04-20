@@ -25,7 +25,7 @@ public:
 
 
 public:
-	void SetParams(CComponentManager<T> *pComponentManager, int numThreads, int indexThread, float gameTime, float deltaTime)
+	void SetParams(CComponentManager<T>* pComponentManager, int numThreads, int indexThread, float gameTime, float deltaTime)
 	{
 		m_gameTime = gameTime;
 		m_deltaTime = deltaTime;
@@ -36,7 +36,7 @@ public:
 		m_pComponentManager = pComponentManager;
 	}
 
-	void TaskFunc(int indexThread, void *pParams)
+	void TaskFunc(int indexThread, void* pParams)
 	{
 		for (int index = m_indexBegin; index < m_indexEnd; index++) {
 			m_pComponentManager->GetComponentByIndex(index)->TaskUpdate(m_gameTime, m_deltaTime);
@@ -51,5 +51,5 @@ private:
 private:
 	int m_indexBegin;
 	int m_indexEnd;
-	CComponentManager<T> *m_pComponentManager;
+	CComponentManager<T>* m_pComponentManager;
 };

@@ -8,7 +8,7 @@ CComponentSkin::CComponentSkin(uint32_t name)
 
 }
 
-CComponentSkin::CComponentSkin(const CComponentSkin &component)
+CComponentSkin::CComponentSkin(const CComponentSkin& component)
 	: CComponent(component)
 {
 
@@ -24,7 +24,7 @@ void CComponentSkin::TaskUpdate(float gameTime, float deltaTime)
 
 }
 
-void CComponentSkin::TaskUpdateCamera(CGfxCamera *pCamera, int indexQueue, int indexThread)
+void CComponentSkin::TaskUpdateCamera(CGfxCamera* pCamera, int indexQueue, int indexThread)
 {
 
 }

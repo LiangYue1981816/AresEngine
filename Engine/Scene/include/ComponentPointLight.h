@@ -14,7 +14,7 @@ private:
 
 public:
 	CComponentPointLight(uint32_t name);
-	CComponentPointLight(const CComponentPointLight &component);
+	CComponentPointLight(const CComponentPointLight& component);
 	virtual ~CComponentPointLight(void);
 
 
@@ -30,7 +30,7 @@ public:
 
 public:
 	virtual void TaskUpdate(float gameTime, float deltaTime);
-	virtual void TaskUpdateCamera(CGfxCamera *pCamera, int indexQueue, int indexThread);
+	virtual void TaskUpdateCamera(CGfxCamera* pCamera, int indexQueue, int indexThread);
 
 
 private:

@@ -8,7 +8,7 @@ CComponentParticle::CComponentParticle(uint32_t name)
 
 }
 
-CComponentParticle::CComponentParticle(const CComponentParticle &component)
+CComponentParticle::CComponentParticle(const CComponentParticle& component)
 	: CComponent(component)
 {
 
@@ -24,7 +24,7 @@ void CComponentParticle::TaskUpdate(float gameTime, float deltaTime)
 
 }
 
-void CComponentParticle::TaskUpdateCamera(CGfxCamera *pCamera, int indexQueue, int indexThread)
+void CComponentParticle::TaskUpdateCamera(CGfxCamera* pCamera, int indexQueue, int indexThread)
 {
 
 }

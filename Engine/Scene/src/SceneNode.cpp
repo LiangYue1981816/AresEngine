@@ -2,7 +2,7 @@
 #include "EngineHeader.h"
 
 
-CSceneNode::CSceneNode(uint32_t name, CSceneManager *pSceneManager)
+CSceneNode::CSceneNode(uint32_t name, CSceneManager* pSceneManager)
 	: m_name(name)
 
 	, m_pParentNode(nullptr)
@@ -61,7 +61,7 @@ bool CSceneNode::IsActive(void) const
 	}
 }
 
-bool CSceneNode::AttachNode(CSceneNode *pNode)
+bool CSceneNode::AttachNode(CSceneNode* pNode)
 {
 	if (pNode == nullptr) {
 		return false;
@@ -83,7 +83,7 @@ bool CSceneNode::AttachNode(CSceneNode *pNode)
 	return true;
 }
 
-bool CSceneNode::DetachNode(CSceneNode *pNode, bool bDestroy)
+bool CSceneNode::DetachNode(CSceneNode* pNode, bool bDestroy)
 {
 	if (pNode == nullptr) {
 		return false;
@@ -111,7 +111,7 @@ bool CSceneNode::DetachNode(CSceneNode *pNode, bool bDestroy)
 
 void CSceneNode::DetachNodeAll(bool bDestroy)
 {
-	for (const auto &itNode : m_pChildNodes) {
+	for (const auto& itNode : m_pChildNodes) {
 		itNode.second->m_pParentNode = nullptr;
 		itNode.second->m_nParentUpdateTransformCount = 0;
 
@@ -125,7 +125,7 @@ void CSceneNode::DetachNodeAll(bool bDestroy)
 
 CSceneNode* CSceneNode::GetNode(uint32_t name) const
 {
-	const auto &itNode = m_pChildNodes.find(name);
+	const auto& itNode = m_pChildNodes.find(name);
 
 	if (itNode != m_pChildNodes.end()) {
 		return itNode->second;
@@ -224,7 +224,7 @@ void CSceneNode::DetachComponentAll(void)
 }
 
 template<class T>
-bool CSceneNode::AttachComponent(CComponentPtr<T> ptrComponent, eastl::unordered_map<uint32_t, CComponentPtr<T>> &container)
+bool CSceneNode::AttachComponent(CComponentPtr<T> ptrComponent, eastl::unordered_map<uint32_t, CComponentPtr<T>>& container)
 {
 	if (ptrComponent.IsNull()) {
 		return false;
@@ -241,7 +241,7 @@ bool CSceneNode::AttachComponent(CComponentPtr<T> ptrComponent, eastl::unordered
 }
 
 template<class T>
-bool CSceneNode::DetachComponent(CComponentPtr<T> ptrComponent, eastl::unordered_map<uint32_t, CComponentPtr<T>> &container)
+bool CSceneNode::DetachComponent(CComponentPtr<T> ptrComponent, eastl::unordered_map<uint32_t, CComponentPtr<T>>& container)
 {
 	if (ptrComponent.IsNull()) {
 		return false;
@@ -258,15 +258,15 @@ bool CSceneNode::DetachComponent(CComponentPtr<T> ptrComponent, eastl::unordered
 }
 
 template<class T>
-void CSceneNode::DetachComponentAll(eastl::unordered_map<uint32_t, CComponentPtr<T>> &container)
+void CSceneNode::DetachComponentAll(eastl::unordered_map<uint32_t, CComponentPtr<T>>& container)
 {
 	container.clear();
 }
 
 template<class T>
-CComponentPtr<T> CSceneNode::GetComponent(uint32_t name, const eastl::unordered_map<uint32_t, CComponentPtr<T>> &container) const
+CComponentPtr<T> CSceneNode::GetComponent(uint32_t name, const eastl::unordered_map<uint32_t, CComponentPtr<T>>& container) const
 {
-	const auto &itComponent = container.find(name);
+	const auto& itComponent = container.find(name);
 
 	if (itComponent != container.end()) {
 		return itComponent->second;

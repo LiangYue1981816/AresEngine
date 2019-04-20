@@ -8,7 +8,7 @@ CComponentMesh::CComponentMesh(uint32_t name)
 
 }
 
-CComponentMesh::CComponentMesh(const CComponentMesh &component)
+CComponentMesh::CComponentMesh(const CComponentMesh& component)
 	: CComponent(component)
 {
 	m_ptrMaterial = component.m_ptrMaterial;
@@ -34,7 +34,7 @@ void CComponentMesh::SetMeshDraw(const CGfxMeshPtr ptrMesh, uint32_t nameDraw, u
 glm::aabb CComponentMesh::GetWorldAABB(void)
 {
 	if (m_ptrMeshDraw && m_pParentNode) {
-		return m_ptrMeshDraw->GetLocalAABB() * m_pParentNode->GetWorldTransform();
+		return m_ptrMeshDraw->GetLocalAABB()* m_pParentNode->GetWorldTransform();
 	}
 	else {
 		return glm::aabb();
@@ -48,11 +48,11 @@ void CComponentMesh::TaskUpdate(float gameTime, float deltaTime)
 	}
 }
 
-void CComponentMesh::TaskUpdateCamera(CGfxCamera *pCamera, int indexQueue, int indexThread)
+void CComponentMesh::TaskUpdateCamera(CGfxCamera* pCamera, int indexQueue, int indexThread)
 {
 	if (m_pParentNode && m_pParentNode->IsActive()) {
 		if (pCamera->IsVisible(GetWorldAABB())) {
-			pCamera->Add(indexQueue, indexThread, m_ptrMaterial, m_ptrMeshDraw, (const uint8_t *)&m_instanceData, sizeof(m_instanceData));
+			pCamera->Add(indexQueue, indexThread, m_ptrMaterial, m_ptrMeshDraw, (const uint8_t*)& m_instanceData, sizeof(m_instanceData));
 		}
 	}
 }

@@ -25,7 +25,7 @@ public:
 
 
 public:
-	void SetParams(CComponentManager<T> *pComponentManager, int numThreads, int indexThread, CGfxCamera *pCamera, int indexQueue)
+	void SetParams(CComponentManager<T>* pComponentManager, int numThreads, int indexThread, CGfxCamera* pCamera, int indexQueue)
 	{
 		m_pCamera = pCamera;
 		m_indexQueue = indexQueue;
@@ -36,7 +36,7 @@ public:
 		m_pComponentManager = pComponentManager;
 	}
 
-	void TaskFunc(int indexThread, void *pParams)
+	void TaskFunc(int indexThread, void* pParams)
 	{
 		for (int index = m_indexBegin; index < m_indexEnd; index++) {
 			m_pComponentManager->GetComponentByIndex(index)->TaskUpdateCamera(m_pCamera, m_indexQueue, indexThread);
@@ -45,11 +45,11 @@ public:
 
 
 private:
-	CGfxCamera *m_pCamera;
+	CGfxCamera* m_pCamera;
 	int m_indexQueue;
 
 private:
 	int m_indexBegin;
 	int m_indexEnd;
-	CComponentManager<T> *m_pComponentManager;
+	CComponentManager<T>* m_pComponentManager;
 };

@@ -13,11 +13,11 @@ CSceneManager::CSceneManager(void)
 
 CSceneManager::~CSceneManager(void)
 {
-	for (const auto &itScene : m_pScenes) {
+	for (const auto& itScene : m_pScenes) {
 		delete itScene.second;
 	}
 
-	for (const auto &itNode : m_pNodes) {
+	for (const auto& itNode : m_pNodes) {
 		delete itNode.second;
 	}
 
@@ -64,7 +64,7 @@ CScene* CSceneManager::CreateScene(uint32_t name)
 	return m_pScenes[name];
 }
 
-void CSceneManager::DestroyScene(CScene *pScene)
+void CSceneManager::DestroyScene(CScene* pScene)
 {
 	if (pScene) {
 		m_pScenes.erase(pScene->GetName());
@@ -81,7 +81,7 @@ CSceneNode* CSceneManager::CreateNode(uint32_t name)
 	return m_pNodes[name];
 }
 
-void CSceneManager::DestroyNode(CSceneNode *pNode)
+void CSceneManager::DestroyNode(CSceneNode* pNode)
 {
 	if (pNode) {
 		m_pNodes.erase(pNode->GetName());
@@ -150,7 +150,7 @@ void CSceneManager::UpdateLogic(float totalTime, float deltaTime)
 	m_taskGraph.Wait();
 }
 
-void CSceneManager::UpdateCamera(CGfxCamera *pCamera, int indexQueue)
+void CSceneManager::UpdateCamera(CGfxCamera* pCamera, int indexQueue)
 {
 	if (pCamera) {
 		pCamera->Begin(indexQueue);
