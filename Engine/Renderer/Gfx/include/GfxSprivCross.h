@@ -26,7 +26,7 @@ public:
 
 
 public:
-	const eastl::string& Create(const uint32_t *words, size_t numWords, uint32_t version = 450);
+	const eastl::string& Create(const uint32_t* words, size_t numWords, uint32_t version = 450);
 
 public:
 	const eastl::string& GetSource(void) const;

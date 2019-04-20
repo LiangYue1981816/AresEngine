@@ -14,7 +14,7 @@ namespace glm {
 			normal = glm::vec3(0.0f, 1.0f, 0.0f);
 		}
 
-		void set(const vec3 &_vertex, const vec3 &_normal)
+		void set(const vec3& _vertex, const vec3& _normal)
 		{
 			vertex = _vertex;
 			normal = glm::normalize(_normal);
@@ -26,34 +26,34 @@ namespace glm {
 			zero();
 		}
 
-		plane(const vec3 &_vertex, const vec3 &_normal)
+		plane(const vec3& _vertex, const vec3& _normal)
 		{
 			set(_vertex, _normal);
 		}
 
-		plane(const plane &_plane)
+		plane(const plane& _plane)
 		{
 			set(_plane.vertex, _plane.normal);
 		}
 
-		plane& operator = (const plane &_plane)
+		plane& operator = (const plane& _plane)
 		{
 			set(_plane.vertex, _plane.normal);
 			return *this;
 		}
 
-		plane& operator *= (const mat4 &_mat4)
+		plane& operator *= (const mat4& _mat4)
 		{
 			set(vec3(_mat4 * vec4(vertex, 1.0f)), vec3(_mat4 * vec4(normal, 0.0f)));
 			return *this;
 		}
 
-		plane operator * (const mat4 &_mat4) const
+		plane operator * (const mat4& _mat4) const
 		{
 			return plane(vec3(_mat4 * vec4(vertex, 1.0f)), vec3(_mat4 * vec4(normal, 0.0f)));
 		}
 
-		bool operator == (const plane &_plane) const
+		bool operator == (const plane& _plane) const
 		{
 			if (vertex != _plane.vertex) return false;
 			if (normal != _plane.normal) return false;
@@ -61,7 +61,7 @@ namespace glm {
 			return true;
 		}
 
-		bool operator != (const plane &_plane) const
+		bool operator != (const plane & _plane) const
 		{
 			if (vertex == _plane.vertex) return false;
 			if (normal == _plane.normal) return false;
@@ -69,22 +69,22 @@ namespace glm {
 			return true;
 		}
 
-		float distance(const vec3 &_vertex) const
+		float distance(const vec3 & _vertex) const
 		{
 			return dot(_vertex - vertex, normal);
 		}
 
-		int side(const vec3 &_vertex) const
+		int side(const vec3 & _vertex) const
 		{
 			float dis = distance(_vertex);
 
 			if (dis < -0.001f) return -1;
-			if (dis >  0.001f) return  1;
+			if (dis > 0.001f) return  1;
 
 			return 0;
 		}
 
-		vec3 project(const vec3 &_vertex) const
+		vec3 project(const vec3 & _vertex) const
 		{
 			vec3 vv = _vertex - vertex;
 			vec3 pp = dot(vv, normal) * normal;
@@ -99,9 +99,9 @@ namespace glm {
 
 	typedef struct aabb {
 	public:
-		static aabb create(const vec3 *vertices, size_t count)
+		static aabb create(const vec3* vertices, size_t count)
 		{
-			vec3 minVertex( FLT_MAX,  FLT_MAX,  FLT_MAX);
+			vec3 minVertex(FLT_MAX, FLT_MAX, FLT_MAX);
 			vec3 maxVertex(-FLT_MAX, -FLT_MAX, -FLT_MAX);
 
 			for (size_t indexVertex = 0; indexVertex < count; indexVertex++) {
@@ -125,7 +125,7 @@ namespace glm {
 			center = glm::vec3(0.0f, 0.0f, 0.0f);
 		}
 
-		void set(const vec3 &_minVertex, const vec3 &_maxVertex)
+		void set(const vec3& _minVertex, const vec3& _maxVertex)
 		{
 			minVertex = _minVertex;
 			maxVertex = _maxVertex;
@@ -138,38 +138,38 @@ namespace glm {
 			zero();
 		}
 
-		aabb(const vec3 &_minVertex, const vec3 &_maxVertex)
+		aabb(const vec3& _minVertex, const vec3& _maxVertex)
 		{
 			set(_minVertex, _maxVertex);
 			normalize();
 		}
 
-		aabb(const aabb &_aabb)
+		aabb(const aabb& _aabb)
 		{
 			set(_aabb.minVertex, _aabb.maxVertex);
 			normalize();
 		}
 
-		aabb& operator = (const aabb &_aabb)
+		aabb& operator = (const aabb& _aabb)
 		{
 			set(_aabb.minVertex, _aabb.maxVertex);
 			normalize();
 			return *this;
 		}
 
-		aabb& operator *= (const mat4 &_mat4)
+		aabb& operator *= (const mat4& _mat4)
 		{
 			set(vec3(_mat4 * vec4(minVertex, 1.0f)), vec3(_mat4 * vec4(maxVertex, 1.0f)));
 			normalize();
 			return *this;
 		}
 
-		aabb operator * (const mat4 &_mat4) const
+		aabb operator * (const mat4& _mat4) const
 		{
 			return aabb(vec3(_mat4 * vec4(minVertex, 1.0f)), vec3(_mat4 * vec4(maxVertex, 1.0f)));
 		}
 
-		bool operator == (const aabb &_aabb) const
+		bool operator == (const aabb& _aabb) const
 		{
 			if (minVertex != _aabb.minVertex) return false;
 			if (maxVertex != _aabb.maxVertex) return false;
@@ -177,7 +177,7 @@ namespace glm {
 			return true;
 		}
 
-		bool operator != (const aabb &_aabb) const
+		bool operator != (const aabb & _aabb) const
 		{
 			if (minVertex == _aabb.minVertex) return false;
 			if (maxVertex == _aabb.maxVertex) return false;
@@ -216,15 +216,15 @@ namespace glm {
 			return true;
 		}
 
-		bool inside(const vec3 &_vertex) const
+		bool inside(const vec3 & _vertex) const
 		{
 			return
-				_vertex.x > minVertex.x && _vertex.x < maxVertex.x &&
-				_vertex.y > minVertex.y && _vertex.y < maxVertex.y &&
-				_vertex.z > minVertex.z && _vertex.z < maxVertex.z;
+				_vertex.x > minVertex.x&& _vertex.x < maxVertex.x&&
+				_vertex.y > minVertex.y&& _vertex.y < maxVertex.y&&
+				_vertex.z > minVertex.z&& _vertex.z < maxVertex.z;
 		}
 
-		bool intersect(const aabb &_aabb) const
+		bool intersect(const aabb & _aabb) const
 		{
 			if (minVertex.x > _aabb.maxVertex.x || maxVertex.x < _aabb.minVertex.x) return false;
 			if (minVertex.y > _aabb.maxVertex.y || maxVertex.y < _aabb.minVertex.y) return false;
@@ -241,9 +241,9 @@ namespace glm {
 
 	typedef struct sphere {
 	public:
-		static sphere create(const vec3 *vertices, size_t count)
+		static sphere create(const vec3* vertices, size_t count)
 		{
-			vec3 minVertex( FLT_MAX,  FLT_MAX,  FLT_MAX);
+			vec3 minVertex(FLT_MAX, FLT_MAX, FLT_MAX);
 			vec3 maxVertex(-FLT_MAX, -FLT_MAX, -FLT_MAX);
 
 			for (size_t indexVertex = 0; indexVertex < count; indexVertex++) {
@@ -267,14 +267,14 @@ namespace glm {
 			radius2 = 0.0f;
 		}
 
-		void set(const vec3 &_center, float _radius)
+		void set(const vec3& _center, float _radius)
 		{
 			center = _center;
 			radius = _radius;
 			radius2 = radius * radius;
 		}
 
-		void set(const vec3 &_minVertex, const vec3 &_maxVertex)
+		void set(const vec3& _minVertex, const vec3& _maxVertex)
 		{
 			center = (_maxVertex + _minVertex) / 2.0f;
 			radius = length(_maxVertex - _minVertex) / 2.0f;
@@ -287,39 +287,39 @@ namespace glm {
 			zero();
 		}
 
-		sphere(const vec3 &_center, float _radius)
+		sphere(const vec3 & _center, float _radius)
 		{
 			set(_center, _radius);
 		}
 
-		sphere(const vec3 &_minVertex, const vec3 &_maxVertex)
+		sphere(const vec3 & _minVertex, const vec3 & _maxVertex)
 		{
 			set(_minVertex, _maxVertex);
 		}
 
-		sphere(const sphere &_sphere)
+		sphere(const sphere & _sphere)
 		{
 			set(_sphere.center, _sphere.radius);
 		}
 
-		sphere& operator = (const sphere &_sphere)
+		sphere& operator = (const sphere & _sphere)
 		{
 			set(_sphere.center, _sphere.radius);
 			return *this;
 		}
 
-		sphere& operator *= (const mat4 &_mat4)
+		sphere& operator *= (const mat4 & _mat4)
 		{
 			center = vec3(_mat4 * vec4(center, 1.0));
 			return *this;
 		}
 
-		sphere operator * (const mat4 &_mat4) const
+		sphere operator * (const mat4 & _mat4) const
 		{
 			return sphere(vec3(_mat4 * vec4(center, 1.0)), radius);
 		}
 
-		bool operator == (const sphere &_sphere) const
+		bool operator == (const sphere & _sphere) const
 		{
 			if (center != _sphere.center) return false;
 			if (radius != _sphere.radius) return false;
@@ -327,7 +327,7 @@ namespace glm {
 			return true;
 		}
 
-		bool operator != (const sphere &_sphere) const
+		bool operator != (const sphere & _sphere) const
 		{
 			if (center == _sphere.center) return false;
 			if (radius == _sphere.radius) return false;
@@ -340,16 +340,16 @@ namespace glm {
 			return radius > 0.001f;
 		}
 
-		bool inside(const vec3 &_vertex) const
+		bool inside(const vec3 & _vertex) const
 		{
 			vec3 delta = center - _vertex;
-			return delta.x * delta.x + delta.y * delta.y + delta.z * delta.z < radius2;
+			return delta.x* delta.x + delta.y * delta.y + delta.z * delta.z < radius2;
 		}
 
-		bool intersect(const sphere &_sphere) const
+		bool intersect(const sphere & _sphere) const
 		{
 			vec3 delta = center - _sphere.center;
-			return delta.x * delta.x + delta.y * delta.y + delta.z * delta.z < radius2 + _sphere.radius2;
+			return delta.x* delta.x + delta.y * delta.y + delta.z * delta.z < radius2 + _sphere.radius2;
 		}
 
 	public:
@@ -408,7 +408,7 @@ namespace glm {
 			planes[5][0] = plane(vec3(0.0f, 0.0f, zFar), vec3(0.0f, 0.0f, 1.0f));
 		}
 
-		void setLookat(const vec3 &_eye, const vec3 &_center, const vec3 &_up)
+		void setLookat(const vec3 & _eye, const vec3 & _center, const vec3 & _up)
 		{
 			position = _eye;
 			forward = normalize(_center - _eye);
@@ -423,17 +423,17 @@ namespace glm {
 			}
 		}
 
-		vec3 worldToScreen(const vec3 &world) const
+		vec3 worldToScreen(const vec3 & world) const
 		{
 			return project(world, viewMatrix, projectionMatrix, viewport);
 		}
 
-		vec3 screenToWorld(const vec3 &screen) const
+		vec3 screenToWorld(const vec3 & screen) const
 		{
 			return unProject(screen, viewMatrix, projectionMatrix, viewport);
 		}
 
-		bool visible(const vec3 &_vertex) const
+		bool visible(const vec3 & _vertex) const
 		{
 			for (int indexPlane = 0; indexPlane < 6; indexPlane++) {
 				if (planes[indexPlane][1].side(_vertex) == -1) {
@@ -444,7 +444,7 @@ namespace glm {
 			return true;
 		}
 
-		bool visible(const sphere &_sphere) const
+		bool visible(const sphere & _sphere) const
 		{
 			if (_sphere.valid() == false) {
 				return false;
@@ -459,7 +459,7 @@ namespace glm {
 			return true;
 		}
 
-		bool visible(const aabb &_aabb) const
+		bool visible(const aabb & _aabb) const
 		{
 			if (_aabb.valid() == false) {
 				return false;

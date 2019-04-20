@@ -57,7 +57,7 @@ public:
 	virtual const CGfxSprivCross& GetSprivCross(void) const = 0;
 
 public:
-	virtual bool Create(const uint32_t *words, size_t numWords, shader_kind kind) = 0;
+	virtual bool Create(const uint32_t* words, size_t numWords, shader_kind kind) = 0;
 	virtual void Destroy(void) = 0;
 
 public:

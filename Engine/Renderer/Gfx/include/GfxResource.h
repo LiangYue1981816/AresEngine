@@ -52,12 +52,12 @@ public:
 	{
 
 	}
-	CGfxResourcePtr(const T *pPointer)
+	CGfxResourcePtr(const T* pPointer)
 		: m_pPointer(nullptr)
 	{
 		Set(pPointer);
 	}
-	CGfxResourcePtr(const CGfxResourcePtr<T> &ptr)
+	CGfxResourcePtr(const CGfxResourcePtr<T>& ptr)
 		: m_pPointer(nullptr)
 	{
 		Set(ptr.m_pPointer);
@@ -69,7 +69,7 @@ public:
 
 
 private:
-	inline void Set(const T *pPointer)
+	inline void Set(const T* pPointer)
 	{
 		if (m_pPointer == pPointer) {
 			return;
@@ -77,8 +77,8 @@ private:
 
 		Release();
 
-		if ((m_pPointer = (T *)pPointer) != nullptr) {
-			((CGfxResource *)m_pPointer)->IncRefCount();
+		if ((m_pPointer = (T*)pPointer) != nullptr) {
+			((CGfxResource*)m_pPointer)->IncRefCount();
 		}
 	}
 
@@ -86,8 +86,8 @@ public:
 	inline void Release(void)
 	{
 		if (m_pPointer) {
-			if (((CGfxResource *)m_pPointer)->DecRefCount() == 0) {
-				((CGfxResource *)m_pPointer)->Release();
+			if (((CGfxResource*)m_pPointer)->DecRefCount() == 0) {
+				((CGfxResource*)m_pPointer)->Release();
 			}
 		}
 
@@ -112,14 +112,14 @@ public:
 	inline uint32_t GetRefCount(void) const
 	{
 		if (m_pPointer) {
-			return ((CGfxResource *)m_pPointer)->refCount;
+			return ((CGfxResource*)m_pPointer)->refCount;
 		}
 		else {
 			return 0;
 		}
 	}
 
-	inline CGfxResourcePtr<T>& operator = (const CGfxResourcePtr<T> &ptr)
+	inline CGfxResourcePtr<T>& operator = (const CGfxResourcePtr<T>& ptr)
 	{
 		Set(ptr.m_pPointer);
 		return *this;
@@ -140,125 +140,125 @@ public:
 		return m_pPointer;
 	}
 
-	inline operator bool (void) const
+	inline operator bool(void) const
 	{
 		return m_pPointer != nullptr;
 	}
 
 
 private:
-	T *m_pPointer;
+	T* m_pPointer;
 };
 
 template<class T>
-inline bool operator == (const CGfxResourcePtr<T> &ptrLeft, const void *pPointer)
+inline bool operator == (const CGfxResourcePtr<T>& ptrLeft, const void* pPointer)
 {
 	return ptrLeft.GetPointer() == pPointer;
 }
 
 template<class T>
-inline bool operator == (const void *pPointer, const CGfxResourcePtr<T> &ptrRight)
+inline bool operator == (const void* pPointer, const CGfxResourcePtr<T>& ptrRight)
 {
 	return pPointer == ptrRight.GetPointer();
 }
 
 template<class T>
-inline bool operator == (const CGfxResourcePtr<T> &ptrLeft, const CGfxResourcePtr<T> &ptrRight)
+inline bool operator == (const CGfxResourcePtr<T>& ptrLeft, const CGfxResourcePtr<T>& ptrRight)
 {
 	return ptrLeft.GetPointer() == ptrRight.GetPointer();
 }
 
 
 template<class T>
-inline bool operator != (const CGfxResourcePtr<T> &ptrLeft, const void *pPointer)
+inline bool operator != (const CGfxResourcePtr<T>& ptrLeft, const void* pPointer)
 {
 	return ptrLeft.GetPointer() != pPointer;
 }
 
 template<class T>
-inline bool operator != (const void *pPointer, const CGfxResourcePtr<T> &ptrRight)
+inline bool operator != (const void* pPointer, const CGfxResourcePtr<T>& ptrRight)
 {
 	return pPointer != ptrRight.GetPointer();
 }
 
 template<class T>
-inline bool operator != (const CGfxResourcePtr<T> &ptrLeft, const CGfxResourcePtr<T> &ptrRight)
+inline bool operator != (const CGfxResourcePtr<T>& ptrLeft, const CGfxResourcePtr<T>& ptrRight)
 {
 	return ptrLeft.GetPointer() != ptrRight.GetPointer();
 }
 
 
 template<class T>
-inline bool operator < (const CGfxResourcePtr<T> &ptrLeft, const void *pPointer)
+inline bool operator < (const CGfxResourcePtr<T>& ptrLeft, const void* pPointer)
 {
 	return ptrLeft.GetPointer() < pPointer;
 }
 
 template<class T>
-inline bool operator < (const void *pPointer, const CGfxResourcePtr<T> &ptrRight)
+inline bool operator < (const void* pPointer, const CGfxResourcePtr<T>& ptrRight)
 {
 	return pPointer < ptrRight.GetPointer();
 }
 
 template<class T>
-inline bool operator < (const CGfxResourcePtr<T> &ptrLeft, const CGfxResourcePtr<T> &ptrRight)
+inline bool operator < (const CGfxResourcePtr<T>& ptrLeft, const CGfxResourcePtr<T>& ptrRight)
 {
 	return ptrLeft.GetPointer() < ptrRight.GetPointer();
 }
 
 
 template<class T>
-inline bool operator <= (const CGfxResourcePtr<T> &ptrLeft, const void *pPointer)
+inline bool operator <= (const CGfxResourcePtr<T>& ptrLeft, const void* pPointer)
 {
 	return ptrLeft.GetPointer() <= pPointer;
 }
 
 template<class T>
-inline bool operator <= (const void *pPointer, const CGfxResourcePtr<T> &ptrRight)
+inline bool operator <= (const void* pPointer, const CGfxResourcePtr<T>& ptrRight)
 {
 	return pPointer <= ptrRight.GetPointer();
 }
 
 template<class T>
-inline bool operator <= (const CGfxResourcePtr<T> &ptrLeft, const CGfxResourcePtr<T> &ptrRight)
+inline bool operator <= (const CGfxResourcePtr<T>& ptrLeft, const CGfxResourcePtr<T>& ptrRight)
 {
 	return ptrLeft.GetPointer() <= ptrRight.GetPointer();
 }
 
 
 template<class T>
-inline bool operator > (const CGfxResourcePtr<T> &ptrLeft, const void *pPointer)
+inline bool operator > (const CGfxResourcePtr<T>& ptrLeft, const void* pPointer)
 {
 	return ptrLeft.GetPointer() > pPointer;
 }
 
 template<class T>
-inline bool operator > (const void *pPointer, const CGfxResourcePtr<T> &ptrRight)
+inline bool operator > (const void* pPointer, const CGfxResourcePtr<T>& ptrRight)
 {
 	return pPointer > ptrRight.GetPointer();
 }
 
 template<class T>
-inline bool operator > (const CGfxResourcePtr<T> &ptrLeft, const CGfxResourcePtr<T> &ptrRight)
+inline bool operator > (const CGfxResourcePtr<T>& ptrLeft, const CGfxResourcePtr<T>& ptrRight)
 {
 	return ptrLeft.GetPointer() > ptrRight.GetPointer();
 }
 
 
 template<class T>
-inline bool operator >= (const CGfxResourcePtr<T> &ptrLeft, const void *pPointer)
+inline bool operator >= (const CGfxResourcePtr<T>& ptrLeft, const void* pPointer)
 {
 	return ptrLeft.GetPointer() >= pPointer;
 }
 
 template<class T>
-inline bool operator >= (const void *pPointer, const CGfxResourcePtr<T> &ptrRight)
+inline bool operator >= (const void* pPointer, const CGfxResourcePtr<T>& ptrRight)
 {
 	return pPointer >= ptrRight.GetPointer();
 }
 
 template<class T>
-inline bool operator >= (const CGfxResourcePtr<T> &ptrLeft, const CGfxResourcePtr<T> &ptrRight)
+inline bool operator >= (const CGfxResourcePtr<T>& ptrLeft, const CGfxResourcePtr<T>& ptrRight)
 {
 	return ptrLeft.GetPointer() >= ptrRight.GetPointer();
 }
@@ -266,7 +266,7 @@ inline bool operator >= (const CGfxResourcePtr<T> &ptrLeft, const CGfxResourcePt
 template<class T>
 struct eastl::hash<CGfxResourcePtr<T>>
 {
-	inline size_t operator()(const CGfxResourcePtr<T> &key) const
+	inline size_t operator()(const CGfxResourcePtr<T>& key) const
 	{
 		return (size_t)key.GetPointer();
 	}
@@ -275,7 +275,7 @@ struct eastl::hash<CGfxResourcePtr<T>>
 template<class T>
 struct eastl::equal_to<CGfxResourcePtr<T>>
 {
-	inline bool operator()(const CGfxResourcePtr<T> &ptrLeft, const CGfxResourcePtr<T> &ptrRight) const
+	inline bool operator()(const CGfxResourcePtr<T>& ptrLeft, const CGfxResourcePtr<T>& ptrRight) const
 	{
 		return ptrLeft.GetPointer() == ptrRight.GetPointer();
 	}

@@ -35,7 +35,7 @@ public:
 	virtual uint32_t GetInstanceCount(void) const = 0;
 
 public:
-	virtual bool InstanceBufferData(size_t size, const void *pBuffer) = 0;
+	virtual bool InstanceBufferData(size_t size, const void* pBuffer) = 0;
 
 
 private:

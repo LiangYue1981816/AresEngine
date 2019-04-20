@@ -20,7 +20,7 @@ public:
 			count = 0;
 		}
 
-		const char *name;
+		const char* name;
 		uint32_t timeBegin;
 		uint32_t timeEnd;
 		uint32_t timeTotal;
@@ -89,7 +89,7 @@ public:
 	static void DecIndirectBufferSize(size_t size);
 
 	static void ResetSamples(void);
-	static void BeginSample(SampleType type, const char *name);
+	static void BeginSample(SampleType type, const char* name);
 	static void EndSample(SampleType type);
 
 	static void LogGfxMemory(void);
@@ -111,11 +111,11 @@ private:
 class CALL_API CGfxProfilerSample
 {
 public:
-	CGfxProfilerSample(CGfxProfiler::SampleType type, const char *name);
+	CGfxProfilerSample(CGfxProfiler::SampleType type, const char* name);
 	~CGfxProfilerSample(void);
 
 
 private:
 	CGfxProfiler::SampleType m_type;
-	const char *m_name;
+	const char* m_name;
 };

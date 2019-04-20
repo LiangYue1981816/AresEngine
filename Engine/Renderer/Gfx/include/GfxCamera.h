@@ -33,18 +33,18 @@ public:
 	const glm::mat4& GetViewInverseTransposeMatrix(void) const;
 
 public:
-	glm::vec3 WorldToScreen(const glm::vec3 &world) const;
-	glm::vec3 ScreenToWorld(const glm::vec3 &screen) const;
+	glm::vec3 WorldToScreen(const glm::vec3& world) const;
+	glm::vec3 ScreenToWorld(const glm::vec3& screen) const;
 
 public:
-	bool IsVisible(const glm::vec3 &vertex) const;
-	bool IsVisible(const glm::aabb &aabb) const;
-	bool IsVisible(const glm::sphere &sphere) const;
+	bool IsVisible(const glm::vec3& vertex) const;
+	bool IsVisible(const glm::aabb& aabb) const;
+	bool IsVisible(const glm::sphere& sphere) const;
 
 public:
 	void Clear(int indexQueue);
 	void Begin(int indexQueue);
-	void Add(int indexQueue, int indexThread, const CGfxMaterialPtr ptrMaterial, const CGfxMeshDrawPtr ptrMeshDraw, const uint8_t *pInstanceData, uint32_t size);
+	void Add(int indexQueue, int indexThread, const CGfxMaterialPtr ptrMaterial, const CGfxMeshDrawPtr ptrMeshDraw, const uint8_t* pInstanceData, uint32_t size);
 	void End(int indexQueue);
 
 public:
@@ -55,10 +55,10 @@ private:
 	glm::camera m_camera;
 
 private:
-	CGfxRenderQueue *m_pRenderQueue;
+	CGfxRenderQueue* m_pRenderQueue;
 
 private:
-	CGfxUniformCamera *m_pUniformCamera;
+	CGfxUniformCamera* m_pUniformCamera;
 	CGfxDescriptorSetPtr m_ptrDescriptorSetCamera;
 	CGfxDescriptorLayoutPtr m_ptrDescriptorLayoutCamera;
 };
