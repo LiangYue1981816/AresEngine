@@ -217,6 +217,12 @@
     <Filter Include="Engine\Renderer\Vulkan\Source Files\Commands">
       <UniqueIdentifier>{19cef04b-3e17-494d-a98d-d672a39129b3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Renderer\Vulkan\Header Files\Bak">
+      <UniqueIdentifier>{71ef7a05-5b74-4429-95ff-017e7113d7ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Renderer\Vulkan\Source Files\Bak">
+      <UniqueIdentifier>{21a432b6-b24a-4fef-a386-4aaa43195259}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Engine\PreHeader.h">
@@ -1290,6 +1296,165 @@
     <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3DescriptorSetManager.h">
       <Filter>Engine\Renderer\GLES3\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKAllocator.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files\Bak</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKBuffer.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files\Bak</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKCommandBuffer.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files\Bak</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKCommandBufferManager.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files\Bak</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKCommandPool.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files\Bak</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKDefinition.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files\Bak</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VkDescriptorLayout.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files\Bak</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VkDescriptorPool.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files\Bak</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VkDescriptorSet.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files\Bak</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VkDescriptorSetManager.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files\Bak</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKDevice.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files\Bak</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKExtension.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files\Bak</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKFrameBuffer.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files\Bak</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKFrameBufferManager.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files\Bak</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKHelper.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files\Bak</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKImage.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files\Bak</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKIndexBuffer.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files\Bak</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKIndirectBuffer.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files\Bak</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKInstance.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files\Bak</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKInstanceBuffer.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files\Bak</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKMaterial.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files\Bak</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKMaterialManager.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files\Bak</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKMaterialPass.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files\Bak</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKMemory.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files\Bak</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKMemoryAllocator.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files\Bak</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKMemoryManager.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files\Bak</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKMesh.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files\Bak</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKMeshDraw.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files\Bak</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKMeshDrawManager.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files\Bak</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKMeshManager.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files\Bak</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKPipeline.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files\Bak</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKPipelineCompute.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files\Bak</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKPipelineGraphics.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files\Bak</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKPipelineManager.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files\Bak</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKQueue.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files\Bak</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKRenderer.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files\Bak</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKRenderPass.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files\Bak</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKRenderPassManager.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files\Bak</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKRenderTexture.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files\Bak</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKRenderTextureManager.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files\Bak</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKSampler.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files\Bak</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKSamplerManager.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files\Bak</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKShader.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files\Bak</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKShaderManager.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files\Bak</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKSwapChain.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files\Bak</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKTexture.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files\Bak</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKTexture2D.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files\Bak</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKTexture2DArray.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files\Bak</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKTextureCubeMap.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files\Bak</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKTextureManager.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files\Bak</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKUniformBuffer.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files\Bak</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKUniformBufferManager.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files\Bak</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKVertexBuffer.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files\Bak</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Engine\ThirdParty\eastl\source\allocator_eastl.cpp">
@@ -1816,6 +1981,162 @@
     </ClCompile>
     <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3DescriptorSetManager.cpp">
       <Filter>Engine\Renderer\GLES3\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKAllocator.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files\Bak</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKBuffer.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files\Bak</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKCommandBuffer.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files\Bak</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKCommandBufferManager.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files\Bak</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKCommandPool.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files\Bak</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VkDescriptorLayout.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files\Bak</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VkDescriptorPool.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files\Bak</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VkDescriptorSet.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files\Bak</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VkDescriptorSetManager.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files\Bak</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKDevice.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files\Bak</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKExtension.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files\Bak</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKFrameBuffer.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files\Bak</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKFrameBufferManager.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files\Bak</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKHelper.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files\Bak</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKImage.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files\Bak</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKIndexBuffer.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files\Bak</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKIndirectBuffer.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files\Bak</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKInstance.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files\Bak</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKInstanceBuffer.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files\Bak</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKMaterial.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files\Bak</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKMaterialManager.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files\Bak</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKMaterialPass.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files\Bak</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKMemory.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files\Bak</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKMemoryAllocator.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files\Bak</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKMemoryManager.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files\Bak</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKMesh.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files\Bak</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKMeshDraw.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files\Bak</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKMeshDrawManager.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files\Bak</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKMeshManager.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files\Bak</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKPipeline.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files\Bak</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKPipelineCompute.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files\Bak</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKPipelineGraphics.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files\Bak</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKPipelineManager.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files\Bak</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKQueue.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files\Bak</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKRenderer.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files\Bak</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKRenderPass.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files\Bak</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKRenderPassManager.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files\Bak</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKRenderTexture.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files\Bak</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKRenderTextureManager.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files\Bak</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKSampler.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files\Bak</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKSamplerManager.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files\Bak</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKShader.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files\Bak</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKShaderManager.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files\Bak</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKSwapChain.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files\Bak</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKTexture.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files\Bak</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKTexture2D.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files\Bak</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKTexture2DArray.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files\Bak</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKTexture2DCubeMap.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files\Bak</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKTextureManager.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files\Bak</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKUniformBuffer.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files\Bak</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKUniformBufferManager.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files\Bak</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKVertexBuffer.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files\Bak</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
