@@ -61,7 +61,7 @@ bool CStream::IsValid(void) const
 	return m_pAddress != nullptr && m_size > 0;
 }
 
-bool CStream::SetStream(uint8_t *pAddress, size_t size)
+bool CStream::SetStream(uint8_t* pAddress, size_t size)
 {
 	if (pAddress == nullptr) {
 		return false;
@@ -84,7 +84,7 @@ bool CStream::SetStream(uint8_t *pAddress, size_t size)
 	return true;
 }
 
-bool CStream::CopyFrom(const CStream *pStream)
+bool CStream::CopyFrom(const CStream* pStream)
 {
 	Free();
 
@@ -109,7 +109,7 @@ bool CStream::CopyFrom(const CStream *pStream)
 	return true;
 }
 
-bool CStream::LoadFromFile(const char *szFileName)
+bool CStream::LoadFromFile(const char* szFileName)
 {
 	Free();
 	{
@@ -117,7 +117,7 @@ bool CStream::LoadFromFile(const char *szFileName)
 			return false;
 		}
 
-		if (FILE *pFile = fopen(szFileName, "rb")) {
+		if (FILE * pFile = fopen(szFileName, "rb")) {
 			do {
 				if (Alloc(fsize(pFile)) == false) {
 					break;
@@ -140,7 +140,7 @@ bool CStream::LoadFromFile(const char *szFileName)
 	return false;
 }
 
-bool CStream::LoadFromPack(const char *szPackName, const char *szFileName)
+bool CStream::LoadFromPack(const char* szPackName, const char* szFileName)
 {
 	Free();
 	{
@@ -152,7 +152,7 @@ bool CStream::LoadFromPack(const char *szPackName, const char *szFileName)
 			return false;
 		}
 
-		if (ZZIP_DIR *pPack = zzip_opendir(szPackName)) {
+		if (ZZIP_DIR * pPack = zzip_opendir(szPackName)) {
 			do {
 				if (LoadFromPack(pPack, szFileName) == false) {
 					break;
@@ -172,7 +172,7 @@ bool CStream::LoadFromPack(const char *szPackName, const char *szFileName)
 	return false;
 }
 
-bool CStream::LoadFromPack(ZZIP_DIR *pPack, const char *szFileName)
+bool CStream::LoadFromPack(ZZIP_DIR* pPack, const char* szFileName)
 {
 	Free();
 	{
@@ -184,7 +184,7 @@ bool CStream::LoadFromPack(ZZIP_DIR *pPack, const char *szFileName)
 			return false;
 		}
 
-		if (ZZIP_FILE *pFile = zzip_file_open(pPack, szFileName, ZZIP_ONLYZIP | ZZIP_CASELESS)) {
+		if (ZZIP_FILE * pFile = zzip_file_open(pPack, szFileName, ZZIP_ONLYZIP | ZZIP_CASELESS)) {
 			do {
 				ZZIP_STAT zstat;
 
@@ -216,7 +216,7 @@ bool CStream::LoadFromPack(ZZIP_DIR *pPack, const char *szFileName)
 
 bool CStream::Reload(void)
 {
-	ZZIP_DIR *pPack = m_pPack;
+	ZZIP_DIR* pPack = m_pPack;
 
 	char szPackName[_MAX_STRING];
 	char szFileName[_MAX_STRING];
@@ -239,7 +239,7 @@ bool CStream::Reload(void)
 	return false;
 }
 
-bool CStream::SetName(const char *szName)
+bool CStream::SetName(const char* szName)
 {
 	if (szName == nullptr) {
 		return false;
@@ -261,7 +261,7 @@ uint32_t CStream::GetHashName(void) const
 	return m_dwName;
 }
 
-bool CStream::SetFileName(const char *szFileName)
+bool CStream::SetFileName(const char* szFileName)
 {
 	if (szFileName == nullptr) {
 		return false;
@@ -285,7 +285,7 @@ const char* CStream::GetFileName(void) const
 	return m_szFileName;
 }
 
-bool CStream::SetPackName(const char *szPackName)
+bool CStream::SetPackName(const char* szPackName)
 {
 	if (szPackName == nullptr) {
 		return false;
@@ -301,7 +301,7 @@ const char* CStream::GetPackName(void) const
 	return m_szPackName;
 }
 
-bool CStream::SetPack(ZZIP_DIR *pPack)
+bool CStream::SetPack(ZZIP_DIR* pPack)
 {
 	if (pPack == nullptr) {
 		return false;
@@ -342,7 +342,7 @@ void* CStream::GetCurrentAddress(void) const
 	return m_pAddress + m_position;
 }
 
-size_t CStream::Read(void *pBuffer, size_t size, size_t count)
+size_t CStream::Read(void* pBuffer, size_t size, size_t count)
 {
 	if (pBuffer == nullptr) {
 		return 0;

@@ -12,13 +12,13 @@ public:
 	{
 
 	}
-	CSharedPtr(const T *pPointer)
+	CSharedPtr(const T* pPointer)
 		: m_pPointer(nullptr)
 		, m_pRefCount(nullptr)
 	{
 		Set(pPointer, nullptr);
 	}
-	CSharedPtr(const CSharedPtr<T> &ptr)
+	CSharedPtr(const CSharedPtr<T>& ptr)
 		: m_pPointer(nullptr)
 		, m_pRefCount(nullptr)
 	{
@@ -31,7 +31,7 @@ public:
 
 
 protected:
-	inline void Set(const T *pPointer, const uint32_t *pRefCount)
+	inline void Set(const T* pPointer, const uint32_t* pRefCount)
 	{
 		if (m_pPointer == pPointer) {
 			return;
@@ -40,11 +40,11 @@ protected:
 		Release();
 
 		if (pPointer) {
-			m_pPointer = (T *)pPointer;
-			m_pRefCount = (uint32_t *)pRefCount;
+			m_pPointer = (T*)pPointer;
+			m_pRefCount = (uint32_t*)pRefCount;
 
 			if (m_pRefCount == nullptr) {
-				m_pRefCount = (uint32_t *)AllocMemory(sizeof(*m_pRefCount)); (*m_pRefCount) = 0;
+				m_pRefCount = (uint32_t*)AllocMemory(sizeof(*m_pRefCount)); (*m_pRefCount) = 0;
 			}
 
 			++(*m_pRefCount);
@@ -58,7 +58,7 @@ public:
 	inline void Release(void)
 	{
 		if (m_pRefCount) {
-			if (-- (*m_pRefCount) == 0) {
+			if (--(*m_pRefCount) == 0) {
 				FreeMemory(m_pRefCount);
 				FreePointer();
 			}
@@ -88,7 +88,7 @@ public:
 		return *m_pRefCount;
 	}
 
-	inline CSharedPtr<T>& operator = (const CSharedPtr<T> &ptr)
+	inline CSharedPtr<T>& operator = (const CSharedPtr<T>& ptr)
 	{
 		Set(ptr.m_pPointer, ptr.m_pRefCount);
 		return *this;
@@ -111,120 +111,120 @@ public:
 
 
 protected:
-	T *m_pPointer;
-	uint32_t *m_pRefCount;
+	T* m_pPointer;
+	uint32_t* m_pRefCount;
 };
 
 
 template<class T>
-inline bool operator == (const CSharedPtr<T> &ptrLeft, const void *pPointer)
+inline bool operator == (const CSharedPtr<T>& ptrLeft, const void* pPointer)
 {
 	return ptrLeft.GetPointer() == pPointer;
 }
 
 template<class T>
-inline bool operator == (const void *pPointer, const CSharedPtr<T> &ptrRight)
+inline bool operator == (const void* pPointer, const CSharedPtr<T>& ptrRight)
 {
 	return pPointer == ptrRight.GetPointer();
 }
 
 template<class T>
-inline bool operator == (const CSharedPtr<T> &ptrLeft, const CSharedPtr<T> &ptrRight)
+inline bool operator == (const CSharedPtr<T>& ptrLeft, const CSharedPtr<T>& ptrRight)
 {
 	return ptrLeft.GetPointer() == ptrRight.GetPointer();
 }
 
 
 template<class T>
-inline bool operator != (const CSharedPtr<T> &ptrLeft, const void *pPointer)
+inline bool operator != (const CSharedPtr<T>& ptrLeft, const void* pPointer)
 {
 	return ptrLeft.GetPointer() != pPointer;
 }
 
 template<class T>
-inline bool operator != (const void *pPointer, const CSharedPtr<T> &ptrRight)
+inline bool operator != (const void* pPointer, const CSharedPtr<T>& ptrRight)
 {
 	return pPointer != ptrRight.GetPointer();
 }
 
 template<class T>
-inline bool operator != (const CSharedPtr<T> &ptrLeft, const CSharedPtr<T> &ptrRight)
+inline bool operator != (const CSharedPtr<T>& ptrLeft, const CSharedPtr<T>& ptrRight)
 {
 	return ptrLeft.GetPointer() != ptrRight.GetPointer();
 }
 
 
 template<class T>
-inline bool operator < (const CSharedPtr<T> &ptrLeft, const void *pPointer)
+inline bool operator < (const CSharedPtr<T>& ptrLeft, const void* pPointer)
 {
 	return ptrLeft.GetPointer() < pPointer;
 }
 
 template<class T>
-inline bool operator < (const void *pPointer, const CSharedPtr<T> &ptrRight)
+inline bool operator < (const void* pPointer, const CSharedPtr<T>& ptrRight)
 {
 	return pPointer < ptrRight.GetPointer();
 }
 
 template<class T>
-inline bool operator < (const CSharedPtr<T> &ptrLeft, const CSharedPtr<T> &ptrRight)
+inline bool operator < (const CSharedPtr<T>& ptrLeft, const CSharedPtr<T>& ptrRight)
 {
 	return ptrLeft.GetPointer() < ptrRight.GetPointer();
 }
 
 
 template<class T>
-inline bool operator <= (const CSharedPtr<T> &ptrLeft, const void *pPointer)
+inline bool operator <= (const CSharedPtr<T>& ptrLeft, const void* pPointer)
 {
 	return ptrLeft.GetPointer() <= pPointer;
 }
 
 template<class T>
-inline bool operator <= (const void *pPointer, const CSharedPtr<T> &ptrRight)
+inline bool operator <= (const void* pPointer, const CSharedPtr<T>& ptrRight)
 {
 	return pPointer <= ptrRight.GetPointer();
 }
 
 template<class T>
-inline bool operator <= (const CSharedPtr<T> &ptrLeft, const CSharedPtr<T> &ptrRight)
+inline bool operator <= (const CSharedPtr<T>& ptrLeft, const CSharedPtr<T>& ptrRight)
 {
 	return ptrLeft.GetPointer() <= ptrRight.GetPointer();
 }
 
 
 template<class T>
-inline bool operator > (const CSharedPtr<T> &ptrLeft, const void *pPointer)
+inline bool operator > (const CSharedPtr<T>& ptrLeft, const void* pPointer)
 {
 	return ptrLeft.GetPointer() > pPointer;
 }
 
 template<class T>
-inline bool operator > (const void *pPointer, const CSharedPtr<T> &ptrRight)
+inline bool operator > (const void* pPointer, const CSharedPtr<T>& ptrRight)
 {
 	return pPointer > ptrRight.GetPointer();
 }
 
 template<class T>
-inline bool operator > (const CSharedPtr<T> &ptrLeft, const CSharedPtr<T> &ptrRight)
+inline bool operator > (const CSharedPtr<T>& ptrLeft, const CSharedPtr<T>& ptrRight)
 {
 	return ptrLeft.GetPointer() > ptrRight.GetPointer();
 }
 
 
 template<class T>
-inline bool operator >= (const CSharedPtr<T> &ptrLeft, const void *pPointer)
+inline bool operator >= (const CSharedPtr<T>& ptrLeft, const void* pPointer)
 {
 	return ptrLeft.GetPointer() >= pPointer;
 }
 
 template<class T>
-inline bool operator >= (const void *pPointer, const CSharedPtr<T> &ptrRight)
+inline bool operator >= (const void* pPointer, const CSharedPtr<T>& ptrRight)
 {
 	return pPointer >= ptrRight.GetPointer();
 }
 
 template<class T>
-inline bool operator >= (const CSharedPtr<T> &ptrLeft, const CSharedPtr<T> &ptrRight)
+inline bool operator >= (const CSharedPtr<T>& ptrLeft, const CSharedPtr<T>& ptrRight)
 {
 	return ptrLeft.GetPointer() >= ptrRight.GetPointer();
 }

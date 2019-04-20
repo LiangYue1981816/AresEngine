@@ -13,7 +13,7 @@ CFile::~CFile(void)
 	Close();
 }
 
-bool CFile::Open(const char *szFileName, const char *szMode)
+bool CFile::Open(const char* szFileName, const char* szMode)
 {
 	Close();
 
@@ -33,7 +33,7 @@ size_t CFile::Size(void)
 	return fsize(m_pFile);
 }
 
-size_t CFile::Read(void *pBuffer, size_t size, size_t count)
+size_t CFile::Read(void* pBuffer, size_t size, size_t count)
 {
 	if (m_pFile) {
 		return fread(pBuffer, size, count, m_pFile);
@@ -43,7 +43,7 @@ size_t CFile::Read(void *pBuffer, size_t size, size_t count)
 	}
 }
 
-size_t CFile::Write(void *pBuffer, size_t size, size_t count)
+size_t CFile::Write(void* pBuffer, size_t size, size_t count)
 {
 	if (m_pFile) {
 		return fwrite(pBuffer, size, count, m_pFile);

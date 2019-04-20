@@ -2,7 +2,7 @@
 #include "TaskGraph.h"
 
 
-CTaskGraph::CTaskGraph(const char *szName, int numThreads)
+CTaskGraph::CTaskGraph(const char* szName, int numThreads)
 {
 	if (numThreads == -1) {
 		numThreads = NumCpuCores();
@@ -53,7 +53,7 @@ int CTaskGraph::GetNumThreads(void) const
 	return m_threads.size();
 }
 
-void CTaskGraph::Task(CTask *pTask, void *pParams, event_t *pEventSignal, event_t *pEventWait)
+void CTaskGraph::Task(CTask* pTask, void* pParams, event_t* pEventSignal, event_t* pEventWait)
 {
 	pTask->SetTaskParams(pParams);
 	pTask->SetTaskEventSignal(pEventSignal);
@@ -85,10 +85,10 @@ void CTaskGraph::Wait(void)
 	m_pTaskListDependence.clear();
 }
 
-void* CTaskGraph::TaskThread(void *pParams)
+void* CTaskGraph::TaskThread(void* pParams)
 {
-	CTaskGraph *pTaskGraph = ((ThreadParam *)pParams)->pTaskGraph;
-	int indexThread = ((ThreadParam *)pParams)->indexThread;
+	CTaskGraph* pTaskGraph = ((ThreadParam*)pParams)->pTaskGraph;
+	int indexThread = ((ThreadParam*)pParams)->indexThread;
 
 	while (true) {
 		event_wait(&pTaskGraph->m_eventDispatch);
@@ -103,16 +103,16 @@ void* CTaskGraph::TaskThread(void *pParams)
 			event_wait(&pTaskGraph->m_eventReady);
 
 			// Run tasks
-			event_t *pEvent = nullptr;
+			event_t* pEvent = nullptr;
 			do {
 				if (pEvent) {
 					event_wait(pEvent);
 				}
 
-				if (CTask **ppTaskListHead = &pTaskGraph->m_pTaskListHeads[pEvent]) {
+				if (CTask * *ppTaskListHead = &pTaskGraph->m_pTaskListHeads[pEvent]) {
 					while (true) {
 						bool bFinish = false;
-						CTask *pTask = nullptr;
+						CTask* pTask = nullptr;
 
 						atomic_spin_lock(&pTaskGraph->m_lockTaskList);
 						{

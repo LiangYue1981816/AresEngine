@@ -10,13 +10,13 @@ class CALL_API CTaskGraph
 {
 private:
 	typedef struct ThreadParam {
-		CTaskGraph *pTaskGraph;
+		CTaskGraph* pTaskGraph;
 		int indexThread;
 	} ThreadParam;
 
 
 public:
-	CTaskGraph(const char *szName, int numThreads = -1);
+	CTaskGraph(const char* szName, int numThreads = -1);
 	virtual ~CTaskGraph(void);
 
 
@@ -24,12 +24,12 @@ public:
 	int GetNumThreads(void) const;
 
 public:
-	void Task(CTask *pTask, void *pParams, event_t *pEventSignal, event_t *pEventWait = nullptr);
+	void Task(CTask* pTask, void* pParams, event_t* pEventSignal, event_t* pEventWait = nullptr);
 	void Dispatch(void);
 	void Wait(void);
 
 private:
-	static void* TaskThread(void *pParams);
+	static void* TaskThread(void* pParams);
 
 
 private:

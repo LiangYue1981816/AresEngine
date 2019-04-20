@@ -14,7 +14,7 @@ class CALL_API CFileManager
 
 private:
 	typedef struct File {
-		ZZIP_DIR *pPack = nullptr;
+		ZZIP_DIR* pPack = nullptr;
 		char szFileName[_MAX_STRING] = { 0 };
 		char szFullName[_MAX_STRING] = { 0 };
 	} File;
@@ -32,12 +32,12 @@ private:
 public:
 	void Clearup(void);
 
-	void SetPath(const char *szPathName, const char *szExtName);
-	void SetPack(const char *szPackName, const char *szExtName);
-	void SetFile(const char *szFileName, const char *szFullName);
+	void SetPath(const char* szPathName, const char* szExtName);
+	void SetPack(const char* szPackName, const char* szExtName);
+	void SetFile(const char* szFileName, const char* szFullName);
 
-	const char* GetFullName(const char *szFileName);
-	bool LoadStream(const char *szFileName, CStream *pStream);
+	const char* GetFullName(const char* szFileName);
+	bool LoadStream(const char* szFileName, CStream* pStream);
 
 
 private:
@@ -45,5 +45,5 @@ private:
 	eastl::unordered_map<uint32_t, ZZIP_DIR*> m_packs;
 
 private:
-	static CFileManager *pInstance;
+	static CFileManager* pInstance;
 };

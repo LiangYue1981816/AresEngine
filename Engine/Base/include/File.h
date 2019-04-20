@@ -10,17 +10,17 @@ public:
 
 
 public:
-	bool Open(const char *szFileName, const char *szMode);
+	bool Open(const char* szFileName, const char* szMode);
 	void Close(void);
 
 	size_t Size(void);
-	size_t Read(void *pBuffer, size_t size, size_t count);
-	size_t Write(void *pBuffer, size_t size, size_t count);
+	size_t Read(void* pBuffer, size_t size, size_t count);
+	size_t Write(void* pBuffer, size_t size, size_t count);
 
 	int Seek(long offset, int origin);
 	int Eof(void);
 
 
 private:
-	FILE *m_pFile;
+	FILE* m_pFile;
 };

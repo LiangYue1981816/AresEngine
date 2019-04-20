@@ -2,7 +2,7 @@
 #include "TaskPool.h"
 
 
-CTaskPool::CTaskPool(const char *szName, int numThreads)
+CTaskPool::CTaskPool(const char* szName, int numThreads)
 	: m_pTaskListHead(nullptr)
 {
 	if (numThreads == -1) {
@@ -47,7 +47,7 @@ int CTaskPool::GetNumThreads(void) const
 	return m_threads.size();
 }
 
-void CTaskPool::Task(CTask *pTask, void *pParams, event_t *pEventSignal, bool bHighPriority)
+void CTaskPool::Task(CTask* pTask, void* pParams, event_t* pEventSignal, bool bHighPriority)
 {
 	pTask->SetTaskParams(pParams);
 	pTask->SetTaskEventSignal(pEventSignal);
@@ -55,7 +55,7 @@ void CTaskPool::Task(CTask *pTask, void *pParams, event_t *pEventSignal, bool bH
 	atomic_spin_lock(&m_lockTaskList);
 	{
 		if (bHighPriority == false && m_pTaskListHead) {
-			CTask *pLastTask = m_pTaskListHead;
+			CTask* pLastTask = m_pTaskListHead;
 
 			while (pLastTask->pNext) {
 				pLastTask = pLastTask->pNext;
@@ -72,10 +72,10 @@ void CTaskPool::Task(CTask *pTask, void *pParams, event_t *pEventSignal, bool bH
 	atomic_spin_unlock(&m_lockTaskList);
 }
 
-void* CTaskPool::TaskThread(void *pParams)
+void* CTaskPool::TaskThread(void* pParams)
 {
-	CTaskPool *pTaskPool = ((ThreadParam *)pParams)->pTaskPool;
-	int indexThread = ((ThreadParam *)pParams)->indexThread;
+	CTaskPool* pTaskPool = ((ThreadParam*)pParams)->pTaskPool;
+	int indexThread = ((ThreadParam*)pParams)->indexThread;
 
 	while (true) {
 		// Check if the thread needs to exit
@@ -86,7 +86,7 @@ void* CTaskPool::TaskThread(void *pParams)
 		// Run tasks
 		do {
 			bool bFinish = false;
-			CTask *pTask = nullptr;
+			CTask* pTask = nullptr;
 
 			atomic_spin_lock(&pTaskPool->m_lockTaskList);
 			{

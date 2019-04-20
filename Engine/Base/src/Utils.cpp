@@ -31,9 +31,9 @@ CALL_API unsigned int Tick(void)
 #endif
 }
 
-CALL_API unsigned int HashValue(const char *szString)
+CALL_API unsigned int HashValue(const char* szString)
 {
-	const char *c = szString;
+	const char* c = szString;
 	unsigned int dwHashValue = 0x00000000;
 
 	if (szString) {
@@ -45,7 +45,7 @@ CALL_API unsigned int HashValue(const char *szString)
 	return dwHashValue ? dwHashValue : INVALID_HASHVALUE;
 }
 
-CALL_API unsigned int HashValueFormat(const char *szFormat, ...)
+CALL_API unsigned int HashValueFormat(const char* szFormat, ...)
 {
 	va_list vaList;
 	char szText[128 * 1024] = { 0 };
@@ -57,9 +57,9 @@ CALL_API unsigned int HashValueFormat(const char *szFormat, ...)
 	return HashValue(szText);
 }
 
-CALL_API unsigned int HashValue(const unsigned char *pBuffer, int length, int stride)
+CALL_API unsigned int HashValue(const unsigned char* pBuffer, int length, int stride)
 {
-	const unsigned char *c = pBuffer;
+	const unsigned char* c = pBuffer;
 	unsigned int dwHashValue = 0x00000000;
 
 	if (pBuffer) {
@@ -71,7 +71,7 @@ CALL_API unsigned int HashValue(const unsigned char *pBuffer, int length, int st
 	return dwHashValue ? dwHashValue : INVALID_HASHVALUE;
 }
 
-CALL_API void LogOutput(const char *szTag, const char *szFormat, ...)
+CALL_API void LogOutput(const char* szTag, const char* szFormat, ...)
 {
 	va_list vaList;
 	char szText[128 * 1024] = { 0 };
@@ -106,11 +106,11 @@ CALL_API void LogOutput(const char *szTag, const char *szFormat, ...)
 #endif
 }
 
-CALL_API void splitfilename(const char *name, char *fname, char *ext)
+CALL_API void splitfilename(const char* name, char* fname, char* ext)
 {
-	const char *p = nullptr;
-	const char *c = nullptr;
-	const char *base = name;
+	const char* p = nullptr;
+	const char* c = nullptr;
+	const char* base = name;
 
 	for (p = base; *p; p++) {
 		if (*p == '/' || *p == '\\') {
@@ -143,9 +143,9 @@ CALL_API void splitfilename(const char *name, char *fname, char *ext)
 	}
 }
 
-CALL_API int fexist(const char *name)
+CALL_API int fexist(const char* name)
 {
-	if (FILE *stream = fopen(name, "rb")) {
+	if (FILE * stream = fopen(name, "rb")) {
 		fclose(stream);
 		return 1;
 	}
@@ -153,7 +153,7 @@ CALL_API int fexist(const char *name)
 	return 0;
 }
 
-CALL_API size_t fsize(FILE *stream)
+CALL_API size_t fsize(FILE * stream)
 {
 	long pos;
 	size_t size;
@@ -168,7 +168,7 @@ CALL_API size_t fsize(FILE *stream)
 	return size;
 }
 
-CALL_API size_t freadline(char *buffer, size_t size, FILE *stream)
+CALL_API size_t freadline(char* buffer, size_t size, FILE * stream)
 {
 	int c;
 	size_t count = 0;
@@ -199,7 +199,7 @@ CALL_API size_t freadline(char *buffer, size_t size, FILE *stream)
 	return count;
 }
 
-CALL_API size_t freadstring(char *buffer, size_t size, FILE *stream)
+CALL_API size_t freadstring(char* buffer, size_t size, FILE * stream)
 {
 	size_t len = 0;
 	size_t reads = 0;
@@ -211,7 +211,7 @@ CALL_API size_t freadstring(char *buffer, size_t size, FILE *stream)
 	return reads;
 }
 
-CALL_API size_t fwritestring(const char *buffer, size_t size, FILE *stream)
+CALL_API size_t fwritestring(const char* buffer, size_t size, FILE * stream)
 {
 	size_t len = 0;
 	size_t writes = 0;
@@ -225,7 +225,7 @@ CALL_API size_t fwritestring(const char *buffer, size_t size, FILE *stream)
 
 #if defined(PLATFORM_ANDROID) || defined(PLATFORM_IOS)
 
-CALL_API int stricmp(const char *src, const char *dst)
+CALL_API int stricmp(const char* src, const char* dst)
 {
 	int f, l;
 
@@ -240,7 +240,7 @@ CALL_API int stricmp(const char *src, const char *dst)
 	return (f - l);
 }
 
-CALL_API int strnicmp(const char *src, const char *dst, int count)
+CALL_API int strnicmp(const char* src, const char* dst, int count)
 {
 	int f, l;
 
@@ -255,7 +255,7 @@ CALL_API int strnicmp(const char *src, const char *dst, int count)
 	return (f - l);
 }
 
-static void _dirent2finddata(struct dirent *d, struct _finddata_t *data)
+static void _dirent2finddata(struct dirent* d, struct _finddata_t* data)
 {
 	data->attrib = 0;
 	strcpy(data->name, d->d_name);
@@ -272,21 +272,21 @@ static void _dirent2finddata(struct dirent *d, struct _finddata_t *data)
 	}
 }
 
-CALL_API long _findfirst(const char *pattern, struct _finddata_t *data)
+CALL_API long _findfirst(const char* pattern, struct _finddata_t* data)
 {
-	DIR *id = opendir(pattern);
+	DIR* id = opendir(pattern);
 	if (id == nullptr) return -1;
 
-	struct dirent *d = readdir((DIR *)id);
+	struct dirent* d = readdir((DIR*)id);
 	if (d == nullptr) return -1;
 
 	_dirent2finddata(d, data);
 	return (long)id;
 }
 
-CALL_API long _findnext(long id, struct _finddata_t *data)
+CALL_API long _findnext(long id, struct _finddata_t* data)
 {
-	struct dirent *d = readdir((DIR *)id);
+	struct dirent* d = readdir((DIR*)id);
 	if (d == nullptr) return -1;
 
 	_dirent2finddata(d, data);
@@ -295,7 +295,7 @@ CALL_API long _findnext(long id, struct _finddata_t *data)
 
 CALL_API long _findclose(long id)
 {
-	closedir((DIR *)id);
+	closedir((DIR*)id);
 	return 0;
 }
 

@@ -10,13 +10,13 @@ class CALL_API CTaskPool
 {
 private:
 	typedef struct ThreadParam {
-		CTaskPool *pTaskPool;
+		CTaskPool* pTaskPool;
 		int indexThread;
 	} ThreadParam;
 
 
 public:
-	CTaskPool(const char *szName, int numThreads = -1);
+	CTaskPool(const char* szName, int numThreads = -1);
 	virtual ~CTaskPool(void);
 
 
@@ -24,10 +24,10 @@ public:
 	int GetNumThreads(void) const;
 
 public:
-	void Task(CTask *pTask, void *pParams, event_t *pEventSignal, bool bHighPriority = false);
+	void Task(CTask* pTask, void* pParams, event_t* pEventSignal, bool bHighPriority = false);
 
 private:
-	static void* TaskThread(void *pParams);
+	static void* TaskThread(void* pParams);
 
 
 private:
@@ -37,5 +37,5 @@ private:
 
 private:
 	std::atomic_flag m_lockTaskList;
-	CTask *m_pTaskListHead;
+	CTask* m_pTaskListHead;
 };

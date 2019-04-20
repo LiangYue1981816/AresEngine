@@ -22,7 +22,7 @@ CFileManager::~CFileManager(void)
 
 void CFileManager::Clearup(void)
 {
-	for (const auto &itPack : m_packs) {
+	for (const auto& itPack : m_packs) {
 		zzip_closedir(itPack.second);
 	}
 
@@ -30,7 +30,7 @@ void CFileManager::Clearup(void)
 	m_packs.clear();
 }
 
-void CFileManager::SetPath(const char *szPathName, const char *szExtName)
+void CFileManager::SetPath(const char* szPathName, const char* szExtName)
 {
 #ifdef PLATFORM_WINDOWS
 	char szFilter[_MAX_STRING];
@@ -45,7 +45,7 @@ void CFileManager::SetPath(const char *szPathName, const char *szExtName)
 
 	if (hFile != -1) {
 		do {
-			if (fileData.attrib&_A_SUBDIR) {
+			if (fileData.attrib & _A_SUBDIR) {
 				if (!stricmp(fileData.name, ".")) continue;
 				if (!stricmp(fileData.name, "..")) continue;
 
@@ -76,9 +76,9 @@ void CFileManager::SetPath(const char *szPathName, const char *szExtName)
 	}
 }
 
-void CFileManager::SetPack(const char *szPackName, const char *szExtName)
+void CFileManager::SetPack(const char* szPackName, const char* szExtName)
 {
-	ZZIP_DIR *pPack = nullptr;
+	ZZIP_DIR* pPack = nullptr;
 	{
 		uint32_t name = HashValue(szPackName);
 
@@ -91,7 +91,7 @@ void CFileManager::SetPack(const char *szPackName, const char *szExtName)
 
 	zzip_seekdir(pPack, 0);
 
-	while (ZZIP_DIRENT *pEntry = zzip_readdir(pPack)) {
+	while (ZZIP_DIRENT * pEntry = zzip_readdir(pPack)) {
 		char szFName[_MAX_STRING];
 		char szEName[_MAX_STRING];
 		splitfilename(pEntry->d_name, szFName, szEName);
@@ -109,7 +109,7 @@ void CFileManager::SetPack(const char *szPackName, const char *szExtName)
 	}
 }
 
-void CFileManager::SetFile(const char *szFileName, const char *szFullName)
+void CFileManager::SetFile(const char* szFileName, const char* szFullName)
 {
 	uint32_t name = HashValue(szFileName);
 	m_files[name].pPack = nullptr;
@@ -117,9 +117,9 @@ void CFileManager::SetFile(const char *szFileName, const char *szFullName)
 	strcpy(m_files[name].szFullName, szFullName);
 }
 
-const char* CFileManager::GetFullName(const char *szFileName)
+const char* CFileManager::GetFullName(const char* szFileName)
 {
-	const auto &itFile = m_files.find(HashValue(szFileName));
+	const auto& itFile = m_files.find(HashValue(szFileName));
 
 	if (itFile != m_files.end()) {
 		return itFile->second.szFullName;
@@ -129,9 +129,9 @@ const char* CFileManager::GetFullName(const char *szFileName)
 	}
 }
 
-bool CFileManager::LoadStream(const char *szFileName, CStream *pStream)
+bool CFileManager::LoadStream(const char* szFileName, CStream * pStream)
 {
-	const auto &itFile = m_files.find(HashValue(szFileName));
+	const auto& itFile = m_files.find(HashValue(szFileName));
 
 	if (itFile != m_files.end()) {
 		if (pStream->LoadFromFile(itFile->second.szFullName)) {

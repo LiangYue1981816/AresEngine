@@ -22,7 +22,7 @@ void CTask::SetTaskSignal(void)
 	}
 }
 
-void CTask::SetTaskEventSignal(event_t *pEventSignal)
+void CTask::SetTaskEventSignal(event_t* pEventSignal)
 {
 	m_pTaskEventSignal = pEventSignal;
 
@@ -31,7 +31,7 @@ void CTask::SetTaskEventSignal(event_t *pEventSignal)
 	}
 }
 
-void CTask::SetTaskParams(void *pParams)
+void CTask::SetTaskParams(void* pParams)
 {
 	m_pTaskParams = pParams;
 }
