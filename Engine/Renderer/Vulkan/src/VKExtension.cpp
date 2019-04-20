@@ -99,7 +99,7 @@ void vkCmdTransferImage(VkCommandBuffer vkCommandBuffer, VkImage vkSrcImage, VkI
 	vkCmdSetImageLayout(vkCommandBuffer, vkDstImage, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL, dstRange);
 }
 
-void vkCmdTransferImage(VkCommandBuffer vkCommandBuffer, VkBuffer vkSrcBuffer, VkImage vkDstImage, uint32_t levels, uint32_t layers, const VkBufferImageCopy *regions, uint32_t count)
+void vkCmdTransferImage(VkCommandBuffer vkCommandBuffer, VkBuffer vkSrcBuffer, VkImage vkDstImage, uint32_t levels, uint32_t layers, const VkBufferImageCopy* regions, uint32_t count)
 {
 	VkImageSubresourceRange dstRange;
 	dstRange.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;

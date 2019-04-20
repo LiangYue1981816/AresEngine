@@ -3,18 +3,19 @@
 
 CVKRenderer::CVKRenderer(void* hInstance, void* hWnd, void* hDC, int width, int height, GfxPixelFormat format)
 	: CGfxRenderer(hInstance, hWnd, hDC, width, height, format)
+	, m_pInstance(nullptr)
 {
-
+	m_pInstance = new CVKInstance(hInstance, hWnd);
 }
 
 CVKRenderer::~CVKRenderer(void)
 {
-
+	delete m_pInstance;
 }
 
 uint32_t CVKRenderer::GetLastError(void) const
 {
-	return 0;
+	return m_pInstance->GetLastError();
 }
 
 CGfxSwapChain* CVKRenderer::GetSwapChain(void) const

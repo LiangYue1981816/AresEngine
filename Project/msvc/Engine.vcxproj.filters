@@ -1287,6 +1287,21 @@
     <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandUpdateInstanceBuffer.h">
       <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKInstance.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKAllocator.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKDefinition.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKExtension.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKHelper.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Engine\ThirdParty\eastl\source\allocator_eastl.cpp">
@@ -1815,6 +1830,18 @@
       <Filter>Engine\Renderer\GLES3\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKRenderer.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKInstance.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKAllocator.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKExtension.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKHelper.cpp">
       <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
     </ClCompile>
   </ItemGroup>

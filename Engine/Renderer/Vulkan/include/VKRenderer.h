@@ -2,13 +2,15 @@
 #include "GfxHeader.h"
 
 #include "Vulkan/Vulkan.h"
-/*
+
 #include "VKHelper.h"
 #include "VKExtension.h"
 #include "VKDefinition.h"
 
 #include "VKAllocator.h"
 
+#include "VKInstance.h"
+/*
 #include "VKInstance.h"
 #include "VKDevice.h"
 #include "VKQueue.h"
@@ -183,4 +185,8 @@ public:
 	void Submit(const eastl::vector<CGfxCommandBufferPtr>& ptrCommandBuffers);
 	void AcquireNextFrame(void);
 	void Present(void);
+
+
+private:
+	CVKInstance* m_pInstance;
 };

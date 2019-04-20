@@ -10,7 +10,7 @@ extern VkResult vkBeginCommandBufferSecondary(VkCommandBuffer vkCommandBuffer, V
 extern void vkCmdSetImageLayout(VkCommandBuffer vkCommandBuffer, VkImage vkImage, VkImageLayout oldLayout, VkImageLayout newLayout, VkImageSubresourceRange range);
 
 extern void vkCmdTransferImage(VkCommandBuffer vkCommandBuffer, VkImage vkSrcImage, VkImage vkDstImage, VkImageCopy region);
-extern void vkCmdTransferImage(VkCommandBuffer vkCommandBuffer, VkBuffer vkSrcBuffer, VkImage vkDstImage, uint32_t levels, uint32_t layers, const VkBufferImageCopy *regions, uint32_t count);
+extern void vkCmdTransferImage(VkCommandBuffer vkCommandBuffer, VkBuffer vkSrcBuffer, VkImage vkDstImage, uint32_t levels, uint32_t layers, const VkBufferImageCopy* regions, uint32_t count);
 extern void vkCmdTransferBuffer(VkCommandBuffer vkCommandBuffer, VkBuffer vkSrcBuffer, VkBuffer vkDstBuffer, VkAccessFlags dstAccessMask, VkPipelineStageFlags dstStageMask, VkDeviceSize srcOffset, VkDeviceSize dstOffset, VkDeviceSize size);
 
 extern void vkCmdBindVertexBuffer(VkCommandBuffer vkCommandBuffer, uint32_t firstBinding, VkBuffer vkBuffer, VkDeviceSize offset);

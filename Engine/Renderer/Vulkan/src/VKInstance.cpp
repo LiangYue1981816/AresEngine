@@ -6,7 +6,7 @@ PFN_vkCreateDebugReportCallbackEXT vkCreateDebugReportCallback = nullptr;
 PFN_vkDestroyDebugReportCallbackEXT vkDestroyDebugReportCallback = nullptr;
 
 
-VkBool32 VKAPI_PTR DebugReportCallback(VkDebugReportFlagsEXT flags, VkDebugReportObjectTypeEXT objectType, uint64_t object, size_t location, int32_t messageCode, const char *pLayerPrefix, const char *pMessage, void *pUserData)
+VkBool32 VKAPI_PTR DebugReportCallback(VkDebugReportFlagsEXT flags, VkDebugReportObjectTypeEXT objectType, uint64_t object, size_t location, int32_t messageCode, const char* pLayerPrefix, const char* pMessage, void* pUserData)
 {
 	if (flags & VK_DEBUG_REPORT_ERROR_BIT_EXT) {
 		LogOutput(LOG_TAG_RENDERER, "Vulkan Error [%s] Code %d : %s\n", pLayerPrefix, messageCode, pMessage);
@@ -46,7 +46,7 @@ VkResult CVKInstance::GetLastError(void)
 }
 
 
-CVKInstance::CVKInstance(void *hInstance, void *hWnd)
+CVKInstance::CVKInstance(void* hInstance, void* hWnd)
 	: m_vkInstance(VK_NULL_HANDLE)
 	, m_vkSurface(VK_NULL_HANDLE)
 
@@ -58,8 +58,8 @@ CVKInstance::CVKInstance(void *hInstance, void *hWnd)
 {
 	m_pAllocator = new CVKAllocator;
 
-	eastl::vector<const char *> enabledInstanceLayers;
-	eastl::vector<const char *> enabledInstanceExtensions;
+	eastl::vector<const char*> enabledInstanceLayers;
+	eastl::vector<const char*> enabledInstanceExtensions;
 	CALL_BOOL_FUNCTION_RETURN(EnumerateInstanceLayerProperties(enabledInstanceLayers));
 	CALL_BOOL_FUNCTION_RETURN(EnumerateInstanceExtensionProperties(enabledInstanceExtensions));
 	CALL_BOOL_FUNCTION_RETURN(CreateInstance(enabledInstanceLayers, enabledInstanceExtensions));
@@ -89,7 +89,7 @@ CVKAllocator* CVKInstance::GetAllocator(void) const
 	return m_pAllocator;
 }
 
-bool CVKInstance::EnumerateInstanceLayerProperties(eastl::vector<const char *> &enabledInstanceLayers) const
+bool CVKInstance::EnumerateInstanceLayerProperties(eastl::vector<const char*>& enabledInstanceLayers) const
 {
 	enabledInstanceLayers.clear();
 
@@ -100,7 +100,7 @@ bool CVKInstance::EnumerateInstanceLayerProperties(eastl::vector<const char *> &
 	eastl::vector<VkLayerProperties> layers(numLayers);
 	CALL_VK_FUNCTION_RETURN_BOOL(vkEnumerateInstanceLayerProperties(&numLayers, layers.data()));
 
-	for (int index = 0; index < numLayers; index++) {
+	for (uint32_t index = 0; index < numLayers; index++) {
 #ifdef DEBUG
 #define VK_LAYER_LUNARG_STANDARD_VALIDATION "VK_LAYER_LUNARG_standard_validation"
 		if (stricmp(layers[index].layerName, VK_LAYER_LUNARG_STANDARD_VALIDATION) == 0) {
@@ -113,7 +113,7 @@ bool CVKInstance::EnumerateInstanceLayerProperties(eastl::vector<const char *> &
 	return true;
 }
 
-bool CVKInstance::EnumerateInstanceExtensionProperties(eastl::vector<const char *> &enabledInstanceExtensions) const
+bool CVKInstance::EnumerateInstanceExtensionProperties(eastl::vector<const char*>& enabledInstanceExtensions) const
 {
 	enabledInstanceExtensions.clear();
 
@@ -126,7 +126,7 @@ bool CVKInstance::EnumerateInstanceExtensionProperties(eastl::vector<const char 
 
 	bool bSurfaceExtension = false;
 	bool bPlatformSurfaceExtension = false;
-	for (int index = 0; index < numExtensions; index++) {
+	for (uint32_t index = 0; index < numExtensions; index++) {
 		if (stricmp(extensions[index].extensionName, VK_KHR_SURFACE_EXTENSION_NAME) == 0) {
 			enabledInstanceExtensions.emplace_back(VK_KHR_SURFACE_EXTENSION_NAME);
 			bSurfaceExtension = true;
@@ -172,7 +172,7 @@ bool CVKInstance::EnumerateInstanceExtensionProperties(eastl::vector<const char 
 	return true;
 }
 
-bool CVKInstance::CreateInstance(const eastl::vector<const char *> &enabledInstanceLayers, const eastl::vector<const char *> &enabledInstanceExtensions)
+bool CVKInstance::CreateInstance(const eastl::vector<const char*>& enabledInstanceLayers, const eastl::vector<const char*>& enabledInstanceExtensions)
 {
 	VkApplicationInfo appInfo = {};
 	appInfo.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO;
@@ -217,7 +217,7 @@ bool CVKInstance::CreateInstance(const eastl::vector<const char *> &enabledInsta
 	return true;
 }
 
-bool CVKInstance::CreateSurface(void *hInstance, void *hWnd)
+bool CVKInstance::CreateSurface(void* hInstance, void* hWnd)
 {
 #ifdef PLATFORM_WINDOWS
 	VkWin32SurfaceCreateInfoKHR surfaceInfo = {};
@@ -235,7 +235,7 @@ bool CVKInstance::CreateSurface(void *hInstance, void *hWnd)
 	surfaceInfo.sType = VK_STRUCTURE_TYPE_ANDROID_SURFACE_CREATE_INFO_KHR;
 	surfaceInfo.pNext = nullptr;
 	surfaceInfo.flags = 0;
-	surfaceInfo.window = (ANativeWindow *)hWnd;
+	surfaceInfo.window = (ANativeWindow*)hWnd;
 	CALL_VK_FUNCTION_RETURN_BOOL(vkCreateAndroidSurfaceKHR(m_vkInstance, &surfaceInfo, m_pAllocator->GetAllocationCallbacks(), &m_vkSurface));
 	return true;
 #endif
