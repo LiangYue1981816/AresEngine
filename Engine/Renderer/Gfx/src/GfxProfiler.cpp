@@ -84,7 +84,7 @@ void CGfxProfiler::ResetSamples(void)
 	}
 }
 
-void CGfxProfiler::BeginSample(SampleType type, const char *name)
+void CGfxProfiler::BeginSample(SampleType type, const char* name)
 {
 	if (bEnableProfiler) {
 		samples[type].name = name;
@@ -131,7 +131,7 @@ void CGfxProfiler::LogProfiler(int frameCount)
 }
 
 
-CGfxProfilerSample::CGfxProfilerSample(CGfxProfiler::SampleType type, const char *name)
+CGfxProfilerSample::CGfxProfilerSample(CGfxProfiler::SampleType type, const char* name)
 	: m_type(type)
 	, m_name(name)
 {

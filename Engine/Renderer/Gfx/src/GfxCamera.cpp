@@ -101,27 +101,27 @@ const glm::mat4& CGfxCamera::GetViewInverseTransposeMatrix(void) const
 	return m_camera.viewInverseTransposeMatrix;
 }
 
-glm::vec3 CGfxCamera::WorldToScreen(const glm::vec3 &world) const
+glm::vec3 CGfxCamera::WorldToScreen(const glm::vec3& world) const
 {
 	return m_camera.worldToScreen(world);
 }
 
-glm::vec3 CGfxCamera::ScreenToWorld(const glm::vec3 &screen) const
+glm::vec3 CGfxCamera::ScreenToWorld(const glm::vec3& screen) const
 {
 	return m_camera.screenToWorld(screen);
 }
 
-bool CGfxCamera::IsVisible(const glm::vec3 &vertex) const
+bool CGfxCamera::IsVisible(const glm::vec3& vertex) const
 {
 	return m_camera.visible(vertex);
 }
 
-bool CGfxCamera::IsVisible(const glm::aabb &aabb) const
+bool CGfxCamera::IsVisible(const glm::aabb& aabb) const
 {
 	return m_camera.visible(aabb);
 }
 
-bool CGfxCamera::IsVisible(const glm::sphere &sphere) const
+bool CGfxCamera::IsVisible(const glm::sphere& sphere) const
 {
 	return m_camera.visible(sphere);
 }
@@ -136,7 +136,7 @@ void CGfxCamera::Begin(int indexQueue)
 	m_pRenderQueue->Begin(indexQueue);
 }
 
-void CGfxCamera::Add(int indexQueue, int indexThread, const CGfxMaterialPtr ptrMaterial, const CGfxMeshDrawPtr ptrMeshDraw, const uint8_t *pInstanceData, uint32_t size)
+void CGfxCamera::Add(int indexQueue, int indexThread, const CGfxMaterialPtr ptrMaterial, const CGfxMeshDrawPtr ptrMeshDraw, const uint8_t* pInstanceData, uint32_t size)
 {
 	m_pRenderQueue->Add(indexQueue, indexThread, ptrMaterial, ptrMeshDraw, pInstanceData, size);
 }
