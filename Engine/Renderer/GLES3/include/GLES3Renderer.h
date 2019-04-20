@@ -87,7 +87,7 @@ class CALL_API CGLES3Renderer : public CGfxRenderer
 
 
 public:
-	CGLES3Renderer(void *hInstance, void *hWnd, void *hDC, int width, int height, GfxPixelFormat format);
+	CGLES3Renderer(void* hInstance, void* hWnd, void* hDC, int width, int height, GfxPixelFormat format);
 	virtual ~CGLES3Renderer(void);
 
 
@@ -98,12 +98,12 @@ public:
 	CGfxSwapChain* GetSwapChain(void) const;
 
 public:
-	bool IsSupportExtension(const char *extension) const;
+	bool IsSupportExtension(const char* extension) const;
 
 public:
-	CGfxShader* CreateShader(const char *szFileName, shader_kind kind);
-	CGfxPipelineCompute* CreatePipelineCompute(const CGfxShader *pComputeShader);
-	CGfxPipelineGraphics* CreatePipelineGraphics(const CGfxRenderPass *pRenderPass, const CGfxShader *pVertexShader, const CGfxShader *pFragmentShader, const PipelineState &state, uint32_t indexSubpass, uint32_t vertexBinding = 0, uint32_t instanceBinding = 1);
+	CGfxShader* CreateShader(const char* szFileName, shader_kind kind);
+	CGfxPipelineCompute* CreatePipelineCompute(const CGfxShader* pComputeShader);
+	CGfxPipelineGraphics* CreatePipelineGraphics(const CGfxRenderPass* pRenderPass, const CGfxShader* pVertexShader, const CGfxShader* pFragmentShader, const PipelineState& state, uint32_t indexSubpass, uint32_t vertexBinding = 0, uint32_t instanceBinding = 1);
 	CGfxSampler* CreateSampler(GfxFilter minFilter, GfxFilter magFilter, GfxSamplerMipmapMode mipmapMode, GfxSamplerAddressMode addressMode);
 
 public:
@@ -114,15 +114,15 @@ public:
 
 	CGfxTexture2DPtr GetTexture2D(uint32_t name);
 	CGfxTexture2DPtr NewTexture2D(uint32_t name);
-	CGfxTexture2DPtr NewTexture2D(const char *szFileName, uint32_t baseLevel = 0);
+	CGfxTexture2DPtr NewTexture2D(const char* szFileName, uint32_t baseLevel = 0);
 
 	CGfxTexture2DArrayPtr GetTexture2DArray(uint32_t name);
 	CGfxTexture2DArrayPtr NewTexture2DArray(uint32_t name);
-	CGfxTexture2DArrayPtr NewTexture2DArray(const char *szFileName, uint32_t baseLevel = 0);
+	CGfxTexture2DArrayPtr NewTexture2DArray(const char* szFileName, uint32_t baseLevel = 0);
 
 	CGfxTextureCubeMapPtr GetTextureCubeMap(uint32_t name);
 	CGfxTextureCubeMapPtr NewTextureCubeMap(uint32_t name);
-	CGfxTextureCubeMapPtr NewTextureCubeMap(const char *szFileName, uint32_t baseLevel = 0);
+	CGfxTextureCubeMapPtr NewTextureCubeMap(const char* szFileName, uint32_t baseLevel = 0);
 
 	CGfxRenderTexturePtr GetRenderTexture(uint32_t name);
 	CGfxRenderTexturePtr NewRenderTexture(uint32_t name);
@@ -131,18 +131,18 @@ public:
 
 	CGfxMeshPtr GetMesh(uint32_t name);
 	CGfxMeshPtr NewMesh(uint32_t name);
-	CGfxMeshPtr NewMesh(const char *szFileName, uint32_t vertexBinding = 0);
+	CGfxMeshPtr NewMesh(const char* szFileName, uint32_t vertexBinding = 0);
 
 	CGfxMeshDrawPtr GetMeshDraw(uint32_t name);
 	CGfxMeshDrawPtr NewMeshDraw(uint32_t name, const CGfxMeshPtr ptrMesh, uint32_t nameDraw, uint32_t instanceFormat, uint32_t instanceBinding = 1);
 
 	CGfxMaterialPtr GetMaterial(uint32_t name);
 	CGfxMaterialPtr NewMaterial(uint32_t name);
-	CGfxMaterialPtr NewMaterial(const char *szFileName, uint32_t vertexBinding = 0, uint32_t instanceBinding = 1, uint32_t baseLevel = 0);
+	CGfxMaterialPtr NewMaterial(const char* szFileName, uint32_t vertexBinding = 0, uint32_t instanceBinding = 1, uint32_t baseLevel = 0);
 
 	CGfxDescriptorLayoutPtr NewDescriptorLayout(uint32_t set);
 	CGfxDescriptorSetPtr NewDescriptorSet(const CGfxDescriptorLayoutPtr ptrDescriptorLayout);
-	CGfxDescriptorSetPtr NewDescriptorSet(const CGfxPipelineGraphics *pPipelineGraphics, const CGfxFrameBuffer *pFrameBuffer, const CGfxRenderPass *pRenderPass, int indexSubpass);
+	CGfxDescriptorSetPtr NewDescriptorSet(const CGfxPipelineGraphics* pPipelineGraphics, const CGfxFrameBuffer* pFrameBuffer, const CGfxRenderPass* pRenderPass, int indexSubpass);
 
 	CGfxCommandBufferPtr NewCommandBuffer(uint32_t pool, bool bMainCommandBuffer);
 
@@ -151,8 +151,8 @@ public:
 	bool CmdNextSubpass(CGfxCommandBufferPtr ptrCommandBuffer);
 	bool CmdEndRenderPass(CGfxCommandBufferPtr ptrCommandBuffer);
 
-	bool CmdBindPipelineCompute(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxPipelineCompute *pPipelineCompute);
-	bool CmdBindPipelineGraphics(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxPipelineGraphics *pPipelineGraphics);
+	bool CmdBindPipelineCompute(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxPipelineCompute* pPipelineCompute);
+	bool CmdBindPipelineGraphics(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxPipelineGraphics* pPipelineGraphics);
 	bool CmdBindDescriptorSet(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxDescriptorSetPtr ptrDescriptorSet);
 
 	bool CmdUniform1i(CGfxCommandBufferPtr ptrCommandBuffer, uint32_t name, int v0);
@@ -163,17 +163,17 @@ public:
 	bool CmdUniform2f(CGfxCommandBufferPtr ptrCommandBuffer, uint32_t name, float v0, float v1);
 	bool CmdUniform3f(CGfxCommandBufferPtr ptrCommandBuffer, uint32_t name, float v0, float v1, float v2);
 	bool CmdUniform4f(CGfxCommandBufferPtr ptrCommandBuffer, uint32_t name, float v0, float v1, float v2, float v3);
-	bool CmdUniform1iv(CGfxCommandBufferPtr ptrCommandBuffer, uint32_t name, int count, const int *value);
-	bool CmdUniform2iv(CGfxCommandBufferPtr ptrCommandBuffer, uint32_t name, int count, const int *value);
-	bool CmdUniform3iv(CGfxCommandBufferPtr ptrCommandBuffer, uint32_t name, int count, const int *value);
-	bool CmdUniform4iv(CGfxCommandBufferPtr ptrCommandBuffer, uint32_t name, int count, const int *value);
-	bool CmdUniform1fv(CGfxCommandBufferPtr ptrCommandBuffer, uint32_t name, int count, const float *value);
-	bool CmdUniform2fv(CGfxCommandBufferPtr ptrCommandBuffer, uint32_t name, int count, const float *value);
-	bool CmdUniform3fv(CGfxCommandBufferPtr ptrCommandBuffer, uint32_t name, int count, const float *value);
-	bool CmdUniform4fv(CGfxCommandBufferPtr ptrCommandBuffer, uint32_t name, int count, const float *value);
-	bool CmdUniformMatrix2fv(CGfxCommandBufferPtr ptrCommandBuffer, uint32_t name, int count, const float *value);
-	bool CmdUniformMatrix3fv(CGfxCommandBufferPtr ptrCommandBuffer, uint32_t name, int count, const float *value);
-	bool CmdUniformMatrix4fv(CGfxCommandBufferPtr ptrCommandBuffer, uint32_t name, int count, const float *value);
+	bool CmdUniform1iv(CGfxCommandBufferPtr ptrCommandBuffer, uint32_t name, int count, const int* value);
+	bool CmdUniform2iv(CGfxCommandBufferPtr ptrCommandBuffer, uint32_t name, int count, const int* value);
+	bool CmdUniform3iv(CGfxCommandBufferPtr ptrCommandBuffer, uint32_t name, int count, const int* value);
+	bool CmdUniform4iv(CGfxCommandBufferPtr ptrCommandBuffer, uint32_t name, int count, const int* value);
+	bool CmdUniform1fv(CGfxCommandBufferPtr ptrCommandBuffer, uint32_t name, int count, const float* value);
+	bool CmdUniform2fv(CGfxCommandBufferPtr ptrCommandBuffer, uint32_t name, int count, const float* value);
+	bool CmdUniform3fv(CGfxCommandBufferPtr ptrCommandBuffer, uint32_t name, int count, const float* value);
+	bool CmdUniform4fv(CGfxCommandBufferPtr ptrCommandBuffer, uint32_t name, int count, const float* value);
+	bool CmdUniformMatrix2fv(CGfxCommandBufferPtr ptrCommandBuffer, uint32_t name, int count, const float* value);
+	bool CmdUniformMatrix3fv(CGfxCommandBufferPtr ptrCommandBuffer, uint32_t name, int count, const float* value);
+	bool CmdUniformMatrix4fv(CGfxCommandBufferPtr ptrCommandBuffer, uint32_t name, int count, const float* value);
 
 	bool CmdSetScissor(CGfxCommandBufferPtr ptrCommandBuffer, int x, int y, int width, int height);
 	bool CmdSetViewport(CGfxCommandBufferPtr ptrCommandBuffer, int x, int y, int width, int height);
@@ -181,23 +181,23 @@ public:
 	bool CmdClearDepth(CGfxCommandBufferPtr ptrCommandBuffer, float depth);
 	bool CmdClearColor(CGfxCommandBufferPtr ptrCommandBuffer, float red, float green, float blue, float alpha);
 
-	bool CmdDrawInstance(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxMeshDrawPtr ptrMeshDraw, const uint8_t *pInstanceBuffer, uint32_t size);
-	bool CmdDrawIndirect(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxMeshDrawPtr ptrMeshDraw, const uint8_t *pInstanceBuffer, uint32_t size);
+	bool CmdDrawInstance(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxMeshDrawPtr ptrMeshDraw, const uint8_t* pInstanceBuffer, uint32_t size);
+	bool CmdDrawIndirect(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxMeshDrawPtr ptrMeshDraw, const uint8_t* pInstanceBuffer, uint32_t size);
 
 	bool CmdExecute(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxCommandBufferPtr ptrSecondaryCommandBuffer);
 	bool CmdPresent(CGfxCommandBufferPtr ptrCommandBuffer);
 
-	bool CmdPushDebugGroup(CGfxCommandBufferPtr ptrCommandBuffer, const char *szMessage);
+	bool CmdPushDebugGroup(CGfxCommandBufferPtr ptrCommandBuffer, const char* szMessage);
 	bool CmdPopDebugGroup(CGfxCommandBufferPtr ptrCommandBuffer);
 
 public:
-	void Submit(const eastl::vector<CGfxCommandBufferPtr> &ptrCommandBuffers);
+	void Submit(const eastl::vector<CGfxCommandBufferPtr>& ptrCommandBuffers);
 	void AcquireNextFrame(void);
 	void Present(void);
 
 private:
-	void BindPipelineCompute(const CGfxPipelineCompute *pPipelineCompute);
-	void BindPipelineGraphics(const CGfxPipelineGraphics *pPipelineGraphics);
+	void BindPipelineCompute(const CGfxPipelineCompute* pPipelineCompute);
+	void BindPipelineGraphics(const CGfxPipelineGraphics* pPipelineGraphics);
 	void BindDescriptorSet(const CGfxDescriptorSetPtr ptrDescriptorSet);
 
 	CGLES3PipelineCompute* GetCurrentPipelineCompute(void) const;
@@ -205,28 +205,28 @@ private:
 
 
 private:
-	CGLES3SwapChain *m_pSwapChain;
+	CGLES3SwapChain* m_pSwapChain;
 
 private:
-	CGLES3ShaderManager *m_pShaderManager;
-	CGLES3PipelineComputeManager *m_pPipelineComputeManager;
-	CGLES3PipelineGraphicsManager *m_pPipelineGraphicsManager;
+	CGLES3ShaderManager* m_pShaderManager;
+	CGLES3PipelineComputeManager* m_pPipelineComputeManager;
+	CGLES3PipelineGraphicsManager* m_pPipelineGraphicsManager;
 	CGLES3DescriptorLayoutManager* m_pDescriptorLayoutManager;
-	CGLES3SamplerManager *m_pSamplerManager;
-	CGLES3Texture2DManager *m_pTexture2DManager;
-	CGLES3Texture2DArrayManager *m_pTexture2DArrayManager;
-	CGLES3TextureCubeMapManager *m_pTextureCubeMapManager;
-	CGLES3UniformBufferManager *m_pUniformBufferManager;
-	CGLES3MeshManager *m_pMeshManager;
-	CGLES3MeshDrawManager *m_pMeshDrawManager;
-	CGLES3MaterialManager *m_pMaterialManager;
-	CGLES3RenderPassManager *m_pRenderPassManager;
-	CGLES3RenderTextureManager *m_pRenderTextureManager;
-	CGLES3FrameBufferManager *m_pFrameBufferManager;
-	CGLES3DescriptorSetManager *m_pDescriptorSetManager;
-	CGLES3CommandBufferManager *m_pCommandBufferManager;
+	CGLES3SamplerManager* m_pSamplerManager;
+	CGLES3Texture2DManager* m_pTexture2DManager;
+	CGLES3Texture2DArrayManager* m_pTexture2DArrayManager;
+	CGLES3TextureCubeMapManager* m_pTextureCubeMapManager;
+	CGLES3UniformBufferManager* m_pUniformBufferManager;
+	CGLES3MeshManager* m_pMeshManager;
+	CGLES3MeshDrawManager* m_pMeshDrawManager;
+	CGLES3MaterialManager* m_pMaterialManager;
+	CGLES3RenderPassManager* m_pRenderPassManager;
+	CGLES3RenderTextureManager* m_pRenderTextureManager;
+	CGLES3FrameBufferManager* m_pFrameBufferManager;
+	CGLES3DescriptorSetManager* m_pDescriptorSetManager;
+	CGLES3CommandBufferManager* m_pCommandBufferManager;
 
 private:
-	CGLES3PipelineCompute *m_pCurrentPipelineCompute;
-	CGLES3PipelineGraphics *m_pCurrentPipelineGraphics;
+	CGLES3PipelineCompute* m_pCurrentPipelineCompute;
+	CGLES3PipelineGraphics* m_pCurrentPipelineGraphics;
 };

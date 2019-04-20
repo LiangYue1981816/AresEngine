@@ -9,7 +9,7 @@ class CGLES3VertexArrayObject
 
 
 private:
-	CGLES3VertexArrayObject(const CGLES3IndexBuffer *pIndexBuffer, const CGLES3VertexBuffer *pVertexBuffer, const CGLES3InstanceBuffer *pInstanceBuffer);
+	CGLES3VertexArrayObject(const CGLES3IndexBuffer* pIndexBuffer, const CGLES3VertexBuffer* pVertexBuffer, const CGLES3InstanceBuffer* pInstanceBuffer);
 	virtual ~CGLES3VertexArrayObject(void);
 
 

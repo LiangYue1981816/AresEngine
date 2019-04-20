@@ -17,7 +17,7 @@ public:
 	const uint32_t GetInputAttachmentName(uint32_t inputAttachmentIndex) const;
 
 public:
-	bool Create(const CGfxRenderPass *pRenderPass, const CGfxShader *pVertexShader, const CGfxShader *pFragmentShader, const PipelineState &state, uint32_t indexSubpass, uint32_t vertexBinding, uint32_t instanceBinding);
+	bool Create(const CGfxRenderPass* pRenderPass, const CGfxShader* pVertexShader, const CGfxShader* pFragmentShader, const PipelineState& state, uint32_t indexSubpass, uint32_t vertexBinding, uint32_t instanceBinding);
 	void Destroy(void);
 
 public:
@@ -34,22 +34,22 @@ public:
 	void Uniform3f(uint32_t name, float v0, float v1, float v2) const;
 	void Uniform4f(uint32_t name, float v0, float v1, float v2, float v3) const;
 
-	void Uniform1iv(uint32_t name, int count, const int *value) const;
-	void Uniform2iv(uint32_t name, int count, const int *value) const;
-	void Uniform3iv(uint32_t name, int count, const int *value) const;
-	void Uniform4iv(uint32_t name, int count, const int *value) const;
+	void Uniform1iv(uint32_t name, int count, const int* value) const;
+	void Uniform2iv(uint32_t name, int count, const int* value) const;
+	void Uniform3iv(uint32_t name, int count, const int* value) const;
+	void Uniform4iv(uint32_t name, int count, const int* value) const;
 
-	void Uniform1fv(uint32_t name, int count, const float *value) const;
-	void Uniform2fv(uint32_t name, int count, const float *value) const;
-	void Uniform3fv(uint32_t name, int count, const float *value) const;
-	void Uniform4fv(uint32_t name, int count, const float *value) const;
+	void Uniform1fv(uint32_t name, int count, const float* value) const;
+	void Uniform2fv(uint32_t name, int count, const float* value) const;
+	void Uniform3fv(uint32_t name, int count, const float* value) const;
+	void Uniform4fv(uint32_t name, int count, const float* value) const;
 
-	void UniformMatrix2fv(uint32_t name, int count, const float *value) const;
-	void UniformMatrix3fv(uint32_t name, int count, const float *value) const;
-	void UniformMatrix4fv(uint32_t name, int count, const float *value) const;
+	void UniformMatrix2fv(uint32_t name, int count, const float* value) const;
+	void UniformMatrix3fv(uint32_t name, int count, const float* value) const;
+	void UniformMatrix4fv(uint32_t name, int count, const float* value) const;
 
 
 private:
 	PipelineState m_state;
-	CGLES3Pipeline *m_pPipeline;
+	CGLES3Pipeline* m_pPipeline;
 };

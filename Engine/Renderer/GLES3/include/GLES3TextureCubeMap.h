@@ -8,7 +8,7 @@ class CGLES3TextureCubeMap : public CGfxTextureCubeMap
 
 
 private:
-	CGLES3TextureCubeMap(CGLES3TextureCubeMapManager *pManager, uint32_t name);
+	CGLES3TextureCubeMap(CGLES3TextureCubeMapManager* pManager, uint32_t name);
 	virtual ~CGLES3TextureCubeMap(void);
 	virtual void Release(void);
 
@@ -29,8 +29,8 @@ public:
 	void Destroy(void);
 
 public:
-	bool TransferTexture2D(GfxPixelFormat format, GfxTextureCubeMapFace face, int level, int xoffset, int yoffset, int width, int height, GfxDataType type, uint32_t size, const void *data);
-	bool TransferTexture2DCompressed(GfxPixelFormat format, GfxTextureCubeMapFace face, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void *data);
+	bool TransferTexture2D(GfxPixelFormat format, GfxTextureCubeMapFace face, int level, int xoffset, int yoffset, int width, int height, GfxDataType type, uint32_t size, const void* data);
+	bool TransferTexture2DCompressed(GfxPixelFormat format, GfxTextureCubeMapFace face, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data);
 
 public:
 	void Bind(uint32_t unit) const;
@@ -44,7 +44,7 @@ private:
 	CGLES3TexturePtr m_ptrTexture;
 
 private:
-	CGLES3TextureCubeMapManager *m_pManager;
+	CGLES3TextureCubeMapManager* m_pManager;
 
 private:
 	eastl::unordered_map<int, eastl::unordered_map<int, uint32_t>> m_size;

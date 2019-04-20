@@ -8,7 +8,7 @@ class CALL_API CGLES3DescriptorLayout : public CGfxDescriptorLayout
 
 
 private:
-	CGLES3DescriptorLayout(CGLES3DescriptorLayoutManager *pManager, uint32_t set);
+	CGLES3DescriptorLayout(CGLES3DescriptorLayoutManager* pManager, uint32_t set);
 	virtual ~CGLES3DescriptorLayout(void);
 	virtual void Release(void);
 
@@ -38,5 +38,5 @@ private:
 	eastl::unordered_map<uint32_t, uint32_t> m_sampledImageBindings; // [name, binding]
 
 private:
-	CGLES3DescriptorLayoutManager *m_pManager;
+	CGLES3DescriptorLayoutManager* m_pManager;
 };

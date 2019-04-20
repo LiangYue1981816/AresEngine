@@ -6,7 +6,7 @@ class CGLES3Helper
 {
 public:
 	static void SetupExtensions(void);
-	static bool IsSupportExtension(const char *extension);
+	static bool IsSupportExtension(const char* extension);
 
 	static GLenum TranslateDataType(GfxDataType dataType);
 	static GLenum TranslateIndexType(GfxIndexType indexType);

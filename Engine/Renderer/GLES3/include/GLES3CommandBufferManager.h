@@ -15,7 +15,7 @@ private:
 
 private:
 	CGLES3CommandBuffer* Create(bool bMainCommandBuffer);
-	void Destroy(CGLES3CommandBuffer *pCommandBuffer);
+	void Destroy(CGLES3CommandBuffer* pCommandBuffer);
 
 
 private:

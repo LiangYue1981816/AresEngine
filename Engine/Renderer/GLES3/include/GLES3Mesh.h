@@ -8,7 +8,7 @@ class CGLES3Mesh : public CGfxMesh
 
 
 private:
-	CGLES3Mesh(CGLES3MeshManager *pManager, uint32_t name);
+	CGLES3Mesh(CGLES3MeshManager* pManager, uint32_t name);
 	virtual ~CGLES3Mesh(void);
 	virtual void Release(void);
 
@@ -26,10 +26,10 @@ public:
 
 
 private:
-	CGLES3IndexBuffer *m_pIndexBuffer;
-	CGLES3VertexBuffer *m_pVertexBuffer;
+	CGLES3IndexBuffer* m_pIndexBuffer;
+	CGLES3VertexBuffer* m_pVertexBuffer;
 	eastl::unordered_map<uint32_t, CGfxMesh::Draw> m_draws;
 
 private:
-	CGLES3MeshManager *m_pManager;
+	CGLES3MeshManager* m_pManager;
 };

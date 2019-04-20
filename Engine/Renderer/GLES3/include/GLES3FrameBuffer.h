@@ -8,7 +8,7 @@ class CGLES3FrameBuffer : public CGfxFrameBuffer
 
 
 private:
-	CGLES3FrameBuffer(CGLES3FrameBufferManager *pManager, int width, int height, int numAttachments);
+	CGLES3FrameBuffer(CGLES3FrameBufferManager* pManager, int width, int height, int numAttachments);
 	virtual ~CGLES3FrameBuffer(void);
 	virtual void Release(void);
 
@@ -26,9 +26,9 @@ public:
 	const CGfxRenderTexturePtr GetAttachmentTexture(int indexAttachment) const;
 
 public:
-	void Bind(const AttachmentInformation *pAttachmentInformations, const SubpassInformation *pSubpassInformation) const;
-	void Resolve(const AttachmentInformation *pAttachmentInformations, const SubpassInformation *pSubpassInformation) const;
-	void InvalidateFramebuffer(const AttachmentInformation *pAttachmentInformations, const SubpassInformation *pSubpassInformation) const;
+	void Bind(const AttachmentInformation* pAttachmentInformations, const SubpassInformation* pSubpassInformation) const;
+	void Resolve(const AttachmentInformation* pAttachmentInformations, const SubpassInformation* pSubpassInformation) const;
+	void InvalidateFramebuffer(const AttachmentInformation* pAttachmentInformations, const SubpassInformation* pSubpassInformation) const;
 
 
 private:
@@ -42,5 +42,5 @@ private:
 	eastl::vector<CGfxRenderTexturePtr> m_ptrAttachmentTextures;
 
 private:
-	CGLES3FrameBufferManager *m_pManager;
+	CGLES3FrameBufferManager* m_pManager;
 };

@@ -8,7 +8,7 @@ class CGLES3RenderTexture : public CGfxRenderTexture
 
 
 private:
-	CGLES3RenderTexture(CGLES3RenderTextureManager *pManager, uint32_t name);
+	CGLES3RenderTexture(CGLES3RenderTextureManager* pManager, uint32_t name);
 	virtual ~CGLES3RenderTexture(void);
 	virtual void Release(void);
 
@@ -41,5 +41,5 @@ private:
 	CGLES3TexturePtr m_ptrTexture;
 
 private:
-	CGLES3RenderTextureManager *m_pManager;
+	CGLES3RenderTextureManager* m_pManager;
 };

@@ -8,7 +8,7 @@ class CGLES3RenderPass : public CGfxRenderPass
 
 
 private:
-	CGLES3RenderPass(CGLES3RenderPassManager *pManager, uint32_t name, int numAttachments, int numSubpasses);
+	CGLES3RenderPass(CGLES3RenderPassManager* pManager, uint32_t name, int numAttachments, int numSubpasses);
 	virtual ~CGLES3RenderPass(void);
 	virtual void Release(void);
 
@@ -43,5 +43,5 @@ private:
 	eastl::vector<SubpassInformation> m_subpasses;
 
 private:
-	CGLES3RenderPassManager *m_pManager;
+	CGLES3RenderPassManager* m_pManager;
 };

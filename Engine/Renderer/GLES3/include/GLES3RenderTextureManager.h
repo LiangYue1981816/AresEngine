@@ -16,7 +16,7 @@ private:
 private:
 	CGLES3RenderTexture* Get(uint32_t name);
 	CGLES3RenderTexture* Create(uint32_t name);
-	void Destroy(CGLES3RenderTexture *pRenderTexture);
+	void Destroy(CGLES3RenderTexture* pRenderTexture);
 
 
 private:

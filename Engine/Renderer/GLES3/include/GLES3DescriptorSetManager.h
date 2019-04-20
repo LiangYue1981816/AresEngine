@@ -15,8 +15,8 @@ private:
 
 private:
 	CGLES3DescriptorSet* Create(const CGfxDescriptorLayoutPtr ptrDescriptorLayout);
-	CGLES3DescriptorSet* Create(const CGfxPipelineGraphics *pPipelineGraphics, const CGfxFrameBuffer *pFrameBuffer, const CGfxRenderPass *pRenderPass, int indexSubpass);
-	void Destroy(CGLES3DescriptorSet *pDescriptorSet);
+	CGLES3DescriptorSet* Create(const CGfxPipelineGraphics* pPipelineGraphics, const CGfxFrameBuffer* pFrameBuffer, const CGfxRenderPass* pRenderPass, int indexSubpass);
+	void Destroy(CGLES3DescriptorSet* pDescriptorSet);
 
 
 private:

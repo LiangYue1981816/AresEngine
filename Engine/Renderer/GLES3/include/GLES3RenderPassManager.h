@@ -16,7 +16,7 @@ private:
 private:
 	CGLES3RenderPass* Get(uint32_t name);
 	CGLES3RenderPass* Create(uint32_t name, int numAttachments, int numSubpasses);
-	void Destroy(CGLES3RenderPass *pRenderPass);
+	void Destroy(CGLES3RenderPass* pRenderPass);
 
 
 private:

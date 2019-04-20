@@ -15,7 +15,7 @@ private:
 
 private:
 	CGLES3DescriptorLayout* Create(uint32_t set);
-	void Destroy(CGLES3DescriptorLayout *pDescriptorLayout);
+	void Destroy(CGLES3DescriptorLayout* pDescriptorLayout);
 
 
 private:

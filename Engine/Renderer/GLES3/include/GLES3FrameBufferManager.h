@@ -15,7 +15,7 @@ private:
 
 private:
 	CGLES3FrameBuffer* Create(int width, int height, int numAttachments);
-	void Destroy(CGLES3FrameBuffer *pFrameBuffer);
+	void Destroy(CGLES3FrameBuffer* pFrameBuffer);
 
 
 private:

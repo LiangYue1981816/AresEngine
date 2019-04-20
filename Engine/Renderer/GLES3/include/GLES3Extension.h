@@ -3,7 +3,7 @@
 
 
 #pragma region OpenGL extension
-extern void glReadBuffers(int n, const uint32_t *bufs);
+extern void glReadBuffers(int n, const uint32_t* bufs);
 extern uint32_t glGetShaderType(shader_kind kind);
 extern uint32_t glGetProgramStage(shader_kind kind);
 #pragma endregion
@@ -42,7 +42,7 @@ extern void GLBlendFunc(GLenum srcRGB, GLenum dstRGB, GLenum srcAlpha, GLenum ds
 extern void GLBlendEquation(GLenum modeRGB, GLenum modeAlpha);
 extern void GLBlendColor(GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha);
 
-extern void GLBindState(const PipelineState *state);
+extern void GLBindState(const PipelineState* state);
 
 extern void GLBindVertexArray(GLuint array);
 extern void GLBindBuffer(GLenum target, GLuint buffer);
@@ -56,8 +56,8 @@ extern void GLBindTexture(GLuint unit, GLenum target, GLuint texture);
 extern void GLBindFramebuffer(GLenum target, GLuint framebuffer);
 extern void GLBindFramebufferTexture2D(GLenum target, GLenum attachment, GLenum textarget, GLuint texture, GLint level);
 
-extern void GLReadBuffers(GLenum target, GLsizei n, const GLenum *bufs);
-extern void GLDrawBuffers(GLenum target, GLsizei n, const GLenum *bufs);
+extern void GLReadBuffers(GLenum target, GLsizei n, const GLenum* bufs);
+extern void GLDrawBuffers(GLenum target, GLsizei n, const GLenum* bufs);
 
 extern void GLUseProgram(GLuint program);
 extern void GLUniform1i(GLint location, GLint v0);
@@ -68,15 +68,15 @@ extern void GLUniform1f(GLint location, GLfloat v0);
 extern void GLUniform2f(GLint location, GLfloat v0, GLfloat v1);
 extern void GLUniform3f(GLint location, GLfloat v0, GLfloat v1, GLfloat v2);
 extern void GLUniform4f(GLint location, GLfloat v0, GLfloat v1, GLfloat v2, GLfloat v3);
-extern void GLUniform1iv(GLint location, GLsizei count, const GLint *value);
-extern void GLUniform2iv(GLint location, GLsizei count, const GLint *value);
-extern void GLUniform3iv(GLint location, GLsizei count, const GLint *value);
-extern void GLUniform4iv(GLint location, GLsizei count, const GLint *value);
-extern void GLUniform1fv(GLint location, GLsizei count, const GLfloat *value);
-extern void GLUniform2fv(GLint location, GLsizei count, const GLfloat *value);
-extern void GLUniform3fv(GLint location, GLsizei count, const GLfloat *value);
-extern void GLUniform4fv(GLint location, GLsizei count, const GLfloat *value);
-extern void GLUniformMatrix2fv(GLint location, GLsizei count, const GLfloat *value);
-extern void GLUniformMatrix3fv(GLint location, GLsizei count, const GLfloat *value);
-extern void GLUniformMatrix4fv(GLint location, GLsizei count, const GLfloat *value);
+extern void GLUniform1iv(GLint location, GLsizei count, const GLint* value);
+extern void GLUniform2iv(GLint location, GLsizei count, const GLint* value);
+extern void GLUniform3iv(GLint location, GLsizei count, const GLint* value);
+extern void GLUniform4iv(GLint location, GLsizei count, const GLint* value);
+extern void GLUniform1fv(GLint location, GLsizei count, const GLfloat* value);
+extern void GLUniform2fv(GLint location, GLsizei count, const GLfloat* value);
+extern void GLUniform3fv(GLint location, GLsizei count, const GLfloat* value);
+extern void GLUniform4fv(GLint location, GLsizei count, const GLfloat* value);
+extern void GLUniformMatrix2fv(GLint location, GLsizei count, const GLfloat* value);
+extern void GLUniformMatrix3fv(GLint location, GLsizei count, const GLfloat* value);
+extern void GLUniformMatrix4fv(GLint location, GLsizei count, const GLfloat* value);
 #pragma endregion

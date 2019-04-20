@@ -8,7 +8,7 @@ class CGLES3MeshDraw : public CGfxMeshDraw
 
 
 private:
-	CGLES3MeshDraw(CGLES3MeshDrawManager *pManager, uint32_t name, const CGfxMeshPtr ptrMesh, uint32_t nameDraw, uint32_t instanceFormat, uint32_t instanceBinding);
+	CGLES3MeshDraw(CGLES3MeshDrawManager* pManager, uint32_t name, const CGfxMeshPtr ptrMesh, uint32_t nameDraw, uint32_t instanceFormat, uint32_t instanceBinding);
 	virtual ~CGLES3MeshDraw(void);
 	virtual void Release(void);
 
@@ -27,7 +27,7 @@ public:
 	uint32_t GetInstanceCount(void) const;
 
 public:
-	bool InstanceBufferData(size_t size, const void *pBuffer);
+	bool InstanceBufferData(size_t size, const void* pBuffer);
 
 public:
 	void Bind(void) const;
@@ -35,11 +35,11 @@ public:
 
 private:
 	CGfxMeshPtr m_ptrMesh;
-	CGfxMesh::Draw *m_pMeshDraw;
-	CGLES3IndirectBuffer *m_pIndirectBuffer;
-	CGLES3InstanceBuffer *m_pInstanceBuffer;
-	CGLES3VertexArrayObject *m_pVertexArrayObject;
+	CGfxMesh::Draw* m_pMeshDraw;
+	CGLES3IndirectBuffer* m_pIndirectBuffer;
+	CGLES3InstanceBuffer* m_pInstanceBuffer;
+	CGLES3VertexArrayObject* m_pVertexArrayObject;
 
 private:
-	CGLES3MeshDrawManager *m_pManager;
+	CGLES3MeshDrawManager* m_pManager;
 };

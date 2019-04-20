@@ -15,7 +15,7 @@ private:
 
 private:
 	CGLES3UniformBuffer* Create(size_t size);
-	void Destroy(CGLES3UniformBuffer *pUniformBuffer);
+	void Destroy(CGLES3UniformBuffer* pUniformBuffer);
 
 
 private:

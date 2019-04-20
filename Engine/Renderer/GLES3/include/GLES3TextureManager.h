@@ -16,8 +16,8 @@ private:
 private:
 	CGLES3Texture2D* Get(uint32_t name);
 	CGLES3Texture2D* Create(uint32_t name);
-	CGLES3Texture2D* Create(const char *szFileName, uint32_t baseLevel);
-	void Destroy(CGLES3Texture2D *pTexture);
+	CGLES3Texture2D* Create(const char* szFileName, uint32_t baseLevel);
+	void Destroy(CGLES3Texture2D* pTexture);
 
 
 private:
@@ -39,8 +39,8 @@ private:
 private:
 	CGLES3Texture2DArray* Get(uint32_t name);
 	CGLES3Texture2DArray* Create(uint32_t name);
-	CGLES3Texture2DArray* Create(const char *szFileName, uint32_t baseLevel);
-	void Destroy(CGLES3Texture2DArray *pTexture);
+	CGLES3Texture2DArray* Create(const char* szFileName, uint32_t baseLevel);
+	void Destroy(CGLES3Texture2DArray* pTexture);
 
 
 private:
@@ -62,8 +62,8 @@ private:
 private:
 	CGLES3TextureCubeMap* Get(uint32_t name);
 	CGLES3TextureCubeMap* Create(uint32_t name);
-	CGLES3TextureCubeMap* Create(const char *szFileName, uint32_t baseLevel);
-	void Destroy(CGLES3TextureCubeMap *pTexture);
+	CGLES3TextureCubeMap* Create(const char* szFileName, uint32_t baseLevel);
+	void Destroy(CGLES3TextureCubeMap* pTexture);
 
 
 private:

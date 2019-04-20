@@ -8,7 +8,7 @@ class CGLES3Texture2D : public CGfxTexture2D
 
 
 private:
-	CGLES3Texture2D(CGLES3Texture2DManager *pManager, uint32_t name);
+	CGLES3Texture2D(CGLES3Texture2DManager* pManager, uint32_t name);
 	virtual ~CGLES3Texture2D(void);
 	virtual void Release(void);
 
@@ -30,8 +30,8 @@ public:
 	void Destroy(void);
 
 public:
-	bool TransferTexture2D(GfxPixelFormat format, int level, int xoffset, int yoffset, int width, int height, GfxDataType type, uint32_t size, const void *data);
-	bool TransferTexture2DCompressed(GfxPixelFormat format, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void *data);
+	bool TransferTexture2D(GfxPixelFormat format, int level, int xoffset, int yoffset, int width, int height, GfxDataType type, uint32_t size, const void* data);
+	bool TransferTexture2DCompressed(GfxPixelFormat format, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data);
 
 public:
 	void Bind(uint32_t unit) const;
@@ -45,7 +45,7 @@ private:
 	CGLES3TexturePtr m_ptrTexture;
 
 private:
-	CGLES3Texture2DManager *m_pManager;
+	CGLES3Texture2DManager* m_pManager;
 
 private:
 	eastl::unordered_map<int, uint32_t> m_size;
