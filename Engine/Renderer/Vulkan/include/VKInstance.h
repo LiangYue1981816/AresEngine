@@ -8,7 +8,7 @@ class CVKInstance
 
 
 private:
-	CVKInstance(void *hInstance, void *hWnd);
+	CVKInstance(void* hInstance, void* hWnd);
 	virtual ~CVKInstance(void);
 
 
@@ -22,11 +22,11 @@ public:
 	CVKAllocator* GetAllocator(void) const;
 
 private:
-	bool EnumerateInstanceLayerProperties(eastl::vector<const char *> &enabledInstanceLayers) const;
-	bool EnumerateInstanceExtensionProperties(eastl::vector<const char *> &enabledInstanceExtensions) const;
+	bool EnumerateInstanceLayerProperties(eastl::vector<const char*>& enabledInstanceLayers) const;
+	bool EnumerateInstanceExtensionProperties(eastl::vector<const char*>& enabledInstanceExtensions) const;
 
-	bool CreateInstance(const eastl::vector<const char *> &enabledInstanceLayers, const eastl::vector<const char *> &enabledInstanceExtensions);
-	bool CreateSurface(void *hInstance, void *hWnd);
+	bool CreateInstance(const eastl::vector<const char*>& enabledInstanceLayers, const eastl::vector<const char*>& enabledInstanceExtensions);
+	bool CreateSurface(void* hInstance, void* hWnd);
 	void DestroyInstance(void);
 	void DestroySurface(void);
 
@@ -36,7 +36,7 @@ private:
 	VkSurfaceKHR m_vkSurface;
 
 private:
-	CVKAllocator *m_pAllocator;
+	CVKAllocator* m_pAllocator;
 
 #ifdef DEBUG
 	VkDebugReportCallbackEXT m_vkDebugReportCallback;
