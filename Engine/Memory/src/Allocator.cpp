@@ -28,8 +28,8 @@
 
 #define MAX_POOL_COUNT 64
 static bool bInitAllocator = false;
-static POOL_ALLOCATOR *pPoolAllocators[MAX_POOL_COUNT] = { nullptr };
-static HEAP_ALLOCATOR *pHeapAllocator = nullptr;
+static POOL_ALLOCATOR * pPoolAllocators[MAX_POOL_COUNT] = { nullptr };
+static HEAP_ALLOCATOR * pHeapAllocator = nullptr;
 
 
 static int GetPoolIndex(void)
@@ -89,23 +89,23 @@ CALL_API void ExitAllocator(void)
 CALL_API void* AllocMemory(size_t size)
 {
 #ifdef MEMORY_ALLOCATOR
-	uint32_t *pPointer = nullptr;
+	uint32_t* pPointer = nullptr;
 
 	if (bInitAllocator && size <= 0x00400000) {
 		int indexPool = GetPoolIndex();
 
 		if (pPointer == nullptr) {
-			pPointer = (uint32_t *)POOL_Alloc(pHeapAllocator, pPoolAllocators[indexPool], size);
+			pPointer = (uint32_t*)POOL_Alloc(pHeapAllocator, pPoolAllocators[indexPool], size);
 		}
 
 		if (pPointer == nullptr) {
-			pPointer = (uint32_t *)HEAP_Alloc(pHeapAllocator, size);
+			pPointer = (uint32_t*)HEAP_Alloc(pHeapAllocator, size);
 		}
 
 		SET_MEM_POOLID(pPointer);
 	}
 	else {
-		pPointer = (uint32_t *)_malloc(size + 4) + 1;
+		pPointer = (uint32_t*)_malloc(size + 4) + 1;
 
 		SET_MEM_SIZE(pPointer, size);
 		SET_MEM_SYSTEM(pPointer);
@@ -117,7 +117,7 @@ CALL_API void* AllocMemory(size_t size)
 #endif
 }
 
-CALL_API void FreeMemory(void *pPointer)
+CALL_API void FreeMemory(void* pPointer)
 {
 	if (pPointer == nullptr) {
 		return;
@@ -140,7 +140,7 @@ CALL_API void FreeMemory(void *pPointer)
 		}
 	}
 	else {
-		_free((uint32_t *)pPointer - 1);
+		_free((uint32_t*)pPointer - 1);
 	}
 #else
 	_free(pPointer);

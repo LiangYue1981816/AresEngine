@@ -5,7 +5,7 @@
 
 void* _malloc(size_t size)
 {
-	void *ptr = nullptr;
+	void* ptr = nullptr;
 
 #ifdef PLATFORM_WINDOWS
 	ptr = _aligned_malloc(size, 16);
@@ -16,7 +16,7 @@ void* _malloc(size_t size)
 	return ptr;
 }
 
-void _free(void *ptr)
+void _free(void* ptr)
 {
 #ifdef PLATFORM_WINDOWS
 	_aligned_free(ptr);
