@@ -8,7 +8,7 @@ CGLES3RenderPassManager::CGLES3RenderPassManager(void)
 
 CGLES3RenderPassManager::~CGLES3RenderPassManager(void)
 {
-	for (const auto &itRenderPasses : m_pRenderPasses) {
+	for (const auto& itRenderPasses : m_pRenderPasses) {
 		delete itRenderPasses.second;
 	}
 }
@@ -17,7 +17,7 @@ CGLES3RenderPass* CGLES3RenderPassManager::Get(uint32_t name)
 {
 	mutex_autolock autolock(&lock);
 	{
-		const auto &itRenderPass = m_pRenderPasses.find(name);
+		const auto& itRenderPass = m_pRenderPasses.find(name);
 
 		if (itRenderPass != m_pRenderPasses.end()) {
 			return itRenderPass->second;
@@ -40,7 +40,7 @@ CGLES3RenderPass* CGLES3RenderPassManager::Create(uint32_t name, int numAttachme
 	}
 }
 
-void CGLES3RenderPassManager::Destroy(CGLES3RenderPass *pRenderPass)
+void CGLES3RenderPassManager::Destroy(CGLES3RenderPass* pRenderPass)
 {
 	mutex_autolock autolock(&lock);
 	{

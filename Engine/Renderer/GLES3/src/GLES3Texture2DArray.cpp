@@ -1,7 +1,7 @@
 #include "GLES3Renderer.h"
 
 
-CGLES3Texture2DArray::CGLES3Texture2DArray(CGLES3Texture2DArrayManager *pManager, uint32_t name)
+CGLES3Texture2DArray::CGLES3Texture2DArray(CGLES3Texture2DArrayManager* pManager, uint32_t name)
 	: CGfxTexture2DArray(name)
 	, m_pManager(pManager)
 
@@ -77,8 +77,8 @@ bool CGLES3Texture2DArray::Create(GfxPixelFormat format, int width, int height, 
 
 void CGLES3Texture2DArray::Destroy(void)
 {
-	for (const auto &itLayerSize : m_size) {
-		for (const auto &itLevelSize : itLayerSize.second) {
+	for (const auto& itLayerSize : m_size) {
+		for (const auto& itLevelSize : itLayerSize.second) {
 			CGfxProfiler::DecTextureDataSize(itLevelSize.second);
 		}
 	}
@@ -91,7 +91,7 @@ void CGLES3Texture2DArray::Destroy(void)
 	m_ptrTexture->Destroy();
 }
 
-bool CGLES3Texture2DArray::TransferTexture2D(GfxPixelFormat format, int layer, int level, int xoffset, int yoffset, int width, int height, GfxDataType type, uint32_t size, const void *data)
+bool CGLES3Texture2DArray::TransferTexture2D(GfxPixelFormat format, int layer, int level, int xoffset, int yoffset, int width, int height, GfxDataType type, uint32_t size, const void* data)
 {
 	if (m_ptrTexture->TransferTexture2DArray(format, layer, level, xoffset, yoffset, width, height, type, size, data)) {
 		CGfxProfiler::DecTextureDataSize(m_size[layer][level]);
@@ -104,7 +104,7 @@ bool CGLES3Texture2DArray::TransferTexture2D(GfxPixelFormat format, int layer, i
 	}
 }
 
-bool CGLES3Texture2DArray::TransferTexture2DCompressed(GfxPixelFormat format, int layer, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void *data)
+bool CGLES3Texture2DArray::TransferTexture2DCompressed(GfxPixelFormat format, int layer, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
 {
 	if (m_ptrTexture->TransferTexture2DArrayCompressed(format, layer, level, xoffset, yoffset, width, height, size, data)) {
 		CGfxProfiler::DecTextureDataSize(m_size[layer][level]);

@@ -26,11 +26,11 @@ const CGfxDescriptorLayoutPtr CGLES3Pipeline::GetDescriptorLayout(int indexDescr
 	}
 }
 
-bool CGLES3Pipeline::CreateProgram(const CGLES3Shader *pVertexShader, const CGLES3Shader *pFragmentShader, const CGLES3Shader *pComputeShader)
+bool CGLES3Pipeline::CreateProgram(const CGLES3Shader* pVertexShader, const CGLES3Shader* pFragmentShader, const CGLES3Shader* pComputeShader)
 {
-	m_pShaders[vertex_shader] = (CGLES3Shader *)pVertexShader;
-	m_pShaders[fragment_shader] = (CGLES3Shader *)pFragmentShader;
-	m_pShaders[compute_shader] = (CGLES3Shader *)pComputeShader;
+	m_pShaders[vertex_shader] = (CGLES3Shader*)pVertexShader;
+	m_pShaders[fragment_shader] = (CGLES3Shader*)pFragmentShader;
+	m_pShaders[compute_shader] = (CGLES3Shader*)pComputeShader;
 
 	m_program = glCreateProgram();
 	{
@@ -64,28 +64,28 @@ bool CGLES3Pipeline::CreateLayouts(void)
 {
 	for (int index = 0; index < compute_shader - vertex_shader + 1; index++) {
 		if (m_pShaders[index]) {
-			const eastl::unordered_map<eastl::string, PushConstantRange> &pushConstantRanges = m_pShaders[index]->GetSprivCross().GetPushConstantRanges();
-			const eastl::unordered_map<eastl::string, DescriptorSetBinding> &uniformBlockBindings = m_pShaders[index]->GetSprivCross().GetUniformBlockBindings();
-			const eastl::unordered_map<eastl::string, DescriptorSetBinding> &sampledImageBindings = m_pShaders[index]->GetSprivCross().GetSampledImageBindings();
-			const eastl::unordered_map<eastl::string, InputAttachmentBinding> &inputAttachmentBindings = m_pShaders[index]->GetSprivCross().GetInputAttachmentBindings();
+			const eastl::unordered_map<eastl::string, PushConstantRange>& pushConstantRanges = m_pShaders[index]->GetSprivCross().GetPushConstantRanges();
+			const eastl::unordered_map<eastl::string, DescriptorSetBinding>& uniformBlockBindings = m_pShaders[index]->GetSprivCross().GetUniformBlockBindings();
+			const eastl::unordered_map<eastl::string, DescriptorSetBinding>& sampledImageBindings = m_pShaders[index]->GetSprivCross().GetSampledImageBindings();
+			const eastl::unordered_map<eastl::string, InputAttachmentBinding>& inputAttachmentBindings = m_pShaders[index]->GetSprivCross().GetInputAttachmentBindings();
 
-			for (const auto &itPushConstant : pushConstantRanges) {
+			for (const auto& itPushConstant : pushConstantRanges) {
 				SetUniformLocation(itPushConstant.first.c_str());
 			}
 
-			for (const auto &itUniformBlock : uniformBlockBindings) {
+			for (const auto& itUniformBlock : uniformBlockBindings) {
 				if (m_ptrDescriptorLayouts[itUniformBlock.second.set]->SetUniformBlockBinding(HashValue(itUniformBlock.first.c_str()), itUniformBlock.second.binding)) {
 					SetUniformBlockBinding(itUniformBlock.first.c_str(), itUniformBlock.second.binding);
 				}
 			}
 
-			for (const auto &itSampledImage : sampledImageBindings) {
+			for (const auto& itSampledImage : sampledImageBindings) {
 				if (m_ptrDescriptorLayouts[itSampledImage.second.set]->SetSampledImageBinding(HashValue(itSampledImage.first.c_str()), itSampledImage.second.binding)) {
 					SetSampledImageLocation(itSampledImage.first.c_str());
 				}
 			}
 
-			for (const auto &itInputAttachment : inputAttachmentBindings) {
+			for (const auto& itInputAttachment : inputAttachmentBindings) {
 				if (m_ptrDescriptorLayouts[itInputAttachment.second.set]->SetSampledImageBinding(HashValue(itInputAttachment.first.c_str()), itInputAttachment.second.binding)) {
 					SetInputAttachmentLocation(itInputAttachment.first.c_str(), itInputAttachment.second.inputAttachmentIndex);
 				}
@@ -124,7 +124,7 @@ void CGLES3Pipeline::Destroy(void)
 	m_ptrDescriptorLayouts[DESCRIPTOR_SET_INPUTATTACHMENT]->Destroy();
 }
 
-void CGLES3Pipeline::SetUniformBlockBinding(const char *szName, uint32_t binding)
+void CGLES3Pipeline::SetUniformBlockBinding(const char* szName, uint32_t binding)
 {
 	uint32_t name = HashValue(szName);
 
@@ -138,7 +138,7 @@ void CGLES3Pipeline::SetUniformBlockBinding(const char *szName, uint32_t binding
 	}
 }
 
-void CGLES3Pipeline::SetUniformLocation(const char *szName)
+void CGLES3Pipeline::SetUniformLocation(const char* szName)
 {
 	uint32_t name = HashValue(szName);
 
@@ -151,7 +151,7 @@ void CGLES3Pipeline::SetUniformLocation(const char *szName)
 	}
 }
 
-void CGLES3Pipeline::SetSampledImageLocation(const char *szName)
+void CGLES3Pipeline::SetSampledImageLocation(const char* szName)
 {
 	uint32_t name = HashValue(szName);
 
@@ -165,7 +165,7 @@ void CGLES3Pipeline::SetSampledImageLocation(const char *szName)
 	}
 }
 
-void CGLES3Pipeline::SetInputAttachmentLocation(const char *szName, uint32_t inputAttachmentIndex)
+void CGLES3Pipeline::SetInputAttachmentLocation(const char* szName, uint32_t inputAttachmentIndex)
 {
 	uint32_t name = HashValue(szName);
 
@@ -180,9 +180,9 @@ void CGLES3Pipeline::SetInputAttachmentLocation(const char *szName, uint32_t inp
 	}
 }
 
-uint32_t CGLES3Pipeline::GetUniformBlockBinding(const char *szName) const
+uint32_t CGLES3Pipeline::GetUniformBlockBinding(const char* szName) const
 {
-	const auto &itUniformBlockBinding = m_uniformBlockBindings.find(HashValue(szName));
+	const auto& itUniformBlockBinding = m_uniformBlockBindings.find(HashValue(szName));
 
 	if (itUniformBlockBinding != m_uniformBlockBindings.end()) {
 		return itUniformBlockBinding->second;
@@ -192,9 +192,9 @@ uint32_t CGLES3Pipeline::GetUniformBlockBinding(const char *szName) const
 	}
 }
 
-uint32_t CGLES3Pipeline::GetUniformLocation(const char *szName) const
+uint32_t CGLES3Pipeline::GetUniformLocation(const char* szName) const
 {
-	const auto &itUniformLocation = m_uniformLocations.find(HashValue(szName));
+	const auto& itUniformLocation = m_uniformLocations.find(HashValue(szName));
 
 	if (itUniformLocation != m_uniformLocations.end()) {
 		return itUniformLocation->second;
@@ -204,9 +204,9 @@ uint32_t CGLES3Pipeline::GetUniformLocation(const char *szName) const
 	}
 }
 
-uint32_t CGLES3Pipeline::GetSampledImageLocation(const char *szName) const
+uint32_t CGLES3Pipeline::GetSampledImageLocation(const char* szName) const
 {
-	const auto &itSampledImageLocation = m_sampledImageLocations.find(HashValue(szName));
+	const auto& itSampledImageLocation = m_sampledImageLocations.find(HashValue(szName));
 
 	if (itSampledImageLocation != m_sampledImageLocations.end()) {
 		return itSampledImageLocation->second;
@@ -218,7 +218,7 @@ uint32_t CGLES3Pipeline::GetSampledImageLocation(const char *szName) const
 
 uint32_t CGLES3Pipeline::GetInputAttachmentName(uint32_t inputAttachmentIndex) const
 {
-	const auto &itInputAttachmentName = m_inputAttachmentNames.find(inputAttachmentIndex);
+	const auto& itInputAttachmentName = m_inputAttachmentNames.find(inputAttachmentIndex);
 
 	if (itInputAttachmentName != m_inputAttachmentNames.end()) {
 		return itInputAttachmentName->second;
@@ -228,7 +228,7 @@ uint32_t CGLES3Pipeline::GetInputAttachmentName(uint32_t inputAttachmentIndex) c
 	}
 }
 
-void CGLES3Pipeline::Bind(const PipelineState *pState) const
+void CGLES3Pipeline::Bind(const PipelineState* pState) const
 {
 	if (pState) {
 		GLBindState(pState);
@@ -249,41 +249,41 @@ bool CGLES3Pipeline::BindDescriptorSet(const CGfxDescriptorSetPtr ptrDescriptorS
 		return false;
 	}
 
-	for (const auto &itUniformBlock : m_uniformBlockBindings) {
-		if (const DescriptorBufferInfo *pDescriptorBufferInfo = ptrDescriptorSet->GetDescriptorBufferInfo(itUniformBlock.first)) {
-			((CGLES3UniformBuffer *)pDescriptorBufferInfo->ptrUniformBuffer.GetPointer())->Bind(itUniformBlock.second, pDescriptorBufferInfo->offset, pDescriptorBufferInfo->range);
+	for (const auto& itUniformBlock : m_uniformBlockBindings) {
+		if (const DescriptorBufferInfo * pDescriptorBufferInfo = ptrDescriptorSet->GetDescriptorBufferInfo(itUniformBlock.first)) {
+			((CGLES3UniformBuffer*)pDescriptorBufferInfo->ptrUniformBuffer.GetPointer())->Bind(itUniformBlock.second, pDescriptorBufferInfo->offset, pDescriptorBufferInfo->range);
 		}
 	}
 
-	for (const auto &itSampledImage : m_sampledImageLocations) {
-		if (const DescriptorImageInfo *pDescriptorImageInfo = ptrDescriptorSet->GetDescriptorImageInfo(itSampledImage.first)) {
-			const auto &itTextureUnit = m_sampledImageTextureUnits.find(itSampledImage.first);
+	for (const auto& itSampledImage : m_sampledImageLocations) {
+		if (const DescriptorImageInfo * pDescriptorImageInfo = ptrDescriptorSet->GetDescriptorImageInfo(itSampledImage.first)) {
+			const auto& itTextureUnit = m_sampledImageTextureUnits.find(itSampledImage.first);
 
 			if (pDescriptorImageInfo->ptrTexture2D) {
 				GLUniform1i(itSampledImage.second, itTextureUnit->second);
-				((CGLES3Sampler *)pDescriptorImageInfo->pSampler)->Bind(itTextureUnit->second);
-				((CGLES3Texture2D *)pDescriptorImageInfo->ptrTexture2D.GetPointer())->Bind(itTextureUnit->second);
+				((CGLES3Sampler*)pDescriptorImageInfo->pSampler)->Bind(itTextureUnit->second);
+				((CGLES3Texture2D*)pDescriptorImageInfo->ptrTexture2D.GetPointer())->Bind(itTextureUnit->second);
 				continue;
 			}
 
 			if (pDescriptorImageInfo->ptrTexture2DArray) {
 				GLUniform1i(itSampledImage.second, itTextureUnit->second);
-				((CGLES3Sampler *)pDescriptorImageInfo->pSampler)->Bind(itTextureUnit->second);
-				((CGLES3Texture2DArray *)pDescriptorImageInfo->ptrTexture2DArray.GetPointer())->Bind(itTextureUnit->second);
+				((CGLES3Sampler*)pDescriptorImageInfo->pSampler)->Bind(itTextureUnit->second);
+				((CGLES3Texture2DArray*)pDescriptorImageInfo->ptrTexture2DArray.GetPointer())->Bind(itTextureUnit->second);
 				continue;
 			}
 
 			if (pDescriptorImageInfo->ptrTextureCubeMap) {
 				GLUniform1i(itSampledImage.second, itTextureUnit->second);
-				((CGLES3Sampler *)pDescriptorImageInfo->pSampler)->Bind(itTextureUnit->second);
-				((CGLES3TextureCubeMap *)pDescriptorImageInfo->ptrTextureCubeMap.GetPointer())->Bind(itTextureUnit->second);
+				((CGLES3Sampler*)pDescriptorImageInfo->pSampler)->Bind(itTextureUnit->second);
+				((CGLES3TextureCubeMap*)pDescriptorImageInfo->ptrTextureCubeMap.GetPointer())->Bind(itTextureUnit->second);
 				continue;
 			}
 
 			if (pDescriptorImageInfo->ptrTextureInputAttachment) {
 				GLUniform1i(itSampledImage.second, itTextureUnit->second);
-				((CGLES3Sampler *)pDescriptorImageInfo->pSampler)->Bind(itTextureUnit->second);
-				((CGLES3RenderTexture *)pDescriptorImageInfo->ptrTextureInputAttachment.GetPointer())->Bind(itTextureUnit->second);
+				((CGLES3Sampler*)pDescriptorImageInfo->pSampler)->Bind(itTextureUnit->second);
+				((CGLES3RenderTexture*)pDescriptorImageInfo->ptrTextureInputAttachment.GetPointer())->Bind(itTextureUnit->second);
 				continue;
 			}
 		}
@@ -294,7 +294,7 @@ bool CGLES3Pipeline::BindDescriptorSet(const CGfxDescriptorSetPtr ptrDescriptorS
 
 void CGLES3Pipeline::Uniform1i(uint32_t name, int v0) const
 {
-	const auto &itLocation = m_uniformLocations.find(name);
+	const auto& itLocation = m_uniformLocations.find(name);
 
 	if (itLocation != m_uniformLocations.end()) {
 		GLUniform1i(itLocation->second, v0);
@@ -303,7 +303,7 @@ void CGLES3Pipeline::Uniform1i(uint32_t name, int v0) const
 
 void CGLES3Pipeline::Uniform2i(uint32_t name, int v0, int v1) const
 {
-	const auto &itLocation = m_uniformLocations.find(name);
+	const auto& itLocation = m_uniformLocations.find(name);
 
 	if (itLocation != m_uniformLocations.end()) {
 		GLUniform2i(itLocation->second, v0, v1);
@@ -312,7 +312,7 @@ void CGLES3Pipeline::Uniform2i(uint32_t name, int v0, int v1) const
 
 void CGLES3Pipeline::Uniform3i(uint32_t name, int v0, int v1, int v2) const
 {
-	const auto &itLocation = m_uniformLocations.find(name);
+	const auto& itLocation = m_uniformLocations.find(name);
 
 	if (itLocation != m_uniformLocations.end()) {
 		GLUniform3i(itLocation->second, v0, v1, v2);
@@ -321,7 +321,7 @@ void CGLES3Pipeline::Uniform3i(uint32_t name, int v0, int v1, int v2) const
 
 void CGLES3Pipeline::Uniform4i(uint32_t name, int v0, int v1, int v2, int v3) const
 {
-	const auto &itLocation = m_uniformLocations.find(name);
+	const auto& itLocation = m_uniformLocations.find(name);
 
 	if (itLocation != m_uniformLocations.end()) {
 		GLUniform4i(itLocation->second, v0, v1, v2, v3);
@@ -330,7 +330,7 @@ void CGLES3Pipeline::Uniform4i(uint32_t name, int v0, int v1, int v2, int v3) co
 
 void CGLES3Pipeline::Uniform1f(uint32_t name, float v0) const
 {
-	const auto &itLocation = m_uniformLocations.find(name);
+	const auto& itLocation = m_uniformLocations.find(name);
 
 	if (itLocation != m_uniformLocations.end()) {
 		GLUniform1f(itLocation->second, v0);
@@ -339,7 +339,7 @@ void CGLES3Pipeline::Uniform1f(uint32_t name, float v0) const
 
 void CGLES3Pipeline::Uniform2f(uint32_t name, float v0, float v1) const
 {
-	const auto &itLocation = m_uniformLocations.find(name);
+	const auto& itLocation = m_uniformLocations.find(name);
 
 	if (itLocation != m_uniformLocations.end()) {
 		GLUniform2f(itLocation->second, v0, v1);
@@ -348,7 +348,7 @@ void CGLES3Pipeline::Uniform2f(uint32_t name, float v0, float v1) const
 
 void CGLES3Pipeline::Uniform3f(uint32_t name, float v0, float v1, float v2) const
 {
-	const auto &itLocation = m_uniformLocations.find(name);
+	const auto& itLocation = m_uniformLocations.find(name);
 
 	if (itLocation != m_uniformLocations.end()) {
 		GLUniform3f(itLocation->second, v0, v1, v2);
@@ -357,106 +357,106 @@ void CGLES3Pipeline::Uniform3f(uint32_t name, float v0, float v1, float v2) cons
 
 void CGLES3Pipeline::Uniform4f(uint32_t name, float v0, float v1, float v2, float v3) const
 {
-	const auto &itLocation = m_uniformLocations.find(name);
+	const auto& itLocation = m_uniformLocations.find(name);
 
 	if (itLocation != m_uniformLocations.end()) {
 		GLUniform4f(itLocation->second, v0, v1, v2, v3);
 	}
 }
 
-void CGLES3Pipeline::Uniform1iv(uint32_t name, int count, const int *value) const
+void CGLES3Pipeline::Uniform1iv(uint32_t name, int count, const int* value) const
 {
-	const auto &itLocation = m_uniformLocations.find(name);
+	const auto& itLocation = m_uniformLocations.find(name);
 
 	if (itLocation != m_uniformLocations.end()) {
 		GLUniform1iv(itLocation->second, count, value);
 	}
 }
 
-void CGLES3Pipeline::Uniform2iv(uint32_t name, int count, const int *value) const
+void CGLES3Pipeline::Uniform2iv(uint32_t name, int count, const int* value) const
 {
-	const auto &itLocation = m_uniformLocations.find(name);
+	const auto& itLocation = m_uniformLocations.find(name);
 
 	if (itLocation != m_uniformLocations.end()) {
 		GLUniform2iv(itLocation->second, count, value);
 	}
 }
 
-void CGLES3Pipeline::Uniform3iv(uint32_t name, int count, const int *value) const
+void CGLES3Pipeline::Uniform3iv(uint32_t name, int count, const int* value) const
 {
-	const auto &itLocation = m_uniformLocations.find(name);
+	const auto& itLocation = m_uniformLocations.find(name);
 
 	if (itLocation != m_uniformLocations.end()) {
 		GLUniform3iv(itLocation->second, count, value);
 	}
 }
 
-void CGLES3Pipeline::Uniform4iv(uint32_t name, int count, const int *value) const
+void CGLES3Pipeline::Uniform4iv(uint32_t name, int count, const int* value) const
 {
-	const auto &itLocation = m_uniformLocations.find(name);
+	const auto& itLocation = m_uniformLocations.find(name);
 
 	if (itLocation != m_uniformLocations.end()) {
 		GLUniform4iv(itLocation->second, count, value);
 	}
 }
 
-void CGLES3Pipeline::Uniform1fv(uint32_t name, int count, const float *value) const
+void CGLES3Pipeline::Uniform1fv(uint32_t name, int count, const float* value) const
 {
-	const auto &itLocation = m_uniformLocations.find(name);
+	const auto& itLocation = m_uniformLocations.find(name);
 
 	if (itLocation != m_uniformLocations.end()) {
 		GLUniform1fv(itLocation->second, count, value);
 	}
 }
 
-void CGLES3Pipeline::Uniform2fv(uint32_t name, int count, const float *value) const
+void CGLES3Pipeline::Uniform2fv(uint32_t name, int count, const float* value) const
 {
-	const auto &itLocation = m_uniformLocations.find(name);
+	const auto& itLocation = m_uniformLocations.find(name);
 
 	if (itLocation != m_uniformLocations.end()) {
 		GLUniform2fv(itLocation->second, count, value);
 	}
 }
 
-void CGLES3Pipeline::Uniform3fv(uint32_t name, int count, const float *value) const
+void CGLES3Pipeline::Uniform3fv(uint32_t name, int count, const float* value) const
 {
-	const auto &itLocation = m_uniformLocations.find(name);
+	const auto& itLocation = m_uniformLocations.find(name);
 
 	if (itLocation != m_uniformLocations.end()) {
 		GLUniform3fv(itLocation->second, count, value);
 	}
 }
 
-void CGLES3Pipeline::Uniform4fv(uint32_t name, int count, const float *value) const
+void CGLES3Pipeline::Uniform4fv(uint32_t name, int count, const float* value) const
 {
-	const auto &itLocation = m_uniformLocations.find(name);
+	const auto& itLocation = m_uniformLocations.find(name);
 
 	if (itLocation != m_uniformLocations.end()) {
 		GLUniform4fv(itLocation->second, count, value);
 	}
 }
 
-void CGLES3Pipeline::UniformMatrix2fv(uint32_t name, int count, const float *value) const
+void CGLES3Pipeline::UniformMatrix2fv(uint32_t name, int count, const float* value) const
 {
-	const auto &itLocation = m_uniformLocations.find(name);
+	const auto& itLocation = m_uniformLocations.find(name);
 
 	if (itLocation != m_uniformLocations.end()) {
 		GLUniformMatrix2fv(itLocation->second, count, value);
 	}
 }
 
-void CGLES3Pipeline::UniformMatrix3fv(uint32_t name, int count, const float *value) const
+void CGLES3Pipeline::UniformMatrix3fv(uint32_t name, int count, const float* value) const
 {
-	const auto &itLocation = m_uniformLocations.find(name);
+	const auto& itLocation = m_uniformLocations.find(name);
 
 	if (itLocation != m_uniformLocations.end()) {
 		GLUniformMatrix3fv(itLocation->second, count, value);
 	}
 }
 
-void CGLES3Pipeline::UniformMatrix4fv(uint32_t name, int count, const float *value) const
+void CGLES3Pipeline::UniformMatrix4fv(uint32_t name, int count, const float* value) const
 {
-	const auto &itLocation = m_uniformLocations.find(name);
+	const auto& itLocation = m_uniformLocations.find(name);
 
 	if (itLocation != m_uniformLocations.end()) {
 		GLUniformMatrix4fv(itLocation->second, count, value);

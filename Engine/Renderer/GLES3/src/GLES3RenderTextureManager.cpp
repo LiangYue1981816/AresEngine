@@ -8,7 +8,7 @@ CGLES3RenderTextureManager::CGLES3RenderTextureManager(void)
 
 CGLES3RenderTextureManager::~CGLES3RenderTextureManager(void)
 {
-	for (const auto &itRenderTexture : m_pRenderTextures) {
+	for (const auto& itRenderTexture : m_pRenderTextures) {
 		delete itRenderTexture.second;
 	}
 }
@@ -17,7 +17,7 @@ CGLES3RenderTexture* CGLES3RenderTextureManager::Get(uint32_t name)
 {
 	mutex_autolock autolock(&lock);
 	{
-		const auto &itRenderTexture = m_pRenderTextures.find(name);
+		const auto& itRenderTexture = m_pRenderTextures.find(name);
 
 		if (itRenderTexture != m_pRenderTextures.end()) {
 			return itRenderTexture->second;
@@ -40,7 +40,7 @@ CGLES3RenderTexture* CGLES3RenderTextureManager::Create(uint32_t name)
 	}
 }
 
-void CGLES3RenderTextureManager::Destroy(CGLES3RenderTexture *pRenderTexture)
+void CGLES3RenderTextureManager::Destroy(CGLES3RenderTexture* pRenderTexture)
 {
 	mutex_autolock autolock(&lock);
 	{

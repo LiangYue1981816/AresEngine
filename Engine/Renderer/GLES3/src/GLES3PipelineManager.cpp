@@ -8,12 +8,12 @@ CGLES3PipelineComputeManager::CGLES3PipelineComputeManager(void)
 
 CGLES3PipelineComputeManager::~CGLES3PipelineComputeManager(void)
 {
-	for (const auto &itPipeline : m_pPipelines) {
+	for (const auto& itPipeline : m_pPipelines) {
 		delete itPipeline.second;
 	}
 }
 
-CGLES3PipelineCompute* CGLES3PipelineComputeManager::Create(const CGfxShader *pComputeShader)
+CGLES3PipelineCompute* CGLES3PipelineComputeManager::Create(const CGfxShader* pComputeShader)
 {
 	uint32_t name = HashValueFormat("%x", pComputeShader->GetName());
 
@@ -36,14 +36,14 @@ CGLES3PipelineGraphicsManager::CGLES3PipelineGraphicsManager(void)
 
 CGLES3PipelineGraphicsManager::~CGLES3PipelineGraphicsManager(void)
 {
-	for (const auto &itPipeline : m_pPipelines) {
+	for (const auto& itPipeline : m_pPipelines) {
 		delete itPipeline.second;
 	}
 }
 
-CGLES3PipelineGraphics* CGLES3PipelineGraphicsManager::Create(const CGfxRenderPass *pRenderPass, const CGfxShader *pVertexShader, const CGfxShader *pFragmentShader, const PipelineState &state, uint32_t indexSubpass, uint32_t vertexBinding, uint32_t instanceBinding)
+CGLES3PipelineGraphics* CGLES3PipelineGraphicsManager::Create(const CGfxRenderPass* pRenderPass, const CGfxShader* pVertexShader, const CGfxShader* pFragmentShader, const PipelineState& state, uint32_t indexSubpass, uint32_t vertexBinding, uint32_t instanceBinding)
 {
-	uint32_t name = HashValueFormat("%x_%x_%x", pVertexShader->GetName(), pFragmentShader->GetName(), HashValue((uint8_t *)&state, sizeof(state)));
+	uint32_t name = HashValueFormat("%x_%x_%x", pVertexShader->GetName(), pFragmentShader->GetName(), HashValue((uint8_t*)& state, sizeof(state)));
 
 	mutex_autolock autolock(&lock);
 	{

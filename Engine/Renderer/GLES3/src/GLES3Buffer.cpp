@@ -39,7 +39,7 @@ uint32_t CGLES3Buffer::GetSize(void) const
 bool CGLES3Buffer::BufferSize(size_t size, bool bDynamic)
 {
 	if (m_size != size) {
-		m_size  = size;
+		m_size = size;
 
 		glBindBuffer(m_target, m_buffer);
 		glBufferData(m_target, m_size, nullptr, bDynamic ? GL_DYNAMIC_DRAW : GL_STATIC_DRAW);
@@ -52,7 +52,7 @@ bool CGLES3Buffer::BufferSize(size_t size, bool bDynamic)
 	}
 }
 
-bool CGLES3Buffer::BufferData(size_t offset, size_t size, const void *pBuffer)
+bool CGLES3Buffer::BufferData(size_t offset, size_t size, const void* pBuffer)
 {
 	if (m_size >= (uint32_t)(offset + size)) {
 		glBindBuffer(m_target, m_buffer);

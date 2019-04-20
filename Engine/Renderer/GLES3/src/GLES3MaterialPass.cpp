@@ -13,23 +13,23 @@ CGLES3MaterialPass::CGLES3MaterialPass(uint32_t name)
 
 CGLES3MaterialPass::~CGLES3MaterialPass(void)
 {
-	for (auto &itUniform : m_pUniformVec1s) {
+	for (auto& itUniform : m_pUniformVec1s) {
 		delete itUniform.second;
 	}
 
-	for (auto &itUniform : m_pUniformVec2s) {
+	for (auto& itUniform : m_pUniformVec2s) {
 		delete itUniform.second;
 	}
 
-	for (auto &itUniform : m_pUniformVec3s) {
+	for (auto& itUniform : m_pUniformVec3s) {
 		delete itUniform.second;
 	}
 
-	for (auto &itUniform : m_pUniformVec4s) {
+	for (auto& itUniform : m_pUniformVec4s) {
 		delete itUniform.second;
 	}
 
-	for (auto &itUniform : m_pUniformMat4s) {
+	for (auto& itUniform : m_pUniformMat4s) {
 		delete itUniform.second;
 	}
 }
@@ -39,7 +39,7 @@ const CGfxDescriptorSetPtr CGLES3MaterialPass::GetDescriptorSet(void) const
 	return m_ptrDescriptorSet;
 }
 
-bool CGLES3MaterialPass::SetPipeline(const CGfxRenderPass *pRenderPass, const CGfxShader *pVertexShader, const CGfxShader *pFragmentShader, const PipelineState &state, uint32_t indexSubpass, uint32_t vertexBinding, uint32_t instanceBinding)
+bool CGLES3MaterialPass::SetPipeline(const CGfxRenderPass* pRenderPass, const CGfxShader* pVertexShader, const CGfxShader* pFragmentShader, const PipelineState& state, uint32_t indexSubpass, uint32_t vertexBinding, uint32_t instanceBinding)
 {
 	if (pRenderPass == nullptr) {
 		return false;
@@ -121,7 +121,7 @@ bool CGLES3MaterialPass::SetTextureCubeMap(uint32_t name, const CGfxTextureCubeM
 	}
 }
 
-bool CGLES3MaterialPass::SetTexture2D(uint32_t name, const char *szFileName, uint32_t baseLevel)
+bool CGLES3MaterialPass::SetTexture2D(uint32_t name, const char* szFileName, uint32_t baseLevel)
 {
 	if (m_ptrDescriptorSet && m_ptrDescriptorSet->GetDescriptorLayout()->IsSampledImageValid(name)) {
 		return m_ptrDescriptorSet->SetTexture2D(name, GLES3Renderer()->NewTexture2D(szFileName, baseLevel), m_pSamplers[name]);
@@ -131,7 +131,7 @@ bool CGLES3MaterialPass::SetTexture2D(uint32_t name, const char *szFileName, uin
 	}
 }
 
-bool CGLES3MaterialPass::SetTexture2DArray(uint32_t name, const char *szFileName, uint32_t baseLevel)
+bool CGLES3MaterialPass::SetTexture2DArray(uint32_t name, const char* szFileName, uint32_t baseLevel)
 {
 	if (m_ptrDescriptorSet && m_ptrDescriptorSet->GetDescriptorLayout()->IsSampledImageValid(name)) {
 		return m_ptrDescriptorSet->SetTexture2DArray(name, GLES3Renderer()->NewTexture2DArray(szFileName, baseLevel), m_pSamplers[name]);
@@ -141,7 +141,7 @@ bool CGLES3MaterialPass::SetTexture2DArray(uint32_t name, const char *szFileName
 	}
 }
 
-bool CGLES3MaterialPass::SetTextureCubeMap(uint32_t name, const char *szFileName, uint32_t baseLevel)
+bool CGLES3MaterialPass::SetTextureCubeMap(uint32_t name, const char* szFileName, uint32_t baseLevel)
 {
 	if (m_ptrDescriptorSet && m_ptrDescriptorSet->GetDescriptorLayout()->IsSampledImageValid(name)) {
 		return m_ptrDescriptorSet->SetTextureCubeMap(name, GLES3Renderer()->NewTextureCubeMap(szFileName, baseLevel), m_pSamplers[name]);
@@ -215,7 +215,7 @@ bool CGLES3MaterialPass::SetUniformVec4(uint32_t name, float v0, float v1, float
 	}
 }
 
-bool CGLES3MaterialPass::SetUniformMat4(uint32_t name, const float *value)
+bool CGLES3MaterialPass::SetUniformMat4(uint32_t name, const float* value)
 {
 	if (m_ptrDescriptorSet && m_ptrDescriptorSet->GetDescriptorLayout()->IsUniformBlockValid(name)) {
 		if (m_pUniformMat4s[name] == nullptr) {
@@ -231,7 +231,7 @@ bool CGLES3MaterialPass::SetUniformMat4(uint32_t name, const float *value)
 	}
 }
 
-void CGLES3MaterialPass::Bind(const CGLES3PipelineGraphics *pPipeline) const
+void CGLES3MaterialPass::Bind(const CGLES3PipelineGraphics* pPipeline) const
 {
 	pPipeline->BindDescriptorSet(m_ptrDescriptorSet);
 }

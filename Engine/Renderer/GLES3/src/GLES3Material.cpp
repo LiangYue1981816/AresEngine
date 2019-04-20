@@ -1,7 +1,7 @@
 #include "GLES3Renderer.h"
 
 
-CGLES3Material::CGLES3Material(CGLES3MaterialManager *pManager, uint32_t name)
+CGLES3Material::CGLES3Material(CGLES3MaterialManager* pManager, uint32_t name)
 	: CGfxMaterial(name)
 	, m_pManager(pManager)
 {
@@ -20,7 +20,7 @@ void CGLES3Material::Release(void)
 
 CGfxMaterialPass* CGLES3Material::GetPass(uint32_t name)
 {
-	const auto &itPass = m_pPasses.find(name);
+	const auto& itPass = m_pPasses.find(name);
 
 	if (itPass != m_pPasses.end()) {
 		return itPass->second;
@@ -41,7 +41,7 @@ CGfxMaterialPass* CGLES3Material::CreatePass(uint32_t name)
 
 void CGLES3Material::Destroy(void)
 {
-	for (const auto &itPass : m_pPasses) {
+	for (const auto& itPass : m_pPasses) {
 		delete itPass.second;
 	}
 

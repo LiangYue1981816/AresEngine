@@ -30,7 +30,7 @@ uint32_t CGLES3VertexBuffer::GetSize(void) const
 	return m_ptrBuffer->GetSize();
 }
 
-bool CGLES3VertexBuffer::BufferData(size_t offset, size_t size, const void *pBuffer)
+bool CGLES3VertexBuffer::BufferData(size_t offset, size_t size, const void* pBuffer)
 {
 	return m_ptrBuffer->BufferData(offset, size, pBuffer);
 }
@@ -49,7 +49,7 @@ void CGLES3VertexBuffer::Bind(void) const
 			uintptr_t offset = GetVertexAttributeOffset(m_format, attribute);
 
 			glEnableVertexAttribArray(location);
-			glVertexAttribPointer(location, components, GL_FLOAT, GL_FALSE, stride, (const void *)offset);
+			glVertexAttribPointer(location, components, GL_FLOAT, GL_FALSE, stride, (const void*)offset);
 			glVertexAttribDivisor(location, 0);
 		}
 	}

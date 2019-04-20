@@ -1,7 +1,7 @@
 #include "GLES3Renderer.h"
 
 
-CGLES3TextureCubeMap::CGLES3TextureCubeMap(CGLES3TextureCubeMapManager *pManager, uint32_t name)
+CGLES3TextureCubeMap::CGLES3TextureCubeMap(CGLES3TextureCubeMapManager* pManager, uint32_t name)
 	: CGfxTextureCubeMap(name)
 	, m_pManager(pManager)
 
@@ -72,8 +72,8 @@ bool CGLES3TextureCubeMap::Create(GfxPixelFormat format, int width, int height, 
 
 void CGLES3TextureCubeMap::Destroy(void)
 {
-	for (const auto &itFaceSize : m_size) {
-		for (const auto &itLevelSize : itFaceSize.second) {
+	for (const auto& itFaceSize : m_size) {
+		for (const auto& itLevelSize : itFaceSize.second) {
 			CGfxProfiler::DecTextureDataSize(itLevelSize.second);
 		}
 	}
@@ -86,7 +86,7 @@ void CGLES3TextureCubeMap::Destroy(void)
 	m_ptrTexture->Destroy();
 }
 
-bool CGLES3TextureCubeMap::TransferTexture2D(GfxPixelFormat format, GfxTextureCubeMapFace face, int level, int xoffset, int yoffset, int width, int height, GfxDataType type, uint32_t size, const void *data)
+bool CGLES3TextureCubeMap::TransferTexture2D(GfxPixelFormat format, GfxTextureCubeMapFace face, int level, int xoffset, int yoffset, int width, int height, GfxDataType type, uint32_t size, const void* data)
 {
 	if (m_ptrTexture->TransferTextureCubeMap(format, face, level, xoffset, yoffset, width, height, type, size, data)) {
 		CGfxProfiler::DecTextureDataSize(m_size[face][level]);
@@ -99,7 +99,7 @@ bool CGLES3TextureCubeMap::TransferTexture2D(GfxPixelFormat format, GfxTextureCu
 	}
 }
 
-bool CGLES3TextureCubeMap::TransferTexture2DCompressed(GfxPixelFormat format, GfxTextureCubeMapFace face, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void *data)
+bool CGLES3TextureCubeMap::TransferTexture2DCompressed(GfxPixelFormat format, GfxTextureCubeMapFace face, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
 {
 	if (m_ptrTexture->TransferTextureCubeMapCompressed(format, face, level, xoffset, yoffset, width, height, size, data)) {
 		CGfxProfiler::DecTextureDataSize(m_size[face][level]);

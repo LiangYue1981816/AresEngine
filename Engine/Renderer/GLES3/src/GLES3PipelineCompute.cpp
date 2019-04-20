@@ -18,7 +18,7 @@ const CGfxDescriptorLayoutPtr CGLES3PipelineCompute::GetDescriptorLayout(int ind
 	return m_pPipeline->GetDescriptorLayout(indexDescriptorSet);
 }
 
-bool CGLES3PipelineCompute::Create(const CGfxShader *pComputeShader)
+bool CGLES3PipelineCompute::Create(const CGfxShader* pComputeShader)
 {
 	if (pComputeShader == nullptr) {
 		return false;
@@ -35,7 +35,7 @@ bool CGLES3PipelineCompute::Create(const CGfxShader *pComputeShader)
 	Destroy();
 	{
 		do {
-			if (m_pPipeline->CreateProgram(nullptr, nullptr, (const CGLES3Shader *)pComputeShader) == false) {
+			if (m_pPipeline->CreateProgram(nullptr, nullptr, (const CGLES3Shader*)pComputeShader) == false) {
 				break;
 			}
 
@@ -105,57 +105,57 @@ void CGLES3PipelineCompute::Uniform4f(uint32_t name, float v0, float v1, float v
 	m_pPipeline->Uniform4f(name, v0, v1, v2, v3);
 }
 
-void CGLES3PipelineCompute::Uniform1iv(uint32_t name, int count, const int *value) const
+void CGLES3PipelineCompute::Uniform1iv(uint32_t name, int count, const int* value) const
 {
 	m_pPipeline->Uniform1iv(name, count, value);
 }
 
-void CGLES3PipelineCompute::Uniform2iv(uint32_t name, int count, const int *value) const
+void CGLES3PipelineCompute::Uniform2iv(uint32_t name, int count, const int* value) const
 {
 	m_pPipeline->Uniform2iv(name, count, value);
 }
 
-void CGLES3PipelineCompute::Uniform3iv(uint32_t name, int count, const int *value) const
+void CGLES3PipelineCompute::Uniform3iv(uint32_t name, int count, const int* value) const
 {
 	m_pPipeline->Uniform3iv(name, count, value);
 }
 
-void CGLES3PipelineCompute::Uniform4iv(uint32_t name, int count, const int *value) const
+void CGLES3PipelineCompute::Uniform4iv(uint32_t name, int count, const int* value) const
 {
 	m_pPipeline->Uniform4iv(name, count, value);
 }
 
-void CGLES3PipelineCompute::Uniform1fv(uint32_t name, int count, const float *value) const
+void CGLES3PipelineCompute::Uniform1fv(uint32_t name, int count, const float* value) const
 {
 	m_pPipeline->Uniform1fv(name, count, value);
 }
 
-void CGLES3PipelineCompute::Uniform2fv(uint32_t name, int count, const float *value) const
+void CGLES3PipelineCompute::Uniform2fv(uint32_t name, int count, const float* value) const
 {
 	m_pPipeline->Uniform2fv(name, count, value);
 }
 
-void CGLES3PipelineCompute::Uniform3fv(uint32_t name, int count, const float *value) const
+void CGLES3PipelineCompute::Uniform3fv(uint32_t name, int count, const float* value) const
 {
 	m_pPipeline->Uniform3fv(name, count, value);
 }
 
-void CGLES3PipelineCompute::Uniform4fv(uint32_t name, int count, const float *value) const
+void CGLES3PipelineCompute::Uniform4fv(uint32_t name, int count, const float* value) const
 {
 	m_pPipeline->Uniform4fv(name, count, value);
 }
 
-void CGLES3PipelineCompute::UniformMatrix2fv(uint32_t name, int count, const float *value) const
+void CGLES3PipelineCompute::UniformMatrix2fv(uint32_t name, int count, const float* value) const
 {
 	m_pPipeline->UniformMatrix2fv(name, count, value);
 }
 
-void CGLES3PipelineCompute::UniformMatrix3fv(uint32_t name, int count, const float *value) const
+void CGLES3PipelineCompute::UniformMatrix3fv(uint32_t name, int count, const float* value) const
 {
 	m_pPipeline->UniformMatrix3fv(name, count, value);
 }
 
-void CGLES3PipelineCompute::UniformMatrix4fv(uint32_t name, int count, const float *value) const
+void CGLES3PipelineCompute::UniformMatrix4fv(uint32_t name, int count, const float* value) const
 {
 	m_pPipeline->UniformMatrix4fv(name, count, value);
 }

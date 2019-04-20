@@ -9,7 +9,7 @@ CGLES3MeshManager::CGLES3MeshManager(void)
 
 CGLES3MeshManager::~CGLES3MeshManager(void)
 {
-	for (const auto &itMesh : m_pMeshs) {
+	for (const auto& itMesh : m_pMeshs) {
 		delete itMesh.second;
 	}
 }
@@ -18,7 +18,7 @@ CGLES3Mesh* CGLES3MeshManager::Get(uint32_t name)
 {
 	mutex_autolock autolock(&lock);
 	{
-		const auto &itMesh = m_pMeshs.find(name);
+		const auto& itMesh = m_pMeshs.find(name);
 
 		if (itMesh != m_pMeshs.end()) {
 			return itMesh->second;
@@ -41,7 +41,7 @@ CGLES3Mesh* CGLES3MeshManager::Create(uint32_t name)
 	}
 }
 
-CGLES3Mesh* CGLES3MeshManager::Create(const char *szFileName, uint32_t vertexBinding)
+CGLES3Mesh* CGLES3MeshManager::Create(const char* szFileName, uint32_t vertexBinding)
 {
 	uint32_t name = HashValue(szFileName);
 
@@ -56,7 +56,7 @@ CGLES3Mesh* CGLES3MeshManager::Create(const char *szFileName, uint32_t vertexBin
 	}
 }
 
-void CGLES3MeshManager::Destroy(CGLES3Mesh *pMesh)
+void CGLES3MeshManager::Destroy(CGLES3Mesh* pMesh)
 {
 	mutex_autolock autolock(&lock);
 	{

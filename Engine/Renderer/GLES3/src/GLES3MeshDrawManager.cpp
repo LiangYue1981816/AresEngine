@@ -8,7 +8,7 @@ CGLES3MeshDrawManager::CGLES3MeshDrawManager(void)
 
 CGLES3MeshDrawManager::~CGLES3MeshDrawManager(void)
 {
-	for (const auto &itMeshDraw : m_pMeshDraws) {
+	for (const auto& itMeshDraw : m_pMeshDraws) {
 		delete itMeshDraw.second;
 	}
 }
@@ -17,7 +17,7 @@ CGLES3MeshDraw* CGLES3MeshDrawManager::Get(uint32_t name)
 {
 	mutex_autolock autolock(&lock);
 	{
-		const auto &itMeshDraw = m_pMeshDraws.find(name);
+		const auto& itMeshDraw = m_pMeshDraws.find(name);
 
 		if (itMeshDraw != m_pMeshDraws.end()) {
 			return itMeshDraw->second;
@@ -40,7 +40,7 @@ CGLES3MeshDraw* CGLES3MeshDrawManager::Create(uint32_t name, const CGfxMeshPtr p
 	}
 }
 
-void CGLES3MeshDrawManager::Destroy(CGLES3MeshDraw *pMeshDraw)
+void CGLES3MeshDrawManager::Destroy(CGLES3MeshDraw* pMeshDraw)
 {
 	mutex_autolock autolock(&lock);
 	{

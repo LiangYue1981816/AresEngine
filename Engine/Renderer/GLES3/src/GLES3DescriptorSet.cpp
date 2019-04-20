@@ -1,7 +1,7 @@
 #include "GLES3Renderer.h"
 
 
-CGLES3DescriptorSet::CGLES3DescriptorSet(CGLES3DescriptorSetManager *pManager, const CGfxDescriptorLayoutPtr ptrDescriptorLayout)
+CGLES3DescriptorSet::CGLES3DescriptorSet(CGLES3DescriptorSetManager* pManager, const CGfxDescriptorLayoutPtr ptrDescriptorLayout)
 	: CGfxDescriptorSet(ptrDescriptorLayout)
 	, m_pManager(pManager)
 	, m_ptrDescriptorLayout(ptrDescriptorLayout)
@@ -19,10 +19,10 @@ void CGLES3DescriptorSet::Release(void)
 	m_pManager->Destroy(this);
 }
 
-bool CGLES3DescriptorSet::SetTexture2D(uint32_t name, const CGfxTexture2DPtr ptrTexture, const CGfxSampler *pSampler)
+bool CGLES3DescriptorSet::SetTexture2D(uint32_t name, const CGfxTexture2DPtr ptrTexture, const CGfxSampler* pSampler)
 {
 	if (m_ptrDescriptorLayout->IsSampledImageValid(name)) {
-		m_imageDescriptorInfos[name].pSampler = (CGfxSampler *)pSampler;
+		m_imageDescriptorInfos[name].pSampler = (CGfxSampler*)pSampler;
 		m_imageDescriptorInfos[name].ptrTexture2D = ptrTexture;
 		return true;
 	}
@@ -31,10 +31,10 @@ bool CGLES3DescriptorSet::SetTexture2D(uint32_t name, const CGfxTexture2DPtr ptr
 	}
 }
 
-bool CGLES3DescriptorSet::SetTexture2DArray(uint32_t name, const CGfxTexture2DArrayPtr ptrTexture, const CGfxSampler *pSampler)
+bool CGLES3DescriptorSet::SetTexture2DArray(uint32_t name, const CGfxTexture2DArrayPtr ptrTexture, const CGfxSampler* pSampler)
 {
 	if (m_ptrDescriptorLayout->IsSampledImageValid(name)) {
-		m_imageDescriptorInfos[name].pSampler = (CGfxSampler *)pSampler;
+		m_imageDescriptorInfos[name].pSampler = (CGfxSampler*)pSampler;
 		m_imageDescriptorInfos[name].ptrTexture2DArray = ptrTexture;
 		return true;
 	}
@@ -43,10 +43,10 @@ bool CGLES3DescriptorSet::SetTexture2DArray(uint32_t name, const CGfxTexture2DAr
 	}
 }
 
-bool CGLES3DescriptorSet::SetTextureCubeMap(uint32_t name, const CGfxTextureCubeMapPtr ptrTexture, const CGfxSampler *pSampler)
+bool CGLES3DescriptorSet::SetTextureCubeMap(uint32_t name, const CGfxTextureCubeMapPtr ptrTexture, const CGfxSampler* pSampler)
 {
 	if (m_ptrDescriptorLayout->IsSampledImageValid(name)) {
-		m_imageDescriptorInfos[name].pSampler = (CGfxSampler *)pSampler;
+		m_imageDescriptorInfos[name].pSampler = (CGfxSampler*)pSampler;
 		m_imageDescriptorInfos[name].ptrTextureCubeMap = ptrTexture;
 		return true;
 	}
@@ -55,10 +55,10 @@ bool CGLES3DescriptorSet::SetTextureCubeMap(uint32_t name, const CGfxTextureCube
 	}
 }
 
-bool CGLES3DescriptorSet::SetTextureInputAttachment(uint32_t name, const CGfxRenderTexturePtr ptrTexture, const CGfxSampler *pSampler)
+bool CGLES3DescriptorSet::SetTextureInputAttachment(uint32_t name, const CGfxRenderTexturePtr ptrTexture, const CGfxSampler* pSampler)
 {
 	if (m_ptrDescriptorLayout->IsSampledImageValid(name)) {
-		m_imageDescriptorInfos[name].pSampler = (CGfxSampler *)pSampler;
+		m_imageDescriptorInfos[name].pSampler = (CGfxSampler*)pSampler;
 		m_imageDescriptorInfos[name].ptrTextureInputAttachment = ptrTexture;
 		return true;
 	}
@@ -87,7 +87,7 @@ const CGfxDescriptorLayoutPtr CGLES3DescriptorSet::GetDescriptorLayout(void) con
 
 const DescriptorImageInfo* CGLES3DescriptorSet::GetDescriptorImageInfo(uint32_t name) const
 {
-	const auto &itDescriptorInfo = m_imageDescriptorInfos.find(name);
+	const auto& itDescriptorInfo = m_imageDescriptorInfos.find(name);
 
 	if (itDescriptorInfo != m_imageDescriptorInfos.end()) {
 		return &itDescriptorInfo->second;
@@ -99,7 +99,7 @@ const DescriptorImageInfo* CGLES3DescriptorSet::GetDescriptorImageInfo(uint32_t 
 
 const DescriptorBufferInfo* CGLES3DescriptorSet::GetDescriptorBufferInfo(uint32_t name) const
 {
-	const auto &itDescriptorInfo = m_bufferDescriptorInfos.find(name);
+	const auto& itDescriptorInfo = m_bufferDescriptorInfos.find(name);
 
 	if (itDescriptorInfo != m_bufferDescriptorInfos.end()) {
 		return &itDescriptorInfo->second;

@@ -1,7 +1,7 @@
 #include "GLES3Renderer.h"
 
 
-CGLES3RenderTexture::CGLES3RenderTexture(CGLES3RenderTextureManager *pManager, uint32_t name)
+CGLES3RenderTexture::CGLES3RenderTexture(CGLES3RenderTextureManager* pManager, uint32_t name)
 	: CGfxRenderTexture(name)
 	, m_pManager(pManager)
 

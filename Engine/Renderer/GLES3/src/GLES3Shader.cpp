@@ -30,13 +30,13 @@ const CGfxSprivCross& CGLES3Shader::GetSprivCross(void) const
 	return m_spriv;
 }
 
-bool CGLES3Shader::Create(const uint32_t *words, size_t numWords, shader_kind kind)
+bool CGLES3Shader::Create(const uint32_t* words, size_t numWords, shader_kind kind)
 {
 	Destroy();
 	{
 		do {
 			const eastl::string strSource = m_spriv.Create(words, numWords, 310);
-			const char *szSource = strSource.c_str();
+			const char* szSource = strSource.c_str();
 
 			m_kind = kind;
 			m_shader = glCreateShader(glGetShaderType(kind));

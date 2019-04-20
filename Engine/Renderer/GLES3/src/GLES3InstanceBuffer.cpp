@@ -32,7 +32,7 @@ uint32_t CGLES3InstanceBuffer::GetSize(void) const
 	return m_ptrBuffer->GetSize();
 }
 
-bool CGLES3InstanceBuffer::BufferData(size_t size, const void *pBuffer)
+bool CGLES3InstanceBuffer::BufferData(size_t size, const void* pBuffer)
 {
 	m_count = size / GetInstanceStride(m_format);
 
@@ -64,7 +64,7 @@ void CGLES3InstanceBuffer::Bind(void) const
 			uintptr_t offset = GetInstanceAttributeOffset(m_format, attribute);
 
 			glEnableVertexAttribArray(location);
-			glVertexAttribPointer(location, components, GL_FLOAT, GL_FALSE, stride, (const void *)offset);
+			glVertexAttribPointer(location, components, GL_FLOAT, GL_FALSE, stride, (const void*)offset);
 			glVertexAttribDivisor(location, 1);
 		}
 	}

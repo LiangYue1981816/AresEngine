@@ -1,7 +1,7 @@
 #include "GLES3Renderer.h"
 
 
-CGLES3Mesh::CGLES3Mesh(CGLES3MeshManager *pManager, uint32_t name)
+CGLES3Mesh::CGLES3Mesh(CGLES3MeshManager* pManager, uint32_t name)
 	: CGfxMesh(name)
 	, m_pManager(pManager)
 
@@ -23,7 +23,7 @@ void CGLES3Mesh::Release(void)
 
 CGfxMesh::Draw* CGLES3Mesh::GetDraw(uint32_t name)
 {
-	const auto &itDraw = m_draws.find(name);
+	const auto& itDraw = m_draws.find(name);
 
 	if (itDraw != m_draws.end()) {
 		return &itDraw->second;
@@ -43,7 +43,7 @@ CGfxVertexBuffer* CGLES3Mesh::GetVertexBuffer(void)
 	return m_pVertexBuffer;
 }
 
-bool CGLES3Mesh::CreateDraw(uint32_t name, const glm::aabb &aabb, int baseVertex, int firstIndex, int indexCount)
+bool CGLES3Mesh::CreateDraw(uint32_t name, const glm::aabb& aabb, int baseVertex, int firstIndex, int indexCount)
 {
 	m_draws[name].aabb = aabb;
 	m_draws[name].baseVertex = baseVertex;
@@ -52,7 +52,7 @@ bool CGLES3Mesh::CreateDraw(uint32_t name, const glm::aabb &aabb, int baseVertex
 	return true;
 }
 
-bool CGLES3Mesh::CreateIndexBuffer(GfxIndexType type, size_t size, bool bDynamic, const void *pBuffer)
+bool CGLES3Mesh::CreateIndexBuffer(GfxIndexType type, size_t size, bool bDynamic, const void* pBuffer)
 {
 	if (m_pIndexBuffer == nullptr) {
 		m_pIndexBuffer = new CGLES3IndexBuffer(type, size, bDynamic);
@@ -63,7 +63,7 @@ bool CGLES3Mesh::CreateIndexBuffer(GfxIndexType type, size_t size, bool bDynamic
 	}
 }
 
-bool CGLES3Mesh::CreateVertexBuffer(uint32_t vertexFormat, uint32_t vertexBinding, size_t size, bool bDynamic, const void *pBuffer)
+bool CGLES3Mesh::CreateVertexBuffer(uint32_t vertexFormat, uint32_t vertexBinding, size_t size, bool bDynamic, const void* pBuffer)
 {
 	if (m_pVertexBuffer == nullptr) {
 		m_pVertexBuffer = new CGLES3VertexBuffer(vertexFormat, vertexBinding, size, bDynamic);

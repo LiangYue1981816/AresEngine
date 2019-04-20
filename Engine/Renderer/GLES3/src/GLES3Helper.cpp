@@ -9,12 +9,12 @@ void CGLES3Helper::SetupExtensions(void)
 	glGetIntegerv(GL_NUM_EXTENSIONS, &numExtensions);
 
 	for (int index = 0; index < numExtensions; index++) {
-		const char *extension = (const char *)glGetStringi(GL_EXTENSIONS, index);
+		const char* extension = (const char*)glGetStringi(GL_EXTENSIONS, index);
 		extensions[HashValue(extension)] = extension;
 	}
 }
 
-bool CGLES3Helper::IsSupportExtension(const char *extension)
+bool CGLES3Helper::IsSupportExtension(const char* extension)
 {
 	return extensions.find(HashValue(extension)) != extensions.end();
 }

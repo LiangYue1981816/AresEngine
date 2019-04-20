@@ -1,7 +1,7 @@
 #include "GLES3Renderer.h"
 
 
-CGLES3SwapChain::CGLES3SwapChain(void *hDC, int width, int height, GfxPixelFormat format)
+CGLES3SwapChain::CGLES3SwapChain(void* hDC, int width, int height, GfxPixelFormat format)
 	: CGfxSwapChain(width, height, format)
 	, m_hDC(hDC)
 
@@ -22,7 +22,7 @@ CGLES3SwapChain::CGLES3SwapChain(void *hDC, int width, int height, GfxPixelForma
 			const float color[] = { 0.0f, 0.0f, 0.0f, 0.0f };
 			const eastl::vector<uint32_t> drawBuffers{ GL_COLOR_ATTACHMENT0 };
 
-			glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, CGLES3Helper::TranslateTextureTarget(((CGLES3RenderTexture *)m_ptrFrameTexture.GetPointer())->GetType()), (GLuint)((CGLES3RenderTexture *)m_ptrFrameTexture.GetPointer())->GetTexture(), 0);
+			glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, CGLES3Helper::TranslateTextureTarget(((CGLES3RenderTexture*)m_ptrFrameTexture.GetPointer())->GetType()), (GLuint)((CGLES3RenderTexture*)m_ptrFrameTexture.GetPointer())->GetTexture(), 0);
 			glClearBufferfv(GL_COLOR, 0, color);
 
 			glReadBuffers((int)drawBuffers.size(), drawBuffers.data());

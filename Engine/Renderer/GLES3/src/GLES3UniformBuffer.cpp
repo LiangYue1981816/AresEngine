@@ -1,7 +1,7 @@
 #include "GLES3Renderer.h"
 
 
-CGLES3UniformBuffer::CGLES3UniformBuffer(CGLES3UniformBufferManager *pManager, size_t size)
+CGLES3UniformBuffer::CGLES3UniformBuffer(CGLES3UniformBufferManager* pManager, size_t size)
 	: CGfxUniformBuffer(size)
 	, m_pManager(pManager)
 {
@@ -29,7 +29,7 @@ uint32_t CGLES3UniformBuffer::GetSize(void) const
 	return m_ptrBuffer->GetSize();
 }
 
-bool CGLES3UniformBuffer::BufferData(size_t offset, size_t size, const void *pBuffer)
+bool CGLES3UniformBuffer::BufferData(size_t offset, size_t size, const void* pBuffer)
 {
 	return m_ptrBuffer->BufferData(offset, size, pBuffer);
 }

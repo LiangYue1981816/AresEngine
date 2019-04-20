@@ -1,7 +1,7 @@
 #include "GLES3Renderer.h"
 
 
-CGLES3RenderPass::CGLES3RenderPass(CGLES3RenderPassManager *pManager, uint32_t name, int numAttachments, int numSubpasses)
+CGLES3RenderPass::CGLES3RenderPass(CGLES3RenderPassManager* pManager, uint32_t name, int numAttachments, int numSubpasses)
 	: CGfxRenderPass(name, numAttachments, numSubpasses)
 	, m_pManager(pManager)
 

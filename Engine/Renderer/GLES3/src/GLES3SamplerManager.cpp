@@ -8,7 +8,7 @@ CGLES3SamplerManager::CGLES3SamplerManager(void)
 
 CGLES3SamplerManager::~CGLES3SamplerManager(void)
 {
-	for (const auto &itSampler : m_pSamplers) {
+	for (const auto& itSampler : m_pSamplers) {
 		delete itSampler.second;
 	}
 }

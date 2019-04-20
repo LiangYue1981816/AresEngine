@@ -1,7 +1,7 @@
 #include "GLES3Renderer.h"
 
 
-CGLES3DescriptorLayout::CGLES3DescriptorLayout(CGLES3DescriptorLayoutManager *pManager, uint32_t set)
+CGLES3DescriptorLayout::CGLES3DescriptorLayout(CGLES3DescriptorLayoutManager* pManager, uint32_t set)
 	: CGfxDescriptorLayout(set)
 	, m_pManager(pManager)
 	, m_set(set)
@@ -59,7 +59,7 @@ uint32_t CGLES3DescriptorLayout::GetSetIndex(void) const
 
 uint32_t CGLES3DescriptorLayout::GetUniformBlockBinding(uint32_t name) const
 {
-	const auto &itBinding = m_uniformBlockBindings.find(name);
+	const auto& itBinding = m_uniformBlockBindings.find(name);
 
 	if (itBinding != m_uniformBlockBindings.end()) {
 		return itBinding->second;
@@ -71,7 +71,7 @@ uint32_t CGLES3DescriptorLayout::GetUniformBlockBinding(uint32_t name) const
 
 uint32_t CGLES3DescriptorLayout::GetSampledImageBinding(uint32_t name) const
 {
-	const auto &itBinding = m_sampledImageBindings.find(name);
+	const auto& itBinding = m_sampledImageBindings.find(name);
 
 	if (itBinding != m_sampledImageBindings.end()) {
 		return itBinding->second;
@@ -93,15 +93,15 @@ bool CGLES3DescriptorLayout::IsSampledImageValid(uint32_t name) const
 
 bool CGLES3DescriptorLayout::IsCompatible(const CGfxDescriptorLayoutPtr ptrLayout) const
 {
-	if (m_set != ((CGLES3DescriptorLayout *)ptrLayout.GetPointer())->m_set) {
+	if (m_set != ((CGLES3DescriptorLayout*)ptrLayout.GetPointer())->m_set) {
 		return false;
 	}
 
-	if (m_uniformBlockBindings != ((CGLES3DescriptorLayout *)ptrLayout.GetPointer())->m_uniformBlockBindings) {
+	if (m_uniformBlockBindings != ((CGLES3DescriptorLayout*)ptrLayout.GetPointer())->m_uniformBlockBindings) {
 		return false;
 	}
 
-	if (m_sampledImageBindings != ((CGLES3DescriptorLayout *)ptrLayout.GetPointer())->m_sampledImageBindings) {
+	if (m_sampledImageBindings != ((CGLES3DescriptorLayout*)ptrLayout.GetPointer())->m_sampledImageBindings) {
 		return false;
 	}
 

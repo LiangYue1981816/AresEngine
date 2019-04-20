@@ -9,12 +9,12 @@ CGLES3ShaderManager::CGLES3ShaderManager(void)
 
 CGLES3ShaderManager::~CGLES3ShaderManager(void)
 {
-	for (const auto &itShader : m_pShaders) {
+	for (const auto& itShader : m_pShaders) {
 		delete itShader.second;
 	}
 }
 
-CGLES3Shader* CGLES3ShaderManager::Create(const char *szFileName, shader_kind kind)
+CGLES3Shader* CGLES3ShaderManager::Create(const char* szFileName, shader_kind kind)
 {
 	uint32_t name = HashValue(szFileName);
 
