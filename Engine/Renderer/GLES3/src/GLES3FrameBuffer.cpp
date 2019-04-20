@@ -116,7 +116,7 @@ void CGLES3FrameBuffer::Bind(const AttachmentInformation* pAttachmentInformation
 	bool bValid = status == GL_FRAMEBUFFER_COMPLETE;
 }
 
-void CGLES3FrameBuffer::Resolve(const AttachmentInformation* pAttachmentInformations, const SubpassInformation* pSubpassInformation) const
+void CGLES3FrameBuffer::Resolve(const AttachmentInformation * pAttachmentInformations, const SubpassInformation * pSubpassInformation) const
 {
 	if (pSubpassInformation->resolveAttachments.empty()) {
 		return;
@@ -157,7 +157,7 @@ void CGLES3FrameBuffer::Resolve(const AttachmentInformation* pAttachmentInformat
 	}
 }
 
-void CGLES3FrameBuffer::InvalidateFramebuffer(const AttachmentInformation* pAttachmentInformations, const SubpassInformation* pSubpassInformation) const
+void CGLES3FrameBuffer::InvalidateFramebuffer(const AttachmentInformation * pAttachmentInformations, const SubpassInformation * pSubpassInformation) const
 {
 	eastl::vector<uint32_t> discardBuffers;
 	{
