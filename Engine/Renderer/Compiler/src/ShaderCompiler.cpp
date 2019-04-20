@@ -31,22 +31,22 @@ CShaderCompiler::~CShaderCompiler(void)
 	pInstance = nullptr;
 }
 
-void CShaderCompiler::SetCachePath(const char *szPath)
+void CShaderCompiler::SetCachePath(const char* szPath)
 {
 	strcpy(m_szCachePath, szPath);
 }
 
-void CShaderCompiler::AddIncludePath(const char *szPath)
+void CShaderCompiler::AddIncludePath(const char* szPath)
 {
 	m_fileFinder.search_path().emplace_back(szPath);
 }
 
-void CShaderCompiler::AddMacroDefinition(const char *szName)
+void CShaderCompiler::AddMacroDefinition(const char* szName)
 {
 	m_strMacroDefinitionNames.emplace_back(szName);
 }
 
-void CShaderCompiler::AddMacroDefinition(const char *szName, const char *szValue)
+void CShaderCompiler::AddMacroDefinition(const char* szName, const char* szValue)
 {
 	m_strMacroDefinitionNameAndValues[szName] = szValue;
 }
@@ -57,7 +57,7 @@ void CShaderCompiler::ClearMacroDefinition(void)
 	m_strMacroDefinitionNameAndValues.clear();
 }
 
-static std::string PreprocessShader(std::string &source, shaderc_shader_kind kind, const shaderc::Compiler &compiler, const shaderc::CompileOptions &options)
+static std::string PreprocessShader(std::string& source, shaderc_shader_kind kind, const shaderc::Compiler& compiler, const shaderc::CompileOptions& options)
 {
 	shaderc::PreprocessedSourceCompilationResult module = compiler.PreprocessGlsl(source, kind, "SPIR-V Preprocess", options);
 
@@ -71,15 +71,15 @@ static std::string PreprocessShader(std::string &source, shaderc_shader_kind kin
 	return { module.cbegin(), module.cend() };
 }
 
-std::string CShaderCompiler::Preprocess(const char *szFileName, shaderc_shader_kind kind)
+std::string CShaderCompiler::Preprocess(const char* szFileName, shaderc_shader_kind kind)
 {
 	shaderc::CompileOptions options(m_options);
 
-	for (const auto &itMacroDefinition : m_strMacroDefinitionNames) {
+	for (const auto& itMacroDefinition : m_strMacroDefinitionNames) {
 		options.AddMacroDefinition(itMacroDefinition);
 	}
 
-	for (const auto &itMacroDefinition : m_strMacroDefinitionNameAndValues) {
+	for (const auto& itMacroDefinition : m_strMacroDefinitionNameAndValues) {
 		options.AddMacroDefinition(itMacroDefinition.first, itMacroDefinition.second);
 	}
 
@@ -92,7 +92,7 @@ std::string CShaderCompiler::Preprocess(const char *szFileName, shaderc_shader_k
 	return PreprocessShader(source, kind, m_compiler, options);
 }
 
-static bool CompileShader(std::string &source, shaderc_shader_kind kind, const shaderc::Compiler &compiler, const shaderc::CompileOptions &options, std::vector<uint32_t> &words)
+static bool CompileShader(std::string& source, shaderc_shader_kind kind, const shaderc::Compiler& compiler, const shaderc::CompileOptions& options, std::vector<uint32_t>& words)
 {
 	shaderc::SpvCompilationResult module = compiler.CompileGlslToSpv(source, kind, "SPIR-V Compiler", options);
 
@@ -108,18 +108,18 @@ static bool CompileShader(std::string &source, shaderc_shader_kind kind, const s
 	return true;
 }
 
-std::vector<uint32_t> CShaderCompiler::Compile(const char *szInputFileName, const char *szOutputFileName, shaderc_shader_kind kind)
+std::vector<uint32_t> CShaderCompiler::Compile(const char* szInputFileName, const char* szOutputFileName, shaderc_shader_kind kind)
 {
 	std::vector<uint32_t> words;
 	{
 		do {
 			shaderc::CompileOptions options(m_options);
 
-			for (const auto &itMacroDefinition : m_strMacroDefinitionNames) {
+			for (const auto& itMacroDefinition : m_strMacroDefinitionNames) {
 				options.AddMacroDefinition(itMacroDefinition);
 			}
 
-			for (const auto &itMacroDefinition : m_strMacroDefinitionNameAndValues) {
+			for (const auto& itMacroDefinition : m_strMacroDefinitionNameAndValues) {
 				options.AddMacroDefinition(itMacroDefinition.first, itMacroDefinition.second);
 			}
 
@@ -156,9 +156,9 @@ std::vector<uint32_t> CShaderCompiler::Compile(const char *szInputFileName, cons
 #endif
 
 
-std::string LoadShader(const char *szFileName)
+std::string LoadShader(const char* szFileName)
 {
-	if (FILE *pFile = fopen(szFileName, "rb")) {
+	if (FILE * pFile = fopen(szFileName, "rb")) {
 		size_t size = fsize(pFile);
 		char szSource[128 * 1024] = { 0 };
 
@@ -171,7 +171,7 @@ std::string LoadShader(const char *szFileName)
 	return "";
 }
 
-bool LoadShaderStream(const char *szFileName, std::vector<uint32_t> &words, uint32_t hash)
+bool LoadShaderStream(const char* szFileName, std::vector<uint32_t>& words, uint32_t hash)
 {
 	CStream stream;
 	if (FileManager()->LoadStream(szFileName, &stream)) {
@@ -195,9 +195,9 @@ bool LoadShaderStream(const char *szFileName, std::vector<uint32_t> &words, uint
 	return false;
 }
 
-bool LoadShaderBinary(const char *szFileName, std::vector<uint32_t> &words, uint32_t hash)
+bool LoadShaderBinary(const char* szFileName, std::vector<uint32_t>& words, uint32_t hash)
 {
-	if (FILE *pFile = fopen(szFileName, "rb")) {
+	if (FILE * pFile = fopen(szFileName, "rb")) {
 		uint32_t dwHashValue;
 
 		words.clear();
@@ -219,9 +219,9 @@ bool LoadShaderBinary(const char *szFileName, std::vector<uint32_t> &words, uint
 	return false;
 }
 
-bool SaveShaderBinary(const char *szFileName, const std::vector<uint32_t> &words, uint32_t hash)
+bool SaveShaderBinary(const char* szFileName, const std::vector<uint32_t>& words, uint32_t hash)
 {
-	if (FILE *pFile = fopen(szFileName, "wb")) {
+	if (FILE * pFile = fopen(szFileName, "wb")) {
 		fwrite(&hash, sizeof(uint32_t), 1, pFile);
 		fwrite(words.data(), sizeof(uint32_t), words.size(), pFile);
 		fclose(pFile);

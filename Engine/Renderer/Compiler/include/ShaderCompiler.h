@@ -27,15 +27,15 @@ private:
 
 
 public:
-	void SetCachePath(const char *szPath);
+	void SetCachePath(const char* szPath);
 
-	void AddIncludePath(const char *szPath);
-	void AddMacroDefinition(const char *szName);
-	void AddMacroDefinition(const char *szName, const char *szValue);
+	void AddIncludePath(const char* szPath);
+	void AddMacroDefinition(const char* szName);
+	void AddMacroDefinition(const char* szName, const char* szValue);
 	void ClearMacroDefinition(void);
 
-	std::string Preprocess(const char *szFileName, shaderc_shader_kind kind);
-	std::vector<uint32_t> Compile(const char *szInputFileName, const char *szOutputFileName, shaderc_shader_kind kind);
+	std::string Preprocess(const char* szFileName, shaderc_shader_kind kind);
+	std::vector<uint32_t> Compile(const char* szInputFileName, const char* szOutputFileName, shaderc_shader_kind kind);
 
 
 private:
@@ -53,12 +53,12 @@ private:
 	std::unique_ptr<glslc::FileIncluder> m_fileIncluder;
 
 private:
-	static CShaderCompiler *pInstance;
+	static CShaderCompiler* pInstance;
 };
 
 #endif
 
-extern std::string LoadShader(const char *szFileName);
-extern bool LoadShaderStream(const char *szFileName, std::vector<uint32_t> &words, uint32_t hash);
-extern bool LoadShaderBinary(const char *szFileName, std::vector<uint32_t> &words, uint32_t hash);
-extern bool SaveShaderBinary(const char *szFileName, const std::vector<uint32_t> &words, uint32_t hash);
+extern std::string LoadShader(const char* szFileName);
+extern bool LoadShaderStream(const char* szFileName, std::vector<uint32_t>& words, uint32_t hash);
+extern bool LoadShaderBinary(const char* szFileName, std::vector<uint32_t>& words, uint32_t hash);
+extern bool SaveShaderBinary(const char* szFileName, const std::vector<uint32_t>& words, uint32_t hash);
