@@ -13,7 +13,7 @@ CEngine* CEngine::GetInstance(void)
 	return pInstance;
 }
 
-void CEngine::Create(GfxApi api, RenderSolution solution, void *hInstance, void *hWnd, void *hDC, int width, int height, GfxPixelFormat format)
+void CEngine::Create(GfxApi api, RenderSolution solution, void* hInstance, void* hWnd, void* hDC, int width, int height, GfxPixelFormat format)
 {
 	if (pInstance == nullptr) {
 		pInstance = new CEngine(api, solution, hInstance, hWnd, hDC, width, height, format);
@@ -34,7 +34,7 @@ void CEngine::Destroy(void)
 #endif
 }
 
-CEngine::CEngine(GfxApi api, RenderSolution solution, void *hInstance, void *hWnd, void *hDC, int width, int height, GfxPixelFormat format)
+CEngine::CEngine(GfxApi api, RenderSolution solution, void* hInstance, void* hWnd, void* hDC, int width, int height, GfxPixelFormat format)
 	: m_indexQueue(0)
 
 	, m_lastTime(0.0f)
@@ -172,9 +172,9 @@ void CEngine::UpdateThread(void)
 	m_pRenderSolution->Render(m_indexQueue);
 }
 
-void* CEngine::WorkThread(void *pParams)
+void* CEngine::WorkThread(void* pParams)
 {
-	if (CEngine *pEngine = (CEngine *)pParams) {
+	if (CEngine * pEngine = (CEngine*)pParams) {
 		while (true) {
 			event_wait(&pEngine->m_eventDispatch);
 			{

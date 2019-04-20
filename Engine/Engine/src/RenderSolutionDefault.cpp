@@ -163,8 +163,8 @@ void CRenderSolutionDefault::Render(int indexQueue)
 
 		GfxRenderer()->CmdBeginRenderPass(m_ptrMainCommandBuffer[indexQueue], ptrFrameBuffer, ptrRenderPass);
 		{
-			const glm::vec4 &scissor = m_pMainCamera->GetScissor();
-			const glm::vec4 &viewport = m_pMainCamera->GetViewport();
+			const glm::vec4& scissor = m_pMainCamera->GetScissor();
+			const glm::vec4& viewport = m_pMainCamera->GetViewport();
 
 			GfxRenderer()->CmdSetScissor(m_ptrMainCommandBuffer[indexQueue], (int)scissor.x, (int)scissor.y, (int)scissor.z, (int)scissor.w);
 			GfxRenderer()->CmdSetViewport(m_ptrMainCommandBuffer[indexQueue], (int)viewport.x, (int)viewport.y, (int)viewport.z, (int)viewport.w);

@@ -38,12 +38,12 @@ class CALL_API CEngine
 {
 public:
 	static CEngine* GetInstance(void);
-	static void Create(GfxApi api, RenderSolution solution, void *hInstance, void *hWnd, void *hDC, int width, int height, GfxPixelFormat format);
+	static void Create(GfxApi api, RenderSolution solution, void* hInstance, void* hWnd, void* hDC, int width, int height, GfxPixelFormat format);
 	static void Destroy(void);
 
 
 private:
-	CEngine(GfxApi api, RenderSolution solution, void *hInstance, void *hWnd, void *hDC, int width, int height, GfxPixelFormat format);
+	CEngine(GfxApi api, RenderSolution solution, void* hInstance, void* hWnd, void* hDC, int width, int height, GfxPixelFormat format);
 	virtual ~CEngine(void);
 
 
@@ -62,7 +62,7 @@ public:
 
 private:
 	void UpdateThread(void);
-	static void* WorkThread(void *pParams);
+	static void* WorkThread(void* pParams);
 
 
 private:
@@ -74,15 +74,15 @@ private:
 	float m_totalTime;
 
 private:
-	CGfxRenderer *m_pRenderer;
-	CRenderSolutionBase *m_pRenderSolution;
+	CGfxRenderer* m_pRenderer;
+	CRenderSolutionBase* m_pRenderSolution;
 
-	CFileManager *m_pFileManager;
-	CSceneManager *m_pSceneManager;
-	CResourceLoader *m_pResourceLoader;
+	CFileManager* m_pFileManager;
+	CSceneManager* m_pSceneManager;
+	CResourceLoader* m_pResourceLoader;
 
 #ifdef PLATFORM_WINDOWS
-	CShaderCompiler *m_pShaderCompiler;
+	CShaderCompiler* m_pShaderCompiler;
 #endif
 
 private:
@@ -92,5 +92,5 @@ private:
 	pthread_t m_thread;
 
 private:
-	static CEngine *pInstance;
+	static CEngine* pInstance;
 };
