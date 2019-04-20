@@ -5,8 +5,8 @@
 class CGLES3CommandBindPipelineGraphics : public CGfxCommandBase
 {
 public:
-	CGLES3CommandBindPipelineGraphics(const CGfxPipelineGraphics *pPipelineGraphics)
-		: m_pPipelineGraphics((CGfxPipelineGraphics *)pPipelineGraphics)
+	CGLES3CommandBindPipelineGraphics(const CGfxPipelineGraphics* pPipelineGraphics)
+		: m_pPipelineGraphics((CGfxPipelineGraphics*)pPipelineGraphics)
 	{
 
 	}
@@ -31,5 +31,5 @@ public:
 
 
 private:
-	CGfxPipelineGraphics *m_pPipelineGraphics;
+	CGfxPipelineGraphics* m_pPipelineGraphics;
 };

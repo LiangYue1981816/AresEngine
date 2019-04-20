@@ -5,8 +5,8 @@
 class CGLES3CommandBindPipelineCompute : public CGfxCommandBase
 {
 public:
-	CGLES3CommandBindPipelineCompute(const CGfxPipelineCompute *pPipelineCompute)
-		: m_pPipelineCompute((CGfxPipelineCompute *)pPipelineCompute)
+	CGLES3CommandBindPipelineCompute(const CGfxPipelineCompute* pPipelineCompute)
+		: m_pPipelineCompute((CGfxPipelineCompute*)pPipelineCompute)
 	{
 
 	}
@@ -31,5 +31,5 @@ public:
 
 
 private:
-	CGfxPipelineCompute *m_pPipelineCompute;
+	CGfxPipelineCompute* m_pPipelineCompute;
 };

@@ -6,7 +6,7 @@
 class CGLES3CommandPushDebugGroup : public CGfxCommandBase
 {
 public:
-	CGLES3CommandPushDebugGroup(const char *szMessage)
+	CGLES3CommandPushDebugGroup(const char* szMessage)
 		: m_strMessage(szMessage)
 	{
 

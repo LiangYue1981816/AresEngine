@@ -5,7 +5,7 @@
 class CGLES3CommandUniform2fv : public CGfxCommandBase
 {
 public:
-	CGLES3CommandUniform2fv(uint32_t name, int count, const float *value)
+	CGLES3CommandUniform2fv(uint32_t name, int count, const float* value)
 		: m_name(name)
 		, m_value(value, value + count)
 	{
@@ -21,11 +21,11 @@ public:
 	{
 		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_UNIFORM2FV, "CommandUniform2fv");
 		{
-			if (CGLES3PipelineCompute *pPipeline = GLES3Renderer()->GetCurrentPipelineCompute()) {
+			if (CGLES3PipelineCompute * pPipeline = GLES3Renderer()->GetCurrentPipelineCompute()) {
 				pPipeline->Uniform2fv(m_name, m_value.size(), m_value.data());
 			}
 
-			if (CGLES3PipelineGraphics *pPipeline = GLES3Renderer()->GetCurrentPipelineGraphics()) {
+			if (CGLES3PipelineGraphics * pPipeline = GLES3Renderer()->GetCurrentPipelineGraphics()) {
 				pPipeline->Uniform2fv(m_name, m_value.size(), m_value.data());
 			}
 		}
