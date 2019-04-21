@@ -174,7 +174,7 @@ void CEngine::UpdateThread(void)
 
 void* CEngine::WorkThread(void* pParams)
 {
-	if (CEngine * pEngine = (CEngine*)pParams) {
+	if (CEngine* pEngine = (CEngine*)pParams) {
 		while (true) {
 			event_wait(&pEngine->m_eventDispatch);
 			{
