@@ -1,7 +1,7 @@
 #include "VKRenderer.h"
 
 
-CVKDevice::CVKDevice(CVKInstance *pInstance)
+CVKDevice::CVKDevice(CVKInstance* pInstance)
 	: m_pInstance(pInstance)
 
 	, m_vkDevice(VK_NULL_HANDLE)
@@ -36,7 +36,7 @@ CVKDevice::~CVKDevice(void)
 	DestroyDevice();
 }
 
-bool CVKDevice::EnumeratePhysicalDevices(eastl::vector<VkPhysicalDevice> &devices) const
+bool CVKDevice::EnumeratePhysicalDevices(eastl::vector<VkPhysicalDevice>& devices) const
 {
 	devices.clear();
 
@@ -50,7 +50,7 @@ bool CVKDevice::EnumeratePhysicalDevices(eastl::vector<VkPhysicalDevice> &device
 	return true;
 }
 
-bool CVKDevice::SelectPhysicalDevices(eastl::vector<VkPhysicalDevice> &devices, uint32_t &deviceIndex, uint32_t &queueFamilyIndex) const
+bool CVKDevice::SelectPhysicalDevices(eastl::vector<VkPhysicalDevice> & devices, uint32_t & deviceIndex, uint32_t & queueFamilyIndex) const
 {
 	uint32_t familyIndex = UINT32_MAX;
 
@@ -113,7 +113,7 @@ bool CVKDevice::CheckPhysicalDeviceExtensionProperties(VkPhysicalDevice vkPhysic
 	return true;
 }
 
-bool CVKDevice::CheckPhysicalDeviceQueueFamilyProperties(VkPhysicalDevice vkPhysicalDevice, uint32_t &queueFamilyIndex) const
+bool CVKDevice::CheckPhysicalDeviceQueueFamilyProperties(VkPhysicalDevice vkPhysicalDevice, uint32_t & queueFamilyIndex) const
 {
 	queueFamilyIndex = UINT32_MAX;
 
@@ -125,7 +125,7 @@ bool CVKDevice::CheckPhysicalDeviceQueueFamilyProperties(VkPhysicalDevice vkPhys
 	vkGetPhysicalDeviceQueueFamilyProperties(vkPhysicalDevice, &numQueueFamilies, queueFamilies.data());
 
 	for (int index = 0; index < numQueueFamilies; index++) {
-		if ((queueFamilies[index].queueFlags & VK_QUEUE_COMPUTE_BIT)  != 0 &&
+		if ((queueFamilies[index].queueFlags & VK_QUEUE_COMPUTE_BIT) != 0 &&
 			(queueFamilies[index].queueFlags & VK_QUEUE_GRAPHICS_BIT) != 0 &&
 			(queueFamilies[index].queueFlags & VK_QUEUE_TRANSFER_BIT) != 0) {
 			VkBool32 surfaceSupported;
@@ -166,7 +166,7 @@ bool CVKDevice::CreateDevice(VkPhysicalDevice vkPhysicalDevice, uint32_t queueFa
 	queueCreateInfo.queueCount = 1;
 	queueCreateInfo.pQueuePriorities = queuePpriorities;
 
-	const char *szSwapchainExtension = VK_KHR_SWAPCHAIN_EXTENSION_NAME;
+	const char* szSwapchainExtension = VK_KHR_SWAPCHAIN_EXTENSION_NAME;
 	VkDeviceCreateInfo deviceCreateInfo = {};
 	deviceCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
 	deviceCreateInfo.pNext = nullptr;

@@ -1,7 +1,7 @@
 #include "VKRenderer.h"
 
 
-CVKRenderTexture::CVKRenderTexture(CVKDevice *pDevice, CVKRenderTextureManager *pManager, uint32_t name)
+CVKRenderTexture::CVKRenderTexture(CVKDevice* pDevice, CVKRenderTextureManager* pManager, uint32_t name)
 	: CGfxRenderTexture(name)
 	, m_name(name)
 	, m_pDevice(pDevice)

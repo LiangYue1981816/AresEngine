@@ -1,7 +1,7 @@
 #include "VKRenderer.h"
 
 
-CVKRenderPassManager::CVKRenderPassManager(CVKDevice *pDevice)
+CVKRenderPassManager::CVKRenderPassManager(CVKDevice* pDevice)
 	: m_pDevice(pDevice)
 {
 
@@ -9,7 +9,7 @@ CVKRenderPassManager::CVKRenderPassManager(CVKDevice *pDevice)
 
 CVKRenderPassManager::~CVKRenderPassManager(void)
 {
-	for (const auto &itRenderPasses : m_pRenderPasses) {
+	for (const auto& itRenderPasses : m_pRenderPasses) {
 		delete itRenderPasses.second;
 	}
 }
@@ -18,7 +18,7 @@ CVKRenderPass* CVKRenderPassManager::Get(uint32_t name)
 {
 	mutex_autolock autolock(&lock);
 	{
-		const auto &itRenderPass = m_pRenderPasses.find(name);
+		const auto& itRenderPass = m_pRenderPasses.find(name);
 
 		if (itRenderPass != m_pRenderPasses.end()) {
 			return itRenderPass->second;
@@ -41,7 +41,7 @@ CVKRenderPass* CVKRenderPassManager::Create(uint32_t name, int numAttachments, i
 	}
 }
 
-void CVKRenderPassManager::Destroy(CVKRenderPass *pRenderPass)
+void CVKRenderPassManager::Destroy(CVKRenderPass* pRenderPass)
 {
 	mutex_autolock autolock(&lock);
 	{

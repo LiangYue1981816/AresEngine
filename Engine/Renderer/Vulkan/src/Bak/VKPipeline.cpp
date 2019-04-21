@@ -1,7 +1,7 @@
 #include "VKRenderer.h"
 
 
-CVKPipeline::CVKPipeline(CVKDevice *pDevice)
+CVKPipeline::CVKPipeline(CVKDevice* pDevice)
 	: m_pDevice(pDevice)
 
 	, m_vkPipeline(VK_NULL_HANDLE)
@@ -24,31 +24,31 @@ CVKPipeline::~CVKPipeline(void)
 	delete m_pDescriptorLayouts[DESCRIPTOR_SET_DRAW];
 }
 
-bool CVKPipeline::CreateLayouts(eastl::vector<VkDescriptorSetLayout> &layouts, eastl::vector<VkPushConstantRange> &pushConstantRanges)
+bool CVKPipeline::CreateLayouts(eastl::vector<VkDescriptorSetLayout>& layouts, eastl::vector<VkPushConstantRange>& pushConstantRanges)
 {
 	for (int index = 0; index < compute_shader - vertex_shader + 1; index++) {
 		if (m_pShaders[index]) {
-			const eastl::unordered_map<eastl::string, PushConstantRange> &pushConstantRanges = m_pShaders[index]->GetSprivCross().GetPushConstantRanges();
-			const eastl::unordered_map<eastl::string, DescriptorSetBinding> &uniformBlockBindings = m_pShaders[index]->GetSprivCross().GetUniformBlockBindings();
-			const eastl::unordered_map<eastl::string, DescriptorSetBinding> &sampledImageBindings = m_pShaders[index]->GetSprivCross().GetSampledImageBindings();
-			const eastl::unordered_map<eastl::string, DescriptorSetBinding> &inputAttachmentBindings = m_pShaders[index]->GetSprivCross().GetInputAttachmentBindings();
+			const eastl::unordered_map<eastl::string, PushConstantRange>& pushConstantRanges = m_pShaders[index]->GetSprivCross().GetPushConstantRanges();
+			const eastl::unordered_map<eastl::string, DescriptorSetBinding>& uniformBlockBindings = m_pShaders[index]->GetSprivCross().GetUniformBlockBindings();
+			const eastl::unordered_map<eastl::string, DescriptorSetBinding>& sampledImageBindings = m_pShaders[index]->GetSprivCross().GetSampledImageBindings();
+			const eastl::unordered_map<eastl::string, DescriptorSetBinding>& inputAttachmentBindings = m_pShaders[index]->GetSprivCross().GetInputAttachmentBindings();
 
-			for (const auto &itPushConstant : pushConstantRanges) {
+			for (const auto& itPushConstant : pushConstantRanges) {
 				uint32_t name = HashValue(itPushConstant.first.c_str());
 				m_pushConstantRanges[name].stageFlags = VK_SHADER_STAGE_ALL;
 				m_pushConstantRanges[name].offset = itPushConstant.second.offset;
 				m_pushConstantRanges[name].size = itPushConstant.second.range;
 			}
 
-			for (const auto &itUniform : uniformBlockBindings) {
+			for (const auto& itUniform : uniformBlockBindings) {
 				m_pDescriptorLayouts[itUniform.second.set]->SetUniformBlockBinding(itUniform.first.c_str(), itUniform.second.binding, VK_SHADER_STAGE_ALL);
 			}
 
-			for (const auto &itSampledImage : sampledImageBindings) {
+			for (const auto& itSampledImage : sampledImageBindings) {
 				m_pDescriptorLayouts[itSampledImage.second.set]->SetSampledImageBinding(itSampledImage.first.c_str(), itSampledImage.second.binding, VK_SHADER_STAGE_ALL);
 			}
 
-			for (const auto &itInputAttachment : inputAttachmentBindings) {
+			for (const auto& itInputAttachment : inputAttachmentBindings) {
 				m_pDescriptorLayouts[itInputAttachment.second.set]->SetInputAttachmentBinding(itInputAttachment.first.c_str(), itInputAttachment.second.binding, VK_SHADER_STAGE_ALL);
 			}
 		}
@@ -60,14 +60,14 @@ bool CVKPipeline::CreateLayouts(eastl::vector<VkDescriptorSetLayout> &layouts, e
 		}
 	}
 
-	for (const auto &itPushConstantRange : m_pushConstantRanges) {
+	for (const auto& itPushConstantRange : m_pushConstantRanges) {
 		pushConstantRanges.emplace_back(itPushConstantRange.second);
 	}
 
 	return true;
 }
 
-bool CVKPipeline::CreateShaderStages(eastl::vector<VkPipelineShaderStageCreateInfo> &shaders)
+bool CVKPipeline::CreateShaderStages(eastl::vector<VkPipelineShaderStageCreateInfo>& shaders)
 {
 	bool rcode = false;
 
@@ -89,7 +89,7 @@ bool CVKPipeline::CreateShaderStages(eastl::vector<VkPipelineShaderStageCreateIn
 	return rcode;
 }
 
-bool CVKPipeline::CreateVertexInputState(eastl::vector<VkVertexInputBindingDescription> &inputBindingDescriptions, eastl::vector<VkVertexInputAttributeDescription> &inputAttributeDescriptions, uint32_t vertexBinding, uint32_t instanceBinding)
+bool CVKPipeline::CreateVertexInputState(eastl::vector<VkVertexInputBindingDescription>& inputBindingDescriptions, eastl::vector<VkVertexInputAttributeDescription>& inputAttributeDescriptions, uint32_t vertexBinding, uint32_t instanceBinding)
 {
 	inputBindingDescriptions.clear();
 	inputAttributeDescriptions.clear();
@@ -97,15 +97,15 @@ bool CVKPipeline::CreateVertexInputState(eastl::vector<VkVertexInputBindingDescr
 	uint32_t vertexFormat = 0;
 	uint32_t instanceFormat = 0;
 
-	const eastl::vector<eastl::string> &vertexAttributes = m_pShaders[vertex_shader]->GetSprivCross().GetVertexAttributes();
+	const eastl::vector<eastl::string>& vertexAttributes = m_pShaders[vertex_shader]->GetSprivCross().GetVertexAttributes();
 
-	for (const auto &itVertexAttribute : vertexAttributes) {
+	for (const auto& itVertexAttribute : vertexAttributes) {
 		vertexFormat |= GetVertexAttribute(itVertexAttribute.c_str());
 		instanceFormat |= GetInstanceAttribute(itVertexAttribute.c_str());
 	}
 
 	if (vertexFormat || instanceFormat) {
-		for (const auto &itVertexAttribute : vertexAttributes) {
+		for (const auto& itVertexAttribute : vertexAttributes) {
 			if (uint32_t attribute = GetVertexAttribute(itVertexAttribute.c_str())) {
 				VkVertexInputAttributeDescription inputAttributeDescription = {};
 				inputAttributeDescription.binding = vertexBinding;
@@ -147,7 +147,7 @@ bool CVKPipeline::CreateVertexInputState(eastl::vector<VkVertexInputBindingDescr
 
 bool CVKPipeline::Uniform1i(VkCommandBuffer vkCommandBuffer, uint32_t name, int v0) const
 {
-	const auto &itPushConstant = m_pushConstantRanges.find(name);
+	const auto& itPushConstant = m_pushConstantRanges.find(name);
 
 	if (itPushConstant != m_pushConstantRanges.end()) {
 		glm::ivec4 vec(v0, 0, 0, 0);
@@ -161,7 +161,7 @@ bool CVKPipeline::Uniform1i(VkCommandBuffer vkCommandBuffer, uint32_t name, int 
 
 bool CVKPipeline::Uniform2i(VkCommandBuffer vkCommandBuffer, uint32_t name, int v0, int v1) const
 {
-	const auto &itPushConstant = m_pushConstantRanges.find(name);
+	const auto& itPushConstant = m_pushConstantRanges.find(name);
 
 	if (itPushConstant != m_pushConstantRanges.end()) {
 		glm::ivec4 vec(v0, v1, 0, 0);
@@ -175,7 +175,7 @@ bool CVKPipeline::Uniform2i(VkCommandBuffer vkCommandBuffer, uint32_t name, int 
 
 bool CVKPipeline::Uniform3i(VkCommandBuffer vkCommandBuffer, uint32_t name, int v0, int v1, int v2) const
 {
-	const auto &itPushConstant = m_pushConstantRanges.find(name);
+	const auto& itPushConstant = m_pushConstantRanges.find(name);
 
 	if (itPushConstant != m_pushConstantRanges.end()) {
 		glm::ivec4 vec(v0, v1, v2, 0);
@@ -189,7 +189,7 @@ bool CVKPipeline::Uniform3i(VkCommandBuffer vkCommandBuffer, uint32_t name, int 
 
 bool CVKPipeline::Uniform4i(VkCommandBuffer vkCommandBuffer, uint32_t name, int v0, int v1, int v2, int v3) const
 {
-	const auto &itPushConstant = m_pushConstantRanges.find(name);
+	const auto& itPushConstant = m_pushConstantRanges.find(name);
 
 	if (itPushConstant != m_pushConstantRanges.end()) {
 		glm::ivec4 vec(v0, v1, v2, v3);
@@ -203,7 +203,7 @@ bool CVKPipeline::Uniform4i(VkCommandBuffer vkCommandBuffer, uint32_t name, int 
 
 bool CVKPipeline::Uniform1f(VkCommandBuffer vkCommandBuffer, uint32_t name, float v0) const
 {
-	const auto &itPushConstant = m_pushConstantRanges.find(name);
+	const auto& itPushConstant = m_pushConstantRanges.find(name);
 
 	if (itPushConstant != m_pushConstantRanges.end()) {
 		glm::vec4 vec(v0, 0.0f, 0.0f, 0.0f);
@@ -217,7 +217,7 @@ bool CVKPipeline::Uniform1f(VkCommandBuffer vkCommandBuffer, uint32_t name, floa
 
 bool CVKPipeline::Uniform2f(VkCommandBuffer vkCommandBuffer, uint32_t name, float v0, float v1) const
 {
-	const auto &itPushConstant = m_pushConstantRanges.find(name);
+	const auto& itPushConstant = m_pushConstantRanges.find(name);
 
 	if (itPushConstant != m_pushConstantRanges.end()) {
 		glm::vec4 vec(v0, v1, 0.0f, 0.0f);
@@ -231,7 +231,7 @@ bool CVKPipeline::Uniform2f(VkCommandBuffer vkCommandBuffer, uint32_t name, floa
 
 bool CVKPipeline::Uniform3f(VkCommandBuffer vkCommandBuffer, uint32_t name, float v0, float v1, float v2) const
 {
-	const auto &itPushConstant = m_pushConstantRanges.find(name);
+	const auto& itPushConstant = m_pushConstantRanges.find(name);
 
 	if (itPushConstant != m_pushConstantRanges.end()) {
 		glm::vec4 vec(v0, v1, v2, 0.0f);
@@ -245,7 +245,7 @@ bool CVKPipeline::Uniform3f(VkCommandBuffer vkCommandBuffer, uint32_t name, floa
 
 bool CVKPipeline::Uniform4f(VkCommandBuffer vkCommandBuffer, uint32_t name, float v0, float v1, float v2, float v3) const
 {
-	const auto &itPushConstant = m_pushConstantRanges.find(name);
+	const auto& itPushConstant = m_pushConstantRanges.find(name);
 
 	if (itPushConstant != m_pushConstantRanges.end()) {
 		glm::vec4 vec(v0, v1, v2, v3);
@@ -257,9 +257,9 @@ bool CVKPipeline::Uniform4f(VkCommandBuffer vkCommandBuffer, uint32_t name, floa
 	}
 }
 
-bool CVKPipeline::Uniform1iv(VkCommandBuffer vkCommandBuffer, uint32_t name, int count, const int *value) const
+bool CVKPipeline::Uniform1iv(VkCommandBuffer vkCommandBuffer, uint32_t name, int count, const int* value) const
 {
-	const auto &itPushConstant = m_pushConstantRanges.find(name);
+	const auto& itPushConstant = m_pushConstantRanges.find(name);
 
 	if (itPushConstant != m_pushConstantRanges.end()) {
 		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, VK_SHADER_STAGE_ALL, itPushConstant->second.offset, itPushConstant->second.size, value);
@@ -270,9 +270,9 @@ bool CVKPipeline::Uniform1iv(VkCommandBuffer vkCommandBuffer, uint32_t name, int
 	}
 }
 
-bool CVKPipeline::Uniform2iv(VkCommandBuffer vkCommandBuffer, uint32_t name, int count, const int *value) const
+bool CVKPipeline::Uniform2iv(VkCommandBuffer vkCommandBuffer, uint32_t name, int count, const int* value) const
 {
-	const auto &itPushConstant = m_pushConstantRanges.find(name);
+	const auto& itPushConstant = m_pushConstantRanges.find(name);
 
 	if (itPushConstant != m_pushConstantRanges.end()) {
 		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, VK_SHADER_STAGE_ALL, itPushConstant->second.offset, itPushConstant->second.size, value);
@@ -283,9 +283,9 @@ bool CVKPipeline::Uniform2iv(VkCommandBuffer vkCommandBuffer, uint32_t name, int
 	}
 }
 
-bool CVKPipeline::Uniform3iv(VkCommandBuffer vkCommandBuffer, uint32_t name, int count, const int *value) const
+bool CVKPipeline::Uniform3iv(VkCommandBuffer vkCommandBuffer, uint32_t name, int count, const int* value) const
 {
-	const auto &itPushConstant = m_pushConstantRanges.find(name);
+	const auto& itPushConstant = m_pushConstantRanges.find(name);
 
 	if (itPushConstant != m_pushConstantRanges.end()) {
 		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, VK_SHADER_STAGE_ALL, itPushConstant->second.offset, itPushConstant->second.size, value);
@@ -296,9 +296,9 @@ bool CVKPipeline::Uniform3iv(VkCommandBuffer vkCommandBuffer, uint32_t name, int
 	}
 }
 
-bool CVKPipeline::Uniform4iv(VkCommandBuffer vkCommandBuffer, uint32_t name, int count, const int *value) const
+bool CVKPipeline::Uniform4iv(VkCommandBuffer vkCommandBuffer, uint32_t name, int count, const int* value) const
 {
-	const auto &itPushConstant = m_pushConstantRanges.find(name);
+	const auto& itPushConstant = m_pushConstantRanges.find(name);
 
 	if (itPushConstant != m_pushConstantRanges.end()) {
 		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, VK_SHADER_STAGE_ALL, itPushConstant->second.offset, itPushConstant->second.size, value);
@@ -309,9 +309,9 @@ bool CVKPipeline::Uniform4iv(VkCommandBuffer vkCommandBuffer, uint32_t name, int
 	}
 }
 
-bool CVKPipeline::Uniform1fv(VkCommandBuffer vkCommandBuffer, uint32_t name, int count, const float *value) const
+bool CVKPipeline::Uniform1fv(VkCommandBuffer vkCommandBuffer, uint32_t name, int count, const float* value) const
 {
-	const auto &itPushConstant = m_pushConstantRanges.find(name);
+	const auto& itPushConstant = m_pushConstantRanges.find(name);
 
 	if (itPushConstant != m_pushConstantRanges.end()) {
 		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, VK_SHADER_STAGE_ALL, itPushConstant->second.offset, itPushConstant->second.size, value);
@@ -322,9 +322,9 @@ bool CVKPipeline::Uniform1fv(VkCommandBuffer vkCommandBuffer, uint32_t name, int
 	}
 }
 
-bool CVKPipeline::Uniform2fv(VkCommandBuffer vkCommandBuffer, uint32_t name, int count, const float *value) const
+bool CVKPipeline::Uniform2fv(VkCommandBuffer vkCommandBuffer, uint32_t name, int count, const float* value) const
 {
-	const auto &itPushConstant = m_pushConstantRanges.find(name);
+	const auto& itPushConstant = m_pushConstantRanges.find(name);
 
 	if (itPushConstant != m_pushConstantRanges.end()) {
 		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, VK_SHADER_STAGE_ALL, itPushConstant->second.offset, itPushConstant->second.size, value);
@@ -335,9 +335,9 @@ bool CVKPipeline::Uniform2fv(VkCommandBuffer vkCommandBuffer, uint32_t name, int
 	}
 }
 
-bool CVKPipeline::Uniform3fv(VkCommandBuffer vkCommandBuffer, uint32_t name, int count, const float *value) const
+bool CVKPipeline::Uniform3fv(VkCommandBuffer vkCommandBuffer, uint32_t name, int count, const float* value) const
 {
-	const auto &itPushConstant = m_pushConstantRanges.find(name);
+	const auto& itPushConstant = m_pushConstantRanges.find(name);
 
 	if (itPushConstant != m_pushConstantRanges.end()) {
 		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, VK_SHADER_STAGE_ALL, itPushConstant->second.offset, itPushConstant->second.size, value);
@@ -348,9 +348,9 @@ bool CVKPipeline::Uniform3fv(VkCommandBuffer vkCommandBuffer, uint32_t name, int
 	}
 }
 
-bool CVKPipeline::Uniform4fv(VkCommandBuffer vkCommandBuffer, uint32_t name, int count, const float *value) const
+bool CVKPipeline::Uniform4fv(VkCommandBuffer vkCommandBuffer, uint32_t name, int count, const float* value) const
 {
-	const auto &itPushConstant = m_pushConstantRanges.find(name);
+	const auto& itPushConstant = m_pushConstantRanges.find(name);
 
 	if (itPushConstant != m_pushConstantRanges.end()) {
 		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, VK_SHADER_STAGE_ALL, itPushConstant->second.offset, itPushConstant->second.size, value);
@@ -361,9 +361,9 @@ bool CVKPipeline::Uniform4fv(VkCommandBuffer vkCommandBuffer, uint32_t name, int
 	}
 }
 
-bool CVKPipeline::UniformMatrix2fv(VkCommandBuffer vkCommandBuffer, uint32_t name, int count, const float *value) const
+bool CVKPipeline::UniformMatrix2fv(VkCommandBuffer vkCommandBuffer, uint32_t name, int count, const float* value) const
 {
-	const auto &itPushConstant = m_pushConstantRanges.find(name);
+	const auto& itPushConstant = m_pushConstantRanges.find(name);
 
 	if (itPushConstant != m_pushConstantRanges.end()) {
 		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, VK_SHADER_STAGE_ALL, itPushConstant->second.offset, itPushConstant->second.size, value);
@@ -374,9 +374,9 @@ bool CVKPipeline::UniformMatrix2fv(VkCommandBuffer vkCommandBuffer, uint32_t nam
 	}
 }
 
-bool CVKPipeline::UniformMatrix3fv(VkCommandBuffer vkCommandBuffer, uint32_t name, int count, const float *value) const
+bool CVKPipeline::UniformMatrix3fv(VkCommandBuffer vkCommandBuffer, uint32_t name, int count, const float* value) const
 {
-	const auto &itPushConstant = m_pushConstantRanges.find(name);
+	const auto& itPushConstant = m_pushConstantRanges.find(name);
 
 	if (itPushConstant != m_pushConstantRanges.end()) {
 		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, VK_SHADER_STAGE_ALL, itPushConstant->second.offset, itPushConstant->second.size, value);
@@ -387,9 +387,9 @@ bool CVKPipeline::UniformMatrix3fv(VkCommandBuffer vkCommandBuffer, uint32_t nam
 	}
 }
 
-bool CVKPipeline::UniformMatrix4fv(VkCommandBuffer vkCommandBuffer, uint32_t name, int count, const float *value) const
+bool CVKPipeline::UniformMatrix4fv(VkCommandBuffer vkCommandBuffer, uint32_t name, int count, const float* value) const
 {
-	const auto &itPushConstant = m_pushConstantRanges.find(name);
+	const auto& itPushConstant = m_pushConstantRanges.find(name);
 
 	if (itPushConstant != m_pushConstantRanges.end()) {
 		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, VK_SHADER_STAGE_ALL, itPushConstant->second.offset, itPushConstant->second.size, value);

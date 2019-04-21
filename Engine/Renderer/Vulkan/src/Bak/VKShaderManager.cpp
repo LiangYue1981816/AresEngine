@@ -2,7 +2,7 @@
 #include "ResourceLoader.h"
 
 
-CVKShaderManager::CVKShaderManager(CVKDevice *pDevice)
+CVKShaderManager::CVKShaderManager(CVKDevice* pDevice)
 	: m_pDevice(pDevice)
 {
 
@@ -10,12 +10,12 @@ CVKShaderManager::CVKShaderManager(CVKDevice *pDevice)
 
 CVKShaderManager::~CVKShaderManager(void)
 {
-	for (const auto &itShader : m_pShaders) {
+	for (const auto& itShader : m_pShaders) {
 		delete itShader.second;
 	}
 }
 
-CVKShader* CVKShaderManager::Create(const char *szFileName, shader_kind kind)
+CVKShader* CVKShaderManager::Create(const char* szFileName, shader_kind kind)
 {
 	mutex_autolock autolock(&lock);
 	{

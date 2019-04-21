@@ -1,7 +1,7 @@
 #include "VKRenderer.h"
 
 
-CVKMeshDraw::CVKMeshDraw(CVKDevice *pDevice, CVKMeshDrawManager *pManager, uint32_t name, const CGfxMeshPtr ptrMesh, int indexDraw, uint32_t instanceFormat, uint32_t instanceBinding)
+CVKMeshDraw::CVKMeshDraw(CVKDevice* pDevice, CVKMeshDrawManager* pManager, uint32_t name, const CGfxMeshPtr ptrMesh, int indexDraw, uint32_t instanceFormat, uint32_t instanceBinding)
 	: CGfxMeshDraw(name, ptrMesh, indexDraw, instanceFormat, instanceBinding)
 	, m_name(name)
 	, m_pDevice(pDevice)
@@ -16,8 +16,8 @@ CVKMeshDraw::CVKMeshDraw(CVKDevice *pDevice, CVKMeshDrawManager *pManager, uint3
 	m_ptrMesh = ptrMesh;
 	m_pMeshDraw = ptrMesh->GetDraw(indexDraw);
 
-	m_pIndexBuffer = (CVKIndexBuffer *)ptrMesh->GetIndexBuffer();
-	m_pVertexBuffer = (CVKVertexBuffer *)ptrMesh->GetVertexBuffer();
+	m_pIndexBuffer = (CVKIndexBuffer*)ptrMesh->GetIndexBuffer();
+	m_pVertexBuffer = (CVKVertexBuffer*)ptrMesh->GetVertexBuffer();
 
 	m_pInstanceBuffer = new CVKInstanceBuffer(m_pDevice, instanceFormat, instanceBinding);
 
@@ -115,7 +115,7 @@ glm::aabb CVKMeshDraw::GetLocalAABB(void) const
 	}
 }
 
-bool CVKMeshDraw::InstanceBufferData(size_t size, const void *pBuffer)
+bool CVKMeshDraw::InstanceBufferData(size_t size, const void* pBuffer)
 {
 	if (m_pInstanceBuffer) {
 		m_pInstanceBuffer->BufferData(size, pBuffer);

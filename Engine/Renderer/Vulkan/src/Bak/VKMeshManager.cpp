@@ -2,7 +2,7 @@
 #include "ResourceLoader.h"
 
 
-CVKMeshManager::CVKMeshManager(CVKDevice *pDevice)
+CVKMeshManager::CVKMeshManager(CVKDevice* pDevice)
 	: m_pDevice(pDevice)
 {
 
@@ -10,7 +10,7 @@ CVKMeshManager::CVKMeshManager(CVKDevice *pDevice)
 
 CVKMeshManager::~CVKMeshManager(void)
 {
-	for (const auto &itMesh : m_pMeshs) {
+	for (const auto& itMesh : m_pMeshs) {
 		delete itMesh.second;
 	}
 }
@@ -19,7 +19,7 @@ CVKMesh* CVKMeshManager::Get(uint32_t name)
 {
 	mutex_autolock autolock(&lock);
 	{
-		const auto &itMesh = m_pMeshs.find(name);
+		const auto& itMesh = m_pMeshs.find(name);
 
 		if (itMesh != m_pMeshs.end()) {
 			return itMesh->second;
@@ -42,7 +42,7 @@ CVKMesh* CVKMeshManager::Create(uint32_t name)
 	}
 }
 
-CVKMesh* CVKMeshManager::Create(const char *szFileName, uint32_t vertexBinding)
+CVKMesh* CVKMeshManager::Create(const char* szFileName, uint32_t vertexBinding)
 {
 	uint32_t name = HashValue(szFileName);
 
@@ -57,7 +57,7 @@ CVKMesh* CVKMeshManager::Create(const char *szFileName, uint32_t vertexBinding)
 	}
 }
 
-void CVKMeshManager::Destroy(CVKMesh *pMesh)
+void CVKMeshManager::Destroy(CVKMesh* pMesh)
 {
 	mutex_autolock autolock(&lock);
 	{

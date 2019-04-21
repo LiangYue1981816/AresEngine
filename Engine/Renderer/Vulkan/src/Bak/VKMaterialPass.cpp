@@ -4,7 +4,7 @@
 #define TEXTURE_INTERNAL_NAME(name) (uint32_t)(name ^ (size_t)this)
 
 
-CVKMaterialPass::CVKMaterialPass(CVKDevice *pDevice, uint32_t name)
+CVKMaterialPass::CVKMaterialPass(CVKDevice* pDevice, uint32_t name)
 	: CGfxMaterialPass(name)
 	, m_name(name)
 	, m_pDevice(pDevice)
@@ -21,23 +21,23 @@ CVKMaterialPass::~CVKMaterialPass(void)
 		m_pDevice->GetDescriptorSetManager()->FreeDescriptorSet(m_pDescriptorSet);
 	}
 
-	for (auto &itUniform : m_pUniformVec1s) {
+	for (auto& itUniform : m_pUniformVec1s) {
 		delete itUniform.second;
 	}
 
-	for (auto &itUniform : m_pUniformVec2s) {
+	for (auto& itUniform : m_pUniformVec2s) {
 		delete itUniform.second;
 	}
 
-	for (auto &itUniform : m_pUniformVec3s) {
+	for (auto& itUniform : m_pUniformVec3s) {
 		delete itUniform.second;
 	}
 
-	for (auto &itUniform : m_pUniformVec4s) {
+	for (auto& itUniform : m_pUniformVec4s) {
 		delete itUniform.second;
 	}
 
-	for (auto &itUniform : m_pUniformMat4s) {
+	for (auto& itUniform : m_pUniformMat4s) {
 		delete itUniform.second;
 	}
 }
@@ -57,7 +57,7 @@ CVKDescriptorSet* CVKMaterialPass::GetDescriptorSet(void) const
 	return m_pDescriptorSet;
 }
 
-bool CVKMaterialPass::SetPipeline(const CGfxRenderPass *pRenderPass, const CGfxShader *pVertexShader, const CGfxShader *pFragmentShader, const PipelineState &state, uint32_t indexSubpass, uint32_t vertexBinding, uint32_t instanceBinding)
+bool CVKMaterialPass::SetPipeline(const CGfxRenderPass* pRenderPass, const CGfxShader* pVertexShader, const CGfxShader* pFragmentShader, const PipelineState& state, uint32_t indexSubpass, uint32_t vertexBinding, uint32_t instanceBinding)
 {
 	if (pRenderPass == nullptr) {
 		return false;
@@ -88,12 +88,12 @@ bool CVKMaterialPass::SetPipeline(const CGfxRenderPass *pRenderPass, const CGfxS
 	}
 
 	m_pPipeline = VKRenderer()->CreatePipelineGraphics(pRenderPass, pVertexShader, pFragmentShader, state, indexSubpass, vertexBinding, instanceBinding);
-	m_pDescriptorSet = m_pDevice->GetDescriptorSetManager()->AllocDescriptorSet(((CVKPipelineGraphics *)m_pPipeline)->GetDescriptorLayout(DESCRIPTOR_SET_PASS));
+	m_pDescriptorSet = m_pDevice->GetDescriptorSetManager()->AllocDescriptorSet(((CVKPipelineGraphics*)m_pPipeline)->GetDescriptorLayout(DESCRIPTOR_SET_PASS));
 
 	return true;
 }
 
-bool CVKMaterialPass::SetSampler(const char *szName, GfxFilter minFilter, GfxFilter magFilter, GfxSamplerMipmapMode mipmapMode, GfxSamplerAddressMode addressMode)
+bool CVKMaterialPass::SetSampler(const char* szName, GfxFilter minFilter, GfxFilter magFilter, GfxSamplerMipmapMode mipmapMode, GfxSamplerAddressMode addressMode)
 {
 	uint32_t name = HashValue(szName);
 
@@ -105,7 +105,7 @@ bool CVKMaterialPass::SetSampler(const char *szName, GfxFilter minFilter, GfxFil
 	return false;
 }
 
-bool CVKMaterialPass::SetTexture2D(const char *szName, const CGfxTexture2DPtr ptrTexture)
+bool CVKMaterialPass::SetTexture2D(const char* szName, const CGfxTexture2DPtr ptrTexture)
 {
 	uint32_t name = HashValue(szName);
 
@@ -117,7 +117,7 @@ bool CVKMaterialPass::SetTexture2D(const char *szName, const CGfxTexture2DPtr pt
 	return false;
 }
 
-bool CVKMaterialPass::SetTexture2DArray(const char *szName, const CGfxTexture2DArrayPtr ptrTexture)
+bool CVKMaterialPass::SetTexture2DArray(const char* szName, const CGfxTexture2DArrayPtr ptrTexture)
 {
 	uint32_t name = HashValue(szName);
 
@@ -129,7 +129,7 @@ bool CVKMaterialPass::SetTexture2DArray(const char *szName, const CGfxTexture2DA
 	return false;
 }
 
-bool CVKMaterialPass::SetTextureCubeMap(const char *szName, const CGfxTextureCubeMapPtr ptrTexture)
+bool CVKMaterialPass::SetTextureCubeMap(const char* szName, const CGfxTextureCubeMapPtr ptrTexture)
 {
 	uint32_t name = HashValue(szName);
 
@@ -141,7 +141,7 @@ bool CVKMaterialPass::SetTextureCubeMap(const char *szName, const CGfxTextureCub
 	return false;
 }
 
-bool CVKMaterialPass::SetTexture2D(const char *szName, const char *szFileName)
+bool CVKMaterialPass::SetTexture2D(const char* szName, const char* szFileName)
 {
 	uint32_t name = HashValue(szName);
 
@@ -153,7 +153,7 @@ bool CVKMaterialPass::SetTexture2D(const char *szName, const char *szFileName)
 	return false;
 }
 
-bool CVKMaterialPass::SetTexture2DArray(const char *szName, const char *szFileName)
+bool CVKMaterialPass::SetTexture2DArray(const char* szName, const char* szFileName)
 {
 	uint32_t name = HashValue(szName);
 
@@ -165,7 +165,7 @@ bool CVKMaterialPass::SetTexture2DArray(const char *szName, const char *szFileNa
 	return false;
 }
 
-bool CVKMaterialPass::SetTextureCubeMap(const char *szName, const char *szFileName)
+bool CVKMaterialPass::SetTextureCubeMap(const char* szName, const char* szFileName)
 {
 	uint32_t name = HashValue(szName);
 
@@ -177,7 +177,7 @@ bool CVKMaterialPass::SetTextureCubeMap(const char *szName, const char *szFileNa
 	return false;
 }
 
-bool CVKMaterialPass::SetUniformVec1(const char *szName, float v0)
+bool CVKMaterialPass::SetUniformVec1(const char* szName, float v0)
 {
 	uint32_t name = HashValue(szName);
 
@@ -195,7 +195,7 @@ bool CVKMaterialPass::SetUniformVec1(const char *szName, float v0)
 	return false;
 }
 
-bool CVKMaterialPass::SetUniformVec2(const char *szName, float v0, float v1)
+bool CVKMaterialPass::SetUniformVec2(const char* szName, float v0, float v1)
 {
 	uint32_t name = HashValue(szName);
 
@@ -213,7 +213,7 @@ bool CVKMaterialPass::SetUniformVec2(const char *szName, float v0, float v1)
 	return false;
 }
 
-bool CVKMaterialPass::SetUniformVec3(const char *szName, float v0, float v1, float v2)
+bool CVKMaterialPass::SetUniformVec3(const char* szName, float v0, float v1, float v2)
 {
 	uint32_t name = HashValue(szName);
 
@@ -231,7 +231,7 @@ bool CVKMaterialPass::SetUniformVec3(const char *szName, float v0, float v1, flo
 	return false;
 }
 
-bool CVKMaterialPass::SetUniformVec4(const char *szName, float v0, float v1, float v2, float v3)
+bool CVKMaterialPass::SetUniformVec4(const char* szName, float v0, float v1, float v2, float v3)
 {
 	uint32_t name = HashValue(szName);
 
@@ -249,7 +249,7 @@ bool CVKMaterialPass::SetUniformVec4(const char *szName, float v0, float v1, flo
 	return false;
 }
 
-bool CVKMaterialPass::SetUniformMat4(const char *szName, const float *value)
+bool CVKMaterialPass::SetUniformMat4(const char* szName, const float* value)
 {
 	uint32_t name = HashValue(szName);
 
@@ -267,7 +267,7 @@ bool CVKMaterialPass::SetUniformMat4(const char *szName, const float *value)
 	return false;
 }
 
-CGfxTexture2DPtr CVKMaterialPass::GetTexture2D(const char *szName) const
+CGfxTexture2DPtr CVKMaterialPass::GetTexture2D(const char* szName) const
 {
 	if (m_pDescriptorSet) {
 		return m_pDescriptorSet->GetTexture2D(HashValue(szName));
@@ -277,7 +277,7 @@ CGfxTexture2DPtr CVKMaterialPass::GetTexture2D(const char *szName) const
 	}
 }
 
-CGfxTexture2DArrayPtr CVKMaterialPass::GetTexture2DArray(const char *szName) const
+CGfxTexture2DArrayPtr CVKMaterialPass::GetTexture2DArray(const char* szName) const
 {
 	if (m_pDescriptorSet) {
 		return m_pDescriptorSet->GetTexture2DArray(HashValue(szName));
@@ -287,7 +287,7 @@ CGfxTexture2DArrayPtr CVKMaterialPass::GetTexture2DArray(const char *szName) con
 	}
 }
 
-CGfxTextureCubeMapPtr CVKMaterialPass::GetTextureCubeMap(const char *szName) const
+CGfxTextureCubeMapPtr CVKMaterialPass::GetTextureCubeMap(const char* szName) const
 {
 	if (m_pDescriptorSet) {
 		return m_pDescriptorSet->GetTextureCubeMap(HashValue(szName));
@@ -297,7 +297,7 @@ CGfxTextureCubeMapPtr CVKMaterialPass::GetTextureCubeMap(const char *szName) con
 	}
 }
 
-void CVKMaterialPass::Bind(VkCommandBuffer vkCommandBuffer, const CVKPipeline *pPipeline) const
+void CVKMaterialPass::Bind(VkCommandBuffer vkCommandBuffer, const CVKPipeline* pPipeline) const
 {
 	if (m_pDescriptorSet) {
 		m_pDescriptorSet->Bind(vkCommandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, pPipeline->GetPipelineLayout());

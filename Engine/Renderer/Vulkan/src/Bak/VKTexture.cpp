@@ -1,7 +1,7 @@
 #include "VKRenderer.h"
 
 
-CVKTexture::CVKTexture(CVKDevice *pDevice)
+CVKTexture::CVKTexture(CVKDevice* pDevice)
 	: m_pDevice(pDevice)
 
 	, m_bExtern(false)
@@ -72,7 +72,7 @@ CVKBufferPtr CVKTexture::BufferTransfer(VkCommandBuffer vkCommandBuffer)
 		eastl::vector<uint8_t> buffers;
 		eastl::vector<VkBufferImageCopy> regions;
 
-		for (auto &itTransferBuffer : m_transferBuffers) {
+		for (auto& itTransferBuffer : m_transferBuffers) {
 			itTransferBuffer.second.region.bufferOffset = buffers.size();
 			regions.insert(regions.end(), itTransferBuffer.second.region);
 			buffers.insert(buffers.end(), itTransferBuffer.second.buffer.data(), itTransferBuffer.second.buffer.data() + itTransferBuffer.second.buffer.size());

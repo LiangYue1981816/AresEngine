@@ -1,7 +1,7 @@
 #include "VKRenderer.h"
 
 
-static VkExtent2D GetSwapchainExtent(const VkSurfaceCapabilitiesKHR &capabilities, uint32_t width, uint32_t height)
+static VkExtent2D GetSwapchainExtent(const VkSurfaceCapabilitiesKHR& capabilities, uint32_t width, uint32_t height)
 {
 	VkExtent2D extent = { width, height };
 
@@ -13,7 +13,7 @@ static VkExtent2D GetSwapchainExtent(const VkSurfaceCapabilitiesKHR &capabilitie
 	return extent;
 }
 
-static VkImageUsageFlags GetSwapchainUsageFlags(const VkSurfaceCapabilitiesKHR &capabilities)
+static VkImageUsageFlags GetSwapchainUsageFlags(const VkSurfaceCapabilitiesKHR& capabilities)
 {
 	VkImageUsageFlags usageFlags = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT;
 
@@ -24,7 +24,7 @@ static VkImageUsageFlags GetSwapchainUsageFlags(const VkSurfaceCapabilitiesKHR &
 	return usageFlags;
 }
 
-static VkSurfaceTransformFlagBitsKHR GetSwapchainTransform(const VkSurfaceCapabilitiesKHR &capabilities, VkSurfaceTransformFlagBitsKHR transform)
+static VkSurfaceTransformFlagBitsKHR GetSwapchainTransform(const VkSurfaceCapabilitiesKHR& capabilities, VkSurfaceTransformFlagBitsKHR transform)
 {
 	if (capabilities.supportedTransforms & transform) {
 		return transform;
@@ -34,7 +34,7 @@ static VkSurfaceTransformFlagBitsKHR GetSwapchainTransform(const VkSurfaceCapabi
 	}
 }
 
-static VkPresentModeKHR GetSwapchainPresentMode(const eastl::vector<VkPresentModeKHR> &modes)
+static VkPresentModeKHR GetSwapchainPresentMode(const eastl::vector<VkPresentModeKHR>& modes)
 {
 	for (int index = 0; index < modes.size(); index++) {
 		if (modes[index] == VK_PRESENT_MODE_FIFO_KHR) {
@@ -51,7 +51,7 @@ static VkPresentModeKHR GetSwapchainPresentMode(const eastl::vector<VkPresentMod
 	return VK_PRESENT_MODE_IMMEDIATE_KHR;
 }
 
-static VkSurfaceFormatKHR GetSwapchainFormat(const eastl::vector<VkSurfaceFormatKHR> &formats, VkFormat format)
+static VkSurfaceFormatKHR GetSwapchainFormat(const eastl::vector<VkSurfaceFormatKHR>& formats, VkFormat format)
 {
 	for (int index = 0; index < formats.size(); index++) {
 		if (formats[index].format == format) {
@@ -63,7 +63,7 @@ static VkSurfaceFormatKHR GetSwapchainFormat(const eastl::vector<VkSurfaceFormat
 }
 
 
-CVKSwapChain::CVKSwapChain(CVKDevice *pDevice, int width, int height, GfxPixelFormat format)
+CVKSwapChain::CVKSwapChain(CVKDevice* pDevice, int width, int height, GfxPixelFormat format)
 	: CGfxSwapChain(width, height, format)
 	, m_pDevice(pDevice)
 
@@ -105,7 +105,7 @@ bool CVKSwapChain::IsSurfaceSupport(void) const
 	return surfaceSupported == VK_TRUE;
 }
 
-bool CVKSwapChain::EnumDeviceSurfaceModes(eastl::vector<VkPresentModeKHR> &modes) const
+bool CVKSwapChain::EnumDeviceSurfaceModes(eastl::vector<VkPresentModeKHR>& modes) const
 {
 	modes.clear();
 
@@ -119,7 +119,7 @@ bool CVKSwapChain::EnumDeviceSurfaceModes(eastl::vector<VkPresentModeKHR> &modes
 	return true;
 }
 
-bool CVKSwapChain::EnumDeviceSurfaceFormats(eastl::vector<VkSurfaceFormatKHR> &formats) const
+bool CVKSwapChain::EnumDeviceSurfaceFormats(eastl::vector<VkSurfaceFormatKHR> & formats) const
 {
 	formats.clear();
 
@@ -133,13 +133,13 @@ bool CVKSwapChain::EnumDeviceSurfaceFormats(eastl::vector<VkSurfaceFormatKHR> &f
 	return true;
 }
 
-bool CVKSwapChain::EnumDeviceSurfaceCapabilities(VkSurfaceCapabilitiesKHR &capabilities) const
+bool CVKSwapChain::EnumDeviceSurfaceCapabilities(VkSurfaceCapabilitiesKHR & capabilities) const
 {
 	CALL_VK_FUNCTION_RETURN_BOOL(vkGetPhysicalDeviceSurfaceCapabilitiesKHR(m_pDevice->GetPhysicalDevice(), m_pDevice->GetInstance()->GetSurface(), &capabilities));
 	return true;
 }
 
-bool CVKSwapChain::CreateSwapChain(const eastl::vector<VkPresentModeKHR> &modes, const eastl::vector<VkSurfaceFormatKHR> &formats, const VkSurfaceCapabilitiesKHR &capabilities)
+bool CVKSwapChain::CreateSwapChain(const eastl::vector<VkPresentModeKHR> & modes, const eastl::vector<VkSurfaceFormatKHR> & formats, const VkSurfaceCapabilitiesKHR & capabilities)
 {
 	VkExtent2D imageExtent = GetSwapchainExtent(capabilities, m_width, m_height);
 	VkImageUsageFlags imageUsage = GetSwapchainUsageFlags(capabilities);

@@ -3,7 +3,7 @@
 
 static const int INSTANCE_BUFFER_SIZE = 64;
 
-CVKInstanceBuffer::CVKInstanceBuffer(CVKDevice *pDevice, uint32_t instanceFormat, uint32_t instanceBinding)
+CVKInstanceBuffer::CVKInstanceBuffer(CVKDevice* pDevice, uint32_t instanceFormat, uint32_t instanceBinding)
 	: CGfxInstanceBuffer(instanceFormat, instanceBinding)
 	, m_pDevice(pDevice)
 
@@ -37,7 +37,7 @@ uint32_t CVKInstanceBuffer::GetSize(void) const
 	return m_size;
 }
 
-bool CVKInstanceBuffer::BufferData(size_t size, const void *pBuffer)
+bool CVKInstanceBuffer::BufferData(size_t size, const void* pBuffer)
 {
 	m_count = size / GetInstanceStride(m_format);
 

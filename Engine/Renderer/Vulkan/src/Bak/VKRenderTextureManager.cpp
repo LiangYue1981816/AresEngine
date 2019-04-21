@@ -1,7 +1,7 @@
 #include "VKRenderer.h"
 
 
-CVKRenderTextureManager::CVKRenderTextureManager(CVKDevice *pDevice)
+CVKRenderTextureManager::CVKRenderTextureManager(CVKDevice* pDevice)
 	: m_pDevice(pDevice)
 {
 
@@ -9,7 +9,7 @@ CVKRenderTextureManager::CVKRenderTextureManager(CVKDevice *pDevice)
 
 CVKRenderTextureManager::~CVKRenderTextureManager(void)
 {
-	for (const auto &itRenderTexture : m_pRenderTextures) {
+	for (const auto& itRenderTexture : m_pRenderTextures) {
 		delete itRenderTexture.second;
 	}
 }
@@ -18,7 +18,7 @@ CVKRenderTexture* CVKRenderTextureManager::Get(uint32_t name)
 {
 	mutex_autolock autolock(&lock);
 	{
-		const auto &itRenderTexture = m_pRenderTextures.find(name);
+		const auto& itRenderTexture = m_pRenderTextures.find(name);
 
 		if (itRenderTexture != m_pRenderTextures.end()) {
 			return itRenderTexture->second;
@@ -41,7 +41,7 @@ CVKRenderTexture* CVKRenderTextureManager::Create(uint32_t name)
 	}
 }
 
-void CVKRenderTextureManager::Destroy(CVKRenderTexture *pRenderTexture)
+void CVKRenderTextureManager::Destroy(CVKRenderTexture* pRenderTexture)
 {
 	mutex_autolock autolock(&lock);
 	{

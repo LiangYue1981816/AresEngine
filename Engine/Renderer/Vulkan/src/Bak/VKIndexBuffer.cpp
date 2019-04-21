@@ -1,7 +1,7 @@
 #include "VKRenderer.h"
 
 
-CVKIndexBuffer::CVKIndexBuffer(CVKDevice *pDevice, GfxIndexType type, size_t size, bool bDynamic)
+CVKIndexBuffer::CVKIndexBuffer(CVKDevice* pDevice, GfxIndexType type, size_t size, bool bDynamic)
 	: CGfxIndexBuffer(type, size, bDynamic)
 	, m_pDevice(pDevice)
 
@@ -44,7 +44,7 @@ uint32_t CVKIndexBuffer::GetSize(void) const
 	return m_size;
 }
 
-bool CVKIndexBuffer::BufferData(size_t offset, size_t size, const void *pBuffer)
+bool CVKIndexBuffer::BufferData(size_t offset, size_t size, const void* pBuffer)
 {
 	if (m_size < (uint32_t)(offset + size)) {
 		return false;
@@ -52,7 +52,7 @@ bool CVKIndexBuffer::BufferData(size_t offset, size_t size, const void *pBuffer)
 
 	if (m_ptrBuffer->IsDeviceLocal()) {
 		m_transferOffset = offset;
-		m_transferBuffer.assign((uint8_t *)pBuffer, (uint8_t *)pBuffer + size);
+		m_transferBuffer.assign((uint8_t*)pBuffer, (uint8_t*)pBuffer + size);
 		return true;
 	}
 	else {

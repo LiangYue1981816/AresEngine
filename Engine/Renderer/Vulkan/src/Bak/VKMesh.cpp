@@ -1,7 +1,7 @@
 #include "VKRenderer.h"
 
 
-CVKMesh::CVKMesh(CVKDevice *pDevice, CVKMeshManager *pManager, uint32_t name)
+CVKMesh::CVKMesh(CVKDevice* pDevice, CVKMeshManager* pManager, uint32_t name)
 	: CGfxMesh(name)
 	, m_name(name)
 	, m_pDevice(pDevice)
@@ -30,7 +30,7 @@ uint32_t CVKMesh::GetName(void) const
 
 CGfxMesh::Draw* CVKMesh::GetDraw(int indexDraw)
 {
-	const auto &itDraw = m_draws.find(indexDraw);
+	const auto& itDraw = m_draws.find(indexDraw);
 
 	if (itDraw != m_draws.end()) {
 		return &itDraw->second;
@@ -50,7 +50,7 @@ CGfxVertexBuffer* CVKMesh::GetVertexBuffer(void)
 	return m_pVertexBuffer;
 }
 
-bool CVKMesh::CreateIndexBuffer(GfxIndexType type, size_t size, bool bDynamic, const void *pBuffer)
+bool CVKMesh::CreateIndexBuffer(GfxIndexType type, size_t size, bool bDynamic, const void* pBuffer)
 {
 	if (m_pIndexBuffer == nullptr) {
 		m_pIndexBuffer = new CVKIndexBuffer(m_pDevice, type, size, bDynamic);
@@ -62,7 +62,7 @@ bool CVKMesh::CreateIndexBuffer(GfxIndexType type, size_t size, bool bDynamic, c
 	}
 }
 
-bool CVKMesh::CreateVertexBuffer(uint32_t vertexFormat, uint32_t vertexBinding, size_t size, bool bDynamic, const void *pBuffer)
+bool CVKMesh::CreateVertexBuffer(uint32_t vertexFormat, uint32_t vertexBinding, size_t size, bool bDynamic, const void* pBuffer)
 {
 	if (m_pVertexBuffer == nullptr) {
 		m_pVertexBuffer = new CVKVertexBuffer(m_pDevice, vertexFormat, vertexBinding, size, bDynamic);
@@ -74,7 +74,7 @@ bool CVKMesh::CreateVertexBuffer(uint32_t vertexFormat, uint32_t vertexBinding, 
 	}
 }
 
-bool CVKMesh::CreateDraw(int indexDraw, const glm::aabb &aabb, int baseVertex, int firstIndex, int indexCount)
+bool CVKMesh::CreateDraw(int indexDraw, const glm::aabb& aabb, int baseVertex, int firstIndex, int indexCount)
 {
 	m_draws[indexDraw].aabb = aabb;
 	m_draws[indexDraw].baseVertex = baseVertex;

@@ -1,7 +1,7 @@
 #include "VKRenderer.h"
 
 
-CVKTexture2D::CVKTexture2D(CVKDevice *pDevice, CVKTexture2DManager *pManager, uint32_t name)
+CVKTexture2D::CVKTexture2D(CVKDevice* pDevice, CVKTexture2DManager* pManager, uint32_t name)
 	: CVKTexture(pDevice)
 	, CGfxTexture2D(name)
 	, m_name(name)
@@ -96,7 +96,7 @@ void CVKTexture2D::Destroy(void)
 {
 	CVKTexture::Destroy();
 
-	for (const auto &itLevelSize : m_size) {
+	for (const auto& itLevelSize : m_size) {
 		CGfxProfiler::DecTextureDataSize(itLevelSize.second);
 	}
 
@@ -111,7 +111,7 @@ void CVKTexture2D::Destroy(void)
 	m_size.clear();
 }
 
-bool CVKTexture2D::TransferTexture2D(GfxPixelFormat format, int level, int xoffset, int yoffset, int width, int height, GfxDataType type, uint32_t size, const void *data)
+bool CVKTexture2D::TransferTexture2D(GfxPixelFormat format, int level, int xoffset, int yoffset, int width, int height, GfxDataType type, uint32_t size, const void* data)
 {
 	if (m_format != format) {
 		return false;
@@ -140,14 +140,14 @@ bool CVKTexture2D::TransferTexture2D(GfxPixelFormat format, int level, int xoffs
 		m_transferBuffers[level].region.imageSubresource = { VK_IMAGE_ASPECT_COLOR_BIT, (uint32_t)level, 0, 1 };
 		m_transferBuffers[level].region.imageOffset = { xoffset, yoffset, 0 };
 		m_transferBuffers[level].region.imageExtent = { (uint32_t)width, (uint32_t)height, 1 };
-		m_transferBuffers[level].buffer.assign((uint8_t *)data, (uint8_t *)data + size);
+		m_transferBuffers[level].buffer.assign((uint8_t*)data, (uint8_t*)data + size);
 	}
 	CGfxProfiler::IncTextureDataSize(m_size[level]);
 
 	return true;
 }
 
-bool CVKTexture2D::TransferTexture2DCompressed(GfxPixelFormat format, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void *data)
+bool CVKTexture2D::TransferTexture2DCompressed(GfxPixelFormat format, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
 {
 	if (m_format != format) {
 		return false;
@@ -176,7 +176,7 @@ bool CVKTexture2D::TransferTexture2DCompressed(GfxPixelFormat format, int level,
 		m_transferBuffers[level].region.imageSubresource = { VK_IMAGE_ASPECT_COLOR_BIT, (uint32_t)level, 0, 1 };
 		m_transferBuffers[level].region.imageOffset = { xoffset, yoffset, 0 };
 		m_transferBuffers[level].region.imageExtent = { (uint32_t)width, (uint32_t)height, 1 };
-		m_transferBuffers[level].buffer.assign((uint8_t *)data, (uint8_t *)data + size);
+		m_transferBuffers[level].buffer.assign((uint8_t*)data, (uint8_t*)data + size);
 	}
 	CGfxProfiler::IncTextureDataSize(m_size[level]);
 

@@ -2,7 +2,7 @@
 #include "ResourceLoader.h"
 
 
-CVKMaterialManager::CVKMaterialManager(CVKDevice *pDevice)
+CVKMaterialManager::CVKMaterialManager(CVKDevice* pDevice)
 	: m_pDevice(pDevice)
 {
 
@@ -10,7 +10,7 @@ CVKMaterialManager::CVKMaterialManager(CVKDevice *pDevice)
 
 CVKMaterialManager::~CVKMaterialManager(void)
 {
-	for (const auto &itMaterial : m_pMaterials) {
+	for (const auto& itMaterial : m_pMaterials) {
 		delete itMaterial.second;
 	}
 }
@@ -19,7 +19,7 @@ CVKMaterial* CVKMaterialManager::Get(uint32_t name)
 {
 	mutex_autolock autolock(&lock);
 	{
-		const auto &itMaterial = m_pMaterials.find(name);
+		const auto& itMaterial = m_pMaterials.find(name);
 
 		if (itMaterial != m_pMaterials.end()) {
 			return itMaterial->second;
@@ -42,7 +42,7 @@ CVKMaterial* CVKMaterialManager::Create(uint32_t name)
 	}
 }
 
-CVKMaterial* CVKMaterialManager::Create(const char *szFileName, uint32_t vertexBinding, uint32_t instanceBinding)
+CVKMaterial* CVKMaterialManager::Create(const char* szFileName, uint32_t vertexBinding, uint32_t instanceBinding)
 {
 	uint32_t name = HashValue(szFileName);
 
@@ -57,7 +57,7 @@ CVKMaterial* CVKMaterialManager::Create(const char *szFileName, uint32_t vertexB
 	}
 }
 
-void CVKMaterialManager::Destroy(CVKMaterial *pMaterial)
+void CVKMaterialManager::Destroy(CVKMaterial* pMaterial)
 {
 	mutex_autolock autolock(&lock);
 	{

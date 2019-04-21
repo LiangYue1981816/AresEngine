@@ -1,7 +1,7 @@
 #include "VKRenderer.h"
 
 
-CVKCommandBuffer::CVKCommandBuffer(CVKDevice *pDevice, CVKCommandPool *pCommandPool, bool bMainCommandBuffer)
+CVKCommandBuffer::CVKCommandBuffer(CVKDevice* pDevice, CVKCommandPool* pCommandPool, bool bMainCommandBuffer)
 	: CGfxCommandBuffer(bMainCommandBuffer)
 	, m_pDevice(pDevice)
 	, m_pCommandPool(pCommandPool)
@@ -48,7 +48,7 @@ uint32_t CVKCommandBuffer::GetCommandCount(void) const
 
 void CVKCommandBuffer::Clearup(void)
 {
-	for (const auto &itCommand : m_pCommands) {
+	for (const auto& itCommand : m_pCommands) {
 		delete itCommand;
 	}
 
@@ -90,7 +90,7 @@ bool CVKCommandBuffer::CmdEndRenderPass(void)
 	return false;
 }
 
-bool CVKCommandBuffer::CmdBindPipelineCompute(const CGfxPipelineCompute *pPipelineCompute)
+bool CVKCommandBuffer::CmdBindPipelineCompute(const CGfxPipelineCompute* pPipelineCompute)
 {
 	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInRenderPass == true)) {
 		return true;
@@ -99,7 +99,7 @@ bool CVKCommandBuffer::CmdBindPipelineCompute(const CGfxPipelineCompute *pPipeli
 	return false;
 }
 
-bool CVKCommandBuffer::CmdBindPipelineGraphics(const CGfxPipelineGraphics *pPipelineGraphics)
+bool CVKCommandBuffer::CmdBindPipelineGraphics(const CGfxPipelineGraphics* pPipelineGraphics)
 {
 	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInRenderPass == true)) {
 		return true;
@@ -135,7 +135,7 @@ bool CVKCommandBuffer::CmdBindMeshDraw(const CGfxMeshDrawPtr ptrMeshDraw)
 	return false;
 }
 
-bool CVKCommandBuffer::CmdUniform1i(const char *szName, int v0)
+bool CVKCommandBuffer::CmdUniform1i(const char* szName, int v0)
 {
 	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInRenderPass == true)) {
 		return true;
@@ -144,7 +144,7 @@ bool CVKCommandBuffer::CmdUniform1i(const char *szName, int v0)
 	return false;
 }
 
-bool CVKCommandBuffer::CmdUniform2i(const char *szName, int v0, int v1)
+bool CVKCommandBuffer::CmdUniform2i(const char* szName, int v0, int v1)
 {
 	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInRenderPass == true)) {
 		return true;
@@ -153,7 +153,7 @@ bool CVKCommandBuffer::CmdUniform2i(const char *szName, int v0, int v1)
 	return false;
 }
 
-bool CVKCommandBuffer::CmdUniform3i(const char *szName, int v0, int v1, int v2)
+bool CVKCommandBuffer::CmdUniform3i(const char* szName, int v0, int v1, int v2)
 {
 	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInRenderPass == true)) {
 		return true;
@@ -162,7 +162,7 @@ bool CVKCommandBuffer::CmdUniform3i(const char *szName, int v0, int v1, int v2)
 	return false;
 }
 
-bool CVKCommandBuffer::CmdUniform4i(const char *szName, int v0, int v1, int v2, int v3)
+bool CVKCommandBuffer::CmdUniform4i(const char* szName, int v0, int v1, int v2, int v3)
 {
 	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInRenderPass == true)) {
 		return true;
@@ -171,7 +171,7 @@ bool CVKCommandBuffer::CmdUniform4i(const char *szName, int v0, int v1, int v2, 
 	return false;
 }
 
-bool CVKCommandBuffer::CmdUniform1f(const char *szName, float v0)
+bool CVKCommandBuffer::CmdUniform1f(const char* szName, float v0)
 {
 	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInRenderPass == true)) {
 		return true;
@@ -180,7 +180,7 @@ bool CVKCommandBuffer::CmdUniform1f(const char *szName, float v0)
 	return false;
 }
 
-bool CVKCommandBuffer::CmdUniform2f(const char *szName, float v0, float v1)
+bool CVKCommandBuffer::CmdUniform2f(const char* szName, float v0, float v1)
 {
 	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInRenderPass == true)) {
 		return true;
@@ -189,7 +189,7 @@ bool CVKCommandBuffer::CmdUniform2f(const char *szName, float v0, float v1)
 	return false;
 }
 
-bool CVKCommandBuffer::CmdUniform3f(const char *szName, float v0, float v1, float v2)
+bool CVKCommandBuffer::CmdUniform3f(const char* szName, float v0, float v1, float v2)
 {
 	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInRenderPass == true)) {
 		return true;
@@ -198,7 +198,7 @@ bool CVKCommandBuffer::CmdUniform3f(const char *szName, float v0, float v1, floa
 	return false;
 }
 
-bool CVKCommandBuffer::CmdUniform4f(const char *szName, float v0, float v1, float v2, float v3)
+bool CVKCommandBuffer::CmdUniform4f(const char* szName, float v0, float v1, float v2, float v3)
 {
 	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInRenderPass == true)) {
 		return true;
@@ -207,7 +207,7 @@ bool CVKCommandBuffer::CmdUniform4f(const char *szName, float v0, float v1, floa
 	return false;
 }
 
-bool CVKCommandBuffer::CmdUniform1iv(const char *szName, int count, const int *value)
+bool CVKCommandBuffer::CmdUniform1iv(const char* szName, int count, const int* value)
 {
 	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInRenderPass == true)) {
 		return true;
@@ -216,7 +216,7 @@ bool CVKCommandBuffer::CmdUniform1iv(const char *szName, int count, const int *v
 	return false;
 }
 
-bool CVKCommandBuffer::CmdUniform2iv(const char *szName, int count, const int *value)
+bool CVKCommandBuffer::CmdUniform2iv(const char* szName, int count, const int* value)
 {
 	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInRenderPass == true)) {
 		return true;
@@ -225,7 +225,7 @@ bool CVKCommandBuffer::CmdUniform2iv(const char *szName, int count, const int *v
 	return false;
 }
 
-bool CVKCommandBuffer::CmdUniform3iv(const char *szName, int count, const int *value)
+bool CVKCommandBuffer::CmdUniform3iv(const char* szName, int count, const int* value)
 {
 	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInRenderPass == true)) {
 		return true;
@@ -234,7 +234,7 @@ bool CVKCommandBuffer::CmdUniform3iv(const char *szName, int count, const int *v
 	return false;
 }
 
-bool CVKCommandBuffer::CmdUniform4iv(const char *szName, int count, const int *value)
+bool CVKCommandBuffer::CmdUniform4iv(const char* szName, int count, const int* value)
 {
 	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInRenderPass == true)) {
 		return true;
@@ -243,7 +243,7 @@ bool CVKCommandBuffer::CmdUniform4iv(const char *szName, int count, const int *v
 	return false;
 }
 
-bool CVKCommandBuffer::CmdUniform1fv(const char *szName, int count, const float *value)
+bool CVKCommandBuffer::CmdUniform1fv(const char* szName, int count, const float* value)
 {
 	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInRenderPass == true)) {
 		return true;
@@ -252,7 +252,7 @@ bool CVKCommandBuffer::CmdUniform1fv(const char *szName, int count, const float 
 	return false;
 }
 
-bool CVKCommandBuffer::CmdUniform2fv(const char *szName, int count, const float *value)
+bool CVKCommandBuffer::CmdUniform2fv(const char* szName, int count, const float* value)
 {
 	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInRenderPass == true)) {
 		return true;
@@ -261,7 +261,7 @@ bool CVKCommandBuffer::CmdUniform2fv(const char *szName, int count, const float 
 	return false;
 }
 
-bool CVKCommandBuffer::CmdUniform3fv(const char *szName, int count, const float *value)
+bool CVKCommandBuffer::CmdUniform3fv(const char* szName, int count, const float* value)
 {
 	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInRenderPass == true)) {
 		return true;
@@ -270,7 +270,7 @@ bool CVKCommandBuffer::CmdUniform3fv(const char *szName, int count, const float 
 	return false;
 }
 
-bool CVKCommandBuffer::CmdUniform4fv(const char *szName, int count, const float *value)
+bool CVKCommandBuffer::CmdUniform4fv(const char* szName, int count, const float* value)
 {
 	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInRenderPass == true)) {
 		return true;
@@ -279,7 +279,7 @@ bool CVKCommandBuffer::CmdUniform4fv(const char *szName, int count, const float 
 	return false;
 }
 
-bool CVKCommandBuffer::CmdUniformMatrix2fv(const char *szName, int count, const float *value)
+bool CVKCommandBuffer::CmdUniformMatrix2fv(const char* szName, int count, const float* value)
 {
 	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInRenderPass == true)) {
 		return true;
@@ -288,7 +288,7 @@ bool CVKCommandBuffer::CmdUniformMatrix2fv(const char *szName, int count, const 
 	return false;
 }
 
-bool CVKCommandBuffer::CmdUniformMatrix3fv(const char *szName, int count, const float *value)
+bool CVKCommandBuffer::CmdUniformMatrix3fv(const char* szName, int count, const float* value)
 {
 	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInRenderPass == true)) {
 		return true;
@@ -297,7 +297,7 @@ bool CVKCommandBuffer::CmdUniformMatrix3fv(const char *szName, int count, const 
 	return false;
 }
 
-bool CVKCommandBuffer::CmdUniformMatrix4fv(const char *szName, int count, const float *value)
+bool CVKCommandBuffer::CmdUniformMatrix4fv(const char* szName, int count, const float* value)
 {
 	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInRenderPass == true)) {
 		return true;
@@ -342,7 +342,7 @@ bool CVKCommandBuffer::CmdSetViewport(int x, int y, int width, int height)
 	return false;
 }
 
-bool CVKCommandBuffer::CmdSetInstanceBufferData(const CGfxMeshDrawPtr ptrMeshDraw, const uint8_t *pInstanceBuffer, uint32_t size)
+bool CVKCommandBuffer::CmdSetInstanceBufferData(const CGfxMeshDrawPtr ptrMeshDraw, const uint8_t* pInstanceBuffer, uint32_t size)
 {
 	if ((m_bMainCommandBuffer == false) || (m_bMainCommandBuffer == true && m_bInRenderPass == true)) {
 		return true;
@@ -396,7 +396,7 @@ bool CVKCommandBuffer::CmdPresent(void)
 	return false;
 }
 
-bool CVKCommandBuffer::CmdPushDebugGroup(const char *szMessage)
+bool CVKCommandBuffer::CmdPushDebugGroup(const char* szMessage)
 {
 	return true;
 }

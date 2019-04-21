@@ -1,7 +1,7 @@
 #include "VKRenderer.h"
 
 
-CVKVertexBuffer::CVKVertexBuffer(CVKDevice *pDevice, uint32_t vertexFormat, uint32_t vertexBinding, size_t size, bool bDynamic)
+CVKVertexBuffer::CVKVertexBuffer(CVKDevice* pDevice, uint32_t vertexFormat, uint32_t vertexBinding, size_t size, bool bDynamic)
 	: CGfxVertexBuffer(vertexFormat, vertexBinding, size, bDynamic)
 	, m_pDevice(pDevice)
 
@@ -42,7 +42,7 @@ uint32_t CVKVertexBuffer::GetSize(void) const
 	return m_size;
 }
 
-bool CVKVertexBuffer::BufferData(size_t offset, size_t size, const void *pBuffer)
+bool CVKVertexBuffer::BufferData(size_t offset, size_t size, const void* pBuffer)
 {
 	if (m_size < (uint32_t)(offset + size)) {
 		return false;
@@ -50,7 +50,7 @@ bool CVKVertexBuffer::BufferData(size_t offset, size_t size, const void *pBuffer
 
 	if (m_ptrBuffer->IsDeviceLocal()) {
 		m_transferOffset = offset;
-		m_transferBuffer.assign((uint8_t *)pBuffer, (uint8_t *)pBuffer + size);
+		m_transferBuffer.assign((uint8_t*)pBuffer, (uint8_t*)pBuffer + size);
 		return true;
 	}
 	else {

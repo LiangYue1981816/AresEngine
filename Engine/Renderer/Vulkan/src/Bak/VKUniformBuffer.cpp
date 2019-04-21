@@ -1,7 +1,7 @@
 #include "VKRenderer.h"
 
 
-CVKUniformBuffer::CVKUniformBuffer(CVKDevice *pDevice, CVKUniformBufferManager *pManager, size_t size)
+CVKUniformBuffer::CVKUniformBuffer(CVKDevice* pDevice, CVKUniformBufferManager* pManager, size_t size)
 	: CGfxUniformBuffer(size)
 	, m_pDevice(pDevice)
 	, m_pManager(pManager)
@@ -38,7 +38,7 @@ uint32_t CVKUniformBuffer::GetBaseOffset(void) const
 	return m_baseOffset;
 }
 
-bool CVKUniformBuffer::BufferData(size_t offset, size_t size, const void *pBuffer)
+bool CVKUniformBuffer::BufferData(size_t offset, size_t size, const void* pBuffer)
 {
 	if (m_size < (uint32_t)(offset + size)) {
 		return false;

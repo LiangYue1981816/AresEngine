@@ -1,7 +1,7 @@
 #include "VKRenderer.h"
 
 
-CVKSamplerManager::CVKSamplerManager(CVKDevice *pDevice)
+CVKSamplerManager::CVKSamplerManager(CVKDevice* pDevice)
 	: m_pDevice(pDevice)
 {
 
@@ -9,7 +9,7 @@ CVKSamplerManager::CVKSamplerManager(CVKDevice *pDevice)
 
 CVKSamplerManager::~CVKSamplerManager(void)
 {
-	for (const auto &itSampler : m_pSamplers) {
+	for (const auto& itSampler : m_pSamplers) {
 		delete itSampler.second;
 	}
 }

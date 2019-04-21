@@ -1,7 +1,7 @@
 #include "VKRenderer.h"
 
 
-CVKBuffer::CVKBuffer(CVKDevice *pDevice, VkDeviceSize size, VkBufferUsageFlags bufferUsageFlags, VkMemoryPropertyFlags memoryPropertyFlags)
+CVKBuffer::CVKBuffer(CVKDevice* pDevice, VkDeviceSize size, VkBufferUsageFlags bufferUsageFlags, VkMemoryPropertyFlags memoryPropertyFlags)
 	: m_pDevice(pDevice)
 
 	, m_vkBuffer(VK_NULL_HANDLE)
@@ -50,13 +50,13 @@ VkDeviceSize CVKBuffer::GetSize(void) const
 	}
 }
 
-bool CVKBuffer::BufferData(size_t offset, size_t size, const void *pBuffer)
+bool CVKBuffer::BufferData(size_t offset, size_t size, const void* pBuffer)
 {
 	if (m_pMemory == nullptr) {
 		return false;
 	}
 
-	void *pAddress = nullptr;
+	void* pAddress = nullptr;
 	CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->BeginMap(offset, size, &pAddress));
 	{
 		memcpy(pAddress, pBuffer, size);

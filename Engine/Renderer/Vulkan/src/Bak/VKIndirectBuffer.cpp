@@ -1,7 +1,7 @@
 #include "VKRenderer.h"
 
 
-CVKIndirectBuffer::CVKIndirectBuffer(CVKDevice *pDevice, uint32_t drawCommandCount)
+CVKIndirectBuffer::CVKIndirectBuffer(CVKDevice* pDevice, uint32_t drawCommandCount)
 	: CGfxIndirectBuffer(drawCommandCount)
 	, m_pDevice(pDevice)
 {
@@ -37,7 +37,7 @@ bool CVKIndirectBuffer::BufferData(int indexDraw, int instanceCount)
 	}
 
 	if (m_draws[indexDraw].instanceCount != instanceCount) {
-		m_draws[indexDraw].instanceCount  = instanceCount;
+		m_draws[indexDraw].instanceCount = instanceCount;
 		return m_ptrBuffer->BufferData(VKRenderer()->GetSwapChain()->GetFrameIndex() * m_draws.size() * sizeof(DrawCommand) + indexDraw * sizeof(DrawCommand) + offsetof(DrawCommand, instanceCount), sizeof(instanceCount), &instanceCount);
 	}
 

@@ -1,7 +1,7 @@
 #include "VKRenderer.h"
 
 
-CVKMaterial::CVKMaterial(CVKDevice *pDevice, CVKMaterialManager *pManager, uint32_t name)
+CVKMaterial::CVKMaterial(CVKDevice* pDevice, CVKMaterialManager* pManager, uint32_t name)
 	: CGfxMaterial(name)
 	, m_name(name)
 	, m_pDevice(pDevice)
@@ -27,7 +27,7 @@ uint32_t CVKMaterial::GetName(void) const
 
 CGfxMaterialPass* CVKMaterial::GetPass(uint32_t name)
 {
-	const auto &itPass = m_pPasses.find(name);
+	const auto& itPass = m_pPasses.find(name);
 
 	if (itPass != m_pPasses.end()) {
 		return itPass->second;
@@ -48,7 +48,7 @@ CGfxMaterialPass* CVKMaterial::CreatePass(uint32_t name)
 
 void CVKMaterial::Destroy(void)
 {
-	for (const auto &itPass : m_pPasses) {
+	for (const auto& itPass : m_pPasses) {
 		delete itPass.second;
 	}
 

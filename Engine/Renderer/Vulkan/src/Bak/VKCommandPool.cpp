@@ -1,7 +1,7 @@
 #include "VKRenderer.h"
 
 
-CVKCommandPool::CVKCommandPool(CVKDevice *pDevice)
+CVKCommandPool::CVKCommandPool(CVKDevice* pDevice)
 	: m_pDevice(pDevice)
 	, m_vkCommandPool(VK_NULL_HANDLE)
 {
@@ -15,7 +15,7 @@ CVKCommandPool::CVKCommandPool(CVKDevice *pDevice)
 
 CVKCommandPool::~CVKCommandPool(void)
 {
-	for (const auto &itCommandBuffer : m_pCommandBuffers) {
+	for (const auto& itCommandBuffer : m_pCommandBuffers) {
 		delete itCommandBuffer.second;
 	}
 
@@ -29,12 +29,12 @@ VkCommandPool CVKCommandPool::GetCommandPool(void) const
 
 CVKCommandBuffer* CVKCommandPool::AllocCommandBuffer(bool bMainCommandBuffer)
 {
-	CVKCommandBuffer *pCommandBuffer = new CVKCommandBuffer(m_pDevice, this, bMainCommandBuffer);
+	CVKCommandBuffer* pCommandBuffer = new CVKCommandBuffer(m_pDevice, this, bMainCommandBuffer);
 	m_pCommandBuffers[pCommandBuffer] = pCommandBuffer;
 	return pCommandBuffer;
 }
 
-void CVKCommandPool::FreeCommandBuffer(CVKCommandBuffer *pCommandBuffer)
+void CVKCommandPool::FreeCommandBuffer(CVKCommandBuffer* pCommandBuffer)
 {
 	m_pCommandBuffers.erase(pCommandBuffer);
 	delete pCommandBuffer;

@@ -1,7 +1,7 @@
 #include "VKRenderer.h"
 
 
-CVKFrameBuffer::CVKFrameBuffer(CVKDevice *pDevice, CVKFrameBufferManager *pManager, int width, int height, int numAttachments)
+CVKFrameBuffer::CVKFrameBuffer(CVKDevice* pDevice, CVKFrameBufferManager* pManager, int width, int height, int numAttachments)
 	: CGfxFrameBuffer(width, height, numAttachments)
 	, m_pDevice(pDevice)
 	, m_pManager(pManager)

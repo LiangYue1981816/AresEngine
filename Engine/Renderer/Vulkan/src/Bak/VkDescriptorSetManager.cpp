@@ -1,7 +1,7 @@
 #include "VKRenderer.h"
 
 
-CVKDescriptorSetManager::CVKDescriptorSetManager(CVKDevice *pDevice)
+CVKDescriptorSetManager::CVKDescriptorSetManager(CVKDevice* pDevice)
 	: m_pDevice(pDevice)
 	, m_pPoolListHead(nullptr)
 {
@@ -11,8 +11,8 @@ CVKDescriptorSetManager::CVKDescriptorSetManager(CVKDevice *pDevice)
 
 CVKDescriptorSetManager::~CVKDescriptorSetManager(void)
 {
-	if (CVKDescriptorPool *pDescriptorPool = m_pPoolListHead) {
-		CVKDescriptorPool *pDescriptorPoolNext = nullptr;
+	if (CVKDescriptorPool * pDescriptorPool = m_pPoolListHead) {
+		CVKDescriptorPool* pDescriptorPoolNext = nullptr;
 		do {
 			pDescriptorPoolNext = pDescriptorPool->pNext;
 			delete pDescriptorPool;
@@ -22,7 +22,7 @@ CVKDescriptorSetManager::~CVKDescriptorSetManager(void)
 	pthread_mutex_destroy(&m_lock);
 }
 
-CVKDescriptorSet* CVKDescriptorSetManager::AllocDescriptorSet(CVKDescriptorLayout *pDescriptorLayout)
+CVKDescriptorSet* CVKDescriptorSetManager::AllocDescriptorSet(CVKDescriptorLayout * pDescriptorLayout)
 {
 	if (pDescriptorLayout->GetDescriptorSetLayout() == VK_NULL_HANDLE) {
 		return nullptr;
@@ -30,10 +30,10 @@ CVKDescriptorSet* CVKDescriptorSetManager::AllocDescriptorSet(CVKDescriptorLayou
 
 	mutex_autolock autolock(&m_lock);
 	{
-		CVKDescriptorPool *pDescriptorPool = m_pPoolListHead;
+		CVKDescriptorPool* pDescriptorPool = m_pPoolListHead;
 
 		do {
-			if (CVKDescriptorSet *DescriptorSet = pDescriptorPool->AllocDescriptorSet(pDescriptorLayout)) {
+			if (CVKDescriptorSet * DescriptorSet = pDescriptorPool->AllocDescriptorSet(pDescriptorLayout)) {
 				return DescriptorSet;
 			}
 
@@ -48,7 +48,7 @@ CVKDescriptorSet* CVKDescriptorSetManager::AllocDescriptorSet(CVKDescriptorLayou
 	return nullptr;
 }
 
-void CVKDescriptorSetManager::FreeDescriptorSet(CVKDescriptorSet *pDescriptorSet)
+void CVKDescriptorSetManager::FreeDescriptorSet(CVKDescriptorSet * pDescriptorSet)
 {
 	if (pDescriptorSet == nullptr) {
 		return;
@@ -56,7 +56,7 @@ void CVKDescriptorSetManager::FreeDescriptorSet(CVKDescriptorSet *pDescriptorSet
 
 	mutex_autolock autolock(&m_lock);
 	{
-		CVKDescriptorPool *pDescriptorPool = pDescriptorSet->GetDescriptorPool();
+		CVKDescriptorPool* pDescriptorPool = pDescriptorSet->GetDescriptorPool();
 
 		if (pDescriptorPool->FreeDescriptorSet(pDescriptorSet)) {
 			if (pDescriptorPool->pPrev) {

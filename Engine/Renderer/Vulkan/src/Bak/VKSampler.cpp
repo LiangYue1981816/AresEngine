@@ -1,7 +1,7 @@
 #include "VKRenderer.h"
 
 
-CVKSampler::CVKSampler(CVKDevice *pDevice, GfxFilter minFilter, GfxFilter magFilter, GfxSamplerMipmapMode mipmapMode, GfxSamplerAddressMode addressMode)
+CVKSampler::CVKSampler(CVKDevice* pDevice, GfxFilter minFilter, GfxFilter magFilter, GfxSamplerMipmapMode mipmapMode, GfxSamplerAddressMode addressMode)
 	: CGfxSampler(minFilter, magFilter, mipmapMode, addressMode)
 	, m_pDevice(pDevice)
 

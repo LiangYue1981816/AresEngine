@@ -1,7 +1,7 @@
 #include "VKRenderer.h"
 
 
-CVKDescriptorLayout::CVKDescriptorLayout(CVKDevice *pDevice, uint32_t set)
+CVKDescriptorLayout::CVKDescriptorLayout(CVKDevice* pDevice, uint32_t set)
 	: m_pDevice(pDevice)
 
 	, m_set(set)
@@ -16,7 +16,7 @@ CVKDescriptorLayout::~CVKDescriptorLayout(void)
 	Destroy();
 }
 
-bool CVKDescriptorLayout::IsCompatible(const CVKDescriptorLayout &layout) const
+bool CVKDescriptorLayout::IsCompatible(const CVKDescriptorLayout& layout) const
 {
 	if (m_set != layout.m_set) {
 		return false;
@@ -64,7 +64,7 @@ bool CVKDescriptorLayout::IsUniformBlockValid(uint32_t name) const
 
 VkDescriptorSetLayoutBinding CVKDescriptorLayout::GetTextureBinding(uint32_t name) const
 {
-	const auto &itBinding = m_sampledImageBindings.find(name);
+	const auto& itBinding = m_sampledImageBindings.find(name);
 
 	if (itBinding != m_sampledImageBindings.end()) {
 		return itBinding->second;
@@ -76,7 +76,7 @@ VkDescriptorSetLayoutBinding CVKDescriptorLayout::GetTextureBinding(uint32_t nam
 
 VkDescriptorSetLayoutBinding CVKDescriptorLayout::GetUniformBlockBinding(uint32_t name) const
 {
-	const auto &itBinding = m_uniformBlockBindings.find(name);
+	const auto& itBinding = m_uniformBlockBindings.find(name);
 
 	if (itBinding != m_uniformBlockBindings.end()) {
 		return itBinding->second;
@@ -86,7 +86,7 @@ VkDescriptorSetLayoutBinding CVKDescriptorLayout::GetUniformBlockBinding(uint32_
 	}
 }
 
-bool CVKDescriptorLayout::SetUniformBlockBinding(const char *szName, uint32_t binding, VkShaderStageFlags flags)
+bool CVKDescriptorLayout::SetUniformBlockBinding(const char* szName, uint32_t binding, VkShaderStageFlags flags)
 {
 	uint32_t name = HashValue(szName);
 
@@ -103,7 +103,7 @@ bool CVKDescriptorLayout::SetUniformBlockBinding(const char *szName, uint32_t bi
 	return true;
 }
 
-bool CVKDescriptorLayout::SetSampledImageBinding(const char *szName, uint32_t binding, VkShaderStageFlags flags)
+bool CVKDescriptorLayout::SetSampledImageBinding(const char* szName, uint32_t binding, VkShaderStageFlags flags)
 {
 	uint32_t name = HashValue(szName);
 
@@ -120,7 +120,7 @@ bool CVKDescriptorLayout::SetSampledImageBinding(const char *szName, uint32_t bi
 	return true;
 }
 
-bool CVKDescriptorLayout::SetInputAttachmentBinding(const char *szName, uint32_t binding, VkShaderStageFlags flags)
+bool CVKDescriptorLayout::SetInputAttachmentBinding(const char* szName, uint32_t binding, VkShaderStageFlags flags)
 {
 	uint32_t name = HashValue(szName);
 
@@ -144,9 +144,9 @@ bool CVKDescriptorLayout::Create(void)
 		do {
 			eastl::vector<VkDescriptorSetLayoutBinding> bindings;
 			{
-				for (const auto &itBinding : m_uniformBlockBindings) bindings.emplace_back(itBinding.second);
-				for (const auto &itBinding : m_sampledImageBindings) bindings.emplace_back(itBinding.second);
-				for (const auto &itBinding : m_inputAttachmentBindings) bindings.emplace_back(itBinding.second);
+				for (const auto& itBinding : m_uniformBlockBindings) bindings.emplace_back(itBinding.second);
+				for (const auto& itBinding : m_sampledImageBindings) bindings.emplace_back(itBinding.second);
+				for (const auto& itBinding : m_inputAttachmentBindings) bindings.emplace_back(itBinding.second);
 			}
 			if (bindings.empty()) break;
 

@@ -1,7 +1,7 @@
 #include "VKRenderer.h"
 
 
-CVKPipelineGraphics::CVKPipelineGraphics(CVKDevice *pDevice, CVKPipelineGraphicsManager *pManager, uint32_t name)
+CVKPipelineGraphics::CVKPipelineGraphics(CVKDevice* pDevice, CVKPipelineGraphicsManager* pManager, uint32_t name)
 	: CVKPipeline(pDevice)
 	, CGfxPipelineGraphics(name)
 	, m_name(name)
@@ -25,7 +25,7 @@ HANDLE CVKPipelineGraphics::GetPipeline(void) const
 	return (HANDLE)m_vkPipeline;
 }
 
-bool CVKPipelineGraphics::Create(const CGfxRenderPass *pRenderPass, const CGfxShader *pVertexShader, const CGfxShader *pFragmentShader, const PipelineState &state, uint32_t indexSubpass, uint32_t vertexBinding, uint32_t instanceBinding)
+bool CVKPipelineGraphics::Create(const CGfxRenderPass* pRenderPass, const CGfxShader* pVertexShader, const CGfxShader* pFragmentShader, const PipelineState& state, uint32_t indexSubpass, uint32_t vertexBinding, uint32_t instanceBinding)
 {
 	if (pRenderPass == nullptr) {
 		return false;
@@ -58,8 +58,8 @@ bool CVKPipelineGraphics::Create(const CGfxRenderPass *pRenderPass, const CGfxSh
 	Destroy();
 	{
 		do {
-			m_pShaders[vertex_shader] = (CVKShader *)pVertexShader;
-			m_pShaders[fragment_shader] = (CVKShader *)pFragmentShader;
+			m_pShaders[vertex_shader] = (CVKShader*)pVertexShader;
+			m_pShaders[fragment_shader] = (CVKShader*)pFragmentShader;
 
 			eastl::vector<VkPipelineShaderStageCreateInfo> shaders;
 			CALL_BOOL_FUNCTION_BREAK(CreateShaderStages(shaders));

@@ -10,7 +10,7 @@ const uint32_t numStorageTexelBuffers = 32;
 const uint32_t numUniformTexelBuffers = 32;
 const uint32_t numInputAttachments = 32;
 
-CVKDescriptorPool::CVKDescriptorPool(CVKDevice *pDevice)
+CVKDescriptorPool::CVKDescriptorPool(CVKDevice* pDevice)
 	: m_pDevice(pDevice)
 	, m_vkDescriptorPool(VK_NULL_HANDLE)
 
@@ -53,7 +53,7 @@ CVKDescriptorPool::CVKDescriptorPool(CVKDevice *pDevice)
 
 CVKDescriptorPool::~CVKDescriptorPool(void)
 {
-	for (const auto &itDescriptorSet : m_pDescriptorSets) {
+	for (const auto& itDescriptorSet : m_pDescriptorSets) {
 		delete itDescriptorSet.second;
 	}
 
@@ -66,7 +66,7 @@ VkDescriptorPool CVKDescriptorPool::GetDescriptorPool(void) const
 	return m_vkDescriptorPool;
 }
 
-CVKDescriptorSet* CVKDescriptorPool::AllocDescriptorSet(CVKDescriptorLayout *pDescriptorLayout)
+CVKDescriptorSet* CVKDescriptorPool::AllocDescriptorSet(CVKDescriptorLayout* pDescriptorLayout)
 {
 	if (m_numSets == 0) {
 		return nullptr;
@@ -78,7 +78,7 @@ CVKDescriptorSet* CVKDescriptorPool::AllocDescriptorSet(CVKDescriptorLayout *pDe
 		}
 	}
 
-	CVKDescriptorSet *pDescriptorSet = new CVKDescriptorSet(m_pDevice, this, pDescriptorLayout);
+	CVKDescriptorSet* pDescriptorSet = new CVKDescriptorSet(m_pDevice, this, pDescriptorLayout);
 	m_pDescriptorSets[pDescriptorSet] = pDescriptorSet;
 
 	m_numSets -= 1;
@@ -90,11 +90,11 @@ CVKDescriptorSet* CVKDescriptorPool::AllocDescriptorSet(CVKDescriptorLayout *pDe
 	return pDescriptorSet;
 }
 
-bool CVKDescriptorPool::FreeDescriptorSet(CVKDescriptorSet *pDescriptorSet)
+bool CVKDescriptorPool::FreeDescriptorSet(CVKDescriptorSet* pDescriptorSet)
 {
 	m_pDescriptorSets.erase(pDescriptorSet);
 	delete pDescriptorSet;
-	
+
 	if (m_pDescriptorSets.empty()) {
 		m_numSets = numMaxSets;
 		m_numDescriptors[VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER] = numUniformBuffers;

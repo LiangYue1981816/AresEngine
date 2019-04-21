@@ -1,7 +1,7 @@
 #include "VKRenderer.h"
 
 
-CVKImage::CVKImage(CVKDevice *pDevice, VkImageType imageType, VkImageViewType viewType, VkFormat format, int width, int height, int levels, int layers, VkSampleCountFlagBits samples, VkImageTiling imageTiling, VkImageUsageFlags imageUsageFlags)
+CVKImage::CVKImage(CVKDevice* pDevice, VkImageType imageType, VkImageViewType viewType, VkFormat format, int width, int height, int levels, int layers, VkSampleCountFlagBits samples, VkImageTiling imageTiling, VkImageUsageFlags imageUsageFlags)
 	: m_pDevice(pDevice)
 
 	, m_vkImage(VK_NULL_HANDLE)
@@ -31,10 +31,10 @@ CVKImage::CVKImage(CVKDevice *pDevice, VkImageType imageType, VkImageViewType vi
 	}
 	vkCreateImage(m_pDevice->GetDevice(), &imageCreateInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkImage);
 
-	VkMemoryPropertyFlags memoryPropertyFlags = 
-		imageTiling == VK_IMAGE_TILING_LINEAR ? 
-		VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT : 
-		imageUsageFlags & VK_IMAGE_USAGE_TRANSIENT_ATTACHMENT_BIT ? 
+	VkMemoryPropertyFlags memoryPropertyFlags =
+		imageTiling == VK_IMAGE_TILING_LINEAR ?
+		VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT :
+		imageUsageFlags & VK_IMAGE_USAGE_TRANSIENT_ATTACHMENT_BIT ?
 		VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT | VK_MEMORY_PROPERTY_LAZILY_ALLOCATED_BIT :
 		VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT;
 
@@ -70,13 +70,13 @@ VkDeviceSize CVKImage::GetSize(void) const
 	}
 }
 
-bool CVKImage::BufferData(size_t offset, size_t size, const void *pBuffer)
+bool CVKImage::BufferData(size_t offset, size_t size, const void* pBuffer)
 {
 	if (m_pMemory == nullptr) {
 		return false;
 	}
 
-	void *pAddress = nullptr;
+	void* pAddress = nullptr;
 	CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->BeginMap(offset, size, &pAddress));
 	{
 		memcpy(pAddress, pBuffer, size);

@@ -1,7 +1,7 @@
 #include "VKRenderer.h"
 
 
-CVKPipelineCompute::CVKPipelineCompute(CVKDevice *pDevice, CVKPipelineComputeManager *pManager, uint32_t name)
+CVKPipelineCompute::CVKPipelineCompute(CVKDevice* pDevice, CVKPipelineComputeManager* pManager, uint32_t name)
 	: CVKPipeline(pDevice)
 	, CGfxPipelineCompute(name)
 	, m_name(name)
@@ -25,7 +25,7 @@ HANDLE CVKPipelineCompute::GetPipeline(void) const
 	return (HANDLE)m_vkPipeline;
 }
 
-bool CVKPipelineCompute::Create(const CGfxShader *pComputeShader)
+bool CVKPipelineCompute::Create(const CGfxShader* pComputeShader)
 {
 	if (pComputeShader == nullptr) {
 		return false;
@@ -42,7 +42,7 @@ bool CVKPipelineCompute::Create(const CGfxShader *pComputeShader)
 	Destroy();
 	{
 		do {
-			m_pShaders[compute_shader] = (CVKShader *)pComputeShader;
+			m_pShaders[compute_shader] = (CVKShader*)pComputeShader;
 
 			eastl::vector<VkDescriptorSetLayout> layouts;
 			eastl::vector<VkPushConstantRange> pushConstantRanges;

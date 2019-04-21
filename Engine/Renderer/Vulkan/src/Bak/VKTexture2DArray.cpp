@@ -1,7 +1,7 @@
 #include "VKRenderer.h"
 
 
-CVKTexture2DArray::CVKTexture2DArray(CVKDevice *pDevice, CVKTexture2DArrayManager *pManager, uint32_t name)
+CVKTexture2DArray::CVKTexture2DArray(CVKDevice* pDevice, CVKTexture2DArrayManager* pManager, uint32_t name)
 	: CVKTexture(pDevice)
 	, CGfxTexture2DArray(name)
 	, m_name(name)
@@ -96,8 +96,8 @@ void CVKTexture2DArray::Destroy(void)
 {
 	CVKTexture::Destroy();
 
-	for (const auto &itLayerSize : m_size) {
-		for (const auto &itLevelSize : itLayerSize.second) {
+	for (const auto& itLayerSize : m_size) {
+		for (const auto& itLevelSize : itLayerSize.second) {
 			CGfxProfiler::DecTextureDataSize(itLevelSize.second);
 		}
 	}
@@ -113,7 +113,7 @@ void CVKTexture2DArray::Destroy(void)
 	m_size.clear();
 }
 
-bool CVKTexture2DArray::TransferTexture2D(GfxPixelFormat format, int layer, int level, int xoffset, int yoffset, int width, int height, GfxDataType type, uint32_t size, const void *data)
+bool CVKTexture2DArray::TransferTexture2D(GfxPixelFormat format, int layer, int level, int xoffset, int yoffset, int width, int height, GfxDataType type, uint32_t size, const void* data)
 {
 	if (m_format != format) {
 		return false;
@@ -143,14 +143,14 @@ bool CVKTexture2DArray::TransferTexture2D(GfxPixelFormat format, int layer, int 
 		m_transferBuffers[layer * m_levels + level].region.imageSubresource = { VK_IMAGE_ASPECT_COLOR_BIT, (uint32_t)level, (uint32_t)layer, 1 };
 		m_transferBuffers[layer * m_levels + level].region.imageOffset = { xoffset, yoffset, 0 };
 		m_transferBuffers[layer * m_levels + level].region.imageExtent = { (uint32_t)width, (uint32_t)height, 1 };
-		m_transferBuffers[layer * m_levels + level].buffer.assign((uint8_t *)data, (uint8_t *)data + size);
+		m_transferBuffers[layer * m_levels + level].buffer.assign((uint8_t*)data, (uint8_t*)data + size);
 	}
 	CGfxProfiler::IncTextureDataSize(m_size[layer][level]);
 
 	return true;
 }
 
-bool CVKTexture2DArray::TransferTexture2DCompressed(GfxPixelFormat format, int layer, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void *data)
+bool CVKTexture2DArray::TransferTexture2DCompressed(GfxPixelFormat format, int layer, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
 {
 	if (m_format != format) {
 		return false;
@@ -180,7 +180,7 @@ bool CVKTexture2DArray::TransferTexture2DCompressed(GfxPixelFormat format, int l
 		m_transferBuffers[layer * m_levels + level].region.imageSubresource = { VK_IMAGE_ASPECT_COLOR_BIT, (uint32_t)level, (uint32_t)layer, 1 };
 		m_transferBuffers[layer * m_levels + level].region.imageOffset = { xoffset, yoffset, 0 };
 		m_transferBuffers[layer * m_levels + level].region.imageExtent = { (uint32_t)width, (uint32_t)height, 1 };
-		m_transferBuffers[layer * m_levels + level].buffer.assign((uint8_t *)data, (uint8_t *)data + size);
+		m_transferBuffers[layer * m_levels + level].buffer.assign((uint8_t*)data, (uint8_t*)data + size);
 	}
 	CGfxProfiler::IncTextureDataSize(m_size[layer][level]);
 

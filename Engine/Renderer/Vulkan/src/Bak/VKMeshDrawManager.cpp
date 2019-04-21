@@ -1,7 +1,7 @@
 #include "VKRenderer.h"
 
 
-CVKMeshDrawManager::CVKMeshDrawManager(CVKDevice *pDevice)
+CVKMeshDrawManager::CVKMeshDrawManager(CVKDevice* pDevice)
 	: m_pDevice(pDevice)
 {
 
@@ -9,7 +9,7 @@ CVKMeshDrawManager::CVKMeshDrawManager(CVKDevice *pDevice)
 
 CVKMeshDrawManager::~CVKMeshDrawManager(void)
 {
-	for (const auto &itMeshDraw : m_pMeshDraws) {
+	for (const auto& itMeshDraw : m_pMeshDraws) {
 		delete itMeshDraw.second;
 	}
 }
@@ -18,7 +18,7 @@ CVKMeshDraw* CVKMeshDrawManager::Get(uint32_t name)
 {
 	mutex_autolock autolock(&lock);
 	{
-		const auto &itMeshDraw = m_pMeshDraws.find(name);
+		const auto& itMeshDraw = m_pMeshDraws.find(name);
 
 		if (itMeshDraw != m_pMeshDraws.end()) {
 			return itMeshDraw->second;
@@ -41,7 +41,7 @@ CVKMeshDraw* CVKMeshDrawManager::Create(uint32_t name, const CGfxMeshPtr ptrMesh
 	}
 }
 
-void CVKMeshDrawManager::Destroy(CVKMeshDraw *pMeshDraw)
+void CVKMeshDrawManager::Destroy(CVKMeshDraw* pMeshDraw)
 {
 	mutex_autolock autolock(&lock);
 	{

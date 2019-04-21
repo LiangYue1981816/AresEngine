@@ -1,7 +1,7 @@
 #include "VKRenderer.h"
 
 
-CVKShader::CVKShader(CVKDevice *pDevice, uint32_t name)
+CVKShader::CVKShader(CVKDevice* pDevice, uint32_t name)
 	: CGfxShader(name)
 	, m_name(name)
 	, m_pDevice(pDevice)
@@ -37,7 +37,7 @@ const CGfxSprivCross& CVKShader::GetSprivCross(void) const
 	return m_spriv;
 }
 
-bool CVKShader::Create(const uint32_t *words, size_t numWords, shader_kind kind)
+bool CVKShader::Create(const uint32_t* words, size_t numWords, shader_kind kind)
 {
 	Destroy();
 	{
@@ -46,7 +46,7 @@ bool CVKShader::Create(const uint32_t *words, size_t numWords, shader_kind kind)
 			createInfo.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;
 			createInfo.pNext = nullptr;
 			createInfo.flags = 0;
-			createInfo.codeSize = sizeof(uint32_t)*numWords;
+			createInfo.codeSize = sizeof(uint32_t) * numWords;
 			createInfo.pCode = words;
 			CALL_VK_FUNCTION_BREAK(vkCreateShaderModule(m_pDevice->GetDevice(), &createInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkShader));
 
