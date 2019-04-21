@@ -340,7 +340,7 @@ static BLOCK_POOL* POOL_CreatePool(HEAP_ALLOCATOR* pHeapAllocator, uint32_t dwMe
 	const uint32_t dwBlockSize = ALIGN_16BYTE(sizeof(BLOCK)) + ALIGN_16BYTE(dwMemSize);
 	const uint32_t dwBlockCount = (BLOCK_POOL_SIZE[dwIndexPool] - ALIGN_16BYTE(sizeof(BLOCK_POOL))) / ALIGN_16BYTE(dwBlockSize);
 
-	BLOCK_POOL * pBlockPool = (BLOCK_POOL*)HEAP_Alloc(pHeapAllocator, BLOCK_POOL_SIZE[dwIndexPool]);
+	BLOCK_POOL* pBlockPool = (BLOCK_POOL*)HEAP_Alloc(pHeapAllocator, BLOCK_POOL_SIZE[dwIndexPool]);
 	{
 		pBlockPool->pBlockHead = (BLOCK*)((uint8_t*)pBlockPool + ALIGN_16BYTE(sizeof(BLOCK_POOL)));
 		pBlockPool->pNext = nullptr;
@@ -351,7 +351,7 @@ static BLOCK_POOL* POOL_CreatePool(HEAP_ALLOCATOR* pHeapAllocator, uint32_t dwMe
 		pBlockPool->dwBlockCount = dwBlockCount;
 	}
 
-	BLOCK * pBlock = pBlockPool->pBlockHead;
+	BLOCK* pBlock = pBlockPool->pBlockHead;
 	{
 		for (uint32_t indexBlock = 0; indexBlock < dwBlockCount; indexBlock++) {
 			pBlock->dwOffset = indexBlock * dwBlockSize;
@@ -363,12 +363,12 @@ static BLOCK_POOL* POOL_CreatePool(HEAP_ALLOCATOR* pHeapAllocator, uint32_t dwMe
 	return pBlockPool;
 }
 
-static void POOL_DestroyPool(HEAP_ALLOCATOR * pHeapAllocator, BLOCK_POOL * pBlockPool)
+static void POOL_DestroyPool(HEAP_ALLOCATOR* pHeapAllocator, BLOCK_POOL* pBlockPool)
 {
 	HEAP_Free(pHeapAllocator, pBlockPool);
 }
 
-POOL_ALLOCATOR* POOL_Create(HEAP_ALLOCATOR * pHeapAllocator)
+POOL_ALLOCATOR* POOL_Create(HEAP_ALLOCATOR* pHeapAllocator)
 {
 	POOL_ALLOCATOR* pPoolAllocator = (POOL_ALLOCATOR*)HEAP_Alloc(pHeapAllocator, sizeof(POOL_ALLOCATOR));
 
@@ -381,10 +381,10 @@ POOL_ALLOCATOR* POOL_Create(HEAP_ALLOCATOR * pHeapAllocator)
 	return pPoolAllocator;
 }
 
-void POOL_Destroy(HEAP_ALLOCATOR * pHeapAllocator, POOL_ALLOCATOR * pPoolAllocator)
+void POOL_Destroy(HEAP_ALLOCATOR* pHeapAllocator, POOL_ALLOCATOR* pPoolAllocator)
 {
 	for (int indexPool = 0; indexPool < BLOCK_POOL_COUNT; indexPool++) {
-		if (BLOCK_POOL * pBlockPool = pPoolAllocator->pools[indexPool].pBlockPoolHead) {
+		if (BLOCK_POOL* pBlockPool = pPoolAllocator->pools[indexPool].pBlockPoolHead) {
 			BLOCK_POOL* pBlockPoolNext = nullptr;
 
 			do {
@@ -397,7 +397,7 @@ void POOL_Destroy(HEAP_ALLOCATOR * pHeapAllocator, POOL_ALLOCATOR * pPoolAllocat
 	HEAP_Free(pHeapAllocator, pPoolAllocator);
 }
 
-void* POOL_Alloc(HEAP_ALLOCATOR * pHeapAllocator, POOL_ALLOCATOR * pPoolAllocator, size_t size)
+void* POOL_Alloc(HEAP_ALLOCATOR* pHeapAllocator, POOL_ALLOCATOR* pPoolAllocator, size_t size)
 {
 	uint32_t* pPointer = nullptr;
 
@@ -439,7 +439,7 @@ void* POOL_Alloc(HEAP_ALLOCATOR * pHeapAllocator, POOL_ALLOCATOR * pPoolAllocato
 	return pPointer;
 }
 
-bool POOL_Free(HEAP_ALLOCATOR * pHeapAllocator, POOL_ALLOCATOR * pPoolAllocator, void* pPointer)
+bool POOL_Free(HEAP_ALLOCATOR* pHeapAllocator, POOL_ALLOCATOR* pPoolAllocator, void* pPointer)
 {
 	if (pHeapAllocator && pPoolAllocator) {
 		const uint32_t dwMemSize = GET_MEM_SIZE(pPointer);

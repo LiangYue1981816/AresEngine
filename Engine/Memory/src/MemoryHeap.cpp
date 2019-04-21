@@ -131,15 +131,15 @@ static BLOCK* HEAP_SearchBlock(BLOCK_POOL* pBlockPool, uint32_t dwSize)
 	return pBlockNode ? pBlockNode->pBlockHead : nullptr;
 }
 
-static void HEAP_InsertBlock(BLOCK_POOL * pBlockPool, BLOCK * pBlock)
+static void HEAP_InsertBlock(BLOCK_POOL* pBlockPool, BLOCK* pBlock)
 {
 	ASSERT(pBlock->dwInUse == false);
 
-	BLOCK_NODE * pBlockNode = &pBlockPool->nodes[NODE_INDEX(pBlock->dwSize)];
+	BLOCK_NODE* pBlockNode = &pBlockPool->nodes[NODE_INDEX(pBlock->dwSize)];
 	ASSERT(pBlockNode->dwSize <= pBlock->dwSize);
 
-	rb_node * *node = &(pBlockPool->root.rb_node);
-	rb_node * parent = nullptr;
+	rb_node* *node = &(pBlockPool->root.rb_node);
+	rb_node* parent = nullptr;
 
 	if (pBlockNode->pBlockHead == nullptr) {
 		while (*node) {
@@ -176,10 +176,10 @@ static void HEAP_InsertBlock(BLOCK_POOL * pBlockPool, BLOCK * pBlock)
 	}
 }
 
-static void HEAP_RemoveBlock(BLOCK_POOL * pBlockPool, BLOCK * pBlock)
+static void HEAP_RemoveBlock(BLOCK_POOL* pBlockPool, BLOCK* pBlock)
 {
 	ASSERT(pBlock->dwInUse == false);
-	BLOCK_NODE * pBlockNode = &pBlockPool->nodes[NODE_INDEX(pBlock->dwSize)];
+	BLOCK_NODE* pBlockNode = &pBlockPool->nodes[NODE_INDEX(pBlock->dwSize)];
 
 	if (pBlock->pFreeNext) {
 		pBlock->pFreeNext->pFreePrev = pBlock->pFreePrev;
@@ -235,19 +235,19 @@ static BLOCK_POOL* HEAP_CreatePool(uint32_t dwMemSize)
 	return pBlockPool;
 }
 
-static void HEAP_DestroyPool(BLOCK_POOL * pBlockPool)
+static void HEAP_DestroyPool(BLOCK_POOL* pBlockPool)
 {
 	_free(pBlockPool->nodes);
 	_free(pBlockPool);
 }
 
-static void* HEAP_PoolAlloc(BLOCK_POOL * pBlockPool, uint32_t dwMemSize)
+static void* HEAP_PoolAlloc(BLOCK_POOL* pBlockPool, uint32_t dwMemSize)
 {
 	uint32_t* pPointer = nullptr;
 	uint32_t dwBlockAndMemSize = ALIGN_16BYTE(sizeof(BLOCK)) + dwMemSize;
 
 	if (pBlockPool->dwSize >= dwBlockAndMemSize) {
-		if (BLOCK * pBlock = HEAP_SearchBlock(pBlockPool, dwBlockAndMemSize)) {
+		if (BLOCK* pBlock = HEAP_SearchBlock(pBlockPool, dwBlockAndMemSize)) {
 			ASSERT(pBlock->dwSize >= dwBlockAndMemSize);
 
 			HEAP_RemoveBlock(pBlockPool, pBlock);
@@ -285,7 +285,7 @@ static void* HEAP_PoolAlloc(BLOCK_POOL * pBlockPool, uint32_t dwMemSize)
 	return pPointer;
 }
 
-static BLOCK* HEAP_Merge(BLOCK_POOL * pBlockPool, BLOCK * pBlock, BLOCK * pBlockNext)
+static BLOCK* HEAP_Merge(BLOCK_POOL* pBlockPool, BLOCK* pBlock, BLOCK* pBlockNext)
 {
 	ASSERT((uint8_t*)pBlock + pBlock->dwSize == (uint8_t*)pBlockNext);
 
@@ -299,7 +299,7 @@ static BLOCK* HEAP_Merge(BLOCK_POOL * pBlockPool, BLOCK * pBlock, BLOCK * pBlock
 	return pBlock;
 }
 
-static void HEAP_PoolFree(BLOCK_POOL * pBlockPool, BLOCK * pBlock)
+static void HEAP_PoolFree(BLOCK_POOL* pBlockPool, BLOCK* pBlock)
 {
 	pBlock->dwInUse = false;
 	pBlockPool->dwSize += pBlock->dwSize;
@@ -326,9 +326,9 @@ HEAP_ALLOCATOR* HEAP_Create(void)
 	return pHeapAllocator;
 }
 
-void HEAP_Destroy(HEAP_ALLOCATOR * pHeapAllocator)
+void HEAP_Destroy(HEAP_ALLOCATOR* pHeapAllocator)
 {
-	if (BLOCK_POOL * pBlockPool = pHeapAllocator->pBlockPoolHead) {
+	if (BLOCK_POOL* pBlockPool = pHeapAllocator->pBlockPoolHead) {
 		BLOCK_POOL* pBlockPoolNext = nullptr;
 		do {
 			pBlockPoolNext = pBlockPool->pNext;
@@ -339,7 +339,7 @@ void HEAP_Destroy(HEAP_ALLOCATOR * pHeapAllocator)
 	_free(pHeapAllocator);
 }
 
-void* HEAP_Alloc(HEAP_ALLOCATOR * pHeapAllocator, size_t size)
+void* HEAP_Alloc(HEAP_ALLOCATOR* pHeapAllocator, size_t size)
 {
 	uint32_t* pPointer = nullptr;
 
@@ -349,7 +349,7 @@ void* HEAP_Alloc(HEAP_ALLOCATOR * pHeapAllocator, size_t size)
 			const uint32_t dwMemSize = (uint32_t)ALIGN_BYTE(size, BLOCK_UNIT_SIZE);
 
 			do {
-				if (BLOCK_POOL * pBlockPool = pHeapAllocator->pBlockPoolHead) {
+				if (BLOCK_POOL* pBlockPool = pHeapAllocator->pBlockPoolHead) {
 					do {
 						if ((pPointer = (uint32_t*)HEAP_PoolAlloc(pBlockPool, dwMemSize)) != nullptr) {
 							goto RET;
@@ -357,7 +357,7 @@ void* HEAP_Alloc(HEAP_ALLOCATOR * pHeapAllocator, size_t size)
 					} while ((pBlockPool = pBlockPool->pNext) != nullptr);
 				}
 
-				BLOCK_POOL * pBlockPool = HEAP_CreatePool(dwMemSize);
+				BLOCK_POOL* pBlockPool = HEAP_CreatePool(dwMemSize);
 
 				if (pHeapAllocator->pBlockPoolHead) {
 					pHeapAllocator->pBlockPoolHead->pPrev = pBlockPool;
@@ -375,13 +375,13 @@ void* HEAP_Alloc(HEAP_ALLOCATOR * pHeapAllocator, size_t size)
 	return pPointer;
 }
 
-bool HEAP_Free(HEAP_ALLOCATOR * pHeapAllocator, void* pPointer)
+bool HEAP_Free(HEAP_ALLOCATOR* pHeapAllocator, void* pPointer)
 {
 	if (pHeapAllocator) {
 		atomic_spin_lock(&pHeapAllocator->lock);
 		{
 			BLOCK* pBlock = (BLOCK*)((uint8_t*)pPointer - ALIGN_16BYTE(sizeof(BLOCK)));
-			BLOCK_POOL * pBlockPool = pBlock->pPool;
+			BLOCK_POOL* pBlockPool = pBlock->pPool;
 
 			HEAP_PoolFree(pBlockPool, pBlock);
 
