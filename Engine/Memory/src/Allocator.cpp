@@ -41,14 +41,14 @@ static int GetPoolIndex(void)
 	static std::thread::id threads[MAX_POOL_COUNT];
 	std::thread::id thread = std::this_thread::get_id();
 
-	for (int index = 0; index < MAX_POOL_COUNT; index++) {
-		if (threads[index] == thread) {
-			return index;
+	for (int indexPool = 0; indexPool < MAX_POOL_COUNT; indexPool++) {
+		if (threads[indexPool] == thread) {
+			return indexPool;
 		}
 
-		if (threads[index] == std::thread::id()) {
-			threads[index] = thread;
-			return index;
+		if (threads[indexPool] == std::thread::id()) {
+			threads[indexPool] = thread;
+			return indexPool;
 		}
 	}
 

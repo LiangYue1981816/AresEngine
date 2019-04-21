@@ -200,8 +200,8 @@ static void HEAP_RemoveBlock(BLOCK_POOL* pBlockPool, BLOCK* pBlock)
 
 static BLOCK_POOL* HEAP_CreatePool(uint32_t dwMemSize)
 {
-	const uint32_t dwPoolSize = ALIGN_16BYTE(max(dwMemSize, BLOCK_POOL_SIZE));
-	const uint32_t dwNodeCount = dwPoolSize / BLOCK_UNIT_SIZE;
+	uint32_t dwPoolSize = ALIGN_16BYTE(max(dwMemSize, BLOCK_POOL_SIZE));
+	uint32_t dwNodeCount = dwPoolSize / BLOCK_UNIT_SIZE;
 
 	BLOCK_POOL* pBlockPool = (BLOCK_POOL*)_malloc(ALIGN_16BYTE(sizeof(BLOCK_POOL)) + dwPoolSize);
 	{

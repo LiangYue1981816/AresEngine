@@ -336,9 +336,9 @@ static void atomic_spin_unlock(std::atomic_flag* flag)
 
 static BLOCK_POOL* POOL_CreatePool(HEAP_ALLOCATOR* pHeapAllocator, uint32_t dwMemSize)
 {
-	const uint32_t dwIndexPool = dwMemSize / 16;
-	const uint32_t dwBlockSize = ALIGN_16BYTE(sizeof(BLOCK)) + ALIGN_16BYTE(dwMemSize);
-	const uint32_t dwBlockCount = (BLOCK_POOL_SIZE[dwIndexPool] - ALIGN_16BYTE(sizeof(BLOCK_POOL))) / ALIGN_16BYTE(dwBlockSize);
+	uint32_t dwIndexPool = dwMemSize / 16;
+	uint32_t dwBlockSize = ALIGN_16BYTE(sizeof(BLOCK)) + ALIGN_16BYTE(dwMemSize);
+	uint32_t dwBlockCount = (BLOCK_POOL_SIZE[dwIndexPool] - ALIGN_16BYTE(sizeof(BLOCK_POOL))) / ALIGN_16BYTE(dwBlockSize);
 
 	BLOCK_POOL* pBlockPool = (BLOCK_POOL*)HEAP_Alloc(pHeapAllocator, BLOCK_POOL_SIZE[dwIndexPool]);
 	{

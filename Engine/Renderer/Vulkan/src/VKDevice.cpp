@@ -51,12 +51,12 @@ bool CVKDevice::SelectPhysicalDevices(eastl::vector<VkPhysicalDevice>& devices, 
 {
 	uint32_t familyIndex = UINT32_MAX;
 
-	for (int index = 0; index < devices.size(); index++) {
-		if (CheckPhysicalDeviceCapabilities(devices[index]) == false) continue;
-		if (CheckPhysicalDeviceExtensionProperties(devices[index]) == false) continue;
-		if (CheckPhysicalDeviceQueueFamilyProperties(devices[index], familyIndex) == false) continue;
+	for (int indexDevice = 0; indexDevice < devices.size(); indexDevice++) {
+		if (CheckPhysicalDeviceCapabilities(devices[indexDevice]) == false) continue;
+		if (CheckPhysicalDeviceExtensionProperties(devices[indexDevice]) == false) continue;
+		if (CheckPhysicalDeviceQueueFamilyProperties(devices[indexDevice], familyIndex) == false) continue;
 
-		deviceIndex = index;
+		deviceIndex = indexDevice;
 		queueFamilyIndex = familyIndex;
 
 		return true;
@@ -92,8 +92,8 @@ bool CVKDevice::CheckPhysicalDeviceExtensionProperties(VkPhysicalDevice vkPhysic
 	CALL_VK_FUNCTION_RETURN_BOOL(vkEnumerateDeviceExtensionProperties(vkPhysicalDevice, nullptr, &numExtensions, extensions.data()));
 
 	bool bSwapchainExtension = false;
-	for (int index = 0; index < extensions.size(); index++) {
-		if (stricmp(extensions[index].extensionName, VK_KHR_SWAPCHAIN_EXTENSION_NAME) == 0) {
+	for (int indexExtension = 0; indexExtension < extensions.size(); indexExtension++) {
+		if (stricmp(extensions[indexExtension].extensionName, VK_KHR_SWAPCHAIN_EXTENSION_NAME) == 0) {
 			bSwapchainExtension = true;
 			continue;
 		}
@@ -121,15 +121,15 @@ bool CVKDevice::CheckPhysicalDeviceQueueFamilyProperties(VkPhysicalDevice vkPhys
 	eastl::vector<VkQueueFamilyProperties> queueFamilies(numQueueFamilies);
 	vkGetPhysicalDeviceQueueFamilyProperties(vkPhysicalDevice, &numQueueFamilies, queueFamilies.data());
 
-	for (int index = 0; index < queueFamilies.size(); index++) {
-		if ((queueFamilies[index].queueFlags & VK_QUEUE_COMPUTE_BIT) != 0 &&
-			(queueFamilies[index].queueFlags & VK_QUEUE_GRAPHICS_BIT) != 0 &&
-			(queueFamilies[index].queueFlags & VK_QUEUE_TRANSFER_BIT) != 0) {
+	for (int indexQueueFamilie = 0; indexQueueFamilie < queueFamilies.size(); indexQueueFamilie++) {
+		if ((queueFamilies[indexQueueFamilie].queueFlags & VK_QUEUE_COMPUTE_BIT) != 0 && 
+			(queueFamilies[indexQueueFamilie].queueFlags & VK_QUEUE_GRAPHICS_BIT) != 0 && 
+			(queueFamilies[indexQueueFamilie].queueFlags & VK_QUEUE_TRANSFER_BIT) != 0) {
 			VkBool32 surfaceSupported;
-			CALL_VK_FUNCTION_RETURN_BOOL(vkGetPhysicalDeviceSurfaceSupportKHR(vkPhysicalDevice, index, m_pInstance->GetSurface(), &surfaceSupported));
+			CALL_VK_FUNCTION_RETURN_BOOL(vkGetPhysicalDeviceSurfaceSupportKHR(vkPhysicalDevice, indexQueueFamilie, m_pInstance->GetSurface(), &surfaceSupported));
 
 			if (surfaceSupported == VK_TRUE) {
-				queueFamilyIndex = index;
+				queueFamilyIndex = indexQueueFamilie;
 				return true;
 			}
 		}

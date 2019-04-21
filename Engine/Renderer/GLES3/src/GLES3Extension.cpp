@@ -4,8 +4,8 @@
 #pragma region OpenGL extension
 void glReadBuffers(int n, const uint32_t* bufs)
 {
-	for (int index = 0; index < n; index++) {
-		glReadBuffer(bufs[index]);
+	for (int indexBuffer = 0; indexBuffer < n; indexBuffer++) {
+		glReadBuffer(bufs[indexBuffer]);
 	}
 }
 
@@ -815,8 +815,8 @@ void GLReadBuffers(GLenum target, GLsizei n, const GLenum * bufs)
 			bReset = true;
 		}
 		else {
-			for (int index = 0; index < n; index++) {
-				if (bufs[index] != FrameBuffers[target].readbuffers[framebuffer][index]) {
+			for (int indexBuffer = 0; indexBuffer < n; indexBuffer++) {
+				if (bufs[indexBuffer] != FrameBuffers[target].readbuffers[framebuffer][indexBuffer]) {
 					bReset = true;
 					break;
 				}
@@ -826,8 +826,8 @@ void GLReadBuffers(GLenum target, GLsizei n, const GLenum * bufs)
 		if (bReset) {
 			FrameBuffers[target].readbuffers[framebuffer].clear();
 
-			for (int index = 0; index < n; index++) {
-				FrameBuffers[target].readbuffers[framebuffer].emplace_back(bufs[index]);
+			for (int indexBuffer = 0; indexBuffer < n; indexBuffer++) {
+				FrameBuffers[target].readbuffers[framebuffer].emplace_back(bufs[indexBuffer]);
 			}
 
 			glReadBuffers(n, bufs);
@@ -848,8 +848,8 @@ void GLDrawBuffers(GLenum target, GLsizei n, const GLenum * bufs)
 			bReset = true;
 		}
 		else {
-			for (int index = 0; index < n; index++) {
-				if (bufs[index] != FrameBuffers[target].drawbuffers[framebuffer][index]) {
+			for (int indexBuffer = 0; indexBuffer < n; indexBuffer++) {
+				if (bufs[indexBuffer] != FrameBuffers[target].drawbuffers[framebuffer][indexBuffer]) {
 					bReset = true;
 					break;
 				}
@@ -859,8 +859,8 @@ void GLDrawBuffers(GLenum target, GLsizei n, const GLenum * bufs)
 		if (bReset) {
 			FrameBuffers[target].drawbuffers[framebuffer].clear();
 
-			for (int index = 0; index < n; index++) {
-				FrameBuffers[target].drawbuffers[framebuffer].emplace_back(bufs[index]);
+			for (int indexBuffer = 0; indexBuffer < n; indexBuffer++) {
+				FrameBuffers[target].drawbuffers[framebuffer].emplace_back(bufs[indexBuffer]);
 			}
 
 			glDrawBuffers(n, bufs);

@@ -34,9 +34,9 @@ bool CGLES3Pipeline::CreateProgram(const CGLES3Shader* pVertexShader, const CGLE
 
 	m_program = glCreateProgram();
 	{
-		for (int index = 0; index < compute_shader - vertex_shader + 1; index++) {
-			if (m_pShaders[index]) {
-				glAttachShader(m_program, (uint32_t)m_pShaders[index]->GetShader());
+		for (int indexShader = 0; indexShader < compute_shader - vertex_shader + 1; indexShader++) {
+			if (m_pShaders[indexShader]) {
+				glAttachShader(m_program, (uint32_t)m_pShaders[indexShader]->GetShader());
 			}
 		}
 	}
@@ -62,12 +62,12 @@ bool CGLES3Pipeline::CreateProgram(const CGLES3Shader* pVertexShader, const CGLE
 
 bool CGLES3Pipeline::CreateLayouts(void)
 {
-	for (int index = 0; index < compute_shader - vertex_shader + 1; index++) {
-		if (m_pShaders[index]) {
-			const eastl::unordered_map<eastl::string, PushConstantRange>& pushConstantRanges = m_pShaders[index]->GetSprivCross().GetPushConstantRanges();
-			const eastl::unordered_map<eastl::string, DescriptorSetBinding>& uniformBlockBindings = m_pShaders[index]->GetSprivCross().GetUniformBlockBindings();
-			const eastl::unordered_map<eastl::string, DescriptorSetBinding>& sampledImageBindings = m_pShaders[index]->GetSprivCross().GetSampledImageBindings();
-			const eastl::unordered_map<eastl::string, InputAttachmentBinding>& inputAttachmentBindings = m_pShaders[index]->GetSprivCross().GetInputAttachmentBindings();
+	for (int indexShader = 0; indexShader < compute_shader - vertex_shader + 1; indexShader++) {
+		if (m_pShaders[indexShader]) {
+			const eastl::unordered_map<eastl::string, PushConstantRange>& pushConstantRanges = m_pShaders[indexShader]->GetSprivCross().GetPushConstantRanges();
+			const eastl::unordered_map<eastl::string, DescriptorSetBinding>& uniformBlockBindings = m_pShaders[indexShader]->GetSprivCross().GetUniformBlockBindings();
+			const eastl::unordered_map<eastl::string, DescriptorSetBinding>& sampledImageBindings = m_pShaders[indexShader]->GetSprivCross().GetSampledImageBindings();
+			const eastl::unordered_map<eastl::string, InputAttachmentBinding>& inputAttachmentBindings = m_pShaders[indexShader]->GetSprivCross().GetInputAttachmentBindings();
 
 			for (const auto& itPushConstant : pushConstantRanges) {
 				SetUniformLocation(itPushConstant.first.c_str());

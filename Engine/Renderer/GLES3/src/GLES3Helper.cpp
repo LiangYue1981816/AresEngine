@@ -8,8 +8,8 @@ void CGLES3Helper::SetupExtensions(void)
 	int numExtensions;
 	glGetIntegerv(GL_NUM_EXTENSIONS, &numExtensions);
 
-	for (int index = 0; index < numExtensions; index++) {
-		const char* extension = (const char*)glGetStringi(GL_EXTENSIONS, index);
+	for (int indexExtension = 0; indexExtension < numExtensions; indexExtension++) {
+		const char* extension = (const char*)glGetStringi(GL_EXTENSIONS, indexExtension);
 		extensions[HashValue(extension)] = extension;
 	}
 }

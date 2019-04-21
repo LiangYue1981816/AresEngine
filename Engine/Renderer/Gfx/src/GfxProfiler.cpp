@@ -79,8 +79,8 @@ void CGfxProfiler::DecIndirectBufferSize(size_t size)
 
 void CGfxProfiler::ResetSamples(void)
 {
-	for (int index = 0; index < SampleType::SAMPLE_TYPE_COUNT; index++) {
-		samples[index].Reset();
+	for (int indexSample = 0; indexSample < SampleType::SAMPLE_TYPE_COUNT; indexSample++) {
+		samples[indexSample].Reset();
 	}
 }
 
@@ -119,10 +119,10 @@ void CGfxProfiler::LogProfiler(int frameCount)
 		LogOutput(LOG_TAG_RENDERER, "GfxProfiler\n");
 
 		float totalTime = 0.0f;
-		for (int index = 0; index < SampleType::SAMPLE_TYPE_COUNT; index++) {
-			if (samples[index].name) {
-				LogOutput(LOG_TAG_RENDERER, "\t%s time = %3.3fms count = %d\n", samples[index].name, samples[index].timeTotal / frameCount / 1000.0f, samples[index].count / frameCount);
-				totalTime += samples[index].timeTotal / frameCount / 1000.0f;
+		for (int indexSample = 0; indexSample < SampleType::SAMPLE_TYPE_COUNT; indexSample++) {
+			if (samples[indexSample].name) {
+				LogOutput(LOG_TAG_RENDERER, "\t%s time = %3.3fms count = %d\n", samples[indexSample].name, samples[indexSample].timeTotal / frameCount / 1000.0f, samples[indexSample].count / frameCount);
+				totalTime += samples[indexSample].timeTotal / frameCount / 1000.0f;
 			}
 		}
 

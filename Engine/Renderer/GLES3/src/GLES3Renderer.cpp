@@ -420,8 +420,8 @@ bool CGLES3Renderer::CmdPopDebugGroup(CGfxCommandBufferPtr ptrCommandBuffer)
 
 void CGLES3Renderer::Submit(const eastl::vector<CGfxCommandBufferPtr>& ptrCommandBuffers)
 {
-	for (int index = 0; index < ptrCommandBuffers.size(); index++) {
-		ptrCommandBuffers[index]->Execute();
+	for (int indexCommandBuffer = 0; indexCommandBuffer < ptrCommandBuffers.size(); indexCommandBuffer++) {
+		ptrCommandBuffers[indexCommandBuffer]->Execute();
 	}
 }
 

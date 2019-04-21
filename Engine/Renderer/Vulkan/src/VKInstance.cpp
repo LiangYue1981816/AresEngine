@@ -100,10 +100,10 @@ bool CVKInstance::EnumerateInstanceLayerProperties(eastl::vector<const char*>& e
 	eastl::vector<VkLayerProperties> layers(numLayers);
 	CALL_VK_FUNCTION_RETURN_BOOL(vkEnumerateInstanceLayerProperties(&numLayers, layers.data()));
 
-	for (int index = 0; index < layers.size(); index++) {
+	for (int indexLayer = 0; indexLayer < layers.size(); indexLayer++) {
 #ifdef DEBUG
 #define VK_LAYER_LUNARG_STANDARD_VALIDATION "VK_LAYER_LUNARG_standard_validation"
-		if (stricmp(layers[index].layerName, VK_LAYER_LUNARG_STANDARD_VALIDATION) == 0) {
+		if (stricmp(layers[indexLayer].layerName, VK_LAYER_LUNARG_STANDARD_VALIDATION) == 0) {
 			enabledInstanceLayers.emplace_back(VK_LAYER_LUNARG_STANDARD_VALIDATION);
 			continue;
 		}
@@ -126,15 +126,15 @@ bool CVKInstance::EnumerateInstanceExtensionProperties(eastl::vector<const char*
 
 	bool bSurfaceExtension = false;
 	bool bPlatformSurfaceExtension = false;
-	for (int index = 0; index < extensions.size(); index++) {
-		if (stricmp(extensions[index].extensionName, VK_KHR_SURFACE_EXTENSION_NAME) == 0) {
+	for (int indexExtension = 0; indexExtension < extensions.size(); indexExtension++) {
+		if (stricmp(extensions[indexExtension].extensionName, VK_KHR_SURFACE_EXTENSION_NAME) == 0) {
 			enabledInstanceExtensions.emplace_back(VK_KHR_SURFACE_EXTENSION_NAME);
 			bSurfaceExtension = true;
 			continue;
 		}
 
 #ifdef PLATFORM_WINDOWS
-		if (stricmp(extensions[index].extensionName, VK_KHR_WIN32_SURFACE_EXTENSION_NAME) == 0) {
+		if (stricmp(extensions[indexExtension].extensionName, VK_KHR_WIN32_SURFACE_EXTENSION_NAME) == 0) {
 			enabledInstanceExtensions.emplace_back(VK_KHR_WIN32_SURFACE_EXTENSION_NAME);
 			bPlatformSurfaceExtension = true;
 			continue;
@@ -142,7 +142,7 @@ bool CVKInstance::EnumerateInstanceExtensionProperties(eastl::vector<const char*
 #endif
 
 #ifdef PLATFORM_ANDROID
-		if (stricmp(extensions[index].extensionName, VK_KHR_ANDROID_SURFACE_EXTENSION_NAME) == 0) {
+		if (stricmp(extensions[indexExtension].extensionName, VK_KHR_ANDROID_SURFACE_EXTENSION_NAME) == 0) {
 			enabledInstanceExtensions.emplace_back(VK_KHR_ANDROID_SURFACE_EXTENSION_NAME);
 			bPlatformSurfaceExtension = true;
 			continue;
@@ -150,7 +150,7 @@ bool CVKInstance::EnumerateInstanceExtensionProperties(eastl::vector<const char*
 #endif
 
 #ifdef DEBUG
-		if (stricmp(extensions[index].extensionName, VK_EXT_DEBUG_REPORT_EXTENSION_NAME) == 0) {
+		if (stricmp(extensions[indexExtension].extensionName, VK_EXT_DEBUG_REPORT_EXTENSION_NAME) == 0) {
 			enabledInstanceExtensions.emplace_back(VK_EXT_DEBUG_REPORT_EXTENSION_NAME);
 			continue;
 		}
