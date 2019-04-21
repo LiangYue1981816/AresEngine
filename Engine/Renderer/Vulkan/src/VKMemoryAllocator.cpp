@@ -140,7 +140,7 @@ void CVKMemoryAllocator::InitNodes(void)
 	uint32_t numNodes = (uint32_t)(m_memoryFullSize / m_memoryAlignment);
 
 	m_root = RB_ROOT;
-	m_nodes = new mem_node* [numNodes];
+	m_nodes = new mem_node*[numNodes];
 
 	for (uint32_t indexNode = 0; indexNode < numNodes; indexNode++) {
 		m_nodes[indexNode] = nullptr;
