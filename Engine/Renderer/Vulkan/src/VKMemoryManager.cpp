@@ -1,7 +1,7 @@
 #include "VKRenderer.h"
 
 
-CVKMemoryManager::CVKMemoryManager(CVKDevice *pDevice)
+CVKMemoryManager::CVKMemoryManager(CVKDevice* pDevice)
 	: m_pDevice(pDevice)
 {
 	pthread_mutex_init(&m_lock, nullptr);
@@ -9,10 +9,10 @@ CVKMemoryManager::CVKMemoryManager(CVKDevice *pDevice)
 
 CVKMemoryManager::~CVKMemoryManager(void)
 {
-	for (const auto &itAligmentAllocator : m_pAllocatorListHeads) {
-		for (const auto &itTypeAllocator : itAligmentAllocator.second) {
-			if (CVKMemoryAllocator *pAllocator = itTypeAllocator.second) {
-				CVKMemoryAllocator *pAllocatorNext = nullptr;
+	for (const auto& itAligmentAllocator : m_pAllocatorListHeads) {
+		for (const auto& itTypeAllocator : itAligmentAllocator.second) {
+			if (CVKMemoryAllocator * pAllocator = itTypeAllocator.second) {
+				CVKMemoryAllocator* pAllocatorNext = nullptr;
 				do {
 					pAllocatorNext = pAllocator->pNext;
 					delete pAllocator;
@@ -24,7 +24,7 @@ CVKMemoryManager::~CVKMemoryManager(void)
 	pthread_mutex_destroy(&m_lock);
 }
 
-uint32_t CVKMemoryManager::GetMemoryTypeIndex(const VkPhysicalDeviceMemoryProperties &memoryProperties, VkFlags memoryTypeBits, VkMemoryPropertyFlags &memoryPropertyFlags, VkDeviceSize memorySize)
+uint32_t CVKMemoryManager::GetMemoryTypeIndex(const VkPhysicalDeviceMemoryProperties & memoryProperties, VkFlags memoryTypeBits, VkMemoryPropertyFlags & memoryPropertyFlags, VkDeviceSize memorySize)
 {
 	uint32_t indexTry = 0;
 
@@ -44,7 +44,7 @@ uint32_t CVKMemoryManager::GetMemoryTypeIndex(const VkPhysicalDeviceMemoryProper
 
 		case 1:
 			memoryPropertyFlags &= ~VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT;
-			memoryPropertyFlags |=  VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT;
+			memoryPropertyFlags |= VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT;
 			break;
 
 		default:
@@ -64,9 +64,9 @@ CVKMemory* CVKMemoryManager::AllocMemory(VkDeviceSize memorySize, VkDeviceSize m
 		memorySize = ALIGN_BYTE(memorySize, memoryAlignment);
 
 		do {
-			if (CVKMemoryAllocator *pAllocator = m_pAllocatorListHeads[memoryAlignment][memoryTypeIndex]) {
+			if (CVKMemoryAllocator * pAllocator = m_pAllocatorListHeads[memoryAlignment][memoryTypeIndex]) {
 				do {
-					if (CVKMemory *pMemory = pAllocator->AllocMemory(memorySize)) {
+					if (CVKMemory * pMemory = pAllocator->AllocMemory(memorySize)) {
 						return pMemory;
 					}
 				} while ((pAllocator = pAllocator->pNext) != nullptr);
@@ -98,7 +98,7 @@ CVKMemory* CVKMemoryManager::AllocMemory(VkDeviceSize memorySize, VkDeviceSize m
 				if (memoryTypeIndex == 0xffffffff) return nullptr;
 			}
 
-			CVKMemoryAllocator *pAllocator = new CVKMemoryAllocator(m_pDevice, memoryTypeIndex, memoryAllocatorSize, memoryAlignment);
+			CVKMemoryAllocator* pAllocator = new CVKMemoryAllocator(m_pDevice, memoryTypeIndex, memoryAllocatorSize, memoryAlignment);
 			{
 				if (m_pAllocatorListHeads[memoryAlignment][memoryTypeIndex]) {
 					m_pAllocatorListHeads[memoryAlignment][memoryTypeIndex]->pPrev = pAllocator;
@@ -114,7 +114,7 @@ CVKMemory* CVKMemoryManager::AllocMemory(VkDeviceSize memorySize, VkDeviceSize m
 	return nullptr;
 }
 
-void CVKMemoryManager::FreeMemory(CVKMemory *pMemory)
+void CVKMemoryManager::FreeMemory(CVKMemory * pMemory)
 {
 	if (pMemory == nullptr) {
 		return;
@@ -122,7 +122,7 @@ void CVKMemoryManager::FreeMemory(CVKMemory *pMemory)
 
 	mutex_autolock autolock(&m_lock);
 	{
-		CVKMemoryAllocator *pAllocator = pMemory->GetAllocator();
+		CVKMemoryAllocator* pAllocator = pMemory->GetAllocator();
 		pAllocator->FreeMemory(pMemory);
 
 		if (pAllocator->GetFreeSize() == pAllocator->GetFullSize()) {
@@ -154,9 +154,9 @@ void CVKMemoryManager::Log(void)
 	{
 		LogOutput(LOG_TAG_RENDERER, "MemoryManager:\n");
 
-		for (const auto &itAligmentAllocator : m_pAllocatorListHeads) {
-			for (const auto &itTypeAllocator : itAligmentAllocator.second) {
-				if (CVKMemoryAllocator *pAllocator = itTypeAllocator.second) {
+		for (const auto& itAligmentAllocator : m_pAllocatorListHeads) {
+			for (const auto& itTypeAllocator : itAligmentAllocator.second) {
+				if (CVKMemoryAllocator * pAllocator = itTypeAllocator.second) {
 					do {
 						LogOutput(LOG_TAG_RENDERER, "\tAllocator: type=%d alignment=%d free=%d full=%d device_local=%s host_visible=%s host_coherent=%s host_cached=%s\n",
 							pAllocator->GetMemoryTypeIndex(),

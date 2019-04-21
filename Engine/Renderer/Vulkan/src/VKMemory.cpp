@@ -1,7 +1,7 @@
 #include "VKRenderer.h"
 
 
-CVKMemory::CVKMemory(CVKMemoryAllocator *pAllocator, CVKDevice *pDevice, VkDeviceSize memorySize, VkDeviceSize memoryOffset)
+CVKMemory::CVKMemory(CVKMemoryAllocator* pAllocator, CVKDevice* pDevice, VkDeviceSize memorySize, VkDeviceSize memoryOffset)
 	: m_pDevice(pDevice)
 	, m_pAllocator(pAllocator)
 
@@ -9,7 +9,6 @@ CVKMemory::CVKMemory(CVKMemoryAllocator *pAllocator, CVKDevice *pDevice, VkDevic
 	, m_memoryOffset(memoryOffset)
 
 	, bInUse(false)
-
 	, pNext(nullptr)
 	, pPrev(nullptr)
 	, pFreeNext(nullptr)
@@ -64,7 +63,7 @@ bool CVKMemory::BindBuffer(VkBuffer vkBuffer) const
 	return true;
 }
 
-bool CVKMemory::BeginMap(VkDeviceSize offset, VkDeviceSize size, void **ppAddress) const
+bool CVKMemory::BeginMap(VkDeviceSize offset, VkDeviceSize size, void** ppAddress) const
 {
 	if (IsHostVisible() == false) {
 		return false;

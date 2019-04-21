@@ -19,12 +19,12 @@ private:
 
 		rb_node node;
 		VkDeviceSize size;
-		CVKMemory *pListHead;
+		CVKMemory* pListHead;
 	} mem_node;
 
 
 private:
-	CVKMemoryAllocator(CVKDevice *pDevice, uint32_t memoryTypeIndex, VkDeviceSize memorySize, VkDeviceSize memoryAlignment);
+	CVKMemoryAllocator(CVKDevice* pDevice, uint32_t memoryTypeIndex, VkDeviceSize memorySize, VkDeviceSize memoryAlignment);
 	virtual ~CVKMemoryAllocator(void);
 
 
@@ -40,15 +40,15 @@ private:
 
 private:
 	CVKMemory* AllocMemory(VkDeviceSize size);
-	void FreeMemory(CVKMemory *pMemory);
+	void FreeMemory(CVKMemory* pMemory);
 
 private:
 	void InitNodes(void);
 	void FreeNodes(void);
 
-	void InsertMemory(CVKMemory *pMemory);
-	void RemoveMemory(CVKMemory *pMemory);
-	CVKMemory* MergeMemory(CVKMemory *pMemory, CVKMemory *pMemoryNext);
+	void InsertMemory(CVKMemory* pMemory);
+	void RemoveMemory(CVKMemory* pMemory);
+	CVKMemory* MergeMemory(CVKMemory* pMemory, CVKMemory* pMemoryNext);
 	CVKMemory* SearchMemory(VkDeviceSize size) const;
 
 private:
@@ -61,7 +61,7 @@ private:
 
 private:
 	rb_root m_root;
-	mem_node **m_nodes;
+	mem_node** m_nodes;
 
 private:
 	VkDeviceMemory m_vkMemory;
@@ -74,9 +74,9 @@ private:
 	VkMemoryPropertyFlags m_memoryPropertyFlags;
 
 private:
-	CVKDevice *m_pDevice;
+	CVKDevice* m_pDevice;
 
 private:
-	CVKMemoryAllocator *pNext;
-	CVKMemoryAllocator *pPrev;
+	CVKMemoryAllocator* pNext;
+	CVKMemoryAllocator* pPrev;
 };

@@ -8,16 +8,16 @@ class CVKMemoryManager
 
 
 private:
-	CVKMemoryManager(CVKDevice *pDevice);
+	CVKMemoryManager(CVKDevice* pDevice);
 	virtual ~CVKMemoryManager(void);
 
 
 private:
-	uint32_t GetMemoryTypeIndex(const VkPhysicalDeviceMemoryProperties &memoryProperties, VkFlags memoryTypeBits, VkMemoryPropertyFlags &memoryPropertyFlags, VkDeviceSize memorySize);
+	uint32_t GetMemoryTypeIndex(const VkPhysicalDeviceMemoryProperties& memoryProperties, VkFlags memoryTypeBits, VkMemoryPropertyFlags& memoryPropertyFlags, VkDeviceSize memorySize);
 
 public:
 	CVKMemory* AllocMemory(VkDeviceSize memorySize, VkDeviceSize memoryAlignment, VkFlags memoryTypeBits, VkMemoryPropertyFlags memoryPropertyFlags);
-	void FreeMemory(CVKMemory *pMemory);
+	void FreeMemory(CVKMemory* pMemory);
 
 public:
 	void Log(void);
@@ -29,5 +29,5 @@ private:
 	eastl::unordered_map<uint32_t, eastl::unordered_map<uint32_t, CVKMemoryAllocator*>> m_pAllocatorListHeads;
 
 private:
-	CVKDevice *m_pDevice;
+	CVKDevice* m_pDevice;
 };

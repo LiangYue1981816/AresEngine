@@ -11,13 +11,13 @@
 
 #include "VKInstance.h"
 #include "VKQueue.h"
-/*
-#include "VKInstance.h"
-#include "VKDevice.h"
 
 #include "VKMemory.h"
 #include "VKMemoryAllocator.h"
 #include "VKMemoryManager.h"
+/*
+#include "VKInstance.h"
+#include "VKDevice.h"
 
 #include "VKImage.h"
 

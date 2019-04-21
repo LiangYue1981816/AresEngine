@@ -9,7 +9,7 @@ class CVKMemory
 
 
 private:
-	CVKMemory(CVKMemoryAllocator *pAllocator, CVKDevice *pDevice, VkDeviceSize memorySize, VkDeviceSize memoryOffset);
+	CVKMemory(CVKMemoryAllocator* pAllocator, CVKDevice* pDevice, VkDeviceSize memorySize, VkDeviceSize memoryOffset);
 	virtual ~CVKMemory(void);
 
 
@@ -25,7 +25,7 @@ public:
 	bool BindBuffer(VkBuffer vkBuffer) const;
 
 public:
-	bool BeginMap(VkDeviceSize offset, VkDeviceSize size, void **ppAddress) const;
+	bool BeginMap(VkDeviceSize offset, VkDeviceSize size, void** ppAddress) const;
 	bool EndMap(void) const;
 	bool Flush(VkDeviceSize offset, VkDeviceSize size) const;
 	bool Invalidate(VkDeviceSize offset, VkDeviceSize size) const;
@@ -43,17 +43,17 @@ private:
 	VkDeviceSize m_memoryOffset;
 
 private:
-	CVKMemoryAllocator *m_pAllocator;
+	CVKMemoryAllocator* m_pAllocator;
 
 private:
-	CVKDevice *m_pDevice;
+	CVKDevice* m_pDevice;
 
 private:
 	bool bInUse;
 
-	CVKMemory *pNext;
-	CVKMemory *pPrev;
+	CVKMemory* pNext;
+	CVKMemory* pPrev;
 
-	CVKMemory *pFreeNext;
-	CVKMemory *pFreePrev;
+	CVKMemory* pFreeNext;
+	CVKMemory* pFreePrev;
 };
