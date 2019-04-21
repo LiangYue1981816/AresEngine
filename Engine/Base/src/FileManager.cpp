@@ -91,7 +91,7 @@ void CFileManager::SetPack(const char* szPackName, const char* szExtName)
 
 	zzip_seekdir(pPack, 0);
 
-	while (ZZIP_DIRENT * pEntry = zzip_readdir(pPack)) {
+	while (ZZIP_DIRENT* pEntry = zzip_readdir(pPack)) {
 		char szFName[_MAX_STRING];
 		char szEName[_MAX_STRING];
 		splitfilename(pEntry->d_name, szFName, szEName);
@@ -129,7 +129,7 @@ const char* CFileManager::GetFullName(const char* szFileName)
 	}
 }
 
-bool CFileManager::LoadStream(const char* szFileName, CStream * pStream)
+bool CFileManager::LoadStream(const char* szFileName, CStream* pStream)
 {
 	const auto& itFile = m_files.find(HashValue(szFileName));
 

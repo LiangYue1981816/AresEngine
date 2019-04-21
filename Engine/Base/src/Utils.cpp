@@ -145,7 +145,7 @@ CALL_API void splitfilename(const char* name, char* fname, char* ext)
 
 CALL_API int fexist(const char* name)
 {
-	if (FILE * stream = fopen(name, "rb")) {
+	if (FILE* stream = fopen(name, "rb")) {
 		fclose(stream);
 		return 1;
 	}
@@ -153,7 +153,7 @@ CALL_API int fexist(const char* name)
 	return 0;
 }
 
-CALL_API size_t fsize(FILE * stream)
+CALL_API size_t fsize(FILE* stream)
 {
 	long pos;
 	size_t size;
@@ -168,7 +168,7 @@ CALL_API size_t fsize(FILE * stream)
 	return size;
 }
 
-CALL_API size_t freadline(char* buffer, size_t size, FILE * stream)
+CALL_API size_t freadline(char* buffer, size_t size, FILE* stream)
 {
 	int c;
 	size_t count = 0;
@@ -199,7 +199,7 @@ CALL_API size_t freadline(char* buffer, size_t size, FILE * stream)
 	return count;
 }
 
-CALL_API size_t freadstring(char* buffer, size_t size, FILE * stream)
+CALL_API size_t freadstring(char* buffer, size_t size, FILE* stream)
 {
 	size_t len = 0;
 	size_t reads = 0;
@@ -211,7 +211,7 @@ CALL_API size_t freadstring(char* buffer, size_t size, FILE * stream)
 	return reads;
 }
 
-CALL_API size_t fwritestring(const char* buffer, size_t size, FILE * stream)
+CALL_API size_t fwritestring(const char* buffer, size_t size, FILE* stream)
 {
 	size_t len = 0;
 	size_t writes = 0;

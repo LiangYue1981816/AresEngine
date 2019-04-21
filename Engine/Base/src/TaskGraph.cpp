@@ -109,7 +109,7 @@ void* CTaskGraph::TaskThread(void* pParams)
 					event_wait(pEvent);
 				}
 
-				if (CTask * *ppTaskListHead = &pTaskGraph->m_pTaskListHeads[pEvent]) {
+				if (CTask** ppTaskListHead = &pTaskGraph->m_pTaskListHeads[pEvent]) {
 					while (true) {
 						bool bFinish = false;
 						CTask* pTask = nullptr;

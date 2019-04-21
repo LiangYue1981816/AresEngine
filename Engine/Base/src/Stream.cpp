@@ -117,7 +117,7 @@ bool CStream::LoadFromFile(const char* szFileName)
 			return false;
 		}
 
-		if (FILE * pFile = fopen(szFileName, "rb")) {
+		if (FILE* pFile = fopen(szFileName, "rb")) {
 			do {
 				if (Alloc(fsize(pFile)) == false) {
 					break;
@@ -152,7 +152,7 @@ bool CStream::LoadFromPack(const char* szPackName, const char* szFileName)
 			return false;
 		}
 
-		if (ZZIP_DIR * pPack = zzip_opendir(szPackName)) {
+		if (ZZIP_DIR* pPack = zzip_opendir(szPackName)) {
 			do {
 				if (LoadFromPack(pPack, szFileName) == false) {
 					break;
@@ -184,7 +184,7 @@ bool CStream::LoadFromPack(ZZIP_DIR* pPack, const char* szFileName)
 			return false;
 		}
 
-		if (ZZIP_FILE * pFile = zzip_file_open(pPack, szFileName, ZZIP_ONLYZIP | ZZIP_CASELESS)) {
+		if (ZZIP_FILE* pFile = zzip_file_open(pPack, szFileName, ZZIP_ONLYZIP | ZZIP_CASELESS)) {
 			do {
 				ZZIP_STAT zstat;
 
