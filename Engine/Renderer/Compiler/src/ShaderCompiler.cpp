@@ -158,7 +158,7 @@ std::vector<uint32_t> CShaderCompiler::Compile(const char* szInputFileName, cons
 
 std::string LoadShader(const char* szFileName)
 {
-	if (FILE * pFile = fopen(szFileName, "rb")) {
+	if (FILE* pFile = fopen(szFileName, "rb")) {
 		size_t size = fsize(pFile);
 		char szSource[128 * 1024] = { 0 };
 
@@ -197,7 +197,7 @@ bool LoadShaderStream(const char* szFileName, std::vector<uint32_t>& words, uint
 
 bool LoadShaderBinary(const char* szFileName, std::vector<uint32_t>& words, uint32_t hash)
 {
-	if (FILE * pFile = fopen(szFileName, "rb")) {
+	if (FILE* pFile = fopen(szFileName, "rb")) {
 		uint32_t dwHashValue;
 
 		words.clear();
@@ -221,7 +221,7 @@ bool LoadShaderBinary(const char* szFileName, std::vector<uint32_t>& words, uint
 
 bool SaveShaderBinary(const char* szFileName, const std::vector<uint32_t>& words, uint32_t hash)
 {
-	if (FILE * pFile = fopen(szFileName, "wb")) {
+	if (FILE* pFile = fopen(szFileName, "wb")) {
 		fwrite(&hash, sizeof(uint32_t), 1, pFile);
 		fwrite(words.data(), sizeof(uint32_t), words.size(), pFile);
 		fclose(pFile);
