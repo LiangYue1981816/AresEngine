@@ -179,7 +179,7 @@ void CVKMemoryAllocator::InsertMemory(CVKMemory* pMemory)
 	mem_node* pMemoryNode = m_nodes[indexNode];
 	ASSERT(pMemoryNode->size == pMemory->m_memorySize);
 
-	rb_node** node = &m_root.rb_node;
+	rb_node**node = &m_root.rb_node;
 	rb_node* parent = nullptr;
 
 	if (pMemoryNode->pListHead == nullptr) {
