@@ -86,7 +86,7 @@ CVKMemory* CVKMemoryAllocator::AllocMemory(VkDeviceSize size)
 
 	if (m_vkMemory != VK_NULL_HANDLE) {
 		if (m_memoryFreeSize >= requestSize) {
-			if (CVKMemory * pMemory = SearchMemory(requestSize)) {
+			if (CVKMemory* pMemory = SearchMemory(requestSize)) {
 				RemoveMemory(pMemory);
 
 				if (pMemory->m_memorySize >= requestSize + m_memoryAlignment) {
@@ -140,7 +140,7 @@ void CVKMemoryAllocator::InitNodes(void)
 	uint32_t numNodes = (uint32_t)(m_memoryFullSize / m_memoryAlignment);
 
 	m_root = RB_ROOT;
-	m_nodes = new mem_node * [numNodes];
+	m_nodes = new mem_node* [numNodes];
 
 	for (uint32_t indexNode = 0; indexNode < numNodes; indexNode++) {
 		m_nodes[indexNode] = nullptr;
@@ -153,7 +153,7 @@ void CVKMemoryAllocator::FreeNodes(void)
 
 	for (uint32_t indexNode = 0; indexNode < numNodes; indexNode++) {
 		if (m_nodes[indexNode]) {
-			if (CVKMemory * pMemory = m_nodes[indexNode]->pListHead) {
+			if (CVKMemory* pMemory = m_nodes[indexNode]->pListHead) {
 				CVKMemory* pMemoryNext = nullptr;
 				do {
 					pMemoryNext = pMemory->pFreeNext;
@@ -168,7 +168,7 @@ void CVKMemoryAllocator::FreeNodes(void)
 	delete[] m_nodes;
 }
 
-void CVKMemoryAllocator::InsertMemory(CVKMemory * pMemory)
+void CVKMemoryAllocator::InsertMemory(CVKMemory* pMemory)
 {
 	uint32_t indexNode = NODE_INDEX(pMemory->m_memorySize);
 
@@ -179,8 +179,8 @@ void CVKMemoryAllocator::InsertMemory(CVKMemory * pMemory)
 	mem_node* pMemoryNode = m_nodes[indexNode];
 	ASSERT(pMemoryNode->size == pMemory->m_memorySize);
 
-	rb_node * *node = &m_root.rb_node;
-	rb_node * parent = nullptr;
+	rb_node** node = &m_root.rb_node;
+	rb_node* parent = nullptr;
 
 	if (pMemoryNode->pListHead == nullptr) {
 		while (*node) {
@@ -217,7 +217,7 @@ void CVKMemoryAllocator::InsertMemory(CVKMemory * pMemory)
 	}
 }
 
-void CVKMemoryAllocator::RemoveMemory(CVKMemory * pMemory)
+void CVKMemoryAllocator::RemoveMemory(CVKMemory* pMemory)
 {
 	uint32_t indexNode = NODE_INDEX(pMemory->m_memorySize);
 
@@ -244,7 +244,7 @@ void CVKMemoryAllocator::RemoveMemory(CVKMemory * pMemory)
 	}
 }
 
-CVKMemory* CVKMemoryAllocator::MergeMemory(CVKMemory * pMemory, CVKMemory * pMemoryNext)
+CVKMemory* CVKMemoryAllocator::MergeMemory(CVKMemory* pMemory, CVKMemory* pMemoryNext)
 {
 	ASSERT(pMemory->m_memoryOffset + pMemory->m_memorySize == pMemoryNext->m_memoryOffset);
 
