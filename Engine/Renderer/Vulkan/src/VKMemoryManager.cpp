@@ -24,7 +24,7 @@ CVKMemoryManager::~CVKMemoryManager(void)
 	pthread_mutex_destroy(&m_lock);
 }
 
-uint32_t CVKMemoryManager::GetMemoryTypeIndex(const VkPhysicalDeviceMemoryProperties & memoryProperties, VkFlags memoryTypeBits, VkMemoryPropertyFlags & memoryPropertyFlags, VkDeviceSize memorySize)
+uint32_t CVKMemoryManager::GetMemoryTypeIndex(const VkPhysicalDeviceMemoryProperties& memoryProperties, VkFlags memoryTypeBits, VkMemoryPropertyFlags& memoryPropertyFlags, VkDeviceSize memorySize)
 {
 	uint32_t indexTry = 0;
 
