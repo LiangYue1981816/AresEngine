@@ -8,7 +8,7 @@ class CVKQueue
 
 
 private:
-	CVKQueue(CVKDevice *pDevice, uint32_t queueFamilyIndex);
+	CVKQueue(CVKDevice* pDevice, uint32_t queueFamilyIndex);
 	virtual ~CVKQueue(void);
 
 
@@ -17,7 +17,7 @@ public:
 	uint32_t GetQueueFamilyIndex(void) const;
 
 public:
-	bool Submit(const eastl::vector<CGfxCommandBufferPtr> &ptrCommandBuffers, VkSemaphore vkWaitSemaphore, VkPipelineStageFlags waitStageFlags, VkSemaphore vkSignalSemaphore, VkFence vkFence) const;
+	bool Submit(const eastl::vector<CGfxCommandBufferPtr>& ptrCommandBuffers, VkSemaphore vkWaitSemaphore, VkPipelineStageFlags waitStageFlags, VkSemaphore vkSignalSemaphore, VkFence vkFence) const;
 	void WaitIdle(void) const;
 
 
@@ -26,5 +26,5 @@ private:
 	uint32_t m_queueFamilyIndex;
 
 private:
-	CVKDevice *m_pDevice;
+	CVKDevice* m_pDevice;
 };

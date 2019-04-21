@@ -10,10 +10,10 @@
 #include "VKAllocator.h"
 
 #include "VKInstance.h"
+#include "VKQueue.h"
 /*
 #include "VKInstance.h"
 #include "VKDevice.h"
-#include "VKQueue.h"
 
 #include "VKMemory.h"
 #include "VKMemoryAllocator.h"

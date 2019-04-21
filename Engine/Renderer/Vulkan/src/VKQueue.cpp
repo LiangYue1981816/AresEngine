@@ -1,7 +1,7 @@
 #include "VKRenderer.h"
 
 
-CVKQueue::CVKQueue(CVKDevice *pDevice, uint32_t queueFamilyIndex)
+CVKQueue::CVKQueue(CVKDevice* pDevice, uint32_t queueFamilyIndex)
 	: m_pDevice(pDevice)
 
 	, m_vkQueue(VK_NULL_HANDLE)
@@ -25,15 +25,18 @@ uint32_t CVKQueue::GetQueueFamilyIndex(void) const
 	return m_queueFamilyIndex;
 }
 
-bool CVKQueue::Submit(const eastl::vector<CGfxCommandBufferPtr> &ptrCommandBuffers, VkSemaphore vkWaitSemaphore, VkPipelineStageFlags waitStageFlags, VkSemaphore vkSignalSemaphore, VkFence vkFence) const
+bool CVKQueue::Submit(const eastl::vector<CGfxCommandBufferPtr>& ptrCommandBuffers, VkSemaphore vkWaitSemaphore, VkPipelineStageFlags waitStageFlags, VkSemaphore vkSignalSemaphore, VkFence vkFence) const
 {
 	eastl::vector<VkCommandBuffer> vkCommandBuffers;
 	{
 		for (int index = 0; index < ptrCommandBuffers.size(); index++) {
 			vkCommandBuffers.emplace_back((VkCommandBuffer)ptrCommandBuffers[index]->GetCommandBuffer());
 		}
+
+		if (vkCommandBuffers.empty()) {
+			return false;
+		}
 	}
-	if (vkCommandBuffers.empty()) return false;
 
 	vkWaitForFences(m_pDevice->GetDevice(), 1, &vkFence, VK_TRUE, UINT64_MAX);
 	vkResetFences(m_pDevice->GetDevice(), 1, &vkFence);
