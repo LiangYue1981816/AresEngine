@@ -55,7 +55,7 @@ static uint32_t GetAttributeOffset(uint32_t format, uint32_t attribute, const AT
 	return -1;
 }
 
-static uint32_t GetAttributeComponents(uint32_t attribute, const ATTRIBUTE * attributes, uint32_t count)
+static uint32_t GetAttributeComponents(uint32_t attribute, const ATTRIBUTE* attributes, uint32_t count)
 {
 	for (uint32_t indexAttribute = 0; indexAttribute < count; indexAttribute++) {
 		if (attribute == attributes[indexAttribute].flag) {
@@ -66,7 +66,7 @@ static uint32_t GetAttributeComponents(uint32_t attribute, const ATTRIBUTE * att
 	return 0;
 }
 
-static uint32_t GetAttributeLocation(uint32_t attribute, const ATTRIBUTE * attributes, uint32_t count)
+static uint32_t GetAttributeLocation(uint32_t attribute, const ATTRIBUTE* attributes, uint32_t count)
 {
 	for (uint32_t indexAttribute = 0; indexAttribute < count; indexAttribute++) {
 		if (attribute == attributes[indexAttribute].flag) {
@@ -77,7 +77,7 @@ static uint32_t GetAttributeLocation(uint32_t attribute, const ATTRIBUTE * attri
 	return -1;
 }
 
-static uint32_t GetAttributeFormat(uint32_t attribute, const ATTRIBUTE * attributes, uint32_t count)
+static uint32_t GetAttributeFormat(uint32_t attribute, const ATTRIBUTE* attributes, uint32_t count)
 {
 	for (uint32_t indexAttribute = 0; indexAttribute < count; indexAttribute++) {
 		if (attribute == attributes[indexAttribute].flag) {
@@ -89,7 +89,7 @@ static uint32_t GetAttributeFormat(uint32_t attribute, const ATTRIBUTE * attribu
 }
 
 
-CALL_API void SetVertexAttributes(const ATTRIBUTE * pAttributes, uint32_t count)
+CALL_API void SetVertexAttributes(const ATTRIBUTE* pAttributes, uint32_t count)
 {
 	pVertexAttributes = pAttributes;
 	numVertexAttributes = count;
@@ -136,7 +136,7 @@ CALL_API uint32_t GetVertexAttributeFormat(uint32_t attribute)
 }
 
 
-CALL_API void SetInstanceAttributes(const ATTRIBUTE * pAttributes, uint32_t count)
+CALL_API void SetInstanceAttributes(const ATTRIBUTE* pAttributes, uint32_t count)
 {
 	pInstanceAttributes = pAttributes;
 	numInstanceAttributes = count;

@@ -36,7 +36,7 @@ public:
 		m_ptrCommandBuffer = GfxRenderer()->NewCommandBuffer(indexThread, false);
 		m_ptrDescriptorSetInputAttachment = GfxRenderer()->NewDescriptorSet(m_pPipeline, m_ptrFrameBuffer, m_ptrRenderPass, m_indexSubpass);
 
-		if (CGfxRenderQueue * pRenderQueue = (CGfxRenderQueue*)pParams) {
+		if (CGfxRenderQueue* pRenderQueue = (CGfxRenderQueue*)pParams) {
 			pRenderQueue->CmdDrawThread(m_indexQueue, m_ptrCommandBuffer, m_ptrDescriptorSetEngine, m_ptrDescriptorSetCamera, m_ptrDescriptorSetInputAttachment, m_pPipeline, m_namePass);
 		}
 	}
@@ -119,8 +119,8 @@ void CGfxRenderQueue::CmdDraw(int indexQueue, CGfxCommandBufferPtr ptrCommandBuf
 	m_pipelineMaterialQueue[indexQueue].clear();
 	{
 		for (const auto& itMaterialQueue : m_materialMeshDrawQueue[indexQueue]) {
-			if (CGfxMaterialPass * pPass = (CGfxMaterialPass*)itMaterialQueue.first->GetPass(namePass)) {
-				if (CGfxPipelineGraphics * pPipeline = (CGfxPipelineGraphics*)pPass->GetPipeline()) {
+			if (CGfxMaterialPass* pPass = (CGfxMaterialPass*)itMaterialQueue.first->GetPass(namePass)) {
+				if (CGfxPipelineGraphics* pPipeline = (CGfxPipelineGraphics*)pPass->GetPipeline()) {
 					m_pipelineMaterialQueue[indexQueue][pPipeline][itMaterialQueue.first] = itMaterialQueue.first;
 				}
 			}
@@ -150,7 +150,7 @@ void CGfxRenderQueue::CmdDraw(int indexQueue, CGfxCommandBufferPtr ptrCommandBuf
 	}
 }
 
-void CGfxRenderQueue::CmdDrawThread(int indexQueue, CGfxCommandBufferPtr ptrCommandBuffer, const CGfxDescriptorSetPtr ptrDescriptorSetEngine, const CGfxDescriptorSetPtr ptrDescriptorSetCamera, const CGfxDescriptorSetPtr ptrDescriptorSetInputAttachment, CGfxPipelineGraphics * pPipeline, uint32_t namePass)
+void CGfxRenderQueue::CmdDrawThread(int indexQueue, CGfxCommandBufferPtr ptrCommandBuffer, const CGfxDescriptorSetPtr ptrDescriptorSetEngine, const CGfxDescriptorSetPtr ptrDescriptorSetCamera, const CGfxDescriptorSetPtr ptrDescriptorSetInputAttachment, CGfxPipelineGraphics* pPipeline, uint32_t namePass)
 {
 	GfxRenderer()->CmdBindPipelineGraphics(ptrCommandBuffer, pPipeline);
 	GfxRenderer()->CmdBindDescriptorSet(ptrCommandBuffer, ptrDescriptorSetEngine);
