@@ -28,8 +28,8 @@
 
 #define MAX_POOL_COUNT 64
 static bool bInitAllocator = false;
-static POOL_ALLOCATOR * pPoolAllocators[MAX_POOL_COUNT] = { nullptr };
-static HEAP_ALLOCATOR * pHeapAllocator = nullptr;
+static POOL_ALLOCATOR* pPoolAllocators[MAX_POOL_COUNT] = { nullptr };
+static HEAP_ALLOCATOR* pHeapAllocator = nullptr;
 
 
 static int GetPoolIndex(void)
