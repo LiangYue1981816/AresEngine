@@ -92,7 +92,7 @@ bool CVKDevice::CheckPhysicalDeviceExtensionProperties(VkPhysicalDevice vkPhysic
 	CALL_VK_FUNCTION_RETURN_BOOL(vkEnumerateDeviceExtensionProperties(vkPhysicalDevice, nullptr, &numExtensions, extensions.data()));
 
 	bool bSwapchainExtension = false;
-	for (uint32_t index = 0; index < numExtensions; index++) {
+	for (int index = 0; index < extensions.size(); index++) {
 		if (stricmp(extensions[index].extensionName, VK_KHR_SWAPCHAIN_EXTENSION_NAME) == 0) {
 			bSwapchainExtension = true;
 			continue;
@@ -121,7 +121,7 @@ bool CVKDevice::CheckPhysicalDeviceQueueFamilyProperties(VkPhysicalDevice vkPhys
 	eastl::vector<VkQueueFamilyProperties> queueFamilies(numQueueFamilies);
 	vkGetPhysicalDeviceQueueFamilyProperties(vkPhysicalDevice, &numQueueFamilies, queueFamilies.data());
 
-	for (uint32_t index = 0; index < numQueueFamilies; index++) {
+	for (int index = 0; index < queueFamilies.size(); index++) {
 		if ((queueFamilies[index].queueFlags & VK_QUEUE_COMPUTE_BIT) != 0 &&
 			(queueFamilies[index].queueFlags & VK_QUEUE_GRAPHICS_BIT) != 0 &&
 			(queueFamilies[index].queueFlags & VK_QUEUE_TRANSFER_BIT) != 0) {

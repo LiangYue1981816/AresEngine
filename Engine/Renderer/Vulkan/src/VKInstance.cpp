@@ -100,7 +100,7 @@ bool CVKInstance::EnumerateInstanceLayerProperties(eastl::vector<const char*>& e
 	eastl::vector<VkLayerProperties> layers(numLayers);
 	CALL_VK_FUNCTION_RETURN_BOOL(vkEnumerateInstanceLayerProperties(&numLayers, layers.data()));
 
-	for (uint32_t index = 0; index < numLayers; index++) {
+	for (int index = 0; index < layers.size(); index++) {
 #ifdef DEBUG
 #define VK_LAYER_LUNARG_STANDARD_VALIDATION "VK_LAYER_LUNARG_standard_validation"
 		if (stricmp(layers[index].layerName, VK_LAYER_LUNARG_STANDARD_VALIDATION) == 0) {
@@ -126,7 +126,7 @@ bool CVKInstance::EnumerateInstanceExtensionProperties(eastl::vector<const char*
 
 	bool bSurfaceExtension = false;
 	bool bPlatformSurfaceExtension = false;
-	for (uint32_t index = 0; index < numExtensions; index++) {
+	for (int index = 0; index < extensions.size(); index++) {
 		if (stricmp(extensions[index].extensionName, VK_KHR_SURFACE_EXTENSION_NAME) == 0) {
 			enabledInstanceExtensions.emplace_back(VK_KHR_SURFACE_EXTENSION_NAME);
 			bSurfaceExtension = true;
