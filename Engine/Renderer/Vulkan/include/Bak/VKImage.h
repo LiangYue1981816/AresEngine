@@ -12,7 +12,7 @@ class CVKImage : public CGfxResource
 
 
 private:
-	CVKImage(CVKDevice *pDevice, VkImageType imageType, VkImageViewType viewType, VkFormat format, int width, int height, int levels, int layers, VkSampleCountFlagBits samples, VkImageTiling imageTiling, VkImageUsageFlags imageUsageFlags);
+	CVKImage(CVKDevice* pDevice, VkImageType imageType, VkImageViewType viewType, VkFormat format, int width, int height, int levels, int layers, VkSampleCountFlagBits samples, VkImageTiling imageTiling, VkImageUsageFlags imageUsageFlags);
 	virtual ~CVKImage(void);
 	virtual void Release(void);
 
@@ -22,7 +22,7 @@ private:
 	VkDeviceSize GetSize(void) const;
 
 private:
-	bool BufferData(size_t offset, size_t size, const void *pBuffer);
+	bool BufferData(size_t offset, size_t size, const void* pBuffer);
 
 private:
 	bool IsDeviceLocal(void) const;
@@ -34,10 +34,10 @@ private:
 
 private:
 	VkImage m_vkImage;
-	CVKMemory *m_pMemory;
+	CVKMemory* m_pMemory;
 
 private:
-	CVKDevice *m_pDevice;
+	CVKDevice* m_pDevice;
 };
 
 typedef CGfxResourcePtr<CVKImage> CVKImagePtr;

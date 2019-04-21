@@ -9,19 +9,19 @@ class CVKRenderPassManager : public CGfxResourceManager
 
 
 private:
-	CVKRenderPassManager(CVKDevice *pDevice);
+	CVKRenderPassManager(CVKDevice* pDevice);
 	virtual ~CVKRenderPassManager(void);
 
 
 private:
 	CVKRenderPass* Get(uint32_t name);
 	CVKRenderPass* Create(uint32_t name, int numAttachments, int numSubpasses);
-	void Destroy(CVKRenderPass *pRenderPass);
+	void Destroy(CVKRenderPass* pRenderPass);
 
 
 private:
 	eastl::unordered_map<uint32_t, CVKRenderPass*> m_pRenderPasses;
 
 private:
-	CVKDevice *m_pDevice;
+	CVKDevice* m_pDevice;
 };

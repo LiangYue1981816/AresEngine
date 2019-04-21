@@ -8,7 +8,7 @@ class CVKPipelineCompute : public CVKPipeline, public CGfxPipelineCompute
 
 
 private:
-	CVKPipelineCompute(CVKDevice *pDevice, CVKPipelineComputeManager *pManager, uint32_t name);
+	CVKPipelineCompute(CVKDevice* pDevice, CVKPipelineComputeManager* pManager, uint32_t name);
 	virtual ~CVKPipelineCompute(void);
 
 
@@ -19,7 +19,7 @@ public:
 	HANDLE GetPipeline(void) const;
 
 public:
-	bool Create(const CGfxShader *pComputeShader);
+	bool Create(const CGfxShader* pComputeShader);
 	void Destroy(void);
 
 public:
@@ -35,5 +35,5 @@ private:
 	uint32_t m_name;
 
 private:
-	CVKPipelineComputeManager *m_pManager;
+	CVKPipelineComputeManager* m_pManager;
 };

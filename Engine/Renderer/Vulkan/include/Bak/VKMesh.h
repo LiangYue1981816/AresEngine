@@ -8,7 +8,7 @@ class CVKMesh : public CGfxMesh
 
 
 private:
-	CVKMesh(CVKDevice *pDevice, CVKMeshManager *pManager, uint32_t name);
+	CVKMesh(CVKDevice* pDevice, CVKMeshManager* pManager, uint32_t name);
 	virtual ~CVKMesh(void);
 	virtual void Release(void);
 
@@ -22,9 +22,9 @@ public:
 	CGfxVertexBuffer* GetVertexBuffer(void);
 
 public:
-	bool CreateIndexBuffer(GfxIndexType type, size_t size, bool bDynamic, const void *pBuffer);
-	bool CreateVertexBuffer(uint32_t vertexFormat, uint32_t vertexBinding, size_t size, bool bDynamic, const void *pBuffer);
-	bool CreateDraw(int indexDraw, const glm::aabb &aabb, int baseVertex, int firstIndex, int indexCount);
+	bool CreateIndexBuffer(GfxIndexType type, size_t size, bool bDynamic, const void* pBuffer);
+	bool CreateVertexBuffer(uint32_t vertexFormat, uint32_t vertexBinding, size_t size, bool bDynamic, const void* pBuffer);
+	bool CreateDraw(int indexDraw, const glm::aabb& aabb, int baseVertex, int firstIndex, int indexCount);
 	void Destroy(void);
 
 
@@ -32,11 +32,11 @@ private:
 	uint32_t m_name;
 
 private:
-	CVKIndexBuffer *m_pIndexBuffer;
-	CVKVertexBuffer *m_pVertexBuffer;
+	CVKIndexBuffer* m_pIndexBuffer;
+	CVKVertexBuffer* m_pVertexBuffer;
 	eastl::unordered_map<int, CGfxMesh::Draw> m_draws;
 
 private:
-	CVKDevice *m_pDevice;
-	CVKMeshManager *m_pManager;
+	CVKDevice* m_pDevice;
+	CVKMeshManager* m_pManager;
 };

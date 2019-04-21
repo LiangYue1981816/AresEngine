@@ -8,7 +8,7 @@ class CVKMeshDraw : public CGfxMeshDraw
 
 
 private:
-	CVKMeshDraw(CVKDevice *pDevice, CVKMeshDrawManager *pManager, uint32_t name, const CGfxMeshPtr ptrMesh, int indexDraw, uint32_t instanceFormat, uint32_t instanceBinding);
+	CVKMeshDraw(CVKDevice* pDevice, CVKMeshDrawManager* pManager, uint32_t name, const CGfxMeshPtr ptrMesh, int indexDraw, uint32_t instanceFormat, uint32_t instanceBinding);
 	virtual ~CVKMeshDraw(void);
 	virtual void Release(void);
 
@@ -29,7 +29,7 @@ public:
 	glm::aabb GetLocalAABB(void) const;
 
 public:
-	bool InstanceBufferData(size_t size, const void *pBuffer);
+	bool InstanceBufferData(size_t size, const void* pBuffer);
 
 public:
 	void Bind(VkCommandBuffer vkCommandBuffer) const;
@@ -44,13 +44,13 @@ private:
 
 private:
 	CGfxMeshPtr m_ptrMesh;
-	CGfxMesh::Draw *m_pMeshDraw;
-	CVKIndexBuffer *m_pIndexBuffer;
-	CVKVertexBuffer *m_pVertexBuffer;
-	CVKInstanceBuffer *m_pInstanceBuffer;
-	CVKIndirectBuffer *m_pIndirectBuffer;
+	CGfxMesh::Draw* m_pMeshDraw;
+	CVKIndexBuffer* m_pIndexBuffer;
+	CVKVertexBuffer* m_pVertexBuffer;
+	CVKInstanceBuffer* m_pInstanceBuffer;
+	CVKIndirectBuffer* m_pIndirectBuffer;
 
 private:
-	CVKDevice *m_pDevice;
-	CVKMeshDrawManager *m_pManager;
+	CVKDevice* m_pDevice;
+	CVKMeshDrawManager* m_pManager;
 };

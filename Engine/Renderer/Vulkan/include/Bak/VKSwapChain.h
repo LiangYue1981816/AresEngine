@@ -8,17 +8,17 @@ class CVKSwapChain : public CGfxSwapChain
 
 
 private:
-	CVKSwapChain(CVKDevice *pDevice, int width, int height, GfxPixelFormat format);
+	CVKSwapChain(CVKDevice* pDevice, int width, int height, GfxPixelFormat format);
 	virtual ~CVKSwapChain(void);
 
 
 private:
 	bool IsSurfaceSupport(void) const;
-	bool EnumDeviceSurfaceModes(eastl::vector<VkPresentModeKHR> &modes) const;
-	bool EnumDeviceSurfaceFormats(eastl::vector<VkSurfaceFormatKHR> &formats) const;
-	bool EnumDeviceSurfaceCapabilities(VkSurfaceCapabilitiesKHR &capabilities) const;
+	bool EnumDeviceSurfaceModes(eastl::vector<VkPresentModeKHR>& modes) const;
+	bool EnumDeviceSurfaceFormats(eastl::vector<VkSurfaceFormatKHR>& formats) const;
+	bool EnumDeviceSurfaceCapabilities(VkSurfaceCapabilitiesKHR& capabilities) const;
 
-	bool CreateSwapChain(const eastl::vector<VkPresentModeKHR> &modes, const eastl::vector<VkSurfaceFormatKHR> &formats, const VkSurfaceCapabilitiesKHR &capabilities);
+	bool CreateSwapChain(const eastl::vector<VkPresentModeKHR>& modes, const eastl::vector<VkSurfaceFormatKHR>& formats, const VkSurfaceCapabilitiesKHR& capabilities);
 	bool CreateImagesAndImageViews(void);
 	void DestroySwapChain(void);
 	void DestroyImagesAndImageViews(void);
@@ -61,5 +61,5 @@ private:
 	VkFence m_vkRenderDoneFences[SWAPCHAIN_FRAME_COUNT];
 
 private:
-	CVKDevice *m_pDevice;
+	CVKDevice* m_pDevice;
 };

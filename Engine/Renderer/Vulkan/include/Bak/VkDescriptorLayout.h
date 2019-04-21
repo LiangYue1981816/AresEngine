@@ -8,12 +8,12 @@ class CVKDescriptorLayout
 
 
 public:
-	CVKDescriptorLayout(CVKDevice *pDevice, uint32_t set);
+	CVKDescriptorLayout(CVKDevice* pDevice, uint32_t set);
 	virtual ~CVKDescriptorLayout(void);
 
 
 public:
-	bool IsCompatible(const CVKDescriptorLayout &layout) const;
+	bool IsCompatible(const CVKDescriptorLayout& layout) const;
 
 public:
 	uint32_t GetSetIndex(void) const;
@@ -29,9 +29,9 @@ public:
 	VkDescriptorSetLayoutBinding GetUniformBlockBinding(uint32_t name) const;
 
 public:
-	bool SetUniformBlockBinding(const char *szName, uint32_t binding, VkShaderStageFlags flags);
-	bool SetSampledImageBinding(const char *szName, uint32_t binding, VkShaderStageFlags flags);
-	bool SetInputAttachmentBinding(const char *szName, uint32_t binding, VkShaderStageFlags flags);
+	bool SetUniformBlockBinding(const char* szName, uint32_t binding, VkShaderStageFlags flags);
+	bool SetSampledImageBinding(const char* szName, uint32_t binding, VkShaderStageFlags flags);
+	bool SetInputAttachmentBinding(const char* szName, uint32_t binding, VkShaderStageFlags flags);
 
 public:
 	bool Create(void);
@@ -49,10 +49,10 @@ private:
 	VkDescriptorSetLayout m_vkDescriptorSetLayout;
 
 private:
-	CVKDevice *m_pDevice;
+	CVKDevice* m_pDevice;
 };
 
-inline bool operator == (const VkDescriptorSetLayoutBinding &left, const VkDescriptorSetLayoutBinding &right)
+inline bool operator == (const VkDescriptorSetLayoutBinding& left, const VkDescriptorSetLayoutBinding& right)
 {
 	if (left.binding != right.binding) {
 		return false;

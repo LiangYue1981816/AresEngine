@@ -8,7 +8,7 @@ class CVKRenderTexture : public CGfxRenderTexture
 
 
 private:
-	CVKRenderTexture(CVKDevice *pDevice, CVKRenderTextureManager *pManager, uint32_t name);
+	CVKRenderTexture(CVKDevice* pDevice, CVKRenderTextureManager* pManager, uint32_t name);
 	virtual ~CVKRenderTexture(void);
 	virtual void Release(void);
 
@@ -53,6 +53,6 @@ private:
 	VkImageView m_vkImageView;
 
 private:
-	CVKDevice *m_pDevice;
-	CVKRenderTextureManager *m_pManager;
+	CVKDevice* m_pDevice;
+	CVKRenderTextureManager* m_pManager;
 };

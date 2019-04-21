@@ -9,17 +9,17 @@ class CVKShaderManager : public CGfxResourceManager
 
 
 private:
-	CVKShaderManager(CVKDevice *pDevice);
+	CVKShaderManager(CVKDevice* pDevice);
 	virtual ~CVKShaderManager(void);
 
 
 private:
-	CVKShader* Create(const char *szFileName, shader_kind kind);
+	CVKShader* Create(const char* szFileName, shader_kind kind);
 
 
 private:
 	eastl::unordered_map<uint32_t, CVKShader*> m_pShaders;
 
 private:
-	CVKDevice *m_pDevice;
+	CVKDevice* m_pDevice;
 };

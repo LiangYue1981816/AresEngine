@@ -8,19 +8,19 @@ class CVKDescriptorSetManager
 
 
 private:
-	CVKDescriptorSetManager(CVKDevice *pDevice);
+	CVKDescriptorSetManager(CVKDevice* pDevice);
 	virtual ~CVKDescriptorSetManager(void);
 
 
 public:
-	CVKDescriptorSet* AllocDescriptorSet(CVKDescriptorLayout *pDescriptorLayout);
-	void FreeDescriptorSet(CVKDescriptorSet *pDescriptorSet);
+	CVKDescriptorSet* AllocDescriptorSet(CVKDescriptorLayout* pDescriptorLayout);
+	void FreeDescriptorSet(CVKDescriptorSet* pDescriptorSet);
 
 
 private:
 	pthread_mutex_t m_lock;
-	CVKDescriptorPool *m_pPoolListHead;
+	CVKDescriptorPool* m_pPoolListHead;
 
 private:
-	CVKDevice *m_pDevice;
+	CVKDevice* m_pDevice;
 };

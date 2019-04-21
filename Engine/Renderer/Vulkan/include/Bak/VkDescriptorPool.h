@@ -9,7 +9,7 @@ class CVKDescriptorPool
 
 
 private:
-	CVKDescriptorPool(CVKDevice *pDevice);
+	CVKDescriptorPool(CVKDevice* pDevice);
 	virtual ~CVKDescriptorPool(void);
 
 
@@ -17,8 +17,8 @@ private:
 	VkDescriptorPool GetDescriptorPool(void) const;
 
 private:
-	CVKDescriptorSet* AllocDescriptorSet(CVKDescriptorLayout *pDescriptorLayout);
-	bool FreeDescriptorSet(CVKDescriptorSet *pDescriptorSet);
+	CVKDescriptorSet* AllocDescriptorSet(CVKDescriptorLayout* pDescriptorLayout);
+	bool FreeDescriptorSet(CVKDescriptorSet* pDescriptorSet);
 
 
 private:
@@ -30,9 +30,9 @@ private:
 	VkDescriptorPool m_vkDescriptorPool;
 
 private:
-	CVKDevice *m_pDevice;
+	CVKDevice* m_pDevice;
 
 private:
-	CVKDescriptorPool *pNext;
-	CVKDescriptorPool *pPrev;
+	CVKDescriptorPool* pNext;
+	CVKDescriptorPool* pPrev;
 };

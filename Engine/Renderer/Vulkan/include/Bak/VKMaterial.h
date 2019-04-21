@@ -9,11 +9,11 @@ class CVKMaterial : public CGfxMaterial
 
 
 private:
-	CVKMaterial(CVKDevice *pDevice, CVKMaterialManager *pManager, uint32_t name);
+	CVKMaterial(CVKDevice* pDevice, CVKMaterialManager* pManager, uint32_t name);
 	virtual ~CVKMaterial(void);
 	virtual void Release(void);
 
-	
+
 public:
 	uint32_t GetName(void) const;
 
@@ -30,6 +30,6 @@ private:
 	eastl::unordered_map<uint32_t, CVKMaterialPass*> m_pPasses;
 
 private:
-	CVKDevice *m_pDevice;
-	CVKMaterialManager *m_pManager;
+	CVKDevice* m_pDevice;
+	CVKMaterialManager* m_pManager;
 };

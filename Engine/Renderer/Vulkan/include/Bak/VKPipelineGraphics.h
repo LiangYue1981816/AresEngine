@@ -8,7 +8,7 @@ class CVKPipelineGraphics : public CVKPipeline, public CGfxPipelineGraphics
 
 
 private:
-	CVKPipelineGraphics(CVKDevice *pDevice, CVKPipelineGraphicsManager *pManager, uint32_t name);
+	CVKPipelineGraphics(CVKDevice* pDevice, CVKPipelineGraphicsManager* pManager, uint32_t name);
 	virtual ~CVKPipelineGraphics(void);
 
 
@@ -19,7 +19,7 @@ public:
 	HANDLE GetPipeline(void) const;
 
 public:
-	bool Create(const CGfxRenderPass *pRenderPass, const CGfxShader *pVertexShader, const CGfxShader *pFragmentShader, const PipelineState &state, uint32_t indexSubpass, uint32_t vertexBinding, uint32_t instanceBinding);
+	bool Create(const CGfxRenderPass* pRenderPass, const CGfxShader* pVertexShader, const CGfxShader* pFragmentShader, const PipelineState& state, uint32_t indexSubpass, uint32_t vertexBinding, uint32_t instanceBinding);
 	void Destroy(void);
 
 public:
@@ -35,5 +35,5 @@ private:
 	uint32_t m_name;
 
 private:
-	CVKPipelineGraphicsManager *m_pManager;
+	CVKPipelineGraphicsManager* m_pManager;
 };

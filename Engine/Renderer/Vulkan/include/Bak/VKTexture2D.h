@@ -8,7 +8,7 @@ class CVKTexture2D : public CVKTexture, public CGfxTexture2D
 
 
 private:
-	CVKTexture2D(CVKDevice *pDevice, CVKTexture2DManager *pManager, uint32_t name);
+	CVKTexture2D(CVKDevice* pDevice, CVKTexture2DManager* pManager, uint32_t name);
 	virtual ~CVKTexture2D(void);
 	virtual void Release(void);
 
@@ -33,8 +33,8 @@ public:
 	void Destroy(void);
 
 public:
-	bool TransferTexture2D(GfxPixelFormat format, int level, int xoffset, int yoffset, int width, int height, GfxDataType type, uint32_t size, const void *data);
-	bool TransferTexture2DCompressed(GfxPixelFormat format, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void *data);
+	bool TransferTexture2D(GfxPixelFormat format, int level, int xoffset, int yoffset, int width, int height, GfxDataType type, uint32_t size, const void* data);
+	bool TransferTexture2DCompressed(GfxPixelFormat format, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data);
 
 
 private:
@@ -53,5 +53,5 @@ private:
 	eastl::unordered_map<int, uint32_t> m_size;
 
 private:
-	CVKTexture2DManager *m_pManager;
+	CVKTexture2DManager* m_pManager;
 };

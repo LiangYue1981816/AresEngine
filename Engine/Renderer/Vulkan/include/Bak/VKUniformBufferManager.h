@@ -9,18 +9,18 @@ class CVKUniformBufferManager : public CGfxResourceManager
 
 
 private:
-	CVKUniformBufferManager(CVKDevice *pDevice);
+	CVKUniformBufferManager(CVKDevice* pDevice);
 	virtual ~CVKUniformBufferManager(void);
 
 
 private:
 	CVKUniformBuffer* Create(size_t size);
-	void Destroy(CVKUniformBuffer *pUniformBuffer);
+	void Destroy(CVKUniformBuffer* pUniformBuffer);
 
 
 private:
 	eastl::unordered_map<CVKUniformBuffer*, CVKUniformBuffer*> m_pUniformBuffers;
 
 private:
-	CVKDevice *m_pDevice;
+	CVKDevice* m_pDevice;
 };

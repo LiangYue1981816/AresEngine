@@ -9,7 +9,7 @@ class CVKMaterialPass : public CGfxMaterialPass
 
 
 private:
-	CVKMaterialPass(CVKDevice *pDevice, uint32_t name);
+	CVKMaterialPass(CVKDevice* pDevice, uint32_t name);
 	virtual ~CVKMaterialPass(void);
 
 
@@ -21,37 +21,37 @@ public:
 	CVKDescriptorSet* GetDescriptorSet(void) const;
 
 public:
-	bool SetPipeline(const CGfxRenderPass *pRenderPass, const CGfxShader *pVertexShader, const CGfxShader *pFragmentShader, const PipelineState &state, uint32_t indexSubpass, uint32_t vertexBinding, uint32_t instanceBinding);
+	bool SetPipeline(const CGfxRenderPass* pRenderPass, const CGfxShader* pVertexShader, const CGfxShader* pFragmentShader, const PipelineState& state, uint32_t indexSubpass, uint32_t vertexBinding, uint32_t instanceBinding);
 
-	bool SetSampler(const char *szName, GfxFilter minFilter, GfxFilter magFilter, GfxSamplerMipmapMode mipmapMode, GfxSamplerAddressMode addressMode);
-	bool SetTexture2D(const char *szName, const CGfxTexture2DPtr ptrTexture);
-	bool SetTexture2DArray(const char *szName, const CGfxTexture2DArrayPtr ptrTexture);
-	bool SetTextureCubeMap(const char *szName, const CGfxTextureCubeMapPtr ptrTexture);
-	bool SetTexture2D(const char *szName, const char *szFileName);
-	bool SetTexture2DArray(const char *szName, const char *szFileName);
-	bool SetTextureCubeMap(const char *szName, const char *szFileName);
+	bool SetSampler(const char* szName, GfxFilter minFilter, GfxFilter magFilter, GfxSamplerMipmapMode mipmapMode, GfxSamplerAddressMode addressMode);
+	bool SetTexture2D(const char* szName, const CGfxTexture2DPtr ptrTexture);
+	bool SetTexture2DArray(const char* szName, const CGfxTexture2DArrayPtr ptrTexture);
+	bool SetTextureCubeMap(const char* szName, const CGfxTextureCubeMapPtr ptrTexture);
+	bool SetTexture2D(const char* szName, const char* szFileName);
+	bool SetTexture2DArray(const char* szName, const char* szFileName);
+	bool SetTextureCubeMap(const char* szName, const char* szFileName);
 
-	bool SetUniformVec1(const char *szName, float v0);
-	bool SetUniformVec2(const char *szName, float v0, float v1);
-	bool SetUniformVec3(const char *szName, float v0, float v1, float v2);
-	bool SetUniformVec4(const char *szName, float v0, float v1, float v2, float v3);
-	bool SetUniformMat4(const char *szName, const float *value);
-
-public:
-	CGfxTexture2DPtr GetTexture2D(const char *szName) const;
-	CGfxTexture2DArrayPtr GetTexture2DArray(const char *szName) const;
-	CGfxTextureCubeMapPtr GetTextureCubeMap(const char *szName) const;
+	bool SetUniformVec1(const char* szName, float v0);
+	bool SetUniformVec2(const char* szName, float v0, float v1);
+	bool SetUniformVec3(const char* szName, float v0, float v1, float v2);
+	bool SetUniformVec4(const char* szName, float v0, float v1, float v2, float v3);
+	bool SetUniformMat4(const char* szName, const float* value);
 
 public:
-	void Bind(VkCommandBuffer vkCommandBuffer, const CVKPipeline *pPipeline) const;
+	CGfxTexture2DPtr GetTexture2D(const char* szName) const;
+	CGfxTexture2DArrayPtr GetTexture2DArray(const char* szName) const;
+	CGfxTextureCubeMapPtr GetTextureCubeMap(const char* szName) const;
+
+public:
+	void Bind(VkCommandBuffer vkCommandBuffer, const CVKPipeline* pPipeline) const;
 
 
 private:
 	uint32_t m_name;
 
 private:
-	CGfxPipelineGraphics *m_pPipeline;
-	CVKDescriptorSet *m_pDescriptorSet;
+	CGfxPipelineGraphics* m_pPipeline;
+	CVKDescriptorSet* m_pDescriptorSet;
 
 private:
 	eastl::unordered_map<uint32_t, CGfxSampler*> m_pSamplers;
@@ -62,5 +62,5 @@ private:
 	eastl::unordered_map<uint32_t, CGfxUniformMat4*> m_pUniformMat4s;
 
 private:
-	CVKDevice *m_pDevice;
+	CVKDevice* m_pDevice;
 };

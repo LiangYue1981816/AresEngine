@@ -9,7 +9,7 @@ class CVKCommandBufferManager : public CGfxResourceManager
 
 
 private:
-	CVKCommandBufferManager(CVKDevice *pDevice);
+	CVKCommandBufferManager(CVKDevice* pDevice);
 	virtual ~CVKCommandBufferManager(void);
 
 
@@ -22,5 +22,5 @@ private:
 	eastl::unordered_map<uint32_t, CVKCommandPool*> m_pCommandPools;
 
 private:
-	CVKDevice *m_pDevice;
+	CVKDevice* m_pDevice;
 };

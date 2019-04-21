@@ -9,18 +9,18 @@ class CVKFrameBufferManager : public CGfxResourceManager
 
 
 private:
-	CVKFrameBufferManager(CVKDevice *pDevice);
+	CVKFrameBufferManager(CVKDevice* pDevice);
 	virtual ~CVKFrameBufferManager(void);
 
 
 private:
 	CVKFrameBuffer* Create(int width, int height, int numAttachments);
-	void Destroy(CVKFrameBuffer *pFrameBuffer);
+	void Destroy(CVKFrameBuffer* pFrameBuffer);
 
 
 private:
 	eastl::unordered_map<CVKFrameBuffer*, CVKFrameBuffer*> m_pFrameBuffers;
 
 private:
-	CVKDevice *m_pDevice;
+	CVKDevice* m_pDevice;
 };

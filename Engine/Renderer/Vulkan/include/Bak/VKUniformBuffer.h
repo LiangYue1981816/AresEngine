@@ -8,7 +8,7 @@ class CVKUniformBuffer : public CGfxUniformBuffer
 
 
 private:
-	CVKUniformBuffer(CVKDevice *pDevice, CVKUniformBufferManager *pManager, size_t size);
+	CVKUniformBuffer(CVKDevice* pDevice, CVKUniformBufferManager* pManager, size_t size);
 	virtual ~CVKUniformBuffer(void);
 	virtual void Release(void);
 
@@ -21,7 +21,7 @@ public:
 	uint32_t GetBaseOffset(void) const;
 
 public:
-	bool BufferData(size_t offset, size_t size, const void *pBuffer);
+	bool BufferData(size_t offset, size_t size, const void* pBuffer);
 
 
 private:
@@ -32,6 +32,6 @@ private:
 	CVKBufferPtr m_ptrBuffer;
 
 private:
-	CVKDevice *m_pDevice;
-	CVKUniformBufferManager *m_pManager;
+	CVKDevice* m_pDevice;
+	CVKUniformBufferManager* m_pManager;
 };

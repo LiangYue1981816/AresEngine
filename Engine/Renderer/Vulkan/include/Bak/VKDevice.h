@@ -8,17 +8,17 @@ class CVKDevice
 
 
 private:
-	CVKDevice(CVKInstance *pInstance);
+	CVKDevice(CVKInstance* pInstance);
 	virtual ~CVKDevice(void);
 
 
 private:
-	bool EnumeratePhysicalDevices(eastl::vector<VkPhysicalDevice> &devices) const;
+	bool EnumeratePhysicalDevices(eastl::vector<VkPhysicalDevice>& devices) const;
 
-	bool SelectPhysicalDevices(eastl::vector<VkPhysicalDevice> &devices, uint32_t &deviceIndex, uint32_t &queueFamilyIndex) const;
+	bool SelectPhysicalDevices(eastl::vector<VkPhysicalDevice>& devices, uint32_t& deviceIndex, uint32_t& queueFamilyIndex) const;
 	bool CheckPhysicalDeviceCapabilities(VkPhysicalDevice vkPhysicalDevice) const;
 	bool CheckPhysicalDeviceExtensionProperties(VkPhysicalDevice vkPhysicalDevice) const;
-	bool CheckPhysicalDeviceQueueFamilyProperties(VkPhysicalDevice vkPhysicalDevice, uint32_t &queueFamilyIndex) const;
+	bool CheckPhysicalDeviceQueueFamilyProperties(VkPhysicalDevice vkPhysicalDevice, uint32_t& queueFamilyIndex) const;
 
 	bool CreateDevice(VkPhysicalDevice vkPhysicalDevice, uint32_t queueFamilyIndex);
 	void DestroyDevice(void);
@@ -47,10 +47,10 @@ private:
 	VkPhysicalDeviceMemoryProperties m_vkPhysicalDeviceMemoryProperties;
 
 private:
-	CVKQueue *m_pQueue;
-	CVKMemoryManager *m_pMemoryManager;
-	CVKDescriptorSetManager *m_pDescriptorSetManager;
+	CVKQueue* m_pQueue;
+	CVKMemoryManager* m_pMemoryManager;
+	CVKDescriptorSetManager* m_pDescriptorSetManager;
 
 private:
-	CVKInstance *m_pInstance;
+	CVKInstance* m_pInstance;
 };

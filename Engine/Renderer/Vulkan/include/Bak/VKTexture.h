@@ -12,7 +12,7 @@ protected:
 
 
 protected:
-	CVKTexture(CVKDevice *pDevice);
+	CVKTexture(CVKDevice* pDevice);
 	virtual ~CVKTexture(void);
 
 
@@ -37,5 +37,5 @@ protected:
 	VkImageView m_vkImageView;
 
 protected:
-	CVKDevice *m_pDevice;
+	CVKDevice* m_pDevice;
 };

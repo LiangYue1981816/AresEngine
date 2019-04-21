@@ -9,7 +9,7 @@ class CVKSamplerManager : public CGfxResourceManager
 
 
 private:
-	CVKSamplerManager(CVKDevice *pDevice);
+	CVKSamplerManager(CVKDevice* pDevice);
 	virtual ~CVKSamplerManager(void);
 
 
@@ -21,5 +21,5 @@ private:
 	eastl::unordered_map<uint32_t, CVKSampler*> m_pSamplers;
 
 private:
-	CVKDevice *m_pDevice;
+	CVKDevice* m_pDevice;
 };

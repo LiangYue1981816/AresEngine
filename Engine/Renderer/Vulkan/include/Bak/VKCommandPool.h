@@ -9,7 +9,7 @@ class CVKCommandPool
 
 
 private:
-	CVKCommandPool(CVKDevice *pDevice);
+	CVKCommandPool(CVKDevice* pDevice);
 	virtual ~CVKCommandPool(void);
 
 
@@ -18,7 +18,7 @@ private:
 
 private:
 	CVKCommandBuffer* AllocCommandBuffer(bool bMainCommandBuffer);
-	void FreeCommandBuffer(CVKCommandBuffer *pCommandBuffer);
+	void FreeCommandBuffer(CVKCommandBuffer* pCommandBuffer);
 	void ResetCommandPool(void);
 
 
@@ -29,5 +29,5 @@ private:
 	VkCommandPool m_vkCommandPool;
 
 private:
-	CVKDevice *m_pDevice;
+	CVKDevice* m_pDevice;
 };

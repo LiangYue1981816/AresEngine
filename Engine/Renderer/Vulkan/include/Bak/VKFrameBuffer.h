@@ -8,7 +8,7 @@ class CVKFrameBuffer : public CGfxFrameBuffer
 
 
 private:
-	CVKFrameBuffer(CVKDevice *pDevice, CVKFrameBufferManager *pManager, int width, int height, int numAttachments);
+	CVKFrameBuffer(CVKDevice* pDevice, CVKFrameBufferManager* pManager, int width, int height, int numAttachments);
 	virtual ~CVKFrameBuffer(void);
 	virtual void Release(void);
 
@@ -39,6 +39,6 @@ private:
 	VkFramebuffer m_vkFrameBuffer;
 
 private:
-	CVKDevice *m_pDevice;
-	CVKFrameBufferManager *m_pManager;
+	CVKDevice* m_pDevice;
+	CVKFrameBufferManager* m_pManager;
 };

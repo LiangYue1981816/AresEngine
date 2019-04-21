@@ -8,7 +8,7 @@ class CVKShader : public CGfxShader
 
 
 private:
-	CVKShader(CVKDevice *pDevice, uint32_t name);
+	CVKShader(CVKDevice* pDevice, uint32_t name);
 	virtual ~CVKShader(void);
 
 
@@ -23,7 +23,7 @@ public:
 	const CGfxSprivCross& GetSprivCross(void) const;
 
 public:
-	bool Create(const uint32_t *words, size_t numWords, shader_kind kind);
+	bool Create(const uint32_t* words, size_t numWords, shader_kind kind);
 	void Destroy(void);
 
 public:
@@ -41,5 +41,5 @@ private:
 	CGfxSprivCross m_spriv;
 
 private:
-	CVKDevice *m_pDevice;
+	CVKDevice* m_pDevice;
 };

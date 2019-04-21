@@ -8,7 +8,7 @@ class CVKIndirectBuffer : public CGfxIndirectBuffer
 
 
 private:
-	CVKIndirectBuffer(CVKDevice *pDevice, uint32_t drawCommandCount);
+	CVKIndirectBuffer(CVKDevice* pDevice, uint32_t drawCommandCount);
 	virtual ~CVKIndirectBuffer(void);
 
 
@@ -29,5 +29,5 @@ private:
 	CVKBufferPtr m_ptrBuffer;
 
 private:
-	CVKDevice *m_pDevice;
+	CVKDevice* m_pDevice;
 };

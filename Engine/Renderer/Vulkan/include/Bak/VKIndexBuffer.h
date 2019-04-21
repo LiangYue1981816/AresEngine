@@ -9,7 +9,7 @@ class CVKIndexBuffer : public CGfxIndexBuffer
 
 
 private:
-	CVKIndexBuffer(CVKDevice *pDevice, GfxIndexType type, size_t size, bool bDynamic);
+	CVKIndexBuffer(CVKDevice* pDevice, GfxIndexType type, size_t size, bool bDynamic);
 	virtual ~CVKIndexBuffer(void);
 
 
@@ -19,7 +19,7 @@ public:
 	uint32_t GetSize(void) const;
 
 public:
-	bool BufferData(size_t offset, size_t size, const void *pBuffer);
+	bool BufferData(size_t offset, size_t size, const void* pBuffer);
 
 private:
 	void Bind(VkCommandBuffer vkCommandBuffer, VkDeviceSize offset) const;
@@ -40,5 +40,5 @@ private:
 	CVKBufferPtr m_ptrBuffer;
 
 private:
-	CVKDevice *m_pDevice;
+	CVKDevice* m_pDevice;
 };

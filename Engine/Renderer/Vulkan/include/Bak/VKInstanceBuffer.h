@@ -8,7 +8,7 @@ class CVKInstanceBuffer : public CGfxInstanceBuffer
 
 
 private:
-	CVKInstanceBuffer(CVKDevice *pDevice, uint32_t instanceFormat, uint32_t instanceBinding);
+	CVKInstanceBuffer(CVKDevice* pDevice, uint32_t instanceFormat, uint32_t instanceBinding);
 	virtual ~CVKInstanceBuffer(void);
 
 
@@ -18,7 +18,7 @@ public:
 	uint32_t GetSize(void) const;
 
 public:
-	bool BufferData(size_t size, const void *pBuffer);
+	bool BufferData(size_t size, const void* pBuffer);
 	void Bind(VkCommandBuffer vkCommandBuffer, VkDeviceSize offset) const;
 
 
@@ -32,5 +32,5 @@ private:
 	CVKBufferPtr m_ptrBuffer;
 
 private:
-	CVKDevice *m_pDevice;
+	CVKDevice* m_pDevice;
 };
