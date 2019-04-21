@@ -13,7 +13,6 @@ CVKDevice::CVKDevice(CVKInstance* pInstance)
 
 	, m_pQueue(nullptr)
 	, m_pMemoryManager(nullptr)
-	, m_pDescriptorSetManager(nullptr)
 {
 	uint32_t deviceIndex;
 	uint32_t queueFamilyIndex;
@@ -24,12 +23,10 @@ CVKDevice::CVKDevice(CVKInstance* pInstance)
 
 	m_pQueue = new CVKQueue(this, queueFamilyIndex);
 	m_pMemoryManager = new CVKMemoryManager(this);
-	m_pDescriptorSetManager = new CVKDescriptorSetManager(this);
 }
 
 CVKDevice::~CVKDevice(void)
 {
-	delete m_pDescriptorSetManager;
 	delete m_pMemoryManager;
 	delete m_pQueue;
 
@@ -50,7 +47,7 @@ bool CVKDevice::EnumeratePhysicalDevices(eastl::vector<VkPhysicalDevice>& device
 	return true;
 }
 
-bool CVKDevice::SelectPhysicalDevices(eastl::vector<VkPhysicalDevice> & devices, uint32_t & deviceIndex, uint32_t & queueFamilyIndex) const
+bool CVKDevice::SelectPhysicalDevices(eastl::vector<VkPhysicalDevice>& devices, uint32_t& deviceIndex, uint32_t& queueFamilyIndex) const
 {
 	uint32_t familyIndex = UINT32_MAX;
 
@@ -113,7 +110,7 @@ bool CVKDevice::CheckPhysicalDeviceExtensionProperties(VkPhysicalDevice vkPhysic
 	return true;
 }
 
-bool CVKDevice::CheckPhysicalDeviceQueueFamilyProperties(VkPhysicalDevice vkPhysicalDevice, uint32_t & queueFamilyIndex) const
+bool CVKDevice::CheckPhysicalDeviceQueueFamilyProperties(VkPhysicalDevice vkPhysicalDevice, uint32_t& queueFamilyIndex) const
 {
 	queueFamilyIndex = UINT32_MAX;
 
@@ -231,9 +228,4 @@ CVKQueue* CVKDevice::GetQueue(void) const
 CVKMemoryManager* CVKDevice::GetMemoryManager(void) const
 {
 	return m_pMemoryManager;
-}
-
-CVKDescriptorSetManager* CVKDevice::GetDescriptorSetManager(void) const
-{
-	return m_pDescriptorSetManager;
 }
