@@ -187,4 +187,5 @@ public:
 
 private:
 	CVKInstance* m_pInstance;
+	CVKDevice* m_pDevice;
 };

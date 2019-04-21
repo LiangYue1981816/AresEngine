@@ -51,7 +51,7 @@ bool CVKDevice::SelectPhysicalDevices(eastl::vector<VkPhysicalDevice>& devices, 
 {
 	uint32_t familyIndex = UINT32_MAX;
 
-	for (int index = 0; index < devices.size(); index++) {
+	for (uint32_t index = 0; index < devices.size(); index++) {
 		if (CheckPhysicalDeviceCapabilities(devices[index]) == false) continue;
 		if (CheckPhysicalDeviceExtensionProperties(devices[index]) == false) continue;
 		if (CheckPhysicalDeviceQueueFamilyProperties(devices[index], familyIndex) == false) continue;
@@ -92,7 +92,7 @@ bool CVKDevice::CheckPhysicalDeviceExtensionProperties(VkPhysicalDevice vkPhysic
 	CALL_VK_FUNCTION_RETURN_BOOL(vkEnumerateDeviceExtensionProperties(vkPhysicalDevice, nullptr, &numExtensions, extensions.data()));
 
 	bool bSwapchainExtension = false;
-	for (int index = 0; index < numExtensions; index++) {
+	for (uint32_t index = 0; index < numExtensions; index++) {
 		if (stricmp(extensions[index].extensionName, VK_KHR_SWAPCHAIN_EXTENSION_NAME) == 0) {
 			bSwapchainExtension = true;
 			continue;
@@ -121,7 +121,7 @@ bool CVKDevice::CheckPhysicalDeviceQueueFamilyProperties(VkPhysicalDevice vkPhys
 	eastl::vector<VkQueueFamilyProperties> queueFamilies(numQueueFamilies);
 	vkGetPhysicalDeviceQueueFamilyProperties(vkPhysicalDevice, &numQueueFamilies, queueFamilies.data());
 
-	for (int index = 0; index < numQueueFamilies; index++) {
+	for (uint32_t index = 0; index < numQueueFamilies; index++) {
 		if ((queueFamilies[index].queueFlags & VK_QUEUE_COMPUTE_BIT) != 0 &&
 			(queueFamilies[index].queueFlags & VK_QUEUE_GRAPHICS_BIT) != 0 &&
 			(queueFamilies[index].queueFlags & VK_QUEUE_TRANSFER_BIT) != 0) {
@@ -147,12 +147,6 @@ bool CVKDevice::CreateDevice(VkPhysicalDevice vkPhysicalDevice, uint32_t queueFa
 	vkGetPhysicalDeviceProperties(m_vkPhysicalDevice, &m_vkPhysicalDeviceProperties);
 	vkGetPhysicalDeviceMemoryProperties(m_vkPhysicalDevice, &m_vkPhysicalDeviceMemoryProperties);
 	LogOutput(LOG_TAG_RENDERER, "Vulkan Device = %s\n", m_vkPhysicalDeviceProperties.deviceName);
-
-	uint32_t numQueueFamilies;
-	vkGetPhysicalDeviceQueueFamilyProperties(vkPhysicalDevice, &numQueueFamilies, nullptr);
-
-	eastl::vector<VkQueueFamilyProperties> queueFamilies(numQueueFamilies);
-	vkGetPhysicalDeviceQueueFamilyProperties(vkPhysicalDevice, &numQueueFamilies, queueFamilies.data());
 
 	const float queuePpriorities[1] = { 1.0f };
 	VkDeviceQueueCreateInfo queueCreateInfo = {};

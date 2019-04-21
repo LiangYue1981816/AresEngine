@@ -4,12 +4,15 @@
 CVKRenderer::CVKRenderer(void* hInstance, void* hWnd, void* hDC, int width, int height, GfxPixelFormat format)
 	: CGfxRenderer(hInstance, hWnd, hDC, width, height, format)
 	, m_pInstance(nullptr)
+	, m_pDevice(nullptr)
 {
 	m_pInstance = new CVKInstance(hInstance, hWnd);
+	m_pDevice = new CVKDevice(m_pInstance);
 }
 
 CVKRenderer::~CVKRenderer(void)
 {
+	delete m_pDevice;
 	delete m_pInstance;
 }
 

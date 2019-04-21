@@ -29,10 +29,11 @@ bool CVKQueue::Submit(const eastl::vector<CGfxCommandBufferPtr>& ptrCommandBuffe
 {
 	eastl::vector<VkCommandBuffer> vkCommandBuffers;
 	{
+		/*
 		for (int index = 0; index < ptrCommandBuffers.size(); index++) {
 			vkCommandBuffers.emplace_back((VkCommandBuffer)ptrCommandBuffers[index]->GetCommandBuffer());
 		}
-
+		*/
 		if (vkCommandBuffers.empty()) {
 			return false;
 		}
