@@ -206,7 +206,7 @@ bool CResourceLoader::LoadTexture2D(const char* szFileName, CGfxTexture2D* pText
 	return false;
 }
 
-bool CResourceLoader::LoadTexture2DArray(const char* szFileName, CGfxTexture2DArray * pTexture2DArray, uint32_t baseLevel)
+bool CResourceLoader::LoadTexture2DArray(const char* szFileName, CGfxTexture2DArray* pTexture2DArray, uint32_t baseLevel)
 {
 	pTexture2DArray->Destroy();
 	{
@@ -226,7 +226,7 @@ bool CResourceLoader::LoadTexture2DArray(const char* szFileName, CGfxTexture2DAr
 	return false;
 }
 
-bool CResourceLoader::LoadTexture2DArrayLayer(const char* szFileName, int layer, CGfxTexture2DArray * pTexture2DArray, uint32_t baseLevel)
+bool CResourceLoader::LoadTexture2DArrayLayer(const char* szFileName, int layer, CGfxTexture2DArray* pTexture2DArray, uint32_t baseLevel)
 {
 	do {
 		CStream stream;
@@ -243,7 +243,7 @@ bool CResourceLoader::LoadTexture2DArrayLayer(const char* szFileName, int layer,
 	return false;
 }
 
-bool CResourceLoader::LoadTextureCubeMap(const char* szFileName, CGfxTextureCubeMap * pTextureCubeMap, uint32_t baseLevel)
+bool CResourceLoader::LoadTextureCubeMap(const char* szFileName, CGfxTextureCubeMap* pTextureCubeMap, uint32_t baseLevel)
 {
 	pTextureCubeMap->Destroy();
 	{
@@ -263,7 +263,7 @@ bool CResourceLoader::LoadTextureCubeMap(const char* szFileName, CGfxTextureCube
 	return false;
 }
 
-bool CResourceLoader::LoadTextureCubeMapFace(const char* szFileName, GfxTextureCubeMapFace face, CGfxTextureCubeMap * pTextureCubeMap, uint32_t baseLevel)
+bool CResourceLoader::LoadTextureCubeMapFace(const char* szFileName, GfxTextureCubeMapFace face, CGfxTextureCubeMap* pTextureCubeMap, uint32_t baseLevel)
 {
 	do {
 		CStream stream;

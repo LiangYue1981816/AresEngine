@@ -10,7 +10,7 @@ static bool InternalLoadDraw(TiXmlNode* pNode, const CGfxMeshPtr ptrMesh, CScene
 {
 	int err = 0;
 
-	if (TiXmlNode * pDrawNode = pNode->FirstChild("Draw")) {
+	if (TiXmlNode* pDrawNode = pNode->FirstChild("Draw")) {
 		do {
 			int indexDraw = pDrawNode->ToElement()->AttributeInt1("index");
 			const char* szMaterialFileName = pDrawNode->ToElement()->AttributeString("material");
@@ -30,7 +30,7 @@ ERR:
 	return false;
 }
 
-static bool InternalLoadNode(TiXmlNode * pNode, const CGfxMeshPtr ptrMesh, CSceneNode * pParentSceneNode, uint32_t instanceFormat, uint32_t vertexBinding, uint32_t instanceBinding, uint32_t baseLevel)
+static bool InternalLoadNode(TiXmlNode* pNode, const CGfxMeshPtr ptrMesh, CSceneNode* pParentSceneNode, uint32_t instanceFormat, uint32_t vertexBinding, uint32_t instanceBinding, uint32_t baseLevel)
 {
 	int err = 0;
 	CSceneNode* pCurrentSceneNode = nullptr;
@@ -57,7 +57,7 @@ static bool InternalLoadNode(TiXmlNode * pNode, const CGfxMeshPtr ptrMesh, CScen
 			err = -2; goto ERR;
 		}
 
-		if (TiXmlNode * pChildNode = pNode->FirstChild("Node")) {
+		if (TiXmlNode* pChildNode = pNode->FirstChild("Node")) {
 			do {
 				if (InternalLoadNode(pChildNode, ptrMesh, pCurrentSceneNode, instanceFormat, vertexBinding, instanceBinding, baseLevel) == false) {
 					err = -3; goto ERR;
@@ -71,11 +71,11 @@ ERR:
 	return false;
 }
 
-static bool InternalLoadMesh(TiXmlNode * pMeshNode, CSceneNode * pParentSceneNode, uint32_t instanceFormat, uint32_t vertexBinding, uint32_t instanceBinding, uint32_t baseLevel)
+static bool InternalLoadMesh(TiXmlNode* pMeshNode, CSceneNode* pParentSceneNode, uint32_t instanceFormat, uint32_t vertexBinding, uint32_t instanceBinding, uint32_t baseLevel)
 {
 	int err = 0;
 	{
-		if (TiXmlNode * pNode = pMeshNode->FirstChild("Node")) {
+		if (TiXmlNode* pNode = pMeshNode->FirstChild("Node")) {
 			const char* szMeshFileName = pMeshNode->ToElement()->AttributeString("mesh");
 			if (szMeshFileName == nullptr) { err = -1; goto ERR; }
 
@@ -92,7 +92,7 @@ ERR:
 	return false;
 }
 
-static CSceneNode* InternalLoadMesh(const char* szFileName, CSceneNode * pParentSceneNode, uint32_t instanceFormat, uint32_t vertexBinding, uint32_t instanceBinding, uint32_t baseLevel)
+static CSceneNode* InternalLoadMesh(const char* szFileName, CSceneNode* pParentSceneNode, uint32_t instanceFormat, uint32_t vertexBinding, uint32_t instanceBinding, uint32_t baseLevel)
 {
 	/*
 	<Mesh mesh="sponza.mesh">
@@ -126,7 +126,7 @@ ERR:
 	return nullptr;
 }
 
-CSceneNode* CResourceLoader::LoadSceneMesh(const char* szFileName, CSceneNode * pParentSceneNode, uint32_t instanceFormat, uint32_t vertexBinding, uint32_t instanceBinding, uint32_t baseLevel)
+CSceneNode* CResourceLoader::LoadSceneMesh(const char* szFileName, CSceneNode* pParentSceneNode, uint32_t instanceFormat, uint32_t vertexBinding, uint32_t instanceBinding, uint32_t baseLevel)
 {
 	return InternalLoadMesh(szFileName, pParentSceneNode, instanceFormat, vertexBinding, instanceBinding, baseLevel);
 }

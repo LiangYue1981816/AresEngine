@@ -154,55 +154,55 @@ static GfxSamplerAddressMode StringToAddressMode(const char* szString)
 
 static bool InternalLoadPipelineState(TiXmlNode* pPipelineNode, PipelineState& state)
 {
-	if (TiXmlNode * pStateNode = pPipelineNode->FirstChild("State")) {
+	if (TiXmlNode* pStateNode = pPipelineNode->FirstChild("State")) {
 		LogOutput(LOG_TAG_RENDERER, "\t\t\tLoadState ... ");
 		{
-			if (TiXmlNode * pInputAssemblyNode = pStateNode->FirstChild("InputAssembly")) {
-				if (TiXmlNode * pPrimitiveRestart = pInputAssemblyNode->FirstChild("PrimitiveRestart")) {
+			if (TiXmlNode* pInputAssemblyNode = pStateNode->FirstChild("InputAssembly")) {
+				if (TiXmlNode* pPrimitiveRestart = pInputAssemblyNode->FirstChild("PrimitiveRestart")) {
 					state.bEnablePrimitiveRestart = StringToBool(pPrimitiveRestart->ToElement()->AttributeString("enable"));
 				}
-				if (TiXmlNode * pPrimitiveTopology = pInputAssemblyNode->FirstChild("PrimitiveTopology")) {
+				if (TiXmlNode* pPrimitiveTopology = pInputAssemblyNode->FirstChild("PrimitiveTopology")) {
 					state.topology = StringToTopology(pPrimitiveTopology->ToElement()->AttributeString("topology"));
 				}
 			}
 
-			if (TiXmlNode * pRasterizationNode = pStateNode->FirstChild("Rasterization")) {
-				if (TiXmlNode * pCullNode = pRasterizationNode->FirstChild("Cull")) {
+			if (TiXmlNode* pRasterizationNode = pStateNode->FirstChild("Rasterization")) {
+				if (TiXmlNode* pCullNode = pRasterizationNode->FirstChild("Cull")) {
 					state.bEnableCullFace = StringToBool(pCullNode->ToElement()->AttributeString("enable"));
 					state.cullFace = StringToCullFace(pCullNode->ToElement()->AttributeString("cull_face"));
 					state.frontFace = StringToFrontFace(pCullNode->ToElement()->AttributeString("front_face"));
 				}
-				if (TiXmlNode * pDepthBiasNode = pRasterizationNode->FirstChild("DepthBias")) {
+				if (TiXmlNode* pDepthBiasNode = pRasterizationNode->FirstChild("DepthBias")) {
 					state.bEnableDepthBias = StringToBool(pDepthBiasNode->ToElement()->AttributeString("enable"));
 					state.depthBiasSlopeFactor = pDepthBiasNode->ToElement()->AttributeFloat1("slope_factor");
 					state.depthBiasConstantFactor = pDepthBiasNode->ToElement()->AttributeFloat1("constant_factor");
 				}
 			}
 
-			if (TiXmlNode * pMultisampleNode = pStateNode->FirstChild("Multisample")) {
-				if (TiXmlNode * pSampleNode = pMultisampleNode->FirstChild("Sample")) {
+			if (TiXmlNode* pMultisampleNode = pStateNode->FirstChild("Multisample")) {
+				if (TiXmlNode* pSampleNode = pMultisampleNode->FirstChild("Sample")) {
 					state.samples = pSampleNode->ToElement()->AttributeInt1("count");
 				}
-				if (TiXmlNode * pAlphaToCoverageNode = pMultisampleNode->FirstChild("AlphaToCoverage")) {
+				if (TiXmlNode* pAlphaToCoverageNode = pMultisampleNode->FirstChild("AlphaToCoverage")) {
 					state.bEnableAlphaToCoverage = StringToBool(pAlphaToCoverageNode->ToElement()->AttributeString("enable"));
 				}
 			}
 
-			if (TiXmlNode * pDepthNode = pStateNode->FirstChild("Depth")) {
-				if (TiXmlNode * pDepthTestNode = pDepthNode->FirstChild("DepthTest")) {
+			if (TiXmlNode* pDepthNode = pStateNode->FirstChild("Depth")) {
+				if (TiXmlNode* pDepthTestNode = pDepthNode->FirstChild("DepthTest")) {
 					state.bEnableDepthTest = StringToBool(pDepthTestNode->ToElement()->AttributeString("enable"));
 					state.depthCompareOp = StringToCompareOp(pDepthTestNode->ToElement()->AttributeString("compare_op"));
 				}
-				if (TiXmlNode * pDepthWriteNode = pDepthNode->FirstChild("DepthWrite")) {
+				if (TiXmlNode* pDepthWriteNode = pDepthNode->FirstChild("DepthWrite")) {
 					state.bEnableDepthWrite = StringToBool(pDepthWriteNode->ToElement()->AttributeString("enable"));
 				}
 			}
 
-			if (TiXmlNode * pStencilNode = pStateNode->FirstChild("Stencil")) {
-				if (TiXmlNode * pStencilTestNode = pStencilNode->FirstChild("StencilTest")) {
+			if (TiXmlNode* pStencilNode = pStateNode->FirstChild("Stencil")) {
+				if (TiXmlNode* pStencilTestNode = pStencilNode->FirstChild("StencilTest")) {
 					state.bEnableStencilTest = StringToBool(pStencilTestNode->ToElement()->AttributeString("enable"));
 				}
-				if (TiXmlNode * pFrontNode = pStencilNode->FirstChild("Front")) {
+				if (TiXmlNode* pFrontNode = pStencilNode->FirstChild("Front")) {
 					state.stencilFrontWriteMask = pFrontNode->ToElement()->AttributeInt1("write_mask");
 					state.stencilFrontCompareMask = pFrontNode->ToElement()->AttributeInt1("compare_mask");
 					state.stencilFrontCompareRef = pFrontNode->ToElement()->AttributeInt1("compare_ref");
@@ -211,7 +211,7 @@ static bool InternalLoadPipelineState(TiXmlNode* pPipelineNode, PipelineState& s
 					state.stencilFrontOpDFail = StringToStencilOp(pFrontNode->ToElement()->AttributeString("depth_fail"));
 					state.stencilFrontOpDPass = StringToStencilOp(pFrontNode->ToElement()->AttributeString("pass"));
 				}
-				if (TiXmlNode * pBackNode = pStencilNode->FirstChild("Back")) {
+				if (TiXmlNode* pBackNode = pStencilNode->FirstChild("Back")) {
 					state.stencilBackWriteMask = pBackNode->ToElement()->AttributeInt1("write_mask");
 					state.stencilBackCompareMask = pBackNode->ToElement()->AttributeInt1("compare_mask");
 					state.stencilBackCompareRef = pBackNode->ToElement()->AttributeInt1("compare_ref");
@@ -222,27 +222,27 @@ static bool InternalLoadPipelineState(TiXmlNode* pPipelineNode, PipelineState& s
 				}
 			}
 
-			if (TiXmlNode * pColorBlendNode = pStateNode->FirstChild("ColorBlend")) {
-				if (TiXmlNode * pBlendNode = pColorBlendNode->FirstChild("Blend")) {
+			if (TiXmlNode* pColorBlendNode = pStateNode->FirstChild("ColorBlend")) {
+				if (TiXmlNode* pBlendNode = pColorBlendNode->FirstChild("Blend")) {
 					state.bEnableBlend = StringToBool(pBlendNode->ToElement()->AttributeString("enable"));
 				}
-				if (TiXmlNode * pConstantNode = pColorBlendNode->FirstChild("Constant")) {
+				if (TiXmlNode* pConstantNode = pColorBlendNode->FirstChild("Constant")) {
 					state.blendColorRed = pConstantNode->ToElement()->AttributeFloat1("red");
 					state.blendColorGreen = pConstantNode->ToElement()->AttributeFloat1("green");
 					state.blendColorBlue = pConstantNode->ToElement()->AttributeFloat1("blue");
 					state.blendColorAlpha = pConstantNode->ToElement()->AttributeFloat1("alpha");
 				}
-				if (TiXmlNode * pRGBBlendNode = pColorBlendNode->FirstChild("RGBBlend")) {
+				if (TiXmlNode* pRGBBlendNode = pColorBlendNode->FirstChild("RGBBlend")) {
 					state.blendOpRGB = StringToBlendOp(pRGBBlendNode->ToElement()->AttributeString("blend_op"));
 					state.blendSrcRGB = StringToBlendFactor(pRGBBlendNode->ToElement()->AttributeString("src_factor"));
 					state.blendDstRGB = StringToBlendFactor(pRGBBlendNode->ToElement()->AttributeString("dst_factor"));
 				}
-				if (TiXmlNode * pAlphaBlendNode = pColorBlendNode->FirstChild("AlphaBlend")) {
+				if (TiXmlNode* pAlphaBlendNode = pColorBlendNode->FirstChild("AlphaBlend")) {
 					state.blendOpAlpha = StringToBlendOp(pAlphaBlendNode->ToElement()->AttributeString("blend_op"));
 					state.blendSrcAlpha = StringToBlendFactor(pAlphaBlendNode->ToElement()->AttributeString("src_factor"));
 					state.blendDstAlpha = StringToBlendFactor(pAlphaBlendNode->ToElement()->AttributeString("dst_factor"));
 				}
-				if (TiXmlNode * pColorMaskNode = pColorBlendNode->FirstChild("ColorMask")) {
+				if (TiXmlNode* pColorMaskNode = pColorBlendNode->FirstChild("ColorMask")) {
 					state.bEnableColorRedWrite = StringToBool(pColorMaskNode->ToElement()->AttributeString("enable_write_red"));
 					state.bEnableColorGreenWrite = StringToBool(pColorMaskNode->ToElement()->AttributeString("enable_write_green"));
 					state.bEnableColorBlueWrite = StringToBool(pColorMaskNode->ToElement()->AttributeString("enable_write_blue"));
@@ -277,7 +277,7 @@ static bool InternalLoadPipelineShader(TiXmlNode* pPipelineNode, CGfxShader*& pS
 		ShaderCompiler()->ClearMacroDefinition();
 #endif
 		{
-			if (TiXmlNode * pDefineNode = pShaderNode->FirstChild("Define")) {
+			if (TiXmlNode* pDefineNode = pShaderNode->FirstChild("Define")) {
 				do {
 					if (const char* szDefine = pDefineNode->ToElement()->AttributeString("name")) {
 						strcat(szHashName, "_");
@@ -309,7 +309,7 @@ ERR:
 	return false;
 }
 
-static bool InternalLoadPipeline(TiXmlNode * pPassNode, CGfxMaterialPass * pPass, uint32_t vertexBinding, uint32_t instanceBinding)
+static bool InternalLoadPipeline(TiXmlNode* pPassNode, CGfxMaterialPass* pPass, uint32_t vertexBinding, uint32_t instanceBinding)
 {
 	int err = 0;
 
@@ -347,11 +347,11 @@ ERR:
 	return false;
 }
 
-static bool InternalLoadTexture2D(TiXmlNode * pPassNode, CGfxMaterialPass * pPass, uint32_t baseLevel)
+static bool InternalLoadTexture2D(TiXmlNode* pPassNode, CGfxMaterialPass* pPass, uint32_t baseLevel)
 {
 	int err = 0;
 
-	if (TiXmlNode * pTextureNode = pPassNode->FirstChild("Texture2D")) {
+	if (TiXmlNode* pTextureNode = pPassNode->FirstChild("Texture2D")) {
 		do {
 			LogOutput(LOG_TAG_RENDERER, "\t\tLoadTexture2D ");
 			{
@@ -380,11 +380,11 @@ ERR:
 	return false;
 }
 
-static bool InternalLoadTexture2DArray(TiXmlNode * pPassNode, CGfxMaterialPass * pPass, uint32_t baseLevel)
+static bool InternalLoadTexture2DArray(TiXmlNode* pPassNode, CGfxMaterialPass* pPass, uint32_t baseLevel)
 {
 	int err = 0;
 
-	if (TiXmlNode * pTextureNode = pPassNode->FirstChild("Texture2DArray")) {
+	if (TiXmlNode* pTextureNode = pPassNode->FirstChild("Texture2DArray")) {
 		do {
 			LogOutput(LOG_TAG_RENDERER, "\t\tLoadTexture2DArray ");
 			{
@@ -413,11 +413,11 @@ ERR:
 	return false;
 }
 
-static bool InternalLoadTextureCubeMap(TiXmlNode * pPassNode, CGfxMaterialPass * pPass, uint32_t baseLevel)
+static bool InternalLoadTextureCubeMap(TiXmlNode* pPassNode, CGfxMaterialPass* pPass, uint32_t baseLevel)
 {
 	int err = 0;
 
-	if (TiXmlNode * pTextureNode = pPassNode->FirstChild("TextureCubeMap")) {
+	if (TiXmlNode* pTextureNode = pPassNode->FirstChild("TextureCubeMap")) {
 		do {
 			LogOutput(LOG_TAG_RENDERER, "\t\tLoadTextureCubeMap ");
 			{
@@ -446,11 +446,11 @@ ERR:
 	return false;
 }
 
-static bool InternalLoadUniformVec1(TiXmlNode * pPassNode, CGfxMaterialPass * pPass)
+static bool InternalLoadUniformVec1(TiXmlNode* pPassNode, CGfxMaterialPass* pPass)
 {
 	int err = 0;
 
-	if (TiXmlNode * pUniformNode = pPassNode->FirstChild("Uniform1f")) {
+	if (TiXmlNode* pUniformNode = pPassNode->FirstChild("Uniform1f")) {
 		do {
 			LogOutput(LOG_TAG_RENDERER, "\t\tLoadUniformVec1 ");
 			{
@@ -474,11 +474,11 @@ ERR:
 	return false;
 }
 
-static bool InternalLoadUniformVec2(TiXmlNode * pPassNode, CGfxMaterialPass * pPass)
+static bool InternalLoadUniformVec2(TiXmlNode* pPassNode, CGfxMaterialPass* pPass)
 {
 	int err = 0;
 
-	if (TiXmlNode * pUniformNode = pPassNode->FirstChild("Uniform2f")) {
+	if (TiXmlNode* pUniformNode = pPassNode->FirstChild("Uniform2f")) {
 		do {
 			LogOutput(LOG_TAG_RENDERER, "\t\tLoadUniformVec2 ");
 			{
@@ -502,11 +502,11 @@ ERR:
 	return false;
 }
 
-static bool InternalLoadUniformVec3(TiXmlNode * pPassNode, CGfxMaterialPass * pPass)
+static bool InternalLoadUniformVec3(TiXmlNode* pPassNode, CGfxMaterialPass* pPass)
 {
 	int err = 0;
 
-	if (TiXmlNode * pUniformNode = pPassNode->FirstChild("Uniform3f")) {
+	if (TiXmlNode* pUniformNode = pPassNode->FirstChild("Uniform3f")) {
 		do {
 			LogOutput(LOG_TAG_RENDERER, "\t\tLoadUniformVec3 ");
 			{
@@ -530,11 +530,11 @@ ERR:
 	return false;
 }
 
-static bool InternalLoadUniformVec4(TiXmlNode * pPassNode, CGfxMaterialPass * pPass)
+static bool InternalLoadUniformVec4(TiXmlNode* pPassNode, CGfxMaterialPass* pPass)
 {
 	int err = 0;
 
-	if (TiXmlNode * pUniformNode = pPassNode->FirstChild("Uniform4f")) {
+	if (TiXmlNode* pUniformNode = pPassNode->FirstChild("Uniform4f")) {
 		do {
 			LogOutput(LOG_TAG_RENDERER, "\t\tLoadUniformVec4 ");
 			{
@@ -558,7 +558,7 @@ ERR:
 	return false;
 }
 
-static bool InternalLoadPass(TiXmlNode * pPassNode, CGfxMaterialPass * pPass, uint32_t vertexBinding, uint32_t instanceBinding, uint32_t baseLevel)
+static bool InternalLoadPass(TiXmlNode* pPassNode, CGfxMaterialPass* pPass, uint32_t vertexBinding, uint32_t instanceBinding, uint32_t baseLevel)
 {
 	int err = 0;
 
@@ -581,7 +581,7 @@ ERR:
 }
 
 
-bool CResourceLoader::LoadMaterial(const char* szFileName, CGfxMaterial * pMaterial, uint32_t vertexBinding, uint32_t instanceBinding, uint32_t baseLevel)
+bool CResourceLoader::LoadMaterial(const char* szFileName, CGfxMaterial* pMaterial, uint32_t vertexBinding, uint32_t instanceBinding, uint32_t baseLevel)
 {
 	//<Material>
 	//	<Pass name="">
@@ -647,7 +647,7 @@ bool CResourceLoader::LoadMaterial(const char* szFileName, CGfxMaterial * pMater
 		TiXmlNode* pMaterialNode = xmlDoc.FirstChild("Material");
 		if (pMaterialNode == nullptr) { err = -3; goto ERR; }
 
-		if (TiXmlNode * pPassNode = pMaterialNode->FirstChild("Pass")) {
+		if (TiXmlNode* pPassNode = pMaterialNode->FirstChild("Pass")) {
 			do {
 				uint32_t name = HashValue(pPassNode->ToElement()->AttributeString("name"));
 				if (pMaterial->CreatePass(name) == false) { err = -4; goto ERR; }
