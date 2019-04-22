@@ -122,8 +122,8 @@ bool CVKDevice::CheckPhysicalDeviceQueueFamilyProperties(VkPhysicalDevice vkPhys
 	vkGetPhysicalDeviceQueueFamilyProperties(vkPhysicalDevice, &numQueueFamilies, queueFamilies.data());
 
 	for (int indexQueueFamilie = 0; indexQueueFamilie < queueFamilies.size(); indexQueueFamilie++) {
-		if ((queueFamilies[indexQueueFamilie].queueFlags & VK_QUEUE_COMPUTE_BIT) != 0 && 
-			(queueFamilies[indexQueueFamilie].queueFlags & VK_QUEUE_GRAPHICS_BIT) != 0 && 
+		if ((queueFamilies[indexQueueFamilie].queueFlags & VK_QUEUE_COMPUTE_BIT) != 0 &&
+			(queueFamilies[indexQueueFamilie].queueFlags & VK_QUEUE_GRAPHICS_BIT) != 0 &&
 			(queueFamilies[indexQueueFamilie].queueFlags & VK_QUEUE_TRANSFER_BIT) != 0) {
 			VkBool32 surfaceSupported;
 			CALL_VK_FUNCTION_RETURN_BOOL(vkGetPhysicalDeviceSurfaceSupportKHR(vkPhysicalDevice, indexQueueFamilie, m_pInstance->GetSurface(), &surfaceSupported));
