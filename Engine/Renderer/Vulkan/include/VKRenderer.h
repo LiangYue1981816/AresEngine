@@ -16,6 +16,8 @@
 #include "VKMemory.h"
 #include "VKMemoryAllocator.h"
 #include "VKMemoryManager.h"
+
+#include "VKBuffer.h"
 /*
 #include "VKImage.h"
 
@@ -32,7 +34,6 @@
 #include "VKPipelineGraphics.h"
 #include "VKPipelineManager.h"
 
-#include "VKBuffer.h"
 #include "VKIndexBuffer.h"
 #include "VKVertexBuffer.h"
 #include "VKInstanceBuffer.h"
