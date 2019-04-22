@@ -27,7 +27,7 @@ CGLES3DescriptorSet* CGLES3DescriptorSetManager::Create(const CGfxPipelineGraphi
 {
 	mutex_autolock autolock(&lock);
 	{
-		if (const SubpassInformation * pSubpassInformation = pRenderPass->GetSubpass(indexSubpass)) {
+		if (const SubpassInformation* pSubpassInformation = pRenderPass->GetSubpass(indexSubpass)) {
 			if (pSubpassInformation->inputAttachments.size()) {
 				if (m_pInputAttachmentDescriptorSets[(CGLES3FrameBuffer*)pFrameBuffer][(SubpassInformation*)pSubpassInformation][(CGLES3PipelineGraphics*)pPipelineGraphics] == nullptr) {
 					m_pInputAttachmentDescriptorSets[(CGLES3FrameBuffer*)pFrameBuffer][(SubpassInformation*)pSubpassInformation][(CGLES3PipelineGraphics*)pPipelineGraphics] = new CGLES3DescriptorSet(this, pPipelineGraphics->GetDescriptorLayout(DESCRIPTOR_SET_INPUTATTACHMENT));

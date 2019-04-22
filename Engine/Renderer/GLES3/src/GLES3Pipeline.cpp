@@ -250,13 +250,13 @@ bool CGLES3Pipeline::BindDescriptorSet(const CGfxDescriptorSetPtr ptrDescriptorS
 	}
 
 	for (const auto& itUniformBlock : m_uniformBlockBindings) {
-		if (const DescriptorBufferInfo * pDescriptorBufferInfo = ptrDescriptorSet->GetDescriptorBufferInfo(itUniformBlock.first)) {
+		if (const DescriptorBufferInfo* pDescriptorBufferInfo = ptrDescriptorSet->GetDescriptorBufferInfo(itUniformBlock.first)) {
 			((CGLES3UniformBuffer*)pDescriptorBufferInfo->ptrUniformBuffer.GetPointer())->Bind(itUniformBlock.second, pDescriptorBufferInfo->offset, pDescriptorBufferInfo->range);
 		}
 	}
 
 	for (const auto& itSampledImage : m_sampledImageLocations) {
-		if (const DescriptorImageInfo * pDescriptorImageInfo = ptrDescriptorSet->GetDescriptorImageInfo(itSampledImage.first)) {
+		if (const DescriptorImageInfo* pDescriptorImageInfo = ptrDescriptorSet->GetDescriptorImageInfo(itSampledImage.first)) {
 			const auto& itTextureUnit = m_sampledImageTextureUnits.find(itSampledImage.first);
 
 			if (pDescriptorImageInfo->ptrTexture2D) {

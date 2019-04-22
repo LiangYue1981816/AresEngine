@@ -805,7 +805,7 @@ void GLBindFramebufferTexture2D(GLenum target, GLenum attachment, GLenum textarg
 	}
 }
 
-void GLReadBuffers(GLenum target, GLsizei n, const GLenum * bufs)
+void GLReadBuffers(GLenum target, GLsizei n, const GLenum* bufs)
 {
 	if (FrameBuffers.find(target) != FrameBuffers.end()) {
 		bool bReset = false;
@@ -838,7 +838,7 @@ void GLReadBuffers(GLenum target, GLsizei n, const GLenum * bufs)
 	}
 }
 
-void GLDrawBuffers(GLenum target, GLsizei n, const GLenum * bufs)
+void GLDrawBuffers(GLenum target, GLsizei n, const GLenum* bufs)
 {
 	if (FrameBuffers.find(target) != FrameBuffers.end()) {
 		bool bReset = false;
@@ -994,7 +994,7 @@ void GLUniform4f(GLint location, GLfloat v0, GLfloat v1, GLfloat v2, GLfloat v3)
 	}
 }
 
-void GLUniform1iv(GLint location, GLsizei count, const GLint * value)
+void GLUniform1iv(GLint location, GLsizei count, const GLint* value)
 {
 	eastl::vector<int> values(value, value + count);
 	if (Program.uniform1iv[Program.program].find(location) == Program.uniform1iv[Program.program].end() ||
@@ -1004,7 +1004,7 @@ void GLUniform1iv(GLint location, GLsizei count, const GLint * value)
 	}
 }
 
-void GLUniform2iv(GLint location, GLsizei count, const GLint * value)
+void GLUniform2iv(GLint location, GLsizei count, const GLint* value)
 {
 	eastl::vector<int> values(value, value + count);
 	if (Program.uniform2iv[Program.program].find(location) == Program.uniform2iv[Program.program].end() ||
@@ -1014,7 +1014,7 @@ void GLUniform2iv(GLint location, GLsizei count, const GLint * value)
 	}
 }
 
-void GLUniform3iv(GLint location, GLsizei count, const GLint * value)
+void GLUniform3iv(GLint location, GLsizei count, const GLint* value)
 {
 	eastl::vector<int> values(value, value + count);
 	if (Program.uniform3iv[Program.program].find(location) == Program.uniform3iv[Program.program].end() ||
@@ -1024,7 +1024,7 @@ void GLUniform3iv(GLint location, GLsizei count, const GLint * value)
 	}
 }
 
-void GLUniform4iv(GLint location, GLsizei count, const GLint * value)
+void GLUniform4iv(GLint location, GLsizei count, const GLint* value)
 {
 	eastl::vector<int> values(value, value + count);
 	if (Program.uniform4iv[Program.program].find(location) == Program.uniform4iv[Program.program].end() ||
@@ -1034,7 +1034,7 @@ void GLUniform4iv(GLint location, GLsizei count, const GLint * value)
 	}
 }
 
-void GLUniform1fv(GLint location, GLsizei count, const GLfloat * value)
+void GLUniform1fv(GLint location, GLsizei count, const GLfloat* value)
 {
 	eastl::vector<float> values(value, value + count);
 	if (Program.uniform1fv[Program.program].find(location) == Program.uniform1fv[Program.program].end() ||
@@ -1044,7 +1044,7 @@ void GLUniform1fv(GLint location, GLsizei count, const GLfloat * value)
 	}
 }
 
-void GLUniform2fv(GLint location, GLsizei count, const GLfloat * value)
+void GLUniform2fv(GLint location, GLsizei count, const GLfloat* value)
 {
 	eastl::vector<float> values(value, value + count);
 	if (Program.uniform2fv[Program.program].find(location) == Program.uniform2fv[Program.program].end() ||
@@ -1054,7 +1054,7 @@ void GLUniform2fv(GLint location, GLsizei count, const GLfloat * value)
 	}
 }
 
-void GLUniform3fv(GLint location, GLsizei count, const GLfloat * value)
+void GLUniform3fv(GLint location, GLsizei count, const GLfloat* value)
 {
 	eastl::vector<float> values(value, value + count);
 	if (Program.uniform3fv[Program.program].find(location) == Program.uniform3fv[Program.program].end() ||
@@ -1064,7 +1064,7 @@ void GLUniform3fv(GLint location, GLsizei count, const GLfloat * value)
 	}
 }
 
-void GLUniform4fv(GLint location, GLsizei count, const GLfloat * value)
+void GLUniform4fv(GLint location, GLsizei count, const GLfloat* value)
 {
 	eastl::vector<float> values(value, value + count);
 	if (Program.uniform4fv[Program.program].find(location) == Program.uniform4fv[Program.program].end() ||
@@ -1074,7 +1074,7 @@ void GLUniform4fv(GLint location, GLsizei count, const GLfloat * value)
 	}
 }
 
-void GLUniformMatrix2fv(GLint location, GLsizei count, const GLfloat * value)
+void GLUniformMatrix2fv(GLint location, GLsizei count, const GLfloat* value)
 {
 	eastl::vector<float> values(value, value + 4 * count);
 	if (Program.uniformMatrix2fv[Program.program].find(location) == Program.uniformMatrix2fv[Program.program].end() ||
@@ -1084,7 +1084,7 @@ void GLUniformMatrix2fv(GLint location, GLsizei count, const GLfloat * value)
 	}
 }
 
-void GLUniformMatrix3fv(GLint location, GLsizei count, const GLfloat * value)
+void GLUniformMatrix3fv(GLint location, GLsizei count, const GLfloat* value)
 {
 	eastl::vector<float> values(value, value + 9 * count);
 	if (Program.uniformMatrix3fv[Program.program].find(location) == Program.uniformMatrix3fv[Program.program].end() ||
@@ -1094,7 +1094,7 @@ void GLUniformMatrix3fv(GLint location, GLsizei count, const GLfloat * value)
 	}
 }
 
-void GLUniformMatrix4fv(GLint location, GLsizei count, const GLfloat * value)
+void GLUniformMatrix4fv(GLint location, GLsizei count, const GLfloat* value)
 {
 	eastl::vector<float> values(value, value + 16 * count);
 	if (Program.uniformMatrix4fv[Program.program].find(location) == Program.uniformMatrix4fv[Program.program].end() ||
