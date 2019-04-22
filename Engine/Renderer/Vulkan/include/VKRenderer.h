@@ -18,6 +18,7 @@
 #include "VKMemoryManager.h"
 
 #include "VKBuffer.h"
+#include "VKTexture.h"
 /*
 #include "VKImage.h"
 
@@ -41,7 +42,6 @@
 
 #include "VKSampler.h"
 #include "VKSamplerManager.h"
-#include "VKTexture.h"
 #include "VKTexture2D.h"
 #include "VKTexture2DArray.h"
 #include "VKTextureCubeMap.h"
