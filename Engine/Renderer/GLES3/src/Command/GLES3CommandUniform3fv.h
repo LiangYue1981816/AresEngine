@@ -7,9 +7,8 @@ class CGLES3CommandUniform3fv : public CGfxCommandBase
 public:
 	CGLES3CommandUniform3fv(uint32_t name, int count, const float* value)
 		: m_name(name)
-		, m_value(value, value + count)
 	{
-
+		m_value.assign(value, value + count);
 	}
 	virtual ~CGLES3CommandUniform3fv(void)
 	{

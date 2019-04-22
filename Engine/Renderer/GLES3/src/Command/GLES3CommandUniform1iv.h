@@ -7,9 +7,8 @@ class CGLES3CommandUniform1iv : public CGfxCommandBase
 public:
 	CGLES3CommandUniform1iv(uint32_t name, int count, const int* value)
 		: m_name(name)
-		, m_value(value, value + count)
 	{
-
+		m_value.assign(value, value + count);
 	}
 	virtual ~CGLES3CommandUniform1iv(void)
 	{
