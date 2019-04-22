@@ -42,20 +42,11 @@ VkBuffer CVKBuffer::GetBuffer(void) const
 
 VkDeviceSize CVKBuffer::GetSize(void) const
 {
-	if (m_pMemory) {
-		return m_pMemory->GetSize();
-	}
-	else {
-		return 0;
-	}
+	return m_pMemory->GetSize();
 }
 
 bool CVKBuffer::BufferData(size_t offset, size_t size, const void* pBuffer)
 {
-	if (m_pMemory == nullptr) {
-		return false;
-	}
-
 	void* pAddress = nullptr;
 	CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->BeginMap(offset, size, &pAddress));
 	{
@@ -63,56 +54,5 @@ bool CVKBuffer::BufferData(size_t offset, size_t size, const void* pBuffer)
 	}
 	CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->Flush(offset, size));
 	CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->EndMap());
-
 	return true;
-}
-
-bool CVKBuffer::IsDeviceLocal(void) const
-{
-	if (m_pMemory) {
-		return m_pMemory->IsDeviceLocal();
-	}
-	else {
-		return false;
-	}
-}
-
-bool CVKBuffer::IsHostVisible(void) const
-{
-	if (m_pMemory) {
-		return m_pMemory->IsHostVisible();
-	}
-	else {
-		return false;
-	}
-}
-
-bool CVKBuffer::IsHostCoherent(void) const
-{
-	if (m_pMemory) {
-		return m_pMemory->IsHostCoherent();
-	}
-	else {
-		return false;
-	}
-}
-
-bool CVKBuffer::IsHostCached(void) const
-{
-	if (m_pMemory) {
-		return m_pMemory->IsHostCached();
-	}
-	else {
-		return false;
-	}
-}
-
-bool CVKBuffer::IsLazilyAllocated(void) const
-{
-	if (m_pMemory) {
-		return m_pMemory->IsLazilyAllocated();
-	}
-	else {
-		return false;
-	}
 }
