@@ -62,20 +62,11 @@ VkImage CVKImage::GetImage(void) const
 
 VkDeviceSize CVKImage::GetSize(void) const
 {
-	if (m_pMemory) {
-		return m_pMemory->GetSize();
-	}
-	else {
-		return 0;
-	}
+	return m_pMemory->GetSize();
 }
 
 bool CVKImage::BufferData(size_t offset, size_t size, const void* pBuffer)
 {
-	if (m_pMemory == nullptr) {
-		return false;
-	}
-
 	void* pAddress = nullptr;
 	CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->BeginMap(offset, size, &pAddress));
 	{
@@ -83,56 +74,5 @@ bool CVKImage::BufferData(size_t offset, size_t size, const void* pBuffer)
 	}
 	CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->Flush(offset, size));
 	CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->EndMap());
-
 	return true;
-}
-
-bool CVKImage::IsDeviceLocal(void) const
-{
-	if (m_pMemory) {
-		return m_pMemory->IsDeviceLocal();
-	}
-	else {
-		return false;
-	}
-}
-
-bool CVKImage::IsHostVisible(void) const
-{
-	if (m_pMemory) {
-		return m_pMemory->IsHostVisible();
-	}
-	else {
-		return false;
-	}
-}
-
-bool CVKImage::IsHostCoherent(void) const
-{
-	if (m_pMemory) {
-		return m_pMemory->IsHostCoherent();
-	}
-	else {
-		return false;
-	}
-}
-
-bool CVKImage::IsHostCached(void) const
-{
-	if (m_pMemory) {
-		return m_pMemory->IsHostCached();
-	}
-	else {
-		return false;
-	}
-}
-
-bool CVKImage::IsLazilyAllocated(void) const
-{
-	if (m_pMemory) {
-		return m_pMemory->IsLazilyAllocated();
-	}
-	else {
-		return false;
-	}
 }
