@@ -110,7 +110,6 @@ bool CVKTexture::Create(GfxTextureType type, GfxPixelFormat format, int width, i
 	m_type = type;
 	m_format = format;
 
-	m_format = format;
 	m_width = width;
 	m_height = height;
 	m_layers = layers;
@@ -238,8 +237,8 @@ bool CVKTexture::TransferTexture2D(GfxPixelFormat format, int level, int xoffset
 	m_transferRegions[level].imageExtent.depth = 1;
 	m_transferRegions[level].imageSubresource.aspectMask = m_vkImageAspectFlags;
 	m_transferRegions[level].imageSubresource.mipLevel = level;
-	m_transferRegions[level].imageSubresource.layerCount = 1;
 	m_transferRegions[level].imageSubresource.baseArrayLayer = 0;
+	m_transferRegions[level].imageSubresource.layerCount = 1;
 	m_transferBuffers[level].assign((uint8_t*)data, (uint8_t*)data + size);
 
 	return true;
@@ -280,8 +279,8 @@ bool CVKTexture::TransferTexture2DCompressed(GfxPixelFormat format, int level, i
 	m_transferRegions[level].imageExtent.depth = 1;
 	m_transferRegions[level].imageSubresource.aspectMask = m_vkImageAspectFlags;
 	m_transferRegions[level].imageSubresource.mipLevel = level;
-	m_transferRegions[level].imageSubresource.layerCount = 1;
 	m_transferRegions[level].imageSubresource.baseArrayLayer = 0;
+	m_transferRegions[level].imageSubresource.layerCount = 1;
 	m_transferBuffers[level].assign((uint8_t*)data, (uint8_t*)data + size);
 
 	return true;
@@ -326,8 +325,8 @@ bool CVKTexture::TransferTexture2DArray(GfxPixelFormat format, int layer, int le
 	m_transferRegions[layer * m_levels + level].imageExtent.depth = 1;
 	m_transferRegions[layer * m_levels + level].imageSubresource.aspectMask = m_vkImageAspectFlags;
 	m_transferRegions[layer * m_levels + level].imageSubresource.mipLevel = level;
-	m_transferRegions[layer * m_levels + level].imageSubresource.layerCount = 1;
 	m_transferRegions[layer * m_levels + level].imageSubresource.baseArrayLayer = layer;
+	m_transferRegions[layer * m_levels + level].imageSubresource.layerCount = 1;
 	m_transferBuffers[layer * m_levels + level].assign((uint8_t*)data, (uint8_t*)data + size);
 
 	return true;
@@ -372,8 +371,8 @@ bool CVKTexture::TransferTexture2DArrayCompressed(GfxPixelFormat format, int lay
 	m_transferRegions[layer * m_levels + level].imageExtent.depth = 1;
 	m_transferRegions[layer * m_levels + level].imageSubresource.aspectMask = m_vkImageAspectFlags;
 	m_transferRegions[layer * m_levels + level].imageSubresource.mipLevel = level;
-	m_transferRegions[layer * m_levels + level].imageSubresource.layerCount = 1;
 	m_transferRegions[layer * m_levels + level].imageSubresource.baseArrayLayer = layer;
+	m_transferRegions[layer * m_levels + level].imageSubresource.layerCount = 1;
 	m_transferBuffers[layer * m_levels + level].assign((uint8_t*)data, (uint8_t*)data + size);
 
 	return true;
@@ -414,8 +413,8 @@ bool CVKTexture::TransferTextureCubeMap(GfxPixelFormat format, GfxCubeMapFace fa
 	m_transferRegions[face * m_levels + level].imageExtent.depth = 1;
 	m_transferRegions[face * m_levels + level].imageSubresource.aspectMask = m_vkImageAspectFlags;
 	m_transferRegions[face * m_levels + level].imageSubresource.mipLevel = level;
-	m_transferRegions[face * m_levels + level].imageSubresource.layerCount = 1;
 	m_transferRegions[face * m_levels + level].imageSubresource.baseArrayLayer = 0;
+	m_transferRegions[face * m_levels + level].imageSubresource.layerCount = 1;
 	m_transferBuffers[face * m_levels + level].assign((uint8_t*)data, (uint8_t*)data + size);
 
 	return true;
@@ -456,8 +455,8 @@ bool CVKTexture::TransferTextureCubeMapCompressed(GfxPixelFormat format, GfxCube
 	m_transferRegions[face * m_levels + level].imageExtent.depth = 1;
 	m_transferRegions[face * m_levels + level].imageSubresource.aspectMask = m_vkImageAspectFlags;
 	m_transferRegions[face * m_levels + level].imageSubresource.mipLevel = level;
-	m_transferRegions[face * m_levels + level].imageSubresource.layerCount = 1;
 	m_transferRegions[face * m_levels + level].imageSubresource.baseArrayLayer = 0;
+	m_transferRegions[face * m_levels + level].imageSubresource.layerCount = 1;
 	m_transferBuffers[face * m_levels + level].assign((uint8_t*)data, (uint8_t*)data + size);
 
 	return true;
