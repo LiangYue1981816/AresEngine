@@ -33,9 +33,9 @@ public:
 	virtual bool SetTexture2D(uint32_t name, const CGfxTexture2DPtr ptrTexture) = 0;
 	virtual bool SetTexture2DArray(uint32_t name, const CGfxTexture2DArrayPtr ptrTexture) = 0;
 	virtual bool SetTextureCubeMap(uint32_t name, const CGfxTextureCubeMapPtr ptrTexture) = 0;
-	virtual bool SetTexture2D(uint32_t name, const char* szFileName, int baseLevel = 0) = 0;
-	virtual bool SetTexture2DArray(uint32_t name, const char* szFileName, int baseLevel = 0) = 0;
-	virtual bool SetTextureCubeMap(uint32_t name, const char* szFileName, int baseLevel = 0) = 0;
+	virtual bool SetTexture2D(uint32_t name, const char* szFileName, int baseLevel = 0, int numLevels = INT_MAX) = 0;
+	virtual bool SetTexture2DArray(uint32_t name, const char* szFileName, int baseLevel = 0, int numLevels = INT_MAX) = 0;
+	virtual bool SetTextureCubeMap(uint32_t name, const char* szFileName, int baseLevel = 0, int numLevels = INT_MAX) = 0;
 
 	virtual bool SetUniformVec1(uint32_t name, float v0) = 0;
 	virtual bool SetUniformVec2(uint32_t name, float v0, float v1) = 0;

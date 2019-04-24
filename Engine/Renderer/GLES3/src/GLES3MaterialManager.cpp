@@ -41,7 +41,7 @@ CGLES3Material* CGLES3MaterialManager::Create(uint32_t name)
 	}
 }
 
-CGLES3Material* CGLES3MaterialManager::Create(const char* szFileName, int vertexBinding, int instanceBinding, int baseLevel)
+CGLES3Material* CGLES3MaterialManager::Create(const char* szFileName, int vertexBinding, int instanceBinding, int baseLevel, int numLevels)
 {
 	uint32_t name = HashValue(szFileName);
 
@@ -49,7 +49,7 @@ CGLES3Material* CGLES3MaterialManager::Create(const char* szFileName, int vertex
 	{
 		if (m_pMaterials[name] == nullptr) {
 			m_pMaterials[name] = new CGLES3Material(this, name);
-			ResourceLoader()->LoadMaterial(szFileName, m_pMaterials[name], vertexBinding, instanceBinding, baseLevel);
+			ResourceLoader()->LoadMaterial(szFileName, m_pMaterials[name], vertexBinding, instanceBinding, baseLevel, numLevels);
 		}
 
 		return m_pMaterials[name];

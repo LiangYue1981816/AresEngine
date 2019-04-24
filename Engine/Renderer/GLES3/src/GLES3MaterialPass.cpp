@@ -121,30 +121,30 @@ bool CGLES3MaterialPass::SetTextureCubeMap(uint32_t name, const CGfxTextureCubeM
 	}
 }
 
-bool CGLES3MaterialPass::SetTexture2D(uint32_t name, const char* szFileName, int baseLevel)
+bool CGLES3MaterialPass::SetTexture2D(uint32_t name, const char* szFileName, int baseLevel, int numLevels)
 {
 	if (m_ptrDescriptorSet && m_ptrDescriptorSet->GetDescriptorLayout()->IsSampledImageValid(name)) {
-		return m_ptrDescriptorSet->SetTexture2D(name, GLES3Renderer()->NewTexture2D(szFileName, baseLevel), m_pSamplers[name]);
+		return m_ptrDescriptorSet->SetTexture2D(name, GLES3Renderer()->NewTexture2D(szFileName, baseLevel, numLevels), m_pSamplers[name]);
 	}
 	else {
 		return false;
 	}
 }
 
-bool CGLES3MaterialPass::SetTexture2DArray(uint32_t name, const char* szFileName, int baseLevel)
+bool CGLES3MaterialPass::SetTexture2DArray(uint32_t name, const char* szFileName, int baseLevel, int numLevels)
 {
 	if (m_ptrDescriptorSet && m_ptrDescriptorSet->GetDescriptorLayout()->IsSampledImageValid(name)) {
-		return m_ptrDescriptorSet->SetTexture2DArray(name, GLES3Renderer()->NewTexture2DArray(szFileName, baseLevel), m_pSamplers[name]);
+		return m_ptrDescriptorSet->SetTexture2DArray(name, GLES3Renderer()->NewTexture2DArray(szFileName, baseLevel, numLevels), m_pSamplers[name]);
 	}
 	else {
 		return false;
 	}
 }
 
-bool CGLES3MaterialPass::SetTextureCubeMap(uint32_t name, const char* szFileName, int baseLevel)
+bool CGLES3MaterialPass::SetTextureCubeMap(uint32_t name, const char* szFileName, int baseLevel, int numLevels)
 {
 	if (m_ptrDescriptorSet && m_ptrDescriptorSet->GetDescriptorLayout()->IsSampledImageValid(name)) {
-		return m_ptrDescriptorSet->SetTextureCubeMap(name, GLES3Renderer()->NewTextureCubeMap(szFileName, baseLevel), m_pSamplers[name]);
+		return m_ptrDescriptorSet->SetTextureCubeMap(name, GLES3Renderer()->NewTextureCubeMap(szFileName, baseLevel, numLevels), m_pSamplers[name]);
 	}
 	else {
 		return false;

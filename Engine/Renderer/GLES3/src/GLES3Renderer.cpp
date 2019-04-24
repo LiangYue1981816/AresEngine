@@ -133,9 +133,9 @@ CGfxTexture2DPtr CGLES3Renderer::NewTexture2D(uint32_t name)
 	return m_pTexture2DManager->Create(name);
 }
 
-CGfxTexture2DPtr CGLES3Renderer::NewTexture2D(const char* szFileName, int baseLevel)
+CGfxTexture2DPtr CGLES3Renderer::NewTexture2D(const char* szFileName, int baseLevel, int numLevels)
 {
-	return m_pTexture2DManager->Create(szFileName, baseLevel);
+	return m_pTexture2DManager->Create(szFileName, baseLevel, numLevels);
 }
 
 CGfxTexture2DArrayPtr CGLES3Renderer::GetTexture2DArray(uint32_t name)
@@ -148,9 +148,9 @@ CGfxTexture2DArrayPtr CGLES3Renderer::NewTexture2DArray(uint32_t name)
 	return m_pTexture2DArrayManager->Create(name);
 }
 
-CGfxTexture2DArrayPtr CGLES3Renderer::NewTexture2DArray(const char* szFileName, int baseLevel)
+CGfxTexture2DArrayPtr CGLES3Renderer::NewTexture2DArray(const char* szFileName, int baseLevel, int numLevels)
 {
-	return m_pTexture2DArrayManager->Create(szFileName, baseLevel);
+	return m_pTexture2DArrayManager->Create(szFileName, baseLevel, numLevels);
 }
 
 CGfxTextureCubeMapPtr CGLES3Renderer::GetTextureCubeMap(uint32_t name)
@@ -163,9 +163,9 @@ CGfxTextureCubeMapPtr CGLES3Renderer::NewTextureCubeMap(uint32_t name)
 	return m_pTextureCubeMapManager->Create(name);
 }
 
-CGfxTextureCubeMapPtr CGLES3Renderer::NewTextureCubeMap(const char* szFileName, int baseLevel)
+CGfxTextureCubeMapPtr CGLES3Renderer::NewTextureCubeMap(const char* szFileName, int baseLevel, int numLevels)
 {
-	return m_pTextureCubeMapManager->Create(szFileName, baseLevel);
+	return m_pTextureCubeMapManager->Create(szFileName, baseLevel, numLevels);
 }
 
 CGfxRenderTexturePtr CGLES3Renderer::GetRenderTexture(uint32_t name)
@@ -218,9 +218,9 @@ CGfxMaterialPtr CGLES3Renderer::NewMaterial(uint32_t name)
 	return m_pMaterialManager->Create(name);
 }
 
-CGfxMaterialPtr CGLES3Renderer::NewMaterial(const char* szFileName, int vertexBinding, int instanceBinding, int baseLevel)
+CGfxMaterialPtr CGLES3Renderer::NewMaterial(const char* szFileName, int vertexBinding, int instanceBinding, int baseLevel, int numLevels)
 {
-	return m_pMaterialManager->Create(szFileName, vertexBinding, instanceBinding, baseLevel);
+	return m_pMaterialManager->Create(szFileName, vertexBinding, instanceBinding, baseLevel, numLevels);
 }
 
 CGfxDescriptorLayoutPtr CGLES3Renderer::NewDescriptorLayout(uint32_t set)

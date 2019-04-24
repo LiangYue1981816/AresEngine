@@ -347,7 +347,7 @@ ERR:
 	return false;
 }
 
-static bool InternalLoadTexture2D(TiXmlNode* pPassNode, CGfxMaterialPass* pPass, int baseLevel)
+static bool InternalLoadTexture2D(TiXmlNode* pPassNode, CGfxMaterialPass* pPass, int baseLevel, int numLevels)
 {
 	int err = 0;
 
@@ -368,7 +368,7 @@ static bool InternalLoadTexture2D(TiXmlNode* pPassNode, CGfxMaterialPass* pPass,
 				if (minFilter == GFX_FILTER_INVALID_ENUM || magFilter == GFX_FILTER_INVALID_ENUM || mipmapMode == GFX_SAMPLER_MIPMAP_MODE_INVALID_ENUM || addressMode == GFX_SAMPLER_ADDRESS_MODE_INVALID_ENUM) { err = -2; goto ERR; }
 
 				if (pPass->SetSampler(HashValue(szName), minFilter, magFilter, mipmapMode, addressMode)) {
-					pPass->SetTexture2D(HashValue(szName), szFileName, baseLevel);
+					pPass->SetTexture2D(HashValue(szName), szFileName, baseLevel, numLevels);
 				}
 			}
 			LogOutput(nullptr, "OK\n");
@@ -380,7 +380,7 @@ ERR:
 	return false;
 }
 
-static bool InternalLoadTexture2DArray(TiXmlNode* pPassNode, CGfxMaterialPass* pPass, int baseLevel)
+static bool InternalLoadTexture2DArray(TiXmlNode* pPassNode, CGfxMaterialPass* pPass, int baseLevel, int numLevels)
 {
 	int err = 0;
 
@@ -401,7 +401,7 @@ static bool InternalLoadTexture2DArray(TiXmlNode* pPassNode, CGfxMaterialPass* p
 				if (minFilter == GFX_FILTER_INVALID_ENUM || magFilter == GFX_FILTER_INVALID_ENUM || mipmapMode == GFX_SAMPLER_MIPMAP_MODE_INVALID_ENUM || addressMode == GFX_SAMPLER_ADDRESS_MODE_INVALID_ENUM) { err = -2; goto ERR; }
 
 				if (pPass->SetSampler(HashValue(szName), minFilter, magFilter, mipmapMode, addressMode)) {
-					pPass->SetTexture2DArray(HashValue(szName), szFileName, baseLevel);
+					pPass->SetTexture2DArray(HashValue(szName), szFileName, baseLevel, numLevels);
 				}
 			}
 			LogOutput(nullptr, "OK\n");
@@ -413,7 +413,7 @@ ERR:
 	return false;
 }
 
-static bool InternalLoadTextureCubeMap(TiXmlNode* pPassNode, CGfxMaterialPass* pPass, int baseLevel)
+static bool InternalLoadTextureCubeMap(TiXmlNode* pPassNode, CGfxMaterialPass* pPass, int baseLevel, int numLevels)
 {
 	int err = 0;
 
@@ -434,7 +434,7 @@ static bool InternalLoadTextureCubeMap(TiXmlNode* pPassNode, CGfxMaterialPass* p
 				if (minFilter == GFX_FILTER_INVALID_ENUM || magFilter == GFX_FILTER_INVALID_ENUM || mipmapMode == GFX_SAMPLER_MIPMAP_MODE_INVALID_ENUM || addressMode == GFX_SAMPLER_ADDRESS_MODE_INVALID_ENUM) { err = -2; goto ERR; }
 
 				if (pPass->SetSampler(HashValue(szName), minFilter, magFilter, mipmapMode, addressMode)) {
-					pPass->SetTextureCubeMap(HashValue(szName), szFileName, baseLevel);
+					pPass->SetTextureCubeMap(HashValue(szName), szFileName, baseLevel, numLevels);
 				}
 			}
 			LogOutput(nullptr, "OK\n");
@@ -558,16 +558,16 @@ ERR:
 	return false;
 }
 
-static bool InternalLoadPass(TiXmlNode* pPassNode, CGfxMaterialPass* pPass, int vertexBinding, int instanceBinding, int baseLevel)
+static bool InternalLoadPass(TiXmlNode* pPassNode, CGfxMaterialPass* pPass, int vertexBinding, int instanceBinding, int baseLevel, int numLevels)
 {
 	int err = 0;
 
 	LogOutput(LOG_TAG_RENDERER, "\tLoadPass(%s)\n", pPassNode->ToElement()->AttributeString("name"));
 	{
 		if (InternalLoadPipeline(pPassNode, pPass, vertexBinding, instanceBinding) == false) { err = -1; goto ERR; }
-		if (InternalLoadTexture2D(pPassNode, pPass, baseLevel) == false) { err = -2; goto ERR; }
-		if (InternalLoadTexture2DArray(pPassNode, pPass, baseLevel) == false) { err = -3; goto ERR; }
-		if (InternalLoadTextureCubeMap(pPassNode, pPass, baseLevel) == false) { err = -4; goto ERR; }
+		if (InternalLoadTexture2D(pPassNode, pPass, baseLevel, numLevels) == false) { err = -2; goto ERR; }
+		if (InternalLoadTexture2DArray(pPassNode, pPass, baseLevel, numLevels) == false) { err = -3; goto ERR; }
+		if (InternalLoadTextureCubeMap(pPassNode, pPass, baseLevel, numLevels) == false) { err = -4; goto ERR; }
 		if (InternalLoadUniformVec1(pPassNode, pPass) == false) { err = -5; goto ERR; }
 		if (InternalLoadUniformVec2(pPassNode, pPass) == false) { err = -6; goto ERR; }
 		if (InternalLoadUniformVec3(pPassNode, pPass) == false) { err = -7; goto ERR; }
@@ -581,7 +581,7 @@ ERR:
 }
 
 
-bool CResourceLoader::LoadMaterial(const char* szFileName, CGfxMaterial* pMaterial, int vertexBinding, int instanceBinding, int baseLevel)
+bool CResourceLoader::LoadMaterial(const char* szFileName, CGfxMaterial* pMaterial, int vertexBinding, int instanceBinding, int baseLevel, int numLevels)
 {
 	//<Material>
 	//	<Pass name="">
@@ -651,7 +651,7 @@ bool CResourceLoader::LoadMaterial(const char* szFileName, CGfxMaterial* pMateri
 			do {
 				uint32_t name = HashValue(pPassNode->ToElement()->AttributeString("name"));
 				if (pMaterial->CreatePass(name) == false) { err = -4; goto ERR; }
-				if (InternalLoadPass(pPassNode, pMaterial->GetPass(name), vertexBinding, instanceBinding, baseLevel) == false) { err = -5; goto ERR; }
+				if (InternalLoadPass(pPassNode, pMaterial->GetPass(name), vertexBinding, instanceBinding, baseLevel, numLevels) == false) { err = -5; goto ERR; }
 			} while ((pPassNode = pMaterialNode->IterateChildren("Pass", pPassNode)) != nullptr);
 		}
 	}

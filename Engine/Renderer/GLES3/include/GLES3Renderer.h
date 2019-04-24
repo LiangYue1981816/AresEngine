@@ -114,15 +114,15 @@ public:
 
 	CGfxTexture2DPtr GetTexture2D(uint32_t name);
 	CGfxTexture2DPtr NewTexture2D(uint32_t name);
-	CGfxTexture2DPtr NewTexture2D(const char* szFileName, int baseLevel = 0);
+	CGfxTexture2DPtr NewTexture2D(const char* szFileName, int baseLevel = 0, int numLevels = INT_MAX);
 
 	CGfxTexture2DArrayPtr GetTexture2DArray(uint32_t name);
 	CGfxTexture2DArrayPtr NewTexture2DArray(uint32_t name);
-	CGfxTexture2DArrayPtr NewTexture2DArray(const char* szFileName, int baseLevel = 0);
+	CGfxTexture2DArrayPtr NewTexture2DArray(const char* szFileName, int baseLevel = 0, int numLevels = INT_MAX);
 
 	CGfxTextureCubeMapPtr GetTextureCubeMap(uint32_t name);
 	CGfxTextureCubeMapPtr NewTextureCubeMap(uint32_t name);
-	CGfxTextureCubeMapPtr NewTextureCubeMap(const char* szFileName, int baseLevel = 0);
+	CGfxTextureCubeMapPtr NewTextureCubeMap(const char* szFileName, int baseLevel = 0, int numLevels = INT_MAX);
 
 	CGfxRenderTexturePtr GetRenderTexture(uint32_t name);
 	CGfxRenderTexturePtr NewRenderTexture(uint32_t name);
@@ -138,7 +138,7 @@ public:
 
 	CGfxMaterialPtr GetMaterial(uint32_t name);
 	CGfxMaterialPtr NewMaterial(uint32_t name);
-	CGfxMaterialPtr NewMaterial(const char* szFileName, int vertexBinding = 0, int instanceBinding = 1, int baseLevel = 0);
+	CGfxMaterialPtr NewMaterial(const char* szFileName, int vertexBinding = 0, int instanceBinding = 1, int baseLevel = 0, int numLevels = INT_MAX);
 
 	CGfxDescriptorLayoutPtr NewDescriptorLayout(uint32_t set);
 	CGfxDescriptorSetPtr NewDescriptorSet(const CGfxDescriptorLayoutPtr ptrDescriptorLayout);
