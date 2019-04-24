@@ -7,7 +7,8 @@ CVKTexture::CVKTexture(CVKDevice* pDevice)
 	, m_bExtern(false)
 	, m_vkImage(VK_NULL_HANDLE)
 	, m_vkImageView(VK_NULL_HANDLE)
-	, m_vkAspectMask(VK_IMAGE_ASPECT_FLAG_BITS_MAX_ENUM)
+	, m_vkImageLayout(VK_IMAGE_LAYOUT_UNDEFINED)
+	, m_vkImageAspectFlags(VK_IMAGE_ASPECT_FLAG_BITS_MAX_ENUM)
 	, m_pMemory(nullptr)
 
 	, m_type(GFX_TEXTURE_INVALID_ENUM)
@@ -79,7 +80,8 @@ bool CVKTexture::Create(GfxTextureType type, VkImageView vkImageView, int width,
 	m_bExtern = true;
 	m_vkImage = VK_NULL_HANDLE;
 	m_vkImageView = vkImageView;
-	m_vkAspectMask = VK_IMAGE_ASPECT_FLAG_BITS_MAX_ENUM;
+	m_vkImageLayout = VK_IMAGE_LAYOUT_UNDEFINED;
+	m_vkImageAspectFlags = VK_IMAGE_ASPECT_FLAG_BITS_MAX_ENUM;
 	m_pMemory = nullptr;
 
 	m_type = type;
@@ -94,14 +96,15 @@ bool CVKTexture::Create(GfxTextureType type, VkImageView vkImageView, int width,
 	return true;
 }
 
-bool CVKTexture::Create(GfxTextureType type, GfxPixelFormat format, int width, int height, int layers, int levels, int samples, VkImageTiling imageTiling, VkImageUsageFlags imageUsageFlags, VkImageAspectFlags aspectMask)
+bool CVKTexture::Create(GfxTextureType type, GfxPixelFormat format, int width, int height, int layers, int levels, int samples, VkImageTiling imageTiling, VkImageUsageFlags imageUsageFlags, VkImageAspectFlags imageAspectFlags)
 {
 	Destroy();
 
 	m_bExtern = false;
 	m_vkImage = VK_NULL_HANDLE;
 	m_vkImageView = VK_NULL_HANDLE;
-	m_vkAspectMask = aspectMask;
+	m_vkImageLayout = VK_IMAGE_LAYOUT_UNDEFINED;
+	m_vkImageAspectFlags = imageAspectFlags;
 	m_pMemory = nullptr;
 
 	m_type = type;
@@ -146,11 +149,11 @@ bool CVKTexture::Create(GfxTextureType type, GfxPixelFormat format, int width, i
 	createInfo.viewType = CVKHelper::TranslateImageViewType(type);
 	createInfo.format = (VkFormat)format;
 	createInfo.components = CVKHelper::GetFormatComponentMapping((VkFormat)format);
-	createInfo.subresourceRange = { aspectMask, 0, (uint32_t)levels, 0, (uint32_t)layers };
+	createInfo.subresourceRange = { imageAspectFlags, 0, (uint32_t)levels, 0, (uint32_t)layers };
 	CALL_VK_FUNCTION_RETURN_BOOL(vkCreateImageView(m_pDevice->GetDevice(), &createInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkImageView));
 
 	VkMemoryPropertyFlags memoryPropertyFlags =
-		imageTiling == VK_IMAGE_TILING_LINEAR ? 
+		imageTiling == VK_IMAGE_TILING_LINEAR ?
 		VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT :
 		imageUsageFlags & VK_IMAGE_USAGE_TRANSIENT_ATTACHMENT_BIT ?
 		VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT | VK_MEMORY_PROPERTY_LAZILY_ALLOCATED_BIT :
@@ -183,7 +186,8 @@ void CVKTexture::Destroy(void)
 	m_bExtern = false;
 	m_vkImage = VK_NULL_HANDLE;
 	m_vkImageView = VK_NULL_HANDLE;
-	m_vkAspectMask = VK_IMAGE_ASPECT_FLAG_BITS_MAX_ENUM;
+	m_vkImageLayout = VK_IMAGE_LAYOUT_UNDEFINED;
+	m_vkImageAspectFlags = VK_IMAGE_ASPECT_FLAG_BITS_MAX_ENUM;
 	m_pMemory = nullptr;
 
 	m_type = GFX_TEXTURE_INVALID_ENUM;
@@ -232,7 +236,7 @@ bool CVKTexture::TransferTexture2D(GfxPixelFormat format, int level, int xoffset
 	m_transferRegions[level].imageExtent.width = width;
 	m_transferRegions[level].imageExtent.height = height;
 	m_transferRegions[level].imageExtent.depth = 1;
-	m_transferRegions[level].imageSubresource.aspectMask = m_vkAspectMask;
+	m_transferRegions[level].imageSubresource.aspectMask = m_vkImageAspectFlags;
 	m_transferRegions[level].imageSubresource.mipLevel = level;
 	m_transferRegions[level].imageSubresource.layerCount = 1;
 	m_transferRegions[level].imageSubresource.baseArrayLayer = 0;
@@ -274,7 +278,7 @@ bool CVKTexture::TransferTexture2DCompressed(GfxPixelFormat format, int level, i
 	m_transferRegions[level].imageExtent.width = width;
 	m_transferRegions[level].imageExtent.height = height;
 	m_transferRegions[level].imageExtent.depth = 1;
-	m_transferRegions[level].imageSubresource.aspectMask = m_vkAspectMask;
+	m_transferRegions[level].imageSubresource.aspectMask = m_vkImageAspectFlags;
 	m_transferRegions[level].imageSubresource.mipLevel = level;
 	m_transferRegions[level].imageSubresource.layerCount = 1;
 	m_transferRegions[level].imageSubresource.baseArrayLayer = 0;
@@ -320,7 +324,7 @@ bool CVKTexture::TransferTexture2DArray(GfxPixelFormat format, int layer, int le
 	m_transferRegions[layer * m_levels + level].imageExtent.width = width;
 	m_transferRegions[layer * m_levels + level].imageExtent.height = height;
 	m_transferRegions[layer * m_levels + level].imageExtent.depth = 1;
-	m_transferRegions[layer * m_levels + level].imageSubresource.aspectMask = m_vkAspectMask;
+	m_transferRegions[layer * m_levels + level].imageSubresource.aspectMask = m_vkImageAspectFlags;
 	m_transferRegions[layer * m_levels + level].imageSubresource.mipLevel = level;
 	m_transferRegions[layer * m_levels + level].imageSubresource.layerCount = 1;
 	m_transferRegions[layer * m_levels + level].imageSubresource.baseArrayLayer = layer;
@@ -366,7 +370,7 @@ bool CVKTexture::TransferTexture2DArrayCompressed(GfxPixelFormat format, int lay
 	m_transferRegions[layer * m_levels + level].imageExtent.width = width;
 	m_transferRegions[layer * m_levels + level].imageExtent.height = height;
 	m_transferRegions[layer * m_levels + level].imageExtent.depth = 1;
-	m_transferRegions[layer * m_levels + level].imageSubresource.aspectMask = m_vkAspectMask;
+	m_transferRegions[layer * m_levels + level].imageSubresource.aspectMask = m_vkImageAspectFlags;
 	m_transferRegions[layer * m_levels + level].imageSubresource.mipLevel = level;
 	m_transferRegions[layer * m_levels + level].imageSubresource.layerCount = 1;
 	m_transferRegions[layer * m_levels + level].imageSubresource.baseArrayLayer = layer;
@@ -408,7 +412,7 @@ bool CVKTexture::TransferTextureCubeMap(GfxPixelFormat format, GfxCubeMapFace fa
 	m_transferRegions[face * m_levels + level].imageExtent.width = width;
 	m_transferRegions[face * m_levels + level].imageExtent.height = height;
 	m_transferRegions[face * m_levels + level].imageExtent.depth = 1;
-	m_transferRegions[face * m_levels + level].imageSubresource.aspectMask = m_vkAspectMask;
+	m_transferRegions[face * m_levels + level].imageSubresource.aspectMask = m_vkImageAspectFlags;
 	m_transferRegions[face * m_levels + level].imageSubresource.mipLevel = level;
 	m_transferRegions[face * m_levels + level].imageSubresource.layerCount = 1;
 	m_transferRegions[face * m_levels + level].imageSubresource.baseArrayLayer = 0;
@@ -450,7 +454,7 @@ bool CVKTexture::TransferTextureCubeMapCompressed(GfxPixelFormat format, GfxCube
 	m_transferRegions[face * m_levels + level].imageExtent.width = width;
 	m_transferRegions[face * m_levels + level].imageExtent.height = height;
 	m_transferRegions[face * m_levels + level].imageExtent.depth = 1;
-	m_transferRegions[face * m_levels + level].imageSubresource.aspectMask = m_vkAspectMask;
+	m_transferRegions[face * m_levels + level].imageSubresource.aspectMask = m_vkImageAspectFlags;
 	m_transferRegions[face * m_levels + level].imageSubresource.mipLevel = level;
 	m_transferRegions[face * m_levels + level].imageSubresource.layerCount = 1;
 	m_transferRegions[face * m_levels + level].imageSubresource.baseArrayLayer = 0;

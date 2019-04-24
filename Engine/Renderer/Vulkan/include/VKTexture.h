@@ -30,7 +30,7 @@ private:
 
 private:
 	bool Create(GfxTextureType type, VkImageView vkImageView, int width, int height, int layers, int levels, int samples);
-	bool Create(GfxTextureType type, GfxPixelFormat format, int width, int height, int layers, int levels, int samples, VkImageTiling imageTiling, VkImageUsageFlags imageUsageFlags, VkImageAspectFlags aspectMask);
+	bool Create(GfxTextureType type, GfxPixelFormat format, int width, int height, int layers, int levels, int samples, VkImageTiling imageTiling, VkImageUsageFlags imageUsageFlags, VkImageAspectFlags imageAspectFlags);
 	void Destroy(void);
 
 private:
@@ -49,7 +49,8 @@ private:
 
 	VkImage m_vkImage;
 	VkImageView m_vkImageView;
-	VkImageAspectFlags m_vkAspectMask;
+	VkImageLayout m_vkImageLayout;
+	VkImageAspectFlags m_vkImageAspectFlags;
 
 	CVKMemory* m_pMemory;
 
