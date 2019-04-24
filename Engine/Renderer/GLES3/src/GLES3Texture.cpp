@@ -6,7 +6,9 @@ CGLES3Texture::CGLES3Texture(void)
 	, m_target(0)
 	, m_texture(0)
 
+	, m_type(GFX_TEXTURE_INVALID_ENUM)
 	, m_format(GFX_PIXELFORMAT_UNDEFINED)
+
 	, m_width(0)
 	, m_height(0)
 	, m_layers(0)
@@ -34,6 +36,16 @@ uint32_t CGLES3Texture::GetTarget(void) const
 uint32_t CGLES3Texture::GetTexture(void) const
 {
 	return m_texture;
+}
+
+GfxTextureType CGLES3Texture::GetType(void) const
+{
+	return m_type;
+}
+
+GfxPixelFormat CGLES3Texture::GetFormat(void) const
+{
+	return m_format;
 }
 
 int CGLES3Texture::GetWidth(void) const
@@ -69,6 +81,9 @@ bool CGLES3Texture::Create(GfxTextureType type, uint32_t texture, int width, int
 	m_target = CGLES3Helper::TranslateTextureTarget(type);
 	m_texture = texture;
 
+	m_type = type;
+	m_format = GFX_PIXELFORMAT_UNDEFINED;
+
 	m_width = width;
 	m_height = height;
 	m_layers = layers;
@@ -86,7 +101,9 @@ bool CGLES3Texture::Create(GfxTextureType type, GfxPixelFormat format, int width
 	m_target = CGLES3Helper::TranslateTextureTarget(type);
 	m_texture = 0;
 
+	m_type = type;
 	m_format = format;
+
 	m_width = width;
 	m_height = height;
 	m_layers = layers;

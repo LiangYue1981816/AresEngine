@@ -20,6 +20,9 @@ private:
 	uint32_t GetTarget(void) const;
 	uint32_t GetTexture(void) const;
 
+	GfxTextureType GetType(void) const;
+	GfxPixelFormat GetFormat(void) const;
+
 	int GetWidth(void) const;
 	int GetHeight(void) const;
 	int GetLayers(void) const;
@@ -51,7 +54,9 @@ private:
 	uint32_t m_texture;
 
 private:
+	GfxTextureType m_type;
 	GfxPixelFormat m_format;
+
 	int m_width;
 	int m_height;
 	int m_layers;
