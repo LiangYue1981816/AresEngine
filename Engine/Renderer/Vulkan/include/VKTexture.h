@@ -49,6 +49,7 @@ private:
 
 	VkImage m_vkImage;
 	VkImageView m_vkImageView;
+	VkImageAspectFlags m_vkAspectMask;
 
 	CVKMemory* m_pMemory;
 
@@ -61,6 +62,10 @@ private:
 	int m_layers;
 	int m_levels;
 	int m_samples;
+
+private:
+	eastl::map<int, VkBufferImageCopy> m_transferRegions;
+	eastl::map<int, eastl::vector<uint8_t>> m_transferBuffers;
 
 private:
 	CVKDevice* m_pDevice;

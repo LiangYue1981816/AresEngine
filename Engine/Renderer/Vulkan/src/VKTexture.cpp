@@ -7,6 +7,7 @@ CVKTexture::CVKTexture(CVKDevice* pDevice)
 	, m_bExtern(false)
 	, m_vkImage(VK_NULL_HANDLE)
 	, m_vkImageView(VK_NULL_HANDLE)
+	, m_vkAspectMask(VK_IMAGE_ASPECT_FLAG_BITS_MAX_ENUM)
 	, m_pMemory(nullptr)
 
 	, m_type(GFX_TEXTURE_INVALID_ENUM)
@@ -78,6 +79,7 @@ bool CVKTexture::Create(GfxTextureType type, VkImageView vkImageView, int width,
 	m_bExtern = true;
 	m_vkImage = VK_NULL_HANDLE;
 	m_vkImageView = vkImageView;
+	m_vkAspectMask = VK_IMAGE_ASPECT_FLAG_BITS_MAX_ENUM;
 	m_pMemory = nullptr;
 
 	m_type = type;
@@ -99,6 +101,7 @@ bool CVKTexture::Create(GfxTextureType type, GfxPixelFormat format, int width, i
 	m_bExtern = false;
 	m_vkImage = VK_NULL_HANDLE;
 	m_vkImageView = VK_NULL_HANDLE;
+	m_vkAspectMask = aspectMask;
 	m_pMemory = nullptr;
 
 	m_type = type;
@@ -180,6 +183,7 @@ void CVKTexture::Destroy(void)
 	m_bExtern = false;
 	m_vkImage = VK_NULL_HANDLE;
 	m_vkImageView = VK_NULL_HANDLE;
+	m_vkAspectMask = VK_IMAGE_ASPECT_FLAG_BITS_MAX_ENUM;
 	m_pMemory = nullptr;
 
 	m_type = GFX_TEXTURE_INVALID_ENUM;
@@ -190,34 +194,267 @@ void CVKTexture::Destroy(void)
 	m_layers = 0;
 	m_levels = 0;
 	m_samples = 0;
+
+	m_transferRegions.clear();
+	m_transferBuffers.clear();
 }
 
 bool CVKTexture::TransferTexture2D(GfxPixelFormat format, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
 {
+	if (m_bExtern == true) {
+		return false;
+	}
+
+	if (m_type != GFX_TEXTURE_2D) {
+		return false;
+	}
+
+	if (m_vkImage == VK_NULL_HANDLE) {
+		return false;
+	}
+
+	if (m_format != format) {
+		return false;
+	}
+
+	if (m_levels < level) {
+		return false;
+	}
+
+	if (m_samples != 1) {
+		return false;
+	}
+
+	m_transferRegions[level] = { 0 };
+	m_transferRegions[level].imageOffset.x = xoffset;
+	m_transferRegions[level].imageOffset.y = yoffset;
+	m_transferRegions[level].imageOffset.z = 0;
+	m_transferRegions[level].imageExtent.width = width;
+	m_transferRegions[level].imageExtent.height = height;
+	m_transferRegions[level].imageExtent.depth = 1;
+	m_transferRegions[level].imageSubresource.aspectMask = m_vkAspectMask;
+	m_transferRegions[level].imageSubresource.mipLevel = level;
+	m_transferRegions[level].imageSubresource.layerCount = 1;
+	m_transferRegions[level].imageSubresource.baseArrayLayer = 0;
+	m_transferBuffers[level].assign((uint8_t*)data, (uint8_t*)data + size);
+
 	return true;
 }
 
 bool CVKTexture::TransferTexture2DCompressed(GfxPixelFormat format, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
 {
+	if (m_bExtern == true) {
+		return false;
+	}
+
+	if (m_type != GFX_TEXTURE_2D) {
+		return false;
+	}
+
+	if (m_vkImage == VK_NULL_HANDLE) {
+		return false;
+	}
+
+	if (m_format != format) {
+		return false;
+	}
+
+	if (m_levels < level) {
+		return false;
+	}
+
+	if (m_samples != 1) {
+		return false;
+	}
+
+	m_transferRegions[level] = { 0 };
+	m_transferRegions[level].imageOffset.x = xoffset;
+	m_transferRegions[level].imageOffset.y = yoffset;
+	m_transferRegions[level].imageOffset.z = 0;
+	m_transferRegions[level].imageExtent.width = width;
+	m_transferRegions[level].imageExtent.height = height;
+	m_transferRegions[level].imageExtent.depth = 1;
+	m_transferRegions[level].imageSubresource.aspectMask = m_vkAspectMask;
+	m_transferRegions[level].imageSubresource.mipLevel = level;
+	m_transferRegions[level].imageSubresource.layerCount = 1;
+	m_transferRegions[level].imageSubresource.baseArrayLayer = 0;
+	m_transferBuffers[level].assign((uint8_t*)data, (uint8_t*)data + size);
+
 	return true;
 }
 
 bool CVKTexture::TransferTexture2DArray(GfxPixelFormat format, int layer, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
 {
+	if (m_bExtern == true) {
+		return false;
+	}
+
+	if (m_type != GFX_TEXTURE_2D_ARRAY) {
+		return false;
+	}
+
+	if (m_vkImage == VK_NULL_HANDLE) {
+		return false;
+	}
+
+	if (m_format != format) {
+		return false;
+	}
+
+	if (m_layers < layer) {
+		return false;
+	}
+
+	if (m_levels < level) {
+		return false;
+	}
+
+	if (m_samples != 1) {
+		return false;
+	}
+
+	m_transferRegions[layer * m_levels + level] = { 0 };
+	m_transferRegions[layer * m_levels + level].imageOffset.x = xoffset;
+	m_transferRegions[layer * m_levels + level].imageOffset.y = yoffset;
+	m_transferRegions[layer * m_levels + level].imageOffset.z = 0;
+	m_transferRegions[layer * m_levels + level].imageExtent.width = width;
+	m_transferRegions[layer * m_levels + level].imageExtent.height = height;
+	m_transferRegions[layer * m_levels + level].imageExtent.depth = 1;
+	m_transferRegions[layer * m_levels + level].imageSubresource.aspectMask = m_vkAspectMask;
+	m_transferRegions[layer * m_levels + level].imageSubresource.mipLevel = level;
+	m_transferRegions[layer * m_levels + level].imageSubresource.layerCount = 1;
+	m_transferRegions[layer * m_levels + level].imageSubresource.baseArrayLayer = layer;
+	m_transferBuffers[layer * m_levels + level].assign((uint8_t*)data, (uint8_t*)data + size);
+
 	return true;
 }
 
 bool CVKTexture::TransferTexture2DArrayCompressed(GfxPixelFormat format, int layer, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
 {
+	if (m_bExtern == true) {
+		return false;
+	}
+
+	if (m_type != GFX_TEXTURE_2D_ARRAY) {
+		return false;
+	}
+
+	if (m_vkImage == VK_NULL_HANDLE) {
+		return false;
+	}
+
+	if (m_format != format) {
+		return false;
+	}
+
+	if (m_layers < layer) {
+		return false;
+	}
+
+	if (m_levels < level) {
+		return false;
+	}
+
+	if (m_samples != 1) {
+		return false;
+	}
+
+	m_transferRegions[layer * m_levels + level] = { 0 };
+	m_transferRegions[layer * m_levels + level].imageOffset.x = xoffset;
+	m_transferRegions[layer * m_levels + level].imageOffset.y = yoffset;
+	m_transferRegions[layer * m_levels + level].imageOffset.z = 0;
+	m_transferRegions[layer * m_levels + level].imageExtent.width = width;
+	m_transferRegions[layer * m_levels + level].imageExtent.height = height;
+	m_transferRegions[layer * m_levels + level].imageExtent.depth = 1;
+	m_transferRegions[layer * m_levels + level].imageSubresource.aspectMask = m_vkAspectMask;
+	m_transferRegions[layer * m_levels + level].imageSubresource.mipLevel = level;
+	m_transferRegions[layer * m_levels + level].imageSubresource.layerCount = 1;
+	m_transferRegions[layer * m_levels + level].imageSubresource.baseArrayLayer = layer;
+	m_transferBuffers[layer * m_levels + level].assign((uint8_t*)data, (uint8_t*)data + size);
+
 	return true;
 }
 
 bool CVKTexture::TransferTextureCubeMap(GfxPixelFormat format, GfxCubeMapFace face, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
 {
+	if (m_bExtern == true) {
+		return false;
+	}
+
+	if (m_type != GFX_TEXTURE_CUBE_MAP) {
+		return false;
+	}
+
+	if (m_vkImage == VK_NULL_HANDLE) {
+		return false;
+	}
+
+	if (m_format != format) {
+		return false;
+	}
+
+	if (m_levels < level) {
+		return false;
+	}
+
+	if (m_samples != 1) {
+		return false;
+	}
+
+	m_transferRegions[face * m_levels + level] = { 0 };
+	m_transferRegions[face * m_levels + level].imageOffset.x = xoffset;
+	m_transferRegions[face * m_levels + level].imageOffset.y = yoffset;
+	m_transferRegions[face * m_levels + level].imageOffset.z = 0;
+	m_transferRegions[face * m_levels + level].imageExtent.width = width;
+	m_transferRegions[face * m_levels + level].imageExtent.height = height;
+	m_transferRegions[face * m_levels + level].imageExtent.depth = 1;
+	m_transferRegions[face * m_levels + level].imageSubresource.aspectMask = m_vkAspectMask;
+	m_transferRegions[face * m_levels + level].imageSubresource.mipLevel = level;
+	m_transferRegions[face * m_levels + level].imageSubresource.layerCount = 1;
+	m_transferRegions[face * m_levels + level].imageSubresource.baseArrayLayer = 0;
+	m_transferBuffers[face * m_levels + level].assign((uint8_t*)data, (uint8_t*)data + size);
+
 	return true;
 }
 
 bool CVKTexture::TransferTextureCubeMapCompressed(GfxPixelFormat format, GfxCubeMapFace face, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
 {
+	if (m_bExtern == true) {
+		return false;
+	}
+
+	if (m_type != GFX_TEXTURE_CUBE_MAP) {
+		return false;
+	}
+
+	if (m_vkImage == VK_NULL_HANDLE) {
+		return false;
+	}
+
+	if (m_format != format) {
+		return false;
+	}
+
+	if (m_levels < level) {
+		return false;
+	}
+
+	if (m_samples != 1) {
+		return false;
+	}
+
+	m_transferRegions[face * m_levels + level] = { 0 };
+	m_transferRegions[face * m_levels + level].imageOffset.x = xoffset;
+	m_transferRegions[face * m_levels + level].imageOffset.y = yoffset;
+	m_transferRegions[face * m_levels + level].imageOffset.z = 0;
+	m_transferRegions[face * m_levels + level].imageExtent.width = width;
+	m_transferRegions[face * m_levels + level].imageExtent.height = height;
+	m_transferRegions[face * m_levels + level].imageExtent.depth = 1;
+	m_transferRegions[face * m_levels + level].imageSubresource.aspectMask = m_vkAspectMask;
+	m_transferRegions[face * m_levels + level].imageSubresource.mipLevel = level;
+	m_transferRegions[face * m_levels + level].imageSubresource.layerCount = 1;
+	m_transferRegions[face * m_levels + level].imageSubresource.baseArrayLayer = 0;
+	m_transferBuffers[face * m_levels + level].assign((uint8_t*)data, (uint8_t*)data + size);
+
 	return true;
 }
