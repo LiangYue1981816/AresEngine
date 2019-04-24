@@ -64,7 +64,7 @@ bool CGLES3Texture2DArray::Create(GfxPixelFormat format, int width, int height, 
 			m_format = format;
 			m_type = GFX_TEXTURE_2D_ARRAY;
 
-			if (m_ptrTexture->Create(GL_TEXTURE_2D_ARRAY, format, width, height, 1, levels) == false) {
+			if (m_ptrTexture->Create(m_type, format, width, height, 1, levels) == false) {
 				break;
 			}
 

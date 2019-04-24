@@ -66,7 +66,7 @@ bool CGLES3Texture2D::Create(GfxPixelFormat format, int width, int height, int l
 			m_format = format;
 			m_type = samples == 1 ? GFX_TEXTURE_2D : GFX_TEXTURE_2D_MULTISAMPLE;
 
-			if (m_ptrTexture->Create(samples == 1 ? GL_TEXTURE_2D : GL_TEXTURE_2D_MULTISAMPLE, format, width, height, 1, levels, samples) == false) {
+			if (m_ptrTexture->Create(m_type, format, width, height, 1, levels, samples) == false) {
 				break;
 			}
 
