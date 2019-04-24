@@ -18,7 +18,7 @@
 #include "VKMemoryManager.h"
 
 #include "VKBuffer.h"
-//#include "VKTexture.h"
+#include "VKTexture.h"
 /*
 #include "VKSwapChain.h"
 #include "VKRenderPass.h"
