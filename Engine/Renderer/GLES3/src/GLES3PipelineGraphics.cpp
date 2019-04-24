@@ -23,7 +23,7 @@ const uint32_t CGLES3PipelineGraphics::GetInputAttachmentName(uint32_t inputAtta
 	return m_pPipeline->GetInputAttachmentName(inputAttachmentIndex);
 }
 
-bool CGLES3PipelineGraphics::Create(const CGfxRenderPass* pRenderPass, const CGfxShader* pVertexShader, const CGfxShader* pFragmentShader, const PipelineState& state, int indexSubpass, uint32_t vertexBinding, uint32_t instanceBinding)
+bool CGLES3PipelineGraphics::Create(const CGfxRenderPass* pRenderPass, const CGfxShader* pVertexShader, const CGfxShader* pFragmentShader, const PipelineState& state, int indexSubpass, int vertexBinding, int instanceBinding)
 {
 	if (pRenderPass == nullptr) {
 		return false;

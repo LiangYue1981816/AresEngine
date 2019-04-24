@@ -63,7 +63,7 @@ bool CGLES3Mesh::CreateIndexBuffer(GfxIndexType type, size_t size, bool bDynamic
 	}
 }
 
-bool CGLES3Mesh::CreateVertexBuffer(uint32_t vertexFormat, uint32_t vertexBinding, size_t size, bool bDynamic, const void* pBuffer)
+bool CGLES3Mesh::CreateVertexBuffer(uint32_t vertexFormat, int vertexBinding, size_t size, bool bDynamic, const void* pBuffer)
 {
 	if (m_pVertexBuffer == nullptr) {
 		m_pVertexBuffer = new CGLES3VertexBuffer(vertexFormat, vertexBinding, size, bDynamic);

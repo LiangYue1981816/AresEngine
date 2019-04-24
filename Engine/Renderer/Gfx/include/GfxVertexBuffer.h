@@ -5,7 +5,7 @@
 class CALL_API CGfxVertexBuffer
 {
 public:
-	CGfxVertexBuffer(uint32_t vertexFormat, uint32_t vertexBinding, size_t size, bool bDynamic)
+	CGfxVertexBuffer(uint32_t vertexFormat, int vertexBinding, size_t size, bool bDynamic)
 	{
 
 	}

@@ -41,7 +41,7 @@ CGfxPipelineCompute* CVKRenderer::CreatePipelineCompute(const CGfxShader* pCompu
 	return nullptr;
 }
 
-CGfxPipelineGraphics* CVKRenderer::CreatePipelineGraphics(const CGfxRenderPass* pRenderPass, const CGfxShader* pVertexShader, const CGfxShader* pFragmentShader, const PipelineState& state, int indexSubpass, uint32_t vertexBinding, uint32_t instanceBinding)
+CGfxPipelineGraphics* CVKRenderer::CreatePipelineGraphics(const CGfxRenderPass* pRenderPass, const CGfxShader* pVertexShader, const CGfxShader* pFragmentShader, const PipelineState& state, int indexSubpass, int vertexBinding, int instanceBinding)
 {
 	return nullptr;
 }
@@ -136,7 +136,7 @@ CGfxMeshPtr CVKRenderer::NewMesh(uint32_t name)
 	return nullptr;
 }
 
-CGfxMeshPtr CVKRenderer::NewMesh(const char* szFileName, uint32_t vertexBinding)
+CGfxMeshPtr CVKRenderer::NewMesh(const char* szFileName, int vertexBinding)
 {
 	return nullptr;
 }
@@ -146,7 +146,7 @@ CGfxMeshDrawPtr CVKRenderer::GetMeshDraw(uint32_t name)
 	return nullptr;
 }
 
-CGfxMeshDrawPtr CVKRenderer::NewMeshDraw(uint32_t name, const CGfxMeshPtr ptrMesh, uint32_t nameDraw, uint32_t instanceFormat, uint32_t instanceBinding)
+CGfxMeshDrawPtr CVKRenderer::NewMeshDraw(uint32_t name, const CGfxMeshPtr ptrMesh, uint32_t nameDraw, uint32_t instanceFormat, int instanceBinding)
 {
 	return nullptr;
 }
@@ -161,7 +161,7 @@ CGfxMaterialPtr CVKRenderer::NewMaterial(uint32_t name)
 	return nullptr;
 }
 
-CGfxMaterialPtr CVKRenderer::NewMaterial(const char* szFileName, uint32_t vertexBinding, uint32_t instanceBinding, int baseLevel)
+CGfxMaterialPtr CVKRenderer::NewMaterial(const char* szFileName, int vertexBinding, int instanceBinding, int baseLevel)
 {
 	return nullptr;
 }

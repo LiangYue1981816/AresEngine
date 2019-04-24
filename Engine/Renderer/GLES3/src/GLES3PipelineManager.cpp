@@ -41,7 +41,7 @@ CGLES3PipelineGraphicsManager::~CGLES3PipelineGraphicsManager(void)
 	}
 }
 
-CGLES3PipelineGraphics* CGLES3PipelineGraphicsManager::Create(const CGfxRenderPass* pRenderPass, const CGfxShader* pVertexShader, const CGfxShader* pFragmentShader, const PipelineState& state, int indexSubpass, uint32_t vertexBinding, uint32_t instanceBinding)
+CGLES3PipelineGraphics* CGLES3PipelineGraphicsManager::Create(const CGfxRenderPass* pRenderPass, const CGfxShader* pVertexShader, const CGfxShader* pFragmentShader, const PipelineState& state, int indexSubpass, int vertexBinding, int instanceBinding)
 {
 	uint32_t name = HashValueFormat("%x_%x_%x", pVertexShader->GetName(), pFragmentShader->GetName(), HashValue((uint8_t*)& state, sizeof(state)));
 

@@ -18,7 +18,7 @@ public:
 
 public:
 	void SetMaterial(const CGfxMaterialPtr ptrMaterial);
-	void SetMeshDraw(const CGfxMeshPtr ptrMesh, uint32_t nameDraw, uint32_t instanceFormat, uint32_t instanceBinding);
+	void SetMeshDraw(const CGfxMeshPtr ptrMesh, uint32_t nameDraw, uint32_t instanceFormat, int instanceBinding);
 
 public:
 	glm::aabb GetWorldAABB(void);

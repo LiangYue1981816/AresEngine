@@ -9,7 +9,7 @@ class CGLES3VertexBuffer : public CGfxVertexBuffer
 
 
 private:
-	CGLES3VertexBuffer(uint32_t vertexFormat, uint32_t vertexBinding, size_t size, bool bDynamic);
+	CGLES3VertexBuffer(uint32_t vertexFormat, int vertexBinding, size_t size, bool bDynamic);
 	virtual ~CGLES3VertexBuffer(void);
 
 

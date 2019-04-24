@@ -16,7 +16,7 @@ private:
 private:
 	CGLES3Mesh* Get(uint32_t name);
 	CGLES3Mesh* Create(uint32_t name);
-	CGLES3Mesh* Create(const char* szFileName, uint32_t vertexBinding);
+	CGLES3Mesh* Create(const char* szFileName, int vertexBinding);
 	void Destroy(CGLES3Mesh* pMesh);
 
 

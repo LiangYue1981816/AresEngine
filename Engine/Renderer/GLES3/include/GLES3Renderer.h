@@ -103,7 +103,7 @@ public:
 public:
 	CGfxShader* CreateShader(const char* szFileName, shader_kind kind);
 	CGfxPipelineCompute* CreatePipelineCompute(const CGfxShader* pComputeShader);
-	CGfxPipelineGraphics* CreatePipelineGraphics(const CGfxRenderPass* pRenderPass, const CGfxShader* pVertexShader, const CGfxShader* pFragmentShader, const PipelineState& state, int indexSubpass, uint32_t vertexBinding = 0, uint32_t instanceBinding = 1);
+	CGfxPipelineGraphics* CreatePipelineGraphics(const CGfxRenderPass* pRenderPass, const CGfxShader* pVertexShader, const CGfxShader* pFragmentShader, const PipelineState& state, int indexSubpass, int vertexBinding = 0, int instanceBinding = 1);
 	CGfxSampler* CreateSampler(GfxFilter minFilter, GfxFilter magFilter, GfxSamplerMipmapMode mipmapMode, GfxSamplerAddressMode addressMode);
 
 public:
@@ -131,14 +131,14 @@ public:
 
 	CGfxMeshPtr GetMesh(uint32_t name);
 	CGfxMeshPtr NewMesh(uint32_t name);
-	CGfxMeshPtr NewMesh(const char* szFileName, uint32_t vertexBinding = 0);
+	CGfxMeshPtr NewMesh(const char* szFileName, int vertexBinding = 0);
 
 	CGfxMeshDrawPtr GetMeshDraw(uint32_t name);
-	CGfxMeshDrawPtr NewMeshDraw(uint32_t name, const CGfxMeshPtr ptrMesh, uint32_t nameDraw, uint32_t instanceFormat, uint32_t instanceBinding = 1);
+	CGfxMeshDrawPtr NewMeshDraw(uint32_t name, const CGfxMeshPtr ptrMesh, uint32_t nameDraw, uint32_t instanceFormat, int instanceBinding = 1);
 
 	CGfxMaterialPtr GetMaterial(uint32_t name);
 	CGfxMaterialPtr NewMaterial(uint32_t name);
-	CGfxMaterialPtr NewMaterial(const char* szFileName, uint32_t vertexBinding = 0, uint32_t instanceBinding = 1, int baseLevel = 0);
+	CGfxMaterialPtr NewMaterial(const char* szFileName, int vertexBinding = 0, int instanceBinding = 1, int baseLevel = 0);
 
 	CGfxDescriptorLayoutPtr NewDescriptorLayout(uint32_t set);
 	CGfxDescriptorSetPtr NewDescriptorSet(const CGfxDescriptorLayoutPtr ptrDescriptorLayout);

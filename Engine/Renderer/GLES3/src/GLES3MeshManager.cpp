@@ -41,7 +41,7 @@ CGLES3Mesh* CGLES3MeshManager::Create(uint32_t name)
 	}
 }
 
-CGLES3Mesh* CGLES3MeshManager::Create(const char* szFileName, uint32_t vertexBinding)
+CGLES3Mesh* CGLES3MeshManager::Create(const char* szFileName, int vertexBinding)
 {
 	uint32_t name = HashValue(szFileName);
 

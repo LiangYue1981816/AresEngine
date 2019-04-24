@@ -58,7 +58,7 @@ static bool InternalLoadDraws(CGfxMesh* pMesh, DrawHeader* drawHeaders, int numD
 }
 
 
-bool CResourceLoader::LoadMesh(const char* szFileName, CGfxMesh* pMesh, uint32_t vertexBinding)
+bool CResourceLoader::LoadMesh(const char* szFileName, CGfxMesh* pMesh, int vertexBinding)
 {
 	int err = 0;
 

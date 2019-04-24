@@ -1,7 +1,7 @@
 #include "GLES3Renderer.h"
 
 
-CGLES3MeshDraw::CGLES3MeshDraw(CGLES3MeshDrawManager* pManager, uint32_t name, const CGfxMeshPtr ptrMesh, uint32_t nameDraw, uint32_t instanceFormat, uint32_t instanceBinding)
+CGLES3MeshDraw::CGLES3MeshDraw(CGLES3MeshDrawManager* pManager, uint32_t name, const CGfxMeshPtr ptrMesh, uint32_t nameDraw, uint32_t instanceFormat, int instanceBinding)
 	: CGfxMeshDraw(name, ptrMesh, nameDraw, instanceFormat, instanceBinding)
 	, m_pManager(pManager)
 

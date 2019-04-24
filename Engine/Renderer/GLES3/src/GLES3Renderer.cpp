@@ -98,7 +98,7 @@ CGfxPipelineCompute* CGLES3Renderer::CreatePipelineCompute(const CGfxShader* pCo
 	return m_pPipelineComputeManager->Create(pComputeShader);
 }
 
-CGfxPipelineGraphics* CGLES3Renderer::CreatePipelineGraphics(const CGfxRenderPass* pRenderPass, const CGfxShader* pVertexShader, const CGfxShader* pFragmentShader, const PipelineState& state, int indexSubpass, uint32_t vertexBinding, uint32_t instanceBinding)
+CGfxPipelineGraphics* CGLES3Renderer::CreatePipelineGraphics(const CGfxRenderPass* pRenderPass, const CGfxShader* pVertexShader, const CGfxShader* pFragmentShader, const PipelineState& state, int indexSubpass, int vertexBinding, int instanceBinding)
 {
 	return m_pPipelineGraphicsManager->Create(pRenderPass, pVertexShader, pFragmentShader, state, indexSubpass, vertexBinding, instanceBinding);
 }
@@ -193,7 +193,7 @@ CGfxMeshPtr CGLES3Renderer::NewMesh(uint32_t name)
 	return m_pMeshManager->Create(name);
 }
 
-CGfxMeshPtr CGLES3Renderer::NewMesh(const char* szFileName, uint32_t vertexBinding)
+CGfxMeshPtr CGLES3Renderer::NewMesh(const char* szFileName, int vertexBinding)
 {
 	return m_pMeshManager->Create(szFileName, vertexBinding);
 }
@@ -203,7 +203,7 @@ CGfxMeshDrawPtr CGLES3Renderer::GetMeshDraw(uint32_t name)
 	return m_pMeshDrawManager->Get(name);
 }
 
-CGfxMeshDrawPtr CGLES3Renderer::NewMeshDraw(uint32_t name, const CGfxMeshPtr ptrMesh, uint32_t nameDraw, uint32_t instanceFormat, uint32_t instanceBinding)
+CGfxMeshDrawPtr CGLES3Renderer::NewMeshDraw(uint32_t name, const CGfxMeshPtr ptrMesh, uint32_t nameDraw, uint32_t instanceFormat, int instanceBinding)
 {
 	return m_pMeshDrawManager->Create(name, ptrMesh, nameDraw, instanceFormat, instanceBinding);
 }
@@ -218,7 +218,7 @@ CGfxMaterialPtr CGLES3Renderer::NewMaterial(uint32_t name)
 	return m_pMaterialManager->Create(name);
 }
 
-CGfxMaterialPtr CGLES3Renderer::NewMaterial(const char* szFileName, uint32_t vertexBinding, uint32_t instanceBinding, int baseLevel)
+CGfxMaterialPtr CGLES3Renderer::NewMaterial(const char* szFileName, int vertexBinding, int instanceBinding, int baseLevel)
 {
 	return m_pMaterialManager->Create(szFileName, vertexBinding, instanceBinding, baseLevel);
 }

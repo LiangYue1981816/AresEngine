@@ -17,7 +17,7 @@ public:
 	const uint32_t GetInputAttachmentName(uint32_t inputAttachmentIndex) const;
 
 public:
-	bool Create(const CGfxRenderPass* pRenderPass, const CGfxShader* pVertexShader, const CGfxShader* pFragmentShader, const PipelineState& state, int indexSubpass, uint32_t vertexBinding, uint32_t instanceBinding);
+	bool Create(const CGfxRenderPass* pRenderPass, const CGfxShader* pVertexShader, const CGfxShader* pFragmentShader, const PipelineState& state, int indexSubpass, int vertexBinding, int instanceBinding);
 	void Destroy(void);
 
 public:

@@ -309,7 +309,7 @@ ERR:
 	return false;
 }
 
-static bool InternalLoadPipeline(TiXmlNode* pPassNode, CGfxMaterialPass* pPass, uint32_t vertexBinding, uint32_t instanceBinding)
+static bool InternalLoadPipeline(TiXmlNode* pPassNode, CGfxMaterialPass* pPass, int vertexBinding, int instanceBinding)
 {
 	int err = 0;
 
@@ -558,7 +558,7 @@ ERR:
 	return false;
 }
 
-static bool InternalLoadPass(TiXmlNode* pPassNode, CGfxMaterialPass* pPass, uint32_t vertexBinding, uint32_t instanceBinding, int baseLevel)
+static bool InternalLoadPass(TiXmlNode* pPassNode, CGfxMaterialPass* pPass, int vertexBinding, int instanceBinding, int baseLevel)
 {
 	int err = 0;
 
@@ -581,7 +581,7 @@ ERR:
 }
 
 
-bool CResourceLoader::LoadMaterial(const char* szFileName, CGfxMaterial* pMaterial, uint32_t vertexBinding, uint32_t instanceBinding, int baseLevel)
+bool CResourceLoader::LoadMaterial(const char* szFileName, CGfxMaterial* pMaterial, int vertexBinding, int instanceBinding, int baseLevel)
 {
 	//<Material>
 	//	<Pass name="">

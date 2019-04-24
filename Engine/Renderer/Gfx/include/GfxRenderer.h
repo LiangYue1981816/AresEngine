@@ -100,7 +100,7 @@ public:
 public:
 	virtual CGfxShader* CreateShader(const char* szFileName, shader_kind kind) = 0;
 	virtual CGfxPipelineCompute* CreatePipelineCompute(const CGfxShader* pComputeShader) = 0;
-	virtual CGfxPipelineGraphics* CreatePipelineGraphics(const CGfxRenderPass* pRenderPass, const CGfxShader* pVertexShader, const CGfxShader* pFragmentShader, const PipelineState& state, int indexSubpass, uint32_t vertexBinding = 0, uint32_t instanceBinding = 1) = 0;
+	virtual CGfxPipelineGraphics* CreatePipelineGraphics(const CGfxRenderPass* pRenderPass, const CGfxShader* pVertexShader, const CGfxShader* pFragmentShader, const PipelineState& state, int indexSubpass, int vertexBinding = 0, int instanceBinding = 1) = 0;
 	virtual CGfxSampler* CreateSampler(GfxFilter minFilter, GfxFilter magFilter, GfxSamplerMipmapMode mipmapMode, GfxSamplerAddressMode addressMode) = 0;
 
 public:
@@ -128,14 +128,14 @@ public:
 
 	virtual CGfxMeshPtr GetMesh(uint32_t name) = 0;
 	virtual CGfxMeshPtr NewMesh(uint32_t name) = 0;
-	virtual CGfxMeshPtr NewMesh(const char* szFileName, uint32_t vertexBinding = 0) = 0;
+	virtual CGfxMeshPtr NewMesh(const char* szFileName, int vertexBinding = 0) = 0;
 
 	virtual CGfxMeshDrawPtr GetMeshDraw(uint32_t name) = 0;
-	virtual CGfxMeshDrawPtr NewMeshDraw(uint32_t name, const CGfxMeshPtr ptrMesh, uint32_t nameDraw, uint32_t instanceFormat, uint32_t instanceBinding = 1) = 0;
+	virtual CGfxMeshDrawPtr NewMeshDraw(uint32_t name, const CGfxMeshPtr ptrMesh, uint32_t nameDraw, uint32_t instanceFormat, int instanceBinding = 1) = 0;
 
 	virtual CGfxMaterialPtr GetMaterial(uint32_t name) = 0;
 	virtual CGfxMaterialPtr NewMaterial(uint32_t name) = 0;
-	virtual CGfxMaterialPtr NewMaterial(const char* szFileName, uint32_t vertexBinding = 0, uint32_t instanceBinding = 1, int baseLevel = 0) = 0;
+	virtual CGfxMaterialPtr NewMaterial(const char* szFileName, int vertexBinding = 0, int instanceBinding = 1, int baseLevel = 0) = 0;
 
 	virtual CGfxDescriptorLayoutPtr NewDescriptorLayout(uint32_t set) = 0;
 	virtual CGfxDescriptorSetPtr NewDescriptorSet(const CGfxDescriptorLayoutPtr ptrDescriptorLayout) = 0;
