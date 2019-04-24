@@ -89,7 +89,7 @@ public:
 	virtual const CGfxDescriptorLayoutPtr GetDescriptorLayout(int indexDescriptorSet) const = 0;
 
 public:
-	virtual bool Create(const CGfxRenderPass* pRenderPass, const CGfxShader* pVertexShader, const CGfxShader* pFragmentShader, const PipelineState& state, uint32_t indexSubpass, uint32_t vertexBinding, uint32_t instanceBinding) = 0;
+	virtual bool Create(const CGfxRenderPass* pRenderPass, const CGfxShader* pVertexShader, const CGfxShader* pFragmentShader, const PipelineState& state, int indexSubpass, uint32_t vertexBinding, uint32_t instanceBinding) = 0;
 	virtual void Destroy(void) = 0;
 
 

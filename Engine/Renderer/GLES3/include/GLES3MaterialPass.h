@@ -17,7 +17,7 @@ public:
 	const CGfxDescriptorSetPtr GetDescriptorSet(void) const;
 
 public:
-	bool SetPipeline(const CGfxRenderPass* pRenderPass, const CGfxShader* pVertexShader, const CGfxShader* pFragmentShader, const PipelineState& state, uint32_t indexSubpass, uint32_t vertexBinding, uint32_t instanceBinding);
+	bool SetPipeline(const CGfxRenderPass* pRenderPass, const CGfxShader* pVertexShader, const CGfxShader* pFragmentShader, const PipelineState& state, int indexSubpass, uint32_t vertexBinding, uint32_t instanceBinding);
 	const CGfxPipelineGraphics* GetPipeline(void) const;
 
 public:

@@ -318,7 +318,7 @@ static bool InternalLoadPipeline(TiXmlNode* pPassNode, CGfxMaterialPass* pPass, 
 		TiXmlNode* pPipelineNode = pPassNode->FirstChild("Pipeline");
 		if (pPipelineNode == nullptr) { err = -1; goto ERR; }
 
-		const uint32_t indexSubpass = pPipelineNode->ToElement()->AttributeInt1("sub_pass");
+		const int indexSubpass = pPipelineNode->ToElement()->AttributeInt1("sub_pass");
 		const char* szRenderPassName = pPipelineNode->ToElement()->AttributeString("render_pass");
 		if (szRenderPassName == nullptr) { err = -2; goto ERR; }
 

@@ -39,7 +39,7 @@ const CGfxDescriptorSetPtr CGLES3MaterialPass::GetDescriptorSet(void) const
 	return m_ptrDescriptorSet;
 }
 
-bool CGLES3MaterialPass::SetPipeline(const CGfxRenderPass* pRenderPass, const CGfxShader* pVertexShader, const CGfxShader* pFragmentShader, const PipelineState& state, uint32_t indexSubpass, uint32_t vertexBinding, uint32_t instanceBinding)
+bool CGLES3MaterialPass::SetPipeline(const CGfxRenderPass* pRenderPass, const CGfxShader* pVertexShader, const CGfxShader* pFragmentShader, const PipelineState& state, int indexSubpass, uint32_t vertexBinding, uint32_t instanceBinding)
 {
 	if (pRenderPass == nullptr) {
 		return false;

@@ -4,7 +4,7 @@
 class CALL_API CTaskCommandBuffer : public CTask
 {
 public:
-	CTaskCommandBuffer(int indexQueue, const CGfxDescriptorSetPtr ptrDescriptorSetEngine, const CGfxDescriptorSetPtr ptrDescriptorSetCamera, const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass, uint32_t indexSubpass, CGfxPipelineGraphics* pPipeline, uint32_t namePass)
+	CTaskCommandBuffer(int indexQueue, const CGfxDescriptorSetPtr ptrDescriptorSetEngine, const CGfxDescriptorSetPtr ptrDescriptorSetCamera, const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass, int indexSubpass, CGfxPipelineGraphics* pPipeline, uint32_t namePass)
 		: m_indexQueue(indexQueue)
 
 		, m_ptrDescriptorSetEngine(ptrDescriptorSetEngine)
@@ -52,7 +52,7 @@ private:
 
 	CGfxFrameBufferPtr m_ptrFrameBuffer;
 	CGfxRenderPassPtr m_ptrRenderPass;
-	uint32_t m_indexSubpass;
+	int m_indexSubpass;
 
 	CGfxPipelineGraphics* m_pPipeline;
 	uint32_t m_namePass;
