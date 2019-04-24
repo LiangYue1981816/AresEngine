@@ -4,9 +4,6 @@
 CGLES3Texture2D::CGLES3Texture2D(CGLES3Texture2DManager* pManager, uint32_t name)
 	: CGfxTexture2D(name)
 	, m_pManager(pManager)
-
-	, m_format(GFX_PIXELFORMAT_UNDEFINED)
-	, m_type(GFX_TEXTURE_INVALID_ENUM)
 {
 	m_ptrTexture = CGLES3TexturePtr(new CGLES3Texture);
 }
@@ -28,12 +25,12 @@ HANDLE CGLES3Texture2D::GetTexture(void) const
 
 GfxTextureType CGLES3Texture2D::GetType(void) const
 {
-	return m_type;
+	return m_ptrTexture->GetType();
 }
 
 GfxPixelFormat CGLES3Texture2D::GetFormat(void) const
 {
-	return m_format;
+	return m_ptrTexture->GetFormat();
 }
 
 int CGLES3Texture2D::GetWidth(void) const
@@ -61,12 +58,7 @@ bool CGLES3Texture2D::Create(GfxPixelFormat format, int width, int height, int l
 	Destroy();
 	{
 		do {
-			samples = std::max(samples, 1);
-
-			m_format = format;
-			m_type = samples == 1 ? GFX_TEXTURE_2D : GFX_TEXTURE_2D_MULTISAMPLE;
-
-			if (m_ptrTexture->Create(m_type, format, width, height, 1, levels, samples) == false) {
+			if (m_ptrTexture->Create(std::max(samples, 1) == 1 ? GFX_TEXTURE_2D : GFX_TEXTURE_2D_MULTISAMPLE, format, width, height, 1, levels, samples) == false) {
 				break;
 			}
 
@@ -84,10 +76,6 @@ void CGLES3Texture2D::Destroy(void)
 	}
 
 	m_size.clear();
-
-	m_format = GFX_PIXELFORMAT_UNDEFINED;
-	m_type = GFX_TEXTURE_INVALID_ENUM;
-
 	m_ptrTexture->Destroy();
 }
 

@@ -9,7 +9,9 @@ CVKTexture::CVKTexture(CVKDevice* pDevice)
 	, m_vkImageView(VK_NULL_HANDLE)
 	, m_pMemory(nullptr)
 
+	, m_type(GFX_TEXTURE_INVALID_ENUM)
 	, m_format(GFX_PIXELFORMAT_UNDEFINED)
+
 	, m_width(0)
 	, m_height(0)
 	, m_layers(0)
@@ -32,6 +34,16 @@ void CVKTexture::Release(void)
 VkImageView CVKTexture::GetImageView(void) const
 {
 	return m_vkImageView;
+}
+
+GfxTextureType CVKTexture::GetType(void) const
+{
+	return m_type;
+}
+
+GfxPixelFormat CVKTexture::GetFormat(void) const
+{
+	return m_format;
 }
 
 int CVKTexture::GetWidth(void) const
@@ -63,8 +75,13 @@ bool CVKTexture::Create(GfxTextureType type, VkImageView vkImageView, int width,
 {
 	Destroy();
 
-	m_bExtern = true;
+	m_bExtern = false;
+	m_vkImage = VK_NULL_HANDLE;
 	m_vkImageView = vkImageView;
+	m_pMemory = nullptr;
+
+	m_type = type;
+	m_format = GFX_PIXELFORMAT_UNDEFINED;
 
 	m_width = width;
 	m_height = height;
@@ -78,6 +95,14 @@ bool CVKTexture::Create(GfxTextureType type, VkImageView vkImageView, int width,
 bool CVKTexture::Create(GfxTextureType type, GfxPixelFormat format, int width, int height, int layers, int levels, int samples, VkImageTiling imageTiling, VkImageUsageFlags imageUsageFlags, VkImageAspectFlags aspectMask)
 {
 	Destroy();
+
+	m_bExtern = false;
+	m_vkImage = VK_NULL_HANDLE;
+	m_vkImageView = VK_NULL_HANDLE;
+	m_pMemory = nullptr;
+
+	m_type = type;
+	m_format = format;
 
 	m_format = format;
 	m_width = width;
@@ -157,7 +182,9 @@ void CVKTexture::Destroy(void)
 	m_vkImageView = VK_NULL_HANDLE;
 	m_pMemory = nullptr;
 
+	m_type = GFX_TEXTURE_INVALID_ENUM;
 	m_format = GFX_PIXELFORMAT_UNDEFINED;
+
 	m_width = 0;
 	m_height = 0;
 	m_layers = 0;

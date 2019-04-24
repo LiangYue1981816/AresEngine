@@ -15,9 +15,9 @@ private:
 
 public:
 	HANDLE GetTexture(void) const;
-	GfxTextureType GetType(void) const;
 
 public:
+	GfxTextureType GetType(void) const;
 	GfxPixelFormat GetFormat(void) const;
 
 	int GetWidth(void) const;
@@ -35,10 +35,6 @@ public:
 public:
 	void Bind(uint32_t unit) const;
 
-
-private:
-	GfxPixelFormat m_format;
-	GfxTextureType m_type;
 
 private:
 	CGLES3TexturePtr m_ptrTexture;

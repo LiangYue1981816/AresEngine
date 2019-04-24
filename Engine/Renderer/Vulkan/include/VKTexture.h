@@ -19,6 +19,9 @@ private:
 private:
 	VkImageView GetImageView(void) const;
 
+	GfxTextureType GetType(void) const;
+	GfxPixelFormat GetFormat(void) const;
+
 	int GetWidth(void) const;
 	int GetHeight(void) const;
 	int GetLayers(void) const;
@@ -48,7 +51,9 @@ private:
 	CVKMemory* m_pMemory;
 
 private:
+	GfxTextureType m_type;
 	GfxPixelFormat m_format;
+
 	int m_width;
 	int m_height;
 	int m_layers;

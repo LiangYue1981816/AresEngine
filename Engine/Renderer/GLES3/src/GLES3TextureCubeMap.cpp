@@ -4,9 +4,6 @@
 CGLES3TextureCubeMap::CGLES3TextureCubeMap(CGLES3TextureCubeMapManager* pManager, uint32_t name)
 	: CGfxTextureCubeMap(name)
 	, m_pManager(pManager)
-
-	, m_format(GFX_PIXELFORMAT_UNDEFINED)
-	, m_type(GFX_TEXTURE_INVALID_ENUM)
 {
 	m_ptrTexture = CGLES3TexturePtr(new CGLES3Texture);
 }
@@ -28,12 +25,12 @@ HANDLE CGLES3TextureCubeMap::GetTexture(void) const
 
 GfxTextureType CGLES3TextureCubeMap::GetType(void) const
 {
-	return m_type;
+	return m_ptrTexture->GetType();
 }
 
 GfxPixelFormat CGLES3TextureCubeMap::GetFormat(void) const
 {
-	return m_format;
+	return m_ptrTexture->GetFormat();
 }
 
 int CGLES3TextureCubeMap::GetWidth(void) const
@@ -56,10 +53,7 @@ bool CGLES3TextureCubeMap::Create(GfxPixelFormat format, int width, int height, 
 	Destroy();
 	{
 		do {
-			m_format = format;
-			m_type = GFX_TEXTURE_CUBE_MAP;
-
-			if (m_ptrTexture->Create(m_type, format, width, height, 1, levels) == false) {
+			if (m_ptrTexture->Create(GFX_TEXTURE_CUBE_MAP, format, width, height, 1, levels) == false) {
 				break;
 			}
 
@@ -79,10 +73,6 @@ void CGLES3TextureCubeMap::Destroy(void)
 	}
 
 	m_size.clear();
-
-	m_format = GFX_PIXELFORMAT_UNDEFINED;
-	m_type = GFX_TEXTURE_INVALID_ENUM;
-
 	m_ptrTexture->Destroy();
 }
 

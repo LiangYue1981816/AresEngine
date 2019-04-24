@@ -4,9 +4,6 @@
 CGLES3Texture2DArray::CGLES3Texture2DArray(CGLES3Texture2DArrayManager* pManager, uint32_t name)
 	: CGfxTexture2DArray(name)
 	, m_pManager(pManager)
-
-	, m_format(GFX_PIXELFORMAT_UNDEFINED)
-	, m_type(GFX_TEXTURE_INVALID_ENUM)
 {
 	m_ptrTexture = CGLES3TexturePtr(new CGLES3Texture);
 }
@@ -28,12 +25,12 @@ HANDLE CGLES3Texture2DArray::GetTexture(void) const
 
 GfxTextureType CGLES3Texture2DArray::GetType(void) const
 {
-	return m_type;
+	return m_ptrTexture->GetType();
 }
 
 GfxPixelFormat CGLES3Texture2DArray::GetFormat(void) const
 {
-	return m_format;
+	return m_ptrTexture->GetFormat();
 }
 
 int CGLES3Texture2DArray::GetWidth(void) const
@@ -61,10 +58,7 @@ bool CGLES3Texture2DArray::Create(GfxPixelFormat format, int width, int height, 
 	Destroy();
 	{
 		do {
-			m_format = format;
-			m_type = GFX_TEXTURE_2D_ARRAY;
-
-			if (m_ptrTexture->Create(m_type, format, width, height, 1, levels) == false) {
+			if (m_ptrTexture->Create(GFX_TEXTURE_2D_ARRAY, format, width, height, 1, levels) == false) {
 				break;
 			}
 
@@ -84,10 +78,6 @@ void CGLES3Texture2DArray::Destroy(void)
 	}
 
 	m_size.clear();
-
-	m_format = GFX_PIXELFORMAT_UNDEFINED;
-	m_type = GFX_TEXTURE_INVALID_ENUM;
-
 	m_ptrTexture->Destroy();
 }
 
