@@ -9,13 +9,11 @@ static bool InternalLoadTexture2D(CGfxTexture2D* pTexture2D, const gli::texture*
 	gli::gl GL(gli::gl::PROFILE_ES30);
 	gli::gl::format format = GL.translate(texture->format(), texture->swizzles());
 
-	if (baseLevel > texture->levels() - 1) {
-		baseLevel = texture->levels() - 1;
-	}
+	baseLevel = std::max(baseLevel, 0);
+	baseLevel = std::min(baseLevel, (int)texture->levels() - 1);
 
-	if (numLevels > texture->levels() - baseLevel) {
-		numLevels = texture->levels() - baseLevel;
-	}
+	numLevels = std::max(numLevels, 1);
+	numLevels = std::min(numLevels, (int)texture->levels() - baseLevel);
 
 	if (pTexture2D->Create((GfxPixelFormat)texture->format(), texture->extent(baseLevel).x, texture->extent(baseLevel).y, numLevels) == false) {
 		return false;
@@ -44,13 +42,11 @@ static bool InternalLoadTexture2DArray(CGfxTexture2DArray* pTexture2DArray, cons
 	gli::gl GL(gli::gl::PROFILE_ES30);
 	gli::gl::format format = GL.translate(texture->format(), texture->swizzles());
 
-	if (baseLevel > texture->levels() - 1) {
-		baseLevel = texture->levels() - 1;
-	}
+	baseLevel = std::max(baseLevel, 0);
+	baseLevel = std::min(baseLevel, (int)texture->levels() - 1);
 
-	if (numLevels > texture->levels() - baseLevel) {
-		numLevels = texture->levels() - baseLevel;
-	}
+	numLevels = std::max(numLevels, 1);
+	numLevels = std::min(numLevels, (int)texture->levels() - baseLevel);
 
 	if (pTexture2DArray->Create((GfxPixelFormat)texture->format(), texture->extent(baseLevel).x, texture->extent(baseLevel).y, (int)texture->layers(), numLevels) == false) {
 		return false;
@@ -83,13 +79,11 @@ static bool InternalLoadTexture2DArrayLayer(CGfxTexture2DArray* pTexture2DArray,
 	gli::gl GL(gli::gl::PROFILE_ES30);
 	gli::gl::format format = GL.translate(texture->format(), texture->swizzles());
 
-	if (baseLevel > texture->levels() - 1) {
-		baseLevel = texture->levels() - 1;
-	}
+	baseLevel = std::max(baseLevel, 0);
+	baseLevel = std::min(baseLevel, (int)texture->levels() - 1);
 
-	if (numLevels > texture->levels() - baseLevel) {
-		numLevels = texture->levels() - baseLevel;
-	}
+	numLevels = std::max(numLevels, 1);
+	numLevels = std::min(numLevels, (int)texture->levels() - baseLevel);
 
 	if (gli::is_compressed(texture->format())) {
 		for (int level = baseLevel; level < baseLevel + numLevels; level++) {
@@ -114,13 +108,11 @@ static bool InternalLoadTextureCubeMap(CGfxTextureCubeMap* pTextureCubeMap, cons
 	gli::gl GL(gli::gl::PROFILE_ES30);
 	gli::gl::format format = GL.translate(texture->format(), texture->swizzles());
 
-	if (baseLevel > texture->levels() - 1) {
-		baseLevel = texture->levels() - 1;
-	}
+	baseLevel = std::max(baseLevel, 0);
+	baseLevel = std::min(baseLevel, (int)texture->levels() - 1);
 
-	if (numLevels > texture->levels() - baseLevel) {
-		numLevels = texture->levels() - baseLevel;
-	}
+	numLevels = std::max(numLevels, 1);
+	numLevels = std::min(numLevels, (int)texture->levels() - baseLevel);
 
 	if (pTextureCubeMap->Create((GfxPixelFormat)texture->format(), texture->extent(baseLevel).x, texture->extent(baseLevel).y, numLevels) == false) {
 		return false;
@@ -179,13 +171,11 @@ static bool InternalLoadTextureCubeMapFace(CGfxTextureCubeMap* pTextureCubeMap, 
 	gli::gl GL(gli::gl::PROFILE_ES30);
 	gli::gl::format format = GL.translate(texture->format(), texture->swizzles());
 
-	if (baseLevel > texture->levels() - 1) {
-		baseLevel = texture->levels() - 1;
-	}
+	baseLevel = std::max(baseLevel, 0);
+	baseLevel = std::min(baseLevel, (int)texture->levels() - 1);
 
-	if (numLevels > texture->levels() - baseLevel) {
-		numLevels = texture->levels() - baseLevel;
-	}
+	numLevels = std::max(numLevels, 1);
+	numLevels = std::min(numLevels, (int)texture->levels() - baseLevel);
 
 	if (gli::is_compressed(texture->format())) {
 		for (int level = baseLevel; level < baseLevel + numLevels; level++) {
