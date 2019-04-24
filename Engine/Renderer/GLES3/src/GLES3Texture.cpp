@@ -146,6 +146,7 @@ void CGLES3Texture::Destroy(void)
 	m_target = 0;
 	m_texture = 0;
 
+	m_format = GFX_PIXELFORMAT_UNDEFINED;
 	m_width = 0;
 	m_height = 0;
 	m_layers = 0;

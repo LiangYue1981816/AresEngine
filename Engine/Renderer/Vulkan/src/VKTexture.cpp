@@ -9,6 +9,7 @@ CVKTexture::CVKTexture(CVKDevice* pDevice)
 	, m_vkImageView(VK_NULL_HANDLE)
 	, m_pMemory(nullptr)
 
+	, m_format(GFX_PIXELFORMAT_UNDEFINED)
 	, m_width(0)
 	, m_height(0)
 	, m_layers(0)
@@ -148,6 +149,7 @@ void CVKTexture::Destroy(void)
 	m_vkImageView = VK_NULL_HANDLE;
 	m_pMemory = nullptr;
 
+	m_format = GFX_PIXELFORMAT_UNDEFINED;
 	m_width = 0;
 	m_height = 0;
 	m_layers = 0;

@@ -48,6 +48,7 @@ private:
 	CVKMemory* m_pMemory;
 
 private:
+	GfxPixelFormat m_format;
 	int m_width;
 	int m_height;
 	int m_layers;
