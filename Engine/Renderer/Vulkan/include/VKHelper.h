@@ -26,6 +26,7 @@ public:
 	static VkStencilOp TranslateStencilOp(GfxStencilOp op);
 	static VkBlendOp TranslateBlendOp(GfxBlendOp op);
 	static VkBlendFactor TranslateBlendFactor(GfxBlendFactor blendFactor);
+	static VkImageViewType TranslateImageViewType(GfxTextureType type);
 
 
 private:

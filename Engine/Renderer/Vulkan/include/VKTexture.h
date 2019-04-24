@@ -26,19 +26,19 @@ private:
 	int GetSamples(void) const;
 
 private:
-	bool Create(VkImageView vkImageView, int width, int height, int layers, int levels, int samples);
-	bool Create(VkImageAspectFlags aspectMask, VkImageViewType viewType, VkFormat format, int width, int height, int layers, int levels, int samples, VkImageTiling imageTiling, VkImageUsageFlags imageUsageFlags);
+	bool Create(GfxTextureType type, VkImageView vkImageView, int width, int height, int layers, int levels, int samples);
+	bool Create(GfxTextureType type, GfxPixelFormat format, int width, int height, int layers, int levels, int samples, VkImageTiling imageTiling, VkImageUsageFlags imageUsageFlags, VkImageAspectFlags aspectMask);
 	void Destroy(void);
 
 private:
-	bool TransferTexture2D(int level, int xoffset, int yoffset, int width, int height, GfxDataType type, uint32_t size, const void* data);
-	bool TransferTexture2DCompressed(int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data);
+	bool TransferTexture2D(GfxPixelFormat format, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data);
+	bool TransferTexture2DCompressed(GfxPixelFormat format, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data);
 
-	bool TransferTexture2DArray(int layer, int level, int xoffset, int yoffset, int width, int height, GfxDataType type, uint32_t size, const void* data);
-	bool TransferTexture2DArrayCompressed(int layer, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data);
+	bool TransferTexture2DArray(GfxPixelFormat format, int layer, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data);
+	bool TransferTexture2DArrayCompressed(GfxPixelFormat format, int layer, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data);
 
-	bool TransferTextureCubeMap(GfxTextureCubeMapFace face, int level, int xoffset, int yoffset, int width, int height, GfxDataType type, uint32_t size, const void* data);
-	bool TransferTextureCubeMapCompressed(GfxTextureCubeMapFace face, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data);
+	bool TransferTextureCubeMap(GfxPixelFormat format, GfxCubeMapFace face, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data);
+	bool TransferTextureCubeMapCompressed(GfxPixelFormat format, GfxCubeMapFace face, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data);
 
 
 private:

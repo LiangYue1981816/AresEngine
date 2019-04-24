@@ -442,3 +442,23 @@ VkBlendFactor CVKHelper::TranslateBlendFactor(GfxBlendFactor blendFactor)
 		return VK_BLEND_FACTOR_MAX_ENUM;
 	}
 }
+
+VkImageViewType CVKHelper::TranslateImageViewType(GfxTextureType type)
+{
+	switch ((int)type) {
+	case GFX_TEXTURE_2D:
+		return VK_IMAGE_VIEW_TYPE_2D;
+
+	case GFX_TEXTURE_2D_MULTISAMPLE:
+		return VK_IMAGE_VIEW_TYPE_2D;
+
+	case GFX_TEXTURE_2D_ARRAY:
+		return VK_IMAGE_VIEW_TYPE_2D_ARRAY;
+
+	case GFX_TEXTURE_CUBE_MAP:
+		return VK_IMAGE_VIEW_TYPE_CUBE;
+
+	default:
+		return VK_IMAGE_VIEW_TYPE_MAX_ENUM;
+	}
+}

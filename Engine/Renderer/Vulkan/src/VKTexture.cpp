@@ -59,12 +59,13 @@ int CVKTexture::GetSamples(void) const
 	return m_samples;
 }
 
-bool CVKTexture::Create(VkImageView vkImageView, int width, int height, int layers, int levels, int samples)
+bool CVKTexture::Create(GfxTextureType type, VkImageView vkImageView, int width, int height, int layers, int levels, int samples)
 {
 	Destroy();
 
 	m_bExtern = true;
 	m_vkImageView = vkImageView;
+
 	m_width = width;
 	m_height = height;
 	m_layers = layers;
@@ -74,16 +75,23 @@ bool CVKTexture::Create(VkImageView vkImageView, int width, int height, int laye
 	return true;
 }
 
-bool CVKTexture::Create(VkImageAspectFlags aspectMask, VkImageViewType viewType, VkFormat format, int width, int height, int layers, int levels, int samples, VkImageTiling imageTiling, VkImageUsageFlags imageUsageFlags)
+bool CVKTexture::Create(GfxTextureType type, GfxPixelFormat format, int width, int height, int layers, int levels, int samples, VkImageTiling imageTiling, VkImageUsageFlags imageUsageFlags, VkImageAspectFlags aspectMask)
 {
 	Destroy();
+
+	m_format = format;
+	m_width = width;
+	m_height = height;
+	m_layers = layers;
+	m_levels = levels;
+	m_samples = samples;
 
 	VkImageCreateInfo imageCreateInfo = {};
 	imageCreateInfo.sType = VK_STRUCTURE_TYPE_IMAGE_CREATE_INFO;
 	imageCreateInfo.pNext = nullptr;
 	imageCreateInfo.flags = 0;
 	imageCreateInfo.imageType = VK_IMAGE_TYPE_2D;
-	imageCreateInfo.format = format;
+	imageCreateInfo.format = (VkFormat)format;
 	imageCreateInfo.extent.width = width;
 	imageCreateInfo.extent.height = height;
 	imageCreateInfo.extent.depth = 1;
@@ -96,9 +104,9 @@ bool CVKTexture::Create(VkImageAspectFlags aspectMask, VkImageViewType viewType,
 	imageCreateInfo.queueFamilyIndexCount = 0;
 	imageCreateInfo.pQueueFamilyIndices = nullptr;
 	imageCreateInfo.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
-	switch (viewType) {
-	case VK_IMAGE_VIEW_TYPE_CUBE: imageCreateInfo.flags = VK_IMAGE_CREATE_CUBE_COMPATIBLE_BIT; break;
-	case VK_IMAGE_VIEW_TYPE_2D_ARRAY: imageCreateInfo.flags = VK_IMAGE_CREATE_2D_ARRAY_COMPATIBLE_BIT; break;
+	switch (type) {
+	case GFX_TEXTURE_CUBE_MAP: imageCreateInfo.flags = VK_IMAGE_CREATE_CUBE_COMPATIBLE_BIT; break;
+	case GFX_TEXTURE_2D_ARRAY: imageCreateInfo.flags = VK_IMAGE_CREATE_2D_ARRAY_COMPATIBLE_BIT; break;
 	}
 	CALL_VK_FUNCTION_RETURN_BOOL(vkCreateImage(m_pDevice->GetDevice(), &imageCreateInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkImage));
 
@@ -107,9 +115,9 @@ bool CVKTexture::Create(VkImageAspectFlags aspectMask, VkImageViewType viewType,
 	createInfo.pNext = nullptr;
 	createInfo.flags = 0;
 	createInfo.image = m_vkImage;
-	createInfo.viewType = viewType;
-	createInfo.format = format;
-	createInfo.components = CVKHelper::GetFormatComponentMapping(format);
+	createInfo.viewType = CVKHelper::TranslateImageViewType(type);
+	createInfo.format = (VkFormat)format;
+	createInfo.components = CVKHelper::GetFormatComponentMapping((VkFormat)format);
 	createInfo.subresourceRange = { aspectMask, 0, (uint32_t)levels, 0, (uint32_t)layers };
 	CALL_VK_FUNCTION_RETURN_BOOL(vkCreateImageView(m_pDevice->GetDevice(), &createInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkImageView));
 
@@ -157,32 +165,32 @@ void CVKTexture::Destroy(void)
 	m_samples = 0;
 }
 
-bool CVKTexture::TransferTexture2D(int level, int xoffset, int yoffset, int width, int height, GfxDataType type, uint32_t size, const void* data)
+bool CVKTexture::TransferTexture2D(GfxPixelFormat format, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
 {
 	return true;
 }
 
-bool CVKTexture::TransferTexture2DCompressed(int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
+bool CVKTexture::TransferTexture2DCompressed(GfxPixelFormat format, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
 {
 	return true;
 }
 
-bool CVKTexture::TransferTexture2DArray(int layer, int level, int xoffset, int yoffset, int width, int height, GfxDataType type, uint32_t size, const void* data)
+bool CVKTexture::TransferTexture2DArray(GfxPixelFormat format, int layer, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
 {
 	return true;
 }
 
-bool CVKTexture::TransferTexture2DArrayCompressed(int layer, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
+bool CVKTexture::TransferTexture2DArrayCompressed(GfxPixelFormat format, int layer, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
 {
 	return true;
 }
 
-bool CVKTexture::TransferTextureCubeMap(GfxCubeMapFace face, int level, int xoffset, int yoffset, int width, int height, GfxDataType type, uint32_t size, const void* data)
+bool CVKTexture::TransferTextureCubeMap(GfxPixelFormat format, GfxCubeMapFace face, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
 {
 	return true;
 }
 
-bool CVKTexture::TransferTextureCubeMapCompressed(GfxCubeMapFace face, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
+bool CVKTexture::TransferTextureCubeMapCompressed(GfxPixelFormat format, GfxCubeMapFace face, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
 {
 	return true;
 }

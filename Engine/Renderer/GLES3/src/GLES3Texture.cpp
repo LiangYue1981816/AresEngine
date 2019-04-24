@@ -100,7 +100,7 @@ bool CGLES3Texture::Create(GfxTextureType type, GfxPixelFormat format, int width
 		m_samples = samples;
 		glGenTextures(1, &m_texture);
 		glBindTexture(GL_TEXTURE_2D_MULTISAMPLE, m_texture);
-		glTexStorage2DMultisample(GL_TEXTURE_2D_MULTISAMPLE, m_samples, glFormat.Internal, m_width, m_height, GL_TRUE);
+		glTexStorage2DMultisample(GL_TEXTURE_2D_MULTISAMPLE, samples, glFormat.Internal, width, height, GL_TRUE);
 		glBindTexture(GL_TEXTURE_2D_MULTISAMPLE, 0);
 		return true;
 
@@ -108,7 +108,7 @@ bool CGLES3Texture::Create(GfxTextureType type, GfxPixelFormat format, int width
 		m_samples = 1;
 		glGenTextures(1, &m_texture);
 		glBindTexture(GL_TEXTURE_2D, m_texture);
-		glTexStorage2D(GL_TEXTURE_2D, m_levels, glFormat.Internal, m_width, m_height);
+		glTexStorage2D(GL_TEXTURE_2D, levels, glFormat.Internal, width, height);
 		glBindTexture(GL_TEXTURE_2D, 0);
 		return true;
 
@@ -116,7 +116,7 @@ bool CGLES3Texture::Create(GfxTextureType type, GfxPixelFormat format, int width
 		m_samples = 1;
 		glGenTextures(1, &m_texture);
 		glBindTexture(GL_TEXTURE_2D_ARRAY, m_texture);
-		glTexStorage3D(GL_TEXTURE_2D_ARRAY, m_levels, glFormat.Internal, m_width, m_height, m_layers);
+		glTexStorage3D(GL_TEXTURE_2D_ARRAY, levels, glFormat.Internal, width, height, layers);
 		glBindTexture(GL_TEXTURE_2D_ARRAY, 0);
 		return true;
 
@@ -124,7 +124,7 @@ bool CGLES3Texture::Create(GfxTextureType type, GfxPixelFormat format, int width
 		m_samples = 1;
 		glGenTextures(1, &m_texture);
 		glBindTexture(GL_TEXTURE_CUBE_MAP, m_texture);
-		glTexStorage2D(GL_TEXTURE_CUBE_MAP, m_levels, glFormat.Internal, m_width, m_height);
+		glTexStorage2D(GL_TEXTURE_CUBE_MAP, levels, glFormat.Internal, width, height);
 		glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
 		return true;
 
