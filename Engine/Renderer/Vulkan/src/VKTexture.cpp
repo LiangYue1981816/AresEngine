@@ -177,12 +177,12 @@ bool CVKTexture::TransferTexture2DArrayCompressed(int layer, int level, int xoff
 	return true;
 }
 
-bool CVKTexture::TransferTextureCubeMap(GfxTextureCubeMapFace face, int level, int xoffset, int yoffset, int width, int height, GfxDataType type, uint32_t size, const void* data)
+bool CVKTexture::TransferTextureCubeMap(GfxCubeMapFace face, int level, int xoffset, int yoffset, int width, int height, GfxDataType type, uint32_t size, const void* data)
 {
 	return true;
 }
 
-bool CVKTexture::TransferTextureCubeMapCompressed(GfxTextureCubeMapFace face, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
+bool CVKTexture::TransferTextureCubeMapCompressed(GfxCubeMapFace face, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
 {
 	return true;
 }

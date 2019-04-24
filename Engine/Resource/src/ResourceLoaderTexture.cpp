@@ -120,44 +120,44 @@ static bool InternalLoadTextureCubeMap(CGfxTextureCubeMap* pTextureCubeMap, cons
 
 	if (gli::is_compressed(texture->format())) {
 		for (int level = baseLevel; level < baseLevel + numLevels; level++) {
-			if (pTextureCubeMap->TransferTexture2DCompressed((GfxPixelFormat)texture->format(), GFX_TEXTURE_CUBEMAP_POSITIVE_X, level - baseLevel, 0, 0, texture->extent(level).x, texture->extent(level).y, texture->size(level), texture->data(0, 0, level)) == false) {
+			if (pTextureCubeMap->TransferTexture2DCompressed((GfxPixelFormat)texture->format(), GFX_CUBEMAP_POSITIVE_X, level - baseLevel, 0, 0, texture->extent(level).x, texture->extent(level).y, texture->size(level), texture->data(0, 0, level)) == false) {
 				return false;
 			}
-			if (pTextureCubeMap->TransferTexture2DCompressed((GfxPixelFormat)texture->format(), GFX_TEXTURE_CUBEMAP_NEGATIVE_X, level - baseLevel, 0, 0, texture->extent(level).x, texture->extent(level).y, texture->size(level), texture->data(0, 1, level)) == false) {
+			if (pTextureCubeMap->TransferTexture2DCompressed((GfxPixelFormat)texture->format(), GFX_CUBEMAP_NEGATIVE_X, level - baseLevel, 0, 0, texture->extent(level).x, texture->extent(level).y, texture->size(level), texture->data(0, 1, level)) == false) {
 				return false;
 			}
-			if (pTextureCubeMap->TransferTexture2DCompressed((GfxPixelFormat)texture->format(), GFX_TEXTURE_CUBEMAP_POSITIVE_Y, level - baseLevel, 0, 0, texture->extent(level).x, texture->extent(level).y, texture->size(level), texture->data(0, 2, level)) == false) {
+			if (pTextureCubeMap->TransferTexture2DCompressed((GfxPixelFormat)texture->format(), GFX_CUBEMAP_POSITIVE_Y, level - baseLevel, 0, 0, texture->extent(level).x, texture->extent(level).y, texture->size(level), texture->data(0, 2, level)) == false) {
 				return false;
 			}
-			if (pTextureCubeMap->TransferTexture2DCompressed((GfxPixelFormat)texture->format(), GFX_TEXTURE_CUBEMAP_NEGATIVE_Y, level - baseLevel, 0, 0, texture->extent(level).x, texture->extent(level).y, texture->size(level), texture->data(0, 3, level)) == false) {
+			if (pTextureCubeMap->TransferTexture2DCompressed((GfxPixelFormat)texture->format(), GFX_CUBEMAP_NEGATIVE_Y, level - baseLevel, 0, 0, texture->extent(level).x, texture->extent(level).y, texture->size(level), texture->data(0, 3, level)) == false) {
 				return false;
 			}
-			if (pTextureCubeMap->TransferTexture2DCompressed((GfxPixelFormat)texture->format(), GFX_TEXTURE_CUBEMAP_POSITIVE_Z, level - baseLevel, 0, 0, texture->extent(level).x, texture->extent(level).y, texture->size(level), texture->data(0, 4, level)) == false) {
+			if (pTextureCubeMap->TransferTexture2DCompressed((GfxPixelFormat)texture->format(), GFX_CUBEMAP_POSITIVE_Z, level - baseLevel, 0, 0, texture->extent(level).x, texture->extent(level).y, texture->size(level), texture->data(0, 4, level)) == false) {
 				return false;
 			}
-			if (pTextureCubeMap->TransferTexture2DCompressed((GfxPixelFormat)texture->format(), GFX_TEXTURE_CUBEMAP_NEGATIVE_Z, level - baseLevel, 0, 0, texture->extent(level).x, texture->extent(level).y, texture->size(level), texture->data(0, 5, level)) == false) {
+			if (pTextureCubeMap->TransferTexture2DCompressed((GfxPixelFormat)texture->format(), GFX_CUBEMAP_NEGATIVE_Z, level - baseLevel, 0, 0, texture->extent(level).x, texture->extent(level).y, texture->size(level), texture->data(0, 5, level)) == false) {
 				return false;
 			}
 		}
 	}
 	else {
 		for (int level = baseLevel; level < baseLevel + numLevels; level++) {
-			if (pTextureCubeMap->TransferTexture2D((GfxPixelFormat)texture->format(), GFX_TEXTURE_CUBEMAP_POSITIVE_X, level - baseLevel, 0, 0, texture->extent(level).x, texture->extent(level).y, texture->size(level), texture->data(0, 0, level)) == false) {
+			if (pTextureCubeMap->TransferTexture2D((GfxPixelFormat)texture->format(), GFX_CUBEMAP_POSITIVE_X, level - baseLevel, 0, 0, texture->extent(level).x, texture->extent(level).y, texture->size(level), texture->data(0, 0, level)) == false) {
 				return false;
 			}
-			if (pTextureCubeMap->TransferTexture2D((GfxPixelFormat)texture->format(), GFX_TEXTURE_CUBEMAP_NEGATIVE_X, level - baseLevel, 0, 0, texture->extent(level).x, texture->extent(level).y, texture->size(level), texture->data(0, 1, level)) == false) {
+			if (pTextureCubeMap->TransferTexture2D((GfxPixelFormat)texture->format(), GFX_CUBEMAP_NEGATIVE_X, level - baseLevel, 0, 0, texture->extent(level).x, texture->extent(level).y, texture->size(level), texture->data(0, 1, level)) == false) {
 				return false;
 			}
-			if (pTextureCubeMap->TransferTexture2D((GfxPixelFormat)texture->format(), GFX_TEXTURE_CUBEMAP_POSITIVE_Y, level - baseLevel, 0, 0, texture->extent(level).x, texture->extent(level).y, texture->size(level), texture->data(0, 2, level)) == false) {
+			if (pTextureCubeMap->TransferTexture2D((GfxPixelFormat)texture->format(), GFX_CUBEMAP_POSITIVE_Y, level - baseLevel, 0, 0, texture->extent(level).x, texture->extent(level).y, texture->size(level), texture->data(0, 2, level)) == false) {
 				return false;
 			}
-			if (pTextureCubeMap->TransferTexture2D((GfxPixelFormat)texture->format(), GFX_TEXTURE_CUBEMAP_NEGATIVE_Y, level - baseLevel, 0, 0, texture->extent(level).x, texture->extent(level).y, texture->size(level), texture->data(0, 3, level)) == false) {
+			if (pTextureCubeMap->TransferTexture2D((GfxPixelFormat)texture->format(), GFX_CUBEMAP_NEGATIVE_Y, level - baseLevel, 0, 0, texture->extent(level).x, texture->extent(level).y, texture->size(level), texture->data(0, 3, level)) == false) {
 				return false;
 			}
-			if (pTextureCubeMap->TransferTexture2D((GfxPixelFormat)texture->format(), GFX_TEXTURE_CUBEMAP_POSITIVE_Z, level - baseLevel, 0, 0, texture->extent(level).x, texture->extent(level).y, texture->size(level), texture->data(0, 4, level)) == false) {
+			if (pTextureCubeMap->TransferTexture2D((GfxPixelFormat)texture->format(), GFX_CUBEMAP_POSITIVE_Z, level - baseLevel, 0, 0, texture->extent(level).x, texture->extent(level).y, texture->size(level), texture->data(0, 4, level)) == false) {
 				return false;
 			}
-			if (pTextureCubeMap->TransferTexture2D((GfxPixelFormat)texture->format(), GFX_TEXTURE_CUBEMAP_NEGATIVE_Z, level - baseLevel, 0, 0, texture->extent(level).x, texture->extent(level).y, texture->size(level), texture->data(0, 5, level)) == false) {
+			if (pTextureCubeMap->TransferTexture2D((GfxPixelFormat)texture->format(), GFX_CUBEMAP_NEGATIVE_Z, level - baseLevel, 0, 0, texture->extent(level).x, texture->extent(level).y, texture->size(level), texture->data(0, 5, level)) == false) {
 				return false;
 			}
 		}
@@ -166,7 +166,7 @@ static bool InternalLoadTextureCubeMap(CGfxTextureCubeMap* pTextureCubeMap, cons
 	return true;
 }
 
-static bool InternalLoadTextureCubeMapFace(CGfxTextureCubeMap* pTextureCubeMap, const gli::texture* texture, GfxTextureCubeMapFace face, int baseLevel, int numLevels)
+static bool InternalLoadTextureCubeMapFace(CGfxTextureCubeMap* pTextureCubeMap, const gli::texture* texture, GfxCubeMapFace face, int baseLevel, int numLevels)
 {
 	gli::gl GL(gli::gl::PROFILE_ES30);
 	gli::gl::format format = GL.translate(texture->format(), texture->swizzles());
@@ -273,7 +273,7 @@ bool CResourceLoader::LoadTextureCubeMap(const char* szFileName, CGfxTextureCube
 	return false;
 }
 
-bool CResourceLoader::LoadTextureCubeMapFace(const char* szFileName, GfxTextureCubeMapFace face, CGfxTextureCubeMap* pTextureCubeMap, int baseLevel, int numLevels)
+bool CResourceLoader::LoadTextureCubeMapFace(const char* szFileName, GfxCubeMapFace face, CGfxTextureCubeMap* pTextureCubeMap, int baseLevel, int numLevels)
 {
 	do {
 		CStream stream;

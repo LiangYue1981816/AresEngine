@@ -345,25 +345,25 @@ GLenum CGLES3Helper::TranslateTextureTarget(GfxTextureType type)
 	}
 }
 
-GLenum CGLES3Helper::TranslateTextureCubeMapFace(GfxTextureCubeMapFace face)
+GLenum CGLES3Helper::TranslateTextureCubeMapFace(GfxCubeMapFace face)
 {
 	switch ((int)face) {
-	case GFX_TEXTURE_CUBEMAP_POSITIVE_X:
+	case GFX_CUBEMAP_POSITIVE_X:
 		return GL_TEXTURE_CUBE_MAP_POSITIVE_X;
 
-	case GFX_TEXTURE_CUBEMAP_NEGATIVE_X:
+	case GFX_CUBEMAP_NEGATIVE_X:
 		return GL_TEXTURE_CUBE_MAP_NEGATIVE_X;
 
-	case GFX_TEXTURE_CUBEMAP_POSITIVE_Y:
+	case GFX_CUBEMAP_POSITIVE_Y:
 		return GL_TEXTURE_CUBE_MAP_POSITIVE_Y;
 
-	case GFX_TEXTURE_CUBEMAP_NEGATIVE_Y:
+	case GFX_CUBEMAP_NEGATIVE_Y:
 		return GL_TEXTURE_CUBE_MAP_NEGATIVE_Y;
 
-	case GFX_TEXTURE_CUBEMAP_POSITIVE_Z:
+	case GFX_CUBEMAP_POSITIVE_Z:
 		return GL_TEXTURE_CUBE_MAP_POSITIVE_Z;
 
-	case GFX_TEXTURE_CUBEMAP_NEGATIVE_Z:
+	case GFX_CUBEMAP_NEGATIVE_Z:
 		return GL_TEXTURE_CUBE_MAP_NEGATIVE_Z;
 
 	default:
