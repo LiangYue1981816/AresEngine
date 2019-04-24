@@ -56,7 +56,7 @@ int CGLES3Texture2DArray::GetLevels(void) const
 	return m_ptrTexture->GetLevels();
 }
 
-bool CGLES3Texture2DArray::Create(GfxPixelFormat format, int width, int height, int levels, int layers)
+bool CGLES3Texture2DArray::Create(GfxPixelFormat format, int width, int height, int layers, int levels)
 {
 	Destroy();
 	{

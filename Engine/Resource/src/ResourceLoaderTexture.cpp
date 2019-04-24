@@ -44,7 +44,7 @@ static bool InternalLoadTexture2DArray(CGfxTexture2DArray* pTexture2DArray, cons
 		baseLevel = texture->levels() - 1;
 	}
 
-	if (pTexture2DArray->Create((GfxPixelFormat)texture->format(), texture->extent(baseLevel).x, texture->extent(baseLevel).y, (int)(texture->levels() - baseLevel), (int)texture->layers()) == false) {
+	if (pTexture2DArray->Create((GfxPixelFormat)texture->format(), texture->extent(baseLevel).x, texture->extent(baseLevel).y, (int)texture->layers(), (int)(texture->levels() - baseLevel)) == false) {
 		return false;
 	}
 

@@ -30,7 +30,7 @@ public:
 	virtual int GetLevels(void) const = 0;
 
 public:
-	virtual bool Create(GfxPixelFormat format, int width, int height, int levels, int layers) = 0;
+	virtual bool Create(GfxPixelFormat format, int width, int height, int layers, int levels) = 0;
 	virtual void Destroy(void) = 0;
 
 public:

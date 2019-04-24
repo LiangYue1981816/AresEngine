@@ -26,7 +26,7 @@ public:
 	int GetLevels(void) const;
 
 public:
-	bool Create(GfxPixelFormat format, int width, int height, int levels, int layers);
+	bool Create(GfxPixelFormat format, int width, int height, int layers, int levels);
 	void Destroy(void);
 
 public:
