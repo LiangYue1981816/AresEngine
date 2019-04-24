@@ -44,7 +44,6 @@ public:
 
 private:
 	int m_indexQueue;
-	CGfxCommandBufferPtr m_ptrCommandBuffer;
 
 	CGfxDescriptorSetPtr m_ptrDescriptorSetEngine;
 	CGfxDescriptorSetPtr m_ptrDescriptorSetCamera;
@@ -56,6 +55,9 @@ private:
 
 	CGfxPipelineGraphics* m_pPipeline;
 	uint32_t m_namePass;
+
+private:
+	CGfxCommandBufferPtr m_ptrCommandBuffer;
 };
 
 
