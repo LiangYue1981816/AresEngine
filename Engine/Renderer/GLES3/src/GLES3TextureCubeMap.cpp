@@ -86,9 +86,9 @@ void CGLES3TextureCubeMap::Destroy(void)
 	m_ptrTexture->Destroy();
 }
 
-bool CGLES3TextureCubeMap::TransferTexture2D(GfxPixelFormat format, GfxTextureCubeMapFace face, int level, int xoffset, int yoffset, int width, int height, GfxDataType type, uint32_t size, const void* data)
+bool CGLES3TextureCubeMap::TransferTexture2D(GfxPixelFormat format, GfxTextureCubeMapFace face, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
 {
-	if (m_ptrTexture->TransferTextureCubeMap(format, face, level, xoffset, yoffset, width, height, type, size, data)) {
+	if (m_ptrTexture->TransferTextureCubeMap(format, face, level, xoffset, yoffset, width, height, size, data)) {
 		CGfxProfiler::DecTextureDataSize(m_size[face][level]);
 		m_size[face][level] = size;
 		CGfxProfiler::IncTextureDataSize(m_size[face][level]);

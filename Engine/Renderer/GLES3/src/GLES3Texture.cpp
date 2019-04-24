@@ -154,7 +154,7 @@ void CGLES3Texture::Destroy(void)
 	m_samples = 0;
 }
 
-bool CGLES3Texture::TransferTexture2D(GfxPixelFormat format, int level, int xoffset, int yoffset, int width, int height, GfxDataType type, uint32_t size, const void* data)
+bool CGLES3Texture::TransferTexture2D(GfxPixelFormat format, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
 {
 	if (m_bExtern == true) {
 		return false;
@@ -184,7 +184,7 @@ bool CGLES3Texture::TransferTexture2D(GfxPixelFormat format, int level, int xoff
 	gli::gl::format glFormat = GL.translate((gli::format)format);
 
 	glBindTexture(m_target, m_texture);
-	glTexSubImage2D(m_target, level, xoffset, yoffset, width, height, glFormat.External, CGLES3Helper::TranslateDataType(type), data);
+	glTexSubImage2D(m_target, level, xoffset, yoffset, width, height, glFormat.External, GL_UNSIGNED_BYTE, data);
 	glBindTexture(m_target, 0);
 
 	return true;
@@ -226,7 +226,7 @@ bool CGLES3Texture::TransferTexture2DCompressed(GfxPixelFormat format, int level
 	return true;
 }
 
-bool CGLES3Texture::TransferTexture2DArray(GfxPixelFormat format, int layer, int level, int xoffset, int yoffset, int width, int height, GfxDataType type, uint32_t size, const void* data)
+bool CGLES3Texture::TransferTexture2DArray(GfxPixelFormat format, int layer, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
 {
 	if (m_bExtern == true) {
 		return false;
@@ -260,7 +260,7 @@ bool CGLES3Texture::TransferTexture2DArray(GfxPixelFormat format, int layer, int
 	gli::gl::format glFormat = GL.translate((gli::format)format);
 
 	glBindTexture(m_target, m_texture);
-	glTexSubImage3D(m_target, level, xoffset, yoffset, layer, width, height, 1, glFormat.External, CGLES3Helper::TranslateDataType(type), data);
+	glTexSubImage3D(m_target, level, xoffset, yoffset, layer, width, height, 1, glFormat.External, GL_UNSIGNED_BYTE, data);
 	glBindTexture(m_target, 0);
 
 	return true;
@@ -306,7 +306,7 @@ bool CGLES3Texture::TransferTexture2DArrayCompressed(GfxPixelFormat format, int 
 	return true;
 }
 
-bool CGLES3Texture::TransferTextureCubeMap(GfxPixelFormat format, GfxTextureCubeMapFace face, int level, int xoffset, int yoffset, int width, int height, GfxDataType type, uint32_t size, const void* data)
+bool CGLES3Texture::TransferTextureCubeMap(GfxPixelFormat format, GfxTextureCubeMapFace face, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
 {
 	if (m_bExtern == true) {
 		return false;
@@ -336,7 +336,7 @@ bool CGLES3Texture::TransferTextureCubeMap(GfxPixelFormat format, GfxTextureCube
 	gli::gl::format glFormat = GL.translate((gli::format)format);
 
 	glBindTexture(m_target, m_texture);
-	glTexSubImage2D(CGLES3Helper::TranslateTextureCubeMapFace(face), level, xoffset, yoffset, width, height, glFormat.External, CGLES3Helper::TranslateDataType(type), data);
+	glTexSubImage2D(CGLES3Helper::TranslateTextureCubeMapFace(face), level, xoffset, yoffset, width, height, glFormat.External, GL_UNSIGNED_BYTE, data);
 	glBindTexture(m_target, 0);
 
 	return true;

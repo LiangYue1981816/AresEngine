@@ -91,9 +91,9 @@ void CGLES3Texture2D::Destroy(void)
 	m_ptrTexture->Destroy();
 }
 
-bool CGLES3Texture2D::TransferTexture2D(GfxPixelFormat format, int level, int xoffset, int yoffset, int width, int height, GfxDataType type, uint32_t size, const void* data)
+bool CGLES3Texture2D::TransferTexture2D(GfxPixelFormat format, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
 {
-	if (m_ptrTexture->TransferTexture2D(format, level, xoffset, yoffset, width, height, type, size, data)) {
+	if (m_ptrTexture->TransferTexture2D(format, level, xoffset, yoffset, width, height, size, data)) {
 		CGfxProfiler::DecTextureDataSize(m_size[level]);
 		m_size[level] = size;
 		CGfxProfiler::IncTextureDataSize(m_size[level]);

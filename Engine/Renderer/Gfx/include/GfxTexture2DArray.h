@@ -34,7 +34,7 @@ public:
 	virtual void Destroy(void) = 0;
 
 public:
-	virtual bool TransferTexture2D(GfxPixelFormat format, int layer, int level, int xoffset, int yoffset, int width, int height, GfxDataType type, uint32_t size, const void* data) = 0;
+	virtual bool TransferTexture2D(GfxPixelFormat format, int layer, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data) = 0;
 	virtual bool TransferTexture2DCompressed(GfxPixelFormat format, int layer, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data) = 0;
 
 

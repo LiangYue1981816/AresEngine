@@ -28,7 +28,7 @@ static bool InternalLoadTexture2D(CGfxTexture2D* pTexture2D, const gli::texture*
 	}
 	else {
 		for (int level = baseLevel; level < baseLevel + numLevels; level++) {
-			if (pTexture2D->TransferTexture2D((GfxPixelFormat)texture->format(), level - baseLevel, 0, 0, texture->extent(level).x, texture->extent(level).y, GFX_DATA_UNSIGNED_BYTE, texture->size(level), texture->data(0, 0, level)) == false) {
+			if (pTexture2D->TransferTexture2D((GfxPixelFormat)texture->format(), level - baseLevel, 0, 0, texture->extent(level).x, texture->extent(level).y, texture->size(level), texture->data(0, 0, level)) == false) {
 				return false;
 			}
 		}
@@ -64,7 +64,7 @@ static bool InternalLoadTexture2DArray(CGfxTexture2DArray* pTexture2DArray, cons
 	else {
 		for (int layer = 0; layer < texture->layers(); layer++) {
 			for (int level = baseLevel; level < baseLevel + numLevels; level++) {
-				if (pTexture2DArray->TransferTexture2D((GfxPixelFormat)texture->format(), layer, level - baseLevel, 0, 0, texture->extent(level).x, texture->extent(level).y, GFX_DATA_UNSIGNED_BYTE, texture->size(level), texture->data(layer, 0, level)) == false) {
+				if (pTexture2DArray->TransferTexture2D((GfxPixelFormat)texture->format(), layer, level - baseLevel, 0, 0, texture->extent(level).x, texture->extent(level).y, texture->size(level), texture->data(layer, 0, level)) == false) {
 					return false;
 				}
 			}
@@ -94,7 +94,7 @@ static bool InternalLoadTexture2DArrayLayer(CGfxTexture2DArray* pTexture2DArray,
 	}
 	else {
 		for (int level = baseLevel; level < baseLevel + numLevels; level++) {
-			if (pTexture2DArray->TransferTexture2D((GfxPixelFormat)texture->format(), layer, level - baseLevel, 0, 0, texture->extent(level).x, texture->extent(level).y, GFX_DATA_UNSIGNED_BYTE, texture->size(level), texture->data(0, 0, level)) == false) {
+			if (pTexture2DArray->TransferTexture2D((GfxPixelFormat)texture->format(), layer, level - baseLevel, 0, 0, texture->extent(level).x, texture->extent(level).y, texture->size(level), texture->data(0, 0, level)) == false) {
 				return false;
 			}
 		}
@@ -142,22 +142,22 @@ static bool InternalLoadTextureCubeMap(CGfxTextureCubeMap* pTextureCubeMap, cons
 	}
 	else {
 		for (int level = baseLevel; level < baseLevel + numLevels; level++) {
-			if (pTextureCubeMap->TransferTexture2D((GfxPixelFormat)texture->format(), GFX_TEXTURE_CUBEMAP_POSITIVE_X, level - baseLevel, 0, 0, texture->extent(level).x, texture->extent(level).y, GFX_DATA_UNSIGNED_BYTE, texture->size(level), texture->data(0, 0, level)) == false) {
+			if (pTextureCubeMap->TransferTexture2D((GfxPixelFormat)texture->format(), GFX_TEXTURE_CUBEMAP_POSITIVE_X, level - baseLevel, 0, 0, texture->extent(level).x, texture->extent(level).y, texture->size(level), texture->data(0, 0, level)) == false) {
 				return false;
 			}
-			if (pTextureCubeMap->TransferTexture2D((GfxPixelFormat)texture->format(), GFX_TEXTURE_CUBEMAP_NEGATIVE_X, level - baseLevel, 0, 0, texture->extent(level).x, texture->extent(level).y, GFX_DATA_UNSIGNED_BYTE, texture->size(level), texture->data(0, 1, level)) == false) {
+			if (pTextureCubeMap->TransferTexture2D((GfxPixelFormat)texture->format(), GFX_TEXTURE_CUBEMAP_NEGATIVE_X, level - baseLevel, 0, 0, texture->extent(level).x, texture->extent(level).y, texture->size(level), texture->data(0, 1, level)) == false) {
 				return false;
 			}
-			if (pTextureCubeMap->TransferTexture2D((GfxPixelFormat)texture->format(), GFX_TEXTURE_CUBEMAP_POSITIVE_Y, level - baseLevel, 0, 0, texture->extent(level).x, texture->extent(level).y, GFX_DATA_UNSIGNED_BYTE, texture->size(level), texture->data(0, 2, level)) == false) {
+			if (pTextureCubeMap->TransferTexture2D((GfxPixelFormat)texture->format(), GFX_TEXTURE_CUBEMAP_POSITIVE_Y, level - baseLevel, 0, 0, texture->extent(level).x, texture->extent(level).y, texture->size(level), texture->data(0, 2, level)) == false) {
 				return false;
 			}
-			if (pTextureCubeMap->TransferTexture2D((GfxPixelFormat)texture->format(), GFX_TEXTURE_CUBEMAP_NEGATIVE_Y, level - baseLevel, 0, 0, texture->extent(level).x, texture->extent(level).y, GFX_DATA_UNSIGNED_BYTE, texture->size(level), texture->data(0, 3, level)) == false) {
+			if (pTextureCubeMap->TransferTexture2D((GfxPixelFormat)texture->format(), GFX_TEXTURE_CUBEMAP_NEGATIVE_Y, level - baseLevel, 0, 0, texture->extent(level).x, texture->extent(level).y, texture->size(level), texture->data(0, 3, level)) == false) {
 				return false;
 			}
-			if (pTextureCubeMap->TransferTexture2D((GfxPixelFormat)texture->format(), GFX_TEXTURE_CUBEMAP_POSITIVE_Z, level - baseLevel, 0, 0, texture->extent(level).x, texture->extent(level).y, GFX_DATA_UNSIGNED_BYTE, texture->size(level), texture->data(0, 4, level)) == false) {
+			if (pTextureCubeMap->TransferTexture2D((GfxPixelFormat)texture->format(), GFX_TEXTURE_CUBEMAP_POSITIVE_Z, level - baseLevel, 0, 0, texture->extent(level).x, texture->extent(level).y, texture->size(level), texture->data(0, 4, level)) == false) {
 				return false;
 			}
-			if (pTextureCubeMap->TransferTexture2D((GfxPixelFormat)texture->format(), GFX_TEXTURE_CUBEMAP_NEGATIVE_Z, level - baseLevel, 0, 0, texture->extent(level).x, texture->extent(level).y, GFX_DATA_UNSIGNED_BYTE, texture->size(level), texture->data(0, 5, level)) == false) {
+			if (pTextureCubeMap->TransferTexture2D((GfxPixelFormat)texture->format(), GFX_TEXTURE_CUBEMAP_NEGATIVE_Z, level - baseLevel, 0, 0, texture->extent(level).x, texture->extent(level).y, texture->size(level), texture->data(0, 5, level)) == false) {
 				return false;
 			}
 		}
@@ -186,7 +186,7 @@ static bool InternalLoadTextureCubeMapFace(CGfxTextureCubeMap* pTextureCubeMap, 
 	}
 	else {
 		for (int level = baseLevel; level < baseLevel + numLevels; level++) {
-			if (pTextureCubeMap->TransferTexture2D((GfxPixelFormat)texture->format(), face, level - baseLevel, 0, 0, texture->extent(level).x, texture->extent(level).y, GFX_DATA_UNSIGNED_BYTE, texture->size(level), texture->data(0, 0, level)) == false) {
+			if (pTextureCubeMap->TransferTexture2D((GfxPixelFormat)texture->format(), face, level - baseLevel, 0, 0, texture->extent(level).x, texture->extent(level).y, texture->size(level), texture->data(0, 0, level)) == false) {
 				return false;
 			}
 		}
