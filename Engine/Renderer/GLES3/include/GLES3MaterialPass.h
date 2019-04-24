@@ -25,9 +25,9 @@ public:
 	bool SetTexture2D(uint32_t name, const CGfxTexture2DPtr ptrTexture);
 	bool SetTexture2DArray(uint32_t name, const CGfxTexture2DArrayPtr ptrTexture);
 	bool SetTextureCubeMap(uint32_t name, const CGfxTextureCubeMapPtr ptrTexture);
-	bool SetTexture2D(uint32_t name, const char* szFileName, uint32_t baseLevel = 0);
-	bool SetTexture2DArray(uint32_t name, const char* szFileName, uint32_t baseLevel = 0);
-	bool SetTextureCubeMap(uint32_t name, const char* szFileName, uint32_t baseLevel = 0);
+	bool SetTexture2D(uint32_t name, const char* szFileName, int baseLevel = 0);
+	bool SetTexture2DArray(uint32_t name, const char* szFileName, int baseLevel = 0);
+	bool SetTextureCubeMap(uint32_t name, const char* szFileName, int baseLevel = 0);
 
 	bool SetUniformVec1(uint32_t name, float v0);
 	bool SetUniformVec2(uint32_t name, float v0, float v1);

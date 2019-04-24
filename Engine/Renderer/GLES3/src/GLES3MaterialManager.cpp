@@ -41,7 +41,7 @@ CGLES3Material* CGLES3MaterialManager::Create(uint32_t name)
 	}
 }
 
-CGLES3Material* CGLES3MaterialManager::Create(const char* szFileName, uint32_t vertexBinding, uint32_t instanceBinding, uint32_t baseLevel)
+CGLES3Material* CGLES3MaterialManager::Create(const char* szFileName, uint32_t vertexBinding, uint32_t instanceBinding, int baseLevel)
 {
 	uint32_t name = HashValue(szFileName);
 

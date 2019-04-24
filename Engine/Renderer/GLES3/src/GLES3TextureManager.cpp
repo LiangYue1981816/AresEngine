@@ -41,7 +41,7 @@ CGLES3Texture2D* CGLES3Texture2DManager::Create(uint32_t name)
 	}
 }
 
-CGLES3Texture2D* CGLES3Texture2DManager::Create(const char* szFileName, uint32_t baseLevel)
+CGLES3Texture2D* CGLES3Texture2DManager::Create(const char* szFileName, int baseLevel)
 {
 	uint32_t name = HashValue(szFileName);
 
@@ -109,7 +109,7 @@ CGLES3Texture2DArray* CGLES3Texture2DArrayManager::Create(uint32_t name)
 	}
 }
 
-CGLES3Texture2DArray* CGLES3Texture2DArrayManager::Create(const char* szFileName, uint32_t baseLevel)
+CGLES3Texture2DArray* CGLES3Texture2DArrayManager::Create(const char* szFileName, int baseLevel)
 {
 	uint32_t name = HashValue(szFileName);
 
@@ -177,7 +177,7 @@ CGLES3TextureCubeMap* CGLES3TextureCubeMapManager::Create(uint32_t name)
 	}
 }
 
-CGLES3TextureCubeMap* CGLES3TextureCubeMapManager::Create(const char* szFileName, uint32_t baseLevel)
+CGLES3TextureCubeMap* CGLES3TextureCubeMapManager::Create(const char* szFileName, int baseLevel)
 {
 	uint32_t name = HashValue(szFileName);
 

@@ -76,7 +76,7 @@ CGfxTexture2DPtr CVKRenderer::NewTexture2D(uint32_t name)
 	return nullptr;
 }
 
-CGfxTexture2DPtr CVKRenderer::NewTexture2D(const char* szFileName, uint32_t baseLevel)
+CGfxTexture2DPtr CVKRenderer::NewTexture2D(const char* szFileName, int baseLevel)
 {
 	return nullptr;
 }
@@ -91,7 +91,7 @@ CGfxTexture2DArrayPtr CVKRenderer::NewTexture2DArray(uint32_t name)
 	return nullptr;
 }
 
-CGfxTexture2DArrayPtr CVKRenderer::NewTexture2DArray(const char* szFileName, uint32_t baseLevel)
+CGfxTexture2DArrayPtr CVKRenderer::NewTexture2DArray(const char* szFileName, int baseLevel)
 {
 	return nullptr;
 }
@@ -106,7 +106,7 @@ CGfxTextureCubeMapPtr CVKRenderer::NewTextureCubeMap(uint32_t name)
 	return nullptr;
 }
 
-CGfxTextureCubeMapPtr CVKRenderer::NewTextureCubeMap(const char* szFileName, uint32_t baseLevel)
+CGfxTextureCubeMapPtr CVKRenderer::NewTextureCubeMap(const char* szFileName, int baseLevel)
 {
 	return nullptr;
 }
@@ -161,7 +161,7 @@ CGfxMaterialPtr CVKRenderer::NewMaterial(uint32_t name)
 	return nullptr;
 }
 
-CGfxMaterialPtr CVKRenderer::NewMaterial(const char* szFileName, uint32_t vertexBinding, uint32_t instanceBinding, uint32_t baseLevel)
+CGfxMaterialPtr CVKRenderer::NewMaterial(const char* szFileName, uint32_t vertexBinding, uint32_t instanceBinding, int baseLevel)
 {
 	return nullptr;
 }

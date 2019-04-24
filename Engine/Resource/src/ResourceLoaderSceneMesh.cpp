@@ -6,7 +6,7 @@
 #include "FileManager.h"
 
 
-static bool InternalLoadDraw(TiXmlNode* pNode, const CGfxMeshPtr ptrMesh, CSceneNode* pCurrentSceneNode, uint32_t instanceFormat, uint32_t vertexBinding, uint32_t instanceBinding, uint32_t baseLevel)
+static bool InternalLoadDraw(TiXmlNode* pNode, const CGfxMeshPtr ptrMesh, CSceneNode* pCurrentSceneNode, uint32_t instanceFormat, uint32_t vertexBinding, uint32_t instanceBinding, int baseLevel)
 {
 	int err = 0;
 
@@ -30,7 +30,7 @@ ERR:
 	return false;
 }
 
-static bool InternalLoadNode(TiXmlNode* pNode, const CGfxMeshPtr ptrMesh, CSceneNode* pParentSceneNode, uint32_t instanceFormat, uint32_t vertexBinding, uint32_t instanceBinding, uint32_t baseLevel)
+static bool InternalLoadNode(TiXmlNode* pNode, const CGfxMeshPtr ptrMesh, CSceneNode* pParentSceneNode, uint32_t instanceFormat, uint32_t vertexBinding, uint32_t instanceBinding, int baseLevel)
 {
 	int err = 0;
 	CSceneNode* pCurrentSceneNode = nullptr;
@@ -71,7 +71,7 @@ ERR:
 	return false;
 }
 
-static bool InternalLoadMesh(TiXmlNode* pMeshNode, CSceneNode* pParentSceneNode, uint32_t instanceFormat, uint32_t vertexBinding, uint32_t instanceBinding, uint32_t baseLevel)
+static bool InternalLoadMesh(TiXmlNode* pMeshNode, CSceneNode* pParentSceneNode, uint32_t instanceFormat, uint32_t vertexBinding, uint32_t instanceBinding, int baseLevel)
 {
 	int err = 0;
 	{
@@ -92,7 +92,7 @@ ERR:
 	return false;
 }
 
-static CSceneNode* InternalLoadMesh(const char* szFileName, CSceneNode* pParentSceneNode, uint32_t instanceFormat, uint32_t vertexBinding, uint32_t instanceBinding, uint32_t baseLevel)
+static CSceneNode* InternalLoadMesh(const char* szFileName, CSceneNode* pParentSceneNode, uint32_t instanceFormat, uint32_t vertexBinding, uint32_t instanceBinding, int baseLevel)
 {
 	/*
 	<Mesh mesh="sponza.mesh">
@@ -126,7 +126,7 @@ ERR:
 	return nullptr;
 }
 
-CSceneNode* CResourceLoader::LoadSceneMesh(const char* szFileName, CSceneNode* pParentSceneNode, uint32_t instanceFormat, uint32_t vertexBinding, uint32_t instanceBinding, uint32_t baseLevel)
+CSceneNode* CResourceLoader::LoadSceneMesh(const char* szFileName, CSceneNode* pParentSceneNode, uint32_t instanceFormat, uint32_t vertexBinding, uint32_t instanceBinding, int baseLevel)
 {
 	return InternalLoadMesh(szFileName, pParentSceneNode, instanceFormat, vertexBinding, instanceBinding, baseLevel);
 }

@@ -133,7 +133,7 @@ CGfxTexture2DPtr CGLES3Renderer::NewTexture2D(uint32_t name)
 	return m_pTexture2DManager->Create(name);
 }
 
-CGfxTexture2DPtr CGLES3Renderer::NewTexture2D(const char* szFileName, uint32_t baseLevel)
+CGfxTexture2DPtr CGLES3Renderer::NewTexture2D(const char* szFileName, int baseLevel)
 {
 	return m_pTexture2DManager->Create(szFileName, baseLevel);
 }
@@ -148,7 +148,7 @@ CGfxTexture2DArrayPtr CGLES3Renderer::NewTexture2DArray(uint32_t name)
 	return m_pTexture2DArrayManager->Create(name);
 }
 
-CGfxTexture2DArrayPtr CGLES3Renderer::NewTexture2DArray(const char* szFileName, uint32_t baseLevel)
+CGfxTexture2DArrayPtr CGLES3Renderer::NewTexture2DArray(const char* szFileName, int baseLevel)
 {
 	return m_pTexture2DArrayManager->Create(szFileName, baseLevel);
 }
@@ -163,7 +163,7 @@ CGfxTextureCubeMapPtr CGLES3Renderer::NewTextureCubeMap(uint32_t name)
 	return m_pTextureCubeMapManager->Create(name);
 }
 
-CGfxTextureCubeMapPtr CGLES3Renderer::NewTextureCubeMap(const char* szFileName, uint32_t baseLevel)
+CGfxTextureCubeMapPtr CGLES3Renderer::NewTextureCubeMap(const char* szFileName, int baseLevel)
 {
 	return m_pTextureCubeMapManager->Create(szFileName, baseLevel);
 }
@@ -218,7 +218,7 @@ CGfxMaterialPtr CGLES3Renderer::NewMaterial(uint32_t name)
 	return m_pMaterialManager->Create(name);
 }
 
-CGfxMaterialPtr CGLES3Renderer::NewMaterial(const char* szFileName, uint32_t vertexBinding, uint32_t instanceBinding, uint32_t baseLevel)
+CGfxMaterialPtr CGLES3Renderer::NewMaterial(const char* szFileName, uint32_t vertexBinding, uint32_t instanceBinding, int baseLevel)
 {
 	return m_pMaterialManager->Create(szFileName, vertexBinding, instanceBinding, baseLevel);
 }

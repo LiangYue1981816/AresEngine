@@ -347,7 +347,7 @@ ERR:
 	return false;
 }
 
-static bool InternalLoadTexture2D(TiXmlNode* pPassNode, CGfxMaterialPass* pPass, uint32_t baseLevel)
+static bool InternalLoadTexture2D(TiXmlNode* pPassNode, CGfxMaterialPass* pPass, int baseLevel)
 {
 	int err = 0;
 
@@ -380,7 +380,7 @@ ERR:
 	return false;
 }
 
-static bool InternalLoadTexture2DArray(TiXmlNode* pPassNode, CGfxMaterialPass* pPass, uint32_t baseLevel)
+static bool InternalLoadTexture2DArray(TiXmlNode* pPassNode, CGfxMaterialPass* pPass, int baseLevel)
 {
 	int err = 0;
 
@@ -413,7 +413,7 @@ ERR:
 	return false;
 }
 
-static bool InternalLoadTextureCubeMap(TiXmlNode* pPassNode, CGfxMaterialPass* pPass, uint32_t baseLevel)
+static bool InternalLoadTextureCubeMap(TiXmlNode* pPassNode, CGfxMaterialPass* pPass, int baseLevel)
 {
 	int err = 0;
 
@@ -558,7 +558,7 @@ ERR:
 	return false;
 }
 
-static bool InternalLoadPass(TiXmlNode* pPassNode, CGfxMaterialPass* pPass, uint32_t vertexBinding, uint32_t instanceBinding, uint32_t baseLevel)
+static bool InternalLoadPass(TiXmlNode* pPassNode, CGfxMaterialPass* pPass, uint32_t vertexBinding, uint32_t instanceBinding, int baseLevel)
 {
 	int err = 0;
 
@@ -581,7 +581,7 @@ ERR:
 }
 
 
-bool CResourceLoader::LoadMaterial(const char* szFileName, CGfxMaterial* pMaterial, uint32_t vertexBinding, uint32_t instanceBinding, uint32_t baseLevel)
+bool CResourceLoader::LoadMaterial(const char* szFileName, CGfxMaterial* pMaterial, uint32_t vertexBinding, uint32_t instanceBinding, int baseLevel)
 {
 	//<Material>
 	//	<Pass name="">
