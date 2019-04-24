@@ -26,9 +26,8 @@ private:
 	int GetSamples(void) const;
 
 private:
-	bool CreateView(VkImageView vkImageView);
-	bool CreateView(VkImageViewType viewType, VkImageAspectFlags aspectMask, VkFormat format, int levels, int layers);
-	bool CreateImage(VkImageType imageType, VkImageViewType viewType, VkFormat format, int width, int height, int layers, int levels, VkSampleCountFlagBits samples, VkImageTiling imageTiling, VkImageUsageFlags imageUsageFlags);
+	bool Create(VkImageView vkImageView, int width, int height, int layers, int levels, int samples);
+	bool Create(VkImageAspectFlags aspectMask, VkImageViewType viewType, VkFormat format, int width, int height, int layers, int levels, int samples, VkImageTiling imageTiling, VkImageUsageFlags imageUsageFlags);
 	void Destroy(void);
 
 private:
