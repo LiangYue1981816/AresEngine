@@ -5,8 +5,8 @@ CVKTexture::CVKTexture(CVKDevice* pDevice)
 	: m_pDevice(pDevice)
 
 	: m_bExtern(false)
-	, m_vkImageView(VK_NULL_HANDLE)
 	, m_vkImage(VK_NULL_HANDLE)
+	, m_vkImageView(VK_NULL_HANDLE)
 	, m_pMemory(nullptr)
 
 	, m_width(0)
