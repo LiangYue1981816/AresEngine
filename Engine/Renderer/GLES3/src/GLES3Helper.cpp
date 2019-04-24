@@ -345,7 +345,7 @@ GLenum CGLES3Helper::TranslateTextureTarget(GfxTextureType type)
 	}
 }
 
-GLenum CGLES3Helper::TranslateTextureCubeMapFace(GfxCubeMapFace face)
+GLenum CGLES3Helper::TranslateTextureTarget(GfxCubeMapFace face)
 {
 	switch ((int)face) {
 	case GFX_CUBEMAP_POSITIVE_X:

@@ -22,7 +22,7 @@ public:
 	static GLenum TranslateMinFilter(GfxFilter minFilter, GfxSamplerMipmapMode mipmapMode);
 	static GLenum TranslateAddressMode(GfxSamplerAddressMode addressMode);
 	static GLenum TranslateTextureTarget(GfxTextureType type);
-	static GLenum TranslateTextureCubeMapFace(GfxCubeMapFace face);
+	static GLenum TranslateTextureTarget(GfxCubeMapFace face);
 
 
 private:

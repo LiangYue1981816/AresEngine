@@ -336,7 +336,7 @@ bool CGLES3Texture::TransferTextureCubeMap(GfxPixelFormat format, GfxCubeMapFace
 	gli::gl::format glFormat = GL.translate((gli::format)format);
 
 	glBindTexture(m_target, m_texture);
-	glTexSubImage2D(CGLES3Helper::TranslateTextureCubeMapFace(face), level, xoffset, yoffset, width, height, glFormat.External, GL_UNSIGNED_BYTE, data);
+	glTexSubImage2D(CGLES3Helper::TranslateTextureTarget(face), level, xoffset, yoffset, width, height, glFormat.External, GL_UNSIGNED_BYTE, data);
 	glBindTexture(m_target, 0);
 
 	return true;
@@ -372,7 +372,7 @@ bool CGLES3Texture::TransferTextureCubeMapCompressed(GfxPixelFormat format, GfxC
 	gli::gl::format glFormat = GL.translate((gli::format)format);
 
 	glBindTexture(m_target, m_texture);
-	glCompressedTexSubImage2D(CGLES3Helper::TranslateTextureCubeMapFace(face), level, xoffset, yoffset, width, height, glFormat.Internal, size, data);
+	glCompressedTexSubImage2D(CGLES3Helper::TranslateTextureTarget(face), level, xoffset, yoffset, width, height, glFormat.Internal, size, data);
 	glBindTexture(m_target, 0);
 
 	return true;
