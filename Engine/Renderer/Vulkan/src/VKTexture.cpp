@@ -75,7 +75,7 @@ bool CVKTexture::Create(GfxTextureType type, VkImageView vkImageView, int width,
 {
 	Destroy();
 
-	m_bExtern = false;
+	m_bExtern = true;
 	m_vkImage = VK_NULL_HANDLE;
 	m_vkImageView = vkImageView;
 	m_pMemory = nullptr;

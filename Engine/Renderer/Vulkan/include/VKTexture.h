@@ -46,8 +46,10 @@ private:
 
 private:
 	bool m_bExtern;
+
 	VkImage m_vkImage;
 	VkImageView m_vkImageView;
+
 	CVKMemory* m_pMemory;
 
 private:
