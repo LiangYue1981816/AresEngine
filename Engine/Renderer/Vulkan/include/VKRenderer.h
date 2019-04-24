@@ -17,12 +17,9 @@
 #include "VKMemoryAllocator.h"
 #include "VKMemoryManager.h"
 
-#include "VKImage.h"
 #include "VKBuffer.h"
-#include "VKTexture.h"
+//#include "VKTexture.h"
 /*
-#include "VKImage.h"
-
 #include "VKSwapChain.h"
 #include "VKRenderPass.h"
 #include "VKRenderPassManager.h"
