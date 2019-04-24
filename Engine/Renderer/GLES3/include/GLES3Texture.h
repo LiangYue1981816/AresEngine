@@ -51,6 +51,7 @@ private:
 	uint32_t m_texture;
 
 private:
+	GfxPixelFormat m_format;
 	int m_width;
 	int m_height;
 	int m_layers;

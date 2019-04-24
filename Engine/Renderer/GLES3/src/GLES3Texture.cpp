@@ -6,6 +6,7 @@ CGLES3Texture::CGLES3Texture(void)
 	, m_target(0)
 	, m_texture(0)
 
+	, m_format(GFX_PIXELFORMAT_UNDEFINED)
 	, m_width(0)
 	, m_height(0)
 	, m_layers(0)
@@ -85,6 +86,7 @@ bool CGLES3Texture::Create(uint32_t target, GfxPixelFormat format, int width, in
 	m_target = target;
 	m_texture = 0;
 
+	m_format = format;
 	m_width = width;
 	m_height = height;
 	m_layers = layers;
@@ -165,6 +167,10 @@ bool CGLES3Texture::TransferTexture2D(GfxPixelFormat format, int level, int xoff
 		return false;
 	}
 
+	if (m_format != format) {
+		return false;
+	}
+
 	if (m_levels < level) {
 		return false;
 	}
@@ -197,6 +203,10 @@ bool CGLES3Texture::TransferTexture2DCompressed(GfxPixelFormat format, int level
 		return false;
 	}
 
+	if (m_format != format) {
+		return false;
+	}
+
 	if (m_levels < level) {
 		return false;
 	}
@@ -226,6 +236,10 @@ bool CGLES3Texture::TransferTexture2DArray(GfxPixelFormat format, int layer, int
 	}
 
 	if (m_texture == 0) {
+		return false;
+	}
+
+	if (m_format != format) {
 		return false;
 	}
 
@@ -265,6 +279,10 @@ bool CGLES3Texture::TransferTexture2DArrayCompressed(GfxPixelFormat format, int 
 		return false;
 	}
 
+	if (m_format != format) {
+		return false;
+	}
+
 	if (m_layers < layer) {
 		return false;
 	}
@@ -301,6 +319,10 @@ bool CGLES3Texture::TransferTextureCubeMap(GfxPixelFormat format, GfxTextureCube
 		return false;
 	}
 
+	if (m_format != format) {
+		return false;
+	}
+
 	if (m_levels < level) {
 		return false;
 	}
@@ -330,6 +352,10 @@ bool CGLES3Texture::TransferTextureCubeMapCompressed(GfxPixelFormat format, GfxT
 	}
 
 	if (m_texture == 0) {
+		return false;
+	}
+
+	if (m_format != format) {
 		return false;
 	}
 
