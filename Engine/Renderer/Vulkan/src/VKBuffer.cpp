@@ -48,16 +48,16 @@ VkDeviceSize CVKBuffer::GetSize(void) const
 bool CVKBuffer::BufferData(size_t offset, size_t size, const void* data)
 {
 	if (m_pMemory->IsHostVisible()) {
-		void* addr = nullptr;
-		CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->BeginMap(offset, size, &addr));
-		{
-			memcpy(addr, data, size);
-		}
-		CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->Flush(offset, size));
+		CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->BeginMap(offset, size));
+		CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->CopyData(0, size, data));
 		CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->EndMap());
 	}
 	else {
-		m_transferRegions.emplace_back(VkBufferCopy{ m_transferBuffers.size(), offset, size });
+		VkBufferCopy region = {};
+		region.srcOffset = m_transferBuffers.size();
+		region.dstOffset = offset;
+		region.size = size;
+		m_transferRegions.emplace_back(region);
 		m_transferBuffers.insert(m_transferBuffers.end(), (uint8_t*)data, (uint8_t*)data + size);
 	}
 
