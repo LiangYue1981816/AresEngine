@@ -81,6 +81,10 @@ bool CVKMemory::BeginMap(VkDeviceSize offset, VkDeviceSize size)
 		return false;
 	}
 
+	if (IsHostCoherent() == false) {
+		return false;
+	}
+
 	if (m_memoryMapAddress != nullptr) {
 		return false;
 	}
@@ -89,7 +93,7 @@ bool CVKMemory::BeginMap(VkDeviceSize offset, VkDeviceSize size)
 		return false;
 	}
 
-	void *address = nullptr;
+	void* address = nullptr;
 	CALL_VK_FUNCTION_RETURN_BOOL(vkMapMemory(m_pDevice->GetDevice(), m_pAllocator->GetMemory(), m_memoryOffset + offset, size, 0, &address));
 
 	m_memoryMapSize = size;
@@ -102,6 +106,10 @@ bool CVKMemory::BeginMap(VkDeviceSize offset, VkDeviceSize size)
 bool CVKMemory::CopyData(VkDeviceSize offset, VkDeviceSize size, const void* data)
 {
 	if (IsHostVisible() == false) {
+		return false;
+	}
+
+	if (IsHostCoherent() == false) {
 		return false;
 	}
 
@@ -123,18 +131,12 @@ bool CVKMemory::EndMap(void)
 		return false;
 	}
 
-	if (m_memoryMapAddress == nullptr) {
+	if (IsHostCoherent() == false) {
 		return false;
 	}
 
-	if (IsHostCoherent() == false) {
-		VkMappedMemoryRange memoryRange = {};
-		memoryRange.sType = VK_STRUCTURE_TYPE_MAPPED_MEMORY_RANGE;
-		memoryRange.pNext = nullptr;
-		memoryRange.memory = m_pAllocator->GetMemory();
-		memoryRange.offset = m_memoryOffset + m_memoryMapOffset;
-		memoryRange.size = m_memoryMapSize;
-		CALL_VK_FUNCTION_RETURN_BOOL(vkFlushMappedMemoryRanges(m_pDevice->GetDevice(), 1, &memoryRange));
+	if (m_memoryMapAddress == nullptr) {
+		return false;
 	}
 
 	vkUnmapMemory(m_pDevice->GetDevice(), m_pAllocator->GetMemory());
