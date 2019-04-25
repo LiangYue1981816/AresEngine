@@ -228,18 +228,20 @@ bool CVKTexture::TransferTexture2D(GfxPixelFormat format, int level, int xoffset
 		return false;
 	}
 
-	m_transferRegions[level] = {};
-	m_transferRegions[level].imageOffset.x = xoffset;
-	m_transferRegions[level].imageOffset.y = yoffset;
-	m_transferRegions[level].imageOffset.z = 0;
-	m_transferRegions[level].imageExtent.width = width;
-	m_transferRegions[level].imageExtent.height = height;
-	m_transferRegions[level].imageExtent.depth = 1;
-	m_transferRegions[level].imageSubresource.aspectMask = m_vkImageAspectFlags;
-	m_transferRegions[level].imageSubresource.mipLevel = level;
-	m_transferRegions[level].imageSubresource.baseArrayLayer = 0;
-	m_transferRegions[level].imageSubresource.layerCount = 1;
-	m_transferBuffers[level].assign((uint8_t*)data, (uint8_t*)data + size);
+	VkBufferImageCopy region = {};
+	region.imageOffset.x = xoffset;
+	region.imageOffset.y = yoffset;
+	region.imageOffset.z = 0;
+	region.imageExtent.width = width;
+	region.imageExtent.height = height;
+	region.imageExtent.depth = 1;
+	region.imageSubresource.aspectMask = m_vkImageAspectFlags;
+	region.imageSubresource.mipLevel = level;
+	region.imageSubresource.baseArrayLayer = 0;
+	region.imageSubresource.layerCount = 1;
+
+	m_transferRegions.emplace_back(region);
+	m_transferBuffers.emplace_back((uint8_t*)data, (uint8_t*)data + size);
 
 	return true;
 }
@@ -270,18 +272,20 @@ bool CVKTexture::TransferTexture2DCompressed(GfxPixelFormat format, int level, i
 		return false;
 	}
 
-	m_transferRegions[level] = {};
-	m_transferRegions[level].imageOffset.x = xoffset;
-	m_transferRegions[level].imageOffset.y = yoffset;
-	m_transferRegions[level].imageOffset.z = 0;
-	m_transferRegions[level].imageExtent.width = width;
-	m_transferRegions[level].imageExtent.height = height;
-	m_transferRegions[level].imageExtent.depth = 1;
-	m_transferRegions[level].imageSubresource.aspectMask = m_vkImageAspectFlags;
-	m_transferRegions[level].imageSubresource.mipLevel = level;
-	m_transferRegions[level].imageSubresource.baseArrayLayer = 0;
-	m_transferRegions[level].imageSubresource.layerCount = 1;
-	m_transferBuffers[level].assign((uint8_t*)data, (uint8_t*)data + size);
+	VkBufferImageCopy region = {};
+	region.imageOffset.x = xoffset;
+	region.imageOffset.y = yoffset;
+	region.imageOffset.z = 0;
+	region.imageExtent.width = width;
+	region.imageExtent.height = height;
+	region.imageExtent.depth = 1;
+	region.imageSubresource.aspectMask = m_vkImageAspectFlags;
+	region.imageSubresource.mipLevel = level;
+	region.imageSubresource.baseArrayLayer = 0;
+	region.imageSubresource.layerCount = 1;
+
+	m_transferRegions.emplace_back(region);
+	m_transferBuffers.emplace_back((uint8_t*)data, (uint8_t*)data + size);
 
 	return true;
 }
@@ -316,18 +320,20 @@ bool CVKTexture::TransferTexture2DArray(GfxPixelFormat format, int layer, int le
 		return false;
 	}
 
-	m_transferRegions[layer * m_levels + level] = {};
-	m_transferRegions[layer * m_levels + level].imageOffset.x = xoffset;
-	m_transferRegions[layer * m_levels + level].imageOffset.y = yoffset;
-	m_transferRegions[layer * m_levels + level].imageOffset.z = 0;
-	m_transferRegions[layer * m_levels + level].imageExtent.width = width;
-	m_transferRegions[layer * m_levels + level].imageExtent.height = height;
-	m_transferRegions[layer * m_levels + level].imageExtent.depth = 1;
-	m_transferRegions[layer * m_levels + level].imageSubresource.aspectMask = m_vkImageAspectFlags;
-	m_transferRegions[layer * m_levels + level].imageSubresource.mipLevel = level;
-	m_transferRegions[layer * m_levels + level].imageSubresource.baseArrayLayer = layer;
-	m_transferRegions[layer * m_levels + level].imageSubresource.layerCount = 1;
-	m_transferBuffers[layer * m_levels + level].assign((uint8_t*)data, (uint8_t*)data + size);
+	VkBufferImageCopy region = {};
+	region.imageOffset.x = xoffset;
+	region.imageOffset.y = yoffset;
+	region.imageOffset.z = 0;
+	region.imageExtent.width = width;
+	region.imageExtent.height = height;
+	region.imageExtent.depth = 1;
+	region.imageSubresource.aspectMask = m_vkImageAspectFlags;
+	region.imageSubresource.mipLevel = level;
+	region.imageSubresource.baseArrayLayer = layer;
+	region.imageSubresource.layerCount = 1;
+
+	m_transferRegions.emplace_back(region);
+	m_transferBuffers.emplace_back((uint8_t*)data, (uint8_t*)data + size);
 
 	return true;
 }
@@ -362,18 +368,20 @@ bool CVKTexture::TransferTexture2DArrayCompressed(GfxPixelFormat format, int lay
 		return false;
 	}
 
-	m_transferRegions[layer * m_levels + level] = {};
-	m_transferRegions[layer * m_levels + level].imageOffset.x = xoffset;
-	m_transferRegions[layer * m_levels + level].imageOffset.y = yoffset;
-	m_transferRegions[layer * m_levels + level].imageOffset.z = 0;
-	m_transferRegions[layer * m_levels + level].imageExtent.width = width;
-	m_transferRegions[layer * m_levels + level].imageExtent.height = height;
-	m_transferRegions[layer * m_levels + level].imageExtent.depth = 1;
-	m_transferRegions[layer * m_levels + level].imageSubresource.aspectMask = m_vkImageAspectFlags;
-	m_transferRegions[layer * m_levels + level].imageSubresource.mipLevel = level;
-	m_transferRegions[layer * m_levels + level].imageSubresource.baseArrayLayer = layer;
-	m_transferRegions[layer * m_levels + level].imageSubresource.layerCount = 1;
-	m_transferBuffers[layer * m_levels + level].assign((uint8_t*)data, (uint8_t*)data + size);
+	VkBufferImageCopy region = {};
+	region.imageOffset.x = xoffset;
+	region.imageOffset.y = yoffset;
+	region.imageOffset.z = 0;
+	region.imageExtent.width = width;
+	region.imageExtent.height = height;
+	region.imageExtent.depth = 1;
+	region.imageSubresource.aspectMask = m_vkImageAspectFlags;
+	region.imageSubresource.mipLevel = level;
+	region.imageSubresource.baseArrayLayer = layer;
+	region.imageSubresource.layerCount = 1;
+
+	m_transferRegions.emplace_back(region);
+	m_transferBuffers.emplace_back((uint8_t*)data, (uint8_t*)data + size);
 
 	return true;
 }
@@ -404,18 +412,20 @@ bool CVKTexture::TransferTextureCubeMap(GfxPixelFormat format, GfxCubeMapFace fa
 		return false;
 	}
 
-	m_transferRegions[face * m_levels + level] = {};
-	m_transferRegions[face * m_levels + level].imageOffset.x = xoffset;
-	m_transferRegions[face * m_levels + level].imageOffset.y = yoffset;
-	m_transferRegions[face * m_levels + level].imageOffset.z = 0;
-	m_transferRegions[face * m_levels + level].imageExtent.width = width;
-	m_transferRegions[face * m_levels + level].imageExtent.height = height;
-	m_transferRegions[face * m_levels + level].imageExtent.depth = 1;
-	m_transferRegions[face * m_levels + level].imageSubresource.aspectMask = m_vkImageAspectFlags;
-	m_transferRegions[face * m_levels + level].imageSubresource.mipLevel = level;
-	m_transferRegions[face * m_levels + level].imageSubresource.baseArrayLayer = 0;
-	m_transferRegions[face * m_levels + level].imageSubresource.layerCount = 1;
-	m_transferBuffers[face * m_levels + level].assign((uint8_t*)data, (uint8_t*)data + size);
+	VkBufferImageCopy region = {};
+	region.imageOffset.x = xoffset;
+	region.imageOffset.y = yoffset;
+	region.imageOffset.z = 0;
+	region.imageExtent.width = width;
+	region.imageExtent.height = height;
+	region.imageExtent.depth = 1;
+	region.imageSubresource.aspectMask = m_vkImageAspectFlags;
+	region.imageSubresource.mipLevel = level;
+	region.imageSubresource.baseArrayLayer = 0;
+	region.imageSubresource.layerCount = 1;
+
+	m_transferRegions.emplace_back(region);
+	m_transferBuffers.emplace_back((uint8_t*)data, (uint8_t*)data + size);
 
 	return true;
 }
@@ -446,18 +456,20 @@ bool CVKTexture::TransferTextureCubeMapCompressed(GfxPixelFormat format, GfxCube
 		return false;
 	}
 
-	m_transferRegions[face * m_levels + level] = {};
-	m_transferRegions[face * m_levels + level].imageOffset.x = xoffset;
-	m_transferRegions[face * m_levels + level].imageOffset.y = yoffset;
-	m_transferRegions[face * m_levels + level].imageOffset.z = 0;
-	m_transferRegions[face * m_levels + level].imageExtent.width = width;
-	m_transferRegions[face * m_levels + level].imageExtent.height = height;
-	m_transferRegions[face * m_levels + level].imageExtent.depth = 1;
-	m_transferRegions[face * m_levels + level].imageSubresource.aspectMask = m_vkImageAspectFlags;
-	m_transferRegions[face * m_levels + level].imageSubresource.mipLevel = level;
-	m_transferRegions[face * m_levels + level].imageSubresource.baseArrayLayer = 0;
-	m_transferRegions[face * m_levels + level].imageSubresource.layerCount = 1;
-	m_transferBuffers[face * m_levels + level].assign((uint8_t*)data, (uint8_t*)data + size);
+	VkBufferImageCopy region = {};
+	region.imageOffset.x = xoffset;
+	region.imageOffset.y = yoffset;
+	region.imageOffset.z = 0;
+	region.imageExtent.width = width;
+	region.imageExtent.height = height;
+	region.imageExtent.depth = 1;
+	region.imageSubresource.aspectMask = m_vkImageAspectFlags;
+	region.imageSubresource.mipLevel = level;
+	region.imageSubresource.baseArrayLayer = 0;
+	region.imageSubresource.layerCount = 1;
+
+	m_transferRegions.emplace_back(region);
+	m_transferBuffers.emplace_back((uint8_t*)data, (uint8_t*)data + size);
 
 	return true;
 }
