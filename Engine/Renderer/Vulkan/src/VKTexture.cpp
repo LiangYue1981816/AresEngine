@@ -229,6 +229,7 @@ bool CVKTexture::TextureData2D(GfxPixelFormat format, int level, int xoffset, in
 	}
 
 	VkBufferImageCopy region = {};
+	region.bufferOffset = m_transferBuffers.size();
 	region.imageOffset.x = xoffset;
 	region.imageOffset.y = yoffset;
 	region.imageOffset.z = 0;
@@ -240,8 +241,8 @@ bool CVKTexture::TextureData2D(GfxPixelFormat format, int level, int xoffset, in
 	region.imageSubresource.baseArrayLayer = 0;
 	region.imageSubresource.layerCount = 1;
 
-	m_transferRegions.emplace_back(region);
-	m_transferBuffers.emplace_back((uint8_t*)data, (uint8_t*)data + size);
+	m_transferRegions.insert(m_transferRegions.end(), region);
+	m_transferBuffers.insert(m_transferBuffers.end(), (uint8_t*)data, (uint8_t*)data + size);
 
 	return true;
 }
@@ -273,6 +274,7 @@ bool CVKTexture::TextureData2DCompressed(GfxPixelFormat format, int level, int x
 	}
 
 	VkBufferImageCopy region = {};
+	region.bufferOffset = m_transferBuffers.size();
 	region.imageOffset.x = xoffset;
 	region.imageOffset.y = yoffset;
 	region.imageOffset.z = 0;
@@ -284,8 +286,8 @@ bool CVKTexture::TextureData2DCompressed(GfxPixelFormat format, int level, int x
 	region.imageSubresource.baseArrayLayer = 0;
 	region.imageSubresource.layerCount = 1;
 
-	m_transferRegions.emplace_back(region);
-	m_transferBuffers.emplace_back((uint8_t*)data, (uint8_t*)data + size);
+	m_transferRegions.insert(m_transferRegions.end(), region);
+	m_transferBuffers.insert(m_transferBuffers.end(), (uint8_t*)data, (uint8_t*)data + size);
 
 	return true;
 }
@@ -321,6 +323,7 @@ bool CVKTexture::TextureData2D(GfxPixelFormat format, int layer, int level, int 
 	}
 
 	VkBufferImageCopy region = {};
+	region.bufferOffset = m_transferBuffers.size();
 	region.imageOffset.x = xoffset;
 	region.imageOffset.y = yoffset;
 	region.imageOffset.z = 0;
@@ -332,8 +335,8 @@ bool CVKTexture::TextureData2D(GfxPixelFormat format, int layer, int level, int 
 	region.imageSubresource.baseArrayLayer = layer;
 	region.imageSubresource.layerCount = 1;
 
-	m_transferRegions.emplace_back(region);
-	m_transferBuffers.emplace_back((uint8_t*)data, (uint8_t*)data + size);
+	m_transferRegions.insert(m_transferRegions.end(), region);
+	m_transferBuffers.insert(m_transferBuffers.end(), (uint8_t*)data, (uint8_t*)data + size);
 
 	return true;
 }
@@ -369,6 +372,7 @@ bool CVKTexture::TextureData2DCompressed(GfxPixelFormat format, int layer, int l
 	}
 
 	VkBufferImageCopy region = {};
+	region.bufferOffset = m_transferBuffers.size();
 	region.imageOffset.x = xoffset;
 	region.imageOffset.y = yoffset;
 	region.imageOffset.z = 0;
@@ -380,8 +384,8 @@ bool CVKTexture::TextureData2DCompressed(GfxPixelFormat format, int layer, int l
 	region.imageSubresource.baseArrayLayer = layer;
 	region.imageSubresource.layerCount = 1;
 
-	m_transferRegions.emplace_back(region);
-	m_transferBuffers.emplace_back((uint8_t*)data, (uint8_t*)data + size);
+	m_transferRegions.insert(m_transferRegions.end(), region);
+	m_transferBuffers.insert(m_transferBuffers.end(), (uint8_t*)data, (uint8_t*)data + size);
 
 	return true;
 }
@@ -413,6 +417,7 @@ bool CVKTexture::TextureData2D(GfxPixelFormat format, GfxCubeMapFace face, int l
 	}
 
 	VkBufferImageCopy region = {};
+	region.bufferOffset = m_transferBuffers.size();
 	region.imageOffset.x = xoffset;
 	region.imageOffset.y = yoffset;
 	region.imageOffset.z = 0;
@@ -424,8 +429,8 @@ bool CVKTexture::TextureData2D(GfxPixelFormat format, GfxCubeMapFace face, int l
 	region.imageSubresource.baseArrayLayer = 0;
 	region.imageSubresource.layerCount = 1;
 
-	m_transferRegions.emplace_back(region);
-	m_transferBuffers.emplace_back((uint8_t*)data, (uint8_t*)data + size);
+	m_transferRegions.insert(m_transferRegions.end(), region);
+	m_transferBuffers.insert(m_transferBuffers.end(), (uint8_t*)data, (uint8_t*)data + size);
 
 	return true;
 }
@@ -457,6 +462,7 @@ bool CVKTexture::TextureData2DCompressed(GfxPixelFormat format, GfxCubeMapFace f
 	}
 
 	VkBufferImageCopy region = {};
+	region.bufferOffset = m_transferBuffers.size();
 	region.imageOffset.x = xoffset;
 	region.imageOffset.y = yoffset;
 	region.imageOffset.z = 0;
@@ -468,8 +474,8 @@ bool CVKTexture::TextureData2DCompressed(GfxPixelFormat format, GfxCubeMapFace f
 	region.imageSubresource.baseArrayLayer = 0;
 	region.imageSubresource.layerCount = 1;
 
-	m_transferRegions.emplace_back(region);
-	m_transferBuffers.emplace_back((uint8_t*)data, (uint8_t*)data + size);
+	m_transferRegions.insert(m_transferRegions.end(), region);
+	m_transferBuffers.insert(m_transferBuffers.end(), (uint8_t*)data, (uint8_t*)data + size);
 
 	return true;
 }
