@@ -55,18 +55,8 @@ int CGLES3Texture2D::GetSamples(void) const
 
 bool CGLES3Texture2D::Create(GfxPixelFormat format, int width, int height, int levels, int samples)
 {
-	Destroy();
-	{
-		do {
-			if (m_ptrTexture->Create(std::max(samples, 1) == 1 ? GFX_TEXTURE_2D : GFX_TEXTURE_2D_MULTISAMPLE, format, width, height, 1, levels, samples) == false) {
-				break;
-			}
-
-			return true;
-		} while (false);
-	}
-	Destroy();
-	return false;
+	samples = std::max(samples, 1);
+	return m_ptrTexture->Create(samples == 1 ? GFX_TEXTURE_2D : GFX_TEXTURE_2D_MULTISAMPLE, format, width, height, 1, levels, samples);
 }
 
 void CGLES3Texture2D::Destroy(void)
