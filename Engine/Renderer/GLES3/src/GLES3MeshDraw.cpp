@@ -114,10 +114,10 @@ uint32_t CGLES3MeshDraw::GetInstanceCount(void) const
 	}
 }
 
-bool CGLES3MeshDraw::InstanceBufferData(size_t size, const void* pBuffer)
+bool CGLES3MeshDraw::InstanceBufferData(size_t size, const void* data)
 {
 	if (m_pInstanceBuffer) {
-		m_pInstanceBuffer->BufferData(size, pBuffer);
+		m_pInstanceBuffer->BufferData(size, data);
 		m_pIndirectBuffer->BufferData(0, m_pMeshDraw->baseVertex, m_pMeshDraw->firstIndex, m_pMeshDraw->indexCount, size / GetInstanceStride(m_pInstanceBuffer->GetInstanceFormat()));
 		return true;
 	}

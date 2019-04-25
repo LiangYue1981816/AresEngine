@@ -29,9 +29,9 @@ uint32_t CGLES3UniformBuffer::GetSize(void) const
 	return m_ptrBuffer->GetSize();
 }
 
-bool CGLES3UniformBuffer::BufferData(size_t offset, size_t size, const void* pBuffer)
+bool CGLES3UniformBuffer::BufferData(size_t offset, size_t size, const void* data)
 {
-	return m_ptrBuffer->BufferData(offset, size, pBuffer);
+	return m_ptrBuffer->BufferData(offset, size, data);
 }
 
 void CGLES3UniformBuffer::Bind(int binding, int offset, int size) const

@@ -52,22 +52,22 @@ bool CGLES3Mesh::CreateDraw(uint32_t name, const glm::aabb& aabb, int baseVertex
 	return true;
 }
 
-bool CGLES3Mesh::CreateIndexBuffer(GfxIndexType type, size_t size, bool bDynamic, const void* pBuffer)
+bool CGLES3Mesh::CreateIndexBuffer(GfxIndexType type, size_t size, bool bDynamic, const void* data)
 {
 	if (m_pIndexBuffer == nullptr) {
 		m_pIndexBuffer = new CGLES3IndexBuffer(type, size, bDynamic);
-		return m_pIndexBuffer->BufferData(0, size, pBuffer);
+		return m_pIndexBuffer->BufferData(0, size, data);
 	}
 	else {
 		return false;
 	}
 }
 
-bool CGLES3Mesh::CreateVertexBuffer(uint32_t vertexFormat, int vertexBinding, size_t size, bool bDynamic, const void* pBuffer)
+bool CGLES3Mesh::CreateVertexBuffer(uint32_t vertexFormat, int vertexBinding, size_t size, bool bDynamic, const void* data)
 {
 	if (m_pVertexBuffer == nullptr) {
 		m_pVertexBuffer = new CGLES3VertexBuffer(vertexFormat, vertexBinding, size, bDynamic);
-		return m_pVertexBuffer->BufferData(0, size, pBuffer);
+		return m_pVertexBuffer->BufferData(0, size, data);
 	}
 	else {
 		return false;

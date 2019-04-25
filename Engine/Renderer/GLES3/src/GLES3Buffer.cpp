@@ -52,11 +52,11 @@ bool CGLES3Buffer::BufferSize(size_t size, bool bDynamic)
 	}
 }
 
-bool CGLES3Buffer::BufferData(size_t offset, size_t size, const void* pBuffer)
+bool CGLES3Buffer::BufferData(size_t offset, size_t size, const void* data)
 {
 	if (m_size >= (uint32_t)(offset + size)) {
 		glBindBuffer(m_target, m_buffer);
-		glBufferSubData(m_target, (int)offset, (uint32_t)size, pBuffer);
+		glBufferSubData(m_target, (int)offset, (uint32_t)size, data);
 		glBindBuffer(m_target, 0);
 
 		return true;

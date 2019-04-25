@@ -22,7 +22,7 @@ private:
 	VkDeviceSize GetSize(void) const;
 
 private:
-	bool BufferData(size_t offset, size_t size, const void* pBuffer);
+	bool BufferData(size_t offset, size_t size, const void* data);
 
 private:
 	bool MemoryBarrier(VkCommandBuffer vkCommandBuffer, VkAccessFlags srcAccessFlags, VkAccessFlags dstAccessFlags, VkPipelineStageFlags srcPipelineStageFlags, VkPipelineStageFlags dstPipelineStageFlags, VkDeviceSize offset, VkDeviceSize size);

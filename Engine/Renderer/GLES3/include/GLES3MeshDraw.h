@@ -27,7 +27,7 @@ public:
 	uint32_t GetInstanceCount(void) const;
 
 public:
-	bool InstanceBufferData(size_t size, const void* pBuffer);
+	bool InstanceBufferData(size_t size, const void* data);
 
 public:
 	void Bind(void) const;
