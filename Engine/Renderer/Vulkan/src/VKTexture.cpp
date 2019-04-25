@@ -202,7 +202,7 @@ void CVKTexture::Destroy(void)
 	m_transferBuffers.clear();
 }
 
-bool CVKTexture::TransferTexture2D(GfxPixelFormat format, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
+bool CVKTexture::TextureData2D(GfxPixelFormat format, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
 {
 	if (m_bExtern == true) {
 		return false;
@@ -246,7 +246,7 @@ bool CVKTexture::TransferTexture2D(GfxPixelFormat format, int level, int xoffset
 	return true;
 }
 
-bool CVKTexture::TransferTexture2DCompressed(GfxPixelFormat format, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
+bool CVKTexture::TextureData2DCompressed(GfxPixelFormat format, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
 {
 	if (m_bExtern == true) {
 		return false;
@@ -290,7 +290,7 @@ bool CVKTexture::TransferTexture2DCompressed(GfxPixelFormat format, int level, i
 	return true;
 }
 
-bool CVKTexture::TransferTexture2DArray(GfxPixelFormat format, int layer, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
+bool CVKTexture::TextureData2D(GfxPixelFormat format, int layer, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
 {
 	if (m_bExtern == true) {
 		return false;
@@ -338,7 +338,7 @@ bool CVKTexture::TransferTexture2DArray(GfxPixelFormat format, int layer, int le
 	return true;
 }
 
-bool CVKTexture::TransferTexture2DArrayCompressed(GfxPixelFormat format, int layer, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
+bool CVKTexture::TextureData2DCompressed(GfxPixelFormat format, int layer, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
 {
 	if (m_bExtern == true) {
 		return false;
@@ -386,7 +386,7 @@ bool CVKTexture::TransferTexture2DArrayCompressed(GfxPixelFormat format, int lay
 	return true;
 }
 
-bool CVKTexture::TransferTextureCubeMap(GfxPixelFormat format, GfxCubeMapFace face, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
+bool CVKTexture::TextureData2D(GfxPixelFormat format, GfxCubeMapFace face, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
 {
 	if (m_bExtern == true) {
 		return false;
@@ -430,7 +430,7 @@ bool CVKTexture::TransferTextureCubeMap(GfxPixelFormat format, GfxCubeMapFace fa
 	return true;
 }
 
-bool CVKTexture::TransferTextureCubeMapCompressed(GfxPixelFormat format, GfxCubeMapFace face, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
+bool CVKTexture::TextureData2DCompressed(GfxPixelFormat format, GfxCubeMapFace face, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
 {
 	if (m_bExtern == true) {
 		return false;
