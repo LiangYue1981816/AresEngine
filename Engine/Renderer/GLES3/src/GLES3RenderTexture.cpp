@@ -21,9 +21,9 @@ void CGLES3RenderTexture::Release(void)
 	m_pManager->Destroy(this);
 }
 
-HANDLE CGLES3RenderTexture::GetTexture(void) const
+uint32_t CGLES3RenderTexture::GetTexture(void) const
 {
-	return (HANDLE)m_ptrTexture->GetTexture();
+	return m_ptrTexture->GetTexture();
 }
 
 GfxTextureType CGLES3RenderTexture::GetType(void) const

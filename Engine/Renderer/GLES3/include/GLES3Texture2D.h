@@ -14,7 +14,7 @@ private:
 
 
 public:
-	HANDLE GetTexture(void) const;
+	uint32_t GetTexture(void) const;
 
 public:
 	GfxTextureType GetType(void) const;

@@ -14,10 +14,10 @@ private:
 
 
 public:
-	HANDLE GetTexture(void) const;
-	GfxTextureType GetType(void) const;
+	uint32_t GetTexture(void) const;
 
 public:
+	GfxTextureType GetType(void) const;
 	GfxPixelFormat GetFormat(void) const;
 
 	int GetWidth(void) const;
