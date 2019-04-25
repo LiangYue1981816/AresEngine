@@ -13,7 +13,7 @@ private:
 
 
 public:
-	HANDLE GetShader(void) const;
+	uint32_t GetShader(void) const;
 
 public:
 	uint32_t GetKind(void) const;

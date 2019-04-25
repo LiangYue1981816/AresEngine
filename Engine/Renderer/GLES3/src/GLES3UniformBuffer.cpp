@@ -19,9 +19,9 @@ void CGLES3UniformBuffer::Release(void)
 	m_pManager->Destroy(this);
 }
 
-HANDLE CGLES3UniformBuffer::GetBuffer(void) const
+uint32_t CGLES3UniformBuffer::GetBuffer(void) const
 {
-	return (HANDLE)m_ptrBuffer->GetBuffer();
+	return m_ptrBuffer->GetBuffer();
 }
 
 uint32_t CGLES3UniformBuffer::GetSize(void) const

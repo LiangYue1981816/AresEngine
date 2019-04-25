@@ -18,9 +18,9 @@ CGLES3Sampler::~CGLES3Sampler(void)
 	glDeleteSamplers(1, &m_sampler);
 }
 
-HANDLE CGLES3Sampler::GetSampler(void) const
+uint32_t CGLES3Sampler::GetSampler(void) const
 {
-	return (HANDLE)m_sampler;
+	return m_sampler;
 }
 
 void CGLES3Sampler::Bind(uint32_t unit) const

@@ -15,9 +15,9 @@ CGLES3Shader::~CGLES3Shader(void)
 	Destroy();
 }
 
-HANDLE CGLES3Shader::GetShader(void) const
+uint32_t CGLES3Shader::GetShader(void) const
 {
-	return (HANDLE)m_shader;
+	return m_shader;
 }
 
 uint32_t CGLES3Shader::GetKind(void) const

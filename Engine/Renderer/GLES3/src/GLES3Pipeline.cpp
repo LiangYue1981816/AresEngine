@@ -36,7 +36,7 @@ bool CGLES3Pipeline::CreateProgram(const CGLES3Shader* pVertexShader, const CGLE
 	{
 		for (int indexShader = 0; indexShader < compute_shader - vertex_shader + 1; indexShader++) {
 			if (m_pShaders[indexShader]) {
-				glAttachShader(m_program, (uint32_t)m_pShaders[indexShader]->GetShader());
+				glAttachShader(m_program, m_pShaders[indexShader]->GetShader());
 			}
 		}
 	}
