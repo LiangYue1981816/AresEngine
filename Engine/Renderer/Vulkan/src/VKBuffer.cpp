@@ -55,8 +55,6 @@ bool CVKBuffer::BufferData(size_t offset, size_t size, const void* data)
 
 		m_transferRegions.emplace_back(region);
 		m_transferBuffers.emplace_back((uint8_t*)data, (uint8_t*)data + size);
-
-		return true;
 	}
 	else {
 		void* addr = nullptr;
@@ -66,9 +64,9 @@ bool CVKBuffer::BufferData(size_t offset, size_t size, const void* data)
 		}
 		CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->Flush(offset, size));
 		CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->EndMap());
-
-		return true;
 	}
+
+	return true;
 }
 
 bool CVKBuffer::MemoryBarrier(VkCommandBuffer vkCommandBuffer, VkAccessFlags srcAccessFlags, VkAccessFlags dstAccessFlags, VkPipelineStageFlags srcPipelineStageFlags, VkPipelineStageFlags dstPipelineStageFlags, VkDeviceSize offset, VkDeviceSize size)
