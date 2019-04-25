@@ -200,6 +200,8 @@ void CVKTexture::Destroy(void)
 
 	m_transferRegions.clear();
 	m_transferBuffers.clear();
+	m_transferRegions.shrink_to_fit();
+	m_transferBuffers.shrink_to_fit();
 }
 
 bool CVKTexture::TextureData2D(GfxPixelFormat format, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
