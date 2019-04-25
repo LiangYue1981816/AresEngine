@@ -44,7 +44,7 @@ private:
 	bool TransferTextureCubeMapCompressed(GfxPixelFormat format, GfxCubeMapFace face, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data);
 
 private:
-	bool TransferLayout(VkCommandBuffer vkCommandBuffer, VkImageLayout layout);
+	bool ImageMemoryBarrier(VkCommandBuffer vkCommandBuffer, VkImageLayout layout);
 
 
 private:

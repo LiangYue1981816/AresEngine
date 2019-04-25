@@ -24,6 +24,9 @@ private:
 private:
 	bool BufferData(size_t offset, size_t size, const void* pBuffer);
 
+private:
+	bool BufferMemoryBarrier(VkCommandBuffer vkCommandBuffer, VkAccessFlags srcAccessFlags, VkAccessFlags dstAccessFlags, VkPipelineStageFlags srcPipelineStageFlags, VkPipelineStageFlags dstPipelineStageFlags, VkDeviceSize offset, VkDeviceSize size);
+
 
 private:
 	VkBuffer m_vkBuffer;

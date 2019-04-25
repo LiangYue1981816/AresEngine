@@ -56,3 +56,9 @@ bool CVKBuffer::BufferData(size_t offset, size_t size, const void* pBuffer)
 	CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->EndMap());
 	return true;
 }
+
+bool CVKBuffer::BufferMemoryBarrier(VkCommandBuffer vkCommandBuffer, VkAccessFlags srcAccessFlags, VkAccessFlags dstAccessFlags, VkPipelineStageFlags srcPipelineStageFlags, VkPipelineStageFlags dstPipelineStageFlags, VkDeviceSize offset, VkDeviceSize size)
+{
+	vkCmdBufferMemoryBarrier(vkCommandBuffer, m_vkBuffer, srcAccessFlags, dstAccessFlags, srcPipelineStageFlags, dstPipelineStageFlags, offset, size);
+	return true;
+}

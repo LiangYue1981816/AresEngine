@@ -462,7 +462,7 @@ bool CVKTexture::TransferTextureCubeMapCompressed(GfxPixelFormat format, GfxCube
 	return true;
 }
 
-bool CVKTexture::TransferLayout(VkCommandBuffer vkCommandBuffer, VkImageLayout layout)
+bool CVKTexture::ImageMemoryBarrier(VkCommandBuffer vkCommandBuffer, VkImageLayout layout)
 {
 	if (m_bExtern == true) {
 		return false;
@@ -479,7 +479,7 @@ bool CVKTexture::TransferLayout(VkCommandBuffer vkCommandBuffer, VkImageLayout l
 	range.baseArrayLayer = 0;
 	range.layerCount = m_layers;
 
-	vkCmdSetImageLayout(vkCommandBuffer, m_vkImage, m_vkImageLayout, layout, range);
+	vkCmdImageMemoryBarrier(vkCommandBuffer, m_vkImage, m_vkImageLayout, layout, range);
 	m_vkImageLayout = layout;
 
 	return true;
