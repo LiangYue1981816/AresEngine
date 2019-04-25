@@ -228,7 +228,7 @@ bool CVKTexture::TransferTexture2D(GfxPixelFormat format, int level, int xoffset
 		return false;
 	}
 
-	m_transferRegions[level] = { 0 };
+	m_transferRegions[level] = {};
 	m_transferRegions[level].imageOffset.x = xoffset;
 	m_transferRegions[level].imageOffset.y = yoffset;
 	m_transferRegions[level].imageOffset.z = 0;
@@ -270,7 +270,7 @@ bool CVKTexture::TransferTexture2DCompressed(GfxPixelFormat format, int level, i
 		return false;
 	}
 
-	m_transferRegions[level] = { 0 };
+	m_transferRegions[level] = {};
 	m_transferRegions[level].imageOffset.x = xoffset;
 	m_transferRegions[level].imageOffset.y = yoffset;
 	m_transferRegions[level].imageOffset.z = 0;
@@ -316,7 +316,7 @@ bool CVKTexture::TransferTexture2DArray(GfxPixelFormat format, int layer, int le
 		return false;
 	}
 
-	m_transferRegions[layer * m_levels + level] = { 0 };
+	m_transferRegions[layer * m_levels + level] = {};
 	m_transferRegions[layer * m_levels + level].imageOffset.x = xoffset;
 	m_transferRegions[layer * m_levels + level].imageOffset.y = yoffset;
 	m_transferRegions[layer * m_levels + level].imageOffset.z = 0;
@@ -362,7 +362,7 @@ bool CVKTexture::TransferTexture2DArrayCompressed(GfxPixelFormat format, int lay
 		return false;
 	}
 
-	m_transferRegions[layer * m_levels + level] = { 0 };
+	m_transferRegions[layer * m_levels + level] = {};
 	m_transferRegions[layer * m_levels + level].imageOffset.x = xoffset;
 	m_transferRegions[layer * m_levels + level].imageOffset.y = yoffset;
 	m_transferRegions[layer * m_levels + level].imageOffset.z = 0;
@@ -404,7 +404,7 @@ bool CVKTexture::TransferTextureCubeMap(GfxPixelFormat format, GfxCubeMapFace fa
 		return false;
 	}
 
-	m_transferRegions[face * m_levels + level] = { 0 };
+	m_transferRegions[face * m_levels + level] = {};
 	m_transferRegions[face * m_levels + level].imageOffset.x = xoffset;
 	m_transferRegions[face * m_levels + level].imageOffset.y = yoffset;
 	m_transferRegions[face * m_levels + level].imageOffset.z = 0;
@@ -446,7 +446,7 @@ bool CVKTexture::TransferTextureCubeMapCompressed(GfxPixelFormat format, GfxCube
 		return false;
 	}
 
-	m_transferRegions[face * m_levels + level] = { 0 };
+	m_transferRegions[face * m_levels + level] = {};
 	m_transferRegions[face * m_levels + level].imageOffset.x = xoffset;
 	m_transferRegions[face * m_levels + level].imageOffset.y = yoffset;
 	m_transferRegions[face * m_levels + level].imageOffset.z = 0;
@@ -458,6 +458,29 @@ bool CVKTexture::TransferTextureCubeMapCompressed(GfxPixelFormat format, GfxCube
 	m_transferRegions[face * m_levels + level].imageSubresource.baseArrayLayer = 0;
 	m_transferRegions[face * m_levels + level].imageSubresource.layerCount = 1;
 	m_transferBuffers[face * m_levels + level].assign((uint8_t*)data, (uint8_t*)data + size);
+
+	return true;
+}
+
+bool CVKTexture::TransferLayout(VkCommandBuffer vkCommandBuffer, VkImageLayout layout)
+{
+	if (m_bExtern == true) {
+		return false;
+	}
+
+	if (m_vkImage == VK_NULL_HANDLE) {
+		return false;
+	}
+
+	VkImageSubresourceRange range = {};
+	range.aspectMask = m_vkImageAspectFlags;
+	range.baseMipLevel = 0;
+	range.levelCount = m_levels;
+	range.baseArrayLayer = 0;
+	range.layerCount = m_layers;
+
+	vkCmdSetImageLayout(vkCommandBuffer, m_vkImage, m_vkImageLayout, layout, range);
+	m_vkImageLayout = layout;
 
 	return true;
 }
