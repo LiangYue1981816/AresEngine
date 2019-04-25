@@ -42,7 +42,4 @@ private:
 
 private:
 	CGLES3Texture2DArrayManager* m_pManager;
-
-private:
-	eastl::unordered_map<int, eastl::unordered_map<int, uint32_t>> m_size;
 };

@@ -71,38 +71,17 @@ bool CGLES3Texture2D::Create(GfxPixelFormat format, int width, int height, int l
 
 void CGLES3Texture2D::Destroy(void)
 {
-	for (const auto& itLevelSize : m_size) {
-		CGfxProfiler::DecTextureDataSize(itLevelSize.second);
-	}
-
-	m_size.clear();
 	m_ptrTexture->Destroy();
 }
 
 bool CGLES3Texture2D::TextureData2D(GfxPixelFormat format, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
 {
-	if (m_ptrTexture->TextureData2D(format, level, xoffset, yoffset, width, height, size, data)) {
-		CGfxProfiler::DecTextureDataSize(m_size[level]);
-		m_size[level] = size;
-		CGfxProfiler::IncTextureDataSize(m_size[level]);
-		return true;
-	}
-	else {
-		return false;
-	}
+	return m_ptrTexture->TextureData2D(format, level, xoffset, yoffset, width, height, size, data);
 }
 
 bool CGLES3Texture2D::TextureData2DCompressed(GfxPixelFormat format, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
 {
-	if (m_ptrTexture->TextureData2DCompressed(format, level, xoffset, yoffset, width, height, size, data)) {
-		CGfxProfiler::DecTextureDataSize(m_size[level]);
-		m_size[level] = size;
-		CGfxProfiler::IncTextureDataSize(m_size[level]);
-		return true;
-	}
-	else {
-		return false;
-	}
+	return m_ptrTexture->TextureData2DCompressed(format, level, xoffset, yoffset, width, height, size, data);
 }
 
 void CGLES3Texture2D::Bind(uint32_t unit) const
