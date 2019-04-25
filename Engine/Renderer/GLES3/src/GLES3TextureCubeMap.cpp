@@ -76,9 +76,9 @@ void CGLES3TextureCubeMap::Destroy(void)
 	m_ptrTexture->Destroy();
 }
 
-bool CGLES3TextureCubeMap::TransferTexture2D(GfxPixelFormat format, GfxCubeMapFace face, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
+bool CGLES3TextureCubeMap::TextureData2D(GfxPixelFormat format, GfxCubeMapFace face, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
 {
-	if (m_ptrTexture->TransferTextureCubeMap(format, face, level, xoffset, yoffset, width, height, size, data)) {
+	if (m_ptrTexture->TextureData2D(format, face, level, xoffset, yoffset, width, height, size, data)) {
 		CGfxProfiler::DecTextureDataSize(m_size[face][level]);
 		m_size[face][level] = size;
 		CGfxProfiler::IncTextureDataSize(m_size[face][level]);
@@ -89,9 +89,9 @@ bool CGLES3TextureCubeMap::TransferTexture2D(GfxPixelFormat format, GfxCubeMapFa
 	}
 }
 
-bool CGLES3TextureCubeMap::TransferTexture2DCompressed(GfxPixelFormat format, GfxCubeMapFace face, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
+bool CGLES3TextureCubeMap::TextureData2DCompressed(GfxPixelFormat format, GfxCubeMapFace face, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
 {
-	if (m_ptrTexture->TransferTextureCubeMapCompressed(format, face, level, xoffset, yoffset, width, height, size, data)) {
+	if (m_ptrTexture->TextureData2DCompressed(format, face, level, xoffset, yoffset, width, height, size, data)) {
 		CGfxProfiler::DecTextureDataSize(m_size[face][level]);
 		m_size[face][level] = size;
 		CGfxProfiler::IncTextureDataSize(m_size[face][level]);

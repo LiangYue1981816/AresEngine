@@ -81,9 +81,9 @@ void CGLES3Texture2DArray::Destroy(void)
 	m_ptrTexture->Destroy();
 }
 
-bool CGLES3Texture2DArray::TransferTexture2D(GfxPixelFormat format, int layer, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
+bool CGLES3Texture2DArray::TextureData2D(GfxPixelFormat format, int layer, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
 {
-	if (m_ptrTexture->TransferTexture2DArray(format, layer, level, xoffset, yoffset, width, height, size, data)) {
+	if (m_ptrTexture->TextureData2D(format, layer, level, xoffset, yoffset, width, height, size, data)) {
 		CGfxProfiler::DecTextureDataSize(m_size[layer][level]);
 		m_size[layer][level] = size;
 		CGfxProfiler::IncTextureDataSize(m_size[layer][level]);
@@ -94,9 +94,9 @@ bool CGLES3Texture2DArray::TransferTexture2D(GfxPixelFormat format, int layer, i
 	}
 }
 
-bool CGLES3Texture2DArray::TransferTexture2DCompressed(GfxPixelFormat format, int layer, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
+bool CGLES3Texture2DArray::TextureData2DCompressed(GfxPixelFormat format, int layer, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
 {
-	if (m_ptrTexture->TransferTexture2DArrayCompressed(format, layer, level, xoffset, yoffset, width, height, size, data)) {
+	if (m_ptrTexture->TextureData2DCompressed(format, layer, level, xoffset, yoffset, width, height, size, data)) {
 		CGfxProfiler::DecTextureDataSize(m_size[layer][level]);
 		m_size[layer][level] = size;
 		CGfxProfiler::IncTextureDataSize(m_size[layer][level]);
