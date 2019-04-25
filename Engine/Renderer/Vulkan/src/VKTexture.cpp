@@ -462,7 +462,7 @@ bool CVKTexture::TransferTextureCubeMapCompressed(GfxPixelFormat format, GfxCube
 	return true;
 }
 
-bool CVKTexture::ImageMemoryBarrier(VkCommandBuffer vkCommandBuffer, VkImageLayout layout)
+bool CVKTexture::MemoryBarrier(VkCommandBuffer vkCommandBuffer, VkImageLayout layout)
 {
 	if (m_bExtern == true) {
 		return false;
