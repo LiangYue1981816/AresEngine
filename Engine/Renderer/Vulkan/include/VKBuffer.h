@@ -34,7 +34,7 @@ private:
 
 private:
 	eastl::vector<VkBufferCopy> m_transferRegions;
-	eastl::vector<eastl::vector<uint8_t>> m_transferBuffers;
+	eastl::vector<uint8_t> m_transferBuffers;
 
 private:
 	CVKDevice* m_pDevice;
