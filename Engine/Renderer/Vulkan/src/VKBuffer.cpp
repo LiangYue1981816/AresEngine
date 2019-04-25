@@ -47,14 +47,28 @@ VkDeviceSize CVKBuffer::GetSize(void) const
 
 bool CVKBuffer::BufferData(size_t offset, size_t size, const void* pBuffer)
 {
-	void* pAddress = nullptr;
-	CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->BeginMap(offset, size, &pAddress));
-	{
-		memcpy(pAddress, pBuffer, size);
+	if (m_pMemory->IsDeviceLocal()) {
+		VkBufferCopy region = {};
+		region.srcOffset = 0;
+		region.dstOffset = offset;
+		region.size = size;
+
+		m_transferRegions.emplace_back(region);
+		m_transferBuffers.emplace_back((uint8_t*)pBuffer, (uint8_t*)pBuffer + size);
+
+		return true;
 	}
-	CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->Flush(offset, size));
-	CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->EndMap());
-	return true;
+	else {
+		void* pAddress = nullptr;
+		CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->BeginMap(offset, size, &pAddress));
+		{
+			memcpy(pAddress, pBuffer, size);
+		}
+		CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->Flush(offset, size));
+		CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->EndMap());
+
+		return true;
+	}
 }
 
 bool CVKBuffer::MemoryBarrier(VkCommandBuffer vkCommandBuffer, VkAccessFlags srcAccessFlags, VkAccessFlags dstAccessFlags, VkPipelineStageFlags srcPipelineStageFlags, VkPipelineStageFlags dstPipelineStageFlags, VkDeviceSize offset, VkDeviceSize size)
