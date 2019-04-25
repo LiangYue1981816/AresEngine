@@ -53,11 +53,7 @@ bool CVKBuffer::BufferData(size_t offset, size_t size, const void* data)
 		CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->EndMap());
 	}
 	else {
-		VkBufferCopy region = {};
-		region.srcOffset = m_transferBuffers.size();
-		region.dstOffset = offset;
-		region.size = size;
-		m_transferRegions.emplace_back(region);
+		m_transferRegions.emplace_back(VkBufferCopy{ m_transferBuffers.size(), offset, size });
 		m_transferBuffers.insert(m_transferBuffers.end(), (uint8_t*)data, (uint8_t*)data + size);
 	}
 
