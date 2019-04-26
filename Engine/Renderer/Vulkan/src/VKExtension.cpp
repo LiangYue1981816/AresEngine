@@ -81,6 +81,25 @@ VkResult vkCmdImageMemoryBarrier(VkCommandBuffer vkCommandBuffer, VkImage vkImag
 	return VK_SUCCESS;
 }
 
+VkResult vkCmdImageMemoryBarrier(VkCommandBuffer vkCommandBuffer, VkImage vkImage, VkImageLayout srcLayout, VkImageLayout dstLayout, VkImageSubresourceRange range)
+{
+	VkAccessFlags srcAccessFlags = CVKHelper::GetAccessMask(srcLayout);
+	VkAccessFlags dstAccessFlags = CVKHelper::GetAccessMask(dstLayout);
+	VkPipelineStageFlags srcPipelineStageFlags = CVKHelper::GetPipelineStageFlags(srcLayout);
+	VkPipelineStageFlags dstPipelineStageFlags = CVKHelper::GetPipelineStageFlags(dstLayout);
+
+	if (srcLayout == VK_IMAGE_LAYOUT_PRESENT_SRC_KHR) {
+		srcPipelineStageFlags |= VK_PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT;
+		dstPipelineStageFlags |= VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
+	}
+	else if (dstLayout == VK_IMAGE_LAYOUT_PRESENT_SRC_KHR) {
+		srcPipelineStageFlags |= VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
+		dstPipelineStageFlags |= VK_PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT;
+	}
+
+	return vkCmdImageMemoryBarrier(vkCommandBuffer, vkImage, srcLayout, dstLayout, srcAccessFlags, dstAccessFlags, srcPipelineStageFlags, dstPipelineStageFlags, range);
+}
+
 VkResult vkSubmitCommandBuffer(VkQueue vkQueue, VkCommandBuffer vkCommandBuffer, VkFence vkFence)
 {
 	return vkSubmitCommandBuffer(vkQueue, vkCommandBuffer, vkFence, VK_NULL_HANDLE, 0, VK_NULL_HANDLE);
