@@ -15,6 +15,7 @@ public:
 	static bool IsFormatDepthOrStencil(VkFormat format);
 
 	static VkAccessFlags GetAccessMask(VkImageLayout layout);
+	static VkPipelineStageFlags GetPipelineStageFlags(VkImageLayout layout);
 	static VkPipelineStageFlags GetPipelineStageFlags(VkAccessFlags access);
 
 	static VkSampleCountFlagBits TranslateSampleCount(int samples);
