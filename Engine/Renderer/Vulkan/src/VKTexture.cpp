@@ -481,26 +481,3 @@ bool CVKTexture::TextureData2DCompressed(GfxPixelFormat format, GfxCubeMapFace f
 
 	return true;
 }
-
-bool CVKTexture::MemoryBarrier(VkCommandBuffer vkCommandBuffer, VkImageLayout layout)
-{
-	if (m_bExtern == true) {
-		return false;
-	}
-
-	if (m_vkImage == VK_NULL_HANDLE) {
-		return false;
-	}
-
-	VkImageSubresourceRange range = {};
-	range.aspectMask = m_vkImageAspectFlags;
-	range.baseMipLevel = 0;
-	range.levelCount = m_levels;
-	range.baseArrayLayer = 0;
-	range.layerCount = m_layers;
-
-	vkCmdImageMemoryBarrier(vkCommandBuffer, m_vkImage, m_vkImageLayout, layout, range);
-	m_vkImageLayout = layout;
-
-	return true;
-}

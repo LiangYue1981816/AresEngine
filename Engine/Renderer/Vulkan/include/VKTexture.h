@@ -43,9 +43,6 @@ private:
 	bool TextureData2D(GfxPixelFormat format, GfxCubeMapFace face, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data);
 	bool TextureData2DCompressed(GfxPixelFormat format, GfxCubeMapFace face, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data);
 
-private:
-	bool MemoryBarrier(VkCommandBuffer vkCommandBuffer, VkImageLayout layout);
-
 
 private:
 	bool m_bExtern;
