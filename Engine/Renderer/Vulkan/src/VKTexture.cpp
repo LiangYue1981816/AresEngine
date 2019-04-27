@@ -491,3 +491,17 @@ bool CVKTexture::TextureCubemapDataCompressed(GfxPixelFormat format, GfxCubemapF
 
 	return true;
 }
+
+bool CVKTexture::PipelineBarrier(VkCommandBuffer vkCommandBuffer, VkImageLayout srcLayout, VkImageLayout dstLayout, VkImageSubresourceRange range)
+{
+	CALL_VK_FUNCTION_RETURN_BOOL(vkCmdImageMemoryBarrier(vkCommandBuffer, m_vkImage, srcLayout, dstLayout, range));
+	m_vkImageLayout = dstLayout;
+	return true;
+}
+
+bool CVKTexture::PipelineBarrier(VkCommandBuffer vkCommandBuffer, VkImageLayout srcLayout, VkImageLayout dstLayout, VkAccessFlags srcAccessFlags, VkAccessFlags dstAccessFlags, VkPipelineStageFlags srcPipelineStageFlags, VkPipelineStageFlags dstPipelineStageFlags, VkImageSubresourceRange range)
+{
+	CALL_VK_FUNCTION_RETURN_BOOL(vkCmdImageMemoryBarrier(vkCommandBuffer, m_vkImage, srcLayout, dstLayout, srcAccessFlags, dstAccessFlags, srcPipelineStageFlags, dstPipelineStageFlags, range));
+	m_vkImageLayout = dstLayout;
+	return true;
+}
