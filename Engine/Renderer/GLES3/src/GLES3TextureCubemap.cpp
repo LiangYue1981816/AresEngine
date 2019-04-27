@@ -50,7 +50,7 @@ int CGLES3TextureCubemap::GetLevels(void) const
 
 bool CGLES3TextureCubemap::Create(GfxPixelFormat format, int width, int height, int levels)
 {
-	return m_ptrTexture->Create(GFX_TEXTURE_CUBE_MAP, format, width, height, 1, levels);
+	return m_ptrTexture->Create(GFX_TEXTURE_CUBE_MAP, format, width, height, 1, levels, 1);
 }
 
 void CGLES3TextureCubemap::Destroy(void)
