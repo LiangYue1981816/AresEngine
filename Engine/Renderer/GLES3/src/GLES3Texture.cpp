@@ -323,7 +323,7 @@ bool CGLES3Texture::TextureData2DCompressed(GfxPixelFormat format, int layer, in
 	return true;
 }
 
-bool CGLES3Texture::TextureData2D(GfxPixelFormat format, GfxCubeMapFace face, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
+bool CGLES3Texture::TextureData2D(GfxPixelFormat format, GfxCubemapFace face, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
 {
 	if (m_bExtern == true) {
 		return false;
@@ -359,7 +359,7 @@ bool CGLES3Texture::TextureData2D(GfxPixelFormat format, GfxCubeMapFace face, in
 	return true;
 }
 
-bool CGLES3Texture::TextureData2DCompressed(GfxPixelFormat format, GfxCubeMapFace face, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
+bool CGLES3Texture::TextureData2DCompressed(GfxPixelFormat format, GfxCubemapFace face, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
 {
 	if (m_bExtern == true) {
 		return false;

@@ -392,7 +392,7 @@ bool CVKTexture::TextureData2DCompressed(GfxPixelFormat format, int layer, int l
 	return true;
 }
 
-bool CVKTexture::TextureData2D(GfxPixelFormat format, GfxCubeMapFace face, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
+bool CVKTexture::TextureData2D(GfxPixelFormat format, GfxCubemapFace face, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
 {
 	if (m_bExtern == true) {
 		return false;
@@ -437,7 +437,7 @@ bool CVKTexture::TextureData2D(GfxPixelFormat format, GfxCubeMapFace face, int l
 	return true;
 }
 
-bool CVKTexture::TextureData2DCompressed(GfxPixelFormat format, GfxCubeMapFace face, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
+bool CVKTexture::TextureData2DCompressed(GfxPixelFormat format, GfxCubemapFace face, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
 {
 	if (m_bExtern == true) {
 		return false;

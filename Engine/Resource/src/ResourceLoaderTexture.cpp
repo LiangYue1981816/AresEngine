@@ -166,7 +166,7 @@ static bool InternalLoadTextureCubeMap(CGfxTextureCubeMap* pTextureCubeMap, cons
 	return true;
 }
 
-static bool InternalLoadTextureCubeMapFace(CGfxTextureCubeMap* pTextureCubeMap, const gli::texture* texture, GfxCubeMapFace face, int baseLevel, int numLevels)
+static bool InternalLoadTextureCubeMapFace(CGfxTextureCubeMap* pTextureCubeMap, const gli::texture* texture, GfxCubemapFace face, int baseLevel, int numLevels)
 {
 	gli::gl GL(gli::gl::PROFILE_ES30);
 	gli::gl::format format = GL.translate(texture->format(), texture->swizzles());
@@ -273,7 +273,7 @@ bool CResourceLoader::LoadTextureCubeMap(const char* szFileName, CGfxTextureCube
 	return false;
 }
 
-bool CResourceLoader::LoadTextureCubeMapFace(const char* szFileName, GfxCubeMapFace face, CGfxTextureCubeMap* pTextureCubeMap, int baseLevel, int numLevels)
+bool CResourceLoader::LoadTextureCubeMapFace(const char* szFileName, GfxCubemapFace face, CGfxTextureCubeMap* pTextureCubeMap, int baseLevel, int numLevels)
 {
 	do {
 		CStream stream;

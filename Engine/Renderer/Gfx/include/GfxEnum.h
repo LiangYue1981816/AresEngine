@@ -386,7 +386,7 @@ typedef enum GfxBlendOp {
 	GFX_BLENDOP_MAX,
 } GfxBlendOp;
 
-typedef enum GfxCubeMapFace {
+typedef enum GfxCubemapFace {
 	GFX_CUBEMAP_INVALID_ENUM = -1,
 	GFX_CUBEMAP_POSITIVE_X,
 	GFX_CUBEMAP_NEGATIVE_X,
@@ -394,4 +394,4 @@ typedef enum GfxCubeMapFace {
 	GFX_CUBEMAP_NEGATIVE_Y,
 	GFX_CUBEMAP_POSITIVE_Z,
 	GFX_CUBEMAP_NEGATIVE_Z,
-} GfxCubeMapFace;
+} GfxCubemapFace;
