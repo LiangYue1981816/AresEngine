@@ -171,7 +171,7 @@ void CGLES3Texture::Destroy(void)
 	m_samples = 0;
 }
 
-bool CGLES3Texture::TextureData2D(GfxPixelFormat format, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
+bool CGLES3Texture::Texture2DData(GfxPixelFormat format, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
 {
 	if (m_bExtern == true) {
 		return false;
@@ -207,7 +207,7 @@ bool CGLES3Texture::TextureData2D(GfxPixelFormat format, int level, int xoffset,
 	return true;
 }
 
-bool CGLES3Texture::TextureData2DCompressed(GfxPixelFormat format, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
+bool CGLES3Texture::Texture2DDataCompressed(GfxPixelFormat format, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
 {
 	if (m_bExtern == true) {
 		return false;
@@ -243,7 +243,7 @@ bool CGLES3Texture::TextureData2DCompressed(GfxPixelFormat format, int level, in
 	return true;
 }
 
-bool CGLES3Texture::TextureData2D(GfxPixelFormat format, int layer, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
+bool CGLES3Texture::Texture2DArrayData(GfxPixelFormat format, int layer, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
 {
 	if (m_bExtern == true) {
 		return false;
@@ -283,7 +283,7 @@ bool CGLES3Texture::TextureData2D(GfxPixelFormat format, int layer, int level, i
 	return true;
 }
 
-bool CGLES3Texture::TextureData2DCompressed(GfxPixelFormat format, int layer, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
+bool CGLES3Texture::Texture2DArrayDataCompressed(GfxPixelFormat format, int layer, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
 {
 	if (m_bExtern == true) {
 		return false;
@@ -323,7 +323,7 @@ bool CGLES3Texture::TextureData2DCompressed(GfxPixelFormat format, int layer, in
 	return true;
 }
 
-bool CGLES3Texture::TextureData2D(GfxPixelFormat format, GfxCubemapFace face, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
+bool CGLES3Texture::TextureCubemapData(GfxPixelFormat format, GfxCubemapFace face, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
 {
 	if (m_bExtern == true) {
 		return false;
@@ -359,7 +359,7 @@ bool CGLES3Texture::TextureData2D(GfxPixelFormat format, GfxCubemapFace face, in
 	return true;
 }
 
-bool CGLES3Texture::TextureData2DCompressed(GfxPixelFormat format, GfxCubemapFace face, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
+bool CGLES3Texture::TextureCubemapDataCompressed(GfxPixelFormat format, GfxCubemapFace face, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
 {
 	if (m_bExtern == true) {
 		return false;
