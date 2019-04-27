@@ -30,7 +30,7 @@ private:
 	int GetSamples(void) const;
 
 private:
-	bool Create(GfxTextureType type, uint32_t texture, int width, int height, int layers, int levels, int samples = 1);
+	bool Create(uint32_t texture, GfxTextureType type, GfxPixelFormat format, int width, int height, int layers, int levels, int samples = 1);
 	bool Create(GfxTextureType type, GfxPixelFormat format, int width, int height, int layers, int levels, int samples = 1);
 	void Destroy(void);
 
