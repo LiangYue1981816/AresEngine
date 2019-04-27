@@ -354,6 +354,8 @@
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKQueue.h" />
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKRenderer.h" />
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKTexture.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKTransferBuffer.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKTransferBufferManager.h" />
     <ClInclude Include="..\..\Engine\Resource\include\ResourceLoader.h" />
     <ClInclude Include="..\..\Engine\SceneHeader.h" />
     <ClInclude Include="..\..\Engine\Scene\include\Component.h" />
@@ -650,6 +652,8 @@
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKQueue.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKRenderer.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKTexture.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKTransferBuffer.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKTransferBufferManager.cpp" />
     <ClCompile Include="..\..\Engine\Resource\src\ResourceLoader.cpp" />
     <ClCompile Include="..\..\Engine\Resource\src\ResourceLoaderMaterial.cpp" />
     <ClCompile Include="..\..\Engine\Resource\src\ResourceLoaderMesh.cpp" />
