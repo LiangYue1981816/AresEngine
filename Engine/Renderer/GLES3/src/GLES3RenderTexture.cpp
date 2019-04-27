@@ -4,9 +4,6 @@
 CGLES3RenderTexture::CGLES3RenderTexture(CGLES3RenderTextureManager* pManager, uint32_t name)
 	: CGfxRenderTexture(name)
 	, m_pManager(pManager)
-
-	, m_format(GFX_PIXELFORMAT_UNDEFINED)
-	, m_type(GFX_TEXTURE_INVALID_ENUM)
 {
 	m_ptrTexture = CGLES3TexturePtr(new CGLES3Texture);
 }
@@ -28,12 +25,12 @@ uint32_t CGLES3RenderTexture::GetTexture(void) const
 
 GfxTextureType CGLES3RenderTexture::GetType(void) const
 {
-	return m_type;
+	return m_ptrTexture->GetType();
 }
 
 GfxPixelFormat CGLES3RenderTexture::GetFormat(void) const
 {
-	return m_format;
+	return m_ptrTexture->GetFormat();
 }
 
 int CGLES3RenderTexture::GetWidth(void) const
@@ -53,51 +50,18 @@ int CGLES3RenderTexture::GetSamples(void) const
 
 bool CGLES3RenderTexture::Create(HANDLE hExternalTexture, GfxPixelFormat format, int width, int height, int samples)
 {
-	Destroy();
-	{
-		do {
-			samples = std::max(samples, 1);
-
-			m_format = format;
-			m_type = samples == 1 ? GFX_TEXTURE_2D : GFX_TEXTURE_2D_MULTISAMPLE;
-
-			if (m_ptrTexture->Create(m_type, (uint32_t)hExternalTexture, width, height, 1, 1, samples) == false) {
-				break;
-			}
-
-			return true;
-		} while (false);
-	}
-	Destroy();
-	return false;
+	samples = std::max(samples, 1);
+	return m_ptrTexture->Create(samples == 1 ? GFX_TEXTURE_2D : GFX_TEXTURE_2D_MULTISAMPLE, format, width, height, 1, 1, samples, (uint32_t)hExternalTexture);
 }
 
 bool CGLES3RenderTexture::Create(GfxPixelFormat format, int width, int height, int samples, bool bTransient)
 {
-	Destroy();
-	{
-		do {
-			samples = std::max(samples, 1);
-
-			m_format = format;
-			m_type = samples == 1 ? GFX_TEXTURE_2D : GFX_TEXTURE_2D_MULTISAMPLE;
-
-			if (m_ptrTexture->Create(m_type, format, width, height, 1, 1, samples) == false) {
-				break;
-			}
-
-			return true;
-		} while (false);
-	}
-	Destroy();
-	return false;
+	samples = std::max(samples, 1);
+	return m_ptrTexture->Create(samples == 1 ? GFX_TEXTURE_2D : GFX_TEXTURE_2D_MULTISAMPLE, format, width, height, 1, 1, samples);
 }
 
 void CGLES3RenderTexture::Destroy(void)
 {
-	m_format = GFX_PIXELFORMAT_UNDEFINED;
-	m_type = GFX_TEXTURE_INVALID_ENUM;
-
 	m_ptrTexture->Destroy();
 }
 

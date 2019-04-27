@@ -73,7 +73,7 @@ int CGLES3Texture::GetSamples(void) const
 	return m_samples;
 }
 
-bool CGLES3Texture::Create(uint32_t texture, GfxTextureType type, GfxPixelFormat format, int width, int height, int layers, int levels, int samples)
+bool CGLES3Texture::Create(GfxTextureType type, GfxPixelFormat format, int width, int height, int layers, int levels, int samples, uint32_t texture)
 {
 	Destroy();
 
