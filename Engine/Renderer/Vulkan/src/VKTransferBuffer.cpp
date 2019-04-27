@@ -29,3 +29,38 @@ CVKTransferBuffer::~CVKTransferBuffer(void)
 	vkDestroyBuffer(m_pDevice->GetDevice(), m_vkBuffer, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
 	m_pDevice->GetMemoryManager()->FreeMemory(m_pMemory);
 }
+
+bool CVKTransferBuffer::TransferBufferData(CVKBuffer* pTransferDstBuffer, size_t offset, size_t size, const void* data) const
+{
+	return true;
+}
+
+bool CVKTransferBuffer::TransferTexture2DData(CVKTexture* pTransferDstTexture, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
+{
+	return true;
+}
+
+bool CVKTransferBuffer::TransferTexture2DDataCompressed(CVKTexture* pTransferDstTexture, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
+{
+	return true;
+}
+
+bool CVKTransferBuffer::TransferTexture2DArrayData(CVKTexture* pTransferDstTexture, int layer, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
+{
+	return true;
+}
+
+bool CVKTransferBuffer::TransferTexture2DArrayDataCompressed(CVKTexture* pTransferDstTexture, int layer, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
+{
+	return true;
+}
+
+bool CVKTransferBuffer::TransferTextureCubemapData(CVKTexture* pTransferDstTexture, int face, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
+{
+	return true;
+}
+
+bool CVKTransferBuffer::TransferTextureCubemapDataCompressed(CVKTexture* pTransferDstTexture, int face, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
+{
+	return true;
+}
