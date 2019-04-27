@@ -212,11 +212,6 @@ void CVKTexture::Destroy(void)
 	m_layers = 0;
 	m_levels = 0;
 	m_samples = 0;
-
-	m_transferRegions.clear();
-	m_transferBuffers.clear();
-	m_transferRegions.shrink_to_fit();
-	m_transferBuffers.shrink_to_fit();
 }
 
 bool CVKTexture::Texture2DData(GfxPixelFormat format, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
@@ -244,67 +239,6 @@ bool CVKTexture::Texture2DData(GfxPixelFormat format, int level, int xoffset, in
 	if (m_samples != 1) {
 		return false;
 	}
-
-	VkBufferImageCopy region = {};
-	region.bufferOffset = m_transferBuffers.size();
-	region.imageOffset.x = xoffset;
-	region.imageOffset.y = yoffset;
-	region.imageOffset.z = 0;
-	region.imageExtent.width = width;
-	region.imageExtent.height = height;
-	region.imageExtent.depth = 1;
-	region.imageSubresource.aspectMask = m_vkImageAspectFlags;
-	region.imageSubresource.mipLevel = level;
-	region.imageSubresource.baseArrayLayer = 0;
-	region.imageSubresource.layerCount = 1;
-
-	m_transferRegions.insert(m_transferRegions.end(), region);
-	m_transferBuffers.insert(m_transferBuffers.end(), (uint8_t*)data, (uint8_t*)data + size);
-
-	return true;
-}
-
-bool CVKTexture::Texture2DDataCompressed(GfxPixelFormat format, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
-{
-	if (m_bExtern == true) {
-		return false;
-	}
-
-	if (m_type != GFX_TEXTURE_2D) {
-		return false;
-	}
-
-	if (m_vkImage == VK_NULL_HANDLE) {
-		return false;
-	}
-
-	if (m_format != format) {
-		return false;
-	}
-
-	if (m_levels < level) {
-		return false;
-	}
-
-	if (m_samples != 1) {
-		return false;
-	}
-
-	VkBufferImageCopy region = {};
-	region.bufferOffset = m_transferBuffers.size();
-	region.imageOffset.x = xoffset;
-	region.imageOffset.y = yoffset;
-	region.imageOffset.z = 0;
-	region.imageExtent.width = width;
-	region.imageExtent.height = height;
-	region.imageExtent.depth = 1;
-	region.imageSubresource.aspectMask = m_vkImageAspectFlags;
-	region.imageSubresource.mipLevel = level;
-	region.imageSubresource.baseArrayLayer = 0;
-	region.imageSubresource.layerCount = 1;
-
-	m_transferRegions.insert(m_transferRegions.end(), region);
-	m_transferBuffers.insert(m_transferBuffers.end(), (uint8_t*)data, (uint8_t*)data + size);
 
 	return true;
 }
@@ -339,71 +273,6 @@ bool CVKTexture::Texture2DArrayData(GfxPixelFormat format, int layer, int level,
 		return false;
 	}
 
-	VkBufferImageCopy region = {};
-	region.bufferOffset = m_transferBuffers.size();
-	region.imageOffset.x = xoffset;
-	region.imageOffset.y = yoffset;
-	region.imageOffset.z = 0;
-	region.imageExtent.width = width;
-	region.imageExtent.height = height;
-	region.imageExtent.depth = 1;
-	region.imageSubresource.aspectMask = m_vkImageAspectFlags;
-	region.imageSubresource.mipLevel = level;
-	region.imageSubresource.baseArrayLayer = layer;
-	region.imageSubresource.layerCount = 1;
-
-	m_transferRegions.insert(m_transferRegions.end(), region);
-	m_transferBuffers.insert(m_transferBuffers.end(), (uint8_t*)data, (uint8_t*)data + size);
-
-	return true;
-}
-
-bool CVKTexture::Texture2DArrayDataCompressed(GfxPixelFormat format, int layer, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
-{
-	if (m_bExtern == true) {
-		return false;
-	}
-
-	if (m_type != GFX_TEXTURE_2D_ARRAY) {
-		return false;
-	}
-
-	if (m_vkImage == VK_NULL_HANDLE) {
-		return false;
-	}
-
-	if (m_format != format) {
-		return false;
-	}
-
-	if (m_layers < layer) {
-		return false;
-	}
-
-	if (m_levels < level) {
-		return false;
-	}
-
-	if (m_samples != 1) {
-		return false;
-	}
-
-	VkBufferImageCopy region = {};
-	region.bufferOffset = m_transferBuffers.size();
-	region.imageOffset.x = xoffset;
-	region.imageOffset.y = yoffset;
-	region.imageOffset.z = 0;
-	region.imageExtent.width = width;
-	region.imageExtent.height = height;
-	region.imageExtent.depth = 1;
-	region.imageSubresource.aspectMask = m_vkImageAspectFlags;
-	region.imageSubresource.mipLevel = level;
-	region.imageSubresource.baseArrayLayer = layer;
-	region.imageSubresource.layerCount = 1;
-
-	m_transferRegions.insert(m_transferRegions.end(), region);
-	m_transferBuffers.insert(m_transferBuffers.end(), (uint8_t*)data, (uint8_t*)data + size);
-
 	return true;
 }
 
@@ -432,67 +301,6 @@ bool CVKTexture::TextureCubemapData(GfxPixelFormat format, GfxCubemapFace face, 
 	if (m_samples != 1) {
 		return false;
 	}
-
-	VkBufferImageCopy region = {};
-	region.bufferOffset = m_transferBuffers.size();
-	region.imageOffset.x = xoffset;
-	region.imageOffset.y = yoffset;
-	region.imageOffset.z = 0;
-	region.imageExtent.width = width;
-	region.imageExtent.height = height;
-	region.imageExtent.depth = 1;
-	region.imageSubresource.aspectMask = m_vkImageAspectFlags;
-	region.imageSubresource.mipLevel = level;
-	region.imageSubresource.baseArrayLayer = 0;
-	region.imageSubresource.layerCount = 1;
-
-	m_transferRegions.insert(m_transferRegions.end(), region);
-	m_transferBuffers.insert(m_transferBuffers.end(), (uint8_t*)data, (uint8_t*)data + size);
-
-	return true;
-}
-
-bool CVKTexture::TextureCubemapDataCompressed(GfxPixelFormat format, GfxCubemapFace face, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
-{
-	if (m_bExtern == true) {
-		return false;
-	}
-
-	if (m_type != GFX_TEXTURE_CUBE_MAP) {
-		return false;
-	}
-
-	if (m_vkImage == VK_NULL_HANDLE) {
-		return false;
-	}
-
-	if (m_format != format) {
-		return false;
-	}
-
-	if (m_levels < level) {
-		return false;
-	}
-
-	if (m_samples != 1) {
-		return false;
-	}
-
-	VkBufferImageCopy region = {};
-	region.bufferOffset = m_transferBuffers.size();
-	region.imageOffset.x = xoffset;
-	region.imageOffset.y = yoffset;
-	region.imageOffset.z = 0;
-	region.imageExtent.width = width;
-	region.imageExtent.height = height;
-	region.imageExtent.depth = 1;
-	region.imageSubresource.aspectMask = m_vkImageAspectFlags;
-	region.imageSubresource.mipLevel = level;
-	region.imageSubresource.baseArrayLayer = 0;
-	region.imageSubresource.layerCount = 1;
-
-	m_transferRegions.insert(m_transferRegions.end(), region);
-	m_transferBuffers.insert(m_transferBuffers.end(), (uint8_t*)data, (uint8_t*)data + size);
 
 	return true;
 }
