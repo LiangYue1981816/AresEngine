@@ -9,7 +9,7 @@ class CVKTransferBuffer
 
 
 private:
-	CVKTransferBuffer(CVKDevice* pDevice, VkDeviceSize size);
+	CVKTransferBuffer(CVKDevice* pDevice, VkCommandPool vkCommandPool, VkDeviceSize size);
 	virtual ~CVKTransferBuffer(void);
 
 
@@ -29,6 +29,11 @@ private:
 private:
 	VkBuffer m_vkBuffer;
 	CVKMemory* m_pMemory;
+
+private:
+	VkFence m_vkFence;
+	VkCommandBuffer m_vkCommandBuffer;
+	VkCommandPool m_vkCommandPool;
 
 private:
 	CVKDevice* m_pDevice;
