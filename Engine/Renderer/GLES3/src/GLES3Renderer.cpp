@@ -13,7 +13,7 @@ CGLES3Renderer::CGLES3Renderer(void* hInstance, void* hWnd, void* hDC, int width
 	, m_pSamplerManager(nullptr)
 	, m_pTexture2DManager(nullptr)
 	, m_pTexture2DArrayManager(nullptr)
-	, m_pTextureCubeMapManager(nullptr)
+	, m_pTextureCubemapManager(nullptr)
 	, m_pUniformBufferManager(nullptr)
 	, m_pMeshManager(nullptr)
 	, m_pMeshDrawManager(nullptr)
@@ -36,7 +36,7 @@ CGLES3Renderer::CGLES3Renderer(void* hInstance, void* hWnd, void* hDC, int width
 	m_pSamplerManager = new CGLES3SamplerManager;
 	m_pTexture2DManager = new CGLES3Texture2DManager;
 	m_pTexture2DArrayManager = new CGLES3Texture2DArrayManager;
-	m_pTextureCubeMapManager = new CGLES3TextureCubeMapManager;
+	m_pTextureCubemapManager = new CGLES3TextureCubemapManager;
 	m_pUniformBufferManager = new CGLES3UniformBufferManager;
 	m_pMeshManager = new CGLES3MeshManager;
 	m_pMeshDrawManager = new CGLES3MeshDrawManager;
@@ -63,7 +63,7 @@ CGLES3Renderer::~CGLES3Renderer(void)
 	delete m_pMeshDrawManager;
 	delete m_pMeshManager;
 	delete m_pUniformBufferManager;
-	delete m_pTextureCubeMapManager;
+	delete m_pTextureCubemapManager;
 	delete m_pTexture2DArrayManager;
 	delete m_pTexture2DManager;
 	delete m_pSamplerManager;
@@ -153,19 +153,19 @@ CGfxTexture2DArrayPtr CGLES3Renderer::NewTexture2DArray(const char* szFileName, 
 	return m_pTexture2DArrayManager->Create(szFileName, baseLevel, numLevels);
 }
 
-CGfxTextureCubeMapPtr CGLES3Renderer::GetTextureCubeMap(uint32_t name)
+CGfxTextureCubemapPtr CGLES3Renderer::GetTextureCubemap(uint32_t name)
 {
-	return m_pTextureCubeMapManager->Get(name);
+	return m_pTextureCubemapManager->Get(name);
 }
 
-CGfxTextureCubeMapPtr CGLES3Renderer::NewTextureCubeMap(uint32_t name)
+CGfxTextureCubemapPtr CGLES3Renderer::NewTextureCubemap(uint32_t name)
 {
-	return m_pTextureCubeMapManager->Create(name);
+	return m_pTextureCubemapManager->Create(name);
 }
 
-CGfxTextureCubeMapPtr CGLES3Renderer::NewTextureCubeMap(const char* szFileName, int baseLevel, int numLevels)
+CGfxTextureCubemapPtr CGLES3Renderer::NewTextureCubemap(const char* szFileName, int baseLevel, int numLevels)
 {
-	return m_pTextureCubeMapManager->Create(szFileName, baseLevel, numLevels);
+	return m_pTextureCubemapManager->Create(szFileName, baseLevel, numLevels);
 }
 
 CGfxRenderTexturePtr CGLES3Renderer::GetRenderTexture(uint32_t name)

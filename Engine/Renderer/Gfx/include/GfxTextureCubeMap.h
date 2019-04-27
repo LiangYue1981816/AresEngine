@@ -2,15 +2,15 @@
 #include "GfxRenderer.h"
 
 
-class CALL_API CGfxTextureCubeMap : public CGfxResource
+class CALL_API CGfxTextureCubemap : public CGfxResource
 {
 public:
-	CGfxTextureCubeMap(uint32_t name)
+	CGfxTextureCubemap(uint32_t name)
 		: m_name(name)
 	{
 
 	}
-	virtual ~CGfxTextureCubeMap(void)
+	virtual ~CGfxTextureCubemap(void)
 	{
 
 	}

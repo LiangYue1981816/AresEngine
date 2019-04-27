@@ -42,7 +42,7 @@
 #include "VKSamplerManager.h"
 #include "VKTexture2D.h"
 #include "VKTexture2DArray.h"
-#include "VKTextureCubeMap.h"
+#include "VKTextureCubemap.h"
 #include "VKTextureManager.h"
 #include "VKRenderTexture.h"
 #include "VKRenderTextureManager.h"
@@ -108,9 +108,9 @@ public:
 	CGfxTexture2DArrayPtr NewTexture2DArray(uint32_t name);
 	CGfxTexture2DArrayPtr NewTexture2DArray(const char* szFileName, int baseLevel = 0, int numLevels = INT_MAX);
 
-	CGfxTextureCubeMapPtr GetTextureCubeMap(uint32_t name);
-	CGfxTextureCubeMapPtr NewTextureCubeMap(uint32_t name);
-	CGfxTextureCubeMapPtr NewTextureCubeMap(const char* szFileName, int baseLevel = 0, int numLevels = INT_MAX);
+	CGfxTextureCubemapPtr GetTextureCubemap(uint32_t name);
+	CGfxTextureCubemapPtr NewTextureCubemap(uint32_t name);
+	CGfxTextureCubemapPtr NewTextureCubemap(const char* szFileName, int baseLevel = 0, int numLevels = INT_MAX);
 
 	CGfxRenderTexturePtr GetRenderTexture(uint32_t name);
 	CGfxRenderTexturePtr NewRenderTexture(uint32_t name);

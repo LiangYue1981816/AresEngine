@@ -2,14 +2,14 @@
 #include "GLES3Renderer.h"
 
 
-class CGLES3TextureCubeMap : public CGfxTextureCubeMap
+class CGLES3TextureCubemap : public CGfxTextureCubemap
 {
-	friend class CGLES3TextureCubeMapManager;
+	friend class CGLES3TextureCubemapManager;
 
 
 private:
-	CGLES3TextureCubeMap(CGLES3TextureCubeMapManager* pManager, uint32_t name);
-	virtual ~CGLES3TextureCubeMap(void);
+	CGLES3TextureCubemap(CGLES3TextureCubemapManager* pManager, uint32_t name);
+	virtual ~CGLES3TextureCubemap(void);
 	virtual void Release(void);
 
 
@@ -40,5 +40,5 @@ private:
 	CGLES3TexturePtr m_ptrTexture;
 
 private:
-	CGLES3TextureCubeMapManager* m_pManager;
+	CGLES3TextureCubemapManager* m_pManager;
 };

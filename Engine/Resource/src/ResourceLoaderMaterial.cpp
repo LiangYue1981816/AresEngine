@@ -413,13 +413,13 @@ ERR:
 	return false;
 }
 
-static bool InternalLoadTextureCubeMap(TiXmlNode* pPassNode, CGfxMaterialPass* pPass, int baseLevel, int numLevels)
+static bool InternalLoadTextureCubemap(TiXmlNode* pPassNode, CGfxMaterialPass* pPass, int baseLevel, int numLevels)
 {
 	int err = 0;
 
-	if (TiXmlNode* pTextureNode = pPassNode->FirstChild("TextureCubeMap")) {
+	if (TiXmlNode* pTextureNode = pPassNode->FirstChild("TextureCubemap")) {
 		do {
-			LogOutput(LOG_TAG_RENDERER, "\t\tLoadTextureCubeMap ");
+			LogOutput(LOG_TAG_RENDERER, "\t\tLoadTextureCubemap ");
 			{
 				const char* szName = pTextureNode->ToElement()->AttributeString("name");
 				const char* szFileName = pTextureNode->ToElement()->AttributeString("file_name");
@@ -434,11 +434,11 @@ static bool InternalLoadTextureCubeMap(TiXmlNode* pPassNode, CGfxMaterialPass* p
 				if (minFilter == GFX_FILTER_INVALID_ENUM || magFilter == GFX_FILTER_INVALID_ENUM || mipmapMode == GFX_SAMPLER_MIPMAP_MODE_INVALID_ENUM || addressMode == GFX_SAMPLER_ADDRESS_MODE_INVALID_ENUM) { err = -2; goto ERR; }
 
 				if (pPass->SetSampler(HashValue(szName), minFilter, magFilter, mipmapMode, addressMode)) {
-					pPass->SetTextureCubeMap(HashValue(szName), szFileName, baseLevel, numLevels);
+					pPass->SetTextureCubemap(HashValue(szName), szFileName, baseLevel, numLevels);
 				}
 			}
 			LogOutput(nullptr, "OK\n");
-		} while ((pTextureNode = pPassNode->IterateChildren("TextureCubeMap", pTextureNode)) != nullptr);
+		} while ((pTextureNode = pPassNode->IterateChildren("TextureCubemap", pTextureNode)) != nullptr);
 	}
 	return true;
 ERR:
@@ -567,7 +567,7 @@ static bool InternalLoadPass(TiXmlNode* pPassNode, CGfxMaterialPass* pPass, int 
 		if (InternalLoadPipeline(pPassNode, pPass, vertexBinding, instanceBinding) == false) { err = -1; goto ERR; }
 		if (InternalLoadTexture2D(pPassNode, pPass, baseLevel, numLevels) == false) { err = -2; goto ERR; }
 		if (InternalLoadTexture2DArray(pPassNode, pPass, baseLevel, numLevels) == false) { err = -3; goto ERR; }
-		if (InternalLoadTextureCubeMap(pPassNode, pPass, baseLevel, numLevels) == false) { err = -4; goto ERR; }
+		if (InternalLoadTextureCubemap(pPassNode, pPass, baseLevel, numLevels) == false) { err = -4; goto ERR; }
 		if (InternalLoadUniformVec1(pPassNode, pPass) == false) { err = -5; goto ERR; }
 		if (InternalLoadUniformVec2(pPassNode, pPass) == false) { err = -6; goto ERR; }
 		if (InternalLoadUniformVec3(pPassNode, pPass) == false) { err = -7; goto ERR; }
@@ -625,7 +625,7 @@ bool CResourceLoader::LoadMaterial(const char* szFileName, CGfxMaterial* pMateri
 	//		</Pipeline>
 	//		<Texture2D file_name="" name="" min_filter="" mag_filter="" mipmap_mode="" address_mode="" />
 	//		<Texture2DArray file_name="" name="" min_filter="" mag_filter="" mipmap_mode="" address_mode="" />
-	//		<TextureCubeMap file_name="" name="" min_filter="" mag_filter="" mipmap_mode="" address_mode="" />
+	//		<TextureCubemap file_name="" name="" min_filter="" mag_filter="" mipmap_mode="" address_mode="" />
 	//		<Uniform1f name="" value="" />
 	//		<Uniform2f name="" value="" />
 	//		<Uniform3f name="" value="" />

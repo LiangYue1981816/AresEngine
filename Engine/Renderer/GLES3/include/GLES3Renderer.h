@@ -31,7 +31,7 @@
 #include "GLES3Texture.h"
 #include "GLES3Texture2D.h"
 #include "GLES3Texture2DArray.h"
-#include "GLES3TextureCubeMap.h"
+#include "GLES3TextureCubemap.h"
 #include "GLES3TextureManager.h"
 #include "GLES3RenderTexture.h"
 #include "GLES3RenderTextureManager.h"
@@ -120,9 +120,9 @@ public:
 	CGfxTexture2DArrayPtr NewTexture2DArray(uint32_t name);
 	CGfxTexture2DArrayPtr NewTexture2DArray(const char* szFileName, int baseLevel = 0, int numLevels = INT_MAX);
 
-	CGfxTextureCubeMapPtr GetTextureCubeMap(uint32_t name);
-	CGfxTextureCubeMapPtr NewTextureCubeMap(uint32_t name);
-	CGfxTextureCubeMapPtr NewTextureCubeMap(const char* szFileName, int baseLevel = 0, int numLevels = INT_MAX);
+	CGfxTextureCubemapPtr GetTextureCubemap(uint32_t name);
+	CGfxTextureCubemapPtr NewTextureCubemap(uint32_t name);
+	CGfxTextureCubemapPtr NewTextureCubemap(const char* szFileName, int baseLevel = 0, int numLevels = INT_MAX);
 
 	CGfxRenderTexturePtr GetRenderTexture(uint32_t name);
 	CGfxRenderTexturePtr NewRenderTexture(uint32_t name);
@@ -215,7 +215,7 @@ private:
 	CGLES3SamplerManager* m_pSamplerManager;
 	CGLES3Texture2DManager* m_pTexture2DManager;
 	CGLES3Texture2DArrayManager* m_pTexture2DArrayManager;
-	CGLES3TextureCubeMapManager* m_pTextureCubeMapManager;
+	CGLES3TextureCubemapManager* m_pTextureCubemapManager;
 	CGLES3UniformBufferManager* m_pUniformBufferManager;
 	CGLES3MeshManager* m_pMeshManager;
 	CGLES3MeshDrawManager* m_pMeshDrawManager;

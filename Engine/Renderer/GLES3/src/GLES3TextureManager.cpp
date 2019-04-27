@@ -138,19 +138,19 @@ void CGLES3Texture2DArrayManager::Destroy(CGLES3Texture2DArray* pTexture)
 }
 
 
-CGLES3TextureCubeMapManager::CGLES3TextureCubeMapManager(void)
+CGLES3TextureCubemapManager::CGLES3TextureCubemapManager(void)
 {
 
 }
 
-CGLES3TextureCubeMapManager::~CGLES3TextureCubeMapManager(void)
+CGLES3TextureCubemapManager::~CGLES3TextureCubemapManager(void)
 {
 	for (const auto& itTexture : m_pTextures) {
 		delete itTexture.second;
 	}
 }
 
-CGLES3TextureCubeMap* CGLES3TextureCubeMapManager::Get(uint32_t name)
+CGLES3TextureCubemap* CGLES3TextureCubemapManager::Get(uint32_t name)
 {
 	mutex_autolock autolock(&lock);
 	{
@@ -165,34 +165,34 @@ CGLES3TextureCubeMap* CGLES3TextureCubeMapManager::Get(uint32_t name)
 	}
 }
 
-CGLES3TextureCubeMap* CGLES3TextureCubeMapManager::Create(uint32_t name)
+CGLES3TextureCubemap* CGLES3TextureCubemapManager::Create(uint32_t name)
 {
 	mutex_autolock autolock(&lock);
 	{
 		if (m_pTextures[name] == nullptr) {
-			m_pTextures[name] = new CGLES3TextureCubeMap(this, name);
+			m_pTextures[name] = new CGLES3TextureCubemap(this, name);
 		}
 
 		return m_pTextures[name];
 	}
 }
 
-CGLES3TextureCubeMap* CGLES3TextureCubeMapManager::Create(const char* szFileName, int baseLevel, int numLevels)
+CGLES3TextureCubemap* CGLES3TextureCubemapManager::Create(const char* szFileName, int baseLevel, int numLevels)
 {
 	uint32_t name = HashValue(szFileName);
 
 	mutex_autolock autolock(&lock);
 	{
 		if (m_pTextures[name] == nullptr) {
-			m_pTextures[name] = new CGLES3TextureCubeMap(this, name);
-			ResourceLoader()->LoadTextureCubeMap(szFileName, m_pTextures[name], baseLevel, numLevels);
+			m_pTextures[name] = new CGLES3TextureCubemap(this, name);
+			ResourceLoader()->LoadTextureCubemap(szFileName, m_pTextures[name], baseLevel, numLevels);
 		}
 
 		return m_pTextures[name];
 	}
 }
 
-void CGLES3TextureCubeMapManager::Destroy(CGLES3TextureCubeMap* pTexture)
+void CGLES3TextureCubemapManager::Destroy(CGLES3TextureCubemap* pTexture)
 {
 	mutex_autolock autolock(&lock);
 	{

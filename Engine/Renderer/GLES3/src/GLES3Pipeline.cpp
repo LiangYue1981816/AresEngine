@@ -273,10 +273,10 @@ bool CGLES3Pipeline::BindDescriptorSet(const CGfxDescriptorSetPtr ptrDescriptorS
 				continue;
 			}
 
-			if (pDescriptorImageInfo->ptrTextureCubeMap) {
+			if (pDescriptorImageInfo->ptrTextureCubemap) {
 				GLUniform1i(itSampledImage.second, itTextureUnit->second);
 				((CGLES3Sampler*)pDescriptorImageInfo->pSampler)->Bind(itTextureUnit->second);
-				((CGLES3TextureCubeMap*)pDescriptorImageInfo->ptrTextureCubeMap.GetPointer())->Bind(itTextureUnit->second);
+				((CGLES3TextureCubemap*)pDescriptorImageInfo->ptrTextureCubemap.GetPointer())->Bind(itTextureUnit->second);
 				continue;
 			}
 

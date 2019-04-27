@@ -32,7 +32,7 @@
 #include "GfxSampler.h"
 #include "GfxTexture2D.h"
 #include "GfxTexture2DArray.h"
-#include "GfxTextureCubeMap.h"
+#include "GfxTextureCubemap.h"
 #include "GfxRenderTexture.h"
 
 #include "GfxUniformVec1.h"
@@ -117,9 +117,9 @@ public:
 	virtual CGfxTexture2DArrayPtr NewTexture2DArray(uint32_t name) = 0;
 	virtual CGfxTexture2DArrayPtr NewTexture2DArray(const char* szFileName, int baseLevel = 0, int numLevels = INT_MAX) = 0;
 
-	virtual CGfxTextureCubeMapPtr GetTextureCubeMap(uint32_t name) = 0;
-	virtual CGfxTextureCubeMapPtr NewTextureCubeMap(uint32_t name) = 0;
-	virtual CGfxTextureCubeMapPtr NewTextureCubeMap(const char* szFileName, int baseLevel = 0, int numLevels = INT_MAX) = 0;
+	virtual CGfxTextureCubemapPtr GetTextureCubemap(uint32_t name) = 0;
+	virtual CGfxTextureCubemapPtr NewTextureCubemap(uint32_t name) = 0;
+	virtual CGfxTextureCubemapPtr NewTextureCubemap(const char* szFileName, int baseLevel = 0, int numLevels = INT_MAX) = 0;
 
 	virtual CGfxRenderTexturePtr GetRenderTexture(uint32_t name) = 0;
 	virtual CGfxRenderTexturePtr NewRenderTexture(uint32_t name) = 0;

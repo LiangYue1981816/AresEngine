@@ -96,17 +96,17 @@ CGfxTexture2DArrayPtr CVKRenderer::NewTexture2DArray(const char* szFileName, int
 	return nullptr;
 }
 
-CGfxTextureCubeMapPtr CVKRenderer::GetTextureCubeMap(uint32_t name)
+CGfxTextureCubemapPtr CVKRenderer::GetTextureCubemap(uint32_t name)
 {
 	return nullptr;
 }
 
-CGfxTextureCubeMapPtr CVKRenderer::NewTextureCubeMap(uint32_t name)
+CGfxTextureCubemapPtr CVKRenderer::NewTextureCubemap(uint32_t name)
 {
 	return nullptr;
 }
 
-CGfxTextureCubeMapPtr CVKRenderer::NewTextureCubeMap(const char* szFileName, int baseLevel, int numLevels)
+CGfxTextureCubemapPtr CVKRenderer::NewTextureCubemap(const char* szFileName, int baseLevel, int numLevels)
 {
 	return nullptr;
 }

@@ -30,8 +30,8 @@ class CGLES3Texture2D;
 class CGLES3Texture2DManager;
 class CGLES3Texture2DArray;
 class CGLES3Texture2DArrayManager;
-class CGLES3TextureCubeMap;
-class CGLES3TextureCubeMapManager;
+class CGLES3TextureCubemap;
+class CGLES3TextureCubemapManager;
 class CGLES3RenderTexture;
 class CGLES3RenderTextureManager;
 

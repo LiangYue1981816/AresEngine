@@ -7,7 +7,7 @@ class CVKTexture : public CGfxResource
 	friend class CVKRenderTexture;
 	friend class CVKTexture2D;
 	friend class CVKTexture2DArray;
-	friend class CVKTextureCubeMap;
+	friend class CVKTextureCubemap;
 
 
 private:

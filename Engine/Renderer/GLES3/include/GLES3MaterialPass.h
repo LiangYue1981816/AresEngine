@@ -24,10 +24,10 @@ public:
 	bool SetSampler(uint32_t name, GfxFilter minFilter, GfxFilter magFilter, GfxSamplerMipmapMode mipmapMode, GfxSamplerAddressMode addressMode);
 	bool SetTexture2D(uint32_t name, const CGfxTexture2DPtr ptrTexture);
 	bool SetTexture2DArray(uint32_t name, const CGfxTexture2DArrayPtr ptrTexture);
-	bool SetTextureCubeMap(uint32_t name, const CGfxTextureCubeMapPtr ptrTexture);
+	bool SetTextureCubemap(uint32_t name, const CGfxTextureCubemapPtr ptrTexture);
 	bool SetTexture2D(uint32_t name, const char* szFileName, int baseLevel = 0, int numLevels = INT_MAX);
 	bool SetTexture2DArray(uint32_t name, const char* szFileName, int baseLevel = 0, int numLevels = INT_MAX);
-	bool SetTextureCubeMap(uint32_t name, const char* szFileName, int baseLevel = 0, int numLevels = INT_MAX);
+	bool SetTextureCubemap(uint32_t name, const char* szFileName, int baseLevel = 0, int numLevels = INT_MAX);
 
 	bool SetUniformVec1(uint32_t name, float v0);
 	bool SetUniformVec2(uint32_t name, float v0, float v1);

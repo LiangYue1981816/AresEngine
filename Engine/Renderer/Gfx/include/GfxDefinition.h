@@ -28,7 +28,7 @@ class CALL_API CGfxIndirectBuffer;
 class CALL_API CGfxSampler;
 class CALL_API CGfxTexture2D;
 class CALL_API CGfxTexture2DArray;
-class CALL_API CGfxTextureCubeMap;
+class CALL_API CGfxTextureCubemap;
 class CALL_API CGfxRenderTexture;
 
 class CALL_API CGfxUniformVec1;
@@ -59,7 +59,7 @@ typedef CGfxResourcePtr<CGfxFrameBuffer> CGfxFrameBufferPtr;
 
 typedef CGfxResourcePtr<CGfxTexture2D> CGfxTexture2DPtr;
 typedef CGfxResourcePtr<CGfxTexture2DArray> CGfxTexture2DArrayPtr;
-typedef CGfxResourcePtr<CGfxTextureCubeMap> CGfxTextureCubeMapPtr;
+typedef CGfxResourcePtr<CGfxTextureCubemap> CGfxTextureCubemapPtr;
 typedef CGfxResourcePtr<CGfxRenderTexture> CGfxRenderTexturePtr;
 typedef CGfxResourcePtr<CGfxUniformBuffer> CGfxUniformBufferPtr;
 
