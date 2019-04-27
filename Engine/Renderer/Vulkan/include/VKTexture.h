@@ -45,8 +45,8 @@ private:
 	bool TextureCubemapData(GfxPixelFormat format, GfxCubemapFace face, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data);
 	bool TextureCubemapDataCompressed(GfxPixelFormat format, GfxCubemapFace face, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data);
 
-	bool PipelineBarrier(VkCommandBuffer vkCommandBuffer, VkImageLayout srcLayout, VkImageLayout dstLayout, VkImageSubresourceRange range);
-	bool PipelineBarrier(VkCommandBuffer vkCommandBuffer, VkImageLayout srcLayout, VkImageLayout dstLayout, VkAccessFlags srcAccessFlags, VkAccessFlags dstAccessFlags, VkPipelineStageFlags srcPipelineStageFlags, VkPipelineStageFlags dstPipelineStageFlags, VkImageSubresourceRange range);
+	bool PipelineBarrier(VkCommandBuffer vkCommandBuffer, VkImageLayout imageLayout, VkImageSubresourceRange range);
+	bool PipelineBarrier(VkCommandBuffer vkCommandBuffer, VkImageLayout imageLayout, VkAccessFlags srcAccessFlags, VkAccessFlags dstAccessFlags, VkPipelineStageFlags srcPipelineStageFlags, VkPipelineStageFlags dstPipelineStageFlags, VkImageSubresourceRange range);
 
 
 private:
