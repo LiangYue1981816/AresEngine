@@ -501,9 +501,6 @@
     <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3Texture2DArray.h">
       <Filter>Engine\Renderer\GLES3\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3TextureCubeMap.h">
-      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3UniformBuffer.h">
       <Filter>Engine\Renderer\GLES3\Header Files</Filter>
     </ClInclude>
@@ -1329,6 +1326,9 @@
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKTransferBufferManager.h">
       <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3TextureCubemap.h">
+      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Engine\ThirdParty\eastl\source\allocator_eastl.cpp">
@@ -1542,9 +1542,6 @@
       <Filter>Engine\Renderer\GLES3\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3Texture2DArray.cpp">
-      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3TextureCubeMap.cpp">
       <Filter>Engine\Renderer\GLES3\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3UniformBuffer.cpp">
@@ -1897,6 +1894,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKTransferBufferManager.cpp">
       <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3TextureCubemap.cpp">
+      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
