@@ -33,8 +33,8 @@ private:
 	int GetSamples(void) const;
 
 private:
-	bool Create(GfxTextureType type, VkImageView vkImageView, int width, int height, int layers, int levels, int samples);
-	bool Create(GfxTextureType type, GfxPixelFormat format, int width, int height, int layers, int levels, int samples, VkImageTiling imageTiling, VkImageUsageFlags imageUsageFlags, VkImageAspectFlags imageAspectFlags);
+	bool Create(GfxTextureType type, GfxPixelFormat format, int width, int height, int layers, int levels, int samples, VkImageAspectFlags imageAspectFlags, VkImageView vkImageView);
+	bool Create(GfxTextureType type, GfxPixelFormat format, int width, int height, int layers, int levels, int samples, VkImageAspectFlags imageAspectFlags, VkImageUsageFlags imageUsageFlags, VkImageTiling imageTiling);
 	void Destroy(void);
 
 private:

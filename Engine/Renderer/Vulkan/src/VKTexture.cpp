@@ -8,7 +8,7 @@ CVKTexture::CVKTexture(CVKDevice* pDevice)
 	, m_vkImage(VK_NULL_HANDLE)
 	, m_vkImageView(VK_NULL_HANDLE)
 	, m_vkImageLayout(VK_IMAGE_LAYOUT_UNDEFINED)
-	, m_vkImageAspectFlags(VK_IMAGE_ASPECT_FLAG_BITS_MAX_ENUM)
+	, m_vkImageAspectFlags(0)
 	, m_pMemory(nullptr)
 
 	, m_type(GFX_TEXTURE_INVALID_ENUM)
@@ -88,7 +88,7 @@ int CVKTexture::GetSamples(void) const
 	return m_samples;
 }
 
-bool CVKTexture::Create(GfxTextureType type, VkImageView vkImageView, int width, int height, int layers, int levels, int samples)
+bool CVKTexture::Create(GfxTextureType type, GfxPixelFormat format, int width, int height, int layers, int levels, int samples, VkImageAspectFlags imageAspectFlags, VkImageView vkImageView)
 {
 	Destroy();
 
@@ -96,11 +96,11 @@ bool CVKTexture::Create(GfxTextureType type, VkImageView vkImageView, int width,
 	m_vkImage = VK_NULL_HANDLE;
 	m_vkImageView = vkImageView;
 	m_vkImageLayout = VK_IMAGE_LAYOUT_UNDEFINED;
-	m_vkImageAspectFlags = VK_IMAGE_ASPECT_FLAG_BITS_MAX_ENUM;
+	m_vkImageAspectFlags = imageAspectFlags;
 	m_pMemory = nullptr;
 
 	m_type = type;
-	m_format = GFX_PIXELFORMAT_UNDEFINED;
+	m_format = format;
 
 	m_width = width;
 	m_height = height;
@@ -111,7 +111,7 @@ bool CVKTexture::Create(GfxTextureType type, VkImageView vkImageView, int width,
 	return true;
 }
 
-bool CVKTexture::Create(GfxTextureType type, GfxPixelFormat format, int width, int height, int layers, int levels, int samples, VkImageTiling imageTiling, VkImageUsageFlags imageUsageFlags, VkImageAspectFlags imageAspectFlags)
+bool CVKTexture::Create(GfxTextureType type, GfxPixelFormat format, int width, int height, int layers, int levels, int samples, VkImageAspectFlags imageAspectFlags, VkImageUsageFlags imageUsageFlags, VkImageTiling imageTiling)
 {
 	Destroy();
 
@@ -201,7 +201,7 @@ void CVKTexture::Destroy(void)
 	m_vkImage = VK_NULL_HANDLE;
 	m_vkImageView = VK_NULL_HANDLE;
 	m_vkImageLayout = VK_IMAGE_LAYOUT_UNDEFINED;
-	m_vkImageAspectFlags = VK_IMAGE_ASPECT_FLAG_BITS_MAX_ENUM;
+	m_vkImageAspectFlags = 0;
 	m_pMemory = nullptr;
 
 	m_type = GFX_TEXTURE_INVALID_ENUM;
