@@ -64,14 +64,14 @@ void CGLES3Texture2D::Destroy(void)
 	m_ptrTexture->Destroy();
 }
 
-bool CGLES3Texture2D::TextureData2D(GfxPixelFormat format, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
+bool CGLES3Texture2D::Texture2DData(GfxPixelFormat format, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
 {
-	return m_ptrTexture->TextureData2D(format, level, xoffset, yoffset, width, height, size, data);
+	return m_ptrTexture->Texture2DData(format, level, xoffset, yoffset, width, height, size, data);
 }
 
-bool CGLES3Texture2D::TextureData2DCompressed(GfxPixelFormat format, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
+bool CGLES3Texture2D::Texture2DDataCompressed(GfxPixelFormat format, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
 {
-	return m_ptrTexture->TextureData2DCompressed(format, level, xoffset, yoffset, width, height, size, data);
+	return m_ptrTexture->Texture2DDataCompressed(format, level, xoffset, yoffset, width, height, size, data);
 }
 
 void CGLES3Texture2D::Bind(uint32_t unit) const

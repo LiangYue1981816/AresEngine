@@ -63,14 +63,14 @@ void CGLES3Texture2DArray::Destroy(void)
 	m_ptrTexture->Destroy();
 }
 
-bool CGLES3Texture2DArray::TextureData2D(GfxPixelFormat format, int layer, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
+bool CGLES3Texture2DArray::Texture2DArrayData(GfxPixelFormat format, int layer, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
 {
-	return m_ptrTexture->TextureData2D(format, layer, level, xoffset, yoffset, width, height, size, data);
+	return m_ptrTexture->Texture2DArrayData(format, layer, level, xoffset, yoffset, width, height, size, data);
 }
 
-bool CGLES3Texture2DArray::TextureData2DCompressed(GfxPixelFormat format, int layer, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
+bool CGLES3Texture2DArray::Texture2DArrayDataCompressed(GfxPixelFormat format, int layer, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
 {
-	return m_ptrTexture->TextureData2DCompressed(format, layer, level, xoffset, yoffset, width, height, size, data);
+	return m_ptrTexture->Texture2DArrayDataCompressed(format, layer, level, xoffset, yoffset, width, height, size, data);
 }
 
 void CGLES3Texture2DArray::Bind(uint32_t unit) const

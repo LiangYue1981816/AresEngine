@@ -58,14 +58,14 @@ void CGLES3TextureCubeMap::Destroy(void)
 	m_ptrTexture->Destroy();
 }
 
-bool CGLES3TextureCubeMap::TextureData2D(GfxPixelFormat format, GfxCubemapFace face, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
+bool CGLES3TextureCubeMap::TextureCubemapData(GfxPixelFormat format, GfxCubemapFace face, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
 {
-	return m_ptrTexture->TextureData2D(format, face, level, xoffset, yoffset, width, height, size, data);
+	return m_ptrTexture->TextureCubemapData(format, face, level, xoffset, yoffset, width, height, size, data);
 }
 
-bool CGLES3TextureCubeMap::TextureData2DCompressed(GfxPixelFormat format, GfxCubemapFace face, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
+bool CGLES3TextureCubeMap::TextureCubemapDataCompressed(GfxPixelFormat format, GfxCubemapFace face, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
 {
-	return m_ptrTexture->TextureData2DCompressed(format, face, level, xoffset, yoffset, width, height, size, data);
+	return m_ptrTexture->TextureCubemapDataCompressed(format, face, level, xoffset, yoffset, width, height, size, data);
 }
 
 void CGLES3TextureCubeMap::Bind(uint32_t unit) const
