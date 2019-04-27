@@ -14,6 +14,10 @@ private:
 
 
 private:
+	VkDeviceSize GetSize(void) const;
+	bool IsTransferFinish(void) const;
+
+private:
 	bool TransferBufferData(CVKBuffer* pTransferDstBuffer, size_t offset, size_t size, const void* data) const;
 
 	bool TransferTexture2DData(CVKTexture* pTransferDstTexture, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data);

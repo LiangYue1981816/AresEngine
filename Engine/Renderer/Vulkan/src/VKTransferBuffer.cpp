@@ -45,11 +45,23 @@ CVKTransferBuffer::CVKTransferBuffer(CVKDevice* pDevice, VkCommandPool vkCommand
 CVKTransferBuffer::~CVKTransferBuffer(void)
 {
 	vkWaitForFences(m_pDevice->GetDevice(), 1, &m_vkFence, VK_TRUE, UINT64_MAX);
+
 	vkDestroyFence(m_pDevice->GetDevice(), m_vkFence, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
 	vkFreeCommandBuffers(m_pDevice->GetDevice(), m_vkCommandPool, 1, &m_vkCommandBuffer);
 
 	vkDestroyBuffer(m_pDevice->GetDevice(), m_vkBuffer, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
 	m_pDevice->GetMemoryManager()->FreeMemory(m_pMemory);
+}
+
+VkDeviceSize CVKTransferBuffer::GetSize(void) const
+{
+	return m_pMemory->GetSize();
+}
+
+bool CVKTransferBuffer::IsTransferFinish(void) const
+{
+	CALL_VK_FUNCTION_RETURN_BOOL(vkGetFenceStatus(m_pDevice->GetDevice(), m_vkFence));
+	return false;
 }
 
 bool CVKTransferBuffer::TransferBufferData(CVKBuffer* pTransferDstBuffer, size_t offset, size_t size, const void* data) const
