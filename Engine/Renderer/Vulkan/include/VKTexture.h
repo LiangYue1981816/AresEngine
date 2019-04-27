@@ -18,6 +18,8 @@ private:
 
 private:
 	VkImageView GetImageView(void) const;
+	VkImageLayout GetImageLayout(void) const;
+	VkImageAspectFlags GetImageAspectFlags(void) const;
 
 	GfxTextureType GetType(void) const;
 	GfxPixelFormat GetFormat(void) const;

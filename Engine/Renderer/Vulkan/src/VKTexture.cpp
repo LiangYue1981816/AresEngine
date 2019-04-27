@@ -38,6 +38,16 @@ VkImageView CVKTexture::GetImageView(void) const
 	return m_vkImageView;
 }
 
+VkImageLayout CVKTexture::GetImageLayout(void) const
+{
+	return m_vkImageLayout;
+}
+
+VkImageAspectFlags CVKTexture::GetImageAspectFlags(void) const
+{
+	return m_vkImageAspectFlags;
+}
+
 GfxTextureType CVKTexture::GetType(void) const
 {
 	return m_type;
