@@ -4,6 +4,7 @@
 
 class CVKTexture : public CGfxResource
 {
+	friend class CVKTransferBuffer;
 	friend class CVKRenderTexture;
 	friend class CVKTexture2D;
 	friend class CVKTexture2DArray;
@@ -17,6 +18,7 @@ private:
 
 
 private:
+	VkImage GetImage(void) const;
 	VkImageView GetImageView(void) const;
 	VkImageLayout GetImageLayout(void) const;
 	VkImageAspectFlags GetImageAspectFlags(void) const;

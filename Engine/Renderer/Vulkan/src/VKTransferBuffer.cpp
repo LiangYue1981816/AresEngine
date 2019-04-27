@@ -71,7 +71,16 @@ bool CVKTransferBuffer::TransferBufferData(CVKBuffer* pDstBuffer, VkAccessFlags 
 	CALL_VK_FUNCTION_RETURN_BOOL(vkGetFenceStatus(m_pDevice->GetDevice(), m_vkFence));
 	CALL_VK_FUNCTION_RETURN_BOOL(vkBeginCommandBufferPrimary(m_vkCommandBuffer, VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT));
 	{
+		CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->BeginMap(0, size));
+		CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->CopyData(0, size, data));
+		CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->EndMap());
 
+		VkBufferCopy region = {};
+		region.srcOffset = 0;
+		region.dstOffset = offset;
+		region.size = size;
+		vkCmdCopyBuffer(m_vkCommandBuffer, m_vkBuffer, pDstBuffer->GetBuffer(), 1, &region);
+		pDstBuffer->PipelineBarrier(m_vkCommandBuffer, VK_ACCESS_TRANSFER_WRITE_BIT, dstAccessFlags, VK_PIPELINE_STAGE_TRANSFER_BIT, dstPipelineStageFlags, offset, size);
 	}
 	CALL_VK_FUNCTION_RETURN_BOOL(vkEndCommandBuffer(m_vkCommandBuffer));
 	CALL_VK_FUNCTION_RETURN_BOOL(vkResetFences(m_pDevice->GetDevice(), 1, &m_vkFence));
@@ -84,20 +93,31 @@ bool CVKTransferBuffer::TransferTexture2DData(CVKTexture* pDstTexture, VkImageLa
 	CALL_VK_FUNCTION_RETURN_BOOL(vkGetFenceStatus(m_pDevice->GetDevice(), m_vkFence));
 	CALL_VK_FUNCTION_RETURN_BOOL(vkBeginCommandBufferPrimary(m_vkCommandBuffer, VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT));
 	{
+		CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->BeginMap(0, size));
+		CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->CopyData(0, size, data));
+		CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->EndMap());
 
-	}
-	CALL_VK_FUNCTION_RETURN_BOOL(vkEndCommandBuffer(m_vkCommandBuffer));
-	CALL_VK_FUNCTION_RETURN_BOOL(vkResetFences(m_pDevice->GetDevice(), 1, &m_vkFence));
-	CALL_VK_FUNCTION_RETURN_BOOL(vkSubmitCommandBuffer(m_vkQueue, m_vkCommandBuffer, m_vkFence));
-	return true;
-}
+		VkBufferImageCopy region = {};
+		region.bufferOffset = 0;
+		region.imageOffset.x = xoffset;
+		region.imageOffset.y = yoffset;
+		region.imageOffset.z = 0;
+		region.imageExtent.width = width;
+		region.imageExtent.height = height;
+		region.imageExtent.depth = 1;
+		region.imageSubresource.aspectMask = pDstTexture->GetImageAspectFlags();
+		region.imageSubresource.mipLevel = level;
+		region.imageSubresource.baseArrayLayer = 0;
+		region.imageSubresource.layerCount = 1;
+		vkCmdCopyBufferToImage(m_vkCommandBuffer, m_vkBuffer, pDstTexture->GetImage(), dstImageLayout, 1, &region);
 
-bool CVKTransferBuffer::TransferTexture2DDataCompressed(CVKTexture* pDstTexture, VkImageLayout dstImageLayout, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
-{
-	CALL_VK_FUNCTION_RETURN_BOOL(vkGetFenceStatus(m_pDevice->GetDevice(), m_vkFence));
-	CALL_VK_FUNCTION_RETURN_BOOL(vkBeginCommandBufferPrimary(m_vkCommandBuffer, VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT));
-	{
-
+		VkImageSubresourceRange range = {};
+		range.aspectMask = pDstTexture->GetImageAspectFlags();
+		range.baseMipLevel = level;
+		range.levelCount = 1;
+		range.baseArrayLayer = 0;
+		range.layerCount = 1;
+		pDstTexture->PipelineBarrier(m_vkCommandBuffer, dstImageLayout, range);
 	}
 	CALL_VK_FUNCTION_RETURN_BOOL(vkEndCommandBuffer(m_vkCommandBuffer));
 	CALL_VK_FUNCTION_RETURN_BOOL(vkResetFences(m_pDevice->GetDevice(), 1, &m_vkFence));
@@ -110,20 +130,31 @@ bool CVKTransferBuffer::TransferTexture2DArrayData(CVKTexture* pDstTexture, VkIm
 	CALL_VK_FUNCTION_RETURN_BOOL(vkGetFenceStatus(m_pDevice->GetDevice(), m_vkFence));
 	CALL_VK_FUNCTION_RETURN_BOOL(vkBeginCommandBufferPrimary(m_vkCommandBuffer, VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT));
 	{
+		CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->BeginMap(0, size));
+		CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->CopyData(0, size, data));
+		CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->EndMap());
 
-	}
-	CALL_VK_FUNCTION_RETURN_BOOL(vkEndCommandBuffer(m_vkCommandBuffer));
-	CALL_VK_FUNCTION_RETURN_BOOL(vkResetFences(m_pDevice->GetDevice(), 1, &m_vkFence));
-	CALL_VK_FUNCTION_RETURN_BOOL(vkSubmitCommandBuffer(m_vkQueue, m_vkCommandBuffer, m_vkFence));
-	return true;
-}
+		VkBufferImageCopy region = {};
+		region.bufferOffset = 0;
+		region.imageOffset.x = xoffset;
+		region.imageOffset.y = yoffset;
+		region.imageOffset.z = 0;
+		region.imageExtent.width = width;
+		region.imageExtent.height = height;
+		region.imageExtent.depth = 1;
+		region.imageSubresource.aspectMask = pDstTexture->GetImageAspectFlags();
+		region.imageSubresource.mipLevel = level;
+		region.imageSubresource.baseArrayLayer = layer;
+		region.imageSubresource.layerCount = 1;
+		vkCmdCopyBufferToImage(m_vkCommandBuffer, m_vkBuffer, pDstTexture->GetImage(), dstImageLayout, 1, &region);
 
-bool CVKTransferBuffer::TransferTexture2DArrayDataCompressed(CVKTexture* pDstTexture, VkImageLayout dstImageLayout, int layer, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
-{
-	CALL_VK_FUNCTION_RETURN_BOOL(vkGetFenceStatus(m_pDevice->GetDevice(), m_vkFence));
-	CALL_VK_FUNCTION_RETURN_BOOL(vkBeginCommandBufferPrimary(m_vkCommandBuffer, VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT));
-	{
-
+		VkImageSubresourceRange range = {};
+		range.aspectMask = pDstTexture->GetImageAspectFlags();
+		range.baseMipLevel = level;
+		range.levelCount = 1;
+		range.baseArrayLayer = layer;
+		range.layerCount = 1;
+		pDstTexture->PipelineBarrier(m_vkCommandBuffer, dstImageLayout, range);
 	}
 	CALL_VK_FUNCTION_RETURN_BOOL(vkEndCommandBuffer(m_vkCommandBuffer));
 	CALL_VK_FUNCTION_RETURN_BOOL(vkResetFences(m_pDevice->GetDevice(), 1, &m_vkFence));
@@ -132,19 +163,6 @@ bool CVKTransferBuffer::TransferTexture2DArrayDataCompressed(CVKTexture* pDstTex
 }
 
 bool CVKTransferBuffer::TransferTextureCubemapData(CVKTexture* pDstTexture, VkImageLayout dstImageLayout, int face, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
-{
-	CALL_VK_FUNCTION_RETURN_BOOL(vkGetFenceStatus(m_pDevice->GetDevice(), m_vkFence));
-	CALL_VK_FUNCTION_RETURN_BOOL(vkBeginCommandBufferPrimary(m_vkCommandBuffer, VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT));
-	{
-
-	}
-	CALL_VK_FUNCTION_RETURN_BOOL(vkEndCommandBuffer(m_vkCommandBuffer));
-	CALL_VK_FUNCTION_RETURN_BOOL(vkResetFences(m_pDevice->GetDevice(), 1, &m_vkFence));
-	CALL_VK_FUNCTION_RETURN_BOOL(vkSubmitCommandBuffer(m_vkQueue, m_vkCommandBuffer, m_vkFence));
-	return true;
-}
-
-bool CVKTransferBuffer::TransferTextureCubemapDataCompressed(CVKTexture* pDstTexture, VkImageLayout dstImageLayout, int face, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
 {
 	CALL_VK_FUNCTION_RETURN_BOOL(vkGetFenceStatus(m_pDevice->GetDevice(), m_vkFence));
 	CALL_VK_FUNCTION_RETURN_BOOL(vkBeginCommandBufferPrimary(m_vkCommandBuffer, VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT));
