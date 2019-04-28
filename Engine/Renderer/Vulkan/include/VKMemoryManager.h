@@ -5,6 +5,8 @@
 class CVKMemoryManager
 {
 	friend class CVKDevice;
+	friend class CVKMemory;
+	friend class CVKMemoryAllocator;
 
 
 private:
