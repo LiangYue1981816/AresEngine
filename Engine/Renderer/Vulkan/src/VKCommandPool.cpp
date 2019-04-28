@@ -36,8 +36,10 @@ CVKCommandBuffer* CVKCommandPool::AllocCommandBuffer(bool bMainCommandBuffer)
 
 void CVKCommandPool::FreeCommandBuffer(CVKCommandBuffer* pCommandBuffer)
 {
-	m_pCommandBuffers.erase(pCommandBuffer);
-	delete pCommandBuffer;
+	if (pCommandBuffer) {
+		m_pCommandBuffers.erase(pCommandBuffer);
+		delete pCommandBuffer;
+	}
 }
 
 void CVKCommandPool::ResetCommandPool(void)

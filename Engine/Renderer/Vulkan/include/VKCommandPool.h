@@ -23,10 +23,8 @@ private:
 
 
 private:
-	eastl::unordered_map<CVKCommandBuffer*, CVKCommandBuffer*> m_pCommandBuffers;
-
-private:
 	VkCommandPool m_vkCommandPool;
+	eastl::unordered_map<CVKCommandBuffer*, CVKCommandBuffer*> m_pCommandBuffers;
 
 private:
 	CVKDevice* m_pDevice;

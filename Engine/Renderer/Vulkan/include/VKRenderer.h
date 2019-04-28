@@ -22,6 +22,10 @@
 
 #include "VKBuffer.h"
 #include "VKTexture.h"
+
+#include "VKCommandPool.h"
+#include "VKCommandBuffer.h"
+#include "VKCommandBufferManager.h"
 /*
 #include "VKSwapChain.h"
 #include "VKRenderPass.h"
@@ -66,10 +70,6 @@
 #include "VKDescriptorPool.h"
 #include "VKDescriptorSet.h"
 #include "VKDescriptorSetManager.h"
-
-#include "VKCommandPool.h"
-#include "VKCommandBuffer.h"
-#include "VKCommandBufferManager.h"
 */
 
 #define VKRenderer() ((CVKRenderer *)CGfxRenderer::GetInstance())
