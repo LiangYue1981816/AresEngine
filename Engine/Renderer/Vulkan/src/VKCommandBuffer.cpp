@@ -12,17 +12,32 @@ CVKCommandBuffer::CVKCommandBuffer(CVKDevice* pDevice, CVKCommandPool* pCommandP
 	, m_bInRenderPass(false)
 	, m_indexSubpass(0)
 {
+	VkFenceCreateInfo fenceCreateInfo = {};
+	fenceCreateInfo.sType = VK_STRUCTURE_TYPE_FENCE_CREATE_INFO;
+	fenceCreateInfo.pNext = nullptr;
+	fenceCreateInfo.flags = VK_FENCE_CREATE_SIGNALED_BIT;
+	vkCreateFence(m_pDevice->GetDevice(), &fenceCreateInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkFence);
 
+	VkCommandBufferAllocateInfo allocateInfo = {};
+	allocateInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
+	allocateInfo.pNext = nullptr;
+	allocateInfo.commandPool = pCommandPool->GetCommandPool();
+	allocateInfo.level = bMainCommandBuffer ? VK_COMMAND_BUFFER_LEVEL_PRIMARY : VK_COMMAND_BUFFER_LEVEL_SECONDARY;
+	allocateInfo.commandBufferCount = 1;
+	vkAllocateCommandBuffers(m_pDevice->GetDevice(), &allocateInfo, &m_vkCommandBuffer);
 }
 
 CVKCommandBuffer::~CVKCommandBuffer(void)
 {
+	Clearup();
 
+	vkDestroyFence(m_pDevice->GetDevice(), m_vkFence, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
+	vkFreeCommandBuffers(m_pDevice->GetDevice(), m_pCommandPool->GetCommandPool(), 1, &m_vkCommandBuffer);
 }
 
 void CVKCommandBuffer::Release(void)
 {
-
+	m_pCommandPool->FreeCommandBuffer(this);
 }
 
 VkFence CVKCommandBuffer::GetFence(void) const
@@ -57,12 +72,24 @@ int CVKCommandBuffer::GetSubpassIndex(void) const
 
 void CVKCommandBuffer::Clearup(void)
 {
+	vkWaitForFences(m_pDevice->GetDevice(), 1, &m_vkFence, VK_TRUE, UINT64_MAX);
 
+	for (const auto& itCommand : m_pCommands) {
+		delete itCommand;
+	}
+
+	m_pCommands.clear();
+
+	m_bInRenderPass = false;
+	m_indexSubpass = 0;
+
+	m_ptrRenderPass.Release();
+	m_ptrFrameBuffer.Release();
 }
 
 bool CVKCommandBuffer::Execute(void) const
 {
-
+	return true;
 }
 
 bool CVKCommandBuffer::CmdBeginRenderPass(const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass)
@@ -406,10 +433,10 @@ bool CVKCommandBuffer::CmdPresent(void)
 
 bool CVKCommandBuffer::CmdPushDebugGroup(const char* szMessage)
 {
-
+	return true;
 }
 
 bool CVKCommandBuffer::CmdPopDebugGroup(void)
 {
-
+	return true;
 }
