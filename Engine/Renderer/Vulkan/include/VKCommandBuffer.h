@@ -5,7 +5,6 @@
 class CVKCommandBuffer : public CGfxCommandBuffer
 {
 	friend class CVKCommandPool;
-	friend class CVKCommandBufferManager;
 
 
 private:

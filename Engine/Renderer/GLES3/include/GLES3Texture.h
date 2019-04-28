@@ -4,10 +4,10 @@
 
 class CGLES3Texture : public CGfxResource
 {
-	friend class CGLES3RenderTexture;
 	friend class CGLES3Texture2D;
 	friend class CGLES3Texture2DArray;
 	friend class CGLES3TextureCubemap;
+	friend class CGLES3RenderTexture;
 
 
 private:
