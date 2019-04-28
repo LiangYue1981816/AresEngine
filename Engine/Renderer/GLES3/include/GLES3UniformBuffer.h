@@ -4,7 +4,6 @@
 
 class CGLES3UniformBuffer : public CGfxUniformBuffer
 {
-	friend class CGLES3Pipeline;
 	friend class CGLES3UniformBufferManager;
 
 
@@ -20,7 +19,7 @@ public:
 public:
 	bool BufferData(size_t offset, size_t size, const void* data);
 
-private:
+public:
 	void Bind(int binding, int offset, int size) const;
 
 
