@@ -5,6 +5,7 @@
 class CGLES3PipelineComputeManager : public CGfxResourceManager
 {
 	friend class CGLES3Renderer;
+	friend class CGLES3PipelineCompute;
 
 
 private:
@@ -24,6 +25,7 @@ private:
 class CGLES3PipelineGraphicsManager : public CGfxResourceManager
 {
 	friend class CGLES3Renderer;
+	friend class CGLES3PipelineGraphics;
 
 
 private:

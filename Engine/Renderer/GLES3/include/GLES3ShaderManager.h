@@ -5,6 +5,7 @@
 class CGLES3ShaderManager : public CGfxResourceManager
 {
 	friend class CGLES3Renderer;
+	friend class CGLES3Shader;
 
 
 private:

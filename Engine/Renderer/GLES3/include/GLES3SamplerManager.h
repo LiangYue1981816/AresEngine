@@ -5,6 +5,7 @@
 class CGLES3SamplerManager : public CGfxResourceManager
 {
 	friend class CGLES3Renderer;
+	friend class CGLES3Sampler;
 
 
 private:
