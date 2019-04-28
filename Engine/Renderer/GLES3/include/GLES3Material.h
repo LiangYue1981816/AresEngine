@@ -4,7 +4,6 @@
 
 class CGLES3Material : public CGfxMaterial
 {
-	friend class CGLES3Renderer;
 	friend class CGLES3MaterialManager;
 
 
