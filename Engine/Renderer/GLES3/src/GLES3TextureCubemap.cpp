@@ -18,11 +18,6 @@ void CGLES3TextureCubemap::Release(void)
 	m_pManager->Destroy(this);
 }
 
-uint32_t CGLES3TextureCubemap::GetTexture(void) const
-{
-	return m_ptrTexture->GetTexture();
-}
-
 GfxTextureType CGLES3TextureCubemap::GetType(void) const
 {
 	return m_ptrTexture->GetType();

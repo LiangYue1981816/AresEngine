@@ -18,11 +18,6 @@ void CGLES3Texture2D::Release(void)
 	m_pManager->Destroy(this);
 }
 
-uint32_t CGLES3Texture2D::GetTexture(void) const
-{
-	return m_ptrTexture->GetTexture();
-}
-
 GfxTextureType CGLES3Texture2D::GetType(void) const
 {
 	return m_ptrTexture->GetType();

@@ -14,9 +14,6 @@ private:
 
 
 public:
-	uint32_t GetTexture(void) const;
-
-public:
 	GfxTextureType GetType(void) const;
 	GfxPixelFormat GetFormat(void) const;
 
