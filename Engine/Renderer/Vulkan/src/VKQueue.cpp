@@ -30,20 +30,9 @@ bool CVKQueue::Submit(CGfxCommandBufferPtr ptrCommandBuffers, VkSemaphore vkWait
 	VkFence vkFence = ((CVKCommandBuffer*)ptrCommandBuffers.GetPointer())->GetFence();
 	VkCommandBuffer vkCommandBuffer = ((CVKCommandBuffer*)ptrCommandBuffers.GetPointer())->GetCommandBuffer();
 
-	VkSubmitInfo submitInfo = {};
-	submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
-	submitInfo.pNext = nullptr;
-	submitInfo.waitSemaphoreCount = vkWaitSemaphore != VK_NULL_HANDLE ? 1 : 0;
-	submitInfo.pWaitSemaphores = vkWaitSemaphore != VK_NULL_HANDLE ? &vkWaitSemaphore : nullptr;
-	submitInfo.pWaitDstStageMask = vkWaitSemaphore != VK_NULL_HANDLE ? &waitStageFlags : nullptr;
-	submitInfo.commandBufferCount = 1;
-	submitInfo.pCommandBuffers = &vkCommandBuffer;
-	submitInfo.signalSemaphoreCount = vkSignalSemaphore != VK_NULL_HANDLE ? 1 : 0;
-	submitInfo.pSignalSemaphores = vkSignalSemaphore != VK_NULL_HANDLE ? &vkSignalSemaphore : nullptr;
-
 	CALL_VK_FUNCTION_RETURN_BOOL(vkWaitForFences(m_pDevice->GetDevice(), 1, &vkFence, VK_TRUE, UINT64_MAX));
 	CALL_VK_FUNCTION_RETURN_BOOL(vkResetFences(m_pDevice->GetDevice(), 1, &vkFence));
-	CALL_VK_FUNCTION_RETURN_BOOL(vkQueueSubmit(m_vkQueue, 1, &submitInfo, vkFence));
+	CALL_VK_FUNCTION_RETURN_BOOL(vkSubmitCommandBuffer(m_vkQueue, vkCommandBuffer, vkFence, vkWaitSemaphore, waitStageFlags, vkSignalSemaphore));
 
 	return true;
 }
