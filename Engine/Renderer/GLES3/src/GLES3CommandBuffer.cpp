@@ -108,6 +108,11 @@ bool CGLES3CommandBuffer::Execute(void) const
 	}
 }
 
+bool CGLES3CommandBuffer::WaitForFinish(void) const
+{
+	return true;
+}
+
 bool CGLES3CommandBuffer::CmdBeginRenderPass(const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass)
 {
 	if (IsMainCommandBuffer() == true && IsInRenderPass() == false && m_pCommands.empty()) {

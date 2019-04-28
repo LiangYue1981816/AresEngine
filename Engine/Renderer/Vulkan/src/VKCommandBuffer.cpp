@@ -92,6 +92,12 @@ bool CVKCommandBuffer::Execute(void) const
 	return true;
 }
 
+bool CVKCommandBuffer::WaitForFinish(void) const
+{
+	CALL_VK_FUNCTION_RETURN_BOOL(vkWaitForFences(m_pDevice->GetDevice(), 1, &m_vkFence, VK_TRUE, UINT64_MAX));
+	return true;
+}
+
 bool CVKCommandBuffer::CmdBeginRenderPass(const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass)
 {
 	if (IsMainCommandBuffer() == true && IsInRenderPass() == false && m_pCommands.empty()) {

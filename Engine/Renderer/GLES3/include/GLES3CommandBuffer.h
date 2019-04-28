@@ -23,6 +23,7 @@ public:
 public:
 	void Clearup(void);
 	bool Execute(void) const;
+	bool WaitForFinish(void) const;
 
 public:
 	bool CmdBeginRenderPass(const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass);
