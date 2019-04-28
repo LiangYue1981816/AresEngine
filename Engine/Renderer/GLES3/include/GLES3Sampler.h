@@ -13,9 +13,6 @@ private:
 
 
 public:
-	uint32_t GetSampler(void) const;
-
-public:
 	void Bind(uint32_t unit) const;
 
 
