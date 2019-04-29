@@ -50,8 +50,11 @@ bool CGLES3Buffer::BufferSize(size_t size, bool bDynamic)
 bool CGLES3Buffer::BufferData(size_t offset, size_t size, const void* data, bool bSync)
 {
 	if (m_size >= (uint32_t)(offset + size)) {
+		void* addr = nullptr;
 		glBindBuffer(m_target, m_buffer);
-		glBufferSubData(m_target, (int)offset, (uint32_t)size, data);
+		glMapBufferRangeAddress(m_target, offset, size, bSync ? GL_MAP_WRITE_BIT : GL_MAP_WRITE_BIT | GL_MAP_UNSYNCHRONIZED_BIT, &addr);
+		glMemcpy(addr, data, size);
+		glUnmapBuffer(m_target);
 		glBindBuffer(m_target, 0);
 
 		return true;
