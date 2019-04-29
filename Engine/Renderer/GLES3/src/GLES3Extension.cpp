@@ -43,6 +43,11 @@ uint32_t glGetProgramStage(shader_kind kind)
 	}
 }
 
+void glMemcpy(void* dst, const void* src, size_t size)
+{
+	memcpy(dst, src, size);
+}
+
 void glMapBufferRangeAddress(GLenum target, GLintptr offset, GLsizeiptr length, GLbitfield access, void** addr)
 {
 	*addr = glMapBufferRange(target, offset, length, access);
