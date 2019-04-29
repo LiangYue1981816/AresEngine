@@ -3,6 +3,7 @@
 
 CGLES3Renderer::CGLES3Renderer(void* hInstance, void* hWnd, void* hDC, int width, int height, GfxPixelFormat format)
 	: CGfxRenderer(hInstance, hWnd, hDC, width, height, format)
+	, m_indexFrame(0)
 
 	, m_pSwapChain(nullptr)
 
@@ -435,6 +436,13 @@ void CGLES3Renderer::Present(void)
 	m_pSwapChain->Present();
 	m_pCurrentPipelineCompute = nullptr;
 	m_pCurrentPipelineGraphics = nullptr;
+
+	m_indexFrame++;
+}
+
+int CGLES3Renderer::GetFrameIndex(void) const
+{
+	return m_indexFrame % CGfxSwapChain::SWAPCHAIN_FRAME_COUNT;
 }
 
 void CGLES3Renderer::BindPipelineCompute(const CGfxPipelineCompute* pPipelineCompute)

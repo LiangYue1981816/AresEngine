@@ -190,10 +190,12 @@ public:
 	bool CmdPushDebugGroup(CGfxCommandBufferPtr ptrCommandBuffer, const char* szMessage);
 	bool CmdPopDebugGroup(CGfxCommandBufferPtr ptrCommandBuffer);
 
-public:
 	void Submit(const eastl::vector<CGfxCommandBufferPtr>& ptrCommandBuffers);
+
+public:
 	void AcquireNextFrame(void);
 	void Present(void);
+	int  GetFrameIndex(void) const;
 
 private:
 	void BindPipelineCompute(const CGfxPipelineCompute* pPipelineCompute);
@@ -203,6 +205,9 @@ private:
 	CGLES3PipelineCompute* GetCurrentPipelineCompute(void) const;
 	CGLES3PipelineGraphics* GetCurrentPipelineGraphics(void) const;
 
+
+private:
+	int m_indexFrame;
 
 private:
 	CGLES3SwapChain* m_pSwapChain;
