@@ -195,7 +195,7 @@ public:
 public:
 	void AcquireNextFrame(void);
 	void Present(void);
-	int  GetFrameIndex(void) const;
+	uint32_t GetFrameIndex(void) const;
 
 private:
 	void BindPipelineCompute(const CGfxPipelineCompute* pPipelineCompute);
@@ -207,7 +207,7 @@ private:
 
 
 private:
-	int m_indexFrame;
+	uint32_t m_indexFrame;
 
 private:
 	CGLES3SwapChain* m_pSwapChain;

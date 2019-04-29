@@ -192,7 +192,7 @@ public:
 public:
 	virtual void AcquireNextFrame(void) = 0;
 	virtual void Present(void) = 0;
-	virtual int  GetFrameIndex(void) const = 0;
+	virtual uint32_t GetFrameIndex(void) const = 0;
 
 
 protected:

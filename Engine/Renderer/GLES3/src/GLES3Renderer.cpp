@@ -440,7 +440,7 @@ void CGLES3Renderer::Present(void)
 	m_indexFrame++;
 }
 
-int CGLES3Renderer::GetFrameIndex(void) const
+uint32_t CGLES3Renderer::GetFrameIndex(void) const
 {
 	return m_indexFrame % CGfxSwapChain::SWAPCHAIN_FRAME_COUNT;
 }
