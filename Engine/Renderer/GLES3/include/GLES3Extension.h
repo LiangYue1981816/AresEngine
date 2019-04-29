@@ -6,6 +6,7 @@
 extern void glReadBuffers(int n, const uint32_t* bufs);
 extern uint32_t glGetShaderType(shader_kind kind);
 extern uint32_t glGetProgramStage(shader_kind kind);
+extern void glMapBufferRangeAddress(GLenum target, GLintptr offset, GLsizeiptr length, GLbitfield access, void** addr);
 #pragma endregion
 
 #pragma region OpenGL state cache

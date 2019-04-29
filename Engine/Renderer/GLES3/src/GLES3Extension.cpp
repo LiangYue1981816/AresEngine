@@ -42,6 +42,11 @@ uint32_t glGetProgramStage(shader_kind kind)
 		return GL_INVALID_ENUM;
 	}
 }
+
+void glMapBufferRangeAddress(GLenum target, GLintptr offset, GLsizeiptr length, GLbitfield access, void** addr)
+{
+	*addr = glMapBufferRange(target, offset, length, access);
+}
 #pragma endregion
 
 #pragma region OpenGL state cache
