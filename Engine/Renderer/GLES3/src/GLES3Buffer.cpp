@@ -47,7 +47,7 @@ bool CGLES3Buffer::BufferSize(size_t size, bool bDynamic)
 	return true;
 }
 
-bool CGLES3Buffer::BufferData(size_t offset, size_t size, const void* data)
+bool CGLES3Buffer::BufferData(size_t offset, size_t size, const void* data, bool bSync)
 {
 	if (m_size >= (uint32_t)(offset + size)) {
 		glBindBuffer(m_target, m_buffer);
