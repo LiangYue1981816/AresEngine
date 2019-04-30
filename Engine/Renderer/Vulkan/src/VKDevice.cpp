@@ -24,7 +24,7 @@ CVKDevice::CVKDevice(CVKInstance* pInstance)
 
 	m_pQueue = new CVKQueue(this, queueFamilyIndex);
 	m_pMemoryManager = new CVKMemoryManager(this);
-	m_pTransferBufferManager = new CVKTransferBufferManager(this);
+	m_pTransferBufferManager = new CVKTransferBufferManager(this, queueFamilyIndex);
 }
 
 CVKDevice::~CVKDevice(void)

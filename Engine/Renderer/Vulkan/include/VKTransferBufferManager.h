@@ -9,7 +9,7 @@ class CVKTransferBufferManager
 
 
 private:
-	CVKTransferBufferManager(CVKDevice* pDevice);
+	CVKTransferBufferManager(CVKDevice* pDevice, uint32_t queueFamilyIndex);
 	virtual ~CVKTransferBufferManager(void);
 
 
