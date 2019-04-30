@@ -21,7 +21,6 @@ private:
 
 private:
 	VkBuffer GetBuffer(void) const;
-	VkBufferUsageFlags GetBufferUsageFlags(void) const;
 	VkDeviceSize GetSize(void) const;
 
 private:

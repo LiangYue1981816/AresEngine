@@ -41,11 +41,6 @@ VkBuffer CVKBuffer::GetBuffer(void) const
 	return m_vkBuffer;
 }
 
-VkBufferUsageFlags CVKBuffer::GetBufferUsageFlags(void) const
-{
-	return m_vkBufferUsageFlags;
-}
-
 VkDeviceSize CVKBuffer::GetSize(void) const
 {
 	return m_pMemory->GetSize();
