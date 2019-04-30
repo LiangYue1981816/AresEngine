@@ -5,6 +5,7 @@ CVKBuffer::CVKBuffer(CVKDevice* pDevice, VkDeviceSize size, VkBufferUsageFlags b
 	: m_pDevice(pDevice)
 
 	, m_vkBuffer(VK_NULL_HANDLE)
+	, m_vkBufferUsageFlags(bufferUsageFlags)
 	, m_pMemory(nullptr)
 {
 	VkBufferCreateInfo createInfo = {};
@@ -12,7 +13,7 @@ CVKBuffer::CVKBuffer(CVKDevice* pDevice, VkDeviceSize size, VkBufferUsageFlags b
 	createInfo.pNext = nullptr;
 	createInfo.flags = 0;
 	createInfo.size = size;
-	createInfo.usage = bufferUsageFlags;
+	createInfo.usage = m_vkBufferUsageFlags;
 	createInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
 	createInfo.queueFamilyIndexCount = 0;
 	createInfo.pQueueFamilyIndices = nullptr;
@@ -38,6 +39,11 @@ void CVKBuffer::Release(void)
 VkBuffer CVKBuffer::GetBuffer(void) const
 {
 	return m_vkBuffer;
+}
+
+VkBufferUsageFlags CVKBuffer::GetBufferUsageFlags(void) const
+{
+	return m_vkBufferUsageFlags;
 }
 
 VkDeviceSize CVKBuffer::GetSize(void) const
