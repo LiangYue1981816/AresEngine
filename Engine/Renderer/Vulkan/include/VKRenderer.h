@@ -17,11 +17,11 @@
 #include "VKMemoryAllocator.h"
 #include "VKMemoryManager.h"
 
-#include "VKBuffer.h"
-#include "VKTexture.h"
-
 #include "VKTransferBuffer.h"
 #include "VKTransferBufferManager.h"
+
+#include "VKBuffer.h"
+#include "VKTexture.h"
 
 #include "VKCommandPool.h"
 #include "VKCommandBuffer.h"

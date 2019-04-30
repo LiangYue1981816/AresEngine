@@ -13,6 +13,7 @@ CVKDevice::CVKDevice(CVKInstance* pInstance)
 
 	, m_pQueue(nullptr)
 	, m_pMemoryManager(nullptr)
+	, m_pTransferBufferManager(nullptr)
 {
 	uint32_t deviceIndex;
 	uint32_t queueFamilyIndex;
@@ -23,10 +24,12 @@ CVKDevice::CVKDevice(CVKInstance* pInstance)
 
 	m_pQueue = new CVKQueue(this, queueFamilyIndex);
 	m_pMemoryManager = new CVKMemoryManager(this);
+	m_pTransferBufferManager = new CVKTransferBufferManager(this);
 }
 
 CVKDevice::~CVKDevice(void)
 {
+	delete m_pTransferBufferManager;
 	delete m_pMemoryManager;
 	delete m_pQueue;
 
@@ -222,4 +225,9 @@ CVKQueue* CVKDevice::GetQueue(void) const
 CVKMemoryManager* CVKDevice::GetMemoryManager(void) const
 {
 	return m_pMemoryManager;
+}
+
+CVKTransferBufferManager* CVKDevice::GetTransferBufferManager(void) const
+{
+	return m_pTransferBufferManager;
 }
