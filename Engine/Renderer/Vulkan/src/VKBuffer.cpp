@@ -52,12 +52,29 @@ bool CVKBuffer::BufferData(size_t offset, size_t size, const void* data)
 		CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->BeginMap(offset, size));
 		CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->CopyData(0, size, data));
 		CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->EndMap());
+		return true;
 	}
 	else {
+		VkAccessFlags dstAccessFlags = 0;
+		VkPipelineStageFlags dstPipelineStageFlags = 0;
 
+		if (m_vkBufferUsageFlags & VK_BUFFER_USAGE_INDEX_BUFFER_BIT) {
+			dstAccessFlags |= VK_ACCESS_INDEX_READ_BIT;
+			dstPipelineStageFlags |= VK_PIPELINE_STAGE_VERTEX_INPUT_BIT;
+		}
+
+		if (m_vkBufferUsageFlags & VK_BUFFER_USAGE_VERTEX_BUFFER_BIT) {
+			dstAccessFlags |= VK_ACCESS_VERTEX_ATTRIBUTE_READ_BIT;
+			dstPipelineStageFlags |= VK_PIPELINE_STAGE_VERTEX_INPUT_BIT;
+		}
+
+		if (m_vkBufferUsageFlags & VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT) {
+			dstAccessFlags |= VK_ACCESS_UNIFORM_READ_BIT;
+			dstPipelineStageFlags |= VK_PIPELINE_STAGE_VERTEX_SHADER_BIT | VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT | VK_PIPELINE_STAGE_COMPUTE_SHADER_BIT;
+		}
+
+		return m_pDevice->GetTransferBufferManager()->TransferBufferData(this, dstAccessFlags, dstPipelineStageFlags, offset, size, data);
 	}
-
-	return true;
 }
 
 bool CVKBuffer::PipelineBarrier(VkCommandBuffer vkCommandBuffer, VkAccessFlags srcAccessFlags, VkAccessFlags dstAccessFlags, VkPipelineStageFlags srcPipelineStageFlags, VkPipelineStageFlags dstPipelineStageFlags, VkDeviceSize offset, VkDeviceSize size)
