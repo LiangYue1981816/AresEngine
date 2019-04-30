@@ -36,9 +36,9 @@ public:
 private:
 	CGfxMeshPtr m_ptrMesh;
 	CGfxMesh::Draw* m_pMeshDraw;
-	CGLES3IndirectBuffer* m_pIndirectBuffer;
-	CGLES3InstanceBuffer* m_pInstanceBuffer;
-	CGLES3VertexArrayObject* m_pVertexArrayObject;
+	CGLES3IndirectBuffer* m_pIndirectBuffer[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
+	CGLES3InstanceBuffer* m_pInstanceBuffer[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
+	CGLES3VertexArrayObject* m_pVertexArrayObject[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
 
 private:
 	CGLES3MeshDrawManager* m_pManager;

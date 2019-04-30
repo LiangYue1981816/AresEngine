@@ -6,23 +6,27 @@ CGLES3MeshDraw::CGLES3MeshDraw(CGLES3MeshDrawManager* pManager, uint32_t name, c
 	, m_pManager(pManager)
 
 	, m_pMeshDraw(nullptr)
-	, m_pIndirectBuffer(nullptr)
-	, m_pInstanceBuffer(nullptr)
-	, m_pVertexArrayObject(nullptr)
+	, m_pIndirectBuffer{ nullptr }
+	, m_pInstanceBuffer{ nullptr }
+	, m_pVertexArrayObject{ nullptr }
 {
 	m_ptrMesh = ptrMesh;
 	m_pMeshDraw = ptrMesh->GetDraw(nameDraw);
 
-	m_pIndirectBuffer = new CGLES3IndirectBuffer(1);
-	m_pInstanceBuffer = new CGLES3InstanceBuffer(instanceFormat, instanceBinding);
-	m_pVertexArrayObject = new CGLES3VertexArrayObject((const CGLES3IndexBuffer*)m_ptrMesh->GetIndexBuffer(), (const CGLES3VertexBuffer*)m_ptrMesh->GetVertexBuffer(), (const CGLES3InstanceBuffer*)m_pInstanceBuffer);
+	for (int indexFrame = 0; indexFrame < CGfxSwapChain::SWAPCHAIN_FRAME_COUNT; indexFrame++) {
+		m_pIndirectBuffer[indexFrame] = new CGLES3IndirectBuffer(1);
+		m_pInstanceBuffer[indexFrame] = new CGLES3InstanceBuffer(instanceFormat, instanceBinding);
+		m_pVertexArrayObject[indexFrame] = new CGLES3VertexArrayObject((const CGLES3IndexBuffer*)m_ptrMesh->GetIndexBuffer(), (const CGLES3VertexBuffer*)m_ptrMesh->GetVertexBuffer(), (const CGLES3InstanceBuffer*)m_pInstanceBuffer[indexFrame]);
+	}
 }
 
 CGLES3MeshDraw::~CGLES3MeshDraw(void)
 {
-	delete m_pIndirectBuffer;
-	delete m_pInstanceBuffer;
-	delete m_pVertexArrayObject;
+	for (int indexFrame = 0; indexFrame < CGfxSwapChain::SWAPCHAIN_FRAME_COUNT; indexFrame++) {
+		delete m_pIndirectBuffer[indexFrame];
+		delete m_pInstanceBuffer[indexFrame];
+		delete m_pVertexArrayObject[indexFrame];
+	}
 }
 
 void CGLES3MeshDraw::Release(void)
@@ -96,8 +100,8 @@ uint32_t CGLES3MeshDraw::GetVertexCount(void) const
 
 uint32_t CGLES3MeshDraw::GetInstanceFormat(void) const
 {
-	if (m_pInstanceBuffer) {
-		return m_pInstanceBuffer->GetInstanceFormat();
+	if (m_pInstanceBuffer[GLES3Renderer()->GetFrameIndex()]) {
+		return m_pInstanceBuffer[GLES3Renderer()->GetFrameIndex()]->GetInstanceFormat();
 	}
 	else {
 		return 0;
@@ -106,8 +110,8 @@ uint32_t CGLES3MeshDraw::GetInstanceFormat(void) const
 
 uint32_t CGLES3MeshDraw::GetInstanceCount(void) const
 {
-	if (m_pInstanceBuffer) {
-		return m_pInstanceBuffer->GetInstanceCount();
+	if (m_pInstanceBuffer[GLES3Renderer()->GetFrameIndex()]) {
+		return m_pInstanceBuffer[GLES3Renderer()->GetFrameIndex()]->GetInstanceCount();
 	}
 	else {
 		return 0;
@@ -116,9 +120,9 @@ uint32_t CGLES3MeshDraw::GetInstanceCount(void) const
 
 bool CGLES3MeshDraw::InstanceBufferData(size_t size, const void* data)
 {
-	if (m_pInstanceBuffer) {
-		m_pInstanceBuffer->BufferData(size, data);
-		m_pIndirectBuffer->BufferData(0, m_pMeshDraw->baseVertex, m_pMeshDraw->firstIndex, m_pMeshDraw->indexCount, size / GetInstanceStride(m_pInstanceBuffer->GetInstanceFormat()));
+	if (m_pInstanceBuffer[GLES3Renderer()->GetFrameIndex()]) {
+		m_pInstanceBuffer[GLES3Renderer()->GetFrameIndex()]->BufferData(size, data);
+		m_pIndirectBuffer[GLES3Renderer()->GetFrameIndex()]->BufferData(0, m_pMeshDraw->baseVertex, m_pMeshDraw->firstIndex, m_pMeshDraw->indexCount, size / GetInstanceStride(m_pInstanceBuffer[GLES3Renderer()->GetFrameIndex()]->GetInstanceFormat()));
 		return true;
 	}
 	else {
@@ -128,11 +132,11 @@ bool CGLES3MeshDraw::InstanceBufferData(size_t size, const void* data)
 
 void CGLES3MeshDraw::Bind(void) const
 {
-	if (m_pVertexArrayObject) {
-		m_pVertexArrayObject->Bind();
+	if (m_pVertexArrayObject[GLES3Renderer()->GetFrameIndex()]) {
+		m_pVertexArrayObject[GLES3Renderer()->GetFrameIndex()]->Bind();
 	}
 
-	if (m_pIndirectBuffer) {
-		m_pIndirectBuffer->Bind();
+	if (m_pIndirectBuffer[GLES3Renderer()->GetFrameIndex()]) {
+		m_pIndirectBuffer[GLES3Renderer()->GetFrameIndex()]->Bind();
 	}
 }

@@ -47,7 +47,7 @@ bool CGLES3IndirectBuffer::BufferData(int indexDraw, int baseVertex, int firstIn
 	m_draws[indexDraw].indexCount = indexCount;
 	m_draws[indexDraw].instanceCount = instanceCount;
 
-	return m_ptrBuffer->BufferData(indexDraw * sizeof(DrawCommand), sizeof(m_draws[indexDraw]), &m_draws[indexDraw]);
+	return m_ptrBuffer->BufferData(indexDraw * sizeof(DrawCommand), sizeof(m_draws[indexDraw]), &m_draws[indexDraw], false);
 }
 
 void CGLES3IndirectBuffer::Bind(void) const

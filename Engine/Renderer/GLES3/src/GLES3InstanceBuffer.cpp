@@ -47,7 +47,7 @@ bool CGLES3InstanceBuffer::BufferData(size_t size, const void* data)
 		CGfxProfiler::IncInstanceBufferSize(m_ptrBuffer->GetSize());
 	}
 
-	return m_ptrBuffer->BufferData(0, size, data);
+	return m_ptrBuffer->BufferData(0, size, data, false);
 }
 
 void CGLES3InstanceBuffer::Bind(void) const
