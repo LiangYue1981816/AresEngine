@@ -23,6 +23,8 @@
 #include "VKBuffer.h"
 #include "VKTexture.h"
 
+#include "VKDescriptorLayout.h"
+
 #include "VKCommandBuffer.h"
 #include "VKCommandBufferManager.h"
 /*
@@ -65,7 +67,6 @@
 #include "VKMaterialPass.h"
 #include "VKMaterialManager.h"
 
-#include "VKDescriptorLayout.h"
 #include "VKDescriptorPool.h"
 #include "VKDescriptorSet.h"
 #include "VKDescriptorSetManager.h"
