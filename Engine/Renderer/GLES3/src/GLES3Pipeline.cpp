@@ -86,7 +86,7 @@ bool CGLES3Pipeline::CreateLayouts(void)
 			}
 
 			for (const auto& itInputAttachment : inputAttachmentBindings) {
-				if (m_ptrDescriptorLayouts[itInputAttachment.second.set]->SetSampledImageBinding(HashValue(itInputAttachment.first.c_str()), itInputAttachment.second.binding)) {
+				if (m_ptrDescriptorLayouts[itInputAttachment.second.set]->SetInputAttachmentBinding(HashValue(itInputAttachment.first.c_str()), itInputAttachment.second.binding)) {
 					SetInputAttachmentLocation(itInputAttachment.first.c_str(), itInputAttachment.second.inputAttachmentIndex);
 				}
 			}
