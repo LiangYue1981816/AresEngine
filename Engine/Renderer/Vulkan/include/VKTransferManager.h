@@ -2,15 +2,15 @@
 #include "VKRenderer.h"
 
 
-class CVKTransferBufferManager
+class CVKTransferManager
 {
 	friend class CVKDevice;
 	friend class CVKTransferBuffer;
 
 
 private:
-	CVKTransferBufferManager(CVKDevice* pDevice, uint32_t queueFamilyIndex);
-	virtual ~CVKTransferBufferManager(void);
+	CVKTransferManager(CVKDevice* pDevice, uint32_t queueFamilyIndex);
+	virtual ~CVKTransferManager(void);
 
 
 private:
