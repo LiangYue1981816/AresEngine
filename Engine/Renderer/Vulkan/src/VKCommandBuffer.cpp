@@ -38,12 +38,17 @@ CVKCommandBuffer::~CVKCommandBuffer(void)
 
 void CVKCommandBuffer::Release(void)
 {
-
+	m_pManager->Destroy(this);
 }
 
 VkFence CVKCommandBuffer::GetFence(void) const
 {
 	return m_vkFence;
+}
+
+VkCommandPool CVKCommandBuffer::GetCommandPool(void) const
+{
+	return m_vkCommandPool;
 }
 
 VkCommandBuffer CVKCommandBuffer::GetCommandBuffer(void) const

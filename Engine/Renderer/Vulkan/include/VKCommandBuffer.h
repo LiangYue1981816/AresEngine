@@ -15,6 +15,7 @@ private:
 
 public:
 	VkFence GetFence(void) const;
+	VkCommandPool GetCommandPool(void) const;
 	VkCommandBuffer GetCommandBuffer(void) const;
 
 public:

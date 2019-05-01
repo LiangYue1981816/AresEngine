@@ -9,7 +9,7 @@ class CVKCommandBufferManager : public CGfxResourceManager
 
 
 private:
-	CVKCommandBufferManager(CVKDevice* pDevice);
+	CVKCommandBufferManager(CVKDevice* pDevice, uint32_t queueFamilyIndex);
 	virtual ~CVKCommandBufferManager(void);
 
 
@@ -19,6 +19,7 @@ private:
 
 
 private:
+	uint32_t m_queueFamilyIndex;
 	eastl::unordered_map<uint32_t, VkCommandPool> m_vkCommandPools;
 	eastl::unordered_map<VkCommandPool, eastl::unordered_map<CVKCommandBuffer*, CVKCommandBuffer*>> m_pCommandBuffers;
 
