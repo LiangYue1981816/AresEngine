@@ -6,11 +6,11 @@ CVKCommandBuffer::CVKCommandBuffer(CVKDevice* pDevice, CVKCommandPool* pCommandP
 	, m_pDevice(pDevice)
 	, m_pCommandPool(pCommandPool)
 
-	, m_vkFence(VK_NULL_HANDLE)
-	, m_vkCommandBuffer(VK_NULL_HANDLE)
-
 	, m_bInRenderPass(false)
 	, m_indexSubpass(0)
+
+	, m_vkFence(VK_NULL_HANDLE)
+	, m_vkCommandBuffer(VK_NULL_HANDLE)
 {
 	VkFenceCreateInfo fenceCreateInfo = {};
 	fenceCreateInfo.sType = VK_STRUCTURE_TYPE_FENCE_CREATE_INFO;
