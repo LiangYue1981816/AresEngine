@@ -86,6 +86,7 @@ class CVKTransferManager;
 
 class CVKBuffer;
 class CVKTexture;
+class CVKTexture2D;
 
 class CVKDescriptorLayout;
 class CVKDescriptorLayoutManager;
@@ -116,7 +117,6 @@ class CVKIndirectBuffer;
 class CVKSampler;
 class CVKSamplerManager;
 class CVKTexture;
-class CVKTexture2D;
 class CVKTexture2DManager;
 class CVKTexture2DArray;
 class CVKTexture2DArrayManager;
