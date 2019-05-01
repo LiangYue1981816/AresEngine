@@ -6,7 +6,7 @@ class CVKTransferBuffer
 {
 	friend class CVKBuffer;
 	friend class CVKTexture;
-	friend class CVKTransferBufferManager;
+	friend class CVKTransferManager;
 
 
 private:
