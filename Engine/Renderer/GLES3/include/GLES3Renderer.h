@@ -60,7 +60,7 @@
 #define GLES3Renderer() ((CGLES3Renderer *)CGfxRenderer::GetInstance())
 
 
-class CALL_API CGLES3Renderer : public CGfxRenderer
+class CGLES3Renderer : public CGfxRenderer
 {
 	friend class CGLES3CommandBindPipelineCompute;
 	friend class CGLES3CommandBindPipelineGraphics;

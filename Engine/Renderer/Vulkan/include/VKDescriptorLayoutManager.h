@@ -2,7 +2,7 @@
 #include "VKRenderer.h"
 
 
-class CALL_API CVKDescriptorLayoutManager : public CGfxResourceManager
+class CVKDescriptorLayoutManager : public CGfxResourceManager
 {
 	friend class CVKRenderer;
 	friend class CVKDescriptorLayout;

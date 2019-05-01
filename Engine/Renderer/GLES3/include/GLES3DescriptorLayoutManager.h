@@ -2,7 +2,7 @@
 #include "GLES3Renderer.h"
 
 
-class CALL_API CGLES3DescriptorLayoutManager : public CGfxResourceManager
+class CGLES3DescriptorLayoutManager : public CGfxResourceManager
 {
 	friend class CGLES3Renderer;
 	friend class CGLES3DescriptorLayout;
