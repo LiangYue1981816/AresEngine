@@ -73,7 +73,6 @@
 class CVKRenderer;
 
 class CVKAllocator;
-
 class CVKInstance;
 class CVKDevice;
 class CVKQueue;
@@ -85,8 +84,15 @@ class CVKMemoryManager;
 class CVKTransferBuffer;
 class CVKTransferManager;
 
-class CVKImage;
+class CVKBuffer;
+class CVKTexture;
 
+class CVKDescriptorLayout;
+class CVKDescriptorLayoutManager;
+
+class CVKCommandBuffer;
+class CVKCommandBufferManager;
+/*
 class CVKSwapChain;
 class CVKRenderPass;
 class CVKRenderPassManager;
@@ -131,12 +137,11 @@ class CVKMaterial;
 class CVKMaterialPass;
 class CVKMaterialManager;
 
-class CVKDescriptorLayout;
-class CVKDescriptorLayoutManager;
+
 class CVKDescriptorPool;
 class CVKDescriptorSet;
 class CVKDescriptorSetManager;
 
 class CVKCommandPool;
-class CVKCommandBuffer;
-class CVKCommandBufferManager;
+
+*/
