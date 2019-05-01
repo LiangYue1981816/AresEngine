@@ -26,7 +26,7 @@ public:
 
 
 private:
-	pthread_mutex_t m_lock;
+	pthread_mutex_t lock;
 	eastl::unordered_map<uint32_t, VkDeviceSize> m_allocatedMemoryHeapSize;
 	eastl::unordered_map<uint32_t, eastl::unordered_map<uint32_t, CVKMemoryAllocator*>> m_pAllocatorListHeads;
 

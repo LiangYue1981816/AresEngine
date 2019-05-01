@@ -4,7 +4,7 @@
 CVKMemoryManager::CVKMemoryManager(CVKDevice* pDevice)
 	: m_pDevice(pDevice)
 {
-	pthread_mutex_init(&m_lock, nullptr);
+	pthread_mutex_init(&lock, nullptr);
 }
 
 CVKMemoryManager::~CVKMemoryManager(void)
@@ -21,7 +21,7 @@ CVKMemoryManager::~CVKMemoryManager(void)
 		}
 	}
 
-	pthread_mutex_destroy(&m_lock);
+	pthread_mutex_destroy(&lock);
 }
 
 uint32_t CVKMemoryManager::GetMemoryTypeIndex(const VkPhysicalDeviceMemoryProperties& memoryProperties, VkFlags memoryTypeBits, VkMemoryPropertyFlags& memoryPropertyFlags, VkDeviceSize memorySize)
@@ -32,7 +32,7 @@ uint32_t CVKMemoryManager::GetMemoryTypeIndex(const VkPhysicalDeviceMemoryProper
 		for (uint32_t indexMemoryType = 0; indexMemoryType < memoryProperties.memoryTypeCount; indexMemoryType++) {
 			if ((memoryTypeBits & (1 << indexMemoryType)) &&
 				(memoryProperties.memoryTypes[indexMemoryType].propertyFlags & memoryPropertyFlags) == memoryPropertyFlags &&
-				(memoryProperties.memoryHeaps[memoryProperties.memoryTypes[indexMemoryType].heapIndex].size * 80 / 100) > (m_allocatedMemoryHeapSize[memoryProperties.memoryTypes[indexMemoryType].heapIndex] + memorySize)) {
+				(memoryProperties.memoryHeaps[memoryProperties.memoryTypes[indexMemoryType].heapIndex].size * 80 / 100) >(m_allocatedMemoryHeapSize[memoryProperties.memoryTypes[indexMemoryType].heapIndex] + memorySize)) {
 				return indexMemoryType;
 			}
 		}
@@ -58,7 +58,7 @@ CVKMemory* CVKMemoryManager::AllocMemory(VkDeviceSize memorySize, VkDeviceSize m
 	uint32_t memoryTypeIndex = GetMemoryTypeIndex(m_pDevice->GetPhysicalDeviceMemoryProperties(), memoryTypeBits, memoryPropertyFlags, 0);
 	if (memoryTypeIndex == 0xffffffff) return nullptr;
 
-	mutex_autolock autolock(&m_lock);
+	mutex_autolock autolock(&lock);
 	{
 		memoryAlignment = ALIGN_BYTE(memoryAlignment, 256); // The min alignment size is 256B
 		memorySize = ALIGN_BYTE(memorySize, memoryAlignment);
@@ -75,9 +75,9 @@ CVKMemory* CVKMemoryManager::AllocMemory(VkDeviceSize memorySize, VkDeviceSize m
 			VkDeviceSize memoryAllocatorSize = 0;
 			{
 				const VkDeviceSize MEMORY_POOL_ALIGNMENT = 8 * 1024 * 1024;
-				const VkDeviceSize MEMORY_POOL_DEVICE_LOCAL_MEMORY_SIZE = 64 * 1024 * 1024;
-				const VkDeviceSize MEMORY_POOL_HOST_VISIBLE_MEMORY_SIZE = 16 * 1024 * 1024;
-				const VkDeviceSize MEMORY_POOL_HOST_VISIBLE_AND_DEVICE_LOCAL_MEMORY_SIZE = 8 * 1024 * 1024;
+				const VkDeviceSize MEMORY_POOL_DEVICE_LOCAL_MEMORY_SIZE = 128 * 1024 * 1024;
+				const VkDeviceSize MEMORY_POOL_HOST_VISIBLE_MEMORY_SIZE = 128 * 1024 * 1024;
+				const VkDeviceSize MEMORY_POOL_HOST_VISIBLE_AND_DEVICE_LOCAL_MEMORY_SIZE = 32 * 1024 * 1024;
 
 				if ((memoryPropertyFlags & VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT) == 0 && (memoryPropertyFlags & VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT) != 0) {
 					memoryAllocatorSize = MEMORY_POOL_DEVICE_LOCAL_MEMORY_SIZE;
@@ -120,7 +120,7 @@ void CVKMemoryManager::FreeMemory(CVKMemory* pMemory)
 		return;
 	}
 
-	mutex_autolock autolock(&m_lock);
+	mutex_autolock autolock(&lock);
 	{
 		CVKMemoryAllocator* pAllocator = pMemory->GetAllocator();
 		pAllocator->FreeMemory(pMemory);
@@ -150,7 +150,7 @@ void CVKMemoryManager::FreeMemory(CVKMemory* pMemory)
 
 void CVKMemoryManager::Log(void)
 {
-	mutex_autolock autolock(&m_lock);
+	mutex_autolock autolock(&lock);
 	{
 		LogOutput(LOG_TAG_RENDERER, "MemoryManager:\n");
 
