@@ -132,6 +132,7 @@ class CVKMaterialPass;
 class CVKMaterialManager;
 
 class CVKDescriptorLayout;
+class CVKDescriptorLayoutManager;
 class CVKDescriptorPool;
 class CVKDescriptorSet;
 class CVKDescriptorSetManager;
