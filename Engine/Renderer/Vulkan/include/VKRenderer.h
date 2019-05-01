@@ -24,6 +24,7 @@
 #include "VKTexture.h"
 
 #include "VKDescriptorLayout.h"
+#include "VKDescriptorLayoutManager.h"
 
 #include "VKCommandBuffer.h"
 #include "VKCommandBufferManager.h"

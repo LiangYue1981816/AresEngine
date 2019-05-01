@@ -1,9 +1,10 @@
 #include "VKRenderer.h"
 
 
-CVKDescriptorLayout::CVKDescriptorLayout(CVKDevice* pDevice, uint32_t set)
+CVKDescriptorLayout::CVKDescriptorLayout(CVKDevice* pDevice, CVKDescriptorLayoutManager* pManager, uint32_t set)
 	: CGfxDescriptorLayout(set)
 	, m_pDevice(pDevice)
+	, m_pManager(pManager)
 
 	, m_set(set)
 	, m_numDescriptors{ 0 }
@@ -19,7 +20,7 @@ CVKDescriptorLayout::~CVKDescriptorLayout(void)
 
 void CVKDescriptorLayout::Release(void)
 {
-
+	m_pManager->Destroy(this);
 }
 
 VkDescriptorSetLayout CVKDescriptorLayout::GetDescriptorLayout(void) const

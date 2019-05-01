@@ -8,7 +8,7 @@ class CVKDescriptorLayout : public CGfxDescriptorLayout
 
 
 private:
-	CVKDescriptorLayout(CVKDevice* pDevice, uint32_t set);
+	CVKDescriptorLayout(CVKDevice* pDevice, CVKDescriptorLayoutManager* pManager, uint32_t set);
 	virtual ~CVKDescriptorLayout(void);
 	virtual void Release(void);
 
@@ -51,4 +51,7 @@ private:
 
 private:
 	CVKDevice* m_pDevice;
+
+private:
+	CVKDescriptorLayoutManager* m_pManager;
 };

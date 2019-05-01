@@ -1323,9 +1323,6 @@
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKTransferBuffer.h">
       <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKTransferBufferManager.h">
-      <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3TextureCubemap.h">
       <Filter>Engine\Renderer\GLES3\Header Files</Filter>
     </ClInclude>
@@ -1335,7 +1332,13 @@
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKCommandBufferManager.h">
       <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKCommandPool.h">
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKTransferManager.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VkDescriptorLayout.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKDescriptorLayoutManager.h">
       <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -1901,9 +1904,6 @@
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKTransferBuffer.cpp">
       <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKTransferBufferManager.cpp">
-      <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3TextureCubemap.cpp">
       <Filter>Engine\Renderer\GLES3\Source Files</Filter>
     </ClCompile>
@@ -1913,7 +1913,13 @@
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKCommandBufferManager.cpp">
       <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKCommandPool.cpp">
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKTransferManager.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VkDescriptorLayout.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKDescriptorLayoutManager.cpp">
       <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
