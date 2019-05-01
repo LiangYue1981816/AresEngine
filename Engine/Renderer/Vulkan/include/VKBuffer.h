@@ -31,6 +31,7 @@ private:
 private:
 	VkBuffer m_vkBuffer;
 	VkBufferUsageFlags m_vkBufferUsageFlags;
+
 	CVKMemory* m_pMemory;
 
 private:
