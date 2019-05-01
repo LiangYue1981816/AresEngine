@@ -358,6 +358,9 @@
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKQueue.h" />
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKRenderer.h" />
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKTexture.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKTexture2D.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKTexture2DArray.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKTextureCubemap.h" />
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKTransferBuffer.h" />
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKTransferManager.h" />
     <ClInclude Include="..\..\Engine\Resource\include\ResourceLoader.h" />
@@ -660,6 +663,9 @@
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKQueue.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKRenderer.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKTexture.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKTexture2D.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKTexture2DArray.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKTexture2DCubemap.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKTransferBuffer.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKTransferManager.cpp" />
     <ClCompile Include="..\..\Engine\Resource\src\ResourceLoader.cpp" />
