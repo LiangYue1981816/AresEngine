@@ -1,16 +1,23 @@
 #include "VKRenderer.h"
 
 
-CVKCommandBufferManager::CVKCommandBufferManager(CVKDevice* pDevice, uint32_t queueFamilyIndex)
+CVKCommandBufferManager::CVKCommandBufferManager(CVKDevice* pDevice)
 	: m_pDevice(pDevice)
-	, m_queueFamilyIndex(queueFamilyIndex)
 {
 
 }
 
 CVKCommandBufferManager::~CVKCommandBufferManager(void)
 {
+	for (const auto& itCommandBuffers : m_pCommandBuffers) {
+		for (const auto& itCommandBuffer : itCommandBuffers.second) {
+			delete itCommandBuffer.second;
+		}
+	}
 
+	for (const auto& itCommandPool : m_vkCommandPools) {
+		vkDestroyCommandPool(m_pDevice->GetDevice(), itCommandPool.second, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
+	}
 }
 
 CVKCommandBuffer* CVKCommandBufferManager::Create(uint32_t pool, bool bMainCommandBuffer)
@@ -22,7 +29,7 @@ CVKCommandBuffer* CVKCommandBufferManager::Create(uint32_t pool, bool bMainComma
 			createInfo.sType = VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO;
 			createInfo.pNext = nullptr;
 			createInfo.flags = VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT;
-			createInfo.queueFamilyIndex = m_queueFamilyIndex;
+			createInfo.queueFamilyIndex = m_pDevice->GetQueue()->GetQueueFamilyIndex();
 			vkCreateCommandPool(m_pDevice->GetDevice(), &createInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkCommandPools[pool]);
 		}
 
