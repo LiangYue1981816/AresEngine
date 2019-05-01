@@ -55,3 +55,24 @@ private:
 private:
 	CVKDescriptorLayoutManager* m_pManager;
 };
+
+inline bool operator == (const VkDescriptorSetLayoutBinding& left, const VkDescriptorSetLayoutBinding& right)
+{
+	if (left.binding != right.binding) {
+		return false;
+	}
+
+	if (left.descriptorType != right.descriptorType) {
+		return false;
+	}
+
+	if (left.descriptorCount != right.descriptorCount) {
+		return false;
+	}
+
+	if (left.stageFlags != right.stageFlags) {
+		return false;
+	}
+
+	return true;
+}
