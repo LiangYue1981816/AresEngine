@@ -23,7 +23,6 @@
 #include "VKBuffer.h"
 #include "VKTexture.h"
 
-#include "VKCommandPool.h"
 #include "VKCommandBuffer.h"
 #include "VKCommandBufferManager.h"
 /*

@@ -25,3 +25,8 @@ CVKCommandBuffer* CVKCommandBufferManager::Create(uint32_t pool, bool bMainComma
 		return m_pCommandPools[pool]->AllocCommandBuffer(bMainCommandBuffer);
 	}
 }
+
+void CVKCommandBufferManager::Destroy(CVKCommandBuffer* pCommandBuffer)
+{
+
+}

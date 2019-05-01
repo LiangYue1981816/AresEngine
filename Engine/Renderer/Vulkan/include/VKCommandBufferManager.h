@@ -5,7 +5,6 @@
 class CVKCommandBufferManager : public CGfxResourceManager
 {
 	friend class CVKRenderer;
-	friend class CVKCommandPool;
 	friend class CVKCommandBuffer;
 
 
@@ -16,11 +15,12 @@ private:
 
 private:
 	CVKCommandBuffer* Create(uint32_t pool, bool bMainCommandBuffer);
+	void Destroy(CVKCommandBuffer* pCommandBuffer);
 
 
 private:
-	pthread_mutex_t m_lock;
-	eastl::unordered_map<uint32_t, CVKCommandPool*> m_pCommandPools;
+	eastl::unordered_map<uint32_t, VkCommandPool> m_vkCommandPools;
+	eastl::unordered_map<VkCommandPool, eastl::unordered_map<CVKCommandBuffer*, CVKCommandBuffer*>> m_pCommandBuffers;
 
 private:
 	CVKDevice* m_pDevice;
