@@ -83,7 +83,7 @@ class CVKMemoryAllocator;
 class CVKMemoryManager;
 
 class CVKTransferBuffer;
-class CVKTransferBufferManager;
+class CVKTransferManager;
 
 class CVKImage;
 

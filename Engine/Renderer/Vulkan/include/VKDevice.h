@@ -35,7 +35,7 @@ public:
 	CVKInstance* GetInstance(void) const;
 	CVKQueue* GetQueue(void) const;
 	CVKMemoryManager* GetMemoryManager(void) const;
-	CVKTransferBufferManager* GetTransferBufferManager(void) const;
+	CVKTransferManager* GetTransferManager(void) const;
 
 
 private:
@@ -49,7 +49,7 @@ private:
 private:
 	CVKQueue* m_pQueue;
 	CVKMemoryManager* m_pMemoryManager;
-	CVKTransferBufferManager* m_pTransferBufferManager;
+	CVKTransferManager* m_pTransferManager;
 
 private:
 	CVKInstance* m_pInstance;
