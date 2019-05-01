@@ -28,6 +28,7 @@ void CGLES3DescriptorLayout::Destroy(void)
 {
 	m_uniformBlockBindings.clear();
 	m_sampledImageBindings.clear();
+	m_inputAttachmentBindings.clear();
 }
 
 bool CGLES3DescriptorLayout::SetUniformBlockBinding(uint32_t name, uint32_t binding)
@@ -45,6 +46,17 @@ bool CGLES3DescriptorLayout::SetSampledImageBinding(uint32_t name, uint32_t bind
 {
 	if (m_sampledImageBindings.find(name) == m_sampledImageBindings.end()) {
 		m_sampledImageBindings[name] = binding;
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+bool CGLES3DescriptorLayout::SetInputAttachmentBinding(uint32_t name, uint32_t binding)
+{
+	if (m_inputAttachmentBindings.find(name) == m_inputAttachmentBindings.end()) {
+		m_inputAttachmentBindings[name] = binding;
 		return true;
 	}
 	else {
@@ -81,6 +93,18 @@ uint32_t CGLES3DescriptorLayout::GetSampledImageBinding(uint32_t name) const
 	}
 }
 
+uint32_t CGLES3DescriptorLayout::GetInputAttachmentBinding(uint32_t name) const
+{
+	const auto& itBinding = m_inputAttachmentBindings.find(name);
+
+	if (itBinding != m_inputAttachmentBindings.end()) {
+		return itBinding->second;
+	}
+	else {
+		return -1;
+	}
+}
+
 bool CGLES3DescriptorLayout::IsUniformBlockValid(uint32_t name) const
 {
 	return GetUniformBlockBinding(name) != -1;
@@ -89,6 +113,11 @@ bool CGLES3DescriptorLayout::IsUniformBlockValid(uint32_t name) const
 bool CGLES3DescriptorLayout::IsSampledImageValid(uint32_t name) const
 {
 	return GetSampledImageBinding(name) != -1;
+}
+
+bool CGLES3DescriptorLayout::IsInputAttachmentValid(uint32_t name) const
+{
+	return GetInputAttachmentBinding(name) != -1;
 }
 
 bool CGLES3DescriptorLayout::IsCompatible(const CGfxDescriptorLayoutPtr ptrLayout) const
@@ -102,6 +131,10 @@ bool CGLES3DescriptorLayout::IsCompatible(const CGfxDescriptorLayoutPtr ptrLayou
 	}
 
 	if (m_sampledImageBindings != ((CGLES3DescriptorLayout*)ptrLayout.GetPointer())->m_sampledImageBindings) {
+		return false;
+	}
+
+	if (m_inputAttachmentBindings != ((CGLES3DescriptorLayout*)ptrLayout.GetPointer())->m_inputAttachmentBindings) {
 		return false;
 	}
 
