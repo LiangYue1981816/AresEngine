@@ -13,21 +13,21 @@ CVKCommandBuffer::CVKCommandBuffer(CVKDevice* pDevice, CVKCommandBufferManager* 
 	, m_vkCommandPool(vkCommandPool)
 	, m_vkCommandBuffer(VK_NULL_HANDLE)
 {
-	if (IsMainCommandBuffer()) {
-		VkFenceCreateInfo fenceCreateInfo = {};
-		fenceCreateInfo.sType = VK_STRUCTURE_TYPE_FENCE_CREATE_INFO;
-		fenceCreateInfo.pNext = nullptr;
-		fenceCreateInfo.flags = VK_FENCE_CREATE_SIGNALED_BIT;
-		vkCreateFence(m_pDevice->GetDevice(), &fenceCreateInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkFence);
+	if (bMainCommandBuffer) {
+		VkFenceCreateInfo createInfo = {};
+		createInfo.sType = VK_STRUCTURE_TYPE_FENCE_CREATE_INFO;
+		createInfo.pNext = nullptr;
+		createInfo.flags = VK_FENCE_CREATE_SIGNALED_BIT;
+		CALL_VK_FUNCTION_RETURN(vkCreateFence(m_pDevice->GetDevice(), &createInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkFence));
 	}
 
 	VkCommandBufferAllocateInfo allocateInfo = {};
 	allocateInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
 	allocateInfo.pNext = nullptr;
-	allocateInfo.commandPool = m_vkCommandPool;
-	allocateInfo.level = IsMainCommandBuffer() ? VK_COMMAND_BUFFER_LEVEL_PRIMARY : VK_COMMAND_BUFFER_LEVEL_SECONDARY;
+	allocateInfo.commandPool = vkCommandPool;
+	allocateInfo.level = bMainCommandBuffer ? VK_COMMAND_BUFFER_LEVEL_PRIMARY : VK_COMMAND_BUFFER_LEVEL_SECONDARY;
 	allocateInfo.commandBufferCount = 1;
-	vkAllocateCommandBuffers(m_pDevice->GetDevice(), &allocateInfo, &m_vkCommandBuffer);
+	CALL_VK_FUNCTION_RETURN(vkAllocateCommandBuffers(m_pDevice->GetDevice(), &allocateInfo, &m_vkCommandBuffer));
 }
 
 CVKCommandBuffer::~CVKCommandBuffer(void)
@@ -38,7 +38,9 @@ CVKCommandBuffer::~CVKCommandBuffer(void)
 		vkDestroyFence(m_pDevice->GetDevice(), m_vkFence, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
 	}
 
-	vkFreeCommandBuffers(m_pDevice->GetDevice(), m_vkCommandPool, 1, &m_vkCommandBuffer);
+	if (m_vkCommandBuffer) {
+		vkFreeCommandBuffers(m_pDevice->GetDevice(), m_vkCommandPool, 1, &m_vkCommandBuffer);
+	}
 }
 
 void CVKCommandBuffer::Release(void)
@@ -83,9 +85,7 @@ int CVKCommandBuffer::GetSubpassIndex(void) const
 
 void CVKCommandBuffer::Clearup(void)
 {
-	if (m_vkFence) {
-		vkWaitForFences(m_pDevice->GetDevice(), 1, &m_vkFence, VK_TRUE, UINT64_MAX);
-	}
+	WaitForFinish();
 
 	for (const auto& itCommand : m_pCommands) {
 		delete itCommand;
@@ -107,8 +107,12 @@ bool CVKCommandBuffer::Execute(void) const
 
 bool CVKCommandBuffer::WaitForFinish(void) const
 {
-	CALL_VK_FUNCTION_RETURN_BOOL(vkWaitForFences(m_pDevice->GetDevice(), 1, &m_vkFence, VK_TRUE, UINT64_MAX));
-	return true;
+	if (m_vkFence) {
+		CALL_VK_FUNCTION_RETURN_BOOL(vkWaitForFences(m_pDevice->GetDevice(), 1, &m_vkFence, VK_TRUE, UINT64_MAX));
+	}
+	else {
+		return true;
+	}
 }
 
 bool CVKCommandBuffer::CmdBeginRenderPass(const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass)
