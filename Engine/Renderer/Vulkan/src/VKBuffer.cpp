@@ -87,7 +87,7 @@ bool CVKBuffer::BufferData(size_t offset, size_t size, const void* data)
 				dstPipelineStageFlags |= VK_PIPELINE_STAGE_VERTEX_SHADER_BIT | VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT | VK_PIPELINE_STAGE_COMPUTE_SHADER_BIT;
 			}
 
-			return m_pDevice->GetTransferBufferManager()->TransferBufferData(this, dstAccessFlags, dstPipelineStageFlags, offset, size, data);
+			return m_pDevice->GetTransferManager()->TransferBufferData(this, dstAccessFlags, dstPipelineStageFlags, offset, size, data);
 		}
 	}
 	else {
