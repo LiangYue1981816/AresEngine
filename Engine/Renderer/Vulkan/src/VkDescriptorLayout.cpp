@@ -39,6 +39,11 @@ bool CVKDescriptorLayout::SetSampledImageBinding(uint32_t name, uint32_t binding
 	return true;
 }
 
+bool CVKDescriptorLayout::SetInputAttachmentBinding(uint32_t name, uint32_t binding)
+{
+	return true;
+}
+
 uint32_t CVKDescriptorLayout::GetSetIndex(void) const
 {
 	return m_set;
@@ -54,12 +59,22 @@ uint32_t CVKDescriptorLayout::GetSampledImageBinding(uint32_t name) const
 	return 0;
 }
 
+uint32_t CVKDescriptorLayout::GetInputAttachmentBinding(uint32_t name) const
+{
+	return 0;
+}
+
 bool CVKDescriptorLayout::IsUniformBlockValid(uint32_t name) const
 {
 	return true;
 }
 
 bool CVKDescriptorLayout::IsSampledImageValid(uint32_t name) const
+{
+	return true;
+}
+
+bool CVKDescriptorLayout::IsInputAttachmentValid(uint32_t name) const
 {
 	return true;
 }
