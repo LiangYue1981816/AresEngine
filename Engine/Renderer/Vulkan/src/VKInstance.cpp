@@ -30,6 +30,7 @@ VkBool32 VKAPI_PTR DebugReportCallback(VkDebugReportFlagsEXT flags, VkDebugRepor
 
 	if (flags & VK_DEBUG_REPORT_DEBUG_BIT_EXT) {
 		LogOutput(LOG_TAG_RENDERER, "Vulkan Debug [%s] Code %d : %s\n", pLayerPrefix, messageCode, pMessage);
+		return VK_FALSE;
 	}
 
 	return VK_TRUE;
@@ -47,10 +48,10 @@ VkResult CVKInstance::GetLastError(void)
 
 
 CVKInstance::CVKInstance(void* hInstance, void* hWnd)
-	: m_vkInstance(VK_NULL_HANDLE)
+	: m_pAllocator(nullptr)
+	
+	, m_vkInstance(VK_NULL_HANDLE)
 	, m_vkSurface(VK_NULL_HANDLE)
-
-	, m_pAllocator(nullptr)
 
 #ifdef DEBUG
 	, m_vkDebugReportCallback(VK_NULL_HANDLE)

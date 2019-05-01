@@ -32,11 +32,11 @@ private:
 
 
 private:
-	VkInstance m_vkInstance;
-	VkSurfaceKHR m_vkSurface;
+	CVKAllocator* m_pAllocator;
 
 private:
-	CVKAllocator* m_pAllocator;
+	VkInstance m_vkInstance;
+	VkSurfaceKHR m_vkSurface;
 
 #ifdef DEBUG
 	VkDebugReportCallbackEXT m_vkDebugReportCallback;
