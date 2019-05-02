@@ -24,6 +24,7 @@
 #include "VKTexture2D.h"
 #include "VKTexture2DArray.h"
 #include "VKTextureCubemap.h"
+#include "VKTextureManager.h"
 
 #include "VKDescriptorLayout.h"
 #include "VKDescriptorLayoutManager.h"

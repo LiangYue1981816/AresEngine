@@ -42,7 +42,7 @@ CVKTexture2D* CVKTexture2DManager::Create(uint32_t name)
 	}
 }
 
-CVKTexture2D* CVKTexture2DManager::Create(const char* szFileName)
+CVKTexture2D* CVKTexture2DManager::Create(const char* szFileName, int baseLevel, int numLevels)
 {
 	uint32_t name = HashValue(szFileName);
 
@@ -50,7 +50,7 @@ CVKTexture2D* CVKTexture2DManager::Create(const char* szFileName)
 	{
 		if (m_pTextures[name] == nullptr) {
 			m_pTextures[name] = new CVKTexture2D(m_pDevice, this, name);
-			ResourceLoader()->LoadTexture2D(szFileName, m_pTextures[name]);
+			ResourceLoader()->LoadTexture2D(szFileName, m_pTextures[name], baseLevel, numLevels);
 		}
 
 		return m_pTextures[name];
@@ -109,7 +109,7 @@ CVKTexture2DArray* CVKTexture2DArrayManager::Create(uint32_t name)
 	}
 }
 
-CVKTexture2DArray* CVKTexture2DArrayManager::Create(const char* szFileName)
+CVKTexture2DArray* CVKTexture2DArrayManager::Create(const char* szFileName, int baseLevel, int numLevels)
 {
 	uint32_t name = HashValue(szFileName);
 
@@ -117,7 +117,7 @@ CVKTexture2DArray* CVKTexture2DArrayManager::Create(const char* szFileName)
 	{
 		if (m_pTextures[name] == nullptr) {
 			m_pTextures[name] = new CVKTexture2DArray(m_pDevice, this, name);
-			ResourceLoader()->LoadTexture2DArray(szFileName, m_pTextures[name]);
+			ResourceLoader()->LoadTexture2DArray(szFileName, m_pTextures[name], baseLevel, numLevels);
 		}
 
 		return (CVKTexture2DArray*)m_pTextures[name];
@@ -136,20 +136,20 @@ void CVKTexture2DArrayManager::Destroy(CVKTexture2DArray* pTexture)
 }
 
 
-CVKTextureCubeMapManager::CVKTextureCubeMapManager(CVKDevice* pDevice)
+CVKTextureCubemapManager::CVKTextureCubemapManager(CVKDevice* pDevice)
 	: m_pDevice(pDevice)
 {
 
 }
 
-CVKTextureCubeMapManager::~CVKTextureCubeMapManager(void)
+CVKTextureCubemapManager::~CVKTextureCubemapManager(void)
 {
 	for (const auto& itTexture : m_pTextures) {
 		delete itTexture.second;
 	}
 }
 
-CVKTextureCubeMap* CVKTextureCubeMapManager::Get(uint32_t name)
+CVKTextureCubemap* CVKTextureCubemapManager::Get(uint32_t name)
 {
 	mutex_autolock autolock(&lock);
 	{
@@ -164,34 +164,34 @@ CVKTextureCubeMap* CVKTextureCubeMapManager::Get(uint32_t name)
 	}
 }
 
-CVKTextureCubeMap* CVKTextureCubeMapManager::Create(uint32_t name)
+CVKTextureCubemap* CVKTextureCubemapManager::Create(uint32_t name)
 {
 	mutex_autolock autolock(&lock);
 	{
 		if (m_pTextures[name] == nullptr) {
-			m_pTextures[name] = new CVKTextureCubeMap(m_pDevice, this, name);
+			m_pTextures[name] = new CVKTextureCubemap(m_pDevice, this, name);
 		}
 
 		return m_pTextures[name];
 	}
 }
 
-CVKTextureCubeMap* CVKTextureCubeMapManager::Create(const char* szFileName)
+CVKTextureCubemap* CVKTextureCubemapManager::Create(const char* szFileName, int baseLevel, int numLevels)
 {
 	uint32_t name = HashValue(szFileName);
 
 	mutex_autolock autolock(&lock);
 	{
 		if (m_pTextures[name] == nullptr) {
-			m_pTextures[name] = new CVKTextureCubeMap(m_pDevice, this, name);
-			ResourceLoader()->LoadTextureCubeMap(szFileName, m_pTextures[name]);
+			m_pTextures[name] = new CVKTextureCubemap(m_pDevice, this, name);
+			ResourceLoader()->LoadTextureCubemap(szFileName, m_pTextures[name], baseLevel, numLevels);
 		}
 
 		return m_pTextures[name];
 	}
 }
 
-void CVKTextureCubeMapManager::Destroy(CVKTextureCubeMap* pTexture)
+void CVKTextureCubemapManager::Destroy(CVKTextureCubemap* pTexture)
 {
 	mutex_autolock autolock(&lock);
 	{

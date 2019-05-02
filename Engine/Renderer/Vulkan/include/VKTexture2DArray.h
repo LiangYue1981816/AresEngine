@@ -8,7 +8,7 @@ class CVKTexture2DArray : public CGfxTexture2DArray
 
 
 private:
-	CVKTexture2DArray(CVKDevice* pDevice, uint32_t name);
+	CVKTexture2DArray(CVKDevice* pDevice, CVKTexture2DArrayManager* pManager, uint32_t name);
 	virtual ~CVKTexture2DArray(void);
 	virtual void Release(void);
 
@@ -41,4 +41,7 @@ private:
 
 private:
 	CVKDevice* m_pDevice;
+
+private:
+	CVKTexture2DArrayManager* m_pManager;
 };

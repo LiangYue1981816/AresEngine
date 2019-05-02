@@ -16,7 +16,7 @@ private:
 private:
 	CVKTexture2D* Get(uint32_t name);
 	CVKTexture2D* Create(uint32_t name);
-	CVKTexture2D* Create(const char* szFileName);
+	CVKTexture2D* Create(const char* szFileName, int baseLevel, int numLevels);
 	void Destroy(CVKTexture2D* pTexture);
 
 
@@ -42,7 +42,7 @@ private:
 private:
 	CVKTexture2DArray* Get(uint32_t name);
 	CVKTexture2DArray* Create(uint32_t name);
-	CVKTexture2DArray* Create(const char* szFileName);
+	CVKTexture2DArray* Create(const char* szFileName, int baseLevel, int numLevels);
 	void Destroy(CVKTexture2DArray* pTexture);
 
 
@@ -54,26 +54,26 @@ private:
 };
 
 
-class CVKTextureCubeMapManager : public CGfxResourceManager
+class CVKTextureCubemapManager : public CGfxResourceManager
 {
 	friend class CVKRenderer;
-	friend class CVKTextureCubeMap;
+	friend class CVKTextureCubemap;
 
 
 private:
-	CVKTextureCubeMapManager(CVKDevice* pDevice);
-	virtual ~CVKTextureCubeMapManager(void);
+	CVKTextureCubemapManager(CVKDevice* pDevice);
+	virtual ~CVKTextureCubemapManager(void);
 
 
 private:
-	CVKTextureCubeMap* Get(uint32_t name);
-	CVKTextureCubeMap* Create(uint32_t name);
-	CVKTextureCubeMap* Create(const char* szFileName);
-	void Destroy(CVKTextureCubeMap* pTexture);
+	CVKTextureCubemap* Get(uint32_t name);
+	CVKTextureCubemap* Create(uint32_t name);
+	CVKTextureCubemap* Create(const char* szFileName, int baseLevel, int numLevels);
+	void Destroy(CVKTextureCubemap* pTexture);
 
 
 private:
-	eastl::unordered_map<uint32_t, CVKTextureCubeMap*> m_pTextures;
+	eastl::unordered_map<uint32_t, CVKTextureCubemap*> m_pTextures;
 
 private:
 	CVKDevice* m_pDevice;

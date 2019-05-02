@@ -8,7 +8,7 @@ class CVKTextureCubemap : public CGfxTextureCubemap
 
 
 private:
-	CVKTextureCubemap(CVKDevice* pDevice, uint32_t name);
+	CVKTextureCubemap(CVKDevice* pDevice, CVKTextureCubemapManager* pManager, uint32_t name);
 	virtual ~CVKTextureCubemap(void);
 	virtual void Release(void);
 
@@ -40,4 +40,7 @@ private:
 
 private:
 	CVKDevice* m_pDevice;
+
+private:
+	CVKTextureCubemapManager* m_pManager;
 };

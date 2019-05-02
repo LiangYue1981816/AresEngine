@@ -1,9 +1,10 @@
 #include "VKRenderer.h"
 
 
-CVKTexture2D::CVKTexture2D(CVKDevice* pDevice, uint32_t name)
+CVKTexture2D::CVKTexture2D(CVKDevice* pDevice, CVKTexture2DManager* pManager, uint32_t name)
 	: CGfxTexture2D(name)
 	, m_pDevice(pDevice)
+	, m_pManager(pManager)
 {
 
 }
@@ -15,7 +16,7 @@ CVKTexture2D::~CVKTexture2D(void)
 
 void CVKTexture2D::Release(void)
 {
-
+	m_pManager->Destroy(this);
 }
 
 VkImageView CVKTexture2D::GetImageView(void) const

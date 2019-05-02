@@ -8,7 +8,7 @@ class CVKTexture2D : public CGfxTexture2D
 
 
 private:
-	CVKTexture2D(CVKDevice* pDevice, uint32_t name);
+	CVKTexture2D(CVKDevice* pDevice, CVKTexture2DManager* pManager, uint32_t name);
 	virtual ~CVKTexture2D(void);
 	virtual void Release(void);
 
@@ -41,4 +41,7 @@ private:
 
 private:
 	CVKDevice* m_pDevice;
+
+private:
+	CVKTexture2DManager* m_pManager;
 };
