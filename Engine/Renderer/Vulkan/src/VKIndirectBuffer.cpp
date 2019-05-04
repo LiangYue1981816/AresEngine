@@ -23,16 +23,6 @@ VkBuffer CVKIndirectBuffer::GetBuffer(void) const
 	return m_ptrBuffer->GetBuffer();
 }
 
-uint32_t CVKIndirectBuffer::GetSize(void) const
-{
-	return m_size;
-}
-
-uint32_t CVKIndirectBuffer::GetOffset(void) const
-{
-	return m_offset;
-}
-
 uint32_t CVKIndirectBuffer::GetDrawCommandCount(void) const
 {
 	return m_draws.size();
@@ -41,6 +31,16 @@ uint32_t CVKIndirectBuffer::GetDrawCommandCount(void) const
 uint32_t CVKIndirectBuffer::GetDrawCommandOffset(int indexDraw) const
 {
 	return indexDraw * sizeof(DrawCommand);
+}
+
+uint32_t CVKIndirectBuffer::GetSize(void) const
+{
+	return m_size;
+}
+
+uint32_t CVKIndirectBuffer::GetOffset(void) const
+{
+	return m_offset;
 }
 
 bool CVKIndirectBuffer::BufferData(int indexDraw, int baseVertex, int firstIndex, int indexCount, int instanceCount)
