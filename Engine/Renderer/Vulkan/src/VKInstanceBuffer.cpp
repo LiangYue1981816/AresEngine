@@ -3,17 +3,16 @@
 
 static const int INSTANCE_BUFFER_SIZE = 64;
 
-CVKInstanceBuffer::CVKInstanceBuffer(CVKDevice* pDevice, uint32_t instanceFormat, uint32_t instanceBinding)
+CVKInstanceBuffer::CVKInstanceBuffer(CVKDevice* pDevice, uint32_t instanceFormat, int instanceBinding)
 	: CGfxInstanceBuffer(instanceFormat, instanceBinding)
 	, m_pDevice(pDevice)
 
+	, m_binding(instanceBinding)
 	, m_format(instanceFormat)
 	, m_count(0)
 	, m_size(INSTANCE_BUFFER_SIZE)
-
-	, m_binding(instanceBinding)
 {
-	m_ptrBuffer = CVKBufferPtr(new CVKBuffer(m_pDevice, CGfxSwapChain::SWAPCHAIN_FRAME_COUNT * m_size, VK_BUFFER_USAGE_VERTEX_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT));
+	m_ptrBuffer = CVKBufferPtr(new CVKBuffer(pDevice, CGfxSwapChain::SWAPCHAIN_FRAME_COUNT * m_size, VK_BUFFER_USAGE_VERTEX_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT));
 	CGfxProfiler::IncInstanceBufferSize(m_ptrBuffer->GetSize());
 }
 
@@ -37,7 +36,7 @@ uint32_t CVKInstanceBuffer::GetSize(void) const
 	return m_size;
 }
 
-bool CVKInstanceBuffer::BufferData(size_t size, const void* pBuffer)
+bool CVKInstanceBuffer::BufferData(size_t size, const void* data)
 {
 	m_count = size / GetInstanceStride(m_format);
 
@@ -52,10 +51,12 @@ bool CVKInstanceBuffer::BufferData(size_t size, const void* pBuffer)
 		CGfxProfiler::IncInstanceBufferSize(m_size);
 	}
 
-	return m_ptrBuffer->BufferData(VKRenderer()->GetSwapChain()->GetFrameIndex() * m_size, size, pBuffer);
+	return m_ptrBuffer->BufferData(VKRenderer()->GetSwapChain()->GetFrameIndex() * m_size, size, data);
 }
 
-void CVKInstanceBuffer::Bind(VkCommandBuffer vkCommandBuffer, VkDeviceSize offset) const
+void CVKInstanceBuffer::Bind(VkCommandBuffer vkCommandBuffer) const
 {
-	vkCmdBindVertexBuffer(vkCommandBuffer, m_binding, m_ptrBuffer->GetBuffer(), offset);
+	const VkBuffer vkBuffer = m_ptrBuffer->GetBuffer();
+	const VkDeviceSize vkOffset = 0;
+	vkCmdBindVertexBuffers(vkCommandBuffer, m_binding, 0, &vkBuffer, &vkOffset);
 }

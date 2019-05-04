@@ -22,6 +22,7 @@
 #include "VKBuffer.h"
 #include "VKIndexBuffer.h"
 #include "VKVertexBuffer.h"
+#include "VKInstanceBuffer.h"
 #include "VKUniformBuffer.h"
 
 #include "VKTexture.h"
@@ -49,7 +50,6 @@
 #include "VKPipelineGraphics.h"
 #include "VKPipelineManager.h"
 
-#include "VKInstanceBuffer.h"
 #include "VKIndirectBuffer.h"
 
 #include "VKSampler.h"
