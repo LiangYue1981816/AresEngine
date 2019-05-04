@@ -13,6 +13,7 @@ public:
 	uint32_t GetVertexFormat(void) const;
 	uint32_t GetVertexCount(void) const;
 	uint32_t GetSize(void) const;
+	uint32_t GetOffset(void) const;
 
 public:
 	bool BufferData(size_t offset, size_t size, const void* data);
@@ -26,6 +27,7 @@ private:
 	uint32_t m_format;
 	uint32_t m_count;
 	uint32_t m_size;
+	uint32_t m_offset;
 
 private:
 	CVKBufferPtr m_ptrBuffer;
