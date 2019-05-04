@@ -375,8 +375,3 @@ void CVKRenderer::Present(void)
 {
 
 }
-
-uint32_t CVKRenderer::GetFrameIndex(void) const
-{
-	return 0;
-}

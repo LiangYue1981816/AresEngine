@@ -20,6 +20,8 @@
 #include "VKTransferManager.h"
 
 #include "VKBuffer.h"
+#include "VKIndexBuffer.h"
+
 #include "VKTexture.h"
 #include "VKTexture2D.h"
 #include "VKTexture2DArray.h"
@@ -45,7 +47,6 @@
 #include "VKPipelineGraphics.h"
 #include "VKPipelineManager.h"
 
-#include "VKIndexBuffer.h"
 #include "VKVertexBuffer.h"
 #include "VKInstanceBuffer.h"
 #include "VKIndirectBuffer.h"
@@ -187,7 +188,6 @@ public:
 public:
 	void AcquireNextFrame(void);
 	void Present(void);
-	uint32_t GetFrameIndex(void) const;
 
 
 private:
