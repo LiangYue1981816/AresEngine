@@ -1,7 +1,7 @@
 #include "GLES3Renderer.h"
 
 
-CGLES3IndirectBuffer::CGLES3IndirectBuffer(uint32_t numDrawCommands)
+CGLES3IndirectBuffer::CGLES3IndirectBuffer(int numDrawCommands)
 	: CGfxIndirectBuffer(numDrawCommands)
 	, m_draws(numDrawCommands)
 {

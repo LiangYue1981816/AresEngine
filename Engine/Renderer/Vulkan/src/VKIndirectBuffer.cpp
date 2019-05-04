@@ -1,7 +1,7 @@
 #include "VKRenderer.h"
 
 
-CVKIndirectBuffer::CVKIndirectBuffer(CVKDevice* pDevice, uint32_t numDrawCommands)
+CVKIndirectBuffer::CVKIndirectBuffer(CVKDevice* pDevice, int numDrawCommands)
 	: CGfxIndirectBuffer(numDrawCommands)
 	, m_pDevice(pDevice)
 

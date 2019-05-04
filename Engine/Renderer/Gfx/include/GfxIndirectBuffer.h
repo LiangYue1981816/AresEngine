@@ -13,7 +13,7 @@ typedef struct DrawCommand {
 class CALL_API CGfxIndirectBuffer
 {
 public:
-	CGfxIndirectBuffer(uint32_t numDrawCommands)
+	CGfxIndirectBuffer(int numDrawCommands)
 	{
 
 	}
