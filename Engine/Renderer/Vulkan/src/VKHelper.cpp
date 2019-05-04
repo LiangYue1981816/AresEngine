@@ -509,3 +509,17 @@ VkImageViewType CVKHelper::TranslateImageViewType(GfxTextureType type)
 		return VK_IMAGE_VIEW_TYPE_MAX_ENUM;
 	}
 }
+
+VkIndexType CVKHelper::TranslateIndexType(GfxIndexType type)
+{
+	switch ((int)type) {
+	case GFX_INDEX_UNSIGNED_SHORT:
+		return VK_INDEX_TYPE_UINT16;
+
+	case GFX_INDEX_UNSIGNED_INT:
+		return VK_INDEX_TYPE_UINT32;
+
+	default:
+		return VK_INDEX_TYPE_MAX_ENUM;
+	}
+}

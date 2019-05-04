@@ -28,6 +28,7 @@ public:
 	static VkBlendOp TranslateBlendOp(GfxBlendOp op);
 	static VkBlendFactor TranslateBlendFactor(GfxBlendFactor blendFactor);
 	static VkImageViewType TranslateImageViewType(GfxTextureType type);
+	static VkIndexType TranslateIndexType(GfxIndexType type);
 
 
 private:

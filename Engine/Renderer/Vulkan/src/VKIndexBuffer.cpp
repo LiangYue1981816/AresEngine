@@ -44,10 +44,15 @@ uint32_t CVKIndexBuffer::GetSize(void) const
 
 bool CVKIndexBuffer::BufferData(size_t offset, size_t size, const void* data)
 {
-	return true;
+	if (m_ptrBuffer->IsDeviceLocal()) {
+		return m_ptrBuffer->BufferData(offset, size, data);
+	}
+	else {
+		return m_ptrBuffer->BufferData((size_t)VKRenderer()->GetSwapChain()->GetFrameIndex() * m_size + offset, size, data);
+	}
 }
 
 void CVKIndexBuffer::Bind(VkCommandBuffer vkCommandBuffer) const
 {
-
+	vkCmdBindIndexBuffer(vkCommandBuffer, m_ptrBuffer->GetBuffer(), 0, CVKHelper::TranslateIndexType(m_type));
 }
