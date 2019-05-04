@@ -14,6 +14,11 @@ CGLES3IndirectBuffer::~CGLES3IndirectBuffer(void)
 	CGfxProfiler::DecIndirectBufferSize(m_ptrBuffer->GetSize());
 }
 
+uint32_t CGLES3IndirectBuffer::GetSize(void) const
+{
+	return m_ptrBuffer->GetSize();
+}
+
 uint32_t CGLES3IndirectBuffer::GetDrawCommandCount(void) const
 {
 	return m_draws.size();
@@ -22,11 +27,6 @@ uint32_t CGLES3IndirectBuffer::GetDrawCommandCount(void) const
 uint32_t CGLES3IndirectBuffer::GetDrawCommandOffset(int indexDraw) const
 {
 	return indexDraw * sizeof(DrawCommand);
-}
-
-uint32_t CGLES3IndirectBuffer::GetSize(void) const
-{
-	return m_ptrBuffer->GetSize();
 }
 
 bool CGLES3IndirectBuffer::BufferData(int indexDraw, int baseVertex, int firstIndex, int indexCount, int instanceCount)
