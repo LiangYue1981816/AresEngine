@@ -4,13 +4,13 @@
 
 class CVKIndirectBuffer : public CGfxIndirectBuffer
 {
-	friend class CVKMeshDraw;
-
-
 private:
-	CVKIndirectBuffer(CVKDevice* pDevice, uint32_t drawCommandCount);
+	CVKIndirectBuffer(CVKDevice* pDevice, uint32_t numDrawCommands);
 	virtual ~CVKIndirectBuffer(void);
 
+
+public:
+	VkBuffer GetBuffer(void) const;
 
 public:
 	uint32_t GetDrawCommandCount(void) const;
@@ -18,7 +18,6 @@ public:
 	uint32_t GetSize(void) const;
 
 public:
-	bool BufferData(int indexDraw, int instanceCount);
 	bool BufferData(int indexDraw, int baseVertex, int firstIndex, int indexCount, int instanceCount);
 
 
