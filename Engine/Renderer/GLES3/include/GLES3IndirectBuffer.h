@@ -13,9 +13,9 @@ private:
 
 
 public:
-	uint32_t GetSize(void) const;
 	uint32_t GetDrawCommandCount(void) const;
 	uint32_t GetDrawCommandOffset(int indexDraw) const;
+	uint32_t GetSize(void) const;
 
 public:
 	bool BufferData(int indexDraw, int baseVertex, int firstIndex, int indexCount, int instanceCount);

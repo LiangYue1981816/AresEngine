@@ -24,9 +24,9 @@ public:
 
 
 public:
-	virtual uint32_t GetSize(void) const = 0;
 	virtual uint32_t GetDrawCommandCount(void) const = 0;
 	virtual uint32_t GetDrawCommandOffset(int indexDraw) const = 0;
+	virtual uint32_t GetSize(void) const = 0;
 
 public:
 	virtual bool BufferData(int indexDraw, int baseVertex, int firstIndex, int indexCount, int instanceCount) = 0;
