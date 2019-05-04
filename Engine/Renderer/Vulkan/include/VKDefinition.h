@@ -86,6 +86,7 @@ class CVKTransferManager;
 
 class CVKBuffer;
 class CVKIndexBuffer;
+class CVKVertexBuffer;
 
 class CVKTexture;
 class CVKTexture2D;
@@ -116,7 +117,6 @@ class CVKPipelineGraphics;
 class CVKPipelineGraphicsManager;
 
 class CVKBuffer;
-class CVKVertexBuffer;
 class CVKInstanceBuffer;
 class CVKIndirectBuffer;
 

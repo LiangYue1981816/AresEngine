@@ -21,6 +21,7 @@
 
 #include "VKBuffer.h"
 #include "VKIndexBuffer.h"
+#include "VKVertexBuffer.h"
 
 #include "VKTexture.h"
 #include "VKTexture2D.h"
@@ -47,7 +48,6 @@
 #include "VKPipelineGraphics.h"
 #include "VKPipelineManager.h"
 
-#include "VKVertexBuffer.h"
 #include "VKInstanceBuffer.h"
 #include "VKIndirectBuffer.h"
 
