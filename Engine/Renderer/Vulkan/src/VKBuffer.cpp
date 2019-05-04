@@ -105,3 +105,53 @@ bool CVKBuffer::PipelineBarrier(VkCommandBuffer vkCommandBuffer, VkAccessFlags s
 		return false;
 	}
 }
+
+bool CVKBuffer::IsDeviceLocal(void) const
+{
+	if (m_pMemory) {
+		return m_pMemory->IsDeviceLocal();
+	}
+	else {
+		return false;
+	}
+}
+
+bool CVKBuffer::IsHostVisible(void) const
+{
+	if (m_pMemory) {
+		return m_pMemory->IsHostVisible();
+	}
+	else {
+		return false;
+	}
+}
+
+bool CVKBuffer::IsHostCoherent(void) const
+{
+	if (m_pMemory) {
+		return m_pMemory->IsHostCoherent();
+	}
+	else {
+		return false;
+	}
+}
+
+bool CVKBuffer::IsHostCached(void) const
+{
+	if (m_pMemory) {
+		return m_pMemory->IsHostCached();
+	}
+	else {
+		return false;
+	}
+}
+
+bool CVKBuffer::IsLazilyAllocated(void) const
+{
+	if (m_pMemory) {
+		return m_pMemory->IsLazilyAllocated();
+	}
+	else {
+		return false;
+	}
+}
