@@ -48,7 +48,7 @@ bool CVKIndexBuffer::BufferData(size_t offset, size_t size, const void* data)
 		return m_ptrBuffer->BufferData(offset, size, data);
 	}
 	else {
-		return m_ptrBuffer->BufferData((size_t)VKRenderer()->GetSwapChain()->GetFrameIndex() * m_size + offset, size, data);
+		return m_ptrBuffer->BufferData(VKRenderer()->GetSwapChain()->GetFrameIndex() * m_size + offset, size, data);
 	}
 }
 
