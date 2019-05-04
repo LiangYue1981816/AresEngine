@@ -37,5 +37,21 @@ uint32_t CVKIndirectBuffer::GetSize(void) const
 
 bool CVKIndirectBuffer::BufferData(int indexDraw, int baseVertex, int firstIndex, int indexCount, int instanceCount)
 {
-	return true;
+	if (indexDraw < 0 || (uint32_t)indexDraw >= m_draws.size()) {
+		return false;
+	}
+
+	if (m_draws[indexDraw].baseVertex == baseVertex &&
+		m_draws[indexDraw].firstIndex == firstIndex &&
+		m_draws[indexDraw].indexCount == indexCount &&
+		m_draws[indexDraw].instanceCount == instanceCount) {
+		return true;
+	}
+
+	m_draws[indexDraw].baseVertex = baseVertex;
+	m_draws[indexDraw].firstIndex = firstIndex;
+	m_draws[indexDraw].indexCount = indexCount;
+	m_draws[indexDraw].instanceCount = instanceCount;
+
+	return m_ptrBuffer->BufferData(VKRenderer()->GetSwapChain()->GetFrameIndex() * m_size + indexDraw * sizeof(DrawCommand), sizeof(m_draws[indexDraw]), &m_draws[indexDraw]);
 }
