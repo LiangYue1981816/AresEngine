@@ -100,8 +100,8 @@ uint32_t CGLES3MeshDraw::GetVertexCount(void) const
 
 uint32_t CGLES3MeshDraw::GetInstanceFormat(void) const
 {
-	if (m_pInstanceBuffer[GLES3Renderer()->GetFrameIndex()]) {
-		return m_pInstanceBuffer[GLES3Renderer()->GetFrameIndex()]->GetInstanceFormat();
+	if (m_pInstanceBuffer[GLES3Renderer()->GetSwapChain()->GetFrameIndex()]) {
+		return m_pInstanceBuffer[GLES3Renderer()->GetSwapChain()->GetFrameIndex()]->GetInstanceFormat();
 	}
 	else {
 		return 0;
@@ -110,8 +110,8 @@ uint32_t CGLES3MeshDraw::GetInstanceFormat(void) const
 
 uint32_t CGLES3MeshDraw::GetInstanceCount(void) const
 {
-	if (m_pInstanceBuffer[GLES3Renderer()->GetFrameIndex()]) {
-		return m_pInstanceBuffer[GLES3Renderer()->GetFrameIndex()]->GetInstanceCount();
+	if (m_pInstanceBuffer[GLES3Renderer()->GetSwapChain()->GetFrameIndex()]) {
+		return m_pInstanceBuffer[GLES3Renderer()->GetSwapChain()->GetFrameIndex()]->GetInstanceCount();
 	}
 	else {
 		return 0;
@@ -120,9 +120,9 @@ uint32_t CGLES3MeshDraw::GetInstanceCount(void) const
 
 bool CGLES3MeshDraw::InstanceBufferData(size_t size, const void* data)
 {
-	if (m_pInstanceBuffer[GLES3Renderer()->GetFrameIndex()]) {
-		m_pInstanceBuffer[GLES3Renderer()->GetFrameIndex()]->BufferData(size, data);
-		m_pIndirectBuffer[GLES3Renderer()->GetFrameIndex()]->BufferData(0, m_pMeshDraw->baseVertex, m_pMeshDraw->firstIndex, m_pMeshDraw->indexCount, size / GetInstanceStride(m_pInstanceBuffer[GLES3Renderer()->GetFrameIndex()]->GetInstanceFormat()));
+	if (m_pInstanceBuffer[GLES3Renderer()->GetSwapChain()->GetFrameIndex()]) {
+		m_pInstanceBuffer[GLES3Renderer()->GetSwapChain()->GetFrameIndex()]->BufferData(size, data);
+		m_pIndirectBuffer[GLES3Renderer()->GetSwapChain()->GetFrameIndex()]->BufferData(0, m_pMeshDraw->baseVertex, m_pMeshDraw->firstIndex, m_pMeshDraw->indexCount, size / GetInstanceStride(m_pInstanceBuffer[GLES3Renderer()->GetSwapChain()->GetFrameIndex()]->GetInstanceFormat()));
 		return true;
 	}
 	else {
@@ -132,11 +132,11 @@ bool CGLES3MeshDraw::InstanceBufferData(size_t size, const void* data)
 
 void CGLES3MeshDraw::Bind(void) const
 {
-	if (m_pVertexArrayObject[GLES3Renderer()->GetFrameIndex()]) {
-		m_pVertexArrayObject[GLES3Renderer()->GetFrameIndex()]->Bind();
+	if (m_pVertexArrayObject[GLES3Renderer()->GetSwapChain()->GetFrameIndex()]) {
+		m_pVertexArrayObject[GLES3Renderer()->GetSwapChain()->GetFrameIndex()]->Bind();
 	}
 
-	if (m_pIndirectBuffer[GLES3Renderer()->GetFrameIndex()]) {
-		m_pIndirectBuffer[GLES3Renderer()->GetFrameIndex()]->Bind();
+	if (m_pIndirectBuffer[GLES3Renderer()->GetSwapChain()->GetFrameIndex()]) {
+		m_pIndirectBuffer[GLES3Renderer()->GetSwapChain()->GetFrameIndex()]->Bind();
 	}
 }
