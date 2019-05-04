@@ -1,6 +1,7 @@
 #include "VKRenderer.h"
 
 
+/*
 CVKUniformBuffer::CVKUniformBuffer(CVKDevice* pDevice, CVKUniformBufferManager* pManager, size_t size)
 	: CGfxUniformBuffer(size)
 	, m_pDevice(pDevice)
@@ -47,3 +48,4 @@ bool CVKUniformBuffer::BufferData(size_t offset, size_t size, const void* pBuffe
 	m_baseOffset = VKRenderer()->GetSwapChain()->GetFrameIndex() * m_size;
 	return m_ptrBuffer->BufferData(m_baseOffset + offset, size, pBuffer);
 }
+*/

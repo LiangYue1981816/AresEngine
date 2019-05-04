@@ -4,6 +4,20 @@
 
 class CVKUniformBuffer : public CGfxUniformBuffer
 {
+private:
+	CVKUniformBuffer(CVKDevice* pDevice, size_t size);
+	virtual ~CVKUniformBuffer(void);
+
+
+public:
+	uint32_t GetSize(void) const;
+
+public:
+	bool BufferData(size_t offset, size_t size, const void* data);
+};
+/*
+class CVKUniformBuffer : public CGfxUniformBuffer
+{
 	friend class CVKUniformBufferManager;
 
 
@@ -35,3 +49,4 @@ private:
 	CVKDevice* m_pDevice;
 	CVKUniformBufferManager* m_pManager;
 };
+*/

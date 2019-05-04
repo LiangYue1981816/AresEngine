@@ -22,6 +22,7 @@
 #include "VKBuffer.h"
 #include "VKIndexBuffer.h"
 #include "VKVertexBuffer.h"
+#include "VKUniformBuffer.h"
 
 #include "VKTexture.h"
 #include "VKTexture2D.h"
@@ -57,7 +58,7 @@
 #include "VKRenderTexture.h"
 #include "VKRenderTextureManager.h"
 
-#include "VKUniformBuffer.h"
+
 #include "VKUniformBufferManager.h"
 
 #include "VKMesh.h"
