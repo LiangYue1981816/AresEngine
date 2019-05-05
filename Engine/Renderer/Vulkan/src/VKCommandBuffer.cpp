@@ -127,7 +127,7 @@ bool CVKCommandBuffer::CmdBeginRenderPass(const CGfxFrameBufferPtr ptrFrameBuffe
 
 bool CVKCommandBuffer::CmdNextSubpass(void)
 {
-	if (IsMainCommandBuffer() == true && IsInRenderPass() == true) {
+	if (IsMainCommandBuffer() == true && IsInRenderPass() == true && m_indexSubpass < m_ptrRenderPass->GetSubpassCount() - 1) {
 		m_indexSubpass += 1;
 		return true;
 	}
