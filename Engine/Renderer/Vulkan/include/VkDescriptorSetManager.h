@@ -5,6 +5,8 @@
 class CVKDescriptorSetManager
 {
 	friend class CVKDevice;
+	friend class CVKDescriptorSet;
+	friend class CVKDescriptorPool;
 
 
 private:

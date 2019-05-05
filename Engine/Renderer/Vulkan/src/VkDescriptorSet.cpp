@@ -19,6 +19,11 @@ void CVKDescriptorSet::Release(void)
 	m_pDescriptorPool->FreeDescriptorSet(this);
 }
 
+CVKDescriptorPool* CVKDescriptorSet::GetDescriptorPool(void) const
+{
+	return m_pDescriptorPool;
+}
+
 bool CVKDescriptorSet::SetTexture2D(uint32_t name, const CGfxTexture2DPtr ptrTexture, const CGfxSampler* pSampler)
 {
 	return true;
@@ -42,11 +47,6 @@ bool CVKDescriptorSet::SetTextureInputAttachment(uint32_t name, const CGfxRender
 bool CVKDescriptorSet::SetUniformBuffer(uint32_t name, const CGfxUniformBufferPtr ptrUniformBuffer, uint32_t offset, uint32_t range)
 {
 	return true;
-}
-
-const CVKDescriptorPool* CVKDescriptorSet::GetDescriptorPool(void) const
-{
-	return m_pDescriptorPool;
 }
 
 const CGfxDescriptorLayoutPtr CVKDescriptorSet::GetDescriptorLayout(void) const

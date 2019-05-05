@@ -73,7 +73,7 @@ CVKDescriptorSet* CVKDescriptorPool::AllocDescriptorSet(const CGfxDescriptorLayo
 	}
 
 	for (int index = 0; index < VK_DESCRIPTOR_TYPE_RANGE_SIZE; index++) {
-		if (m_numDescriptors[index] < ptrDescriptorLayout->GetNumDescriptors()[index]) {
+		if (m_numDescriptors[index] < ((CVKDescriptorLayout*)ptrDescriptorLayout.GetPointer())->GetNumDescriptors()[index]) {
 			return nullptr;
 		}
 	}
@@ -84,7 +84,7 @@ CVKDescriptorSet* CVKDescriptorPool::AllocDescriptorSet(const CGfxDescriptorLayo
 	m_numSets -= 1;
 
 	for (int index = 0; index < VK_DESCRIPTOR_TYPE_RANGE_SIZE; index++) {
-		m_numDescriptors[index] -= ptrDescriptorLayout->GetNumDescriptors()[index];
+		m_numDescriptors[index] -= ((CVKDescriptorLayout*)ptrDescriptorLayout.GetPointer())->GetNumDescriptors()[index];
 	}
 
 	return pDescriptorSet;
