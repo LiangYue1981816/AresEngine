@@ -5,8 +5,9 @@ CVKDescriptorSet::CVKDescriptorSet(CVKDevice* pDevice, CVKDescriptorPool* pDescr
 	: CGfxDescriptorSet(ptrDescriptorLayout)
 	, m_pDevice(pDevice)
 	, m_pDescriptorPool(pDescriptorPool)
-	, m_ptrDescriptorLayout(ptrDescriptorLayout)
+
 	, m_vkDescriptorSet(VK_NULL_HANDLE)
+	, m_ptrDescriptorLayout(ptrDescriptorLayout)
 
 	, m_bDirty(false)
 {

@@ -12,10 +12,10 @@ const uint32_t numInputAttachments = 32;
 
 CVKDescriptorPool::CVKDescriptorPool(CVKDevice* pDevice)
 	: m_pDevice(pDevice)
-	, m_vkDescriptorPool(VK_NULL_HANDLE)
 
 	, m_numSets(0)
 	, m_numDescriptors{ 0 }
+	, m_vkDescriptorPool(VK_NULL_HANDLE)
 
 	, pNext(nullptr)
 	, pPrev(nullptr)
