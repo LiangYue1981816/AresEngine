@@ -67,6 +67,11 @@ bool CVKCommandBuffer::IsInRenderPass(void) const
 	return m_ptrRenderPass && m_indexSubpass >= 0 && m_indexSubpass < (int)m_ptrRenderPass->GetSubpassCount();
 }
 
+int CVKCommandBuffer::GetSubpassIndex(void) const
+{
+	return m_indexSubpass;
+}
+
 const CGfxRenderPassPtr CVKCommandBuffer::GetRenderPass(void) const
 {
 	return m_ptrRenderPass;

@@ -40,6 +40,8 @@ public:
 
 public:
 	virtual bool IsInRenderPass(void) const = 0;
+	virtual int GetSubpassIndex(void) const = 0;
+
 	virtual const CGfxRenderPassPtr GetRenderPass(void) const = 0;
 	virtual const CGfxFrameBufferPtr GetFrameBuffer(void) const = 0;
 

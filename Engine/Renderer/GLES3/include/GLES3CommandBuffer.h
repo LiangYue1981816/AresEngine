@@ -15,6 +15,8 @@ private:
 
 public:
 	bool IsInRenderPass(void) const;
+	int GetSubpassIndex(void) const;
+
 	const CGfxRenderPassPtr GetRenderPass(void) const;
 	const CGfxFrameBufferPtr GetFrameBuffer(void) const;
 

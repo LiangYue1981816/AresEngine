@@ -63,6 +63,11 @@ bool CGLES3CommandBuffer::IsInRenderPass(void) const
 	return m_ptrRenderPass && m_indexSubpass >= 0 && m_indexSubpass < (int)m_ptrRenderPass->GetSubpassCount();
 }
 
+int CGLES3CommandBuffer::GetSubpassIndex(void) const
+{
+	return m_indexSubpass;
+}
+
 const CGfxRenderPassPtr CGLES3CommandBuffer::GetRenderPass(void) const
 {
 	return m_ptrRenderPass;
