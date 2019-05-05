@@ -155,7 +155,7 @@ void CVKDescriptorSet::Update(void)
 		for (const auto& itImage : m_imageDescriptorInfos) {
 			if (itImage.second.ptrTexture2D) {
 				VkDescriptorImageInfo imageInfo = {};
-				imageInfo.sampler;
+				imageInfo.sampler = ((CVKSampler*)itImage.second.pSampler)->GetSampler();
 				imageInfo.imageView = ((CVKTexture2D*)itImage.second.ptrTexture2D.GetPointer())->GetImageView();
 				imageInfo.imageLayout = ((CVKTexture2D*)itImage.second.ptrTexture2D.GetPointer())->GetImageLayout();
 				imageInfos.emplace_back(imageInfo);
@@ -163,7 +163,7 @@ void CVKDescriptorSet::Update(void)
 
 			if (itImage.second.ptrTexture2DArray) {
 				VkDescriptorImageInfo imageInfo = {};
-				imageInfo.sampler;
+				imageInfo.sampler = ((CVKSampler*)itImage.second.pSampler)->GetSampler();
 				imageInfo.imageView = ((CVKTexture2DArray*)itImage.second.ptrTexture2DArray.GetPointer())->GetImageView();
 				imageInfo.imageLayout = ((CVKTexture2DArray*)itImage.second.ptrTexture2DArray.GetPointer())->GetImageLayout();
 				imageInfos.emplace_back(imageInfo);
@@ -171,7 +171,7 @@ void CVKDescriptorSet::Update(void)
 
 			if (itImage.second.ptrTextureCubemap) {
 				VkDescriptorImageInfo imageInfo = {};
-				imageInfo.sampler;
+				imageInfo.sampler = ((CVKSampler*)itImage.second.pSampler)->GetSampler();
 				imageInfo.imageView = ((CVKTextureCubemap*)itImage.second.ptrTextureCubemap.GetPointer())->GetImageView();
 				imageInfo.imageLayout = ((CVKTextureCubemap*)itImage.second.ptrTextureCubemap.GetPointer())->GetImageLayout();
 				imageInfos.emplace_back(imageInfo);
@@ -193,7 +193,7 @@ void CVKDescriptorSet::Update(void)
 
 		for (const auto& itImage : m_inputAttachmentDescriptorInfos) {
 			VkDescriptorImageInfo imageInfo = {};
-			imageInfo.sampler;
+			imageInfo.sampler = ((CVKSampler*)itImage.second.pSampler)->GetSampler();
 			imageInfo.imageView;
 			imageInfo.imageLayout;
 			imageInfos.emplace_back(imageInfo);
@@ -214,9 +214,9 @@ void CVKDescriptorSet::Update(void)
 
 		for (const auto& itBuffer : m_bufferDescriptorInfos) {
 			VkDescriptorBufferInfo bufferInfo = {};
-			bufferInfo.buffer;
-			bufferInfo.offset;
-			bufferInfo.range;
+			bufferInfo.buffer = ((CVKUniformBuffer*)itBuffer.second.ptrUniformBuffer.GetPointer())->GetBuffer();
+			bufferInfo.offset = itBuffer.second.offset;
+			bufferInfo.range = itBuffer.second.range;
 			bufferInfos.emplace_back(bufferInfo);
 
 			VkWriteDescriptorSet write = {};
