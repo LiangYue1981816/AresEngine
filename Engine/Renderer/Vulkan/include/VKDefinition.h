@@ -89,7 +89,9 @@ class CVKIndexBuffer;
 class CVKVertexBuffer;
 class CVKInstanceBuffer;
 class CVKIndirectBuffer;
+
 class CVKUniformBuffer;
+class CVKUniformBufferManager;
 
 class CVKTexture;
 class CVKTexture2D;
@@ -129,8 +131,6 @@ class CVKTexture2DArrayManager;
 class CVKTextureCubemapManager;
 class CVKRenderTexture;
 class CVKRenderTextureManager;
-
-class CVKUniformBufferManager;
 
 class CVKMesh;
 class CVKMeshManager;

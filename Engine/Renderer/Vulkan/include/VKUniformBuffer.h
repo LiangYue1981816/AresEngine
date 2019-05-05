@@ -4,9 +4,13 @@
 
 class CVKUniformBuffer : public CGfxUniformBuffer
 {
+	friend class CVKUniformBufferManager;
+
+
 private:
-	CVKUniformBuffer(CVKDevice* pDevice, size_t size);
+	CVKUniformBuffer(CVKDevice* pDevice, CVKUniformBufferManager* pManaer, size_t size);
 	virtual ~CVKUniformBuffer(void);
+	virtual void Release(void);
 
 
 public:
@@ -29,4 +33,7 @@ private:
 
 private:
 	CVKDevice* m_pDevice;
+
+private:
+	CVKUniformBufferManager* m_pManaer;
 };
