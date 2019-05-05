@@ -31,7 +31,7 @@ public:
 
 public:
 	void Update(void);
-	void Bind(VkCommandBuffer vkCommandBuffer, VkPipelineBindPoint vkPipelineBindPoint, VkPipelineLayout vkPipelineLayout) const;
+	void Bind(VkCommandBuffer vkCommandBuffer, VkPipelineLayout vkPipelineLayout) const;
 
 
 private:

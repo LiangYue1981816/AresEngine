@@ -236,7 +236,7 @@ void CVKDescriptorSet::Update(void)
 	}
 }
 
-void CVKDescriptorSet::Bind(VkCommandBuffer vkCommandBuffer, VkPipelineBindPoint vkPipelineBindPoint, VkPipelineLayout vkPipelineLayout) const
+void CVKDescriptorSet::Bind(VkCommandBuffer vkCommandBuffer, VkPipelineLayout vkPipelineLayout) const
 {
 	eastl::vector<uint32_t> offsets;
 
@@ -244,7 +244,7 @@ void CVKDescriptorSet::Bind(VkCommandBuffer vkCommandBuffer, VkPipelineBindPoint
 		offsets.emplace_back(((CVKUniformBuffer*)itBuffer.second.ptrUniformBuffer.GetPointer())->GetOffset());
 	}
 
-	vkCmdBindDescriptorSets(vkCommandBuffer, vkPipelineBindPoint, vkPipelineLayout, m_ptrDescriptorLayout->GetSetIndex(), 1, &m_vkDescriptorSet, offsets.size(), offsets.data());
+	vkCmdBindDescriptorSets(vkCommandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS | VK_PIPELINE_BIND_POINT_COMPUTE, vkPipelineLayout, m_ptrDescriptorLayout->GetSetIndex(), 1, &m_vkDescriptorSet, offsets.size(), offsets.data());
 }
 
 /*
