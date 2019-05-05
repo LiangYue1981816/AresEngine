@@ -11,12 +11,12 @@ CVKSampler::CVKSampler(CVKDevice* pDevice, GfxFilter minFilter, GfxFilter magFil
 	createInfo.sType = VK_STRUCTURE_TYPE_SAMPLER_CREATE_INFO;
 	createInfo.pNext = nullptr;
 	createInfo.flags = 0;
-	createInfo.magFilter = (VkFilter)magFilter;
-	createInfo.minFilter = (VkFilter)minFilter;
-	createInfo.mipmapMode = (VkSamplerMipmapMode)mipmapMode;
-	createInfo.addressModeU = (VkSamplerAddressMode)addressMode;
-	createInfo.addressModeV = (VkSamplerAddressMode)addressMode;
-	createInfo.addressModeW = (VkSamplerAddressMode)addressMode;
+	createInfo.magFilter = CVKHelper::TranslateFilter(magFilter);
+	createInfo.minFilter = CVKHelper::TranslateFilter(minFilter);
+	createInfo.mipmapMode = CVKHelper::TranslateSamplerMipmapMode(mipmapMode);
+	createInfo.addressModeU = CVKHelper::TranslateSamplerAddressMode(addressMode);
+	createInfo.addressModeV = CVKHelper::TranslateSamplerAddressMode(addressMode);
+	createInfo.addressModeW = CVKHelper::TranslateSamplerAddressMode(addressMode);
 	createInfo.mipLodBias = 0.0f;
 	createInfo.anisotropyEnable = VK_FALSE;
 	createInfo.maxAnisotropy = 1.0f;
@@ -34,7 +34,7 @@ CVKSampler::~CVKSampler(void)
 	vkDestroySampler(m_pDevice->GetDevice(), m_vkSampler, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
 }
 
-HANDLE CVKSampler::GetSampler(void) const
+VkSampler CVKSampler::GetSampler(void) const
 {
-	return (HANDLE)m_vkSampler;
+	return m_vkSampler;
 }

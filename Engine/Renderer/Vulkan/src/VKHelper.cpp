@@ -523,3 +523,54 @@ VkIndexType CVKHelper::TranslateIndexType(GfxIndexType type)
 		return VK_INDEX_TYPE_MAX_ENUM;
 	}
 }
+
+VkFilter CVKHelper::TranslateFilter(GfxFilter filter)
+{
+	switch ((int)filter) {
+	case GFX_FILTER_NEAREST:
+		return VK_FILTER_NEAREST;
+
+	case GFX_FILTER_LINEAR:
+		return VK_FILTER_LINEAR;
+
+	default:
+		return VK_FILTER_MAX_ENUM;
+	}
+}
+
+VkSamplerMipmapMode CVKHelper::TranslateSamplerMipmapMode(GfxSamplerMipmapMode mipmapMode)
+{
+	switch ((int)mipmapMode) {
+	case GFX_SAMPLER_MIPMAP_MODE_NEAREST:
+		return VK_SAMPLER_MIPMAP_MODE_NEAREST;
+
+	case GFX_SAMPLER_MIPMAP_MODE_LINEAR:
+		return VK_SAMPLER_MIPMAP_MODE_LINEAR;
+
+	default:
+		return VK_SAMPLER_MIPMAP_MODE_MAX_ENUM;
+	}
+}
+
+VkSamplerAddressMode CVKHelper::TranslateSamplerAddressMode(GfxSamplerAddressMode addressMode)
+{
+	switch ((int)addressMode) {
+	case GFX_SAMPLER_ADDRESS_MODE_REPEAT:
+		return VK_SAMPLER_ADDRESS_MODE_REPEAT;
+
+	case GFX_SAMPLER_ADDRESS_MODE_MIRRORED_REPEAT:
+		return VK_SAMPLER_ADDRESS_MODE_MIRRORED_REPEAT;
+
+	case GFX_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE:
+		return VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE;
+
+	case GFX_SAMPLER_ADDRESS_MODE_CLAMP_TO_BORDER:
+		return VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_BORDER;
+
+	case GFX_SAMPLER_ADDRESS_MODE_MIRROR_CLAMP_TO_EDGE:
+		return VK_SAMPLER_ADDRESS_MODE_MIRROR_CLAMP_TO_EDGE;
+
+	default:
+		return VK_SAMPLER_ADDRESS_MODE_MAX_ENUM;
+	}
+}

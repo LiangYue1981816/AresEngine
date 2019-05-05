@@ -13,7 +13,7 @@ private:
 
 
 public:
-	HANDLE GetSampler(void) const;
+	VkSampler GetSampler(void) const;
 
 
 private:

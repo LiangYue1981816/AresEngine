@@ -29,6 +29,9 @@ public:
 	static VkBlendFactor TranslateBlendFactor(GfxBlendFactor blendFactor);
 	static VkImageViewType TranslateImageViewType(GfxTextureType type);
 	static VkIndexType TranslateIndexType(GfxIndexType type);
+	static VkFilter TranslateFilter(GfxFilter filter);
+	static VkSamplerMipmapMode TranslateSamplerMipmapMode(GfxSamplerMipmapMode mipmapMode);
+	static VkSamplerAddressMode TranslateSamplerAddressMode(GfxSamplerAddressMode addressMode);
 
 
 private:
