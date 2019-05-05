@@ -3,11 +3,10 @@
 
 CVKBuffer::CVKBuffer(CVKDevice* pDevice, VkDeviceSize size, VkBufferUsageFlags bufferUsageFlags, VkMemoryPropertyFlags memoryPropertyFlags)
 	: m_pDevice(pDevice)
+	, m_pMemory(nullptr)
 
 	, m_vkBuffer(VK_NULL_HANDLE)
 	, m_vkBufferUsageFlags(bufferUsageFlags)
-
-	, m_pMemory(nullptr)
 {
 	VkBufferCreateInfo createInfo = {};
 	createInfo.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;

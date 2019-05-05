@@ -27,7 +27,6 @@ private:
 
 private:
 	VkBuffer m_vkBuffer;
-	CVKMemory* m_pMemory;
 
 private:
 	VkQueue m_vkQueue;
@@ -35,6 +34,9 @@ private:
 
 	VkCommandPool m_vkCommandPool;
 	VkCommandBuffer m_vkCommandBuffer;
+
+private:
+	CVKMemory* m_pMemory;
 
 private:
 	CVKDevice* m_pDevice;

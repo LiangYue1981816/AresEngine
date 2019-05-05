@@ -54,8 +54,6 @@ private:
 	VkImageLayout m_vkImageLayout;
 	VkImageAspectFlags m_vkImageAspectFlags;
 
-	CVKMemory* m_pMemory;
-
 private:
 	GfxTextureType m_type;
 	GfxPixelFormat m_format;
@@ -65,6 +63,9 @@ private:
 	int m_layers;
 	int m_levels;
 	int m_samples;
+
+private:
+	CVKMemory* m_pMemory;
 
 private:
 	CVKDevice* m_pDevice;

@@ -3,9 +3,9 @@
 
 CVKTransferBuffer::CVKTransferBuffer(CVKDevice* pDevice, VkQueue vkQueue, VkCommandPool vkCommandPool, VkDeviceSize size)
 	: m_pDevice(pDevice)
+	, m_pMemory(nullptr)
 
 	, m_vkBuffer(VK_NULL_HANDLE)
-	, m_pMemory(nullptr)
 
 	, m_vkQueue(vkQueue)
 	, m_vkFence(VK_NULL_HANDLE)

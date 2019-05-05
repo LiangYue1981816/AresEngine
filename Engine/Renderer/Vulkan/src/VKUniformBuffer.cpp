@@ -1,7 +1,7 @@
 #include "VKRenderer.h"
 
 
-CVKUniformBuffer::CVKUniformBuffer(CVKDevice* pDevice, CVKUniformBufferManager* pManaer, size_t size)
+CVKUniformBuffer::CVKUniformBuffer(CVKDevice* pDevice, CVKUniformBufferManager* pManager, size_t size)
 	: CGfxUniformBuffer(size)
 	, m_pDevice(pDevice)
 	, m_pManager(pManager)
@@ -20,7 +20,7 @@ CVKUniformBuffer::~CVKUniformBuffer(void)
 
 void CVKUniformBuffer::Release(void)
 {
-	m_pManaer->Destroy(this);
+	m_pManager->Destroy(this);
 }
 
 VkBuffer CVKUniformBuffer::GetBuffer(void) const
