@@ -1,6 +1,7 @@
 #include "VKRenderer.h"
 
 
+/*
 CVKDescriptorSet::CVKDescriptorSet(CVKDevice* pDevice, CVKDescriptorPool* pDescriptorPool, CVKDescriptorLayout* pDescriptorLayout)
 	: m_pDevice(pDevice)
 	, m_pDescriptorPool(pDescriptorPool)
@@ -21,11 +22,9 @@ CVKDescriptorSet::CVKDescriptorSet(CVKDevice* pDevice, CVKDescriptorPool* pDescr
 
 CVKDescriptorSet::~CVKDescriptorSet(void)
 {
-	/*
 	if (m_vkDescriptorSet) {
 		vkFreeDescriptorSets(m_pDevice->GetDevice(), m_pDescriptorPool->GetDescriptorPool(), 1, &m_vkDescriptorSet);
 	}
-	*/
 }
 
 uint32_t CVKDescriptorSet::GetSetIndex(void) const
@@ -246,3 +245,4 @@ void CVKDescriptorSet::Bind(VkCommandBuffer vkCommandBuffer, VkPipelineBindPoint
 
 	vkCmdBindDescriptorSets(vkCommandBuffer, vkPipelineBindPoint, vkPipelineLayout, m_pDescriptorLayout->GetSetIndex(), 1, &m_vkDescriptorSet, offsets.size(), offsets.data());
 }
+*/

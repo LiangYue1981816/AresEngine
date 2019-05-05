@@ -37,6 +37,10 @@
 #include "VKDescriptorLayout.h"
 #include "VKDescriptorLayoutManager.h"
 
+#include "VKDescriptorPool.h"
+#include "VKDescriptorSet.h"
+#include "VKDescriptorSetManager.h"
+
 #include "VKCommandBuffer.h"
 #include "VKCommandBufferManager.h"
 /*
@@ -68,10 +72,6 @@
 #include "VKMaterial.h"
 #include "VKMaterialPass.h"
 #include "VKMaterialManager.h"
-
-#include "VKDescriptorPool.h"
-#include "VKDescriptorSet.h"
-#include "VKDescriptorSetManager.h"
 */
 
 #define VKRenderer() ((CVKRenderer *)CGfxRenderer::GetInstance())

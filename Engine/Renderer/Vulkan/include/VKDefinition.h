@@ -104,6 +104,10 @@ class CVKTextureCubemapManager;
 class CVKDescriptorLayout;
 class CVKDescriptorLayoutManager;
 
+class CVKDescriptorPool;
+class CVKDescriptorSet;
+class CVKDescriptorSetManager;
+
 class CVKCommandBuffer;
 class CVKCommandBufferManager;
 /*
@@ -140,11 +144,6 @@ class CVKMeshDrawManager;
 class CVKMaterial;
 class CVKMaterialPass;
 class CVKMaterialManager;
-
-
-class CVKDescriptorPool;
-class CVKDescriptorSet;
-class CVKDescriptorSetManager;
 
 class CVKCommandPool;
 
