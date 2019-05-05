@@ -189,7 +189,7 @@ void CVKDescriptorSet::Update(void)
 			write.pTexelBufferView = nullptr;
 			writes.emplace_back(write);
 		}
-		
+
 		for (const auto& itImage : m_inputAttachmentDescriptorInfos) {
 			VkDescriptorImageInfo imageInfo = {};
 			imageInfo.sampler;
@@ -236,7 +236,7 @@ void CVKDescriptorSet::Update(void)
 	}
 }
 
-void CVKDescriptorSet::Bind(VkCommandBuffer vkCommandBuffer, VkPipelineLayout vkPipelineLayout) const
+void CVKDescriptorSet::Bind(VkCommandBuffer vkCommandBuffer, VkPipelineBindPoint vkPipelineBindPoint, VkPipelineLayout vkPipelineLayout) const
 {
 	eastl::vector<uint32_t> offsets;
 
@@ -244,58 +244,5 @@ void CVKDescriptorSet::Bind(VkCommandBuffer vkCommandBuffer, VkPipelineLayout vk
 		offsets.emplace_back(((CVKUniformBuffer*)itBuffer.second.ptrUniformBuffer.GetPointer())->GetOffset());
 	}
 
-	vkCmdBindDescriptorSets(vkCommandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS | VK_PIPELINE_BIND_POINT_COMPUTE, vkPipelineLayout, m_ptrDescriptorLayout->GetSetIndex(), 1, &m_vkDescriptorSet, offsets.size(), offsets.data());
+	vkCmdBindDescriptorSets(vkCommandBuffer, vkPipelineBindPoint, vkPipelineLayout, m_ptrDescriptorLayout->GetSetIndex(), 1, &m_vkDescriptorSet, offsets.size(), offsets.data());
 }
-
-/*
-void CVKDescriptorSet::Update(void)
-{
-	if (m_bDirty) {
-		m_bDirty = false;
-
-		eastl::vector<VkWriteDescriptorSet> writes;
-
-		for (const auto& itImage : m_imageDescriptors) {
-			VkWriteDescriptorSet write = {};
-			write.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
-			write.pNext = nullptr;
-			write.dstSet = m_vkDescriptorSet;
-			write.dstBinding = m_pDescriptorLayout->GetTextureBinding(itImage.first).binding;
-			write.dstArrayElement = 0;
-			write.descriptorCount = 1;
-			write.descriptorType = itImage.second.ptrRenderTexture.IsValid() ? VK_DESCRIPTOR_TYPE_INPUT_ATTACHMENT : VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
-			write.pImageInfo = &itImage.second.imageInfo;
-			write.pBufferInfo = nullptr;
-			write.pTexelBufferView = nullptr;
-			writes.emplace_back(write);
-		}
-
-		for (const auto& itBuffer : m_bufferDescriptors) {
-			VkWriteDescriptorSet write = {};
-			write.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
-			write.pNext = nullptr;
-			write.dstSet = m_vkDescriptorSet;
-			write.dstBinding = m_pDescriptorLayout->GetUniformBlockBinding(itBuffer.first).binding;
-			write.dstArrayElement = 0;
-			write.descriptorCount = 1;
-			write.descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER_DYNAMIC;
-			write.pImageInfo = nullptr;
-			write.pBufferInfo = &itBuffer.second.bufferInfo;
-			write.pTexelBufferView = nullptr;
-			writes.emplace_back(write);
-		}
-
-		vkUpdateDescriptorSets(m_pDevice->GetDevice(), writes.size(), writes.data(), 0, nullptr);
-	}
-}
-
-void CVKDescriptorSet::Bind(VkCommandBuffer vkCommandBuffer, VkPipelineBindPoint vkPipelineBindPoint, VkPipelineLayout vkPipelineLayout) const
-{
-	eastl::vector<uint32_t> offsets;
-	for (const auto& itBuffer : m_bufferDescriptors) {
-		offsets.emplace_back(((CVKUniformBuffer*)itBuffer.second.ptrUniformBuffer.GetPointer())->GetBaseOffset());
-	}
-
-	vkCmdBindDescriptorSets(vkCommandBuffer, vkPipelineBindPoint, vkPipelineLayout, m_pDescriptorLayout->GetSetIndex(), 1, &m_vkDescriptorSet, offsets.size(), offsets.data());
-}
-*/
