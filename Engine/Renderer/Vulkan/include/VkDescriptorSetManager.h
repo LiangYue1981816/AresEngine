@@ -18,7 +18,7 @@ public:
 
 
 private:
-	pthread_mutex_t m_lock;
+	pthread_mutex_t lock;
 	CVKDescriptorPool* m_pPoolListHead;
 
 private:

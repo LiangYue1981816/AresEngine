@@ -5,6 +5,7 @@
 class CVKDescriptorSet : public CGfxDescriptorSet
 {
 	friend class CVKDescriptorPool;
+	friend class CVKDescriptorSetManager;
 
 
 private:
