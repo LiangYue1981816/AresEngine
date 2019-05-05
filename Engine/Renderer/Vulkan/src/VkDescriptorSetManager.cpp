@@ -44,7 +44,7 @@ CVKDescriptorSet* CVKDescriptorSetManager::AllocDescriptorSet(const CGfxDescript
 	return nullptr;
 }
 
-void CVKDescriptorSetManager::FreeDescriptorSet(CVKDescriptorSet * pDescriptorSet)
+void CVKDescriptorSetManager::FreeDescriptorSet(CVKDescriptorSet* pDescriptorSet)
 {
 	if (pDescriptorSet == nullptr) {
 		return;
