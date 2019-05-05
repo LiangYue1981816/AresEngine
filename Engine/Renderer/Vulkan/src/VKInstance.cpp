@@ -49,7 +49,7 @@ VkResult CVKInstance::GetLastError(void)
 
 CVKInstance::CVKInstance(void* hInstance, void* hWnd)
 	: m_pAllocator(nullptr)
-	
+
 	, m_vkInstance(VK_NULL_HANDLE)
 	, m_vkSurface(VK_NULL_HANDLE)
 

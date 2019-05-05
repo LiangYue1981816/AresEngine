@@ -21,7 +21,7 @@ public:
 public:
 	void Bind(VkCommandBuffer vkCommandBuffer) const;
 
-	
+
 private:
 	uint32_t m_binding;
 	uint32_t m_format;
