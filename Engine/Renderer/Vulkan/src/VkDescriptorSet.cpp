@@ -40,6 +40,9 @@ bool CVKDescriptorSet::SetTexture2D(uint32_t name, const CGfxTexture2DPtr ptrTex
 	if (m_ptrDescriptorLayout->IsSampledImageValid(name)) {
 		m_imageDescriptorInfos[name].pSampler = (CGfxSampler*)pSampler;
 		m_imageDescriptorInfos[name].ptrTexture2D = ptrTexture;
+		m_imageDescriptorInfos[name].ptrTexture2DArray.Release();
+		m_imageDescriptorInfos[name].ptrTextureCubemap.Release();
+		m_imageDescriptorInfos[name].ptrTextureInputAttachment.Release();
 		m_bDirty = true;
 		return true;
 	}
@@ -52,7 +55,10 @@ bool CVKDescriptorSet::SetTexture2DArray(uint32_t name, const CGfxTexture2DArray
 {
 	if (m_ptrDescriptorLayout->IsSampledImageValid(name)) {
 		m_imageDescriptorInfos[name].pSampler = (CGfxSampler*)pSampler;
+		m_imageDescriptorInfos[name].ptrTexture2D.Release();
 		m_imageDescriptorInfos[name].ptrTexture2DArray = ptrTexture;
+		m_imageDescriptorInfos[name].ptrTextureCubemap.Release();
+		m_imageDescriptorInfos[name].ptrTextureInputAttachment.Release();
 		m_bDirty = true;
 		return true;
 	}
@@ -65,7 +71,10 @@ bool CVKDescriptorSet::SetTextureCubemap(uint32_t name, const CGfxTextureCubemap
 {
 	if (m_ptrDescriptorLayout->IsSampledImageValid(name)) {
 		m_imageDescriptorInfos[name].pSampler = (CGfxSampler*)pSampler;
+		m_imageDescriptorInfos[name].ptrTexture2D.Release();
+		m_imageDescriptorInfos[name].ptrTexture2DArray.Release();
 		m_imageDescriptorInfos[name].ptrTextureCubemap = ptrTexture;
+		m_imageDescriptorInfos[name].ptrTextureInputAttachment.Release();
 		m_bDirty = true;
 		return true;
 	}
@@ -77,8 +86,11 @@ bool CVKDescriptorSet::SetTextureCubemap(uint32_t name, const CGfxTextureCubemap
 bool CVKDescriptorSet::SetTextureInputAttachment(uint32_t name, const CGfxRenderTexturePtr ptrTexture, const CGfxSampler* pSampler)
 {
 	if (m_ptrDescriptorLayout->IsSampledImageValid(name)) {
-		m_inputAttachmentDescriptorInfos[name].pSampler = (CGfxSampler*)pSampler;
-		m_inputAttachmentDescriptorInfos[name].ptrTextureInputAttachment = ptrTexture;
+		m_imageDescriptorInfos[name].pSampler = (CGfxSampler*)pSampler;
+		m_imageDescriptorInfos[name].ptrTexture2D.Release();
+		m_imageDescriptorInfos[name].ptrTexture2DArray.Release();
+		m_imageDescriptorInfos[name].ptrTextureCubemap.Release();
+		m_imageDescriptorInfos[name].ptrTextureInputAttachment = ptrTexture;
 		m_bDirty = true;
 		return true;
 	}
@@ -136,251 +148,106 @@ void CVKDescriptorSet::Update(void)
 		m_bDirty = false;
 
 		eastl::vector<VkWriteDescriptorSet> writes;
+		eastl::vector<VkDescriptorImageInfo> imageInfos;
+		eastl::vector<VkDescriptorBufferInfo> bufferInfos;
+
 		for (const auto& itImage : m_imageDescriptorInfos) {
+			if (itImage.second.ptrTexture2D) {
+				VkDescriptorImageInfo imageInfo = {};
+				imageInfo.sampler;
+				imageInfo.imageView = ((CVKTexture2D*)itImage.second.ptrTexture2D.GetPointer())->GetImageView();
+				imageInfo.imageLayout = ((CVKTexture2D*)itImage.second.ptrTexture2D.GetPointer())->GetImageLayout();
+				imageInfos.emplace_back(imageInfo);
+			}
+
+			if (itImage.second.ptrTexture2DArray) {
+				VkDescriptorImageInfo imageInfo = {};
+				imageInfo.sampler;
+				imageInfo.imageView = ((CVKTexture2DArray*)itImage.second.ptrTexture2DArray.GetPointer())->GetImageView();
+				imageInfo.imageLayout = ((CVKTexture2DArray*)itImage.second.ptrTexture2DArray.GetPointer())->GetImageLayout()
+				imageInfos.emplace_back(imageInfo);
+			}
+
+			if (itImage.second.ptrTextureCubemap) {
+				VkDescriptorImageInfo imageInfo = {};
+				imageInfo.sampler;
+				imageInfo.imageView = ((CVKTextureCubemap*)itImage.second.ptrTextureCubemap.GetPointer())->GetImageView();
+				imageInfo.imageLayout = ((CVKTextureCubemap*)itImage.second.ptrTextureCubemap.GetPointer())->GetImageLayout();
+				imageInfos.emplace_back(imageInfo);
+			}
+
 			VkWriteDescriptorSet write = {};
 			write.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
 			write.pNext = nullptr;
 			write.dstSet = m_vkDescriptorSet;
-			write.dstBinding;
-			write.dstArrayElement;
-			write.descriptorCount;
-			write.descriptorType;
-			write.pImageInfo;
-			write.pBufferInfo;
-			write.pTexelBufferView;
+			write.dstBinding = m_ptrDescriptorLayout->GetSampledImageBinding(itImage.first);
+			write.dstArrayElement = 0;
+			write.descriptorCount = 1;
+			write.descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
+			write.pImageInfo = &imageInfos[imageInfos.size() - 1];
+			write.pBufferInfo = nullptr;
+			write.pTexelBufferView = nullptr;
 			writes.emplace_back(write);
 		}
+		
 		for (const auto& itImage : m_inputAttachmentDescriptorInfos) {
+			VkDescriptorImageInfo imageInfo = {};
+			imageInfo.sampler;
+			imageInfo.imageView;
+			imageInfo.imageLayout;
+			imageInfos.emplace_back(imageInfo);
+
 			VkWriteDescriptorSet write = {};
 			write.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
 			write.pNext = nullptr;
 			write.dstSet = m_vkDescriptorSet;
-			write.dstBinding;
-			write.dstArrayElement;
-			write.descriptorCount;
-			write.descriptorType;
-			write.pImageInfo;
-			write.pBufferInfo;
-			write.pTexelBufferView;
+			write.dstBinding = m_ptrDescriptorLayout->GetInputAttachmentBinding(itImage.first);
+			write.dstArrayElement = 0;
+			write.descriptorCount = 1;
+			write.descriptorType = VK_DESCRIPTOR_TYPE_INPUT_ATTACHMENT;
+			write.pImageInfo = &imageInfos[imageInfos.size() - 1];
+			write.pBufferInfo = nullptr;
+			write.pTexelBufferView = nullptr;
 			writes.emplace_back(write);
 		}
+
 		for (const auto& itBuffer : m_bufferDescriptorInfos) {
+			VkDescriptorBufferInfo bufferInfo = {};
+			bufferInfo.buffer;
+			bufferInfo.offset;
+			bufferInfo.range;
+			bufferInfos.emplace_back(bufferInfo);
+
 			VkWriteDescriptorSet write = {};
 			write.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
 			write.pNext = nullptr;
 			write.dstSet = m_vkDescriptorSet;
-			write.dstBinding;
-			write.dstArrayElement;
-			write.descriptorCount;
-			write.descriptorType;
-			write.pImageInfo;
-			write.pBufferInfo;
-			write.pTexelBufferView;
+			write.dstBinding = m_ptrDescriptorLayout->GetUniformBlockBinding(itBuffer.first);
+			write.dstArrayElement = 0;
+			write.descriptorCount = 1;
+			write.descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
+			write.pImageInfo = nullptr;
+			write.pBufferInfo = &bufferInfos[bufferInfos.size() - 1];
+			write.pTexelBufferView = nullptr;
 			writes.emplace_back(write);
 		}
+
 		vkUpdateDescriptorSets(m_pDevice->GetDevice(), writes.size(), writes.data(), 0, nullptr);
 	}
 }
 
 void CVKDescriptorSet::Bind(VkCommandBuffer vkCommandBuffer, VkPipelineBindPoint vkPipelineBindPoint, VkPipelineLayout vkPipelineLayout) const
 {
+	eastl::vector<uint32_t> offsets;
 
+	for (const auto& itBuffer : m_bufferDescriptorInfos) {
+		offsets.emplace_back(((CVKUniformBuffer*)itBuffer.second.ptrUniformBuffer.GetPointer())->GetOffset());
+	}
+
+	vkCmdBindDescriptorSets(vkCommandBuffer, vkPipelineBindPoint, vkPipelineLayout, m_ptrDescriptorLayout->GetSetIndex(), 1, &m_vkDescriptorSet, offsets.size(), offsets.data());
 }
 
 /*
-CVKDescriptorSet::CVKDescriptorSet(CVKDevice* pDevice, CVKDescriptorPool* pDescriptorPool, CVKDescriptorLayout* pDescriptorLayout)
-	: m_pDevice(pDevice)
-	, m_pDescriptorPool(pDescriptorPool)
-	, m_pDescriptorLayout(pDescriptorLayout)
-	, m_vkDescriptorSet(VK_NULL_HANDLE)
-
-	, m_bDirty(false)
-{
-	VkDescriptorSetLayout vkDescriptorLayout = m_pDescriptorLayout->GetDescriptorSetLayout();
-	VkDescriptorSetAllocateInfo allocateInfo = {};
-	allocateInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO;
-	allocateInfo.pNext = nullptr;
-	allocateInfo.descriptorPool = m_pDescriptorPool->GetDescriptorPool();
-	allocateInfo.descriptorSetCount = 1;
-	allocateInfo.pSetLayouts = &vkDescriptorLayout;
-	vkAllocateDescriptorSets(m_pDevice->GetDevice(), &allocateInfo, &m_vkDescriptorSet);
-}
-
-CVKDescriptorSet::~CVKDescriptorSet(void)
-{
-	if (m_vkDescriptorSet) {
-		vkFreeDescriptorSets(m_pDevice->GetDevice(), m_pDescriptorPool->GetDescriptorPool(), 1, &m_vkDescriptorSet);
-	}
-}
-
-uint32_t CVKDescriptorSet::GetSetIndex(void) const
-{
-	return m_pDescriptorLayout->GetSetIndex();
-}
-
-VkDescriptorSet CVKDescriptorSet::GetDescriptorSet(void) const
-{
-	return m_vkDescriptorSet;
-}
-
-CVKDescriptorPool* CVKDescriptorSet::GetDescriptorPool(void) const
-{
-	return m_pDescriptorPool;
-}
-
-CVKDescriptorLayout* CVKDescriptorSet::GetDescriptorLayout(void) const
-{
-	return m_pDescriptorLayout;
-}
-
-bool CVKDescriptorSet::SetTexture2D(uint32_t name, const CGfxTexture2DPtr ptrTexture, const CGfxSampler* pSampler)
-{
-	if (m_pDescriptorLayout->IsTextureValid(name) && m_imageDescriptors.find(name) == m_imageDescriptors.end()) {
-		if (m_imageDescriptors[name].ptrTexture2D != ptrTexture || m_imageDescriptors[name].pSampler != pSampler) {
-			m_imageDescriptors[name].ptrTexture2D = ptrTexture;
-			m_imageDescriptors[name].pSampler = (CVKSampler*)pSampler;
-			m_imageDescriptors[name].imageInfo.sampler = (VkSampler)pSampler->GetSampler();
-			m_imageDescriptors[name].imageInfo.imageView = (VkImageView)ptrTexture->GetTexture();
-			m_imageDescriptors[name].imageInfo.imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
-			m_bDirty = true;
-		}
-		return true;
-	}
-	else {
-		return false;
-	}
-}
-
-bool CVKDescriptorSet::SetTexture2DArray(uint32_t name, const CGfxTexture2DArrayPtr ptrTexture, const CGfxSampler* pSampler)
-{
-	if (m_pDescriptorLayout->IsTextureValid(name) && m_imageDescriptors.find(name) == m_imageDescriptors.end()) {
-		if (m_imageDescriptors[name].ptrTexture2DArray != ptrTexture || m_imageDescriptors[name].pSampler != pSampler) {
-			m_imageDescriptors[name].ptrTexture2DArray = ptrTexture;
-			m_imageDescriptors[name].pSampler = (CVKSampler*)pSampler;
-			m_imageDescriptors[name].imageInfo.sampler = (VkSampler)pSampler->GetSampler();
-			m_imageDescriptors[name].imageInfo.imageView = (VkImageView)ptrTexture->GetTexture();
-			m_imageDescriptors[name].imageInfo.imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
-			m_bDirty = true;
-		}
-		return true;
-	}
-	else {
-		return false;
-	}
-}
-
-bool CVKDescriptorSet::SetTextureCubeMap(uint32_t name, const CGfxTextureCubeMapPtr ptrTexture, const CGfxSampler* pSampler)
-{
-	if (m_pDescriptorLayout->IsTextureValid(name) && m_imageDescriptors.find(name) == m_imageDescriptors.end()) {
-		if (m_imageDescriptors[name].ptrTextureCubeMap != ptrTexture || m_imageDescriptors[name].pSampler != pSampler) {
-			m_imageDescriptors[name].ptrTextureCubeMap = ptrTexture;
-			m_imageDescriptors[name].pSampler = (CVKSampler*)pSampler;
-			m_imageDescriptors[name].imageInfo.sampler = (VkSampler)pSampler->GetSampler();
-			m_imageDescriptors[name].imageInfo.imageView = (VkImageView)ptrTexture->GetTexture();
-			m_imageDescriptors[name].imageInfo.imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
-			m_bDirty = true;
-		}
-		return true;
-	}
-	else {
-		return false;
-	}
-}
-
-bool CVKDescriptorSet::SetRenderTexture(uint32_t name, const CGfxRenderTexturePtr ptrRenderTexture, const CGfxSampler* pSampler)
-{
-	if (m_pDescriptorLayout->IsTextureValid(name) && m_imageDescriptors.find(name) == m_imageDescriptors.end()) {
-		if (m_imageDescriptors[name].ptrRenderTexture != ptrRenderTexture || m_imageDescriptors[name].pSampler != pSampler) {
-			m_imageDescriptors[name].ptrRenderTexture = ptrRenderTexture;
-			m_imageDescriptors[name].pSampler = (CVKSampler*)pSampler;
-			m_imageDescriptors[name].imageInfo.sampler = (VkSampler)pSampler->GetSampler();
-			m_imageDescriptors[name].imageInfo.imageView = (VkImageView)ptrRenderTexture->GetTexture();
-			m_imageDescriptors[name].imageInfo.imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
-			m_bDirty = true;
-		}
-		return true;
-	}
-	else {
-		return false;
-	}
-}
-
-bool CVKDescriptorSet::SetUniformBuffer(uint32_t name, const CGfxUniformBufferPtr ptrUniformBuffer)
-{
-	if (m_pDescriptorLayout->IsUniformBlockValid(name) && m_bufferDescriptors.find(name) == m_bufferDescriptors.end()) {
-		if (m_bufferDescriptors[name].ptrUniformBuffer != ptrUniformBuffer) {
-			m_bufferDescriptors[name].ptrUniformBuffer = ptrUniformBuffer;
-			m_bufferDescriptors[name].bufferInfo.range = ptrUniformBuffer->GetSize();
-			m_bufferDescriptors[name].bufferInfo.buffer = (VkBuffer)ptrUniformBuffer->GetBuffer();
-			m_bDirty = true;
-		}
-		return true;
-	}
-	else {
-		return false;
-	}
-}
-
-CGfxSampler* CVKDescriptorSet::GetSampler(uint32_t name) const
-{
-	const auto& itImageDescriptor = m_imageDescriptors.find(name);
-
-	if (itImageDescriptor != m_imageDescriptors.end()) {
-		return itImageDescriptor->second.pSampler;
-	}
-	else {
-		return nullptr;
-	}
-}
-
-CGfxTexture2DPtr CVKDescriptorSet::GetTexture2D(uint32_t name) const
-{
-	const auto& itImageDescriptor = m_imageDescriptors.find(name);
-
-	if (itImageDescriptor != m_imageDescriptors.end()) {
-		return itImageDescriptor->second.ptrTexture2D;
-	}
-	else {
-		return nullptr;
-	}
-}
-
-CGfxTexture2DArrayPtr CVKDescriptorSet::GetTexture2DArray(uint32_t name) const
-{
-	const auto& itImageDescriptor = m_imageDescriptors.find(name);
-
-	if (itImageDescriptor != m_imageDescriptors.end()) {
-		return itImageDescriptor->second.ptrTexture2DArray;
-	}
-	else {
-		return nullptr;
-	}
-}
-
-CGfxTextureCubeMapPtr CVKDescriptorSet::GetTextureCubeMap(uint32_t name) const
-{
-	const auto& itImageDescriptor = m_imageDescriptors.find(name);
-
-	if (itImageDescriptor != m_imageDescriptors.end()) {
-		return itImageDescriptor->second.ptrTextureCubeMap;
-	}
-	else {
-		return nullptr;
-	}
-}
-
-CGfxRenderTexturePtr CVKDescriptorSet::GetRenderTexture(uint32_t name) const
-{
-	const auto& itImageDescriptor = m_imageDescriptors.find(name);
-
-	if (itImageDescriptor != m_imageDescriptors.end()) {
-		return itImageDescriptor->second.ptrRenderTexture;
-	}
-	else {
-		return nullptr;
-	}
-}
-
 void CVKDescriptorSet::Update(void)
 {
 	if (m_bDirty) {
