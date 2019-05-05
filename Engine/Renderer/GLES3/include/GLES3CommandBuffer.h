@@ -71,7 +71,6 @@ public:
 
 
 private:
-	bool m_bInRenderPass;
 	int m_indexSubpass;
 
 	CGfxRenderPassPtr m_ptrRenderPass;

@@ -43,8 +43,7 @@ CGLES3CommandBuffer::CGLES3CommandBuffer(CGLES3CommandBufferManager* pManager, b
 	: CGfxCommandBuffer(bMainCommandBuffer)
 	, m_pManager(pManager)
 
-	, m_bInRenderPass(false)
-	, m_indexSubpass(0)
+	, m_indexSubpass(-1)
 {
 
 }
@@ -71,7 +70,7 @@ const CGfxRenderPassPtr CGLES3CommandBuffer::GetRenderPass(void) const
 
 bool CGLES3CommandBuffer::IsInRenderPass(void) const
 {
-	return m_bInRenderPass;
+	return m_indexSubpass >= 0;
 }
 
 int CGLES3CommandBuffer::GetSubpassIndex(void) const
@@ -87,9 +86,7 @@ void CGLES3CommandBuffer::Clearup(void)
 
 	m_pCommands.clear();
 
-	m_bInRenderPass = false;
-	m_indexSubpass = 0;
-
+	m_indexSubpass = -1;
 	m_ptrRenderPass.Release();
 	m_ptrFrameBuffer.Release();
 }
@@ -116,9 +113,7 @@ bool CGLES3CommandBuffer::WaitForFinish(void) const
 bool CGLES3CommandBuffer::CmdBeginRenderPass(const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass)
 {
 	if (IsMainCommandBuffer() == true && IsInRenderPass() == false && m_pCommands.empty()) {
-		m_bInRenderPass = true;
 		m_indexSubpass = 0;
-
 		m_ptrRenderPass = ptrRenderPass;
 		m_ptrFrameBuffer = ptrFrameBuffer;
 
@@ -134,7 +129,7 @@ bool CGLES3CommandBuffer::CmdBeginRenderPass(const CGfxFrameBufferPtr ptrFrameBu
 
 bool CGLES3CommandBuffer::CmdNextSubpass(void)
 {
-	if (IsMainCommandBuffer() == true && IsInRenderPass() == true) {
+	if (IsMainCommandBuffer() == true && IsInRenderPass() == true && m_indexSubpass < m_ptrRenderPass->GetSubpassCount() - 1) {
 		m_pCommands.emplace_back(new CGLES3CommandInvalidateFramebuffer(m_ptrFrameBuffer, m_ptrRenderPass, m_indexSubpass));
 		m_pCommands.emplace_back(new CGLES3CommandResolve(m_ptrFrameBuffer, m_ptrRenderPass, m_indexSubpass));
 
@@ -157,8 +152,7 @@ bool CGLES3CommandBuffer::CmdEndRenderPass(void)
 		m_pCommands.emplace_back(new CGLES3CommandResolve(m_ptrFrameBuffer, m_ptrRenderPass, m_indexSubpass));
 		m_pCommands.emplace_back(new CGLES3CommandEndRenderPass(m_ptrFrameBuffer, m_ptrRenderPass));
 
-		m_bInRenderPass = false;
-		m_indexSubpass = 0;
+		m_indexSubpass = -1;
 
 		return true;
 	}
