@@ -14,11 +14,9 @@ private:
 
 
 public:
-	const CGfxFrameBufferPtr GetFrameBuffer(void) const;
-	const CGfxRenderPassPtr GetRenderPass(void) const;
-
 	bool IsInRenderPass(void) const;
-	int GetSubpassIndex(void) const;
+	const CGfxRenderPassPtr GetRenderPass(void) const;
+	const CGfxFrameBufferPtr GetFrameBuffer(void) const;
 
 public:
 	void Clearup(void);

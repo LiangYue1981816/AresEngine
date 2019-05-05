@@ -58,9 +58,9 @@ void CGLES3CommandBuffer::Release(void)
 	m_pManager->Destroy(this);
 }
 
-const CGfxFrameBufferPtr CGLES3CommandBuffer::GetFrameBuffer(void) const
+bool CGLES3CommandBuffer::IsInRenderPass(void) const
 {
-	return m_ptrFrameBuffer;
+	return m_ptrRenderPass && m_indexSubpass >= 0 && m_indexSubpass < (int)m_ptrRenderPass->GetSubpassCount();
 }
 
 const CGfxRenderPassPtr CGLES3CommandBuffer::GetRenderPass(void) const
@@ -68,14 +68,9 @@ const CGfxRenderPassPtr CGLES3CommandBuffer::GetRenderPass(void) const
 	return m_ptrRenderPass;
 }
 
-bool CGLES3CommandBuffer::IsInRenderPass(void) const
+const CGfxFrameBufferPtr CGLES3CommandBuffer::GetFrameBuffer(void) const
 {
-	return m_indexSubpass >= 0;
-}
-
-int CGLES3CommandBuffer::GetSubpassIndex(void) const
-{
-	return m_indexSubpass;
+	return m_ptrFrameBuffer;
 }
 
 void CGLES3CommandBuffer::Clearup(void)
@@ -129,7 +124,7 @@ bool CGLES3CommandBuffer::CmdBeginRenderPass(const CGfxFrameBufferPtr ptrFrameBu
 
 bool CGLES3CommandBuffer::CmdNextSubpass(void)
 {
-	if (IsMainCommandBuffer() == true && IsInRenderPass() == true && m_indexSubpass < m_ptrRenderPass->GetSubpassCount() - 1) {
+	if (IsMainCommandBuffer() == true && IsInRenderPass() == true && m_indexSubpass < (int)m_ptrRenderPass->GetSubpassCount() - 1) {
 		m_pCommands.emplace_back(new CGLES3CommandInvalidateFramebuffer(m_ptrFrameBuffer, m_ptrRenderPass, m_indexSubpass));
 		m_pCommands.emplace_back(new CGLES3CommandResolve(m_ptrFrameBuffer, m_ptrRenderPass, m_indexSubpass));
 

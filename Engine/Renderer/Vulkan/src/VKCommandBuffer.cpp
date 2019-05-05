@@ -62,9 +62,9 @@ VkCommandBuffer CVKCommandBuffer::GetCommandBuffer(void) const
 	return m_vkCommandBuffer;
 }
 
-const CGfxFrameBufferPtr CVKCommandBuffer::GetFrameBuffer(void) const
+bool CVKCommandBuffer::IsInRenderPass(void) const
 {
-	return m_ptrFrameBuffer;
+	return m_ptrRenderPass && m_indexSubpass >= 0 && m_indexSubpass < (int)m_ptrRenderPass->GetSubpassCount();
 }
 
 const CGfxRenderPassPtr CVKCommandBuffer::GetRenderPass(void) const
@@ -72,14 +72,9 @@ const CGfxRenderPassPtr CVKCommandBuffer::GetRenderPass(void) const
 	return m_ptrRenderPass;
 }
 
-bool CVKCommandBuffer::IsInRenderPass(void) const
+const CGfxFrameBufferPtr CVKCommandBuffer::GetFrameBuffer(void) const
 {
-	return m_indexSubpass >= 0;
-}
-
-int CVKCommandBuffer::GetSubpassIndex(void) const
-{
-	return m_indexSubpass;
+	return m_ptrFrameBuffer;
 }
 
 void CVKCommandBuffer::Clearup(void)
@@ -127,7 +122,7 @@ bool CVKCommandBuffer::CmdBeginRenderPass(const CGfxFrameBufferPtr ptrFrameBuffe
 
 bool CVKCommandBuffer::CmdNextSubpass(void)
 {
-	if (IsMainCommandBuffer() == true && IsInRenderPass() == true && m_indexSubpass < m_ptrRenderPass->GetSubpassCount() - 1) {
+	if (IsMainCommandBuffer() == true && IsInRenderPass() == true && m_indexSubpass < (int)m_ptrRenderPass->GetSubpassCount() - 1) {
 		m_indexSubpass += 1;
 		return true;
 	}
