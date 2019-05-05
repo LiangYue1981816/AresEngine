@@ -6,8 +6,7 @@ CVKCommandBuffer::CVKCommandBuffer(CVKDevice* pDevice, CVKCommandBufferManager* 
 	, m_pDevice(pDevice)
 	, m_pManager(pManager)
 
-	, m_bInRenderPass(false)
-	, m_indexSubpass(0)
+	, m_indexSubpass(-1)
 
 	, m_vkFence(VK_NULL_HANDLE)
 	, m_vkCommandPool(vkCommandPool)
@@ -75,7 +74,7 @@ const CGfxRenderPassPtr CVKCommandBuffer::GetRenderPass(void) const
 
 bool CVKCommandBuffer::IsInRenderPass(void) const
 {
-	return m_bInRenderPass;
+	return m_indexSubpass >= 0;
 }
 
 int CVKCommandBuffer::GetSubpassIndex(void) const
@@ -93,9 +92,7 @@ void CVKCommandBuffer::Clearup(void)
 
 	m_pCommands.clear();
 
-	m_bInRenderPass = false;
-	m_indexSubpass = 0;
-
+	m_indexSubpass = -1;
 	m_ptrRenderPass.Release();
 	m_ptrFrameBuffer.Release();
 }
@@ -117,9 +114,7 @@ bool CVKCommandBuffer::WaitForFinish(void) const
 bool CVKCommandBuffer::CmdBeginRenderPass(const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass)
 {
 	if (IsMainCommandBuffer() == true && IsInRenderPass() == false && m_pCommands.empty()) {
-		m_bInRenderPass = true;
 		m_indexSubpass = 0;
-
 		m_ptrRenderPass = ptrRenderPass;
 		m_ptrFrameBuffer = ptrFrameBuffer;
 
@@ -144,8 +139,7 @@ bool CVKCommandBuffer::CmdNextSubpass(void)
 bool CVKCommandBuffer::CmdEndRenderPass(void)
 {
 	if (IsMainCommandBuffer() == true && IsInRenderPass() == true) {
-		m_bInRenderPass = false;
-		m_indexSubpass = 0;
+		m_indexSubpass = -1;
 		return true;
 	}
 	else {
