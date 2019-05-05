@@ -22,10 +22,15 @@ public:
 	bool SetUniformBuffer(uint32_t name, const CGfxUniformBufferPtr ptrUniformBuffer, uint32_t offset, uint32_t range);
 
 public:
+	const CVKDescriptorPool* GetDescriptorPool(void) const;
 	const CGfxDescriptorLayoutPtr GetDescriptorLayout(void) const;
 	const DescriptorImageInfo* GetDescriptorImageInfo(uint32_t name) const;
 	const DescriptorBufferInfo* GetDescriptorBufferInfo(uint32_t name) const;
 
+
+private:
+	CVKDescriptorPool* m_pDescriptorPool;
+	CGfxDescriptorLayoutPtr m_ptrDescriptorLayout;
 
 private:
 	CVKDevice* m_pDevice;

@@ -1,6 +1,69 @@
 #include "VKRenderer.h"
 
 
+CVKDescriptorSet::CVKDescriptorSet(CVKDevice* pDevice, CVKDescriptorPool* pDescriptorPool, const CGfxDescriptorLayoutPtr ptrDescriptorLayout)
+	: CGfxDescriptorSet(ptrDescriptorLayout)
+	, m_pDevice(pDevice)
+	, m_pDescriptorPool(pDescriptorPool)
+{
+
+}
+
+CVKDescriptorSet::~CVKDescriptorSet(void)
+{
+
+}
+
+void CVKDescriptorSet::Release(void)
+{
+	m_pDescriptorPool->FreeDescriptorSet(this);
+}
+
+bool CVKDescriptorSet::SetTexture2D(uint32_t name, const CGfxTexture2DPtr ptrTexture, const CGfxSampler* pSampler)
+{
+	return true;
+}
+
+bool CVKDescriptorSet::SetTexture2DArray(uint32_t name, const CGfxTexture2DArrayPtr ptrTexture, const CGfxSampler* pSampler)
+{
+	return true;
+}
+
+bool CVKDescriptorSet::SetTextureCubemap(uint32_t name, const CGfxTextureCubemapPtr ptrTexture, const CGfxSampler* pSampler)
+{
+	return true;
+}
+
+bool CVKDescriptorSet::SetTextureInputAttachment(uint32_t name, const CGfxRenderTexturePtr ptrTexture, const CGfxSampler* pSampler)
+{
+	return true;
+}
+
+bool CVKDescriptorSet::SetUniformBuffer(uint32_t name, const CGfxUniformBufferPtr ptrUniformBuffer, uint32_t offset, uint32_t range)
+{
+	return true;
+}
+
+const CVKDescriptorPool* CVKDescriptorSet::GetDescriptorPool(void) const
+{
+	return m_pDescriptorPool;
+}
+
+const CGfxDescriptorLayoutPtr CVKDescriptorSet::GetDescriptorLayout(void) const
+{
+	return m_ptrDescriptorLayout;
+}
+
+const DescriptorImageInfo* CVKDescriptorSet::GetDescriptorImageInfo(uint32_t name) const
+{
+	return nullptr;
+}
+
+const DescriptorBufferInfo* CVKDescriptorSet::GetDescriptorBufferInfo(uint32_t name) const
+{
+	return nullptr;
+}
+
 /*
 CVKDescriptorSet::CVKDescriptorSet(CVKDevice* pDevice, CVKDescriptorPool* pDescriptorPool, CVKDescriptorLayout* pDescriptorLayout)
 	: m_pDevice(pDevice)

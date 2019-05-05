@@ -13,7 +13,7 @@ private:
 
 
 public:
-	CVKDescriptorSet* AllocDescriptorSet(CVKDescriptorLayout* pDescriptorLayout);
+	CVKDescriptorSet* AllocDescriptorSet(const CGfxDescriptorLayoutPtr ptrDescriptorLayout);
 	void FreeDescriptorSet(CVKDescriptorSet* pDescriptorSet);
 
 

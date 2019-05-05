@@ -17,7 +17,7 @@ private:
 	VkDescriptorPool GetDescriptorPool(void) const;
 
 private:
-	CVKDescriptorSet* AllocDescriptorSet(CVKDescriptorLayout* pDescriptorLayout);
+	CVKDescriptorSet* AllocDescriptorSet(const CGfxDescriptorLayoutPtr ptrDescriptorLayout);
 	bool FreeDescriptorSet(CVKDescriptorSet* pDescriptorSet);
 
 

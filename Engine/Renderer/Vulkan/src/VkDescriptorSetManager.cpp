@@ -22,18 +22,14 @@ CVKDescriptorSetManager::~CVKDescriptorSetManager(void)
 	pthread_mutex_destroy(&lock);
 }
 
-CVKDescriptorSet* CVKDescriptorSetManager::AllocDescriptorSet(CVKDescriptorLayout * pDescriptorLayout)
+CVKDescriptorSet* CVKDescriptorSetManager::AllocDescriptorSet(const CGfxDescriptorLayoutPtr ptrDescriptorLayout)
 {
-	if (pDescriptorLayout->GetDescriptorSetLayout() == VK_NULL_HANDLE) {
-		return nullptr;
-	}
-
 	mutex_autolock autolock(&lock);
 	{
 		CVKDescriptorPool* pDescriptorPool = m_pPoolListHead;
 
 		do {
-			if (CVKDescriptorSet * DescriptorSet = pDescriptorPool->AllocDescriptorSet(pDescriptorLayout)) {
+			if (CVKDescriptorSet* DescriptorSet = pDescriptorPool->AllocDescriptorSet(ptrDescriptorLayout)) {
 				return DescriptorSet;
 			}
 
