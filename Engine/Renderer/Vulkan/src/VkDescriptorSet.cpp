@@ -164,7 +164,7 @@ void CVKDescriptorSet::Update(void)
 				VkDescriptorImageInfo imageInfo = {};
 				imageInfo.sampler;
 				imageInfo.imageView = ((CVKTexture2DArray*)itImage.second.ptrTexture2DArray.GetPointer())->GetImageView();
-				imageInfo.imageLayout = ((CVKTexture2DArray*)itImage.second.ptrTexture2DArray.GetPointer())->GetImageLayout()
+				imageInfo.imageLayout = ((CVKTexture2DArray*)itImage.second.ptrTexture2DArray.GetPointer())->GetImageLayout();
 				imageInfos.emplace_back(imageInfo);
 			}
 
