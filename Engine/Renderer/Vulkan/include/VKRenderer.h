@@ -28,6 +28,8 @@
 #include "VKUniformBuffer.h"
 #include "VKUniformBufferManager.h"
 
+#include "VKSampler.h"
+#include "VKSamplerManager.h"
 #include "VKTexture.h"
 #include "VKTexture2D.h"
 #include "VKTexture2DArray.h"
@@ -57,8 +59,6 @@
 #include "VKPipelineGraphics.h"
 #include "VKPipelineManager.h"
 
-#include "VKSampler.h"
-#include "VKSamplerManager.h"
 #include "VKTextureManager.h"
 #include "VKRenderTexture.h"
 #include "VKRenderTextureManager.h"

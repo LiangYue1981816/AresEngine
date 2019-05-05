@@ -93,6 +93,8 @@ class CVKIndirectBuffer;
 class CVKUniformBuffer;
 class CVKUniformBufferManager;
 
+class CVKSampler;
+class CVKSamplerManager;
 class CVKTexture;
 class CVKTexture2D;
 class CVKTexture2DManager;
@@ -127,8 +129,6 @@ class CVKPipelineGraphicsManager;
 
 class CVKBuffer;
 
-class CVKSampler;
-class CVKSamplerManager;
 class CVKTexture;
 class CVKTexture2DManager;
 class CVKTexture2DArrayManager;
