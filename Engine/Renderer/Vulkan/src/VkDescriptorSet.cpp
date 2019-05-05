@@ -194,8 +194,8 @@ void CVKDescriptorSet::Update(void)
 		for (const auto& itImage : m_inputAttachmentDescriptorInfos) {
 			VkDescriptorImageInfo imageInfo = {};
 			imageInfo.sampler = ((CVKSampler*)itImage.second.pSampler)->GetSampler();
-			imageInfo.imageView;
-			imageInfo.imageLayout;
+			imageInfo.imageView = ((CVKRenderTexture*)itImage.second.ptrTextureInputAttachment.GetPointer())->GetImageView();
+			imageInfo.imageLayout = ((CVKRenderTexture*)itImage.second.ptrTextureInputAttachment.GetPointer())->GetImageLayout();
 			imageInfos.emplace_back(imageInfo);
 
 			VkWriteDescriptorSet write = {};

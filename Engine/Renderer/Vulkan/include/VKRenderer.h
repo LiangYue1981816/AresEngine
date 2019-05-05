@@ -35,6 +35,8 @@
 #include "VKTexture2DArray.h"
 #include "VKTextureCubemap.h"
 #include "VKTextureManager.h"
+#include "VKRenderTexture.h"
+#include "VKRenderTextureManager.h"
 
 #include "VKDescriptorLayout.h"
 #include "VKDescriptorLayoutManager.h"
@@ -60,8 +62,6 @@
 #include "VKPipelineManager.h"
 
 #include "VKTextureManager.h"
-#include "VKRenderTexture.h"
-#include "VKRenderTextureManager.h"
 
 
 #include "VKMesh.h"

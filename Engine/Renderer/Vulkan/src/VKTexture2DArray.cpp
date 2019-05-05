@@ -66,7 +66,12 @@ int CVKTexture2DArray::GetLevels(void) const
 
 bool CVKTexture2DArray::Create(GfxPixelFormat format, int width, int height, int layers, int levels)
 {
-	return m_ptrTexture->Create(GFX_TEXTURE_2D_ARRAY, format, width, height, layers, levels, 1, VK_IMAGE_ASPECT_COLOR_BIT, VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_IMAGE_TILING_OPTIMAL);
+	if (CVKHelper::IsFormatSupported((VkFormat)format) && CVKHelper::IsFormatDepthOrStencil((VkFormat)format) == false) {
+		return m_ptrTexture->Create(GFX_TEXTURE_2D_ARRAY, format, width, height, layers, levels, 1, VK_IMAGE_ASPECT_COLOR_BIT, VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_IMAGE_TILING_OPTIMAL);
+	}
+	else {
+		return false;
+	}
 }
 
 void CVKTexture2DArray::Destroy(void)
