@@ -29,10 +29,23 @@ public:
 	const DescriptorImageInfo* GetDescriptorImageInfo(uint32_t name) const;
 	const DescriptorBufferInfo* GetDescriptorBufferInfo(uint32_t name) const;
 
+public:
+	void Update(void);
+	void Bind(VkCommandBuffer vkCommandBuffer, VkPipelineBindPoint vkPipelineBindPoint, VkPipelineLayout vkPipelineLayout) const;
+
+
+private:
+	VkDescriptorSet m_vkDescriptorSet;
 
 private:
 	CVKDescriptorPool* m_pDescriptorPool;
 	CGfxDescriptorLayoutPtr m_ptrDescriptorLayout;
+
+private:
+	bool m_bDirty;
+	eastl::unordered_map<uint32_t, DescriptorImageInfo> m_imageDescriptorInfos;
+	eastl::unordered_map<uint32_t, DescriptorImageInfo> m_inputAttachmentDescriptorInfos;
+	eastl::unordered_map<uint32_t, DescriptorBufferInfo> m_bufferDescriptorInfos;
 
 private:
 	CVKDevice* m_pDevice;
