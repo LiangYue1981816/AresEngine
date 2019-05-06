@@ -28,7 +28,9 @@ public:
 
 
 private:
+#ifdef PLATFORM_WINDOWS
 	void* m_hDC;
+#endif
 
 private:
 	uint32_t m_surface;
@@ -38,7 +40,9 @@ private:
 
 	int m_width;
 	int m_height;
+
 	int m_indexFrame;
 
+private:
 	CGfxRenderTexturePtr m_ptrFrameTexture;
 };

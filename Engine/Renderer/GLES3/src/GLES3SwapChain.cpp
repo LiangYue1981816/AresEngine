@@ -3,13 +3,17 @@
 
 CGLES3SwapChain::CGLES3SwapChain(void* hDC, int width, int height, GfxPixelFormat format)
 	: CGfxSwapChain(width, height, format)
+
+#ifdef PLATFORM_WINDOWS
 	, m_hDC(hDC)
+#endif
 
 	, m_surface(0)
 
 	, m_format(format)
 	, m_width(width)
 	, m_height(height)
+
 	, m_indexFrame(0)
 {
 	if (m_width != 0 && m_height != 0 && m_format != GFX_PIXELFORMAT_UNDEFINED) {
