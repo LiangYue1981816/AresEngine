@@ -50,6 +50,7 @@ private:
 
 private:
 	bool m_bExtern;
+
 	uint32_t m_target;
 	uint32_t m_texture;
 

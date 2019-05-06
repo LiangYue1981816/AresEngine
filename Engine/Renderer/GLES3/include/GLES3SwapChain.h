@@ -31,14 +31,14 @@ private:
 	void* m_hDC;
 
 private:
+	uint32_t m_surface;
+
+private:
 	GfxPixelFormat m_format;
 
 	int m_width;
 	int m_height;
-
 	int m_indexFrame;
 
-private:
-	uint32_t m_surface;
 	CGfxRenderTexturePtr m_ptrFrameTexture;
 };

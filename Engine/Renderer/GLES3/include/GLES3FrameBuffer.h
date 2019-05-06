@@ -32,13 +32,12 @@ public:
 
 
 private:
-	int m_width;
-	int m_height;
-
-private:
 	uint32_t m_fbo;
 	uint32_t m_resolve;
 
+private:
+	int m_width;
+	int m_height;
 	eastl::vector<CGfxRenderTexturePtr> m_ptrAttachmentTextures;
 
 private:
