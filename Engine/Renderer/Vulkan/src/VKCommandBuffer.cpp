@@ -6,11 +6,11 @@ CVKCommandBuffer::CVKCommandBuffer(CVKDevice* pDevice, CVKCommandBufferManager* 
 	, m_pDevice(pDevice)
 	, m_pManager(pManager)
 
-	, m_indexSubpass(-1)
-
 	, m_vkFence(VK_NULL_HANDLE)
 	, m_vkCommandPool(vkCommandPool)
 	, m_vkCommandBuffer(VK_NULL_HANDLE)
+
+	, m_indexSubpass(-1)
 {
 	if (bMainCommandBuffer) {
 		VkFenceCreateInfo createInfo = {};

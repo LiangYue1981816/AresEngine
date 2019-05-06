@@ -6,9 +6,10 @@ CVKDescriptorLayout::CVKDescriptorLayout(CVKDevice* pDevice, CVKDescriptorLayout
 	, m_pDevice(pDevice)
 	, m_pManager(pManager)
 
+	, m_vkDescriptorLayout(VK_NULL_HANDLE)
+
 	, m_set(set)
 	, m_numDescriptors{ 0 }
-	, m_vkDescriptorLayout(VK_NULL_HANDLE)
 {
 
 }

@@ -7,6 +7,7 @@ CVKRenderPass::CVKRenderPass(CVKDevice* pDevice, CVKRenderPassManager* pManager,
 	, m_pManager(pManager)
 
 	, m_vkRenderPass(VK_NULL_HANDLE)
+
 	, m_attachments(numAttachments)
 	, m_subpasses(numSubpasses)
 {
