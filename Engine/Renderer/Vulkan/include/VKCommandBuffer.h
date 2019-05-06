@@ -76,17 +76,17 @@ public:
 
 
 private:
+	VkFence m_vkFence;
+	VkCommandPool m_vkCommandPool;
+	VkCommandBuffer m_vkCommandBuffer;
+
+private:
 	int m_indexSubpass;
 
 	CGfxRenderPassPtr m_ptrRenderPass;
 	CGfxFrameBufferPtr m_ptrFrameBuffer;
 
 	eastl::vector<CGfxCommandBase*> m_pCommands;
-
-private:
-	VkFence m_vkFence;
-	VkCommandPool m_vkCommandPool;
-	VkCommandBuffer m_vkCommandBuffer;
 
 private:
 	CVKDevice* m_pDevice;

@@ -30,11 +30,11 @@ public:
 
 
 private:
-	int m_width;
-	int m_height;
+	VkFramebuffer m_vkFrameBuffer;
 
 private:
-	VkFramebuffer m_vkFrameBuffer;
+	int m_width;
+	int m_height;
 	eastl::vector<CGfxRenderTexturePtr> m_ptrAttachmentTextures;
 
 private:
