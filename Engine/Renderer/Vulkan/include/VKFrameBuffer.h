@@ -14,7 +14,7 @@ private:
 
 
 public:
-	HANDLE GetFrameBuffer(void);
+	VkFramebuffer GetFrameBuffer(void);
 
 public:
 	int GetWidth(void) const;
@@ -25,20 +25,21 @@ public:
 	void Destroy(void);
 
 public:
-	bool SetAttachmentTexture(int indexAttachment, CGfxRenderTexturePtr ptrAttachmentTexture);
-	CGfxRenderTexturePtr GetAttachmentTexture(int indexAttachment) const;
+	bool SetAttachmentTexture(int indexAttachment, const CGfxRenderTexturePtr ptrAttachmentTexture);
+	const CGfxRenderTexturePtr GetAttachmentTexture(int indexAttachment) const;
 
 
 private:
 	int m_width;
 	int m_height;
 
+private:
+	VkFramebuffer m_vkFrameBuffer;
 	eastl::vector<CGfxRenderTexturePtr> m_ptrAttachmentTextures;
 
 private:
-	VkFramebuffer m_vkFrameBuffer;
+	CVKDevice* m_pDevice;
 
 private:
-	CVKDevice* m_pDevice;
 	CVKFrameBufferManager* m_pManager;
 };

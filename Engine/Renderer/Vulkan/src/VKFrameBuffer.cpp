@@ -10,8 +10,9 @@ CVKFrameBuffer::CVKFrameBuffer(CVKDevice* pDevice, CVKFrameBufferManager* pManag
 	, m_height(height)
 
 	, m_vkFrameBuffer(VK_NULL_HANDLE)
+	, m_ptrAttachmentTextures(numAttachments)
 {
-	m_ptrAttachmentTextures.resize(numAttachments);
+
 }
 
 CVKFrameBuffer::~CVKFrameBuffer(void)
@@ -24,9 +25,9 @@ void CVKFrameBuffer::Release(void)
 	m_pManager->Destroy(this);
 }
 
-HANDLE CVKFrameBuffer::GetFrameBuffer(void)
+VkFramebuffer CVKFrameBuffer::GetFrameBuffer(void)
 {
-	return (HANDLE)m_vkFrameBuffer;
+	return m_vkFrameBuffer;
 }
 
 int CVKFrameBuffer::GetWidth(void) const
@@ -41,34 +42,29 @@ int CVKFrameBuffer::GetHeight(void) const
 
 bool CVKFrameBuffer::Create(const CGfxRenderPassPtr ptrRenderPass)
 {
-	Destroy();
+	eastl::vector<VkImageView> attachments;
 	{
-		do {
-			eastl::vector<VkImageView> attachments;
-			{
-				for (int indexAttachment = 0; indexAttachment < m_ptrAttachmentTextures.size(); indexAttachment++) {
-					attachments.emplace_back((VkImageView)m_ptrAttachmentTextures[indexAttachment]->GetTexture());
-				}
-			}
-			if (attachments.empty()) break;
+		for (int indexAttachment = 0; indexAttachment < m_ptrAttachmentTextures.size(); indexAttachment++) {
+			attachments.emplace_back(((CVKRenderTexture*)m_ptrAttachmentTextures[indexAttachment].GetPointer())->GetImageView());
+		}
 
-			VkFramebufferCreateInfo createInfo = {};
-			createInfo.sType = VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO;
-			createInfo.pNext = nullptr;
-			createInfo.flags = 0;
-			createInfo.renderPass = (VkRenderPass)ptrRenderPass->GetRenderPass();
-			createInfo.attachmentCount = attachments.size();
-			createInfo.pAttachments = attachments.data();
-			createInfo.width = m_width;
-			createInfo.height = m_height;
-			createInfo.layers = 1;
-			CALL_VK_FUNCTION_BREAK(vkCreateFramebuffer(m_pDevice->GetDevice(), &createInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkFrameBuffer));
-
-			return true;
-		} while (false);
+		if (attachments.empty()) {
+			return false;
+		}
 	}
-	Destroy();
-	return false;
+
+	VkFramebufferCreateInfo createInfo = {};
+	createInfo.sType = VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO;
+	createInfo.pNext = nullptr;
+	createInfo.flags = 0;
+	createInfo.renderPass = ((CVKRenderPass*)ptrRenderPass.GetPointer())->GetRenderPass();
+	createInfo.attachmentCount = attachments.size();
+	createInfo.pAttachments = attachments.data();
+	createInfo.width = m_width;
+	createInfo.height = m_height;
+	createInfo.layers = 1;
+	CALL_VK_FUNCTION_RETURN_BOOL(vkCreateFramebuffer(m_pDevice->GetDevice(), &createInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkFrameBuffer));
+	return true;
 }
 
 void CVKFrameBuffer::Destroy(void)
@@ -80,10 +76,9 @@ void CVKFrameBuffer::Destroy(void)
 	m_vkFrameBuffer = VK_NULL_HANDLE;
 }
 
-bool CVKFrameBuffer::SetAttachmentTexture(int indexAttachment, CGfxRenderTexturePtr ptrAttachmentTexture)
+bool CVKFrameBuffer::SetAttachmentTexture(int indexAttachment, const CGfxRenderTexturePtr ptrAttachmentTexture)
 {
-	if (ptrAttachmentTexture->GetWidth() == m_width && ptrAttachmentTexture->GetHeight() == m_height &&
-		indexAttachment >= 0 && indexAttachment < (int)m_ptrAttachmentTextures.size()) {
+	if (indexAttachment >= 0 && indexAttachment < m_ptrAttachmentTextures.size() && ptrAttachmentTexture->GetWidth() == m_width && ptrAttachmentTexture->GetHeight() == m_height) {
 		m_ptrAttachmentTextures[indexAttachment] = ptrAttachmentTexture;
 		return true;
 	}
@@ -92,9 +87,9 @@ bool CVKFrameBuffer::SetAttachmentTexture(int indexAttachment, CGfxRenderTexture
 	}
 }
 
-CGfxRenderTexturePtr CVKFrameBuffer::GetAttachmentTexture(int indexAttachment) const
+const CGfxRenderTexturePtr CVKFrameBuffer::GetAttachmentTexture(int indexAttachment) const
 {
-	if (indexAttachment >= 0 && indexAttachment < (int)m_ptrAttachmentTextures.size()) {
+	if (indexAttachment >= 0 && indexAttachment < m_ptrAttachmentTextures.size()) {
 		return m_ptrAttachmentTextures[indexAttachment];
 	}
 	else {

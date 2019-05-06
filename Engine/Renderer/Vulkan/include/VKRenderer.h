@@ -18,6 +18,8 @@
 
 #include "VKRenderPass.h"
 #include "VKRenderPassManager.h"
+#include "VKFrameBuffer.h"
+#include "VKFrameBufferManager.h"
 
 #include "VKTransferBuffer.h"
 #include "VKTransferManager.h"
@@ -52,8 +54,6 @@
 #include "VKCommandBufferManager.h"
 /*
 #include "VKSwapChain.h"
-#include "VKFrameBuffer.h"
-#include "VKFrameBufferManager.h"
 
 #include "VKShader.h"
 #include "VKShaderManager.h"
