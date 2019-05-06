@@ -27,8 +27,8 @@ public:
 	void AcquireNextFrame(void);
 
 
-private:
 #ifdef PLATFORM_WINDOWS
+private:
 	void* m_hDC;
 #endif
 
