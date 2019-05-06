@@ -1392,6 +1392,18 @@
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKRenderTextureManager.h">
       <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKRenderPass.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKRenderPassManager.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKFrameBuffer.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKFrameBufferManager.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Engine\ThirdParty\eastl\source\allocator_eastl.cpp">
@@ -2022,6 +2034,18 @@
       <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKRenderTextureManager.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKRenderPass.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKRenderPassManager.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKFrameBuffer.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKFrameBufferManager.cpp">
       <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
