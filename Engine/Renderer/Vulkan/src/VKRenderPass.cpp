@@ -3,6 +3,112 @@
 
 CVKRenderPass::CVKRenderPass(CVKDevice* pDevice, CVKRenderPassManager* pManager, uint32_t name, int numAttachments, int numSubpasses)
 	: CGfxRenderPass(name, numAttachments, numSubpasses)
+	, m_pDevice(pDevice)
+	, m_pManager(pManager)
+
+	, m_vkRenderPass(VK_NULL_HANDLE)
+{
+
+}
+
+CVKRenderPass::~CVKRenderPass(void)
+{
+	Destroy();
+}
+
+void CVKRenderPass::Release(void)
+{
+	m_pManager->Destroy(this);
+}
+
+VkRenderPass CVKRenderPass::GetRenderPass(void) const
+{
+	return m_vkRenderPass;
+}
+
+bool CVKRenderPass::Create(void)
+{
+	return true;
+}
+
+void CVKRenderPass::Destroy(void)
+{
+
+}
+
+bool CVKRenderPass::SetColorAttachment(int indexAttachment, GfxPixelFormat format, int samples, bool bInvalidation, bool bClear, float red, float green, float blue, float alpha)
+{
+	return true;
+}
+
+bool CVKRenderPass::SetDepthStencilAttachment(int indexAttachment, GfxPixelFormat format, int samples, bool bInvalidation, bool bClear, float depth, int stencil)
+{
+	return true;
+}
+
+bool CVKRenderPass::SetSubpassInputColorReference(int indexSubpass, int indexAttachment)
+{
+	return true;
+}
+
+bool CVKRenderPass::SetSubpassOutputColorReference(int indexSubpass, int indexAttachment)
+{
+	return true;
+}
+
+bool CVKRenderPass::SetSubpassOutputDepthStencilReference(int indexSubpass, int indexAttachment)
+{
+	return true;
+}
+
+bool CVKRenderPass::SetSubpassResolveReference(int indexSubpass, int indexAttachment)
+{
+	return true;
+}
+
+bool CVKRenderPass::SetSubpassPreserveReference(int indexSubpass, int indexAttachment)
+{
+	return true;
+}
+
+uint32_t CVKRenderPass::GetAttachmentCount(void) const
+{
+	return 0;
+}
+
+const AttachmentInformation* CVKRenderPass::GetAttachments(void) const
+{
+	return nullptr;
+}
+
+const AttachmentInformation* CVKRenderPass::GetAttachment(int indexAttachment) const
+{
+	return nullptr;
+}
+
+uint32_t CVKRenderPass::GetSubpassCount(void) const
+{
+	return 0;
+}
+
+uint32_t CVKRenderPass::GetSubpassInputAttachmentCount(int indexSubpass) const
+{
+	return 0;
+}
+
+uint32_t CVKRenderPass::GetSubpassOutputAttachmentCount(int indexSubpass) const
+{
+	return 0;
+}
+
+const SubpassInformation* CVKRenderPass::GetSubpass(int indexSubpass) const
+{
+	return nullptr;
+}
+
+/*
+CVKRenderPass::CVKRenderPass(CVKDevice* pDevice, CVKRenderPassManager* pManager, uint32_t name, int numAttachments, int numSubpasses)
+	: CGfxRenderPass(name, numAttachments, numSubpasses)
 	, m_name(name)
 	, m_pDevice(pDevice)
 	, m_pManager(pManager)
@@ -305,3 +411,4 @@ const SubpassInformation* CVKRenderPass::GetSubpass(int indexSubpass) const
 		return nullptr;
 	}
 }
+*/

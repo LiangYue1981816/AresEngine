@@ -81,6 +81,9 @@ class CVKMemory;
 class CVKMemoryAllocator;
 class CVKMemoryManager;
 
+class CVKRenderPass;
+class CVKRenderPassManager;
+
 class CVKTransferBuffer;
 class CVKTransferManager;
 
@@ -116,8 +119,6 @@ class CVKCommandBuffer;
 class CVKCommandBufferManager;
 /*
 class CVKSwapChain;
-class CVKRenderPass;
-class CVKRenderPassManager;
 class CVKFrameBuffer;
 class CVKFrameBufferManager;
 

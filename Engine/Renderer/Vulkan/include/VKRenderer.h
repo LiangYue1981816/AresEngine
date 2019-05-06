@@ -16,6 +16,9 @@
 #include "VKMemoryAllocator.h"
 #include "VKMemoryManager.h"
 
+#include "VKRenderPass.h"
+#include "VKRenderPassManager.h"
+
 #include "VKTransferBuffer.h"
 #include "VKTransferManager.h"
 
@@ -49,8 +52,6 @@
 #include "VKCommandBufferManager.h"
 /*
 #include "VKSwapChain.h"
-#include "VKRenderPass.h"
-#include "VKRenderPassManager.h"
 #include "VKFrameBuffer.h"
 #include "VKFrameBufferManager.h"
 

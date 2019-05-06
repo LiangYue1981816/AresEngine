@@ -14,10 +14,7 @@ private:
 
 
 public:
-	uint32_t GetName(void) const;
-
-public:
-	HANDLE GetRenderPass(void) const;
+	VkRenderPass GetRenderPass(void) const;
 
 public:
 	bool Create(void);
@@ -27,7 +24,7 @@ public:
 	bool SetColorAttachment(int indexAttachment, GfxPixelFormat format, int samples, bool bInvalidation, bool bClear, float red = 0.0f, float green = 0.0f, float blue = 0.0f, float alpha = 0.0f);
 	bool SetDepthStencilAttachment(int indexAttachment, GfxPixelFormat format, int samples, bool bInvalidation, bool bClear, float depth = 1.0f, int stencil = 0);
 
-	bool SetSubpassInputColorReference(int indexSubpass, int indexAttachment, const char* szName);
+	bool SetSubpassInputColorReference(int indexSubpass, int indexAttachment);
 	bool SetSubpassOutputColorReference(int indexSubpass, int indexAttachment);
 	bool SetSubpassOutputDepthStencilReference(int indexSubpass, int indexAttachment);
 	bool SetSubpassResolveReference(int indexSubpass, int indexAttachment);
@@ -45,16 +42,15 @@ public:
 
 
 private:
-	uint32_t m_name;
+	VkRenderPass m_vkRenderPass;
 
 private:
 	eastl::vector<AttachmentInformation> m_attachments;
 	eastl::vector<SubpassInformation> m_subpasses;
 
 private:
-	VkRenderPass m_vkRenderPass;
+	CVKDevice* m_pDevice;
 
 private:
-	CVKDevice* m_pDevice;
 	CVKRenderPassManager* m_pManager;
 };
