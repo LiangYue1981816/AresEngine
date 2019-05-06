@@ -5,11 +5,11 @@ CGLES3SwapChain::CGLES3SwapChain(void* hDC, int width, int height, GfxPixelForma
 	: CGfxSwapChain(width, height, format)
 	, m_hDC(hDC)
 
+	, m_surface(0)
+
+	, m_format(format)
 	, m_width(width)
 	, m_height(height)
-	, m_format(format)
-
-	, m_surface(0)
 	, m_indexFrame(0)
 {
 	if (m_width != 0 && m_height != 0 && m_format != GFX_PIXELFORMAT_UNDEFINED) {

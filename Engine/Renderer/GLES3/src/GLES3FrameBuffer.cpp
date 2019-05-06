@@ -5,12 +5,12 @@ CGLES3FrameBuffer::CGLES3FrameBuffer(CGLES3FrameBufferManager* pManager, int wid
 	: CGfxFrameBuffer(width, height, numAttachments)
 	, m_pManager(pManager)
 
+	, m_fbo(0)
+	, m_resolve(0)
+
 	, m_width(width)
 	, m_height(height)
 	, m_ptrAttachmentTextures(numAttachments)
-
-	, m_fbo(0)
-	, m_resolve(0)
 {
 
 }

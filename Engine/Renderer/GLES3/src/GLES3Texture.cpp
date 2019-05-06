@@ -3,6 +3,7 @@
 
 CGLES3Texture::CGLES3Texture(void)
 	: m_bExtern(false)
+
 	, m_target(0)
 	, m_texture(0)
 
