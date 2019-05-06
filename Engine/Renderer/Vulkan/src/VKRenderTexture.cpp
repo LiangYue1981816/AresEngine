@@ -11,7 +11,7 @@ CVKRenderTexture::CVKRenderTexture(CVKDevice* pDevice, CVKRenderTextureManager* 
 
 CVKRenderTexture::~CVKRenderTexture(void)
 {
-
+	Destroy();
 }
 
 void CVKRenderTexture::Release(void)
