@@ -15,7 +15,7 @@ private:
 
 private:
 	CVKMeshDraw* Get(uint32_t name);
-	CVKMeshDraw* Create(uint32_t name, const CGfxMeshPtr ptrMesh, int indexDraw, uint32_t instanceFormat, uint32_t instanceBinding);
+	CVKMeshDraw* Create(uint32_t name, const CGfxMeshPtr ptrMesh, uint32_t nameDraw, uint32_t instanceFormat, int instanceBinding);
 	void Destroy(CVKMeshDraw* pMeshDraw);
 
 

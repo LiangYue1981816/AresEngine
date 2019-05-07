@@ -29,12 +29,12 @@ CVKMeshDraw* CVKMeshDrawManager::Get(uint32_t name)
 	}
 }
 
-CVKMeshDraw* CVKMeshDrawManager::Create(uint32_t name, const CGfxMeshPtr ptrMesh, int indexDraw, uint32_t instanceFormat, uint32_t instanceBinding)
+CVKMeshDraw* CVKMeshDrawManager::Create(uint32_t name, const CGfxMeshPtr ptrMesh, uint32_t nameDraw, uint32_t instanceFormat, int instanceBinding)
 {
 	mutex_autolock autolock(&lock);
 	{
 		if (m_pMeshDraws[name] == nullptr) {
-			m_pMeshDraws[name] = new CVKMeshDraw(m_pDevice, this, name, ptrMesh, indexDraw, instanceFormat, instanceBinding);
+			m_pMeshDraws[name] = new CVKMeshDraw(m_pDevice, this, name, ptrMesh, nameDraw, instanceFormat, instanceBinding);
 		}
 
 		return m_pMeshDraws[name];
@@ -46,8 +46,10 @@ void CVKMeshDrawManager::Destroy(CVKMeshDraw* pMeshDraw)
 	mutex_autolock autolock(&lock);
 	{
 		if (pMeshDraw) {
-			m_pMeshDraws.erase(pMeshDraw->GetName());
-			delete pMeshDraw;
+			if (m_pMeshDraws.find(pMeshDraw->GetName()) != m_pMeshDraws.end()) {
+				m_pMeshDraws.erase(pMeshDraw->GetName());
+				delete pMeshDraw;
+			}
 		}
 	}
 }

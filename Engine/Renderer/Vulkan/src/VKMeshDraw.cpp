@@ -1,34 +1,15 @@
 #include "VKRenderer.h"
 
 
-CVKMeshDraw::CVKMeshDraw(CVKDevice* pDevice, CVKMeshDrawManager* pManager, uint32_t name, const CGfxMeshPtr ptrMesh, int indexDraw, uint32_t instanceFormat, uint32_t instanceBinding)
-	: CGfxMeshDraw(name, ptrMesh, indexDraw, instanceFormat, instanceBinding)
-	, m_name(name)
-	, m_pDevice(pDevice)
-	, m_pManager(pManager)
-
-	, m_pMeshDraw(nullptr)
-	, m_pIndexBuffer(nullptr)
-	, m_pVertexBuffer(nullptr)
-	, m_pInstanceBuffer(nullptr)
-	, m_pIndirectBuffer(nullptr)
+CVKMeshDraw::CVKMeshDraw(CVKDevice* pDevice, CVKMeshDrawManager* pManager, uint32_t name, const CGfxMeshPtr ptrMesh, uint32_t nameDraw, uint32_t instanceFormat, int instanceBinding)
+	: CGfxMeshDraw(name, ptrMesh, nameDraw, instanceFormat, instanceBinding)
 {
-	m_ptrMesh = ptrMesh;
-	m_pMeshDraw = ptrMesh->GetDraw(indexDraw);
 
-	m_pIndexBuffer = (CVKIndexBuffer*)ptrMesh->GetIndexBuffer();
-	m_pVertexBuffer = (CVKVertexBuffer*)ptrMesh->GetVertexBuffer();
-
-	m_pInstanceBuffer = new CVKInstanceBuffer(m_pDevice, instanceFormat, instanceBinding);
-
-	m_pIndirectBuffer = new CVKIndirectBuffer(m_pDevice, 1);
-	m_pIndirectBuffer->BufferData(0, m_pMeshDraw->baseVertex, m_pMeshDraw->firstIndex, m_pMeshDraw->indexCount, 0);
 }
 
 CVKMeshDraw::~CVKMeshDraw(void)
 {
-	delete m_pInstanceBuffer;
-	delete m_pIndirectBuffer;
+
 }
 
 void CVKMeshDraw::Release(void)
@@ -36,18 +17,23 @@ void CVKMeshDraw::Release(void)
 	m_pManager->Destroy(this);
 }
 
-uint32_t CVKMeshDraw::GetName(void) const
+glm::aabb CVKMeshDraw::GetLocalAABB(void) const
 {
-	return m_name;
-}
-
-uint32_t CVKMeshDraw::GetVertexFormat(void) const
-{
-	if (m_ptrMesh.IsValid()) {
-		return m_ptrMesh->GetVertexBuffer()->GetVertexFormat();
+	if (m_pMeshDraw) {
+		return m_pMeshDraw->aabb;
 	}
 	else {
-		return 0;
+		return glm::aabb();
+	}
+}
+
+GfxIndexType CVKMeshDraw::GetIndexType(void) const
+{
+	if (m_ptrMesh.IsValid()) {
+		return m_ptrMesh->GetIndexBuffer()->GetIndexType();
+	}
+	else {
+		return GFX_INDEX_INVALID_ENUM;
 	}
 }
 
@@ -75,20 +61,20 @@ uint32_t CVKMeshDraw::GetIndexOffset(void) const
 	}
 }
 
-GfxIndexType CVKMeshDraw::GetIndexType(void) const
+uint32_t CVKMeshDraw::GetVertexFormat(void) const
 {
 	if (m_ptrMesh.IsValid()) {
-		return m_ptrMesh->GetIndexBuffer()->GetIndexType();
+		return m_ptrMesh->GetVertexBuffer()->GetVertexFormat();
 	}
 	else {
-		return GFX_INDEX_INVALID_ENUM;
+		return 0;
 	}
 }
 
-uint32_t CVKMeshDraw::GetInstanceCount(void) const
+uint32_t CVKMeshDraw::GetVertexCount(void) const
 {
-	if (m_pInstanceBuffer) {
-		return m_pInstanceBuffer->GetInstanceCount();
+	if (m_ptrMesh.IsValid()) {
+		return m_ptrMesh->GetVertexBuffer()->GetVertexCount();
 	}
 	else {
 		return 0;
@@ -105,41 +91,31 @@ uint32_t CVKMeshDraw::GetInstanceFormat(void) const
 	}
 }
 
-glm::aabb CVKMeshDraw::GetLocalAABB(void) const
+uint32_t CVKMeshDraw::GetInstanceCount(void) const
 {
-	if (m_pMeshDraw) {
-		return m_pMeshDraw->aabb;
+	if (m_pInstanceBuffer) {
+		return m_pInstanceBuffer->GetInstanceCount();
 	}
 	else {
-		return glm::aabb();
+		return 0;
 	}
 }
 
-bool CVKMeshDraw::InstanceBufferData(size_t size, const void* pBuffer)
+bool CVKMeshDraw::InstanceBufferData(size_t size, const void* data)
 {
 	if (m_pInstanceBuffer) {
-		m_pInstanceBuffer->BufferData(size, pBuffer);
-		m_pIndirectBuffer->BufferData(0, size / GetInstanceStride(m_pInstanceBuffer->GetInstanceFormat()));
-		return true;
+		return m_pInstanceBuffer->BufferData(size, data);
 	}
 	else {
 		return false;
 	}
 }
 
-void CVKMeshDraw::Bind(VkCommandBuffer vkCommandBuffer) const
+void CVKMeshDraw::Bind(VkCommandBuffer vkCommandBuffer)
 {
-	m_pIndexBuffer->Bind(vkCommandBuffer, 0);
-	m_pVertexBuffer->Bind(vkCommandBuffer, 0);
-	m_pInstanceBuffer->Bind(vkCommandBuffer, 0);
-}
-
-CVKBufferPtr CVKMeshDraw::TransferIndexBuffer(VkCommandBuffer vkCommandBuffer)
-{
-	return m_pIndexBuffer->TransferBuffer(vkCommandBuffer);
-}
-
-CVKBufferPtr CVKMeshDraw::TransferVertexBuffer(VkCommandBuffer vkCommandBuffer)
-{
-	return m_pVertexBuffer->TransferBuffer(vkCommandBuffer);
+	if (m_ptrMesh.IsValid()) {
+		((CVKIndexBuffer*)m_ptrMesh->GetIndexBuffer())->Bind(vkCommandBuffer);
+		((CVKVertexBuffer*)m_ptrMesh->GetVertexBuffer())->Bind(vkCommandBuffer);
+		((CVKVertexBuffer*)m_pInstanceBuffer)->Bind(vkCommandBuffer);
+	}
 }
