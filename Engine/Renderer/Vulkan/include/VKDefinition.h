@@ -111,6 +111,8 @@ class CVKTextureCubemapManager;
 class CVKRenderTexture;
 class CVKRenderTextureManager;
 
+class CVKMesh;
+class CVKMeshManager;
 class CVKMeshDraw;
 class CVKMeshDrawManager;
 
@@ -132,20 +134,7 @@ class CVKPipelineComputeManager;
 class CVKPipelineGraphics;
 class CVKPipelineGraphicsManager;
 
-class CVKBuffer;
-
-class CVKTexture;
-class CVKTexture2DManager;
-class CVKTexture2DArrayManager;
-class CVKTextureCubemapManager;
-
-class CVKMesh;
-class CVKMeshManager;
-
 class CVKMaterial;
 class CVKMaterialPass;
 class CVKMaterialManager;
-
-class CVKCommandPool;
-
 */

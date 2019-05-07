@@ -16,7 +16,7 @@ private:
 private:
 	CVKMesh* Get(uint32_t name);
 	CVKMesh* Create(uint32_t name);
-	CVKMesh* Create(const char* szFileName, uint32_t vertexBinding);
+	CVKMesh* Create(const char* szFileName, int vertexBinding);
 	void Destroy(CVKMesh* pMesh);
 
 

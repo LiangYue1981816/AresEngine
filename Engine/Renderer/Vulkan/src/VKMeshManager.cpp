@@ -42,7 +42,7 @@ CVKMesh* CVKMeshManager::Create(uint32_t name)
 	}
 }
 
-CVKMesh* CVKMeshManager::Create(const char* szFileName, uint32_t vertexBinding)
+CVKMesh* CVKMeshManager::Create(const char* szFileName, int vertexBinding)
 {
 	uint32_t name = HashValue(szFileName);
 
@@ -62,8 +62,10 @@ void CVKMeshManager::Destroy(CVKMesh* pMesh)
 	mutex_autolock autolock(&lock);
 	{
 		if (pMesh) {
-			m_pMeshs.erase(pMesh->GetName());
-			delete pMesh;
+			if (m_pMeshs.find(pMesh->GetName()) != m_pMeshs.end()) {
+				m_pMeshs.erase(pMesh->GetName());
+				delete pMesh;
+			}
 		}
 	}
 }

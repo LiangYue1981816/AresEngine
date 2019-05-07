@@ -44,6 +44,8 @@
 #include "VKRenderTexture.h"
 #include "VKRenderTextureManager.h"
 
+#include "VKMesh.h"
+#include "VKMeshManager.h"
 #include "VKMeshDraw.h"
 #include "VKMeshDrawManager.h"
 
@@ -63,12 +65,6 @@
 #include "VKPipelineCompute.h"
 #include "VKPipelineGraphics.h"
 #include "VKPipelineManager.h"
-
-#include "VKTextureManager.h"
-
-
-#include "VKMesh.h"
-#include "VKMeshManager.h"
 
 #include "VKMaterial.h"
 #include "VKMaterialPass.h"
