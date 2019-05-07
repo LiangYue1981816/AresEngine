@@ -16,6 +16,7 @@
 #include "VKMemoryAllocator.h"
 #include "VKMemoryManager.h"
 
+#include "VKSwapChain.h"
 #include "VKRenderPass.h"
 #include "VKRenderPassManager.h"
 #include "VKFrameBuffer.h"
@@ -53,8 +54,6 @@
 #include "VKCommandBuffer.h"
 #include "VKCommandBufferManager.h"
 /*
-#include "VKSwapChain.h"
-
 #include "VKShader.h"
 #include "VKShaderManager.h"
 #include "VKPipeline.h"

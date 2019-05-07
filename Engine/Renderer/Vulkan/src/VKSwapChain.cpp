@@ -67,19 +67,20 @@ CVKSwapChain::CVKSwapChain(CVKDevice* pDevice, int width, int height, GfxPixelFo
 	: CGfxSwapChain(width, height, format)
 	, m_pDevice(pDevice)
 
-	, m_format(format)
-	, m_width(width)
-	, m_height(height)
-
-	, m_indexImage(0)
-
-	, m_vkImages{ VK_NULL_HANDLE }
-	, m_vkImageViews{ VK_NULL_HANDLE }
-
 	, m_vkSwapchain(VK_NULL_HANDLE)
 	, m_vkAcquireSemaphore(VK_NULL_HANDLE)
 	, m_vkRenderDoneSemaphores{ VK_NULL_HANDLE }
 	, m_vkRenderDoneFences{ VK_NULL_HANDLE }
+
+	, m_vkImages{ VK_NULL_HANDLE }
+	, m_vkImageViews{ VK_NULL_HANDLE }
+
+	, m_format(format)
+
+	, m_width(width)
+	, m_height(height)
+
+	, m_indexFrame(0)
 {
 	eastl::vector<VkPresentModeKHR> modes;
 	eastl::vector<VkSurfaceFormatKHR> formats;
@@ -119,7 +120,7 @@ bool CVKSwapChain::EnumDeviceSurfaceModes(eastl::vector<VkPresentModeKHR>& modes
 	return true;
 }
 
-bool CVKSwapChain::EnumDeviceSurfaceFormats(eastl::vector<VkSurfaceFormatKHR> & formats) const
+bool CVKSwapChain::EnumDeviceSurfaceFormats(eastl::vector<VkSurfaceFormatKHR>& formats) const
 {
 	formats.clear();
 
@@ -133,13 +134,13 @@ bool CVKSwapChain::EnumDeviceSurfaceFormats(eastl::vector<VkSurfaceFormatKHR> & 
 	return true;
 }
 
-bool CVKSwapChain::EnumDeviceSurfaceCapabilities(VkSurfaceCapabilitiesKHR & capabilities) const
+bool CVKSwapChain::EnumDeviceSurfaceCapabilities(VkSurfaceCapabilitiesKHR& capabilities) const
 {
 	CALL_VK_FUNCTION_RETURN_BOOL(vkGetPhysicalDeviceSurfaceCapabilitiesKHR(m_pDevice->GetPhysicalDevice(), m_pDevice->GetInstance()->GetSurface(), &capabilities));
 	return true;
 }
 
-bool CVKSwapChain::CreateSwapChain(const eastl::vector<VkPresentModeKHR> & modes, const eastl::vector<VkSurfaceFormatKHR> & formats, const VkSurfaceCapabilitiesKHR & capabilities)
+bool CVKSwapChain::CreateSwapChain(const eastl::vector<VkPresentModeKHR>& modes, const eastl::vector<VkSurfaceFormatKHR>& formats, const VkSurfaceCapabilitiesKHR& capabilities)
 {
 	VkExtent2D imageExtent = GetSwapchainExtent(capabilities, m_width, m_height);
 	VkImageUsageFlags imageUsage = GetSwapchainUsageFlags(capabilities);
@@ -226,6 +227,9 @@ void CVKSwapChain::DestroySwapChain(void)
 	if (m_vkAcquireSemaphore) {
 		vkDestroySemaphore(m_pDevice->GetDevice(), m_vkAcquireSemaphore, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
 	}
+
+	m_vkSwapchain = VK_NULL_HANDLE;
+	m_vkAcquireSemaphore = VK_NULL_HANDLE;
 }
 
 void CVKSwapChain::DestroyImagesAndImageViews(void)
@@ -243,8 +247,26 @@ void CVKSwapChain::DestroyImagesAndImageViews(void)
 			vkDestroyFence(m_pDevice->GetDevice(), m_vkRenderDoneFences[index], m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
 		}
 
+		m_vkImageViews[index] = VK_NULL_HANDLE;
+		m_vkRenderDoneSemaphores[index] = VK_NULL_HANDLE;
+		m_vkRenderDoneFences[index] = VK_NULL_HANDLE;
 		m_ptrRenderTextures[index].Release();
 	}
+}
+
+VkSemaphore CVKSwapChain::GetAcquireSemaphore(void) const
+{
+	return m_vkAcquireSemaphore;
+}
+
+VkSemaphore CVKSwapChain::GetRenderDoneSemaphore(void) const
+{
+	return m_vkRenderDoneSemaphores[m_indexFrame];
+}
+
+VkFence CVKSwapChain::GetRenderDoneFence(void) const
+{
+	return m_vkRenderDoneFences[m_indexFrame];
 }
 
 GfxPixelFormat CVKSwapChain::GetFormat(void) const
@@ -264,45 +286,37 @@ int CVKSwapChain::GetHeight(void) const
 
 int CVKSwapChain::GetFrameIndex(void) const
 {
-	return 0;
+	return m_indexFrame;
 }
 
-CGfxRenderTexturePtr CVKSwapChain::GetFrameTexture(int index) const
+const CGfxRenderTexturePtr CVKSwapChain::GetFrameTexture(int index) const
 {
-	return m_ptrRenderTextures[index];
+	if (index >= 0 && index < SWAPCHAIN_FRAME_COUNT) {
+		return m_ptrRenderTextures[index];
+	}
+	else {
+		return nullptr;
+	}
 }
 
 void CVKSwapChain::Present(void)
 {
+	uint32_t indexFrame = m_indexFrame;
 	VkPresentInfoKHR presentInfo = {};
 	presentInfo.sType = VK_STRUCTURE_TYPE_PRESENT_INFO_KHR;
 	presentInfo.pNext = nullptr;
 	presentInfo.waitSemaphoreCount = 1;
-	presentInfo.pWaitSemaphores = &m_vkRenderDoneSemaphores[m_indexImage];
+	presentInfo.pWaitSemaphores = &m_vkRenderDoneSemaphores[indexFrame];
 	presentInfo.swapchainCount = 1;
 	presentInfo.pSwapchains = &m_vkSwapchain;
-	presentInfo.pImageIndices = &m_indexImage;
+	presentInfo.pImageIndices = &indexFrame;
 	presentInfo.pResults = nullptr;
 	vkQueuePresentKHR(m_pDevice->GetQueue()->GetQueue(), &presentInfo);
 }
 
 void CVKSwapChain::AcquireNextFrame(void)
 {
-	m_indexImage = -1;
-	vkAcquireNextImageKHR(m_pDevice->GetDevice(), m_vkSwapchain, UINT64_MAX, m_vkAcquireSemaphore, VK_NULL_HANDLE, &m_indexImage);
-}
-
-VkSemaphore CVKSwapChain::GetAcquireSemaphore(void) const
-{
-	return m_vkAcquireSemaphore;
-}
-
-VkSemaphore CVKSwapChain::GetRenderDoneSemaphore(void) const
-{
-	return m_vkRenderDoneSemaphores[m_indexImage];
-}
-
-VkFence CVKSwapChain::GetRenderDoneFence(void) const
-{
-	return m_vkRenderDoneFences[m_indexImage];
+	uint32_t indexFrame;
+	vkAcquireNextImageKHR(m_pDevice->GetDevice(), m_vkSwapchain, UINT64_MAX, m_vkAcquireSemaphore, VK_NULL_HANDLE, &indexFrame);
+	m_indexFrame = indexFrame;
 }

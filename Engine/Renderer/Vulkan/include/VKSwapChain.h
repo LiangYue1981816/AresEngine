@@ -24,6 +24,11 @@ private:
 	void DestroyImagesAndImageViews(void);
 
 public:
+	VkSemaphore GetAcquireSemaphore(void) const;
+	VkSemaphore GetRenderDoneSemaphore(void) const;
+	VkFence GetRenderDoneFence(void) const;
+
+public:
 	GfxPixelFormat GetFormat(void) const;
 
 	int GetWidth(void) const;
@@ -31,16 +36,23 @@ public:
 
 public:
 	int GetFrameIndex(void) const;
-	CGfxRenderTexturePtr GetFrameTexture(int index) const;
+	const CGfxRenderTexturePtr GetFrameTexture(int index) const;
 
 public:
 	void Present(void);
 	void AcquireNextFrame(void);
 
-	VkSemaphore GetAcquireSemaphore(void) const;
-	VkSemaphore GetRenderDoneSemaphore(void) const;
-	VkFence GetRenderDoneFence(void) const;
 
+private:
+	VkSwapchainKHR m_vkSwapchain;
+	VkSemaphore m_vkAcquireSemaphore;
+	VkSemaphore m_vkRenderDoneSemaphores[SWAPCHAIN_FRAME_COUNT];
+	VkFence m_vkRenderDoneFences[SWAPCHAIN_FRAME_COUNT];
+
+private:
+	VkImage m_vkImages[SWAPCHAIN_FRAME_COUNT];
+	VkImageView m_vkImageViews[SWAPCHAIN_FRAME_COUNT];
+	CGfxRenderTexturePtr m_ptrRenderTextures[SWAPCHAIN_FRAME_COUNT];
 
 private:
 	GfxPixelFormat m_format;
@@ -48,17 +60,7 @@ private:
 	int m_width;
 	int m_height;
 
-private:
-	uint32_t m_indexImage;
-	VkImage m_vkImages[SWAPCHAIN_FRAME_COUNT];
-	VkImageView m_vkImageViews[SWAPCHAIN_FRAME_COUNT];
-	CGfxRenderTexturePtr m_ptrRenderTextures[SWAPCHAIN_FRAME_COUNT];
-
-private:
-	VkSwapchainKHR m_vkSwapchain;
-	VkSemaphore m_vkAcquireSemaphore;
-	VkSemaphore m_vkRenderDoneSemaphores[SWAPCHAIN_FRAME_COUNT];
-	VkFence m_vkRenderDoneFences[SWAPCHAIN_FRAME_COUNT];
+	int m_indexFrame;
 
 private:
 	CVKDevice* m_pDevice;

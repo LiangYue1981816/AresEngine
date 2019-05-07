@@ -371,6 +371,7 @@
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKRenderTextureManager.h" />
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKSampler.h" />
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKSamplerManager.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKSwapChain.h" />
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKTexture.h" />
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKTexture2D.h" />
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKTexture2DArray.h" />
@@ -694,6 +695,7 @@
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKRenderTextureManager.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKSampler.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKSamplerManager.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKSwapChain.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKTexture.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKTexture2D.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKTexture2DArray.cpp" />
