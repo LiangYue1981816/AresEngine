@@ -111,6 +111,9 @@ class CVKTextureCubemapManager;
 class CVKRenderTexture;
 class CVKRenderTextureManager;
 
+class CVKMeshDraw;
+class CVKMeshDrawManager;
+
 class CVKDescriptorLayout;
 class CVKDescriptorLayoutManager;
 
@@ -138,8 +141,6 @@ class CVKTextureCubemapManager;
 
 class CVKMesh;
 class CVKMeshManager;
-class CVKMeshDraw;
-class CVKMeshDrawManager;
 
 class CVKMaterial;
 class CVKMaterialPass;

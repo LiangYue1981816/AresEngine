@@ -44,6 +44,9 @@
 #include "VKRenderTexture.h"
 #include "VKRenderTextureManager.h"
 
+#include "VKMeshDraw.h"
+#include "VKMeshDrawManager.h"
+
 #include "VKDescriptorLayout.h"
 #include "VKDescriptorLayoutManager.h"
 
@@ -66,8 +69,6 @@
 
 #include "VKMesh.h"
 #include "VKMeshManager.h"
-#include "VKMeshDraw.h"
-#include "VKMeshDrawManager.h"
 
 #include "VKMaterial.h"
 #include "VKMaterialPass.h"
