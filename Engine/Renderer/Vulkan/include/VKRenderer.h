@@ -193,4 +193,5 @@ public:
 private:
 	CVKInstance* m_pInstance;
 	CVKDevice* m_pDevice;
+	CVKSwapChain* m_pSwapChain;
 };
