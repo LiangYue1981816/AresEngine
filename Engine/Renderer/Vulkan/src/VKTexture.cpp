@@ -116,75 +116,79 @@ bool CVKTexture::Create(GfxTextureType type, GfxPixelFormat format, int width, i
 bool CVKTexture::Create(GfxTextureType type, GfxPixelFormat format, int width, int height, int layers, int levels, int samples, VkImageAspectFlags imageAspectFlags, VkImageUsageFlags imageUsageFlags, VkImageTiling imageTiling)
 {
 	Destroy();
+	{
+		do {
+			m_bExtern = false;
+			m_pMemory = nullptr;
 
-	m_bExtern = false;
-	m_pMemory = nullptr;
+			m_vkImage = VK_NULL_HANDLE;
+			m_vkImageView = VK_NULL_HANDLE;
+			m_vkImageLayout = VK_IMAGE_LAYOUT_UNDEFINED;
+			m_vkImageAspectFlags = imageAspectFlags;
 
-	m_vkImage = VK_NULL_HANDLE;
-	m_vkImageView = VK_NULL_HANDLE;
-	m_vkImageLayout = VK_IMAGE_LAYOUT_UNDEFINED;
-	m_vkImageAspectFlags = imageAspectFlags;
+			m_type = type;
+			m_format = format;
 
-	m_type = type;
-	m_format = format;
+			m_width = width;
+			m_height = height;
+			m_layers = layers;
+			m_levels = levels;
+			m_samples = samples;
 
-	m_width = width;
-	m_height = height;
-	m_layers = layers;
-	m_levels = levels;
-	m_samples = samples;
+			VkImageCreateInfo imageCreateInfo = {};
+			imageCreateInfo.sType = VK_STRUCTURE_TYPE_IMAGE_CREATE_INFO;
+			imageCreateInfo.pNext = nullptr;
+			imageCreateInfo.flags = 0;
+			imageCreateInfo.imageType = VK_IMAGE_TYPE_2D;
+			imageCreateInfo.format = (VkFormat)format;
+			imageCreateInfo.extent.width = width;
+			imageCreateInfo.extent.height = height;
+			imageCreateInfo.extent.depth = 1;
+			imageCreateInfo.mipLevels = levels;
+			imageCreateInfo.arrayLayers = layers;
+			imageCreateInfo.samples = CVKHelper::TranslateSampleCount(samples);
+			imageCreateInfo.tiling = imageTiling;
+			imageCreateInfo.usage = imageUsageFlags;
+			imageCreateInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
+			imageCreateInfo.queueFamilyIndexCount = 0;
+			imageCreateInfo.pQueueFamilyIndices = nullptr;
+			imageCreateInfo.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
+			switch (type) {
+			case GFX_TEXTURE_CUBE_MAP: imageCreateInfo.flags = VK_IMAGE_CREATE_CUBE_COMPATIBLE_BIT; break;
+			case GFX_TEXTURE_2D_ARRAY: imageCreateInfo.flags = VK_IMAGE_CREATE_2D_ARRAY_COMPATIBLE_BIT; break;
+			}
+			CALL_VK_FUNCTION_BREAK(vkCreateImage(m_pDevice->GetDevice(), &imageCreateInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkImage));
 
-	VkImageCreateInfo imageCreateInfo = {};
-	imageCreateInfo.sType = VK_STRUCTURE_TYPE_IMAGE_CREATE_INFO;
-	imageCreateInfo.pNext = nullptr;
-	imageCreateInfo.flags = 0;
-	imageCreateInfo.imageType = VK_IMAGE_TYPE_2D;
-	imageCreateInfo.format = (VkFormat)format;
-	imageCreateInfo.extent.width = width;
-	imageCreateInfo.extent.height = height;
-	imageCreateInfo.extent.depth = 1;
-	imageCreateInfo.mipLevels = levels;
-	imageCreateInfo.arrayLayers = layers;
-	imageCreateInfo.samples = CVKHelper::TranslateSampleCount(samples);
-	imageCreateInfo.tiling = imageTiling;
-	imageCreateInfo.usage = imageUsageFlags;
-	imageCreateInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
-	imageCreateInfo.queueFamilyIndexCount = 0;
-	imageCreateInfo.pQueueFamilyIndices = nullptr;
-	imageCreateInfo.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
-	switch (type) {
-	case GFX_TEXTURE_CUBE_MAP: imageCreateInfo.flags = VK_IMAGE_CREATE_CUBE_COMPATIBLE_BIT; break;
-	case GFX_TEXTURE_2D_ARRAY: imageCreateInfo.flags = VK_IMAGE_CREATE_2D_ARRAY_COMPATIBLE_BIT; break;
+			VkImageViewCreateInfo createInfo = {};
+			createInfo.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
+			createInfo.pNext = nullptr;
+			createInfo.flags = 0;
+			createInfo.image = m_vkImage;
+			createInfo.viewType = CVKHelper::TranslateImageViewType(type);
+			createInfo.format = (VkFormat)format;
+			createInfo.components = CVKHelper::GetFormatComponentMapping((VkFormat)format);
+			createInfo.subresourceRange = { imageAspectFlags, 0, (uint32_t)levels, 0, (uint32_t)layers };
+			CALL_VK_FUNCTION_BREAK(vkCreateImageView(m_pDevice->GetDevice(), &createInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkImageView));
+
+			VkMemoryPropertyFlags memoryPropertyFlags =
+				imageTiling == VK_IMAGE_TILING_LINEAR ?
+				VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT :
+				imageUsageFlags & VK_IMAGE_USAGE_TRANSIENT_ATTACHMENT_BIT ?
+				VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT | VK_MEMORY_PROPERTY_LAZILY_ALLOCATED_BIT :
+				VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT;
+
+			VkMemoryRequirements requirements;
+			vkGetImageMemoryRequirements(m_pDevice->GetDevice(), m_vkImage, &requirements);
+
+			m_pMemory = m_pDevice->GetMemoryManager()->AllocMemory(requirements.size, requirements.alignment, requirements.memoryTypeBits, memoryPropertyFlags);
+			if (m_pMemory == nullptr) break;
+			if (m_pMemory->BindImage(m_vkImage) == false) break;
+
+			return true;
+		} while (false);
 	}
-	CALL_VK_FUNCTION_RETURN_BOOL(vkCreateImage(m_pDevice->GetDevice(), &imageCreateInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkImage));
-
-	VkImageViewCreateInfo createInfo = {};
-	createInfo.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
-	createInfo.pNext = nullptr;
-	createInfo.flags = 0;
-	createInfo.image = m_vkImage;
-	createInfo.viewType = CVKHelper::TranslateImageViewType(type);
-	createInfo.format = (VkFormat)format;
-	createInfo.components = CVKHelper::GetFormatComponentMapping((VkFormat)format);
-	createInfo.subresourceRange = { imageAspectFlags, 0, (uint32_t)levels, 0, (uint32_t)layers };
-	CALL_VK_FUNCTION_RETURN_BOOL(vkCreateImageView(m_pDevice->GetDevice(), &createInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkImageView));
-
-	VkMemoryPropertyFlags memoryPropertyFlags =
-		imageTiling == VK_IMAGE_TILING_LINEAR ?
-		VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT :
-		imageUsageFlags & VK_IMAGE_USAGE_TRANSIENT_ATTACHMENT_BIT ?
-		VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT | VK_MEMORY_PROPERTY_LAZILY_ALLOCATED_BIT :
-		VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT;
-
-	VkMemoryRequirements requirements;
-	vkGetImageMemoryRequirements(m_pDevice->GetDevice(), m_vkImage, &requirements);
-
-	if (m_pMemory = m_pDevice->GetMemoryManager()->AllocMemory(requirements.size, requirements.alignment, requirements.memoryTypeBits, memoryPropertyFlags)) {
-		return m_pMemory->BindImage(m_vkImage);
-	}
-	else {
-		return false;
-	}
+	Destroy();
+	return false;
 }
 
 void CVKTexture::Destroy(void)
