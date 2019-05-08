@@ -15,7 +15,7 @@ private:
 
 public:
 	bool Create(void);
-	void Destroy(void);
+	void Destroy(bool bClearBindings);
 
 public:
 	bool SetUniformBlockBinding(uint32_t name, uint32_t binding);

@@ -17,7 +17,7 @@ public:
 
 public:
 	virtual bool Create(void) = 0;
-	virtual void Destroy(void) = 0;
+	virtual void Destroy(bool bClearBindings) = 0;
 
 public:
 	virtual bool SetUniformBlockBinding(uint32_t name, uint32_t binding) = 0;

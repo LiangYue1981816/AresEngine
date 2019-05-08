@@ -11,7 +11,7 @@ CGLES3DescriptorLayout::CGLES3DescriptorLayout(CGLES3DescriptorLayoutManager* pM
 
 CGLES3DescriptorLayout::~CGLES3DescriptorLayout(void)
 {
-	Destroy();
+	Destroy(true);
 }
 
 void CGLES3DescriptorLayout::Release(void)
@@ -24,11 +24,13 @@ bool CGLES3DescriptorLayout::Create(void)
 	return true;
 }
 
-void CGLES3DescriptorLayout::Destroy(void)
+void CGLES3DescriptorLayout::Destroy(bool bClearBindings)
 {
-	m_uniformBlockBindings.clear();
-	m_sampledImageBindings.clear();
-	m_inputAttachmentBindings.clear();
+	if (bClearBindings) {
+		m_uniformBlockBindings.clear();
+		m_sampledImageBindings.clear();
+		m_inputAttachmentBindings.clear();
+	}
 }
 
 bool CGLES3DescriptorLayout::SetUniformBlockBinding(uint32_t name, uint32_t binding)

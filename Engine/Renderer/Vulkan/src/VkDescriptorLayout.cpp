@@ -16,7 +16,7 @@ CVKDescriptorLayout::CVKDescriptorLayout(CVKDevice* pDevice, CVKDescriptorLayout
 
 CVKDescriptorLayout::~CVKDescriptorLayout(void)
 {
-	Destroy();
+	Destroy(true);
 }
 
 void CVKDescriptorLayout::Release(void)
@@ -36,52 +36,60 @@ const uint32_t* CVKDescriptorLayout::GetNumDescriptors(void) const
 
 bool CVKDescriptorLayout::Create(void)
 {
-	eastl::vector<VkDescriptorSetLayoutBinding> bindings;
+	Destroy(false);
 	{
-		for (const auto& itBinding : m_uniformBlockBindings) {
-			bindings.emplace_back(itBinding.second);
-		}
+		do {
+			eastl::vector<VkDescriptorSetLayoutBinding> bindings;
+			{
+				for (const auto& itBinding : m_uniformBlockBindings) {
+					bindings.emplace_back(itBinding.second);
+				}
 
-		for (const auto& itBinding : m_sampledImageBindings) {
-			bindings.emplace_back(itBinding.second);
-		}
+				for (const auto& itBinding : m_sampledImageBindings) {
+					bindings.emplace_back(itBinding.second);
+				}
 
-		for (const auto& itBinding : m_inputAttachmentBindings) {
-			bindings.emplace_back(itBinding.second);
-		}
+				for (const auto& itBinding : m_inputAttachmentBindings) {
+					bindings.emplace_back(itBinding.second);
+				}
 
-		if (bindings.empty()) {
-			return false;
-		}
+				if (bindings.empty()) {
+					break;
+				}
+			}
+
+			VkDescriptorSetLayoutCreateInfo createInfo = {};
+			createInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO;
+			createInfo.pNext = nullptr;
+			createInfo.flags = 0;
+			createInfo.bindingCount = bindings.size();
+			createInfo.pBindings = bindings.data();
+			CALL_VK_FUNCTION_BREAK(vkCreateDescriptorSetLayout(m_pDevice->GetDevice(), &createInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkDescriptorLayout));
+
+			m_numDescriptors[VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER_DYNAMIC] = m_uniformBlockBindings.size();
+			m_numDescriptors[VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER] = m_sampledImageBindings.size();
+			m_numDescriptors[VK_DESCRIPTOR_TYPE_INPUT_ATTACHMENT] = m_inputAttachmentBindings.size();
+
+			return true;
+		} while (false);
 	}
-
-	VkDescriptorSetLayoutCreateInfo createInfo = {};
-	createInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO;
-	createInfo.pNext = nullptr;
-	createInfo.flags = 0;
-	createInfo.bindingCount = bindings.size();
-	createInfo.pBindings = bindings.data();
-	CALL_VK_FUNCTION_RETURN_BOOL(vkCreateDescriptorSetLayout(m_pDevice->GetDevice(), &createInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkDescriptorLayout));
-
-	m_numDescriptors[VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER_DYNAMIC] = m_uniformBlockBindings.size();
-	m_numDescriptors[VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER] = m_sampledImageBindings.size();
-	m_numDescriptors[VK_DESCRIPTOR_TYPE_INPUT_ATTACHMENT] = m_inputAttachmentBindings.size();
-
-	return true;
+	Destroy(true);
+	return false;
 }
 
-void CVKDescriptorLayout::Destroy(void)
+void CVKDescriptorLayout::Destroy(bool bClearBindings)
 {
 	if (m_vkDescriptorLayout) {
 		vkDestroyDescriptorSetLayout(m_pDevice->GetDevice(), m_vkDescriptorLayout, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
 	}
 
+	if (bClearBindings) {
+		m_uniformBlockBindings.clear();
+		m_sampledImageBindings.clear();
+		m_inputAttachmentBindings.clear();
+	}
+
 	m_vkDescriptorLayout = VK_NULL_HANDLE;
-
-	m_uniformBlockBindings.clear();
-	m_sampledImageBindings.clear();
-	m_inputAttachmentBindings.clear();
-
 	memset(m_numDescriptors, 0, sizeof(m_numDescriptors));
 }
 

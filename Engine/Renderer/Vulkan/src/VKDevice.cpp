@@ -143,38 +143,45 @@ bool CVKDevice::CheckPhysicalDeviceQueueFamilyProperties(VkPhysicalDevice vkPhys
 
 bool CVKDevice::CreateDevice(VkPhysicalDevice vkPhysicalDevice, uint32_t queueFamilyIndex)
 {
-	m_vkPhysicalDevice = vkPhysicalDevice;
+	DestroyDevice();
+	{
+		do {
+			m_vkPhysicalDevice = vkPhysicalDevice;
 
-	CVKHelper::SetupFormat(m_vkPhysicalDevice);
-	vkGetPhysicalDeviceFeatures(m_vkPhysicalDevice, &m_vkPhysicalDeviceFeatures);
-	vkGetPhysicalDeviceProperties(m_vkPhysicalDevice, &m_vkPhysicalDeviceProperties);
-	vkGetPhysicalDeviceMemoryProperties(m_vkPhysicalDevice, &m_vkPhysicalDeviceMemoryProperties);
-	LogOutput(LOG_TAG_RENDERER, "Vulkan Device = %s\n", m_vkPhysicalDeviceProperties.deviceName);
+			CVKHelper::SetupFormat(m_vkPhysicalDevice);
+			vkGetPhysicalDeviceFeatures(m_vkPhysicalDevice, &m_vkPhysicalDeviceFeatures);
+			vkGetPhysicalDeviceProperties(m_vkPhysicalDevice, &m_vkPhysicalDeviceProperties);
+			vkGetPhysicalDeviceMemoryProperties(m_vkPhysicalDevice, &m_vkPhysicalDeviceMemoryProperties);
+			LogOutput(LOG_TAG_RENDERER, "Vulkan Device = %s\n", m_vkPhysicalDeviceProperties.deviceName);
 
-	const float queuePpriorities[1] = { 1.0f };
-	VkDeviceQueueCreateInfo queueCreateInfo = {};
-	queueCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
-	queueCreateInfo.pNext = nullptr;
-	queueCreateInfo.flags = 0;
-	queueCreateInfo.queueFamilyIndex = queueFamilyIndex;
-	queueCreateInfo.queueCount = 1;
-	queueCreateInfo.pQueuePriorities = queuePpriorities;
+			const float queuePpriorities[1] = { 1.0f };
+			VkDeviceQueueCreateInfo queueCreateInfo = {};
+			queueCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
+			queueCreateInfo.pNext = nullptr;
+			queueCreateInfo.flags = 0;
+			queueCreateInfo.queueFamilyIndex = queueFamilyIndex;
+			queueCreateInfo.queueCount = 1;
+			queueCreateInfo.pQueuePriorities = queuePpriorities;
 
-	const char* szSwapchainExtension = VK_KHR_SWAPCHAIN_EXTENSION_NAME;
-	VkDeviceCreateInfo deviceCreateInfo = {};
-	deviceCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
-	deviceCreateInfo.pNext = nullptr;
-	deviceCreateInfo.flags = 0;
-	deviceCreateInfo.queueCreateInfoCount = 1;
-	deviceCreateInfo.pQueueCreateInfos = &queueCreateInfo;
-	deviceCreateInfo.enabledLayerCount = 0;
-	deviceCreateInfo.ppEnabledLayerNames = nullptr;
-	deviceCreateInfo.enabledExtensionCount = 1;
-	deviceCreateInfo.ppEnabledExtensionNames = &szSwapchainExtension;
-	deviceCreateInfo.pEnabledFeatures = &m_vkPhysicalDeviceFeatures;
-	CALL_VK_FUNCTION_RETURN_BOOL(vkCreateDevice(m_vkPhysicalDevice, &deviceCreateInfo, m_pInstance->GetAllocator()->GetAllocationCallbacks(), &m_vkDevice));
+			const char* szSwapchainExtension = VK_KHR_SWAPCHAIN_EXTENSION_NAME;
+			VkDeviceCreateInfo deviceCreateInfo = {};
+			deviceCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
+			deviceCreateInfo.pNext = nullptr;
+			deviceCreateInfo.flags = 0;
+			deviceCreateInfo.queueCreateInfoCount = 1;
+			deviceCreateInfo.pQueueCreateInfos = &queueCreateInfo;
+			deviceCreateInfo.enabledLayerCount = 0;
+			deviceCreateInfo.ppEnabledLayerNames = nullptr;
+			deviceCreateInfo.enabledExtensionCount = 1;
+			deviceCreateInfo.ppEnabledExtensionNames = &szSwapchainExtension;
+			deviceCreateInfo.pEnabledFeatures = &m_vkPhysicalDeviceFeatures;
+			CALL_VK_FUNCTION_BREAK(vkCreateDevice(m_vkPhysicalDevice, &deviceCreateInfo, m_pInstance->GetAllocator()->GetAllocationCallbacks(), &m_vkDevice));
 
-	return true;
+			return true;
+		} while (false);
+	}
+	DestroyDevice();
+	return false;
 }
 
 void CVKDevice::DestroyDevice(void)

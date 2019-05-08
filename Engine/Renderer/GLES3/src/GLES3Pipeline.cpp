@@ -118,10 +118,10 @@ void CGLES3Pipeline::Destroy(void)
 	m_sampledImageLocations.clear();
 	m_sampledImageTextureUnits.clear();
 
-	m_ptrDescriptorLayouts[DESCRIPTOR_SET_ENGINE]->Destroy();
-	m_ptrDescriptorLayouts[DESCRIPTOR_SET_CAMERA]->Destroy();
-	m_ptrDescriptorLayouts[DESCRIPTOR_SET_PASS]->Destroy();
-	m_ptrDescriptorLayouts[DESCRIPTOR_SET_INPUTATTACHMENT]->Destroy();
+	m_ptrDescriptorLayouts[DESCRIPTOR_SET_ENGINE]->Destroy(true);
+	m_ptrDescriptorLayouts[DESCRIPTOR_SET_CAMERA]->Destroy(true);
+	m_ptrDescriptorLayouts[DESCRIPTOR_SET_PASS]->Destroy(true);
+	m_ptrDescriptorLayouts[DESCRIPTOR_SET_INPUTATTACHMENT]->Destroy(true);
 }
 
 void CGLES3Pipeline::SetUniformBlockBinding(const char* szName, uint32_t binding)
