@@ -13,6 +13,10 @@ private:
 	virtual void Release(void);
 
 
+private:
+	bool Create(VkCommandPool vkCommandPool, bool bMainCommandBuffer);
+	void Destroy(void);
+
 public:
 	VkFence GetFence(void) const;
 	VkCommandPool GetCommandPool(void) const;

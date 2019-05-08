@@ -20,12 +20,12 @@ private:
 
 
 private:
-	VkBuffer GetBuffer(void) const;
-	VkDeviceSize GetSize(void) const;
-
-private:
 	bool Create(VkDeviceSize size, VkBufferUsageFlags bufferUsageFlags, VkMemoryPropertyFlags memoryPropertyFlags);
 	void Destroy(void);
+
+private:
+	VkBuffer GetBuffer(void) const;
+	VkDeviceSize GetSize(void) const;
 
 private:
 	bool BufferData(size_t offset, size_t size, const void* data);

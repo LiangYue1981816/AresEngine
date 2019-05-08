@@ -12,24 +12,48 @@ CVKCommandBuffer::CVKCommandBuffer(CVKDevice* pDevice, CVKCommandBufferManager* 
 
 	, m_indexSubpass(-1)
 {
-	if (bMainCommandBuffer) {
-		VkFenceCreateInfo createInfo = {};
-		createInfo.sType = VK_STRUCTURE_TYPE_FENCE_CREATE_INFO;
-		createInfo.pNext = nullptr;
-		createInfo.flags = VK_FENCE_CREATE_SIGNALED_BIT;
-		CALL_VK_FUNCTION_RETURN(vkCreateFence(m_pDevice->GetDevice(), &createInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkFence));
-	}
-
-	VkCommandBufferAllocateInfo allocateInfo = {};
-	allocateInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
-	allocateInfo.pNext = nullptr;
-	allocateInfo.commandPool = vkCommandPool;
-	allocateInfo.level = bMainCommandBuffer ? VK_COMMAND_BUFFER_LEVEL_PRIMARY : VK_COMMAND_BUFFER_LEVEL_SECONDARY;
-	allocateInfo.commandBufferCount = 1;
-	CALL_VK_FUNCTION_RETURN(vkAllocateCommandBuffers(m_pDevice->GetDevice(), &allocateInfo, &m_vkCommandBuffer));
+	Create(vkCommandPool, bMainCommandBuffer);
 }
 
 CVKCommandBuffer::~CVKCommandBuffer(void)
+{
+	Destroy();
+}
+
+void CVKCommandBuffer::Release(void)
+{
+	m_pManager->Destroy(this);
+}
+
+bool CVKCommandBuffer::Create(VkCommandPool vkCommandPool, bool bMainCommandBuffer)
+{
+	Destroy();
+	{
+		do {
+			if (bMainCommandBuffer) {
+				VkFenceCreateInfo createInfo = {};
+				createInfo.sType = VK_STRUCTURE_TYPE_FENCE_CREATE_INFO;
+				createInfo.pNext = nullptr;
+				createInfo.flags = VK_FENCE_CREATE_SIGNALED_BIT;
+				CALL_VK_FUNCTION_BREAK(vkCreateFence(m_pDevice->GetDevice(), &createInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkFence));
+			}
+
+			VkCommandBufferAllocateInfo allocateInfo = {};
+			allocateInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
+			allocateInfo.pNext = nullptr;
+			allocateInfo.commandPool = vkCommandPool;
+			allocateInfo.level = bMainCommandBuffer ? VK_COMMAND_BUFFER_LEVEL_PRIMARY : VK_COMMAND_BUFFER_LEVEL_SECONDARY;
+			allocateInfo.commandBufferCount = 1;
+			CALL_VK_FUNCTION_BREAK(vkAllocateCommandBuffers(m_pDevice->GetDevice(), &allocateInfo, &m_vkCommandBuffer));
+
+			return true;
+		} while (false);
+	}
+	Destroy();
+	return false;
+}
+
+void CVKCommandBuffer::Destroy(void)
 {
 	Clearup();
 
@@ -40,11 +64,9 @@ CVKCommandBuffer::~CVKCommandBuffer(void)
 	if (m_vkCommandBuffer) {
 		vkFreeCommandBuffers(m_pDevice->GetDevice(), m_vkCommandPool, 1, &m_vkCommandBuffer);
 	}
-}
 
-void CVKCommandBuffer::Release(void)
-{
-	m_pManager->Destroy(this);
+	m_vkFence = VK_NULL_HANDLE;
+	m_vkCommandBuffer = VK_NULL_HANDLE;
 }
 
 VkFence CVKCommandBuffer::GetFence(void) const

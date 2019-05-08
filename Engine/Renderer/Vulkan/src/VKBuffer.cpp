@@ -21,21 +21,6 @@ void CVKBuffer::Release(void)
 	delete this;
 }
 
-VkBuffer CVKBuffer::GetBuffer(void) const
-{
-	return m_vkBuffer;
-}
-
-VkDeviceSize CVKBuffer::GetSize(void) const
-{
-	if (m_pMemory) {
-		return m_pMemory->GetSize();
-	}
-	else {
-		return 0;
-	}
-}
-
 bool CVKBuffer::Create(VkDeviceSize size, VkBufferUsageFlags bufferUsageFlags, VkMemoryPropertyFlags memoryPropertyFlags)
 {
 	Destroy();
@@ -78,6 +63,21 @@ void CVKBuffer::Destroy(void)
 
 	m_vkBuffer = VK_NULL_HANDLE;
 	m_pMemory = nullptr;
+}
+
+VkBuffer CVKBuffer::GetBuffer(void) const
+{
+	return m_vkBuffer;
+}
+
+VkDeviceSize CVKBuffer::GetSize(void) const
+{
+	if (m_pMemory) {
+		return m_pMemory->GetSize();
+	}
+	else {
+		return 0;
+	}
 }
 
 bool CVKBuffer::BufferData(size_t offset, size_t size, const void* data)
