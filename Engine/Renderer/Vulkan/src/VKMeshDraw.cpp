@@ -114,7 +114,9 @@ uint32_t CVKMeshDraw::GetInstanceCount(void) const
 bool CVKMeshDraw::InstanceBufferData(size_t size, const void* data)
 {
 	if (m_pInstanceBuffer) {
-		return m_pInstanceBuffer->BufferData(size, data);
+		m_pInstanceBuffer->BufferData(size, data);
+		m_pIndirectBuffer->BufferData(0, m_pMeshDraw->baseVertex, m_pMeshDraw->firstIndex, m_pMeshDraw->indexCount, size / GetInstanceStride(m_pInstanceBuffer->GetInstanceFormat()));
+		return true;
 	}
 	else {
 		return false;
