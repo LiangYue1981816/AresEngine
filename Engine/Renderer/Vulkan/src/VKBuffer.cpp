@@ -6,7 +6,7 @@ CVKBuffer::CVKBuffer(CVKDevice* pDevice, VkDeviceSize size, VkBufferUsageFlags b
 	, m_pMemory(nullptr)
 
 	, m_vkBuffer(VK_NULL_HANDLE)
-	, m_vkBufferUsageFlags(bufferUsageFlags)
+	, m_vkBufferUsageFlags(0)
 {
 	Create(size, bufferUsageFlags, memoryPropertyFlags);
 }
@@ -26,6 +26,8 @@ bool CVKBuffer::Create(VkDeviceSize size, VkBufferUsageFlags bufferUsageFlags, V
 	Destroy();
 	{
 		do {
+			m_vkBufferUsageFlags = bufferUsageFlags;
+
 			VkBufferCreateInfo createInfo = {};
 			createInfo.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
 			createInfo.pNext = nullptr;
@@ -61,8 +63,9 @@ void CVKBuffer::Destroy(void)
 		m_pDevice->GetMemoryManager()->FreeMemory(m_pMemory);
 	}
 
-	m_vkBuffer = VK_NULL_HANDLE;
 	m_pMemory = nullptr;
+	m_vkBuffer = VK_NULL_HANDLE;
+	m_vkBufferUsageFlags = 0;
 }
 
 VkBuffer CVKBuffer::GetBuffer(void) const

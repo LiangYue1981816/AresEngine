@@ -7,7 +7,7 @@ CVKCommandBuffer::CVKCommandBuffer(CVKDevice* pDevice, CVKCommandBufferManager* 
 	, m_pManager(pManager)
 
 	, m_vkFence(VK_NULL_HANDLE)
-	, m_vkCommandPool(vkCommandPool)
+	, m_vkCommandPool(VK_NULL_HANDLE)
 	, m_vkCommandBuffer(VK_NULL_HANDLE)
 
 	, m_indexSubpass(-1)
@@ -30,6 +30,8 @@ bool CVKCommandBuffer::Create(VkCommandPool vkCommandPool, bool bMainCommandBuff
 	Destroy();
 	{
 		do {
+			m_vkCommandPool = vkCommandPool;
+
 			if (bMainCommandBuffer) {
 				VkFenceCreateInfo createInfo = {};
 				createInfo.sType = VK_STRUCTURE_TYPE_FENCE_CREATE_INFO;
@@ -67,6 +69,7 @@ void CVKCommandBuffer::Destroy(void)
 
 	m_vkFence = VK_NULL_HANDLE;
 	m_vkCommandBuffer = VK_NULL_HANDLE;
+	m_vkCommandPool = VK_NULL_HANDLE;
 }
 
 VkFence CVKCommandBuffer::GetFence(void) const
