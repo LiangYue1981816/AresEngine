@@ -3,13 +3,23 @@
 
 CVKMeshDraw::CVKMeshDraw(CVKDevice* pDevice, CVKMeshDrawManager* pManager, uint32_t name, const CGfxMeshPtr ptrMesh, uint32_t nameDraw, uint32_t instanceFormat, int instanceBinding)
 	: CGfxMeshDraw(name, ptrMesh, nameDraw, instanceFormat, instanceBinding)
-{
+	, m_pDevice(pDevice)
+	, m_pManager(pManager)
 
+	, m_pMeshDraw(nullptr)
+	, m_pIndirectBuffer(nullptr)
+	, m_pInstanceBuffer(nullptr)
+{
+	m_ptrMesh = ptrMesh;
+	m_pMeshDraw = ptrMesh->GetDraw(nameDraw);
+	m_pIndirectBuffer = new CVKIndirectBuffer(pDevice, 1);
+	m_pInstanceBuffer = new CVKInstanceBuffer(pDevice, instanceFormat, instanceBinding);
 }
 
 CVKMeshDraw::~CVKMeshDraw(void)
 {
-
+	delete m_pIndirectBuffer;
+	delete m_pInstanceBuffer;
 }
 
 void CVKMeshDraw::Release(void)

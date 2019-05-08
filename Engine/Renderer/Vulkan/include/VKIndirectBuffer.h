@@ -4,6 +4,9 @@
 
 class CVKIndirectBuffer : public CGfxIndirectBuffer
 {
+	friend class CVKMeshDraw;
+
+
 private:
 	CVKIndirectBuffer(CVKDevice* pDevice, int numDrawCommands);
 	virtual ~CVKIndirectBuffer(void);
