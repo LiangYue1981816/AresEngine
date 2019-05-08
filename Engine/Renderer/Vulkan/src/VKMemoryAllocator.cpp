@@ -10,11 +10,11 @@ CVKMemoryAllocator::CVKMemoryAllocator(CVKDevice* pDevice, uint32_t memoryTypeIn
 	, m_nodes(nullptr)
 
 	, m_vkMemory(VK_NULL_HANDLE)
-	, m_memoryFreeSize(memorySize)
-	, m_memoryFullSize(memorySize)
-	, m_memoryAlignment(memoryAlignment)
-	, m_memoryTypeIndex(memoryTypeIndex)
-	, m_memoryPropertyFlags(pDevice->GetPhysicalDeviceMemoryProperties().memoryTypes[memoryTypeIndex].propertyFlags)
+	, m_memoryFreeSize(0)
+	, m_memoryFullSize(0)
+	, m_memoryAlignment(0)
+	, m_memoryTypeIndex(0)
+	, m_memoryPropertyFlags(0)
 
 	, pNext(nullptr)
 	, pPrev(nullptr)
@@ -36,6 +36,7 @@ bool CVKMemoryAllocator::Create(uint32_t memoryTypeIndex, VkDeviceSize memorySiz
 			m_memoryFullSize = memorySize;
 			m_memoryAlignment = memoryAlignment;
 			m_memoryTypeIndex = memoryTypeIndex;
+			m_memoryPropertyFlags = m_pDevice->GetPhysicalDeviceMemoryProperties().memoryTypes[memoryTypeIndex].propertyFlags;
 
 			VkMemoryAllocateInfo allocateInfo = {};
 			allocateInfo.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
@@ -63,6 +64,11 @@ void CVKMemoryAllocator::Destroy(void)
 	}
 
 	m_vkMemory = VK_NULL_HANDLE;
+	m_memoryFreeSize = 0;
+	m_memoryFullSize = 0;
+	m_memoryAlignment = 0;
+	m_memoryTypeIndex = 0;
+	m_memoryPropertyFlags = 0;
 }
 
 VkDeviceMemory CVKMemoryAllocator::GetMemory(void) const
@@ -193,6 +199,9 @@ void CVKMemoryAllocator::FreeNodes(void)
 	}
 
 	delete[] m_nodes;
+
+	m_root = { nullptr };
+	m_nodes = nullptr;
 }
 
 void CVKMemoryAllocator::InsertMemory(CVKMemory* pMemory)
