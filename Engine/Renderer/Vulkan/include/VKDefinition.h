@@ -87,6 +87,9 @@ class CVKRenderPassManager;
 class CVKFrameBuffer;
 class CVKFrameBufferManager;
 
+class CVKShader;
+class CVKShaderManager;
+
 class CVKTransferBuffer;
 class CVKTransferManager;
 
@@ -126,8 +129,6 @@ class CVKDescriptorSetManager;
 class CVKCommandBuffer;
 class CVKCommandBufferManager;
 /*
-class CVKShader;
-class CVKShaderManager;
 class CVKPipeline;
 class CVKPipelineCompute;
 class CVKPipelineComputeManager;

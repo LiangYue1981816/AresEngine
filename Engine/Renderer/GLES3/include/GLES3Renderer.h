@@ -26,6 +26,9 @@
 #include "GLES3IndirectBuffer.h"
 #include "GLES3VertexArrayObject.h"
 
+#include "GLES3UniformBuffer.h"
+#include "GLES3UniformBufferManager.h"
+
 #include "GLES3Sampler.h"
 #include "GLES3SamplerManager.h"
 #include "GLES3Texture.h"
@@ -35,9 +38,6 @@
 #include "GLES3TextureManager.h"
 #include "GLES3RenderTexture.h"
 #include "GLES3RenderTextureManager.h"
-
-#include "GLES3UniformBuffer.h"
-#include "GLES3UniformBufferManager.h"
 
 #include "GLES3Mesh.h"
 #include "GLES3MeshManager.h"

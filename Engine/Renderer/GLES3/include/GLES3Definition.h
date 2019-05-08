@@ -23,6 +23,9 @@ class CGLES3InstanceBuffer;
 class CGLES3IndirectBuffer;
 class CGLES3VertexArrayObject;
 
+class CGLES3UniformBuffer;
+class CGLES3UniformBufferManager;
+
 class CGLES3Sampler;
 class CGLES3SamplerManager;
 class CGLES3Texture;
@@ -34,9 +37,6 @@ class CGLES3TextureCubemap;
 class CGLES3TextureCubemapManager;
 class CGLES3RenderTexture;
 class CGLES3RenderTextureManager;
-
-class CGLES3UniformBuffer;
-class CGLES3UniformBufferManager;
 
 class CGLES3Mesh;
 class CGLES3MeshManager;

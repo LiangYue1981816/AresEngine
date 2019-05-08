@@ -3,7 +3,6 @@
 
 CVKShader::CVKShader(CVKDevice* pDevice, uint32_t name)
 	: CGfxShader(name)
-	, m_name(name)
 	, m_pDevice(pDevice)
 
 	, m_kind(-1)
@@ -17,14 +16,9 @@ CVKShader::~CVKShader(void)
 	Destroy();
 }
 
-uint32_t CVKShader::GetName(void) const
+VkShaderModule CVKShader::GetShader(void) const
 {
-	return m_name;
-}
-
-HANDLE CVKShader::GetShader(void) const
-{
-	return (HANDLE)m_vkShader;
+	return m_vkShader;
 }
 
 uint32_t CVKShader::GetKind(void) const
@@ -42,6 +36,9 @@ bool CVKShader::Create(const uint32_t* words, size_t numWords, shader_kind kind)
 	Destroy();
 	{
 		do {
+			m_kind = kind;
+			m_spriv.Create(words, numWords, 310);
+
 			VkShaderModuleCreateInfo createInfo = {};
 			createInfo.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;
 			createInfo.pNext = nullptr;
@@ -49,9 +46,6 @@ bool CVKShader::Create(const uint32_t* words, size_t numWords, shader_kind kind)
 			createInfo.codeSize = sizeof(uint32_t) * numWords;
 			createInfo.pCode = words;
 			CALL_VK_FUNCTION_BREAK(vkCreateShaderModule(m_pDevice->GetDevice(), &createInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkShader));
-
-			m_kind = kind;
-			m_spriv.Create(words, numWords, 310);
 
 			return true;
 		} while (false);
