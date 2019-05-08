@@ -138,7 +138,7 @@ bool CVKCommandBuffer::WaitForFinish(void) const
 
 bool CVKCommandBuffer::CmdBeginRenderPass(const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass)
 {
-	if (IsMainCommandBuffer() == true && IsInRenderPass() == false && m_pCommands.empty()) {
+	if (m_vkCommandBuffer != VK_NULL_HANDLE && IsMainCommandBuffer() == true && IsInRenderPass() == false && m_pCommands.empty()) {
 		m_indexSubpass = 0;
 		m_ptrRenderPass = ptrRenderPass;
 		m_ptrFrameBuffer = ptrFrameBuffer;
@@ -152,7 +152,7 @@ bool CVKCommandBuffer::CmdBeginRenderPass(const CGfxFrameBufferPtr ptrFrameBuffe
 
 bool CVKCommandBuffer::CmdNextSubpass(void)
 {
-	if (IsMainCommandBuffer() == true && IsInRenderPass() == true && m_indexSubpass < (int)m_ptrRenderPass->GetSubpassCount() - 1) {
+	if (m_vkCommandBuffer != VK_NULL_HANDLE && IsMainCommandBuffer() == true && IsInRenderPass() == true && m_indexSubpass < (int)m_ptrRenderPass->GetSubpassCount() - 1) {
 		m_indexSubpass += 1;
 		return true;
 	}
@@ -163,7 +163,7 @@ bool CVKCommandBuffer::CmdNextSubpass(void)
 
 bool CVKCommandBuffer::CmdEndRenderPass(void)
 {
-	if (IsMainCommandBuffer() == true && IsInRenderPass() == true) {
+	if (m_vkCommandBuffer != VK_NULL_HANDLE && IsMainCommandBuffer() == true && IsInRenderPass() == true) {
 		m_indexSubpass = -1;
 		return true;
 	}
@@ -174,7 +174,7 @@ bool CVKCommandBuffer::CmdEndRenderPass(void)
 
 bool CVKCommandBuffer::CmdBindPipelineCompute(const CGfxPipelineCompute* pPipelineCompute)
 {
-	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
+	if ((m_vkCommandBuffer != VK_NULL_HANDLE) && ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true))) {
 		return true;
 	}
 	else {
@@ -184,7 +184,7 @@ bool CVKCommandBuffer::CmdBindPipelineCompute(const CGfxPipelineCompute* pPipeli
 
 bool CVKCommandBuffer::CmdBindPipelineGraphics(const CGfxPipelineGraphics* pPipelineGraphics)
 {
-	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
+	if ((m_vkCommandBuffer != VK_NULL_HANDLE) && ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true))) {
 		return true;
 	}
 	else {
@@ -194,7 +194,7 @@ bool CVKCommandBuffer::CmdBindPipelineGraphics(const CGfxPipelineGraphics* pPipe
 
 bool CVKCommandBuffer::CmdBindDescriptorSet(const CGfxDescriptorSetPtr ptrDescriptorSet)
 {
-	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
+	if ((m_vkCommandBuffer != VK_NULL_HANDLE) && ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true))) {
 		return true;
 	}
 	else {
@@ -204,7 +204,7 @@ bool CVKCommandBuffer::CmdBindDescriptorSet(const CGfxDescriptorSetPtr ptrDescri
 
 bool CVKCommandBuffer::CmdUniform1i(uint32_t name, int v0)
 {
-	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
+	if ((m_vkCommandBuffer != VK_NULL_HANDLE) && ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true))) {
 		return true;
 	}
 	else {
@@ -214,7 +214,7 @@ bool CVKCommandBuffer::CmdUniform1i(uint32_t name, int v0)
 
 bool CVKCommandBuffer::CmdUniform2i(uint32_t name, int v0, int v1)
 {
-	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
+	if ((m_vkCommandBuffer != VK_NULL_HANDLE) && ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true))) {
 		return true;
 	}
 	else {
@@ -224,7 +224,7 @@ bool CVKCommandBuffer::CmdUniform2i(uint32_t name, int v0, int v1)
 
 bool CVKCommandBuffer::CmdUniform3i(uint32_t name, int v0, int v1, int v2)
 {
-	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
+	if ((m_vkCommandBuffer != VK_NULL_HANDLE) && ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true))) {
 		return true;
 	}
 	else {
@@ -234,7 +234,7 @@ bool CVKCommandBuffer::CmdUniform3i(uint32_t name, int v0, int v1, int v2)
 
 bool CVKCommandBuffer::CmdUniform4i(uint32_t name, int v0, int v1, int v2, int v3)
 {
-	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
+	if ((m_vkCommandBuffer != VK_NULL_HANDLE) && ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true))) {
 		return true;
 	}
 	else {
@@ -244,7 +244,7 @@ bool CVKCommandBuffer::CmdUniform4i(uint32_t name, int v0, int v1, int v2, int v
 
 bool CVKCommandBuffer::CmdUniform1f(uint32_t name, float v0)
 {
-	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
+	if ((m_vkCommandBuffer != VK_NULL_HANDLE) && ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true))) {
 		return true;
 	}
 	else {
@@ -254,7 +254,7 @@ bool CVKCommandBuffer::CmdUniform1f(uint32_t name, float v0)
 
 bool CVKCommandBuffer::CmdUniform2f(uint32_t name, float v0, float v1)
 {
-	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
+	if ((m_vkCommandBuffer != VK_NULL_HANDLE) && ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true))) {
 		return true;
 	}
 	else {
@@ -264,7 +264,7 @@ bool CVKCommandBuffer::CmdUniform2f(uint32_t name, float v0, float v1)
 
 bool CVKCommandBuffer::CmdUniform3f(uint32_t name, float v0, float v1, float v2)
 {
-	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
+	if ((m_vkCommandBuffer != VK_NULL_HANDLE) && ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true))) {
 		return true;
 	}
 	else {
@@ -274,7 +274,7 @@ bool CVKCommandBuffer::CmdUniform3f(uint32_t name, float v0, float v1, float v2)
 
 bool CVKCommandBuffer::CmdUniform4f(uint32_t name, float v0, float v1, float v2, float v3)
 {
-	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
+	if ((m_vkCommandBuffer != VK_NULL_HANDLE) && ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true))) {
 		return true;
 	}
 	else {
@@ -284,7 +284,7 @@ bool CVKCommandBuffer::CmdUniform4f(uint32_t name, float v0, float v1, float v2,
 
 bool CVKCommandBuffer::CmdUniform1iv(uint32_t name, int count, const int* value)
 {
-	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
+	if ((m_vkCommandBuffer != VK_NULL_HANDLE) && ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true))) {
 		return true;
 	}
 	else {
@@ -294,7 +294,7 @@ bool CVKCommandBuffer::CmdUniform1iv(uint32_t name, int count, const int* value)
 
 bool CVKCommandBuffer::CmdUniform2iv(uint32_t name, int count, const int* value)
 {
-	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
+	if ((m_vkCommandBuffer != VK_NULL_HANDLE) && ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true))) {
 		return true;
 	}
 	else {
@@ -304,7 +304,7 @@ bool CVKCommandBuffer::CmdUniform2iv(uint32_t name, int count, const int* value)
 
 bool CVKCommandBuffer::CmdUniform3iv(uint32_t name, int count, const int* value)
 {
-	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
+	if ((m_vkCommandBuffer != VK_NULL_HANDLE) && ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true))) {
 		return true;
 	}
 	else {
@@ -314,7 +314,7 @@ bool CVKCommandBuffer::CmdUniform3iv(uint32_t name, int count, const int* value)
 
 bool CVKCommandBuffer::CmdUniform4iv(uint32_t name, int count, const int* value)
 {
-	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
+	if ((m_vkCommandBuffer != VK_NULL_HANDLE) && ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true))) {
 		return true;
 	}
 	else {
@@ -324,7 +324,7 @@ bool CVKCommandBuffer::CmdUniform4iv(uint32_t name, int count, const int* value)
 
 bool CVKCommandBuffer::CmdUniform1fv(uint32_t name, int count, const float* value)
 {
-	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
+	if ((m_vkCommandBuffer != VK_NULL_HANDLE) && ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true))) {
 		return true;
 	}
 	else {
@@ -334,7 +334,7 @@ bool CVKCommandBuffer::CmdUniform1fv(uint32_t name, int count, const float* valu
 
 bool CVKCommandBuffer::CmdUniform2fv(uint32_t name, int count, const float* value)
 {
-	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
+	if ((m_vkCommandBuffer != VK_NULL_HANDLE) && ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true))) {
 		return true;
 	}
 	else {
@@ -344,7 +344,7 @@ bool CVKCommandBuffer::CmdUniform2fv(uint32_t name, int count, const float* valu
 
 bool CVKCommandBuffer::CmdUniform3fv(uint32_t name, int count, const float* value)
 {
-	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
+	if ((m_vkCommandBuffer != VK_NULL_HANDLE) && ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true))) {
 		return true;
 	}
 	else {
@@ -354,7 +354,7 @@ bool CVKCommandBuffer::CmdUniform3fv(uint32_t name, int count, const float* valu
 
 bool CVKCommandBuffer::CmdUniform4fv(uint32_t name, int count, const float* value)
 {
-	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
+	if ((m_vkCommandBuffer != VK_NULL_HANDLE) && ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true))) {
 		return true;
 	}
 	else {
@@ -364,7 +364,7 @@ bool CVKCommandBuffer::CmdUniform4fv(uint32_t name, int count, const float* valu
 
 bool CVKCommandBuffer::CmdUniformMatrix2fv(uint32_t name, int count, const float* value)
 {
-	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
+	if ((m_vkCommandBuffer != VK_NULL_HANDLE) && ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true))) {
 		return true;
 	}
 	else {
@@ -374,7 +374,7 @@ bool CVKCommandBuffer::CmdUniformMatrix2fv(uint32_t name, int count, const float
 
 bool CVKCommandBuffer::CmdUniformMatrix3fv(uint32_t name, int count, const float* value)
 {
-	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
+	if ((m_vkCommandBuffer != VK_NULL_HANDLE) && ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true))) {
 		return true;
 	}
 	else {
@@ -384,7 +384,7 @@ bool CVKCommandBuffer::CmdUniformMatrix3fv(uint32_t name, int count, const float
 
 bool CVKCommandBuffer::CmdUniformMatrix4fv(uint32_t name, int count, const float* value)
 {
-	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
+	if ((m_vkCommandBuffer != VK_NULL_HANDLE) && ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true))) {
 		return true;
 	}
 	else {
@@ -394,7 +394,7 @@ bool CVKCommandBuffer::CmdUniformMatrix4fv(uint32_t name, int count, const float
 
 bool CVKCommandBuffer::CmdSetScissor(int x, int y, int width, int height)
 {
-	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
+	if ((m_vkCommandBuffer != VK_NULL_HANDLE) && ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true))) {
 		return true;
 	}
 	else {
@@ -404,7 +404,7 @@ bool CVKCommandBuffer::CmdSetScissor(int x, int y, int width, int height)
 
 bool CVKCommandBuffer::CmdSetViewport(int x, int y, int width, int height)
 {
-	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
+	if ((m_vkCommandBuffer != VK_NULL_HANDLE) && ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true))) {
 		return true;
 	}
 	else {
@@ -414,7 +414,7 @@ bool CVKCommandBuffer::CmdSetViewport(int x, int y, int width, int height)
 
 bool CVKCommandBuffer::CmdClearDepth(float depth)
 {
-	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
+	if ((m_vkCommandBuffer != VK_NULL_HANDLE) && ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true))) {
 		return true;
 	}
 	else {
@@ -424,7 +424,7 @@ bool CVKCommandBuffer::CmdClearDepth(float depth)
 
 bool CVKCommandBuffer::CmdClearColor(float red, float green, float blue, float alpha)
 {
-	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
+	if ((m_vkCommandBuffer != VK_NULL_HANDLE) && ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true))) {
 		return true;
 	}
 	else {
@@ -434,7 +434,7 @@ bool CVKCommandBuffer::CmdClearColor(float red, float green, float blue, float a
 
 bool CVKCommandBuffer::CmdDrawInstance(const CGfxMeshDrawPtr ptrMeshDraw, const uint8_t* pInstanceBuffer, uint32_t size)
 {
-	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
+	if ((m_vkCommandBuffer != VK_NULL_HANDLE) && ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true))) {
 		return true;
 	}
 	else {
@@ -444,7 +444,7 @@ bool CVKCommandBuffer::CmdDrawInstance(const CGfxMeshDrawPtr ptrMeshDraw, const 
 
 bool CVKCommandBuffer::CmdDrawIndirect(const CGfxMeshDrawPtr ptrMeshDraw, const uint8_t* pInstanceBuffer, uint32_t size)
 {
-	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
+	if ((m_vkCommandBuffer != VK_NULL_HANDLE) && ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true))) {
 		return true;
 	}
 	else {
@@ -454,7 +454,7 @@ bool CVKCommandBuffer::CmdDrawIndirect(const CGfxMeshDrawPtr ptrMeshDraw, const 
 
 bool CVKCommandBuffer::CmdExecute(const CGfxCommandBufferPtr ptrCommandBuffer)
 {
-	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
+	if ((m_vkCommandBuffer != VK_NULL_HANDLE) && ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true))) {
 		return true;
 	}
 	else {
@@ -464,7 +464,7 @@ bool CVKCommandBuffer::CmdExecute(const CGfxCommandBufferPtr ptrCommandBuffer)
 
 bool CVKCommandBuffer::CmdPresent(void)
 {
-	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
+	if ((m_vkCommandBuffer != VK_NULL_HANDLE) && ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true))) {
 		return true;
 	}
 	else {

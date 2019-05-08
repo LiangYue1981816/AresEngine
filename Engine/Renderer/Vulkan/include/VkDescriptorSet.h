@@ -15,7 +15,7 @@ private:
 
 
 private:
-	bool Create(CVKDescriptorPool* pDescriptorPool, const CGfxDescriptorLayoutPtr ptrDescriptorLayout);
+	bool Create(const CGfxDescriptorLayoutPtr ptrDescriptorLayout);
 	void Destroy(void);
 
 private:
@@ -40,9 +40,6 @@ public:
 
 private:
 	VkDescriptorSet m_vkDescriptorSet;
-
-private:
-	CVKDescriptorPool* m_pDescriptorPool;
 	CGfxDescriptorLayoutPtr m_ptrDescriptorLayout;
 
 private:
@@ -50,6 +47,9 @@ private:
 	eastl::unordered_map<uint32_t, DescriptorImageInfo> m_imageDescriptorInfos;
 	eastl::unordered_map<uint32_t, DescriptorImageInfo> m_inputAttachmentDescriptorInfos;
 	eastl::unordered_map<uint32_t, DescriptorBufferInfo> m_bufferDescriptorInfos;
+
+private:
+	CVKDescriptorPool* m_pDescriptorPool;
 
 private:
 	CVKDevice* m_pDevice;

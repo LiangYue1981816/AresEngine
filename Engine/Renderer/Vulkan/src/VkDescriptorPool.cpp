@@ -83,6 +83,7 @@ void CVKDescriptorPool::Destroy(void)
 	}
 
 	m_vkDescriptorPool = VK_NULL_HANDLE;
+	m_pDescriptorSets.clear();
 }
 
 VkDescriptorPool CVKDescriptorPool::GetDescriptorPool(void) const
@@ -92,6 +93,10 @@ VkDescriptorPool CVKDescriptorPool::GetDescriptorPool(void) const
 
 CVKDescriptorSet* CVKDescriptorPool::AllocDescriptorSet(const CGfxDescriptorLayoutPtr ptrDescriptorLayout)
 {
+	if (m_vkDescriptorPool == VK_NULL_HANDLE) {
+		return nullptr;
+	}
+
 	if (m_numSets == 0) {
 		return nullptr;
 	}
@@ -116,6 +121,10 @@ CVKDescriptorSet* CVKDescriptorPool::AllocDescriptorSet(const CGfxDescriptorLayo
 
 bool CVKDescriptorPool::FreeDescriptorSet(CVKDescriptorSet* pDescriptorSet)
 {
+	if (m_vkDescriptorPool == VK_NULL_HANDLE) {
+		return false;
+	}
+
 	m_pDescriptorSets.erase(pDescriptorSet);
 	delete pDescriptorSet;
 
