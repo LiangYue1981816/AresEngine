@@ -19,21 +19,50 @@ CVKMemoryAllocator::CVKMemoryAllocator(CVKDevice* pDevice, uint32_t memoryTypeIn
 	, pNext(nullptr)
 	, pPrev(nullptr)
 {
-	VkMemoryAllocateInfo allocateInfo = {};
-	allocateInfo.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
-	allocateInfo.pNext = nullptr;
-	allocateInfo.allocationSize = m_memoryFullSize;
-	allocateInfo.memoryTypeIndex = m_memoryTypeIndex;
-	vkAllocateMemory(m_pDevice->GetDevice(), &allocateInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkMemory);
-
-	InitNodes();
-	InsertMemory(new CVKMemory(this, m_pDevice, m_memoryFreeSize, 0));
+	Create(memoryTypeIndex, memorySize, memoryAlignment);
 }
 
 CVKMemoryAllocator::~CVKMemoryAllocator(void)
 {
+	Destroy();
+}
+
+bool CVKMemoryAllocator::Create(uint32_t memoryTypeIndex, VkDeviceSize memorySize, VkDeviceSize memoryAlignment)
+{
+	Destroy();
+	{
+		do {
+			m_memoryFreeSize = memorySize;
+			m_memoryFullSize = memorySize;
+			m_memoryAlignment = memoryAlignment;
+			m_memoryTypeIndex = memoryTypeIndex;
+
+			VkMemoryAllocateInfo allocateInfo = {};
+			allocateInfo.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
+			allocateInfo.pNext = nullptr;
+			allocateInfo.allocationSize = memorySize;
+			allocateInfo.memoryTypeIndex = memoryTypeIndex;
+			CALL_VK_FUNCTION_BREAK(vkAllocateMemory(m_pDevice->GetDevice(), &allocateInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkMemory));
+
+			InitNodes();
+			InsertMemory(new CVKMemory(this, m_pDevice, memorySize, 0));
+
+			return true;
+		} while (false);
+	}
+	Destroy();
+	return false;
+}
+
+void CVKMemoryAllocator::Destroy(void)
+{
 	FreeNodes();
-	vkFreeMemory(m_pDevice->GetDevice(), m_vkMemory, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
+
+	if (m_vkMemory) {
+		vkFreeMemory(m_pDevice->GetDevice(), m_vkMemory, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
+	}
+
+	m_vkMemory = VK_NULL_HANDLE;
 }
 
 VkDeviceMemory CVKMemoryAllocator::GetMemory(void) const

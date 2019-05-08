@@ -29,6 +29,10 @@ private:
 
 
 private:
+	bool Create(uint32_t memoryTypeIndex, VkDeviceSize memorySize, VkDeviceSize memoryAlignment);
+	void Destroy(void);
+
+private:
 	VkDeviceMemory GetMemory(void) const;
 
 	VkDeviceSize GetFreeSize(void) const;
