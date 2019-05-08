@@ -15,6 +15,10 @@ private:
 
 
 private:
+	bool Create(CVKDescriptorPool* pDescriptorPool, const CGfxDescriptorLayoutPtr ptrDescriptorLayout);
+	void Destroy(void);
+
+private:
 	CVKDescriptorPool* GetDescriptorPool(void) const;
 
 public:

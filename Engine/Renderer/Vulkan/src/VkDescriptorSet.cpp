@@ -11,24 +11,43 @@ CVKDescriptorSet::CVKDescriptorSet(CVKDevice* pDevice, CVKDescriptorPool* pDescr
 
 	, m_bDirty(false)
 {
-	VkDescriptorSetLayout vkDescriptorSetLayout = ((CVKDescriptorLayout*)ptrDescriptorLayout.GetPointer())->GetDescriptorLayout();
-	VkDescriptorSetAllocateInfo allocInfo = {};
-	allocInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO;
-	allocInfo.pNext = nullptr;
-	allocInfo.descriptorPool = pDescriptorPool->GetDescriptorPool();
-	allocInfo.descriptorSetCount = 1;
-	allocInfo.pSetLayouts = &vkDescriptorSetLayout;
-	vkAllocateDescriptorSets(m_pDevice->GetDevice(), &allocInfo, &m_vkDescriptorSet);
+	Create(pDescriptorPool, ptrDescriptorLayout);
 }
 
 CVKDescriptorSet::~CVKDescriptorSet(void)
 {
-
+	Destroy();
 }
 
 void CVKDescriptorSet::Release(void)
 {
 	m_pDescriptorPool->FreeDescriptorSet(this);
+}
+
+bool CVKDescriptorSet::Create(CVKDescriptorPool* pDescriptorPool, const CGfxDescriptorLayoutPtr ptrDescriptorLayout)
+{
+	Destroy();
+	{
+		do {
+			VkDescriptorSetLayout vkDescriptorSetLayout = ((CVKDescriptorLayout*)ptrDescriptorLayout.GetPointer())->GetDescriptorLayout();
+			VkDescriptorSetAllocateInfo allocInfo = {};
+			allocInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO;
+			allocInfo.pNext = nullptr;
+			allocInfo.descriptorPool = pDescriptorPool->GetDescriptorPool();
+			allocInfo.descriptorSetCount = 1;
+			allocInfo.pSetLayouts = &vkDescriptorSetLayout;
+			CALL_VK_FUNCTION_BREAK(vkAllocateDescriptorSets(m_pDevice->GetDevice(), &allocInfo, &m_vkDescriptorSet));
+
+			return true;
+		} while (false);
+	}
+	Destroy();
+	return false;
+}
+
+void CVKDescriptorSet::Destroy(void)
+{
+	m_vkDescriptorSet = VK_NULL_HANDLE;
 }
 
 CVKDescriptorPool* CVKDescriptorSet::GetDescriptorPool(void) const
