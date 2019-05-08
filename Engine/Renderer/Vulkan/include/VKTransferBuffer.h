@@ -15,6 +15,10 @@ private:
 
 
 private:
+	bool Create(VkQueue vkQueue, VkCommandPool vkCommandPool, VkDeviceSize size);
+	void Destroy(void);
+
+private:
 	VkDeviceSize GetSize(void) const;
 	bool IsTransferFinish(void) const;
 

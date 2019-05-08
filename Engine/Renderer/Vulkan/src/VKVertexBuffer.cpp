@@ -13,12 +13,12 @@ CVKVertexBuffer::CVKVertexBuffer(CVKDevice* pDevice, uint32_t vertexFormat, int 
 {
 	if (bDynamic) {
 		m_ptrBuffer = CVKBufferPtr(new CVKBuffer(pDevice, CGfxSwapChain::SWAPCHAIN_FRAME_COUNT * size, VK_BUFFER_USAGE_VERTEX_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT));
-		CGfxProfiler::IncVertexBufferSize(m_ptrBuffer->GetSize());
 	}
 	else {
 		m_ptrBuffer = CVKBufferPtr(new CVKBuffer(pDevice, size, VK_BUFFER_USAGE_VERTEX_BUFFER_BIT | VK_BUFFER_USAGE_TRANSFER_DST_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT));
-		CGfxProfiler::IncVertexBufferSize(m_ptrBuffer->GetSize());
 	}
+
+	CGfxProfiler::IncVertexBufferSize(m_ptrBuffer->GetSize());
 }
 
 CVKVertexBuffer::~CVKVertexBuffer(void)
