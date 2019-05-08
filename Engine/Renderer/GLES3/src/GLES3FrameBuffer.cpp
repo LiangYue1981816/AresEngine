@@ -17,7 +17,7 @@ CGLES3FrameBuffer::CGLES3FrameBuffer(CGLES3FrameBufferManager* pManager, int wid
 
 CGLES3FrameBuffer::~CGLES3FrameBuffer(void)
 {
-	Destroy();
+	Destroy(true);
 }
 
 void CGLES3FrameBuffer::Release(void)
@@ -37,7 +37,7 @@ int CGLES3FrameBuffer::GetHeight(void) const
 
 bool CGLES3FrameBuffer::Create(const CGfxRenderPassPtr ptrRenderPass)
 {
-	Destroy();
+	Destroy(false);
 
 	glGenFramebuffers(1, &m_fbo);
 	glGenFramebuffers(1, &m_resolve);
@@ -45,7 +45,7 @@ bool CGLES3FrameBuffer::Create(const CGfxRenderPassPtr ptrRenderPass)
 	return true;
 }
 
-void CGLES3FrameBuffer::Destroy(void)
+void CGLES3FrameBuffer::Destroy(bool bClear)
 {
 	if (m_fbo) {
 		glDeleteFramebuffers(1, &m_fbo);
@@ -53,6 +53,10 @@ void CGLES3FrameBuffer::Destroy(void)
 
 	if (m_resolve) {
 		glDeleteFramebuffers(1, &m_resolve);
+	}
+
+	if (bClear) {
+		m_ptrAttachmentTextures.clear();
 	}
 
 	m_fbo = 0;

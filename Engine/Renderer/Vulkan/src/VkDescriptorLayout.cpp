@@ -77,13 +77,13 @@ bool CVKDescriptorLayout::Create(void)
 	return false;
 }
 
-void CVKDescriptorLayout::Destroy(bool bClearBindings)
+void CVKDescriptorLayout::Destroy(bool bClear)
 {
 	if (m_vkDescriptorLayout) {
 		vkDestroyDescriptorSetLayout(m_pDevice->GetDevice(), m_vkDescriptorLayout, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
 	}
 
-	if (bClearBindings) {
+	if (bClear) {
 		m_uniformBlockBindings.clear();
 		m_sampledImageBindings.clear();
 		m_inputAttachmentBindings.clear();

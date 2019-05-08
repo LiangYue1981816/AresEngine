@@ -15,7 +15,7 @@ private:
 
 public:
 	bool Create(void);
-	void Destroy(void);
+	void Destroy(bool bClear = true);
 
 public:
 	bool SetColorAttachment(int indexAttachment, GfxPixelFormat format, int samples, bool bInvalidation, bool bClear, float red = 0.0f, float green = 0.0f, float blue = 0.0f, float alpha = 0.0f);

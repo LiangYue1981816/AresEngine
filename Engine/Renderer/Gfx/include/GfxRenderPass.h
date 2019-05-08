@@ -41,7 +41,7 @@ public:
 
 public:
 	virtual bool Create(void) = 0;
-	virtual void Destroy(void) = 0;
+	virtual void Destroy(bool bClear = true) = 0;
 
 public:
 	virtual bool SetColorAttachment(int indexAttachment, GfxPixelFormat format, int samples, bool bInvalidation, bool bClear, float red = 0.0f, float green = 0.0f, float blue = 0.0f, float alpha = 0.0f) = 0;

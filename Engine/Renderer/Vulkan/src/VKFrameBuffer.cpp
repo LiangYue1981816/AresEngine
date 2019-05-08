@@ -17,7 +17,7 @@ CVKFrameBuffer::CVKFrameBuffer(CVKDevice* pDevice, CVKFrameBufferManager* pManag
 
 CVKFrameBuffer::~CVKFrameBuffer(void)
 {
-	Destroy();
+	Destroy(true);
 }
 
 void CVKFrameBuffer::Release(void)
@@ -42,7 +42,7 @@ int CVKFrameBuffer::GetHeight(void) const
 
 bool CVKFrameBuffer::Create(const CGfxRenderPassPtr ptrRenderPass)
 {
-	Destroy();
+	Destroy(false);
 	{
 		do {
 			eastl::vector<VkImageView> attachments;
@@ -71,14 +71,18 @@ bool CVKFrameBuffer::Create(const CGfxRenderPassPtr ptrRenderPass)
 			return true;
 		} while (false);
 	}
-	Destroy();
+	Destroy(true);
 	return false;
 }
 
-void CVKFrameBuffer::Destroy(void)
+void CVKFrameBuffer::Destroy(bool bClear)
 {
 	if (m_vkFrameBuffer) {
 		vkDestroyFramebuffer(m_pDevice->GetDevice(), m_vkFrameBuffer, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
+	}
+
+	if (bClear) {
+		m_ptrAttachmentTextures.clear();
 	}
 
 	m_vkFrameBuffer = VK_NULL_HANDLE;

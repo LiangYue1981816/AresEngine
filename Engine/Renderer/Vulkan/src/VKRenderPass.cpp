@@ -16,7 +16,7 @@ CVKRenderPass::CVKRenderPass(CVKDevice* pDevice, CVKRenderPassManager* pManager,
 
 CVKRenderPass::~CVKRenderPass(void)
 {
-	Destroy();
+	Destroy(true);
 }
 
 void CVKRenderPass::Release(void)
@@ -126,10 +126,15 @@ bool CVKRenderPass::Create(void)
 	return true;
 }
 
-void CVKRenderPass::Destroy(void)
+void CVKRenderPass::Destroy(bool bClear)
 {
 	if (m_vkRenderPass) {
 		vkDestroyRenderPass(m_pDevice->GetDevice(), m_vkRenderPass, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
+	}
+
+	if (bClear) {
+		m_attachments.clear();
+		m_subpasses.clear();
 	}
 
 	m_vkRenderPass = VK_NULL_HANDLE;

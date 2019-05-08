@@ -19,7 +19,7 @@ public:
 
 public:
 	bool Create(const CGfxRenderPassPtr ptrRenderPass);
-	void Destroy(void);
+	void Destroy(bool bClear = true);
 
 public:
 	bool SetAttachmentTexture(int indexAttachment, const CGfxRenderTexturePtr ptrAttachmentTexture);

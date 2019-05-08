@@ -24,9 +24,9 @@ bool CGLES3DescriptorLayout::Create(void)
 	return true;
 }
 
-void CGLES3DescriptorLayout::Destroy(bool bClearBindings)
+void CGLES3DescriptorLayout::Destroy(bool bClear)
 {
-	if (bClearBindings) {
+	if (bClear) {
 		m_uniformBlockBindings.clear();
 		m_sampledImageBindings.clear();
 		m_inputAttachmentBindings.clear();

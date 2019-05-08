@@ -21,7 +21,7 @@ public:
 
 public:
 	virtual bool Create(const CGfxRenderPassPtr ptrRenderPass) = 0;
-	virtual void Destroy(void) = 0;
+	virtual void Destroy(bool bClear = true) = 0;
 
 public:
 	virtual bool SetAttachmentTexture(int indexAttachment, const CGfxRenderTexturePtr ptrAttachmentTexture) = 0;
