@@ -22,9 +22,9 @@ CVKBuffer::CVKBuffer(CVKDevice* pDevice, VkDeviceSize size, VkBufferUsageFlags b
 	VkMemoryRequirements requirements;
 	vkGetBufferMemoryRequirements(m_pDevice->GetDevice(), m_vkBuffer, &requirements);
 
-	if (m_pMemory = m_pDevice->GetMemoryManager()->AllocMemory(requirements.size, requirements.alignment, requirements.memoryTypeBits, memoryPropertyFlags)) {
-		m_pMemory->BindBuffer(m_vkBuffer);
-	}
+	m_pMemory = m_pDevice->GetMemoryManager()->AllocMemory(requirements.size, requirements.alignment, requirements.memoryTypeBits, memoryPropertyFlags);
+	if (m_pMemory == nullptr) return;
+	if (m_pMemory->BindBuffer(m_vkBuffer) == false) return;
 }
 
 CVKBuffer::~CVKBuffer(void)
