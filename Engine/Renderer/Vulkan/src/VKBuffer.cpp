@@ -8,34 +8,12 @@ CVKBuffer::CVKBuffer(CVKDevice* pDevice, VkDeviceSize size, VkBufferUsageFlags b
 	, m_vkBuffer(VK_NULL_HANDLE)
 	, m_vkBufferUsageFlags(bufferUsageFlags)
 {
-	VkBufferCreateInfo createInfo = {};
-	createInfo.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
-	createInfo.pNext = nullptr;
-	createInfo.flags = 0;
-	createInfo.size = size;
-	createInfo.usage = bufferUsageFlags;
-	createInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
-	createInfo.queueFamilyIndexCount = 0;
-	createInfo.pQueueFamilyIndices = nullptr;
-	CALL_VK_FUNCTION_RETURN(vkCreateBuffer(m_pDevice->GetDevice(), &createInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkBuffer));
-
-	VkMemoryRequirements requirements;
-	vkGetBufferMemoryRequirements(m_pDevice->GetDevice(), m_vkBuffer, &requirements);
-
-	m_pMemory = m_pDevice->GetMemoryManager()->AllocMemory(requirements.size, requirements.alignment, requirements.memoryTypeBits, memoryPropertyFlags);
-	if (m_pMemory == nullptr) return;
-	if (m_pMemory->BindBuffer(m_vkBuffer) == false) return;
+	Create(size, bufferUsageFlags, memoryPropertyFlags);
 }
 
 CVKBuffer::~CVKBuffer(void)
 {
-	if (m_vkBuffer) {
-		vkDestroyBuffer(m_pDevice->GetDevice(), m_vkBuffer, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
-	}
-
-	if (m_pMemory) {
-		m_pDevice->GetMemoryManager()->FreeMemory(m_pMemory);
-	}
+	Destroy();
 }
 
 void CVKBuffer::Release(void)
@@ -56,6 +34,50 @@ VkDeviceSize CVKBuffer::GetSize(void) const
 	else {
 		return 0;
 	}
+}
+
+bool CVKBuffer::Create(VkDeviceSize size, VkBufferUsageFlags bufferUsageFlags, VkMemoryPropertyFlags memoryPropertyFlags)
+{
+	Destroy();
+	{
+		do {
+			VkBufferCreateInfo createInfo = {};
+			createInfo.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
+			createInfo.pNext = nullptr;
+			createInfo.flags = 0;
+			createInfo.size = size;
+			createInfo.usage = bufferUsageFlags;
+			createInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
+			createInfo.queueFamilyIndexCount = 0;
+			createInfo.pQueueFamilyIndices = nullptr;
+			CALL_VK_FUNCTION_BREAK(vkCreateBuffer(m_pDevice->GetDevice(), &createInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkBuffer));
+
+			VkMemoryRequirements requirements;
+			vkGetBufferMemoryRequirements(m_pDevice->GetDevice(), m_vkBuffer, &requirements);
+
+			m_pMemory = m_pDevice->GetMemoryManager()->AllocMemory(requirements.size, requirements.alignment, requirements.memoryTypeBits, memoryPropertyFlags);
+			if (m_pMemory == nullptr) break;
+			if (m_pMemory->BindBuffer(m_vkBuffer) == false) break;
+
+			return true;
+		} while (false);
+	}
+	Destroy();
+	return false;
+}
+
+void CVKBuffer::Destroy(void)
+{
+	if (m_vkBuffer) {
+		vkDestroyBuffer(m_pDevice->GetDevice(), m_vkBuffer, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
+	}
+
+	if (m_pMemory) {
+		m_pDevice->GetMemoryManager()->FreeMemory(m_pMemory);
+	}
+
+	m_vkBuffer = VK_NULL_HANDLE;
+	m_pMemory = nullptr;
 }
 
 bool CVKBuffer::BufferData(size_t offset, size_t size, const void* data)
