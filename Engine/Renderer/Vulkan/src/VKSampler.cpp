@@ -31,7 +31,9 @@ CVKSampler::CVKSampler(CVKDevice* pDevice, GfxFilter minFilter, GfxFilter magFil
 
 CVKSampler::~CVKSampler(void)
 {
-	vkDestroySampler(m_pDevice->GetDevice(), m_vkSampler, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
+	if (m_vkSampler) {
+		vkDestroySampler(m_pDevice->GetDevice(), m_vkSampler, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
+	}
 }
 
 VkSampler CVKSampler::GetSampler(void) const

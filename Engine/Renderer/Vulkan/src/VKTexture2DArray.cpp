@@ -21,52 +21,97 @@ void CVKTexture2DArray::Release(void)
 
 VkImageView CVKTexture2DArray::GetImageView(void) const
 {
-	return m_ptrTexture->GetImageView();
+	if (m_ptrTexture) {
+		return m_ptrTexture->GetImageView();
+	}
+	else {
+		return VK_NULL_HANDLE;
+	}
 }
 
 VkImageLayout CVKTexture2DArray::GetImageLayout(void) const
 {
-	return m_ptrTexture->GetImageLayout();
+	if (m_ptrTexture) {
+		return m_ptrTexture->GetImageLayout();
+	}
+	else {
+		return VK_IMAGE_LAYOUT_UNDEFINED;
+	}
 }
 
 VkImageAspectFlags CVKTexture2DArray::GetImageAspectFlags(void) const
 {
-	return m_ptrTexture->GetImageAspectFlags();
+	if (m_ptrTexture) {
+		return m_ptrTexture->GetImageAspectFlags();
+	}
+	else {
+		return 0;
+	}
 }
 
 GfxTextureType CVKTexture2DArray::GetType(void) const
 {
-	return m_ptrTexture->GetType();
+	if (m_ptrTexture) {
+		return m_ptrTexture->GetType();
+	}
+	else {
+		return GFX_TEXTURE_2D_ARRAY;
+	}
 }
 
 GfxPixelFormat CVKTexture2DArray::GetFormat(void) const
 {
-	return m_ptrTexture->GetFormat();
+	if (m_ptrTexture) {
+		return m_ptrTexture->GetFormat();
+	}
+	else {
+		return GFX_PIXELFORMAT_UNDEFINED;
+	}
 }
 
 int CVKTexture2DArray::GetWidth(void) const
 {
-	return m_ptrTexture->GetWidth();
+	if (m_ptrTexture) {
+		return m_ptrTexture->GetWidth();
+	}
+	else {
+		return 0;
+	}
 }
 
 int CVKTexture2DArray::GetHeight(void) const
 {
-	return m_ptrTexture->GetHeight();
+	if (m_ptrTexture) {
+		return m_ptrTexture->GetHeight();
+	}
+	else {
+		return 0;
+	}
 }
 
 int CVKTexture2DArray::GetLayers(void) const
 {
-	return m_ptrTexture->GetLayers();
+	if (m_ptrTexture) {
+		return m_ptrTexture->GetLayers();
+	}
+	else {
+		return 0;
+	}
 }
 
 int CVKTexture2DArray::GetLevels(void) const
 {
-	return m_ptrTexture->GetLevels();
+	if (m_ptrTexture) {
+		return m_ptrTexture->GetLevels();
+	}
+	else {
+		return 0;
+	}
 }
 
 bool CVKTexture2DArray::Create(GfxPixelFormat format, int width, int height, int layers, int levels)
 {
-	if (CVKHelper::IsFormatSupported((VkFormat)format) && CVKHelper::IsFormatDepthOrStencil((VkFormat)format) == false) {
+	if (m_ptrTexture && CVKHelper::IsFormatSupported((VkFormat)format) && CVKHelper::IsFormatDepthOrStencil((VkFormat)format) == false) {
 		return m_ptrTexture->Create(GFX_TEXTURE_2D_ARRAY, format, width, height, layers, levels, 1, VK_IMAGE_ASPECT_COLOR_BIT, VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_IMAGE_TILING_OPTIMAL);
 	}
 	else {
@@ -76,15 +121,27 @@ bool CVKTexture2DArray::Create(GfxPixelFormat format, int width, int height, int
 
 void CVKTexture2DArray::Destroy(void)
 {
-	return m_ptrTexture->Destroy();
+	if (m_ptrTexture) {
+		m_ptrTexture->Destroy();
+	}
 }
 
 bool CVKTexture2DArray::Texture2DArrayData(GfxPixelFormat format, int layer, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
 {
-	return m_ptrTexture->Texture2DArrayData(format, layer, level, xoffset, yoffset, width, height, size, data);
+	if (m_ptrTexture) {
+		return m_ptrTexture->Texture2DArrayData(format, layer, level, xoffset, yoffset, width, height, size, data);
+	}
+	else {
+		return false;
+	}
 }
 
 bool CVKTexture2DArray::Texture2DArrayDataCompressed(GfxPixelFormat format, int layer, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
 {
-	return m_ptrTexture->Texture2DArrayData(format, layer, level, xoffset, yoffset, width, height, size, data);
+	if (m_ptrTexture) {
+		return m_ptrTexture->Texture2DArrayData(format, layer, level, xoffset, yoffset, width, height, size, data);
+	}
+	else {
+		return false;
+	}
 }
