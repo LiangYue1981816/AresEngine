@@ -29,7 +29,7 @@ glm::aabb CVKMeshDraw::GetLocalAABB(void) const
 
 GfxIndexType CVKMeshDraw::GetIndexType(void) const
 {
-	if (m_ptrMesh.IsValid()) {
+	if (m_ptrMesh) {
 		return m_ptrMesh->GetIndexBuffer()->GetIndexType();
 	}
 	else {
@@ -63,7 +63,7 @@ uint32_t CVKMeshDraw::GetIndexOffset(void) const
 
 uint32_t CVKMeshDraw::GetVertexFormat(void) const
 {
-	if (m_ptrMesh.IsValid()) {
+	if (m_ptrMesh) {
 		return m_ptrMesh->GetVertexBuffer()->GetVertexFormat();
 	}
 	else {
@@ -73,7 +73,7 @@ uint32_t CVKMeshDraw::GetVertexFormat(void) const
 
 uint32_t CVKMeshDraw::GetVertexCount(void) const
 {
-	if (m_ptrMesh.IsValid()) {
+	if (m_ptrMesh) {
 		return m_ptrMesh->GetVertexBuffer()->GetVertexCount();
 	}
 	else {
@@ -113,7 +113,7 @@ bool CVKMeshDraw::InstanceBufferData(size_t size, const void* data)
 
 void CVKMeshDraw::Bind(VkCommandBuffer vkCommandBuffer)
 {
-	if (m_ptrMesh.IsValid()) {
+	if (m_ptrMesh) {
 		((CVKIndexBuffer*)m_ptrMesh->GetIndexBuffer())->Bind(vkCommandBuffer);
 		((CVKVertexBuffer*)m_ptrMesh->GetVertexBuffer())->Bind(vkCommandBuffer);
 		((CVKVertexBuffer*)m_pInstanceBuffer)->Bind(vkCommandBuffer);
