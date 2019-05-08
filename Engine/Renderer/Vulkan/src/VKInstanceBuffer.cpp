@@ -47,14 +47,14 @@ bool CVKInstanceBuffer::BufferData(size_t size, const void* data)
 	m_count = size / GetInstanceStride(m_format);
 
 	if (m_size < size) {
-		CGfxProfiler::DecInstanceBufferSize(m_size);
+		CGfxProfiler::DecInstanceBufferSize(m_ptrBuffer->GetSize());
 		{
 			m_size = INSTANCE_BUFFER_SIZE;
 			while (m_size < size) m_size <<= 1;
 
 			m_ptrBuffer = CVKBufferPtr(new CVKBuffer(m_pDevice, CGfxSwapChain::SWAPCHAIN_FRAME_COUNT * m_size, VK_BUFFER_USAGE_VERTEX_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT));
 		}
-		CGfxProfiler::IncInstanceBufferSize(m_size);
+		CGfxProfiler::IncInstanceBufferSize(m_ptrBuffer->GetSize());
 	}
 
 	m_offset = VKRenderer()->GetSwapChain()->GetFrameIndex() * m_size;
