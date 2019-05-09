@@ -28,18 +28,21 @@ uint32_t CGLES3Buffer::GetTarget(void) const
 
 uint32_t CGLES3Buffer::GetBuffer(void) const
 {
+	ASSERT(m_buffer);
 	return m_buffer;
 }
 
 uint32_t CGLES3Buffer::GetSize(void) const
 {
+	ASSERT(m_size);
 	return m_size;
 }
 
 bool CGLES3Buffer::BufferSize(size_t size, bool bDynamic)
 {
-	m_size = size;
+	ASSERT(size);
 
+	m_size = size;
 	glBindBuffer(m_target, m_buffer);
 	glBufferData(m_target, m_size, nullptr, bDynamic ? GL_DYNAMIC_DRAW : GL_STATIC_DRAW);
 	glBindBuffer(m_target, 0);
@@ -49,20 +52,19 @@ bool CGLES3Buffer::BufferSize(size_t size, bool bDynamic)
 
 bool CGLES3Buffer::BufferData(size_t offset, size_t size, const void* data, bool bSync)
 {
-	if (m_size >= (uint32_t)(offset + size)) {
-		void* addr = nullptr;
+	ASSERT(data);
+	ASSERT(size);
+	ASSERT(m_size >= (uint32_t)(offset + size));
 
-		glBindBuffer(m_target, m_buffer);
-		glMapBufferRangeAddress(m_target, offset, size, bSync ? GL_MAP_WRITE_BIT : GL_MAP_WRITE_BIT | GL_MAP_UNSYNCHRONIZED_BIT, &addr);
-		glMemcpy(addr, data, size);
-		glUnmapBuffer(m_target);
-		glBindBuffer(m_target, 0);
+	void* addr = nullptr;
 
-		return true;
-	}
-	else {
-		return false;
-	}
+	glBindBuffer(m_target, m_buffer);
+	glMapBufferRangeAddress(m_target, offset, size, bSync ? GL_MAP_WRITE_BIT : GL_MAP_WRITE_BIT | GL_MAP_UNSYNCHRONIZED_BIT, &addr);
+	glMemcpy(addr, data, size);
+	glUnmapBuffer(m_target);
+	glBindBuffer(m_target, 0);
+
+	return true;
 }
 
 void CGLES3Buffer::Bind(void) const
@@ -72,9 +74,8 @@ void CGLES3Buffer::Bind(void) const
 
 void CGLES3Buffer::Bind(int binding, int offset, int size) const
 {
-	if (m_size < (uint32_t)(offset + size)) {
-		return;
-	}
+	ASSERT(size);
+	ASSERT(m_size >= (uint32_t)(offset + size));
 
 	GLBindBufferRange(m_target, binding, m_buffer, offset, size);
 }

@@ -43,10 +43,10 @@ CGLES3Material* CGLES3MaterialManager::Create(uint32_t name)
 
 CGLES3Material* CGLES3MaterialManager::Create(const char* szFileName, int vertexBinding, int instanceBinding, int baseLevel, int numLevels)
 {
-	uint32_t name = HashValue(szFileName);
-
 	mutex_autolock autolock(&lock);
 	{
+		uint32_t name = HashValue(szFileName);
+
 		if (m_pMaterials[name] == nullptr) {
 			m_pMaterials[name] = new CGLES3Material(this, name);
 			ResourceLoader()->LoadMaterial(szFileName, m_pMaterials[name], vertexBinding, instanceBinding, baseLevel, numLevels);

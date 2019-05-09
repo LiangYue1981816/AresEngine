@@ -109,6 +109,8 @@ bool CGLES3DescriptorLayout::IsInputAttachmentValid(uint32_t name) const
 
 bool CGLES3DescriptorLayout::IsCompatible(const CGfxDescriptorLayoutPtr ptrLayout) const
 {
+	ASSERT(ptrLayout);
+
 	if (m_set != ((CGLES3DescriptorLayout*)ptrLayout.GetPointer())->m_set) {
 		return false;
 	}

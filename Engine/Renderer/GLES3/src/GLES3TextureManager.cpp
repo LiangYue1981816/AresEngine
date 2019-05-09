@@ -43,10 +43,10 @@ CGLES3Texture2D* CGLES3Texture2DManager::Create(uint32_t name)
 
 CGLES3Texture2D* CGLES3Texture2DManager::Create(const char* szFileName, int baseLevel, int numLevels)
 {
-	uint32_t name = HashValue(szFileName);
-
 	mutex_autolock autolock(&lock);
 	{
+		uint32_t name = HashValue(szFileName);
+
 		if (m_pTextures[name] == nullptr) {
 			m_pTextures[name] = new CGLES3Texture2D(this, name);
 			ResourceLoader()->LoadTexture2D(szFileName, m_pTextures[name], baseLevel, numLevels);
@@ -111,10 +111,10 @@ CGLES3Texture2DArray* CGLES3Texture2DArrayManager::Create(uint32_t name)
 
 CGLES3Texture2DArray* CGLES3Texture2DArrayManager::Create(const char* szFileName, int baseLevel, int numLevels)
 {
-	uint32_t name = HashValue(szFileName);
-
 	mutex_autolock autolock(&lock);
 	{
+		uint32_t name = HashValue(szFileName);
+
 		if (m_pTextures[name] == nullptr) {
 			m_pTextures[name] = new CGLES3Texture2DArray(this, name);
 			ResourceLoader()->LoadTexture2DArray(szFileName, m_pTextures[name], baseLevel, numLevels);
@@ -179,10 +179,10 @@ CGLES3TextureCubemap* CGLES3TextureCubemapManager::Create(uint32_t name)
 
 CGLES3TextureCubemap* CGLES3TextureCubemapManager::Create(const char* szFileName, int baseLevel, int numLevels)
 {
-	uint32_t name = HashValue(szFileName);
-
 	mutex_autolock autolock(&lock);
 	{
+		uint32_t name = HashValue(szFileName);
+
 		if (m_pTextures[name] == nullptr) {
 			m_pTextures[name] = new CGLES3TextureCubemap(this, name);
 			ResourceLoader()->LoadTextureCubemap(szFileName, m_pTextures[name], baseLevel, numLevels);

@@ -20,5 +20,6 @@ CGLES3Sampler::~CGLES3Sampler(void)
 
 void CGLES3Sampler::Bind(uint32_t unit) const
 {
+	ASSERT(m_sampler);
 	GLBindSampler(unit, m_sampler);
 }

@@ -43,10 +43,10 @@ CGLES3Mesh* CGLES3MeshManager::Create(uint32_t name)
 
 CGLES3Mesh* CGLES3MeshManager::Create(const char* szFileName, int vertexBinding)
 {
-	uint32_t name = HashValue(szFileName);
-
 	mutex_autolock autolock(&lock);
 	{
+		uint32_t name = HashValue(szFileName);
+
 		if (m_pMeshs[name] == nullptr) {
 			m_pMeshs[name] = new CGLES3Mesh(this, name);
 			ResourceLoader()->LoadMesh(szFileName, m_pMeshs[name], vertexBinding);

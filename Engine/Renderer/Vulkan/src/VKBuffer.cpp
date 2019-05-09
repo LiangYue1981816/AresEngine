@@ -83,29 +83,30 @@ VkDeviceSize CVKBuffer::GetSize(void) const
 
 bool CVKBuffer::BufferData(size_t offset, size_t size, const void* data)
 {
+	ASSERT(data);
+	ASSERT(size);
 	ASSERT(m_pMemory);
+	ASSERT(m_pMemory->GetSize() >= offset + size);
 
-	if (m_pMemory->GetSize() >= offset + size) {
-		if (m_pMemory->IsHostVisible()) {
-			CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->BeginMap(offset, size));
-			CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->CopyData(0, size, data));
-			CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->EndMap());
-			return true;
-		}
-		else {
-			VkAccessFlags dstAccessFlags = CVKHelper::GetAccessMaskByBufferUsage(m_vkBufferUsageFlags);
-			VkPipelineStageFlags dstPipelineStageFlags = CVKHelper::GetPipelineStageFlagsByBufferUsage(m_vkBufferUsageFlags);
-			return m_pDevice->GetTransferManager()->TransferBufferData(this, dstAccessFlags, dstPipelineStageFlags, offset, size, data);
-		}
+	if (m_pMemory->IsHostVisible()) {
+		CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->BeginMap(offset, size));
+		CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->CopyData(0, size, data));
+		CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->EndMap());
+		return true;
 	}
 	else {
-		return false;
+		VkAccessFlags dstAccessFlags = CVKHelper::GetAccessMaskByBufferUsage(m_vkBufferUsageFlags);
+		VkPipelineStageFlags dstPipelineStageFlags = CVKHelper::GetPipelineStageFlagsByBufferUsage(m_vkBufferUsageFlags);
+		return m_pDevice->GetTransferManager()->TransferBufferData(this, dstAccessFlags, dstPipelineStageFlags, offset, size, data);
 	}
 }
 
 bool CVKBuffer::PipelineBarrier(VkCommandBuffer vkCommandBuffer, VkAccessFlags srcAccessFlags, VkAccessFlags dstAccessFlags, VkPipelineStageFlags srcPipelineStageFlags, VkPipelineStageFlags dstPipelineStageFlags, VkDeviceSize offset, VkDeviceSize size)
 {
 	ASSERT(m_vkBuffer);
+	ASSERT(m_pMemory);
+	ASSERT(m_pMemory->GetSize() >= offset + size);
+
 	CALL_VK_FUNCTION_ASSERT(vkCmdBufferMemoryBarrier(vkCommandBuffer, m_vkBuffer, srcAccessFlags, dstAccessFlags, srcPipelineStageFlags, dstPipelineStageFlags, offset, size));
 	return true;
 }

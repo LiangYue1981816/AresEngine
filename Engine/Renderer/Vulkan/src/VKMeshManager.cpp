@@ -44,10 +44,10 @@ CVKMesh* CVKMeshManager::Create(uint32_t name)
 
 CVKMesh* CVKMeshManager::Create(const char* szFileName, int vertexBinding)
 {
-	uint32_t name = HashValue(szFileName);
-
 	mutex_autolock autolock(&lock);
 	{
+		uint32_t name = HashValue(szFileName);
+
 		if (m_pMeshs[name] == nullptr) {
 			m_pMeshs[name] = new CVKMesh(m_pDevice, this, name);
 			ResourceLoader()->LoadMesh(szFileName, m_pMeshs[name], vertexBinding);

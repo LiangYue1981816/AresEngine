@@ -28,7 +28,6 @@ bool CVKDescriptorSet::Create(const CGfxDescriptorLayoutPtr ptrDescriptorLayout)
 	{
 		do {
 			ASSERT(ptrDescriptorLayout);
-
 			m_ptrDescriptorLayout = ptrDescriptorLayout;
 
 			VkDescriptorSetLayout vkDescriptorSetLayout = ((CVKDescriptorLayout*)ptrDescriptorLayout.GetPointer())->GetDescriptorLayout();
@@ -61,10 +60,12 @@ CVKDescriptorPool* CVKDescriptorSet::GetDescriptorPool(void) const
 
 bool CVKDescriptorSet::SetTexture2D(uint32_t name, const CGfxTexture2DPtr ptrTexture, const CGfxSampler* pSampler)
 {
-	ASSERT(ptrTexture);
 	ASSERT(pSampler);
+	ASSERT(ptrTexture);
+	ASSERT(m_vkDescriptorSet);
+	ASSERT(m_ptrDescriptorLayout);
 
-	if (m_vkDescriptorSet != VK_NULL_HANDLE && m_ptrDescriptorLayout->IsSampledImageValid(name)) {
+	if (m_ptrDescriptorLayout->IsSampledImageValid(name)) {
 		m_imageDescriptorInfos[name].pSampler = (CGfxSampler*)pSampler;
 		m_imageDescriptorInfos[name].ptrTexture2D = ptrTexture;
 		m_imageDescriptorInfos[name].ptrTexture2DArray.Release();
@@ -80,10 +81,12 @@ bool CVKDescriptorSet::SetTexture2D(uint32_t name, const CGfxTexture2DPtr ptrTex
 
 bool CVKDescriptorSet::SetTexture2DArray(uint32_t name, const CGfxTexture2DArrayPtr ptrTexture, const CGfxSampler* pSampler)
 {
-	ASSERT(ptrTexture);
 	ASSERT(pSampler);
+	ASSERT(ptrTexture);
+	ASSERT(m_vkDescriptorSet);
+	ASSERT(m_ptrDescriptorLayout);
 
-	if (m_vkDescriptorSet != VK_NULL_HANDLE && m_ptrDescriptorLayout->IsSampledImageValid(name)) {
+	if (m_ptrDescriptorLayout->IsSampledImageValid(name)) {
 		m_imageDescriptorInfos[name].pSampler = (CGfxSampler*)pSampler;
 		m_imageDescriptorInfos[name].ptrTexture2D.Release();
 		m_imageDescriptorInfos[name].ptrTexture2DArray = ptrTexture;
@@ -99,10 +102,12 @@ bool CVKDescriptorSet::SetTexture2DArray(uint32_t name, const CGfxTexture2DArray
 
 bool CVKDescriptorSet::SetTextureCubemap(uint32_t name, const CGfxTextureCubemapPtr ptrTexture, const CGfxSampler* pSampler)
 {
-	ASSERT(ptrTexture);
 	ASSERT(pSampler);
+	ASSERT(ptrTexture);
+	ASSERT(m_vkDescriptorSet);
+	ASSERT(m_ptrDescriptorLayout);
 
-	if (m_vkDescriptorSet != VK_NULL_HANDLE && m_ptrDescriptorLayout->IsSampledImageValid(name)) {
+	if (m_ptrDescriptorLayout->IsSampledImageValid(name)) {
 		m_imageDescriptorInfos[name].pSampler = (CGfxSampler*)pSampler;
 		m_imageDescriptorInfos[name].ptrTexture2D.Release();
 		m_imageDescriptorInfos[name].ptrTexture2DArray.Release();
@@ -118,10 +123,12 @@ bool CVKDescriptorSet::SetTextureCubemap(uint32_t name, const CGfxTextureCubemap
 
 bool CVKDescriptorSet::SetTextureInputAttachment(uint32_t name, const CGfxRenderTexturePtr ptrTexture, const CGfxSampler* pSampler)
 {
-	ASSERT(ptrTexture);
 	ASSERT(pSampler);
+	ASSERT(ptrTexture);
+	ASSERT(m_vkDescriptorSet);
+	ASSERT(m_ptrDescriptorLayout);
 
-	if (m_vkDescriptorSet != VK_NULL_HANDLE && m_ptrDescriptorLayout->IsSampledImageValid(name)) {
+	if (m_ptrDescriptorLayout->IsSampledImageValid(name)) {
 		m_imageDescriptorInfos[name].pSampler = (CGfxSampler*)pSampler;
 		m_imageDescriptorInfos[name].ptrTexture2D.Release();
 		m_imageDescriptorInfos[name].ptrTexture2DArray.Release();
@@ -138,8 +145,10 @@ bool CVKDescriptorSet::SetTextureInputAttachment(uint32_t name, const CGfxRender
 bool CVKDescriptorSet::SetUniformBuffer(uint32_t name, const CGfxUniformBufferPtr ptrUniformBuffer, uint32_t offset, uint32_t range)
 {
 	ASSERT(ptrUniformBuffer);
+	ASSERT(m_vkDescriptorSet);
+	ASSERT(m_ptrDescriptorLayout);
 
-	if (m_vkDescriptorSet != VK_NULL_HANDLE && m_ptrDescriptorLayout->IsUniformBlockValid(name)) {
+	if (m_ptrDescriptorLayout->IsUniformBlockValid(name)) {
 		m_bufferDescriptorInfos[name].offset = offset;
 		m_bufferDescriptorInfos[name].range = range;
 		m_bufferDescriptorInfos[name].ptrUniformBuffer = ptrUniformBuffer;

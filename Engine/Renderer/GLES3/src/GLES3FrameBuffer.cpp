@@ -37,6 +37,8 @@ int CGLES3FrameBuffer::GetHeight(void) const
 
 bool CGLES3FrameBuffer::Create(const CGfxRenderPassPtr ptrRenderPass)
 {
+	ASSERT(ptrRenderPass);
+
 	Destroy(false);
 
 	glGenFramebuffers(1, &m_fbo);
@@ -47,16 +49,16 @@ bool CGLES3FrameBuffer::Create(const CGfxRenderPassPtr ptrRenderPass)
 
 void CGLES3FrameBuffer::Destroy(bool bClear)
 {
+	if (bClear) {
+		m_ptrAttachmentTextures.clear();
+	}
+
 	if (m_fbo) {
 		glDeleteFramebuffers(1, &m_fbo);
 	}
 
 	if (m_resolve) {
 		glDeleteFramebuffers(1, &m_resolve);
-	}
-
-	if (bClear) {
-		m_ptrAttachmentTextures.clear();
 	}
 
 	m_fbo = 0;
@@ -88,6 +90,9 @@ const CGfxRenderTexturePtr CGLES3FrameBuffer::GetAttachmentTexture(int indexAtta
 
 void CGLES3FrameBuffer::Bind(const AttachmentInformation* pAttachmentInformations, const SubpassInformation* pSubpassInformation) const
 {
+	ASSERT(pAttachmentInformations);
+	ASSERT(pSubpassInformation);
+
 	GLBindFramebuffer(GL_FRAMEBUFFER, m_fbo);
 	{
 		uint32_t indexAttachment = 0;
@@ -124,6 +129,9 @@ void CGLES3FrameBuffer::Bind(const AttachmentInformation* pAttachmentInformation
 
 void CGLES3FrameBuffer::Resolve(const AttachmentInformation* pAttachmentInformations, const SubpassInformation* pSubpassInformation) const
 {
+	ASSERT(pAttachmentInformations);
+	ASSERT(pSubpassInformation);
+
 	if (pSubpassInformation->resolveAttachments.empty()) {
 		return;
 	}
@@ -165,6 +173,9 @@ void CGLES3FrameBuffer::Resolve(const AttachmentInformation* pAttachmentInformat
 
 void CGLES3FrameBuffer::InvalidateFramebuffer(const AttachmentInformation* pAttachmentInformations, const SubpassInformation* pSubpassInformation) const
 {
+	ASSERT(pAttachmentInformations);
+	ASSERT(pSubpassInformation);
+
 	eastl::vector<uint32_t> discardBuffers;
 	{
 		uint32_t indexAttachment = 0;

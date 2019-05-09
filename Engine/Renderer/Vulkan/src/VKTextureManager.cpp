@@ -44,10 +44,10 @@ CVKTexture2D* CVKTexture2DManager::Create(uint32_t name)
 
 CVKTexture2D* CVKTexture2DManager::Create(const char* szFileName, int baseLevel, int numLevels)
 {
-	uint32_t name = HashValue(szFileName);
-
 	mutex_autolock autolock(&lock);
 	{
+		uint32_t name = HashValue(szFileName);
+
 		if (m_pTextures[name] == nullptr) {
 			m_pTextures[name] = new CVKTexture2D(m_pDevice, this, name);
 			ResourceLoader()->LoadTexture2D(szFileName, m_pTextures[name], baseLevel, numLevels);
@@ -113,10 +113,10 @@ CVKTexture2DArray* CVKTexture2DArrayManager::Create(uint32_t name)
 
 CVKTexture2DArray* CVKTexture2DArrayManager::Create(const char* szFileName, int baseLevel, int numLevels)
 {
-	uint32_t name = HashValue(szFileName);
-
 	mutex_autolock autolock(&lock);
 	{
+		uint32_t name = HashValue(szFileName);
+
 		if (m_pTextures[name] == nullptr) {
 			m_pTextures[name] = new CVKTexture2DArray(m_pDevice, this, name);
 			ResourceLoader()->LoadTexture2DArray(szFileName, m_pTextures[name], baseLevel, numLevels);
@@ -182,10 +182,10 @@ CVKTextureCubemap* CVKTextureCubemapManager::Create(uint32_t name)
 
 CVKTextureCubemap* CVKTextureCubemapManager::Create(const char* szFileName, int baseLevel, int numLevels)
 {
-	uint32_t name = HashValue(szFileName);
-
 	mutex_autolock autolock(&lock);
 	{
+		uint32_t name = HashValue(szFileName);
+
 		if (m_pTextures[name] == nullptr) {
 			m_pTextures[name] = new CVKTextureCubemap(m_pDevice, this, name);
 			ResourceLoader()->LoadTextureCubemap(szFileName, m_pTextures[name], baseLevel, numLevels);

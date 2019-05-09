@@ -44,6 +44,10 @@ VkDeviceSize CVKMemory::GetOffset(void) const
 
 bool CVKMemory::BindImage(VkImage vkImage) const
 {
+	ASSERT(vkImage);
+	ASSERT(m_pAllocator);
+	ASSERT(m_pAllocator->GetMemory());
+
 	VkMemoryRequirements requirements;
 	vkGetImageMemoryRequirements(m_pDevice->GetDevice(), vkImage, &requirements);
 
@@ -56,6 +60,10 @@ bool CVKMemory::BindImage(VkImage vkImage) const
 
 bool CVKMemory::BindBuffer(VkBuffer vkBuffer) const
 {
+	ASSERT(vkBuffer);
+	ASSERT(m_pAllocator);
+	ASSERT(m_pAllocator->GetMemory());
+
 	VkMemoryRequirements requirements;
 	vkGetBufferMemoryRequirements(m_pDevice->GetDevice(), vkBuffer, &requirements);
 
@@ -68,19 +76,15 @@ bool CVKMemory::BindBuffer(VkBuffer vkBuffer) const
 
 bool CVKMemory::BeginMap(VkDeviceSize offset, VkDeviceSize size)
 {
+	ASSERT(size);
+	ASSERT(m_memorySize >= offset + size);
+	ASSERT(m_memoryMapAddress == nullptr);
+
 	if (IsHostVisible() == false) {
 		return false;
 	}
 
 	if (IsHostCoherent() == false) {
-		return false;
-	}
-
-	if (m_memoryMapAddress != nullptr) {
-		return false;
-	}
-
-	if (m_memorySize < offset + size) {
 		return false;
 	}
 
@@ -96,19 +100,16 @@ bool CVKMemory::BeginMap(VkDeviceSize offset, VkDeviceSize size)
 
 bool CVKMemory::CopyData(VkDeviceSize offset, VkDeviceSize size, const void* data)
 {
+	ASSERT(data);
+	ASSERT(size);
+	ASSERT(m_memoryMapAddress);
+	ASSERT(m_memoryMapSize >= offset + size);
+
 	if (IsHostVisible() == false) {
 		return false;
 	}
 
 	if (IsHostCoherent() == false) {
-		return false;
-	}
-
-	if (m_memoryMapAddress == nullptr) {
-		return false;
-	}
-
-	if (m_memoryMapSize < offset + size) {
 		return false;
 	}
 
@@ -118,15 +119,13 @@ bool CVKMemory::CopyData(VkDeviceSize offset, VkDeviceSize size, const void* dat
 
 bool CVKMemory::EndMap(void)
 {
+	ASSERT(m_memoryMapAddress);
+
 	if (IsHostVisible() == false) {
 		return false;
 	}
 
 	if (IsHostCoherent() == false) {
-		return false;
-	}
-
-	if (m_memoryMapAddress == nullptr) {
 		return false;
 	}
 

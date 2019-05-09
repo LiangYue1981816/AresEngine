@@ -21,6 +21,10 @@ void CGLES3DescriptorSet::Release(void)
 
 bool CGLES3DescriptorSet::SetTexture2D(uint32_t name, const CGfxTexture2DPtr ptrTexture, const CGfxSampler* pSampler)
 {
+	ASSERT(pSampler);
+	ASSERT(ptrTexture);
+	ASSERT(m_ptrDescriptorLayout);
+
 	if (m_ptrDescriptorLayout->IsSampledImageValid(name)) {
 		m_imageDescriptorInfos[name].pSampler = (CGfxSampler*)pSampler;
 		m_imageDescriptorInfos[name].ptrTexture2D = ptrTexture;
@@ -36,6 +40,10 @@ bool CGLES3DescriptorSet::SetTexture2D(uint32_t name, const CGfxTexture2DPtr ptr
 
 bool CGLES3DescriptorSet::SetTexture2DArray(uint32_t name, const CGfxTexture2DArrayPtr ptrTexture, const CGfxSampler* pSampler)
 {
+	ASSERT(pSampler);
+	ASSERT(ptrTexture);
+	ASSERT(m_ptrDescriptorLayout);
+
 	if (m_ptrDescriptorLayout->IsSampledImageValid(name)) {
 		m_imageDescriptorInfos[name].pSampler = (CGfxSampler*)pSampler;
 		m_imageDescriptorInfos[name].ptrTexture2D.Release();
@@ -51,6 +59,10 @@ bool CGLES3DescriptorSet::SetTexture2DArray(uint32_t name, const CGfxTexture2DAr
 
 bool CGLES3DescriptorSet::SetTextureCubemap(uint32_t name, const CGfxTextureCubemapPtr ptrTexture, const CGfxSampler* pSampler)
 {
+	ASSERT(pSampler);
+	ASSERT(ptrTexture);
+	ASSERT(m_ptrDescriptorLayout);
+
 	if (m_ptrDescriptorLayout->IsSampledImageValid(name)) {
 		m_imageDescriptorInfos[name].pSampler = (CGfxSampler*)pSampler;
 		m_imageDescriptorInfos[name].ptrTexture2D.Release();
@@ -66,6 +78,10 @@ bool CGLES3DescriptorSet::SetTextureCubemap(uint32_t name, const CGfxTextureCube
 
 bool CGLES3DescriptorSet::SetTextureInputAttachment(uint32_t name, const CGfxRenderTexturePtr ptrTexture, const CGfxSampler* pSampler)
 {
+	ASSERT(pSampler);
+	ASSERT(ptrTexture);
+	ASSERT(m_ptrDescriptorLayout);
+
 	if (m_ptrDescriptorLayout->IsSampledImageValid(name)) {
 		m_imageDescriptorInfos[name].pSampler = (CGfxSampler*)pSampler;
 		m_imageDescriptorInfos[name].ptrTexture2D.Release();
@@ -81,6 +97,9 @@ bool CGLES3DescriptorSet::SetTextureInputAttachment(uint32_t name, const CGfxRen
 
 bool CGLES3DescriptorSet::SetUniformBuffer(uint32_t name, const CGfxUniformBufferPtr ptrUniformBuffer, uint32_t offset, uint32_t range)
 {
+	ASSERT(ptrUniformBuffer);
+	ASSERT(m_ptrDescriptorLayout);
+
 	if (m_ptrDescriptorLayout->IsUniformBlockValid(name)) {
 		m_bufferDescriptorInfos[name].offset = offset;
 		m_bufferDescriptorInfos[name].range = range;

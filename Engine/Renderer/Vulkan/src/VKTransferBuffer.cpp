@@ -26,6 +26,10 @@ bool CVKTransferBuffer::Create(VkQueue vkQueue, VkCommandPool vkCommandPool, VkD
 	Destroy();
 	{
 		do {
+			ASSERT(size);
+			ASSERT(vkQueue);
+			ASSERT(vkCommandPool);
+
 			m_vkQueue = vkQueue;
 			m_vkCommandPool = vkCommandPool;
 
@@ -113,6 +117,7 @@ bool CVKTransferBuffer::IsTransferFinish(void) const
 
 bool CVKTransferBuffer::TransferBufferData(CVKBuffer* pDstBuffer, VkAccessFlags dstAccessFlags, VkPipelineStageFlags dstPipelineStageFlags, size_t offset, size_t size, const void* data)
 {
+	ASSERT(pDstBuffer);
 	ASSERT(m_pMemory);
 	ASSERT(m_vkBuffer);
 	ASSERT(m_vkFence);
@@ -141,6 +146,7 @@ bool CVKTransferBuffer::TransferBufferData(CVKBuffer* pDstBuffer, VkAccessFlags 
 
 bool CVKTransferBuffer::TransferTexture2DData(CVKTexture* pDstTexture, VkImageLayout dstImageLayout, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
 {
+	ASSERT(pDstTexture);
 	ASSERT(m_pMemory);
 	ASSERT(m_vkBuffer);
 	ASSERT(m_vkFence);
@@ -185,6 +191,7 @@ bool CVKTransferBuffer::TransferTexture2DData(CVKTexture* pDstTexture, VkImageLa
 
 bool CVKTransferBuffer::TransferTexture2DArrayData(CVKTexture* pDstTexture, VkImageLayout dstImageLayout, int layer, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
 {
+	ASSERT(pDstTexture);
 	ASSERT(m_pMemory);
 	ASSERT(m_vkBuffer);
 	ASSERT(m_vkFence);
@@ -229,6 +236,7 @@ bool CVKTransferBuffer::TransferTexture2DArrayData(CVKTexture* pDstTexture, VkIm
 
 bool CVKTransferBuffer::TransferTextureCubemapData(CVKTexture* pDstTexture, VkImageLayout dstImageLayout, int face, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
 {
+	ASSERT(pDstTexture);
 	ASSERT(m_pMemory);
 	ASSERT(m_vkBuffer);
 	ASSERT(m_vkFence);

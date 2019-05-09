@@ -48,7 +48,7 @@ uint32_t CVKMemoryManager::GetMemoryTypeIndex(const VkPhysicalDeviceMemoryProper
 			break;
 
 		default:
-			return 0xffffffff;
+			return INVALID_VALUE;
 		}
 	} while (true);
 }
@@ -56,7 +56,7 @@ uint32_t CVKMemoryManager::GetMemoryTypeIndex(const VkPhysicalDeviceMemoryProper
 CVKMemory* CVKMemoryManager::AllocMemory(VkDeviceSize memorySize, VkDeviceSize memoryAlignment, VkFlags memoryTypeBits, VkMemoryPropertyFlags memoryPropertyFlags)
 {
 	uint32_t memoryTypeIndex = GetMemoryTypeIndex(m_pDevice->GetPhysicalDeviceMemoryProperties(), memoryTypeBits, memoryPropertyFlags, 0);
-	if (memoryTypeIndex == 0xffffffff) return nullptr;
+	ASSERT(memoryTypeIndex != INVALID_VALUE);
 
 	mutex_autolock autolock(&lock);
 	{

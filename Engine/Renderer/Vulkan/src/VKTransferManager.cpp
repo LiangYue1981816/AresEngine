@@ -36,6 +36,7 @@ CVKTransferManager::~CVKTransferManager(void)
 
 CVKTransferBuffer* CVKTransferManager::AcquireTransferBuffer(size_t size)
 {
+	ASSERT(size);
 	ASSERT(m_vkQueue);
 	ASSERT(m_vkCommandPool);
 

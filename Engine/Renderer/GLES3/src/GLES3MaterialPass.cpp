@@ -76,6 +76,7 @@ bool CGLES3MaterialPass::SetSampler(uint32_t name, GfxFilter minFilter, GfxFilte
 
 bool CGLES3MaterialPass::SetTexture2D(uint32_t name, const CGfxTexture2DPtr ptrTexture)
 {
+	ASSERT(ptrTexture);
 	ASSERT(m_ptrDescriptorSet);
 
 	if (m_ptrDescriptorSet->GetDescriptorLayout()->IsSampledImageValid(name)) {
@@ -88,6 +89,7 @@ bool CGLES3MaterialPass::SetTexture2D(uint32_t name, const CGfxTexture2DPtr ptrT
 
 bool CGLES3MaterialPass::SetTexture2DArray(uint32_t name, const CGfxTexture2DArrayPtr ptrTexture)
 {
+	ASSERT(ptrTexture);
 	ASSERT(m_ptrDescriptorSet);
 
 	if (m_ptrDescriptorSet->GetDescriptorLayout()->IsSampledImageValid(name)) {
@@ -100,6 +102,7 @@ bool CGLES3MaterialPass::SetTexture2DArray(uint32_t name, const CGfxTexture2DArr
 
 bool CGLES3MaterialPass::SetTextureCubemap(uint32_t name, const CGfxTextureCubemapPtr ptrTexture)
 {
+	ASSERT(ptrTexture);
 	ASSERT(m_ptrDescriptorSet);
 
 	if (m_ptrDescriptorSet->GetDescriptorLayout()->IsSampledImageValid(name)) {
@@ -220,6 +223,7 @@ bool CGLES3MaterialPass::SetUniformVec4(uint32_t name, float v0, float v1, float
 
 bool CGLES3MaterialPass::SetUniformMat4(uint32_t name, const float* value)
 {
+	ASSERT(value);
 	ASSERT(m_ptrDescriptorSet);
 
 	if (m_ptrDescriptorSet->GetDescriptorLayout()->IsUniformBlockValid(name)) {
