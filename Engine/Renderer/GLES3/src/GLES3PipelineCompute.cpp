@@ -20,17 +20,9 @@ const CGfxDescriptorLayoutPtr CGLES3PipelineCompute::GetDescriptorLayout(int ind
 
 bool CGLES3PipelineCompute::Create(const CGfxShader* pComputeShader)
 {
-	if (pComputeShader == nullptr) {
-		return false;
-	}
-
-	if (pComputeShader->IsValid() == false) {
-		return false;
-	}
-
-	if (pComputeShader->GetKind() != compute_shader) {
-		return false;
-	}
+	ASSERT(pComputeShader);
+	ASSERT(pComputeShader->IsValid());
+	ASSERT(pComputeShader->GetKind() == compute_shader);
 
 	Destroy();
 	{

@@ -35,35 +35,20 @@ void CGLES3DescriptorLayout::Destroy(bool bClear)
 
 bool CGLES3DescriptorLayout::SetUniformBlockBinding(uint32_t name, uint32_t binding)
 {
-	if (m_uniformBlockBindings.find(name) == m_uniformBlockBindings.end()) {
-		m_uniformBlockBindings[name] = binding;
-		return true;
-	}
-	else {
-		return false;
-	}
+	m_uniformBlockBindings[name] = binding;
+	return true;
 }
 
 bool CGLES3DescriptorLayout::SetSampledImageBinding(uint32_t name, uint32_t binding)
 {
-	if (m_sampledImageBindings.find(name) == m_sampledImageBindings.end()) {
-		m_sampledImageBindings[name] = binding;
-		return true;
-	}
-	else {
-		return false;
-	}
+	m_sampledImageBindings[name] = binding;
+	return true;
 }
 
 bool CGLES3DescriptorLayout::SetInputAttachmentBinding(uint32_t name, uint32_t binding)
 {
-	if (m_inputAttachmentBindings.find(name) == m_inputAttachmentBindings.end()) {
-		m_inputAttachmentBindings[name] = binding;
-		return true;
-	}
-	else {
-		return false;
-	}
+	m_inputAttachmentBindings[name] = binding;
+	return true;
 }
 
 uint32_t CGLES3DescriptorLayout::GetSetIndex(void) const

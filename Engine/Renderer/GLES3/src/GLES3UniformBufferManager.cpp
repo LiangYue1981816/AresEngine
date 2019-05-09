@@ -27,11 +27,11 @@ void CGLES3UniformBufferManager::Destroy(CGLES3UniformBuffer* pUniformBuffer)
 {
 	mutex_autolock autolock(&lock);
 	{
-		if (pUniformBuffer) {
-			if (m_pUniformBuffers.find(pUniformBuffer) != m_pUniformBuffers.end()) {
-				m_pUniformBuffers.erase(pUniformBuffer);
-				delete pUniformBuffer;
-			}
+		ASSERT(pUniformBuffer);
+
+		if (m_pUniformBuffers.find(pUniformBuffer) != m_pUniformBuffers.end()) {
+			m_pUniformBuffers.erase(pUniformBuffer);
+			delete pUniformBuffer;
 		}
 	}
 }

@@ -35,11 +35,13 @@ CGfxMesh::Draw* CGLES3Mesh::GetDraw(uint32_t name)
 
 CGfxIndexBuffer* CGLES3Mesh::GetIndexBuffer(void)
 {
+	ASSERT(m_pIndexBuffer);
 	return m_pIndexBuffer;
 }
 
 CGfxVertexBuffer* CGLES3Mesh::GetVertexBuffer(void)
 {
+	ASSERT(m_pVertexBuffer);
 	return m_pVertexBuffer;
 }
 

@@ -60,11 +60,11 @@ void CGLES3Texture2DManager::Destroy(CGLES3Texture2D* pTexture)
 {
 	mutex_autolock autolock(&lock);
 	{
-		if (pTexture) {
-			if (m_pTextures.find(pTexture->GetName()) != m_pTextures.end()) {
-				m_pTextures.erase(pTexture->GetName());
-				delete pTexture;
-			}
+		ASSERT(pTexture);
+
+		if (m_pTextures.find(pTexture->GetName()) != m_pTextures.end()) {
+			m_pTextures.erase(pTexture->GetName());
+			delete pTexture;
 		}
 	}
 }
@@ -128,11 +128,11 @@ void CGLES3Texture2DArrayManager::Destroy(CGLES3Texture2DArray* pTexture)
 {
 	mutex_autolock autolock(&lock);
 	{
-		if (pTexture) {
-			if (m_pTextures.find(pTexture->GetName()) != m_pTextures.end()) {
-				m_pTextures.erase(pTexture->GetName());
-				delete pTexture;
-			}
+		ASSERT(pTexture);
+
+		if (m_pTextures.find(pTexture->GetName()) != m_pTextures.end()) {
+			m_pTextures.erase(pTexture->GetName());
+			delete pTexture;
 		}
 	}
 }
@@ -196,11 +196,11 @@ void CGLES3TextureCubemapManager::Destroy(CGLES3TextureCubemap* pTexture)
 {
 	mutex_autolock autolock(&lock);
 	{
-		if (pTexture) {
-			if (m_pTextures.find(pTexture->GetName()) != m_pTextures.end()) {
-				m_pTextures.erase(pTexture->GetName());
-				delete pTexture;
-			}
+		ASSERT(pTexture);
+
+		if (m_pTextures.find(pTexture->GetName()) != m_pTextures.end()) {
+			m_pTextures.erase(pTexture->GetName());
+			delete pTexture;
 		}
 	}
 }

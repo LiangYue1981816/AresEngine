@@ -44,11 +44,11 @@ void CGLES3RenderTextureManager::Destroy(CGLES3RenderTexture* pRenderTexture)
 {
 	mutex_autolock autolock(&lock);
 	{
-		if (pRenderTexture) {
-			if (m_pRenderTextures.find(pRenderTexture->GetName()) != m_pRenderTextures.end()) {
-				m_pRenderTextures.erase(pRenderTexture->GetName());
-				delete pRenderTexture;
-			}
+		ASSERT(pRenderTexture);
+
+		if (m_pRenderTextures.find(pRenderTexture->GetName()) != m_pRenderTextures.end()) {
+			m_pRenderTextures.erase(pRenderTexture->GetName());
+			delete pRenderTexture;
 		}
 	}
 }

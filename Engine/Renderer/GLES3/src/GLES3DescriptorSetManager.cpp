@@ -52,11 +52,11 @@ void CGLES3DescriptorSetManager::Destroy(CGLES3DescriptorSet* pDescriptorSet)
 {
 	mutex_autolock autolock(&lock);
 	{
-		if (pDescriptorSet) {
-			if (m_pDescriptorSets.find(pDescriptorSet) != m_pDescriptorSets.end()) {
-				m_pDescriptorSets.erase(pDescriptorSet);
-				delete pDescriptorSet;
-			}
+		ASSERT(pDescriptorSet);
+
+		if (m_pDescriptorSets.find(pDescriptorSet) != m_pDescriptorSets.end()) {
+			m_pDescriptorSets.erase(pDescriptorSet);
+			delete pDescriptorSet;
 		}
 	}
 }

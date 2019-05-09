@@ -17,11 +17,13 @@ CGLES3Shader::~CGLES3Shader(void)
 
 uint32_t CGLES3Shader::GetShader(void) const
 {
+	ASSERT(m_shader);
 	return m_shader;
 }
 
 uint32_t CGLES3Shader::GetKind(void) const
 {
+	ASSERT(m_kind != -1);
 	return m_kind;
 }
 

@@ -174,29 +174,12 @@ void CGLES3Texture::Destroy(void)
 
 bool CGLES3Texture::Texture2DData(GfxPixelFormat format, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
 {
-	if (m_bExtern == true) {
-		return false;
-	}
-
-	if (m_target != GL_TEXTURE_2D) {
-		return false;
-	}
-
-	if (m_texture == 0) {
-		return false;
-	}
-
-	if (m_format != format) {
-		return false;
-	}
-
-	if (m_levels < level) {
-		return false;
-	}
-
-	if (m_samples != 1) {
-		return false;
-	}
+	ASSERT(m_texture);
+	ASSERT(m_bExtern == false);
+	ASSERT(m_target == GL_TEXTURE_2D);
+	ASSERT(m_format == format);
+	ASSERT(m_levels > level);
+	ASSERT(m_samples == 1);
 
 	gli::gl GL(gli::gl::PROFILE_ES30);
 	gli::gl::format glFormat = GL.translate((gli::format)format);
@@ -210,29 +193,12 @@ bool CGLES3Texture::Texture2DData(GfxPixelFormat format, int level, int xoffset,
 
 bool CGLES3Texture::Texture2DDataCompressed(GfxPixelFormat format, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
 {
-	if (m_bExtern == true) {
-		return false;
-	}
-
-	if (m_target != GL_TEXTURE_2D) {
-		return false;
-	}
-
-	if (m_texture == 0) {
-		return false;
-	}
-
-	if (m_format != format) {
-		return false;
-	}
-
-	if (m_levels < level) {
-		return false;
-	}
-
-	if (m_samples != 1) {
-		return false;
-	}
+	ASSERT(m_texture);
+	ASSERT(m_bExtern == false);
+	ASSERT(m_target == GL_TEXTURE_2D);
+	ASSERT(m_format == format);
+	ASSERT(m_levels > level);
+	ASSERT(m_samples == 1);
 
 	gli::gl GL(gli::gl::PROFILE_ES30);
 	gli::gl::format glFormat = GL.translate((gli::format)format);
@@ -246,33 +212,13 @@ bool CGLES3Texture::Texture2DDataCompressed(GfxPixelFormat format, int level, in
 
 bool CGLES3Texture::Texture2DArrayData(GfxPixelFormat format, int layer, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
 {
-	if (m_bExtern == true) {
-		return false;
-	}
-
-	if (m_target != GL_TEXTURE_2D_ARRAY) {
-		return false;
-	}
-
-	if (m_texture == 0) {
-		return false;
-	}
-
-	if (m_format != format) {
-		return false;
-	}
-
-	if (m_layers < layer) {
-		return false;
-	}
-
-	if (m_levels < level) {
-		return false;
-	}
-
-	if (m_samples != 1) {
-		return false;
-	}
+	ASSERT(m_texture);
+	ASSERT(m_bExtern == false);
+	ASSERT(m_target == GL_TEXTURE_2D_ARRAY);
+	ASSERT(m_format == format);
+	ASSERT(m_layers > layer);
+	ASSERT(m_levels > level);
+	ASSERT(m_samples == 1);
 
 	gli::gl GL(gli::gl::PROFILE_ES30);
 	gli::gl::format glFormat = GL.translate((gli::format)format);
@@ -286,33 +232,13 @@ bool CGLES3Texture::Texture2DArrayData(GfxPixelFormat format, int layer, int lev
 
 bool CGLES3Texture::Texture2DArrayDataCompressed(GfxPixelFormat format, int layer, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
 {
-	if (m_bExtern == true) {
-		return false;
-	}
-
-	if (m_target != GL_TEXTURE_2D_ARRAY) {
-		return false;
-	}
-
-	if (m_texture == 0) {
-		return false;
-	}
-
-	if (m_format != format) {
-		return false;
-	}
-
-	if (m_layers < layer) {
-		return false;
-	}
-
-	if (m_levels < level) {
-		return false;
-	}
-
-	if (m_samples != 1) {
-		return false;
-	}
+	ASSERT(m_texture);
+	ASSERT(m_bExtern == false);
+	ASSERT(m_target == GL_TEXTURE_2D_ARRAY);
+	ASSERT(m_format == format);
+	ASSERT(m_layers > layer);
+	ASSERT(m_levels > level);
+	ASSERT(m_samples == 1);
 
 	gli::gl GL(gli::gl::PROFILE_ES30);
 	gli::gl::format glFormat = GL.translate((gli::format)format);
@@ -326,29 +252,12 @@ bool CGLES3Texture::Texture2DArrayDataCompressed(GfxPixelFormat format, int laye
 
 bool CGLES3Texture::TextureCubemapData(GfxPixelFormat format, GfxCubemapFace face, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
 {
-	if (m_bExtern == true) {
-		return false;
-	}
-
-	if (m_target != GL_TEXTURE_CUBE_MAP) {
-		return false;
-	}
-
-	if (m_texture == 0) {
-		return false;
-	}
-
-	if (m_format != format) {
-		return false;
-	}
-
-	if (m_levels < level) {
-		return false;
-	}
-
-	if (m_samples != 1) {
-		return false;
-	}
+	ASSERT(m_texture);
+	ASSERT(m_bExtern == false);
+	ASSERT(m_target == GL_TEXTURE_CUBE_MAP);
+	ASSERT(m_format == format);
+	ASSERT(m_levels > level);
+	ASSERT(m_samples == 1);
 
 	gli::gl GL(gli::gl::PROFILE_ES30);
 	gli::gl::format glFormat = GL.translate((gli::format)format);
@@ -362,29 +271,12 @@ bool CGLES3Texture::TextureCubemapData(GfxPixelFormat format, GfxCubemapFace fac
 
 bool CGLES3Texture::TextureCubemapDataCompressed(GfxPixelFormat format, GfxCubemapFace face, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
 {
-	if (m_bExtern == true) {
-		return false;
-	}
-
-	if (m_target != GL_TEXTURE_CUBE_MAP) {
-		return false;
-	}
-
-	if (m_texture == 0) {
-		return false;
-	}
-
-	if (m_format != format) {
-		return false;
-	}
-
-	if (m_levels < level) {
-		return false;
-	}
-
-	if (m_samples != 1) {
-		return false;
-	}
+	ASSERT(m_texture);
+	ASSERT(m_bExtern == false);
+	ASSERT(m_target == GL_TEXTURE_CUBE_MAP);
+	ASSERT(m_format == format);
+	ASSERT(m_levels > level);
+	ASSERT(m_samples == 1);
 
 	gli::gl GL(gli::gl::PROFILE_ES30);
 	gli::gl::format glFormat = GL.translate((gli::format)format);

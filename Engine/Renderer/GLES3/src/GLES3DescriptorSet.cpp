@@ -94,6 +94,7 @@ bool CGLES3DescriptorSet::SetUniformBuffer(uint32_t name, const CGfxUniformBuffe
 
 const CGfxDescriptorLayoutPtr CGLES3DescriptorSet::GetDescriptorLayout(void) const
 {
+	ASSERT(m_ptrDescriptorLayout);
 	return m_ptrDescriptorLayout;
 }
 

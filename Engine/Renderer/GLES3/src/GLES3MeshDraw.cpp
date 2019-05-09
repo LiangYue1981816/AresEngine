@@ -36,107 +36,73 @@ void CGLES3MeshDraw::Release(void)
 
 glm::aabb CGLES3MeshDraw::GetLocalAABB(void) const
 {
-	if (m_pMeshDraw) {
-		return m_pMeshDraw->aabb;
-	}
-	else {
-		return glm::aabb();
-	}
+	ASSERT(m_pMeshDraw);
+	return m_pMeshDraw->aabb;
 }
 
 GfxIndexType CGLES3MeshDraw::GetIndexType(void) const
 {
-	if (m_ptrMesh) {
-		return m_ptrMesh->GetIndexBuffer()->GetIndexType();
-	}
-	else {
-		return GFX_INDEX_INVALID_ENUM;
-	}
+	ASSERT(m_ptrMesh);
+	return m_ptrMesh->GetIndexBuffer()->GetIndexType();
 }
 
 uint32_t CGLES3MeshDraw::GetIndexCount(void) const
 {
-	if (m_pMeshDraw) {
-		return m_pMeshDraw->indexCount;
-	}
-	else {
-		return 0;
-	}
+	ASSERT(m_pMeshDraw);
+	return m_pMeshDraw->indexCount;
 }
 
 uint32_t CGLES3MeshDraw::GetIndexOffset(void) const
 {
-	if (m_pMeshDraw) {
-		switch ((int)GetIndexType()) {
-		case GFX_INDEX_UNSIGNED_SHORT: return m_pMeshDraw->firstIndex * 2;
-		case GFX_INDEX_UNSIGNED_INT:   return m_pMeshDraw->firstIndex * 4;
-		default:                       return 0;
-		}
-	}
-	else {
-		return 0;
+	ASSERT(m_pMeshDraw);
+
+	switch ((int)GetIndexType()) {
+	case GFX_INDEX_UNSIGNED_SHORT: return m_pMeshDraw->firstIndex * 2;
+	case GFX_INDEX_UNSIGNED_INT:   return m_pMeshDraw->firstIndex * 4;
+	default:                       return 0;
 	}
 }
 
 uint32_t CGLES3MeshDraw::GetVertexFormat(void) const
 {
-	if (m_ptrMesh) {
-		return m_ptrMesh->GetVertexBuffer()->GetVertexFormat();
-	}
-	else {
-		return 0;
-	}
+	ASSERT(m_ptrMesh);
+	return m_ptrMesh->GetVertexBuffer()->GetVertexFormat();
 }
 
 uint32_t CGLES3MeshDraw::GetVertexCount(void) const
 {
-	if (m_ptrMesh) {
-		return m_ptrMesh->GetVertexBuffer()->GetVertexCount();
-	}
-	else {
-		return 0;
-	}
+	ASSERT(m_ptrMesh);
+	return m_ptrMesh->GetVertexBuffer()->GetVertexCount();
 }
 
 uint32_t CGLES3MeshDraw::GetInstanceFormat(void) const
 {
-	if (m_pInstanceBuffer[GLES3Renderer()->GetSwapChain()->GetFrameIndex()]) {
-		return m_pInstanceBuffer[GLES3Renderer()->GetSwapChain()->GetFrameIndex()]->GetInstanceFormat();
-	}
-	else {
-		return 0;
-	}
+	ASSERT(m_pInstanceBuffer[GLES3Renderer()->GetSwapChain()->GetFrameIndex()]);
+	return m_pInstanceBuffer[GLES3Renderer()->GetSwapChain()->GetFrameIndex()]->GetInstanceFormat();
 }
 
 uint32_t CGLES3MeshDraw::GetInstanceCount(void) const
 {
-	if (m_pInstanceBuffer[GLES3Renderer()->GetSwapChain()->GetFrameIndex()]) {
-		return m_pInstanceBuffer[GLES3Renderer()->GetSwapChain()->GetFrameIndex()]->GetInstanceCount();
-	}
-	else {
-		return 0;
-	}
+	ASSERT(m_pInstanceBuffer[GLES3Renderer()->GetSwapChain()->GetFrameIndex()]);
+	return m_pInstanceBuffer[GLES3Renderer()->GetSwapChain()->GetFrameIndex()]->GetInstanceCount();
 }
 
 bool CGLES3MeshDraw::InstanceBufferData(size_t size, const void* data)
 {
-	if (m_pInstanceBuffer[GLES3Renderer()->GetSwapChain()->GetFrameIndex()]) {
-		m_pInstanceBuffer[GLES3Renderer()->GetSwapChain()->GetFrameIndex()]->BufferData(size, data);
-		m_pIndirectBuffer[GLES3Renderer()->GetSwapChain()->GetFrameIndex()]->BufferData(0, m_pMeshDraw->baseVertex, m_pMeshDraw->firstIndex, m_pMeshDraw->indexCount, size / GetInstanceStride(m_pInstanceBuffer[GLES3Renderer()->GetSwapChain()->GetFrameIndex()]->GetInstanceFormat()));
-		return true;
-	}
-	else {
-		return false;
-	}
+	ASSERT(m_pInstanceBuffer[GLES3Renderer()->GetSwapChain()->GetFrameIndex()]);
+	ASSERT(m_pIndirectBuffer[GLES3Renderer()->GetSwapChain()->GetFrameIndex()]);
+
+	m_pInstanceBuffer[GLES3Renderer()->GetSwapChain()->GetFrameIndex()]->BufferData(size, data);
+	m_pIndirectBuffer[GLES3Renderer()->GetSwapChain()->GetFrameIndex()]->BufferData(0, m_pMeshDraw->baseVertex, m_pMeshDraw->firstIndex, m_pMeshDraw->indexCount, size / GetInstanceStride(m_pInstanceBuffer[GLES3Renderer()->GetSwapChain()->GetFrameIndex()]->GetInstanceFormat()));
+
+	return true;
 }
 
 void CGLES3MeshDraw::Bind(void) const
 {
-	if (m_pVertexArrayObject[GLES3Renderer()->GetSwapChain()->GetFrameIndex()]) {
-		m_pVertexArrayObject[GLES3Renderer()->GetSwapChain()->GetFrameIndex()]->Bind();
-	}
+	ASSERT(m_pIndirectBuffer[GLES3Renderer()->GetSwapChain()->GetFrameIndex()]);
+	ASSERT(m_pVertexArrayObject[GLES3Renderer()->GetSwapChain()->GetFrameIndex()]);
 
-	if (m_pIndirectBuffer[GLES3Renderer()->GetSwapChain()->GetFrameIndex()]) {
-		m_pIndirectBuffer[GLES3Renderer()->GetSwapChain()->GetFrameIndex()]->Bind();
-	}
+	m_pIndirectBuffer[GLES3Renderer()->GetSwapChain()->GetFrameIndex()]->Bind();
+	m_pVertexArrayObject[GLES3Renderer()->GetSwapChain()->GetFrameIndex()]->Bind();
 }
