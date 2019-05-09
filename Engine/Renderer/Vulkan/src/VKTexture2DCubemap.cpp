@@ -6,7 +6,7 @@ CVKTextureCubemap::CVKTextureCubemap(CVKDevice* pDevice, CVKTextureCubemapManage
 	, m_pDevice(pDevice)
 	, m_pManager(pManager)
 {
-
+	m_ptrTexture = CVKTexturePtr(new CVKTexture(m_pDevice));
 }
 
 CVKTextureCubemap::~CVKTextureCubemap(void)
@@ -21,87 +21,47 @@ void CVKTextureCubemap::Release(void)
 
 VkImageView CVKTextureCubemap::GetImageView(void) const
 {
-	if (m_ptrTexture) {
-		return m_ptrTexture->GetImageView();
-	}
-	else {
-		return VK_NULL_HANDLE;
-	}
+	return m_ptrTexture->GetImageView();
 }
 
 VkImageLayout CVKTextureCubemap::GetImageLayout(void) const
 {
-	if (m_ptrTexture) {
-		return m_ptrTexture->GetImageLayout();
-	}
-	else {
-		return VK_IMAGE_LAYOUT_UNDEFINED;
-	}
+	return m_ptrTexture->GetImageLayout();
 }
 
 VkImageAspectFlags CVKTextureCubemap::GetImageAspectFlags(void) const
 {
-	if (m_ptrTexture) {
-		return m_ptrTexture->GetImageAspectFlags();
-	}
-	else {
-		return 0;
-	}
+	return m_ptrTexture->GetImageAspectFlags();
 }
 
 GfxTextureType CVKTextureCubemap::GetType(void) const
 {
-	if (m_ptrTexture) {
-		return m_ptrTexture->GetType();
-	}
-	else {
-		return GFX_TEXTURE_CUBE_MAP;
-	}
+	return m_ptrTexture->GetType();
 }
 
 GfxPixelFormat CVKTextureCubemap::GetFormat(void) const
 {
-	if (m_ptrTexture) {
-		return m_ptrTexture->GetFormat();
-	}
-	else {
-		return GFX_PIXELFORMAT_UNDEFINED;
-	}
+	return m_ptrTexture->GetFormat();
 }
 
 int CVKTextureCubemap::GetWidth(void) const
 {
-	if (m_ptrTexture) {
-		return m_ptrTexture->GetWidth();
-	}
-	else {
-		return 0;
-	}
+	return m_ptrTexture->GetWidth();
 }
 
 int CVKTextureCubemap::GetHeight(void) const
 {
-	if (m_ptrTexture) {
-		return m_ptrTexture->GetHeight();
-	}
-	else {
-		return 0;
-	}
+	return m_ptrTexture->GetHeight();
 }
 
 int CVKTextureCubemap::GetLevels(void) const
 {
-	if (m_ptrTexture) {
-		return m_ptrTexture->GetLevels();
-	}
-	else {
-		return 0;
-	}
+	return m_ptrTexture->GetLevels();
 }
 
 bool CVKTextureCubemap::Create(GfxPixelFormat format, int width, int height, int levels)
 {
-	if (m_ptrTexture && CVKHelper::IsFormatSupported((VkFormat)format) && CVKHelper::IsFormatDepthOrStencil((VkFormat)format) == false) {
+	if (CVKHelper::IsFormatSupported((VkFormat)format) && CVKHelper::IsFormatDepthOrStencil((VkFormat)format) == false) {
 		return m_ptrTexture->Create(GFX_TEXTURE_CUBE_MAP, format, width, height, 1, levels, 1, VK_IMAGE_ASPECT_COLOR_BIT, VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_IMAGE_TILING_OPTIMAL);
 	}
 	else {
@@ -111,27 +71,15 @@ bool CVKTextureCubemap::Create(GfxPixelFormat format, int width, int height, int
 
 void CVKTextureCubemap::Destroy(void)
 {
-	if (m_ptrTexture) {
-		m_ptrTexture->Destroy();
-	}
+	m_ptrTexture->Destroy();
 }
 
 bool CVKTextureCubemap::TextureCubemapData(GfxPixelFormat format, GfxCubemapFace face, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
 {
-	if (m_ptrTexture) {
-		return m_ptrTexture->TextureCubemapData(format, face, level, xoffset, yoffset, width, height, size, data);
-	}
-	else {
-		return false;
-	}
+	return m_ptrTexture->TextureCubemapData(format, face, level, xoffset, yoffset, width, height, size, data);
 }
 
 bool CVKTextureCubemap::TextureCubemapDataCompressed(GfxPixelFormat format, GfxCubemapFace face, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
 {
-	if (m_ptrTexture) {
-		return m_ptrTexture->TextureCubemapData(format, face, level, xoffset, yoffset, width, height, size, data);
-	}
-	else {
-		return false;
-	}
+	return m_ptrTexture->TextureCubemapData(format, face, level, xoffset, yoffset, width, height, size, data);
 }

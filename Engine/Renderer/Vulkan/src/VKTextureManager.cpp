@@ -61,11 +61,11 @@ void CVKTexture2DManager::Destroy(CVKTexture2D* pTexture)
 {
 	mutex_autolock autolock(&lock);
 	{
-		if (pTexture) {
-			if (m_pTextures.find(pTexture->GetName()) != m_pTextures.end()) {
-				m_pTextures.erase(pTexture->GetName());
-				delete pTexture;
-			}
+		ASSERT(pTexture);
+
+		if (m_pTextures.find(pTexture->GetName()) != m_pTextures.end()) {
+			m_pTextures.erase(pTexture->GetName());
+			delete pTexture;
 		}
 	}
 }
@@ -130,11 +130,11 @@ void CVKTexture2DArrayManager::Destroy(CVKTexture2DArray* pTexture)
 {
 	mutex_autolock autolock(&lock);
 	{
-		if (pTexture) {
-			if (m_pTextures.find(pTexture->GetName()) != m_pTextures.end()) {
-				m_pTextures.erase(pTexture->GetName());
-				delete pTexture;
-			}
+		ASSERT(pTexture);
+
+		if (m_pTextures.find(pTexture->GetName()) != m_pTextures.end()) {
+			m_pTextures.erase(pTexture->GetName());
+			delete pTexture;
 		}
 	}
 }
@@ -199,11 +199,11 @@ void CVKTextureCubemapManager::Destroy(CVKTextureCubemap* pTexture)
 {
 	mutex_autolock autolock(&lock);
 	{
-		if (pTexture) {
-			if (m_pTextures.find(pTexture->GetName()) != m_pTextures.end()) {
-				m_pTextures.erase(pTexture->GetName());
-				delete pTexture;
-			}
+		ASSERT(pTexture);
+
+		if (m_pTextures.find(pTexture->GetName()) != m_pTextures.end()) {
+			m_pTextures.erase(pTexture->GetName());
+			delete pTexture;
 		}
 	}
 }

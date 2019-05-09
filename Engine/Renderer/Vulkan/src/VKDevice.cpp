@@ -196,11 +196,13 @@ void CVKDevice::DestroyDevice(void)
 
 VkDevice CVKDevice::GetDevice(void) const
 {
+	ASSERT(m_vkDevice);
 	return m_vkDevice;
 }
 
 VkPhysicalDevice CVKDevice::GetPhysicalDevice(void) const
 {
+	ASSERT(m_vkPhysicalDevice);
 	return m_vkPhysicalDevice;
 }
 
@@ -221,20 +223,24 @@ const VkPhysicalDeviceMemoryProperties& CVKDevice::GetPhysicalDeviceMemoryProper
 
 CVKInstance* CVKDevice::GetInstance(void) const
 {
+	ASSERT(m_pInstance);
 	return m_pInstance;
 }
 
 CVKQueue* CVKDevice::GetQueue(void) const
 {
+	ASSERT(m_pQueue);
 	return m_pQueue;
 }
 
 CVKMemoryManager* CVKDevice::GetMemoryManager(void) const
 {
+	ASSERT(m_pMemoryManager);
 	return m_pMemoryManager;
 }
 
 CVKTransferManager* CVKDevice::GetTransferManager(void) const
 {
+	ASSERT(m_pTransferManager);
 	return m_pTransferManager;
 }

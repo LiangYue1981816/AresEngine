@@ -14,9 +14,11 @@ public:
 	static bool IsFormatDepthStencil(VkFormat format);
 	static bool IsFormatDepthOrStencil(VkFormat format);
 
-	static VkAccessFlags GetAccessMask(VkImageLayout layout);
-	static VkPipelineStageFlags GetPipelineStageFlags(VkImageLayout layout);
-	static VkPipelineStageFlags GetPipelineStageFlags(VkAccessFlags access);
+	static VkAccessFlags GetAccessMaskByImageLayout(VkImageLayout layout);
+	static VkAccessFlags GetAccessMaskByBufferUsage(VkBufferUsageFlags usage);
+	static VkPipelineStageFlags GetPipelineStageFlagsByImageLayout(VkImageLayout layout);
+	static VkPipelineStageFlags GetPipelineStageFlagsByAccessFlags(VkAccessFlags access);
+	static VkPipelineStageFlags GetPipelineStageFlagsByBufferUsage(VkBufferUsageFlags usage);
 
 	static VkSampleCountFlagBits TranslateSampleCount(int samples);
 	static VkPrimitiveTopology TranslatePrimitiveTopology(GfxPrimitiveTopology topology);

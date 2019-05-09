@@ -36,11 +36,13 @@ CGfxMesh::Draw* CVKMesh::GetDraw(uint32_t name)
 
 CGfxIndexBuffer* CVKMesh::GetIndexBuffer(void)
 {
+	ASSERT(m_pIndexBuffer);
 	return m_pIndexBuffer;
 }
 
 CGfxVertexBuffer* CVKMesh::GetVertexBuffer(void)
 {
+	ASSERT(m_pVertexBuffer);
 	return m_pVertexBuffer;
 }
 
@@ -85,7 +87,7 @@ void CVKMesh::Destroy(void)
 		delete m_pVertexBuffer;
 	}
 
+	m_draws.clear();
 	m_pIndexBuffer = nullptr;
 	m_pVertexBuffer = nullptr;
-	m_draws.clear();
 }

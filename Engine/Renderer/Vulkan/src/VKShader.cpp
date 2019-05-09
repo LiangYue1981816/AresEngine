@@ -18,11 +18,13 @@ CVKShader::~CVKShader(void)
 
 VkShaderModule CVKShader::GetShader(void) const
 {
+	ASSERT(m_vkShader);
 	return m_vkShader;
 }
 
 uint32_t CVKShader::GetKind(void) const
 {
+	ASSERT(m_kind != -1);
 	return m_kind;
 }
 

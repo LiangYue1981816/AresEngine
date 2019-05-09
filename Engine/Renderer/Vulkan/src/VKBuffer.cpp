@@ -64,118 +64,73 @@ void CVKBuffer::Destroy(void)
 	}
 
 	m_pMemory = nullptr;
+
 	m_vkBuffer = VK_NULL_HANDLE;
 	m_vkBufferUsageFlags = 0;
 }
 
 VkBuffer CVKBuffer::GetBuffer(void) const
 {
+	ASSERT(m_vkBuffer);
 	return m_vkBuffer;
 }
 
 VkDeviceSize CVKBuffer::GetSize(void) const
 {
-	if (m_pMemory) {
-		return m_pMemory->GetSize();
-	}
-	else {
-		return 0;
-	}
+	ASSERT(m_pMemory);
+	return m_pMemory->GetSize();
 }
 
 bool CVKBuffer::BufferData(size_t offset, size_t size, const void* data)
 {
-	if (m_pMemory) {
-		if (m_pMemory->IsHostVisible()) {
-			CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->BeginMap(offset, size));
-			CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->CopyData(0, size, data));
-			CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->EndMap());
-			return true;
-		}
-		else {
-			VkAccessFlags dstAccessFlags = 0;
-			VkPipelineStageFlags dstPipelineStageFlags = 0;
+	ASSERT(m_pMemory);
 
-			if (m_vkBufferUsageFlags & VK_BUFFER_USAGE_INDEX_BUFFER_BIT) {
-				dstAccessFlags |= VK_ACCESS_INDEX_READ_BIT;
-				dstPipelineStageFlags |= VK_PIPELINE_STAGE_VERTEX_INPUT_BIT;
-			}
-
-			if (m_vkBufferUsageFlags & VK_BUFFER_USAGE_VERTEX_BUFFER_BIT) {
-				dstAccessFlags |= VK_ACCESS_VERTEX_ATTRIBUTE_READ_BIT;
-				dstPipelineStageFlags |= VK_PIPELINE_STAGE_VERTEX_INPUT_BIT;
-			}
-
-			if (m_vkBufferUsageFlags & VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT) {
-				dstAccessFlags |= VK_ACCESS_UNIFORM_READ_BIT;
-				dstPipelineStageFlags |= VK_PIPELINE_STAGE_VERTEX_SHADER_BIT | VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT | VK_PIPELINE_STAGE_COMPUTE_SHADER_BIT;
-			}
-
-			return m_pDevice->GetTransferManager()->TransferBufferData(this, dstAccessFlags, dstPipelineStageFlags, offset, size, data);
-		}
+	if (m_pMemory->IsHostVisible()) {
+		CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->BeginMap(offset, size));
+		CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->CopyData(0, size, data));
+		CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->EndMap());
+		return true;
 	}
 	else {
-		return false;
+		VkAccessFlags dstAccessFlags = CVKHelper::GetAccessMaskByBufferUsage(m_vkBufferUsageFlags);
+		VkPipelineStageFlags dstPipelineStageFlags = CVKHelper::GetPipelineStageFlagsByBufferUsage(m_vkBufferUsageFlags);
+		return m_pDevice->GetTransferManager()->TransferBufferData(this, dstAccessFlags, dstPipelineStageFlags, offset, size, data);
 	}
 }
 
 bool CVKBuffer::PipelineBarrier(VkCommandBuffer vkCommandBuffer, VkAccessFlags srcAccessFlags, VkAccessFlags dstAccessFlags, VkPipelineStageFlags srcPipelineStageFlags, VkPipelineStageFlags dstPipelineStageFlags, VkDeviceSize offset, VkDeviceSize size)
 {
-	if (m_vkBuffer) {
-		CALL_VK_FUNCTION_RETURN_BOOL(vkCmdBufferMemoryBarrier(vkCommandBuffer, m_vkBuffer, srcAccessFlags, dstAccessFlags, srcPipelineStageFlags, dstPipelineStageFlags, offset, size));
-		return true;
-	}
-	else {
-		return false;
-	}
+	ASSERT(m_vkBuffer);
+	CALL_VK_FUNCTION_ASSERT(vkCmdBufferMemoryBarrier(vkCommandBuffer, m_vkBuffer, srcAccessFlags, dstAccessFlags, srcPipelineStageFlags, dstPipelineStageFlags, offset, size));
+	return true;
 }
 
 bool CVKBuffer::IsDeviceLocal(void) const
 {
-	if (m_pMemory) {
-		return m_pMemory->IsDeviceLocal();
-	}
-	else {
-		return false;
-	}
+	ASSERT(m_pMemory);
+	return m_pMemory->IsDeviceLocal();
 }
 
 bool CVKBuffer::IsHostVisible(void) const
 {
-	if (m_pMemory) {
-		return m_pMemory->IsHostVisible();
-	}
-	else {
-		return false;
-	}
+	ASSERT(m_pMemory);
+	return m_pMemory->IsHostVisible();
 }
 
 bool CVKBuffer::IsHostCoherent(void) const
 {
-	if (m_pMemory) {
-		return m_pMemory->IsHostCoherent();
-	}
-	else {
-		return false;
-	}
+	ASSERT(m_pMemory);
+	return m_pMemory->IsHostCoherent();
 }
 
 bool CVKBuffer::IsHostCached(void) const
 {
-	if (m_pMemory) {
-		return m_pMemory->IsHostCached();
-	}
-	else {
-		return false;
-	}
+	ASSERT(m_pMemory);
+	return m_pMemory->IsHostCached();
 }
 
 bool CVKBuffer::IsLazilyAllocated(void) const
 {
-	if (m_pMemory) {
-		return m_pMemory->IsLazilyAllocated();
-	}
-	else {
-		return false;
-	}
+	ASSERT(m_pMemory);
+	return m_pMemory->IsLazilyAllocated();
 }

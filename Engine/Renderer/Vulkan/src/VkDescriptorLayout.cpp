@@ -6,10 +6,9 @@ CVKDescriptorLayout::CVKDescriptorLayout(CVKDevice* pDevice, CVKDescriptorLayout
 	, m_pDevice(pDevice)
 	, m_pManager(pManager)
 
-	, m_vkDescriptorLayout(VK_NULL_HANDLE)
-
 	, m_set(set)
 	, m_numDescriptors{ 0 }
+	, m_vkDescriptorLayout(VK_NULL_HANDLE)
 {
 
 }
@@ -26,6 +25,7 @@ void CVKDescriptorLayout::Release(void)
 
 VkDescriptorSetLayout CVKDescriptorLayout::GetDescriptorLayout(void) const
 {
+	ASSERT(m_vkDescriptorLayout);
 	return m_vkDescriptorLayout;
 }
 
@@ -79,14 +79,14 @@ bool CVKDescriptorLayout::Create(void)
 
 void CVKDescriptorLayout::Destroy(bool bClear)
 {
-	if (m_vkDescriptorLayout) {
-		vkDestroyDescriptorSetLayout(m_pDevice->GetDevice(), m_vkDescriptorLayout, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
-	}
-
 	if (bClear) {
 		m_uniformBlockBindings.clear();
 		m_sampledImageBindings.clear();
 		m_inputAttachmentBindings.clear();
+	}
+
+	if (m_vkDescriptorLayout) {
+		vkDestroyDescriptorSetLayout(m_pDevice->GetDevice(), m_vkDescriptorLayout, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
 	}
 
 	m_vkDescriptorLayout = VK_NULL_HANDLE;
@@ -95,49 +95,34 @@ void CVKDescriptorLayout::Destroy(bool bClear)
 
 bool CVKDescriptorLayout::SetUniformBlockBinding(uint32_t name, uint32_t binding)
 {
-	if (m_uniformBlockBindings.find(name) == m_uniformBlockBindings.end()) {
-		m_uniformBlockBindings[name] = {};
-		m_uniformBlockBindings[name].binding = binding;
-		m_uniformBlockBindings[name].descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER_DYNAMIC;
-		m_uniformBlockBindings[name].descriptorCount = 1;
-		m_uniformBlockBindings[name].stageFlags = VK_SHADER_STAGE_VERTEX_BIT | VK_SHADER_STAGE_FRAGMENT_BIT | VK_SHADER_STAGE_COMPUTE_BIT;
-		m_uniformBlockBindings[name].pImmutableSamplers = nullptr;
-		return true;
-	}
-	else {
-		return false;
-	}
+	m_uniformBlockBindings[name] = {};
+	m_uniformBlockBindings[name].binding = binding;
+	m_uniformBlockBindings[name].descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER_DYNAMIC;
+	m_uniformBlockBindings[name].descriptorCount = 1;
+	m_uniformBlockBindings[name].stageFlags = VK_SHADER_STAGE_VERTEX_BIT | VK_SHADER_STAGE_FRAGMENT_BIT | VK_SHADER_STAGE_COMPUTE_BIT;
+	m_uniformBlockBindings[name].pImmutableSamplers = nullptr;
+	return true;
 }
 
 bool CVKDescriptorLayout::SetSampledImageBinding(uint32_t name, uint32_t binding)
 {
-	if (m_sampledImageBindings.find(name) != m_sampledImageBindings.end()) {
-		m_sampledImageBindings[name] = {};
-		m_sampledImageBindings[name].binding = binding;
-		m_sampledImageBindings[name].descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
-		m_sampledImageBindings[name].descriptorCount = 1;
-		m_sampledImageBindings[name].stageFlags = VK_SHADER_STAGE_FRAGMENT_BIT;
-		m_sampledImageBindings[name].pImmutableSamplers = nullptr;
-		return true;
-	}
-	else {
-		return false;
-	}
+	m_sampledImageBindings[name] = {};
+	m_sampledImageBindings[name].binding = binding;
+	m_sampledImageBindings[name].descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
+	m_sampledImageBindings[name].descriptorCount = 1;
+	m_sampledImageBindings[name].stageFlags = VK_SHADER_STAGE_FRAGMENT_BIT;
+	m_sampledImageBindings[name].pImmutableSamplers = nullptr;
+	return true;
 }
 
 bool CVKDescriptorLayout::SetInputAttachmentBinding(uint32_t name, uint32_t binding)
 {
-	if (m_inputAttachmentBindings.find(name) != m_inputAttachmentBindings.end()) {
-		m_inputAttachmentBindings[name].binding = binding;
-		m_inputAttachmentBindings[name].descriptorType = VK_DESCRIPTOR_TYPE_INPUT_ATTACHMENT;
-		m_inputAttachmentBindings[name].descriptorCount = 1;
-		m_inputAttachmentBindings[name].stageFlags = VK_SHADER_STAGE_FRAGMENT_BIT;
-		m_inputAttachmentBindings[name].pImmutableSamplers = nullptr;
-		return true;
-	}
-	else {
-		return false;
-	}
+	m_inputAttachmentBindings[name].binding = binding;
+	m_inputAttachmentBindings[name].descriptorType = VK_DESCRIPTOR_TYPE_INPUT_ATTACHMENT;
+	m_inputAttachmentBindings[name].descriptorCount = 1;
+	m_inputAttachmentBindings[name].stageFlags = VK_SHADER_STAGE_FRAGMENT_BIT;
+	m_inputAttachmentBindings[name].pImmutableSamplers = nullptr;
+	return true;
 }
 
 uint32_t CVKDescriptorLayout::GetSetIndex(void) const
@@ -198,9 +183,7 @@ bool CVKDescriptorLayout::IsInputAttachmentValid(uint32_t name) const
 
 bool CVKDescriptorLayout::IsCompatible(const CGfxDescriptorLayoutPtr ptrLayout) const
 {
-	if (m_vkDescriptorLayout == VK_NULL_HANDLE) {
-		return false;
-	}
+	ASSERT(m_vkDescriptorLayout);
 
 	if (m_set != ((CVKDescriptorLayout*)ptrLayout.GetPointer())->m_set) {
 		return false;

@@ -44,11 +44,11 @@ void CVKCommandBufferManager::Destroy(CVKCommandBuffer* pCommandBuffer)
 {
 	mutex_autolock autolock(&lock);
 	{
-		if (pCommandBuffer) {
-			if (m_pCommandBuffers[pCommandBuffer->GetCommandPool()].find(pCommandBuffer) != m_pCommandBuffers[pCommandBuffer->GetCommandPool()].end()) {
-				m_pCommandBuffers[pCommandBuffer->GetCommandPool()].erase(pCommandBuffer);
-				delete pCommandBuffer;
-			}
+		ASSERT(pCommandBuffer);
+
+		if (m_pCommandBuffers[pCommandBuffer->GetCommandPool()].find(pCommandBuffer) != m_pCommandBuffers[pCommandBuffer->GetCommandPool()].end()) {
+			m_pCommandBuffers[pCommandBuffer->GetCommandPool()].erase(pCommandBuffer);
+			delete pCommandBuffer;
 		}
 	}
 }

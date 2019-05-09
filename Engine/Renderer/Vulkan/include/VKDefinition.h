@@ -69,6 +69,12 @@
 	}                                        \
 }
 
+#define CALL_VK_FUNCTION_ASSERT(func)        \
+{                                            \
+	VkResult err = func;                     \
+	ASSERT(err == VK_SUCCESS);               \
+}
+
 
 class CVKRenderer;
 

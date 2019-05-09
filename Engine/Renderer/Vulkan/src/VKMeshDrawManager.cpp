@@ -45,11 +45,11 @@ void CVKMeshDrawManager::Destroy(CVKMeshDraw* pMeshDraw)
 {
 	mutex_autolock autolock(&lock);
 	{
-		if (pMeshDraw) {
-			if (m_pMeshDraws.find(pMeshDraw->GetName()) != m_pMeshDraws.end()) {
-				m_pMeshDraws.erase(pMeshDraw->GetName());
-				delete pMeshDraw;
-			}
+		ASSERT(pMeshDraw);
+
+		if (m_pMeshDraws.find(pMeshDraw->GetName()) != m_pMeshDraws.end()) {
+			m_pMeshDraws.erase(pMeshDraw->GetName());
+			delete pMeshDraw;
 		}
 	}
 }

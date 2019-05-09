@@ -46,26 +46,24 @@ CVKDescriptorSet* CVKDescriptorSetManager::AllocDescriptorSet(const CGfxDescript
 
 void CVKDescriptorSetManager::FreeDescriptorSet(CVKDescriptorSet* pDescriptorSet)
 {
-	if (pDescriptorSet == nullptr) {
-		return;
-	}
-
 	mutex_autolock autolock(&lock);
 	{
-		CVKDescriptorPool* pDescriptorPool = pDescriptorSet->GetDescriptorPool();
+		ASSERT(pDescriptorSet);
 
-		if (pDescriptorPool->FreeDescriptorSet(pDescriptorSet)) {
-			if (pDescriptorPool->pPrev) {
-				pDescriptorPool->pPrev->pNext = pDescriptorPool->pNext;
+		if (CVKDescriptorPool* pDescriptorPool = pDescriptorSet->GetDescriptorPool()) {
+			if (pDescriptorPool->FreeDescriptorSet(pDescriptorSet)) {
+				if (pDescriptorPool->pPrev) {
+					pDescriptorPool->pPrev->pNext = pDescriptorPool->pNext;
+				}
+
+				if (pDescriptorPool->pNext) {
+					pDescriptorPool->pNext->pPrev = pDescriptorPool->pPrev;
+				}
+
+				pDescriptorPool->pPrev = nullptr;
+				pDescriptorPool->pNext = m_pPoolListHead;
+				m_pPoolListHead = pDescriptorPool;
 			}
-
-			if (pDescriptorPool->pNext) {
-				pDescriptorPool->pNext->pPrev = pDescriptorPool->pPrev;
-			}
-
-			pDescriptorPool->pPrev = nullptr;
-			pDescriptorPool->pNext = m_pPoolListHead;
-			m_pPoolListHead = pDescriptorPool;
 		}
 	}
 }

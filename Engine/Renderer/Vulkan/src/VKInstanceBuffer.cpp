@@ -63,6 +63,8 @@ bool CVKInstanceBuffer::BufferData(size_t size, const void* data)
 
 void CVKInstanceBuffer::Bind(VkCommandBuffer vkCommandBuffer) const
 {
+	ASSERT(vkCommandBuffer);
+
 	const VkBuffer vkBuffer = m_ptrBuffer->GetBuffer();
 	const VkDeviceSize vkOffset = m_offset;
 	vkCmdBindVertexBuffers(vkCommandBuffer, m_binding, 1, &vkBuffer, &vkOffset);

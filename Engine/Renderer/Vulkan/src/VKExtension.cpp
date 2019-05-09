@@ -83,10 +83,10 @@ VkResult vkCmdImageMemoryBarrier(VkCommandBuffer vkCommandBuffer, VkImage vkImag
 
 VkResult vkCmdImageMemoryBarrier(VkCommandBuffer vkCommandBuffer, VkImage vkImage, VkImageLayout srcLayout, VkImageLayout dstLayout, VkImageSubresourceRange range)
 {
-	VkAccessFlags srcAccessFlags = CVKHelper::GetAccessMask(srcLayout);
-	VkAccessFlags dstAccessFlags = CVKHelper::GetAccessMask(dstLayout);
-	VkPipelineStageFlags srcPipelineStageFlags = CVKHelper::GetPipelineStageFlags(srcLayout);
-	VkPipelineStageFlags dstPipelineStageFlags = CVKHelper::GetPipelineStageFlags(dstLayout);
+	VkAccessFlags srcAccessFlags = CVKHelper::GetAccessMaskByImageLayout(srcLayout);
+	VkAccessFlags dstAccessFlags = CVKHelper::GetAccessMaskByImageLayout(dstLayout);
+	VkPipelineStageFlags srcPipelineStageFlags = CVKHelper::GetPipelineStageFlagsByImageLayout(srcLayout);
+	VkPipelineStageFlags dstPipelineStageFlags = CVKHelper::GetPipelineStageFlagsByImageLayout(dstLayout);
 
 	if (srcLayout == VK_IMAGE_LAYOUT_PRESENT_SRC_KHR) {
 		srcPipelineStageFlags |= VK_PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT;

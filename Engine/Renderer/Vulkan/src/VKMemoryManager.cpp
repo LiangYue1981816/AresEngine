@@ -116,34 +116,33 @@ CVKMemory* CVKMemoryManager::AllocMemory(VkDeviceSize memorySize, VkDeviceSize m
 
 void CVKMemoryManager::FreeMemory(CVKMemory* pMemory)
 {
-	if (pMemory == nullptr) {
-		return;
-	}
-
 	mutex_autolock autolock(&lock);
 	{
-		CVKMemoryAllocator* pAllocator = pMemory->GetAllocator();
-		pAllocator->FreeMemory(pMemory);
+		ASSERT(pMemory);
 
-		if (pAllocator->GetFreeSize() == pAllocator->GetFullSize()) {
-			uint32_t memoryAlignment = pAllocator->GetAlignment();
-			uint32_t memoryTypeIndex = pAllocator->GetMemoryTypeIndex();
+		if (CVKMemoryAllocator* pAllocator = pMemory->GetAllocator()) {
+			pAllocator->FreeMemory(pMemory);
 
-			m_allocatedMemoryHeapSize[m_pDevice->GetPhysicalDeviceMemoryProperties().memoryTypes[memoryTypeIndex].heapIndex] -= pAllocator->GetFullSize();
-			{
-				if (m_pAllocatorListHeads[memoryAlignment][memoryTypeIndex] == pAllocator) {
-					m_pAllocatorListHeads[memoryAlignment][memoryTypeIndex] = pAllocator->pNext;
+			if (pAllocator->GetFreeSize() == pAllocator->GetFullSize()) {
+				uint32_t memoryAlignment = pAllocator->GetAlignment();
+				uint32_t memoryTypeIndex = pAllocator->GetMemoryTypeIndex();
+
+				m_allocatedMemoryHeapSize[m_pDevice->GetPhysicalDeviceMemoryProperties().memoryTypes[memoryTypeIndex].heapIndex] -= pAllocator->GetFullSize();
+				{
+					if (m_pAllocatorListHeads[memoryAlignment][memoryTypeIndex] == pAllocator) {
+						m_pAllocatorListHeads[memoryAlignment][memoryTypeIndex] = pAllocator->pNext;
+					}
+
+					if (pAllocator->pPrev) {
+						pAllocator->pPrev->pNext = pAllocator->pNext;
+					}
+
+					if (pAllocator->pNext) {
+						pAllocator->pNext->pPrev = pAllocator->pPrev;
+					}
 				}
-
-				if (pAllocator->pPrev) {
-					pAllocator->pPrev->pNext = pAllocator->pNext;
-				}
-
-				if (pAllocator->pNext) {
-					pAllocator->pNext->pPrev = pAllocator->pPrev;
-				}
+				delete pAllocator;
 			}
-			delete pAllocator;
 		}
 	}
 }

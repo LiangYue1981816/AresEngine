@@ -27,6 +27,7 @@ void CVKFrameBuffer::Release(void)
 
 VkFramebuffer CVKFrameBuffer::GetFrameBuffer(void)
 {
+	ASSERT(m_vkFrameBuffer);
 	return m_vkFrameBuffer;
 }
 
@@ -77,12 +78,12 @@ bool CVKFrameBuffer::Create(const CGfxRenderPassPtr ptrRenderPass)
 
 void CVKFrameBuffer::Destroy(bool bClear)
 {
-	if (m_vkFrameBuffer) {
-		vkDestroyFramebuffer(m_pDevice->GetDevice(), m_vkFrameBuffer, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
-	}
-
 	if (bClear) {
 		m_ptrAttachmentTextures.clear();
+	}
+
+	if (m_vkFrameBuffer) {
+		vkDestroyFramebuffer(m_pDevice->GetDevice(), m_vkFrameBuffer, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
 	}
 
 	m_vkFrameBuffer = VK_NULL_HANDLE;
@@ -90,6 +91,8 @@ void CVKFrameBuffer::Destroy(bool bClear)
 
 bool CVKFrameBuffer::SetAttachmentTexture(int indexAttachment, const CGfxRenderTexturePtr ptrAttachmentTexture)
 {
+	ASSERT(ptrAttachmentTexture);
+
 	if (indexAttachment >= 0 && indexAttachment < m_ptrAttachmentTextures.size() && ptrAttachmentTexture->GetWidth() == m_width && ptrAttachmentTexture->GetHeight() == m_height) {
 		m_ptrAttachmentTextures[indexAttachment] = ptrAttachmentTexture;
 		return true;

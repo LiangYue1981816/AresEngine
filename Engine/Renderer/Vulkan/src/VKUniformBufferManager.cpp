@@ -28,11 +28,11 @@ void CVKUniformBufferManager::Destroy(CVKUniformBuffer* pUniformBuffer)
 {
 	mutex_autolock autolock(&lock);
 	{
-		if (pUniformBuffer) {
-			if (m_pUniformBuffers.find(pUniformBuffer) != m_pUniformBuffers.end()) {
-				m_pUniformBuffers.erase(pUniformBuffer);
-				delete pUniformBuffer;
-			}
+		ASSERT(pUniformBuffer);
+
+		if (m_pUniformBuffers.find(pUniformBuffer) != m_pUniformBuffers.end()) {
+			m_pUniformBuffers.erase(pUniformBuffer);
+			delete pUniformBuffer;
 		}
 	}
 }

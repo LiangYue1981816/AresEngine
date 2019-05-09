@@ -61,11 +61,11 @@ void CVKMeshManager::Destroy(CVKMesh* pMesh)
 {
 	mutex_autolock autolock(&lock);
 	{
-		if (pMesh) {
-			if (m_pMeshs.find(pMesh->GetName()) != m_pMeshs.end()) {
-				m_pMeshs.erase(pMesh->GetName());
-				delete pMesh;
-			}
+		ASSERT(pMesh);
+
+		if (m_pMeshs.find(pMesh->GetName()) != m_pMeshs.end()) {
+			m_pMeshs.erase(pMesh->GetName());
+			delete pMesh;
 		}
 	}
 }

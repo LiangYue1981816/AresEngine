@@ -100,40 +100,23 @@ void CVKTransferBuffer::Destroy(void)
 
 VkDeviceSize CVKTransferBuffer::GetSize(void) const
 {
-	if (m_pMemory) {
-		return m_pMemory->GetSize();
-	}
-	else {
-		return 0;
-	}
+	ASSERT(m_pMemory);
+	return m_pMemory->GetSize();
 }
 
 bool CVKTransferBuffer::IsTransferFinish(void) const
 {
-	if (m_vkFence) {
-		CALL_VK_FUNCTION_RETURN_BOOL(vkGetFenceStatus(m_pDevice->GetDevice(), m_vkFence));
-	}
-
+	ASSERT(m_vkFence);
+	CALL_VK_FUNCTION_RETURN_BOOL(vkGetFenceStatus(m_pDevice->GetDevice(), m_vkFence));
 	return true;
 }
 
 bool CVKTransferBuffer::TransferBufferData(CVKBuffer* pDstBuffer, VkAccessFlags dstAccessFlags, VkPipelineStageFlags dstPipelineStageFlags, size_t offset, size_t size, const void* data)
 {
-	if (m_pMemory == nullptr) {
-		return false;
-	}
-
-	if (m_vkBuffer == VK_NULL_HANDLE) {
-		return false;
-	}
-
-	if (m_vkFence == VK_NULL_HANDLE) {
-		return false;
-	}
-
-	if (m_vkCommandBuffer == VK_NULL_HANDLE) {
-		return false;
-	}
+	ASSERT(m_pMemory);
+	ASSERT(m_vkBuffer);
+	ASSERT(m_vkFence);
+	ASSERT(m_vkCommandBuffer);
 
 	CALL_VK_FUNCTION_RETURN_BOOL(vkBeginCommandBufferPrimary(m_vkCommandBuffer, VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT));
 	{
@@ -158,21 +141,10 @@ bool CVKTransferBuffer::TransferBufferData(CVKBuffer* pDstBuffer, VkAccessFlags 
 
 bool CVKTransferBuffer::TransferTexture2DData(CVKTexture* pDstTexture, VkImageLayout dstImageLayout, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
 {
-	if (m_pMemory == nullptr) {
-		return false;
-	}
-
-	if (m_vkBuffer == VK_NULL_HANDLE) {
-		return false;
-	}
-
-	if (m_vkFence == VK_NULL_HANDLE) {
-		return false;
-	}
-
-	if (m_vkCommandBuffer == VK_NULL_HANDLE) {
-		return false;
-	}
+	ASSERT(m_pMemory);
+	ASSERT(m_vkBuffer);
+	ASSERT(m_vkFence);
+	ASSERT(m_vkCommandBuffer);
 
 	CALL_VK_FUNCTION_RETURN_BOOL(vkBeginCommandBufferPrimary(m_vkCommandBuffer, VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT));
 	{
@@ -213,21 +185,10 @@ bool CVKTransferBuffer::TransferTexture2DData(CVKTexture* pDstTexture, VkImageLa
 
 bool CVKTransferBuffer::TransferTexture2DArrayData(CVKTexture* pDstTexture, VkImageLayout dstImageLayout, int layer, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
 {
-	if (m_pMemory == nullptr) {
-		return false;
-	}
-
-	if (m_vkBuffer == VK_NULL_HANDLE) {
-		return false;
-	}
-
-	if (m_vkFence == VK_NULL_HANDLE) {
-		return false;
-	}
-
-	if (m_vkCommandBuffer == VK_NULL_HANDLE) {
-		return false;
-	}
+	ASSERT(m_pMemory);
+	ASSERT(m_vkBuffer);
+	ASSERT(m_vkFence);
+	ASSERT(m_vkCommandBuffer);
 
 	CALL_VK_FUNCTION_RETURN_BOOL(vkBeginCommandBufferPrimary(m_vkCommandBuffer, VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT));
 	{
@@ -268,21 +229,10 @@ bool CVKTransferBuffer::TransferTexture2DArrayData(CVKTexture* pDstTexture, VkIm
 
 bool CVKTransferBuffer::TransferTextureCubemapData(CVKTexture* pDstTexture, VkImageLayout dstImageLayout, int face, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
 {
-	if (m_pMemory == nullptr) {
-		return false;
-	}
-
-	if (m_vkBuffer == VK_NULL_HANDLE) {
-		return false;
-	}
-
-	if (m_vkFence == VK_NULL_HANDLE) {
-		return false;
-	}
-
-	if (m_vkCommandBuffer == VK_NULL_HANDLE) {
-		return false;
-	}
+	ASSERT(m_pMemory);
+	ASSERT(m_vkBuffer);
+	ASSERT(m_vkFence);
+	ASSERT(m_vkCommandBuffer);
 
 	CALL_VK_FUNCTION_RETURN_BOOL(vkBeginCommandBufferPrimary(m_vkCommandBuffer, VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT));
 	{

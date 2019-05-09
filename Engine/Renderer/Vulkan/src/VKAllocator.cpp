@@ -36,53 +36,61 @@ const VkAllocationCallbacks* CVKAllocator::GetAllocationCallbacks(void) const
 
 void* VKAPI_PTR CVKAllocator::vkAllocationFunction(void* pUserData, size_t size, size_t alignment, VkSystemAllocationScope allocationScope)
 {
-	if (CVKAllocator* pAllocator = (CVKAllocator*)pUserData) {
-		void* pPointer = AllocMemory(size);
-		pAllocator->m_allocatedSize += GET_MEM_SIZE(pPointer);
-		pAllocator->m_maxAllocatedSize = pAllocator->m_maxAllocatedSize >= pAllocator->m_allocatedSize ? pAllocator->m_maxAllocatedSize : pAllocator->m_allocatedSize;
-		return pPointer;
-	}
+	ASSERT(pUserData);
 
-	return nullptr;
+	CVKAllocator* pAllocator = (CVKAllocator*)pUserData;
+	void* pPointer = AllocMemory(size);
+
+	pAllocator->m_allocatedSize += GET_MEM_SIZE(pPointer);
+	pAllocator->m_maxAllocatedSize = pAllocator->m_maxAllocatedSize >= pAllocator->m_allocatedSize ? pAllocator->m_maxAllocatedSize : pAllocator->m_allocatedSize;
+
+	return pPointer;
 }
 
 void* VKAPI_PTR CVKAllocator::vkReallocationFunction(void* pUserData, void* pOriginal, size_t size, size_t alignment, VkSystemAllocationScope allocationScope)
 {
-	if (CVKAllocator* pAllocator = (CVKAllocator*)pUserData) {
-		void* pPointer = AllocMemory(size);
-		memcpy(pPointer, pOriginal, std::min(GET_MEM_SIZE(pPointer), GET_MEM_SIZE(pOriginal)));
-		pAllocator->m_allocatedSize += GET_MEM_SIZE(pPointer);
-		pAllocator->m_allocatedSize -= GET_MEM_SIZE(pOriginal);
-		pAllocator->m_maxAllocatedSize = pAllocator->m_maxAllocatedSize >= pAllocator->m_allocatedSize ? pAllocator->m_maxAllocatedSize : pAllocator->m_allocatedSize;
-		FreeMemory(pOriginal);
-		return pPointer;
-	}
+	ASSERT(pUserData);
+	ASSERT(pOriginal);
 
-	return nullptr;
+	CVKAllocator* pAllocator = (CVKAllocator*)pUserData;
+	void* pPointer = AllocMemory(size);
+
+	memcpy(pPointer, pOriginal, std::min(GET_MEM_SIZE(pPointer), GET_MEM_SIZE(pOriginal)));
+	pAllocator->m_allocatedSize += GET_MEM_SIZE(pPointer);
+	pAllocator->m_allocatedSize -= GET_MEM_SIZE(pOriginal);
+	pAllocator->m_maxAllocatedSize = pAllocator->m_maxAllocatedSize >= pAllocator->m_allocatedSize ? pAllocator->m_maxAllocatedSize : pAllocator->m_allocatedSize;
+	FreeMemory(pOriginal);
+
+	return pPointer;
 }
 
 void VKAPI_PTR CVKAllocator::vkFreeFunction(void* pUserData, void* pPointer)
 {
-	if (CVKAllocator* pAllocator = (CVKAllocator*)pUserData) {
-		if (pPointer) {
-			pAllocator->m_allocatedSize -= GET_MEM_SIZE(pPointer);
-			FreeMemory(pPointer);
-		}
-	}
+	ASSERT(pUserData);
+	ASSERT(pPointer);
+
+	CVKAllocator* pAllocator = (CVKAllocator*)pUserData;
+
+	pAllocator->m_allocatedSize -= GET_MEM_SIZE(pPointer);
+	FreeMemory(pPointer);
 }
 
 void VKAPI_PTR CVKAllocator::vkInternalAllocationNotification(void* pUserData, size_t size, VkInternalAllocationType allocationType, VkSystemAllocationScope allocationScope)
 {
-	if (CVKAllocator* pAllocator = (CVKAllocator*)pUserData) {
-		pAllocator->m_allocatedSize += size;
-		pAllocator->m_maxAllocatedSize = pAllocator->m_maxAllocatedSize >= pAllocator->m_allocatedSize ? pAllocator->m_maxAllocatedSize : pAllocator->m_allocatedSize;
-	}
+	ASSERT(pUserData);
+
+	CVKAllocator* pAllocator = (CVKAllocator*)pUserData;
+
+	pAllocator->m_allocatedSize += size;
+	pAllocator->m_maxAllocatedSize = pAllocator->m_maxAllocatedSize >= pAllocator->m_allocatedSize ? pAllocator->m_maxAllocatedSize : pAllocator->m_allocatedSize;
 }
 
 void VKAPI_PTR CVKAllocator::vkInternalFreeNotification(void* pUserData, size_t size, VkInternalAllocationType allocationType, VkSystemAllocationScope allocationScope)
 {
-	if (CVKAllocator* pAllocator = (CVKAllocator*)pUserData) {
-		pAllocator->m_allocatedSize -= size;
-		pAllocator->m_maxAllocatedSize = pAllocator->m_maxAllocatedSize >= pAllocator->m_allocatedSize ? pAllocator->m_maxAllocatedSize : pAllocator->m_allocatedSize;
-	}
+	ASSERT(pUserData);
+
+	CVKAllocator* pAllocator = (CVKAllocator*)pUserData;
+
+	pAllocator->m_allocatedSize -= size;
+	pAllocator->m_maxAllocatedSize = pAllocator->m_maxAllocatedSize >= pAllocator->m_allocatedSize ? pAllocator->m_maxAllocatedSize : pAllocator->m_allocatedSize;
 }

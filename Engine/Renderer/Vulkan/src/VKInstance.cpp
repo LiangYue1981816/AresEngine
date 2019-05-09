@@ -77,16 +77,19 @@ CVKInstance::~CVKInstance(void)
 
 VkInstance CVKInstance::GetInstance(void) const
 {
+	ASSERT(m_vkInstance);
 	return m_vkInstance;
 }
 
 VkSurfaceKHR CVKInstance::GetSurface(void) const
 {
+	ASSERT(m_vkSurface);
 	return m_vkSurface;
 }
 
 CVKAllocator* CVKInstance::GetAllocator(void) const
 {
+	ASSERT(m_pAllocator);
 	return m_pAllocator;
 }
 

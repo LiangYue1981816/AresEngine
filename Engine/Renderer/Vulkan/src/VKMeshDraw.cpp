@@ -29,105 +29,74 @@ void CVKMeshDraw::Release(void)
 
 glm::aabb CVKMeshDraw::GetLocalAABB(void) const
 {
-	if (m_pMeshDraw) {
-		return m_pMeshDraw->aabb;
-	}
-	else {
-		return glm::aabb();
-	}
+	ASSERT(m_pMeshDraw);
+	return m_pMeshDraw->aabb;
 }
 
 GfxIndexType CVKMeshDraw::GetIndexType(void) const
 {
-	if (m_ptrMesh) {
-		return m_ptrMesh->GetIndexBuffer()->GetIndexType();
-	}
-	else {
-		return GFX_INDEX_INVALID_ENUM;
-	}
+	ASSERT(m_ptrMesh);
+	return m_ptrMesh->GetIndexBuffer()->GetIndexType();
 }
 
 uint32_t CVKMeshDraw::GetIndexCount(void) const
 {
-	if (m_pMeshDraw) {
-		return m_pMeshDraw->indexCount;
-	}
-	else {
-		return 0;
-	}
+	ASSERT(m_pMeshDraw);
+	return m_pMeshDraw->indexCount;
 }
 
 uint32_t CVKMeshDraw::GetIndexOffset(void) const
 {
-	if (m_pMeshDraw) {
-		switch ((int)GetIndexType()) {
-		case GFX_INDEX_UNSIGNED_SHORT: return m_pMeshDraw->firstIndex * 2;
-		case GFX_INDEX_UNSIGNED_INT:   return m_pMeshDraw->firstIndex * 4;
-		default:                       return 0;
-		}
-	}
-	else {
-		return 0;
+	ASSERT(m_pMeshDraw);
+
+	switch ((int)GetIndexType()) {
+	case GFX_INDEX_UNSIGNED_SHORT: return m_pMeshDraw->firstIndex * 2;
+	case GFX_INDEX_UNSIGNED_INT:   return m_pMeshDraw->firstIndex * 4;
+	default:                       return 0;
 	}
 }
 
 uint32_t CVKMeshDraw::GetVertexFormat(void) const
 {
-	if (m_ptrMesh) {
-		return m_ptrMesh->GetVertexBuffer()->GetVertexFormat();
-	}
-	else {
-		return 0;
-	}
+	ASSERT(m_ptrMesh);
+	return m_ptrMesh->GetVertexBuffer()->GetVertexFormat();
 }
 
 uint32_t CVKMeshDraw::GetVertexCount(void) const
 {
-	if (m_ptrMesh) {
-		return m_ptrMesh->GetVertexBuffer()->GetVertexCount();
-	}
-	else {
-		return 0;
-	}
+	ASSERT(m_ptrMesh);
+	return m_ptrMesh->GetVertexBuffer()->GetVertexCount();
 }
 
 uint32_t CVKMeshDraw::GetInstanceFormat(void) const
 {
-	if (m_pInstanceBuffer) {
-		return m_pInstanceBuffer->GetInstanceFormat();
-	}
-	else {
-		return 0;
-	}
+	ASSERT(m_pInstanceBuffer);
+	return m_pInstanceBuffer->GetInstanceFormat();
 }
 
 uint32_t CVKMeshDraw::GetInstanceCount(void) const
 {
-	if (m_pInstanceBuffer) {
-		return m_pInstanceBuffer->GetInstanceCount();
-	}
-	else {
-		return 0;
-	}
+	ASSERT(m_pInstanceBuffer);
+	return m_pInstanceBuffer->GetInstanceCount();
 }
 
 bool CVKMeshDraw::InstanceBufferData(size_t size, const void* data)
 {
-	if (m_pInstanceBuffer) {
-		m_pInstanceBuffer->BufferData(size, data);
-		m_pIndirectBuffer->BufferData(0, m_pMeshDraw->baseVertex, m_pMeshDraw->firstIndex, m_pMeshDraw->indexCount, size / GetInstanceStride(m_pInstanceBuffer->GetInstanceFormat()));
-		return true;
-	}
-	else {
-		return false;
-	}
+	ASSERT(m_pInstanceBuffer);
+	ASSERT(m_pIndirectBuffer);
+
+	m_pInstanceBuffer->BufferData(size, data);
+	m_pIndirectBuffer->BufferData(0, m_pMeshDraw->baseVertex, m_pMeshDraw->firstIndex, m_pMeshDraw->indexCount, size / GetInstanceStride(m_pInstanceBuffer->GetInstanceFormat()));
+
+	return true;
 }
 
 void CVKMeshDraw::Bind(VkCommandBuffer vkCommandBuffer)
 {
-	if (m_ptrMesh) {
-		((CVKIndexBuffer*)m_ptrMesh->GetIndexBuffer())->Bind(vkCommandBuffer);
-		((CVKVertexBuffer*)m_ptrMesh->GetVertexBuffer())->Bind(vkCommandBuffer);
-		((CVKVertexBuffer*)m_pInstanceBuffer)->Bind(vkCommandBuffer);
-	}
+	ASSERT(vkCommandBuffer);
+	ASSERT(m_ptrMesh);
+
+	((CVKIndexBuffer*)m_ptrMesh->GetIndexBuffer())->Bind(vkCommandBuffer);
+	((CVKVertexBuffer*)m_ptrMesh->GetVertexBuffer())->Bind(vkCommandBuffer);
+	((CVKVertexBuffer*)m_pInstanceBuffer)->Bind(vkCommandBuffer);
 }

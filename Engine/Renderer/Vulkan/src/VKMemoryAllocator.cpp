@@ -9,12 +9,12 @@ CVKMemoryAllocator::CVKMemoryAllocator(CVKDevice* pDevice, uint32_t memoryTypeIn
 	, m_root{ nullptr }
 	, m_nodes(nullptr)
 
-	, m_vkMemory(VK_NULL_HANDLE)
 	, m_memoryFreeSize(0)
 	, m_memoryFullSize(0)
 	, m_memoryAlignment(0)
 	, m_memoryTypeIndex(0)
 	, m_memoryPropertyFlags(0)
+	, m_vkMemory(VK_NULL_HANDLE)
 
 	, pNext(nullptr)
 	, pPrev(nullptr)
@@ -73,6 +73,7 @@ void CVKMemoryAllocator::Destroy(void)
 
 VkDeviceMemory CVKMemoryAllocator::GetMemory(void) const
 {
+	ASSERT(m_vkMemory);
 	return m_vkMemory;
 }
 
@@ -117,9 +118,11 @@ CVKMemory* CVKMemoryAllocator::AllocMemory(VkDeviceSize size)
 	//             |                    New Memory Handle
 	//             Allocated Memory Handle
 
+	ASSERT(m_vkMemory);
+
 	VkDeviceSize requestSize = ALIGN_BYTE(size, m_memoryAlignment);
 
-	if (m_vkMemory != VK_NULL_HANDLE && m_memoryFreeSize >= requestSize) {
+	if (m_memoryFreeSize >= requestSize) {
 		if (CVKMemory* pMemory = SearchMemory(requestSize)) {
 			RemoveMemory(pMemory);
 
@@ -152,22 +155,23 @@ CVKMemory* CVKMemoryAllocator::AllocMemory(VkDeviceSize size)
 
 void CVKMemoryAllocator::FreeMemory(CVKMemory* pMemory)
 {
-	if (m_vkMemory != VK_NULL_HANDLE && pMemory != nullptr) {
-		pMemory->bInUse = false;
-		m_memoryFreeSize += pMemory->m_memorySize;
+	ASSERT(pMemory);
+	ASSERT(m_vkMemory);
 
-		if (pMemory->pNext && pMemory->pNext->bInUse == false) {
-			RemoveMemory(pMemory->pNext);
-			pMemory = MergeMemory(pMemory, pMemory->pNext);
-		}
+	pMemory->bInUse = false;
+	m_memoryFreeSize += pMemory->m_memorySize;
 
-		if (pMemory->pPrev && pMemory->pPrev->bInUse == false) {
-			RemoveMemory(pMemory->pPrev);
-			pMemory = MergeMemory(pMemory->pPrev, pMemory);
-		}
-
-		InsertMemory(pMemory);
+	if (pMemory->pNext && pMemory->pNext->bInUse == false) {
+		RemoveMemory(pMemory->pNext);
+		pMemory = MergeMemory(pMemory, pMemory->pNext);
 	}
+
+	if (pMemory->pPrev && pMemory->pPrev->bInUse == false) {
+		RemoveMemory(pMemory->pPrev);
+		pMemory = MergeMemory(pMemory->pPrev, pMemory);
+	}
+
+	InsertMemory(pMemory);
 }
 
 void CVKMemoryAllocator::InitNodes(void)

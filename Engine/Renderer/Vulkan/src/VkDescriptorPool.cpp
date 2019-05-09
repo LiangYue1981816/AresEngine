@@ -13,10 +13,9 @@ const uint32_t numInputAttachments = 32;
 CVKDescriptorPool::CVKDescriptorPool(CVKDevice* pDevice)
 	: m_pDevice(pDevice)
 
-	, m_vkDescriptorPool(VK_NULL_HANDLE)
-
 	, m_numSets(0)
 	, m_numDescriptors{ 0 }
+	, m_vkDescriptorPool(VK_NULL_HANDLE)
 
 	, pNext(nullptr)
 	, pPrev(nullptr)
@@ -82,20 +81,20 @@ void CVKDescriptorPool::Destroy(void)
 		vkDestroyDescriptorPool(m_pDevice->GetDevice(), m_vkDescriptorPool, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
 	}
 
-	m_vkDescriptorPool = VK_NULL_HANDLE;
 	m_pDescriptorSets.clear();
+	m_vkDescriptorPool = VK_NULL_HANDLE;
+	memset(m_numDescriptors, 0, sizeof(m_numDescriptors));
 }
 
 VkDescriptorPool CVKDescriptorPool::GetDescriptorPool(void) const
 {
+	ASSERT(m_vkDescriptorPool);
 	return m_vkDescriptorPool;
 }
 
 CVKDescriptorSet* CVKDescriptorPool::AllocDescriptorSet(const CGfxDescriptorLayoutPtr ptrDescriptorLayout)
 {
-	if (m_vkDescriptorPool == VK_NULL_HANDLE) {
-		return nullptr;
-	}
+	ASSERT(m_vkDescriptorPool);
 
 	if (m_numSets == 0) {
 		return nullptr;
@@ -121,9 +120,8 @@ CVKDescriptorSet* CVKDescriptorPool::AllocDescriptorSet(const CGfxDescriptorLayo
 
 bool CVKDescriptorPool::FreeDescriptorSet(CVKDescriptorSet* pDescriptorSet)
 {
-	if (m_vkDescriptorPool == VK_NULL_HANDLE) {
-		return false;
-	}
+	ASSERT(pDescriptorSet);
+	ASSERT(m_vkDescriptorPool);
 
 	m_pDescriptorSets.erase(pDescriptorSet);
 	delete pDescriptorSet;

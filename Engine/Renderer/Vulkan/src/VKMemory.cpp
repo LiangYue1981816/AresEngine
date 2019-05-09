@@ -28,6 +28,7 @@ CVKMemory::~CVKMemory(void)
 
 CVKMemoryAllocator* CVKMemory::GetAllocator(void) const
 {
+	ASSERT(m_pAllocator);
 	return m_pAllocator;
 }
 
@@ -46,13 +47,8 @@ bool CVKMemory::BindImage(VkImage vkImage) const
 	VkMemoryRequirements requirements;
 	vkGetImageMemoryRequirements(m_pDevice->GetDevice(), vkImage, &requirements);
 
-	if (m_memorySize < requirements.size) {
-		return false;
-	}
-
-	if ((ALIGN_BYTE(m_memoryOffset, requirements.alignment) != m_memoryOffset)) {
-		return false;
-	}
+	ASSERT(m_memorySize < requirements.size);
+	ASSERT(ALIGN_BYTE(m_memoryOffset, requirements.alignment) != m_memoryOffset);
 
 	CALL_VK_FUNCTION_RETURN_BOOL(vkBindImageMemory(m_pDevice->GetDevice(), vkImage, m_pAllocator->GetMemory(), m_memoryOffset));
 	return true;
@@ -63,13 +59,8 @@ bool CVKMemory::BindBuffer(VkBuffer vkBuffer) const
 	VkMemoryRequirements requirements;
 	vkGetBufferMemoryRequirements(m_pDevice->GetDevice(), vkBuffer, &requirements);
 
-	if (m_memorySize < requirements.size) {
-		return false;
-	}
-
-	if ((ALIGN_BYTE(m_memoryOffset, requirements.alignment) != m_memoryOffset)) {
-		return false;
-	}
+	ASSERT(m_memorySize < requirements.size);
+	ASSERT(ALIGN_BYTE(m_memoryOffset, requirements.alignment) != m_memoryOffset);
 
 	CALL_VK_FUNCTION_RETURN_BOOL(vkBindBufferMemory(m_pDevice->GetDevice(), vkBuffer, m_pAllocator->GetMemory(), m_memoryOffset));
 	return true;

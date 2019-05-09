@@ -113,7 +113,7 @@ bool CVKHelper::IsFormatDepthOrStencil(VkFormat format)
 	return IsFormatStencilOnly(format) || IsFormatDepthOnly(format) || IsFormatDepthStencil(format);
 }
 
-VkAccessFlags CVKHelper::GetAccessMask(VkImageLayout layout)
+VkAccessFlags CVKHelper::GetAccessMaskByImageLayout(VkImageLayout layout)
 {
 	switch ((int)layout) {
 	case VK_IMAGE_LAYOUT_UNDEFINED:
@@ -151,7 +151,26 @@ VkAccessFlags CVKHelper::GetAccessMask(VkImageLayout layout)
 	}
 }
 
-VkPipelineStageFlags CVKHelper::GetPipelineStageFlags(VkImageLayout layout)
+VkAccessFlags CVKHelper::GetAccessMaskByBufferUsage(VkBufferUsageFlags usage)
+{
+	VkAccessFlags flags = 0;
+
+	if (usage & VK_BUFFER_USAGE_INDEX_BUFFER_BIT) {
+		flags |= VK_ACCESS_INDEX_READ_BIT;
+	}
+
+	if (usage & VK_BUFFER_USAGE_VERTEX_BUFFER_BIT) {
+		flags |= VK_ACCESS_VERTEX_ATTRIBUTE_READ_BIT;
+	}
+
+	if (usage & VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT) {
+		flags |= VK_ACCESS_UNIFORM_READ_BIT;
+	}
+
+	return flags;
+}
+
+VkPipelineStageFlags CVKHelper::GetPipelineStageFlagsByImageLayout(VkImageLayout layout)
 {
 	switch ((int)layout) {
 	case VK_IMAGE_LAYOUT_UNDEFINED:
@@ -189,7 +208,7 @@ VkPipelineStageFlags CVKHelper::GetPipelineStageFlags(VkImageLayout layout)
 	}
 }
 
-VkPipelineStageFlags CVKHelper::GetPipelineStageFlags(VkAccessFlags access)
+VkPipelineStageFlags CVKHelper::GetPipelineStageFlagsByAccessFlags(VkAccessFlags access)
 {
 	switch ((int)access) {
 	case VK_ACCESS_INDIRECT_COMMAND_READ_BIT:
@@ -240,6 +259,25 @@ VkPipelineStageFlags CVKHelper::GetPipelineStageFlags(VkAccessFlags access)
 	default:
 		return VK_PIPELINE_STAGE_FLAG_BITS_MAX_ENUM;
 	}
+}
+
+VkPipelineStageFlags CVKHelper::GetPipelineStageFlagsByBufferUsage(VkBufferUsageFlags usage)
+{
+	VkPipelineStageFlags flags = 0;
+
+	if (usage & VK_BUFFER_USAGE_INDEX_BUFFER_BIT) {
+		flags |= VK_PIPELINE_STAGE_VERTEX_INPUT_BIT;
+	}
+
+	if (usage & VK_BUFFER_USAGE_VERTEX_BUFFER_BIT) {
+		flags |= VK_PIPELINE_STAGE_VERTEX_INPUT_BIT;
+	}
+
+	if (usage & VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT) {
+		flags |= VK_PIPELINE_STAGE_VERTEX_SHADER_BIT | VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT | VK_PIPELINE_STAGE_COMPUTE_SHADER_BIT;
+	}
+
+	return flags;
 }
 
 VkSampleCountFlagBits CVKHelper::TranslateSampleCount(int samples)

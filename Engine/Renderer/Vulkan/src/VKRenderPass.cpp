@@ -26,6 +26,7 @@ void CVKRenderPass::Release(void)
 
 VkRenderPass CVKRenderPass::GetRenderPass(void) const
 {
+	ASSERT(m_vkRenderPass);
 	return m_vkRenderPass;
 }
 
@@ -136,13 +137,13 @@ bool CVKRenderPass::Create(void)
 
 void CVKRenderPass::Destroy(bool bClear)
 {
-	if (m_vkRenderPass) {
-		vkDestroyRenderPass(m_pDevice->GetDevice(), m_vkRenderPass, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
-	}
-
 	if (bClear) {
 		m_attachments.clear();
 		m_subpasses.clear();
+	}
+
+	if (m_vkRenderPass) {
+		vkDestroyRenderPass(m_pDevice->GetDevice(), m_vkRenderPass, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
 	}
 
 	m_vkRenderPass = VK_NULL_HANDLE;

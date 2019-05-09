@@ -36,13 +36,8 @@ CVKTransferManager::~CVKTransferManager(void)
 
 CVKTransferBuffer* CVKTransferManager::AcquireTransferBuffer(size_t size)
 {
-	if (m_vkQueue == VK_NULL_HANDLE) {
-		return nullptr;
-	}
-
-	if (m_vkCommandPool == VK_NULL_HANDLE) {
-		return nullptr;
-	}
+	ASSERT(m_vkQueue);
+	ASSERT(m_vkCommandPool);
 
 	for (eastl::vector<CVKTransferBuffer*>::const_iterator itTransferBuffer = m_pendingList.begin(); itTransferBuffer != m_pendingList.end();) {
 		CVKTransferBuffer* pTransferBuffer = *itTransferBuffer;

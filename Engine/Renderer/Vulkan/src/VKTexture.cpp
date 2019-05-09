@@ -36,11 +36,13 @@ void CVKTexture::Release(void)
 
 VkImage CVKTexture::GetImage(void) const
 {
+	ASSERT(m_vkImage);
 	return m_vkImage;
 }
 
 VkImageView CVKTexture::GetImageView(void) const
 {
+	ASSERT(m_vkImageView);
 	return m_vkImageView;
 }
 
@@ -227,115 +229,63 @@ void CVKTexture::Destroy(void)
 
 bool CVKTexture::Texture2DData(GfxPixelFormat format, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
 {
-	if (m_bExtern == true) {
-		return false;
-	}
-
-	if (m_type != GFX_TEXTURE_2D) {
-		return false;
-	}
-
-	if (m_vkImage == VK_NULL_HANDLE) {
-		return false;
-	}
-
-	if (m_format != format) {
-		return false;
-	}
-
-	if (m_levels < level) {
-		return false;
-	}
-
-	if (m_samples != 1) {
-		return false;
-	}
+	ASSERT(m_vkImage);
+	ASSERT(m_type == GFX_TEXTURE_2D);
+	ASSERT(m_bExtern == false);
+	ASSERT(m_format == format);
+	ASSERT(m_levels == level);
+	ASSERT(m_samples == 1);
+	ASSERT(xoffset >= 0 && width >= 0 && xoffset + width < m_width);
+	ASSERT(yoffset >= 0 && height >= 0 && yoffset + height < m_height);
 
 	return m_pDevice->GetTransferManager()->TransferTexture2DData(this, VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL, level, xoffset, yoffset, width, height, size, data);
 }
 
 bool CVKTexture::Texture2DArrayData(GfxPixelFormat format, int layer, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
 {
-	if (m_bExtern == true) {
-		return false;
-	}
-
-	if (m_type != GFX_TEXTURE_2D_ARRAY) {
-		return false;
-	}
-
-	if (m_vkImage == VK_NULL_HANDLE) {
-		return false;
-	}
-
-	if (m_format != format) {
-		return false;
-	}
-
-	if (m_layers < layer) {
-		return false;
-	}
-
-	if (m_levels < level) {
-		return false;
-	}
-
-	if (m_samples != 1) {
-		return false;
-	}
+	ASSERT(m_vkImage);
+	ASSERT(m_type == GFX_TEXTURE_2D_ARRAY);
+	ASSERT(m_bExtern == false);
+	ASSERT(m_format == format);
+	ASSERT(m_layers == layer);
+	ASSERT(m_levels == level);
+	ASSERT(m_samples == 1);
+	ASSERT(xoffset >= 0 && width >= 0 && xoffset + width < m_width);
+	ASSERT(yoffset >= 0 && height >= 0 && yoffset + height < m_height);
 
 	return m_pDevice->GetTransferManager()->TransferTexture2DArrayData(this, VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL, layer, level, xoffset, yoffset, width, height, size, data);
 }
 
 bool CVKTexture::TextureCubemapData(GfxPixelFormat format, GfxCubemapFace face, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
 {
-	if (m_bExtern == true) {
-		return false;
-	}
-
-	if (m_type != GFX_TEXTURE_CUBE_MAP) {
-		return false;
-	}
-
-	if (m_vkImage == VK_NULL_HANDLE) {
-		return false;
-	}
-
-	if (m_format != format) {
-		return false;
-	}
-
-	if (m_levels < level) {
-		return false;
-	}
-
-	if (m_samples != 1) {
-		return false;
-	}
+	ASSERT(m_vkImage);
+	ASSERT(m_type == GFX_TEXTURE_CUBE_MAP);
+	ASSERT(m_bExtern == false);
+	ASSERT(m_format == format);
+	ASSERT(m_levels == level);
+	ASSERT(m_samples == 1);
+	ASSERT(xoffset >= 0 && width >= 0 && xoffset + width < m_width);
+	ASSERT(yoffset >= 0 && height >= 0 && yoffset + height < m_height);
 
 	return m_pDevice->GetTransferManager()->TransferTextureCubemapData(this, VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL, face, level, xoffset, yoffset, width, height, size, data);
 }
 
 bool CVKTexture::PipelineBarrier(VkCommandBuffer vkCommandBuffer, VkImageLayout imageLayout, VkImageSubresourceRange range)
 {
-	if (m_vkImage) {
-		CALL_VK_FUNCTION_RETURN_BOOL(vkCmdImageMemoryBarrier(vkCommandBuffer, m_vkImage, m_vkImageLayout, imageLayout, range));
-		m_vkImageLayout = imageLayout;
-		return true;
-	}
-	else {
-		return false;
-	}
+	ASSERT(m_vkImage);
+
+	CALL_VK_FUNCTION_RETURN_BOOL(vkCmdImageMemoryBarrier(vkCommandBuffer, m_vkImage, m_vkImageLayout, imageLayout, range));
+	m_vkImageLayout = imageLayout;
+
+	return true;
 }
 
 bool CVKTexture::PipelineBarrier(VkCommandBuffer vkCommandBuffer, VkImageLayout imageLayout, VkAccessFlags srcAccessFlags, VkAccessFlags dstAccessFlags, VkPipelineStageFlags srcPipelineStageFlags, VkPipelineStageFlags dstPipelineStageFlags, VkImageSubresourceRange range)
 {
-	if (m_vkImage) {
-		CALL_VK_FUNCTION_RETURN_BOOL(vkCmdImageMemoryBarrier(vkCommandBuffer, m_vkImage, m_vkImageLayout, imageLayout, srcAccessFlags, dstAccessFlags, srcPipelineStageFlags, dstPipelineStageFlags, range));
-		m_vkImageLayout = imageLayout;
-		return true;
-	}
-	else {
-		return false;
-	}
+	ASSERT(m_vkImage);
+
+	CALL_VK_FUNCTION_RETURN_BOOL(vkCmdImageMemoryBarrier(vkCommandBuffer, m_vkImage, m_vkImageLayout, imageLayout, srcAccessFlags, dstAccessFlags, srcPipelineStageFlags, dstPipelineStageFlags, range));
+	m_vkImageLayout = imageLayout;
+
+	return true;
 }

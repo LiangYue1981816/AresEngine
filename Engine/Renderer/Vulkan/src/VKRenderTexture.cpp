@@ -6,7 +6,7 @@ CVKRenderTexture::CVKRenderTexture(CVKDevice* pDevice, CVKRenderTextureManager* 
 	, m_pDevice(pDevice)
 	, m_pManager(pManager)
 {
-
+	m_ptrTexture = CVKTexturePtr(new CVKTexture(m_pDevice));
 }
 
 CVKRenderTexture::~CVKRenderTexture(void)
@@ -21,87 +21,47 @@ void CVKRenderTexture::Release(void)
 
 VkImageView CVKRenderTexture::GetImageView(void) const
 {
-	if (m_ptrTexture) {
-		return m_ptrTexture->GetImageView();
-	}
-	else {
-		return VK_NULL_HANDLE;
-	}
+	return m_ptrTexture->GetImageView();
 }
 
 VkImageLayout CVKRenderTexture::GetImageLayout(void) const
 {
-	if (m_ptrTexture) {
-		return m_ptrTexture->GetImageLayout();
-	}
-	else {
-		return VK_IMAGE_LAYOUT_UNDEFINED;
-	}
+	return m_ptrTexture->GetImageLayout();
 }
 
 VkImageAspectFlags CVKRenderTexture::GetImageAspectFlags(void) const
 {
-	if (m_ptrTexture) {
-		return m_ptrTexture->GetImageAspectFlags();
-	}
-	else {
-		return 0;
-	}
+	return m_ptrTexture->GetImageAspectFlags();
 }
 
 GfxTextureType CVKRenderTexture::GetType(void) const
 {
-	if (m_ptrTexture) {
-		return m_ptrTexture->GetType();
-	}
-	else {
-		return GFX_TEXTURE_2D;
-	}
+	return m_ptrTexture->GetType();
 }
 
 GfxPixelFormat CVKRenderTexture::GetFormat(void) const
 {
-	if (m_ptrTexture) {
-		return m_ptrTexture->GetFormat();
-	}
-	else {
-		return GFX_PIXELFORMAT_UNDEFINED;
-	}
+	return m_ptrTexture->GetFormat();
 }
 
 int CVKRenderTexture::GetWidth(void) const
 {
-	if (m_ptrTexture) {
-		return m_ptrTexture->GetWidth();
-	}
-	else {
-		return 0;
-	}
+	return m_ptrTexture->GetWidth();
 }
 
 int CVKRenderTexture::GetHeight(void) const
 {
-	if (m_ptrTexture) {
-		return m_ptrTexture->GetHeight();
-	}
-	else {
-		return 0;
-	}
+	return m_ptrTexture->GetHeight();
 }
 
 int CVKRenderTexture::GetSamples(void) const
 {
-	if (m_ptrTexture) {
-		return m_ptrTexture->GetSamples();
-	}
-	else {
-		return 0;
-	}
+	return m_ptrTexture->GetSamples();
 }
 
 bool CVKRenderTexture::Create(HANDLE hExternalTexture, GfxPixelFormat format, int width, int height, int samples)
 {
-	if (m_ptrTexture && CVKHelper::IsFormatSupported((VkFormat)format)) {
+	if (CVKHelper::IsFormatSupported((VkFormat)format)) {
 		samples = std::max(samples, 1);
 
 		if (CVKHelper::IsFormatDepthOnly((VkFormat)format)) {
@@ -125,7 +85,7 @@ bool CVKRenderTexture::Create(HANDLE hExternalTexture, GfxPixelFormat format, in
 
 bool CVKRenderTexture::Create(GfxPixelFormat format, int width, int height, int samples, bool bTransient)
 {
-	if (m_ptrTexture && CVKHelper::IsFormatSupported((VkFormat)format)) {
+	if (CVKHelper::IsFormatSupported((VkFormat)format)) {
 		samples = std::max(samples, 1);
 
 		if (CVKHelper::IsFormatDepthOnly((VkFormat)format)) {
@@ -149,7 +109,5 @@ bool CVKRenderTexture::Create(GfxPixelFormat format, int width, int height, int 
 
 void CVKRenderTexture::Destroy(void)
 {
-	if (m_ptrTexture) {
-		m_ptrTexture->Destroy();
-	}
+	m_ptrTexture->Destroy();
 }
