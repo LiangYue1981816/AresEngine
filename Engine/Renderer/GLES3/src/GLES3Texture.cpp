@@ -184,8 +184,8 @@ bool CGLES3Texture::Texture2DData(GfxPixelFormat format, int level, int xoffset,
 	ASSERT(m_format == format);
 	ASSERT(m_levels > level);
 	ASSERT(m_samples == 1);
-	ASSERT(xoffset >= 0 && width >= 0 && xoffset + width < m_width);
-	ASSERT(yoffset >= 0 && height >= 0 && yoffset + height < m_height);
+	ASSERT(xoffset >= 0 && width >= 0 && xoffset + width <= m_width);
+	ASSERT(yoffset >= 0 && height >= 0 && yoffset + height <= m_height);
 
 	gli::gl GL(gli::gl::PROFILE_ES30);
 	gli::gl::format glFormat = GL.translate((gli::format)format);
@@ -207,8 +207,8 @@ bool CGLES3Texture::Texture2DDataCompressed(GfxPixelFormat format, int level, in
 	ASSERT(m_format == format);
 	ASSERT(m_levels > level);
 	ASSERT(m_samples == 1);
-	ASSERT(xoffset >= 0 && width >= 0 && xoffset + width < m_width);
-	ASSERT(yoffset >= 0 && height >= 0 && yoffset + height < m_height);
+	ASSERT(xoffset >= 0 && width >= 0 && xoffset + width <= m_width);
+	ASSERT(yoffset >= 0 && height >= 0 && yoffset + height <= m_height);
 
 	gli::gl GL(gli::gl::PROFILE_ES30);
 	gli::gl::format glFormat = GL.translate((gli::format)format);
@@ -231,8 +231,8 @@ bool CGLES3Texture::Texture2DArrayData(GfxPixelFormat format, int layer, int lev
 	ASSERT(m_layers > layer);
 	ASSERT(m_levels > level);
 	ASSERT(m_samples == 1);
-	ASSERT(xoffset >= 0 && width >= 0 && xoffset + width < m_width);
-	ASSERT(yoffset >= 0 && height >= 0 && yoffset + height < m_height);
+	ASSERT(xoffset >= 0 && width >= 0 && xoffset + width <= m_width);
+	ASSERT(yoffset >= 0 && height >= 0 && yoffset + height <= m_height);
 
 	gli::gl GL(gli::gl::PROFILE_ES30);
 	gli::gl::format glFormat = GL.translate((gli::format)format);
@@ -255,8 +255,8 @@ bool CGLES3Texture::Texture2DArrayDataCompressed(GfxPixelFormat format, int laye
 	ASSERT(m_layers > layer);
 	ASSERT(m_levels > level);
 	ASSERT(m_samples == 1);
-	ASSERT(xoffset >= 0 && width >= 0 && xoffset + width < m_width);
-	ASSERT(yoffset >= 0 && height >= 0 && yoffset + height < m_height);
+	ASSERT(xoffset >= 0 && width >= 0 && xoffset + width <= m_width);
+	ASSERT(yoffset >= 0 && height >= 0 && yoffset + height <= m_height);
 
 	gli::gl GL(gli::gl::PROFILE_ES30);
 	gli::gl::format glFormat = GL.translate((gli::format)format);
@@ -278,8 +278,8 @@ bool CGLES3Texture::TextureCubemapData(GfxPixelFormat format, GfxCubemapFace fac
 	ASSERT(m_format == format);
 	ASSERT(m_levels > level);
 	ASSERT(m_samples == 1);
-	ASSERT(xoffset >= 0 && width >= 0 && xoffset + width < m_width);
-	ASSERT(yoffset >= 0 && height >= 0 && yoffset + height < m_height);
+	ASSERT(xoffset >= 0 && width >= 0 && xoffset + width <= m_width);
+	ASSERT(yoffset >= 0 && height >= 0 && yoffset + height <= m_height);
 
 	gli::gl GL(gli::gl::PROFILE_ES30);
 	gli::gl::format glFormat = GL.translate((gli::format)format);
@@ -301,8 +301,8 @@ bool CGLES3Texture::TextureCubemapDataCompressed(GfxPixelFormat format, GfxCubem
 	ASSERT(m_format == format);
 	ASSERT(m_levels > level);
 	ASSERT(m_samples == 1);
-	ASSERT(xoffset >= 0 && width >= 0 && xoffset + width < m_width);
-	ASSERT(yoffset >= 0 && height >= 0 && yoffset + height < m_height);
+	ASSERT(xoffset >= 0 && width >= 0 && xoffset + width <= m_width);
+	ASSERT(yoffset >= 0 && height >= 0 && yoffset + height <= m_height);
 
 	gli::gl GL(gli::gl::PROFILE_ES30);
 	gli::gl::format glFormat = GL.translate((gli::format)format);
