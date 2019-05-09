@@ -42,10 +42,10 @@
 
 #ifndef ASSERT
 #  if defined (_DEBUG) || defined (DEBUG)
-#     define ASSERT                    assert
+#    define ASSERT                     assert
 #  else
-#     define ASSERT
-#  endf
+#    define ASSERT
+#  endif
 #endif
 
 #define ALIGN_BYTE(a, b)               ((((a) + (b) - 1) / (b)) * (b))
