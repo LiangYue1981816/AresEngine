@@ -12,7 +12,7 @@ CGLES3FrameBuffer::CGLES3FrameBuffer(CGLES3FrameBufferManager* pManager, int wid
 	, m_height(height)
 	, m_ptrAttachmentTextures(numAttachments)
 {
-
+	ASSERT(m_pManager);
 }
 
 CGLES3FrameBuffer::~CGLES3FrameBuffer(void)
@@ -43,6 +43,7 @@ bool CGLES3FrameBuffer::Create(const CGfxRenderPassPtr ptrRenderPass)
 
 	glGenFramebuffers(1, &m_fbo);
 	glGenFramebuffers(1, &m_resolve);
+	CHECK_GL_ERROR_ASSERT();
 
 	return true;
 }
@@ -121,10 +122,11 @@ void CGLES3FrameBuffer::Bind(const AttachmentInformation* pAttachmentInformation
 
 		GLReadBuffers(GL_FRAMEBUFFER, drawBuffers.size(), drawBuffers.data());
 		GLDrawBuffers(GL_FRAMEBUFFER, drawBuffers.size(), drawBuffers.data());
-	}
 
-	uint32_t status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
-	bool bValid = status == GL_FRAMEBUFFER_COMPLETE;
+		uint32_t status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
+		bool bValid = status == GL_FRAMEBUFFER_COMPLETE;
+	}
+	CHECK_GL_ERROR_ASSERT();
 }
 
 void CGLES3FrameBuffer::Resolve(const AttachmentInformation* pAttachmentInformations, const SubpassInformation* pSubpassInformation) const
@@ -160,6 +162,7 @@ void CGLES3FrameBuffer::Resolve(const AttachmentInformation* pAttachmentInformat
 		uint32_t status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
 		bool bValid = status == GL_FRAMEBUFFER_COMPLETE;
 	}
+	CHECK_GL_ERROR_ASSERT();
 
 	GLBindFramebuffer(GL_READ_FRAMEBUFFER, m_fbo);
 	GLBindFramebuffer(GL_DRAW_FRAMEBUFFER, m_resolve);
@@ -169,6 +172,7 @@ void CGLES3FrameBuffer::Resolve(const AttachmentInformation* pAttachmentInformat
 			0, 0, m_width, m_height,
 			GL_COLOR_BUFFER_BIT, GL_NEAREST);
 	}
+	CHECK_GL_ERROR_ASSERT();
 }
 
 void CGLES3FrameBuffer::InvalidateFramebuffer(const AttachmentInformation* pAttachmentInformations, const SubpassInformation* pSubpassInformation) const
@@ -198,4 +202,5 @@ void CGLES3FrameBuffer::InvalidateFramebuffer(const AttachmentInformation* pAtta
 	}
 
 	glInvalidateFramebuffer(GL_FRAMEBUFFER, (int)discardBuffers.size(), discardBuffers.data());
+	CHECK_GL_ERROR_ASSERT();
 }

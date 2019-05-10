@@ -12,6 +12,10 @@ private:
 	virtual ~CGLES3SwapChain(void);
 
 
+private:
+	bool Create(int width, int height, GfxPixelFormat format);
+	void Destroy(void);
+
 public:
 	GfxPixelFormat GetFormat(void) const;
 

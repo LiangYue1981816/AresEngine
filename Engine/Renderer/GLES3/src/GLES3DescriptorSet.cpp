@@ -6,7 +6,8 @@ CGLES3DescriptorSet::CGLES3DescriptorSet(CGLES3DescriptorSetManager* pManager, c
 	, m_pManager(pManager)
 	, m_ptrDescriptorLayout(ptrDescriptorLayout)
 {
-
+	ASSERT(m_pManager);
+	ASSERT(m_ptrDescriptorLayout);
 }
 
 CGLES3DescriptorSet::~CGLES3DescriptorSet(void)
@@ -23,7 +24,6 @@ bool CGLES3DescriptorSet::SetTexture2D(uint32_t name, const CGfxTexture2DPtr ptr
 {
 	ASSERT(pSampler);
 	ASSERT(ptrTexture);
-	ASSERT(m_ptrDescriptorLayout);
 
 	if (m_ptrDescriptorLayout->IsSampledImageValid(name)) {
 		m_imageDescriptorInfos[name].pSampler = (CGfxSampler*)pSampler;
@@ -42,7 +42,6 @@ bool CGLES3DescriptorSet::SetTexture2DArray(uint32_t name, const CGfxTexture2DAr
 {
 	ASSERT(pSampler);
 	ASSERT(ptrTexture);
-	ASSERT(m_ptrDescriptorLayout);
 
 	if (m_ptrDescriptorLayout->IsSampledImageValid(name)) {
 		m_imageDescriptorInfos[name].pSampler = (CGfxSampler*)pSampler;
@@ -61,7 +60,6 @@ bool CGLES3DescriptorSet::SetTextureCubemap(uint32_t name, const CGfxTextureCube
 {
 	ASSERT(pSampler);
 	ASSERT(ptrTexture);
-	ASSERT(m_ptrDescriptorLayout);
 
 	if (m_ptrDescriptorLayout->IsSampledImageValid(name)) {
 		m_imageDescriptorInfos[name].pSampler = (CGfxSampler*)pSampler;
@@ -80,7 +78,6 @@ bool CGLES3DescriptorSet::SetTextureInputAttachment(uint32_t name, const CGfxRen
 {
 	ASSERT(pSampler);
 	ASSERT(ptrTexture);
-	ASSERT(m_ptrDescriptorLayout);
 
 	if (m_ptrDescriptorLayout->IsSampledImageValid(name)) {
 		m_imageDescriptorInfos[name].pSampler = (CGfxSampler*)pSampler;
@@ -98,7 +95,7 @@ bool CGLES3DescriptorSet::SetTextureInputAttachment(uint32_t name, const CGfxRen
 bool CGLES3DescriptorSet::SetUniformBuffer(uint32_t name, const CGfxUniformBufferPtr ptrUniformBuffer, uint32_t offset, uint32_t range)
 {
 	ASSERT(ptrUniformBuffer);
-	ASSERT(m_ptrDescriptorLayout);
+	ASSERT(ptrUniformBuffer->GetSize() >= offset + range);
 
 	if (m_ptrDescriptorLayout->IsUniformBlockValid(name)) {
 		m_bufferDescriptorInfos[name].offset = offset;
@@ -113,7 +110,6 @@ bool CGLES3DescriptorSet::SetUniformBuffer(uint32_t name, const CGfxUniformBuffe
 
 const CGfxDescriptorLayoutPtr CGLES3DescriptorSet::GetDescriptorLayout(void) const
 {
-	ASSERT(m_ptrDescriptorLayout);
 	return m_ptrDescriptorLayout;
 }
 

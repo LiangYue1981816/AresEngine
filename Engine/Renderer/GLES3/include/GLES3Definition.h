@@ -1,5 +1,17 @@
 #pragma once
 
+
+#if defined (_DEBUG) || defined (DEBUG)
+#  define CHECK_GL_ERROR_ASSERT()                \
+   {                                             \
+      GLenum err = glGetError();                 \
+      ASSERT(err == GL_NO_ERROR);                \
+   }
+#else
+#  define CHECK_GL_ERROR_ASSERT()
+#endif
+
+
 class CGLES3Renderer;
 
 class CGLES3SwapChain;

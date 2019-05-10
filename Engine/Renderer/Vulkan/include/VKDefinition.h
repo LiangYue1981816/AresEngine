@@ -1,78 +1,78 @@
 #pragma once
 
 
-#define CALL_BOOL_FUNCTION_BREAK(func)       \
-{                                            \
-	bool err = func;                         \
-	if (err != true) {                       \
-		break;                               \
-	}                                        \
+#define CALL_BOOL_FUNCTION_BREAK(func)           \
+{                                                \
+	bool err = func;                             \
+	if (err != true) {                           \
+		break;                                   \
+	}                                            \
 }
 
-#define CALL_BOOL_FUNCTION_RETURN(func)      \
-{                                            \
-	bool err = func;                         \
-	if (err != true) {                       \
-		return;                              \
-	}                                        \
+#define CALL_BOOL_FUNCTION_RETURN(func)          \
+{                                                \
+	bool err = func;                             \
+	if (err != true) {                           \
+		return;                                  \
+	}                                            \
 }
 
-#define CALL_BOOL_FUNCTION_RETURN_BOOL(func) \
-{                                            \
-	bool err = func;                         \
-	if (err != true) {                       \
-		return false;                        \
-	}                                        \
+#define CALL_BOOL_FUNCTION_RETURN_BOOL(func)     \
+{                                                \
+	bool err = func;                             \
+	if (err != true) {                           \
+		return false;                            \
+	}                                            \
 }
 
-#define CALL_BOOL_FUNCTION_RETURN_NULLPTR(func) \
-{                                            \
-	bool err = func;                         \
-	if (err != true) {                       \
-		return nullptr;                      \
-	}                                        \
+#define CALL_BOOL_FUNCTION_RETURN_NULLPTR(func)  \
+{                                                \
+	bool err = func;                             \
+	if (err != true) {                           \
+		return nullptr;                          \
+	}                                            \
 }
 
-#define CALL_VK_FUNCTION_BREAK(func)         \
-{                                            \
-	VkResult err = func;                     \
-	if (err != VK_SUCCESS) {                 \
-		CVKInstance::SetLastError(err);      \
-		break;                               \
-	}                                        \
+#define CALL_VK_FUNCTION_BREAK(func)             \
+{                                                \
+	VkResult err = func;                         \
+	if (err != VK_SUCCESS) {                     \
+		CVKInstance::SetLastError(err);          \
+		break;                                   \
+	}                                            \
 }
 
-#define CALL_VK_FUNCTION_RETURN(func)        \
-{                                            \
-	VkResult err = func;                     \
-	if (err != VK_SUCCESS) {                 \
-		CVKInstance::SetLastError(err);      \
-		return;                              \
-	}                                        \
+#define CALL_VK_FUNCTION_RETURN(func)            \
+{                                                \
+	VkResult err = func;                         \
+	if (err != VK_SUCCESS) {                     \
+		CVKInstance::SetLastError(err);          \
+		return;                                  \
+	}                                            \
 }
 
-#define CALL_VK_FUNCTION_RETURN_BOOL(func)   \
-{                                            \
-	VkResult err = func;                     \
-	if (err != VK_SUCCESS) {                 \
-		CVKInstance::SetLastError(err);      \
-		return false;                        \
-	}                                        \
+#define CALL_VK_FUNCTION_RETURN_BOOL(func)       \
+{                                                \
+	VkResult err = func;                         \
+	if (err != VK_SUCCESS) {                     \
+		CVKInstance::SetLastError(err);          \
+		return false;                            \
+	}                                            \
 }
 
-#define CALL_VK_FUNCTION_RETURN_NULLPTR(func)\
-{                                            \
-	VkResult err = func;                     \
-	if (err != VK_SUCCESS) {                 \
-		CVKInstance::SetLastError(err);      \
-		return nullptr;                      \
-	}                                        \
+#define CALL_VK_FUNCTION_RETURN_NULLPTR(func)    \
+{                                                \
+	VkResult err = func;                         \
+	if (err != VK_SUCCESS) {                     \
+		CVKInstance::SetLastError(err);          \
+		return nullptr;                          \
+	}                                            \
 }
 
-#define CALL_VK_FUNCTION_ASSERT(func)        \
-{                                            \
-	VkResult err = func;                     \
-	ASSERT(err == VK_SUCCESS);               \
+#define CALL_VK_FUNCTION_ASSERT(func)            \
+{                                                \
+	VkResult err = func;                         \
+	ASSERT(err == VK_SUCCESS);                   \
 }
 
 

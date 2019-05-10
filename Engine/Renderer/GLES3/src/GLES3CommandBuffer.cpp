@@ -45,7 +45,7 @@ CGLES3CommandBuffer::CGLES3CommandBuffer(CGLES3CommandBufferManager* pManager, b
 
 	, m_indexSubpass(-1)
 {
-
+	ASSERT(m_pManager);
 }
 
 CGLES3CommandBuffer::~CGLES3CommandBuffer(void)

@@ -68,4 +68,6 @@ void CGLES3InstanceBuffer::Bind(void) const
 			glVertexAttribDivisor(location, 1);
 		}
 	}
+
+	CHECK_GL_ERROR_ASSERT();
 }

@@ -8,42 +8,70 @@ CGLES3SwapChain::CGLES3SwapChain(void* hDC, int width, int height, GfxPixelForma
 	, m_hDC(hDC)
 #endif
 
+	, m_format(GFX_PIXELFORMAT_UNDEFINED)
+	, m_width(0)
+	, m_height(0)
 	, m_surface(0)
-
-	, m_format(format)
-	, m_width(width)
-	, m_height(height)
 
 	, m_indexFrame(0)
 {
-	if (m_width != 0 && m_height != 0 && m_format != GFX_PIXELFORMAT_UNDEFINED) {
-		m_ptrFrameTexture = GLES3Renderer()->NewRenderTexture(HashValue("SwapChain Frame Texture"));
-		m_ptrFrameTexture->Create(m_format, m_width, m_height);
-
-		glGenFramebuffers(1, &m_surface);
-		glBindFramebuffer(GL_FRAMEBUFFER, m_surface);
-		{
-			const float color[] = { 0.0f, 0.0f, 0.0f, 0.0f };
-			const eastl::vector<uint32_t> drawBuffers{ GL_COLOR_ATTACHMENT0 };
-
-			glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, CGLES3Helper::TranslateTextureTarget(((CGLES3RenderTexture*)m_ptrFrameTexture.GetPointer())->GetType()), ((CGLES3RenderTexture*)m_ptrFrameTexture.GetPointer())->GetTexture(), 0);
-			glClearBufferfv(GL_COLOR, 0, color);
-
-			glReadBuffers((int)drawBuffers.size(), drawBuffers.data());
-			glDrawBuffers((int)drawBuffers.size(), drawBuffers.data());
-
-			uint32_t status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
-			bool bValid = status == GL_FRAMEBUFFER_COMPLETE;
-		}
-		glBindFramebuffer(GL_FRAMEBUFFER, 0);
-	}
+	Create(width, height, format);
 }
 
 CGLES3SwapChain::~CGLES3SwapChain(void)
 {
+	Destroy();
+}
+
+bool CGLES3SwapChain::Create(int width, int height, GfxPixelFormat format)
+{
+	Destroy();
+	{
+		do {
+			if (width != 0 && height != 0 && format != GFX_PIXELFORMAT_UNDEFINED) {
+				m_width = width;
+				m_height = height;
+				m_format = format;
+
+				m_ptrFrameTexture = GLES3Renderer()->NewRenderTexture(HashValue("SwapChain Frame Texture"));
+				m_ptrFrameTexture->Create(format, width, height);
+
+				glGenFramebuffers(1, &m_surface);
+				glBindFramebuffer(GL_FRAMEBUFFER, m_surface);
+				{
+					const float color[] = { 0.0f, 0.0f, 0.0f, 0.0f };
+					const eastl::vector<uint32_t> drawBuffers{ GL_COLOR_ATTACHMENT0 };
+
+					glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, CGLES3Helper::TranslateTextureTarget(((CGLES3RenderTexture*)m_ptrFrameTexture.GetPointer())->GetType()), ((CGLES3RenderTexture*)m_ptrFrameTexture.GetPointer())->GetTexture(), 0);
+					glClearBufferfv(GL_COLOR, 0, color);
+
+					glReadBuffers((int)drawBuffers.size(), drawBuffers.data());
+					glDrawBuffers((int)drawBuffers.size(), drawBuffers.data());
+
+					uint32_t status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
+					bool bValid = status == GL_FRAMEBUFFER_COMPLETE;
+				}
+				glBindFramebuffer(GL_FRAMEBUFFER, 0);
+				CHECK_GL_ERROR_ASSERT();
+			}
+
+			return true;
+		} while (false);
+	}
+	Destroy();
+	return false;
+}
+
+void CGLES3SwapChain::Destroy(void)
+{
 	if (m_surface) {
 		glDeleteFramebuffers(1, &m_surface);
 	}
+
+	m_format = GFX_PIXELFORMAT_UNDEFINED;
+	m_width = 0;
+	m_height = 0;
+	m_surface = 0;
 }
 
 GfxPixelFormat CGLES3SwapChain::GetFormat(void) const
@@ -86,6 +114,7 @@ void CGLES3SwapChain::Present(void)
 		}
 		GLBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
 		GLBindFramebuffer(GL_READ_FRAMEBUFFER, 0);
+		CHECK_GL_ERROR_ASSERT();
 	}
 
 #ifdef PLATFORM_WINDOWS

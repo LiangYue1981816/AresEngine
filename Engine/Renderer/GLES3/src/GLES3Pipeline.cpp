@@ -41,13 +41,14 @@ bool CGLES3Pipeline::CreateProgram(const CGLES3Shader* pVertexShader, const CGLE
 		}
 	}
 	glLinkProgram(m_program);
+	CHECK_GL_ERROR_ASSERT();
 
 	GLint success;
 	glGetProgramiv(m_program, GL_LINK_STATUS, &success);
 
 	if (success == GL_FALSE) {
 		GLsizei length = 0;
-		char szError[128 * 1024] = { 0 };
+		static char szError[32 * 1024] = { 0 };
 
 		glGetProgramInfoLog(m_program, sizeof(szError), &length, szError);
 
@@ -135,6 +136,8 @@ void CGLES3Pipeline::SetUniformBlockBinding(const char* szName, uint32_t binding
 			m_uniformBlockBindings[name] = binding;
 			glUniformBlockBinding(m_program, indexBinding, binding);
 		}
+
+		CHECK_GL_ERROR_ASSERT();
 	}
 }
 
@@ -148,6 +151,8 @@ void CGLES3Pipeline::SetUniformLocation(const char* szName)
 		if (location != GL_INVALID_INDEX) {
 			m_uniformLocations[name] = location;
 		}
+
+		CHECK_GL_ERROR_ASSERT();
 	}
 }
 
@@ -162,6 +167,8 @@ void CGLES3Pipeline::SetSampledImageLocation(const char* szName)
 			m_sampledImageTextureUnits[name] = m_sampledImageLocations.size();
 			m_sampledImageLocations[name] = location;
 		}
+
+		CHECK_GL_ERROR_ASSERT();
 	}
 }
 
@@ -177,6 +184,8 @@ void CGLES3Pipeline::SetInputAttachmentLocation(const char* szName, uint32_t inp
 			m_sampledImageLocations[name] = location;
 			m_inputAttachmentNames[inputAttachmentIndex] = name;
 		}
+
+		CHECK_GL_ERROR_ASSERT();
 	}
 }
 
@@ -240,7 +249,6 @@ void CGLES3Pipeline::Bind(const PipelineState* pState) const
 bool CGLES3Pipeline::BindDescriptorSet(const CGfxDescriptorSetPtr ptrDescriptorSet) const
 {
 	ASSERT(ptrDescriptorSet);
-
 	const CGfxDescriptorLayoutPtr ptrDescriptorLayout = ptrDescriptorSet->GetDescriptorLayout();
 
 	if (ptrDescriptorLayout->GetSetIndex() < 0 || ptrDescriptorLayout->GetSetIndex() >= DESCRIPTOR_SET_COUNT) {
@@ -369,7 +377,6 @@ void CGLES3Pipeline::Uniform4f(uint32_t name, float v0, float v1, float v2, floa
 void CGLES3Pipeline::Uniform1iv(uint32_t name, int count, const int* value) const
 {
 	ASSERT(value);
-
 	const auto& itLocation = m_uniformLocations.find(name);
 
 	if (itLocation != m_uniformLocations.end()) {
@@ -380,7 +387,6 @@ void CGLES3Pipeline::Uniform1iv(uint32_t name, int count, const int* value) cons
 void CGLES3Pipeline::Uniform2iv(uint32_t name, int count, const int* value) const
 {
 	ASSERT(value);
-
 	const auto& itLocation = m_uniformLocations.find(name);
 
 	if (itLocation != m_uniformLocations.end()) {
@@ -391,7 +397,6 @@ void CGLES3Pipeline::Uniform2iv(uint32_t name, int count, const int* value) cons
 void CGLES3Pipeline::Uniform3iv(uint32_t name, int count, const int* value) const
 {
 	ASSERT(value);
-
 	const auto& itLocation = m_uniformLocations.find(name);
 
 	if (itLocation != m_uniformLocations.end()) {
@@ -402,7 +407,6 @@ void CGLES3Pipeline::Uniform3iv(uint32_t name, int count, const int* value) cons
 void CGLES3Pipeline::Uniform4iv(uint32_t name, int count, const int* value) const
 {
 	ASSERT(value);
-
 	const auto& itLocation = m_uniformLocations.find(name);
 
 	if (itLocation != m_uniformLocations.end()) {
@@ -413,7 +417,6 @@ void CGLES3Pipeline::Uniform4iv(uint32_t name, int count, const int* value) cons
 void CGLES3Pipeline::Uniform1fv(uint32_t name, int count, const float* value) const
 {
 	ASSERT(value);
-
 	const auto& itLocation = m_uniformLocations.find(name);
 
 	if (itLocation != m_uniformLocations.end()) {
@@ -424,7 +427,6 @@ void CGLES3Pipeline::Uniform1fv(uint32_t name, int count, const float* value) co
 void CGLES3Pipeline::Uniform2fv(uint32_t name, int count, const float* value) const
 {
 	ASSERT(value);
-
 	const auto& itLocation = m_uniformLocations.find(name);
 
 	if (itLocation != m_uniformLocations.end()) {
@@ -435,7 +437,6 @@ void CGLES3Pipeline::Uniform2fv(uint32_t name, int count, const float* value) co
 void CGLES3Pipeline::Uniform3fv(uint32_t name, int count, const float* value) const
 {
 	ASSERT(value);
-
 	const auto& itLocation = m_uniformLocations.find(name);
 
 	if (itLocation != m_uniformLocations.end()) {
@@ -446,7 +447,6 @@ void CGLES3Pipeline::Uniform3fv(uint32_t name, int count, const float* value) co
 void CGLES3Pipeline::Uniform4fv(uint32_t name, int count, const float* value) const
 {
 	ASSERT(value);
-
 	const auto& itLocation = m_uniformLocations.find(name);
 
 	if (itLocation != m_uniformLocations.end()) {
@@ -457,7 +457,6 @@ void CGLES3Pipeline::Uniform4fv(uint32_t name, int count, const float* value) co
 void CGLES3Pipeline::UniformMatrix2fv(uint32_t name, int count, const float* value) const
 {
 	ASSERT(value);
-
 	const auto& itLocation = m_uniformLocations.find(name);
 
 	if (itLocation != m_uniformLocations.end()) {
@@ -468,7 +467,6 @@ void CGLES3Pipeline::UniformMatrix2fv(uint32_t name, int count, const float* val
 void CGLES3Pipeline::UniformMatrix3fv(uint32_t name, int count, const float* value) const
 {
 	ASSERT(value);
-
 	const auto& itLocation = m_uniformLocations.find(name);
 
 	if (itLocation != m_uniformLocations.end()) {
@@ -479,7 +477,6 @@ void CGLES3Pipeline::UniformMatrix3fv(uint32_t name, int count, const float* val
 void CGLES3Pipeline::UniformMatrix4fv(uint32_t name, int count, const float* value) const
 {
 	ASSERT(value);
-
 	const auto& itLocation = m_uniformLocations.find(name);
 
 	if (itLocation != m_uniformLocations.end()) {

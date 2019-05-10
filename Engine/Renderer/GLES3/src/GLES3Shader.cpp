@@ -44,13 +44,14 @@ bool CGLES3Shader::Create(const uint32_t* words, size_t numWords, shader_kind ki
 			m_shader = glCreateShader(glGetShaderType(kind));
 			glShaderSource(m_shader, 1, &szSource, nullptr);
 			glCompileShader(m_shader);
+			CHECK_GL_ERROR_ASSERT();
 
 			GLint success;
 			glGetShaderiv(m_shader, GL_COMPILE_STATUS, &success);
 
 			if (success == GL_FALSE) {
 				GLsizei length = 0;
-				char szError[128 * 1024] = { 0 };
+				static char szError[32 * 1024] = { 0 };
 
 				glGetShaderInfoLog(m_shader, sizeof(szError), &length, szError);
 

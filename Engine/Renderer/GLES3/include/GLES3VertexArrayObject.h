@@ -13,6 +13,10 @@ private:
 
 
 private:
+	bool Create(const CGLES3IndexBuffer* pIndexBuffer, const CGLES3VertexBuffer* pVertexBuffer, const CGLES3InstanceBuffer* pInstanceBuffer);
+	void Destroy(void);
+
+private:
 	void Bind(void) const;
 
 

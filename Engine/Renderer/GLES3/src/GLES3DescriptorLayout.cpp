@@ -6,7 +6,7 @@ CGLES3DescriptorLayout::CGLES3DescriptorLayout(CGLES3DescriptorLayoutManager* pM
 	, m_pManager(pManager)
 	, m_set(set)
 {
-
+	ASSERT(m_pManager);
 }
 
 CGLES3DescriptorLayout::~CGLES3DescriptorLayout(void)

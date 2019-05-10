@@ -18,6 +18,10 @@ private:
 
 
 private:
+	bool Create(uint32_t target, size_t size, bool bDynamic);
+	void Destroy(void);
+
+private:
 	uint32_t GetTarget(void) const;
 	uint32_t GetBuffer(void) const;
 	uint32_t GetSize(void) const;

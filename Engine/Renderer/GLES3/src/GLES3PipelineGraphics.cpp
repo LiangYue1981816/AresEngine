@@ -25,17 +25,17 @@ const uint32_t CGLES3PipelineGraphics::GetInputAttachmentName(uint32_t inputAtta
 
 bool CGLES3PipelineGraphics::Create(const CGfxRenderPass* pRenderPass, const CGfxShader* pVertexShader, const CGfxShader* pFragmentShader, const PipelineState& state, int indexSubpass, int vertexBinding, int instanceBinding)
 {
-	ASSERT(pRenderPass);
-	ASSERT(pVertexShader);
-	ASSERT(pVertexShader->IsValid());
-	ASSERT(pVertexShader->GetKind() == vertex_shader);
-	ASSERT(pFragmentShader);
-	ASSERT(pFragmentShader->IsValid());
-	ASSERT(pFragmentShader->GetKind() == fragment_shader);
-
 	Destroy();
 	{
 		do {
+			ASSERT(pRenderPass);
+			ASSERT(pVertexShader);
+			ASSERT(pVertexShader->IsValid());
+			ASSERT(pVertexShader->GetKind() == vertex_shader);
+			ASSERT(pFragmentShader);
+			ASSERT(pFragmentShader->IsValid());
+			ASSERT(pFragmentShader->GetKind() == fragment_shader);
+
 			m_state = state;
 
 			if (m_pPipeline->CreateProgram((const CGLES3Shader*)pVertexShader, (const CGLES3Shader*)pFragmentShader, nullptr) == false) {
@@ -65,7 +65,6 @@ void CGLES3PipelineGraphics::Bind(void) const
 
 bool CGLES3PipelineGraphics::BindDescriptorSet(const CGfxDescriptorSetPtr ptrDescriptorSet) const
 {
-	ASSERT(ptrDescriptorSet);
 	return m_pPipeline->BindDescriptorSet(ptrDescriptorSet);
 }
 
@@ -111,66 +110,55 @@ void CGLES3PipelineGraphics::Uniform4f(uint32_t name, float v0, float v1, float 
 
 void CGLES3PipelineGraphics::Uniform1iv(uint32_t name, int count, const int* value) const
 {
-	ASSERT(value);
 	m_pPipeline->Uniform1iv(name, count, value);
 }
 
 void CGLES3PipelineGraphics::Uniform2iv(uint32_t name, int count, const int* value) const
 {
-	ASSERT(value);
 	m_pPipeline->Uniform2iv(name, count, value);
 }
 
 void CGLES3PipelineGraphics::Uniform3iv(uint32_t name, int count, const int* value) const
 {
-	ASSERT(value);
 	m_pPipeline->Uniform3iv(name, count, value);
 }
 
 void CGLES3PipelineGraphics::Uniform4iv(uint32_t name, int count, const int* value) const
 {
-	ASSERT(value);
 	m_pPipeline->Uniform4iv(name, count, value);
 }
 
 void CGLES3PipelineGraphics::Uniform1fv(uint32_t name, int count, const float* value) const
 {
-	ASSERT(value);
 	m_pPipeline->Uniform1fv(name, count, value);
 }
 
 void CGLES3PipelineGraphics::Uniform2fv(uint32_t name, int count, const float* value) const
 {
-	ASSERT(value);
 	m_pPipeline->Uniform2fv(name, count, value);
 }
 
 void CGLES3PipelineGraphics::Uniform3fv(uint32_t name, int count, const float* value) const
 {
-	ASSERT(value);
 	m_pPipeline->Uniform3fv(name, count, value);
 }
 
 void CGLES3PipelineGraphics::Uniform4fv(uint32_t name, int count, const float* value) const
 {
-	ASSERT(value);
 	m_pPipeline->Uniform4fv(name, count, value);
 }
 
 void CGLES3PipelineGraphics::UniformMatrix2fv(uint32_t name, int count, const float* value) const
 {
-	ASSERT(value);
 	m_pPipeline->UniformMatrix2fv(name, count, value);
 }
 
 void CGLES3PipelineGraphics::UniformMatrix3fv(uint32_t name, int count, const float* value) const
 {
-	ASSERT(value);
 	m_pPipeline->UniformMatrix3fv(name, count, value);
 }
 
 void CGLES3PipelineGraphics::UniformMatrix4fv(uint32_t name, int count, const float* value) const
 {
-	ASSERT(value);
 	m_pPipeline->UniformMatrix4fv(name, count, value);
 }

@@ -5,6 +5,7 @@ CGLES3RenderTexture::CGLES3RenderTexture(CGLES3RenderTextureManager* pManager, u
 	: CGfxRenderTexture(name)
 	, m_pManager(pManager)
 {
+	ASSERT(m_pManager);
 	m_ptrTexture = CGLES3TexturePtr(new CGLES3Texture);
 }
 
