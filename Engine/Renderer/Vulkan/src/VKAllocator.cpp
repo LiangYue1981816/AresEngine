@@ -36,6 +36,8 @@ const VkAllocationCallbacks* CVKAllocator::GetAllocationCallbacks(void) const
 
 void* VKAPI_PTR CVKAllocator::vkAllocationFunction(void* pUserData, size_t size, size_t alignment, VkSystemAllocationScope allocationScope)
 {
+	ASSERT(size);
+	ASSERT(alignment);
 	ASSERT(pUserData);
 
 	CVKAllocator* pAllocator = (CVKAllocator*)pUserData;
@@ -49,6 +51,8 @@ void* VKAPI_PTR CVKAllocator::vkAllocationFunction(void* pUserData, size_t size,
 
 void* VKAPI_PTR CVKAllocator::vkReallocationFunction(void* pUserData, void* pOriginal, size_t size, size_t alignment, VkSystemAllocationScope allocationScope)
 {
+	ASSERT(size);
+	ASSERT(alignment);
 	ASSERT(pUserData);
 	ASSERT(pOriginal);
 
@@ -66,8 +70,8 @@ void* VKAPI_PTR CVKAllocator::vkReallocationFunction(void* pUserData, void* pOri
 
 void VKAPI_PTR CVKAllocator::vkFreeFunction(void* pUserData, void* pPointer)
 {
-	ASSERT(pUserData);
 	ASSERT(pPointer);
+	ASSERT(pUserData);
 
 	CVKAllocator* pAllocator = (CVKAllocator*)pUserData;
 
@@ -77,6 +81,7 @@ void VKAPI_PTR CVKAllocator::vkFreeFunction(void* pUserData, void* pPointer)
 
 void VKAPI_PTR CVKAllocator::vkInternalAllocationNotification(void* pUserData, size_t size, VkInternalAllocationType allocationType, VkSystemAllocationScope allocationScope)
 {
+	ASSERT(size);
 	ASSERT(pUserData);
 
 	CVKAllocator* pAllocator = (CVKAllocator*)pUserData;
@@ -87,6 +92,7 @@ void VKAPI_PTR CVKAllocator::vkInternalAllocationNotification(void* pUserData, s
 
 void VKAPI_PTR CVKAllocator::vkInternalFreeNotification(void* pUserData, size_t size, VkInternalAllocationType allocationType, VkSystemAllocationScope allocationScope)
 {
+	ASSERT(size);
 	ASSERT(pUserData);
 
 	CVKAllocator* pAllocator = (CVKAllocator*)pUserData;
