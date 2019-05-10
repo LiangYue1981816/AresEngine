@@ -12,6 +12,7 @@
 	VkResult err = func;                         \
 	if (err != VK_SUCCESS) {                     \
 		CVKInstance::SetLastError(err);          \
+		ASSERT(false);                           \
 		break;                                   \
 	}                                            \
 }
@@ -21,6 +22,7 @@
 	VkResult err = func;                         \
 	if (err != VK_SUCCESS) {                     \
 		CVKInstance::SetLastError(err);          \
+		ASSERT(false);                           \
 		return;                                  \
 	}                                            \
 }
@@ -30,6 +32,7 @@
 	VkResult err = func;                         \
 	if (err != VK_SUCCESS) {                     \
 		CVKInstance::SetLastError(err);          \
+		ASSERT(false);                           \
 		return false;                            \
 	}                                            \
 }
@@ -39,6 +42,7 @@
 	VkResult err = func;                         \
 	if (err != VK_SUCCESS) {                     \
 		CVKInstance::SetLastError(err);          \
+		ASSERT(false);                           \
 		return nullptr;                          \
 	}                                            \
 }

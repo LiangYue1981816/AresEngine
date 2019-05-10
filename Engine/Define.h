@@ -70,6 +70,7 @@
 {                                                \
 	bool err = func;                             \
 	if (err != true) {                           \
+		ASSERT(false);                           \
 		break;                                   \
 	}                                            \
 }
@@ -78,6 +79,7 @@
 {                                                \
 	bool err = func;                             \
 	if (err != true) {                           \
+		ASSERT(false);                           \
 		return;                                  \
 	}                                            \
 }
@@ -86,6 +88,7 @@
 {                                                \
 	bool err = func;                             \
 	if (err != true) {                           \
+		ASSERT(false);                           \
 		return false;                            \
 	}                                            \
 }
@@ -94,6 +97,7 @@
 {                                                \
 	bool err = func;                             \
 	if (err != true) {                           \
+		ASSERT(false);                           \
 		return nullptr;                          \
 	}                                            \
 }
