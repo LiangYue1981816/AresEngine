@@ -60,6 +60,12 @@
 #define MAX_THREAD_COUNT               32
 
 
+#define CALL_BOOL_FUNCTION_ASSERT(func)          \
+{                                                \
+	bool err = func;                             \
+	ASSERT(err);                                 \
+}
+
 #define CALL_BOOL_FUNCTION_BREAK(func)           \
 {                                                \
 	bool err = func;                             \

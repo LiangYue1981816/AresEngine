@@ -1,6 +1,12 @@
 #pragma once
 
 
+#define CALL_VK_FUNCTION_ASSERT(func)            \
+{                                                \
+	VkResult err = func;                         \
+	ASSERT(err == VK_SUCCESS);                   \
+}
+
 #define CALL_VK_FUNCTION_BREAK(func)             \
 {                                                \
 	VkResult err = func;                         \
@@ -35,12 +41,6 @@
 		CVKInstance::SetLastError(err);          \
 		return nullptr;                          \
 	}                                            \
-}
-
-#define CALL_VK_FUNCTION_ASSERT(func)            \
-{                                                \
-	VkResult err = func;                         \
-	ASSERT(err == VK_SUCCESS);                   \
 }
 
 
