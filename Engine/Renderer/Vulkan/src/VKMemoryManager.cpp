@@ -96,7 +96,7 @@ CVKMemory* CVKMemoryManager::AllocMemory(VkDeviceSize memorySize, VkDeviceSize m
 				memoryAllocatorSize = ALIGN_BYTE(memoryAllocatorSize, MEMORY_POOL_ALIGNMENT);
 
 				memoryTypeIndex = GetMemoryTypeIndex(m_pDevice->GetPhysicalDeviceMemoryProperties(), memoryTypeBits, memoryPropertyFlags, memoryAllocatorSize);
-				if (memoryTypeIndex == 0xffffffff) return nullptr;
+				if (memoryTypeIndex == INVALID_VALUE) return nullptr;
 			}
 
 			CVKMemoryAllocator* pAllocator = new CVKMemoryAllocator(m_pDevice, memoryTypeIndex, memoryAllocatorSize, memoryAlignment);
@@ -120,30 +120,30 @@ void CVKMemoryManager::FreeMemory(CVKMemory* pMemory)
 	mutex_autolock autolock(&lock);
 	{
 		ASSERT(pMemory);
+		ASSERT(pMemory->GetAllocator());
 
-		if (CVKMemoryAllocator* pAllocator = pMemory->GetAllocator()) {
-			pAllocator->FreeMemory(pMemory);
+		CVKMemoryAllocator* pAllocator = pMemory->GetAllocator();
+		pAllocator->FreeMemory(pMemory);
 
-			if (pAllocator->GetFreeSize() == pAllocator->GetFullSize()) {
-				uint32_t memoryAlignment = pAllocator->GetAlignment();
-				uint32_t memoryTypeIndex = pAllocator->GetMemoryTypeIndex();
+		if (pAllocator->GetFreeSize() == pAllocator->GetFullSize()) {
+			uint32_t memoryAlignment = pAllocator->GetAlignment();
+			uint32_t memoryTypeIndex = pAllocator->GetMemoryTypeIndex();
 
-				m_allocatedMemoryHeapSize[m_pDevice->GetPhysicalDeviceMemoryProperties().memoryTypes[memoryTypeIndex].heapIndex] -= pAllocator->GetFullSize();
-				{
-					if (m_pAllocatorListHeads[memoryAlignment][memoryTypeIndex] == pAllocator) {
-						m_pAllocatorListHeads[memoryAlignment][memoryTypeIndex] = pAllocator->pNext;
-					}
-
-					if (pAllocator->pPrev) {
-						pAllocator->pPrev->pNext = pAllocator->pNext;
-					}
-
-					if (pAllocator->pNext) {
-						pAllocator->pNext->pPrev = pAllocator->pPrev;
-					}
+			m_allocatedMemoryHeapSize[m_pDevice->GetPhysicalDeviceMemoryProperties().memoryTypes[memoryTypeIndex].heapIndex] -= pAllocator->GetFullSize();
+			{
+				if (m_pAllocatorListHeads[memoryAlignment][memoryTypeIndex] == pAllocator) {
+					m_pAllocatorListHeads[memoryAlignment][memoryTypeIndex] = pAllocator->pNext;
 				}
-				delete pAllocator;
+
+				if (pAllocator->pPrev) {
+					pAllocator->pPrev->pNext = pAllocator->pNext;
+				}
+
+				if (pAllocator->pNext) {
+					pAllocator->pNext->pPrev = pAllocator->pPrev;
+				}
 			}
+			delete pAllocator;
 		}
 	}
 }

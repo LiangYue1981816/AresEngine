@@ -33,6 +33,9 @@ bool CVKMemoryAllocator::Create(uint32_t memoryTypeIndex, VkDeviceSize memorySiz
 	Destroy();
 	{
 		do {
+			ASSERT(memorySize);
+			ASSERT(memoryAlignment);
+
 			m_memoryFreeSize = memorySize;
 			m_memoryFullSize = memorySize;
 			m_memoryAlignment = memoryAlignment;

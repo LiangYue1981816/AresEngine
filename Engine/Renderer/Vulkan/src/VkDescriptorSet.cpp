@@ -30,6 +30,7 @@ bool CVKDescriptorSet::Create(const CGfxDescriptorLayoutPtr ptrDescriptorLayout)
 	{
 		do {
 			ASSERT(ptrDescriptorLayout);
+
 			m_ptrDescriptorLayout = ptrDescriptorLayout;
 
 			VkDescriptorSetLayout vkDescriptorSetLayout = ((CVKDescriptorLayout*)ptrDescriptorLayout.GetPointer())->GetDescriptorLayout();

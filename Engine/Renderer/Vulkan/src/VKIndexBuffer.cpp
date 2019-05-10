@@ -3,7 +3,7 @@
 
 CVKIndexBuffer::CVKIndexBuffer(CVKDevice* pDevice, GfxIndexType type, size_t size, bool bDynamic)
 	: CGfxIndexBuffer(type, size, bDynamic)
-	, m_pDevice(nullptr)
+	, m_pDevice(pDevice)
 
 	, m_type(type)
 	, m_size(size)

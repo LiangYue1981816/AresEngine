@@ -28,6 +28,8 @@ bool CVKBuffer::Create(VkDeviceSize size, VkBufferUsageFlags bufferUsageFlags, V
 	{
 		do {
 			ASSERT(size);
+			ASSERT(bufferUsageFlags);
+			ASSERT(memoryPropertyFlags);
 
 			m_vkBufferUsageFlags = bufferUsageFlags;
 

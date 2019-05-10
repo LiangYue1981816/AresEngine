@@ -33,6 +33,7 @@ bool CVKCommandBuffer::Create(VkCommandPool vkCommandPool, bool bMainCommandBuff
 	{
 		do {
 			ASSERT(vkCommandPool);
+
 			m_vkCommandPool = vkCommandPool;
 
 			if (bMainCommandBuffer) {

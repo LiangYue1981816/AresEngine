@@ -68,40 +68,20 @@ CVKTransferBuffer* CVKTransferManager::AcquireTransferBuffer(size_t size)
 
 bool CVKTransferManager::TransferBufferData(CVKBuffer* pDstBuffer, VkAccessFlags dstAccessFlags, VkPipelineStageFlags dstPipelineStageFlags, size_t offset, size_t size, const void* data)
 {
-	if (CVKTransferBuffer* pTransferBuffer = AcquireTransferBuffer(size)) {
-		return pTransferBuffer->TransferBufferData(pDstBuffer, dstAccessFlags, dstPipelineStageFlags, offset, size, data);
-	}
-	else {
-		return false;
-	}
+	return AcquireTransferBuffer(size)->TransferBufferData(pDstBuffer, dstAccessFlags, dstPipelineStageFlags, offset, size, data);
 }
 
 bool CVKTransferManager::TransferTexture2DData(CVKTexture* pDstTexture, VkImageLayout dstImageLayout, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
 {
-	if (CVKTransferBuffer* pTransferBuffer = AcquireTransferBuffer(size)) {
-		return pTransferBuffer->TransferTexture2DData(pDstTexture, dstImageLayout, level, xoffset, yoffset, width, height, size, data);
-	}
-	else {
-		return false;
-	}
+	return AcquireTransferBuffer(size)->TransferTexture2DData(pDstTexture, dstImageLayout, level, xoffset, yoffset, width, height, size, data);
 }
 
 bool CVKTransferManager::TransferTexture2DArrayData(CVKTexture* pDstTexture, VkImageLayout dstImageLayout, int layer, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
 {
-	if (CVKTransferBuffer* pTransferBuffer = AcquireTransferBuffer(size)) {
-		return pTransferBuffer->TransferTexture2DArrayData(pDstTexture, dstImageLayout, layer, level, xoffset, yoffset, width, height, size, data);
-	}
-	else {
-		return false;
-	}
+	return AcquireTransferBuffer(size)->TransferTexture2DArrayData(pDstTexture, dstImageLayout, layer, level, xoffset, yoffset, width, height, size, data);
 }
 
 bool CVKTransferManager::TransferTextureCubemapData(CVKTexture* pDstTexture, VkImageLayout dstImageLayout, int face, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
 {
-	if (CVKTransferBuffer* pTransferBuffer = AcquireTransferBuffer(size)) {
-		return pTransferBuffer->TransferTextureCubemapData(pDstTexture, dstImageLayout, face, level, xoffset, yoffset, width, height, size, data);
-	}
-	else {
-		return false;
-	}
+	return AcquireTransferBuffer(size)->TransferTextureCubemapData(pDstTexture, dstImageLayout, face, level, xoffset, yoffset, width, height, size, data);
 }

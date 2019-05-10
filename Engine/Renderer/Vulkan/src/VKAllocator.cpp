@@ -53,8 +53,8 @@ void* VKAPI_PTR CVKAllocator::vkReallocationFunction(void* pUserData, void* pOri
 {
 	ASSERT(size);
 	ASSERT(alignment);
-	ASSERT(pUserData);
 	ASSERT(pOriginal);
+	ASSERT(pUserData);
 
 	CVKAllocator* pAllocator = (CVKAllocator*)pUserData;
 	void* pPointer = AllocMemory(size);

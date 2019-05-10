@@ -30,7 +30,7 @@ CVKCommandBuffer* CVKCommandBufferManager::Create(uint32_t pool, bool bMainComma
 			createInfo.pNext = nullptr;
 			createInfo.flags = VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT;
 			createInfo.queueFamilyIndex = m_pDevice->GetQueue()->GetQueueFamilyIndex();
-			vkCreateCommandPool(m_pDevice->GetDevice(), &createInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkCommandPools[pool]);
+			CALL_VK_FUNCTION_ASSERT(vkCreateCommandPool(m_pDevice->GetDevice(), &createInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkCommandPools[pool]));
 		}
 
 		CVKCommandBuffer* pCommandBuffer = new CVKCommandBuffer(m_pDevice, this, m_vkCommandPools[pool], bMainCommandBuffer);

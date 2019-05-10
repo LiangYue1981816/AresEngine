@@ -36,11 +36,13 @@ void CVKTexture::Release(void)
 
 VkImage CVKTexture::GetImage(void) const
 {
+	ASSERT(m_vkImage);
 	return m_vkImage;
 }
 
 VkImageView CVKTexture::GetImageView(void) const
 {
+	ASSERT(m_vkImageView);
 	return m_vkImageView;
 }
 
@@ -280,6 +282,8 @@ bool CVKTexture::PipelineBarrier(VkCommandBuffer vkCommandBuffer, VkImageLayout 
 {
 	ASSERT(vkCommandBuffer);
 	ASSERT(m_vkImage);
+	ASSERT(m_levels > range.baseMipLevel + range.levelCount);
+	ASSERT(m_layers > range.baseArrayLayer + range.layerCount);
 
 	CALL_VK_FUNCTION_RETURN_BOOL(vkCmdImageMemoryBarrier(vkCommandBuffer, m_vkImage, m_vkImageLayout, imageLayout, range));
 	m_vkImageLayout = imageLayout;
@@ -291,6 +295,8 @@ bool CVKTexture::PipelineBarrier(VkCommandBuffer vkCommandBuffer, VkImageLayout 
 {
 	ASSERT(vkCommandBuffer);
 	ASSERT(m_vkImage);
+	ASSERT(m_levels > range.baseMipLevel + range.levelCount);
+	ASSERT(m_layers > range.baseArrayLayer + range.layerCount);
 
 	CALL_VK_FUNCTION_RETURN_BOOL(vkCmdImageMemoryBarrier(vkCommandBuffer, m_vkImage, m_vkImageLayout, imageLayout, srcAccessFlags, dstAccessFlags, srcPipelineStageFlags, dstPipelineStageFlags, range));
 	m_vkImageLayout = imageLayout;

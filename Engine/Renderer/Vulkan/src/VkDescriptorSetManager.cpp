@@ -6,7 +6,6 @@ CVKDescriptorSetManager::CVKDescriptorSetManager(CVKDevice* pDevice)
 	, m_pPoolListHead(nullptr)
 {
 	ASSERT(m_pDevice);
-
 	pthread_mutex_init(&lock, nullptr);
 	m_pPoolListHead = new CVKDescriptorPool(m_pDevice);
 }
@@ -51,21 +50,22 @@ void CVKDescriptorSetManager::FreeDescriptorSet(CVKDescriptorSet* pDescriptorSet
 	mutex_autolock autolock(&lock);
 	{
 		ASSERT(pDescriptorSet);
+		ASSERT(pDescriptorSet->GetDescriptorPool());
 
-		if (CVKDescriptorPool* pDescriptorPool = pDescriptorSet->GetDescriptorPool()) {
-			if (pDescriptorPool->FreeDescriptorSet(pDescriptorSet)) {
-				if (pDescriptorPool->pPrev) {
-					pDescriptorPool->pPrev->pNext = pDescriptorPool->pNext;
-				}
+		CVKDescriptorPool* pDescriptorPool = pDescriptorSet->GetDescriptorPool();
 
-				if (pDescriptorPool->pNext) {
-					pDescriptorPool->pNext->pPrev = pDescriptorPool->pPrev;
-				}
-
-				pDescriptorPool->pPrev = nullptr;
-				pDescriptorPool->pNext = m_pPoolListHead;
-				m_pPoolListHead = pDescriptorPool;
+		if (pDescriptorPool->FreeDescriptorSet(pDescriptorSet)) {
+			if (pDescriptorPool->pPrev) {
+				pDescriptorPool->pPrev->pNext = pDescriptorPool->pNext;
 			}
+
+			if (pDescriptorPool->pNext) {
+				pDescriptorPool->pNext->pPrev = pDescriptorPool->pPrev;
+			}
+
+			pDescriptorPool->pPrev = nullptr;
+			pDescriptorPool->pNext = m_pPoolListHead;
+			m_pPoolListHead = pDescriptorPool;
 		}
 	}
 }

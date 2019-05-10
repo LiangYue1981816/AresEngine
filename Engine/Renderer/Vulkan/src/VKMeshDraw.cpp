@@ -85,7 +85,6 @@ bool CVKMeshDraw::InstanceBufferData(size_t size, const void* data)
 
 void CVKMeshDraw::Bind(VkCommandBuffer vkCommandBuffer)
 {
-	ASSERT(vkCommandBuffer);
 	((CVKIndexBuffer*)m_ptrMesh->GetIndexBuffer())->Bind(vkCommandBuffer);
 	((CVKVertexBuffer*)m_ptrMesh->GetVertexBuffer())->Bind(vkCommandBuffer);
 	((CVKVertexBuffer*)m_pInstanceBuffer)->Bind(vkCommandBuffer);

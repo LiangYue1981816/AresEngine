@@ -110,8 +110,7 @@ VkDeviceSize CVKTransferBuffer::GetSize(void) const
 
 bool CVKTransferBuffer::IsTransferFinish(void) const
 {
-	CALL_VK_FUNCTION_RETURN_BOOL(vkGetFenceStatus(m_pDevice->GetDevice(), m_vkFence));
-	return true;
+	return vkGetFenceStatus(m_pDevice->GetDevice(), m_vkFence) == VK_SUCCESS;
 }
 
 bool CVKTransferBuffer::TransferBufferData(CVKBuffer* pDstBuffer, VkAccessFlags dstAccessFlags, VkPipelineStageFlags dstPipelineStageFlags, size_t offset, size_t size, const void* data)

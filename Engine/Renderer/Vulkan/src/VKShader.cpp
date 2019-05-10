@@ -38,6 +38,9 @@ bool CVKShader::Create(const uint32_t* words, size_t numWords, shader_kind kind)
 	Destroy();
 	{
 		do {
+			ASSERT(words);
+			ASSERT(numWords);
+
 			m_kind = kind;
 			m_spriv.Create(words, numWords, 310);
 
