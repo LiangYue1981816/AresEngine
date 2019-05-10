@@ -11,6 +11,7 @@ CVKDescriptorSet::CVKDescriptorSet(CVKDevice* pDevice, CVKDescriptorPool* pDescr
 {
 	ASSERT(m_pDevice);
 	ASSERT(m_pDescriptorPool);
+
 	Create(ptrDescriptorLayout);
 }
 

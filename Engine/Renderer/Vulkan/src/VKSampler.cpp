@@ -8,6 +8,7 @@ CVKSampler::CVKSampler(CVKDevice* pDevice, GfxFilter minFilter, GfxFilter magFil
 	, m_vkSampler(VK_NULL_HANDLE)
 {
 	ASSERT(m_pDevice);
+
 	Create(minFilter, magFilter, mipmapMode, addressMode);
 }
 

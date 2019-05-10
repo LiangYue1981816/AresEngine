@@ -14,6 +14,7 @@ CVKCommandBuffer::CVKCommandBuffer(CVKDevice* pDevice, CVKCommandBufferManager* 
 {
 	ASSERT(m_pDevice);
 	ASSERT(m_pManager);
+
 	Create(vkCommandPool, bMainCommandBuffer);
 }
 

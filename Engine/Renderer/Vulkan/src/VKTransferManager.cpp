@@ -8,6 +8,7 @@ CVKTransferManager::CVKTransferManager(CVKDevice* pDevice, uint32_t queueFamilyI
 	, m_vkCommandPool(VK_NULL_HANDLE)
 {
 	ASSERT(m_pDevice);
+
 	vkGetDeviceQueue(m_pDevice->GetDevice(), queueFamilyIndex, 0, &m_vkQueue);
 
 	VkCommandPoolCreateInfo createInfo = {};

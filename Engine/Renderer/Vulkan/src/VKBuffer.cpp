@@ -9,6 +9,7 @@ CVKBuffer::CVKBuffer(CVKDevice* pDevice, VkDeviceSize size, VkBufferUsageFlags b
 	, m_vkBufferUsageFlags(0)
 {
 	ASSERT(m_pDevice);
+
 	Create(size, bufferUsageFlags, memoryPropertyFlags);
 }
 

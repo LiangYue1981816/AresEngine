@@ -14,6 +14,7 @@ CVKTransferBuffer::CVKTransferBuffer(CVKDevice* pDevice, VkQueue vkQueue, VkComm
 	, m_vkCommandBuffer(VK_NULL_HANDLE)
 {
 	ASSERT(m_pDevice);
+
 	Create(vkQueue, vkCommandPool, size);
 }
 

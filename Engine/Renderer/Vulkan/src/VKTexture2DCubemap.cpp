@@ -8,6 +8,7 @@ CVKTextureCubemap::CVKTextureCubemap(CVKDevice* pDevice, CVKTextureCubemapManage
 {
 	ASSERT(m_pDevice);
 	ASSERT(m_pManager);
+
 	m_ptrTexture = CVKTexturePtr(new CVKTexture(m_pDevice));
 }
 

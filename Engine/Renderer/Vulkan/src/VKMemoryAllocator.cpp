@@ -20,6 +20,7 @@ CVKMemoryAllocator::CVKMemoryAllocator(CVKDevice* pDevice, uint32_t memoryTypeIn
 	, pPrev(nullptr)
 {
 	ASSERT(m_pDevice);
+
 	Create(memoryTypeIndex, memorySize, memoryAlignment);
 }
 

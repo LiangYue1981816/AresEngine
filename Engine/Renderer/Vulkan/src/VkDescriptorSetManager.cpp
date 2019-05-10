@@ -6,6 +6,7 @@ CVKDescriptorSetManager::CVKDescriptorSetManager(CVKDevice* pDevice)
 	, m_pPoolListHead(nullptr)
 {
 	ASSERT(m_pDevice);
+
 	pthread_mutex_init(&lock, nullptr);
 	m_pPoolListHead = new CVKDescriptorPool(m_pDevice);
 }

@@ -21,6 +21,7 @@ CVKDescriptorPool::CVKDescriptorPool(CVKDevice* pDevice)
 	, pPrev(nullptr)
 {
 	ASSERT(m_pDevice);
+
 	Create();
 }
 

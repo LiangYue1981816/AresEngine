@@ -8,6 +8,7 @@ CVKQueue::CVKQueue(CVKDevice* pDevice, uint32_t queueFamilyIndex)
 	, m_queueFamilyIndex(queueFamilyIndex)
 {
 	ASSERT(m_pDevice);
+
 	vkGetDeviceQueue(m_pDevice->GetDevice(), m_queueFamilyIndex, 0, &m_vkQueue);
 }
 

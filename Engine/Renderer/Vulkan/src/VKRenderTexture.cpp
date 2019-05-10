@@ -8,6 +8,7 @@ CVKRenderTexture::CVKRenderTexture(CVKDevice* pDevice, CVKRenderTextureManager* 
 {
 	ASSERT(m_pDevice);
 	ASSERT(m_pManager);
+
 	m_ptrTexture = CVKTexturePtr(new CVKTexture(m_pDevice));
 }
 
