@@ -15,6 +15,8 @@ CVKDevice::CVKDevice(CVKInstance* pInstance)
 	, m_pMemoryManager(nullptr)
 	, m_pTransferManager(nullptr)
 {
+	ASSERT(m_pInstance);
+
 	uint32_t deviceIndex;
 	uint32_t queueFamilyIndex;
 	eastl::vector<VkPhysicalDevice> devices;

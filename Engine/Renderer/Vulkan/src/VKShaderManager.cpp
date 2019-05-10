@@ -5,7 +5,7 @@
 CVKShaderManager::CVKShaderManager(CVKDevice* pDevice)
 	: m_pDevice(pDevice)
 {
-
+	ASSERT(m_pDevice);
 }
 
 CVKShaderManager::~CVKShaderManager(void)

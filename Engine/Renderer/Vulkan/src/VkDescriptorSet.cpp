@@ -9,6 +9,8 @@ CVKDescriptorSet::CVKDescriptorSet(CVKDevice* pDevice, CVKDescriptorPool* pDescr
 	, m_vkDescriptorSet(VK_NULL_HANDLE)
 	, m_bDirty(false)
 {
+	ASSERT(m_pDevice);
+	ASSERT(m_pDescriptorPool);
 	Create(ptrDescriptorLayout);
 }
 
@@ -54,7 +56,6 @@ void CVKDescriptorSet::Destroy(void)
 
 CVKDescriptorPool* CVKDescriptorSet::GetDescriptorPool(void) const
 {
-	ASSERT(m_pDescriptorPool);
 	return m_pDescriptorPool;
 }
 
@@ -62,8 +63,6 @@ bool CVKDescriptorSet::SetTexture2D(uint32_t name, const CGfxTexture2DPtr ptrTex
 {
 	ASSERT(pSampler);
 	ASSERT(ptrTexture);
-	ASSERT(m_vkDescriptorSet);
-	ASSERT(m_ptrDescriptorLayout);
 
 	if (m_ptrDescriptorLayout->IsSampledImageValid(name)) {
 		m_imageDescriptorInfos[name].pSampler = (CGfxSampler*)pSampler;
@@ -83,8 +82,6 @@ bool CVKDescriptorSet::SetTexture2DArray(uint32_t name, const CGfxTexture2DArray
 {
 	ASSERT(pSampler);
 	ASSERT(ptrTexture);
-	ASSERT(m_vkDescriptorSet);
-	ASSERT(m_ptrDescriptorLayout);
 
 	if (m_ptrDescriptorLayout->IsSampledImageValid(name)) {
 		m_imageDescriptorInfos[name].pSampler = (CGfxSampler*)pSampler;
@@ -104,8 +101,6 @@ bool CVKDescriptorSet::SetTextureCubemap(uint32_t name, const CGfxTextureCubemap
 {
 	ASSERT(pSampler);
 	ASSERT(ptrTexture);
-	ASSERT(m_vkDescriptorSet);
-	ASSERT(m_ptrDescriptorLayout);
 
 	if (m_ptrDescriptorLayout->IsSampledImageValid(name)) {
 		m_imageDescriptorInfos[name].pSampler = (CGfxSampler*)pSampler;
@@ -125,8 +120,6 @@ bool CVKDescriptorSet::SetTextureInputAttachment(uint32_t name, const CGfxRender
 {
 	ASSERT(pSampler);
 	ASSERT(ptrTexture);
-	ASSERT(m_vkDescriptorSet);
-	ASSERT(m_ptrDescriptorLayout);
 
 	if (m_ptrDescriptorLayout->IsSampledImageValid(name)) {
 		m_imageDescriptorInfos[name].pSampler = (CGfxSampler*)pSampler;
@@ -145,8 +138,7 @@ bool CVKDescriptorSet::SetTextureInputAttachment(uint32_t name, const CGfxRender
 bool CVKDescriptorSet::SetUniformBuffer(uint32_t name, const CGfxUniformBufferPtr ptrUniformBuffer, uint32_t offset, uint32_t range)
 {
 	ASSERT(ptrUniformBuffer);
-	ASSERT(m_vkDescriptorSet);
-	ASSERT(m_ptrDescriptorLayout);
+	ASSERT(ptrUniformBuffer->GetSize() >= offset + range);
 
 	if (m_ptrDescriptorLayout->IsUniformBlockValid(name)) {
 		m_bufferDescriptorInfos[name].offset = offset;
@@ -162,7 +154,6 @@ bool CVKDescriptorSet::SetUniformBuffer(uint32_t name, const CGfxUniformBufferPt
 
 const CGfxDescriptorLayoutPtr CVKDescriptorSet::GetDescriptorLayout(void) const
 {
-	ASSERT(m_ptrDescriptorLayout);
 	return m_ptrDescriptorLayout;
 }
 
@@ -192,8 +183,6 @@ const DescriptorBufferInfo* CVKDescriptorSet::GetDescriptorBufferInfo(uint32_t n
 
 void CVKDescriptorSet::Update(void)
 {
-	ASSERT(m_vkDescriptorSet);
-
 	if (m_bDirty) {
 		m_bDirty = false;
 
@@ -289,7 +278,6 @@ void CVKDescriptorSet::Update(void)
 void CVKDescriptorSet::Bind(VkCommandBuffer vkCommandBuffer, VkPipelineBindPoint vkPipelineBindPoint, VkPipelineLayout vkPipelineLayout) const
 {
 	ASSERT(vkCommandBuffer);
-	ASSERT(m_vkDescriptorSet);
 
 	eastl::vector<uint32_t> offsets;
 

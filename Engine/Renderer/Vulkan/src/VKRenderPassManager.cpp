@@ -4,7 +4,7 @@
 CVKRenderPassManager::CVKRenderPassManager(CVKDevice* pDevice)
 	: m_pDevice(pDevice)
 {
-
+	ASSERT(m_pDevice);
 }
 
 CVKRenderPassManager::~CVKRenderPassManager(void)

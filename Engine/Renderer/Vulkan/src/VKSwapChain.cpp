@@ -82,6 +82,8 @@ CVKSwapChain::CVKSwapChain(CVKDevice* pDevice, int width, int height, GfxPixelFo
 
 	, m_indexFrame(0)
 {
+	ASSERT(m_pDevice);
+
 	eastl::vector<VkPresentModeKHR> modes;
 	eastl::vector<VkSurfaceFormatKHR> formats;
 	VkSurfaceCapabilitiesKHR capabilities;
@@ -256,19 +258,16 @@ void CVKSwapChain::DestroyImagesAndImageViews(void)
 
 VkSemaphore CVKSwapChain::GetAcquireSemaphore(void) const
 {
-	ASSERT(m_vkAcquireSemaphore);
 	return m_vkAcquireSemaphore;
 }
 
 VkSemaphore CVKSwapChain::GetRenderDoneSemaphore(void) const
 {
-	ASSERT(m_vkRenderDoneSemaphores[m_indexFrame]);
 	return m_vkRenderDoneSemaphores[m_indexFrame];
 }
 
 VkFence CVKSwapChain::GetRenderDoneFence(void) const
 {
-	ASSERT(m_vkRenderDoneFences[m_indexFrame]);
 	return m_vkRenderDoneFences[m_indexFrame];
 }
 
@@ -304,8 +303,6 @@ const CGfxRenderTexturePtr CVKSwapChain::GetFrameTexture(int index) const
 
 void CVKSwapChain::Present(void)
 {
-	ASSERT(m_vkSwapchain);
-
 	uint32_t indexFrame = m_indexFrame;
 	VkPresentInfoKHR presentInfo = {};
 	presentInfo.sType = VK_STRUCTURE_TYPE_PRESENT_INFO_KHR;
@@ -321,8 +318,6 @@ void CVKSwapChain::Present(void)
 
 void CVKSwapChain::AcquireNextFrame(void)
 {
-	ASSERT(m_vkSwapchain);
-
 	uint32_t indexFrame;
 	vkAcquireNextImageKHR(m_pDevice->GetDevice(), m_vkSwapchain, UINT64_MAX, m_vkAcquireSemaphore, VK_NULL_HANDLE, &indexFrame);
 	m_indexFrame = indexFrame;

@@ -21,7 +21,7 @@ CVKTexture::CVKTexture(CVKDevice* pDevice)
 	, m_levels(0)
 	, m_samples(0)
 {
-
+	ASSERT(m_pDevice);
 }
 
 CVKTexture::~CVKTexture(void)
@@ -36,13 +36,11 @@ void CVKTexture::Release(void)
 
 VkImage CVKTexture::GetImage(void) const
 {
-	ASSERT(m_vkImage);
 	return m_vkImage;
 }
 
 VkImageView CVKTexture::GetImageView(void) const
 {
-	ASSERT(m_vkImageView);
 	return m_vkImageView;
 }
 
@@ -185,8 +183,8 @@ bool CVKTexture::Create(GfxTextureType type, GfxPixelFormat format, int width, i
 			vkGetImageMemoryRequirements(m_pDevice->GetDevice(), m_vkImage, &requirements);
 
 			m_pMemory = m_pDevice->GetMemoryManager()->AllocMemory(requirements.size, requirements.alignment, requirements.memoryTypeBits, memoryPropertyFlags);
-			if (m_pMemory == nullptr) break;
-			if (m_pMemory->BindImage(m_vkImage) == false) break;
+			if (m_pMemory == nullptr) { ASSERT(false); break; }
+			if (m_pMemory->BindImage(m_vkImage) == false) { ASSERT(false); break; }
 
 			return true;
 		} while (false);

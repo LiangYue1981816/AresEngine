@@ -18,7 +18,9 @@ CVKMemory::CVKMemory(CVKMemoryAllocator* pAllocator, CVKDevice* pDevice, VkDevic
 	, pFreeNext(nullptr)
 	, pFreePrev(nullptr)
 {
-
+	ASSERT(m_pDevice);
+	ASSERT(m_pAllocator);
+	ASSERT(m_pAllocator->GetMemory());
 }
 
 CVKMemory::~CVKMemory(void)
@@ -28,7 +30,6 @@ CVKMemory::~CVKMemory(void)
 
 CVKMemoryAllocator* CVKMemory::GetAllocator(void) const
 {
-	ASSERT(m_pAllocator);
 	return m_pAllocator;
 }
 
@@ -45,8 +46,6 @@ VkDeviceSize CVKMemory::GetOffset(void) const
 bool CVKMemory::BindImage(VkImage vkImage) const
 {
 	ASSERT(vkImage);
-	ASSERT(m_pAllocator);
-	ASSERT(m_pAllocator->GetMemory());
 
 	VkMemoryRequirements requirements;
 	vkGetImageMemoryRequirements(m_pDevice->GetDevice(), vkImage, &requirements);
@@ -61,8 +60,6 @@ bool CVKMemory::BindImage(VkImage vkImage) const
 bool CVKMemory::BindBuffer(VkBuffer vkBuffer) const
 {
 	ASSERT(vkBuffer);
-	ASSERT(m_pAllocator);
-	ASSERT(m_pAllocator->GetMemory());
 
 	VkMemoryRequirements requirements;
 	vkGetBufferMemoryRequirements(m_pDevice->GetDevice(), vkBuffer, &requirements);

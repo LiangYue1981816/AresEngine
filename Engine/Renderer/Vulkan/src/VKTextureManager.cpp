@@ -5,7 +5,7 @@
 CVKTexture2DManager::CVKTexture2DManager(CVKDevice* pDevice)
 	: m_pDevice(pDevice)
 {
-
+	ASSERT(m_pDevice);
 }
 
 CVKTexture2DManager::~CVKTexture2DManager(void)

@@ -8,6 +8,7 @@ CVKBuffer::CVKBuffer(CVKDevice* pDevice, VkDeviceSize size, VkBufferUsageFlags b
 	, m_vkBuffer(VK_NULL_HANDLE)
 	, m_vkBufferUsageFlags(0)
 {
+	ASSERT(m_pDevice);
 	Create(size, bufferUsageFlags, memoryPropertyFlags);
 }
 
@@ -26,6 +27,8 @@ bool CVKBuffer::Create(VkDeviceSize size, VkBufferUsageFlags bufferUsageFlags, V
 	Destroy();
 	{
 		do {
+			ASSERT(size);
+
 			m_vkBufferUsageFlags = bufferUsageFlags;
 
 			VkBufferCreateInfo createInfo = {};
@@ -43,8 +46,8 @@ bool CVKBuffer::Create(VkDeviceSize size, VkBufferUsageFlags bufferUsageFlags, V
 			vkGetBufferMemoryRequirements(m_pDevice->GetDevice(), m_vkBuffer, &requirements);
 
 			m_pMemory = m_pDevice->GetMemoryManager()->AllocMemory(requirements.size, requirements.alignment, requirements.memoryTypeBits, memoryPropertyFlags);
-			if (m_pMemory == nullptr) break;
-			if (m_pMemory->BindBuffer(m_vkBuffer) == false) break;
+			if (m_pMemory == nullptr) { ASSERT(false); break; }
+			if (m_pMemory->BindBuffer(m_vkBuffer) == false) { ASSERT(false); break; }
 
 			return true;
 		} while (false);
@@ -71,13 +74,11 @@ void CVKBuffer::Destroy(void)
 
 VkBuffer CVKBuffer::GetBuffer(void) const
 {
-	ASSERT(m_vkBuffer);
 	return m_vkBuffer;
 }
 
 VkDeviceSize CVKBuffer::GetSize(void) const
 {
-	ASSERT(m_pMemory);
 	return m_pMemory->GetSize();
 }
 
@@ -85,7 +86,6 @@ bool CVKBuffer::BufferData(size_t offset, size_t size, const void* data)
 {
 	ASSERT(data);
 	ASSERT(size);
-	ASSERT(m_pMemory);
 	ASSERT(m_pMemory->GetSize() >= offset + size);
 
 	if (m_pMemory->IsHostVisible()) {
@@ -103,8 +103,7 @@ bool CVKBuffer::BufferData(size_t offset, size_t size, const void* data)
 
 bool CVKBuffer::PipelineBarrier(VkCommandBuffer vkCommandBuffer, VkAccessFlags srcAccessFlags, VkAccessFlags dstAccessFlags, VkPipelineStageFlags srcPipelineStageFlags, VkPipelineStageFlags dstPipelineStageFlags, VkDeviceSize offset, VkDeviceSize size)
 {
-	ASSERT(m_vkBuffer);
-	ASSERT(m_pMemory);
+	ASSERT(vkCommandBuffer);
 	ASSERT(m_pMemory->GetSize() >= offset + size);
 
 	CALL_VK_FUNCTION_ASSERT(vkCmdBufferMemoryBarrier(vkCommandBuffer, m_vkBuffer, srcAccessFlags, dstAccessFlags, srcPipelineStageFlags, dstPipelineStageFlags, offset, size));
@@ -113,30 +112,25 @@ bool CVKBuffer::PipelineBarrier(VkCommandBuffer vkCommandBuffer, VkAccessFlags s
 
 bool CVKBuffer::IsDeviceLocal(void) const
 {
-	ASSERT(m_pMemory);
 	return m_pMemory->IsDeviceLocal();
 }
 
 bool CVKBuffer::IsHostVisible(void) const
 {
-	ASSERT(m_pMemory);
 	return m_pMemory->IsHostVisible();
 }
 
 bool CVKBuffer::IsHostCoherent(void) const
 {
-	ASSERT(m_pMemory);
 	return m_pMemory->IsHostCoherent();
 }
 
 bool CVKBuffer::IsHostCached(void) const
 {
-	ASSERT(m_pMemory);
 	return m_pMemory->IsHostCached();
 }
 
 bool CVKBuffer::IsLazilyAllocated(void) const
 {
-	ASSERT(m_pMemory);
 	return m_pMemory->IsLazilyAllocated();
 }

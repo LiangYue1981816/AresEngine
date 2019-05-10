@@ -10,7 +10,8 @@ CVKDescriptorLayout::CVKDescriptorLayout(CVKDevice* pDevice, CVKDescriptorLayout
 	, m_numDescriptors{ 0 }
 	, m_vkDescriptorLayout(VK_NULL_HANDLE)
 {
-
+	ASSERT(m_pDevice);
+	ASSERT(m_pManager);
 }
 
 CVKDescriptorLayout::~CVKDescriptorLayout(void)
@@ -184,7 +185,6 @@ bool CVKDescriptorLayout::IsInputAttachmentValid(uint32_t name) const
 bool CVKDescriptorLayout::IsCompatible(const CGfxDescriptorLayoutPtr ptrLayout) const
 {
 	ASSERT(ptrLayout);
-	ASSERT(m_vkDescriptorLayout);
 
 	if (m_set != ((CVKDescriptorLayout*)ptrLayout.GetPointer())->m_set) {
 		return false;

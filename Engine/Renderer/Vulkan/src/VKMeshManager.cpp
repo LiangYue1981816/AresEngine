@@ -5,7 +5,7 @@
 CVKMeshManager::CVKMeshManager(CVKDevice* pDevice)
 	: m_pDevice(pDevice)
 {
-
+	ASSERT(m_pDevice);
 }
 
 CVKMeshManager::~CVKMeshManager(void)

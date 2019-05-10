@@ -20,6 +20,7 @@ CVKDescriptorPool::CVKDescriptorPool(CVKDevice* pDevice)
 	, pNext(nullptr)
 	, pPrev(nullptr)
 {
+	ASSERT(m_pDevice);
 	Create();
 }
 
@@ -88,13 +89,12 @@ void CVKDescriptorPool::Destroy(void)
 
 VkDescriptorPool CVKDescriptorPool::GetDescriptorPool(void) const
 {
-	ASSERT(m_vkDescriptorPool);
 	return m_vkDescriptorPool;
 }
 
 CVKDescriptorSet* CVKDescriptorPool::AllocDescriptorSet(const CGfxDescriptorLayoutPtr ptrDescriptorLayout)
 {
-	ASSERT(m_vkDescriptorPool);
+	ASSERT(ptrDescriptorLayout);
 
 	if (m_numSets == 0) {
 		return nullptr;
@@ -121,7 +121,6 @@ CVKDescriptorSet* CVKDescriptorPool::AllocDescriptorSet(const CGfxDescriptorLayo
 bool CVKDescriptorPool::FreeDescriptorSet(CVKDescriptorSet* pDescriptorSet)
 {
 	ASSERT(pDescriptorSet);
-	ASSERT(m_vkDescriptorPool);
 
 	m_pDescriptorSets.erase(pDescriptorSet);
 	delete pDescriptorSet;
@@ -136,7 +135,7 @@ bool CVKDescriptorPool::FreeDescriptorSet(CVKDescriptorSet* pDescriptorSet)
 		m_numDescriptors[VK_DESCRIPTOR_TYPE_STORAGE_TEXEL_BUFFER] = numStorageTexelBuffers;
 		m_numDescriptors[VK_DESCRIPTOR_TYPE_UNIFORM_TEXEL_BUFFER] = numUniformTexelBuffers;
 		m_numDescriptors[VK_DESCRIPTOR_TYPE_INPUT_ATTACHMENT] = numInputAttachments;
-		vkResetDescriptorPool(m_pDevice->GetDevice(), m_vkDescriptorPool, 0);
+		CALL_VK_FUNCTION_ASSERT(vkResetDescriptorPool(m_pDevice->GetDevice(), m_vkDescriptorPool, 0));
 		return true;
 	}
 	else {

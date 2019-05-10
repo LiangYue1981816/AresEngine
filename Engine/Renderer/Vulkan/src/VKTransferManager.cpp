@@ -7,6 +7,7 @@ CVKTransferManager::CVKTransferManager(CVKDevice* pDevice, uint32_t queueFamilyI
 	, m_vkQueue(VK_NULL_HANDLE)
 	, m_vkCommandPool(VK_NULL_HANDLE)
 {
+	ASSERT(m_pDevice);
 	vkGetDeviceQueue(m_pDevice->GetDevice(), queueFamilyIndex, 0, &m_vkQueue);
 
 	VkCommandPoolCreateInfo createInfo = {};
@@ -37,8 +38,6 @@ CVKTransferManager::~CVKTransferManager(void)
 CVKTransferBuffer* CVKTransferManager::AcquireTransferBuffer(size_t size)
 {
 	ASSERT(size);
-	ASSERT(m_vkQueue);
-	ASSERT(m_vkCommandPool);
 
 	for (eastl::vector<CVKTransferBuffer*>::const_iterator itTransferBuffer = m_pendingList.begin(); itTransferBuffer != m_pendingList.end();) {
 		CVKTransferBuffer* pTransferBuffer = *itTransferBuffer;

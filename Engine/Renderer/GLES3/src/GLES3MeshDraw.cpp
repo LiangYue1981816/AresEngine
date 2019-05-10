@@ -5,18 +5,17 @@ CGLES3MeshDraw::CGLES3MeshDraw(CGLES3MeshDrawManager* pManager, uint32_t name, c
 	: CGfxMeshDraw(name, ptrMesh, nameDraw, instanceFormat, instanceBinding)
 	, m_pManager(pManager)
 
-	, m_ptrMesh(ptrMesh)
 	, m_pMeshDraw(nullptr)
-
 	, m_pIndirectBuffer{ nullptr }
 	, m_pInstanceBuffer{ nullptr }
 	, m_pVertexArrayObject{ nullptr }
 {
 	ASSERT(m_pManager);
-	ASSERT(m_ptrMesh);
-	ASSERT(m_ptrMesh->GetDraw(nameDraw));
+	ASSERT(ptrMesh);
+	ASSERT(ptrMesh->GetDraw(nameDraw));
 
-	m_pMeshDraw = m_ptrMesh->GetDraw(nameDraw);
+	m_ptrMesh = ptrMesh;
+	m_pMeshDraw = ptrMesh->GetDraw(nameDraw);
 
 	for (int indexFrame = 0; indexFrame < CGfxSwapChain::SWAPCHAIN_FRAME_COUNT; indexFrame++) {
 		m_pIndirectBuffer[indexFrame] = new CGLES3IndirectBuffer(1);

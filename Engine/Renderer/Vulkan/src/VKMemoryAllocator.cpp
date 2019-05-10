@@ -19,6 +19,7 @@ CVKMemoryAllocator::CVKMemoryAllocator(CVKDevice* pDevice, uint32_t memoryTypeIn
 	, pNext(nullptr)
 	, pPrev(nullptr)
 {
+	ASSERT(m_pDevice);
 	Create(memoryTypeIndex, memorySize, memoryAlignment);
 }
 
@@ -73,7 +74,6 @@ void CVKMemoryAllocator::Destroy(void)
 
 VkDeviceMemory CVKMemoryAllocator::GetMemory(void) const
 {
-	ASSERT(m_vkMemory);
 	return m_vkMemory;
 }
 
@@ -118,8 +118,6 @@ CVKMemory* CVKMemoryAllocator::AllocMemory(VkDeviceSize size)
 	//             |                    New Memory Handle
 	//             Allocated Memory Handle
 
-	ASSERT(m_vkMemory);
-
 	VkDeviceSize requestSize = ALIGN_BYTE(size, m_memoryAlignment);
 
 	if (m_memoryFreeSize >= requestSize) {
@@ -156,7 +154,6 @@ CVKMemory* CVKMemoryAllocator::AllocMemory(VkDeviceSize size)
 void CVKMemoryAllocator::FreeMemory(CVKMemory* pMemory)
 {
 	ASSERT(pMemory);
-	ASSERT(m_vkMemory);
 
 	pMemory->bInUse = false;
 	m_memoryFreeSize += pMemory->m_memorySize;

@@ -112,6 +112,9 @@ bool CGLES3CommandBuffer::WaitForFinish(void) const
 
 bool CGLES3CommandBuffer::CmdBeginRenderPass(const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass)
 {
+	ASSERT(ptrFrameBuffer);
+	ASSERT(ptrRenderPass);
+
 	if (IsMainCommandBuffer() == true && IsInRenderPass() == false && m_pCommands.empty()) {
 		m_indexSubpass = 0;
 		m_ptrRenderPass = ptrRenderPass;
@@ -163,6 +166,8 @@ bool CGLES3CommandBuffer::CmdEndRenderPass(void)
 
 bool CGLES3CommandBuffer::CmdBindPipelineCompute(const CGfxPipelineCompute* pPipelineCompute)
 {
+	ASSERT(pPipelineCompute);
+
 	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
 		m_pCommands.emplace_back(new CGLES3CommandBindPipelineCompute(pPipelineCompute));
 		return true;
@@ -174,6 +179,8 @@ bool CGLES3CommandBuffer::CmdBindPipelineCompute(const CGfxPipelineCompute* pPip
 
 bool CGLES3CommandBuffer::CmdBindPipelineGraphics(const CGfxPipelineGraphics* pPipelineGraphics)
 {
+	ASSERT(pPipelineGraphics);
+
 	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
 		m_pCommands.emplace_back(new CGLES3CommandBindPipelineGraphics(pPipelineGraphics));
 		return true;
@@ -185,6 +192,8 @@ bool CGLES3CommandBuffer::CmdBindPipelineGraphics(const CGfxPipelineGraphics* pP
 
 bool CGLES3CommandBuffer::CmdBindDescriptorSet(const CGfxDescriptorSetPtr ptrDescriptorSet)
 {
+	ASSERT(ptrDescriptorSet);
+
 	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
 		m_pCommands.emplace_back(new CGLES3CommandBindDescriptorSet(ptrDescriptorSet));
 		return true;
@@ -284,6 +293,8 @@ bool CGLES3CommandBuffer::CmdUniform4f(uint32_t name, float v0, float v1, float 
 
 bool CGLES3CommandBuffer::CmdUniform1iv(uint32_t name, int count, const int* value)
 {
+	ASSERT(value);
+
 	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
 		m_pCommands.emplace_back(new CGLES3CommandUniform1iv(name, count, value));
 		return true;
@@ -295,6 +306,8 @@ bool CGLES3CommandBuffer::CmdUniform1iv(uint32_t name, int count, const int* val
 
 bool CGLES3CommandBuffer::CmdUniform2iv(uint32_t name, int count, const int* value)
 {
+	ASSERT(value);
+
 	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
 		m_pCommands.emplace_back(new CGLES3CommandUniform2iv(name, count, value));
 		return true;
@@ -306,6 +319,8 @@ bool CGLES3CommandBuffer::CmdUniform2iv(uint32_t name, int count, const int* val
 
 bool CGLES3CommandBuffer::CmdUniform3iv(uint32_t name, int count, const int* value)
 {
+	ASSERT(value);
+
 	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
 		m_pCommands.emplace_back(new CGLES3CommandUniform3iv(name, count, value));
 		return true;
@@ -317,6 +332,8 @@ bool CGLES3CommandBuffer::CmdUniform3iv(uint32_t name, int count, const int* val
 
 bool CGLES3CommandBuffer::CmdUniform4iv(uint32_t name, int count, const int* value)
 {
+	ASSERT(value);
+
 	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
 		m_pCommands.emplace_back(new CGLES3CommandUniform4iv(name, count, value));
 		return true;
@@ -328,6 +345,8 @@ bool CGLES3CommandBuffer::CmdUniform4iv(uint32_t name, int count, const int* val
 
 bool CGLES3CommandBuffer::CmdUniform1fv(uint32_t name, int count, const float* value)
 {
+	ASSERT(value);
+
 	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
 		m_pCommands.emplace_back(new CGLES3CommandUniform1fv(name, count, value));
 		return true;
@@ -339,6 +358,8 @@ bool CGLES3CommandBuffer::CmdUniform1fv(uint32_t name, int count, const float* v
 
 bool CGLES3CommandBuffer::CmdUniform2fv(uint32_t name, int count, const float* value)
 {
+	ASSERT(value);
+
 	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
 		m_pCommands.emplace_back(new CGLES3CommandUniform2fv(name, count, value));
 		return true;
@@ -350,6 +371,8 @@ bool CGLES3CommandBuffer::CmdUniform2fv(uint32_t name, int count, const float* v
 
 bool CGLES3CommandBuffer::CmdUniform3fv(uint32_t name, int count, const float* value)
 {
+	ASSERT(value);
+
 	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
 		m_pCommands.emplace_back(new CGLES3CommandUniform3fv(name, count, value));
 		return true;
@@ -361,6 +384,8 @@ bool CGLES3CommandBuffer::CmdUniform3fv(uint32_t name, int count, const float* v
 
 bool CGLES3CommandBuffer::CmdUniform4fv(uint32_t name, int count, const float* value)
 {
+	ASSERT(value);
+
 	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
 		m_pCommands.emplace_back(new CGLES3CommandUniform4fv(name, count, value));
 		return true;
@@ -372,6 +397,8 @@ bool CGLES3CommandBuffer::CmdUniform4fv(uint32_t name, int count, const float* v
 
 bool CGLES3CommandBuffer::CmdUniformMatrix2fv(uint32_t name, int count, const float* value)
 {
+	ASSERT(value);
+
 	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
 		m_pCommands.emplace_back(new CGLES3CommandUniformMatrix2fv(name, count, value));
 		return true;
@@ -383,6 +410,8 @@ bool CGLES3CommandBuffer::CmdUniformMatrix2fv(uint32_t name, int count, const fl
 
 bool CGLES3CommandBuffer::CmdUniformMatrix3fv(uint32_t name, int count, const float* value)
 {
+	ASSERT(value);
+
 	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
 		m_pCommands.emplace_back(new CGLES3CommandUniformMatrix3fv(name, count, value));
 		return true;
@@ -394,6 +423,8 @@ bool CGLES3CommandBuffer::CmdUniformMatrix3fv(uint32_t name, int count, const fl
 
 bool CGLES3CommandBuffer::CmdUniformMatrix4fv(uint32_t name, int count, const float* value)
 {
+	ASSERT(value);
+
 	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
 		m_pCommands.emplace_back(new CGLES3CommandUniformMatrix4fv(name, count, value));
 		return true;
@@ -473,6 +504,8 @@ bool CGLES3CommandBuffer::CmdDrawIndirect(const CGfxMeshDrawPtr ptrMeshDraw, con
 
 bool CGLES3CommandBuffer::CmdExecute(const CGfxCommandBufferPtr ptrCommandBuffer)
 {
+	ASSERT(ptrCommandBuffer);
+
 	if (IsMainCommandBuffer() == true && IsInRenderPass() == true && ptrCommandBuffer->IsMainCommandBuffer() == false) {
 		m_pCommands.emplace_back(new CGLES3CommandExecute(ptrCommandBuffer));
 		return true;

@@ -4,6 +4,7 @@
 CVKMemoryManager::CVKMemoryManager(CVKDevice* pDevice)
 	: m_pDevice(pDevice)
 {
+	ASSERT(m_pDevice);
 	pthread_mutex_init(&lock, nullptr);
 }
 

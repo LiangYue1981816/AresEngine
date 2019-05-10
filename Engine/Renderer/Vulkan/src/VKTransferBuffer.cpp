@@ -13,6 +13,7 @@ CVKTransferBuffer::CVKTransferBuffer(CVKDevice* pDevice, VkQueue vkQueue, VkComm
 	, m_vkCommandPool(VK_NULL_HANDLE)
 	, m_vkCommandBuffer(VK_NULL_HANDLE)
 {
+	ASSERT(m_pDevice);
 	Create(vkQueue, vkCommandPool, size);
 }
 
@@ -62,8 +63,8 @@ bool CVKTransferBuffer::Create(VkQueue vkQueue, VkCommandPool vkCommandPool, VkD
 			vkGetBufferMemoryRequirements(m_pDevice->GetDevice(), m_vkBuffer, &requirements);
 
 			m_pMemory = m_pDevice->GetMemoryManager()->AllocMemory(requirements.size, requirements.alignment, requirements.memoryTypeBits, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
-			if (m_pMemory == nullptr) break;
-			if (m_pMemory->BindBuffer(m_vkBuffer) == false) break;
+			if (m_pMemory == nullptr) { ASSERT(false); break; }
+			if (m_pMemory->BindBuffer(m_vkBuffer) == false) { ASSERT(false); break; }
 
 			return true;
 		} while (false);
@@ -104,13 +105,11 @@ void CVKTransferBuffer::Destroy(void)
 
 VkDeviceSize CVKTransferBuffer::GetSize(void) const
 {
-	ASSERT(m_pMemory);
 	return m_pMemory->GetSize();
 }
 
 bool CVKTransferBuffer::IsTransferFinish(void) const
 {
-	ASSERT(m_vkFence);
 	CALL_VK_FUNCTION_RETURN_BOOL(vkGetFenceStatus(m_pDevice->GetDevice(), m_vkFence));
 	return true;
 }
@@ -118,10 +117,6 @@ bool CVKTransferBuffer::IsTransferFinish(void) const
 bool CVKTransferBuffer::TransferBufferData(CVKBuffer* pDstBuffer, VkAccessFlags dstAccessFlags, VkPipelineStageFlags dstPipelineStageFlags, size_t offset, size_t size, const void* data)
 {
 	ASSERT(pDstBuffer);
-	ASSERT(m_pMemory);
-	ASSERT(m_vkBuffer);
-	ASSERT(m_vkFence);
-	ASSERT(m_vkCommandBuffer);
 
 	CALL_VK_FUNCTION_RETURN_BOOL(vkBeginCommandBufferPrimary(m_vkCommandBuffer, VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT));
 	{
@@ -147,10 +142,6 @@ bool CVKTransferBuffer::TransferBufferData(CVKBuffer* pDstBuffer, VkAccessFlags 
 bool CVKTransferBuffer::TransferTexture2DData(CVKTexture* pDstTexture, VkImageLayout dstImageLayout, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
 {
 	ASSERT(pDstTexture);
-	ASSERT(m_pMemory);
-	ASSERT(m_vkBuffer);
-	ASSERT(m_vkFence);
-	ASSERT(m_vkCommandBuffer);
 
 	CALL_VK_FUNCTION_RETURN_BOOL(vkBeginCommandBufferPrimary(m_vkCommandBuffer, VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT));
 	{
@@ -192,10 +183,6 @@ bool CVKTransferBuffer::TransferTexture2DData(CVKTexture* pDstTexture, VkImageLa
 bool CVKTransferBuffer::TransferTexture2DArrayData(CVKTexture* pDstTexture, VkImageLayout dstImageLayout, int layer, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
 {
 	ASSERT(pDstTexture);
-	ASSERT(m_pMemory);
-	ASSERT(m_vkBuffer);
-	ASSERT(m_vkFence);
-	ASSERT(m_vkCommandBuffer);
 
 	CALL_VK_FUNCTION_RETURN_BOOL(vkBeginCommandBufferPrimary(m_vkCommandBuffer, VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT));
 	{
@@ -237,10 +224,6 @@ bool CVKTransferBuffer::TransferTexture2DArrayData(CVKTexture* pDstTexture, VkIm
 bool CVKTransferBuffer::TransferTextureCubemapData(CVKTexture* pDstTexture, VkImageLayout dstImageLayout, int face, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
 {
 	ASSERT(pDstTexture);
-	ASSERT(m_pMemory);
-	ASSERT(m_vkBuffer);
-	ASSERT(m_vkFence);
-	ASSERT(m_vkCommandBuffer);
 
 	CALL_VK_FUNCTION_RETURN_BOOL(vkBeginCommandBufferPrimary(m_vkCommandBuffer, VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT));
 	{

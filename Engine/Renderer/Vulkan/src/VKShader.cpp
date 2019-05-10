@@ -8,7 +8,7 @@ CVKShader::CVKShader(CVKDevice* pDevice, uint32_t name)
 	, m_kind(-1)
 	, m_vkShader(VK_NULL_HANDLE)
 {
-
+	ASSERT(m_pDevice);
 }
 
 CVKShader::~CVKShader(void)

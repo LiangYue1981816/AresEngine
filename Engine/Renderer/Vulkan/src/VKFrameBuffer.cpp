@@ -12,7 +12,8 @@ CVKFrameBuffer::CVKFrameBuffer(CVKDevice* pDevice, CVKFrameBufferManager* pManag
 	, m_height(height)
 	, m_ptrAttachmentTextures(numAttachments)
 {
-
+	ASSERT(m_pDevice);
+	ASSERT(m_pManager);
 }
 
 CVKFrameBuffer::~CVKFrameBuffer(void)
