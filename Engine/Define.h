@@ -58,3 +58,36 @@
 #define LOG_TAG_RENDERER               "GfxRenderer"
 
 #define MAX_THREAD_COUNT               32
+
+
+#define CALL_BOOL_FUNCTION_BREAK(func)           \
+{                                                \
+	bool err = func;                             \
+	if (err != true) {                           \
+		break;                                   \
+	}                                            \
+}
+
+#define CALL_BOOL_FUNCTION_RETURN(func)          \
+{                                                \
+	bool err = func;                             \
+	if (err != true) {                           \
+		return;                                  \
+	}                                            \
+}
+
+#define CALL_BOOL_FUNCTION_RETURN_BOOL(func)     \
+{                                                \
+	bool err = func;                             \
+	if (err != true) {                           \
+		return false;                            \
+	}                                            \
+}
+
+#define CALL_BOOL_FUNCTION_RETURN_NULLPTR(func)  \
+{                                                \
+	bool err = func;                             \
+	if (err != true) {                           \
+		return nullptr;                          \
+	}                                            \
+}

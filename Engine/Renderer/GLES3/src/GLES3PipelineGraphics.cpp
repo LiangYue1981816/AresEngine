@@ -38,13 +38,8 @@ bool CGLES3PipelineGraphics::Create(const CGfxRenderPass* pRenderPass, const CGf
 
 			m_state = state;
 
-			if (m_pPipeline->CreateProgram((const CGLES3Shader*)pVertexShader, (const CGLES3Shader*)pFragmentShader, nullptr) == false) {
-				break;
-			}
-
-			if (m_pPipeline->CreateLayouts() == false) {
-				break;
-			}
+			CALL_BOOL_FUNCTION_BREAK(m_pPipeline->CreateProgram((const CGLES3Shader*)pVertexShader, (const CGLES3Shader*)pFragmentShader, nullptr));
+			CALL_BOOL_FUNCTION_BREAK(m_pPipeline->CreateLayouts());
 
 			return true;
 		} while (false);

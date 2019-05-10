@@ -27,13 +27,8 @@ bool CGLES3PipelineCompute::Create(const CGfxShader* pComputeShader)
 			ASSERT(pComputeShader->IsValid());
 			ASSERT(pComputeShader->GetKind() == compute_shader);
 
-			if (m_pPipeline->CreateProgram(nullptr, nullptr, (const CGLES3Shader*)pComputeShader) == false) {
-				break;
-			}
-
-			if (m_pPipeline->CreateLayouts() == false) {
-				break;
-			}
+			CALL_BOOL_FUNCTION_BREAK(m_pPipeline->CreateProgram(nullptr, nullptr, (const CGLES3Shader*)pComputeShader));
+			CALL_BOOL_FUNCTION_BREAK(m_pPipeline->CreateLayouts());
 
 			return true;
 		} while (false);

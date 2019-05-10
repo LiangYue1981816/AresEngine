@@ -45,7 +45,9 @@ uint32_t CVKIndirectBuffer::GetOffset(void) const
 
 bool CVKIndirectBuffer::BufferData(int indexDraw, int baseVertex, int firstIndex, int indexCount, int instanceCount)
 {
-	ASSERT(indexDraw >= 0 && (uint32_t)indexDraw < m_draws.size());
+	if (indexDraw < 0 || (uint32_t)indexDraw >= m_draws.size()) {
+		return false;
+	}
 
 	if (m_draws[indexDraw].baseVertex == baseVertex &&
 		m_draws[indexDraw].firstIndex == firstIndex &&
