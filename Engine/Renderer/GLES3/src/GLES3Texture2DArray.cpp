@@ -5,6 +5,8 @@ CGLES3Texture2DArray::CGLES3Texture2DArray(CGLES3Texture2DArrayManager* pManager
 	: CGfxTexture2DArray(name)
 	, m_pManager(pManager)
 {
+	ASSERT(m_pManager);
+
 	m_ptrTexture = CGLES3TexturePtr(new CGLES3Texture);
 }
 

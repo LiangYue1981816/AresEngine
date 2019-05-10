@@ -5,6 +5,8 @@ CGLES3TextureCubemap::CGLES3TextureCubemap(CGLES3TextureCubemapManager* pManager
 	: CGfxTextureCubemap(name)
 	, m_pManager(pManager)
 {
+	ASSERT(m_pManager);
+
 	m_ptrTexture = CGLES3TexturePtr(new CGLES3Texture);
 }
 
