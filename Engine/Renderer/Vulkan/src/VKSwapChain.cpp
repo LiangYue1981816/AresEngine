@@ -76,7 +76,6 @@ CVKSwapChain::CVKSwapChain(CVKDevice* pDevice, int width, int height, GfxPixelFo
 	, m_vkImageViews{ VK_NULL_HANDLE }
 
 	, m_format(format)
-
 	, m_width(width)
 	, m_height(height)
 

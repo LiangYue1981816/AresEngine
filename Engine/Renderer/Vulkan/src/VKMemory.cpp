@@ -20,7 +20,6 @@ CVKMemory::CVKMemory(CVKMemoryAllocator* pAllocator, CVKDevice* pDevice, VkDevic
 {
 	ASSERT(m_pDevice);
 	ASSERT(m_pAllocator);
-	ASSERT(m_pAllocator->GetMemory());
 }
 
 CVKMemory::~CVKMemory(void)

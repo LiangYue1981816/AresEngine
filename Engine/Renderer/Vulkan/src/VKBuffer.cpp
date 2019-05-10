@@ -70,7 +70,6 @@ void CVKBuffer::Destroy(void)
 	}
 
 	m_pMemory = nullptr;
-
 	m_vkBuffer = VK_NULL_HANDLE;
 	m_vkBufferUsageFlags = 0;
 }

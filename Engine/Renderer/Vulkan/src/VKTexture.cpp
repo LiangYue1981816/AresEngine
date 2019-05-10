@@ -94,6 +94,7 @@ int CVKTexture::GetSamples(void) const
 bool CVKTexture::Create(GfxTextureType type, GfxPixelFormat format, int width, int height, int layers, int levels, int samples, VkImageAspectFlags imageAspectFlags, VkImageView vkImageView)
 {
 	ASSERT(vkImageView);
+	ASSERT(imageAspectFlags);
 
 	Destroy();
 
@@ -122,6 +123,9 @@ bool CVKTexture::Create(GfxTextureType type, GfxPixelFormat format, int width, i
 	Destroy();
 	{
 		do {
+			ASSERT(imageUsageFlags);
+			ASSERT(imageAspectFlags);
+
 			m_bExtern = false;
 			m_pMemory = nullptr;
 
