@@ -63,6 +63,5 @@ void CGLES3VertexArrayObject::Destroy(void)
 
 void CGLES3VertexArrayObject::Bind(void) const
 {
-	ASSERT(m_vao);
 	GLBindVertexArray(m_vao);
 }

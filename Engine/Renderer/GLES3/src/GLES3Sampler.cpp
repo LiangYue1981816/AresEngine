@@ -45,4 +45,5 @@ void CGLES3Sampler::Destroy(void)
 void CGLES3Sampler::Bind(uint32_t unit) const
 {
 	GLBindSampler(unit, m_sampler);
+	CHECK_GL_ERROR_ASSERT();
 }

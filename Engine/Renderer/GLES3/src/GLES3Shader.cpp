@@ -37,13 +37,18 @@ bool CGLES3Shader::Create(const uint32_t* words, size_t numWords, shader_kind ki
 	Destroy();
 	{
 		do {
+			ASSERT(words);
+			ASSERT(numWords);
+
 			const eastl::string strSource = m_spriv.Create(words, numWords, 310);
 			const char* szSource = strSource.c_str();
 
 			m_kind = kind;
 			m_shader = glCreateShader(glGetShaderType(kind));
-			glShaderSource(m_shader, 1, &szSource, nullptr);
-			glCompileShader(m_shader);
+			{
+				glShaderSource(m_shader, 1, &szSource, nullptr);
+				glCompileShader(m_shader);
+			}
 			CHECK_GL_ERROR_ASSERT();
 
 			GLint success;

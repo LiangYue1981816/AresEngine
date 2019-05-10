@@ -8,6 +8,8 @@ CGLES3InstanceBuffer::CGLES3InstanceBuffer(uint32_t instanceFormat, int instance
 	, m_format(instanceFormat)
 	, m_count(0)
 {
+	ASSERT(GetInstanceStride(m_format) != 0);
+
 	m_ptrBuffer = CGLES3BufferPtr(new CGLES3Buffer(GL_ARRAY_BUFFER, INSTANCE_BUFFER_SIZE, true));
 	CGfxProfiler::IncInstanceBufferSize(m_ptrBuffer->GetSize());
 }

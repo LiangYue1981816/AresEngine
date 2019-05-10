@@ -39,13 +39,8 @@ const CGfxDescriptorSetPtr CGLES3MaterialPass::GetDescriptorSet(void) const
 
 bool CGLES3MaterialPass::SetPipeline(const CGfxRenderPass* pRenderPass, const CGfxShader* pVertexShader, const CGfxShader* pFragmentShader, const PipelineState& state, int indexSubpass, int vertexBinding, int instanceBinding)
 {
-	ASSERT(pRenderPass);
-	ASSERT(pVertexShader);
-	ASSERT(pFragmentShader);
-
 	m_pPipeline = GLES3Renderer()->CreatePipelineGraphics(pRenderPass, pVertexShader, pFragmentShader, state, indexSubpass, vertexBinding, instanceBinding);
 	m_ptrDescriptorSet = GLES3Renderer()->NewDescriptorSet(m_pPipeline->GetDescriptorLayout(DESCRIPTOR_SET_PASS));
-
 	return true;
 }
 
@@ -71,7 +66,6 @@ bool CGLES3MaterialPass::SetSampler(uint32_t name, GfxFilter minFilter, GfxFilte
 
 bool CGLES3MaterialPass::SetTexture2D(uint32_t name, const CGfxTexture2DPtr ptrTexture)
 {
-	ASSERT(ptrTexture);
 	ASSERT(m_pPipeline);
 	ASSERT(m_ptrDescriptorSet);
 
@@ -85,7 +79,6 @@ bool CGLES3MaterialPass::SetTexture2D(uint32_t name, const CGfxTexture2DPtr ptrT
 
 bool CGLES3MaterialPass::SetTexture2DArray(uint32_t name, const CGfxTexture2DArrayPtr ptrTexture)
 {
-	ASSERT(ptrTexture);
 	ASSERT(m_pPipeline);
 	ASSERT(m_ptrDescriptorSet);
 
@@ -99,7 +92,6 @@ bool CGLES3MaterialPass::SetTexture2DArray(uint32_t name, const CGfxTexture2DArr
 
 bool CGLES3MaterialPass::SetTextureCubemap(uint32_t name, const CGfxTextureCubemapPtr ptrTexture)
 {
-	ASSERT(ptrTexture);
 	ASSERT(m_pPipeline);
 	ASSERT(m_ptrDescriptorSet);
 
@@ -219,26 +211,6 @@ bool CGLES3MaterialPass::SetUniformVec4(uint32_t name, float v0, float v1, float
 		}
 
 		m_pUniformVec4s[name]->SetValue(v0, v1, v2, v3);
-		return true;
-	}
-	else {
-		return false;
-	}
-}
-
-bool CGLES3MaterialPass::SetUniformMat4(uint32_t name, const float* value)
-{
-	ASSERT(value);
-	ASSERT(m_pPipeline);
-	ASSERT(m_ptrDescriptorSet);
-
-	if (m_ptrDescriptorSet->GetDescriptorLayout()->IsUniformBlockValid(name)) {
-		if (m_pUniformMat4s[name] == nullptr) {
-			m_pUniformMat4s[name] = new CGfxUniformMat4;
-			m_ptrDescriptorSet->SetUniformBuffer(name, m_pUniformMat4s[name]->GetUniformBuffer(), 0, m_pUniformMat4s[name]->GetUniformBuffer()->GetSize());
-		}
-
-		m_pUniformMat4s[name]->SetValue(value);
 		return true;
 	}
 	else {

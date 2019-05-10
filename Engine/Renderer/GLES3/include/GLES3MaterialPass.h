@@ -32,7 +32,6 @@ public:
 	bool SetUniformVec2(uint32_t name, float v0, float v1);
 	bool SetUniformVec3(uint32_t name, float v0, float v1, float v2);
 	bool SetUniformVec4(uint32_t name, float v0, float v1, float v2, float v3);
-	bool SetUniformMat4(uint32_t name, const float* value);
 
 public:
 	void Bind(const CGLES3PipelineGraphics* pPipeline) const;

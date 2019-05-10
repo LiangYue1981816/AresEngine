@@ -86,7 +86,7 @@ void CGLES3Mesh::Destroy(void)
 		delete m_pVertexBuffer;
 	}
 
+	m_draws.clear();
 	m_pIndexBuffer = nullptr;
 	m_pVertexBuffer = nullptr;
-	m_draws.clear();
 }

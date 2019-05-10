@@ -39,8 +39,9 @@ bool CGLES3Pipeline::CreateProgram(const CGLES3Shader* pVertexShader, const CGLE
 				glAttachShader(m_program, m_pShaders[indexShader]->GetShader());
 			}
 		}
+
+		glLinkProgram(m_program);
 	}
-	glLinkProgram(m_program);
 	CHECK_GL_ERROR_ASSERT();
 
 	GLint success;
@@ -244,6 +245,7 @@ void CGLES3Pipeline::Bind(const PipelineState* pState) const
 	}
 
 	GLUseProgram(m_program);
+	CHECK_GL_ERROR_ASSERT();
 }
 
 bool CGLES3Pipeline::BindDescriptorSet(const CGfxDescriptorSetPtr ptrDescriptorSet) const
@@ -309,6 +311,8 @@ void CGLES3Pipeline::Uniform1i(uint32_t name, int v0) const
 	if (itLocation != m_uniformLocations.end()) {
 		GLUniform1i(itLocation->second, v0);
 	}
+
+	CHECK_GL_ERROR_ASSERT();
 }
 
 void CGLES3Pipeline::Uniform2i(uint32_t name, int v0, int v1) const
@@ -318,6 +322,8 @@ void CGLES3Pipeline::Uniform2i(uint32_t name, int v0, int v1) const
 	if (itLocation != m_uniformLocations.end()) {
 		GLUniform2i(itLocation->second, v0, v1);
 	}
+
+	CHECK_GL_ERROR_ASSERT();
 }
 
 void CGLES3Pipeline::Uniform3i(uint32_t name, int v0, int v1, int v2) const
@@ -327,6 +333,8 @@ void CGLES3Pipeline::Uniform3i(uint32_t name, int v0, int v1, int v2) const
 	if (itLocation != m_uniformLocations.end()) {
 		GLUniform3i(itLocation->second, v0, v1, v2);
 	}
+
+	CHECK_GL_ERROR_ASSERT();
 }
 
 void CGLES3Pipeline::Uniform4i(uint32_t name, int v0, int v1, int v2, int v3) const
@@ -336,6 +344,8 @@ void CGLES3Pipeline::Uniform4i(uint32_t name, int v0, int v1, int v2, int v3) co
 	if (itLocation != m_uniformLocations.end()) {
 		GLUniform4i(itLocation->second, v0, v1, v2, v3);
 	}
+
+	CHECK_GL_ERROR_ASSERT();
 }
 
 void CGLES3Pipeline::Uniform1f(uint32_t name, float v0) const
@@ -345,6 +355,8 @@ void CGLES3Pipeline::Uniform1f(uint32_t name, float v0) const
 	if (itLocation != m_uniformLocations.end()) {
 		GLUniform1f(itLocation->second, v0);
 	}
+
+	CHECK_GL_ERROR_ASSERT();
 }
 
 void CGLES3Pipeline::Uniform2f(uint32_t name, float v0, float v1) const
@@ -354,6 +366,8 @@ void CGLES3Pipeline::Uniform2f(uint32_t name, float v0, float v1) const
 	if (itLocation != m_uniformLocations.end()) {
 		GLUniform2f(itLocation->second, v0, v1);
 	}
+
+	CHECK_GL_ERROR_ASSERT();
 }
 
 void CGLES3Pipeline::Uniform3f(uint32_t name, float v0, float v1, float v2) const
@@ -363,6 +377,8 @@ void CGLES3Pipeline::Uniform3f(uint32_t name, float v0, float v1, float v2) cons
 	if (itLocation != m_uniformLocations.end()) {
 		GLUniform3f(itLocation->second, v0, v1, v2);
 	}
+
+	CHECK_GL_ERROR_ASSERT();
 }
 
 void CGLES3Pipeline::Uniform4f(uint32_t name, float v0, float v1, float v2, float v3) const
@@ -372,6 +388,8 @@ void CGLES3Pipeline::Uniform4f(uint32_t name, float v0, float v1, float v2, floa
 	if (itLocation != m_uniformLocations.end()) {
 		GLUniform4f(itLocation->second, v0, v1, v2, v3);
 	}
+
+	CHECK_GL_ERROR_ASSERT();
 }
 
 void CGLES3Pipeline::Uniform1iv(uint32_t name, int count, const int* value) const
@@ -382,6 +400,8 @@ void CGLES3Pipeline::Uniform1iv(uint32_t name, int count, const int* value) cons
 	if (itLocation != m_uniformLocations.end()) {
 		GLUniform1iv(itLocation->second, count, value);
 	}
+
+	CHECK_GL_ERROR_ASSERT();
 }
 
 void CGLES3Pipeline::Uniform2iv(uint32_t name, int count, const int* value) const
@@ -392,6 +412,8 @@ void CGLES3Pipeline::Uniform2iv(uint32_t name, int count, const int* value) cons
 	if (itLocation != m_uniformLocations.end()) {
 		GLUniform2iv(itLocation->second, count, value);
 	}
+
+	CHECK_GL_ERROR_ASSERT();
 }
 
 void CGLES3Pipeline::Uniform3iv(uint32_t name, int count, const int* value) const
@@ -402,6 +424,8 @@ void CGLES3Pipeline::Uniform3iv(uint32_t name, int count, const int* value) cons
 	if (itLocation != m_uniformLocations.end()) {
 		GLUniform3iv(itLocation->second, count, value);
 	}
+
+	CHECK_GL_ERROR_ASSERT();
 }
 
 void CGLES3Pipeline::Uniform4iv(uint32_t name, int count, const int* value) const
@@ -412,6 +436,8 @@ void CGLES3Pipeline::Uniform4iv(uint32_t name, int count, const int* value) cons
 	if (itLocation != m_uniformLocations.end()) {
 		GLUniform4iv(itLocation->second, count, value);
 	}
+
+	CHECK_GL_ERROR_ASSERT();
 }
 
 void CGLES3Pipeline::Uniform1fv(uint32_t name, int count, const float* value) const
@@ -422,6 +448,8 @@ void CGLES3Pipeline::Uniform1fv(uint32_t name, int count, const float* value) co
 	if (itLocation != m_uniformLocations.end()) {
 		GLUniform1fv(itLocation->second, count, value);
 	}
+
+	CHECK_GL_ERROR_ASSERT();
 }
 
 void CGLES3Pipeline::Uniform2fv(uint32_t name, int count, const float* value) const
@@ -432,6 +460,8 @@ void CGLES3Pipeline::Uniform2fv(uint32_t name, int count, const float* value) co
 	if (itLocation != m_uniformLocations.end()) {
 		GLUniform2fv(itLocation->second, count, value);
 	}
+
+	CHECK_GL_ERROR_ASSERT();
 }
 
 void CGLES3Pipeline::Uniform3fv(uint32_t name, int count, const float* value) const
@@ -442,6 +472,8 @@ void CGLES3Pipeline::Uniform3fv(uint32_t name, int count, const float* value) co
 	if (itLocation != m_uniformLocations.end()) {
 		GLUniform3fv(itLocation->second, count, value);
 	}
+
+	CHECK_GL_ERROR_ASSERT();
 }
 
 void CGLES3Pipeline::Uniform4fv(uint32_t name, int count, const float* value) const
@@ -452,6 +484,8 @@ void CGLES3Pipeline::Uniform4fv(uint32_t name, int count, const float* value) co
 	if (itLocation != m_uniformLocations.end()) {
 		GLUniform4fv(itLocation->second, count, value);
 	}
+
+	CHECK_GL_ERROR_ASSERT();
 }
 
 void CGLES3Pipeline::UniformMatrix2fv(uint32_t name, int count, const float* value) const
@@ -462,6 +496,8 @@ void CGLES3Pipeline::UniformMatrix2fv(uint32_t name, int count, const float* val
 	if (itLocation != m_uniformLocations.end()) {
 		GLUniformMatrix2fv(itLocation->second, count, value);
 	}
+
+	CHECK_GL_ERROR_ASSERT();
 }
 
 void CGLES3Pipeline::UniformMatrix3fv(uint32_t name, int count, const float* value) const
@@ -472,6 +508,8 @@ void CGLES3Pipeline::UniformMatrix3fv(uint32_t name, int count, const float* val
 	if (itLocation != m_uniformLocations.end()) {
 		GLUniformMatrix3fv(itLocation->second, count, value);
 	}
+
+	CHECK_GL_ERROR_ASSERT();
 }
 
 void CGLES3Pipeline::UniformMatrix4fv(uint32_t name, int count, const float* value) const
@@ -482,4 +520,6 @@ void CGLES3Pipeline::UniformMatrix4fv(uint32_t name, int count, const float* val
 	if (itLocation != m_uniformLocations.end()) {
 		GLUniformMatrix4fv(itLocation->second, count, value);
 	}
+
+	CHECK_GL_ERROR_ASSERT();
 }
