@@ -49,7 +49,7 @@ bool CGLES3SwapChain::Create(int width, int height, GfxPixelFormat format)
 					glDrawBuffers((int)drawBuffers.size(), drawBuffers.data());
 
 					uint32_t status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
-					bool bValid = status == GL_FRAMEBUFFER_COMPLETE;
+					ASSERT(status == GL_FRAMEBUFFER_COMPLETE);
 				}
 				glBindFramebuffer(GL_FRAMEBUFFER, 0);
 				CHECK_GL_ERROR_ASSERT();

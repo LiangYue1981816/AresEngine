@@ -251,11 +251,10 @@ void CGLES3Pipeline::Bind(const PipelineState* pState) const
 bool CGLES3Pipeline::BindDescriptorSet(const CGfxDescriptorSetPtr ptrDescriptorSet) const
 {
 	ASSERT(ptrDescriptorSet);
-	const CGfxDescriptorLayoutPtr ptrDescriptorLayout = ptrDescriptorSet->GetDescriptorLayout();
 
-	if (ptrDescriptorLayout->GetSetIndex() < 0 || ptrDescriptorLayout->GetSetIndex() >= DESCRIPTOR_SET_COUNT) {
-		return false;
-	}
+	const CGfxDescriptorLayoutPtr ptrDescriptorLayout = ptrDescriptorSet->GetDescriptorLayout();
+	ASSERT(ptrDescriptorLayout);
+	ASSERT(ptrDescriptorLayout->GetSetIndex() >= 0 && ptrDescriptorLayout->GetSetIndex() < DESCRIPTOR_SET_COUNT);
 
 	if (ptrDescriptorLayout->IsCompatible(m_ptrDescriptorLayouts[ptrDescriptorLayout->GetSetIndex()]) == false) {
 		return false;

@@ -93,6 +93,7 @@ void CGLES3FrameBuffer::Bind(const AttachmentInformation* pAttachmentInformation
 {
 	ASSERT(pAttachmentInformations);
 	ASSERT(pSubpassInformation);
+	ASSERT(m_fbo);
 
 	GLBindFramebuffer(GL_FRAMEBUFFER, m_fbo);
 	{
@@ -124,7 +125,7 @@ void CGLES3FrameBuffer::Bind(const AttachmentInformation* pAttachmentInformation
 		GLDrawBuffers(GL_FRAMEBUFFER, drawBuffers.size(), drawBuffers.data());
 
 		uint32_t status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
-		bool bValid = status == GL_FRAMEBUFFER_COMPLETE;
+		ASSERT(status == GL_FRAMEBUFFER_COMPLETE);
 	}
 	CHECK_GL_ERROR_ASSERT();
 }
@@ -133,6 +134,7 @@ void CGLES3FrameBuffer::Resolve(const AttachmentInformation* pAttachmentInformat
 {
 	ASSERT(pAttachmentInformations);
 	ASSERT(pSubpassInformation);
+	ASSERT(m_resolve);
 
 	if (pSubpassInformation->resolveAttachments.empty()) {
 		return;
@@ -160,7 +162,7 @@ void CGLES3FrameBuffer::Resolve(const AttachmentInformation* pAttachmentInformat
 		GLDrawBuffers(GL_FRAMEBUFFER, drawBuffers.size(), drawBuffers.data());
 
 		uint32_t status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
-		bool bValid = status == GL_FRAMEBUFFER_COMPLETE;
+		ASSERT(status == GL_FRAMEBUFFER_COMPLETE);
 	}
 	CHECK_GL_ERROR_ASSERT();
 
