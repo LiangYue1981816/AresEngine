@@ -31,11 +31,13 @@ void CGLES3Texture::Release(void)
 
 uint32_t CGLES3Texture::GetTarget(void) const
 {
+	ASSERT(m_target);
 	return m_target;
 }
 
 uint32_t CGLES3Texture::GetTexture(void) const
 {
+	ASSERT(m_texture);
 	return m_texture;
 }
 

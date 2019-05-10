@@ -282,8 +282,8 @@ bool CVKTexture::PipelineBarrier(VkCommandBuffer vkCommandBuffer, VkImageLayout 
 {
 	ASSERT(vkCommandBuffer);
 	ASSERT(m_vkImage);
-	ASSERT(m_levels > range.baseMipLevel + range.levelCount);
-	ASSERT(m_layers > range.baseArrayLayer + range.layerCount);
+	ASSERT((uint32_t)m_levels > range.baseMipLevel + range.levelCount);
+	ASSERT((uint32_t)m_layers > range.baseArrayLayer + range.layerCount);
 
 	CALL_VK_FUNCTION_RETURN_BOOL(vkCmdImageMemoryBarrier(vkCommandBuffer, m_vkImage, m_vkImageLayout, imageLayout, range));
 	m_vkImageLayout = imageLayout;
@@ -295,8 +295,8 @@ bool CVKTexture::PipelineBarrier(VkCommandBuffer vkCommandBuffer, VkImageLayout 
 {
 	ASSERT(vkCommandBuffer);
 	ASSERT(m_vkImage);
-	ASSERT(m_levels > range.baseMipLevel + range.levelCount);
-	ASSERT(m_layers > range.baseArrayLayer + range.layerCount);
+	ASSERT((uint32_t)m_levels > range.baseMipLevel + range.levelCount);
+	ASSERT((uint32_t)m_layers > range.baseArrayLayer + range.layerCount);
 
 	CALL_VK_FUNCTION_RETURN_BOOL(vkCmdImageMemoryBarrier(vkCommandBuffer, m_vkImage, m_vkImageLayout, imageLayout, srcAccessFlags, dstAccessFlags, srcPipelineStageFlags, dstPipelineStageFlags, range));
 	m_vkImageLayout = imageLayout;
