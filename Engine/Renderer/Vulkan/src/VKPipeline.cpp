@@ -21,6 +21,16 @@ CVKPipeline::~CVKPipeline(void)
 	Destroy();
 }
 
+const CGfxDescriptorLayoutPtr CVKPipeline::GetDescriptorLayout(int indexDescriptorSet) const
+{
+	if (indexDescriptorSet >= 0 && indexDescriptorSet < DESCRIPTOR_SET_COUNT) {
+		return m_ptrDescriptorLayouts[indexDescriptorSet];
+	}
+	else {
+		return nullptr;
+	}
+}
+
 bool CVKPipeline::CreateLayouts(void)
 {
 	for (int indexShader = 0; indexShader < compute_shader - vertex_shader + 1; indexShader++) {
@@ -389,6 +399,12 @@ void CVKPipeline::Destroy(void)
 	m_ptrDescriptorLayouts[DESCRIPTOR_SET_CAMERA]->Destroy(true);
 	m_ptrDescriptorLayouts[DESCRIPTOR_SET_PASS]->Destroy(true);
 	m_ptrDescriptorLayouts[DESCRIPTOR_SET_INPUTATTACHMENT]->Destroy(true);
+}
+
+void CVKPipeline::Bind(VkCommandBuffer vkCommandBuffer, VkPipelineBindPoint pipelineBindPoint)
+{
+	ASSERT(vkCommandBuffer);
+	vkCmdBindPipeline(vkCommandBuffer, pipelineBindPoint, m_vkPipeline);
 }
 
 void CVKPipeline::Uniform1i(VkCommandBuffer vkCommandBuffer, uint32_t name, int v0) const

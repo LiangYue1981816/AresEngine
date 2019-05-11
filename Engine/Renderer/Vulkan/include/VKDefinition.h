@@ -69,6 +69,10 @@ class CVKShader;
 class CVKShaderManager;
 
 class CVKPipeline;
+class CVKPipelineCompute;
+class CVKPipelineComputeManager;
+class CVKPipelineGraphics;
+class CVKPipelineGraphicsManager;
 
 class CVKTransferBuffer;
 class CVKTransferManager;
@@ -109,11 +113,6 @@ class CVKDescriptorSetManager;
 class CVKCommandBuffer;
 class CVKCommandBufferManager;
 /*
-class CVKPipelineCompute;
-class CVKPipelineComputeManager;
-class CVKPipelineGraphics;
-class CVKPipelineGraphicsManager;
-
 class CVKMaterial;
 class CVKMaterialPass;
 class CVKMaterialManager;

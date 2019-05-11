@@ -4,7 +4,7 @@
 CVKPipelineComputeManager::CVKPipelineComputeManager(CVKDevice* pDevice)
 	: m_pDevice(pDevice)
 {
-
+	ASSERT(m_pDevice);
 }
 
 CVKPipelineComputeManager::~CVKPipelineComputeManager(void)
@@ -21,7 +21,7 @@ CVKPipelineCompute* CVKPipelineComputeManager::Create(const CGfxShader* pCompute
 		uint32_t name = HashValueFormat("%x", pComputeShader->GetName());
 
 		if (m_pPipelines[name] == nullptr) {
-			m_pPipelines[name] = new CVKPipelineCompute(m_pDevice, this, name);
+			m_pPipelines[name] = new CVKPipelineCompute(m_pDevice, name);
 			m_pPipelines[name]->Create(pComputeShader);
 		}
 
@@ -33,7 +33,7 @@ CVKPipelineCompute* CVKPipelineComputeManager::Create(const CGfxShader* pCompute
 CVKPipelineGraphicsManager::CVKPipelineGraphicsManager(CVKDevice* pDevice)
 	: m_pDevice(pDevice)
 {
-
+	ASSERT(m_pDevice);
 }
 
 CVKPipelineGraphicsManager::~CVKPipelineGraphicsManager(void)
@@ -50,7 +50,7 @@ CVKPipelineGraphics* CVKPipelineGraphicsManager::Create(const CGfxRenderPass* pR
 		uint32_t name = HashValueFormat("%p_%x_%x_%x_%x_%x_%x", pRenderPass, pVertexShader->GetName(), pFragmentShader->GetName(), HashValue((uint8_t*)& state, sizeof(state)), indexSubpass, vertexBinding, instanceBinding);
 
 		if (m_pPipelines[name] == nullptr) {
-			m_pPipelines[name] = new CVKPipelineGraphics(m_pDevice, this, name);
+			m_pPipelines[name] = new CVKPipelineGraphics(m_pDevice, name);
 			m_pPipelines[name]->Create(pRenderPass, pVertexShader, pFragmentShader, state, indexSubpass, vertexBinding, instanceBinding);
 		}
 

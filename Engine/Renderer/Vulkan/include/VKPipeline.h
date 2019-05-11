@@ -14,6 +14,9 @@ private:
 
 
 private:
+	const CGfxDescriptorLayoutPtr GetDescriptorLayout(int indexDescriptorSet) const;
+
+private:
 	bool CreateLayouts(void);
 	bool CreateShaderStages(eastl::vector<VkPipelineShaderStageCreateInfo>& shaders);
 	bool CreateVertexInputState(eastl::vector<VkVertexInputBindingDescription>& inputBindingDescriptions, eastl::vector<VkVertexInputAttributeDescription>& inputAttributeDescriptions, int vertexBinding, int instanceBinding);
@@ -23,6 +26,8 @@ private:
 	void Destroy(void);
 
 private:
+	void Bind(VkCommandBuffer vkCommandBuffer, VkPipelineBindPoint pipelineBindPoint);
+
 	void Uniform1i(VkCommandBuffer vkCommandBuffer, uint32_t name, int v0) const;
 	void Uniform2i(VkCommandBuffer vkCommandBuffer, uint32_t name, int v0, int v1) const;
 	void Uniform3i(VkCommandBuffer vkCommandBuffer, uint32_t name, int v0, int v1, int v2) const;
