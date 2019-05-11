@@ -4,6 +4,7 @@
 CGLES3VertexBuffer::CGLES3VertexBuffer(uint32_t vertexFormat, int vertexBinding, size_t size, bool bDynamic)
 	: CGfxVertexBuffer(vertexFormat, vertexBinding, size, bDynamic)
 	, m_pBuffer(nullptr)
+
 	, m_format(vertexFormat)
 	, m_count(size / GetVertexStride(vertexFormat))
 {

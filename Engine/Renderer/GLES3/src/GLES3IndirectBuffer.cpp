@@ -4,6 +4,7 @@
 CGLES3IndirectBuffer::CGLES3IndirectBuffer(int numDrawCommands)
 	: CGfxIndirectBuffer(numDrawCommands)
 	, m_pBuffer(nullptr)
+
 	, m_draws(numDrawCommands)
 {
 	m_pBuffer = new CGLES3Buffer(GL_DRAW_INDIRECT_BUFFER, numDrawCommands * sizeof(DrawCommand), true);

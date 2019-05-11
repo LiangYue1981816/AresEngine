@@ -6,6 +6,7 @@ static const int INSTANCE_BUFFER_SIZE = 64;
 CGLES3InstanceBuffer::CGLES3InstanceBuffer(uint32_t instanceFormat, int instanceBinding)
 	: CGfxInstanceBuffer(instanceFormat, instanceBinding)
 	, m_pBuffer(nullptr)
+
 	, m_format(instanceFormat)
 	, m_count(0)
 {

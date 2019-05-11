@@ -4,6 +4,7 @@
 CGLES3IndexBuffer::CGLES3IndexBuffer(GfxIndexType type, size_t size, bool bDynamic)
 	: CGfxIndexBuffer(type, size, bDynamic)
 	, m_pBuffer(nullptr)
+
 	, m_type(type)
 {
 	m_pBuffer = new CGLES3Buffer(GL_ELEMENT_ARRAY_BUFFER, size, bDynamic);
