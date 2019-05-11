@@ -49,5 +49,3 @@ private:
 private:
 	CVKDevice* m_pDevice;
 };
-
-typedef CGfxResourcePtr<CVKBuffer> CVKBufferPtr;

@@ -4,6 +4,7 @@
 CVKIndexBuffer::CVKIndexBuffer(CVKDevice* pDevice, GfxIndexType type, size_t size, bool bDynamic)
 	: CGfxIndexBuffer(type, size, bDynamic)
 	, m_pDevice(pDevice)
+	, m_pBuffer(nullptr)
 
 	, m_type(type)
 	, m_size(size)
@@ -12,18 +13,19 @@ CVKIndexBuffer::CVKIndexBuffer(CVKDevice* pDevice, GfxIndexType type, size_t siz
 	ASSERT(m_pDevice);
 
 	if (bDynamic) {
-		m_ptrBuffer = CVKBufferPtr(new CVKBuffer(pDevice, CGfxSwapChain::SWAPCHAIN_FRAME_COUNT * size, VK_BUFFER_USAGE_INDEX_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT));
+		m_pBuffer = new CVKBuffer(pDevice, CGfxSwapChain::SWAPCHAIN_FRAME_COUNT * size, VK_BUFFER_USAGE_INDEX_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
+		CGfxProfiler::IncIndexBufferSize(m_pBuffer->GetSize());
 	}
 	else {
-		m_ptrBuffer = CVKBufferPtr(new CVKBuffer(pDevice, size, VK_BUFFER_USAGE_INDEX_BUFFER_BIT | VK_BUFFER_USAGE_TRANSFER_DST_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT));
+		m_pBuffer = new CVKBuffer(pDevice, size, VK_BUFFER_USAGE_INDEX_BUFFER_BIT | VK_BUFFER_USAGE_TRANSFER_DST_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT);
+		CGfxProfiler::IncIndexBufferSize(m_pBuffer->GetSize());
 	}
-
-	CGfxProfiler::IncIndexBufferSize(m_ptrBuffer->GetSize());
 }
 
 CVKIndexBuffer::~CVKIndexBuffer(void)
 {
-	CGfxProfiler::DecIndexBufferSize(m_ptrBuffer->GetSize());
+	CGfxProfiler::DecIndexBufferSize(m_pBuffer->GetSize());
+	delete m_pBuffer;
 }
 
 GfxIndexType CVKIndexBuffer::GetIndexType(void) const
@@ -52,15 +54,15 @@ uint32_t CVKIndexBuffer::GetOffset(void) const
 
 bool CVKIndexBuffer::BufferData(size_t offset, size_t size, const void* data)
 {
-	if (m_ptrBuffer->IsHostVisible()) {
+	if (m_pBuffer->IsHostVisible()) {
 		m_offset = VKRenderer()->GetSwapChain()->GetFrameIndex() * m_size;
 	}
 
-	return m_ptrBuffer->BufferData(m_offset + offset, size, data);
+	return m_pBuffer->BufferData(m_offset + offset, size, data);
 }
 
 void CVKIndexBuffer::Bind(VkCommandBuffer vkCommandBuffer) const
 {
 	ASSERT(vkCommandBuffer);
-	vkCmdBindIndexBuffer(vkCommandBuffer, m_ptrBuffer->GetBuffer(), m_offset, CVKHelper::TranslateIndexType(m_type));
+	vkCmdBindIndexBuffer(vkCommandBuffer, m_pBuffer->GetBuffer(), m_offset, CVKHelper::TranslateIndexType(m_type));
 }

@@ -31,7 +31,7 @@ private:
 	eastl::vector<DrawCommand> m_draws;
 
 private:
-	CVKBufferPtr m_ptrBuffer;
+	CVKBuffer* m_pBuffer;
 
 private:
 	CVKDevice* m_pDevice;

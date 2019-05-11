@@ -5,6 +5,7 @@ CVKUniformBuffer::CVKUniformBuffer(CVKDevice* pDevice, CVKUniformBufferManager* 
 	: CGfxUniformBuffer(size)
 	, m_pDevice(pDevice)
 	, m_pManager(pManager)
+	, m_pBuffer(nullptr)
 
 	, m_size(size)
 	, m_offset(0)
@@ -12,13 +13,14 @@ CVKUniformBuffer::CVKUniformBuffer(CVKDevice* pDevice, CVKUniformBufferManager* 
 	ASSERT(m_pDevice);
 	ASSERT(m_pManager);
 
-	m_ptrBuffer = CVKBufferPtr(new CVKBuffer(pDevice, CGfxSwapChain::SWAPCHAIN_FRAME_COUNT * size, VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT));
-	CGfxProfiler::IncUniformBufferSize(m_ptrBuffer->GetSize());
+	m_pBuffer = new CVKBuffer(pDevice, CGfxSwapChain::SWAPCHAIN_FRAME_COUNT * size, VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
+	CGfxProfiler::IncUniformBufferSize(m_pBuffer->GetSize());
 }
 
 CVKUniformBuffer::~CVKUniformBuffer(void)
 {
-	CGfxProfiler::DecUniformBufferSize(m_ptrBuffer->GetSize());
+	CGfxProfiler::DecUniformBufferSize(m_pBuffer->GetSize());
+	delete m_pBuffer;
 }
 
 void CVKUniformBuffer::Release(void)
@@ -28,7 +30,7 @@ void CVKUniformBuffer::Release(void)
 
 VkBuffer CVKUniformBuffer::GetBuffer(void) const
 {
-	return m_ptrBuffer->GetBuffer();
+	return m_pBuffer->GetBuffer();
 }
 
 uint32_t CVKUniformBuffer::GetSize(void) const
@@ -44,5 +46,5 @@ uint32_t CVKUniformBuffer::GetOffset(void) const
 bool CVKUniformBuffer::BufferData(size_t offset, size_t size, const void* data)
 {
 	m_offset = VKRenderer()->GetSwapChain()->GetFrameIndex() * m_size;
-	return m_ptrBuffer->BufferData(m_offset + offset, size, data);
+	return m_pBuffer->BufferData(m_offset + offset, size, data);
 }

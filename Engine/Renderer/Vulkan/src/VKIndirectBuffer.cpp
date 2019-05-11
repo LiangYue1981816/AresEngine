@@ -4,6 +4,7 @@
 CVKIndirectBuffer::CVKIndirectBuffer(CVKDevice* pDevice, int numDrawCommands)
 	: CGfxIndirectBuffer(numDrawCommands)
 	, m_pDevice(pDevice)
+	, m_pBuffer(nullptr)
 
 	, m_draws(numDrawCommands)
 	, m_size(numDrawCommands * sizeof(DrawCommand))
@@ -11,18 +12,19 @@ CVKIndirectBuffer::CVKIndirectBuffer(CVKDevice* pDevice, int numDrawCommands)
 {
 	ASSERT(m_pDevice);
 
-	m_ptrBuffer = CVKBufferPtr(new CVKBuffer(pDevice, CGfxSwapChain::SWAPCHAIN_FRAME_COUNT * m_size, VK_BUFFER_USAGE_INDIRECT_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT));
-	CGfxProfiler::IncIndirectBufferSize(m_ptrBuffer->GetSize());
+	m_pBuffer = new CVKBuffer(pDevice, CGfxSwapChain::SWAPCHAIN_FRAME_COUNT * m_size, VK_BUFFER_USAGE_INDIRECT_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
+	CGfxProfiler::IncIndirectBufferSize(m_pBuffer->GetSize());
 }
 
 CVKIndirectBuffer::~CVKIndirectBuffer(void)
 {
-	CGfxProfiler::DecIndirectBufferSize(m_ptrBuffer->GetSize());
+	CGfxProfiler::DecIndirectBufferSize(m_pBuffer->GetSize());
+	delete m_pBuffer;
 }
 
 VkBuffer CVKIndirectBuffer::GetBuffer(void) const
 {
-	return m_ptrBuffer->GetBuffer();
+	return m_pBuffer->GetBuffer();
 }
 
 uint32_t CVKIndirectBuffer::GetDrawCommandCount(void) const
@@ -64,5 +66,5 @@ bool CVKIndirectBuffer::BufferData(int indexDraw, int baseVertex, int firstIndex
 	m_draws[indexDraw].instanceCount = instanceCount;
 
 	m_offset = VKRenderer()->GetSwapChain()->GetFrameIndex() * m_size;
-	return m_ptrBuffer->BufferData(m_offset + indexDraw * sizeof(DrawCommand), sizeof(m_draws[indexDraw]), &m_draws[indexDraw]);
+	return m_pBuffer->BufferData(m_offset + indexDraw * sizeof(DrawCommand), sizeof(m_draws[indexDraw]), &m_draws[indexDraw]);
 }

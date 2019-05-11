@@ -33,7 +33,7 @@ private:
 	uint32_t m_offset;
 
 private:
-	CVKBufferPtr m_ptrBuffer;
+	CVKBuffer* m_pBuffer;
 
 private:
 	CVKDevice* m_pDevice;
