@@ -76,21 +76,18 @@ bool CGLES3Pipeline::CreateLayouts(void)
 			}
 
 			for (const auto& itUniformBlock : uniformBlockBindings) {
-				if (m_ptrDescriptorLayouts[itUniformBlock.second.set]->SetUniformBlockBinding(HashValue(itUniformBlock.first.c_str()), itUniformBlock.second.binding)) {
-					SetUniformBlockBinding(itUniformBlock.first.c_str(), itUniformBlock.second.binding);
-				}
+				SetUniformBlockBinding(itUniformBlock.first.c_str(), itUniformBlock.second.binding);
+				m_ptrDescriptorLayouts[itUniformBlock.second.set]->SetUniformBlockBinding(HashValue(itUniformBlock.first.c_str()), itUniformBlock.second.binding);
 			}
 
 			for (const auto& itSampledImage : sampledImageBindings) {
-				if (m_ptrDescriptorLayouts[itSampledImage.second.set]->SetSampledImageBinding(HashValue(itSampledImage.first.c_str()), itSampledImage.second.binding)) {
-					SetSampledImageLocation(itSampledImage.first.c_str());
-				}
+				SetSampledImageLocation(itSampledImage.first.c_str());
+				m_ptrDescriptorLayouts[itSampledImage.second.set]->SetSampledImageBinding(HashValue(itSampledImage.first.c_str()), itSampledImage.second.binding);
 			}
 
 			for (const auto& itInputAttachment : inputAttachmentBindings) {
-				if (m_ptrDescriptorLayouts[itInputAttachment.second.set]->SetInputAttachmentBinding(HashValue(itInputAttachment.first.c_str()), itInputAttachment.second.binding)) {
-					SetInputAttachmentLocation(itInputAttachment.first.c_str(), itInputAttachment.second.inputAttachmentIndex);
-				}
+				SetInputAttachmentLocation(itInputAttachment.first.c_str(), itInputAttachment.second.inputAttachmentIndex);
+				m_ptrDescriptorLayouts[itInputAttachment.second.set]->SetInputAttachmentBinding(HashValue(itInputAttachment.first.c_str()), itInputAttachment.second.binding);
 			}
 		}
 	}
