@@ -119,3 +119,8 @@ VkResult vkSubmitCommandBuffer(VkQueue vkQueue, VkCommandBuffer vkCommandBuffer,
 	submitInfo.pSignalSemaphores = vkSignalSemaphore != VK_NULL_HANDLE ? &vkSignalSemaphore : nullptr;
 	return vkQueueSubmit(vkQueue, 1, &submitInfo, vkFence);
 }
+
+void vkCmdBindVertexBuffer(VkCommandBuffer vkCommandBuffer, uint32_t binding, VkBuffer vkBuffer, VkDeviceSize offset)
+{
+	vkCmdBindVertexBuffers(vkCommandBuffer, binding, 1, &vkBuffer, &offset);
+}
