@@ -21,7 +21,7 @@ CVKPipeline::~CVKPipeline(void)
 	Destroy();
 }
 
-bool CVKPipeline::CreateLayouts(eastl::vector<VkDescriptorSetLayout>& layouts, eastl::vector<VkPushConstantRange>& pushConstantRanges)
+bool CVKPipeline::CreateLayouts(void)
 {
 	for (int indexShader = 0; indexShader < compute_shader - vertex_shader + 1; indexShader++) {
 		if (m_pShaders[indexShader] && m_pShaders[indexShader]->IsValid()) {
@@ -56,6 +56,9 @@ bool CVKPipeline::CreateLayouts(eastl::vector<VkDescriptorSetLayout>& layouts, e
 	CALL_BOOL_FUNCTION_RETURN_BOOL(m_ptrDescriptorLayouts[DESCRIPTOR_SET_PASS]->Create());
 	CALL_BOOL_FUNCTION_RETURN_BOOL(m_ptrDescriptorLayouts[DESCRIPTOR_SET_INPUTATTACHMENT]->Create());
 
+	eastl::vector<VkDescriptorSetLayout> layouts;
+	eastl::vector<VkPushConstantRange> pushConstantRanges;
+
 	for (int index = 0; index < DESCRIPTOR_SET_COUNT; index++) {
 		layouts.emplace_back(((CVKDescriptorLayout*)m_ptrDescriptorLayouts[index].GetPointer())->GetDescriptorLayout());
 	}
@@ -63,6 +66,16 @@ bool CVKPipeline::CreateLayouts(eastl::vector<VkDescriptorSetLayout>& layouts, e
 	for (const auto& itPushConstantRange : m_pushConstantRanges) {
 		pushConstantRanges.emplace_back(itPushConstantRange.second);
 	}
+
+	VkPipelineLayoutCreateInfo layoutCreateInfo = {};
+	layoutCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
+	layoutCreateInfo.pNext = nullptr;
+	layoutCreateInfo.flags = 0;
+	layoutCreateInfo.setLayoutCount = layouts.size();
+	layoutCreateInfo.pSetLayouts = layouts.data();
+	layoutCreateInfo.pushConstantRangeCount = pushConstantRanges.size();
+	layoutCreateInfo.pPushConstantRanges = pushConstantRanges.data();
+	CALL_VK_FUNCTION_RETURN_BOOL(vkCreatePipelineLayout(m_pDevice->GetDevice(), &layoutCreateInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkPipelineLayout));
 
 	return true;
 }
@@ -145,9 +158,36 @@ bool CVKPipeline::CreateVertexInputState(eastl::vector<VkVertexInputBindingDescr
 	return true;
 }
 
+bool CVKPipeline::Create(const CGfxRenderPass* pRenderPass, const CGfxShader* pVertexShader, const CGfxShader* pFragmentShader, const PipelineState& state, int indexSubpass, int vertexBinding, int instanceBinding)
+{
+	Destroy();
+	{
+		do {
+			ASSERT(pRenderPass);
+			ASSERT(pVertexShader);
+			ASSERT(pVertexShader->IsValid());
+			ASSERT(pVertexShader->GetKind() == vertex_shader);
+			ASSERT(pFragmentShader);
+			ASSERT(pFragmentShader->IsValid());
+			ASSERT(pFragmentShader->GetKind() == fragment_shader);
+		} while (false);
+	}
+	Destroy();
+	return false;
+}
+
 void CVKPipeline::Destroy(void)
 {
+	if (m_vkPipeline) {
+		vkDestroyPipeline(m_pDevice->GetDevice(), m_vkPipeline, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
+	}
 
+	if (m_vkPipelineLayout) {
+		vkDestroyPipelineLayout(m_pDevice->GetDevice(), m_vkPipelineLayout, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
+	}
+
+	m_vkPipeline = VK_NULL_HANDLE;
+	m_vkPipelineLayout = VK_NULL_HANDLE;
 }
 
 void CVKPipeline::Uniform1i(VkCommandBuffer vkCommandBuffer, uint32_t name, int v0) const
