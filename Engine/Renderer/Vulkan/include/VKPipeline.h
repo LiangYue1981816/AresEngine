@@ -18,6 +18,7 @@ private:
 	bool CreateShaderStages(eastl::vector<VkPipelineShaderStageCreateInfo>& shaders);
 	bool CreateVertexInputState(eastl::vector<VkVertexInputBindingDescription>& inputBindingDescriptions, eastl::vector<VkVertexInputAttributeDescription>& inputAttributeDescriptions, int vertexBinding, int instanceBinding);
 
+	bool Create(const CGfxShader* pComputeShader);
 	bool Create(const CGfxRenderPass* pRenderPass, const CGfxShader* pVertexShader, const CGfxShader* pFragmentShader, const PipelineState& state, int indexSubpass, int vertexBinding, int instanceBinding);
 	void Destroy(void);
 
