@@ -24,7 +24,7 @@ public:
 
 
 private:
-	CGLES3BufferPtr m_ptrBuffer;
+	CGLES3Buffer* m_pBuffer;
 
 private:
 	CGLES3UniformBufferManager* m_pManager;

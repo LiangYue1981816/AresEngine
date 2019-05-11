@@ -28,5 +28,5 @@ private:
 	GfxIndexType m_type;
 
 private:
-	CGLES3BufferPtr m_ptrBuffer;
+	CGLES3Buffer* m_pBuffer;
 };

@@ -29,5 +29,5 @@ private:
 	uint32_t m_count;
 
 private:
-	CGLES3BufferPtr m_ptrBuffer;
+	CGLES3Buffer* m_pBuffer;
 };

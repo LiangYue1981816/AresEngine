@@ -3,15 +3,17 @@
 
 CGLES3IndirectBuffer::CGLES3IndirectBuffer(int numDrawCommands)
 	: CGfxIndirectBuffer(numDrawCommands)
+	, m_pBuffer(nullptr)
 	, m_draws(numDrawCommands)
 {
-	m_ptrBuffer = CGLES3BufferPtr(new CGLES3Buffer(GL_DRAW_INDIRECT_BUFFER, numDrawCommands * sizeof(DrawCommand), true));
-	CGfxProfiler::IncIndirectBufferSize(m_ptrBuffer->GetSize());
+	m_pBuffer = new CGLES3Buffer(GL_DRAW_INDIRECT_BUFFER, numDrawCommands * sizeof(DrawCommand), true);
+	CGfxProfiler::IncIndirectBufferSize(m_pBuffer->GetSize());
 }
 
 CGLES3IndirectBuffer::~CGLES3IndirectBuffer(void)
 {
-	CGfxProfiler::DecIndirectBufferSize(m_ptrBuffer->GetSize());
+	CGfxProfiler::DecIndirectBufferSize(m_pBuffer->GetSize());
+	delete m_pBuffer;
 }
 
 uint32_t CGLES3IndirectBuffer::GetDrawCommandCount(void) const
@@ -26,12 +28,12 @@ uint32_t CGLES3IndirectBuffer::GetDrawCommandOffset(int indexDraw) const
 
 uint32_t CGLES3IndirectBuffer::GetSize(void) const
 {
-	return m_ptrBuffer->GetSize();
+	return m_pBuffer->GetSize();
 }
 
 bool CGLES3IndirectBuffer::BufferData(int indexDraw, int baseVertex, int firstIndex, int indexCount, int instanceCount)
 {
- 	if (indexDraw < 0 || (uint32_t)indexDraw >= m_draws.size()) {
+	if (indexDraw < 0 || (uint32_t)indexDraw >= m_draws.size()) {
 		return false;
 	}
 
@@ -47,10 +49,10 @@ bool CGLES3IndirectBuffer::BufferData(int indexDraw, int baseVertex, int firstIn
 	m_draws[indexDraw].indexCount = indexCount;
 	m_draws[indexDraw].instanceCount = instanceCount;
 
-	return m_ptrBuffer->BufferData(indexDraw * sizeof(DrawCommand), sizeof(m_draws[indexDraw]), &m_draws[indexDraw], false);
+	return m_pBuffer->BufferData(indexDraw * sizeof(DrawCommand), sizeof(m_draws[indexDraw]), &m_draws[indexDraw], false);
 }
 
 void CGLES3IndirectBuffer::Bind(void) const
 {
-	m_ptrBuffer->Bind();
+	m_pBuffer->Bind();
 }

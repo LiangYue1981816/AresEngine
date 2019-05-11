@@ -40,5 +40,3 @@ private:
 	uint32_t m_buffer;
 	uint32_t m_size;
 };
-
-typedef CGfxResourcePtr<CGLES3Buffer> CGLES3BufferPtr;
