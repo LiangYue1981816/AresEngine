@@ -12,12 +12,11 @@ CVKInstanceBuffer::CVKInstanceBuffer(CVKDevice* pDevice, uint32_t instanceFormat
 	, m_format(instanceFormat)
 	, m_count(0)
 	, m_size(INSTANCE_BUFFER_SIZE)
-	, m_offset(0)
 {
 	ASSERT(m_pDevice);
 	ASSERT(GetInstanceStride(m_format) != 0);
 
-	m_pBuffer = new CVKBuffer(pDevice, CGfxSwapChain::SWAPCHAIN_FRAME_COUNT * INSTANCE_BUFFER_SIZE, VK_BUFFER_USAGE_VERTEX_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
+	m_pBuffer = new CVKBuffer(pDevice, INSTANCE_BUFFER_SIZE, VK_BUFFER_USAGE_VERTEX_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
 	CGfxProfiler::IncInstanceBufferSize(m_pBuffer->GetSize());
 }
 
@@ -42,11 +41,6 @@ uint32_t CVKInstanceBuffer::GetSize(void) const
 	return m_size;
 }
 
-uint32_t CVKInstanceBuffer::GetOffset(void) const
-{
-	return m_offset;
-}
-
 bool CVKInstanceBuffer::BufferData(size_t size, const void* data)
 {
 	m_count = size / GetInstanceStride(m_format);
@@ -58,13 +52,12 @@ bool CVKInstanceBuffer::BufferData(size_t size, const void* data)
 			while (m_size < size) m_size <<= 1;
 
 			delete m_pBuffer;
-			m_pBuffer = new CVKBuffer(m_pDevice, CGfxSwapChain::SWAPCHAIN_FRAME_COUNT * m_size, VK_BUFFER_USAGE_VERTEX_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
+			m_pBuffer = new CVKBuffer(m_pDevice, m_size, VK_BUFFER_USAGE_VERTEX_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
 		}
 		CGfxProfiler::IncInstanceBufferSize(m_pBuffer->GetSize());
 	}
 
-	m_offset = VKRenderer()->GetSwapChain()->GetFrameIndex() * m_size;
-	return m_pBuffer->BufferData(m_offset, size, data);
+	return m_pBuffer->BufferData(0, size, data);
 }
 
 void CVKInstanceBuffer::Bind(VkCommandBuffer vkCommandBuffer) const
@@ -72,6 +65,6 @@ void CVKInstanceBuffer::Bind(VkCommandBuffer vkCommandBuffer) const
 	ASSERT(vkCommandBuffer);
 
 	const VkBuffer vkBuffer = m_pBuffer->GetBuffer();
-	const VkDeviceSize vkOffset = m_offset;
+	const VkDeviceSize vkOffset = 0;
 	vkCmdBindVertexBuffers(vkCommandBuffer, m_binding, 1, &vkBuffer, &vkOffset);
 }
