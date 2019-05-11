@@ -4,15 +4,16 @@
 CGLES3RenderTexture::CGLES3RenderTexture(CGLES3RenderTextureManager* pManager, uint32_t name)
 	: CGfxRenderTexture(name)
 	, m_pManager(pManager)
+	, m_pTexture(nullptr)
 {
 	ASSERT(m_pManager);
 
-	m_ptrTexture = CGLES3TexturePtr(new CGLES3Texture);
+	m_pTexture = new CGLES3Texture;
 }
 
 CGLES3RenderTexture::~CGLES3RenderTexture(void)
 {
-	Destroy();
+	delete m_pTexture;
 }
 
 void CGLES3RenderTexture::Release(void)
@@ -22,52 +23,52 @@ void CGLES3RenderTexture::Release(void)
 
 uint32_t CGLES3RenderTexture::GetTexture(void) const
 {
-	return m_ptrTexture->GetTexture();
+	return m_pTexture->GetTexture();
 }
 
 GfxTextureType CGLES3RenderTexture::GetType(void) const
 {
-	return m_ptrTexture->GetType();
+	return m_pTexture->GetType();
 }
 
 GfxPixelFormat CGLES3RenderTexture::GetFormat(void) const
 {
-	return m_ptrTexture->GetFormat();
+	return m_pTexture->GetFormat();
 }
 
 int CGLES3RenderTexture::GetWidth(void) const
 {
-	return m_ptrTexture->GetWidth();
+	return m_pTexture->GetWidth();
 }
 
 int CGLES3RenderTexture::GetHeight(void) const
 {
-	return m_ptrTexture->GetHeight();
+	return m_pTexture->GetHeight();
 }
 
 int CGLES3RenderTexture::GetSamples(void) const
 {
-	return m_ptrTexture->GetSamples();
+	return m_pTexture->GetSamples();
 }
 
 bool CGLES3RenderTexture::Create(HANDLE hExternalTexture, GfxPixelFormat format, int width, int height, int samples)
 {
 	samples = std::max(samples, 1);
-	return m_ptrTexture->Create(samples == 1 ? GFX_TEXTURE_2D : GFX_TEXTURE_2D_MULTISAMPLE, format, width, height, 1, 1, samples, (uint32_t)hExternalTexture);
+	return m_pTexture->Create(samples == 1 ? GFX_TEXTURE_2D : GFX_TEXTURE_2D_MULTISAMPLE, format, width, height, 1, 1, samples, (uint32_t)hExternalTexture);
 }
 
 bool CGLES3RenderTexture::Create(GfxPixelFormat format, int width, int height, int samples, bool bTransient)
 {
 	samples = std::max(samples, 1);
-	return m_ptrTexture->Create(samples == 1 ? GFX_TEXTURE_2D : GFX_TEXTURE_2D_MULTISAMPLE, format, width, height, 1, 1, samples);
+	return m_pTexture->Create(samples == 1 ? GFX_TEXTURE_2D : GFX_TEXTURE_2D_MULTISAMPLE, format, width, height, 1, 1, samples);
 }
 
 void CGLES3RenderTexture::Destroy(void)
 {
-	m_ptrTexture->Destroy();
+	m_pTexture->Destroy();
 }
 
 void CGLES3RenderTexture::Bind(uint32_t unit) const
 {
-	m_ptrTexture->Bind(unit);
+	m_pTexture->Bind(unit);
 }

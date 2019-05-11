@@ -64,5 +64,3 @@ private:
 	int m_levels;
 	int m_samples;
 };
-
-typedef CGfxResourcePtr<CGLES3Texture> CGLES3TexturePtr;

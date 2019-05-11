@@ -34,7 +34,7 @@ public:
 
 
 private:
-	CGLES3TexturePtr m_ptrTexture;
+	CGLES3Texture* m_pTexture;
 
 private:
 	CGLES3RenderTextureManager* m_pManager;
