@@ -25,27 +25,8 @@ const uint32_t CGLES3PipelineGraphics::GetInputAttachmentName(uint32_t inputAtta
 
 bool CGLES3PipelineGraphics::Create(const CGfxRenderPass* pRenderPass, const CGfxShader* pVertexShader, const CGfxShader* pFragmentShader, const PipelineState& state, int indexSubpass, int vertexBinding, int instanceBinding)
 {
-	Destroy();
-	{
-		do {
-			ASSERT(pRenderPass);
-			ASSERT(pVertexShader);
-			ASSERT(pVertexShader->IsValid());
-			ASSERT(pVertexShader->GetKind() == vertex_shader);
-			ASSERT(pFragmentShader);
-			ASSERT(pFragmentShader->IsValid());
-			ASSERT(pFragmentShader->GetKind() == fragment_shader);
-
-			m_state = state;
-
-			CALL_BOOL_FUNCTION_BREAK(m_pPipeline->CreateProgram((const CGLES3Shader*)pVertexShader, (const CGLES3Shader*)pFragmentShader, nullptr));
-			CALL_BOOL_FUNCTION_BREAK(m_pPipeline->CreateLayouts());
-
-			return true;
-		} while (false);
-	}
-	Destroy();
-	return true;
+	m_state = state;
+	return m_pPipeline->Create(pRenderPass, pVertexShader, pFragmentShader, state, indexSubpass, vertexBinding, instanceBinding);
 }
 
 void CGLES3PipelineGraphics::Destroy(void)

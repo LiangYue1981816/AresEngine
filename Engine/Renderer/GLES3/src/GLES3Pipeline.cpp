@@ -100,6 +100,48 @@ bool CGLES3Pipeline::CreateLayouts(void)
 	return true;
 }
 
+bool CGLES3Pipeline::Create(const CGfxShader* pComputeShader)
+{
+	Destroy();
+	{
+		do {
+			ASSERT(pComputeShader);
+			ASSERT(pComputeShader->IsValid());
+			ASSERT(pComputeShader->GetKind() == compute_shader);
+
+			CALL_BOOL_FUNCTION_BREAK(CreateProgram(nullptr, nullptr, (const CGLES3Shader*)pComputeShader));
+			CALL_BOOL_FUNCTION_BREAK(CreateLayouts());
+
+			return true;
+		} while (false);
+	}
+	Destroy();
+	return true;
+}
+
+bool CGLES3Pipeline::Create(const CGfxRenderPass* pRenderPass, const CGfxShader* pVertexShader, const CGfxShader* pFragmentShader, const PipelineState& state, int indexSubpass, int vertexBinding, int instanceBinding)
+{
+	Destroy();
+	{
+		do {
+			ASSERT(pRenderPass);
+			ASSERT(pVertexShader);
+			ASSERT(pVertexShader->IsValid());
+			ASSERT(pVertexShader->GetKind() == vertex_shader);
+			ASSERT(pFragmentShader);
+			ASSERT(pFragmentShader->IsValid());
+			ASSERT(pFragmentShader->GetKind() == fragment_shader);
+
+			CALL_BOOL_FUNCTION_BREAK(CreateProgram((const CGLES3Shader*)pVertexShader, (const CGLES3Shader*)pFragmentShader, nullptr));
+			CALL_BOOL_FUNCTION_BREAK(CreateLayouts());
+
+			return true;
+		} while (false);
+	}
+	Destroy();
+	return true;
+}
+
 void CGLES3Pipeline::Destroy(void)
 {
 	if (m_program) {
