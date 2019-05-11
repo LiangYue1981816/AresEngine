@@ -8,7 +8,7 @@ CVKPipelineGraphics::CVKPipelineGraphics(CVKDevice* pDevice, uint32_t name)
 {
 	ASSERT(m_pDevice);
 
-	m_pPipeline = new CVKPipeline(m_pPipeline);
+	m_pPipeline = new CVKPipeline(m_pDevice);
 }
 
 CVKPipelineGraphics::~CVKPipelineGraphics(void)
