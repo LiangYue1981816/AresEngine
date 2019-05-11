@@ -4,6 +4,7 @@
 
 class CVKDescriptorLayout : public CGfxDescriptorLayout
 {
+	friend class CVKPipeline;
 	friend class CVKDescriptorLayoutManager;
 
 
@@ -22,9 +23,9 @@ public:
 	void Destroy(bool bClear = true);
 
 public:
-	bool SetUniformBlockBinding(uint32_t name, uint32_t binding);
-	bool SetSampledImageBinding(uint32_t name, uint32_t binding);
-	bool SetInputAttachmentBinding(uint32_t name, uint32_t binding);
+	void SetUniformBlockBinding(uint32_t name, uint32_t binding);
+	void SetSampledImageBinding(uint32_t name, uint32_t binding);
+	void SetInputAttachmentBinding(uint32_t name, uint32_t binding);
 
 public:
 	uint32_t GetSetIndex(void) const;

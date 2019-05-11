@@ -25,6 +25,8 @@
 #include "VKShader.h"
 #include "VKShaderManager.h"
 
+#include "VKPipeline.h"
+
 #include "VKTransferBuffer.h"
 #include "VKTransferManager.h"
 
@@ -62,7 +64,6 @@
 #include "VKCommandBuffer.h"
 #include "VKCommandBufferManager.h"
 /*
-#include "VKPipeline.h"
 #include "VKPipelineCompute.h"
 #include "VKPipelineGraphics.h"
 #include "VKPipelineManager.h"

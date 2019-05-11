@@ -206,8 +206,6 @@ bool CVKCommandBuffer::CmdBindPipelineGraphics(const CGfxPipelineGraphics* pPipe
 
 bool CVKCommandBuffer::CmdBindDescriptorSet(const CGfxDescriptorSetPtr ptrDescriptorSet)
 {
-	ASSERT(ptrDescriptorSet);
-
 	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
 		return true;
 	}
@@ -298,8 +296,6 @@ bool CVKCommandBuffer::CmdUniform4f(uint32_t name, float v0, float v1, float v2,
 
 bool CVKCommandBuffer::CmdUniform1iv(uint32_t name, int count, const int* value)
 {
-	ASSERT(value);
-
 	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
 		return true;
 	}
@@ -310,8 +306,6 @@ bool CVKCommandBuffer::CmdUniform1iv(uint32_t name, int count, const int* value)
 
 bool CVKCommandBuffer::CmdUniform2iv(uint32_t name, int count, const int* value)
 {
-	ASSERT(value);
-
 	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
 		return true;
 	}
@@ -322,8 +316,6 @@ bool CVKCommandBuffer::CmdUniform2iv(uint32_t name, int count, const int* value)
 
 bool CVKCommandBuffer::CmdUniform3iv(uint32_t name, int count, const int* value)
 {
-	ASSERT(value);
-
 	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
 		return true;
 	}
@@ -334,8 +326,6 @@ bool CVKCommandBuffer::CmdUniform3iv(uint32_t name, int count, const int* value)
 
 bool CVKCommandBuffer::CmdUniform4iv(uint32_t name, int count, const int* value)
 {
-	ASSERT(value);
-
 	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
 		return true;
 	}
@@ -346,8 +336,6 @@ bool CVKCommandBuffer::CmdUniform4iv(uint32_t name, int count, const int* value)
 
 bool CVKCommandBuffer::CmdUniform1fv(uint32_t name, int count, const float* value)
 {
-	ASSERT(value);
-
 	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
 		return true;
 	}
@@ -358,8 +346,6 @@ bool CVKCommandBuffer::CmdUniform1fv(uint32_t name, int count, const float* valu
 
 bool CVKCommandBuffer::CmdUniform2fv(uint32_t name, int count, const float* value)
 {
-	ASSERT(value);
-
 	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
 		return true;
 	}
@@ -370,8 +356,6 @@ bool CVKCommandBuffer::CmdUniform2fv(uint32_t name, int count, const float* valu
 
 bool CVKCommandBuffer::CmdUniform3fv(uint32_t name, int count, const float* value)
 {
-	ASSERT(value);
-
 	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
 		return true;
 	}
@@ -382,8 +366,6 @@ bool CVKCommandBuffer::CmdUniform3fv(uint32_t name, int count, const float* valu
 
 bool CVKCommandBuffer::CmdUniform4fv(uint32_t name, int count, const float* value)
 {
-	ASSERT(value);
-
 	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
 		return true;
 	}
@@ -394,8 +376,6 @@ bool CVKCommandBuffer::CmdUniform4fv(uint32_t name, int count, const float* valu
 
 bool CVKCommandBuffer::CmdUniformMatrix2fv(uint32_t name, int count, const float* value)
 {
-	ASSERT(value);
-
 	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
 		return true;
 	}
@@ -406,8 +386,6 @@ bool CVKCommandBuffer::CmdUniformMatrix2fv(uint32_t name, int count, const float
 
 bool CVKCommandBuffer::CmdUniformMatrix3fv(uint32_t name, int count, const float* value)
 {
-	ASSERT(value);
-
 	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
 		return true;
 	}
@@ -418,8 +396,6 @@ bool CVKCommandBuffer::CmdUniformMatrix3fv(uint32_t name, int count, const float
 
 bool CVKCommandBuffer::CmdUniformMatrix4fv(uint32_t name, int count, const float* value)
 {
-	ASSERT(value);
-
 	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
 		return true;
 	}

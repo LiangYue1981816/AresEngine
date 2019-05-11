@@ -94,7 +94,7 @@ void CVKDescriptorLayout::Destroy(bool bClear)
 	memset(m_numDescriptors, 0, sizeof(m_numDescriptors));
 }
 
-bool CVKDescriptorLayout::SetUniformBlockBinding(uint32_t name, uint32_t binding)
+void CVKDescriptorLayout::SetUniformBlockBinding(uint32_t name, uint32_t binding)
 {
 	m_uniformBlockBindings[name] = {};
 	m_uniformBlockBindings[name].binding = binding;
@@ -102,10 +102,9 @@ bool CVKDescriptorLayout::SetUniformBlockBinding(uint32_t name, uint32_t binding
 	m_uniformBlockBindings[name].descriptorCount = 1;
 	m_uniformBlockBindings[name].stageFlags = VK_SHADER_STAGE_VERTEX_BIT | VK_SHADER_STAGE_FRAGMENT_BIT | VK_SHADER_STAGE_COMPUTE_BIT;
 	m_uniformBlockBindings[name].pImmutableSamplers = nullptr;
-	return true;
 }
 
-bool CVKDescriptorLayout::SetSampledImageBinding(uint32_t name, uint32_t binding)
+void CVKDescriptorLayout::SetSampledImageBinding(uint32_t name, uint32_t binding)
 {
 	m_sampledImageBindings[name] = {};
 	m_sampledImageBindings[name].binding = binding;
@@ -113,17 +112,15 @@ bool CVKDescriptorLayout::SetSampledImageBinding(uint32_t name, uint32_t binding
 	m_sampledImageBindings[name].descriptorCount = 1;
 	m_sampledImageBindings[name].stageFlags = VK_SHADER_STAGE_FRAGMENT_BIT;
 	m_sampledImageBindings[name].pImmutableSamplers = nullptr;
-	return true;
 }
 
-bool CVKDescriptorLayout::SetInputAttachmentBinding(uint32_t name, uint32_t binding)
+void CVKDescriptorLayout::SetInputAttachmentBinding(uint32_t name, uint32_t binding)
 {
 	m_inputAttachmentBindings[name].binding = binding;
 	m_inputAttachmentBindings[name].descriptorType = VK_DESCRIPTOR_TYPE_INPUT_ATTACHMENT;
 	m_inputAttachmentBindings[name].descriptorCount = 1;
 	m_inputAttachmentBindings[name].stageFlags = VK_SHADER_STAGE_FRAGMENT_BIT;
 	m_inputAttachmentBindings[name].pImmutableSamplers = nullptr;
-	return true;
 }
 
 uint32_t CVKDescriptorLayout::GetSetIndex(void) const

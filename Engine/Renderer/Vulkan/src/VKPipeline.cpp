@@ -4,60 +4,60 @@
 CVKPipeline::CVKPipeline(CVKDevice* pDevice)
 	: m_pDevice(pDevice)
 
+	, m_pShaders{ nullptr }
 	, m_vkPipeline(VK_NULL_HANDLE)
 	, m_vkPipelineLayout(VK_NULL_HANDLE)
-
-	, m_pShaders{ NULL }
-	, m_pDescriptorLayouts{ NULL }
 {
-	m_pDescriptorLayouts[DESCRIPTOR_SET_CAMERA] = new CVKDescriptorLayout(m_pDevice, DESCRIPTOR_SET_CAMERA);
-	m_pDescriptorLayouts[DESCRIPTOR_SET_ENGINE] = new CVKDescriptorLayout(m_pDevice, DESCRIPTOR_SET_ENGINE);
-	m_pDescriptorLayouts[DESCRIPTOR_SET_PASS] = new CVKDescriptorLayout(m_pDevice, DESCRIPTOR_SET_PASS);
-	m_pDescriptorLayouts[DESCRIPTOR_SET_DRAW] = new CVKDescriptorLayout(m_pDevice, DESCRIPTOR_SET_DRAW);
+	ASSERT(m_pDevice);
+
+	m_ptrDescriptorLayouts[DESCRIPTOR_SET_ENGINE] = VKRenderer()->NewDescriptorLayout(DESCRIPTOR_SET_ENGINE);
+	m_ptrDescriptorLayouts[DESCRIPTOR_SET_CAMERA] = VKRenderer()->NewDescriptorLayout(DESCRIPTOR_SET_CAMERA);
+	m_ptrDescriptorLayouts[DESCRIPTOR_SET_PASS] = VKRenderer()->NewDescriptorLayout(DESCRIPTOR_SET_PASS);
+	m_ptrDescriptorLayouts[DESCRIPTOR_SET_INPUTATTACHMENT] = VKRenderer()->NewDescriptorLayout(DESCRIPTOR_SET_INPUTATTACHMENT);
 }
 
 CVKPipeline::~CVKPipeline(void)
 {
-	delete m_pDescriptorLayouts[DESCRIPTOR_SET_CAMERA];
-	delete m_pDescriptorLayouts[DESCRIPTOR_SET_ENGINE];
-	delete m_pDescriptorLayouts[DESCRIPTOR_SET_PASS];
-	delete m_pDescriptorLayouts[DESCRIPTOR_SET_DRAW];
+	Destroy();
 }
 
 bool CVKPipeline::CreateLayouts(eastl::vector<VkDescriptorSetLayout>& layouts, eastl::vector<VkPushConstantRange>& pushConstantRanges)
 {
-	for (int index = 0; index < compute_shader - vertex_shader + 1; index++) {
-		if (m_pShaders[index]) {
-			const eastl::unordered_map<eastl::string, PushConstantRange>& pushConstantRanges = m_pShaders[index]->GetSprivCross().GetPushConstantRanges();
-			const eastl::unordered_map<eastl::string, DescriptorSetBinding>& uniformBlockBindings = m_pShaders[index]->GetSprivCross().GetUniformBlockBindings();
-			const eastl::unordered_map<eastl::string, DescriptorSetBinding>& sampledImageBindings = m_pShaders[index]->GetSprivCross().GetSampledImageBindings();
-			const eastl::unordered_map<eastl::string, DescriptorSetBinding>& inputAttachmentBindings = m_pShaders[index]->GetSprivCross().GetInputAttachmentBindings();
+	for (int indexShader = 0; indexShader < compute_shader - vertex_shader + 1; indexShader++) {
+		if (m_pShaders[indexShader] && m_pShaders[indexShader]->IsValid()) {
+			const eastl::unordered_map<eastl::string, PushConstantRange>& pushConstantRanges = m_pShaders[indexShader]->GetSprivCross().GetPushConstantRanges();
+			const eastl::unordered_map<eastl::string, DescriptorSetBinding>& uniformBlockBindings = m_pShaders[indexShader]->GetSprivCross().GetUniformBlockBindings();
+			const eastl::unordered_map<eastl::string, DescriptorSetBinding>& sampledImageBindings = m_pShaders[indexShader]->GetSprivCross().GetSampledImageBindings();
+			const eastl::unordered_map<eastl::string, InputAttachmentBinding>& inputAttachmentBindings = m_pShaders[indexShader]->GetSprivCross().GetInputAttachmentBindings();
 
 			for (const auto& itPushConstant : pushConstantRanges) {
 				uint32_t name = HashValue(itPushConstant.first.c_str());
-				m_pushConstantRanges[name].stageFlags = VK_SHADER_STAGE_ALL;
+				m_pushConstantRanges[name].stageFlags = vkGetShaderStageFlagBits((shader_kind)indexShader);
 				m_pushConstantRanges[name].offset = itPushConstant.second.offset;
 				m_pushConstantRanges[name].size = itPushConstant.second.range;
 			}
 
-			for (const auto& itUniform : uniformBlockBindings) {
-				m_pDescriptorLayouts[itUniform.second.set]->SetUniformBlockBinding(itUniform.first.c_str(), itUniform.second.binding, VK_SHADER_STAGE_ALL);
+			for (const auto& itUniformBlock : uniformBlockBindings) {
+				m_ptrDescriptorLayouts[itUniformBlock.second.set]->SetUniformBlockBinding(HashValue(itUniformBlock.first.c_str()), itUniformBlock.second.binding);
 			}
 
 			for (const auto& itSampledImage : sampledImageBindings) {
-				m_pDescriptorLayouts[itSampledImage.second.set]->SetSampledImageBinding(itSampledImage.first.c_str(), itSampledImage.second.binding, VK_SHADER_STAGE_ALL);
+				m_ptrDescriptorLayouts[itSampledImage.second.set]->SetSampledImageBinding(HashValue(itSampledImage.first.c_str()), itSampledImage.second.binding);
 			}
 
 			for (const auto& itInputAttachment : inputAttachmentBindings) {
-				m_pDescriptorLayouts[itInputAttachment.second.set]->SetInputAttachmentBinding(itInputAttachment.first.c_str(), itInputAttachment.second.binding, VK_SHADER_STAGE_ALL);
+				m_ptrDescriptorLayouts[itInputAttachment.second.set]->SetInputAttachmentBinding(HashValue(itInputAttachment.first.c_str()), itInputAttachment.second.binding);
 			}
 		}
 	}
 
+	CALL_BOOL_FUNCTION_RETURN_BOOL(m_ptrDescriptorLayouts[DESCRIPTOR_SET_ENGINE]->Create());
+	CALL_BOOL_FUNCTION_RETURN_BOOL(m_ptrDescriptorLayouts[DESCRIPTOR_SET_CAMERA]->Create());
+	CALL_BOOL_FUNCTION_RETURN_BOOL(m_ptrDescriptorLayouts[DESCRIPTOR_SET_PASS]->Create());
+	CALL_BOOL_FUNCTION_RETURN_BOOL(m_ptrDescriptorLayouts[DESCRIPTOR_SET_INPUTATTACHMENT]->Create());
+
 	for (int index = 0; index < DESCRIPTOR_SET_COUNT; index++) {
-		if (m_pDescriptorLayouts[index]->Create()) {
-			layouts.emplace_back(m_pDescriptorLayouts[index]->GetDescriptorSetLayout());
-		}
+		layouts.emplace_back(((CVKDescriptorLayout*)m_ptrDescriptorLayouts[index].GetPointer())->GetDescriptorLayout());
 	}
 
 	for (const auto& itPushConstantRange : m_pushConstantRanges) {
@@ -69,28 +69,28 @@ bool CVKPipeline::CreateLayouts(eastl::vector<VkDescriptorSetLayout>& layouts, e
 
 bool CVKPipeline::CreateShaderStages(eastl::vector<VkPipelineShaderStageCreateInfo>& shaders)
 {
-	bool rcode = false;
-
-	for (int index = 0; index < compute_shader - vertex_shader + 1; index++) {
-		if (m_pShaders[index] && m_pShaders[index]->GetShader()) {
+	for (int indexShader = 0; indexShader < compute_shader - vertex_shader + 1; indexShader++) {
+		if (m_pShaders[indexShader] && m_pShaders[indexShader]->IsValid()) {
 			VkPipelineShaderStageCreateInfo createInfo = {};
 			createInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
 			createInfo.pNext = nullptr;
 			createInfo.flags = 0;
-			createInfo.stage = vkGetShaderStageFlagBits((shader_kind)index);
-			createInfo.module = (VkShaderModule)m_pShaders[index]->GetShader();
+			createInfo.stage = vkGetShaderStageFlagBits((shader_kind)indexShader);
+			createInfo.module = m_pShaders[indexShader]->GetShader();
 			createInfo.pName = "main";
 			createInfo.pSpecializationInfo = nullptr;
 			shaders.emplace_back(createInfo);
-			rcode = true;
 		}
 	}
 
-	return rcode;
+	return true;
 }
 
-bool CVKPipeline::CreateVertexInputState(eastl::vector<VkVertexInputBindingDescription>& inputBindingDescriptions, eastl::vector<VkVertexInputAttributeDescription>& inputAttributeDescriptions, uint32_t vertexBinding, uint32_t instanceBinding)
+bool CVKPipeline::CreateVertexInputState(eastl::vector<VkVertexInputBindingDescription>& inputBindingDescriptions, eastl::vector<VkVertexInputAttributeDescription>& inputAttributeDescriptions, int vertexBinding, int instanceBinding)
 {
+	ASSERT(m_pShaders[vertex_shader]);
+	ASSERT(m_pShaders[vertex_shader]->IsValid());
+
 	inputBindingDescriptions.clear();
 	inputAttributeDescriptions.clear();
 
@@ -145,299 +145,243 @@ bool CVKPipeline::CreateVertexInputState(eastl::vector<VkVertexInputBindingDescr
 	return true;
 }
 
-bool CVKPipeline::Uniform1i(VkCommandBuffer vkCommandBuffer, uint32_t name, int v0) const
+void CVKPipeline::Destroy(void)
+{
+
+}
+
+void CVKPipeline::Uniform1i(VkCommandBuffer vkCommandBuffer, uint32_t name, int v0) const
 {
 	const auto& itPushConstant = m_pushConstantRanges.find(name);
 
 	if (itPushConstant != m_pushConstantRanges.end()) {
 		glm::ivec4 vec(v0, 0, 0, 0);
-		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, VK_SHADER_STAGE_ALL, itPushConstant->second.offset, itPushConstant->second.size, &vec);
-		return true;
-	}
-	else {
-		return false;
+
+		ASSERT(vkCommandBuffer);
+		ASSERT(itPushConstant->second.size == sizeof(vec));
+		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, itPushConstant->second.stageFlags, itPushConstant->second.offset, itPushConstant->second.size, &vec);
 	}
 }
 
-bool CVKPipeline::Uniform2i(VkCommandBuffer vkCommandBuffer, uint32_t name, int v0, int v1) const
+void CVKPipeline::Uniform2i(VkCommandBuffer vkCommandBuffer, uint32_t name, int v0, int v1) const
 {
 	const auto& itPushConstant = m_pushConstantRanges.find(name);
 
 	if (itPushConstant != m_pushConstantRanges.end()) {
 		glm::ivec4 vec(v0, v1, 0, 0);
-		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, VK_SHADER_STAGE_ALL, itPushConstant->second.offset, itPushConstant->second.size, &vec);
-		return true;
-	}
-	else {
-		return false;
+
+		ASSERT(vkCommandBuffer);
+		ASSERT(itPushConstant->second.size == sizeof(vec));
+		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, itPushConstant->second.stageFlags, itPushConstant->second.offset, itPushConstant->second.size, &vec);
 	}
 }
 
-bool CVKPipeline::Uniform3i(VkCommandBuffer vkCommandBuffer, uint32_t name, int v0, int v1, int v2) const
+void CVKPipeline::Uniform3i(VkCommandBuffer vkCommandBuffer, uint32_t name, int v0, int v1, int v2) const
 {
 	const auto& itPushConstant = m_pushConstantRanges.find(name);
 
 	if (itPushConstant != m_pushConstantRanges.end()) {
 		glm::ivec4 vec(v0, v1, v2, 0);
-		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, VK_SHADER_STAGE_ALL, itPushConstant->second.offset, itPushConstant->second.size, &vec);
-		return true;
-	}
-	else {
-		return false;
+
+		ASSERT(vkCommandBuffer);
+		ASSERT(itPushConstant->second.size == sizeof(vec));
+		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, itPushConstant->second.stageFlags, itPushConstant->second.offset, itPushConstant->second.size, &vec);
 	}
 }
 
-bool CVKPipeline::Uniform4i(VkCommandBuffer vkCommandBuffer, uint32_t name, int v0, int v1, int v2, int v3) const
+void CVKPipeline::Uniform4i(VkCommandBuffer vkCommandBuffer, uint32_t name, int v0, int v1, int v2, int v3) const
 {
 	const auto& itPushConstant = m_pushConstantRanges.find(name);
 
 	if (itPushConstant != m_pushConstantRanges.end()) {
 		glm::ivec4 vec(v0, v1, v2, v3);
-		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, VK_SHADER_STAGE_ALL, itPushConstant->second.offset, itPushConstant->second.size, &vec);
-		return true;
-	}
-	else {
-		return false;
+
+		ASSERT(vkCommandBuffer);
+		ASSERT(itPushConstant->second.size == sizeof(vec));
+		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, itPushConstant->second.stageFlags, itPushConstant->second.offset, itPushConstant->second.size, &vec);
 	}
 }
 
-bool CVKPipeline::Uniform1f(VkCommandBuffer vkCommandBuffer, uint32_t name, float v0) const
+void CVKPipeline::Uniform1f(VkCommandBuffer vkCommandBuffer, uint32_t name, float v0) const
 {
 	const auto& itPushConstant = m_pushConstantRanges.find(name);
 
 	if (itPushConstant != m_pushConstantRanges.end()) {
 		glm::vec4 vec(v0, 0.0f, 0.0f, 0.0f);
-		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, VK_SHADER_STAGE_ALL, itPushConstant->second.offset, itPushConstant->second.size, &vec);
-		return true;
-	}
-	else {
-		return false;
+
+		ASSERT(vkCommandBuffer);
+		ASSERT(itPushConstant->second.size == sizeof(vec));
+		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, itPushConstant->second.stageFlags, itPushConstant->second.offset, itPushConstant->second.size, &vec);
 	}
 }
 
-bool CVKPipeline::Uniform2f(VkCommandBuffer vkCommandBuffer, uint32_t name, float v0, float v1) const
+void CVKPipeline::Uniform2f(VkCommandBuffer vkCommandBuffer, uint32_t name, float v0, float v1) const
 {
 	const auto& itPushConstant = m_pushConstantRanges.find(name);
 
 	if (itPushConstant != m_pushConstantRanges.end()) {
 		glm::vec4 vec(v0, v1, 0.0f, 0.0f);
-		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, VK_SHADER_STAGE_ALL, itPushConstant->second.offset, itPushConstant->second.size, &vec);
-		return true;
-	}
-	else {
-		return false;
+
+		ASSERT(vkCommandBuffer);
+		ASSERT(itPushConstant->second.size == sizeof(vec));
+		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, itPushConstant->second.stageFlags, itPushConstant->second.offset, itPushConstant->second.size, &vec);
 	}
 }
 
-bool CVKPipeline::Uniform3f(VkCommandBuffer vkCommandBuffer, uint32_t name, float v0, float v1, float v2) const
+void CVKPipeline::Uniform3f(VkCommandBuffer vkCommandBuffer, uint32_t name, float v0, float v1, float v2) const
 {
 	const auto& itPushConstant = m_pushConstantRanges.find(name);
 
 	if (itPushConstant != m_pushConstantRanges.end()) {
 		glm::vec4 vec(v0, v1, v2, 0.0f);
-		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, VK_SHADER_STAGE_ALL, itPushConstant->second.offset, itPushConstant->second.size, &vec);
-		return true;
-	}
-	else {
-		return false;
+
+		ASSERT(vkCommandBuffer);
+		ASSERT(itPushConstant->second.size == sizeof(vec));
+		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, itPushConstant->second.stageFlags, itPushConstant->second.offset, itPushConstant->second.size, &vec);
 	}
 }
 
-bool CVKPipeline::Uniform4f(VkCommandBuffer vkCommandBuffer, uint32_t name, float v0, float v1, float v2, float v3) const
+void CVKPipeline::Uniform4f(VkCommandBuffer vkCommandBuffer, uint32_t name, float v0, float v1, float v2, float v3) const
 {
 	const auto& itPushConstant = m_pushConstantRanges.find(name);
 
 	if (itPushConstant != m_pushConstantRanges.end()) {
 		glm::vec4 vec(v0, v1, v2, v3);
-		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, VK_SHADER_STAGE_ALL, itPushConstant->second.offset, itPushConstant->second.size, &vec);
-		return true;
-	}
-	else {
-		return false;
+
+		ASSERT(vkCommandBuffer);
+		ASSERT(itPushConstant->second.size == sizeof(vec));
+		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, itPushConstant->second.stageFlags, itPushConstant->second.offset, itPushConstant->second.size, &vec);
 	}
 }
 
-bool CVKPipeline::Uniform1iv(VkCommandBuffer vkCommandBuffer, uint32_t name, int count, const int* value) const
+void CVKPipeline::Uniform1iv(VkCommandBuffer vkCommandBuffer, uint32_t name, int count, const int* value) const
 {
 	const auto& itPushConstant = m_pushConstantRanges.find(name);
 
 	if (itPushConstant != m_pushConstantRanges.end()) {
-		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, VK_SHADER_STAGE_ALL, itPushConstant->second.offset, itPushConstant->second.size, value);
-		return true;
-	}
-	else {
-		return false;
+		ASSERT(value);
+		ASSERT(vkCommandBuffer);
+		ASSERT(itPushConstant->second.size == sizeof(*value) * count);
+		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, itPushConstant->second.stageFlags, itPushConstant->second.offset, itPushConstant->second.size, value);
 	}
 }
 
-bool CVKPipeline::Uniform2iv(VkCommandBuffer vkCommandBuffer, uint32_t name, int count, const int* value) const
+void CVKPipeline::Uniform2iv(VkCommandBuffer vkCommandBuffer, uint32_t name, int count, const int* value) const
 {
 	const auto& itPushConstant = m_pushConstantRanges.find(name);
 
 	if (itPushConstant != m_pushConstantRanges.end()) {
-		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, VK_SHADER_STAGE_ALL, itPushConstant->second.offset, itPushConstant->second.size, value);
-		return true;
-	}
-	else {
-		return false;
+		ASSERT(value);
+		ASSERT(vkCommandBuffer);
+		ASSERT(itPushConstant->second.size == sizeof(*value) * count);
+		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, itPushConstant->second.stageFlags, itPushConstant->second.offset, itPushConstant->second.size, value);
 	}
 }
 
-bool CVKPipeline::Uniform3iv(VkCommandBuffer vkCommandBuffer, uint32_t name, int count, const int* value) const
+void CVKPipeline::Uniform3iv(VkCommandBuffer vkCommandBuffer, uint32_t name, int count, const int* value) const
 {
 	const auto& itPushConstant = m_pushConstantRanges.find(name);
 
 	if (itPushConstant != m_pushConstantRanges.end()) {
-		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, VK_SHADER_STAGE_ALL, itPushConstant->second.offset, itPushConstant->second.size, value);
-		return true;
-	}
-	else {
-		return false;
+		ASSERT(value);
+		ASSERT(vkCommandBuffer);
+		ASSERT(itPushConstant->second.size == sizeof(*value) * count);
+		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, itPushConstant->second.stageFlags, itPushConstant->second.offset, itPushConstant->second.size, value);
 	}
 }
 
-bool CVKPipeline::Uniform4iv(VkCommandBuffer vkCommandBuffer, uint32_t name, int count, const int* value) const
+void CVKPipeline::Uniform4iv(VkCommandBuffer vkCommandBuffer, uint32_t name, int count, const int* value) const
 {
 	const auto& itPushConstant = m_pushConstantRanges.find(name);
 
 	if (itPushConstant != m_pushConstantRanges.end()) {
-		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, VK_SHADER_STAGE_ALL, itPushConstant->second.offset, itPushConstant->second.size, value);
-		return true;
-	}
-	else {
-		return false;
+		ASSERT(value);
+		ASSERT(vkCommandBuffer);
+		ASSERT(itPushConstant->second.size == sizeof(*value) * count);
+		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, itPushConstant->second.stageFlags, itPushConstant->second.offset, itPushConstant->second.size, value);
 	}
 }
 
-bool CVKPipeline::Uniform1fv(VkCommandBuffer vkCommandBuffer, uint32_t name, int count, const float* value) const
+void CVKPipeline::Uniform1fv(VkCommandBuffer vkCommandBuffer, uint32_t name, int count, const float* value) const
 {
 	const auto& itPushConstant = m_pushConstantRanges.find(name);
 
 	if (itPushConstant != m_pushConstantRanges.end()) {
-		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, VK_SHADER_STAGE_ALL, itPushConstant->second.offset, itPushConstant->second.size, value);
-		return true;
-	}
-	else {
-		return false;
+		ASSERT(value);
+		ASSERT(vkCommandBuffer);
+		ASSERT(itPushConstant->second.size == sizeof(*value) * count);
+		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, itPushConstant->second.stageFlags, itPushConstant->second.offset, itPushConstant->second.size, value);
 	}
 }
 
-bool CVKPipeline::Uniform2fv(VkCommandBuffer vkCommandBuffer, uint32_t name, int count, const float* value) const
+void CVKPipeline::Uniform2fv(VkCommandBuffer vkCommandBuffer, uint32_t name, int count, const float* value) const
 {
 	const auto& itPushConstant = m_pushConstantRanges.find(name);
 
 	if (itPushConstant != m_pushConstantRanges.end()) {
-		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, VK_SHADER_STAGE_ALL, itPushConstant->second.offset, itPushConstant->second.size, value);
-		return true;
-	}
-	else {
-		return false;
+		ASSERT(value);
+		ASSERT(vkCommandBuffer);
+		ASSERT(itPushConstant->second.size == sizeof(*value) * count);
+		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, itPushConstant->second.stageFlags, itPushConstant->second.offset, itPushConstant->second.size, value);
 	}
 }
 
-bool CVKPipeline::Uniform3fv(VkCommandBuffer vkCommandBuffer, uint32_t name, int count, const float* value) const
+void CVKPipeline::Uniform3fv(VkCommandBuffer vkCommandBuffer, uint32_t name, int count, const float* value) const
 {
 	const auto& itPushConstant = m_pushConstantRanges.find(name);
 
 	if (itPushConstant != m_pushConstantRanges.end()) {
-		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, VK_SHADER_STAGE_ALL, itPushConstant->second.offset, itPushConstant->second.size, value);
-		return true;
-	}
-	else {
-		return false;
+		ASSERT(value);
+		ASSERT(vkCommandBuffer);
+		ASSERT(itPushConstant->second.size == sizeof(*value) * count);
+		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, itPushConstant->second.stageFlags, itPushConstant->second.offset, itPushConstant->second.size, value);
 	}
 }
 
-bool CVKPipeline::Uniform4fv(VkCommandBuffer vkCommandBuffer, uint32_t name, int count, const float* value) const
+void CVKPipeline::Uniform4fv(VkCommandBuffer vkCommandBuffer, uint32_t name, int count, const float* value) const
 {
 	const auto& itPushConstant = m_pushConstantRanges.find(name);
 
 	if (itPushConstant != m_pushConstantRanges.end()) {
-		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, VK_SHADER_STAGE_ALL, itPushConstant->second.offset, itPushConstant->second.size, value);
-		return true;
-	}
-	else {
-		return false;
+		ASSERT(value);
+		ASSERT(vkCommandBuffer);
+		ASSERT(itPushConstant->second.size == sizeof(*value) * count);
+		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, itPushConstant->second.stageFlags, itPushConstant->second.offset, itPushConstant->second.size, value);
 	}
 }
 
-bool CVKPipeline::UniformMatrix2fv(VkCommandBuffer vkCommandBuffer, uint32_t name, int count, const float* value) const
+void CVKPipeline::UniformMatrix2fv(VkCommandBuffer vkCommandBuffer, uint32_t name, int count, const float* value) const
 {
 	const auto& itPushConstant = m_pushConstantRanges.find(name);
 
 	if (itPushConstant != m_pushConstantRanges.end()) {
-		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, VK_SHADER_STAGE_ALL, itPushConstant->second.offset, itPushConstant->second.size, value);
-		return true;
-	}
-	else {
-		return false;
+		ASSERT(value);
+		ASSERT(vkCommandBuffer);
+		ASSERT(itPushConstant->second.size == sizeof(*value) * count);
+		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, itPushConstant->second.stageFlags, itPushConstant->second.offset, itPushConstant->second.size, value);
 	}
 }
 
-bool CVKPipeline::UniformMatrix3fv(VkCommandBuffer vkCommandBuffer, uint32_t name, int count, const float* value) const
+void CVKPipeline::UniformMatrix3fv(VkCommandBuffer vkCommandBuffer, uint32_t name, int count, const float* value) const
 {
 	const auto& itPushConstant = m_pushConstantRanges.find(name);
 
 	if (itPushConstant != m_pushConstantRanges.end()) {
-		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, VK_SHADER_STAGE_ALL, itPushConstant->second.offset, itPushConstant->second.size, value);
-		return true;
-	}
-	else {
-		return false;
+		ASSERT(value);
+		ASSERT(vkCommandBuffer);
+		ASSERT(itPushConstant->second.size == sizeof(*value) * count);
+		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, itPushConstant->second.stageFlags, itPushConstant->second.offset, itPushConstant->second.size, value);
 	}
 }
 
-bool CVKPipeline::UniformMatrix4fv(VkCommandBuffer vkCommandBuffer, uint32_t name, int count, const float* value) const
+void CVKPipeline::UniformMatrix4fv(VkCommandBuffer vkCommandBuffer, uint32_t name, int count, const float* value) const
 {
 	const auto& itPushConstant = m_pushConstantRanges.find(name);
 
 	if (itPushConstant != m_pushConstantRanges.end()) {
-		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, VK_SHADER_STAGE_ALL, itPushConstant->second.offset, itPushConstant->second.size, value);
-		return true;
-	}
-	else {
-		return false;
-	}
-}
-
-bool CVKPipeline::IsTextureValid(uint32_t name) const
-{
-	for (int index = 0; index < DESCRIPTOR_SET_COUNT; index++) {
-		if (m_pDescriptorLayouts[index]->IsTextureValid(name)) {
-			return true;
-		}
-	}
-
-	return false;
-}
-
-bool CVKPipeline::IsUniformBlockValid(uint32_t name) const
-{
-	for (int index = 0; index < DESCRIPTOR_SET_COUNT; index++) {
-		if (m_pDescriptorLayouts[index]->IsUniformBlockValid(name)) {
-			return true;
-		}
-	}
-
-	return false;
-}
-
-bool CVKPipeline::IsUniformValid(uint32_t name) const
-{
-	return m_pushConstantRanges.find(name) != m_pushConstantRanges.end();
-}
-
-VkPipelineLayout CVKPipeline::GetPipelineLayout(void) const
-{
-	return m_vkPipelineLayout;
-}
-
-CVKDescriptorLayout* CVKPipeline::GetDescriptorLayout(uint32_t set) const
-{
-	if (set < DESCRIPTOR_SET_COUNT) {
-		return m_pDescriptorLayouts[set];
-	}
-	else {
-		return nullptr;
+		ASSERT(value);
+		ASSERT(vkCommandBuffer);
+		ASSERT(itPushConstant->second.size == sizeof(*value) * count);
+		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, itPushConstant->second.stageFlags, itPushConstant->second.offset, itPushConstant->second.size, value);
 	}
 }
