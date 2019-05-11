@@ -36,7 +36,7 @@ public:
 
 
 private:
-	CVKTexturePtr m_ptrTexture;
+	CVKTexture* m_pTexture;
 
 private:
 	CVKDevice* m_pDevice;

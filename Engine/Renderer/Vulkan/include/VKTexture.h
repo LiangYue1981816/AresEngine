@@ -70,5 +70,3 @@ private:
 private:
 	CVKDevice* m_pDevice;
 };
-
-typedef CGfxResourcePtr<CVKTexture> CVKTexturePtr;

@@ -5,16 +5,17 @@ CVKRenderTexture::CVKRenderTexture(CVKDevice* pDevice, CVKRenderTextureManager* 
 	: CGfxRenderTexture(name)
 	, m_pDevice(pDevice)
 	, m_pManager(pManager)
+	, m_pTexture(nullptr)
 {
 	ASSERT(m_pDevice);
 	ASSERT(m_pManager);
 
-	m_ptrTexture = CVKTexturePtr(new CVKTexture(m_pDevice));
+	m_pTexture = new CVKTexture(m_pDevice);
 }
 
 CVKRenderTexture::~CVKRenderTexture(void)
 {
-	Destroy();
+	delete m_pTexture;
 }
 
 void CVKRenderTexture::Release(void)
@@ -24,42 +25,42 @@ void CVKRenderTexture::Release(void)
 
 VkImageView CVKRenderTexture::GetImageView(void) const
 {
-	return m_ptrTexture->GetImageView();
+	return m_pTexture->GetImageView();
 }
 
 VkImageLayout CVKRenderTexture::GetImageLayout(void) const
 {
-	return m_ptrTexture->GetImageLayout();
+	return m_pTexture->GetImageLayout();
 }
 
 VkImageAspectFlags CVKRenderTexture::GetImageAspectFlags(void) const
 {
-	return m_ptrTexture->GetImageAspectFlags();
+	return m_pTexture->GetImageAspectFlags();
 }
 
 GfxTextureType CVKRenderTexture::GetType(void) const
 {
-	return m_ptrTexture->GetType();
+	return m_pTexture->GetType();
 }
 
 GfxPixelFormat CVKRenderTexture::GetFormat(void) const
 {
-	return m_ptrTexture->GetFormat();
+	return m_pTexture->GetFormat();
 }
 
 int CVKRenderTexture::GetWidth(void) const
 {
-	return m_ptrTexture->GetWidth();
+	return m_pTexture->GetWidth();
 }
 
 int CVKRenderTexture::GetHeight(void) const
 {
-	return m_ptrTexture->GetHeight();
+	return m_pTexture->GetHeight();
 }
 
 int CVKRenderTexture::GetSamples(void) const
 {
-	return m_ptrTexture->GetSamples();
+	return m_pTexture->GetSamples();
 }
 
 bool CVKRenderTexture::Create(HANDLE hExternalTexture, GfxPixelFormat format, int width, int height, int samples)
@@ -68,18 +69,18 @@ bool CVKRenderTexture::Create(HANDLE hExternalTexture, GfxPixelFormat format, in
 		samples = std::max(samples, 1);
 
 		if (CVKHelper::IsFormatDepthOnly((VkFormat)format)) {
-			return m_ptrTexture->Create(samples == 1 ? GFX_TEXTURE_2D : GFX_TEXTURE_2D_MULTISAMPLE, format, width, height, 1, 1, samples, VK_IMAGE_ASPECT_DEPTH_BIT, (VkImageView)hExternalTexture);
+			return m_pTexture->Create(samples == 1 ? GFX_TEXTURE_2D : GFX_TEXTURE_2D_MULTISAMPLE, format, width, height, 1, 1, samples, VK_IMAGE_ASPECT_DEPTH_BIT, (VkImageView)hExternalTexture);
 		}
 
 		if (CVKHelper::IsFormatStencilOnly((VkFormat)format)) {
-			return m_ptrTexture->Create(samples == 1 ? GFX_TEXTURE_2D : GFX_TEXTURE_2D_MULTISAMPLE, format, width, height, 1, 1, samples, VK_IMAGE_ASPECT_STENCIL_BIT, (VkImageView)hExternalTexture);
+			return m_pTexture->Create(samples == 1 ? GFX_TEXTURE_2D : GFX_TEXTURE_2D_MULTISAMPLE, format, width, height, 1, 1, samples, VK_IMAGE_ASPECT_STENCIL_BIT, (VkImageView)hExternalTexture);
 		}
 
 		if (CVKHelper::IsFormatDepthStencil((VkFormat)format)) {
-			return m_ptrTexture->Create(samples == 1 ? GFX_TEXTURE_2D : GFX_TEXTURE_2D_MULTISAMPLE, format, width, height, 1, 1, samples, VK_IMAGE_ASPECT_DEPTH_BIT | VK_IMAGE_ASPECT_STENCIL_BIT, (VkImageView)hExternalTexture);
+			return m_pTexture->Create(samples == 1 ? GFX_TEXTURE_2D : GFX_TEXTURE_2D_MULTISAMPLE, format, width, height, 1, 1, samples, VK_IMAGE_ASPECT_DEPTH_BIT | VK_IMAGE_ASPECT_STENCIL_BIT, (VkImageView)hExternalTexture);
 		}
 
-		return m_ptrTexture->Create(samples == 1 ? GFX_TEXTURE_2D : GFX_TEXTURE_2D_MULTISAMPLE, format, width, height, 1, 1, samples, VK_IMAGE_ASPECT_COLOR_BIT, (VkImageView)hExternalTexture);
+		return m_pTexture->Create(samples == 1 ? GFX_TEXTURE_2D : GFX_TEXTURE_2D_MULTISAMPLE, format, width, height, 1, 1, samples, VK_IMAGE_ASPECT_COLOR_BIT, (VkImageView)hExternalTexture);
 	}
 	else {
 		return false;
@@ -92,18 +93,18 @@ bool CVKRenderTexture::Create(GfxPixelFormat format, int width, int height, int 
 		samples = std::max(samples, 1);
 
 		if (CVKHelper::IsFormatDepthOnly((VkFormat)format)) {
-			return m_ptrTexture->Create(samples == 1 ? GFX_TEXTURE_2D : GFX_TEXTURE_2D_MULTISAMPLE, format, width, height, 1, 1, samples, VK_IMAGE_ASPECT_DEPTH_BIT, VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT | VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT | (bTransient ? VK_IMAGE_USAGE_TRANSIENT_ATTACHMENT_BIT : VK_IMAGE_USAGE_TRANSFER_SRC_BIT), VK_IMAGE_TILING_OPTIMAL);
+			return m_pTexture->Create(samples == 1 ? GFX_TEXTURE_2D : GFX_TEXTURE_2D_MULTISAMPLE, format, width, height, 1, 1, samples, VK_IMAGE_ASPECT_DEPTH_BIT, VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT | VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT | (bTransient ? VK_IMAGE_USAGE_TRANSIENT_ATTACHMENT_BIT : VK_IMAGE_USAGE_TRANSFER_SRC_BIT), VK_IMAGE_TILING_OPTIMAL);
 		}
 
 		if (CVKHelper::IsFormatStencilOnly((VkFormat)format)) {
-			return m_ptrTexture->Create(samples == 1 ? GFX_TEXTURE_2D : GFX_TEXTURE_2D_MULTISAMPLE, format, width, height, 1, 1, samples, VK_IMAGE_ASPECT_STENCIL_BIT, VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT | VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT | (bTransient ? VK_IMAGE_USAGE_TRANSIENT_ATTACHMENT_BIT : VK_IMAGE_USAGE_TRANSFER_SRC_BIT), VK_IMAGE_TILING_OPTIMAL);
+			return m_pTexture->Create(samples == 1 ? GFX_TEXTURE_2D : GFX_TEXTURE_2D_MULTISAMPLE, format, width, height, 1, 1, samples, VK_IMAGE_ASPECT_STENCIL_BIT, VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT | VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT | (bTransient ? VK_IMAGE_USAGE_TRANSIENT_ATTACHMENT_BIT : VK_IMAGE_USAGE_TRANSFER_SRC_BIT), VK_IMAGE_TILING_OPTIMAL);
 		}
 
 		if (CVKHelper::IsFormatDepthStencil((VkFormat)format)) {
-			return m_ptrTexture->Create(samples == 1 ? GFX_TEXTURE_2D : GFX_TEXTURE_2D_MULTISAMPLE, format, width, height, 1, 1, samples, VK_IMAGE_ASPECT_DEPTH_BIT | VK_IMAGE_ASPECT_STENCIL_BIT, VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT | VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT | (bTransient ? VK_IMAGE_USAGE_TRANSIENT_ATTACHMENT_BIT : VK_IMAGE_USAGE_TRANSFER_SRC_BIT), VK_IMAGE_TILING_OPTIMAL);
+			return m_pTexture->Create(samples == 1 ? GFX_TEXTURE_2D : GFX_TEXTURE_2D_MULTISAMPLE, format, width, height, 1, 1, samples, VK_IMAGE_ASPECT_DEPTH_BIT | VK_IMAGE_ASPECT_STENCIL_BIT, VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT | VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT | (bTransient ? VK_IMAGE_USAGE_TRANSIENT_ATTACHMENT_BIT : VK_IMAGE_USAGE_TRANSFER_SRC_BIT), VK_IMAGE_TILING_OPTIMAL);
 		}
 
-		return m_ptrTexture->Create(samples == 1 ? GFX_TEXTURE_2D : GFX_TEXTURE_2D_MULTISAMPLE, format, width, height, 1, 1, samples, VK_IMAGE_ASPECT_COLOR_BIT, VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT | VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | (bTransient ? VK_IMAGE_USAGE_TRANSIENT_ATTACHMENT_BIT : VK_IMAGE_USAGE_TRANSFER_SRC_BIT), VK_IMAGE_TILING_OPTIMAL);
+		return m_pTexture->Create(samples == 1 ? GFX_TEXTURE_2D : GFX_TEXTURE_2D_MULTISAMPLE, format, width, height, 1, 1, samples, VK_IMAGE_ASPECT_COLOR_BIT, VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT | VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | (bTransient ? VK_IMAGE_USAGE_TRANSIENT_ATTACHMENT_BIT : VK_IMAGE_USAGE_TRANSFER_SRC_BIT), VK_IMAGE_TILING_OPTIMAL);
 	}
 	else {
 		return false;
@@ -112,5 +113,5 @@ bool CVKRenderTexture::Create(GfxPixelFormat format, int width, int height, int 
 
 void CVKRenderTexture::Destroy(void)
 {
-	m_ptrTexture->Destroy();
+	m_pTexture->Destroy();
 }
