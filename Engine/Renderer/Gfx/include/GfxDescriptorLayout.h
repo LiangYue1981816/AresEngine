@@ -20,9 +20,9 @@ public:
 	virtual void Destroy(bool bClear = true) = 0;
 
 public:
-	virtual bool SetUniformBlockBinding(uint32_t name, uint32_t binding) = 0;
-	virtual bool SetSampledImageBinding(uint32_t name, uint32_t binding) = 0;
-	virtual bool SetInputAttachmentBinding(uint32_t name, uint32_t binding) = 0;
+	virtual void SetUniformBlockBinding(uint32_t name, uint32_t binding) = 0;
+	virtual void SetSampledImageBinding(uint32_t name, uint32_t binding) = 0;
+	virtual void SetInputAttachmentBinding(uint32_t name, uint32_t binding) = 0;
 
 public:
 	virtual uint32_t GetSetIndex(void) const = 0;
