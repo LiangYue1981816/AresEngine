@@ -28,7 +28,6 @@ private:
 	uint32_t m_binding;
 	uint32_t m_format;
 	uint32_t m_count;
-	uint32_t m_size;
 
 private:
 	CVKBuffer* m_pBuffer;
