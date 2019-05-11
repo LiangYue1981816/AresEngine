@@ -104,9 +104,6 @@ bool CVKPipeline::CreateVertexInputState(eastl::vector<VkVertexInputBindingDescr
 	ASSERT(m_pShaders[vertex_shader]);
 	ASSERT(m_pShaders[vertex_shader]->IsValid());
 
-	inputBindingDescriptions.clear();
-	inputAttributeDescriptions.clear();
-
 	uint32_t vertexFormat = 0;
 	uint32_t instanceFormat = 0;
 
