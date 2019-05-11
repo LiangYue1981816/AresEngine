@@ -36,8 +36,8 @@ public:
 private:
 	CGfxMeshPtr m_ptrMesh;
 	CGfxMesh::Draw* m_pMeshDraw;
-	CVKIndirectBuffer* m_pIndirectBuffer;
-	CVKInstanceBuffer* m_pInstanceBuffer;
+	CVKIndirectBuffer* m_pIndirectBuffer[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
+	CVKInstanceBuffer* m_pInstanceBuffer[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
 
 private:
 	CVKDevice* m_pDevice;
