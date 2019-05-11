@@ -35,7 +35,7 @@ bool CGLES3Pipeline::CreateProgram(const CGLES3Shader* pVertexShader, const CGLE
 	m_program = glCreateProgram();
 	{
 		for (int indexShader = 0; indexShader < compute_shader - vertex_shader + 1; indexShader++) {
-			if (m_pShaders[indexShader]) {
+			if (m_pShaders[indexShader] && m_pShaders[indexShader]->IsValid()) {
 				glAttachShader(m_program, m_pShaders[indexShader]->GetShader());
 			}
 		}
@@ -65,7 +65,7 @@ bool CGLES3Pipeline::CreateProgram(const CGLES3Shader* pVertexShader, const CGLE
 bool CGLES3Pipeline::CreateLayouts(void)
 {
 	for (int indexShader = 0; indexShader < compute_shader - vertex_shader + 1; indexShader++) {
-		if (m_pShaders[indexShader]) {
+		if (m_pShaders[indexShader] && m_pShaders[indexShader]->IsValid()) {
 			const eastl::unordered_map<eastl::string, PushConstantRange>& pushConstantRanges = m_pShaders[indexShader]->GetSprivCross().GetPushConstantRanges();
 			const eastl::unordered_map<eastl::string, DescriptorSetBinding>& uniformBlockBindings = m_pShaders[indexShader]->GetSprivCross().GetUniformBlockBindings();
 			const eastl::unordered_map<eastl::string, DescriptorSetBinding>& sampledImageBindings = m_pShaders[indexShader]->GetSprivCross().GetSampledImageBindings();
@@ -92,10 +92,10 @@ bool CGLES3Pipeline::CreateLayouts(void)
 		}
 	}
 
-	m_ptrDescriptorLayouts[DESCRIPTOR_SET_ENGINE]->Create();
-	m_ptrDescriptorLayouts[DESCRIPTOR_SET_CAMERA]->Create();
-	m_ptrDescriptorLayouts[DESCRIPTOR_SET_PASS]->Create();
-	m_ptrDescriptorLayouts[DESCRIPTOR_SET_INPUTATTACHMENT]->Create();
+	CALL_BOOL_FUNCTION_RETURN_BOOL(m_ptrDescriptorLayouts[DESCRIPTOR_SET_ENGINE]->Create());
+	CALL_BOOL_FUNCTION_RETURN_BOOL(m_ptrDescriptorLayouts[DESCRIPTOR_SET_CAMERA]->Create());
+	CALL_BOOL_FUNCTION_RETURN_BOOL(m_ptrDescriptorLayouts[DESCRIPTOR_SET_PASS]->Create());
+	CALL_BOOL_FUNCTION_RETURN_BOOL(m_ptrDescriptorLayouts[DESCRIPTOR_SET_INPUTATTACHMENT]->Create());
 
 	return true;
 }
@@ -184,42 +184,6 @@ void CGLES3Pipeline::SetInputAttachmentLocation(const char* szName, uint32_t inp
 		}
 
 		CHECK_GL_ERROR_ASSERT();
-	}
-}
-
-uint32_t CGLES3Pipeline::GetUniformBlockBinding(const char* szName) const
-{
-	const auto& itUniformBlockBinding = m_uniformBlockBindings.find(HashValue(szName));
-
-	if (itUniformBlockBinding != m_uniformBlockBindings.end()) {
-		return itUniformBlockBinding->second;
-	}
-	else {
-		return -1;
-	}
-}
-
-uint32_t CGLES3Pipeline::GetUniformLocation(const char* szName) const
-{
-	const auto& itUniformLocation = m_uniformLocations.find(HashValue(szName));
-
-	if (itUniformLocation != m_uniformLocations.end()) {
-		return itUniformLocation->second;
-	}
-	else {
-		return -1;
-	}
-}
-
-uint32_t CGLES3Pipeline::GetSampledImageLocation(const char* szName) const
-{
-	const auto& itSampledImageLocation = m_sampledImageLocations.find(HashValue(szName));
-
-	if (itSampledImageLocation != m_sampledImageLocations.end()) {
-		return itSampledImageLocation->second;
-	}
-	else {
-		return -1;
 	}
 }
 

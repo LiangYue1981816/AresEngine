@@ -33,22 +33,19 @@ void CGLES3DescriptorLayout::Destroy(bool bClear)
 	}
 }
 
-bool CGLES3DescriptorLayout::SetUniformBlockBinding(uint32_t name, uint32_t binding)
+void CGLES3DescriptorLayout::SetUniformBlockBinding(uint32_t name, uint32_t binding)
 {
 	m_uniformBlockBindings[name] = binding;
-	return true;
 }
 
-bool CGLES3DescriptorLayout::SetSampledImageBinding(uint32_t name, uint32_t binding)
+void CGLES3DescriptorLayout::SetSampledImageBinding(uint32_t name, uint32_t binding)
 {
 	m_sampledImageBindings[name] = binding;
-	return true;
 }
 
-bool CGLES3DescriptorLayout::SetInputAttachmentBinding(uint32_t name, uint32_t binding)
+void CGLES3DescriptorLayout::SetInputAttachmentBinding(uint32_t name, uint32_t binding)
 {
 	m_inputAttachmentBindings[name] = binding;
-	return true;
 }
 
 uint32_t CGLES3DescriptorLayout::GetSetIndex(void) const
