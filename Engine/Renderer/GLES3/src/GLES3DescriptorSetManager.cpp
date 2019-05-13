@@ -21,13 +21,18 @@ CGLES3DescriptorSetManager::~CGLES3DescriptorSetManager(void)
 	}
 }
 
+CGLES3DescriptorSet* CGLES3DescriptorSetManager::CreateInternal(eastl::unordered_map<CGLES3DescriptorSet*, CGLES3DescriptorSet*>& pDescriptorSets, const CGfxDescriptorLayoutPtr ptrDescriptorLayout)
+{
+	CGLES3DescriptorSet* pDescriptorSet = new CGLES3DescriptorSet(this, ptrDescriptorLayout);
+	pDescriptorSets[pDescriptorSet] = pDescriptorSet;
+	return pDescriptorSet;
+}
+
 CGLES3DescriptorSet* CGLES3DescriptorSetManager::Create(const CGfxDescriptorLayoutPtr ptrDescriptorLayout)
 {
 	mutex_autolock autolock(&lock);
 	{
-		CGLES3DescriptorSet* pDescriptorSet = new CGLES3DescriptorSet(this, ptrDescriptorLayout);
-		m_pDescriptorSets[pDescriptorSet] = pDescriptorSet;
-		return pDescriptorSet;
+		return CreateInternal(m_pDescriptorSets, ptrDescriptorLayout);
 	}
 }
 
