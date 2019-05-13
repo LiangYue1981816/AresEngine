@@ -4,33 +4,38 @@
 CVKDescriptorSetManager::CVKDescriptorSetManager(CVKDevice* pDevice)
 	: m_pDevice(pDevice)
 	, m_pPoolListHead(nullptr)
+	, m_pInputAttachmentPoolListHead(nullptr)
 {
 	ASSERT(m_pDevice);
 
 	pthread_mutex_init(&lock, nullptr);
-	m_pPoolListHead = new CVKDescriptorPool(m_pDevice);
-	m_pInputAttachmentPoolListHead = new CVKDescriptorPool(m_pDevice);
+	InitPool(&m_pPoolListHead);
+	InitPool(&m_pInputAttachmentPoolListHead);
 }
 
 CVKDescriptorSetManager::~CVKDescriptorSetManager(void)
 {
-	if (CVKDescriptorPool* pDescriptorPool = m_pPoolListHead) {
-		CVKDescriptorPool* pDescriptorPoolNext = nullptr;
-		do {
-			pDescriptorPoolNext = pDescriptorPool->pNext;
-			delete pDescriptorPool;
-		} while (pDescriptorPool = pDescriptorPoolNext);
-	}
-
-	if (CVKDescriptorPool* pDescriptorPool = m_pInputAttachmentPoolListHead) {
-		CVKDescriptorPool* pDescriptorPoolNext = nullptr;
-		do {
-			pDescriptorPoolNext = pDescriptorPool->pNext;
-			delete pDescriptorPool;
-		} while (pDescriptorPool = pDescriptorPoolNext);
-	}
-
+	FreePool(&m_pPoolListHead);
+	FreePool(&m_pInputAttachmentPoolListHead);
 	pthread_mutex_destroy(&lock);
+}
+
+void CVKDescriptorSetManager::InitPool(CVKDescriptorPool** ppPoolListHead)
+{
+	*ppPoolListHead = new CVKDescriptorPool(m_pDevice);
+}
+
+void CVKDescriptorSetManager::FreePool(CVKDescriptorPool** ppPoolListHead)
+{
+	if (CVKDescriptorPool* pDescriptorPool = *ppPoolListHead) {
+		CVKDescriptorPool* pDescriptorPoolNext = nullptr;
+		do {
+			pDescriptorPoolNext = pDescriptorPool->pNext;
+			delete pDescriptorPool;
+		} while (pDescriptorPool = pDescriptorPoolNext);
+	}
+
+	*ppPoolListHead = nullptr;
 }
 
 CVKDescriptorSet* CVKDescriptorSetManager::Create(const CGfxDescriptorLayoutPtr ptrDescriptorLayout)

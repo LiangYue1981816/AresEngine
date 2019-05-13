@@ -14,7 +14,11 @@ private:
 	virtual ~CVKDescriptorSetManager(void);
 
 
-public:
+private:
+	void InitPool(CVKDescriptorPool** ppPoolListHead);
+	void FreePool(CVKDescriptorPool** ppPoolListHead);
+
+private:
 	CVKDescriptorSet* Create(const CGfxDescriptorLayoutPtr ptrDescriptorLayout);
 	CVKDescriptorSet* Create(const CGfxPipelineGraphics* pPipelineGraphics, const CGfxFrameBuffer* pFrameBuffer, const CGfxRenderPass* pRenderPass, int indexSubpass);
 	void Destroy(CVKDescriptorSet* pDescriptorSet);
