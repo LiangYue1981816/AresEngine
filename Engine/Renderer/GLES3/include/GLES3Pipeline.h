@@ -30,6 +30,8 @@ private:
 	void SetUniformLocation(const char* szName);
 	void SetSampledImageLocation(const char* szName);
 	void SetInputAttachmentLocation(const char* szName, uint32_t inputAttachmentIndex);
+
+private:
 	uint32_t GetInputAttachmentName(uint32_t inputAttachmentIndex) const;
 	bool IsCompatibleVertexFormat(uint32_t binding, uint32_t format) const;
 

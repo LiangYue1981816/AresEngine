@@ -26,6 +26,11 @@ const uint32_t CVKPipelineGraphics::GetInputAttachmentName(uint32_t inputAttachm
 	return m_pPipeline->GetInputAttachmentName(inputAttachmentIndex);
 }
 
+const bool CVKPipelineGraphics::IsCompatibleVertexFormat(uint32_t binding, uint32_t format) const
+{
+	return m_pPipeline->IsCompatibleVertexFormat(binding, format);
+}
+
 bool CVKPipelineGraphics::Create(const CGfxRenderPass* pRenderPass, const CGfxShader* pVertexShader, const CGfxShader* pFragmentShader, const PipelineState& state, int indexSubpass, int vertexBinding, int instanceBinding)
 {
 	return m_pPipeline->Create(pRenderPass, pVertexShader, pFragmentShader, state, indexSubpass, vertexBinding, instanceBinding);

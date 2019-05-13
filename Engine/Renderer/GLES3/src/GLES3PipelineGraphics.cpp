@@ -23,6 +23,11 @@ const uint32_t CGLES3PipelineGraphics::GetInputAttachmentName(uint32_t inputAtta
 	return m_pPipeline->GetInputAttachmentName(inputAttachmentIndex);
 }
 
+const bool CGLES3PipelineGraphics::IsCompatibleVertexFormat(uint32_t binding, uint32_t format) const
+{
+	return m_pPipeline->IsCompatibleVertexFormat(binding, format);
+}
+
 bool CGLES3PipelineGraphics::Create(const CGfxRenderPass* pRenderPass, const CGfxShader* pVertexShader, const CGfxShader* pFragmentShader, const PipelineState& state, int indexSubpass, int vertexBinding, int instanceBinding)
 {
 	m_state = state;
