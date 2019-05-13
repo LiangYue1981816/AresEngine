@@ -11,6 +11,14 @@ CGLES3DescriptorSetManager::~CGLES3DescriptorSetManager(void)
 	for (const auto& itDescriptorSet : m_pDescriptorSets) {
 		delete itDescriptorSet.second;
 	}
+
+	for (const auto& itFrameBufferDescriptorSet : m_pInputAttachmentDescriptorSets) {
+		for (const auto& itSubpassDescriptorSet : itFrameBufferDescriptorSet.second) {
+			for (const auto& itDescriptorSet : itSubpassDescriptorSet.second) {
+				delete itDescriptorSet.second;
+			}
+		}
+	}
 }
 
 CGLES3DescriptorSet* CGLES3DescriptorSetManager::Create(const CGfxDescriptorLayoutPtr ptrDescriptorLayout)
