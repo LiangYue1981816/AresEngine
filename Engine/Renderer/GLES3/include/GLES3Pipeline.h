@@ -18,6 +18,7 @@ private:
 
 private:
 	bool CreateProgram(const CGLES3Shader* pVertexShader, const CGLES3Shader* pFragmentShader, const CGLES3Shader* pComputeShader);
+	bool CreateVertexFormat(int vertexBinding, int instanceBinding);
 	bool CreateLayouts(void);
 
 	bool Create(const CGfxShader* pComputeShader);
@@ -30,6 +31,7 @@ private:
 	void SetSampledImageLocation(const char* szName);
 	void SetInputAttachmentLocation(const char* szName, uint32_t inputAttachmentIndex);
 	uint32_t GetInputAttachmentName(uint32_t inputAttachmentIndex) const;
+	bool IsCompatibleVertexFormat(uint32_t binding, uint32_t format) const;
 
 private:
 	void Bind(const PipelineState* pState) const;
@@ -71,4 +73,5 @@ private:
 	eastl::unordered_map<uint32_t, uint32_t> m_sampledImageLocations;    // [name, location]
 	eastl::unordered_map<uint32_t, uint32_t> m_sampledImageTextureUnits; // [name, texture unit]
 	eastl::unordered_map<uint32_t, uint32_t> m_inputAttachmentNames;     // [input attachment index, name]
+	eastl::unordered_map<uint32_t, uint32_t> m_vertexFormats;            // [binding, format]
 };

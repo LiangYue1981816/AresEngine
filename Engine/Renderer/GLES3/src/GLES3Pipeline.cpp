@@ -62,6 +62,32 @@ bool CGLES3Pipeline::CreateProgram(const CGLES3Shader* pVertexShader, const CGLE
 	return true;
 }
 
+bool CGLES3Pipeline::CreateVertexFormat(int vertexBinding, int instanceBinding)
+{
+	ASSERT(m_pShaders[vertex_shader]);
+	ASSERT(m_pShaders[vertex_shader]->IsValid());
+
+	const eastl::vector<eastl::string>& vertexAttributes = m_pShaders[vertex_shader]->GetSprivCross().GetVertexAttributes();
+
+	uint32_t vertexFormat = 0;
+	uint32_t instanceFormat = 0;
+
+	for (const auto& itVertexAttribute : vertexAttributes) {
+		vertexFormat |= GetVertexAttribute(itVertexAttribute.c_str());
+		instanceFormat |= GetInstanceAttribute(itVertexAttribute.c_str());
+	}
+
+	if (vertexFormat) {
+		m_vertexFormats[vertexBinding] = vertexFormat;
+	}
+
+	if (instanceFormat) {
+		m_vertexFormats[instanceBinding] = instanceFormat;
+	}
+
+	return true;
+}
+
 bool CGLES3Pipeline::CreateLayouts(void)
 {
 	for (int indexShader = 0; indexShader < compute_shader - vertex_shader + 1; indexShader++) {
@@ -133,6 +159,7 @@ bool CGLES3Pipeline::Create(const CGfxRenderPass* pRenderPass, const CGfxShader*
 			ASSERT(pFragmentShader->GetKind() == fragment_shader);
 
 			CALL_BOOL_FUNCTION_BREAK(CreateProgram((const CGLES3Shader*)pVertexShader, (const CGLES3Shader*)pFragmentShader, nullptr));
+			CALL_BOOL_FUNCTION_BREAK(CreateVertexFormat(vertexBinding, instanceBinding));
 			CALL_BOOL_FUNCTION_BREAK(CreateLayouts());
 
 			return true;
@@ -158,6 +185,8 @@ void CGLES3Pipeline::Destroy(void)
 	m_uniformBlockBindings.clear();
 	m_sampledImageLocations.clear();
 	m_sampledImageTextureUnits.clear();
+	m_inputAttachmentNames.clear();
+	m_vertexFormats.clear();
 
 	m_ptrDescriptorLayouts[DESCRIPTOR_SET_ENGINE]->Destroy(true);
 	m_ptrDescriptorLayouts[DESCRIPTOR_SET_CAMERA]->Destroy(true);
@@ -238,6 +267,18 @@ uint32_t CGLES3Pipeline::GetInputAttachmentName(uint32_t inputAttachmentIndex) c
 	}
 	else {
 		return INVALID_HASHNAME;
+	}
+}
+
+bool CGLES3Pipeline::IsCompatibleVertexFormat(uint32_t binding, uint32_t format) const
+{
+	const auto& itFormat = m_vertexFormats.find(binding);
+
+	if (itFormat != m_vertexFormats.end()) {
+		return itFormat->second == format && itFormat->second != 0;
+	}
+	else {
+		return false;
 	}
 }
 
