@@ -13,8 +13,8 @@ CVKDescriptorSetManager::CVKDescriptorSetManager(CVKDevice* pDevice)
 
 CVKDescriptorSetManager::~CVKDescriptorSetManager(void)
 {
-	DestroyInternal(&m_pPoolListHead);
-	DestroyInternal(&m_pInputAttachmentPoolListHead);
+	DestroyPoolListInternal(&m_pPoolListHead);
+	DestroyPoolListInternal(&m_pInputAttachmentPoolListHead);
 	pthread_mutex_destroy(&lock);
 }
 
@@ -36,17 +36,15 @@ CVKDescriptorSet* CVKDescriptorSetManager::CreateInternal(CVKDescriptorPool**ppP
 	} while (true);
 }
 
-void CVKDescriptorSetManager::DestroyInternal(CVKDescriptorPool** ppPoolListHead)
+void CVKDescriptorSetManager::DestroyPoolListInternal(CVKDescriptorPool** ppPoolListHead)
 {
 	if (CVKDescriptorPool* pDescriptorPool = *ppPoolListHead) {
 		CVKDescriptorPool* pDescriptorPoolNext = nullptr;
 		do {
 			pDescriptorPoolNext = pDescriptorPool->pNext;
 			delete pDescriptorPool;
-		} while (pDescriptorPool = pDescriptorPoolNext);
+		} while ((pDescriptorPool = pDescriptorPoolNext) != nullptr);
 	}
-
-	*ppPoolListHead = nullptr;
 }
 
 CVKDescriptorSet* CVKDescriptorSetManager::Create(const CGfxDescriptorLayoutPtr ptrDescriptorLayout)
