@@ -102,6 +102,8 @@ void CVKDescriptorSetManager::Destroy(CVKDescriptorSet* pDescriptorSet)
 		ASSERT(pDescriptorSet->GetDescriptorPool());
 
 		if (m_pDescriptorSets.find(pDescriptorSet) != m_pDescriptorSets.end()) {
+			m_pDescriptorSets.erase(pDescriptorSet);
+
 			CVKDescriptorPool* pDescriptorPool = pDescriptorSet->GetDescriptorPool();
 
 			if (pDescriptorPool->FreeDescriptorSet(pDescriptorSet)) {
