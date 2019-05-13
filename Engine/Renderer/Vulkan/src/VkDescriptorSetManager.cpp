@@ -9,23 +9,34 @@ CVKDescriptorSetManager::CVKDescriptorSetManager(CVKDevice* pDevice)
 	ASSERT(m_pDevice);
 
 	pthread_mutex_init(&lock, nullptr);
-	InitPool(&m_pPoolListHead);
-	InitPool(&m_pInputAttachmentPoolListHead);
 }
 
 CVKDescriptorSetManager::~CVKDescriptorSetManager(void)
 {
-	FreePool(&m_pPoolListHead);
-	FreePool(&m_pInputAttachmentPoolListHead);
+	DestroyInternal(&m_pPoolListHead);
+	DestroyInternal(&m_pInputAttachmentPoolListHead);
 	pthread_mutex_destroy(&lock);
 }
 
-void CVKDescriptorSetManager::InitPool(CVKDescriptorPool** ppPoolListHead)
+CVKDescriptorSet* CVKDescriptorSetManager::CreateInternal(CVKDescriptorPool**ppPoolListHead, const CGfxDescriptorLayoutPtr ptrDescriptorLayout)
 {
-	*ppPoolListHead = new CVKDescriptorPool(m_pDevice);
+	do {
+		if (CVKDescriptorPool* pDescriptorPool = *ppPoolListHead) {
+			do {
+				if (CVKDescriptorSet* pDescriptorSet = pDescriptorPool->AllocDescriptorSet(ptrDescriptorLayout)) {
+					return pDescriptorSet;
+				}
+			} while ((pDescriptorPool = pDescriptorPool->pNext) != nullptr);
+		}
+
+		CVKDescriptorPool* pDescriptorPool = new CVKDescriptorPool(m_pDevice);
+		{
+
+		}
+	} while (true);
 }
 
-void CVKDescriptorSetManager::FreePool(CVKDescriptorPool** ppPoolListHead)
+void CVKDescriptorSetManager::DestroyInternal(CVKDescriptorPool** ppPoolListHead)
 {
 	if (CVKDescriptorPool* pDescriptorPool = *ppPoolListHead) {
 		CVKDescriptorPool* pDescriptorPoolNext = nullptr;
@@ -36,25 +47,6 @@ void CVKDescriptorSetManager::FreePool(CVKDescriptorPool** ppPoolListHead)
 	}
 
 	*ppPoolListHead = nullptr;
-}
-
-CVKDescriptorSet* CVKDescriptorSetManager::CreateInternal(CVKDescriptorPool**ppPoolListHead, const CGfxDescriptorLayoutPtr ptrDescriptorLayout)
-{
-	if (CVKDescriptorPool* pDescriptorPool = *ppPoolListHead) {
-		do {
-			if (CVKDescriptorSet* DescriptorSet = pDescriptorPool->AllocDescriptorSet(ptrDescriptorLayout)) {
-				return DescriptorSet;
-			}
-
-			if (pDescriptorPool->pNext == nullptr) {
-				pDescriptorPool->pNext = new CVKDescriptorPool(m_pDevice);
-			}
-
-			pDescriptorPool = pDescriptorPool->pNext;
-		} while (true);
-	}
-
-	return nullptr;
 }
 
 CVKDescriptorSet* CVKDescriptorSetManager::Create(const CGfxDescriptorLayoutPtr ptrDescriptorLayout)

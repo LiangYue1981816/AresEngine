@@ -15,11 +15,10 @@ private:
 
 
 private:
-	void InitPool(CVKDescriptorPool** ppPoolListHead);
-	void FreePool(CVKDescriptorPool** ppPoolListHead);
+	CVKDescriptorSet* CreateInternal(CVKDescriptorPool** ppPoolListHead, const CGfxDescriptorLayoutPtr ptrDescriptorLayout);
+	void DestroyInternal(CVKDescriptorPool** ppPoolListHead);
 
 private:
-	CVKDescriptorSet* CreateInternal(CVKDescriptorPool** ppPoolListHead, const CGfxDescriptorLayoutPtr ptrDescriptorLayout);
 	CVKDescriptorSet* Create(const CGfxDescriptorLayoutPtr ptrDescriptorLayout);
 	CVKDescriptorSet* Create(const CGfxPipelineGraphics* pPipelineGraphics, const CGfxFrameBuffer* pFrameBuffer, const CGfxRenderPass* pRenderPass, int indexSubpass);
 	void Destroy(CVKDescriptorSet* pDescriptorSet);
