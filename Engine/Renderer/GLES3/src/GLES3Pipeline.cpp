@@ -62,32 +62,6 @@ bool CGLES3Pipeline::CreateProgram(const CGLES3Shader* pVertexShader, const CGLE
 	return true;
 }
 
-bool CGLES3Pipeline::CreateVertexFormat(int vertexBinding, int instanceBinding)
-{
-	ASSERT(m_pShaders[vertex_shader]);
-	ASSERT(m_pShaders[vertex_shader]->IsValid());
-
-	const eastl::vector<eastl::string>& vertexAttributes = m_pShaders[vertex_shader]->GetSprivCross().GetVertexAttributes();
-
-	uint32_t vertexFormat = 0;
-	uint32_t instanceFormat = 0;
-
-	for (const auto& itVertexAttribute : vertexAttributes) {
-		vertexFormat |= GetVertexAttribute(itVertexAttribute.c_str());
-		instanceFormat |= GetInstanceAttribute(itVertexAttribute.c_str());
-	}
-
-	if (vertexFormat) {
-		m_vertexFormats[vertexBinding] = vertexFormat;
-	}
-
-	if (instanceFormat) {
-		m_vertexFormats[instanceBinding] = instanceFormat;
-	}
-
-	return true;
-}
-
 bool CGLES3Pipeline::CreateLayouts(void)
 {
 	for (int indexShader = 0; indexShader < compute_shader - vertex_shader + 1; indexShader++) {
@@ -126,6 +100,32 @@ bool CGLES3Pipeline::CreateLayouts(void)
 	return true;
 }
 
+bool CGLES3Pipeline::CreateVertexFormat(int vertexBinding, int instanceBinding)
+{
+	ASSERT(m_pShaders[vertex_shader]);
+	ASSERT(m_pShaders[vertex_shader]->IsValid());
+
+	const eastl::vector<eastl::string>& vertexAttributes = m_pShaders[vertex_shader]->GetSprivCross().GetVertexAttributes();
+
+	uint32_t vertexFormat = 0;
+	uint32_t instanceFormat = 0;
+
+	for (const auto& itVertexAttribute : vertexAttributes) {
+		vertexFormat |= GetVertexAttribute(itVertexAttribute.c_str());
+		instanceFormat |= GetInstanceAttribute(itVertexAttribute.c_str());
+	}
+
+	if (vertexFormat) {
+		m_vertexFormats[vertexBinding] = vertexFormat;
+	}
+
+	if (instanceFormat) {
+		m_vertexFormats[instanceBinding] = instanceFormat;
+	}
+
+	return true;
+}
+
 bool CGLES3Pipeline::Create(const CGfxShader* pComputeShader)
 {
 	Destroy();
@@ -159,8 +159,8 @@ bool CGLES3Pipeline::Create(const CGfxRenderPass* pRenderPass, const CGfxShader*
 			ASSERT(pFragmentShader->GetKind() == fragment_shader);
 
 			CALL_BOOL_FUNCTION_BREAK(CreateProgram((const CGLES3Shader*)pVertexShader, (const CGLES3Shader*)pFragmentShader, nullptr));
-			CALL_BOOL_FUNCTION_BREAK(CreateVertexFormat(vertexBinding, instanceBinding));
 			CALL_BOOL_FUNCTION_BREAK(CreateLayouts());
+			CALL_BOOL_FUNCTION_BREAK(CreateVertexFormat(vertexBinding, instanceBinding));
 
 			return true;
 		} while (false);

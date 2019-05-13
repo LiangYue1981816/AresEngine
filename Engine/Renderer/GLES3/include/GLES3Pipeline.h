@@ -18,8 +18,8 @@ private:
 
 private:
 	bool CreateProgram(const CGLES3Shader* pVertexShader, const CGLES3Shader* pFragmentShader, const CGLES3Shader* pComputeShader);
-	bool CreateVertexFormat(int vertexBinding, int instanceBinding);
 	bool CreateLayouts(void);
+	bool CreateVertexFormat(int vertexBinding, int instanceBinding);
 
 	bool Create(const CGfxShader* pComputeShader);
 	bool Create(const CGfxRenderPass* pRenderPass, const CGfxShader* pVertexShader, const CGfxShader* pFragmentShader, const PipelineState& state, int indexSubpass, int vertexBinding, int instanceBinding);
