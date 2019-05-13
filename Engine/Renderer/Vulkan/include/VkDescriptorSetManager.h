@@ -15,8 +15,9 @@ private:
 
 
 public:
-	CVKDescriptorSet* AllocDescriptorSet(const CGfxDescriptorLayoutPtr ptrDescriptorLayout);
-	void FreeDescriptorSet(CVKDescriptorSet* pDescriptorSet);
+	CVKDescriptorSet* Create(const CGfxDescriptorLayoutPtr ptrDescriptorLayout);
+	CVKDescriptorSet* Create(const CGfxPipelineGraphics* pPipelineGraphics, const CGfxFrameBuffer* pFrameBuffer, const CGfxRenderPass* pRenderPass, int indexSubpass);
+	void Destroy(CVKDescriptorSet* pDescriptorSet);
 
 
 private:

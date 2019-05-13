@@ -24,7 +24,7 @@ CVKDescriptorSetManager::~CVKDescriptorSetManager(void)
 	pthread_mutex_destroy(&lock);
 }
 
-CVKDescriptorSet* CVKDescriptorSetManager::AllocDescriptorSet(const CGfxDescriptorLayoutPtr ptrDescriptorLayout)
+CVKDescriptorSet* CVKDescriptorSetManager::Create(const CGfxDescriptorLayoutPtr ptrDescriptorLayout)
 {
 	mutex_autolock autolock(&lock);
 	{
@@ -46,7 +46,12 @@ CVKDescriptorSet* CVKDescriptorSetManager::AllocDescriptorSet(const CGfxDescript
 	return nullptr;
 }
 
-void CVKDescriptorSetManager::FreeDescriptorSet(CVKDescriptorSet* pDescriptorSet)
+CVKDescriptorSet* CVKDescriptorSetManager::Create(const CGfxPipelineGraphics* pPipelineGraphics, const CGfxFrameBuffer* pFrameBuffer, const CGfxRenderPass* pRenderPass, int indexSubpass)
+{
+	return nullptr;
+}
+
+void CVKDescriptorSetManager::Destroy(CVKDescriptorSet* pDescriptorSet)
 {
 	mutex_autolock autolock(&lock);
 	{
