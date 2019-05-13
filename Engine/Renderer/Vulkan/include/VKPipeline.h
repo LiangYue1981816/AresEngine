@@ -27,6 +27,7 @@ private:
 
 private:
 	uint32_t GetInputAttachmentName(uint32_t inputAttachmentIndex) const;
+	bool IsCompatibleVertexFormat(uint32_t binding, uint32_t format) const;
 
 private:
 	void Bind(VkCommandBuffer vkCommandBuffer, VkPipelineBindPoint pipelineBindPoint);
@@ -65,6 +66,7 @@ private:
 	CGfxDescriptorLayoutPtr m_ptrDescriptorLayouts[DESCRIPTOR_SET_COUNT];
 	eastl::unordered_map<uint32_t, VkPushConstantRange> m_pushConstantRanges;
 	eastl::unordered_map<uint32_t, uint32_t> m_inputAttachmentNames; // [input attachment index, name]
+	eastl::unordered_map<uint32_t, uint32_t> m_vertexFormats;        // [binding, format]
 
 private:
 	CVKDevice* m_pDevice;

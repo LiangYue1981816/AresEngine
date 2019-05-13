@@ -152,6 +152,7 @@ bool CVKPipeline::CreateVertexInputState(eastl::vector<VkVertexInputBindingDescr
 			inputBindingDescription.stride = GetVertexStride(vertexFormat);
 			inputBindingDescription.inputRate = VK_VERTEX_INPUT_RATE_VERTEX;
 			inputBindingDescriptions.emplace_back(inputBindingDescription);
+			m_vertexFormats[vertexBinding] = vertexFormat;
 		}
 
 		if (instanceFormat) {
@@ -160,6 +161,7 @@ bool CVKPipeline::CreateVertexInputState(eastl::vector<VkVertexInputBindingDescr
 			inputBindingDescription.stride = GetInstanceStride(instanceFormat);
 			inputBindingDescription.inputRate = VK_VERTEX_INPUT_RATE_INSTANCE;
 			inputBindingDescriptions.emplace_back(inputBindingDescription);
+			m_vertexFormats[instanceBinding] = instanceFormat;
 		}
 	}
 
@@ -396,6 +398,7 @@ void CVKPipeline::Destroy(void)
 
 	m_pushConstantRanges.clear();
 	m_inputAttachmentNames.clear();
+	m_vertexFormats.clear();
 
 	m_ptrDescriptorLayouts[DESCRIPTOR_SET_ENGINE]->Destroy(true);
 	m_ptrDescriptorLayouts[DESCRIPTOR_SET_CAMERA]->Destroy(true);
@@ -412,6 +415,18 @@ uint32_t CVKPipeline::GetInputAttachmentName(uint32_t inputAttachmentIndex) cons
 	}
 	else {
 		return INVALID_HASHNAME;
+	}
+}
+
+bool CVKPipeline::IsCompatibleVertexFormat(uint32_t binding, uint32_t format) const
+{
+	const auto& itFormat = m_vertexFormats.find(binding);
+
+	if (itFormat != m_vertexFormats.end()) {
+		return itFormat->second == format && itFormat->second != 0;
+	}
+	else {
+		return false;
 	}
 }
 
