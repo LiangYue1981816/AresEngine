@@ -18,7 +18,7 @@ CVKDescriptorSetManager::~CVKDescriptorSetManager(void)
 	pthread_mutex_destroy(&lock);
 }
 
-CVKDescriptorSet* CVKDescriptorSetManager::CreateInternal(CVKDescriptorPool**ppPoolListHead, const CGfxDescriptorLayoutPtr ptrDescriptorLayout)
+CVKDescriptorSet* CVKDescriptorSetManager::CreateInternal(CVKDescriptorPool** ppPoolListHead, const CGfxDescriptorLayoutPtr ptrDescriptorLayout)
 {
 	do {
 		if (CVKDescriptorPool* pDescriptorPool = *ppPoolListHead) {
@@ -31,12 +31,17 @@ CVKDescriptorSet* CVKDescriptorSetManager::CreateInternal(CVKDescriptorPool**ppP
 
 		CVKDescriptorPool* pDescriptorPool = new CVKDescriptorPool(m_pDevice);
 		{
+			if ((*ppPoolListHead) != nullptr) {
+				(*ppPoolListHead)->pPrev = pDescriptorPool;
+				pDescriptorPool->pNext = (*ppPoolListHead);
+			}
 
+			*ppPoolListHead = pDescriptorPool;
 		}
 	} while (true);
 }
 
-void CVKDescriptorSetManager::DestroyPoolListInternal(CVKDescriptorPool** ppPoolListHead)
+void CVKDescriptorSetManager::DestroyPoolListInternal(CVKDescriptorPool**ppPoolListHead)
 {
 	if (CVKDescriptorPool* pDescriptorPool = *ppPoolListHead) {
 		CVKDescriptorPool* pDescriptorPoolNext = nullptr;
