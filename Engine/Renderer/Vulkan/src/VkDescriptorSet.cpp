@@ -124,11 +124,11 @@ bool CVKDescriptorSet::SetTextureInputAttachment(uint32_t name, const CGfxRender
 	ASSERT(ptrTexture);
 
 	if (m_ptrDescriptorLayout->IsSampledImageValid(name)) {
-		m_inputAttachmentDescriptorInfos[name].pSampler = (CGfxSampler*)pSampler;
-		m_inputAttachmentDescriptorInfos[name].ptrTexture2D.Release();
-		m_inputAttachmentDescriptorInfos[name].ptrTexture2DArray.Release();
-		m_inputAttachmentDescriptorInfos[name].ptrTextureCubemap.Release();
-		m_inputAttachmentDescriptorInfos[name].ptrTextureInputAttachment = ptrTexture;
+		m_imageDescriptorInfos[name].pSampler = (CGfxSampler*)pSampler;
+		m_imageDescriptorInfos[name].ptrTexture2D.Release();
+		m_imageDescriptorInfos[name].ptrTexture2DArray.Release();
+		m_imageDescriptorInfos[name].ptrTextureCubemap.Release();
+		m_imageDescriptorInfos[name].ptrTextureInputAttachment = ptrTexture;
 		m_bDirty = true;
 		return true;
 	}
@@ -193,59 +193,57 @@ void CVKDescriptorSet::Update(void)
 		eastl::vector<VkDescriptorBufferInfo> bufferInfos;
 
 		for (const auto& itImage : m_imageDescriptorInfos) {
-			if (itImage.second.ptrTexture2D) {
+			bool bTextureInputAttachment;
+
+			if (itImage.second.ptrTextureInputAttachment) {
+				bTextureInputAttachment = true;
+
+				VkDescriptorImageInfo imageInfo = {};
+				imageInfo.sampler = ((CVKSampler*)itImage.second.pSampler)->GetSampler();
+				imageInfo.imageView = ((CVKRenderTexture*)itImage.second.ptrTextureInputAttachment.GetPointer())->GetImageView();
+				imageInfo.imageLayout = ((CVKRenderTexture*)itImage.second.ptrTextureInputAttachment.GetPointer())->GetImageLayout();
+				imageInfos.emplace_back(imageInfo);
+			}
+			else if (itImage.second.ptrTexture2D) {
+				bTextureInputAttachment = false;
+
 				VkDescriptorImageInfo imageInfo = {};
 				imageInfo.sampler = ((CVKSampler*)itImage.second.pSampler)->GetSampler();
 				imageInfo.imageView = ((CVKTexture2D*)itImage.second.ptrTexture2D.GetPointer())->GetImageView();
 				imageInfo.imageLayout = ((CVKTexture2D*)itImage.second.ptrTexture2D.GetPointer())->GetImageLayout();
 				imageInfos.emplace_back(imageInfo);
 			}
+			else if (itImage.second.ptrTexture2DArray) {
+				bTextureInputAttachment = false;
 
-			if (itImage.second.ptrTexture2DArray) {
 				VkDescriptorImageInfo imageInfo = {};
 				imageInfo.sampler = ((CVKSampler*)itImage.second.pSampler)->GetSampler();
 				imageInfo.imageView = ((CVKTexture2DArray*)itImage.second.ptrTexture2DArray.GetPointer())->GetImageView();
 				imageInfo.imageLayout = ((CVKTexture2DArray*)itImage.second.ptrTexture2DArray.GetPointer())->GetImageLayout();
 				imageInfos.emplace_back(imageInfo);
 			}
+			else if (itImage.second.ptrTextureCubemap) {
+				bTextureInputAttachment = false;
 
-			if (itImage.second.ptrTextureCubemap) {
 				VkDescriptorImageInfo imageInfo = {};
 				imageInfo.sampler = ((CVKSampler*)itImage.second.pSampler)->GetSampler();
 				imageInfo.imageView = ((CVKTextureCubemap*)itImage.second.ptrTextureCubemap.GetPointer())->GetImageView();
 				imageInfo.imageLayout = ((CVKTextureCubemap*)itImage.second.ptrTextureCubemap.GetPointer())->GetImageLayout();
 				imageInfos.emplace_back(imageInfo);
 			}
+			else {
+				ASSERT(false);
+				continue;
+			}
 
 			VkWriteDescriptorSet write = {};
 			write.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
 			write.pNext = nullptr;
 			write.dstSet = m_vkDescriptorSet;
-			write.dstBinding = m_ptrDescriptorLayout->GetSampledImageBinding(itImage.first);
+			write.dstBinding = bTextureInputAttachment ? m_ptrDescriptorLayout->GetInputAttachmentBinding(itImage.first) : m_ptrDescriptorLayout->GetSampledImageBinding(itImage.first);
 			write.dstArrayElement = 0;
 			write.descriptorCount = 1;
-			write.descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
-			write.pImageInfo = &imageInfos[imageInfos.size() - 1];
-			write.pBufferInfo = nullptr;
-			write.pTexelBufferView = nullptr;
-			writes.emplace_back(write);
-		}
-
-		for (const auto& itImage : m_inputAttachmentDescriptorInfos) {
-			VkDescriptorImageInfo imageInfo = {};
-			imageInfo.sampler = ((CVKSampler*)itImage.second.pSampler)->GetSampler();
-			imageInfo.imageView = ((CVKRenderTexture*)itImage.second.ptrTextureInputAttachment.GetPointer())->GetImageView();
-			imageInfo.imageLayout = ((CVKRenderTexture*)itImage.second.ptrTextureInputAttachment.GetPointer())->GetImageLayout();
-			imageInfos.emplace_back(imageInfo);
-
-			VkWriteDescriptorSet write = {};
-			write.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
-			write.pNext = nullptr;
-			write.dstSet = m_vkDescriptorSet;
-			write.dstBinding = m_ptrDescriptorLayout->GetInputAttachmentBinding(itImage.first);
-			write.dstArrayElement = 0;
-			write.descriptorCount = 1;
-			write.descriptorType = VK_DESCRIPTOR_TYPE_INPUT_ATTACHMENT;
+			write.descriptorType = bTextureInputAttachment ? VK_DESCRIPTOR_TYPE_INPUT_ATTACHMENT : VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
 			write.pImageInfo = &imageInfos[imageInfos.size() - 1];
 			write.pBufferInfo = nullptr;
 			write.pTexelBufferView = nullptr;
