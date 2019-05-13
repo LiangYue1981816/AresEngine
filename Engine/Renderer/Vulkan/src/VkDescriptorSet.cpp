@@ -124,11 +124,11 @@ bool CVKDescriptorSet::SetTextureInputAttachment(uint32_t name, const CGfxRender
 	ASSERT(ptrTexture);
 
 	if (m_ptrDescriptorLayout->IsSampledImageValid(name)) {
-		m_imageDescriptorInfos[name].pSampler = (CGfxSampler*)pSampler;
-		m_imageDescriptorInfos[name].ptrTexture2D.Release();
-		m_imageDescriptorInfos[name].ptrTexture2DArray.Release();
-		m_imageDescriptorInfos[name].ptrTextureCubemap.Release();
-		m_imageDescriptorInfos[name].ptrTextureInputAttachment = ptrTexture;
+		m_inputAttachmentDescriptorInfos[name].pSampler = (CGfxSampler*)pSampler;
+		m_inputAttachmentDescriptorInfos[name].ptrTexture2D.Release();
+		m_inputAttachmentDescriptorInfos[name].ptrTexture2DArray.Release();
+		m_inputAttachmentDescriptorInfos[name].ptrTextureCubemap.Release();
+		m_inputAttachmentDescriptorInfos[name].ptrTextureInputAttachment = ptrTexture;
 		m_bDirty = true;
 		return true;
 	}
