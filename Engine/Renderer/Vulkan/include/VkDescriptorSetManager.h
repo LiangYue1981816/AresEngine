@@ -16,9 +16,6 @@ private:
 
 private:
 	CVKDescriptorSet* CreateInternal(CVKDescriptorPool** ppPoolListHead, const CGfxDescriptorLayoutPtr ptrDescriptorLayout);
-	void DestroyPoolListInternal(CVKDescriptorPool** ppPoolListHead);
-
-private:
 	CVKDescriptorSet* Create(const CGfxDescriptorLayoutPtr ptrDescriptorLayout);
 	CVKDescriptorSet* Create(const CGfxPipelineGraphics* pPipelineGraphics, const CGfxFrameBuffer* pFrameBuffer, const CGfxRenderPass* pRenderPass, int indexSubpass);
 	void Destroy(CVKDescriptorSet* pDescriptorSet);
