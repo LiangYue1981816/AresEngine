@@ -9,11 +9,20 @@ CVKDescriptorSetManager::CVKDescriptorSetManager(CVKDevice* pDevice)
 
 	pthread_mutex_init(&lock, nullptr);
 	m_pPoolListHead = new CVKDescriptorPool(m_pDevice);
+	m_pPoolListHead = new CVKDescriptorPool(m_pInputAttachmentPoolListHead);
 }
 
 CVKDescriptorSetManager::~CVKDescriptorSetManager(void)
 {
 	if (CVKDescriptorPool* pDescriptorPool = m_pPoolListHead) {
+		CVKDescriptorPool* pDescriptorPoolNext = nullptr;
+		do {
+			pDescriptorPoolNext = pDescriptorPool->pNext;
+			delete pDescriptorPool;
+		} while (pDescriptorPool = pDescriptorPoolNext);
+	}
+
+	if (CVKDescriptorPool* pDescriptorPool = m_pInputAttachmentPoolListHead) {
 		CVKDescriptorPool* pDescriptorPoolNext = nullptr;
 		do {
 			pDescriptorPoolNext = pDescriptorPool->pNext;
