@@ -14,7 +14,6 @@ private:
 
 
 private:
-	CGLES3DescriptorSet* CreateInternal(eastl::unordered_map<CGLES3DescriptorSet*, CGLES3DescriptorSet*>& pDescriptorSets, const CGfxDescriptorLayoutPtr ptrDescriptorLayout);
 	CGLES3DescriptorSet* Create(const CGfxDescriptorLayoutPtr ptrDescriptorLayout);
 	CGLES3DescriptorSet* Create(const CGfxPipelineGraphics* pPipelineGraphics, const CGfxFrameBuffer* pFrameBuffer, const CGfxRenderPass* pRenderPass, int indexSubpass);
 	void Destroy(CGLES3DescriptorSet* pDescriptorSet);

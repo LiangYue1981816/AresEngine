@@ -14,25 +14,20 @@ CGLES3DescriptorSetManager::~CGLES3DescriptorSetManager(void)
 
 	for (const auto& itFrameBufferDescriptorSet : m_pInputAttachmentDescriptorSets) {
 		for (const auto& itSubpassDescriptorSet : itFrameBufferDescriptorSet.second) {
-			for (const auto& itDescriptorSet : itSubpassDescriptorSet.second) {
-				delete itDescriptorSet.second;
+			for (const auto& itPipelineDescriptorSet : itSubpassDescriptorSet.second) {
+				delete itPipelineDescriptorSet.second;
 			}
 		}
 	}
-}
-
-CGLES3DescriptorSet* CGLES3DescriptorSetManager::CreateInternal(eastl::unordered_map<CGLES3DescriptorSet*, CGLES3DescriptorSet*>& pDescriptorSets, const CGfxDescriptorLayoutPtr ptrDescriptorLayout)
-{
-	CGLES3DescriptorSet* pDescriptorSet = new CGLES3DescriptorSet(this, ptrDescriptorLayout);
-	pDescriptorSets[pDescriptorSet] = pDescriptorSet;
-	return pDescriptorSet;
 }
 
 CGLES3DescriptorSet* CGLES3DescriptorSetManager::Create(const CGfxDescriptorLayoutPtr ptrDescriptorLayout)
 {
 	mutex_autolock autolock(&lock);
 	{
-		return CreateInternal(m_pDescriptorSets, ptrDescriptorLayout);
+		CGLES3DescriptorSet* pDescriptorSet = new CGLES3DescriptorSet(this, ptrDescriptorLayout);
+		m_pDescriptorSets[pDescriptorSet] = pDescriptorSet;
+		return pDescriptorSet;
 	}
 }
 
