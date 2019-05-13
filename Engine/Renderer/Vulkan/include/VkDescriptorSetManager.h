@@ -2,9 +2,9 @@
 #include "VKRenderer.h"
 
 
-class CVKDescriptorSetManager
+class CVKDescriptorSetManager : public CGfxResourceManager
 {
-	friend class CVKDevice;
+	friend class CVKRenderer;
 	friend class CVKDescriptorSet;
 	friend class CVKDescriptorPool;
 
@@ -22,7 +22,6 @@ private:
 
 
 private:
-	pthread_mutex_t lock;
 	CVKDescriptorPool* m_pPoolListHead;
 	CVKDescriptorPool* m_pInputAttachmentPoolListHead;
 	eastl::unordered_map<CVKDescriptorSet*, CVKDescriptorSet*> m_pDescriptorSets;

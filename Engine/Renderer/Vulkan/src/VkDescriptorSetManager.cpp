@@ -7,8 +7,6 @@ CVKDescriptorSetManager::CVKDescriptorSetManager(CVKDevice* pDevice)
 	, m_pInputAttachmentPoolListHead(nullptr)
 {
 	ASSERT(m_pDevice);
-
-	pthread_mutex_init(&lock, nullptr);
 }
 
 CVKDescriptorSetManager::~CVKDescriptorSetManager(void)
@@ -28,8 +26,6 @@ CVKDescriptorSetManager::~CVKDescriptorSetManager(void)
 			delete pDescriptorPool;
 		} while ((pDescriptorPool = pDescriptorPoolNext) != nullptr);
 	}
-
-	pthread_mutex_destroy(&lock);
 }
 
 CVKDescriptorSet* CVKDescriptorSetManager::CreateInternal(CVKDescriptorPool** ppPoolListHead, const CGfxDescriptorLayoutPtr ptrDescriptorLayout)

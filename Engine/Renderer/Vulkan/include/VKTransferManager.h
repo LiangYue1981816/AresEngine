@@ -28,6 +28,7 @@ private:
 	VkCommandPool m_vkCommandPool;
 
 private:
+	pthread_mutex_t lock;
 	eastl::vector<CVKTransferBuffer*> m_pendingList;
 	eastl::unordered_map<VkDeviceSize, eastl::list<CVKTransferBuffer*>> m_freeLists;
 

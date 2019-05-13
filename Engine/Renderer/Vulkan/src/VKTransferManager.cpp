@@ -17,6 +17,8 @@ CVKTransferManager::CVKTransferManager(CVKDevice* pDevice, uint32_t queueFamilyI
 	createInfo.flags = VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT;
 	createInfo.queueFamilyIndex = queueFamilyIndex;
 	CALL_VK_FUNCTION_RETURN(vkCreateCommandPool(m_pDevice->GetDevice(), &createInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkCommandPool));
+
+	pthread_mutex_init(&lock, nullptr);
 }
 
 CVKTransferManager::~CVKTransferManager(void)
@@ -34,37 +36,42 @@ CVKTransferManager::~CVKTransferManager(void)
 	if (m_vkCommandPool) {
 		vkDestroyCommandPool(m_pDevice->GetDevice(), m_vkCommandPool, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
 	}
+
+	pthread_mutex_destroy(&lock);
 }
 
 CVKTransferBuffer* CVKTransferManager::AcquireTransferBuffer(size_t size)
 {
-	ASSERT(size);
-
-	for (eastl::vector<CVKTransferBuffer*>::const_iterator itTransferBuffer = m_pendingList.begin(); itTransferBuffer != m_pendingList.end();) {
-		CVKTransferBuffer* pTransferBuffer = *itTransferBuffer;
-
-		if (pTransferBuffer->IsTransferFinish()) {
-			m_freeLists[pTransferBuffer->GetSize()].emplace_back(pTransferBuffer);
-			itTransferBuffer = m_pendingList.erase(itTransferBuffer);
-		}
-		else {
-			itTransferBuffer++;
-		}
-	}
-
-	CVKTransferBuffer* pTransferBuffer = nullptr;
+	mutex_autolock autolock(&lock);
 	{
-		if (m_freeLists[size].empty()) {
-			pTransferBuffer = new CVKTransferBuffer(m_pDevice, m_vkQueue, m_vkCommandPool, size);
-		}
-		else {
-			pTransferBuffer = m_freeLists[size].front(); m_freeLists[size].pop_front();
+		ASSERT(size);
+
+		for (eastl::vector<CVKTransferBuffer*>::const_iterator itTransferBuffer = m_pendingList.begin(); itTransferBuffer != m_pendingList.end();) {
+			CVKTransferBuffer* pTransferBuffer = *itTransferBuffer;
+
+			if (pTransferBuffer->IsTransferFinish()) {
+				m_freeLists[pTransferBuffer->GetSize()].emplace_back(pTransferBuffer);
+				itTransferBuffer = m_pendingList.erase(itTransferBuffer);
+			}
+			else {
+				itTransferBuffer++;
+			}
 		}
 
-		m_pendingList.emplace_back(pTransferBuffer);
+		CVKTransferBuffer* pTransferBuffer = nullptr;
+		{
+			if (m_freeLists[size].empty()) {
+				pTransferBuffer = new CVKTransferBuffer(m_pDevice, m_vkQueue, m_vkCommandPool, size);
+			}
+			else {
+				pTransferBuffer = m_freeLists[size].front(); m_freeLists[size].pop_front();
+			}
+
+			m_pendingList.emplace_back(pTransferBuffer);
+		}
+
+		return pTransferBuffer;
 	}
-
-	return pTransferBuffer;
 }
 
 bool CVKTransferManager::TransferBufferData(CVKBuffer* pDstBuffer, VkAccessFlags dstAccessFlags, VkPipelineStageFlags dstPipelineStageFlags, size_t offset, size_t size, const void* data)
