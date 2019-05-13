@@ -38,10 +38,11 @@ CGLES3DescriptorSet* CGLES3DescriptorSetManager::Create(const CGfxPipelineGraphi
 		if (const SubpassInformation* pSubpassInformation = pRenderPass->GetSubpass(indexSubpass)) {
 			if (pSubpassInformation->inputAttachments.size()) {
 				if (m_pInputAttachmentDescriptorSets[(CGLES3FrameBuffer*)pFrameBuffer][(SubpassInformation*)pSubpassInformation][(CGLES3PipelineGraphics*)pPipelineGraphics] == nullptr) {
-					m_pInputAttachmentDescriptorSets[(CGLES3FrameBuffer*)pFrameBuffer][(SubpassInformation*)pSubpassInformation][(CGLES3PipelineGraphics*)pPipelineGraphics] = new CGLES3DescriptorSet(this, pPipelineGraphics->GetDescriptorLayout(DESCRIPTOR_SET_INPUTATTACHMENT));
+					CGLES3DescriptorSet* pDescriptorSet = new CGLES3DescriptorSet(this, pPipelineGraphics->GetDescriptorLayout(DESCRIPTOR_SET_INPUTATTACHMENT));
+					m_pInputAttachmentDescriptorSets[(CGLES3FrameBuffer*)pFrameBuffer][(SubpassInformation*)pSubpassInformation][(CGLES3PipelineGraphics*)pPipelineGraphics] = pDescriptorSet;
 
 					for (const auto& itInputAttachment : pSubpassInformation->inputAttachments) {
-						m_pInputAttachmentDescriptorSets[(CGLES3FrameBuffer*)pFrameBuffer][(SubpassInformation*)pSubpassInformation][(CGLES3PipelineGraphics*)pPipelineGraphics]->SetTextureInputAttachment(
+						pDescriptorSet->SetTextureInputAttachment(
 							((CGLES3PipelineGraphics*)pPipelineGraphics)->GetInputAttachmentName(itInputAttachment.first),
 							((CGLES3FrameBuffer*)pFrameBuffer)->GetAttachmentTexture(itInputAttachment.first),
 							GLES3Renderer()->CreateSampler(GFX_FILTER_NEAREST, GFX_FILTER_NEAREST, GFX_SAMPLER_MIPMAP_MODE_NEAREST, GFX_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE));
