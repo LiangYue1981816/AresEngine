@@ -38,12 +38,9 @@ void CVKDescriptorSetManager::FreePool(CVKDescriptorPool** ppPoolListHead)
 	*ppPoolListHead = nullptr;
 }
 
-CVKDescriptorSet* CVKDescriptorSetManager::Create(const CGfxDescriptorLayoutPtr ptrDescriptorLayout)
+CVKDescriptorSet* CVKDescriptorSetManager::CreateInternal(CVKDescriptorPool**ppPoolListHead, const CGfxDescriptorLayoutPtr ptrDescriptorLayout)
 {
-	mutex_autolock autolock(&lock);
-	{
-		CVKDescriptorPool* pDescriptorPool = m_pPoolListHead;
-
+	if (CVKDescriptorPool* pDescriptorPool = *ppPoolListHead) {
 		do {
 			if (CVKDescriptorSet* DescriptorSet = pDescriptorPool->AllocDescriptorSet(ptrDescriptorLayout)) {
 				return DescriptorSet;
@@ -60,9 +57,41 @@ CVKDescriptorSet* CVKDescriptorSetManager::Create(const CGfxDescriptorLayoutPtr 
 	return nullptr;
 }
 
+CVKDescriptorSet* CVKDescriptorSetManager::Create(const CGfxDescriptorLayoutPtr ptrDescriptorLayout)
+{
+	mutex_autolock autolock(&lock);
+	{
+		CVKDescriptorSet* pDescriptorSet = CreateInternal(&m_pPoolListHead, ptrDescriptorLayout);
+		m_pDescriptorSets[pDescriptorSet] = pDescriptorSet;
+		return pDescriptorSet;
+	}
+}
+
 CVKDescriptorSet* CVKDescriptorSetManager::Create(const CGfxPipelineGraphics* pPipelineGraphics, const CGfxFrameBuffer* pFrameBuffer, const CGfxRenderPass* pRenderPass, int indexSubpass)
 {
-	return nullptr;
+	mutex_autolock autolock(&lock);
+	{
+		if (const SubpassInformation* pSubpassInformation = pRenderPass->GetSubpass(indexSubpass)) {
+			if (pSubpassInformation->inputAttachments.size()) {
+				if (m_pInputAttachmentDescriptorSets[(CVKFrameBuffer*)pFrameBuffer][(SubpassInformation*)pSubpassInformation][(CVKPipelineGraphics*)pPipelineGraphics] == nullptr) {
+					CVKDescriptorSet* pDescriptorSet = CreateInternal(&m_pInputAttachmentPoolListHead, pPipelineGraphics->GetDescriptorLayout(DESCRIPTOR_SET_INPUTATTACHMENT));
+					{
+						for (const auto& itInputAttachment : pSubpassInformation->inputAttachments) {
+							pDescriptorSet->SetTextureInputAttachment(
+								((CVKPipelineGraphics*)pPipelineGraphics)->GetInputAttachmentName(itInputAttachment.first),
+								((CVKFrameBuffer*)pFrameBuffer)->GetAttachmentTexture(itInputAttachment.first),
+								VKRenderer()->CreateSampler(GFX_FILTER_NEAREST, GFX_FILTER_NEAREST, GFX_SAMPLER_MIPMAP_MODE_NEAREST, GFX_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE));
+						}
+					}
+					m_pInputAttachmentDescriptorSets[(CVKFrameBuffer*)pFrameBuffer][(SubpassInformation*)pSubpassInformation][(CVKPipelineGraphics*)pPipelineGraphics] = pDescriptorSet;
+				}
+
+				return m_pInputAttachmentDescriptorSets[(CVKFrameBuffer*)pFrameBuffer][(SubpassInformation*)pSubpassInformation][(CVKPipelineGraphics*)pPipelineGraphics];
+			}
+		}
+
+		return nullptr;
+	}
 }
 
 void CVKDescriptorSetManager::Destroy(CVKDescriptorSet* pDescriptorSet)
@@ -72,20 +101,22 @@ void CVKDescriptorSetManager::Destroy(CVKDescriptorSet* pDescriptorSet)
 		ASSERT(pDescriptorSet);
 		ASSERT(pDescriptorSet->GetDescriptorPool());
 
-		CVKDescriptorPool* pDescriptorPool = pDescriptorSet->GetDescriptorPool();
+		if (m_pDescriptorSets.find(pDescriptorSet) != m_pDescriptorSets.end()) {
+			CVKDescriptorPool* pDescriptorPool = pDescriptorSet->GetDescriptorPool();
 
-		if (pDescriptorPool->FreeDescriptorSet(pDescriptorSet)) {
-			if (pDescriptorPool->pPrev) {
-				pDescriptorPool->pPrev->pNext = pDescriptorPool->pNext;
+			if (pDescriptorPool->FreeDescriptorSet(pDescriptorSet)) {
+				if (pDescriptorPool->pPrev) {
+					pDescriptorPool->pPrev->pNext = pDescriptorPool->pNext;
+				}
+
+				if (pDescriptorPool->pNext) {
+					pDescriptorPool->pNext->pPrev = pDescriptorPool->pPrev;
+				}
+
+				pDescriptorPool->pPrev = nullptr;
+				pDescriptorPool->pNext = m_pPoolListHead;
+				m_pPoolListHead = pDescriptorPool;
 			}
-
-			if (pDescriptorPool->pNext) {
-				pDescriptorPool->pNext->pPrev = pDescriptorPool->pPrev;
-			}
-
-			pDescriptorPool->pPrev = nullptr;
-			pDescriptorPool->pNext = m_pPoolListHead;
-			m_pPoolListHead = pDescriptorPool;
 		}
 	}
 }
