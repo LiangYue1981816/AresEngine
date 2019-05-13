@@ -26,6 +26,9 @@ private:
 	void Destroy(void);
 
 private:
+	uint32_t GetInputAttachmentName(uint32_t inputAttachmentIndex) const;
+
+private:
 	void Bind(VkCommandBuffer vkCommandBuffer, VkPipelineBindPoint pipelineBindPoint);
 
 	void Uniform1i(VkCommandBuffer vkCommandBuffer, uint32_t name, int v0) const;
@@ -61,6 +64,7 @@ private:
 	CVKShader* m_pShaders[compute_shader - vertex_shader + 1];
 	CGfxDescriptorLayoutPtr m_ptrDescriptorLayouts[DESCRIPTOR_SET_COUNT];
 	eastl::unordered_map<uint32_t, VkPushConstantRange> m_pushConstantRanges;
+	eastl::unordered_map<uint32_t, uint32_t> m_inputAttachmentNames; // [input attachment index, name]
 
 private:
 	CVKDevice* m_pDevice;

@@ -56,6 +56,7 @@ bool CVKPipeline::CreateLayouts(void)
 			}
 
 			for (const auto& itInputAttachment : inputAttachmentBindings) {
+				m_inputAttachmentNames[itInputAttachment.second.inputAttachmentIndex] = HashValue(itInputAttachment.first.c_str());
 				m_ptrDescriptorLayouts[itInputAttachment.second.set]->SetInputAttachmentBinding(HashValue(itInputAttachment.first.c_str()), itInputAttachment.second.binding);
 			}
 		}
@@ -394,11 +395,24 @@ void CVKPipeline::Destroy(void)
 	m_pShaders[compute_shader] = nullptr;
 
 	m_pushConstantRanges.clear();
+	m_inputAttachmentNames.clear();
 
 	m_ptrDescriptorLayouts[DESCRIPTOR_SET_ENGINE]->Destroy(true);
 	m_ptrDescriptorLayouts[DESCRIPTOR_SET_CAMERA]->Destroy(true);
 	m_ptrDescriptorLayouts[DESCRIPTOR_SET_PASS]->Destroy(true);
 	m_ptrDescriptorLayouts[DESCRIPTOR_SET_INPUTATTACHMENT]->Destroy(true);
+}
+
+uint32_t CVKPipeline::GetInputAttachmentName(uint32_t inputAttachmentIndex) const
+{
+	const auto& itInputAttachmentName = m_inputAttachmentNames.find(inputAttachmentIndex);
+
+	if (itInputAttachmentName != m_inputAttachmentNames.end()) {
+		return itInputAttachmentName->second;
+	}
+	else {
+		return INVALID_HASHNAME;
+	}
 }
 
 void CVKPipeline::Bind(VkCommandBuffer vkCommandBuffer, VkPipelineBindPoint pipelineBindPoint)
