@@ -115,17 +115,19 @@ bool CVKPipeline::CreateVertexInputState(eastl::vector<VkVertexInputBindingDescr
 	ASSERT(m_pShaders[vertex_shader]);
 	ASSERT(m_pShaders[vertex_shader]->IsValid());
 
+	const eastl::vector<eastl::string>& vertexAttributes = m_pShaders[vertex_shader]->GetSprivCross().GetVertexAttributes();
+
 	uint32_t vertexFormat = 0;
 	uint32_t instanceFormat = 0;
-
-	const eastl::vector<eastl::string>& vertexAttributes = m_pShaders[vertex_shader]->GetSprivCross().GetVertexAttributes();
 
 	for (const auto& itVertexAttribute : vertexAttributes) {
 		vertexFormat |= GetVertexAttribute(itVertexAttribute.c_str());
 		instanceFormat |= GetInstanceAttribute(itVertexAttribute.c_str());
 	}
 
-	if (vertexFormat || instanceFormat) {
+	if (vertexFormat) {
+		m_vertexFormats[vertexBinding] = vertexFormat;
+
 		for (const auto& itVertexAttribute : vertexAttributes) {
 			if (uint32_t attribute = GetVertexAttribute(itVertexAttribute.c_str())) {
 				VkVertexInputAttributeDescription inputAttributeDescription = {};
@@ -135,7 +137,19 @@ bool CVKPipeline::CreateVertexInputState(eastl::vector<VkVertexInputBindingDescr
 				inputAttributeDescription.offset = GetVertexAttributeOffset(vertexFormat, attribute);
 				inputAttributeDescriptions.emplace_back(inputAttributeDescription);
 			}
+		}
 
+		VkVertexInputBindingDescription inputBindingDescription;
+		inputBindingDescription.binding = vertexBinding;
+		inputBindingDescription.stride = GetVertexStride(vertexFormat);
+		inputBindingDescription.inputRate = VK_VERTEX_INPUT_RATE_VERTEX;
+		inputBindingDescriptions.emplace_back(inputBindingDescription);
+	}
+
+	if (instanceFormat) {
+		m_vertexFormats[instanceBinding] = instanceFormat;
+
+		for (const auto& itVertexAttribute : vertexAttributes) {
 			if (uint32_t attribute = GetInstanceAttribute(itVertexAttribute.c_str())) {
 				VkVertexInputAttributeDescription inputAttributeDescription = {};
 				inputAttributeDescription.binding = instanceBinding;
@@ -146,23 +160,11 @@ bool CVKPipeline::CreateVertexInputState(eastl::vector<VkVertexInputBindingDescr
 			}
 		}
 
-		if (vertexFormat) {
-			VkVertexInputBindingDescription inputBindingDescription;
-			inputBindingDescription.binding = vertexBinding;
-			inputBindingDescription.stride = GetVertexStride(vertexFormat);
-			inputBindingDescription.inputRate = VK_VERTEX_INPUT_RATE_VERTEX;
-			inputBindingDescriptions.emplace_back(inputBindingDescription);
-			m_vertexFormats[vertexBinding] = vertexFormat;
-		}
-
-		if (instanceFormat) {
-			VkVertexInputBindingDescription inputBindingDescription;
-			inputBindingDescription.binding = instanceBinding;
-			inputBindingDescription.stride = GetInstanceStride(instanceFormat);
-			inputBindingDescription.inputRate = VK_VERTEX_INPUT_RATE_INSTANCE;
-			inputBindingDescriptions.emplace_back(inputBindingDescription);
-			m_vertexFormats[instanceBinding] = instanceFormat;
-		}
+		VkVertexInputBindingDescription inputBindingDescription;
+		inputBindingDescription.binding = instanceBinding;
+		inputBindingDescription.stride = GetInstanceStride(instanceFormat);
+		inputBindingDescription.inputRate = VK_VERTEX_INPUT_RATE_INSTANCE;
+		inputBindingDescriptions.emplace_back(inputBindingDescription);
 	}
 
 	return true;
