@@ -37,8 +37,8 @@ public:
 
 private:
 	uint32_t m_set;
-	eastl::unordered_map<uint32_t, uint32_t> m_uniformBlockBindings; // [name, binding]
-	eastl::unordered_map<uint32_t, uint32_t> m_sampledImageBindings; // [name, binding]
+	eastl::unordered_map<uint32_t, uint32_t> m_uniformBlockBindings;    // [name, binding]
+	eastl::unordered_map<uint32_t, uint32_t> m_sampledImageBindings;    // [name, binding]
 	eastl::unordered_map<uint32_t, uint32_t> m_inputAttachmentBindings; // [name, binding]
 
 private:

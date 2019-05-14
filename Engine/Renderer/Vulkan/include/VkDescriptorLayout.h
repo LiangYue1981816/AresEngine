@@ -45,8 +45,8 @@ private:
 private:
 	uint32_t m_set;
 	uint32_t m_numDescriptors[VK_DESCRIPTOR_TYPE_RANGE_SIZE];
-	eastl::unordered_map<uint32_t, VkDescriptorSetLayoutBinding> m_uniformBlockBindings; // [name, binding]
-	eastl::unordered_map<uint32_t, VkDescriptorSetLayoutBinding> m_sampledImageBindings; // [name, binding]
+	eastl::unordered_map<uint32_t, VkDescriptorSetLayoutBinding> m_uniformBlockBindings;    // [name, binding]
+	eastl::unordered_map<uint32_t, VkDescriptorSetLayoutBinding> m_sampledImageBindings;    // [name, binding]
 	eastl::unordered_map<uint32_t, VkDescriptorSetLayoutBinding> m_inputAttachmentBindings; // [name, binding]
 
 private:
