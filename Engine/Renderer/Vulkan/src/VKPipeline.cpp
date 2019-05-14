@@ -23,6 +23,7 @@ CVKPipeline::~CVKPipeline(void)
 
 const VkPipelineLayout CVKPipeline::GetPipelineLayout(void) const
 {
+	ASSERT(m_vkPipelineLayout);
 	return m_vkPipelineLayout;
 }
 
