@@ -67,16 +67,13 @@ bool CVKPipeline::CreateLayouts(void)
 		}
 	}
 
-	CALL_BOOL_FUNCTION_RETURN_BOOL(m_ptrDescriptorLayouts[DESCRIPTOR_SET_ENGINE]->Create());
-	CALL_BOOL_FUNCTION_RETURN_BOOL(m_ptrDescriptorLayouts[DESCRIPTOR_SET_CAMERA]->Create());
-	CALL_BOOL_FUNCTION_RETURN_BOOL(m_ptrDescriptorLayouts[DESCRIPTOR_SET_PASS]->Create());
-	CALL_BOOL_FUNCTION_RETURN_BOOL(m_ptrDescriptorLayouts[DESCRIPTOR_SET_INPUTATTACHMENT]->Create());
-
 	eastl::vector<VkDescriptorSetLayout> layouts;
 	eastl::vector<VkPushConstantRange> pushConstantRanges;
 
 	for (int index = 0; index < DESCRIPTOR_SET_COUNT; index++) {
-		layouts.emplace_back(((CVKDescriptorLayout*)m_ptrDescriptorLayouts[index].GetPointer())->GetDescriptorLayout());
+		if (m_ptrDescriptorLayouts[index]->Create()) {
+			layouts.emplace_back(((CVKDescriptorLayout*)m_ptrDescriptorLayouts[index].GetPointer())->GetDescriptorLayout());
+		}
 	}
 
 	for (const auto& itPushConstantRange : m_pushConstantRanges) {
