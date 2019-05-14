@@ -13,6 +13,7 @@ private:
 
 
 public:
+	const VkPipelineLayout GetPipelineLayout(void) const;
 	const CGfxDescriptorLayoutPtr GetDescriptorLayout(int indexDescriptorSet) const;
 
 public:

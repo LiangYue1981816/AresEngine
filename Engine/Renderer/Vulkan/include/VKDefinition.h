@@ -103,17 +103,15 @@ class CVKMeshManager;
 class CVKMeshDraw;
 class CVKMeshDrawManager;
 
-class CVKDescriptorLayout;
-class CVKDescriptorLayoutManager;
+class CVKMaterial;
+class CVKMaterialPass;
+class CVKMaterialManager;
 
 class CVKDescriptorPool;
 class CVKDescriptorSet;
 class CVKDescriptorSetManager;
+class CVKDescriptorLayout;
+class CVKDescriptorLayoutManager;
 
 class CVKCommandBuffer;
 class CVKCommandBufferManager;
-/*
-class CVKMaterial;
-class CVKMaterialPass;
-class CVKMaterialManager;
-*/

@@ -16,6 +16,11 @@ CVKPipelineCompute::~CVKPipelineCompute(void)
 	delete m_pPipeline;
 }
 
+const VkPipelineLayout CVKPipelineCompute::GetPipelineLayout(void) const
+{
+	return m_pPipeline->GetPipelineLayout();
+}
+
 const CGfxDescriptorLayoutPtr CVKPipelineCompute::GetDescriptorLayout(int indexDescriptorSet) const
 {
 	return m_pPipeline->GetDescriptorLayout(indexDescriptorSet);

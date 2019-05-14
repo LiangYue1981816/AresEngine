@@ -14,6 +14,8 @@ private:
 
 public:
 	const CGfxDescriptorLayoutPtr GetDescriptorLayout(int indexDescriptorSet) const;
+
+public:
 	const uint32_t GetInputAttachmentName(uint32_t inputAttachmentIndex) const;
 	const bool IsCompatibleVertexFormat(uint32_t binding, uint32_t format) const;
 

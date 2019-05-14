@@ -21,6 +21,11 @@ CVKPipeline::~CVKPipeline(void)
 	Destroy();
 }
 
+const VkPipelineLayout CVKPipeline::GetPipelineLayout(void) const
+{
+	return m_vkPipelineLayout;
+}
+
 const CGfxDescriptorLayoutPtr CVKPipeline::GetDescriptorLayout(int indexDescriptorSet) const
 {
 	if (indexDescriptorSet >= 0 && indexDescriptorSet < DESCRIPTOR_SET_COUNT) {

@@ -57,20 +57,19 @@
 #include "VKMeshDraw.h"
 #include "VKMeshDrawManager.h"
 
-#include "VKDescriptorLayout.h"
-#include "VKDescriptorLayoutManager.h"
+//#include "VKMaterial.h"
+#include "VKMaterialPass.h"
+//#include "VKMaterialManager.h"
 
 #include "VKDescriptorPool.h"
 #include "VKDescriptorSet.h"
 #include "VKDescriptorSetManager.h"
+#include "VKDescriptorLayout.h"
+#include "VKDescriptorLayoutManager.h"
 
 #include "VKCommandBuffer.h"
 #include "VKCommandBufferManager.h"
-/*
-#include "VKMaterial.h"
-#include "VKMaterialPass.h"
-#include "VKMaterialManager.h"
-*/
+
 
 #define VKRenderer() ((CVKRenderer *)CGfxRenderer::GetInstance())
 
