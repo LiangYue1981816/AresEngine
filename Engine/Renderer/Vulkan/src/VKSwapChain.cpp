@@ -36,15 +36,15 @@ static VkSurfaceTransformFlagBitsKHR GetSwapchainTransform(const VkSurfaceCapabi
 
 static VkPresentModeKHR GetSwapchainPresentMode(const eastl::vector<VkPresentModeKHR>& modes)
 {
-	for (int index = 0; index < modes.size(); index++) {
-		if (modes[index] == VK_PRESENT_MODE_FIFO_KHR) {
-			return modes[index];
+	for (int indexMode = 0; indexMode < modes.size(); indexMode++) {
+		if (modes[indexMode] == VK_PRESENT_MODE_FIFO_KHR) {
+			return modes[indexMode];
 		}
 	}
 
-	for (int index = 0; index < modes.size(); index++) {
-		if (modes[index] == VK_PRESENT_MODE_MAILBOX_KHR) {
-			return modes[index];
+	for (int indexMode = 0; indexMode < modes.size(); indexMode++) {
+		if (modes[indexMode] == VK_PRESENT_MODE_MAILBOX_KHR) {
+			return modes[indexMode];
 		}
 	}
 
@@ -53,9 +53,9 @@ static VkPresentModeKHR GetSwapchainPresentMode(const eastl::vector<VkPresentMod
 
 static VkSurfaceFormatKHR GetSwapchainFormat(const eastl::vector<VkSurfaceFormatKHR>& formats, VkFormat format)
 {
-	for (int index = 0; index < formats.size(); index++) {
-		if (formats[index].format == format) {
-			return formats[index];
+	for (int indexFormat = 0; indexFormat < formats.size(); indexFormat++) {
+		if (formats[indexFormat].format == format) {
+			return formats[indexFormat];
 		}
 	}
 
@@ -187,33 +187,33 @@ bool CVKSwapChain::CreateImagesAndImageViews(void)
 
 	CALL_VK_FUNCTION_RETURN_BOOL(vkGetSwapchainImagesKHR(m_pDevice->GetDevice(), m_vkSwapchain, &numImages, m_vkImages));
 
-	for (int index = 0; index < SWAPCHAIN_FRAME_COUNT; index++) {
+	for (int indexFrame = 0; indexFrame < SWAPCHAIN_FRAME_COUNT; indexFrame++) {
 		VkSemaphoreCreateInfo semaphoreCreateInfo = {};
 		semaphoreCreateInfo.sType = VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO;
 		semaphoreCreateInfo.pNext = nullptr;
 		semaphoreCreateInfo.flags = 0;
-		CALL_VK_FUNCTION_RETURN_BOOL(vkCreateSemaphore(m_pDevice->GetDevice(), &semaphoreCreateInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkRenderDoneSemaphores[index]));
+		CALL_VK_FUNCTION_RETURN_BOOL(vkCreateSemaphore(m_pDevice->GetDevice(), &semaphoreCreateInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkRenderDoneSemaphores[indexFrame]));
 
 		VkFenceCreateInfo fenceCreateInfo = {};
 		fenceCreateInfo.sType = VK_STRUCTURE_TYPE_FENCE_CREATE_INFO;
 		fenceCreateInfo.pNext = nullptr;
 		fenceCreateInfo.flags = VK_FENCE_CREATE_SIGNALED_BIT;
-		CALL_VK_FUNCTION_RETURN_BOOL(vkCreateFence(m_pDevice->GetDevice(), &fenceCreateInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkRenderDoneFences[index]));
+		CALL_VK_FUNCTION_RETURN_BOOL(vkCreateFence(m_pDevice->GetDevice(), &fenceCreateInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkRenderDoneFences[indexFrame]));
 
 		VkImageViewCreateInfo imageViewCreateInfo = {};
 		imageViewCreateInfo.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
 		imageViewCreateInfo.pNext = nullptr;
 		imageViewCreateInfo.flags = 0;
-		imageViewCreateInfo.image = m_vkImages[index];
+		imageViewCreateInfo.image = m_vkImages[indexFrame];
 		imageViewCreateInfo.viewType = VK_IMAGE_VIEW_TYPE_2D;
 		imageViewCreateInfo.format = (VkFormat)m_format;
 		imageViewCreateInfo.components = CVKHelper::GetFormatComponentMapping((VkFormat)m_format);
 		imageViewCreateInfo.subresourceRange = { VK_IMAGE_ASPECT_COLOR_BIT, 0, 1, 0, 1 };
-		CALL_VK_FUNCTION_RETURN_BOOL(vkCreateImageView(m_pDevice->GetDevice(), &imageViewCreateInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkImageViews[index]));
+		CALL_VK_FUNCTION_RETURN_BOOL(vkCreateImageView(m_pDevice->GetDevice(), &imageViewCreateInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkImageViews[indexFrame]));
 
-		uint32_t name = HashValueFormat("SwapChain Frame Texture %d", index);
-		m_ptrRenderTextures[index] = VKRenderer()->NewRenderTexture(name);
-		CALL_BOOL_FUNCTION_RETURN_BOOL(m_ptrRenderTextures[index]->Create((HANDLE)m_vkImageViews[index], m_format, m_width, m_height));
+		uint32_t name = HashValueFormat("SwapChain Frame Texture %d", indexFrame);
+		m_ptrRenderTextures[indexFrame] = VKRenderer()->NewRenderTexture(name);
+		CALL_BOOL_FUNCTION_RETURN_BOOL(m_ptrRenderTextures[indexFrame]->Create((HANDLE)m_vkImageViews[indexFrame], m_format, m_width, m_height));
 	}
 
 	return true;
@@ -235,23 +235,23 @@ void CVKSwapChain::DestroySwapChain(void)
 
 void CVKSwapChain::DestroyImagesAndImageViews(void)
 {
-	for (int index = 0; index < SWAPCHAIN_FRAME_COUNT; index++) {
-		if (m_vkImageViews[index]) {
-			vkDestroyImageView(m_pDevice->GetDevice(), m_vkImageViews[index], m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
+	for (int indexFrame = 0; indexFrame < SWAPCHAIN_FRAME_COUNT; indexFrame++) {
+		if (m_vkImageViews[indexFrame]) {
+			vkDestroyImageView(m_pDevice->GetDevice(), m_vkImageViews[indexFrame], m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
 		}
 
-		if (m_vkRenderDoneSemaphores[index]) {
-			vkDestroySemaphore(m_pDevice->GetDevice(), m_vkRenderDoneSemaphores[index], m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
+		if (m_vkRenderDoneSemaphores[indexFrame]) {
+			vkDestroySemaphore(m_pDevice->GetDevice(), m_vkRenderDoneSemaphores[indexFrame], m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
 		}
 
-		if (m_vkRenderDoneFences[index]) {
-			vkDestroyFence(m_pDevice->GetDevice(), m_vkRenderDoneFences[index], m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
+		if (m_vkRenderDoneFences[indexFrame]) {
+			vkDestroyFence(m_pDevice->GetDevice(), m_vkRenderDoneFences[indexFrame], m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
 		}
 
-		m_vkImageViews[index] = VK_NULL_HANDLE;
-		m_vkRenderDoneSemaphores[index] = VK_NULL_HANDLE;
-		m_vkRenderDoneFences[index] = VK_NULL_HANDLE;
-		m_ptrRenderTextures[index].Release();
+		m_vkImageViews[indexFrame] = VK_NULL_HANDLE;
+		m_vkRenderDoneSemaphores[indexFrame] = VK_NULL_HANDLE;
+		m_vkRenderDoneFences[indexFrame] = VK_NULL_HANDLE;
+		m_ptrRenderTextures[indexFrame].Release();
 	}
 }
 
