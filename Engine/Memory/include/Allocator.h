@@ -2,7 +2,7 @@
 #include "Define.h"
 
 
-#define GET_MEM_SIZE(ptr) (*((uint32_t *)(ptr) - 1) & 0x01FFFFFF)
+#define GET_MEM_SIZE(ptr) ((ptr) != nullptr ? (*((uint32_t*)(ptr) - 1) & 0x01FFFFFF) : 0)
 
 
 CALL_API void InitAllocator(void);
