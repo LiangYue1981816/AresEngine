@@ -4,7 +4,6 @@
 
 class CVKDescriptorLayout : public CGfxDescriptorLayout
 {
-	friend class CVKPipeline;
 	friend class CVKDescriptorLayoutManager;
 
 
