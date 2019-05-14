@@ -167,16 +167,16 @@ bool CVKTexture::Create(GfxTextureType type, GfxPixelFormat format, int width, i
 			}
 			CALL_VK_FUNCTION_BREAK(vkCreateImage(m_pDevice->GetDevice(), &imageCreateInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkImage));
 
-			VkImageViewCreateInfo createInfo = {};
-			createInfo.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
-			createInfo.pNext = nullptr;
-			createInfo.flags = 0;
-			createInfo.image = m_vkImage;
-			createInfo.viewType = CVKHelper::TranslateImageViewType(type);
-			createInfo.format = (VkFormat)format;
-			createInfo.components = CVKHelper::GetFormatComponentMapping((VkFormat)format);
-			createInfo.subresourceRange = { imageAspectFlags, 0, (uint32_t)levels, 0, (uint32_t)layers };
-			CALL_VK_FUNCTION_BREAK(vkCreateImageView(m_pDevice->GetDevice(), &createInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkImageView));
+			VkImageViewCreateInfo viewCreateInfo = {};
+			viewCreateInfo.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
+			viewCreateInfo.pNext = nullptr;
+			viewCreateInfo.flags = 0;
+			viewCreateInfo.image = m_vkImage;
+			viewCreateInfo.viewType = CVKHelper::TranslateImageViewType(type);
+			viewCreateInfo.format = (VkFormat)format;
+			viewCreateInfo.components = CVKHelper::GetFormatComponentMapping((VkFormat)format);
+			viewCreateInfo.subresourceRange = { imageAspectFlags, 0, (uint32_t)levels, 0, (uint32_t)layers };
+			CALL_VK_FUNCTION_BREAK(vkCreateImageView(m_pDevice->GetDevice(), &viewCreateInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkImageView));
 
 			VkMemoryPropertyFlags memoryPropertyFlags =
 				imageTiling == VK_IMAGE_TILING_LINEAR ?
