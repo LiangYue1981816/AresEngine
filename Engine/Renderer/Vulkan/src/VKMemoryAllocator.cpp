@@ -190,23 +190,25 @@ void CVKMemoryAllocator::InitNodes(void)
 
 void CVKMemoryAllocator::FreeNodes(void)
 {
-	uint32_t numNodes = (uint32_t)(m_memoryFullSize / m_memoryAlignment);
+	if (m_nodes) {
+		uint32_t numNodes = (uint32_t)(m_memoryFullSize / m_memoryAlignment);
 
-	for (uint32_t indexNode = 0; indexNode < numNodes; indexNode++) {
-		if (m_nodes[indexNode]) {
-			if (CVKMemory* pMemory = m_nodes[indexNode]->pListHead) {
-				CVKMemory* pMemoryNext = nullptr;
-				do {
-					pMemoryNext = pMemory->pFreeNext;
-					delete pMemory;
-				} while (pMemory = pMemoryNext);
+		for (uint32_t indexNode = 0; indexNode < numNodes; indexNode++) {
+			if (m_nodes[indexNode]) {
+				if (CVKMemory* pMemory = m_nodes[indexNode]->pListHead) {
+					CVKMemory* pMemoryNext = nullptr;
+					do {
+						pMemoryNext = pMemory->pFreeNext;
+						delete pMemory;
+					} while (pMemory = pMemoryNext);
+				}
+
+				delete m_nodes[indexNode];
 			}
-
-			delete m_nodes[indexNode];
 		}
-	}
 
-	delete[] m_nodes;
+		delete[] m_nodes;
+	}
 
 	m_root = { nullptr };
 	m_nodes = nullptr;
