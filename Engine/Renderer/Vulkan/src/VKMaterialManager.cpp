@@ -5,7 +5,7 @@
 CVKMaterialManager::CVKMaterialManager(CVKDevice* pDevice)
 	: m_pDevice(pDevice)
 {
-
+	ASSERT(m_pDevice);
 }
 
 CVKMaterialManager::~CVKMaterialManager(void)
@@ -42,15 +42,15 @@ CVKMaterial* CVKMaterialManager::Create(uint32_t name)
 	}
 }
 
-CVKMaterial* CVKMaterialManager::Create(const char* szFileName, uint32_t vertexBinding, uint32_t instanceBinding)
+CVKMaterial* CVKMaterialManager::Create(const char* szFileName, int vertexBinding, int instanceBinding, int baseLevel, int numLevels)
 {
-	uint32_t name = HashValue(szFileName);
-
 	mutex_autolock autolock(&lock);
 	{
+		uint32_t name = HashValue(szFileName);
+
 		if (m_pMaterials[name] == nullptr) {
 			m_pMaterials[name] = new CVKMaterial(m_pDevice, this, name);
-			ResourceLoader()->LoadMaterial(szFileName, m_pMaterials[name], vertexBinding, instanceBinding);
+			ResourceLoader()->LoadMaterial(szFileName, m_pMaterials[name], vertexBinding, instanceBinding, baseLevel, numLevels);
 		}
 
 		return m_pMaterials[name];
@@ -61,7 +61,9 @@ void CVKMaterialManager::Destroy(CVKMaterial* pMaterial)
 {
 	mutex_autolock autolock(&lock);
 	{
-		if (pMaterial) {
+		ASSERT(pMaterial);
+
+		if (m_pMaterials.find(pMaterial->GetName()) != m_pMaterials.end()) {
 			m_pMaterials.erase(pMaterial->GetName());
 			delete pMaterial;
 		}

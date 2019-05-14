@@ -57,9 +57,9 @@
 #include "VKMeshDraw.h"
 #include "VKMeshDrawManager.h"
 
-//#include "VKMaterial.h"
+#include "VKMaterial.h"
 #include "VKMaterialPass.h"
-//#include "VKMaterialManager.h"
+#include "VKMaterialManager.h"
 
 #include "VKDescriptorPool.h"
 #include "VKDescriptorSet.h"

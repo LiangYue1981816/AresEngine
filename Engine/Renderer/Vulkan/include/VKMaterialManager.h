@@ -16,7 +16,7 @@ private:
 private:
 	CVKMaterial* Get(uint32_t name);
 	CVKMaterial* Create(uint32_t name);
-	CVKMaterial* Create(const char* szFileName, uint32_t vertexBinding, uint32_t instanceBinding);
+	CVKMaterial* Create(const char* szFileName, int vertexBinding, int instanceBinding, int baseLevel, int numLevels);
 	void Destroy(CVKMaterial* pMaterial);
 
 

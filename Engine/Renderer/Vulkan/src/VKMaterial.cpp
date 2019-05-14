@@ -3,11 +3,11 @@
 
 CVKMaterial::CVKMaterial(CVKDevice* pDevice, CVKMaterialManager* pManager, uint32_t name)
 	: CGfxMaterial(name)
-	, m_name(name)
 	, m_pDevice(pDevice)
 	, m_pManager(pManager)
 {
-
+	ASSERT(m_pDevice);
+	ASSERT(m_pManager);
 }
 
 CVKMaterial::~CVKMaterial(void)
@@ -18,11 +18,6 @@ CVKMaterial::~CVKMaterial(void)
 void CVKMaterial::Release(void)
 {
 	m_pManager->Destroy(this);
-}
-
-uint32_t CVKMaterial::GetName(void) const
-{
-	return m_name;
 }
 
 CGfxMaterialPass* CVKMaterial::GetPass(uint32_t name)
