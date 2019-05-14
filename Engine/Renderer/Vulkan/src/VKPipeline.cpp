@@ -67,13 +67,16 @@ bool CVKPipeline::CreateLayouts(void)
 		}
 	}
 
+	m_ptrDescriptorLayouts[DESCRIPTOR_SET_ENGINE]->Create();
+	m_ptrDescriptorLayouts[DESCRIPTOR_SET_CAMERA]->Create();
+	m_ptrDescriptorLayouts[DESCRIPTOR_SET_PASS]->Create();
+	m_ptrDescriptorLayouts[DESCRIPTOR_SET_INPUTATTACHMENT]->Create();
+
 	eastl::vector<VkDescriptorSetLayout> layouts;
 	eastl::vector<VkPushConstantRange> pushConstantRanges;
 
 	for (int index = 0; index < DESCRIPTOR_SET_COUNT; index++) {
-		if (m_ptrDescriptorLayouts[index]->Create()) {
-			layouts.emplace_back(((CVKDescriptorLayout*)m_ptrDescriptorLayouts[index].GetPointer())->GetDescriptorLayout());
-		}
+		layouts.emplace_back(((CVKDescriptorLayout*)m_ptrDescriptorLayouts[index].GetPointer())->GetDescriptorLayout());
 	}
 
 	for (const auto& itPushConstantRange : m_pushConstantRanges) {

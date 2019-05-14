@@ -92,10 +92,10 @@ bool CGLES3Pipeline::CreateLayouts(void)
 		}
 	}
 
-	CALL_BOOL_FUNCTION_RETURN_BOOL(m_ptrDescriptorLayouts[DESCRIPTOR_SET_ENGINE]->Create());
-	CALL_BOOL_FUNCTION_RETURN_BOOL(m_ptrDescriptorLayouts[DESCRIPTOR_SET_CAMERA]->Create());
-	CALL_BOOL_FUNCTION_RETURN_BOOL(m_ptrDescriptorLayouts[DESCRIPTOR_SET_PASS]->Create());
-	CALL_BOOL_FUNCTION_RETURN_BOOL(m_ptrDescriptorLayouts[DESCRIPTOR_SET_INPUTATTACHMENT]->Create());
+	m_ptrDescriptorLayouts[DESCRIPTOR_SET_ENGINE]->Create();
+	m_ptrDescriptorLayouts[DESCRIPTOR_SET_CAMERA]->Create();
+	m_ptrDescriptorLayouts[DESCRIPTOR_SET_PASS]->Create();
+	m_ptrDescriptorLayouts[DESCRIPTOR_SET_INPUTATTACHMENT]->Create();
 
 	return true;
 }
