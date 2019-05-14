@@ -164,24 +164,37 @@ uint32_t CVKDescriptorLayout::GetInputAttachmentBinding(uint32_t name) const
 	}
 }
 
+bool CVKDescriptorLayout::IsValid(void) const
+{
+	return m_vkDescriptorLayout != VK_NULL_HANDLE;
+}
+
 bool CVKDescriptorLayout::IsUniformBlockValid(uint32_t name) const
 {
-	return GetUniformBlockBinding(name) != -1;
+	return IsValid() && GetUniformBlockBinding(name) != -1;
 }
 
 bool CVKDescriptorLayout::IsSampledImageValid(uint32_t name) const
 {
-	return GetSampledImageBinding(name) != -1;
+	return IsValid() && GetSampledImageBinding(name) != -1;
 }
 
 bool CVKDescriptorLayout::IsInputAttachmentValid(uint32_t name) const
 {
-	return GetInputAttachmentBinding(name) != -1;
+	return IsValid() && GetInputAttachmentBinding(name) != -1;
 }
 
 bool CVKDescriptorLayout::IsCompatible(const CGfxDescriptorLayoutPtr ptrLayout) const
 {
 	ASSERT(ptrLayout);
+
+	if (IsValid() == false) {
+		return false;
+	}
+
+	if (((CVKDescriptorLayout*)ptrLayout.GetPointer())->IsValid() == false) {
+		return false;
+	}
 
 	if (m_set != ((CVKDescriptorLayout*)ptrLayout.GetPointer())->m_set) {
 		return false;

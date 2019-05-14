@@ -33,6 +33,7 @@ public:
 	uint32_t GetInputAttachmentBinding(uint32_t name) const;
 
 public:
+	bool IsValid(void) const;
 	bool IsUniformBlockValid(uint32_t name) const;
 	bool IsSampledImageValid(uint32_t name) const;
 	bool IsInputAttachmentValid(uint32_t name) const;

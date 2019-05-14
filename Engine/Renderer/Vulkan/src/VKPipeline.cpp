@@ -75,12 +75,24 @@ bool CVKPipeline::CreateLayouts(void)
 	eastl::vector<VkDescriptorSetLayout> layouts;
 	eastl::vector<VkPushConstantRange> pushConstantRanges;
 
-	for (int index = 0; index < DESCRIPTOR_SET_COUNT; index++) {
-		layouts.emplace_back(((CVKDescriptorLayout*)m_ptrDescriptorLayouts[index].GetPointer())->GetDescriptorLayout());
-	}
-
 	for (const auto& itPushConstantRange : m_pushConstantRanges) {
 		pushConstantRanges.emplace_back(itPushConstantRange.second);
+	}
+
+	if (((CVKDescriptorLayout*)m_ptrDescriptorLayouts[DESCRIPTOR_SET_ENGINE].GetPointer())->IsValid()) {
+		layouts.emplace_back(((CVKDescriptorLayout*)m_ptrDescriptorLayouts[DESCRIPTOR_SET_ENGINE].GetPointer())->GetDescriptorLayout());
+	}
+
+	if (((CVKDescriptorLayout*)m_ptrDescriptorLayouts[DESCRIPTOR_SET_CAMERA].GetPointer())->IsValid()) {
+		layouts.emplace_back(((CVKDescriptorLayout*)m_ptrDescriptorLayouts[DESCRIPTOR_SET_CAMERA].GetPointer())->GetDescriptorLayout());
+	}
+
+	if (((CVKDescriptorLayout*)m_ptrDescriptorLayouts[DESCRIPTOR_SET_PASS].GetPointer())->IsValid()) {
+		layouts.emplace_back(((CVKDescriptorLayout*)m_ptrDescriptorLayouts[DESCRIPTOR_SET_PASS].GetPointer())->GetDescriptorLayout());
+	}
+
+	if (((CVKDescriptorLayout*)m_ptrDescriptorLayouts[DESCRIPTOR_SET_INPUTATTACHMENT].GetPointer())->IsValid()) {
+		layouts.emplace_back(((CVKDescriptorLayout*)m_ptrDescriptorLayouts[DESCRIPTOR_SET_INPUTATTACHMENT].GetPointer())->GetDescriptorLayout());
 	}
 
 	VkPipelineLayoutCreateInfo layoutCreateInfo = {};
