@@ -70,6 +70,7 @@ void* VKAPI_PTR CVKAllocator::vkReallocationFunction(void* pUserData, void* pOri
 
 void VKAPI_PTR CVKAllocator::vkFreeFunction(void* pUserData, void* pPointer)
 {
+//	ASSERT(pPointer);
 	ASSERT(pUserData);
 
 	CVKAllocator* pAllocator = (CVKAllocator*)pUserData;
