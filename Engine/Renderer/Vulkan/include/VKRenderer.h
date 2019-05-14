@@ -191,4 +191,23 @@ private:
 	CVKInstance* m_pInstance;
 	CVKDevice* m_pDevice;
 	CVKSwapChain* m_pSwapChain;
+
+private:
+	CVKShaderManager* m_pShaderManager;
+	CVKPipelineComputeManager* m_pPipelineComputeManager;
+	CVKPipelineGraphicsManager* m_pPipelineGraphicsManager;
+	CVKDescriptorLayoutManager* m_pDescriptorLayoutManager;
+	CVKSamplerManager* m_pSamplerManager;
+	CVKTexture2DManager* m_pTexture2DManager;
+	CVKTexture2DArrayManager* m_pTexture2DArrayManager;
+	CVKTextureCubemapManager* m_pTextureCubemapManager;
+	CVKUniformBufferManager* m_pUniformBufferManager;
+	CVKMeshManager* m_pMeshManager;
+	CVKMeshDrawManager* m_pMeshDrawManager;
+	CVKMaterialManager* m_pMaterialManager;
+	CVKRenderPassManager* m_pRenderPassManager;
+	CVKRenderTextureManager* m_pRenderTextureManager;
+	CVKFrameBufferManager* m_pFrameBufferManager;
+	CVKDescriptorSetManager* m_pDescriptorSetManager;
+	CVKCommandBufferManager* m_pCommandBufferManager;
 };

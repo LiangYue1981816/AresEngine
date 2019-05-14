@@ -3,7 +3,6 @@
 
 CGLES3Renderer::CGLES3Renderer(void* hInstance, void* hWnd, void* hDC, int width, int height, GfxPixelFormat format)
 	: CGfxRenderer(hInstance, hWnd, hDC, width, height, format)
-
 	, m_pSwapChain(nullptr)
 
 	, m_pShaderManager(nullptr)
