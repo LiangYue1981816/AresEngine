@@ -302,6 +302,7 @@ const CGfxRenderTexturePtr CVKSwapChain::GetFrameTexture(int index) const
 
 void CVKSwapChain::Present(void)
 {
+	/*
 	uint32_t indexFrame = m_indexFrame;
 	VkPresentInfoKHR presentInfo = {};
 	presentInfo.sType = VK_STRUCTURE_TYPE_PRESENT_INFO_KHR;
@@ -313,11 +314,14 @@ void CVKSwapChain::Present(void)
 	presentInfo.pImageIndices = &indexFrame;
 	presentInfo.pResults = nullptr;
 	vkQueuePresentKHR(m_pDevice->GetQueue()->GetQueue(), &presentInfo);
+	*/
 }
 
 void CVKSwapChain::AcquireNextFrame(void)
 {
+	/*
 	uint32_t indexFrame;
 	vkAcquireNextImageKHR(m_pDevice->GetDevice(), m_vkSwapchain, UINT64_MAX, m_vkAcquireSemaphore, VK_NULL_HANDLE, &indexFrame);
 	m_indexFrame = indexFrame;
+	*/
 }
