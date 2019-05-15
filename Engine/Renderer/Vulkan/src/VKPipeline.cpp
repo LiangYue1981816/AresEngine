@@ -68,10 +68,10 @@ bool CVKPipeline::CreateLayouts(void)
 		}
 	}
 
-	m_ptrDescriptorLayouts[DESCRIPTOR_SET_ENGINE]->Create();
-	m_ptrDescriptorLayouts[DESCRIPTOR_SET_CAMERA]->Create();
-	m_ptrDescriptorLayouts[DESCRIPTOR_SET_PASS]->Create();
-	m_ptrDescriptorLayouts[DESCRIPTOR_SET_INPUTATTACHMENT]->Create();
+	CALL_BOOL_FUNCTION_RETURN_BOOL(m_ptrDescriptorLayouts[DESCRIPTOR_SET_ENGINE]->Create());
+	CALL_BOOL_FUNCTION_RETURN_BOOL(m_ptrDescriptorLayouts[DESCRIPTOR_SET_CAMERA]->Create());
+	CALL_BOOL_FUNCTION_RETURN_BOOL(m_ptrDescriptorLayouts[DESCRIPTOR_SET_PASS]->Create());
+	CALL_BOOL_FUNCTION_RETURN_BOOL(m_ptrDescriptorLayouts[DESCRIPTOR_SET_INPUTATTACHMENT]->Create());
 
 	eastl::vector<VkDescriptorSetLayout> layouts;
 	eastl::vector<VkPushConstantRange> pushConstantRanges;
@@ -80,21 +80,10 @@ bool CVKPipeline::CreateLayouts(void)
 		pushConstantRanges.emplace_back(itPushConstantRange.second);
 	}
 
-	if (((CVKDescriptorLayout*)m_ptrDescriptorLayouts[DESCRIPTOR_SET_ENGINE].GetPointer())->IsValid()) {
-		layouts.emplace_back(((CVKDescriptorLayout*)m_ptrDescriptorLayouts[DESCRIPTOR_SET_ENGINE].GetPointer())->GetDescriptorLayout());
-	}
-
-	if (((CVKDescriptorLayout*)m_ptrDescriptorLayouts[DESCRIPTOR_SET_CAMERA].GetPointer())->IsValid()) {
-		layouts.emplace_back(((CVKDescriptorLayout*)m_ptrDescriptorLayouts[DESCRIPTOR_SET_CAMERA].GetPointer())->GetDescriptorLayout());
-	}
-
-	if (((CVKDescriptorLayout*)m_ptrDescriptorLayouts[DESCRIPTOR_SET_PASS].GetPointer())->IsValid()) {
-		layouts.emplace_back(((CVKDescriptorLayout*)m_ptrDescriptorLayouts[DESCRIPTOR_SET_PASS].GetPointer())->GetDescriptorLayout());
-	}
-
-	if (((CVKDescriptorLayout*)m_ptrDescriptorLayouts[DESCRIPTOR_SET_INPUTATTACHMENT].GetPointer())->IsValid()) {
-		layouts.emplace_back(((CVKDescriptorLayout*)m_ptrDescriptorLayouts[DESCRIPTOR_SET_INPUTATTACHMENT].GetPointer())->GetDescriptorLayout());
-	}
+	layouts.emplace_back(((CVKDescriptorLayout*)m_ptrDescriptorLayouts[DESCRIPTOR_SET_ENGINE].GetPointer())->GetDescriptorLayout());
+	layouts.emplace_back(((CVKDescriptorLayout*)m_ptrDescriptorLayouts[DESCRIPTOR_SET_CAMERA].GetPointer())->GetDescriptorLayout());
+	layouts.emplace_back(((CVKDescriptorLayout*)m_ptrDescriptorLayouts[DESCRIPTOR_SET_PASS].GetPointer())->GetDescriptorLayout());
+	layouts.emplace_back(((CVKDescriptorLayout*)m_ptrDescriptorLayouts[DESCRIPTOR_SET_INPUTATTACHMENT].GetPointer())->GetDescriptorLayout());
 
 	VkPipelineLayoutCreateInfo layoutCreateInfo = {};
 	layoutCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
