@@ -282,12 +282,17 @@ bool CVKTexture::TextureCubemapData(GfxPixelFormat format, GfxCubemapFace face, 
 	return m_pDevice->GetTransferManager()->TransferTextureCubemapData(this, VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL, face, level, xoffset, yoffset, width, height, size, data);
 }
 
-bool CVKTexture::PipelineBarrier(VkCommandBuffer vkCommandBuffer, VkImageLayout imageLayout, VkImageSubresourceRange range)
+bool CVKTexture::PipelineBarrier(VkCommandBuffer vkCommandBuffer, VkImageLayout imageLayout)
 {
 	ASSERT(vkCommandBuffer);
 	ASSERT(m_vkImage);
-	ASSERT((uint32_t)m_levels >= range.baseMipLevel + range.levelCount);
-	ASSERT((uint32_t)m_layers >= range.baseArrayLayer + range.layerCount);
+
+	VkImageSubresourceRange range = {};
+	range.aspectMask = m_vkImageAspectFlags;
+	range.baseMipLevel = 0;
+	range.levelCount = m_levels;
+	range.baseArrayLayer = 0;
+	range.layerCount = m_layers;
 
 	CALL_VK_FUNCTION_RETURN_BOOL(vkCmdImageMemoryBarrier(vkCommandBuffer, m_vkImage, m_vkImageLayout, imageLayout, range));
 	m_vkImageLayout = imageLayout;
@@ -295,12 +300,17 @@ bool CVKTexture::PipelineBarrier(VkCommandBuffer vkCommandBuffer, VkImageLayout 
 	return true;
 }
 
-bool CVKTexture::PipelineBarrier(VkCommandBuffer vkCommandBuffer, VkImageLayout imageLayout, VkAccessFlags srcAccessFlags, VkAccessFlags dstAccessFlags, VkPipelineStageFlags srcPipelineStageFlags, VkPipelineStageFlags dstPipelineStageFlags, VkImageSubresourceRange range)
+bool CVKTexture::PipelineBarrier(VkCommandBuffer vkCommandBuffer, VkImageLayout imageLayout, VkAccessFlags srcAccessFlags, VkAccessFlags dstAccessFlags, VkPipelineStageFlags srcPipelineStageFlags, VkPipelineStageFlags dstPipelineStageFlags)
 {
 	ASSERT(vkCommandBuffer);
 	ASSERT(m_vkImage);
-	ASSERT((uint32_t)m_levels >= range.baseMipLevel + range.levelCount);
-	ASSERT((uint32_t)m_layers >= range.baseArrayLayer + range.layerCount);
+
+	VkImageSubresourceRange range = {};
+	range.aspectMask = m_vkImageAspectFlags;
+	range.baseMipLevel = 0;
+	range.levelCount = m_levels;
+	range.baseArrayLayer = 0;
+	range.layerCount = m_layers;
 
 	CALL_VK_FUNCTION_RETURN_BOOL(vkCmdImageMemoryBarrier(vkCommandBuffer, m_vkImage, m_vkImageLayout, imageLayout, srcAccessFlags, dstAccessFlags, srcPipelineStageFlags, dstPipelineStageFlags, range));
 	m_vkImageLayout = imageLayout;

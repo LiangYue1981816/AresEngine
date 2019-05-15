@@ -149,13 +149,6 @@ bool CVKTransferBuffer::TransferTexture2DData(CVKTexture* pDstTexture, VkImageLa
 		CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->CopyData(0, size, data));
 		CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->EndMap());
 
-		VkImageSubresourceRange range = {};
-		range.aspectMask = pDstTexture->GetImageAspectFlags();
-		range.baseMipLevel = level;
-		range.levelCount = 1;
-		range.baseArrayLayer = 0;
-		range.layerCount = 1;
-
 		VkBufferImageCopy region = {};
 		region.bufferOffset = 0;
 		region.imageOffset.x = xoffset;
@@ -169,9 +162,9 @@ bool CVKTransferBuffer::TransferTexture2DData(CVKTexture* pDstTexture, VkImageLa
 		region.imageSubresource.baseArrayLayer = 0;
 		region.imageSubresource.layerCount = 1;
 
-		pDstTexture->PipelineBarrier(m_vkCommandBuffer, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, range);
+		pDstTexture->PipelineBarrier(m_vkCommandBuffer, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL);
 		vkCmdCopyBufferToImage(m_vkCommandBuffer, m_vkBuffer, pDstTexture->GetImage(), pDstTexture->GetImageLayout(), 1, &region);
-		pDstTexture->PipelineBarrier(m_vkCommandBuffer, dstImageLayout, range);
+		pDstTexture->PipelineBarrier(m_vkCommandBuffer, dstImageLayout);
 	}
 	CALL_VK_FUNCTION_RETURN_BOOL(vkEndCommandBuffer(m_vkCommandBuffer));
 	CALL_VK_FUNCTION_RETURN_BOOL(vkWaitForFences(m_pDevice->GetDevice(), 1, &m_vkFence, VK_TRUE, UINT64_MAX));
@@ -191,13 +184,6 @@ bool CVKTransferBuffer::TransferTexture2DArrayData(CVKTexture* pDstTexture, VkIm
 		CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->CopyData(0, size, data));
 		CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->EndMap());
 
-		VkImageSubresourceRange range = {};
-		range.aspectMask = pDstTexture->GetImageAspectFlags();
-		range.baseMipLevel = level;
-		range.levelCount = 1;
-		range.baseArrayLayer = layer;
-		range.layerCount = 1;
-
 		VkBufferImageCopy region = {};
 		region.bufferOffset = 0;
 		region.imageOffset.x = xoffset;
@@ -211,9 +197,9 @@ bool CVKTransferBuffer::TransferTexture2DArrayData(CVKTexture* pDstTexture, VkIm
 		region.imageSubresource.baseArrayLayer = layer;
 		region.imageSubresource.layerCount = 1;
 
-		pDstTexture->PipelineBarrier(m_vkCommandBuffer, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, range);
+		pDstTexture->PipelineBarrier(m_vkCommandBuffer, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL);
 		vkCmdCopyBufferToImage(m_vkCommandBuffer, m_vkBuffer, pDstTexture->GetImage(), pDstTexture->GetImageLayout(), 1, &region);
-		pDstTexture->PipelineBarrier(m_vkCommandBuffer, dstImageLayout, range);
+		pDstTexture->PipelineBarrier(m_vkCommandBuffer, dstImageLayout);
 	}
 	CALL_VK_FUNCTION_RETURN_BOOL(vkEndCommandBuffer(m_vkCommandBuffer));
 	CALL_VK_FUNCTION_RETURN_BOOL(vkWaitForFences(m_pDevice->GetDevice(), 1, &m_vkFence, VK_TRUE, UINT64_MAX));
@@ -233,13 +219,6 @@ bool CVKTransferBuffer::TransferTextureCubemapData(CVKTexture* pDstTexture, VkIm
 		CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->CopyData(0, size, data));
 		CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->EndMap());
 
-		VkImageSubresourceRange range = {};
-		range.aspectMask = pDstTexture->GetImageAspectFlags();
-		range.baseMipLevel = level;
-		range.levelCount = 1;
-		range.baseArrayLayer = face;
-		range.layerCount = 1;
-
 		VkBufferImageCopy region = {};
 		region.bufferOffset = 0;
 		region.imageOffset.x = xoffset;
@@ -253,9 +232,9 @@ bool CVKTransferBuffer::TransferTextureCubemapData(CVKTexture* pDstTexture, VkIm
 		region.imageSubresource.baseArrayLayer = face;
 		region.imageSubresource.layerCount = 1;
 
-		pDstTexture->PipelineBarrier(m_vkCommandBuffer, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, range);
+		pDstTexture->PipelineBarrier(m_vkCommandBuffer, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL);
 		vkCmdCopyBufferToImage(m_vkCommandBuffer, m_vkBuffer, pDstTexture->GetImage(), pDstTexture->GetImageLayout(), 1, &region);
-		pDstTexture->PipelineBarrier(m_vkCommandBuffer, dstImageLayout, range);
+		pDstTexture->PipelineBarrier(m_vkCommandBuffer, dstImageLayout);
 	}
 	CALL_VK_FUNCTION_RETURN_BOOL(vkEndCommandBuffer(m_vkCommandBuffer));
 	CALL_VK_FUNCTION_RETURN_BOOL(vkWaitForFences(m_pDevice->GetDevice(), 1, &m_vkFence, VK_TRUE, UINT64_MAX));
