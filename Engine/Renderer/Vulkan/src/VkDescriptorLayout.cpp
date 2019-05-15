@@ -53,10 +53,6 @@ bool CVKDescriptorLayout::Create(void)
 				for (const auto& itBinding : m_inputAttachmentBindings) {
 					bindings.emplace_back(itBinding.second);
 				}
-
-				if (bindings.empty()) {
-					break;
-				}
 			}
 
 			VkDescriptorSetLayoutCreateInfo createInfo = {};
