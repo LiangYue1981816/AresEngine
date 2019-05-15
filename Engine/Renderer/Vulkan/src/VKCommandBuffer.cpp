@@ -4,8 +4,8 @@
 #include "./Command/VKCommandEndRenderPass.h"
 #include "./Command/VKCommandBindPipelineCompute.h"
 #include "./Command/VKCommandBindPipelineGraphics.h"
+#include "./Command/VKCommandBindDescriptorSet.h"
 /*
-#include "./Command/GLES3CommandBindDescriptorSet.h"
 #include "./Command/GLES3CommandUniform1i.h"
 #include "./Command/GLES3CommandUniform2i.h"
 #include "./Command/GLES3CommandUniform3i.h"

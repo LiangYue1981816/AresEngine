@@ -78,6 +78,7 @@ class CVKRenderer : public CGfxRenderer
 {
 	friend class CVKCommandBindPipelineCompute;
 	friend class CVKCommandBindPipelineGraphics;
+	friend class CVKCommandBindDescriptorSet;
 
 
 public:

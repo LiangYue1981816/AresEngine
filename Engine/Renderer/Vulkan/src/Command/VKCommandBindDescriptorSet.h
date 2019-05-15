@@ -2,26 +2,26 @@
 #include "GfxCommandBuffer.h"
 
 
-class CGLES3CommandBindDescriptorSet : public CGfxCommandBase
+class CVKCommandBindDescriptorSet : public CGfxCommandBase
 {
 public:
-	CGLES3CommandBindDescriptorSet(const CGfxDescriptorSetPtr ptrDescriptorSet)
+	CVKCommandBindDescriptorSet(VkCommandBuffer vkCommandBuffer, const CGfxDescriptorSetPtr ptrDescriptorSet)
 		: m_ptrDescriptorSet(ptrDescriptorSet)
 	{
-
+		Execute(vkCommandBuffer);
 	}
-	virtual ~CGLES3CommandBindDescriptorSet(void)
+	virtual ~CVKCommandBindDescriptorSet(void)
 	{
 
 	}
 
 public:
-	virtual void Execute(void) const
+	virtual void Execute(VkCommandBuffer vkCommandBuffer) const
 	{
 		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_BIND_DESCRIPTORSET, "CommandBindDescriptorSet");
 		{
-			if (m_ptrDescriptorSet) {
-				GLES3Renderer()->BindDescriptorSet(m_ptrDescriptorSet);
+			if (CVKPipelineGraphics* pPipelineGraphics = VKRenderer()->GetCurrentPipelineGraphics()) {
+				((CVKDescriptorSet*)m_ptrDescriptorSet.GetPointer())->Bind(vkCommandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, pPipelineGraphics->GetPipelineLayout());
 			}
 		}
 	}
