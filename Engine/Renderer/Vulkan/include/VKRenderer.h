@@ -186,6 +186,13 @@ public:
 	void AcquireNextFrame(void);
 	void Present(void);
 
+private:
+	void BindPipelineCompute(VkCommandBuffer vkCommandBuffer, const CGfxPipelineCompute* pPipelineCompute);
+	void BindPipelineGraphics(VkCommandBuffer vkCommandBuffer, const CGfxPipelineGraphics* pPipelineGraphics);
+
+	CVKPipelineCompute* GetCurrentPipelineCompute(void) const;
+	CVKPipelineGraphics* GetCurrentPipelineGraphics(void) const;
+
 
 private:
 	CVKInstance* m_pInstance;
@@ -210,4 +217,8 @@ private:
 	CVKFrameBufferManager* m_pFrameBufferManager;
 	CVKDescriptorSetManager* m_pDescriptorSetManager;
 	CVKCommandBufferManager* m_pCommandBufferManager;
+
+private:
+	CVKPipelineCompute* m_pCurrentPipelineCompute;
+	CVKPipelineGraphics* m_pCurrentPipelineGraphics;
 };
