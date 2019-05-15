@@ -2,26 +2,26 @@
 #include "GfxCommandBuffer.h"
 
 
-class CGLES3CommandEndRenderPass : public CGfxCommandBase
+class CVKCommandEndRenderPass : public CGfxCommandBase
 {
 public:
-	CGLES3CommandEndRenderPass(const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass)
+	CVKCommandEndRenderPass(VkCommandBuffer vkCommandBuffer, const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass)
 		: m_ptrFrameBuffer(ptrFrameBuffer)
 		, m_ptrRenderPass(ptrRenderPass)
 	{
-
+		Execute(vkCommandBuffer);
 	}
-	virtual ~CGLES3CommandEndRenderPass(void)
+	virtual ~CVKCommandEndRenderPass(void)
 	{
 
 	}
 
 public:
-	virtual void Execute(void) const
+	virtual void Execute(VkCommandBuffer vkCommandBuffer) const
 	{
 		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_END_RENDERPASS, "CommandEndRenderPass");
 		{
-
+			vkCmdEndRenderPass(vkCommandBuffer);
 		}
 	}
 

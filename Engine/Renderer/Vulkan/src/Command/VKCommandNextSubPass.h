@@ -2,27 +2,27 @@
 #include "GfxCommandBuffer.h"
 
 
-class CGLES3CommandNextSubPass : public CGfxCommandBase
+class CVKCommandNextSubPass : public CGfxCommandBase
 {
 public:
-	CGLES3CommandNextSubPass(const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass, int indexSubpass)
+	CVKCommandNextSubPass(VkCommandBuffer vkCommandBuffer, const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass, int indexSubpass)
 		: m_ptrFrameBuffer(ptrFrameBuffer)
 		, m_ptrRenderPass(ptrRenderPass)
 		, m_indexSubpass(indexSubpass)
 	{
-
+		Execute(vkCommandBuffer);
 	}
-	virtual ~CGLES3CommandNextSubPass(void)
+	virtual ~CVKCommandNextSubPass(void)
 	{
 
 	}
 
 public:
-	virtual void Execute(void) const
+	virtual void Execute(VkCommandBuffer vkCommandBuffer) const
 	{
 		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_NEXT_SUBPASS, "CommandNextSubPass");
 		{
-
+			vkCmdNextSubpass(vkCommandBuffer, VK_SUBPASS_CONTENTS_SECONDARY_COMMAND_BUFFERS);
 		}
 	}
 

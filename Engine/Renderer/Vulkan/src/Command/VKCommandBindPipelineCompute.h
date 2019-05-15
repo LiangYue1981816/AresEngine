@@ -2,30 +2,25 @@
 #include "GfxCommandBuffer.h"
 
 
-class CGLES3CommandBindPipelineCompute : public CGfxCommandBase
+class CVKCommandBindPipelineCompute : public CGfxCommandBase
 {
 public:
-	CGLES3CommandBindPipelineCompute(const CGfxPipelineCompute* pPipelineCompute)
+	CVKCommandBindPipelineCompute(VkCommandBuffer vkCommandBuffer, const CGfxPipelineCompute* pPipelineCompute)
 		: m_pPipelineCompute((CGfxPipelineCompute*)pPipelineCompute)
 	{
-
+		Execute(vkCommandBuffer);
 	}
-	virtual ~CGLES3CommandBindPipelineCompute(void)
+	virtual ~CVKCommandBindPipelineCompute(void)
 	{
 
 	}
 
 public:
-	virtual void Execute(void) const
+	virtual void Execute(VkCommandBuffer vkCommandBuffer) const
 	{
 		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_BIND_PIPELINECOMPUTE, "CommandBindPipelineCompute");
 		{
-			if (m_pPipelineCompute) {
-				GLES3Renderer()->BindPipelineCompute(m_pPipelineCompute);
-			}
-			else {
-				GLUseProgram(0);
-			}
+			VKRenderer()->BindPipelineCompute(vkCommandBuffer, m_pPipelineCompute);
 		}
 	}
 
