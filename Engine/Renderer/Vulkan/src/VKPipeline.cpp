@@ -76,14 +76,13 @@ bool CVKPipeline::CreateLayouts(void)
 	eastl::vector<VkDescriptorSetLayout> layouts;
 	eastl::vector<VkPushConstantRange> pushConstantRanges;
 
+	for (const auto& itDescriptorSet : m_ptrDescriptorLayouts) {
+		layouts.emplace_back(((CVKDescriptorLayout*)itDescriptorSet.GetPointer())->GetDescriptorLayout());
+	}
+
 	for (const auto& itPushConstantRange : m_pushConstantRanges) {
 		pushConstantRanges.emplace_back(itPushConstantRange.second);
 	}
-
-	layouts.emplace_back(((CVKDescriptorLayout*)m_ptrDescriptorLayouts[DESCRIPTOR_SET_ENGINE].GetPointer())->GetDescriptorLayout());
-	layouts.emplace_back(((CVKDescriptorLayout*)m_ptrDescriptorLayouts[DESCRIPTOR_SET_CAMERA].GetPointer())->GetDescriptorLayout());
-	layouts.emplace_back(((CVKDescriptorLayout*)m_ptrDescriptorLayouts[DESCRIPTOR_SET_PASS].GetPointer())->GetDescriptorLayout());
-	layouts.emplace_back(((CVKDescriptorLayout*)m_ptrDescriptorLayouts[DESCRIPTOR_SET_INPUTATTACHMENT].GetPointer())->GetDescriptorLayout());
 
 	VkPipelineLayoutCreateInfo layoutCreateInfo = {};
 	layoutCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
