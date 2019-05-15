@@ -2,32 +2,32 @@
 #include "GfxCommandBuffer.h"
 
 
-class CGLES3CommandUniform2f : public CGfxCommandBase
+class CVKCommandUniform2f : public CGfxCommandBase
 {
 public:
-	CGLES3CommandUniform2f(uint32_t name, float v0, float v1)
+	CVKCommandUniform2f(VkCommandBuffer vkCommandBuffer, uint32_t name, float v0, float v1)
 		: m_name(name)
 		, m_v0(v0)
 		, m_v1(v1)
 	{
-
+		Execute(vkCommandBuffer);
 	}
-	virtual ~CGLES3CommandUniform2f(void)
+	virtual ~CVKCommandUniform2f(void)
 	{
 
 	}
 
 public:
-	virtual void Execute(void) const
+	virtual void Execute(VkCommandBuffer vkCommandBuffer) const
 	{
 		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_UNIFORM2F, "CommandUniform2f");
 		{
-			if (CGLES3PipelineCompute* pPipeline = GLES3Renderer()->GetCurrentPipelineCompute()) {
-				pPipeline->Uniform2f(m_name, m_v0, m_v1);
+			if (CVKPipelineCompute* pPipeline = VKRenderer()->GetCurrentPipelineCompute()) {
+				pPipeline->Uniform2f(vkCommandBuffer, m_name, m_v0, m_v1);
 			}
 
-			if (CGLES3PipelineGraphics* pPipeline = GLES3Renderer()->GetCurrentPipelineGraphics()) {
-				pPipeline->Uniform2f(m_name, m_v0, m_v1);
+			if (CVKPipelineGraphics* pPipeline = VKRenderer()->GetCurrentPipelineGraphics()) {
+				pPipeline->Uniform2f(vkCommandBuffer, m_name, m_v0, m_v1);
 			}
 		}
 	}

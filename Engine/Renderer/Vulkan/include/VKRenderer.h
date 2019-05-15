@@ -79,6 +79,22 @@ class CVKRenderer : public CGfxRenderer
 	friend class CVKCommandBindPipelineCompute;
 	friend class CVKCommandBindPipelineGraphics;
 	friend class CVKCommandBindDescriptorSet;
+	friend class CVKCommandUniform1i;
+	friend class CVKCommandUniform2i;
+	friend class CVKCommandUniform3i;
+	friend class CVKCommandUniform4i;
+	friend class CVKCommandUniform1f;
+	friend class CVKCommandUniform2f;
+	friend class CVKCommandUniform3f;
+	friend class CVKCommandUniform4f;
+	friend class CVKCommandUniform1iv;
+	friend class CVKCommandUniform2iv;
+	friend class CVKCommandUniform3iv;
+	friend class CVKCommandUniform4iv;
+	friend class CVKCommandUniform1fv;
+	friend class CVKCommandUniform2fv;
+	friend class CVKCommandUniform3fv;
+	friend class CVKCommandUniform4fv;
 
 
 public:
