@@ -170,7 +170,7 @@ bool CVKTransferBuffer::TransferTexture2DData(CVKTexture* pDstTexture, VkImageLa
 		region.imageSubresource.layerCount = 1;
 
 		pDstTexture->PipelineBarrier(m_vkCommandBuffer, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, range);
-		vkCmdCopyBufferToImage(m_vkCommandBuffer, m_vkBuffer, pDstTexture->GetImage(), dstImageLayout, 1, &region);
+		vkCmdCopyBufferToImage(m_vkCommandBuffer, m_vkBuffer, pDstTexture->GetImage(), pDstTexture->GetImageLayout(), 1, &region);
 		pDstTexture->PipelineBarrier(m_vkCommandBuffer, dstImageLayout, range);
 	}
 	CALL_VK_FUNCTION_RETURN_BOOL(vkEndCommandBuffer(m_vkCommandBuffer));
@@ -212,7 +212,7 @@ bool CVKTransferBuffer::TransferTexture2DArrayData(CVKTexture* pDstTexture, VkIm
 		region.imageSubresource.layerCount = 1;
 
 		pDstTexture->PipelineBarrier(m_vkCommandBuffer, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, range);
-		vkCmdCopyBufferToImage(m_vkCommandBuffer, m_vkBuffer, pDstTexture->GetImage(), dstImageLayout, 1, &region);
+		vkCmdCopyBufferToImage(m_vkCommandBuffer, m_vkBuffer, pDstTexture->GetImage(), pDstTexture->GetImageLayout(), 1, &region);
 		pDstTexture->PipelineBarrier(m_vkCommandBuffer, dstImageLayout, range);
 	}
 	CALL_VK_FUNCTION_RETURN_BOOL(vkEndCommandBuffer(m_vkCommandBuffer));
@@ -254,7 +254,7 @@ bool CVKTransferBuffer::TransferTextureCubemapData(CVKTexture* pDstTexture, VkIm
 		region.imageSubresource.layerCount = 1;
 
 		pDstTexture->PipelineBarrier(m_vkCommandBuffer, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, range);
-		vkCmdCopyBufferToImage(m_vkCommandBuffer, m_vkBuffer, pDstTexture->GetImage(), dstImageLayout, 1, &region);
+		vkCmdCopyBufferToImage(m_vkCommandBuffer, m_vkBuffer, pDstTexture->GetImage(), pDstTexture->GetImageLayout(), 1, &region);
 		pDstTexture->PipelineBarrier(m_vkCommandBuffer, dstImageLayout, range);
 	}
 	CALL_VK_FUNCTION_RETURN_BOOL(vkEndCommandBuffer(m_vkCommandBuffer));
