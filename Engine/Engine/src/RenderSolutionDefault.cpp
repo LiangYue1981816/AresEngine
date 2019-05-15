@@ -184,6 +184,7 @@ void CRenderSolutionDefault::Present(int indexQueue)
 	eastl::vector<CGfxCommandBufferPtr> ptrCommandBuffers;
 	ptrCommandBuffers.emplace_back(m_ptrMainCommandBuffer[indexQueue]);
 
+	GfxRenderer()->AcquireNextFrame();
 	GfxRenderer()->Submit(ptrCommandBuffers);
 	GfxRenderer()->Present();
 }
