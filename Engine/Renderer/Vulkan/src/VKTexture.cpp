@@ -241,7 +241,7 @@ bool CVKTexture::Texture2DData(GfxPixelFormat format, int level, int xoffset, in
 	ASSERT(m_bExtern == false);
 	ASSERT(m_type == GFX_TEXTURE_2D);
 	ASSERT(m_format == format);
-	ASSERT(m_levels >= level);
+	ASSERT(m_levels > level);
 	ASSERT(m_samples == 1);
 	ASSERT(xoffset >= 0 && width > 0 && xoffset + width <= m_width);
 	ASSERT(yoffset >= 0 && height > 0 && yoffset + height <= m_height);
@@ -257,8 +257,8 @@ bool CVKTexture::Texture2DArrayData(GfxPixelFormat format, int layer, int level,
 	ASSERT(m_bExtern == false);
 	ASSERT(m_type == GFX_TEXTURE_2D_ARRAY);
 	ASSERT(m_format == format);
-	ASSERT(m_layers >= layer);
-	ASSERT(m_levels >= level);
+	ASSERT(m_layers > layer);
+	ASSERT(m_levels > level);
 	ASSERT(m_samples == 1);
 	ASSERT(xoffset >= 0 && width > 0 && xoffset + width <= m_width);
 	ASSERT(yoffset >= 0 && height > 0 && yoffset + height <= m_height);
@@ -274,7 +274,7 @@ bool CVKTexture::TextureCubemapData(GfxPixelFormat format, GfxCubemapFace face, 
 	ASSERT(m_bExtern == false);
 	ASSERT(m_type == GFX_TEXTURE_CUBE_MAP);
 	ASSERT(m_format == format);
-	ASSERT(m_levels >= level);
+	ASSERT(m_levels > level);
 	ASSERT(m_samples == 1);
 	ASSERT(xoffset >= 0 && width > 0 && xoffset + width <= m_width);
 	ASSERT(yoffset >= 0 && height > 0 && yoffset + height <= m_height);
