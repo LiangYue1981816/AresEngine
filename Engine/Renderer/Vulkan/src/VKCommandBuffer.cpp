@@ -1,4 +1,6 @@
 #include "VKRenderer.h"
+#include "./Command/VKCommandBeginRecord.h"
+#include "./Command/VKCommandEndRecord.h"
 #include "./Command/VKCommandBeginRenderPass.h"
 #include "./Command/VKCommandNextSubPass.h"
 #include "./Command/VKCommandEndRenderPass.h"
