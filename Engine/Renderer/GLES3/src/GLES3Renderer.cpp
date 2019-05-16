@@ -242,6 +242,16 @@ CGfxCommandBufferPtr CGLES3Renderer::NewCommandBuffer(uint32_t pool, bool bMainC
 	return m_pCommandBufferManager->Create(bMainCommandBuffer);
 }
 
+bool CGLES3Renderer::CmdBeginRecord(CGfxCommandBufferPtr ptrCommandBuffer)
+{
+	return ptrCommandBuffer->CmdBeginRecord();
+}
+
+bool CGLES3Renderer::CmdEndRecord(CGfxCommandBufferPtr ptrCommandBuffer)
+{
+	return ptrCommandBuffer->CmdEndRecord();
+}
+
 bool CGLES3Renderer::CmdBeginRenderPass(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass)
 {
 	return ptrCommandBuffer->CmdBeginRenderPass(ptrFrameBuffer, ptrRenderPass);

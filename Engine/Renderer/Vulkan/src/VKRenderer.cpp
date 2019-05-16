@@ -248,6 +248,16 @@ CGfxCommandBufferPtr CVKRenderer::NewCommandBuffer(uint32_t pool, bool bMainComm
 	return m_pCommandBufferManager->Create(pool, bMainCommandBuffer);
 }
 
+bool CVKRenderer::CmdBeginRecord(CGfxCommandBufferPtr ptrCommandBuffer)
+{
+	return ptrCommandBuffer->CmdBeginRecord();
+}
+
+bool CVKRenderer::CmdEndRecord(CGfxCommandBufferPtr ptrCommandBuffer)
+{
+	return ptrCommandBuffer->CmdEndRecord();
+}
+
 bool CVKRenderer::CmdBeginRenderPass(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass)
 {
 	return ptrCommandBuffer->CmdBeginRenderPass(ptrFrameBuffer, ptrRenderPass);
