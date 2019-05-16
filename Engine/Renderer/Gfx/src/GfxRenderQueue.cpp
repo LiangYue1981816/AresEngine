@@ -154,17 +154,21 @@ void CGfxRenderQueue::CmdDraw(int indexQueue, CGfxCommandBufferPtr ptrCommandBuf
 
 void CGfxRenderQueue::CmdDrawThread(int indexQueue, CGfxCommandBufferPtr ptrCommandBuffer, const CGfxDescriptorSetPtr ptrDescriptorSetEngine, const CGfxDescriptorSetPtr ptrDescriptorSetCamera, const CGfxDescriptorSetPtr ptrDescriptorSetInputAttachment, CGfxPipelineGraphics* pPipeline, uint32_t namePass)
 {
-	GfxRenderer()->CmdBindPipelineGraphics(ptrCommandBuffer, pPipeline);
-	GfxRenderer()->CmdBindDescriptorSet(ptrCommandBuffer, ptrDescriptorSetEngine);
-	GfxRenderer()->CmdBindDescriptorSet(ptrCommandBuffer, ptrDescriptorSetCamera);
-	GfxRenderer()->CmdBindDescriptorSet(ptrCommandBuffer, ptrDescriptorSetInputAttachment);
+	GfxRenderer()->CmdBeginRecord(ptrCommandBuffer);
+	{
+		GfxRenderer()->CmdBindPipelineGraphics(ptrCommandBuffer, pPipeline);
+		GfxRenderer()->CmdBindDescriptorSet(ptrCommandBuffer, ptrDescriptorSetEngine);
+		GfxRenderer()->CmdBindDescriptorSet(ptrCommandBuffer, ptrDescriptorSetCamera);
+		GfxRenderer()->CmdBindDescriptorSet(ptrCommandBuffer, ptrDescriptorSetInputAttachment);
 
-	for (const auto& itMaterial : m_pipelineMaterialQueue[indexQueue][pPipeline]) {
-		GfxRenderer()->CmdBindDescriptorSet(ptrCommandBuffer, itMaterial.first->GetPass(namePass)->GetDescriptorSet());
+		for (const auto& itMaterial : m_pipelineMaterialQueue[indexQueue][pPipeline]) {
+			GfxRenderer()->CmdBindDescriptorSet(ptrCommandBuffer, itMaterial.first->GetPass(namePass)->GetDescriptorSet());
 
-		for (const auto& itMeshDrawQueue : m_materialMeshDrawQueue[indexQueue][itMaterial.first]) {
-			GfxRenderer()->CmdDrawInstance(ptrCommandBuffer, itMeshDrawQueue.first, itMeshDrawQueue.second.data(), itMeshDrawQueue.second.size());
-//			GfxRenderer()->CmdDrawIndirect(ptrCommandBuffer, itMeshDrawQueue.first, itMeshDrawQueue.second.data(), itMeshDrawQueue.second.size());
+			for (const auto& itMeshDrawQueue : m_materialMeshDrawQueue[indexQueue][itMaterial.first]) {
+				GfxRenderer()->CmdDrawInstance(ptrCommandBuffer, itMeshDrawQueue.first, itMeshDrawQueue.second.data(), itMeshDrawQueue.second.size());
+//				GfxRenderer()->CmdDrawIndirect(ptrCommandBuffer, itMeshDrawQueue.first, itMeshDrawQueue.second.data(), itMeshDrawQueue.second.size());
+			}
 		}
 	}
+	GfxRenderer()->CmdEndRecord(ptrCommandBuffer);
 }

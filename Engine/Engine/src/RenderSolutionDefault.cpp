@@ -161,17 +161,21 @@ void CRenderSolutionDefault::Render(int indexQueue)
 		const CGfxRenderPassPtr ptrRenderPass = m_bEnableMSAA ? m_ptrRenderPassMSAA : m_ptrRenderPass;
 		const CGfxFrameBufferPtr ptrFrameBuffer = m_bEnableMSAA ? m_ptrFrameBufferScreenMSAA[GfxRenderer()->GetSwapChain()->GetFrameIndex()] : m_ptrFrameBufferScreen[GfxRenderer()->GetSwapChain()->GetFrameIndex()];
 
-		GfxRenderer()->CmdBeginRenderPass(m_ptrMainCommandBuffer[indexQueue], ptrFrameBuffer, ptrRenderPass);
+		GfxRenderer()->CmdBeginRecord(m_ptrMainCommandBuffer[indexQueue]);
 		{
-			const glm::vec4& scissor = m_pMainCamera->GetScissor();
-			const glm::vec4& viewport = m_pMainCamera->GetViewport();
+			GfxRenderer()->CmdBeginRenderPass(m_ptrMainCommandBuffer[indexQueue], ptrFrameBuffer, ptrRenderPass);
+			{
+				const glm::vec4& scissor = m_pMainCamera->GetScissor();
+				const glm::vec4& viewport = m_pMainCamera->GetViewport();
 
-			GfxRenderer()->CmdSetScissor(m_ptrMainCommandBuffer[indexQueue], (int)scissor.x, (int)scissor.y, (int)scissor.z, (int)scissor.w);
-			GfxRenderer()->CmdSetViewport(m_ptrMainCommandBuffer[indexQueue], (int)viewport.x, (int)viewport.y, (int)viewport.z, (int)viewport.w);
+				GfxRenderer()->CmdSetScissor(m_ptrMainCommandBuffer[indexQueue], (int)scissor.x, (int)scissor.y, (int)scissor.z, (int)scissor.w);
+				GfxRenderer()->CmdSetViewport(m_ptrMainCommandBuffer[indexQueue], (int)viewport.x, (int)viewport.y, (int)viewport.z, (int)viewport.w);
 
-			m_pMainCamera->CmdDraw(indexQueue, m_ptrMainCommandBuffer[indexQueue], m_ptrDescriptorSetEngine, nameDefaultPass);
+				m_pMainCamera->CmdDraw(indexQueue, m_ptrMainCommandBuffer[indexQueue], m_ptrDescriptorSetEngine, nameDefaultPass);
+			}
+			GfxRenderer()->CmdEndRenderPass(m_ptrMainCommandBuffer[indexQueue]);
 		}
-		GfxRenderer()->CmdEndRenderPass(m_ptrMainCommandBuffer[indexQueue]);
+		GfxRenderer()->CmdEndRecord(m_ptrMainCommandBuffer[indexQueue]);
 	}
 }
 
