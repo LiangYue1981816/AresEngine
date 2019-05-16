@@ -2,27 +2,26 @@
 #include "GfxCommandBuffer.h"
 
 
-class CGLES3CommandDrawIndirect : public CGfxCommandBase
+class CVKCommandDrawIndirect : public CGfxCommandBase
 {
 public:
-	CGLES3CommandDrawIndirect(const CGfxMeshDrawPtr ptrMeshDraw)
+	CVKCommandDrawIndirect(VkCommandBuffer vkCommandBuffer, const CGfxMeshDrawPtr ptrMeshDraw)
 		: m_ptrMeshDraw(ptrMeshDraw)
 	{
-
+		Execute(vkCommandBuffer);
 	}
-	virtual ~CGLES3CommandDrawIndirect(void)
+	virtual ~CVKCommandDrawIndirect(void)
 	{
 
 	}
 
 public:
-	virtual void Execute(void) const
+	virtual void Execute(VkCommandBuffer vkCommandBuffer) const
 	{
 		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_DRAW_INDIRECT, "CommandDrawIndirect");
 		{
 			if (m_ptrMeshDraw) {
-				((CGLES3MeshDraw*)m_ptrMeshDraw.GetPointer())->Bind();
-				glDrawElementsIndirect(GL_TRIANGLES, CGLES3Helper::TranslateIndexType(m_ptrMeshDraw->GetIndexType()), (const void*)0);
+
 			}
 		}
 	}

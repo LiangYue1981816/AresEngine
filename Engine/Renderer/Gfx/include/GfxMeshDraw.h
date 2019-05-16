@@ -26,6 +26,7 @@ public:
 
 	virtual GfxIndexType GetIndexType(void) const = 0;
 	virtual uint32_t GetIndexCount(void) const = 0;
+	virtual uint32_t GetIndexFirst(void) const = 0;
 	virtual uint32_t GetIndexOffset(void) const = 0;
 
 	virtual uint32_t GetVertexFormat(void) const = 0;

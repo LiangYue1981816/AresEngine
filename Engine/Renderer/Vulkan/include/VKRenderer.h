@@ -95,6 +95,9 @@ class CVKRenderer : public CGfxRenderer
 	friend class CVKCommandUniform2fv;
 	friend class CVKCommandUniform3fv;
 	friend class CVKCommandUniform4fv;
+	friend class CVKCommandUniformMatrix2fv;
+	friend class CVKCommandUniformMatrix3fv;
+	friend class CVKCommandUniformMatrix4fv;
 
 
 public:

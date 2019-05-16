@@ -2,29 +2,33 @@
 #include "GfxCommandBuffer.h"
 
 
-class CGLES3CommandSetScissor : public CGfxCommandBase
+class CVKCommandSetScissor : public CGfxCommandBase
 {
 public:
-	CGLES3CommandSetScissor(int x, int y, int width, int height)
+	CVKCommandSetScissor(VkCommandBuffer vkCommandBuffer, int x, int y, int width, int height)
 		: m_x(x)
 		, m_y(y)
 		, m_width(width)
 		, m_height(height)
 	{
-
+		Execute(vkCommandBuffer);
 	}
-	virtual ~CGLES3CommandSetScissor(void)
+	virtual ~CVKCommandSetScissor(void)
 	{
 
 	}
 
 public:
-	virtual void Execute(void) const
+	virtual void Execute(VkCommandBuffer vkCommandBuffer) const
 	{
 		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_SET_SCISSOR, "CommandSetScissor");
 		{
-			GLEnable(GL_SCISSOR_TEST);
-			GLScissor(m_x, m_y, m_width, m_height);
+			VkRect2D rect = {};
+			rect.offset.x = m_x;
+			rect.offset.y = m_y;
+			rect.extent.width = m_width;
+			rect.extent.height = m_height;
+			vkCmdSetScissor(vkCommandBuffer, 0, 1, &rect);
 		}
 	}
 

@@ -2,30 +2,31 @@
 #include "GfxCommandBuffer.h"
 
 
-class CGLES3CommandUniformMatrix2fv : public CGfxCommandBase
+class CVKCommandUniformMatrix2fv : public CGfxCommandBase
 {
 public:
-	CGLES3CommandUniformMatrix2fv(uint32_t name, int count, const float* value)
+	CVKCommandUniformMatrix2fv(VkCommandBuffer vkCommandBuffer, uint32_t name, int count, const float* value)
 		: m_name(name)
 	{
 		m_value.assign(value, value + 4 * count);
+		Execute(vkCommandBuffer);
 	}
-	virtual ~CGLES3CommandUniformMatrix2fv(void)
+	virtual ~CVKCommandUniformMatrix2fv(void)
 	{
 
 	}
 
 public:
-	virtual void Execute(void) const
+	virtual void Execute(VkCommandBuffer vkCommandBuffer) const
 	{
 		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_UNIFORMMATRIX2FV, "CommandUniformMatrix2fv");
 		{
-			if (CGLES3PipelineCompute* pPipeline = GLES3Renderer()->GetCurrentPipelineCompute()) {
-				pPipeline->UniformMatrix2fv(m_name, m_value.size() / 4, m_value.data());
+			if (CVKPipelineCompute* pPipeline = VKRenderer()->GetCurrentPipelineCompute()) {
+				pPipeline->UniformMatrix2fv(vkCommandBuffer, m_name, m_value.size() / 4, m_value.data());
 			}
 
-			if (CGLES3PipelineGraphics* pPipeline = GLES3Renderer()->GetCurrentPipelineGraphics()) {
-				pPipeline->UniformMatrix2fv(m_name, m_value.size() / 4, m_value.data());
+			if (CVKPipelineGraphics* pPipeline = VKRenderer()->GetCurrentPipelineGraphics()) {
+				pPipeline->UniformMatrix2fv(vkCommandBuffer, m_name, m_value.size() / 4, m_value.data());
 			}
 		}
 	}

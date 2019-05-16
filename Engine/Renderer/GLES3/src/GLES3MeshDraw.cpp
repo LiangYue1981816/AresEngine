@@ -53,6 +53,11 @@ uint32_t CGLES3MeshDraw::GetIndexCount(void) const
 	return m_pMeshDraw->indexCount;
 }
 
+uint32_t CGLES3MeshDraw::GetIndexFirst(void) const
+{
+	return m_pMeshDraw->firstIndex;
+}
+
 uint32_t CGLES3MeshDraw::GetIndexOffset(void) const
 {
 	switch ((int)GetIndexType()) {

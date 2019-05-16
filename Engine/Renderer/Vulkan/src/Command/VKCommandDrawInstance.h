@@ -2,27 +2,27 @@
 #include "GfxCommandBuffer.h"
 
 
-class CGLES3CommandDrawInstance : public CGfxCommandBase
+class CVKCommandDrawInstance : public CGfxCommandBase
 {
 public:
-	CGLES3CommandDrawInstance(const CGfxMeshDrawPtr ptrMeshDraw)
+	CVKCommandDrawInstance(VkCommandBuffer vkCommandBuffer, const CGfxMeshDrawPtr ptrMeshDraw)
 		: m_ptrMeshDraw(ptrMeshDraw)
 	{
-
+		Execute(vkCommandBuffer);
 	}
-	virtual ~CGLES3CommandDrawInstance(void)
+	virtual ~CVKCommandDrawInstance(void)
 	{
 
 	}
 
 public:
-	virtual void Execute(void) const
+	virtual void Execute(VkCommandBuffer vkCommandBuffer) const
 	{
 		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_DRAW_INSTANCE, "CommandDrawInstance");
 		{
 			if (m_ptrMeshDraw) {
-				((CGLES3MeshDraw*)m_ptrMeshDraw.GetPointer())->Bind();
-				glDrawElementsInstanced(GL_TRIANGLES, m_ptrMeshDraw->GetIndexCount(), CGLES3Helper::TranslateIndexType(m_ptrMeshDraw->GetIndexType()), (const void*)m_ptrMeshDraw->GetIndexOffset(), m_ptrMeshDraw->GetInstanceCount());
+				((CVKMeshDraw*)m_ptrMeshDraw.GetPointer())->Bind(vkCommandBuffer);
+				vkCmdDrawIndexed(vkCommandBuffer, m_ptrMeshDraw->GetIndexCount(), m_ptrMeshDraw->GetInstanceCount(), m_ptrMeshDraw->GetIndexFirst(), 0, 0);
 			}
 		}
 	}

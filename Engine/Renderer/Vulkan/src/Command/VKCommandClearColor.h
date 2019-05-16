@@ -2,29 +2,28 @@
 #include "GfxCommandBuffer.h"
 
 
-class CGLES3CommandClearColor : public CGfxCommandBase
+class CVKCommandClearColor : public CGfxCommandBase
 {
 public:
-	CGLES3CommandClearColor(float red, float green, float blue, float alpha)
+	CVKCommandClearColor(VkCommandBuffer vkCommandBuffer, float red, float green, float blue, float alpha)
 		: m_red(red)
 		, m_green(green)
 		, m_blue(blue)
 		, m_alpha(alpha)
 	{
-
+		Execute(vkCommandBuffer);
 	}
-	virtual ~CGLES3CommandClearColor(void)
+	virtual ~CVKCommandClearColor(void)
 	{
 
 	}
 
 public:
-	virtual void Execute(void) const
+	virtual void Execute(VkCommandBuffer vkCommandBuffer) const
 	{
 		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_CLEAR_COLOR, "CommandClearColor");
 		{
-			GLClearColor(m_red, m_green, m_blue, m_alpha);
-			glClear(GL_COLOR_BUFFER_BIT);
+
 		}
 	}
 

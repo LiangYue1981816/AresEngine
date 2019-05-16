@@ -52,6 +52,11 @@ uint32_t CVKMeshDraw::GetIndexCount(void) const
 	return m_pMeshDraw->indexCount;
 }
 
+uint32_t CVKMeshDraw::GetIndexFirst(void) const
+{
+	return m_pMeshDraw->firstIndex;
+}
+
 uint32_t CVKMeshDraw::GetIndexOffset(void) const
 {
 	switch ((int)GetIndexType()) {
