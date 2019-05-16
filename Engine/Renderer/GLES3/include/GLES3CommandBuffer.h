@@ -26,6 +26,9 @@ public:
 	bool WaitForFinish(void) const;
 
 public:
+	bool CmdBeginRecord(void);
+	bool CmdEndRecord(void);
+
 	bool CmdBeginRenderPass(const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass);
 	bool CmdNextSubpass(void);
 	bool CmdEndRenderPass(void);

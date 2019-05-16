@@ -176,6 +176,16 @@ bool CVKCommandBuffer::WaitForFinish(void) const
 	return true;
 }
 
+bool CVKCommandBuffer::CmdBeginRecord(void)
+{
+	return true;
+}
+
+bool CVKCommandBuffer::CmdEndRecord(void)
+{
+	return true;
+}
+
 bool CVKCommandBuffer::CmdBeginRenderPass(const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass)
 {
 	ASSERT(ptrRenderPass);

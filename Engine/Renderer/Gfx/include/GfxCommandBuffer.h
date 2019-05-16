@@ -51,6 +51,9 @@ public:
 	virtual bool WaitForFinish(void) const = 0;
 
 public:
+	virtual bool CmdBeginRecord(void) = 0;
+	virtual bool CmdEndRecord(void) = 0;
+
 	virtual bool CmdBeginRenderPass(const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass) = 0;
 	virtual bool CmdNextSubpass(void) = 0;
 	virtual bool CmdEndRenderPass(void) = 0;

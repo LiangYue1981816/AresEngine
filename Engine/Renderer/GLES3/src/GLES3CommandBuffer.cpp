@@ -110,6 +110,16 @@ bool CGLES3CommandBuffer::WaitForFinish(void) const
 	return true;
 }
 
+bool CGLES3CommandBuffer::CmdBeginRecord(void)
+{
+	return true;
+}
+
+bool CGLES3CommandBuffer::CmdEndRecord(void)
+{
+	return true;
+}
+
 bool CGLES3CommandBuffer::CmdBeginRenderPass(const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass)
 {
 	ASSERT(ptrFrameBuffer);
