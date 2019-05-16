@@ -211,7 +211,7 @@ bool CVKCommandBuffer::CmdBeginRenderPass(const CGfxFrameBufferPtr ptrFrameBuffe
 	ASSERT(ptrRenderPass);
 	ASSERT(ptrFrameBuffer);
 
-	if (IsMainCommandBuffer() == true && IsInRenderPass() == false && m_pCommands.empty()) {
+	if (IsMainCommandBuffer() == true && IsInRenderPass() == false) {
 		m_indexSubpass = 0;
 		m_ptrRenderPass = ptrRenderPass;
 		m_ptrFrameBuffer = ptrFrameBuffer;
@@ -375,7 +375,7 @@ bool CVKCommandBuffer::CmdUniform4f(uint32_t name, float v0, float v1, float v2,
 bool CVKCommandBuffer::CmdUniform1iv(uint32_t name, int count, const int* value)
 {
 	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
-		m_pCommands.emplace_back(new CVKCommandUniform1iv(m_vkCommandBuffer, name, value));
+		m_pCommands.emplace_back(new CVKCommandUniform1iv(m_vkCommandBuffer, name, count, value));
 		return true;
 	}
 	else {
@@ -386,7 +386,7 @@ bool CVKCommandBuffer::CmdUniform1iv(uint32_t name, int count, const int* value)
 bool CVKCommandBuffer::CmdUniform2iv(uint32_t name, int count, const int* value)
 {
 	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
-		m_pCommands.emplace_back(new CVKCommandUniform2iv(m_vkCommandBuffer, name, value));
+		m_pCommands.emplace_back(new CVKCommandUniform2iv(m_vkCommandBuffer, name, count, value));
 		return true;
 	}
 	else {
@@ -397,7 +397,7 @@ bool CVKCommandBuffer::CmdUniform2iv(uint32_t name, int count, const int* value)
 bool CVKCommandBuffer::CmdUniform3iv(uint32_t name, int count, const int* value)
 {
 	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
-		m_pCommands.emplace_back(new CVKCommandUniform3iv(m_vkCommandBuffer, name, value));
+		m_pCommands.emplace_back(new CVKCommandUniform3iv(m_vkCommandBuffer, name, count, value));
 		return true;
 	}
 	else {
@@ -408,7 +408,7 @@ bool CVKCommandBuffer::CmdUniform3iv(uint32_t name, int count, const int* value)
 bool CVKCommandBuffer::CmdUniform4iv(uint32_t name, int count, const int* value)
 {
 	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
-		m_pCommands.emplace_back(new CVKCommandUniform4iv(m_vkCommandBuffer, name, value));
+		m_pCommands.emplace_back(new CVKCommandUniform4iv(m_vkCommandBuffer, name, count, value));
 		return true;
 	}
 	else {
@@ -419,7 +419,7 @@ bool CVKCommandBuffer::CmdUniform4iv(uint32_t name, int count, const int* value)
 bool CVKCommandBuffer::CmdUniform1fv(uint32_t name, int count, const float* value)
 {
 	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
-		m_pCommands.emplace_back(new CVKCommandUniform1fv(m_vkCommandBuffer, name, value));
+		m_pCommands.emplace_back(new CVKCommandUniform1fv(m_vkCommandBuffer, name, count, value));
 		return true;
 	}
 	else {
@@ -430,7 +430,7 @@ bool CVKCommandBuffer::CmdUniform1fv(uint32_t name, int count, const float* valu
 bool CVKCommandBuffer::CmdUniform2fv(uint32_t name, int count, const float* value)
 {
 	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
-		m_pCommands.emplace_back(new CVKCommandUniform2fv(m_vkCommandBuffer, name, value));
+		m_pCommands.emplace_back(new CVKCommandUniform2fv(m_vkCommandBuffer, name, count, value));
 		return true;
 	}
 	else {
@@ -441,7 +441,7 @@ bool CVKCommandBuffer::CmdUniform2fv(uint32_t name, int count, const float* valu
 bool CVKCommandBuffer::CmdUniform3fv(uint32_t name, int count, const float* value)
 {
 	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
-		m_pCommands.emplace_back(new CVKCommandUniform3fv(m_vkCommandBuffer, name, value));
+		m_pCommands.emplace_back(new CVKCommandUniform3fv(m_vkCommandBuffer, name, count, value));
 		return true;
 	}
 	else {
@@ -452,7 +452,7 @@ bool CVKCommandBuffer::CmdUniform3fv(uint32_t name, int count, const float* valu
 bool CVKCommandBuffer::CmdUniform4fv(uint32_t name, int count, const float* value)
 {
 	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
-		m_pCommands.emplace_back(new CVKCommandUniform4fv(m_vkCommandBuffer, name, value));
+		m_pCommands.emplace_back(new CVKCommandUniform4fv(m_vkCommandBuffer, name, count, value));
 		return true;
 	}
 	else {

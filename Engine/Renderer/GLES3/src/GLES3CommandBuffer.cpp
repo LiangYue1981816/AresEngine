@@ -112,7 +112,22 @@ bool CGLES3CommandBuffer::WaitForFinish(void) const
 
 bool CGLES3CommandBuffer::CmdBeginRecord(void)
 {
-	return true;
+	if (IsMainCommandBuffer()) {
+		if (IsInRenderPass() == false && m_pCommands.empty()) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	else {
+		if (IsInRenderPass()) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
 }
 
 bool CGLES3CommandBuffer::CmdEndRecord(void)
@@ -125,7 +140,7 @@ bool CGLES3CommandBuffer::CmdBeginRenderPass(const CGfxFrameBufferPtr ptrFrameBu
 	ASSERT(ptrFrameBuffer);
 	ASSERT(ptrRenderPass);
 
-	if (IsMainCommandBuffer() == true && IsInRenderPass() == false && m_pCommands.empty()) {
+	if (IsMainCommandBuffer() == true && IsInRenderPass() == false) {
 		m_indexSubpass = 0;
 		m_ptrRenderPass = ptrRenderPass;
 		m_ptrFrameBuffer = ptrFrameBuffer;

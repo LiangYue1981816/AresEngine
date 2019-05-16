@@ -21,8 +21,10 @@ public:
 	{
 		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_BIND_DESCRIPTORSET, "CommandBindDescriptorSet");
 		{
-			if (CVKPipelineGraphics* pPipeline = VKRenderer()->GetCurrentPipelineGraphics()) {
-				((CVKDescriptorSet*)m_ptrDescriptorSet.GetPointer())->Bind(m_vkCommandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, pPipeline->GetPipelineLayout());
+			if (m_ptrDescriptorSet) {
+				if (CVKPipelineGraphics* pPipeline = VKRenderer()->GetCurrentPipelineGraphics()) {
+					((CVKDescriptorSet*)m_ptrDescriptorSet.GetPointer())->Bind(m_vkCommandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, pPipeline->GetPipelineLayout());
+				}
 			}
 		}
 	}
