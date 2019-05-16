@@ -3,23 +3,21 @@
 #include "GfxCommandBuffer.h"
 
 
-class CGLES3CommandPopDebugGroup : public CGfxCommandBase
+class CVKCommandPopDebugGroup : public CGfxCommandBase
 {
 public:
-	CGLES3CommandPopDebugGroup(void)
+	CVKCommandPopDebugGroup(VkCommandBuffer vkCommandBuffer)
 	{
-
+		Execute(vkCommandBuffer);
 	}
-	virtual ~CGLES3CommandPopDebugGroup(void)
+	virtual ~CVKCommandPopDebugGroup(void)
 	{
 
 	}
 
 public:
-	virtual void Execute(void) const
+	virtual void Execute(VkCommandBuffer vkCommandBuffer) const
 	{
-#ifdef PLATFORM_WINDOWS
-		glPopDebugGroup();
-#endif
+
 	}
 };

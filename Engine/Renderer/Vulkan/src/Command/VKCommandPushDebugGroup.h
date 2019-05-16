@@ -3,25 +3,23 @@
 #include "GfxCommandBuffer.h"
 
 
-class CGLES3CommandPushDebugGroup : public CGfxCommandBase
+class CVKCommandPushDebugGroup : public CGfxCommandBase
 {
 public:
-	CGLES3CommandPushDebugGroup(const char* szMessage)
+	CVKCommandPushDebugGroup(VkCommandBuffer vkCommandBuffer, const char* szMessage)
 		: m_strMessage(szMessage)
 	{
-
+		Execute(vkCommandBuffer);
 	}
-	virtual ~CGLES3CommandPushDebugGroup(void)
+	virtual ~CVKCommandPushDebugGroup(void)
 	{
 
 	}
 
 public:
-	virtual void Execute(void) const
+	virtual void Execute(VkCommandBuffer vkCommandBuffer) const
 	{
-#ifdef PLATFORM_WINDOWS
-		glPushDebugGroup(GL_DEBUG_SOURCE_APPLICATION, 0, -1, m_strMessage.c_str());
-#endif
+
 	}
 
 

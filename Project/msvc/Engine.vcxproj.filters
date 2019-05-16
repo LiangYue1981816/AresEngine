@@ -1215,9 +1215,6 @@
     <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandResolve.h">
       <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandSetInstanceBufferData.h">
-      <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandSetScissor.h">
       <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
     </ClInclude>
@@ -1445,6 +1442,111 @@
     </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKMaterialManager.h">
       <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\src\Command\VKCommandBeginRenderPass.h">
+      <Filter>Engine\Renderer\Vulkan\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\src\Command\VKCommandBindDescriptorSet.h">
+      <Filter>Engine\Renderer\Vulkan\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\src\Command\VKCommandBindPipelineCompute.h">
+      <Filter>Engine\Renderer\Vulkan\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\src\Command\VKCommandBindPipelineGraphics.h">
+      <Filter>Engine\Renderer\Vulkan\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\src\Command\VKCommandClearColor.h">
+      <Filter>Engine\Renderer\Vulkan\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\src\Command\VKCommandClearDepth.h">
+      <Filter>Engine\Renderer\Vulkan\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\src\Command\VKCommandDrawIndirect.h">
+      <Filter>Engine\Renderer\Vulkan\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\src\Command\VKCommandDrawInstance.h">
+      <Filter>Engine\Renderer\Vulkan\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\src\Command\VKCommandEndRenderPass.h">
+      <Filter>Engine\Renderer\Vulkan\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\src\Command\VKCommandExecute.h">
+      <Filter>Engine\Renderer\Vulkan\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\src\Command\VKCommandNextSubPass.h">
+      <Filter>Engine\Renderer\Vulkan\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\src\Command\VKCommandPopDebugGroup.h">
+      <Filter>Engine\Renderer\Vulkan\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\src\Command\VKCommandPushDebugGroup.h">
+      <Filter>Engine\Renderer\Vulkan\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\src\Command\VKCommandSetScissor.h">
+      <Filter>Engine\Renderer\Vulkan\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\src\Command\VKCommandSetViewport.h">
+      <Filter>Engine\Renderer\Vulkan\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\src\Command\VKCommandUniform1f.h">
+      <Filter>Engine\Renderer\Vulkan\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\src\Command\VKCommandUniform1fv.h">
+      <Filter>Engine\Renderer\Vulkan\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\src\Command\VKCommandUniform1i.h">
+      <Filter>Engine\Renderer\Vulkan\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\src\Command\VKCommandUniform1iv.h">
+      <Filter>Engine\Renderer\Vulkan\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\src\Command\VKCommandUniform2f.h">
+      <Filter>Engine\Renderer\Vulkan\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\src\Command\VKCommandUniform2fv.h">
+      <Filter>Engine\Renderer\Vulkan\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\src\Command\VKCommandUniform2i.h">
+      <Filter>Engine\Renderer\Vulkan\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\src\Command\VKCommandUniform2iv.h">
+      <Filter>Engine\Renderer\Vulkan\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\src\Command\VKCommandUniform3f.h">
+      <Filter>Engine\Renderer\Vulkan\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\src\Command\VKCommandUniform3fv.h">
+      <Filter>Engine\Renderer\Vulkan\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\src\Command\VKCommandUniform3i.h">
+      <Filter>Engine\Renderer\Vulkan\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\src\Command\VKCommandUniform3iv.h">
+      <Filter>Engine\Renderer\Vulkan\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\src\Command\VKCommandUniform4f.h">
+      <Filter>Engine\Renderer\Vulkan\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\src\Command\VKCommandUniform4fv.h">
+      <Filter>Engine\Renderer\Vulkan\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\src\Command\VKCommandUniform4i.h">
+      <Filter>Engine\Renderer\Vulkan\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\src\Command\VKCommandUniform4iv.h">
+      <Filter>Engine\Renderer\Vulkan\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\src\Command\VKCommandUniformMatrix2fv.h">
+      <Filter>Engine\Renderer\Vulkan\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\src\Command\VKCommandUniformMatrix3fv.h">
+      <Filter>Engine\Renderer\Vulkan\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\src\Command\VKCommandUniformMatrix4fv.h">
+      <Filter>Engine\Renderer\Vulkan\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\src\Command\VKCommandUpdateInstanceBuffer.h">
+      <Filter>Engine\Renderer\Vulkan\Source Files\Commands</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

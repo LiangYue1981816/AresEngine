@@ -2,24 +2,25 @@
 #include "GfxCommandBuffer.h"
 
 
-class CGLES3CommandExecute : public CGfxCommandBase
+class CVKCommandExecute : public CGfxCommandBase
 {
 public:
-	CGLES3CommandExecute(const CGfxCommandBufferPtr ptrCommandBuffer)
+	CVKCommandExecute(VkCommandBuffer vkCommandBuffer, const CGfxCommandBufferPtr ptrCommandBuffer)
 		: m_ptrCommandBuffer(ptrCommandBuffer)
 	{
-
+		Execute(vkCommandBuffer);
 	}
-	virtual ~CGLES3CommandExecute(void)
+	virtual ~CVKCommandExecute(void)
 	{
 
 	}
 
 public:
-	virtual void Execute(void) const
+	virtual void Execute(VkCommandBuffer vkCommandBuffer) const
 	{
 		if (m_ptrCommandBuffer) {
-			m_ptrCommandBuffer->Execute();
+			VkCommandBuffer vkExecuteCommandBuffer = ((CVKCommandBuffer*)m_ptrCommandBuffer.GetPointer())->GetCommandBuffer();
+			vkCmdExecuteCommands(vkCommandBuffer, 1, &vkExecuteCommandBuffer);
 		}
 	}
 
