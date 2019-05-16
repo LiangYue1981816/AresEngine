@@ -86,6 +86,16 @@ uint32_t CVKMeshDraw::GetInstanceCount(void) const
 	return m_pInstanceBuffer[VKRenderer()->GetSwapChain()->GetFrameIndex()]->GetInstanceCount();
 }
 
+VkBuffer CVKMeshDraw::GetIndirectBuffer(void) const
+{
+	return m_pIndirectBuffer[VKRenderer()->GetSwapChain()->GetFrameIndex()]->GetBuffer();
+}
+
+uint32_t CVKMeshDraw::GetIndirectBufferStride(void) const
+{
+	return m_pIndirectBuffer[VKRenderer()->GetSwapChain()->GetFrameIndex()]->GetStride();
+}
+
 bool CVKMeshDraw::InstanceBufferData(size_t size, const void* data)
 {
 	CALL_BOOL_FUNCTION_RETURN_BOOL(m_pInstanceBuffer[VKRenderer()->GetSwapChain()->GetFrameIndex()]->BufferData(size, data));

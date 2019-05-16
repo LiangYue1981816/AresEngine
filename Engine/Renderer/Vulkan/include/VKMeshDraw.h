@@ -28,6 +28,10 @@ public:
 	uint32_t GetInstanceCount(void) const;
 
 public:
+	VkBuffer GetIndirectBuffer(void) const;
+	uint32_t GetIndirectBufferStride(void) const;
+
+public:
 	bool InstanceBufferData(size_t size, const void* data);
 
 public:

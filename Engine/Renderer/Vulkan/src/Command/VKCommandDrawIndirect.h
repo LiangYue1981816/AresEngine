@@ -21,7 +21,8 @@ public:
 		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_DRAW_INDIRECT, "CommandDrawIndirect");
 		{
 			if (m_ptrMeshDraw) {
-
+				((CVKMeshDraw*)m_ptrMeshDraw.GetPointer())->Bind(vkCommandBuffer);
+				vkCmdDrawIndexedIndirect(vkCommandBuffer, ((CVKMeshDraw*)m_ptrMeshDraw.GetPointer())->GetIndirectBuffer(), 0, 1, ((CVKMeshDraw*)m_ptrMeshDraw.GetPointer())->GetIndirectBufferStride());
 			}
 		}
 	}

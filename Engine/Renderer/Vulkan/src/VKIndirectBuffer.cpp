@@ -40,6 +40,11 @@ uint32_t CVKIndirectBuffer::GetSize(void) const
 	return m_pBuffer->GetSize();
 }
 
+uint32_t CVKIndirectBuffer::GetStride(void) const
+{
+	return sizeof(DrawCommand);
+}
+
 bool CVKIndirectBuffer::BufferData(int indexDraw, int baseVertex, int firstIndex, int indexCount, int instanceCount)
 {
 	if (indexDraw < 0 || (uint32_t)indexDraw >= m_draws.size()) {

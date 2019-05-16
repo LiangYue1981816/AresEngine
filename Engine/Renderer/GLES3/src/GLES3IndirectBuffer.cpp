@@ -32,6 +32,11 @@ uint32_t CGLES3IndirectBuffer::GetSize(void) const
 	return m_pBuffer->GetSize();
 }
 
+uint32_t CGLES3IndirectBuffer::GetStride(void) const
+{
+	return sizeof(DrawCommand);
+}
+
 bool CGLES3IndirectBuffer::BufferData(int indexDraw, int baseVertex, int firstIndex, int indexCount, int instanceCount)
 {
 	if (indexDraw < 0 || (uint32_t)indexDraw >= m_draws.size()) {
