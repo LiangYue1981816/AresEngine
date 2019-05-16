@@ -30,8 +30,8 @@
 #include "./Command/VKCommandClearColor.h"
 #include "./Command/VKCommandDrawInstance.h"
 #include "./Command/VKCommandDrawIndirect.h"
+#include "./Command/VKCommandUpdateInstanceBuffer.h"
 /*
-#include "./Command/GLES3CommandUpdateInstanceBuffer.h"
 #include "./Command/GLES3CommandExecute.h"
 #include "./Command/GLES3CommandPushDebugGroup.h"
 #include "./Command/GLES3CommandPopDebugGroup.h"

@@ -5,11 +5,12 @@
 class CGLES3CommandUpdateInstanceBuffer : public CGfxCommandBase
 {
 public:
-	CGLES3CommandUpdateInstanceBuffer(const CGfxMeshDrawPtr ptrMeshDraw, const uint8_t* pInstanceBuffer, uint32_t size)
+	CGLES3CommandUpdateInstanceBuffer(VkCommandBuffer vkCommandBuffer, const CGfxMeshDrawPtr ptrMeshDraw, const uint8_t* pInstanceBuffer, uint32_t size)
 		: m_ptrMeshDraw(ptrMeshDraw)
 	{
 		if (pInstanceBuffer && size) {
 			m_buffer.assign(pInstanceBuffer, pInstanceBuffer + size);
+			Execute(vkCommandBuffer);
 		}
 	}
 	virtual ~CGLES3CommandUpdateInstanceBuffer(void)
@@ -18,7 +19,7 @@ public:
 	}
 
 public:
-	virtual void Execute(void) const
+	virtual void Execute(VkCommandBuffer vkCommandBuffer) const
 	{
 		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_UPDATE_INSTANCEBUFFER, "CommandUpdateInstanceBuffer");
 		{
