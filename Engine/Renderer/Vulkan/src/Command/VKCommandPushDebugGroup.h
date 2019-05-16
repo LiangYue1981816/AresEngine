@@ -7,9 +7,10 @@ class CVKCommandPushDebugGroup : public CGfxCommandBase
 {
 public:
 	CVKCommandPushDebugGroup(VkCommandBuffer vkCommandBuffer, const char* szMessage)
-		: m_strMessage(szMessage)
+		: m_vkCommandBuffer(vkCommandBuffer)
+		, m_strMessage(szMessage)
 	{
-		Execute(vkCommandBuffer);
+		Execute();
 	}
 	virtual ~CVKCommandPushDebugGroup(void)
 	{
@@ -17,11 +18,14 @@ public:
 	}
 
 public:
-	virtual void Execute(VkCommandBuffer vkCommandBuffer) const
+	virtual void Execute(void) const
 	{
 
 	}
 
+
+private:
+	VkCommandBuffer m_vkCommandBuffer;
 
 private:
 	eastl::string m_strMessage;

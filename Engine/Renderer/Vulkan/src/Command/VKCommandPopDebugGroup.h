@@ -7,8 +7,9 @@ class CVKCommandPopDebugGroup : public CGfxCommandBase
 {
 public:
 	CVKCommandPopDebugGroup(VkCommandBuffer vkCommandBuffer)
+		: m_vkCommandBuffer(vkCommandBuffer)
 	{
-		Execute(vkCommandBuffer);
+		Execute();
 	}
 	virtual ~CVKCommandPopDebugGroup(void)
 	{
@@ -16,8 +17,12 @@ public:
 	}
 
 public:
-	virtual void Execute(VkCommandBuffer vkCommandBuffer) const
+	virtual void Execute(void) const
 	{
 
 	}
+
+
+private:
+	VkCommandBuffer m_vkCommandBuffer;
 };

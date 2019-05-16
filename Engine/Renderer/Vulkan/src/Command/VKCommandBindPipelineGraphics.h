@@ -6,9 +6,10 @@ class CVKCommandBindPipelineGraphics : public CGfxCommandBase
 {
 public:
 	CVKCommandBindPipelineGraphics(VkCommandBuffer vkCommandBuffer, const CGfxPipelineGraphics* pPipelineGraphics)
-		: m_pPipelineGraphics((CGfxPipelineGraphics*)pPipelineGraphics)
+		: m_vkCommandBuffer(vkCommandBuffer)
+		, m_pPipelineGraphics((CGfxPipelineGraphics*)pPipelineGraphics)
 	{
-		Execute(vkCommandBuffer);
+		Execute();
 	}
 	virtual ~CVKCommandBindPipelineGraphics(void)
 	{
@@ -16,14 +17,17 @@ public:
 	}
 
 public:
-	virtual void Execute(VkCommandBuffer vkCommandBuffer) const
+	virtual void Execute(void) const
 	{
 		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_BIND_PIPELINEGRAPHICS, "CommandBindPipelineGraphics");
 		{
-			VKRenderer()->BindPipelineGraphics(vkCommandBuffer, m_pPipelineGraphics);
+			VKRenderer()->BindPipelineGraphics(m_vkCommandBuffer, m_pPipelineGraphics);
 		}
 	}
 
+
+private:
+	VkCommandBuffer m_vkCommandBuffer;
 
 private:
 	CGfxPipelineGraphics* m_pPipelineGraphics;

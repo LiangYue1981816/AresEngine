@@ -6,11 +6,12 @@ class CVKCommandNextSubPass : public CGfxCommandBase
 {
 public:
 	CVKCommandNextSubPass(VkCommandBuffer vkCommandBuffer, const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass, int indexSubpass)
-		: m_ptrFrameBuffer(ptrFrameBuffer)
+		: m_vkCommandBuffer(vkCommandBuffer)
+		, m_ptrFrameBuffer(ptrFrameBuffer)
 		, m_ptrRenderPass(ptrRenderPass)
 		, m_indexSubpass(indexSubpass)
 	{
-		Execute(vkCommandBuffer);
+		Execute();
 	}
 	virtual ~CVKCommandNextSubPass(void)
 	{
@@ -18,14 +19,17 @@ public:
 	}
 
 public:
-	virtual void Execute(VkCommandBuffer vkCommandBuffer) const
+	virtual void Execute(void) const
 	{
 		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_NEXT_SUBPASS, "CommandNextSubPass");
 		{
-			vkCmdNextSubpass(vkCommandBuffer, VK_SUBPASS_CONTENTS_SECONDARY_COMMAND_BUFFERS);
+			vkCmdNextSubpass(m_vkCommandBuffer, VK_SUBPASS_CONTENTS_SECONDARY_COMMAND_BUFFERS);
 		}
 	}
 
+
+private:
+	VkCommandBuffer m_vkCommandBuffer;
 
 private:
 	CGfxFrameBufferPtr m_ptrFrameBuffer;

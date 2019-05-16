@@ -6,9 +6,10 @@ class CVKCommandExecute : public CGfxCommandBase
 {
 public:
 	CVKCommandExecute(VkCommandBuffer vkCommandBuffer, const CGfxCommandBufferPtr ptrCommandBuffer)
-		: m_ptrCommandBuffer(ptrCommandBuffer)
+		: m_vkCommandBuffer(vkCommandBuffer)
+		, m_ptrCommandBuffer(ptrCommandBuffer)
 	{
-		Execute(vkCommandBuffer);
+		Execute();
 	}
 	virtual ~CVKCommandExecute(void)
 	{
@@ -16,14 +17,17 @@ public:
 	}
 
 public:
-	virtual void Execute(VkCommandBuffer vkCommandBuffer) const
+	virtual void Execute(void) const
 	{
 		if (m_ptrCommandBuffer) {
 			VkCommandBuffer vkExecuteCommandBuffer = ((CVKCommandBuffer*)m_ptrCommandBuffer.GetPointer())->GetCommandBuffer();
-			vkCmdExecuteCommands(vkCommandBuffer, 1, &vkExecuteCommandBuffer);
+			vkCmdExecuteCommands(m_vkCommandBuffer, 1, &vkExecuteCommandBuffer);
 		}
 	}
 
+
+private:
+	VkCommandBuffer m_vkCommandBuffer;
 
 private:
 	CGfxCommandBufferPtr m_ptrCommandBuffer;

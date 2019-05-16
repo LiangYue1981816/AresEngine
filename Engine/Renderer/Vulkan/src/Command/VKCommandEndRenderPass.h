@@ -6,10 +6,11 @@ class CVKCommandEndRenderPass : public CGfxCommandBase
 {
 public:
 	CVKCommandEndRenderPass(VkCommandBuffer vkCommandBuffer, const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass)
-		: m_ptrFrameBuffer(ptrFrameBuffer)
+		: m_vkCommandBuffer(vkCommandBuffer)
+		, m_ptrFrameBuffer(ptrFrameBuffer)
 		, m_ptrRenderPass(ptrRenderPass)
 	{
-		Execute(vkCommandBuffer);
+		Execute();
 	}
 	virtual ~CVKCommandEndRenderPass(void)
 	{
@@ -17,14 +18,17 @@ public:
 	}
 
 public:
-	virtual void Execute(VkCommandBuffer vkCommandBuffer) const
+	virtual void Execute(void) const
 	{
 		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_END_RENDERPASS, "CommandEndRenderPass");
 		{
-			vkCmdEndRenderPass(vkCommandBuffer);
+			vkCmdEndRenderPass(m_vkCommandBuffer);
 		}
 	}
 
+
+private:
+	VkCommandBuffer m_vkCommandBuffer;
 
 private:
 	CGfxFrameBufferPtr m_ptrFrameBuffer;

@@ -6,9 +6,10 @@ class CVKCommandClearDepth : public CGfxCommandBase
 {
 public:
 	CVKCommandClearDepth(VkCommandBuffer vkCommandBuffer, float depth)
-		: m_depth(depth)
+		: m_vkCommandBuffer(vkCommandBuffer)
+		, m_depth(depth)
 	{
-		Execute(vkCommandBuffer);
+		Execute();
 	}
 	virtual ~CVKCommandClearDepth(void)
 	{
@@ -16,7 +17,7 @@ public:
 	}
 
 public:
-	virtual void Execute(VkCommandBuffer vkCommandBuffer) const
+	virtual void Execute(void) const
 	{
 		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_CLEAR_DEPTH, "CommandClearDepth");
 		{
@@ -24,6 +25,9 @@ public:
 		}
 	}
 
+
+private:
+	VkCommandBuffer m_vkCommandBuffer;
 
 private:
 	float m_depth;

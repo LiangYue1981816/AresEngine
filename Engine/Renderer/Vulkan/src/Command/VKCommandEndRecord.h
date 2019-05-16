@@ -6,8 +6,9 @@ class CVKCommandEndRecord : public CGfxCommandBase
 {
 public:
 	CVKCommandEndRecord(VkCommandBuffer vkCommandBuffer)
+		: m_vkCommandBuffer(vkCommandBuffer)
 	{
-		Execute(vkCommandBuffer);
+		Execute();
 	}
 	virtual ~CVKCommandEndRecord(void)
 	{
@@ -15,11 +16,15 @@ public:
 	}
 
 public:
-	virtual void Execute(VkCommandBuffer vkCommandBuffer) const
+	virtual void Execute(void) const
 	{
 		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_END_RECORD, "CommandEndRecord");
 		{
-			vkEndCommandBuffer(vkCommandBuffer);
+			vkEndCommandBuffer(m_vkCommandBuffer);
 		}
 	}
+
+
+private:
+	VkCommandBuffer m_vkCommandBuffer;
 };

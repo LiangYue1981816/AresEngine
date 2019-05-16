@@ -6,12 +6,13 @@ class CVKCommandSetViewport : public CGfxCommandBase
 {
 public:
 	CVKCommandSetViewport(VkCommandBuffer vkCommandBuffer, int x, int y, int width, int height)
-		: m_x(x)
+		: m_vkCommandBuffer(vkCommandBuffer)
+		, m_x(x)
 		, m_y(y)
 		, m_width(width)
 		, m_height(height)
 	{
-		Execute(vkCommandBuffer);
+		Execute();
 	}
 	virtual ~CVKCommandSetViewport(void)
 	{
@@ -19,7 +20,7 @@ public:
 	}
 
 public:
-	virtual void Execute(VkCommandBuffer vkCommandBuffer) const
+	virtual void Execute(void) const
 	{
 		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_SET_VIEWPORT, "CommandSetViewport");
 		{
@@ -30,10 +31,13 @@ public:
 			viewport.height = m_height;
 			viewport.minDepth = 0.0f;
 			viewport.maxDepth = 1.0f;
-			vkCmdSetViewport(vkCommandBuffer, 0, 1, &viewport);
+			vkCmdSetViewport(m_vkCommandBuffer, 0, 1, &viewport);
 		}
 	}
 
+
+private:
+	VkCommandBuffer m_vkCommandBuffer;
 
 private:
 	int m_x;

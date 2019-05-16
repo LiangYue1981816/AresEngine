@@ -6,12 +6,13 @@ class CVKCommandSetScissor : public CGfxCommandBase
 {
 public:
 	CVKCommandSetScissor(VkCommandBuffer vkCommandBuffer, int x, int y, int width, int height)
-		: m_x(x)
+		: m_vkCommandBuffer(vkCommandBuffer)
+		, m_x(x)
 		, m_y(y)
 		, m_width(width)
 		, m_height(height)
 	{
-		Execute(vkCommandBuffer);
+		Execute();
 	}
 	virtual ~CVKCommandSetScissor(void)
 	{
@@ -19,7 +20,7 @@ public:
 	}
 
 public:
-	virtual void Execute(VkCommandBuffer vkCommandBuffer) const
+	virtual void Execute(void) const
 	{
 		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_SET_SCISSOR, "CommandSetScissor");
 		{
@@ -28,10 +29,13 @@ public:
 			rect.offset.y = m_y;
 			rect.extent.width = m_width;
 			rect.extent.height = m_height;
-			vkCmdSetScissor(vkCommandBuffer, 0, 1, &rect);
+			vkCmdSetScissor(m_vkCommandBuffer, 0, 1, &rect);
 		}
 	}
 
+
+private:
+	VkCommandBuffer m_vkCommandBuffer;
 
 private:
 	int m_x;

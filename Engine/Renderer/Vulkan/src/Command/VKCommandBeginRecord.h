@@ -6,16 +6,20 @@ class CVKCommandBeginRecord : public CGfxCommandBase
 {
 public:
 	CVKCommandBeginRecord(VkCommandBuffer vkCommandBuffer)
-		: m_indexSubpass(0)
+		: m_bMainCommandBuffer(true)
+		, m_vkCommandBuffer(vkCommandBuffer)
+		, m_indexSubpass(0)
 	{
-		Execute(vkCommandBuffer, true);
+		Execute();
 	}
 	CVKCommandBeginRecord(VkCommandBuffer vkCommandBuffer, const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass, int indexSubpass)
-		: m_ptrFrameBuffer(ptrFrameBuffer)
+		: m_bMainCommandBuffer(false)
+		, m_vkCommandBuffer(vkCommandBuffer)
+		, m_ptrFrameBuffer(ptrFrameBuffer)
 		, m_ptrRenderPass(ptrRenderPass)
 		, m_indexSubpass(indexSubpass)
 	{
-		Execute(vkCommandBuffer, false);
+		Execute();
 	}
 	virtual ~CVKCommandBeginRecord(void)
 	{
@@ -23,21 +27,25 @@ public:
 	}
 
 public:
-	virtual void Execute(VkCommandBuffer vkCommandBuffer, bool bMainCommandBuffer) const
+	virtual void Execute(void) const
 	{
 		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_BEGIN_RECORD, "CommandBeginRecord");
 		{
-			if (bMainCommandBuffer) {
-				vkBeginCommandBufferPrimary(vkCommandBuffer, VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT);
+			if (m_bMainCommandBuffer) {
+				vkBeginCommandBufferPrimary(m_vkCommandBuffer, VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT);
 			}
 			else {
 				VkRenderPass vkRenderPass = ((CVKRenderPass*)m_ptrRenderPass.GetPointer())->GetRenderPass();
 				VkFramebuffer vkFrameBuffer = ((CVKFrameBuffer*)m_ptrFrameBuffer.GetPointer())->GetFrameBuffer();
-				vkBeginCommandBufferSecondary(vkCommandBuffer, VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT | VK_COMMAND_BUFFER_USAGE_RENDER_PASS_CONTINUE_BIT, vkFrameBuffer, vkRenderPass, m_indexSubpass, VK_FALSE, 0, 0);
+				vkBeginCommandBufferSecondary(m_vkCommandBuffer, VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT | VK_COMMAND_BUFFER_USAGE_RENDER_PASS_CONTINUE_BIT, vkFrameBuffer, vkRenderPass, m_indexSubpass, VK_FALSE, 0, 0);
 			}
 		}
 	}
 
+
+private:
+	bool m_bMainCommandBuffer;
+	VkCommandBuffer m_vkCommandBuffer;
 
 private:
 	CGfxFrameBufferPtr m_ptrFrameBuffer;

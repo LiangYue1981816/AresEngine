@@ -6,10 +6,11 @@ class CVKCommandBeginRenderPass : public CGfxCommandBase
 {
 public:
 	CVKCommandBeginRenderPass(VkCommandBuffer vkCommandBuffer, const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass)
-		: m_ptrFrameBuffer(ptrFrameBuffer)
+		: m_vkCommandBuffer(vkCommandBuffer)
+		, m_ptrFrameBuffer(ptrFrameBuffer)
 		, m_ptrRenderPass(ptrRenderPass)
 	{
-		Execute(vkCommandBuffer);
+		Execute();
 	}
 	virtual ~CVKCommandBeginRenderPass(void)
 	{
@@ -17,7 +18,7 @@ public:
 	}
 
 public:
-	virtual void Execute(VkCommandBuffer vkCommandBuffer) const
+	virtual void Execute(void) const
 	{
 		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_BEGIN_RENDERPASS, "CommandBeginRenderPass");
 		{
@@ -32,10 +33,13 @@ public:
 			beginInfo.renderArea.extent.height = m_ptrFrameBuffer->GetHeight();
 			beginInfo.clearValueCount = 0;
 			beginInfo.pClearValues = nullptr;
-			vkCmdBeginRenderPass(vkCommandBuffer, &beginInfo, VK_SUBPASS_CONTENTS_SECONDARY_COMMAND_BUFFERS);
+			vkCmdBeginRenderPass(m_vkCommandBuffer, &beginInfo, VK_SUBPASS_CONTENTS_SECONDARY_COMMAND_BUFFERS);
 		}
 	}
 
+
+private:
+	VkCommandBuffer m_vkCommandBuffer;
 
 private:
 	CGfxFrameBufferPtr m_ptrFrameBuffer;

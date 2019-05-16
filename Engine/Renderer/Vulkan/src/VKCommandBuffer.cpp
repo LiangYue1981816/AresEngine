@@ -180,11 +180,29 @@ bool CVKCommandBuffer::WaitForFinish(void) const
 
 bool CVKCommandBuffer::CmdBeginRecord(void)
 {
-	return true;
+	if (IsMainCommandBuffer()) {
+		if (IsInRenderPass() == false && m_pCommands.empty()) {
+			m_pCommands.emplace_back(new CVKCommandBeginRecord(m_vkCommandBuffer));
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	else {
+		if (IsInRenderPass()) {
+			m_pCommands.emplace_back(new CVKCommandBeginRecord(m_vkCommandBuffer, m_ptrFrameBuffer, m_ptrRenderPass, m_indexSubpass));
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
 }
 
 bool CVKCommandBuffer::CmdEndRecord(void)
 {
+	m_pCommands.emplace_back(new CVKCommandEndRecord(m_vkCommandBuffer));
 	return true;
 }
 
