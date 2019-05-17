@@ -191,7 +191,7 @@ public:
 	virtual bool CmdPushDebugGroup(CGfxCommandBufferPtr ptrCommandBuffer, const char* szMessage) = 0;
 	virtual bool CmdPopDebugGroup(CGfxCommandBufferPtr ptrCommandBuffer) = 0;
 
-	virtual void Submit(const eastl::vector<CGfxCommandBufferPtr>& ptrCommandBuffers) = 0;
+	virtual void Submit(const CGfxCommandBufferPtr& ptrCommandBuffer) = 0;
 
 public:
 	virtual void AcquireNextFrame(void) = 0;

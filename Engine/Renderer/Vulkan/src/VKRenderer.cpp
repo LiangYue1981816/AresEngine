@@ -433,9 +433,9 @@ bool CVKRenderer::CmdPopDebugGroup(CGfxCommandBufferPtr ptrCommandBuffer)
 	return ptrCommandBuffer->CmdPopDebugGroup();
 }
 
-void CVKRenderer::Submit(const eastl::vector<CGfxCommandBufferPtr>& ptrCommandBuffers)
+void CVKRenderer::Submit(const CGfxCommandBufferPtr& ptrCommandBuffer)
 {
-
+//	m_pDevice->GetQueue()->Submit(ptrCommandBuffer, );
 }
 
 void CVKRenderer::AcquireNextFrame(void)

@@ -207,7 +207,7 @@ public:
 	bool CmdPushDebugGroup(CGfxCommandBufferPtr ptrCommandBuffer, const char* szMessage);
 	bool CmdPopDebugGroup(CGfxCommandBufferPtr ptrCommandBuffer);
 
-	void Submit(const eastl::vector<CGfxCommandBufferPtr>& ptrCommandBuffers);
+	void Submit(const CGfxCommandBufferPtr& ptrCommandBuffer);
 
 public:
 	void AcquireNextFrame(void);

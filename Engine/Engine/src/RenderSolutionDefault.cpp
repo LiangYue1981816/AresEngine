@@ -185,11 +185,8 @@ void CRenderSolutionDefault::Present(int indexQueue)
 	m_pShadowCamera->Apply();
 	m_pUniformEngine->Apply();
 
-	eastl::vector<CGfxCommandBufferPtr> ptrCommandBuffers;
-	ptrCommandBuffers.emplace_back(m_ptrMainCommandBuffer[indexQueue]);
-
 	GfxRenderer()->AcquireNextFrame();
-	GfxRenderer()->Submit(ptrCommandBuffers);
+	GfxRenderer()->Submit(m_ptrMainCommandBuffer[indexQueue]);
 	GfxRenderer()->Present();
 }
 
