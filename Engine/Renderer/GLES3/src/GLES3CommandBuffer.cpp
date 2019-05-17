@@ -110,7 +110,7 @@ bool CGLES3CommandBuffer::WaitForFinish(void) const
 	return true;
 }
 
-bool CGLES3CommandBuffer::CmdBeginRecord(void)
+bool CGLES3CommandBuffer::BeginRecord(void)
 {
 	if (IsMainCommandBuffer()) {
 		if (IsInRenderPass() == false && m_pCommands.empty()) {
@@ -130,7 +130,7 @@ bool CGLES3CommandBuffer::CmdBeginRecord(void)
 	}
 }
 
-bool CGLES3CommandBuffer::CmdEndRecord(void)
+bool CGLES3CommandBuffer::EndRecord(void)
 {
 	return true;
 }
@@ -507,16 +507,6 @@ bool CGLES3CommandBuffer::CmdExecute(const CGfxCommandBufferPtr ptrCommandBuffer
 {
 	if (IsMainCommandBuffer() == true && IsInRenderPass() == true && ptrCommandBuffer->IsMainCommandBuffer() == false) {
 		m_pCommands.emplace_back(new CGLES3CommandExecute(ptrCommandBuffer));
-		return true;
-	}
-	else {
-		return false;
-	}
-}
-
-bool CGLES3CommandBuffer::CmdPresent(void)
-{
-	if (IsMainCommandBuffer() == true && IsInRenderPass() == false) {
 		return true;
 	}
 	else {

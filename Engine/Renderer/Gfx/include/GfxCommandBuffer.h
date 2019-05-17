@@ -51,8 +51,8 @@ public:
 	virtual bool WaitForFinish(void) const = 0;
 
 public:
-	virtual bool CmdBeginRecord(void) = 0;
-	virtual bool CmdEndRecord(void) = 0;
+	virtual bool BeginRecord(void) = 0;
+	virtual bool EndRecord(void) = 0;
 
 	virtual bool CmdBeginRenderPass(const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass) = 0;
 	virtual bool CmdNextSubpass(void) = 0;
@@ -92,7 +92,6 @@ public:
 	virtual bool CmdDrawIndirect(const CGfxMeshDrawPtr ptrMeshDraw, const uint8_t* pInstanceBuffer, uint32_t size) = 0;
 
 	virtual bool CmdExecute(const CGfxCommandBufferPtr ptrCommandBuffer) = 0;
-	virtual bool CmdPresent(void) = 0;
 
 	virtual bool CmdPushDebugGroup(const char* szMessage) = 0;
 	virtual bool CmdPopDebugGroup(void) = 0;

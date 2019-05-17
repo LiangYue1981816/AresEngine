@@ -35,8 +35,8 @@ public:
 	bool WaitForFinish(void) const;
 
 public:
-	bool CmdBeginRecord(void);
-	bool CmdEndRecord(void);
+	bool BeginRecord(void);
+	bool EndRecord(void);
 
 	bool CmdBeginRenderPass(const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass);
 	bool CmdNextSubpass(void);
@@ -76,7 +76,6 @@ public:
 	bool CmdDrawIndirect(const CGfxMeshDrawPtr ptrMeshDraw, const uint8_t* pInstanceBuffer, uint32_t size);
 
 	bool CmdExecute(const CGfxCommandBufferPtr ptrCommandBuffer);
-	bool CmdPresent(void);
 
 	bool CmdPushDebugGroup(const char* szMessage);
 	bool CmdPopDebugGroup(void);

@@ -178,7 +178,7 @@ bool CVKCommandBuffer::WaitForFinish(void) const
 	return true;
 }
 
-bool CVKCommandBuffer::CmdBeginRecord(void)
+bool CVKCommandBuffer::BeginRecord(void)
 {
 	if (IsMainCommandBuffer()) {
 		if (IsInRenderPass() == false && m_pCommands.empty()) {
@@ -200,7 +200,7 @@ bool CVKCommandBuffer::CmdBeginRecord(void)
 	}
 }
 
-bool CVKCommandBuffer::CmdEndRecord(void)
+bool CVKCommandBuffer::EndRecord(void)
 {
 	m_pCommands.emplace_back(new CVKCommandEndRecord(m_vkCommandBuffer));
 	return true;
@@ -567,16 +567,6 @@ bool CVKCommandBuffer::CmdExecute(const CGfxCommandBufferPtr ptrCommandBuffer)
 
 	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
 		m_pCommands.emplace_back(new CVKCommandExecute(m_vkCommandBuffer, ptrCommandBuffer));
-		return true;
-	}
-	else {
-		return false;
-	}
-}
-
-bool CVKCommandBuffer::CmdPresent(void)
-{
-	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
 		return true;
 	}
 	else {
