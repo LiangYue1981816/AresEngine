@@ -152,6 +152,10 @@ void CVKRenderPass::Destroy(bool bClear)
 
 bool CVKRenderPass::SetColorAttachment(int indexAttachment, GfxPixelFormat format, int samples, bool bInvalidation, bool bClear, float red, float green, float blue, float alpha)
 {
+	if (CGfxHelper::IsFormatDepthOrStencil(format)) {
+		return false;
+	}
+
 	if (indexAttachment < 0 || indexAttachment >= m_attachments.size()) {
 		return false;
 	}
@@ -170,6 +174,10 @@ bool CVKRenderPass::SetColorAttachment(int indexAttachment, GfxPixelFormat forma
 
 bool CVKRenderPass::SetDepthStencilAttachment(int indexAttachment, GfxPixelFormat format, int samples, bool bInvalidation, bool bClear, float depth, int stencil)
 {
+	if (CGfxHelper::IsFormatDepthOrStencil(format) == false) {
+		return false;
+	}
+
 	if (indexAttachment < 0 || indexAttachment >= m_attachments.size()) {
 		return false;
 	}
