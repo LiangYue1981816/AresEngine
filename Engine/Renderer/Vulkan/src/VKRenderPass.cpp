@@ -202,6 +202,10 @@ bool CVKRenderPass::SetSubpassInputColorReference(int indexSubpass, int indexAtt
 		return false;
 	}
 
+	if (CGfxHelper::IsFormatDepthOrStencil(m_attachments[indexAttachment].format)) {
+		return false;
+	}
+
 	m_subpasses[indexSubpass].inputAttachments[indexAttachment] = indexAttachment;
 	return true;
 }
@@ -216,6 +220,10 @@ bool CVKRenderPass::SetSubpassOutputColorReference(int indexSubpass, int indexAt
 		return false;
 	}
 
+	if (CGfxHelper::IsFormatDepthOrStencil(m_attachments[indexAttachment].format)) {
+		return false;
+	}
+
 	m_subpasses[indexSubpass].outputAttachments[indexAttachment] = indexAttachment;
 	return true;
 }
@@ -227,6 +235,10 @@ bool CVKRenderPass::SetSubpassOutputDepthStencilReference(int indexSubpass, int 
 	}
 
 	if (indexAttachment < 0 || indexAttachment >= m_attachments.size()) {
+		return false;
+	}
+
+	if (CGfxHelper::IsFormatDepthOrStencil(m_attachments[indexAttachment].format) == false) {
 		return false;
 	}
 

@@ -86,6 +86,10 @@ bool CGLES3RenderPass::SetSubpassInputColorReference(int indexSubpass, int index
 		return false;
 	}
 
+	if (CGfxHelper::IsFormatDepthOrStencil(m_attachments[indexAttachment].format)) {
+		return false;
+	}
+
 	m_subpasses[indexSubpass].inputAttachments[indexAttachment] = indexAttachment;
 	return true;
 }
@@ -100,6 +104,10 @@ bool CGLES3RenderPass::SetSubpassOutputColorReference(int indexSubpass, int inde
 		return false;
 	}
 
+	if (CGfxHelper::IsFormatDepthOrStencil(m_attachments[indexAttachment].format)) {
+		return false;
+	}
+
 	m_subpasses[indexSubpass].outputAttachments[indexAttachment] = indexAttachment;
 	return true;
 }
@@ -111,6 +119,10 @@ bool CGLES3RenderPass::SetSubpassOutputDepthStencilReference(int indexSubpass, i
 	}
 
 	if (indexAttachment < 0 || indexAttachment >= m_attachments.size()) {
+		return false;
+	}
+
+	if (CGfxHelper::IsFormatDepthOrStencil(m_attachments[indexAttachment].format) == false) {
 		return false;
 	}
 
