@@ -55,8 +55,8 @@ bool CVKRenderPass::Create(void)
 				attachment.storeOp = m_attachments[indexAttachment].bInvalidation ? VK_ATTACHMENT_STORE_OP_DONT_CARE : VK_ATTACHMENT_STORE_OP_STORE;
 				attachment.stencilLoadOp = m_attachments[indexAttachment].bClear ? VK_ATTACHMENT_LOAD_OP_CLEAR : VK_ATTACHMENT_LOAD_OP_LOAD;
 				attachment.stencilStoreOp = m_attachments[indexAttachment].bInvalidation ? VK_ATTACHMENT_STORE_OP_DONT_CARE : VK_ATTACHMENT_STORE_OP_STORE;
-				attachment.initialLayout = CVKHelper::IsFormatDepthOrStencil((VkFormat)m_attachments[indexAttachment].format) ? VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL : VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
-				attachment.finalLayout = CVKHelper::IsFormatDepthOrStencil((VkFormat)m_attachments[indexAttachment].format) ? VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL : VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
+				attachment.initialLayout = CGfxHelper::IsFormatDepthOrStencil(m_attachments[indexAttachment].format) ? VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL : VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
+				attachment.finalLayout = CGfxHelper::IsFormatDepthOrStencil(m_attachments[indexAttachment].format) ? VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL : VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
 				attachments.emplace_back(attachment);
 			}
 
@@ -64,21 +64,21 @@ bool CVKRenderPass::Create(void)
 				for (const auto& itInputAttachment : m_subpasses[indexSubpass].inputAttachments) {
 					VkAttachmentReference attachment = {};
 					attachment.attachment = itInputAttachment.first;
-					attachment.layout = CVKHelper::IsFormatDepthOrStencil((VkFormat)m_attachments[itInputAttachment.first].format) ? VK_IMAGE_LAYOUT_DEPTH_STENCIL_READ_ONLY_OPTIMAL : VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
+					attachment.layout = CGfxHelper::IsFormatDepthOrStencil(m_attachments[itInputAttachment.first].format) ? VK_IMAGE_LAYOUT_DEPTH_STENCIL_READ_ONLY_OPTIMAL : VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
 					inputAttachmentReferences[indexSubpass].emplace_back(attachment);
 				}
 
 				for (const auto& itOutputAttachment : m_subpasses[indexSubpass].outputAttachments) {
 					VkAttachmentReference attachment = {};
 					attachment.attachment = itOutputAttachment.first;
-					attachment.layout = CVKHelper::IsFormatDepthOrStencil((VkFormat)m_attachments[itOutputAttachment.first].format) ? VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL : VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
+					attachment.layout = CGfxHelper::IsFormatDepthOrStencil(m_attachments[itOutputAttachment.first].format) ? VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL : VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
 					outputAttachmentReferences[indexSubpass].emplace_back(attachment);
 				}
 
 				for (const auto& itResolveAttachment : m_subpasses[indexSubpass].resolveAttachments) {
 					VkAttachmentReference attachment = {};
 					attachment.attachment = itResolveAttachment.first;
-					attachment.layout = CVKHelper::IsFormatDepthOrStencil((VkFormat)m_attachments[itResolveAttachment.first].format) ? VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL : VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
+					attachment.layout = CGfxHelper::IsFormatDepthOrStencil(m_attachments[itResolveAttachment.first].format) ? VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL : VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
 					resolveAttachmentReferences[indexSubpass].emplace_back(attachment);
 				}
 

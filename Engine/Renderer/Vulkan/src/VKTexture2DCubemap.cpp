@@ -65,7 +65,7 @@ int CVKTextureCubemap::GetLevels(void) const
 
 bool CVKTextureCubemap::Create(GfxPixelFormat format, int width, int height, int levels)
 {
-	if (CVKHelper::IsFormatSupported((VkFormat)format) && CVKHelper::IsFormatDepthOrStencil((VkFormat)format) == false) {
+	if (CVKHelper::IsFormatSupported((VkFormat)format) && CGfxHelper::IsFormatDepthOrStencil(format) == false) {
 		return m_pTexture->Create(GFX_TEXTURE_CUBE_MAP, format, width, height, 1, levels, 1, VK_IMAGE_ASPECT_COLOR_BIT, VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_IMAGE_TILING_OPTIMAL);
 	}
 	else {
