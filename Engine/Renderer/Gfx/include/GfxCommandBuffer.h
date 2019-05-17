@@ -52,6 +52,7 @@ public:
 
 public:
 	virtual bool BeginRecord(void) = 0;
+	virtual bool BeginRecord(const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass, int indexSubpass) = 0;
 	virtual bool EndRecord(void) = 0;
 
 	virtual bool CmdBeginRenderPass(const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass) = 0;

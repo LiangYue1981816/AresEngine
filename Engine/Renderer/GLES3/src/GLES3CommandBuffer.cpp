@@ -112,21 +112,27 @@ bool CGLES3CommandBuffer::WaitForFinish(void) const
 
 bool CGLES3CommandBuffer::BeginRecord(void)
 {
-	if (IsMainCommandBuffer()) {
-		if (IsInRenderPass() == false && m_pCommands.empty()) {
-			return true;
-		}
-		else {
-			return false;
-		}
+	if (IsMainCommandBuffer() && IsInRenderPass() == false && m_pCommands.empty()) {
+		return true;
 	}
 	else {
-		if (IsInRenderPass()) {
-			return true;
-		}
-		else {
-			return false;
-		}
+		return false;
+	}
+}
+
+bool CGLES3CommandBuffer::BeginRecord(const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass, int indexSubpass)
+{
+	ASSERT(ptrRenderPass);
+	ASSERT(ptrFrameBuffer);
+
+	if (IsMainCommandBuffer() == false && IsInRenderPass() == false && m_pCommands.empty()) {
+		m_indexSubpass = indexSubpass;
+		m_ptrRenderPass = ptrRenderPass;
+		m_ptrFrameBuffer = ptrFrameBuffer;
+		return true;
+	}
+	else {
+		return false;
 	}
 }
 
@@ -137,8 +143,8 @@ bool CGLES3CommandBuffer::EndRecord(void)
 
 bool CGLES3CommandBuffer::CmdBeginRenderPass(const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass)
 {
-	ASSERT(ptrFrameBuffer);
 	ASSERT(ptrRenderPass);
+	ASSERT(ptrFrameBuffer);
 
 	if (IsMainCommandBuffer() == true && IsInRenderPass() == false) {
 		m_indexSubpass = 0;

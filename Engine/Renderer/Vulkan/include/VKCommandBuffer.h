@@ -36,6 +36,7 @@ public:
 
 public:
 	bool BeginRecord(void);
+	bool BeginRecord(const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass, int indexSubpass);
 	bool EndRecord(void);
 
 	bool CmdBeginRenderPass(const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass);

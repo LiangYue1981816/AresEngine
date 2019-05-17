@@ -180,23 +180,29 @@ bool CVKCommandBuffer::WaitForFinish(void) const
 
 bool CVKCommandBuffer::BeginRecord(void)
 {
-	if (IsMainCommandBuffer()) {
-		if (IsInRenderPass() == false && m_pCommands.empty()) {
-			m_pCommands.emplace_back(new CVKCommandBeginRecord(m_vkCommandBuffer));
-			return true;
-		}
-		else {
-			return false;
-		}
+	if (IsMainCommandBuffer() && IsInRenderPass() == false && m_pCommands.empty()) {
+		m_pCommands.emplace_back(new CVKCommandBeginRecord(m_vkCommandBuffer));
+		return true;
 	}
 	else {
-		if (IsInRenderPass()) {
-			m_pCommands.emplace_back(new CVKCommandBeginRecord(m_vkCommandBuffer, m_ptrFrameBuffer, m_ptrRenderPass, m_indexSubpass));
-			return true;
-		}
-		else {
-			return false;
-		}
+		return false;
+	}
+}
+
+bool CVKCommandBuffer::BeginRecord(const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass, int indexSubpass)
+{
+	ASSERT(ptrRenderPass);
+	ASSERT(ptrFrameBuffer);
+
+	if (IsMainCommandBuffer() == false && IsInRenderPass() == false && m_pCommands.empty()) {
+		m_indexSubpass = indexSubpass;
+		m_ptrRenderPass = ptrRenderPass;
+		m_ptrFrameBuffer = ptrFrameBuffer;
+		m_pCommands.emplace_back(new CVKCommandBeginRecord(m_vkCommandBuffer, m_ptrFrameBuffer, m_ptrRenderPass, m_indexSubpass));
+		return true;
+	}
+	else {
+		return false;
 	}
 }
 
