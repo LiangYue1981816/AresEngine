@@ -103,7 +103,7 @@ bool CVKTexture::Create(GfxTextureType type, GfxPixelFormat format, int width, i
 
 	m_vkImage = VK_NULL_HANDLE;
 	m_vkImageView = vkImageView;
-	m_vkImageLayout = VK_IMAGE_LAYOUT_UNDEFINED;
+	m_vkImageLayout = VK_IMAGE_LAYOUT_GENERAL;
 	m_vkImageAspectFlags = imageAspectFlags;
 
 	m_type = type;
