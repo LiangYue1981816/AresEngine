@@ -154,7 +154,7 @@ void CGfxRenderQueue::CmdDraw(int indexQueue, CGfxCommandBufferPtr ptrCommandBuf
 
 void CGfxRenderQueue::CmdDrawThread(int indexQueue, CGfxCommandBufferPtr ptrCommandBuffer, const CGfxDescriptorSetPtr ptrDescriptorSetEngine, const CGfxDescriptorSetPtr ptrDescriptorSetCamera, const CGfxDescriptorSetPtr ptrDescriptorSetInputAttachment, CGfxPipelineGraphics* pPipeline, uint32_t namePass)
 {
-	GfxRenderer()->CmdBeginRecord(ptrCommandBuffer);
+	GfxRenderer()->BeginRecord(ptrCommandBuffer);
 	{
 		GfxRenderer()->CmdBindPipelineGraphics(ptrCommandBuffer, pPipeline);
 		GfxRenderer()->CmdBindDescriptorSet(ptrCommandBuffer, ptrDescriptorSetEngine);
@@ -170,5 +170,5 @@ void CGfxRenderQueue::CmdDrawThread(int indexQueue, CGfxCommandBufferPtr ptrComm
 			}
 		}
 	}
-	GfxRenderer()->CmdEndRecord(ptrCommandBuffer);
+	GfxRenderer()->EndRecord(ptrCommandBuffer);
 }

@@ -161,7 +161,7 @@ void CRenderSolutionDefault::Render(int indexQueue)
 		const CGfxRenderPassPtr ptrRenderPass = m_bEnableMSAA ? m_ptrRenderPassMSAA : m_ptrRenderPass;
 		const CGfxFrameBufferPtr ptrFrameBuffer = m_bEnableMSAA ? m_ptrFrameBufferScreenMSAA[GfxRenderer()->GetSwapChain()->GetFrameIndex()] : m_ptrFrameBufferScreen[GfxRenderer()->GetSwapChain()->GetFrameIndex()];
 
-		GfxRenderer()->CmdBeginRecord(m_ptrMainCommandBuffer[indexQueue]);
+		GfxRenderer()->BeginRecord(m_ptrMainCommandBuffer[indexQueue]);
 		{
 			GfxRenderer()->CmdBeginRenderPass(m_ptrMainCommandBuffer[indexQueue], ptrFrameBuffer, ptrRenderPass);
 			{
@@ -175,7 +175,7 @@ void CRenderSolutionDefault::Render(int indexQueue)
 			}
 			GfxRenderer()->CmdEndRenderPass(m_ptrMainCommandBuffer[indexQueue]);
 		}
-		GfxRenderer()->CmdEndRecord(m_ptrMainCommandBuffer[indexQueue]);
+		GfxRenderer()->EndRecord(m_ptrMainCommandBuffer[indexQueue]);
 	}
 }
 

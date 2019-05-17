@@ -188,7 +188,6 @@ public:
 	bool CmdDrawIndirect(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxMeshDrawPtr ptrMeshDraw, const uint8_t* pInstanceBuffer, uint32_t size);
 
 	bool CmdExecute(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxCommandBufferPtr ptrSecondaryCommandBuffer);
-	bool CmdPresent(CGfxCommandBufferPtr ptrCommandBuffer);
 
 	bool CmdPushDebugGroup(CGfxCommandBufferPtr ptrCommandBuffer, const char* szMessage);
 	bool CmdPopDebugGroup(CGfxCommandBufferPtr ptrCommandBuffer);

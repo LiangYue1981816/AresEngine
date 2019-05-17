@@ -418,11 +418,6 @@ bool CVKRenderer::CmdExecute(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxCo
 	return ptrCommandBuffer->CmdExecute(ptrSecondaryCommandBuffer);
 }
 
-bool CVKRenderer::CmdPresent(CGfxCommandBufferPtr ptrCommandBuffer)
-{
-	return ptrCommandBuffer->CmdPresent();
-}
-
 bool CVKRenderer::CmdPushDebugGroup(CGfxCommandBufferPtr ptrCommandBuffer, const char* szMessage)
 {
 	return ptrCommandBuffer->CmdPushDebugGroup(szMessage);

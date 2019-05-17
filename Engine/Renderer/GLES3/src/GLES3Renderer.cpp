@@ -412,11 +412,6 @@ bool CGLES3Renderer::CmdExecute(CGfxCommandBufferPtr ptrCommandBuffer, const CGf
 	return ptrCommandBuffer->CmdExecute(ptrSecondaryCommandBuffer);
 }
 
-bool CGLES3Renderer::CmdPresent(CGfxCommandBufferPtr ptrCommandBuffer)
-{
-	return ptrCommandBuffer->CmdPresent();
-}
-
 bool CGLES3Renderer::CmdPushDebugGroup(CGfxCommandBufferPtr ptrCommandBuffer, const char* szMessage)
 {
 	return ptrCommandBuffer->CmdPushDebugGroup(szMessage);
