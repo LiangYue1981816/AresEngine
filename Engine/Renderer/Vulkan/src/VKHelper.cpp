@@ -71,48 +71,6 @@ bool CVKHelper::IsFormatSupported(VkFormat format)
 	return vkFormatProperties[format].bufferFeatures || vkFormatProperties[format].linearTilingFeatures || vkFormatProperties[format].optimalTilingFeatures;
 }
 
-bool CVKHelper::IsFormatDepthOnly(VkFormat format)
-{
-	switch ((int)format) {
-	case VK_FORMAT_D16_UNORM:
-	case VK_FORMAT_X8_D24_UNORM_PACK32:
-	case VK_FORMAT_D32_SFLOAT:
-		return true;
-
-	default:
-		return false;
-	}
-}
-
-bool CVKHelper::IsFormatStencilOnly(VkFormat format)
-{
-	switch ((int)format) {
-	case VK_FORMAT_S8_UINT:
-		return true;
-
-	default:
-		return false;
-	}
-}
-
-bool CVKHelper::IsFormatDepthStencil(VkFormat format)
-{
-	switch ((int)format) {
-	case VK_FORMAT_D16_UNORM_S8_UINT:
-	case VK_FORMAT_D24_UNORM_S8_UINT:
-	case VK_FORMAT_D32_SFLOAT_S8_UINT:
-		return true;
-
-	default:
-		return false;
-	}
-}
-
-bool CVKHelper::IsFormatDepthOrStencil(VkFormat format)
-{
-	return IsFormatStencilOnly(format) || IsFormatDepthOnly(format) || IsFormatDepthStencil(format);
-}
-
 VkAccessFlags CVKHelper::GetAccessMaskByImageLayout(VkImageLayout layout)
 {
 	switch ((int)layout) {

@@ -1548,6 +1548,9 @@
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\src\Command\VKCommandUpdateInstanceBuffer.h">
       <Filter>Engine\Renderer\Vulkan\Source Files\Commands</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxHelper.h">
+      <Filter>Engine\Renderer\Gfx\Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Engine\ThirdParty\eastl\source\allocator_eastl.cpp">
@@ -2233,6 +2236,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKMaterialManager.cpp">
       <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxHelper.cpp">
+      <Filter>Engine\Renderer\Gfx\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

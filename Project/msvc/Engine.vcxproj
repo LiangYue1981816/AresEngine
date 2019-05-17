@@ -224,6 +224,7 @@
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxEnum.h" />
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxFrameBuffer.h" />
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxGLM.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxHelper.h" />
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxIndexBuffer.h" />
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxIndirectBuffer.h" />
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxInstanceBuffer.h" />
@@ -655,6 +656,7 @@
     <ClCompile Include="..\..\Engine\Memory\src\MemorySystem.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Compiler\src\ShaderCompiler.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxCamera.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxHelper.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxProfiler.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxRenderer.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxRenderQueue.cpp" />

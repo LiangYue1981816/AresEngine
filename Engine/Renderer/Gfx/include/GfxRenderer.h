@@ -3,6 +3,7 @@
 
 #include "GfxGLM.h"
 #include "GfxEnum.h"
+#include "GfxHelper.h"
 #include "GfxDefinition.h"
 
 #include "GfxSprivCross.h"
