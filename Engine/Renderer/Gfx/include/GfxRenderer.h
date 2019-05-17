@@ -146,6 +146,7 @@ public:
 
 public:
 	virtual bool BeginRecord(CGfxCommandBufferPtr ptrCommandBuffer) = 0;
+	virtual bool BeginRecord(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass, int indexSubpass) = 0;
 	virtual bool EndRecord(CGfxCommandBufferPtr ptrCommandBuffer) = 0;
 
 	virtual bool CmdBeginRenderPass(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass) = 0;

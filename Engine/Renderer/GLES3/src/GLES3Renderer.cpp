@@ -247,6 +247,11 @@ bool CGLES3Renderer::BeginRecord(CGfxCommandBufferPtr ptrCommandBuffer)
 	return ptrCommandBuffer->BeginRecord();
 }
 
+bool CGLES3Renderer::BeginRecord(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass, int indexSubpass)
+{
+	return ptrCommandBuffer->BeginRecord(ptrFrameBuffer, ptrRenderPass, indexSubpass);
+}
+
 bool CGLES3Renderer::EndRecord(CGfxCommandBufferPtr ptrCommandBuffer)
 {
 	return ptrCommandBuffer->EndRecord();

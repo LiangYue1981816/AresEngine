@@ -148,6 +148,7 @@ public:
 
 public:
 	bool BeginRecord(CGfxCommandBufferPtr ptrCommandBuffer);
+	bool BeginRecord(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass, int indexSubpass);
 	bool EndRecord(CGfxCommandBufferPtr ptrCommandBuffer);
 
 	bool CmdBeginRenderPass(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass);

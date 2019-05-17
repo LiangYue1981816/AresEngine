@@ -253,6 +253,11 @@ bool CVKRenderer::BeginRecord(CGfxCommandBufferPtr ptrCommandBuffer)
 	return ptrCommandBuffer->BeginRecord();
 }
 
+bool CVKRenderer::BeginRecord(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass, int indexSubpass)
+{
+	return ptrCommandBuffer->BeginRecord(ptrFrameBuffer, ptrRenderPass, indexSubpass);
+}
+
 bool CVKRenderer::EndRecord(CGfxCommandBufferPtr ptrCommandBuffer)
 {
 	return ptrCommandBuffer->EndRecord();
