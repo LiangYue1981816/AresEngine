@@ -34,6 +34,11 @@ void CGLES3RenderPass::Destroy(bool bClear)
 	}
 }
 
+bool CGLES3RenderPass::SetPresentAttachment(int indexAttachment, GfxPixelFormat format, int samples, bool bInvalidation, bool bClear, float red, float green, float blue, float alpha)
+{
+	return true;
+}
+
 bool CGLES3RenderPass::SetColorAttachment(int indexAttachment, GfxPixelFormat format, int samples, bool bInvalidation, bool bClear, float red, float green, float blue, float alpha)
 {
 	if (indexAttachment < 0 || indexAttachment >= m_attachments.size()) {

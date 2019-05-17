@@ -150,6 +150,25 @@ void CVKRenderPass::Destroy(bool bClear)
 	m_vkRenderPass = VK_NULL_HANDLE;
 }
 
+bool CVKRenderPass::SetPresentAttachment(int indexAttachment, GfxPixelFormat format, int samples, bool bInvalidation, bool bClear, float red, float green, float blue, float alpha)
+{
+	if (indexAttachment < 0 || indexAttachment >= m_attachments.size()) {
+		return false;
+	}
+
+	m_attachments[indexAttachment].format = format;
+	m_attachments[indexAttachment].samples = samples;
+	m_attachments[indexAttachment].bPresent = true;
+	m_attachments[indexAttachment].bInvalidation = bInvalidation;
+	m_attachments[indexAttachment].bClear = bClear;
+	m_attachments[indexAttachment].color[0] = red;
+	m_attachments[indexAttachment].color[1] = green;
+	m_attachments[indexAttachment].color[2] = blue;
+	m_attachments[indexAttachment].color[3] = alpha;
+
+	return true;
+}
+
 bool CVKRenderPass::SetColorAttachment(int indexAttachment, GfxPixelFormat format, int samples, bool bInvalidation, bool bClear, float red, float green, float blue, float alpha)
 {
 	if (indexAttachment < 0 || indexAttachment >= m_attachments.size()) {
