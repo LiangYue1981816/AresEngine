@@ -145,8 +145,8 @@ public:
 	virtual CGfxCommandBufferPtr NewCommandBuffer(uint32_t pool, bool bMainCommandBuffer) = 0;
 
 public:
-	virtual bool CmdBeginRecord(CGfxCommandBufferPtr ptrCommandBuffer) = 0;
-	virtual bool CmdEndRecord(CGfxCommandBufferPtr ptrCommandBuffer) = 0;
+	virtual bool BeginRecord(CGfxCommandBufferPtr ptrCommandBuffer) = 0;
+	virtual bool EndRecord(CGfxCommandBufferPtr ptrCommandBuffer) = 0;
 
 	virtual bool CmdBeginRenderPass(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass) = 0;
 	virtual bool CmdNextSubpass(CGfxCommandBufferPtr ptrCommandBuffer) = 0;

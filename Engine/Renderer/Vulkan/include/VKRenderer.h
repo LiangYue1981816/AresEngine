@@ -161,8 +161,8 @@ public:
 	CGfxCommandBufferPtr NewCommandBuffer(uint32_t pool, bool bMainCommandBuffer);
 
 public:
-	bool CmdBeginRecord(CGfxCommandBufferPtr ptrCommandBuffer);
-	bool CmdEndRecord(CGfxCommandBufferPtr ptrCommandBuffer);
+	bool BeginRecord(CGfxCommandBufferPtr ptrCommandBuffer);
+	bool EndRecord(CGfxCommandBufferPtr ptrCommandBuffer);
 
 	bool CmdBeginRenderPass(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass);
 	bool CmdNextSubpass(CGfxCommandBufferPtr ptrCommandBuffer);
