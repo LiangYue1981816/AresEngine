@@ -27,12 +27,12 @@ uint32_t CVKQueue::GetQueueFamilyIndex(void) const
 	return m_queueFamilyIndex;
 }
 
-bool CVKQueue::Submit(CGfxCommandBufferPtr ptrCommandBuffers, VkSemaphore vkWaitSemaphore, VkPipelineStageFlags waitStageFlags, VkSemaphore vkSignalSemaphore) const
+bool CVKQueue::Submit(CGfxCommandBufferPtr ptrCommandBuffer, VkSemaphore vkWaitSemaphore, VkPipelineStageFlags waitStageFlags, VkSemaphore vkSignalSemaphore) const
 {
-	ASSERT(ptrCommandBuffers);
+	ASSERT(ptrCommandBuffer);
 
-	VkFence vkFence = ((CVKCommandBuffer*)ptrCommandBuffers.GetPointer())->GetFence();
-	VkCommandBuffer vkCommandBuffer = ((CVKCommandBuffer*)ptrCommandBuffers.GetPointer())->GetCommandBuffer();
+	VkFence vkFence = ((CVKCommandBuffer*)ptrCommandBuffer.GetPointer())->GetFence();
+	VkCommandBuffer vkCommandBuffer = ((CVKCommandBuffer*)ptrCommandBuffer.GetPointer())->GetCommandBuffer();
 
 	CALL_VK_FUNCTION_RETURN_BOOL(vkWaitForFences(m_pDevice->GetDevice(), 1, &vkFence, VK_TRUE, UINT64_MAX));
 	CALL_VK_FUNCTION_RETURN_BOOL(vkResetFences(m_pDevice->GetDevice(), 1, &vkFence));
