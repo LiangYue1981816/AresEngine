@@ -246,7 +246,7 @@ bool CVKTexture::Texture2DData(GfxPixelFormat format, int level, int xoffset, in
 	ASSERT(xoffset >= 0 && width > 0 && xoffset + width <= m_width);
 	ASSERT(yoffset >= 0 && height > 0 && yoffset + height <= m_height);
 
-	return m_pDevice->GetTransferManager()->TransferTexture2DData(this, VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL, level, xoffset, yoffset, width, height, size, data);
+	return m_pDevice->GetTransferManager()->TransferTexture2DData(this, VK_IMAGE_LAYOUT_GENERAL, level, xoffset, yoffset, width, height, size, data);
 }
 
 bool CVKTexture::Texture2DArrayData(GfxPixelFormat format, int layer, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
@@ -263,7 +263,7 @@ bool CVKTexture::Texture2DArrayData(GfxPixelFormat format, int layer, int level,
 	ASSERT(xoffset >= 0 && width > 0 && xoffset + width <= m_width);
 	ASSERT(yoffset >= 0 && height > 0 && yoffset + height <= m_height);
 
-	return m_pDevice->GetTransferManager()->TransferTexture2DArrayData(this, VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL, layer, level, xoffset, yoffset, width, height, size, data);
+	return m_pDevice->GetTransferManager()->TransferTexture2DArrayData(this, VK_IMAGE_LAYOUT_GENERAL, layer, level, xoffset, yoffset, width, height, size, data);
 }
 
 bool CVKTexture::TextureCubemapData(GfxPixelFormat format, GfxCubemapFace face, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
@@ -279,7 +279,7 @@ bool CVKTexture::TextureCubemapData(GfxPixelFormat format, GfxCubemapFace face, 
 	ASSERT(xoffset >= 0 && width > 0 && xoffset + width <= m_width);
 	ASSERT(yoffset >= 0 && height > 0 && yoffset + height <= m_height);
 
-	return m_pDevice->GetTransferManager()->TransferTextureCubemapData(this, VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL, face, level, xoffset, yoffset, width, height, size, data);
+	return m_pDevice->GetTransferManager()->TransferTextureCubemapData(this, VK_IMAGE_LAYOUT_GENERAL, face, level, xoffset, yoffset, width, height, size, data);
 }
 
 bool CVKTexture::PipelineBarrier(VkCommandBuffer vkCommandBuffer, VkImageLayout imageLayout)
