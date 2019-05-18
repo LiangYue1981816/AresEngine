@@ -39,8 +39,6 @@ public:
 
 
 public:
-	virtual int GetCommandCount(void) const = 0;
-
 	virtual bool IsInRenderPass(void) const = 0;
 	virtual int GetSubpassIndex(void) const = 0;
 
@@ -53,6 +51,8 @@ public:
 	virtual bool WaitForFinish(void) const = 0;
 
 public:
+	virtual bool IsEmpty(void) const = 0;
+
 	virtual bool BeginRecord(void) = 0;
 	virtual bool BeginRecord(const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass, int indexSubpass) = 0;
 	virtual bool EndRecord(void) = 0;

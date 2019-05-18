@@ -28,6 +28,8 @@ public:
 	bool WaitForFinish(void) const;
 
 public:
+	bool IsEmpty(void) const;
+
 	bool BeginRecord(void);
 	bool BeginRecord(const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass, int indexSubpass);
 	bool EndRecord(void);

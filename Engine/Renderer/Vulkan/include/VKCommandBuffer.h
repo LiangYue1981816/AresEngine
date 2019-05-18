@@ -23,8 +23,6 @@ public:
 	VkCommandBuffer GetCommandBuffer(void) const;
 
 public:
-	int GetCommandCount(void) const;
-
 	bool IsInRenderPass(void) const;
 	int GetSubpassIndex(void) const;
 
@@ -37,6 +35,8 @@ public:
 	bool WaitForFinish(void) const;
 
 public:
+	bool IsEmpty(void) const;
+
 	bool BeginRecord(void);
 	bool BeginRecord(const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass, int indexSubpass);
 	bool EndRecord(void);

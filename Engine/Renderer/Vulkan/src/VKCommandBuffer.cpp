@@ -129,11 +129,6 @@ VkCommandBuffer CVKCommandBuffer::GetCommandBuffer(void) const
 	return m_vkCommandBuffer;
 }
 
-int CVKCommandBuffer::GetCommandCount(void) const
-{
-	return (int)m_pCommands.size();
-}
-
 bool CVKCommandBuffer::IsInRenderPass(void) const
 {
 	return m_ptrRenderPass && m_indexSubpass >= 0 && m_indexSubpass < (int)m_ptrRenderPass->GetSubpassCount();
@@ -181,6 +176,11 @@ bool CVKCommandBuffer::WaitForFinish(void) const
 	}
 
 	return true;
+}
+
+bool CVKCommandBuffer::IsEmpty(void) const
+{
+	return m_pCommands.empty();
 }
 
 bool CVKCommandBuffer::BeginRecord(void)
