@@ -55,7 +55,7 @@ bool CVKRenderPass::Create(void)
 				attachment.storeOp = m_attachments[indexAttachment].bInvalidation ? VK_ATTACHMENT_STORE_OP_DONT_CARE : VK_ATTACHMENT_STORE_OP_STORE;
 				attachment.stencilLoadOp = m_attachments[indexAttachment].bClear ? VK_ATTACHMENT_LOAD_OP_CLEAR : VK_ATTACHMENT_LOAD_OP_LOAD;
 				attachment.stencilStoreOp = m_attachments[indexAttachment].bInvalidation ? VK_ATTACHMENT_STORE_OP_DONT_CARE : VK_ATTACHMENT_STORE_OP_STORE;
-				attachment.initialLayout = VK_IMAGE_LAYOUT_GENERAL;
+				attachment.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
 				attachment.finalLayout = m_attachments[indexAttachment].bPresent ? VK_IMAGE_LAYOUT_PRESENT_SRC_KHR : VK_IMAGE_LAYOUT_GENERAL;
 				attachments.emplace_back(attachment);
 			}
