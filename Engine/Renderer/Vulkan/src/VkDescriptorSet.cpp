@@ -264,7 +264,7 @@ void CVKDescriptorSet::Update(void)
 			write.dstBinding = m_ptrDescriptorLayout->GetUniformBlockBinding(itBuffer.first);
 			write.dstArrayElement = 0;
 			write.descriptorCount = 1;
-			write.descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
+			write.descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER_DYNAMIC;
 			write.pImageInfo = nullptr;
 			write.pBufferInfo = &bufferInfos[bufferInfos.size() - 1];
 			write.pTexelBufferView = nullptr;
