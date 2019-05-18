@@ -185,9 +185,11 @@ void CRenderSolutionDefault::Present(int indexQueue)
 	m_pShadowCamera->Apply();
 	m_pUniformEngine->Apply();
 
-	GfxRenderer()->AcquireNextFrame();
-	GfxRenderer()->Submit(m_ptrMainCommandBuffer[indexQueue]);
-	GfxRenderer()->Present();
+	if (m_ptrMainCommandBuffer[indexQueue]->IsEmpty() == false) {
+		GfxRenderer()->AcquireNextFrame();
+		GfxRenderer()->Submit(m_ptrMainCommandBuffer[indexQueue]);
+		GfxRenderer()->Present();
+	}
 }
 
 void CRenderSolutionDefault::Clearup(int indexQueue)
