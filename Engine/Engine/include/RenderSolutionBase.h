@@ -80,4 +80,9 @@ protected:
 	CGfxEngine* m_pEngine;
 	CGfxCamera* m_pMainCamera;
 	CGfxCamera* m_pShadowCamera;
+
+protected:
+	CGfxRenderQueue* m_pMainQueue;
+	CGfxRenderQueue* m_pLightQueue;
+	CGfxRenderQueue* m_pShadowQueue;
 };

@@ -27,10 +27,18 @@ CRenderSolutionBase::CRenderSolutionBase(void)
 	: m_pEngine(nullptr)
 	, m_pMainCamera(nullptr)
 	, m_pShadowCamera(nullptr)
+
+	, m_pMainQueue(nullptr)
+	, m_pLightQueue(nullptr)
+	, m_pShadowQueue(nullptr)
 {
 	m_pEngine = new CGfxEngine;
 	m_pMainCamera = new CGfxCamera;
 	m_pShadowCamera = new CGfxCamera;
+
+	m_pMainQueue = new CGfxRenderQueue;
+	m_pLightQueue = new CGfxRenderQueue;
+	m_pShadowQueue = new CGfxRenderQueue;
 
 	SetVertexAttributes(vertexAttributes, VERTEX_ATTRIBUTE_COUNT);
 	SetInstanceAttributes(instanceAttributes, INSTANCE_ATTRIBUTE_COUNT);
@@ -41,6 +49,10 @@ CRenderSolutionBase::~CRenderSolutionBase(void)
 	delete m_pEngine;
 	delete m_pMainCamera;
 	delete m_pShadowCamera;
+
+	delete m_pMainQueue;
+	delete m_pLightQueue;
+	delete m_pShadowQueue;
 }
 
 CGfxCamera* CRenderSolutionBase::GetMainCamera(void) const

@@ -151,7 +151,7 @@ void CRenderSolutionDefault::Render(int indexQueue)
 	// Update logic & camera
 	{
 		SceneManager()->UpdateLogic(Engine()->GetTotalTime(), Engine()->GetDeltaTime());
-		SceneManager()->UpdateCamera(m_pMainCamera, indexQueue);
+		SceneManager()->UpdateCamera(m_pMainCamera, m_pMainQueue, indexQueue);
 	}
 
 	// Build command buffer
@@ -165,7 +165,7 @@ void CRenderSolutionDefault::Render(int indexQueue)
 		{
 			GfxRenderer()->CmdBeginRenderPass(m_ptrMainCommandBuffer[indexQueue], ptrFrameBuffer, ptrRenderPass);
 			{
-				m_pMainCamera->CmdDraw(indexQueue, m_ptrMainCommandBuffer[indexQueue], m_pEngine->GetDescriptorSet(), m_pMainCamera->GetDescriptorSet(), nameDefaultPass);
+				m_pMainQueue->CmdDraw(indexQueue, m_ptrMainCommandBuffer[indexQueue], m_pEngine->GetDescriptorSet(), m_pMainCamera->GetDescriptorSet(), nameDefaultPass, m_pMainCamera->GetScissor(), m_pMainCamera->GetViewport());
 			}
 			GfxRenderer()->CmdEndRenderPass(m_ptrMainCommandBuffer[indexQueue]);
 		}
