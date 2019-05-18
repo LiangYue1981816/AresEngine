@@ -24,20 +24,13 @@ static const ATTRIBUTE instanceAttributes[INSTANCE_ATTRIBUTE_COUNT] = {
 
 
 CRenderSolutionBase::CRenderSolutionBase(void)
-	: m_pMainCamera(nullptr)
+	: m_pEngine(nullptr)
+	, m_pMainCamera(nullptr)
 	, m_pShadowCamera(nullptr)
-	, m_pUniformEngine(nullptr)
 {
+	m_pEngine = new CGfxEngine;
 	m_pMainCamera = new CGfxCamera;
 	m_pShadowCamera = new CGfxCamera;
-	m_pUniformEngine = new CGfxUniformEngine;
-
-	m_ptrDescriptorLayoutEngine = GfxRenderer()->NewDescriptorLayout(DESCRIPTOR_SET_ENGINE);
-	m_ptrDescriptorLayoutEngine->SetUniformBlockBinding(UNIFORM_ENGINE_NAME, DESCRIPTOR_BIND_ENGINE);
-	m_ptrDescriptorLayoutEngine->Create();
-
-	m_ptrDescriptorSetEngine = GfxRenderer()->NewDescriptorSet(m_ptrDescriptorLayoutEngine);
-	m_ptrDescriptorSetEngine->SetUniformBuffer(UNIFORM_ENGINE_NAME, m_pUniformEngine->GetUniformBuffer(), 0, m_pUniformEngine->GetUniformBuffer()->GetSize());
 
 	SetVertexAttributes(vertexAttributes, VERTEX_ATTRIBUTE_COUNT);
 	SetInstanceAttributes(instanceAttributes, INSTANCE_ATTRIBUTE_COUNT);
@@ -45,9 +38,9 @@ CRenderSolutionBase::CRenderSolutionBase(void)
 
 CRenderSolutionBase::~CRenderSolutionBase(void)
 {
+	delete m_pEngine;
 	delete m_pMainCamera;
 	delete m_pShadowCamera;
-	delete m_pUniformEngine;
 }
 
 CGfxCamera* CRenderSolutionBase::GetMainCamera(void) const
@@ -62,80 +55,80 @@ CGfxCamera* CRenderSolutionBase::GetShadowCamera(void) const
 
 void CRenderSolutionBase::SetTime(float t, float dt)
 {
-	m_pUniformEngine->SetTime(t, dt);
+	m_pEngine->SetTime(t, dt);
 }
 
 void CRenderSolutionBase::SetShadowOrtho(float left, float right, float bottom, float top, float zNear, float zFar)
 {
-	m_pUniformEngine->SetShadowOrtho(left, right, bottom, top, zNear, zFar);
+	m_pEngine->SetShadowOrtho(left, right, bottom, top, zNear, zFar);
 }
 
 void CRenderSolutionBase::SetShadowLookat(float eyex, float eyey, float eyez, float centerx, float centery, float centerz, float upx, float upy, float upz)
 {
-	m_pUniformEngine->SetShadowLookat(eyex, eyey, eyez, centerx, centery, centerz, upx, upy, upz);
+	m_pEngine->SetShadowLookat(eyex, eyey, eyez, centerx, centery, centerz, upx, upy, upz);
 }
 
 void CRenderSolutionBase::SetShadowRange(float range)
 {
-	m_pUniformEngine->SetShadowRange(range);
+	m_pEngine->SetShadowRange(range);
 }
 
 void CRenderSolutionBase::SetShadowResolution(float resolution)
 {
-	m_pUniformEngine->SetShadowResolution(resolution);
+	m_pEngine->SetShadowResolution(resolution);
 }
 
 void CRenderSolutionBase::SetLightFactor(float ambientLightFactor, float pointLightFactor, float directLightFactor, float envLightFactor)
 {
-	m_pUniformEngine->SetLightFactor(ambientLightFactor, pointLightFactor, directLightFactor, envLightFactor);
+	m_pEngine->SetLightFactor(ambientLightFactor, pointLightFactor, directLightFactor, envLightFactor);
 }
 
 void CRenderSolutionBase::SetAmbientLightSH(float shRed[9], float shGreen[9], float shBlue[9])
 {
-	m_pUniformEngine->SetAmbientLightSH(shRed, shGreen, shBlue);
+	m_pEngine->SetAmbientLightSH(shRed, shGreen, shBlue);
 }
 
 void CRenderSolutionBase::SetAmbientLightRotation(float angle, float axisx, float axisy, float axisz)
 {
-	m_pUniformEngine->SetAmbientLightRotation(angle, axisx, axisy, axisz);
+	m_pEngine->SetAmbientLightRotation(angle, axisx, axisy, axisz);
 }
 
 void CRenderSolutionBase::SetMainPointLightColor(float red, float green, float blue)
 {
-	m_pUniformEngine->SetPointLightColor(red, green, blue);
+	m_pEngine->SetMainPointLightColor(red, green, blue);
 }
 
 void CRenderSolutionBase::SetMainPointLightPosition(float posx, float posy, float posz, float radius)
 {
-	m_pUniformEngine->SetPointLightPosition(posx, posy, posz, radius);
+	m_pEngine->SetMainPointLightPosition(posx, posy, posz, radius);
 }
 
 void CRenderSolutionBase::SetMainPointLightAttenuation(float linear, float square, float constant)
 {
-	m_pUniformEngine->SetPointLightAttenuation(linear, square, constant);
+	m_pEngine->SetMainPointLightAttenuation(linear, square, constant);
 }
 
 void CRenderSolutionBase::SetMainDirectLightColor(float red, float green, float blue)
 {
-	m_pUniformEngine->SetDirectLightColor(red, green, blue);
+	m_pEngine->SetMainDirectLightColor(red, green, blue);
 }
 
 void CRenderSolutionBase::SetMainDirectLightDirection(float dirx, float diry, float dirz)
 {
-	m_pUniformEngine->SetDirectLightDirection(dirx, diry, dirz);
+	m_pEngine->SetMainDirectLightDirection(dirx, diry, dirz);
 }
 
 void CRenderSolutionBase::SetFogColor(float red, float green, float blue)
 {
-	m_pUniformEngine->SetFogColor(red, green, blue);
+	m_pEngine->SetFogColor(red, green, blue);
 }
 
 void CRenderSolutionBase::SetFogHeightDensity(float startHeight, float endHeight, float density)
 {
-	m_pUniformEngine->SetFogHeightDensity(startHeight, endHeight, density);
+	m_pEngine->SetFogHeightDensity(startHeight, endHeight, density);
 }
 
 void CRenderSolutionBase::SetFogDistanceDensity(float startDistance, float endDistance, float density)
 {
-	m_pUniformEngine->SetFogDistanceDensity(startDistance, endDistance, density);
+	m_pEngine->SetFogDistanceDensity(startDistance, endDistance, density);
 }

@@ -145,7 +145,7 @@ void CRenderSolutionDefault::Render(int indexQueue)
 {
 	// Uniform
 	{
-		m_pUniformEngine->SetTime(Engine()->GetTotalTime(), Engine()->GetDeltaTime());
+		m_pEngine->SetTime(Engine()->GetTotalTime(), Engine()->GetDeltaTime());
 	}
 
 	// Update logic & camera
@@ -165,7 +165,7 @@ void CRenderSolutionDefault::Render(int indexQueue)
 		{
 			GfxRenderer()->CmdBeginRenderPass(m_ptrMainCommandBuffer[indexQueue], ptrFrameBuffer, ptrRenderPass);
 			{
-				m_pMainCamera->CmdDraw(indexQueue, m_ptrMainCommandBuffer[indexQueue], m_ptrDescriptorSetEngine, nameDefaultPass);
+				m_pMainCamera->CmdDraw(indexQueue, m_ptrMainCommandBuffer[indexQueue], m_pEngine->GetDescriptorSet(), m_pMainCamera->GetDescriptorSet(), nameDefaultPass);
 			}
 			GfxRenderer()->CmdEndRenderPass(m_ptrMainCommandBuffer[indexQueue]);
 		}
@@ -175,9 +175,9 @@ void CRenderSolutionDefault::Render(int indexQueue)
 
 void CRenderSolutionDefault::Present(int indexQueue)
 {
+	m_pEngine->Apply();
 	m_pMainCamera->Apply();
 	m_pShadowCamera->Apply();
-	m_pUniformEngine->Apply();
 
 	if (m_ptrMainCommandBuffer[indexQueue]->IsEmpty() == false) {
 		GfxRenderer()->AcquireNextFrame();

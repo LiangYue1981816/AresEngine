@@ -23,6 +23,11 @@ CGfxCamera::~CGfxCamera(void)
 	delete m_pUniformCamera;
 }
 
+CGfxDescriptorSetPtr CGfxCamera::GetDescriptorSet(void) const
+{
+	return m_ptrDescriptorSetCamera;
+}
+
 void CGfxCamera::SetScissor(float x, float y, float width, float height)
 {
 	m_camera.setScissor(x, y, width, height);
@@ -147,7 +152,7 @@ void CGfxCamera::End(int indexQueue)
 	m_pRenderQueue->End(indexQueue);
 }
 
-void CGfxCamera::CmdDraw(int indexQueue, CGfxCommandBufferPtr ptrCommandBuffer, const CGfxDescriptorSetPtr ptrDescriptorSetEngine, uint32_t namePass)
+void CGfxCamera::CmdDraw(int indexQueue, CGfxCommandBufferPtr ptrCommandBuffer, const CGfxDescriptorSetPtr ptrDescriptorSetEngine, const CGfxDescriptorSetPtr ptrDescriptorSetCamera, uint32_t namePass)
 {
-	m_pRenderQueue->CmdDraw(indexQueue, ptrCommandBuffer, ptrDescriptorSetEngine, m_ptrDescriptorSetCamera, namePass, m_camera.scissor, m_camera.viewport);
+	m_pRenderQueue->CmdDraw(indexQueue, ptrCommandBuffer, ptrDescriptorSetEngine, ptrDescriptorSetCamera, namePass, m_camera.scissor, m_camera.viewport);
 }

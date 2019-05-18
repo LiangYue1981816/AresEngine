@@ -20,6 +20,11 @@ CGfxEngine::~CGfxEngine(void)
 	delete m_pUniformEngine;
 }
 
+CGfxDescriptorSetPtr CGfxEngine::GetDescriptorSet(void) const
+{
+	return m_ptrDescriptorSetEngine;
+}
+
 void CGfxEngine::SetTime(float t, float dt)
 {
 	m_pUniformEngine->SetTime(t, dt);
@@ -98,4 +103,9 @@ void CGfxEngine::SetFogHeightDensity(float startHeight, float endHeight, float d
 void CGfxEngine::SetFogDistanceDensity(float startDistance, float endDistance, float density)
 {
 	m_pUniformEngine->SetFogDistanceDensity(startDistance, endDistance, density);
+}
+
+void CGfxEngine::Apply(void)
+{
+	m_pUniformEngine->Apply();
 }

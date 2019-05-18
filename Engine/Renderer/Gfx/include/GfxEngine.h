@@ -10,6 +10,9 @@ public:
 
 
 public:
+	CGfxDescriptorSetPtr GetDescriptorSet(void) const;
+
+public:
 	void SetTime(float t, float dt);
 
 	void SetShadowOrtho(float left, float right, float bottom, float top, float zNear, float zFar);
@@ -32,6 +35,8 @@ public:
 	void SetFogColor(float red, float green, float blue);
 	void SetFogHeightDensity(float startHeight, float endHeight, float density);
 	void SetFogDistanceDensity(float startDistance, float endDistance, float density);
+
+	void Apply(void);
 
 
 private:

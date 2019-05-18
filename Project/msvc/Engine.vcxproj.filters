@@ -1551,6 +1551,9 @@
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxHelper.h">
       <Filter>Engine\Renderer\Gfx\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxEngine.h">
+      <Filter>Engine\Renderer\Gfx\Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Engine\ThirdParty\eastl\source\allocator_eastl.cpp">
@@ -2238,6 +2241,9 @@
       <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxHelper.cpp">
+      <Filter>Engine\Renderer\Gfx\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxEngine.cpp">
       <Filter>Engine\Renderer\Gfx\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
