@@ -148,19 +148,20 @@ void CRenderSolutionDefault::Render(int indexQueue)
 	}
 
 	// Update logic & camera
-	m_pMainQueue->Clear(indexQueue);
-	m_pLightQueue->Clear(indexQueue);
-	m_pShadowQueue->Clear(indexQueue);
 	{
+		m_pMainQueue->Clear(indexQueue);
+		m_pLightQueue->Clear(indexQueue);
+		m_pShadowQueue->Clear(indexQueue);
+
 		SceneManager()->UpdateLogic(Engine()->GetTotalTime(), Engine()->GetDeltaTime());
 		SceneManager()->UpdateCamera(m_pMainCamera, m_pMainQueue, indexQueue);
 	}
 
 	// Build command buffer
-	m_ptrMainCommandBuffer[indexQueue]->Clearup();
 	{
-		static const uint32_t nameDefaultPass = HashValue("Default");
+		m_ptrMainCommandBuffer[indexQueue]->Clearup();
 
+		static const uint32_t nameDefaultPass = HashValue("Default");
 		const CGfxRenderPassPtr ptrRenderPass = m_bEnableMSAA ? m_ptrRenderPassMSAA : m_ptrRenderPass;
 		const CGfxFrameBufferPtr ptrFrameBuffer = m_bEnableMSAA ? m_ptrFrameBufferScreenMSAA[GfxRenderer()->GetSwapChain()->GetFrameIndex()] : m_ptrFrameBufferScreen[GfxRenderer()->GetSwapChain()->GetFrameIndex()];
 
