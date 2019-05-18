@@ -58,6 +58,11 @@ void CGLES3CommandBuffer::Release(void)
 	m_pManager->Destroy(this);
 }
 
+int CGLES3CommandBuffer::GetCommandCount(void) const
+{
+	return (int)m_pCommands.size();
+}
+
 bool CGLES3CommandBuffer::IsInRenderPass(void) const
 {
 	return m_ptrRenderPass && m_indexSubpass >= 0 && m_indexSubpass < (int)m_ptrRenderPass->GetSubpassCount();

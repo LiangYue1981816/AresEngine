@@ -39,6 +39,8 @@ public:
 
 
 public:
+	virtual int GetCommandCount(void) const = 0;
+
 	virtual bool IsInRenderPass(void) const = 0;
 	virtual int GetSubpassIndex(void) const = 0;
 

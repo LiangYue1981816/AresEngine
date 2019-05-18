@@ -14,6 +14,8 @@ private:
 
 
 public:
+	int GetCommandCount(void) const;
+
 	bool IsInRenderPass(void) const;
 	int GetSubpassIndex(void) const;
 

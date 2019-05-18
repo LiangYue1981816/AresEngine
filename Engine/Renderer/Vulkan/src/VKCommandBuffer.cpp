@@ -129,6 +129,11 @@ VkCommandBuffer CVKCommandBuffer::GetCommandBuffer(void) const
 	return m_vkCommandBuffer;
 }
 
+int CVKCommandBuffer::GetCommandCount(void) const
+{
+	return (int)m_pCommands.size();
+}
+
 bool CVKCommandBuffer::IsInRenderPass(void) const
 {
 	return m_ptrRenderPass && m_indexSubpass >= 0 && m_indexSubpass < (int)m_ptrRenderPass->GetSubpassCount();
