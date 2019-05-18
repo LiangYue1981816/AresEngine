@@ -34,7 +34,7 @@ void CGLES3RenderPass::Destroy(bool bClear)
 	}
 }
 
-bool CGLES3RenderPass::SetColorAttachment(int indexAttachment, GfxPixelFormat format, int samples, bool bInvalidation, bool bClear, float red, float green, float blue, float alpha)
+bool CGLES3RenderPass::SetColorAttachment(int indexAttachment, GfxPixelFormat format, int samples, bool bPresent, bool bInvalidation, bool bClear, float red, float green, float blue, float alpha)
 {
 	if (CGfxHelper::IsFormatDepthOrStencil(format)) {
 		return false;
@@ -46,6 +46,7 @@ bool CGLES3RenderPass::SetColorAttachment(int indexAttachment, GfxPixelFormat fo
 
 	m_attachments[indexAttachment].format = format;
 	m_attachments[indexAttachment].samples = samples;
+	m_attachments[indexAttachment].bPresent = bPresent;
 	m_attachments[indexAttachment].bInvalidation = bInvalidation;
 	m_attachments[indexAttachment].bClear = bClear;
 	m_attachments[indexAttachment].color[0] = red;

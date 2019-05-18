@@ -5,6 +5,7 @@
 typedef struct AttachmentInformation {
 	GfxPixelFormat format = GFX_PIXELFORMAT_UNDEFINED;
 	int samples = 1;
+	bool bPresent = false;
 	bool bInvalidation = false;
 	bool bClear = true;
 	int stencil = 0;
@@ -44,7 +45,7 @@ public:
 	virtual void Destroy(bool bClear = true) = 0;
 
 public:
-	virtual bool SetColorAttachment(int indexAttachment, GfxPixelFormat format, int samples, bool bInvalidation, bool bClear, float red = 0.0f, float green = 0.0f, float blue = 0.0f, float alpha = 0.0f) = 0;
+	virtual bool SetColorAttachment(int indexAttachment, GfxPixelFormat format, int samples, bool bPresent, bool bInvalidation, bool bClear, float red = 0.0f, float green = 0.0f, float blue = 0.0f, float alpha = 0.0f) = 0;
 	virtual bool SetDepthStencilAttachment(int indexAttachment, GfxPixelFormat format, int samples, bool bInvalidation, bool bClear, float depth = 1.0f, int stencil = 0) = 0;
 
 	virtual bool SetSubpassInputColorReference(int indexSubpass, int indexAttachment) = 0;
