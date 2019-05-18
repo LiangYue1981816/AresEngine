@@ -470,6 +470,19 @@ void CVKRenderer::BindPipelineGraphics(VkCommandBuffer vkCommandBuffer, const CG
 	}
 }
 
+void CVKRenderer::BindDescriptorSet(VkCommandBuffer vkCommandBuffer, const CGfxDescriptorSetPtr ptrDescriptorSet)
+{
+	if (m_pCurrentPipelineCompute &&
+		m_pCurrentPipelineCompute->GetDescriptorLayout(ptrDescriptorSet->GetDescriptorLayout()->GetSetIndex())->IsCompatible(ptrDescriptorSet->GetDescriptorLayout())) {
+		((CVKDescriptorSet*)ptrDescriptorSet.GetPointer())->Bind(vkCommandBuffer, VK_PIPELINE_BIND_POINT_COMPUTE, m_pCurrentPipelineCompute->GetPipelineLayout());
+	}
+
+	if (m_pCurrentPipelineGraphics &&
+		m_pCurrentPipelineGraphics->GetDescriptorLayout(ptrDescriptorSet->GetDescriptorLayout()->GetSetIndex())->IsCompatible(ptrDescriptorSet->GetDescriptorLayout())) {
+		((CVKDescriptorSet*)ptrDescriptorSet.GetPointer())->Bind(vkCommandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, m_pCurrentPipelineGraphics->GetPipelineLayout());
+	}
+}
+
 CVKPipelineCompute* CVKRenderer::GetCurrentPipelineCompute(void) const
 {
 	return m_pCurrentPipelineCompute;

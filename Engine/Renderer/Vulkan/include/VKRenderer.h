@@ -216,6 +216,7 @@ public:
 private:
 	void BindPipelineCompute(VkCommandBuffer vkCommandBuffer, const CGfxPipelineCompute* pPipelineCompute);
 	void BindPipelineGraphics(VkCommandBuffer vkCommandBuffer, const CGfxPipelineGraphics* pPipelineGraphics);
+	void BindDescriptorSet(VkCommandBuffer vkCommandBuffer, const CGfxDescriptorSetPtr ptrDescriptorSet);
 
 	CVKPipelineCompute* GetCurrentPipelineCompute(void) const;
 	CVKPipelineGraphics* GetCurrentPipelineGraphics(void) const;
