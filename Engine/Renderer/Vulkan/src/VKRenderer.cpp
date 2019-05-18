@@ -450,23 +450,19 @@ void CVKRenderer::Present(void)
 
 void CVKRenderer::BindPipelineCompute(VkCommandBuffer vkCommandBuffer, const CGfxPipelineCompute* pPipelineCompute)
 {
-	if (m_pCurrentPipelineCompute != pPipelineCompute) {
-		m_pCurrentPipelineCompute = (CVKPipelineCompute*)pPipelineCompute;
+	m_pCurrentPipelineCompute = (CVKPipelineCompute*)pPipelineCompute;
 
-		if (m_pCurrentPipelineCompute) {
-			m_pCurrentPipelineCompute->Bind(vkCommandBuffer);
-		}
+	if (m_pCurrentPipelineCompute) {
+		m_pCurrentPipelineCompute->Bind(vkCommandBuffer);
 	}
 }
 
 void CVKRenderer::BindPipelineGraphics(VkCommandBuffer vkCommandBuffer, const CGfxPipelineGraphics* pPipelineGraphics)
 {
-	if (m_pCurrentPipelineGraphics != pPipelineGraphics) {
-		m_pCurrentPipelineGraphics = (CVKPipelineGraphics*)pPipelineGraphics;
+	m_pCurrentPipelineGraphics = (CVKPipelineGraphics*)pPipelineGraphics;
 
-		if (m_pCurrentPipelineGraphics) {
-			m_pCurrentPipelineGraphics->Bind(vkCommandBuffer);
-		}
+	if (m_pCurrentPipelineGraphics) {
+		m_pCurrentPipelineGraphics->Bind(vkCommandBuffer);
 	}
 }
 
