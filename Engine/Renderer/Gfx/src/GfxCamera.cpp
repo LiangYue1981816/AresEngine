@@ -14,6 +14,7 @@ CGfxCamera::CGfxCamera(void)
 
 	m_ptrDescriptorSetCamera = GfxRenderer()->NewDescriptorSet(m_ptrDescriptorLayoutCamera);
 	m_ptrDescriptorSetCamera->SetUniformBuffer(UNIFORM_CAMERA_NAME, m_pUniformCamera->GetUniformBuffer(), 0, m_pUniformCamera->GetUniformBuffer()->GetSize());
+	m_ptrDescriptorSetCamera->Update();
 }
 
 CGfxCamera::~CGfxCamera(void)
@@ -54,7 +55,6 @@ void CGfxCamera::SetLookat(float eyex, float eyey, float eyez, float centerx, fl
 void CGfxCamera::Apply(void)
 {
 	m_pUniformCamera->Apply();
-	m_ptrDescriptorSetCamera->Update();
 }
 
 const glm::vec4& CGfxCamera::GetScissor(void) const

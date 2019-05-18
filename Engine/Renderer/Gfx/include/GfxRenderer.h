@@ -14,6 +14,7 @@
 #include "GfxResource.h"
 #include "GfxResourceManager.h"
 
+#include "GfxEngine.h"
 #include "GfxCamera.h"
 #include "GfxRenderQueue.h"
 

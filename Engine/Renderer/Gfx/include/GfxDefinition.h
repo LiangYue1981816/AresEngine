@@ -9,6 +9,7 @@ class CALL_API CGfxProfilerSample;
 class CALL_API CGfxResource;
 class CALL_API CGfxResourceManager;
 
+class CALL_API CGfxEngine;
 class CALL_API CGfxCamera;
 class CALL_API CGfxRenderQueue;
 
