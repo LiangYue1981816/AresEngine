@@ -148,5 +148,5 @@ void CGfxCamera::End(int indexQueue)
 
 void CGfxCamera::CmdDraw(int indexQueue, CGfxCommandBufferPtr ptrCommandBuffer, const CGfxDescriptorSetPtr ptrDescriptorSetEngine, uint32_t namePass)
 {
-	m_pRenderQueue->CmdDraw(indexQueue, ptrCommandBuffer, ptrDescriptorSetEngine, m_ptrDescriptorSetCamera, namePass);
+	m_pRenderQueue->CmdDraw(indexQueue, ptrCommandBuffer, ptrDescriptorSetEngine, m_ptrDescriptorSetCamera, namePass, m_camera.scissor, m_camera.viewport);
 }
