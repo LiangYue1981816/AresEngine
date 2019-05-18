@@ -136,3 +136,8 @@ const DescriptorBufferInfo* CGLES3DescriptorSet::GetDescriptorBufferInfo(uint32_
 		return nullptr;
 	}
 }
+
+void CGLES3DescriptorSet::Update(void)
+{
+
+}

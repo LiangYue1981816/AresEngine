@@ -40,4 +40,7 @@ public:
 	virtual const CGfxDescriptorLayoutPtr GetDescriptorLayout(void) const = 0;
 	virtual const DescriptorImageInfo* GetDescriptorImageInfo(uint32_t name) const = 0;
 	virtual const DescriptorBufferInfo* GetDescriptorBufferInfo(uint32_t name) const = 0;
+
+public:
+	virtual void Update(void) = 0;
 };

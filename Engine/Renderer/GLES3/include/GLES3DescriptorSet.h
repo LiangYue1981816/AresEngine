@@ -25,6 +25,9 @@ public:
 	const DescriptorImageInfo* GetDescriptorImageInfo(uint32_t name) const;
 	const DescriptorBufferInfo* GetDescriptorBufferInfo(uint32_t name) const;
 
+public:
+	void Update(void);
+
 
 private:
 	CGfxDescriptorLayoutPtr m_ptrDescriptorLayout;
