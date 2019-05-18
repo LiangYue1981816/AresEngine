@@ -54,6 +54,7 @@ void CGfxCamera::SetLookat(float eyex, float eyey, float eyez, float centerx, fl
 void CGfxCamera::Apply(void)
 {
 	m_pUniformCamera->Apply();
+	m_ptrDescriptorSetCamera->Update();
 }
 
 const glm::vec4& CGfxCamera::GetScissor(void) const
