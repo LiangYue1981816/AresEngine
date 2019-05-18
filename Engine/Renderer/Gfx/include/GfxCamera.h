@@ -58,9 +58,6 @@ private:
 	glm::camera m_camera;
 
 private:
-	CGfxRenderQueue* m_pRenderQueue;
-
-private:
 	CGfxUniformCamera* m_pUniformCamera;
 	CGfxDescriptorSetPtr m_ptrDescriptorSetCamera;
 	CGfxDescriptorLayoutPtr m_ptrDescriptorLayoutCamera;

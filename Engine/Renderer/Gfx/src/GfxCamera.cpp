@@ -2,10 +2,8 @@
 
 
 CGfxCamera::CGfxCamera(void)
-	: m_pRenderQueue(nullptr)
-	, m_pUniformCamera(nullptr)
+	: m_pUniformCamera(nullptr)
 {
-	m_pRenderQueue = new CGfxRenderQueue;
 	m_pUniformCamera = new CGfxUniformCamera;
 
 	m_ptrDescriptorLayoutCamera = GfxRenderer()->NewDescriptorLayout(DESCRIPTOR_SET_CAMERA);
@@ -19,7 +17,6 @@ CGfxCamera::CGfxCamera(void)
 
 CGfxCamera::~CGfxCamera(void)
 {
-	delete m_pRenderQueue;
 	delete m_pUniformCamera;
 }
 
@@ -130,29 +127,4 @@ bool CGfxCamera::IsVisible(const glm::aabb& aabb) const
 bool CGfxCamera::IsVisible(const glm::sphere& sphere) const
 {
 	return m_camera.visible(sphere);
-}
-
-void CGfxCamera::Clear(int indexQueue)
-{
-	m_pRenderQueue->Clear(indexQueue);
-}
-
-void CGfxCamera::Begin(int indexQueue)
-{
-	m_pRenderQueue->Begin(indexQueue);
-}
-
-void CGfxCamera::Add(int indexQueue, int indexThread, const CGfxMaterialPtr ptrMaterial, const CGfxMeshDrawPtr ptrMeshDraw, const uint8_t* pInstanceData, uint32_t size)
-{
-	m_pRenderQueue->Add(indexQueue, indexThread, ptrMaterial, ptrMeshDraw, pInstanceData, size);
-}
-
-void CGfxCamera::End(int indexQueue)
-{
-	m_pRenderQueue->End(indexQueue);
-}
-
-void CGfxCamera::CmdDraw(int indexQueue, CGfxCommandBufferPtr ptrCommandBuffer, const CGfxDescriptorSetPtr ptrDescriptorSetEngine, const CGfxDescriptorSetPtr ptrDescriptorSetCamera, uint32_t namePass)
-{
-	m_pRenderQueue->CmdDraw(indexQueue, ptrCommandBuffer, ptrDescriptorSetEngine, ptrDescriptorSetCamera, namePass, m_camera.scissor, m_camera.viewport);
 }
