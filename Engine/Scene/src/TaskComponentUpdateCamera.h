@@ -29,6 +29,7 @@ public:
 	void SetParams(CComponentManager<T>* pComponentManager, int numThreads, int indexThread, CGfxCamera* pCamera, CGfxRenderQueue* pRenderQueue, int indexQueue)
 	{
 		m_pCamera = pCamera;
+		m_pRenderQueue = pRenderQueue;
 		m_indexQueue = indexQueue;
 
 		int count = (pComponentManager->GetComponentCount() + (numThreads - pComponentManager->GetComponentCount() % numThreads)) / numThreads;
