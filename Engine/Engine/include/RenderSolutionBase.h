@@ -45,7 +45,6 @@ public:
 public:
 	virtual void Render(int indexQueue) = 0;
 	virtual void Present(int indexQueue) = 0;
-	virtual void Clearup(int indexQueue) = 0;
 
 public:
 	CGfxCamera* GetMainCamera(void) const;

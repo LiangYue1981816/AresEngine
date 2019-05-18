@@ -158,7 +158,6 @@ void CEngine::Update(void)
 void CEngine::Present(void)
 {
 	m_pRenderSolution->Present(1 - m_indexQueue);
-	m_pRenderSolution->Clearup(1 - m_indexQueue);
 }
 
 void CEngine::UpdateThread(void)

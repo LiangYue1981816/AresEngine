@@ -46,8 +46,3 @@ void CRenderSolutionForwardPlus::Present(int indexQueue)
 {
 
 }
-
-void CRenderSolutionForwardPlus::Clearup(int indexQueue)
-{
-
-}

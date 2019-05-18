@@ -25,7 +25,6 @@ public:
 public:
 	virtual void Render(int indexQueue);
 	virtual void Present(int indexQueue);
-	virtual void Clearup(int indexQueue);
 
 
 private:

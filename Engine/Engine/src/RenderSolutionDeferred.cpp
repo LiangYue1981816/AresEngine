@@ -46,8 +46,3 @@ void CRenderSolutionDeferred::Present(int indexQueue)
 {
 
 }
-
-void CRenderSolutionDeferred::Clearup(int indexQueue)
-{
-
-}

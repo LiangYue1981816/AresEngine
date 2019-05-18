@@ -11,8 +11,7 @@ CRenderSolutionDefault::CRenderSolutionDefault(void)
 
 CRenderSolutionDefault::~CRenderSolutionDefault(void)
 {
-	Clearup(0);
-	Clearup(1);
+
 }
 
 void CRenderSolutionDefault::CreateFrameBuffer(void)
@@ -149,6 +148,9 @@ void CRenderSolutionDefault::Render(int indexQueue)
 	}
 
 	// Update logic & camera
+	m_pMainQueue->Clear(indexQueue);
+	m_pLightQueue->Clear(indexQueue);
+	m_pShadowQueue->Clear(indexQueue);
 	{
 		SceneManager()->UpdateLogic(Engine()->GetTotalTime(), Engine()->GetDeltaTime());
 		SceneManager()->UpdateCamera(m_pMainCamera, m_pMainQueue, indexQueue);
@@ -185,11 +187,4 @@ void CRenderSolutionDefault::Present(int indexQueue)
 		GfxRenderer()->Submit(m_ptrMainCommandBuffer[indexQueue]);
 		GfxRenderer()->Present();
 	}
-}
-
-void CRenderSolutionDefault::Clearup(int indexQueue)
-{
-	m_pMainQueue->Clear(indexQueue);
-	m_pLightQueue->Clear(indexQueue);
-	m_pShadowQueue->Clear(indexQueue);
 }
