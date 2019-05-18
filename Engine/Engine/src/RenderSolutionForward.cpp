@@ -8,8 +8,7 @@ CRenderSolutionForward::CRenderSolutionForward(void)
 
 CRenderSolutionForward::~CRenderSolutionForward(void)
 {
-	Clearup(0);
-	Clearup(1);
+
 }
 
 void CRenderSolutionForward::CreateFrameBuffer(void)

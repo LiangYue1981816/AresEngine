@@ -8,8 +8,7 @@ CRenderSolutionDeferred::CRenderSolutionDeferred(void)
 
 CRenderSolutionDeferred::~CRenderSolutionDeferred(void)
 {
-	Clearup(0);
-	Clearup(1);
+
 }
 
 void CRenderSolutionDeferred::CreateFrameBuffer(void)
