@@ -155,6 +155,7 @@ void CRenderSolutionDefault::Render(int indexQueue)
 	}
 
 	// Build command buffer
+	m_ptrMainCommandBuffer[indexQueue]->Clearup();
 	{
 		static const uint32_t nameDefaultPass = HashValue("Default");
 
@@ -191,5 +192,4 @@ void CRenderSolutionDefault::Clearup(int indexQueue)
 	m_pMainQueue->Clear(indexQueue);
 	m_pLightQueue->Clear(indexQueue);
 	m_pShadowQueue->Clear(indexQueue);
-	m_ptrMainCommandBuffer[indexQueue]->Clearup();
 }
