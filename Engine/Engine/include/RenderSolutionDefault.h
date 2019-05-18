@@ -45,5 +45,5 @@ private:
 	CGfxFrameBufferPtr m_ptrFrameBufferScreenMSAA[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
 
 private:
-	CGfxCommandBufferPtr m_ptrMainCommandBuffer[2];
+	CGfxCommandBufferPtr m_ptrMainCommandBuffer[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
 };

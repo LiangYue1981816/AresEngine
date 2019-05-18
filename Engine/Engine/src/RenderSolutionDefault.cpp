@@ -7,6 +7,7 @@ CRenderSolutionDefault::CRenderSolutionDefault(void)
 
 	m_ptrMainCommandBuffer[0] = GfxRenderer()->NewCommandBuffer(0, true);
 	m_ptrMainCommandBuffer[1] = GfxRenderer()->NewCommandBuffer(0, true);
+	m_ptrMainCommandBuffer[2] = GfxRenderer()->NewCommandBuffer(0, true);
 }
 
 CRenderSolutionDefault::~CRenderSolutionDefault(void)
@@ -159,21 +160,23 @@ void CRenderSolutionDefault::Render(int indexQueue)
 
 	// Build command buffer
 	{
-		m_ptrMainCommandBuffer[indexQueue]->Clearup();
+		const uint32_t nameDefaultPass = HashValue("Default");
 
-		static const uint32_t nameDefaultPass = HashValue("Default");
 		const CGfxRenderPassPtr ptrRenderPass = m_bEnableMSAA ? m_ptrRenderPassMSAA : m_ptrRenderPass;
 		const CGfxFrameBufferPtr ptrFrameBuffer = m_bEnableMSAA ? m_ptrFrameBufferScreenMSAA[GfxRenderer()->GetSwapChain()->GetFrameIndex()] : m_ptrFrameBufferScreen[GfxRenderer()->GetSwapChain()->GetFrameIndex()];
 
-		GfxRenderer()->BeginRecord(m_ptrMainCommandBuffer[indexQueue]);
+		const int indexFrame = GfxRenderer()->GetSwapChain()->GetFrameIndex();
+		m_ptrMainCommandBuffer[indexFrame]->Clearup();
+
+		GfxRenderer()->BeginRecord(m_ptrMainCommandBuffer[indexFrame]);
 		{
-			GfxRenderer()->CmdBeginRenderPass(m_ptrMainCommandBuffer[indexQueue], ptrFrameBuffer, ptrRenderPass);
+			GfxRenderer()->CmdBeginRenderPass(m_ptrMainCommandBuffer[indexFrame], ptrFrameBuffer, ptrRenderPass);
 			{
-				m_pMainQueue->CmdDraw(indexQueue, m_ptrMainCommandBuffer[indexQueue], m_pEngine->GetDescriptorSet(), m_pMainCamera->GetDescriptorSet(), nameDefaultPass, m_pMainCamera->GetScissor(), m_pMainCamera->GetViewport());
+				m_pMainQueue->CmdDraw(indexQueue, m_ptrMainCommandBuffer[indexFrame], m_pEngine->GetDescriptorSet(), m_pMainCamera->GetDescriptorSet(), nameDefaultPass, m_pMainCamera->GetScissor(), m_pMainCamera->GetViewport());
 			}
-			GfxRenderer()->CmdEndRenderPass(m_ptrMainCommandBuffer[indexQueue]);
+			GfxRenderer()->CmdEndRenderPass(m_ptrMainCommandBuffer[indexFrame]);
 		}
-		GfxRenderer()->EndRecord(m_ptrMainCommandBuffer[indexQueue]);
+		GfxRenderer()->EndRecord(m_ptrMainCommandBuffer[indexFrame]);
 	}
 }
 
