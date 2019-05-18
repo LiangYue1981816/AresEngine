@@ -71,7 +71,9 @@ bool CVKMaterialPass::SetTexture2D(uint32_t name, const CGfxTexture2DPtr ptrText
 	ASSERT(m_ptrDescriptorSet);
 
 	if (m_ptrDescriptorSet->GetDescriptorLayout()->IsSampledImageValid(name)) {
-		return m_ptrDescriptorSet->SetTexture2D(name, ptrTexture, m_pSamplers[name]);
+		m_ptrDescriptorSet->SetTexture2D(name, ptrTexture, m_pSamplers[name]);
+		m_ptrDescriptorSet->Update();
+		return true;
 	}
 	else {
 		return false;
@@ -84,7 +86,9 @@ bool CVKMaterialPass::SetTexture2DArray(uint32_t name, const CGfxTexture2DArrayP
 	ASSERT(m_ptrDescriptorSet);
 
 	if (m_ptrDescriptorSet->GetDescriptorLayout()->IsSampledImageValid(name)) {
-		return m_ptrDescriptorSet->SetTexture2DArray(name, ptrTexture, m_pSamplers[name]);
+		m_ptrDescriptorSet->SetTexture2DArray(name, ptrTexture, m_pSamplers[name]);
+		m_ptrDescriptorSet->Update();
+		return true;
 	}
 	else {
 		return false;
@@ -97,7 +101,9 @@ bool CVKMaterialPass::SetTextureCubemap(uint32_t name, const CGfxTextureCubemapP
 	ASSERT(m_ptrDescriptorSet);
 
 	if (m_ptrDescriptorSet->GetDescriptorLayout()->IsSampledImageValid(name)) {
-		return m_ptrDescriptorSet->SetTextureCubemap(name, ptrTexture, m_pSamplers[name]);
+		m_ptrDescriptorSet->SetTextureCubemap(name, ptrTexture, m_pSamplers[name]);
+		m_ptrDescriptorSet->Update();
+		return true;
 	}
 	else {
 		return false;
@@ -110,7 +116,9 @@ bool CVKMaterialPass::SetTexture2D(uint32_t name, const char* szFileName, int ba
 	ASSERT(m_ptrDescriptorSet);
 
 	if (m_ptrDescriptorSet->GetDescriptorLayout()->IsSampledImageValid(name)) {
-		return m_ptrDescriptorSet->SetTexture2D(name, VKRenderer()->NewTexture2D(szFileName, baseLevel, numLevels), m_pSamplers[name]);
+		m_ptrDescriptorSet->SetTexture2D(name, VKRenderer()->NewTexture2D(szFileName, baseLevel, numLevels), m_pSamplers[name]);
+		m_ptrDescriptorSet->Update();
+		return true;
 	}
 	else {
 		return false;
@@ -123,7 +131,9 @@ bool CVKMaterialPass::SetTexture2DArray(uint32_t name, const char* szFileName, i
 	ASSERT(m_ptrDescriptorSet);
 
 	if (m_ptrDescriptorSet->GetDescriptorLayout()->IsSampledImageValid(name)) {
-		return m_ptrDescriptorSet->SetTexture2DArray(name, VKRenderer()->NewTexture2DArray(szFileName, baseLevel, numLevels), m_pSamplers[name]);
+		m_ptrDescriptorSet->SetTexture2DArray(name, VKRenderer()->NewTexture2DArray(szFileName, baseLevel, numLevels), m_pSamplers[name]);
+		m_ptrDescriptorSet->Update();
+		return true;
 	}
 	else {
 		return false;
@@ -136,7 +146,9 @@ bool CVKMaterialPass::SetTextureCubemap(uint32_t name, const char* szFileName, i
 	ASSERT(m_ptrDescriptorSet);
 
 	if (m_ptrDescriptorSet->GetDescriptorLayout()->IsSampledImageValid(name)) {
-		return m_ptrDescriptorSet->SetTextureCubemap(name, VKRenderer()->NewTextureCubemap(szFileName, baseLevel, numLevels), m_pSamplers[name]);
+		m_ptrDescriptorSet->SetTextureCubemap(name, VKRenderer()->NewTextureCubemap(szFileName, baseLevel, numLevels), m_pSamplers[name]);
+		m_ptrDescriptorSet->Update();
+		return true;
 	}
 	else {
 		return false;
@@ -152,6 +164,7 @@ bool CVKMaterialPass::SetUniformVec1(uint32_t name, float v0)
 		if (m_pUniformVec1s[name] == nullptr) {
 			m_pUniformVec1s[name] = new CGfxUniformVec1;
 			m_ptrDescriptorSet->SetUniformBuffer(name, m_pUniformVec1s[name]->GetUniformBuffer(), 0, m_pUniformVec1s[name]->GetUniformBuffer()->GetSize());
+			m_ptrDescriptorSet->Update();
 		}
 
 		m_pUniformVec1s[name]->SetValue(v0);
@@ -171,6 +184,7 @@ bool CVKMaterialPass::SetUniformVec2(uint32_t name, float v0, float v1)
 		if (m_pUniformVec2s[name] == nullptr) {
 			m_pUniformVec2s[name] = new CGfxUniformVec2;
 			m_ptrDescriptorSet->SetUniformBuffer(name, m_pUniformVec2s[name]->GetUniformBuffer(), 0, m_pUniformVec2s[name]->GetUniformBuffer()->GetSize());
+			m_ptrDescriptorSet->Update();
 		}
 
 		m_pUniformVec2s[name]->SetValue(v0, v1);
@@ -190,6 +204,7 @@ bool CVKMaterialPass::SetUniformVec3(uint32_t name, float v0, float v1, float v2
 		if (m_pUniformVec3s[name] == nullptr) {
 			m_pUniformVec3s[name] = new CGfxUniformVec3;
 			m_ptrDescriptorSet->SetUniformBuffer(name, m_pUniformVec3s[name]->GetUniformBuffer(), 0, m_pUniformVec3s[name]->GetUniformBuffer()->GetSize());
+			m_ptrDescriptorSet->Update();
 		}
 
 		m_pUniformVec3s[name]->SetValue(v0, v1, v2);
@@ -209,6 +224,7 @@ bool CVKMaterialPass::SetUniformVec4(uint32_t name, float v0, float v1, float v2
 		if (m_pUniformVec4s[name] == nullptr) {
 			m_pUniformVec4s[name] = new CGfxUniformVec4;
 			m_ptrDescriptorSet->SetUniformBuffer(name, m_pUniformVec4s[name]->GetUniformBuffer(), 0, m_pUniformVec4s[name]->GetUniformBuffer()->GetSize());
+			m_ptrDescriptorSet->Update();
 		}
 
 		m_pUniformVec4s[name]->SetValue(v0, v1, v2, v3);
