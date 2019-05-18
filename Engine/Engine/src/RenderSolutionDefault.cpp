@@ -159,24 +159,24 @@ void CRenderSolutionDefault::Render(int indexQueue)
 	}
 
 	// Build command buffer
+	const CGfxCommandBufferPtr ptrMainCommandBuffer = m_ptrMainCommandBuffer[GfxRenderer()->GetSwapChain()->GetFrameIndex()];
 	{
+		ptrMainCommandBuffer->Clearup();
+
 		const uint32_t nameDefaultPass = HashValue("Default");
 
 		const CGfxRenderPassPtr ptrRenderPass = m_bEnableMSAA ? m_ptrRenderPassMSAA : m_ptrRenderPass;
 		const CGfxFrameBufferPtr ptrFrameBuffer = m_bEnableMSAA ? m_ptrFrameBufferScreenMSAA[GfxRenderer()->GetSwapChain()->GetFrameIndex()] : m_ptrFrameBufferScreen[GfxRenderer()->GetSwapChain()->GetFrameIndex()];
 
-		const int indexFrame = GfxRenderer()->GetSwapChain()->GetFrameIndex();
-		m_ptrMainCommandBuffer[indexFrame]->Clearup();
-
-		GfxRenderer()->BeginRecord(m_ptrMainCommandBuffer[indexFrame]);
+		GfxRenderer()->BeginRecord(ptrMainCommandBuffer);
 		{
-			GfxRenderer()->CmdBeginRenderPass(m_ptrMainCommandBuffer[indexFrame], ptrFrameBuffer, ptrRenderPass);
+			GfxRenderer()->CmdBeginRenderPass(ptrMainCommandBuffer, ptrFrameBuffer, ptrRenderPass);
 			{
-				m_pMainQueue->CmdDraw(indexQueue, m_ptrMainCommandBuffer[indexFrame], m_pEngine->GetDescriptorSet(), m_pMainCamera->GetDescriptorSet(), nameDefaultPass, m_pMainCamera->GetScissor(), m_pMainCamera->GetViewport());
+				m_pMainQueue->CmdDraw(indexQueue, ptrMainCommandBuffer, m_pEngine->GetDescriptorSet(), m_pMainCamera->GetDescriptorSet(), nameDefaultPass, m_pMainCamera->GetScissor(), m_pMainCamera->GetViewport());
 			}
-			GfxRenderer()->CmdEndRenderPass(m_ptrMainCommandBuffer[indexFrame]);
+			GfxRenderer()->CmdEndRenderPass(ptrMainCommandBuffer);
 		}
-		GfxRenderer()->EndRecord(m_ptrMainCommandBuffer[indexFrame]);
+		GfxRenderer()->EndRecord(ptrMainCommandBuffer);
 	}
 }
 
