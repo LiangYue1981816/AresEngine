@@ -10,6 +10,7 @@ class CTaskComponentUpdateCamera : public CTask
 public:
 	CTaskComponentUpdateCamera(void)
 		: m_pCamera(nullptr)
+		, m_pRenderQueue(nullptr)
 		, m_indexQueue(0)
 
 		, m_indexBegin(0)
@@ -25,7 +26,7 @@ public:
 
 
 public:
-	void SetParams(CComponentManager<T>* pComponentManager, int numThreads, int indexThread, CGfxCamera* pCamera, int indexQueue)
+	void SetParams(CComponentManager<T>* pComponentManager, int numThreads, int indexThread, CGfxCamera* pCamera, CGfxRenderQueue* pRenderQueue, int indexQueue)
 	{
 		m_pCamera = pCamera;
 		m_indexQueue = indexQueue;
@@ -39,13 +40,14 @@ public:
 	void TaskFunc(int indexThread, void* pParams)
 	{
 		for (int index = m_indexBegin; index < m_indexEnd; index++) {
-			m_pComponentManager->GetComponentByIndex(index)->TaskUpdateCamera(m_pCamera, m_indexQueue, indexThread);
+			m_pComponentManager->GetComponentByIndex(index)->TaskUpdateCamera(m_pCamera, m_pRenderQueue, m_indexQueue, indexThread);
 		}
 	}
 
 
 private:
 	CGfxCamera* m_pCamera;
+	CGfxRenderQueue* m_pRenderQueue;
 	int m_indexQueue;
 
 private:
