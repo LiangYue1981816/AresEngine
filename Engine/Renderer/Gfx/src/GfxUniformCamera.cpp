@@ -25,6 +25,8 @@ void CGfxUniformCamera::SetScreen(float width, float height)
 
 void CGfxUniformCamera::SetPerspective(float fovy, float aspect, float zNear, float zFar)
 {
+	static const glm::mat4 LH2RH = glm::scale(glm::mat4(), glm::vec3(1.0f, -1.0f, 1.0f));
+
 	// [-1 1]
 	//float x = (1.0f - zFar / zNear) / 2.0f;
 	//float y = (1.0f + zFar / zNear) / 2.0f;
@@ -42,6 +44,8 @@ void CGfxUniformCamera::SetPerspective(float fovy, float aspect, float zNear, fl
 
 void CGfxUniformCamera::SetOrtho(float left, float right, float bottom, float top, float zNear, float zFar)
 {
+	static const glm::mat4 LH2RH = glm::scale(glm::mat4(), glm::vec3(1.0f, -1.0f, 1.0f));
+
 	// [-1 1]
 	//float x = (1.0f - zFar / zNear) / 2.0f;
 	//float y = (1.0f + zFar / zNear) / 2.0f;
