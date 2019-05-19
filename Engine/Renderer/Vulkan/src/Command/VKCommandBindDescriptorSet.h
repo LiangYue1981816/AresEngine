@@ -21,11 +21,8 @@ public:
 	{
 		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_BIND_DESCRIPTORSET, "CommandBindDescriptorSet");
 		{
-			CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_BIND_DESCRIPTORSET, "CommandBindDescriptorSet");
-			{
-				if (m_ptrDescriptorSet) {
-					VKRenderer()->BindDescriptorSet(m_vkCommandBuffer, m_ptrDescriptorSet);
-				}
+			if (m_ptrDescriptorSet) {
+				VKRenderer()->BindDescriptorSet(m_vkCommandBuffer, m_ptrDescriptorSet);
 			}
 		}
 	}
