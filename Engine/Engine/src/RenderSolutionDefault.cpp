@@ -141,54 +141,43 @@ void CRenderSolutionDefault::SetEnableMSAA(bool bEnable, int samples)
 	}
 }
 
-void CRenderSolutionDefault::Render(int indexQueue)
+void CRenderSolutionDefault::Update(int indexQueue)
 {
-	// Uniform
-	{
-		m_pEngine->SetTime(Engine()->GetTotalTime(), Engine()->GetDeltaTime());
-	}
+	m_pMainQueue->Clear(indexQueue);
+	m_pLightQueue->Clear(indexQueue);
+	m_pShadowQueue->Clear(indexQueue);
 
-	// Update logic & camera
-	{
-		m_pMainQueue->Clear(indexQueue);
-		m_pLightQueue->Clear(indexQueue);
-		m_pShadowQueue->Clear(indexQueue);
-
-		SceneManager()->UpdateLogic(Engine()->GetTotalTime(), Engine()->GetDeltaTime());
-		SceneManager()->UpdateCamera(m_pMainCamera, m_pMainQueue, indexQueue);
-	}
-
-	// Build command buffer
-	const CGfxCommandBufferPtr ptrMainCommandBuffer = m_ptrMainCommandBuffer[GfxRenderer()->GetSwapChain()->GetFrameIndex()];
-	{
-		ptrMainCommandBuffer->Clearup();
-
-		const uint32_t nameDefaultPass = HashValue("Default");
-
-		const CGfxRenderPassPtr ptrRenderPass = m_bEnableMSAA ? m_ptrRenderPassMSAA : m_ptrRenderPass;
-		const CGfxFrameBufferPtr ptrFrameBuffer = m_bEnableMSAA ? m_ptrFrameBufferScreenMSAA[GfxRenderer()->GetSwapChain()->GetFrameIndex()] : m_ptrFrameBufferScreen[GfxRenderer()->GetSwapChain()->GetFrameIndex()];
-
-		GfxRenderer()->BeginRecord(ptrMainCommandBuffer);
-		{
-			GfxRenderer()->CmdBeginRenderPass(ptrMainCommandBuffer, ptrFrameBuffer, ptrRenderPass);
-			{
-				m_pMainQueue->CmdDraw(indexQueue, ptrMainCommandBuffer, m_pEngine->GetDescriptorSet(), m_pMainCamera->GetDescriptorSet(), nameDefaultPass, m_pMainCamera->GetScissor(), m_pMainCamera->GetViewport());
-			}
-			GfxRenderer()->CmdEndRenderPass(ptrMainCommandBuffer);
-		}
-		GfxRenderer()->EndRecord(ptrMainCommandBuffer);
-	}
+	SceneManager()->UpdateLogic(Engine()->GetTotalTime(), Engine()->GetDeltaTime());
+	SceneManager()->UpdateCamera(m_pMainCamera, m_pMainQueue, indexQueue);
 }
 
-void CRenderSolutionDefault::Present(int indexQueue)
+void CRenderSolutionDefault::Render(int indexQueue)
 {
 	m_pEngine->Apply();
 	m_pMainCamera->Apply();
 	m_pShadowCamera->Apply();
 
-	if (m_ptrMainCommandBuffer[indexQueue]->IsEmpty() == false) {
-		GfxRenderer()->AcquireNextFrame();
-		GfxRenderer()->Submit(m_ptrMainCommandBuffer[indexQueue]);
-		GfxRenderer()->Present();
+	GfxRenderer()->AcquireNextFrame();
+	{
+		const uint32_t nameDefaultPass = HashValue("Default");
+
+		const int indexFrame = GfxRenderer()->GetSwapChain()->GetFrameIndex();
+		const CGfxRenderPassPtr ptrRenderPass = m_bEnableMSAA ? m_ptrRenderPassMSAA : m_ptrRenderPass;
+		const CGfxFrameBufferPtr ptrFrameBuffer = m_bEnableMSAA ? m_ptrFrameBufferScreenMSAA[indexFrame] : m_ptrFrameBufferScreen[indexFrame];
+
+		const CGfxCommandBufferPtr ptrMainCommandBuffer = m_ptrMainCommandBuffer[indexFrame];
+		{
+			ptrMainCommandBuffer->Clearup();
+
+			GfxRenderer()->BeginRecord(ptrMainCommandBuffer);
+			GfxRenderer()->CmdBeginRenderPass(ptrMainCommandBuffer, ptrFrameBuffer, ptrRenderPass);
+			{
+				m_pMainQueue->CmdDraw(indexQueue, ptrMainCommandBuffer, m_pEngine->GetDescriptorSet(), m_pMainCamera->GetDescriptorSet(), nameDefaultPass, m_pMainCamera->GetScissor(), m_pMainCamera->GetViewport());
+			}
+			GfxRenderer()->CmdEndRenderPass(ptrMainCommandBuffer);
+			GfxRenderer()->EndRecord(ptrMainCommandBuffer);
+		}
+		GfxRenderer()->Submit(ptrMainCommandBuffer);
 	}
+	GfxRenderer()->Present();
 }

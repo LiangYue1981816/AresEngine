@@ -23,8 +23,8 @@ public:
 	virtual void SetEnableMSAA(bool bEnable, int samples = 4);
 
 public:
+	virtual void Update(int indexQueue);
 	virtual void Render(int indexQueue);
-	virtual void Present(int indexQueue);
 
 
 private:

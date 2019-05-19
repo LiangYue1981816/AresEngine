@@ -43,8 +43,8 @@ public:
 	virtual void SetEnableMSAA(bool bEnable, int samples = 4) = 0;
 
 public:
+	virtual void Update(int indexQueue) = 0;
 	virtual void Render(int indexQueue) = 0;
-	virtual void Present(int indexQueue) = 0;
 
 public:
 	CGfxCamera* GetMainCamera(void) const;

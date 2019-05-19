@@ -155,9 +155,9 @@ void CEngine::Update(void)
 	event_signal(&m_eventDispatch);
 }
 
-void CEngine::Present(void)
+void CEngine::Render(void)
 {
-	m_pRenderSolution->Present(1 - m_indexQueue);
+	m_pRenderSolution->Render(1 - m_indexQueue);
 }
 
 void CEngine::UpdateThread(void)
@@ -168,7 +168,7 @@ void CEngine::UpdateThread(void)
 	m_totalTime = m_totalTime + m_deltaTime;
 	m_lastTime = currTime;
 
-	m_pRenderSolution->Render(m_indexQueue);
+	m_pRenderSolution->Update(m_indexQueue);
 }
 
 void* CEngine::WorkThread(void* pParams)

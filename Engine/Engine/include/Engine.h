@@ -58,7 +58,7 @@ public:
 
 public:
 	void Update(void);
-	void Present(void);
+	void Render(void);
 
 private:
 	void UpdateThread(void);

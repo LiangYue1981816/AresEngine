@@ -36,12 +36,12 @@ void CRenderSolutionForward::SetEnableMSAA(bool bEnable, int samples)
 
 }
 
-void CRenderSolutionForward::Render(int indexQueue)
+void CRenderSolutionForward::Update(int indexQueue)
 {
 
 }
 
-void CRenderSolutionForward::Present(int indexQueue)
+void CRenderSolutionForward::Render(int indexQueue)
 {
 
 }

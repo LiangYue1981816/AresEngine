@@ -36,12 +36,12 @@ void CRenderSolutionDeferred::SetEnableMSAA(bool bEnable, int samples)
 
 }
 
-void CRenderSolutionDeferred::Render(int indexQueue)
+void CRenderSolutionDeferred::Update(int indexQueue)
 {
 
 }
 
-void CRenderSolutionDeferred::Present(int indexQueue)
+void CRenderSolutionDeferred::Render(int indexQueue)
 {
 
 }
