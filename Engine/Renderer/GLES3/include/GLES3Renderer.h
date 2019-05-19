@@ -89,6 +89,7 @@ class CGLES3Renderer : public CGfxRenderer
 public:
 	CGLES3Renderer(void* hInstance, void* hWnd, void* hDC, int width, int height, GfxPixelFormat format);
 	virtual ~CGLES3Renderer(void);
+	virtual GfxApi GetAPI(void) const;
 
 
 public:

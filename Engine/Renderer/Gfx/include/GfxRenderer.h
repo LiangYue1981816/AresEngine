@@ -74,6 +74,12 @@
 #define UNIFORM_CAMERA_NAME                 HashValue("Camera")
 
 
+typedef enum GfxApi {
+	GFX_API_GLES3 = 0,
+	GFX_API_VULKAN
+} GfxApi;
+
+
 class CALL_API CGfxRenderer
 {
 public:
@@ -83,6 +89,7 @@ public:
 public:
 	CGfxRenderer(void* hInstance, void* hWnd, void* hDC, int width, int height, GfxPixelFormat format);
 	virtual ~CGfxRenderer(void);
+	virtual GfxApi GetAPI(void) const = 0;
 
 
 public:

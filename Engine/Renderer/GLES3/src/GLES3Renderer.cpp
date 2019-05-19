@@ -72,6 +72,11 @@ CGLES3Renderer::~CGLES3Renderer(void)
 	delete m_pDescriptorLayoutManager;
 }
 
+GfxApi CGLES3Renderer::GetAPI(void) const
+{
+	return GFX_API_GLES3;
+}
+
 uint32_t CGLES3Renderer::GetLastError(void) const
 {
 	return glGetError();

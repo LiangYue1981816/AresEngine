@@ -19,12 +19,6 @@
 #define ShadowCamera() CEngine::GetInstance()->GetRenderSolution()->GetShadowCamera()
 
 
-typedef enum GfxApi {
-	GFX_API_GLES3 = 0,
-	GFX_API_VULKAN,
-	GFX_API_METAL
-} GfxApi;
-
 typedef enum RenderSolution {
 	RENDER_SOLUTION_DEFAULT = 0,
 	RENDER_SOLUTION_DEFERRED,

@@ -78,6 +78,11 @@ CVKRenderer::~CVKRenderer(void)
 	delete m_pInstance;
 }
 
+GfxApi CVKRenderer::GetAPI(void) const
+{
+	return GFX_API_VULKAN;
+}
+
 uint32_t CVKRenderer::GetLastError(void) const
 {
 	return m_pInstance->GetLastError();
