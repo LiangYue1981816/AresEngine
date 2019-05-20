@@ -149,19 +149,27 @@ void CRenderSolutionDefault::Render(int indexQueue)
 		const uint32_t nameDefaultPass = HashValue("Default");
 
 		const int indexFrame = GfxRenderer()->GetSwapChain()->GetFrameIndex();
+
 		const CGfxRenderPassPtr ptrRenderPass = m_ptrRenderPass;
 		const CGfxFrameBufferPtr ptrFrameBuffer = m_ptrFrameBuffer[indexFrame];
+		const CGfxRenderTexturePtr ptrColorTexture = m_ptrColorTextures[indexFrame];
+		const CGfxRenderTexturePtr ptrDepthStencilTexture = m_ptrDepthStencilTextures[indexFrame];
 
 		const CGfxCommandBufferPtr ptrMainCommandBuffer = m_ptrMainCommandBuffer[indexFrame];
 		{
 			ptrMainCommandBuffer->Clearup();
 
 			GfxRenderer()->BeginRecord(ptrMainCommandBuffer);
-			GfxRenderer()->CmdBeginRenderPass(ptrMainCommandBuffer, ptrFrameBuffer, ptrRenderPass);
 			{
-				m_pMainQueue->CmdDraw(indexQueue, ptrMainCommandBuffer, m_pEngine->GetDescriptorSet(), m_pMainCamera->GetDescriptorSet(), nameDefaultPass, m_pMainCamera->GetScissor(), m_pMainCamera->GetViewport());
+				GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, ptrColorTexture, GFX_IMAGE_LAYOUT_PRESENT_SRC_OPTIMAL);
+				GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, ptrDepthStencilTexture, GFX_IMAGE_LAYOUT_GENERAL);
+
+				GfxRenderer()->CmdBeginRenderPass(ptrMainCommandBuffer, ptrFrameBuffer, ptrRenderPass);
+				{
+					m_pMainQueue->CmdDraw(indexQueue, ptrMainCommandBuffer, m_pEngine->GetDescriptorSet(), m_pMainCamera->GetDescriptorSet(), nameDefaultPass, m_pMainCamera->GetScissor(), m_pMainCamera->GetViewport());
+				}
+				GfxRenderer()->CmdEndRenderPass(ptrMainCommandBuffer);
 			}
-			GfxRenderer()->CmdEndRenderPass(ptrMainCommandBuffer);
 			GfxRenderer()->EndRecord(ptrMainCommandBuffer);
 		}
 		GfxRenderer()->Submit(ptrMainCommandBuffer);
