@@ -30,6 +30,7 @@ public:
 	static VkFilter TranslateFilter(GfxFilter filter);
 	static VkSamplerMipmapMode TranslateSamplerMipmapMode(GfxSamplerMipmapMode mipmapMode);
 	static VkSamplerAddressMode TranslateSamplerAddressMode(GfxSamplerAddressMode addressMode);
+	static VkImageLayout TranslateImageLayout(GfxImageLayout imageLayout);
 
 
 private:
