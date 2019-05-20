@@ -18,7 +18,7 @@ CVKUniformBuffer* CVKUniformBufferManager::Create(size_t size)
 {
 	mutex_autolock autolock(&lock);
 	{
-		CVKUniformBuffer* pUniformBuffer = new CVKUniformBuffer(m_pDevice, this, size);
+		CVKUniformBuffer* pUniformBuffer = new CVKUniformBuffer(m_pDevice, this, ALIGN_BYTE(size, m_pDevice->GetPhysicalDeviceLimits().minUniformBufferOffsetAlignment));
 		m_pUniformBuffers[pUniformBuffer] = pUniformBuffer;
 		return pUniformBuffer;
 	}
