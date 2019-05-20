@@ -146,6 +146,42 @@ bool CGLES3CommandBuffer::EndRecord(void)
 	return true;
 }
 
+bool CGLES3CommandBuffer::CmdSetImageLayout(const CGfxTexture2DPtr ptrTexture, GfxImageLayout imageLayout)
+{
+	ASSERT(ptrTexture);
+
+	if (IsMainCommandBuffer() == true && IsInRenderPass() == false) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+bool CGLES3CommandBuffer::CmdSetImageLayout(const CGfxTexture2DArrayPtr ptrTexture, GfxImageLayout imageLayout)
+{
+	ASSERT(ptrTexture);
+
+	if (IsMainCommandBuffer() == true && IsInRenderPass() == false) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+bool CGLES3CommandBuffer::CmdSetImageLayout(const CGfxTextureCubemapPtr ptrTexture, GfxImageLayout imageLayout)
+{
+	ASSERT(ptrTexture);
+
+	if (IsMainCommandBuffer() == true && IsInRenderPass() == false) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
 bool CGLES3CommandBuffer::CmdBeginRenderPass(const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass)
 {
 	ASSERT(ptrRenderPass);

@@ -34,6 +34,12 @@ public:
 	bool BeginRecord(const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass, int indexSubpass);
 	bool EndRecord(void);
 
+	// Outside RenderPass
+	bool CmdSetImageLayout(const CGfxTexture2DPtr ptrTexture, GfxImageLayout imageLayout);
+	bool CmdSetImageLayout(const CGfxTexture2DArrayPtr ptrTexture, GfxImageLayout imageLayout);
+	bool CmdSetImageLayout(const CGfxTextureCubemapPtr ptrTexture, GfxImageLayout imageLayout);
+
+	// Inside RenderPass
 	bool CmdBeginRenderPass(const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass);
 	bool CmdNextSubpass(void);
 	bool CmdEndRenderPass(void);
@@ -73,6 +79,7 @@ public:
 
 	bool CmdExecute(const CGfxCommandBufferPtr ptrCommandBuffer);
 
+	// Other
 	bool CmdPushDebugGroup(const char* szMessage);
 	bool CmdPopDebugGroup(void);
 

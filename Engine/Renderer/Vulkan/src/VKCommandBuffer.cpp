@@ -217,6 +217,42 @@ bool CVKCommandBuffer::EndRecord(void)
 	return true;
 }
 
+bool CVKCommandBuffer::CmdSetImageLayout(const CGfxTexture2DPtr ptrTexture, GfxImageLayout imageLayout)
+{
+	ASSERT(ptrTexture);
+
+	if (IsMainCommandBuffer() == true && IsInRenderPass() == false) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+bool CVKCommandBuffer::CmdSetImageLayout(const CGfxTexture2DArrayPtr ptrTexture, GfxImageLayout imageLayout)
+{
+	ASSERT(ptrTexture);
+
+	if (IsMainCommandBuffer() == true && IsInRenderPass() == false) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+bool CVKCommandBuffer::CmdSetImageLayout(const CGfxTextureCubemapPtr ptrTexture, GfxImageLayout imageLayout)
+{
+	ASSERT(ptrTexture);
+
+	if (IsMainCommandBuffer() == true && IsInRenderPass() == false) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
 bool CVKCommandBuffer::CmdBeginRenderPass(const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass)
 {
 	ASSERT(ptrRenderPass);
