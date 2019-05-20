@@ -31,18 +31,18 @@ private:
 	bool m_bEnableMSAA;
 
 private:
-	CGfxRenderTexturePtr m_ptrColorTextures[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
-
-private:
 	CGfxRenderPassPtr m_ptrRenderPass;
-	CGfxRenderTexturePtr m_ptrDepthStencilTexture;
-	CGfxFrameBufferPtr m_ptrFrameBufferScreen[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
+	CGfxFrameBufferPtr m_ptrFrameBuffer[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
+	CGfxRenderTexturePtr m_ptrColorTextures[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
+	CGfxRenderTexturePtr m_ptrDepthStencilTextures[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
 
+	/*
 private:
 	CGfxRenderPassPtr m_ptrRenderPassMSAA;
 	CGfxRenderTexturePtr m_ptrColorTextureMSAA;
 	CGfxRenderTexturePtr m_ptrDepthStencilTextureMSAA;
 	CGfxFrameBufferPtr m_ptrFrameBufferScreenMSAA[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
+	*/
 
 private:
 	CGfxCommandBufferPtr m_ptrMainCommandBuffer[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
