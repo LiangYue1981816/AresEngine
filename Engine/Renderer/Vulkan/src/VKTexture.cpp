@@ -287,15 +287,17 @@ bool CVKTexture::PipelineBarrier(VkCommandBuffer vkCommandBuffer, VkImageLayout 
 	ASSERT(vkCommandBuffer);
 	ASSERT(m_vkImage);
 
-	VkImageSubresourceRange range = {};
-	range.aspectMask = m_vkImageAspectFlags;
-	range.baseMipLevel = 0;
-	range.levelCount = m_levels;
-	range.baseArrayLayer = 0;
-	range.layerCount = m_layers;
+	if (m_vkImageLayout != imageLayout) {
+		VkImageSubresourceRange range = {};
+		range.aspectMask = m_vkImageAspectFlags;
+		range.baseMipLevel = 0;
+		range.levelCount = m_levels;
+		range.baseArrayLayer = 0;
+		range.layerCount = m_layers;
 
-	CALL_VK_FUNCTION_RETURN_BOOL(vkCmdImageMemoryBarrier(vkCommandBuffer, m_vkImage, m_vkImageLayout, imageLayout, range));
-	m_vkImageLayout = imageLayout;
+		CALL_VK_FUNCTION_RETURN_BOOL(vkCmdImageMemoryBarrier(vkCommandBuffer, m_vkImage, m_vkImageLayout, imageLayout, range));
+		m_vkImageLayout = imageLayout;
+	}
 
 	return true;
 }
@@ -305,15 +307,17 @@ bool CVKTexture::PipelineBarrier(VkCommandBuffer vkCommandBuffer, VkImageLayout 
 	ASSERT(vkCommandBuffer);
 	ASSERT(m_vkImage);
 
-	VkImageSubresourceRange range = {};
-	range.aspectMask = m_vkImageAspectFlags;
-	range.baseMipLevel = 0;
-	range.levelCount = m_levels;
-	range.baseArrayLayer = 0;
-	range.layerCount = m_layers;
+	if (m_vkImageLayout != imageLayout) {
+		VkImageSubresourceRange range = {};
+		range.aspectMask = m_vkImageAspectFlags;
+		range.baseMipLevel = 0;
+		range.levelCount = m_levels;
+		range.baseArrayLayer = 0;
+		range.layerCount = m_layers;
 
-	CALL_VK_FUNCTION_RETURN_BOOL(vkCmdImageMemoryBarrier(vkCommandBuffer, m_vkImage, m_vkImageLayout, imageLayout, srcAccessFlags, dstAccessFlags, srcPipelineStageFlags, dstPipelineStageFlags, range));
-	m_vkImageLayout = imageLayout;
+		CALL_VK_FUNCTION_RETURN_BOOL(vkCmdImageMemoryBarrier(vkCommandBuffer, m_vkImage, m_vkImageLayout, imageLayout, srcAccessFlags, dstAccessFlags, srcPipelineStageFlags, dstPipelineStageFlags, range));
+		m_vkImageLayout = imageLayout;
+	}
 
 	return true;
 }
