@@ -1,6 +1,7 @@
 #include "VKRenderer.h"
 #include "./Command/VKCommandBeginRecord.h"
 #include "./Command/VKCommandEndRecord.h"
+#include "./Command/VKCommandSetImageLayout.h"
 #include "./Command/VKCommandBeginRenderPass.h"
 #include "./Command/VKCommandNextSubPass.h"
 #include "./Command/VKCommandEndRenderPass.h"
@@ -222,6 +223,7 @@ bool CVKCommandBuffer::CmdSetImageLayout(const CGfxTexture2DPtr ptrTexture, GfxI
 	ASSERT(ptrTexture);
 
 	if (IsMainCommandBuffer() == true && IsInRenderPass() == false) {
+		m_pCommands.emplace_back(new CVKCommandSetImageLayout(m_vkCommandBuffer, ptrTexture, imageLayout));
 		return true;
 	}
 	else {
@@ -234,6 +236,7 @@ bool CVKCommandBuffer::CmdSetImageLayout(const CGfxTexture2DArrayPtr ptrTexture,
 	ASSERT(ptrTexture);
 
 	if (IsMainCommandBuffer() == true && IsInRenderPass() == false) {
+		m_pCommands.emplace_back(new CVKCommandSetImageLayout(m_vkCommandBuffer, ptrTexture, imageLayout));
 		return true;
 	}
 	else {
@@ -246,6 +249,7 @@ bool CVKCommandBuffer::CmdSetImageLayout(const CGfxTextureCubemapPtr ptrTexture,
 	ASSERT(ptrTexture);
 
 	if (IsMainCommandBuffer() == true && IsInRenderPass() == false) {
+		m_pCommands.emplace_back(new CVKCommandSetImageLayout(m_vkCommandBuffer, ptrTexture, imageLayout));
 		return true;
 	}
 	else {
