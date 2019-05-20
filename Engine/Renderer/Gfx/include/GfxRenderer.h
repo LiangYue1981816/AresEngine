@@ -157,6 +157,13 @@ public:
 	virtual bool BeginRecord(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass, int indexSubpass) = 0;
 	virtual bool EndRecord(CGfxCommandBufferPtr ptrCommandBuffer) = 0;
 
+	// Outside RenderPass
+	virtual bool CmdSetImageLayout(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxTexture2DPtr ptrTexture, GfxImageLayout imageLayout) = 0;
+	virtual bool CmdSetImageLayout(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxTexture2DArrayPtr ptrTexture, GfxImageLayout imageLayout) = 0;
+	virtual bool CmdSetImageLayout(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxTextureCubemapPtr ptrTexture, GfxImageLayout imageLayout) = 0;
+	virtual bool CmdSetImageLayout(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxRenderTexturePtr ptrTexture, GfxImageLayout imageLayout) = 0;
+
+	// Inside RenderPass
 	virtual bool CmdBeginRenderPass(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass) = 0;
 	virtual bool CmdNextSubpass(CGfxCommandBufferPtr ptrCommandBuffer) = 0;
 	virtual bool CmdEndRenderPass(CGfxCommandBufferPtr ptrCommandBuffer) = 0;
@@ -196,9 +203,11 @@ public:
 
 	virtual bool CmdExecute(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxCommandBufferPtr ptrSecondaryCommandBuffer) = 0;
 
+	// Other
 	virtual bool CmdPushDebugGroup(CGfxCommandBufferPtr ptrCommandBuffer, const char* szMessage) = 0;
 	virtual bool CmdPopDebugGroup(CGfxCommandBufferPtr ptrCommandBuffer) = 0;
 
+	// Submit
 	virtual void Submit(const CGfxCommandBufferPtr& ptrCommandBuffer) = 0;
 
 public:

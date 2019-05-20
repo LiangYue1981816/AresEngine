@@ -166,6 +166,13 @@ public:
 	bool BeginRecord(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass, int indexSubpass);
 	bool EndRecord(CGfxCommandBufferPtr ptrCommandBuffer);
 
+	// Outside RenderPass
+	bool CmdSetImageLayout(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxTexture2DPtr ptrTexture, GfxImageLayout imageLayout);
+	bool CmdSetImageLayout(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxTexture2DArrayPtr ptrTexture, GfxImageLayout imageLayout);
+	bool CmdSetImageLayout(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxTextureCubemapPtr ptrTexture, GfxImageLayout imageLayout);
+	bool CmdSetImageLayout(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxRenderTexturePtr ptrTexture, GfxImageLayout imageLayout);
+
+	// Inside RenderPass
 	bool CmdBeginRenderPass(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass);
 	bool CmdNextSubpass(CGfxCommandBufferPtr ptrCommandBuffer);
 	bool CmdEndRenderPass(CGfxCommandBufferPtr ptrCommandBuffer);
@@ -205,9 +212,11 @@ public:
 
 	bool CmdExecute(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxCommandBufferPtr ptrSecondaryCommandBuffer);
 
+	// Other
 	bool CmdPushDebugGroup(CGfxCommandBufferPtr ptrCommandBuffer, const char* szMessage);
 	bool CmdPopDebugGroup(CGfxCommandBufferPtr ptrCommandBuffer);
 
+	// Submit
 	void Submit(const CGfxCommandBufferPtr& ptrCommandBuffer);
 
 public:

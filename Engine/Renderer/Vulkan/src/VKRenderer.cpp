@@ -268,6 +268,26 @@ bool CVKRenderer::EndRecord(CGfxCommandBufferPtr ptrCommandBuffer)
 	return ptrCommandBuffer->EndRecord();
 }
 
+bool CVKRenderer::CmdSetImageLayout(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxTexture2DPtr ptrTexture, GfxImageLayout imageLayout)
+{
+	return ptrCommandBuffer->CmdSetImageLayout(ptrTexture, imageLayout);
+}
+
+bool CVKRenderer::CmdSetImageLayout(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxTexture2DArrayPtr ptrTexture, GfxImageLayout imageLayout)
+{
+	return ptrCommandBuffer->CmdSetImageLayout(ptrTexture, imageLayout);
+}
+
+bool CVKRenderer::CmdSetImageLayout(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxTextureCubemapPtr ptrTexture, GfxImageLayout imageLayout)
+{
+	return ptrCommandBuffer->CmdSetImageLayout(ptrTexture, imageLayout);
+}
+
+bool CVKRenderer::CmdSetImageLayout(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxRenderTexturePtr ptrTexture, GfxImageLayout imageLayout)
+{
+	return ptrCommandBuffer->CmdSetImageLayout(ptrTexture, imageLayout);
+}
+
 bool CVKRenderer::CmdBeginRenderPass(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass)
 {
 	return ptrCommandBuffer->CmdBeginRenderPass(ptrFrameBuffer, ptrRenderPass);

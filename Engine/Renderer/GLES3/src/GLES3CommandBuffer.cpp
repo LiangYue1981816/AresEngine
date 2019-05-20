@@ -182,6 +182,18 @@ bool CGLES3CommandBuffer::CmdSetImageLayout(const CGfxTextureCubemapPtr ptrTextu
 	}
 }
 
+bool CGLES3CommandBuffer::CmdSetImageLayout(const CGfxRenderTexturePtr ptrTexture, GfxImageLayout imageLayout)
+{
+	ASSERT(ptrTexture);
+
+	if (IsMainCommandBuffer() == true && IsInRenderPass() == false) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
 bool CGLES3CommandBuffer::CmdBeginRenderPass(const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass)
 {
 	ASSERT(ptrRenderPass);

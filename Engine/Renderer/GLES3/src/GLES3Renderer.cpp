@@ -262,6 +262,26 @@ bool CGLES3Renderer::EndRecord(CGfxCommandBufferPtr ptrCommandBuffer)
 	return ptrCommandBuffer->EndRecord();
 }
 
+bool CGLES3Renderer::CmdSetImageLayout(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxTexture2DPtr ptrTexture, GfxImageLayout imageLayout)
+{
+	return ptrCommandBuffer->CmdSetImageLayout(ptrTexture, imageLayout);
+}
+
+bool CGLES3Renderer::CmdSetImageLayout(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxTexture2DArrayPtr ptrTexture, GfxImageLayout imageLayout)
+{
+	return ptrCommandBuffer->CmdSetImageLayout(ptrTexture, imageLayout);
+}
+
+bool CGLES3Renderer::CmdSetImageLayout(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxTextureCubemapPtr ptrTexture, GfxImageLayout imageLayout)
+{
+	return ptrCommandBuffer->CmdSetImageLayout(ptrTexture, imageLayout);
+}
+
+bool CGLES3Renderer::CmdSetImageLayout(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxRenderTexturePtr ptrTexture, GfxImageLayout imageLayout)
+{
+	return ptrCommandBuffer->CmdSetImageLayout(ptrTexture, imageLayout);
+}
+
 bool CGLES3Renderer::CmdBeginRenderPass(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass)
 {
 	return ptrCommandBuffer->CmdBeginRenderPass(ptrFrameBuffer, ptrRenderPass);

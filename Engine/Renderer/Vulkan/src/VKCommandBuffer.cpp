@@ -257,6 +257,19 @@ bool CVKCommandBuffer::CmdSetImageLayout(const CGfxTextureCubemapPtr ptrTexture,
 	}
 }
 
+bool CVKCommandBuffer::CmdSetImageLayout(const CGfxRenderTexturePtr ptrTexture, GfxImageLayout imageLayout)
+{
+	ASSERT(ptrTexture);
+
+	if (IsMainCommandBuffer() == true && IsInRenderPass() == false) {
+		m_pCommands.emplace_back(new CVKCommandSetImageLayout(m_vkCommandBuffer, ptrTexture, imageLayout));
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
 bool CVKCommandBuffer::CmdBeginRenderPass(const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass)
 {
 	ASSERT(ptrRenderPass);

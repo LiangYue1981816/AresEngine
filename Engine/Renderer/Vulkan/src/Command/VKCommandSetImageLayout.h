@@ -26,6 +26,13 @@ public:
 	{
 		Execute();
 	}
+	CVKCommandSetImageLayout(VkCommandBuffer vkCommandBuffer, const CGfxRenderTexturePtr ptrTexture, GfxImageLayout imageLayout)
+		: m_vkCommandBuffer(vkCommandBuffer)
+		, m_imageLayout(imageLayout)
+		, m_ptrRenderTexture(ptrTexture)
+	{
+		Execute();
+	}
 	virtual ~CVKCommandSetImageLayout(void)
 	{
 
@@ -47,6 +54,10 @@ public:
 			if (m_ptrTextureCubemap) {
 				((CVKTextureCubemap*)m_ptrTextureCubemap.GetPointer())->PipelineBarrier(m_vkCommandBuffer, CVKHelper::TranslateImageLayout(m_imageLayout));
 			}
+
+			if (m_ptrRenderTexture) {
+				((CVKRenderTexture*)m_ptrRenderTexture.GetPointer())->PipelineBarrier(m_vkCommandBuffer, CVKHelper::TranslateImageLayout(m_imageLayout));
+			}
 		}
 	}
 
@@ -59,4 +70,5 @@ private:
 	CGfxTexture2DPtr m_ptrTexture2D;
 	CGfxTexture2DArrayPtr m_ptrTexture2DArray;
 	CGfxTextureCubemapPtr m_ptrTextureCubemap;
+	CGfxRenderTexturePtr m_ptrRenderTexture;
 };
