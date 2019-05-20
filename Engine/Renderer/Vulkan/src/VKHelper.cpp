@@ -68,7 +68,6 @@ const VkComponentMapping& CVKHelper::GetFormatComponentMapping(VkFormat format)
 
 bool CVKHelper::IsFormatSupported(VkFormat format)
 {
-	return true;
 	return vkFormatProperties[format].bufferFeatures || vkFormatProperties[format].linearTilingFeatures || vkFormatProperties[format].optimalTilingFeatures;
 }
 

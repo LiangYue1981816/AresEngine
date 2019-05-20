@@ -20,7 +20,7 @@ void CRenderSolutionDefault::CreateFrameBuffer(void)
 	for (int indexFrame = 0; indexFrame < CGfxSwapChain::SWAPCHAIN_FRAME_COUNT; indexFrame++) {
 		m_ptrColorTextures[indexFrame] = GfxRenderer()->GetSwapChain()->GetFrameTexture(indexFrame);
 		m_ptrDepthStencilTextures[indexFrame] = GfxRenderer()->NewRenderTexture(HashValueFormat("DepthStencilTexture %d", indexFrame));
-		m_ptrDepthStencilTextures[indexFrame]->Create(GFX_PIXELFORMAT_D24_UNORM_S8_UINT_PACK32, GfxRenderer()->GetSwapChain()->GetWidth(), GfxRenderer()->GetSwapChain()->GetHeight());
+		m_ptrDepthStencilTextures[indexFrame]->Create(GFX_PIXELFORMAT_D32_SFLOAT_PACK32, GfxRenderer()->GetSwapChain()->GetWidth(), GfxRenderer()->GetSwapChain()->GetHeight());
 	}
 
 	const int numAttachments = 2;
