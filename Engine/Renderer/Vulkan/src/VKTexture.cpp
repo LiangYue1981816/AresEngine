@@ -91,31 +91,47 @@ int CVKTexture::GetSamples(void) const
 	return m_samples;
 }
 
-bool CVKTexture::Create(GfxTextureType type, GfxPixelFormat format, int width, int height, int layers, int levels, int samples, VkImageAspectFlags imageAspectFlags, VkImageView vkImageView)
+bool CVKTexture::Create(GfxTextureType type, GfxPixelFormat format, int width, int height, int layers, int levels, int samples, VkImageAspectFlags imageAspectFlags, VkImage vkImage)
 {
-	ASSERT(vkImageView);
-	ASSERT(imageAspectFlags);
-
 	Destroy();
+	{
+		do {
+			ASSERT(vkImage);
+			ASSERT(imageAspectFlags);
 
-	m_bExtern = true;
-	m_pMemory = nullptr;
+			m_bExtern = true;
+			m_pMemory = nullptr;
 
-	m_vkImage = VK_NULL_HANDLE;
-	m_vkImageView = vkImageView;
-	m_vkImageLayout = VK_IMAGE_LAYOUT_UNDEFINED;
-	m_vkImageAspectFlags = imageAspectFlags;
+			m_vkImage = vkImage;
+			m_vkImageView = VK_NULL_HANDLE;
+			m_vkImageLayout = VK_IMAGE_LAYOUT_UNDEFINED;
+			m_vkImageAspectFlags = imageAspectFlags;
 
-	m_type = type;
-	m_format = format;
+			m_type = type;
+			m_format = format;
 
-	m_width = width;
-	m_height = height;
-	m_layers = layers;
-	m_levels = levels;
-	m_samples = samples;
+			m_width = width;
+			m_height = height;
+			m_layers = layers;
+			m_levels = levels;
+			m_samples = samples;
 
-	return true;
+			VkImageViewCreateInfo viewCreateInfo = {};
+			viewCreateInfo.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
+			viewCreateInfo.pNext = nullptr;
+			viewCreateInfo.flags = 0;
+			viewCreateInfo.image = m_vkImage;
+			viewCreateInfo.viewType = CVKHelper::TranslateImageViewType(type);
+			viewCreateInfo.format = (VkFormat)format;
+			viewCreateInfo.components = CVKHelper::GetFormatComponentMapping((VkFormat)format);
+			viewCreateInfo.subresourceRange = { imageAspectFlags, 0, (uint32_t)levels, 0, (uint32_t)layers };
+			CALL_VK_FUNCTION_BREAK(vkCreateImageView(m_pDevice->GetDevice(), &viewCreateInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkImageView));
+
+			return true;
+		} while (false);
+	}
+	Destroy();
+	return false;
 }
 
 bool CVKTexture::Create(GfxTextureType type, GfxPixelFormat format, int width, int height, int layers, int levels, int samples, VkImageAspectFlags imageAspectFlags, VkImageUsageFlags imageUsageFlags, VkImageTiling imageTiling)
@@ -202,13 +218,13 @@ bool CVKTexture::Create(GfxTextureType type, GfxPixelFormat format, int width, i
 void CVKTexture::Destroy(void)
 {
 	if (m_bExtern == false) {
-		if (m_vkImageView) {
-			vkDestroyImageView(m_pDevice->GetDevice(), m_vkImageView, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
+		if (m_vkImage) {
+			vkDestroyImage(m_pDevice->GetDevice(), m_vkImage, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
 		}
 	}
 
-	if (m_vkImage) {
-		vkDestroyImage(m_pDevice->GetDevice(), m_vkImage, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
+	if (m_vkImageView) {
+		vkDestroyImageView(m_pDevice->GetDevice(), m_vkImageView, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
 	}
 
 	if (m_pMemory) {

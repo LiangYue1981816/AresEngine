@@ -67,13 +67,11 @@ CVKSwapChain::CVKSwapChain(CVKDevice* pDevice, int width, int height, GfxPixelFo
 	: CGfxSwapChain(width, height, format)
 	, m_pDevice(pDevice)
 
+	, m_vkImages{ VK_NULL_HANDLE }
 	, m_vkSwapchain(VK_NULL_HANDLE)
 	, m_vkAcquireSemaphore(VK_NULL_HANDLE)
 	, m_vkRenderDoneSemaphores{ VK_NULL_HANDLE }
 	, m_vkRenderDoneFences{ VK_NULL_HANDLE }
-
-	, m_vkImages{ VK_NULL_HANDLE }
-	, m_vkImageViews{ VK_NULL_HANDLE }
 
 	, m_format(format)
 	, m_width(width)
@@ -200,20 +198,9 @@ bool CVKSwapChain::CreateImagesAndImageViews(void)
 		fenceCreateInfo.flags = VK_FENCE_CREATE_SIGNALED_BIT;
 		CALL_VK_FUNCTION_RETURN_BOOL(vkCreateFence(m_pDevice->GetDevice(), &fenceCreateInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkRenderDoneFences[indexFrame]));
 
-		VkImageViewCreateInfo imageViewCreateInfo = {};
-		imageViewCreateInfo.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
-		imageViewCreateInfo.pNext = nullptr;
-		imageViewCreateInfo.flags = 0;
-		imageViewCreateInfo.image = m_vkImages[indexFrame];
-		imageViewCreateInfo.viewType = VK_IMAGE_VIEW_TYPE_2D;
-		imageViewCreateInfo.format = (VkFormat)m_format;
-		imageViewCreateInfo.components = CVKHelper::GetFormatComponentMapping((VkFormat)m_format);
-		imageViewCreateInfo.subresourceRange = { VK_IMAGE_ASPECT_COLOR_BIT, 0, 1, 0, 1 };
-		CALL_VK_FUNCTION_RETURN_BOOL(vkCreateImageView(m_pDevice->GetDevice(), &imageViewCreateInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkImageViews[indexFrame]));
-
 		uint32_t name = HashValueFormat("SwapChain Frame Texture %d", indexFrame);
 		m_ptrRenderTextures[indexFrame] = VKRenderer()->NewRenderTexture(name);
-		CALL_BOOL_FUNCTION_RETURN_BOOL(m_ptrRenderTextures[indexFrame]->Create((HANDLE)m_vkImageViews[indexFrame], m_format, m_width, m_height));
+		CALL_BOOL_FUNCTION_RETURN_BOOL(m_ptrRenderTextures[indexFrame]->Create((HANDLE)m_vkImages[indexFrame], m_format, m_width, m_height));
 	}
 
 	return true;
@@ -236,10 +223,6 @@ void CVKSwapChain::DestroySwapChain(void)
 void CVKSwapChain::DestroyImagesAndImageViews(void)
 {
 	for (int indexFrame = 0; indexFrame < SWAPCHAIN_FRAME_COUNT; indexFrame++) {
-		if (m_vkImageViews[indexFrame]) {
-			vkDestroyImageView(m_pDevice->GetDevice(), m_vkImageViews[indexFrame], m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
-		}
-
 		if (m_vkRenderDoneSemaphores[indexFrame]) {
 			vkDestroySemaphore(m_pDevice->GetDevice(), m_vkRenderDoneSemaphores[indexFrame], m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
 		}
@@ -248,7 +231,6 @@ void CVKSwapChain::DestroyImagesAndImageViews(void)
 			vkDestroyFence(m_pDevice->GetDevice(), m_vkRenderDoneFences[indexFrame], m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
 		}
 
-		m_vkImageViews[indexFrame] = VK_NULL_HANDLE;
 		m_vkRenderDoneSemaphores[indexFrame] = VK_NULL_HANDLE;
 		m_vkRenderDoneFences[indexFrame] = VK_NULL_HANDLE;
 		m_ptrRenderTextures[indexFrame].Release();

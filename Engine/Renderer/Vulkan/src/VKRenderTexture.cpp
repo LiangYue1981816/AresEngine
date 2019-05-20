@@ -69,18 +69,18 @@ bool CVKRenderTexture::Create(HANDLE hExternalTexture, GfxPixelFormat format, in
 		samples = std::max(samples, 1);
 
 		if (CGfxHelper::IsFormatDepthOnly(format)) {
-			return m_pTexture->Create(samples == 1 ? GFX_TEXTURE_2D : GFX_TEXTURE_2D_MULTISAMPLE, format, width, height, 1, 1, samples, VK_IMAGE_ASPECT_DEPTH_BIT, (VkImageView)hExternalTexture);
+			return m_pTexture->Create(samples == 1 ? GFX_TEXTURE_2D : GFX_TEXTURE_2D_MULTISAMPLE, format, width, height, 1, 1, samples, VK_IMAGE_ASPECT_DEPTH_BIT, (VkImage)hExternalTexture);
 		}
 
 		if (CGfxHelper::IsFormatStencilOnly(format)) {
-			return m_pTexture->Create(samples == 1 ? GFX_TEXTURE_2D : GFX_TEXTURE_2D_MULTISAMPLE, format, width, height, 1, 1, samples, VK_IMAGE_ASPECT_STENCIL_BIT, (VkImageView)hExternalTexture);
+			return m_pTexture->Create(samples == 1 ? GFX_TEXTURE_2D : GFX_TEXTURE_2D_MULTISAMPLE, format, width, height, 1, 1, samples, VK_IMAGE_ASPECT_STENCIL_BIT, (VkImage)hExternalTexture);
 		}
 
 		if (CGfxHelper::IsFormatDepthStencil(format)) {
-			return m_pTexture->Create(samples == 1 ? GFX_TEXTURE_2D : GFX_TEXTURE_2D_MULTISAMPLE, format, width, height, 1, 1, samples, VK_IMAGE_ASPECT_DEPTH_BIT | VK_IMAGE_ASPECT_STENCIL_BIT, (VkImageView)hExternalTexture);
+			return m_pTexture->Create(samples == 1 ? GFX_TEXTURE_2D : GFX_TEXTURE_2D_MULTISAMPLE, format, width, height, 1, 1, samples, VK_IMAGE_ASPECT_DEPTH_BIT | VK_IMAGE_ASPECT_STENCIL_BIT, (VkImage)hExternalTexture);
 		}
 
-		return m_pTexture->Create(samples == 1 ? GFX_TEXTURE_2D : GFX_TEXTURE_2D_MULTISAMPLE, format, width, height, 1, 1, samples, VK_IMAGE_ASPECT_COLOR_BIT, (VkImageView)hExternalTexture);
+		return m_pTexture->Create(samples == 1 ? GFX_TEXTURE_2D : GFX_TEXTURE_2D_MULTISAMPLE, format, width, height, 1, 1, samples, VK_IMAGE_ASPECT_COLOR_BIT, (VkImage)hExternalTexture);
 	}
 	else {
 		return false;
