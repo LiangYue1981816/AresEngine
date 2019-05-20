@@ -87,3 +87,13 @@ bool CVKTextureCubemap::TextureCubemapDataCompressed(GfxPixelFormat format, GfxC
 {
 	return m_pTexture->TextureCubemapData(format, face, level, xoffset, yoffset, width, height, size, data);
 }
+
+bool CVKTextureCubemap::PipelineBarrier(VkCommandBuffer vkCommandBuffer, VkImageLayout imageLayout)
+{
+	return m_pTexture->PipelineBarrier(vkCommandBuffer, imageLayout);
+}
+
+bool CVKTextureCubemap::PipelineBarrier(VkCommandBuffer vkCommandBuffer, VkImageLayout imageLayout, VkAccessFlags srcAccessFlags, VkAccessFlags dstAccessFlags, VkPipelineStageFlags srcPipelineStageFlags, VkPipelineStageFlags dstPipelineStageFlags)
+{
+	return m_pTexture->PipelineBarrier(vkCommandBuffer, imageLayout, srcAccessFlags, dstAccessFlags, srcPipelineStageFlags, dstPipelineStageFlags);
+}

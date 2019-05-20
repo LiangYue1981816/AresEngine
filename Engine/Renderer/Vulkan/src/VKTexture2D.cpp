@@ -93,3 +93,13 @@ bool CVKTexture2D::Texture2DDataCompressed(GfxPixelFormat format, int level, int
 {
 	return m_pTexture->Texture2DData(format, level, xoffset, yoffset, width, height, size, data);
 }
+
+bool CVKTexture2D::PipelineBarrier(VkCommandBuffer vkCommandBuffer, VkImageLayout imageLayout)
+{
+	return m_pTexture->PipelineBarrier(vkCommandBuffer, imageLayout);
+}
+
+bool CVKTexture2D::PipelineBarrier(VkCommandBuffer vkCommandBuffer, VkImageLayout imageLayout, VkAccessFlags srcAccessFlags, VkAccessFlags dstAccessFlags, VkPipelineStageFlags srcPipelineStageFlags, VkPipelineStageFlags dstPipelineStageFlags)
+{
+	return m_pTexture->PipelineBarrier(vkCommandBuffer, imageLayout, srcAccessFlags, dstAccessFlags, srcPipelineStageFlags, dstPipelineStageFlags);
+}
