@@ -47,8 +47,8 @@ public:
 
 public:
 	virtual void Clearup(void) = 0;
-	virtual bool Execute(void) const = 0;
-	virtual bool WaitForFinish(void) const = 0;
+	virtual void Execute(void) const = 0;
+	virtual void WaitForFinish(void) const = 0;
 
 public:
 	virtual bool IsEmpty(void) const = 0;

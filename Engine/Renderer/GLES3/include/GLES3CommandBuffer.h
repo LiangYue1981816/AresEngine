@@ -24,8 +24,8 @@ public:
 
 public:
 	void Clearup(void);
-	bool Execute(void) const;
-	bool WaitForFinish(void) const;
+	void Execute(void) const;
+	void WaitForFinish(void) const;
 
 public:
 	bool IsEmpty(void) const;

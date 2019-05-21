@@ -166,18 +166,16 @@ void CVKCommandBuffer::Clearup(void)
 	m_ptrFrameBuffer.Release();
 }
 
-bool CVKCommandBuffer::Execute(void) const
+void CVKCommandBuffer::Execute(void) const
 {
-	return true;
+
 }
 
-bool CVKCommandBuffer::WaitForFinish(void) const
+void CVKCommandBuffer::WaitForFinish(void) const
 {
 	if (m_vkFence) {
-		CALL_VK_FUNCTION_RETURN_BOOL(vkWaitForFences(m_pDevice->GetDevice(), 1, &m_vkFence, VK_TRUE, UINT64_MAX));
+		vkWaitForFences(m_pDevice->GetDevice(), 1, &m_vkFence, VK_TRUE, UINT64_MAX);
 	}
-
-	return true;
 }
 
 void CVKCommandBuffer::ResetCommandBuffer(void) const

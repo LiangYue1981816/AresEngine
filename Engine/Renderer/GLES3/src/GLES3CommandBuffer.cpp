@@ -91,23 +91,18 @@ void CGLES3CommandBuffer::Clearup(void)
 	m_ptrFrameBuffer.Release();
 }
 
-bool CGLES3CommandBuffer::Execute(void) const
+void CGLES3CommandBuffer::Execute(void) const
 {
-	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == false)) {
+	if (IsMainCommandBuffer() == true && IsInRenderPass() == false) {
 		for (const auto& itCommand : m_pCommands) {
 			itCommand->Execute();
 		}
-
-		return true;
-	}
-	else {
-		return false;
 	}
 }
 
-bool CGLES3CommandBuffer::WaitForFinish(void) const
+void CGLES3CommandBuffer::WaitForFinish(void) const
 {
-	return true;
+
 }
 
 bool CGLES3CommandBuffer::IsEmpty(void) const
