@@ -10,8 +10,10 @@ CVKCommandBufferManager::CVKCommandBufferManager(CVKDevice* pDevice)
 CVKCommandBufferManager::~CVKCommandBufferManager(void)
 {
 	for (const auto& itCommandBuffers : m_pCommandBuffers) {
-		for (const auto& itCommandBuffer : itCommandBuffers.second) {
-			delete itCommandBuffer.second;
+		for (const auto& itCommandBufferList : itCommandBuffers.second) {
+			for (const auto& itCommandBuffer : itCommandBufferList.second) {
+				delete itCommandBuffer;
+			}
 		}
 	}
 
@@ -33,9 +35,16 @@ CVKCommandBuffer* CVKCommandBufferManager::Create(uint32_t pool, bool bMainComma
 			CALL_VK_FUNCTION_ASSERT(vkCreateCommandPool(m_pDevice->GetDevice(), &createInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkCommandPools[pool]));
 		}
 
-		CVKCommandBuffer* pCommandBuffer = new CVKCommandBuffer(m_pDevice, this, m_vkCommandPools[pool], bMainCommandBuffer);
-		m_pCommandBuffers[m_vkCommandPools[pool]][pCommandBuffer] = pCommandBuffer;
-
+		CVKCommandBuffer* pCommandBuffer = nullptr;
+		{
+			if (m_pCommandBuffers[m_vkCommandPools[pool]][bMainCommandBuffer].empty()) {
+				pCommandBuffer = new CVKCommandBuffer(m_pDevice, this, m_vkCommandPools[pool], bMainCommandBuffer);
+			}
+			else {
+				pCommandBuffer = m_pCommandBuffers[m_vkCommandPools[pool]][bMainCommandBuffer].front();
+				m_pCommandBuffers[m_vkCommandPools[pool]][bMainCommandBuffer].pop_front();
+			}
+		}
 		return pCommandBuffer;
 	}
 }
@@ -46,9 +55,7 @@ void CVKCommandBufferManager::Destroy(CVKCommandBuffer* pCommandBuffer)
 	{
 		ASSERT(pCommandBuffer);
 
-		if (m_pCommandBuffers[pCommandBuffer->GetCommandPool()].find(pCommandBuffer) != m_pCommandBuffers[pCommandBuffer->GetCommandPool()].end()) {
-			m_pCommandBuffers[pCommandBuffer->GetCommandPool()].erase(pCommandBuffer);
-			delete pCommandBuffer;
-		}
+		pCommandBuffer->Clearup();
+		m_pCommandBuffers[pCommandBuffer->GetCommandPool()][pCommandBuffer->IsMainCommandBuffer()].emplace_back(pCommandBuffer);
 	}
 }
