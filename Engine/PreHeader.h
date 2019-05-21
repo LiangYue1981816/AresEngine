@@ -32,13 +32,14 @@
 
 #include <string>
 #include <map>
+#include <list>
 #include <vector>
 #include <unordered_map>
 
 #ifdef HAVE_EASTL
 #  include <EASTL/string.h>
-#  include <EASTL/list.h>
 #  include <EASTL/map.h>
+#  include <EASTL/list.h>
 #  include <EASTL/vector.h>
 #  include <EASTL/unordered_map.h>
 #else
