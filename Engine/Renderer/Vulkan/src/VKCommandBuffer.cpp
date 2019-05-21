@@ -153,10 +153,7 @@ const CGfxFrameBufferPtr CVKCommandBuffer::GetFrameBuffer(void) const
 void CVKCommandBuffer::Clearup(void)
 {
 	WaitForFinish();
-
-	if (m_vkCommandBuffer) {
-		vkResetCommandBuffer(m_vkCommandBuffer, VK_COMMAND_BUFFER_RESET_RELEASE_RESOURCES_BIT);
-	}
+	ResetCommandBuffer();
 
 	for (const auto& itCommand : m_pCommands) {
 		delete itCommand;
@@ -181,6 +178,13 @@ bool CVKCommandBuffer::WaitForFinish(void) const
 	}
 
 	return true;
+}
+
+void CVKCommandBuffer::ResetCommandBuffer(void) const
+{
+	if (m_vkCommandBuffer) {
+		vkResetCommandBuffer(m_vkCommandBuffer, VK_COMMAND_BUFFER_RESET_RELEASE_RESOURCES_BIT);
+	}
 }
 
 bool CVKCommandBuffer::IsEmpty(void) const

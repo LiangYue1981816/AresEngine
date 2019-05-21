@@ -33,6 +33,7 @@ public:
 	void Clearup(void);
 	bool Execute(void) const;
 	bool WaitForFinish(void) const;
+	void ResetCommandBuffer(void) const;
 
 public:
 	bool IsEmpty(void) const;
