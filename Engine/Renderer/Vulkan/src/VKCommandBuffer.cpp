@@ -154,6 +154,10 @@ void CVKCommandBuffer::Clearup(void)
 {
 	WaitForFinish();
 
+	if (m_vkCommandBuffer) {
+		vkResetCommandBuffer(m_vkCommandBuffer, VK_COMMAND_BUFFER_RESET_RELEASE_RESOURCES_BIT);
+	}
+
 	for (const auto& itCommand : m_pCommands) {
 		delete itCommand;
 	}
