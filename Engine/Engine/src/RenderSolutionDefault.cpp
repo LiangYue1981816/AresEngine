@@ -12,7 +12,9 @@ CRenderSolutionDefault::CRenderSolutionDefault(void)
 
 CRenderSolutionDefault::~CRenderSolutionDefault(void)
 {
-
+	m_ptrMainCommandBuffer[0]->Clearup();
+	m_ptrMainCommandBuffer[1]->Clearup();
+	m_ptrMainCommandBuffer[2]->Clearup();
 }
 
 void CRenderSolutionDefault::CreateFrameBuffer(void)
