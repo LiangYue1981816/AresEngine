@@ -78,7 +78,7 @@ CVKMemory* CVKMemoryManager::AllocMemory(VkDeviceSize memorySize, VkDeviceSize m
 			{
 				const VkDeviceSize MEMORY_POOL_ALIGNMENT = 8 * 1024 * 1024;
 				const VkDeviceSize MEMORY_POOL_DEVICE_LOCAL_MEMORY_SIZE = 128 * 1024 * 1024;
-				const VkDeviceSize MEMORY_POOL_HOST_VISIBLE_MEMORY_SIZE =   8 * 1024 * 1024;
+				const VkDeviceSize MEMORY_POOL_HOST_VISIBLE_MEMORY_SIZE =  32 * 1024 * 1024;
 				const VkDeviceSize MEMORY_POOL_HOST_VISIBLE_AND_DEVICE_LOCAL_MEMORY_SIZE = 16 * 1024 * 1024;
 
 				if ((memoryPropertyFlags & VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT) == 0 && (memoryPropertyFlags & VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT) != 0) {
