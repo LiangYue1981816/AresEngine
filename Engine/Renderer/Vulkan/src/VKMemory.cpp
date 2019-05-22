@@ -20,6 +20,7 @@ CVKMemory::CVKMemory(CVKMemoryAllocator* pAllocator, CVKDevice* pDevice, VkDevic
 {
 	ASSERT(m_pDevice);
 	ASSERT(m_pAllocator);
+	ASSERT(m_memorySize);
 }
 
 CVKMemory::~CVKMemory(void)
@@ -74,6 +75,8 @@ bool CVKMemory::BeginMap(VkDeviceSize offset, VkDeviceSize size)
 {
 	ASSERT(size);
 	ASSERT(m_memorySize >= offset + size);
+	ASSERT(m_memoryMapSize == 0);
+	ASSERT(m_memoryMapOffset == 0);
 	ASSERT(m_memoryMapAddress == nullptr);
 
 	if (IsHostVisible() == false) {
@@ -94,8 +97,8 @@ bool CVKMemory::CopyData(VkDeviceSize offset, VkDeviceSize size, const void* dat
 {
 	ASSERT(data);
 	ASSERT(size);
-	ASSERT(m_memoryMapAddress);
 	ASSERT(m_memoryMapSize >= offset + size);
+	ASSERT(m_memoryMapAddress != nullptr);
 
 	if (IsHostVisible() == false) {
 		return false;
@@ -105,8 +108,51 @@ bool CVKMemory::CopyData(VkDeviceSize offset, VkDeviceSize size, const void* dat
 	return true;
 }
 
+bool CVKMemory::FlushMappedMemoryRange(VkDeviceSize offset, VkDeviceSize size)
+{
+	ASSERT(size);
+	ASSERT(m_memoryMapSize >= offset + size);
+	ASSERT(m_memoryMapAddress != nullptr);
+
+	if (IsHostVisible() == false) {
+		return false;
+	}
+
+	VkMappedMemoryRange range = {};
+	range.sType = VK_STRUCTURE_TYPE_MAPPED_MEMORY_RANGE;
+	range.pNext = nullptr;
+	range.memory = m_pAllocator->GetMemory();
+	range.offset = m_memoryOffset + m_memoryMapOffset + offset;
+	range.size = size;
+
+	CALL_VK_FUNCTION_RETURN_BOOL(vkFlushMappedMemoryRanges(m_pDevice->GetDevice(), 1, &range));
+	return true;
+}
+
+bool CVKMemory::InvalidateMappedMemoryRange(VkDeviceSize offset, VkDeviceSize size)
+{
+	ASSERT(size);
+	ASSERT(m_memoryMapSize >= offset + size);
+	ASSERT(m_memoryMapAddress != nullptr);
+
+	if (IsHostVisible() == false) {
+		return false;
+	}
+
+	VkMappedMemoryRange range = {};
+	range.sType = VK_STRUCTURE_TYPE_MAPPED_MEMORY_RANGE;
+	range.pNext = nullptr;
+	range.memory = m_pAllocator->GetMemory();
+	range.offset = m_memoryOffset + m_memoryMapOffset + offset;
+	range.size = size;
+
+	CALL_VK_FUNCTION_RETURN_BOOL(vkInvalidateMappedMemoryRanges(m_pDevice->GetDevice(), 1, &range));
+	return true;
+}
+
 bool CVKMemory::EndMap(void)
 {
+	ASSERT(m_memoryMapSize);
 	ASSERT(m_memoryMapAddress);
 
 	if (IsHostVisible() == false) {
