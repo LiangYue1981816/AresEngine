@@ -80,10 +80,6 @@ bool CVKMemory::BeginMap(VkDeviceSize offset, VkDeviceSize size)
 		return false;
 	}
 
-	if (IsHostCoherent() == false) {
-		return false;
-	}
-
 	void* address = nullptr;
 	CALL_VK_FUNCTION_RETURN_BOOL(vkMapMemory(m_pDevice->GetDevice(), m_pAllocator->GetMemory(), m_memoryOffset + offset, size, 0, &address));
 
@@ -105,10 +101,6 @@ bool CVKMemory::CopyData(VkDeviceSize offset, VkDeviceSize size, const void* dat
 		return false;
 	}
 
-	if (IsHostCoherent() == false) {
-		return false;
-	}
-
 	memcpy((uint8_t*)m_memoryMapAddress + offset, data, size);
 	return true;
 }
@@ -118,10 +110,6 @@ bool CVKMemory::EndMap(void)
 	ASSERT(m_memoryMapAddress);
 
 	if (IsHostVisible() == false) {
-		return false;
-	}
-
-	if (IsHostCoherent() == false) {
 		return false;
 	}
 
