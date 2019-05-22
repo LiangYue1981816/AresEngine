@@ -1,7 +1,7 @@
 #include "VKRenderer.h"
 
 
-CVKMemory::CVKMemory(CVKMemoryAllocator* pAllocator, CVKDevice* pDevice, VkDeviceSize memorySize, VkDeviceSize memoryOffset)
+CVKMemory::CVKMemory(CVKDevice* pDevice, CVKMemoryAllocator* pAllocator, VkDeviceSize memorySize, VkDeviceSize memoryOffset)
 	: m_pDevice(pDevice)
 	, m_pAllocator(pAllocator)
 

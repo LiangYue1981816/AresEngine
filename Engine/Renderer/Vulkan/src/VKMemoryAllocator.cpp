@@ -52,7 +52,7 @@ bool CVKMemoryAllocator::Create(uint32_t memoryTypeIndex, VkDeviceSize memorySiz
 			CALL_VK_FUNCTION_BREAK(vkAllocateMemory(m_pDevice->GetDevice(), &allocateInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkMemory));
 
 			InitNodes();
-			InsertMemory(new CVKMemory(this, m_pDevice, memorySize, 0));
+			InsertMemory(new CVKMemory(m_pDevice, this, memorySize, 0));
 
 			return true;
 		} while (false);
@@ -130,7 +130,7 @@ CVKMemory* CVKMemoryAllocator::AllocMemory(VkDeviceSize size)
 			RemoveMemory(pMemory);
 
 			if (pMemory->m_memorySize >= requestSize + m_memoryAlignment) {
-				CVKMemory* pMemoryNext = new CVKMemory(this, m_pDevice, pMemory->m_memorySize - requestSize, pMemory->m_memoryOffset + requestSize);
+				CVKMemory* pMemoryNext = new CVKMemory(m_pDevice, this, pMemory->m_memorySize - requestSize, pMemory->m_memoryOffset + requestSize);
 				{
 					pMemoryNext->pNext = pMemory->pNext;
 					pMemoryNext->pPrev = pMemory;
