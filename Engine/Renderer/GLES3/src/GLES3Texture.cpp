@@ -328,6 +328,9 @@ bool CGLES3Texture::TextureCubemapDataCompressed(GfxPixelFormat format, GfxCubem
 
 void CGLES3Texture::Bind(uint32_t unit) const
 {
+	ASSERT(m_target);
+	ASSERT(m_texture);
+
 	GLBindTexture(unit, m_target, m_texture);
 	CHECK_GL_ERROR_ASSERT();
 }

@@ -18,14 +18,11 @@ public:
 public:
 	virtual void Execute(void) const
 	{
+		ASSERT(m_pPipelineGraphics);
+
 		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_BIND_PIPELINEGRAPHICS, "CommandBindPipelineGraphics");
 		{
-			if (m_pPipelineGraphics) {
-				GLES3Renderer()->BindPipelineGraphics(m_pPipelineGraphics);
-			}
-			else {
-				GLUseProgram(0);
-			}
+			GLES3Renderer()->BindPipelineGraphics(m_pPipelineGraphics);
 		}
 	}
 

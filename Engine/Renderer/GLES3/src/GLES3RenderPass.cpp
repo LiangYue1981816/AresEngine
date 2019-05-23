@@ -8,7 +8,7 @@ CGLES3RenderPass::CGLES3RenderPass(CGLES3RenderPassManager* pManager, uint32_t n
 	, m_attachments(numAttachments)
 	, m_subpasses(numAttachments)
 {
-	ASSERT(m_pManager);
+
 }
 
 CGLES3RenderPass::~CGLES3RenderPass(void)

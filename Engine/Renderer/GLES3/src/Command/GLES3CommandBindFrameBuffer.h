@@ -20,14 +20,12 @@ public:
 public:
 	virtual void Execute(void) const
 	{
+		ASSERT(m_ptrRenderPass);
+		ASSERT(m_ptrFrameBuffer);
+
 		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_BIND_FRAMEBUFFER, "CommandBindFrameBuffer");
 		{
-			if (m_ptrFrameBuffer && m_ptrRenderPass) {
-				((CGLES3FrameBuffer*)m_ptrFrameBuffer.GetPointer())->Bind(m_ptrRenderPass->GetAttachments(), m_ptrRenderPass->GetSubpass(m_indexSubpass));
-			}
-			else {
-				GLBindFramebuffer(GL_FRAMEBUFFER, 0);
-			}
+			((CGLES3FrameBuffer*)m_ptrFrameBuffer.GetPointer())->Bind(m_ptrRenderPass->GetAttachments(), m_ptrRenderPass->GetSubpass(m_indexSubpass));
 		}
 	}
 

@@ -18,9 +18,8 @@ public:
 public:
 	virtual void Execute(void) const
 	{
-		if (m_ptrCommandBuffer) {
-			m_ptrCommandBuffer->Execute();
-		}
+		ASSERT(m_ptrCommandBuffer);
+		m_ptrCommandBuffer->Execute();
 	}
 
 

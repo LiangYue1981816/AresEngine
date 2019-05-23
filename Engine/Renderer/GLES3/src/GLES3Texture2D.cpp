@@ -6,8 +6,6 @@ CGLES3Texture2D::CGLES3Texture2D(CGLES3Texture2DManager* pManager, uint32_t name
 	, m_pManager(pManager)
 	, m_pTexture(nullptr)
 {
-	ASSERT(m_pManager);
-
 	m_pTexture = new CGLES3Texture;
 }
 

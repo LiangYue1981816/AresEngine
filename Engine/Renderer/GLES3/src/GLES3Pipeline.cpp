@@ -284,6 +284,8 @@ bool CGLES3Pipeline::IsCompatibleVertexFormat(uint32_t binding, uint32_t format)
 
 void CGLES3Pipeline::Bind(const PipelineState* pState) const
 {
+	ASSERT(m_program);
+
 	if (pState) {
 		GLBindState(pState);
 	}

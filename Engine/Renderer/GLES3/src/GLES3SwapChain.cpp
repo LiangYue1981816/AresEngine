@@ -25,41 +25,34 @@ CGLES3SwapChain::~CGLES3SwapChain(void)
 
 bool CGLES3SwapChain::Create(int width, int height, GfxPixelFormat format)
 {
-	Destroy();
-	{
-		do {
-			if (width != 0 && height != 0 && format != GFX_PIXELFORMAT_UNDEFINED) {
-				m_width = width;
-				m_height = height;
-				m_format = format;
+	if (width != 0 && height != 0 && format != GFX_PIXELFORMAT_UNDEFINED) {
+		m_width = width;
+		m_height = height;
+		m_format = format;
 
-				m_ptrFrameTexture = GLES3Renderer()->NewRenderTexture(HashValue("SwapChain Frame Texture"));
-				m_ptrFrameTexture->Create(format, width, height);
+		m_ptrFrameTexture = GLES3Renderer()->NewRenderTexture(HashValue("SwapChain Frame Texture"));
+		m_ptrFrameTexture->Create(format, width, height);
 
-				glGenFramebuffers(1, &m_surface);
-				glBindFramebuffer(GL_FRAMEBUFFER, m_surface);
-				{
-					const float color[] = { 0.0f, 0.0f, 0.0f, 0.0f };
-					const eastl::vector<uint32_t> drawBuffers{ GL_COLOR_ATTACHMENT0 };
+		glGenFramebuffers(1, &m_surface);
+		glBindFramebuffer(GL_FRAMEBUFFER, m_surface);
+		{
+			const float color[] = { 0.0f, 0.0f, 0.0f, 0.0f };
+			const eastl::vector<uint32_t> drawBuffers{ GL_COLOR_ATTACHMENT0 };
 
-					glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, CGLES3Helper::TranslateTextureTarget(((CGLES3RenderTexture*)m_ptrFrameTexture.GetPointer())->GetType()), ((CGLES3RenderTexture*)m_ptrFrameTexture.GetPointer())->GetTexture(), 0);
-					glClearBufferfv(GL_COLOR, 0, color);
+			glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, CGLES3Helper::TranslateTextureTarget(((CGLES3RenderTexture*)m_ptrFrameTexture.GetPointer())->GetType()), ((CGLES3RenderTexture*)m_ptrFrameTexture.GetPointer())->GetTexture(), 0);
+			glClearBufferfv(GL_COLOR, 0, color);
 
-					glReadBuffers((int)drawBuffers.size(), drawBuffers.data());
-					glDrawBuffers((int)drawBuffers.size(), drawBuffers.data());
+			glReadBuffers((int)drawBuffers.size(), drawBuffers.data());
+			glDrawBuffers((int)drawBuffers.size(), drawBuffers.data());
 
-					uint32_t status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
-					ASSERT(status == GL_FRAMEBUFFER_COMPLETE);
-				}
-				glBindFramebuffer(GL_FRAMEBUFFER, 0);
-				CHECK_GL_ERROR_ASSERT();
-			}
-
-			return true;
-		} while (false);
+			uint32_t status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
+			ASSERT(status == GL_FRAMEBUFFER_COMPLETE);
+		}
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+		CHECK_GL_ERROR_ASSERT();
 	}
-	Destroy();
-	return false;
+
+	return true;
 }
 
 void CGLES3SwapChain::Destroy(void)

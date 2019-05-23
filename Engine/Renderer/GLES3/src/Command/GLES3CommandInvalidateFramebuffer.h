@@ -20,11 +20,12 @@ public:
 public:
 	virtual void Execute(void) const
 	{
+		ASSERT(m_ptrRenderPass);
+		ASSERT(m_ptrFrameBuffer);
+
 		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_INVALIDATE_FRAMEBUFFER, "CommandInvalidateFramebuffer");
 		{
-			if (m_ptrFrameBuffer && m_ptrRenderPass) {
-				((CGLES3FrameBuffer*)m_ptrFrameBuffer.GetPointer())->InvalidateFramebuffer(m_ptrRenderPass->GetAttachments(), m_ptrRenderPass->GetSubpass(m_indexSubpass));
-			}
+			((CGLES3FrameBuffer*)m_ptrFrameBuffer.GetPointer())->InvalidateFramebuffer(m_ptrRenderPass->GetAttachments(), m_ptrRenderPass->GetSubpass(m_indexSubpass));
 		}
 	}
 

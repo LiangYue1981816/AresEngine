@@ -12,7 +12,7 @@ CGLES3FrameBuffer::CGLES3FrameBuffer(CGLES3FrameBufferManager* pManager, int wid
 	, m_height(height)
 	, m_ptrAttachmentTextures(numAttachments)
 {
-	ASSERT(m_pManager);
+
 }
 
 CGLES3FrameBuffer::~CGLES3FrameBuffer(void)
@@ -130,7 +130,7 @@ void CGLES3FrameBuffer::Bind(const AttachmentInformation* pAttachmentInformation
 	CHECK_GL_ERROR_ASSERT();
 }
 
-void CGLES3FrameBuffer::Resolve(const AttachmentInformation* pAttachmentInformations, const SubpassInformation* pSubpassInformation) const
+void CGLES3FrameBuffer::Resolve(const AttachmentInformation * pAttachmentInformations, const SubpassInformation * pSubpassInformation) const
 {
 	ASSERT(pAttachmentInformations);
 	ASSERT(pSubpassInformation);
@@ -177,7 +177,7 @@ void CGLES3FrameBuffer::Resolve(const AttachmentInformation* pAttachmentInformat
 	CHECK_GL_ERROR_ASSERT();
 }
 
-void CGLES3FrameBuffer::InvalidateFramebuffer(const AttachmentInformation* pAttachmentInformations, const SubpassInformation* pSubpassInformation) const
+void CGLES3FrameBuffer::InvalidateFramebuffer(const AttachmentInformation * pAttachmentInformations, const SubpassInformation * pSubpassInformation) const
 {
 	ASSERT(pAttachmentInformations);
 	ASSERT(pSubpassInformation);

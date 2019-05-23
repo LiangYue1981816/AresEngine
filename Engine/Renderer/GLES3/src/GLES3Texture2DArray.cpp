@@ -6,8 +6,6 @@ CGLES3Texture2DArray::CGLES3Texture2DArray(CGLES3Texture2DArrayManager* pManager
 	, m_pManager(pManager)
 	, m_pTexture(nullptr)
 {
-	ASSERT(m_pManager);
-
 	m_pTexture = new CGLES3Texture;
 }
 

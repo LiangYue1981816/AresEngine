@@ -84,6 +84,8 @@ class CGLES3Renderer : public CGfxRenderer
 	friend class CGLES3CommandUniformMatrix2fv;
 	friend class CGLES3CommandUniformMatrix3fv;
 	friend class CGLES3CommandUniformMatrix4fv;
+	friend class CGLES3CommandDrawInstance;
+	friend class CGLES3CommandDrawIndirect;
 
 
 public:

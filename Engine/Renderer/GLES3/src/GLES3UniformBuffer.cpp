@@ -6,8 +6,6 @@ CGLES3UniformBuffer::CGLES3UniformBuffer(CGLES3UniformBufferManager* pManager, s
 	, m_pManager(pManager)
 	, m_pBuffer(nullptr)
 {
-	ASSERT(m_pManager);
-
 	m_pBuffer = new CGLES3Buffer(GL_UNIFORM_BUFFER, size, true);
 	CGfxProfiler::IncUniformBufferSize(m_pBuffer->GetSize());
 }

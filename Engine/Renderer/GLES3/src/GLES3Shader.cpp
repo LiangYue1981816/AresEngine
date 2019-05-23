@@ -32,7 +32,7 @@ const CGfxSprivCross& CGLES3Shader::GetSprivCross(void) const
 	return m_spriv;
 }
 
-bool CGLES3Shader::Create(const uint32_t* words, size_t numWords, shader_kind kind)
+bool CGLES3Shader::Create(const uint32_t * words, size_t numWords, shader_kind kind)
 {
 	Destroy();
 	{

@@ -10,7 +10,6 @@ CGLES3MeshDraw::CGLES3MeshDraw(CGLES3MeshDrawManager* pManager, uint32_t name, c
 	, m_pInstanceBuffer{ nullptr }
 	, m_pVertexArrayObject{ nullptr }
 {
-	ASSERT(m_pManager);
 	ASSERT(ptrMesh);
 	ASSERT(ptrMesh->GetDraw(nameDraw));
 

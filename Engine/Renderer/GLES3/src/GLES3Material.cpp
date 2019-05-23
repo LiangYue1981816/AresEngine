@@ -5,7 +5,7 @@ CGLES3Material::CGLES3Material(CGLES3MaterialManager* pManager, uint32_t name)
 	: CGfxMaterial(name)
 	, m_pManager(pManager)
 {
-	ASSERT(m_pManager);
+
 }
 
 CGLES3Material::~CGLES3Material(void)

@@ -8,7 +8,7 @@ CGLES3Mesh::CGLES3Mesh(CGLES3MeshManager* pManager, uint32_t name)
 	, m_pIndexBuffer(nullptr)
 	, m_pVertexBuffer(nullptr)
 {
-	ASSERT(m_pManager);
+
 }
 
 CGLES3Mesh::~CGLES3Mesh(void)

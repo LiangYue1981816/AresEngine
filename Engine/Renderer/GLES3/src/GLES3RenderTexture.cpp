@@ -6,8 +6,6 @@ CGLES3RenderTexture::CGLES3RenderTexture(CGLES3RenderTextureManager* pManager, u
 	, m_pManager(pManager)
 	, m_pTexture(nullptr)
 {
-	ASSERT(m_pManager);
-
 	m_pTexture = new CGLES3Texture;
 }
 
