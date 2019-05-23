@@ -20,46 +20,46 @@ CRenderSolutionDefault::~CRenderSolutionDefault(void)
 void CRenderSolutionDefault::CreateFrameBuffer(void)
 {
 	for (int indexFrame = 0; indexFrame < CGfxSwapChain::SWAPCHAIN_FRAME_COUNT; indexFrame++) {
-		m_ptrColorTextures[indexFrame] = GfxRenderer()->GetSwapChain()->GetFrameTexture(indexFrame);
-		m_ptrDepthStencilTextures[indexFrame] = GfxRenderer()->NewRenderTexture(HashValueFormat("DepthStencilTexture %d", indexFrame));
-		m_ptrDepthStencilTextures[indexFrame]->Create(GFX_PIXELFORMAT_D32_SFLOAT_PACK32, GfxRenderer()->GetSwapChain()->GetWidth(), GfxRenderer()->GetSwapChain()->GetHeight());
+		m_renderParams.ptrColorTextures[indexFrame] = GfxRenderer()->GetSwapChain()->GetFrameTexture(indexFrame);
+		m_renderParams.ptrDepthStencilTextures[indexFrame] = GfxRenderer()->NewRenderTexture(HashValueFormat("DepthStencilTexture %d", indexFrame));
+		m_renderParams.ptrDepthStencilTextures[indexFrame]->Create(GFX_PIXELFORMAT_D32_SFLOAT_PACK32, GfxRenderer()->GetSwapChain()->GetWidth(), GfxRenderer()->GetSwapChain()->GetHeight());
 	}
 
 	const int numAttachments = 2;
 	const int numSubpasses = 1;
 
-	m_ptrRenderPass = GfxRenderer()->NewRenderPass(HashValue("Default"), numAttachments, numSubpasses);
+	m_renderParams.ptrRenderPass = GfxRenderer()->NewRenderPass(HashValue("Default"), numAttachments, numSubpasses);
 	{
-		m_ptrRenderPass->SetColorAttachment(0, m_ptrColorTextures[0]->GetFormat(), m_ptrColorTextures[0]->GetSamples(), true, false, true, 0.2f, 0.2f, 0.2f, 0.0f);
-		m_ptrRenderPass->SetDepthStencilAttachment(1, m_ptrDepthStencilTextures[0]->GetFormat(), m_ptrDepthStencilTextures[0]->GetSamples(), true, true, 1.0f, 0);
+		m_renderParams.ptrRenderPass->SetColorAttachment(0, m_renderParams.ptrColorTextures[0]->GetFormat(), m_renderParams.ptrColorTextures[0]->GetSamples(), true, false, true, 0.2f, 0.2f, 0.2f, 0.0f);
+		m_renderParams.ptrRenderPass->SetDepthStencilAttachment(1, m_renderParams.ptrDepthStencilTextures[0]->GetFormat(), m_renderParams.ptrDepthStencilTextures[0]->GetSamples(), true, true, 1.0f, 0);
 
-		m_ptrRenderPass->SetSubpassOutputColorReference(0, 0);
-		m_ptrRenderPass->SetSubpassOutputDepthStencilReference(0, 1);
+		m_renderParams.ptrRenderPass->SetSubpassOutputColorReference(0, 0);
+		m_renderParams.ptrRenderPass->SetSubpassOutputDepthStencilReference(0, 1);
 	}
-	m_ptrRenderPass->Create();
+	m_renderParams.ptrRenderPass->Create();
 
 	for (int indexFrame = 0; indexFrame < CGfxSwapChain::SWAPCHAIN_FRAME_COUNT; indexFrame++) {
-		m_ptrFrameBuffer[indexFrame] = GfxRenderer()->NewFrameBuffer(m_ptrColorTextures[indexFrame]->GetWidth(), m_ptrColorTextures[indexFrame]->GetHeight(), numAttachments);
+		m_renderParams.ptrFrameBuffer[indexFrame] = GfxRenderer()->NewFrameBuffer(m_renderParams.ptrColorTextures[indexFrame]->GetWidth(), m_renderParams.ptrColorTextures[indexFrame]->GetHeight(), numAttachments);
 		{
-			m_ptrFrameBuffer[indexFrame]->SetAttachmentTexture(0, m_ptrColorTextures[indexFrame]);
-			m_ptrFrameBuffer[indexFrame]->SetAttachmentTexture(1, m_ptrDepthStencilTextures[indexFrame]);
+			m_renderParams.ptrFrameBuffer[indexFrame]->SetAttachmentTexture(0, m_renderParams.ptrColorTextures[indexFrame]);
+			m_renderParams.ptrFrameBuffer[indexFrame]->SetAttachmentTexture(1, m_renderParams.ptrDepthStencilTextures[indexFrame]);
 		}
-		m_ptrFrameBuffer[indexFrame]->Create(m_ptrRenderPass);
+		m_renderParams.ptrFrameBuffer[indexFrame]->Create(m_renderParams.ptrRenderPass);
 	}
 }
 
 void CRenderSolutionDefault::DestroyFrameBuffer(void)
 {
 	for (int indexFrame = 0; indexFrame < CGfxSwapChain::SWAPCHAIN_FRAME_COUNT; indexFrame++) {
-		m_ptrColorTextures[indexFrame].Release();
-		m_ptrDepthStencilTextures[indexFrame].Release();
+		m_renderParams.ptrColorTextures[indexFrame].Release();
+		m_renderParams.ptrDepthStencilTextures[indexFrame].Release();
 	}
 
 	for (int indexFrame = 0; indexFrame < CGfxSwapChain::SWAPCHAIN_FRAME_COUNT; indexFrame++) {
-		m_ptrFrameBuffer[indexFrame].Release();
+		m_renderParams.ptrFrameBuffer[indexFrame].Release();
 	}
 
-	m_ptrRenderPass.Release();
+	m_renderParams.ptrRenderPass.Release();
 }
 
 void CRenderSolutionDefault::CreateFrameBufferMSAA(int samples)
@@ -152,10 +152,10 @@ void CRenderSolutionDefault::Render(int indexQueue)
 
 		const int indexFrame = GfxRenderer()->GetSwapChain()->GetFrameIndex();
 
-		const CGfxRenderPassPtr ptrRenderPass = m_ptrRenderPass;
-		const CGfxFrameBufferPtr ptrFrameBuffer = m_ptrFrameBuffer[indexFrame];
-		const CGfxRenderTexturePtr ptrColorTexture = m_ptrColorTextures[indexFrame];
-		const CGfxRenderTexturePtr ptrDepthStencilTexture = m_ptrDepthStencilTextures[indexFrame];
+		const CGfxRenderPassPtr ptrRenderPass = m_renderParams.ptrRenderPass;
+		const CGfxFrameBufferPtr ptrFrameBuffer = m_renderParams.ptrFrameBuffer[indexFrame];
+		const CGfxRenderTexturePtr ptrColorTexture = m_renderParams.ptrColorTextures[indexFrame];
+		const CGfxRenderTexturePtr ptrDepthStencilTexture = m_renderParams.ptrDepthStencilTextures[indexFrame];
 
 		const CGfxCommandBufferPtr ptrMainCommandBuffer = m_ptrMainCommandBuffer[indexFrame];
 		{

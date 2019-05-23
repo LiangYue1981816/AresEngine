@@ -7,6 +7,15 @@ class CALL_API CRenderSolutionDefault : public CRenderSolutionBase
 	friend class CEngine;
 
 
+private:
+	typedef struct RenderParams {
+		CGfxRenderPassPtr ptrRenderPass;
+		CGfxFrameBufferPtr ptrFrameBuffer[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
+		CGfxRenderTexturePtr ptrColorTextures[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
+		CGfxRenderTexturePtr ptrDepthStencilTextures[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
+	} RenderParams;
+
+
 protected:
 	CRenderSolutionDefault(void);
 	virtual ~CRenderSolutionDefault(void);
@@ -31,10 +40,7 @@ private:
 	bool m_bEnableMSAA;
 
 private:
-	CGfxRenderPassPtr m_ptrRenderPass;
-	CGfxFrameBufferPtr m_ptrFrameBuffer[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
-	CGfxRenderTexturePtr m_ptrColorTextures[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
-	CGfxRenderTexturePtr m_ptrDepthStencilTextures[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
+	RenderParams m_renderParams;
 
 	/*
 private:
