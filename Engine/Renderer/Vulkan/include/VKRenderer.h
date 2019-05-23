@@ -105,7 +105,11 @@ class CVKRenderer : public CGfxRenderer
 public:
 	CVKRenderer(void* hInstance, void* hWnd, void* hDC, int width, int height, GfxPixelFormat format);
 	virtual ~CVKRenderer(void);
-	virtual GfxApi GetAPI(void) const;
+
+
+public:
+	GfxApi GetAPI(void) const;
+	const glm::mat4& GetBaseMatrix(void) const;
 
 
 public:

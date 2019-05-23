@@ -25,8 +25,6 @@ void CGfxUniformCamera::SetScreen(float width, float height)
 
 void CGfxUniformCamera::SetPerspective(float fovy, float aspect, float zNear, float zFar)
 {
-	static const glm::mat4 LH2RH = glm::scale(glm::mat4(), glm::vec3(1.0f, -1.0f, 1.0f));
-
 	// [-1 1]
 	//float x = (1.0f - zFar / zNear) / 2.0f;
 	//float y = (1.0f + zFar / zNear) / 2.0f;
@@ -38,14 +36,12 @@ void CGfxUniformCamera::SetPerspective(float fovy, float aspect, float zNear, fl
 	m_bDirty = true;
 	m_params.zbuffer = glm::vec4(x, y, x / zFar, y / zFar);
 	m_params.projection = glm::vec4(1.0f, zNear, zFar, 1.0f / zFar);
-	m_params.projectionMatrix = GfxRenderer()->GetAPI() == GFX_API_VULKAN ? LH2RH * glm::perspective(glm::radians(fovy), aspect, zNear, zFar) : glm::perspective(glm::radians(fovy), aspect, zNear, zFar);
+	m_params.projectionMatrix = GfxRenderer()->GetBaseMatrix() * glm::perspective(glm::radians(fovy), aspect, zNear, zFar);
 	m_params.projectionViewMatrix = m_params.projectionMatrix * m_params.viewMatrix;
 }
 
 void CGfxUniformCamera::SetOrtho(float left, float right, float bottom, float top, float zNear, float zFar)
 {
-	static const glm::mat4 LH2RH = glm::scale(glm::mat4(), glm::vec3(1.0f, -1.0f, 1.0f));
-
 	// [-1 1]
 	//float x = (1.0f - zFar / zNear) / 2.0f;
 	//float y = (1.0f + zFar / zNear) / 2.0f;
@@ -57,7 +53,7 @@ void CGfxUniformCamera::SetOrtho(float left, float right, float bottom, float to
 	m_bDirty = true;
 	m_params.zbuffer = glm::vec4(x, y, x / zFar, y / zFar);
 	m_params.projection = glm::vec4(1.0f, zNear, zFar, 1.0f / zFar);
-	m_params.projectionMatrix = GfxRenderer()->GetAPI() == GFX_API_VULKAN ? LH2RH * glm::ortho(left, right, bottom, top, zNear, zFar) : glm::ortho(left, right, bottom, top, zNear, zFar);
+	m_params.projectionMatrix = GfxRenderer()->GetBaseMatrix() * glm::ortho(left, right, bottom, top, zNear, zFar);
 	m_params.projectionViewMatrix = m_params.projectionMatrix * m_params.viewMatrix;
 }
 

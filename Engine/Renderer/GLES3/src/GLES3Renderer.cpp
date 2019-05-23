@@ -77,6 +77,12 @@ GfxApi CGLES3Renderer::GetAPI(void) const
 	return GFX_API_GLES3;
 }
 
+const glm::mat4& CGLES3Renderer::GetBaseMatrix(void) const
+{
+	static const glm::mat4 matrix;
+	return matrix;
+}
+
 uint32_t CGLES3Renderer::GetLastError(void) const
 {
 	return glGetError();

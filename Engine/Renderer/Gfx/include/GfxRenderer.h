@@ -89,7 +89,11 @@ public:
 public:
 	CGfxRenderer(void* hInstance, void* hWnd, void* hDC, int width, int height, GfxPixelFormat format);
 	virtual ~CGfxRenderer(void);
+
+
+public:
 	virtual GfxApi GetAPI(void) const = 0;
+	virtual const glm::mat4& GetBaseMatrix(void) const = 0;
 
 
 public:

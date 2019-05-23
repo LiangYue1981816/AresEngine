@@ -83,6 +83,12 @@ GfxApi CVKRenderer::GetAPI(void) const
 	return GFX_API_VULKAN;
 }
 
+const glm::mat4& CVKRenderer::GetBaseMatrix(void) const
+{
+	static const glm::mat4 matrix = glm::scale(glm::mat4(), glm::vec3(1.0f, -1.0f, 1.0f));
+	return matrix;
+}
+
 uint32_t CVKRenderer::GetLastError(void) const
 {
 	return m_pInstance->GetLastError();
