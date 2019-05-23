@@ -433,14 +433,19 @@ bool CVKRenderer::CmdClearColor(CGfxCommandBufferPtr ptrCommandBuffer, float red
 	return ptrCommandBuffer->CmdClearColor(red, green, blue, alpha);
 }
 
-bool CVKRenderer::CmdDrawInstance(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxMeshDrawPtr ptrMeshDraw, const uint8_t* pInstanceBuffer, uint32_t size)
+bool CVKRenderer::CmdDrawInstance(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxMeshDrawPtr ptrMeshDraw)
 {
-	return ptrCommandBuffer->CmdDrawInstance(ptrMeshDraw, pInstanceBuffer, size);
+	return ptrCommandBuffer->CmdDrawInstance(ptrMeshDraw);
 }
 
-bool CVKRenderer::CmdDrawIndirect(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxMeshDrawPtr ptrMeshDraw, const uint8_t* pInstanceBuffer, uint32_t size)
+bool CVKRenderer::CmdDrawIndirect(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxMeshDrawPtr ptrMeshDraw)
 {
-	return ptrCommandBuffer->CmdDrawIndirect(ptrMeshDraw, pInstanceBuffer, size);
+	return ptrCommandBuffer->CmdDrawIndirect(ptrMeshDraw);
+}
+
+bool CVKRenderer::CmdUpdateInstanceBuffer(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxMeshDrawPtr ptrMeshDraw, const uint8_t* pInstanceBuffer, uint32_t size)
+{
+	return ptrCommandBuffer->CmdUpdateInstanceBuffer(ptrMeshDraw, pInstanceBuffer, size);
 }
 
 bool CVKRenderer::CmdExecute(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxCommandBufferPtr ptrSecondaryCommandBuffer)

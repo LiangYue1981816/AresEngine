@@ -555,12 +555,11 @@ bool CGLES3CommandBuffer::CmdClearColor(float red, float green, float blue, floa
 	}
 }
 
-bool CGLES3CommandBuffer::CmdDrawInstance(const CGfxMeshDrawPtr ptrMeshDraw, const uint8_t* pInstanceBuffer, uint32_t size)
+bool CGLES3CommandBuffer::CmdDrawInstance(const CGfxMeshDrawPtr ptrMeshDraw)
 {
 	ASSERT(ptrMeshDraw);
 
 	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
-		m_pCommands.emplace_back(new CGLES3CommandUpdateInstanceBuffer(ptrMeshDraw, pInstanceBuffer, size));
 		m_pCommands.emplace_back(new CGLES3CommandDrawInstance(ptrMeshDraw));
 		return true;
 	}
@@ -569,13 +568,25 @@ bool CGLES3CommandBuffer::CmdDrawInstance(const CGfxMeshDrawPtr ptrMeshDraw, con
 	}
 }
 
-bool CGLES3CommandBuffer::CmdDrawIndirect(const CGfxMeshDrawPtr ptrMeshDraw, const uint8_t* pInstanceBuffer, uint32_t size)
+bool CGLES3CommandBuffer::CmdDrawIndirect(const CGfxMeshDrawPtr ptrMeshDraw)
+{
+	ASSERT(ptrMeshDraw);
+
+	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
+		m_pCommands.emplace_back(new CGLES3CommandDrawIndirect(ptrMeshDraw));
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+bool CGLES3CommandBuffer::CmdUpdateInstanceBuffer(const CGfxMeshDrawPtr ptrMeshDraw, const uint8_t* pInstanceBuffer, uint32_t size)
 {
 	ASSERT(ptrMeshDraw);
 
 	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
 		m_pCommands.emplace_back(new CGLES3CommandUpdateInstanceBuffer(ptrMeshDraw, pInstanceBuffer, size));
-		m_pCommands.emplace_back(new CGLES3CommandDrawIndirect(ptrMeshDraw));
 		return true;
 	}
 	else {

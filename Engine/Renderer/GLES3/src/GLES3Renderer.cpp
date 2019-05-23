@@ -427,14 +427,19 @@ bool CGLES3Renderer::CmdClearColor(CGfxCommandBufferPtr ptrCommandBuffer, float 
 	return ptrCommandBuffer->CmdClearColor(red, green, blue, alpha);
 }
 
-bool CGLES3Renderer::CmdDrawInstance(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxMeshDrawPtr ptrMeshDraw, const uint8_t* pInstanceBuffer, uint32_t size)
+bool CGLES3Renderer::CmdDrawInstance(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxMeshDrawPtr ptrMeshDraw)
 {
-	return ptrCommandBuffer->CmdDrawInstance(ptrMeshDraw, pInstanceBuffer, size);
+	return ptrCommandBuffer->CmdDrawInstance(ptrMeshDraw);
 }
 
-bool CGLES3Renderer::CmdDrawIndirect(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxMeshDrawPtr ptrMeshDraw, const uint8_t* pInstanceBuffer, uint32_t size)
+bool CGLES3Renderer::CmdDrawIndirect(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxMeshDrawPtr ptrMeshDraw)
 {
-	return ptrCommandBuffer->CmdDrawIndirect(ptrMeshDraw, pInstanceBuffer, size);
+	return ptrCommandBuffer->CmdDrawIndirect(ptrMeshDraw);
+}
+
+bool CGLES3Renderer::CmdUpdateInstanceBuffer(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxMeshDrawPtr ptrMeshDraw, const uint8_t* pInstanceBuffer, uint32_t size)
+{
+	return ptrCommandBuffer->CmdUpdateInstanceBuffer(ptrMeshDraw, pInstanceBuffer, size);
 }
 
 bool CGLES3Renderer::CmdExecute(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxCommandBufferPtr ptrSecondaryCommandBuffer)

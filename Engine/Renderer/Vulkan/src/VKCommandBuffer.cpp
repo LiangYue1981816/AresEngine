@@ -674,13 +674,12 @@ bool CVKCommandBuffer::CmdClearColor(float red, float green, float blue, float a
 	}
 }
 
-bool CVKCommandBuffer::CmdDrawInstance(const CGfxMeshDrawPtr ptrMeshDraw, const uint8_t* pInstanceBuffer, uint32_t size)
+bool CVKCommandBuffer::CmdDrawInstance(const CGfxMeshDrawPtr ptrMeshDraw)
 {
 	ASSERT(ptrMeshDraw);
 	ASSERT(m_vkCommandBuffer);
 
 	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
-		m_pCommands.emplace_back(new CVKCommandUpdateInstanceBuffer(m_vkCommandBuffer, ptrMeshDraw, pInstanceBuffer, size));
 		m_pCommands.emplace_back(new CVKCommandDrawInstance(m_vkCommandBuffer, ptrMeshDraw));
 		return true;
 	}
@@ -689,14 +688,27 @@ bool CVKCommandBuffer::CmdDrawInstance(const CGfxMeshDrawPtr ptrMeshDraw, const 
 	}
 }
 
-bool CVKCommandBuffer::CmdDrawIndirect(const CGfxMeshDrawPtr ptrMeshDraw, const uint8_t* pInstanceBuffer, uint32_t size)
+bool CVKCommandBuffer::CmdDrawIndirect(const CGfxMeshDrawPtr ptrMeshDraw)
+{
+	ASSERT(ptrMeshDraw);
+	ASSERT(m_vkCommandBuffer);
+
+	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
+		m_pCommands.emplace_back(new CVKCommandDrawIndirect(m_vkCommandBuffer, ptrMeshDraw));
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+bool CVKCommandBuffer::CmdUpdateInstanceBuffer(const CGfxMeshDrawPtr ptrMeshDraw, const uint8_t* pInstanceBuffer, uint32_t size)
 {
 	ASSERT(ptrMeshDraw);
 	ASSERT(m_vkCommandBuffer);
 
 	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
 		m_pCommands.emplace_back(new CVKCommandUpdateInstanceBuffer(m_vkCommandBuffer, ptrMeshDraw, pInstanceBuffer, size));
-		m_pCommands.emplace_back(new CVKCommandDrawIndirect(m_vkCommandBuffer, ptrMeshDraw));
 		return true;
 	}
 	else {
