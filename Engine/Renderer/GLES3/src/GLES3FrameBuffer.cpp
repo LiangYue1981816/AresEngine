@@ -130,7 +130,7 @@ void CGLES3FrameBuffer::Bind(const AttachmentInformation* pAttachmentInformation
 	CHECK_GL_ERROR_ASSERT();
 }
 
-void CGLES3FrameBuffer::Resolve(const AttachmentInformation * pAttachmentInformations, const SubpassInformation * pSubpassInformation) const
+void CGLES3FrameBuffer::Resolve(const AttachmentInformation* pAttachmentInformations, const SubpassInformation* pSubpassInformation) const
 {
 	ASSERT(pAttachmentInformations);
 	ASSERT(pSubpassInformation);
@@ -177,7 +177,7 @@ void CGLES3FrameBuffer::Resolve(const AttachmentInformation * pAttachmentInforma
 	CHECK_GL_ERROR_ASSERT();
 }
 
-void CGLES3FrameBuffer::InvalidateFramebuffer(const AttachmentInformation * pAttachmentInformations, const SubpassInformation * pSubpassInformation) const
+void CGLES3FrameBuffer::InvalidateFramebuffer(const AttachmentInformation* pAttachmentInformations, const SubpassInformation* pSubpassInformation) const
 {
 	ASSERT(pAttachmentInformations);
 	ASSERT(pSubpassInformation);
