@@ -77,8 +77,8 @@ void CRenderSolutionDefault::CreateFrameBufferMSAA(int samples)
 
 	m_renderParamsMSAA.ptrRenderPass = GfxRenderer()->NewRenderPass(HashValue("Default"), numAttachments, numSubpasses);
 	{
-		m_renderParamsMSAA.ptrRenderPass->SetColorAttachment(0, m_renderParamsMSAA.ptrColorTextures[0]->GetFormat(), m_renderParamsMSAA.ptrColorTextures[0]->GetSamples(), true, false, true, 0.2f, 0.2f, 0.2f, 0.0f);
-		m_renderParamsMSAA.ptrRenderPass->SetColorAttachment(1, m_renderParamsMSAA.ptrColorTexturesMSAA[0]->GetFormat(), m_renderParamsMSAA.ptrColorTexturesMSAA[0]->GetSamples(), false, false, false, 0.2f, 0.2f, 0.2f, 0.0f);
+		m_renderParamsMSAA.ptrRenderPass->SetColorAttachment(0, m_renderParamsMSAA.ptrColorTextures[0]->GetFormat(), m_renderParamsMSAA.ptrColorTextures[0]->GetSamples(), true, false, false, 0.2f, 0.2f, 0.2f, 0.0f);
+		m_renderParamsMSAA.ptrRenderPass->SetColorAttachment(1, m_renderParamsMSAA.ptrColorTexturesMSAA[0]->GetFormat(), m_renderParamsMSAA.ptrColorTexturesMSAA[0]->GetSamples(), false, false, true, 0.2f, 0.2f, 0.2f, 0.0f);
 		m_renderParamsMSAA.ptrRenderPass->SetDepthStencilAttachment(2, m_renderParamsMSAA.ptrDepthStencilTexturesMSAA[0]->GetFormat(), m_renderParamsMSAA.ptrDepthStencilTexturesMSAA[0]->GetSamples(), true, true, 1.0f, 0);
 
 		m_renderParamsMSAA.ptrRenderPass->SetSubpassResolveReference(0, 0);
