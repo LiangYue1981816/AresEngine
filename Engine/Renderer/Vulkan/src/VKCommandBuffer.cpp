@@ -356,9 +356,7 @@ bool CVKCommandBuffer::CmdBindDescriptorSet(const CGfxDescriptorSetPtr ptrDescri
 	ASSERT(m_vkCommandBuffer);
 
 	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
-		if (ptrDescriptorSet) {
-			m_pCommands.emplace_back(new CVKCommandBindDescriptorSet(m_vkCommandBuffer, ptrDescriptorSet));
-		}
+		m_pCommands.emplace_back(new CVKCommandBindDescriptorSet(m_vkCommandBuffer, ptrDescriptorSet));
 		return true;
 	}
 	else {

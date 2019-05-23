@@ -9,7 +9,9 @@ public:
 		: m_vkCommandBuffer(vkCommandBuffer)
 		, m_ptrDescriptorSet(ptrDescriptorSet)
 	{
-		Execute();
+		if (m_ptrDescriptorSet) {
+			Execute();
+		}
 	}
 	virtual ~CVKCommandBindDescriptorSet(void)
 	{
