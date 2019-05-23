@@ -19,27 +19,28 @@ bool CGLES3VertexArrayObject::Create(const CGLES3IndexBuffer* pIndexBuffer, cons
 	ASSERT(pInstanceBuffer);
 
 	glGenVertexArrays(1, &m_vao);
-
-	GLBindVertexArray(0);
-	GLBindBuffer(GL_ARRAY_BUFFER, 0);
-	GLBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-	GLBindVertexArray(m_vao);
 	{
-		if (pIndexBuffer) {
-			pIndexBuffer->Bind();
-		}
+		GLBindVertexArray(0);
+		GLBindBuffer(GL_ARRAY_BUFFER, 0);
+		GLBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+		GLBindVertexArray(m_vao);
+		{
+			if (pIndexBuffer) {
+				pIndexBuffer->Bind();
+			}
 
-		if (pVertexBuffer) {
-			pVertexBuffer->Bind();
-		}
+			if (pVertexBuffer) {
+				pVertexBuffer->Bind();
+			}
 
-		if (pInstanceBuffer) {
-			pInstanceBuffer->Bind();
+			if (pInstanceBuffer) {
+				pInstanceBuffer->Bind();
+			}
 		}
+		GLBindVertexArray(0);
+		GLBindBuffer(GL_ARRAY_BUFFER, 0);
+		GLBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	}
-	GLBindVertexArray(0);
-	GLBindBuffer(GL_ARRAY_BUFFER, 0);
-	GLBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	CHECK_GL_ERROR_ASSERT();
 
 	return true;
