@@ -5,23 +5,18 @@ static VkExtent2D GetSwapchainExtent(const VkSurfaceCapabilitiesKHR& capabilitie
 {
 	VkExtent2D extent = { width, height };
 
-	if (extent.width < capabilities.minImageExtent.width) extent.width = capabilities.minImageExtent.width;
-	if (extent.width > capabilities.maxImageExtent.width) extent.width = capabilities.maxImageExtent.width;
-	if (extent.height < capabilities.minImageExtent.height) extent.height = capabilities.minImageExtent.height;
-	if (extent.height > capabilities.maxImageExtent.height) extent.height = capabilities.maxImageExtent.height;
+	extent.width = std::min(extent.width, capabilities.minImageExtent.width);
+	extent.width = std::max(extent.width, capabilities.maxImageExtent.width);
+	extent.height = std::min(extent.height, capabilities.minImageExtent.height);
+	extent.height = std::max(extent.height, capabilities.maxImageExtent.height);
 
 	return extent;
 }
 
 static VkImageUsageFlags GetSwapchainUsageFlags(const VkSurfaceCapabilitiesKHR& capabilities)
 {
-	VkImageUsageFlags usageFlags = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT;
-
-	if (capabilities.supportedUsageFlags & VK_IMAGE_USAGE_TRANSFER_SRC_BIT) {
-		usageFlags |= VK_IMAGE_USAGE_TRANSFER_SRC_BIT;
-	}
-
-	return usageFlags;
+	VkImageUsageFlags usageFlags = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_TRANSFER_SRC_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT;
+	return usageFlags & capabilities.supportedUsageFlags;
 }
 
 static VkSurfaceTransformFlagBitsKHR GetSwapchainTransform(const VkSurfaceCapabilitiesKHR& capabilities, VkSurfaceTransformFlagBitsKHR transform)
@@ -79,22 +74,20 @@ CVKSwapChain::CVKSwapChain(CVKDevice* pDevice, int width, int height, GfxPixelFo
 
 	, m_indexFrame(0)
 {
-	ASSERT(m_pDevice);
-
+	VkSurfaceCapabilitiesKHR capabilities;
 	eastl::vector<VkPresentModeKHR> modes;
 	eastl::vector<VkSurfaceFormatKHR> formats;
-	VkSurfaceCapabilitiesKHR capabilities;
 	CALL_BOOL_FUNCTION_RETURN(IsSurfaceSupport());
 	CALL_BOOL_FUNCTION_RETURN(EnumDeviceSurfaceModes(modes));
 	CALL_BOOL_FUNCTION_RETURN(EnumDeviceSurfaceFormats(formats));
 	CALL_BOOL_FUNCTION_RETURN(EnumDeviceSurfaceCapabilities(capabilities));
 	CALL_BOOL_FUNCTION_RETURN(CreateSwapChain(modes, formats, capabilities));
-	CALL_BOOL_FUNCTION_RETURN(CreateImagesAndImageViews());
+	CALL_BOOL_FUNCTION_RETURN(CreateRenderTextures());
 }
 
 CVKSwapChain::~CVKSwapChain(void)
 {
-	DestroyImagesAndImageViews();
+	DestroyRenderTextures();
 	DestroySwapChain();
 }
 
@@ -107,9 +100,8 @@ bool CVKSwapChain::IsSurfaceSupport(void) const
 
 bool CVKSwapChain::EnumDeviceSurfaceModes(eastl::vector<VkPresentModeKHR>& modes) const
 {
-	modes.clear();
-
 	uint32_t numModes;
+
 	CALL_VK_FUNCTION_RETURN_BOOL(vkGetPhysicalDeviceSurfacePresentModesKHR(m_pDevice->GetPhysicalDevice(), m_pDevice->GetInstance()->GetSurface(), &numModes, nullptr));
 	if (numModes == 0) return false;
 
@@ -121,9 +113,8 @@ bool CVKSwapChain::EnumDeviceSurfaceModes(eastl::vector<VkPresentModeKHR>& modes
 
 bool CVKSwapChain::EnumDeviceSurfaceFormats(eastl::vector<VkSurfaceFormatKHR>& formats) const
 {
-	formats.clear();
-
 	uint32_t numFormats;
+
 	CALL_VK_FUNCTION_RETURN_BOOL(vkGetPhysicalDeviceSurfaceFormatsKHR(m_pDevice->GetPhysicalDevice(), m_pDevice->GetInstance()->GetSurface(), &numFormats, nullptr));
 	if (numFormats == 0) return false;
 
@@ -177,12 +168,12 @@ bool CVKSwapChain::CreateSwapChain(const eastl::vector<VkPresentModeKHR>& modes,
 	return true;
 }
 
-bool CVKSwapChain::CreateImagesAndImageViews(void)
+bool CVKSwapChain::CreateRenderTextures(void)
 {
 	uint32_t numImages;
-	CALL_VK_FUNCTION_RETURN_BOOL(vkGetSwapchainImagesKHR(m_pDevice->GetDevice(), m_vkSwapchain, &numImages, nullptr));
-	if (numImages != SWAPCHAIN_FRAME_COUNT) return false;
 
+	CALL_VK_FUNCTION_RETURN_BOOL(vkGetSwapchainImagesKHR(m_pDevice->GetDevice(), m_vkSwapchain, &numImages, nullptr));
+	ASSERT(numImages == SWAPCHAIN_FRAME_COUNT);
 	CALL_VK_FUNCTION_RETURN_BOOL(vkGetSwapchainImagesKHR(m_pDevice->GetDevice(), m_vkSwapchain, &numImages, m_vkImages));
 
 	for (int indexFrame = 0; indexFrame < SWAPCHAIN_FRAME_COUNT; indexFrame++) {
@@ -198,7 +189,7 @@ bool CVKSwapChain::CreateImagesAndImageViews(void)
 		fenceCreateInfo.flags = VK_FENCE_CREATE_SIGNALED_BIT;
 		CALL_VK_FUNCTION_RETURN_BOOL(vkCreateFence(m_pDevice->GetDevice(), &fenceCreateInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkRenderDoneFences[indexFrame]));
 
-		uint32_t name = HashValueFormat("SwapChain Frame Texture %d", indexFrame);
+		uint32_t name = HashValueFormat("SwapChain Frame RenderTexture %d", indexFrame);
 		m_ptrRenderTextures[indexFrame] = VKRenderer()->NewRenderTexture(name);
 		CALL_BOOL_FUNCTION_RETURN_BOOL(m_ptrRenderTextures[indexFrame]->Create((HANDLE)m_vkImages[indexFrame], m_format, m_width, m_height));
 	}
@@ -208,28 +199,25 @@ bool CVKSwapChain::CreateImagesAndImageViews(void)
 
 void CVKSwapChain::DestroySwapChain(void)
 {
-	if (m_vkSwapchain) {
-		vkDestroySwapchainKHR(m_pDevice->GetDevice(), m_vkSwapchain, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
-	}
+	ASSERT(m_vkSwapchain);
+	ASSERT(m_vkAcquireSemaphore);
 
-	if (m_vkAcquireSemaphore) {
-		vkDestroySemaphore(m_pDevice->GetDevice(), m_vkAcquireSemaphore, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
-	}
+	vkDestroySwapchainKHR(m_pDevice->GetDevice(), m_vkSwapchain, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
+	vkDestroySemaphore(m_pDevice->GetDevice(), m_vkAcquireSemaphore, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
 
 	m_vkSwapchain = VK_NULL_HANDLE;
 	m_vkAcquireSemaphore = VK_NULL_HANDLE;
 }
 
-void CVKSwapChain::DestroyImagesAndImageViews(void)
+void CVKSwapChain::DestroyRenderTextures(void)
 {
 	for (int indexFrame = 0; indexFrame < SWAPCHAIN_FRAME_COUNT; indexFrame++) {
-		if (m_vkRenderDoneSemaphores[indexFrame]) {
-			vkDestroySemaphore(m_pDevice->GetDevice(), m_vkRenderDoneSemaphores[indexFrame], m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
-		}
+		ASSERT(m_vkRenderDoneSemaphores[indexFrame]);
+		ASSERT(m_vkRenderDoneFences[indexFrame]);
+		ASSERT(m_ptrRenderTextures[indexFrame]);
 
-		if (m_vkRenderDoneFences[indexFrame]) {
-			vkDestroyFence(m_pDevice->GetDevice(), m_vkRenderDoneFences[indexFrame], m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
-		}
+		vkDestroySemaphore(m_pDevice->GetDevice(), m_vkRenderDoneSemaphores[indexFrame], m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
+		vkDestroyFence(m_pDevice->GetDevice(), m_vkRenderDoneFences[indexFrame], m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
 
 		m_vkRenderDoneSemaphores[indexFrame] = VK_NULL_HANDLE;
 		m_vkRenderDoneFences[indexFrame] = VK_NULL_HANDLE;
@@ -239,16 +227,19 @@ void CVKSwapChain::DestroyImagesAndImageViews(void)
 
 VkSemaphore CVKSwapChain::GetAcquireSemaphore(void) const
 {
+	ASSERT(m_vkAcquireSemaphore);
 	return m_vkAcquireSemaphore;
 }
 
 VkSemaphore CVKSwapChain::GetRenderDoneSemaphore(void) const
 {
+	ASSERT(m_vkRenderDoneSemaphores[m_indexFrame]);
 	return m_vkRenderDoneSemaphores[m_indexFrame];
 }
 
 VkFence CVKSwapChain::GetRenderDoneFence(void) const
 {
+	ASSERT(m_vkRenderDoneFences[m_indexFrame]);
 	return m_vkRenderDoneFences[m_indexFrame];
 }
 
@@ -274,16 +265,16 @@ int CVKSwapChain::GetFrameIndex(void) const
 
 const CGfxRenderTexturePtr CVKSwapChain::GetFrameTexture(int index) const
 {
-	if (index >= 0 && index < SWAPCHAIN_FRAME_COUNT) {
-		return m_ptrRenderTextures[index];
-	}
-	else {
-		return nullptr;
-	}
+	ASSERT(index >= 0 && index < SWAPCHAIN_FRAME_COUNT);
+	ASSERT(m_ptrRenderTextures[index]);
+	return m_ptrRenderTextures[index];
 }
 
 void CVKSwapChain::Present(void)
 {
+	ASSERT(m_vkSwapchain);
+	ASSERT(m_vkRenderDoneSemaphores[m_indexFrame]);
+
 	uint32_t indexFrame = m_indexFrame;
 	VkPresentInfoKHR presentInfo = {};
 	presentInfo.sType = VK_STRUCTURE_TYPE_PRESENT_INFO_KHR;
@@ -299,6 +290,9 @@ void CVKSwapChain::Present(void)
 
 void CVKSwapChain::AcquireNextFrame(void)
 {
+	ASSERT(m_vkSwapchain);
+	ASSERT(m_vkAcquireSemaphore);
+
 	uint32_t indexFrame;
 	vkAcquireNextImageKHR(m_pDevice->GetDevice(), m_vkSwapchain, UINT64_MAX, m_vkAcquireSemaphore, VK_NULL_HANDLE, &indexFrame);
 	m_indexFrame = indexFrame;

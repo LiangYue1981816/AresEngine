@@ -6,7 +6,7 @@ CVKMaterialPass::CVKMaterialPass(CVKDevice* pDevice, uint32_t name)
 	, m_pDevice(pDevice)
 	, m_pPipeline(nullptr)
 {
-	ASSERT(m_pDevice);
+
 }
 
 CVKMaterialPass::~CVKMaterialPass(void)

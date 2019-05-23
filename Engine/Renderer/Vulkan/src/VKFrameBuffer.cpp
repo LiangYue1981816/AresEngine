@@ -12,8 +12,7 @@ CVKFrameBuffer::CVKFrameBuffer(CVKDevice* pDevice, CVKFrameBufferManager* pManag
 	, m_height(height)
 	, m_ptrAttachmentTextures(numAttachments)
 {
-	ASSERT(m_pDevice);
-	ASSERT(m_pManager);
+
 }
 
 CVKFrameBuffer::~CVKFrameBuffer(void)
@@ -60,17 +59,17 @@ bool CVKFrameBuffer::Create(const CGfxRenderPassPtr ptrRenderPass)
 				}
 			}
 
-			VkFramebufferCreateInfo createInfo = {};
-			createInfo.sType = VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO;
-			createInfo.pNext = nullptr;
-			createInfo.flags = 0;
-			createInfo.renderPass = ((CVKRenderPass*)ptrRenderPass.GetPointer())->GetRenderPass();
-			createInfo.attachmentCount = attachments.size();
-			createInfo.pAttachments = attachments.data();
-			createInfo.width = m_width;
-			createInfo.height = m_height;
-			createInfo.layers = 1;
-			CALL_VK_FUNCTION_BREAK(vkCreateFramebuffer(m_pDevice->GetDevice(), &createInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkFrameBuffer));
+			VkFramebufferCreateInfo frameBufferCreateInfo = {};
+			frameBufferCreateInfo.sType = VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO;
+			frameBufferCreateInfo.pNext = nullptr;
+			frameBufferCreateInfo.flags = 0;
+			frameBufferCreateInfo.renderPass = ((CVKRenderPass*)ptrRenderPass.GetPointer())->GetRenderPass();
+			frameBufferCreateInfo.attachmentCount = attachments.size();
+			frameBufferCreateInfo.pAttachments = attachments.data();
+			frameBufferCreateInfo.width = m_width;
+			frameBufferCreateInfo.height = m_height;
+			frameBufferCreateInfo.layers = 1;
+			CALL_VK_FUNCTION_BREAK(vkCreateFramebuffer(m_pDevice->GetDevice(), &frameBufferCreateInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkFrameBuffer));
 
 			return true;
 		} while (false);

@@ -4,7 +4,7 @@
 CVKDescriptorLayoutManager::CVKDescriptorLayoutManager(CVKDevice* pDevice)
 	: m_pDevice(pDevice)
 {
-	ASSERT(m_pDevice);
+
 }
 
 CVKDescriptorLayoutManager::~CVKDescriptorLayoutManager(void)

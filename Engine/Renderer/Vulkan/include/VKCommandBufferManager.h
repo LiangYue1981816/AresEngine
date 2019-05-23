@@ -20,7 +20,7 @@ private:
 
 private:
 	eastl::unordered_map<uint32_t, VkCommandPool> m_vkCommandPools;
-	eastl::unordered_map<VkCommandPool, eastl::unordered_map<bool, eastl::list<CVKCommandBuffer*>>> m_pCommandBuffers;
+	eastl::unordered_map<VkCommandPool, eastl::unordered_map<bool, eastl::list<CVKCommandBuffer*>>> m_pCommandBuffers; // [pool][main][list commandbuffer]
 
 private:
 	CVKDevice* m_pDevice;

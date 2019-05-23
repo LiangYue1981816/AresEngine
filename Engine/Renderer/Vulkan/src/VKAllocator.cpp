@@ -44,7 +44,7 @@ void* VKAPI_PTR CVKAllocator::vkAllocationFunction(void* pUserData, size_t size,
 	void* pPointer = AllocMemory(size);
 
 	pAllocator->m_allocatedSize += GET_MEM_SIZE(pPointer);
-	pAllocator->m_maxAllocatedSize = pAllocator->m_maxAllocatedSize >= pAllocator->m_allocatedSize ? pAllocator->m_maxAllocatedSize : pAllocator->m_allocatedSize;
+	pAllocator->m_maxAllocatedSize = std::max(pAllocator->m_maxAllocatedSize, pAllocator->m_allocatedSize);
 
 	return pPointer;
 }
@@ -60,9 +60,11 @@ void* VKAPI_PTR CVKAllocator::vkReallocationFunction(void* pUserData, void* pOri
 	void* pPointer = AllocMemory(size);
 
 	memcpy(pPointer, pOriginal, std::min(GET_MEM_SIZE(pPointer), GET_MEM_SIZE(pOriginal)));
+
 	pAllocator->m_allocatedSize += GET_MEM_SIZE(pPointer);
 	pAllocator->m_allocatedSize -= GET_MEM_SIZE(pOriginal);
-	pAllocator->m_maxAllocatedSize = pAllocator->m_maxAllocatedSize >= pAllocator->m_allocatedSize ? pAllocator->m_maxAllocatedSize : pAllocator->m_allocatedSize;
+	pAllocator->m_maxAllocatedSize = std::max(pAllocator->m_maxAllocatedSize, pAllocator->m_allocatedSize);
+
 	FreeMemory(pOriginal);
 
 	return pPointer;
@@ -70,12 +72,14 @@ void* VKAPI_PTR CVKAllocator::vkReallocationFunction(void* pUserData, void* pOri
 
 void VKAPI_PTR CVKAllocator::vkFreeFunction(void* pUserData, void* pPointer)
 {
-//	ASSERT(pPointer);
+//	ASSERT(pPointer); // The pPointer is really nullptr with AMD Driver !!!
 	ASSERT(pUserData);
 
 	CVKAllocator* pAllocator = (CVKAllocator*)pUserData;
 
 	pAllocator->m_allocatedSize -= GET_MEM_SIZE(pPointer);
+	pAllocator->m_maxAllocatedSize = std::max(pAllocator->m_maxAllocatedSize, pAllocator->m_allocatedSize);
+
 	FreeMemory(pPointer);
 }
 
@@ -87,7 +91,7 @@ void VKAPI_PTR CVKAllocator::vkInternalAllocationNotification(void* pUserData, s
 	CVKAllocator* pAllocator = (CVKAllocator*)pUserData;
 
 	pAllocator->m_allocatedSize += size;
-	pAllocator->m_maxAllocatedSize = pAllocator->m_maxAllocatedSize >= pAllocator->m_allocatedSize ? pAllocator->m_maxAllocatedSize : pAllocator->m_allocatedSize;
+	pAllocator->m_maxAllocatedSize = std::max(pAllocator->m_maxAllocatedSize, pAllocator->m_allocatedSize);
 }
 
 void VKAPI_PTR CVKAllocator::vkInternalFreeNotification(void* pUserData, size_t size, VkInternalAllocationType allocationType, VkSystemAllocationScope allocationScope)
@@ -98,5 +102,5 @@ void VKAPI_PTR CVKAllocator::vkInternalFreeNotification(void* pUserData, size_t 
 	CVKAllocator* pAllocator = (CVKAllocator*)pUserData;
 
 	pAllocator->m_allocatedSize -= size;
-	pAllocator->m_maxAllocatedSize = pAllocator->m_maxAllocatedSize >= pAllocator->m_allocatedSize ? pAllocator->m_maxAllocatedSize : pAllocator->m_allocatedSize;
+	pAllocator->m_maxAllocatedSize = std::max(pAllocator->m_maxAllocatedSize, pAllocator->m_allocatedSize);
 }

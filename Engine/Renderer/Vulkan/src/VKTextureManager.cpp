@@ -5,7 +5,7 @@
 CVKTexture2DManager::CVKTexture2DManager(CVKDevice* pDevice)
 	: m_pDevice(pDevice)
 {
-	ASSERT(m_pDevice);
+
 }
 
 CVKTexture2DManager::~CVKTexture2DManager(void)
@@ -74,7 +74,7 @@ void CVKTexture2DManager::Destroy(CVKTexture2D* pTexture)
 CVKTexture2DArrayManager::CVKTexture2DArrayManager(CVKDevice* pDevice)
 	: m_pDevice(pDevice)
 {
-	ASSERT(m_pDevice);
+
 }
 
 CVKTexture2DArrayManager::~CVKTexture2DArrayManager(void)
@@ -143,7 +143,7 @@ void CVKTexture2DArrayManager::Destroy(CVKTexture2DArray* pTexture)
 CVKTextureCubemapManager::CVKTextureCubemapManager(CVKDevice* pDevice)
 	: m_pDevice(pDevice)
 {
-	ASSERT(m_pDevice);
+
 }
 
 CVKTextureCubemapManager::~CVKTextureCubemapManager(void)

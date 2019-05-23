@@ -13,6 +13,7 @@ private:
 
 
 public:
+	uint32_t GetInstanceBinding(void) const;
 	uint32_t GetInstanceFormat(void) const;
 	uint32_t GetInstanceCount(void) const;
 	uint32_t GetSize(void) const;

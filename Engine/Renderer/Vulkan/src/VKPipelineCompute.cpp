@@ -6,8 +6,6 @@ CVKPipelineCompute::CVKPipelineCompute(CVKDevice* pDevice, uint32_t name)
 	, m_pDevice(pDevice)
 	, m_pPipeline(nullptr)
 {
-	ASSERT(m_pDevice);
-
 	m_pPipeline = new CVKPipeline(m_pDevice);
 }
 

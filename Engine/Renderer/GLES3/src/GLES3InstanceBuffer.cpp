@@ -7,6 +7,7 @@ CGLES3InstanceBuffer::CGLES3InstanceBuffer(uint32_t instanceFormat, int instance
 	: CGfxInstanceBuffer(instanceFormat, instanceBinding)
 	, m_pBuffer(nullptr)
 
+	, m_binding(instanceBinding)
 	, m_format(instanceFormat)
 	, m_count(0)
 {
@@ -20,6 +21,11 @@ CGLES3InstanceBuffer::~CGLES3InstanceBuffer(void)
 {
 	CGfxProfiler::DecInstanceBufferSize(m_pBuffer->GetSize());
 	delete m_pBuffer;
+}
+
+uint32_t CGLES3InstanceBuffer::GetInstanceBinding(void) const
+{
+	return m_binding;
 }
 
 uint32_t CGLES3InstanceBuffer::GetInstanceFormat(void) const

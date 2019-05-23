@@ -12,8 +12,6 @@ CVKVertexBuffer::CVKVertexBuffer(CVKDevice* pDevice, uint32_t vertexFormat, int 
 	, m_size(size)
 	, m_offset(0)
 {
-	ASSERT(m_pDevice);
-
 	if (bDynamic) {
 		m_pBuffer = new CVKBuffer(pDevice, CGfxSwapChain::SWAPCHAIN_FRAME_COUNT * size, VK_BUFFER_USAGE_VERTEX_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
 		CGfxProfiler::IncVertexBufferSize(m_pBuffer->GetSize());
@@ -28,6 +26,11 @@ CVKVertexBuffer::~CVKVertexBuffer(void)
 {
 	CGfxProfiler::DecVertexBufferSize(m_pBuffer->GetSize());
 	delete m_pBuffer;
+}
+
+uint32_t CVKVertexBuffer::GetVertexBinding(void) const
+{
+	return m_binding;
 }
 
 uint32_t CVKVertexBuffer::GetVertexFormat(void) const
@@ -52,13 +55,7 @@ uint32_t CVKVertexBuffer::GetOffset(void) const
 
 bool CVKVertexBuffer::BufferData(size_t offset, size_t size, const void* data)
 {
-	if (m_pBuffer->IsHostVisible()) {
-		m_offset = VKRenderer()->GetSwapChain()->GetFrameIndex() * m_size;
-	}
-	else {
-		m_offset = 0;
-	}
-
+	m_offset = m_pBuffer->IsHostVisible() ? VKRenderer()->GetSwapChain()->GetFrameIndex() * m_size : 0;
 	return m_pBuffer->BufferData(m_offset + offset, size, data);
 }
 

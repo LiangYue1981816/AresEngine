@@ -21,7 +21,7 @@ CVKTexture::CVKTexture(CVKDevice* pDevice)
 	, m_levels(0)
 	, m_samples(0)
 {
-	ASSERT(m_pDevice);
+
 }
 
 CVKTexture::~CVKTexture(void)
@@ -254,6 +254,7 @@ bool CVKTexture::Texture2DData(GfxPixelFormat format, int level, int xoffset, in
 	ASSERT(size);
 	ASSERT(data);
 	ASSERT(m_vkImage);
+	ASSERT(m_vkImageView);
 	ASSERT(m_bExtern == false);
 	ASSERT(m_type == GFX_TEXTURE_2D);
 	ASSERT(m_format == format);
@@ -270,6 +271,7 @@ bool CVKTexture::Texture2DArrayData(GfxPixelFormat format, int layer, int level,
 	ASSERT(size);
 	ASSERT(data);
 	ASSERT(m_vkImage);
+	ASSERT(m_vkImageView);
 	ASSERT(m_bExtern == false);
 	ASSERT(m_type == GFX_TEXTURE_2D_ARRAY);
 	ASSERT(m_format == format);
@@ -287,6 +289,7 @@ bool CVKTexture::TextureCubemapData(GfxPixelFormat format, GfxCubemapFace face, 
 	ASSERT(size);
 	ASSERT(data);
 	ASSERT(m_vkImage);
+	ASSERT(m_vkImageView);
 	ASSERT(m_bExtern == false);
 	ASSERT(m_type == GFX_TEXTURE_CUBE_MAP);
 	ASSERT(m_format == format);
@@ -302,6 +305,7 @@ bool CVKTexture::PipelineBarrier(VkCommandBuffer vkCommandBuffer, VkImageLayout 
 {
 	ASSERT(vkCommandBuffer);
 	ASSERT(m_vkImage);
+	ASSERT(m_vkImageView);
 
 	if (m_vkImageLayout != imageLayout) {
 		VkImageSubresourceRange range = {};
@@ -322,6 +326,7 @@ bool CVKTexture::PipelineBarrier(VkCommandBuffer vkCommandBuffer, VkImageLayout 
 {
 	ASSERT(vkCommandBuffer);
 	ASSERT(m_vkImage);
+	ASSERT(m_vkImageView);
 
 	if (m_vkImageLayout != imageLayout) {
 		VkImageSubresourceRange range = {};

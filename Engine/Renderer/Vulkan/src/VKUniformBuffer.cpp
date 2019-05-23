@@ -10,10 +10,6 @@ CVKUniformBuffer::CVKUniformBuffer(CVKDevice* pDevice, CVKUniformBufferManager* 
 	, m_size(size)
 	, m_offset(0)
 {
-	ASSERT(m_pDevice);
-	ASSERT(m_pManager);
-	ASSERT(m_size == ALIGN_BYTE(m_size, m_pDevice->GetPhysicalDeviceLimits().minUniformBufferOffsetAlignment));
-
 	m_pBuffer = new CVKBuffer(pDevice, CGfxSwapChain::SWAPCHAIN_FRAME_COUNT * size, VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
 	CGfxProfiler::IncUniformBufferSize(m_pBuffer->GetSize());
 }

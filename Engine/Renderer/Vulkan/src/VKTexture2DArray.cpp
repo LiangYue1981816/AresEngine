@@ -7,9 +7,6 @@ CVKTexture2DArray::CVKTexture2DArray(CVKDevice* pDevice, CVKTexture2DArrayManage
 	, m_pManager(pManager)
 	, m_pTexture(nullptr)
 {
-	ASSERT(m_pDevice);
-	ASSERT(m_pManager);
-
 	m_pTexture = new CVKTexture(m_pDevice);
 }
 

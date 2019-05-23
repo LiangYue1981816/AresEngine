@@ -27,6 +27,7 @@ private:
 
 	bool CreateInstance(const eastl::vector<const char*>& enabledInstanceLayers, const eastl::vector<const char*>& enabledInstanceExtensions);
 	bool CreateSurface(void* hInstance, void* hWnd);
+
 	void DestroyInstance(void);
 	void DestroySurface(void);
 

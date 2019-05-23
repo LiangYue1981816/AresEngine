@@ -11,8 +11,7 @@ CVKRenderPass::CVKRenderPass(CVKDevice* pDevice, CVKRenderPassManager* pManager,
 	, m_attachments(numAttachments)
 	, m_subpasses(numSubpasses)
 {
-	ASSERT(m_pDevice);
-	ASSERT(m_pManager);
+
 }
 
 CVKRenderPass::~CVKRenderPass(void)

@@ -19,9 +19,10 @@ private:
 	bool EnumDeviceSurfaceCapabilities(VkSurfaceCapabilitiesKHR& capabilities) const;
 
 	bool CreateSwapChain(const eastl::vector<VkPresentModeKHR>& modes, const eastl::vector<VkSurfaceFormatKHR>& formats, const VkSurfaceCapabilitiesKHR& capabilities);
-	bool CreateImagesAndImageViews(void);
+	bool CreateRenderTextures(void);
+
 	void DestroySwapChain(void);
-	void DestroyImagesAndImageViews(void);
+	void DestroyRenderTextures(void);
 
 public:
 	VkSemaphore GetAcquireSemaphore(void) const;

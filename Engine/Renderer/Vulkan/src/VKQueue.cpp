@@ -7,8 +7,6 @@ CVKQueue::CVKQueue(CVKDevice* pDevice, uint32_t queueFamilyIndex)
 	, m_vkQueue(VK_NULL_HANDLE)
 	, m_queueFamilyIndex(queueFamilyIndex)
 {
-	ASSERT(m_pDevice);
-
 	vkGetDeviceQueue(m_pDevice->GetDevice(), m_queueFamilyIndex, 0, &m_vkQueue);
 }
 
@@ -19,6 +17,7 @@ CVKQueue::~CVKQueue(void)
 
 VkQueue CVKQueue::GetQueue(void) const
 {
+	ASSERT(m_vkQueue);
 	return m_vkQueue;
 }
 
@@ -30,6 +29,7 @@ uint32_t CVKQueue::GetQueueFamilyIndex(void) const
 bool CVKQueue::Submit(CGfxCommandBufferPtr ptrCommandBuffer, VkSemaphore vkWaitSemaphore, VkPipelineStageFlags waitStageFlags, VkSemaphore vkSignalSemaphore) const
 {
 	ASSERT(ptrCommandBuffer);
+	ASSERT(m_vkQueue);
 
 	VkFence vkFence = ((CVKCommandBuffer*)ptrCommandBuffer.GetPointer())->GetFence();
 	VkCommandBuffer vkCommandBuffer = ((CVKCommandBuffer*)ptrCommandBuffer.GetPointer())->GetCommandBuffer();
@@ -43,5 +43,6 @@ bool CVKQueue::Submit(CGfxCommandBufferPtr ptrCommandBuffer, VkSemaphore vkWaitS
 
 void CVKQueue::WaitIdle(void) const
 {
+	ASSERT(m_vkQueue);
 	CALL_VK_FUNCTION_ASSERT(vkQueueWaitIdle(m_vkQueue));
 }

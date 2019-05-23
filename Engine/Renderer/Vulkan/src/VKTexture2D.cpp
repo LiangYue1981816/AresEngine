@@ -7,9 +7,6 @@ CVKTexture2D::CVKTexture2D(CVKDevice* pDevice, CVKTexture2DManager* pManager, ui
 	, m_pManager(pManager)
 	, m_pTexture(nullptr)
 {
-	ASSERT(m_pDevice);
-	ASSERT(m_pManager);
-
 	m_pTexture = new CVKTexture(m_pDevice);
 }
 

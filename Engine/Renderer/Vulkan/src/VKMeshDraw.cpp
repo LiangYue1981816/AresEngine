@@ -10,8 +10,6 @@ CVKMeshDraw::CVKMeshDraw(CVKDevice* pDevice, CVKMeshDrawManager* pManager, uint3
 	, m_pIndirectBuffer{ nullptr }
 	, m_pInstanceBuffer{ nullptr }
 {
-	ASSERT(m_pDevice);
-	ASSERT(m_pManager);
 	ASSERT(ptrMesh);
 	ASSERT(ptrMesh->GetDraw(nameDraw));
 
@@ -66,6 +64,11 @@ uint32_t CVKMeshDraw::GetIndexOffset(void) const
 	}
 }
 
+uint32_t CVKMeshDraw::GetVertexBinding(void) const
+{
+	return m_ptrMesh->GetVertexBuffer()->GetVertexBinding();
+}
+
 uint32_t CVKMeshDraw::GetVertexFormat(void) const
 {
 	return m_ptrMesh->GetVertexBuffer()->GetVertexFormat();
@@ -74,6 +77,11 @@ uint32_t CVKMeshDraw::GetVertexFormat(void) const
 uint32_t CVKMeshDraw::GetVertexCount(void) const
 {
 	return m_ptrMesh->GetVertexBuffer()->GetVertexCount();
+}
+
+uint32_t CVKMeshDraw::GetInstanceBinding(void) const
+{
+	return m_pInstanceBuffer[VKRenderer()->GetSwapChain()->GetFrameIndex()]->GetInstanceBinding();
 }
 
 uint32_t CVKMeshDraw::GetInstanceFormat(void) const

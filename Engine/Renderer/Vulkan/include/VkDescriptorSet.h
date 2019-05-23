@@ -43,7 +43,6 @@ private:
 	CGfxDescriptorLayoutPtr m_ptrDescriptorLayout;
 
 private:
-	bool m_bDirty;
 	eastl::unordered_map<uint32_t, DescriptorImageInfo> m_imageDescriptorInfos;
 	eastl::unordered_map<uint32_t, DescriptorBufferInfo> m_bufferDescriptorInfos;
 

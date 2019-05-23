@@ -6,8 +6,7 @@ CVKMaterial::CVKMaterial(CVKDevice* pDevice, CVKMaterialManager* pManager, uint3
 	, m_pDevice(pDevice)
 	, m_pManager(pManager)
 {
-	ASSERT(m_pDevice);
-	ASSERT(m_pManager);
+
 }
 
 CVKMaterial::~CVKMaterial(void)

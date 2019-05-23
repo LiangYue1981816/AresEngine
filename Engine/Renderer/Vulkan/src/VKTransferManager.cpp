@@ -7,22 +7,22 @@ CVKTransferManager::CVKTransferManager(CVKDevice* pDevice, uint32_t queueFamilyI
 	, m_vkQueue(VK_NULL_HANDLE)
 	, m_vkCommandPool(VK_NULL_HANDLE)
 {
-	ASSERT(m_pDevice);
-
 	vkGetDeviceQueue(m_pDevice->GetDevice(), queueFamilyIndex, 0, &m_vkQueue);
 
-	VkCommandPoolCreateInfo createInfo = {};
-	createInfo.sType = VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO;
-	createInfo.pNext = nullptr;
-	createInfo.flags = VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT;
-	createInfo.queueFamilyIndex = queueFamilyIndex;
-	CALL_VK_FUNCTION_RETURN(vkCreateCommandPool(m_pDevice->GetDevice(), &createInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkCommandPool));
+	VkCommandPoolCreateInfo poolCreateInfo = {};
+	poolCreateInfo.sType = VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO;
+	poolCreateInfo.pNext = nullptr;
+	poolCreateInfo.flags = VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT;
+	poolCreateInfo.queueFamilyIndex = queueFamilyIndex;
+	CALL_VK_FUNCTION_RETURN(vkCreateCommandPool(m_pDevice->GetDevice(), &poolCreateInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkCommandPool));
 
 	pthread_mutex_init(&lock, nullptr);
 }
 
 CVKTransferManager::~CVKTransferManager(void)
 {
+	ASSERT(m_vkCommandPool);
+
 	for (const auto& itPending : m_pendingList) {
 		delete itPending;
 	}
@@ -33,9 +33,7 @@ CVKTransferManager::~CVKTransferManager(void)
 		}
 	}
 
-	if (m_vkCommandPool) {
-		vkDestroyCommandPool(m_pDevice->GetDevice(), m_vkCommandPool, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
-	}
+	vkDestroyCommandPool(m_pDevice->GetDevice(), m_vkCommandPool, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
 
 	pthread_mutex_destroy(&lock);
 }
@@ -45,6 +43,7 @@ CVKTransferBuffer* CVKTransferManager::AcquireTransferBuffer(size_t size)
 	mutex_autolock autolock(&lock);
 	{
 		ASSERT(size);
+		ASSERT(m_vkCommandPool);
 
 		for (eastl::vector<CVKTransferBuffer*>::const_iterator itTransferBuffer = m_pendingList.begin(); itTransferBuffer != m_pendingList.end();) {
 			CVKTransferBuffer* pTransferBuffer = *itTransferBuffer;
@@ -64,7 +63,8 @@ CVKTransferBuffer* CVKTransferManager::AcquireTransferBuffer(size_t size)
 				pTransferBuffer = new CVKTransferBuffer(m_pDevice, m_vkQueue, m_vkCommandPool, size);
 			}
 			else {
-				pTransferBuffer = m_freeLists[size].front(); m_freeLists[size].pop_front();
+				pTransferBuffer = m_freeLists[size].front();
+				m_freeLists[size].pop_front();
 			}
 
 			m_pendingList.emplace_back(pTransferBuffer);

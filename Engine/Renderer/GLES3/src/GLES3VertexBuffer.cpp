@@ -5,6 +5,7 @@ CGLES3VertexBuffer::CGLES3VertexBuffer(uint32_t vertexFormat, int vertexBinding,
 	: CGfxVertexBuffer(vertexFormat, vertexBinding, size, bDynamic)
 	, m_pBuffer(nullptr)
 
+	, m_binding(vertexBinding)
 	, m_format(vertexFormat)
 	, m_count(size / GetVertexStride(vertexFormat))
 {
@@ -16,6 +17,11 @@ CGLES3VertexBuffer::~CGLES3VertexBuffer(void)
 {
 	CGfxProfiler::DecVertexBufferSize(m_pBuffer->GetSize());
 	delete m_pBuffer;
+}
+
+uint32_t CGLES3VertexBuffer::GetVertexBinding(void) const
+{
+	return m_binding;
 }
 
 uint32_t CGLES3VertexBuffer::GetVertexFormat(void) const

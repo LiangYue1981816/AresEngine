@@ -6,7 +6,7 @@ CVKDescriptorSetManager::CVKDescriptorSetManager(CVKDevice* pDevice)
 	, m_pPoolListHead(nullptr)
 	, m_pInputAttachmentPoolListHead(nullptr)
 {
-	ASSERT(m_pDevice);
+
 }
 
 CVKDescriptorSetManager::~CVKDescriptorSetManager(void)
@@ -95,7 +95,6 @@ void CVKDescriptorSetManager::Destroy(CVKDescriptorSet* pDescriptorSet)
 	mutex_autolock autolock(&lock);
 	{
 		ASSERT(pDescriptorSet);
-		ASSERT(pDescriptorSet->GetDescriptorPool());
 
 		if (m_pDescriptorSets.find(pDescriptorSet) != m_pDescriptorSets.end()) {
 			m_pDescriptorSets.erase(pDescriptorSet);

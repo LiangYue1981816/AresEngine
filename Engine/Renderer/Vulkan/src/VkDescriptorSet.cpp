@@ -7,11 +7,7 @@ CVKDescriptorSet::CVKDescriptorSet(CVKDevice* pDevice, CVKDescriptorPool* pDescr
 	, m_pDescriptorPool(pDescriptorPool)
 
 	, m_vkDescriptorSet(VK_NULL_HANDLE)
-	, m_bDirty(false)
 {
-	ASSERT(m_pDevice);
-	ASSERT(m_pDescriptorPool);
-
 	Create(ptrDescriptorLayout);
 }
 
@@ -27,37 +23,34 @@ void CVKDescriptorSet::Release(void)
 
 bool CVKDescriptorSet::Create(const CGfxDescriptorLayoutPtr ptrDescriptorLayout)
 {
-	Destroy();
-	{
-		do {
-			ASSERT(ptrDescriptorLayout);
+	ASSERT(ptrDescriptorLayout);
 
-			m_ptrDescriptorLayout = ptrDescriptorLayout;
+	m_ptrDescriptorLayout = ptrDescriptorLayout;
 
-			VkDescriptorSetLayout vkDescriptorSetLayout = ((CVKDescriptorLayout*)ptrDescriptorLayout.GetPointer())->GetDescriptorLayout();
-			VkDescriptorSetAllocateInfo allocInfo = {};
-			allocInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO;
-			allocInfo.pNext = nullptr;
-			allocInfo.descriptorPool = m_pDescriptorPool->GetDescriptorPool();
-			allocInfo.descriptorSetCount = 1;
-			allocInfo.pSetLayouts = &vkDescriptorSetLayout;
-			CALL_VK_FUNCTION_BREAK(vkAllocateDescriptorSets(m_pDevice->GetDevice(), &allocInfo, &m_vkDescriptorSet));
+	VkDescriptorSetLayout vkDescriptorSetLayout = ((CVKDescriptorLayout*)ptrDescriptorLayout.GetPointer())->GetDescriptorLayout();
+	VkDescriptorSetAllocateInfo descriptorAllocInfo = {};
+	descriptorAllocInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO;
+	descriptorAllocInfo.pNext = nullptr;
+	descriptorAllocInfo.descriptorPool = m_pDescriptorPool->GetDescriptorPool();
+	descriptorAllocInfo.descriptorSetCount = 1;
+	descriptorAllocInfo.pSetLayouts = &vkDescriptorSetLayout;
+	CALL_VK_FUNCTION_RETURN_BOOL(vkAllocateDescriptorSets(m_pDevice->GetDevice(), &descriptorAllocInfo, &m_vkDescriptorSet));
 
-			return true;
-		} while (false);
-	}
-	Destroy();
-	return false;
+	return true;
 }
 
 void CVKDescriptorSet::Destroy(void)
 {
+	ASSERT(m_vkDescriptorSet);
+	ASSERT(m_ptrDescriptorLayout);
+
 	m_vkDescriptorSet = VK_NULL_HANDLE;
 	m_ptrDescriptorLayout.Release();
 }
 
 CVKDescriptorPool* CVKDescriptorSet::GetDescriptorPool(void) const
 {
+	ASSERT(m_pDescriptorPool);
 	return m_pDescriptorPool;
 }
 
@@ -65,14 +58,16 @@ bool CVKDescriptorSet::SetTexture2D(uint32_t name, const CGfxTexture2DPtr ptrTex
 {
 	ASSERT(pSampler);
 	ASSERT(ptrTexture);
+	ASSERT(m_vkDescriptorSet);
+	ASSERT(m_ptrDescriptorLayout);
 
 	if (m_ptrDescriptorLayout->IsSampledImageValid(name)) {
+		m_imageDescriptorInfos[name].bDirty = true;
 		m_imageDescriptorInfos[name].pSampler = (CGfxSampler*)pSampler;
 		m_imageDescriptorInfos[name].ptrTexture2D = ptrTexture;
 		m_imageDescriptorInfos[name].ptrTexture2DArray.Release();
 		m_imageDescriptorInfos[name].ptrTextureCubemap.Release();
 		m_imageDescriptorInfos[name].ptrTextureInputAttachment.Release();
-		m_bDirty = true;
 		return true;
 	}
 	else {
@@ -84,14 +79,16 @@ bool CVKDescriptorSet::SetTexture2DArray(uint32_t name, const CGfxTexture2DArray
 {
 	ASSERT(pSampler);
 	ASSERT(ptrTexture);
+	ASSERT(m_vkDescriptorSet);
+	ASSERT(m_ptrDescriptorLayout);
 
 	if (m_ptrDescriptorLayout->IsSampledImageValid(name)) {
+		m_imageDescriptorInfos[name].bDirty = true;
 		m_imageDescriptorInfos[name].pSampler = (CGfxSampler*)pSampler;
 		m_imageDescriptorInfos[name].ptrTexture2D.Release();
 		m_imageDescriptorInfos[name].ptrTexture2DArray = ptrTexture;
 		m_imageDescriptorInfos[name].ptrTextureCubemap.Release();
 		m_imageDescriptorInfos[name].ptrTextureInputAttachment.Release();
-		m_bDirty = true;
 		return true;
 	}
 	else {
@@ -103,14 +100,16 @@ bool CVKDescriptorSet::SetTextureCubemap(uint32_t name, const CGfxTextureCubemap
 {
 	ASSERT(pSampler);
 	ASSERT(ptrTexture);
+	ASSERT(m_vkDescriptorSet);
+	ASSERT(m_ptrDescriptorLayout);
 
 	if (m_ptrDescriptorLayout->IsSampledImageValid(name)) {
+		m_imageDescriptorInfos[name].bDirty = true;
 		m_imageDescriptorInfos[name].pSampler = (CGfxSampler*)pSampler;
 		m_imageDescriptorInfos[name].ptrTexture2D.Release();
 		m_imageDescriptorInfos[name].ptrTexture2DArray.Release();
 		m_imageDescriptorInfos[name].ptrTextureCubemap = ptrTexture;
 		m_imageDescriptorInfos[name].ptrTextureInputAttachment.Release();
-		m_bDirty = true;
 		return true;
 	}
 	else {
@@ -122,14 +121,16 @@ bool CVKDescriptorSet::SetTextureInputAttachment(uint32_t name, const CGfxRender
 {
 	ASSERT(pSampler);
 	ASSERT(ptrTexture);
+	ASSERT(m_vkDescriptorSet);
+	ASSERT(m_ptrDescriptorLayout);
 
 	if (m_ptrDescriptorLayout->IsSampledImageValid(name)) {
+		m_imageDescriptorInfos[name].bDirty = true;
 		m_imageDescriptorInfos[name].pSampler = (CGfxSampler*)pSampler;
 		m_imageDescriptorInfos[name].ptrTexture2D.Release();
 		m_imageDescriptorInfos[name].ptrTexture2DArray.Release();
 		m_imageDescriptorInfos[name].ptrTextureCubemap.Release();
 		m_imageDescriptorInfos[name].ptrTextureInputAttachment = ptrTexture;
-		m_bDirty = true;
 		return true;
 	}
 	else {
@@ -141,12 +142,14 @@ bool CVKDescriptorSet::SetUniformBuffer(uint32_t name, const CGfxUniformBufferPt
 {
 	ASSERT(ptrUniformBuffer);
 	ASSERT(ptrUniformBuffer->GetSize() >= offset + range);
+	ASSERT(m_vkDescriptorSet);
+	ASSERT(m_ptrDescriptorLayout);
 
 	if (m_ptrDescriptorLayout->IsUniformBlockValid(name)) {
+		m_bufferDescriptorInfos[name].bDirty = true;
 		m_bufferDescriptorInfos[name].offset = offset;
 		m_bufferDescriptorInfos[name].range = range;
 		m_bufferDescriptorInfos[name].ptrUniformBuffer = ptrUniformBuffer;
-		m_bDirty = true;
 		return true;
 	}
 	else {
@@ -156,6 +159,7 @@ bool CVKDescriptorSet::SetUniformBuffer(uint32_t name, const CGfxUniformBufferPt
 
 const CGfxDescriptorLayoutPtr CVKDescriptorSet::GetDescriptorLayout(void) const
 {
+	ASSERT(m_ptrDescriptorLayout);
 	return m_ptrDescriptorLayout;
 }
 
@@ -185,14 +189,17 @@ const DescriptorBufferInfo* CVKDescriptorSet::GetDescriptorBufferInfo(uint32_t n
 
 void CVKDescriptorSet::Update(void)
 {
-	if (m_bDirty) {
-		m_bDirty = false;
+	ASSERT(m_vkDescriptorSet);
+	ASSERT(m_ptrDescriptorLayout);
 
-		eastl::vector<VkWriteDescriptorSet> writes;
-		eastl::vector<VkDescriptorImageInfo> imageInfos;
-		eastl::vector<VkDescriptorBufferInfo> bufferInfos;
+	eastl::vector<VkWriteDescriptorSet> writes;
+	eastl::vector<VkDescriptorImageInfo> imageInfos;
+	eastl::vector<VkDescriptorBufferInfo> bufferInfos;
 
-		for (const auto& itImage : m_imageDescriptorInfos) {
+	for (auto& itImage : m_imageDescriptorInfos) {
+		if (itImage.second.bDirty) {
+			itImage.second.bDirty = false;
+
 			bool bTextureInputAttachment;
 
 			if (itImage.second.ptrTextureInputAttachment) {
@@ -249,8 +256,12 @@ void CVKDescriptorSet::Update(void)
 			write.pTexelBufferView = nullptr;
 			writes.emplace_back(write);
 		}
+	}
 
-		for (const auto& itBuffer : m_bufferDescriptorInfos) {
+	for (auto& itBuffer : m_bufferDescriptorInfos) {
+		if (itBuffer.second.bDirty) {
+			itBuffer.second.bDirty = false;
+
 			VkDescriptorBufferInfo bufferInfo = {};
 			bufferInfo.buffer = ((CVKUniformBuffer*)itBuffer.second.ptrUniformBuffer.GetPointer())->GetBuffer();
 			bufferInfo.offset = itBuffer.second.offset;
@@ -270,7 +281,9 @@ void CVKDescriptorSet::Update(void)
 			write.pTexelBufferView = nullptr;
 			writes.emplace_back(write);
 		}
+	}
 
+	if (writes.empty() == false) {
 		vkUpdateDescriptorSets(m_pDevice->GetDevice(), writes.size(), writes.data(), 0, nullptr);
 	}
 }
@@ -278,6 +291,8 @@ void CVKDescriptorSet::Update(void)
 void CVKDescriptorSet::Bind(VkCommandBuffer vkCommandBuffer, VkPipelineBindPoint vkPipelineBindPoint, VkPipelineLayout vkPipelineLayout) const
 {
 	ASSERT(vkCommandBuffer);
+	ASSERT(m_vkDescriptorSet);
+	ASSERT(m_ptrDescriptorLayout);
 
 	eastl::vector<uint32_t> offsets;
 

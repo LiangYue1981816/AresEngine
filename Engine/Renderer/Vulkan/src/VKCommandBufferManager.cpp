@@ -4,7 +4,7 @@
 CVKCommandBufferManager::CVKCommandBufferManager(CVKDevice* pDevice)
 	: m_pDevice(pDevice)
 {
-	ASSERT(m_pDevice);
+
 }
 
 CVKCommandBufferManager::~CVKCommandBufferManager(void)
@@ -36,15 +36,16 @@ CVKCommandBuffer* CVKCommandBufferManager::Create(uint32_t pool, bool bMainComma
 		}
 
 		CVKCommandBuffer* pCommandBuffer = nullptr;
-		{
-			if (m_pCommandBuffers[m_vkCommandPools[pool]][bMainCommandBuffer].empty()) {
-				pCommandBuffer = new CVKCommandBuffer(m_pDevice, this, m_vkCommandPools[pool], bMainCommandBuffer);
-			}
-			else {
-				pCommandBuffer = m_pCommandBuffers[m_vkCommandPools[pool]][bMainCommandBuffer].front();
-				m_pCommandBuffers[m_vkCommandPools[pool]][bMainCommandBuffer].pop_front();
-			}
+		VkCommandPool vkCommandPool = m_vkCommandPools[pool];
+
+		if (m_pCommandBuffers[vkCommandPool][bMainCommandBuffer].empty()) {
+			pCommandBuffer = new CVKCommandBuffer(m_pDevice, this, vkCommandPool, bMainCommandBuffer);
 		}
+		else {
+			pCommandBuffer = m_pCommandBuffers[vkCommandPool][bMainCommandBuffer].front();
+			m_pCommandBuffers[vkCommandPool][bMainCommandBuffer].pop_front();
+		}
+
 		return pCommandBuffer;
 	}
 }
@@ -54,8 +55,6 @@ void CVKCommandBufferManager::Destroy(CVKCommandBuffer* pCommandBuffer)
 	mutex_autolock autolock(&lock);
 	{
 		ASSERT(pCommandBuffer);
-
-		pCommandBuffer->Clearup();
 		m_pCommandBuffers[pCommandBuffer->GetCommandPool()][pCommandBuffer->IsMainCommandBuffer()].emplace_back(pCommandBuffer);
 	}
 }

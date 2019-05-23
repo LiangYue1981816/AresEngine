@@ -16,6 +16,7 @@ public:
 
 
 public:
+	virtual uint32_t GetInstanceBinding(void) const = 0;
 	virtual uint32_t GetInstanceFormat(void) const = 0;
 	virtual uint32_t GetInstanceCount(void) const = 0;
 	virtual uint32_t GetSize(void) const = 0;

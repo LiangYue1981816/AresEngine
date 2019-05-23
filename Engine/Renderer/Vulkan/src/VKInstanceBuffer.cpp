@@ -12,9 +12,6 @@ CVKInstanceBuffer::CVKInstanceBuffer(CVKDevice* pDevice, uint32_t instanceFormat
 	, m_format(instanceFormat)
 	, m_count(0)
 {
-	ASSERT(m_pDevice);
-	ASSERT(GetInstanceStride(m_format) != 0);
-
 	m_pBuffer = new CVKBuffer(pDevice, INSTANCE_BUFFER_SIZE, VK_BUFFER_USAGE_VERTEX_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
 	CGfxProfiler::IncInstanceBufferSize(m_pBuffer->GetSize());
 }
@@ -23,6 +20,11 @@ CVKInstanceBuffer::~CVKInstanceBuffer(void)
 {
 	CGfxProfiler::DecInstanceBufferSize(m_pBuffer->GetSize());
 	delete m_pBuffer;
+}
+
+uint32_t CVKInstanceBuffer::GetInstanceBinding(void) const
+{
+	return m_binding;
 }
 
 uint32_t CVKInstanceBuffer::GetInstanceFormat(void) const

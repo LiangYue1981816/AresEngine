@@ -8,8 +8,6 @@ CVKPipeline::CVKPipeline(CVKDevice* pDevice)
 	, m_vkPipeline(VK_NULL_HANDLE)
 	, m_vkPipelineLayout(VK_NULL_HANDLE)
 {
-	ASSERT(m_pDevice);
-
 	m_ptrDescriptorLayouts[DESCRIPTOR_SET_ENGINE] = VKRenderer()->NewDescriptorLayout(DESCRIPTOR_SET_ENGINE);
 	m_ptrDescriptorLayouts[DESCRIPTOR_SET_CAMERA] = VKRenderer()->NewDescriptorLayout(DESCRIPTOR_SET_CAMERA);
 	m_ptrDescriptorLayouts[DESCRIPTOR_SET_PASS] = VKRenderer()->NewDescriptorLayout(DESCRIPTOR_SET_PASS);
@@ -101,15 +99,15 @@ bool CVKPipeline::CreateShaderStages(eastl::vector<VkPipelineShaderStageCreateIn
 {
 	for (int indexShader = 0; indexShader < compute_shader - vertex_shader + 1; indexShader++) {
 		if (m_pShaders[indexShader] && m_pShaders[indexShader]->IsValid()) {
-			VkPipelineShaderStageCreateInfo createInfo = {};
-			createInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
-			createInfo.pNext = nullptr;
-			createInfo.flags = 0;
-			createInfo.stage = vkGetShaderStageFlagBits((shader_kind)indexShader);
-			createInfo.module = m_pShaders[indexShader]->GetShader();
-			createInfo.pName = "main";
-			createInfo.pSpecializationInfo = nullptr;
-			shaders.emplace_back(createInfo);
+			VkPipelineShaderStageCreateInfo shaderStageCreateInfo = {};
+			shaderStageCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
+			shaderStageCreateInfo.pNext = nullptr;
+			shaderStageCreateInfo.flags = 0;
+			shaderStageCreateInfo.stage = vkGetShaderStageFlagBits((shader_kind)indexShader);
+			shaderStageCreateInfo.module = m_pShaders[indexShader]->GetShader();
+			shaderStageCreateInfo.pName = "main";
+			shaderStageCreateInfo.pSpecializationInfo = nullptr;
+			shaders.emplace_back(shaderStageCreateInfo);
 		}
 	}
 
@@ -441,17 +439,23 @@ bool CVKPipeline::IsCompatibleVertexFormat(uint32_t binding, uint32_t format) co
 void CVKPipeline::Bind(VkCommandBuffer vkCommandBuffer, VkPipelineBindPoint pipelineBindPoint)
 {
 	ASSERT(vkCommandBuffer);
+	ASSERT(m_vkPipeline);
+	ASSERT(m_vkPipelineLayout);
+
 	vkCmdBindPipeline(vkCommandBuffer, pipelineBindPoint, m_vkPipeline);
 }
 
 void CVKPipeline::Uniform1i(VkCommandBuffer vkCommandBuffer, uint32_t name, int v0) const
 {
+	ASSERT(vkCommandBuffer);
+	ASSERT(m_vkPipeline);
+	ASSERT(m_vkPipelineLayout);
+
 	const auto& itPushConstant = m_pushConstantRanges.find(name);
 
 	if (itPushConstant != m_pushConstantRanges.end()) {
 		glm::ivec4 vec(v0, 0, 0, 0);
 
-		ASSERT(vkCommandBuffer);
 		ASSERT(itPushConstant->second.size == sizeof(vec));
 		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, itPushConstant->second.stageFlags, itPushConstant->second.offset, itPushConstant->second.size, &vec);
 	}
@@ -459,12 +463,15 @@ void CVKPipeline::Uniform1i(VkCommandBuffer vkCommandBuffer, uint32_t name, int 
 
 void CVKPipeline::Uniform2i(VkCommandBuffer vkCommandBuffer, uint32_t name, int v0, int v1) const
 {
+	ASSERT(vkCommandBuffer);
+	ASSERT(m_vkPipeline);
+	ASSERT(m_vkPipelineLayout);
+
 	const auto& itPushConstant = m_pushConstantRanges.find(name);
 
 	if (itPushConstant != m_pushConstantRanges.end()) {
 		glm::ivec4 vec(v0, v1, 0, 0);
 
-		ASSERT(vkCommandBuffer);
 		ASSERT(itPushConstant->second.size == sizeof(vec));
 		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, itPushConstant->second.stageFlags, itPushConstant->second.offset, itPushConstant->second.size, &vec);
 	}
@@ -472,12 +479,15 @@ void CVKPipeline::Uniform2i(VkCommandBuffer vkCommandBuffer, uint32_t name, int 
 
 void CVKPipeline::Uniform3i(VkCommandBuffer vkCommandBuffer, uint32_t name, int v0, int v1, int v2) const
 {
+	ASSERT(vkCommandBuffer);
+	ASSERT(m_vkPipeline);
+	ASSERT(m_vkPipelineLayout);
+
 	const auto& itPushConstant = m_pushConstantRanges.find(name);
 
 	if (itPushConstant != m_pushConstantRanges.end()) {
 		glm::ivec4 vec(v0, v1, v2, 0);
 
-		ASSERT(vkCommandBuffer);
 		ASSERT(itPushConstant->second.size == sizeof(vec));
 		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, itPushConstant->second.stageFlags, itPushConstant->second.offset, itPushConstant->second.size, &vec);
 	}
@@ -485,12 +495,15 @@ void CVKPipeline::Uniform3i(VkCommandBuffer vkCommandBuffer, uint32_t name, int 
 
 void CVKPipeline::Uniform4i(VkCommandBuffer vkCommandBuffer, uint32_t name, int v0, int v1, int v2, int v3) const
 {
+	ASSERT(vkCommandBuffer);
+	ASSERT(m_vkPipeline);
+	ASSERT(m_vkPipelineLayout);
+
 	const auto& itPushConstant = m_pushConstantRanges.find(name);
 
 	if (itPushConstant != m_pushConstantRanges.end()) {
 		glm::ivec4 vec(v0, v1, v2, v3);
 
-		ASSERT(vkCommandBuffer);
 		ASSERT(itPushConstant->second.size == sizeof(vec));
 		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, itPushConstant->second.stageFlags, itPushConstant->second.offset, itPushConstant->second.size, &vec);
 	}
@@ -498,12 +511,15 @@ void CVKPipeline::Uniform4i(VkCommandBuffer vkCommandBuffer, uint32_t name, int 
 
 void CVKPipeline::Uniform1f(VkCommandBuffer vkCommandBuffer, uint32_t name, float v0) const
 {
+	ASSERT(vkCommandBuffer);
+	ASSERT(m_vkPipeline);
+	ASSERT(m_vkPipelineLayout);
+
 	const auto& itPushConstant = m_pushConstantRanges.find(name);
 
 	if (itPushConstant != m_pushConstantRanges.end()) {
 		glm::vec4 vec(v0, 0.0f, 0.0f, 0.0f);
 
-		ASSERT(vkCommandBuffer);
 		ASSERT(itPushConstant->second.size == sizeof(vec));
 		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, itPushConstant->second.stageFlags, itPushConstant->second.offset, itPushConstant->second.size, &vec);
 	}
@@ -511,12 +527,15 @@ void CVKPipeline::Uniform1f(VkCommandBuffer vkCommandBuffer, uint32_t name, floa
 
 void CVKPipeline::Uniform2f(VkCommandBuffer vkCommandBuffer, uint32_t name, float v0, float v1) const
 {
+	ASSERT(vkCommandBuffer);
+	ASSERT(m_vkPipeline);
+	ASSERT(m_vkPipelineLayout);
+
 	const auto& itPushConstant = m_pushConstantRanges.find(name);
 
 	if (itPushConstant != m_pushConstantRanges.end()) {
 		glm::vec4 vec(v0, v1, 0.0f, 0.0f);
 
-		ASSERT(vkCommandBuffer);
 		ASSERT(itPushConstant->second.size == sizeof(vec));
 		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, itPushConstant->second.stageFlags, itPushConstant->second.offset, itPushConstant->second.size, &vec);
 	}
@@ -524,12 +543,15 @@ void CVKPipeline::Uniform2f(VkCommandBuffer vkCommandBuffer, uint32_t name, floa
 
 void CVKPipeline::Uniform3f(VkCommandBuffer vkCommandBuffer, uint32_t name, float v0, float v1, float v2) const
 {
+	ASSERT(vkCommandBuffer);
+	ASSERT(m_vkPipeline);
+	ASSERT(m_vkPipelineLayout);
+
 	const auto& itPushConstant = m_pushConstantRanges.find(name);
 
 	if (itPushConstant != m_pushConstantRanges.end()) {
 		glm::vec4 vec(v0, v1, v2, 0.0f);
 
-		ASSERT(vkCommandBuffer);
 		ASSERT(itPushConstant->second.size == sizeof(vec));
 		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, itPushConstant->second.stageFlags, itPushConstant->second.offset, itPushConstant->second.size, &vec);
 	}
@@ -537,12 +559,15 @@ void CVKPipeline::Uniform3f(VkCommandBuffer vkCommandBuffer, uint32_t name, floa
 
 void CVKPipeline::Uniform4f(VkCommandBuffer vkCommandBuffer, uint32_t name, float v0, float v1, float v2, float v3) const
 {
+	ASSERT(vkCommandBuffer);
+	ASSERT(m_vkPipeline);
+	ASSERT(m_vkPipelineLayout);
+
 	const auto& itPushConstant = m_pushConstantRanges.find(name);
 
 	if (itPushConstant != m_pushConstantRanges.end()) {
 		glm::vec4 vec(v0, v1, v2, v3);
 
-		ASSERT(vkCommandBuffer);
 		ASSERT(itPushConstant->second.size == sizeof(vec));
 		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, itPushConstant->second.stageFlags, itPushConstant->second.offset, itPushConstant->second.size, &vec);
 	}
@@ -550,11 +575,14 @@ void CVKPipeline::Uniform4f(VkCommandBuffer vkCommandBuffer, uint32_t name, floa
 
 void CVKPipeline::Uniform1iv(VkCommandBuffer vkCommandBuffer, uint32_t name, int count, const int* value) const
 {
+	ASSERT(value);
+	ASSERT(vkCommandBuffer);
+	ASSERT(m_vkPipeline);
+	ASSERT(m_vkPipelineLayout);
+
 	const auto& itPushConstant = m_pushConstantRanges.find(name);
 
 	if (itPushConstant != m_pushConstantRanges.end()) {
-		ASSERT(value);
-		ASSERT(vkCommandBuffer);
 		ASSERT(itPushConstant->second.size == sizeof(*value) * count);
 		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, itPushConstant->second.stageFlags, itPushConstant->second.offset, itPushConstant->second.size, value);
 	}
@@ -562,11 +590,14 @@ void CVKPipeline::Uniform1iv(VkCommandBuffer vkCommandBuffer, uint32_t name, int
 
 void CVKPipeline::Uniform2iv(VkCommandBuffer vkCommandBuffer, uint32_t name, int count, const int* value) const
 {
+	ASSERT(value);
+	ASSERT(vkCommandBuffer);
+	ASSERT(m_vkPipeline);
+	ASSERT(m_vkPipelineLayout);
+
 	const auto& itPushConstant = m_pushConstantRanges.find(name);
 
 	if (itPushConstant != m_pushConstantRanges.end()) {
-		ASSERT(value);
-		ASSERT(vkCommandBuffer);
 		ASSERT(itPushConstant->second.size == sizeof(*value) * count);
 		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, itPushConstant->second.stageFlags, itPushConstant->second.offset, itPushConstant->second.size, value);
 	}
@@ -574,11 +605,14 @@ void CVKPipeline::Uniform2iv(VkCommandBuffer vkCommandBuffer, uint32_t name, int
 
 void CVKPipeline::Uniform3iv(VkCommandBuffer vkCommandBuffer, uint32_t name, int count, const int* value) const
 {
+	ASSERT(value);
+	ASSERT(vkCommandBuffer);
+	ASSERT(m_vkPipeline);
+	ASSERT(m_vkPipelineLayout);
+
 	const auto& itPushConstant = m_pushConstantRanges.find(name);
 
 	if (itPushConstant != m_pushConstantRanges.end()) {
-		ASSERT(value);
-		ASSERT(vkCommandBuffer);
 		ASSERT(itPushConstant->second.size == sizeof(*value) * count);
 		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, itPushConstant->second.stageFlags, itPushConstant->second.offset, itPushConstant->second.size, value);
 	}
@@ -586,11 +620,14 @@ void CVKPipeline::Uniform3iv(VkCommandBuffer vkCommandBuffer, uint32_t name, int
 
 void CVKPipeline::Uniform4iv(VkCommandBuffer vkCommandBuffer, uint32_t name, int count, const int* value) const
 {
+	ASSERT(value);
+	ASSERT(vkCommandBuffer);
+	ASSERT(m_vkPipeline);
+	ASSERT(m_vkPipelineLayout);
+
 	const auto& itPushConstant = m_pushConstantRanges.find(name);
 
 	if (itPushConstant != m_pushConstantRanges.end()) {
-		ASSERT(value);
-		ASSERT(vkCommandBuffer);
 		ASSERT(itPushConstant->second.size == sizeof(*value) * count);
 		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, itPushConstant->second.stageFlags, itPushConstant->second.offset, itPushConstant->second.size, value);
 	}
@@ -598,11 +635,14 @@ void CVKPipeline::Uniform4iv(VkCommandBuffer vkCommandBuffer, uint32_t name, int
 
 void CVKPipeline::Uniform1fv(VkCommandBuffer vkCommandBuffer, uint32_t name, int count, const float* value) const
 {
+	ASSERT(value);
+	ASSERT(vkCommandBuffer);
+	ASSERT(m_vkPipeline);
+	ASSERT(m_vkPipelineLayout);
+
 	const auto& itPushConstant = m_pushConstantRanges.find(name);
 
 	if (itPushConstant != m_pushConstantRanges.end()) {
-		ASSERT(value);
-		ASSERT(vkCommandBuffer);
 		ASSERT(itPushConstant->second.size == sizeof(*value) * count);
 		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, itPushConstant->second.stageFlags, itPushConstant->second.offset, itPushConstant->second.size, value);
 	}
@@ -610,11 +650,14 @@ void CVKPipeline::Uniform1fv(VkCommandBuffer vkCommandBuffer, uint32_t name, int
 
 void CVKPipeline::Uniform2fv(VkCommandBuffer vkCommandBuffer, uint32_t name, int count, const float* value) const
 {
+	ASSERT(value);
+	ASSERT(vkCommandBuffer);
+	ASSERT(m_vkPipeline);
+	ASSERT(m_vkPipelineLayout);
+
 	const auto& itPushConstant = m_pushConstantRanges.find(name);
 
 	if (itPushConstant != m_pushConstantRanges.end()) {
-		ASSERT(value);
-		ASSERT(vkCommandBuffer);
 		ASSERT(itPushConstant->second.size == sizeof(*value) * count);
 		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, itPushConstant->second.stageFlags, itPushConstant->second.offset, itPushConstant->second.size, value);
 	}
@@ -622,11 +665,14 @@ void CVKPipeline::Uniform2fv(VkCommandBuffer vkCommandBuffer, uint32_t name, int
 
 void CVKPipeline::Uniform3fv(VkCommandBuffer vkCommandBuffer, uint32_t name, int count, const float* value) const
 {
+	ASSERT(value);
+	ASSERT(vkCommandBuffer);
+	ASSERT(m_vkPipeline);
+	ASSERT(m_vkPipelineLayout);
+
 	const auto& itPushConstant = m_pushConstantRanges.find(name);
 
 	if (itPushConstant != m_pushConstantRanges.end()) {
-		ASSERT(value);
-		ASSERT(vkCommandBuffer);
 		ASSERT(itPushConstant->second.size == sizeof(*value) * count);
 		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, itPushConstant->second.stageFlags, itPushConstant->second.offset, itPushConstant->second.size, value);
 	}
@@ -634,11 +680,14 @@ void CVKPipeline::Uniform3fv(VkCommandBuffer vkCommandBuffer, uint32_t name, int
 
 void CVKPipeline::Uniform4fv(VkCommandBuffer vkCommandBuffer, uint32_t name, int count, const float* value) const
 {
+	ASSERT(value);
+	ASSERT(vkCommandBuffer);
+	ASSERT(m_vkPipeline);
+	ASSERT(m_vkPipelineLayout);
+
 	const auto& itPushConstant = m_pushConstantRanges.find(name);
 
 	if (itPushConstant != m_pushConstantRanges.end()) {
-		ASSERT(value);
-		ASSERT(vkCommandBuffer);
 		ASSERT(itPushConstant->second.size == sizeof(*value) * count);
 		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, itPushConstant->second.stageFlags, itPushConstant->second.offset, itPushConstant->second.size, value);
 	}
@@ -646,11 +695,14 @@ void CVKPipeline::Uniform4fv(VkCommandBuffer vkCommandBuffer, uint32_t name, int
 
 void CVKPipeline::UniformMatrix2fv(VkCommandBuffer vkCommandBuffer, uint32_t name, int count, const float* value) const
 {
+	ASSERT(value);
+	ASSERT(vkCommandBuffer);
+	ASSERT(m_vkPipeline);
+	ASSERT(m_vkPipelineLayout);
+
 	const auto& itPushConstant = m_pushConstantRanges.find(name);
 
 	if (itPushConstant != m_pushConstantRanges.end()) {
-		ASSERT(value);
-		ASSERT(vkCommandBuffer);
 		ASSERT(itPushConstant->second.size == sizeof(*value) * count);
 		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, itPushConstant->second.stageFlags, itPushConstant->second.offset, itPushConstant->second.size, value);
 	}
@@ -658,11 +710,14 @@ void CVKPipeline::UniformMatrix2fv(VkCommandBuffer vkCommandBuffer, uint32_t nam
 
 void CVKPipeline::UniformMatrix3fv(VkCommandBuffer vkCommandBuffer, uint32_t name, int count, const float* value) const
 {
+	ASSERT(value);
+	ASSERT(vkCommandBuffer);
+	ASSERT(m_vkPipeline);
+	ASSERT(m_vkPipelineLayout);
+
 	const auto& itPushConstant = m_pushConstantRanges.find(name);
 
 	if (itPushConstant != m_pushConstantRanges.end()) {
-		ASSERT(value);
-		ASSERT(vkCommandBuffer);
 		ASSERT(itPushConstant->second.size == sizeof(*value) * count);
 		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, itPushConstant->second.stageFlags, itPushConstant->second.offset, itPushConstant->second.size, value);
 	}
@@ -670,11 +725,14 @@ void CVKPipeline::UniformMatrix3fv(VkCommandBuffer vkCommandBuffer, uint32_t nam
 
 void CVKPipeline::UniformMatrix4fv(VkCommandBuffer vkCommandBuffer, uint32_t name, int count, const float* value) const
 {
+	ASSERT(value);
+	ASSERT(vkCommandBuffer);
+	ASSERT(m_vkPipeline);
+	ASSERT(m_vkPipelineLayout);
+
 	const auto& itPushConstant = m_pushConstantRanges.find(name);
 
 	if (itPushConstant != m_pushConstantRanges.end()) {
-		ASSERT(value);
-		ASSERT(vkCommandBuffer);
 		ASSERT(itPushConstant->second.size == sizeof(*value) * count);
 		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, itPushConstant->second.stageFlags, itPushConstant->second.offset, itPushConstant->second.size, value);
 	}

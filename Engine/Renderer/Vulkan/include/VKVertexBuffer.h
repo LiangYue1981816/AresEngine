@@ -13,6 +13,7 @@ private:
 
 
 public:
+	uint32_t GetVertexBinding(void) const;
 	uint32_t GetVertexFormat(void) const;
 	uint32_t GetVertexCount(void) const;
 	uint32_t GetSize(void) const;

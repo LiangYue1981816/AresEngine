@@ -67,6 +67,11 @@ uint32_t CGLES3MeshDraw::GetIndexOffset(void) const
 	}
 }
 
+uint32_t CGLES3MeshDraw::GetVertexBinding(void) const
+{
+	return m_ptrMesh->GetVertexBuffer()->GetVertexBinding();
+}
+
 uint32_t CGLES3MeshDraw::GetVertexFormat(void) const
 {
 	return m_ptrMesh->GetVertexBuffer()->GetVertexFormat();
@@ -75,6 +80,11 @@ uint32_t CGLES3MeshDraw::GetVertexFormat(void) const
 uint32_t CGLES3MeshDraw::GetVertexCount(void) const
 {
 	return m_ptrMesh->GetVertexBuffer()->GetVertexCount();
+}
+
+uint32_t CGLES3MeshDraw::GetInstanceBinding(void) const
+{
+	return m_pInstanceBuffer[GLES3Renderer()->GetSwapChain()->GetFrameIndex()]->GetInstanceBinding();
 }
 
 uint32_t CGLES3MeshDraw::GetInstanceFormat(void) const

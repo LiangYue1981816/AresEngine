@@ -9,8 +9,7 @@ CVKMesh::CVKMesh(CVKDevice* pDevice, CVKMeshManager* pManager, uint32_t name)
 	, m_pIndexBuffer(nullptr)
 	, m_pVertexBuffer(nullptr)
 {
-	ASSERT(m_pDevice);
-	ASSERT(m_pManager);
+
 }
 
 CVKMesh::~CVKMesh(void)

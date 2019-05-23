@@ -13,14 +13,14 @@ CVKMemory::CVKMemory(CVKDevice* pDevice, CVKMemoryAllocator* pAllocator, VkDevic
 	, m_memoryMapAddress(nullptr)
 
 	, bInUse(false)
+
 	, pNext(nullptr)
 	, pPrev(nullptr)
+
 	, pFreeNext(nullptr)
 	, pFreePrev(nullptr)
 {
-	ASSERT(m_pDevice);
-	ASSERT(m_pAllocator);
-	ASSERT(m_memorySize);
+
 }
 
 CVKMemory::~CVKMemory(void)
@@ -124,8 +124,8 @@ bool CVKMemory::FlushMappedMemoryRange(VkDeviceSize offset, VkDeviceSize size)
 	range.memory = m_pAllocator->GetMemory();
 	range.offset = m_memoryOffset + m_memoryMapOffset + offset;
 	range.size = size;
-
 	CALL_VK_FUNCTION_RETURN_BOOL(vkFlushMappedMemoryRanges(m_pDevice->GetDevice(), 1, &range));
+
 	return true;
 }
 
@@ -145,8 +145,8 @@ bool CVKMemory::InvalidateMappedMemoryRange(VkDeviceSize offset, VkDeviceSize si
 	range.memory = m_pAllocator->GetMemory();
 	range.offset = m_memoryOffset + m_memoryMapOffset + offset;
 	range.size = size;
-
 	CALL_VK_FUNCTION_RETURN_BOOL(vkInvalidateMappedMemoryRanges(m_pDevice->GetDevice(), 1, &range));
+
 	return true;
 }
 

@@ -10,8 +10,7 @@ CVKDescriptorLayout::CVKDescriptorLayout(CVKDevice* pDevice, CVKDescriptorLayout
 	, m_numDescriptors{ 0 }
 	, m_vkDescriptorLayout(VK_NULL_HANDLE)
 {
-	ASSERT(m_pDevice);
-	ASSERT(m_pManager);
+
 }
 
 CVKDescriptorLayout::~CVKDescriptorLayout(void)
@@ -55,13 +54,13 @@ bool CVKDescriptorLayout::Create(void)
 				}
 			}
 
-			VkDescriptorSetLayoutCreateInfo createInfo = {};
-			createInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO;
-			createInfo.pNext = nullptr;
-			createInfo.flags = 0;
-			createInfo.bindingCount = bindings.size();
-			createInfo.pBindings = bindings.data();
-			CALL_VK_FUNCTION_BREAK(vkCreateDescriptorSetLayout(m_pDevice->GetDevice(), &createInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkDescriptorLayout));
+			VkDescriptorSetLayoutCreateInfo layoutCreateInfo = {};
+			layoutCreateInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO;
+			layoutCreateInfo.pNext = nullptr;
+			layoutCreateInfo.flags = 0;
+			layoutCreateInfo.bindingCount = bindings.size();
+			layoutCreateInfo.pBindings = bindings.data();
+			CALL_VK_FUNCTION_BREAK(vkCreateDescriptorSetLayout(m_pDevice->GetDevice(), &layoutCreateInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkDescriptorLayout));
 
 			m_numDescriptors[VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER_DYNAMIC] = m_uniformBlockBindings.size();
 			m_numDescriptors[VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER] = m_sampledImageBindings.size();

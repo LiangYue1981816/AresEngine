@@ -3,13 +3,15 @@
 
 
 typedef struct DescriptorBufferInfo {
-	uint32_t offset;
-	uint32_t range;
+	bool bDirty = false;
+	uint32_t offset = 0;
+	uint32_t range = 0;
 	CGfxUniformBufferPtr ptrUniformBuffer;
 } DescriptorBufferInfo;
 
 typedef struct DescriptorImageInfo {
-	CGfxSampler* pSampler;
+	bool bDirty = false;
+	CGfxSampler* pSampler = nullptr;
 	CGfxTexture2DPtr ptrTexture2D;
 	CGfxTexture2DArrayPtr ptrTexture2DArray;
 	CGfxTextureCubemapPtr ptrTextureCubemap;

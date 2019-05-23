@@ -95,6 +95,7 @@ public:
 
 private:
 	VkFence m_vkFence;
+
 	VkCommandPool m_vkCommandPool;
 	VkCommandBuffer m_vkCommandBuffer;
 
