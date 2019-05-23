@@ -93,7 +93,7 @@ void CGLES3CommandBuffer::Clearup(void)
 
 void CGLES3CommandBuffer::Execute(void) const
 {
-	if (IsMainCommandBuffer() == true && IsInRenderPass() == false) {
+	if (IsMainCommandBuffer() == false || (IsMainCommandBuffer() == true && IsInRenderPass() == false)) {
 		for (const auto& itCommand : m_pCommands) {
 			itCommand->Execute();
 		}
