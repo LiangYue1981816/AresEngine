@@ -15,6 +15,14 @@ private:
 		CGfxRenderTexturePtr ptrDepthStencilTextures[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
 	} RenderParams;
 
+	typedef struct RenderParamsMSAA {
+		CGfxRenderPassPtr ptrRenderPass;
+		CGfxFrameBufferPtr ptrFrameBuffer[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
+		CGfxRenderTexturePtr ptrColorTextures[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
+		CGfxRenderTexturePtr ptrColorTexturesMSAA[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
+		CGfxRenderTexturePtr ptrDepthStencilTexturesMSAA[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
+	} RenderParamsMSAA;
+
 
 protected:
 	CRenderSolutionDefault(void);
@@ -38,17 +46,8 @@ public:
 
 private:
 	bool m_bEnableMSAA;
-
-private:
 	RenderParams m_renderParams;
-
-	/*
-private:
-	CGfxRenderPassPtr m_ptrRenderPassMSAA;
-	CGfxRenderTexturePtr m_ptrColorTextureMSAA;
-	CGfxRenderTexturePtr m_ptrDepthStencilTextureMSAA;
-	CGfxFrameBufferPtr m_ptrFrameBufferScreenMSAA[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
-	*/
+	RenderParamsMSAA m_renderParamsMSAA;
 
 private:
 	CGfxCommandBufferPtr m_ptrMainCommandBuffer[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
