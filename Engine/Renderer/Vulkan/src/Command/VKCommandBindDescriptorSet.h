@@ -19,11 +19,12 @@ public:
 public:
 	virtual void Execute(void) const
 	{
+		ASSERT(m_vkCommandBuffer);
+		ASSERT(m_ptrDescriptorSet);
+
 		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_BIND_DESCRIPTORSET, "CommandBindDescriptorSet");
 		{
-			if (m_ptrDescriptorSet) {
-				VKRenderer()->BindDescriptorSet(m_vkCommandBuffer, m_ptrDescriptorSet);
-			}
+			VKRenderer()->BindDescriptorSet(m_vkCommandBuffer, m_ptrDescriptorSet);
 		}
 	}
 

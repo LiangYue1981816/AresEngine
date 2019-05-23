@@ -21,6 +21,8 @@ public:
 public:
 	virtual void Execute(void) const
 	{
+		ASSERT(m_vkCommandBuffer);
+
 		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_UNIFORM2I, "CommandUniform2i");
 		{
 			if (CVKPipelineCompute* pPipeline = VKRenderer()->GetCurrentPipelineCompute()) {

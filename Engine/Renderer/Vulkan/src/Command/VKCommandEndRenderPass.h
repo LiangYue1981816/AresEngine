@@ -20,6 +20,10 @@ public:
 public:
 	virtual void Execute(void) const
 	{
+		ASSERT(m_vkCommandBuffer);
+		ASSERT(m_ptrRenderPass);
+		ASSERT(m_ptrFrameBuffer);
+
 		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_END_RENDERPASS, "CommandEndRenderPass");
 		{
 			vkCmdEndRenderPass(m_vkCommandBuffer);

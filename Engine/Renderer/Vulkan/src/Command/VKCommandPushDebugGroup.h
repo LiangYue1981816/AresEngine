@@ -20,7 +20,7 @@ public:
 public:
 	virtual void Execute(void) const
 	{
-
+		ASSERT(m_vkCommandBuffer);
 	}
 
 

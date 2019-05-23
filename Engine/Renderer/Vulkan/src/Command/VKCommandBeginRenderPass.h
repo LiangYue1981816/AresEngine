@@ -20,6 +20,10 @@ public:
 public:
 	virtual void Execute(void) const
 	{
+		ASSERT(m_vkCommandBuffer);
+		ASSERT(m_ptrRenderPass);
+		ASSERT(m_ptrFrameBuffer);
+
 		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_BEGIN_RENDERPASS, "CommandBeginRenderPass");
 		{
 			eastl::vector<VkClearValue> clearValues;

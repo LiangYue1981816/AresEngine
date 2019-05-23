@@ -19,10 +19,11 @@ public:
 public:
 	virtual void Execute(void) const
 	{
-		if (m_ptrCommandBuffer) {
-			VkCommandBuffer vkExecuteCommandBuffer = ((CVKCommandBuffer*)m_ptrCommandBuffer.GetPointer())->GetCommandBuffer();
-			vkCmdExecuteCommands(m_vkCommandBuffer, 1, &vkExecuteCommandBuffer);
-		}
+		ASSERT(m_vkCommandBuffer);
+		ASSERT(m_ptrCommandBuffer);
+
+		VkCommandBuffer vkExecuteCommandBuffer = ((CVKCommandBuffer*)m_ptrCommandBuffer.GetPointer())->GetCommandBuffer();
+		vkCmdExecuteCommands(m_vkCommandBuffer, 1, &vkExecuteCommandBuffer);
 	}
 
 

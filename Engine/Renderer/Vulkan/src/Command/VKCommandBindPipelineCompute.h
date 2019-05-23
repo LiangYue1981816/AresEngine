@@ -19,6 +19,9 @@ public:
 public:
 	virtual void Execute(void) const
 	{
+		ASSERT(m_vkCommandBuffer);
+		ASSERT(m_pPipelineCompute);
+
 		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_BIND_PIPELINECOMPUTE, "CommandBindPipelineCompute");
 		{
 			VKRenderer()->BindPipelineCompute(m_vkCommandBuffer, m_pPipelineCompute);
