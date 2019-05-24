@@ -23,6 +23,8 @@ public:
 public:
 	virtual void Execute(void) const
 	{
+		ASSERT(m_pPipelineCompute || m_pPipelineGraphics);
+
 		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_UNIFORM3F, "CommandUniform3f");
 		{
 			if (m_pPipelineCompute) {

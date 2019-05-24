@@ -30,8 +30,6 @@ public:
 
 
 private:
-	CVKPipelineCompute* m_pPipelineCompute;
-
-private:
 	VkCommandBuffer m_vkCommandBuffer;
+	CVKPipelineCompute* m_pPipelineCompute;
 };

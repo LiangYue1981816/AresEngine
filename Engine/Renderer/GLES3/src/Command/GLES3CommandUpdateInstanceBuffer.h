@@ -7,10 +7,9 @@ class CGLES3CommandUpdateInstanceBuffer : public CGfxCommandBase
 public:
 	CGLES3CommandUpdateInstanceBuffer(const CGfxMeshDrawPtr ptrMeshDraw, const uint8_t* pInstanceBuffer, uint32_t size)
 		: m_ptrMeshDraw(ptrMeshDraw)
+		, m_buffer(pInstanceBuffer, pInstanceBuffer + size)
 	{
-		if (pInstanceBuffer && size) {
-			m_buffer.assign(pInstanceBuffer, pInstanceBuffer + size);
-		}
+
 	}
 	virtual ~CGLES3CommandUpdateInstanceBuffer(void)
 	{

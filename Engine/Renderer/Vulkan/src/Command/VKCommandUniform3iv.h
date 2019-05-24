@@ -10,8 +10,8 @@ public:
 		, m_pPipelineCompute((CVKPipelineCompute*)pPipelineCompute)
 		, m_pPipelineGraphics((CVKPipelineGraphics*)pPipelineGraphics)
 		, m_name(name)
+		, m_value(value, value + count)
 	{
-		m_value.assign(value, value + count);
 		Execute();
 	}
 	virtual ~CVKCommandUniform3iv(void)
@@ -23,6 +23,7 @@ public:
 	virtual void Execute(void) const
 	{
 		ASSERT(m_vkCommandBuffer);
+		ASSERT(m_pPipelineCompute || m_pPipelineGraphics);
 
 		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_UNIFORM3IV, "CommandUniform3iv");
 		{

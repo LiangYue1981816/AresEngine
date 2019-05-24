@@ -9,8 +9,9 @@ public:
 		: m_pPipelineCompute((CGLES3PipelineCompute*)pPipelineCompute)
 		, m_pPipelineGraphics((CGLES3PipelineGraphics*)pPipelineGraphics)
 		, m_name(name)
+		, m_value(value, value + count)
 	{
-		m_value.assign(value, value + count);
+
 	}
 	virtual ~CGLES3CommandUniform3fv(void)
 	{
@@ -20,6 +21,8 @@ public:
 public:
 	virtual void Execute(void) const
 	{
+		ASSERT(m_pPipelineCompute || m_pPipelineGraphics);
+
 		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_UNIFORM3FV, "CommandUniform3fv");
 		{
 			if (m_pPipelineCompute) {

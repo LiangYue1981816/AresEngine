@@ -26,6 +26,7 @@ public:
 	virtual void Execute(void) const
 	{
 		ASSERT(m_vkCommandBuffer);
+		ASSERT(m_pPipelineCompute || m_pPipelineGraphics);
 
 		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_UNIFORM4I, "CommandUniform4i");
 		{

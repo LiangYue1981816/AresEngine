@@ -8,11 +8,9 @@ public:
 	CVKCommandUpdateInstanceBuffer(VkCommandBuffer vkCommandBuffer, const CGfxMeshDrawPtr ptrMeshDraw, const uint8_t* pInstanceBuffer, uint32_t size)
 		: m_vkCommandBuffer(vkCommandBuffer)
 		, m_ptrMeshDraw(ptrMeshDraw)
+		, m_buffer(pInstanceBuffer, pInstanceBuffer + size)
 	{
-		if (pInstanceBuffer && size) {
-			m_buffer.assign(pInstanceBuffer, pInstanceBuffer + size);
-			Execute();
-		}
+		Execute();
 	}
 	virtual ~CVKCommandUpdateInstanceBuffer(void)
 	{
@@ -24,11 +22,12 @@ public:
 	{
 		ASSERT(m_vkCommandBuffer);
 		ASSERT(m_ptrMeshDraw);
-		ASSERT(m_buffer.size());
 
 		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_UPDATE_INSTANCEBUFFER, "CommandUpdateInstanceBuffer");
 		{
-			m_ptrMeshDraw->InstanceBufferData(m_buffer.size(), m_buffer.data());
+			if (m_buffer.empty() == false) {
+				m_ptrMeshDraw->InstanceBufferData(m_buffer.size(), m_buffer.data());
+			}
 		}
 	}
 
