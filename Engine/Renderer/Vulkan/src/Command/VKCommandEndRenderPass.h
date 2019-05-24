@@ -32,9 +32,9 @@ public:
 
 
 private:
-	VkCommandBuffer m_vkCommandBuffer;
-
-private:
 	CGfxFrameBufferPtr m_ptrFrameBuffer;
 	CGfxRenderPassPtr m_ptrRenderPass;
+
+private:
+	VkCommandBuffer m_vkCommandBuffer;
 };

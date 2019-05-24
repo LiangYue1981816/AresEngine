@@ -25,8 +25,8 @@ public:
 
 
 private:
-	VkCommandBuffer m_vkCommandBuffer;
+	eastl::string m_strMessage;
 
 private:
-	eastl::string m_strMessage;
+	VkCommandBuffer m_vkCommandBuffer;
 };

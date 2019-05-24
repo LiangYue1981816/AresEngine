@@ -29,8 +29,8 @@ public:
 
 
 private:
-	VkCommandBuffer m_vkCommandBuffer;
+	float m_depth;
 
 private:
-	float m_depth;
+	VkCommandBuffer m_vkCommandBuffer;
 };

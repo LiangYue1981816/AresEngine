@@ -39,11 +39,11 @@ public:
 
 
 private:
-	VkCommandBuffer m_vkCommandBuffer;
-
-private:
 	int m_x;
 	int m_y;
 	int m_width;
 	int m_height;
+
+private:
+	VkCommandBuffer m_vkCommandBuffer;
 };

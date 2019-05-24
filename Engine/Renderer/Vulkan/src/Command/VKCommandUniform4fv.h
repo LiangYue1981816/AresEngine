@@ -5,8 +5,10 @@
 class CVKCommandUniform4fv : public CGfxCommandBase
 {
 public:
-	CVKCommandUniform4fv(VkCommandBuffer vkCommandBuffer, uint32_t name, int count, const float* value)
+	CVKCommandUniform4fv(VkCommandBuffer vkCommandBuffer, const CGfxPipelineCompute* pPipelineCompute, const CGfxPipelineGraphics* pPipelineGraphics, uint32_t name, int count, const float* value)
 		: m_vkCommandBuffer(vkCommandBuffer)
+		, m_pPipelineCompute((CVKPipelineCompute*)pPipelineCompute)
+		, m_pPipelineGraphics((CVKPipelineGraphics*)pPipelineGraphics)
 		, m_name(name)
 	{
 		m_value.assign(value, value + count);
@@ -24,21 +26,23 @@ public:
 
 		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_UNIFORM4FV, "CommandUniform4fv");
 		{
-			if (CVKPipelineCompute* pPipeline = VKRenderer()->GetCurrentPipelineCompute()) {
-				pPipeline->Uniform4fv(m_vkCommandBuffer, m_name, m_value.size(), m_value.data());
+			if (m_pPipelineCompute) {
+				m_pPipelineCompute->Uniform4fv(m_vkCommandBuffer, m_name, m_value.size(), m_value.data());
 			}
 
-			if (CVKPipelineGraphics* pPipeline = VKRenderer()->GetCurrentPipelineGraphics()) {
-				pPipeline->Uniform4fv(m_vkCommandBuffer, m_name, m_value.size(), m_value.data());
+			if (m_pPipelineGraphics) {
+				m_pPipelineGraphics->Uniform4fv(m_vkCommandBuffer, m_name, m_value.size(), m_value.data());
 			}
 		}
 	}
 
 
 private:
-	VkCommandBuffer m_vkCommandBuffer;
-
-private:
 	uint32_t m_name;
 	eastl::vector<float> m_value;
+
+private:
+	VkCommandBuffer m_vkCommandBuffer;
+	CVKPipelineCompute* m_pPipelineCompute;
+	CVKPipelineGraphics* m_pPipelineGraphics;
 };

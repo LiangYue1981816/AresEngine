@@ -76,32 +76,6 @@
 
 class CVKRenderer : public CGfxRenderer
 {
-	friend class CVKCommandBindPipelineCompute;
-	friend class CVKCommandBindPipelineGraphics;
-	friend class CVKCommandBindDescriptorSet;
-	friend class CVKCommandUniform1i;
-	friend class CVKCommandUniform2i;
-	friend class CVKCommandUniform3i;
-	friend class CVKCommandUniform4i;
-	friend class CVKCommandUniform1f;
-	friend class CVKCommandUniform2f;
-	friend class CVKCommandUniform3f;
-	friend class CVKCommandUniform4f;
-	friend class CVKCommandUniform1iv;
-	friend class CVKCommandUniform2iv;
-	friend class CVKCommandUniform3iv;
-	friend class CVKCommandUniform4iv;
-	friend class CVKCommandUniform1fv;
-	friend class CVKCommandUniform2fv;
-	friend class CVKCommandUniform3fv;
-	friend class CVKCommandUniform4fv;
-	friend class CVKCommandUniformMatrix2fv;
-	friend class CVKCommandUniformMatrix3fv;
-	friend class CVKCommandUniformMatrix4fv;
-	friend class CVKCommandDrawInstance;
-	friend class CVKCommandDrawIndirect;
-
-
 public:
 	CVKRenderer(void* hInstance, void* hWnd, void* hDC, int width, int height, GfxPixelFormat format);
 	virtual ~CVKRenderer(void);
@@ -230,14 +204,6 @@ public:
 	void AcquireNextFrame(void);
 	void Present(void);
 
-private:
-	void BindPipelineCompute(VkCommandBuffer vkCommandBuffer, const CGfxPipelineCompute* pPipelineCompute);
-	void BindPipelineGraphics(VkCommandBuffer vkCommandBuffer, const CGfxPipelineGraphics* pPipelineGraphics);
-	void BindDescriptorSet(VkCommandBuffer vkCommandBuffer, const CGfxDescriptorSetPtr ptrDescriptorSet);
-
-	CVKPipelineCompute* GetCurrentPipelineCompute(void) const;
-	CVKPipelineGraphics* GetCurrentPipelineGraphics(void) const;
-
 
 private:
 	CVKInstance* m_pInstance;
@@ -262,8 +228,4 @@ private:
 	CVKFrameBufferManager* m_pFrameBufferManager;
 	CVKDescriptorSetManager* m_pDescriptorSetManager;
 	CVKCommandBufferManager* m_pCommandBufferManager;
-
-private:
-	CVKPipelineCompute* m_pCurrentPipelineCompute;
-	CVKPipelineGraphics* m_pCurrentPipelineGraphics;
 };

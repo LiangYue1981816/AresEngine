@@ -24,9 +24,6 @@ CVKRenderer::CVKRenderer(void* hInstance, void* hWnd, void* hDC, int width, int 
 	, m_pFrameBufferManager(nullptr)
 	, m_pDescriptorSetManager(nullptr)
 	, m_pCommandBufferManager(nullptr)
-
-	, m_pCurrentPipelineCompute(nullptr)
-	, m_pCurrentPipelineGraphics(nullptr)
 {
 	m_pInstance = new CVKInstance(hInstance, hWnd);
 	m_pDevice = new CVKDevice(m_pInstance);
@@ -482,45 +479,4 @@ void CVKRenderer::AcquireNextFrame(void)
 void CVKRenderer::Present(void)
 {
 	m_pSwapChain->Present();
-}
-
-void CVKRenderer::BindPipelineCompute(VkCommandBuffer vkCommandBuffer, const CGfxPipelineCompute* pPipelineCompute)
-{
-	m_pCurrentPipelineCompute = (CVKPipelineCompute*)pPipelineCompute;
-
-	if (m_pCurrentPipelineCompute) {
-		m_pCurrentPipelineCompute->Bind(vkCommandBuffer);
-	}
-}
-
-void CVKRenderer::BindPipelineGraphics(VkCommandBuffer vkCommandBuffer, const CGfxPipelineGraphics* pPipelineGraphics)
-{
-	m_pCurrentPipelineGraphics = (CVKPipelineGraphics*)pPipelineGraphics;
-
-	if (m_pCurrentPipelineGraphics) {
-		m_pCurrentPipelineGraphics->Bind(vkCommandBuffer);
-	}
-}
-
-void CVKRenderer::BindDescriptorSet(VkCommandBuffer vkCommandBuffer, const CGfxDescriptorSetPtr ptrDescriptorSet)
-{
-	if (m_pCurrentPipelineCompute &&
-		m_pCurrentPipelineCompute->GetDescriptorLayout(ptrDescriptorSet->GetDescriptorLayout()->GetSetIndex())->IsCompatible(ptrDescriptorSet->GetDescriptorLayout())) {
-		((CVKDescriptorSet*)ptrDescriptorSet.GetPointer())->Bind(vkCommandBuffer, VK_PIPELINE_BIND_POINT_COMPUTE, m_pCurrentPipelineCompute->GetPipelineLayout());
-	}
-
-	if (m_pCurrentPipelineGraphics &&
-		m_pCurrentPipelineGraphics->GetDescriptorLayout(ptrDescriptorSet->GetDescriptorLayout()->GetSetIndex())->IsCompatible(ptrDescriptorSet->GetDescriptorLayout())) {
-		((CVKDescriptorSet*)ptrDescriptorSet.GetPointer())->Bind(vkCommandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, m_pCurrentPipelineGraphics->GetPipelineLayout());
-	}
-}
-
-CVKPipelineCompute* CVKRenderer::GetCurrentPipelineCompute(void) const
-{
-	return m_pCurrentPipelineCompute;
-}
-
-CVKPipelineGraphics* CVKRenderer::GetCurrentPipelineGraphics(void) const
-{
-	return m_pCurrentPipelineGraphics;
 }

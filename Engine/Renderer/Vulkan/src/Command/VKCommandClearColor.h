@@ -32,11 +32,11 @@ public:
 
 
 private:
-	VkCommandBuffer m_vkCommandBuffer;
-
-private:
 	float m_red;
 	float m_green;
 	float m_blue;
 	float m_alpha;
+
+private:
+	VkCommandBuffer m_vkCommandBuffer;
 };

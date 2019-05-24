@@ -34,9 +34,9 @@ public:
 
 
 private:
-	VkCommandBuffer m_vkCommandBuffer;
-
-private:
 	CGfxMeshDrawPtr m_ptrMeshDraw;
 	eastl::vector<uint8_t> m_buffer;
+
+private:
+	VkCommandBuffer m_vkCommandBuffer;
 };

@@ -28,8 +28,8 @@ public:
 
 
 private:
-	VkCommandBuffer m_vkCommandBuffer;
+	CGfxCommandBufferPtr m_ptrCommandBuffer;
 
 private:
-	CGfxCommandBufferPtr m_ptrCommandBuffer;
+	VkCommandBuffer m_vkCommandBuffer;
 };

@@ -109,6 +109,10 @@ private:
 	eastl::vector<CGfxCommandBase*> m_pCommands;
 
 private:
+	CGfxPipelineCompute* m_pCurrentPipelineCompute;
+	CGfxPipelineGraphics* m_pCurrentPipelineGraphics;
+
+private:
 	CVKDevice* m_pDevice;
 
 private:

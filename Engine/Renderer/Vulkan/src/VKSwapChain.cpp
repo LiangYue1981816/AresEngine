@@ -5,10 +5,10 @@ static VkExtent2D GetSwapchainExtent(const VkSurfaceCapabilitiesKHR& capabilitie
 {
 	VkExtent2D extent = { width, height };
 
-	extent.width = std::min(extent.width, capabilities.minImageExtent.width);
-	extent.width = std::max(extent.width, capabilities.maxImageExtent.width);
-	extent.height = std::min(extent.height, capabilities.minImageExtent.height);
-	extent.height = std::max(extent.height, capabilities.maxImageExtent.height);
+	extent.width = std::max(extent.width, capabilities.minImageExtent.width);
+	extent.width = std::min(extent.width, capabilities.maxImageExtent.width);
+	extent.height = std::max(extent.height, capabilities.minImageExtent.height);
+	extent.height = std::min(extent.height, capabilities.maxImageExtent.height);
 
 	return extent;
 }

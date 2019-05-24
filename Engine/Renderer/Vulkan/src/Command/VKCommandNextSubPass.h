@@ -33,10 +33,10 @@ public:
 
 
 private:
-	VkCommandBuffer m_vkCommandBuffer;
-
-private:
 	CGfxFrameBufferPtr m_ptrFrameBuffer;
 	CGfxRenderPassPtr m_ptrRenderPass;
 	int m_indexSubpass;
+
+private:
+	VkCommandBuffer m_vkCommandBuffer;
 };

@@ -5,8 +5,10 @@
 class CVKCommandBindDescriptorSet : public CGfxCommandBase
 {
 public:
-	CVKCommandBindDescriptorSet(VkCommandBuffer vkCommandBuffer, const CGfxDescriptorSetPtr ptrDescriptorSet)
+	CVKCommandBindDescriptorSet(VkCommandBuffer vkCommandBuffer, const CGfxPipelineCompute* pPipelineCompute, const CGfxPipelineGraphics* pPipelineGraphics, const CGfxDescriptorSetPtr ptrDescriptorSet)
 		: m_vkCommandBuffer(vkCommandBuffer)
+		, m_pPipelineCompute((CVKPipelineCompute*)pPipelineCompute)
+		, m_pPipelineGraphics((CVKPipelineGraphics*)pPipelineGraphics)
 		, m_ptrDescriptorSet(ptrDescriptorSet)
 	{
 		if (m_ptrDescriptorSet) {
@@ -26,14 +28,24 @@ public:
 
 		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_BIND_DESCRIPTORSET, "CommandBindDescriptorSet");
 		{
-			VKRenderer()->BindDescriptorSet(m_vkCommandBuffer, m_ptrDescriptorSet);
+			if (m_pPipelineCompute &&
+				m_pPipelineCompute->GetDescriptorLayout(m_ptrDescriptorSet->GetDescriptorLayout()->GetSetIndex())->IsCompatible(m_ptrDescriptorSet->GetDescriptorLayout())) {
+				((CVKDescriptorSet*)m_ptrDescriptorSet.GetPointer())->Bind(m_vkCommandBuffer, VK_PIPELINE_BIND_POINT_COMPUTE, m_pPipelineCompute->GetPipelineLayout());
+			}
+
+			if (m_pPipelineGraphics &&
+				m_pPipelineGraphics->GetDescriptorLayout(m_ptrDescriptorSet->GetDescriptorLayout()->GetSetIndex())->IsCompatible(m_ptrDescriptorSet->GetDescriptorLayout())) {
+				((CVKDescriptorSet*)m_ptrDescriptorSet.GetPointer())->Bind(m_vkCommandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, m_pPipelineGraphics->GetPipelineLayout());
+			}
 		}
 	}
 
 
 private:
-	VkCommandBuffer m_vkCommandBuffer;
+	CGfxDescriptorSetPtr m_ptrDescriptorSet;
 
 private:
-	CGfxDescriptorSetPtr m_ptrDescriptorSet;
+	VkCommandBuffer m_vkCommandBuffer;
+	CVKPipelineCompute* m_pPipelineCompute;
+	CVKPipelineGraphics* m_pPipelineGraphics;
 };
