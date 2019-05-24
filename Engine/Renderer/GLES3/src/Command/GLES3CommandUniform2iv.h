@@ -5,8 +5,10 @@
 class CGLES3CommandUniform2iv : public CGfxCommandBase
 {
 public:
-	CGLES3CommandUniform2iv(uint32_t name, int count, const int* value)
-		: m_name(name)
+	CGLES3CommandUniform2iv(const CGfxPipelineCompute* pPipelineCompute, const CGfxPipelineGraphics* pPipelineGraphics, uint32_t name, int count, const int* value)
+		: m_pPipelineCompute((CGLES3PipelineCompute*)pPipelineCompute)
+		, m_pPipelineGraphics((CGLES3PipelineGraphics*)pPipelineGraphics)
+		, m_name(name)
 	{
 		m_value.assign(value, value + count);
 	}
@@ -20,12 +22,12 @@ public:
 	{
 		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_UNIFORM2IV, "CommandUniform2iv");
 		{
-			if (CGLES3PipelineCompute* pPipeline = GLES3Renderer()->GetCurrentPipelineCompute()) {
-				pPipeline->Uniform2iv(m_name, m_value.size(), m_value.data());
+			if (m_pPipelineCompute) {
+				m_pPipelineCompute->Uniform2iv(m_name, m_value.size(), m_value.data());
 			}
 
-			if (CGLES3PipelineGraphics* pPipeline = GLES3Renderer()->GetCurrentPipelineGraphics()) {
-				pPipeline->Uniform2iv(m_name, m_value.size(), m_value.data());
+			if (m_pPipelineGraphics) {
+				m_pPipelineGraphics->Uniform2iv(m_name, m_value.size(), m_value.data());
 			}
 		}
 	}
@@ -34,4 +36,8 @@ public:
 private:
 	uint32_t m_name;
 	eastl::vector<int> m_value;
+
+private:
+	CGLES3PipelineCompute* m_pPipelineCompute;
+	CGLES3PipelineGraphics* m_pPipelineGraphics;
 };

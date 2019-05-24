@@ -5,8 +5,10 @@
 class CGLES3CommandUniform1f : public CGfxCommandBase
 {
 public:
-	CGLES3CommandUniform1f(uint32_t name, float v0)
-		: m_name(name)
+	CGLES3CommandUniform1f(const CGfxPipelineCompute* pPipelineCompute, const CGfxPipelineGraphics* pPipelineGraphics, uint32_t name, float v0)
+		: m_pPipelineCompute((CGLES3PipelineCompute*)pPipelineCompute)
+		, m_pPipelineGraphics((CGLES3PipelineGraphics*)pPipelineGraphics)
+		, m_name(name)
 		, m_v0(v0)
 	{
 
@@ -21,12 +23,12 @@ public:
 	{
 		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_UNIFORM1F, "CommandUniform1f");
 		{
-			if (CGLES3PipelineCompute* pPipeline = GLES3Renderer()->GetCurrentPipelineCompute()) {
-				pPipeline->Uniform1f(m_name, m_v0);
+			if (m_pPipelineCompute) {
+				m_pPipelineCompute->Uniform1f(m_name, m_v0);
 			}
 
-			if (CGLES3PipelineGraphics* pPipeline = GLES3Renderer()->GetCurrentPipelineGraphics()) {
-				pPipeline->Uniform1f(m_name, m_v0);
+			if (m_pPipelineGraphics) {
+				m_pPipelineGraphics->Uniform1f(m_name, m_v0);
 			}
 		}
 	}
@@ -35,4 +37,8 @@ public:
 private:
 	uint32_t m_name;
 	float m_v0;
+
+private:
+	CGLES3PipelineCompute* m_pPipelineCompute;
+	CGLES3PipelineGraphics* m_pPipelineGraphics;
 };

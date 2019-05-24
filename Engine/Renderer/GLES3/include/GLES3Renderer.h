@@ -62,32 +62,6 @@
 
 class CGLES3Renderer : public CGfxRenderer
 {
-	friend class CGLES3CommandBindPipelineCompute;
-	friend class CGLES3CommandBindPipelineGraphics;
-	friend class CGLES3CommandBindDescriptorSet;
-	friend class CGLES3CommandUniform1i;
-	friend class CGLES3CommandUniform2i;
-	friend class CGLES3CommandUniform3i;
-	friend class CGLES3CommandUniform4i;
-	friend class CGLES3CommandUniform1f;
-	friend class CGLES3CommandUniform2f;
-	friend class CGLES3CommandUniform3f;
-	friend class CGLES3CommandUniform4f;
-	friend class CGLES3CommandUniform1iv;
-	friend class CGLES3CommandUniform2iv;
-	friend class CGLES3CommandUniform3iv;
-	friend class CGLES3CommandUniform4iv;
-	friend class CGLES3CommandUniform1fv;
-	friend class CGLES3CommandUniform2fv;
-	friend class CGLES3CommandUniform3fv;
-	friend class CGLES3CommandUniform4fv;
-	friend class CGLES3CommandUniformMatrix2fv;
-	friend class CGLES3CommandUniformMatrix3fv;
-	friend class CGLES3CommandUniformMatrix4fv;
-	friend class CGLES3CommandDrawInstance;
-	friend class CGLES3CommandDrawIndirect;
-
-
 public:
 	CGLES3Renderer(void* hInstance, void* hWnd, void* hDC, int width, int height, GfxPixelFormat format);
 	virtual ~CGLES3Renderer(void);
@@ -216,14 +190,6 @@ public:
 	void AcquireNextFrame(void);
 	void Present(void);
 
-private:
-	void BindPipelineCompute(const CGfxPipelineCompute* pPipelineCompute);
-	void BindPipelineGraphics(const CGfxPipelineGraphics* pPipelineGraphics);
-	void BindDescriptorSet(const CGfxDescriptorSetPtr ptrDescriptorSet);
-
-	CGLES3PipelineCompute* GetCurrentPipelineCompute(void) const;
-	CGLES3PipelineGraphics* GetCurrentPipelineGraphics(void) const;
-
 
 private:
 	CGLES3SwapChain* m_pSwapChain;
@@ -246,8 +212,4 @@ private:
 	CGLES3FrameBufferManager* m_pFrameBufferManager;
 	CGLES3DescriptorSetManager* m_pDescriptorSetManager;
 	CGLES3CommandBufferManager* m_pCommandBufferManager;
-
-private:
-	CGLES3PipelineCompute* m_pCurrentPipelineCompute;
-	CGLES3PipelineGraphics* m_pCurrentPipelineGraphics;
 };

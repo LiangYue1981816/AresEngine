@@ -5,8 +5,10 @@
 class CGLES3CommandBindDescriptorSet : public CGfxCommandBase
 {
 public:
-	CGLES3CommandBindDescriptorSet(const CGfxDescriptorSetPtr ptrDescriptorSet)
-		: m_ptrDescriptorSet(ptrDescriptorSet)
+	CGLES3CommandBindDescriptorSet(const CGfxPipelineCompute* pPipelineCompute, const CGfxPipelineGraphics* pPipelineGraphics, const CGfxDescriptorSetPtr ptrDescriptorSet)
+		: m_pPipelineCompute((CGLES3PipelineCompute*)pPipelineCompute)
+		, m_pPipelineGraphics((CGLES3PipelineGraphics*)pPipelineGraphics)
+		, m_ptrDescriptorSet(ptrDescriptorSet)
 	{
 
 	}
@@ -21,7 +23,13 @@ public:
 		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_BIND_DESCRIPTORSET, "CommandBindDescriptorSet");
 		{
 			if (m_ptrDescriptorSet) {
-				GLES3Renderer()->BindDescriptorSet(m_ptrDescriptorSet);
+				if (m_pPipelineCompute) {
+					m_pPipelineCompute->BindDescriptorSet(m_ptrDescriptorSet);
+				}
+
+				if (m_pPipelineGraphics) {
+					m_pPipelineGraphics->BindDescriptorSet(m_ptrDescriptorSet);
+				}
 			}
 		}
 	}
@@ -29,4 +37,8 @@ public:
 
 private:
 	CGfxDescriptorSetPtr m_ptrDescriptorSet;
+
+private:
+	CGLES3PipelineCompute* m_pPipelineCompute;
+	CGLES3PipelineGraphics* m_pPipelineGraphics;
 };

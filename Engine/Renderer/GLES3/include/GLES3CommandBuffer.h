@@ -14,8 +14,6 @@ private:
 
 
 public:
-	int GetCommandCount(void) const;
-
 	bool IsInRenderPass(void) const;
 	int GetSubpassIndex(void) const;
 
@@ -93,6 +91,10 @@ private:
 	CGfxFrameBufferPtr m_ptrFrameBuffer;
 
 	eastl::vector<CGfxCommandBase*> m_pCommands;
+
+private:
+	CGfxPipelineCompute* m_pCurrentPipelineCompute;
+	CGfxPipelineGraphics* m_pCurrentPipelineGraphics;
 
 private:
 	CGLES3CommandBufferManager* m_pManager;

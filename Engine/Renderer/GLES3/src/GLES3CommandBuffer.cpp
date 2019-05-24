@@ -44,6 +44,8 @@ CGLES3CommandBuffer::CGLES3CommandBuffer(CGLES3CommandBufferManager* pManager, b
 	, m_pManager(pManager)
 
 	, m_indexSubpass(-1)
+	, m_pCurrentPipelineCompute(nullptr)
+	, m_pCurrentPipelineGraphics(nullptr)
 {
 
 }
@@ -89,6 +91,8 @@ void CGLES3CommandBuffer::Clearup(void)
 	m_indexSubpass = -1;
 	m_ptrRenderPass.Release();
 	m_ptrFrameBuffer.Release();
+	m_pCurrentPipelineCompute = nullptr;
+	m_pCurrentPipelineGraphics = nullptr;
 }
 
 void CGLES3CommandBuffer::Execute(void) const
@@ -248,6 +252,7 @@ bool CGLES3CommandBuffer::CmdBindPipelineCompute(const CGfxPipelineCompute* pPip
 	ASSERT(pPipelineCompute);
 
 	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
+		m_pCurrentPipelineCompute = (CGLES3PipelineCompute*)pPipelineCompute;
 		m_pCommands.emplace_back(new CGLES3CommandBindPipelineCompute(pPipelineCompute));
 		return true;
 	}
@@ -261,6 +266,7 @@ bool CGLES3CommandBuffer::CmdBindPipelineGraphics(const CGfxPipelineGraphics* pP
 	ASSERT(pPipelineGraphics);
 
 	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
+		m_pCurrentPipelineGraphics = (CGLES3PipelineGraphics*)pPipelineGraphics;
 		m_pCommands.emplace_back(new CGLES3CommandBindPipelineGraphics(pPipelineGraphics));
 		return true;
 	}
@@ -272,7 +278,7 @@ bool CGLES3CommandBuffer::CmdBindPipelineGraphics(const CGfxPipelineGraphics* pP
 bool CGLES3CommandBuffer::CmdBindDescriptorSet(const CGfxDescriptorSetPtr ptrDescriptorSet)
 {
 	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
-		m_pCommands.emplace_back(new CGLES3CommandBindDescriptorSet(ptrDescriptorSet));
+		m_pCommands.emplace_back(new CGLES3CommandBindDescriptorSet(m_pCurrentPipelineCompute, m_pCurrentPipelineGraphics, ptrDescriptorSet));
 		return true;
 	}
 	else {
@@ -283,7 +289,7 @@ bool CGLES3CommandBuffer::CmdBindDescriptorSet(const CGfxDescriptorSetPtr ptrDes
 bool CGLES3CommandBuffer::CmdUniform1i(uint32_t name, int v0)
 {
 	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
-		m_pCommands.emplace_back(new CGLES3CommandUniform1i(name, v0));
+		m_pCommands.emplace_back(new CGLES3CommandUniform1i(m_pCurrentPipelineCompute, m_pCurrentPipelineGraphics, name, v0));
 		return true;
 	}
 	else {
@@ -294,7 +300,7 @@ bool CGLES3CommandBuffer::CmdUniform1i(uint32_t name, int v0)
 bool CGLES3CommandBuffer::CmdUniform2i(uint32_t name, int v0, int v1)
 {
 	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
-		m_pCommands.emplace_back(new CGLES3CommandUniform2i(name, v0, v1));
+		m_pCommands.emplace_back(new CGLES3CommandUniform2i(m_pCurrentPipelineCompute, m_pCurrentPipelineGraphics, name, v0, v1));
 		return true;
 	}
 	else {
@@ -305,7 +311,7 @@ bool CGLES3CommandBuffer::CmdUniform2i(uint32_t name, int v0, int v1)
 bool CGLES3CommandBuffer::CmdUniform3i(uint32_t name, int v0, int v1, int v2)
 {
 	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
-		m_pCommands.emplace_back(new CGLES3CommandUniform3i(name, v0, v1, v2));
+		m_pCommands.emplace_back(new CGLES3CommandUniform3i(m_pCurrentPipelineCompute, m_pCurrentPipelineGraphics, name, v0, v1, v2));
 		return true;
 	}
 	else {
@@ -316,7 +322,7 @@ bool CGLES3CommandBuffer::CmdUniform3i(uint32_t name, int v0, int v1, int v2)
 bool CGLES3CommandBuffer::CmdUniform4i(uint32_t name, int v0, int v1, int v2, int v3)
 {
 	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
-		m_pCommands.emplace_back(new CGLES3CommandUniform4i(name, v0, v1, v2, v3));
+		m_pCommands.emplace_back(new CGLES3CommandUniform4i(m_pCurrentPipelineCompute, m_pCurrentPipelineGraphics, name, v0, v1, v2, v3));
 		return true;
 	}
 	else {
@@ -327,7 +333,7 @@ bool CGLES3CommandBuffer::CmdUniform4i(uint32_t name, int v0, int v1, int v2, in
 bool CGLES3CommandBuffer::CmdUniform1f(uint32_t name, float v0)
 {
 	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
-		m_pCommands.emplace_back(new CGLES3CommandUniform1f(name, v0));
+		m_pCommands.emplace_back(new CGLES3CommandUniform1f(m_pCurrentPipelineCompute, m_pCurrentPipelineGraphics, name, v0));
 		return true;
 	}
 	else {
@@ -338,7 +344,7 @@ bool CGLES3CommandBuffer::CmdUniform1f(uint32_t name, float v0)
 bool CGLES3CommandBuffer::CmdUniform2f(uint32_t name, float v0, float v1)
 {
 	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
-		m_pCommands.emplace_back(new CGLES3CommandUniform2f(name, v0, v1));
+		m_pCommands.emplace_back(new CGLES3CommandUniform2f(m_pCurrentPipelineCompute, m_pCurrentPipelineGraphics, name, v0, v1));
 		return true;
 	}
 	else {
@@ -349,7 +355,7 @@ bool CGLES3CommandBuffer::CmdUniform2f(uint32_t name, float v0, float v1)
 bool CGLES3CommandBuffer::CmdUniform3f(uint32_t name, float v0, float v1, float v2)
 {
 	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
-		m_pCommands.emplace_back(new CGLES3CommandUniform3f(name, v0, v1, v2));
+		m_pCommands.emplace_back(new CGLES3CommandUniform3f(m_pCurrentPipelineCompute, m_pCurrentPipelineGraphics, name, v0, v1, v2));
 		return true;
 	}
 	else {
@@ -360,7 +366,7 @@ bool CGLES3CommandBuffer::CmdUniform3f(uint32_t name, float v0, float v1, float 
 bool CGLES3CommandBuffer::CmdUniform4f(uint32_t name, float v0, float v1, float v2, float v3)
 {
 	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
-		m_pCommands.emplace_back(new CGLES3CommandUniform4f(name, v0, v1, v2, v3));
+		m_pCommands.emplace_back(new CGLES3CommandUniform4f(m_pCurrentPipelineCompute, m_pCurrentPipelineGraphics, name, v0, v1, v2, v3));
 		return true;
 	}
 	else {
@@ -373,7 +379,7 @@ bool CGLES3CommandBuffer::CmdUniform1iv(uint32_t name, int count, const int* val
 	ASSERT(value);
 
 	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
-		m_pCommands.emplace_back(new CGLES3CommandUniform1iv(name, count, value));
+		m_pCommands.emplace_back(new CGLES3CommandUniform1iv(m_pCurrentPipelineCompute, m_pCurrentPipelineGraphics, name, count, value));
 		return true;
 	}
 	else {
@@ -386,7 +392,7 @@ bool CGLES3CommandBuffer::CmdUniform2iv(uint32_t name, int count, const int* val
 	ASSERT(value);
 
 	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
-		m_pCommands.emplace_back(new CGLES3CommandUniform2iv(name, count, value));
+		m_pCommands.emplace_back(new CGLES3CommandUniform2iv(m_pCurrentPipelineCompute, m_pCurrentPipelineGraphics, name, count, value));
 		return true;
 	}
 	else {
@@ -399,7 +405,7 @@ bool CGLES3CommandBuffer::CmdUniform3iv(uint32_t name, int count, const int* val
 	ASSERT(value);
 
 	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
-		m_pCommands.emplace_back(new CGLES3CommandUniform3iv(name, count, value));
+		m_pCommands.emplace_back(new CGLES3CommandUniform3iv(m_pCurrentPipelineCompute, m_pCurrentPipelineGraphics, name, count, value));
 		return true;
 	}
 	else {
@@ -412,7 +418,7 @@ bool CGLES3CommandBuffer::CmdUniform4iv(uint32_t name, int count, const int* val
 	ASSERT(value);
 
 	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
-		m_pCommands.emplace_back(new CGLES3CommandUniform4iv(name, count, value));
+		m_pCommands.emplace_back(new CGLES3CommandUniform4iv(m_pCurrentPipelineCompute, m_pCurrentPipelineGraphics, name, count, value));
 		return true;
 	}
 	else {
@@ -425,7 +431,7 @@ bool CGLES3CommandBuffer::CmdUniform1fv(uint32_t name, int count, const float* v
 	ASSERT(value);
 
 	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
-		m_pCommands.emplace_back(new CGLES3CommandUniform1fv(name, count, value));
+		m_pCommands.emplace_back(new CGLES3CommandUniform1fv(m_pCurrentPipelineCompute, m_pCurrentPipelineGraphics, name, count, value));
 		return true;
 	}
 	else {
@@ -438,7 +444,7 @@ bool CGLES3CommandBuffer::CmdUniform2fv(uint32_t name, int count, const float* v
 	ASSERT(value);
 
 	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
-		m_pCommands.emplace_back(new CGLES3CommandUniform2fv(name, count, value));
+		m_pCommands.emplace_back(new CGLES3CommandUniform2fv(m_pCurrentPipelineCompute, m_pCurrentPipelineGraphics, name, count, value));
 		return true;
 	}
 	else {
@@ -451,7 +457,7 @@ bool CGLES3CommandBuffer::CmdUniform3fv(uint32_t name, int count, const float* v
 	ASSERT(value);
 
 	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
-		m_pCommands.emplace_back(new CGLES3CommandUniform3fv(name, count, value));
+		m_pCommands.emplace_back(new CGLES3CommandUniform3fv(m_pCurrentPipelineCompute, m_pCurrentPipelineGraphics, name, count, value));
 		return true;
 	}
 	else {
@@ -464,7 +470,7 @@ bool CGLES3CommandBuffer::CmdUniform4fv(uint32_t name, int count, const float* v
 	ASSERT(value);
 
 	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
-		m_pCommands.emplace_back(new CGLES3CommandUniform4fv(name, count, value));
+		m_pCommands.emplace_back(new CGLES3CommandUniform4fv(m_pCurrentPipelineCompute, m_pCurrentPipelineGraphics, name, count, value));
 		return true;
 	}
 	else {
@@ -477,7 +483,7 @@ bool CGLES3CommandBuffer::CmdUniformMatrix2fv(uint32_t name, int count, const fl
 	ASSERT(value);
 
 	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
-		m_pCommands.emplace_back(new CGLES3CommandUniformMatrix2fv(name, count, value));
+		m_pCommands.emplace_back(new CGLES3CommandUniformMatrix2fv(m_pCurrentPipelineCompute, m_pCurrentPipelineGraphics, name, count, value));
 		return true;
 	}
 	else {
@@ -490,7 +496,7 @@ bool CGLES3CommandBuffer::CmdUniformMatrix3fv(uint32_t name, int count, const fl
 	ASSERT(value);
 
 	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
-		m_pCommands.emplace_back(new CGLES3CommandUniformMatrix3fv(name, count, value));
+		m_pCommands.emplace_back(new CGLES3CommandUniformMatrix3fv(m_pCurrentPipelineCompute, m_pCurrentPipelineGraphics, name, count, value));
 		return true;
 	}
 	else {
@@ -503,7 +509,7 @@ bool CGLES3CommandBuffer::CmdUniformMatrix4fv(uint32_t name, int count, const fl
 	ASSERT(value);
 
 	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
-		m_pCommands.emplace_back(new CGLES3CommandUniformMatrix4fv(name, count, value));
+		m_pCommands.emplace_back(new CGLES3CommandUniformMatrix4fv(m_pCurrentPipelineCompute, m_pCurrentPipelineGraphics, name, count, value));
 		return true;
 	}
 	else {
@@ -560,7 +566,7 @@ bool CGLES3CommandBuffer::CmdDrawInstance(const CGfxMeshDrawPtr ptrMeshDraw)
 	ASSERT(ptrMeshDraw);
 
 	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
-		m_pCommands.emplace_back(new CGLES3CommandDrawInstance(ptrMeshDraw));
+		m_pCommands.emplace_back(new CGLES3CommandDrawInstance(m_pCurrentPipelineGraphics, ptrMeshDraw));
 		return true;
 	}
 	else {
@@ -573,7 +579,7 @@ bool CGLES3CommandBuffer::CmdDrawIndirect(const CGfxMeshDrawPtr ptrMeshDraw)
 	ASSERT(ptrMeshDraw);
 
 	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
-		m_pCommands.emplace_back(new CGLES3CommandDrawIndirect(ptrMeshDraw));
+		m_pCommands.emplace_back(new CGLES3CommandDrawIndirect(m_pCurrentPipelineGraphics, ptrMeshDraw));
 		return true;
 	}
 	else {

@@ -6,7 +6,7 @@ class CGLES3CommandBindPipelineGraphics : public CGfxCommandBase
 {
 public:
 	CGLES3CommandBindPipelineGraphics(const CGfxPipelineGraphics* pPipelineGraphics)
-		: m_pPipelineGraphics((CGfxPipelineGraphics*)pPipelineGraphics)
+		: m_pPipelineGraphics((CGLES3PipelineGraphics*)pPipelineGraphics)
 	{
 
 	}
@@ -22,11 +22,11 @@ public:
 
 		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_BIND_PIPELINEGRAPHICS, "CommandBindPipelineGraphics");
 		{
-			GLES3Renderer()->BindPipelineGraphics(m_pPipelineGraphics);
+			m_pPipelineGraphics->Bind();
 		}
 	}
 
 
 private:
-	CGfxPipelineGraphics* m_pPipelineGraphics;
+	CGLES3PipelineGraphics* m_pPipelineGraphics;
 };

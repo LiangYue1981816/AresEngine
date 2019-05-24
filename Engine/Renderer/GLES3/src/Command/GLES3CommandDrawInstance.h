@@ -5,8 +5,9 @@
 class CGLES3CommandDrawInstance : public CGfxCommandBase
 {
 public:
-	CGLES3CommandDrawInstance(const CGfxMeshDrawPtr ptrMeshDraw)
-		: m_ptrMeshDraw(ptrMeshDraw)
+	CGLES3CommandDrawInstance(const CGfxPipelineGraphics* pPipelineGraphics, const CGfxMeshDrawPtr ptrMeshDraw)
+		: m_pPipelineGraphics((CGLES3PipelineGraphics*)pPipelineGraphics)
+		, m_ptrMeshDraw(ptrMeshDraw)
 	{
 
 	}
@@ -19,15 +20,14 @@ public:
 	virtual void Execute(void) const
 	{
 		ASSERT(m_ptrMeshDraw);
+		ASSERT(m_pPipelineGraphics);
 
 		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_DRAW_INSTANCE, "CommandDrawInstance");
 		{
-			if (CGLES3PipelineGraphics* pPipeline = GLES3Renderer()->GetCurrentPipelineGraphics()) {
-				if (pPipeline->IsCompatibleVertexFormat(m_ptrMeshDraw->GetVertexBinding(), m_ptrMeshDraw->GetVertexFormat()) &&
-					pPipeline->IsCompatibleVertexFormat(m_ptrMeshDraw->GetInstanceBinding(), m_ptrMeshDraw->GetInstanceFormat())) {
-					((CGLES3MeshDraw*)m_ptrMeshDraw.GetPointer())->Bind();
-					glDrawElementsInstanced(GL_TRIANGLES, m_ptrMeshDraw->GetIndexCount(), CGLES3Helper::TranslateIndexType(m_ptrMeshDraw->GetIndexType()), (const void*)m_ptrMeshDraw->GetIndexOffset(), m_ptrMeshDraw->GetInstanceCount());
-				}
+			if (m_pPipelineGraphics->IsCompatibleVertexFormat(m_ptrMeshDraw->GetVertexBinding(), m_ptrMeshDraw->GetVertexFormat()) &&
+				m_pPipelineGraphics->IsCompatibleVertexFormat(m_ptrMeshDraw->GetInstanceBinding(), m_ptrMeshDraw->GetInstanceFormat())) {
+				((CGLES3MeshDraw*)m_ptrMeshDraw.GetPointer())->Bind();
+				glDrawElementsInstanced(GL_TRIANGLES, m_ptrMeshDraw->GetIndexCount(), CGLES3Helper::TranslateIndexType(m_ptrMeshDraw->GetIndexType()), (const void*)m_ptrMeshDraw->GetIndexOffset(), m_ptrMeshDraw->GetInstanceCount());
 			}
 		}
 	}
@@ -35,4 +35,7 @@ public:
 
 private:
 	CGfxMeshDrawPtr m_ptrMeshDraw;
+
+private:
+	CGLES3PipelineGraphics* m_pPipelineGraphics;
 };

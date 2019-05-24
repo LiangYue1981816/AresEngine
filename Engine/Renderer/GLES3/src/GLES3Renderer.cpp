@@ -22,9 +22,6 @@ CGLES3Renderer::CGLES3Renderer(void* hInstance, void* hWnd, void* hDC, int width
 	, m_pFrameBufferManager(nullptr)
 	, m_pDescriptorSetManager(nullptr)
 	, m_pCommandBufferManager(nullptr)
-
-	, m_pCurrentPipelineCompute(nullptr)
-	, m_pCurrentPipelineGraphics(nullptr)
 {
 	CGLES3Helper::SetupExtensions();
 
@@ -476,49 +473,4 @@ void CGLES3Renderer::AcquireNextFrame(void)
 void CGLES3Renderer::Present(void)
 {
 	m_pSwapChain->Present();
-	m_pCurrentPipelineCompute = nullptr;
-	m_pCurrentPipelineGraphics = nullptr;
-}
-
-void CGLES3Renderer::BindPipelineCompute(const CGfxPipelineCompute* pPipelineCompute)
-{
-	if (m_pCurrentPipelineCompute != pPipelineCompute) {
-		m_pCurrentPipelineCompute = (CGLES3PipelineCompute*)pPipelineCompute;
-
-		if (m_pCurrentPipelineCompute) {
-			m_pCurrentPipelineCompute->Bind();
-		}
-	}
-}
-
-void CGLES3Renderer::BindPipelineGraphics(const CGfxPipelineGraphics* pPipelineGraphics)
-{
-	if (m_pCurrentPipelineGraphics != pPipelineGraphics) {
-		m_pCurrentPipelineGraphics = (CGLES3PipelineGraphics*)pPipelineGraphics;
-
-		if (m_pCurrentPipelineGraphics) {
-			m_pCurrentPipelineGraphics->Bind();
-		}
-	}
-}
-
-void CGLES3Renderer::BindDescriptorSet(const CGfxDescriptorSetPtr ptrDescriptorSet)
-{
-	if (m_pCurrentPipelineCompute) {
-		m_pCurrentPipelineCompute->BindDescriptorSet(ptrDescriptorSet);
-	}
-
-	if (m_pCurrentPipelineGraphics) {
-		m_pCurrentPipelineGraphics->BindDescriptorSet(ptrDescriptorSet);
-	}
-}
-
-CGLES3PipelineCompute* CGLES3Renderer::GetCurrentPipelineCompute(void) const
-{
-	return m_pCurrentPipelineCompute;
-}
-
-CGLES3PipelineGraphics* CGLES3Renderer::GetCurrentPipelineGraphics(void) const
-{
-	return m_pCurrentPipelineGraphics;
 }
