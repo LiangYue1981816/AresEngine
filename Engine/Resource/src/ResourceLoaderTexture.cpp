@@ -6,9 +6,6 @@
 
 static bool InternalLoadTexture2D(CGfxTexture2D* pTexture2D, const gli::texture* texture, int baseLevel, int numLevels)
 {
-	gli::gl GL(gli::gl::PROFILE_ES30);
-	gli::gl::format format = GL.translate(texture->format(), texture->swizzles());
-
 	baseLevel = std::max(baseLevel, 0);
 	baseLevel = std::min(baseLevel, (int)texture->levels() - 1);
 
@@ -39,9 +36,6 @@ static bool InternalLoadTexture2D(CGfxTexture2D* pTexture2D, const gli::texture*
 
 static bool InternalLoadTexture2DArray(CGfxTexture2DArray* pTexture2DArray, const gli::texture* texture, int baseLevel, int numLevels)
 {
-	gli::gl GL(gli::gl::PROFILE_ES30);
-	gli::gl::format format = GL.translate(texture->format(), texture->swizzles());
-
 	baseLevel = std::max(baseLevel, 0);
 	baseLevel = std::min(baseLevel, (int)texture->levels() - 1);
 
@@ -76,9 +70,6 @@ static bool InternalLoadTexture2DArray(CGfxTexture2DArray* pTexture2DArray, cons
 
 static bool InternalLoadTexture2DArrayLayer(CGfxTexture2DArray* pTexture2DArray, const gli::texture* texture, int layer, int baseLevel, int numLevels)
 {
-	gli::gl GL(gli::gl::PROFILE_ES30);
-	gli::gl::format format = GL.translate(texture->format(), texture->swizzles());
-
 	baseLevel = std::max(baseLevel, 0);
 	baseLevel = std::min(baseLevel, (int)texture->levels() - 1);
 
@@ -105,9 +96,6 @@ static bool InternalLoadTexture2DArrayLayer(CGfxTexture2DArray* pTexture2DArray,
 
 static bool InternalLoadTextureCubemap(CGfxTextureCubemap* pTextureCubemap, const gli::texture* texture, int baseLevel, int numLevels)
 {
-	gli::gl GL(gli::gl::PROFILE_ES30);
-	gli::gl::format format = GL.translate(texture->format(), texture->swizzles());
-
 	baseLevel = std::max(baseLevel, 0);
 	baseLevel = std::min(baseLevel, (int)texture->levels() - 1);
 
@@ -168,9 +156,6 @@ static bool InternalLoadTextureCubemap(CGfxTextureCubemap* pTextureCubemap, cons
 
 static bool InternalLoadTextureCubemapFace(CGfxTextureCubemap* pTextureCubemap, const gli::texture* texture, GfxCubemapFace face, int baseLevel, int numLevels)
 {
-	gli::gl GL(gli::gl::PROFILE_ES30);
-	gli::gl::format format = GL.translate(texture->format(), texture->swizzles());
-
 	baseLevel = std::max(baseLevel, 0);
 	baseLevel = std::min(baseLevel, (int)texture->levels() - 1);
 
