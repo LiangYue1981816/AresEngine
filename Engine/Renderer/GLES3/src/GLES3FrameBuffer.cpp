@@ -102,8 +102,9 @@ void CGLES3FrameBuffer::Bind(const AttachmentInformation* pAttachmentInformation
 
 		for (const auto& itOutputAttachment : pSubpassInformation->outputAttachments) {
 			if (const CGfxRenderTexturePtr ptrOutputTexture = GetAttachmentTexture(itOutputAttachment.first)) {
-				GLBindFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + indexAttachment, CGLES3Helper::TranslateTextureTarget(((CGLES3RenderTexture*)ptrOutputTexture.GetPointer())->GetType()), ((CGLES3RenderTexture*)ptrOutputTexture.GetPointer())->GetTexture(), 0);
+				ASSERT(CGfxHelper::IsFormatColor(ptrOutputTexture->GetFormat()));
 
+				GLBindFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + indexAttachment, CGLES3Helper::TranslateTextureTarget(((CGLES3RenderTexture*)ptrOutputTexture.GetPointer())->GetType()), ((CGLES3RenderTexture*)ptrOutputTexture.GetPointer())->GetTexture(), 0);
 				if (pAttachmentInformations[itOutputAttachment.first].bClear) {
 					glClearBufferfv(GL_COLOR, indexAttachment, pAttachmentInformations[itOutputAttachment.first].color);
 				}
@@ -114,8 +115,9 @@ void CGLES3FrameBuffer::Bind(const AttachmentInformation* pAttachmentInformation
 		}
 
 		if (const CGfxRenderTexturePtr ptrDepthStencilTexture = GetAttachmentTexture(pSubpassInformation->depthStencilAttachment)) {
-			GLBindFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, CGLES3Helper::TranslateTextureTarget(((CGLES3RenderTexture*)ptrDepthStencilTexture.GetPointer())->GetType()), ((CGLES3RenderTexture*)ptrDepthStencilTexture.GetPointer())->GetTexture(), 0);
+			ASSERT(CGfxHelper::IsFormatDepthOrStencil(ptrDepthStencilTexture->GetFormat()));
 
+			GLBindFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, CGLES3Helper::TranslateTextureTarget(((CGLES3RenderTexture*)ptrDepthStencilTexture.GetPointer())->GetType()), ((CGLES3RenderTexture*)ptrDepthStencilTexture.GetPointer())->GetTexture(), 0);
 			if (pAttachmentInformations[pSubpassInformation->depthStencilAttachment].bClear) {
 				glClearBufferfi(GL_DEPTH_STENCIL, 0, pAttachmentInformations[pSubpassInformation->depthStencilAttachment].depth, pAttachmentInformations[pSubpassInformation->depthStencilAttachment].stencil);
 			}
@@ -147,8 +149,9 @@ void CGLES3FrameBuffer::Resolve(const AttachmentInformation* pAttachmentInformat
 
 		for (const auto& itResolveAttachment : pSubpassInformation->resolveAttachments) {
 			if (const CGfxRenderTexturePtr ptrResolveTexture = GetAttachmentTexture(itResolveAttachment.first)) {
-				GLBindFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + indexAttachment, CGLES3Helper::TranslateTextureTarget(((CGLES3RenderTexture*)ptrResolveTexture.GetPointer())->GetType()), ((CGLES3RenderTexture*)ptrResolveTexture.GetPointer())->GetTexture(), 0);
+				ASSERT(CGfxHelper::IsFormatColor(ptrResolveTexture->GetFormat()));
 
+				GLBindFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + indexAttachment, CGLES3Helper::TranslateTextureTarget(((CGLES3RenderTexture*)ptrResolveTexture.GetPointer())->GetType()), ((CGLES3RenderTexture*)ptrResolveTexture.GetPointer())->GetTexture(), 0);
 				if (pAttachmentInformations[itResolveAttachment.first].bClear) {
 					glClearBufferfv(GL_COLOR, indexAttachment, pAttachmentInformations[itResolveAttachment.first].color);
 				}
