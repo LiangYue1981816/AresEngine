@@ -25,7 +25,7 @@ bool CGfxHelper::IsFormatStencilOnly(GfxPixelFormat format)
 	}
 }
 
-bool CGfxHelper::IsFormatDepthStencil(GfxPixelFormat format)
+bool CGfxHelper::IsFormatDepthAndStencil(GfxPixelFormat format)
 {
 	switch ((int)format) {
 	case GFX_PIXELFORMAT_D16_UNORM_S8_UINT_PACK32:
@@ -40,5 +40,10 @@ bool CGfxHelper::IsFormatDepthStencil(GfxPixelFormat format)
 
 bool CGfxHelper::IsFormatDepthOrStencil(GfxPixelFormat format)
 {
-	return IsFormatStencilOnly(format) || IsFormatDepthOnly(format) || IsFormatDepthStencil(format);
+	return IsFormatStencilOnly(format) || IsFormatDepthOnly(format) || IsFormatDepthAndStencil(format);
+}
+
+bool CGfxHelper::IsFormatColor(GfxPixelFormat format)
+{
+	return IsFormatDepthOrStencil(format) == false;
 }

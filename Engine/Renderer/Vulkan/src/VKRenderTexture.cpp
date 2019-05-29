@@ -73,7 +73,7 @@ bool CVKRenderTexture::Create(HANDLE hExternalTexture, GfxPixelFormat format, in
 			return m_pTexture->Create(samples == 1 ? GFX_TEXTURE_2D : GFX_TEXTURE_2D_MULTISAMPLE, format, width, height, 1, 1, samples, VK_IMAGE_ASPECT_STENCIL_BIT, (VkImage)hExternalTexture);
 		}
 
-		if (CGfxHelper::IsFormatDepthStencil(format)) {
+		if (CGfxHelper::IsFormatDepthAndStencil(format)) {
 			return m_pTexture->Create(samples == 1 ? GFX_TEXTURE_2D : GFX_TEXTURE_2D_MULTISAMPLE, format, width, height, 1, 1, samples, VK_IMAGE_ASPECT_DEPTH_BIT | VK_IMAGE_ASPECT_STENCIL_BIT, (VkImage)hExternalTexture);
 		}
 
@@ -97,7 +97,7 @@ bool CVKRenderTexture::Create(GfxPixelFormat format, int width, int height, int 
 			return m_pTexture->Create(samples == 1 ? GFX_TEXTURE_2D : GFX_TEXTURE_2D_MULTISAMPLE, format, width, height, 1, 1, samples, VK_IMAGE_ASPECT_STENCIL_BIT, VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT | VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT | (bTransient ? VK_IMAGE_USAGE_TRANSIENT_ATTACHMENT_BIT : VK_IMAGE_USAGE_TRANSFER_SRC_BIT), VK_IMAGE_TILING_OPTIMAL);
 		}
 
-		if (CGfxHelper::IsFormatDepthStencil(format)) {
+		if (CGfxHelper::IsFormatDepthAndStencil(format)) {
 			return m_pTexture->Create(samples == 1 ? GFX_TEXTURE_2D : GFX_TEXTURE_2D_MULTISAMPLE, format, width, height, 1, 1, samples, VK_IMAGE_ASPECT_DEPTH_BIT | VK_IMAGE_ASPECT_STENCIL_BIT, VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT | VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT | (bTransient ? VK_IMAGE_USAGE_TRANSIENT_ATTACHMENT_BIT : VK_IMAGE_USAGE_TRANSFER_SRC_BIT), VK_IMAGE_TILING_OPTIMAL);
 		}
 
