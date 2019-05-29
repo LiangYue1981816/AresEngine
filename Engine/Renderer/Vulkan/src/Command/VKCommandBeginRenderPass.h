@@ -29,18 +29,19 @@ public:
 			eastl::vector<VkClearValue> clearValues;
 			for (int indexAttachment = 0; indexAttachment < (int)m_ptrRenderPass->GetAttachmentCount(); indexAttachment++) {
 				if (const AttachmentInformation* pAttachment = m_ptrRenderPass->GetAttachment(indexAttachment)) {
-					if (CGfxHelper::IsFormatDepthOrStencil(pAttachment->format)) {
-						VkClearValue value = {};
-						value.depthStencil.depth = pAttachment->depth;
-						value.depthStencil.stencil = pAttachment->stencil;
-						clearValues.emplace_back(value);
-					}
-					else {
+					if (CGfxHelper::IsFormatColor(pAttachment->format)) {
 						VkClearValue value = {};
 						value.color.float32[0] = pAttachment->color[0];
 						value.color.float32[1] = pAttachment->color[1];
 						value.color.float32[2] = pAttachment->color[2];
 						value.color.float32[3] = pAttachment->color[3];
+						clearValues.emplace_back(value);
+					}
+
+					if (CGfxHelper::IsFormatDepthOrStencil(pAttachment->format)) {
+						VkClearValue value = {};
+						value.depthStencil.depth = pAttachment->depth;
+						value.depthStencil.stencil = pAttachment->stencil;
 						clearValues.emplace_back(value);
 					}
 				}
