@@ -117,9 +117,23 @@ void CGLES3FrameBuffer::Bind(const AttachmentInformation* pAttachmentInformation
 		if (const CGfxRenderTexturePtr ptrDepthStencilTexture = GetAttachmentTexture(pSubpassInformation->depthStencilAttachment)) {
 			ASSERT(CGfxHelper::IsFormatDepthOrStencil(ptrDepthStencilTexture->GetFormat()));
 
-			GLBindFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, CGLES3Helper::TranslateTextureTarget(((CGLES3RenderTexture*)ptrDepthStencilTexture.GetPointer())->GetType()), ((CGLES3RenderTexture*)ptrDepthStencilTexture.GetPointer())->GetTexture(), 0);
-			if (pAttachmentInformations[pSubpassInformation->depthStencilAttachment].bClear) {
-				glClearBufferfi(GL_DEPTH_STENCIL, 0, pAttachmentInformations[pSubpassInformation->depthStencilAttachment].depth, pAttachmentInformations[pSubpassInformation->depthStencilAttachment].stencil);
+			if (CGfxHelper::IsFormatDepthOnly(ptrDepthStencilTexture->GetFormat())) {
+				GLBindFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, CGLES3Helper::TranslateTextureTarget(((CGLES3RenderTexture*)ptrDepthStencilTexture.GetPointer())->GetType()), ((CGLES3RenderTexture*)ptrDepthStencilTexture.GetPointer())->GetTexture(), 0);
+				if (pAttachmentInformations[pSubpassInformation->depthStencilAttachment].bClear) {
+					glClearBufferfv(GL_DEPTH, 0, &pAttachmentInformations[pSubpassInformation->depthStencilAttachment].depth);
+				}
+			}
+			else if (CGfxHelper::IsFormatStencilOnly(ptrDepthStencilTexture->GetFormat())) {
+				GLBindFramebufferTexture2D(GL_FRAMEBUFFER, GL_STENCIL_ATTACHMENT, CGLES3Helper::TranslateTextureTarget(((CGLES3RenderTexture*)ptrDepthStencilTexture.GetPointer())->GetType()), ((CGLES3RenderTexture*)ptrDepthStencilTexture.GetPointer())->GetTexture(), 0);
+				if (pAttachmentInformations[pSubpassInformation->depthStencilAttachment].bClear) {
+					glClearBufferiv(GL_STENCIL, 0, &pAttachmentInformations[pSubpassInformation->depthStencilAttachment].stencil);
+				}
+			}
+			else if (CGfxHelper::IsFormatDepthAndStencil(ptrDepthStencilTexture->GetFormat())) {
+				GLBindFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, CGLES3Helper::TranslateTextureTarget(((CGLES3RenderTexture*)ptrDepthStencilTexture.GetPointer())->GetType()), ((CGLES3RenderTexture*)ptrDepthStencilTexture.GetPointer())->GetTexture(), 0);
+				if (pAttachmentInformations[pSubpassInformation->depthStencilAttachment].bClear) {
+					glClearBufferfi(GL_DEPTH_STENCIL, 0, pAttachmentInformations[pSubpassInformation->depthStencilAttachment].depth, pAttachmentInformations[pSubpassInformation->depthStencilAttachment].stencil);
+				}
 			}
 		}
 
