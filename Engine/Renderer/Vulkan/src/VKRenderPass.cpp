@@ -151,7 +151,7 @@ void CVKRenderPass::Destroy(bool bClear)
 
 bool CVKRenderPass::SetColorAttachment(int indexAttachment, GfxPixelFormat format, int samples, bool bPresent, bool bInvalidation, bool bClear, float red, float green, float blue, float alpha)
 {
-	if (CGfxHelper::IsFormatDepthOrStencil(format)) {
+	if (CGfxHelper::IsFormatColor(format) == false) {
 		return false;
 	}
 
@@ -202,7 +202,7 @@ bool CVKRenderPass::SetSubpassInputColorReference(int indexSubpass, int indexAtt
 		return false;
 	}
 
-	if (CGfxHelper::IsFormatDepthOrStencil(m_attachments[indexAttachment].format)) {
+	if (CGfxHelper::IsFormatColor(m_attachments[indexAttachment].format) == false) {
 		return false;
 	}
 
@@ -220,7 +220,7 @@ bool CVKRenderPass::SetSubpassOutputColorReference(int indexSubpass, int indexAt
 		return false;
 	}
 
-	if (CGfxHelper::IsFormatDepthOrStencil(m_attachments[indexAttachment].format)) {
+	if (CGfxHelper::IsFormatColor(m_attachments[indexAttachment].format) == false) {
 		return false;
 	}
 

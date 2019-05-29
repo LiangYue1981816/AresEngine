@@ -36,7 +36,7 @@ void CGLES3RenderPass::Destroy(bool bClear)
 
 bool CGLES3RenderPass::SetColorAttachment(int indexAttachment, GfxPixelFormat format, int samples, bool bPresent, bool bInvalidation, bool bClear, float red, float green, float blue, float alpha)
 {
-	if (CGfxHelper::IsFormatDepthOrStencil(format)) {
+	if (CGfxHelper::IsFormatColor(format) == false) {
 		return false;
 	}
 
@@ -87,7 +87,7 @@ bool CGLES3RenderPass::SetSubpassInputColorReference(int indexSubpass, int index
 		return false;
 	}
 
-	if (CGfxHelper::IsFormatDepthOrStencil(m_attachments[indexAttachment].format)) {
+	if (CGfxHelper::IsFormatColor(m_attachments[indexAttachment].format) == false) {
 		return false;
 	}
 
@@ -105,7 +105,7 @@ bool CGLES3RenderPass::SetSubpassOutputColorReference(int indexSubpass, int inde
 		return false;
 	}
 
-	if (CGfxHelper::IsFormatDepthOrStencil(m_attachments[indexAttachment].format)) {
+	if (CGfxHelper::IsFormatColor(m_attachments[indexAttachment].format) == false) {
 		return false;
 	}
 
