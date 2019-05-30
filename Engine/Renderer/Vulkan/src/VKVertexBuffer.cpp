@@ -55,7 +55,10 @@ uint32_t CVKVertexBuffer::GetOffset(void) const
 
 bool CVKVertexBuffer::BufferData(size_t offset, size_t size, const void* data)
 {
-	m_offset = m_pBuffer->IsHostVisible() ? VKRenderer()->GetSwapChain()->GetFrameIndex() * m_size : 0;
+	if (m_pBuffer->IsHostVisible()) {
+		m_offset = VKRenderer()->GetSwapChain()->GetFrameIndex() * m_size;
+	}
+
 	return m_pBuffer->BufferData(m_offset + offset, size, data);
 }
 
