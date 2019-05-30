@@ -86,7 +86,7 @@ bool CVKBuffer::BufferData(size_t offset, size_t size, const void* data)
 	if (m_pMemory->IsHostVisible()) {
 		CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->BeginMap(offset, size));
 		CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->CopyData(0, size, data));
-		CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->FlushMappedMemoryRange());
+		CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->FlushMappedMemory());
 		CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->EndMap());
 	}
 	else {

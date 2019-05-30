@@ -108,7 +108,7 @@ bool CVKMemory::CopyData(VkDeviceSize offset, VkDeviceSize size, const void* dat
 	return true;
 }
 
-bool CVKMemory::FlushMappedMemoryRange(void)
+bool CVKMemory::FlushMappedMemory(void)
 {
 	ASSERT(m_memoryMapSize);
 	ASSERT(m_memoryMapAddress);
@@ -128,7 +128,7 @@ bool CVKMemory::FlushMappedMemoryRange(void)
 	return true;
 }
 
-bool CVKMemory::InvalidateMappedMemoryRange(void)
+bool CVKMemory::InvalidateMappedMemory(void)
 {
 	ASSERT(m_memoryMapSize);
 	ASSERT(m_memoryMapAddress);
