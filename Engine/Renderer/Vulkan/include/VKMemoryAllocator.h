@@ -33,6 +33,7 @@ private:
 	void Destroy(void);
 
 private:
+	void* GetMemoryAddress(void) const;
 	VkDeviceMemory GetMemory(void) const;
 
 	VkDeviceSize GetFreeSize(void) const;
@@ -68,6 +69,7 @@ private:
 	mem_node** m_nodes;
 
 private:
+	void* m_pMemoryAddress;
 	VkDeviceMemory m_vkMemory;
 
 	VkDeviceSize m_memoryFreeSize;
