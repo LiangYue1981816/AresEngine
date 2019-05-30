@@ -8,7 +8,7 @@ CVKIndirectBuffer::CVKIndirectBuffer(CVKDevice* pDevice, int numDrawCommands)
 
 	, m_draws(numDrawCommands)
 {
-	m_pBuffer = new CVKBuffer(pDevice, numDrawCommands * sizeof(DrawCommand), VK_BUFFER_USAGE_INDIRECT_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT);
+	m_pBuffer = new CVKBuffer(m_pDevice, ALIGN_BYTE(numDrawCommands * sizeof(DrawCommand), m_pDevice->GetPhysicalDeviceLimits().nonCoherentAtomSize), VK_BUFFER_USAGE_INDIRECT_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT);
 	CGfxProfiler::IncIndirectBufferSize(m_pBuffer->GetSize());
 }
 
