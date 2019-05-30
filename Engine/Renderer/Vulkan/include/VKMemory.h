@@ -27,8 +27,6 @@ public:
 public:
 	bool BeginMap(VkDeviceSize offset, VkDeviceSize size);
 	bool CopyData(VkDeviceSize offset, VkDeviceSize size, const void* data);
-	bool FlushMappedMemory(void);
-	bool InvalidateMappedMemory(void);
 	bool EndMap(void);
 
 public:
