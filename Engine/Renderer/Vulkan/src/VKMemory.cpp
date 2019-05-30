@@ -108,11 +108,10 @@ bool CVKMemory::CopyData(VkDeviceSize offset, VkDeviceSize size, const void* dat
 	return true;
 }
 
-bool CVKMemory::FlushMappedMemoryRange(VkDeviceSize offset, VkDeviceSize size)
+bool CVKMemory::FlushMappedMemoryRange(void)
 {
-	ASSERT(size);
-	ASSERT(m_memoryMapSize >= offset + size);
-	ASSERT(m_memoryMapAddress != nullptr);
+	ASSERT(m_memoryMapSize);
+	ASSERT(m_memoryMapAddress);
 
 	if (IsHostVisible() == false) {
 		return false;
@@ -122,18 +121,17 @@ bool CVKMemory::FlushMappedMemoryRange(VkDeviceSize offset, VkDeviceSize size)
 	range.sType = VK_STRUCTURE_TYPE_MAPPED_MEMORY_RANGE;
 	range.pNext = nullptr;
 	range.memory = m_pAllocator->GetMemory();
-	range.offset = m_memoryOffset + m_memoryMapOffset + offset;
-	range.size = size;
+	range.offset = m_memoryOffset + m_memoryMapOffset;
+	range.size = m_memoryMapSize;
 	CALL_VK_FUNCTION_RETURN_BOOL(vkFlushMappedMemoryRanges(m_pDevice->GetDevice(), 1, &range));
 
 	return true;
 }
 
-bool CVKMemory::InvalidateMappedMemoryRange(VkDeviceSize offset, VkDeviceSize size)
+bool CVKMemory::InvalidateMappedMemoryRange(void)
 {
-	ASSERT(size);
-	ASSERT(m_memoryMapSize >= offset + size);
-	ASSERT(m_memoryMapAddress != nullptr);
+	ASSERT(m_memoryMapSize);
+	ASSERT(m_memoryMapAddress);
 
 	if (IsHostVisible() == false) {
 		return false;
@@ -143,8 +141,8 @@ bool CVKMemory::InvalidateMappedMemoryRange(VkDeviceSize offset, VkDeviceSize si
 	range.sType = VK_STRUCTURE_TYPE_MAPPED_MEMORY_RANGE;
 	range.pNext = nullptr;
 	range.memory = m_pAllocator->GetMemory();
-	range.offset = m_memoryOffset + m_memoryMapOffset + offset;
-	range.size = size;
+	range.offset = m_memoryOffset + m_memoryMapOffset;
+	range.size = m_memoryMapSize;
 	CALL_VK_FUNCTION_RETURN_BOOL(vkInvalidateMappedMemoryRanges(m_pDevice->GetDevice(), 1, &range));
 
 	return true;
