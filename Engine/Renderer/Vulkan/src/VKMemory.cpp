@@ -98,9 +98,7 @@ bool CVKMemory::EndMap(void)
 	range.memory = m_pAllocator->GetMemory();
 	range.offset = m_memoryOffset;
 	range.size = m_memorySize;
-
 	vkFlushMappedMemoryRanges(m_pDevice->GetDevice(), 1, &range);
-	vkUnmapMemory(m_pDevice->GetDevice(), m_pAllocator->GetMemory());
 
 	return true;
 }
