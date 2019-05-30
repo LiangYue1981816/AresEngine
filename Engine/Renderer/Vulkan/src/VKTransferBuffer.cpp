@@ -112,7 +112,7 @@ bool CVKTransferBuffer::TransferBufferData(CVKBuffer* pDstBuffer, VkAccessFlags 
 
 	CALL_VK_FUNCTION_RETURN_BOOL(vkBeginCommandBufferPrimary(m_vkCommandBuffer, VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT));
 	{
-		CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->BeginMap(0, size));
+		CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->BeginMap());
 		CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->CopyData(0, size, data));
 		CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->EndMap());
 
@@ -142,7 +142,7 @@ bool CVKTransferBuffer::TransferTexture2DData(CVKTexture* pDstTexture, VkImageLa
 
 	CALL_VK_FUNCTION_RETURN_BOOL(vkBeginCommandBufferPrimary(m_vkCommandBuffer, VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT));
 	{
-		CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->BeginMap(0, size));
+		CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->BeginMap());
 		CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->CopyData(0, size, data));
 		CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->EndMap());
 
@@ -183,7 +183,7 @@ bool CVKTransferBuffer::TransferTexture2DArrayData(CVKTexture* pDstTexture, VkIm
 
 	CALL_VK_FUNCTION_RETURN_BOOL(vkBeginCommandBufferPrimary(m_vkCommandBuffer, VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT));
 	{
-		CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->BeginMap(0, size));
+		CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->BeginMap());
 		CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->CopyData(0, size, data));
 		CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->EndMap());
 
@@ -224,7 +224,7 @@ bool CVKTransferBuffer::TransferTextureCubemapData(CVKTexture* pDstTexture, VkIm
 
 	CALL_VK_FUNCTION_RETURN_BOOL(vkBeginCommandBufferPrimary(m_vkCommandBuffer, VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT));
 	{
-		CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->BeginMap(0, size));
+		CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->BeginMap());
 		CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->CopyData(0, size, data));
 		CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->EndMap());
 

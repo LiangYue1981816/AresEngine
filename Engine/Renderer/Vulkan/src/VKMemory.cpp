@@ -8,10 +8,6 @@ CVKMemory::CVKMemory(CVKDevice* pDevice, CVKMemoryAllocator* pAllocator, VkDevic
 	, m_memorySize(memorySize)
 	, m_memoryOffset(memoryOffset)
 
-	, m_memoryMapSize(0)
-	, m_memoryMapOffset(0)
-	, m_memoryMapAddress(nullptr)
-
 	, bInUse(false)
 
 	, pNext(nullptr)
@@ -71,26 +67,9 @@ bool CVKMemory::BindBuffer(VkBuffer vkBuffer) const
 	return true;
 }
 
-bool CVKMemory::BeginMap(VkDeviceSize offset, VkDeviceSize size)
+bool CVKMemory::BeginMap(void)
 {
-	if (IsHostVisible() == false) {
-		return false;
-	}
-
-	ASSERT(size);
-	ASSERT(m_memorySize >= offset + size);
-	ASSERT(m_memoryMapSize == 0);
-	ASSERT(m_memoryMapOffset == 0);
-	ASSERT(m_memoryMapAddress == nullptr);
-
-	void* address = nullptr;
-	CALL_VK_FUNCTION_RETURN_BOOL(vkMapMemory(m_pDevice->GetDevice(), m_pAllocator->GetMemory(), m_memoryOffset + offset, size, 0, &address));
-
-	m_memoryMapSize = size;
-	m_memoryMapOffset = offset;
-	m_memoryMapAddress = address;
-
-	return true;
+	return IsHostVisible();
 }
 
 bool CVKMemory::CopyData(VkDeviceSize offset, VkDeviceSize size, const void* data)
@@ -101,10 +80,9 @@ bool CVKMemory::CopyData(VkDeviceSize offset, VkDeviceSize size, const void* dat
 
 	ASSERT(data);
 	ASSERT(size);
-	ASSERT(m_memoryMapSize >= offset + size);
-	ASSERT(m_memoryMapAddress != nullptr);
+	ASSERT(m_memorySize >= offset + size);
 
-	memcpy((uint8_t*)m_memoryMapAddress + offset, data, size);
+	memcpy((uint8_t*)m_pAllocator->GetMemoryAddress() + m_memoryOffset + offset, data, size);
 	return true;
 }
 
@@ -114,22 +92,15 @@ bool CVKMemory::EndMap(void)
 		return false;
 	}
 
-	ASSERT(m_memoryMapSize);
-	ASSERT(m_memoryMapAddress);
-
 	VkMappedMemoryRange range = {};
 	range.sType = VK_STRUCTURE_TYPE_MAPPED_MEMORY_RANGE;
 	range.pNext = nullptr;
 	range.memory = m_pAllocator->GetMemory();
-	range.offset = m_memoryOffset + m_memoryMapOffset;
-	range.size = m_memoryMapSize;
+	range.offset = m_memoryOffset;
+	range.size = m_memorySize;
 
 	vkFlushMappedMemoryRanges(m_pDevice->GetDevice(), 1, &range);
 	vkUnmapMemory(m_pDevice->GetDevice(), m_pAllocator->GetMemory());
-
-	m_memoryMapSize = 0;
-	m_memoryMapOffset = 0;
-	m_memoryMapAddress = nullptr;
 
 	return true;
 }

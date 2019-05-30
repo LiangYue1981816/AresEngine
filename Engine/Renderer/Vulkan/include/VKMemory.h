@@ -25,7 +25,7 @@ public:
 	bool BindBuffer(VkBuffer vkBuffer) const;
 
 public:
-	bool BeginMap(VkDeviceSize offset, VkDeviceSize size);
+	bool BeginMap(void);
 	bool CopyData(VkDeviceSize offset, VkDeviceSize size, const void* data);
 	bool EndMap(void);
 
@@ -40,11 +40,6 @@ public:
 private:
 	VkDeviceSize m_memorySize;
 	VkDeviceSize m_memoryOffset;
-
-private:
-	VkDeviceSize m_memoryMapSize;
-	VkDeviceSize m_memoryMapOffset;
-	void* m_memoryMapAddress;
 
 private:
 	CVKMemoryAllocator* m_pAllocator;
