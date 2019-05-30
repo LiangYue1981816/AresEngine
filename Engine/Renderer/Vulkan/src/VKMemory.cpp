@@ -73,15 +73,15 @@ bool CVKMemory::BindBuffer(VkBuffer vkBuffer) const
 
 bool CVKMemory::BeginMap(VkDeviceSize offset, VkDeviceSize size)
 {
+	if (IsHostVisible() == false) {
+		return false;
+	}
+
 	ASSERT(size);
 	ASSERT(m_memorySize >= offset + size);
 	ASSERT(m_memoryMapSize == 0);
 	ASSERT(m_memoryMapOffset == 0);
 	ASSERT(m_memoryMapAddress == nullptr);
-
-	if (IsHostVisible() == false) {
-		return false;
-	}
 
 	void* address = nullptr;
 	CALL_VK_FUNCTION_RETURN_BOOL(vkMapMemory(m_pDevice->GetDevice(), m_pAllocator->GetMemory(), m_memoryOffset + offset, size, 0, &address));
@@ -95,14 +95,14 @@ bool CVKMemory::BeginMap(VkDeviceSize offset, VkDeviceSize size)
 
 bool CVKMemory::CopyData(VkDeviceSize offset, VkDeviceSize size, const void* data)
 {
+	if (IsHostVisible() == false) {
+		return false;
+	}
+
 	ASSERT(data);
 	ASSERT(size);
 	ASSERT(m_memoryMapSize >= offset + size);
 	ASSERT(m_memoryMapAddress != nullptr);
-
-	if (IsHostVisible() == false) {
-		return false;
-	}
 
 	memcpy((uint8_t*)m_memoryMapAddress + offset, data, size);
 	return true;
@@ -110,12 +110,12 @@ bool CVKMemory::CopyData(VkDeviceSize offset, VkDeviceSize size, const void* dat
 
 bool CVKMemory::EndMap(void)
 {
-	ASSERT(m_memoryMapSize);
-	ASSERT(m_memoryMapAddress);
-
 	if (IsHostVisible() == false) {
 		return false;
 	}
+
+	ASSERT(m_memoryMapSize);
+	ASSERT(m_memoryMapAddress);
 
 	VkMappedMemoryRange range = {};
 	range.sType = VK_STRUCTURE_TYPE_MAPPED_MEMORY_RANGE;
