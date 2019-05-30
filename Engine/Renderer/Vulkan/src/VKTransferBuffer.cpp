@@ -114,6 +114,7 @@ bool CVKTransferBuffer::TransferBufferData(CVKBuffer* pDstBuffer, VkAccessFlags 
 	{
 		CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->BeginMap(0, size));
 		CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->CopyData(0, size, data));
+		CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->FlushMappedMemoryRange(0, size));
 		CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->EndMap());
 
 		VkBufferCopy region = {};
@@ -144,6 +145,7 @@ bool CVKTransferBuffer::TransferTexture2DData(CVKTexture* pDstTexture, VkImageLa
 	{
 		CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->BeginMap(0, size));
 		CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->CopyData(0, size, data));
+		CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->FlushMappedMemoryRange(0, size));
 		CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->EndMap());
 
 		VkBufferImageCopy region = {};
@@ -185,6 +187,7 @@ bool CVKTransferBuffer::TransferTexture2DArrayData(CVKTexture* pDstTexture, VkIm
 	{
 		CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->BeginMap(0, size));
 		CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->CopyData(0, size, data));
+		CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->FlushMappedMemoryRange(0, size));
 		CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->EndMap());
 
 		VkBufferImageCopy region = {};
@@ -226,6 +229,7 @@ bool CVKTransferBuffer::TransferTextureCubemapData(CVKTexture* pDstTexture, VkIm
 	{
 		CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->BeginMap(0, size));
 		CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->CopyData(0, size, data));
+		CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->FlushMappedMemoryRange(0, size));
 		CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->EndMap());
 
 		VkBufferImageCopy region = {};
