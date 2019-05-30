@@ -9,8 +9,8 @@ CVKMemoryAllocator::CVKMemoryAllocator(CVKDevice* pDevice, uint32_t memoryTypeIn
 	, m_root{ nullptr }
 	, m_nodes(nullptr)
 
-	, m_vkMemory(VK_NULL_HANDLE)
 	, m_pMemoryAddress(nullptr)
+	, m_vkMemory(VK_NULL_HANDLE)
 
 	, m_memoryFreeSize(0)
 	, m_memoryFullSize(0)
@@ -70,8 +70,8 @@ void CVKMemoryAllocator::Destroy(void)
 
 	vkFreeMemory(m_pDevice->GetDevice(), m_vkMemory, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
 
-	m_vkMemory = VK_NULL_HANDLE;
 	m_pMemoryAddress = nullptr;
+	m_vkMemory = VK_NULL_HANDLE;
 
 	m_memoryFreeSize = 0;
 	m_memoryFullSize = 0;
