@@ -146,7 +146,7 @@ void CRenderSolutionDefault::Render(int indexQueue)
 
 	GfxRenderer()->AcquireNextFrame();
 	{
-		const uint32_t nameDefaultPass = HashValue("Default");
+		const uint32_t nameDefaultPass = HashValue("Pbr");
 
 		const int indexFrame = GfxRenderer()->GetSwapChain()->GetFrameIndex();
 
