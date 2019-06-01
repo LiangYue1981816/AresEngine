@@ -3,8 +3,6 @@
 
 CRenderSolutionForward::CRenderSolutionForward(void)
 {
-	SetEnableMSAA(false);
-
 	m_ptrMainCommandBuffer[0] = GfxRenderer()->NewCommandBuffer(0, true);
 	m_ptrMainCommandBuffer[1] = GfxRenderer()->NewCommandBuffer(0, true);
 	m_ptrMainCommandBuffer[2] = GfxRenderer()->NewCommandBuffer(0, true);
@@ -15,6 +13,8 @@ CRenderSolutionForward::~CRenderSolutionForward(void)
 	m_ptrMainCommandBuffer[0]->Clearup();
 	m_ptrMainCommandBuffer[1]->Clearup();
 	m_ptrMainCommandBuffer[2]->Clearup();
+
+	Destroy();
 }
 
 void CRenderSolutionForward::CreateFrameBuffer(void)
@@ -64,6 +64,8 @@ void CRenderSolutionForward::DestroyFrameBuffer(void)
 
 void CRenderSolutionForward::CreateFrameBufferMSAA(int samples)
 {
+	m_bEnableMSAA = true;
+
 	for (int indexFrame = 0; indexFrame < CGfxSwapChain::SWAPCHAIN_FRAME_COUNT; indexFrame++) {
 		m_renderParamsMSAA.ptrColorTextures[indexFrame] = GfxRenderer()->GetSwapChain()->GetFrameTexture(indexFrame);
 		m_renderParamsMSAA.ptrColorTexturesMSAA[indexFrame] = GfxRenderer()->NewRenderTexture(HashValueFormat("ColorTexture %d", indexFrame));
@@ -113,19 +115,20 @@ void CRenderSolutionForward::DestroyFrameBufferMSAA(void)
 	m_renderParamsMSAA.ptrRenderPass.Release();
 }
 
-void CRenderSolutionForward::SetEnableMSAA(bool bEnable, int samples)
+void CRenderSolutionForward::Create(int samples)
 {
-	m_bEnableMSAA = bEnable;
-
-	DestroyFrameBuffer();
-	DestroyFrameBufferMSAA();
-
-	if (m_bEnableMSAA) {
-		CreateFrameBufferMSAA(samples);
-	}
-	else {
+	if (samples <= 1) {
 		CreateFrameBuffer();
 	}
+	else {
+		CRenderSolutionForward(samples);
+	}
+}
+
+void CRenderSolutionForward::Destroy(void)
+{
+	DestroyFrameBuffer();
+	DestroyFrameBufferMSAA();
 }
 
 void CRenderSolutionForward::Update(int indexQueue)

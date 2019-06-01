@@ -8,7 +8,7 @@ CRenderSolutionDeferred::CRenderSolutionDeferred(void)
 
 CRenderSolutionDeferred::~CRenderSolutionDeferred(void)
 {
-
+	Destroy();
 }
 
 void CRenderSolutionDeferred::CreateFrameBuffer(void)
@@ -31,7 +31,12 @@ void CRenderSolutionDeferred::DestroyFrameBufferMSAA(void)
 
 }
 
-void CRenderSolutionDeferred::SetEnableMSAA(bool bEnable, int samples)
+void CRenderSolutionDeferred::Create(int samples)
+{
+
+}
+
+void CRenderSolutionDeferred::Destroy(void)
 {
 
 }

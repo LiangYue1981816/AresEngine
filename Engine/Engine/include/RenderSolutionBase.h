@@ -40,7 +40,8 @@ protected:
 	virtual void DestroyFrameBufferMSAA(void) = 0;
 
 public:
-	virtual void SetEnableMSAA(bool bEnable, int samples = 4) = 0;
+	virtual void Create(int samples = 1) = 0;
+	virtual void Destroy(void) = 0;
 
 public:
 	virtual void Update(int indexQueue) = 0;

@@ -8,7 +8,7 @@ CRenderSolutionForwardPlus::CRenderSolutionForwardPlus(void)
 
 CRenderSolutionForwardPlus::~CRenderSolutionForwardPlus(void)
 {
-
+	Destroy();
 }
 
 void CRenderSolutionForwardPlus::CreateFrameBuffer(void)
@@ -31,7 +31,12 @@ void CRenderSolutionForwardPlus::DestroyFrameBufferMSAA(void)
 
 }
 
-void CRenderSolutionForwardPlus::SetEnableMSAA(bool bEnable, int samples)
+void CRenderSolutionForwardPlus::Create(int samples)
+{
+
+}
+
+void CRenderSolutionForwardPlus::Destroy(void)
 {
 
 }
