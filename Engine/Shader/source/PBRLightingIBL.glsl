@@ -76,7 +76,9 @@ DESCRIPTOR_SET_PASS(9)  uniform sampler2D texAO;
 DESCRIPTOR_SET_PASS(10) uniform sampler2D texNormal;
 #endif
 DESCRIPTOR_SET_PASS(11) uniform sampler2D texRoughMetallic;
-DESCRIPTOR_SET_PASS(12) uniform samplerCube texEnv;
+#ifdef ENV_MAP
+DESCRIPTOR_SET_PASS(12) uniform sampler2D texEnv;
+#endif
 
 layout (location = 0) in highp   vec3 inPosition;
 layout (location = 1) in mediump vec2 inTexcoord;
@@ -123,7 +125,11 @@ void main()
 	mediump vec3 ambientLightingColor = AmbientLightingSH9(albedoColor, metallic, pixelNormal) * ambientLightFactor;
 	mediump vec3 pointLightingColor = SimpleLighting(pointLightColor, pointLightDirection, pixelNormal, albedoColor) * pointLightFactor;
 	mediump vec3 directLightingColor = PBRLighting(mainDirectLightColor, mainDirectLightDirection, inHalfDirection, inViewDirection, pixelNormal, albedoColor, metallic, roughness) * directLightFactor;
+#ifdef ENV_MAP
 	mediump vec3 envLightingColor = EnvSpecular(inViewDirection, pixelNormal, albedoColor, metallic, roughness, 8.0, texEnv) * envLightFactor;
+#else
+	mediump vec3 envLightingColor = vec3(1.0);
+#endif
 	mediump vec3 finalLighting = FinalLighting(ao, ambientLightingColor, pointLightingColor, directLightingColor, envLightingColor, 1.0);
 
 	finalLighting = ToneMapping(finalLighting);
