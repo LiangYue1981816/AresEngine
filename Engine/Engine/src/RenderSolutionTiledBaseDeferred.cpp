@@ -1,52 +1,52 @@
 #include "EngineHeader.h"
 
 
-CRenderSolutionForwardPlus::CRenderSolutionForwardPlus(void)
+CRenderSolutionTiledBaseDeferred::CRenderSolutionTiledBaseDeferred(void)
 {
 
 }
 
-CRenderSolutionForwardPlus::~CRenderSolutionForwardPlus(void)
+CRenderSolutionTiledBaseDeferred::~CRenderSolutionTiledBaseDeferred(void)
 {
 	Destroy();
 }
 
-void CRenderSolutionForwardPlus::CreateFrameBuffer(void)
+void CRenderSolutionTiledBaseDeferred::CreateFrameBuffer(void)
 {
 
 }
 
-void CRenderSolutionForwardPlus::DestroyFrameBuffer(void)
+void CRenderSolutionTiledBaseDeferred::DestroyFrameBuffer(void)
 {
 
 }
 
-void CRenderSolutionForwardPlus::CreateFrameBufferMSAA(int samples)
+void CRenderSolutionTiledBaseDeferred::CreateFrameBufferMSAA(int samples)
 {
 
 }
 
-void CRenderSolutionForwardPlus::DestroyFrameBufferMSAA(void)
+void CRenderSolutionTiledBaseDeferred::DestroyFrameBufferMSAA(void)
 {
 
 }
 
-void CRenderSolutionForwardPlus::Create(int samples)
+void CRenderSolutionTiledBaseDeferred::Create(int samples)
 {
 
 }
 
-void CRenderSolutionForwardPlus::Destroy(void)
+void CRenderSolutionTiledBaseDeferred::Destroy(void)
 {
 
 }
 
-void CRenderSolutionForwardPlus::Update(int indexQueue)
+void CRenderSolutionTiledBaseDeferred::Update(int indexQueue)
 {
 
 }
 
-void CRenderSolutionForwardPlus::Render(int indexQueue)
+void CRenderSolutionTiledBaseDeferred::Render(int indexQueue)
 {
 
 }

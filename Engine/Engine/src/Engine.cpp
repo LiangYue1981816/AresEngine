@@ -77,8 +77,8 @@ CEngine::CEngine(GfxApi api, RenderSolution solution, void* hInstance, void* hWn
 		m_pRenderSolution = new CRenderSolutionForward;
 		break;
 
-	case RENDER_SOLUTION_FORWARD_PLUS:
-		m_pRenderSolution = new CRenderSolutionForwardPlus;
+	case RENDER_SOLUTION_TILED_BASE_DEFERRED:
+		m_pRenderSolution = new CRenderSolutionTiledBaseDeferred;
 		break;
 	}
 

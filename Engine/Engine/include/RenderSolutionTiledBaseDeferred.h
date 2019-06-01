@@ -2,14 +2,14 @@
 #include "RenderSolutionBase.h"
 
 
-class CALL_API CRenderSolutionForwardPlus : public CRenderSolutionBase
+class CALL_API CRenderSolutionTiledBaseDeferred : public CRenderSolutionBase
 {
 	friend class CEngine;
 
 
 protected:
-	CRenderSolutionForwardPlus(void);
-	virtual ~CRenderSolutionForwardPlus(void);
+	CRenderSolutionTiledBaseDeferred(void);
+	virtual ~CRenderSolutionTiledBaseDeferred(void);
 
 
 protected:
