@@ -7,6 +7,23 @@ class CALL_API CRenderSolutionForward : public CRenderSolutionBase
 	friend class CEngine;
 
 
+private:
+	typedef struct RenderParams {
+		CGfxRenderPassPtr ptrRenderPass;
+		CGfxFrameBufferPtr ptrFrameBuffer[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
+		CGfxRenderTexturePtr ptrColorTextures[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
+		CGfxRenderTexturePtr ptrDepthStencilTextures[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
+	} RenderParams;
+
+	typedef struct RenderParamsMSAA {
+		CGfxRenderPassPtr ptrRenderPass;
+		CGfxFrameBufferPtr ptrFrameBuffer[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
+		CGfxRenderTexturePtr ptrColorTextures[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
+		CGfxRenderTexturePtr ptrColorTexturesMSAA[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
+		CGfxRenderTexturePtr ptrDepthStencilTexturesMSAA[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
+	} RenderParamsMSAA;
+
+
 protected:
 	CRenderSolutionForward(void);
 	virtual ~CRenderSolutionForward(void);
@@ -25,4 +42,13 @@ public:
 public:
 	virtual void Update(int indexQueue);
 	virtual void Render(int indexQueue);
+
+
+private:
+	bool m_bEnableMSAA;
+	RenderParams m_renderParams;
+	RenderParamsMSAA m_renderParamsMSAA;
+
+private:
+	CGfxCommandBufferPtr m_ptrMainCommandBuffer[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
 };

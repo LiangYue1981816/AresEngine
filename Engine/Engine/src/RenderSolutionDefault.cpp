@@ -132,7 +132,6 @@ void CRenderSolutionDefault::Update(int indexQueue)
 {
 	m_pMainQueue->Clear(indexQueue);
 	m_pLightQueue->Clear(indexQueue);
-	m_pShadowQueue->Clear(indexQueue);
 
 	SceneManager()->UpdateLogic(Engine()->GetTotalTime(), Engine()->GetDeltaTime());
 	SceneManager()->UpdateCamera(m_pMainCamera, m_pMainQueue, indexQueue);
@@ -142,7 +141,6 @@ void CRenderSolutionDefault::Render(int indexQueue)
 {
 	m_pEngine->Apply();
 	m_pMainCamera->Apply();
-	m_pShadowCamera->Apply();
 
 	GfxRenderer()->AcquireNextFrame();
 	{
