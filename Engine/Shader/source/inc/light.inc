@@ -161,9 +161,7 @@ vec3 Env_SpecularFast(vec3 SpecularColor, float ndv, float roughness)
 vec3 BRDF_Diffuse(vec3 lightColor, vec3 L, vec3 N, vec3 albedoColor)
 {
 	float ndl = max(dot(N, L), 0.0);
-
 	vec3 diffuse = Diffuse_Lambert(albedoColor);
-	
 	return diffuse * ndl * lightColor;
 }
 
