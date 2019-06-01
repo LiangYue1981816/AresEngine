@@ -130,6 +130,13 @@ vec3 F_Schlick(float ndv, float metallic, vec3 albedo)
 	return F0 + (1.0 - F0) * pow(1.0 - ndv, 5.0);
 }
 
+vec3 F_SchlickFast(float ndv, float metallic, vec3 albedo)
+{
+	vec3 F0 = mix(vec3(0.04), albedo, metallic);
+	float F1 = clamp(1.0 - ndv * 1.5, 0.0, 1.0);
+	return F0 + (1.0 - F0) * F1 * F1 * F1;
+}
+
 vec3 Env_Specular(vec3 SpecularColor, float ndv, float roughness)
 {
 	vec4 c0 = vec4(-1.0, -0.0275, -0.572, 0.022);
@@ -157,7 +164,7 @@ vec3 BRDF_Blinn(vec3 lightColor, vec3 L, vec3 H, vec3 V, vec3 N, vec3 albedoColo
 	float ndv = max(dot(N, V), 0.0);
 
 	float D = D_Blinn(ndh, roughness);
-	vec3  F = F_Schlick(ndv, metallic, albedoColor);
+	vec3  F = F_SchlickFast(ndv, metallic, albedoColor);
 
 	vec3 factor = vec3(1.0 - metallic);
 	vec3 diffuse = Diffuse_Lambert(albedoColor) * factor;
@@ -174,7 +181,7 @@ vec3 BRDF_Pbr(vec3 lightColor, vec3 L, vec3 H, vec3 V, vec3 N, vec3 albedoColor,
 
 	float D = D_GGX(ndh, roughness);
 	float G = G_SchlickSmithGGX(ndv, ndl, roughness);
-	vec3  F = F_Schlick(ndv, metallic, albedoColor);
+	vec3  F = F_SchlickFast(ndv, metallic, albedoColor);
 
 	vec3 factor = vec3(1.0 - metallic);
 	vec3 diffuse = Diffuse_Lambert(albedoColor) * factor;
@@ -187,7 +194,7 @@ vec3 BRDF_EnvSpecular(vec3 V, vec3 N, vec3 albedoColor, float metallic, float ro
 {
 	float ndv = max(dot(N, V), 0.0);
 
-	vec3 F = F_Schlick(ndv, metallic, albedoColor);
+	vec3 F = F_SchlickFast(ndv, metallic, albedoColor);
 
 	return Env_Specular(F, ndv, roughness) * specularColor;
 }
