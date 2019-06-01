@@ -10,10 +10,6 @@ CRenderSolutionForward::CRenderSolutionForward(void)
 
 CRenderSolutionForward::~CRenderSolutionForward(void)
 {
-	m_ptrMainCommandBuffer[0]->Clearup();
-	m_ptrMainCommandBuffer[1]->Clearup();
-	m_ptrMainCommandBuffer[2]->Clearup();
-
 	Destroy();
 }
 
@@ -127,6 +123,13 @@ void CRenderSolutionForward::Create(int samples)
 
 void CRenderSolutionForward::Destroy(void)
 {
+	m_ptrMainCommandBuffer[0]->Clearup();
+	m_ptrMainCommandBuffer[1]->Clearup();
+	m_ptrMainCommandBuffer[2]->Clearup();
+
+	m_pMainQueue->Clear(0);
+	m_pMainQueue->Clear(1);
+
 	DestroyFrameBuffer();
 	DestroyFrameBufferMSAA();
 }
