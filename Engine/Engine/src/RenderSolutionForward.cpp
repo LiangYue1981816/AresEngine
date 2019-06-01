@@ -128,7 +128,12 @@ void CRenderSolutionForward::Destroy(void)
 	m_ptrMainCommandBuffer[2]->Clearup();
 
 	m_pMainQueue->Clear(0);
+	m_pLightQueue->Clear(0);
+	m_pShadowQueue->Clear(0);
+
 	m_pMainQueue->Clear(1);
+	m_pLightQueue->Clear(1);
+	m_pShadowQueue->Clear(1);
 
 	DestroyFrameBuffer();
 	DestroyFrameBufferMSAA();
