@@ -128,7 +128,7 @@ void main()
 #ifdef ENV_MAP
 	mediump vec3 envLightingColor = EnvSpecularFast(inViewDirection, pixelNormal, albedoColor, metallic, roughness, 8.0, texEnv) * envLightFactor;
 #else
-	mediump vec3 envLightingColor = vec3(1.0);
+	mediump vec3 envLightingColor = vec3(0.0);
 #endif
 	mediump vec3 finalLighting = FinalLighting(ao, ambientLightingColor, pointLightingColor, directLightingColor, envLightingColor, 1.0);
 
