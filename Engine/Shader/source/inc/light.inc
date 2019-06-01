@@ -84,12 +84,6 @@ vec3 Diffuse_Lambert(vec3 albedoColor)
 	return albedoColor / PI;
 }
 
-float D_Blinn(float ndh, float roughness)
-{
-	float a = pow2(1.0 - roughness) * 256.0;
-	return (a + 2.0) / (8.0 * PI) * pow(ndh, a);
-}
-
 float D_GGX(float ndh, float roughness)
 {
 	float a = roughness * roughness;
@@ -165,40 +159,6 @@ vec3 BRDF_Diffuse(vec3 lightColor, vec3 L, vec3 N, vec3 albedoColor)
 	return diffuse * ndl * lightColor;
 }
 
-vec3 BRDF_Blinn(vec3 lightColor, vec3 L, vec3 H, vec3 V, vec3 N, vec3 albedoColor, vec3 specularColor, float metallic, float roughness)
-{
-	float ndl = max(dot(N, L), 0.0);
-	float ndh = max(dot(N, H), 0.0);
-	float ndv = max(dot(N, V), 0.0);
-
-	float D = D_GGX(ndh, roughness);
-	float G = G_Neumann(ndv, ndl);
-	vec3  F = F_Schlick(ndv, metallic, albedoColor);
-
-	vec3 factor = vec3(1.0 - metallic);
-	vec3 diffuse = Diffuse_Lambert(albedoColor) * factor;
-	vec3 specular = D * G * F * specularColor;
-
-	return (diffuse + specular) * ndl * lightColor;
-}
-
-vec3 BRDF_BlinnFast(vec3 lightColor, vec3 L, vec3 H, vec3 V, vec3 N, vec3 albedoColor, vec3 specularColor, float metallic, float roughness)
-{
-	float ndl = max(dot(N, L), 0.0);
-	float ndh = max(dot(N, H), 0.0);
-	float ndv = max(dot(N, V), 0.0);
-
-	float D = D_GGX(ndh, roughness);
-	float G = G_Neumann(ndv, ndl);
-	vec3  F = F_SchlickFast(ndv, metallic, albedoColor);
-
-	vec3 factor = vec3(1.0 - metallic);
-	vec3 diffuse = Diffuse_Lambert(albedoColor) * factor;
-	vec3 specular = D * G * F * specularColor;
-
-	return (diffuse + specular) * ndl * lightColor;
-}
-
 vec3 BRDF_Pbr(vec3 lightColor, vec3 L, vec3 H, vec3 V, vec3 N, vec3 albedoColor, float metallic, float roughness)
 {
 	float ndl = max(dot(N, L), 0.0);
@@ -267,11 +227,6 @@ vec3 AmbientLightingSH9(vec3 albedoColor, float metallic, vec3 normal)
 vec3 SimpleLighting(vec3 lightColor, vec3 lightDirection, vec3 N, vec3 albedoColor)
 {
 	return BRDF_Diffuse(lightColor, lightDirection, N, albedoColor);
-}
-
-vec3 BlinnLighting(vec3 lightColor, vec3 lightDirection, vec3 H, vec3 V, vec3 N, vec3 albedoColor, vec3 specularColor, float metallic, float roughness)
-{
-	return BRDF_Blinn(lightColor, lightDirection, H, V, N, albedoColor, specularColor, metallic, roughness);
 }
 
 vec3 PBRLighting(vec3 lightColor, vec3 lightDirection, vec3 H, vec3 V, vec3 N, vec3 albedoColor, float metallic, float roughness)
