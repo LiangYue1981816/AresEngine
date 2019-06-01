@@ -8,6 +8,15 @@
 #include "RenderSolutionTiledBaseDeferred.h"
 
 
+typedef enum RenderSolution {
+	RENDER_SOLUTION_DEFAULT = 0,
+	RENDER_SOLUTION_FORWARD,
+	RENDER_SOLUTION_DEFERRED,
+	RENDER_SOLUTION_TILED_BASE_DEFERRED,
+	RENDER_SOLUTION_COUNT
+} RenderSolution;
+
+
 #define CreateEngine(api, solution, hInstance, hWnd, hDC, width, height, format) CEngine::Create((api), (solution), (hInstance), (hWnd), (hDC), (width), (height), (format))
 #define DestroyEngine() CEngine::Destroy()
 #define Engine() CEngine::GetInstance()
@@ -17,15 +26,6 @@
 #define RenderSolution() CEngine::GetInstance()->GetRenderSolution()
 #define MainCamera() CEngine::GetInstance()->GetRenderSolution()->GetMainCamera()
 #define ShadowCamera() CEngine::GetInstance()->GetRenderSolution()->GetShadowCamera()
-
-
-typedef enum RenderSolution {
-	RENDER_SOLUTION_DEFAULT = 0,
-	RENDER_SOLUTION_FORWARD,
-	RENDER_SOLUTION_DEFERRED,
-	RENDER_SOLUTION_TILED_BASE_DEFERRED,
-	RENDER_SOLUTION_COUNT
-} RenderSolution;
 
 
 class CALL_API CEngine
@@ -40,6 +40,9 @@ private:
 	CEngine(GfxApi api, RenderSolution solution, void* hInstance, void* hWnd, void* hDC, int width, int height, GfxPixelFormat format);
 	virtual ~CEngine(void);
 
+
+public:
+	void SetRenderSolution(RenderSolution solution, int samples = 1);
 
 public:
 	CGfxRenderer* GetRenderer(void) const;
@@ -69,7 +72,9 @@ private:
 
 private:
 	CGfxRenderer* m_pRenderer;
-	CRenderSolutionBase* m_pRenderSolution;
+
+	CRenderSolutionBase* m_pRenderSolution[RENDER_SOLUTION_COUNT];
+	CRenderSolutionBase* m_pCurrentRenderSolution;
 
 	CFileManager* m_pFileManager;
 	CSceneManager* m_pSceneManager;

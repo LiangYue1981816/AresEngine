@@ -42,7 +42,9 @@ CEngine::CEngine(GfxApi api, RenderSolution solution, void* hInstance, void* hWn
 	, m_totalTime(0.0f)
 
 	, m_pRenderer(nullptr)
-	, m_pRenderSolution(nullptr)
+
+	, m_pRenderSolution{ nullptr }
+	, m_pCurrentRenderSolution(nullptr)
 
 	, m_pFileManager(nullptr)
 	, m_pSceneManager(nullptr)
@@ -64,23 +66,13 @@ CEngine::CEngine(GfxApi api, RenderSolution solution, void* hInstance, void* hWn
 		break;
 	}
 
-	switch ((int)solution) {
-	case RENDER_SOLUTION_DEFAULT:
-		m_pRenderSolution = new CRenderSolutionDefault;
-		break;
+	m_pRenderSolution[RENDER_SOLUTION_DEFAULT] = new CRenderSolutionDefault;
+	m_pRenderSolution[RENDER_SOLUTION_FORWARD] = new CRenderSolutionForward;
+	m_pRenderSolution[RENDER_SOLUTION_DEFERRED] = new CRenderSolutionDeferred;
+	m_pRenderSolution[RENDER_SOLUTION_TILED_BASE_DEFERRED] = new CRenderSolutionTiledBaseDeferred;
 
-	case RENDER_SOLUTION_DEFERRED:
-		m_pRenderSolution = new CRenderSolutionDeferred;
-		break;
-
-	case RENDER_SOLUTION_FORWARD:
-		m_pRenderSolution = new CRenderSolutionForward;
-		break;
-
-	case RENDER_SOLUTION_TILED_BASE_DEFERRED:
-		m_pRenderSolution = new CRenderSolutionTiledBaseDeferred;
-		break;
-	}
+	m_pCurrentRenderSolution = m_pRenderSolution[RENDER_SOLUTION_DEFAULT];
+	m_pCurrentRenderSolution->Create();
 
 	m_pFileManager = new CFileManager;
 	m_pSceneManager = new CSceneManager;
@@ -113,8 +105,19 @@ CEngine::~CEngine(void)
 	delete m_pSceneManager;
 	delete m_pFileManager;
 
-	delete m_pRenderSolution;
+	delete m_pRenderSolution[RENDER_SOLUTION_DEFAULT];
+	delete m_pRenderSolution[RENDER_SOLUTION_FORWARD];
+	delete m_pRenderSolution[RENDER_SOLUTION_DEFERRED];
+	delete m_pRenderSolution[RENDER_SOLUTION_TILED_BASE_DEFERRED];
+
 	delete m_pRenderer;
+}
+
+void CEngine::SetRenderSolution(RenderSolution solution, int samples)
+{
+	m_pCurrentRenderSolution->Destroy();
+	m_pCurrentRenderSolution = m_pRenderSolution[solution];
+	m_pCurrentRenderSolution->Create(samples);
 }
 
 CGfxRenderer* CEngine::GetRenderer(void) const
@@ -129,7 +132,7 @@ CSceneManager* CEngine::GetSceneManager(void) const
 
 CRenderSolutionBase* CEngine::GetRenderSolution(void) const
 {
-	return m_pRenderSolution;
+	return m_pCurrentRenderSolution;
 }
 
 float CEngine::GetDeltaTime(void) const
@@ -154,7 +157,7 @@ void CEngine::Update(void)
 
 void CEngine::Render(void)
 {
-	m_pRenderSolution->Render(1 - m_indexQueue);
+	m_pCurrentRenderSolution->Render(1 - m_indexQueue);
 }
 
 void CEngine::UpdateThread(void)
@@ -165,7 +168,7 @@ void CEngine::UpdateThread(void)
 	m_totalTime = m_totalTime + m_deltaTime;
 	m_lastTime = currTime;
 
-	m_pRenderSolution->Update(m_indexQueue);
+	m_pCurrentRenderSolution->Update(m_indexQueue);
 }
 
 void* CEngine::WorkThread(void* pParams)
