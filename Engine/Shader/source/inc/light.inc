@@ -234,9 +234,19 @@ vec3 PBRLighting(vec3 lightColor, vec3 lightDirection, vec3 H, vec3 V, vec3 N, v
 	return BRDF_Pbr(lightColor, lightDirection, H, V, N, albedoColor, metallic, roughness);
 }
 
+vec3 PBRLightingFast(vec3 lightColor, vec3 lightDirection, vec3 H, vec3 V, vec3 N, vec3 albedoColor, float metallic, float roughness)
+{
+	return BRDF_PbrFast(lightColor, lightDirection, H, V, N, albedoColor, metallic, roughness);
+}
+
 vec3 EnvSpecular(vec3 V, vec3 N, vec3 albedoColor, float metallic, float roughness, vec3 specularColor)
 {
 	return BRDF_EnvSpecular(V, N, albedoColor, metallic, roughness, specularColor);
+}
+
+vec3 EnvSpecularFast(vec3 V, vec3 N, vec3 albedoColor, float metallic, float roughness, vec3 specularColor)
+{
+	return BRDF_EnvSpecularFast(V, N, albedoColor, metallic, roughness, specularColor);
 }
 
 vec3 EnvSpecular(vec3 V, vec3 N, vec3 albedoColor, float metallic, float roughness, float maxLods, samplerCube env)
@@ -246,11 +256,25 @@ vec3 EnvSpecular(vec3 V, vec3 N, vec3 albedoColor, float metallic, float roughne
 	return BRDF_EnvSpecular(V, N, albedoColor, metallic, roughness, specularColor);
 }
 
+vec3 EnvSpecularFast(vec3 V, vec3 N, vec3 albedoColor, float metallic, float roughness, float maxLods, samplerCube env)
+{
+	vec3 R = reflect(-V, N);
+	vec3 specularColor = Gamma2Linear(textureLod(env, R, roughness * maxLods).rgb);
+	return BRDF_EnvSpecularFast(V, N, albedoColor, metallic, roughness, specularColor);
+}
+
 vec3 EnvSpecular(vec3 V, vec3 N, vec3 albedoColor, float metallic, float roughness, float maxLods, sampler2D env)
 {
 	vec3 R = reflect(-V, N);
 	vec3 specularColor = Gamma2Linear(textureLod(env, SphericalSampleing(R), roughness * maxLods).rgb);
 	return BRDF_EnvSpecular(V, N, albedoColor, metallic, roughness, specularColor);
+}
+
+vec3 EnvSpecularFast(vec3 V, vec3 N, vec3 albedoColor, float metallic, float roughness, float maxLods, sampler2D env)
+{
+	vec3 R = reflect(-V, N);
+	vec3 specularColor = Gamma2Linear(textureLod(env, SphericalSampleing(R), roughness * maxLods).rgb);
+	return BRDF_EnvSpecularFast(V, N, albedoColor, metallic, roughness, specularColor);
 }
 
 vec3 FinalLighting(vec3 ao, vec3 ambientLightingColor, vec3 pointLightingColor, vec3 directLightingColor, vec3 envLightingColor, float shadow)
