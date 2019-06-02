@@ -109,6 +109,7 @@ CEngine::~CEngine(void)
 	delete m_pRenderSolution[RENDER_SOLUTION_DEFAULT];
 	delete m_pRenderSolution[RENDER_SOLUTION_FORWARD];
 	delete m_pRenderSolution[RENDER_SOLUTION_DEFERRED];
+	delete m_pRenderSolution[RENDER_SOLUTION_TILED_BASE_FORWARD];
 	delete m_pRenderSolution[RENDER_SOLUTION_TILED_BASE_DEFERRED];
 
 	delete m_pRenderer;
