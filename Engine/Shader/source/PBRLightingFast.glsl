@@ -75,7 +75,9 @@ DESCRIPTOR_SET_PASS(9)  uniform sampler2D texAO;
 #ifdef NORMAL_MAP
 DESCRIPTOR_SET_PASS(10) uniform sampler2D texNormal;
 #endif
+#ifdef ROUGHT_METALLIC_MAP
 DESCRIPTOR_SET_PASS(11) uniform sampler2D texRoughMetallic;
+#endif
 #ifdef ENV_MAP
 DESCRIPTOR_SET_PASS(12) uniform sampler2D texEnv;
 #endif
@@ -101,14 +103,21 @@ void main()
 #endif
 
 	lowp vec3 albedoColor = Gamma2Linear(albedo.rgb);
+
 #ifdef AO_MAP
 	lowp vec3 ao = texture(texAO, inTexcoord).rgb;
 #else
 	lowp vec3 ao = vec3(1.0);
 #endif
+
+#ifdef ROUGHT_METALLIC_MAP
 	lowp vec3 rough_metallic = texture(texRoughMetallic, inTexcoord).rgb;
 	lowp float metallic = rough_metallic.b;
 	lowp float roughness = rough_metallic.g;
+#else
+	lowp float metallic = 0.5;
+	lowp float roughness = 0.5;
+#endif
 
 #ifdef NORMAL_MAP
 	mediump vec3 pixelNormal = texture(texNormal, inTexcoord).rgb * 2.0 - 1.0;
