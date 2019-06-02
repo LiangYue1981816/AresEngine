@@ -56,6 +56,7 @@ public:
 	float GetTotalTime(void) const;
 
 public:
+	void Wait(void);
 	void Update(void);
 	void Render(void);
 
