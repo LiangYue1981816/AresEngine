@@ -66,6 +66,7 @@ CEngine::CEngine(GfxApi api, RenderSolution solution, void* hInstance, void* hWn
 		break;
 	}
 
+	CRenderSolutionBase::CreateInstance();
 	m_pRenderSolution[RENDER_SOLUTION_DEFAULT] = new CRenderSolutionDefault;
 	m_pRenderSolution[RENDER_SOLUTION_FORWARD] = new CRenderSolutionForward;
 	m_pRenderSolution[RENDER_SOLUTION_DEFERRED] = new CRenderSolutionDeferred;
@@ -111,6 +112,7 @@ CEngine::~CEngine(void)
 	delete m_pRenderSolution[RENDER_SOLUTION_DEFERRED];
 	delete m_pRenderSolution[RENDER_SOLUTION_TILED_BASE_FORWARD];
 	delete m_pRenderSolution[RENDER_SOLUTION_TILED_BASE_DEFERRED];
+	CRenderSolutionBase::DestroyInstance();
 
 	delete m_pRenderer;
 }

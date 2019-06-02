@@ -23,19 +23,15 @@ static const ATTRIBUTE instanceAttributes[INSTANCE_ATTRIBUTE_COUNT] = {
 };
 
 
-CRenderSolutionBase::CRenderSolutionBase(void)
-	: m_pEngine(nullptr)
-	, m_pMainCamera(nullptr)
-	, m_pShadowCamera(nullptr)
+CGfxEngine* CRenderSolutionBase::m_pEngine = nullptr;
+CGfxCamera* CRenderSolutionBase::m_pMainCamera = nullptr;
+CGfxCamera* CRenderSolutionBase::m_pShadowCamera = nullptr;
 
-	, m_pMainQueue(nullptr)
+CRenderSolutionBase::CRenderSolutionBase(void)
+	: m_pMainQueue(nullptr)
 	, m_pLightQueue(nullptr)
 	, m_pShadowQueue(nullptr)
 {
-	m_pEngine = new CGfxEngine;
-	m_pMainCamera = new CGfxCamera;
-	m_pShadowCamera = new CGfxCamera;
-
 	m_pMainQueue = new CGfxRenderQueue;
 	m_pLightQueue = new CGfxRenderQueue;
 	m_pShadowQueue = new CGfxRenderQueue;
@@ -46,21 +42,31 @@ CRenderSolutionBase::CRenderSolutionBase(void)
 
 CRenderSolutionBase::~CRenderSolutionBase(void)
 {
-	delete m_pEngine;
-	delete m_pMainCamera;
-	delete m_pShadowCamera;
-
 	delete m_pMainQueue;
 	delete m_pLightQueue;
 	delete m_pShadowQueue;
 }
 
-CGfxCamera* CRenderSolutionBase::GetMainCamera(void) const
+void CRenderSolutionBase::CreateInstance(void)
+{
+	m_pEngine = new CGfxEngine;
+	m_pMainCamera = new CGfxCamera;
+	m_pShadowCamera = new CGfxCamera;
+}
+
+void CRenderSolutionBase::DestroyInstance(void)
+{
+	delete m_pEngine;
+	delete m_pMainCamera;
+	delete m_pShadowCamera;
+}
+
+CGfxCamera* CRenderSolutionBase::GetMainCamera(void)
 {
 	return m_pMainCamera;
 }
 
-CGfxCamera* CRenderSolutionBase::GetShadowCamera(void) const
+CGfxCamera* CRenderSolutionBase::GetShadowCamera(void)
 {
 	return m_pShadowCamera;
 }
