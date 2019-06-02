@@ -1554,6 +1554,9 @@
     <ClInclude Include="..\..\Engine\Engine\include\RenderSolutionTiledBaseDeferred.h">
       <Filter>Engine\Engine\Header Files\RenderSolution</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Engine\Engine\include\RenderSolutionTiledBaseForward.h">
+      <Filter>Engine\Engine\Header Files\RenderSolution</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Engine\ThirdParty\eastl\source\allocator_eastl.cpp">
@@ -2244,6 +2247,9 @@
       <Filter>Engine\Renderer\Gfx\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\Engine\src\RenderSolutionTiledBaseDeferred.cpp">
+      <Filter>Engine\Engine\Source Files\RenderSolution</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Engine\src\RenderSolutionTiledBaseForward.cpp">
       <Filter>Engine\Engine\Source Files\RenderSolution</Filter>
     </ClCompile>
   </ItemGroup>

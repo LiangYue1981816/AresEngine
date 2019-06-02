@@ -5,6 +5,7 @@
 #include "RenderSolutionDefault.h"
 #include "RenderSolutionDeferred.h"
 #include "RenderSolutionForward.h"
+#include "RenderSolutionTiledBaseForward.h"
 #include "RenderSolutionTiledBaseDeferred.h"
 
 
@@ -12,6 +13,7 @@ typedef enum RenderSolution {
 	RENDER_SOLUTION_DEFAULT = 0,
 	RENDER_SOLUTION_FORWARD,
 	RENDER_SOLUTION_DEFERRED,
+	RENDER_SOLUTION_TILED_BASE_FORWARD,
 	RENDER_SOLUTION_TILED_BASE_DEFERRED,
 	RENDER_SOLUTION_COUNT
 } RenderSolution;

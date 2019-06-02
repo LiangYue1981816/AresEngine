@@ -2,6 +2,7 @@
 
 
 CRenderSolutionForward::CRenderSolutionForward(void)
+	: m_bEnableMSAA(false)
 {
 	m_ptrMainCommandBuffer[0] = GfxRenderer()->NewCommandBuffer(0, true);
 	m_ptrMainCommandBuffer[1] = GfxRenderer()->NewCommandBuffer(0, true);
@@ -15,6 +16,8 @@ CRenderSolutionForward::~CRenderSolutionForward(void)
 
 void CRenderSolutionForward::CreateFrameBuffer(void)
 {
+	m_bEnableMSAA = false;
+
 	for (int indexFrame = 0; indexFrame < CGfxSwapChain::SWAPCHAIN_FRAME_COUNT; indexFrame++) {
 		m_renderParams.ptrColorTextures[indexFrame] = GfxRenderer()->GetSwapChain()->GetFrameTexture(indexFrame);
 		m_renderParams.ptrDepthStencilTextures[indexFrame] = GfxRenderer()->NewRenderTexture(HashValueFormat("DepthStencilTexture %d", indexFrame));

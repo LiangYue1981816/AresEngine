@@ -69,6 +69,7 @@ CEngine::CEngine(GfxApi api, RenderSolution solution, void* hInstance, void* hWn
 	m_pRenderSolution[RENDER_SOLUTION_DEFAULT] = new CRenderSolutionDefault;
 	m_pRenderSolution[RENDER_SOLUTION_FORWARD] = new CRenderSolutionForward;
 	m_pRenderSolution[RENDER_SOLUTION_DEFERRED] = new CRenderSolutionDeferred;
+	m_pRenderSolution[RENDER_SOLUTION_TILED_BASE_FORWARD] = new CRenderSolutionTiledBaseForward;
 	m_pRenderSolution[RENDER_SOLUTION_TILED_BASE_DEFERRED] = new CRenderSolutionTiledBaseDeferred;
 
 	m_pCurrentRenderSolution = m_pRenderSolution[RENDER_SOLUTION_DEFAULT];

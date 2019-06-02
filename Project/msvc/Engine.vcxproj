@@ -209,6 +209,7 @@
     <ClInclude Include="..\..\Engine\Engine\include\RenderSolutionDeferred.h" />
     <ClInclude Include="..\..\Engine\Engine\include\RenderSolutionForward.h" />
     <ClInclude Include="..\..\Engine\Engine\include\RenderSolutionTiledBaseDeferred.h" />
+    <ClInclude Include="..\..\Engine\Engine\include\RenderSolutionTiledBaseForward.h" />
     <ClInclude Include="..\..\Engine\GfxHeader.h" />
     <ClInclude Include="..\..\Engine\Memory\include\Allocator.h" />
     <ClInclude Include="..\..\Engine\Memory\src\MemoryHeap.h" />
@@ -651,6 +652,7 @@
     <ClCompile Include="..\..\Engine\Engine\src\RenderSolutionDeferred.cpp" />
     <ClCompile Include="..\..\Engine\Engine\src\RenderSolutionForward.cpp" />
     <ClCompile Include="..\..\Engine\Engine\src\RenderSolutionTiledBaseDeferred.cpp" />
+    <ClCompile Include="..\..\Engine\Engine\src\RenderSolutionTiledBaseForward.cpp" />
     <ClCompile Include="..\..\Engine\Memory\src\Allocator.cpp" />
     <ClCompile Include="..\..\Engine\Memory\src\MemoryHeap.cpp" />
     <ClCompile Include="..\..\Engine\Memory\src\MemoryPool.cpp" />
