@@ -289,10 +289,6 @@ static bool InternalLoadPipelineShader(TiXmlNode* pPipelineNode, CGfxShader*& pS
 					}
 				} while ((pDefineNode = pShaderNode->IterateChildren("Define", pDefineNode)) != nullptr);
 			}
-
-#ifndef PLATFORM_WINDOWS
-			ShaderCompiler()->AddMacroDefinition("FAST_LIGHTING");
-#endif
 		}
 
 		char szExtName[2][_MAX_STRING] = { "vert", "frag" };
