@@ -4,16 +4,6 @@
 precision mediump float;
 #include "engine.inc"
 
-USE_VERTEX_ATTRIBUTE_POSITION;
-USE_VERTEX_ATTRIBUTE_NORMAL;
-USE_VERTEX_ATTRIBUTE_BINORMAL;
-USE_VERTEX_ATTRIBUTE_TEXCOORD0;
-
-USE_INSTANCE_ATTRIBUTE_TRANSFORM_MATRIX_COL0;
-USE_INSTANCE_ATTRIBUTE_TRANSFORM_MATRIX_COL1;
-USE_INSTANCE_ATTRIBUTE_TRANSFORM_MATRIX_COL2;
-USE_INSTANCE_ATTRIBUTE_TRANSFORM_MATRIX_COL3;
-
 layout (location = 0) out mediump vec2 outTexcoord;
 
 void main()
@@ -30,10 +20,10 @@ void main()
 precision mediump float;
 #include "engine.inc"
 
-DESCRIPTOR_SET_PASS(8) uniform sampler2D texAlbedo;
-
 layout (location = 0) in mediump vec2 inTexcoord;
 layout (location = 0) out vec4 outFragColor;
+
+DESCRIPTOR_SET_PASS(8) uniform sampler2D texAlbedo;
 
 void main()
 {

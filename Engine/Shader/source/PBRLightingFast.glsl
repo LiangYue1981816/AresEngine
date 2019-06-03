@@ -5,16 +5,6 @@ precision mediump float;
 #include "engine.inc"
 #include "light.inc"
 
-USE_VERTEX_ATTRIBUTE_POSITION;
-USE_VERTEX_ATTRIBUTE_NORMAL;
-USE_VERTEX_ATTRIBUTE_BINORMAL;
-USE_VERTEX_ATTRIBUTE_TEXCOORD0;
-
-USE_INSTANCE_ATTRIBUTE_TRANSFORM_MATRIX_COL0;
-USE_INSTANCE_ATTRIBUTE_TRANSFORM_MATRIX_COL1;
-USE_INSTANCE_ATTRIBUTE_TRANSFORM_MATRIX_COL2;
-USE_INSTANCE_ATTRIBUTE_TRANSFORM_MATRIX_COL3;
-
 layout (location = 0) out highp   vec3 outPosition;
 layout (location = 1) out mediump vec2 outTexcoord;
 layout (location = 2) out mediump vec3 outHalfDirection;
@@ -68,6 +58,18 @@ precision mediump float;
 #include "engine.inc"
 #include "light.inc"
 
+layout (location = 0) in highp   vec3 inPosition;
+layout (location = 1) in mediump vec2 inTexcoord;
+layout (location = 2) in mediump vec3 inHalfDirection;
+layout (location = 3) in mediump vec3 inViewDirection;
+#ifdef NORMAL_MAP
+layout (location = 4) in mediump mat3 inTBN;
+#else
+layout (location = 4) in mediump vec3 inNormal;
+#endif
+
+layout (location = 0) out vec4 outFragColor;
+
 DESCRIPTOR_SET_PASS(8)  uniform sampler2D texAlbedo;
 #ifdef AO_MAP
 DESCRIPTOR_SET_PASS(9)  uniform sampler2D texAO;
@@ -81,18 +83,6 @@ DESCRIPTOR_SET_PASS(11) uniform sampler2D texRoughMetallic;
 #ifdef ENV_MAP
 DESCRIPTOR_SET_PASS(12) uniform sampler2D texEnv;
 #endif
-
-layout (location = 0) in highp   vec3 inPosition;
-layout (location = 1) in mediump vec2 inTexcoord;
-layout (location = 2) in mediump vec3 inHalfDirection;
-layout (location = 3) in mediump vec3 inViewDirection;
-#ifdef NORMAL_MAP
-layout (location = 4) in mediump mat3 inTBN;
-#else
-layout (location = 4) in mediump vec3 inNormal;
-#endif
-
-layout (location = 0) out vec4 outFragColor;
 
 void main()
 {
