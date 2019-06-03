@@ -5,6 +5,7 @@ precision mediump float;
 #include "engine.inc"
 #include "light.inc"
 
+// Output
 layout (location = 0) out highp   vec3 outPosition;
 layout (location = 1) out mediump vec2 outTexcoord;
 layout (location = 2) out mediump vec3 outHalfDirection;
@@ -43,6 +44,7 @@ void main()
 	outPosition = worldPosition;
 	outHalfDirection = worldHalfDirection;
 	outViewDirection = worldViewDirection;
+
 #ifdef NORMAL_MAP
 	outTBN = tbn;
 #else
@@ -58,6 +60,10 @@ precision mediump float;
 #include "engine.inc"
 #include "light.inc"
 
+// Output
+layout (location = 0) out mediump vec4 outFragColor;
+
+// Input
 layout (location = 0) in highp   vec3 inPosition;
 layout (location = 1) in mediump vec2 inTexcoord;
 layout (location = 2) in mediump vec3 inHalfDirection;
@@ -68,45 +74,25 @@ layout (location = 4) in mediump mat3 inTBN;
 layout (location = 4) in mediump vec3 inNormal;
 #endif
 
-layout (location = 0) out vec4 outFragColor;
-
-DESCRIPTOR_SET_PASS(8)  uniform sampler2D texAlbedo;
-#ifdef AO_MAP
-DESCRIPTOR_SET_PASS(9)  uniform sampler2D texAO;
-#endif
+// Descriptor
+DESCRIPTOR_SET_PASS(8) uniform sampler2D texAlbedo;
 #ifdef NORMAL_MAP
-DESCRIPTOR_SET_PASS(10) uniform sampler2D texNormal;
+DESCRIPTOR_SET_PASS(9) uniform sampler2D texNormal;
 #endif
-#ifdef ROUGHT_METALLIC_MAP
-DESCRIPTOR_SET_PASS(11) uniform sampler2D texRoughMetallic;
+#ifdef ROUGHNESS_METALLIC_SPECULAR_AO_MAP
+DESCRIPTOR_SET_PASS(10) uniform sampler2D texRoughnessMetallicSpecularAO;
 #endif
 #ifdef ENV_MAP
-DESCRIPTOR_SET_PASS(12) uniform sampler2D texEnv;
+DESCRIPTOR_SET_PASS(11) uniform sampler2D texEnv;
 #endif
 
 void main()
 {
 	lowp vec4 albedo = texture(texAlbedo, inTexcoord);
+
 #ifdef ALPHA_TEST
 	if (albedo.a < 0.5)
 		discard;
-#endif
-
-	lowp vec3 albedoColor = Gamma2Linear(albedo.rgb);
-
-#ifdef AO_MAP
-	lowp vec3 ao = texture(texAO, inTexcoord).rgb;
-#else
-	lowp vec3 ao = vec3(1.0);
-#endif
-
-#ifdef ROUGHT_METALLIC_MAP
-	lowp vec3 rough_metallic = texture(texRoughMetallic, inTexcoord).rgb;
-	lowp float metallic = rough_metallic.b;
-	lowp float roughness = rough_metallic.g;
-#else
-	lowp float metallic = 0.5;
-	lowp float roughness = 0.5;
 #endif
 
 #ifdef NORMAL_MAP
@@ -116,11 +102,25 @@ void main()
 	mediump vec3 pixelNormal = inNormal;
 #endif
 
+#ifdef ROUGHNESS_METALLIC_SPECULAR_AO_MAP
+	mediump vec4 roughness_metallic_specular_ao = texture(texRoughnessMetallicSpecularAO, inTexcoord);
+	mediump float roughness = roughness_metallic_specular_ao.r;
+	mediump float metallic = roughness_metallic_specular_ao.g;
+	mediump float specular = roughness_metallic_specular_ao.b;
+	mediump float ao = roughness_metallic_specular_ao.a;
+#else
+	mediump float roughness = 0.5;
+	mediump float metallic = 0.5;
+	mediump float specular = 1.0;
+	mediump float ao = 1.0;
+#endif
+
 	mediump vec3 pointLightColor = mainPointLightColor;
 	mediump vec3 pointLightDirection = mainPointLightPosition - inPosition;
 	pointLightColor = pointLightColor * PointLightAttenuation(length(pointLightDirection));
 	pointLightDirection = normalize(pointLightDirection);
 
+	mediump vec3 albedoColor = Gamma2Linear(albedo.rgb);
 	mediump vec3 ambientLightingColor = AmbientLightingSH9(albedoColor, metallic, pixelNormal) * ambientLightFactor;
 	mediump vec3 pointLightingColor = SimpleLighting(pointLightColor, pointLightDirection, pixelNormal, albedoColor) * pointLightFactor;
 	mediump vec3 directLightingColor = PBRLighting(mainDirectLightColor, mainDirectLightDirection, inHalfDirection, inViewDirection, pixelNormal, albedoColor, metallic, roughness) * directLightFactor;
