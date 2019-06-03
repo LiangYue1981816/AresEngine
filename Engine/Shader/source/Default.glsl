@@ -4,7 +4,14 @@
 precision mediump float;
 #include "engine.inc"
 
+
+// VERTEX_ATTRIBUTE_POSITION;
+// VERTEX_ATTRIBUTE_TEXCOORD0;
+// INSTANCE_ATTRIBUTE_TRANSFORM;
+
+// Output
 layout (location = 0) out mediump vec2 outTexcoord;
+
 
 void main()
 {
@@ -20,10 +27,14 @@ void main()
 precision mediump float;
 #include "engine.inc"
 
+
+// Input
 layout (location = 0) in mediump vec2 inTexcoord;
 layout (location = 0) out vec4 outFragColor;
 
+// Descriptor
 DESCRIPTOR_SET_PASS(8) uniform sampler2D texAlbedo;
+
 
 void main()
 {

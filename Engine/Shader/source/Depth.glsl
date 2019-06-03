@@ -4,6 +4,11 @@
 precision mediump float;
 #include "engine.inc"
 
+
+// VERTEX_ATTRIBUTE_POSITION;
+// INSTANCE_ATTRIBUTE_TRANSFORM;
+
+
 void main()
 {
 	highp mat4 worldMatrix = mat4(inInstanceTransformMatrixCol0, inInstanceTransformMatrixCol1, inInstanceTransformMatrixCol2, inInstanceTransformMatrixCol3);
@@ -14,6 +19,7 @@ void main()
 #ifdef FRAGMENT_SHADER
 precision mediump float;
 #include "engine.inc"
+
 
 void main()
 {
