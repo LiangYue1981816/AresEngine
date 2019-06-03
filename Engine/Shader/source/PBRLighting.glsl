@@ -130,6 +130,7 @@ void main()
 	pointLightColor = pointLightColor * PointLightAttenuation(length(pointLightDirection));
 	pointLightDirection = normalize(pointLightDirection);
 
+	mediump vec3 aoColor = vec3(ao);
 	mediump vec3 albedoColor = Gamma2Linear(albedo.rgb);
 	mediump vec3 ambientLightingColor = AmbientLightingSH9(albedoColor, metallic, pixelNormal) * ambientLightFactor;
 	mediump vec3 pointLightingColor = SimpleLighting(pointLightColor, pointLightDirection, pixelNormal, albedoColor) * pointLightFactor;
@@ -139,7 +140,7 @@ void main()
 #else
 	mediump vec3 envLightingColor = vec3(0.0);
 #endif
-	mediump vec3 finalLighting = FinalLighting(ao, ambientLightingColor, pointLightingColor, directLightingColor, envLightingColor, 1.0);
+	mediump vec3 finalLighting = FinalLighting(aoColor, ambientLightingColor, pointLightingColor, directLightingColor, envLightingColor, 1.0);
 
 	finalLighting = ToneMapping(finalLighting);
 	finalLighting = Linear2Gamma(finalLighting);
