@@ -6,7 +6,6 @@ precision mediump float;
 #include "light.inc"
 
 
-// At Least Need
 // VERTEX_ATTRIBUTE_POSITION;
 // VERTEX_ATTRIBUTE_NORMAL;
 // VERTEX_ATTRIBUTE_BINORMAL;
