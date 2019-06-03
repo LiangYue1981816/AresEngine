@@ -160,8 +160,7 @@ void CRenderSolutionForward::Render(int indexQueue)
 
 	GfxRenderer()->AcquireNextFrame();
 	{
-//		const uint32_t nameLightingPass = HashValue("PBRLighting");
-		const uint32_t nameLightingPass = HashValue("PBRLightingFast");
+		const uint32_t nameLightingPass = HashValue("PBRLighting");
 
 		const int indexFrame = GfxRenderer()->GetSwapChain()->GetFrameIndex();
 
