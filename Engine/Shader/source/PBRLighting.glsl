@@ -68,6 +68,7 @@ precision mediump float;
 #include "engine.inc"
 #include "light.inc"
 
+
 // Output
 layout (location = 0) out mediump vec4 outFragColor;
 
@@ -93,6 +94,7 @@ DESCRIPTOR_SET_PASS(10) uniform sampler2D texRoughnessMetallicSpecularAO;
 #ifdef ENV_MAP
 DESCRIPTOR_SET_PASS(11) uniform sampler2D texEnv;
 #endif
+
 
 void main()
 {
