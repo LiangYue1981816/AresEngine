@@ -1,22 +1,44 @@
 #ifndef _ENGINE_INC_
 #define _ENGINE_INC_
 
-#define USE_VERTEX_ATTRIBUTE_POSITION  layout (location = 0) in highp   vec3 inPosition
-#define USE_VERTEX_ATTRIBUTE_NORMAL    layout (location = 1) in mediump vec3 inNormal
-#define USE_VERTEX_ATTRIBUTE_BINORMAL  layout (location = 2) in mediump vec3 inBinormal
-#define USE_VERTEX_ATTRIBUTE_COLOR     layout (location = 3) in mediump vec3 inColor
-#define USE_VERTEX_ATTRIBUTE_TEXCOORD0 layout (location = 4) in mediump vec2 inTexcoord0
-#define USE_VERTEX_ATTRIBUTE_TEXCOORD1 layout (location = 5) in mediump vec2 inTexcoord1
-#define USE_VERTEX_ATTRIBUTE_INDICES   layout (location = 6) in mediump vec4 inIndices
-#define USE_VERTEX_ATTRIBUTE_WEIGHTS   layout (location = 7) in mediump vec4 inWeights
 
-#define USE_INSTANCE_ATTRIBUTE_TRANSFORM_MATRIX_COL0 layout (location = 8)  in highp vec4 inInstanceTransformMatrixCol0
-#define USE_INSTANCE_ATTRIBUTE_TRANSFORM_MATRIX_COL1 layout (location = 9)  in highp vec4 inInstanceTransformMatrixCol1
-#define USE_INSTANCE_ATTRIBUTE_TRANSFORM_MATRIX_COL2 layout (location = 10) in highp vec4 inInstanceTransformMatrixCol2
-#define USE_INSTANCE_ATTRIBUTE_TRANSFORM_MATRIX_COL3 layout (location = 11) in highp vec4 inInstanceTransformMatrixCol3
+#ifdef VERTEX_ATTRIBUTE_POSITION
+	layout (location = 0) in highp vec3 inPosition
+#endif
+#ifdef VERTEX_ATTRIBUTE_NORMAL
+	layout (location = 1) in mediump vec3 inNormal
+#endif
+#ifdef VERTEX_ATTRIBUTE_BINORMAL
+	layout (location = 2) in mediump vec3 inBinormal
+#endif
+#ifdef VERTEX_ATTRIBUTE_COLOR
+	layout (location = 3) in mediump vec3 inColor
+#endif
+#ifdef VERTEX_ATTRIBUTE_TEXCOORD0
+	layout (location = 4) in mediump vec2 inTexcoord0
+#endif
+#ifdef VERTEX_ATTRIBUTE_TEXCOORD1
+	layout (location = 5) in mediump vec2 inTexcoord1
+#endif
+#ifdef VERTEX_ATTRIBUTE_INDICES
+	layout (location = 6) in mediump vec4 inIndices
+#endif
+#ifdef VERTEX_ATTRIBUTE_WEIGHTS
+	layout (location = 7) in mediump vec4 inWeights
+#endif
 
-#define USE_INSTANCE_ATTRIBUTE_POINTLIGHT_COLOR       layout (location = 12) in mediump vec4 inInstancePointLightColor
-#define USE_INSTANCE_ATTRIBUTE_POINTLIGHT_ATTENUATION layout (location = 13) in mediump vec4 inInstancePointLightAttenuation
+#ifdef INSTANCE_ATTRIBUTE_TRANSFORM
+	layout (location = 8)  in highp vec4 inInstanceTransformMatrixCol0
+	layout (location = 9)  in highp vec4 inInstanceTransformMatrixCol1
+	layout (location = 10) in highp vec4 inInstanceTransformMatrixCol2
+	layout (location = 11) in highp vec4 inInstanceTransformMatrixCol3
+#endif
+
+#ifdef INSTANCE_ATTRIBUTE_POINTLIGHT
+	layout (location = 12) in mediump vec4 inInstancePointLightColor
+	layout (location = 13) in mediump vec4 inInstancePointLightAttenuation
+#endif
+
 
 #define DESCRIPTOR_SET_ENGINE(b)          layout (set = 0, binding = b)
 #define DESCRIPTOR_SET_CAMERA(b)          layout (set = 1, binding = b)
@@ -27,9 +49,9 @@
 #define DESCRIPTOR_BIND_CAMERA 1
 
 
-#define USE_ENGINE_UNIFORM                                                     \
-	DESCRIPTOR_SET_ENGINE(DESCRIPTOR_BIND_ENGINE) uniform Engine                 \
-	{                                                                            \
+#define USE_ENGINE_UNIFORM                                                         \
+	DESCRIPTOR_SET_ENGINE(DESCRIPTOR_BIND_ENGINE) uniform Engine                   \
+	{                                                                              \
 		mediump vec4 time;                                                         \
 		mediump vec4 sinTime;                                                      \
 		mediump vec4 cosTime;                                                      \
