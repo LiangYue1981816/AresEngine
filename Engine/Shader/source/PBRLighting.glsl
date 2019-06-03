@@ -5,6 +5,14 @@ precision mediump float;
 #include "engine.inc"
 #include "light.inc"
 
+
+// At Least Need
+// VERTEX_ATTRIBUTE_POSITION;
+// VERTEX_ATTRIBUTE_NORMAL;
+// VERTEX_ATTRIBUTE_BINORMAL;
+// VERTEX_ATTRIBUTE_TEXCOORD0;
+// INSTANCE_ATTRIBUTE_TRANSFORM;
+
 // Output
 layout (location = 0) out highp   vec3 outPosition;
 layout (location = 1) out mediump vec2 outTexcoord;
@@ -15,6 +23,7 @@ layout (location = 4) out mediump mat3 outTBN;
 #else
 layout (location = 4) out mediump vec3 outNormal;
 #endif
+
 
 void main()
 {
@@ -40,8 +49,8 @@ void main()
 	mediump mat3 tbn = mat3(t, b, worldNormal);
 #endif
 
-	outTexcoord = inTexcoord0;
 	outPosition = worldPosition;
+	outTexcoord = inTexcoord0;
 	outHalfDirection = worldHalfDirection;
 	outViewDirection = worldViewDirection;
 
@@ -88,7 +97,7 @@ DESCRIPTOR_SET_PASS(11) uniform sampler2D texEnv;
 
 void main()
 {
-	lowp vec4 albedo = texture(texAlbedo, inTexcoord);
+	mediump vec4 albedo = texture(texAlbedo, inTexcoord);
 
 #ifdef ALPHA_TEST
 	if (albedo.a < 0.5)
