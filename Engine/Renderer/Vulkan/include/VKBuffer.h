@@ -26,6 +26,7 @@ private:
 private:
 	VkBuffer GetBuffer(void) const;
 	VkDeviceSize GetSize(void) const;
+	VkDeviceSize GetMemorySize(void) const;
 
 private:
 	bool BufferData(size_t offset, size_t size, const void* data);
@@ -41,6 +42,7 @@ private:
 
 private:
 	VkBuffer m_vkBuffer;
+	VkDeviceSize m_vkSize;
 	VkBufferUsageFlags m_vkBufferUsageFlags;
 
 private:

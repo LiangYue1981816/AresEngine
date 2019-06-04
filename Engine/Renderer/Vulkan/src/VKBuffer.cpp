@@ -6,6 +6,7 @@ CVKBuffer::CVKBuffer(CVKDevice* pDevice, VkDeviceSize size, VkBufferUsageFlags b
 	, m_pMemory(nullptr)
 
 	, m_vkBuffer(VK_NULL_HANDLE)
+	, m_vkSize(0)
 	, m_vkBufferUsageFlags(0)
 {
 	Create(size, bufferUsageFlags, memoryPropertyFlags);
@@ -27,6 +28,7 @@ bool CVKBuffer::Create(VkDeviceSize size, VkBufferUsageFlags bufferUsageFlags, V
 	ASSERT(bufferUsageFlags);
 	ASSERT(memoryPropertyFlags);
 
+	m_vkSize = size;
 	m_vkBufferUsageFlags = bufferUsageFlags;
 
 	VkBufferCreateInfo createInfo = {};
@@ -71,6 +73,12 @@ VkBuffer CVKBuffer::GetBuffer(void) const
 
 VkDeviceSize CVKBuffer::GetSize(void) const
 {
+	ASSERT(m_vkSize);
+	return m_vkSize;
+}
+
+VkDeviceSize CVKBuffer::GetMemorySize(void) const
+{
 	ASSERT(m_pMemory);
 	return m_pMemory->GetSize();
 }
@@ -80,8 +88,7 @@ bool CVKBuffer::BufferData(size_t offset, size_t size, const void* data)
 	ASSERT(data);
 	ASSERT(size);
 	ASSERT(m_vkBuffer);
-	ASSERT(m_pMemory);
-	ASSERT(m_pMemory->GetSize() >= offset + size);
+	ASSERT(m_vkSize >= offset + size);
 
 	if (m_pMemory->IsHostVisible()) {
 		CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->BeginMap());
@@ -101,8 +108,7 @@ bool CVKBuffer::PipelineBarrier(VkCommandBuffer vkCommandBuffer, VkAccessFlags s
 {
 	ASSERT(vkCommandBuffer);
 	ASSERT(m_vkBuffer);
-	ASSERT(m_pMemory);
-	ASSERT(m_pMemory->GetSize() >= offset + size);
+	ASSERT(m_vkSize >= offset + size);
 
 	CALL_VK_FUNCTION_ASSERT(vkCmdBufferMemoryBarrier(vkCommandBuffer, m_vkBuffer, srcAccessFlags, dstAccessFlags, srcPipelineStageFlags, dstPipelineStageFlags, offset, size));
 	return true;
