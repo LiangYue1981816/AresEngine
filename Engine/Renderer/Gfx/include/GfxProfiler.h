@@ -91,6 +91,9 @@ public:
 	static void IncIndirectBufferSize(size_t size);
 	static void DecIndirectBufferSize(size_t size);
 
+	static void IncTransferBufferSize(size_t size);
+	static void DecTransferBufferSize(size_t size);
+
 	static void ResetSamples(void);
 	static void BeginSample(SampleType type, const char* name);
 	static void EndSample(SampleType type);
@@ -107,6 +110,7 @@ private:
 	static size_t indexBufferSize;
 	static size_t instanceBufferSize;
 	static size_t indirectBufferSize;
+	static size_t transferBufferSize;
 
 	static Sample samples[SampleType::SAMPLE_TYPE_COUNT];
 };

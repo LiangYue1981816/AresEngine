@@ -15,10 +15,12 @@ CVKTransferBuffer::CVKTransferBuffer(CVKDevice* pDevice, VkQueue vkQueue, VkComm
 	, m_vkCommandBuffer(VK_NULL_HANDLE)
 {
 	Create(vkQueue, vkCommandPool, size);
+	CGfxProfiler::IncTransferBufferSize(GetSize());
 }
 
 CVKTransferBuffer::~CVKTransferBuffer(void)
 {
+	CGfxProfiler::DecTransferBufferSize(GetSize());
 	Destroy();
 }
 
@@ -84,6 +86,7 @@ void CVKTransferBuffer::Destroy(void)
 
 	m_pMemory = nullptr;
 	m_vkBuffer = VK_NULL_HANDLE;
+	m_vkSize = 0;
 
 	m_vkQueue = VK_NULL_HANDLE;
 	m_vkFence = VK_NULL_HANDLE;
