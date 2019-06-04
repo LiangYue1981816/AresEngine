@@ -6,6 +6,7 @@ CVKTransferBuffer::CVKTransferBuffer(CVKDevice* pDevice, VkQueue vkQueue, VkComm
 	, m_pMemory(nullptr)
 
 	, m_vkBuffer(VK_NULL_HANDLE)
+	, m_vkSize(0)
 
 	, m_vkQueue(VK_NULL_HANDLE)
 	, m_vkFence(VK_NULL_HANDLE)
@@ -27,6 +28,7 @@ bool CVKTransferBuffer::Create(VkQueue vkQueue, VkCommandPool vkCommandPool, VkD
 	ASSERT(vkQueue);
 	ASSERT(vkCommandPool);
 
+	m_vkSize = size;
 	m_vkQueue = vkQueue;
 	m_vkCommandPool = vkCommandPool;
 
@@ -92,14 +94,13 @@ void CVKTransferBuffer::Destroy(void)
 
 VkDeviceSize CVKTransferBuffer::GetSize(void) const
 {
-	ASSERT(m_pMemory);
-	return m_pMemory->GetSize();
+	return m_vkSize;
 }
 
-bool CVKTransferBuffer::IsTransferFinish(void) const
+VkDeviceSize CVKTransferBuffer::GetMemorySize(void) const
 {
-	ASSERT(m_vkFence);
-	return vkGetFenceStatus(m_pDevice->GetDevice(), m_vkFence) == VK_SUCCESS;
+	ASSERT(m_pMemory);
+	return m_pMemory->GetSize();
 }
 
 bool CVKTransferBuffer::TransferBufferData(CVKBuffer* pDstBuffer, VkAccessFlags dstAccessFlags, VkPipelineStageFlags dstPipelineStageFlags, size_t offset, size_t size, const void* data)
@@ -253,4 +254,10 @@ bool CVKTransferBuffer::TransferTextureCubemapData(CVKTexture* pDstTexture, VkIm
 	CALL_VK_FUNCTION_RETURN_BOOL(vkSubmitCommandBuffer(m_vkQueue, m_vkCommandBuffer, m_vkFence));
 
 	return true;
+}
+
+bool CVKTransferBuffer::IsTransferFinish(void) const
+{
+	ASSERT(m_vkFence);
+	return vkGetFenceStatus(m_pDevice->GetDevice(), m_vkFence) == VK_SUCCESS;
 }
