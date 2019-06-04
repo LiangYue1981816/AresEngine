@@ -35,6 +35,26 @@ void CGfxEngine::SetTime(float t, float dt)
 	m_pUniformEngine->SetTime(t, dt);
 }
 
+void CGfxEngine::SetViewport(float x, float y, float width, float height)
+{
+	m_pUniformCamera->SetScreen(width, height);
+}
+
+void CGfxEngine::SetPerspective(float fovy, float aspect, float zNear, float zFar)
+{
+	m_pUniformCamera->SetPerspective(fovy, aspect, zNear, zFar);
+}
+
+void CGfxEngine::SetOrtho(float left, float right, float bottom, float top, float zNear, float zFar)
+{
+	m_pUniformCamera->SetOrtho(left, right, bottom, top, zNear, zFar);
+}
+
+void CGfxEngine::SetLookat(float eyex, float eyey, float eyez, float centerx, float centery, float centerz, float upx, float upy, float upz)
+{
+	m_pUniformCamera->SetLookat(eyex, eyey, eyez, centerx, centery, centerz, upx, upy, upz);
+}
+
 void CGfxEngine::SetShadowOrtho(float left, float right, float bottom, float top, float zNear, float zFar)
 {
 	m_pUniformEngine->SetShadowOrtho(left, right, bottom, top, zNear, zFar);
@@ -113,4 +133,5 @@ void CGfxEngine::SetFogDistanceDensity(float startDistance, float endDistance, f
 void CGfxEngine::Apply(void)
 {
 	m_pUniformEngine->Apply();
+	m_pUniformCamera->Apply();
 }
