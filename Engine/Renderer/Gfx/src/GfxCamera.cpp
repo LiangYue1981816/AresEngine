@@ -2,27 +2,13 @@
 
 
 CGfxCamera::CGfxCamera(void)
-	: m_pUniformCamera(nullptr)
 {
-	m_pUniformCamera = new CGfxUniformCamera;
 
-	m_ptrDescriptorLayoutCamera = GfxRenderer()->NewDescriptorLayout(DESCRIPTOR_SET_CAMERA);
-	m_ptrDescriptorLayoutCamera->SetUniformBlockBinding(UNIFORM_CAMERA_NAME, DESCRIPTOR_BIND_CAMERA);
-	m_ptrDescriptorLayoutCamera->Create();
-
-	m_ptrDescriptorSetCamera = GfxRenderer()->NewDescriptorSet(m_ptrDescriptorLayoutCamera);
-	m_ptrDescriptorSetCamera->SetUniformBuffer(UNIFORM_CAMERA_NAME, m_pUniformCamera->GetUniformBuffer(), 0, m_pUniformCamera->GetUniformBuffer()->GetSize());
-	m_ptrDescriptorSetCamera->Update();
 }
 
 CGfxCamera::~CGfxCamera(void)
 {
-	delete m_pUniformCamera;
-}
 
-CGfxDescriptorSetPtr CGfxCamera::GetDescriptorSet(void) const
-{
-	return m_ptrDescriptorSetCamera;
 }
 
 void CGfxCamera::SetScissor(float x, float y, float width, float height)
@@ -33,30 +19,21 @@ void CGfxCamera::SetScissor(float x, float y, float width, float height)
 void CGfxCamera::SetViewport(float x, float y, float width, float height)
 {
 	m_camera.setViewport(x, y, width, height);
-	m_pUniformCamera->SetScreen(width, height);
 }
 
 void CGfxCamera::SetPerspective(float fovy, float aspect, float zNear, float zFar)
 {
 	m_camera.setPerspective(fovy, aspect, zNear, zFar);
-	m_pUniformCamera->SetPerspective(fovy, aspect, zNear, zFar);
 }
 
 void CGfxCamera::SetOrtho(float left, float right, float bottom, float top, float zNear, float zFar)
 {
 	m_camera.setOrtho(left, right, bottom, top, zNear, zFar);
-	m_pUniformCamera->SetOrtho(left, right, bottom, top, zNear, zFar);
 }
 
 void CGfxCamera::SetLookat(float eyex, float eyey, float eyez, float centerx, float centery, float centerz, float upx, float upy, float upz)
 {
 	m_camera.setLookat(glm::vec3(eyex, eyey, eyez), glm::vec3(centerx, centery, centerz), glm::vec3(upx, upy, upz));
-	m_pUniformCamera->SetLookat(eyex, eyey, eyez, centerx, centery, centerz, upx, upy, upz);
-}
-
-void CGfxCamera::Apply(void)
-{
-	m_pUniformCamera->Apply();
 }
 
 const glm::vec4& CGfxCamera::GetScissor(void) const
