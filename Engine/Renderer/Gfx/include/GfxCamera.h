@@ -39,15 +39,6 @@ public:
 	bool IsVisible(const glm::aabb& aabb) const;
 	bool IsVisible(const glm::sphere& sphere) const;
 
-public:
-	void Clear(int indexQueue);
-	void Begin(int indexQueue);
-	void Add(int indexQueue, int indexThread, const CGfxMaterialPtr ptrMaterial, const CGfxMeshDrawPtr ptrMeshDraw, const uint8_t* pInstanceData, uint32_t size);
-	void End(int indexQueue);
-
-public:
-	void CmdDraw(int indexQueue, CGfxCommandBufferPtr ptrCommandBuffer, const CGfxDescriptorSetPtr ptrDescriptorSetEngine, const CGfxDescriptorSetPtr ptrDescriptorSetCamera, uint32_t namePass);
-
 
 private:
 	glm::camera m_camera;
