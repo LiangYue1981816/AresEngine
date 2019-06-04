@@ -148,7 +148,6 @@ void CRenderSolutionDefault::Update(int indexQueue)
 void CRenderSolutionDefault::Render(int indexQueue)
 {
 	m_pEngine->Apply();
-	m_pMainCamera->Apply();
 
 	GfxRenderer()->AcquireNextFrame();
 	{
@@ -180,7 +179,7 @@ void CRenderSolutionDefault::Render(int indexQueue)
 
 				GfxRenderer()->CmdBeginRenderPass(ptrMainCommandBuffer, ptrFrameBuffer, ptrRenderPass);
 				{
-					m_pMainQueue->CmdDraw(indexQueue, ptrMainCommandBuffer, m_pEngine->GetDescriptorSet(), m_pMainCamera->GetDescriptorSet(), nameDefaultPass, m_pMainCamera->GetScissor(), m_pMainCamera->GetViewport());
+					m_pMainQueue->CmdDraw(indexQueue, ptrMainCommandBuffer, m_pEngine->GetDescriptorSet(), nullptr, nameDefaultPass, m_pMainCamera->GetScissor(), m_pMainCamera->GetViewport());
 				}
 				GfxRenderer()->CmdEndRenderPass(ptrMainCommandBuffer);
 			}

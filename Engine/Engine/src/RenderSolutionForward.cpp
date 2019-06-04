@@ -155,8 +155,6 @@ void CRenderSolutionForward::Update(int indexQueue)
 void CRenderSolutionForward::Render(int indexQueue)
 {
 	m_pEngine->Apply();
-	m_pMainCamera->Apply();
-	m_pShadowCamera->Apply();
 
 	GfxRenderer()->AcquireNextFrame();
 	{
@@ -188,7 +186,7 @@ void CRenderSolutionForward::Render(int indexQueue)
 
 				GfxRenderer()->CmdBeginRenderPass(ptrMainCommandBuffer, ptrFrameBuffer, ptrRenderPass);
 				{
-					m_pMainQueue->CmdDraw(indexQueue, ptrMainCommandBuffer, m_pEngine->GetDescriptorSet(), m_pMainCamera->GetDescriptorSet(), nameLightingPass, m_pMainCamera->GetScissor(), m_pMainCamera->GetViewport());
+					m_pMainQueue->CmdDraw(indexQueue, ptrMainCommandBuffer, m_pEngine->GetDescriptorSet(), nullptr, nameLightingPass, m_pMainCamera->GetScissor(), m_pMainCamera->GetViewport());
 				}
 				GfxRenderer()->CmdEndRenderPass(ptrMainCommandBuffer);
 			}
