@@ -6,8 +6,8 @@ CGLES3Pipeline::CGLES3Pipeline(void)
 	, m_pShaders{ nullptr }
 {
 	m_ptrDescriptorLayouts[DESCRIPTOR_SET_ENGINE] = GLES3Renderer()->NewDescriptorLayout(DESCRIPTOR_SET_ENGINE);
-	m_ptrDescriptorLayouts[DESCRIPTOR_SET_CAMERA] = GLES3Renderer()->NewDescriptorLayout(DESCRIPTOR_SET_CAMERA);
-	m_ptrDescriptorLayouts[DESCRIPTOR_SET_PASS] = GLES3Renderer()->NewDescriptorLayout(DESCRIPTOR_SET_PASS);
+	m_ptrDescriptorLayouts[DESCRIPTOR_SET_MESHDRAW] = GLES3Renderer()->NewDescriptorLayout(DESCRIPTOR_SET_MESHDRAW);
+	m_ptrDescriptorLayouts[DESCRIPTOR_SET_MATPASS] = GLES3Renderer()->NewDescriptorLayout(DESCRIPTOR_SET_MATPASS);
 	m_ptrDescriptorLayouts[DESCRIPTOR_SET_INPUTATTACHMENT] = GLES3Renderer()->NewDescriptorLayout(DESCRIPTOR_SET_INPUTATTACHMENT);
 }
 
@@ -93,8 +93,8 @@ bool CGLES3Pipeline::CreateLayouts(void)
 	}
 
 	CALL_BOOL_FUNCTION_RETURN_BOOL(m_ptrDescriptorLayouts[DESCRIPTOR_SET_ENGINE]->Create());
-	CALL_BOOL_FUNCTION_RETURN_BOOL(m_ptrDescriptorLayouts[DESCRIPTOR_SET_CAMERA]->Create());
-	CALL_BOOL_FUNCTION_RETURN_BOOL(m_ptrDescriptorLayouts[DESCRIPTOR_SET_PASS]->Create());
+	CALL_BOOL_FUNCTION_RETURN_BOOL(m_ptrDescriptorLayouts[DESCRIPTOR_SET_MESHDRAW]->Create());
+	CALL_BOOL_FUNCTION_RETURN_BOOL(m_ptrDescriptorLayouts[DESCRIPTOR_SET_MATPASS]->Create());
 	CALL_BOOL_FUNCTION_RETURN_BOOL(m_ptrDescriptorLayouts[DESCRIPTOR_SET_INPUTATTACHMENT]->Create());
 
 	return true;
@@ -189,8 +189,8 @@ void CGLES3Pipeline::Destroy(void)
 	m_vertexFormats.clear();
 
 	m_ptrDescriptorLayouts[DESCRIPTOR_SET_ENGINE]->Destroy(true);
-	m_ptrDescriptorLayouts[DESCRIPTOR_SET_CAMERA]->Destroy(true);
-	m_ptrDescriptorLayouts[DESCRIPTOR_SET_PASS]->Destroy(true);
+	m_ptrDescriptorLayouts[DESCRIPTOR_SET_MESHDRAW]->Destroy(true);
+	m_ptrDescriptorLayouts[DESCRIPTOR_SET_MATPASS]->Destroy(true);
 	m_ptrDescriptorLayouts[DESCRIPTOR_SET_INPUTATTACHMENT]->Destroy(true);
 }
 

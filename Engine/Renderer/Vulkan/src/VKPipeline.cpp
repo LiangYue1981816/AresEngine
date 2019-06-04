@@ -9,8 +9,8 @@ CVKPipeline::CVKPipeline(CVKDevice* pDevice)
 	, m_vkPipelineLayout(VK_NULL_HANDLE)
 {
 	m_ptrDescriptorLayouts[DESCRIPTOR_SET_ENGINE] = VKRenderer()->NewDescriptorLayout(DESCRIPTOR_SET_ENGINE);
-	m_ptrDescriptorLayouts[DESCRIPTOR_SET_CAMERA] = VKRenderer()->NewDescriptorLayout(DESCRIPTOR_SET_CAMERA);
-	m_ptrDescriptorLayouts[DESCRIPTOR_SET_PASS] = VKRenderer()->NewDescriptorLayout(DESCRIPTOR_SET_PASS);
+	m_ptrDescriptorLayouts[DESCRIPTOR_SET_MESHDRAW] = VKRenderer()->NewDescriptorLayout(DESCRIPTOR_SET_MESHDRAW);
+	m_ptrDescriptorLayouts[DESCRIPTOR_SET_MATPASS] = VKRenderer()->NewDescriptorLayout(DESCRIPTOR_SET_MATPASS);
 	m_ptrDescriptorLayouts[DESCRIPTOR_SET_INPUTATTACHMENT] = VKRenderer()->NewDescriptorLayout(DESCRIPTOR_SET_INPUTATTACHMENT);
 }
 
@@ -67,8 +67,8 @@ bool CVKPipeline::CreateLayouts(void)
 	}
 
 	CALL_BOOL_FUNCTION_RETURN_BOOL(m_ptrDescriptorLayouts[DESCRIPTOR_SET_ENGINE]->Create());
-	CALL_BOOL_FUNCTION_RETURN_BOOL(m_ptrDescriptorLayouts[DESCRIPTOR_SET_CAMERA]->Create());
-	CALL_BOOL_FUNCTION_RETURN_BOOL(m_ptrDescriptorLayouts[DESCRIPTOR_SET_PASS]->Create());
+	CALL_BOOL_FUNCTION_RETURN_BOOL(m_ptrDescriptorLayouts[DESCRIPTOR_SET_MESHDRAW]->Create());
+	CALL_BOOL_FUNCTION_RETURN_BOOL(m_ptrDescriptorLayouts[DESCRIPTOR_SET_MATPASS]->Create());
 	CALL_BOOL_FUNCTION_RETURN_BOOL(m_ptrDescriptorLayouts[DESCRIPTOR_SET_INPUTATTACHMENT]->Create());
 
 	eastl::vector<VkDescriptorSetLayout> layouts;
@@ -407,8 +407,8 @@ void CVKPipeline::Destroy(void)
 	m_vertexFormats.clear();
 
 	m_ptrDescriptorLayouts[DESCRIPTOR_SET_ENGINE]->Destroy(true);
-	m_ptrDescriptorLayouts[DESCRIPTOR_SET_CAMERA]->Destroy(true);
-	m_ptrDescriptorLayouts[DESCRIPTOR_SET_PASS]->Destroy(true);
+	m_ptrDescriptorLayouts[DESCRIPTOR_SET_MESHDRAW]->Destroy(true);
+	m_ptrDescriptorLayouts[DESCRIPTOR_SET_MATPASS]->Destroy(true);
 	m_ptrDescriptorLayouts[DESCRIPTOR_SET_INPUTATTACHMENT]->Destroy(true);
 }
 
