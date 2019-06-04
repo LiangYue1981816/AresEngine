@@ -4,11 +4,11 @@
 class CALL_API CTaskCommandBuffer : public CTask
 {
 public:
-	CTaskCommandBuffer(int indexQueue, const CGfxDescriptorSetPtr ptrDescriptorSetEngine, const CGfxDescriptorSetPtr ptrDescriptorSetCamera, const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass, int indexSubpass, CGfxPipelineGraphics* pPipeline, uint32_t namePass, const glm::vec4& scissor, const glm::vec4& viewport)
+	CTaskCommandBuffer(int indexQueue, const CGfxDescriptorSetPtr ptrDescriptorSetEngine, const CGfxDescriptorSetPtr ptrDescriptorSetMeshDraw, const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass, int indexSubpass, CGfxPipelineGraphics* pPipeline, uint32_t namePass, const glm::vec4& scissor, const glm::vec4& viewport)
 		: m_indexQueue(indexQueue)
 
 		, m_ptrDescriptorSetEngine(ptrDescriptorSetEngine)
-		, m_ptrDescriptorSetCamera(ptrDescriptorSetCamera)
+		, m_ptrDescriptorSetCamera(ptrDescriptorSetMeshDraw)
 
 		, m_ptrFrameBuffer(ptrFrameBuffer)
 		, m_ptrRenderPass(ptrRenderPass)
@@ -122,7 +122,7 @@ void CGfxRenderQueue::End(int indexQueue)
 	}
 }
 
-void CGfxRenderQueue::CmdDraw(int indexQueue, CGfxCommandBufferPtr ptrCommandBuffer, const CGfxDescriptorSetPtr ptrDescriptorSetEngine, const CGfxDescriptorSetPtr ptrDescriptorSetCamera, uint32_t namePass, const glm::vec4& scissor, const glm::vec4& viewport)
+void CGfxRenderQueue::CmdDraw(int indexQueue, CGfxCommandBufferPtr ptrCommandBuffer, const CGfxDescriptorSetPtr ptrDescriptorSetEngine, const CGfxDescriptorSetPtr ptrDescriptorSetMeshDraw, uint32_t namePass, const glm::vec4& scissor, const glm::vec4& viewport)
 {
 	m_pipelineMaterialQueue[indexQueue].clear();
 	{
@@ -142,7 +142,7 @@ void CGfxRenderQueue::CmdDraw(int indexQueue, CGfxCommandBufferPtr ptrCommandBuf
 	eastl::vector<CTaskCommandBuffer> tasks;
 	{
 		for (const auto& itPipelineQueue : m_pipelineMaterialQueue[indexQueue]) {
-			tasks.emplace_back(indexQueue, ptrDescriptorSetEngine, ptrDescriptorSetCamera, ptrCommandBuffer->GetFrameBuffer(), ptrCommandBuffer->GetRenderPass(), ptrCommandBuffer->GetSubpassIndex(), itPipelineQueue.first, namePass, scissor, viewport);
+			tasks.emplace_back(indexQueue, ptrDescriptorSetEngine, ptrDescriptorSetMeshDraw, ptrCommandBuffer->GetFrameBuffer(), ptrCommandBuffer->GetRenderPass(), ptrCommandBuffer->GetSubpassIndex(), itPipelineQueue.first, namePass, scissor, viewport);
 		}
 
 		for (int indexTask = 0; indexTask < tasks.size(); indexTask++) {
@@ -158,7 +158,7 @@ void CGfxRenderQueue::CmdDraw(int indexQueue, CGfxCommandBufferPtr ptrCommandBuf
 	}
 }
 
-void CGfxRenderQueue::CmdDrawThread(int indexQueue, CGfxCommandBufferPtr ptrCommandBuffer, const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass, int indexSubpass, const CGfxDescriptorSetPtr ptrDescriptorSetEngine, const CGfxDescriptorSetPtr ptrDescriptorSetCamera, const CGfxDescriptorSetPtr ptrDescriptorSetInputAttachment, CGfxPipelineGraphics* pPipeline, uint32_t namePass, const glm::vec4& scissor, const glm::vec4& viewport)
+void CGfxRenderQueue::CmdDrawThread(int indexQueue, CGfxCommandBufferPtr ptrCommandBuffer, const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass, int indexSubpass, const CGfxDescriptorSetPtr ptrDescriptorSetEngine, const CGfxDescriptorSetPtr ptrDescriptorSetMeshDraw, const CGfxDescriptorSetPtr ptrDescriptorSetInputAttachment, CGfxPipelineGraphics* pPipeline, uint32_t namePass, const glm::vec4& scissor, const glm::vec4& viewport)
 {
 	ptrCommandBuffer->Clearup();
 
@@ -169,7 +169,7 @@ void CGfxRenderQueue::CmdDrawThread(int indexQueue, CGfxCommandBufferPtr ptrComm
 
 		GfxRenderer()->CmdBindPipelineGraphics(ptrCommandBuffer, pPipeline);
 		GfxRenderer()->CmdBindDescriptorSet(ptrCommandBuffer, ptrDescriptorSetEngine);
-		GfxRenderer()->CmdBindDescriptorSet(ptrCommandBuffer, ptrDescriptorSetCamera);
+		GfxRenderer()->CmdBindDescriptorSet(ptrCommandBuffer, ptrDescriptorSetMeshDraw);
 		GfxRenderer()->CmdBindDescriptorSet(ptrCommandBuffer, ptrDescriptorSetInputAttachment);
 
 		for (const auto& itMaterial : m_pipelineMaterialQueue[indexQueue][pPipeline]) {
