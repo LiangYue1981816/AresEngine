@@ -62,8 +62,8 @@
 
 
 #define DESCRIPTOR_SET_ENGINE               0
-#define DESCRIPTOR_SET_CAMERA               1
-#define DESCRIPTOR_SET_PASS                 2
+#define DESCRIPTOR_SET_MESHDRAW             1
+#define DESCRIPTOR_SET_MATPASS              2
 #define DESCRIPTOR_SET_INPUTATTACHMENT      3
 #define DESCRIPTOR_SET_COUNT                4
 
