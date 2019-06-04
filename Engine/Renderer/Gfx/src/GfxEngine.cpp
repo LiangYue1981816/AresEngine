@@ -3,26 +3,31 @@
 
 CGfxEngine::CGfxEngine(void)
 	: m_pUniformEngine(nullptr)
+	, m_pUniformCamera(nullptr)
 {
 	m_pUniformEngine = new CGfxUniformEngine;
+	m_pUniformCamera = new CGfxUniformCamera;
 
-	m_ptrDescriptorLayoutEngine = GfxRenderer()->NewDescriptorLayout(DESCRIPTOR_SET_ENGINE);
-	m_ptrDescriptorLayoutEngine->SetUniformBlockBinding(UNIFORM_ENGINE_NAME, DESCRIPTOR_BIND_ENGINE);
-	m_ptrDescriptorLayoutEngine->Create();
+	m_ptrDescriptorLayout = GfxRenderer()->NewDescriptorLayout(DESCRIPTOR_SET_ENGINE);
+	m_ptrDescriptorLayout->SetUniformBlockBinding(UNIFORM_ENGINE_NAME, DESCRIPTOR_BIND_ENGINE);
+	m_ptrDescriptorLayout->SetUniformBlockBinding(UNIFORM_CAMERA_NAME, DESCRIPTOR_BIND_CAMERA);
+	m_ptrDescriptorLayout->Create();
 
-	m_ptrDescriptorSetEngine = GfxRenderer()->NewDescriptorSet(m_ptrDescriptorLayoutEngine);
-	m_ptrDescriptorSetEngine->SetUniformBuffer(UNIFORM_ENGINE_NAME, m_pUniformEngine->GetUniformBuffer(), 0, m_pUniformEngine->GetUniformBuffer()->GetSize());
-	m_ptrDescriptorSetEngine->Update();
+	m_ptrDescriptorSet = GfxRenderer()->NewDescriptorSet(m_ptrDescriptorLayout);
+	m_ptrDescriptorSet->SetUniformBuffer(UNIFORM_ENGINE_NAME, m_pUniformEngine->GetUniformBuffer(), 0, m_pUniformEngine->GetUniformBuffer()->GetSize());
+	m_ptrDescriptorSet->SetUniformBuffer(UNIFORM_CAMERA_NAME, m_pUniformCamera->GetUniformBuffer(), 0, m_pUniformCamera->GetUniformBuffer()->GetSize());
+	m_ptrDescriptorSet->Update();
 }
 
 CGfxEngine::~CGfxEngine(void)
 {
 	delete m_pUniformEngine;
+	delete m_pUniformCamera;
 }
 
 CGfxDescriptorSetPtr CGfxEngine::GetDescriptorSet(void) const
 {
-	return m_ptrDescriptorSetEngine;
+	return m_ptrDescriptorSet;
 }
 
 void CGfxEngine::SetTime(float t, float dt)
