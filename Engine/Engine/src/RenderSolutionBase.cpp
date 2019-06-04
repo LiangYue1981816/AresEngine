@@ -80,7 +80,7 @@ void CRenderSolutionBase::SetCameraViewport(float x, float y, float width, float
 void CRenderSolutionBase::SetCameraPerspective(float fovy, float aspect, float zNear, float zFar)
 {
 	m_pEngine->SetPerspective(fovy, aspect, zNear, zFar);
-	m_pMainCamera->SetViewport(fovy, aspect, zNear, zFar);
+	m_pMainCamera->SetPerspective(fovy, aspect, zNear, zFar);
 }
 
 void CRenderSolutionBase::SetCameraOrtho(float left, float right, float bottom, float top, float zNear, float zFar)
