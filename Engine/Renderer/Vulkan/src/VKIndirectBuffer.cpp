@@ -9,12 +9,12 @@ CVKIndirectBuffer::CVKIndirectBuffer(CVKDevice* pDevice, int numDrawCommands)
 	, m_draws(numDrawCommands)
 {
 	m_pBuffer = new CVKBuffer(m_pDevice, ALIGN_BYTE(numDrawCommands * sizeof(DrawCommand), m_pDevice->GetPhysicalDeviceLimits().nonCoherentAtomSize), VK_BUFFER_USAGE_INDIRECT_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT);
-	CGfxProfiler::IncIndirectBufferSize(m_pBuffer->GetSize());
+	CGfxProfiler::IncIndirectBufferSize(m_pBuffer->GetMemorySize());
 }
 
 CVKIndirectBuffer::~CVKIndirectBuffer(void)
 {
-	CGfxProfiler::DecIndirectBufferSize(m_pBuffer->GetSize());
+	CGfxProfiler::DecIndirectBufferSize(m_pBuffer->GetMemorySize());
 	delete m_pBuffer;
 }
 

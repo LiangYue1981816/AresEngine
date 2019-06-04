@@ -12,12 +12,12 @@ CVKUniformBuffer::CVKUniformBuffer(CVKDevice* pDevice, CVKUniformBufferManager* 
 {
 	m_size = ALIGN_BYTE(size, m_pDevice->GetPhysicalDeviceLimits().nonCoherentAtomSize);
 	m_pBuffer = new CVKBuffer(m_pDevice, CGfxSwapChain::SWAPCHAIN_FRAME_COUNT * m_size, VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT);
-	CGfxProfiler::IncUniformBufferSize(m_pBuffer->GetSize());
+	CGfxProfiler::IncUniformBufferSize(m_pBuffer->GetMemorySize());
 }
 
 CVKUniformBuffer::~CVKUniformBuffer(void)
 {
-	CGfxProfiler::DecUniformBufferSize(m_pBuffer->GetSize());
+	CGfxProfiler::DecUniformBufferSize(m_pBuffer->GetMemorySize());
 	delete m_pBuffer;
 }
 

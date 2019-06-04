@@ -13,18 +13,18 @@ CVKIndexBuffer::CVKIndexBuffer(CVKDevice* pDevice, GfxIndexType type, size_t siz
 	if (bDynamic) {
 		m_size = ALIGN_BYTE(size, m_pDevice->GetPhysicalDeviceLimits().nonCoherentAtomSize);
 		m_pBuffer = new CVKBuffer(m_pDevice, CGfxSwapChain::SWAPCHAIN_FRAME_COUNT * m_size, VK_BUFFER_USAGE_INDEX_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT);
-		CGfxProfiler::IncIndexBufferSize(m_pBuffer->GetSize());
+		CGfxProfiler::IncIndexBufferSize(m_pBuffer->GetMemorySize());
 	}
 	else {
 		m_size = size;
 		m_pBuffer = new CVKBuffer(m_pDevice, m_size, VK_BUFFER_USAGE_INDEX_BUFFER_BIT | VK_BUFFER_USAGE_TRANSFER_DST_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT);
-		CGfxProfiler::IncIndexBufferSize(m_pBuffer->GetSize());
+		CGfxProfiler::IncIndexBufferSize(m_pBuffer->GetMemorySize());
 	}
 }
 
 CVKIndexBuffer::~CVKIndexBuffer(void)
 {
-	CGfxProfiler::DecIndexBufferSize(m_pBuffer->GetSize());
+	CGfxProfiler::DecIndexBufferSize(m_pBuffer->GetMemorySize());
 	delete m_pBuffer;
 }
 
