@@ -53,11 +53,13 @@ public:
 	static void DestroyInstance(void);
 
 public:
-	static CGfxCamera* GetMainCamera(void);
-	static CGfxCamera* GetShadowCamera(void);
-
-public:
 	static void SetTime(float t, float dt);
+
+	static void SetCameraScissor(float x, float y, float width, float height);
+	static void SetCameraViewport(float x, float y, float width, float height);
+	static void SetCameraPerspective(float fovy, float aspect, float zNear, float zFar);
+	static void SetCameraOrtho(float left, float right, float bottom, float top, float zNear, float zFar);
+	static void SetCameraLookat(float eyex, float eyey, float eyez, float centerx, float centery, float centerz, float upx, float upy, float upz);
 
 	static void SetShadowOrtho(float left, float right, float bottom, float top, float zNear, float zFar);
 	static void SetShadowLookat(float eyex, float eyey, float eyez, float centerx, float centery, float centerz, float upx, float upy, float upz);

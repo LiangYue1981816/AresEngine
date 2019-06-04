@@ -61,29 +61,50 @@ void CRenderSolutionBase::DestroyInstance(void)
 	delete m_pShadowCamera;
 }
 
-CGfxCamera* CRenderSolutionBase::GetMainCamera(void)
-{
-	return m_pMainCamera;
-}
-
-CGfxCamera* CRenderSolutionBase::GetShadowCamera(void)
-{
-	return m_pShadowCamera;
-}
-
 void CRenderSolutionBase::SetTime(float t, float dt)
 {
 	m_pEngine->SetTime(t, dt);
 }
 
+void CRenderSolutionBase::SetCameraScissor(float x, float y, float width, float height)
+{
+	m_pMainCamera->SetScissor(x, y, width, height);
+}
+
+void CRenderSolutionBase::SetCameraViewport(float x, float y, float width, float height)
+{
+	m_pEngine->SetViewport(x, y, width, height);
+	m_pMainCamera->SetViewport(x, y, width, height);
+}
+
+void CRenderSolutionBase::SetCameraPerspective(float fovy, float aspect, float zNear, float zFar)
+{
+	m_pEngine->SetPerspective(fovy, aspect, zNear, zFar);
+	m_pMainCamera->SetViewport(fovy, aspect, zNear, zFar);
+}
+
+void CRenderSolutionBase::SetCameraOrtho(float left, float right, float bottom, float top, float zNear, float zFar)
+{
+	m_pEngine->SetOrtho(left, right, bottom, top, zNear, zFar);
+	m_pMainCamera->SetOrtho(left, right, bottom, top, zNear, zFar);
+}
+
+void CRenderSolutionBase::SetCameraLookat(float eyex, float eyey, float eyez, float centerx, float centery, float centerz, float upx, float upy, float upz)
+{
+	m_pEngine->SetLookat(eyex, eyey, eyez, centerx, centery, centerz, upx, upy, upz);
+	m_pMainCamera->SetLookat(eyex, eyey, eyez, centerx, centery, centerz, upx, upy, upz);
+}
+
 void CRenderSolutionBase::SetShadowOrtho(float left, float right, float bottom, float top, float zNear, float zFar)
 {
 	m_pEngine->SetShadowOrtho(left, right, bottom, top, zNear, zFar);
+	m_pShadowCamera->SetOrtho(left, right, bottom, top, zNear, zFar);
 }
 
 void CRenderSolutionBase::SetShadowLookat(float eyex, float eyey, float eyez, float centerx, float centery, float centerz, float upx, float upy, float upz)
 {
 	m_pEngine->SetShadowLookat(eyex, eyey, eyez, centerx, centery, centerz, upx, upy, upz);
+	m_pShadowCamera->SetLookat(eyex, eyey, eyez, centerx, centery, centerz, upx, upy, upz);
 }
 
 void CRenderSolutionBase::SetShadowRange(float range)
