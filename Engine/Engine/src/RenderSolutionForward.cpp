@@ -142,7 +142,7 @@ void CRenderSolutionForward::Destroy(void)
 	DestroyFrameBufferMSAA();
 }
 
-void CRenderSolutionForward::Update(int indexQueue)
+void CRenderSolutionForward::UpdateCamera(int indexQueue)
 {
 	m_pMainQueue->Clear(indexQueue);
 	m_pLightQueue->Clear(indexQueue);

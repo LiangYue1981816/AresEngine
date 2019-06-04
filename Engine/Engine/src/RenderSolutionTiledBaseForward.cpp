@@ -41,7 +41,7 @@ void CRenderSolutionTiledBaseForward::Destroy(void)
 
 }
 
-void CRenderSolutionTiledBaseForward::Update(int indexQueue)
+void CRenderSolutionTiledBaseForward::UpdateCamera(int indexQueue)
 {
 
 }

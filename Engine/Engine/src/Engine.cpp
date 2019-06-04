@@ -175,7 +175,7 @@ void CEngine::UpdateThread(void)
 	m_lastTime = currTime;
 
 	m_pSceneManager->UpdateLogic(m_totalTime, m_deltaTime);
-	m_pCurrentRenderSolution->Update(m_indexQueue);
+	m_pCurrentRenderSolution->UpdateCamera(m_indexQueue);
 }
 
 void* CEngine::WorkThread(void* pParams)

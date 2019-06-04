@@ -44,7 +44,7 @@ public:
 	virtual void Destroy(void) = 0;
 
 public:
-	virtual void Update(int indexQueue) = 0;
+	virtual void UpdateCamera(int indexQueue) = 0;
 	virtual void Render(int indexQueue) = 0;
 
 

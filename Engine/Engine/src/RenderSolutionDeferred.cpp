@@ -41,7 +41,7 @@ void CRenderSolutionDeferred::Destroy(void)
 
 }
 
-void CRenderSolutionDeferred::Update(int indexQueue)
+void CRenderSolutionDeferred::UpdateCamera(int indexQueue)
 {
 
 }
