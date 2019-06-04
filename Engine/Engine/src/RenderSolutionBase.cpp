@@ -171,3 +171,48 @@ void CRenderSolutionBase::SetFogDistanceDensity(float startDistance, float endDi
 {
 	m_pEngine->SetFogDistanceDensity(startDistance, endDistance, density);
 }
+
+const glm::vec4& CRenderSolutionBase::GetCameraScissor(void)
+{
+	return m_pMainCamera->GetScissor();
+}
+
+const glm::vec4& CRenderSolutionBase::GetCameraViewport(void)
+{
+	return m_pMainCamera->GetViewport();
+}
+
+const glm::vec3& CRenderSolutionBase::GetCameraPosition(void)
+{
+	return m_pMainCamera->GetPosition();
+}
+
+const glm::vec3& CRenderSolutionBase::GetCameraForwardDirection(void)
+{
+	return m_pMainCamera->GetForwardDirection();
+}
+
+const glm::vec3& CRenderSolutionBase::GetCameraUpDirection(void)
+{
+	return m_pMainCamera->GetUpDirection();
+}
+
+const glm::mat4& CRenderSolutionBase::GetCameraProjectionMatrix(void)
+{
+	return m_pMainCamera->GetProjectionMatrix();
+}
+
+const glm::mat4& CRenderSolutionBase::GetCameraViewMatrix(void)
+{
+	return m_pMainCamera->GetViewMatrix();
+}
+
+const glm::mat4& CRenderSolutionBase::GetCameraViewInverseMatrix(void)
+{
+	return m_pMainCamera->GetViewInverseMatrix();
+}
+
+const glm::mat4& CRenderSolutionBase::GetCameraViewInverseTransposeMatrix(void)
+{
+	return m_pMainCamera->GetViewInverseTransposeMatrix();
+}

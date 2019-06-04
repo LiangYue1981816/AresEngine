@@ -26,8 +26,6 @@ typedef enum RenderSolution {
 
 #define SceneManager() CEngine::GetInstance()->GetSceneManager()
 #define RenderSolution() CEngine::GetInstance()->GetRenderSolution()
-#define MainCamera() CEngine::GetInstance()->GetRenderSolution()->GetMainCamera()
-#define ShadowCamera() CEngine::GetInstance()->GetRenderSolution()->GetShadowCamera()
 
 
 class CALL_API CEngine
