@@ -140,8 +140,9 @@ void CRenderSolutionDefault::Destroy(void)
 void CRenderSolutionDefault::Update(int indexQueue)
 {
 	m_pMainQueue->Clear(indexQueue);
+	m_pLightQueue->Clear(indexQueue);
+	m_pShadowQueue->Clear(indexQueue);
 
-	SceneManager()->UpdateLogic(Engine()->GetTotalTime(), Engine()->GetDeltaTime());
 	SceneManager()->UpdateCamera(m_pMainCamera, m_pMainQueue, indexQueue);
 }
 

@@ -174,6 +174,7 @@ void CEngine::UpdateThread(void)
 	m_totalTime = m_totalTime + m_deltaTime;
 	m_lastTime = currTime;
 
+	m_pSceneManager->UpdateLogic(m_totalTime, m_deltaTime);
 	m_pCurrentRenderSolution->Update(m_indexQueue);
 }
 
