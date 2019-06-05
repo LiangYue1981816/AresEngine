@@ -1,4 +1,6 @@
 #include "EngineHeader.h"
+#include "VKRenderer.h"
+#include "GLES3Renderer.h"
 
 
 static const ATTRIBUTE vertexAttributes[VERTEX_ATTRIBUTE_COUNT] = {
