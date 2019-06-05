@@ -1,28 +1,6 @@
 #include "EngineHeader.h"
 
 
-static const ATTRIBUTE vertexAttributes[VERTEX_ATTRIBUTE_COUNT] = {
-	{ VERTEX_ATTRIBUTE_POSITION,  4, 3, 0, GFX_DATAFORMAT_VEC3_SFLOAT, "inPosition"  },
-	{ VERTEX_ATTRIBUTE_NORMAL,    4, 3, 1, GFX_DATAFORMAT_VEC3_SFLOAT, "inNormal"    },
-	{ VERTEX_ATTRIBUTE_BINORMAL,  4, 3, 2, GFX_DATAFORMAT_VEC3_SFLOAT, "inBinormal"  },
-	{ VERTEX_ATTRIBUTE_COLOR,     4, 3, 3, GFX_DATAFORMAT_VEC3_SFLOAT, "inColor"     },
-	{ VERTEX_ATTRIBUTE_TEXCOORD0, 4, 2, 4, GFX_DATAFORMAT_VEC2_SFLOAT, "inTexcoord0" },
-	{ VERTEX_ATTRIBUTE_TEXCOORD1, 4, 2, 5, GFX_DATAFORMAT_VEC2_SFLOAT, "inTexcoord1" },
-};
-
-static const ATTRIBUTE instanceAttributes[INSTANCE_ATTRIBUTE_COUNT] = {
-	// Transform
-	{ INSTANCE_ATTRIBUTE_TRANSFORM_MATRIX_COL0, 4, 4, 8,  GFX_DATAFORMAT_VEC4_SFLOAT, "inInstanceTransformMatrixCol0" },
-	{ INSTANCE_ATTRIBUTE_TRANSFORM_MATRIX_COL1, 4, 4, 9,  GFX_DATAFORMAT_VEC4_SFLOAT, "inInstanceTransformMatrixCol1" },
-	{ INSTANCE_ATTRIBUTE_TRANSFORM_MATRIX_COL2, 4, 4, 10, GFX_DATAFORMAT_VEC4_SFLOAT, "inInstanceTransformMatrixCol2" },
-	{ INSTANCE_ATTRIBUTE_TRANSFORM_MATRIX_COL3, 4, 4, 11, GFX_DATAFORMAT_VEC4_SFLOAT, "inInstanceTransformMatrixCol3" },
-
-	// PointLight
-	{ INSTANCE_ATTRIBUTE_POINTLIGHT_COLOR,      4, 4, 12, GFX_DATAFORMAT_VEC4_SFLOAT, "inInstancePointLightColor"       },
-	{ INSTANCE_ATTRIBUTE_POINTLIGHT_ATTENUATION,4, 4, 13, GFX_DATAFORMAT_VEC4_SFLOAT, "inInstancePointLightAttenuation" },
-};
-
-
 CGfxEngine* CRenderSolutionBase::m_pEngine = nullptr;
 CGfxCamera* CRenderSolutionBase::m_pMainCamera = nullptr;
 CGfxCamera* CRenderSolutionBase::m_pShadowCamera = nullptr;
@@ -35,9 +13,6 @@ CRenderSolutionBase::CRenderSolutionBase(void)
 	m_pMainQueue = new CGfxRenderQueue;
 	m_pLightQueue = new CGfxRenderQueue;
 	m_pShadowQueue = new CGfxRenderQueue;
-
-	SetVertexAttributes(vertexAttributes, VERTEX_ATTRIBUTE_COUNT);
-	SetInstanceAttributes(instanceAttributes, INSTANCE_ATTRIBUTE_COUNT);
 }
 
 CRenderSolutionBase::~CRenderSolutionBase(void)

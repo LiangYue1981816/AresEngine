@@ -13,4 +13,5 @@
 #include "Base/include/FileManager.h"
 
 #include "Resource/include/ResourceLoader.h"
+#include "RenderSolution/include/RenderSolution.h"
 #include "Engine/include/Engine.h"

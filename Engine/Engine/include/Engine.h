@@ -1,23 +1,6 @@
 #pragma once
 #include "PreHeader.h"
 
-#include "RenderSolutionBase.h"
-#include "RenderSolutionDefault.h"
-#include "RenderSolutionDeferred.h"
-#include "RenderSolutionForward.h"
-#include "RenderSolutionTiledBaseForward.h"
-#include "RenderSolutionTiledBaseDeferred.h"
-
-
-typedef enum RenderSolution {
-	RENDER_SOLUTION_DEFAULT = 0,
-	RENDER_SOLUTION_FORWARD,
-	RENDER_SOLUTION_DEFERRED,
-	RENDER_SOLUTION_TILED_BASE_FORWARD,
-	RENDER_SOLUTION_TILED_BASE_DEFERRED,
-	RENDER_SOLUTION_COUNT
-} RenderSolution;
-
 
 #define CreateEngine(api, solution, hInstance, hWnd, hDC, width, height, format) CEngine::Create((api), (solution), (hInstance), (hWnd), (hDC), (width), (height), (format))
 #define DestroyEngine() CEngine::Destroy()
@@ -42,12 +25,8 @@ private:
 
 
 public:
-	void SetRenderSolution(RenderSolution solution, int samples = 1);
-
-public:
-	CGfxRenderer* GetRenderer(void) const;
 	CSceneManager* GetSceneManager(void) const;
-	CRenderSolutionBase* GetRenderSolution(void) const;
+	CRenderSolution* GetRenderSolution(void) const;
 
 public:
 	float GetDeltaTime(void) const;
@@ -72,13 +51,9 @@ private:
 	float m_totalTime;
 
 private:
-	CGfxRenderer* m_pRenderer;
-
-	CRenderSolutionBase* m_pRenderSolution[RENDER_SOLUTION_COUNT];
-	CRenderSolutionBase* m_pCurrentRenderSolution;
-
 	CFileManager* m_pFileManager;
 	CSceneManager* m_pSceneManager;
+	CRenderSolution* m_pRenderSolution;
 	CResourceLoader* m_pResourceLoader;
 
 #ifdef PLATFORM_WINDOWS

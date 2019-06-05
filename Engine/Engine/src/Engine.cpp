@@ -41,13 +41,9 @@ CEngine::CEngine(GfxApi api, RenderSolution solution, void* hInstance, void* hWn
 	, m_deltaTime(0.0f)
 	, m_totalTime(0.0f)
 
-	, m_pRenderer(nullptr)
-
-	, m_pRenderSolution{ nullptr }
-	, m_pCurrentRenderSolution(nullptr)
-
 	, m_pFileManager(nullptr)
 	, m_pSceneManager(nullptr)
+	, m_pRenderSolution(nullptr)
 	, m_pResourceLoader(nullptr)
 
 #ifdef PLATFORM_WINDOWS
@@ -56,26 +52,7 @@ CEngine::CEngine(GfxApi api, RenderSolution solution, void* hInstance, void* hWn
 {
 	pInstance = this;
 
-	switch ((int)api) {
-	case GFX_API_GLES3:
-		m_pRenderer = new CGLES3Renderer(hInstance, hWnd, hDC, width, height, format);
-		break;
-
-	case GFX_API_VULKAN:
-		m_pRenderer = new CVKRenderer(hInstance, hWnd, hDC, width, height, format);
-		break;
-	}
-
-	CRenderSolutionBase::CreateInstance();
-	m_pRenderSolution[RENDER_SOLUTION_DEFAULT] = new CRenderSolutionDefault;
-	m_pRenderSolution[RENDER_SOLUTION_FORWARD] = new CRenderSolutionForward;
-	m_pRenderSolution[RENDER_SOLUTION_DEFERRED] = new CRenderSolutionDeferred;
-	m_pRenderSolution[RENDER_SOLUTION_TILED_BASE_FORWARD] = new CRenderSolutionTiledBaseForward;
-	m_pRenderSolution[RENDER_SOLUTION_TILED_BASE_DEFERRED] = new CRenderSolutionTiledBaseDeferred;
-
-	m_pCurrentRenderSolution = m_pRenderSolution[RENDER_SOLUTION_DEFAULT];
-	m_pCurrentRenderSolution->Create();
-
+	m_pRenderSolution = new CRenderSolution(api, solution, hInstance, hWnd, hDC, width, height, format);
 	m_pFileManager = new CFileManager;
 	m_pSceneManager = new CSceneManager;
 	m_pResourceLoader = new CResourceLoader;
@@ -106,27 +83,7 @@ CEngine::~CEngine(void)
 	delete m_pResourceLoader;
 	delete m_pSceneManager;
 	delete m_pFileManager;
-
-	delete m_pRenderSolution[RENDER_SOLUTION_DEFAULT];
-	delete m_pRenderSolution[RENDER_SOLUTION_FORWARD];
-	delete m_pRenderSolution[RENDER_SOLUTION_DEFERRED];
-	delete m_pRenderSolution[RENDER_SOLUTION_TILED_BASE_FORWARD];
-	delete m_pRenderSolution[RENDER_SOLUTION_TILED_BASE_DEFERRED];
-	CRenderSolutionBase::DestroyInstance();
-
-	delete m_pRenderer;
-}
-
-void CEngine::SetRenderSolution(RenderSolution solution, int samples)
-{
-	m_pCurrentRenderSolution->Destroy();
-	m_pCurrentRenderSolution = m_pRenderSolution[solution];
-	m_pCurrentRenderSolution->Create(samples);
-}
-
-CGfxRenderer* CEngine::GetRenderer(void) const
-{
-	return m_pRenderer;
+	delete m_pRenderSolution;
 }
 
 CSceneManager* CEngine::GetSceneManager(void) const
@@ -134,9 +91,9 @@ CSceneManager* CEngine::GetSceneManager(void) const
 	return m_pSceneManager;
 }
 
-CRenderSolutionBase* CEngine::GetRenderSolution(void) const
+CRenderSolution* CEngine::GetRenderSolution(void) const
 {
-	return m_pCurrentRenderSolution;
+	return m_pRenderSolution;
 }
 
 float CEngine::GetDeltaTime(void) const
@@ -163,7 +120,7 @@ void CEngine::Update(void)
 
 void CEngine::Render(void)
 {
-	m_pCurrentRenderSolution->Render(1 - m_indexQueue);
+	m_pRenderSolution->GetRenderSolution()->Render(1 - m_indexQueue);
 }
 
 void CEngine::UpdateThread(void)
@@ -175,7 +132,7 @@ void CEngine::UpdateThread(void)
 	m_lastTime = currTime;
 
 	m_pSceneManager->UpdateLogic(m_totalTime, m_deltaTime);
-	m_pCurrentRenderSolution->UpdateCamera(m_indexQueue);
+	m_pRenderSolution->GetRenderSolution()->UpdateCamera(m_indexQueue);
 }
 
 void* CEngine::WorkThread(void* pParams)

@@ -28,6 +28,9 @@ CRenderSolution::CRenderSolution(GfxApi api, RenderSolution solution, void* hIns
 	, m_pRenderSolution{ nullptr }
 	, m_pCurrentRenderSolution(nullptr)
 {
+	SetVertexAttributes(vertexAttributes, VERTEX_ATTRIBUTE_COUNT);
+	SetInstanceAttributes(instanceAttributes, INSTANCE_ATTRIBUTE_COUNT);
+
 	switch ((int)api) {
 	case GFX_API_GLES3:
 		m_pRenderer = new CGLES3Renderer(hInstance, hWnd, hDC, width, height, format);
