@@ -10,6 +10,7 @@
 
 #include "Base/include/Lock.h"
 #include "Base/include/Utils.h"
+#include "Base/include/TaskPool.h"
 #include "Base/include/TaskGraph.h"
 
 #include "Renderer/Gfx/include/GfxRenderer.h"
