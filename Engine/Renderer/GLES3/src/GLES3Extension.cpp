@@ -806,7 +806,10 @@ void GLBindFramebufferTexture2D(GLenum target, GLenum attachment, GLenum textarg
 {
 	if (FrameBuffers.find(target) != FrameBuffers.end()) {
 		uint32_t framebuffer = FrameBuffers[target].framebuffer;
-		if (FrameBuffers[target].attachments[framebuffer].find(attachment) == FrameBuffers[target].attachments[framebuffer].end() || FrameBuffers[target].attachments[framebuffer][attachment].textarget != textarget || FrameBuffers[target].attachments[framebuffer][attachment].texture != texture || FrameBuffers[target].attachments[framebuffer][attachment].level != level) {
+		if (FrameBuffers[target].attachments[framebuffer].find(attachment) == FrameBuffers[target].attachments[framebuffer].end() || 
+			FrameBuffers[target].attachments[framebuffer][attachment].textarget != textarget || 
+			FrameBuffers[target].attachments[framebuffer][attachment].texture != texture || 
+			FrameBuffers[target].attachments[framebuffer][attachment].level != level) {
 			FrameBuffers[target].attachments[framebuffer][attachment].textarget = textarget;
 			FrameBuffers[target].attachments[framebuffer][attachment].texture = texture;
 			FrameBuffers[target].attachments[framebuffer][attachment].level = level;
