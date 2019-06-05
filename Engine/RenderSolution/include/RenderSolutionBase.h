@@ -4,7 +4,7 @@
 
 class CALL_API CRenderSolutionBase
 {
-	friend class CEngine;
+	friend class CRenderSolution;
 
 
 protected:

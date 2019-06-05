@@ -4,7 +4,7 @@
 
 class CALL_API CRenderSolutionTiledBaseDeferred : public CRenderSolutionBase
 {
-	friend class CEngine;
+	friend class CRenderSolution;
 
 
 protected:

@@ -4,7 +4,7 @@
 
 class CALL_API CRenderSolutionForward : public CRenderSolutionBase
 {
-	friend class CEngine;
+	friend class CRenderSolution;
 
 
 private:
