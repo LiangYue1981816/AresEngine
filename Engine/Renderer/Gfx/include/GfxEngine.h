@@ -15,10 +15,10 @@ public:
 public:
 	void SetTime(float t, float dt);
 
-	void SetViewport(float x, float y, float width, float height);
-	void SetPerspective(float fovy, float aspect, float zNear, float zFar);
-	void SetOrtho(float left, float right, float bottom, float top, float zNear, float zFar);
-	void SetLookat(float eyex, float eyey, float eyez, float centerx, float centery, float centerz, float upx, float upy, float upz);
+	void SetCameraViewport(float x, float y, float width, float height);
+	void SetCameraPerspective(float fovy, float aspect, float zNear, float zFar);
+	void SetCameraOrtho(float left, float right, float bottom, float top, float zNear, float zFar);
+	void SetCameraLookat(float eyex, float eyey, float eyez, float centerx, float centery, float centerz, float upx, float upy, float upz);
 
 	void SetShadowOrtho(float left, float right, float bottom, float top, float zNear, float zFar);
 	void SetShadowLookat(float eyex, float eyey, float eyez, float centerx, float centery, float centerz, float upx, float upy, float upz);

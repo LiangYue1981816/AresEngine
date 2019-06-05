@@ -30,22 +30,22 @@ void CGfxEngine::SetTime(float t, float dt)
 	m_pUniformEngine->SetTime(t, dt);
 }
 
-void CGfxEngine::SetViewport(float x, float y, float width, float height)
+void CGfxEngine::SetCameraViewport(float x, float y, float width, float height)
 {
 	m_pUniformEngine->SetCameraViewport(width, height);
 }
 
-void CGfxEngine::SetPerspective(float fovy, float aspect, float zNear, float zFar)
+void CGfxEngine::SetCameraPerspective(float fovy, float aspect, float zNear, float zFar)
 {
 	m_pUniformEngine->SetCameraPerspective(fovy, aspect, zNear, zFar);
 }
 
-void CGfxEngine::SetOrtho(float left, float right, float bottom, float top, float zNear, float zFar)
+void CGfxEngine::SetCameraOrtho(float left, float right, float bottom, float top, float zNear, float zFar)
 {
 	m_pUniformEngine->SetCameraOrtho(left, right, bottom, top, zNear, zFar);
 }
 
-void CGfxEngine::SetLookat(float eyex, float eyey, float eyez, float centerx, float centery, float centerz, float upx, float upy, float upz)
+void CGfxEngine::SetCameraLookat(float eyex, float eyey, float eyez, float centerx, float centery, float centerz, float upx, float upy, float upz)
 {
 	m_pUniformEngine->SetCameraLookat(eyex, eyey, eyez, centerx, centery, centerz, upx, upy, upz);
 }
