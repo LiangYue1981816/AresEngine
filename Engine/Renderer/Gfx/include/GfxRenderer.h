@@ -43,7 +43,6 @@
 #include "GfxUniformVec4.h"
 #include "GfxUniformMat4.h"
 #include "GfxUniformEngine.h"
-#include "GfxUniformCamera.h"
 #include "GfxUniformBuffer.h"
 
 #include "GfxMesh.h"
