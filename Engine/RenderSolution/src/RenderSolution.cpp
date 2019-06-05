@@ -66,14 +66,14 @@ CRenderSolution::~CRenderSolution(void)
 	delete m_pRenderer;
 }
 
-void CRenderSolution::SetRenderSolution(RenderSolution solution, int samples)
+void CRenderSolution::SetCurrentRenderSolution(RenderSolution solution, int samples)
 {
 	m_pCurrentRenderSolution->Destroy();
 	m_pCurrentRenderSolution = m_pRenderSolution[solution];
 	m_pCurrentRenderSolution->Create(samples);
 }
 
-CRenderSolutionBase* CRenderSolution::GetRenderSolution(void) const
+CRenderSolutionBase* CRenderSolution::GetCurrentRenderSolution(void) const
 {
 	return m_pCurrentRenderSolution;
 }

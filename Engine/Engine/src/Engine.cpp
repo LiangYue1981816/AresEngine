@@ -84,16 +84,6 @@ CEngine::~CEngine(void)
 	delete m_pRenderSolution;
 }
 
-CSceneManager* CEngine::GetSceneManager(void) const
-{
-	return m_pSceneManager;
-}
-
-CRenderSolution* CEngine::GetRenderSolution(void) const
-{
-	return m_pRenderSolution;
-}
-
 float CEngine::GetDeltaTime(void) const
 {
 	return m_deltaTime;
@@ -102,6 +92,16 @@ float CEngine::GetDeltaTime(void) const
 float CEngine::GetTotalTime(void) const
 {
 	return m_totalTime;
+}
+
+CSceneManager* CEngine::GetSceneManager(void) const
+{
+	return m_pSceneManager;
+}
+
+CRenderSolution* CEngine::GetRenderSolution(void) const
+{
+	return m_pRenderSolution;
 }
 
 void CEngine::Wait(void)
@@ -118,7 +118,7 @@ void CEngine::Update(void)
 
 void CEngine::Render(void)
 {
-	m_pRenderSolution->GetRenderSolution()->Render(1 - m_indexQueue);
+	m_pRenderSolution->GetCurrentRenderSolution()->Render(1 - m_indexQueue);
 }
 
 void CEngine::UpdateThread(void)
@@ -130,7 +130,7 @@ void CEngine::UpdateThread(void)
 	m_lastTime = currTime;
 
 	m_pSceneManager->UpdateLogic(m_totalTime, m_deltaTime);
-	m_pRenderSolution->GetRenderSolution()->UpdateCamera(m_indexQueue);
+	m_pRenderSolution->GetCurrentRenderSolution()->UpdateCamera(m_indexQueue);
 }
 
 void* CEngine::WorkThread(void* pParams)

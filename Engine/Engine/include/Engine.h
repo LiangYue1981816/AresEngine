@@ -25,12 +25,12 @@ private:
 
 
 public:
-	CSceneManager* GetSceneManager(void) const;
-	CRenderSolution* GetRenderSolution(void) const;
-
-public:
 	float GetDeltaTime(void) const;
 	float GetTotalTime(void) const;
+
+public:
+	CSceneManager* GetSceneManager(void) const;
+	CRenderSolution* GetRenderSolution(void) const;
 
 public:
 	void Wait(void);

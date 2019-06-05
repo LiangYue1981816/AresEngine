@@ -50,8 +50,8 @@ private:
 
 
 public:
-	void SetRenderSolution(RenderSolution solution, int samples = 1);
-	CRenderSolutionBase* GetRenderSolution(void) const;
+	void SetCurrentRenderSolution(RenderSolution solution, int samples = 1);
+	CRenderSolutionBase* GetCurrentRenderSolution(void) const;
 
 
 private:
