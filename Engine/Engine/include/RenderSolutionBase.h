@@ -83,19 +83,6 @@ public:
 	static void SetFogHeightDensity(float startHeight, float endHeight, float density);
 	static void SetFogDistanceDensity(float startDistance, float endDistance, float density);
 
-public:
-	static const glm::vec4& GetCameraScissor(void);
-	static const glm::vec4& GetCameraViewport(void);
-
-	static const glm::vec3& GetCameraPosition(void);
-	static const glm::vec3& GetCameraForwardDirection(void);
-	static const glm::vec3& GetCameraUpDirection(void);
-
-	static const glm::mat4& GetCameraProjectionMatrix(void);
-	static const glm::mat4& GetCameraViewMatrix(void);
-	static const glm::mat4& GetCameraViewInverseMatrix(void);
-	static const glm::mat4& GetCameraViewInverseTransposeMatrix(void);
-
 
 protected:
 	CGfxRenderQueue* m_pMainQueue;
