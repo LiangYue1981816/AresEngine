@@ -255,6 +255,12 @@ void CGfxUniformEngine::SetAmbientLightRotation(float angle, float axisx, float 
 	m_params.ambientLightRotationMatrix = glm::rotate(glm::mat4(), -angle, glm::vec3(axisx, axisy, axisz));
 }
 
+void CGfxUniformEngine::SetAmbientLightDirection(float dirx, float diry, float dirz)
+{
+	m_bDirty = true;
+	m_params.ambientLightRotationMatrix = glm::lookAt(glm::vec3(0.0f, 0.0f, 0.0f), glm::normalize(glm::vec3(-dirx, -diry, -dirz)), glm::vec3(0.0f, 1.0f, 0.0f));
+}
+
 void CGfxUniformEngine::SetPointLightColor(float red, float green, float blue)
 {
 	m_bDirty = true;
