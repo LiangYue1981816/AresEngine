@@ -152,7 +152,7 @@ void CGfxUniformEngine::SetTime(float t, float dt)
 	m_params.deltaTime = glm::vec4(dt, 1.0f / dt, 1.0f, 1.0f);
 }
 
-void CGfxUniformEngine::SetCameraScreen(float width, float height)
+void CGfxUniformEngine::SetCameraViewport(float width, float height)
 {
 	m_bDirty = true;
 	m_params.cameraScreen = glm::vec4(width, height, 1.0f + 1.0f / width, 1.0f + 1.0f / height);

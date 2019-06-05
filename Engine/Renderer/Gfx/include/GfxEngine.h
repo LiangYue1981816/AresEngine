@@ -46,8 +46,6 @@ public:
 
 private:
 	CGfxUniformEngine* m_pUniformEngine;
-	CGfxUniformCamera* m_pUniformCamera;
-
 	CGfxDescriptorSetPtr m_ptrDescriptorSet;
 	CGfxDescriptorLayoutPtr m_ptrDescriptorLayout;
 };

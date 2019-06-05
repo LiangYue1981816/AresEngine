@@ -3,26 +3,21 @@
 
 CGfxEngine::CGfxEngine(void)
 	: m_pUniformEngine(nullptr)
-	, m_pUniformCamera(nullptr)
 {
 	m_pUniformEngine = new CGfxUniformEngine;
-	m_pUniformCamera = new CGfxUniformCamera;
 
 	m_ptrDescriptorLayout = GfxRenderer()->NewDescriptorLayout(DESCRIPTOR_SET_ENGINE);
 	m_ptrDescriptorLayout->SetUniformBlockBinding(UNIFORM_ENGINE_NAME, DESCRIPTOR_BIND_ENGINE);
-	m_ptrDescriptorLayout->SetUniformBlockBinding(UNIFORM_CAMERA_NAME, DESCRIPTOR_BIND_CAMERA);
 	m_ptrDescriptorLayout->Create();
 
 	m_ptrDescriptorSet = GfxRenderer()->NewDescriptorSet(m_ptrDescriptorLayout);
 	m_ptrDescriptorSet->SetUniformBuffer(UNIFORM_ENGINE_NAME, m_pUniformEngine->GetUniformBuffer(), 0, m_pUniformEngine->GetUniformBuffer()->GetSize());
-	m_ptrDescriptorSet->SetUniformBuffer(UNIFORM_CAMERA_NAME, m_pUniformCamera->GetUniformBuffer(), 0, m_pUniformCamera->GetUniformBuffer()->GetSize());
 	m_ptrDescriptorSet->Update();
 }
 
 CGfxEngine::~CGfxEngine(void)
 {
 	delete m_pUniformEngine;
-	delete m_pUniformCamera;
 }
 
 CGfxDescriptorSetPtr CGfxEngine::GetDescriptorSet(void) const
@@ -37,22 +32,22 @@ void CGfxEngine::SetTime(float t, float dt)
 
 void CGfxEngine::SetViewport(float x, float y, float width, float height)
 {
-	m_pUniformCamera->SetScreen(width, height);
+	m_pUniformEngine->SetCameraViewport(width, height);
 }
 
 void CGfxEngine::SetPerspective(float fovy, float aspect, float zNear, float zFar)
 {
-	m_pUniformCamera->SetPerspective(fovy, aspect, zNear, zFar);
+	m_pUniformEngine->SetCameraPerspective(fovy, aspect, zNear, zFar);
 }
 
 void CGfxEngine::SetOrtho(float left, float right, float bottom, float top, float zNear, float zFar)
 {
-	m_pUniformCamera->SetOrtho(left, right, bottom, top, zNear, zFar);
+	m_pUniformEngine->SetCameraOrtho(left, right, bottom, top, zNear, zFar);
 }
 
 void CGfxEngine::SetLookat(float eyex, float eyey, float eyez, float centerx, float centery, float centerz, float upx, float upy, float upz)
 {
-	m_pUniformCamera->SetLookat(eyex, eyey, eyez, centerx, centery, centerz, upx, upy, upz);
+	m_pUniformEngine->SetCameraLookat(eyex, eyey, eyez, centerx, centery, centerz, upx, upy, upz);
 }
 
 void CGfxEngine::SetShadowOrtho(float left, float right, float bottom, float top, float zNear, float zFar)
@@ -133,5 +128,4 @@ void CGfxEngine::SetFogDistanceDensity(float startDistance, float endDistance, f
 void CGfxEngine::Apply(void)
 {
 	m_pUniformEngine->Apply();
-	m_pUniformCamera->Apply();
 }
