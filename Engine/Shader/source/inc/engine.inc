@@ -96,14 +96,14 @@ layout (location = 13) in mediump vec4 inInstancePointLightAttenuation;
 	} engine
 
 USE_ENGINE_UNIFORM;
-#define cameraScreen camera.screen
-#define cameraZBuffer camera.cameraZBuffer
-#define cameraProjection camera.cameraProjection
-#define cameraProjectionMatrix camera.cameraProjectionMatrix
-#define cameraProjectionViewMatrix camera.cameraProjectionViewMatrix
-#define cameraViewMatrix camera.cameraViewMatrix
-#define cameraViewInverseMatrix camera.cameraViewInverseMatrix
-#define cameraViewInverseTransposeMatrix camera.cameraViewInverseTransposeMatrix
+#define cameraScreen engine.screen
+#define cameraZBuffer engine.cameraZBuffer
+#define cameraProjection engine.cameraProjection
+#define cameraProjectionMatrix engine.cameraProjectionMatrix
+#define cameraProjectionViewMatrix engine.cameraProjectionViewMatrix
+#define cameraViewMatrix engine.cameraViewMatrix
+#define cameraViewInverseMatrix engine.cameraViewInverseMatrix
+#define cameraViewInverseTransposeMatrix engine.cameraViewInverseTransposeMatrix
 
 #define shadowProjectionMatrix engine.shadowProjectionMatrix
 #define shadowProjectionViewMatrix engine.shadowProjectionViewMatrix
