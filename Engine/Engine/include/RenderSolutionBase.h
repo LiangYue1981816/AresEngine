@@ -70,6 +70,7 @@ public:
 
 	static void SetAmbientLightSH(float shRed[9], float shGreen[9], float shBlue[9]);
 	static void SetAmbientLightRotation(float angle, float axisx, float axisy, float axisz);
+	static void SetAmbientLightDirection(float dirx, float diry, float dirz);
 
 	static void SetMainPointLightColor(float red, float green, float blue);
 	static void SetMainPointLightPosition(float posx, float posy, float posz, float radius);

@@ -85,6 +85,11 @@ void CGfxEngine::SetAmbientLightRotation(float angle, float axisx, float axisy, 
 	m_pUniformEngine->SetAmbientLightRotation(angle, axisx, axisy, axisz);
 }
 
+void CGfxEngine::SetAmbientLightDirection(float dirx, float diry, float dirz)
+{
+	m_pUniformEngine->SetAmbientLightDirection(dirx, diry, dirz);
+}
+
 void CGfxEngine::SetMainPointLightColor(float red, float green, float blue)
 {
 	m_pUniformEngine->SetPointLightColor(red, green, blue);

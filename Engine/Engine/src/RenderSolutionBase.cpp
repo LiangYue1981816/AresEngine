@@ -152,6 +152,11 @@ void CRenderSolutionBase::SetAmbientLightRotation(float angle, float axisx, floa
 	m_pEngine->SetAmbientLightRotation(angle, axisx, axisy, axisz);
 }
 
+void CRenderSolutionBase::SetAmbientLightDirection(float dirx, float diry, float dirz)
+{
+	m_pEngine->SetAmbientLightDirection(dirx, diry, dirz);
+}
+
 void CRenderSolutionBase::SetMainPointLightColor(float red, float green, float blue)
 {
 	m_pEngine->SetMainPointLightColor(red, green, blue);
