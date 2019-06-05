@@ -49,16 +49,36 @@ CRenderSolutionBase::~CRenderSolutionBase(void)
 
 void CRenderSolutionBase::CreateInstance(void)
 {
-	m_pEngine = new CGfxEngine;
-	m_pMainCamera = new CGfxCamera;
-	m_pShadowCamera = new CGfxCamera;
+	if (m_pEngine == nullptr) {
+		m_pEngine = new CGfxEngine;
+	}
+
+	if (m_pMainCamera == nullptr) {
+		m_pMainCamera = new CGfxCamera;
+	}
+
+	if (m_pShadowCamera == nullptr) {
+		m_pShadowCamera = new CGfxCamera;
+	}
 }
 
 void CRenderSolutionBase::DestroyInstance(void)
 {
-	delete m_pEngine;
-	delete m_pMainCamera;
-	delete m_pShadowCamera;
+	if (m_pEngine) {
+		delete m_pEngine;
+	}
+
+	if (m_pMainCamera) {
+		delete m_pMainCamera;
+	}
+
+	if (m_pShadowCamera) {
+		delete m_pShadowCamera;
+	}
+
+	m_pEngine = nullptr;
+	m_pMainCamera = nullptr;
+	m_pShadowCamera = nullptr;
 }
 
 void CRenderSolutionBase::SetTime(float t, float dt)
