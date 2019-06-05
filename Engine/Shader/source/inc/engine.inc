@@ -46,7 +46,6 @@ layout (location = 13) in mediump vec4 inInstancePointLightAttenuation;
 #define DESCRIPTOR_SET_INPUTATTACHMENT(b) layout (set = 3, binding = b)
 
 #define DESCRIPTOR_BIND_ENGINE 0
-#define DESCRIPTOR_BIND_CAMERA 1
 
 
 #define USE_ENGINE_UNIFORM                                                         \
@@ -56,6 +55,15 @@ layout (location = 13) in mediump vec4 inInstancePointLightAttenuation;
 		mediump vec4 sinTime;                                                      \
 		mediump vec4 cosTime;                                                      \
 		mediump vec4 deltaTime;                                                    \
+		                                                                           \
+		mediump vec4 cameraScreen;                                                 \
+		mediump vec4 cameraZBuffer;                                                \
+		mediump vec4 cameraProjection;                                             \
+		mediump mat4 cameraProjectionMatrix;                                       \
+		mediump mat4 cameraProjectionViewMatrix;                                   \
+		mediump mat4 cameraViewMatrix;                                             \
+		mediump mat4 cameraViewInverseMatrix;                                      \
+		mediump mat4 cameraViewInverseTransposeMatrix;                             \
 		                                                                           \
 		highp mat4 shadowProjectionMatrix;                                         \
 		highp mat4 shadowProjectionViewMatrix;                                     \
@@ -86,22 +94,17 @@ layout (location = 13) in mediump vec4 inInstancePointLightAttenuation;
 		mediump vec4 fogHeightDensity;                                             \
 		mediump vec4 fogDistanceDensity;                                           \
 	} engine
-	
-#define USE_CAMERA_UNIFORM                                                         \
-	DESCRIPTOR_SET_ENGINE(DESCRIPTOR_BIND_CAMERA) uniform Camera                   \
-	{                                                                              \
-		highp vec4 screen;                                                         \
-		highp vec4 zbuffer;                                                        \
-		highp vec4 projection;                                                     \
-		                                                                           \
-		highp mat4 projectionMatrix;                                               \
-		highp mat4 projectionViewMatrix;                                           \
-		highp mat4 viewMatrix;                                                     \
-		highp mat4 viewInverseMatrix;                                              \
-		highp mat4 viewInverseTransposeMatrix;                                     \
-	} camera
 
 USE_ENGINE_UNIFORM;
+#define cameraScreen camera.screen
+#define cameraZBuffer camera.cameraZBuffer
+#define cameraProjection camera.cameraProjection
+#define cameraProjectionMatrix camera.cameraProjectionMatrix
+#define cameraProjectionViewMatrix camera.cameraProjectionViewMatrix
+#define cameraViewMatrix camera.cameraViewMatrix
+#define cameraViewInverseMatrix camera.cameraViewInverseMatrix
+#define cameraViewInverseTransposeMatrix camera.cameraViewInverseTransposeMatrix
+
 #define shadowProjectionMatrix engine.shadowProjectionMatrix
 #define shadowProjectionViewMatrix engine.shadowProjectionViewMatrix
 #define shadowViewMatrix engine.shadowViewMatrix
@@ -125,15 +128,5 @@ USE_ENGINE_UNIFORM;
 #define fogDistanceStart engine.fogDistanceDensity.x
 #define fogDistanceEnd engine.fogDistanceDensity.y
 #define fogDistanceDensity engine.fogDistanceDensity.z
-
-USE_CAMERA_UNIFORM;
-#define cameraScreen camera.screen
-#define cameraZBuffer camera.zbuffer
-#define cameraProjection camera.projection
-#define cameraProjectionMatrix camera.projectionMatrix
-#define cameraProjectionViewMatrix camera.projectionViewMatrix
-#define cameraViewMatrix camera.viewMatrix
-#define cameraViewInverseMatrix camera.viewInverseMatrix
-#define cameraViewInverseTransposeMatrix camera.viewInverseTransposeMatrix
 
 #endif
