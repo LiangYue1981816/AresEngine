@@ -76,13 +76,10 @@ void CVKTransferBuffer::Destroy(void)
 	ASSERT(m_vkBuffer);
 	ASSERT(m_vkCommandBuffer);
 
-	vkWaitForFences(m_pDevice->GetDevice(), 1, &m_vkFence, VK_TRUE, UINT64_MAX);
+	vkFreeCommandBuffers(m_pDevice->GetDevice(), m_vkCommandPool, 1, &m_vkCommandBuffer);
 	vkDestroyFence(m_pDevice->GetDevice(), m_vkFence, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
-
 	vkDestroyBuffer(m_pDevice->GetDevice(), m_vkBuffer, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
 	m_pDevice->GetMemoryManager()->FreeMemory(m_pMemory);
-
-	vkFreeCommandBuffers(m_pDevice->GetDevice(), m_vkCommandPool, 1, &m_vkCommandBuffer);
 
 	m_pMemory = nullptr;
 	m_vkBuffer = VK_NULL_HANDLE;
@@ -129,9 +126,8 @@ bool CVKTransferBuffer::TransferBufferData(CVKBuffer* pDstBuffer, VkAccessFlags 
 		CALL_BOOL_FUNCTION_RETURN_BOOL(pDstBuffer->PipelineBarrier(m_vkCommandBuffer, VK_ACCESS_TRANSFER_WRITE_BIT, dstAccessFlags, VK_PIPELINE_STAGE_TRANSFER_BIT, dstPipelineStageFlags, offset, size));
 	}
 	CALL_VK_FUNCTION_RETURN_BOOL(vkEndCommandBuffer(m_vkCommandBuffer));
-	CALL_VK_FUNCTION_RETURN_BOOL(vkWaitForFences(m_pDevice->GetDevice(), 1, &m_vkFence, VK_TRUE, UINT64_MAX));
-	CALL_VK_FUNCTION_RETURN_BOOL(vkResetFences(m_pDevice->GetDevice(), 1, &m_vkFence));
 	CALL_VK_FUNCTION_RETURN_BOOL(vkSubmitCommandBuffer(m_vkQueue, m_vkCommandBuffer, m_vkFence));
+	CALL_VK_FUNCTION_RETURN_BOOL(vkWaitForFences(m_pDevice->GetDevice(), 1, &m_vkFence, VK_TRUE, UINT64_MAX));
 
 	return true;
 }
@@ -170,9 +166,8 @@ bool CVKTransferBuffer::TransferTexture2DData(CVKTexture* pDstTexture, VkImageLa
 		CALL_BOOL_FUNCTION_RETURN_BOOL(pDstTexture->PipelineBarrier(m_vkCommandBuffer, dstImageLayout));
 	}
 	CALL_VK_FUNCTION_RETURN_BOOL(vkEndCommandBuffer(m_vkCommandBuffer));
-	CALL_VK_FUNCTION_RETURN_BOOL(vkWaitForFences(m_pDevice->GetDevice(), 1, &m_vkFence, VK_TRUE, UINT64_MAX));
-	CALL_VK_FUNCTION_RETURN_BOOL(vkResetFences(m_pDevice->GetDevice(), 1, &m_vkFence));
 	CALL_VK_FUNCTION_RETURN_BOOL(vkSubmitCommandBuffer(m_vkQueue, m_vkCommandBuffer, m_vkFence));
+	CALL_VK_FUNCTION_RETURN_BOOL(vkWaitForFences(m_pDevice->GetDevice(), 1, &m_vkFence, VK_TRUE, UINT64_MAX));
 
 	return true;
 }
@@ -211,9 +206,8 @@ bool CVKTransferBuffer::TransferTexture2DArrayData(CVKTexture* pDstTexture, VkIm
 		CALL_BOOL_FUNCTION_RETURN_BOOL(pDstTexture->PipelineBarrier(m_vkCommandBuffer, dstImageLayout));
 	}
 	CALL_VK_FUNCTION_RETURN_BOOL(vkEndCommandBuffer(m_vkCommandBuffer));
-	CALL_VK_FUNCTION_RETURN_BOOL(vkWaitForFences(m_pDevice->GetDevice(), 1, &m_vkFence, VK_TRUE, UINT64_MAX));
-	CALL_VK_FUNCTION_RETURN_BOOL(vkResetFences(m_pDevice->GetDevice(), 1, &m_vkFence));
 	CALL_VK_FUNCTION_RETURN_BOOL(vkSubmitCommandBuffer(m_vkQueue, m_vkCommandBuffer, m_vkFence));
+	CALL_VK_FUNCTION_RETURN_BOOL(vkWaitForFences(m_pDevice->GetDevice(), 1, &m_vkFence, VK_TRUE, UINT64_MAX));
 
 	return true;
 }
@@ -252,9 +246,8 @@ bool CVKTransferBuffer::TransferTextureCubemapData(CVKTexture* pDstTexture, VkIm
 		CALL_BOOL_FUNCTION_RETURN_BOOL(pDstTexture->PipelineBarrier(m_vkCommandBuffer, dstImageLayout));
 	}
 	CALL_VK_FUNCTION_RETURN_BOOL(vkEndCommandBuffer(m_vkCommandBuffer));
-	CALL_VK_FUNCTION_RETURN_BOOL(vkWaitForFences(m_pDevice->GetDevice(), 1, &m_vkFence, VK_TRUE, UINT64_MAX));
-	CALL_VK_FUNCTION_RETURN_BOOL(vkResetFences(m_pDevice->GetDevice(), 1, &m_vkFence));
 	CALL_VK_FUNCTION_RETURN_BOOL(vkSubmitCommandBuffer(m_vkQueue, m_vkCommandBuffer, m_vkFence));
+	CALL_VK_FUNCTION_RETURN_BOOL(vkWaitForFences(m_pDevice->GetDevice(), 1, &m_vkFence, VK_TRUE, UINT64_MAX));
 
 	return true;
 }
