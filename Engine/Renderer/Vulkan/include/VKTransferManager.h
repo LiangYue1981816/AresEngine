@@ -29,8 +29,7 @@ private:
 
 private:
 	pthread_mutex_t lock;
-	eastl::vector<CVKTransferBuffer*> m_pendingList;
-	eastl::unordered_map<VkDeviceSize, eastl::list<CVKTransferBuffer*>> m_freeLists;
+	eastl::unordered_map<VkDeviceSize, CVKTransferBuffer*> m_pTransferBuffers;
 
 private:
 	CVKDevice* m_pDevice;
