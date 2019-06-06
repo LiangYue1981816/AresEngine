@@ -41,6 +41,8 @@ CVKTransferBuffer* CVKTransferManager::AcquireTransferBuffer(size_t size)
 		ASSERT(m_vkQueue);
 		ASSERT(m_vkCommandPool);
 
+		size = ALIGN_BYTE(size, 4 * 1024 * 1024);
+
 		if (m_pTransferBuffers.find(size) == m_pTransferBuffers.end()) {
 			m_pTransferBuffers[size] = new CVKTransferBuffer(m_pDevice, m_vkQueue, m_vkCommandPool, size);
 		}
