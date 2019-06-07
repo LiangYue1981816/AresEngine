@@ -78,7 +78,6 @@ CVKMemory* CVKMemoryManager::AllocMemory(VkDeviceSize memorySize, VkDeviceSize m
 
 			VkDeviceSize memoryAllocatorSize = 0;
 			{
-				const VkDeviceSize MEMORY_POOL_ALIGNMENT = 8 * 1024 * 1024;
 				const VkDeviceSize MEMORY_POOL_DEVICE_LOCAL_MEMORY_SIZE = 32 * 1024 * 1024;
 				const VkDeviceSize MEMORY_POOL_HOST_VISIBLE_MEMORY_SIZE = 32 * 1024 * 1024;
 				const VkDeviceSize MEMORY_POOL_HOST_VISIBLE_AND_DEVICE_LOCAL_MEMORY_SIZE = 16 * 1024 * 1024;
@@ -96,8 +95,6 @@ CVKMemory* CVKMemoryManager::AllocMemory(VkDeviceSize memorySize, VkDeviceSize m
 				}
 
 				memoryAllocatorSize = std::max(memoryAllocatorSize, memorySize);
-				memoryAllocatorSize = ALIGN_BYTE(memoryAllocatorSize, MEMORY_POOL_ALIGNMENT);
-
 				memoryTypeIndex = GetMemoryTypeIndex(m_pDevice->GetPhysicalDeviceMemoryProperties(), memoryPropertyFlags, memoryAllocatorSize);
 				if (memoryTypeIndex == INVALID_VALUE) return nullptr;
 			}
