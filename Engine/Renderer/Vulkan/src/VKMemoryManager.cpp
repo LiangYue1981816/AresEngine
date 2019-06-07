@@ -24,14 +24,13 @@ CVKMemoryManager::~CVKMemoryManager(void)
 	pthread_mutex_destroy(&lock);
 }
 
-uint32_t CVKMemoryManager::GetMemoryTypeIndex(const VkPhysicalDeviceMemoryProperties& memoryProperties, VkFlags memoryTypeBits, VkMemoryPropertyFlags& memoryPropertyFlags, VkDeviceSize memorySize)
+uint32_t CVKMemoryManager::GetMemoryTypeIndex(const VkPhysicalDeviceMemoryProperties& memoryProperties, VkMemoryPropertyFlags& memoryPropertyFlags, VkDeviceSize memorySize)
 {
 	uint32_t indexTry = 0;
 
 	do {
 		for (uint32_t indexMemoryType = 0; indexMemoryType < memoryProperties.memoryTypeCount; indexMemoryType++) {
-			if ((memoryTypeBits & (1 << indexMemoryType)) &&
-				(memoryProperties.memoryTypes[indexMemoryType].propertyFlags & memoryPropertyFlags) == memoryPropertyFlags &&
+			if ((memoryProperties.memoryTypes[indexMemoryType].propertyFlags & memoryPropertyFlags) == memoryPropertyFlags &&
 				(memoryProperties.memoryHeaps[memoryProperties.memoryTypes[indexMemoryType].heapIndex].size * 80 / 100) > (m_allocatedMemoryHeapSize[memoryProperties.memoryTypes[indexMemoryType].heapIndex] + memorySize)) {
 				return indexMemoryType;
 			}
@@ -53,9 +52,9 @@ uint32_t CVKMemoryManager::GetMemoryTypeIndex(const VkPhysicalDeviceMemoryProper
 	} while (true);
 }
 
-CVKMemory* CVKMemoryManager::AllocMemory(VkDeviceSize memorySize, VkDeviceSize memoryAlignment, VkFlags memoryTypeBits, VkMemoryPropertyFlags memoryPropertyFlags)
+CVKMemory* CVKMemoryManager::AllocMemory(VkDeviceSize memorySize, VkDeviceSize memoryAlignment, VkMemoryPropertyFlags memoryPropertyFlags)
 {
-	uint32_t memoryTypeIndex = GetMemoryTypeIndex(m_pDevice->GetPhysicalDeviceMemoryProperties(), memoryTypeBits, memoryPropertyFlags, 0);
+	uint32_t memoryTypeIndex = GetMemoryTypeIndex(m_pDevice->GetPhysicalDeviceMemoryProperties(), memoryPropertyFlags, 0);
 	ASSERT(memoryTypeIndex != INVALID_VALUE);
 
 	mutex_autolock autolock(&lock);
@@ -95,7 +94,7 @@ CVKMemory* CVKMemoryManager::AllocMemory(VkDeviceSize memorySize, VkDeviceSize m
 				memoryAllocatorSize = std::max(memoryAllocatorSize, memorySize);
 				memoryAllocatorSize = ALIGN_BYTE(memoryAllocatorSize, MEMORY_POOL_ALIGNMENT);
 
-				memoryTypeIndex = GetMemoryTypeIndex(m_pDevice->GetPhysicalDeviceMemoryProperties(), memoryTypeBits, memoryPropertyFlags, memoryAllocatorSize);
+				memoryTypeIndex = GetMemoryTypeIndex(m_pDevice->GetPhysicalDeviceMemoryProperties(), memoryPropertyFlags, memoryAllocatorSize);
 				if (memoryTypeIndex == INVALID_VALUE) return nullptr;
 			}
 

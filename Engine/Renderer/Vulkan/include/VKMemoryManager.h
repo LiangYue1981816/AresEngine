@@ -15,10 +15,10 @@ private:
 
 
 private:
-	uint32_t GetMemoryTypeIndex(const VkPhysicalDeviceMemoryProperties& memoryProperties, VkFlags memoryTypeBits, VkMemoryPropertyFlags& memoryPropertyFlags, VkDeviceSize memorySize);
+	uint32_t GetMemoryTypeIndex(const VkPhysicalDeviceMemoryProperties& memoryProperties, VkMemoryPropertyFlags& memoryPropertyFlags, VkDeviceSize memorySize);
 
 public:
-	CVKMemory* AllocMemory(VkDeviceSize memorySize, VkDeviceSize memoryAlignment, VkFlags memoryTypeBits, VkMemoryPropertyFlags memoryPropertyFlags);
+	CVKMemory* AllocMemory(VkDeviceSize memorySize, VkDeviceSize memoryAlignment, VkMemoryPropertyFlags memoryPropertyFlags);
 	void FreeMemory(CVKMemory* pMemory);
 
 public:

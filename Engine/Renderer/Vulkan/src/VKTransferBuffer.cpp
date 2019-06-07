@@ -62,7 +62,7 @@ bool CVKTransferBuffer::Create(VkQueue vkQueue, VkCommandPool vkCommandPool, VkD
 	VkMemoryRequirements requirements;
 	vkGetBufferMemoryRequirements(m_pDevice->GetDevice(), m_vkBuffer, &requirements);
 
-	m_pMemory = m_pDevice->GetMemoryManager()->AllocMemory(requirements.size, requirements.alignment, requirements.memoryTypeBits, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT);
+	m_pMemory = m_pDevice->GetMemoryManager()->AllocMemory(requirements.size, requirements.alignment, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT);
 	if (m_pMemory == nullptr) { ASSERT(false); return false; }
 	if (m_pMemory->BindBuffer(m_vkBuffer) == false) { ASSERT(false); return false; }
 
