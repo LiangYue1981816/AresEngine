@@ -75,7 +75,6 @@ void CVKTransferBuffer::Destroy(void)
 	vkFreeCommandBuffers(m_pDevice->GetDevice(), m_vkCommandPool, 1, &m_vkCommandBuffer);
 	vkDestroyFence(m_pDevice->GetDevice(), m_vkFence, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
 	vkDestroyBuffer(m_pDevice->GetDevice(), m_vkBuffer, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
-	m_pDevice->GetMemoryManager()->FreeMemory(m_pMemory);
 
 	m_pMemory = nullptr;
 	m_vkBuffer = VK_NULL_HANDLE;
