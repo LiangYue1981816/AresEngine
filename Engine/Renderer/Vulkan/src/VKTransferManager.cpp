@@ -30,6 +30,10 @@ CVKTransferManager::~CVKTransferManager(void)
 		delete itTransferBuffer.second;
 	}
 
+	for (const auto& itMemory : m_pMemorys) {
+		m_pDevice->GetMemoryManager()->FreeMemory(itMemory.second);
+	}
+
 	vkDestroyCommandPool(m_pDevice->GetDevice(), m_vkCommandPool, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
 }
 

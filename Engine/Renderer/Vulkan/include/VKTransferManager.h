@@ -29,6 +29,7 @@ private:
 
 private:
 	pthread_mutex_t lock;
+	eastl::unordered_map<VkDeviceSize, CVKMemory*> m_pMemorys;
 	eastl::unordered_map<VkDeviceSize, CVKTransferBuffer*> m_pTransferBuffers;
 
 private:
