@@ -45,13 +45,18 @@ CVKTransferBuffer* CVKTransferManager::AcquireTransferBuffer(size_t size)
 		ASSERT(m_vkQueue);
 		ASSERT(m_vkCommandPool);
 
-		size = ALIGN_BYTE(size, 4 * 1024 * 1024);
+		VkDeviceSize bufferSize = size;
+		VkDeviceSize memorySize = ALIGN_BYTE(size, 4 * 1024 * 1024);
 
-		if (m_pTransferBuffers.find(size) == m_pTransferBuffers.end()) {
-			m_pTransferBuffers[size] = new CVKTransferBuffer(m_pDevice, m_vkQueue, m_vkCommandPool, size);
+		if (m_pMemorys.find(memorySize) == m_pMemorys.end()) {
+			m_pMemorys[memorySize] = m_pDevice->GetMemoryManager()->AllocMemory(memorySize, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT);
 		}
 
-		return m_pTransferBuffers[size];
+		if (m_pTransferBuffers.find(bufferSize) == m_pTransferBuffers.end()) {
+			m_pTransferBuffers[bufferSize] = new CVKTransferBuffer(m_pDevice, m_pMemorys[memorySize], m_vkQueue, m_vkCommandPool, bufferSize);
+		}
+
+		return m_pTransferBuffers[bufferSize];
 	}
 }
 
