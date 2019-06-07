@@ -1,9 +1,9 @@
 #include "VKRenderer.h"
 
 
-CVKTransferBuffer::CVKTransferBuffer(CVKDevice* pDevice, VkQueue vkQueue, VkCommandPool vkCommandPool, VkDeviceSize size)
+CVKTransferBuffer::CVKTransferBuffer(CVKDevice* pDevice, CVKMemory* pMemory, VkQueue vkQueue, VkCommandPool vkCommandPool, VkDeviceSize size)
 	: m_pDevice(pDevice)
-	, m_pMemory(nullptr)
+	, m_pMemory(pMemory)
 
 	, m_vkBuffer(VK_NULL_HANDLE)
 	, m_vkSize(0)
@@ -59,12 +59,8 @@ bool CVKTransferBuffer::Create(VkQueue vkQueue, VkCommandPool vkCommandPool, VkD
 	bufferCreateInfo.pQueueFamilyIndices = nullptr;
 	CALL_VK_FUNCTION_RETURN_BOOL(vkCreateBuffer(m_pDevice->GetDevice(), &bufferCreateInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkBuffer));
 
-	VkMemoryRequirements requirements;
-	vkGetBufferMemoryRequirements(m_pDevice->GetDevice(), m_vkBuffer, &requirements);
-
-	m_pMemory = m_pDevice->GetMemoryManager()->AllocMemory(requirements.size, requirements.alignment, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT);
-	if (m_pMemory == nullptr) { ASSERT(false); return false; }
-	if (m_pMemory->BindBuffer(m_vkBuffer) == false) { ASSERT(false); return false; }
+	ASSERT(m_pMemory);
+	CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->BindBuffer(m_vkBuffer));
 
 	return true;
 }
