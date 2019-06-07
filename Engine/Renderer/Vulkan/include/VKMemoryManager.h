@@ -18,6 +18,7 @@ private:
 	uint32_t GetMemoryTypeIndex(const VkPhysicalDeviceMemoryProperties& memoryProperties, VkMemoryPropertyFlags& memoryPropertyFlags, VkDeviceSize memorySize);
 
 public:
+	CVKMemory* AllocMemory(VkDeviceSize memorySize, VkMemoryPropertyFlags memoryPropertyFlags);
 	CVKMemory* AllocMemory(VkDeviceSize memorySize, VkDeviceSize memoryAlignment, VkMemoryPropertyFlags memoryPropertyFlags);
 	void FreeMemory(CVKMemory* pMemory);
 

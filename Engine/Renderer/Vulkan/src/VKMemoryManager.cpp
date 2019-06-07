@@ -52,6 +52,11 @@ uint32_t CVKMemoryManager::GetMemoryTypeIndex(const VkPhysicalDeviceMemoryProper
 	} while (true);
 }
 
+CVKMemory* CVKMemoryManager::AllocMemory(VkDeviceSize memorySize, VkMemoryPropertyFlags memoryPropertyFlags)
+{
+	return AllocMemory(memorySize, 1, memoryPropertyFlags);
+}
+
 CVKMemory* CVKMemoryManager::AllocMemory(VkDeviceSize memorySize, VkDeviceSize memoryAlignment, VkMemoryPropertyFlags memoryPropertyFlags)
 {
 	uint32_t memoryTypeIndex = GetMemoryTypeIndex(m_pDevice->GetPhysicalDeviceMemoryProperties(), memoryPropertyFlags, 0);
