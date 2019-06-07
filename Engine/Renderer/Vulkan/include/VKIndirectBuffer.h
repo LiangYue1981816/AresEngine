@@ -26,6 +26,7 @@ public:
 
 
 private:
+	uint32_t m_size;
 	eastl::vector<DrawCommand> m_draws;
 
 private:
