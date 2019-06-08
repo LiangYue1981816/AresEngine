@@ -18,13 +18,13 @@ VkDeviceSize mem_node::offset(void)
 }
 
 
-CVKMemory::CVKMemory(CVKDevice* pDevice, CVKMemoryAllocator* pAllocator, VkDeviceSize memorySize, VkDeviceSize memoryOffset, VkDeviceSize memoryAlignmentOffset)
+CVKMemory::CVKMemory(CVKDevice* pDevice, CVKMemoryAllocator* pAllocator, VkDeviceSize memorySize, VkDeviceSize memoryOffset, VkDeviceSize memoryPadding)
 	: m_pDevice(pDevice)
 	, m_pAllocator(pAllocator)
 
 	, m_memorySize(memorySize)
 	, m_memoryOffset(memoryOffset)
-	, m_memoryAlignmentOffset(memoryAlignmentOffset)
+	, m_memoryPadding(memoryPadding)
 
 	, bInUse(false)
 
