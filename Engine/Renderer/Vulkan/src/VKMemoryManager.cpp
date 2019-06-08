@@ -62,6 +62,9 @@ CVKMemory* CVKMemoryManager::AllocMemory(VkDeviceSize memorySize, VkDeviceSize m
 
 	mutex_autolock autolock(&lock);
 	{
+		memoryAlignment = ALIGN_BYTE(memoryAlignment, 256); // The min alignment size is 256B
+		memorySize = ALIGN_BYTE(memorySize, memoryAlignment);
+
 		do {
 			if (CVKMemoryAllocator* pAllocator = m_pAllocatorListHeads[memoryTypeIndex]) {
 				do {
