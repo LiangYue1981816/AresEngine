@@ -263,6 +263,34 @@ CVKMemory* CVKMemoryAllocator::MergeMemory(CVKMemory* pMemory, CVKMemory* pMemor
 	return pMemory;
 }
 
+bool IsNeedCheckAliasing(VkResourceType prevType, VkResourceType currType)
+{
+	if (prevType == VK_RESOURCE_TYPE_UNKNOW || currType == VK_RESOURCE_TYPE_UNKNOW) {
+		return true;
+	}
+
+	if (prevType == VK_RESOURCE_TYPE_BUFFER && currType == VK_RESOURCE_TYPE_IMAGE_OPTIMAL) {
+		return true;
+	}
+
+	if (prevType == VK_RESOURCE_TYPE_IMAGE_LINEAR && currType == VK_RESOURCE_TYPE_IMAGE_OPTIMAL) {
+		return true;
+	}
+
+	return false;
+}
+
+bool IsMemoryAliasing(VkDeviceSize prevResourceOffset, VkDeviceSize prevResourceSize, VkDeviceSize currResourceOffset, VkDeviceSize bufferImageGranularity)
+{
+	// http://vulkan-spec-chunked.ahcox.com/ch11s06.html
+
+	VkDeviceSize prevResourceEnd = prevResourceOffset + prevResourceSize - 1;
+	VkDeviceSize prevResourceEndPage = prevResourceEnd & ~(bufferImageGranularity - 1);
+	VkDeviceSize currResourceStart = currResourceOffset;
+	VkDeviceSize currResourceStartPage = currResourceStart & ~(bufferImageGranularity - 1);
+	return prevResourceEndPage < currResourceStartPage;
+}
+
 CVKMemory* CVKMemoryAllocator::SearchMemory(VkDeviceSize size, VkDeviceSize alignment, VkResourceType type) const
 {
 	mem_node* pMemoryNode = nullptr;
