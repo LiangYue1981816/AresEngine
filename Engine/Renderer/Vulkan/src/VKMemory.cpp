@@ -1,6 +1,23 @@
 #include "VKRenderer.h"
 
 
+mem_node::mem_node(CVKMemory* pFreeMemory)
+{
+	pMemory = pFreeMemory;
+	pMemory->pMemoryNode = this;
+}
+
+VkDeviceSize mem_node::size(void)
+{
+	return pMemory->GetSize();
+}
+
+VkDeviceSize mem_node::offset(void)
+{
+	return pMemory->GetOffset();
+}
+
+
 CVKMemory::CVKMemory(CVKDevice* pDevice, CVKMemoryAllocator* pAllocator, VkDeviceSize memorySize, VkDeviceSize memoryOffset)
 	: m_pDevice(pDevice)
 	, m_pAllocator(pAllocator)
@@ -12,6 +29,8 @@ CVKMemory::CVKMemory(CVKDevice* pDevice, CVKMemoryAllocator* pAllocator, VkDevic
 
 	, pNext(nullptr)
 	, pPrev(nullptr)
+
+	, pMemoryNode(nullptr)
 {
 
 }

@@ -10,18 +10,6 @@ class CVKMemoryAllocator
 
 
 private:
-	typedef struct mem_node {
-		mem_node(CVKMemory* pFreeMemory)
-		{
-			pMemory = pFreeMemory;
-		}
-
-		rb_node node;
-		CVKMemory* pMemory;
-	} mem_node;
-
-
-private:
 	CVKMemoryAllocator(CVKDevice* pDevice, uint32_t memoryTypeIndex, VkDeviceSize memorySize);
 	virtual ~CVKMemoryAllocator(void);
 
