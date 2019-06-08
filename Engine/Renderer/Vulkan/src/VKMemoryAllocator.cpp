@@ -208,7 +208,7 @@ void CVKMemoryAllocator::InsertMemory(CVKMemory* pMemory)
 
 		parent = *node;
 
-		if (pMemoryNode->size() >= pMemoryNodeCur->size()) {
+		if (pMemoryNodeCur->size() < pMemoryNode->size()) {
 			node = &(*node)->rb_right;
 			continue;
 		}
@@ -260,14 +260,14 @@ CVKMemory* CVKMemoryAllocator::SearchMemory(VkDeviceSize size, VkDeviceSize alig
 	while (node) {
 		mem_node* pMemoryNodeCur = container_of(node, mem_node, node);
 
-		if (size > pMemoryNodeCur->size()) {
+		if (pMemoryNodeCur->size() < size) {
 			node = node->rb_right;
 			continue;
 		}
 
 		pMemoryNode = pMemoryNodeCur;
 
-		if (size < pMemoryNodeCur->size()) {
+		if (pMemoryNodeCur->size() > size) {
 			node = node->rb_left;
 			continue;
 		}
