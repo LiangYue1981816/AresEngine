@@ -78,7 +78,7 @@ private:
 	CVKDevice* m_pDevice;
 
 private:
-	bool bInUse;
+	VkResourceType type;
 
 	CVKMemory* pNext;
 	CVKMemory* pPrev;

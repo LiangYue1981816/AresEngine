@@ -21,7 +21,7 @@ CVKMemory::CVKMemory(CVKDevice* pDevice, CVKMemoryAllocator* pAllocator, VkDevic
 	, m_memoryOffset(memoryOffset)
 	, m_memoryPadding(0)
 
-	, bInUse(false)
+	, type(VK_RESOURCE_TYPE_FREE)
 
 	, pNext(nullptr)
 	, pPrev(nullptr)
