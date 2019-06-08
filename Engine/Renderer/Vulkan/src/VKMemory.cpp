@@ -48,12 +48,12 @@ CVKMemoryAllocator* CVKMemory::GetAllocator(void) const
 
 VkDeviceSize CVKMemory::GetSize(void) const
 {
-	return m_memorySize;
+	return m_memorySize - m_memoryPadding;
 }
 
 VkDeviceSize CVKMemory::GetOffset(void) const
 {
-	return m_memoryOffset;
+	return m_memoryOffset + m_memoryPadding;
 }
 
 bool CVKMemory::BindImage(VkImage vkImage) const
@@ -63,10 +63,10 @@ bool CVKMemory::BindImage(VkImage vkImage) const
 	VkMemoryRequirements requirements;
 	vkGetImageMemoryRequirements(m_pDevice->GetDevice(), vkImage, &requirements);
 
-	ASSERT(m_memorySize >= requirements.size);
-	ASSERT(m_memoryOffset == ALIGN_BYTE(m_memoryOffset, requirements.alignment));
+	ASSERT(m_memorySize - m_memoryPadding >= requirements.size);
+	ASSERT(m_memoryOffset + m_memoryPadding == ALIGN_BYTE(m_memoryOffset + m_memoryPadding, requirements.alignment));
 
-	CALL_VK_FUNCTION_RETURN_BOOL(vkBindImageMemory(m_pDevice->GetDevice(), vkImage, m_pAllocator->GetMemory(), m_memoryOffset));
+	CALL_VK_FUNCTION_RETURN_BOOL(vkBindImageMemory(m_pDevice->GetDevice(), vkImage, m_pAllocator->GetMemory(), m_memoryOffset + m_memoryPadding));
 	return true;
 }
 
@@ -77,10 +77,10 @@ bool CVKMemory::BindBuffer(VkBuffer vkBuffer) const
 	VkMemoryRequirements requirements;
 	vkGetBufferMemoryRequirements(m_pDevice->GetDevice(), vkBuffer, &requirements);
 
-	ASSERT(m_memorySize >= requirements.size);
-	ASSERT(m_memoryOffset == ALIGN_BYTE(m_memoryOffset, requirements.alignment));
+	ASSERT(m_memorySize - m_memoryPadding >= requirements.size);
+	ASSERT(m_memoryOffset + m_memoryPadding == ALIGN_BYTE(m_memoryOffset + m_memoryPadding, requirements.alignment));
 
-	CALL_VK_FUNCTION_RETURN_BOOL(vkBindBufferMemory(m_pDevice->GetDevice(), vkBuffer, m_pAllocator->GetMemory(), m_memoryOffset));
+	CALL_VK_FUNCTION_RETURN_BOOL(vkBindBufferMemory(m_pDevice->GetDevice(), vkBuffer, m_pAllocator->GetMemory(), m_memoryOffset + m_memoryPadding));
 	return true;
 }
 
@@ -97,9 +97,9 @@ bool CVKMemory::CopyData(VkDeviceSize offset, VkDeviceSize size, const void* dat
 
 	ASSERT(data);
 	ASSERT(size);
-	ASSERT(m_memorySize >= offset + size);
+	ASSERT(m_memorySize - m_memoryPadding >= offset + size);
 
-	memcpy((uint8_t*)m_pAllocator->GetMemoryAddress() + m_memoryOffset + offset, data, size);
+	memcpy((uint8_t*)m_pAllocator->GetMemoryAddress() + m_memoryOffset + m_memoryPadding + offset, data, size);
 	return true;
 }
 
@@ -113,8 +113,8 @@ bool CVKMemory::EndMap(void)
 	range.sType = VK_STRUCTURE_TYPE_MAPPED_MEMORY_RANGE;
 	range.pNext = nullptr;
 	range.memory = m_pAllocator->GetMemory();
-	range.offset = m_memoryOffset;
-	range.size = m_memorySize;
+	range.offset = m_memoryOffset + m_memoryPadding;
+	range.size = m_memorySize - m_memoryPadding;
 	vkFlushMappedMemoryRanges(m_pDevice->GetDevice(), 1, &range);
 
 	return true;
