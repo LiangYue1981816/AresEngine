@@ -3,6 +3,13 @@
 #include "VKRenderer.h"
 
 
+typedef enum VkResourceType {
+	VK_RESOURCE_TYPE_FREE = 0,
+	VK_RESOURCE_TYPE_BUFFER,
+	VK_RESOURCE_TYPE_IMAGE_LINEAR,
+	VK_RESOURCE_TYPE_IMAGE_OPTIMAL,
+} VkResourceType;
+
 typedef struct mem_node {
 	mem_node(CVKMemory* pFreeMemory);
 	~mem_node(void);
