@@ -22,12 +22,12 @@ private:
 
 
 private:
-	CVKMemoryAllocator(CVKDevice* pDevice, uint32_t memoryTypeIndex, VkDeviceSize memorySize, VkDeviceSize memoryAlignment);
+	CVKMemoryAllocator(CVKDevice* pDevice, uint32_t memoryTypeIndex, VkDeviceSize memorySize);
 	virtual ~CVKMemoryAllocator(void);
 
 
 private:
-	bool Create(uint32_t memoryTypeIndex, VkDeviceSize memorySize, VkDeviceSize memoryAlignment);
+	bool Create(uint32_t memoryTypeIndex, VkDeviceSize memorySize);
 	void Destroy(void);
 
 private:
@@ -36,7 +36,6 @@ private:
 
 	VkDeviceSize GetFreeSize(void) const;
 	VkDeviceSize GetFullSize(void) const;
-	VkDeviceSize GetAlignment(void) const;
 
 	uint32_t GetMemoryTypeIndex(void) const;
 	VkMemoryPropertyFlags GetMemoryPropertyFlags(void) const;
@@ -72,7 +71,6 @@ private:
 
 	VkDeviceSize m_memoryFreeSize;
 	VkDeviceSize m_memoryFullSize;
-	VkDeviceSize m_memoryAlignment;
 
 	uint32_t m_memoryTypeIndex;
 	VkMemoryPropertyFlags m_memoryPropertyFlags;
