@@ -105,22 +105,23 @@ VkMemoryPropertyFlags CVKMemoryAllocator::GetMemoryPropertyFlags(void) const
 
 CVKMemory* CVKMemoryAllocator::AllocMemory(VkDeviceSize size, VkDeviceSize alignment)
 {
-	/*
 	//  Memory Pool
 	//
 	//
 	//             Memory Handle 
-	//             |                      Memory Size                      |
-	//  -------------------------------------------------------------------
-	// |           |                    |                     |            |
-	// |    ...    |    Request Size    |   New Memory Size   |     ...    |
-	// |___________|____________________|_____________________|____________|
-	//             |                    |                     |
-	//             Offset               |                     Next Memory Handle
-	//             |                    New Memory Handle
+	//             |                         Memory Size                         |
+	//  -------------------------------------------------------------------------
+	// |           |         |                |                     |            |
+	// |    ...    | Padding |  Request Size  |   New Memory Size   |     ...    |
+	// |___________|_________|________________|_____________________|____________|
+	//             |         |                |                     |
+	//             Offset    |                |                     Next Memory Handle
+	//             |         |                New Memory Handle
+	//             |         Alignment Offset
+	//             |
 	//             Allocated Memory Handle
 	ASSERT(m_vkMemory);
-
+	/*
 	VkDeviceSize requestSize = ALIGN_BYTE(size, m_memoryAlignment);
 
 	if (m_memoryFreeSize >= requestSize) {
