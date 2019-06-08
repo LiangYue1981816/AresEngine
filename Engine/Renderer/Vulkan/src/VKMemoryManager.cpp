@@ -9,15 +9,13 @@ CVKMemoryManager::CVKMemoryManager(CVKDevice* pDevice)
 
 CVKMemoryManager::~CVKMemoryManager(void)
 {
-	for (const auto& itAligmentAllocator : m_pAllocatorListHeads) {
-		for (const auto& itTypeAllocator : itAligmentAllocator.second) {
-			if (CVKMemoryAllocator* pAllocator = itTypeAllocator.second) {
-				CVKMemoryAllocator* pAllocatorNext = nullptr;
-				do {
-					pAllocatorNext = pAllocator->pNext;
-					delete pAllocator;
-				} while ((pAllocator = pAllocatorNext) != nullptr);
-			}
+	for (const auto& itAllocator : m_pAllocatorListHeads) {
+		if (CVKMemoryAllocator* pAllocator = itAllocator.second) {
+			CVKMemoryAllocator* pAllocatorNext = nullptr;
+			do {
+				pAllocatorNext = pAllocator->pNext;
+				delete pAllocator;
+			} while ((pAllocator = pAllocatorNext) != nullptr);
 		}
 	}
 
@@ -64,13 +62,10 @@ CVKMemory* CVKMemoryManager::AllocMemory(VkDeviceSize memorySize, VkDeviceSize m
 
 	mutex_autolock autolock(&lock);
 	{
-		memoryAlignment = ALIGN_BYTE(memoryAlignment, 256); // The min alignment size is 256B
-		memorySize = ALIGN_BYTE(memorySize, memoryAlignment);
-
 		do {
-			if (CVKMemoryAllocator* pAllocator = m_pAllocatorListHeads[memoryAlignment][memoryTypeIndex]) {
+			if (CVKMemoryAllocator* pAllocator = m_pAllocatorListHeads[memoryTypeIndex]) {
 				do {
-					if (CVKMemory* pMemory = pAllocator->AllocMemory(memorySize)) {
+					if (CVKMemory* pMemory = pAllocator->AllocMemory(memorySize, memoryAlignment)) {
 						return pMemory;
 					}
 				} while ((pAllocator = pAllocator->pNext) != nullptr);
@@ -99,14 +94,14 @@ CVKMemory* CVKMemoryManager::AllocMemory(VkDeviceSize memorySize, VkDeviceSize m
 				if (memoryTypeIndex == INVALID_VALUE) return nullptr;
 			}
 
-			CVKMemoryAllocator* pAllocator = new CVKMemoryAllocator(m_pDevice, memoryTypeIndex, memoryAllocatorSize, memoryAlignment);
+			CVKMemoryAllocator* pAllocator = new CVKMemoryAllocator(m_pDevice, memoryTypeIndex, memoryAllocatorSize);
 			{
-				if (m_pAllocatorListHeads[memoryAlignment][memoryTypeIndex]) {
-					m_pAllocatorListHeads[memoryAlignment][memoryTypeIndex]->pPrev = pAllocator;
-					pAllocator->pNext = m_pAllocatorListHeads[memoryAlignment][memoryTypeIndex];
+				if (m_pAllocatorListHeads[memoryTypeIndex]) {
+					m_pAllocatorListHeads[memoryTypeIndex]->pPrev = pAllocator;
+					pAllocator->pNext = m_pAllocatorListHeads[memoryTypeIndex];
 				}
 
-				m_pAllocatorListHeads[memoryAlignment][memoryTypeIndex] = pAllocator;
+				m_pAllocatorListHeads[memoryTypeIndex] = pAllocator;
 			}
 			m_allocatedMemoryHeapSize[m_pDevice->GetPhysicalDeviceMemoryProperties().memoryTypes[memoryTypeIndex].heapIndex] += pAllocator->GetFullSize();
 		} while (true);
@@ -126,13 +121,12 @@ void CVKMemoryManager::FreeMemory(CVKMemory* pMemory)
 		pAllocator->FreeMemory(pMemory);
 
 		if (pAllocator->GetFreeSize() == pAllocator->GetFullSize()) {
-			uint32_t memoryAlignment = pAllocator->GetAlignment();
 			uint32_t memoryTypeIndex = pAllocator->GetMemoryTypeIndex();
 
 			m_allocatedMemoryHeapSize[m_pDevice->GetPhysicalDeviceMemoryProperties().memoryTypes[memoryTypeIndex].heapIndex] -= pAllocator->GetFullSize();
 			{
-				if (m_pAllocatorListHeads[memoryAlignment][memoryTypeIndex] == pAllocator) {
-					m_pAllocatorListHeads[memoryAlignment][memoryTypeIndex] = pAllocator->pNext;
+				if (m_pAllocatorListHeads[memoryTypeIndex] == pAllocator) {
+					m_pAllocatorListHeads[memoryTypeIndex] = pAllocator->pNext;
 				}
 
 				if (pAllocator->pPrev) {
@@ -154,21 +148,18 @@ void CVKMemoryManager::Log(void)
 	{
 		LogOutput(LOG_TAG_RENDERER, "MemoryManager:\n");
 
-		for (const auto& itAligmentAllocator : m_pAllocatorListHeads) {
-			for (const auto& itTypeAllocator : itAligmentAllocator.second) {
-				if (CVKMemoryAllocator* pAllocator = itTypeAllocator.second) {
-					do {
-						LogOutput(LOG_TAG_RENDERER, "\tAllocator: type=%d alignment=%d free=%d full=%d device_local=%s host_visible=%s host_coherent=%s host_cached=%s\n",
-							pAllocator->GetMemoryTypeIndex(),
-							pAllocator->GetAlignment(),
-							pAllocator->GetFreeSize(),
-							pAllocator->GetFullSize(),
-							pAllocator->IsDeviceLocal() ? "true" : "false",
-							pAllocator->IsHostVisible() ? "true" : "false",
-							pAllocator->IsHostCoherent() ? "true" : "false",
-							pAllocator->IsHostCached() ? "true" : "false");
-					} while ((pAllocator = pAllocator->pNext) != nullptr);
-				}
+		for (const auto& itAllocator : m_pAllocatorListHeads) {
+			if (CVKMemoryAllocator* pAllocator = itAllocator.second) {
+				do {
+					LogOutput(LOG_TAG_RENDERER, "\tAllocator: type=%d free=%d full=%d device_local=%s host_visible=%s host_coherent=%s host_cached=%s\n",
+						pAllocator->GetMemoryTypeIndex(),
+						pAllocator->GetFreeSize(),
+						pAllocator->GetFullSize(),
+						pAllocator->IsDeviceLocal() ? "true" : "false",
+						pAllocator->IsHostVisible() ? "true" : "false",
+						pAllocator->IsHostCoherent() ? "true" : "false",
+						pAllocator->IsHostCached() ? "true" : "false");
+				} while ((pAllocator = pAllocator->pNext) != nullptr);
 			}
 		}
 	}
