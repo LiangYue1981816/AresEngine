@@ -185,8 +185,8 @@ void CVKMemoryAllocator::InitNodes(void)
 void CVKMemoryAllocator::FreeNodes(void)
 {
 	for (const auto& itNode : m_nodes) {
-		delete itNode.second->pMemory;
-		delete itNode.second;
+		delete itNode.first->pMemory;
+		delete itNode.first;
 	}
 
 	m_root = RB_ROOT;
@@ -221,6 +221,8 @@ void CVKMemoryAllocator::InsertMemory(CVKMemory* pMemory)
 	rb_init_node(&pMemoryNode->node);
 	rb_link_node(&pMemoryNode->node, parent, node);
 	rb_insert_color(&pMemoryNode->node, &m_root);
+
+	m_nodes[pMemoryNode] = pMemoryNode->size();
 }
 
 void CVKMemoryAllocator::RemoveMemory(CVKMemory* pMemory)
