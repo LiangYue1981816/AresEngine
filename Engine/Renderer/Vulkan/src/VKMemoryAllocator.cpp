@@ -4,8 +4,6 @@
 CVKMemoryAllocator::CVKMemoryAllocator(CVKDevice* pDevice, uint32_t memoryTypeIndex, VkDeviceSize memorySize)
 	: m_pDevice(pDevice)
 
-	, m_root{ nullptr }
-
 	, m_pMemoryAddress(nullptr)
 	, m_vkMemory(VK_NULL_HANDLE)
 
@@ -191,7 +189,7 @@ void CVKMemoryAllocator::FreeNodes(void)
 		delete itNode.second;
 	}
 
-	m_root = { nullptr };
+	m_root = RB_ROOT;
 	m_nodes.clear();
 }
 
