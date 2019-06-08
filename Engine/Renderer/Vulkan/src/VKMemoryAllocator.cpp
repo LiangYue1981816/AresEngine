@@ -45,7 +45,7 @@ bool CVKMemoryAllocator::Create(uint32_t memoryTypeIndex, VkDeviceSize memorySiz
 	}
 
 	InitNodes();
-	InsertMemory(new CVKMemory(m_pDevice, this, memorySize, 0));
+	InsertMemory(new CVKMemory(m_pDevice, this, memorySize, 0, 0));
 
 	return true;
 }
