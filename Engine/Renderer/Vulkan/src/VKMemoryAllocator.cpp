@@ -195,6 +195,9 @@ void CVKMemoryAllocator::FreeNodes(void)
 
 void CVKMemoryAllocator::InsertMemory(CVKMemory* pMemory)
 {
+	ASSERT(pMemory);
+	ASSERT(pMemory->pMemoryNode == nullptr);
+
 	mem_node* pMemoryNode = new mem_node(pMemory);
 
 	rb_node*  parent = nullptr;
@@ -222,31 +225,14 @@ void CVKMemoryAllocator::InsertMemory(CVKMemory* pMemory)
 
 void CVKMemoryAllocator::RemoveMemory(CVKMemory* pMemory)
 {
-	/*
-	uint32_t indexNode = NODE_INDEX(pMemory->m_memorySize);
+	ASSERT(pMemory);
+	ASSERT(pMemory->pMemoryNode);
 
-	mem_node* pMemoryNode = m_nodes[indexNode];
-	ASSERT(pMemoryNode->size == pMemory->m_memorySize);
+	rb_erase(&pMemory->pMemoryNode->node, &m_root);
+	m_nodes.erase(pMemory->pMemoryNode);
 
-	if (pMemory->pFreeNext) {
-		pMemory->pFreeNext->pFreePrev = pMemory->pFreePrev;
-	}
-
-	if (pMemory->pFreePrev) {
-		pMemory->pFreePrev->pFreeNext = pMemory->pFreeNext;
-	}
-
-	if (pMemoryNode->pListHead == pMemory) {
-		pMemoryNode->pListHead = pMemory->pFreeNext;
-	}
-
-	if (pMemoryNode->pListHead == nullptr) {
-		rb_erase(&pMemoryNode->node, &m_root);
-		delete pMemoryNode;
-
-		m_nodes[indexNode] = nullptr;
-	}
-	*/
+	delete pMemory->pMemoryNode;
+	pMemory->pMemoryNode = nullptr;
 }
 
 CVKMemory* CVKMemoryAllocator::MergeMemory(CVKMemory* pMemory, CVKMemory* pMemoryNext)
