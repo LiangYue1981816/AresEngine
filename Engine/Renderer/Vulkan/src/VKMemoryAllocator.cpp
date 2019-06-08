@@ -205,7 +205,7 @@ void CVKMemoryAllocator::InsertMemory(CVKMemory* pMemory)
 
 		parent = *node;
 
-		if (pMemoryNode->pMemory->GetSize() >= pMemoryNodeCur->pMemory->GetSize()) {
+		if (pMemoryNode->size() >= pMemoryNodeCur->size()) {
 			node = &(*node)->rb_right;
 			continue;
 		}
