@@ -121,6 +121,18 @@ CVKMemory* CVKMemoryAllocator::AllocMemory(VkDeviceSize size, VkDeviceSize align
 	//             |
 	//             Allocated Memory Handle
 	ASSERT(m_vkMemory);
+
+	if (m_memoryFreeSize >= size) {
+		if (CVKMemory* pMemory = SearchMemory(size, alignment)) {
+			RemoveMemory(pMemory);
+
+			VkDeviceSize alignmentOffset = ALIGN_BYTE(pMemory->m_memoryOffset, alignment);
+			VkDeviceSize padding = alignmentOffset - pMemory->m_memoryOffset;
+			pMemory->m_memoryPadding = padding;
+		}
+	}
+
+	return nullptr;
 	/*
 	VkDeviceSize requestSize = ALIGN_BYTE(size, m_memoryAlignment);
 
@@ -154,7 +166,6 @@ CVKMemory* CVKMemoryAllocator::AllocMemory(VkDeviceSize size, VkDeviceSize align
 
 	return nullptr;
 	*/
-	return nullptr;
 }
 
 void CVKMemoryAllocator::FreeMemory(CVKMemory* pMemory)
@@ -275,16 +286,16 @@ CVKMemory* CVKMemoryAllocator::SearchMemory(VkDeviceSize size, VkDeviceSize alig
 		//           AlignmentOffset
 
 		VkDeviceSize alignmentOffset = ALIGN_BYTE(pMemoryNodeCur->offset(), alignment);
-		VkDeviceSize paddingOffset = alignmentOffset - pMemoryNodeCur->offset();
+		VkDeviceSize padding = alignmentOffset - pMemoryNodeCur->offset();
 
-		if (pMemoryNodeCur->size() - paddingOffset < size) {
+		if (pMemoryNodeCur->size() - padding < size) {
 			node = node->rb_right;
 			continue;
 		}
 
 		pMemoryNode = pMemoryNodeCur;
 
-		if (pMemoryNodeCur->size() - paddingOffset > size) {
+		if (pMemoryNodeCur->size() - padding > size) {
 			node = node->rb_left;
 			continue;
 		}

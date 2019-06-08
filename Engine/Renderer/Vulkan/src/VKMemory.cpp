@@ -9,12 +9,12 @@ mem_node::mem_node(CVKMemory* pFreeMemory)
 
 VkDeviceSize mem_node::size(void)
 {
-	return pMemory->GetSize();
+	return pMemory->m_memorySize;
 }
 
 VkDeviceSize mem_node::offset(void)
 {
-	return pMemory->GetOffset();
+	return pMemory->m_memoryOffset;
 }
 
 
