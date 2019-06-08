@@ -21,7 +21,7 @@ class CVKMemory
 
 
 private:
-	CVKMemory(CVKDevice* pDevice, CVKMemoryAllocator* pAllocator, VkDeviceSize memorySize, VkDeviceSize memoryOffset);
+	CVKMemory(CVKDevice* pDevice, CVKMemoryAllocator* pAllocator, VkDeviceSize memorySize, VkDeviceSize memoryOffset, VkDeviceSize memoryAlignmentOffset);
 	virtual ~CVKMemory(void);
 
 
@@ -52,6 +52,7 @@ public:
 private:
 	VkDeviceSize m_memorySize;
 	VkDeviceSize m_memoryOffset;
+	VkDeviceSize m_memoryAlignmentOffset;
 
 private:
 	CVKMemoryAllocator* m_pAllocator;
