@@ -64,7 +64,7 @@ private:
 
 private:
 	rb_root m_root;
-	mem_node** m_nodes;
+	eastl::unordered_map<mem_node*, mem_node*> m_nodes;
 
 private:
 	void* m_pMemoryAddress;
