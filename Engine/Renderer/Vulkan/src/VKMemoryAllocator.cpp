@@ -254,35 +254,31 @@ CVKMemory* CVKMemoryAllocator::MergeMemory(CVKMemory* pMemory, CVKMemory* pMemor
 
 CVKMemory* CVKMemoryAllocator::SearchMemory(VkDeviceSize size, VkDeviceSize alignment) const
 {
-	/*
 	mem_node* pMemoryNode = nullptr;
-	rb_node* node = m_root.rb_node;
+	rb_node*  node = m_root.rb_node;
 
 	while (node) {
 		mem_node* pMemoryNodeCur = container_of(node, mem_node, node);
 
-		if (size > pMemoryNodeCur->size) {
+		if (size > pMemoryNodeCur->size()) {
 			node = node->rb_right;
 			continue;
 		}
 
 		pMemoryNode = pMemoryNodeCur;
 
-		if (size < pMemoryNodeCur->size) {
+		if (size < pMemoryNodeCur->size()) {
 			node = node->rb_left;
 			continue;
 		}
 
-		ASSERT(pMemoryNode->pListHead);
-		ASSERT(pMemoryNode->pListHead->bInUse == false);
-		ASSERT(pMemoryNode->pListHead->m_memorySize >= size);
+		ASSERT(pMemoryNode->pMemory);
+		ASSERT(pMemoryNode->pMemory->bInUse == false);
 
 		break;
 	}
 
-	return pMemoryNode ? pMemoryNode->pListHead : nullptr;
-	*/
-	return nullptr;
+	return pMemoryNode ? pMemoryNode->pMemory : nullptr;
 }
 
 bool CVKMemoryAllocator::IsDeviceLocal(void) const
