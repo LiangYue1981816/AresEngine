@@ -103,7 +103,7 @@ VkMemoryPropertyFlags CVKMemoryAllocator::GetMemoryPropertyFlags(void) const
 	return m_memoryPropertyFlags;
 }
 
-CVKMemory* CVKMemoryAllocator::AllocMemory(VkDeviceSize size, VkDeviceSize alignment)
+CVKMemory* CVKMemoryAllocator::AllocMemory(VkDeviceSize size, VkDeviceSize alignment, VkResourceType type)
 {
 	//  Memory Pool
 	//
@@ -120,10 +120,11 @@ CVKMemory* CVKMemoryAllocator::AllocMemory(VkDeviceSize size, VkDeviceSize align
 	//             |         Alignment Offset
 	//             |
 	//             Allocated Memory Handle
+
 	ASSERT(m_vkMemory);
 
 	if (m_memoryFreeSize >= size) {
-		if (CVKMemory* pMemory = SearchMemory(size, alignment)) {
+		if (CVKMemory* pMemory = SearchMemory(size, alignment, type)) {
 			RemoveMemory(pMemory);
 
 			VkDeviceSize alignmentOffset = ALIGN_BYTE(pMemory->m_memoryOffset, alignment);
@@ -147,7 +148,7 @@ CVKMemory* CVKMemoryAllocator::AllocMemory(VkDeviceSize size, VkDeviceSize align
 				pMemory->m_memorySize = padding + size;
 			}
 
-			pMemory->bInUse = true;
+			pMemory->type = type;
 			pMemory->m_memoryPadding = padding;
 
 			ASSERT(m_memoryFreeSize >= pMemory->m_memorySize);
@@ -162,21 +163,21 @@ CVKMemory* CVKMemoryAllocator::AllocMemory(VkDeviceSize size, VkDeviceSize align
 
 void CVKMemoryAllocator::FreeMemory(CVKMemory* pMemory)
 {
-	ASSERT(pMemory);
-	ASSERT(pMemory->bInUse);
-	ASSERT(pMemory->pMemoryNode == nullptr);
 	ASSERT(m_vkMemory);
+	ASSERT(pMemory);
+	ASSERT(pMemory->type != VK_RESOURCE_TYPE_FREE);
 
-	pMemory->bInUse = false;
-	pMemory->m_memoryPadding = 0;
 	m_memoryFreeSize += pMemory->m_memorySize;
 
-	if (pMemory->pNext && pMemory->pNext->bInUse == false) {
+	pMemory->type = VK_RESOURCE_TYPE_FREE;
+	pMemory->m_memoryPadding = 0;
+
+	if (pMemory->pNext && pMemory->pNext->type == VK_RESOURCE_TYPE_FREE) {
 		RemoveMemory(pMemory->pNext);
 		pMemory = MergeMemory(pMemory, pMemory->pNext);
 	}
 
-	if (pMemory->pPrev && pMemory->pPrev->bInUse == false) {
+	if (pMemory->pPrev && pMemory->pPrev->type == VK_RESOURCE_TYPE_FREE) {
 		RemoveMemory(pMemory->pPrev);
 		pMemory = MergeMemory(pMemory->pPrev, pMemory);
 	}
@@ -203,7 +204,7 @@ void CVKMemoryAllocator::FreeNodes(void)
 void CVKMemoryAllocator::InsertMemory(CVKMemory* pMemory)
 {
 	ASSERT(pMemory);
-	ASSERT(pMemory->bInUse == false);
+	ASSERT(pMemory->type == VK_RESOURCE_TYPE_FREE);
 	ASSERT(pMemory->pMemoryNode == nullptr);
 
 	mem_node* pMemoryNode = new mem_node(pMemory);
@@ -236,7 +237,7 @@ void CVKMemoryAllocator::InsertMemory(CVKMemory* pMemory)
 void CVKMemoryAllocator::RemoveMemory(CVKMemory* pMemory)
 {
 	ASSERT(pMemory);
-	ASSERT(pMemory->bInUse == false);
+	ASSERT(pMemory->type == VK_RESOURCE_TYPE_FREE);
 	ASSERT(pMemory->pMemoryNode != nullptr);
 
 	rb_erase(&pMemory->pMemoryNode->node, &m_root);
@@ -247,6 +248,8 @@ void CVKMemoryAllocator::RemoveMemory(CVKMemory* pMemory)
 
 CVKMemory* CVKMemoryAllocator::MergeMemory(CVKMemory* pMemory, CVKMemory* pMemoryNext)
 {
+	ASSERT(pMemory);
+	ASSERT(pMemoryNext);
 	ASSERT(pMemory->m_memoryOffset + pMemory->m_memorySize == pMemoryNext->m_memoryOffset);
 
 	pMemory->m_memorySize = pMemoryNext->m_memorySize + pMemory->m_memorySize;
@@ -260,7 +263,7 @@ CVKMemory* CVKMemoryAllocator::MergeMemory(CVKMemory* pMemory, CVKMemory* pMemor
 	return pMemory;
 }
 
-CVKMemory* CVKMemoryAllocator::SearchMemory(VkDeviceSize size, VkDeviceSize alignment) const
+CVKMemory* CVKMemoryAllocator::SearchMemory(VkDeviceSize size, VkDeviceSize alignment, VkResourceType type) const
 {
 	mem_node* pMemoryNode = nullptr;
 	rb_node*  node = m_root.rb_node;

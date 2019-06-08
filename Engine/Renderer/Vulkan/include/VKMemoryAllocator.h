@@ -29,7 +29,7 @@ private:
 	VkMemoryPropertyFlags GetMemoryPropertyFlags(void) const;
 
 private:
-	CVKMemory* AllocMemory(VkDeviceSize size, VkDeviceSize alignment);
+	CVKMemory* AllocMemory(VkDeviceSize size, VkDeviceSize alignment, VkResourceType type);
 	void FreeMemory(CVKMemory* pMemory);
 
 private:
@@ -39,7 +39,7 @@ private:
 	void InsertMemory(CVKMemory* pMemory);
 	void RemoveMemory(CVKMemory* pMemory);
 	CVKMemory* MergeMemory(CVKMemory* pMemory, CVKMemory* pMemoryNext);
-	CVKMemory* SearchMemory(VkDeviceSize size, VkDeviceSize alignment) const;
+	CVKMemory* SearchMemory(VkDeviceSize size, VkDeviceSize alignment, VkResourceType type) const;
 
 private:
 	bool IsDeviceLocal(void) const;
