@@ -195,7 +195,7 @@ bool CVKTexture::Create(GfxTextureType type, GfxPixelFormat format, int width, i
 
 			m_pMemory = m_pDevice->GetMemoryManager()->AllocMemory(requirements.size, requirements.alignment, memoryPropertyFlags);
 			if (m_pMemory == nullptr) { ASSERT(false); break; }
-			if (m_pMemory->BindImage(m_vkImage, imageTiling) == false) { ASSERT(false); break; }
+			if (m_pMemory->BindImage(m_vkImage) == false) { ASSERT(false); break; }
 
 			VkImageViewCreateInfo viewCreateInfo = {};
 			viewCreateInfo.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;

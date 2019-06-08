@@ -32,7 +32,7 @@ public:
 	VkDeviceSize GetOffset(void) const;
 
 public:
-	bool BindImage(VkImage vkImage, VkImageTiling imageTiling) const;
+	bool BindImage(VkImage vkImage) const;
 	bool BindBuffer(VkBuffer vkBuffer) const;
 
 public:
