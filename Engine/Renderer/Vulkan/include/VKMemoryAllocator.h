@@ -11,15 +11,13 @@ class CVKMemoryAllocator
 
 private:
 	typedef struct mem_node {
-		mem_node(uint32_t index, VkDeviceSize alignment)
+		mem_node(CVKMemory* pFreeMemory)
 		{
-			size = (index + 1) * alignment;
-			pListHead = nullptr;
+			pMemory = pFreeMemory;
 		}
 
 		rb_node node;
-		VkDeviceSize size;
-		CVKMemory* pListHead;
+		CVKMemory* pMemory;
 	} mem_node;
 
 
