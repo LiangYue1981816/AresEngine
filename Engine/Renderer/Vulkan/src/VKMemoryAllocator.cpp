@@ -221,7 +221,7 @@ void CVKMemoryAllocator::InsertMemory(CVKMemory* pMemory)
 
 		parent = *node;
 
-		if (pMemoryNodeCur->size() < pMemoryNode->size()) {
+		if (pMemoryNodeCur->pMemory->m_memorySize < pMemoryNode->pMemory->m_memorySize) {
 			node = &(*node)->rb_right;
 			continue;
 		}
@@ -235,7 +235,7 @@ void CVKMemoryAllocator::InsertMemory(CVKMemory* pMemory)
 	rb_link_node(&pMemoryNode->node, parent, node);
 	rb_insert_color(&pMemoryNode->node, &m_root);
 
-	m_nodes[pMemoryNode] = pMemoryNode->size();
+	m_nodes[pMemoryNode] = pMemoryNode->pMemory->m_memorySize;
 }
 
 void CVKMemoryAllocator::RemoveMemory(CVKMemory* pMemory)
@@ -285,17 +285,17 @@ CVKMemory* CVKMemoryAllocator::SearchMemory(VkDeviceSize size, VkDeviceSize alig
 		// Offset    |
 		//           AlignmentOffset
 
-		VkDeviceSize alignmentOffset = ALIGN_BYTE(pMemoryNodeCur->offset(), alignment);
-		VkDeviceSize padding = alignmentOffset - pMemoryNodeCur->offset();
+		VkDeviceSize alignmentOffset = ALIGN_BYTE(pMemoryNodeCur->pMemory->m_memoryOffset, alignment);
+		VkDeviceSize padding = alignmentOffset - pMemoryNodeCur->pMemory->m_memoryOffset;
 
-		if (pMemoryNodeCur->size() - padding < size) {
+		if (pMemoryNodeCur->pMemory->m_memorySize - padding < size) {
 			node = node->rb_right;
 			continue;
 		}
 
 		pMemoryNode = pMemoryNodeCur;
 
-		if (pMemoryNodeCur->size() - padding > size) {
+		if (pMemoryNodeCur->pMemory->m_memorySize - padding > size) {
 			node = node->rb_left;
 			continue;
 		}
