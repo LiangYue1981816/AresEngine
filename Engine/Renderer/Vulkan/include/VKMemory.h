@@ -52,7 +52,4 @@ private:
 
 	CVKMemory* pNext;
 	CVKMemory* pPrev;
-
-	CVKMemory* pFreeNext;
-	CVKMemory* pFreePrev;
 };

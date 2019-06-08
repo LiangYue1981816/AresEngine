@@ -12,9 +12,6 @@ CVKMemory::CVKMemory(CVKDevice* pDevice, CVKMemoryAllocator* pAllocator, VkDevic
 
 	, pNext(nullptr)
 	, pPrev(nullptr)
-
-	, pFreeNext(nullptr)
-	, pFreePrev(nullptr)
 {
 
 }
