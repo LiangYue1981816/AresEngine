@@ -15,6 +15,7 @@ typedef struct mem_node {
 
 class CVKMemory
 {
+	friend struct mem_node;
 	friend class CVKMemoryAllocator;
 	friend class CVKMemoryManager;
 
@@ -64,6 +65,6 @@ private:
 	CVKMemory* pNext;
 	CVKMemory* pPrev;
 
-public:
+private:
 	mem_node* pMemoryNode;
 };
