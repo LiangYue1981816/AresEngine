@@ -252,7 +252,7 @@ CVKMemory* CVKMemoryAllocator::MergeMemory(CVKMemory* pMemory, CVKMemory* pMemor
 	return pMemory;
 }
 
-CVKMemory* CVKMemoryAllocator::SearchMemory(VkDeviceSize size) const
+CVKMemory* CVKMemoryAllocator::SearchMemory(VkDeviceSize size, VkDeviceSize alignment) const
 {
 	/*
 	mem_node* pMemoryNode = nullptr;
