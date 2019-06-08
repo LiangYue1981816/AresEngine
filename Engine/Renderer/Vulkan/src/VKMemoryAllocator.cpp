@@ -103,7 +103,7 @@ VkMemoryPropertyFlags CVKMemoryAllocator::GetMemoryPropertyFlags(void) const
 	return m_memoryPropertyFlags;
 }
 
-CVKMemory* CVKMemoryAllocator::AllocMemory(VkDeviceSize size)
+CVKMemory* CVKMemoryAllocator::AllocMemory(VkDeviceSize size, VkDeviceSize alignment)
 {
 	/*
 	//  Memory Pool

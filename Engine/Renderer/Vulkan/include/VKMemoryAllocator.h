@@ -29,7 +29,7 @@ private:
 	VkMemoryPropertyFlags GetMemoryPropertyFlags(void) const;
 
 private:
-	CVKMemory* AllocMemory(VkDeviceSize size);
+	CVKMemory* AllocMemory(VkDeviceSize size, VkDeviceSize alignment);
 	void FreeMemory(CVKMemory* pMemory);
 
 private:
