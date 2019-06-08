@@ -45,8 +45,8 @@ CVKTransferBuffer* CVKTransferManager::AcquireTransferBuffer(size_t size)
 		ASSERT(m_vkQueue);
 		ASSERT(m_vkCommandPool);
 
-		VkDeviceSize bufferSize = size;
-		VkDeviceSize memorySize = size;// ALIGN_BYTE(size, 4 * 1024 * 1024);
+		VkDeviceSize bufferSize = ALIGN_BYTE(size, m_pDevice->GetPhysicalDeviceLimits().nonCoherentAtomSize);
+		VkDeviceSize memorySize = ALIGN_BYTE(bufferSize, 4 * 1024 * 1024);
 
 		if (m_pMemorys.find(memorySize) == m_pMemorys.end()) {
 			m_pMemorys[memorySize] = m_pDevice->GetMemoryManager()->AllocMemory(memorySize, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT);
