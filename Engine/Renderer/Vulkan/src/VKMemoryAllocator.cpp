@@ -171,6 +171,8 @@ CVKMemory* CVKMemoryAllocator::AllocMemory(VkDeviceSize size, VkDeviceSize align
 void CVKMemoryAllocator::FreeMemory(CVKMemory* pMemory)
 {
 	ASSERT(pMemory);
+	ASSERT(pMemory->bInUse);
+	ASSERT(pMemory->pMemoryNode == nullptr);
 	ASSERT(m_vkMemory);
 
 	pMemory->bInUse = false;
@@ -248,7 +250,6 @@ void CVKMemoryAllocator::RemoveMemory(CVKMemory* pMemory)
 	m_nodes.erase(pMemory->pMemoryNode);
 
 	delete pMemory->pMemoryNode;
-	pMemory->pMemoryNode = nullptr;
 }
 
 CVKMemory* CVKMemoryAllocator::MergeMemory(CVKMemory* pMemory, CVKMemory* pMemoryNext)
@@ -273,6 +274,9 @@ CVKMemory* CVKMemoryAllocator::SearchMemory(VkDeviceSize size, VkDeviceSize alig
 
 	while (node) {
 		mem_node* pMemoryNodeCur = container_of(node, mem_node, node);
+
+		ASSERT(pMemoryNodeCur);
+		ASSERT(pMemoryNodeCur->pMemory);
 
 		// Memory Block
 		//

@@ -5,6 +5,8 @@
 
 typedef struct mem_node {
 	mem_node(CVKMemory* pFreeMemory);
+	~mem_node(void);
+
 	rb_node node;
 	CVKMemory* pMemory;
 } mem_node;

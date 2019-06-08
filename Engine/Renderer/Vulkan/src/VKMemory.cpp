@@ -7,6 +7,11 @@ mem_node::mem_node(CVKMemory* pFreeMemory)
 	pMemory->pMemoryNode = this;
 }
 
+mem_node::~mem_node(void)
+{
+	pMemory->pMemoryNode = nullptr;
+}
+
 
 CVKMemory::CVKMemory(CVKDevice* pDevice, CVKMemoryAllocator* pAllocator, VkDeviceSize memorySize, VkDeviceSize memoryOffset)
 	: m_pDevice(pDevice)
