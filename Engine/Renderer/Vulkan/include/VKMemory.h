@@ -5,9 +5,6 @@
 
 typedef struct mem_node {
 	mem_node(CVKMemory* pFreeMemory);
-	VkDeviceSize size(void);
-	VkDeviceSize offset(void);
-
 	rb_node node;
 	CVKMemory* pMemory;
 } mem_node;

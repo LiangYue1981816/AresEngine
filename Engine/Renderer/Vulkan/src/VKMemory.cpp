@@ -7,16 +7,6 @@ mem_node::mem_node(CVKMemory* pFreeMemory)
 	pMemory->pMemoryNode = this;
 }
 
-VkDeviceSize mem_node::size(void)
-{
-	return pMemory->m_memorySize;
-}
-
-VkDeviceSize mem_node::offset(void)
-{
-	return pMemory->m_memoryOffset;
-}
-
 
 CVKMemory::CVKMemory(CVKDevice* pDevice, CVKMemoryAllocator* pAllocator, VkDeviceSize memorySize, VkDeviceSize memoryOffset)
 	: m_pDevice(pDevice)
