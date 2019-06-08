@@ -262,6 +262,8 @@ CVKMemory* CVKMemoryAllocator::SearchMemory(VkDeviceSize size, VkDeviceSize alig
 	while (node) {
 		mem_node* pMemoryNodeCur = container_of(node, mem_node, node);
 
+		// Memory Block
+		//
 		// |             Memory Size             |
 		// |-------------------------------------|
 		// |         |                           |
