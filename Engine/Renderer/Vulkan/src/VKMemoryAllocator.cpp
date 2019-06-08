@@ -128,6 +128,7 @@ CVKMemory* CVKMemoryAllocator::AllocMemory(VkDeviceSize size, VkDeviceSize align
 
 			VkDeviceSize alignmentOffset = ALIGN_BYTE(pMemory->m_memoryOffset, alignment);
 			VkDeviceSize padding = alignmentOffset - pMemory->m_memoryOffset;
+			ASSERT(pMemory->m_memorySize >= padding);
 
 			if (pMemory->m_memorySize - padding > size) {
 				CVKMemory* pMemoryNext = new CVKMemory(m_pDevice, this, pMemory->m_memorySize - padding - size, pMemory->m_memoryOffset + padding + size);
@@ -148,6 +149,8 @@ CVKMemory* CVKMemoryAllocator::AllocMemory(VkDeviceSize size, VkDeviceSize align
 
 			pMemory->bInUse = true;
 			pMemory->m_memoryPadding = padding;
+
+			ASSERT(m_memoryFreeSize >= pMemory->m_memorySize);
 			m_memoryFreeSize -= pMemory->m_memorySize;
 
 			return pMemory;
