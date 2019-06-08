@@ -282,6 +282,11 @@ CVKMemory* CVKMemoryAllocator::SearchMemory(VkDeviceSize size, VkDeviceSize alig
 		VkDeviceSize alignmentOffset = ALIGN_BYTE(pMemoryNodeCur->pMemory->m_memoryOffset, alignment);
 		VkDeviceSize padding = alignmentOffset - pMemoryNodeCur->pMemory->m_memoryOffset;
 
+		if (pMemoryNodeCur->pMemory->m_memorySize < padding) {
+			node = node->rb_right;
+			continue;
+		}
+
 		if (pMemoryNodeCur->pMemory->m_memorySize - padding < size) {
 			node = node->rb_right;
 			continue;
