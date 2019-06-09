@@ -25,6 +25,7 @@ private:
 private:
 	CVKDescriptorPool* m_pPoolListHead;
 	CVKDescriptorPool* m_pInputAttachmentPoolListHead;
+
 	eastl::unordered_map<uint32_t, CVKDescriptorSet*> m_pDescriptorSets;
 	eastl::unordered_map<CVKFrameBuffer*, eastl::unordered_map<SubpassInformation*, eastl::unordered_map<CVKPipelineGraphics*, CVKDescriptorSet*>>> m_pInputAttachmentDescriptorSets;
 
