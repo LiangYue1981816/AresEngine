@@ -21,13 +21,30 @@ CGLES3DescriptorSetManager::~CGLES3DescriptorSetManager(void)
 	}
 }
 
-CGLES3DescriptorSet* CGLES3DescriptorSetManager::Create(const CGfxDescriptorLayoutPtr ptrDescriptorLayout)
+CGLES3DescriptorSet* CGLES3DescriptorSetManager::Get(uint32_t name)
 {
 	mutex_autolock autolock(&lock);
 	{
-		CGLES3DescriptorSet* pDescriptorSet = new CGLES3DescriptorSet(this, ptrDescriptorLayout);
-		m_pDescriptorSets[pDescriptorSet] = pDescriptorSet;
-		return pDescriptorSet;
+		const auto& itDescriptorSet = m_pDescriptorSets.find(name);
+
+		if (itDescriptorSet != m_pDescriptorSets.end()) {
+			return itDescriptorSet->second;
+		}
+		else {
+			return nullptr;
+		}
+	}
+}
+
+CGLES3DescriptorSet* CGLES3DescriptorSetManager::Create(uint32_t name, const CGfxDescriptorLayoutPtr ptrDescriptorLayout)
+{
+	mutex_autolock autolock(&lock);
+	{
+		if (m_pDescriptorSets[name] == nullptr) {
+			m_pDescriptorSets[name] = new CGLES3DescriptorSet(this, name, ptrDescriptorLayout);
+		}
+
+		return m_pDescriptorSets[name];
 	}
 }
 
@@ -38,7 +55,7 @@ CGLES3DescriptorSet* CGLES3DescriptorSetManager::Create(const CGfxPipelineGraphi
 		if (const SubpassInformation* pSubpassInformation = pRenderPass->GetSubpass(indexSubpass)) {
 			if (pSubpassInformation->inputAttachments.size()) {
 				if (m_pInputAttachmentDescriptorSets[(CGLES3FrameBuffer*)pFrameBuffer][(SubpassInformation*)pSubpassInformation][(CGLES3PipelineGraphics*)pPipelineGraphics] == nullptr) {
-					CGLES3DescriptorSet* pDescriptorSet = new CGLES3DescriptorSet(this, pPipelineGraphics->GetDescriptorLayout(DESCRIPTOR_SET_INPUTATTACHMENT));
+					CGLES3DescriptorSet* pDescriptorSet = new CGLES3DescriptorSet(this, INVALID_HASHNAME, pPipelineGraphics->GetDescriptorLayout(DESCRIPTOR_SET_INPUTATTACHMENT));
 					{
 						for (const auto& itInputAttachment : pSubpassInformation->inputAttachments) {
 							pDescriptorSet->SetTextureInputAttachment(
@@ -66,8 +83,8 @@ void CGLES3DescriptorSetManager::Destroy(CGLES3DescriptorSet* pDescriptorSet)
 	{
 		ASSERT(pDescriptorSet);
 
-		if (m_pDescriptorSets.find(pDescriptorSet) != m_pDescriptorSets.end()) {
-			m_pDescriptorSets.erase(pDescriptorSet);
+		if (m_pDescriptorSets.find(pDescriptorSet->GetName()) != m_pDescriptorSets.end()) {
+			m_pDescriptorSets.erase(pDescriptorSet->GetName());
 			delete pDescriptorSet;
 		}
 	}
