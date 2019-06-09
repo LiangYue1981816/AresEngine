@@ -21,13 +21,19 @@ typedef struct DescriptorImageInfo {
 class CALL_API CGfxDescriptorSet : public CGfxResource
 {
 public:
-	CGfxDescriptorSet(const CGfxDescriptorLayoutPtr ptrDescriptorLayout)
+	CGfxDescriptorSet(uint32_t name, const CGfxDescriptorLayoutPtr ptrDescriptorLayout)
+		: m_name(name)
 	{
 
 	}
 	virtual ~CGfxDescriptorSet(void)
 	{
 
+	}
+
+	uint32_t GetName(void) const
+	{
+		return m_name;
 	}
 
 
@@ -45,4 +51,8 @@ public:
 
 public:
 	virtual void Update(void) = 0;
+
+
+private:
+	uint32_t m_name;
 };
