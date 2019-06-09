@@ -237,19 +237,19 @@ void CRenderSolution::SetMainDirectLightDirection(float dirx, float diry, float 
 	m_pUniformEngine->SetMainDirectLightDirection(dirx, diry, dirz);
 }
 
-void CRenderSolution::SetFogColor(float red, float green, float blue)
+void CRenderSolution::SetMainFogColor(float red, float green, float blue)
 {
-	m_pUniformEngine->SetFogColor(red, green, blue);
+	m_pUniformEngine->SetMainFogColor(red, green, blue);
 }
 
-void CRenderSolution::SetFogHeightDensity(float startHeight, float endHeight, float density)
+void CRenderSolution::SetMainFogHeightDensity(float startHeight, float endHeight, float density)
 {
-	m_pUniformEngine->SetFogHeightDensity(startHeight, endHeight, density);
+	m_pUniformEngine->SetMainFogHeightDensity(startHeight, endHeight, density);
 }
 
-void CRenderSolution::SetFogDistanceDensity(float startDistance, float endDistance, float density)
+void CRenderSolution::SetMainFogDistanceDensity(float startDistance, float endDistance, float density)
 {
-	m_pUniformEngine->SetFogDistanceDensity(startDistance, endDistance, density);
+	m_pUniformEngine->SetMainFogDistanceDensity(startDistance, endDistance, density);
 }
 
 void CRenderSolution::UpdateCamera(int indexQueue)

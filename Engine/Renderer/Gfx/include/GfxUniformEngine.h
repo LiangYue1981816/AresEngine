@@ -29,16 +29,16 @@ private:
 		glm::vec4 ambientLightSH8;
 		glm::mat4 ambientLightRotationMatrix;
 
-		glm::vec4 pointLightColor;
-		glm::vec4 pointLightPosition;
-		glm::vec4 pointLightAttenuation;
+		glm::vec4 mainPointLightColor;
+		glm::vec4 mainPointLightPosition;
+		glm::vec4 mainPointLightAttenuation;
 
-		glm::vec4 directLightColor;
-		glm::vec4 directLightDirection;
+		glm::vec4 mainDirectLightColor;
+		glm::vec4 mainDirectLightDirection;
 
-		glm::vec4 fogColor;
-		glm::vec4 fogHeightDensity;
-		glm::vec4 fogDistanceDensity;
+		glm::vec4 mainFogColor;
+		glm::vec4 mainFogHeightDensity;
+		glm::vec4 mainFogDistanceDensity;
 	} Params;
 
 
@@ -71,9 +71,9 @@ public:
 	void SetMainDirectLightColor(float red, float green, float blue);
 	void SetMainDirectLightDirection(float dirx, float diry, float dirz);
 
-	void SetFogColor(float red, float green, float blue);
-	void SetFogHeightDensity(float startHeight, float endHeight, float density);
-	void SetFogDistanceDensity(float startDistance, float endDistance, float density);
+	void SetMainFogColor(float red, float green, float blue);
+	void SetMainFogHeightDensity(float startHeight, float endHeight, float density);
+	void SetMainFogDistanceDensity(float startDistance, float endDistance, float density);
 
 	void Apply(void);
 

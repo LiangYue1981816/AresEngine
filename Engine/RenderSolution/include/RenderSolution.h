@@ -90,9 +90,9 @@ public:
 	void SetMainDirectLightColor(float red, float green, float blue);
 	void SetMainDirectLightDirection(float dirx, float diry, float dirz);
 
-	void SetFogColor(float red, float green, float blue);
-	void SetFogHeightDensity(float startHeight, float endHeight, float density);
-	void SetFogDistanceDensity(float startDistance, float endDistance, float density);
+	void SetMainFogColor(float red, float green, float blue);
+	void SetMainFogHeightDensity(float startHeight, float endHeight, float density);
+	void SetMainFogDistanceDensity(float startDistance, float endDistance, float density);
 
 public:
 	void UpdateCamera(int indexQueue);

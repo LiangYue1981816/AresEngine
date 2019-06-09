@@ -215,49 +215,49 @@ void CGfxUniformEngine::SetAmbientLightDirection(float dirx, float diry, float d
 void CGfxUniformEngine::SetMainPointLightColor(float red, float green, float blue)
 {
 	m_bDirty = true;
-	m_params.pointLightColor = glm::vec4(red, green, blue, 0.0f);
+	m_params.mainPointLightColor = glm::vec4(red, green, blue, 0.0f);
 }
 
 void CGfxUniformEngine::SetMainPointLightPosition(float posx, float posy, float posz, float radius)
 {
 	m_bDirty = true;
-	m_params.pointLightPosition = glm::vec4(posx, posy, posz, radius);
+	m_params.mainPointLightPosition = glm::vec4(posx, posy, posz, radius);
 }
 
 void CGfxUniformEngine::SetMainPointLightAttenuation(float linear, float square, float constant)
 {
 	m_bDirty = true;
-	m_params.pointLightAttenuation = glm::vec4(linear, square, constant, 0.0f);
+	m_params.mainPointLightAttenuation = glm::vec4(linear, square, constant, 0.0f);
 }
 
 void CGfxUniformEngine::SetMainDirectLightColor(float red, float green, float blue)
 {
 	m_bDirty = true;
-	m_params.directLightColor = glm::vec4(red, green, blue, 0.0);
+	m_params.mainDirectLightColor = glm::vec4(red, green, blue, 0.0);
 }
 
 void CGfxUniformEngine::SetMainDirectLightDirection(float dirx, float diry, float dirz)
 {
 	m_bDirty = true;
-	m_params.directLightDirection = glm::vec4(glm::normalize(glm::vec3(-dirx, -diry, -dirz)), 0.0f);
+	m_params.mainDirectLightDirection = glm::vec4(glm::normalize(glm::vec3(-dirx, -diry, -dirz)), 0.0f);
 }
 
-void CGfxUniformEngine::SetFogColor(float red, float green, float blue)
+void CGfxUniformEngine::SetMainFogColor(float red, float green, float blue)
 {
 	m_bDirty = true;
-	m_params.fogColor = glm::vec4(red, green, blue, 0.0f);
+	m_params.mainFogColor = glm::vec4(red, green, blue, 0.0f);
 }
 
-void CGfxUniformEngine::SetFogHeightDensity(float startHeight, float endHeight, float density)
+void CGfxUniformEngine::SetMainFogHeightDensity(float startHeight, float endHeight, float density)
 {
 	m_bDirty = true;
-	m_params.fogHeightDensity = glm::vec4(startHeight, endHeight, density, 0.0f);
+	m_params.mainFogHeightDensity = glm::vec4(startHeight, endHeight, density, 0.0f);
 }
 
-void CGfxUniformEngine::SetFogDistanceDensity(float startDistance, float endDistance, float density)
+void CGfxUniformEngine::SetMainFogDistanceDensity(float startDistance, float endDistance, float density)
 {
 	m_bDirty = true;
-	m_params.fogDistanceDensity = glm::vec4(startDistance, endDistance, density, 0.0f);
+	m_params.mainFogDistanceDensity = glm::vec4(startDistance, endDistance, density, 0.0f);
 }
 
 void CGfxUniformEngine::Apply(void)
