@@ -42,12 +42,6 @@ typedef enum RenderSolution {
 class CALL_API CRenderSolution
 {
 	friend class CEngine;
-	friend class CRenderSolutionBase;
-	friend class CRenderSolutionDefault;
-	friend class CRenderSolutionForward;
-	friend class CRenderSolutionDeferred;
-	friend class CRenderSolutionTiledBaseDeferred;
-	friend class CRenderSolutionTiledBaseForward;
 
 
 private:
