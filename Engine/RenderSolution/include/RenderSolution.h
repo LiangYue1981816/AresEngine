@@ -65,4 +65,15 @@ private:
 
 	CRenderSolutionBase* m_pRenderSolution[RENDER_SOLUTION_COUNT];
 	CRenderSolutionBase* m_pCurrentRenderSolution;
+
+private:
+	CGfxEngine* m_pEngine;
+
+private:
+	CGfxCamera* m_pMainCamera;
+	CGfxCamera* m_pShadowCamera;
+
+	CGfxRenderQueue* m_pMainQueue;
+	CGfxRenderQueue* m_pLightQueue;
+	CGfxRenderQueue* m_pShadowQueue;
 };

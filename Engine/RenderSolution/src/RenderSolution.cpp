@@ -29,6 +29,15 @@ CRenderSolution::CRenderSolution(GfxApi api, RenderSolution solution, void* hIns
 	: m_pRenderer(nullptr)
 	, m_pRenderSolution{ nullptr }
 	, m_pCurrentRenderSolution(nullptr)
+
+	, m_pEngine(nullptr)
+
+	, m_pMainCamera(nullptr)
+	, m_pShadowCamera(nullptr)
+
+	, m_pMainQueue(nullptr)
+	, m_pLightQueue(nullptr)
+	, m_pShadowQueue(nullptr)
 {
 	SetVertexAttributes(vertexAttributes, VERTEX_ATTRIBUTE_COUNT);
 	SetInstanceAttributes(instanceAttributes, INSTANCE_ATTRIBUTE_COUNT);
