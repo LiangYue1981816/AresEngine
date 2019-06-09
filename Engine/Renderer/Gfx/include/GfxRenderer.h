@@ -60,7 +60,7 @@
 #define GfxRenderer() CGfxRenderer::GetInstance()
 
 
-#define DESCRIPTOR_SET_ENGINE               0
+#define DESCRIPTOR_SET_MAIN                 0
 #define DESCRIPTOR_SET_MATPASS              1
 #define DESCRIPTOR_SET_MESHDRAW             2
 #define DESCRIPTOR_SET_INPUTATTACHMENT      3
