@@ -117,3 +117,6 @@ private:
 	CGfxUniformEngine* m_pUniformEngine;
 	CGfxUniformCamera* m_pUniformMainCamera;
 };
+
+extern const uint32_t DESCRIPTORSET_DEFAULT_PASS_NAME;
+extern const uint32_t DESCRIPTORSET_FORWARD_LIGHTING_PASS_NAME;
