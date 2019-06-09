@@ -17,12 +17,18 @@ CRenderSolutionDefault::~CRenderSolutionDefault(void)
 
 void CRenderSolutionDefault::CreateDescriptorSet(void)
 {
+	CGfxDescriptorLayoutPtr ptrDescriptorLayout = GfxRenderer()->NewDescriptorLayout(DESCRIPTOR_SET_PASS);
+	ptrDescriptorLayout->SetUniformBlockBinding(UNIFORM_CAMERA_NAME, DESCRIPTOR_BIND_CAMERA);
+	ptrDescriptorLayout->Create();
 
+	m_ptrDescriptorSetDefaultPass = GfxRenderer()->NewDescriptorSet(DESCRIPTORSET_DEFAULT_PASS_NAME, ptrDescriptorLayout);
+	m_ptrDescriptorSetDefaultPass->SetUniformBuffer(DESCRIPTOR_BIND_CAMERA, m_pRenderSolution->GetMainCameraUniformBuffer(), 0, m_pRenderSolution->GetMainCameraUniformBuffer()->GetSize());
+	m_ptrDescriptorSetDefaultPass->Update();
 }
 
 void CRenderSolutionDefault::DestroyDescriptorSet(void)
 {
-
+	m_ptrDescriptorSetDefaultPass.Release();
 }
 
 void CRenderSolutionDefault::CreateFrameBuffer(void)
@@ -189,7 +195,7 @@ void CRenderSolutionDefault::Render(int indexQueue)
 
 				GfxRenderer()->CmdBeginRenderPass(ptrMainCommandBuffer, ptrFrameBuffer, ptrRenderPass);
 				{
-//					m_pRenderSolution->GetMainQueue()->CmdDraw(indexQueue, ptrMainCommandBuffer, m_pRenderSolution->GetEngine()->GetDescriptorSet(), nullptr, nameDefaultPass, m_pRenderSolution->GetMainCamera()->GetScissor(), m_pRenderSolution->GetMainCamera()->GetViewport());
+					m_pRenderSolution->GetMainQueue()->CmdDraw(indexQueue, ptrMainCommandBuffer, m_ptrDescriptorSetDefaultPass, nameDefaultPass, m_pRenderSolution->GetMainCamera()->GetScissor(), m_pRenderSolution->GetMainCamera()->GetViewport());
 				}
 				GfxRenderer()->CmdEndRenderPass(ptrMainCommandBuffer);
 			}

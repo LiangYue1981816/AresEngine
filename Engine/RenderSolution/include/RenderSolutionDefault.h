@@ -55,5 +55,8 @@ private:
 	RenderParamsMSAA m_renderParamsMSAA;
 
 private:
+	CGfxDescriptorSetPtr m_ptrDescriptorSetDefaultPass;
+
+private:
 	CGfxCommandBufferPtr m_ptrMainCommandBuffer[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
 };
