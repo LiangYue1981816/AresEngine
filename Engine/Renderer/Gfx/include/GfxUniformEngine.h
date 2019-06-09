@@ -11,15 +11,6 @@ private:
 		glm::vec4 cosTime;
 		glm::vec4 deltaTime;
 
-		glm::vec4 cameraScreen;
-		glm::vec4 cameraZBuffer;
-		glm::vec4 cameraProjection;
-		glm::mat4 cameraProjectionMatrix;
-		glm::mat4 cameraProjectionViewMatrix;
-		glm::mat4 cameraViewMatrix;
-		glm::mat4 cameraViewInverseMatrix;
-		glm::mat4 cameraViewInverseTransposeMatrix;
-
 		glm::mat4 shadowProjectionMatrix;
 		glm::mat4 shadowProjectionViewMatrix;
 		glm::mat4 shadowViewMatrix;
@@ -61,11 +52,6 @@ public:
 
 public:
 	void SetTime(float t, float dt);
-
-	void SetCameraViewport(float width, float height);
-	void SetCameraPerspective(float fovy, float aspect, float zNear, float zFar);
-	void SetCameraOrtho(float left, float right, float bottom, float top, float zNear, float zFar);
-	void SetCameraLookat(float eyex, float eyey, float eyez, float centerx, float centery, float centerz, float upx, float upy, float upz);
 
 	void SetShadowOrtho(float left, float right, float bottom, float top, float zNear, float zFar);
 	void SetShadowLookat(float eyex, float eyey, float eyez, float centerx, float centery, float centerz, float upx, float upy, float upz);

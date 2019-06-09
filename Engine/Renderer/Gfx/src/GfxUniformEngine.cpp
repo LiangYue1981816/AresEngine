@@ -152,55 +152,6 @@ void CGfxUniformEngine::SetTime(float t, float dt)
 	m_params.deltaTime = glm::vec4(dt, 1.0f / dt, 1.0f, 1.0f);
 }
 
-void CGfxUniformEngine::SetCameraViewport(float width, float height)
-{
-	m_bDirty = true;
-	m_params.cameraScreen = glm::vec4(width, height, 1.0f + 1.0f / width, 1.0f + 1.0f / height);
-}
-
-void CGfxUniformEngine::SetCameraPerspective(float fovy, float aspect, float zNear, float zFar)
-{
-	// [-1 1]
-	//float x = (1.0f - zFar / zNear) / 2.0f;
-	//float y = (1.0f + zFar / zNear) / 2.0f;
-
-	// [0 1]
-	float x = 1.0f - zFar / zNear;
-	float y = zFar / zNear;
-
-	m_bDirty = true;
-	m_params.cameraZBuffer = glm::vec4(x, y, x / zFar, y / zFar);
-	m_params.cameraProjection = glm::vec4(1.0f, zNear, zFar, 1.0f / zFar);
-	m_params.cameraProjectionMatrix = GfxRenderer()->GetBaseMatrix() * glm::perspective(glm::radians(fovy), aspect, zNear, zFar);
-	m_params.cameraProjectionViewMatrix = m_params.cameraProjectionMatrix * m_params.cameraViewMatrix;
-}
-
-void CGfxUniformEngine::SetCameraOrtho(float left, float right, float bottom, float top, float zNear, float zFar)
-{
-	// [-1 1]
-	//float x = (1.0f - zFar / zNear) / 2.0f;
-	//float y = (1.0f + zFar / zNear) / 2.0f;
-
-	// [0 1]
-	float x = 1.0f - zFar / zNear;
-	float y = zFar / zNear;
-
-	m_bDirty = true;
-	m_params.cameraZBuffer = glm::vec4(x, y, x / zFar, y / zFar);
-	m_params.cameraProjection = glm::vec4(1.0f, zNear, zFar, 1.0f / zFar);
-	m_params.cameraProjectionMatrix = GfxRenderer()->GetBaseMatrix() * glm::ortho(left, right, bottom, top, zNear, zFar);
-	m_params.cameraProjectionViewMatrix = m_params.cameraProjectionMatrix * m_params.cameraViewMatrix;
-}
-
-void CGfxUniformEngine::SetCameraLookat(float eyex, float eyey, float eyez, float centerx, float centery, float centerz, float upx, float upy, float upz)
-{
-	m_bDirty = true;
-	m_params.cameraViewMatrix = glm::lookAt(glm::vec3(eyex, eyey, eyez), glm::vec3(centerx, centery, centerz), glm::vec3(upx, upy, upz));
-	m_params.cameraViewInverseMatrix = glm::inverse(m_params.cameraViewMatrix);
-	m_params.cameraViewInverseTransposeMatrix = glm::transpose(m_params.cameraViewInverseMatrix);
-	m_params.cameraProjectionViewMatrix = m_params.cameraProjectionMatrix * m_params.cameraViewMatrix;
-}
-
 void CGfxUniformEngine::SetShadowOrtho(float left, float right, float bottom, float top, float zNear, float zFar)
 {
 	m_bDirty = true;
