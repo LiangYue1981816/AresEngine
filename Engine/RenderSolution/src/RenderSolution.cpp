@@ -93,18 +93,6 @@ CRenderSolution::~CRenderSolution(void)
 	delete m_pRenderer;
 }
 
-void CRenderSolution::SetCurrentRenderSolution(RenderSolution solution, int samples)
-{
-	m_pCurrentRenderSolution->Destroy();
-	m_pCurrentRenderSolution = m_pRenderSolution[solution];
-	m_pCurrentRenderSolution->Create(samples);
-}
-
-CRenderSolutionBase* CRenderSolution::GetCurrentRenderSolution(void) const
-{
-	return m_pCurrentRenderSolution;
-}
-
 CGfxEngine* CRenderSolution::GetEngine(void) const
 {
 	return m_pEngine;
@@ -133,6 +121,13 @@ CGfxRenderQueue* CRenderSolution::GetLightQueue(void) const
 CGfxRenderQueue* CRenderSolution::GetShadowQueue(void) const
 {
 	return m_pShadowQueue;
+}
+
+void CRenderSolution::SetCurrentRenderSolution(RenderSolution solution, int samples)
+{
+	m_pCurrentRenderSolution->Destroy();
+	m_pCurrentRenderSolution = m_pRenderSolution[solution];
+	m_pCurrentRenderSolution->Create(samples);
 }
 
 void CRenderSolution::SetTime(float t, float dt)
@@ -249,4 +244,14 @@ void CRenderSolution::SetFogHeightDensity(float startHeight, float endHeight, fl
 void CRenderSolution::SetFogDistanceDensity(float startDistance, float endDistance, float density)
 {
 	m_pEngine->SetFogDistanceDensity(startDistance, endDistance, density);
+}
+
+void CRenderSolution::UpdateCamera(int indexQueue)
+{
+	m_pCurrentRenderSolution->UpdateCamera(indexQueue);
+}
+
+void CRenderSolution::Render(int indexQueue)
+{
+	m_pCurrentRenderSolution->Render(indexQueue);
 }

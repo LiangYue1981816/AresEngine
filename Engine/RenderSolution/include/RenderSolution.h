@@ -50,10 +50,6 @@ private:
 
 
 public:
-	void SetCurrentRenderSolution(RenderSolution solution, int samples = 1);
-	CRenderSolutionBase* GetCurrentRenderSolution(void) const;
-
-public:
 	CGfxEngine* GetEngine(void) const;
 
 	CGfxCamera* GetMainCamera(void) const;
@@ -62,6 +58,9 @@ public:
 	CGfxRenderQueue* GetMainQueue(void) const;
 	CGfxRenderQueue* GetLightQueue(void) const;
 	CGfxRenderQueue* GetShadowQueue(void) const;
+
+public:
+	void SetCurrentRenderSolution(RenderSolution solution, int samples = 1);
 
 public:
 	void SetTime(float t, float dt);
@@ -93,6 +92,10 @@ public:
 	void SetFogColor(float red, float green, float blue);
 	void SetFogHeightDensity(float startHeight, float endHeight, float density);
 	void SetFogDistanceDensity(float startDistance, float endDistance, float density);
+
+public:
+	void UpdateCamera(int indexQueue);
+	void Render(int indexQueue);
 
 
 private:
