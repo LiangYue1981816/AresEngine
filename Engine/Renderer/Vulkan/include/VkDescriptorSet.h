@@ -47,8 +47,8 @@ private:
 	eastl::unordered_map<uint32_t, DescriptorBufferInfo> m_bufferDescriptorInfos;
 
 private:
-	CVKDescriptorPool* m_pDescriptorPool;
+	CVKDevice* m_pDevice;
 
 private:
-	CVKDevice* m_pDevice;
+	CVKDescriptorPool* m_pDescriptorPool;
 };

@@ -50,7 +50,6 @@ void CVKDescriptorSet::Destroy(void)
 
 CVKDescriptorPool* CVKDescriptorSet::GetDescriptorPool(void) const
 {
-	ASSERT(m_pDescriptorPool);
 	return m_pDescriptorPool;
 }
 
