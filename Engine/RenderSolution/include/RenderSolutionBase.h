@@ -8,7 +8,7 @@ class CALL_API CRenderSolutionBase
 
 
 protected:
-	CRenderSolutionBase(void);
+	CRenderSolutionBase(CRenderSolution* pRenderSolution);
 	virtual ~CRenderSolutionBase(void);
 
 
@@ -68,6 +68,9 @@ protected:
 	CGfxRenderQueue* m_pMainQueue;
 	CGfxRenderQueue* m_pLightQueue;
 	CGfxRenderQueue* m_pShadowQueue;
+
+protected:
+	CRenderSolution* m_pRenderSolution;
 
 protected:
 	static CGfxEngine* m_pEngine;

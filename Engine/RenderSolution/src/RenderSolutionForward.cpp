@@ -1,8 +1,9 @@
 #include "EngineHeader.h"
 
 
-CRenderSolutionForward::CRenderSolutionForward(void)
-	: m_bEnableMSAA(false)
+CRenderSolutionForward::CRenderSolutionForward(CRenderSolution* pRenderSolution)
+	: CRenderSolutionBase(pRenderSolution)
+	, m_bEnableMSAA(false)
 {
 	m_ptrMainCommandBuffer[0] = GfxRenderer()->NewCommandBuffer(0, true);
 	m_ptrMainCommandBuffer[1] = GfxRenderer()->NewCommandBuffer(0, true);
@@ -120,7 +121,7 @@ void CRenderSolutionForward::Create(int samples)
 		CreateFrameBuffer();
 	}
 	else {
-		CRenderSolutionForward(samples);
+		CreateFrameBufferMSAA(samples);
 	}
 }
 

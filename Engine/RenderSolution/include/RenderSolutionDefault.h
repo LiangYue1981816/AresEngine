@@ -25,7 +25,7 @@ private:
 
 
 protected:
-	CRenderSolutionDefault(void);
+	CRenderSolutionDefault(CRenderSolution* pRenderSolution);
 	virtual ~CRenderSolutionDefault(void);
 
 

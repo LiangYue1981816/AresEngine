@@ -5,8 +5,9 @@ CGfxEngine* CRenderSolutionBase::m_pEngine = nullptr;
 CGfxCamera* CRenderSolutionBase::m_pMainCamera = nullptr;
 CGfxCamera* CRenderSolutionBase::m_pShadowCamera = nullptr;
 
-CRenderSolutionBase::CRenderSolutionBase(void)
-	: m_pMainQueue(nullptr)
+CRenderSolutionBase::CRenderSolutionBase(CRenderSolution* pRenderSolution)
+	: m_pRenderSolution(pRenderSolution)
+	, m_pMainQueue(nullptr)
 	, m_pLightQueue(nullptr)
 	, m_pShadowQueue(nullptr)
 {

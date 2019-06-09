@@ -44,11 +44,11 @@ CRenderSolution::CRenderSolution(GfxApi api, RenderSolution solution, void* hIns
 	}
 
 	CRenderSolutionBase::CreateInstance();
-	m_pRenderSolution[RENDER_SOLUTION_DEFAULT] = new CRenderSolutionDefault;
-	m_pRenderSolution[RENDER_SOLUTION_FORWARD] = new CRenderSolutionForward;
-	m_pRenderSolution[RENDER_SOLUTION_DEFERRED] = new CRenderSolutionDeferred;
-	m_pRenderSolution[RENDER_SOLUTION_TILED_BASE_FORWARD] = new CRenderSolutionTiledBaseForward;
-	m_pRenderSolution[RENDER_SOLUTION_TILED_BASE_DEFERRED] = new CRenderSolutionTiledBaseDeferred;
+	m_pRenderSolution[RENDER_SOLUTION_DEFAULT] = new CRenderSolutionDefault(this);
+	m_pRenderSolution[RENDER_SOLUTION_FORWARD] = new CRenderSolutionForward(this);
+	m_pRenderSolution[RENDER_SOLUTION_DEFERRED] = new CRenderSolutionDeferred(this);
+	m_pRenderSolution[RENDER_SOLUTION_TILED_BASE_FORWARD] = new CRenderSolutionTiledBaseForward(this);
+	m_pRenderSolution[RENDER_SOLUTION_TILED_BASE_DEFERRED] = new CRenderSolutionTiledBaseDeferred(this);
 
 	m_pCurrentRenderSolution = m_pRenderSolution[RENDER_SOLUTION_DEFAULT];
 	m_pCurrentRenderSolution->Create();

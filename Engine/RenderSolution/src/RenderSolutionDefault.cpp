@@ -1,8 +1,9 @@
 #include "EngineHeader.h"
 
 
-CRenderSolutionDefault::CRenderSolutionDefault(void)
-	: m_bEnableMSAA(false)
+CRenderSolutionDefault::CRenderSolutionDefault(CRenderSolution* pRenderSolution)
+	: CRenderSolutionBase(pRenderSolution)
+	, m_bEnableMSAA(false)
 {
 	m_ptrMainCommandBuffer[0] = GfxRenderer()->NewCommandBuffer(0, true);
 	m_ptrMainCommandBuffer[1] = GfxRenderer()->NewCommandBuffer(0, true);

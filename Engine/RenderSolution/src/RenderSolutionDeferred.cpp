@@ -1,7 +1,8 @@
 #include "EngineHeader.h"
 
 
-CRenderSolutionDeferred::CRenderSolutionDeferred(void)
+CRenderSolutionDeferred::CRenderSolutionDeferred(CRenderSolution* pRenderSolution)
+	: CRenderSolutionBase(pRenderSolution)
 {
 
 }

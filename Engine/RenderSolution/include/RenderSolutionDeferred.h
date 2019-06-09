@@ -8,7 +8,7 @@ class CALL_API CRenderSolutionDeferred : public CRenderSolutionBase
 
 
 protected:
-	CRenderSolutionDeferred(void);
+	CRenderSolutionDeferred(CRenderSolution* pRenderSolution);
 	virtual ~CRenderSolutionDeferred(void);
 
 

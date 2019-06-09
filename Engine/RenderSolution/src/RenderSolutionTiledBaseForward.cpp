@@ -1,7 +1,8 @@
 #include "EngineHeader.h"
 
 
-CRenderSolutionTiledBaseForward::CRenderSolutionTiledBaseForward(void)
+CRenderSolutionTiledBaseForward::CRenderSolutionTiledBaseForward(CRenderSolution* pRenderSolution)
+	: CRenderSolutionBase(pRenderSolution)
 {
 
 }

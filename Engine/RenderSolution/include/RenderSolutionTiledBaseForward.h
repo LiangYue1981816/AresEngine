@@ -8,7 +8,7 @@ class CALL_API CRenderSolutionTiledBaseForward : public CRenderSolutionBase
 
 
 protected:
-	CRenderSolutionTiledBaseForward(void);
+	CRenderSolutionTiledBaseForward(CRenderSolution* pRenderSolution);
 	virtual ~CRenderSolutionTiledBaseForward(void);
 
 
