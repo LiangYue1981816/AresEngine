@@ -1536,9 +1536,6 @@
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxHelper.h">
       <Filter>Engine\Renderer\Gfx\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxEngine.h">
-      <Filter>Engine\Renderer\Gfx\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Engine\RenderSolution\include\RenderSolution.h">
       <Filter>Engine\RenderSolution\Header Files</Filter>
     </ClInclude>
@@ -1559,6 +1556,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Engine\RenderSolution\include\RenderSolutionTiledBaseForward.h">
       <Filter>Engine\RenderSolution\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxUniformCamera.h">
+      <Filter>Engine\Renderer\Gfx\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -2231,9 +2231,6 @@
     <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxHelper.cpp">
       <Filter>Engine\Renderer\Gfx\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxEngine.cpp">
-      <Filter>Engine\Renderer\Gfx\Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Engine\RenderSolution\src\RenderSolution.cpp">
       <Filter>Engine\RenderSolution\Source Files</Filter>
     </ClCompile>
@@ -2254,6 +2251,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Engine\RenderSolution\src\RenderSolutionTiledBaseForward.cpp">
       <Filter>Engine\RenderSolution\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxUniformCamera.cpp">
+      <Filter>Engine\Renderer\Gfx\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -216,7 +216,6 @@
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxDefinition.h" />
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxDescriptorLayout.h" />
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxDescriptorSet.h" />
-    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxEngine.h" />
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxEnum.h" />
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxFrameBuffer.h" />
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxGLM.h" />
@@ -245,6 +244,7 @@
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxTexture2DArray.h" />
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxTextureCubeMap.h" />
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxUniformBuffer.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxUniformCamera.h" />
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxUniformEngine.h" />
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxUniformMat4.h" />
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxUniformVec1.h" />
@@ -653,7 +653,6 @@
     <ClCompile Include="..\..\Engine\Memory\src\MemorySystem.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Compiler\src\ShaderCompiler.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxCamera.cpp" />
-    <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxEngine.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxHelper.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxProfiler.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxRenderer.cpp" />
@@ -661,6 +660,7 @@
     <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxResource.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxResourceManager.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxSprivCross.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxUniformCamera.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxUniformEngine.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxUniformMat4.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxUniformVec1.cpp" />

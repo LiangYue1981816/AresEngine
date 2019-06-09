@@ -9,7 +9,6 @@ class CALL_API CGfxProfilerSample;
 class CALL_API CGfxResource;
 class CALL_API CGfxResourceManager;
 
-class CALL_API CGfxEngine;
 class CALL_API CGfxCamera;
 class CALL_API CGfxRenderQueue;
 
@@ -38,6 +37,7 @@ class CALL_API CGfxUniformVec3;
 class CALL_API CGfxUniformVec4;
 class CALL_API CGfxUniformMat4;
 class CALL_API CGfxUniformEngine;
+class CALL_API CGfxUniformCamera;
 class CALL_API CGfxUniformBuffer;
 
 class CALL_API CGfxMesh;
