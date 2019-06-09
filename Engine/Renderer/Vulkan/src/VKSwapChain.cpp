@@ -189,8 +189,7 @@ bool CVKSwapChain::CreateRenderTextures(void)
 		fenceCreateInfo.flags = VK_FENCE_CREATE_SIGNALED_BIT;
 		CALL_VK_FUNCTION_RETURN_BOOL(vkCreateFence(m_pDevice->GetDevice(), &fenceCreateInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkRenderDoneFences[indexFrame]));
 
-		uint32_t name = HashValueFormat("SwapChain Frame RenderTexture %d", indexFrame);
-		m_ptrRenderTextures[indexFrame] = VKRenderer()->NewRenderTexture(name);
+		m_ptrRenderTextures[indexFrame] = VKRenderer()->NewRenderTexture(HashValueFormat("SwapChain Frame RenderTexture %d", indexFrame));
 		CALL_BOOL_FUNCTION_RETURN_BOOL(m_ptrRenderTextures[indexFrame]->Create((HANDLE)m_vkImages[indexFrame], m_format, m_width, m_height));
 	}
 
