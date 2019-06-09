@@ -4,7 +4,7 @@
 class CALL_API CTaskCommandBuffer : public CTask
 {
 public:
-	CTaskCommandBuffer(int indexQueue, const CGfxDescriptorSetPtr ptrDescriptorSetPass, const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass, int indexSubpass, CGfxPipelineGraphics* pPipeline, uint32_t matPassName, const glm::vec4& scissor, const glm::vec4& viewport)
+	CTaskCommandBuffer(int indexQueue, const CGfxDescriptorSetPtr ptrDescriptorSetPass, const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass, int indexSubpass, const CGfxPipelineGraphics* pPipeline, uint32_t matPassName, const glm::vec4& scissor, const glm::vec4& viewport)
 		: m_indexQueue(indexQueue)
 
 		, m_ptrDescriptorSetPass(ptrDescriptorSetPass)
@@ -45,20 +45,20 @@ public:
 
 
 private:
-	int m_indexQueue;
+	const int m_indexQueue;
 
 	CGfxDescriptorSetPtr m_ptrDescriptorSetPass;
 	CGfxDescriptorSetPtr m_ptrDescriptorSetInputAttachment;
 
-	CGfxFrameBufferPtr m_ptrFrameBuffer;
-	CGfxRenderPassPtr m_ptrRenderPass;
-	int m_indexSubpass;
+	const CGfxFrameBufferPtr m_ptrFrameBuffer;
+	const CGfxRenderPassPtr m_ptrRenderPass;
+	const int m_indexSubpass;
 
-	CGfxPipelineGraphics* m_pPipeline;
-	uint32_t m_matPassName;
+	const uint32_t m_matPassName;
+	const CGfxPipelineGraphics* m_pPipeline;
 
-	glm::vec4 m_scissor;
-	glm::vec4 m_viewport;
+	const glm::vec4 m_scissor;
+	const glm::vec4 m_viewport;
 
 private:
 	CGfxCommandBufferPtr m_ptrCommandBuffer;
@@ -156,7 +156,7 @@ void CGfxRenderQueue::CmdDraw(int indexQueue, CGfxCommandBufferPtr ptrCommandBuf
 	}
 }
 
-void CGfxRenderQueue::CmdDrawThread(int indexQueue, CGfxCommandBufferPtr ptrCommandBuffer, const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass, int indexSubpass, const CGfxDescriptorSetPtr ptrDescriptorSetPass, const CGfxDescriptorSetPtr ptrDescriptorSetInputAttachment, CGfxPipelineGraphics* pPipeline, uint32_t matPassName, const glm::vec4& scissor, const glm::vec4& viewport)
+void CGfxRenderQueue::CmdDrawThread(int indexQueue, CGfxCommandBufferPtr ptrCommandBuffer, const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass, int indexSubpass, const CGfxDescriptorSetPtr ptrDescriptorSetPass, const CGfxDescriptorSetPtr ptrDescriptorSetInputAttachment, const CGfxPipelineGraphics* pPipeline, uint32_t matPassName, const glm::vec4& scissor, const glm::vec4& viewport)
 {
 	ptrCommandBuffer->Clearup();
 
