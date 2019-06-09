@@ -40,8 +40,12 @@ const CGfxDescriptorSetPtr CVKMaterialPass::GetDescriptorSet(void) const
 
 bool CVKMaterialPass::SetPipeline(const CGfxRenderPass* pRenderPass, const CGfxShader* pVertexShader, const CGfxShader* pFragmentShader, const PipelineState& state, int indexSubpass, int vertexBinding, int instanceBinding)
 {
+	char szName[_MAX_STRING];
+	sprintf(szName, "%p_%x", this, GetName());
+
 	m_pPipeline = VKRenderer()->CreatePipelineGraphics(pRenderPass, pVertexShader, pFragmentShader, state, indexSubpass, vertexBinding, instanceBinding);
-	m_ptrDescriptorSet = VKRenderer()->NewDescriptorSet(m_pPipeline->GetDescriptorLayout(DESCRIPTOR_SET_MATPASS));
+	m_ptrDescriptorSet = VKRenderer()->NewDescriptorSet(HashValue(szName), m_pPipeline->GetDescriptorLayout(DESCRIPTOR_SET_MATPASS));
+
 	return true;
 }
 

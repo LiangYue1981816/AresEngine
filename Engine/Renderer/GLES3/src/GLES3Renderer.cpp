@@ -235,9 +235,14 @@ CGfxDescriptorLayoutPtr CGLES3Renderer::NewDescriptorLayout(uint32_t set)
 	return m_pDescriptorLayoutManager->Create(set);
 }
 
-CGfxDescriptorSetPtr CGLES3Renderer::NewDescriptorSet(const CGfxDescriptorLayoutPtr ptrDescriptorLayout)
+CGfxDescriptorSetPtr CGLES3Renderer::GetDescriptorSet(uint32_t name)
 {
-	return m_pDescriptorSetManager->Create(ptrDescriptorLayout);
+	return m_pDescriptorSetManager->Get(name);
+}
+
+CGfxDescriptorSetPtr CGLES3Renderer::NewDescriptorSet(uint32_t name, const CGfxDescriptorLayoutPtr ptrDescriptorLayout)
+{
+	return m_pDescriptorSetManager->Create(name, ptrDescriptorLayout);
 }
 
 CGfxDescriptorSetPtr CGLES3Renderer::NewDescriptorSet(const CGfxPipelineGraphics* pPipelineGraphics, const CGfxFrameBuffer* pFrameBuffer, const CGfxRenderPass* pRenderPass, int indexSubpass)
