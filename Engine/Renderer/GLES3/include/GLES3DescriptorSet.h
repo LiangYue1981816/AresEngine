@@ -8,7 +8,7 @@ class CGLES3DescriptorSet : public CGfxDescriptorSet
 
 
 private:
-	CGLES3DescriptorSet(CGLES3DescriptorSetManager* pManager, const CGfxDescriptorLayoutPtr ptrDescriptorLayout);
+	CGLES3DescriptorSet(CGLES3DescriptorSetManager* pManager, uint32_t name, const CGfxDescriptorLayoutPtr ptrDescriptorLayout);
 	virtual ~CGLES3DescriptorSet(void);
 	virtual void Release(void);
 

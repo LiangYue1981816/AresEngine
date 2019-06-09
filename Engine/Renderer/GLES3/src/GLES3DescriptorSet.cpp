@@ -1,8 +1,8 @@
 #include "GLES3Renderer.h"
 
 
-CGLES3DescriptorSet::CGLES3DescriptorSet(CGLES3DescriptorSetManager* pManager, const CGfxDescriptorLayoutPtr ptrDescriptorLayout)
-	: CGfxDescriptorSet(ptrDescriptorLayout)
+CGLES3DescriptorSet::CGLES3DescriptorSet(CGLES3DescriptorSetManager* pManager, uint32_t name, const CGfxDescriptorLayoutPtr ptrDescriptorLayout)
+	: CGfxDescriptorSet(name, ptrDescriptorLayout)
 	, m_pManager(pManager)
 	, m_ptrDescriptorLayout(ptrDescriptorLayout)
 {

@@ -9,7 +9,7 @@ class CVKDescriptorSet : public CGfxDescriptorSet
 
 
 private:
-	CVKDescriptorSet(CVKDevice* pDevice, CVKDescriptorPool* pDescriptorPool, const CGfxDescriptorLayoutPtr ptrDescriptorLayout);
+	CVKDescriptorSet(CVKDevice* pDevice, CVKDescriptorPool* pDescriptorPool, uint32_t name, const CGfxDescriptorLayoutPtr ptrDescriptorLayout);
 	virtual ~CVKDescriptorSet(void);
 	virtual void Release(void);
 

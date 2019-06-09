@@ -1,8 +1,8 @@
 #include "VKRenderer.h"
 
 
-CVKDescriptorSet::CVKDescriptorSet(CVKDevice* pDevice, CVKDescriptorPool* pDescriptorPool, const CGfxDescriptorLayoutPtr ptrDescriptorLayout)
-	: CGfxDescriptorSet(ptrDescriptorLayout)
+CVKDescriptorSet::CVKDescriptorSet(CVKDevice* pDevice, CVKDescriptorPool* pDescriptorPool, uint32_t name, const CGfxDescriptorLayoutPtr ptrDescriptorLayout)
+	: CGfxDescriptorSet(name, ptrDescriptorLayout)
 	, m_pDevice(pDevice)
 	, m_pDescriptorPool(pDescriptorPool)
 
