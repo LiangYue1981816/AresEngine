@@ -52,6 +52,15 @@ CRenderSolution::CRenderSolution(GfxApi api, RenderSolution solution, void* hIns
 		break;
 	}
 
+	m_pEngine = new CGfxEngine;
+
+	m_pMainCamera = new CGfxCamera;
+	m_pShadowCamera = new CGfxCamera;
+
+	m_pMainQueue = new CGfxRenderQueue;
+	m_pLightQueue = new CGfxRenderQueue;
+	m_pShadowQueue = new CGfxRenderQueue;
+
 	CRenderSolutionBase::CreateInstance();
 	m_pRenderSolution[RENDER_SOLUTION_DEFAULT] = new CRenderSolutionDefault(this);
 	m_pRenderSolution[RENDER_SOLUTION_FORWARD] = new CRenderSolutionForward(this);
@@ -71,6 +80,15 @@ CRenderSolution::~CRenderSolution(void)
 	delete m_pRenderSolution[RENDER_SOLUTION_TILED_BASE_FORWARD];
 	delete m_pRenderSolution[RENDER_SOLUTION_TILED_BASE_DEFERRED];
 	CRenderSolutionBase::DestroyInstance();
+
+	delete m_pEngine;
+
+	delete m_pMainCamera;
+	delete m_pShadowCamera;
+
+	delete m_pMainQueue;
+	delete m_pLightQueue;
+	delete m_pShadowQueue;
 
 	delete m_pRenderer;
 }
