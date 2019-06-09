@@ -45,8 +45,8 @@ layout (location = 13) in mediump vec4 inInstancePointLightAttenuation;
 #define DESCRIPTOR_SET_MESHDRAW(b)        layout (set = 2, binding = b)
 #define DESCRIPTOR_SET_INPUTATTACHMENT(b) layout (set = 3, binding = b)
 
-#define DESCRIPTOR_BIND_CAMERA 0
-#define DESCRIPTOR_BIND_ENGINE 1
+#define DESCRIPTOR_BIND_ENGINE 0
+#define DESCRIPTOR_BIND_CAMERA 1
 
 
 #define USE_CAMERA_UNIFORM                                                         \
