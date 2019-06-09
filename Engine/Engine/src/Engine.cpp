@@ -118,7 +118,7 @@ void CEngine::Update(void)
 
 void CEngine::Render(void)
 {
-	m_pRenderSolution->GetCurrentRenderSolution()->Render(1 - m_indexQueue);
+	m_pRenderSolution->Render(1 - m_indexQueue);
 }
 
 void CEngine::UpdateThread(void)
@@ -130,7 +130,7 @@ void CEngine::UpdateThread(void)
 	m_lastTime = currTime;
 
 	m_pSceneManager->UpdateLogic(m_totalTime, m_deltaTime);
-	m_pRenderSolution->GetCurrentRenderSolution()->UpdateCamera(m_indexQueue);
+	m_pRenderSolution->UpdateCamera(m_indexQueue);
 }
 
 void* CEngine::WorkThread(void* pParams)
