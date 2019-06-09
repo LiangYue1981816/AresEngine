@@ -59,6 +59,16 @@ public:
 	void SetCurrentRenderSolution(RenderSolution solution, int samples = 1);
 	CRenderSolutionBase* GetCurrentRenderSolution(void) const;
 
+public:
+	CGfxEngine* GetEngine(void) const;
+
+	CGfxCamera* GetMainCamera(void) const;
+	CGfxCamera* GetShadowCamera(void) const;
+
+	CGfxRenderQueue* GetMainQueue(void) const;
+	CGfxRenderQueue* GetLightQueue(void) const;
+	CGfxRenderQueue* GetShadowQueue(void) const;
+
 
 private:
 	CGfxRenderer* m_pRenderer;

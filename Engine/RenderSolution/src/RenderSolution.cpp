@@ -104,3 +104,33 @@ CRenderSolutionBase* CRenderSolution::GetCurrentRenderSolution(void) const
 {
 	return m_pCurrentRenderSolution;
 }
+
+CGfxEngine* CRenderSolution::GetEngine(void) const
+{
+	return m_pEngine;
+}
+
+CGfxCamera* CRenderSolution::GetMainCamera(void) const
+{
+	return m_pMainCamera;
+}
+
+CGfxCamera* CRenderSolution::GetShadowCamera(void) const
+{
+	return m_pShadowCamera;
+}
+
+CGfxRenderQueue* CRenderSolution::GetMainQueue(void) const
+{
+	return m_pMainQueue;
+}
+
+CGfxRenderQueue* CRenderSolution::GetLightQueue(void) const
+{
+	return m_pLightQueue;
+}
+
+CGfxRenderQueue* CRenderSolution::GetShadowQueue(void) const
+{
+	return m_pShadowQueue;
+}
