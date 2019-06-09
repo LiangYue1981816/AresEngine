@@ -134,3 +134,119 @@ CGfxRenderQueue* CRenderSolution::GetShadowQueue(void) const
 {
 	return m_pShadowQueue;
 }
+
+void CRenderSolution::SetTime(float t, float dt)
+{
+	m_pEngine->SetTime(t, dt);
+}
+
+void CRenderSolution::SetCameraScissor(float x, float y, float width, float height)
+{
+	m_pMainCamera->SetScissor(x, y, width, height);
+}
+
+void CRenderSolution::SetCameraViewport(float x, float y, float width, float height)
+{
+	m_pEngine->SetCameraViewport(x, y, width, height);
+	m_pMainCamera->SetViewport(x, y, width, height);
+}
+
+void CRenderSolution::SetCameraPerspective(float fovy, float aspect, float zNear, float zFar)
+{
+	m_pEngine->SetCameraPerspective(fovy, aspect, zNear, zFar);
+	m_pMainCamera->SetPerspective(fovy, aspect, zNear, zFar);
+}
+
+void CRenderSolution::SetCameraOrtho(float left, float right, float bottom, float top, float zNear, float zFar)
+{
+	m_pEngine->SetCameraOrtho(left, right, bottom, top, zNear, zFar);
+	m_pMainCamera->SetOrtho(left, right, bottom, top, zNear, zFar);
+}
+
+void CRenderSolution::SetCameraLookat(float eyex, float eyey, float eyez, float centerx, float centery, float centerz, float upx, float upy, float upz)
+{
+	m_pEngine->SetCameraLookat(eyex, eyey, eyez, centerx, centery, centerz, upx, upy, upz);
+	m_pMainCamera->SetLookat(eyex, eyey, eyez, centerx, centery, centerz, upx, upy, upz);
+}
+
+void CRenderSolution::SetShadowOrtho(float left, float right, float bottom, float top, float zNear, float zFar)
+{
+	m_pEngine->SetShadowOrtho(left, right, bottom, top, zNear, zFar);
+	m_pShadowCamera->SetOrtho(left, right, bottom, top, zNear, zFar);
+}
+
+void CRenderSolution::SetShadowLookat(float eyex, float eyey, float eyez, float centerx, float centery, float centerz, float upx, float upy, float upz)
+{
+	m_pEngine->SetShadowLookat(eyex, eyey, eyez, centerx, centery, centerz, upx, upy, upz);
+	m_pShadowCamera->SetLookat(eyex, eyey, eyez, centerx, centery, centerz, upx, upy, upz);
+}
+
+void CRenderSolution::SetShadowRange(float range)
+{
+	m_pEngine->SetShadowRange(range);
+}
+
+void CRenderSolution::SetShadowResolution(float resolution)
+{
+	m_pEngine->SetShadowResolution(resolution);
+}
+
+void CRenderSolution::SetLightFactor(float ambientLightFactor, float pointLightFactor, float directLightFactor, float envLightFactor)
+{
+	m_pEngine->SetLightFactor(ambientLightFactor, pointLightFactor, directLightFactor, envLightFactor);
+}
+
+void CRenderSolution::SetAmbientLightSH(float shRed[9], float shGreen[9], float shBlue[9])
+{
+	m_pEngine->SetAmbientLightSH(shRed, shGreen, shBlue);
+}
+
+void CRenderSolution::SetAmbientLightRotation(float angle, float axisx, float axisy, float axisz)
+{
+	m_pEngine->SetAmbientLightRotation(angle, axisx, axisy, axisz);
+}
+
+void CRenderSolution::SetAmbientLightDirection(float dirx, float diry, float dirz)
+{
+	m_pEngine->SetAmbientLightDirection(dirx, diry, dirz);
+}
+
+void CRenderSolution::SetMainPointLightColor(float red, float green, float blue)
+{
+	m_pEngine->SetMainPointLightColor(red, green, blue);
+}
+
+void CRenderSolution::SetMainPointLightPosition(float posx, float posy, float posz, float radius)
+{
+	m_pEngine->SetMainPointLightPosition(posx, posy, posz, radius);
+}
+
+void CRenderSolution::SetMainPointLightAttenuation(float linear, float square, float constant)
+{
+	m_pEngine->SetMainPointLightAttenuation(linear, square, constant);
+}
+
+void CRenderSolution::SetMainDirectLightColor(float red, float green, float blue)
+{
+	m_pEngine->SetMainDirectLightColor(red, green, blue);
+}
+
+void CRenderSolution::SetMainDirectLightDirection(float dirx, float diry, float dirz)
+{
+	m_pEngine->SetMainDirectLightDirection(dirx, diry, dirz);
+}
+
+void CRenderSolution::SetFogColor(float red, float green, float blue)
+{
+	m_pEngine->SetFogColor(red, green, blue);
+}
+
+void CRenderSolution::SetFogHeightDensity(float startHeight, float endHeight, float density)
+{
+	m_pEngine->SetFogHeightDensity(startHeight, endHeight, density);
+}
+
+void CRenderSolution::SetFogDistanceDensity(float startDistance, float endDistance, float density)
+{
+	m_pEngine->SetFogDistanceDensity(startDistance, endDistance, density);
+}

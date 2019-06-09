@@ -63,10 +63,42 @@ public:
 	CGfxRenderQueue* GetLightQueue(void) const;
 	CGfxRenderQueue* GetShadowQueue(void) const;
 
+public:
+	void SetTime(float t, float dt);
+
+	void SetCameraScissor(float x, float y, float width, float height);
+	void SetCameraViewport(float x, float y, float width, float height);
+	void SetCameraPerspective(float fovy, float aspect, float zNear, float zFar);
+	void SetCameraOrtho(float left, float right, float bottom, float top, float zNear, float zFar);
+	void SetCameraLookat(float eyex, float eyey, float eyez, float centerx, float centery, float centerz, float upx, float upy, float upz);
+
+	void SetShadowOrtho(float left, float right, float bottom, float top, float zNear, float zFar);
+	void SetShadowLookat(float eyex, float eyey, float eyez, float centerx, float centery, float centerz, float upx, float upy, float upz);
+	void SetShadowRange(float range);
+	void SetShadowResolution(float resolution);
+
+	void SetLightFactor(float ambientLightFactor, float pointLightFactor, float directLightFactor, float envLightFactor);
+
+	void SetAmbientLightSH(float shRed[9], float shGreen[9], float shBlue[9]);
+	void SetAmbientLightRotation(float angle, float axisx, float axisy, float axisz);
+	void SetAmbientLightDirection(float dirx, float diry, float dirz);
+
+	void SetMainPointLightColor(float red, float green, float blue);
+	void SetMainPointLightPosition(float posx, float posy, float posz, float radius);
+	void SetMainPointLightAttenuation(float linear, float square, float constant);
+
+	void SetMainDirectLightColor(float red, float green, float blue);
+	void SetMainDirectLightDirection(float dirx, float diry, float dirz);
+
+	void SetFogColor(float red, float green, float blue);
+	void SetFogHeightDensity(float startHeight, float endHeight, float density);
+	void SetFogDistanceDensity(float startDistance, float endDistance, float density);
+
 
 private:
 	CGfxRenderer* m_pRenderer;
 
+private:
 	CRenderSolutionBase* m_pRenderSolution[RENDER_SOLUTION_COUNT];
 	CRenderSolutionBase* m_pCurrentRenderSolution;
 
