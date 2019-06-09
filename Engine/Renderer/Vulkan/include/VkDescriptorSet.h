@@ -40,9 +40,9 @@ public:
 
 private:
 	VkDescriptorSet m_vkDescriptorSet;
-	CGfxDescriptorLayoutPtr m_ptrDescriptorLayout;
 
 private:
+	CGfxDescriptorLayoutPtr m_ptrDescriptorLayout;
 	eastl::unordered_map<uint32_t, DescriptorImageInfo> m_imageDescriptorInfos;
 	eastl::unordered_map<uint32_t, DescriptorBufferInfo> m_bufferDescriptorInfos;
 
