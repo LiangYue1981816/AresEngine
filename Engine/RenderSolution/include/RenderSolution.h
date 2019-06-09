@@ -103,8 +103,8 @@ private:
 	CGfxRenderer* m_pRenderer;
 
 private:
-	CRenderSolutionBase* m_pRenderSolution[RENDER_SOLUTION_COUNT];
 	CRenderSolutionBase* m_pCurrentRenderSolution;
+	CRenderSolutionBase* m_pRenderSolution[RENDER_SOLUTION_COUNT];
 
 private:
 	CGfxCamera* m_pMainCamera;
