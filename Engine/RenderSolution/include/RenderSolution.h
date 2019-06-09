@@ -62,6 +62,7 @@ public:
 
 	CGfxUniformBufferPtr GetEngineUniformBuffer(void) const;
 	CGfxUniformBufferPtr GetMainCameraUniformBuffer(void) const;
+	CGfxUniformBufferPtr GetShadowCameraUniformBuffer(void) const;
 
 public:
 	void SetTime(float t, float dt);
@@ -72,6 +73,7 @@ public:
 	void SetCameraOrtho(float left, float right, float bottom, float top, float zNear, float zFar);
 	void SetCameraLookat(float eyex, float eyey, float eyez, float centerx, float centery, float centerz, float upx, float upy, float upz);
 
+	void SetShadowViewport(float x, float y, float width, float height);
 	void SetShadowOrtho(float left, float right, float bottom, float top, float zNear, float zFar);
 	void SetShadowLookat(float eyex, float eyey, float eyez, float centerx, float centery, float centerz, float upx, float upy, float upz);
 	void SetShadowRange(float range);
@@ -116,6 +118,7 @@ private:
 
 	CGfxUniformEngine* m_pUniformEngine;
 	CGfxUniformCamera* m_pUniformMainCamera;
+	CGfxUniformCamera* m_pUniformShadowCamera;
 };
 
 extern const uint32_t DESCRIPTORSET_DEFAULT_PASS_NAME;

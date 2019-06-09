@@ -43,6 +43,7 @@ CRenderSolution::CRenderSolution(GfxApi api, RenderSolution solution, void* hIns
 
 	, m_pUniformEngine(nullptr)
 	, m_pUniformMainCamera(nullptr)
+	, m_pUniformShadowCamera(nullptr)
 {
 	SetVertexAttributes(vertexAttributes, VERTEX_ATTRIBUTE_COUNT);
 	SetInstanceAttributes(instanceAttributes, INSTANCE_ATTRIBUTE_COUNT);
@@ -66,6 +67,7 @@ CRenderSolution::CRenderSolution(GfxApi api, RenderSolution solution, void* hIns
 
 	m_pUniformEngine = new CGfxUniformEngine;
 	m_pUniformMainCamera = new CGfxUniformCamera;
+	m_pUniformShadowCamera = new CGfxUniformCamera;
 
 	m_pRenderSolution[RENDER_SOLUTION_DEFAULT] = new CRenderSolutionDefault(this);
 	m_pRenderSolution[RENDER_SOLUTION_FORWARD] = new CRenderSolutionForward(this);
@@ -94,6 +96,7 @@ CRenderSolution::~CRenderSolution(void)
 
 	delete m_pUniformEngine;
 	delete m_pUniformMainCamera;
+	delete m_pUniformShadowCamera;
 
 	delete m_pRenderer;
 }
@@ -140,6 +143,11 @@ CGfxUniformBufferPtr CRenderSolution::GetMainCameraUniformBuffer(void) const
 	return m_pUniformMainCamera->GetUniformBuffer();
 }
 
+CGfxUniformBufferPtr CRenderSolution::GetShadowCameraUniformBuffer(void) const
+{
+	return m_pUniformShadowCamera->GetUniformBuffer();
+}
+
 void CRenderSolution::SetTime(float t, float dt)
 {
 	m_pUniformEngine->SetTime(t, dt);
@@ -174,15 +182,23 @@ void CRenderSolution::SetCameraLookat(float eyex, float eyey, float eyez, float 
 	m_pUniformMainCamera->SetLookat(eyex, eyey, eyez, centerx, centery, centerz, upx, upy, upz);
 }
 
+void CRenderSolution::SetShadowViewport(float x, float y, float width, float height)
+{
+	m_pShadowCamera->SetViewport(x, y, width, height);
+	m_pUniformShadowCamera->SetScreen(width, height);
+}
+
 void CRenderSolution::SetShadowOrtho(float left, float right, float bottom, float top, float zNear, float zFar)
 {
 	m_pShadowCamera->SetOrtho(left, right, bottom, top, zNear, zFar);
+	m_pUniformShadowCamera->SetOrtho(left, right, bottom, top, zNear, zFar);
 	m_pUniformEngine->SetShadowOrtho(left, right, bottom, top, zNear, zFar);
 }
 
 void CRenderSolution::SetShadowLookat(float eyex, float eyey, float eyez, float centerx, float centery, float centerz, float upx, float upy, float upz)
 {
 	m_pShadowCamera->SetLookat(eyex, eyey, eyez, centerx, centery, centerz, upx, upy, upz);
+	m_pUniformShadowCamera->SetLookat(eyex, eyey, eyez, centerx, centery, centerz, upx, upy, upz);
 	m_pUniformEngine->SetShadowLookat(eyex, eyey, eyez, centerx, centery, centerz, upx, upy, upz);
 }
 
