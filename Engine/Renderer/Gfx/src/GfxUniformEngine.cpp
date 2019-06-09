@@ -212,31 +212,31 @@ void CGfxUniformEngine::SetAmbientLightDirection(float dirx, float diry, float d
 	m_params.ambientLightRotationMatrix = glm::lookAt(glm::vec3(0.0f, 0.0f, 0.0f), glm::normalize(glm::vec3(-dirx, -diry, -dirz)), glm::vec3(0.0f, 1.0f, 0.0f));
 }
 
-void CGfxUniformEngine::SetPointLightColor(float red, float green, float blue)
+void CGfxUniformEngine::SetMainPointLightColor(float red, float green, float blue)
 {
 	m_bDirty = true;
 	m_params.pointLightColor = glm::vec4(red, green, blue, 0.0f);
 }
 
-void CGfxUniformEngine::SetPointLightPosition(float posx, float posy, float posz, float radius)
+void CGfxUniformEngine::SetMainPointLightPosition(float posx, float posy, float posz, float radius)
 {
 	m_bDirty = true;
 	m_params.pointLightPosition = glm::vec4(posx, posy, posz, radius);
 }
 
-void CGfxUniformEngine::SetPointLightAttenuation(float linear, float square, float constant)
+void CGfxUniformEngine::SetMainPointLightAttenuation(float linear, float square, float constant)
 {
 	m_bDirty = true;
 	m_params.pointLightAttenuation = glm::vec4(linear, square, constant, 0.0f);
 }
 
-void CGfxUniformEngine::SetDirectLightColor(float red, float green, float blue)
+void CGfxUniformEngine::SetMainDirectLightColor(float red, float green, float blue)
 {
 	m_bDirty = true;
 	m_params.directLightColor = glm::vec4(red, green, blue, 0.0);
 }
 
-void CGfxUniformEngine::SetDirectLightDirection(float dirx, float diry, float dirz)
+void CGfxUniformEngine::SetMainDirectLightDirection(float dirx, float diry, float dirz)
 {
 	m_bDirty = true;
 	m_params.directLightDirection = glm::vec4(glm::normalize(glm::vec3(-dirx, -diry, -dirz)), 0.0f);

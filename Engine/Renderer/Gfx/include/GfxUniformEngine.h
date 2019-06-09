@@ -64,12 +64,12 @@ public:
 	void SetAmbientLightRotation(float angle, float axisx, float axisy, float axisz);
 	void SetAmbientLightDirection(float dirx, float diry, float dirz);
 
-	void SetPointLightColor(float red, float green, float blue);
-	void SetPointLightPosition(float posx, float posy, float posz, float radius);
-	void SetPointLightAttenuation(float linear, float square, float constant);
+	void SetMainPointLightColor(float red, float green, float blue);
+	void SetMainPointLightPosition(float posx, float posy, float posz, float radius);
+	void SetMainPointLightAttenuation(float linear, float square, float constant);
 
-	void SetDirectLightColor(float red, float green, float blue);
-	void SetDirectLightDirection(float dirx, float diry, float dirz);
+	void SetMainDirectLightColor(float red, float green, float blue);
+	void SetMainDirectLightDirection(float dirx, float diry, float dirz);
 
 	void SetFogColor(float red, float green, float blue);
 	void SetFogHeightDensity(float startHeight, float endHeight, float density);

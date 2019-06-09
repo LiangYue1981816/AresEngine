@@ -50,14 +50,15 @@ private:
 
 
 public:
-	CGfxEngine* GetEngine(void) const;
-
 	CGfxCamera* GetMainCamera(void) const;
 	CGfxCamera* GetShadowCamera(void) const;
 
 	CGfxRenderQueue* GetMainQueue(void) const;
 	CGfxRenderQueue* GetLightQueue(void) const;
 	CGfxRenderQueue* GetShadowQueue(void) const;
+
+	CGfxUniformBufferPtr GetEngineUniformBuffer(void) const;
+	CGfxUniformBufferPtr GetMainCameraUniformBuffer(void) const;
 
 public:
 	void SetCurrentRenderSolution(RenderSolution solution, int samples = 1);
@@ -106,13 +107,13 @@ private:
 	CRenderSolutionBase* m_pCurrentRenderSolution;
 
 private:
-	CGfxEngine* m_pEngine;
-
-private:
 	CGfxCamera* m_pMainCamera;
 	CGfxCamera* m_pShadowCamera;
 
 	CGfxRenderQueue* m_pMainQueue;
 	CGfxRenderQueue* m_pLightQueue;
 	CGfxRenderQueue* m_pShadowQueue;
+
+	CGfxUniformEngine* m_pUniformEngine;
+	CGfxUniformCamera* m_pUniformMainCamera;
 };

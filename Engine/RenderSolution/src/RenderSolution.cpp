@@ -30,14 +30,15 @@ CRenderSolution::CRenderSolution(GfxApi api, RenderSolution solution, void* hIns
 	, m_pRenderSolution{ nullptr }
 	, m_pCurrentRenderSolution(nullptr)
 
-	, m_pEngine(nullptr)
-
 	, m_pMainCamera(nullptr)
 	, m_pShadowCamera(nullptr)
 
 	, m_pMainQueue(nullptr)
 	, m_pLightQueue(nullptr)
 	, m_pShadowQueue(nullptr)
+
+	, m_pUniformEngine(nullptr)
+	, m_pUniformMainCamera(nullptr)
 {
 	SetVertexAttributes(vertexAttributes, VERTEX_ATTRIBUTE_COUNT);
 	SetInstanceAttributes(instanceAttributes, INSTANCE_ATTRIBUTE_COUNT);
@@ -52,14 +53,15 @@ CRenderSolution::CRenderSolution(GfxApi api, RenderSolution solution, void* hIns
 		break;
 	}
 
-	m_pEngine = new CGfxEngine;
-
 	m_pMainCamera = new CGfxCamera;
 	m_pShadowCamera = new CGfxCamera;
 
 	m_pMainQueue = new CGfxRenderQueue;
 	m_pLightQueue = new CGfxRenderQueue;
 	m_pShadowQueue = new CGfxRenderQueue;
+
+	m_pUniformEngine = new CGfxUniformEngine;
+	m_pUniformMainCamera = new CGfxUniformCamera;
 
 	m_pRenderSolution[RENDER_SOLUTION_DEFAULT] = new CRenderSolutionDefault(this);
 	m_pRenderSolution[RENDER_SOLUTION_FORWARD] = new CRenderSolutionForward(this);
@@ -79,8 +81,6 @@ CRenderSolution::~CRenderSolution(void)
 	delete m_pRenderSolution[RENDER_SOLUTION_TILED_BASE_FORWARD];
 	delete m_pRenderSolution[RENDER_SOLUTION_TILED_BASE_DEFERRED];
 
-	delete m_pEngine;
-
 	delete m_pMainCamera;
 	delete m_pShadowCamera;
 
@@ -88,12 +88,10 @@ CRenderSolution::~CRenderSolution(void)
 	delete m_pLightQueue;
 	delete m_pShadowQueue;
 
-	delete m_pRenderer;
-}
+	delete m_pUniformEngine;
+	delete m_pUniformMainCamera;
 
-CGfxEngine* CRenderSolution::GetEngine(void) const
-{
-	return m_pEngine;
+	delete m_pRenderer;
 }
 
 CGfxCamera* CRenderSolution::GetMainCamera(void) const
@@ -121,6 +119,16 @@ CGfxRenderQueue* CRenderSolution::GetShadowQueue(void) const
 	return m_pShadowQueue;
 }
 
+CGfxUniformBufferPtr CRenderSolution::GetEngineUniformBuffer(void) const
+{
+	return m_pUniformEngine->GetUniformBuffer();
+}
+
+CGfxUniformBufferPtr CRenderSolution::GetMainCameraUniformBuffer(void) const
+{
+	return m_pUniformMainCamera->GetUniformBuffer();
+}
+
 void CRenderSolution::SetCurrentRenderSolution(RenderSolution solution, int samples)
 {
 	m_pCurrentRenderSolution->Destroy();
@@ -130,7 +138,7 @@ void CRenderSolution::SetCurrentRenderSolution(RenderSolution solution, int samp
 
 void CRenderSolution::SetTime(float t, float dt)
 {
-	m_pEngine->SetTime(t, dt);
+	m_pUniformEngine->SetTime(t, dt);
 }
 
 void CRenderSolution::SetCameraScissor(float x, float y, float width, float height)
@@ -140,108 +148,108 @@ void CRenderSolution::SetCameraScissor(float x, float y, float width, float heig
 
 void CRenderSolution::SetCameraViewport(float x, float y, float width, float height)
 {
-	m_pEngine->SetCameraViewport(x, y, width, height);
 	m_pMainCamera->SetViewport(x, y, width, height);
+	m_pUniformMainCamera->SetScreen(width, height);
 }
 
 void CRenderSolution::SetCameraPerspective(float fovy, float aspect, float zNear, float zFar)
 {
-	m_pEngine->SetCameraPerspective(fovy, aspect, zNear, zFar);
 	m_pMainCamera->SetPerspective(fovy, aspect, zNear, zFar);
+	m_pUniformMainCamera->SetPerspective(fovy, aspect, zNear, zFar);
 }
 
 void CRenderSolution::SetCameraOrtho(float left, float right, float bottom, float top, float zNear, float zFar)
 {
-	m_pEngine->SetCameraOrtho(left, right, bottom, top, zNear, zFar);
 	m_pMainCamera->SetOrtho(left, right, bottom, top, zNear, zFar);
+	m_pUniformMainCamera->SetOrtho(left, right, bottom, top, zNear, zFar);
 }
 
 void CRenderSolution::SetCameraLookat(float eyex, float eyey, float eyez, float centerx, float centery, float centerz, float upx, float upy, float upz)
 {
-	m_pEngine->SetCameraLookat(eyex, eyey, eyez, centerx, centery, centerz, upx, upy, upz);
 	m_pMainCamera->SetLookat(eyex, eyey, eyez, centerx, centery, centerz, upx, upy, upz);
+	m_pUniformMainCamera->SetLookat(eyex, eyey, eyez, centerx, centery, centerz, upx, upy, upz);
 }
 
 void CRenderSolution::SetShadowOrtho(float left, float right, float bottom, float top, float zNear, float zFar)
 {
-	m_pEngine->SetShadowOrtho(left, right, bottom, top, zNear, zFar);
 	m_pShadowCamera->SetOrtho(left, right, bottom, top, zNear, zFar);
+	m_pUniformEngine->SetShadowOrtho(left, right, bottom, top, zNear, zFar);
 }
 
 void CRenderSolution::SetShadowLookat(float eyex, float eyey, float eyez, float centerx, float centery, float centerz, float upx, float upy, float upz)
 {
-	m_pEngine->SetShadowLookat(eyex, eyey, eyez, centerx, centery, centerz, upx, upy, upz);
 	m_pShadowCamera->SetLookat(eyex, eyey, eyez, centerx, centery, centerz, upx, upy, upz);
+	m_pUniformEngine->SetShadowLookat(eyex, eyey, eyez, centerx, centery, centerz, upx, upy, upz);
 }
 
 void CRenderSolution::SetShadowRange(float range)
 {
-	m_pEngine->SetShadowRange(range);
+	m_pUniformEngine->SetShadowRange(range);
 }
 
 void CRenderSolution::SetShadowResolution(float resolution)
 {
-	m_pEngine->SetShadowResolution(resolution);
+	m_pUniformEngine->SetShadowResolution(resolution);
 }
 
 void CRenderSolution::SetLightFactor(float ambientLightFactor, float pointLightFactor, float directLightFactor, float envLightFactor)
 {
-	m_pEngine->SetLightFactor(ambientLightFactor, pointLightFactor, directLightFactor, envLightFactor);
+	m_pUniformEngine->SetLightFactor(ambientLightFactor, pointLightFactor, directLightFactor, envLightFactor);
 }
 
 void CRenderSolution::SetAmbientLightSH(float shRed[9], float shGreen[9], float shBlue[9])
 {
-	m_pEngine->SetAmbientLightSH(shRed, shGreen, shBlue);
+	m_pUniformEngine->SetAmbientLightSH(shRed, shGreen, shBlue);
 }
 
 void CRenderSolution::SetAmbientLightRotation(float angle, float axisx, float axisy, float axisz)
 {
-	m_pEngine->SetAmbientLightRotation(angle, axisx, axisy, axisz);
+	m_pUniformEngine->SetAmbientLightRotation(angle, axisx, axisy, axisz);
 }
 
 void CRenderSolution::SetAmbientLightDirection(float dirx, float diry, float dirz)
 {
-	m_pEngine->SetAmbientLightDirection(dirx, diry, dirz);
+	m_pUniformEngine->SetAmbientLightDirection(dirx, diry, dirz);
 }
 
 void CRenderSolution::SetMainPointLightColor(float red, float green, float blue)
 {
-	m_pEngine->SetMainPointLightColor(red, green, blue);
+	m_pUniformEngine->SetMainPointLightColor(red, green, blue);
 }
 
 void CRenderSolution::SetMainPointLightPosition(float posx, float posy, float posz, float radius)
 {
-	m_pEngine->SetMainPointLightPosition(posx, posy, posz, radius);
+	m_pUniformEngine->SetMainPointLightPosition(posx, posy, posz, radius);
 }
 
 void CRenderSolution::SetMainPointLightAttenuation(float linear, float square, float constant)
 {
-	m_pEngine->SetMainPointLightAttenuation(linear, square, constant);
+	m_pUniformEngine->SetMainPointLightAttenuation(linear, square, constant);
 }
 
 void CRenderSolution::SetMainDirectLightColor(float red, float green, float blue)
 {
-	m_pEngine->SetMainDirectLightColor(red, green, blue);
+	m_pUniformEngine->SetMainDirectLightColor(red, green, blue);
 }
 
 void CRenderSolution::SetMainDirectLightDirection(float dirx, float diry, float dirz)
 {
-	m_pEngine->SetMainDirectLightDirection(dirx, diry, dirz);
+	m_pUniformEngine->SetMainDirectLightDirection(dirx, diry, dirz);
 }
 
 void CRenderSolution::SetFogColor(float red, float green, float blue)
 {
-	m_pEngine->SetFogColor(red, green, blue);
+	m_pUniformEngine->SetFogColor(red, green, blue);
 }
 
 void CRenderSolution::SetFogHeightDensity(float startHeight, float endHeight, float density)
 {
-	m_pEngine->SetFogHeightDensity(startHeight, endHeight, density);
+	m_pUniformEngine->SetFogHeightDensity(startHeight, endHeight, density);
 }
 
 void CRenderSolution::SetFogDistanceDensity(float startDistance, float endDistance, float density)
 {
-	m_pEngine->SetFogDistanceDensity(startDistance, endDistance, density);
+	m_pUniformEngine->SetFogDistanceDensity(startDistance, endDistance, density);
 }
 
 void CRenderSolution::UpdateCamera(int indexQueue)
@@ -251,6 +259,7 @@ void CRenderSolution::UpdateCamera(int indexQueue)
 
 void CRenderSolution::Render(int indexQueue)
 {
-	m_pEngine->Apply();
+	m_pUniformEngine->Apply();
+	m_pUniformMainCamera->Apply();
 	m_pCurrentRenderSolution->Render(indexQueue);
 }
