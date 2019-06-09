@@ -37,8 +37,8 @@ private:
 		glm::vec4 mainDirectLightDirection;
 
 		glm::vec4 mainFogColor;
-		glm::vec4 mainFogHeightDensity;
-		glm::vec4 mainFogDistanceDensity;
+		glm::vec4 mainFogHeightParams;
+		glm::vec4 mainFogDistanceParams;
 	} Params;
 
 

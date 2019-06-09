@@ -251,13 +251,13 @@ void CGfxUniformEngine::SetMainFogColor(float red, float green, float blue)
 void CGfxUniformEngine::SetMainFogHeightDensity(float startHeight, float endHeight, float density)
 {
 	m_bDirty = true;
-	m_params.mainFogHeightDensity = glm::vec4(startHeight, endHeight, density, 0.0f);
+	m_params.mainFogHeightParams = glm::vec4(startHeight, endHeight, density, 0.0f);
 }
 
 void CGfxUniformEngine::SetMainFogDistanceDensity(float startDistance, float endDistance, float density)
 {
 	m_bDirty = true;
-	m_params.mainFogDistanceDensity = glm::vec4(startDistance, endDistance, density, 0.0f);
+	m_params.mainFogDistanceParams = glm::vec4(startDistance, endDistance, density, 0.0f);
 }
 
 void CGfxUniformEngine::Apply(void)
