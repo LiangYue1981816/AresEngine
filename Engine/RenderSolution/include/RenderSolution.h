@@ -116,4 +116,7 @@ private:
 
 	CGfxUniformEngine* m_pUniformEngine;
 	CGfxUniformCamera* m_pUniformMainCamera;
+
+private:
+	eastl::unordered_map<uint32_t, CGfxDescriptorSetPtr> m_ptrDescriptorSets;
 };
