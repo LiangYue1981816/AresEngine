@@ -4,11 +4,10 @@
 class CALL_API CTaskCommandBuffer : public CTask
 {
 public:
-	CTaskCommandBuffer(int indexQueue, const CGfxDescriptorSetPtr ptrDescriptorSetPass, const CGfxDescriptorSetPtr ptrDescriptorSetMeshDraw, const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass, int indexSubpass, CGfxPipelineGraphics* pPipeline, uint32_t matPassName, const glm::vec4& scissor, const glm::vec4& viewport)
+	CTaskCommandBuffer(int indexQueue, const CGfxDescriptorSetPtr ptrDescriptorSetPass, const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass, int indexSubpass, CGfxPipelineGraphics* pPipeline, uint32_t matPassName, const glm::vec4& scissor, const glm::vec4& viewport)
 		: m_indexQueue(indexQueue)
 
 		, m_ptrDescriptorSetPass(ptrDescriptorSetPass)
-		, m_ptrDescriptorSetMeshDraw(ptrDescriptorSetMeshDraw)
 
 		, m_ptrFrameBuffer(ptrFrameBuffer)
 		, m_ptrRenderPass(ptrRenderPass)
@@ -40,7 +39,7 @@ public:
 		m_ptrDescriptorSetInputAttachment = GfxRenderer()->NewDescriptorSet(m_pPipeline, m_ptrFrameBuffer, m_ptrRenderPass, m_indexSubpass);
 
 		if (CGfxRenderQueue* pRenderQueue = (CGfxRenderQueue*)pParams) {
-			pRenderQueue->CmdDrawThread(m_indexQueue, m_ptrCommandBuffer, m_ptrFrameBuffer, m_ptrRenderPass, m_indexSubpass, m_ptrDescriptorSetPass, m_ptrDescriptorSetMeshDraw, m_ptrDescriptorSetInputAttachment, m_pPipeline, m_matPassName, m_scissor, m_viewport);
+			pRenderQueue->CmdDrawThread(m_indexQueue, m_ptrCommandBuffer, m_ptrFrameBuffer, m_ptrRenderPass, m_indexSubpass, m_ptrDescriptorSetPass, m_ptrDescriptorSetInputAttachment, m_pPipeline, m_matPassName, m_scissor, m_viewport);
 		}
 	}
 
@@ -49,7 +48,6 @@ private:
 	int m_indexQueue;
 
 	CGfxDescriptorSetPtr m_ptrDescriptorSetPass;
-	CGfxDescriptorSetPtr m_ptrDescriptorSetMeshDraw;
 	CGfxDescriptorSetPtr m_ptrDescriptorSetInputAttachment;
 
 	CGfxFrameBufferPtr m_ptrFrameBuffer;
@@ -122,7 +120,7 @@ void CGfxRenderQueue::End(int indexQueue)
 	}
 }
 
-void CGfxRenderQueue::CmdDraw(int indexQueue, CGfxCommandBufferPtr ptrCommandBuffer, const CGfxDescriptorSetPtr ptrDescriptorSetPass, const CGfxDescriptorSetPtr ptrDescriptorSetMeshDraw, uint32_t matPassName, const glm::vec4& scissor, const glm::vec4& viewport)
+void CGfxRenderQueue::CmdDraw(int indexQueue, CGfxCommandBufferPtr ptrCommandBuffer, const CGfxDescriptorSetPtr ptrDescriptorSetPass, uint32_t matPassName, const glm::vec4& scissor, const glm::vec4& viewport)
 {
 	m_pipelineMaterialQueue[indexQueue].clear();
 	{
@@ -142,7 +140,7 @@ void CGfxRenderQueue::CmdDraw(int indexQueue, CGfxCommandBufferPtr ptrCommandBuf
 	eastl::vector<CTaskCommandBuffer> tasks;
 	{
 		for (const auto& itPipelineQueue : m_pipelineMaterialQueue[indexQueue]) {
-			tasks.emplace_back(indexQueue, ptrDescriptorSetPass, ptrDescriptorSetMeshDraw, ptrCommandBuffer->GetFrameBuffer(), ptrCommandBuffer->GetRenderPass(), ptrCommandBuffer->GetSubpassIndex(), itPipelineQueue.first, matPassName, scissor, viewport);
+			tasks.emplace_back(indexQueue, ptrDescriptorSetPass, ptrCommandBuffer->GetFrameBuffer(), ptrCommandBuffer->GetRenderPass(), ptrCommandBuffer->GetSubpassIndex(), itPipelineQueue.first, matPassName, scissor, viewport);
 		}
 
 		for (int indexTask = 0; indexTask < tasks.size(); indexTask++) {
@@ -158,7 +156,7 @@ void CGfxRenderQueue::CmdDraw(int indexQueue, CGfxCommandBufferPtr ptrCommandBuf
 	}
 }
 
-void CGfxRenderQueue::CmdDrawThread(int indexQueue, CGfxCommandBufferPtr ptrCommandBuffer, const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass, int indexSubpass, const CGfxDescriptorSetPtr ptrDescriptorSetPass, const CGfxDescriptorSetPtr ptrDescriptorSetMeshDraw, const CGfxDescriptorSetPtr ptrDescriptorSetInputAttachment, CGfxPipelineGraphics* pPipeline, uint32_t matPassName, const glm::vec4& scissor, const glm::vec4& viewport)
+void CGfxRenderQueue::CmdDrawThread(int indexQueue, CGfxCommandBufferPtr ptrCommandBuffer, const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass, int indexSubpass, const CGfxDescriptorSetPtr ptrDescriptorSetPass, const CGfxDescriptorSetPtr ptrDescriptorSetInputAttachment, CGfxPipelineGraphics* pPipeline, uint32_t matPassName, const glm::vec4& scissor, const glm::vec4& viewport)
 {
 	ptrCommandBuffer->Clearup();
 
@@ -169,7 +167,6 @@ void CGfxRenderQueue::CmdDrawThread(int indexQueue, CGfxCommandBufferPtr ptrComm
 
 		GfxRenderer()->CmdBindPipelineGraphics(ptrCommandBuffer, pPipeline);
 		GfxRenderer()->CmdBindDescriptorSet(ptrCommandBuffer, ptrDescriptorSetPass);
-		GfxRenderer()->CmdBindDescriptorSet(ptrCommandBuffer, ptrDescriptorSetMeshDraw);
 		GfxRenderer()->CmdBindDescriptorSet(ptrCommandBuffer, ptrDescriptorSetInputAttachment);
 
 		for (const auto& itMaterial : m_pipelineMaterialQueue[indexQueue][pPipeline]) {
