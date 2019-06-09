@@ -13,6 +13,10 @@ protected:
 
 
 protected:
+	virtual void CreateDescriptorSet(void) = 0;
+	virtual void DestroyDescriptorSet(void) = 0;
+
+protected:
 	virtual void CreateFrameBuffer(void) = 0;
 	virtual void DestroyFrameBuffer(void) = 0;
 

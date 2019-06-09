@@ -12,6 +12,16 @@ CRenderSolutionTiledBaseDeferred::~CRenderSolutionTiledBaseDeferred(void)
 	Destroy();
 }
 
+void CRenderSolutionTiledBaseDeferred::CreateDescriptorSet(void)
+{
+
+}
+
+void CRenderSolutionTiledBaseDeferred::DestroyDescriptorSet(void)
+{
+
+}
+
 void CRenderSolutionTiledBaseDeferred::CreateFrameBuffer(void)
 {
 

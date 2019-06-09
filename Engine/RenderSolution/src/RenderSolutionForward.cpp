@@ -15,6 +15,16 @@ CRenderSolutionForward::~CRenderSolutionForward(void)
 	Destroy();
 }
 
+void CRenderSolutionForward::CreateDescriptorSet(void)
+{
+
+}
+
+void CRenderSolutionForward::DestroyDescriptorSet(void)
+{
+
+}
+
 void CRenderSolutionForward::CreateFrameBuffer(void)
 {
 	m_bEnableMSAA = false;
@@ -123,6 +133,8 @@ void CRenderSolutionForward::Create(int samples)
 	else {
 		CreateFrameBufferMSAA(samples);
 	}
+
+	CreateDescriptorSet();
 }
 
 void CRenderSolutionForward::Destroy(void)
@@ -133,6 +145,7 @@ void CRenderSolutionForward::Destroy(void)
 
 	DestroyFrameBuffer();
 	DestroyFrameBufferMSAA();
+	DestroyDescriptorSet();
 }
 
 void CRenderSolutionForward::UpdateCamera(int indexQueue)

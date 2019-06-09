@@ -12,6 +12,16 @@ CRenderSolutionTiledBaseForward::~CRenderSolutionTiledBaseForward(void)
 	Destroy();
 }
 
+void CRenderSolutionTiledBaseForward::CreateDescriptorSet(void)
+{
+
+}
+
+void CRenderSolutionTiledBaseForward::DestroyDescriptorSet(void)
+{
+
+}
+
 void CRenderSolutionTiledBaseForward::CreateFrameBuffer(void)
 {
 
