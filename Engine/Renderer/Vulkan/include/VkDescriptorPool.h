@@ -9,7 +9,7 @@ class CVKDescriptorPool
 
 
 private:
-	CVKDescriptorPool(CVKDevice* pDevice);
+	CVKDescriptorPool(CVKDevice* pDevice, CVKDescriptorSetManager* pManager);
 	virtual ~CVKDescriptorPool(void);
 
 
@@ -19,6 +19,7 @@ private:
 
 private:
 	VkDescriptorPool GetDescriptorPool(void) const;
+	CVKDescriptorSetManager* GetDescriptorSetManager(void) const;
 
 private:
 	CVKDescriptorSet* AllocDescriptorSet(uint32_t name, const CGfxDescriptorLayoutPtr ptrDescriptorLayout);
@@ -35,6 +36,9 @@ private:
 
 private:
 	CVKDevice* m_pDevice;
+
+private:
+	CVKDescriptorSetManager* m_pManager;
 
 private:
 	CVKDescriptorPool* pNext;

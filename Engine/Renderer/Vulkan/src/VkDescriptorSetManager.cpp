@@ -54,7 +54,7 @@ CVKDescriptorSet* CVKDescriptorSetManager::CreateInternal(CVKDescriptorPool** pp
 			} while ((pDescriptorPool = pDescriptorPool->pNext) != nullptr);
 		}
 
-		CVKDescriptorPool* pDescriptorPool = new CVKDescriptorPool(m_pDevice);
+		CVKDescriptorPool* pDescriptorPool = new CVKDescriptorPool(m_pDevice, this);
 		{
 			if ((*ppPoolListHead) != nullptr) {
 				(*ppPoolListHead)->pPrev = pDescriptorPool;

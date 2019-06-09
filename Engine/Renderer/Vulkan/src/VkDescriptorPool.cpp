@@ -10,8 +10,9 @@ const uint32_t numStorageTexelBuffers = 32;
 const uint32_t numUniformTexelBuffers = 32;
 const uint32_t numInputAttachments = 32;
 
-CVKDescriptorPool::CVKDescriptorPool(CVKDevice* pDevice)
+CVKDescriptorPool::CVKDescriptorPool(CVKDevice* pDevice, CVKDescriptorSetManager* pManager)
 	: m_pDevice(pDevice)
+	, m_pManager(pManager)
 
 	, m_numSets(0)
 	, m_numDescriptors{ 0 }
@@ -84,10 +85,16 @@ VkDescriptorPool CVKDescriptorPool::GetDescriptorPool(void) const
 	return m_vkDescriptorPool;
 }
 
+CVKDescriptorSetManager* CVKDescriptorPool::GetDescriptorSetManager(void) const
+{
+	ASSERT(m_pManager);
+	return m_pManager;
+}
+
 CVKDescriptorSet* CVKDescriptorPool::AllocDescriptorSet(uint32_t name, const CGfxDescriptorLayoutPtr ptrDescriptorLayout)
 {
-	ASSERT(ptrDescriptorLayout);
 	ASSERT(m_vkDescriptorPool);
+	ASSERT(ptrDescriptorLayout);
 
 	if (m_numSets == 0) {
 		return nullptr;

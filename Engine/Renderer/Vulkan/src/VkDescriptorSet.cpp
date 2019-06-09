@@ -18,7 +18,7 @@ CVKDescriptorSet::~CVKDescriptorSet(void)
 
 void CVKDescriptorSet::Release(void)
 {
-	m_pDescriptorPool->FreeDescriptorSet(this);
+	m_pDescriptorPool->GetDescriptorSetManager()->Destroy(this);
 }
 
 bool CVKDescriptorSet::Create(const CGfxDescriptorLayoutPtr ptrDescriptorLayout)
