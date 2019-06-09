@@ -211,7 +211,7 @@ vec3 BRDF_EnvSpecularFast(vec3 V, vec3 N, vec3 albedoColor, float metallic, floa
 // High level functions
 float PointLightAttenuation(float dis)
 {
-	return Attenuation(dis, engine.pointLightAttenuation.x, engine.pointLightAttenuation.y, engine.pointLightAttenuation.z);
+	return Attenuation(dis, engine.mainPointLightAttenuation.x, engine.mainPointLightAttenuation.y, engine.mainPointLightAttenuation.z);
 }
 
 vec3 AmbientLightingSH4(vec3 albedoColor, float metallic, vec3 normal)
