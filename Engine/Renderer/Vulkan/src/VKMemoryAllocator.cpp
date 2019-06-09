@@ -124,12 +124,11 @@ CVKMemory* CVKMemoryAllocator::AllocMemory(VkDeviceSize size, VkDeviceSize align
 	ASSERT(m_vkMemory);
 
 	if (m_memoryFreeSize >= size) {
-		if (CVKMemory* pMemory = SearchMemory(size, alignment, type)) {
-			RemoveMemory(pMemory);
+		VkDeviceSize offset;
+		VkDeviceSize padding;
 
-			VkDeviceSize alignmentOffset = ALIGN_BYTE(pMemory->m_memoryOffset, alignment);
-			VkDeviceSize padding = alignmentOffset - pMemory->m_memoryOffset;
-			ASSERT(pMemory->m_memorySize >= padding);
+		if (CVKMemory* pMemory = SearchMemory(size, alignment, type, offset, padding)) {
+			RemoveMemory(pMemory);
 
 			if (pMemory->m_memorySize - padding > size) {
 				CVKMemory* pMemoryNext = new CVKMemory(m_pDevice, this, pMemory->m_memorySize - padding - size, pMemory->m_memoryOffset + padding + size);
@@ -291,7 +290,7 @@ bool IsMemoryAliasing(VkDeviceSize prevResourceOffset, VkDeviceSize prevResource
 	return prevResourceEndPage > currResourceStartPage;
 }
 
-CVKMemory* CVKMemoryAllocator::SearchMemory(VkDeviceSize size, VkDeviceSize alignment, VkResourceType type) const
+CVKMemory* CVKMemoryAllocator::SearchMemory(VkDeviceSize size, VkDeviceSize alignment, VkResourceType type, VkDeviceSize &offset, VkDeviceSize &padding) const
 {
 	mem_node* pMemoryNode = nullptr;
 	rb_node*  node = m_root.rb_node;
@@ -313,18 +312,18 @@ CVKMemory* CVKMemoryAllocator::SearchMemory(VkDeviceSize size, VkDeviceSize alig
 		// Offset    |
 		//           AlignmentOffset
 
-		VkDeviceSize alignmentOffset = ALIGN_BYTE(pMemoryNodeCur->pMemory->m_memoryOffset, alignment);
-		VkDeviceSize padding = alignmentOffset - pMemoryNodeCur->pMemory->m_memoryOffset;
+		offset = ALIGN_BYTE(pMemoryNodeCur->pMemory->m_memoryOffset, alignment);
+		padding = offset - pMemoryNodeCur->pMemory->m_memoryOffset;
 
 		if (CVKMemory* pMemoryPrev = pMemoryNodeCur->pMemory->pPrev) {
 			if (IsNeedCheckAliasing(pMemoryPrev->type, type) &&
-				IsMemoryAliasing(pMemoryPrev->m_memoryOffset, pMemoryPrev->m_memorySize, alignmentOffset, m_pDevice->GetPhysicalDeviceLimits().bufferImageGranularity)) {
+				IsMemoryAliasing(pMemoryPrev->m_memoryOffset, pMemoryPrev->m_memorySize, offset, m_pDevice->GetPhysicalDeviceLimits().bufferImageGranularity)) {
 				VkDeviceSize alignmentGranularity = ALIGN_BYTE(alignment, m_pDevice->GetPhysicalDeviceLimits().bufferImageGranularity);
 
-				alignmentOffset = ALIGN_BYTE(pMemoryNodeCur->pMemory->m_memoryOffset, alignmentGranularity);
-				padding = alignmentOffset - pMemoryNodeCur->pMemory->m_memoryOffset;
+				offset = ALIGN_BYTE(pMemoryNodeCur->pMemory->m_memoryOffset, alignmentGranularity);
+				padding = offset - pMemoryNodeCur->pMemory->m_memoryOffset;
 
-				ASSERT(IsMemoryAliasing(pMemoryPrev->m_memoryOffset, pMemoryPrev->m_memorySize, alignmentOffset, m_pDevice->GetPhysicalDeviceLimits().bufferImageGranularity) == false);
+				ASSERT(IsMemoryAliasing(pMemoryPrev->m_memoryOffset, pMemoryPrev->m_memorySize, offset, m_pDevice->GetPhysicalDeviceLimits().bufferImageGranularity) == false);
 			}
 		}
 

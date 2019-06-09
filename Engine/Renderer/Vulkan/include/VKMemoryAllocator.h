@@ -39,7 +39,7 @@ private:
 	void InsertMemory(CVKMemory* pMemory);
 	void RemoveMemory(CVKMemory* pMemory);
 	CVKMemory* MergeMemory(CVKMemory* pMemory, CVKMemory* pMemoryNext);
-	CVKMemory* SearchMemory(VkDeviceSize size, VkDeviceSize alignment, VkResourceType type) const;
+	CVKMemory* SearchMemory(VkDeviceSize size, VkDeviceSize alignment, VkResourceType type, VkDeviceSize &offset, VkDeviceSize &padding) const;
 
 private:
 	bool IsDeviceLocal(void) const;
