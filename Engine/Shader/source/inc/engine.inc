@@ -40,7 +40,7 @@ layout (location = 13) in mediump vec4 inInstancePointLightAttenuation;
 #endif
 
 
-#define DESCRIPTOR_SET_MAIN(b)            layout (set = 0, binding = b)
+#define DESCRIPTOR_SET_PASS(b)            layout (set = 0, binding = b)
 #define DESCRIPTOR_SET_MATPASS(b)         layout (set = 1, binding = b)
 #define DESCRIPTOR_SET_MESHDRAW(b)        layout (set = 2, binding = b)
 #define DESCRIPTOR_SET_INPUTATTACHMENT(b) layout (set = 3, binding = b)
@@ -50,7 +50,7 @@ layout (location = 13) in mediump vec4 inInstancePointLightAttenuation;
 
 
 #define USE_CAMERA_UNIFORM                                                         \
-	DESCRIPTOR_SET_MAIN(DESCRIPTOR_BIND_CAMERA) uniform Camera                     \
+	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_CAMERA) uniform Camera                     \
 	{                                                                              \
 		highp vec4 screen;                                                         \
 		highp vec4 zbuffer;                                                        \
@@ -64,7 +64,7 @@ layout (location = 13) in mediump vec4 inInstancePointLightAttenuation;
 	} camera
 
 #define USE_ENGINE_UNIFORM                                                         \
-	DESCRIPTOR_SET_MAIN(DESCRIPTOR_BIND_ENGINE) uniform Engine                     \
+	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_ENGINE) uniform Engine                     \
 	{                                                                              \
 		mediump vec4 time;                                                         \
 		mediump vec4 sinTime;                                                      \
