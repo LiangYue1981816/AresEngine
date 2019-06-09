@@ -127,9 +127,11 @@ void CVKDescriptorSetManager::Destroy(CVKDescriptorSet* pDescriptorSet)
 					pDescriptorPool->pNext->pPrev = pDescriptorPool->pPrev;
 				}
 
-				pDescriptorPool->pPrev = nullptr;
-				pDescriptorPool->pNext = m_pPoolListHead;
-				m_pPoolListHead = pDescriptorPool;
+				if (m_pPoolListHead == pDescriptorPool) {
+					m_pPoolListHead = pDescriptorPool->pNext;
+				}
+
+				delete pDescriptorPool;
 			}
 		}
 	}
