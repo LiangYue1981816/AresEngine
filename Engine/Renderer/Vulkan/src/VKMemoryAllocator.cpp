@@ -292,6 +292,8 @@ bool IsMemoryAliasing(VkDeviceSize prevResourceOffset, VkDeviceSize prevResource
 
 CVKMemory* CVKMemoryAllocator::SearchMemory(VkDeviceSize size, VkDeviceSize alignment, VkResourceType type, VkDeviceSize &offset, VkDeviceSize &padding) const
 {
+	const VkDeviceSize bufferImageGranularity = m_pDevice->GetPhysicalDeviceLimits().bufferImageGranularity;
+
 	mem_node* pMemoryNode = nullptr;
 	rb_node*  node = m_root.rb_node;
 
@@ -313,19 +315,18 @@ CVKMemory* CVKMemoryAllocator::SearchMemory(VkDeviceSize size, VkDeviceSize alig
 		//           AlignmentOffset
 
 		offset = ALIGN_BYTE(pMemoryNodeCur->pMemory->m_memoryOffset, alignment);
-		padding = offset - pMemoryNodeCur->pMemory->m_memoryOffset;
-
-		if (CVKMemory* pMemoryPrev = pMemoryNodeCur->pMemory->pPrev) {
-			if (IsNeedCheckAliasing(pMemoryPrev->type, type) &&
-				IsMemoryAliasing(pMemoryPrev->m_memoryOffset, pMemoryPrev->m_memorySize, offset, m_pDevice->GetPhysicalDeviceLimits().bufferImageGranularity)) {
-				VkDeviceSize alignmentGranularity = ALIGN_BYTE(alignment, m_pDevice->GetPhysicalDeviceLimits().bufferImageGranularity);
-
-				offset = ALIGN_BYTE(pMemoryNodeCur->pMemory->m_memoryOffset, alignmentGranularity);
-				padding = offset - pMemoryNodeCur->pMemory->m_memoryOffset;
-
-				ASSERT(IsMemoryAliasing(pMemoryPrev->m_memoryOffset, pMemoryPrev->m_memorySize, offset, m_pDevice->GetPhysicalDeviceLimits().bufferImageGranularity) == false);
+		{
+			if (bufferImageGranularity > 1) {
+				if (CVKMemory* pMemoryPrev = pMemoryNodeCur->pMemory->pPrev) {
+					if (IsNeedCheckAliasing(pMemoryPrev->type, type) &&
+						IsMemoryAliasing(pMemoryPrev->m_memoryOffset, pMemoryPrev->m_memorySize, offset, bufferImageGranularity)) {
+						offset = ALIGN_BYTE(offset, bufferImageGranularity);
+						ASSERT(IsMemoryAliasing(pMemoryPrev->m_memoryOffset, pMemoryPrev->m_memorySize, offset, bufferImageGranularity) == false);
+					}
+				}
 			}
 		}
+		padding = offset - pMemoryNodeCur->pMemory->m_memoryOffset;
 
 		if (pMemoryNodeCur->pMemory->m_memorySize < padding) {
 			node = node->rb_right;
