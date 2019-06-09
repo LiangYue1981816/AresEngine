@@ -84,7 +84,7 @@ VkDescriptorPool CVKDescriptorPool::GetDescriptorPool(void) const
 	return m_vkDescriptorPool;
 }
 
-CVKDescriptorSet* CVKDescriptorPool::AllocDescriptorSet(const CGfxDescriptorLayoutPtr ptrDescriptorLayout)
+CVKDescriptorSet* CVKDescriptorPool::AllocDescriptorSet(uint32_t name, const CGfxDescriptorLayoutPtr ptrDescriptorLayout)
 {
 	ASSERT(ptrDescriptorLayout);
 	ASSERT(m_vkDescriptorPool);
@@ -99,7 +99,7 @@ CVKDescriptorSet* CVKDescriptorPool::AllocDescriptorSet(const CGfxDescriptorLayo
 		}
 	}
 
-	CVKDescriptorSet* pDescriptorSet = new CVKDescriptorSet(m_pDevice, this, ptrDescriptorLayout);
+	CVKDescriptorSet* pDescriptorSet = new CVKDescriptorSet(m_pDevice, this, name, ptrDescriptorLayout);
 	m_pDescriptorSets[pDescriptorSet] = pDescriptorSet;
 
 	m_numSets -= 1;
