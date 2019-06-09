@@ -25,8 +25,8 @@ static const ATTRIBUTE instanceAttributes[INSTANCE_ATTRIBUTE_COUNT] = {
 };
 
 
-const uint32_t DESCRIPTORSET_DEFAULT_PASS_NAME = HashValue("DESCRIPTORSET_DEFAULT_PASS_NAME");
-const uint32_t DESCRIPTORSET_FORWARD_LIGHTING_PASS_NAME = HashValue("DESCRIPTORSET_FORWARD_LIGHTING_PASS_NAME");
+const uint32_t DESCRIPTORSET_DEFAULT_PASS_NAME = HashValue("Default");
+const uint32_t DESCRIPTORSET_FORWARD_LIGHTING_PASS_NAME = HashValue("PBRLighting");
 
 
 CRenderSolution::CRenderSolution(GfxApi api, RenderSolution solution, void* hInstance, void* hWnd, void* hDC, int width, int height, GfxPixelFormat format)

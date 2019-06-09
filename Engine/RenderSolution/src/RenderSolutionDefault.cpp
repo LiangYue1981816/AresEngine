@@ -167,8 +167,6 @@ void CRenderSolutionDefault::Render(int indexQueue)
 {
 	GfxRenderer()->AcquireNextFrame();
 	{
-		const uint32_t nameDefaultPass = HashValue("Default");
-
 		const int indexFrame = GfxRenderer()->GetSwapChain()->GetFrameIndex();
 
 		const CGfxRenderPassPtr ptrRenderPass = m_bEnableMSAA ? m_renderParamsMSAA.ptrRenderPass : m_renderParams.ptrRenderPass;
@@ -195,7 +193,7 @@ void CRenderSolutionDefault::Render(int indexQueue)
 
 				GfxRenderer()->CmdBeginRenderPass(ptrMainCommandBuffer, ptrFrameBuffer, ptrRenderPass);
 				{
-					m_pRenderSolution->GetMainQueue()->CmdDraw(indexQueue, ptrMainCommandBuffer, m_ptrDescriptorSetDefaultPass, nameDefaultPass, m_pRenderSolution->GetMainCamera()->GetScissor(), m_pRenderSolution->GetMainCamera()->GetViewport());
+					m_pRenderSolution->GetMainQueue()->CmdDraw(indexQueue, ptrMainCommandBuffer, m_ptrDescriptorSetDefaultPass, DESCRIPTORSET_DEFAULT_PASS_NAME, m_pRenderSolution->GetMainCamera()->GetScissor(), m_pRenderSolution->GetMainCamera()->GetViewport());
 				}
 				GfxRenderer()->CmdEndRenderPass(ptrMainCommandBuffer);
 			}
