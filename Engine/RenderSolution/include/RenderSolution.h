@@ -50,6 +50,9 @@ private:
 
 
 public:
+	void SetCurrentRenderSolution(RenderSolution solution, int samples = 1);
+
+public:
 	CGfxCamera* GetMainCamera(void) const;
 	CGfxCamera* GetShadowCamera(void) const;
 
@@ -59,9 +62,6 @@ public:
 
 	CGfxUniformBufferPtr GetEngineUniformBuffer(void) const;
 	CGfxUniformBufferPtr GetMainCameraUniformBuffer(void) const;
-
-public:
-	void SetCurrentRenderSolution(RenderSolution solution, int samples = 1);
 
 public:
 	void SetTime(float t, float dt);

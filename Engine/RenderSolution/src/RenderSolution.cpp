@@ -94,6 +94,13 @@ CRenderSolution::~CRenderSolution(void)
 	delete m_pRenderer;
 }
 
+void CRenderSolution::SetCurrentRenderSolution(RenderSolution solution, int samples)
+{
+	m_pCurrentRenderSolution->Destroy();
+	m_pCurrentRenderSolution = m_pRenderSolution[solution];
+	m_pCurrentRenderSolution->Create(samples);
+}
+
 CGfxCamera* CRenderSolution::GetMainCamera(void) const
 {
 	return m_pMainCamera;
@@ -127,13 +134,6 @@ CGfxUniformBufferPtr CRenderSolution::GetEngineUniformBuffer(void) const
 CGfxUniformBufferPtr CRenderSolution::GetMainCameraUniformBuffer(void) const
 {
 	return m_pUniformMainCamera->GetUniformBuffer();
-}
-
-void CRenderSolution::SetCurrentRenderSolution(RenderSolution solution, int samples)
-{
-	m_pCurrentRenderSolution->Destroy();
-	m_pCurrentRenderSolution = m_pRenderSolution[solution];
-	m_pCurrentRenderSolution->Create(samples);
 }
 
 void CRenderSolution::SetTime(float t, float dt)

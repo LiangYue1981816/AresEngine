@@ -61,13 +61,16 @@
 
 
 #define DESCRIPTOR_SET_ENGINE               0
-#define DESCRIPTOR_SET_MESHDRAW             1
-#define DESCRIPTOR_SET_MATPASS              2
+#define DESCRIPTOR_SET_MATPASS              1
+#define DESCRIPTOR_SET_MESHDRAW             2
 #define DESCRIPTOR_SET_INPUTATTACHMENT      3
 #define DESCRIPTOR_SET_COUNT                4
 
 #define DESCRIPTOR_BIND_ENGINE              0
+#define DESCRIPTOR_BIND_CAMERA              1
+
 #define UNIFORM_ENGINE_NAME                 HashValue("Engine")
+#define UNIFORM_CAMERA_NAME                 HashValue("Camera")
 
 
 typedef enum GfxApi {
