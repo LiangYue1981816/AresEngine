@@ -131,31 +131,21 @@ void CRenderSolutionForward::Destroy(void)
 	m_ptrMainCommandBuffer[1]->Clearup();
 	m_ptrMainCommandBuffer[2]->Clearup();
 
-	m_pMainQueue->Clear(0);
-	m_pLightQueue->Clear(0);
-	m_pShadowQueue->Clear(0);
-
-	m_pMainQueue->Clear(1);
-	m_pLightQueue->Clear(1);
-	m_pShadowQueue->Clear(1);
-
 	DestroyFrameBuffer();
 	DestroyFrameBufferMSAA();
 }
 
 void CRenderSolutionForward::UpdateCamera(int indexQueue)
 {
-	m_pMainQueue->Clear(indexQueue);
-	m_pLightQueue->Clear(indexQueue);
-	m_pShadowQueue->Clear(indexQueue);
+	m_pRenderSolution->GetMainQueue()->Clear(indexQueue);
+	m_pRenderSolution->GetLightQueue()->Clear(indexQueue);
+	m_pRenderSolution->GetShadowQueue()->Clear(indexQueue);
 
-	SceneManager()->UpdateCamera(m_pMainCamera, m_pMainQueue, indexQueue);
+	SceneManager()->UpdateCamera(m_pRenderSolution->GetMainCamera(), m_pRenderSolution->GetMainQueue(), indexQueue);
 }
 
 void CRenderSolutionForward::Render(int indexQueue)
 {
-	m_pEngine->Apply();
-
 	GfxRenderer()->AcquireNextFrame();
 	{
 		const uint32_t nameLightingPass = HashValue("PBRLighting");
@@ -186,7 +176,7 @@ void CRenderSolutionForward::Render(int indexQueue)
 
 				GfxRenderer()->CmdBeginRenderPass(ptrMainCommandBuffer, ptrFrameBuffer, ptrRenderPass);
 				{
-					m_pMainQueue->CmdDraw(indexQueue, ptrMainCommandBuffer, m_pEngine->GetDescriptorSet(), nullptr, nameLightingPass, m_pMainCamera->GetScissor(), m_pMainCamera->GetViewport());
+					m_pRenderSolution->GetMainQueue()->CmdDraw(indexQueue, ptrMainCommandBuffer, m_pRenderSolution->GetEngine()->GetDescriptorSet(), nullptr, nameLightingPass, m_pRenderSolution->GetMainCamera()->GetScissor(), m_pRenderSolution->GetMainCamera()->GetViewport());
 				}
 				GfxRenderer()->CmdEndRenderPass(ptrMainCommandBuffer);
 			}
