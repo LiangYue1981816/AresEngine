@@ -22,7 +22,7 @@ void CRenderSolutionDefault::CreateDescriptorSet(void)
 	ptrDescriptorLayout->Create();
 
 	m_ptrDescriptorSetDefaultPass = GfxRenderer()->NewDescriptorSet(DESCRIPTORSET_DEFAULT_PASS_NAME, ptrDescriptorLayout);
-	m_ptrDescriptorSetDefaultPass->SetUniformBuffer(DESCRIPTOR_BIND_CAMERA, m_pRenderSolution->GetMainCameraUniformBuffer(), 0, m_pRenderSolution->GetMainCameraUniformBuffer()->GetSize());
+	m_ptrDescriptorSetDefaultPass->SetUniformBuffer(UNIFORM_CAMERA_NAME, m_pRenderSolution->GetMainCameraUniformBuffer(), 0, m_pRenderSolution->GetMainCameraUniformBuffer()->GetSize());
 	m_ptrDescriptorSetDefaultPass->Update();
 }
 
