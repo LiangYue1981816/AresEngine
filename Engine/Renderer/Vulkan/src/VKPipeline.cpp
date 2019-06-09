@@ -60,8 +60,9 @@ bool CVKPipeline::CreateLayouts(void)
 			}
 
 			for (const auto& itInputAttachment : inputAttachmentBindings) {
-				m_inputAttachmentNames[itInputAttachment.second.inputAttachmentIndex] = HashValue(itInputAttachment.first.c_str());
-				m_ptrDescriptorLayouts[itInputAttachment.second.set]->SetInputAttachmentBinding(HashValue(itInputAttachment.first.c_str()), itInputAttachment.second.binding);
+				uint32_t name = HashValue(itInputAttachment.first.c_str());
+				m_inputAttachmentNames[itInputAttachment.second.inputAttachmentIndex] = name;
+				m_ptrDescriptorLayouts[itInputAttachment.second.set]->SetInputAttachmentBinding(name, itInputAttachment.second.binding);
 			}
 		}
 	}
