@@ -121,5 +121,5 @@ private:
 	CGfxUniformCamera* m_pUniformShadowCamera;
 };
 
-extern const uint32_t DESCRIPTORSET_DEFAULT_PASS_NAME;
-extern const uint32_t DESCRIPTORSET_FORWARD_LIGHTING_PASS_NAME;
+extern const uint32_t DEFAULT_PASS_NAME;
+extern const uint32_t FORWARD_LIGHTING_PASS_NAME;
