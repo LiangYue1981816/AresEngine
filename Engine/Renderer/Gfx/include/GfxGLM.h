@@ -402,14 +402,14 @@ namespace glm {
 			planes[4][0] = plane(vec3(0.0f, 0.0f, -zNear), vec3(0.0f, 0.0f, -1.0f));
 			planes[5][0] = plane(vec3(0.0f, 0.0f, -zFar), vec3(0.0f, 0.0f, 1.0f));
 
-			vertexs[0][0] = vec4(-xNear, -yNear, zNear, 0.0f);
-			vertexs[1][0] = vec4(xNear, -yNear, zNear, 0.0f);
-			vertexs[2][0] = vec4(xNear, yNear, zNear, 0.0f);
-			vertexs[3][0] = vec4(-xNear, yNear, zNear, 0.0f);
-			vertexs[4][0] = vec4(-xFar, -yFar, zFar, 0.0f);
-			vertexs[5][0] = vec4(xFar, -yFar, zFar, 0.0f);
-			vertexs[6][0] = vec4(xFar, yFar, zFar, 0.0f);
-			vertexs[7][0] = vec4(-xFar, yFar, zFar, 0.0f);
+			vertexs[0][0] = vec4(-xNear, -yNear, -zNear, 0.0f);
+			vertexs[1][0] = vec4(xNear, -yNear, -zNear, 0.0f);
+			vertexs[2][0] = vec4(xNear, yNear, -zNear, 0.0f);
+			vertexs[3][0] = vec4(-xNear, yNear, -zNear, 0.0f);
+			vertexs[4][0] = vec4(-xFar, -yFar, -zFar, 0.0f);
+			vertexs[5][0] = vec4(xFar, -yFar, -zFar, 0.0f);
+			vertexs[6][0] = vec4(xFar, yFar, -zFar, 0.0f);
+			vertexs[7][0] = vec4(-xFar, yFar, -zFar, 0.0f);
 		}
 
 		void setOrtho(float left, float right, float bottom, float top, float zNear, float zFar)
