@@ -505,6 +505,7 @@ namespace glm {
 		mat4 viewInverseTransposeMatrix;
 
 	private:
+		vec3 vertexs[8][2];
 		plane planes[6][2];
 	} camera;
 
