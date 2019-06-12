@@ -386,6 +386,13 @@ namespace glm {
 			float angle = radians(fovy);
 			float d = 1.0f / tan(angle * 0.5f);
 
+			float tanHalfFovy = tan(angle * 0.5f);
+			float tanHalfFovx = tanHalfFovy * aspect;
+			float xNear = zNear * tanHalfFovx;
+			float yNear = zNear * tanHalfFovy;
+			float xFar = zFar * tanHalfFovx;
+			float yFar = zFar * tanHalfFovy;
+
 			projectionMatrix = glm::perspective(angle, aspect, zNear, zFar);
 
 			planes[0][0] = plane(vec3(0.0f, 0.0f, 0.0f), vec3(0.0f, -d, -1.0f));
@@ -394,6 +401,15 @@ namespace glm {
 			planes[3][0] = plane(vec3(0.0f, 0.0f, 0.0f), vec3(-d, 0.0f, -aspect));
 			planes[4][0] = plane(vec3(0.0f, 0.0f, -zNear), vec3(0.0f, 0.0f, -1.0f));
 			planes[5][0] = plane(vec3(0.0f, 0.0f, -zFar), vec3(0.0f, 0.0f, 1.0f));
+
+			vertexs[0][0] = vec4(-xNear, -yNear, -zNear, 0.0f);
+			vertexs[1][0] = vec4(xNear, -yNear, -zNear, 0.0f);
+			vertexs[2][0] = vec4(xNear, yNear, -zNear, 0.0f);
+			vertexs[3][0] = vec4(-xNear, yNear, -zNear, 0.0f);
+			vertexs[4][0] = vec4(-xFar, -yFar, -zFar, 0.0f);
+			vertexs[5][0] = vec4(xFar, -yFar, -zFar, 0.0f);
+			vertexs[6][0] = vec4(xFar, yFar, -zFar, 0.0f);
+			vertexs[7][0] = vec4(-xFar, yFar, -zFar, 0.0f);
 		}
 
 		void setOrtho(float left, float right, float bottom, float top, float zNear, float zFar)
@@ -420,6 +436,10 @@ namespace glm {
 
 			for (int indexPlane = 0; indexPlane < 6; indexPlane++) {
 				planes[indexPlane][1] = planes[indexPlane][0] * viewInverseMatrix;
+			}
+
+			for (int indexVertex = 0; indexVertex < 8; indexVertex++) {
+				vertexs[indexVertex][1] = viewInverseMatrix * vertexs[indexVertex][0];
 			}
 		}
 
@@ -505,7 +525,7 @@ namespace glm {
 		mat4 viewInverseTransposeMatrix;
 
 	private:
-		vec3 vertexs[8][2];
+		vec4 vertexs[8][2];
 		plane planes[6][2];
 	} camera;
 
