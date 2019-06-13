@@ -80,6 +80,12 @@ static bool InternalLoadTexture2DArrayLayer(CGfxTexture2DArray* pTexture2DArray,
 	numLevels = std::max(numLevels, 1);
 	numLevels = std::min(numLevels, (int)texture->levels() - baseLevel);
 
+	if (pTexture2DArray->GetFormat() != (GfxPixelFormat)texture->format() || pTexture2DArray->GetWidth() < texture->extent(baseLevel).x || pTexture2DArray->GetHeight() < texture->extent(baseLevel).y || pTexture2DArray->GetLayers() < (int)texture->layers() || pTexture2DArray->GetLevels() < (int)texture->levels() - baseLevel) {
+		if (pTexture2DArray->Create((GfxPixelFormat)texture->format(), texture->extent(baseLevel).x, texture->extent(baseLevel).y, (int)texture->layers(), (int)texture->levels() - baseLevel) == false) {
+			return false;
+		}
+	}
+
 	if (gli::is_compressed(texture->format())) {
 		for (int level = baseLevel; level < baseLevel + numLevels; level++) {
 			if (pTexture2DArray->Texture2DArrayDataCompressed((GfxPixelFormat)texture->format(), layer, level - baseLevel, 0, 0, texture->extent(level).x, texture->extent(level).y, texture->size(level), texture->data(0, 0, level)) == false) {
@@ -167,6 +173,12 @@ static bool InternalLoadTextureCubemapFace(CGfxTextureCubemap* pTextureCubemap, 
 
 	numLevels = std::max(numLevels, 1);
 	numLevels = std::min(numLevels, (int)texture->levels() - baseLevel);
+
+	if (pTextureCubemap->GetFormat() != (GfxPixelFormat)texture->format() || pTextureCubemap->GetWidth() < texture->extent(baseLevel).x || pTextureCubemap->GetHeight() < texture->extent(baseLevel).y || pTextureCubemap->GetLevels() < (int)texture->levels() - baseLevel) {
+		if (pTextureCubemap->Create((GfxPixelFormat)texture->format(), texture->extent(baseLevel).x, texture->extent(baseLevel).y, (int)texture->levels() - baseLevel) == false) {
+			return false;
+		}
+	}
 
 	if (gli::is_compressed(texture->format())) {
 		for (int level = baseLevel; level < baseLevel + numLevels; level++) {
