@@ -201,41 +201,35 @@ static bool InternalLoadTextureCubemapFace(CGfxTextureCubemap* pTextureCubemap, 
 
 bool CResourceLoader::LoadTexture2D(const char* szFileName, CGfxTexture2D* pTexture2D, int baseLevel, int numLevels)
 {
-	pTexture2D->Destroy();
-	{
-		do {
-			CStream stream;
-			if (FileManager()->LoadStream(szFileName, &stream) == false) break;
+	do {
+		CStream stream;
+		if (FileManager()->LoadStream(szFileName, &stream) == false) break;
 
-			const gli::texture texture = gli::load((const char*)stream.GetAddress(), stream.GetFullSize());
-			if (texture.empty()) break;
-			if (texture.target() != gli::TARGET_2D) break;
-			if (InternalLoadTexture2D(pTexture2D, &texture, baseLevel, numLevels) == false) break;
+		const gli::texture texture = gli::load((const char*)stream.GetAddress(), stream.GetFullSize());
+		if (texture.empty()) break;
+		if (texture.target() != gli::TARGET_2D) break;
+		if (InternalLoadTexture2D(pTexture2D, &texture, baseLevel, numLevels) == false) break;
 
-			return true;
-		} while (false);
-	}
-	pTexture2D->Destroy();
+		return true;
+	} while (false);
+
 	return false;
 }
 
 bool CResourceLoader::LoadTexture2DArray(const char* szFileName, CGfxTexture2DArray* pTexture2DArray, int baseLevel, int numLevels)
 {
-	pTexture2DArray->Destroy();
-	{
-		do {
-			CStream stream;
-			if (FileManager()->LoadStream(szFileName, &stream) == false) break;
+	do {
+		CStream stream;
+		if (FileManager()->LoadStream(szFileName, &stream) == false) break;
 
-			const gli::texture texture = gli::load((const char*)stream.GetAddress(), stream.GetFullSize());
-			if (texture.empty()) break;
-			if (texture.target() != gli::TARGET_2D_ARRAY) break;
-			if (InternalLoadTexture2DArray(pTexture2DArray, &texture, baseLevel, numLevels)) break;
+		const gli::texture texture = gli::load((const char*)stream.GetAddress(), stream.GetFullSize());
+		if (texture.empty()) break;
+		if (texture.target() != gli::TARGET_2D_ARRAY) break;
+		if (InternalLoadTexture2DArray(pTexture2DArray, &texture, baseLevel, numLevels)) break;
 
-			return true;
-		} while (false);
-	}
-	pTexture2DArray->Destroy();
+		return true;
+	} while (false);
+
 	return false;
 }
 
@@ -258,21 +252,18 @@ bool CResourceLoader::LoadTexture2DArrayLayer(const char* szFileName, int layer,
 
 bool CResourceLoader::LoadTextureCubemap(const char* szFileName, CGfxTextureCubemap* pTextureCubemap, int baseLevel, int numLevels)
 {
-	pTextureCubemap->Destroy();
-	{
-		do {
-			CStream stream;
-			if (FileManager()->LoadStream(szFileName, &stream) == false) break;
+	do {
+		CStream stream;
+		if (FileManager()->LoadStream(szFileName, &stream) == false) break;
 
-			const gli::texture texture = gli::load((const char*)stream.GetAddress(), stream.GetFullSize());
-			if (texture.empty()) break;
-			if (texture.target() != gli::TARGET_CUBE) break;
-			if (InternalLoadTextureCubemap(pTextureCubemap, &texture, baseLevel, numLevels) == false) break;
+		const gli::texture texture = gli::load((const char*)stream.GetAddress(), stream.GetFullSize());
+		if (texture.empty()) break;
+		if (texture.target() != gli::TARGET_CUBE) break;
+		if (InternalLoadTextureCubemap(pTextureCubemap, &texture, baseLevel, numLevels) == false) break;
 
-			return true;
-		} while (false);
-	}
-	pTextureCubemap->Destroy();
+		return true;
+	} while (false);
+
 	return false;
 }
 
