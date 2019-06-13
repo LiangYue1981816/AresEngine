@@ -12,8 +12,10 @@ static bool InternalLoadTexture2D(CGfxTexture2D* pTexture2D, const gli::texture*
 	numLevels = std::max(numLevels, 1);
 	numLevels = std::min(numLevels, (int)texture->levels() - baseLevel);
 
-	if (pTexture2D->Create((GfxPixelFormat)texture->format(), texture->extent(baseLevel).x, texture->extent(baseLevel).y, (int)texture->levels() - baseLevel) == false) {
-		return false;
+	if (pTexture2D->GetFormat() != (GfxPixelFormat)texture->format() || pTexture2D->GetWidth() < texture->extent(baseLevel).x || pTexture2D->GetHeight() < texture->extent(baseLevel).y || pTexture2D->GetLevels() < (int)texture->levels() - baseLevel) {
+		if (pTexture2D->Create((GfxPixelFormat)texture->format(), texture->extent(baseLevel).x, texture->extent(baseLevel).y, (int)texture->levels() - baseLevel) == false) {
+			return false;
+		}
 	}
 
 	if (gli::is_compressed(texture->format())) {
@@ -42,8 +44,10 @@ static bool InternalLoadTexture2DArray(CGfxTexture2DArray* pTexture2DArray, cons
 	numLevels = std::max(numLevels, 1);
 	numLevels = std::min(numLevels, (int)texture->levels() - baseLevel);
 
-	if (pTexture2DArray->Create((GfxPixelFormat)texture->format(), texture->extent(baseLevel).x, texture->extent(baseLevel).y, (int)texture->layers(), (int)texture->levels() - baseLevel) == false) {
-		return false;
+	if (pTexture2DArray->GetFormat() != (GfxPixelFormat)texture->format() || pTexture2DArray->GetWidth() < texture->extent(baseLevel).x || pTexture2DArray->GetHeight() < texture->extent(baseLevel).y || pTexture2DArray->GetLayers() < (int)texture->layers() || pTexture2DArray->GetLevels() < (int)texture->levels() - baseLevel) {
+		if (pTexture2DArray->Create((GfxPixelFormat)texture->format(), texture->extent(baseLevel).x, texture->extent(baseLevel).y, (int)texture->layers(), (int)texture->levels() - baseLevel) == false) {
+			return false;
+		}
 	}
 
 	if (gli::is_compressed(texture->format())) {
@@ -102,8 +106,10 @@ static bool InternalLoadTextureCubemap(CGfxTextureCubemap* pTextureCubemap, cons
 	numLevels = std::max(numLevels, 1);
 	numLevels = std::min(numLevels, (int)texture->levels() - baseLevel);
 
-	if (pTextureCubemap->Create((GfxPixelFormat)texture->format(), texture->extent(baseLevel).x, texture->extent(baseLevel).y, (int)texture->levels() - baseLevel) == false) {
-		return false;
+	if (pTextureCubemap->GetFormat() != (GfxPixelFormat)texture->format() || pTextureCubemap->GetWidth() < texture->extent(baseLevel).x || pTextureCubemap->GetHeight() < texture->extent(baseLevel).y || pTextureCubemap->GetLevels() < (int)texture->levels() - baseLevel) {
+		if (pTextureCubemap->Create((GfxPixelFormat)texture->format(), texture->extent(baseLevel).x, texture->extent(baseLevel).y, (int)texture->levels() - baseLevel) == false) {
+			return false;
+		}
 	}
 
 	if (gli::is_compressed(texture->format())) {
