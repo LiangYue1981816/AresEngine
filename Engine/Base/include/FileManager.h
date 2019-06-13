@@ -37,7 +37,10 @@ public:
 	void SetFile(const char* szFileName, const char* szFullName);
 
 	const char* GetFullName(const char* szFileName);
+	const char* GetFullName(uint32_t name);
+
 	bool LoadStream(const char* szFileName, CStream* pStream);
+	bool LoadStream(uint32_t name, CStream* pStream);
 
 
 private:
