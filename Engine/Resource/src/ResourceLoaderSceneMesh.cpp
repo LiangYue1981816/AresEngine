@@ -22,6 +22,7 @@ static bool InternalLoadDraw(TiXmlNode* pNode, const CGfxMeshPtr ptrMesh, CScene
 			CComponentMeshPtr ptrComponentMesh = pCurrentSceneNode->GetSceneManager()->CreateComponentMesh(pCurrentSceneNode->GetSceneManager()->GetNextComponentMeshName());
 			ptrComponentMesh->SetMaterial(ptrMaterial);
 			ptrComponentMesh->SetMeshDraw(ptrMesh, indexDraw, instanceFormat, instanceBinding);
+			ptrComponentMesh->SetMask(0xffffffff);
 			pCurrentSceneNode->AttachComponentMesh(ptrComponentMesh);
 		} while ((pDrawNode = pNode->IterateChildren("Draw", pDrawNode)) != nullptr);
 	}

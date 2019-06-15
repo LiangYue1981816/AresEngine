@@ -35,6 +35,13 @@ void CComponentMesh::SetMeshDraw(const CGfxMeshPtr ptrMesh, uint32_t nameDraw, u
 	}
 }
 
+void CComponentMesh::SetMask(uint32_t mask)
+{
+	if (m_ptrMeshDraw) {
+		m_ptrMeshDraw->SetMask(mask);
+	}
+}
+
 glm::aabb CComponentMesh::GetWorldAABB(void)
 {
 	if (m_ptrMeshDraw && m_pParentNode) {
