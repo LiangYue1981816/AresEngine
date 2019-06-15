@@ -724,6 +724,7 @@ public:
 		which is the opposite of almost all other TinyXml calls.
 		*/
 	int QueryBoolValue(int* _value) const;
+	int QueryUintValue(unsigned int* _value) const;
 	int QueryIntValue1(int* _value1) const;
 	int QueryIntValue2(int* _value1, int* _value2) const;
 	int QueryIntValue3(int* _value1, int* _value2, int* _value3) const;
@@ -740,6 +741,7 @@ public:
 	void SetName(const char* _name)	{ name = _name; }
 	void SetValue(const char* _value)	{ value = _value; }
 	void SetBoolValue(int _value);
+	void SetUintValue(unsigned int _value);
 	void SetIntValue1(int _value1);
 	void SetIntValue2(int _value1, int _value2);
 	void SetIntValue3(int _value1, int _value2, int _value3);
@@ -852,49 +854,21 @@ public:
 
 	virtual ~TiXmlElement();
 
-	/** Given an attribute name, Attribute() returns the value
-		for the attribute of that name, or null if none exists.
+	/** Given an attribute name, Attribute() returns the value.
 		*/
 	const char* AttributeString(const char* name) const;
-
-	/** Given an attribute name, Attribute() returns the value
-	for the attribute of that name, or null if none exists.
-	If the attribute exists and can be converted to an bool,
-	the integer value will be put in the return 'b', if 'b'
-	is non-null.
-	*/
 	int AttributeBool(const char* name) const;
-
-	/** Given an attribute name, Attribute() returns the value
-		for the attribute of that name, or null if none exists.
-		If the attribute exists and can be converted to an integer,
-		the integer value will be put in the return 'i', if 'i'
-		is non-null.
-		*/
+	unsigned int AttributeUint(const char* name) const;
 	int  AttributeInt1(const char* name) const;
 	int* AttributeInt1(const char* name, int *result) const;
 	int* AttributeInt2(const char* name, int *result) const;
 	int* AttributeInt3(const char* name, int *result) const;
 	int* AttributeInt4(const char* name, int *result) const;
-
-	/** Given an attribute name, Attribute() returns the value
-	for the attribute of that name, or null if none exists.
-	If the attribute exists and can be converted to an float,
-	the float value will be put in the return 'f', if 'f'
-	is non-null.
-	*/
 	float  AttributeFloat1(const char* name) const;
 	float* AttributeFloat1(const char* name, float *result) const;
 	float* AttributeFloat2(const char* name, float *result) const;
 	float* AttributeFloat3(const char* name, float *result) const;
 	float* AttributeFloat4(const char* name, float *result) const;
-
-	/** Given an attribute name, Attribute() returns the value
-		for the attribute of that name, or null if none exists.
-		If the attribute exists and can be converted to an double,
-		the double value will be put in the return 'd', if 'd'
-		is non-null.
-		*/
 	double  AttributeDouble1(const char* name) const;
 	double* AttributeDouble1(const char* name, double *result) const;
 	double* AttributeDouble2(const char* name, double *result) const;
@@ -905,6 +879,7 @@ public:
 		will be created if it does not exist, or changed if it does.
 		*/
 	void SetAttributeBool(const char * name, int value);
+	void SetAttributeUint(const char * name, unsigned int value);
 	void SetAttributeInt1(const char * name, int value1);
 	void SetAttributeInt2(const char * name, int value1, int value2);
 	void SetAttributeInt3(const char * name, int value1, int value2, int value3);

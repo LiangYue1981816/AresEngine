@@ -617,6 +617,19 @@ int TiXmlElement::AttributeBool(const char* name) const
 }
 
 
+unsigned int TiXmlElement::AttributeUint(const char* name) const
+{
+	const TiXmlAttribute* attrib = attributeSet.Find(name);
+	unsigned int result = 0;
+
+	if (attrib) {
+		attrib->QueryUintValue(&result);
+	}
+
+	return result;
+}
+
+
 int TiXmlElement::AttributeInt1(const char* name) const
 {
 	const TiXmlAttribute* attrib = attributeSet.Find(name);
@@ -817,6 +830,15 @@ void TiXmlElement::SetAttributeBool(const char * name, int val)
 	TiXmlAttribute* attrib = attributeSet.FindOrCreate(name);
 	if (attrib) {
 		attrib->SetBoolValue(val);
+	}
+}
+
+
+void TiXmlElement::SetAttributeUint(const char * name, unsigned int val)
+{
+	TiXmlAttribute* attrib = attributeSet.FindOrCreate(name);
+	if (attrib) {
+		attrib->SetUintValue(val);
 	}
 }
 
@@ -1409,6 +1431,13 @@ int TiXmlAttribute::QueryBoolValue(int* _value) const
 	return TIXML_WRONG_TYPE;
 }
 
+int TiXmlAttribute::QueryUintValue(unsigned int* _value) const
+{
+	if (TIXML_SSCANF(value.c_str(), "%x", _value) == 1)
+		return TIXML_SUCCESS;
+	return TIXML_WRONG_TYPE;
+}
+
 int TiXmlAttribute::QueryIntValue1(int* ival1) const
 {
 	if (TIXML_SSCANF(value.c_str(), "%d", ival1) == 1)
@@ -1510,6 +1539,17 @@ void TiXmlAttribute::SetBoolValue(int _value)
 	else {
 		sprintf(buf, sizeof(buf), "false");
 	}
+#endif
+	SetValue(buf);
+}
+
+void TiXmlAttribute::SetUintValue(unsigned int _value)
+{
+	char buf[256];
+#if defined(TIXML_SNPRINTF)		
+	TIXML_SNPRINTF(buf, sizeof(buf), "%x", _value);
+#else
+	sprintf(buf, "%x", _value1);
 #endif
 	SetValue(buf);
 }
