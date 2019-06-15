@@ -3,9 +3,9 @@
 
 CVKPipeline::CVKPipeline(CVKDevice* pDevice, VkPipelineCache vkPipelineCache)
 	: m_pDevice(pDevice)
-	, m_vkPipelineCache(vkPipelineCache)
-
 	, m_pShaders{ nullptr }
+
+	, m_vkPipelineCache(vkPipelineCache)
 	, m_vkPipeline(VK_NULL_HANDLE)
 	, m_vkPipelineLayout(VK_NULL_HANDLE)
 {

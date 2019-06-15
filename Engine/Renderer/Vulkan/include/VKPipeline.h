@@ -59,8 +59,9 @@ private:
 
 
 private:
-	VkPipeline m_vkPipeline;
 	VkPipelineCache m_vkPipelineCache;
+
+	VkPipeline m_vkPipeline;
 	VkPipelineLayout m_vkPipelineLayout;
 
 private:
