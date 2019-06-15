@@ -39,11 +39,15 @@ static void DestroyPipelineCache(const char* szFileName, CVKDevice* pDevice, VkP
 }
 
 
+const char* szPipelineComputeCachePath = "./PipelineComputeCache.data";
+const char* szPipelineGraphicsCachePath = "./PipelineGraphicsCache.data";
+
+
 CVKPipelineComputeManager::CVKPipelineComputeManager(CVKDevice* pDevice)
 	: m_pDevice(pDevice)
 	, m_vkPipelineCache(VK_NULL_HANDLE)
 {
-
+	m_vkPipelineCache = CreatePipelineCache(szPipelineComputeCachePath, m_pDevice);
 }
 
 CVKPipelineComputeManager::~CVKPipelineComputeManager(void)
@@ -51,6 +55,8 @@ CVKPipelineComputeManager::~CVKPipelineComputeManager(void)
 	for (const auto& itPipeline : m_pPipelines) {
 		delete itPipeline.second;
 	}
+
+	DestroyPipelineCache(szPipelineComputeCachePath, m_pDevice, m_vkPipelineCache);
 }
 
 CVKPipelineCompute* CVKPipelineComputeManager::Create(const CGfxShader* pComputeShader)
@@ -73,7 +79,7 @@ CVKPipelineGraphicsManager::CVKPipelineGraphicsManager(CVKDevice* pDevice)
 	: m_pDevice(pDevice)
 	, m_vkPipelineCache(VK_NULL_HANDLE)
 {
-
+	m_vkPipelineCache = CreatePipelineCache(szPipelineGraphicsCachePath, m_pDevice);
 }
 
 CVKPipelineGraphicsManager::~CVKPipelineGraphicsManager(void)
@@ -81,6 +87,8 @@ CVKPipelineGraphicsManager::~CVKPipelineGraphicsManager(void)
 	for (const auto& itPipeline : m_pPipelines) {
 		delete itPipeline.second;
 	}
+
+	DestroyPipelineCache(szPipelineGraphicsCachePath, m_pDevice, m_vkPipelineCache);
 }
 
 CVKPipelineGraphics* CVKPipelineGraphicsManager::Create(const CGfxRenderPass* pRenderPass, const CGfxShader* pVertexShader, const CGfxShader* pFragmentShader, const PipelineState& state, uint32_t indexSubpass, uint32_t vertexBinding, uint32_t instanceBinding)
