@@ -96,8 +96,8 @@ public:
 
 
 public:
-	void SetShaderCachePath(const char* szPath) const;
-	void SetShaderIncludePath(const char* szPath) const;
+	virtual void SetShaderCachePath(const char* szPath) const;
+	virtual void SetShaderIncludePath(const char* szPath) const;
 
 
 public:
