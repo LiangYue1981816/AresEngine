@@ -8,7 +8,7 @@ class CVKPipelineCompute : public CGfxPipelineCompute
 
 
 private:
-	CVKPipelineCompute(CVKDevice* pDevice, uint32_t name);
+	CVKPipelineCompute(CVKDevice* pDevice, VkPipelineCache vkPipelineCache, uint32_t name);
 	virtual ~CVKPipelineCompute(void);
 
 
@@ -50,6 +50,7 @@ public:
 
 private:
 	CVKPipeline* m_pPipeline;
+	VkPipelineCache m_vkPipelineCache;
 
 private:
 	CVKDevice* m_pDevice;

@@ -175,7 +175,7 @@ bool CVKPipeline::CreateVertexInputState(eastl::vector<VkVertexInputBindingDescr
 	return true;
 }
 
-bool CVKPipeline::Create(const CGfxShader* pComputeShader)
+bool CVKPipeline::Create(VkPipelineCache vkPipelineCache, const CGfxShader* pComputeShader)
 {
 	Destroy();
 	{
@@ -205,7 +205,7 @@ bool CVKPipeline::Create(const CGfxShader* pComputeShader)
 			pipelineCreateInfo.layout = m_vkPipelineLayout;
 			pipelineCreateInfo.basePipelineHandle = VK_NULL_HANDLE;
 			pipelineCreateInfo.basePipelineIndex = 0;
-			CALL_VK_FUNCTION_BREAK(vkCreateComputePipelines(m_pDevice->GetDevice(), VK_NULL_HANDLE, 1, &pipelineCreateInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkPipeline));
+			CALL_VK_FUNCTION_BREAK(vkCreateComputePipelines(m_pDevice->GetDevice(), vkPipelineCache, 1, &pipelineCreateInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkPipeline));
 
 			return true;
 		} while (false);
@@ -214,7 +214,7 @@ bool CVKPipeline::Create(const CGfxShader* pComputeShader)
 	return false;
 }
 
-bool CVKPipeline::Create(const CGfxRenderPass* pRenderPass, const CGfxShader* pVertexShader, const CGfxShader* pFragmentShader, const PipelineState& state, int indexSubpass, int vertexBinding, int instanceBinding)
+bool CVKPipeline::Create(VkPipelineCache vkPipelineCache, const CGfxRenderPass* pRenderPass, const CGfxShader* pVertexShader, const CGfxShader* pFragmentShader, const PipelineState& state, int indexSubpass, int vertexBinding, int instanceBinding)
 {
 	Destroy();
 	{
@@ -377,7 +377,7 @@ bool CVKPipeline::Create(const CGfxRenderPass* pRenderPass, const CGfxShader* pV
 			pipelineCreateInfo.subpass = indexSubpass;
 			pipelineCreateInfo.basePipelineHandle = VK_NULL_HANDLE;
 			pipelineCreateInfo.basePipelineIndex = 0;
-			CALL_VK_FUNCTION_BREAK(vkCreateGraphicsPipelines(m_pDevice->GetDevice(), VK_NULL_HANDLE, 1, &pipelineCreateInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkPipeline));
+			CALL_VK_FUNCTION_BREAK(vkCreateGraphicsPipelines(m_pDevice->GetDevice(), vkPipelineCache, 1, &pipelineCreateInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkPipeline));
 
 			return true;
 		} while (false);

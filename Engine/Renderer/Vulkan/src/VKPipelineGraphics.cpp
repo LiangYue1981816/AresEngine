@@ -1,10 +1,11 @@
 #include "VKRenderer.h"
 
 
-CVKPipelineGraphics::CVKPipelineGraphics(CVKDevice* pDevice, uint32_t name)
+CVKPipelineGraphics::CVKPipelineGraphics(CVKDevice* pDevice, VkPipelineCache vkPipelineCache, uint32_t name)
 	: CGfxPipelineGraphics(name)
 	, m_pDevice(pDevice)
 	, m_pPipeline(nullptr)
+	, m_vkPipelineCache(vkPipelineCache)
 {
 	m_pPipeline = new CVKPipeline(m_pDevice);
 }
@@ -36,7 +37,7 @@ const bool CVKPipelineGraphics::IsCompatibleVertexFormat(uint32_t binding, uint3
 
 bool CVKPipelineGraphics::Create(const CGfxRenderPass* pRenderPass, const CGfxShader* pVertexShader, const CGfxShader* pFragmentShader, const PipelineState& state, int indexSubpass, int vertexBinding, int instanceBinding)
 {
-	return m_pPipeline->Create(pRenderPass, pVertexShader, pFragmentShader, state, indexSubpass, vertexBinding, instanceBinding);
+	return m_pPipeline->Create(m_vkPipelineCache, pRenderPass, pVertexShader, pFragmentShader, state, indexSubpass, vertexBinding, instanceBinding);
 }
 
 void CVKPipelineGraphics::Destroy(void)

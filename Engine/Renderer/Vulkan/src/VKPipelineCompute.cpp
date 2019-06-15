@@ -1,10 +1,11 @@
 #include "VKRenderer.h"
 
 
-CVKPipelineCompute::CVKPipelineCompute(CVKDevice* pDevice, uint32_t name)
+CVKPipelineCompute::CVKPipelineCompute(CVKDevice* pDevice, VkPipelineCache vkPipelineCache, uint32_t name)
 	: CGfxPipelineCompute(name)
 	, m_pDevice(pDevice)
 	, m_pPipeline(nullptr)
+	, m_vkPipelineCache(vkPipelineCache)
 {
 	m_pPipeline = new CVKPipeline(m_pDevice);
 }
@@ -26,7 +27,7 @@ const CGfxDescriptorLayoutPtr CVKPipelineCompute::GetDescriptorLayout(int indexD
 
 bool CVKPipelineCompute::Create(const CGfxShader* pComputeShader)
 {
-	return m_pPipeline->Create(pComputeShader);
+	return m_pPipeline->Create(m_vkPipelineCache, pComputeShader);
 }
 
 void CVKPipelineCompute::Destroy(void)

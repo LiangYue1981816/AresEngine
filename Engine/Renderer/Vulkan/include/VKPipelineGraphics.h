@@ -8,7 +8,7 @@ class CVKPipelineGraphics : public CGfxPipelineGraphics
 
 
 private:
-	CVKPipelineGraphics(CVKDevice* pDevice, uint32_t name);
+	CVKPipelineGraphics(CVKDevice* pDevice, VkPipelineCache vkPipelineCache, uint32_t name);
 	virtual ~CVKPipelineGraphics(void);
 
 
@@ -54,6 +54,7 @@ public:
 
 private:
 	CVKPipeline* m_pPipeline;
+	VkPipelineCache m_vkPipelineCache;
 
 private:
 	CVKDevice* m_pDevice;
