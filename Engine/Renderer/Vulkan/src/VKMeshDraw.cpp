@@ -6,6 +6,7 @@ CVKMeshDraw::CVKMeshDraw(CVKDevice* pDevice, CVKMeshDrawManager* pManager, uint3
 	, m_pDevice(pDevice)
 	, m_pManager(pManager)
 
+	, m_mask(0)
 	, m_pMeshDraw(nullptr)
 	, m_pIndirectBuffer{ nullptr }
 	, m_pInstanceBuffer{ nullptr }
@@ -33,6 +34,16 @@ CVKMeshDraw::~CVKMeshDraw(void)
 void CVKMeshDraw::Release(void)
 {
 	m_pManager->Destroy(this);
+}
+
+void CVKMeshDraw::SetMask(uint32_t mask)
+{
+	m_mask = mask;
+}
+
+uint32_t CVKMeshDraw::GetMask(void) const
+{
+	return m_mask;
 }
 
 glm::aabb CVKMeshDraw::GetLocalAABB(void) const

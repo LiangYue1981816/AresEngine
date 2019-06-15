@@ -5,6 +5,7 @@ CGLES3MeshDraw::CGLES3MeshDraw(CGLES3MeshDrawManager* pManager, uint32_t name, c
 	: CGfxMeshDraw(name, ptrMesh, nameDraw, instanceFormat, instanceBinding)
 	, m_pManager(pManager)
 
+	, m_mask(0)
 	, m_pMeshDraw(nullptr)
 	, m_pIndirectBuffer{ nullptr }
 	, m_pInstanceBuffer{ nullptr }
@@ -35,6 +36,16 @@ CGLES3MeshDraw::~CGLES3MeshDraw(void)
 void CGLES3MeshDraw::Release(void)
 {
 	m_pManager->Destroy(this);
+}
+
+void CGLES3MeshDraw::SetMask(uint32_t mask)
+{
+	m_mask = mask;
+}
+
+uint32_t CGLES3MeshDraw::GetMask(void) const
+{
+	return m_mask;
 }
 
 glm::aabb CGLES3MeshDraw::GetLocalAABB(void) const

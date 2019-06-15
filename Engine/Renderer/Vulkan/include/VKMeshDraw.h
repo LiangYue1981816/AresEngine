@@ -14,6 +14,10 @@ private:
 
 
 public:
+	void SetMask(uint32_t mask);
+	uint32_t GetMask(void) const;
+
+public:
 	glm::aabb GetLocalAABB(void) const;
 
 	GfxIndexType GetIndexType(void) const;
@@ -39,6 +43,9 @@ public:
 public:
 	void Bind(VkCommandBuffer vkCommandBuffer);
 
+
+private:
+	uint32_t m_mask;
 
 private:
 	CGfxMeshPtr m_ptrMesh;

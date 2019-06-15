@@ -22,6 +22,10 @@ public:
 
 
 public:
+	virtual void SetMask(uint32_t mask) = 0;
+	virtual uint32_t GetMask(void) const = 0;
+
+public:
 	virtual glm::aabb GetLocalAABB(void) const = 0;
 
 	virtual GfxIndexType GetIndexType(void) const = 0;
