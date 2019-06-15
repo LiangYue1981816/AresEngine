@@ -12,6 +12,7 @@ static bool InternalLoadDraw(TiXmlNode* pNode, const CGfxMeshPtr ptrMesh, CScene
 
 	if (TiXmlNode* pDrawNode = pNode->FirstChild("Draw")) {
 		do {
+			int mask = pDrawNode->ToElement()->AttributeInt("mask");
 			int indexDraw = pDrawNode->ToElement()->AttributeInt("index");
 			const char* szMaterialFileName = pDrawNode->ToElement()->AttributeString("material");
 			if (szMaterialFileName == nullptr) { err = -1; goto ERR; }
@@ -22,7 +23,7 @@ static bool InternalLoadDraw(TiXmlNode* pNode, const CGfxMeshPtr ptrMesh, CScene
 			CComponentMeshPtr ptrComponentMesh = pCurrentSceneNode->GetSceneManager()->CreateComponentMesh(pCurrentSceneNode->GetSceneManager()->GetNextComponentMeshName());
 			ptrComponentMesh->SetMaterial(ptrMaterial);
 			ptrComponentMesh->SetMeshDraw(ptrMesh, indexDraw, instanceFormat, instanceBinding);
-			ptrComponentMesh->SetMask(0xffffffff);
+			ptrComponentMesh->SetMask(mask);
 			pCurrentSceneNode->AttachComponentMesh(ptrComponentMesh);
 		} while ((pDrawNode = pNode->IterateChildren("Draw", pDrawNode)) != nullptr);
 	}
