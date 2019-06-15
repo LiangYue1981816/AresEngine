@@ -17,6 +17,7 @@ private:
 
 
 private:
+	VkPipelineCache m_vkPipelineCache;
 	eastl::unordered_map<uint32_t, CVKPipelineCompute*> m_pPipelines;
 
 private:
@@ -39,6 +40,7 @@ private:
 
 
 private:
+	VkPipelineCache m_vkPipelineCache;
 	eastl::unordered_map<uint32_t, CVKPipelineGraphics*> m_pPipelines;
 
 private:

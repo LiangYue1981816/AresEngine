@@ -3,6 +3,7 @@
 
 CVKPipelineComputeManager::CVKPipelineComputeManager(CVKDevice* pDevice)
 	: m_pDevice(pDevice)
+	, m_vkPipelineCache(VK_NULL_HANDLE)
 {
 
 }
@@ -32,8 +33,9 @@ CVKPipelineCompute* CVKPipelineComputeManager::Create(const CGfxShader* pCompute
 
 CVKPipelineGraphicsManager::CVKPipelineGraphicsManager(CVKDevice* pDevice)
 	: m_pDevice(pDevice)
+	, m_vkPipelineCache(VK_NULL_HANDLE)
 {
-	ASSERT(m_pDevice);
+
 }
 
 CVKPipelineGraphicsManager::~CVKPipelineGraphicsManager(void)
