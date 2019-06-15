@@ -724,7 +724,6 @@ public:
 		which is the opposite of almost all other TinyXml calls.
 		*/
 	int QueryBoolValue(bool* _value) const;
-	int QueryUintValue(unsigned int* _value) const;
 	int QueryIntValue1(int* _value1) const;
 	int QueryIntValue2(int* _value1, int* _value2) const;
 	int QueryIntValue3(int* _value1, int* _value2, int* _value3) const;
@@ -738,10 +737,7 @@ public:
 	int QueryDoubleValue3(double* _value1, double* _value2, double* _value3) const;
 	int QueryDoubleValue4(double* _value1, double* _value2, double* _value3, double* _value4) const;
 
-	void SetName(const char* _name)	{ name = _name; }
-	void SetValue(const char* _value)	{ value = _value; }
 	void SetBoolValue(bool _value);
-	void SetUintValue(unsigned int _value);
 	void SetIntValue1(int _value1);
 	void SetIntValue2(int _value1, int _value2);
 	void SetIntValue3(int _value1, int _value2, int _value3);
@@ -754,6 +750,9 @@ public:
 	void SetDoubleValue2(double _value1, double _value2);
 	void SetDoubleValue3(double _value1, double _value2, double _value3);
 	void SetDoubleValue4(double _value1, double _value2, double _value3, double _value4);
+
+	void SetName(const char* _name) { name = _name; }
+	void SetValue(const char* _value) { value = _value; }
 
 	/// Get the next sibling attribute in the DOM. Returns null at end.
 	const TiXmlAttribute* Next() const;
@@ -858,18 +857,18 @@ public:
 		*/
 	const char* AttributeString(const char* name) const;
 	bool AttributeBool(const char* name) const;
-	unsigned int AttributeUint(const char* name) const;
-	int  AttributeInt1(const char* name) const;
+	int AttributeInt(const char* name) const;
+	float AttributeFloat(const char* name) const;
+	double AttributeDouble(const char* name) const;
+
 	int* AttributeInt1(const char* name, int *result) const;
 	int* AttributeInt2(const char* name, int *result) const;
 	int* AttributeInt3(const char* name, int *result) const;
 	int* AttributeInt4(const char* name, int *result) const;
-	float  AttributeFloat1(const char* name) const;
 	float* AttributeFloat1(const char* name, float *result) const;
 	float* AttributeFloat2(const char* name, float *result) const;
 	float* AttributeFloat3(const char* name, float *result) const;
 	float* AttributeFloat4(const char* name, float *result) const;
-	double  AttributeDouble1(const char* name) const;
 	double* AttributeDouble1(const char* name, double *result) const;
 	double* AttributeDouble2(const char* name, double *result) const;
 	double* AttributeDouble3(const char* name, double *result) const;
@@ -879,7 +878,6 @@ public:
 		will be created if it does not exist, or changed if it does.
 		*/
 	void SetAttributeBool(const char * name, int value);
-	void SetAttributeUint(const char * name, unsigned int value);
 	void SetAttributeInt1(const char * name, int value1);
 	void SetAttributeInt2(const char * name, int value1, int value2);
 	void SetAttributeInt3(const char * name, int value1, int value2, int value3);

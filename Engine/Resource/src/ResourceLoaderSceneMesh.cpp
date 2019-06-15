@@ -12,7 +12,7 @@ static bool InternalLoadDraw(TiXmlNode* pNode, const CGfxMeshPtr ptrMesh, CScene
 
 	if (TiXmlNode* pDrawNode = pNode->FirstChild("Draw")) {
 		do {
-			int indexDraw = pDrawNode->ToElement()->AttributeInt1("index");
+			int indexDraw = pDrawNode->ToElement()->AttributeInt("index");
 			const char* szMaterialFileName = pDrawNode->ToElement()->AttributeString("material");
 			if (szMaterialFileName == nullptr) { err = -1; goto ERR; }
 
