@@ -1,17 +1,37 @@
 #include "VKRenderer.h"
 
 
-static void LoadPipelineCache(const char* szFileName, eastl::vector<uint8_t>& cacheData)
+static VkPipelineCache CreatePipelineCache(const char* szFileName, CVKDevice* pDevice)
 {
+	eastl::vector<uint8_t> cacheData;
+	VkPipelineCache vkPipelineCache = VK_NULL_HANDLE;
+
 	if (FILE* pFile = fopen(szFileName, "rb")) {
 		cacheData.resize(fsize(pFile));
 		fread(cacheData.data(), 1, cacheData.size(), pFile);
 		fclose(pFile);
 	}
+
+	VkPipelineCacheCreateInfo cacheCreateInfo = {};
+	cacheCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_CACHE_CREATE_INFO;
+	cacheCreateInfo.pNext = nullptr;
+	cacheCreateInfo.flags = 0;
+	cacheCreateInfo.initialDataSize = cacheData.size();
+	cacheCreateInfo.pInitialData = cacheData.data();
+	vkCreatePipelineCache(pDevice->GetDevice(), &cacheCreateInfo, pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &vkPipelineCache);
+
+	return vkPipelineCache;
 }
 
-static void SavePipelineCache(const char* szFileName, eastl::vector<uint8_t>& cacheData)
+static void DestroyPipelineCache(const char* szFileName, CVKDevice* pDevice, VkPipelineCache vkPipelineCache)
 {
+	size_t size = 0;
+	vkGetPipelineCacheData(pDevice->GetDevice(), vkPipelineCache, &size, nullptr);
+
+	eastl::vector<uint8_t> cacheData(size);
+	vkGetPipelineCacheData(pDevice->GetDevice(), vkPipelineCache, &size, cacheData.data());
+	vkDestroyPipelineCache(pDevice->GetDevice(), vkPipelineCache, pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
+
 	if (FILE* pFile = fopen(szFileName, "wb")) {
 		fwrite(cacheData.data(), 1, cacheData.size(), pFile);
 		fclose(pFile);
@@ -23,29 +43,11 @@ CVKPipelineComputeManager::CVKPipelineComputeManager(CVKDevice* pDevice)
 	: m_pDevice(pDevice)
 	, m_vkPipelineCache(VK_NULL_HANDLE)
 {
-	eastl::vector<uint8_t> cacheData;
-	LoadPipelineCache("./ComputeCache.data", cacheData);
 
-	VkPipelineCacheCreateInfo cacheCreateInfo = {};
-	cacheCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_CACHE_CREATE_INFO;
-	cacheCreateInfo.pNext = nullptr;
-	cacheCreateInfo.flags = 0;
-	cacheCreateInfo.initialDataSize = cacheData.size();
-	cacheCreateInfo.pInitialData = cacheData.data();
-	vkCreatePipelineCache(m_pDevice->GetDevice(), &cacheCreateInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkPipelineCache);
 }
 
 CVKPipelineComputeManager::~CVKPipelineComputeManager(void)
 {
-	size_t size = 0;
-	vkGetPipelineCacheData(m_pDevice->GetDevice(), m_vkPipelineCache, &size, nullptr);
-
-	eastl::vector<uint8_t> cacheData(size);
-	vkGetPipelineCacheData(m_pDevice->GetDevice(), m_vkPipelineCache, &size, cacheData.data());
-	vkDestroyPipelineCache(m_pDevice->GetDevice(), m_vkPipelineCache, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
-
-	SavePipelineCache("./ComputeCache.data", cacheData);
-
 	for (const auto& itPipeline : m_pPipelines) {
 		delete itPipeline.second;
 	}
@@ -71,29 +73,11 @@ CVKPipelineGraphicsManager::CVKPipelineGraphicsManager(CVKDevice* pDevice)
 	: m_pDevice(pDevice)
 	, m_vkPipelineCache(VK_NULL_HANDLE)
 {
-	eastl::vector<uint8_t> cacheData;
-	LoadPipelineCache("./GraphicsCache.data", cacheData);
 
-	VkPipelineCacheCreateInfo cacheCreateInfo = {};
-	cacheCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_CACHE_CREATE_INFO;
-	cacheCreateInfo.pNext = nullptr;
-	cacheCreateInfo.flags = 0;
-	cacheCreateInfo.initialDataSize = cacheData.size();
-	cacheCreateInfo.pInitialData = cacheData.data();
-	vkCreatePipelineCache(m_pDevice->GetDevice(), &cacheCreateInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkPipelineCache);
 }
 
 CVKPipelineGraphicsManager::~CVKPipelineGraphicsManager(void)
 {
-	size_t size = 0;
-	vkGetPipelineCacheData(m_pDevice->GetDevice(), m_vkPipelineCache, &size, nullptr);
-
-	eastl::vector<uint8_t> cacheData(size);
-	vkGetPipelineCacheData(m_pDevice->GetDevice(), m_vkPipelineCache, &size, cacheData.data());
-	vkDestroyPipelineCache(m_pDevice->GetDevice(), m_vkPipelineCache, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
-
-	SavePipelineCache("./GraphicsCache.data", cacheData);
-
 	for (const auto& itPipeline : m_pPipelines) {
 		delete itPipeline.second;
 	}
