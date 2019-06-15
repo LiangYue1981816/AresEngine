@@ -5,9 +5,8 @@ CVKPipelineCompute::CVKPipelineCompute(CVKDevice* pDevice, VkPipelineCache vkPip
 	: CGfxPipelineCompute(name)
 	, m_pDevice(pDevice)
 	, m_pPipeline(nullptr)
-	, m_vkPipelineCache(vkPipelineCache)
 {
-	m_pPipeline = new CVKPipeline(m_pDevice);
+	m_pPipeline = new CVKPipeline(m_pDevice, vkPipelineCache);
 }
 
 CVKPipelineCompute::~CVKPipelineCompute(void)
@@ -27,7 +26,7 @@ const CGfxDescriptorLayoutPtr CVKPipelineCompute::GetDescriptorLayout(int indexD
 
 bool CVKPipelineCompute::Create(const CGfxShader* pComputeShader)
 {
-	return m_pPipeline->Create(m_vkPipelineCache, pComputeShader);
+	return m_pPipeline->Create(pComputeShader);
 }
 
 void CVKPipelineCompute::Destroy(void)

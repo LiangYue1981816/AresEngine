@@ -54,7 +54,6 @@ public:
 
 private:
 	CVKPipeline* m_pPipeline;
-	VkPipelineCache m_vkPipelineCache;
 
 private:
 	CVKDevice* m_pDevice;

@@ -9,7 +9,7 @@ class CVKPipeline
 
 
 private:
-	CVKPipeline(CVKDevice* pDevice);
+	CVKPipeline(CVKDevice* pDevice, VkPipelineCache vkPipelineCache);
 	virtual ~CVKPipeline(void);
 
 
@@ -22,8 +22,8 @@ private:
 	bool CreateShaderStages(eastl::vector<VkPipelineShaderStageCreateInfo>& shaders);
 	bool CreateVertexInputState(eastl::vector<VkVertexInputBindingDescription>& inputBindingDescriptions, eastl::vector<VkVertexInputAttributeDescription>& inputAttributeDescriptions, int vertexBinding, int instanceBinding);
 
-	bool Create(VkPipelineCache vkPipelineCache, const CGfxShader* pComputeShader);
-	bool Create(VkPipelineCache vkPipelineCache, const CGfxRenderPass* pRenderPass, const CGfxShader* pVertexShader, const CGfxShader* pFragmentShader, const PipelineState& state, int indexSubpass, int vertexBinding, int instanceBinding);
+	bool Create(const CGfxShader* pComputeShader);
+	bool Create(const CGfxRenderPass* pRenderPass, const CGfxShader* pVertexShader, const CGfxShader* pFragmentShader, const PipelineState& state, int indexSubpass, int vertexBinding, int instanceBinding);
 	void Destroy(void);
 
 private:
@@ -60,6 +60,7 @@ private:
 
 private:
 	VkPipeline m_vkPipeline;
+	VkPipelineCache m_vkPipelineCache;
 	VkPipelineLayout m_vkPipelineLayout;
 
 private:

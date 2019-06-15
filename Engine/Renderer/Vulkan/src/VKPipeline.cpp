@@ -1,8 +1,9 @@
 #include "VKRenderer.h"
 
 
-CVKPipeline::CVKPipeline(CVKDevice* pDevice)
+CVKPipeline::CVKPipeline(CVKDevice* pDevice, VkPipelineCache vkPipelineCache)
 	: m_pDevice(pDevice)
+	, m_vkPipelineCache(vkPipelineCache)
 
 	, m_pShaders{ nullptr }
 	, m_vkPipeline(VK_NULL_HANDLE)
@@ -175,7 +176,7 @@ bool CVKPipeline::CreateVertexInputState(eastl::vector<VkVertexInputBindingDescr
 	return true;
 }
 
-bool CVKPipeline::Create(VkPipelineCache vkPipelineCache, const CGfxShader* pComputeShader)
+bool CVKPipeline::Create(const CGfxShader* pComputeShader)
 {
 	Destroy();
 	{
@@ -205,7 +206,7 @@ bool CVKPipeline::Create(VkPipelineCache vkPipelineCache, const CGfxShader* pCom
 			pipelineCreateInfo.layout = m_vkPipelineLayout;
 			pipelineCreateInfo.basePipelineHandle = VK_NULL_HANDLE;
 			pipelineCreateInfo.basePipelineIndex = 0;
-			CALL_VK_FUNCTION_BREAK(vkCreateComputePipelines(m_pDevice->GetDevice(), vkPipelineCache, 1, &pipelineCreateInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkPipeline));
+			CALL_VK_FUNCTION_BREAK(vkCreateComputePipelines(m_pDevice->GetDevice(), m_vkPipelineCache, 1, &pipelineCreateInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkPipeline));
 
 			return true;
 		} while (false);
@@ -214,7 +215,7 @@ bool CVKPipeline::Create(VkPipelineCache vkPipelineCache, const CGfxShader* pCom
 	return false;
 }
 
-bool CVKPipeline::Create(VkPipelineCache vkPipelineCache, const CGfxRenderPass* pRenderPass, const CGfxShader* pVertexShader, const CGfxShader* pFragmentShader, const PipelineState& state, int indexSubpass, int vertexBinding, int instanceBinding)
+bool CVKPipeline::Create(const CGfxRenderPass* pRenderPass, const CGfxShader* pVertexShader, const CGfxShader* pFragmentShader, const PipelineState& state, int indexSubpass, int vertexBinding, int instanceBinding)
 {
 	Destroy();
 	{
@@ -377,7 +378,7 @@ bool CVKPipeline::Create(VkPipelineCache vkPipelineCache, const CGfxRenderPass* 
 			pipelineCreateInfo.subpass = indexSubpass;
 			pipelineCreateInfo.basePipelineHandle = VK_NULL_HANDLE;
 			pipelineCreateInfo.basePipelineIndex = 0;
-			CALL_VK_FUNCTION_BREAK(vkCreateGraphicsPipelines(m_pDevice->GetDevice(), vkPipelineCache, 1, &pipelineCreateInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkPipeline));
+			CALL_VK_FUNCTION_BREAK(vkCreateGraphicsPipelines(m_pDevice->GetDevice(), m_vkPipelineCache, 1, &pipelineCreateInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkPipeline));
 
 			return true;
 		} while (false);
