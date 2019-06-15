@@ -39,7 +39,6 @@ CVKDevice::~CVKDevice(void)
 bool CVKDevice::EnumeratePhysicalDevices(eastl::vector<VkPhysicalDevice>& devices) const
 {
 	uint32_t numDevices;
-
 	CALL_VK_FUNCTION_RETURN_BOOL(vkEnumeratePhysicalDevices(m_pInstance->GetInstance(), &numDevices, nullptr));
 	if (numDevices == 0) return false;
 
@@ -87,7 +86,6 @@ bool CVKDevice::CheckPhysicalDeviceCapabilities(VkPhysicalDevice vkPhysicalDevic
 bool CVKDevice::CheckPhysicalDeviceExtensionProperties(VkPhysicalDevice vkPhysicalDevice) const
 {
 	uint32_t numExtensions;
-
 	CALL_VK_FUNCTION_RETURN_BOOL(vkEnumerateDeviceExtensionProperties(vkPhysicalDevice, nullptr, &numExtensions, nullptr));
 	if (numExtensions == 0) return false;
 

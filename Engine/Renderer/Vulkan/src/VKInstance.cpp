@@ -96,7 +96,6 @@ CVKAllocator* CVKInstance::GetAllocator(void) const
 bool CVKInstance::EnumerateInstanceLayerProperties(eastl::vector<const char*>& enabledInstanceLayers) const
 {
 	uint32_t numLayers;
-
 	CALL_VK_FUNCTION_RETURN_BOOL(vkEnumerateInstanceLayerProperties(&numLayers, nullptr));
 	if (numLayers == 0) return false;
 
@@ -119,7 +118,6 @@ bool CVKInstance::EnumerateInstanceLayerProperties(eastl::vector<const char*>& e
 bool CVKInstance::EnumerateInstanceExtensionProperties(eastl::vector<const char*>& enabledInstanceExtensions) const
 {
 	uint32_t numExtensions;
-
 	CALL_VK_FUNCTION_RETURN_BOOL(vkEnumerateInstanceExtensionProperties(nullptr, &numExtensions, nullptr));
 	if (numExtensions == 0) return false;
 
