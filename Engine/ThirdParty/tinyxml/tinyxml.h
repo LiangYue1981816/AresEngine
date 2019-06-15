@@ -723,7 +723,7 @@ public:
 		A specialized but useful call. Note that for success it returns 0,
 		which is the opposite of almost all other TinyXml calls.
 		*/
-	int QueryBoolValue(int* _value) const;
+	int QueryBoolValue(bool* _value) const;
 	int QueryUintValue(unsigned int* _value) const;
 	int QueryIntValue1(int* _value1) const;
 	int QueryIntValue2(int* _value1, int* _value2) const;
@@ -740,7 +740,7 @@ public:
 
 	void SetName(const char* _name)	{ name = _name; }
 	void SetValue(const char* _value)	{ value = _value; }
-	void SetBoolValue(int _value);
+	void SetBoolValue(bool _value);
 	void SetUintValue(unsigned int _value);
 	void SetIntValue1(int _value1);
 	void SetIntValue2(int _value1, int _value2);
@@ -857,7 +857,7 @@ public:
 	/** Given an attribute name, Attribute() returns the value.
 		*/
 	const char* AttributeString(const char* name) const;
-	int AttributeBool(const char* name) const;
+	bool AttributeBool(const char* name) const;
 	unsigned int AttributeUint(const char* name) const;
 	int  AttributeInt1(const char* name) const;
 	int* AttributeInt1(const char* name, int *result) const;

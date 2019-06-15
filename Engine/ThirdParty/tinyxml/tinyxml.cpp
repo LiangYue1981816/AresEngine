@@ -604,10 +604,10 @@ const char* TiXmlElement::AttributeString(const char* name) const
 }
 
 
-int TiXmlElement::AttributeBool(const char* name) const
+bool TiXmlElement::AttributeBool(const char* name) const
 {
 	const TiXmlAttribute* attrib = attributeSet.Find(name);
-	int result = 0;
+	bool result = false;
 
 	if (attrib) {
 		attrib->QueryBoolValue(&result);
@@ -646,7 +646,7 @@ int TiXmlElement::AttributeInt1(const char* name) const
 int* TiXmlElement::AttributeInt1(const char* name, int *result) const
 {
 	const TiXmlAttribute* attrib = attributeSet.Find(name);
-	memset(result, 0, sizeof(int) * 1);
+	result[0] = 0;
 
 	if (attrib) {
 		attrib->QueryIntValue1(&result[0]);
@@ -659,7 +659,8 @@ int* TiXmlElement::AttributeInt1(const char* name, int *result) const
 int* TiXmlElement::AttributeInt2(const char* name, int *result) const
 {
 	const TiXmlAttribute* attrib = attributeSet.Find(name);
-	memset(result, 0, sizeof(int) * 2);
+	result[0] = 0;
+	result[1] = 0;
 
 	if (attrib) {
 		attrib->QueryIntValue2(&result[0], &result[1]);
@@ -672,7 +673,9 @@ int* TiXmlElement::AttributeInt2(const char* name, int *result) const
 int* TiXmlElement::AttributeInt3(const char* name, int *result) const
 {
 	const TiXmlAttribute* attrib = attributeSet.Find(name);
-	memset(result, 0, sizeof(int) * 3);
+	result[0] = 0;
+	result[1] = 0;
+	result[2] = 0;
 
 	if (attrib) {
 		attrib->QueryIntValue3(&result[0], &result[1], &result[2]);
@@ -685,7 +688,10 @@ int* TiXmlElement::AttributeInt3(const char* name, int *result) const
 int* TiXmlElement::AttributeInt4(const char* name, int *result) const
 {
 	const TiXmlAttribute* attrib = attributeSet.Find(name);
-	memset(result, 0, sizeof(int) * 4);
+	result[0] = 0;
+	result[1] = 0;
+	result[2] = 0;
+	result[3] = 0;
 
 	if (attrib) {
 		attrib->QueryIntValue4(&result[0], &result[1], &result[2], &result[3]);
@@ -711,7 +717,7 @@ float TiXmlElement::AttributeFloat1(const char* name) const
 float* TiXmlElement::AttributeFloat1(const char* name, float *result) const
 {
 	const TiXmlAttribute* attrib = attributeSet.Find(name);
-	memset(result, 0, sizeof(float) * 1);
+	result[0] = 0.0f;
 
 	if (attrib) {
 		attrib->QueryFloatValue1(&result[0]);
@@ -724,7 +730,8 @@ float* TiXmlElement::AttributeFloat1(const char* name, float *result) const
 float* TiXmlElement::AttributeFloat2(const char* name, float *result) const
 {
 	const TiXmlAttribute* attrib = attributeSet.Find(name);
-	memset(result, 0, sizeof(float) * 2);
+	result[0] = 0.0f;
+	result[1] = 0.0f;
 
 	if (attrib) {
 		attrib->QueryFloatValue2(&result[0], &result[1]);
@@ -737,7 +744,9 @@ float* TiXmlElement::AttributeFloat2(const char* name, float *result) const
 float* TiXmlElement::AttributeFloat3(const char* name, float *result) const
 {
 	const TiXmlAttribute* attrib = attributeSet.Find(name);
-	memset(result, 0, sizeof(float) * 3);
+	result[0] = 0.0f;
+	result[1] = 0.0f;
+	result[2] = 0.0f;
 
 	if (attrib) {
 		attrib->QueryFloatValue3(&result[0], &result[1], &result[2]);
@@ -750,7 +759,10 @@ float* TiXmlElement::AttributeFloat3(const char* name, float *result) const
 float* TiXmlElement::AttributeFloat4(const char* name, float *result) const
 {
 	const TiXmlAttribute* attrib = attributeSet.Find(name);
-	memset(result, 0, sizeof(float) * 4);
+	result[0] = 0.0f;
+	result[1] = 0.0f;
+	result[2] = 0.0f;
+	result[3] = 0.0f;
 
 	if (attrib) {
 		attrib->QueryFloatValue4(&result[0], &result[1], &result[2], &result[3]);
@@ -776,7 +788,7 @@ double TiXmlElement::AttributeDouble1(const char* name) const
 double* TiXmlElement::AttributeDouble1(const char* name, double *result) const
 {
 	const TiXmlAttribute* attrib = attributeSet.Find(name);
-	memset(result, 0, sizeof(double) * 1);
+	result[0] = 0.0;
 
 	if (attrib) {
 		attrib->QueryDoubleValue1(&result[0]);
@@ -789,7 +801,8 @@ double* TiXmlElement::AttributeDouble1(const char* name, double *result) const
 double* TiXmlElement::AttributeDouble2(const char* name, double *result) const
 {
 	const TiXmlAttribute* attrib = attributeSet.Find(name);
-	memset(result, 0, sizeof(double) * 2);
+	result[0] = 0.0;
+	result[1] = 0.0;
 
 	if (attrib) {
 		attrib->QueryDoubleValue2(&result[0], &result[1]);
@@ -802,7 +815,9 @@ double* TiXmlElement::AttributeDouble2(const char* name, double *result) const
 double* TiXmlElement::AttributeDouble3(const char* name, double *result) const
 {
 	const TiXmlAttribute* attrib = attributeSet.Find(name);
-	memset(result, 0, sizeof(double) * 3);
+	result[0] = 0.0;
+	result[1] = 0.0;
+	result[2] = 0.0;
 
 	if (attrib) {
 		attrib->QueryDoubleValue3(&result[0], &result[1], &result[2]);
@@ -815,7 +830,10 @@ double* TiXmlElement::AttributeDouble3(const char* name, double *result) const
 double* TiXmlElement::AttributeDouble4(const char* name, double *result) const
 {
 	const TiXmlAttribute* attrib = attributeSet.Find(name);
-	memset(result, 0, sizeof(double) * 4);
+	result[0] = 0.0;
+	result[1] = 0.0;
+	result[2] = 0.0;
+	result[3] = 0.0;
 
 	if (attrib) {
 		attrib->QueryDoubleValue4(&result[0], &result[1], &result[2], &result[3]);
@@ -1396,35 +1414,35 @@ void TiXmlAttribute::Print(FILE* cfile, int /*depth*/, TIXML_STRING* str) const
 }
 
 
-int TiXmlAttribute::QueryBoolValue(int* _value) const
+int TiXmlAttribute::QueryBoolValue(bool* _value) const
 {
 	if (stricmp(value.c_str(), "1") == 0) {
-		*_value = 1;
+		*_value = true;
 		return TIXML_SUCCESS;
 	}
 
 	if (stricmp(value.c_str(), "yes") == 0) {
-		*_value = 1;
+		*_value = true;
 		return TIXML_SUCCESS;
 	}
 
 	if (stricmp(value.c_str(), "true") == 0) {
-		*_value = 1;
+		*_value = true;
 		return TIXML_SUCCESS;
 	}
 
 	if (stricmp(value.c_str(), "0") == 0) {
-		*_value = 0;
+		*_value = false;
 		return TIXML_SUCCESS;
 	}
 
 	if (stricmp(value.c_str(), "no") == 0) {
-		*_value = 0;
+		*_value = false;
 		return TIXML_SUCCESS;
 	}
 
 	if (stricmp(value.c_str(), "false") == 0) {
-		*_value = 0;
+		*_value = false;
 		return TIXML_SUCCESS;
 	}
 
@@ -1522,7 +1540,7 @@ int TiXmlAttribute::QueryDoubleValue4(double* dval1, double* dval2, double* dval
 	return TIXML_WRONG_TYPE;
 }
 
-void TiXmlAttribute::SetBoolValue(int _value)
+void TiXmlAttribute::SetBoolValue(bool _value)
 {
 	char buf[256];
 #if defined(TIXML_SNPRINTF)		
