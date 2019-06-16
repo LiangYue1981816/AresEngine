@@ -52,7 +52,7 @@ vec3 Linear2Gamma(vec3 linear)
 }
 
 
-// BRDF
+// Lighting Functions
 vec3 Ambient_SH4(vec3 albedoColor, float metallic, vec3 normal, vec4 shRed, vec4 shGreen, vec4 shBlue)
 {
 	float x = normal.x;
