@@ -134,7 +134,7 @@ void main()
 	mediump vec3 albedoColor = Gamma2Linear(albedo.rgb);
 	mediump vec3 ambientLightingColor = AmbientSH9(pixelNormal, albedoColor, metallic) * ambientLightFactor;
 	mediump vec3 pointLightingColor = PbrLighting(pixelNormal, inViewDirection, inHalfDirection, pointLightDirection, pointLightColor, albedoColor, metallic, roughness) * pointLightFactor;
-	mediump vec3 directLightingColor = PBRLighting(pixelNormal, inViewDirection, inHalfDirection, mainDirectLightDirection. mainDirectLightColor, albedoColor, metallic, roughness) * directLightFactor;
+	mediump vec3 directLightingColor = PbrLighting(pixelNormal, inViewDirection, inHalfDirection, mainDirectLightDirection, mainDirectLightColor, albedoColor, metallic, roughness) * directLightFactor;
 #ifdef ENV_MAP
 	mediump vec3 envLightingColor = EnvLighting(pixelNormal, inViewDirection, albedoColor, texEnv, 8.0, metallic, roughness) * envLightFactor;
 #else
