@@ -152,19 +152,14 @@ vec3 Env_SpecularFast(vec3 SpecularColor, float ndv, float roughness)
 	return SpecularColor * AB.x + AB.y;
 }
 
-vec3 BRDF_Diffuse(vec3 lightColor, vec3 L, vec3 N, vec3 albedoColor)
+vec3 BRDF_Diffuse(float ndl, vec3 lightColor, vec3 albedoColor)
 {
-	float ndl = max(dot(N, L), 0.0);
 	vec3 diffuse = Diffuse_Lambert(albedoColor);
 	return diffuse * ndl * lightColor;
 }
 
-vec3 BRDF_Pbr(vec3 lightColor, vec3 L, vec3 H, vec3 V, vec3 N, vec3 albedoColor, float metallic, float roughness)
+vec3 BRDF_Pbr(float ndl, float ndh, float ndv, vec3 lightColor, vec3 albedoColor, float metallic, float roughness)
 {
-	float ndl = max(dot(N, L), 0.0);
-	float ndh = max(dot(N, H), 0.0);
-	float ndv = max(dot(N, V), 0.0);
-
 	float D = D_GGX(ndh, roughness);
 	float G = G_SchlickSmithGGX(ndv, ndl, roughness);
 	vec3  F = F_Schlick(ndv, metallic, albedoColor);
@@ -176,12 +171,14 @@ vec3 BRDF_Pbr(vec3 lightColor, vec3 L, vec3 H, vec3 V, vec3 N, vec3 albedoColor,
 	return (diffuse + specular) * ndl * lightColor;
 }
 
-vec3 BRDF_PbrFast(vec3 lightColor, vec3 L, vec3 H, vec3 V, vec3 N, vec3 albedoColor, float metallic, float roughness)
+vec3 BRDF_EnvSpecular(float ndv, vec3 albedoColor, vec3 specularColor, float metallic, float roughness)
 {
-	float ndl = max(dot(N, L), 0.0);
-	float ndh = max(dot(N, H), 0.0);
-	float ndv = max(dot(N, V), 0.0);
+	vec3 F = F_Schlick(ndv, metallic, albedoColor);
+	return Env_Specular(F, ndv, roughness) * specularColor;
+}
 
+vec3 BRDF_PbrFast(float ndl, float ndh, float ndv, vec3 lightColor, vec3 albedoColor, float metallic, float roughness)
+{
 	float D = D_GGX(ndh, roughness);
 	float G = G_SchlickSmithGGX(ndv, ndl, roughness);
 	vec3  F = F_SchlickFast(ndv, metallic, albedoColor);
@@ -193,16 +190,8 @@ vec3 BRDF_PbrFast(vec3 lightColor, vec3 L, vec3 H, vec3 V, vec3 N, vec3 albedoCo
 	return (diffuse + specular) * ndl * lightColor;
 }
 
-vec3 BRDF_EnvSpecular(vec3 V, vec3 N, vec3 albedoColor, float metallic, float roughness, vec3 specularColor)
+vec3 BRDF_EnvSpecularFast(float ndv, vec3 albedoColor, vec3 specularColor, float metallic, float roughness)
 {
-	float ndv = max(dot(N, V), 0.0);
-	vec3 F = F_Schlick(ndv, metallic, albedoColor);
-	return Env_Specular(F, ndv, roughness) * specularColor;
-}
-
-vec3 BRDF_EnvSpecularFast(vec3 V, vec3 N, vec3 albedoColor, float metallic, float roughness, vec3 specularColor)
-{
-	float ndv = max(dot(N, V), 0.0);
 	vec3 F = F_SchlickFast(ndv, metallic, albedoColor);
 	return Env_SpecularFast(F, ndv, roughness) * specularColor;
 }
