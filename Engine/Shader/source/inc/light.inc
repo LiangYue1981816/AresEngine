@@ -202,7 +202,7 @@ vec3 EnvLighting(vec3 normal, vec3 viewDirection, vec3 albedoColor, vec3 specula
 
 vec3 EnvLighting(vec3 normal, vec3 viewDirection, vec3 albedoColor, sampler2D env, float maxLods, float metallic, float roughness)
 {
-	vec3 R = reflect(-V, N);
+	vec3 R = reflect(-viewDirection, normal);
 	vec3 specularColor = Gamma2Linear(textureLod(env, SphericalSampleing(R), roughness * maxLods).rgb);
 	return EnvLighting(normal, viewDirection, albedoColor, specularColor, metallic, roughness);
 }

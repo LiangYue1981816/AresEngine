@@ -136,9 +136,9 @@ void main()
 	mediump vec3 pointLightingColor = PbrLighting(pixelNormal, inViewDirection, inHalfDirection, pointLightDirection, pointLightColor, albedoColor, metallic, roughness) * pointLightFactor;
 	mediump vec3 directLightingColor = PBRLighting(pixelNormal, inViewDirection, inHalfDirection, mainDirectLightDirection. mainDirectLightColor, albedoColor, metallic, roughness) * directLightFactor;
 #ifdef ENV_MAP
-	mediump vec3 envLightingColor = EnvLighting(pixelNormal, inViewDirection, albedoColor, texEnv, 8.0, metallic, roughness) * envLightFactor
+	mediump vec3 envLightingColor = EnvLighting(pixelNormal, inViewDirection, albedoColor, texEnv, 8.0, metallic, roughness) * envLightFactor;
 #else
-	mediump vec3 envLightingColor = EnvLighting(pixelNormal, inViewDirection, albedoColor, ambientLightingColor, metallic, roughness) * envLightFactor
+	mediump vec3 envLightingColor = EnvLighting(pixelNormal, inViewDirection, albedoColor, ambientLightingColor, metallic, roughness) * envLightFactor;
 #endif
 	mediump vec3 finalLighting = aoColor * (ambientLightingColor + pointLightingColor + directLightingColor * shadow + envLightingColor);
 
