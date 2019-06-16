@@ -152,6 +152,36 @@ vec3 Env_SpecularFast(vec3 specularColor, float ndv, float roughness)
 	return specularColor * AB.x + AB.y;
 }
 
+
+// PBRLighting
+vec3 PBRDirectLighting(vec3 N, vec3 H, vec3 V, vec3 L, vec3 lightColor, vec3 albedoColor, vec3 specularColor, float metallic, float roughness, float shadow)
+{
+	float ndl = max(dot(N, L), 0.0);
+	float ndh = max(dot(N, H), 0.0);
+	float ndv = max(dot(N, V), 0.0);
+
+	float D = D_GGX(ndh, roughness);
+	float G = G_SchlickSmithGGX(ndv, ndl, roughness);
+	vec3  F = F_Schlick(ndv, metallic, albedoColor);
+
+	vec3 factor = vec3(1.0 - metallic);
+	vec3 diffuse = Diffuse_Lambert(albedoColor) * factor;
+	vec3 specular = D * F * G;
+
+	vec3 directLightingColor = (diffuse + specular) * ndl * lightColor;
+	vec3 envLightingColor = Env_Specular(F, ndv, roughness) * specularColor;
+
+	return shadow * directLightingColor + envLightingColor;
+}
+
+void PBRPointLighting()
+{
+
+}
+
+
+
+
 vec3 BRDF_Diffuse(float ndl, vec3 lightColor, vec3 albedoColor)
 {
 	vec3 diffuse = Diffuse_Lambert(albedoColor);
