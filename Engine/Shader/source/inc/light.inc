@@ -131,17 +131,17 @@ vec3 F_SchlickFast(float ndv, float metallic, vec3 albedo)
 	return F0 + (1.0 - F0) * F1 * F1 * F1;
 }
 
-vec3 Env_Specular(vec3 SpecularColor, float ndv, float roughness)
+vec3 Env_Specular(vec3 specularColor, float ndv, float roughness)
 {
 	vec4 c0 = vec4(-1.0, -0.0275, -0.572, 0.022);
 	vec4 c1 = vec4( 1.0,  0.0425,  1.04, -0.04 );
 	vec4 r = roughness * c0 + c1;
 	float a004 = min(r.x * r.x, exp2(-9.28 * ndv)) * r.x + r.y;
 	vec2 AB = vec2(-1.04, 1.04) * a004 + r.zw;
-	return SpecularColor * AB.x + AB.y;
+	return specularColor * AB.x + AB.y;
 }
 
-vec3 Env_SpecularFast(vec3 SpecularColor, float ndv, float roughness)
+vec3 Env_SpecularFast(vec3 specularColor, float ndv, float roughness)
 {
 	vec4 c0 = vec4(-1.0, -0.0275, -0.572, 0.022);
 	vec4 c1 = vec4( 1.0,  0.0425,  1.04, -0.04 );
@@ -149,7 +149,7 @@ vec3 Env_SpecularFast(vec3 SpecularColor, float ndv, float roughness)
 	float a001 = clamp(0.3 / (ndv + 0.3), 0.0, 1.0);
 	float a004 = min(r.x * r.x, a001 * a001 * a001) * r.x + r.y;
 	vec2 AB = vec2(-1.04, 1.04) * a004 + r.zw;
-	return SpecularColor * AB.x + AB.y;
+	return specularColor * AB.x + AB.y;
 }
 
 vec3 BRDF_Diffuse(float ndl, vec3 lightColor, vec3 albedoColor)
