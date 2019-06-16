@@ -218,3 +218,5 @@ float LightingAttenuation(float dis)
 {
 	return Attenuation(dis, engine.mainPointLightAttenuation.x, engine.mainPointLightAttenuation.y, engine.mainPointLightAttenuation.z);
 }
+
+#endif
