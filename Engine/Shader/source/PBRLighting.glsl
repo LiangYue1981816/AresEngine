@@ -124,23 +124,23 @@ void main()
 	mediump float specular = 1.0;
 	mediump float ao = 1.0;
 #endif
+	mediump float shadow = 1.0;
 
-	mediump vec3 pointLightColor = mainPointLightColor;
 	mediump vec3 pointLightDirection = mainPointLightPosition - inPosition;
-	pointLightColor = pointLightColor * PointLightAttenuation(length(pointLightDirection));
+	mediump vec3 pointLightColor = mainPointLightColor * LightingAttenuation(length(pointLightDirection));
 	pointLightDirection = normalize(pointLightDirection);
 
 	mediump vec3 aoColor = vec3(ao);
 	mediump vec3 albedoColor = Gamma2Linear(albedo.rgb);
-	mediump vec3 ambientLightingColor = AmbientLightingSH9(albedoColor, metallic, pixelNormal) * ambientLightFactor;
-	mediump vec3 pointLightingColor = SimpleLighting(pointLightColor, pointLightDirection, pixelNormal, albedoColor) * pointLightFactor;
-	mediump vec3 directLightingColor = PBRLighting(mainDirectLightColor, mainDirectLightDirection, inHalfDirection, inViewDirection, pixelNormal, albedoColor, metallic, roughness) * directLightFactor;
+	mediump vec3 ambientLightingColor = AmbientSH9(pixelNormal, albedoColor, metallic) * ambientLightFactor;
+	mediump vec3 pointLightingColor = PbrLighting(pixelNormal, inViewDirection, inHalfDirection, pointLightDirection, pointLightColor, albedoColor, metallic, roughness) * pointLightFactor;
+	mediump vec3 directLightingColor = PBRLighting(pixelNormal, inViewDirection, inHalfDirection, mainDirectLightDirection. mainDirectLightColor, albedoColor, metallic, roughness) * directLightFactor;
 #ifdef ENV_MAP
-	mediump vec3 envLightingColor = EnvSpecular(inViewDirection, pixelNormal, albedoColor, metallic, roughness, 8.0, texEnv) * envLightFactor;
+	mediump vec3 envLightingColor = EnvLighting(pixelNormal, inViewDirection, albedoColor, texEnv, 8.0, metallic, roughness) * envLightFactor
 #else
-	mediump vec3 envLightingColor = vec3(0.0);
+	mediump vec3 envLightingColor = EnvLighting(pixelNormal, inViewDirection, albedoColor, ambientLightingColor, metallic, roughness) * envLightFactor
 #endif
-	mediump vec3 finalLighting = FinalLighting(aoColor, ambientLightingColor, pointLightingColor, directLightingColor, envLightingColor, 1.0);
+	mediump vec3 finalLighting = aoColor * (ambientLightingColor + pointLightingColor + directLightingColor * shadow + envLightingColor);
 
 	finalLighting = ToneMapping(finalLighting);
 	finalLighting = Linear2Gamma(finalLighting);

@@ -200,6 +200,20 @@ vec3 EnvLighting(vec3 normal, vec3 viewDirection, vec3 albedoColor, vec3 specula
 #endif
 }
 
+vec3 EnvLighting(vec3 normal, vec3 viewDirection, vec3 albedoColor, sampler2D env, float maxLods, float metallic, float roughness)
+{
+	vec3 R = reflect(-V, N);
+	vec3 specularColor = Gamma2Linear(textureLod(env, SphericalSampleing(R), roughness * maxLods).rgb);
+	return EnvLighting(normal, viewDirection, albedoColor, specularColor, metallic, roughness);
+}
+
+vec3 EnvLighting(vec3 normal, vec3 viewDirection, vec3 albedoColor, samplerCube env, float maxLods, float metallic, float roughness)
+{
+	vec3 R = reflect(-viewDirection, normal);
+	vec3 specularColor = Gamma2Linear(textureLod(env, R, roughness * maxLods).rgb);
+	return EnvLighting(normal, viewDirection, albedoColor, specularColor, metallic, roughness);
+}
+
 float LightingAttenuation(float dis)
 {
 	return Attenuation(dis, engine.mainPointLightAttenuation.x, engine.mainPointLightAttenuation.y, engine.mainPointLightAttenuation.z);
