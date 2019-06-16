@@ -5,7 +5,7 @@
 #include "common.inc"
 
 
-// Utils Functions
+// Utils
 vec2 SphericalSampleing(vec3 v)
 {
 	vec2 invAtan = vec2(1.0 / (2.0 * PI), 1.0 / (1.0 * PI));
@@ -38,7 +38,7 @@ vec3 ToneMapping(vec3 color)
 }
 
 
-// Gamma
+// Gamma and Linear
 vec3 Gamma2Linear(vec3 gamma)
 {
 //	return gamma * gamma;
@@ -153,146 +153,49 @@ vec3 Env_SpecularFast(vec3 specularColor, float ndv, float roughness)
 }
 
 
-// PBRLighting
-vec3 PBRDirectLighting(vec3 N, vec3 H, vec3 V, vec3 L, vec3 lightColor, vec3 albedoColor, vec3 specularColor, float metallic, float roughness, float shadow)
-{
-	float ndl = max(dot(N, L), 0.0);
-	float ndh = max(dot(N, H), 0.0);
-	float ndv = max(dot(N, V), 0.0);
-
-	float D = D_GGX(ndh, roughness);
-	float G = G_SchlickSmithGGX(ndv, ndl, roughness);
-	vec3  F = F_Schlick(ndv, metallic, albedoColor);
-
-	vec3 factor = vec3(1.0 - metallic);
-	vec3 diffuse = Diffuse_Lambert(albedoColor) * factor;
-	vec3 specular = D * F * G;
-
-	vec3 directLightingColor = (diffuse + specular) * ndl * lightColor;
-	vec3 envLightingColor = Env_Specular(F, ndv, roughness) * specularColor;
-
-	return shadow * directLightingColor + envLightingColor;
-}
-
-void PBRPointLighting()
-{
-
-}
-
-
-
-
-vec3 BRDF_Diffuse(float ndl, vec3 lightColor, vec3 albedoColor)
-{
-	vec3 diffuse = Diffuse_Lambert(albedoColor);
-	return diffuse * ndl * lightColor;
-}
-
-vec3 BRDF_Pbr(float ndl, float ndh, float ndv, vec3 lightColor, vec3 albedoColor, float metallic, float roughness)
-{
-	float D = D_GGX(ndh, roughness);
-	float G = G_SchlickSmithGGX(ndv, ndl, roughness);
-	vec3  F = F_Schlick(ndv, metallic, albedoColor);
-
-	vec3 factor = vec3(1.0 - metallic);
-	vec3 diffuse = Diffuse_Lambert(albedoColor) * factor;
-	vec3 specular = D * F * G;
-
-	return (diffuse + specular) * ndl * lightColor;
-}
-
-vec3 BRDF_EnvSpecular(float ndv, vec3 albedoColor, vec3 specularColor, float metallic, float roughness)
-{
-	vec3 F = F_Schlick(ndv, metallic, albedoColor);
-	return Env_Specular(F, ndv, roughness) * specularColor;
-}
-
-vec3 BRDF_PbrFast(float ndl, float ndh, float ndv, vec3 lightColor, vec3 albedoColor, float metallic, float roughness)
-{
-	float D = D_GGX(ndh, roughness);
-	float G = G_SchlickSmithGGX(ndv, ndl, roughness);
-	vec3  F = F_SchlickFast(ndv, metallic, albedoColor);
-
-	vec3 factor = vec3(1.0 - metallic);
-	vec3 diffuse = Diffuse_Lambert(albedoColor) * factor;
-	vec3 specular = D * F * G;
-
-	return (diffuse + specular) * ndl * lightColor;
-}
-
-vec3 BRDF_EnvSpecularFast(float ndv, vec3 albedoColor, vec3 specularColor, float metallic, float roughness)
-{
-	vec3 F = F_SchlickFast(ndv, metallic, albedoColor);
-	return Env_SpecularFast(F, ndv, roughness) * specularColor;
-}
-
-
-// High level functions
-float PointLightAttenuation(float dis)
-{
-	return Attenuation(dis, engine.mainPointLightAttenuation.x, engine.mainPointLightAttenuation.y, engine.mainPointLightAttenuation.z);
-}
-
-vec3 AmbientLightingSH4(vec3 albedoColor, float metallic, vec3 normal)
+// BRDF Functions
+vec3 AmbientSH4(vec3 normal, vec3 albedoColor, float metallic)
 {
 	return Ambient_SH4(albedoColor, metallic, (engine.ambientLightRotationMatrix * vec4(normal, 0.0)).xyz, engine.ambientLightRed0, engine.ambientLightGreen0, engine.ambientLightBlue0);
 }
 
-vec3 AmbientLightingSH9(vec3 albedoColor, float metallic, vec3 normal)
+vec3 AmbientSH9(vec3 normal, vec3 albedoColor, float metallic)
 {
 	return Ambient_SH9(albedoColor, metallic, (engine.ambientLightRotationMatrix * vec4(normal, 0.0)).xyz, engine.ambientLightRed0.xyz, engine.ambientLightRed1.xyz, engine.ambientLightRed2.xyz, engine.ambientLightGreen0.xyz, engine.ambientLightGreen1.xyz, engine.ambientLightGreen2.xyz, engine.ambientLightBlue0.xyz, engine.ambientLightBlue1.xyz, engine.ambientLightBlue2.xyz);
 }
 
-vec3 SimpleLighting(vec3 lightColor, vec3 lightDirection, vec3 N, vec3 albedoColor)
+vec3 PbrLighting(vec3 normal, vec3 viewDirection, vec3 halfDirection, vec3 lightDirection, vec3 lightColor, vec3 albedoColor, float metallic, float roughness)
 {
-	return BRDF_Diffuse(lightColor, lightDirection, N, albedoColor);
-}
-
-vec3 PBRLighting(vec3 lightColor, vec3 lightDirection, vec3 H, vec3 V, vec3 N, vec3 albedoColor, float metallic, float roughness)
-{
-#ifdef FAST_LIGHTING
-	return BRDF_PbrFast(lightColor, lightDirection, H, V, N, albedoColor, metallic, roughness);
-#else
-	return BRDF_Pbr(lightColor, lightDirection, H, V, N, albedoColor, metallic, roughness);
-#endif
-}
-
-vec3 EnvSpecular(vec3 V, vec3 N, vec3 albedoColor, float metallic, float roughness, vec3 specularColor)
-{
-#ifdef FAST_LIGHTING
-	return BRDF_EnvSpecularFast(V, N, albedoColor, metallic, roughness, specularColor);
-#else
-	return BRDF_EnvSpecular(V, N, albedoColor, metallic, roughness, specularColor);
-#endif
-}
-
-vec3 EnvSpecular(vec3 V, vec3 N, vec3 albedoColor, float metallic, float roughness, float maxLods, sampler2D env)
-{
-	vec3 R = reflect(-V, N);
-	vec3 specularColor = Gamma2Linear(textureLod(env, SphericalSampleing(R), roughness * maxLods).rgb);
+	float ndh = max(dot(normal, halfDirection), 0.0);
+	float ndv = max(dot(normal, viewDirection), 0.0);
+	float ndl = max(dot(normal, lightDirection), 0.0);
 
 #ifdef FAST_LIGHTING
-	return BRDF_EnvSpecularFast(V, N, albedoColor, metallic, roughness, specularColor);
+	float D = D_GGX(ndh, roughness);
+	float G = G_SchlickSmithGGX(ndv, ndl, roughness);
+	vec3  F = F_SchlickFast(ndv, metallic, albedoColor);
 #else
-	return BRDF_EnvSpecular(V, N, albedoColor, metallic, roughness, specularColor);
+	float D = D_GGX(ndh, roughness);
+	float G = G_SchlickSmithGGX(ndv, ndl, roughness);
+	vec3  F = F_Schlick(ndv, metallic, albedoColor);
 #endif
+
+	vec3 factor = vec3(1.0 - metallic);
+	vec3 diffuse = Diffuse_Lambert(albedoColor) * factor;
+	vec3 specular = D * F * G;
+
+	return (diffuse + specular) * ndl * lightColor;
 }
 
-vec3 EnvSpecular(vec3 V, vec3 N, vec3 albedoColor, float metallic, float roughness, float maxLods, samplerCube env)
+vec3 EnvLighting(vec3 normal, vec3 viewDirection, vec3 albedoColor, vec3 specularColor, float metallic, float roughness)
 {
-	vec3 R = reflect(-V, N);
-	vec3 specularColor = Gamma2Linear(textureLod(env, R, roughness * maxLods).rgb);
-
 #ifdef FAST_LIGHTING
-	return BRDF_EnvSpecularFast(V, N, albedoColor, metallic, roughness, specularColor);
+	float ndv = max(dot(normal, viewDirection), 0.0);
+	vec3 F = F_SchlickFast(ndv, metallic, albedoColor);
+	return Env_SpecularFast(F, ndv, roughness) * specularColor;
 #else
-	return BRDF_EnvSpecular(V, N, albedoColor, metallic, roughness, specularColor);
+	float ndv = max(dot(normal, viewDirection), 0.0);
+	vec3 F = F_Schlick(ndv, metallic, albedoColor);
+	return Env_Specular(F, ndv, roughness) * specularColor;
 #endif
 }
-
-vec3 FinalLighting(vec3 ao, vec3 ambientLightingColor, vec3 pointLightingColor, vec3 directLightingColor, vec3 envLightingColor, float shadow)
-{
-	return ao * (ambientLightingColor + pointLightingColor + shadow * directLightingColor + envLightingColor);
-}
-
-#endif
