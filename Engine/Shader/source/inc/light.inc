@@ -199,3 +199,8 @@ vec3 EnvLighting(vec3 normal, vec3 viewDirection, vec3 albedoColor, vec3 specula
 	return Env_Specular(F, ndv, roughness) * specularColor;
 #endif
 }
+
+float LightingAttenuation(float dis)
+{
+	return Attenuation(dis, engine.mainPointLightAttenuation.x, engine.mainPointLightAttenuation.y, engine.mainPointLightAttenuation.z);
+}
