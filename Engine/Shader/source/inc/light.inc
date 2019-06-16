@@ -41,14 +41,14 @@ vec3 ToneMapping(vec3 color)
 // Gamma
 vec3 Gamma2Linear(vec3 gamma)
 {
-	return gamma * gamma;
-//	return pow(gamma, vec3(2.2));
+//	return gamma * gamma;
+	return pow(gamma, vec3(2.2));
 }
 
 vec3 Linear2Gamma(vec3 linear)
 {
-	return sqrt(linear);
-//	return pow(linear, vec3(1.0 / 2.2));
+//	return sqrt(linear);
+	return pow(linear, vec3(1.0 / 2.2));
 }
 
 
