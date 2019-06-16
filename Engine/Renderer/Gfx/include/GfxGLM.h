@@ -440,8 +440,8 @@ namespace glm {
 			planes[1][0] = plane(vec3(0.0f, bottom, 0.0f), vec3(0.0f, 1.0f, 0.0f));
 			planes[2][0] = plane(vec3(left, 0.0f, 0.0f), vec3(1.0f, 0.0f, 0.0f));
 			planes[3][0] = plane(vec3(right, 0.0f, 0.0f), vec3(-1.0f, 0.0f, 0.0f));
-			planes[4][0] = plane(vec3(0.0f, 0.0f, zNear), vec3(0.0f, 0.0f, -1.0f));
-			planes[5][0] = plane(vec3(0.0f, 0.0f, zFar), vec3(0.0f, 0.0f, 1.0f));
+			planes[4][0] = plane(vec3(0.0f, 0.0f, -zNear), vec3(0.0f, 0.0f, -1.0f));
+			planes[5][0] = plane(vec3(0.0f, 0.0f, -zFar), vec3(0.0f, 0.0f, 1.0f));
 		}
 
 		void setLookat(const vec3& _eye, const vec3& _center, const vec3& _up)
