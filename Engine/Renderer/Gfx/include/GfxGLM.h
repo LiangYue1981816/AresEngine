@@ -92,6 +92,26 @@ namespace glm {
 			return vertex + vp;
 		}
 
+		bool intersect_line(const vec3& _vertex0, const vec3& _vertex1, vec3& _intersection)
+		{
+			float a = glm::dot(normal, _vertex1 - _vertex0);
+
+			if (fabs(a) < 0.001f) {
+				return false;
+			}
+
+			float b = glm::dot(normal, vertex - _vertex0);
+			float t = b / a;
+
+			if (t < 0.0f || t > 1.0f) {
+				return false;
+			}
+
+			_intersection = _vertex0 + (_vertex1 - _vertex0) * t;
+
+			return true;
+		}
+
 	public:
 		vec3 vertex;
 		vec3 normal;
