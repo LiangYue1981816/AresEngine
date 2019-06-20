@@ -1,6 +1,7 @@
 #pragma once
 #include "PreHeader.h"
 #include "PassDefault.h"
+#include "PassShadow.h"
 #include "PassForwardLighting.h"
 
 
@@ -132,6 +133,7 @@ private:
 	CGfxRenderTexturePtr m_ptrDepthStencilTexture[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
 	CGfxRenderTexturePtr m_ptrColorTextureMSAA[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
 	CGfxRenderTexturePtr m_ptrDepthStencilTextureMSAA[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
+	CGfxRenderTexturePtr m_ptrShadowMapTexture[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
 
 private:
 	bool m_bEnableMSAA;

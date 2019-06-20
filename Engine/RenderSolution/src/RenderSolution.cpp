@@ -107,14 +107,17 @@ void CRenderSolution::CreateAttachments(void)
 	for (int indexFrame = 0; indexFrame < CGfxSwapChain::SWAPCHAIN_FRAME_COUNT; indexFrame++) {
 		m_ptrPresentTexture[indexFrame] = GfxRenderer()->GetSwapChain()->GetFrameTexture(indexFrame);
 
-		m_ptrDepthStencilTexture[indexFrame] = GfxRenderer()->NewRenderTexture(HashValueFormat("DepthStencilTexture %d", indexFrame));
+		m_ptrDepthStencilTexture[indexFrame] = GfxRenderer()->NewRenderTexture(HashValueFormat("DepthStencilTexture(%d)", indexFrame));
 		m_ptrDepthStencilTexture[indexFrame]->Create(GFX_PIXELFORMAT_D32_SFLOAT_PACK32, width, height);
 
-		m_ptrColorTextureMSAA[indexFrame] = GfxRenderer()->NewRenderTexture(HashValueFormat("ColorTextureMSAA %d", indexFrame));
+		m_ptrColorTextureMSAA[indexFrame] = GfxRenderer()->NewRenderTexture(HashValueFormat("ColorTextureMSAA(%d)", indexFrame));
 		m_ptrColorTextureMSAA[indexFrame]->Create(GFX_PIXELFORMAT_BGRA8_UNORM_PACK8, width, height, samples);
 
-		m_ptrDepthStencilTextureMSAA[indexFrame] = GfxRenderer()->NewRenderTexture(HashValueFormat("DepthStencilTextureMSAA %d", indexFrame));
+		m_ptrDepthStencilTextureMSAA[indexFrame] = GfxRenderer()->NewRenderTexture(HashValueFormat("DepthStencilTextureMSAA(%d)", indexFrame));
 		m_ptrDepthStencilTextureMSAA[indexFrame]->Create(GFX_PIXELFORMAT_D32_SFLOAT_PACK32, width, height, samples);
+
+		m_ptrShadowMapTexture[indexFrame] = GfxRenderer()->NewRenderTexture(HashValueFormat("ShadowMap(%d)", indexFrame));
+		m_ptrShadowMapTexture[indexFrame]->Create(GFX_PIXELFORMAT_D32_SFLOAT_PACK32, 2048, 2048);
 	}
 }
 
