@@ -1542,6 +1542,9 @@
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxUniformCamera.h">
       <Filter>Engine\Renderer\Gfx\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Engine\RenderSolution\include\PassDefault.h">
+      <Filter>Engine\RenderSolution\Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Engine\ThirdParty\eastl\source\allocator_eastl.cpp">
@@ -2223,6 +2226,9 @@
       <Filter>Engine\RenderSolution\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\RenderSolution\src\RenderSolution_Update.cpp">
+      <Filter>Engine\RenderSolution\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\RenderSolution\src\PassDefault.cpp">
       <Filter>Engine\RenderSolution\Source Files</Filter>
     </ClCompile>
   </ItemGroup>

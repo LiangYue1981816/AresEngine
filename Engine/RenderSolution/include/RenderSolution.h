@@ -1,5 +1,6 @@
 #pragma once
 #include "PreHeader.h"
+#include "PassDefault.h"
 
 
 #define VERTEX_ATTRIBUTE_POSITION                          0x00000001
@@ -35,6 +36,7 @@ typedef enum RenderSolution {
 class CALL_API CRenderSolution
 {
 	friend class CEngine;
+	friend class CPassDefault;
 
 
 private:
@@ -110,12 +112,15 @@ private:
 	CGfxUniformCamera* m_pUniformShadowCamera;
 
 private:
-	CGfxRenderTexturePtr m_ptrScreenTexture[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
+	CGfxRenderTexturePtr m_ptrPresentTexture[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
 
 	CGfxRenderTexturePtr m_ptrDepthStencilTexture[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
 
 	CGfxRenderTexturePtr m_ptrColorTextureMSAA[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
 	CGfxRenderTexturePtr m_ptrDepthStencilTextureMSAA[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
+
+private:
+	CPassDefault* m_pPassDefault;
 };
 
 extern const uint32_t DEFAULT_PASS_NAME;

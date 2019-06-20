@@ -68,7 +68,7 @@ CRenderSolution::CRenderSolution(GfxApi api, RenderSolution solution, void* hIns
 	m_pUniformShadowCamera = new CGfxUniformCamera;
 
 	for (int indexFrame = 0; indexFrame < CGfxSwapChain::SWAPCHAIN_FRAME_COUNT; indexFrame++) {
-		m_ptrScreenTexture[indexFrame] = GfxRenderer()->GetSwapChain()->GetFrameTexture(indexFrame);
+		m_ptrPresentTexture[indexFrame] = GfxRenderer()->GetSwapChain()->GetFrameTexture(indexFrame);
 
 		m_ptrDepthStencilTexture[indexFrame] = GfxRenderer()->NewRenderTexture(HashValueFormat("DepthStencilTexture %d", indexFrame));
 		m_ptrDepthStencilTexture[indexFrame]->Create(GFX_PIXELFORMAT_D32_SFLOAT_PACK32, GfxRenderer()->GetSwapChain()->GetWidth(), GfxRenderer()->GetSwapChain()->GetHeight());
@@ -81,6 +81,8 @@ CRenderSolution::CRenderSolution(GfxApi api, RenderSolution solution, void* hIns
 		m_ptrDepthStencilTextureMSAA[indexFrame] = GfxRenderer()->NewRenderTexture(HashValueFormat("DepthStencilTextureMSAA %d", indexFrame));
 		m_ptrDepthStencilTextureMSAA[indexFrame]->Create(GFX_PIXELFORMAT_D32_SFLOAT_PACK32, GfxRenderer()->GetSwapChain()->GetWidth(), GfxRenderer()->GetSwapChain()->GetHeight(), samples);
 	}
+
+	m_pPassDefault = new CPassDefault(this);
 }
 
 CRenderSolution::~CRenderSolution(void)
@@ -95,6 +97,8 @@ CRenderSolution::~CRenderSolution(void)
 	delete m_pUniformEngine;
 	delete m_pUniformMainCamera;
 	delete m_pUniformShadowCamera;
+
+	delete m_pPassDefault;
 
 	delete m_pRenderer;
 }

@@ -425,6 +425,7 @@
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\src\Command\VKCommandUniformMatrix3fv.h" />
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\src\Command\VKCommandUniformMatrix4fv.h" />
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\src\Command\VKCommandUpdateInstanceBuffer.h" />
+    <ClInclude Include="..\..\Engine\RenderSolution\include\PassDefault.h" />
     <ClInclude Include="..\..\Engine\RenderSolution\include\RenderSolution.h" />
     <ClInclude Include="..\..\Engine\Resource\include\ResourceLoader.h" />
     <ClInclude Include="..\..\Engine\SceneHeader.h" />
@@ -759,6 +760,7 @@
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKUniformBuffer.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKUniformBufferManager.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKVertexBuffer.cpp" />
+    <ClCompile Include="..\..\Engine\RenderSolution\src\PassDefault.cpp" />
     <ClCompile Include="..\..\Engine\RenderSolution\src\RenderSolution.cpp" />
     <ClCompile Include="..\..\Engine\RenderSolution\src\RenderSolution_Render.cpp" />
     <ClCompile Include="..\..\Engine\RenderSolution\src\RenderSolution_Update.cpp" />
