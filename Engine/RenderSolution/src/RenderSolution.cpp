@@ -66,6 +66,21 @@ CRenderSolution::CRenderSolution(GfxApi api, RenderSolution solution, void* hIns
 	m_pUniformEngine = new CGfxUniformEngine;
 	m_pUniformMainCamera = new CGfxUniformCamera;
 	m_pUniformShadowCamera = new CGfxUniformCamera;
+
+	for (int indexFrame = 0; indexFrame < CGfxSwapChain::SWAPCHAIN_FRAME_COUNT; indexFrame++) {
+		m_ptrScreenTexture[indexFrame] = GfxRenderer()->GetSwapChain()->GetFrameTexture(indexFrame);
+
+		m_ptrDepthStencilTexture[indexFrame] = GfxRenderer()->NewRenderTexture(HashValueFormat("DepthStencilTexture %d", indexFrame));
+		m_ptrDepthStencilTexture[indexFrame]->Create(GFX_PIXELFORMAT_D32_SFLOAT_PACK32, GfxRenderer()->GetSwapChain()->GetWidth(), GfxRenderer()->GetSwapChain()->GetHeight());
+
+		const int samples = 4;
+
+		m_ptrColorTextureMSAA[indexFrame] = GfxRenderer()->NewRenderTexture(HashValueFormat("ColorTextureMSAA %d", indexFrame));
+		m_ptrColorTextureMSAA[indexFrame]->Create(GFX_PIXELFORMAT_BGRA8_UNORM_PACK8, GfxRenderer()->GetSwapChain()->GetWidth(), GfxRenderer()->GetSwapChain()->GetHeight(), samples);
+
+		m_ptrDepthStencilTextureMSAA[indexFrame] = GfxRenderer()->NewRenderTexture(HashValueFormat("DepthStencilTextureMSAA %d", indexFrame));
+		m_ptrDepthStencilTextureMSAA[indexFrame]->Create(GFX_PIXELFORMAT_D32_SFLOAT_PACK32, GfxRenderer()->GetSwapChain()->GetWidth(), GfxRenderer()->GetSwapChain()->GetHeight(), samples);
+	}
 }
 
 CRenderSolution::~CRenderSolution(void)
@@ -122,11 +137,6 @@ CGfxUniformBufferPtr CRenderSolution::GetMainCameraUniformBuffer(void) const
 CGfxUniformBufferPtr CRenderSolution::GetShadowCameraUniformBuffer(void) const
 {
 	return m_pUniformShadowCamera->GetUniformBuffer();
-}
-
-void CRenderSolution::SetRenderSolution(RenderSolution solution, int samples)
-{
-
 }
 
 void CRenderSolution::SetTime(float t, float dt)
@@ -251,15 +261,4 @@ void CRenderSolution::SetMainFogHeightDensity(float startHeight, float endHeight
 void CRenderSolution::SetMainFogDistanceDensity(float startDistance, float endDistance, float density)
 {
 	m_pUniformEngine->SetMainFogDistanceDensity(startDistance, endDistance, density);
-}
-
-void CRenderSolution::UpdateCamera(int indexQueue)
-{
-
-}
-
-void CRenderSolution::Render(int indexQueue)
-{
-	m_pUniformEngine->Apply();
-	m_pUniformMainCamera->Apply();
 }

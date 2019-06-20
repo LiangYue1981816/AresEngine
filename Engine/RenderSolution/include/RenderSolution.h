@@ -55,7 +55,7 @@ public:
 	CGfxUniformBufferPtr GetShadowCameraUniformBuffer(void) const;
 
 public:
-	void SetRenderSolution(RenderSolution solution, int samples = 1);
+	void SetRenderSolution(RenderSolution solution);
 
 public:
 	void SetTime(float t, float dt);
@@ -108,6 +108,14 @@ private:
 	CGfxUniformEngine* m_pUniformEngine;
 	CGfxUniformCamera* m_pUniformMainCamera;
 	CGfxUniformCamera* m_pUniformShadowCamera;
+
+private:
+	CGfxRenderTexturePtr m_ptrScreenTexture[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
+
+	CGfxRenderTexturePtr m_ptrDepthStencilTexture[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
+
+	CGfxRenderTexturePtr m_ptrColorTextureMSAA[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
+	CGfxRenderTexturePtr m_ptrDepthStencilTextureMSAA[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
 };
 
 extern const uint32_t DEFAULT_PASS_NAME;

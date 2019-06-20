@@ -2219,6 +2219,12 @@
     <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxUniformCamera.cpp">
       <Filter>Engine\Renderer\Gfx\Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Engine\RenderSolution\src\RenderSolution_Render.cpp">
+      <Filter>Engine\RenderSolution\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\RenderSolution\src\RenderSolution_Update.cpp">
+      <Filter>Engine\RenderSolution\Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\..\Engine\ThirdParty\rttr\CMakeLists.txt">

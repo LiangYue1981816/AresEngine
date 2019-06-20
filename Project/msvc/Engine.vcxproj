@@ -760,6 +760,8 @@
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKUniformBufferManager.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKVertexBuffer.cpp" />
     <ClCompile Include="..\..\Engine\RenderSolution\src\RenderSolution.cpp" />
+    <ClCompile Include="..\..\Engine\RenderSolution\src\RenderSolution_Render.cpp" />
+    <ClCompile Include="..\..\Engine\RenderSolution\src\RenderSolution_Update.cpp" />
     <ClCompile Include="..\..\Engine\Resource\src\ResourceLoader.cpp" />
     <ClCompile Include="..\..\Engine\Resource\src\ResourceLoaderMaterial.cpp" />
     <ClCompile Include="..\..\Engine\Resource\src\ResourceLoaderMesh.cpp" />
