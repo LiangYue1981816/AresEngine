@@ -51,5 +51,5 @@ CPassShadow::~CPassShadow(void)
 
 void CPassShadow::Render(int indexQueue)
 {
-
+	const glm::camera& mainCamera = m_pRenderSolution->GetMainCamera()->GetCamera();
 }

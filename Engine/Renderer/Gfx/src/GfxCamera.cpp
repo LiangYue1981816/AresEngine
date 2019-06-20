@@ -36,6 +36,11 @@ void CGfxCamera::SetLookat(float eyex, float eyey, float eyez, float centerx, fl
 	m_camera.setLookat(glm::vec3(eyex, eyey, eyez), glm::vec3(centerx, centery, centerz), glm::vec3(upx, upy, upz));
 }
 
+const glm::camera& CGfxCamera::GetCamera(void) const
+{
+	return m_camera;
+}
+
 const glm::vec4& CGfxCamera::GetScissor(void) const
 {
 	return m_camera.scissor;
