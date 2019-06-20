@@ -27,7 +27,6 @@ typedef enum RenderSolution {
 	RENDER_SOLUTION_DEFAULT = 0,
 	RENDER_SOLUTION_FORWARD,
 	RENDER_SOLUTION_DEFERRED,
-	RENDER_SOLUTION_TILED_BASE_FORWARD,
 	RENDER_SOLUTION_TILED_BASE_DEFERRED,
 	RENDER_SOLUTION_COUNT
 } RenderSolution;
@@ -36,7 +35,6 @@ typedef enum RenderSolution {
 class CALL_API CRenderSolution
 {
 	friend class CEngine;
-	friend class CPassDefault;
 
 
 private:
@@ -57,7 +55,10 @@ public:
 	CGfxUniformBufferPtr GetShadowCameraUniformBuffer(void) const;
 
 public:
-	void SetRenderSolution(RenderSolution solution);
+	CGfxRenderTexturePtr GetPresentTexture(int indexFrame) const;
+	CGfxRenderTexturePtr GetDepthStencilTexture(int indexFrame) const;
+	CGfxRenderTexturePtr GetColorTextureMSAA(int indexFrame) const;
+	CGfxRenderTexturePtr GetDepthStencilTextureMSAA(int indexFrame) const;
 
 public:
 	void SetTime(float t, float dt);
@@ -93,7 +94,18 @@ public:
 
 public:
 	void UpdateCamera(int indexQueue);
+
+public:
+	void SetRenderSolution(RenderSolution solution);
+	void SetEnableMSAA(bool bEnable);
+
 	void Render(int indexQueue);
+
+private:
+	void RenderDefault(int indexQueue);
+	void RenderForward(int indexQueue);
+	void RenderDeferred(int indexQueue);
+	void RenderTiledBaseDeferred(int indexQueue);
 
 
 private:
@@ -113,13 +125,14 @@ private:
 
 private:
 	CGfxRenderTexturePtr m_ptrPresentTexture[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
-
 	CGfxRenderTexturePtr m_ptrDepthStencilTexture[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
-
 	CGfxRenderTexturePtr m_ptrColorTextureMSAA[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
 	CGfxRenderTexturePtr m_ptrDepthStencilTextureMSAA[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
 
 private:
+	bool m_bEnableMSAA;
+	RenderSolution m_renderSolution;
+
 	CPassDefault* m_pPassDefault;
 };
 

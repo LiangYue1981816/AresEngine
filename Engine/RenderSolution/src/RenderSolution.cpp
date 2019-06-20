@@ -42,6 +42,9 @@ CRenderSolution::CRenderSolution(GfxApi api, RenderSolution solution, void* hIns
 	, m_pUniformEngine(nullptr)
 	, m_pUniformMainCamera(nullptr)
 	, m_pUniformShadowCamera(nullptr)
+
+	, m_bEnableMSAA(false)
+	, m_renderSolution(RENDER_SOLUTION_DEFAULT)
 {
 	SetVertexAttributes(vertexAttributes, VERTEX_ATTRIBUTE_COUNT);
 	SetInstanceAttributes(instanceAttributes, INSTANCE_ATTRIBUTE_COUNT);
@@ -141,6 +144,26 @@ CGfxUniformBufferPtr CRenderSolution::GetMainCameraUniformBuffer(void) const
 CGfxUniformBufferPtr CRenderSolution::GetShadowCameraUniformBuffer(void) const
 {
 	return m_pUniformShadowCamera->GetUniformBuffer();
+}
+
+CGfxRenderTexturePtr CRenderSolution::GetPresentTexture(int indexFrame) const
+{
+	return m_ptrPresentTexture[indexFrame % CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
+}
+
+CGfxRenderTexturePtr CRenderSolution::GetDepthStencilTexture(int indexFrame) const
+{
+	return m_ptrDepthStencilTexture[indexFrame % CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
+}
+
+CGfxRenderTexturePtr CRenderSolution::GetColorTextureMSAA(int indexFrame) const
+{
+	return m_ptrColorTextureMSAA[indexFrame % CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
+}
+
+CGfxRenderTexturePtr CRenderSolution::GetDepthStencilTextureMSAA(int indexFrame) const
+{
+	return m_ptrDepthStencilTextureMSAA[indexFrame % CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
 }
 
 void CRenderSolution::SetTime(float t, float dt)
