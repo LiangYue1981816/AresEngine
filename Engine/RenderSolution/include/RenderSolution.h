@@ -43,6 +43,9 @@ private:
 	virtual ~CRenderSolution(void);
 
 
+private:
+	void CreateAttachments(void);
+
 public:
 	CGfxCamera* GetMainCamera(void) const;
 	CGfxCamera* GetShadowCamera(void) const;
