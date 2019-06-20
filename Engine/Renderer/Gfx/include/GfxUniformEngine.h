@@ -11,10 +11,10 @@ private:
 		glm::vec4 cosTime;
 		glm::vec4 deltaTime;
 
-		glm::mat4 shadowProjectionMatrix;
-		glm::mat4 shadowProjectionViewMatrix;
-		glm::mat4 shadowViewMatrix;
-		glm::vec4 shadowParams;
+		glm::mat4 shadowProjectionMatrix[4];
+		glm::mat4 shadowProjectionViewMatrix[4];
+		glm::mat4 shadowViewMatrix[4];
+		glm::vec4 shadowParams[4];
 
 		glm::vec4 lightFactor;
 
@@ -53,10 +53,10 @@ public:
 public:
 	void SetTime(float t, float dt);
 
-	void SetShadowOrtho(float left, float right, float bottom, float top, float zNear, float zFar);
-	void SetShadowLookat(float eyex, float eyey, float eyez, float centerx, float centery, float centerz, float upx, float upy, float upz);
-	void SetShadowRange(float range);
-	void SetShadowResolution(float resolution);
+	void SetShadowOrtho(int indexLevel, float left, float right, float bottom, float top, float zNear, float zFar);
+	void SetShadowLookat(int indexLevel, float eyex, float eyey, float eyez, float centerx, float centery, float centerz, float upx, float upy, float upz);
+	void SetShadowRange(int indexLevel, float range);
+	void SetShadowResolution(int indexLevel, float resolution);
 
 	void SetLightFactor(float ambientLightFactor, float pointLightFactor, float directLightFactor, float envLightFactor);
 
