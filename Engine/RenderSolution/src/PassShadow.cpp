@@ -51,5 +51,27 @@ CPassShadow::~CPassShadow(void)
 
 void CPassShadow::Render(int indexQueue)
 {
-	const glm::camera& mainCamera = m_pRenderSolution->GetMainCamera()->GetCamera();
+	const int indexFrame = GfxRenderer()->GetSwapChain()->GetFrameIndex();
+
+	const CGfxRenderPassPtr ptrRenderPass = m_ptrRenderPass;
+	const CGfxFrameBufferPtr ptrFrameBuffer = m_ptrFrameBuffer[indexFrame];
+	const CGfxRenderTexturePtr ptrShadowMapTexture = m_pRenderSolution->GetShadowMapTexture(indexFrame);
+
+	const CGfxCommandBufferPtr ptrMainCommandBuffer = m_ptrMainCommandBuffer[indexFrame];
+	{
+		ptrMainCommandBuffer->Clearup();
+		GfxRenderer()->BeginRecord(ptrMainCommandBuffer);
+		{
+			GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, ptrShadowMapTexture, GFX_IMAGE_LAYOUT_GENERAL);
+
+			GfxRenderer()->CmdBeginRenderPass(ptrMainCommandBuffer, ptrFrameBuffer, ptrRenderPass);
+			{
+				const glm::camera& mainCamera = m_pRenderSolution->GetMainCamera()->GetCamera();
+//				m_pRenderSolution->GetMainQueue()->CmdDraw(indexQueue, ptrMainCommandBuffer, m_ptrDescriptorSetDefaultPass, DEFAULT_PASS_NAME, m_pRenderSolution->GetMainCamera()->GetScissor(), m_pRenderSolution->GetMainCamera()->GetViewport(), 0xffffffff);
+			}
+			GfxRenderer()->CmdEndRenderPass(ptrMainCommandBuffer);
+		}
+		GfxRenderer()->EndRecord(ptrMainCommandBuffer);
+	}
+	GfxRenderer()->Submit(ptrMainCommandBuffer);
 }
