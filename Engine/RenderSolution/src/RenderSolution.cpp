@@ -31,8 +31,6 @@ const uint32_t FORWARD_LIGHTING_PASS_NAME = HashValue("PBRLighting");
 
 CRenderSolution::CRenderSolution(GfxApi api, RenderSolution solution, void* hInstance, void* hWnd, void* hDC, int width, int height, GfxPixelFormat format)
 	: m_pRenderer(nullptr)
-	, m_pRenderSolution{ nullptr }
-	, m_pCurrentRenderSolution(nullptr)
 
 	, m_pMainCamera(nullptr)
 	, m_pShadowCamera(nullptr)
@@ -68,25 +66,10 @@ CRenderSolution::CRenderSolution(GfxApi api, RenderSolution solution, void* hIns
 	m_pUniformEngine = new CGfxUniformEngine;
 	m_pUniformMainCamera = new CGfxUniformCamera;
 	m_pUniformShadowCamera = new CGfxUniformCamera;
-
-	m_pRenderSolution[RENDER_SOLUTION_DEFAULT] = new CRenderSolutionDefault(this);
-	m_pRenderSolution[RENDER_SOLUTION_FORWARD] = new CRenderSolutionForward(this);
-	m_pRenderSolution[RENDER_SOLUTION_DEFERRED] = new CRenderSolutionDeferred(this);
-	m_pRenderSolution[RENDER_SOLUTION_TILED_BASE_FORWARD] = new CRenderSolutionTiledBaseForward(this);
-	m_pRenderSolution[RENDER_SOLUTION_TILED_BASE_DEFERRED] = new CRenderSolutionTiledBaseDeferred(this);
-
-	m_pCurrentRenderSolution = m_pRenderSolution[RENDER_SOLUTION_DEFAULT];
-	m_pCurrentRenderSolution->Create();
 }
 
 CRenderSolution::~CRenderSolution(void)
 {
-	delete m_pRenderSolution[RENDER_SOLUTION_DEFAULT];
-	delete m_pRenderSolution[RENDER_SOLUTION_FORWARD];
-	delete m_pRenderSolution[RENDER_SOLUTION_DEFERRED];
-	delete m_pRenderSolution[RENDER_SOLUTION_TILED_BASE_FORWARD];
-	delete m_pRenderSolution[RENDER_SOLUTION_TILED_BASE_DEFERRED];
-
 	delete m_pMainCamera;
 	delete m_pShadowCamera;
 
@@ -99,13 +82,6 @@ CRenderSolution::~CRenderSolution(void)
 	delete m_pUniformShadowCamera;
 
 	delete m_pRenderer;
-}
-
-void CRenderSolution::SetCurrentRenderSolution(RenderSolution solution, int samples)
-{
-	m_pCurrentRenderSolution->Destroy();
-	m_pCurrentRenderSolution = m_pRenderSolution[solution];
-	m_pCurrentRenderSolution->Create(samples);
 }
 
 CGfxCamera* CRenderSolution::GetMainCamera(void) const
@@ -146,6 +122,11 @@ CGfxUniformBufferPtr CRenderSolution::GetMainCameraUniformBuffer(void) const
 CGfxUniformBufferPtr CRenderSolution::GetShadowCameraUniformBuffer(void) const
 {
 	return m_pUniformShadowCamera->GetUniformBuffer();
+}
+
+void CRenderSolution::SetRenderSolution(RenderSolution solution, int samples)
+{
+
 }
 
 void CRenderSolution::SetTime(float t, float dt)
@@ -274,12 +255,11 @@ void CRenderSolution::SetMainFogDistanceDensity(float startDistance, float endDi
 
 void CRenderSolution::UpdateCamera(int indexQueue)
 {
-	m_pCurrentRenderSolution->UpdateCamera(indexQueue);
+
 }
 
 void CRenderSolution::Render(int indexQueue)
 {
 	m_pUniformEngine->Apply();
 	m_pUniformMainCamera->Apply();
-	m_pCurrentRenderSolution->Render(indexQueue);
 }

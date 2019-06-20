@@ -1539,24 +1539,6 @@
     <ClInclude Include="..\..\Engine\RenderSolution\include\RenderSolution.h">
       <Filter>Engine\RenderSolution\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Engine\RenderSolution\include\RenderSolutionBase.h">
-      <Filter>Engine\RenderSolution\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\RenderSolution\include\RenderSolutionDefault.h">
-      <Filter>Engine\RenderSolution\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\RenderSolution\include\RenderSolutionDeferred.h">
-      <Filter>Engine\RenderSolution\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\RenderSolution\include\RenderSolutionForward.h">
-      <Filter>Engine\RenderSolution\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\RenderSolution\include\RenderSolutionTiledBaseDeferred.h">
-      <Filter>Engine\RenderSolution\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\RenderSolution\include\RenderSolutionTiledBaseForward.h">
-      <Filter>Engine\RenderSolution\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxUniformCamera.h">
       <Filter>Engine\Renderer\Gfx\Header Files</Filter>
     </ClInclude>
@@ -2232,24 +2214,6 @@
       <Filter>Engine\Renderer\Gfx\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\RenderSolution\src\RenderSolution.cpp">
-      <Filter>Engine\RenderSolution\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\RenderSolution\src\RenderSolutionBase.cpp">
-      <Filter>Engine\RenderSolution\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\RenderSolution\src\RenderSolutionDefault.cpp">
-      <Filter>Engine\RenderSolution\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\RenderSolution\src\RenderSolutionDeferred.cpp">
-      <Filter>Engine\RenderSolution\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\RenderSolution\src\RenderSolutionForward.cpp">
-      <Filter>Engine\RenderSolution\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\RenderSolution\src\RenderSolutionTiledBaseDeferred.cpp">
-      <Filter>Engine\RenderSolution\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\RenderSolution\src\RenderSolutionTiledBaseForward.cpp">
       <Filter>Engine\RenderSolution\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxUniformCamera.cpp">

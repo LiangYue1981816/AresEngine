@@ -426,12 +426,6 @@
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\src\Command\VKCommandUniformMatrix4fv.h" />
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\src\Command\VKCommandUpdateInstanceBuffer.h" />
     <ClInclude Include="..\..\Engine\RenderSolution\include\RenderSolution.h" />
-    <ClInclude Include="..\..\Engine\RenderSolution\include\RenderSolutionBase.h" />
-    <ClInclude Include="..\..\Engine\RenderSolution\include\RenderSolutionDefault.h" />
-    <ClInclude Include="..\..\Engine\RenderSolution\include\RenderSolutionDeferred.h" />
-    <ClInclude Include="..\..\Engine\RenderSolution\include\RenderSolutionForward.h" />
-    <ClInclude Include="..\..\Engine\RenderSolution\include\RenderSolutionTiledBaseDeferred.h" />
-    <ClInclude Include="..\..\Engine\RenderSolution\include\RenderSolutionTiledBaseForward.h" />
     <ClInclude Include="..\..\Engine\Resource\include\ResourceLoader.h" />
     <ClInclude Include="..\..\Engine\SceneHeader.h" />
     <ClInclude Include="..\..\Engine\Scene\include\Component.h" />
@@ -766,12 +760,6 @@
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKUniformBufferManager.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKVertexBuffer.cpp" />
     <ClCompile Include="..\..\Engine\RenderSolution\src\RenderSolution.cpp" />
-    <ClCompile Include="..\..\Engine\RenderSolution\src\RenderSolutionBase.cpp" />
-    <ClCompile Include="..\..\Engine\RenderSolution\src\RenderSolutionDefault.cpp" />
-    <ClCompile Include="..\..\Engine\RenderSolution\src\RenderSolutionDeferred.cpp" />
-    <ClCompile Include="..\..\Engine\RenderSolution\src\RenderSolutionForward.cpp" />
-    <ClCompile Include="..\..\Engine\RenderSolution\src\RenderSolutionTiledBaseDeferred.cpp" />
-    <ClCompile Include="..\..\Engine\RenderSolution\src\RenderSolutionTiledBaseForward.cpp" />
     <ClCompile Include="..\..\Engine\Resource\src\ResourceLoader.cpp" />
     <ClCompile Include="..\..\Engine\Resource\src\ResourceLoaderMaterial.cpp" />
     <ClCompile Include="..\..\Engine\Resource\src\ResourceLoaderMesh.cpp" />

@@ -1,13 +1,6 @@
 #pragma once
 #include "PreHeader.h"
 
-#include "RenderSolutionBase.h"
-#include "RenderSolutionDefault.h"
-#include "RenderSolutionDeferred.h"
-#include "RenderSolutionForward.h"
-#include "RenderSolutionTiledBaseForward.h"
-#include "RenderSolutionTiledBaseDeferred.h"
-
 
 #define VERTEX_ATTRIBUTE_POSITION                          0x00000001
 #define VERTEX_ATTRIBUTE_NORMAL                            0x00000002
@@ -50,9 +43,6 @@ private:
 
 
 public:
-	void SetCurrentRenderSolution(RenderSolution solution, int samples = 1);
-
-public:
 	CGfxCamera* GetMainCamera(void) const;
 	CGfxCamera* GetShadowCamera(void) const;
 
@@ -63,6 +53,9 @@ public:
 	CGfxUniformBufferPtr GetEngineUniformBuffer(void) const;
 	CGfxUniformBufferPtr GetMainCameraUniformBuffer(void) const;
 	CGfxUniformBufferPtr GetShadowCameraUniformBuffer(void) const;
+
+public:
+	void SetRenderSolution(RenderSolution solution, int samples = 1);
 
 public:
 	void SetTime(float t, float dt);
@@ -103,10 +96,6 @@ public:
 
 private:
 	CGfxRenderer* m_pRenderer;
-
-private:
-	CRenderSolutionBase* m_pCurrentRenderSolution;
-	CRenderSolutionBase* m_pRenderSolution[RENDER_SOLUTION_COUNT];
 
 private:
 	CGfxCamera* m_pMainCamera;
