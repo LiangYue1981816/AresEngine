@@ -78,12 +78,6 @@ public:
 	void SetCameraOrtho(float left, float right, float bottom, float top, float zNear, float zFar);
 	void SetCameraLookat(float eyex, float eyey, float eyez, float centerx, float centery, float centerz, float upx, float upy, float upz);
 
-	void SetShadowViewport(float x, float y, float width, float height);
-	void SetShadowOrtho(float left, float right, float bottom, float top, float zNear, float zFar);
-	void SetShadowLookat(float eyex, float eyey, float eyez, float centerx, float centery, float centerz, float upx, float upy, float upz);
-	void SetShadowRange(float range);
-	void SetShadowResolution(float resolution);
-
 	void SetLightFactor(float ambientLightFactor, float pointLightFactor, float directLightFactor, float envLightFactor);
 
 	void SetAmbientLightSH(float shRed[9], float shGreen[9], float shBlue[9]);

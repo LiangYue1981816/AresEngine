@@ -233,36 +233,6 @@ void CRenderSolution::SetCameraLookat(float eyex, float eyey, float eyez, float 
 	m_pUniformMainCamera->SetLookat(eyex, eyey, eyez, centerx, centery, centerz, upx, upy, upz);
 }
 
-void CRenderSolution::SetShadowViewport(float x, float y, float width, float height)
-{
-	m_pShadowCamera->SetViewport(x, y, width, height);
-	m_pUniformShadowCamera->SetScreen(width, height);
-}
-
-void CRenderSolution::SetShadowOrtho(float left, float right, float bottom, float top, float zNear, float zFar)
-{
-	m_pShadowCamera->SetOrtho(left, right, bottom, top, zNear, zFar);
-	m_pUniformShadowCamera->SetOrtho(left, right, bottom, top, zNear, zFar);
-	m_pUniformEngine->SetShadowOrtho(left, right, bottom, top, zNear, zFar);
-}
-
-void CRenderSolution::SetShadowLookat(float eyex, float eyey, float eyez, float centerx, float centery, float centerz, float upx, float upy, float upz)
-{
-	m_pShadowCamera->SetLookat(eyex, eyey, eyez, centerx, centery, centerz, upx, upy, upz);
-	m_pUniformShadowCamera->SetLookat(eyex, eyey, eyez, centerx, centery, centerz, upx, upy, upz);
-	m_pUniformEngine->SetShadowLookat(eyex, eyey, eyez, centerx, centery, centerz, upx, upy, upz);
-}
-
-void CRenderSolution::SetShadowRange(float range)
-{
-	m_pUniformEngine->SetShadowRange(range);
-}
-
-void CRenderSolution::SetShadowResolution(float resolution)
-{
-	m_pUniformEngine->SetShadowResolution(resolution);
-}
-
 void CRenderSolution::SetLightFactor(float ambientLightFactor, float pointLightFactor, float directLightFactor, float envLightFactor)
 {
 	m_pUniformEngine->SetLightFactor(ambientLightFactor, pointLightFactor, directLightFactor, envLightFactor);
@@ -306,6 +276,7 @@ void CRenderSolution::SetMainDirectLightColor(float red, float green, float blue
 void CRenderSolution::SetMainDirectLightDirection(float dirx, float diry, float dirz)
 {
 	m_pUniformEngine->SetMainDirectLightDirection(dirx, diry, dirz);
+	m_pUniformEngine->SetShadowDirection(dirx, diry, dirz);
 }
 
 void CRenderSolution::SetMainFogColor(float red, float green, float blue)
