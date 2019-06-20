@@ -1545,6 +1545,9 @@
     <ClInclude Include="..\..\Engine\RenderSolution\include\PassDefault.h">
       <Filter>Engine\RenderSolution\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Engine\RenderSolution\include\PassForwardLighting.h">
+      <Filter>Engine\RenderSolution\Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Engine\ThirdParty\eastl\source\allocator_eastl.cpp">
@@ -2229,6 +2232,9 @@
       <Filter>Engine\RenderSolution\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\RenderSolution\src\PassDefault.cpp">
+      <Filter>Engine\RenderSolution\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\RenderSolution\src\PassForwardLighting.cpp">
       <Filter>Engine\RenderSolution\Source Files</Filter>
     </ClCompile>
   </ItemGroup>

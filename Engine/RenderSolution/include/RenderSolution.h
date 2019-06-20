@@ -1,6 +1,7 @@
 #pragma once
 #include "PreHeader.h"
 #include "PassDefault.h"
+#include "PassForwardLighting.h"
 
 
 #define VERTEX_ATTRIBUTE_POSITION                          0x00000001
@@ -134,6 +135,7 @@ private:
 	RenderSolution m_renderSolution;
 
 	CPassDefault* m_pPassDefault;
+	CPassForwardLighting* m_pPassForwardLighting;
 };
 
 extern const uint32_t DEFAULT_PASS_NAME;

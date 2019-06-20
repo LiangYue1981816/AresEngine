@@ -50,7 +50,7 @@ void CRenderSolution::RenderForward(int indexQueue)
 {
 	GfxRenderer()->AcquireNextFrame();
 	{
-
+		m_pPassForwardLighting->Render(indexQueue, m_bEnableMSAA);
 	}
 	GfxRenderer()->Present();
 }
