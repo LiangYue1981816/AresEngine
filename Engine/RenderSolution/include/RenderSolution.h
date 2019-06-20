@@ -1,8 +1,8 @@
 #pragma once
 #include "PreHeader.h"
 #include "PassDefault.h"
-#include "PassShadow.h"
 #include "PassForwardLighting.h"
+#include "PassShadow.h"
 
 
 #define VERTEX_ATTRIBUTE_POSITION                          0x00000001
@@ -45,7 +45,8 @@ private:
 
 
 private:
-	void CreateAttachments(void);
+	void CreateColorAttachments(void);
+	void CreateShadowAttachments(int width, int height);
 
 public:
 	CGfxCamera* GetMainCamera(void) const;
@@ -62,8 +63,11 @@ public:
 public:
 	CGfxRenderTexturePtr GetPresentTexture(int indexFrame) const;
 	CGfxRenderTexturePtr GetDepthStencilTexture(int indexFrame) const;
+
 	CGfxRenderTexturePtr GetColorTextureMSAA(int indexFrame) const;
 	CGfxRenderTexturePtr GetDepthStencilTextureMSAA(int indexFrame) const;
+
+	CGfxRenderTexturePtr GetShadowMapTexture(int indexFrame) const;
 
 public:
 	void SetTime(float t, float dt);
@@ -141,6 +145,8 @@ private:
 
 	CPassDefault* m_pPassDefault;
 	CPassForwardLighting* m_pPassForwardLighting;
+
+	CPassShadow* m_pPassShadow;
 };
 
 extern const uint32_t DEFAULT_PASS_NAME;

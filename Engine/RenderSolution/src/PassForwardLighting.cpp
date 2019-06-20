@@ -29,7 +29,7 @@ CPassForwardLighting::CPassForwardLighting(CRenderSolution* pRenderSolution)
 		const int numAttachments = 2;
 		const int numSubpasses = 1;
 
-		m_ptrRenderPass = GfxRenderer()->NewRenderPass(HashValue("Default"), numAttachments, numSubpasses);
+		m_ptrRenderPass = GfxRenderer()->NewRenderPass(HashValue("ForwardLighting"), numAttachments, numSubpasses);
 		{
 			m_ptrRenderPass->SetColorAttachment(0, m_pRenderSolution->GetPresentTexture(0)->GetFormat(), m_pRenderSolution->GetPresentTexture(0)->GetSamples(), true, false, true, 0.2f, 0.2f, 0.2f, 0.0f);
 			m_ptrRenderPass->SetDepthStencilAttachment(1, m_pRenderSolution->GetDepthStencilTexture(0)->GetFormat(), m_pRenderSolution->GetDepthStencilTexture(0)->GetSamples(), true, true, 1.0f, 0);
@@ -50,6 +50,7 @@ CPassForwardLighting::CPassForwardLighting(CRenderSolution* pRenderSolution)
 	}
 
 	// RenderPass and FrameBuffer with MSAA
+	/*
 	{
 		const int numAttachments = 3;
 		const int numSubpasses = 1;
@@ -76,6 +77,7 @@ CPassForwardLighting::CPassForwardLighting(CRenderSolution* pRenderSolution)
 			m_ptrFrameBufferMSAA[indexFrame]->Create(m_ptrRenderPassMSAA);
 		}
 	}
+	*/
 }
 
 CPassForwardLighting::~CPassForwardLighting(void)

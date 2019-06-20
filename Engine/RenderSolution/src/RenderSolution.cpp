@@ -48,6 +48,8 @@ CRenderSolution::CRenderSolution(GfxApi api, RenderSolution solution, void* hIns
 
 	, m_pPassDefault(nullptr)
 	, m_pPassForwardLighting(nullptr)
+
+	, m_pPassShadow(nullptr)
 {
 	switch ((int)api) {
 	case GFX_API_GLES3:
@@ -59,7 +61,9 @@ CRenderSolution::CRenderSolution(GfxApi api, RenderSolution solution, void* hIns
 		break;
 	}
 
-	CreateAttachments();
+	CreateColorAttachments();
+	CreateShadowAttachments(2048, 2048);
+
 	SetVertexAttributes(vertexAttributes, VERTEX_ATTRIBUTE_COUNT);
 	SetInstanceAttributes(instanceAttributes, INSTANCE_ATTRIBUTE_COUNT);
 
@@ -76,12 +80,14 @@ CRenderSolution::CRenderSolution(GfxApi api, RenderSolution solution, void* hIns
 
 	m_pPassDefault = new CPassDefault(this);
 	m_pPassForwardLighting = new CPassForwardLighting(this);
+	m_pPassShadow = new CPassShadow(this);
 }
 
 CRenderSolution::~CRenderSolution(void)
 {
 	delete m_pPassDefault;
 	delete m_pPassForwardLighting;
+	delete m_pPassShadow;
 
 	delete m_pMainCamera;
 	delete m_pShadowCamera;
@@ -97,7 +103,7 @@ CRenderSolution::~CRenderSolution(void)
 	delete m_pRenderer;
 }
 
-void CRenderSolution::CreateAttachments(void)
+void CRenderSolution::CreateColorAttachments(void)
 {
 	const int samples = 4;
 
@@ -110,14 +116,21 @@ void CRenderSolution::CreateAttachments(void)
 		m_ptrDepthStencilTexture[indexFrame] = GfxRenderer()->NewRenderTexture(HashValueFormat("DepthStencilTexture(%d)", indexFrame));
 		m_ptrDepthStencilTexture[indexFrame]->Create(GFX_PIXELFORMAT_D32_SFLOAT_PACK32, width, height);
 
+		/*
 		m_ptrColorTextureMSAA[indexFrame] = GfxRenderer()->NewRenderTexture(HashValueFormat("ColorTextureMSAA(%d)", indexFrame));
 		m_ptrColorTextureMSAA[indexFrame]->Create(GFX_PIXELFORMAT_BGRA8_UNORM_PACK8, width, height, samples);
 
 		m_ptrDepthStencilTextureMSAA[indexFrame] = GfxRenderer()->NewRenderTexture(HashValueFormat("DepthStencilTextureMSAA(%d)", indexFrame));
 		m_ptrDepthStencilTextureMSAA[indexFrame]->Create(GFX_PIXELFORMAT_D32_SFLOAT_PACK32, width, height, samples);
+		*/
+	}
+}
 
+void CRenderSolution::CreateShadowAttachments(int width, int height)
+{
+	for (int indexFrame = 0; indexFrame < CGfxSwapChain::SWAPCHAIN_FRAME_COUNT; indexFrame++) {
 		m_ptrShadowMapTexture[indexFrame] = GfxRenderer()->NewRenderTexture(HashValueFormat("ShadowMap(%d)", indexFrame));
-		m_ptrShadowMapTexture[indexFrame]->Create(GFX_PIXELFORMAT_D32_SFLOAT_PACK32, 2048, 2048);
+		m_ptrShadowMapTexture[indexFrame]->Create(GFX_PIXELFORMAT_D32_SFLOAT_PACK32, width, height);
 	}
 }
 
@@ -179,6 +192,11 @@ CGfxRenderTexturePtr CRenderSolution::GetColorTextureMSAA(int indexFrame) const
 CGfxRenderTexturePtr CRenderSolution::GetDepthStencilTextureMSAA(int indexFrame) const
 {
 	return m_ptrDepthStencilTextureMSAA[indexFrame % CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
+}
+
+CGfxRenderTexturePtr CRenderSolution::GetShadowMapTexture(int indexFrame) const
+{
+	return m_ptrShadowMapTexture[indexFrame % CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
 }
 
 void CRenderSolution::SetTime(float t, float dt)

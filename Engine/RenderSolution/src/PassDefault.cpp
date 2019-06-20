@@ -48,6 +48,7 @@ CPassDefault::CPassDefault(CRenderSolution* pRenderSolution)
 	}
 
 	// RenderPass and FrameBuffer with MSAA
+	/*
 	{
 		const int numAttachments = 3;
 		const int numSubpasses = 1;
@@ -74,6 +75,7 @@ CPassDefault::CPassDefault(CRenderSolution* pRenderSolution)
 			m_ptrFrameBufferMSAA[indexFrame]->Create(m_ptrRenderPassMSAA);
 		}
 	}
+	*/
 }
 
 CPassDefault::~CPassDefault(void)

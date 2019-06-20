@@ -64,8 +64,10 @@ CVKMemory* CVKMemoryManager::AllocMemory(VkDeviceSize memorySize, VkDeviceSize m
 	{
 		if (memoryPropertyFlags & VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT) {
 			memoryAlignment = ALIGN_BYTE(memoryAlignment, m_pDevice->GetPhysicalDeviceLimits().nonCoherentAtomSize);
-			memorySize = ALIGN_BYTE(memorySize, memoryAlignment);
 		}
+
+		memoryAlignment = ALIGN_BYTE(memoryAlignment, 256);
+		memorySize = ALIGN_BYTE(memorySize, memoryAlignment);
 
 		do {
 			if (CVKMemoryAllocator* pAllocator = m_pAllocatorListHeads[memoryTypeIndex]) {
