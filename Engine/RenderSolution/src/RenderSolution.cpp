@@ -27,6 +27,7 @@ static const ATTRIBUTE instanceAttributes[INSTANCE_ATTRIBUTE_COUNT] = {
 
 const uint32_t DEFAULT_PASS_NAME = HashValue("Default");
 const uint32_t FORWARD_LIGHTING_PASS_NAME = HashValue("PBRLighting");
+const uint32_t SHADOW_PASS_NAME = HashValue("Shadow");
 
 
 CRenderSolution::CRenderSolution(GfxApi api, RenderSolution solution, void* hInstance, void* hWnd, void* hDC, int width, int height, GfxPixelFormat format)
@@ -85,6 +86,9 @@ CRenderSolution::CRenderSolution(GfxApi api, RenderSolution solution, void* hIns
 
 CRenderSolution::~CRenderSolution(void)
 {
+	DestroyColorAttachments();
+	DestroyShadowAttachments();
+
 	delete m_pPassDefault;
 	delete m_pPassForwardLighting;
 	delete m_pPassShadow;
@@ -112,10 +116,8 @@ void CRenderSolution::CreateColorAttachments(void)
 
 	for (int indexFrame = 0; indexFrame < CGfxSwapChain::SWAPCHAIN_FRAME_COUNT; indexFrame++) {
 		m_ptrPresentTexture[indexFrame] = GfxRenderer()->GetSwapChain()->GetFrameTexture(indexFrame);
-
 		m_ptrDepthStencilTexture[indexFrame] = GfxRenderer()->NewRenderTexture(HashValueFormat("DepthStencilTexture(%d)", indexFrame));
 		m_ptrDepthStencilTexture[indexFrame]->Create(GFX_PIXELFORMAT_D32_SFLOAT_PACK32, width, height);
-
 		/*
 		m_ptrColorTextureMSAA[indexFrame] = GfxRenderer()->NewRenderTexture(HashValueFormat("ColorTextureMSAA(%d)", indexFrame));
 		m_ptrColorTextureMSAA[indexFrame]->Create(GFX_PIXELFORMAT_BGRA8_UNORM_PACK8, width, height, samples);
@@ -126,11 +128,29 @@ void CRenderSolution::CreateColorAttachments(void)
 	}
 }
 
+void CRenderSolution::DestroyColorAttachments(void)
+{
+	for (int indexFrame = 0; indexFrame < CGfxSwapChain::SWAPCHAIN_FRAME_COUNT; indexFrame++) {
+		m_ptrPresentTexture[indexFrame].Release();
+		m_ptrDepthStencilTexture[indexFrame].Release();
+
+		m_ptrColorTextureMSAA[indexFrame].Release();
+		m_ptrDepthStencilTextureMSAA[indexFrame].Release();
+	}
+}
+
 void CRenderSolution::CreateShadowAttachments(int width, int height)
 {
 	for (int indexFrame = 0; indexFrame < CGfxSwapChain::SWAPCHAIN_FRAME_COUNT; indexFrame++) {
 		m_ptrShadowMapTexture[indexFrame] = GfxRenderer()->NewRenderTexture(HashValueFormat("ShadowMap(%d)", indexFrame));
 		m_ptrShadowMapTexture[indexFrame]->Create(GFX_PIXELFORMAT_D32_SFLOAT_PACK32, width, height);
+	}
+}
+
+void CRenderSolution::DestroyShadowAttachments(void)
+{
+	for (int indexFrame = 0; indexFrame < CGfxSwapChain::SWAPCHAIN_FRAME_COUNT; indexFrame++) {
+		m_ptrShadowMapTexture[indexFrame].Release();
 	}
 }
 

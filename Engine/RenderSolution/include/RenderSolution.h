@@ -46,7 +46,10 @@ private:
 
 private:
 	void CreateColorAttachments(void);
+	void DestroyColorAttachments(void);
+
 	void CreateShadowAttachments(int width, int height);
+	void DestroyShadowAttachments(void);
 
 public:
 	CGfxCamera* GetMainCamera(void) const;
@@ -145,3 +148,4 @@ private:
 
 extern const uint32_t DEFAULT_PASS_NAME;
 extern const uint32_t FORWARD_LIGHTING_PASS_NAME;
+extern const uint32_t SHADOW_PASS_NAME;

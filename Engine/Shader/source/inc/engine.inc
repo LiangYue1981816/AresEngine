@@ -71,10 +71,11 @@ layout (location = 13) in mediump vec4 inInstancePointLightAttenuation;
 		mediump vec4 cosTime;                                                      \
 		mediump vec4 deltaTime;                                                    \
 		                                                                           \
-		highp mat4 shadowProjectionMatrix;                                         \
-		highp mat4 shadowProjectionViewMatrix;                                     \
-		highp mat4 shadowViewMatrix;                                               \
-		highp vec4 shadowParams;                                                   \
+		highp vec4 shadowDirection;                                                \
+		highp mat4 shadowProjectionMatrix[4];                                      \
+		highp mat4 shadowProjectionViewMatrix[4];                                  \
+		highp mat4 shadowViewMatrix[4];                                            \
+		highp vec4 shadowParams[4];                                                \
 		                                                                           \
 		mediump vec4 lightFactor;                                                  \
 		                                                                           \
@@ -112,12 +113,12 @@ USE_CAMERA_UNIFORM;
 #define cameraViewInverseTransposeMatrix camera.viewInverseTransposeMatrix
 
 USE_ENGINE_UNIFORM;
-#define shadowProjectionMatrix engine.shadowProjectionMatrix
-#define shadowProjectionViewMatrix engine.shadowProjectionViewMatrix
-#define shadowViewMatrix engine.shadowViewMatrix
-#define shadowClipPlane engine.shadowParams
-#define shadowDistance engine.shadowParams.z
-#define shadowResolution engine.shadowParams.w
+#define shadowProjectionMatrix(indexLevel) engine.shadowProjectionMatrix[indexLevel]
+#define shadowProjectionViewMatrix(indexLevel) engine.shadowProjectionViewMatrix[indexLevel]
+#define shadowViewMatrix(indexLevel) engine.shadowViewMatrix[indexLevel]
+#define shadowClipPlane(indexLevel) engine.shadowParams[indexLevel]
+#define shadowDistance(indexLevel) engine.shadowParams[indexLevel].z
+#define shadowResolution(indexLevel) engine.shadowParams[indexLevel].w
 
 #define ambientLightFactor engine.lightFactor.x
 #define pointLightFactor engine.lightFactor.y

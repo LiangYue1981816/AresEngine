@@ -17,7 +17,7 @@ CPassShadow::CPassShadow(CRenderSolution* pRenderSolution)
 		ptrDescriptorLayout->SetUniformBlockBinding(UNIFORM_CAMERA_NAME, DESCRIPTOR_BIND_CAMERA);
 		ptrDescriptorLayout->Create();
 
-		m_ptrDescriptorSetShadowPass = GfxRenderer()->NewDescriptorSet(DEFAULT_PASS_NAME, ptrDescriptorLayout);
+		m_ptrDescriptorSetShadowPass = GfxRenderer()->NewDescriptorSet(SHADOW_PASS_NAME, ptrDescriptorLayout);
 		m_ptrDescriptorSetShadowPass->SetUniformBuffer(UNIFORM_CAMERA_NAME, m_pRenderSolution->GetShadowCameraUniformBuffer(), 0, m_pRenderSolution->GetShadowCameraUniformBuffer()->GetSize());
 		m_ptrDescriptorSetShadowPass->Update();
 	}
