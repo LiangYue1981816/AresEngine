@@ -11,7 +11,6 @@ private:
 		glm::vec4 cosTime;
 		glm::vec4 deltaTime;
 
-		glm::vec4 shadowDirection;
 		glm::mat4 shadowProjectionMatrix[4];
 		glm::mat4 shadowProjectionViewMatrix[4];
 		glm::mat4 shadowViewMatrix[4];
@@ -54,7 +53,6 @@ public:
 public:
 	void SetTime(float t, float dt);
 
-	void SetShadowDirection(float x, float y, float z);
 	void SetShadowOrtho(int indexLevel, float left, float right, float bottom, float top, float zNear, float zFar);
 	void SetShadowLookat(int indexLevel, float eyex, float eyey, float eyez, float centerx, float centery, float centerz, float upx, float upy, float upz);
 	void SetShadowRange(int indexLevel, float range);

@@ -152,12 +152,6 @@ void CGfxUniformEngine::SetTime(float t, float dt)
 	m_params.deltaTime = glm::vec4(dt, 1.0f / dt, 1.0f, 1.0f);
 }
 
-void CGfxUniformEngine::SetShadowDirection(float x, float y, float z)
-{
-	m_bDirty = true;
-	m_params.shadowDirection = glm::vec4(x, y, z, 0.0f);
-}
-
 void CGfxUniformEngine::SetShadowOrtho(int indexLevel, float left, float right, float bottom, float top, float zNear, float zFar)
 {
 	m_bDirty = true;

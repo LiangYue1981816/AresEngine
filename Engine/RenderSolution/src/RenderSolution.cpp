@@ -311,7 +311,6 @@ void CRenderSolution::SetMainDirectLightColor(float red, float green, float blue
 void CRenderSolution::SetMainDirectLightDirection(float dirx, float diry, float dirz)
 {
 	m_pUniformEngine->SetMainDirectLightDirection(dirx, diry, dirz);
-	m_pUniformEngine->SetShadowDirection(dirx, diry, dirz);
 }
 
 void CRenderSolution::SetMainFogColor(float red, float green, float blue)
