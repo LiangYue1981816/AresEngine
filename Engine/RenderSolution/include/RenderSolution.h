@@ -59,6 +59,10 @@ public:
 	CGfxRenderQueue* GetLightQueue(void) const;
 	CGfxRenderQueue* GetShadowQueue(void) const;
 
+	CGfxUniformEngine* GetEngineUniform(void) const;
+	CGfxUniformCamera* GetMainCameraUniform(void) const;
+	CGfxUniformCamera* GetShadowCameraUniform(void) const;
+
 	CGfxUniformBufferPtr GetEngineUniformBuffer(void) const;
 	CGfxUniformBufferPtr GetMainCameraUniformBuffer(void) const;
 	CGfxUniformBufferPtr GetShadowCameraUniformBuffer(void) const;

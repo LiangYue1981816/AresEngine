@@ -179,6 +179,21 @@ CGfxRenderQueue* CRenderSolution::GetShadowQueue(void) const
 	return m_pShadowQueue;
 }
 
+CGfxUniformEngine* CRenderSolution::GetEngineUniform(void) const
+{
+	return m_pUniformEngine;
+}
+
+CGfxUniformCamera* CRenderSolution::GetMainCameraUniform(void) const
+{
+	return m_pUniformMainCamera;
+}
+
+CGfxUniformCamera* CRenderSolution::GetShadowCameraUniform(void) const
+{
+	return m_pUniformShadowCamera;
+}
+
 CGfxUniformBufferPtr CRenderSolution::GetEngineUniformBuffer(void) const
 {
 	return m_pUniformEngine->GetUniformBuffer();
