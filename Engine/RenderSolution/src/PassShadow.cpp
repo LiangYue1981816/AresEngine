@@ -3,6 +3,7 @@
 
 CPassShadow::CPassShadow(CRenderSolution* pRenderSolution)
 	: m_pRenderSolution(pRenderSolution)
+	, m_splitFactors{ 0.0f, 0.1f, 0.2f, 0.5f, 1.0f }
 {
 	// CommandBuffer
 	{
@@ -47,6 +48,15 @@ CPassShadow::CPassShadow(CRenderSolution* pRenderSolution)
 CPassShadow::~CPassShadow(void)
 {
 
+}
+
+void CPassShadow::SetSplitFactor(float f1, float f2, float f3)
+{
+	m_splitFactors[0] = 0.0f;
+	m_splitFactors[1] = f1;
+	m_splitFactors[2] = f2;
+	m_splitFactors[3] = f3;
+	m_splitFactors[4] = 1.0f;
 }
 
 void CPassShadow::Render(int indexQueue)

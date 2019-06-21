@@ -13,8 +13,12 @@ private:
 
 
 private:
+	void SetSplitFactor(float f1, float f2, float f3);
 	void Render(int indexQueue);
 
+
+private:
+	float m_splitFactors[5];
 
 private:
 	CGfxRenderPassPtr m_ptrRenderPass;
