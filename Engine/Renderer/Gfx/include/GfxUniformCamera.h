@@ -24,6 +24,7 @@ public:
 
 
 public:
+	const Params& GetParams(void) const;
 	const CGfxUniformBufferPtr GetUniformBuffer(void) const;
 
 public:
