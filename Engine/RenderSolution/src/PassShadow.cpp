@@ -19,7 +19,7 @@ CPassShadow::CPassShadow(CRenderSolution* pRenderSolution)
 		ptrDescriptorLayout->Create();
 
 		for (int indexLevel = 0; indexLevel < 4; indexLevel++) {
-			m_ptrDescriptorSetShadowPass[indexLevel] = GfxRenderer()->NewDescriptorSet(SHADOW_PASS_NAME, ptrDescriptorLayout);
+			m_ptrDescriptorSetShadowPass[indexLevel] = GfxRenderer()->NewDescriptorSet(SHADOW_PASS_NAME + indexLevel, ptrDescriptorLayout);
 			m_ptrDescriptorSetShadowPass[indexLevel]->SetUniformBuffer(UNIFORM_CAMERA_NAME, m_pRenderSolution->GetShadowCameraUniform(indexLevel)->GetUniformBuffer(), 0, m_pRenderSolution->GetShadowCameraUniform(indexLevel)->GetUniformBuffer()->GetSize());
 			m_ptrDescriptorSetShadowPass[indexLevel]->Update();
 		}
