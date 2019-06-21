@@ -4,7 +4,7 @@
 
 class CALL_API CGfxUniformEngine
 {
-private:
+public:
 	typedef struct Params {
 		glm::vec4 time;
 		glm::vec4 sinTime;
