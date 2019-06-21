@@ -159,30 +159,38 @@ void CGfxUniformEngine::SetTime(float t, float dt)
 
 void CGfxUniformEngine::SetShadowOrtho(int indexLevel, float left, float right, float bottom, float top, float zNear, float zFar)
 {
-	m_bDirty = true;
-	m_params.shadowParams[indexLevel].x = zFar - zNear;
-	m_params.shadowParams[indexLevel].y = 1.0f / (zFar - zNear);
-	m_params.shadowProjectionMatrix[indexLevel] = GfxRenderer()->GetBaseMatrix() * glm::ortho(left, right, bottom, top, zNear, zFar);
-	m_params.shadowProjectionViewMatrix[indexLevel] = m_params.shadowProjectionMatrix[indexLevel] * m_params.shadowViewMatrix[indexLevel];
+	if (indexLevel >= 0 && indexLevel < 4) {
+		m_bDirty = true;
+		m_params.shadowParams[indexLevel].x = zFar - zNear;
+		m_params.shadowParams[indexLevel].y = 1.0f / (zFar - zNear);
+		m_params.shadowProjectionMatrix[indexLevel] = GfxRenderer()->GetBaseMatrix() * glm::ortho(left, right, bottom, top, zNear, zFar);
+		m_params.shadowProjectionViewMatrix[indexLevel] = m_params.shadowProjectionMatrix[indexLevel] * m_params.shadowViewMatrix[indexLevel];
+	}
 }
 
 void CGfxUniformEngine::SetShadowLookat(int indexLevel, float eyex, float eyey, float eyez, float centerx, float centery, float centerz, float upx, float upy, float upz)
 {
-	m_bDirty = true;
-	m_params.shadowViewMatrix[indexLevel] = glm::lookAt(glm::vec3(eyex, eyey, eyez), glm::vec3(centerx, centery, centerz), glm::vec3(upx, upy, upz));
-	m_params.shadowProjectionViewMatrix[indexLevel] = m_params.shadowProjectionMatrix[indexLevel] * m_params.shadowViewMatrix[indexLevel];
+	if (indexLevel >= 0 && indexLevel < 4) {
+		m_bDirty = true;
+		m_params.shadowViewMatrix[indexLevel] = glm::lookAt(glm::vec3(eyex, eyey, eyez), glm::vec3(centerx, centery, centerz), glm::vec3(upx, upy, upz));
+		m_params.shadowProjectionViewMatrix[indexLevel] = m_params.shadowProjectionMatrix[indexLevel] * m_params.shadowViewMatrix[indexLevel];
+	}
 }
 
 void CGfxUniformEngine::SetShadowRange(int indexLevel, float range)
 {
-	m_bDirty = true;
-	m_params.shadowParams[indexLevel].z = range;
+	if (indexLevel >= 0 && indexLevel < 4) {
+		m_bDirty = true;
+		m_params.shadowParams[indexLevel].z = range;
+	}
 }
 
 void CGfxUniformEngine::SetShadowResolution(int indexLevel, float resolution)
 {
-	m_bDirty = true;
-	m_params.shadowParams[indexLevel].w = resolution;
+	if (indexLevel >= 0 && indexLevel < 4) {
+		m_bDirty = true;
+		m_params.shadowParams[indexLevel].w = resolution;
+	}
 }
 
 void CGfxUniformEngine::SetLightFactor(float ambientLightFactor, float pointLightFactor, float directLightFactor, float envLightFactor)
