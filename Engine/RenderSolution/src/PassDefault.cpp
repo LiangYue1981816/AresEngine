@@ -83,6 +83,11 @@ CPassDefault::~CPassDefault(void)
 
 }
 
+void CPassDefault::Update(void)
+{
+
+}
+
 void CPassDefault::Render(int indexQueue, bool bMSAA)
 {
 	const int indexFrame = GfxRenderer()->GetSwapChain()->GetFrameIndex();

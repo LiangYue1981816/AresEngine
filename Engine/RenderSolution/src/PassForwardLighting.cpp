@@ -85,6 +85,11 @@ CPassForwardLighting::~CPassForwardLighting(void)
 
 }
 
+void CPassForwardLighting::Update(void)
+{
+
+}
+
 void CPassForwardLighting::Render(int indexQueue, bool bMSAA)
 {
 	const int indexFrame = GfxRenderer()->GetSwapChain()->GetFrameIndex();

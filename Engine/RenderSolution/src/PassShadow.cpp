@@ -59,12 +59,12 @@ void CPassShadow::SetSplitFactor(float f1, float f2, float f3)
 	m_splitFactors[4] = 1.0f;
 }
 
-void CPassShadow::Render(int indexQueue)
+void CPassShadow::Update(void)
 {
 	const glm::camera& mainCamera = m_pRenderSolution->GetMainCamera()->GetCamera();
 
 	for (int indexFrustum = 0; indexFrustum < 4; indexFrustum++) {
-		glm::vec3 minVertex = glm::vec3( FLT_MAX,  FLT_MAX,  FLT_MAX);
+		glm::vec3 minVertex = glm::vec3(FLT_MAX, FLT_MAX, FLT_MAX);
 		glm::vec3 maxVertex = glm::vec3(-FLT_MAX, -FLT_MAX, -FLT_MAX);
 
 		for (int indexFrustumLine = 0; indexFrustumLine < 4; indexFrustumLine++) {
@@ -91,7 +91,10 @@ void CPassShadow::Render(int indexQueue)
 
 		glm::sphere sphereFrustum = glm::sphere(minVertex, maxVertex);
 	}
+}
 
+void CPassShadow::Render(int indexQueue)
+{
 	/*
 	const int indexFrame = GfxRenderer()->GetSwapChain()->GetFrameIndex();
 

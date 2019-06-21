@@ -106,13 +106,18 @@ public:
 	void SetMainFogDistanceDensity(float startDistance, float endDistance, float density);
 
 public:
-	void UpdateCamera(int indexQueue);
-
-public:
 	void SetRenderSolution(RenderSolution solution);
 	void SetEnableMSAA(bool bEnable);
 
+public:
+	void UpdateCamera(int indexQueue);
 	void Render(int indexQueue);
+
+private:
+	void UpdateDefault(int indexQueue);
+	void UpdateForward(int indexQueue);
+	void UpdateDeferred(int indexQueue);
+	void UpdateTiledBaseDeferred(int indexQueue);
 
 private:
 	void RenderDefault(int indexQueue);
@@ -129,7 +134,6 @@ private:
 	CGfxCamera* m_pShadowCamera;
 
 	CGfxRenderQueue* m_pMainQueue;
-	CGfxRenderQueue* m_pLightQueue;
 	CGfxRenderQueue* m_pShadowQueue;
 
 	CGfxUniformEngine* m_pEngineUniform;
@@ -145,11 +149,10 @@ private:
 
 private:
 	bool m_bEnableMSAA;
-	RenderSolution m_renderSolution;
+	RenderSolution m_solution;
 
 	CPassDefault* m_pPassDefault;
 	CPassForwardLighting* m_pPassForwardLighting;
-
 	CPassShadow* m_pPassShadow;
 };
 

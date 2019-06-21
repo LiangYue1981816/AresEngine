@@ -13,6 +13,7 @@ private:
 
 
 private:
+	void Update(void);
 	void Render(int indexQueue, bool bMSAA);
 
 

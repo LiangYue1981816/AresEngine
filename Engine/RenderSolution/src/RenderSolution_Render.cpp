@@ -5,7 +5,7 @@
 
 void CRenderSolution::SetRenderSolution(RenderSolution solution)
 {
-	m_renderSolution = solution;
+	m_solution = solution;
 }
 
 void CRenderSolution::SetEnableMSAA(bool bEnable)
@@ -15,10 +15,11 @@ void CRenderSolution::SetEnableMSAA(bool bEnable)
 
 void CRenderSolution::Render(int indexQueue)
 {
-	m_pUniformEngine->Apply();
-	m_pUniformMainCamera->Apply();
+	m_pEngineUniform->Apply();
+	m_pMainCameraUniform->Apply();
+	m_pShadowCameraUniform->Apply();
 
-	switch (m_renderSolution) {
+	switch (m_solution) {
 	case RENDER_SOLUTION_DEFAULT:
 		RenderDefault(indexQueue);
 		break;

@@ -37,7 +37,6 @@ CRenderSolution::CRenderSolution(GfxApi api, RenderSolution solution, void* hIns
 	, m_pShadowCamera(nullptr)
 
 	, m_pMainQueue(nullptr)
-	, m_pLightQueue(nullptr)
 	, m_pShadowQueue(nullptr)
 
 	, m_pEngineUniform(nullptr)
@@ -45,7 +44,7 @@ CRenderSolution::CRenderSolution(GfxApi api, RenderSolution solution, void* hIns
 	, m_pShadowCameraUniform(nullptr)
 
 	, m_bEnableMSAA(false)
-	, m_renderSolution(RENDER_SOLUTION_DEFAULT)
+	, m_solution(RENDER_SOLUTION_DEFAULT)
 
 	, m_pPassDefault(nullptr)
 	, m_pPassForwardLighting(nullptr)
@@ -72,7 +71,6 @@ CRenderSolution::CRenderSolution(GfxApi api, RenderSolution solution, void* hIns
 	m_pShadowCamera = new CGfxCamera;
 
 	m_pMainQueue = new CGfxRenderQueue;
-	m_pLightQueue = new CGfxRenderQueue;
 	m_pShadowQueue = new CGfxRenderQueue;
 
 	m_pEngineUniform = new CGfxUniformEngine;
@@ -97,7 +95,6 @@ CRenderSolution::~CRenderSolution(void)
 	delete m_pShadowCamera;
 
 	delete m_pMainQueue;
-	delete m_pLightQueue;
 	delete m_pShadowQueue;
 
 	delete m_pEngineUniform;
@@ -167,11 +164,6 @@ CGfxCamera* CRenderSolution::GetShadowCamera(void) const
 CGfxRenderQueue* CRenderSolution::GetMainQueue(void) const
 {
 	return m_pMainQueue;
-}
-
-CGfxRenderQueue* CRenderSolution::GetLightQueue(void) const
-{
-	return m_pLightQueue;
 }
 
 CGfxRenderQueue* CRenderSolution::GetShadowQueue(void) const
