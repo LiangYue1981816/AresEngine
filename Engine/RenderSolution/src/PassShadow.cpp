@@ -92,12 +92,13 @@ void CPassShadow::Update(void)
 
 		float zNear = -100.0f;
 		float zFar = 100.0f;
+		float resolution = m_pRenderSolution->GetShadowMapTexture(0)->GetWidth();
 		glm::sphere sphereFrustum = glm::sphere(minVertex, maxVertex);
 
 		m_pRenderSolution->GetEngineUniform()->SetShadowOrtho(indexFrustum, -sphereFrustum.radius, sphereFrustum.radius, -sphereFrustum.radius, sphereFrustum.radius, zNear, zFar);
 		m_pRenderSolution->GetEngineUniform()->SetShadowLookat(indexFrustum, sphereFrustum.center.x, sphereFrustum.center.y, sphereFrustum.center.z, sphereFrustum.center.x + mainLightDirection.x, sphereFrustum.center.y + mainLightDirection.y, sphereFrustum.center.z + mainLightDirection.z, 0.0f, 1.0f, 0.0f);
 		m_pRenderSolution->GetEngineUniform()->SetShadowRange(indexFrustum, zFar - zNear);
-		m_pRenderSolution->GetEngineUniform()->SetShadowResolution(indexFrustum, 2048.0f);
+		m_pRenderSolution->GetEngineUniform()->SetShadowResolution(indexFrustum, resolution);
 	}
 }
 
