@@ -79,11 +79,14 @@ public:
 public:
 	void SetTime(float t, float dt);
 
-	void SetCameraScissor(float x, float y, float width, float height);
-	void SetCameraViewport(float x, float y, float width, float height);
-	void SetCameraPerspective(float fovy, float aspect, float zNear, float zFar);
-	void SetCameraOrtho(float left, float right, float bottom, float top, float zNear, float zFar);
-	void SetCameraLookat(float eyex, float eyey, float eyez, float centerx, float centery, float centerz, float upx, float upy, float upz);
+	void SetMainCameraScissor(float x, float y, float width, float height);
+	void SetMainCameraViewport(float x, float y, float width, float height);
+	void SetMainCameraPerspective(float fovy, float aspect, float zNear, float zFar);
+	void SetMainCameraOrtho(float left, float right, float bottom, float top, float zNear, float zFar);
+	void SetMainCameraLookat(float eyex, float eyey, float eyez, float centerx, float centery, float centerz, float upx, float upy, float upz);
+
+	void SetShadowCameraOrtho(float left, float right, float bottom, float top, float zNear, float zFar);
+	void SetShadowCameraLookat(float eyex, float eyey, float eyez, float centerx, float centery, float centerz, float upx, float upy, float upz);
 
 	void SetLightFactor(float ambientLightFactor, float pointLightFactor, float directLightFactor, float envLightFactor);
 
@@ -129,9 +132,9 @@ private:
 	CGfxRenderQueue* m_pLightQueue;
 	CGfxRenderQueue* m_pShadowQueue;
 
-	CGfxUniformEngine* m_pUniformEngine;
-	CGfxUniformCamera* m_pUniformMainCamera;
-	CGfxUniformCamera* m_pUniformShadowCamera;
+	CGfxUniformEngine* m_pEngineUniform;
+	CGfxUniformCamera* m_pMainCameraUniform;
+	CGfxUniformCamera* m_pShadowCameraUniform;
 
 private:
 	CGfxRenderTexturePtr m_ptrPresentTexture[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
