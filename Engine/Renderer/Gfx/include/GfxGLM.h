@@ -463,6 +463,16 @@ namespace glm {
 			}
 		}
 
+		vec4 getFrustumVertexInLocalSpace(int indexVertex) const
+		{
+			return indexVertex >= 0 && indexVertex < 8 ? vertexs[indexVertex][0] : glm::vec4(0.0f, 0.0f, 0.0f, 0.0f);
+		}
+
+		vec4 getFrustumVertexInWorldSpace(int indexVertex) const
+		{
+			return indexVertex >= 0 && indexVertex < 8 ? vertexs[indexVertex][1] : glm::vec4(0.0f, 0.0f, 0.0f, 0.0f);
+		}
+
 		vec3 worldToScreen(const vec3& world) const
 		{
 			return project(world, viewMatrix, projectionMatrix, viewport);

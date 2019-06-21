@@ -61,6 +61,38 @@ void CPassShadow::SetSplitFactor(float f1, float f2, float f3)
 
 void CPassShadow::Render(int indexQueue)
 {
+	const glm::camera& mainCamera = m_pRenderSolution->GetMainCamera()->GetCamera();
+
+	for (int indexFrustum = 0; indexFrustum < 4; indexFrustum++) {
+		glm::vec3 minVertex = glm::vec3( FLT_MAX,  FLT_MAX,  FLT_MAX);
+		glm::vec3 maxVertex = glm::vec3(-FLT_MAX, -FLT_MAX, -FLT_MAX);
+
+		for (int indexFrustumLine = 0; indexFrustumLine < 4; indexFrustumLine++) {
+			glm::vec4 vertex;
+			glm::vec4 vertexBegin = mainCamera.getFrustumVertexInWorldSpace(indexFrustumLine);
+			glm::vec4 vertexEnd = mainCamera.getFrustumVertexInWorldSpace(indexFrustumLine + 4);
+
+			vertex = vertexBegin + (vertexEnd - vertexBegin) * m_splitFactors[indexFrustum];
+			if (minVertex.x > vertex.x) minVertex.x = vertex.x;
+			if (minVertex.y > vertex.y) minVertex.y = vertex.y;
+			if (minVertex.z > vertex.z) minVertex.z = vertex.z;
+			if (maxVertex.x < vertex.x) maxVertex.x = vertex.x;
+			if (maxVertex.y < vertex.y) maxVertex.y = vertex.y;
+			if (maxVertex.z < vertex.z) maxVertex.z = vertex.z;
+
+			vertex = vertexBegin + (vertexEnd - vertexBegin) * m_splitFactors[indexFrustum + 1];
+			if (minVertex.x > vertex.x) minVertex.x = vertex.x;
+			if (minVertex.y > vertex.y) minVertex.y = vertex.y;
+			if (minVertex.z > vertex.z) minVertex.z = vertex.z;
+			if (maxVertex.x < vertex.x) maxVertex.x = vertex.x;
+			if (maxVertex.y < vertex.y) maxVertex.y = vertex.y;
+			if (maxVertex.z < vertex.z) maxVertex.z = vertex.z;
+		}
+
+		glm::sphere sphereFrustum = glm::sphere(minVertex, maxVertex);
+	}
+
+	/*
 	const int indexFrame = GfxRenderer()->GetSwapChain()->GetFrameIndex();
 
 	const CGfxRenderPassPtr ptrRenderPass = m_ptrRenderPass;
@@ -76,7 +108,6 @@ void CPassShadow::Render(int indexQueue)
 
 			GfxRenderer()->CmdBeginRenderPass(ptrMainCommandBuffer, ptrFrameBuffer, ptrRenderPass);
 			{
-				const glm::camera& mainCamera = m_pRenderSolution->GetMainCamera()->GetCamera();
 //				m_pRenderSolution->GetMainQueue()->CmdDraw(indexQueue, ptrMainCommandBuffer, m_ptrDescriptorSetDefaultPass, DEFAULT_PASS_NAME, m_pRenderSolution->GetMainCamera()->GetScissor(), m_pRenderSolution->GetMainCamera()->GetViewport(), 0xffffffff);
 			}
 			GfxRenderer()->CmdEndRenderPass(ptrMainCommandBuffer);
@@ -84,4 +115,5 @@ void CPassShadow::Render(int indexQueue)
 		GfxRenderer()->EndRecord(ptrMainCommandBuffer);
 	}
 	GfxRenderer()->Submit(ptrMainCommandBuffer);
+	*/
 }
