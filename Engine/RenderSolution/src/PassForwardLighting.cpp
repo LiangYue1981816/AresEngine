@@ -19,8 +19,8 @@ CPassForwardLighting::CPassForwardLighting(CRenderSolution* pRenderSolution)
 		ptrDescriptorLayout->Create();
 
 		m_ptrDescriptorSetLightingPass = GfxRenderer()->NewDescriptorSet(FORWARD_LIGHTING_PASS_NAME, ptrDescriptorLayout);
-		m_ptrDescriptorSetLightingPass->SetUniformBuffer(UNIFORM_ENGINE_NAME, m_pRenderSolution->GetEngineUniformBuffer(), 0, m_pRenderSolution->GetEngineUniformBuffer()->GetSize());
-		m_ptrDescriptorSetLightingPass->SetUniformBuffer(UNIFORM_CAMERA_NAME, m_pRenderSolution->GetMainCameraUniformBuffer(), 0, m_pRenderSolution->GetMainCameraUniformBuffer()->GetSize());
+		m_ptrDescriptorSetLightingPass->SetUniformBuffer(UNIFORM_ENGINE_NAME, m_pRenderSolution->GetEngineUniform()->GetUniformBuffer(), 0, m_pRenderSolution->GetEngineUniform()->GetUniformBuffer()->GetSize());
+		m_ptrDescriptorSetLightingPass->SetUniformBuffer(UNIFORM_CAMERA_NAME, m_pRenderSolution->GetMainCameraUniform()->GetUniformBuffer(), 0, m_pRenderSolution->GetMainCameraUniform()->GetUniformBuffer()->GetSize());
 		m_ptrDescriptorSetLightingPass->Update();
 	}
 
@@ -117,7 +117,7 @@ void CPassForwardLighting::Render(int indexQueue, bool bMSAA)
 
 			GfxRenderer()->CmdBeginRenderPass(ptrMainCommandBuffer, ptrFrameBuffer, ptrRenderPass);
 			{
-				m_pRenderSolution->GetMainQueue()->CmdDraw(indexQueue, ptrMainCommandBuffer, m_ptrDescriptorSetLightingPass, FORWARD_LIGHTING_PASS_NAME, m_pRenderSolution->GetMainCamera()->GetScissor(), m_pRenderSolution->GetMainCamera()->GetViewport(), 0xffffffff);
+				m_pRenderSolution->GetMainCameraQueue()->CmdDraw(indexQueue, ptrMainCommandBuffer, m_ptrDescriptorSetLightingPass, FORWARD_LIGHTING_PASS_NAME, m_pRenderSolution->GetMainCamera()->GetScissor(), m_pRenderSolution->GetMainCamera()->GetViewport(), 0xffffffff);
 			}
 			GfxRenderer()->CmdEndRenderPass(ptrMainCommandBuffer);
 		}

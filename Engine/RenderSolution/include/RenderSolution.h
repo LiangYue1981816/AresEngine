@@ -53,40 +53,27 @@ private:
 
 public:
 	CGfxCamera* GetMainCamera(void) const;
-	CGfxCamera* GetShadowCamera(void) const;
-
-	CGfxRenderQueue* GetMainQueue(void) const;
-	CGfxRenderQueue* GetLightQueue(void) const;
-	CGfxRenderQueue* GetShadowQueue(void) const;
+	CGfxRenderQueue* GetMainCameraQueue(void) const;
 
 	CGfxUniformEngine* GetEngineUniform(void) const;
 	CGfxUniformCamera* GetMainCameraUniform(void) const;
 	CGfxUniformCamera* GetShadowCameraUniform(void) const;
 
-	CGfxUniformBufferPtr GetEngineUniformBuffer(void) const;
-	CGfxUniformBufferPtr GetMainCameraUniformBuffer(void) const;
-	CGfxUniformBufferPtr GetShadowCameraUniformBuffer(void) const;
-
 public:
 	CGfxRenderTexturePtr GetPresentTexture(int indexFrame) const;
 	CGfxRenderTexturePtr GetDepthStencilTexture(int indexFrame) const;
-
 	CGfxRenderTexturePtr GetColorTextureMSAA(int indexFrame) const;
 	CGfxRenderTexturePtr GetDepthStencilTextureMSAA(int indexFrame) const;
-
 	CGfxRenderTexturePtr GetShadowMapTexture(int indexFrame) const;
 
 public:
 	void SetTime(float t, float dt);
 
-	void SetMainCameraScissor(float x, float y, float width, float height);
-	void SetMainCameraViewport(float x, float y, float width, float height);
-	void SetMainCameraPerspective(float fovy, float aspect, float zNear, float zFar);
-	void SetMainCameraOrtho(float left, float right, float bottom, float top, float zNear, float zFar);
-	void SetMainCameraLookat(float eyex, float eyey, float eyez, float centerx, float centery, float centerz, float upx, float upy, float upz);
-
-	void SetShadowCameraOrtho(float left, float right, float bottom, float top, float zNear, float zFar);
-	void SetShadowCameraLookat(float eyex, float eyey, float eyez, float centerx, float centery, float centerz, float upx, float upy, float upz);
+	void SetCameraScissor(float x, float y, float width, float height);
+	void SetCameraViewport(float x, float y, float width, float height);
+	void SetCameraPerspective(float fovy, float aspect, float zNear, float zFar);
+	void SetCameraOrtho(float left, float right, float bottom, float top, float zNear, float zFar);
+	void SetCameraLookat(float eyex, float eyey, float eyez, float centerx, float centery, float centerz, float upx, float upy, float upz);
 
 	void SetLightFactor(float ambientLightFactor, float pointLightFactor, float directLightFactor, float envLightFactor);
 
@@ -114,10 +101,10 @@ public:
 	void Render(int indexQueue);
 
 private:
-	void UpdateDefault(int indexQueue);
-	void UpdateForward(int indexQueue);
-	void UpdateDeferred(int indexQueue);
-	void UpdateTiledBaseDeferred(int indexQueue);
+	void UpdateDefault(void);
+	void UpdateForward(void);
+	void UpdateDeferred(void);
+	void UpdateTiledBaseDeferred(void);
 
 private:
 	void RenderDefault(int indexQueue);
@@ -131,10 +118,7 @@ private:
 
 private:
 	CGfxCamera* m_pMainCamera;
-	CGfxCamera* m_pShadowCamera;
-
-	CGfxRenderQueue* m_pMainQueue;
-	CGfxRenderQueue* m_pShadowQueue;
+	CGfxRenderQueue* m_pMainCameraQueue;
 
 	CGfxUniformEngine* m_pEngineUniform;
 	CGfxUniformCamera* m_pMainCameraUniform;

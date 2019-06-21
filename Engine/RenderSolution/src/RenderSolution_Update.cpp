@@ -5,50 +5,45 @@
 
 void CRenderSolution::UpdateCamera(int indexQueue)
 {
-	m_pMainQueue->Clear(indexQueue);
-	m_pShadowQueue->Clear(indexQueue);
+	m_pMainCameraQueue->Clear(indexQueue);
+	SceneManager()->UpdateCamera(m_pMainCamera, m_pMainCameraQueue, indexQueue);
 
 	switch (m_solution) {
 	case RENDER_SOLUTION_DEFAULT:
-		UpdateDefault(indexQueue);
+		UpdateDefault();
 		break;
 
 	case RENDER_SOLUTION_FORWARD:
-		UpdateForward(indexQueue);
+		UpdateForward();
 		break;
 
 	case RENDER_SOLUTION_DEFERRED:
-		UpdateDeferred(indexQueue);
+		UpdateDeferred();
 		break;
 
 	case RENDER_SOLUTION_TILED_BASE_DEFERRED:
-		UpdateTiledBaseDeferred(indexQueue);
+		UpdateTiledBaseDeferred();
 		break;
 	}
 }
 
-void CRenderSolution::UpdateDefault(int indexQueue)
+void CRenderSolution::UpdateDefault(void)
 {
 	m_pPassDefault->Update();
-
-	SceneManager()->UpdateCamera(m_pMainCamera, m_pMainQueue, indexQueue);
 }
 
-void CRenderSolution::UpdateForward(int indexQueue)
+void CRenderSolution::UpdateForward(void)
 {
 	m_pPassShadow->Update();
 	m_pPassForwardLighting->Update();
-
-	SceneManager()->UpdateCamera(m_pMainCamera, m_pMainQueue, indexQueue);
-	SceneManager()->UpdateCamera(m_pShadowCamera, m_pShadowQueue, indexQueue);
 }
 
-void CRenderSolution::UpdateDeferred(int indexQueue)
+void CRenderSolution::UpdateDeferred(void)
 {
 
 }
 
-void CRenderSolution::UpdateTiledBaseDeferred(int indexQueue)
+void CRenderSolution::UpdateTiledBaseDeferred(void)
 {
 
 }

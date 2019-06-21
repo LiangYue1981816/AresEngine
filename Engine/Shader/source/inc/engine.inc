@@ -71,7 +71,6 @@ layout (location = 13) in mediump vec4 inInstancePointLightAttenuation;
 		mediump vec4 cosTime;                                                      \
 		mediump vec4 deltaTime;                                                    \
 		                                                                           \
-		highp vec4 shadowDirection;                                                \
 		highp mat4 shadowProjectionMatrix[4];                                      \
 		highp mat4 shadowProjectionViewMatrix[4];                                  \
 		highp mat4 shadowViewMatrix[4];                                            \

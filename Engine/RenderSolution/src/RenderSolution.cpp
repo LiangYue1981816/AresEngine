@@ -34,10 +34,7 @@ CRenderSolution::CRenderSolution(GfxApi api, RenderSolution solution, void* hIns
 	: m_pRenderer(nullptr)
 
 	, m_pMainCamera(nullptr)
-	, m_pShadowCamera(nullptr)
-
-	, m_pMainQueue(nullptr)
-	, m_pShadowQueue(nullptr)
+	, m_pMainCameraQueue(nullptr)
 
 	, m_pEngineUniform(nullptr)
 	, m_pMainCameraUniform(nullptr)
@@ -68,10 +65,7 @@ CRenderSolution::CRenderSolution(GfxApi api, RenderSolution solution, void* hIns
 	SetInstanceAttributes(instanceAttributes, INSTANCE_ATTRIBUTE_COUNT);
 
 	m_pMainCamera = new CGfxCamera;
-	m_pShadowCamera = new CGfxCamera;
-
-	m_pMainQueue = new CGfxRenderQueue;
-	m_pShadowQueue = new CGfxRenderQueue;
+	m_pMainCameraQueue = new CGfxRenderQueue;
 
 	m_pEngineUniform = new CGfxUniformEngine;
 	m_pMainCameraUniform = new CGfxUniformCamera;
@@ -92,10 +86,7 @@ CRenderSolution::~CRenderSolution(void)
 	delete m_pPassShadow;
 
 	delete m_pMainCamera;
-	delete m_pShadowCamera;
-
-	delete m_pMainQueue;
-	delete m_pShadowQueue;
+	delete m_pMainCameraQueue;
 
 	delete m_pEngineUniform;
 	delete m_pMainCameraUniform;
@@ -156,19 +147,9 @@ CGfxCamera* CRenderSolution::GetMainCamera(void) const
 	return m_pMainCamera;
 }
 
-CGfxCamera* CRenderSolution::GetShadowCamera(void) const
+CGfxRenderQueue* CRenderSolution::GetMainCameraQueue(void) const
 {
-	return m_pShadowCamera;
-}
-
-CGfxRenderQueue* CRenderSolution::GetMainQueue(void) const
-{
-	return m_pMainQueue;
-}
-
-CGfxRenderQueue* CRenderSolution::GetShadowQueue(void) const
-{
-	return m_pShadowQueue;
+	return m_pMainCameraQueue;
 }
 
 CGfxUniformEngine* CRenderSolution::GetEngineUniform(void) const
@@ -184,21 +165,6 @@ CGfxUniformCamera* CRenderSolution::GetMainCameraUniform(void) const
 CGfxUniformCamera* CRenderSolution::GetShadowCameraUniform(void) const
 {
 	return m_pShadowCameraUniform;
-}
-
-CGfxUniformBufferPtr CRenderSolution::GetEngineUniformBuffer(void) const
-{
-	return m_pEngineUniform->GetUniformBuffer();
-}
-
-CGfxUniformBufferPtr CRenderSolution::GetMainCameraUniformBuffer(void) const
-{
-	return m_pMainCameraUniform->GetUniformBuffer();
-}
-
-CGfxUniformBufferPtr CRenderSolution::GetShadowCameraUniformBuffer(void) const
-{
-	return m_pShadowCameraUniform->GetUniformBuffer();
 }
 
 CGfxRenderTexturePtr CRenderSolution::GetPresentTexture(int indexFrame) const
@@ -231,43 +197,33 @@ void CRenderSolution::SetTime(float t, float dt)
 	m_pEngineUniform->SetTime(t, dt);
 }
 
-void CRenderSolution::SetMainCameraScissor(float x, float y, float width, float height)
+void CRenderSolution::SetCameraScissor(float x, float y, float width, float height)
 {
 	m_pMainCamera->SetScissor(x, y, width, height);
 }
 
-void CRenderSolution::SetMainCameraViewport(float x, float y, float width, float height)
+void CRenderSolution::SetCameraViewport(float x, float y, float width, float height)
 {
 	m_pMainCamera->SetViewport(x, y, width, height);
 	m_pMainCameraUniform->SetScreen(width, height);
 }
 
-void CRenderSolution::SetMainCameraPerspective(float fovy, float aspect, float zNear, float zFar)
+void CRenderSolution::SetCameraPerspective(float fovy, float aspect, float zNear, float zFar)
 {
 	m_pMainCamera->SetPerspective(fovy, aspect, zNear, zFar);
 	m_pMainCameraUniform->SetPerspective(fovy, aspect, zNear, zFar);
 }
 
-void CRenderSolution::SetMainCameraOrtho(float left, float right, float bottom, float top, float zNear, float zFar)
+void CRenderSolution::SetCameraOrtho(float left, float right, float bottom, float top, float zNear, float zFar)
 {
 	m_pMainCamera->SetOrtho(left, right, bottom, top, zNear, zFar);
 	m_pMainCameraUniform->SetOrtho(left, right, bottom, top, zNear, zFar);
 }
 
-void CRenderSolution::SetMainCameraLookat(float eyex, float eyey, float eyez, float centerx, float centery, float centerz, float upx, float upy, float upz)
+void CRenderSolution::SetCameraLookat(float eyex, float eyey, float eyez, float centerx, float centery, float centerz, float upx, float upy, float upz)
 {
 	m_pMainCamera->SetLookat(eyex, eyey, eyez, centerx, centery, centerz, upx, upy, upz);
 	m_pMainCameraUniform->SetLookat(eyex, eyey, eyez, centerx, centery, centerz, upx, upy, upz);
-}
-
-void CRenderSolution::SetShadowCameraOrtho(float left, float right, float bottom, float top, float zNear, float zFar)
-{
-	m_pShadowCamera->SetOrtho(left, right, bottom, top, zNear, zFar);
-}
-
-void CRenderSolution::SetShadowCameraLookat(float eyex, float eyey, float eyez, float centerx, float centery, float centerz, float upx, float upy, float upz)
-{
-	m_pShadowCamera->SetLookat(eyex, eyey, eyez, centerx, centery, centerz, upx, upy, upz);
 }
 
 void CRenderSolution::SetLightFactor(float ambientLightFactor, float pointLightFactor, float directLightFactor, float envLightFactor)
