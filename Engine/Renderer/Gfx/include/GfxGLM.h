@@ -442,6 +442,15 @@ namespace glm {
 			planes[3][0] = plane(vec3(right, 0.0f, 0.0f), vec3(-1.0f, 0.0f, 0.0f));
 			planes[4][0] = plane(vec3(0.0f, 0.0f, -zNear), vec3(0.0f, 0.0f, -1.0f));
 			planes[5][0] = plane(vec3(0.0f, 0.0f, -zFar), vec3(0.0f, 0.0f, 1.0f));
+
+			vertexs[0][0] = vec4(left, bottom, -zNear, 0.0f);
+			vertexs[1][0] = vec4(right, bottom, -zNear, 0.0f);
+			vertexs[2][0] = vec4(right, top, -zNear, 0.0f);
+			vertexs[3][0] = vec4(left, top, -zNear, 0.0f);
+			vertexs[4][0] = vec4(left, bottom, -zFar, 0.0f);
+			vertexs[5][0] = vec4(right, bottom, -zFar, 0.0f);
+			vertexs[6][0] = vec4(right, top, -zFar, 0.0f);
+			vertexs[7][0] = vec4(left, top, -zFar, 0.0f);
 		}
 
 		void setLookat(const vec3& _eye, const vec3& _center, const vec3& _up)
