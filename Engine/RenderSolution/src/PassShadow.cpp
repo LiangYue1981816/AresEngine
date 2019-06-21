@@ -62,6 +62,7 @@ void CPassShadow::SetSplitFactor(float f1, float f2, float f3)
 void CPassShadow::Update(void)
 {
 	const glm::camera& mainCamera = m_pRenderSolution->GetMainCamera()->GetCamera();
+	const glm::vec4& mainLightDirection = m_pRenderSolution->GetEngineUniform()->GetParams().mainDirectLightDirection;
 
 	for (int indexFrustum = 0; indexFrustum < 4; indexFrustum++) {
 		glm::vec3 minVertex = glm::vec3(FLT_MAX, FLT_MAX, FLT_MAX);
@@ -89,7 +90,14 @@ void CPassShadow::Update(void)
 			if (maxVertex.z < vertex.z) maxVertex.z = vertex.z;
 		}
 
+		float zNear = -100.0f;
+		float zFar = 100.0f;
 		glm::sphere sphereFrustum = glm::sphere(minVertex, maxVertex);
+
+		m_pRenderSolution->GetEngineUniform()->SetShadowOrtho(indexFrustum, -sphereFrustum.radius, sphereFrustum.radius, -sphereFrustum.radius, sphereFrustum.radius, zNear, zFar);
+		m_pRenderSolution->GetEngineUniform()->SetShadowLookat(indexFrustum, sphereFrustum.center.x, sphereFrustum.center.y, sphereFrustum.center.z, sphereFrustum.center.x + mainLightDirection.x, sphereFrustum.center.y + mainLightDirection.y, sphereFrustum.center.z + mainLightDirection.z, 0.0f, 1.0f, 0.0f);
+		m_pRenderSolution->GetEngineUniform()->SetShadowRange(indexFrustum, zFar - zNear);
+		m_pRenderSolution->GetEngineUniform()->SetShadowResolution(indexFrustum, 2048.0f);
 	}
 }
 
