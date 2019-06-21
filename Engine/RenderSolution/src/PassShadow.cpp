@@ -90,8 +90,8 @@ void CPassShadow::SetSplitFactor(float f1, float f2, float f3)
 
 void CPassShadow::Update(void)
 {
-	const glm::camera& mainCamera = m_pRenderSolution->GetMainCamera()->GetCamera();
-	const glm::vec4& mainLightDirection = m_pRenderSolution->GetEngineUniform()->GetParams().mainDirectLightDirection;
+	const glm::camera mainCamera = m_pRenderSolution->GetMainCamera()->GetCamera();
+	const glm::vec4 mainLightDirection = m_pRenderSolution->GetEngineUniform()->GetParams().mainDirectLightDirection * glm::vec4(-1.0f, -1.0f, -1.0f, 0.0f);
 
 	for (int indexFrustum = 0; indexFrustum < 4; indexFrustum++) {
 		glm::vec3 minVertex = glm::vec3(FLT_MAX, FLT_MAX, FLT_MAX);
