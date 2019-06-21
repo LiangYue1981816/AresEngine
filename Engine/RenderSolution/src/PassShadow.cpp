@@ -18,9 +18,11 @@ CPassShadow::CPassShadow(CRenderSolution* pRenderSolution)
 		ptrDescriptorLayout->SetUniformBlockBinding(UNIFORM_CAMERA_NAME, DESCRIPTOR_BIND_CAMERA);
 		ptrDescriptorLayout->Create();
 
-		m_ptrDescriptorSetShadowPass = GfxRenderer()->NewDescriptorSet(SHADOW_PASS_NAME, ptrDescriptorLayout);
-		m_ptrDescriptorSetShadowPass->SetUniformBuffer(UNIFORM_CAMERA_NAME, m_pRenderSolution->GetShadowCameraUniform()->GetUniformBuffer(), 0, m_pRenderSolution->GetShadowCameraUniform()->GetUniformBuffer()->GetSize());
-		m_ptrDescriptorSetShadowPass->Update();
+		for (int indexLevel = 0; indexLevel < 4; indexLevel++) {
+			m_ptrDescriptorSetShadowPass[indexLevel] = GfxRenderer()->NewDescriptorSet(SHADOW_PASS_NAME, ptrDescriptorLayout);
+			m_ptrDescriptorSetShadowPass[indexLevel]->SetUniformBuffer(UNIFORM_CAMERA_NAME, m_pRenderSolution->GetShadowCameraUniform(indexLevel)->GetUniformBuffer(), 0, m_pRenderSolution->GetShadowCameraUniform(indexLevel)->GetUniformBuffer()->GetSize());
+			m_ptrDescriptorSetShadowPass[indexLevel]->Update();
+		}
 	}
 
 	// RenderPass and FrameBuffer
@@ -95,6 +97,9 @@ void CPassShadow::Update(void)
 		float resolution = m_pRenderSolution->GetShadowMapTexture(0)->GetWidth();
 		glm::sphere sphereFrustum = glm::sphere(minVertex, maxVertex);
 
+		m_pRenderSolution->GetShadowCameraUniform(indexFrustum)->SetOrtho(-sphereFrustum.radius, sphereFrustum.radius, -sphereFrustum.radius, sphereFrustum.radius, zNear, zFar);
+		m_pRenderSolution->GetShadowCameraUniform(indexFrustum)->SetLookat(sphereFrustum.center.x, sphereFrustum.center.y, sphereFrustum.center.z, sphereFrustum.center.x + mainLightDirection.x, sphereFrustum.center.y + mainLightDirection.y, sphereFrustum.center.z + mainLightDirection.z, 0.0f, 1.0f, 0.0f);
+
 		m_pRenderSolution->GetEngineUniform()->SetShadowOrtho(indexFrustum, -sphereFrustum.radius, sphereFrustum.radius, -sphereFrustum.radius, sphereFrustum.radius, zNear, zFar);
 		m_pRenderSolution->GetEngineUniform()->SetShadowLookat(indexFrustum, sphereFrustum.center.x, sphereFrustum.center.y, sphereFrustum.center.z, sphereFrustum.center.x + mainLightDirection.x, sphereFrustum.center.y + mainLightDirection.y, sphereFrustum.center.z + mainLightDirection.z, 0.0f, 1.0f, 0.0f);
 		m_pRenderSolution->GetEngineUniform()->SetShadowRange(indexFrustum, zFar - zNear);
@@ -104,7 +109,6 @@ void CPassShadow::Update(void)
 
 void CPassShadow::Render(int indexQueue)
 {
-	/*
 	const int indexFrame = GfxRenderer()->GetSwapChain()->GetFrameIndex();
 
 	const CGfxRenderPassPtr ptrRenderPass = m_ptrRenderPass;
@@ -120,12 +124,11 @@ void CPassShadow::Render(int indexQueue)
 
 			GfxRenderer()->CmdBeginRenderPass(ptrMainCommandBuffer, ptrFrameBuffer, ptrRenderPass);
 			{
-//				m_pRenderSolution->GetMainQueue()->CmdDraw(indexQueue, ptrMainCommandBuffer, m_ptrDescriptorSetDefaultPass, DEFAULT_PASS_NAME, m_pRenderSolution->GetMainCamera()->GetScissor(), m_pRenderSolution->GetMainCamera()->GetViewport(), 0xffffffff);
+//				m_pRenderSolution->GetMainQueue()->CmdDraw(indexQueue, ptrMainCommandBuffer, m_ptrDescriptorSetShadowPass[0], DEFAULT_PASS_NAME, m_pRenderSolution->GetMainCamera()->GetScissor(), m_pRenderSolution->GetMainCamera()->GetViewport(), 0xffffffff);
 			}
 			GfxRenderer()->CmdEndRenderPass(ptrMainCommandBuffer);
 		}
 		GfxRenderer()->EndRecord(ptrMainCommandBuffer);
 	}
 	GfxRenderer()->Submit(ptrMainCommandBuffer);
-	*/
 }

@@ -17,7 +17,10 @@ void CRenderSolution::Render(int indexQueue)
 {
 	m_pEngineUniform->Apply();
 	m_pMainCameraUniform->Apply();
-	m_pShadowCameraUniform->Apply();
+	m_pShadowCameraUniform[0]->Apply();
+	m_pShadowCameraUniform[1]->Apply();
+	m_pShadowCameraUniform[2]->Apply();
+	m_pShadowCameraUniform[3]->Apply();
 
 	switch (m_solution) {
 	case RENDER_SOLUTION_DEFAULT:

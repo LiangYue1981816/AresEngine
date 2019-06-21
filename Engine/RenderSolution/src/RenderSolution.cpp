@@ -38,7 +38,7 @@ CRenderSolution::CRenderSolution(GfxApi api, RenderSolution solution, void* hIns
 
 	, m_pEngineUniform(nullptr)
 	, m_pMainCameraUniform(nullptr)
-	, m_pShadowCameraUniform(nullptr)
+	, m_pShadowCameraUniform{ nullptr }
 
 	, m_bEnableMSAA(false)
 	, m_solution(RENDER_SOLUTION_DEFAULT)
@@ -69,7 +69,10 @@ CRenderSolution::CRenderSolution(GfxApi api, RenderSolution solution, void* hIns
 
 	m_pEngineUniform = new CGfxUniformEngine;
 	m_pMainCameraUniform = new CGfxUniformCamera;
-	m_pShadowCameraUniform = new CGfxUniformCamera;
+	m_pShadowCameraUniform[0] = new CGfxUniformCamera;
+	m_pShadowCameraUniform[1] = new CGfxUniformCamera;
+	m_pShadowCameraUniform[2] = new CGfxUniformCamera;
+	m_pShadowCameraUniform[3] = new CGfxUniformCamera;
 
 	m_pPassDefault = new CPassDefault(this);
 	m_pPassForwardLighting = new CPassForwardLighting(this);
@@ -90,7 +93,10 @@ CRenderSolution::~CRenderSolution(void)
 
 	delete m_pEngineUniform;
 	delete m_pMainCameraUniform;
-	delete m_pShadowCameraUniform;
+	delete m_pShadowCameraUniform[0];
+	delete m_pShadowCameraUniform[1];
+	delete m_pShadowCameraUniform[2];
+	delete m_pShadowCameraUniform[3];
 
 	delete m_pRenderer;
 }
@@ -162,9 +168,9 @@ CGfxUniformCamera* CRenderSolution::GetMainCameraUniform(void) const
 	return m_pMainCameraUniform;
 }
 
-CGfxUniformCamera* CRenderSolution::GetShadowCameraUniform(void) const
+CGfxUniformCamera* CRenderSolution::GetShadowCameraUniform(int indexLevel) const
 {
-	return m_pShadowCameraUniform;
+	return indexLevel >= 0 && indexLevel < 4 ? m_pShadowCameraUniform[indexLevel] : nullptr;
 }
 
 CGfxRenderTexturePtr CRenderSolution::GetPresentTexture(int indexFrame) const

@@ -57,7 +57,7 @@ public:
 
 	CGfxUniformEngine* GetEngineUniform(void) const;
 	CGfxUniformCamera* GetMainCameraUniform(void) const;
-	CGfxUniformCamera* GetShadowCameraUniform(void) const;
+	CGfxUniformCamera* GetShadowCameraUniform(int indexLevel) const;
 
 public:
 	CGfxRenderTexturePtr GetPresentTexture(int indexFrame) const;
@@ -122,7 +122,7 @@ private:
 
 	CGfxUniformEngine* m_pEngineUniform;
 	CGfxUniformCamera* m_pMainCameraUniform;
-	CGfxUniformCamera* m_pShadowCameraUniform;
+	CGfxUniformCamera* m_pShadowCameraUniform[4];
 
 private:
 	CGfxRenderTexturePtr m_ptrPresentTexture[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
