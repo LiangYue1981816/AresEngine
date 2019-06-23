@@ -56,11 +56,12 @@ vec3 Linear2Gamma(vec3 linear)
 // Lighting Functions
 vec3 Ambient_SH4(vec3 albedoColor, float metallic, vec3 normal, vec4 shRed, vec4 shGreen, vec4 shBlue)
 {
+	float factor = 1.0;
 	float x = normal.x;
 	float y = normal.y;
 	float z = normal.z;
 
-	vec4 basis = vec4(1.0, y, z, x);
+	vec4 basis = vec4(1.0, factor * y, factor * z, factor * x);
 	vec3 diffuse = vec3(dot(basis, shRed), dot(basis, shGreen), dot(basis, shBlue));
 
 	return (1.0 - metallic) * diffuse * albedoColor / PI;
@@ -68,12 +69,13 @@ vec3 Ambient_SH4(vec3 albedoColor, float metallic, vec3 normal, vec4 shRed, vec4
 
 vec3 Ambient_SH9(vec3 albedoColor, float metallic, vec3 normal, vec3 shRed0, vec3 shRed1, vec3 shRed2, vec3 shGreen0, vec3 shGreen1, vec3 shGreen2, vec3 shBlue0, vec3 shBlue1, vec3 shBlue2)
 {
+	float factor = 1.0;
 	float x = normal.x;
 	float y = normal.y;
 	float z = normal.z;
 
-	vec3 basis0 = vec3(1.0, 2.0 * y, 2.0 * z);
-	vec3 basis1 = vec3(2.0 * x, x * y, y * z);
+	vec3 basis0 = vec3(1.0, factor * y, factor * z);
+	vec3 basis1 = vec3(factor * x, x * y, y * z);
 	vec3 basis2 = vec3(z * z * 3.0f - 1.0f, x * z, x * x - y * y);
 	vec3 diffuse = basis0 * mat3(shRed0, shGreen0, shBlue0) + basis1 * mat3(shRed1, shGreen1, shBlue1) + basis2 * mat3(shRed2, shGreen2, shBlue2);
 
