@@ -32,7 +32,7 @@ CPassShadow::CPassShadow(CRenderSolution* pRenderSolution)
 
 		m_ptrRenderPass = GfxRenderer()->NewRenderPass(HashValue("Shadow"), numAttachments, numSubpasses);
 		{
-			m_ptrRenderPass->SetDepthStencilAttachment(0, m_pRenderSolution->GetShadowMapTexture(0)->GetFormat(), m_pRenderSolution->GetShadowMapTexture(0)->GetSamples(), true, true, 1.0f, 0);
+			m_ptrRenderPass->SetDepthStencilAttachment(0, m_pRenderSolution->GetShadowMapTexture(0)->GetFormat(), m_pRenderSolution->GetShadowMapTexture(0)->GetSamples(), false, true, 1.0f, 0);
 			m_ptrRenderPass->SetSubpassOutputDepthStencilReference(0, 0);
 		}
 		m_ptrRenderPass->Create();
@@ -124,7 +124,19 @@ void CPassShadow::Render(int indexQueue)
 
 			GfxRenderer()->CmdBeginRenderPass(ptrMainCommandBuffer, ptrFrameBuffer, ptrRenderPass);
 			{
-				m_pRenderSolution->GetMainCameraQueue()->CmdDraw(indexQueue, ptrMainCommandBuffer, m_ptrDescriptorSetShadowPass[0], DEFAULT_PASS_NAME, m_pRenderSolution->GetMainCamera()->GetScissor(), m_pRenderSolution->GetMainCamera()->GetViewport(), 0xffffffff);
+				static const glm::vec4 area[4] = {
+					{ 0.0f, 0.0f, 0.5f, 0.5f },
+					{ 0.5f, 0.0f, 0.5f, 0.5f },
+					{ 0.0f, 0.5f, 0.5f, 0.5f },
+					{ 0.5f, 0.5f, 0.5f, 0.5f },
+				};
+
+				for (int indexLevel = 0; indexLevel < 4; indexLevel++) {
+					float w = m_pRenderSolution->GetShadowMapTexture(indexLevel)->GetWidth();
+					float h = m_pRenderSolution->GetShadowMapTexture(indexLevel)->GetHeight();
+					glm::vec4 scale = { w, h, w, h };
+					m_pRenderSolution->GetMainCameraQueue()->CmdDraw(indexQueue, ptrMainCommandBuffer, m_ptrDescriptorSetShadowPass[indexLevel], SHADOW_PASS_NAME, area[indexLevel] * scale, area[indexLevel] * scale, 0xffffffff);
+				}
 			}
 			GfxRenderer()->CmdEndRenderPass(ptrMainCommandBuffer);
 		}
