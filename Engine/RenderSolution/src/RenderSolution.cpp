@@ -26,7 +26,7 @@ static const ATTRIBUTE instanceAttributes[INSTANCE_ATTRIBUTE_COUNT] = {
 
 
 const uint32_t DEFAULT_PASS_NAME = HashValue("Default");
-const uint32_t FORWARD_LIGHTING_PASS_NAME = HashValue("PBRLighting");
+const uint32_t FORWARD_LIGHTING_PASS_NAME = HashValue("ForwardLighting");
 const uint32_t SHADOW_PASS_NAME = HashValue("Shadow");
 
 

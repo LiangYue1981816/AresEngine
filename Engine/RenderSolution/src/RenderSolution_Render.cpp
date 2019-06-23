@@ -54,8 +54,8 @@ void CRenderSolution::RenderForward(int indexQueue)
 {
 	GfxRenderer()->AcquireNextFrame();
 	{
-		m_pPassShadow->Render(indexQueue);
-//		m_pPassForwardLighting->Render(indexQueue, m_bEnableMSAA);
+//		m_pPassShadow->Render(indexQueue);
+		m_pPassForwardLighting->Render(indexQueue, m_bEnableMSAA);
 	}
 	GfxRenderer()->Present();
 }
