@@ -15,12 +15,10 @@ precision mediump float;
 // Output
 layout (location = 0) out highp   vec3 outPosition;
 layout (location = 1) out mediump vec2 outTexcoord;
-layout (location = 2) out mediump vec3 outHalfDirection;
-layout (location = 3) out mediump vec3 outViewDirection;
 #ifdef NORMAL_MAP
-layout (location = 4) out mediump mat3 outTBN;
+layout (location = 2) out mediump mat3 outTBN;
 #else
-layout (location = 4) out mediump vec3 outNormal;
+layout (location = 2) out mediump vec3 outNormal;
 #endif
 
 
@@ -28,13 +26,6 @@ void main()
 {
 	highp mat4 worldMatrix = mat4(inInstanceTransformMatrixCol0, inInstanceTransformMatrixCol1, inInstanceTransformMatrixCol2, inInstanceTransformMatrixCol3);
 	highp vec3 worldPosition = (worldMatrix * vec4(inPosition.xyz, 1.0)).xyz;
-	highp vec3 worldCameraPosition = (cameraViewInverseMatrix * vec4(0.0, 0.0, 0.0, 1.0)).xyz;
-
-	mediump vec3 worldViewDirection = worldCameraPosition - worldPosition;
-	worldViewDirection = normalize(worldViewDirection);
-
-	mediump vec3 worldHalfDirection = mainDirectLightDirection + worldViewDirection;
-	worldHalfDirection = normalize(worldHalfDirection);
 
 	mediump vec3 worldNormal = (worldMatrix * vec4(inNormal, 0.0f)).xyz;
 	worldNormal = normalize(worldNormal);
@@ -75,12 +66,10 @@ layout (location = 0) out mediump vec4 outFragColor;
 // Input
 layout (location = 0) in highp   vec3 inPosition;
 layout (location = 1) in mediump vec2 inTexcoord;
-layout (location = 2) in mediump vec3 inHalfDirection;
-layout (location = 3) in mediump vec3 inViewDirection;
 #ifdef NORMAL_MAP
-layout (location = 4) in mediump mat3 inTBN;
+layout (location = 2) in mediump mat3 inTBN;
 #else
-layout (location = 4) in mediump vec3 inNormal;
+layout (location = 2) in mediump vec3 inNormal;
 #endif
 
 // Descriptor
@@ -105,11 +94,14 @@ void main()
 		discard;
 #endif
 
+	highp vec3 worldCameraPosition = (cameraViewInverseMatrix * vec4(0.0, 0.0, 0.0, 1.0)).xyz;
+	mediump vec3 worldViewDirection = normalize((worldCameraPosition - inPosition);
+	mediump vec3 worldHalfDirection = normalize(mainDirectLightDirection + worldViewDirection);
+
 #ifdef NORMAL_MAP
-	mediump vec3 pixelNormal = texture(texNormal, inTexcoord).rgb * 2.0 - 1.0;
-	pixelNormal = normalize(inTBN * pixelNormal);
+	mediump vec3 worldNormal = normalize(inTBN * (texture(texNormal, inTexcoord).rgb * vec3(2.0) - vec3(1.0)));
 #else
-	mediump vec3 pixelNormal = inNormal;
+	mediump vec3 worldNormal = inNormal;
 #endif
 
 #ifdef ROUGHNESS_METALLIC_SPECULAR_AO_MAP
@@ -132,13 +124,13 @@ void main()
 
 	mediump vec3 aoColor = vec3(ao);
 	mediump vec3 albedoColor = Gamma2Linear(albedo.rgb);
-	mediump vec3 ambientLightingColor = AmbientSH9(pixelNormal, albedoColor, metallic) * ambientLightFactor;
-	mediump vec3 pointLightingColor = PbrLighting(pixelNormal, inViewDirection, inHalfDirection, pointLightDirection, pointLightColor, albedoColor, metallic, roughness) * pointLightFactor;
-	mediump vec3 directLightingColor = PbrLighting(pixelNormal, inViewDirection, inHalfDirection, mainDirectLightDirection, mainDirectLightColor, albedoColor, metallic, roughness) * directLightFactor;
+	mediump vec3 ambientLightingColor = AmbientSH9(worldNormal, albedoColor, metallic) * ambientLightFactor;
+	mediump vec3 pointLightingColor = PbrLighting(worldNormal, worldViewDirection, worldHalfDirection, pointLightDirection, pointLightColor, albedoColor, metallic, roughness) * pointLightFactor;
+	mediump vec3 directLightingColor = PbrLighting(worldNormal, worldViewDirection, worldHalfDirection, mainDirectLightDirection, mainDirectLightColor, albedoColor, metallic, roughness) * directLightFactor;
 #ifdef ENV_MAP
-	mediump vec3 envLightingColor = EnvLighting(pixelNormal, inViewDirection, albedoColor, texEnv, 8.0, metallic, roughness) * envLightFactor;
+	mediump vec3 envLightingColor = EnvLighting(worldNormal, worldViewDirection, albedoColor, texEnv, 8.0, metallic, roughness) * envLightFactor;
 #else
-	mediump vec3 envLightingColor = EnvLighting(pixelNormal, inViewDirection, albedoColor, ambientLightingColor, metallic, roughness) * envLightFactor;
+	mediump vec3 envLightingColor = EnvLighting(worldNormal, worldViewDirection, albedoColor, ambientLightingColor, metallic, roughness) * envLightFactor;
 #endif
 	mediump vec3 finalLighting = aoColor * (ambientLightingColor + pointLightingColor + directLightingColor * shadow + envLightingColor);
 
