@@ -26,9 +26,7 @@ void main()
 {
 	highp mat4 worldMatrix = mat4(inInstanceTransformMatrixCol0, inInstanceTransformMatrixCol1, inInstanceTransformMatrixCol2, inInstanceTransformMatrixCol3);
 	highp vec3 worldPosition = (worldMatrix * vec4(inPosition.xyz, 1.0)).xyz;
-
-	mediump vec3 worldNormal = (worldMatrix * vec4(inNormal, 0.0f)).xyz;
-	worldNormal = normalize(worldNormal);
+	mediump vec3 worldNormal = normalize((worldMatrix * vec4(inNormal, 0.0f)).xyz);
 
 #ifdef NORMAL_MAP
 	mediump vec3 worldBinormal = (worldMatrix * vec4(inBinormal, 0.0f)).xyz;
@@ -41,8 +39,6 @@ void main()
 
 	outPosition = worldPosition;
 	outTexcoord = inTexcoord0;
-	outHalfDirection = worldHalfDirection;
-	outViewDirection = worldViewDirection;
 
 #ifdef NORMAL_MAP
 	outTBN = tbn;
@@ -95,7 +91,7 @@ void main()
 #endif
 
 	highp vec3 worldCameraPosition = (cameraViewInverseMatrix * vec4(0.0, 0.0, 0.0, 1.0)).xyz;
-	mediump vec3 worldViewDirection = normalize((worldCameraPosition - inPosition);
+	mediump vec3 worldViewDirection = normalize(worldCameraPosition - inPosition);
 	mediump vec3 worldHalfDirection = normalize(mainDirectLightDirection + worldViewDirection);
 
 #ifdef NORMAL_MAP
