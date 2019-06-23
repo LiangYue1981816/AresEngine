@@ -29,6 +29,7 @@ float Attenuation(float dis, float linear, float square, float constant)
 // ToneMapping
 vec3 ToneMapping(vec3 color)
 {
+	// https://knarkowicz.wordpress.com/2016/01/06/aces-filmic-tone-mapping-curve/
 	float a = 2.51;
 	float b = 0.03;
 	float c = 2.43;
