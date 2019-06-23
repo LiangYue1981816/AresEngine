@@ -25,7 +25,6 @@ CPassShadow::CPassShadow(CRenderSolution* pRenderSolution)
 		}
 	}
 
-	/*
 	// RenderPass and FrameBuffer
 	{
 		const int numAttachments = 1;
@@ -46,32 +45,6 @@ CPassShadow::CPassShadow(CRenderSolution* pRenderSolution)
 			m_ptrFrameBuffer[indexFrame]->Create(m_ptrRenderPass);
 		}
 	}
-	/*/
-	// RenderPass and FrameBuffer with Debug
-	{
-		const int numAttachments = 2;
-		const int numSubpasses = 1;
-
-		m_ptrRenderPass = GfxRenderer()->NewRenderPass(HashValue("ShadowDebug"), numAttachments, numSubpasses);
-		{
-			m_ptrRenderPass->SetColorAttachment(0, m_pRenderSolution->GetPresentTexture(0)->GetFormat(), m_pRenderSolution->GetPresentTexture(0)->GetSamples(), true, false, true, 0.2f, 0.2f, 0.2f, 0.0f);
-			m_ptrRenderPass->SetDepthStencilAttachment(1, m_pRenderSolution->GetDepthStencilTexture(0)->GetFormat(), m_pRenderSolution->GetDepthStencilTexture(0)->GetSamples(), true, true, 1.0f, 0);
-
-			m_ptrRenderPass->SetSubpassOutputColorReference(0, 0);
-			m_ptrRenderPass->SetSubpassOutputDepthStencilReference(0, 1);
-		}
-		m_ptrRenderPass->Create();
-
-		for (int indexFrame = 0; indexFrame < CGfxSwapChain::SWAPCHAIN_FRAME_COUNT; indexFrame++) {
-			m_ptrFrameBuffer[indexFrame] = GfxRenderer()->NewFrameBuffer(m_pRenderSolution->GetPresentTexture(indexFrame)->GetWidth(), m_pRenderSolution->GetPresentTexture(indexFrame)->GetHeight(), numAttachments);
-			{
-				m_ptrFrameBuffer[indexFrame]->SetAttachmentTexture(0, m_pRenderSolution->GetPresentTexture(indexFrame));
-				m_ptrFrameBuffer[indexFrame]->SetAttachmentTexture(1, m_pRenderSolution->GetDepthStencilTexture(indexFrame));
-			}
-			m_ptrFrameBuffer[indexFrame]->Create(m_ptrRenderPass);
-		}
-	}
-	//*/
 }
 
 CPassShadow::~CPassShadow(void)
