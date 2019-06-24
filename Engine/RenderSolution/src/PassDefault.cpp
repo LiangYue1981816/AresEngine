@@ -80,7 +80,9 @@ CPassDefault::CPassDefault(CRenderSolution* pRenderSolution)
 
 CPassDefault::~CPassDefault(void)
 {
-
+	m_ptrMainCommandBuffer[0]->Clearup();
+	m_ptrMainCommandBuffer[1]->Clearup();
+	m_ptrMainCommandBuffer[2]->Clearup();
 }
 
 void CPassDefault::Update(void)

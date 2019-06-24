@@ -82,7 +82,9 @@ CPassForwardLighting::CPassForwardLighting(CRenderSolution* pRenderSolution)
 
 CPassForwardLighting::~CPassForwardLighting(void)
 {
-
+	m_ptrMainCommandBuffer[0]->Clearup();
+	m_ptrMainCommandBuffer[1]->Clearup();
+	m_ptrMainCommandBuffer[2]->Clearup();
 }
 
 void CPassForwardLighting::Update(void)
