@@ -126,9 +126,10 @@ void CRenderSolution::DestroyColorAttachments(void)
 	for (int indexFrame = 0; indexFrame < CGfxSwapChain::SWAPCHAIN_FRAME_COUNT; indexFrame++) {
 		m_ptrPresentTexture[indexFrame].Release();
 		m_ptrDepthStencilTexture[indexFrame].Release();
-
+		/*
 		m_ptrColorTextureMSAA[indexFrame].Release();
 		m_ptrDepthStencilTextureMSAA[indexFrame].Release();
+		*/
 	}
 }
 
