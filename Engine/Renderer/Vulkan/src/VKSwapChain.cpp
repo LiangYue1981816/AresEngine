@@ -81,6 +81,7 @@ CVKSwapChain::CVKSwapChain(CVKDevice* pDevice, int width, int height, GfxPixelFo
 	CALL_BOOL_FUNCTION_RETURN(EnumDeviceSurfaceCapabilities(capabilities));
 	CALL_BOOL_FUNCTION_RETURN(CreateSwapChain(modes, formats, capabilities));
 	CALL_BOOL_FUNCTION_RETURN(CreateRenderTextures());
+
 	m_pAcquireSemaphore = new CVKSemaphore(m_pDevice);
 }
 
@@ -88,6 +89,7 @@ CVKSwapChain::~CVKSwapChain(void)
 {
 	DestroyRenderTextures();
 	DestroySwapChain();
+
 	delete m_pAcquireSemaphore;
 }
 
@@ -228,6 +230,7 @@ const CGfxRenderTexturePtr CVKSwapChain::GetFrameTexture(int index) const
 
 void CVKSwapChain::Present(const CGfxSemaphore* pWaitSemaphore)
 {
+	ASSERT(pWaitSemaphore);
 	ASSERT(m_vkSwapchain);
 
 	uint32_t indexFrame = m_indexFrame;
