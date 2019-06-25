@@ -188,11 +188,11 @@ public:
 	bool CmdPopDebugGroup(CGfxCommandBufferPtr ptrCommandBuffer);
 
 	// Submit
-	void Submit(const CGfxCommandBufferPtr& ptrCommandBuffer, CGfxSemaphore* pWaitSemaphore);
+	void Submit(const CGfxCommandBufferPtr& ptrCommandBuffer, const CGfxSemaphore* pWaitSemaphore);
 
 public:
 	void AcquireNextFrame(void);
-	void Present(CGfxSemaphore* pWaitSemaphore);
+	void Present(const CGfxSemaphore* pWaitSemaphore);
 
 
 private:

@@ -234,7 +234,7 @@ const CGfxRenderTexturePtr CVKSwapChain::GetFrameTexture(int index) const
 	return m_ptrRenderTextures[index];
 }
 
-void CVKSwapChain::Present(CGfxSemaphore* pWaitSemaphore)
+void CVKSwapChain::Present(const CGfxSemaphore* pWaitSemaphore)
 {
 	ASSERT(m_vkSwapchain);
 

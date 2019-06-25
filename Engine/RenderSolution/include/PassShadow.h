@@ -13,11 +13,14 @@ private:
 
 
 private:
+	const CGfxSemaphore* GetSemaphore(void) const;
+
+private:
 	void SetSplitFactor(float f1, float f2, float f3);
 
 private:
 	void Update(void);
-	void Render(int indexQueue);
+	void Render(int indexQueue, const CGfxSemaphore* pWaitSemaphore);
 
 
 private:

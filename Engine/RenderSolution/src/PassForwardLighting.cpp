@@ -86,12 +86,18 @@ CPassForwardLighting::~CPassForwardLighting(void)
 	m_ptrMainCommandBuffer[2]->Clearup();
 }
 
+const CGfxSemaphore* CPassForwardLighting::GetSemaphore(void) const
+{
+	const int indexFrame = GfxRenderer()->GetSwapChain()->GetFrameIndex();
+	return m_ptrMainCommandBuffer[indexFrame]->GetSemaphore();
+}
+
 void CPassForwardLighting::Update(void)
 {
 
 }
 
-void CPassForwardLighting::Render(int indexQueue, bool bMSAA)
+void CPassForwardLighting::Render(int indexQueue, bool bMSAA, const CGfxSemaphore* pWaitSemaphore)
 {
 	const int indexFrame = GfxRenderer()->GetSwapChain()->GetFrameIndex();
 
@@ -124,5 +130,5 @@ void CPassForwardLighting::Render(int indexQueue, bool bMSAA)
 		}
 		GfxRenderer()->EndRecord(ptrMainCommandBuffer);
 	}
-	GfxRenderer()->Submit(ptrMainCommandBuffer);
+	GfxRenderer()->Submit(ptrMainCommandBuffer, pWaitSemaphore);
 }

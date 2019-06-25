@@ -471,9 +471,9 @@ bool CVKRenderer::CmdPopDebugGroup(CGfxCommandBufferPtr ptrCommandBuffer)
 	return ptrCommandBuffer->CmdPopDebugGroup();
 }
 
-void CVKRenderer::Submit(const CGfxCommandBufferPtr& ptrCommandBuffer, CGfxSemaphore* pWaitSemaphore)
+void CVKRenderer::Submit(const CGfxCommandBufferPtr& ptrCommandBuffer, const CGfxSemaphore* pWaitSemaphore)
 {
-	m_pDevice->GetQueue()->Submit(ptrCommandBuffer, ((CVKSemaphore *)pWaitSemaphore)->GetSemaphore(), VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT, ((CVKSemaphore *)((CVKCommandBuffer *)ptrCommandBuffer.GetPointer())->GetSemaphore())->GetSemaphore());
+	m_pDevice->GetQueue()->Submit(ptrCommandBuffer, ((CVKSemaphore *)pWaitSemaphore)->GetSemaphore(), VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT, ((CVKSemaphore *)ptrCommandBuffer->GetSemaphore())->GetSemaphore());
 }
 
 void CVKRenderer::AcquireNextFrame(void)
@@ -481,7 +481,7 @@ void CVKRenderer::AcquireNextFrame(void)
 	m_pSwapChain->AcquireNextFrame();
 }
 
-void CVKRenderer::Present(CGfxSemaphore* pWaitSemaphore)
+void CVKRenderer::Present(const CGfxSemaphore* pWaitSemaphore)
 {
 	m_pSwapChain->Present(pWaitSemaphore);
 }

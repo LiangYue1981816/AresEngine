@@ -27,7 +27,7 @@ public:
 	const CGfxRenderTexturePtr GetFrameTexture(int index) const;
 
 public:
-	void Present(CGfxSemaphore* pWaitSemaphore);
+	void Present(const CGfxSemaphore* pWaitSemaphore);
 	void AcquireNextFrame(void);
 
 

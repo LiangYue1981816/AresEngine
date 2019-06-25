@@ -13,8 +13,11 @@ private:
 
 
 private:
+	const CGfxSemaphore* GetSemaphore(void) const;
+
+private:
 	void Update(void);
-	void Render(int indexQueue, bool bMSAA);
+	void Render(int indexQueue, bool bMSAA, const CGfxSemaphore* pWaitSemaphore);
 
 
 private:

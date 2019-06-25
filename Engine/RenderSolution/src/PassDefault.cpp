@@ -85,12 +85,18 @@ CPassDefault::~CPassDefault(void)
 	m_ptrMainCommandBuffer[2]->Clearup();
 }
 
+const CGfxSemaphore* CPassDefault::GetSemaphore(void) const
+{
+	const int indexFrame = GfxRenderer()->GetSwapChain()->GetFrameIndex();
+	return m_ptrMainCommandBuffer[indexFrame]->GetSemaphore();
+}
+
 void CPassDefault::Update(void)
 {
 
 }
 
-void CPassDefault::Render(int indexQueue, bool bMSAA)
+void CPassDefault::Render(int indexQueue, bool bMSAA, const CGfxSemaphore* pWaitSemaphore)
 {
 	const int indexFrame = GfxRenderer()->GetSwapChain()->GetFrameIndex();
 
@@ -121,7 +127,7 @@ void CPassDefault::Render(int indexQueue, bool bMSAA)
 			}
 			GfxRenderer()->CmdEndRenderPass(ptrMainCommandBuffer);
 		}
-		GfxRenderer()->EndRecord(ptrMainCommandBuffer);
+		GfxRenderer()->EndRecord(ptrMainCommandBuffer, pWaitSemaphore);
 	}
 	GfxRenderer()->Submit(ptrMainCommandBuffer);
 }

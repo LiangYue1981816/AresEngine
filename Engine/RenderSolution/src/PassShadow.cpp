@@ -52,6 +52,12 @@ CPassShadow::~CPassShadow(void)
 	m_ptrMainCommandBuffer[2]->Clearup();
 }
 
+const CGfxSemaphore* CPassShadow::GetSemaphore(void) const
+{
+	const int indexFrame = GfxRenderer()->GetSwapChain()->GetFrameIndex();
+	return m_ptrMainCommandBuffer[indexFrame]->GetSemaphore();
+}
+
 void CPassShadow::SetSplitFactor(float f1, float f2, float f3)
 {
 	m_splitFactors[0] = 0.0f;
@@ -107,7 +113,7 @@ void CPassShadow::Update(void)
 	}
 }
 
-void CPassShadow::Render(int indexQueue)
+void CPassShadow::Render(int indexQueue, const CGfxSemaphore* pWaitSemaphore)
 {
 	const int indexFrame = GfxRenderer()->GetSwapChain()->GetFrameIndex();
 
@@ -142,5 +148,5 @@ void CPassShadow::Render(int indexQueue)
 		}
 		GfxRenderer()->EndRecord(ptrMainCommandBuffer);
 	}
-	GfxRenderer()->Submit(ptrMainCommandBuffer);
+	GfxRenderer()->Submit(ptrMainCommandBuffer, pWaitSemaphore);
 }
