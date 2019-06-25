@@ -294,5 +294,6 @@ void CVKSwapChain::AcquireNextFrame(void)
 
 	uint32_t indexFrame;
 	vkAcquireNextImageKHR(m_pDevice->GetDevice(), m_vkSwapchain, UINT64_MAX, m_vkAcquireSemaphore, VK_NULL_HANDLE, &indexFrame);
+
 	m_indexFrame = indexFrame;
 }
