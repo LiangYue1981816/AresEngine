@@ -45,11 +45,8 @@ private:
 
 
 private:
-	void CreateColorAttachments(void);
-	void DestroyColorAttachments(void);
-
-	void CreateShadowAttachments(int width, int height);
-	void DestroyShadowAttachments(void);
+	void CreateAttachments(void);
+	void DestroyAttachments(void);
 
 public:
 	CGfxCamera* GetMainCamera(void) const;
@@ -64,7 +61,8 @@ public:
 	CGfxRenderTexturePtr GetDepthStencilTexture(int indexFrame) const;
 	CGfxRenderTexturePtr GetColorTextureMSAA(int indexFrame) const;
 	CGfxRenderTexturePtr GetDepthStencilTextureMSAA(int indexFrame) const;
-	CGfxRenderTexturePtr GetShadowMapTexture(int indexFrame) const;
+
+	CGfxRenderTexturePtr GetShadowMapTexture(void) const;
 
 public:
 	void SetTime(float t, float dt);
@@ -129,7 +127,8 @@ private:
 	CGfxRenderTexturePtr m_ptrDepthStencilTexture[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
 	CGfxRenderTexturePtr m_ptrColorTextureMSAA[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
 	CGfxRenderTexturePtr m_ptrDepthStencilTextureMSAA[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
-	CGfxRenderTexturePtr m_ptrShadowMapTexture[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
+
+	CGfxRenderTexturePtr m_ptrShadowMapTexture;
 
 private:
 	bool m_bEnableMSAA;

@@ -58,8 +58,7 @@ CRenderSolution::CRenderSolution(GfxApi api, RenderSolution solution, void* hIns
 		break;
 	}
 
-	CreateColorAttachments();
-	CreateShadowAttachments(2048, 2048);
+	CreateAttachments();
 
 	SetVertexAttributes(vertexAttributes, VERTEX_ATTRIBUTE_COUNT);
 	SetInstanceAttributes(instanceAttributes, INSTANCE_ATTRIBUTE_COUNT);
@@ -81,8 +80,7 @@ CRenderSolution::CRenderSolution(GfxApi api, RenderSolution solution, void* hIns
 
 CRenderSolution::~CRenderSolution(void)
 {
-	DestroyColorAttachments();
-	DestroyShadowAttachments();
+	DestroyAttachments();
 
 	delete m_pPassDefault;
 	delete m_pPassForwardLighting;
@@ -101,50 +99,55 @@ CRenderSolution::~CRenderSolution(void)
 	delete m_pRenderer;
 }
 
-void CRenderSolution::CreateColorAttachments(void)
+void CRenderSolution::CreateAttachments(void)
 {
-	const int samples = 4;
+	// Present
+	{
+		const int samples = 4;
 
-	const int width = GfxRenderer()->GetSwapChain()->GetWidth();
-	const int height = GfxRenderer()->GetSwapChain()->GetHeight();
+		const int width = GfxRenderer()->GetSwapChain()->GetWidth();
+		const int height = GfxRenderer()->GetSwapChain()->GetHeight();
 
-	for (int indexFrame = 0; indexFrame < CGfxSwapChain::SWAPCHAIN_FRAME_COUNT; indexFrame++) {
-		m_ptrPresentTexture[indexFrame] = GfxRenderer()->GetSwapChain()->GetFrameTexture(indexFrame);
-		m_ptrDepthStencilTexture[indexFrame] = GfxRenderer()->NewRenderTexture(HashValueFormat("DepthStencilTexture(%d)", indexFrame));
-		m_ptrDepthStencilTexture[indexFrame]->Create(GFX_PIXELFORMAT_D32_SFLOAT_PACK32, width, height);
-		/*
-		m_ptrColorTextureMSAA[indexFrame] = GfxRenderer()->NewRenderTexture(HashValueFormat("ColorTextureMSAA(%d)", indexFrame));
-		m_ptrColorTextureMSAA[indexFrame]->Create(GFX_PIXELFORMAT_BGRA8_UNORM_PACK8, width, height, samples);
-		m_ptrDepthStencilTextureMSAA[indexFrame] = GfxRenderer()->NewRenderTexture(HashValueFormat("DepthStencilTextureMSAA(%d)", indexFrame));
-		m_ptrDepthStencilTextureMSAA[indexFrame]->Create(GFX_PIXELFORMAT_D32_SFLOAT_PACK32, width, height, samples);
-		*/
+		for (int indexFrame = 0; indexFrame < CGfxSwapChain::SWAPCHAIN_FRAME_COUNT; indexFrame++) {
+			m_ptrPresentTexture[indexFrame] = GfxRenderer()->GetSwapChain()->GetFrameTexture(indexFrame);
+			m_ptrDepthStencilTexture[indexFrame] = GfxRenderer()->NewRenderTexture(HashValueFormat("DepthStencilTexture(%d)", indexFrame));
+			m_ptrDepthStencilTexture[indexFrame]->Create(GFX_PIXELFORMAT_D32_SFLOAT_PACK32, width, height);
+			/*
+			m_ptrColorTextureMSAA[indexFrame] = GfxRenderer()->NewRenderTexture(HashValueFormat("ColorTextureMSAA(%d)", indexFrame));
+			m_ptrColorTextureMSAA[indexFrame]->Create(GFX_PIXELFORMAT_BGRA8_UNORM_PACK8, width, height, samples);
+			m_ptrDepthStencilTextureMSAA[indexFrame] = GfxRenderer()->NewRenderTexture(HashValueFormat("DepthStencilTextureMSAA(%d)", indexFrame));
+			m_ptrDepthStencilTextureMSAA[indexFrame]->Create(GFX_PIXELFORMAT_D32_SFLOAT_PACK32, width, height, samples);
+			*/
+		}
+	}
+
+	// ShadowMap
+	{
+		const int width = 2048;
+		const int height = 2048;
+
+		m_ptrShadowMapTexture = GfxRenderer()->NewRenderTexture(HashValue("ShadowMap"));
+		m_ptrShadowMapTexture->Create(GFX_PIXELFORMAT_D32_SFLOAT_PACK32, width, height);
 	}
 }
 
-void CRenderSolution::DestroyColorAttachments(void)
+void CRenderSolution::DestroyAttachments(void)
 {
-	for (int indexFrame = 0; indexFrame < CGfxSwapChain::SWAPCHAIN_FRAME_COUNT; indexFrame++) {
-		m_ptrPresentTexture[indexFrame].Release();
-		m_ptrDepthStencilTexture[indexFrame].Release();
-		/*
-		m_ptrColorTextureMSAA[indexFrame].Release();
-		m_ptrDepthStencilTextureMSAA[indexFrame].Release();
-		*/
+	// Present
+	{
+		for (int indexFrame = 0; indexFrame < CGfxSwapChain::SWAPCHAIN_FRAME_COUNT; indexFrame++) {
+			m_ptrPresentTexture[indexFrame].Release();
+			m_ptrDepthStencilTexture[indexFrame].Release();
+			/*
+			m_ptrColorTextureMSAA[indexFrame].Release();
+			m_ptrDepthStencilTextureMSAA[indexFrame].Release();
+			*/
+		}
 	}
-}
 
-void CRenderSolution::CreateShadowAttachments(int width, int height)
-{
-	for (int indexFrame = 0; indexFrame < CGfxSwapChain::SWAPCHAIN_FRAME_COUNT; indexFrame++) {
-		m_ptrShadowMapTexture[indexFrame] = GfxRenderer()->NewRenderTexture(HashValueFormat("ShadowMap(%d)", indexFrame));
-		m_ptrShadowMapTexture[indexFrame]->Create(GFX_PIXELFORMAT_D32_SFLOAT_PACK32, width, height);
-	}
-}
-
-void CRenderSolution::DestroyShadowAttachments(void)
-{
-	for (int indexFrame = 0; indexFrame < CGfxSwapChain::SWAPCHAIN_FRAME_COUNT; indexFrame++) {
-		m_ptrShadowMapTexture[indexFrame].Release();
+	// ShadowMap
+	{
+		m_ptrShadowMapTexture.Release();
 	}
 }
 
@@ -170,32 +173,57 @@ CGfxUniformCamera* CRenderSolution::GetMainCameraUniform(void) const
 
 CGfxUniformCamera* CRenderSolution::GetShadowCameraUniform(int indexLevel) const
 {
-	return indexLevel >= 0 && indexLevel < 4 ? m_pShadowCameraUniform[indexLevel] : nullptr;
+	if (indexLevel >= 0 && indexLevel < 4) {
+		return m_pShadowCameraUniform[indexLevel];
+	}
+	else {
+		return nullptr;
+	}
 }
 
 CGfxRenderTexturePtr CRenderSolution::GetPresentTexture(int indexFrame) const
 {
-	return m_ptrPresentTexture[indexFrame % CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
+	if (indexFrame >= 0 && indexFrame < CGfxSwapChain::SWAPCHAIN_FRAME_COUNT) {
+		return m_ptrPresentTexture[indexFrame];
+	}
+	else {
+		return nullptr;
+	}
 }
 
 CGfxRenderTexturePtr CRenderSolution::GetDepthStencilTexture(int indexFrame) const
 {
-	return m_ptrDepthStencilTexture[indexFrame % CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
+	if (indexFrame >= 0 && indexFrame < CGfxSwapChain::SWAPCHAIN_FRAME_COUNT) {
+		return m_ptrDepthStencilTexture[indexFrame];
+	}
+	else {
+		return nullptr;
+	}
 }
 
 CGfxRenderTexturePtr CRenderSolution::GetColorTextureMSAA(int indexFrame) const
 {
-	return m_ptrColorTextureMSAA[indexFrame % CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
+	if (indexFrame >= 0 && indexFrame < CGfxSwapChain::SWAPCHAIN_FRAME_COUNT) {
+		return m_ptrColorTextureMSAA[indexFrame];
+	}
+	else {
+		return nullptr;
+	}
 }
 
 CGfxRenderTexturePtr CRenderSolution::GetDepthStencilTextureMSAA(int indexFrame) const
 {
-	return m_ptrDepthStencilTextureMSAA[indexFrame % CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
+	if (indexFrame >= 0 && indexFrame < CGfxSwapChain::SWAPCHAIN_FRAME_COUNT) {
+		return m_ptrDepthStencilTextureMSAA[indexFrame];
+	}
+	else {
+		return nullptr;
+	}
 }
 
-CGfxRenderTexturePtr CRenderSolution::GetShadowMapTexture(int indexFrame) const
+CGfxRenderTexturePtr CRenderSolution::GetShadowMapTexture(void) const
 {
-	return m_ptrShadowMapTexture[indexFrame % CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
+	return m_ptrShadowMapTexture;
 }
 
 void CRenderSolution::SetTime(float t, float dt)
