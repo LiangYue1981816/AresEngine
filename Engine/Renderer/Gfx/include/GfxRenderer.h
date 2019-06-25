@@ -17,6 +17,8 @@
 #include "GfxCamera.h"
 #include "GfxRenderQueue.h"
 
+#include "GfxSemaphore.h"
+
 #include "GfxSwapChain.h"
 #include "GfxRenderPass.h"
 #include "GfxFrameBuffer.h"

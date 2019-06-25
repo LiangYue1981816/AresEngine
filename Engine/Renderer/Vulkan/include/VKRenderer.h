@@ -16,6 +16,8 @@
 #include "VKMemoryAllocator.h"
 #include "VKMemoryManager.h"
 
+#include "VKSemaphore.h"
+
 #include "VKSwapChain.h"
 #include "VKRenderPass.h"
 #include "VKRenderPassManager.h"

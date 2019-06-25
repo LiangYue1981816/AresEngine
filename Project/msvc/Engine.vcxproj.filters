@@ -1551,6 +1551,15 @@
     <ClInclude Include="..\..\Engine\RenderSolution\include\PassShadow.h">
       <Filter>Engine\RenderSolution\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxSemaphore.h">
+      <Filter>Engine\Renderer\Gfx\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3Semaphore.h">
+      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKSemaphore.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Engine\ThirdParty\eastl\source\allocator_eastl.cpp">
@@ -2242,6 +2251,12 @@
     </ClCompile>
     <ClCompile Include="..\..\Engine\RenderSolution\src\PassShadow.cpp">
       <Filter>Engine\RenderSolution\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3Semaphore.cpp">
+      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKSemaphore.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

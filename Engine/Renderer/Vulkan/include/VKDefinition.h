@@ -59,6 +59,8 @@ class CVKMemory;
 class CVKMemoryAllocator;
 class CVKMemoryManager;
 
+class CVKSemaphore;
+
 class CVKSwapChain;
 class CVKRenderPass;
 class CVKRenderPassManager;

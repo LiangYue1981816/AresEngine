@@ -14,6 +14,8 @@
 
 class CGLES3Renderer;
 
+class CGLES3Semaphore;
+
 class CGLES3SwapChain;
 class CGLES3RenderPass;
 class CGLES3RenderPassManager;

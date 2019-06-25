@@ -42,6 +42,8 @@ bool CVKSampler::Create(GfxFilter minFilter, GfxFilter magFilter, GfxSamplerMipm
 
 void CVKSampler::Destroy(void)
 {
+	ASSERT(m_vkSampler);
+
 	vkDestroySampler(m_pDevice->GetDevice(), m_vkSampler, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
 	m_vkSampler = VK_NULL_HANDLE;
 }

@@ -12,6 +12,8 @@ class CALL_API CGfxResourceManager;
 class CALL_API CGfxCamera;
 class CALL_API CGfxRenderQueue;
 
+class CALL_API CGfxSemaphore;
+
 class CALL_API CGfxSwapChain;
 class CALL_API CGfxRenderPass;
 class CALL_API CGfxFrameBuffer;
