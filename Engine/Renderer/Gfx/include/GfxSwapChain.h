@@ -16,6 +16,9 @@ public:
 
 
 public:
+	virtual const CGfxSemaphore* GetAcquireSemaphore(void) const = 0;
+
+public:
 	virtual GfxPixelFormat GetFormat(void) const = 0;
 
 	virtual int GetWidth(void) const = 0;

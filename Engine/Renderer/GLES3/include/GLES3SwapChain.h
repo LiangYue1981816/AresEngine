@@ -17,6 +17,9 @@ private:
 	void Destroy(void);
 
 public:
+	const CGfxSemaphore* GetAcquireSemaphore(void) const;
+
+public:
 	GfxPixelFormat GetFormat(void) const;
 
 	int GetWidth(void) const;

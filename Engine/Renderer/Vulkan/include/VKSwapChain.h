@@ -25,7 +25,7 @@ private:
 	void DestroyRenderTextures(void);
 
 public:
-	VkSemaphore GetAcquireSemaphore(void) const;
+	const CGfxSemaphore* GetAcquireSemaphore(void) const;
 
 public:
 	GfxPixelFormat GetFormat(void) const;
@@ -44,7 +44,6 @@ public:
 
 private:
 	VkSwapchainKHR m_vkSwapchain;
-	VkSemaphore m_vkAcquireSemaphore;
 
 private:
 	VkImage m_vkImages[SWAPCHAIN_FRAME_COUNT];
@@ -57,6 +56,9 @@ private:
 	int m_height;
 
 	int m_indexFrame;
+
+private:
+	CGfxSemaphore* m_pAcquireSemaphore;
 
 private:
 	CVKDevice* m_pDevice;

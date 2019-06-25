@@ -67,6 +67,11 @@ void CGLES3SwapChain::Destroy(void)
 	m_surface = 0;
 }
 
+const CGfxSemaphore* CGLES3SwapChain::GetAcquireSemaphore(void) const
+{
+	return nullptr;
+}
+
 GfxPixelFormat CGLES3SwapChain::GetFormat(void) const
 {
 	return m_format;
