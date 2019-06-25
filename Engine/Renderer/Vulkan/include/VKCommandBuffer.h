@@ -23,6 +23,9 @@ public:
 	VkCommandBuffer GetCommandBuffer(void) const;
 
 public:
+	const CGfxSemaphore* GetSemaphore(void) const;
+
+public:
 	bool IsInRenderPass(void) const;
 	int GetSubpassIndex(void) const;
 
@@ -111,6 +114,9 @@ private:
 private:
 	CGfxPipelineCompute* m_pCurrentPipelineCompute;
 	CGfxPipelineGraphics* m_pCurrentPipelineGraphics;
+
+private:
+	CVKSemaphore* m_pSemaphore;
 
 private:
 	CVKDevice* m_pDevice;

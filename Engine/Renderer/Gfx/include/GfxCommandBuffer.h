@@ -39,6 +39,9 @@ public:
 
 
 public:
+	virtual const CGfxSemaphore* GetSemaphore(void) const = 0;
+
+public:
 	virtual bool IsInRenderPass(void) const = 0;
 	virtual int GetSubpassIndex(void) const = 0;
 

@@ -51,13 +51,17 @@ CVKCommandBuffer::CVKCommandBuffer(CVKDevice* pDevice, CVKCommandBufferManager* 
 	, m_indexSubpass(-1)
 	, m_pCurrentPipelineCompute(nullptr)
 	, m_pCurrentPipelineGraphics(nullptr)
+
+	, m_pSemaphore(nullptr)
 {
 	Create(vkCommandPool, bMainCommandBuffer);
+	m_pSemaphore = new CVKSemaphore(m_pDevice);
 }
 
 CVKCommandBuffer::~CVKCommandBuffer(void)
 {
 	Destroy();
+	delete m_pSemaphore;
 }
 
 void CVKCommandBuffer::Release(void)
@@ -123,6 +127,12 @@ VkCommandBuffer CVKCommandBuffer::GetCommandBuffer(void) const
 {
 	ASSERT(m_vkCommandBuffer);
 	return m_vkCommandBuffer;
+}
+
+const CGfxSemaphore* CVKCommandBuffer::GetSemaphore(void) const
+{
+	ASSERT(m_pSemaphore);
+	return m_pSemaphore;
 }
 
 bool CVKCommandBuffer::IsInRenderPass(void) const

@@ -14,6 +14,9 @@ private:
 
 
 public:
+	const CGfxSemaphore* GetSemaphore(void) const;
+
+public:
 	bool IsInRenderPass(void) const;
 	int GetSubpassIndex(void) const;
 
