@@ -26,8 +26,6 @@ private:
 
 public:
 	VkSemaphore GetAcquireSemaphore(void) const;
-	VkSemaphore GetRenderDoneSemaphore(void) const;
-	VkFence GetRenderDoneFence(void) const;
 
 public:
 	GfxPixelFormat GetFormat(void) const;
@@ -40,15 +38,13 @@ public:
 	const CGfxRenderTexturePtr GetFrameTexture(int index) const;
 
 public:
-	void Present(void);
+	void Present(CGfxSemaphore* pRenderDoneSemaphore);
 	void AcquireNextFrame(void);
 
 
 private:
 	VkSwapchainKHR m_vkSwapchain;
 	VkSemaphore m_vkAcquireSemaphore;
-	VkSemaphore m_vkRenderDoneSemaphores[SWAPCHAIN_FRAME_COUNT];
-	VkFence m_vkRenderDoneFences[SWAPCHAIN_FRAME_COUNT];
 
 private:
 	VkImage m_vkImages[SWAPCHAIN_FRAME_COUNT];

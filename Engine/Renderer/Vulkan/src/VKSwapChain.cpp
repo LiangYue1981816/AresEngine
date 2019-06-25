@@ -65,8 +65,6 @@ CVKSwapChain::CVKSwapChain(CVKDevice* pDevice, int width, int height, GfxPixelFo
 	, m_vkImages{ VK_NULL_HANDLE }
 	, m_vkSwapchain(VK_NULL_HANDLE)
 	, m_vkAcquireSemaphore(VK_NULL_HANDLE)
-	, m_vkRenderDoneSemaphores{ VK_NULL_HANDLE }
-	, m_vkRenderDoneFences{ VK_NULL_HANDLE }
 
 	, m_format(format)
 	, m_width(width)
@@ -177,18 +175,6 @@ bool CVKSwapChain::CreateRenderTextures(void)
 	CALL_VK_FUNCTION_RETURN_BOOL(vkGetSwapchainImagesKHR(m_pDevice->GetDevice(), m_vkSwapchain, &numImages, m_vkImages));
 
 	for (int indexFrame = 0; indexFrame < SWAPCHAIN_FRAME_COUNT; indexFrame++) {
-		VkSemaphoreCreateInfo semaphoreCreateInfo = {};
-		semaphoreCreateInfo.sType = VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO;
-		semaphoreCreateInfo.pNext = nullptr;
-		semaphoreCreateInfo.flags = 0;
-		CALL_VK_FUNCTION_RETURN_BOOL(vkCreateSemaphore(m_pDevice->GetDevice(), &semaphoreCreateInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkRenderDoneSemaphores[indexFrame]));
-
-		VkFenceCreateInfo fenceCreateInfo = {};
-		fenceCreateInfo.sType = VK_STRUCTURE_TYPE_FENCE_CREATE_INFO;
-		fenceCreateInfo.pNext = nullptr;
-		fenceCreateInfo.flags = VK_FENCE_CREATE_SIGNALED_BIT;
-		CALL_VK_FUNCTION_RETURN_BOOL(vkCreateFence(m_pDevice->GetDevice(), &fenceCreateInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkRenderDoneFences[indexFrame]));
-
 		m_ptrRenderTextures[indexFrame] = VKRenderer()->NewRenderTexture(HashValueFormat("SwapChain Frame RenderTexture %d", indexFrame));
 		CALL_BOOL_FUNCTION_RETURN_BOOL(m_ptrRenderTextures[indexFrame]->Create((HANDLE)m_vkImages[indexFrame], m_format, m_width, m_height));
 	}
@@ -211,15 +197,6 @@ void CVKSwapChain::DestroySwapChain(void)
 void CVKSwapChain::DestroyRenderTextures(void)
 {
 	for (int indexFrame = 0; indexFrame < SWAPCHAIN_FRAME_COUNT; indexFrame++) {
-		ASSERT(m_vkRenderDoneSemaphores[indexFrame]);
-		ASSERT(m_vkRenderDoneFences[indexFrame]);
-		ASSERT(m_ptrRenderTextures[indexFrame]);
-
-		vkDestroySemaphore(m_pDevice->GetDevice(), m_vkRenderDoneSemaphores[indexFrame], m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
-		vkDestroyFence(m_pDevice->GetDevice(), m_vkRenderDoneFences[indexFrame], m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
-
-		m_vkRenderDoneSemaphores[indexFrame] = VK_NULL_HANDLE;
-		m_vkRenderDoneFences[indexFrame] = VK_NULL_HANDLE;
 		m_ptrRenderTextures[indexFrame].Release();
 	}
 }
@@ -228,18 +205,6 @@ VkSemaphore CVKSwapChain::GetAcquireSemaphore(void) const
 {
 	ASSERT(m_vkAcquireSemaphore);
 	return m_vkAcquireSemaphore;
-}
-
-VkSemaphore CVKSwapChain::GetRenderDoneSemaphore(void) const
-{
-	ASSERT(m_vkRenderDoneSemaphores[m_indexFrame]);
-	return m_vkRenderDoneSemaphores[m_indexFrame];
-}
-
-VkFence CVKSwapChain::GetRenderDoneFence(void) const
-{
-	ASSERT(m_vkRenderDoneFences[m_indexFrame]);
-	return m_vkRenderDoneFences[m_indexFrame];
 }
 
 GfxPixelFormat CVKSwapChain::GetFormat(void) const
@@ -269,17 +234,18 @@ const CGfxRenderTexturePtr CVKSwapChain::GetFrameTexture(int index) const
 	return m_ptrRenderTextures[index];
 }
 
-void CVKSwapChain::Present(void)
+void CVKSwapChain::Present(CGfxSemaphore* pRenderDoneSemaphore)
 {
 	ASSERT(m_vkSwapchain);
-	ASSERT(m_vkRenderDoneSemaphores[m_indexFrame]);
 
 	uint32_t indexFrame = m_indexFrame;
+	VkSemaphore vkWaitSemaphore = ((CVKSemaphore *)pRenderDoneSemaphore)->GetSemaphore();
+
 	VkPresentInfoKHR presentInfo = {};
 	presentInfo.sType = VK_STRUCTURE_TYPE_PRESENT_INFO_KHR;
 	presentInfo.pNext = nullptr;
 	presentInfo.waitSemaphoreCount = 1;
-	presentInfo.pWaitSemaphores = &m_vkRenderDoneSemaphores[indexFrame];
+	presentInfo.pWaitSemaphores = &vkWaitSemaphore;
 	presentInfo.swapchainCount = 1;
 	presentInfo.pSwapchains = &m_vkSwapchain;
 	presentInfo.pImageIndices = &indexFrame;

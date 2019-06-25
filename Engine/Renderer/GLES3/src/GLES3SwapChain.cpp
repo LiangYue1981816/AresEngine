@@ -92,7 +92,7 @@ const CGfxRenderTexturePtr CGLES3SwapChain::GetFrameTexture(int index) const
 	return m_ptrFrameTexture;
 }
 
-void CGLES3SwapChain::Present(void)
+void CGLES3SwapChain::Present(CGfxSemaphore* pRenderDoneSemaphore)
 {
 	if (m_surface) {
 		GLBindFramebuffer(GL_FRAMEBUFFER, 0);
