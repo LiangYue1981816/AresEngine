@@ -465,7 +465,7 @@ bool CGLES3Renderer::CmdPopDebugGroup(CGfxCommandBufferPtr ptrCommandBuffer)
 	return ptrCommandBuffer->CmdPopDebugGroup();
 }
 
-void CGLES3Renderer::Submit(const CGfxCommandBufferPtr& ptrCommandBuffer)
+void CGLES3Renderer::Submit(const CGfxCommandBufferPtr& ptrCommandBuffer, CGfxSemaphore* pWaitSemaphore)
 {
 	ptrCommandBuffer->Execute();
 }
@@ -476,7 +476,7 @@ void CGLES3Renderer::AcquireNextFrame(void)
 	GLResetContext();
 }
 
-void CGLES3Renderer::Present(void)
+void CGLES3Renderer::Present(CGfxSemaphore* pWaitSemaphore)
 {
-	m_pSwapChain->Present();
+	m_pSwapChain->Present(pWaitSemaphore);
 }

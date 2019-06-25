@@ -216,11 +216,11 @@ public:
 	virtual bool CmdPopDebugGroup(CGfxCommandBufferPtr ptrCommandBuffer) = 0;
 
 	// Submit
-	virtual void Submit(const CGfxCommandBufferPtr& ptrCommandBuffer) = 0;
+	virtual void Submit(const CGfxCommandBufferPtr& ptrCommandBuffer, CGfxSemaphore* pWaitSemaphore) = 0;
 
 public:
 	virtual void AcquireNextFrame(void) = 0;
-	virtual void Present(void) = 0;
+	virtual void Present(CGfxSemaphore* pWaitSemaphore) = 0;
 
 
 protected:
