@@ -46,6 +46,12 @@ vec3 Gamma2Linear(vec3 gamma)
 	return pow(gamma, vec3(2.2));
 }
 
+vec4 Gamma2Linear(vec4 gamma)
+{
+//	return gamma * gamma;
+	return pow(gamma, vec4(2.2));
+}
+
 vec3 Linear2Gamma(vec3 linear)
 {
 //	return sqrt(linear);
