@@ -57,10 +57,10 @@ public:
 	CGfxUniformCamera* GetShadowCameraUniform(int indexLevel) const;
 
 public:
-	CGfxRenderTexturePtr GetPresentTexture(int indexFrame) const;
-	CGfxRenderTexturePtr GetDepthStencilTexture(int indexFrame) const;
-	CGfxRenderTexturePtr GetColorTextureMSAA(int indexFrame) const;
-	CGfxRenderTexturePtr GetDepthStencilTextureMSAA(int indexFrame) const;
+	CGfxRenderTexturePtr GetPresentColorTexture(int indexFrame) const;
+	CGfxRenderTexturePtr GetPresentDepthStencilTexture(int indexFrame) const;
+	CGfxRenderTexturePtr GetPresentColorTextureMSAA(int indexFrame) const;
+	CGfxRenderTexturePtr GetPresentDepthStencilTextureMSAA(int indexFrame) const;
 
 	CGfxRenderTexturePtr GetShadowMapTexture(void) const;
 
@@ -123,10 +123,10 @@ private:
 	CGfxUniformCamera* m_pShadowCameraUniform[4];
 
 private:
-	CGfxRenderTexturePtr m_ptrPresentTexture[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
-	CGfxRenderTexturePtr m_ptrDepthStencilTexture[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
-	CGfxRenderTexturePtr m_ptrColorTextureMSAA[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
-	CGfxRenderTexturePtr m_ptrDepthStencilTextureMSAA[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
+	CGfxRenderTexturePtr m_ptrPresentColorTexture[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
+	CGfxRenderTexturePtr m_ptrPresentDepthStencilTexture[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
+	CGfxRenderTexturePtr m_ptrPresentColorTextureMSAA[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
+	CGfxRenderTexturePtr m_ptrPresentDepthStencilTextureMSAA[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
 
 	CGfxRenderTexturePtr m_ptrShadowMapTexture;
 

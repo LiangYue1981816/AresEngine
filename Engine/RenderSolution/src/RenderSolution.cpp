@@ -109,14 +109,14 @@ void CRenderSolution::CreateAttachments(void)
 		const int height = GfxRenderer()->GetSwapChain()->GetHeight();
 
 		for (int indexFrame = 0; indexFrame < CGfxSwapChain::SWAPCHAIN_FRAME_COUNT; indexFrame++) {
-			m_ptrPresentTexture[indexFrame] = GfxRenderer()->GetSwapChain()->GetFrameTexture(indexFrame);
-			m_ptrDepthStencilTexture[indexFrame] = GfxRenderer()->NewRenderTexture(HashValueFormat("DepthStencilTexture(%d)", indexFrame));
-			m_ptrDepthStencilTexture[indexFrame]->Create(GFX_PIXELFORMAT_D32_SFLOAT_PACK32, width, height);
+			m_ptrPresentColorTexture[indexFrame] = GfxRenderer()->GetSwapChain()->GetFrameTexture(indexFrame);
+			m_ptrPresentDepthStencilTexture[indexFrame] = GfxRenderer()->NewRenderTexture(HashValueFormat("DepthStencilTexture(%d)", indexFrame));
+			m_ptrPresentDepthStencilTexture[indexFrame]->Create(GFX_PIXELFORMAT_D32_SFLOAT_PACK32, width, height);
 			/*
-			m_ptrColorTextureMSAA[indexFrame] = GfxRenderer()->NewRenderTexture(HashValueFormat("ColorTextureMSAA(%d)", indexFrame));
-			m_ptrColorTextureMSAA[indexFrame]->Create(GFX_PIXELFORMAT_BGRA8_UNORM_PACK8, width, height, samples);
-			m_ptrDepthStencilTextureMSAA[indexFrame] = GfxRenderer()->NewRenderTexture(HashValueFormat("DepthStencilTextureMSAA(%d)", indexFrame));
-			m_ptrDepthStencilTextureMSAA[indexFrame]->Create(GFX_PIXELFORMAT_D32_SFLOAT_PACK32, width, height, samples);
+			m_ptrPresentColorTextureMSAA[indexFrame] = GfxRenderer()->NewRenderTexture(HashValueFormat("ColorTextureMSAA(%d)", indexFrame));
+			m_ptrPresentColorTextureMSAA[indexFrame]->Create(GFX_PIXELFORMAT_BGRA8_UNORM_PACK8, width, height, samples);
+			m_ptrPresentDepthStencilTextureMSAA[indexFrame] = GfxRenderer()->NewRenderTexture(HashValueFormat("DepthStencilTextureMSAA(%d)", indexFrame));
+			m_ptrPresentDepthStencilTextureMSAA[indexFrame]->Create(GFX_PIXELFORMAT_D32_SFLOAT_PACK32, width, height, samples);
 			*/
 		}
 	}
@@ -136,11 +136,11 @@ void CRenderSolution::DestroyAttachments(void)
 	// Present
 	{
 		for (int indexFrame = 0; indexFrame < CGfxSwapChain::SWAPCHAIN_FRAME_COUNT; indexFrame++) {
-			m_ptrPresentTexture[indexFrame].Release();
-			m_ptrDepthStencilTexture[indexFrame].Release();
+			m_ptrPresentColorTexture[indexFrame].Release();
+			m_ptrPresentDepthStencilTexture[indexFrame].Release();
 			/*
-			m_ptrColorTextureMSAA[indexFrame].Release();
-			m_ptrDepthStencilTextureMSAA[indexFrame].Release();
+			m_ptrPresentColorTextureMSAA[indexFrame].Release();
+			m_ptrPresentDepthStencilTextureMSAA[indexFrame].Release();
 			*/
 		}
 	}
@@ -181,40 +181,40 @@ CGfxUniformCamera* CRenderSolution::GetShadowCameraUniform(int indexLevel) const
 	}
 }
 
-CGfxRenderTexturePtr CRenderSolution::GetPresentTexture(int indexFrame) const
+CGfxRenderTexturePtr CRenderSolution::GetPresentColorTexture(int indexFrame) const
 {
 	if (indexFrame >= 0 && indexFrame < CGfxSwapChain::SWAPCHAIN_FRAME_COUNT) {
-		return m_ptrPresentTexture[indexFrame];
+		return m_ptrPresentColorTexture[indexFrame];
 	}
 	else {
 		return nullptr;
 	}
 }
 
-CGfxRenderTexturePtr CRenderSolution::GetDepthStencilTexture(int indexFrame) const
+CGfxRenderTexturePtr CRenderSolution::GetPresentDepthStencilTexture(int indexFrame) const
 {
 	if (indexFrame >= 0 && indexFrame < CGfxSwapChain::SWAPCHAIN_FRAME_COUNT) {
-		return m_ptrDepthStencilTexture[indexFrame];
+		return m_ptrPresentDepthStencilTexture[indexFrame];
 	}
 	else {
 		return nullptr;
 	}
 }
 
-CGfxRenderTexturePtr CRenderSolution::GetColorTextureMSAA(int indexFrame) const
+CGfxRenderTexturePtr CRenderSolution::GetPresentColorTextureMSAA(int indexFrame) const
 {
 	if (indexFrame >= 0 && indexFrame < CGfxSwapChain::SWAPCHAIN_FRAME_COUNT) {
-		return m_ptrColorTextureMSAA[indexFrame];
+		return m_ptrPresentColorTextureMSAA[indexFrame];
 	}
 	else {
 		return nullptr;
 	}
 }
 
-CGfxRenderTexturePtr CRenderSolution::GetDepthStencilTextureMSAA(int indexFrame) const
+CGfxRenderTexturePtr CRenderSolution::GetPresentDepthStencilTextureMSAA(int indexFrame) const
 {
 	if (indexFrame >= 0 && indexFrame < CGfxSwapChain::SWAPCHAIN_FRAME_COUNT) {
-		return m_ptrDepthStencilTextureMSAA[indexFrame];
+		return m_ptrPresentDepthStencilTextureMSAA[indexFrame];
 	}
 	else {
 		return nullptr;
