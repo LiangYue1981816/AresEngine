@@ -234,12 +234,12 @@ const CGfxRenderTexturePtr CVKSwapChain::GetFrameTexture(int index) const
 	return m_ptrRenderTextures[index];
 }
 
-void CVKSwapChain::Present(CGfxSemaphore* pRenderDoneSemaphore)
+void CVKSwapChain::Present(CGfxSemaphore* pWaitSemaphore)
 {
 	ASSERT(m_vkSwapchain);
 
 	uint32_t indexFrame = m_indexFrame;
-	VkSemaphore vkWaitSemaphore = ((CVKSemaphore *)pRenderDoneSemaphore)->GetSemaphore();
+	VkSemaphore vkWaitSemaphore = ((CVKSemaphore *)pWaitSemaphore)->GetSemaphore();
 
 	VkPresentInfoKHR presentInfo = {};
 	presentInfo.sType = VK_STRUCTURE_TYPE_PRESENT_INFO_KHR;
