@@ -25,7 +25,7 @@ private:
 
 private:
 	CGfxRenderPassPtr m_ptrRenderPass;
-	CGfxFrameBufferPtr m_ptrFrameBuffer[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
+	CGfxFrameBufferPtr m_ptrFrameBuffer;
 
 	CGfxDescriptorSetPtr m_ptrDescriptorSetShadowPass[4];
 	CGfxCommandBufferPtr m_ptrMainCommandBuffer[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];

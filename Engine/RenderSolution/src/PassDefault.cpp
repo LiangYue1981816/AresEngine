@@ -29,8 +29,8 @@ CPassDefault::CPassDefault(CRenderSolution* pRenderSolution)
 
 		m_ptrRenderPass = GfxRenderer()->NewRenderPass(HashValue("Default"), numAttachments, numSubpasses);
 		{
-			m_ptrRenderPass->SetColorAttachment(0, m_pRenderSolution->GetPresentTexture(0)->GetFormat(), m_pRenderSolution->GetPresentTexture(0)->GetSamples(), true, false, true, 0.2f, 0.2f, 0.2f, 0.0f);
-			m_ptrRenderPass->SetDepthStencilAttachment(1, m_pRenderSolution->GetDepthStencilTexture(0)->GetFormat(), m_pRenderSolution->GetDepthStencilTexture(0)->GetSamples(), true, true, 1.0f, 0);
+			m_ptrRenderPass->SetColorAttachment(0, m_pRenderSolution->GetPresentColorTexture(0)->GetFormat(), m_pRenderSolution->GetPresentColorTexture(0)->GetSamples(), true, false, true, 0.2f, 0.2f, 0.2f, 0.0f);
+			m_ptrRenderPass->SetDepthStencilAttachment(1, m_pRenderSolution->GetPresentDepthStencilTexture(0)->GetFormat(), m_pRenderSolution->GetPresentDepthStencilTexture(0)->GetSamples(), true, true, 1.0f, 0);
 
 			m_ptrRenderPass->SetSubpassOutputColorReference(0, 0);
 			m_ptrRenderPass->SetSubpassOutputDepthStencilReference(0, 1);
@@ -38,10 +38,10 @@ CPassDefault::CPassDefault(CRenderSolution* pRenderSolution)
 		m_ptrRenderPass->Create();
 
 		for (int indexFrame = 0; indexFrame < CGfxSwapChain::SWAPCHAIN_FRAME_COUNT; indexFrame++) {
-			m_ptrFrameBuffer[indexFrame] = GfxRenderer()->NewFrameBuffer(m_pRenderSolution->GetPresentTexture(indexFrame)->GetWidth(), m_pRenderSolution->GetPresentTexture(indexFrame)->GetHeight(), numAttachments);
+			m_ptrFrameBuffer[indexFrame] = GfxRenderer()->NewFrameBuffer(m_pRenderSolution->GetPresentColorTexture(indexFrame)->GetWidth(), m_pRenderSolution->GetPresentColorTexture(indexFrame)->GetHeight(), numAttachments);
 			{
-				m_ptrFrameBuffer[indexFrame]->SetAttachmentTexture(0, m_pRenderSolution->GetPresentTexture(indexFrame));
-				m_ptrFrameBuffer[indexFrame]->SetAttachmentTexture(1, m_pRenderSolution->GetDepthStencilTexture(indexFrame));
+				m_ptrFrameBuffer[indexFrame]->SetAttachmentTexture(0, m_pRenderSolution->GetPresentColorTexture(indexFrame));
+				m_ptrFrameBuffer[indexFrame]->SetAttachmentTexture(1, m_pRenderSolution->GetPresentDepthStencilTexture(indexFrame));
 			}
 			m_ptrFrameBuffer[indexFrame]->Create(m_ptrRenderPass);
 		}
@@ -55,9 +55,9 @@ CPassDefault::CPassDefault(CRenderSolution* pRenderSolution)
 
 		m_ptrRenderPassMSAA = GfxRenderer()->NewRenderPass(HashValue("DefaultMSAA"), numAttachments, numSubpasses);
 		{
-			m_ptrRenderPassMSAA->SetColorAttachment(0, m_pRenderSolution->GetPresentTexture(0)->GetFormat(), m_pRenderSolution->GetPresentTexture(0)->GetSamples(), true, false, false, 0.2f, 0.2f, 0.2f, 0.0f);
-			m_ptrRenderPassMSAA->SetColorAttachment(1, m_pRenderSolution->GetColorTextureMSAA(0)->GetFormat(), m_pRenderSolution->GetColorTextureMSAA(0)->GetSamples(), false, false, true, 0.2f, 0.2f, 0.2f, 0.0f);
-			m_ptrRenderPassMSAA->SetDepthStencilAttachment(2, m_pRenderSolution->GetDepthStencilTextureMSAA(0)->GetFormat(), m_pRenderSolution->GetDepthStencilTextureMSAA(0)->GetSamples(), true, true, 1.0f, 0);
+			m_ptrRenderPassMSAA->SetColorAttachment(0, m_pRenderSolution->GetPresentColorTexture(0)->GetFormat(), m_pRenderSolution->GetPresentColorTexture(0)->GetSamples(), true, false, false, 0.2f, 0.2f, 0.2f, 0.0f);
+			m_ptrRenderPassMSAA->SetColorAttachment(1, m_pRenderSolution->GetPresentColorTextureMSAA(0)->GetFormat(), m_pRenderSolution->GetPresentColorTextureMSAA(0)->GetSamples(), false, false, true, 0.2f, 0.2f, 0.2f, 0.0f);
+			m_ptrRenderPassMSAA->SetDepthStencilAttachment(2, m_pRenderSolution->GetPresentDepthStencilTextureMSAA(0)->GetFormat(), m_pRenderSolution->GetPresentDepthStencilTextureMSAA(0)->GetSamples(), true, true, 1.0f, 0);
 
 			m_ptrRenderPassMSAA->SetSubpassResolveReference(0, 0);
 			m_ptrRenderPassMSAA->SetSubpassOutputColorReference(0, 1);
@@ -66,11 +66,11 @@ CPassDefault::CPassDefault(CRenderSolution* pRenderSolution)
 		m_ptrRenderPassMSAA->Create();
 
 		for (int indexFrame = 0; indexFrame < CGfxSwapChain::SWAPCHAIN_FRAME_COUNT; indexFrame++) {
-			m_ptrFrameBufferMSAA[indexFrame] = GfxRenderer()->NewFrameBuffer(m_pRenderSolution->GetPresentTexture(indexFrame)->GetWidth(), m_pRenderSolution->GetPresentTexture(indexFrame)->GetHeight(), numAttachments);
+			m_ptrFrameBufferMSAA[indexFrame] = GfxRenderer()->NewFrameBuffer(m_pRenderSolution->GetPresentColorTexture(indexFrame)->GetWidth(), m_pRenderSolution->GetPresentColorTexture(indexFrame)->GetHeight(), numAttachments);
 			{
-				m_ptrFrameBufferMSAA[indexFrame]->SetAttachmentTexture(0, m_pRenderSolution->GetPresentTexture(indexFrame));
-				m_ptrFrameBufferMSAA[indexFrame]->SetAttachmentTexture(1, m_pRenderSolution->GetColorTextureMSAA(indexFrame));
-				m_ptrFrameBufferMSAA[indexFrame]->SetAttachmentTexture(2, m_pRenderSolution->GetDepthStencilTextureMSAA(indexFrame));
+				m_ptrFrameBufferMSAA[indexFrame]->SetAttachmentTexture(0, m_pRenderSolution->GetPresentColorTexture(indexFrame));
+				m_ptrFrameBufferMSAA[indexFrame]->SetAttachmentTexture(1, m_pRenderSolution->GetPresentColorTextureMSAA(indexFrame));
+				m_ptrFrameBufferMSAA[indexFrame]->SetAttachmentTexture(2, m_pRenderSolution->GetPresentDepthStencilTextureMSAA(indexFrame));
 			}
 			m_ptrFrameBufferMSAA[indexFrame]->Create(m_ptrRenderPassMSAA);
 		}
@@ -96,9 +96,9 @@ void CPassDefault::Render(int indexQueue, bool bMSAA)
 
 	const CGfxRenderPassPtr ptrRenderPass = bMSAA ? m_ptrRenderPassMSAA : m_ptrRenderPass;
 	const CGfxFrameBufferPtr ptrFrameBuffer = bMSAA ? m_ptrFrameBufferMSAA[indexFrame] : m_ptrFrameBuffer[indexFrame];
-	const CGfxRenderTexturePtr ptrPresentTexture = bMSAA ? m_pRenderSolution->GetPresentTexture(indexFrame) : m_pRenderSolution->GetPresentTexture(indexFrame);
-	const CGfxRenderTexturePtr ptrColorTexture = bMSAA ? m_pRenderSolution->GetColorTextureMSAA(indexFrame) : m_pRenderSolution->GetPresentTexture(indexFrame);
-	const CGfxRenderTexturePtr ptrDepthStencilTexture = bMSAA ? m_pRenderSolution->GetDepthStencilTextureMSAA(indexFrame) : m_pRenderSolution->GetDepthStencilTexture(indexFrame);
+	const CGfxRenderTexturePtr ptrPresentTexture = bMSAA ? m_pRenderSolution->GetPresentColorTexture(indexFrame) : m_pRenderSolution->GetPresentColorTexture(indexFrame);
+	const CGfxRenderTexturePtr ptrPresentColorTexture = bMSAA ? m_pRenderSolution->GetPresentColorTextureMSAA(indexFrame) : m_pRenderSolution->GetPresentColorTexture(indexFrame);
+	const CGfxRenderTexturePtr ptrPresentDepthStencilTexture = bMSAA ? m_pRenderSolution->GetPresentDepthStencilTextureMSAA(indexFrame) : m_pRenderSolution->GetPresentDepthStencilTexture(indexFrame);
 
 	const CGfxCommandBufferPtr ptrMainCommandBuffer = m_ptrMainCommandBuffer[indexFrame];
 	{
@@ -107,12 +107,12 @@ void CPassDefault::Render(int indexQueue, bool bMSAA)
 		{
 			if (bMSAA) {
 				GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, ptrPresentTexture, GFX_IMAGE_LAYOUT_PRESENT_SRC_OPTIMAL);
-				GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, ptrColorTexture, GFX_IMAGE_LAYOUT_GENERAL);
-				GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, ptrDepthStencilTexture, GFX_IMAGE_LAYOUT_GENERAL);
+				GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, ptrPresentColorTexture, GFX_IMAGE_LAYOUT_GENERAL);
+				GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, ptrPresentDepthStencilTexture, GFX_IMAGE_LAYOUT_GENERAL);
 			}
 			else {
 				GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, ptrPresentTexture, GFX_IMAGE_LAYOUT_PRESENT_SRC_OPTIMAL);
-				GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, ptrDepthStencilTexture, GFX_IMAGE_LAYOUT_GENERAL);
+				GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, ptrPresentDepthStencilTexture, GFX_IMAGE_LAYOUT_GENERAL);
 			}
 
 			GfxRenderer()->CmdBeginRenderPass(ptrMainCommandBuffer, ptrFrameBuffer, ptrRenderPass);

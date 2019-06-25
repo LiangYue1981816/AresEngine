@@ -32,18 +32,16 @@ CPassShadow::CPassShadow(CRenderSolution* pRenderSolution)
 
 		m_ptrRenderPass = GfxRenderer()->NewRenderPass(HashValue("Shadow"), numAttachments, numSubpasses);
 		{
-			m_ptrRenderPass->SetDepthStencilAttachment(0, m_pRenderSolution->GetShadowMapTexture(0)->GetFormat(), m_pRenderSolution->GetShadowMapTexture(0)->GetSamples(), false, true, 1.0f, 0);
+			m_ptrRenderPass->SetDepthStencilAttachment(0, m_pRenderSolution->GetShadowMapTexture()->GetFormat(), m_pRenderSolution->GetShadowMapTexture()->GetSamples(), false, true, 1.0f, 0);
 			m_ptrRenderPass->SetSubpassOutputDepthStencilReference(0, 0);
 		}
 		m_ptrRenderPass->Create();
 
-		for (int indexFrame = 0; indexFrame < CGfxSwapChain::SWAPCHAIN_FRAME_COUNT; indexFrame++) {
-			m_ptrFrameBuffer[indexFrame] = GfxRenderer()->NewFrameBuffer(m_pRenderSolution->GetShadowMapTexture(indexFrame)->GetWidth(), m_pRenderSolution->GetShadowMapTexture(indexFrame)->GetHeight(), numAttachments);
-			{
-				m_ptrFrameBuffer[indexFrame]->SetAttachmentTexture(0, m_pRenderSolution->GetShadowMapTexture(indexFrame));
-			}
-			m_ptrFrameBuffer[indexFrame]->Create(m_ptrRenderPass);
+		m_ptrFrameBuffer = GfxRenderer()->NewFrameBuffer(m_pRenderSolution->GetShadowMapTexture()->GetWidth(), m_pRenderSolution->GetShadowMapTexture()->GetHeight(), numAttachments);
+		{
+			m_ptrFrameBuffer->SetAttachmentTexture(0, m_pRenderSolution->GetShadowMapTexture());
 		}
+		m_ptrFrameBuffer->Create(m_ptrRenderPass);
 	}
 }
 
@@ -96,7 +94,7 @@ void CPassShadow::Update(void)
 
 		float zNear = -100.0f;
 		float zFar = 100.0f;
-		float resolution = m_pRenderSolution->GetShadowMapTexture(0)->GetWidth();
+		float resolution = m_pRenderSolution->GetShadowMapTexture()->GetWidth();
 		glm::sphere sphereFrustum = glm::sphere(minVertex, maxVertex);
 
 		m_pRenderSolution->GetShadowCameraUniform(indexFrustum)->SetOrtho(-sphereFrustum.radius, sphereFrustum.radius, -sphereFrustum.radius, sphereFrustum.radius, zNear, zFar);
@@ -114,8 +112,8 @@ void CPassShadow::Render(int indexQueue)
 	const int indexFrame = GfxRenderer()->GetSwapChain()->GetFrameIndex();
 
 	const CGfxRenderPassPtr ptrRenderPass = m_ptrRenderPass;
-	const CGfxFrameBufferPtr ptrFrameBuffer = m_ptrFrameBuffer[indexFrame];
-	const CGfxRenderTexturePtr ptrShadowMapTexture = m_pRenderSolution->GetShadowMapTexture(indexFrame);
+	const CGfxFrameBufferPtr ptrFrameBuffer = m_ptrFrameBuffer;
+	const CGfxRenderTexturePtr ptrShadowMapTexture = m_pRenderSolution->GetShadowMapTexture();
 
 	const CGfxCommandBufferPtr ptrMainCommandBuffer = m_ptrMainCommandBuffer[indexFrame];
 	{
@@ -126,18 +124,18 @@ void CPassShadow::Render(int indexQueue)
 
 			GfxRenderer()->CmdBeginRenderPass(ptrMainCommandBuffer, ptrFrameBuffer, ptrRenderPass);
 			{
-				static const glm::vec4 area[4] = {
-					{ 0.0f, 0.0f, 0.5f, 0.5f },
-					{ 0.5f, 0.0f, 0.5f, 0.5f },
-					{ 0.0f, 0.5f, 0.5f, 0.5f },
-					{ 0.5f, 0.5f, 0.5f, 0.5f },
+				const float w = ptrShadowMapTexture->GetWidth();
+				const float h = ptrShadowMapTexture->GetHeight();
+
+				const glm::vec4 area[4] = {
+					glm::vec4(0.0f, 0.0f, 0.5f, 0.5f) * glm::vec4(w, h, w, h),
+					glm::vec4(0.5f, 0.0f, 0.5f, 0.5f) * glm::vec4(w, h, w, h),
+					glm::vec4(0.0f, 0.5f, 0.5f, 0.5f) * glm::vec4(w, h, w, h),
+					glm::vec4(0.5f, 0.5f, 0.5f, 0.5f) * glm::vec4(w, h, w, h),
 				};
 
 				for (int indexLevel = 0; indexLevel < 4; indexLevel++) {
-					float w = m_pRenderSolution->GetShadowMapTexture(indexLevel)->GetWidth();
-					float h = m_pRenderSolution->GetShadowMapTexture(indexLevel)->GetHeight();
-					glm::vec4 scale = { w, h, w, h };
-					m_pRenderSolution->GetMainCameraQueue()->CmdDraw(indexQueue, ptrMainCommandBuffer, m_ptrDescriptorSetShadowPass[indexLevel], SHADOW_PASS_NAME, area[indexLevel] * scale, area[indexLevel] * scale, 0xffffffff);
+					m_pRenderSolution->GetMainCameraQueue()->CmdDraw(indexQueue, ptrMainCommandBuffer, m_ptrDescriptorSetShadowPass[indexLevel], SHADOW_PASS_NAME, area[indexLevel], area[indexLevel], 0xffffffff);
 				}
 			}
 			GfxRenderer()->CmdEndRenderPass(ptrMainCommandBuffer);
