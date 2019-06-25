@@ -16,7 +16,9 @@ precision mediump float;
 layout (location = 0) out highp   vec3 outPosition;
 layout (location = 1) out mediump vec2 outTexcoord;
 #ifdef NORMAL_MAP
-layout (location = 2) out mediump mat3 outTBN;
+layout (location = 2) out mediump vec3 outTangent;
+layout (location = 3) out mediump vec3 outBinormal;
+layout (location = 4) out mediump vec3 outNormal;
 #else
 layout (location = 2) out mediump vec3 outNormal;
 #endif
@@ -26,25 +28,23 @@ void main()
 {
 	highp mat4 worldMatrix = mat4(inInstanceTransformMatrixCol0, inInstanceTransformMatrixCol1, inInstanceTransformMatrixCol2, inInstanceTransformMatrixCol3);
 	highp vec3 worldPosition = (worldMatrix * vec4(inPosition.xyz, 1.0)).xyz;
-	mediump vec3 worldNormal = normalize((worldMatrix * vec4(inNormal, 0.0f)).xyz);
 
 #ifdef NORMAL_MAP
-	mediump vec3 worldBinormal = (worldMatrix * vec4(inBinormal, 0.0f)).xyz;
-	worldBinormal = normalize(worldBinormal);
+	mediump vec3 worldNormal = normalize((worldMatrix * vec4(inNormal, 0.0f)).xyz);
+	mediump vec3 worldBinormal = normalize((worldMatrix * vec4(inBinormal, 0.0f)).xyz);
+	mediump vec3 worldTangent = cross(worldBinormal, worldNormal);
+	worldBinormal = cross(worldNormal, worldTangent);
 
-	mediump vec3 t = cross(worldBinormal, worldNormal);
-	mediump vec3 b = cross(worldNormal, t);
-	mediump mat3 tbn = mat3(t, b, worldNormal);
+	outTangent = worldTangent;
+	outBinormal = worldBinormal;
+	outNormal = worldNormal;
+#else
+	mediump vec3 worldNormal = normalize((worldMatrix * vec4(inNormal, 0.0f)).xyz);
+	outNormal = worldNormal;
 #endif
 
 	outPosition = worldPosition;
 	outTexcoord = inTexcoord0;
-
-#ifdef NORMAL_MAP
-	outTBN = tbn;
-#else
-	outNormal = worldNormal;
-#endif
 
 	gl_Position = cameraProjectionViewMatrix * vec4(worldPosition, 1.0);
 }
@@ -63,7 +63,9 @@ layout (location = 0) out mediump vec4 outFragColor;
 layout (location = 0) in highp   vec3 inPosition;
 layout (location = 1) in mediump vec2 inTexcoord;
 #ifdef NORMAL_MAP
-layout (location = 2) in mediump mat3 inTBN;
+layout (location = 2) in mediump vec3 inTangent;
+layout (location = 3) in mediump vec3 inBinormal;
+layout (location = 4) in mediump vec3 inNormal;
 #else
 layout (location = 2) in mediump vec3 inNormal;
 #endif
@@ -95,7 +97,7 @@ void main()
 	mediump vec3 worldHalfDirection = normalize(mainDirectLightDirection + worldViewDirection);
 
 #ifdef NORMAL_MAP
-	mediump vec3 worldNormal = normalize(inTBN * (texture(texNormal, inTexcoord).rgb * vec3(2.0) - vec3(1.0)));
+	mediump vec3 worldNormal = normalize(mat3(inTangent, inBinormal, inNormal) * (texture(texNormal, inTexcoord).rgb * vec3(2.0) - vec3(1.0)));
 #else
 	mediump vec3 worldNormal = inNormal;
 #endif
