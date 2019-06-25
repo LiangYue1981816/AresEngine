@@ -127,7 +127,7 @@ void CPassDefault::Render(int indexQueue, bool bMSAA, const CGfxSemaphore* pWait
 			}
 			GfxRenderer()->CmdEndRenderPass(ptrMainCommandBuffer);
 		}
-		GfxRenderer()->EndRecord(ptrMainCommandBuffer, pWaitSemaphore);
+		GfxRenderer()->EndRecord(ptrMainCommandBuffer);
 	}
-	GfxRenderer()->Submit(ptrMainCommandBuffer);
+	GfxRenderer()->Submit(ptrMainCommandBuffer, pWaitSemaphore);
 }

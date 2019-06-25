@@ -45,35 +45,39 @@ void CRenderSolution::RenderDefault(int indexQueue)
 {
 	GfxRenderer()->AcquireNextFrame();
 	{
-		m_pPassDefault->Render(indexQueue, m_bEnableMSAA);
+		m_pPassDefault->Render(indexQueue, m_bEnableMSAA, GfxRenderer()->GetSwapChain()->GetAcquireSemaphore());
 	}
-	GfxRenderer()->Present();
+	GfxRenderer()->Present(m_pPassDefault->GetSemaphore());
 }
 
 void CRenderSolution::RenderForward(int indexQueue)
 {
 	GfxRenderer()->AcquireNextFrame();
 	{
-		m_pPassShadow->Render(indexQueue);
-		m_pPassForwardLighting->Render(indexQueue, m_bEnableMSAA);
+		m_pPassShadow->Render(indexQueue, GfxRenderer()->GetSwapChain()->GetAcquireSemaphore());
+		m_pPassForwardLighting->Render(indexQueue, m_bEnableMSAA, m_pPassShadow->GetSemaphore());
 	}
-	GfxRenderer()->Present();
+	GfxRenderer()->Present(m_pPassForwardLighting->GetSemaphore());
 }
 
 void CRenderSolution::RenderDeferred(int indexQueue)
 {
+	/*
 	GfxRenderer()->AcquireNextFrame();
 	{
 
 	}
 	GfxRenderer()->Present();
+	*/
 }
 
 void CRenderSolution::RenderTiledBaseDeferred(int indexQueue)
 {
+	/*
 	GfxRenderer()->AcquireNextFrame();
 	{
 
 	}
 	GfxRenderer()->Present();
+	*/
 }
