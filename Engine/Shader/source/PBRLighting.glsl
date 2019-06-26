@@ -92,6 +92,8 @@ void main()
 		discard;
 #endif
 
+	mediump vec3 albedoColor = Gamma2Linear(albedo.rgb);
+
 	highp vec3 worldCameraPosition = (cameraViewInverseMatrix * vec4(0.0, 0.0, 0.0, 1.0)).xyz;
 	mediump vec3 worldViewDirection = normalize(worldCameraPosition - inPosition);
 	mediump vec3 worldHalfDirection = normalize(mainDirectLightDirection + worldViewDirection);
@@ -114,6 +116,13 @@ void main()
 	mediump float specular = 1.0;
 	mediump float ao = 1.0;
 #endif
+
+#ifdef ENV_MAP
+	mediump vec3 envSpecularColor = EnvSpecularColor(worldNormal, worldViewDirection, roughness, texEnv, 8.0) * envLightFactor;
+#else
+	mediump vec3 envSpecularColor = albedoColor * envLightFactor;
+#endif
+
 	mediump float shadow = 1.0;
 
 	mediump vec3 pointLightDirection = mainPointLightPosition - inPosition;
@@ -121,16 +130,10 @@ void main()
 	pointLightDirection = normalize(pointLightDirection);
 
 	mediump vec3 aoColor = vec3(ao);
-	mediump vec3 albedoColor = Gamma2Linear(albedo.rgb);
 	mediump vec3 ambientLightingColor = AmbientSH9(worldNormal, albedoColor, metallic) * ambientLightFactor;
-	mediump vec3 pointLightingColor = PbrLighting(worldNormal, worldViewDirection, worldHalfDirection, pointLightDirection, pointLightColor, albedoColor, metallic, roughness) * pointLightFactor;
-	mediump vec3 directLightingColor = PbrLighting(worldNormal, worldViewDirection, worldHalfDirection, mainDirectLightDirection, mainDirectLightColor, albedoColor, metallic, roughness) * directLightFactor;
-#ifdef ENV_MAP
-	mediump vec3 envLightingColor = EnvLighting(worldNormal, worldViewDirection, albedoColor, texEnv, 8.0, metallic, roughness) * envLightFactor;
-#else
-	mediump vec3 envLightingColor = EnvLighting(worldNormal, worldViewDirection, albedoColor, ambientLightingColor, metallic, roughness) * envLightFactor;
-#endif
-	mediump vec3 finalLighting = aoColor * (ambientLightingColor + pointLightingColor + directLightingColor * shadow + envLightingColor);
+	mediump vec3 pointLightingColor = PBRLighting(worldNormal, worldViewDirection, worldHalfDirection, pointLightDirection, pointLightColor, albedoColor, envSpecularColor, metallic, roughness) * pointLightFactor;
+	mediump vec3 directLightingColor = PBRLighting(worldNormal, worldViewDirection, worldHalfDirection, mainDirectLightDirection, mainDirectLightColor, albedoColor, envSpecularColor, metallic, roughness) * directLightFactor;
+	mediump vec3 finalLighting = aoColor * (ambientLightingColor + pointLightingColor + directLightingColor * shadow);
 
 	finalLighting = ToneMapping(finalLighting);
 	finalLighting = Linear2Gamma(finalLighting);
