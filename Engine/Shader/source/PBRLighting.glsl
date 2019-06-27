@@ -117,12 +117,6 @@ void main()
 	mediump float ao = 1.0;
 #endif
 
-#ifdef ENV_MAP
-	mediump vec3 envLightingColor = EnvLighting(worldNormal, worldViewDirection, roughness, texEnv, 8.0) * envLightFactor;
-#else
-	mediump vec3 envLightingColor = vec3(0.0);
-#endif
-
 	mediump float shadow = 1.0;
 
 	mediump vec3 pointLightDirection = mainPointLightPosition - inPosition;
@@ -133,7 +127,12 @@ void main()
 	mediump vec3 ambientLightingColor = AmbientSH9(worldNormal, albedoColor, metallic) * ambientLightFactor;
 	mediump vec3 pointLightingColor = PBRLighting(worldNormal, worldViewDirection, worldHalfDirection, pointLightDirection, pointLightColor, albedoColor, metallic, roughness) * pointLightFactor;
 	mediump vec3 directLightingColor = PBRLighting(worldNormal, worldViewDirection, worldHalfDirection, mainDirectLightDirection, mainDirectLightColor, albedoColor, metallic, roughness) * directLightFactor;
-	mediump vec3 finalLighting = aoColor * (ambientLightingColor + pointLightingColor + directLightingColor * shadow);
+#ifdef ENV_MAP
+	mediump vec3 envLightingColor = EnvLighting(worldNormal, worldViewDirection, albedoColor, metallic, roughness, texEnv, 8.0) * envLightFactor;
+#else
+	mediump vec3 envLightingColor = vec3(0.0);
+#endif
+	mediump vec3 finalLighting = aoColor * (ambientLightingColor + pointLightingColor + directLightingColor * shadow + envLightingColor);
 
 	finalLighting = ToneMapping(finalLighting);
 	finalLighting = Linear2Gamma(finalLighting);
