@@ -131,8 +131,8 @@ void main()
 
 	mediump vec3 aoColor = vec3(ao);
 	mediump vec3 ambientLightingColor = AmbientSH9(worldNormal, albedoColor, metallic) * ambientLightFactor;
-	mediump vec3 pointLightingColor = PBRLighting(worldNormal, worldViewDirection, worldHalfDirection, pointLightDirection, pointLightColor, albedoColor, envSpecularColor, metallic, roughness) * pointLightFactor;
-	mediump vec3 directLightingColor = PBRLighting(worldNormal, worldViewDirection, worldHalfDirection, mainDirectLightDirection, mainDirectLightColor, albedoColor, envSpecularColor, metallic, roughness) * directLightFactor;
+	mediump vec3 pointLightingColor = PBRLighting(worldNormal, worldViewDirection, worldHalfDirection, pointLightDirection, pointLightColor, albedoColor, metallic, roughness) * pointLightFactor;
+	mediump vec3 directLightingColor = PBRLighting(worldNormal, worldViewDirection, worldHalfDirection, mainDirectLightDirection, mainDirectLightColor, albedoColor, metallic, roughness) * directLightFactor;
 	mediump vec3 finalLighting = aoColor * (ambientLightingColor + pointLightingColor + directLightingColor * shadow);
 
 	finalLighting = ToneMapping(finalLighting);

@@ -173,7 +173,7 @@ vec3 AmbientSH9(vec3 normal, vec3 albedoColor, float metallic)
 	return Ambient_SH9(albedoColor, metallic, (engine.ambientLightRotationMatrix * vec4(normal, 0.0)).xyz, engine.ambientLightRed0.xyz, engine.ambientLightRed1.xyz, engine.ambientLightRed2.xyz, engine.ambientLightGreen0.xyz, engine.ambientLightGreen1.xyz, engine.ambientLightGreen2.xyz, engine.ambientLightBlue0.xyz, engine.ambientLightBlue1.xyz, engine.ambientLightBlue2.xyz);
 }
 
-vec3 PBRLighting(vec3 normal, vec3 viewDirection, vec3 halfDirection, vec3 lightDirection, vec3 lightColor, vec3 albedoColor, vec3 specularColor, float metallic, float roughness)
+vec3 PBRLighting(vec3 normal, vec3 viewDirection, vec3 halfDirection, vec3 lightDirection, vec3 lightColor, vec3 albedoColor, float metallic, float roughness)
 {
 	float ndh = max(dot(normal, halfDirection), 0.0);
 	float ndv = max(dot(normal, viewDirection), 0.0);
@@ -182,11 +182,11 @@ vec3 PBRLighting(vec3 normal, vec3 viewDirection, vec3 halfDirection, vec3 light
 #ifdef FAST_LIGHTING
 	float D = D_GGX(ndh, roughness);
 	float G = G_SchlickSmithGGX(ndv, ndl, roughness);
-	vec3  F = F_SchlickFast(ndv, metallic, specularColor);
+	vec3  F = F_SchlickFast(ndv, metallic, albedoColor);
 #else
 	float D = D_GGX(ndh, roughness);
 	float G = G_SchlickSmithGGX(ndv, ndl, roughness);
-	vec3  F = F_Schlick(ndv, metallic, specularColor);
+	vec3  F = F_Schlick(ndv, metallic, albedoColor);
 #endif
 
 	vec3 factor = vec3(1.0 - metallic);
