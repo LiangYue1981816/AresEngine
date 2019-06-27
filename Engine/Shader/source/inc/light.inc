@@ -171,13 +171,13 @@ vec3 AmbientSH9(vec3 normal, vec3 albedoColor, float metallic)
 	return Ambient_SH9(albedoColor, metallic, (engine.ambientLightRotationMatrix * vec4(normal, 0.0)).xyz, engine.ambientLightRed0.xyz, engine.ambientLightRed1.xyz, engine.ambientLightRed2.xyz, engine.ambientLightGreen0.xyz, engine.ambientLightGreen1.xyz, engine.ambientLightGreen2.xyz, engine.ambientLightBlue0.xyz, engine.ambientLightBlue1.xyz, engine.ambientLightBlue2.xyz);
 }
 
-void Fresnel(vec3 normal, vec3 viewDirection, vec3 albedoColor, float metallic)
+vec3 Fresnel(vec3 normal, vec3 viewDirection, vec3 albedoColor, float metallic)
 {
 	float ndv = max(dot(normal, viewDirection), 0.0);
 	return F_Schlick(ndv, metallic, albedoColor);
 }
 
-vec3 PBRLighting(vec3 normal, vec3 viewDirection, vec3 halfDirection, vec3 lightDirection, vec3 lightColor, vec3 albedoColor, float metallic, float roughness)
+vec3 PBRLighting(vec3 normal, vec3 viewDirection, vec3 halfDirection, vec3 lightDirection, vec3 lightColor, vec3 albedoColor, vec3 fresnel, float metallic, float roughness)
 {
 	float ndh = max(dot(normal, halfDirection), 0.0);
 	float ndv = max(dot(normal, viewDirection), 0.0);
@@ -185,7 +185,7 @@ vec3 PBRLighting(vec3 normal, vec3 viewDirection, vec3 halfDirection, vec3 light
 
 	float D = D_GGX(ndh, roughness);
 	float G = G_SchlickSmithGGX(ndv, ndl, roughness);
-	vec3  F = F_Schlick(ndv, metallic, albedoColor);
+	vec3  F = fresnel;
 
 	vec3 factor = vec3(1.0 - metallic) * (vec3(1.0) - F);
 	vec3 diffuse = Diffuse_Lambert(albedoColor) * factor;
@@ -194,25 +194,24 @@ vec3 PBRLighting(vec3 normal, vec3 viewDirection, vec3 halfDirection, vec3 light
 	return (diffuse + specular) * ndl * lightColor;
 }
 
-vec3 EnvLighting(vec3 normal, vec3 viewDirection, vec3 albedoColor, vec3 envColor, float metallic, float roughness)
+vec3 EnvLighting(vec3 normal, vec3 viewDirection, vec3 envColor, vec3 fresnel, float roughness)
 {
 	float ndv = max(dot(normal, viewDirection), 0.0);
-	vec3  F = F_Schlick(ndv, metallic, albedoColor);
-	return Env_Specular(F, ndv, roughness) * envColor;
+	return Env_Specular(fresnel, ndv, roughness) * envColor;
 }
 
-vec3 EnvLighting(vec3 normal, vec3 viewDirection, vec3 albedoColor, float metallic, float roughness, sampler2D env, float maxLods)
+vec3 EnvLighting(vec3 normal, vec3 viewDirection, vec3 fresnel, float roughness, sampler2D env, float maxLods)
 {
 	vec3 R = reflect(-viewDirection, normal);
 	vec3 envColor = Gamma2Linear(textureLod(env, SphericalSampleing(R), roughness * maxLods).rgb);
-	return EnvLighting(normal, viewDirection, albedoColor, envColor, metallic, roughness);
+	return EnvLighting(normal, viewDirection, envColor, fresnel, roughness);
 }
 
-vec3 EnvLighting(vec3 normal, vec3 viewDirection, vec3 albedoColor, float metallic, float roughness, samplerCube env, float maxLods)
+vec3 EnvLighting(vec3 normal, vec3 viewDirection, vec3 fresnel, float roughness, samplerCube env, float maxLods)
 {
 	vec3 R = reflect(-viewDirection, normal);
 	vec3 envColor = Gamma2Linear(textureLod(env, R, roughness * maxLods).rgb);
-	return EnvLighting(normal, viewDirection, albedoColor, envColor, metallic, roughness);
+	return EnvLighting(normal, viewDirection, envColor, fresnel, roughness);
 }
 
 float LightingAttenuation(float dis)
