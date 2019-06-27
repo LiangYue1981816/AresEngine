@@ -129,29 +129,19 @@ float G_SchlickSmithGGX(float ndv, float ndl, float roughness)
 
 vec3 F_Schlick(float ndv, float metallic, vec3 albedo)
 {
-	vec3 F0 = mix(vec3(0.04), albedo, metallic);
-	return F0 + (1.0 - F0) * pow(1.0 - ndv, 5.0);
-}
-
-vec3 F_SchlickFast(float ndv, float metallic, vec3 albedo)
-{
+#ifdef FAST_LIGHTING
 	vec3 F0 = mix(vec3(0.04), albedo, metallic);
 	float F1 = clamp(1.0 - ndv * 1.5, 0.0, 1.0);
 	return F0 + (1.0 - F0) * F1 * F1 * F1;
+#else
+	vec3 F0 = mix(vec3(0.04), albedo, metallic);
+	return F0 + (1.0 - F0) * pow(1.0 - ndv, 5.0);
+#endif
 }
 
 vec3 Env_Specular(vec3 specularColor, float ndv, float roughness)
 {
-	vec4 c0 = vec4(-1.0, -0.0275, -0.572, 0.022);
-	vec4 c1 = vec4( 1.0,  0.0425,  1.04, -0.04 );
-	vec4 r = roughness * c0 + c1;
-	float a004 = min(r.x * r.x, exp2(-9.28 * ndv)) * r.x + r.y;
-	vec2 AB = vec2(-1.04, 1.04) * a004 + r.zw;
-	return specularColor * AB.x + AB.y;
-}
-
-vec3 Env_SpecularFast(vec3 specularColor, float ndv, float roughness)
-{
+#ifdef FAST_LIGHTING
 	vec4 c0 = vec4(-1.0, -0.0275, -0.572, 0.022);
 	vec4 c1 = vec4( 1.0,  0.0425,  1.04, -0.04 );
 	vec4 r = roughness * c0 + c1;
@@ -159,6 +149,14 @@ vec3 Env_SpecularFast(vec3 specularColor, float ndv, float roughness)
 	float a004 = min(r.x * r.x, a001 * a001 * a001) * r.x + r.y;
 	vec2 AB = vec2(-1.04, 1.04) * a004 + r.zw;
 	return specularColor * AB.x + AB.y;
+#else
+	vec4 c0 = vec4(-1.0, -0.0275, -0.572, 0.022);
+	vec4 c1 = vec4( 1.0,  0.0425,  1.04, -0.04 );
+	vec4 r = roughness * c0 + c1;
+	float a004 = min(r.x * r.x, exp2(-9.28 * ndv)) * r.x + r.y;
+	vec2 AB = vec2(-1.04, 1.04) * a004 + r.zw;
+	return specularColor * AB.x + AB.y;
+#endif
 }
 
 
@@ -179,15 +177,9 @@ vec3 PBRLighting(vec3 normal, vec3 viewDirection, vec3 halfDirection, vec3 light
 	float ndv = max(dot(normal, viewDirection), 0.0);
 	float ndl = max(dot(normal, lightDirection), 0.0);
 
-#ifdef FAST_LIGHTING
-	float D = D_GGX(ndh, roughness);
-	float G = G_SchlickSmithGGX(ndv, ndl, roughness);
-	vec3  F = F_SchlickFast(ndv, metallic, albedoColor);
-#else
 	float D = D_GGX(ndh, roughness);
 	float G = G_SchlickSmithGGX(ndv, ndl, roughness);
 	vec3  F = F_Schlick(ndv, metallic, albedoColor);
-#endif
 
 	vec3 factor = vec3(1.0 - metallic) * (vec3(1.0) - F);
 	vec3 diffuse = Diffuse_Lambert(albedoColor) * factor;
