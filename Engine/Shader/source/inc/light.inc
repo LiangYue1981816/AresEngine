@@ -188,16 +188,24 @@ vec3 PBRLighting(vec3 normal, vec3 viewDirection, vec3 halfDirection, vec3 light
 	return (diffuse + specular) * ndl * lightColor;
 }
 
-vec3 EnvSpecularColor(vec3 normal, vec3 viewDirection, float roughness, sampler2D env, float maxLods)
+vec3 EnvLighting(vec3 normal, vec3 viewDirection, vec3 envColor, float roughness)
 {
-	vec3 R = reflect(-viewDirection, normal);
-	return Gamma2Linear(textureLod(env, SphericalSampleing(R), roughness * maxLods).rgb);
+	float ndv = max(dot(normal, viewDirection), 0.0);
+	return Env_Specular(envColor, ndv, roughness);
 }
 
-vec3 EnvSpecularColor(vec3 normal, vec3 viewDirection, float roughness, samplerCube env, float maxLods)
+vec3 EnvLighting(vec3 normal, vec3 viewDirection, float roughness, sampler2D env, float maxLods)
 {
 	vec3 R = reflect(-viewDirection, normal);
-	return Gamma2Linear(textureLod(env, R, roughness * maxLods).rgb);
+	vec3 envColor = Gamma2Linear(textureLod(env, SphericalSampleing(R), roughness * maxLods).rgb);
+	return EnvLighting(normal, viewDirection, envColor, roughness);
+}
+
+vec3 EnvLighting(vec3 normal, vec3 viewDirection, float roughness, samplerCube env, float maxLods)
+{
+	vec3 R = reflect(-viewDirection, normal);
+	vec3 envColor = Gamma2Linear(textureLod(env, R, roughness * maxLods).rgb);
+	return EnvLighting(normal, viewDirection, envColor, roughness);
 }
 
 float LightingAttenuation(float dis)

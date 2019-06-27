@@ -118,9 +118,9 @@ void main()
 #endif
 
 #ifdef ENV_MAP
-	mediump vec3 envSpecularColor = EnvSpecularColor(worldNormal, worldViewDirection, roughness, texEnv, 8.0) * envLightFactor;
+	mediump vec3 envLightingColor = EnvLighting(worldNormal, worldViewDirection, roughness, texEnv, 8.0) * envLightFactor;
 #else
-	mediump vec3 envSpecularColor = albedoColor * envLightFactor;
+	mediump vec3 envLightingColor = vec3(0.0);
 #endif
 
 	mediump float shadow = 1.0;
