@@ -189,7 +189,7 @@ vec3 PBRLighting(vec3 normal, vec3 viewDirection, vec3 halfDirection, vec3 light
 	vec3  F = F_Schlick(ndv, metallic, albedoColor);
 #endif
 
-	vec3 factor = vec3(1.0 - metallic);
+	vec3 factor = vec3(1.0 - metallic) * (vec3(1.0) - F);
 	vec3 diffuse = Diffuse_Lambert(albedoColor) * factor;
 	vec3 specular = D * F * G;
 
