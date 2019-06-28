@@ -124,12 +124,11 @@ void main()
 	pointLightDirection = normalize(pointLightDirection);
 
 	mediump vec3 fresnel = Fresnel(worldNormal, worldViewDirection, albedoColor, metallic);
-	mediump vec3 fresnelRoughness = FresnelRoughness(worldNormal, worldViewDirection, albedoColor, metallic, roughness);
-
-	mediump vec3 ambientLighting = AmbientSH9(worldNormal, albedoColor, fresnelRoughness, metallic) * ambientLightFactor;
+	mediump vec3 ambientLighting = AmbientSH9(worldNormal, albedoColor, fresnel, metallic) * ambientLightFactor;
 	mediump vec3 pointLighting = PBRLighting(worldNormal, worldViewDirection, worldHalfDirection, pointLightDirection, pointLightColor, albedoColor, fresnel, metallic, roughness) * pointLightFactor;
 	mediump vec3 directLighting = PBRLighting(worldNormal, worldViewDirection, worldHalfDirection, mainDirectLightDirection, mainDirectLightColor, albedoColor, fresnel, metallic, roughness) * directLightFactor;
 #ifdef ENV_MAP
+	mediump vec3 fresnelRoughness = FresnelRoughness(worldNormal, worldViewDirection, albedoColor, metallic, roughness);
 	mediump vec3 envLighting = EnvLighting(worldNormal, worldViewDirection, fresnelRoughness, roughness, texEnv, 8.0) * envLightFactor;
 #else
 	mediump vec3 envLighting = vec3(0.0);
