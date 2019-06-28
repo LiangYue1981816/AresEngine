@@ -60,7 +60,7 @@ vec3 Linear2Gamma(vec3 linear)
 
 
 // Lighting Functions
-vec3 Ambient_SH4(vec3 albedoColor, vec3 fresnel, float metallic, vec3 normal, vec4 shRed, vec4 shGreen, vec4 shBlue)
+vec3 Ambient_SH4(vec3 albedoColor, vec3 normal, vec3 fresnel, float metallic, vec4 shRed, vec4 shGreen, vec4 shBlue)
 {
 	float factor = 1.0;
 	float x = normal.x;
@@ -73,7 +73,7 @@ vec3 Ambient_SH4(vec3 albedoColor, vec3 fresnel, float metallic, vec3 normal, ve
 	return vec3(1.0 - metallic) * (vec3(1.0) - fresnel) * diffuse * albedoColor / PI;
 }
 
-vec3 Ambient_SH9(vec3 albedoColor, vec3 fresnel, float metallic, vec3 normal, vec3 shRed0, vec3 shRed1, vec3 shRed2, vec3 shGreen0, vec3 shGreen1, vec3 shGreen2, vec3 shBlue0, vec3 shBlue1, vec3 shBlue2)
+vec3 Ambient_SH9(vec3 albedoColor, vec3 normal, vec3 fresnel, float metallic, vec3 shRed0, vec3 shRed1, vec3 shRed2, vec3 shGreen0, vec3 shGreen1, vec3 shGreen2, vec3 shBlue0, vec3 shBlue1, vec3 shBlue2)
 {
 	float factor = 1.0;
 	float x = normal.x;
@@ -127,15 +127,27 @@ float G_SchlickSmithGGX(float ndv, float ndl, float roughness)
 	return 0.25 / (ggx1 * ggx2);
 }
 
-vec3 F_Schlick(float ndv, float metallic, vec3 albedo)
+vec3 F_Schlick(vec3 specularColor, float ndv, float metallic)
 {
 #ifdef FAST_LIGHTING
-	vec3 F0 = mix(vec3(0.04), albedo, metallic);
+	vec3 F0 = mix(vec3(0.04), specularColor, metallic);
 	float F1 = clamp(1.0 - ndv * 1.5, 0.0, 1.0);
 	return F0 + (1.0 - F0) * F1 * F1 * F1;
 #else
-	vec3 F0 = mix(vec3(0.04), albedo, metallic);
+	vec3 F0 = mix(vec3(0.04), specularColor, metallic);
 	return F0 + (1.0 - F0) * pow(1.0 - ndv, 5.0);
+#endif
+}
+
+vec3 F_SchlickRoughness(vec3 specularColor, float ndv, float metallic, float roughness)
+{
+#ifdef FAST_LIGHTING
+	vec3 F0 = mix(vec3(0.04), specularColor, metallic);
+	float F1 = clamp(1.0 - ndv * 1.5, 0.0, 1.0);
+	return F0 + (max(vec3(1.0 - roughness), F0) - F0) * F1 * F1 * F1;
+#else
+	vec3 F0 = mix(vec3(0.04), specularColor, metallic);
+	return F0 + (max(vec3(1.0 - roughness), F0) - F0) * pow(1.0 - ndv, 5.0);
 #endif
 }
 
@@ -161,20 +173,26 @@ vec3 Env_Specular(vec3 specularColor, float ndv, float roughness)
 
 
 // BRDF Functions
-vec3 AmbientSH4(vec3 normal, vec3 albedoColor, vec3 fresnel, float metallic)
+vec3 AmbientSH4(vec3 albedoColor, vec3 normal, vec3 fresnel, float metallic)
 {
-	return Ambient_SH4(albedoColor, fresnel, metallic, (engine.ambientLightRotationMatrix * vec4(normal, 0.0)).xyz, engine.ambientLightRed0, engine.ambientLightGreen0, engine.ambientLightBlue0);
+	return Ambient_SH4(albedoColor, (engine.ambientLightRotationMatrix * vec4(normal, 0.0)).xyz, fresnel, metallic, engine.ambientLightRed0, engine.ambientLightGreen0, engine.ambientLightBlue0);
 }
 
-vec3 AmbientSH9(vec3 normal, vec3 albedoColor, vec3 fresnel, float metallic)
+vec3 AmbientSH9(vec3 albedoColor, vec3 normal, vec3 fresnel, float metallic)
 {
-	return Ambient_SH9(albedoColor, fresnel, metallic, (engine.ambientLightRotationMatrix * vec4(normal, 0.0)).xyz, engine.ambientLightRed0.xyz, engine.ambientLightRed1.xyz, engine.ambientLightRed2.xyz, engine.ambientLightGreen0.xyz, engine.ambientLightGreen1.xyz, engine.ambientLightGreen2.xyz, engine.ambientLightBlue0.xyz, engine.ambientLightBlue1.xyz, engine.ambientLightBlue2.xyz);
+	return Ambient_SH9(albedoColor, (engine.ambientLightRotationMatrix * vec4(normal, 0.0)).xyz, fresnel, metallic, engine.ambientLightRed0.xyz, engine.ambientLightRed1.xyz, engine.ambientLightRed2.xyz, engine.ambientLightGreen0.xyz, engine.ambientLightGreen1.xyz, engine.ambientLightGreen2.xyz, engine.ambientLightBlue0.xyz, engine.ambientLightBlue1.xyz, engine.ambientLightBlue2.xyz);
 }
 
-vec3 Fresnel(vec3 normal, vec3 viewDirection, vec3 albedoColor, float metallic)
+vec3 Fresnel(vec3 normal, vec3 viewDirection, vec3 specularColor, float metallic)
 {
 	float ndv = max(dot(normal, viewDirection), 0.0);
-	return F_Schlick(ndv, metallic, albedoColor);
+	return F_Schlick(specularColor, ndv, metallic);
+}
+
+vec3 FresnelRoughness(vec3 normal, vec3 viewDirection, vec3 specularColor, float metallic, float roughness)
+{
+	float ndv = max(dot(normal, viewDirection), 0.0);
+	return F_SchlickRoughness(specularColor, ndv, metallic, roughness);
 }
 
 vec3 PBRLighting(vec3 normal, vec3 viewDirection, vec3 halfDirection, vec3 lightDirection, vec3 lightColor, vec3 albedoColor, vec3 fresnel, float metallic, float roughness)
