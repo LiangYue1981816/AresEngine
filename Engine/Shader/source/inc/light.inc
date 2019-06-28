@@ -88,9 +88,9 @@ vec3 Ambient_SH9(vec3 normal, vec3 albedo, vec3 fresnel, float metallic, vec3 sh
 	return vec3(1.0 - metallic) * (vec3(1.0) - fresnel) * diffuse * albedo / PI;
 }
 
-vec3 Diffuse_Lambert(vec3 albedoColor)
+vec3 Diffuse_Lambert(vec3 albedo)
 {
-	return albedoColor / PI;
+	return albedo / PI;
 }
 
 float D_GGX(float ndh, float roughness)
@@ -127,31 +127,31 @@ float G_SchlickSmithGGX(float ndv, float ndl, float roughness)
 	return 0.25 / (ggx1 * ggx2);
 }
 
-vec3 F_Schlick(vec3 specularColor, float ndv, float metallic)
+vec3 F_Schlick(vec3 specular, float ndv, float metallic)
 {
 #ifdef FAST_LIGHTING
-	vec3 F0 = mix(vec3(0.04), specularColor, metallic);
+	vec3 F0 = mix(vec3(0.04), specular, metallic);
 	float F1 = clamp(1.0 - ndv * 1.5, 0.0, 1.0);
 	return F0 + (1.0 - F0) * F1 * F1 * F1;
 #else
-	vec3 F0 = mix(vec3(0.04), specularColor, metallic);
+	vec3 F0 = mix(vec3(0.04), specular, metallic);
 	return F0 + (1.0 - F0) * pow(1.0 - ndv, 5.0);
 #endif
 }
 
-vec3 F_SchlickRoughness(vec3 specularColor, float ndv, float metallic, float roughness)
+vec3 F_SchlickRoughness(vec3 specular, float ndv, float metallic, float roughness)
 {
 #ifdef FAST_LIGHTING
-	vec3 F0 = mix(vec3(0.04), specularColor, metallic);
+	vec3 F0 = mix(vec3(0.04), specular, metallic);
 	float F1 = clamp(1.0 - ndv * 1.5, 0.0, 1.0);
 	return F0 + (max(vec3(1.0 - roughness), F0) - F0) * F1 * F1 * F1;
 #else
-	vec3 F0 = mix(vec3(0.04), specularColor, metallic);
+	vec3 F0 = mix(vec3(0.04), specular, metallic);
 	return F0 + (max(vec3(1.0 - roughness), F0) - F0) * pow(1.0 - ndv, 5.0);
 #endif
 }
 
-vec3 Env_Specular(vec3 specularColor, float ndv, float roughness)
+vec3 Env_Specular(vec3 specular, float ndv, float roughness)
 {
 #ifdef FAST_LIGHTING
 	vec4 c0 = vec4(-1.0, -0.0275, -0.572, 0.022);
@@ -160,14 +160,14 @@ vec3 Env_Specular(vec3 specularColor, float ndv, float roughness)
 	float a001 = clamp(0.3 / (ndv + 0.3), 0.0, 1.0);
 	float a004 = min(r.x * r.x, a001 * a001 * a001) * r.x + r.y;
 	vec2 AB = vec2(-1.04, 1.04) * a004 + r.zw;
-	return specularColor * AB.x + AB.y;
+	return specular * AB.x + AB.y;
 #else
 	vec4 c0 = vec4(-1.0, -0.0275, -0.572, 0.022);
 	vec4 c1 = vec4( 1.0,  0.0425,  1.04, -0.04 );
 	vec4 r = roughness * c0 + c1;
 	float a004 = min(r.x * r.x, exp2(-9.28 * ndv)) * r.x + r.y;
 	vec2 AB = vec2(-1.04, 1.04) * a004 + r.zw;
-	return specularColor * AB.x + AB.y;
+	return specular * AB.x + AB.y;
 #endif
 }
 
@@ -183,19 +183,19 @@ vec3 AmbientSH9(vec3 normal, vec3 albedo, vec3 fresnel, float metallic)
 	return Ambient_SH9((engine.ambientLightRotationMatrix * vec4(normal, 0.0)).xyz, albedo, fresnel, metallic, engine.ambientLightRed0.xyz, engine.ambientLightRed1.xyz, engine.ambientLightRed2.xyz, engine.ambientLightGreen0.xyz, engine.ambientLightGreen1.xyz, engine.ambientLightGreen2.xyz, engine.ambientLightBlue0.xyz, engine.ambientLightBlue1.xyz, engine.ambientLightBlue2.xyz);
 }
 
-vec3 Fresnel(vec3 normal, vec3 viewDirection, vec3 specularColor, float metallic)
+vec3 Fresnel(vec3 normal, vec3 viewDirection, vec3 specular, float metallic)
 {
 	float ndv = max(dot(normal, viewDirection), 0.0);
-	return F_Schlick(specularColor, ndv, metallic);
+	return F_Schlick(specular, ndv, metallic);
 }
 
-vec3 FresnelRoughness(vec3 normal, vec3 viewDirection, vec3 specularColor, float metallic, float roughness)
+vec3 FresnelRoughness(vec3 normal, vec3 viewDirection, vec3 specular, float metallic, float roughness)
 {
 	float ndv = max(dot(normal, viewDirection), 0.0);
-	return F_SchlickRoughness(specularColor, ndv, metallic, roughness);
+	return F_SchlickRoughness(specular, ndv, metallic, roughness);
 }
 
-vec3 PBRLighting(vec3 normal, vec3 viewDirection, vec3 halfDirection, vec3 lightDirection, vec3 lightColor, vec3 albedoColor, vec3 fresnel, float metallic, float roughness)
+vec3 PBRLighting(vec3 normal, vec3 viewDirection, vec3 halfDirection, vec3 lightDirection, vec3 lightColor, vec3 albedo, vec3 fresnel, float metallic, float roughness)
 {
 	float ndh = max(dot(normal, halfDirection), 0.0);
 	float ndv = max(dot(normal, viewDirection), 0.0);
@@ -205,30 +205,30 @@ vec3 PBRLighting(vec3 normal, vec3 viewDirection, vec3 halfDirection, vec3 light
 	float G = G_SchlickSmithGGX(ndv, ndl, roughness);
 	vec3  F = fresnel;
 
-	vec3 diffuseColor = Diffuse_Lambert(albedoColor) * vec3(1.0 - metallic) * (vec3(1.0) - F);
-	vec3 specularColor = D * F * G;
+	vec3 diffuse = Diffuse_Lambert(albedo) * vec3(1.0 - metallic) * (vec3(1.0) - F);
+	vec3 specular = D * F * G;
 
-	return (diffuseColor + specularColor) * ndl * lightColor;
+	return (diffuse + specular) * ndl * lightColor;
 }
 
-vec3 EnvLighting(vec3 normal, vec3 viewDirection, vec3 envColor, vec3 fresnel, float roughness)
+vec3 EnvLighting(vec3 normal, vec3 viewDirection, vec3 env, vec3 fresnel, float roughness)
 {
 	float ndv = max(dot(normal, viewDirection), 0.0);
-	return Env_Specular(fresnel, ndv, roughness) * envColor;
+	return Env_Specular(fresnel, ndv, roughness) * env;
 }
 
-vec3 EnvLighting(vec3 normal, vec3 viewDirection, vec3 fresnel, float roughness, sampler2D env, float maxLods)
+vec3 EnvLighting(vec3 normal, vec3 viewDirection, vec3 fresnel, float roughness, sampler2D texEnv, float maxLods)
 {
 	vec3 R = reflect(-viewDirection, normal);
-	vec3 envColor = Gamma2Linear(textureLod(env, SphericalSampleing(R), roughness * maxLods).rgb);
-	return EnvLighting(normal, viewDirection, envColor, fresnel, roughness);
+	vec3 env = Gamma2Linear(textureLod(texEnv, SphericalSampleing(R), roughness * maxLods).rgb);
+	return EnvLighting(normal, viewDirection, env, fresnel, roughness);
 }
 
-vec3 EnvLighting(vec3 normal, vec3 viewDirection, vec3 fresnel, float roughness, samplerCube env, float maxLods)
+vec3 EnvLighting(vec3 normal, vec3 viewDirection, vec3 fresnel, float roughness, samplerCube texEnv, float maxLods)
 {
 	vec3 R = reflect(-viewDirection, normal);
-	vec3 envColor = Gamma2Linear(textureLod(env, R, roughness * maxLods).rgb);
-	return EnvLighting(normal, viewDirection, envColor, fresnel, roughness);
+	vec3 env = Gamma2Linear(textureLod(texEnv, R, roughness * maxLods).rgb);
+	return EnvLighting(normal, viewDirection, env, fresnel, roughness);
 }
 
 float LightingAttenuation(float dis)
