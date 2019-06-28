@@ -60,7 +60,7 @@ vec3 Linear2Gamma(vec3 linear)
 
 
 // Lighting Functions
-vec3 Ambient_SH4(vec3 albedoColor, float metallic, vec3 normal, vec4 shRed, vec4 shGreen, vec4 shBlue)
+vec3 Ambient_SH4(vec3 albedoColor, vec3 fresnel, float metallic, vec3 normal, vec4 shRed, vec4 shGreen, vec4 shBlue)
 {
 	float factor = 1.0;
 	float x = normal.x;
@@ -70,10 +70,10 @@ vec3 Ambient_SH4(vec3 albedoColor, float metallic, vec3 normal, vec4 shRed, vec4
 	vec4 basis = vec4(1.0, factor * y, factor * z, factor * x);
 	vec3 diffuse = vec3(dot(basis, shRed), dot(basis, shGreen), dot(basis, shBlue));
 
-	return (1.0 - metallic) * diffuse * albedoColor / PI;
+	return vec3(1.0 - metallic) * (vec3(1.0) - fresnel) * diffuse * albedoColor / PI;
 }
 
-vec3 Ambient_SH9(vec3 albedoColor, float metallic, vec3 normal, vec3 shRed0, vec3 shRed1, vec3 shRed2, vec3 shGreen0, vec3 shGreen1, vec3 shGreen2, vec3 shBlue0, vec3 shBlue1, vec3 shBlue2)
+vec3 Ambient_SH9(vec3 albedoColor, vec3 fresnel, float metallic, vec3 normal, vec3 shRed0, vec3 shRed1, vec3 shRed2, vec3 shGreen0, vec3 shGreen1, vec3 shGreen2, vec3 shBlue0, vec3 shBlue1, vec3 shBlue2)
 {
 	float factor = 1.0;
 	float x = normal.x;
@@ -85,7 +85,7 @@ vec3 Ambient_SH9(vec3 albedoColor, float metallic, vec3 normal, vec3 shRed0, vec
 	vec3 basis2 = vec3(z * z * 3.0f - 1.0f, x * z, x * x - y * y);
 	vec3 diffuse = basis0 * mat3(shRed0, shGreen0, shBlue0) + basis1 * mat3(shRed1, shGreen1, shBlue1) + basis2 * mat3(shRed2, shGreen2, shBlue2);
 
-	return (1.0 - metallic) * diffuse * albedoColor / PI;
+	return vec3(1.0 - metallic) * (vec3(1.0) - fresnel) * diffuse * albedoColor / PI;
 }
 
 vec3 Diffuse_Lambert(vec3 albedoColor)
@@ -161,14 +161,14 @@ vec3 Env_Specular(vec3 specularColor, float ndv, float roughness)
 
 
 // BRDF Functions
-vec3 AmbientSH4(vec3 normal, vec3 albedoColor, float metallic)
+vec3 AmbientSH4(vec3 normal, vec3 albedoColor, vec3 fresnel, float metallic)
 {
-	return Ambient_SH4(albedoColor, metallic, (engine.ambientLightRotationMatrix * vec4(normal, 0.0)).xyz, engine.ambientLightRed0, engine.ambientLightGreen0, engine.ambientLightBlue0);
+	return Ambient_SH4(albedoColor, fresnel, metallic, (engine.ambientLightRotationMatrix * vec4(normal, 0.0)).xyz, engine.ambientLightRed0, engine.ambientLightGreen0, engine.ambientLightBlue0);
 }
 
-vec3 AmbientSH9(vec3 normal, vec3 albedoColor, float metallic)
+vec3 AmbientSH9(vec3 normal, vec3 albedoColor, vec3 fresnel, float metallic)
 {
-	return Ambient_SH9(albedoColor, metallic, (engine.ambientLightRotationMatrix * vec4(normal, 0.0)).xyz, engine.ambientLightRed0.xyz, engine.ambientLightRed1.xyz, engine.ambientLightRed2.xyz, engine.ambientLightGreen0.xyz, engine.ambientLightGreen1.xyz, engine.ambientLightGreen2.xyz, engine.ambientLightBlue0.xyz, engine.ambientLightBlue1.xyz, engine.ambientLightBlue2.xyz);
+	return Ambient_SH9(albedoColor, fresnel, metallic, (engine.ambientLightRotationMatrix * vec4(normal, 0.0)).xyz, engine.ambientLightRed0.xyz, engine.ambientLightRed1.xyz, engine.ambientLightRed2.xyz, engine.ambientLightGreen0.xyz, engine.ambientLightGreen1.xyz, engine.ambientLightGreen2.xyz, engine.ambientLightBlue0.xyz, engine.ambientLightBlue1.xyz, engine.ambientLightBlue2.xyz);
 }
 
 vec3 Fresnel(vec3 normal, vec3 viewDirection, vec3 albedoColor, float metallic)

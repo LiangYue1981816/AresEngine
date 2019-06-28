@@ -125,7 +125,7 @@ void main()
 
 	mediump vec3 aoColor = vec3(ao);
 	mediump vec3 fresnel = Fresnel(worldNormal, worldViewDirection, albedoColor, metallic);
-	mediump vec3 ambientLightingColor = AmbientSH9(worldNormal, albedoColor, metallic) * ambientLightFactor;
+	mediump vec3 ambientLightingColor = AmbientSH9(worldNormal, albedoColor, fresnel, metallic) * ambientLightFactor;
 	mediump vec3 pointLightingColor = PBRLighting(worldNormal, worldViewDirection, worldHalfDirection, pointLightDirection, pointLightColor, albedoColor, fresnel, metallic, roughness) * pointLightFactor;
 	mediump vec3 directLightingColor = PBRLighting(worldNormal, worldViewDirection, worldHalfDirection, mainDirectLightDirection, mainDirectLightColor, albedoColor, fresnel, metallic, roughness) * directLightFactor;
 #ifdef ENV_MAP
