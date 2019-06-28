@@ -187,11 +187,10 @@ vec3 PBRLighting(vec3 normal, vec3 viewDirection, vec3 halfDirection, vec3 light
 	float G = G_SchlickSmithGGX(ndv, ndl, roughness);
 	vec3  F = fresnel;
 
-	vec3 factor = vec3(1.0 - metallic) * (vec3(1.0) - F);
-	vec3 diffuse = Diffuse_Lambert(albedoColor) * factor;
-	vec3 specular = D * F * G;
+	vec3 diffuseColor = Diffuse_Lambert(albedoColor) * vec3(1.0 - metallic) * (vec3(1.0) - F);
+	vec3 specularColor = D * F * G;
 
-	return (diffuse + specular) * ndl * lightColor;
+	return (diffuseColor + specularColor) * ndl * lightColor;
 }
 
 vec3 EnvLighting(vec3 normal, vec3 viewDirection, vec3 envColor, vec3 fresnel, float roughness)
