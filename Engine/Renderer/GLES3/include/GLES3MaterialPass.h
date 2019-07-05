@@ -15,7 +15,7 @@ private:
 public:
 	const CGfxDescriptorSetPtr GetDescriptorSet(void) const;
 
-public:
+private:
 	bool CopyFrom(const CGfxMaterialPass* pPass);
 
 public:

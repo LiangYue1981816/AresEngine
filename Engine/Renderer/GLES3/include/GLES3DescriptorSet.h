@@ -13,7 +13,7 @@ private:
 	virtual void Release(void);
 
 
-public:
+private:
 	bool CopyFrom(const CGfxDescriptorSet* pDescriptorSet);
 
 public:

@@ -21,7 +21,7 @@ private:
 private:
 	CVKDescriptorPool* GetDescriptorPool(void) const;
 
-public:
+private:
 	bool CopyFrom(const CGfxDescriptorSet* pDescriptorSet);
 
 public:
