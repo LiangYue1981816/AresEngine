@@ -48,6 +48,18 @@ CGLES3DescriptorSet* CGLES3DescriptorSetManager::Create(uint32_t name, const CGf
 	}
 }
 
+CGLES3DescriptorSet* CGLES3DescriptorSetManager::Create(uint32_t name, const CGfxDescriptorSetPtr ptrDescriptorSetTemplate)
+{
+	mutex_autolock autolock(&lock);
+	{
+		if (m_pDescriptorSets[name] == nullptr) {
+			m_pDescriptorSets[name] = new CGLES3DescriptorSet(this, name, ptrDescriptorSetTemplate);
+		}
+
+		return m_pDescriptorSets[name];
+	}
+}
+
 CGLES3DescriptorSet* CGLES3DescriptorSetManager::Create(const CGfxPipelineGraphics* pPipelineGraphics, const CGfxFrameBuffer* pFrameBuffer, const CGfxRenderPass* pRenderPass, int indexSubpass)
 {
 	mutex_autolock autolock(&lock);

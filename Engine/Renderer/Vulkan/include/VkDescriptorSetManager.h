@@ -17,7 +17,9 @@ private:
 private:
 	CVKDescriptorSet* Get(uint32_t name);
 	CVKDescriptorSet* CreateInternal(CVKDescriptorPool** ppPoolListHead, uint32_t name, const CGfxDescriptorLayoutPtr ptrDescriptorLayout);
+	CVKDescriptorSet* CreateInternal(CVKDescriptorPool** ppPoolListHead, uint32_t name, const CGfxDescriptorSetPtr ptrDescriptorSetTemplate);
 	CVKDescriptorSet* Create(uint32_t name, const CGfxDescriptorLayoutPtr ptrDescriptorLayout);
+	CVKDescriptorSet* Create(uint32_t name, const CGfxDescriptorSetPtr ptrDescriptorSetTemplate);
 	CVKDescriptorSet* Create(const CGfxPipelineGraphics* pPipelineGraphics, const CGfxFrameBuffer* pFrameBuffer, const CGfxRenderPass* pRenderPass, int indexSubpass);
 	void Destroy(CVKDescriptorSet* pDescriptorSet);
 

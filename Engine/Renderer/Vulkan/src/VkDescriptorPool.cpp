@@ -118,6 +118,33 @@ CVKDescriptorSet* CVKDescriptorPool::AllocDescriptorSet(uint32_t name, const CGf
 	return pDescriptorSet;
 }
 
+CVKDescriptorSet* CVKDescriptorPool::AllocDescriptorSet(uint32_t name, const CGfxDescriptorSetPtr ptrDescriptorSetTemplate)
+{
+	ASSERT(m_vkDescriptorPool);
+	ASSERT(ptrDescriptorSetTemplate);
+
+	if (m_numSets == 0) {
+		return nullptr;
+	}
+
+	for (int indexType = 0; indexType < VK_DESCRIPTOR_TYPE_RANGE_SIZE; indexType++) {
+		if (m_numDescriptors[indexType] < ((CVKDescriptorLayout*)ptrDescriptorSetTemplate->GetDescriptorLayout().GetPointer())->GetNumDescriptors()[indexType]) {
+			return nullptr;
+		}
+	}
+
+	CVKDescriptorSet* pDescriptorSet = new CVKDescriptorSet(m_pDevice, this, name, ptrDescriptorSetTemplate);
+	m_pDescriptorSets[pDescriptorSet] = pDescriptorSet;
+
+	m_numSets -= 1;
+
+	for (int indexType = 0; indexType < VK_DESCRIPTOR_TYPE_RANGE_SIZE; indexType++) {
+		m_numDescriptors[indexType] -= ((CVKDescriptorLayout*)ptrDescriptorSetTemplate->GetDescriptorLayout().GetPointer())->GetNumDescriptors()[indexType];
+	}
+
+	return pDescriptorSet;
+}
+
 bool CVKDescriptorPool::FreeDescriptorSet(CVKDescriptorSet* pDescriptorSet)
 {
 	ASSERT(pDescriptorSet);

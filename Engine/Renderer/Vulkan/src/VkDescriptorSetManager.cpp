@@ -66,12 +66,47 @@ CVKDescriptorSet* CVKDescriptorSetManager::CreateInternal(CVKDescriptorPool** pp
 	} while (true);
 }
 
+CVKDescriptorSet* CVKDescriptorSetManager::CreateInternal(CVKDescriptorPool** ppPoolListHead, uint32_t name, const CGfxDescriptorSetPtr ptrDescriptorSetTemplate)
+{
+	do {
+		if (CVKDescriptorPool* pDescriptorPool = *ppPoolListHead) {
+			do {
+				if (CVKDescriptorSet* pDescriptorSet = pDescriptorPool->AllocDescriptorSet(name, ptrDescriptorSetTemplate)) {
+					return pDescriptorSet;
+				}
+			} while ((pDescriptorPool = pDescriptorPool->pNext) != nullptr);
+		}
+
+		CVKDescriptorPool* pDescriptorPool = new CVKDescriptorPool(m_pDevice, this);
+		{
+			if ((*ppPoolListHead) != nullptr) {
+				(*ppPoolListHead)->pPrev = pDescriptorPool;
+				pDescriptorPool->pNext = (*ppPoolListHead);
+			}
+
+			*ppPoolListHead = pDescriptorPool;
+		}
+	} while (true);
+}
+
 CVKDescriptorSet* CVKDescriptorSetManager::Create(uint32_t name, const CGfxDescriptorLayoutPtr ptrDescriptorLayout)
 {
 	mutex_autolock autolock(&lock);
 	{
 		if (m_pDescriptorSets[name] == nullptr) {
 			m_pDescriptorSets[name] = CreateInternal(&m_pPoolListHead, name, ptrDescriptorLayout);
+		}
+
+		return m_pDescriptorSets[name];
+	}
+}
+
+CVKDescriptorSet* CVKDescriptorSetManager::Create(uint32_t name, const CGfxDescriptorSetPtr ptrDescriptorSetTemplate)
+{
+	mutex_autolock autolock(&lock);
+	{
+		if (m_pDescriptorSets[name] == nullptr) {
+			m_pDescriptorSets[name] = CreateInternal(&m_pPoolListHead, name, ptrDescriptorSetTemplate);
 		}
 
 		return m_pDescriptorSets[name];
