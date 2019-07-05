@@ -12,6 +12,11 @@ CGfxUniformVec2::~CGfxUniformVec2(void)
 
 }
 
+const glm::vec2& CGfxUniformVec2::GetValue(void) const
+{
+	return m_value;
+}
+
 const CGfxUniformBufferPtr CGfxUniformVec2::GetUniformBuffer(void) const
 {
 	return m_ptrUniformBuffer;

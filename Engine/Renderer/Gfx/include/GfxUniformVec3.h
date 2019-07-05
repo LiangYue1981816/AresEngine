@@ -10,6 +10,7 @@ public:
 
 
 public:
+	const glm::vec3& GetValue(void) const;
 	const CGfxUniformBufferPtr GetUniformBuffer(void) const;
 
 public:

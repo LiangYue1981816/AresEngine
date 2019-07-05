@@ -12,6 +12,11 @@ CGfxUniformVec1::~CGfxUniformVec1(void)
 
 }
 
+const float CGfxUniformVec1::GetValue(void) const
+{
+	return m_value;
+}
+
 const CGfxUniformBufferPtr CGfxUniformVec1::GetUniformBuffer(void) const
 {
 	return m_ptrUniformBuffer;

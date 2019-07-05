@@ -12,6 +12,11 @@ CGfxUniformVec3::~CGfxUniformVec3(void)
 
 }
 
+const glm::vec3& CGfxUniformVec3::GetValue(void) const
+{
+	return m_value;
+}
+
 const CGfxUniformBufferPtr CGfxUniformVec3::GetUniformBuffer(void) const
 {
 	return m_ptrUniformBuffer;

@@ -10,6 +10,7 @@ public:
 
 
 public:
+	const float GetValue(void) const;
 	const CGfxUniformBufferPtr GetUniformBuffer(void) const;
 
 public:
