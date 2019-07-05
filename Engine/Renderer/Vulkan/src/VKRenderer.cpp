@@ -251,6 +251,11 @@ CGfxDescriptorSetPtr CVKRenderer::NewDescriptorSet(uint32_t name, const CGfxDesc
 	return m_pDescriptorSetManager->Create(name, ptrDescriptorLayout);
 }
 
+CGfxDescriptorSetPtr CVKRenderer::NewDescriptorSet(uint32_t name, const CGfxDescriptorSetPtr ptrDescriptorSetTemplate)
+{
+	return m_pDescriptorSetManager->Create(name, ptrDescriptorSetTemplate);
+}
+
 CGfxDescriptorSetPtr CVKRenderer::NewDescriptorSet(const CGfxPipelineGraphics* pPipelineGraphics, const CGfxFrameBuffer* pFrameBuffer, const CGfxRenderPass* pRenderPass, int indexSubpass)
 {
 	return m_pDescriptorSetManager->Create(pPipelineGraphics, pFrameBuffer, pRenderPass, indexSubpass);

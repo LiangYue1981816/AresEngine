@@ -17,7 +17,7 @@ CVKMaterialPass::CVKMaterialPass(CVKDevice* pDevice, uint32_t name, const CVKMat
 	m_pPipeline = ((CVKMaterialPass *)pPass)->m_pPipeline;
 	m_pSamplers = ((CVKMaterialPass *)pPass)->m_pSamplers;
 
-	m_ptrDescriptorSet = VKRenderer()->NewDescriptorSet(HashValueFormat("%p_%x", this, GetName()), m_pPipeline->GetDescriptorLayout(DESCRIPTOR_SET_MATPASS));
+	m_ptrDescriptorSet = VKRenderer()->NewDescriptorSet(HashValueFormat("%p_%x", this, GetName()), pPass->GetDescriptorSet());
 	{
 		for (const auto& itUniform : ((CVKMaterialPass *)pPass)->m_pUniformVec1s) {
 			m_pUniformVec1s[itUniform.first] = new CGfxUniformVec1;

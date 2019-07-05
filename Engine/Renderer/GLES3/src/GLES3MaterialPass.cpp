@@ -15,7 +15,7 @@ CGLES3MaterialPass::CGLES3MaterialPass(uint32_t name, const CGLES3MaterialPass* 
 	m_pPipeline = ((CGLES3MaterialPass *)pPass)->m_pPipeline;
 	m_pSamplers = ((CGLES3MaterialPass *)pPass)->m_pSamplers;
 
-	m_ptrDescriptorSet = GLES3Renderer()->NewDescriptorSet(HashValueFormat("%p_%x", this, GetName()), m_pPipeline->GetDescriptorLayout(DESCRIPTOR_SET_MATPASS));
+	m_ptrDescriptorSet = GLES3Renderer()->NewDescriptorSet(HashValueFormat("%p_%x", this, GetName()), pPass->GetDescriptorSet());
 	{
 		for (const auto& itUniform : ((CGLES3MaterialPass *)pPass)->m_pUniformVec1s) {
 			m_pUniformVec1s[itUniform.first] = new CGfxUniformVec1;

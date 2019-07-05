@@ -155,6 +155,7 @@ public:
 
 	virtual CGfxDescriptorSetPtr GetDescriptorSet(uint32_t name) = 0;
 	virtual CGfxDescriptorSetPtr NewDescriptorSet(uint32_t name, const CGfxDescriptorLayoutPtr ptrDescriptorLayout) = 0;
+	virtual CGfxDescriptorSetPtr NewDescriptorSet(uint32_t name, const CGfxDescriptorSetPtr ptrDescriptorSetTemplate) = 0;
 	virtual CGfxDescriptorSetPtr NewDescriptorSet(const CGfxPipelineGraphics* pPipelineGraphics, const CGfxFrameBuffer* pFrameBuffer, const CGfxRenderPass* pRenderPass, int indexSubpass) = 0;
 
 	virtual CGfxCommandBufferPtr NewCommandBuffer(uint32_t pool, bool bMainCommandBuffer) = 0;
