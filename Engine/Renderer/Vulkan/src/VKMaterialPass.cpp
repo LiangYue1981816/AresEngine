@@ -9,8 +9,8 @@ CVKMaterialPass::CVKMaterialPass(CVKDevice* pDevice, uint32_t name)
 
 }
 
-CVKMaterialPass::CVKMaterialPass(CVKDevice* pDevice, const CVKMaterialPass* pPass)
-	: CGfxMaterialPass(pPass->GetName())
+CVKMaterialPass::CVKMaterialPass(CVKDevice* pDevice, uint32_t name, const CVKMaterialPass* pPass)
+	: CGfxMaterialPass(name)
 	, m_pDevice(pDevice)
 	, m_pPipeline(nullptr)
 {

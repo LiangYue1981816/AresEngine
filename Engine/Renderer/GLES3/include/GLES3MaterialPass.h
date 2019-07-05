@@ -9,7 +9,7 @@ class CGLES3MaterialPass : public CGfxMaterialPass
 
 private:
 	CGLES3MaterialPass(uint32_t name);
-	CGLES3MaterialPass(const CGLES3MaterialPass* pPass);
+	CGLES3MaterialPass(uint32_t name, const CGLES3MaterialPass* pPass);
 	virtual ~CGLES3MaterialPass(void);
 
 

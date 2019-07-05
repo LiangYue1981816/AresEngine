@@ -8,8 +8,8 @@ CGLES3MaterialPass::CGLES3MaterialPass(uint32_t name)
 
 }
 
-CGLES3MaterialPass::CGLES3MaterialPass(const CGLES3MaterialPass* pPass)
-	: CGfxMaterialPass(pPass->GetName())
+CGLES3MaterialPass::CGLES3MaterialPass(uint32_t name, const CGLES3MaterialPass* pPass)
+	: CGfxMaterialPass(name)
 	, m_pPipeline(nullptr)
 {
 	m_pPipeline = ((CGLES3MaterialPass *)pPass)->m_pPipeline;
