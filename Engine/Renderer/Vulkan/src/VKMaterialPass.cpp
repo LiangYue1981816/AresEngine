@@ -11,23 +11,23 @@ CVKMaterialPass::CVKMaterialPass(CVKDevice* pDevice, uint32_t name)
 
 CVKMaterialPass::~CVKMaterialPass(void)
 {
-	for (auto& itUniform : m_pUniformVec1s) {
+	for (const auto& itUniform : m_pUniformVec1s) {
 		delete itUniform.second;
 	}
 
-	for (auto& itUniform : m_pUniformVec2s) {
+	for (const auto& itUniform : m_pUniformVec2s) {
 		delete itUniform.second;
 	}
 
-	for (auto& itUniform : m_pUniformVec3s) {
+	for (const auto& itUniform : m_pUniformVec3s) {
 		delete itUniform.second;
 	}
 
-	for (auto& itUniform : m_pUniformVec4s) {
+	for (const auto& itUniform : m_pUniformVec4s) {
 		delete itUniform.second;
 	}
 
-	for (auto& itUniform : m_pUniformMat4s) {
+	for (const auto& itUniform : m_pUniformMat4s) {
 		delete itUniform.second;
 	}
 }
