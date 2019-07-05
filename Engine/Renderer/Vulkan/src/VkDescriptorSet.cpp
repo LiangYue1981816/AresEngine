@@ -11,6 +11,40 @@ CVKDescriptorSet::CVKDescriptorSet(CVKDevice* pDevice, CVKDescriptorPool* pDescr
 	Create(ptrDescriptorLayout);
 }
 
+CVKDescriptorSet::CVKDescriptorSet(CVKDevice* pDevice, CVKDescriptorPool* pDescriptorPool, uint32_t name, const CGfxDescriptorSetPtr ptrDescriptorSet)
+	: CGfxDescriptorSet(name, ptrDescriptorSet->GetDescriptorLayout())
+	, m_pDevice(pDevice)
+	, m_pDescriptorPool(pDescriptorPool)
+
+	, m_vkDescriptorSet(VK_NULL_HANDLE)
+{
+	Create(ptrDescriptorSet->GetDescriptorLayout());
+
+	for (const auto& itImageDescriptorInfo : ((CVKDescriptorSet *)ptrDescriptorSet.GetPointer())->m_imageDescriptorInfos) {
+		if (itImageDescriptorInfo.second.ptrTexture2D) {
+			SetTexture2D(itImageDescriptorInfo.first, itImageDescriptorInfo.second.ptrTexture2D, itImageDescriptorInfo.second.pSampler);
+		}
+
+		if (itImageDescriptorInfo.second.ptrTexture2DArray) {
+			SetTexture2DArray(itImageDescriptorInfo.first, itImageDescriptorInfo.second.ptrTexture2DArray, itImageDescriptorInfo.second.pSampler);
+		}
+
+		if (itImageDescriptorInfo.second.ptrTextureCubemap) {
+			SetTextureCubemap(itImageDescriptorInfo.first, itImageDescriptorInfo.second.ptrTextureCubemap, itImageDescriptorInfo.second.pSampler);
+		}
+
+		if (itImageDescriptorInfo.second.ptrTextureInputAttachment) {
+			SetTextureInputAttachment(itImageDescriptorInfo.first, itImageDescriptorInfo.second.ptrTextureInputAttachment, itImageDescriptorInfo.second.pSampler);
+		}
+	}
+
+	for (const auto& itbufferDescriptorInfo : ((CVKDescriptorSet *)ptrDescriptorSet.GetPointer())->m_bufferDescriptorInfos) {
+		SetUniformBuffer(itbufferDescriptorInfo.first, itbufferDescriptorInfo.second.ptrUniformBuffer, itbufferDescriptorInfo.second.offset, itbufferDescriptorInfo.second.range);
+	}
+
+	Update();
+}
+
 CVKDescriptorSet::~CVKDescriptorSet(void)
 {
 	Destroy();
@@ -51,39 +85,6 @@ void CVKDescriptorSet::Destroy(void)
 CVKDescriptorPool* CVKDescriptorSet::GetDescriptorPool(void) const
 {
 	return m_pDescriptorPool;
-}
-
-bool CVKDescriptorSet::CopyFrom(const CGfxDescriptorSet* pDescriptorSet)
-{
-	ASSERT(pDescriptorSet);
-
-	if (m_ptrDescriptorLayout->IsCompatible(((CVKDescriptorSet *)pDescriptorSet)->m_ptrDescriptorLayout) == false) {
-		return false;
-	}
-
-	for (const auto& itImageDescriptorInfo : ((CVKDescriptorSet *)pDescriptorSet)->m_imageDescriptorInfos) {
-		if (itImageDescriptorInfo.second.ptrTexture2D) {
-			SetTexture2D(itImageDescriptorInfo.first, itImageDescriptorInfo.second.ptrTexture2D, itImageDescriptorInfo.second.pSampler);
-		}
-
-		if (itImageDescriptorInfo.second.ptrTexture2DArray) {
-			SetTexture2DArray(itImageDescriptorInfo.first, itImageDescriptorInfo.second.ptrTexture2DArray, itImageDescriptorInfo.second.pSampler);
-		}
-
-		if (itImageDescriptorInfo.second.ptrTextureCubemap) {
-			SetTextureCubemap(itImageDescriptorInfo.first, itImageDescriptorInfo.second.ptrTextureCubemap, itImageDescriptorInfo.second.pSampler);
-		}
-
-		if (itImageDescriptorInfo.second.ptrTextureInputAttachment) {
-			SetTextureInputAttachment(itImageDescriptorInfo.first, itImageDescriptorInfo.second.ptrTextureInputAttachment, itImageDescriptorInfo.second.pSampler);
-		}
-	}
-
-	for (const auto& itbufferDescriptorInfo : ((CVKDescriptorSet *)pDescriptorSet)->m_bufferDescriptorInfos) {
-		SetUniformBuffer(itbufferDescriptorInfo.first, itbufferDescriptorInfo.second.ptrUniformBuffer, itbufferDescriptorInfo.second.offset, itbufferDescriptorInfo.second.range);
-	}
-
-	return true;
 }
 
 bool CVKDescriptorSet::SetTexture2D(uint32_t name, const CGfxTexture2DPtr ptrTexture, const CGfxSampler* pSampler)

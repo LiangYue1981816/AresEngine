@@ -9,12 +9,10 @@ class CGLES3DescriptorSet : public CGfxDescriptorSet
 
 private:
 	CGLES3DescriptorSet(CGLES3DescriptorSetManager* pManager, uint32_t name, const CGfxDescriptorLayoutPtr ptrDescriptorLayout);
+	CGLES3DescriptorSet(CGLES3DescriptorSetManager* pManager, uint32_t name, const CGfxDescriptorSetPtr ptrDescriptorSet);
 	virtual ~CGLES3DescriptorSet(void);
 	virtual void Release(void);
 
-
-private:
-	bool CopyFrom(const CGfxDescriptorSet* pDescriptorSet);
 
 public:
 	bool SetTexture2D(uint32_t name, const CGfxTexture2DPtr ptrTexture, const CGfxSampler* pSampler);
