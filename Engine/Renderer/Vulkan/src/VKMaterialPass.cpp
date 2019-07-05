@@ -38,6 +38,11 @@ const CGfxDescriptorSetPtr CVKMaterialPass::GetDescriptorSet(void) const
 	return m_ptrDescriptorSet;
 }
 
+bool CVKMaterialPass::CopyFrom(const CGfxMaterialPass* pPass)
+{
+	return true;
+}
+
 bool CVKMaterialPass::SetPipeline(const CGfxRenderPass* pRenderPass, const CGfxShader* pVertexShader, const CGfxShader* pFragmentShader, const PipelineState& state, int indexSubpass, int vertexBinding, int instanceBinding)
 {
 	m_pPipeline = VKRenderer()->CreatePipelineGraphics(pRenderPass, pVertexShader, pFragmentShader, state, indexSubpass, vertexBinding, instanceBinding);

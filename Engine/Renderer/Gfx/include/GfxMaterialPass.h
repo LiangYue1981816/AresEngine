@@ -25,6 +25,9 @@ public:
 	virtual const CGfxDescriptorSetPtr GetDescriptorSet(void) const = 0;
 
 public:
+	virtual bool CopyFrom(const CGfxMaterialPass* pPass) = 0;
+
+public:
 	virtual bool SetPipeline(const CGfxRenderPass* pRenderPass, const CGfxShader* pVertexShader, const CGfxShader* pFragmentShader, const PipelineState& state, int indexSubpass, int vertexBinding, int instanceBinding) = 0;
 	virtual const CGfxPipelineGraphics* GetPipeline(void) const = 0;
 

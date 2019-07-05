@@ -23,7 +23,9 @@ bool CGLES3DescriptorSet::CopyFrom(const CGfxDescriptorSet* pDescriptorSet)
 {
 	ASSERT(pDescriptorSet);
 
-	m_ptrDescriptorLayout = ((CGLES3DescriptorSet *)pDescriptorSet)->m_ptrDescriptorLayout;
+	if (m_ptrDescriptorLayout->IsCompatible(((CGLES3DescriptorSet *)pDescriptorSet)->m_ptrDescriptorLayout) == false) {
+		return false;
+	}
 
 	for (const auto& itImageDescriptorInfo : ((CGLES3DescriptorSet *)pDescriptorSet)->m_imageDescriptorInfos) {
 		if (itImageDescriptorInfo.second.ptrTexture2D) {
@@ -46,8 +48,6 @@ bool CGLES3DescriptorSet::CopyFrom(const CGfxDescriptorSet* pDescriptorSet)
 	for (const auto& itbufferDescriptorInfo : ((CGLES3DescriptorSet *)pDescriptorSet)->m_bufferDescriptorInfos) {
 		SetUniformBuffer(itbufferDescriptorInfo.first, itbufferDescriptorInfo.second.ptrUniformBuffer, itbufferDescriptorInfo.second.offset, itbufferDescriptorInfo.second.range);
 	}
-
-	Update();
 
 	return true;
 }

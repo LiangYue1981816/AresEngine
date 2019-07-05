@@ -16,6 +16,9 @@ public:
 	const CGfxDescriptorSetPtr GetDescriptorSet(void) const;
 
 public:
+	bool CopyFrom(const CGfxMaterialPass* pPass);
+
+public:
 	bool SetPipeline(const CGfxRenderPass* pRenderPass, const CGfxShader* pVertexShader, const CGfxShader* pFragmentShader, const PipelineState& state, int indexSubpass, int vertexBinding, int instanceBinding);
 	const CGfxPipelineGraphics* GetPipeline(void) const;
 

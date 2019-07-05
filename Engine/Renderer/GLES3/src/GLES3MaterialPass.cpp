@@ -37,6 +37,11 @@ const CGfxDescriptorSetPtr CGLES3MaterialPass::GetDescriptorSet(void) const
 	return m_ptrDescriptorSet;
 }
 
+bool CGLES3MaterialPass::CopyFrom(const CGfxMaterialPass* pPass)
+{
+	return true;
+}
+
 bool CGLES3MaterialPass::SetPipeline(const CGfxRenderPass* pRenderPass, const CGfxShader* pVertexShader, const CGfxShader* pFragmentShader, const PipelineState& state, int indexSubpass, int vertexBinding, int instanceBinding)
 {
 	m_pPipeline = GLES3Renderer()->CreatePipelineGraphics(pRenderPass, pVertexShader, pFragmentShader, state, indexSubpass, vertexBinding, instanceBinding);
