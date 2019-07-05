@@ -42,8 +42,6 @@ CGLES3MaterialPass::CGLES3MaterialPass(const CGLES3MaterialPass* pPass)
 		}
 	}
 	m_ptrDescriptorSet->Update();
-
-	return true;
 }
 
 CGLES3MaterialPass::~CGLES3MaterialPass(void)

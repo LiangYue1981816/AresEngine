@@ -44,8 +44,6 @@ CVKMaterialPass::CVKMaterialPass(CVKDevice* pDevice, const CVKMaterialPass* pPas
 		}
 	}
 	m_ptrDescriptorSet->Update();
-
-	return true;
 }
 
 CVKMaterialPass::~CVKMaterialPass(void)
