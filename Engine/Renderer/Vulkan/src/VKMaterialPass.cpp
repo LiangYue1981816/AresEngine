@@ -9,35 +9,35 @@ CVKMaterialPass::CVKMaterialPass(CVKDevice* pDevice, uint32_t name)
 
 }
 
-CVKMaterialPass::CVKMaterialPass(CVKDevice* pDevice, uint32_t name, const CVKMaterialPass* pPass)
+CVKMaterialPass::CVKMaterialPass(CVKDevice* pDevice, uint32_t name, const CVKMaterialPass* pPassCopyFrom)
 	: CGfxMaterialPass(name)
 	, m_pDevice(pDevice)
 	, m_pPipeline(nullptr)
 {
-	m_pPipeline = ((CVKMaterialPass *)pPass)->m_pPipeline;
-	m_pSamplers = ((CVKMaterialPass *)pPass)->m_pSamplers;
+	m_pPipeline = ((CVKMaterialPass *)pPassCopyFrom)->m_pPipeline;
+	m_pSamplers = ((CVKMaterialPass *)pPassCopyFrom)->m_pSamplers;
 
-	m_ptrDescriptorSet = VKRenderer()->NewDescriptorSet(HashValueFormat("%p_%x", this, GetName()), pPass->GetDescriptorSet());
+	m_ptrDescriptorSet = VKRenderer()->NewDescriptorSet(HashValueFormat("%p_%x", this, GetName()), pPassCopyFrom->GetDescriptorSet());
 	{
-		for (const auto& itUniform : ((CVKMaterialPass *)pPass)->m_pUniformVec1s) {
+		for (const auto& itUniform : ((CVKMaterialPass *)pPassCopyFrom)->m_pUniformVec1s) {
 			m_pUniformVec1s[itUniform.first] = new CGfxUniformVec1;
 			m_pUniformVec1s[itUniform.first]->SetValue(itUniform.second->GetValue());
 			m_ptrDescriptorSet->SetUniformBuffer(itUniform.first, m_pUniformVec1s[itUniform.first]->GetUniformBuffer(), 0, m_pUniformVec1s[itUniform.first]->GetUniformBuffer()->GetSize());
 		}
 
-		for (const auto& itUniform : ((CVKMaterialPass *)pPass)->m_pUniformVec2s) {
+		for (const auto& itUniform : ((CVKMaterialPass *)pPassCopyFrom)->m_pUniformVec2s) {
 			m_pUniformVec2s[itUniform.first] = new CGfxUniformVec2;
 			m_pUniformVec2s[itUniform.first]->SetValue(itUniform.second->GetValue().x, itUniform.second->GetValue().y);
 			m_ptrDescriptorSet->SetUniformBuffer(itUniform.first, m_pUniformVec2s[itUniform.first]->GetUniformBuffer(), 0, m_pUniformVec2s[itUniform.first]->GetUniformBuffer()->GetSize());
 		}
 
-		for (const auto& itUniform : ((CVKMaterialPass *)pPass)->m_pUniformVec3s) {
+		for (const auto& itUniform : ((CVKMaterialPass *)pPassCopyFrom)->m_pUniformVec3s) {
 			m_pUniformVec3s[itUniform.first] = new CGfxUniformVec3;
 			m_pUniformVec3s[itUniform.first]->SetValue(itUniform.second->GetValue().x, itUniform.second->GetValue().y, itUniform.second->GetValue().z);
 			m_ptrDescriptorSet->SetUniformBuffer(itUniform.first, m_pUniformVec3s[itUniform.first]->GetUniformBuffer(), 0, m_pUniformVec3s[itUniform.first]->GetUniformBuffer()->GetSize());
 		}
 
-		for (const auto& itUniform : ((CVKMaterialPass *)pPass)->m_pUniformVec4s) {
+		for (const auto& itUniform : ((CVKMaterialPass *)pPassCopyFrom)->m_pUniformVec4s) {
 			m_pUniformVec4s[itUniform.first] = new CGfxUniformVec4;
 			m_pUniformVec4s[itUniform.first]->SetValue(itUniform.second->GetValue().x, itUniform.second->GetValue().y, itUniform.second->GetValue().z, itUniform.second->GetValue().w);
 			m_ptrDescriptorSet->SetUniformBuffer(itUniform.first, m_pUniformVec4s[itUniform.first]->GetUniformBuffer(), 0, m_pUniformVec4s[itUniform.first]->GetUniformBuffer()->GetSize());

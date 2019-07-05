@@ -41,6 +41,18 @@ CGLES3Material* CGLES3MaterialManager::Create(uint32_t name)
 	}
 }
 
+CGLES3Material* CGLES3MaterialManager::Create(uint32_t name, const CGfxMaterialPtr ptrMaterialCopyFrom)
+{
+	mutex_autolock autolock(&lock);
+	{
+		if (m_pMaterials[name] == nullptr) {
+			m_pMaterials[name] = new CGLES3Material(this, name, ptrMaterialCopyFrom);
+		}
+
+		return m_pMaterials[name];
+	}
+}
+
 CGLES3Material* CGLES3MaterialManager::Create(const char* szFileName, int vertexBinding, int instanceBinding, int baseLevel, int numLevels)
 {
 	mutex_autolock autolock(&lock);

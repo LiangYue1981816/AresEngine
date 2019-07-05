@@ -8,6 +8,15 @@ CGLES3Material::CGLES3Material(CGLES3MaterialManager* pManager, uint32_t name)
 
 }
 
+CGLES3Material::CGLES3Material(CGLES3MaterialManager* pManager, uint32_t name, const CGfxMaterialPtr ptrMaterialCopyFrom)
+	: CGfxMaterial(name)
+	, m_pManager(pManager)
+{
+	for (const auto& itPass : ((CGLES3Material *)ptrMaterialCopyFrom.GetPointer())->m_pPasses) {
+		m_pPasses[itPass.first] = new CGLES3MaterialPass(name, itPass.second);
+	}
+}
+
 CGLES3Material::~CGLES3Material(void)
 {
 	Destroy();

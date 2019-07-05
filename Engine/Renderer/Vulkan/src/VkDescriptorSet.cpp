@@ -11,16 +11,16 @@ CVKDescriptorSet::CVKDescriptorSet(CVKDevice* pDevice, CVKDescriptorPool* pDescr
 	Create(ptrDescriptorLayout);
 }
 
-CVKDescriptorSet::CVKDescriptorSet(CVKDevice* pDevice, CVKDescriptorPool* pDescriptorPool, uint32_t name, const CGfxDescriptorSetPtr ptrDescriptorSet)
-	: CGfxDescriptorSet(name, ptrDescriptorSet->GetDescriptorLayout())
+CVKDescriptorSet::CVKDescriptorSet(CVKDevice* pDevice, CVKDescriptorPool* pDescriptorPool, uint32_t name, const CGfxDescriptorSetPtr ptrDescriptorSetCopyFrom)
+	: CGfxDescriptorSet(name, ptrDescriptorSetCopyFrom->GetDescriptorLayout())
 	, m_pDevice(pDevice)
 	, m_pDescriptorPool(pDescriptorPool)
 
 	, m_vkDescriptorSet(VK_NULL_HANDLE)
 {
-	Create(ptrDescriptorSet->GetDescriptorLayout());
+	Create(ptrDescriptorSetCopyFrom->GetDescriptorLayout());
 
-	for (const auto& itImageDescriptorInfo : ((CVKDescriptorSet *)ptrDescriptorSet.GetPointer())->m_imageDescriptorInfos) {
+	for (const auto& itImageDescriptorInfo : ((CVKDescriptorSet *)ptrDescriptorSetCopyFrom.GetPointer())->m_imageDescriptorInfos) {
 		if (itImageDescriptorInfo.second.ptrTexture2D) {
 			SetTexture2D(itImageDescriptorInfo.first, itImageDescriptorInfo.second.ptrTexture2D, itImageDescriptorInfo.second.pSampler);
 		}
@@ -38,7 +38,7 @@ CVKDescriptorSet::CVKDescriptorSet(CVKDevice* pDevice, CVKDescriptorPool* pDescr
 		}
 	}
 
-	for (const auto& itbufferDescriptorInfo : ((CVKDescriptorSet *)ptrDescriptorSet.GetPointer())->m_bufferDescriptorInfos) {
+	for (const auto& itbufferDescriptorInfo : ((CVKDescriptorSet *)ptrDescriptorSetCopyFrom.GetPointer())->m_bufferDescriptorInfos) {
 		SetUniformBuffer(itbufferDescriptorInfo.first, itbufferDescriptorInfo.second.ptrUniformBuffer, itbufferDescriptorInfo.second.offset, itbufferDescriptorInfo.second.range);
 	}
 

@@ -16,6 +16,7 @@ private:
 private:
 	CVKMaterial* Get(uint32_t name);
 	CVKMaterial* Create(uint32_t name);
+	CVKMaterial* Create(uint32_t name, const CGfxMaterialPtr ptrMaterialCopyFrom);
 	CVKMaterial* Create(const char* szFileName, int vertexBinding, int instanceBinding, int baseLevel, int numLevels);
 	void Destroy(CVKMaterial* pMaterial);
 

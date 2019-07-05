@@ -231,6 +231,11 @@ CGfxMaterialPtr CVKRenderer::NewMaterial(uint32_t name)
 	return m_pMaterialManager->Create(name);
 }
 
+CGfxMaterialPtr CVKRenderer::NewMaterial(uint32_t name, const CGfxMaterialPtr ptrMaterialCopyFrom)
+{
+	return m_pMaterialManager->Create(name, ptrMaterialCopyFrom);
+}
+
 CGfxMaterialPtr CVKRenderer::NewMaterial(const char* szFileName, int vertexBinding, int instanceBinding, int baseLevel, int numLevels)
 {
 	return m_pMaterialManager->Create(szFileName, vertexBinding, instanceBinding, baseLevel, numLevels);
@@ -251,9 +256,9 @@ CGfxDescriptorSetPtr CVKRenderer::NewDescriptorSet(uint32_t name, const CGfxDesc
 	return m_pDescriptorSetManager->Create(name, ptrDescriptorLayout);
 }
 
-CGfxDescriptorSetPtr CVKRenderer::NewDescriptorSet(uint32_t name, const CGfxDescriptorSetPtr ptrDescriptorSetTemplate)
+CGfxDescriptorSetPtr CVKRenderer::NewDescriptorSet(uint32_t name, const CGfxDescriptorSetPtr ptrDescriptorSetCopyFrom)
 {
-	return m_pDescriptorSetManager->Create(name, ptrDescriptorSetTemplate);
+	return m_pDescriptorSetManager->Create(name, ptrDescriptorSetCopyFrom);
 }
 
 CGfxDescriptorSetPtr CVKRenderer::NewDescriptorSet(const CGfxPipelineGraphics* pPipelineGraphics, const CGfxFrameBuffer* pFrameBuffer, const CGfxRenderPass* pRenderPass, int indexSubpass)

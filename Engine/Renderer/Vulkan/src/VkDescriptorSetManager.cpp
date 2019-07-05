@@ -66,12 +66,12 @@ CVKDescriptorSet* CVKDescriptorSetManager::CreateInternal(CVKDescriptorPool** pp
 	} while (true);
 }
 
-CVKDescriptorSet* CVKDescriptorSetManager::CreateInternal(CVKDescriptorPool** ppPoolListHead, uint32_t name, const CGfxDescriptorSetPtr ptrDescriptorSetTemplate)
+CVKDescriptorSet* CVKDescriptorSetManager::CreateInternal(CVKDescriptorPool** ppPoolListHead, uint32_t name, const CGfxDescriptorSetPtr ptrDescriptorSetCopyFrom)
 {
 	do {
 		if (CVKDescriptorPool* pDescriptorPool = *ppPoolListHead) {
 			do {
-				if (CVKDescriptorSet* pDescriptorSet = pDescriptorPool->AllocDescriptorSet(name, ptrDescriptorSetTemplate)) {
+				if (CVKDescriptorSet* pDescriptorSet = pDescriptorPool->AllocDescriptorSet(name, ptrDescriptorSetCopyFrom)) {
 					return pDescriptorSet;
 				}
 			} while ((pDescriptorPool = pDescriptorPool->pNext) != nullptr);
@@ -101,12 +101,12 @@ CVKDescriptorSet* CVKDescriptorSetManager::Create(uint32_t name, const CGfxDescr
 	}
 }
 
-CVKDescriptorSet* CVKDescriptorSetManager::Create(uint32_t name, const CGfxDescriptorSetPtr ptrDescriptorSetTemplate)
+CVKDescriptorSet* CVKDescriptorSetManager::Create(uint32_t name, const CGfxDescriptorSetPtr ptrDescriptorSetCopyFrom)
 {
 	mutex_autolock autolock(&lock);
 	{
 		if (m_pDescriptorSets[name] == nullptr) {
-			m_pDescriptorSets[name] = CreateInternal(&m_pPoolListHead, name, ptrDescriptorSetTemplate);
+			m_pDescriptorSets[name] = CreateInternal(&m_pPoolListHead, name, ptrDescriptorSetCopyFrom);
 		}
 
 		return m_pDescriptorSets[name];

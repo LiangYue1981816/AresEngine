@@ -9,12 +9,12 @@ CGLES3DescriptorSet::CGLES3DescriptorSet(CGLES3DescriptorSetManager* pManager, u
 
 }
 
-CGLES3DescriptorSet::CGLES3DescriptorSet(CGLES3DescriptorSetManager* pManager, uint32_t name, const CGfxDescriptorSetPtr ptrDescriptorSet)
-	: CGfxDescriptorSet(name, ptrDescriptorSet->GetDescriptorLayout())
+CGLES3DescriptorSet::CGLES3DescriptorSet(CGLES3DescriptorSetManager* pManager, uint32_t name, const CGfxDescriptorSetPtr ptrDescriptorSetCopyFrom)
+	: CGfxDescriptorSet(name, ptrDescriptorSetCopyFrom->GetDescriptorLayout())
 	, m_pManager(pManager)
-	, m_ptrDescriptorLayout(ptrDescriptorSet->GetDescriptorLayout())
+	, m_ptrDescriptorLayout(ptrDescriptorSetCopyFrom->GetDescriptorLayout())
 {
-	for (const auto& itImageDescriptorInfo : ((CGLES3DescriptorSet *)ptrDescriptorSet.GetPointer())->m_imageDescriptorInfos) {
+	for (const auto& itImageDescriptorInfo : ((CGLES3DescriptorSet *)ptrDescriptorSetCopyFrom.GetPointer())->m_imageDescriptorInfos) {
 		if (itImageDescriptorInfo.second.ptrTexture2D) {
 			SetTexture2D(itImageDescriptorInfo.first, itImageDescriptorInfo.second.ptrTexture2D, itImageDescriptorInfo.second.pSampler);
 		}
@@ -32,7 +32,7 @@ CGLES3DescriptorSet::CGLES3DescriptorSet(CGLES3DescriptorSetManager* pManager, u
 		}
 	}
 
-	for (const auto& itbufferDescriptorInfo : ((CGLES3DescriptorSet *)ptrDescriptorSet.GetPointer())->m_bufferDescriptorInfos) {
+	for (const auto& itbufferDescriptorInfo : ((CGLES3DescriptorSet *)ptrDescriptorSetCopyFrom.GetPointer())->m_bufferDescriptorInfos) {
 		SetUniformBuffer(itbufferDescriptorInfo.first, itbufferDescriptorInfo.second.ptrUniformBuffer, itbufferDescriptorInfo.second.offset, itbufferDescriptorInfo.second.range);
 	}
 

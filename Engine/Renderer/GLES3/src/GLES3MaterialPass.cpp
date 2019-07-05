@@ -8,34 +8,34 @@ CGLES3MaterialPass::CGLES3MaterialPass(uint32_t name)
 
 }
 
-CGLES3MaterialPass::CGLES3MaterialPass(uint32_t name, const CGLES3MaterialPass* pPass)
+CGLES3MaterialPass::CGLES3MaterialPass(uint32_t name, const CGLES3MaterialPass* pPassCopyFrom)
 	: CGfxMaterialPass(name)
 	, m_pPipeline(nullptr)
 {
-	m_pPipeline = ((CGLES3MaterialPass *)pPass)->m_pPipeline;
-	m_pSamplers = ((CGLES3MaterialPass *)pPass)->m_pSamplers;
+	m_pPipeline = ((CGLES3MaterialPass *)pPassCopyFrom)->m_pPipeline;
+	m_pSamplers = ((CGLES3MaterialPass *)pPassCopyFrom)->m_pSamplers;
 
-	m_ptrDescriptorSet = GLES3Renderer()->NewDescriptorSet(HashValueFormat("%p_%x", this, GetName()), pPass->GetDescriptorSet());
+	m_ptrDescriptorSet = GLES3Renderer()->NewDescriptorSet(HashValueFormat("%p_%x", this, GetName()), pPassCopyFrom->GetDescriptorSet());
 	{
-		for (const auto& itUniform : ((CGLES3MaterialPass *)pPass)->m_pUniformVec1s) {
+		for (const auto& itUniform : ((CGLES3MaterialPass *)pPassCopyFrom)->m_pUniformVec1s) {
 			m_pUniformVec1s[itUniform.first] = new CGfxUniformVec1;
 			m_pUniformVec1s[itUniform.first]->SetValue(itUniform.second->GetValue());
 			m_ptrDescriptorSet->SetUniformBuffer(itUniform.first, m_pUniformVec1s[itUniform.first]->GetUniformBuffer(), 0, m_pUniformVec1s[itUniform.first]->GetUniformBuffer()->GetSize());
 		}
 
-		for (const auto& itUniform : ((CGLES3MaterialPass *)pPass)->m_pUniformVec2s) {
+		for (const auto& itUniform : ((CGLES3MaterialPass *)pPassCopyFrom)->m_pUniformVec2s) {
 			m_pUniformVec2s[itUniform.first] = new CGfxUniformVec2;
 			m_pUniformVec2s[itUniform.first]->SetValue(itUniform.second->GetValue().x, itUniform.second->GetValue().y);
 			m_ptrDescriptorSet->SetUniformBuffer(itUniform.first, m_pUniformVec2s[itUniform.first]->GetUniformBuffer(), 0, m_pUniformVec2s[itUniform.first]->GetUniformBuffer()->GetSize());
 		}
 
-		for (const auto& itUniform : ((CGLES3MaterialPass *)pPass)->m_pUniformVec3s) {
+		for (const auto& itUniform : ((CGLES3MaterialPass *)pPassCopyFrom)->m_pUniformVec3s) {
 			m_pUniformVec3s[itUniform.first] = new CGfxUniformVec3;
 			m_pUniformVec3s[itUniform.first]->SetValue(itUniform.second->GetValue().x, itUniform.second->GetValue().y, itUniform.second->GetValue().z);
 			m_ptrDescriptorSet->SetUniformBuffer(itUniform.first, m_pUniformVec3s[itUniform.first]->GetUniformBuffer(), 0, m_pUniformVec3s[itUniform.first]->GetUniformBuffer()->GetSize());
 		}
 
-		for (const auto& itUniform : ((CGLES3MaterialPass *)pPass)->m_pUniformVec4s) {
+		for (const auto& itUniform : ((CGLES3MaterialPass *)pPassCopyFrom)->m_pUniformVec4s) {
 			m_pUniformVec4s[itUniform.first] = new CGfxUniformVec4;
 			m_pUniformVec4s[itUniform.first]->SetValue(itUniform.second->GetValue().x, itUniform.second->GetValue().y, itUniform.second->GetValue().z, itUniform.second->GetValue().w);
 			m_ptrDescriptorSet->SetUniformBuffer(itUniform.first, m_pUniformVec4s[itUniform.first]->GetUniformBuffer(), 0, m_pUniformVec4s[itUniform.first]->GetUniformBuffer()->GetSize());

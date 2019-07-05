@@ -48,12 +48,12 @@ CGLES3DescriptorSet* CGLES3DescriptorSetManager::Create(uint32_t name, const CGf
 	}
 }
 
-CGLES3DescriptorSet* CGLES3DescriptorSetManager::Create(uint32_t name, const CGfxDescriptorSetPtr ptrDescriptorSetTemplate)
+CGLES3DescriptorSet* CGLES3DescriptorSetManager::Create(uint32_t name, const CGfxDescriptorSetPtr ptrDescriptorSetCopyFrom)
 {
 	mutex_autolock autolock(&lock);
 	{
 		if (m_pDescriptorSets[name] == nullptr) {
-			m_pDescriptorSets[name] = new CGLES3DescriptorSet(this, name, ptrDescriptorSetTemplate);
+			m_pDescriptorSets[name] = new CGLES3DescriptorSet(this, name, ptrDescriptorSetCopyFrom);
 		}
 
 		return m_pDescriptorSets[name];

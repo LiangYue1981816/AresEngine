@@ -42,6 +42,18 @@ CVKMaterial* CVKMaterialManager::Create(uint32_t name)
 	}
 }
 
+CVKMaterial* CVKMaterialManager::Create(uint32_t name, const CGfxMaterialPtr ptrMaterialCopyFrom)
+{
+	mutex_autolock autolock(&lock);
+	{
+		if (m_pMaterials[name] == nullptr) {
+			m_pMaterials[name] = new CVKMaterial(m_pDevice, this, name, ptrMaterialCopyFrom);
+		}
+
+		return m_pMaterials[name];
+	}
+}
+
 CVKMaterial* CVKMaterialManager::Create(const char* szFileName, int vertexBinding, int instanceBinding, int baseLevel, int numLevels)
 {
 	mutex_autolock autolock(&lock);

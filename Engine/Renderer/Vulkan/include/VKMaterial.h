@@ -10,6 +10,7 @@ class CVKMaterial : public CGfxMaterial
 
 private:
 	CVKMaterial(CVKDevice* pDevice, CVKMaterialManager* pManager, uint32_t name);
+	CVKMaterial(CVKDevice* pDevice, CVKMaterialManager* pManager, uint32_t name, const CGfxMaterialPtr ptrMaterialCopyFrom);
 	virtual ~CVKMaterial(void);
 	virtual void Release(void);
 

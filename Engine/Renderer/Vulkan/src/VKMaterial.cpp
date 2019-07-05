@@ -9,6 +9,16 @@ CVKMaterial::CVKMaterial(CVKDevice* pDevice, CVKMaterialManager* pManager, uint3
 
 }
 
+CVKMaterial::CVKMaterial(CVKDevice* pDevice, CVKMaterialManager* pManager, uint32_t name, const CGfxMaterialPtr ptrMaterialCopyFrom)
+	: CGfxMaterial(name)
+	, m_pDevice(pDevice)
+	, m_pManager(pManager)
+{
+	for (const auto& itPass : ((CVKMaterial *)ptrMaterialCopyFrom.GetPointer())->m_pPasses) {
+		m_pPasses[itPass.first] = new CVKMaterialPass(m_pDevice, name, itPass.second);
+	}
+}
+
 CVKMaterial::~CVKMaterial(void)
 {
 	Destroy();

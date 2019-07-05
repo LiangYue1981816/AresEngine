@@ -16,7 +16,7 @@ private:
 private:
 	CGLES3DescriptorSet* Get(uint32_t name);
 	CGLES3DescriptorSet* Create(uint32_t name, const CGfxDescriptorLayoutPtr ptrDescriptorLayout);
-	CGLES3DescriptorSet* Create(uint32_t name, const CGfxDescriptorSetPtr ptrDescriptorSetTemplate);
+	CGLES3DescriptorSet* Create(uint32_t name, const CGfxDescriptorSetPtr ptrDescriptorSetCopyFrom);
 	CGLES3DescriptorSet* Create(const CGfxPipelineGraphics* pPipelineGraphics, const CGfxFrameBuffer* pFrameBuffer, const CGfxRenderPass* pRenderPass, int indexSubpass);
 	void Destroy(CGLES3DescriptorSet* pDescriptorSet);
 

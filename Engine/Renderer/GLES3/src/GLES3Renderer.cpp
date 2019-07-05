@@ -225,6 +225,11 @@ CGfxMaterialPtr CGLES3Renderer::NewMaterial(uint32_t name)
 	return m_pMaterialManager->Create(name);
 }
 
+CGfxMaterialPtr CGLES3Renderer::NewMaterial(uint32_t name, const CGfxMaterialPtr ptrMaterialCopyFrom)
+{
+	return m_pMaterialManager->Create(name, ptrMaterialCopyFrom);
+}
+
 CGfxMaterialPtr CGLES3Renderer::NewMaterial(const char* szFileName, int vertexBinding, int instanceBinding, int baseLevel, int numLevels)
 {
 	return m_pMaterialManager->Create(szFileName, vertexBinding, instanceBinding, baseLevel, numLevels);
@@ -245,9 +250,9 @@ CGfxDescriptorSetPtr CGLES3Renderer::NewDescriptorSet(uint32_t name, const CGfxD
 	return m_pDescriptorSetManager->Create(name, ptrDescriptorLayout);
 }
 
-CGfxDescriptorSetPtr CGLES3Renderer::NewDescriptorSet(uint32_t name, const CGfxDescriptorSetPtr ptrDescriptorSetTemplate)
+CGfxDescriptorSetPtr CGLES3Renderer::NewDescriptorSet(uint32_t name, const CGfxDescriptorSetPtr ptrDescriptorSetCopyFrom)
 {
-	return m_pDescriptorSetManager->Create(name, ptrDescriptorSetTemplate);
+	return m_pDescriptorSetManager->Create(name, ptrDescriptorSetCopyFrom);
 }
 
 CGfxDescriptorSetPtr CGLES3Renderer::NewDescriptorSet(const CGfxPipelineGraphics* pPipelineGraphics, const CGfxFrameBuffer* pFrameBuffer, const CGfxRenderPass* pRenderPass, int indexSubpass)

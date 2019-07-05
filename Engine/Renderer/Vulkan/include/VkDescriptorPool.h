@@ -23,7 +23,7 @@ private:
 
 private:
 	CVKDescriptorSet* AllocDescriptorSet(uint32_t name, const CGfxDescriptorLayoutPtr ptrDescriptorLayout);
-	CVKDescriptorSet* AllocDescriptorSet(uint32_t name, const CGfxDescriptorSetPtr ptrDescriptorSetTemplate);
+	CVKDescriptorSet* AllocDescriptorSet(uint32_t name, const CGfxDescriptorSetPtr ptrDescriptorSetCopyFrom);
 	bool FreeDescriptorSet(CVKDescriptorSet* pDescriptorSet);
 
 

@@ -9,6 +9,7 @@ class CGLES3Material : public CGfxMaterial
 
 private:
 	CGLES3Material(CGLES3MaterialManager* pManager, uint32_t name);
+	CGLES3Material(CGLES3MaterialManager* pManager, uint32_t name, const CGfxMaterialPtr ptrMaterialCopyFrom);
 	virtual ~CGLES3Material(void);
 	virtual void Release(void);
 

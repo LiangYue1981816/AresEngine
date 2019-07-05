@@ -9,7 +9,7 @@ class CVKMaterialPass : public CGfxMaterialPass
 
 private:
 	CVKMaterialPass(CVKDevice* pDevice, uint32_t name);
-	CVKMaterialPass(CVKDevice* pDevice, uint32_t name, const CVKMaterialPass* pPass);
+	CVKMaterialPass(CVKDevice* pDevice, uint32_t name, const CVKMaterialPass* pPassCopyFrom);
 	virtual ~CVKMaterialPass(void);
 
 
