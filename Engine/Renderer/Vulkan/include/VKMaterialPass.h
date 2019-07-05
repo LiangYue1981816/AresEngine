@@ -9,14 +9,12 @@ class CVKMaterialPass : public CGfxMaterialPass
 
 private:
 	CVKMaterialPass(CVKDevice* pDevice, uint32_t name);
+	CVKMaterialPass(CVKDevice* pDevice, const CVKMaterialPass* pPass);
 	virtual ~CVKMaterialPass(void);
 
 
 public:
 	const CGfxDescriptorSetPtr GetDescriptorSet(void) const;
-
-private:
-	bool CopyFrom(const CGfxMaterialPass* pPass);
 
 public:
 	bool SetPipeline(const CGfxRenderPass* pRenderPass, const CGfxShader* pVertexShader, const CGfxShader* pFragmentShader, const PipelineState& state, int indexSubpass, int vertexBinding, int instanceBinding);

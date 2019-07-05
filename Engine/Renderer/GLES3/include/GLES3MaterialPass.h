@@ -9,14 +9,12 @@ class CGLES3MaterialPass : public CGfxMaterialPass
 
 private:
 	CGLES3MaterialPass(uint32_t name);
+	CGLES3MaterialPass(const CGLES3MaterialPass* pPass);
 	virtual ~CGLES3MaterialPass(void);
 
 
 public:
 	const CGfxDescriptorSetPtr GetDescriptorSet(void) const;
-
-private:
-	bool CopyFrom(const CGfxMaterialPass* pPass);
 
 public:
 	bool SetPipeline(const CGfxRenderPass* pRenderPass, const CGfxShader* pVertexShader, const CGfxShader* pFragmentShader, const PipelineState& state, int indexSubpass, int vertexBinding, int instanceBinding);

@@ -9,39 +9,11 @@ CVKMaterialPass::CVKMaterialPass(CVKDevice* pDevice, uint32_t name)
 
 }
 
-CVKMaterialPass::~CVKMaterialPass(void)
+CVKMaterialPass::CVKMaterialPass(CVKDevice* pDevice, const CVKMaterialPass* pPass)
+	: CGfxMaterialPass(pPass->GetName())
+	, m_pDevice(pDevice)
+	, m_pPipeline(nullptr)
 {
-	for (const auto& itUniform : m_pUniformVec1s) {
-		delete itUniform.second;
-	}
-
-	for (const auto& itUniform : m_pUniformVec2s) {
-		delete itUniform.second;
-	}
-
-	for (const auto& itUniform : m_pUniformVec3s) {
-		delete itUniform.second;
-	}
-
-	for (const auto& itUniform : m_pUniformVec4s) {
-		delete itUniform.second;
-	}
-
-	for (const auto& itUniform : m_pUniformMat4s) {
-		delete itUniform.second;
-	}
-}
-
-const CGfxDescriptorSetPtr CVKMaterialPass::GetDescriptorSet(void) const
-{
-	ASSERT(m_ptrDescriptorSet);
-	return m_ptrDescriptorSet;
-}
-
-bool CVKMaterialPass::CopyFrom(const CGfxMaterialPass* pPass)
-{
-	ASSERT(pPass);
-
 	m_pPipeline = ((CVKMaterialPass *)pPass)->m_pPipeline;
 	m_pSamplers = ((CVKMaterialPass *)pPass)->m_pSamplers;
 
@@ -74,6 +46,35 @@ bool CVKMaterialPass::CopyFrom(const CGfxMaterialPass* pPass)
 	m_ptrDescriptorSet->Update();
 
 	return true;
+}
+
+CVKMaterialPass::~CVKMaterialPass(void)
+{
+	for (const auto& itUniform : m_pUniformVec1s) {
+		delete itUniform.second;
+	}
+
+	for (const auto& itUniform : m_pUniformVec2s) {
+		delete itUniform.second;
+	}
+
+	for (const auto& itUniform : m_pUniformVec3s) {
+		delete itUniform.second;
+	}
+
+	for (const auto& itUniform : m_pUniformVec4s) {
+		delete itUniform.second;
+	}
+
+	for (const auto& itUniform : m_pUniformMat4s) {
+		delete itUniform.second;
+	}
+}
+
+const CGfxDescriptorSetPtr CVKMaterialPass::GetDescriptorSet(void) const
+{
+	ASSERT(m_ptrDescriptorSet);
+	return m_ptrDescriptorSet;
 }
 
 bool CVKMaterialPass::SetPipeline(const CGfxRenderPass* pRenderPass, const CGfxShader* pVertexShader, const CGfxShader* pFragmentShader, const PipelineState& state, int indexSubpass, int vertexBinding, int instanceBinding)
