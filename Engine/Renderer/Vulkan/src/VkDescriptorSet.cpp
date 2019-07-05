@@ -53,6 +53,39 @@ CVKDescriptorPool* CVKDescriptorSet::GetDescriptorPool(void) const
 	return m_pDescriptorPool;
 }
 
+bool CVKDescriptorSet::CopyFrom(const CGfxDescriptorSet* pDescriptorSet)
+{
+	ASSERT(pDescriptorSet);
+
+	m_ptrDescriptorLayout = ((CVKDescriptorSet *)pDescriptorSet)->m_ptrDescriptorLayout;
+
+	for (const auto& itImageDescriptorInfo : ((CVKDescriptorSet *)pDescriptorSet)->m_imageDescriptorInfos) {
+		if (itImageDescriptorInfo.second.ptrTexture2D) {
+			SetTexture2D(itImageDescriptorInfo.first, itImageDescriptorInfo.second.ptrTexture2D, itImageDescriptorInfo.second.pSampler);
+		}
+
+		if (itImageDescriptorInfo.second.ptrTexture2DArray) {
+			SetTexture2DArray(itImageDescriptorInfo.first, itImageDescriptorInfo.second.ptrTexture2DArray, itImageDescriptorInfo.second.pSampler);
+		}
+
+		if (itImageDescriptorInfo.second.ptrTextureCubemap) {
+			SetTextureCubemap(itImageDescriptorInfo.first, itImageDescriptorInfo.second.ptrTextureCubemap, itImageDescriptorInfo.second.pSampler);
+		}
+
+		if (itImageDescriptorInfo.second.ptrTextureInputAttachment) {
+			SetTextureInputAttachment(itImageDescriptorInfo.first, itImageDescriptorInfo.second.ptrTextureInputAttachment, itImageDescriptorInfo.second.pSampler);
+		}
+	}
+
+	for (const auto& itbufferDescriptorInfo : ((CVKDescriptorSet *)pDescriptorSet)->m_bufferDescriptorInfos) {
+		SetUniformBuffer(itbufferDescriptorInfo.first, itbufferDescriptorInfo.second.ptrUniformBuffer, itbufferDescriptorInfo.second.offset, itbufferDescriptorInfo.second.range);
+	}
+
+	Update();
+
+	return true;
+}
+
 bool CVKDescriptorSet::SetTexture2D(uint32_t name, const CGfxTexture2DPtr ptrTexture, const CGfxSampler* pSampler)
 {
 	ASSERT(pSampler);
