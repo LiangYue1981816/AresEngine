@@ -12,6 +12,10 @@ private:
 	virtual ~CCamera(void);
 
 
+private:
+	void CreateAttachments(void);
+	void DestroyAttachments(void);
+
 public:
 	CGfxCamera* GetCamera(void) const;
 	CGfxRenderQueue* GetRenderQueue(void) const;
@@ -28,6 +32,10 @@ public:
 	void Update(void);
 	void Render(void);
 
+
+private:
+	CGfxRenderTexturePtr m_ptrColorTexture;
+	CGfxRenderTexturePtr m_ptrDepthStencilTexture;
 
 private:
 	int m_indexQueue;
