@@ -1560,6 +1560,9 @@
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKSemaphore.h">
       <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Engine\RenderSolution\include\Camera.h">
+      <Filter>Engine\RenderSolution\Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Engine\ThirdParty\eastl\source\allocator_eastl.cpp">
@@ -2257,6 +2260,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKSemaphore.cpp">
       <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\RenderSolution\src\Camera.cpp">
+      <Filter>Engine\RenderSolution\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

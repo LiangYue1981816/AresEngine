@@ -428,6 +428,7 @@
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\src\Command\VKCommandUniformMatrix3fv.h" />
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\src\Command\VKCommandUniformMatrix4fv.h" />
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\src\Command\VKCommandUpdateInstanceBuffer.h" />
+    <ClInclude Include="..\..\Engine\RenderSolution\include\Camera.h" />
     <ClInclude Include="..\..\Engine\RenderSolution\include\PassDefault.h" />
     <ClInclude Include="..\..\Engine\RenderSolution\include\PassForwardLighting.h" />
     <ClInclude Include="..\..\Engine\RenderSolution\include\PassShadow.h" />
@@ -767,6 +768,7 @@
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKUniformBuffer.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKUniformBufferManager.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKVertexBuffer.cpp" />
+    <ClCompile Include="..\..\Engine\RenderSolution\src\Camera.cpp" />
     <ClCompile Include="..\..\Engine\RenderSolution\src\PassDefault.cpp" />
     <ClCompile Include="..\..\Engine\RenderSolution\src\PassForwardLighting.cpp" />
     <ClCompile Include="..\..\Engine\RenderSolution\src\PassShadow.cpp" />
