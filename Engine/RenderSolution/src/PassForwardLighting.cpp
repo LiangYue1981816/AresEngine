@@ -1,8 +1,9 @@
 #include "EngineHeader.h"
 
 
-CPassForwardLighting::CPassForwardLighting(CRenderSolution* pRenderSolution)
-	: m_pRenderSolution(pRenderSolution)
+CPassForwardLighting::CPassForwardLighting(CCamera* pCamera, CRenderSolution* pRenderSolution)
+	: m_pCamera(pCamera)
+	, m_pRenderSolution(pRenderSolution)
 {
 	// CommandBuffer
 	{
@@ -18,65 +19,11 @@ CPassForwardLighting::CPassForwardLighting(CRenderSolution* pRenderSolution)
 		ptrDescriptorLayout->SetUniformBlockBinding(UNIFORM_CAMERA_NAME, DESCRIPTOR_BIND_CAMERA);
 		ptrDescriptorLayout->Create();
 
-		m_ptrDescriptorSetLightingPass = GfxRenderer()->NewDescriptorSet(FORWARD_LIGHTING_PASS_NAME, ptrDescriptorLayout);
-		m_ptrDescriptorSetLightingPass->SetUniformBuffer(UNIFORM_ENGINE_NAME, m_pRenderSolution->GetEngineUniform()->GetUniformBuffer(), 0, m_pRenderSolution->GetEngineUniform()->GetUniformBuffer()->GetSize());
-		m_ptrDescriptorSetLightingPass->SetUniformBuffer(UNIFORM_CAMERA_NAME, m_pRenderSolution->GetMainCameraUniform()->GetUniformBuffer(), 0, m_pRenderSolution->GetMainCameraUniform()->GetUniformBuffer()->GetSize());
-		m_ptrDescriptorSetLightingPass->Update();
+		m_ptrDescriptorSetPass = GfxRenderer()->NewDescriptorSet(FORWARD_LIGHTING_PASS_NAME, ptrDescriptorLayout);
+		m_ptrDescriptorSetPass->SetUniformBuffer(UNIFORM_ENGINE_NAME, m_pRenderSolution->GetEngineUniform()->GetUniformBuffer(), 0, m_pRenderSolution->GetEngineUniform()->GetUniformBuffer()->GetSize());
+		m_ptrDescriptorSetPass->SetUniformBuffer(UNIFORM_CAMERA_NAME, m_pCamera->GetCameraUniform()->GetUniformBuffer(), 0, m_pCamera->GetCameraUniform()->GetUniformBuffer()->GetSize());
+		m_ptrDescriptorSetPass->Update();
 	}
-
-	// RenderPass and FrameBuffer
-	{
-		const int numAttachments = 2;
-		const int numSubpasses = 1;
-
-		m_ptrRenderPass = GfxRenderer()->NewRenderPass(HashValue("ForwardLighting"), numAttachments, numSubpasses);
-		{
-			m_ptrRenderPass->SetColorAttachment(0, m_pRenderSolution->GetPresentColorTexture(0)->GetFormat(), m_pRenderSolution->GetPresentColorTexture(0)->GetSamples(), true, false, true, 0.2f, 0.2f, 0.2f, 0.0f);
-			m_ptrRenderPass->SetDepthStencilAttachment(1, m_pRenderSolution->GetPresentDepthStencilTexture(0)->GetFormat(), m_pRenderSolution->GetPresentDepthStencilTexture(0)->GetSamples(), true, true, 1.0f, 0);
-
-			m_ptrRenderPass->SetSubpassOutputColorReference(0, 0);
-			m_ptrRenderPass->SetSubpassOutputDepthStencilReference(0, 1);
-		}
-		m_ptrRenderPass->Create();
-
-		for (int indexFrame = 0; indexFrame < CGfxSwapChain::SWAPCHAIN_FRAME_COUNT; indexFrame++) {
-			m_ptrFrameBuffer[indexFrame] = GfxRenderer()->NewFrameBuffer(m_pRenderSolution->GetPresentColorTexture(indexFrame)->GetWidth(), m_pRenderSolution->GetPresentColorTexture(indexFrame)->GetHeight(), numAttachments);
-			{
-				m_ptrFrameBuffer[indexFrame]->SetAttachmentTexture(0, m_pRenderSolution->GetPresentColorTexture(indexFrame));
-				m_ptrFrameBuffer[indexFrame]->SetAttachmentTexture(1, m_pRenderSolution->GetPresentDepthStencilTexture(indexFrame));
-			}
-			m_ptrFrameBuffer[indexFrame]->Create(m_ptrRenderPass);
-		}
-	}
-	/*
-	// RenderPass and FrameBuffer with MSAA
-	{
-		const int numAttachments = 3;
-		const int numSubpasses = 1;
-
-		m_ptrRenderPassMSAA = GfxRenderer()->NewRenderPass(HashValue("DefaultMSAA"), numAttachments, numSubpasses);
-		{
-			m_ptrRenderPassMSAA->SetColorAttachment(0, m_pRenderSolution->GetPresentColorTexture(0)->GetFormat(), m_pRenderSolution->GetPresentColorTexture(0)->GetSamples(), true, false, false, 0.2f, 0.2f, 0.2f, 0.0f);
-			m_ptrRenderPassMSAA->SetColorAttachment(1, m_pRenderSolution->GetPresentColorTextureMSAA(0)->GetFormat(), m_pRenderSolution->GetPresentColorTextureMSAA(0)->GetSamples(), false, false, true, 0.2f, 0.2f, 0.2f, 0.0f);
-			m_ptrRenderPassMSAA->SetDepthStencilAttachment(2, m_pRenderSolution->GetPresentDepthStencilTextureMSAA(0)->GetFormat(), m_pRenderSolution->GetPresentDepthStencilTextureMSAA(0)->GetSamples(), true, true, 1.0f, 0);
-
-			m_ptrRenderPassMSAA->SetSubpassResolveReference(0, 0);
-			m_ptrRenderPassMSAA->SetSubpassOutputColorReference(0, 1);
-			m_ptrRenderPassMSAA->SetSubpassOutputDepthStencilReference(0, 2);
-		}
-		m_ptrRenderPassMSAA->Create();
-
-		for (int indexFrame = 0; indexFrame < CGfxSwapChain::SWAPCHAIN_FRAME_COUNT; indexFrame++) {
-			m_ptrFrameBufferMSAA[indexFrame] = GfxRenderer()->NewFrameBuffer(m_pRenderSolution->GetPresentColorTexture(indexFrame)->GetWidth(), m_pRenderSolution->GetPresentColorTexture(indexFrame)->GetHeight(), numAttachments);
-			{
-				m_ptrFrameBufferMSAA[indexFrame]->SetAttachmentTexture(0, m_pRenderSolution->GetPresentColorTexture(indexFrame));
-				m_ptrFrameBufferMSAA[indexFrame]->SetAttachmentTexture(1, m_pRenderSolution->GetPresentColorTextureMSAA(indexFrame));
-				m_ptrFrameBufferMSAA[indexFrame]->SetAttachmentTexture(2, m_pRenderSolution->GetPresentDepthStencilTextureMSAA(indexFrame));
-			}
-			m_ptrFrameBufferMSAA[indexFrame]->Create(m_ptrRenderPassMSAA);
-		}
-	}
-	*/
 }
 
 CPassForwardLighting::~CPassForwardLighting(void)
@@ -86,49 +33,60 @@ CPassForwardLighting::~CPassForwardLighting(void)
 	m_ptrMainCommandBuffer[2]->Clearup();
 }
 
-const CGfxSemaphore* CPassForwardLighting::GetSemaphore(void) const
+void CPassForwardLighting::CreateFrameBuffer(CGfxRenderTexturePtr ptrColorTexture, CGfxRenderTexturePtr ptrDepthStencilTexture)
 {
-	const int indexFrame = GfxRenderer()->GetSwapChain()->GetFrameIndex();
-	return m_ptrMainCommandBuffer[indexFrame]->GetSemaphore();
+	const int numSubpasses = 1;
+	const int numAttachments = 2;
+
+	m_ptrColorTexture = ptrColorTexture;
+	m_ptrDepthStencilTexture = ptrDepthStencilTexture;
+
+	// RenderPass
+	{
+		const int stencil = 0;
+		const float depth = 1.0f;
+		const float color[] = { 0.1f, 0.1f, 0.1f, 0.0f };
+
+		m_ptrRenderPass = GfxRenderer()->NewRenderPass(HashValue("ForwardLighting"), numAttachments, numSubpasses);
+		m_ptrRenderPass->SetColorAttachment(0, m_ptrColorTexture->GetFormat(), m_ptrColorTexture->GetSamples(), false, false, true, color[0], color[1], color[2], color[3]);
+		m_ptrRenderPass->SetDepthStencilAttachment(1, m_ptrDepthStencilTexture->GetFormat(), m_ptrDepthStencilTexture->GetSamples(), true, true, depth, stencil);
+		m_ptrRenderPass->SetSubpassOutputColorReference(0, 0);
+		m_ptrRenderPass->SetSubpassOutputDepthStencilReference(0, 1);
+		m_ptrRenderPass->Create();
+	}
+
+	// FrameBuffer
+	{
+		m_ptrFrameBuffer = GfxRenderer()->NewFrameBuffer(m_ptrColorTexture->GetWidth(), m_ptrColorTexture->GetHeight(), numAttachments);
+		m_ptrFrameBuffer->SetAttachmentTexture(0, m_ptrColorTexture);
+		m_ptrFrameBuffer->SetAttachmentTexture(1, m_ptrDepthStencilTexture);
+		m_ptrFrameBuffer->Create(m_ptrRenderPass);
+	}
 }
 
-void CPassForwardLighting::Update(void)
+void CPassForwardLighting::Render(int indexQueue, const CGfxSemaphore* pWaitSemaphore)
 {
-
-}
-
-void CPassForwardLighting::Render(int indexQueue, bool bMSAA, const CGfxSemaphore* pWaitSemaphore)
-{
-	const int indexFrame = GfxRenderer()->GetSwapChain()->GetFrameIndex();
-
-	const CGfxRenderPassPtr ptrRenderPass = bMSAA ? m_ptrRenderPassMSAA : m_ptrRenderPass;
-	const CGfxFrameBufferPtr ptrFrameBuffer = bMSAA ? m_ptrFrameBufferMSAA[indexFrame] : m_ptrFrameBuffer[indexFrame];
-	const CGfxRenderTexturePtr ptrPresentTexture = bMSAA ? m_pRenderSolution->GetPresentColorTexture(indexFrame) : m_pRenderSolution->GetPresentColorTexture(indexFrame);
-	const CGfxRenderTexturePtr ptrPresentColorTexture = bMSAA ? m_pRenderSolution->GetPresentColorTextureMSAA(indexFrame) : m_pRenderSolution->GetPresentColorTexture(indexFrame);
-	const CGfxRenderTexturePtr ptrPresentDepthStencilTexture = bMSAA ? m_pRenderSolution->GetPresentDepthStencilTextureMSAA(indexFrame) : m_pRenderSolution->GetPresentDepthStencilTexture(indexFrame);
-
-	const CGfxCommandBufferPtr ptrMainCommandBuffer = m_ptrMainCommandBuffer[indexFrame];
+	const CGfxCommandBufferPtr ptrMainCommandBuffer = m_ptrMainCommandBuffer[GfxRenderer()->GetSwapChain()->GetFrameIndex()];
 	{
 		ptrMainCommandBuffer->Clearup();
+
 		GfxRenderer()->BeginRecord(ptrMainCommandBuffer);
 		{
-			if (bMSAA) {
-				GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, ptrPresentTexture, GFX_IMAGE_LAYOUT_PRESENT_SRC_OPTIMAL);
-				GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, ptrPresentColorTexture, GFX_IMAGE_LAYOUT_GENERAL);
-				GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, ptrPresentDepthStencilTexture, GFX_IMAGE_LAYOUT_GENERAL);
-			}
-			else {
-				GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, ptrPresentTexture, GFX_IMAGE_LAYOUT_PRESENT_SRC_OPTIMAL);
-				GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, ptrPresentDepthStencilTexture, GFX_IMAGE_LAYOUT_GENERAL);
-			}
+			GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, m_ptrColorTexture, GFX_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL);
+			GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, m_ptrDepthStencilTexture, GFX_IMAGE_LAYOUT_GENERAL);
 
-			GfxRenderer()->CmdBeginRenderPass(ptrMainCommandBuffer, ptrFrameBuffer, ptrRenderPass);
+			GfxRenderer()->CmdBeginRenderPass(ptrMainCommandBuffer, m_ptrFrameBuffer, m_ptrRenderPass);
 			{
-				m_pRenderSolution->GetMainCameraQueue()->CmdDraw(indexQueue, ptrMainCommandBuffer, m_ptrDescriptorSetLightingPass, FORWARD_LIGHTING_PASS_NAME, m_pRenderSolution->GetMainCamera()->GetScissor(), m_pRenderSolution->GetMainCamera()->GetViewport(), 0xffffffff);
+				m_pCamera->GetRenderQueue()->CmdDraw(indexQueue, ptrMainCommandBuffer, m_ptrDescriptorSetPass, FORWARD_LIGHTING_PASS_NAME, m_pCamera->GetCamera()->GetScissor(), m_pCamera->GetCamera()->GetViewport(), 0xffffffff);
 			}
 			GfxRenderer()->CmdEndRenderPass(ptrMainCommandBuffer);
 		}
 		GfxRenderer()->EndRecord(ptrMainCommandBuffer);
 	}
 	GfxRenderer()->Submit(ptrMainCommandBuffer, pWaitSemaphore);
+}
+
+const CGfxSemaphore* CPassForwardLighting::GetSemaphore(void) const
+{
+	return m_ptrMainCommandBuffer[GfxRenderer()->GetSwapChain()->GetFrameIndex()]->GetSemaphore();
 }

@@ -4,32 +4,35 @@
 
 class CALL_API CPassForwardLighting
 {
+	friend class CCamera;
 	friend class CRenderSolution;
 
 
 private:
-	CPassForwardLighting(CRenderSolution* pRenderSolution);
+	CPassForwardLighting(CCamera* pCamera, CRenderSolution* pRenderSolution);
 	virtual ~CPassForwardLighting(void);
 
 
 private:
-	const CGfxSemaphore* GetSemaphore(void) const;
+	void CreateFrameBuffer(CGfxRenderTexturePtr ptrColorTexture, CGfxRenderTexturePtr ptrDepthStencilTexture);
 
 private:
-	void Update(void);
-	void Render(int indexQueue, bool bMSAA, const CGfxSemaphore* pWaitSemaphore);
+	void Render(int indexQueue, const CGfxSemaphore* pWaitSemaphore);
+	const CGfxSemaphore* GetSemaphore(void) const;
 
 
 private:
 	CGfxRenderPassPtr m_ptrRenderPass;
-	CGfxFrameBufferPtr m_ptrFrameBuffer[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
+	CGfxFrameBufferPtr m_ptrFrameBuffer;
 
-	CGfxRenderPassPtr m_ptrRenderPassMSAA;
-	CGfxFrameBufferPtr m_ptrFrameBufferMSAA[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
+	CGfxRenderTexturePtr m_ptrColorTexture;
+	CGfxRenderTexturePtr m_ptrDepthStencilTexture;
 
-	CGfxDescriptorSetPtr m_ptrDescriptorSetLightingPass;
+private:
+	CGfxDescriptorSetPtr m_ptrDescriptorSetPass;
 	CGfxCommandBufferPtr m_ptrMainCommandBuffer[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
 
 private:
+	CCamera* m_pCamera;
 	CRenderSolution* m_pRenderSolution;
 };
