@@ -11,8 +11,6 @@ CCamera::CCamera(void)
 	m_pCamera = new CGfxCamera;
 	m_pRenderQueue = new CGfxRenderQueue;
 	m_pCameraUniform = new CGfxUniformCamera;
-
-	CreateAttachments();
 }
 
 CCamera::~CCamera(void)
@@ -20,26 +18,6 @@ CCamera::~CCamera(void)
 	delete m_pCamera;
 	delete m_pRenderQueue;
 	delete m_pCameraUniform;
-
-	DestroyAttachments();
-}
-
-void CCamera::CreateAttachments(void)
-{
-	const int width = GfxRenderer()->GetSwapChain()->GetWidth();
-	const int height = GfxRenderer()->GetSwapChain()->GetHeight();
-
-	m_ptrColorTexture = GfxRenderer()->NewRenderTexture(HashValueFormat("Camera(%x) ColorTexture", this));
-	m_ptrColorTexture->Create(GFX_PIXELFORMAT_BGRA8_UNORM_PACK8, width, height);
-
-	m_ptrDepthStencilTexture = GfxRenderer()->NewRenderTexture(HashValueFormat("Camera(%x) DepthStencilTexture", this));
-	m_ptrDepthStencilTexture->Create(GFX_PIXELFORMAT_D32_SFLOAT_PACK32, width, height);
-}
-
-void CCamera::DestroyAttachments(void)
-{
-	m_ptrColorTexture.Release();
-	m_ptrDepthStencilTexture.Release();
 }
 
 CGfxCamera* CCamera::GetCamera(void) const
