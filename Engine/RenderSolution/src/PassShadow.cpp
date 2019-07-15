@@ -1,8 +1,9 @@
 #include "EngineHeader.h"
 
 
-CPassShadow::CPassShadow(CRenderSolution* pRenderSolution)
-	: m_pRenderSolution(pRenderSolution)
+CPassShadow::CPassShadow(CCamera* pCamera, CRenderSolution* pRenderSolution)
+	: m_pCamera(pCamera)
+	, m_pRenderSolution(pRenderSolution)
 	, m_splitFactors{ 0.0f, 0.1f, 0.2f, 0.5f, 1.0f }
 {
 	// CommandBuffer
@@ -19,29 +20,10 @@ CPassShadow::CPassShadow(CRenderSolution* pRenderSolution)
 		ptrDescriptorLayout->Create();
 
 		for (int indexLevel = 0; indexLevel < 4; indexLevel++) {
-			m_ptrDescriptorSetShadowPass[indexLevel] = GfxRenderer()->NewDescriptorSet(SHADOW_PASS_NAME + indexLevel, ptrDescriptorLayout);
-			m_ptrDescriptorSetShadowPass[indexLevel]->SetUniformBuffer(UNIFORM_CAMERA_NAME, m_pRenderSolution->GetShadowCameraUniform(indexLevel)->GetUniformBuffer(), 0, m_pRenderSolution->GetShadowCameraUniform(indexLevel)->GetUniformBuffer()->GetSize());
-			m_ptrDescriptorSetShadowPass[indexLevel]->Update();
+			m_ptrDescriptorSetPass[indexLevel] = GfxRenderer()->NewDescriptorSet(SHADOW_PASS_NAME + indexLevel, ptrDescriptorLayout);
+			m_ptrDescriptorSetPass[indexLevel]->SetUniformBuffer(UNIFORM_CAMERA_NAME, m_pRenderSolution->GetShadowCameraUniform(indexLevel)->GetUniformBuffer(), 0, m_pRenderSolution->GetShadowCameraUniform(indexLevel)->GetUniformBuffer()->GetSize());
+			m_ptrDescriptorSetPass[indexLevel]->Update();
 		}
-	}
-
-	// RenderPass and FrameBuffer
-	{
-		const int numAttachments = 1;
-		const int numSubpasses = 1;
-
-		m_ptrRenderPass = GfxRenderer()->NewRenderPass(HashValue("Shadow"), numAttachments, numSubpasses);
-		{
-			m_ptrRenderPass->SetDepthStencilAttachment(0, m_pRenderSolution->GetShadowMapTexture()->GetFormat(), m_pRenderSolution->GetShadowMapTexture()->GetSamples(), false, true, 1.0f, 0);
-			m_ptrRenderPass->SetSubpassOutputDepthStencilReference(0, 0);
-		}
-		m_ptrRenderPass->Create();
-
-		m_ptrFrameBuffer = GfxRenderer()->NewFrameBuffer(m_pRenderSolution->GetShadowMapTexture()->GetWidth(), m_pRenderSolution->GetShadowMapTexture()->GetHeight(), numAttachments);
-		{
-			m_ptrFrameBuffer->SetAttachmentTexture(0, m_pRenderSolution->GetShadowMapTexture());
-		}
-		m_ptrFrameBuffer->Create(m_ptrRenderPass);
 	}
 }
 
@@ -52,19 +34,30 @@ CPassShadow::~CPassShadow(void)
 	m_ptrMainCommandBuffer[2]->Clearup();
 }
 
-const CGfxSemaphore* CPassShadow::GetSemaphore(void) const
+void CPassShadow::CreateFrameBuffer(CGfxRenderTexturePtr ptrShadowTexture)
 {
-	const int indexFrame = GfxRenderer()->GetSwapChain()->GetFrameIndex();
-	return m_ptrMainCommandBuffer[indexFrame]->GetSemaphore();
-}
+	const int numSubpasses = 1;
+	const int numAttachments = 1;
 
-void CPassShadow::SetSplitFactor(float f1, float f2, float f3)
-{
-	m_splitFactors[0] = 0.0f;
-	m_splitFactors[1] = f1;
-	m_splitFactors[2] = f2;
-	m_splitFactors[3] = f3;
-	m_splitFactors[4] = 1.0f;
+	m_ptrShadowTexture = ptrShadowTexture;
+
+	// RenderPass
+	{
+		const int stencil = 0;
+		const float depth = 1.0f;
+
+		m_ptrRenderPass = GfxRenderer()->NewRenderPass(HashValue("Shadow"), numAttachments, numSubpasses);
+		m_ptrRenderPass->SetDepthStencilAttachment(0, m_ptrShadowTexture->GetFormat(), m_ptrShadowTexture->GetSamples(), false, true, depth, stencil);
+		m_ptrRenderPass->SetSubpassOutputDepthStencilReference(0, 0);
+		m_ptrRenderPass->Create();
+	}
+
+	// FrameBuffer
+	{
+		m_ptrFrameBuffer = GfxRenderer()->NewFrameBuffer(m_ptrShadowTexture->GetWidth(), m_ptrShadowTexture->GetHeight(), numAttachments);
+		m_ptrFrameBuffer->SetAttachmentTexture(0, m_ptrShadowTexture);
+		m_ptrFrameBuffer->Create(m_ptrRenderPass);
+	}
 }
 
 void CPassShadow::Update(void)
@@ -115,23 +108,18 @@ void CPassShadow::Update(void)
 
 void CPassShadow::Render(int indexQueue, const CGfxSemaphore* pWaitSemaphore)
 {
-	const int indexFrame = GfxRenderer()->GetSwapChain()->GetFrameIndex();
-
-	const CGfxRenderPassPtr ptrRenderPass = m_ptrRenderPass;
-	const CGfxFrameBufferPtr ptrFrameBuffer = m_ptrFrameBuffer;
-	const CGfxRenderTexturePtr ptrShadowMapTexture = m_pRenderSolution->GetShadowMapTexture();
-
-	const CGfxCommandBufferPtr ptrMainCommandBuffer = m_ptrMainCommandBuffer[indexFrame];
+	const CGfxCommandBufferPtr ptrMainCommandBuffer = m_ptrMainCommandBuffer[GfxRenderer()->GetSwapChain()->GetFrameIndex()];
 	{
 		ptrMainCommandBuffer->Clearup();
+
 		GfxRenderer()->BeginRecord(ptrMainCommandBuffer);
 		{
-			GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, ptrShadowMapTexture, GFX_IMAGE_LAYOUT_GENERAL);
+			GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, m_ptrShadowTexture, GFX_IMAGE_LAYOUT_GENERAL);
 
-			GfxRenderer()->CmdBeginRenderPass(ptrMainCommandBuffer, ptrFrameBuffer, ptrRenderPass);
+			GfxRenderer()->CmdBeginRenderPass(ptrMainCommandBuffer, m_ptrFrameBuffer, m_ptrRenderPass);
 			{
-				const float w = ptrShadowMapTexture->GetWidth();
-				const float h = ptrShadowMapTexture->GetHeight();
+				const float w = m_ptrShadowTexture->GetWidth();
+				const float h = m_ptrShadowTexture->GetHeight();
 
 				const glm::vec4 area[4] = {
 					glm::vec4(0.0f, 0.0f, 0.5f, 0.5f) * glm::vec4(w, h, w, h),
@@ -141,7 +129,7 @@ void CPassShadow::Render(int indexQueue, const CGfxSemaphore* pWaitSemaphore)
 				};
 
 				for (int indexLevel = 0; indexLevel < 4; indexLevel++) {
-					m_pRenderSolution->GetMainCameraQueue()->CmdDraw(indexQueue, ptrMainCommandBuffer, m_ptrDescriptorSetShadowPass[indexLevel], SHADOW_PASS_NAME, area[indexLevel], area[indexLevel], 0xffffffff);
+					m_pCamera->GetRenderQueue()->CmdDraw(indexQueue, ptrMainCommandBuffer, m_ptrDescriptorSetPass[indexLevel], SHADOW_PASS_NAME, area[indexLevel], area[indexLevel], 0xffffffff);
 				}
 			}
 			GfxRenderer()->CmdEndRenderPass(ptrMainCommandBuffer);
@@ -149,4 +137,9 @@ void CPassShadow::Render(int indexQueue, const CGfxSemaphore* pWaitSemaphore)
 		GfxRenderer()->EndRecord(ptrMainCommandBuffer);
 	}
 	GfxRenderer()->Submit(ptrMainCommandBuffer, pWaitSemaphore);
+}
+
+const CGfxSemaphore* CPassShadow::GetSemaphore(void) const
+{
+	return m_ptrMainCommandBuffer[GfxRenderer()->GetSwapChain()->GetFrameIndex()]->GetSemaphore();
 }

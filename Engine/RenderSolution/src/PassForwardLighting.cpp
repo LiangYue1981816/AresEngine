@@ -64,6 +64,11 @@ void CPassForwardLighting::CreateFrameBuffer(CGfxRenderTexturePtr ptrColorTextur
 	}
 }
 
+void CPassForwardLighting::Update(void)
+{
+
+}
+
 void CPassForwardLighting::Render(int indexQueue, const CGfxSemaphore* pWaitSemaphore)
 {
 	const CGfxCommandBufferPtr ptrMainCommandBuffer = m_ptrMainCommandBuffer[GfxRenderer()->GetSwapChain()->GetFrameIndex()];

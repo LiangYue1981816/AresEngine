@@ -62,6 +62,11 @@ void CPassDefault::CreateFrameBuffer(CGfxRenderTexturePtr ptrColorTexture, CGfxR
 	}
 }
 
+void CPassDefault::Update(void)
+{
+
+}
+
 void CPassDefault::Render(int indexQueue, const CGfxSemaphore* pWaitSemaphore)
 {
 	const CGfxCommandBufferPtr ptrMainCommandBuffer = m_ptrMainCommandBuffer[GfxRenderer()->GetSwapChain()->GetFrameIndex()];

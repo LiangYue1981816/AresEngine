@@ -4,23 +4,24 @@
 
 class CALL_API CPassShadow
 {
+	friend class CCamera;
 	friend class CRenderSolution;
 
 
 private:
-	CPassShadow(CRenderSolution* pRenderSolution);
+	CPassShadow(CCamera* pCamera, CRenderSolution* pRenderSolution);
 	virtual ~CPassShadow(void);
 
 
 private:
-	const CGfxSemaphore* GetSemaphore(void) const;
-
-private:
-	void SetSplitFactor(float f1, float f2, float f3);
+	void CreateFrameBuffer(CGfxRenderTexturePtr ptrShadowTexture);
 
 private:
 	void Update(void);
 	void Render(int indexQueue, const CGfxSemaphore* pWaitSemaphore);
+
+private:
+	const CGfxSemaphore* GetSemaphore(void) const;
 
 
 private:
@@ -30,9 +31,13 @@ private:
 	CGfxRenderPassPtr m_ptrRenderPass;
 	CGfxFrameBufferPtr m_ptrFrameBuffer;
 
-	CGfxDescriptorSetPtr m_ptrDescriptorSetShadowPass[4];
+	CGfxRenderTexturePtr m_ptrShadowTexture;
+
+private:
+	CGfxDescriptorSetPtr m_ptrDescriptorSetPass[4];
 	CGfxCommandBufferPtr m_ptrMainCommandBuffer[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
 
 private:
+	CCamera* m_pCamera;
 	CRenderSolution* m_pRenderSolution;
 };

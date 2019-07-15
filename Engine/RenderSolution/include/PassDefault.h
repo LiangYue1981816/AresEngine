@@ -17,7 +17,10 @@ private:
 	void CreateFrameBuffer(CGfxRenderTexturePtr ptrColorTexture, CGfxRenderTexturePtr ptrDepthStencilTexture);
 
 private:
+	void Update(void);
 	void Render(int indexQueue, const CGfxSemaphore* pWaitSemaphore);
+
+private:
 	const CGfxSemaphore* GetSemaphore(void) const;
 
 
