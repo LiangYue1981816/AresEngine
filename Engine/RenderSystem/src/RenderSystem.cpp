@@ -30,6 +30,143 @@ const uint32_t FORWARD_LIGHTING_PASS_NAME = HashValue("ForwardLighting");
 const uint32_t SHADOW_PASS_NAME = HashValue("Shadow");
 
 
+CRenderSystem::CRenderSystem(GfxApi api, void* hInstance, void* hWnd, void* hDC, int width, int height, GfxPixelFormat format)
+	: m_pRenderer(nullptr)
+	, m_pEngineUniform(nullptr)
+{
+	switch ((int)api) {
+	case GFX_API_GLES3:
+		m_pRenderer = new CGLES3Renderer(hInstance, hWnd, hDC, width, height, format);
+		m_pEngineUniform = new CGfxUniformEngine;
+		break;
+
+	case GFX_API_VULKAN:
+		m_pRenderer = new CVKRenderer(hInstance, hWnd, hDC, width, height, format);
+		m_pEngineUniform = new CGfxUniformEngine;
+		break;
+	}
+
+	SetVertexAttributes(vertexAttributes, VERTEX_ATTRIBUTE_COUNT);
+	SetInstanceAttributes(instanceAttributes, INSTANCE_ATTRIBUTE_COUNT);
+}
+
+CRenderSystem::~CRenderSystem(void)
+{
+	delete m_pEngineUniform;
+	delete m_pRenderer;
+}
+
+void CRenderSystem::SetTime(float t, float dt)
+{
+	m_pEngineUniform->SetTime(t, dt);
+}
+
+void CRenderSystem::SetEnvLightFactor(float factor)
+{
+	m_pEngineUniform->SetEnvLightFactor(factor);
+}
+
+void CRenderSystem::SetAmbientLightFactor(float factor)
+{
+	m_pEngineUniform->SetAmbientLightFactor(factor);
+}
+
+void CRenderSystem::SetMainPointLightFactor(float factor)
+{
+	m_pEngineUniform->SetMainPointLightFactor(factor);
+}
+
+void CRenderSystem::SetMainDirectLightFactor(float factor)
+{
+	m_pEngineUniform->SetMainDirectLightFactor(factor);
+}
+
+void CRenderSystem::SetAmbientLightSH(float shRed[9], float shGreen[9], float shBlue[9])
+{
+	m_pEngineUniform->SetAmbientLightSH(shRed, shGreen, shBlue);
+}
+
+void CRenderSystem::SetAmbientLightRotation(float angle, float axisx, float axisy, float axisz)
+{
+	m_pEngineUniform->SetAmbientLightRotation(angle, axisx, axisy, axisz);
+}
+
+void CRenderSystem::SetAmbientLightDirection(float dirx, float diry, float dirz)
+{
+	m_pEngineUniform->SetAmbientLightDirection(dirx, diry, dirz);
+}
+
+void CRenderSystem::SetMainPointLightColor(float red, float green, float blue)
+{
+	m_pEngineUniform->SetMainPointLightColor(red, green, blue);
+}
+
+void CRenderSystem::SetMainPointLightPosition(float posx, float posy, float posz, float radius)
+{
+	m_pEngineUniform->SetMainPointLightPosition(posx, posy, posz, radius);
+}
+
+void CRenderSystem::SetMainPointLightAttenuation(float linear, float square, float constant)
+{
+	m_pEngineUniform->SetMainPointLightAttenuation(linear, square, constant);
+}
+
+void CRenderSystem::SetMainDirectLightColor(float red, float green, float blue)
+{
+	m_pEngineUniform->SetMainDirectLightColor(red, green, blue);
+}
+
+void CRenderSystem::SetMainDirectLightDirection(float dirx, float diry, float dirz)
+{
+	m_pEngineUniform->SetMainDirectLightDirection(dirx, diry, dirz);
+}
+
+void CRenderSystem::SetMainFogColor(float red, float green, float blue)
+{
+	m_pEngineUniform->SetMainFogColor(red, green, blue);
+}
+
+void CRenderSystem::SetMainFogHeightDensity(float startHeight, float endHeight, float density)
+{
+	m_pEngineUniform->SetMainFogHeightDensity(startHeight, endHeight, density);
+}
+
+void CRenderSystem::SetMainFogDistanceDensity(float startDistance, float endDistance, float density)
+{
+	m_pEngineUniform->SetMainFogDistanceDensity(startDistance, endDistance, density);
+}
+
+void CRenderSystem::SetShadowOrtho(int indexLevel, float left, float right, float bottom, float top, float zNear, float zFar)
+{
+	m_pEngineUniform->SetShadowOrtho(indexLevel, left, right, bottom, top, zNear, zFar);
+}
+
+void CRenderSystem::SetShadowLookat(int indexLevel, float eyex, float eyey, float eyez, float centerx, float centery, float centerz, float upx, float upy, float upz)
+{
+	m_pEngineUniform->SetShadowLookat(indexLevel, eyex, eyey, eyez, centerx, centery, centerz, upx, upy, upz);
+}
+
+void CRenderSystem::SetShadowRange(int indexLevel, float range)
+{
+	m_pEngineUniform->SetShadowRange(indexLevel, range);
+}
+
+void CRenderSystem::SetShadowResolution(int indexLevel, float resolution)
+{
+	m_pEngineUniform->SetShadowResolution(indexLevel, resolution);
+}
+
+void CRenderSystem::UpdateCamera(CCamera* pCamera)
+{
+
+}
+
+void CRenderSystem::RenderCamera(CCamera* pCamera)
+{
+
+}
+
+/*
 CRenderSolution::CRenderSolution(GfxApi api, RenderSolution solution, void* hInstance, void* hWnd, void* hDC, int width, int height, GfxPixelFormat format)
 	: m_pRenderer(nullptr)
 
@@ -112,12 +249,6 @@ void CRenderSolution::CreateAttachments(void)
 			m_ptrPresentColorTexture[indexFrame] = GfxRenderer()->GetSwapChain()->GetFrameTexture(indexFrame);
 			m_ptrPresentDepthStencilTexture[indexFrame] = GfxRenderer()->NewRenderTexture(HashValueFormat("DepthStencilTexture(%d)", indexFrame));
 			m_ptrPresentDepthStencilTexture[indexFrame]->Create(GFX_PIXELFORMAT_D32_SFLOAT_PACK32, width, height);
-			/*
-			m_ptrPresentColorTextureMSAA[indexFrame] = GfxRenderer()->NewRenderTexture(HashValueFormat("ColorTextureMSAA(%d)", indexFrame));
-			m_ptrPresentColorTextureMSAA[indexFrame]->Create(GFX_PIXELFORMAT_BGRA8_UNORM_PACK8, width, height, samples);
-			m_ptrPresentDepthStencilTextureMSAA[indexFrame] = GfxRenderer()->NewRenderTexture(HashValueFormat("DepthStencilTextureMSAA(%d)", indexFrame));
-			m_ptrPresentDepthStencilTextureMSAA[indexFrame]->Create(GFX_PIXELFORMAT_D32_SFLOAT_PACK32, width, height, samples);
-			*/
 		}
 	}
 
@@ -138,10 +269,6 @@ void CRenderSolution::DestroyAttachments(void)
 		for (int indexFrame = 0; indexFrame < CGfxSwapChain::SWAPCHAIN_FRAME_COUNT; indexFrame++) {
 			m_ptrPresentColorTexture[indexFrame].Release();
 			m_ptrPresentDepthStencilTexture[indexFrame].Release();
-			/*
-			m_ptrPresentColorTextureMSAA[indexFrame].Release();
-			m_ptrPresentDepthStencilTextureMSAA[indexFrame].Release();
-			*/
 		}
 	}
 
@@ -319,3 +446,4 @@ void CRenderSolution::SetMainFogDistanceDensity(float startDistance, float endDi
 {
 	m_pEngineUniform->SetMainFogDistanceDensity(startDistance, endDistance, density);
 }
+*/
