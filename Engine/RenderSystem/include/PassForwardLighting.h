@@ -1,5 +1,5 @@
 #pragma once
-#include "RenderSolution.h"
+#include "RenderSystem.h"
 
 
 class CALL_API CPassForwardLighting

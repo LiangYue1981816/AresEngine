@@ -1,5 +1,5 @@
 #pragma once
-#include "RenderSolution.h"
+#include "RenderSystem.h"
 
 
 class CALL_API CPassShadow
@@ -34,6 +34,7 @@ private:
 	CGfxRenderTexturePtr m_ptrShadowTexture;
 
 private:
+	CGfxUniformCamera* m_pShadowCameraUniform[4];
 	CGfxDescriptorSetPtr m_ptrDescriptorSetPass[4];
 	CGfxCommandBufferPtr m_ptrMainCommandBuffer[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
 
