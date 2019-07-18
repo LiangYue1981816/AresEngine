@@ -35,6 +35,11 @@ private:
 public:
 	void SetTime(float t, float dt);
 
+	void SetEnvLightFactor(float factor);
+	void SetAmbientLightFactor(float factor);
+	void SetMainPointLightFactor(float factor);
+	void SetMainDirectLightFactor(float factor);
+
 	void SetAmbientLightSH(float shRed[9], float shGreen[9], float shBlue[9]);
 	void SetAmbientLightRotation(float angle, float axisx, float axisy, float axisz);
 	void SetAmbientLightDirection(float dirx, float diry, float dirz);
@@ -46,14 +51,9 @@ public:
 	void SetMainDirectLightColor(float red, float green, float blue);
 	void SetMainDirectLightDirection(float dirx, float diry, float dirz);
 
-	void SetAmbientLightFactor(float factor);
-	void SetMainPointLightFactor(float factor);
-	void SetMainDirectLightFactor(float factor);
-	void SetMainEnvLightFactor(float factor);
-
-	void SetFogColor(float red, float green, float blue);
-	void SetFogHeightDensity(float startHeight, float endHeight, float density);
-	void SetFogDistanceDensity(float startDistance, float endDistance, float density);
+	void SetMainFogColor(float red, float green, float blue);
+	void SetMainFogHeightDensity(float startHeight, float endHeight, float density);
+	void SetMainFogDistanceDensity(float startDistance, float endDistance, float density);
 
 	void SetShadowOrtho(int indexLevel, float left, float right, float bottom, float top, float zNear, float zFar);
 	void SetShadowLookat(int indexLevel, float eyex, float eyey, float eyez, float centerx, float centery, float centerz, float upx, float upy, float upz);
