@@ -211,13 +211,13 @@
     <Filter Include="Engine\Renderer\Vulkan\Source Files\Commands">
       <UniqueIdentifier>{19cef04b-3e17-494d-a98d-d672a39129b3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\RenderSolution">
+    <Filter Include="Engine\RenderSystem">
       <UniqueIdentifier>{8edcbdc2-3d50-470a-aacc-4e67c6cbfc48}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\RenderSolution\Header Files">
+    <Filter Include="Engine\RenderSystem\Header Files">
       <UniqueIdentifier>{b03b265d-7953-44f2-a525-f8ab793382d4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\RenderSolution\Source Files">
+    <Filter Include="Engine\RenderSystem\Source Files">
       <UniqueIdentifier>{84fe1aaf-d6e8-410f-80a2-54706235ab73}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -1537,19 +1537,19 @@
       <Filter>Engine\Renderer\Gfx\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\RenderSolution\include\RenderSolution.h">
-      <Filter>Engine\RenderSolution\Header Files</Filter>
+      <Filter>Engine\RenderSystem\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxUniformCamera.h">
       <Filter>Engine\Renderer\Gfx\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\RenderSolution\include\PassDefault.h">
-      <Filter>Engine\RenderSolution\Header Files</Filter>
+      <Filter>Engine\RenderSystem\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\RenderSolution\include\PassForwardLighting.h">
-      <Filter>Engine\RenderSolution\Header Files</Filter>
+      <Filter>Engine\RenderSystem\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\RenderSolution\include\PassShadow.h">
-      <Filter>Engine\RenderSolution\Header Files</Filter>
+      <Filter>Engine\RenderSystem\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxSemaphore.h">
       <Filter>Engine\Renderer\Gfx\Header Files</Filter>
@@ -1561,7 +1561,7 @@
       <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\RenderSolution\include\Camera.h">
-      <Filter>Engine\RenderSolution\Header Files</Filter>
+      <Filter>Engine\RenderSystem\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -2235,25 +2235,25 @@
       <Filter>Engine\Renderer\Gfx\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\RenderSolution\src\RenderSolution.cpp">
-      <Filter>Engine\RenderSolution\Source Files</Filter>
+      <Filter>Engine\RenderSystem\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxUniformCamera.cpp">
       <Filter>Engine\Renderer\Gfx\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\RenderSolution\src\RenderSolution_Render.cpp">
-      <Filter>Engine\RenderSolution\Source Files</Filter>
+      <Filter>Engine\RenderSystem\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\RenderSolution\src\RenderSolution_Update.cpp">
-      <Filter>Engine\RenderSolution\Source Files</Filter>
+      <Filter>Engine\RenderSystem\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\RenderSolution\src\PassDefault.cpp">
-      <Filter>Engine\RenderSolution\Source Files</Filter>
+      <Filter>Engine\RenderSystem\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\RenderSolution\src\PassForwardLighting.cpp">
-      <Filter>Engine\RenderSolution\Source Files</Filter>
+      <Filter>Engine\RenderSystem\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\RenderSolution\src\PassShadow.cpp">
-      <Filter>Engine\RenderSolution\Source Files</Filter>
+      <Filter>Engine\RenderSystem\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3Semaphore.cpp">
       <Filter>Engine\Renderer\GLES3\Source Files</Filter>
@@ -2262,7 +2262,7 @@
       <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\RenderSolution\src\Camera.cpp">
-      <Filter>Engine\RenderSolution\Source Files</Filter>
+      <Filter>Engine\RenderSystem\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
