@@ -56,6 +56,11 @@ CRenderSystem::~CRenderSystem(void)
 	delete m_pRenderer;
 }
 
+CGfxUniformEngine* CRenderSystem::GetEngineUniform(void) const
+{
+	return m_pEngineUniform;
+}
+
 void CRenderSystem::SetTime(float t, float dt)
 {
 	m_pEngineUniform->SetTime(t, dt);

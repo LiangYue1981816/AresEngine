@@ -1,9 +1,9 @@
 #include "EngineHeader.h"
 
 
-CPassDefault::CPassDefault(CCamera* pCamera, CRenderSolution* pRenderSolution)
+CPassDefault::CPassDefault(CCamera* pCamera, CRenderSystem* pRenderSystem)
 	: m_pCamera(pCamera)
-	, m_pRenderSolution(pRenderSolution)
+	, m_pRenderSystem(pRenderSystem)
 {
 	// CommandBuffer
 	{

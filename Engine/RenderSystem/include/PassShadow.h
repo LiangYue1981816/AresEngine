@@ -9,7 +9,7 @@ class CALL_API CPassShadow
 
 
 private:
-	CPassShadow(CCamera* pCamera, CRenderSolution* pRenderSolution);
+	CPassShadow(CCamera* pCamera, CRenderSystem* pRenderSystem);
 	virtual ~CPassShadow(void);
 
 
@@ -40,5 +40,5 @@ private:
 
 private:
 	CCamera* m_pCamera;
-	CRenderSolution* m_pRenderSolution;
+	CRenderSystem* m_pRenderSystem;
 };

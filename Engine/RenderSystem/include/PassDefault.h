@@ -9,7 +9,7 @@ class CALL_API CPassDefault
 
 
 private:
-	CPassDefault(CCamera* pCamera, CRenderSolution* pRenderSolution);
+	CPassDefault(CCamera* pCamera, CRenderSystem* pRenderSystem);
 	virtual ~CPassDefault(void);
 
 
@@ -37,5 +37,5 @@ private:
 
 private:
 	CCamera* m_pCamera;
-	CRenderSolution* m_pRenderSolution;
+	CRenderSystem* m_pRenderSystem;
 };

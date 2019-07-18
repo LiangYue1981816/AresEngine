@@ -9,7 +9,7 @@ class CALL_API CPassForwardLighting
 
 
 private:
-	CPassForwardLighting(CCamera* pCamera, CRenderSolution* pRenderSolution);
+	CPassForwardLighting(CCamera* pCamera, CRenderSystem* pRenderSystem);
 	virtual ~CPassForwardLighting(void);
 
 
@@ -37,5 +37,5 @@ private:
 
 private:
 	CCamera* m_pCamera;
-	CRenderSolution* m_pRenderSolution;
+	CRenderSystem* m_pRenderSystem;
 };

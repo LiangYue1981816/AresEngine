@@ -2,13 +2,13 @@
 #include "PreHeader.h"
 
 
-#define CreateEngine(api, solution, hInstance, hWnd, hDC, width, height, format) CEngine::Create((api), (solution), (hInstance), (hWnd), (hDC), (width), (height), (format))
+#define CreateEngine(api, hInstance, hWnd, hDC, width, height, format) CEngine::Create((api), (hInstance), (hWnd), (hDC), (width), (height), (format))
 #define DestroyEngine() CEngine::Destroy()
 #define Engine() CEngine::GetInstance()
 
 
 #define SceneManager() CEngine::GetInstance()->GetSceneManager()
-#define RenderSolution() CEngine::GetInstance()->GetRenderSolution()
+#define RenderSystem() CEngine::GetInstance()->GetRenderSystem()
 
 
 class CALL_API CEngine

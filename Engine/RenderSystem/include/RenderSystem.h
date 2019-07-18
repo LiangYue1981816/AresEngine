@@ -33,6 +33,9 @@ private:
 
 
 public:
+	CGfxUniformEngine* GetEngineUniform(void) const;
+
+public:
 	void SetTime(float t, float dt);
 
 	void SetEnvLightFactor(float factor);

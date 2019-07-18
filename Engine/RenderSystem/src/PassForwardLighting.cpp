@@ -1,9 +1,9 @@
 #include "EngineHeader.h"
 
 
-CPassForwardLighting::CPassForwardLighting(CCamera* pCamera, CRenderSolution* pRenderSolution)
+CPassForwardLighting::CPassForwardLighting(CCamera* pCamera, CRenderSystem* pRenderSystem)
 	: m_pCamera(pCamera)
-	, m_pRenderSolution(pRenderSolution)
+	, m_pRenderSystem(pRenderSystem)
 {
 	// CommandBuffer
 	{
@@ -20,7 +20,7 @@ CPassForwardLighting::CPassForwardLighting(CCamera* pCamera, CRenderSolution* pR
 		ptrDescriptorLayout->Create();
 
 		m_ptrDescriptorSetPass = GfxRenderer()->NewDescriptorSet(FORWARD_LIGHTING_PASS_NAME, ptrDescriptorLayout);
-		m_ptrDescriptorSetPass->SetUniformBuffer(UNIFORM_ENGINE_NAME, m_pRenderSolution->GetEngineUniform()->GetUniformBuffer(), 0, m_pRenderSolution->GetEngineUniform()->GetUniformBuffer()->GetSize());
+		m_ptrDescriptorSetPass->SetUniformBuffer(UNIFORM_ENGINE_NAME, m_pRenderSystem->GetEngineUniform()->GetUniformBuffer(), 0, m_pRenderSystem->GetEngineUniform()->GetUniformBuffer()->GetSize());
 		m_ptrDescriptorSetPass->SetUniformBuffer(UNIFORM_CAMERA_NAME, m_pCamera->GetCameraUniform()->GetUniformBuffer(), 0, m_pCamera->GetCameraUniform()->GetUniformBuffer()->GetSize());
 		m_ptrDescriptorSetPass->Update();
 	}
