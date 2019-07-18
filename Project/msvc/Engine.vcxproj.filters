@@ -1536,20 +1536,8 @@
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxHelper.h">
       <Filter>Engine\Renderer\Gfx\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Engine\RenderSolution\include\RenderSolution.h">
-      <Filter>Engine\RenderSystem\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxUniformCamera.h">
       <Filter>Engine\Renderer\Gfx\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\RenderSolution\include\PassDefault.h">
-      <Filter>Engine\RenderSystem\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\RenderSolution\include\PassForwardLighting.h">
-      <Filter>Engine\RenderSystem\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\RenderSolution\include\PassShadow.h">
-      <Filter>Engine\RenderSystem\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxSemaphore.h">
       <Filter>Engine\Renderer\Gfx\Header Files</Filter>
@@ -1560,7 +1548,19 @@
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKSemaphore.h">
       <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Engine\RenderSolution\include\Camera.h">
+    <ClInclude Include="..\..\Engine\RenderSystem\include\Camera.h">
+      <Filter>Engine\RenderSystem\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\RenderSystem\include\PassDefault.h">
+      <Filter>Engine\RenderSystem\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\RenderSystem\include\PassForwardLighting.h">
+      <Filter>Engine\RenderSystem\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\RenderSystem\include\PassShadow.h">
+      <Filter>Engine\RenderSystem\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\RenderSystem\include\RenderSystem.h">
       <Filter>Engine\RenderSystem\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -2234,26 +2234,8 @@
     <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxHelper.cpp">
       <Filter>Engine\Renderer\Gfx\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Engine\RenderSolution\src\RenderSolution.cpp">
-      <Filter>Engine\RenderSystem\Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxUniformCamera.cpp">
       <Filter>Engine\Renderer\Gfx\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\RenderSolution\src\RenderSolution_Render.cpp">
-      <Filter>Engine\RenderSystem\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\RenderSolution\src\RenderSolution_Update.cpp">
-      <Filter>Engine\RenderSystem\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\RenderSolution\src\PassDefault.cpp">
-      <Filter>Engine\RenderSystem\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\RenderSolution\src\PassForwardLighting.cpp">
-      <Filter>Engine\RenderSystem\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\RenderSolution\src\PassShadow.cpp">
-      <Filter>Engine\RenderSystem\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3Semaphore.cpp">
       <Filter>Engine\Renderer\GLES3\Source Files</Filter>
@@ -2261,7 +2243,19 @@
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKSemaphore.cpp">
       <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Engine\RenderSolution\src\Camera.cpp">
+    <ClCompile Include="..\..\Engine\RenderSystem\src\Camera.cpp">
+      <Filter>Engine\RenderSystem\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\RenderSystem\src\PassDefault.cpp">
+      <Filter>Engine\RenderSystem\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\RenderSystem\src\PassForwardLighting.cpp">
+      <Filter>Engine\RenderSystem\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\RenderSystem\src\PassShadow.cpp">
+      <Filter>Engine\RenderSystem\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\RenderSystem\src\RenderSystem.cpp">
       <Filter>Engine\RenderSystem\Source Files</Filter>
     </ClCompile>
   </ItemGroup>

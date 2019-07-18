@@ -13,6 +13,11 @@
 #include "Base/include/FileManager.h"
 
 #include "Resource/include/ResourceLoader.h"
-#include "RenderSolution/include/Camera.h"
-#include "RenderSolution/include/RenderSolution.h"
+
+#include "RenderSystem/include/Camera.h"
+#include "RenderSystem/include/PassDefault.h"
+#include "RenderSystem/include/PassForwardLighting.h"
+#include "RenderSystem/include/PassShadow.h"
+#include "RenderSystem/include/RenderSystem.h"
+
 #include "Engine/include/Engine.h"

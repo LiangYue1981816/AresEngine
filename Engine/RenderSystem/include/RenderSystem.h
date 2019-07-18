@@ -1,8 +1,5 @@
 #pragma once
 #include "PreHeader.h"
-#include "PassDefault.h"
-#include "PassForwardLighting.h"
-#include "PassShadow.h"
 
 
 #define VERTEX_ATTRIBUTE_POSITION                          0x00000001
@@ -25,6 +22,59 @@
 #define INSTANCE_FORMAT_TRANSFORM INSTANCE_ATTRIBUTE_TRANSFORM
 
 
+class CALL_API CRenderSystem
+{
+	friend class CEngine;
+
+
+private:
+	CRenderSystem(GfxApi api, void* hInstance, void* hWnd, void* hDC, int width, int height, GfxPixelFormat format);
+	virtual ~CRenderSystem(void);
+
+
+public:
+	void SetTime(float t, float dt);
+
+	void SetAmbientLightSH(float shRed[9], float shGreen[9], float shBlue[9]);
+	void SetAmbientLightRotation(float angle, float axisx, float axisy, float axisz);
+	void SetAmbientLightDirection(float dirx, float diry, float dirz);
+	void SetAmbientLightFactor(float factor);
+
+	void SetMainPointLightColor(float red, float green, float blue);
+	void SetMainPointLightPosition(float posx, float posy, float posz, float radius);
+	void SetMainPointLightAttenuation(float linear, float square, float constant);
+	void SetMainPointLightFactor(float factor);
+
+	void SetMainDirectLightColor(float red, float green, float blue);
+	void SetMainDirectLightDirection(float dirx, float diry, float dirz);
+	void SetMainDirectLightFactor(float factor);
+
+	void SetMainFogColor(float red, float green, float blue);
+	void SetMainFogHeightDensity(float startHeight, float endHeight, float density);
+	void SetMainFogDistanceDensity(float startDistance, float endDistance, float density);
+
+	void SetShadowOrtho(int indexLevel, float left, float right, float bottom, float top, float zNear, float zFar);
+	void SetShadowLookat(int indexLevel, float eyex, float eyey, float eyez, float centerx, float centery, float centerz, float upx, float upy, float upz);
+	void SetShadowRange(int indexLevel, float range);
+	void SetShadowResolution(int indexLevel, float resolution);
+
+public:
+	void UpdateCamera(CCamera* pCamera, int indexQueue);
+	void RenderCamera(CCamera* pCamera, int indexQueue);
+
+
+private:
+	CGfxRenderer* m_pRenderer;
+
+private:
+	CGfxUniformEngine* m_pEngineUniform;
+	CGfxUniformCamera* m_pShadowUniform[4];
+};
+
+extern const uint32_t DEFAULT_PASS_NAME;
+extern const uint32_t FORWARD_LIGHTING_PASS_NAME;
+extern const uint32_t SHADOW_PASS_NAME;
+/*
 typedef enum RenderSolution {
 	RENDER_SOLUTION_DEFAULT = 0,
 	RENDER_SOLUTION_FORWARD,
@@ -138,7 +188,4 @@ private:
 	CPassForwardLighting* m_pPassForwardLighting;
 	CPassShadow* m_pPassShadow;
 };
-
-extern const uint32_t DEFAULT_PASS_NAME;
-extern const uint32_t FORWARD_LIGHTING_PASS_NAME;
-extern const uint32_t SHADOW_PASS_NAME;
+*/
