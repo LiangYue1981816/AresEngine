@@ -68,8 +68,7 @@ void CFileManager::SetPath(const char* szPathName, const char* szExtName)
 
 			uint32_t name = HashValue(szFileName);
 			m_files[name].pPack = nullptr;
-			strcpy(m_files[name].szFileName, szFileName);
-			strcpy(m_files[name].szFullName, szFullName);
+			m_files[name].strFullName = szFullName;
 		} while (_findnext(hFile, &fileData) == 0);
 
 		_findclose(hFile);
@@ -104,8 +103,7 @@ void CFileManager::SetPack(const char* szPackName, const char* szExtName)
 
 		uint32_t name = HashValue(szFileName);
 		m_files[name].pPack = pPack;
-		strcpy(m_files[name].szFileName, szFileName);
-		strcpy(m_files[name].szFullName, szFullName);
+		m_files[name].strFullName = szFullName;
 	}
 }
 
@@ -113,8 +111,7 @@ void CFileManager::SetFile(const char* szFileName, const char* szFullName)
 {
 	uint32_t name = HashValue(szFileName);
 	m_files[name].pPack = nullptr;
-	strcpy(m_files[name].szFileName, szFileName);
-	strcpy(m_files[name].szFullName, szFullName);
+	m_files[name].strFullName = szFullName;
 }
 
 const char* CFileManager::GetFullName(const char* szFileName)
@@ -127,7 +124,7 @@ const char* CFileManager::GetFullName(uint32_t name)
 	const auto& itFile = m_files.find(name);
 
 	if (itFile != m_files.end()) {
-		return itFile->second.szFullName;
+		return itFile->second.strFullName.c_str();
 	}
 	else {
 		return "";
@@ -144,11 +141,11 @@ bool CFileManager::LoadStream(uint32_t name, CStream* pStream)
 	const auto& itFile = m_files.find(name);
 
 	if (itFile != m_files.end()) {
-		if (pStream->LoadFromFile(itFile->second.szFullName)) {
+		if (pStream->LoadFromFile(itFile->second.strFullName.c_str())) {
 			return true;
 		}
 
-		if (pStream->LoadFromPack(itFile->second.pPack, itFile->second.szFullName)) {
+		if (pStream->LoadFromPack(itFile->second.pPack, itFile->second.strFullName.c_str())) {
 			return true;
 		}
 	}
