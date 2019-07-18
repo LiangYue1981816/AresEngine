@@ -61,8 +61,8 @@ public:
 	void SetShadowResolution(int indexLevel, float resolution);
 
 public:
-	void UpdateCamera(CCamera* pCamera, int indexQueue);
-	void RenderCamera(CCamera* pCamera, int indexQueue);
+	void UpdateCamera(CCamera* pCamera);
+	void RenderCamera(CCamera* pCamera);
 
 
 private:

@@ -71,11 +71,6 @@ layout (location = 13) in mediump vec4 inInstancePointLightAttenuation;
 		mediump vec4 cosTime;                                                      \
 		mediump vec4 deltaTime;                                                    \
 		                                                                           \
-		highp mat4 shadowProjectionMatrix[4];                                      \
-		highp mat4 shadowProjectionViewMatrix[4];                                  \
-		highp mat4 shadowViewMatrix[4];                                            \
-		highp vec4 shadowParams[4];                                                \
-		                                                                           \
 		mediump vec4 lightFactor;                                                  \
 		                                                                           \
 		mediump vec4 ambientLightRed0;                                             \
@@ -99,6 +94,11 @@ layout (location = 13) in mediump vec4 inInstancePointLightAttenuation;
 		mediump vec4 mainFogColor;                                                 \
 		mediump vec4 mainFogHeightParams;                                          \
 		mediump vec4 mainFogDistanceParams;                                        \
+		                                                                           \
+		highp mat4 shadowProjectionMatrix[4];                                      \
+		highp mat4 shadowProjectionViewMatrix[4];                                  \
+		highp mat4 shadowViewMatrix[4];                                            \
+		highp vec4 shadowParams[4];                                                \
 	} engine
 
 USE_CAMERA_UNIFORM;
