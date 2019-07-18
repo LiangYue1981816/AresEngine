@@ -11,10 +11,10 @@ CEngine* CEngine::GetInstance(void)
 	return pInstance;
 }
 
-void CEngine::Create(GfxApi api, RenderSolution solution, void* hInstance, void* hWnd, void* hDC, int width, int height, GfxPixelFormat format)
+void CEngine::Create(GfxApi api, void* hInstance, void* hWnd, void* hDC, int width, int height, GfxPixelFormat format)
 {
 	if (pInstance == nullptr) {
-		pInstance = new CEngine(api, solution, hInstance, hWnd, hDC, width, height, format);
+		pInstance = new CEngine(api, hInstance, hWnd, hDC, width, height, format);
 	}
 }
 
@@ -32,7 +32,7 @@ void CEngine::Destroy(void)
 #endif
 }
 
-CEngine::CEngine(GfxApi api, RenderSolution solution, void* hInstance, void* hWnd, void* hDC, int width, int height, GfxPixelFormat format)
+CEngine::CEngine(GfxApi api, void* hInstance, void* hWnd, void* hDC, int width, int height, GfxPixelFormat format)
 	: m_indexQueue(0)
 
 	, m_lastTime(0.0f)
@@ -41,7 +41,7 @@ CEngine::CEngine(GfxApi api, RenderSolution solution, void* hInstance, void* hWn
 
 	, m_pFileManager(nullptr)
 	, m_pSceneManager(nullptr)
-	, m_pRenderSolution(nullptr)
+	, m_pRenderSystem(nullptr)
 	, m_pResourceLoader(nullptr)
 
 #ifdef PLATFORM_WINDOWS
@@ -50,7 +50,7 @@ CEngine::CEngine(GfxApi api, RenderSolution solution, void* hInstance, void* hWn
 {
 	pInstance = this;
 
-	m_pRenderSolution = new CRenderSolution(api, solution, hInstance, hWnd, hDC, width, height, format);
+	m_pRenderSystem = new CRenderSystem(api, hInstance, hWnd, hDC, width, height, format);
 	m_pFileManager = new CFileManager;
 	m_pSceneManager = new CSceneManager;
 	m_pResourceLoader = new CResourceLoader;
@@ -81,7 +81,7 @@ CEngine::~CEngine(void)
 	delete m_pResourceLoader;
 	delete m_pSceneManager;
 	delete m_pFileManager;
-	delete m_pRenderSolution;
+	delete m_pRenderSystem;
 }
 
 float CEngine::GetDeltaTime(void) const
@@ -99,9 +99,9 @@ CSceneManager* CEngine::GetSceneManager(void) const
 	return m_pSceneManager;
 }
 
-CRenderSolution* CEngine::GetRenderSolution(void) const
+CRenderSystem* CEngine::GetRenderSystem(void) const
 {
-	return m_pRenderSolution;
+	return m_pRenderSystem;
 }
 
 void CEngine::Wait(void)
@@ -118,7 +118,7 @@ void CEngine::Update(void)
 
 void CEngine::Render(void)
 {
-	m_pRenderSolution->Render(1 - m_indexQueue);
+
 }
 
 void CEngine::UpdateThread(void)
@@ -130,7 +130,6 @@ void CEngine::UpdateThread(void)
 	m_lastTime = currTime;
 
 	m_pSceneManager->UpdateLogic(m_totalTime, m_deltaTime);
-	m_pRenderSolution->UpdateCamera(m_indexQueue);
 }
 
 void* CEngine::WorkThread(void* pParams)
