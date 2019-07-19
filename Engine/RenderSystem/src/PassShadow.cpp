@@ -71,7 +71,7 @@ void CPassShadow::Update(void)
 	const glm::camera mainCamera = m_pCamera->GetCamera()->GetCamera();
 	const glm::vec4 mainLightDirection = m_pRenderSystem->GetEngineUniform()->GetParams().mainDirectLightDirection * glm::vec4(-1.0f, -1.0f, -1.0f, 0.0f);
 
-	for (int indexFrustum = 0; indexFrustum < 4; indexFrustum++) {
+	for (int indexLevel = 0; indexLevel < 4; indexLevel++) {
 		glm::vec3 minVertex = glm::vec3(FLT_MAX, FLT_MAX, FLT_MAX);
 		glm::vec3 maxVertex = glm::vec3(-FLT_MAX, -FLT_MAX, -FLT_MAX);
 
@@ -80,7 +80,7 @@ void CPassShadow::Update(void)
 			glm::vec4 vertexBegin = mainCamera.getFrustumVertexInWorldSpace(indexFrustumLine);
 			glm::vec4 vertexEnd = mainCamera.getFrustumVertexInWorldSpace(indexFrustumLine + 4);
 
-			vertex = vertexBegin + (vertexEnd - vertexBegin) * m_splitFactors[indexFrustum];
+			vertex = vertexBegin + (vertexEnd - vertexBegin) * m_splitFactors[indexLevel];
 			if (minVertex.x > vertex.x) minVertex.x = vertex.x;
 			if (minVertex.y > vertex.y) minVertex.y = vertex.y;
 			if (minVertex.z > vertex.z) minVertex.z = vertex.z;
@@ -88,7 +88,7 @@ void CPassShadow::Update(void)
 			if (maxVertex.y < vertex.y) maxVertex.y = vertex.y;
 			if (maxVertex.z < vertex.z) maxVertex.z = vertex.z;
 
-			vertex = vertexBegin + (vertexEnd - vertexBegin) * m_splitFactors[indexFrustum + 1];
+			vertex = vertexBegin + (vertexEnd - vertexBegin) * m_splitFactors[indexLevel + 1];
 			if (minVertex.x > vertex.x) minVertex.x = vertex.x;
 			if (minVertex.y > vertex.y) minVertex.y = vertex.y;
 			if (minVertex.z > vertex.z) minVertex.z = vertex.z;
@@ -102,13 +102,13 @@ void CPassShadow::Update(void)
 		const float resolution = 1024;
 		glm::sphere sphereFrustum = glm::sphere(minVertex, maxVertex);
 
-		m_pShadowCameraUniform[indexFrustum]->SetOrtho(-sphereFrustum.radius, sphereFrustum.radius, -sphereFrustum.radius, sphereFrustum.radius, zNear, zFar);
-		m_pShadowCameraUniform[indexFrustum]->SetLookat(sphereFrustum.center.x, sphereFrustum.center.y, sphereFrustum.center.z, sphereFrustum.center.x + mainLightDirection.x, sphereFrustum.center.y + mainLightDirection.y, sphereFrustum.center.z + mainLightDirection.z, 0.0f, 1.0f, 0.0f);
+		m_pShadowCameraUniform[indexLevel]->SetOrtho(-sphereFrustum.radius, sphereFrustum.radius, -sphereFrustum.radius, sphereFrustum.radius, zNear, zFar);
+		m_pShadowCameraUniform[indexLevel]->SetLookat(sphereFrustum.center.x, sphereFrustum.center.y, sphereFrustum.center.z, sphereFrustum.center.x + mainLightDirection.x, sphereFrustum.center.y + mainLightDirection.y, sphereFrustum.center.z + mainLightDirection.z, 0.0f, 1.0f, 0.0f);
 		
-		m_pRenderSystem->GetEngineUniform()->SetShadowOrtho(indexFrustum, -sphereFrustum.radius, sphereFrustum.radius, -sphereFrustum.radius, sphereFrustum.radius, zNear, zFar);
-		m_pRenderSystem->GetEngineUniform()->SetShadowLookat(indexFrustum, sphereFrustum.center.x, sphereFrustum.center.y, sphereFrustum.center.z, sphereFrustum.center.x + mainLightDirection.x, sphereFrustum.center.y + mainLightDirection.y, sphereFrustum.center.z + mainLightDirection.z, 0.0f, 1.0f, 0.0f);
-		m_pRenderSystem->GetEngineUniform()->SetShadowRange(indexFrustum, zFar - zNear);
-		m_pRenderSystem->GetEngineUniform()->SetShadowResolution(indexFrustum, resolution);
+		m_pRenderSystem->GetEngineUniform()->SetMainShadowOrtho(indexLevel, -sphereFrustum.radius, sphereFrustum.radius, -sphereFrustum.radius, sphereFrustum.radius, zNear, zFar);
+		m_pRenderSystem->GetEngineUniform()->SetMainShadowLookat(indexLevel, sphereFrustum.center.x, sphereFrustum.center.y, sphereFrustum.center.z, sphereFrustum.center.x + mainLightDirection.x, sphereFrustum.center.y + mainLightDirection.y, sphereFrustum.center.z + mainLightDirection.z, 0.0f, 1.0f, 0.0f);
+		m_pRenderSystem->GetEngineUniform()->SetMainShadowRange(indexLevel, zFar - zNear);
+		m_pRenderSystem->GetEngineUniform()->SetMainShadowResolution(indexLevel, resolution);
 	}
 }
 
