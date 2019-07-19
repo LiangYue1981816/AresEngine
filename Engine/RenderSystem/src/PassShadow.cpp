@@ -112,7 +112,7 @@ void CPassShadow::Update(void)
 	}
 }
 
-void CPassShadow::Render(int indexQueue, const CGfxSemaphore* pWaitSemaphore)
+void CPassShadow::Render(CTaskGraph& taskGraph, const CGfxSemaphore* pWaitSemaphore)
 {
 	const CGfxCommandBufferPtr ptrMainCommandBuffer = m_ptrMainCommandBuffer[GfxRenderer()->GetSwapChain()->GetFrameIndex()];
 	{
@@ -135,7 +135,7 @@ void CPassShadow::Render(int indexQueue, const CGfxSemaphore* pWaitSemaphore)
 				};
 
 				for (int indexLevel = 0; indexLevel < 4; indexLevel++) {
-					m_pCamera->GetRenderQueue()->CmdDraw(indexQueue, ptrMainCommandBuffer, m_ptrDescriptorSetPass[indexLevel], SHADOW_PASS_NAME, area[indexLevel], area[indexLevel], 0xffffffff);
+					m_pCamera->GetRenderQueue()->CmdDraw(taskGraph, ptrMainCommandBuffer, m_ptrDescriptorSetPass[indexLevel], SHADOW_PASS_NAME, area[indexLevel], area[indexLevel], 0xffffffff);
 				}
 			}
 			GfxRenderer()->CmdEndRenderPass(ptrMainCommandBuffer);

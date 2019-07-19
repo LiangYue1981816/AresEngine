@@ -11,7 +11,6 @@ public:
 	CTaskComponentUpdateCamera(void)
 		: m_pCamera(nullptr)
 		, m_pRenderQueue(nullptr)
-		, m_indexQueue(0)
 
 		, m_indexBegin(0)
 		, m_indexEnd(0)
@@ -26,11 +25,10 @@ public:
 
 
 public:
-	void SetParams(CComponentManager<T>* pComponentManager, int numThreads, int indexThread, CGfxCamera* pCamera, CGfxRenderQueue* pRenderQueue, int indexQueue)
+	void SetParams(CComponentManager<T>* pComponentManager, int numThreads, int indexThread, CGfxCamera* pCamera, CGfxRenderQueue* pRenderQueue)
 	{
 		m_pCamera = pCamera;
 		m_pRenderQueue = pRenderQueue;
-		m_indexQueue = indexQueue;
 
 		int count = (pComponentManager->GetComponentCount() + (numThreads - pComponentManager->GetComponentCount() % numThreads)) / numThreads;
 		m_indexBegin = std::max(count * indexThread, 0);
@@ -41,7 +39,7 @@ public:
 	void TaskFunc(int indexThread, void* pParams)
 	{
 		for (int index = m_indexBegin; index < m_indexEnd; index++) {
-			m_pComponentManager->GetComponentByIndex(index)->TaskUpdateCamera(m_pCamera, m_pRenderQueue, m_indexQueue, indexThread);
+			m_pComponentManager->GetComponentByIndex(index)->TaskUpdateCamera(m_pCamera, m_pRenderQueue, indexThread);
 		}
 	}
 
@@ -49,7 +47,6 @@ public:
 private:
 	CGfxCamera* m_pCamera;
 	CGfxRenderQueue* m_pRenderQueue;
-	int m_indexQueue;
 
 private:
 	int m_indexBegin;

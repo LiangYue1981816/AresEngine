@@ -18,7 +18,7 @@ private:
 
 private:
 	void Update(void);
-	void Render(int indexQueue, const CGfxSemaphore* pWaitSemaphore);
+	void Render(CTaskGraph& taskGraph, const CGfxSemaphore* pWaitSemaphore);
 
 private:
 	const CGfxSemaphore* GetSemaphore(void) const;
