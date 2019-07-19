@@ -25,8 +25,7 @@ public:
 	void SetCameraLookat(float eyex, float eyey, float eyez, float centerx, float centery, float centerz, float upx, float upy, float upz);
 
 public:
-	void Update(void);
-	void Render(void);
+	void Render(CTaskGraph& taskGraph);
 
 
 private:

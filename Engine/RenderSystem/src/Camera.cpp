@@ -62,12 +62,7 @@ void CCamera::SetCameraLookat(float eyex, float eyey, float eyez, float centerx,
 	m_pCameraUniform->SetLookat(eyex, eyey, eyez, centerx, centery, centerz, upx, upy, upz);
 }
 
-void CCamera::Update(void)
+void CCamera::Render(CTaskGraph& taskGraph)
 {
-	SceneManager()->UpdateCamera(m_pCamera, m_pRenderQueue);
-}
-
-void CCamera::Render(void)
-{
-
+	SceneManager()->UpdateCamera(taskGraph, m_pCamera, m_pRenderQueue);
 }

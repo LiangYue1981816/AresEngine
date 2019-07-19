@@ -129,7 +129,7 @@ void CEngine::UpdateThread(void)
 	m_totalTime = m_totalTime + m_deltaTime;
 	m_lastTime = currTime;
 
-	m_pSceneManager->UpdateLogic(m_totalTime, m_deltaTime);
+	m_pSceneManager->UpdateLogic(m_taskGraphUpdate, m_totalTime, m_deltaTime);
 }
 
 void* CEngine::WorkThread(void* pParams)
