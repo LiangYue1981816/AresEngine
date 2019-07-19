@@ -43,8 +43,8 @@ public:
 	CComponentPointLightPtr CreateComponentPointLight(uint32_t name);
 
 public:
-	void UpdateLogic(float totalTime, float deltaTime);
-	void UpdateCamera(CGfxCamera* pCamera, CGfxRenderQueue* pRenderQueue);
+	void UpdateLogic(CTaskGraph& taskGraph, float totalTime, float deltaTime);
+	void UpdateCamera(CTaskGraph& taskGraph, CGfxCamera* pCamera, CGfxRenderQueue* pRenderQueue);
 
 
 private:
@@ -55,7 +55,4 @@ private:
 	CComponentManager<CComponentSkin> m_skinManager;
 	CComponentManager<CComponentParticle> m_particleManager;
 	CComponentManager<CComponentPointLight> m_pointLightManager;
-
-private:
-	CTaskGraph m_taskGraph;
 };
