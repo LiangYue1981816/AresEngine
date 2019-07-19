@@ -43,9 +43,6 @@ private:
 
 
 private:
-	int m_indexQueue;
-
-private:
 	float m_lastTime;
 	float m_deltaTime;
 	float m_totalTime;
@@ -59,6 +56,10 @@ private:
 #ifdef PLATFORM_WINDOWS
 	CShaderCompiler* m_pShaderCompiler;
 #endif
+
+private:
+	CTaskGraph m_taskGraphUpdate;
+	CTaskGraph m_taskGraphRender;
 
 private:
 	event_t m_eventExit;

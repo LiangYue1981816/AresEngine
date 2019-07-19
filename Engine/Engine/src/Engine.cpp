@@ -33,9 +33,7 @@ void CEngine::Destroy(void)
 }
 
 CEngine::CEngine(GfxApi api, void* hInstance, void* hWnd, void* hDC, int width, int height, GfxPixelFormat format)
-	: m_indexQueue(0)
-
-	, m_lastTime(0.0f)
+	: m_lastTime(0.0f)
 	, m_deltaTime(0.0f)
 	, m_totalTime(0.0f)
 
@@ -47,6 +45,9 @@ CEngine::CEngine(GfxApi api, void* hInstance, void* hWnd, void* hDC, int width, 
 #ifdef PLATFORM_WINDOWS
 	, m_pShaderCompiler(nullptr)
 #endif
+
+	, m_taskGraphUpdate("TashGraph_Update")
+	, m_taskGraphRender("TashGraph_Render")
 {
 	pInstance = this;
 
@@ -107,7 +108,6 @@ CRenderSystem* CEngine::GetRenderSystem(void) const
 void CEngine::Wait(void)
 {
 	event_wait(&m_eventFinish);
-	m_indexQueue = 1 - m_indexQueue;
 }
 
 void CEngine::Update(void)
