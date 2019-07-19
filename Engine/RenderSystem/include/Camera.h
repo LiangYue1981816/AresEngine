@@ -30,7 +30,6 @@ public:
 
 
 private:
-	int m_indexQueue;
 	CGfxCamera* m_pCamera;
 	CGfxRenderQueue* m_pRenderQueue;
 	CGfxUniformCamera* m_pCameraUniform;

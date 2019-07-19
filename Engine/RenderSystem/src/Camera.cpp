@@ -2,9 +2,7 @@
 
 
 CCamera::CCamera(void)
-	: m_indexQueue(0)
-
-	, m_pCamera(nullptr)
+	: m_pCamera(nullptr)
 	, m_pRenderQueue(nullptr)
 	, m_pCameraUniform(nullptr)
 {
@@ -66,8 +64,7 @@ void CCamera::SetCameraLookat(float eyex, float eyey, float eyez, float centerx,
 
 void CCamera::Update(void)
 {
-	m_pRenderQueue->Clear(m_indexQueue);
-	SceneManager()->UpdateCamera(m_pCamera, m_pRenderQueue, m_indexQueue);
+	SceneManager()->UpdateCamera(m_pCamera, m_pRenderQueue);
 }
 
 void CCamera::Render(void)
