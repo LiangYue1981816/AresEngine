@@ -64,7 +64,7 @@ void CPassDefault::CreateFrameBuffer(CGfxRenderTexturePtr ptrColorTexture, CGfxR
 
 void CPassDefault::Update(void)
 {
-
+	m_pRenderSystem->GetEngineUniform()->Apply();
 }
 
 void CPassDefault::Render(CTaskGraph& taskGraph, const CGfxSemaphore* pWaitSemaphore)

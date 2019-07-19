@@ -66,7 +66,7 @@ void CPassForwardLighting::CreateFrameBuffer(CGfxRenderTexturePtr ptrColorTextur
 
 void CPassForwardLighting::Update(void)
 {
-
+	m_pRenderSystem->GetEngineUniform()->Apply();
 }
 
 void CPassForwardLighting::Render(CTaskGraph& taskGraph, const CGfxSemaphore* pWaitSemaphore)

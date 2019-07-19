@@ -111,6 +111,8 @@ void CPassShadow::Update(void)
 		m_pRenderSystem->GetEngineUniform()->SetMainShadowRange(indexLevel, zFar - zNear);
 		m_pRenderSystem->GetEngineUniform()->SetMainShadowResolution(indexLevel, resolution);
 	}
+
+	m_pRenderSystem->GetEngineUniform()->Apply();
 }
 
 void CPassShadow::Render(CTaskGraph& taskGraph, const CGfxSemaphore* pWaitSemaphore)
