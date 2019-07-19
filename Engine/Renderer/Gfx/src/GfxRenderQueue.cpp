@@ -65,7 +65,6 @@ private:
 
 
 CGfxRenderQueue::CGfxRenderQueue(void)
-	: m_taskGraph("TashGraph_RenderQueue")
 {
 
 }
@@ -119,7 +118,7 @@ void CGfxRenderQueue::End(void)
 	}
 }
 
-void CGfxRenderQueue::CmdDraw(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxDescriptorSetPtr ptrDescriptorSetPass, const uint32_t matPassName, const glm::vec4& scissor, const glm::vec4& viewport, uint32_t mask)
+void CGfxRenderQueue::CmdDraw(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer, const CGfxDescriptorSetPtr ptrDescriptorSetPass, const uint32_t matPassName, const glm::vec4& scissor, const glm::vec4& viewport, uint32_t mask)
 {
 	m_pipelineMaterialQueue.clear();
 	{
@@ -144,11 +143,11 @@ void CGfxRenderQueue::CmdDraw(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxD
 		}
 
 		for (int indexTask = 0; indexTask < tasks.size(); indexTask++) {
-			m_taskGraph.Task(&tasks[indexTask], this, nullptr);
+			taskGraph.Task(&tasks[indexTask], this, nullptr);
 		}
 
-		m_taskGraph.Dispatch();
-		m_taskGraph.Wait();
+		taskGraph.Dispatch();
+		taskGraph.Wait();
 
 		for (int indexTask = 0; indexTask < tasks.size(); indexTask++) {
 			ptrCommandBuffer->CmdExecute(tasks[indexTask].GetCommandBuffer());
