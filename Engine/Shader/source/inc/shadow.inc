@@ -32,14 +32,14 @@ highp float SimpleShadowDepth(highp sampler2D shadowmap, highp vec2 texCoord)
 
 highp float LinearShadowDepth(lowp int indexLevel, highp sampler2D shadowmap, highp vec2 texCoord)
 {
-	highp vec2 unnormalized = texCoord * shadowResolution(indexLevel);
+	highp vec2 unnormalized = texCoord * mainShadowResolution(indexLevel);
 	highp vec2 fractional = fract(unnormalized);
 	unnormalized = floor(unnormalized);
 
-	highp float v0 = DecodeFloatRGB(texture(shadowmap, (unnormalized + vec2(0.0f, 0.0f)) / shadowResolution(indexLevel)).rgb);
-	highp float v1 = DecodeFloatRGB(texture(shadowmap, (unnormalized + vec2(1.0f, 0.0f)) / shadowResolution(indexLevel)).rgb);
-	highp float v2 = DecodeFloatRGB(texture(shadowmap, (unnormalized + vec2(1.0f, 1.0f)) / shadowResolution(indexLevel)).rgb);
-	highp float v3 = DecodeFloatRGB(texture(shadowmap, (unnormalized + vec2(0.0f, 1.0f)) / shadowResolution(indexLevel)).rgb);
+	highp float v0 = DecodeFloatRGB(texture(shadowmap, (unnormalized + vec2(0.0f, 0.0f)) / mainShadowResolution(indexLevel)).rgb);
+	highp float v1 = DecodeFloatRGB(texture(shadowmap, (unnormalized + vec2(1.0f, 0.0f)) / mainShadowResolution(indexLevel)).rgb);
+	highp float v2 = DecodeFloatRGB(texture(shadowmap, (unnormalized + vec2(1.0f, 1.0f)) / mainShadowResolution(indexLevel)).rgb);
+	highp float v3 = DecodeFloatRGB(texture(shadowmap, (unnormalized + vec2(0.0f, 1.0f)) / mainShadowResolution(indexLevel)).rgb);
 
 	highp float v = 0.0;
 	v = (v0 + (v3 - v0) * fractional.y);
@@ -50,17 +50,17 @@ highp float LinearShadowDepth(lowp int indexLevel, highp sampler2D shadowmap, hi
 
 highp float SimpleShadowValue(lowp int indexLevel, highp vec3 position, highp sampler2D shadowmap)
 {
-	highp vec3 shadowViewPosition = (shadowViewMatrix(indexLevel) * vec4(position.xyz, 1.0)).xyz;
+	highp vec3 shadowViewPosition = (mainShadowViewMatrix(indexLevel) * vec4(position.xyz, 1.0)).xyz;
 	highp float curDepth = length(shadowViewPosition) - 0.001;
 
-	highp vec4 projectCoord = shadowProjectionViewMatrix(indexLevel) * vec4(position.xyz, 1.0);
+	highp vec4 projectCoord = mainShadowProjectionViewMatrix(indexLevel) * vec4(position.xyz, 1.0);
 	projectCoord.xy /= projectCoord.w;
  	projectCoord.xy = projectCoord.xy * 0.5 + vec2(0.5, 0.5);
 
-	highp float shadowDepth = SimpleShadowDepth(shadowmap, projectCoord.xy) * shadowClipPlane(indexLevel).x;
+	highp float shadowDepth = SimpleShadowDepth(shadowmap, projectCoord.xy) * mainShadowClipPlane(indexLevel).x;
 
 	highp vec3 cameraPosition = (cameraViewInverseMatrix * vec4(0.0, 0.0, 0.0, 1.0)).xyz;
-	highp float shadowAtten = (shadowDistance(indexLevel) - length(position - cameraPosition)) / shadowDistance(indexLevel);
+	highp float shadowAtten = (mainShadowDistance(indexLevel) - length(position - cameraPosition)) / mainShadowDistance(indexLevel);
 	shadowAtten = pow2(shadowAtten);
 	shadowAtten = clamp(shadowAtten, 0.0, 1.0);
 
@@ -73,17 +73,17 @@ highp float SimpleShadowValue(lowp int indexLevel, highp vec3 position, highp sa
 
 highp float LinearShadowValue(lowp int indexLevel, highp vec3 position, highp sampler2D shadowmap)
 {
-	highp vec3 shadowViewPosition = (shadowViewMatrix(indexLevel) * vec4(position.xyz, 1.0)).xyz;
+	highp vec3 shadowViewPosition = (mainShadowViewMatrix(indexLevel) * vec4(position.xyz, 1.0)).xyz;
 	highp float curDepth = length(shadowViewPosition) - 0.001;
 
-	highp vec4 projectCoord = shadowProjectionViewMatrix(indexLevel) * vec4(position.xyz, 1.0);
+	highp vec4 projectCoord = mainShadowProjectionViewMatrix(indexLevel) * vec4(position.xyz, 1.0);
 	projectCoord.xy /= projectCoord.w;
  	projectCoord.xy = projectCoord.xy * 0.5 + vec2(0.5, 0.5);
 
-	highp float shadowDepth = LinearShadowDepth(shadowmap, projectCoord.xy) * shadowClipPlane(indexLevel).x;
+	highp float shadowDepth = LinearShadowDepth(shadowmap, projectCoord.xy) * mainShadowClipPlane(indexLevel).x;
 
 	highp vec3 cameraPosition = (cameraViewInverseMatrix * vec4(0.0, 0.0, 0.0, 1.0)).xyz;
-	highp float shadowAtten = (shadowDistance(indexLevel) - length(position - cameraPosition)) / shadowDistance(indexLevel);
+	highp float shadowAtten = (mainShadowDistance(indexLevel) - length(position - cameraPosition)) / mainShadowDistance(indexLevel);
 	shadowAtten = pow2(shadowAtten);
 	shadowAtten = clamp(shadowAtten, 0.0, 1.0);
 

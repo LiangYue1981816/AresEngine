@@ -58,10 +58,10 @@ public:
 	void SetMainFogHeightDensity(float startHeight, float endHeight, float density);
 	void SetMainFogDistanceDensity(float startDistance, float endDistance, float density);
 
-	void SetShadowOrtho(int indexLevel, float left, float right, float bottom, float top, float zNear, float zFar);
-	void SetShadowLookat(int indexLevel, float eyex, float eyey, float eyez, float centerx, float centery, float centerz, float upx, float upy, float upz);
-	void SetShadowRange(int indexLevel, float range);
-	void SetShadowResolution(int indexLevel, float resolution);
+	void SetMainShadowOrtho(int indexLevel, float left, float right, float bottom, float top, float zNear, float zFar);
+	void SetMainShadowLookat(int indexLevel, float eyex, float eyey, float eyez, float centerx, float centery, float centerz, float upx, float upy, float upz);
+	void SetMainShadowRange(int indexLevel, float range);
+	void SetMainShadowResolution(int indexLevel, float resolution);
 
 public:
 	void UpdateCamera(CCamera* pCamera);

@@ -95,10 +95,10 @@ layout (location = 13) in mediump vec4 inInstancePointLightAttenuation;
 		mediump vec4 mainFogHeightParams;                                          \
 		mediump vec4 mainFogDistanceParams;                                        \
 		                                                                           \
-		highp mat4 shadowProjectionMatrix[4];                                      \
-		highp mat4 shadowProjectionViewMatrix[4];                                  \
-		highp mat4 shadowViewMatrix[4];                                            \
-		highp vec4 shadowParams[4];                                                \
+		highp mat4 mainShadowProjectionMatrix[4];                                  \
+		highp mat4 mainShadowProjectionViewMatrix[4];                              \
+		highp mat4 mainShadowViewMatrix[4];                                        \
+		highp vec4 mainShadowParams[4];                                            \
 	} engine
 
 USE_CAMERA_UNIFORM;
@@ -112,12 +112,12 @@ USE_CAMERA_UNIFORM;
 #define cameraViewInverseTransposeMatrix camera.viewInverseTransposeMatrix
 
 USE_ENGINE_UNIFORM;
-#define shadowProjectionMatrix(indexLevel) engine.shadowProjectionMatrix[indexLevel]
-#define shadowProjectionViewMatrix(indexLevel) engine.shadowProjectionViewMatrix[indexLevel]
-#define shadowViewMatrix(indexLevel) engine.shadowViewMatrix[indexLevel]
-#define shadowClipPlane(indexLevel) engine.shadowParams[indexLevel]
-#define shadowDistance(indexLevel) engine.shadowParams[indexLevel].z
-#define shadowResolution(indexLevel) engine.shadowParams[indexLevel].w
+#define mainShadowProjectionMatrix(indexLevel) engine.mainShadowProjectionMatrix[indexLevel]
+#define mainShadowProjectionViewMatrix(indexLevel) engine.mainShadowProjectionViewMatrix[indexLevel]
+#define mainShadowViewMatrix(indexLevel) engine.mainShadowViewMatrix[indexLevel]
+#define mainShadowClipPlane(indexLevel) engine.mainShadowParams[indexLevel]
+#define mainShadowDistance(indexLevel) engine.mainShadowParams[indexLevel].z
+#define mainShadowResolution(indexLevel) engine.mainShadowParams[indexLevel].w
 
 #define ambientLightFactor engine.lightFactor.x
 #define pointLightFactor engine.lightFactor.y

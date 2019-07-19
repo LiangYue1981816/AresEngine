@@ -141,24 +141,24 @@ void CRenderSystem::SetMainFogDistanceDensity(float startDistance, float endDist
 	m_pEngineUniform->SetMainFogDistanceDensity(startDistance, endDistance, density);
 }
 
-void CRenderSystem::SetShadowOrtho(int indexLevel, float left, float right, float bottom, float top, float zNear, float zFar)
+void CRenderSystem::SetMainShadowOrtho(int indexLevel, float left, float right, float bottom, float top, float zNear, float zFar)
 {
-	m_pEngineUniform->SetShadowOrtho(indexLevel, left, right, bottom, top, zNear, zFar);
+	m_pEngineUniform->SetMainShadowOrtho(indexLevel, left, right, bottom, top, zNear, zFar);
 }
 
-void CRenderSystem::SetShadowLookat(int indexLevel, float eyex, float eyey, float eyez, float centerx, float centery, float centerz, float upx, float upy, float upz)
+void CRenderSystem::SetMainShadowLookat(int indexLevel, float eyex, float eyey, float eyez, float centerx, float centery, float centerz, float upx, float upy, float upz)
 {
-	m_pEngineUniform->SetShadowLookat(indexLevel, eyex, eyey, eyez, centerx, centery, centerz, upx, upy, upz);
+	m_pEngineUniform->SetMainShadowLookat(indexLevel, eyex, eyey, eyez, centerx, centery, centerz, upx, upy, upz);
 }
 
-void CRenderSystem::SetShadowRange(int indexLevel, float range)
+void CRenderSystem::SetMainShadowRange(int indexLevel, float range)
 {
-	m_pEngineUniform->SetShadowRange(indexLevel, range);
+	m_pEngineUniform->SetMainShadowRange(indexLevel, range);
 }
 
-void CRenderSystem::SetShadowResolution(int indexLevel, float resolution)
+void CRenderSystem::SetMainShadowResolution(int indexLevel, float resolution)
 {
-	m_pEngineUniform->SetShadowResolution(indexLevel, resolution);
+	m_pEngineUniform->SetMainShadowResolution(indexLevel, resolution);
 }
 
 void CRenderSystem::UpdateCamera(CCamera* pCamera)
