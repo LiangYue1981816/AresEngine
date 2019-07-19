@@ -35,7 +35,7 @@ public:
 public:
 	void Wait(void);
 	void Update(void);
-	void Render(void);
+	void Render(CCamera* pCamera);
 
 private:
 	void UpdateThread(void);

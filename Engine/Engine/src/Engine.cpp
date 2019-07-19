@@ -71,6 +71,7 @@ CEngine::~CEngine(void)
 	event_signal(&m_eventExit);
 	event_signal(&m_eventDispatch);
 	pthread_join(m_thread, nullptr);
+
 	event_destroy(&m_eventExit);
 	event_destroy(&m_eventFinish);
 	event_destroy(&m_eventDispatch);
@@ -116,9 +117,10 @@ void CEngine::Update(void)
 	event_signal(&m_eventDispatch);
 }
 
-void CEngine::Render(void)
+void CEngine::Render(CCamera* pCamera)
 {
-
+	m_pRenderSystem->UpdateCamera(m_taskGraphRender, pCamera);
+	m_pRenderSystem->RenderCamera(m_taskGraphRender, pCamera);
 }
 
 void CEngine::UpdateThread(void)
