@@ -5,7 +5,7 @@
 class CALL_API CPassShadow
 {
 	friend class CCamera;
-	friend class CRenderSolution;
+	friend class CRenderSystem;
 
 
 private:
