@@ -30,6 +30,9 @@ extern const uint32_t SHADOW_PASS_NAME;
 class CALL_API CRenderSystem
 {
 	friend class CEngine;
+	friend class CPassDefault;
+	friend class CPassForwardLighting;
+	friend class CPassShadow;
 
 
 private:
@@ -37,7 +40,7 @@ private:
 	virtual ~CRenderSystem(void);
 
 
-public:
+private:
 	CGfxUniformEngine* GetEngineUniform(void) const;
 
 public:
@@ -68,7 +71,7 @@ public:
 	void SetMainShadowRange(int indexLevel, float range);
 	void SetMainShadowResolution(int indexLevel, float resolution);
 
-public:
+private:
 	void UpdateCamera(CTaskGraph& taskGraph, CCamera* pCamera);
 	void RenderCamera(CTaskGraph& taskGraph, CCamera* pCamera);
 

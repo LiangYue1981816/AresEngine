@@ -5,14 +5,26 @@ CCamera::CCamera(void)
 	: m_pCamera(nullptr)
 	, m_pRenderQueue(nullptr)
 	, m_pCameraUniform(nullptr)
+
+	, m_pPassDefault(nullptr)
+	, m_pPassForwardLighting(nullptr)
+	, m_pPassShadow(nullptr)
 {
 	m_pCamera = new CGfxCamera;
 	m_pRenderQueue = new CGfxRenderQueue;
 	m_pCameraUniform = new CGfxUniformCamera;
+
+	m_pPassDefault = new CPassDefault(this, RenderSystem());
+	m_pPassForwardLighting = new CPassForwardLighting(this, RenderSystem());
+	m_pPassShadow = new CPassShadow(this, RenderSystem());
 }
 
 CCamera::~CCamera(void)
 {
+	delete m_pPassShadow;
+	delete m_pPassForwardLighting;
+	delete m_pPassDefault;
+
 	delete m_pCamera;
 	delete m_pRenderQueue;
 	delete m_pCameraUniform;

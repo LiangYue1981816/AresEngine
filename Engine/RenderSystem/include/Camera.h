@@ -4,7 +4,10 @@
 
 class CALL_API CCamera
 {
-	friend class CEngine;
+	friend class CRenderSystem;
+	friend class CPassDefault;
+	friend class CPassForwardLighting;
+	friend class CPassShadow;
 
 
 private:
@@ -12,7 +15,7 @@ private:
 	virtual ~CCamera(void);
 
 
-public:
+private:
 	CGfxCamera* GetCamera(void) const;
 	CGfxRenderQueue* GetRenderQueue(void) const;
 	CGfxUniformCamera* GetCameraUniform(void) const;
@@ -29,4 +32,9 @@ private:
 	CGfxCamera* m_pCamera;
 	CGfxRenderQueue* m_pRenderQueue;
 	CGfxUniformCamera* m_pCameraUniform;
+
+private:
+	CPassDefault* m_pPassDefault;
+	CPassForwardLighting* m_pPassForwardLighting;
+	CPassShadow* m_pPassShadow;
 };
