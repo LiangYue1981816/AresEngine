@@ -161,12 +161,29 @@ void CRenderSystem::SetMainShadowResolution(int indexLevel, float resolution)
 	m_pEngineUniform->SetMainShadowResolution(indexLevel, resolution);
 }
 
-void CRenderSystem::UpdateCamera(CTaskGraph& taskGraph, CCamera* pCamera)
+void CRenderSystem::Update(CTaskGraph& taskGraph, CCamera* pCamera)
 {
 	SceneManager()->UpdateCamera(taskGraph, pCamera->GetCamera(), pCamera->GetRenderQueue());
 }
 
-void CRenderSystem::RenderCamera(CTaskGraph& taskGraph, CCamera* pCamera)
+void CRenderSystem::RenderDefault(CTaskGraph& taskGraph, CCamera* pCamera) const
 {
+	const CGfxSemaphore* pWaitSemaphore = nullptr;
 
+	GfxRenderer()->AcquireNextFrame();
+	{
+		pWaitSemaphore = pCamera->RenderDefault(taskGraph, GfxRenderer()->GetSwapChain()->GetAcquireSemaphore());
+	}
+	GfxRenderer()->Present(pWaitSemaphore);
+}
+
+void CRenderSystem::RenderForwardLighting(CTaskGraph& taskGraph, CCamera* pCamera, bool bShadow) const
+{
+	const CGfxSemaphore* pWaitSemaphore = nullptr;
+
+	GfxRenderer()->AcquireNextFrame();
+	{
+		pWaitSemaphore = pCamera->RenderForwardLighting(taskGraph, GfxRenderer()->GetSwapChain()->GetAcquireSemaphore(), bShadow);
+	}
+	GfxRenderer()->Present(pWaitSemaphore);
 }

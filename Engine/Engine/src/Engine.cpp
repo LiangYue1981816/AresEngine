@@ -117,10 +117,16 @@ void CEngine::Update(void)
 	event_signal(&m_eventDispatch);
 }
 
-void CEngine::Render(CCamera* pCamera)
+void CEngine::RenderDefault(CCamera* pCamera)
 {
-	m_pRenderSystem->UpdateCamera(m_taskGraphRender, pCamera);
-	m_pRenderSystem->RenderCamera(m_taskGraphRender, pCamera);
+	m_pRenderSystem->Update(m_taskGraphRender, pCamera);
+	m_pRenderSystem->RenderDefault(m_taskGraphRender, pCamera);
+}
+
+void CEngine::RenderForwardLighting(CCamera* pCamera, bool bShadow)
+{
+	m_pRenderSystem->Update(m_taskGraphRender, pCamera);
+	m_pRenderSystem->RenderForwardLighting(m_taskGraphRender, pCamera, bShadow);
 }
 
 void CEngine::UpdateThread(void)

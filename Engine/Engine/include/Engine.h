@@ -35,7 +35,8 @@ public:
 public:
 	void Wait(void);
 	void Update(void);
-	void Render(CCamera* pCamera);
+	void RenderDefault(CCamera* pCamera);
+	void RenderForwardLighting(CCamera* pCamera, bool bShadow);
 
 private:
 	void UpdateThread(void);
