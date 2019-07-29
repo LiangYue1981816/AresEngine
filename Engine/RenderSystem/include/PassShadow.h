@@ -17,7 +17,7 @@ private:
 	static void CreateRenderPass(const char* szName, GfxPixelFormat shadowPixelFormat);
 	static void DestroyRenderPass(void);
 
-private:
+public:
 	void CreateFrameBuffer(CGfxRenderTexturePtr ptrShadowTexture);
 
 private:

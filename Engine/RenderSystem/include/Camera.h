@@ -21,6 +21,11 @@ private:
 	CGfxUniformCamera* GetCameraUniform(void) const;
 
 public:
+	CPassDefault* GetPassDefault(void) const;
+	CPassForwardLighting* GetPassForwardLighting(void) const;
+	CPassShadow* GetPassShadow(void) const;
+
+public:
 	void SetScissor(float x, float y, float width, float height);
 	void SetViewport(float x, float y, float width, float height);
 	void SetPerspective(float fovy, float aspect, float zNear, float zFar);
