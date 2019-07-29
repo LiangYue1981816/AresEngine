@@ -14,6 +14,10 @@ private:
 
 
 private:
+	static void CreateRenderPass(const char* szName, GfxPixelFormat shadowPixelFormat);
+	static void DestroyRenderPass(void);
+
+private:
 	void CreateFrameBuffer(CGfxRenderTexturePtr ptrShadowTexture);
 
 private:
@@ -28,9 +32,10 @@ private:
 	float m_splitFactors[5];
 
 private:
-	CGfxRenderPassPtr m_ptrRenderPass;
-	CGfxFrameBufferPtr m_ptrFrameBuffer;
+	static CGfxRenderPassPtr m_ptrRenderPass;
 
+private:
+	CGfxFrameBufferPtr m_ptrFrameBuffer;
 	CGfxRenderTexturePtr m_ptrShadowTexture;
 
 private:

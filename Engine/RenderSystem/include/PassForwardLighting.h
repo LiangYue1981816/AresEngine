@@ -14,6 +14,10 @@ private:
 
 
 private:
+	static void CreateRenderPass(const char* szName, GfxPixelFormat colorPixelFormat, GfxPixelFormat depthPixelFormat, int samples);
+	static void DestroyRenderPass(void);
+
+private:
 	void CreateFrameBuffer(CGfxRenderTexturePtr ptrColorTexture, CGfxRenderTexturePtr ptrDepthStencilTexture);
 
 private:
@@ -25,9 +29,10 @@ private:
 
 
 private:
-	CGfxRenderPassPtr m_ptrRenderPass;
-	CGfxFrameBufferPtr m_ptrFrameBuffer;
+	static CGfxRenderPassPtr m_ptrRenderPass;
 
+private:
+	CGfxFrameBufferPtr m_ptrFrameBuffer;
 	CGfxRenderTexturePtr m_ptrColorTexture;
 	CGfxRenderTexturePtr m_ptrDepthStencilTexture;
 

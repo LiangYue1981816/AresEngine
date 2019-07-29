@@ -40,6 +40,25 @@ CPassShadow::~CPassShadow(void)
 	delete m_pShadowCameraUniform[4];
 }
 
+void CPassShadow::CreateRenderPass(const char* szName, GfxPixelFormat shadowPixelFormat)
+{
+	const int numSubpasses = 1;
+	const int numAttachments = 1;
+
+	const int stencil = 0;
+	const float depth = 1.0f;
+
+	m_ptrRenderPass = GfxRenderer()->NewRenderPass(HashValue(szName), numAttachments, numSubpasses);
+	m_ptrRenderPass->SetDepthStencilAttachment(0, shadowPixelFormat, 1, false, true, depth, stencil);
+	m_ptrRenderPass->SetSubpassOutputDepthStencilReference(0, 0);
+	m_ptrRenderPass->Create();
+}
+
+void CPassShadow::DestroyRenderPass(void)
+{
+	m_ptrRenderPass.Release();
+}
+
 void CPassShadow::CreateFrameBuffer(CGfxRenderTexturePtr ptrShadowTexture)
 {
 	const int numSubpasses = 1;
@@ -47,23 +66,9 @@ void CPassShadow::CreateFrameBuffer(CGfxRenderTexturePtr ptrShadowTexture)
 
 	m_ptrShadowTexture = ptrShadowTexture;
 
-	// RenderPass
-	{
-		const int stencil = 0;
-		const float depth = 1.0f;
-
-		m_ptrRenderPass = GfxRenderer()->NewRenderPass(HashValue("Shadow"), numAttachments, numSubpasses);
-		m_ptrRenderPass->SetDepthStencilAttachment(0, m_ptrShadowTexture->GetFormat(), m_ptrShadowTexture->GetSamples(), false, true, depth, stencil);
-		m_ptrRenderPass->SetSubpassOutputDepthStencilReference(0, 0);
-		m_ptrRenderPass->Create();
-	}
-
-	// FrameBuffer
-	{
-		m_ptrFrameBuffer = GfxRenderer()->NewFrameBuffer(m_ptrShadowTexture->GetWidth(), m_ptrShadowTexture->GetHeight(), numAttachments);
-		m_ptrFrameBuffer->SetAttachmentTexture(0, m_ptrShadowTexture);
-		m_ptrFrameBuffer->Create(m_ptrRenderPass);
-	}
+	m_ptrFrameBuffer = GfxRenderer()->NewFrameBuffer(m_ptrShadowTexture->GetWidth(), m_ptrShadowTexture->GetHeight(), numAttachments);
+	m_ptrFrameBuffer->SetAttachmentTexture(0, m_ptrShadowTexture);
+	m_ptrFrameBuffer->Create(m_ptrRenderPass);
 }
 
 void CPassShadow::Update(void)
