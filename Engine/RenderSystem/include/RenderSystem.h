@@ -76,7 +76,7 @@ public:
 	void SetMainShadowResolution(int indexLevel, float resolution);
 
 private:
-	void Update(CTaskGraph& taskGraph, CCamera* pCamera);
+	void Update(CTaskGraph& taskGraph, CCamera* pCamera) const;
 	void RenderDefault(CTaskGraph& taskGraph, CCamera* pCamera) const;
 	void RenderForwardLighting(CTaskGraph& taskGraph, CCamera* pCamera, bool bShadow) const;
 
