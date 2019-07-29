@@ -78,7 +78,6 @@ void CGfxRenderQueue::Clear(void)
 {
 	m_pipelineMaterialQueue.clear();
 	m_materialMeshDrawQueue.clear();
-	m_materialMeshDrawQueueThreads.clear();
 }
 
 void CGfxRenderQueue::Begin(void)
@@ -88,16 +87,18 @@ void CGfxRenderQueue::Begin(void)
 
 void CGfxRenderQueue::Add(int indexThread, const CGfxMaterialPtr ptrMaterial, const CGfxMeshDrawPtr ptrMeshDraw, const uint8_t* pInstanceData, uint32_t size)
 {
-	eastl::vector<uint8_t>& meshDrawInstanceBuffer = m_materialMeshDrawQueueThreads[indexThread][ptrMaterial][ptrMeshDraw];
-	meshDrawInstanceBuffer.insert(meshDrawInstanceBuffer.end(), pInstanceData, pInstanceData + size);
+	if (indexThread < MAX_THREAD_COUNT) {
+		eastl::vector<uint8_t>& meshDrawInstanceBuffer = m_materialMeshDrawQueueThreads[indexThread][ptrMaterial][ptrMeshDraw];
+		meshDrawInstanceBuffer.insert(meshDrawInstanceBuffer.end(), pInstanceData, pInstanceData + size);
+	}
 }
 
 void CGfxRenderQueue::End(void)
 {
 	m_materialMeshDrawQueue.clear();
 	{
-		for (const auto& itMaterialMeshDrawQueueThreads : m_materialMeshDrawQueueThreads) {
-			for (const auto& itMaterialMeshDrawQueueThread : itMaterialMeshDrawQueueThreads.second) {
+		for (int indexThread = 0; indexThread < MAX_THREAD_COUNT; indexThread++) {
+			for (const auto& itMaterialMeshDrawQueueThread : m_materialMeshDrawQueueThreads[indexThread]) {
 				eastl::unordered_map<CGfxMeshDrawPtr, eastl::vector<uint8_t>>& meshDrawQueue = m_materialMeshDrawQueue[itMaterialMeshDrawQueueThread.first];
 
 				for (const auto& itMeshDrawQueueThread : itMaterialMeshDrawQueueThread.second) {
@@ -105,9 +106,10 @@ void CGfxRenderQueue::End(void)
 					meshDrawInstanceBuffer.insert(meshDrawInstanceBuffer.end(), itMeshDrawQueueThread.second.begin(), itMeshDrawQueueThread.second.end());
 				}
 			}
+
+			m_materialMeshDrawQueueThreads[indexThread].clear();
 		}
 	}
-	m_materialMeshDrawQueueThreads.clear();
 }
 
 void CGfxRenderQueue::CmdDraw(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer, const CGfxDescriptorSetPtr ptrDescriptorSetPass, const uint32_t matPassName, const glm::vec4& scissor, const glm::vec4& viewport, uint32_t mask)
