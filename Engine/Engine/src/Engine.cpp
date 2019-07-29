@@ -120,7 +120,7 @@ void CEngine::Update(void)
 void CEngine::RenderDefault(CCamera* pCamera)
 {
 	m_pRenderSystem->Update(m_taskGraphRender, pCamera);
-	m_pRenderSystem->RenderDefault(m_taskGraphRender, pCamera);
+//	m_pRenderSystem->RenderDefault(m_taskGraphRender, pCamera);
 }
 
 void CEngine::RenderForwardLighting(CCamera* pCamera, bool bShadow)
