@@ -30,8 +30,8 @@ bool CGLES3SwapChain::Create(int width, int height, GfxPixelFormat format)
 		m_height = height;
 		m_format = format;
 
-		m_ptrFrameTexture = GLES3Renderer()->NewRenderTexture(HashValue("SwapChain Frame Texture"));
-		m_ptrFrameTexture->Create(format, width, height);
+		m_ptrRenderTexture = GLES3Renderer()->NewRenderTexture(HashValue("SwapChain Frame RenderTexture"));
+		m_ptrRenderTexture->Create(format, width, height);
 
 		glGenFramebuffers(1, &m_surface);
 		glBindFramebuffer(GL_FRAMEBUFFER, m_surface);
@@ -39,7 +39,7 @@ bool CGLES3SwapChain::Create(int width, int height, GfxPixelFormat format)
 			const float color[] = { 0.0f, 0.0f, 0.0f, 0.0f };
 			const eastl::vector<uint32_t> drawBuffers{ GL_COLOR_ATTACHMENT0 };
 
-			glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, CGLES3Helper::TranslateTextureTarget(((CGLES3RenderTexture*)m_ptrFrameTexture.GetPointer())->GetType()), ((CGLES3RenderTexture*)m_ptrFrameTexture.GetPointer())->GetTexture(), 0);
+			glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, CGLES3Helper::TranslateTextureTarget(((CGLES3RenderTexture*)m_ptrRenderTexture.GetPointer())->GetType()), ((CGLES3RenderTexture*)m_ptrRenderTexture.GetPointer())->GetTexture(), 0);
 			glClearBufferfv(GL_COLOR, 0, color);
 
 			glReadBuffers((int)drawBuffers.size(), drawBuffers.data());
@@ -94,7 +94,7 @@ int CGLES3SwapChain::GetFrameIndex(void) const
 
 const CGfxRenderTexturePtr CGLES3SwapChain::GetFrameTexture(int index) const
 {
-	return m_ptrFrameTexture;
+	return m_ptrRenderTexture;
 }
 
 void CGLES3SwapChain::Present(const CGfxSemaphore* pWaitSemaphore)

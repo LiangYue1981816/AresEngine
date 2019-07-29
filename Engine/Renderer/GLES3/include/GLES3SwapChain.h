@@ -51,5 +51,5 @@ private:
 	int m_indexFrame;
 
 private:
-	CGfxRenderTexturePtr m_ptrFrameTexture;
+	CGfxRenderTexturePtr m_ptrRenderTexture;
 };
