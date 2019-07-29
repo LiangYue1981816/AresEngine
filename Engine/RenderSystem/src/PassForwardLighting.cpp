@@ -1,6 +1,8 @@
 #include "EngineHeader.h"
 
 
+static CGfxRenderPassPtr ptrRenderPass;
+
 CPassForwardLighting::CPassForwardLighting(CCamera* pCamera, CRenderSystem* pRenderSystem)
 	: m_pCamera(pCamera)
 	, m_pRenderSystem(pRenderSystem)
@@ -42,17 +44,17 @@ void CPassForwardLighting::CreateRenderPass(const char* szName, GfxPixelFormat c
 	const float depth = 1.0f;
 	const float color[] = { 0.1f, 0.1f, 0.1f, 0.0f };
 
-	m_ptrRenderPass = GfxRenderer()->NewRenderPass(HashValue(szName), numAttachments, numSubpasses);
-	m_ptrRenderPass->SetColorAttachment(0, colorPixelFormat, samples, false, false, true, color[0], color[1], color[2], color[3]);
-	m_ptrRenderPass->SetDepthStencilAttachment(1, depthPixelFormat, samples, true, true, depth, stencil);
-	m_ptrRenderPass->SetSubpassOutputColorReference(0, 0);
-	m_ptrRenderPass->SetSubpassOutputDepthStencilReference(0, 1);
-	m_ptrRenderPass->Create();
+	ptrRenderPass = GfxRenderer()->NewRenderPass(HashValue(szName), numAttachments, numSubpasses);
+	ptrRenderPass->SetColorAttachment(0, colorPixelFormat, samples, false, false, true, color[0], color[1], color[2], color[3]);
+	ptrRenderPass->SetDepthStencilAttachment(1, depthPixelFormat, samples, true, true, depth, stencil);
+	ptrRenderPass->SetSubpassOutputColorReference(0, 0);
+	ptrRenderPass->SetSubpassOutputDepthStencilReference(0, 1);
+	ptrRenderPass->Create();
 }
 
 void CPassForwardLighting::DestroyRenderPass(void)
 {
-	m_ptrRenderPass.Release();
+	ptrRenderPass.Release();
 }
 
 void CPassForwardLighting::CreateFrameBuffer(CGfxRenderTexturePtr ptrColorTexture, CGfxRenderTexturePtr ptrDepthStencilTexture)
@@ -66,7 +68,7 @@ void CPassForwardLighting::CreateFrameBuffer(CGfxRenderTexturePtr ptrColorTextur
 	m_ptrFrameBuffer = GfxRenderer()->NewFrameBuffer(m_ptrColorTexture->GetWidth(), m_ptrColorTexture->GetHeight(), numAttachments);
 	m_ptrFrameBuffer->SetAttachmentTexture(0, m_ptrColorTexture);
 	m_ptrFrameBuffer->SetAttachmentTexture(1, m_ptrDepthStencilTexture);
-	m_ptrFrameBuffer->Create(m_ptrRenderPass);
+	m_ptrFrameBuffer->Create(ptrRenderPass);
 }
 
 void CPassForwardLighting::Update(void)
@@ -85,7 +87,7 @@ void CPassForwardLighting::Render(CTaskGraph& taskGraph, const CGfxSemaphore* pW
 			GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, m_ptrColorTexture, GFX_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL);
 			GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, m_ptrDepthStencilTexture, GFX_IMAGE_LAYOUT_GENERAL);
 
-			GfxRenderer()->CmdBeginRenderPass(ptrMainCommandBuffer, m_ptrFrameBuffer, m_ptrRenderPass);
+			GfxRenderer()->CmdBeginRenderPass(ptrMainCommandBuffer, m_ptrFrameBuffer, ptrRenderPass);
 			{
 				m_pCamera->GetRenderQueue()->CmdDraw(taskGraph, ptrMainCommandBuffer, m_ptrDescriptorSetPass, FORWARD_LIGHTING_PASS_NAME, m_pCamera->GetCamera()->GetScissor(), m_pCamera->GetCamera()->GetViewport(), 0xffffffff);
 			}

@@ -43,6 +43,10 @@ private:
 private:
 	CGfxUniformEngine* GetEngineUniform(void) const;
 
+private:
+	void CreateRenderPass(void) const;
+	void DestroyRenderPass(void) const;
+
 public:
 	void SetTime(float t, float dt);
 

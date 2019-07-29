@@ -1,6 +1,8 @@
 #include "EngineHeader.h"
 
 
+static CGfxRenderPassPtr ptrRenderPass;
+
 CPassShadow::CPassShadow(CCamera* pCamera, CRenderSystem* pRenderSystem)
 	: m_pCamera(pCamera)
 	, m_pRenderSystem(pRenderSystem)
@@ -48,15 +50,15 @@ void CPassShadow::CreateRenderPass(const char* szName, GfxPixelFormat shadowPixe
 	const int stencil = 0;
 	const float depth = 1.0f;
 
-	m_ptrRenderPass = GfxRenderer()->NewRenderPass(HashValue(szName), numAttachments, numSubpasses);
-	m_ptrRenderPass->SetDepthStencilAttachment(0, shadowPixelFormat, 1, false, true, depth, stencil);
-	m_ptrRenderPass->SetSubpassOutputDepthStencilReference(0, 0);
-	m_ptrRenderPass->Create();
+	ptrRenderPass = GfxRenderer()->NewRenderPass(HashValue(szName), numAttachments, numSubpasses);
+	ptrRenderPass->SetDepthStencilAttachment(0, shadowPixelFormat, 1, false, true, depth, stencil);
+	ptrRenderPass->SetSubpassOutputDepthStencilReference(0, 0);
+	ptrRenderPass->Create();
 }
 
 void CPassShadow::DestroyRenderPass(void)
 {
-	m_ptrRenderPass.Release();
+	ptrRenderPass.Release();
 }
 
 void CPassShadow::CreateFrameBuffer(CGfxRenderTexturePtr ptrShadowTexture)
@@ -68,7 +70,7 @@ void CPassShadow::CreateFrameBuffer(CGfxRenderTexturePtr ptrShadowTexture)
 
 	m_ptrFrameBuffer = GfxRenderer()->NewFrameBuffer(m_ptrShadowTexture->GetWidth(), m_ptrShadowTexture->GetHeight(), numAttachments);
 	m_ptrFrameBuffer->SetAttachmentTexture(0, m_ptrShadowTexture);
-	m_ptrFrameBuffer->Create(m_ptrRenderPass);
+	m_ptrFrameBuffer->Create(ptrRenderPass);
 }
 
 void CPassShadow::Update(void)
@@ -130,7 +132,7 @@ void CPassShadow::Render(CTaskGraph& taskGraph, const CGfxSemaphore* pWaitSemaph
 		{
 			GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, m_ptrShadowTexture, GFX_IMAGE_LAYOUT_GENERAL);
 
-			GfxRenderer()->CmdBeginRenderPass(ptrMainCommandBuffer, m_ptrFrameBuffer, m_ptrRenderPass);
+			GfxRenderer()->CmdBeginRenderPass(ptrMainCommandBuffer, m_ptrFrameBuffer, ptrRenderPass);
 			{
 				const float w = m_ptrShadowTexture->GetWidth();
 				const float h = m_ptrShadowTexture->GetHeight();

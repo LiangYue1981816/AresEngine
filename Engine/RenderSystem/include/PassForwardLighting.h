@@ -29,9 +29,6 @@ private:
 
 
 private:
-	static CGfxRenderPassPtr m_ptrRenderPass;
-
-private:
 	CGfxFrameBufferPtr m_ptrFrameBuffer;
 	CGfxRenderTexturePtr m_ptrColorTexture;
 	CGfxRenderTexturePtr m_ptrDepthStencilTexture;

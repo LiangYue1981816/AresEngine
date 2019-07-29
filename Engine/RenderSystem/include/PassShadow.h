@@ -32,9 +32,6 @@ private:
 	float m_splitFactors[5];
 
 private:
-	static CGfxRenderPassPtr m_ptrRenderPass;
-
-private:
 	CGfxFrameBufferPtr m_ptrFrameBuffer;
 	CGfxRenderTexturePtr m_ptrShadowTexture;
 

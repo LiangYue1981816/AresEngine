@@ -1,6 +1,8 @@
 #include "EngineHeader.h"
 
 
+static CGfxRenderPassPtr ptrRenderPass;
+
 CPassDefault::CPassDefault(CCamera* pCamera, CRenderSystem* pRenderSystem)
 	: m_pCamera(pCamera)
 	, m_pRenderSystem(pRenderSystem)
@@ -40,17 +42,17 @@ void CPassDefault::CreateRenderPass(const char* szName, GfxPixelFormat colorPixe
 	const float depth = 1.0f;
 	const float color[] = { 0.1f, 0.1f, 0.1f, 0.0f };
 
-	m_ptrRenderPass = GfxRenderer()->NewRenderPass(HashValue(szName), numAttachments, numSubpasses);
-	m_ptrRenderPass->SetColorAttachment(0, colorPixelFormat, samples, false, false, true, color[0], color[1], color[2], color[3]);
-	m_ptrRenderPass->SetDepthStencilAttachment(1, depthPixelFormat, samples, true, true, depth, stencil);
-	m_ptrRenderPass->SetSubpassOutputColorReference(0, 0);
-	m_ptrRenderPass->SetSubpassOutputDepthStencilReference(0, 1);
-	m_ptrRenderPass->Create();
+	ptrRenderPass = GfxRenderer()->NewRenderPass(HashValue(szName), numAttachments, numSubpasses);
+	ptrRenderPass->SetColorAttachment(0, colorPixelFormat, samples, false, false, true, color[0], color[1], color[2], color[3]);
+	ptrRenderPass->SetDepthStencilAttachment(1, depthPixelFormat, samples, true, true, depth, stencil);
+	ptrRenderPass->SetSubpassOutputColorReference(0, 0);
+	ptrRenderPass->SetSubpassOutputDepthStencilReference(0, 1);
+	ptrRenderPass->Create();
 }
 
 void CPassDefault::DestroyRenderPass(void)
 {
-	m_ptrRenderPass.Release();
+	ptrRenderPass.Release();
 }
 
 void CPassDefault::CreateFrameBuffer(CGfxRenderTexturePtr ptrColorTexture, CGfxRenderTexturePtr ptrDepthStencilTexture)
@@ -64,7 +66,7 @@ void CPassDefault::CreateFrameBuffer(CGfxRenderTexturePtr ptrColorTexture, CGfxR
 	m_ptrFrameBuffer = GfxRenderer()->NewFrameBuffer(m_ptrColorTexture->GetWidth(), m_ptrColorTexture->GetHeight(), numAttachments);
 	m_ptrFrameBuffer->SetAttachmentTexture(0, m_ptrColorTexture);
 	m_ptrFrameBuffer->SetAttachmentTexture(1, m_ptrDepthStencilTexture);
-	m_ptrFrameBuffer->Create(m_ptrRenderPass);
+	m_ptrFrameBuffer->Create(ptrRenderPass);
 }
 
 void CPassDefault::Update(void)
@@ -83,7 +85,7 @@ void CPassDefault::Render(CTaskGraph& taskGraph, const CGfxSemaphore* pWaitSemap
 			GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, m_ptrColorTexture, GFX_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL);
 			GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, m_ptrDepthStencilTexture, GFX_IMAGE_LAYOUT_GENERAL);
 
-			GfxRenderer()->CmdBeginRenderPass(ptrMainCommandBuffer, m_ptrFrameBuffer, m_ptrRenderPass);
+			GfxRenderer()->CmdBeginRenderPass(ptrMainCommandBuffer, m_ptrFrameBuffer, ptrRenderPass);
 			{
 				m_pCamera->GetRenderQueue()->CmdDraw(taskGraph, ptrMainCommandBuffer, m_ptrDescriptorSetPass, DEFAULT_PASS_NAME, m_pCamera->GetCamera()->GetScissor(), m_pCamera->GetCamera()->GetViewport(), 0xffffffff);
 			}

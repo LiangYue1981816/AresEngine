@@ -48,10 +48,14 @@ CRenderSystem::CRenderSystem(GfxApi api, void* hInstance, void* hWnd, void* hDC,
 
 	SetVertexAttributes(vertexAttributes, VERTEX_ATTRIBUTE_COUNT);
 	SetInstanceAttributes(instanceAttributes, INSTANCE_ATTRIBUTE_COUNT);
+
+	CreateRenderPass();
 }
 
 CRenderSystem::~CRenderSystem(void)
 {
+	DestroyRenderPass();
+
 	delete m_pEngineUniform;
 	delete m_pRenderer;
 }
@@ -59,6 +63,22 @@ CRenderSystem::~CRenderSystem(void)
 CGfxUniformEngine* CRenderSystem::GetEngineUniform(void) const
 {
 	return m_pEngineUniform;
+}
+
+void CRenderSystem::CreateRenderPass(void) const
+{
+	CPassDefault::CreateRenderPass("Default", GFX_PIXELFORMAT_BGR8_SNORM_PACK8, GFX_PIXELFORMAT_D24_UNORM_S8_UINT_PACK32, 1);
+	CPassForwardLighting::CreateRenderPass("ForwardLighting", GFX_PIXELFORMAT_BGR8_SNORM_PACK8, GFX_PIXELFORMAT_D24_UNORM_S8_UINT_PACK32, 1);
+
+	CPassShadow::CreateRenderPass("Shadow", GFX_PIXELFORMAT_D24_UNORM_PACK32);
+}
+
+void CRenderSystem::DestroyRenderPass(void) const
+{
+	CPassDefault::DestroyRenderPass();
+	CPassForwardLighting::DestroyRenderPass();
+
+	CPassShadow::DestroyRenderPass();
 }
 
 void CRenderSystem::SetTime(float t, float dt)
