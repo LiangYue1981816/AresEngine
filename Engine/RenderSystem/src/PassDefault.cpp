@@ -31,6 +31,28 @@ CPassDefault::~CPassDefault(void)
 	m_ptrMainCommandBuffer[2]->Clearup();
 }
 
+void CPassDefault::CreateRenderPass(const char* szName, GfxPixelFormat colorPixelFormat, GfxPixelFormat depthPixelFormat, int samples)
+{
+	const int numSubpasses = 1;
+	const int numAttachments = 2;
+
+	const int stencil = 0;
+	const float depth = 1.0f;
+	const float color[] = { 0.1f, 0.1f, 0.1f, 0.0f };
+
+	m_ptrRenderPass = GfxRenderer()->NewRenderPass(HashValue(szName), numAttachments, numSubpasses);
+	m_ptrRenderPass->SetColorAttachment(0, colorPixelFormat, samples, false, false, true, color[0], color[1], color[2], color[3]);
+	m_ptrRenderPass->SetDepthStencilAttachment(1, depthPixelFormat, samples, true, true, depth, stencil);
+	m_ptrRenderPass->SetSubpassOutputColorReference(0, 0);
+	m_ptrRenderPass->SetSubpassOutputDepthStencilReference(0, 1);
+	m_ptrRenderPass->Create();
+}
+
+void CPassDefault::DestroyRenderPass(void)
+{
+	m_ptrRenderPass.Release();
+}
+
 void CPassDefault::CreateFrameBuffer(CGfxRenderTexturePtr ptrColorTexture, CGfxRenderTexturePtr ptrDepthStencilTexture)
 {
 	const int numSubpasses = 1;
@@ -39,27 +61,10 @@ void CPassDefault::CreateFrameBuffer(CGfxRenderTexturePtr ptrColorTexture, CGfxR
 	m_ptrColorTexture = ptrColorTexture;
 	m_ptrDepthStencilTexture = ptrDepthStencilTexture;
 
-	// RenderPass
-	{
-		const int stencil = 0;
-		const float depth = 1.0f;
-		const float color[] = { 0.1f, 0.1f, 0.1f, 0.0f };
-
-		m_ptrRenderPass = GfxRenderer()->NewRenderPass(HashValue("Default"), numAttachments, numSubpasses);
-		m_ptrRenderPass->SetColorAttachment(0, m_ptrColorTexture->GetFormat(), m_ptrColorTexture->GetSamples(), false, false, true, color[0], color[1], color[2], color[3]);
-		m_ptrRenderPass->SetDepthStencilAttachment(1, m_ptrDepthStencilTexture->GetFormat(), m_ptrDepthStencilTexture->GetSamples(), true, true, depth, stencil);
-		m_ptrRenderPass->SetSubpassOutputColorReference(0, 0);
-		m_ptrRenderPass->SetSubpassOutputDepthStencilReference(0, 1);
-		m_ptrRenderPass->Create();
-	}
-
-	// FrameBuffer
-	{
-		m_ptrFrameBuffer = GfxRenderer()->NewFrameBuffer(m_ptrColorTexture->GetWidth(), m_ptrColorTexture->GetHeight(), numAttachments);
-		m_ptrFrameBuffer->SetAttachmentTexture(0, m_ptrColorTexture);
-		m_ptrFrameBuffer->SetAttachmentTexture(1, m_ptrDepthStencilTexture);
-		m_ptrFrameBuffer->Create(m_ptrRenderPass);
-	}
+	m_ptrFrameBuffer = GfxRenderer()->NewFrameBuffer(m_ptrColorTexture->GetWidth(), m_ptrColorTexture->GetHeight(), numAttachments);
+	m_ptrFrameBuffer->SetAttachmentTexture(0, m_ptrColorTexture);
+	m_ptrFrameBuffer->SetAttachmentTexture(1, m_ptrDepthStencilTexture);
+	m_ptrFrameBuffer->Create(m_ptrRenderPass);
 }
 
 void CPassDefault::Update(void)
