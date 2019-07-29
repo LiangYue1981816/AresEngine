@@ -10,7 +10,7 @@ class CALL_API CCamera
 	friend class CPassShadow;
 
 
-private:
+public:
 	CCamera(void);
 	virtual ~CCamera(void);
 
