@@ -18,7 +18,7 @@ private:
 	static void DestroyRenderPass(void);
 
 public:
-	void CreateFrameBuffer(CGfxRenderTexturePtr ptrColorTexture, CGfxRenderTexturePtr ptrDepthStencilTexture);
+	void CreateFrameBuffer(int indexFrame, CGfxRenderTexturePtr ptrColorTexture, CGfxRenderTexturePtr ptrDepthStencilTexture);
 
 private:
 	void Update(void);
@@ -29,9 +29,9 @@ private:
 
 
 private:
-	CGfxFrameBufferPtr m_ptrFrameBuffer;
-	CGfxRenderTexturePtr m_ptrColorTexture;
-	CGfxRenderTexturePtr m_ptrDepthStencilTexture;
+	CGfxFrameBufferPtr m_ptrFrameBuffer[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
+	CGfxRenderTexturePtr m_ptrColorTexture[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
+	CGfxRenderTexturePtr m_ptrDepthStencilTexture[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
 
 private:
 	CGfxDescriptorSetPtr m_ptrDescriptorSetPass;

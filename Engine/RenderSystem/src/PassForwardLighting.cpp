@@ -57,18 +57,18 @@ void CPassForwardLighting::DestroyRenderPass(void)
 	ptrRenderPass.Release();
 }
 
-void CPassForwardLighting::CreateFrameBuffer(CGfxRenderTexturePtr ptrColorTexture, CGfxRenderTexturePtr ptrDepthStencilTexture)
+void CPassForwardLighting::CreateFrameBuffer(int indexFrame, CGfxRenderTexturePtr ptrColorTexture, CGfxRenderTexturePtr ptrDepthStencilTexture)
 {
 	const int numSubpasses = 1;
 	const int numAttachments = 2;
 
-	m_ptrColorTexture = ptrColorTexture;
-	m_ptrDepthStencilTexture = ptrDepthStencilTexture;
+	m_ptrColorTexture[indexFrame] = ptrColorTexture;
+	m_ptrDepthStencilTexture[indexFrame] = ptrDepthStencilTexture;
 
-	m_ptrFrameBuffer = GfxRenderer()->NewFrameBuffer(m_ptrColorTexture->GetWidth(), m_ptrColorTexture->GetHeight(), numAttachments);
-	m_ptrFrameBuffer->SetAttachmentTexture(0, m_ptrColorTexture);
-	m_ptrFrameBuffer->SetAttachmentTexture(1, m_ptrDepthStencilTexture);
-	m_ptrFrameBuffer->Create(ptrRenderPass);
+	m_ptrFrameBuffer[indexFrame] = GfxRenderer()->NewFrameBuffer(m_ptrColorTexture[indexFrame]->GetWidth(), m_ptrColorTexture[indexFrame]->GetHeight(), numAttachments);
+	m_ptrFrameBuffer[indexFrame]->SetAttachmentTexture(0, m_ptrColorTexture[indexFrame]);
+	m_ptrFrameBuffer[indexFrame]->SetAttachmentTexture(1, m_ptrDepthStencilTexture[indexFrame]);
+	m_ptrFrameBuffer[indexFrame]->Create(ptrRenderPass);
 }
 
 void CPassForwardLighting::Update(void)
@@ -79,15 +79,18 @@ void CPassForwardLighting::Update(void)
 void CPassForwardLighting::Render(CTaskGraph& taskGraph, const CGfxSemaphore* pWaitSemaphore)
 {
 	const CGfxCommandBufferPtr ptrMainCommandBuffer = m_ptrMainCommandBuffer[GfxRenderer()->GetSwapChain()->GetFrameIndex()];
+	const CGfxFrameBufferPtr ptrFrameBuffer = m_ptrFrameBuffer[GfxRenderer()->GetSwapChain()->GetFrameIndex()];
+	const CGfxRenderTexturePtr ptrColorTexture = m_ptrColorTexture[GfxRenderer()->GetSwapChain()->GetFrameIndex()];
+	const CGfxRenderTexturePtr ptrDepthStencilTexture = m_ptrDepthStencilTexture[GfxRenderer()->GetSwapChain()->GetFrameIndex()];
 	{
 		ptrMainCommandBuffer->Clearup();
 
 		GfxRenderer()->BeginRecord(ptrMainCommandBuffer);
 		{
-			GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, m_ptrColorTexture, GFX_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL);
-			GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, m_ptrDepthStencilTexture, GFX_IMAGE_LAYOUT_GENERAL);
+			GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, ptrColorTexture, GFX_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL);
+			GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, ptrDepthStencilTexture, GFX_IMAGE_LAYOUT_GENERAL);
 
-			GfxRenderer()->CmdBeginRenderPass(ptrMainCommandBuffer, m_ptrFrameBuffer, ptrRenderPass);
+			GfxRenderer()->CmdBeginRenderPass(ptrMainCommandBuffer, ptrFrameBuffer, ptrRenderPass);
 			{
 				m_pCamera->GetRenderQueue()->CmdDraw(taskGraph, ptrMainCommandBuffer, m_ptrDescriptorSetPass, FORWARD_LIGHTING_PASS_NAME, m_pCamera->GetCamera()->GetScissor(), m_pCamera->GetCamera()->GetViewport(), 0xffffffff);
 			}
