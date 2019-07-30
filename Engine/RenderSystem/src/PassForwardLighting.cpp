@@ -87,14 +87,16 @@ void CPassForwardLighting::Render(CTaskGraph& taskGraph, const CGfxSemaphore* pW
 
 		GfxRenderer()->BeginRecord(ptrMainCommandBuffer);
 		{
-			GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, ptrColorTexture, GFX_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL);
+			GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, ptrColorTexture, GFX_IMAGE_LAYOUT_GENERAL);
 			GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, ptrDepthStencilTexture, GFX_IMAGE_LAYOUT_GENERAL);
-
-			GfxRenderer()->CmdBeginRenderPass(ptrMainCommandBuffer, ptrFrameBuffer, ptrRenderPass);
 			{
-				m_pCamera->GetRenderQueue()->CmdDraw(taskGraph, ptrMainCommandBuffer, m_ptrDescriptorSetPass, FORWARD_LIGHTING_PASS_NAME, m_pCamera->GetCamera()->GetScissor(), m_pCamera->GetCamera()->GetViewport(), 0xffffffff);
+				GfxRenderer()->CmdBeginRenderPass(ptrMainCommandBuffer, ptrFrameBuffer, ptrRenderPass);
+				{
+					m_pCamera->GetRenderQueue()->CmdDraw(taskGraph, ptrMainCommandBuffer, m_ptrDescriptorSetPass, FORWARD_LIGHTING_PASS_NAME, m_pCamera->GetCamera()->GetScissor(), m_pCamera->GetCamera()->GetViewport(), 0xffffffff);
+				}
+				GfxRenderer()->CmdEndRenderPass(ptrMainCommandBuffer);
 			}
-			GfxRenderer()->CmdEndRenderPass(ptrMainCommandBuffer);
+			GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, ptrColorTexture, GFX_IMAGE_LAYOUT_PRESENT_SRC_OPTIMAL);
 		}
 		GfxRenderer()->EndRecord(ptrMainCommandBuffer);
 	}
