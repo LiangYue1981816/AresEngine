@@ -119,6 +119,7 @@ void CPassShadow::Update(void)
 		m_pRenderSystem->GetEngineUniform()->SetMainShadowResolution(indexLevel, resolution);
 	}
 
+	m_pCamera->GetCameraUniform()->Apply();
 	m_pRenderSystem->GetEngineUniform()->Apply();
 }
 

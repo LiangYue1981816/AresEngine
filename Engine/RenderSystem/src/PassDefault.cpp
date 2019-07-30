@@ -71,6 +71,7 @@ void CPassDefault::CreateFrameBuffer(int indexFrame, CGfxRenderTexturePtr ptrCol
 
 void CPassDefault::Update(void)
 {
+	m_pCamera->GetCameraUniform()->Apply();
 	m_pRenderSystem->GetEngineUniform()->Apply();
 }
 

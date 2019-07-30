@@ -73,6 +73,7 @@ void CPassForwardLighting::CreateFrameBuffer(int indexFrame, CGfxRenderTexturePt
 
 void CPassForwardLighting::Update(void)
 {
+	m_pCamera->GetCameraUniform()->Apply();
 	m_pRenderSystem->GetEngineUniform()->Apply();
 }
 
