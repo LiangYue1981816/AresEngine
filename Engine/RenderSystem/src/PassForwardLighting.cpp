@@ -45,7 +45,7 @@ void CPassForwardLighting::CreateRenderPass(const char* szName, GfxPixelFormat c
 	const float color[] = { 0.1f, 0.1f, 0.1f, 0.0f };
 
 	ptrRenderPass = GfxRenderer()->NewRenderPass(HashValue(szName), numAttachments, numSubpasses);
-	ptrRenderPass->SetColorAttachment(0, colorPixelFormat, samples, false, false, true, color[0], color[1], color[2], color[3]);
+	ptrRenderPass->SetColorAttachment(0, colorPixelFormat, samples, true, false, true, color[0], color[1], color[2], color[3]);
 	ptrRenderPass->SetDepthStencilAttachment(1, depthPixelFormat, samples, true, true, depth, stencil);
 	ptrRenderPass->SetSubpassOutputColorReference(0, 0);
 	ptrRenderPass->SetSubpassOutputDepthStencilReference(0, 1);
@@ -88,16 +88,14 @@ void CPassForwardLighting::Render(CTaskGraph& taskGraph, const CGfxSemaphore* pW
 
 		GfxRenderer()->BeginRecord(ptrMainCommandBuffer);
 		{
-			GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, ptrColorTexture, GFX_IMAGE_LAYOUT_GENERAL);
-			GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, ptrDepthStencilTexture, GFX_IMAGE_LAYOUT_GENERAL);
-			{
-				GfxRenderer()->CmdBeginRenderPass(ptrMainCommandBuffer, ptrFrameBuffer, ptrRenderPass);
-				{
-					m_pCamera->GetRenderQueue()->CmdDraw(taskGraph, ptrMainCommandBuffer, m_ptrDescriptorSetPass, FORWARD_LIGHTING_PASS_NAME, m_pCamera->GetCamera()->GetScissor(), m_pCamera->GetCamera()->GetViewport(), 0xffffffff);
-				}
-				GfxRenderer()->CmdEndRenderPass(ptrMainCommandBuffer);
-			}
 			GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, ptrColorTexture, GFX_IMAGE_LAYOUT_PRESENT_SRC_OPTIMAL);
+			GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, ptrDepthStencilTexture, GFX_IMAGE_LAYOUT_GENERAL);
+
+			GfxRenderer()->CmdBeginRenderPass(ptrMainCommandBuffer, ptrFrameBuffer, ptrRenderPass);
+			{
+				m_pCamera->GetRenderQueue()->CmdDraw(taskGraph, ptrMainCommandBuffer, m_ptrDescriptorSetPass, FORWARD_LIGHTING_PASS_NAME, m_pCamera->GetCamera()->GetScissor(), m_pCamera->GetCamera()->GetViewport(), 0xffffffff);
+			}
+			GfxRenderer()->CmdEndRenderPass(ptrMainCommandBuffer);
 		}
 		GfxRenderer()->EndRecord(ptrMainCommandBuffer);
 	}
