@@ -39,7 +39,7 @@ CPassShadow::~CPassShadow(void)
 	delete m_pShadowCameraUniform[0];
 	delete m_pShadowCameraUniform[1];
 	delete m_pShadowCameraUniform[2];
-	delete m_pShadowCameraUniform[4];
+	delete m_pShadowCameraUniform[3];
 }
 
 void CPassShadow::CreateRenderPass(const char* szName, GfxPixelFormat shadowPixelFormat)
