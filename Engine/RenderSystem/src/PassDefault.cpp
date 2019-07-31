@@ -43,7 +43,7 @@ void CPassDefault::CreateRenderPass(const char* szName, GfxPixelFormat colorPixe
 	const float color[] = { 0.1f, 0.1f, 0.1f, 0.0f };
 
 	ptrRenderPass = GfxRenderer()->NewRenderPass(HashValue(szName), numAttachments, numSubpasses);
-	ptrRenderPass->SetColorAttachment(0, colorPixelFormat, samples, true, false, true, color[0], color[1], color[2], color[3]);
+	ptrRenderPass->SetColorAttachment(0, colorPixelFormat, samples, false, false, true, color[0], color[1], color[2], color[3]);
 	ptrRenderPass->SetDepthStencilAttachment(1, depthPixelFormat, samples, true, true, depth, stencil);
 	ptrRenderPass->SetSubpassOutputColorReference(0, 0);
 	ptrRenderPass->SetSubpassOutputDepthStencilReference(0, 1);
@@ -75,7 +75,7 @@ void CPassDefault::Update(void)
 	m_pRenderSystem->GetEngineUniform()->Apply();
 }
 
-void CPassDefault::Render(CTaskGraph& taskGraph, const CGfxSemaphore* pWaitSemaphore)
+void CPassDefault::Render(CTaskGraph& taskGraph, const CGfxSemaphore* pWaitSemaphore, bool bPresent)
 {
 	const CGfxCommandBufferPtr ptrMainCommandBuffer = m_ptrMainCommandBuffer[GfxRenderer()->GetSwapChain()->GetFrameIndex()];
 	const CGfxFrameBufferPtr ptrFrameBuffer = m_ptrFrameBuffer[GfxRenderer()->GetSwapChain()->GetFrameIndex()];
@@ -86,7 +86,7 @@ void CPassDefault::Render(CTaskGraph& taskGraph, const CGfxSemaphore* pWaitSemap
 
 		GfxRenderer()->BeginRecord(ptrMainCommandBuffer);
 		{
-			GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, ptrColorTexture, GFX_IMAGE_LAYOUT_PRESENT_SRC_OPTIMAL);
+			GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, ptrColorTexture, GFX_IMAGE_LAYOUT_GENERAL);
 			GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, ptrDepthStencilTexture, GFX_IMAGE_LAYOUT_GENERAL);
 
 			GfxRenderer()->CmdBeginRenderPass(ptrMainCommandBuffer, ptrFrameBuffer, ptrRenderPass);
@@ -94,6 +94,10 @@ void CPassDefault::Render(CTaskGraph& taskGraph, const CGfxSemaphore* pWaitSemap
 				m_pCamera->GetRenderQueue()->CmdDraw(taskGraph, ptrMainCommandBuffer, m_ptrDescriptorSetPass, DEFAULT_PASS_NAME, m_pCamera->GetCamera()->GetScissor(), m_pCamera->GetCamera()->GetViewport(), 0xffffffff);
 			}
 			GfxRenderer()->CmdEndRenderPass(ptrMainCommandBuffer);
+
+			if (bPresent) {
+				GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, ptrColorTexture, GFX_IMAGE_LAYOUT_PRESENT_SRC_OPTIMAL);
+			}
 		}
 		GfxRenderer()->EndRecord(ptrMainCommandBuffer);
 	}
