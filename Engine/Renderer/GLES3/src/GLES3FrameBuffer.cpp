@@ -95,6 +95,9 @@ void CGLES3FrameBuffer::Bind(const AttachmentInformation* pAttachmentInformation
 	ASSERT(pSubpassInformation);
 	ASSERT(m_fbo);
 
+	GLScissor(0, 0, m_width, m_height);
+	GLViewport(0, 0, m_width, m_height);
+
 	GLBindFramebuffer(GL_FRAMEBUFFER, m_fbo);
 	{
 		uint32_t indexAttachment = 0;
