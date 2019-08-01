@@ -22,10 +22,7 @@ public:
 
 private:
 	void Update(void);
-	void Render(CTaskGraph& taskGraph, const CGfxSemaphore* pWaitSemaphore);
-
-private:
-	const CGfxSemaphore* GetSemaphore(void) const;
+	const CGfxSemaphore* Render(CTaskGraph& taskGraph, const CGfxSemaphore* pWaitSemaphore);
 
 
 private:

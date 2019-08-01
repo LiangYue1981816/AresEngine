@@ -123,7 +123,7 @@ void CPassShadow::Update(void)
 	m_pRenderSystem->GetEngineUniform()->Apply();
 }
 
-void CPassShadow::Render(CTaskGraph& taskGraph, const CGfxSemaphore* pWaitSemaphore)
+const CGfxSemaphore* CPassShadow::Render(CTaskGraph& taskGraph, const CGfxSemaphore* pWaitSemaphore)
 {
 	const CGfxCommandBufferPtr ptrMainCommandBuffer = m_ptrMainCommandBuffer[GfxRenderer()->GetSwapChain()->GetFrameIndex()];
 	{
@@ -154,9 +154,5 @@ void CPassShadow::Render(CTaskGraph& taskGraph, const CGfxSemaphore* pWaitSemaph
 		GfxRenderer()->EndRecord(ptrMainCommandBuffer);
 	}
 	GfxRenderer()->Submit(ptrMainCommandBuffer, pWaitSemaphore);
-}
-
-const CGfxSemaphore* CPassShadow::GetSemaphore(void) const
-{
-	return m_ptrMainCommandBuffer[GfxRenderer()->GetSwapChain()->GetFrameIndex()]->GetSemaphore();
+	return ptrMainCommandBuffer->GetSemaphore();
 }

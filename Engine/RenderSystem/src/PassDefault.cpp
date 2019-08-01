@@ -75,12 +75,12 @@ void CPassDefault::Update(void)
 	m_pRenderSystem->GetEngineUniform()->Apply();
 }
 
-void CPassDefault::Render(CTaskGraph& taskGraph, const CGfxSemaphore* pWaitSemaphore, bool bPresent)
+const CGfxSemaphore* CPassDefault::Render(CTaskGraph& taskGraph, const CGfxSemaphore* pWaitSemaphore, bool bPresent)
 {
-	const CGfxCommandBufferPtr ptrMainCommandBuffer = m_ptrMainCommandBuffer[GfxRenderer()->GetSwapChain()->GetFrameIndex()];
 	const CGfxFrameBufferPtr ptrFrameBuffer = m_ptrFrameBuffer[GfxRenderer()->GetSwapChain()->GetFrameIndex()];
 	const CGfxRenderTexturePtr ptrColorTexture = m_ptrColorTexture[GfxRenderer()->GetSwapChain()->GetFrameIndex()];
 	const CGfxRenderTexturePtr ptrDepthStencilTexture = m_ptrDepthStencilTexture[GfxRenderer()->GetSwapChain()->GetFrameIndex()];
+	const CGfxCommandBufferPtr ptrMainCommandBuffer = m_ptrMainCommandBuffer[GfxRenderer()->GetSwapChain()->GetFrameIndex()];
 	{
 		ptrMainCommandBuffer->Clearup();
 
@@ -102,9 +102,5 @@ void CPassDefault::Render(CTaskGraph& taskGraph, const CGfxSemaphore* pWaitSemap
 		GfxRenderer()->EndRecord(ptrMainCommandBuffer);
 	}
 	GfxRenderer()->Submit(ptrMainCommandBuffer, pWaitSemaphore);
-}
-
-const CGfxSemaphore* CPassDefault::GetSemaphore(void) const
-{
-	return m_ptrMainCommandBuffer[GfxRenderer()->GetSwapChain()->GetFrameIndex()]->GetSemaphore();
+	return ptrMainCommandBuffer->GetSemaphore();
 }
