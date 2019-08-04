@@ -211,24 +211,24 @@ vec3 PBRLighting(vec3 normal, vec3 viewDirection, vec3 halfDirection, vec3 light
 	return (diffuse + specular) * ndl * lightColor;
 }
 
-vec3 EnvLighting(vec3 normal, vec3 viewDirection, vec3 env, vec3 fresnel, float roughness)
+vec3 EnvLighting(vec3 normal, vec3 viewDirection, vec3 env, vec3 albedo, vec3 fresnel, float roughness)
 {
 	float ndv = max(dot(normal, viewDirection), 0.0);
-	return Env_Specular(fresnel, ndv, roughness) * env;
+	return Env_Specular(fresnel, ndv, roughness) * env * albedo;
 }
 
-vec3 EnvLighting(vec3 normal, vec3 viewDirection, vec3 fresnel, float roughness, sampler2D texEnv, float maxLods)
+vec3 EnvLighting(vec3 normal, vec3 viewDirection, vec3 albedo, vec3 fresnel, float roughness, sampler2D texEnv, float maxLods)
 {
 	vec3 R = reflect(-viewDirection, normal);
 	vec3 env = Gamma2Linear(textureLod(texEnv, SphericalSampleing(R), roughness * maxLods).rgb);
-	return EnvLighting(normal, viewDirection, env, fresnel, roughness);
+	return EnvLighting(normal, viewDirection, env, albedo, fresnel, roughness);
 }
 
-vec3 EnvLighting(vec3 normal, vec3 viewDirection, vec3 fresnel, float roughness, samplerCube texEnv, float maxLods)
+vec3 EnvLighting(vec3 normal, vec3 viewDirection, vec3 albedo, vec3 fresnel, float roughness, samplerCube texEnv, float maxLods)
 {
 	vec3 R = reflect(-viewDirection, normal);
 	vec3 env = Gamma2Linear(textureLod(texEnv, R, roughness * maxLods).rgb);
-	return EnvLighting(normal, viewDirection, env, fresnel, roughness);
+	return EnvLighting(normal, viewDirection, env, albedo, fresnel, roughness);
 }
 
 float LightingAttenuation(float dis)
