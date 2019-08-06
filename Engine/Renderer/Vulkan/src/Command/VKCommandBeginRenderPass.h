@@ -31,17 +31,17 @@ public:
 				if (const AttachmentInformation* pAttachment = m_ptrRenderPass->GetAttachment(indexAttachment)) {
 					if (CGfxHelper::IsFormatColor(pAttachment->format)) {
 						VkClearValue value = {};
-						value.color.float32[0] = pAttachment->color[0];
-						value.color.float32[1] = pAttachment->color[1];
-						value.color.float32[2] = pAttachment->color[2];
-						value.color.float32[3] = pAttachment->color[3];
+						value.color.float32[0] = pAttachment->clearValue.color[0];
+						value.color.float32[1] = pAttachment->clearValue.color[1];
+						value.color.float32[2] = pAttachment->clearValue.color[2];
+						value.color.float32[3] = pAttachment->clearValue.color[3];
 						clearValues.emplace_back(value);
 					}
 
 					if (CGfxHelper::IsFormatDepthOrStencil(pAttachment->format)) {
 						VkClearValue value = {};
-						value.depthStencil.depth = pAttachment->depth;
-						value.depthStencil.stencil = pAttachment->stencil;
+						value.depthStencil.depth = pAttachment->clearValue.depth;
+						value.depthStencil.stencil = pAttachment->clearValue.stencil;
 						clearValues.emplace_back(value);
 					}
 				}

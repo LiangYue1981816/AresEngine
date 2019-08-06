@@ -164,10 +164,10 @@ bool CVKRenderPass::SetColorAttachment(int indexAttachment, GfxPixelFormat forma
 	m_attachments[indexAttachment].bPresent = bPresent;
 	m_attachments[indexAttachment].bInvalidation = bInvalidation;
 	m_attachments[indexAttachment].bClear = bClear;
-	m_attachments[indexAttachment].color[0] = red;
-	m_attachments[indexAttachment].color[1] = green;
-	m_attachments[indexAttachment].color[2] = blue;
-	m_attachments[indexAttachment].color[3] = alpha;
+	m_attachments[indexAttachment].clearValue.color[0] = red;
+	m_attachments[indexAttachment].clearValue.color[1] = green;
+	m_attachments[indexAttachment].clearValue.color[2] = blue;
+	m_attachments[indexAttachment].clearValue.color[3] = alpha;
 
 	return true;
 }
@@ -186,8 +186,8 @@ bool CVKRenderPass::SetDepthStencilAttachment(int indexAttachment, GfxPixelForma
 	m_attachments[indexAttachment].samples = samples;
 	m_attachments[indexAttachment].bInvalidation = bInvalidation;
 	m_attachments[indexAttachment].bClear = bClear;
-	m_attachments[indexAttachment].depth = depth;
-	m_attachments[indexAttachment].stencil = stencil;
+	m_attachments[indexAttachment].clearValue.depth = depth;
+	m_attachments[indexAttachment].clearValue.stencil = stencil;
 
 	return true;
 }

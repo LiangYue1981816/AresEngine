@@ -95,6 +95,8 @@ void CGLES3FrameBuffer::Bind(const AttachmentInformation* pAttachmentInformation
 	ASSERT(pSubpassInformation);
 	ASSERT(m_fbo);
 
+	eastl::unordered_map<int, ClearValue> attachmentClearValues;
+
 	GLScissor(0, 0, m_width, m_height);
 	GLViewport(0, 0, m_width, m_height);
 
@@ -109,7 +111,7 @@ void CGLES3FrameBuffer::Bind(const AttachmentInformation* pAttachmentInformation
 
 				GLBindFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + indexAttachment, CGLES3Helper::TranslateTextureTarget(((CGLES3RenderTexture*)ptrOutputTexture.GetPointer())->GetType()), ((CGLES3RenderTexture*)ptrOutputTexture.GetPointer())->GetTexture(), 0);
 				if (pAttachmentInformations[itOutputAttachment.first].bClear) {
-					glClearBufferfv(GL_COLOR, indexAttachment, pAttachmentInformations[itOutputAttachment.first].color);
+					attachmentClearValues[indexAttachment] = pAttachmentInformations[itOutputAttachment.first].clearValue;
 				}
 
 				drawBuffers.emplace_back(GL_COLOR_ATTACHMENT0 + indexAttachment);
@@ -123,19 +125,19 @@ void CGLES3FrameBuffer::Bind(const AttachmentInformation* pAttachmentInformation
 			if (CGfxHelper::IsFormatDepthOnly(ptrDepthStencilTexture->GetFormat())) {
 				GLBindFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, CGLES3Helper::TranslateTextureTarget(((CGLES3RenderTexture*)ptrDepthStencilTexture.GetPointer())->GetType()), ((CGLES3RenderTexture*)ptrDepthStencilTexture.GetPointer())->GetTexture(), 0);
 				if (pAttachmentInformations[pSubpassInformation->depthStencilAttachment].bClear) {
-					glClearBufferfv(GL_DEPTH, 0, &pAttachmentInformations[pSubpassInformation->depthStencilAttachment].depth);
+					attachmentClearValues[GL_DEPTH] = pAttachmentInformations[pSubpassInformation->depthStencilAttachment].clearValue;
 				}
 			}
 			else if (CGfxHelper::IsFormatStencilOnly(ptrDepthStencilTexture->GetFormat())) {
 				GLBindFramebufferTexture2D(GL_FRAMEBUFFER, GL_STENCIL_ATTACHMENT, CGLES3Helper::TranslateTextureTarget(((CGLES3RenderTexture*)ptrDepthStencilTexture.GetPointer())->GetType()), ((CGLES3RenderTexture*)ptrDepthStencilTexture.GetPointer())->GetTexture(), 0);
 				if (pAttachmentInformations[pSubpassInformation->depthStencilAttachment].bClear) {
-					glClearBufferiv(GL_STENCIL, 0, &pAttachmentInformations[pSubpassInformation->depthStencilAttachment].stencil);
+					attachmentClearValues[GL_STENCIL] = pAttachmentInformations[pSubpassInformation->depthStencilAttachment].clearValue;
 				}
 			}
 			else if (CGfxHelper::IsFormatDepthAndStencil(ptrDepthStencilTexture->GetFormat())) {
 				GLBindFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, CGLES3Helper::TranslateTextureTarget(((CGLES3RenderTexture*)ptrDepthStencilTexture.GetPointer())->GetType()), ((CGLES3RenderTexture*)ptrDepthStencilTexture.GetPointer())->GetTexture(), 0);
 				if (pAttachmentInformations[pSubpassInformation->depthStencilAttachment].bClear) {
-					glClearBufferfi(GL_DEPTH_STENCIL, 0, pAttachmentInformations[pSubpassInformation->depthStencilAttachment].depth, pAttachmentInformations[pSubpassInformation->depthStencilAttachment].stencil);
+					attachmentClearValues[GL_DEPTH_STENCIL] = pAttachmentInformations[pSubpassInformation->depthStencilAttachment].clearValue;
 				}
 			}
 		}
@@ -147,6 +149,26 @@ void CGLES3FrameBuffer::Bind(const AttachmentInformation* pAttachmentInformation
 		ASSERT(status == GL_FRAMEBUFFER_COMPLETE);
 	}
 	CHECK_GL_ERROR_ASSERT();
+
+	for (const auto& itClearValue : attachmentClearValues) {
+		switch (itClearValue.first) {
+		case GL_DEPTH:
+			glClearBufferfv(GL_DEPTH, 0, &itClearValue.second.depth);
+			break;
+
+		case GL_STENCIL:
+			glClearBufferiv(GL_STENCIL, 0, &itClearValue.second.stencil);
+			break;
+
+		case GL_DEPTH_STENCIL:
+			glClearBufferfi(GL_DEPTH_STENCIL, 0, itClearValue.second.depth, itClearValue.second.stencil);
+			break;
+
+		default:
+			glClearBufferfv(GL_COLOR, itClearValue.first, itClearValue.second.color);
+			break;
+		}
+	}
 }
 
 void CGLES3FrameBuffer::Resolve(const AttachmentInformation* pAttachmentInformations, const SubpassInformation* pSubpassInformation) const
@@ -169,9 +191,6 @@ void CGLES3FrameBuffer::Resolve(const AttachmentInformation* pAttachmentInformat
 				ASSERT(CGfxHelper::IsFormatColor(ptrResolveTexture->GetFormat()));
 
 				GLBindFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + indexAttachment, CGLES3Helper::TranslateTextureTarget(((CGLES3RenderTexture*)ptrResolveTexture.GetPointer())->GetType()), ((CGLES3RenderTexture*)ptrResolveTexture.GetPointer())->GetTexture(), 0);
-				if (pAttachmentInformations[itResolveAttachment.first].bClear) {
-					glClearBufferfv(GL_COLOR, indexAttachment, pAttachmentInformations[itResolveAttachment.first].color);
-				}
 
 				drawBuffers.emplace_back(GL_COLOR_ATTACHMENT0 + indexAttachment);
 				indexAttachment++;

@@ -2,15 +2,19 @@
 #include "GfxRenderer.h"
 
 
+typedef struct ClearValue {
+	int stencil = 0;
+	float depth = 1.0f;
+	float color[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
+} ClearValue;
+
 typedef struct AttachmentInformation {
 	GfxPixelFormat format = GFX_PIXELFORMAT_UNDEFINED;
 	int samples = 1;
 	bool bPresent = false;
 	bool bInvalidation = false;
 	bool bClear = true;
-	int stencil = 0;
-	float depth = 1.0f;
-	float color[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
+	ClearValue clearValue;
 } AttachmentInformation;
 
 typedef struct SubpassInformation {
