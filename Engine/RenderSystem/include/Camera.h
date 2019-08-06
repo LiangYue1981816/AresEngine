@@ -33,6 +33,7 @@ public:
 	void SetLookat(float eyex, float eyey, float eyez, float centerx, float centery, float centerz, float upx, float upy, float upz);
 
 private:
+	void Update(CTaskGraph& taskGraph) const;
 	const CGfxSemaphore* RenderDefault(CTaskGraph& taskGraph, const CGfxSemaphore* pWaitSemaphore, bool bPresent) const;
 	const CGfxSemaphore* RenderForwardLighting(CTaskGraph& taskGraph, const CGfxSemaphore* pWaitSemaphore, bool bShadow, bool bPresent) const;
 

@@ -181,9 +181,9 @@ void CRenderSystem::SetMainShadowResolution(int indexLevel, float resolution)
 	m_pEngineUniform->SetMainShadowResolution(indexLevel, resolution);
 }
 
-void CRenderSystem::Update(CTaskGraph& taskGraph, CCamera* pCamera, bool bShadow) const
+void CRenderSystem::Update(CTaskGraph& taskGraph, CCamera* pCamera) const
 {
-	SceneManager()->UpdateCamera(taskGraph, pCamera->GetCamera(), pCamera->GetRenderQueue());
+	pCamera->Update(taskGraph);
 }
 
 void CRenderSystem::RenderDefault(CTaskGraph& taskGraph, CCamera* pCamera, bool bPresent) const

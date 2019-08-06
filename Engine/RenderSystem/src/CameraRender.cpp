@@ -1,6 +1,11 @@
 #include "EngineHeader.h"
 
 
+void CCamera::Update(CTaskGraph& taskGraph) const
+{
+	SceneManager()->UpdateCamera(taskGraph, m_pCamera, m_pRenderQueue);
+}
+
 const CGfxSemaphore* CCamera::RenderDefault(CTaskGraph& taskGraph, const CGfxSemaphore* pWaitSemaphore, bool bPresent) const
 {
 	return m_pPassDefault->Render(taskGraph, pWaitSemaphore, bPresent);
