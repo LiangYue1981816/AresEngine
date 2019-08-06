@@ -73,13 +73,9 @@ void CPassShadow::CreateFrameBuffer(CGfxRenderTexturePtr ptrShadowTexture)
 	m_ptrFrameBuffer->Create(ptrRenderPass);
 }
 
-void CPassShadow::Update(void)
-{
-
-}
-
 const CGfxSemaphore* CPassShadow::Render(CTaskGraph& taskGraph, const CGfxSemaphore* pWaitSemaphore)
 {
+	// Update
 	const glm::camera mainCamera = m_pCamera->GetCamera()->GetCamera();
 	const glm::vec4 mainLightDirection = m_pRenderSystem->GetEngineUniform()->GetParams().mainDirectLightDirection * glm::vec4(-1.0f, -1.0f, -1.0f, 0.0f);
 
@@ -127,6 +123,7 @@ const CGfxSemaphore* CPassShadow::Render(CTaskGraph& taskGraph, const CGfxSemaph
 	m_pCamera->GetCameraUniform()->Apply();
 	m_pRenderSystem->GetEngineUniform()->Apply();
 
+	// Render
 	const CGfxCommandBufferPtr ptrMainCommandBuffer = m_ptrMainCommandBuffer[GfxRenderer()->GetSwapChain()->GetFrameIndex()];
 	{
 		ptrMainCommandBuffer->Clearup();

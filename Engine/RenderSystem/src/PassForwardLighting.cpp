@@ -71,16 +71,13 @@ void CPassForwardLighting::CreateFrameBuffer(int indexFrame, CGfxRenderTexturePt
 	m_ptrFrameBuffer[indexFrame]->Create(ptrRenderPass);
 }
 
-void CPassForwardLighting::Update(void)
-{
-
-}
-
 const CGfxSemaphore* CPassForwardLighting::Render(CTaskGraph& taskGraph, const CGfxSemaphore* pWaitSemaphore, bool bPresent)
 {
+	// Update
 	m_pCamera->GetCameraUniform()->Apply();
 	m_pRenderSystem->GetEngineUniform()->Apply();
 
+	// Render
 	const CGfxFrameBufferPtr ptrFrameBuffer = m_ptrFrameBuffer[GfxRenderer()->GetSwapChain()->GetFrameIndex()];
 	const CGfxRenderTexturePtr ptrColorTexture = m_ptrColorTexture[GfxRenderer()->GetSwapChain()->GetFrameIndex()];
 	const CGfxRenderTexturePtr ptrDepthStencilTexture = m_ptrDepthStencilTexture[GfxRenderer()->GetSwapChain()->GetFrameIndex()];
