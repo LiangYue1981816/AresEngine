@@ -71,12 +71,14 @@ void CPassDefault::CreateFrameBuffer(int indexFrame, CGfxRenderTexturePtr ptrCol
 
 void CPassDefault::Update(void)
 {
-	m_pCamera->GetCameraUniform()->Apply();
-	m_pRenderSystem->GetEngineUniform()->Apply();
+
 }
 
 const CGfxSemaphore* CPassDefault::Render(CTaskGraph& taskGraph, const CGfxSemaphore* pWaitSemaphore, bool bPresent)
 {
+	m_pCamera->GetCameraUniform()->Apply();
+	m_pRenderSystem->GetEngineUniform()->Apply();
+
 	const CGfxFrameBufferPtr ptrFrameBuffer = m_ptrFrameBuffer[GfxRenderer()->GetSwapChain()->GetFrameIndex()];
 	const CGfxRenderTexturePtr ptrColorTexture = m_ptrColorTexture[GfxRenderer()->GetSwapChain()->GetFrameIndex()];
 	const CGfxRenderTexturePtr ptrDepthStencilTexture = m_ptrDepthStencilTexture[GfxRenderer()->GetSwapChain()->GetFrameIndex()];
