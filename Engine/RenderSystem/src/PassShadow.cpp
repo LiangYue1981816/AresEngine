@@ -6,8 +6,18 @@ static CGfxRenderPassPtr ptrRenderPass;
 CPassShadow::CPassShadow(CCamera* pCamera, CRenderSystem* pRenderSystem)
 	: m_pCamera(pCamera)
 	, m_pRenderSystem(pRenderSystem)
+	, m_pShadowCamera{ nullptr }
+	, m_pShadowRenderQueue{ nullptr }
 	, m_splitFactors{ 0.0f, 0.1f, 0.2f, 0.5f, 1.0f }
 {
+	// Camera
+	{
+		for (int indexLevel = 0; indexLevel < 4; indexLevel++) {
+			m_pShadowCamera[indexLevel] = new CGfxCamera;
+			m_pShadowRenderQueue[indexLevel] = new CGfxRenderQueue;
+		}
+	}
+
 	// CommandBuffer
 	{
 		m_ptrMainCommandBuffer[0] = GfxRenderer()->NewCommandBuffer(0, true);
@@ -35,6 +45,16 @@ CPassShadow::~CPassShadow(void)
 	m_ptrMainCommandBuffer[0]->Clearup();
 	m_ptrMainCommandBuffer[1]->Clearup();
 	m_ptrMainCommandBuffer[2]->Clearup();
+
+	delete m_pShadowCamera[0];
+	delete m_pShadowCamera[1];
+	delete m_pShadowCamera[2];
+	delete m_pShadowCamera[3];
+
+	delete m_pShadowRenderQueue[0];
+	delete m_pShadowRenderQueue[1];
+	delete m_pShadowRenderQueue[2];
+	delete m_pShadowRenderQueue[3];
 
 	delete m_pShadowCameraUniform[0];
 	delete m_pShadowCameraUniform[1];
@@ -110,6 +130,10 @@ const CGfxSemaphore* CPassShadow::Render(CTaskGraph& taskGraph, const CGfxSemaph
 		const float resolution = 1024;
 		glm::sphere sphereFrustum = glm::sphere(minVertex, maxVertex);
 
+		m_pShadowCamera[indexLevel]->SetOrtho(-sphereFrustum.radius, sphereFrustum.radius, -sphereFrustum.radius, sphereFrustum.radius, zNear, zFar);
+		m_pShadowCamera[indexLevel]->SetLookat(sphereFrustum.center.x, sphereFrustum.center.y, sphereFrustum.center.z, sphereFrustum.center.x + mainLightDirection.x, sphereFrustum.center.y + mainLightDirection.y, sphereFrustum.center.z + mainLightDirection.z, 0.0f, 1.0f, 0.0f);
+		SceneManager()->UpdateCamera(taskGraph, m_pShadowCamera[indexLevel], m_pShadowRenderQueue[indexLevel]);
+
 		m_pShadowCameraUniform[indexLevel]->SetOrtho(-sphereFrustum.radius, sphereFrustum.radius, -sphereFrustum.radius, sphereFrustum.radius, zNear, zFar);
 		m_pShadowCameraUniform[indexLevel]->SetLookat(sphereFrustum.center.x, sphereFrustum.center.y, sphereFrustum.center.z, sphereFrustum.center.x + mainLightDirection.x, sphereFrustum.center.y + mainLightDirection.y, sphereFrustum.center.z + mainLightDirection.z, 0.0f, 1.0f, 0.0f);
 		m_pShadowCameraUniform[indexLevel]->Apply();
@@ -145,7 +169,8 @@ const CGfxSemaphore* CPassShadow::Render(CTaskGraph& taskGraph, const CGfxSemaph
 				};
 
 				for (int indexLevel = 0; indexLevel < 4; indexLevel++) {
-					m_pCamera->GetRenderQueue()->CmdDraw(taskGraph, ptrMainCommandBuffer, m_ptrDescriptorSetPass[indexLevel], SHADOW_PASS_NAME, area[indexLevel], area[indexLevel], 0xffffffff);
+//					m_pCamera->GetRenderQueue()->CmdDraw(taskGraph, ptrMainCommandBuffer, m_ptrDescriptorSetPass[indexLevel], SHADOW_PASS_NAME, area[indexLevel], area[indexLevel], 0xffffffff);
+					m_pShadowRenderQueue[indexLevel]->CmdDraw(taskGraph, ptrMainCommandBuffer, m_ptrDescriptorSetPass[indexLevel], SHADOW_PASS_NAME, area[indexLevel], area[indexLevel], 0xffffffff);
 				}
 			}
 			GfxRenderer()->CmdEndRenderPass(ptrMainCommandBuffer);

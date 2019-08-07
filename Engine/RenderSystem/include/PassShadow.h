@@ -26,6 +26,8 @@ private:
 
 private:
 	float m_splitFactors[5];
+	CGfxCamera* m_pShadowCamera[4];
+	CGfxRenderQueue* m_pShadowRenderQueue[4];
 
 private:
 	CGfxFrameBufferPtr m_ptrFrameBuffer;
