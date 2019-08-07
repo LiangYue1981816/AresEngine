@@ -33,7 +33,8 @@ private:
 
 
 private:
-	event_t m_eventExit;
+	std::atomic_bool m_bExit;
+
 	event_t m_eventReady;
 	event_t m_eventFinish;
 	event_t m_eventDispatch;

@@ -12,7 +12,8 @@ CTaskGraph::CTaskGraph(const char* szName, int numThreads)
 		numThreads = MAX_THREAD_COUNT;
 	}
 
-	event_init(&m_eventExit, 0);
+	m_bExit = false;
+
 	event_init(&m_eventReady, 1);
 	event_init(&m_eventFinish, 1);
 	event_init(&m_eventDispatch, 0);
@@ -35,14 +36,14 @@ CTaskGraph::CTaskGraph(const char* szName, int numThreads)
 
 CTaskGraph::~CTaskGraph(void)
 {
-	event_signal(&m_eventExit);
+	m_bExit = true;
+
 	event_signal(&m_eventDispatch);
 
 	for (int indexThread = 0; indexThread < m_threads.size(); indexThread++) {
 		pthread_join(m_threads[indexThread], nullptr);
 	}
 
-	event_destroy(&m_eventExit);
 	event_destroy(&m_eventReady);
 	event_destroy(&m_eventFinish);
 	event_destroy(&m_eventDispatch);
@@ -94,7 +95,7 @@ void* CTaskGraph::TaskThread(void* pParams)
 		event_wait(&pTaskGraph->m_eventDispatch);
 		{
 			// Check if the thread needs to exit
-			if (event_wait_timeout(&pTaskGraph->m_eventExit, 0) == 0) {
+			if (pTaskGraph->m_bExit) {
 				break;
 			}
 
