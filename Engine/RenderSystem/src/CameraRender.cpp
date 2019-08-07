@@ -3,7 +3,7 @@
 
 void CCamera::Update(CTaskGraph& taskGraph) const
 {
-	SceneManager()->UpdateCamera(taskGraph, m_pCamera, m_pRenderQueue);
+	SceneManager()->UpdateCamera(taskGraph, m_pCamera, m_pRenderQueue, 0xffffffff);
 }
 
 const CGfxSemaphore* CCamera::RenderDefault(CTaskGraph& taskGraph, const CGfxSemaphore* pWaitSemaphore, bool bPresent) const

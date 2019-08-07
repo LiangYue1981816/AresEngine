@@ -24,7 +24,7 @@ void CComponentSkin::TaskUpdate(float gameTime, float deltaTime)
 
 }
 
-void CComponentSkin::TaskUpdateCamera(CGfxCamera* pCamera, CGfxRenderQueue* pRenderQueue, int indexThread)
+void CComponentSkin::TaskUpdateCamera(CGfxCamera* pCamera, CGfxRenderQueue* pRenderQueue, uint32_t mask, int indexThread)
 {
 
 }

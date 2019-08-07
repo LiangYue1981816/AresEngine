@@ -61,11 +61,13 @@ void CComponentPointLight::TaskUpdate(float gameTime, float deltaTime)
 	}
 }
 
-void CComponentPointLight::TaskUpdateCamera(CGfxCamera* pCamera, CGfxRenderQueue* pRenderQueue, int indexThread)
+void CComponentPointLight::TaskUpdateCamera(CGfxCamera* pCamera, CGfxRenderQueue* pRenderQueue, uint32_t mask, int indexThread)
 {
-	if (m_pParentNode && m_pParentNode->IsActive()) {
-		if (pCamera->IsVisible(GetWorldAABB())) {
-			pRenderQueue->Add(indexThread, m_ptrMaterial, m_ptrMeshDraw, (const uint8_t*)& m_instanceData, sizeof(m_instanceData));
+	if (m_ptrMeshDraw->GetMask() & mask) {
+		if (m_pParentNode && m_pParentNode->IsActive()) {
+			if (pCamera->IsVisible(GetWorldAABB())) {
+				pRenderQueue->Add(indexThread, m_ptrMaterial, m_ptrMeshDraw, (const uint8_t*)& m_instanceData, sizeof(m_instanceData));
+			}
 		}
 	}
 }

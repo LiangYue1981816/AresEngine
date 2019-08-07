@@ -93,7 +93,7 @@ int event_wait_timeout(event_t *event, int msec)
 	pthread_mutex_lock(&event->mutex);
 	{
 		if (event->count) {
-			int nsec;
+			long nsec;
 			struct timeval now;
 			struct timespec abstime;
 
