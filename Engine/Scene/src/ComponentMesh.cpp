@@ -45,7 +45,7 @@ void CComponentMesh::SetMask(uint32_t mask)
 glm::aabb CComponentMesh::GetWorldAABB(void)
 {
 	if (m_ptrMeshDraw && m_pParentNode) {
-		return m_ptrMeshDraw->GetLocalAABB()* m_pParentNode->GetWorldTransform();
+		return m_ptrMeshDraw->GetLocalAABB() * m_pParentNode->GetWorldTransform();
 	}
 	else {
 		return glm::aabb();
