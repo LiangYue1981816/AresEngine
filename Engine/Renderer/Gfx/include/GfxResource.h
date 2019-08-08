@@ -140,7 +140,7 @@ public:
 		return m_pPointer;
 	}
 
-	inline operator bool(void) const
+	inline operator bool (void) const
 	{
 		return m_pPointer != nullptr;
 	}
