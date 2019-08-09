@@ -44,7 +44,6 @@ private:
 	int m_v1;
 	int m_v2;
 
-private:
 	CGLES3PipelineCompute* m_pPipelineCompute;
 	CGLES3PipelineGraphics* m_pPipelineGraphics;
 };

@@ -26,7 +26,6 @@ public:
 		{
 			if (m_pPipelineGraphics->IsCompatibleVertexFormat(m_ptrMeshDraw->GetVertexBinding(), m_ptrMeshDraw->GetVertexFormat()) &&
 				m_pPipelineGraphics->IsCompatibleVertexFormat(m_ptrMeshDraw->GetInstanceBinding(), m_ptrMeshDraw->GetInstanceFormat())) {
-				((CGLES3MeshDraw*)m_ptrMeshDraw.GetPointer())->Bind();
 				glDrawElementsInstanced(GL_TRIANGLES, m_ptrMeshDraw->GetIndexCount(), CGLES3Helper::TranslateIndexType(m_ptrMeshDraw->GetIndexType()), (const void*)m_ptrMeshDraw->GetIndexOffset(), m_ptrMeshDraw->GetInstanceCount());
 			}
 		}
@@ -35,7 +34,5 @@ public:
 
 private:
 	CGfxMeshDrawPtr m_ptrMeshDraw;
-
-private:
 	CGLES3PipelineGraphics* m_pPipelineGraphics;
 };

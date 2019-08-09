@@ -9,6 +9,7 @@
 #include "./Command/VKCommandBindPipelineGraphics.h"
 #include "./Command/VKCommandBindDescriptorSet.h"
 #include "./Command/VKCommandBindMesh.h"
+#include "./Command/VKCommandBindMeshDraw.h"
 #include "./Command/VKCommandUniform1i.h"
 #include "./Command/VKCommandUniform2i.h"
 #include "./Command/VKCommandUniform3i.h"
@@ -386,7 +387,20 @@ bool CVKCommandBuffer::CmdBindMesh(const CGfxMeshPtr ptrMesh)
 	ASSERT(m_vkCommandBuffer);
 
 	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
-		m_pCommands.emplace_back(new CVKCommandBindMesh(m_vkCommandBuffer, ptrMesh));
+		m_pCommands.emplace_back(new CVKCommandBindMesh(m_vkCommandBuffer, m_pCurrentPipelineGraphics, ptrMesh));
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+bool CVKCommandBuffer::CmdBindMeshDraw(const CGfxMeshDrawPtr ptrMeshDraw)
+{
+	ASSERT(m_vkCommandBuffer);
+
+	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
+		m_pCommands.emplace_back(new CVKCommandBindMeshDraw(m_vkCommandBuffer, m_pCurrentPipelineGraphics, ptrMeshDraw));
 		return true;
 	}
 	else {

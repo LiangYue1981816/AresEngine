@@ -8,6 +8,8 @@
 #include "./Command/GLES3CommandBindPipelineCompute.h"
 #include "./Command/GLES3CommandBindPipelineGraphics.h"
 #include "./Command/GLES3CommandBindDescriptorSet.h"
+#include "./Command/GLES3CommandBindMesh.h"
+#include "./Command/GLES3CommandBindMeshDraw.h"
 #include "./Command/GLES3CommandUniform1i.h"
 #include "./Command/GLES3CommandUniform2i.h"
 #include "./Command/GLES3CommandUniform3i.h"
@@ -293,7 +295,24 @@ bool CGLES3CommandBuffer::CmdBindDescriptorSet(const CGfxDescriptorSetPtr ptrDes
 
 bool CGLES3CommandBuffer::CmdBindMesh(const CGfxMeshPtr ptrMesh)
 {
-	return true;
+	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
+		m_pCommands.emplace_back(new CGLES3CommandBindMesh(m_pCurrentPipelineGraphics, ptrMesh));
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+bool CGLES3CommandBuffer::CmdBindMeshDraw(const CGfxMeshDrawPtr ptrMeshDraw)
+{
+	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
+		m_pCommands.emplace_back(new CGLES3CommandBindMeshDraw(m_pCurrentPipelineGraphics, ptrMeshDraw));
+		return true;
+	}
+	else {
+		return false;
+	}
 }
 
 bool CGLES3CommandBuffer::CmdUniform1i(uint32_t name, int v0)

@@ -60,6 +60,7 @@ public:
 	bool CmdBindPipelineGraphics(const CGfxPipelineGraphics* pPipelineGraphics);
 	bool CmdBindDescriptorSet(const CGfxDescriptorSetPtr ptrDescriptorSet);
 	bool CmdBindMesh(const CGfxMeshPtr ptrMesh);
+	bool CmdBindMeshDraw(const CGfxMeshDrawPtr ptrMeshDraw);
 
 	bool CmdUniform1i(uint32_t name, int v0);
 	bool CmdUniform2i(uint32_t name, int v0, int v1);

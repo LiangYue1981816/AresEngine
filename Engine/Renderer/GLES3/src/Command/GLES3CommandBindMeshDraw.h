@@ -2,16 +2,16 @@
 #include "GfxCommandBuffer.h"
 
 
-class CGLES3CommandDrawIndirect : public CGfxCommandBase
+class CGLES3CommandBindMeshDraw : public CGfxCommandBase
 {
 public:
-	CGLES3CommandDrawIndirect(const CGfxPipelineGraphics* pPipelineGraphics, const CGfxMeshDrawPtr ptrMeshDraw)
+	CGLES3CommandBindMeshDraw(const CGfxPipelineGraphics* pPipelineGraphics, const CGfxMeshDrawPtr ptrMeshDraw)
 		: m_pPipelineGraphics((CGLES3PipelineGraphics*)pPipelineGraphics)
 		, m_ptrMeshDraw(ptrMeshDraw)
 	{
 
 	}
-	virtual ~CGLES3CommandDrawIndirect(void)
+	virtual ~CGLES3CommandBindMeshDraw(void)
 	{
 
 	}
@@ -22,11 +22,11 @@ public:
 		ASSERT(m_ptrMeshDraw);
 		ASSERT(m_pPipelineGraphics);
 
-		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_DRAW_INDIRECT, "CommandDrawIndirect");
+		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_BIND_MESHDRAW, "CommandBindMeshDraw");
 		{
 			if (m_pPipelineGraphics->IsCompatibleVertexFormat(m_ptrMeshDraw->GetVertexBinding(), m_ptrMeshDraw->GetVertexFormat()) &&
 				m_pPipelineGraphics->IsCompatibleVertexFormat(m_ptrMeshDraw->GetInstanceBinding(), m_ptrMeshDraw->GetInstanceFormat())) {
-				glDrawElementsIndirect(GL_TRIANGLES, CGLES3Helper::TranslateIndexType(m_ptrMeshDraw->GetIndexType()), (const void*)0);
+				((CGLES3MeshDraw*)m_ptrMeshDraw.GetPointer())->Bind();
 			}
 		}
 	}

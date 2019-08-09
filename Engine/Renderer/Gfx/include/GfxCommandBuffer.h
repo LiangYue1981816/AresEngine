@@ -75,6 +75,7 @@ public:
 	virtual bool CmdBindPipelineGraphics(const CGfxPipelineGraphics* pPipelineGraphics) = 0;
 	virtual bool CmdBindDescriptorSet(const CGfxDescriptorSetPtr ptrDescriptorSet) = 0;
 	virtual bool CmdBindMesh(const CGfxMeshPtr ptrMesh) = 0;
+	virtual bool CmdBindMeshDraw(const CGfxMeshDrawPtr ptrMeshDraw) = 0;
 
 	virtual bool CmdUniform1i(uint32_t name, int v0) = 0;
 	virtual bool CmdUniform2i(uint32_t name, int v0, int v1) = 0;
