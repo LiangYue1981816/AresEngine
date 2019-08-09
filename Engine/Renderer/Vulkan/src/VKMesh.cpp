@@ -91,3 +91,9 @@ void CVKMesh::Destroy(void)
 	m_pIndexBuffer = nullptr;
 	m_pVertexBuffer = nullptr;
 }
+
+void CVKMesh::Bind(VkCommandBuffer vkCommandBuffer)
+{
+	m_pIndexBuffer->Bind(vkCommandBuffer);
+	m_pVertexBuffer->Bind(vkCommandBuffer);
+}

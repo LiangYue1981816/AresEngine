@@ -37,8 +37,8 @@ public:
 
 private:
 	CGfxMeshDrawPtr m_ptrMeshDraw;
+	CVKPipelineGraphics* m_pPipelineGraphics;
 
 private:
 	VkCommandBuffer m_vkCommandBuffer;
-	CVKPipelineGraphics* m_pPipelineGraphics;
 };

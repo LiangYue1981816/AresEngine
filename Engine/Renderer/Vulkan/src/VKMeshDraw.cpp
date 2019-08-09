@@ -129,7 +129,5 @@ bool CVKMeshDraw::InstanceBufferData(size_t size, const void* data)
 
 void CVKMeshDraw::Bind(VkCommandBuffer vkCommandBuffer)
 {
-	((CVKIndexBuffer*)m_ptrMesh->GetIndexBuffer())->Bind(vkCommandBuffer);
-	((CVKVertexBuffer*)m_ptrMesh->GetVertexBuffer())->Bind(vkCommandBuffer);
-	((CVKInstanceBuffer*)m_pInstanceBuffer[VKRenderer()->GetSwapChain()->GetFrameIndex()])->Bind(vkCommandBuffer);
+	m_pInstanceBuffer[VKRenderer()->GetSwapChain()->GetFrameIndex()]->Bind(vkCommandBuffer);
 }

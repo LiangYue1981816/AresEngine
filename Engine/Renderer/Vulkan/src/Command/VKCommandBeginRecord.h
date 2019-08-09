@@ -44,11 +44,11 @@ public:
 
 
 private:
-	bool m_bMainCommandBuffer;
-	VkCommandBuffer m_vkCommandBuffer;
-
-private:
 	CGfxFrameBufferPtr m_ptrFrameBuffer;
 	CGfxRenderPassPtr m_ptrRenderPass;
 	int m_indexSubpass;
+
+private:
+	bool m_bMainCommandBuffer;
+	VkCommandBuffer m_vkCommandBuffer;
 };

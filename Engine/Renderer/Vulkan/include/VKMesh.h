@@ -24,6 +24,9 @@ public:
 	bool CreateVertexBuffer(uint32_t vertexFormat, int vertexBinding, size_t size, bool bDynamic, const void* data);
 	void Destroy(void);
 
+public:
+	void Bind(VkCommandBuffer vkCommandBuffer);
+
 
 private:
 	CVKIndexBuffer* m_pIndexBuffer;

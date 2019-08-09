@@ -8,6 +8,7 @@
 #include "./Command/VKCommandBindPipelineCompute.h"
 #include "./Command/VKCommandBindPipelineGraphics.h"
 #include "./Command/VKCommandBindDescriptorSet.h"
+#include "./Command/VKCommandBindMesh.h"
 #include "./Command/VKCommandUniform1i.h"
 #include "./Command/VKCommandUniform2i.h"
 #include "./Command/VKCommandUniform3i.h"
@@ -373,6 +374,19 @@ bool CVKCommandBuffer::CmdBindDescriptorSet(const CGfxDescriptorSetPtr ptrDescri
 
 	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
 		m_pCommands.emplace_back(new CVKCommandBindDescriptorSet(m_vkCommandBuffer, m_pCurrentPipelineCompute, m_pCurrentPipelineGraphics, ptrDescriptorSet));
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+bool CVKCommandBuffer::CmdBindMesh(const CGfxMeshPtr ptrMesh)
+{
+	ASSERT(m_vkCommandBuffer);
+
+	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
+		m_pCommands.emplace_back(new CVKCommandBindMesh(m_vkCommandBuffer, ptrMesh));
 		return true;
 	}
 	else {

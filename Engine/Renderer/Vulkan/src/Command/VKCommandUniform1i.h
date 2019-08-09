@@ -42,8 +42,9 @@ private:
 	uint32_t m_name;
 	int m_v0;
 
-private:
-	VkCommandBuffer m_vkCommandBuffer;
 	CVKPipelineCompute* m_pPipelineCompute;
 	CVKPipelineGraphics* m_pPipelineGraphics;
+
+private:
+	VkCommandBuffer m_vkCommandBuffer;
 };

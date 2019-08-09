@@ -48,8 +48,9 @@ private:
 	int m_v2;
 	int m_v3;
 
-private:
-	VkCommandBuffer m_vkCommandBuffer;
 	CVKPipelineCompute* m_pPipelineCompute;
 	CVKPipelineGraphics* m_pPipelineGraphics;
+
+private:
+	VkCommandBuffer m_vkCommandBuffer;
 };

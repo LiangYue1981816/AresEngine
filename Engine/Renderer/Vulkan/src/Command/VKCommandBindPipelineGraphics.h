@@ -30,6 +30,8 @@ public:
 
 
 private:
-	VkCommandBuffer m_vkCommandBuffer;
 	CVKPipelineGraphics* m_pPipelineGraphics;
+
+private:
+	VkCommandBuffer m_vkCommandBuffer;
 };

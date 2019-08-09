@@ -291,6 +291,11 @@ bool CGLES3CommandBuffer::CmdBindDescriptorSet(const CGfxDescriptorSetPtr ptrDes
 	}
 }
 
+bool CGLES3CommandBuffer::CmdBindMesh(const CGfxMeshPtr ptrMesh)
+{
+	return true;
+}
+
 bool CGLES3CommandBuffer::CmdUniform1i(uint32_t name, int v0)
 {
 	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {

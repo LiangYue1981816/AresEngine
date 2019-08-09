@@ -63,12 +63,12 @@ public:
 
 
 private:
-	VkCommandBuffer m_vkCommandBuffer;
-
-private:
 	GfxImageLayout m_imageLayout;
 	CGfxTexture2DPtr m_ptrTexture2D;
 	CGfxTexture2DArrayPtr m_ptrTexture2DArray;
 	CGfxTextureCubemapPtr m_ptrTextureCubemap;
 	CGfxRenderTexturePtr m_ptrRenderTexture;
+
+private:
+	VkCommandBuffer m_vkCommandBuffer;
 };

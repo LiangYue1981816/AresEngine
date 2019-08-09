@@ -46,8 +46,9 @@ private:
 	float m_v1;
 	float m_v2;
 
-private:
-	VkCommandBuffer m_vkCommandBuffer;
 	CVKPipelineCompute* m_pPipelineCompute;
 	CVKPipelineGraphics* m_pPipelineGraphics;
+
+private:
+	VkCommandBuffer m_vkCommandBuffer;
 };

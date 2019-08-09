@@ -43,9 +43,9 @@ public:
 
 private:
 	CGfxDescriptorSetPtr m_ptrDescriptorSet;
+	CVKPipelineCompute* m_pPipelineCompute;
+	CVKPipelineGraphics* m_pPipelineGraphics;
 
 private:
 	VkCommandBuffer m_vkCommandBuffer;
-	CVKPipelineCompute* m_pPipelineCompute;
-	CVKPipelineGraphics* m_pPipelineGraphics;
 };
