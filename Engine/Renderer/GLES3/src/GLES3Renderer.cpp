@@ -330,6 +330,16 @@ bool CGLES3Renderer::CmdBindDescriptorSet(CGfxCommandBufferPtr ptrCommandBuffer,
 	return ptrCommandBuffer->CmdBindDescriptorSet(ptrDescriptorSet);
 }
 
+bool CGLES3Renderer::CmdBindMesh(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxMeshPtr ptrMesh)
+{
+	return ptrCommandBuffer->CmdBindMesh(ptrMesh);
+}
+
+bool CGLES3Renderer::CmdBindMeshDraw(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxMeshDrawPtr ptrMeshDraw)
+{
+	return ptrCommandBuffer->CmdBindMeshDraw(ptrMeshDraw);
+}
+
 bool CGLES3Renderer::CmdUniform1i(CGfxCommandBufferPtr ptrCommandBuffer, uint32_t name, int v0)
 {
 	return ptrCommandBuffer->CmdUniform1i(name, v0);

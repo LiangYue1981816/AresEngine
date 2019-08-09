@@ -336,6 +336,16 @@ bool CVKRenderer::CmdBindDescriptorSet(CGfxCommandBufferPtr ptrCommandBuffer, co
 	return ptrCommandBuffer->CmdBindDescriptorSet(ptrDescriptorSet);
 }
 
+bool CVKRenderer::CmdBindMesh(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxMeshPtr ptrMesh)
+{
+	return ptrCommandBuffer->CmdBindMesh(ptrMesh);
+}
+
+bool CVKRenderer::CmdBindMeshDraw(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxMeshDrawPtr ptrMeshDraw)
+{
+	return ptrCommandBuffer->CmdBindMeshDraw(ptrMeshDraw);
+}
+
 bool CVKRenderer::CmdUniform1i(CGfxCommandBufferPtr ptrCommandBuffer, uint32_t name, int v0)
 {
 	return ptrCommandBuffer->CmdUniform1i(name, v0);
