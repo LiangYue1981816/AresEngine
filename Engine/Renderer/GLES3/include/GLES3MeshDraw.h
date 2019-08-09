@@ -18,6 +18,9 @@ public:
 	uint32_t GetMask(void) const;
 
 public:
+	CGfxMeshPtr GetMesh(void) const;
+
+public:
 	glm::aabb GetLocalAABB(void) const;
 
 	GfxIndexType GetIndexType(void) const;

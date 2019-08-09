@@ -46,6 +46,11 @@ uint32_t CVKMeshDraw::GetMask(void) const
 	return m_mask;
 }
 
+CGfxMeshPtr CVKMeshDraw::GetMesh(void) const
+{
+	return m_ptrMesh;
+}
+
 glm::aabb CVKMeshDraw::GetLocalAABB(void) const
 {
 	return m_pMeshDraw->aabb;

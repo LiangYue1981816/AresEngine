@@ -48,6 +48,11 @@ uint32_t CGLES3MeshDraw::GetMask(void) const
 	return m_mask;
 }
 
+CGfxMeshPtr CGLES3MeshDraw::GetMesh(void) const
+{
+	return m_ptrMesh;
+}
+
 glm::aabb CGLES3MeshDraw::GetLocalAABB(void) const
 {
 	return m_pMeshDraw->aabb;

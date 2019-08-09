@@ -26,6 +26,9 @@ public:
 	virtual uint32_t GetMask(void) const = 0;
 
 public:
+	virtual CGfxMeshPtr GetMesh(void) const = 0;
+
+public:
 	virtual glm::aabb GetLocalAABB(void) const = 0;
 
 	virtual GfxIndexType GetIndexType(void) const = 0;
