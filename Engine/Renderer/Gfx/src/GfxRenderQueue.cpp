@@ -88,7 +88,7 @@ void CGfxRenderQueue::Begin(void)
 void CGfxRenderQueue::Add(int indexThread, const CGfxMaterialPtr ptrMaterial, const CGfxMeshDrawPtr ptrMeshDraw, const uint8_t* pInstanceData, uint32_t size)
 {
 	if (indexThread < MAX_THREAD_COUNT) {
-		eastl::vector<uint8_t>& meshDrawInstanceBuffer = m_materialMeshDrawQueueThreads[indexThread][ptrMaterial][ptrMeshDraw];
+		eastl::vector<uint8_t>& meshDrawInstanceBuffer = m_materialMeshDrawQueueThreads[indexThread][ptrMaterial][ptrMeshDraw->GetMesh()][ptrMeshDraw];
 		meshDrawInstanceBuffer.insert(meshDrawInstanceBuffer.end(), pInstanceData, pInstanceData + size);
 	}
 }
@@ -98,12 +98,13 @@ void CGfxRenderQueue::End(void)
 	m_materialMeshDrawQueue.clear();
 	{
 		for (int indexThread = 0; indexThread < MAX_THREAD_COUNT; indexThread++) {
-			for (const auto& itMaterialMeshDrawQueueThread : m_materialMeshDrawQueueThreads[indexThread]) {
-				eastl::unordered_map<CGfxMeshDrawPtr, eastl::vector<uint8_t>>& meshDrawQueue = m_materialMeshDrawQueue[itMaterialMeshDrawQueueThread.first];
-
-				for (const auto& itMeshDrawQueueThread : itMaterialMeshDrawQueueThread.second) {
-					eastl::vector<uint8_t>& meshDrawInstanceBuffer = meshDrawQueue[itMeshDrawQueueThread.first];
-					meshDrawInstanceBuffer.insert(meshDrawInstanceBuffer.end(), itMeshDrawQueueThread.second.begin(), itMeshDrawQueueThread.second.end());
+			for (const auto& itMaterialMeshQueueThread : m_materialMeshDrawQueueThreads[indexThread]) {
+				for (const auto& itMaterialMeshDrawQueueThread : itMaterialMeshQueueThread.second) {
+					eastl::unordered_map<CGfxMeshDrawPtr, eastl::vector<uint8_t>>& meshDrawQueue = m_materialMeshDrawQueue[itMaterialMeshQueueThread.first][itMaterialMeshDrawQueueThread.first];
+					for (const auto& itMeshDrawQueueThread : itMaterialMeshDrawQueueThread.second) {
+						eastl::vector<uint8_t>& meshDrawInstanceBuffer = meshDrawQueue[itMeshDrawQueueThread.first];
+						meshDrawInstanceBuffer.insert(meshDrawInstanceBuffer.end(), itMeshDrawQueueThread.second.begin(), itMeshDrawQueueThread.second.end());
+					}
 				}
 			}
 
@@ -162,13 +163,14 @@ void CGfxRenderQueue::CmdDrawThread(CGfxCommandBufferPtr ptrCommandBuffer, const
 
 		for (const auto& itMaterial : m_pipelineMaterialQueue[pPipeline]) {
 			GfxRenderer()->CmdBindDescriptorSet(ptrCommandBuffer, itMaterial.first->GetPass(matPassName)->GetDescriptorSet());
-
-			for (const auto& itMeshDrawQueue : m_materialMeshDrawQueue[itMaterial.first]) {
-				if (itMeshDrawQueue.first->GetMask() & mask) {
-					GfxRenderer()->CmdBindDescriptorSet(ptrCommandBuffer, GfxRenderer()->GetDescriptorSet(itMeshDrawQueue.first->GetName()));
-					GfxRenderer()->CmdUpdateInstanceBuffer(ptrCommandBuffer, itMeshDrawQueue.first, itMeshDrawQueue.second.data(), itMeshDrawQueue.second.size());
-					GfxRenderer()->CmdDrawInstance(ptrCommandBuffer, itMeshDrawQueue.first);
-//					GfxRenderer()->CmdDrawIndirect(ptrCommandBuffer, itMeshDrawQueue.first);
+			for (const auto& itMeshQueue : m_materialMeshDrawQueue[itMaterial.first]) {
+				for (const auto& itMeshDrawQueue : itMeshQueue.second) {
+					if (itMeshDrawQueue.first->GetMask() & mask) {
+						GfxRenderer()->CmdBindDescriptorSet(ptrCommandBuffer, GfxRenderer()->GetDescriptorSet(itMeshDrawQueue.first->GetName()));
+						GfxRenderer()->CmdUpdateInstanceBuffer(ptrCommandBuffer, itMeshDrawQueue.first, itMeshDrawQueue.second.data(), itMeshDrawQueue.second.size());
+						GfxRenderer()->CmdDrawInstance(ptrCommandBuffer, itMeshDrawQueue.first);
+//						GfxRenderer()->CmdDrawIndirect(ptrCommandBuffer, itMeshDrawQueue.first);
+					}
 				}
 			}
 		}

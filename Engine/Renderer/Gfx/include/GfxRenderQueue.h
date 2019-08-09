@@ -21,7 +21,7 @@ public:
 
 
 private:
-	eastl::unordered_map<CGfxMaterialPtr, eastl::unordered_map<CGfxMeshDrawPtr, eastl::vector<uint8_t>>> m_materialMeshDrawQueue;
-	eastl::unordered_map<CGfxMaterialPtr, eastl::unordered_map<CGfxMeshDrawPtr, eastl::vector<uint8_t>>> m_materialMeshDrawQueueThreads[MAX_THREAD_COUNT];
+	eastl::unordered_map<CGfxMaterialPtr, eastl::unordered_map<CGfxMeshPtr, eastl::unordered_map<CGfxMeshDrawPtr, eastl::vector<uint8_t>>>> m_materialMeshDrawQueue;
+	eastl::unordered_map<CGfxMaterialPtr, eastl::unordered_map<CGfxMeshPtr, eastl::unordered_map<CGfxMeshDrawPtr, eastl::vector<uint8_t>>>> m_materialMeshDrawQueueThreads[MAX_THREAD_COUNT];
 	eastl::unordered_map<const CGfxPipelineGraphics*, eastl::unordered_map<CGfxMaterialPtr, CGfxMaterialPtr>> m_pipelineMaterialQueue;
 };
