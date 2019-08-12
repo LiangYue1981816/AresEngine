@@ -19,7 +19,11 @@ public:
 	virtual void Execute(void) const
 	{
 		ASSERT(m_ptrCommandBuffer);
-		m_ptrCommandBuffer->Execute();
+
+		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_EXECUTE, "CommandExecute");
+		{
+			m_ptrCommandBuffer->Execute();
+		}
 	}
 
 
