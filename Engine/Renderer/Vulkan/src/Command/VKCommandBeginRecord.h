@@ -29,9 +29,6 @@ public:
 public:
 	virtual void Execute(void) const
 	{
-		ASSERT(m_ptrFrameBuffer);
-		ASSERT(m_ptrRenderPass);
-
 		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_BEGIN_RECORD, "CommandBeginRecord");
 		{
 			if (m_bMainCommandBuffer) {
