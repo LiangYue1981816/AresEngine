@@ -22,8 +22,11 @@ public:
 		ASSERT(m_vkCommandBuffer);
 		ASSERT(m_ptrCommandBuffer);
 
-		VkCommandBuffer vkExecuteCommandBuffer = ((CVKCommandBuffer*)m_ptrCommandBuffer.GetPointer())->GetCommandBuffer();
-		vkCmdExecuteCommands(m_vkCommandBuffer, 1, &vkExecuteCommandBuffer);
+		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_EXECUTE, "CommandExecute");
+		{
+			VkCommandBuffer vkExecuteCommandBuffer = ((CVKCommandBuffer*)m_ptrCommandBuffer.GetPointer())->GetCommandBuffer();
+			vkCmdExecuteCommands(m_vkCommandBuffer, 1, &vkExecuteCommandBuffer);
+		}
 	}
 
 

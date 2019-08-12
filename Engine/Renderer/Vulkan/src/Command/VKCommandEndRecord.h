@@ -18,6 +18,8 @@ public:
 public:
 	virtual void Execute(void) const
 	{
+		ASSERT(m_vkCommandBuffer);
+
 		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_END_RECORD, "CommandEndRecord");
 		{
 			vkEndCommandBuffer(m_vkCommandBuffer);

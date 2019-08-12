@@ -21,8 +21,8 @@ public:
 	virtual void Execute(void) const
 	{
 		ASSERT(m_vkCommandBuffer);
-		ASSERT(m_pPipelineGraphics);
 		ASSERT(m_ptrMeshDraw);
+		ASSERT(m_pPipelineGraphics);
 
 		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_DRAW_INSTANCE, "CommandDrawInstance");
 		{

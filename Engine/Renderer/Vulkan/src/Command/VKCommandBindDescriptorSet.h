@@ -43,6 +43,7 @@ public:
 
 private:
 	CGfxDescriptorSetPtr m_ptrDescriptorSet;
+
 	CVKPipelineCompute* m_pPipelineCompute;
 	CVKPipelineGraphics* m_pPipelineGraphics;
 
