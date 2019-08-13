@@ -71,6 +71,8 @@ layout (location = 2) in mediump vec3 inNormal;
 #endif
 
 // Descriptor
+USE_SHADOWMAP_UNIFORM;
+
 DESCRIPTOR_SET_MATPASS(8) uniform sampler2D texAlbedo;
 #ifdef NORMAL_MAP
 DESCRIPTOR_SET_MATPASS(9) uniform sampler2D texNormal;

@@ -47,6 +47,7 @@ layout (location = 13) in mediump vec4 inInstancePointLightAttenuation;
 
 #define DESCRIPTOR_BIND_ENGINE 0
 #define DESCRIPTOR_BIND_CAMERA 1
+#define DESCRIPTOR_BIND_SHADOWMAP 2
 
 
 #define USE_CAMERA_UNIFORM                                                         \
@@ -100,6 +101,10 @@ layout (location = 13) in mediump vec4 inInstancePointLightAttenuation;
 		highp mat4 mainShadowViewMatrix[4];                                        \
 		highp vec4 mainShadowParams[4];                                            \
 	} engine
+
+#define USE_SHADOWMAP_UNIFORM                                                      \
+	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_SHADOWMAP) uniform sampler2D texShadowMap
+
 
 USE_CAMERA_UNIFORM;
 #define cameraScreen camera.screen
