@@ -337,10 +337,17 @@ bool CGLES3Pipeline::BindDescriptorSet(const CGfxDescriptorSetPtr ptrDescriptorS
 				continue;
 			}
 
-			if (pDescriptorImageInfo->ptrTextureInputAttachment) {
+			if (pDescriptorImageInfo->ptrRenderTexture) {
 				GLUniform1i(itSampledImage.second, itTextureUnit->second);
 				((CGLES3Sampler*)pDescriptorImageInfo->pSampler)->Bind(itTextureUnit->second);
-				((CGLES3RenderTexture*)pDescriptorImageInfo->ptrTextureInputAttachment.GetPointer())->Bind(itTextureUnit->second);
+				((CGLES3RenderTexture*)pDescriptorImageInfo->ptrRenderTexture.GetPointer())->Bind(itTextureUnit->second);
+				continue;
+			}
+
+			if (pDescriptorImageInfo->ptrInputAttachmentTexture) {
+				GLUniform1i(itSampledImage.second, itTextureUnit->second);
+				((CGLES3Sampler*)pDescriptorImageInfo->pSampler)->Bind(itTextureUnit->second);
+				((CGLES3RenderTexture*)pDescriptorImageInfo->ptrInputAttachmentTexture.GetPointer())->Bind(itTextureUnit->second);
 				continue;
 			}
 		}

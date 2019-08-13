@@ -123,7 +123,7 @@ CVKDescriptorSet* CVKDescriptorSetManager::Create(const CGfxPipelineGraphics* pP
 					CVKDescriptorSet* pDescriptorSet = CreateInternal(&m_pInputAttachmentPoolListHead, INVALID_HASHNAME, pPipelineGraphics->GetDescriptorLayout(DESCRIPTOR_SET_INPUTATTACHMENT));
 					{
 						for (const auto& itInputAttachment : pSubpassInformation->inputAttachments) {
-							pDescriptorSet->SetTextureInputAttachment(
+							pDescriptorSet->SetInputAttachmentTexture(
 								((CVKPipelineGraphics*)pPipelineGraphics)->GetInputAttachmentName(itInputAttachment.first),
 								((CVKFrameBuffer*)pFrameBuffer)->GetAttachmentTexture(itInputAttachment.first),
 								VKRenderer()->CreateSampler(GFX_FILTER_NEAREST, GFX_FILTER_NEAREST, GFX_SAMPLER_MIPMAP_MODE_NEAREST, GFX_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE));

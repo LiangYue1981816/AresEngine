@@ -70,7 +70,7 @@ CGLES3DescriptorSet* CGLES3DescriptorSetManager::Create(const CGfxPipelineGraphi
 					CGLES3DescriptorSet* pDescriptorSet = new CGLES3DescriptorSet(this, INVALID_HASHNAME, pPipelineGraphics->GetDescriptorLayout(DESCRIPTOR_SET_INPUTATTACHMENT));
 					{
 						for (const auto& itInputAttachment : pSubpassInformation->inputAttachments) {
-							pDescriptorSet->SetTextureInputAttachment(
+							pDescriptorSet->SetInputAttachmentTexture(
 								((CGLES3PipelineGraphics*)pPipelineGraphics)->GetInputAttachmentName(itInputAttachment.first),
 								((CGLES3FrameBuffer*)pFrameBuffer)->GetAttachmentTexture(itInputAttachment.first),
 								GLES3Renderer()->CreateSampler(GFX_FILTER_NEAREST, GFX_FILTER_NEAREST, GFX_SAMPLER_MIPMAP_MODE_NEAREST, GFX_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE));

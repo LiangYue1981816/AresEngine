@@ -33,8 +33,12 @@ CVKDescriptorSet::CVKDescriptorSet(CVKDevice* pDevice, CVKDescriptorPool* pDescr
 			SetTextureCubemap(itImageDescriptorInfo.first, itImageDescriptorInfo.second.ptrTextureCubemap, itImageDescriptorInfo.second.pSampler);
 		}
 
-		if (itImageDescriptorInfo.second.ptrTextureInputAttachment) {
-			SetTextureInputAttachment(itImageDescriptorInfo.first, itImageDescriptorInfo.second.ptrTextureInputAttachment, itImageDescriptorInfo.second.pSampler);
+		if (itImageDescriptorInfo.second.ptrRenderTexture) {
+			SetRenderTexture(itImageDescriptorInfo.first, itImageDescriptorInfo.second.ptrRenderTexture, itImageDescriptorInfo.second.pSampler);
+		}
+
+		if (itImageDescriptorInfo.second.ptrInputAttachmentTexture) {
+			SetInputAttachmentTexture(itImageDescriptorInfo.first, itImageDescriptorInfo.second.ptrInputAttachmentTexture, itImageDescriptorInfo.second.pSampler);
 		}
 	}
 
@@ -100,7 +104,8 @@ bool CVKDescriptorSet::SetTexture2D(uint32_t name, const CGfxTexture2DPtr ptrTex
 		m_imageDescriptorInfos[name].ptrTexture2D = ptrTexture;
 		m_imageDescriptorInfos[name].ptrTexture2DArray.Release();
 		m_imageDescriptorInfos[name].ptrTextureCubemap.Release();
-		m_imageDescriptorInfos[name].ptrTextureInputAttachment.Release();
+		m_imageDescriptorInfos[name].ptrRenderTexture.Release();
+		m_imageDescriptorInfos[name].ptrInputAttachmentTexture.Release();
 		return true;
 	}
 	else {
@@ -121,7 +126,8 @@ bool CVKDescriptorSet::SetTexture2DArray(uint32_t name, const CGfxTexture2DArray
 		m_imageDescriptorInfos[name].ptrTexture2D.Release();
 		m_imageDescriptorInfos[name].ptrTexture2DArray = ptrTexture;
 		m_imageDescriptorInfos[name].ptrTextureCubemap.Release();
-		m_imageDescriptorInfos[name].ptrTextureInputAttachment.Release();
+		m_imageDescriptorInfos[name].ptrRenderTexture.Release();
+		m_imageDescriptorInfos[name].ptrInputAttachmentTexture.Release();
 		return true;
 	}
 	else {
@@ -142,7 +148,8 @@ bool CVKDescriptorSet::SetTextureCubemap(uint32_t name, const CGfxTextureCubemap
 		m_imageDescriptorInfos[name].ptrTexture2D.Release();
 		m_imageDescriptorInfos[name].ptrTexture2DArray.Release();
 		m_imageDescriptorInfos[name].ptrTextureCubemap = ptrTexture;
-		m_imageDescriptorInfos[name].ptrTextureInputAttachment.Release();
+		m_imageDescriptorInfos[name].ptrRenderTexture.Release();
+		m_imageDescriptorInfos[name].ptrInputAttachmentTexture.Release();
 		return true;
 	}
 	else {
@@ -150,7 +157,7 @@ bool CVKDescriptorSet::SetTextureCubemap(uint32_t name, const CGfxTextureCubemap
 	}
 }
 
-bool CVKDescriptorSet::SetTextureInputAttachment(uint32_t name, const CGfxRenderTexturePtr ptrTexture, const CGfxSampler* pSampler)
+bool CVKDescriptorSet::SetRenderTexture(uint32_t name, const CGfxRenderTexturePtr ptrTexture, const CGfxSampler* pSampler)
 {
 	ASSERT(pSampler);
 	ASSERT(ptrTexture);
@@ -163,7 +170,30 @@ bool CVKDescriptorSet::SetTextureInputAttachment(uint32_t name, const CGfxRender
 		m_imageDescriptorInfos[name].ptrTexture2D.Release();
 		m_imageDescriptorInfos[name].ptrTexture2DArray.Release();
 		m_imageDescriptorInfos[name].ptrTextureCubemap.Release();
-		m_imageDescriptorInfos[name].ptrTextureInputAttachment = ptrTexture;
+		m_imageDescriptorInfos[name].ptrRenderTexture = ptrTexture;
+		m_imageDescriptorInfos[name].ptrInputAttachmentTexture.Release();
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+bool CVKDescriptorSet::SetInputAttachmentTexture(uint32_t name, const CGfxRenderTexturePtr ptrTexture, const CGfxSampler* pSampler)
+{
+	ASSERT(pSampler);
+	ASSERT(ptrTexture);
+	ASSERT(m_vkDescriptorSet);
+	ASSERT(m_ptrDescriptorLayout);
+
+	if (m_ptrDescriptorLayout->IsSampledImageValid(name)) {
+		m_imageDescriptorInfos[name].bDirty = true;
+		m_imageDescriptorInfos[name].pSampler = (CGfxSampler*)pSampler;
+		m_imageDescriptorInfos[name].ptrTexture2D.Release();
+		m_imageDescriptorInfos[name].ptrTexture2DArray.Release();
+		m_imageDescriptorInfos[name].ptrTextureCubemap.Release();
+		m_imageDescriptorInfos[name].ptrRenderTexture.Release();
+		m_imageDescriptorInfos[name].ptrInputAttachmentTexture = ptrTexture;
 		return true;
 	}
 	else {
@@ -233,43 +263,47 @@ void CVKDescriptorSet::Update(void)
 		if (itImage.second.bDirty) {
 			itImage.second.bDirty = false;
 
-			bool bTextureInputAttachment;
+			bool bTextureInputAttachment = false;
 
-			if (itImage.second.ptrTextureInputAttachment) {
-				bTextureInputAttachment = true;
-
-				VkDescriptorImageInfo imageInfo = {};
-				imageInfo.sampler = ((CVKSampler*)itImage.second.pSampler)->GetSampler();
-				imageInfo.imageView = ((CVKRenderTexture*)itImage.second.ptrTextureInputAttachment.GetPointer())->GetImageView();
-				imageInfo.imageLayout = ((CVKRenderTexture*)itImage.second.ptrTextureInputAttachment.GetPointer())->GetImageLayout();
-				imageInfos.emplace_back(imageInfo);
-			}
-			else if (itImage.second.ptrTexture2D) {
-				bTextureInputAttachment = false;
-
+			if (itImage.second.ptrTexture2D) {
 				VkDescriptorImageInfo imageInfo = {};
 				imageInfo.sampler = ((CVKSampler*)itImage.second.pSampler)->GetSampler();
 				imageInfo.imageView = ((CVKTexture2D*)itImage.second.ptrTexture2D.GetPointer())->GetImageView();
 				imageInfo.imageLayout = ((CVKTexture2D*)itImage.second.ptrTexture2D.GetPointer())->GetImageLayout();
 				imageInfos.emplace_back(imageInfo);
+				bTextureInputAttachment = false;
 			}
 			else if (itImage.second.ptrTexture2DArray) {
-				bTextureInputAttachment = false;
-
 				VkDescriptorImageInfo imageInfo = {};
 				imageInfo.sampler = ((CVKSampler*)itImage.second.pSampler)->GetSampler();
 				imageInfo.imageView = ((CVKTexture2DArray*)itImage.second.ptrTexture2DArray.GetPointer())->GetImageView();
 				imageInfo.imageLayout = ((CVKTexture2DArray*)itImage.second.ptrTexture2DArray.GetPointer())->GetImageLayout();
 				imageInfos.emplace_back(imageInfo);
+				bTextureInputAttachment = false;
 			}
 			else if (itImage.second.ptrTextureCubemap) {
-				bTextureInputAttachment = false;
-
 				VkDescriptorImageInfo imageInfo = {};
 				imageInfo.sampler = ((CVKSampler*)itImage.second.pSampler)->GetSampler();
 				imageInfo.imageView = ((CVKTextureCubemap*)itImage.second.ptrTextureCubemap.GetPointer())->GetImageView();
 				imageInfo.imageLayout = ((CVKTextureCubemap*)itImage.second.ptrTextureCubemap.GetPointer())->GetImageLayout();
 				imageInfos.emplace_back(imageInfo);
+				bTextureInputAttachment = false;
+			}
+			else if (itImage.second.ptrRenderTexture) {
+				VkDescriptorImageInfo imageInfo = {};
+				imageInfo.sampler = ((CVKSampler*)itImage.second.pSampler)->GetSampler();
+				imageInfo.imageView = ((CVKRenderTexture*)itImage.second.ptrRenderTexture.GetPointer())->GetImageView();
+				imageInfo.imageLayout = ((CVKRenderTexture*)itImage.second.ptrRenderTexture.GetPointer())->GetImageLayout();
+				imageInfos.emplace_back(imageInfo);
+				bTextureInputAttachment = false;
+			}
+			else if (itImage.second.ptrInputAttachmentTexture) {
+				VkDescriptorImageInfo imageInfo = {};
+				imageInfo.sampler = ((CVKSampler*)itImage.second.pSampler)->GetSampler();
+				imageInfo.imageView = ((CVKRenderTexture*)itImage.second.ptrInputAttachmentTexture.GetPointer())->GetImageView();
+				imageInfo.imageLayout = ((CVKRenderTexture*)itImage.second.ptrInputAttachmentTexture.GetPointer())->GetImageLayout();
+				imageInfos.emplace_back(imageInfo);
+				bTextureInputAttachment = true;
 			}
 			else {
 				ASSERT(false);

@@ -15,7 +15,8 @@ typedef struct DescriptorImageInfo {
 	CGfxTexture2DPtr ptrTexture2D;
 	CGfxTexture2DArrayPtr ptrTexture2DArray;
 	CGfxTextureCubemapPtr ptrTextureCubemap;
-	CGfxRenderTexturePtr ptrTextureInputAttachment;
+	CGfxRenderTexturePtr ptrRenderTexture;
+	CGfxRenderTexturePtr ptrInputAttachmentTexture;
 } DescriptorImageInfo;
 
 class CALL_API CGfxDescriptorSet : public CGfxResource
@@ -41,7 +42,8 @@ public:
 	virtual bool SetTexture2D(uint32_t name, const CGfxTexture2DPtr ptrTexture, const CGfxSampler* pSampler) = 0;
 	virtual bool SetTexture2DArray(uint32_t name, const CGfxTexture2DArrayPtr ptrTexture, const CGfxSampler* pSampler) = 0;
 	virtual bool SetTextureCubemap(uint32_t name, const CGfxTextureCubemapPtr ptrTexture, const CGfxSampler* pSampler) = 0;
-	virtual bool SetTextureInputAttachment(uint32_t name, const CGfxRenderTexturePtr ptrTexture, const CGfxSampler* pSampler) = 0;
+	virtual bool SetRenderTexture(uint32_t name, const CGfxRenderTexturePtr ptrTexture, const CGfxSampler* pSampler) = 0;
+	virtual bool SetInputAttachmentTexture(uint32_t name, const CGfxRenderTexturePtr ptrTexture, const CGfxSampler* pSampler) = 0;
 	virtual bool SetUniformBuffer(uint32_t name, const CGfxUniformBufferPtr ptrUniformBuffer, uint32_t offset, uint32_t range) = 0;
 
 public:

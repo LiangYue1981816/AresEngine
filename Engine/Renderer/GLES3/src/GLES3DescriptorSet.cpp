@@ -27,8 +27,12 @@ CGLES3DescriptorSet::CGLES3DescriptorSet(CGLES3DescriptorSetManager* pManager, u
 			SetTextureCubemap(itImageDescriptorInfo.first, itImageDescriptorInfo.second.ptrTextureCubemap, itImageDescriptorInfo.second.pSampler);
 		}
 
-		if (itImageDescriptorInfo.second.ptrTextureInputAttachment) {
-			SetTextureInputAttachment(itImageDescriptorInfo.first, itImageDescriptorInfo.second.ptrTextureInputAttachment, itImageDescriptorInfo.second.pSampler);
+		if (itImageDescriptorInfo.second.ptrRenderTexture) {
+			SetRenderTexture(itImageDescriptorInfo.first, itImageDescriptorInfo.second.ptrRenderTexture, itImageDescriptorInfo.second.pSampler);
+		}
+
+		if (itImageDescriptorInfo.second.ptrInputAttachmentTexture) {
+			SetInputAttachmentTexture(itImageDescriptorInfo.first, itImageDescriptorInfo.second.ptrInputAttachmentTexture, itImageDescriptorInfo.second.pSampler);
 		}
 	}
 
@@ -60,7 +64,8 @@ bool CGLES3DescriptorSet::SetTexture2D(uint32_t name, const CGfxTexture2DPtr ptr
 		m_imageDescriptorInfos[name].ptrTexture2D = ptrTexture;
 		m_imageDescriptorInfos[name].ptrTexture2DArray.Release();
 		m_imageDescriptorInfos[name].ptrTextureCubemap.Release();
-		m_imageDescriptorInfos[name].ptrTextureInputAttachment.Release();
+		m_imageDescriptorInfos[name].ptrRenderTexture.Release();
+		m_imageDescriptorInfos[name].ptrInputAttachmentTexture.Release();
 		return true;
 	}
 	else {
@@ -79,7 +84,8 @@ bool CGLES3DescriptorSet::SetTexture2DArray(uint32_t name, const CGfxTexture2DAr
 		m_imageDescriptorInfos[name].ptrTexture2D.Release();
 		m_imageDescriptorInfos[name].ptrTexture2DArray = ptrTexture;
 		m_imageDescriptorInfos[name].ptrTextureCubemap.Release();
-		m_imageDescriptorInfos[name].ptrTextureInputAttachment.Release();
+		m_imageDescriptorInfos[name].ptrRenderTexture.Release();
+		m_imageDescriptorInfos[name].ptrInputAttachmentTexture.Release();
 		return true;
 	}
 	else {
@@ -98,7 +104,8 @@ bool CGLES3DescriptorSet::SetTextureCubemap(uint32_t name, const CGfxTextureCube
 		m_imageDescriptorInfos[name].ptrTexture2D.Release();
 		m_imageDescriptorInfos[name].ptrTexture2DArray.Release();
 		m_imageDescriptorInfos[name].ptrTextureCubemap = ptrTexture;
-		m_imageDescriptorInfos[name].ptrTextureInputAttachment.Release();
+		m_imageDescriptorInfos[name].ptrRenderTexture.Release();
+		m_imageDescriptorInfos[name].ptrInputAttachmentTexture.Release();
 		return true;
 	}
 	else {
@@ -106,7 +113,7 @@ bool CGLES3DescriptorSet::SetTextureCubemap(uint32_t name, const CGfxTextureCube
 	}
 }
 
-bool CGLES3DescriptorSet::SetTextureInputAttachment(uint32_t name, const CGfxRenderTexturePtr ptrTexture, const CGfxSampler* pSampler)
+bool CGLES3DescriptorSet::SetRenderTexture(uint32_t name, const CGfxRenderTexturePtr ptrTexture, const CGfxSampler* pSampler)
 {
 	ASSERT(pSampler);
 	ASSERT(ptrTexture);
@@ -117,7 +124,28 @@ bool CGLES3DescriptorSet::SetTextureInputAttachment(uint32_t name, const CGfxRen
 		m_imageDescriptorInfos[name].ptrTexture2D.Release();
 		m_imageDescriptorInfos[name].ptrTexture2DArray.Release();
 		m_imageDescriptorInfos[name].ptrTextureCubemap.Release();
-		m_imageDescriptorInfos[name].ptrTextureInputAttachment = ptrTexture;
+		m_imageDescriptorInfos[name].ptrRenderTexture = ptrTexture;
+		m_imageDescriptorInfos[name].ptrInputAttachmentTexture.Release();
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+bool CGLES3DescriptorSet::SetInputAttachmentTexture(uint32_t name, const CGfxRenderTexturePtr ptrTexture, const CGfxSampler* pSampler)
+{
+	ASSERT(pSampler);
+	ASSERT(ptrTexture);
+	ASSERT(m_ptrDescriptorLayout);
+
+	if (m_ptrDescriptorLayout->IsSampledImageValid(name)) {
+		m_imageDescriptorInfos[name].pSampler = (CGfxSampler*)pSampler;
+		m_imageDescriptorInfos[name].ptrTexture2D.Release();
+		m_imageDescriptorInfos[name].ptrTexture2DArray.Release();
+		m_imageDescriptorInfos[name].ptrTextureCubemap.Release();
+		m_imageDescriptorInfos[name].ptrRenderTexture.Release();
+		m_imageDescriptorInfos[name].ptrInputAttachmentTexture = ptrTexture;
 		return true;
 	}
 	else {
