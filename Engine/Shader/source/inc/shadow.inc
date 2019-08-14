@@ -50,12 +50,19 @@ highp float LinearShadowDepth(lowp int indexLevel, highp sampler2D shadowmap, hi
 
 highp float SimpleShadowValue(lowp int indexLevel, highp vec3 position, highp sampler2D shadowmap)
 {
+	highp vec2 offset[4];
+	offset[0] = vec2(0.0, 0.0);
+	offset[1] = vec2(0.5, 0.0);
+	offset[2] = vec2(0.0, 0.5);
+	offset[3] = vec2(0.5, 0.5);
+
 	highp vec3 shadowViewPosition = (mainShadowViewMatrix(indexLevel) * vec4(position.xyz, 1.0)).xyz;
 	highp float curDepth = length(shadowViewPosition) - 0.001;
 
 	highp vec4 projectCoord = mainShadowProjectionViewMatrix(indexLevel) * vec4(position.xyz, 1.0);
 	projectCoord.xy /= projectCoord.w;
  	projectCoord.xy = projectCoord.xy * 0.5 + vec2(0.5, 0.5);
+	projectCoord.xy = projectCoord.xy * 0.5 + offset[indexLevel];
 
 	highp float shadowDepth = SimpleShadowDepth(shadowmap, projectCoord.xy) * mainShadowClipPlane(indexLevel).x;
 
@@ -73,14 +80,21 @@ highp float SimpleShadowValue(lowp int indexLevel, highp vec3 position, highp sa
 
 highp float LinearShadowValue(lowp int indexLevel, highp vec3 position, highp sampler2D shadowmap)
 {
+	highp vec2 offset[4];
+	offset[0] = vec2(0.0, 0.0);
+	offset[1] = vec2(0.5, 0.0);
+	offset[2] = vec2(0.0, 0.5);
+	offset[3] = vec2(0.5, 0.5);
+
 	highp vec3 shadowViewPosition = (mainShadowViewMatrix(indexLevel) * vec4(position.xyz, 1.0)).xyz;
 	highp float curDepth = length(shadowViewPosition) - 0.001;
 
 	highp vec4 projectCoord = mainShadowProjectionViewMatrix(indexLevel) * vec4(position.xyz, 1.0);
 	projectCoord.xy /= projectCoord.w;
  	projectCoord.xy = projectCoord.xy * 0.5 + vec2(0.5, 0.5);
+	projectCoord.xy = projectCoord.xy * 0.5 + offset[indexLevel];
 
-	highp float shadowDepth = LinearShadowDepth(shadowmap, projectCoord.xy) * mainShadowClipPlane(indexLevel).x;
+	highp float shadowDepth = LinearShadowDepth(indexLevel, shadowmap, projectCoord.xy) * mainShadowClipPlane(indexLevel).x;
 
 	highp vec3 cameraPosition = (cameraViewInverseMatrix * vec4(0.0, 0.0, 0.0, 1.0)).xyz;
 	highp float shadowAtten = (mainShadowDistance(indexLevel) - length(position - cameraPosition)) / mainShadowDistance(indexLevel);

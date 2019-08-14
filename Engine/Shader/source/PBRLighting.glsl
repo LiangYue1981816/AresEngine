@@ -54,6 +54,7 @@ void main()
 precision mediump float;
 #include "engine.inc"
 #include "light.inc"
+#include "shadow.inc"
 
 
 // Output
@@ -119,7 +120,7 @@ void main()
 	mediump float ao = 1.0;
 #endif
 
-	mediump float shadow = 1.0;
+	mediump float shadow = SimpleShadowValue(0, inPosition, texShadowMap);
 
 	mediump vec3 pointLightDirection = mainPointLightPosition - inPosition;
 	mediump vec3 pointLightColor = mainPointLightColor * LightingAttenuation(length(pointLightDirection));
