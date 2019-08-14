@@ -314,7 +314,7 @@ bool CVKTexture::PipelineBarrier(VkCommandBuffer vkCommandBuffer, VkImageLayout 
 	range.baseArrayLayer = 0;
 	range.layerCount = m_layers;
 
-	CALL_VK_FUNCTION_RETURN_BOOL(vkCmdImageMemoryBarrier(vkCommandBuffer, m_vkImage, VK_IMAGE_LAYOUT_UNDEFINED, imageLayout, range));
+	CALL_VK_FUNCTION_RETURN_BOOL(vkCmdImageMemoryBarrier(vkCommandBuffer, m_vkImage, m_vkImageLayout, imageLayout, range));
 	m_vkImageLayout = imageLayout;
 
 	return true;
@@ -333,7 +333,7 @@ bool CVKTexture::PipelineBarrier(VkCommandBuffer vkCommandBuffer, VkImageLayout 
 	range.baseArrayLayer = 0;
 	range.layerCount = m_layers;
 
-	CALL_VK_FUNCTION_RETURN_BOOL(vkCmdImageMemoryBarrier(vkCommandBuffer, m_vkImage, VK_IMAGE_LAYOUT_UNDEFINED, imageLayout, srcAccessFlags, dstAccessFlags, srcPipelineStageFlags, dstPipelineStageFlags, range));
+	CALL_VK_FUNCTION_RETURN_BOOL(vkCmdImageMemoryBarrier(vkCommandBuffer, m_vkImage, m_vkImageLayout, imageLayout, srcAccessFlags, dstAccessFlags, srcPipelineStageFlags, dstPipelineStageFlags, range));
 	m_vkImageLayout = imageLayout;
 
 	return true;
