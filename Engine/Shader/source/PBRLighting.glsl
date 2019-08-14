@@ -57,9 +57,6 @@ precision mediump float;
 #include "shadow.inc"
 
 
-// Output
-layout (location = 0) out mediump vec4 outFragColor;
-
 // Input
 layout (location = 0) in highp   vec3 inPosition;
 layout (location = 1) in mediump vec2 inTexcoord;
@@ -70,6 +67,9 @@ layout (location = 4) in mediump vec3 inNormal;
 #else
 layout (location = 2) in mediump vec3 inNormal;
 #endif
+
+// Output
+layout (location = 0) out mediump vec4 outFragColor;
 
 // Descriptor
 USE_SHADOWMAP_UNIFORM;

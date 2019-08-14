@@ -30,6 +30,8 @@ precision mediump float;
 
 // Input
 layout (location = 0) in mediump vec2 inTexcoord;
+
+// Output
 layout (location = 0) out vec4 outFragColor;
 
 // Descriptor
