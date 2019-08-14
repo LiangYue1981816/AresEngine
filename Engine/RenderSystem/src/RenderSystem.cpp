@@ -69,7 +69,6 @@ void CRenderSystem::CreateRenderPass(void) const
 {
 	CPassDefault::CreateRenderPass("Default", GFX_PIXELFORMAT_BGRA8_UNORM_PACK8, GFX_PIXELFORMAT_D32_SFLOAT_PACK32, 1);
 	CPassForwardLighting::CreateRenderPass("ForwardLighting", GFX_PIXELFORMAT_BGRA8_UNORM_PACK8, GFX_PIXELFORMAT_D32_SFLOAT_PACK32, 1);
-
 	CPassShadow::CreateRenderPass("Shadow", GFX_PIXELFORMAT_D32_SFLOAT_PACK32);
 }
 
@@ -77,7 +76,6 @@ void CRenderSystem::DestroyRenderPass(void) const
 {
 	CPassDefault::DestroyRenderPass();
 	CPassForwardLighting::DestroyRenderPass();
-
 	CPassShadow::DestroyRenderPass();
 }
 
