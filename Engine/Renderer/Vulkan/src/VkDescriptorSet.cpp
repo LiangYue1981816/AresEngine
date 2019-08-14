@@ -269,7 +269,7 @@ void CVKDescriptorSet::Update(void)
 				VkDescriptorImageInfo imageInfo = {};
 				imageInfo.sampler = ((CVKSampler*)itImage.second.pSampler)->GetSampler();
 				imageInfo.imageView = ((CVKTexture2D*)itImage.second.ptrTexture2D.GetPointer())->GetImageView();
-				imageInfo.imageLayout = VK_IMAGE_LAYOUT_GENERAL;
+				imageInfo.imageLayout = CGfxHelper::IsFormatDepthOrStencil(itImage.second.ptrTexture2D->GetFormat()) ? VK_IMAGE_LAYOUT_DEPTH_STENCIL_READ_ONLY_OPTIMAL : VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
 				imageInfos.emplace_back(imageInfo);
 				bTextureInputAttachment = false;
 			}
@@ -277,7 +277,7 @@ void CVKDescriptorSet::Update(void)
 				VkDescriptorImageInfo imageInfo = {};
 				imageInfo.sampler = ((CVKSampler*)itImage.second.pSampler)->GetSampler();
 				imageInfo.imageView = ((CVKTexture2DArray*)itImage.second.ptrTexture2DArray.GetPointer())->GetImageView();
-				imageInfo.imageLayout = VK_IMAGE_LAYOUT_GENERAL;
+				imageInfo.imageLayout = CGfxHelper::IsFormatDepthOrStencil(itImage.second.ptrTexture2DArray->GetFormat()) ? VK_IMAGE_LAYOUT_DEPTH_STENCIL_READ_ONLY_OPTIMAL : VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
 				imageInfos.emplace_back(imageInfo);
 				bTextureInputAttachment = false;
 			}
@@ -285,7 +285,7 @@ void CVKDescriptorSet::Update(void)
 				VkDescriptorImageInfo imageInfo = {};
 				imageInfo.sampler = ((CVKSampler*)itImage.second.pSampler)->GetSampler();
 				imageInfo.imageView = ((CVKTextureCubemap*)itImage.second.ptrTextureCubemap.GetPointer())->GetImageView();
-				imageInfo.imageLayout = VK_IMAGE_LAYOUT_GENERAL;
+				imageInfo.imageLayout = CGfxHelper::IsFormatDepthOrStencil(itImage.second.ptrTextureCubemap->GetFormat()) ? VK_IMAGE_LAYOUT_DEPTH_STENCIL_READ_ONLY_OPTIMAL : VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
 				imageInfos.emplace_back(imageInfo);
 				bTextureInputAttachment = false;
 			}
@@ -293,7 +293,7 @@ void CVKDescriptorSet::Update(void)
 				VkDescriptorImageInfo imageInfo = {};
 				imageInfo.sampler = ((CVKSampler*)itImage.second.pSampler)->GetSampler();
 				imageInfo.imageView = ((CVKRenderTexture*)itImage.second.ptrRenderTexture.GetPointer())->GetImageView();
-				imageInfo.imageLayout = VK_IMAGE_LAYOUT_GENERAL;
+				imageInfo.imageLayout = CGfxHelper::IsFormatDepthOrStencil(itImage.second.ptrRenderTexture->GetFormat()) ? VK_IMAGE_LAYOUT_DEPTH_STENCIL_READ_ONLY_OPTIMAL : VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
 				imageInfos.emplace_back(imageInfo);
 				bTextureInputAttachment = false;
 			}
@@ -301,7 +301,7 @@ void CVKDescriptorSet::Update(void)
 				VkDescriptorImageInfo imageInfo = {};
 				imageInfo.sampler = ((CVKSampler*)itImage.second.pSampler)->GetSampler();
 				imageInfo.imageView = ((CVKRenderTexture*)itImage.second.ptrInputAttachmentTexture.GetPointer())->GetImageView();
-				imageInfo.imageLayout = VK_IMAGE_LAYOUT_GENERAL;
+				imageInfo.imageLayout = CGfxHelper::IsFormatDepthOrStencil(itImage.second.ptrInputAttachmentTexture->GetFormat()) ? VK_IMAGE_LAYOUT_DEPTH_STENCIL_READ_ONLY_OPTIMAL : VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
 				imageInfos.emplace_back(imageInfo);
 				bTextureInputAttachment = true;
 			}

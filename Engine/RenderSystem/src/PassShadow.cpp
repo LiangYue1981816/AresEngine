@@ -155,7 +155,6 @@ const CGfxSemaphore* CPassShadow::Render(CTaskGraph& taskGraph, const CGfxSemaph
 		GfxRenderer()->BeginRecord(ptrMainCommandBuffer);
 		{
 			GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, m_ptrShadowTexture, GFX_IMAGE_LAYOUT_GENERAL);
-
 			GfxRenderer()->CmdBeginRenderPass(ptrMainCommandBuffer, m_ptrFrameBuffer, ptrRenderPass);
 			{
 				const float w = m_ptrShadowTexture->GetWidth();
@@ -174,6 +173,7 @@ const CGfxSemaphore* CPassShadow::Render(CTaskGraph& taskGraph, const CGfxSemaph
 				}
 			}
 			GfxRenderer()->CmdEndRenderPass(ptrMainCommandBuffer);
+			GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, m_ptrShadowTexture, GFX_IMAGE_LAYOUT_DEPTH_STENCIL_READ_ONLY_OPTIMAL);
 		}
 		GfxRenderer()->EndRecord(ptrMainCommandBuffer);
 	}
