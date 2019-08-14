@@ -54,8 +54,8 @@ bool CVKRenderPass::Create(void)
 				attachment.storeOp = m_attachments[indexAttachment].bInvalidation ? VK_ATTACHMENT_STORE_OP_DONT_CARE : VK_ATTACHMENT_STORE_OP_STORE;
 				attachment.stencilLoadOp = m_attachments[indexAttachment].bClear ? VK_ATTACHMENT_LOAD_OP_CLEAR : VK_ATTACHMENT_LOAD_OP_LOAD;
 				attachment.stencilStoreOp = m_attachments[indexAttachment].bInvalidation ? VK_ATTACHMENT_STORE_OP_DONT_CARE : VK_ATTACHMENT_STORE_OP_STORE;
-				attachment.initialLayout = m_attachments[indexAttachment].bPresent ? VK_IMAGE_LAYOUT_PRESENT_SRC_KHR : VK_IMAGE_LAYOUT_GENERAL;
-				attachment.finalLayout = m_attachments[indexAttachment].bPresent ? VK_IMAGE_LAYOUT_PRESENT_SRC_KHR : VK_IMAGE_LAYOUT_GENERAL;
+				attachment.initialLayout = VK_IMAGE_LAYOUT_GENERAL;
+				attachment.finalLayout = VK_IMAGE_LAYOUT_GENERAL;
 				attachments.emplace_back(attachment);
 			}
 
@@ -149,7 +149,7 @@ void CVKRenderPass::Destroy(bool bClear)
 	m_vkRenderPass = VK_NULL_HANDLE;
 }
 
-bool CVKRenderPass::SetColorAttachment(int indexAttachment, GfxPixelFormat format, int samples, bool bPresent, bool bInvalidation, bool bClear, float red, float green, float blue, float alpha)
+bool CVKRenderPass::SetColorAttachment(int indexAttachment, GfxPixelFormat format, int samples, bool bInvalidation, bool bClear, float red, float green, float blue, float alpha)
 {
 	if (CGfxHelper::IsFormatColor(format) == false) {
 		return false;
@@ -161,7 +161,6 @@ bool CVKRenderPass::SetColorAttachment(int indexAttachment, GfxPixelFormat forma
 
 	m_attachments[indexAttachment].format = format;
 	m_attachments[indexAttachment].samples = samples;
-	m_attachments[indexAttachment].bPresent = bPresent;
 	m_attachments[indexAttachment].bInvalidation = bInvalidation;
 	m_attachments[indexAttachment].bClear = bClear;
 	m_attachments[indexAttachment].clearValue.color[0] = red;
