@@ -7,22 +7,17 @@
 
 highp vec3 EncodeFloatRGB(highp float value)
 {
-	highp vec3 encode;
-	value = sqrt(value) * 8388608.0;
-	encode.x = floor(value * 0.00001526);
-	value -= encode.x * 65536.0;
-	encode.y = floor(value * 0.00390625);
-	value -= encode.y * 256.0;
-	encode.z = floor(value);
-	encode = vec3(127.0, 255.0, 255.0) - encode;
-	return encode * 0.003922;
+	highp vec4 kEncodeMul = vec4(1.0, 255.0, 65025.0, 16581375.0);
+	highp vec4 enc = kEncodeMul * value;
+	enc  = fract(enc);
+	enc -= enc.yzww / 255.0;
+	return enc;
 }
 
 highp float DecodeFloatRGB(highp vec3 encode) 
 {
-	highp vec3 factor = vec3(1.9921875, 0.0077820, 0.000030398);
-	highp float value = 1.0 - dot(encode, factor);
-	return value * value;
+	highp vec4 kDecodeDot = vec4(1.0, 1.0 / 255.0, 1.0 / 65025.0, 1.0 / 16581375.0);
+	return dot(encode, kDecodeDot);
 }
 
 highp float SimpleShadowDepth(highp sampler2D shadowmap, highp vec2 texCoord)
