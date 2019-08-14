@@ -56,14 +56,20 @@ CVKCommandBuffer::CVKCommandBuffer(CVKDevice* pDevice, CVKCommandBufferManager* 
 
 	, m_pSemaphore(nullptr)
 {
+	if (bMainCommandBuffer) {
+		m_pSemaphore = new CVKSemaphore(m_pDevice);
+	}
+
 	Create(vkCommandPool, bMainCommandBuffer);
-	m_pSemaphore = new CVKSemaphore(m_pDevice);
 }
 
 CVKCommandBuffer::~CVKCommandBuffer(void)
 {
+	if (m_pSemaphore) {
+		delete m_pSemaphore;
+	}
+
 	Destroy();
-	delete m_pSemaphore;
 }
 
 void CVKCommandBuffer::Release(void)
