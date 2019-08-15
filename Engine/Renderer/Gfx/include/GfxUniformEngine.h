@@ -35,10 +35,10 @@ public:
 		glm::vec4 mainFogHeightParams;
 		glm::vec4 mainFogDistanceParams;
 
+		glm::vec4 mainShadowDepth[4];
 		glm::mat4 mainShadowProjectionMatrix[4];
 		glm::mat4 mainShadowProjectionViewMatrix[4];
 		glm::mat4 mainShadowViewMatrix[4];
-		glm::vec4 mainShadowParams[4];
 	} Params;
 
 
@@ -76,8 +76,6 @@ public:
 
 	void SetMainShadowOrtho(int indexLevel, float left, float right, float bottom, float top, float zNear, float zFar);
 	void SetMainShadowLookat(int indexLevel, float eyex, float eyey, float eyez, float centerx, float centery, float centerz, float upx, float upy, float upz);
-	void SetMainShadowRange(int indexLevel, float range);
-	void SetMainShadowResolution(int indexLevel, float resolution);
 
 	void Apply(void);
 

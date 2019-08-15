@@ -259,8 +259,7 @@ void CGfxUniformEngine::SetMainShadowOrtho(int indexLevel, float left, float rig
 {
 	if (indexLevel >= 0 && indexLevel < 4) {
 		m_bDirty = true;
-		m_params.mainShadowParams[indexLevel].x = zFar - zNear;
-		m_params.mainShadowParams[indexLevel].y = 1.0f / (zFar - zNear);
+		m_params.mainShadowDepth[indexLevel] = glm::vec4(zNear, zFar, zFar - zNear, 1.0f / (zFar - zNear));
 		m_params.mainShadowProjectionMatrix[indexLevel] = GfxRenderer()->GetBaseMatrix() * glm::ortho(left, right, bottom, top, zNear, zFar);
 		m_params.mainShadowProjectionViewMatrix[indexLevel] = m_params.mainShadowProjectionMatrix[indexLevel] * m_params.mainShadowViewMatrix[indexLevel];
 	}
@@ -272,22 +271,6 @@ void CGfxUniformEngine::SetMainShadowLookat(int indexLevel, float eyex, float ey
 		m_bDirty = true;
 		m_params.mainShadowViewMatrix[indexLevel] = glm::lookAt(glm::vec3(eyex, eyey, eyez), glm::vec3(centerx, centery, centerz), glm::vec3(upx, upy, upz));
 		m_params.mainShadowProjectionViewMatrix[indexLevel] = m_params.mainShadowProjectionMatrix[indexLevel] * m_params.mainShadowViewMatrix[indexLevel];
-	}
-}
-
-void CGfxUniformEngine::SetMainShadowRange(int indexLevel, float range)
-{
-	if (indexLevel >= 0 && indexLevel < 4) {
-		m_bDirty = true;
-		m_params.mainShadowParams[indexLevel].z = range;
-	}
-}
-
-void CGfxUniformEngine::SetMainShadowResolution(int indexLevel, float resolution)
-{
-	if (indexLevel >= 0 && indexLevel < 4) {
-		m_bDirty = true;
-		m_params.mainShadowParams[indexLevel].w = resolution;
 	}
 }
 
