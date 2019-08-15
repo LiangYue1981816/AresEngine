@@ -62,17 +62,20 @@ CPassShadow::~CPassShadow(void)
 	delete m_pShadowCameraUniform[3];
 }
 
-void CPassShadow::CreateRenderPass(const char* szName, GfxPixelFormat shadowPixelFormat)
+void CPassShadow::CreateRenderPass(const char* szName, GfxPixelFormat shadowPixelFormat, GfxPixelFormat depthPixelFormat)
 {
 	const int numSubpasses = 1;
-	const int numAttachments = 1;
+	const int numAttachments = 2;
 
 	const int stencil = 0;
 	const float depth = 1.0f;
+	const float color[] = { 0.0f, 0.0f, 0.0f, 0.0f };
 
 	ptrRenderPass = GfxRenderer()->NewRenderPass(HashValue(szName), numAttachments, numSubpasses);
-	ptrRenderPass->SetDepthStencilAttachment(0, shadowPixelFormat, 1, false, true, depth, stencil);
-	ptrRenderPass->SetSubpassOutputDepthStencilReference(0, 0);
+	ptrRenderPass->SetColorAttachment(0, shadowPixelFormat, 1, false, true, color[0], color[1], color[2], color[3]);
+	ptrRenderPass->SetDepthStencilAttachment(1, depthPixelFormat, 1, true, true, depth, stencil);
+	ptrRenderPass->SetSubpassOutputColorReference(0, 0);
+	ptrRenderPass->SetSubpassOutputDepthStencilReference(0, 1);
 	ptrRenderPass->Create();
 }
 
@@ -81,15 +84,17 @@ void CPassShadow::DestroyRenderPass(void)
 	ptrRenderPass.Release();
 }
 
-void CPassShadow::CreateFrameBuffer(CGfxRenderTexturePtr ptrShadowTexture)
+void CPassShadow::CreateFrameBuffer(CGfxRenderTexturePtr ptrShadowTexture, CGfxRenderTexturePtr ptrDepthStencilTexture)
 {
 	const int numSubpasses = 1;
-	const int numAttachments = 1;
+	const int numAttachments = 2;
 
 	m_ptrShadowTexture = ptrShadowTexture;
+	m_ptrDepthStencilTexture = ptrDepthStencilTexture;
 
 	m_ptrFrameBuffer = GfxRenderer()->NewFrameBuffer(m_ptrShadowTexture->GetWidth(), m_ptrShadowTexture->GetHeight(), numAttachments);
 	m_ptrFrameBuffer->SetAttachmentTexture(0, m_ptrShadowTexture);
+	m_ptrFrameBuffer->SetAttachmentTexture(1, m_ptrDepthStencilTexture);
 	m_ptrFrameBuffer->Create(ptrRenderPass);
 }
 
@@ -155,6 +160,7 @@ const CGfxSemaphore* CPassShadow::Render(CTaskGraph& taskGraph, const CGfxSemaph
 		GfxRenderer()->BeginRecord(ptrMainCommandBuffer);
 		{
 			GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, m_ptrShadowTexture, GFX_IMAGE_LAYOUT_GENERAL);
+			GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, m_ptrDepthStencilTexture, GFX_IMAGE_LAYOUT_GENERAL);
 			GfxRenderer()->CmdBeginRenderPass(ptrMainCommandBuffer, m_ptrFrameBuffer, ptrRenderPass);
 			{
 				const float w = m_ptrShadowTexture->GetWidth();
@@ -173,7 +179,7 @@ const CGfxSemaphore* CPassShadow::Render(CTaskGraph& taskGraph, const CGfxSemaph
 				}
 			}
 			GfxRenderer()->CmdEndRenderPass(ptrMainCommandBuffer);
-			GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, m_ptrShadowTexture, GFX_IMAGE_LAYOUT_DEPTH_STENCIL_READ_ONLY_OPTIMAL);
+			GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, m_ptrShadowTexture, GFX_IMAGE_LAYOUT_COLOR_READ_ONLY_OPTIMAL);
 		}
 		GfxRenderer()->EndRecord(ptrMainCommandBuffer);
 	}
