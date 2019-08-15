@@ -35,6 +35,6 @@ layout (location = 0) out mediump vec4 outFragColor;
 
 void main()
 {
-	outFragColor = EncodeFloatRGB(length(inPosition) / (cameraZFar - cameraZNear));
+	outFragColor = EncodeFloat(length(inPosition) / (cameraZFar - cameraZNear));
 }
 #endif

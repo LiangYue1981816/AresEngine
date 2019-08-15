@@ -5,7 +5,7 @@
 #include "common.inc"
 
 
-highp vec4 EncodeFloatRGB(highp float value)
+highp vec4 EncodeFloat(highp float value)
 {
 	highp vec4 kEncodeMul = vec4(1.0, 255.0, 65025.0, 16581375.0);
 	highp vec4 enc = kEncodeMul * value;
@@ -14,7 +14,7 @@ highp vec4 EncodeFloatRGB(highp float value)
 	return enc;
 }
 
-highp float DecodeFloatRGB(highp vec4 encode) 
+highp float DecodeFloat(highp vec4 encode) 
 {
 	highp vec4 kDecodeDot = vec4(1.0, 1.0 / 255.0, 1.0 / 65025.0, 1.0 / 16581375.0);
 	return dot(encode, kDecodeDot);
@@ -22,7 +22,7 @@ highp float DecodeFloatRGB(highp vec4 encode)
 
 highp float SimpleShadowDepth(highp sampler2D shadowmap, highp vec2 texCoord)
 {
-	return DecodeFloatRGB(texture(shadowmap, texCoord.xy));
+	return DecodeFloat(texture(shadowmap, texCoord.xy));
 }
 
 highp float LinearShadowDepth(lowp int indexLevel, highp sampler2D shadowmap, highp vec2 texCoord)
@@ -32,10 +32,10 @@ highp float LinearShadowDepth(lowp int indexLevel, highp sampler2D shadowmap, hi
 	highp vec2 fractional = fract(unnormalized);
 	unnormalized = floor(unnormalized);
 
-	highp float v0 = DecodeFloatRGB(texture(shadowmap, (unnormalized + vec2(0.0f, 0.0f)) / resolution));
-	highp float v1 = DecodeFloatRGB(texture(shadowmap, (unnormalized + vec2(1.0f, 0.0f)) / resolution));
-	highp float v2 = DecodeFloatRGB(texture(shadowmap, (unnormalized + vec2(1.0f, 1.0f)) / resolution));
-	highp float v3 = DecodeFloatRGB(texture(shadowmap, (unnormalized + vec2(0.0f, 1.0f)) / resolution));
+	highp float v0 = DecodeFloat(texture(shadowmap, (unnormalized + vec2(0.0f, 0.0f)) / resolution));
+	highp float v1 = DecodeFloat(texture(shadowmap, (unnormalized + vec2(1.0f, 0.0f)) / resolution));
+	highp float v2 = DecodeFloat(texture(shadowmap, (unnormalized + vec2(1.0f, 1.0f)) / resolution));
+	highp float v3 = DecodeFloat(texture(shadowmap, (unnormalized + vec2(0.0f, 1.0f)) / resolution));
 
 	highp float v = 0.0;
 	v = (v0 + (v3 - v0) * fractional.y);
