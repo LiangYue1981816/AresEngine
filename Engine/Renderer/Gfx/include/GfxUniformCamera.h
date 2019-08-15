@@ -8,11 +8,11 @@ public:
 	typedef struct Params {
 		glm::vec4 screen;
 		glm::vec4 depth;
-		glm::mat4 projectionMatrix;
-		glm::mat4 projectionViewMatrix;
 		glm::mat4 viewMatrix;
 		glm::mat4 viewInverseMatrix;
 		glm::mat4 viewInverseTransposeMatrix;
+		glm::mat4 projectionMatrix;
+		glm::mat4 projectionViewMatrix;
 	} Params;
 
 

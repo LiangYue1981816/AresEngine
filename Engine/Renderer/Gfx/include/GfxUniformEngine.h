@@ -36,9 +36,9 @@ public:
 		glm::vec4 mainFogDistanceParams;
 
 		glm::vec4 mainShadowDepth[4];
+		glm::mat4 mainShadowViewMatrix[4];
 		glm::mat4 mainShadowProjectionMatrix[4];
 		glm::mat4 mainShadowProjectionViewMatrix[4];
-		glm::mat4 mainShadowViewMatrix[4];
 	} Params;
 
 
