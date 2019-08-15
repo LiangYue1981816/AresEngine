@@ -14,11 +14,11 @@ private:
 
 
 private:
-	static void CreateRenderPass(const char* szName, GfxPixelFormat shadowPixelFormat);
+	static void CreateRenderPass(const char* szName, GfxPixelFormat shadowPixelFormat, GfxPixelFormat depthPixelFormat);
 	static void DestroyRenderPass(void);
 
 public:
-	void CreateFrameBuffer(CGfxRenderTexturePtr ptrShadowTexture);
+	void CreateFrameBuffer(CGfxRenderTexturePtr ptrShadowTexture, CGfxRenderTexturePtr ptrDepthStencilTexture);
 
 private:
 	const CGfxSemaphore* Render(CTaskGraph& taskGraph, const CGfxSemaphore* pWaitSemaphore);
@@ -32,6 +32,7 @@ private:
 private:
 	CGfxFrameBufferPtr m_ptrFrameBuffer;
 	CGfxRenderTexturePtr m_ptrShadowTexture;
+	CGfxRenderTexturePtr m_ptrDepthStencilTexture;
 
 private:
 	CGfxUniformCamera* m_pShadowCameraUniform[4];
