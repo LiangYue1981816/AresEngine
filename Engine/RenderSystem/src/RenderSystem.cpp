@@ -169,16 +169,6 @@ void CRenderSystem::SetMainShadowLookat(int indexLevel, float eyex, float eyey, 
 	m_pEngineUniform->SetMainShadowLookat(indexLevel, eyex, eyey, eyez, centerx, centery, centerz, upx, upy, upz);
 }
 
-void CRenderSystem::SetMainShadowRange(int indexLevel, float range)
-{
-	m_pEngineUniform->SetMainShadowRange(indexLevel, range);
-}
-
-void CRenderSystem::SetMainShadowResolution(int indexLevel, float resolution)
-{
-	m_pEngineUniform->SetMainShadowResolution(indexLevel, resolution);
-}
-
 void CRenderSystem::Update(CTaskGraph& taskGraph, CCamera* pCamera) const
 {
 	pCamera->Update(taskGraph);
