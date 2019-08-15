@@ -3,65 +3,64 @@
 
 
 #ifdef VERTEX_ATTRIBUTE_POSITION
-layout (location = 0) in highp vec3 inPosition;
+layout (location = 0)                            in highp vec3 inPosition;
 #endif
 #ifdef VERTEX_ATTRIBUTE_NORMAL
-layout (location = 1) in mediump vec3 inNormal;
+layout (location = 1)                            in mediump vec3 inNormal;
 #endif
 #ifdef VERTEX_ATTRIBUTE_BINORMAL
-layout (location = 2) in mediump vec3 inBinormal;
+layout (location = 2)                            in mediump vec3 inBinormal;
 #endif
 #ifdef VERTEX_ATTRIBUTE_COLOR
-layout (location = 3) in mediump vec3 inColor;
+layout (location = 3)                            in mediump vec3 inColor;
 #endif
 #ifdef VERTEX_ATTRIBUTE_TEXCOORD0
-layout (location = 4) in mediump vec2 inTexcoord0;
+layout (location = 4)                            in mediump vec2 inTexcoord0;
 #endif
 #ifdef VERTEX_ATTRIBUTE_TEXCOORD1
-layout (location = 5) in mediump vec2 inTexcoord1;
+layout (location = 5)                            in mediump vec2 inTexcoord1;
 #endif
 #ifdef VERTEX_ATTRIBUTE_INDICES
-layout (location = 6) in mediump vec4 inIndices;
+layout (location = 6)                            in mediump vec4 inIndices;
 #endif
 #ifdef VERTEX_ATTRIBUTE_WEIGHTS
-layout (location = 7) in mediump vec4 inWeights;
+layout (location = 7)                            in mediump vec4 inWeights;
 #endif
 
 #ifdef INSTANCE_ATTRIBUTE_TRANSFORM
-layout (location = 8)  in highp vec4 inInstanceTransformMatrixCol0;
-layout (location = 9)  in highp vec4 inInstanceTransformMatrixCol1;
-layout (location = 10) in highp vec4 inInstanceTransformMatrixCol2;
-layout (location = 11) in highp vec4 inInstanceTransformMatrixCol3;
+layout (location = 8)                            in highp vec4 inInstanceTransformMatrixCol0;
+layout (location = 9)                            in highp vec4 inInstanceTransformMatrixCol1;
+layout (location = 10)                           in highp vec4 inInstanceTransformMatrixCol2;
+layout (location = 11)                           in highp vec4 inInstanceTransformMatrixCol3;
 #endif
 
 #ifdef INSTANCE_ATTRIBUTE_POINTLIGHT
-layout (location = 12) in mediump vec4 inInstancePointLightColor;
-layout (location = 13) in mediump vec4 inInstancePointLightAttenuation;
+layout (location = 12)                           in mediump vec4 inInstancePointLightColor;
+layout (location = 13)                           in mediump vec4 inInstancePointLightAttenuation;
 #endif
 
 
-#define DESCRIPTOR_SET_PASS(b)            layout (set = 0, binding = b)
-#define DESCRIPTOR_SET_MATPASS(b)         layout (set = 1, binding = b)
-#define DESCRIPTOR_SET_MESHDRAW(b)        layout (set = 2, binding = b)
-#define DESCRIPTOR_SET_INPUTATTACHMENT(b) layout (set = 3, binding = b)
+#define DESCRIPTOR_SET_PASS(b)                   layout (set = 0, binding = b)
+#define DESCRIPTOR_SET_MATPASS(b)                layout (set = 1, binding = b)
+#define DESCRIPTOR_SET_MESHDRAW(b)               layout (set = 2, binding = b)
+#define DESCRIPTOR_SET_INPUTATTACHMENT(b)        layout (set = 3, binding = b)
 
-#define DESCRIPTOR_BIND_ENGINE 0
-#define DESCRIPTOR_BIND_CAMERA 1
-#define DESCRIPTOR_BIND_SHADOWMAP 2
+#define DESCRIPTOR_BIND_ENGINE                   0
+#define DESCRIPTOR_BIND_CAMERA                   1
+#define DESCRIPTOR_BIND_SHADOWMAP                2
 
 
 #define USE_CAMERA_UNIFORM                                                         \
 	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_CAMERA) uniform Camera                     \
 	{                                                                              \
 		highp vec4 screen;                                                         \
-		highp vec4 zbuffer;                                                        \
-		highp vec4 projection;                                                     \
+		highp vec4 depth;                                                          \
 		                                                                           \
-		highp mat4 projectionMatrix;                                               \
-		highp mat4 projectionViewMatrix;                                           \
 		highp mat4 viewMatrix;                                                     \
 		highp mat4 viewInverseMatrix;                                              \
 		highp mat4 viewInverseTransposeMatrix;                                     \
+		highp mat4 projectionMatrix;                                               \
+		highp mat4 projectionViewMatrix;                                           \
 	} camera
 
 #define USE_ENGINE_UNIFORM                                                         \
@@ -74,15 +73,15 @@ layout (location = 13) in mediump vec4 inInstancePointLightAttenuation;
 		                                                                           \
 		mediump vec4 lightFactor;                                                  \
 		                                                                           \
-		mediump vec4 ambientLightRed0;                                             \
-		mediump vec4 ambientLightRed1;                                             \
-		mediump vec4 ambientLightRed2;                                             \
-		mediump vec4 ambientLightGreen0;                                           \
-		mediump vec4 ambientLightGreen1;                                           \
-		mediump vec4 ambientLightGreen2;                                           \
-		mediump vec4 ambientLightBlue0;                                            \
-		mediump vec4 ambientLightBlue1;                                            \
-		mediump vec4 ambientLightBlue2;                                            \
+		mediump vec4 ambientLightSH0;                                              \
+		mediump vec4 ambientLightSH1;                                              \
+		mediump vec4 ambientLightSH2;                                              \
+		mediump vec4 ambientLightSH3;                                              \
+		mediump vec4 ambientLightSH4;                                              \
+		mediump vec4 ambientLightSH5;                                              \
+		mediump vec4 ambientLightSH6;                                              \
+		mediump vec4 ambientLightSH7;                                              \
+		mediump vec4 ambientLightSH8;                                              \
 		mediump mat4 ambientLightRotationMatrix;                                   \
 		                                                                           \
 		mediump vec4 mainPointLightColor;                                          \
@@ -96,10 +95,10 @@ layout (location = 13) in mediump vec4 inInstancePointLightAttenuation;
 		mediump vec4 mainFogHeightParams;                                          \
 		mediump vec4 mainFogDistanceParams;                                        \
 		                                                                           \
+		highp vec4 mainShadowDepth[4];                                             \
+		highp mat4 mainShadowViewMatrix[4];                                        \
 		highp mat4 mainShadowProjectionMatrix[4];                                  \
 		highp mat4 mainShadowProjectionViewMatrix[4];                              \
-		highp mat4 mainShadowViewMatrix[4];                                        \
-		highp vec4 mainShadowParams[4];                                            \
 	} engine
 
 #define USE_SHADOWMAP_UNIFORM                                                      \
@@ -107,41 +106,41 @@ layout (location = 13) in mediump vec4 inInstancePointLightAttenuation;
 
 
 USE_CAMERA_UNIFORM;
-#define cameraScreen camera.screen
-#define cameraZBuffer camera.zbuffer
-#define cameraProjection camera.projection
-#define cameraProjectionMatrix camera.projectionMatrix
-#define cameraProjectionViewMatrix camera.projectionViewMatrix
-#define cameraViewMatrix camera.viewMatrix
-#define cameraViewInverseMatrix camera.viewInverseMatrix
-#define cameraViewInverseTransposeMatrix camera.viewInverseTransposeMatrix
-#define cameraZNear camera.projection.y
-#define cameraZFar camera.projection.z
+#define screenWidth                              camera.screen.x
+#define screenHeight                             camera.screen.y
+
+#define cameraZNear                              camera.depth.x
+#define cameraZFar                               camera.depth.y
+
+#define cameraViewMatrix                         camera.viewMatrix
+#define cameraViewInverseMatrix                  camera.viewInverseMatrix
+#define cameraViewInverseTransposeMatrix         camera.viewInverseTransposeMatrix
+#define cameraProjectionMatrix                   camera.projectionMatrix
+#define cameraProjectionViewMatrix               camera.projectionViewMatrix
 
 USE_ENGINE_UNIFORM;
-#define mainShadowProjectionMatrix(indexLevel) engine.mainShadowProjectionMatrix[indexLevel]
+#define mainShadowZNear(indexLevel)              engine.mainShadowDepth[indexLevel].x
+#define mainShadowZFar(indexLevel)               engine.mainShadowDepth[indexLevel].y
+#define mainShadowViewMatrix(indexLevel)         engine.mainShadowViewMatrix[indexLevel]
+#define mainShadowProjectionMatrix(indexLevel)   engine.mainShadowProjectionMatrix[indexLevel]
 #define mainShadowProjectionViewMatrix(indexLevel) engine.mainShadowProjectionViewMatrix[indexLevel]
-#define mainShadowViewMatrix(indexLevel) engine.mainShadowViewMatrix[indexLevel]
-#define mainShadowClipPlane(indexLevel) engine.mainShadowParams[indexLevel]
-#define mainShadowDistance(indexLevel) engine.mainShadowParams[indexLevel].z
-#define mainShadowResolution(indexLevel) engine.mainShadowParams[indexLevel].w
 
-#define ambientLightFactor engine.lightFactor.x
-#define pointLightFactor engine.lightFactor.y
-#define directLightFactor engine.lightFactor.z
-#define envLightFactor engine.lightFactor.w
+#define ambientLightFactor                       engine.lightFactor.x
+#define pointLightFactor                         engine.lightFactor.y
+#define directLightFactor                        engine.lightFactor.z
+#define envLightFactor                           engine.lightFactor.w
 
-#define mainPointLightColor engine.mainPointLightColor.rgb
-#define mainPointLightPosition engine.mainPointLightPosition.xyz
-#define mainDirectLightColor engine.mainDirectLightColor.rgb
-#define mainDirectLightDirection engine.mainDirectLightDirection.xyz
+#define mainPointLightColor                      engine.mainPointLightColor.rgb
+#define mainPointLightPosition                   engine.mainPointLightPosition.xyz
+#define mainDirectLightColor                     engine.mainDirectLightColor.rgb
+#define mainDirectLightDirection                 engine.mainDirectLightDirection.xyz
 
-#define mainFogColor engine.mainFogColor.rgb
-#define mainFogHeightStart engine.mainFogHeightParams.x
-#define mainFogHeightEnd engine.mainFogHeightParams.y
-#define mainFogHeightDensity engine.mainFogHeightParams.z
-#define mainFogDistanceStart engine.mainFogDistanceParams.x
-#define mainFogDistanceEnd engine.mainFogDistanceParams.y
-#define mainFogDistanceDensity engine.mainFogDistanceParams.z
+#define mainFogColor                             engine.mainFogColor.rgb
+#define mainFogHeightStart                       engine.mainFogHeightParams.x
+#define mainFogHeightEnd                         engine.mainFogHeightParams.y
+#define mainFogHeightDensity                     engine.mainFogHeightParams.z
+#define mainFogDistanceStart                     engine.mainFogDistanceParams.x
+#define mainFogDistanceEnd                       engine.mainFogDistanceParams.y
+#define mainFogDistanceDensity                   engine.mainFogDistanceParams.z
 
 #endif

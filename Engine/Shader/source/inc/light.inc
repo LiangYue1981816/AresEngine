@@ -175,12 +175,12 @@ vec3 Env_Specular(vec3 specular, float ndv, float roughness)
 // BRDF Functions
 vec3 AmbientSH4(vec3 normal, vec3 albedo, float metallic)
 {
-	return Ambient_SH4((engine.ambientLightRotationMatrix * vec4(normal, 0.0)).xyz, albedo, metallic, engine.ambientLightRed0, engine.ambientLightGreen0, engine.ambientLightBlue0);
+	return Ambient_SH4((engine.ambientLightRotationMatrix * vec4(normal, 0.0)).xyz, albedo, metallic, engine.ambientLightSH0, engine.ambientLightSH3, engine.ambientLightSH6);
 }
 
 vec3 AmbientSH9(vec3 normal, vec3 albedo, float metallic)
 {
-	return Ambient_SH9((engine.ambientLightRotationMatrix * vec4(normal, 0.0)).xyz, albedo, metallic, engine.ambientLightRed0.xyz, engine.ambientLightRed1.xyz, engine.ambientLightRed2.xyz, engine.ambientLightGreen0.xyz, engine.ambientLightGreen1.xyz, engine.ambientLightGreen2.xyz, engine.ambientLightBlue0.xyz, engine.ambientLightBlue1.xyz, engine.ambientLightBlue2.xyz);
+	return Ambient_SH9((engine.ambientLightRotationMatrix * vec4(normal, 0.0)).xyz, albedo, metallic, engine.ambientLightSH0.xyz, engine.ambientLightSH1.xyz, engine.ambientLightSH2.xyz, engine.ambientLightSH3.xyz, engine.ambientLightSH4.xyz, engine.ambientLightSH5.xyz, engine.ambientLightSH6.xyz, engine.ambientLightSH7.xyz, engine.ambientLightSH8.xyz);
 }
 
 vec3 Fresnel(vec3 normal, vec3 viewDirection, vec3 specular, float metallic)
