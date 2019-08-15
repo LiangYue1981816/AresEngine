@@ -25,7 +25,7 @@ const CGfxUniformBufferPtr CGfxUniformCamera::GetUniformBuffer(void) const
 void CGfxUniformCamera::SetScreen(float width, float height)
 {
 	m_bDirty = true;
-	m_params.screen = glm::vec4(width, height, 1.0f + 1.0f / width, 1.0f + 1.0f / height);
+	m_params.screen = glm::vec4(width, height, 1.0f / width, 1.0f / height);
 }
 
 void CGfxUniformCamera::SetPerspective(float fovy, float aspect, float zNear, float zFar)
@@ -39,8 +39,7 @@ void CGfxUniformCamera::SetPerspective(float fovy, float aspect, float zNear, fl
 	float y = zFar / zNear;
 
 	m_bDirty = true;
-	m_params.zbuffer = glm::vec4(x, y, x / zFar, y / zFar);
-	m_params.projection = glm::vec4(1.0f, zNear, zFar, 1.0f / zFar);
+	m_params.depth = glm::vec4(zNear, zFar, zFar - zNear, 1.0f / (zFar - zNear));
 	m_params.projectionMatrix = GfxRenderer()->GetBaseMatrix() * glm::perspective(glm::radians(fovy), aspect, zNear, zFar);
 	m_params.projectionViewMatrix = m_params.projectionMatrix * m_params.viewMatrix;
 }
@@ -56,8 +55,7 @@ void CGfxUniformCamera::SetOrtho(float left, float right, float bottom, float to
 	float y = zFar / zNear;
 
 	m_bDirty = true;
-	m_params.zbuffer = glm::vec4(x, y, x / zFar, y / zFar);
-	m_params.projection = glm::vec4(1.0f, zNear, zFar, 1.0f / zFar);
+	m_params.depth = glm::vec4(zNear, zFar, zFar - zNear, 1.0f / (zFar - zNear));
 	m_params.projectionMatrix = GfxRenderer()->GetBaseMatrix() * glm::ortho(left, right, bottom, top, zNear, zFar);
 	m_params.projectionViewMatrix = m_params.projectionMatrix * m_params.viewMatrix;
 }

@@ -7,9 +7,7 @@ class CALL_API CGfxUniformCamera
 public:
 	typedef struct Params {
 		glm::vec4 screen;
-		glm::vec4 zbuffer;
-		glm::vec4 projection;
-
+		glm::vec4 depth;
 		glm::mat4 projectionMatrix;
 		glm::mat4 projectionViewMatrix;
 		glm::mat4 viewMatrix;
