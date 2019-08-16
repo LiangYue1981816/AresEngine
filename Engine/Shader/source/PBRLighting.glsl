@@ -120,7 +120,13 @@ void main()
 	mediump float ao = 1.0;
 #endif
 
-	mediump float shadow = SimpleShadowValue(0, inPosition, texShadowMap);
+	mediump int indexLevel;
+	mediump float factor = length(worldCameraPosition - inPosition) / (cameraZFar - cameraZNear);
+	if (factor < mainShadowLevelFactor.w) indexLevel = 3;
+	if (factor < mainShadowLevelFactor.z) indexLevel = 2;
+	if (factor < mainShadowLevelFactor.y) indexLevel = 1;
+	if (factor < mainShadowLevelFactor.x) indexLevel = 0;
+	mediump float shadow = SimpleShadowValue(indexLevel, inPosition, texShadowMap);
 
 	mediump vec3 pointLightDirection = mainPointLightPosition - inPosition;
 	mediump vec3 pointLightColor = mainPointLightColor * LightingAttenuation(length(pointLightDirection));
