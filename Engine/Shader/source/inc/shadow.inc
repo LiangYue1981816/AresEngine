@@ -59,7 +59,9 @@ highp float SimpleShadowValue(lowp int indexLevel, highp vec3 position, highp sa
 
 	highp float shadowDepth = SimpleShadowDepth(shadowmap, projectCoord.xy);
 	highp float shadowRange = mainShadowZFar(indexLevel) - mainShadowZNear(indexLevel);
-	highp float curDepth = length((mainShadowViewMatrix(indexLevel) * vec4(position.xyz, 1.0)).xyz) / shadowRange + 0.01;
+
+	highp vec3 worldShadowPosition = (mainShadowViewInverseMatrix(indexLevel) * vec4(0.0, 0.0, 0.0, 1.0)).xyz;
+	highp float curDepth = length(worldShadowPosition - position) / shadowRange + 0.01;
 
 	/*
 	highp vec3 cameraPosition = (cameraViewInverseMatrix * vec4(0.0, 0.0, 0.0, 1.0)).xyz;

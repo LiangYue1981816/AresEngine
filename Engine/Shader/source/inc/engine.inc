@@ -98,6 +98,7 @@ layout (location = 13)                           in mediump vec4 inInstancePoint
 		highp vec4 mainShadowLevelFactor;                                          \
 		highp vec4 mainShadowDepth[4];                                             \
 		highp mat4 mainShadowViewMatrix[4];                                        \
+		highp mat4 mainShadowViewInverseMatrix[4];                                 \
 		highp mat4 mainShadowProjectionMatrix[4];                                  \
 		highp mat4 mainShadowProjectionViewMatrix[4];                              \
 	} engine
@@ -124,6 +125,7 @@ USE_ENGINE_UNIFORM;
 #define mainShadowZNear(indexLevel)              engine.mainShadowDepth[indexLevel].x
 #define mainShadowZFar(indexLevel)               engine.mainShadowDepth[indexLevel].y
 #define mainShadowViewMatrix(indexLevel)         engine.mainShadowViewMatrix[indexLevel]
+#define mainShadowViewInverseMatrix(indexLevel)  engine.mainShadowViewInverseMatrix[indexLevel]
 #define mainShadowProjectionMatrix(indexLevel)   engine.mainShadowProjectionMatrix[indexLevel]
 #define mainShadowProjectionViewMatrix(indexLevel) engine.mainShadowProjectionViewMatrix[indexLevel]
 
