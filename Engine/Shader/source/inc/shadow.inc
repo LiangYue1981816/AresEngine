@@ -60,7 +60,8 @@ highp float SimpleShadowValue(lowp int indexLevel, highp vec3 position, highp sa
  	projectCoord.xy = projectCoord.xy * 0.5 + vec2(0.5, 0.5);
 	projectCoord.xy = projectCoord.xy * 0.5 + offset[indexLevel];
 
-	highp float shadowDepth = SimpleShadowDepth(shadowmap, projectCoord.xy) * (mainShadowZFar(indexLevel) - mainShadowZNear(indexLevel));
+	highp float shadowRange = mainShadowZFar(indexLevel) - mainShadowZNear(indexLevel);
+	highp float shadowDepth = SimpleShadowDepth(shadowmap, projectCoord.xy) * shadowRange;
 	/*
 	highp vec3 cameraPosition = (cameraViewInverseMatrix * vec4(0.0, 0.0, 0.0, 1.0)).xyz;
 	highp float shadowAtten = (mainShadowDistance(indexLevel) - length(position - cameraPosition)) / mainShadowDistance(indexLevel);
@@ -93,7 +94,8 @@ highp float LinearShadowValue(lowp int indexLevel, highp vec3 position, highp sa
  	projectCoord.xy = projectCoord.xy * 0.5 + vec2(0.5, 0.5);
 	projectCoord.xy = projectCoord.xy * 0.5 + offset[indexLevel];
 
-	highp float shadowDepth = LinearShadowDepth(indexLevel, shadowmap, projectCoord.xy) * (mainShadowZFar(indexLevel) - mainShadowZNear(indexLevel));
+	highp float shadowRange = mainShadowZFar(indexLevel) - mainShadowZNear(indexLevel);
+	highp float shadowDepth = SimpleShadowDepth(shadowmap, projectCoord.xy) * shadowRange;
 	/*
 	highp vec3 cameraPosition = (cameraViewInverseMatrix * vec4(0.0, 0.0, 0.0, 1.0)).xyz;
 	highp float shadowAtten = (mainShadowDistance(indexLevel) - length(position - cameraPosition)) / mainShadowDistance(indexLevel);
