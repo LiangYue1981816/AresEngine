@@ -9,14 +9,14 @@ precision mediump float;
 // INSTANCE_ATTRIBUTE_TRANSFORM;
 
 // Output
-layout (location = 0) out highp vec3 outPosition;
+layout (location = 0) out highp vec4 outPosition;
 
 
 void main()
 {
 	highp mat4 worldMatrix = mat4(inInstanceTransformMatrixCol0, inInstanceTransformMatrixCol1, inInstanceTransformMatrixCol2, inInstanceTransformMatrixCol3);
-	outPosition = (cameraViewMatrix * worldMatrix * vec4(inPosition.xyz, 1.0)).xyz;
-	gl_Position = (cameraProjectionViewMatrix * worldMatrix * vec4(inPosition.xyz, 1.0));
+	outPosition = cameraProjectionViewMatrix * worldMatrix * vec4(inPosition.xyz, 1.0);
+	gl_Position = outPosition;
 }
 #endif
 
@@ -27,7 +27,7 @@ precision mediump float;
 
 
 // Input
-layout (location = 0) in highp vec3 inPosition;
+layout (location = 0) in highp vec4 inPosition;
 
 // Output
 layout (location = 0) out mediump vec4 outFragColor;
@@ -35,6 +35,6 @@ layout (location = 0) out mediump vec4 outFragColor;
 
 void main()
 {
-	outFragColor = EncodeFloat(length(inPosition) / (cameraZFar - cameraZNear));
+	outFragColor = EncodeFloat(inPosition.z);
 }
 #endif

@@ -58,10 +58,7 @@ highp float SimpleShadowValue(lowp int indexLevel, highp vec3 position, highp sa
 	projectCoord.xy = clamp(projectCoord.xy * 0.5 + offset[indexLevel], offset[indexLevel], offset[indexLevel] + vec2(0.5));
 
 	highp float shadowDepth = SimpleShadowDepth(shadowmap, projectCoord.xy);
-	highp float shadowRange = mainShadowZFar(indexLevel) - mainShadowZNear(indexLevel);
-
-	highp vec3 worldShadowPosition = (mainShadowViewInverseMatrix(indexLevel) * vec4(0.0, 0.0, 0.0, 1.0)).xyz;
-	highp float curDepth = length(worldShadowPosition - position) / shadowRange + 0.01;
+	highp float curDepth = (mainShadowProjectionViewMatrix(indexLevel) * vec4(position, 1.0)).z - 0.001;
 
 	/*
 	highp vec3 cameraPosition = (cameraViewInverseMatrix * vec4(0.0, 0.0, 0.0, 1.0)).xyz;
@@ -82,36 +79,7 @@ highp float SimpleShadowValue(lowp int indexLevel, highp vec3 position, highp sa
 
 highp float LinearShadowValue(lowp int indexLevel, highp vec3 position, highp sampler2D shadowmap)
 {
-	highp vec2 offset[4];
-	offset[0] = vec2(0.0, 0.0);
-	offset[1] = vec2(0.5, 0.0);
-	offset[2] = vec2(0.0, 0.5);
-	offset[3] = vec2(0.5, 0.5);
-
-	highp vec4 projectCoord = mainShadowProjectionViewMatrix(indexLevel) * vec4(position.xyz, 1.0);
-	projectCoord.xy /= projectCoord.w;
- 	projectCoord.xy = clamp(projectCoord.xy * 0.5 + vec2(0.5, 0.5), vec2(0.0), vec2(1.0));
-	projectCoord.xy = clamp(projectCoord.xy * 0.5 + offset[indexLevel], offset[indexLevel], offset[indexLevel] + vec2(0.5));
-
-	highp float shadowDepth = SimpleShadowDepth(shadowmap, projectCoord.xy);
-	highp float shadowRange = mainShadowZFar(indexLevel) - mainShadowZNear(indexLevel);
-	highp float curDepth = length((mainShadowViewMatrix(indexLevel) * vec4(position.xyz, 1.0)).xyz) / shadowRange + 0.01;
-
-	/*
-	highp vec3 cameraPosition = (cameraViewInverseMatrix * vec4(0.0, 0.0, 0.0, 1.0)).xyz;
-	highp float shadowAtten = (mainShadowDistance(indexLevel) - length(position - cameraPosition)) / mainShadowDistance(indexLevel);
-	shadowAtten = pow2(shadowAtten);
-	shadowAtten = clamp(shadowAtten, 0.0, 1.0);
-
-	highp float shadowValue = exp(shadowDepth - curDepth);
-	shadowValue = 1.0 - (1.0 - shadowValue) * shadowAtten;
-	shadowValue = clamp(shadowValue, 0.0, 1.0);
-	*/
-
-	highp float shadowValue = exp(shadowDepth - curDepth);
-	shadowValue = clamp(shadowValue, 0.0, 1.0);
-
-	return shadowValue;
+	return 0.0;
 }
 
 #endif
