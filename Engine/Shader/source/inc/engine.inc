@@ -95,6 +95,7 @@ layout (location = 13)                           in mediump vec4 inInstancePoint
 		mediump vec4 mainFogHeightParams;                                          \
 		mediump vec4 mainFogDistanceParams;                                        \
 		                                                                           \
+		highp vec4 mainShadowLevelFactor;                                          \
 		highp vec4 mainShadowDepth[4];                                             \
 		highp mat4 mainShadowViewMatrix[4];                                        \
 		highp mat4 mainShadowProjectionMatrix[4];                                  \
@@ -119,6 +120,7 @@ USE_CAMERA_UNIFORM;
 #define cameraProjectionViewMatrix               camera.projectionViewMatrix
 
 USE_ENGINE_UNIFORM;
+#define mainShadowLevelFactor                    engine.mainShadowLevelFactor
 #define mainShadowZNear(indexLevel)              engine.mainShadowDepth[indexLevel].x
 #define mainShadowZFar(indexLevel)               engine.mainShadowDepth[indexLevel].y
 #define mainShadowViewMatrix(indexLevel)         engine.mainShadowViewMatrix[indexLevel]
