@@ -143,6 +143,7 @@ const CGfxSemaphore* CPassShadow::Render(CTaskGraph& taskGraph, const CGfxSemaph
 		m_pShadowCameraUniform[indexLevel]->SetLookat(sphereFrustum.center.x, sphereFrustum.center.y, sphereFrustum.center.z, sphereFrustum.center.x + mainLightDirection.x, sphereFrustum.center.y + mainLightDirection.y, sphereFrustum.center.z + mainLightDirection.z, 0.0f, 1.0f, 0.0f);
 		m_pShadowCameraUniform[indexLevel]->Apply();
 
+		m_pRenderSystem->GetEngineUniform()->SetMainShadowLevelFactor(m_splitFactors[1], m_splitFactors[2], m_splitFactors[3], m_splitFactors[4]);
 		m_pRenderSystem->GetEngineUniform()->SetMainShadowOrtho(indexLevel, -sphereFrustum.radius, sphereFrustum.radius, -sphereFrustum.radius, sphereFrustum.radius, zNear, zFar);
 		m_pRenderSystem->GetEngineUniform()->SetMainShadowLookat(indexLevel, sphereFrustum.center.x, sphereFrustum.center.y, sphereFrustum.center.z, sphereFrustum.center.x + mainLightDirection.x, sphereFrustum.center.y + mainLightDirection.y, sphereFrustum.center.z + mainLightDirection.z, 0.0f, 1.0f, 0.0f);
 	}

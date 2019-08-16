@@ -255,6 +255,12 @@ void CGfxUniformEngine::SetMainFogDistanceDensity(float startDistance, float end
 	m_params.mainFogDistanceParams = glm::vec4(startDistance, endDistance, density, 0.0f);
 }
 
+void CGfxUniformEngine::SetMainShadowLevelFactor(float factor0, float factor1, float factor2, float factor3)
+{
+	m_bDirty = true;
+	m_params.mainShadowLevelFactor = glm::vec4(factor0, factor1, factor2, factor3);
+}
+
 void CGfxUniformEngine::SetMainShadowOrtho(int indexLevel, float left, float right, float bottom, float top, float zNear, float zFar)
 {
 	if (indexLevel >= 0 && indexLevel < 4) {
