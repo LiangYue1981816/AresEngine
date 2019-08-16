@@ -46,11 +46,23 @@ highp float LinearShadowDepth(lowp int indexLevel, highp sampler2D shadowmap, hi
 
 highp float SimpleShadowValue(lowp int indexLevel, highp vec3 position, highp sampler2D shadowmap)
 {
+	highp float biasOffset[4];
+	biasOffset[0] = 0.001;
+	biasOffset[1] = 0.002;
+	biasOffset[2] = 0.005;
+	biasOffset[3] = 0.010;
+
 	highp vec2 offset[4];
 	offset[0] = vec2(0.0, 0.0);
 	offset[1] = vec2(0.5, 0.0);
 	offset[2] = vec2(0.0, 0.5);
 	offset[3] = vec2(0.5, 0.5);
+
+	highp mat4 bias = mat4( 
+		0.5, 0.0, 0.0, 0.0,
+		0.0, 0.5, 0.0, 0.0,
+		0.0, 0.0, 1.0, 0.0,
+		0.5, 0.5, 0.0, 1.0);
 
 	highp vec4 projectCoord = mainShadowProjectionViewMatrix(indexLevel) * vec4(position.xyz, 1.0);
 	projectCoord.xy /= projectCoord.w;
@@ -58,7 +70,7 @@ highp float SimpleShadowValue(lowp int indexLevel, highp vec3 position, highp sa
 	projectCoord.xy = clamp(projectCoord.xy * 0.5 + offset[indexLevel], offset[indexLevel], offset[indexLevel] + vec2(0.5));
 
 	highp float shadowDepth = SimpleShadowDepth(shadowmap, projectCoord.xy);
-	highp float curDepth = (mainShadowProjectionViewMatrix(indexLevel) * vec4(position, 1.0)).z - 0.001;
+	highp float curDepth = (bias * mainShadowProjectionViewMatrix(indexLevel) * vec4(position, 1.0)).z - biasOffset[indexLevel];
 
 	/*
 	highp vec3 cameraPosition = (cameraViewInverseMatrix * vec4(0.0, 0.0, 0.0, 1.0)).xyz;
