@@ -38,6 +38,7 @@ public:
 		glm::vec4 mainShadowLevelFactor;
 		glm::vec4 mainShadowDepth[4];
 		glm::mat4 mainShadowViewMatrix[4];
+		glm::mat4 mainShadowViewInverseMatrix[4];
 		glm::mat4 mainShadowProjectionMatrix[4];
 		glm::mat4 mainShadowProjectionViewMatrix[4];
 	} Params;

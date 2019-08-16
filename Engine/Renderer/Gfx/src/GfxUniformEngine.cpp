@@ -276,6 +276,7 @@ void CGfxUniformEngine::SetMainShadowLookat(int indexLevel, float eyex, float ey
 	if (indexLevel >= 0 && indexLevel < 4) {
 		m_bDirty = true;
 		m_params.mainShadowViewMatrix[indexLevel] = glm::lookAt(glm::vec3(eyex, eyey, eyez), glm::vec3(centerx, centery, centerz), glm::vec3(upx, upy, upz));
+		m_params.mainShadowViewInverseMatrix[indexLevel] = glm::inverse(m_params.mainShadowViewMatrix[indexLevel]);
 		m_params.mainShadowProjectionViewMatrix[indexLevel] = m_params.mainShadowProjectionMatrix[indexLevel] * m_params.mainShadowViewMatrix[indexLevel];
 	}
 }
