@@ -57,8 +57,8 @@ highp float SimpleShadowValue(lowp int indexLevel, highp vec3 position, highp sa
 
 	highp vec4 projectCoord = mainShadowProjectionViewMatrix(indexLevel) * vec4(position.xyz, 1.0);
 	projectCoord.xy /= projectCoord.w;
- 	projectCoord.xy = projectCoord.xy * 0.5 + vec2(0.5, 0.5);
-	projectCoord.xy = projectCoord.xy * 0.5 + offset[indexLevel];
+ 	projectCoord.xy = clamp(projectCoord.xy * 0.5 + vec2(0.5, 0.5), vec2(0.0), vec2(1.0));
+	projectCoord.xy = clamp(projectCoord.xy * 0.5 + offset[indexLevel], offset[indexLevel], offset[indexLevel] + vec2(0.5));
 
 	highp float shadowRange = mainShadowZFar(indexLevel) - mainShadowZNear(indexLevel);
 	highp float shadowDepth = SimpleShadowDepth(shadowmap, projectCoord.xy) * shadowRange;
@@ -91,8 +91,8 @@ highp float LinearShadowValue(lowp int indexLevel, highp vec3 position, highp sa
 
 	highp vec4 projectCoord = mainShadowProjectionViewMatrix(indexLevel) * vec4(position.xyz, 1.0);
 	projectCoord.xy /= projectCoord.w;
- 	projectCoord.xy = projectCoord.xy * 0.5 + vec2(0.5, 0.5);
-	projectCoord.xy = projectCoord.xy * 0.5 + offset[indexLevel];
+ 	projectCoord.xy = clamp(projectCoord.xy * 0.5 + vec2(0.5, 0.5), vec2(0.0), vec2(1.0));
+	projectCoord.xy = clamp(projectCoord.xy * 0.5 + offset[indexLevel], offset[indexLevel], offset[indexLevel] + vec2(0.5));
 
 	highp float shadowRange = mainShadowZFar(indexLevel) - mainShadowZNear(indexLevel);
 	highp float shadowDepth = SimpleShadowDepth(shadowmap, projectCoord.xy) * shadowRange;
