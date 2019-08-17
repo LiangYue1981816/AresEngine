@@ -120,13 +120,7 @@ void main()
 	mediump float ao = 1.0;
 #endif
 
-	mediump int indexLevel;
-	mediump float factor = length(worldCameraPosition - inPosition) / (cameraZFar - cameraZNear);
-	if (factor < mainShadowLevelFactor.w) indexLevel = 3;
-	if (factor < mainShadowLevelFactor.z) indexLevel = 2;
-	if (factor < mainShadowLevelFactor.y) indexLevel = 1;
-	if (factor < mainShadowLevelFactor.x) indexLevel = 0;
-	mediump float shadow = SimpleShadowValue(indexLevel, inPosition, texShadowMap);
+	mediump float shadow = ShadowValue(inPosition, texShadowMap);
 
 	mediump vec3 pointLightDirection = mainPointLightPosition - inPosition;
 	mediump vec3 pointLightColor = mainPointLightColor * LightingAttenuation(length(pointLightDirection));
@@ -146,6 +140,13 @@ void main()
 
 	finalLighting = ToneMapping(finalLighting);
 	finalLighting = Linear2Gamma(finalLighting);
+
+highp float factor = length(worldCameraPosition - inPosition) / (cameraZFar - cameraZNear);
+if (factor < mainShadowLevelFactor.w) finalLighting = vec3(1.0, 1.0, 0.0) * vec3(shadow);
+if (factor < mainShadowLevelFactor.z) finalLighting = vec3(0.0, 1.0, 1.0) * vec3(shadow);
+if (factor < mainShadowLevelFactor.y) finalLighting = vec3(0.0, 1.0, 0.0) * vec3(shadow);
+if (factor < mainShadowLevelFactor.x) finalLighting = vec3(1.0, 0.0, 0.0) * vec3(shadow);
+finalLighting = vec3(shadow);
 
 	outFragColor.rgb = finalLighting;
 	outFragColor.a = 1.0;
