@@ -45,7 +45,7 @@ highp float ShadowValue(highp vec3 worldPosition, highp sampler2D shadowmap)
  	projectCoord.xy = clamp(projectCoord.xy * 0.5 + vec2(0.5, 0.5), vec2(0.0), vec2(1.0));
 	projectCoord.xy = clamp(projectCoord.xy * 0.5 + texOffset[indexLevel], texOffset[indexLevel], texOffset[indexLevel] + vec2(0.5));
 
-	//*
+	/*
 	highp vec4 resolution = vec4(2048.0, 2048.0, 4096.0, 4096.0);
 	highp vec2 unnormalized = projectCoord.xy * resolution[indexLevel];
 	highp vec2 fractional = fract(unnormalized);
@@ -61,7 +61,7 @@ highp float ShadowValue(highp vec3 worldPosition, highp sampler2D shadowmap)
 	highp float shadowDepth = ShadowDepth(shadowmap, projectCoord.xy);
 	//*/
 
-	highp vec4 biasOffset = vec4(0.001, 0.002, 0.004, 0.005);
+	highp vec4 biasOffset = vec4(0.000, 0.000, 0.000, 0.000);
 	highp float curDepth = ((mainShadowViewMatrix(indexLevel) * vec4(worldPosition, 1.0)).z - mainShadowZNear(indexLevel)) / (mainShadowZFar(indexLevel) - mainShadowZNear(indexLevel)) + biasOffset[indexLevel];	
 
 	highp float shadowValue = curDepth > shadowDepth ? 1.0 : 0.0;
