@@ -134,7 +134,6 @@ const CGfxSemaphore* CPassShadow::Render(CTaskGraph& taskGraph, const CGfxSemaph
 
 		const float zFar = 100.0f;
 		const float zNear = -100.0f;
-		const float resolution = 1024;
 		glm::sphere sphereFrustum = glm::sphere(minVertex, maxVertex);
 
 		m_pShadowCamera[indexLevel]->SetOrtho(-sphereFrustum.radius, sphereFrustum.radius, -sphereFrustum.radius, sphereFrustum.radius, zNear, zFar);

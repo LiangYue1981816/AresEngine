@@ -45,7 +45,7 @@ highp float ShadowValue(highp vec3 worldPosition, highp sampler2D shadowmap)
  	projectCoord.xy = clamp(projectCoord.xy * 0.5 + vec2(0.5, 0.5), vec2(0.0), vec2(1.0));
 	projectCoord.xy = clamp(projectCoord.xy * 0.5 + texOffset[indexLevel], texOffset[indexLevel], texOffset[indexLevel] + vec2(0.5));
 
-	/*
+	//*
 	highp vec4 resolution = vec4(2048.0, 2048.0, 4096.0, 4096.0);
 	highp vec2 unnormalized = projectCoord.xy * resolution[indexLevel];
 	highp vec2 fractional = fract(unnormalized);
@@ -57,18 +57,18 @@ highp float ShadowValue(highp vec3 worldPosition, highp sampler2D shadowmap)
 	highp float shadowDepth = 0.0;
 	shadowDepth = (shadowDepth0 + (shadowDepth3 - shadowDepth0) * fractional.y);
 	shadowDepth = shadowDepth + ((shadowDepth1 + (shadowDepth2 - shadowDepth1) * fractional.y) - shadowDepth) * fractional.x;
-	*/
+	/*/
 	highp float shadowDepth = ShadowDepth(shadowmap, projectCoord.xy);
+	//*/
 
-	highp vec4 biasOffset = vec4(0.001, 0.00125, 0.0015, 0.002);
-	highp mat4 biasMatrix = mat4(0.5, 0.0, 0.0, 0.0, 0.0, 0.5, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.5, 0.5, 0.0, 1.0);
-	highp float curDepth = (biasMatrix * mainShadowProjectionViewMatrix(indexLevel) * vec4(worldPosition, 1.0)).z - biasOffset[indexLevel];	
+	highp vec4 biasOffset = vec4(0.001, 0.002, 0.004, 0.005);
+	highp float curDepth = ((mainShadowViewMatrix(indexLevel) * vec4(worldPosition, 1.0)).z - mainShadowZNear(indexLevel)) / (mainShadowZFar(indexLevel) - mainShadowZNear(indexLevel)) + biasOffset[indexLevel];	
 
-//	return curDepth;
-//	return shadowDepth;
-	return exp((mainShadowZFar(indexLevel) - mainShadowZNear(indexLevel)) * (shadowDepth - curDepth));
-	return shadowDepth > curDepth ? 0.8 : 0.2;
-//	return clamp(curDepth - shadowDepth, 0.0, 1.0);
+	highp float shadowValue = curDepth > shadowDepth ? 1.0 : 0.0;
+//	highp float shadowValue = exp((mainShadowZFar(indexLevel) - mainShadowZNear(indexLevel)) * (curDepth - shadowDepth));
+	shadowValue = clamp(shadowValue, 0.0, 1.0);
+
+	return shadowValue;
 }
 
 #endif
