@@ -23,10 +23,7 @@ CShaderCompiler::CShaderCompiler(void)
 	m_options.SetAutoBindUniforms(true);
 	m_options.SetSourceLanguage(shaderc_source_language_glsl);
 	m_options.SetForcedVersionProfile(310, shaderc_profile_es);
-
-#ifndef DEBUG
-	m_options.SetOptimizationLevel(shaderc_optimization_level_performance);
-#endif
+//	m_options.SetOptimizationLevel(shaderc_optimization_level_performance);
 }
 
 CShaderCompiler::~CShaderCompiler(void)
