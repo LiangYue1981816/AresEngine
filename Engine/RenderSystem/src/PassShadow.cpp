@@ -133,8 +133,8 @@ const CGfxSemaphore* CPassShadow::Render(CTaskGraph& taskGraph, const CGfxSemaph
 			if (maxVertex.z < vertex.z) maxVertex.z = vertex.z;
 		}
 
-		const float zFar = 200.0f;
-		const float zNear = -200.0f;
+		const float zFar = 500.0f;
+		const float zNear = -500.0f;
 		glm::sphere sphereFrustum = glm::sphere(minVertex, maxVertex);
 
 		m_pShadowCamera[indexLevel]->SetOrtho(-sphereFrustum.radius, sphereFrustum.radius, -sphereFrustum.radius, sphereFrustum.radius, zNear, zFar);
