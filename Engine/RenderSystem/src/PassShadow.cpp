@@ -8,6 +8,7 @@ CPassShadow::CPassShadow(CCamera* pCamera, CRenderSystem* pRenderSystem)
 	, m_pRenderSystem(pRenderSystem)
 	, m_pShadowCamera{ nullptr }
 	, m_pShadowRenderQueue{ nullptr }
+//	, m_splitFactors{ 0.0f, 0.05f, 0.15f, 0.35f, 0.65f }
 	, m_splitFactors{ 0.0f, exp(-3.0f), exp(-2.0f), exp(-1.0f), exp(-0.0f) }
 {
 	// Camera
@@ -132,8 +133,8 @@ const CGfxSemaphore* CPassShadow::Render(CTaskGraph& taskGraph, const CGfxSemaph
 			if (maxVertex.z < vertex.z) maxVertex.z = vertex.z;
 		}
 
-		const float zFar = 100.0f;
-		const float zNear = -100.0f;
+		const float zFar = 200.0f;
+		const float zNear = -200.0f;
 		glm::sphere sphereFrustum = glm::sphere(minVertex, maxVertex);
 
 		m_pShadowCamera[indexLevel]->SetOrtho(-sphereFrustum.radius, sphereFrustum.radius, -sphereFrustum.radius, sphereFrustum.radius, zNear, zFar);
