@@ -82,19 +82,20 @@ highp float ShadowValue(highp vec3 worldPosition, highp sampler2D shadowmap)
  	projectCoord.xy = clamp(projectCoord.xy * 0.5 + vec2(0.5), vec2(0.0), vec2(1.0));
 	projectCoord.xy = clamp(projectCoord.xy * 0.5 + texOffset[indexLevel], texOffset[indexLevel], texOffset[indexLevel] + vec2(0.5));
 
-	highp float bias = 0.0005;
-	highp float curDepth = ((mainShadowViewMatrix(indexLevel) * vec4(worldPosition, 1.0)).z - mainShadowZNear(indexLevel)) / (mainShadowZFar(indexLevel) - mainShadowZNear(indexLevel)) + bias;
-	/*
+	highp float bias[4] = float[](0.00015, 0.0003, 0.0006, 0.010);
+	highp float curDepth = ((mainShadowViewMatrix(indexLevel) * vec4(worldPosition, 1.0)).z - mainShadowZNear(indexLevel)) / (mainShadowZFar(indexLevel) - mainShadowZNear(indexLevel)) + bias[indexLevel];
+	//*
 	highp float visibility = 1.0;
-	highp float resolution = 4096.0;
+	highp float resolution[4] = float[](4000.0, 6000.0, 8000.0, 10000.0);
 	for (int i = 0; i < 4; i++){
-		highp vec2 randomOffset = RandomOffset(worldPosition, i) / resolution;
+		highp vec2 randomOffset = RandomOffset(worldPosition, i) / resolution[indexLevel];
 		highp float shadowDepth = ShadowDepth(shadowmap, projectCoord.xy + randomOffset);
 		visibility -= curDepth > shadowDepth ? 0.0 : 0.25;
 	}
-	*/
-	highp float shadowDepth = LinearShadowDepth(shadowmap, projectCoord.xy, 1024.0);
+	/*/
+	highp float shadowDepth = LinearShadowDepth(shadowmap, projectCoord.xy, 2048.0);
 	highp float visibility = exp(200.0 * (curDepth - shadowDepth));
+	//*/
 
 	return clamp(visibility, 0.0, 1.0);
 }
