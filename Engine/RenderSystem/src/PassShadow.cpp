@@ -65,7 +65,7 @@ CPassShadow::~CPassShadow(void)
 	delete m_pShadowCameraUniform[3];
 }
 
-void CPassShadow::Create(const char* szName, GfxPixelFormat shadowPixelFormat, GfxPixelFormat depthPixelFormat)
+void CPassShadow::Create(GfxPixelFormat shadowPixelFormat, GfxPixelFormat depthPixelFormat)
 {
 	const int numSubpasses = 1;
 	const int numAttachments = 2;
@@ -74,7 +74,7 @@ void CPassShadow::Create(const char* szName, GfxPixelFormat shadowPixelFormat, G
 	const float depth = 1.0f;
 	const float color[] = { 0.0f, 0.0f, 0.0f, 0.0f };
 
-	ptrRenderPass = GfxRenderer()->NewRenderPass(HashValue(szName), numAttachments, numSubpasses);
+	ptrRenderPass = GfxRenderer()->NewRenderPass(HashValue("PassShadow"), numAttachments, numSubpasses);
 	ptrRenderPass->SetColorAttachment(0, shadowPixelFormat, 1, false, true, color[0], color[1], color[2], color[3]);
 	ptrRenderPass->SetDepthStencilAttachment(1, depthPixelFormat, 1, true, true, depth, stencil);
 	ptrRenderPass->SetSubpassOutputColorReference(0, 0);

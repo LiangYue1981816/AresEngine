@@ -14,7 +14,7 @@ private:
 
 
 private:
-	static void Create(const char* szName, GfxPixelFormat colorPixelFormat, GfxPixelFormat depthPixelFormat, int samples);
+	static void Create(GfxPixelFormat colorPixelFormat, GfxPixelFormat depthPixelFormat, int samples);
 	static void Destroy(void);
 
 public:
