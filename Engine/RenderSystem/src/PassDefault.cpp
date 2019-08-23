@@ -1,7 +1,7 @@
 #include "EngineHeader.h"
 
 
-static CGfxRenderPassPtr ptrRenderPass;
+CGfxRenderPassPtr ptrRenderPass;
 
 CPassDefault::CPassDefault(CCamera* pCamera, CRenderSystem* pRenderSystem)
 	: m_pCamera(pCamera)
