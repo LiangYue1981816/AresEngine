@@ -1,7 +1,7 @@
 #include "EngineHeader.h"
 
 
-CGfxRenderPassPtr ptrRenderPass;
+static CGfxRenderPassPtr ptrRenderPass;
 
 CPassForwardLighting::CPassForwardLighting(CCamera* pCamera, CRenderSystem* pRenderSystem)
 	: m_pCamera(pCamera)
