@@ -1,6 +1,8 @@
 #include "EngineHeader.h"
 
 
+static CGfxMeshPtr ptrMesh;
+static CGfxMeshDrawPtr ptrMeshDraw;
 static CGfxRenderPassPtr ptrRenderPass;
 
 CPassShadow::CPassShadow(CCamera* pCamera, CRenderSystem* pRenderSystem)
@@ -67,24 +69,47 @@ CPassShadow::~CPassShadow(void)
 
 void CPassShadow::Create(GfxPixelFormat shadowPixelFormat, GfxPixelFormat depthPixelFormat)
 {
-	const int numSubpasses = 1;
-	const int numAttachments = 2;
+	{
+		const int numSubpasses = 1;
+		const int numAttachments = 2;
 
-	const int stencil = 0;
-	const float depth = 1.0f;
-	const float color[] = { 0.0f, 0.0f, 0.0f, 0.0f };
+		const int stencil = 0;
+		const float depth = 1.0f;
+		const float color[] = { 0.0f, 0.0f, 0.0f, 0.0f };
 
-	ptrRenderPass = GfxRenderer()->NewRenderPass(HashValue("PassShadow"), numAttachments, numSubpasses);
-	ptrRenderPass->SetColorAttachment(0, shadowPixelFormat, 1, false, true, color[0], color[1], color[2], color[3]);
-	ptrRenderPass->SetDepthStencilAttachment(1, depthPixelFormat, 1, true, true, depth, stencil);
-	ptrRenderPass->SetSubpassOutputColorReference(0, 0);
-	ptrRenderPass->SetSubpassOutputDepthStencilReference(0, 1);
-	ptrRenderPass->Create();
+		ptrRenderPass = GfxRenderer()->NewRenderPass(HashValue("PassShadow"), numAttachments, numSubpasses);
+		ptrRenderPass->SetColorAttachment(0, shadowPixelFormat, 1, false, true, color[0], color[1], color[2], color[3]);
+		ptrRenderPass->SetDepthStencilAttachment(1, depthPixelFormat, 1, true, true, depth, stencil);
+		ptrRenderPass->SetSubpassOutputColorReference(0, 0);
+		ptrRenderPass->SetSubpassOutputDepthStencilReference(0, 1);
+		ptrRenderPass->Create();
+	}
+
+	{
+		struct Vertex {
+			float position[3];
+			float texcoord[2];
+		};
+
+		const glm::aabb aabb;
+		const int meshIndices[] = { 0, 1, 2, 2, 3, 0 };
+		const Vertex meshVertices[] = { {-1.0f, -1.0f, 0.0f, 0.0f, 0.0f}, {1.0f, -1.0f, 0.0f, 1.0f, 0.0f}, {1.0f, 1.0f, 0.0f, 1.0f, 1.0f}, {-1.0f, 1.0f, 0.0f, 0.0f, 1.0f} };
+
+		ptrMesh = GfxRenderer()->NewMesh(HashValue("PassShadow_Mesh"));
+		ptrMesh->CreateDraw(0, aabb, 0, 0, 6);
+		ptrMesh->CreateIndexBuffer(GFX_INDEX_UNSIGNED_INT, sizeof(meshIndices), false, (const void*)meshIndices);
+		ptrMesh->CreateVertexBuffer(VERTEX_ATTRIBUTE_POSITION | VERTEX_ATTRIBUTE_TEXCOORD0, 0, sizeof(meshVertices), false, (const void*)meshVertices);
+
+		ptrMeshDraw = GfxRenderer()->NewMeshDraw(HashValue("PassShadow_MeshDraw"), ptrMesh, 0, INSTANCE_FORMAT_TRANSFORM);
+	}
 }
 
 void CPassShadow::Destroy(void)
 {
 	ptrRenderPass.Release();
+
+	ptrMesh.Release();
+	ptrMeshDraw.Release();
 }
 
 void CPassShadow::CreateFrameBuffer(CGfxRenderTexturePtr ptrShadowTexture, CGfxRenderTexturePtr ptrDepthStencilTexture)
