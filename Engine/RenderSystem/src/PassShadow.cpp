@@ -77,7 +77,7 @@ void CPassShadow::Create(GfxPixelFormat shadowPixelFormat, GfxPixelFormat depthP
 		const float depth = 1.0f;
 		const float color[] = { 0.0f, 0.0f, 0.0f, 0.0f };
 
-		ptrRenderPass = GfxRenderer()->NewRenderPass(HashValue("PassShadow"), numAttachments, numSubpasses);
+		ptrRenderPass = GfxRenderer()->NewRenderPass(HashValue("Shadow"), numAttachments, numSubpasses);
 		ptrRenderPass->SetColorAttachment(0, shadowPixelFormat, 1, false, true, color[0], color[1], color[2], color[3]);
 		ptrRenderPass->SetDepthStencilAttachment(1, depthPixelFormat, 1, true, true, depth, stencil);
 		ptrRenderPass->SetSubpassOutputColorReference(0, 0);

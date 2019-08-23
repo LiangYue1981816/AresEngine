@@ -45,7 +45,7 @@ void CPassForwardLighting::Create(GfxPixelFormat colorPixelFormat, GfxPixelForma
 	const float depth = 1.0f;
 	const float color[] = { 0.1f, 0.1f, 0.1f, 0.0f };
 
-	ptrRenderPass = GfxRenderer()->NewRenderPass(HashValue("PassForwardLighting"), numAttachments, numSubpasses);
+	ptrRenderPass = GfxRenderer()->NewRenderPass(HashValue("ForwardLighting"), numAttachments, numSubpasses);
 	ptrRenderPass->SetColorAttachment(0, colorPixelFormat, samples, false, true, color[0], color[1], color[2], color[3]);
 	ptrRenderPass->SetDepthStencilAttachment(1, depthPixelFormat, samples, true, true, depth, stencil);
 	ptrRenderPass->SetSubpassOutputColorReference(0, 0);
