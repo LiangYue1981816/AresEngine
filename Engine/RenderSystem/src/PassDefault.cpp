@@ -35,7 +35,7 @@ CPassDefault::~CPassDefault(void)
 	m_ptrMainCommandBuffer[2]->Clearup();
 }
 
-void CPassDefault::CreateRenderPass(const char* szName, GfxPixelFormat colorPixelFormat, GfxPixelFormat depthPixelFormat, int samples)
+void CPassDefault::Create(const char* szName, GfxPixelFormat colorPixelFormat, GfxPixelFormat depthPixelFormat, int samples)
 {
 	const int numSubpasses = 1;
 	const int numAttachments = 2;
@@ -52,7 +52,7 @@ void CPassDefault::CreateRenderPass(const char* szName, GfxPixelFormat colorPixe
 	ptrRenderPass->Create();
 }
 
-void CPassDefault::DestroyRenderPass(void)
+void CPassDefault::Destroy(void)
 {
 	ptrRenderPass.Release();
 }

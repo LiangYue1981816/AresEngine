@@ -14,8 +14,8 @@ private:
 
 
 private:
-	static void CreateRenderPass(const char* szName, GfxPixelFormat shadowPixelFormat, GfxPixelFormat depthPixelFormat);
-	static void DestroyRenderPass(void);
+	static void Create(const char* szName, GfxPixelFormat shadowPixelFormat, GfxPixelFormat depthPixelFormat);
+	static void Destroy(void);
 
 public:
 	void CreateFrameBuffer(CGfxRenderTexturePtr ptrShadowTexture, CGfxRenderTexturePtr ptrDepthStencilTexture);

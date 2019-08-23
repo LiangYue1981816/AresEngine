@@ -36,7 +36,7 @@ CPassForwardLighting::~CPassForwardLighting(void)
 	m_ptrMainCommandBuffer[2]->Clearup();
 }
 
-void CPassForwardLighting::CreateRenderPass(const char* szName, GfxPixelFormat colorPixelFormat, GfxPixelFormat depthPixelFormat, int samples)
+void CPassForwardLighting::Create(const char* szName, GfxPixelFormat colorPixelFormat, GfxPixelFormat depthPixelFormat, int samples)
 {
 	const int numSubpasses = 1;
 	const int numAttachments = 2;
@@ -53,7 +53,7 @@ void CPassForwardLighting::CreateRenderPass(const char* szName, GfxPixelFormat c
 	ptrRenderPass->Create();
 }
 
-void CPassForwardLighting::DestroyRenderPass(void)
+void CPassForwardLighting::Destroy(void)
 {
 	ptrRenderPass.Release();
 }

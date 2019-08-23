@@ -65,7 +65,7 @@ CPassShadow::~CPassShadow(void)
 	delete m_pShadowCameraUniform[3];
 }
 
-void CPassShadow::CreateRenderPass(const char* szName, GfxPixelFormat shadowPixelFormat, GfxPixelFormat depthPixelFormat)
+void CPassShadow::Create(const char* szName, GfxPixelFormat shadowPixelFormat, GfxPixelFormat depthPixelFormat)
 {
 	const int numSubpasses = 1;
 	const int numAttachments = 2;
@@ -82,7 +82,7 @@ void CPassShadow::CreateRenderPass(const char* szName, GfxPixelFormat shadowPixe
 	ptrRenderPass->Create();
 }
 
-void CPassShadow::DestroyRenderPass(void)
+void CPassShadow::Destroy(void)
 {
 	ptrRenderPass.Release();
 }

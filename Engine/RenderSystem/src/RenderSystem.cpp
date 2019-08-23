@@ -67,16 +67,16 @@ CGfxUniformEngine* CRenderSystem::GetEngineUniform(void) const
 
 void CRenderSystem::CreateRenderPass(void) const
 {
-	CPassDefault::CreateRenderPass("Default", GFX_PIXELFORMAT_BGRA8_UNORM_PACK8, GFX_PIXELFORMAT_D32_SFLOAT_PACK32, 1);
-	CPassForwardLighting::CreateRenderPass("ForwardLighting", GFX_PIXELFORMAT_BGRA8_UNORM_PACK8, GFX_PIXELFORMAT_D32_SFLOAT_PACK32, 1);
-	CPassShadow::CreateRenderPass("Shadow", GFX_PIXELFORMAT_BGRA8_UNORM_PACK8, GFX_PIXELFORMAT_D32_SFLOAT_PACK32);
+	CPassDefault::Create("Default", GFX_PIXELFORMAT_BGRA8_UNORM_PACK8, GFX_PIXELFORMAT_D32_SFLOAT_PACK32, 1);
+	CPassForwardLighting::Create("ForwardLighting", GFX_PIXELFORMAT_BGRA8_UNORM_PACK8, GFX_PIXELFORMAT_D32_SFLOAT_PACK32, 1);
+	CPassShadow::Create("Shadow", GFX_PIXELFORMAT_BGRA8_UNORM_PACK8, GFX_PIXELFORMAT_D32_SFLOAT_PACK32);
 }
 
 void CRenderSystem::DestroyRenderPass(void) const
 {
-	CPassDefault::DestroyRenderPass();
-	CPassForwardLighting::DestroyRenderPass();
-	CPassShadow::DestroyRenderPass();
+	CPassDefault::Destroy();
+	CPassForwardLighting::Destroy();
+	CPassShadow::Destroy();
 }
 
 void CRenderSystem::SetTime(float t, float dt)
