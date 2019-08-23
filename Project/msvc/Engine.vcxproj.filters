@@ -1563,6 +1563,9 @@
     <ClInclude Include="..\..\Engine\RenderSystem\include\RenderSystem.h">
       <Filter>Engine\RenderSystem\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Engine\RenderSystem\include\PassShadowBlur.h">
+      <Filter>Engine\RenderSystem\Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Engine\ThirdParty\eastl\source\allocator_eastl.cpp">
@@ -2259,6 +2262,9 @@
       <Filter>Engine\RenderSystem\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\RenderSystem\src\CameraRender.cpp">
+      <Filter>Engine\RenderSystem\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\RenderSystem\src\PassShadowBlur.cpp">
       <Filter>Engine\RenderSystem\Source Files</Filter>
     </ClCompile>
   </ItemGroup>

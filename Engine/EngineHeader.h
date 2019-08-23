@@ -18,6 +18,7 @@
 #include "RenderSystem/include/PassDefault.h"
 #include "RenderSystem/include/PassForwardLighting.h"
 #include "RenderSystem/include/PassShadow.h"
+#include "RenderSystem/include/PassShadowBlur.h"
 #include "RenderSystem/include/RenderSystem.h"
 
 #include "Engine/include/Engine.h"

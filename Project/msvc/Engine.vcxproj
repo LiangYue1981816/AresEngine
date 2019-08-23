@@ -432,6 +432,7 @@
     <ClInclude Include="..\..\Engine\RenderSystem\include\PassDefault.h" />
     <ClInclude Include="..\..\Engine\RenderSystem\include\PassForwardLighting.h" />
     <ClInclude Include="..\..\Engine\RenderSystem\include\PassShadow.h" />
+    <ClInclude Include="..\..\Engine\RenderSystem\include\PassShadowBlur.h" />
     <ClInclude Include="..\..\Engine\RenderSystem\include\RenderSystem.h" />
     <ClInclude Include="..\..\Engine\Resource\include\ResourceLoader.h" />
     <ClInclude Include="..\..\Engine\SceneHeader.h" />
@@ -773,6 +774,7 @@
     <ClCompile Include="..\..\Engine\RenderSystem\src\PassDefault.cpp" />
     <ClCompile Include="..\..\Engine\RenderSystem\src\PassForwardLighting.cpp" />
     <ClCompile Include="..\..\Engine\RenderSystem\src\PassShadow.cpp" />
+    <ClCompile Include="..\..\Engine\RenderSystem\src\PassShadowBlur.cpp" />
     <ClCompile Include="..\..\Engine\RenderSystem\src\RenderSystem.cpp" />
     <ClCompile Include="..\..\Engine\Resource\src\ResourceLoader.cpp" />
     <ClCompile Include="..\..\Engine\Resource\src\ResourceLoaderMaterial.cpp" />

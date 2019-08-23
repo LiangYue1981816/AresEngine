@@ -5,7 +5,14 @@ static CGfxMeshPtr ptrMesh;
 static CGfxMeshDrawPtr ptrMeshDraw;
 static CGfxRenderPassPtr ptrRenderPass;
 
-CPassShadow::CPassShadow(CCamera* pCamera, CRenderSystem* pRenderSystem)
+
+
+/*
+static CGfxMeshPtr ptrMesh;
+static CGfxMeshDrawPtr ptrMeshDraw;
+static CGfxRenderPassPtr ptrRenderPass;
+
+CPassShadowBlur::CPassShadowBlur(CCamera* pCamera, CRenderSystem* pRenderSystem)
 	: m_pCamera(pCamera)
 	, m_pRenderSystem(pRenderSystem)
 	, m_pShadowCamera{ nullptr }
@@ -45,7 +52,7 @@ CPassShadow::CPassShadow(CCamera* pCamera, CRenderSystem* pRenderSystem)
 	}
 }
 
-CPassShadow::~CPassShadow(void)
+CPassShadowBlur::~CPassShadowBlur(void)
 {
 	m_ptrMainCommandBuffer[0]->Clearup();
 	m_ptrMainCommandBuffer[1]->Clearup();
@@ -67,7 +74,7 @@ CPassShadow::~CPassShadow(void)
 	delete m_pShadowCameraUniform[3];
 }
 
-void CPassShadow::Create(GfxPixelFormat shadowPixelFormat, GfxPixelFormat depthPixelFormat)
+void CPassShadowBlur::Create(GfxPixelFormat shadowPixelFormat, GfxPixelFormat depthPixelFormat)
 {
 	{
 		const int numSubpasses = 1;
@@ -104,7 +111,7 @@ void CPassShadow::Create(GfxPixelFormat shadowPixelFormat, GfxPixelFormat depthP
 	}
 }
 
-void CPassShadow::Destroy(void)
+void CPassShadowBlur::Destroy(void)
 {
 	ptrRenderPass.Release();
 
@@ -112,7 +119,7 @@ void CPassShadow::Destroy(void)
 	ptrMeshDraw.Release();
 }
 
-void CPassShadow::CreateFrameBuffer(CGfxRenderTexturePtr ptrShadowTexture, CGfxRenderTexturePtr ptrDepthStencilTexture)
+void CPassShadowBlur::CreateFrameBuffer(CGfxRenderTexturePtr ptrShadowTexture, CGfxRenderTexturePtr ptrDepthStencilTexture)
 {
 	const int numSubpasses = 1;
 	const int numAttachments = 2;
@@ -126,7 +133,7 @@ void CPassShadow::CreateFrameBuffer(CGfxRenderTexturePtr ptrShadowTexture, CGfxR
 	m_ptrFrameBuffer->Create(ptrRenderPass);
 }
 
-const CGfxSemaphore* CPassShadow::Render(CTaskGraph& taskGraph, const CGfxSemaphore* pWaitSemaphore)
+const CGfxSemaphore* CPassShadowBlur::Render(CTaskGraph& taskGraph, const CGfxSemaphore* pWaitSemaphore)
 {
 	// Update
 	const glm::camera mainCamera = m_pCamera->GetCamera()->GetCamera();
@@ -212,3 +219,4 @@ const CGfxSemaphore* CPassShadow::Render(CTaskGraph& taskGraph, const CGfxSemaph
 	GfxRenderer()->Submit(ptrMainCommandBuffer, pWaitSemaphore);
 	return ptrMainCommandBuffer->GetSemaphore();
 }
+*/

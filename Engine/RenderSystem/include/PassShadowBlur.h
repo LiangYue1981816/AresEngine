@@ -2,44 +2,42 @@
 #include "RenderSystem.h"
 
 
-class CALL_API CPassShadow
+class CALL_API CPassShadowBlur
 {
 	friend class CCamera;
 	friend class CRenderSystem;
 
 
 private:
-	CPassShadow(CCamera* pCamera, CRenderSystem* pRenderSystem);
-	virtual ~CPassShadow(void);
+	CPassShadowBlur(CRenderSystem* pRenderSystem);
+	virtual ~CPassShadowBlur(void);
 
 
 private:
-	static void Create(GfxPixelFormat shadowPixelFormat, GfxPixelFormat depthPixelFormat);
+	static void Create(GfxPixelFormat shadowPixelFormat);
 	static void Destroy(void);
 
 public:
-	void CreateFrameBuffer(CGfxRenderTexturePtr ptrShadowTexture, CGfxRenderTexturePtr ptrDepthStencilTexture);
+	void CreateFrameBuffer(CGfxRenderTexturePtr ptrShadowTexture, CGfxRenderTexturePtr ptrShadowBlurTexture);
 
 private:
 	const CGfxSemaphore* Render(CTaskGraph& taskGraph, const CGfxSemaphore* pWaitSemaphore);
 
 
 private:
-	float m_splitFactors[5];
-	CGfxCamera* m_pShadowCamera[4];
-	CGfxRenderQueue* m_pShadowRenderQueue[4];
+	CGfxCamera* m_pCamera;
+	CGfxRenderQueue* m_pRenderQueue;
 
 private:
 	CGfxFrameBufferPtr m_ptrFrameBuffer;
 	CGfxRenderTexturePtr m_ptrShadowTexture;
-	CGfxRenderTexturePtr m_ptrDepthStencilTexture;
+	CGfxRenderTexturePtr m_ptrShadowBlurTexture;
 
 private:
-	CGfxUniformCamera* m_pShadowCameraUniform[4];
-	CGfxDescriptorSetPtr m_ptrDescriptorSetPass[4];
+	CGfxUniformCamera* m_pCameraUniform;
+	CGfxDescriptorSetPtr m_ptrDescriptorSetPass;
 	CGfxCommandBufferPtr m_ptrMainCommandBuffer[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
 
 private:
-	CCamera* m_pCamera;
 	CRenderSystem* m_pRenderSystem;
 };
