@@ -91,7 +91,7 @@ int CVKTexture::GetSamples(void) const
 	return m_samples;
 }
 
-bool CVKTexture::Create(GfxTextureType type, GfxPixelFormat format, int width, int height, int layers, int levels, int samples, VkImageAspectFlags imageAspectFlags, VkImage vkImage)
+bool CVKTexture::Create(GfxTextureType type, GfxPixelFormat format, int width, int height, int layers, int levels, int samples, VkImageAspectFlags imageAspectFlags, VkImage vkImage, VkImageLayout imageLayout)
 {
 	Destroy();
 	{
@@ -104,7 +104,7 @@ bool CVKTexture::Create(GfxTextureType type, GfxPixelFormat format, int width, i
 
 			m_vkImage = vkImage;
 			m_vkImageView = VK_NULL_HANDLE;
-			m_vkImageLayout = VK_IMAGE_LAYOUT_UNDEFINED;
+			m_vkImageLayout = imageLayout;
 			m_vkImageAspectFlags = imageAspectFlags;
 
 			m_type = type;
@@ -134,7 +134,7 @@ bool CVKTexture::Create(GfxTextureType type, GfxPixelFormat format, int width, i
 	return false;
 }
 
-bool CVKTexture::Create(GfxTextureType type, GfxPixelFormat format, int width, int height, int layers, int levels, int samples, VkImageAspectFlags imageAspectFlags, VkImageUsageFlags imageUsageFlags, VkImageTiling imageTiling)
+bool CVKTexture::Create(GfxTextureType type, GfxPixelFormat format, int width, int height, int layers, int levels, int samples, VkImageAspectFlags imageAspectFlags, VkImageUsageFlags imageUsageFlags, VkImageTiling imageTiling, VkImageLayout imageLayout)
 {
 	Destroy();
 	{
@@ -147,7 +147,7 @@ bool CVKTexture::Create(GfxTextureType type, GfxPixelFormat format, int width, i
 
 			m_vkImage = VK_NULL_HANDLE;
 			m_vkImageView = VK_NULL_HANDLE;
-			m_vkImageLayout = VK_IMAGE_LAYOUT_UNDEFINED;
+			m_vkImageLayout = imageLayout;
 			m_vkImageAspectFlags = imageAspectFlags;
 
 			m_type = type;
@@ -176,7 +176,7 @@ bool CVKTexture::Create(GfxTextureType type, GfxPixelFormat format, int width, i
 			imageCreateInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
 			imageCreateInfo.queueFamilyIndexCount = 0;
 			imageCreateInfo.pQueueFamilyIndices = nullptr;
-			imageCreateInfo.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
+			imageCreateInfo.initialLayout = imageLayout;
 			switch (type) {
 			case GFX_TEXTURE_CUBE_MAP: imageCreateInfo.flags = VK_IMAGE_CREATE_CUBE_COMPATIBLE_BIT; break;
 			case GFX_TEXTURE_2D_ARRAY: imageCreateInfo.flags = VK_IMAGE_CREATE_2D_ARRAY_COMPATIBLE_BIT; break;
