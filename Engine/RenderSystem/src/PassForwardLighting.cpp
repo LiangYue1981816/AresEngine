@@ -86,9 +86,10 @@ const CGfxSemaphore* CPassForwardLighting::Render(CTaskGraph& taskGraph, const C
 	m_pRenderSystem->GetEngineUniform()->Apply();
 
 	// Render
-	const CGfxFrameBufferPtr ptrFrameBuffer = m_ptrFrameBuffer[GfxRenderer()->GetSwapChain()->GetFrameIndex()];
-	const CGfxRenderTexturePtr ptrColorTexture = m_ptrColorTexture[GfxRenderer()->GetSwapChain()->GetFrameIndex()];
-	const CGfxRenderTexturePtr ptrDepthStencilTexture = m_ptrDepthStencilTexture[GfxRenderer()->GetSwapChain()->GetFrameIndex()];
+	const int indexFrame = bPresent ? GfxRenderer()->GetSwapChain()->GetFrameIndex() : 0;
+	const CGfxFrameBufferPtr ptrFrameBuffer = m_ptrFrameBuffer[indexFrame];
+	const CGfxRenderTexturePtr ptrColorTexture = m_ptrColorTexture[indexFrame];
+	const CGfxRenderTexturePtr ptrDepthStencilTexture = m_ptrDepthStencilTexture[indexFrame];
 	const CGfxCommandBufferPtr ptrMainCommandBuffer = m_ptrMainCommandBuffer[GfxRenderer()->GetSwapChain()->GetFrameIndex()];
 	{
 		ptrMainCommandBuffer->Clearup();
@@ -102,7 +103,7 @@ const CGfxSemaphore* CPassForwardLighting::Render(CTaskGraph& taskGraph, const C
 				m_pCamera->GetRenderQueue()->CmdDraw(taskGraph, ptrMainCommandBuffer, m_ptrDescriptorSetPass, FORWARD_LIGHTING_PASS_NAME, m_pCamera->GetCamera()->GetScissor(), m_pCamera->GetCamera()->GetViewport(), 0xffffffff);
 			}
 			GfxRenderer()->CmdEndRenderPass(ptrMainCommandBuffer);
-			GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, ptrColorTexture, GFX_IMAGE_LAYOUT_PRESENT_SRC_OPTIMAL);
+			GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, ptrColorTexture, bPresent ? GFX_IMAGE_LAYOUT_PRESENT_SRC_OPTIMAL : GFX_IMAGE_LAYOUT_COLOR_READ_ONLY_OPTIMAL);
 		}
 		GfxRenderer()->EndRecord(ptrMainCommandBuffer);
 	}
