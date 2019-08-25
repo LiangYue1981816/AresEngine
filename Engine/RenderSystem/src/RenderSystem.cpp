@@ -28,6 +28,7 @@ static const ATTRIBUTE instanceAttributes[INSTANCE_ATTRIBUTE_COUNT] = {
 const uint32_t DEFAULT_PASS_NAME = HashValue("Default");
 const uint32_t FORWARD_LIGHTING_PASS_NAME = HashValue("ForwardLighting");
 const uint32_t SHADOW_PASS_NAME = HashValue("Shadow");
+const uint32_t SHADOW_BLUR_PASS_NAME = HashValue("ShadowBlur");
 
 
 CRenderSystem::CRenderSystem(GfxApi api, void* hInstance, void* hWnd, void* hDC, int width, int height, GfxPixelFormat format)
