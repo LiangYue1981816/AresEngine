@@ -18,7 +18,10 @@ private:
 	static void Destroy(void);
 
 public:
-	void CreateFrameBuffer(CGfxRenderTexturePtr ptrShadowTexture, CGfxRenderTexturePtr ptrShadowBlurTexture);
+	void CreateFrameBuffer(CGfxRenderTexturePtr ptrShadowBlurTexture);
+
+public:
+	void SetShadowTexture(CGfxRenderTexturePtr ptrShadowTexture);
 
 private:
 	const CGfxSemaphore* Render(CTaskGraph& taskGraph, const CGfxSemaphore* pWaitSemaphore);
@@ -30,7 +33,6 @@ private:
 
 private:
 	CGfxFrameBufferPtr m_ptrFrameBuffer;
-	CGfxRenderTexturePtr m_ptrShadowTexture;
 	CGfxRenderTexturePtr m_ptrShadowBlurTexture;
 
 private:

@@ -54,17 +54,13 @@ void CPassShadowBlur::Create(GfxPixelFormat shadowPixelFormat)
 {
 	{
 		const int numSubpasses = 1;
-		const int numAttachments = 2;
+		const int numAttachments = 1;
 
-		const int stencil = 0;
-		const float depth = 1.0f;
 		const float color[] = { 0.0f, 0.0f, 0.0f, 0.0f };
 
-		ptrRenderPass = GfxRenderer()->NewRenderPass(HashValue("Shadow"), numAttachments, numSubpasses);
-		ptrRenderPass->SetColorAttachment(0, shadowPixelFormat, 1, false, false, color[0], color[1], color[2], color[3]);
-		ptrRenderPass->SetColorAttachment(1, shadowPixelFormat, 1, false, true, color[0], color[1], color[2], color[3]);
-		ptrRenderPass->SetSubpassInputColorReference(0, 0);
-		ptrRenderPass->SetSubpassOutputColorReference(0, 1);
+		ptrRenderPass = GfxRenderer()->NewRenderPass(SHADOW_BLUR_PASS_NAME, numAttachments, numSubpasses);
+		ptrRenderPass->SetColorAttachment(0, shadowPixelFormat, 1, false, true, color[0], color[1], color[2], color[3]);
+		ptrRenderPass->SetSubpassOutputColorReference(0, 0);
 		ptrRenderPass->Create();
 	}
 
@@ -94,18 +90,23 @@ void CPassShadowBlur::Destroy(void)
 	ptrRenderPass.Release();
 }
 
-void CPassShadowBlur::CreateFrameBuffer(CGfxRenderTexturePtr ptrShadowTexture, CGfxRenderTexturePtr ptrShadowBlurTexture)
+void CPassShadowBlur::CreateFrameBuffer(CGfxRenderTexturePtr ptrShadowBlurTexture)
 {
 	const int numSubpasses = 1;
-	const int numAttachments = 2;
+	const int numAttachments = 1;
 
-	m_ptrShadowTexture = ptrShadowTexture;
 	m_ptrShadowBlurTexture = ptrShadowBlurTexture;
 
 	m_ptrFrameBuffer = GfxRenderer()->NewFrameBuffer(m_ptrShadowBlurTexture->GetWidth(), m_ptrShadowBlurTexture->GetHeight(), numAttachments);
-	m_ptrFrameBuffer->SetAttachmentTexture(0, m_ptrShadowTexture);
-	m_ptrFrameBuffer->SetAttachmentTexture(1, m_ptrShadowBlurTexture);
+	m_ptrFrameBuffer->SetAttachmentTexture(0, m_ptrShadowBlurTexture);
 	m_ptrFrameBuffer->Create(ptrRenderPass);
+}
+
+void CPassShadowBlur::SetShadowTexture(CGfxRenderTexturePtr ptrShadowTexture)
+{
+	CGfxSampler* pSampler = GfxRenderer()->CreateSampler(GFX_FILTER_NEAREST, GFX_FILTER_NEAREST, GFX_SAMPLER_MIPMAP_MODE_NEAREST, GFX_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE);
+	m_ptrDescriptorSetPass->SetRenderTexture(UNIFORM_SHADOWMAP_NAME, ptrShadowTexture, pSampler);
+	m_ptrDescriptorSetPass->Update();
 }
 
 const CGfxSemaphore* CPassShadowBlur::Render(CTaskGraph& taskGraph, const CGfxSemaphore* pWaitSemaphore)
