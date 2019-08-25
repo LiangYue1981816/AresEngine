@@ -84,7 +84,8 @@ highp float ShadowValue(highp vec3 worldPosition, highp sampler2D shadowmap)
 
 	highp float bias[4] = float[](0.00015, 0.0003, 0.0006, 0.010);
 	highp float curDepth = ((mainShadowViewMatrix(indexLevel) * vec4(worldPosition, 1.0)).z - mainShadowZNear(indexLevel)) / (mainShadowZFar(indexLevel) - mainShadowZNear(indexLevel)) + bias[indexLevel];
-	//*
+
+	/*
 	highp float visibility = 1.0;
 	highp float resolution[4] = float[](4000.0, 6000.0, 8000.0, 10000.0);
 	for (int i = 0; i < 4; i++){
@@ -94,7 +95,7 @@ highp float ShadowValue(highp vec3 worldPosition, highp sampler2D shadowmap)
 	}
 	/*/
 	highp float shadowDepth = LinearShadowDepth(shadowmap, projectCoord.xy, 2048.0);
-	highp float visibility = exp(200.0 * (curDepth - shadowDepth));
+	highp float visibility = exp(300.0 * (curDepth - shadowDepth));
 	//*/
 
 	return clamp(visibility, 0.0, 1.0);

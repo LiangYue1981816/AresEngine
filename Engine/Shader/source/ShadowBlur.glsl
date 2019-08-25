@@ -39,6 +39,7 @@ USE_SHADOWMAP_UNIFORM;
 
 void main()
 {
-	outFragColor = texture(texShadowMap, inTexcoord);
+	highp float depth = LinearShadowDepth(texShadowMap, inTexcoord, 2048.0);
+	outFragColor = EncodeFloat(depth);
 }
 #endif
