@@ -3,7 +3,6 @@
 
 static CGfxMeshPtr ptrMesh;
 static CGfxMeshDrawPtr ptrMeshDraw;
-static CGfxMaterialPtr ptrMaterial;
 static CGfxRenderPassPtr ptrRenderPass;
 
 
@@ -15,7 +14,9 @@ CPassShadowBlur::CPassShadowBlur(CRenderSystem* pRenderSystem)
 	{
 		const glm::mat4 matrix;
 		m_pRenderQueue = new CGfxRenderQueue;
-		m_pRenderQueue->Add(0, ptrMaterial, ptrMeshDraw, (const uint8_t*)&matrix, sizeof(matrix));
+		m_pRenderQueue->Begin();
+		m_pRenderQueue->Add(0, GfxRenderer()->NewMaterial("ShadowBlur.material"), ptrMeshDraw, (const uint8_t*)&matrix, sizeof(matrix));
+		m_pRenderQueue->End();
 	}
 
 	// CommandBuffer
@@ -78,8 +79,9 @@ void CPassShadowBlur::Create(GfxPixelFormat shadowPixelFormat)
 		ptrMesh->CreateDraw(0, aabb, 0, 0, 6);
 		ptrMesh->CreateIndexBuffer(GFX_INDEX_UNSIGNED_INT, sizeof(meshIndices), false, (const void*)meshIndices);
 		ptrMesh->CreateVertexBuffer(VERTEX_ATTRIBUTE_POSITION | VERTEX_ATTRIBUTE_TEXCOORD0, 0, sizeof(meshVertices), false, (const void*)meshVertices);
+
 		ptrMeshDraw = GfxRenderer()->NewMeshDraw(HashValue("PassShadowBlur_MeshDraw"), ptrMesh, 0, INSTANCE_FORMAT_TRANSFORM);
-		ptrMaterial = GfxRenderer()->NewMaterial("ShadowBlur.material");
+		ptrMeshDraw->SetMask(0xffffffff);
 	}
 }
 
@@ -87,7 +89,6 @@ void CPassShadowBlur::Destroy(void)
 {
 	ptrMesh.Release();
 	ptrMeshDraw.Release();
-	ptrMaterial.Release();
 	ptrRenderPass.Release();
 }
 
