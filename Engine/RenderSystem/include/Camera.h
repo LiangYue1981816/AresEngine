@@ -25,6 +25,7 @@ public:
 	CPassDefault* GetPassDefault(void) const;
 	CPassForwardLighting* GetPassForwardLighting(void) const;
 	CPassShadow* GetPassShadow(void) const;
+	CPassShadowBlur* GetPassShadowBlur(void) const;
 
 public:
 	void SetScissor(float x, float y, float width, float height);

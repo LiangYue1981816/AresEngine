@@ -63,6 +63,11 @@ CPassShadow* CCamera::GetPassShadow(void) const
 	return m_pPassShadow;
 }
 
+CPassShadowBlur* CCamera::GetPassShadowBlur(void) const
+{
+	return m_pPassShadowBlur;
+}
+
 void CCamera::SetScissor(float x, float y, float width, float height)
 {
 	m_pCamera->SetScissor(x, y, width, height);
