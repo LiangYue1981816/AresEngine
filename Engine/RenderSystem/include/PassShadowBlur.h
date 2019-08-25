@@ -21,7 +21,7 @@ public:
 	void CreateFrameBuffer(CGfxRenderTexturePtr ptrShadowBlurTexture);
 
 public:
-	void SetShadowTexture(CGfxRenderTexturePtr ptrShadowTexture);
+	void SetInputShadowTexture(CGfxRenderTexturePtr ptrShadowTexture);
 
 private:
 	const CGfxSemaphore* Render(CTaskGraph& taskGraph, const CGfxSemaphore* pWaitSemaphore);

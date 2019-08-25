@@ -72,7 +72,7 @@ void CPassForwardLighting::CreateFrameBuffer(int indexFrame, CGfxRenderTexturePt
 	m_ptrFrameBuffer[indexFrame]->Create(ptrRenderPass);
 }
 
-void CPassForwardLighting::SetShadowTexture(CGfxRenderTexturePtr ptrShadowTexture)
+void CPassForwardLighting::SetInputShadowTexture(CGfxRenderTexturePtr ptrShadowTexture)
 {
 	CGfxSampler* pSampler = GfxRenderer()->CreateSampler(GFX_FILTER_NEAREST, GFX_FILTER_NEAREST, GFX_SAMPLER_MIPMAP_MODE_NEAREST, GFX_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE);
 	m_ptrDescriptorSetPass->SetRenderTexture(UNIFORM_SHADOWMAP_NAME, ptrShadowTexture, pSampler);
