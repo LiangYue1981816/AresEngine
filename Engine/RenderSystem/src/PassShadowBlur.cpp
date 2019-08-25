@@ -3,6 +3,7 @@
 
 static CGfxMeshPtr ptrMesh;
 static CGfxMeshDrawPtr ptrMeshDraw;
+static CGfxMaterialPtr ptrMaterial;
 static CGfxRenderPassPtr ptrRenderPass;
 
 
@@ -71,12 +72,12 @@ void CPassShadowBlur::Create(GfxPixelFormat shadowPixelFormat)
 		const int meshIndices[] = { 0, 1, 2, 2, 3, 0 };
 		const Vertex meshVertices[] = { {-1.0f, -1.0f, 0.0f, 0.0f, 0.0f}, {1.0f, -1.0f, 0.0f, 1.0f, 0.0f}, {1.0f, 1.0f, 0.0f, 1.0f, 1.0f}, {-1.0f, 1.0f, 0.0f, 0.0f, 1.0f} };
 
-		ptrMesh = GfxRenderer()->NewMesh(HashValue("PassShadow_Mesh"));
+		ptrMesh = GfxRenderer()->NewMesh(HashValue("PassShadowBlur_Mesh"));
 		ptrMesh->CreateDraw(0, aabb, 0, 0, 6);
 		ptrMesh->CreateIndexBuffer(GFX_INDEX_UNSIGNED_INT, sizeof(meshIndices), false, (const void*)meshIndices);
 		ptrMesh->CreateVertexBuffer(VERTEX_ATTRIBUTE_POSITION | VERTEX_ATTRIBUTE_TEXCOORD0, 0, sizeof(meshVertices), false, (const void*)meshVertices);
-
-		ptrMeshDraw = GfxRenderer()->NewMeshDraw(HashValue("PassShadow_MeshDraw"), ptrMesh, 0, INSTANCE_FORMAT_TRANSFORM);
+		ptrMeshDraw = GfxRenderer()->NewMeshDraw(HashValue("PassShadowBlur_MeshDraw"), ptrMesh, 0, INSTANCE_FORMAT_TRANSFORM);
+		ptrMaterial = GfxRenderer()->NewMaterial("ShadowBlur.material");
 	}
 }
 
@@ -84,6 +85,7 @@ void CPassShadowBlur::Destroy(void)
 {
 	ptrMesh.Release();
 	ptrMeshDraw.Release();
+	ptrMaterial.Release();
 	ptrRenderPass.Release();
 }
 
@@ -108,10 +110,10 @@ void CPassShadowBlur::SetShadowTexture(CGfxRenderTexturePtr ptrShadowTexture)
 
 const CGfxSemaphore* CPassShadowBlur::Render(CTaskGraph& taskGraph, const CGfxSemaphore* pWaitSemaphore)
 {
-	float width = 1.0f * m_ptrShadowBlurTexture->GetWidth();
-	float height = 1.0f * m_ptrShadowBlurTexture->GetHeight();
+	float texWidth = 1.0f * m_ptrShadowBlurTexture->GetWidth();
+	float texHeight = 1.0f * m_ptrShadowBlurTexture->GetHeight();
 
-	m_pCameraUniform->SetOrtho(-width / 2.0f, width / 2.0f, -height / 2.0f, height / 2.0f, -1.0f, 1.0f);
+	m_pCameraUniform->SetOrtho(-texWidth / 2.0f, texWidth / 2.0f, -texHeight / 2.0f, texHeight / 2.0f, -1.0f, 1.0f);
 	m_pCameraUniform->SetLookat(0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
 
 	return nullptr;
