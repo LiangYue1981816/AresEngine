@@ -35,6 +35,9 @@ CPassShadowBlur::CPassShadowBlur(CRenderSystem* pRenderSystem)
 		ptrDescriptorLayout->Create();
 
 		m_pCameraUniform = new CGfxUniformCamera;
+		m_pCameraUniform->SetOrtho(-1.0f, 1.0f, 1.0f, -1.0f, -1.0f, 1.0f);
+		m_pCameraUniform->SetLookat(0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
+
 		m_ptrDescriptorSetPass = GfxRenderer()->NewDescriptorSet(SHADOW_BLUR_PASS_NAME, ptrDescriptorLayout);
 		m_ptrDescriptorSetPass->SetUniformBuffer(UNIFORM_ENGINE_NAME, m_pRenderSystem->GetEngineUniform()->GetUniformBuffer(), 0, m_pRenderSystem->GetEngineUniform()->GetUniformBuffer()->GetSize());
 		m_ptrDescriptorSetPass->SetUniformBuffer(UNIFORM_CAMERA_NAME, m_pCameraUniform->GetUniformBuffer(), 0, m_pCameraUniform->GetUniformBuffer()->GetSize());
@@ -114,12 +117,7 @@ void CPassShadowBlur::SetInputShadowTexture(CGfxRenderTexturePtr ptrShadowTextur
 
 const CGfxSemaphore* CPassShadowBlur::Render(CTaskGraph& taskGraph, const CGfxSemaphore* pWaitSemaphore)
 {
-	const float w = m_ptrShadowBlurTexture->GetWidth();
-	const float h = m_ptrShadowBlurTexture->GetHeight();
-
 	// Update
-	m_pCameraUniform->SetOrtho(-w / 2.0f, w / 2.0f, -h / 2.0f, h / 2.0f, -1.0f, 1.0f);
-	m_pCameraUniform->SetLookat(0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
 	m_pCameraUniform->Apply();
 	m_pRenderSystem->GetEngineUniform()->Apply();
 
@@ -133,15 +131,20 @@ const CGfxSemaphore* CPassShadowBlur::Render(CTaskGraph& taskGraph, const CGfxSe
 			GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, m_ptrShadowBlurTexture, GFX_IMAGE_LAYOUT_GENERAL);
 			GfxRenderer()->CmdBeginRenderPass(ptrMainCommandBuffer, m_ptrFrameBuffer, ptrRenderPass);
 			{
-				const glm::vec4 area[4] = {
+				const float w = m_ptrShadowBlurTexture->GetWidth();
+				const float h = m_ptrShadowBlurTexture->GetHeight();
+
+				const glm::vec4 scissor[4] = {
 					glm::vec4(0.0f, 0.0f, 0.5f, 0.5f) * glm::vec4(w, h, w, h),
 					glm::vec4(0.5f, 0.0f, 0.5f, 0.5f) * glm::vec4(w, h, w, h),
 					glm::vec4(0.0f, 0.5f, 0.5f, 0.5f) * glm::vec4(w, h, w, h),
 					glm::vec4(0.5f, 0.5f, 0.5f, 0.5f) * glm::vec4(w, h, w, h),
 				};
 
+				const glm::vec4 viewport = glm::vec4(0.0, 0.0, w, h);
+
 				for (int indexLevel = 0; indexLevel < 4; indexLevel++) {
-					m_pRenderQueue->CmdDraw(taskGraph, ptrMainCommandBuffer, m_ptrDescriptorSetPass, SHADOW_BLUR_PASS_NAME, area[indexLevel], area[indexLevel], 0xffffffff);
+					m_pRenderQueue->CmdDraw(taskGraph, ptrMainCommandBuffer, m_ptrDescriptorSetPass, SHADOW_BLUR_PASS_NAME, scissor[indexLevel], viewport, 0xffffffff);
 				}
 			}
 			GfxRenderer()->CmdEndRenderPass(ptrMainCommandBuffer);

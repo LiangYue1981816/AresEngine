@@ -13,6 +13,9 @@
 		  		<DepthTest enable="false" compare_op="GFX_COMPAREOP_LESS" />
 		  		<DepthWrite enable="false" />
 		  	</Depth>
+		  	<Rasterization>
+		  		<Cull enable="false" cull_face="GFX_BACK" front_face="GFX_CCW" />
+		  	</Rasterization>
 		  </State>
 		</Pipeline>
 	</Pass>
