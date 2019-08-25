@@ -13,7 +13,9 @@ CPassShadowBlur::CPassShadowBlur(CRenderSystem* pRenderSystem)
 {
 	// RenderQueue
 	{
+		const glm::mat4 matrix;
 		m_pRenderQueue = new CGfxRenderQueue;
+		m_pRenderQueue->Add(0, ptrMaterial, ptrMeshDraw, (const uint8_t*)&matrix, sizeof(matrix));
 	}
 
 	// CommandBuffer
