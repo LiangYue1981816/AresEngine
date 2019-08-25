@@ -15,8 +15,12 @@ layout (location = 0) out highp vec4 outPosition;
 void main()
 {
 	highp mat4 worldMatrix = mat4(inInstanceTransformMatrixCol0, inInstanceTransformMatrixCol1, inInstanceTransformMatrixCol2, inInstanceTransformMatrixCol3);
-	outPosition = cameraViewMatrix * worldMatrix * vec4(inPosition.xyz, 1.0);
-	gl_Position = cameraProjectionMatrix * outPosition;
+
+//	outPosition = cameraViewMatrix * worldMatrix * vec4(inPosition.xyz, 1.0);
+//	gl_Position = cameraProjectionMatrix * outPosition;
+
+	outPosition = cameraProjectionViewMatrix * worldMatrix * vec4(inPosition.xyz, 1.0);
+	gl_Position = outPosition;
 }
 #endif
 
@@ -35,6 +39,7 @@ layout (location = 0) out mediump vec4 outFragColor;
 
 void main()
 {
-	outFragColor = EncodeFloat((inPosition.z - cameraZNear) / (cameraZFar - cameraZNear));
+//	outFragColor = EncodeFloat((inPosition.z - cameraZNear) / (cameraZFar - cameraZNear));
+	outFragColor = EncodeFloat(inPosition.z);
 }
 #endif
