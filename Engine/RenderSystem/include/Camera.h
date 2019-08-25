@@ -8,6 +8,7 @@ class CALL_API CCamera
 	friend class CPassDefault;
 	friend class CPassForwardLighting;
 	friend class CPassShadow;
+	friend class CPassShadowBlur;
 
 
 public:
@@ -47,4 +48,5 @@ private:
 	CPassDefault* m_pPassDefault;
 	CPassForwardLighting* m_pPassForwardLighting;
 	CPassShadow* m_pPassShadow;
+	CPassShadowBlur* m_pPassShadowBlur;
 };

@@ -112,11 +112,41 @@ void CPassShadowBlur::SetShadowTexture(CGfxRenderTexturePtr ptrShadowTexture)
 
 const CGfxSemaphore* CPassShadowBlur::Render(CTaskGraph& taskGraph, const CGfxSemaphore* pWaitSemaphore)
 {
-	float texWidth = 1.0f * m_ptrShadowBlurTexture->GetWidth();
-	float texHeight = 1.0f * m_ptrShadowBlurTexture->GetHeight();
+	const float w = m_ptrShadowBlurTexture->GetWidth();
+	const float h = m_ptrShadowBlurTexture->GetHeight();
 
-	m_pCameraUniform->SetOrtho(-texWidth / 2.0f, texWidth / 2.0f, -texHeight / 2.0f, texHeight / 2.0f, -1.0f, 1.0f);
+	// Update
+	m_pCameraUniform->SetOrtho(-w / 2.0f, w / 2.0f, -h / 2.0f, h / 2.0f, -1.0f, 1.0f);
 	m_pCameraUniform->SetLookat(0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
+	m_pCameraUniform->Apply();
+	m_pRenderSystem->GetEngineUniform()->Apply();
 
-	return nullptr;
+	// Render
+	const CGfxCommandBufferPtr ptrMainCommandBuffer = m_ptrMainCommandBuffer[GfxRenderer()->GetSwapChain()->GetFrameIndex()];
+	{
+		ptrMainCommandBuffer->Clearup();
+
+		GfxRenderer()->BeginRecord(ptrMainCommandBuffer);
+		{
+			GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, m_ptrShadowBlurTexture, GFX_IMAGE_LAYOUT_GENERAL);
+			GfxRenderer()->CmdBeginRenderPass(ptrMainCommandBuffer, m_ptrFrameBuffer, ptrRenderPass);
+			{
+				const glm::vec4 area[4] = {
+					glm::vec4(0.0f, 0.0f, 0.5f, 0.5f) * glm::vec4(w, h, w, h),
+					glm::vec4(0.5f, 0.0f, 0.5f, 0.5f) * glm::vec4(w, h, w, h),
+					glm::vec4(0.0f, 0.5f, 0.5f, 0.5f) * glm::vec4(w, h, w, h),
+					glm::vec4(0.5f, 0.5f, 0.5f, 0.5f) * glm::vec4(w, h, w, h),
+				};
+
+				for (int indexLevel = 0; indexLevel < 4; indexLevel++) {
+					m_pRenderQueue->CmdDraw(taskGraph, ptrMainCommandBuffer, m_ptrDescriptorSetPass, SHADOW_BLUR_PASS_NAME, area[indexLevel], area[indexLevel], 0xffffffff);
+				}
+			}
+			GfxRenderer()->CmdEndRenderPass(ptrMainCommandBuffer);
+			GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, m_ptrShadowBlurTexture, GFX_IMAGE_LAYOUT_COLOR_READ_ONLY_OPTIMAL);
+		}
+		GfxRenderer()->EndRecord(ptrMainCommandBuffer);
+	}
+	GfxRenderer()->Submit(ptrMainCommandBuffer, pWaitSemaphore);
+	return ptrMainCommandBuffer->GetSemaphore();
 }
