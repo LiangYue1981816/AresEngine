@@ -8,7 +8,7 @@ CPassShadow::CPassShadow(CCamera* pCamera, CRenderSystem* pRenderSystem)
 	, m_pRenderSystem(pRenderSystem)
 	, m_pShadowCamera{ nullptr }
 	, m_pShadowRenderQueue{ nullptr }
-	, m_splitFactors{ 0.0f, 0.05f, 0.15f, 0.5f, 1.0f }
+	, m_splitFactors{ 0.0f, 0.05f, 0.20f, 0.45f, 1.0f }
 //	, m_splitFactors{ 0.0f, exp(-3.0f), exp(-2.0f), exp(-1.0f), exp(-0.0f) }
 {
 	// Camera
