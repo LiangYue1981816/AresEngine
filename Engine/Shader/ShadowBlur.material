@@ -9,12 +9,8 @@
 		  <Fragment file_name="ShadowBlur.glsl">
 		  </Fragment>
 		  <State>
-		  	<Depth>
-		  		<DepthTest enable="false" compare_op="GFX_COMPAREOP_LESS" />
-		  		<DepthWrite enable="false" />
-		  	</Depth>
 		  	<Rasterization>
-		  		<Cull enable="false" cull_face="GFX_BACK" front_face="GFX_CCW" />
+		  		<Cull enable="false" cull_face="GFX_FRONT_AND_BACK" front_face="GFX_CCW" />
 		  	</Rasterization>
 		  </State>
 		</Pipeline>
