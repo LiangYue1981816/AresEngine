@@ -31,6 +31,7 @@ CPassShadowBlur::CPassShadowBlur(CRenderSystem* pRenderSystem)
 		CGfxDescriptorLayoutPtr ptrDescriptorLayout = GfxRenderer()->NewDescriptorLayout(DESCRIPTOR_SET_PASS);
 		ptrDescriptorLayout->SetUniformBlockBinding(UNIFORM_ENGINE_NAME, DESCRIPTOR_BIND_ENGINE);
 		ptrDescriptorLayout->SetUniformBlockBinding(UNIFORM_CAMERA_NAME, DESCRIPTOR_BIND_CAMERA);
+		ptrDescriptorLayout->SetSampledImageBinding(UNIFORM_SHADOWMAP_NAME, DESCRIPTOR_BIND_SHADOWMAP);
 		ptrDescriptorLayout->Create();
 
 		m_pCameraUniform = new CGfxUniformCamera;
