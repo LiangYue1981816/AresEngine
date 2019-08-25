@@ -120,7 +120,7 @@ void main()
 	mediump float ao = 1.0;
 #endif
 
-	mediump float shadow = ShadowValue(inPosition, texShadowMap);
+	mediump float shadow = ShadowValueESM(inPosition, texShadowMap);
 
 	mediump vec3 pointLightDirection = mainPointLightPosition - inPosition;
 	mediump vec3 pointLightColor = mainPointLightColor * LightingAttenuation(length(pointLightDirection));
