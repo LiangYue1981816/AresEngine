@@ -6,13 +6,18 @@ precision mediump float;
 
 
 // VERTEX_ATTRIBUTE_POSITION;
+// VERTEX_ATTRIBUTE_TEXCOORD0;
 // INSTANCE_ATTRIBUTE_TRANSFORM;
+
+// Output
+layout (location = 0) out mediump vec2 outTexcoord;
 
 
 void main()
 {
 	highp mat4 worldMatrix = mat4(inInstanceTransformMatrixCol0, inInstanceTransformMatrixCol1, inInstanceTransformMatrixCol2, inInstanceTransformMatrixCol3);
 	gl_Position = cameraProjectionViewMatrix * worldMatrix * vec4(inPosition.xyz, 1.0);
+	outTexcoord = inTexcoord0;
 }
 #endif
 
@@ -21,6 +26,9 @@ precision mediump float;
 #include "engine.inc"
 #include "shadow.inc"
 
+
+// Input
+layout (location = 0) in mediump vec2 inTexcoord;
 
 // Output
 layout (location = 0) out mediump vec4 outFragColor;
@@ -31,6 +39,6 @@ USE_SHADOWMAP_UNIFORM;
 
 void main()
 {
-	outFragColor = vec4(0.0, 1.0, 0.0, 1.0);
+	outFragColor = texture(texShadowMap, inTexcoord);
 }
 #endif
