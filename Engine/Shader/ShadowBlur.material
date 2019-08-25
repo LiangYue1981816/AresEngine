@@ -1,5 +1,5 @@
 <Material>
-	<Pass name="Shadow">
+	<Pass name="ShadowBlur">
 		<Pipeline render_pass="ShadowBlur">
 		  <Vertex file_name="ShadowBlur.glsl">
 		    <Define name="VERTEX_ATTRIBUTE_POSITION" />
