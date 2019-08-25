@@ -28,7 +28,6 @@ private:
 
 
 private:
-	CGfxCamera* m_pCamera;
 	CGfxRenderQueue* m_pRenderQueue;
 
 private:

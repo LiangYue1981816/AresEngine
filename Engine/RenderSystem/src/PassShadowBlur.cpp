@@ -7,13 +7,11 @@ static CGfxRenderPassPtr ptrRenderPass;
 
 
 CPassShadowBlur::CPassShadowBlur(CRenderSystem* pRenderSystem)
-	: m_pCamera(nullptr)
-	, m_pRenderQueue(nullptr)
+	: m_pRenderQueue(nullptr)
 	, m_pRenderSystem(pRenderSystem)
 {
-	// Camera
+	// RenderQueue
 	{
-		m_pCamera = new CGfxCamera;
 		m_pRenderQueue = new CGfxRenderQueue;
 	}
 
@@ -45,7 +43,6 @@ CPassShadowBlur::~CPassShadowBlur(void)
 	m_ptrMainCommandBuffer[1]->Clearup();
 	m_ptrMainCommandBuffer[2]->Clearup();
 
-	delete m_pCamera;
 	delete m_pRenderQueue;
 	delete m_pCameraUniform;
 }
@@ -111,5 +108,11 @@ void CPassShadowBlur::SetShadowTexture(CGfxRenderTexturePtr ptrShadowTexture)
 
 const CGfxSemaphore* CPassShadowBlur::Render(CTaskGraph& taskGraph, const CGfxSemaphore* pWaitSemaphore)
 {
+	float width = 1.0f * m_ptrShadowBlurTexture->GetWidth();
+	float height = 1.0f * m_ptrShadowBlurTexture->GetHeight();
+
+	m_pCameraUniform->SetOrtho(-width / 2.0f, width / 2.0f, -height / 2.0f, height / 2.0f, -1.0f, 1.0f);
+	m_pCameraUniform->SetLookat(0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
+
 	return nullptr;
 }
