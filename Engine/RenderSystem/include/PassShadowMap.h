@@ -9,7 +9,7 @@ class CALL_API CPassShadowMap
 
 
 private:
-	CPassShadowMap(CCamera* pCamera, CRenderSystem* pRenderSystem);
+	CPassShadowMap(CRenderSystem* pRenderSystem);
 	virtual ~CPassShadowMap(void);
 
 
@@ -18,7 +18,8 @@ private:
 	static void Destroy(void);
 
 public:
-	void CreateFrameBuffer(CGfxRenderTexturePtr ptrShadowTexture, CGfxRenderTexturePtr ptrDepthStencilTexture);
+	void SetCamera(CCamera* pCamera);
+	void SetFrameBuffer(CGfxRenderTexturePtr ptrShadowTexture, CGfxRenderTexturePtr ptrDepthStencilTexture);
 
 private:
 	const CGfxSemaphore* Render(CTaskGraph& taskGraph, const CGfxSemaphore* pWaitSemaphore);

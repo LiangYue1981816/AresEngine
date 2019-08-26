@@ -82,7 +82,7 @@ const CGfxSemaphore* CPassDefault::Render(CTaskGraph& taskGraph, const CGfxSemap
 		const CGfxFrameBufferPtr ptrFrameBuffer = m_ptrFrameBuffer[indexFrame];
 		const CGfxRenderTexturePtr ptrColorTexture = m_ptrColorTexture[indexFrame];
 		const CGfxRenderTexturePtr ptrDepthStencilTexture = m_ptrDepthStencilTexture[indexFrame];
-		const CGfxCommandBufferPtr ptrMainCommandBuffer = m_ptrMainCommandBuffer[indexFrame];
+		const CGfxCommandBufferPtr ptrMainCommandBuffer = m_ptrMainCommandBuffer[GfxRenderer()->GetSwapChain()->GetFrameIndex()];
 		{
 			ptrMainCommandBuffer->Clearup();
 
