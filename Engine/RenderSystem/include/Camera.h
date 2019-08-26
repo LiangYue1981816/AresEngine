@@ -7,8 +7,8 @@ class CALL_API CCamera
 	friend class CRenderSystem;
 	friend class CPassDefault;
 	friend class CPassForwardLighting;
-	friend class CPassShadow;
-	friend class CPassShadowBlur;
+	friend class CPassShadowMap;
+	friend class CPassShadowMapBlur;
 
 
 public:
@@ -24,8 +24,8 @@ private:
 public:
 	CPassDefault* GetPassDefault(void) const;
 	CPassForwardLighting* GetPassForwardLighting(void) const;
-	CPassShadow* GetPassShadow(void) const;
-	CPassShadowBlur* GetPassShadowBlur(void) const;
+	CPassShadowMap* GetPassShadowMap(void) const;
+	CPassShadowMapBlur* GetPassShadowMapBlur(void) const;
 
 public:
 	void SetScissor(float x, float y, float width, float height);
@@ -48,6 +48,6 @@ private:
 private:
 	CPassDefault* m_pPassDefault;
 	CPassForwardLighting* m_pPassForwardLighting;
-	CPassShadow* m_pPassShadow;
-	CPassShadowBlur* m_pPassShadowBlur;
+	CPassShadowMap* m_pPassShadowMap;
+	CPassShadowMapBlur* m_pPassShadowMapBlur;
 };

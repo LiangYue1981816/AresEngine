@@ -33,8 +33,8 @@ class CALL_API CRenderSystem
 	friend class CEngine;
 	friend class CPassDefault;
 	friend class CPassForwardLighting;
-	friend class CPassShadow;
-	friend class CPassShadowBlur;
+	friend class CPassShadowMap;
+	friend class CPassShadowMapBlur;
 
 
 private:

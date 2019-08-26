@@ -2,15 +2,15 @@
 #include "RenderSystem.h"
 
 
-class CALL_API CPassShadowBlur
+class CALL_API CPassShadowMapBlur
 {
 	friend class CCamera;
 	friend class CRenderSystem;
 
 
 private:
-	CPassShadowBlur(CRenderSystem* pRenderSystem);
-	virtual ~CPassShadowBlur(void);
+	CPassShadowMapBlur(CRenderSystem* pRenderSystem);
+	virtual ~CPassShadowMapBlur(void);
 
 
 private:

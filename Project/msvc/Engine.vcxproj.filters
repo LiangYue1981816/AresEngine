@@ -1557,13 +1557,13 @@
     <ClInclude Include="..\..\Engine\RenderSystem\include\PassForwardLighting.h">
       <Filter>Engine\RenderSystem\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Engine\RenderSystem\include\PassShadow.h">
-      <Filter>Engine\RenderSystem\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Engine\RenderSystem\include\RenderSystem.h">
       <Filter>Engine\RenderSystem\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Engine\RenderSystem\include\PassShadowBlur.h">
+    <ClInclude Include="..\..\Engine\RenderSystem\include\PassShadowMap.h">
+      <Filter>Engine\RenderSystem\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\RenderSystem\include\PassShadowMapBlur.h">
       <Filter>Engine\RenderSystem\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -2255,16 +2255,16 @@
     <ClCompile Include="..\..\Engine\RenderSystem\src\PassForwardLighting.cpp">
       <Filter>Engine\RenderSystem\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Engine\RenderSystem\src\PassShadow.cpp">
-      <Filter>Engine\RenderSystem\Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Engine\RenderSystem\src\RenderSystem.cpp">
       <Filter>Engine\RenderSystem\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\RenderSystem\src\CameraRender.cpp">
       <Filter>Engine\RenderSystem\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Engine\RenderSystem\src\PassShadowBlur.cpp">
+    <ClCompile Include="..\..\Engine\RenderSystem\src\PassShadowMap.cpp">
+      <Filter>Engine\RenderSystem\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\RenderSystem\src\PassShadowMapBlur.cpp">
       <Filter>Engine\RenderSystem\Source Files</Filter>
     </ClCompile>
   </ItemGroup>

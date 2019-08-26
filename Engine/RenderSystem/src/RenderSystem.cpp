@@ -70,16 +70,16 @@ void CRenderSystem::CreateRenderPass(void) const
 {
 	CPassDefault::Create(GFX_PIXELFORMAT_BGRA8_UNORM_PACK8, GFX_PIXELFORMAT_D32_SFLOAT_PACK32, 1);
 	CPassForwardLighting::Create(GFX_PIXELFORMAT_BGRA8_UNORM_PACK8, GFX_PIXELFORMAT_D32_SFLOAT_PACK32, 1);
-	CPassShadow::Create(GFX_PIXELFORMAT_BGRA8_UNORM_PACK8, GFX_PIXELFORMAT_D32_SFLOAT_PACK32);
-	CPassShadowBlur::Create(GFX_PIXELFORMAT_BGRA8_UNORM_PACK8);
+	CPassShadowMap::Create(GFX_PIXELFORMAT_BGRA8_UNORM_PACK8, GFX_PIXELFORMAT_D32_SFLOAT_PACK32);
+	CPassShadowMapBlur::Create(GFX_PIXELFORMAT_BGRA8_UNORM_PACK8);
 }
 
 void CRenderSystem::DestroyRenderPass(void) const
 {
 	CPassDefault::Destroy();
 	CPassForwardLighting::Destroy();
-	CPassShadow::Destroy();
-	CPassShadowBlur::Destroy();
+	CPassShadowMap::Destroy();
+	CPassShadowMapBlur::Destroy();
 }
 
 void CRenderSystem::SetTime(float t, float dt)

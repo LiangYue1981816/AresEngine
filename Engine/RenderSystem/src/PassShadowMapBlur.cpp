@@ -6,7 +6,7 @@ static CGfxMeshDrawPtr ptrMeshDraw;
 static CGfxRenderPassPtr ptrRenderPass;
 
 
-CPassShadowBlur::CPassShadowBlur(CRenderSystem* pRenderSystem)
+CPassShadowMapBlur::CPassShadowMapBlur(CRenderSystem* pRenderSystem)
 	: m_pRenderQueue(nullptr)
 	, m_pRenderSystem(pRenderSystem)
 {
@@ -45,7 +45,7 @@ CPassShadowBlur::CPassShadowBlur(CRenderSystem* pRenderSystem)
 	}
 }
 
-CPassShadowBlur::~CPassShadowBlur(void)
+CPassShadowMapBlur::~CPassShadowMapBlur(void)
 {
 	m_ptrMainCommandBuffer[0]->Clearup();
 	m_ptrMainCommandBuffer[1]->Clearup();
@@ -55,7 +55,7 @@ CPassShadowBlur::~CPassShadowBlur(void)
 	delete m_pCameraUniform;
 }
 
-void CPassShadowBlur::Create(GfxPixelFormat shadowPixelFormat)
+void CPassShadowMapBlur::Create(GfxPixelFormat shadowPixelFormat)
 {
 	{
 		const int numSubpasses = 1;
@@ -89,14 +89,14 @@ void CPassShadowBlur::Create(GfxPixelFormat shadowPixelFormat)
 	}
 }
 
-void CPassShadowBlur::Destroy(void)
+void CPassShadowMapBlur::Destroy(void)
 {
 	ptrMesh.Release();
 	ptrMeshDraw.Release();
 	ptrRenderPass.Release();
 }
 
-void CPassShadowBlur::CreateFrameBuffer(CGfxRenderTexturePtr ptrShadowBlurTexture)
+void CPassShadowMapBlur::CreateFrameBuffer(CGfxRenderTexturePtr ptrShadowBlurTexture)
 {
 	const int numSubpasses = 1;
 	const int numAttachments = 1;
@@ -108,14 +108,14 @@ void CPassShadowBlur::CreateFrameBuffer(CGfxRenderTexturePtr ptrShadowBlurTextur
 	m_ptrFrameBuffer->Create(ptrRenderPass);
 }
 
-void CPassShadowBlur::SetInputShadowTexture(CGfxRenderTexturePtr ptrShadowTexture)
+void CPassShadowMapBlur::SetInputShadowTexture(CGfxRenderTexturePtr ptrShadowTexture)
 {
 	CGfxSampler* pSampler = GfxRenderer()->CreateSampler(GFX_FILTER_NEAREST, GFX_FILTER_NEAREST, GFX_SAMPLER_MIPMAP_MODE_NEAREST, GFX_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE);
 	m_ptrDescriptorSetPass->SetRenderTexture(UNIFORM_SHADOWMAP_NAME, ptrShadowTexture, pSampler);
 	m_ptrDescriptorSetPass->Update();
 }
 
-const CGfxSemaphore* CPassShadowBlur::Render(CTaskGraph& taskGraph, const CGfxSemaphore* pWaitSemaphore)
+const CGfxSemaphore* CPassShadowMapBlur::Render(CTaskGraph& taskGraph, const CGfxSemaphore* pWaitSemaphore)
 {
 	// Update
 	m_pCameraUniform->Apply();

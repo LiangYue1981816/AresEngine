@@ -8,8 +8,8 @@ CCamera::CCamera(void)
 
 	, m_pPassDefault(nullptr)
 	, m_pPassForwardLighting(nullptr)
-	, m_pPassShadow(nullptr)
-	, m_pPassShadowBlur(nullptr)
+	, m_pPassShadowMap(nullptr)
+	, m_pPassShadowMapBlur(nullptr)
 {
 	m_pCamera = new CGfxCamera;
 	m_pRenderQueue = new CGfxRenderQueue;
@@ -17,16 +17,16 @@ CCamera::CCamera(void)
 
 	m_pPassDefault = new CPassDefault(this, RenderSystem());
 	m_pPassForwardLighting = new CPassForwardLighting(this, RenderSystem());
-	m_pPassShadow = new CPassShadow(this, RenderSystem());
-	m_pPassShadowBlur = new CPassShadowBlur(RenderSystem());
+	m_pPassShadowMap = new CPassShadowMap(this, RenderSystem());
+	m_pPassShadowMapBlur = new CPassShadowMapBlur(RenderSystem());
 }
 
 CCamera::~CCamera(void)
 {
 	delete m_pPassDefault;
 	delete m_pPassForwardLighting;
-	delete m_pPassShadow;
-	delete m_pPassShadowBlur;
+	delete m_pPassShadowMap;
+	delete m_pPassShadowMapBlur;
 
 	delete m_pCamera;
 	delete m_pRenderQueue;
@@ -58,14 +58,14 @@ CPassForwardLighting* CCamera::GetPassForwardLighting(void) const
 	return m_pPassForwardLighting;
 }
 
-CPassShadow* CCamera::GetPassShadow(void) const
+CPassShadowMap* CCamera::GetPassShadowMap(void) const
 {
-	return m_pPassShadow;
+	return m_pPassShadowMap;
 }
 
-CPassShadowBlur* CCamera::GetPassShadowBlur(void) const
+CPassShadowMapBlur* CCamera::GetPassShadowMapBlur(void) const
 {
-	return m_pPassShadowBlur;
+	return m_pPassShadowMapBlur;
 }
 
 void CCamera::SetScissor(float x, float y, float width, float height)

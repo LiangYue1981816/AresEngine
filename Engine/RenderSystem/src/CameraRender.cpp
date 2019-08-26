@@ -14,8 +14,8 @@ const CGfxSemaphore* CCamera::RenderDefault(CTaskGraph& taskGraph, const CGfxSem
 const CGfxSemaphore* CCamera::RenderForwardLighting(CTaskGraph& taskGraph, const CGfxSemaphore* pWaitSemaphore, bool bShadow, bool bPresent) const
 {
 	if (bShadow) {
-		pWaitSemaphore = m_pPassShadow->Render(taskGraph, pWaitSemaphore);
-		pWaitSemaphore = m_pPassShadowBlur->Render(taskGraph, pWaitSemaphore);
+		pWaitSemaphore = m_pPassShadowMap->Render(taskGraph, pWaitSemaphore);
+		pWaitSemaphore = m_pPassShadowMapBlur->Render(taskGraph, pWaitSemaphore);
 	}
 
 	return m_pPassForwardLighting->Render(taskGraph, pWaitSemaphore, bPresent);
