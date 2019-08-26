@@ -9,13 +9,14 @@ class CALL_API CPassDefault
 
 
 private:
-	CPassDefault(CRenderSystem* pRenderSystem);
-	virtual ~CPassDefault(void);
+	static void Create(GfxPixelFormat colorPixelFormat, GfxPixelFormat depthPixelFormat, int samples);
+	static void Destroy(void);
 
 
 private:
-	static void Create(GfxPixelFormat colorPixelFormat, GfxPixelFormat depthPixelFormat, int samples);
-	static void Destroy(void);
+	CPassDefault(CRenderSystem* pRenderSystem);
+	virtual ~CPassDefault(void);
+
 
 public:
 	void SetCamera(CCamera* pCamera);

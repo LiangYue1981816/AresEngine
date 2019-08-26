@@ -9,13 +9,14 @@ class CALL_API CPassShadowMapBlur
 
 
 private:
-	CPassShadowMapBlur(CRenderSystem* pRenderSystem);
-	virtual ~CPassShadowMapBlur(void);
+	static void Create(GfxPixelFormat shadowPixelFormat);
+	static void Destroy(void);
 
 
 private:
-	static void Create(GfxPixelFormat shadowPixelFormat);
-	static void Destroy(void);
+	CPassShadowMapBlur(CRenderSystem* pRenderSystem);
+	virtual ~CPassShadowMapBlur(void);
+
 
 public:
 	void SetFrameBuffer(CGfxRenderTexturePtr ptrShadowBlurTexture);

@@ -46,9 +46,7 @@ CPassDefault::CPassDefault(CRenderSystem* pRenderSystem)
 
 CPassDefault::~CPassDefault(void)
 {
-	m_ptrMainCommandBuffer[0]->Clearup();
-	m_ptrMainCommandBuffer[1]->Clearup();
-	m_ptrMainCommandBuffer[2]->Clearup();
+
 }
 
 void CPassDefault::SetCamera(CCamera* pCamera)

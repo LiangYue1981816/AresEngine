@@ -61,24 +61,11 @@ CPassShadowMap::CPassShadowMap(CRenderSystem* pRenderSystem)
 
 CPassShadowMap::~CPassShadowMap(void)
 {
-	m_ptrMainCommandBuffer[0]->Clearup();
-	m_ptrMainCommandBuffer[1]->Clearup();
-	m_ptrMainCommandBuffer[2]->Clearup();
-
-	delete m_pShadowCamera[0];
-	delete m_pShadowCamera[1];
-	delete m_pShadowCamera[2];
-	delete m_pShadowCamera[3];
-
-	delete m_pShadowRenderQueue[0];
-	delete m_pShadowRenderQueue[1];
-	delete m_pShadowRenderQueue[2];
-	delete m_pShadowRenderQueue[3];
-
-	delete m_pShadowCameraUniform[0];
-	delete m_pShadowCameraUniform[1];
-	delete m_pShadowCameraUniform[2];
-	delete m_pShadowCameraUniform[3];
+	for (int indexLevel = 0; indexLevel < 4; indexLevel++) {
+		delete m_pShadowCamera[indexLevel];
+		delete m_pShadowRenderQueue[indexLevel];
+		delete m_pShadowCameraUniform[indexLevel];
+	}
 }
 
 void CPassShadowMap::SetCamera(CCamera* pCamera)

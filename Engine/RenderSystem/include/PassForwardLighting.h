@@ -9,13 +9,14 @@ class CALL_API CPassForwardLighting
 
 
 private:
-	CPassForwardLighting(CRenderSystem* pRenderSystem);
-	virtual ~CPassForwardLighting(void);
+	static void Create(GfxPixelFormat colorPixelFormat, GfxPixelFormat depthPixelFormat, int samples);
+	static void Destroy(void);
 
 
 private:
-	static void Create(GfxPixelFormat colorPixelFormat, GfxPixelFormat depthPixelFormat, int samples);
-	static void Destroy(void);
+	CPassForwardLighting(CRenderSystem* pRenderSystem);
+	virtual ~CPassForwardLighting(void);
+
 
 public:
 	void SetCamera(CCamera* pCamera);

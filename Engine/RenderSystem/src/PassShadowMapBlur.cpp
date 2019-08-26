@@ -77,10 +77,6 @@ CPassShadowMapBlur::CPassShadowMapBlur(CRenderSystem* pRenderSystem)
 
 CPassShadowMapBlur::~CPassShadowMapBlur(void)
 {
-	m_ptrMainCommandBuffer[0]->Clearup();
-	m_ptrMainCommandBuffer[1]->Clearup();
-	m_ptrMainCommandBuffer[2]->Clearup();
-
 	delete m_pRenderQueue;
 	delete m_pCameraUniform;
 }

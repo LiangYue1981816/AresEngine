@@ -9,13 +9,14 @@ class CALL_API CPassShadowMap
 
 
 private:
-	CPassShadowMap(CRenderSystem* pRenderSystem);
-	virtual ~CPassShadowMap(void);
+	static void Create(GfxPixelFormat shadowPixelFormat, GfxPixelFormat depthPixelFormat);
+	static void Destroy(void);
 
 
 private:
-	static void Create(GfxPixelFormat shadowPixelFormat, GfxPixelFormat depthPixelFormat);
-	static void Destroy(void);
+	CPassShadowMap(CRenderSystem* pRenderSystem);
+	virtual ~CPassShadowMap(void);
+
 
 public:
 	void SetCamera(CCamera* pCamera);
