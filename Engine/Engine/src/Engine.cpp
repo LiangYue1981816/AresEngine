@@ -48,11 +48,9 @@ CEngine::CEngine(GfxApi api, void* hInstance, void* hWnd, void* hDC, int width, 
 	, m_taskGraphUpdate("TashGraph_Update")
 	, m_taskGraphRender("TashGraph_Render")
 {
-	pInstance = this;
-
-	m_pRenderSystem = new CRenderSystem(api, hInstance, hWnd, hDC, width, height, format);
-	m_pSceneManager = new CSceneManager;
 	m_pResourceLoader = new CResourceLoader;
+	m_pSceneManager = new CSceneManager;
+	m_pRenderSystem = new CRenderSystem(api, hInstance, hWnd, hDC, width, height, format);
 
 #ifdef PLATFORM_WINDOWS
 	m_pShaderCompiler = new CShaderCompiler;
@@ -78,9 +76,9 @@ CEngine::~CEngine(void)
 	delete m_pShaderCompiler;
 #endif
 
-	delete m_pResourceLoader;
 	delete m_pSceneManager;
 	delete m_pRenderSystem;
+	delete m_pResourceLoader;
 }
 
 float CEngine::GetDeltaTime(void) const

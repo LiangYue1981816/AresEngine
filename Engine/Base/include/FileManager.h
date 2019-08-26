@@ -39,9 +39,11 @@ public:
 	void SetPack(const char* szPackName, const char* szExtName);
 	void SetFile(const char* szFileName, const char* szFullName);
 
+public:
 	const char* GetFullName(const char* szFileName);
 	const char* GetFullName(uint32_t name);
 
+public:
 	bool LoadStream(const char* szFileName, CStream* pStream);
 	bool LoadStream(uint32_t name, CStream* pStream);
 
