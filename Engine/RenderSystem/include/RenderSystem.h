@@ -22,6 +22,22 @@
 #define INSTANCE_FORMAT_TRANSFORM INSTANCE_ATTRIBUTE_TRANSFORM
 
 
+typedef enum RenderTextureType {
+	RENDER_TEXTURE_NONE = -1,
+
+	RENDER_TEXTURE_SWAPCHAIN_DEPTH,
+	RENDER_TEXTURE_SWAPCHAIN_COLOR0,
+	RENDER_TEXTURE_SWAPCHAIN_COLOR1,
+	RENDER_TEXTURE_SWAPCHAIN_COLOR2,
+	
+	RENDER_TEXTURE_SHADOWMAP_DEPTH,
+	RENDER_TEXTURE_SHADOWMAP_COLOR,
+	RENDER_TEXTURE_SHADOWMAP_COLOR_BLUR,
+
+	RENDER_TEXTURE_COUNT
+} RenderTextureType;
+
+
 extern const uint32_t DEFAULT_PASS_NAME;
 extern const uint32_t FORWARD_LIGHTING_PASS_NAME;
 extern const uint32_t SHADOWMAP_PASS_NAME;
@@ -48,6 +64,11 @@ private:
 private:
 	void CreateRenderPass(void) const;
 	void DestroyRenderPass(void) const;
+
+private:
+	void CreateRenderTexture(void);
+	void DestroyRenderTexture(void);
+	CGfxRenderTexturePtr GetRenderTexture(RenderTextureType type);
 
 public:
 	void SetTime(float t, float dt);
@@ -84,4 +105,7 @@ private:
 private:
 	CGfxRenderer* m_pRenderer;
 	CGfxUniformEngine* m_pEngineUniform;
+
+private:
+	CGfxRenderTexturePtr m_ptrRenderTextures[RENDER_TEXTURE_COUNT];
 };

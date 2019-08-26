@@ -51,11 +51,13 @@ CRenderSystem::CRenderSystem(GfxApi api, void* hInstance, void* hWnd, void* hDC,
 	SetInstanceAttributes(instanceAttributes, INSTANCE_ATTRIBUTE_COUNT);
 
 	CreateRenderPass();
+	CreateRenderTexture();
 }
 
 CRenderSystem::~CRenderSystem(void)
 {
 	DestroyRenderPass();
+	DestroyRenderTexture();
 
 	delete m_pEngineUniform;
 	delete m_pRenderer;
@@ -64,6 +66,40 @@ CRenderSystem::~CRenderSystem(void)
 CGfxUniformEngine* CRenderSystem::GetEngineUniform(void) const
 {
 	return m_pEngineUniform;
+}
+
+void CRenderSystem::CreateRenderTexture(void)
+{
+	m_ptrRenderTextures[RENDER_TEXTURE_SWAPCHAIN_COLOR0] = GfxRenderer()->GetSwapChain()->GetFrameTexture(0);
+	m_ptrRenderTextures[RENDER_TEXTURE_SWAPCHAIN_COLOR1] = GfxRenderer()->GetSwapChain()->GetFrameTexture(1);
+	m_ptrRenderTextures[RENDER_TEXTURE_SWAPCHAIN_COLOR2] = GfxRenderer()->GetSwapChain()->GetFrameTexture(2);
+
+	m_ptrRenderTextures[RENDER_TEXTURE_SWAPCHAIN_DEPTH] = GfxRenderer()->NewRenderTexture(HashValue("RENDER_TEXTURE_SWAPCHAIN_DEPTH"));
+	m_ptrRenderTextures[RENDER_TEXTURE_SWAPCHAIN_DEPTH]->Create(GFX_PIXELFORMAT_D32_SFLOAT_PACK32, GfxRenderer()->GetSwapChain()->GetWidth(), GfxRenderer()->GetSwapChain()->GetHeight());
+
+	m_ptrRenderTextures[RENDER_TEXTURE_SHADOWMAP_DEPTH] = GfxRenderer()->NewRenderTexture(HashValue("RENDER_TEXTURE_SHADOWMAP_DEPTH"));
+	m_ptrRenderTextures[RENDER_TEXTURE_SHADOWMAP_COLOR] = GfxRenderer()->NewRenderTexture(HashValue("RENDER_TEXTURE_SHADOWMAP_COLOR"));
+	m_ptrRenderTextures[RENDER_TEXTURE_SHADOWMAP_COLOR_BLUR] = GfxRenderer()->NewRenderTexture(HashValue("RENDER_TEXTURE_SHADOWMAP_COLOR_BLUR"));
+	m_ptrRenderTextures[RENDER_TEXTURE_SHADOWMAP_DEPTH]->Create(GFX_PIXELFORMAT_D32_SFLOAT_PACK32, 2048, 2048);
+	m_ptrRenderTextures[RENDER_TEXTURE_SHADOWMAP_COLOR]->Create(GFX_PIXELFORMAT_BGRA8_UNORM_PACK8, 2048, 2048);
+	m_ptrRenderTextures[RENDER_TEXTURE_SHADOWMAP_COLOR_BLUR]->Create(GFX_PIXELFORMAT_BGRA8_UNORM_PACK8, 2048, 2048);
+}
+
+void CRenderSystem::DestroyRenderTexture(void)
+{
+	for (int index = 0; index < RENDER_TEXTURE_COUNT; index++) {
+		m_ptrRenderTextures[index].Release();
+	}
+}
+
+CGfxRenderTexturePtr CRenderSystem::GetRenderTexture(RenderTextureType type)
+{
+	if ((int)type >= 0 && (int)type < RENDER_TEXTURE_COUNT) {
+		return m_ptrRenderTextures[(int)type];
+	}
+	else {
+		return nullptr;
+	}
 }
 
 void CRenderSystem::CreateRenderPass(void) const
