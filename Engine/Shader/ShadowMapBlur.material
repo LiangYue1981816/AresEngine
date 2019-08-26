@@ -1,12 +1,12 @@
 <Material>
-	<Pass name="ShadowBlur">
-		<Pipeline render_pass="ShadowBlur">
-		  <Vertex file_name="ShadowBlur.glsl">
+	<Pass name="ShadowMapBlur">
+		<Pipeline render_pass="ShadowMapBlur">
+		  <Vertex file_name="ShadowMapBlur.glsl">
 		    <Define name="VERTEX_ATTRIBUTE_POSITION" />
         <Define name="VERTEX_ATTRIBUTE_TEXCOORD0" />
         <Define name="INSTANCE_ATTRIBUTE_TRANSFORM" />
 		  </Vertex>
-		  <Fragment file_name="ShadowBlur.glsl">
+		  <Fragment file_name="ShadowMapBlur.glsl">
 		  </Fragment>
 		  <State>
 		  	<Rasterization>

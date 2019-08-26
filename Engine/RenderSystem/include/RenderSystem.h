@@ -24,8 +24,8 @@
 
 extern const uint32_t DEFAULT_PASS_NAME;
 extern const uint32_t FORWARD_LIGHTING_PASS_NAME;
-extern const uint32_t SHADOW_PASS_NAME;
-extern const uint32_t SHADOW_BLUR_PASS_NAME;
+extern const uint32_t SHADOWMAP_PASS_NAME;
+extern const uint32_t SHADOWMAP_BLUR_PASS_NAME;
 
 
 class CALL_API CRenderSystem
