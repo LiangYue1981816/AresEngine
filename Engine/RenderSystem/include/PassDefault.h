@@ -9,7 +9,7 @@ class CALL_API CPassDefault
 
 
 private:
-	CPassDefault(CCamera* pCamera, CRenderSystem* pRenderSystem);
+	CPassDefault(CRenderSystem* pRenderSystem);
 	virtual ~CPassDefault(void);
 
 
@@ -18,10 +18,11 @@ private:
 	static void Destroy(void);
 
 public:
-	void CreateFrameBuffer(int indexFrame, CGfxRenderTexturePtr ptrColorTexture, CGfxRenderTexturePtr ptrDepthStencilTexture);
+	void SetCamera(CCamera* pCamera);
+	void SetFrameBuffer(int indexFrame, CGfxRenderTexturePtr ptrColorTexture, CGfxRenderTexturePtr ptrDepthStencilTexture);
 
 private:
-	const CGfxSemaphore* Render(CTaskGraph& taskGraph, const CGfxSemaphore* pWaitSemaphore, bool bPresent);
+	const CGfxSemaphore* Render(CTaskGraph& taskGraph, const CGfxSemaphore* pWaitSemaphore, int indexFrame, bool bPresent);
 
 
 private:
