@@ -62,13 +62,13 @@ private:
 	CGfxUniformEngine* GetEngineUniform(void) const;
 
 private:
-	void CreateRenderPass(void) const;
-	void DestroyRenderPass(void) const;
-
-private:
 	void CreateRenderTexture(void);
 	void DestroyRenderTexture(void);
 	CGfxRenderTexturePtr GetRenderTexture(RenderTextureType type);
+
+private:
+	void CreateRenderPass(void);
+	void DestroyRenderPass(void);
 
 public:
 	void SetTime(float t, float dt);
