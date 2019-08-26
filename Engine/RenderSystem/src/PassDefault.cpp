@@ -30,22 +30,18 @@ CPassDefault::CPassDefault(CRenderSystem* pRenderSystem)
 	, m_pRenderSystem(pRenderSystem)
 {
 	// CommandBuffer
-	{
-		m_ptrMainCommandBuffer[0] = GfxRenderer()->NewCommandBuffer(0, true);
-		m_ptrMainCommandBuffer[1] = GfxRenderer()->NewCommandBuffer(0, true);
-		m_ptrMainCommandBuffer[2] = GfxRenderer()->NewCommandBuffer(0, true);
-	}
+	m_ptrMainCommandBuffer[0] = GfxRenderer()->NewCommandBuffer(0, true);
+	m_ptrMainCommandBuffer[1] = GfxRenderer()->NewCommandBuffer(0, true);
+	m_ptrMainCommandBuffer[2] = GfxRenderer()->NewCommandBuffer(0, true);
 
-	// DescriptorSet
-	{
-		CGfxDescriptorLayoutPtr ptrDescriptorLayout = GfxRenderer()->NewDescriptorLayout(DESCRIPTOR_SET_PASS);
-		ptrDescriptorLayout->SetUniformBlockBinding(UNIFORM_ENGINE_NAME, DESCRIPTOR_BIND_ENGINE);
-		ptrDescriptorLayout->SetUniformBlockBinding(UNIFORM_CAMERA_NAME, DESCRIPTOR_BIND_CAMERA);
-		ptrDescriptorLayout->Create();
+	// DescriptorLayout and DescriptorSet
+	CGfxDescriptorLayoutPtr ptrDescriptorLayout = GfxRenderer()->NewDescriptorLayout(DESCRIPTOR_SET_PASS);
+	ptrDescriptorLayout->SetUniformBlockBinding(UNIFORM_ENGINE_NAME, DESCRIPTOR_BIND_ENGINE);
+	ptrDescriptorLayout->SetUniformBlockBinding(UNIFORM_CAMERA_NAME, DESCRIPTOR_BIND_CAMERA);
+	ptrDescriptorLayout->Create();
 
-		m_ptrDescriptorSetPass = GfxRenderer()->NewDescriptorSet(DEFAULT_PASS_NAME, ptrDescriptorLayout);
-		m_ptrDescriptorSetPass->SetUniformBuffer(UNIFORM_ENGINE_NAME, m_pRenderSystem->GetEngineUniform()->GetUniformBuffer(), 0, m_pRenderSystem->GetEngineUniform()->GetUniformBuffer()->GetSize());
-	}
+	m_ptrDescriptorSetPass = GfxRenderer()->NewDescriptorSet(DEFAULT_PASS_NAME, ptrDescriptorLayout);
+	m_ptrDescriptorSetPass->SetUniformBuffer(UNIFORM_ENGINE_NAME, m_pRenderSystem->GetEngineUniform()->GetUniformBuffer(), 0, m_pRenderSystem->GetEngineUniform()->GetUniformBuffer()->GetSize());
 }
 
 CPassDefault::~CPassDefault(void)
@@ -76,7 +72,7 @@ void CPassDefault::SetFrameBuffer(int indexFrame, CGfxRenderTexturePtr ptrColorT
 
 const CGfxSemaphore* CPassDefault::Render(CTaskGraph& taskGraph, const CGfxSemaphore* pWaitSemaphore, int indexFrame, bool bPresent)
 {
-	if (m_pCamera) {
+	if (m_pCamera && indexFrame >= 0 && indexFrame < CGfxSwapChain::SWAPCHAIN_FRAME_COUNT) {
 		// Update
 		m_ptrDescriptorSetPass->Update();
 		m_pCamera->GetCameraUniform()->Apply();
