@@ -49,13 +49,12 @@ private:
 	float m_totalTime;
 
 private:
-	CSceneManager* m_pSceneManager;
-	CRenderSystem* m_pRenderSystem;
+	CFileManager* m_pFileManager;
+	CShaderCompiler* m_pShaderCompiler;
 	CResourceLoader* m_pResourceLoader;
 
-#ifdef PLATFORM_WINDOWS
-	CShaderCompiler* m_pShaderCompiler;
-#endif
+	CSceneManager* m_pSceneManager;
+	CRenderSystem* m_pRenderSystem;
 
 private:
 	CTaskGraph m_taskGraphUpdate;

@@ -9,29 +9,15 @@ CFileManager* CFileManager::GetInstance(void)
 	return pInstance;
 }
 
-void CFileManager::Create(void)
-{
-	if (pInstance == nullptr) {
-		pInstance = new CFileManager;
-	}
-}
-
-void CFileManager::Destroy(void)
-{
-	if (pInstance) {
-		delete pInstance;
-		pInstance = nullptr;
-	}
-}
-
 CFileManager::CFileManager(void)
 {
-
+	pInstance = this;
 }
 
 CFileManager::~CFileManager(void)
 {
 	Clearup();
+	pInstance = nullptr;
 }
 
 void CFileManager::Clearup(void)

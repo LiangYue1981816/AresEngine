@@ -3,8 +3,6 @@
 #include "zzip/zzip.h"
 
 
-#define CreateFileManager() CFileManager::Create()
-#define DestroyFileManager() CFileManager::Destroy()
 #define FileManager() CFileManager::GetInstance()
 
 
@@ -23,8 +21,6 @@ private:
 
 public:
 	static CFileManager* GetInstance(void);
-	static void Create(void);
-	static void Destroy(void);
 
 
 private:

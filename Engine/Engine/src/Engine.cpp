@@ -37,24 +37,36 @@ CEngine::CEngine(GfxApi api, void* hInstance, void* hWnd, void* hDC, int width, 
 	, m_deltaTime(0.0f)
 	, m_totalTime(0.0f)
 
-	, m_pSceneManager(nullptr)
-	, m_pRenderSystem(nullptr)
+	, m_pFileManager(nullptr)
+	, m_pShaderCompiler(nullptr)
 	, m_pResourceLoader(nullptr)
 
-#ifdef PLATFORM_WINDOWS
-	, m_pShaderCompiler(nullptr)
-#endif
+	, m_pSceneManager(nullptr)
+	, m_pRenderSystem(nullptr)
 
 	, m_taskGraphUpdate("TashGraph_Update")
 	, m_taskGraphRender("TashGraph_Render")
 {
+	m_pFileManager = new CFileManager;
+	m_pFileManager->SetPath("../Data/Engine", ".xml");
+	m_pFileManager->SetPath("../Data/Engine", ".png");
+	m_pFileManager->SetPath("../Data/Engine", ".tga");
+	m_pFileManager->SetPath("../Data/Engine", ".dds");
+	m_pFileManager->SetPath("../Data/Engine", ".glsl");
+	m_pFileManager->SetPath("../Data/Engine", ".vert");
+	m_pFileManager->SetPath("../Data/Engine", ".frag");
+	m_pFileManager->SetPath("../Data/Engine", ".comp");
+	m_pFileManager->SetPath("../Data/Engine", ".mesh");
+	m_pFileManager->SetPath("../Data/Engine", ".material");
+
+	m_pShaderCompiler = new CShaderCompiler;
+	m_pShaderCompiler->SetCachePath("../Data/Engine/ShaderCache");
+	m_pShaderCompiler->AddIncludePath("../Data/Engine/Shader/inc");
+
 	m_pResourceLoader = new CResourceLoader;
+
 	m_pSceneManager = new CSceneManager;
 	m_pRenderSystem = new CRenderSystem(api, hInstance, hWnd, hDC, width, height, format);
-
-#ifdef PLATFORM_WINDOWS
-	m_pShaderCompiler = new CShaderCompiler;
-#endif
 
 	event_init(&m_eventExit, 0);
 	event_init(&m_eventFinish, 1);
@@ -72,13 +84,12 @@ CEngine::~CEngine(void)
 	event_destroy(&m_eventFinish);
 	event_destroy(&m_eventDispatch);
 
-#ifdef PLATFORM_WINDOWS
+	delete m_pFileManager;
 	delete m_pShaderCompiler;
-#endif
+	delete m_pResourceLoader;
 
 	delete m_pSceneManager;
 	delete m_pRenderSystem;
-	delete m_pResourceLoader;
 }
 
 float CEngine::GetDeltaTime(void) const
