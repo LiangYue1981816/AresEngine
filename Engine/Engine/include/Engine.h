@@ -49,7 +49,6 @@ private:
 	float m_totalTime;
 
 private:
-	CFileManager* m_pFileManager;
 	CSceneManager* m_pSceneManager;
 	CRenderSystem* m_pRenderSystem;
 	CResourceLoader* m_pResourceLoader;

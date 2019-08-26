@@ -6,11 +6,22 @@
 CFileManager* CFileManager::pInstance = nullptr;
 CFileManager* CFileManager::GetInstance(void)
 {
-	if (pInstance == nullptr) {
-		pInstance =  new CFileManager;
-	}
-
 	return pInstance;
+}
+
+void CFileManager::Create(void)
+{
+	if (pInstance == nullptr) {
+		pInstance = new CFileManager;
+	}
+}
+
+void CFileManager::Destroy(void)
+{
+	if (pInstance) {
+		delete pInstance;
+		pInstance = nullptr;
+	}
 }
 
 CFileManager::CFileManager(void)

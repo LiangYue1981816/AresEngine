@@ -37,7 +37,6 @@ CEngine::CEngine(GfxApi api, void* hInstance, void* hWnd, void* hDC, int width, 
 	, m_deltaTime(0.0f)
 	, m_totalTime(0.0f)
 
-	, m_pFileManager(nullptr)
 	, m_pSceneManager(nullptr)
 	, m_pRenderSystem(nullptr)
 	, m_pResourceLoader(nullptr)
@@ -52,7 +51,6 @@ CEngine::CEngine(GfxApi api, void* hInstance, void* hWnd, void* hDC, int width, 
 	pInstance = this;
 
 	m_pRenderSystem = new CRenderSystem(api, hInstance, hWnd, hDC, width, height, format);
-	m_pFileManager = new CFileManager;
 	m_pSceneManager = new CSceneManager;
 	m_pResourceLoader = new CResourceLoader;
 
@@ -82,7 +80,6 @@ CEngine::~CEngine(void)
 
 	delete m_pResourceLoader;
 	delete m_pSceneManager;
-	delete m_pFileManager;
 	delete m_pRenderSystem;
 }
 
