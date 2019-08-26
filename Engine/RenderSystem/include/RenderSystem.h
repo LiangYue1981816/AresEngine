@@ -107,5 +107,11 @@ private:
 	CGfxUniformEngine* m_pEngineUniform;
 
 private:
+	CPassDefault* m_pPassDefault;
+	CPassForwardLighting* m_pPassForwardLighting;
+	CPassShadowMap* m_pPassShadowMap;
+	CPassShadowMapBlur* m_pPassShadowMapBlur;
+
+private:
 	CGfxRenderTexturePtr m_ptrRenderTextures[RENDER_TEXTURE_COUNT];
 };
