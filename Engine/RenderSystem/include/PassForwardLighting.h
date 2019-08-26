@@ -9,7 +9,7 @@ class CALL_API CPassForwardLighting
 
 
 private:
-	CPassForwardLighting(CCamera* pCamera, CRenderSystem* pRenderSystem);
+	CPassForwardLighting(CRenderSystem* pRenderSystem);
 	virtual ~CPassForwardLighting(void);
 
 
@@ -18,13 +18,12 @@ private:
 	static void Destroy(void);
 
 public:
-	void CreateFrameBuffer(int indexFrame, CGfxRenderTexturePtr ptrColorTexture, CGfxRenderTexturePtr ptrDepthStencilTexture);
-
-public:
-	void SetInputShadowTexture(CGfxRenderTexturePtr ptrShadowTexture);
+	void SetCamera(CCamera* pCamera);
+	void SetFrameBuffer(int indexFrame, CGfxRenderTexturePtr ptrColorTexture, CGfxRenderTexturePtr ptrDepthStencilTexture);
+	void SetInputShadowMapTexture(CGfxRenderTexturePtr ptrShadowTexture);
 
 private:
-	const CGfxSemaphore* Render(CTaskGraph& taskGraph, const CGfxSemaphore* pWaitSemaphore, bool bPresent);
+	const CGfxSemaphore* Render(CTaskGraph& taskGraph, const CGfxSemaphore* pWaitSemaphore, int indexFrame, bool bPresent);
 
 
 private:
