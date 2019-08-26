@@ -770,7 +770,6 @@
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKUniformBufferManager.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKVertexBuffer.cpp" />
     <ClCompile Include="..\..\Engine\RenderSystem\src\Camera.cpp" />
-    <ClCompile Include="..\..\Engine\RenderSystem\src\CameraRender.cpp" />
     <ClCompile Include="..\..\Engine\RenderSystem\src\PassDefault.cpp" />
     <ClCompile Include="..\..\Engine\RenderSystem\src\PassForwardLighting.cpp" />
     <ClCompile Include="..\..\Engine\RenderSystem\src\PassShadowMap.cpp" />

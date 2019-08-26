@@ -2258,9 +2258,6 @@
     <ClCompile Include="..\..\Engine\RenderSystem\src\RenderSystem.cpp">
       <Filter>Engine\RenderSystem\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Engine\RenderSystem\src\CameraRender.cpp">
-      <Filter>Engine\RenderSystem\Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Engine\RenderSystem\src\PassShadowMap.cpp">
       <Filter>Engine\RenderSystem\Source Files</Filter>
     </ClCompile>

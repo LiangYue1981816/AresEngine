@@ -30,18 +30,10 @@ public:
 
 private:
 	void Update(CTaskGraph& taskGraph) const;
-	const CGfxSemaphore* RenderDefault(CTaskGraph& taskGraph, const CGfxSemaphore* pWaitSemaphore, bool bPresent) const;
-	const CGfxSemaphore* RenderForwardLighting(CTaskGraph& taskGraph, const CGfxSemaphore* pWaitSemaphore, bool bShadow, bool bPresent) const;
 
 
 private:
 	CGfxCamera* m_pCamera;
 	CGfxRenderQueue* m_pRenderQueue;
 	CGfxUniformCamera* m_pCameraUniform;
-
-private:
-	CPassDefault* m_pPassDefault;
-	CPassForwardLighting* m_pPassForwardLighting;
-	CPassShadowMap* m_pPassShadowMap;
-	CPassShadowMapBlur* m_pPassShadowMapBlur;
 };

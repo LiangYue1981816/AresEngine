@@ -5,29 +5,14 @@ CCamera::CCamera(void)
 	: m_pCamera(nullptr)
 	, m_pRenderQueue(nullptr)
 	, m_pCameraUniform(nullptr)
-
-	, m_pPassDefault(nullptr)
-	, m_pPassForwardLighting(nullptr)
-	, m_pPassShadowMap(nullptr)
-	, m_pPassShadowMapBlur(nullptr)
 {
 	m_pCamera = new CGfxCamera;
 	m_pRenderQueue = new CGfxRenderQueue;
 	m_pCameraUniform = new CGfxUniformCamera;
-
-	m_pPassDefault = new CPassDefault(this, RenderSystem());
-	m_pPassForwardLighting = new CPassForwardLighting(this, RenderSystem());
-	m_pPassShadowMap = new CPassShadowMap(this, RenderSystem());
-	m_pPassShadowMapBlur = new CPassShadowMapBlur(RenderSystem());
 }
 
 CCamera::~CCamera(void)
 {
-	delete m_pPassDefault;
-	delete m_pPassForwardLighting;
-	delete m_pPassShadowMap;
-	delete m_pPassShadowMapBlur;
-
 	delete m_pCamera;
 	delete m_pRenderQueue;
 	delete m_pCameraUniform;
@@ -75,4 +60,9 @@ void CCamera::SetLookat(float eyex, float eyey, float eyez, float centerx, float
 {
 	m_pCamera->SetLookat(eyex, eyey, eyez, centerx, centery, centerz, upx, upy, upz);
 	m_pCameraUniform->SetLookat(eyex, eyey, eyez, centerx, centery, centerz, upx, upy, upz);
+}
+
+void CCamera::Update(CTaskGraph& taskGraph) const
+{
+	SceneManager()->UpdateCamera(taskGraph, m_pCamera, m_pRenderQueue, 0xffffffff);
 }

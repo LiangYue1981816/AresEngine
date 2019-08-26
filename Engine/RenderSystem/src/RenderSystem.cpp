@@ -244,22 +244,29 @@ void CRenderSystem::Update(CTaskGraph& taskGraph, CCamera* pCamera) const
 
 void CRenderSystem::RenderDefault(CTaskGraph& taskGraph, CCamera* pCamera, bool bPresent) const
 {
-	const CGfxSemaphore* pWaitSemaphore = nullptr;
+	const CGfxSemaphore* pWaitSemaphore = GfxRenderer()->GetSwapChain()->GetAcquireSemaphore();
 
 	GfxRenderer()->AcquireNextFrame();
 	{
-		pWaitSemaphore = pCamera->RenderDefault(taskGraph, GfxRenderer()->GetSwapChain()->GetAcquireSemaphore(), bPresent);
+		m_pPassDefault->SetCamera(pCamera);
+
+		pWaitSemaphore = m_pPassDefault->Render(taskGraph, pWaitSemaphore, bPresent, GfxRenderer()->GetSwapChain()->GetFrameIndex());
 	}
 	GfxRenderer()->Present(pWaitSemaphore);
 }
 
 void CRenderSystem::RenderForwardLighting(CTaskGraph& taskGraph, CCamera* pCamera, bool bShadow, bool bPresent) const
 {
-	const CGfxSemaphore* pWaitSemaphore = nullptr;
+	const CGfxSemaphore* pWaitSemaphore = GfxRenderer()->GetSwapChain()->GetAcquireSemaphore();
 
 	GfxRenderer()->AcquireNextFrame();
 	{
-		pWaitSemaphore = pCamera->RenderForwardLighting(taskGraph, GfxRenderer()->GetSwapChain()->GetAcquireSemaphore(), bShadow, bPresent);
+		m_pPassShadowMap->SetCamera(pCamera);
+		m_pPassForwardLighting->SetCamera(pCamera);
+
+		pWaitSemaphore = m_pPassShadowMap->Render(taskGraph, pWaitSemaphore);
+		pWaitSemaphore = m_pPassShadowMapBlur->Render(taskGraph, pWaitSemaphore);
+		pWaitSemaphore = m_pPassForwardLighting->Render(taskGraph, pWaitSemaphore, bPresent, GfxRenderer()->GetSwapChain()->GetFrameIndex());
 	}
 	GfxRenderer()->Present(pWaitSemaphore);
 }
