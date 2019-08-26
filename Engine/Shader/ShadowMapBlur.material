@@ -10,7 +10,7 @@
 		  </Fragment>
 		  <State>
 		  	<Rasterization>
-		  		<Cull enable="false" cull_face="GFX_FRONT_AND_BACK" front_face="GFX_CCW" />
+		  		<Cull enable="GFX_FALSE" cull_face="GFX_FRONT_AND_BACK" front_face="GFX_CCW" />
 		  	</Rasterization>
 		  </State>
 		</Pipeline>
