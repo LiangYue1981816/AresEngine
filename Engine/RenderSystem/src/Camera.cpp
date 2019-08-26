@@ -48,26 +48,6 @@ CGfxUniformCamera* CCamera::GetCameraUniform(void) const
 	return m_pCameraUniform;
 }
 
-CPassDefault* CCamera::GetPassDefault(void) const
-{
-	return m_pPassDefault;
-}
-
-CPassForwardLighting* CCamera::GetPassForwardLighting(void) const
-{
-	return m_pPassForwardLighting;
-}
-
-CPassShadowMap* CCamera::GetPassShadowMap(void) const
-{
-	return m_pPassShadowMap;
-}
-
-CPassShadowMapBlur* CCamera::GetPassShadowMapBlur(void) const
-{
-	return m_pPassShadowMapBlur;
-}
-
 void CCamera::SetScissor(float x, float y, float width, float height)
 {
 	m_pCamera->SetScissor(x, y, width, height);
