@@ -5,7 +5,7 @@
 #include "common.inc"
 
 
-highp vec4 EncodeFloat(highp float value)
+highp vec4 PackFloat(highp float value)
 {
 	highp vec4 kEncodeMul = vec4(1.0, 255.0, 65025.0, 16581375.0);
 	highp vec4 enc = kEncodeMul * value;
@@ -14,7 +14,7 @@ highp vec4 EncodeFloat(highp float value)
 	return enc;
 }
 
-highp float DecodeFloat(highp vec4 encode) 
+highp float UnpackFloat(highp vec4 encode) 
 {
 	highp vec4 kDecodeDot = vec4(1.0, 1.0 / 255.0, 1.0 / 65025.0, 1.0 / 16581375.0);
 	return dot(encode, kDecodeDot);
@@ -22,7 +22,7 @@ highp float DecodeFloat(highp vec4 encode)
 
 highp float ShadowDepth(highp sampler2D shadowmap, highp vec2 texCoord)
 {
-	return DecodeFloat(texture(shadowmap, texCoord.xy));
+	return UnpackFloat(texture(shadowmap, texCoord.xy));
 }
 
 highp float LinearShadowDepth(highp sampler2D shadowmap, highp vec2 texCoord, highp float resolution)
@@ -31,10 +31,10 @@ highp float LinearShadowDepth(highp sampler2D shadowmap, highp vec2 texCoord, hi
 	highp vec2 fractional = fract(unnormalized);
 	unnormalized = floor(unnormalized);
 
-	highp float value0 = DecodeFloat(texture(shadowmap, (unnormalized + vec2(0.0f, 0.0f)) / resolution));
-	highp float value1 = DecodeFloat(texture(shadowmap, (unnormalized + vec2(1.0f, 0.0f)) / resolution));
-	highp float value2 = DecodeFloat(texture(shadowmap, (unnormalized + vec2(1.0f, 1.0f)) / resolution));
-	highp float value3 = DecodeFloat(texture(shadowmap, (unnormalized + vec2(0.0f, 1.0f)) / resolution));
+	highp float value0 = UnpackFloat(texture(shadowmap, (unnormalized + vec2(0.0f, 0.0f)) / resolution));
+	highp float value1 = UnpackFloat(texture(shadowmap, (unnormalized + vec2(1.0f, 0.0f)) / resolution));
+	highp float value2 = UnpackFloat(texture(shadowmap, (unnormalized + vec2(1.0f, 1.0f)) / resolution));
+	highp float value3 = UnpackFloat(texture(shadowmap, (unnormalized + vec2(0.0f, 1.0f)) / resolution));
 	highp float value5 = value0 + (value3 - value0) * fractional.y;
 	highp float value6 = value5 + ((value1 + (value2 - value1) * fractional.y) - value5) * fractional.x;
 	return value6;
