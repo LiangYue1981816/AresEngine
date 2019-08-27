@@ -92,7 +92,7 @@ highp float ShadowValueIrregular(highp vec3 worldPosition, highp sampler2D shado
 	return clamp(visibility, 0.0, 1.0);
 }
 
-highp float ShadowValueESM(highp vec3 worldPosition, highp sampler2D shadowmap)
+highp float ShadowValue(highp vec3 worldPosition, highp sampler2D shadowmap)
 {
 	highp int indexLevel;
 	highp vec3 worldCameraPosition = (cameraViewInverseMatrix * vec4(0.0, 0.0, 0.0, 1.0)).xyz;
