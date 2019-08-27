@@ -86,8 +86,8 @@ highp float ShadowValueIrregular(highp vec3 worldPosition, highp sampler2D shado
 	highp float curDepth = (mainShadowViewMatrix(indexLevel) * vec4(worldPosition, 1.0)).z - mainShadowZNear(indexLevel) + bias[indexLevel];
 
 	highp float resolution[4] = float[](4096.0, 4096.0, 4096.0, 4096.0);
-	highp float shadowDepth = ShadowDepth(shadowmap, projectCoord.xy + RandomOffset(worldPosition, 0) / resolution[indexLevel]) * (mainShadowZFar(indexLevel) - mainShadowZNear(indexLevel));
-//	highp float shadowDepth = LinearShadowDepth(shadowmap, projectCoord.xy + RandomOffset(worldPosition, 0) / resolution[indexLevel], resolution[indexLevel]) * (mainShadowZFar(indexLevel) - mainShadowZNear(indexLevel));
+//	highp float shadowDepth = ShadowDepth(shadowmap, projectCoord.xy + RandomOffset(worldPosition, 0) / resolution[indexLevel]) * (mainShadowZFar(indexLevel) - mainShadowZNear(indexLevel));
+	highp float shadowDepth = LinearShadowDepth(shadowmap, projectCoord.xy + RandomOffset(worldPosition, 0) / resolution[indexLevel], resolution[indexLevel]) * (mainShadowZFar(indexLevel) - mainShadowZNear(indexLevel));
 
 	highp float visibility = shadowDepth > curDepth ? 0.0 : 1.0;
 	return clamp(visibility, 0.0, 1.0);

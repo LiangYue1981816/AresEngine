@@ -121,6 +121,7 @@ void main()
 #endif
 
 	mediump float shadow = ShadowValue(inPosition, texShadowMap);
+//	mediump float shadow = ShadowValueIrregular(inPosition, texShadowMap);
 
 	mediump vec3 pointLightDirection = mainPointLightPosition - inPosition;
 	mediump vec3 pointLightColor = mainPointLightColor * LightingAttenuation(length(pointLightDirection));
