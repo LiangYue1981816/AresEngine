@@ -108,14 +108,15 @@ highp float ShadowValueESM(highp vec3 worldPosition, highp sampler2D shadowmap)
  	projectCoord.xy = clamp(projectCoord.xy * 0.5 + vec2(0.5), vec2(0.0), vec2(1.0));
 	projectCoord.xy = clamp(projectCoord.xy * 0.5 + texOffset[indexLevel], texOffset[indexLevel], texOffset[indexLevel] + vec2(0.5));
 
-	highp float bias[4] = float[](0.0002, 0.0003, 0.0005, 0.0020);
-//	highp float curDepth = ((mainShadowViewMatrix(indexLevel) * vec4(worldPosition, 1.0)).z - mainShadowZNear(indexLevel)) / (mainShadowZFar(indexLevel) - mainShadowZNear(indexLevel)) + bias[indexLevel];
-	highp float curDepth = (mainShadowProjectionViewMatrix(indexLevel) * vec4(worldPosition, 1.0)).z - bias[indexLevel];
+	highp float bias[4] = float[](0.1, 0.2, 0.5, 1.5);
+	highp float curDepth = (mainShadowViewMatrix(indexLevel) * vec4(worldPosition, 1.0)).z - mainShadowZNear(indexLevel) + bias[indexLevel];
 
 	highp float resolution[4] = float[](2048.0, 2048.0, 2048.0, 2048.0);
-	highp float shadowDepth = LinearShadowDepth(shadowmap, projectCoord.xy, resolution[indexLevel]);
+	highp float shadowDepth = LinearShadowDepth(shadowmap, projectCoord.xy, resolution[indexLevel]) * (mainShadowZFar(indexLevel) - mainShadowZNear(indexLevel));
 
-	highp float visibility = exp(5000.0 * (shadowDepth - curDepth));
+//	highp float visibility = shadowDepth > curDepth ? 0.0 : 1.0;
+	highp float visibility = 1.0 - clamp(shadowDepth - curDepth, 0.0, 1.0);
+//	highp float visibility = exp((curDepth - shadowDepth));
 	return clamp(visibility, 0.0, 1.0);
 }
 
