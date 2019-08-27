@@ -116,7 +116,7 @@ highp float ShadowValueESM(highp vec3 worldPosition, highp sampler2D shadowmap)
 
 //	highp float visibility = shadowDepth > curDepth ? 0.0 : 1.0;
 	highp float visibility = 1.0 - clamp(shadowDepth - curDepth, 0.0, 1.0);
-//	highp float visibility = exp((curDepth - shadowDepth));
+//	highp float visibility = exp(-1.0 * (shadowDepth - curDepth));
 	return clamp(visibility, 0.0, 1.0);
 }
 
