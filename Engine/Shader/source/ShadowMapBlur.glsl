@@ -39,7 +39,18 @@ USE_SHADOWMAP_UNIFORM;
 
 void main()
 {
-	highp float depth = LinearShadowDepth(texShadowMap, inTexcoord, 2048.0);
-	outFragColor = EncodeFloat(depth);
+	highp float resolution = 2048.0;
+	highp float depth = 0.0;
+//	depth = LinearShadowDepth(texShadowMap, inTexcoord, resolution);
+	depth += UnpackFloat(texture(texShadowMap, inTexcoord + vec2(-1.0f, -1.0f) / resolution)) * 1.0 / 16.0;
+	depth += UnpackFloat(texture(texShadowMap, inTexcoord + vec2( 0.0f, -1.0f) / resolution)) * 2.0 / 16.0;
+	depth += UnpackFloat(texture(texShadowMap, inTexcoord + vec2( 1.0f, -1.0f) / resolution)) * 1.0 / 16.0;
+	depth += UnpackFloat(texture(texShadowMap, inTexcoord + vec2(-1.0f,  0.0f) / resolution)) * 2.0 / 16.0;
+	depth += UnpackFloat(texture(texShadowMap, inTexcoord + vec2( 0.0f,  0.0f) / resolution)) * 4.0 / 16.0;
+	depth += UnpackFloat(texture(texShadowMap, inTexcoord + vec2( 1.0f,  0.0f) / resolution)) * 2.0 / 16.0;
+	depth += UnpackFloat(texture(texShadowMap, inTexcoord + vec2(-1.0f,  1.0f) / resolution)) * 1.0 / 16.0;
+	depth += UnpackFloat(texture(texShadowMap, inTexcoord + vec2( 0.0f,  1.0f) / resolution)) * 2.0 / 16.0;
+	depth += UnpackFloat(texture(texShadowMap, inTexcoord + vec2( 1.0f,  1.0f) / resolution)) * 1.0 / 16.0;
+	outFragColor = PackFloat(depth);
 }
 #endif
