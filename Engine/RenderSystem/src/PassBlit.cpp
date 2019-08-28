@@ -1,8 +1,10 @@
 #include "EngineHeader.h"
 
 
-CPassBlit::CPassBlit(const char* szMaterialFileName)
+CPassBlit::CPassBlit(const char* szMaterialFileName, CGfxUniformEngine* pEngineUniform)
 	: m_pRenderQueue(nullptr)
+	, m_pCameraUniform(nullptr)
+	, m_pEngineUniform(pEngineUniform)
 {
 	struct Vertex {
 		float position[3];

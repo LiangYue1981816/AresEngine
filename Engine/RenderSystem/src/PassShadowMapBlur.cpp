@@ -22,7 +22,7 @@ void CPassShadowMapBlur::Destroy(void)
 
 
 CPassShadowMapBlur::CPassShadowMapBlur(CRenderSystem* pRenderSystem)
-	: CPassBlit("ShadowMapBlur.material")
+	: CPassBlit("ShadowMapBlur.material", m_pRenderSystem->GetEngineUniform())
 	, m_pRenderSystem(pRenderSystem)
 {
 	// CommandBuffer
@@ -38,7 +38,7 @@ CPassShadowMapBlur::CPassShadowMapBlur(CRenderSystem* pRenderSystem)
 	ptrDescriptorLayout->Create();
 
 	m_ptrDescriptorSetPass = GfxRenderer()->NewDescriptorSet(PASS_SHADOWMAP_BLUR_NAME, ptrDescriptorLayout);
-	m_ptrDescriptorSetPass->SetUniformBuffer(UNIFORM_ENGINE_NAME, m_pRenderSystem->GetEngineUniform()->GetUniformBuffer(), 0, m_pRenderSystem->GetEngineUniform()->GetUniformBuffer()->GetSize());
+	m_ptrDescriptorSetPass->SetUniformBuffer(UNIFORM_ENGINE_NAME, m_pEngineUniform->GetUniformBuffer(), 0, m_pEngineUniform->GetUniformBuffer()->GetSize());
 	m_ptrDescriptorSetPass->SetUniformBuffer(UNIFORM_CAMERA_NAME, m_pCameraUniform->GetUniformBuffer(), 0, m_pCameraUniform->GetUniformBuffer()->GetSize());
 }
 
@@ -67,7 +67,7 @@ const CGfxSemaphore* CPassShadowMapBlur::Render(CTaskGraph& taskGraph, const CGf
 	// Update
 	m_ptrDescriptorSetPass->Update();
 	m_pCameraUniform->Apply();
-	m_pRenderSystem->GetEngineUniform()->Apply();
+	m_pEngineUniform->Apply();
 
 	// Render
 	const CGfxCommandBufferPtr ptrMainCommandBuffer = m_ptrMainCommandBuffer[GfxRenderer()->GetSwapChain()->GetFrameIndex()];

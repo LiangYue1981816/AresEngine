@@ -9,7 +9,7 @@ class CALL_API CPassBlit
 
 
 protected:
-	CPassBlit(const char* szMaterialFileName);
+	CPassBlit(const char* szMaterialFileName, CGfxUniformEngine* pEngineUniform);
 	virtual ~CPassBlit(void);
 
 
@@ -21,4 +21,5 @@ private:
 protected:
 	CGfxRenderQueue* m_pRenderQueue;
 	CGfxUniformCamera* m_pCameraUniform;
+	CGfxUniformEngine* m_pEngineUniform;
 };

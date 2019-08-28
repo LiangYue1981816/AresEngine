@@ -2,7 +2,7 @@
 #include "RenderSystem.h"
 
 
-class CALL_API CPassColorGrading
+class CALL_API CPassColorGrading : CPassBlit
 {
 	friend class CCamera;
 	friend class CRenderSystem;
@@ -27,14 +27,10 @@ private:
 
 
 private:
-	CGfxRenderQueue* m_pRenderQueue;
-
-private:
 	CGfxFrameBufferPtr m_ptrFrameBuffer;
 	CGfxRenderTexturePtr m_ptrShadowMapBlurTexture;
 
 private:
-	CGfxUniformCamera* m_pCameraUniform;
 	CGfxDescriptorSetPtr m_ptrDescriptorSetPass;
 	CGfxCommandBufferPtr m_ptrMainCommandBuffer[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
 
