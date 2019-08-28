@@ -100,6 +100,7 @@ const CGfxSemaphore* CPassColorGrading::Render(CTaskGraph& taskGraph, const CGfx
 {
 	// Update
 	m_ptrDescriptorSetPass->Update();
+
 	m_pCameraUniform->Apply();
 	m_pRenderSystem->GetEngineUniform()->Apply();
 

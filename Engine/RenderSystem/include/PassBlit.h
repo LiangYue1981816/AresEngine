@@ -13,15 +13,12 @@ protected:
 	virtual ~CPassBlit(void);
 
 
-protected:
-	void CmdBlit(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer, const CGfxDescriptorSetPtr ptrDescriptorSetPass, const uint32_t matPassName, const glm::vec4& scissor, const glm::vec4& viewport, uint32_t mask);
-
-
 private:
 	CGfxMeshPtr m_ptrMesh;
 	CGfxMeshDrawPtr m_ptrMeshDraw;
 	CGfxMaterialPtr m_ptrMaterial;
 
-private:
+protected:
 	CGfxRenderQueue* m_pRenderQueue;
+	CGfxUniformCamera* m_pCameraUniform;
 };

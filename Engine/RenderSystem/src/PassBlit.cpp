@@ -28,14 +28,14 @@ CPassBlit::CPassBlit(const char* szMaterialFileName)
 	m_pRenderQueue->Begin();
 	m_pRenderQueue->Add(0, m_ptrMaterial, m_ptrMeshDraw, (const uint8_t*)&matrix, sizeof(matrix));
 	m_pRenderQueue->End();
+
+	m_pCameraUniform = new CGfxUniformCamera;
+	m_pCameraUniform->SetOrtho(-1.0f, 1.0f, 1.0f, -1.0f, -1.0f, 1.0f);
+	m_pCameraUniform->SetLookat(0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
 }
 
 CPassBlit::~CPassBlit(void)
 {
 	delete m_pRenderQueue;
-}
-
-void CPassBlit::CmdBlit(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer, const CGfxDescriptorSetPtr ptrDescriptorSetPass, const uint32_t matPassName, const glm::vec4& scissor, const glm::vec4& viewport, uint32_t mask)
-{
-	m_pRenderQueue->CmdDraw(taskGraph, ptrCommandBuffer, ptrDescriptorSetPass, matPassName, scissor, viewport, mask);
+	delete m_pCameraUniform;
 }

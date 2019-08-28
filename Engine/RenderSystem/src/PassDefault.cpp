@@ -73,6 +73,7 @@ const CGfxSemaphore* CPassDefault::Render(CTaskGraph& taskGraph, const CGfxSemap
 	if (m_pCamera && indexFrame >= 0 && indexFrame < CGfxSwapChain::SWAPCHAIN_FRAME_COUNT) {
 		// Update
 		m_ptrDescriptorSetPass->Update();
+
 		m_pCamera->GetCameraUniform()->Apply();
 		m_pRenderSystem->GetEngineUniform()->Apply();
 
