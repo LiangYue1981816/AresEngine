@@ -47,9 +47,9 @@ CPassForwardLighting::CPassForwardLighting(CRenderSystem* pRenderSystem)
 
 CPassForwardLighting::~CPassForwardLighting(void)
 {
-	m_ptrMainCommandBuffer[0].Release();
-	m_ptrMainCommandBuffer[1].Release();
-	m_ptrMainCommandBuffer[2].Release();
+	m_ptrMainCommandBuffer[0]->Clearup();
+	m_ptrMainCommandBuffer[1]->Clearup();
+	m_ptrMainCommandBuffer[2]->Clearup();
 }
 
 void CPassForwardLighting::SetCamera(CCamera* pCamera)
