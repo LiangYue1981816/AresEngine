@@ -39,7 +39,7 @@ USE_SHADOWMAP_UNIFORM;
 
 void main()
 {
-	highp float resolution = 2048.0;
+	highp float resolution = 4096.0;
 	highp float depth = 0.0;
 //	depth = LinearShadowDepth(texShadowMap, inTexcoord, resolution);
 	depth += UnpackFloat(texture(texShadowMap, inTexcoord + vec2(-1.0f, -1.0f) / resolution)) * 1.0 / 16.0;
