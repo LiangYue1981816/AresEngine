@@ -12,7 +12,7 @@ void CPassShadowMapBlur::Create(GfxPixelFormat shadowPixelFormat)
 {
 	const float color[] = { 0.0f, 0.0f, 0.0f, 0.0f };
 
-	ptrRenderPass = GfxRenderer()->NewRenderPass(SHADOWMAP_BLUR_PASS_NAME, numAttachments, numSubpasses);
+	ptrRenderPass = GfxRenderer()->NewRenderPass(PASS_SHADOWMAP_BLUR_NAME, numAttachments, numSubpasses);
 	ptrRenderPass->SetColorAttachment(0, shadowPixelFormat, 1, false, true, color[0], color[1], color[2], color[3]);
 	ptrRenderPass->SetSubpassOutputColorReference(0, 0);
 	ptrRenderPass->Create();
@@ -70,7 +70,7 @@ CPassShadowMapBlur::CPassShadowMapBlur(CRenderSystem* pRenderSystem)
 	m_pCameraUniform->SetOrtho(-1.0f, 1.0f, 1.0f, -1.0f, -1.0f, 1.0f);
 	m_pCameraUniform->SetLookat(0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
 
-	m_ptrDescriptorSetPass = GfxRenderer()->NewDescriptorSet(SHADOWMAP_BLUR_PASS_NAME, ptrDescriptorLayout);
+	m_ptrDescriptorSetPass = GfxRenderer()->NewDescriptorSet(PASS_SHADOWMAP_BLUR_NAME, ptrDescriptorLayout);
 	m_ptrDescriptorSetPass->SetUniformBuffer(UNIFORM_ENGINE_NAME, m_pRenderSystem->GetEngineUniform()->GetUniformBuffer(), 0, m_pRenderSystem->GetEngineUniform()->GetUniformBuffer()->GetSize());
 	m_ptrDescriptorSetPass->SetUniformBuffer(UNIFORM_CAMERA_NAME, m_pCameraUniform->GetUniformBuffer(), 0, m_pCameraUniform->GetUniformBuffer()->GetSize());
 }
@@ -126,7 +126,7 @@ const CGfxSemaphore* CPassShadowMapBlur::Render(CTaskGraph& taskGraph, const CGf
 				const glm::vec4 viewport = glm::vec4(0.0, 0.0, w, h);
 
 				for (int indexLevel = 0; indexLevel < 4; indexLevel++) {
-					m_pRenderQueue->CmdDraw(taskGraph, ptrMainCommandBuffer, m_ptrDescriptorSetPass, SHADOWMAP_BLUR_PASS_NAME, scissor[indexLevel], viewport, 0xffffffff);
+					m_pRenderQueue->CmdDraw(taskGraph, ptrMainCommandBuffer, m_ptrDescriptorSetPass, PASS_SHADOWMAP_BLUR_NAME, scissor[indexLevel], viewport, 0xffffffff);
 				}
 			}
 			GfxRenderer()->CmdEndRenderPass(ptrMainCommandBuffer);

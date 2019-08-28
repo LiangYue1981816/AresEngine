@@ -38,10 +38,11 @@ typedef enum RenderTextureType {
 } RenderTextureType;
 
 
-extern const uint32_t DEFAULT_PASS_NAME;
-extern const uint32_t FORWARD_LIGHTING_PASS_NAME;
-extern const uint32_t SHADOWMAP_PASS_NAME;
-extern const uint32_t SHADOWMAP_BLUR_PASS_NAME;
+extern const uint32_t PASS_DEFAULT_NAME;
+extern const uint32_t PASS_FORWARD_LIGHTING_NAME;
+extern const uint32_t PASS_SHADOWMAP_NAME;
+extern const uint32_t PASS_SHADOWMAP_BLUR_NAME;
+extern const uint32_t PASS_COLOR_GRADING_NAME;
 
 
 class CALL_API CRenderSystem
