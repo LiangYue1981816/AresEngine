@@ -79,9 +79,9 @@ const CGfxSemaphore* CPassForwardLighting::Render(CTaskGraph& taskGraph, const C
 {
 	if (m_pCamera && indexFrame >= 0 && indexFrame < CGfxSwapChain::SWAPCHAIN_FRAME_COUNT) {
 		// Update
-		m_ptrDescriptorSetPass->Update();
 		m_pCamera->GetCameraUniform()->Apply();
 		m_pRenderSystem->GetEngineUniform()->Apply();
+		m_ptrDescriptorSetPass->Update();
 
 		// Render
 		const CGfxFrameBufferPtr ptrFrameBuffer = m_ptrFrameBuffer[indexFrame];

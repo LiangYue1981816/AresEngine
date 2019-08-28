@@ -71,10 +71,12 @@
 #define DESCRIPTOR_BIND_ENGINE              0
 #define DESCRIPTOR_BIND_CAMERA              1
 #define DESCRIPTOR_BIND_SHADOWMAP           2
+#define DESCRIPTOR_BIND_COLOR_TEXTURE       2
 
 #define UNIFORM_ENGINE_NAME                 HashValue("Engine")
 #define UNIFORM_CAMERA_NAME                 HashValue("Camera")
 #define UNIFORM_SHADOWMAP_NAME              HashValue("texShadowMap")
+#define UNIFORM_COLOR_TEXTURE_NAME          HashValue("texColor")
 
 
 typedef enum GfxApi {

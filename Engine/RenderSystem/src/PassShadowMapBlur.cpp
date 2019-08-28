@@ -65,9 +65,9 @@ void CPassShadowMapBlur::SetInputShadowMapTexture(CGfxRenderTexturePtr ptrShadow
 const CGfxSemaphore* CPassShadowMapBlur::Render(CTaskGraph& taskGraph, const CGfxSemaphore* pWaitSemaphore)
 {
 	// Update
-	m_ptrDescriptorSetPass->Update();
 	m_pCameraUniform->Apply();
 	m_pEngineUniform->Apply();
+	m_ptrDescriptorSetPass->Update();
 
 	// Render
 	const CGfxCommandBufferPtr ptrMainCommandBuffer = m_ptrMainCommandBuffer[GfxRenderer()->GetSwapChain()->GetFrameIndex()];

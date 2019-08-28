@@ -9,7 +9,7 @@ class CALL_API CPassColorGrading : CPassBlit
 
 
 private:
-	static void Create(GfxPixelFormat shadowPixelFormat);
+	static void Create(GfxPixelFormat colorPixelFormat);
 	static void Destroy(void);
 
 
@@ -19,8 +19,8 @@ private:
 
 
 public:
-	void SetFrameBuffer(CGfxRenderTexturePtr ptrShadowBlurTexture);
-	void SetInputShadowMapTexture(CGfxRenderTexturePtr ptrShadowMapTexture);
+	void SetFrameBuffer(CGfxRenderTexturePtr ptrColorGradingTexture);
+	void SetInputColorTexture(CGfxRenderTexturePtr ptrColorTexture);
 
 private:
 	const CGfxSemaphore* Render(CTaskGraph& taskGraph, const CGfxSemaphore* pWaitSemaphore);
@@ -28,7 +28,7 @@ private:
 
 private:
 	CGfxFrameBufferPtr m_ptrFrameBuffer;
-	CGfxRenderTexturePtr m_ptrShadowMapBlurTexture;
+	CGfxRenderTexturePtr m_ptrColorGradingTexture;
 
 private:
 	CGfxDescriptorSetPtr m_ptrDescriptorSetPass;
