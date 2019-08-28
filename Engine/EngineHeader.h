@@ -15,6 +15,7 @@
 #include "Resource/include/ResourceLoader.h"
 
 #include "RenderSystem/include/Camera.h"
+#include "RenderSystem/include/PassBlit.h"
 #include "RenderSystem/include/PassDefault.h"
 #include "RenderSystem/include/PassForwardLighting.h"
 #include "RenderSystem/include/PassShadowMap.h"
