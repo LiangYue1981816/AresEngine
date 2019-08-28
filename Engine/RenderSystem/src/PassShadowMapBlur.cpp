@@ -66,7 +66,6 @@ const CGfxSemaphore* CPassShadowMapBlur::Render(CTaskGraph& taskGraph, const CGf
 {
 	// Update
 	m_ptrDescriptorSetPass->Update();
-
 	m_pCameraUniform->Apply();
 	m_pRenderSystem->GetEngineUniform()->Apply();
 
