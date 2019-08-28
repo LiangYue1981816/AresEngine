@@ -22,8 +22,7 @@ void CPassShadowMapBlur::Destroy(void)
 
 
 CPassShadowMapBlur::CPassShadowMapBlur(CRenderSystem* pRenderSystem)
-	: CPassBlit("ShadowMapBlur.material", m_pRenderSystem->GetEngineUniform())
-	, m_pRenderSystem(pRenderSystem)
+	: CPassBlit("ShadowMapBlur.material", pRenderSystem->GetEngineUniform())
 {
 	// CommandBuffer
 	m_ptrMainCommandBuffer[0] = GfxRenderer()->NewCommandBuffer(0, true);

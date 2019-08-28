@@ -33,7 +33,4 @@ private:
 private:
 	CGfxDescriptorSetPtr m_ptrDescriptorSetPass;
 	CGfxCommandBufferPtr m_ptrMainCommandBuffer[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
-
-private:
-	CRenderSystem* m_pRenderSystem;
 };
