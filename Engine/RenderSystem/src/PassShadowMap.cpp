@@ -61,6 +61,10 @@ CPassShadowMap::CPassShadowMap(CRenderSystem* pRenderSystem)
 
 CPassShadowMap::~CPassShadowMap(void)
 {
+	m_ptrMainCommandBuffer[0].Release();
+	m_ptrMainCommandBuffer[1].Release();
+	m_ptrMainCommandBuffer[2].Release();
+
 	for (int indexLevel = 0; indexLevel < 4; indexLevel++) {
 		delete m_pShadowCamera[indexLevel];
 		delete m_pShadowRenderQueue[indexLevel];

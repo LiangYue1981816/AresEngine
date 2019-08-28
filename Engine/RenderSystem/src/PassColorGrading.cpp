@@ -43,7 +43,9 @@ CPassColorGrading::CPassColorGrading(CRenderSystem* pRenderSystem)
 
 CPassColorGrading::~CPassColorGrading(void)
 {
-
+	m_ptrMainCommandBuffer[0].Release();
+	m_ptrMainCommandBuffer[1].Release();
+	m_ptrMainCommandBuffer[2].Release();
 }
 
 void CPassColorGrading::SetFrameBuffer(CGfxRenderTexturePtr ptrColorGradingTexture)
