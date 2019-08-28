@@ -51,6 +51,7 @@ class CALL_API CRenderSystem
 	friend class CPassForwardLighting;
 	friend class CPassShadowMap;
 	friend class CPassShadowMapBlur;
+	friend class CPassColorGrading;
 
 
 private:
