@@ -22,10 +22,10 @@
 #define INSTANCE_FORMAT_TRANSFORM INSTANCE_ATTRIBUTE_TRANSFORM
 
 
-#define DESCRIPTOR_BIND_ENGINE                             0
-#define DESCRIPTOR_BIND_CAMERA                             1
-#define DESCRIPTOR_BIND_SHADOWMAP                          2
-#define DESCRIPTOR_BIND_COLOR_TEXTURE                      2
+#define UNIFORM_ENGINE_BIND                                0
+#define UNIFORM_CAMERA_BIND                                1
+#define UNIFORM_SHADOWMAP_BIND                             2
+#define UNIFORM_COLOR_TEXTURE_BIND                         2
 
 #define UNIFORM_ENGINE_NAME                                HashValue("Engine")
 #define UNIFORM_CAMERA_NAME                                HashValue("Camera")
