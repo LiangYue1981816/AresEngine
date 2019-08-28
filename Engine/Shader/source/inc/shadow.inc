@@ -85,9 +85,9 @@ highp float ShadowValueIrregular(highp vec3 worldPosition, highp sampler2D shado
 	highp float bias[4] = float[](0.1, 0.2, 0.5, 1.5);
 	highp float curDepth = (mainShadowViewMatrix(indexLevel) * vec4(worldPosition, 1.0)).z - mainShadowZNear(indexLevel) + bias[indexLevel];
 
-	highp float resolution[4] = float[](4000.0, 6000.0, 8000.0, 10000.0);
-	highp float shadowDepth = ShadowDepth(shadowmap, projectCoord.xy + RandomOffset(worldPosition, indexLevel) / resolution[indexLevel]) * (mainShadowZFar(indexLevel) - mainShadowZNear(indexLevel));
-//	highp float shadowDepth = LinearShadowDepth(shadowmap, projectCoord.xy + RandomOffset(worldPosition, indexLevel) / resolution[indexLevel], resolution[indexLevel]) * (mainShadowZFar(indexLevel) - mainShadowZNear(indexLevel));
+	highp float resolution[4] = float[](2.0, 4.0, 6.0, 8.0);
+	highp float shadowDepth = ShadowDepth(shadowmap, projectCoord.xy + RandomOffset(worldPosition, indexLevel) / (resolution[indexLevel] * 1024.0)) * (mainShadowZFar(indexLevel) - mainShadowZNear(indexLevel));
+//	highp float shadowDepth = LinearShadowDepth(shadowmap, projectCoord.xy + RandomOffset(worldPosition, indexLevel) / (resolution[indexLevel] * 1024.0), (resolution[indexLevel] * 1024.0)) * (mainShadowZFar(indexLevel) - mainShadowZNear(indexLevel));
 
 	highp float visibility = shadowDepth > curDepth ? 0.0 : 1.0;
 	return clamp(visibility, 0.0, 1.0);
@@ -112,8 +112,8 @@ highp float ShadowValue(highp vec3 worldPosition, highp sampler2D shadowmap)
 	highp float bias[4] = float[](0.1, 0.2, 0.5, 1.5);
 	highp float curDepth = (mainShadowViewMatrix(indexLevel) * vec4(worldPosition, 1.0)).z - mainShadowZNear(indexLevel) + bias[indexLevel];
 
-	highp float resolution[4] = float[](4000.0, 6000.0, 8000.0, 10000.0);
-	highp float shadowDepth = LinearShadowDepth(shadowmap, projectCoord.xy, resolution[indexLevel]) * (mainShadowZFar(indexLevel) - mainShadowZNear(indexLevel));
+	highp float resolution[4] = float[](2.0, 4.0, 6.0, 8.0);
+	highp float shadowDepth = LinearShadowDepth(shadowmap, projectCoord.xy, resolution[indexLevel] * 1024.0) * (mainShadowZFar(indexLevel) - mainShadowZNear(indexLevel));
 
 //	highp float visibility = curDepth / (mainShadowZFar(indexLevel) - mainShadowZNear(indexLevel));
 //	highp float visibility = shadowDepth / (mainShadowZFar(indexLevel) - mainShadowZNear(indexLevel));
