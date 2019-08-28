@@ -59,6 +59,13 @@
 #include "GfxCommandBuffer.h"
 
 
+#define DESCRIPTOR_SET_PASS                                0
+#define DESCRIPTOR_SET_MATPASS                             1
+#define DESCRIPTOR_SET_MESHDRAW                            2
+#define DESCRIPTOR_SET_INPUTATTACHMENT                     3
+#define DESCRIPTOR_SET_COUNT                               4
+
+
 #define GfxRenderer() CGfxRenderer::GetInstance()
 
 
