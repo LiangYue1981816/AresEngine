@@ -32,7 +32,7 @@ CPassBlit::CPassBlit(const char* szMaterialFileName, CGfxUniformEngine* pEngineU
 	m_pRenderQueue->End();
 
 	m_pCameraUniform = new CGfxUniformCamera;
-	m_pCameraUniform->SetOrtho(-1.0f, 1.0f, 1.0f, -1.0f, -1.0f, 1.0f);
+	m_pCameraUniform->SetOrtho(-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f);
 	m_pCameraUniform->SetLookat(0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
 }
 
