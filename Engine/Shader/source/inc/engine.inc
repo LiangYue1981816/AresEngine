@@ -48,6 +48,7 @@ layout (location = 13)                           in mediump vec4 inInstancePoint
 #define DESCRIPTOR_BIND_ENGINE                   0
 #define DESCRIPTOR_BIND_CAMERA                   1
 #define DESCRIPTOR_BIND_SHADOWMAP                2
+#define DESCRIPTOR_BIND_COLOR_TEXTURE            2
 
 
 #define USE_CAMERA_UNIFORM                                                         \
@@ -105,6 +106,9 @@ layout (location = 13)                           in mediump vec4 inInstancePoint
 
 #define USE_SHADOWMAP_UNIFORM                                                      \
 	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_SHADOWMAP) uniform sampler2D texShadowMap
+
+#define USE_COLOR_TEXTURE_UNIFORM                                                  \
+	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_COLOR_TEXTURE) uniform sampler2D texColor
 
 
 USE_CAMERA_UNIFORM;
