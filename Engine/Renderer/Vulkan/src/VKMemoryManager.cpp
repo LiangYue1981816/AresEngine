@@ -158,10 +158,11 @@ void CVKMemoryManager::Log(void)
 		for (const auto& itAllocator : m_pAllocatorListHeads) {
 			if (CVKMemoryAllocator* pAllocator = itAllocator.second) {
 				do {
-					LogOutput(LOG_TAG_RENDERER, "\tAllocator: type=%d free=%d full=%d device_local=%s host_visible=%s host_coherent=%s host_cached=%s\n",
+					LogOutput(LOG_TAG_RENDERER, "\tAllocator: type=%d free=%d full=%d commitment=%d device_local=%s host_visible=%s host_coherent=%s host_cached=%s\n",
 						pAllocator->GetMemoryTypeIndex(),
 						pAllocator->GetFreeSize(),
 						pAllocator->GetFullSize(),
+						pAllocator->GetCommitmentSize(),
 						pAllocator->IsDeviceLocal() ? "true" : "false",
 						pAllocator->IsHostVisible() ? "true" : "false",
 						pAllocator->IsHostCoherent() ? "true" : "false",

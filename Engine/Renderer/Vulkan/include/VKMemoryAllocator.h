@@ -24,6 +24,7 @@ private:
 
 	VkDeviceSize GetFreeSize(void) const;
 	VkDeviceSize GetFullSize(void) const;
+	VkDeviceSize GetCommitmentSize(void) const;
 
 	uint32_t GetMemoryTypeIndex(void) const;
 	VkMemoryPropertyFlags GetMemoryPropertyFlags(void) const;

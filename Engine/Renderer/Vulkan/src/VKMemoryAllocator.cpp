@@ -93,6 +93,13 @@ VkDeviceSize CVKMemoryAllocator::GetFullSize(void) const
 	return m_memoryFullSize;
 }
 
+VkDeviceSize CVKMemoryAllocator::GetCommitmentSize(void) const
+{
+	VkDeviceSize size;
+	vkGetDeviceMemoryCommitment(m_pDevice->GetDevice(), m_vkMemory, &size);
+	return size;
+}
+
 uint32_t CVKMemoryAllocator::GetMemoryTypeIndex(void) const
 {
 	return m_memoryTypeIndex;
