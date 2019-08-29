@@ -107,6 +107,7 @@ void CRenderSystem::CreateRenderPass(void)
 	CPassForwardLighting::Create(GFX_PIXELFORMAT_BGRA8_UNORM_PACK8, GFX_PIXELFORMAT_D32_SFLOAT_PACK32, 1);
 	CPassShadowMap::Create(GFX_PIXELFORMAT_BGRA8_UNORM_PACK8, GFX_PIXELFORMAT_D32_SFLOAT_PACK32);
 	CPassShadowMapBlur::Create(GFX_PIXELFORMAT_BGRA8_UNORM_PACK8);
+	CPassColorGrading::Create(GFX_PIXELFORMAT_BGRA8_UNORM_PACK8);
 
 	m_pPassDefault = new CPassDefault(this);
 	m_pPassDefault->SetFrameBuffer(0, m_ptrRenderTextures[RENDER_TEXTURE_SWAPCHAIN_COLOR0], m_ptrRenderTextures[RENDER_TEXTURE_SWAPCHAIN_DEPTH]);
@@ -126,6 +127,8 @@ void CRenderSystem::CreateRenderPass(void)
 	m_pPassShadowMapBlur = new CPassShadowMapBlur(this);
 	m_pPassShadowMapBlur->SetFrameBuffer(m_ptrRenderTextures[RENDER_TEXTURE_SHADOWMAP_COLOR_BLUR]);
 	m_pPassShadowMapBlur->SetInputShadowMapTexture(m_ptrRenderTextures[RENDER_TEXTURE_SHADOWMAP_COLOR]);
+
+	m_pPassColorGrading = new CPassColorGrading(this);
 }
 
 void CRenderSystem::DestroyRenderPass(void)
@@ -134,11 +137,13 @@ void CRenderSystem::DestroyRenderPass(void)
 	CPassForwardLighting::Destroy();
 	CPassShadowMap::Destroy();
 	CPassShadowMapBlur::Destroy();
+	CPassColorGrading::Destroy();
 
 	delete m_pPassDefault;
 	delete m_pPassForwardLighting;
 	delete m_pPassShadowMap;
 	delete m_pPassShadowMapBlur;
+	delete m_pPassColorGrading;
 }
 
 void CRenderSystem::SetTime(float t, float dt)

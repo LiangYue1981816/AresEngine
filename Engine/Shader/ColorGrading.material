@@ -1,5 +1,5 @@
 <Material>
-	<Pass name="ShadowMapBlur">
+	<Pass name="ColorGrading">
 		<Pipeline render_pass="ColorGrading">
 		  <Vertex file_name="ColorGrading.glsl">
 		    <Define name="VERTEX_ATTRIBUTE_POSITION" />

@@ -124,6 +124,7 @@ private:
 	CPassForwardLighting* m_pPassForwardLighting;
 	CPassShadowMap* m_pPassShadowMap;
 	CPassShadowMapBlur* m_pPassShadowMapBlur;
+	CPassColorGrading* m_pPassColorGrading;
 
 private:
 	CGfxRenderTexturePtr m_ptrRenderTextures[RENDER_TEXTURE_COUNT];
