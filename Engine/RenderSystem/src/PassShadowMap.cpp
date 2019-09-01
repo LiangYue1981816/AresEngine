@@ -123,9 +123,7 @@ const CGfxSemaphore* CPassShadowMap::Render(CTaskGraph& taskGraph, const CGfxSem
 
 			const float zFar = 500.0f;
 			const float zNear = -500.0f;
-
 			glm::sphere sphereFrustum = glm::sphere(minVertex, maxVertex);
-			sphereFrustum.radius *= 0.75f; // ???
 
 			m_pShadowCamera[indexLevel]->SetOrtho(-sphereFrustum.radius, sphereFrustum.radius, -sphereFrustum.radius, sphereFrustum.radius, zNear, zFar);
 			m_pShadowCamera[indexLevel]->SetLookat(sphereFrustum.center.x, sphereFrustum.center.y, sphereFrustum.center.z, sphereFrustum.center.x + mainLightDirection.x, sphereFrustum.center.y + mainLightDirection.y, sphereFrustum.center.z + mainLightDirection.z, 0.0f, 1.0f, 0.0f);
