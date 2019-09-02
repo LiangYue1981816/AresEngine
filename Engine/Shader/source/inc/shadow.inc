@@ -93,7 +93,54 @@ highp float ShadowValueIrregular(highp vec3 worldPosition, highp sampler2D shado
 	return clamp(visibility, 0.0, 1.0);
 }
 
-highp float ShadowValue(highp vec3 worldPosition, highp sampler2D shadowmap)
+
+
+
+
+highp float FilterPCF(highp sampler2D shadowmap, highp vec2 texcoord, highp float curDepth, highp float resolution)
+{
+	highp float result = 0.0;
+	highp vec2 texelSize = vec2(1.0 / resolution);
+	//*
+	result += step(curDepth, texture(shadowmap, texcoord + vec2(-1.0f, -1.0f) * texelSize).r) * 1.0 / 16.0;
+	result += step(curDepth, texture(shadowmap, texcoord + vec2( 0.0f, -1.0f) * texelSize).r) * 2.0 / 16.0;
+	result += step(curDepth, texture(shadowmap, texcoord + vec2( 1.0f, -1.0f) * texelSize).r) * 1.0 / 16.0;
+	result += step(curDepth, texture(shadowmap, texcoord + vec2(-1.0f,  0.0f) * texelSize).r) * 2.0 / 16.0;
+	result += step(curDepth, texture(shadowmap, texcoord + vec2( 0.0f,  0.0f) * texelSize).r) * 4.0 / 16.0;
+	result += step(curDepth, texture(shadowmap, texcoord + vec2( 1.0f,  0.0f) * texelSize).r) * 2.0 / 16.0;
+	result += step(curDepth, texture(shadowmap, texcoord + vec2(-1.0f,  1.0f) * texelSize).r) * 1.0 / 16.0;
+	result += step(curDepth, texture(shadowmap, texcoord + vec2( 0.0f,  1.0f) * texelSize).r) * 2.0 / 16.0;
+	result += step(curDepth, texture(shadowmap, texcoord + vec2( 1.0f,  1.0f) * texelSize).r) * 1.0 / 16.0;
+	return result;
+	/*/
+	for (highp float x = -1.0; x <= 1.0; x++) {
+		for (highp float y = -1.0; y <= 1.0; y++) {
+			highp vec2 offset = vec2(x, y) * texelSize;
+			highp float shadowDepth = texture(shadowmap, texcoord + offset).r;
+			result += step(curDepth, shadowDepth);
+		}
+	}
+	
+	return result / 9.0;
+	//*/
+}
+
+highp float LinearFilterPCF(highp sampler2D shadowmap, highp vec2 texcoord, highp float curDepth, highp float resolution)
+{
+	highp vec2 texelSize = vec2(1.0 / resolution);
+	highp vec2 center = floor(texcoord * resolution + 0.5) * texelSize;
+	highp vec2 f = fract(texcoord * resolution + 0.5);
+	highp float lb = FilterPCF(shadowmap, center + vec2(0.0, 0.0) * texelSize, curDepth, resolution);
+	highp float lt = FilterPCF(shadowmap, center + vec2(0.0, 1.0) * texelSize, curDepth, resolution);
+	highp float rb = FilterPCF(shadowmap, center + vec2(1.0, 0.0) * texelSize, curDepth, resolution);
+	highp float rt = FilterPCF(shadowmap, center + vec2(1.0, 1.0) * texelSize, curDepth, resolution);
+	highp float a = mix(lb, lt, f.y);
+	highp float b = mix(rb, rt, f.y);
+	highp float c = mix(a, b, f.x);
+	return c;
+}
+
+highp float ShadowValue(highp vec3 worldPosition, highp vec3 worldNormal, highp sampler2D shadowmap)
 {
 	highp int indexLevel;
 	highp vec3 worldCameraPosition = (cameraViewInverseMatrix * vec4(0.0, 0.0, 0.0, 1.0)).xyz;
@@ -109,29 +156,15 @@ highp float ShadowValue(highp vec3 worldPosition, highp sampler2D shadowmap)
  	projectCoord.xy = clamp(projectCoord.xy * 0.5 + vec2(0.5), vec2(0.0), vec2(1.0));
 	projectCoord.xy = clamp(projectCoord.xy * 0.5 + texOffset[indexLevel], texOffset[indexLevel], texOffset[indexLevel] + vec2(0.5));
 
-	highp float shadowDepth = texture(shadowmap, projectCoord.xy).r;
-	highp float curDepth = (mainShadowProjectionViewMatrix(indexLevel) * vec4(worldPosition, 1.0)).z;
+	highp float biasBase[4] = float[](3.0, 0.0, 0.0, 0.0);
+	highp float resolution[4] = float[](2.0, 2.0, 2.0, 2.0);
 
-	highp float visibility = shadowDepth + 0.0001 > curDepth ? 1.0 : 0.0;
-	return clamp(visibility, 0.0, 1.0);
+	highp vec3 mainShadowDirection = normalize((mainShadowViewInverseMatrix(indexLevel) * vec4(0.0, 0.0, 1.0, 0.0)).xyz);
+	highp float bias = max(0.0001 * biasBase[indexLevel] * (1.0 - dot(worldNormal, mainShadowDirection)), 0.00001 * biasBase[indexLevel]);
+	highp float curDepth = (mainShadowProjectionViewMatrix(indexLevel) * vec4(worldPosition, 1.0)).z - bias;
 
-	/*
-	highp float bias[4] = float[](0.1, 0.2, 0.5, 1.5);
-	highp float curDepth = (mainShadowViewMatrix(indexLevel) * vec4(worldPosition, 1.0)).z - mainShadowZNear(indexLevel) + bias[indexLevel];
-
-	highp float resolution[4] = float[](2.0, 4.0, 6.0, 8.0);
-	highp float shadowDepth = LinearShadowDepth(shadowmap, projectCoord.xy, resolution[indexLevel] * 1024.0) * (mainShadowZFar(indexLevel) - mainShadowZNear(indexLevel));
-
-//	highp float visibility = curDepth / (mainShadowZFar(indexLevel) - mainShadowZNear(indexLevel));
-//	highp float visibility = shadowDepth / (mainShadowZFar(indexLevel) - mainShadowZNear(indexLevel));
-//	highp float visibility = shadowDepth > curDepth ? 0.0 : 1.0;
-//	highp float visibility = 1.0 - clamp(shadowDepth - curDepth, 0.0, 1.0);
-//	highp float visibility = cos(mix(0.0, 1.57, clamp(shadowDepth - curDepth, 0.0, 1.0)));
-//	highp float visibility = exp(mix(0.0, -5.0, clamp(shadowDepth - curDepth, 0.0, 1.0)));
-	highp float visibility = exp(mix(0.0, -5.0, clamp(log(shadowDepth - curDepth + 1.0) * 0.5, 0.0, 1.0)));
-//	highp float visibility = exp(-1.0 * (shadowDepth - curDepth));
-	return clamp(visibility, 0.0, 1.0);
-	*/
+//	return FilterPCF(shadowmap, projectCoord.xy, curDepth, resolution[indexLevel] * 1024.0);
+	return LinearFilterPCF(shadowmap, projectCoord.xy, curDepth, resolution[indexLevel] * 1024.0);
 }
 
 #endif

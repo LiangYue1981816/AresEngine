@@ -120,7 +120,7 @@ void main()
 	mediump float ao = 1.0;
 #endif
 
-	mediump float shadow = ShadowValue(inPosition, texShadowMap);
+	mediump float shadow = ShadowValue(inPosition, inNormal, texShadowMap);
 //	mediump float shadow = ShadowValueIrregular(inPosition, texShadowMap);
 
 	mediump vec3 pointLightDirection = mainPointLightPosition - inPosition;
@@ -147,7 +147,7 @@ void main()
 //if (factor < mainShadowLevelFactor.z) finalLighting = vec3(0.0, 0.0, 1.0) * vec3(shadow);
 //if (factor < mainShadowLevelFactor.y) finalLighting = vec3(0.0, 1.0, 0.0) * vec3(shadow);
 //if (factor < mainShadowLevelFactor.x) finalLighting = vec3(1.0, 0.0, 0.0) * vec3(shadow);
-//finalLighting = vec3(shadow);
+finalLighting = vec3(shadow);
 
 	outFragColor.rgb = finalLighting;
 	outFragColor.a = 1.0;
