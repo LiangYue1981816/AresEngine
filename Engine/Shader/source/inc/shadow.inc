@@ -109,6 +109,13 @@ highp float ShadowValue(highp vec3 worldPosition, highp sampler2D shadowmap)
  	projectCoord.xy = clamp(projectCoord.xy * 0.5 + vec2(0.5), vec2(0.0), vec2(1.0));
 	projectCoord.xy = clamp(projectCoord.xy * 0.5 + texOffset[indexLevel], texOffset[indexLevel], texOffset[indexLevel] + vec2(0.5));
 
+	highp float shadowDepth = texture(shadowmap, projectCoord.xy).r;
+	highp float curDepth = (mainShadowProjectionViewMatrix(indexLevel) * vec4(worldPosition, 1.0)).z;
+
+	highp float visibility = shadowDepth + 0.0001 > curDepth ? 1.0 : 0.0;
+	return clamp(visibility, 0.0, 1.0);
+
+	/*
 	highp float bias[4] = float[](0.1, 0.2, 0.5, 1.5);
 	highp float curDepth = (mainShadowViewMatrix(indexLevel) * vec4(worldPosition, 1.0)).z - mainShadowZNear(indexLevel) + bias[indexLevel];
 
@@ -124,6 +131,7 @@ highp float ShadowValue(highp vec3 worldPosition, highp sampler2D shadowmap)
 	highp float visibility = exp(mix(0.0, -5.0, clamp(log(shadowDepth - curDepth + 1.0) * 0.5, 0.0, 1.0)));
 //	highp float visibility = exp(-1.0 * (shadowDepth - curDepth));
 	return clamp(visibility, 0.0, 1.0);
+	*/
 }
 
 #endif
