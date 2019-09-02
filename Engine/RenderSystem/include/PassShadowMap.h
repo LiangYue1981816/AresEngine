@@ -9,7 +9,7 @@ class CALL_API CPassShadowMap
 
 
 private:
-	static void Create(GfxPixelFormat shadowPixelFormat, GfxPixelFormat depthPixelFormat);
+	static void Create(GfxPixelFormat depthPixelFormat);
 	static void Destroy(void);
 
 
@@ -20,7 +20,8 @@ private:
 
 public:
 	void SetCamera(CCamera* pCamera);
-	void SetFrameBuffer(CGfxRenderTexturePtr ptrShadowTexture, CGfxRenderTexturePtr ptrDepthStencilTexture);
+	void SetFrameBuffer(CGfxRenderTexturePtr ptrDepthTexture);
+	void SetSplitFactors(float f1, float f2, float f3, float f4);
 
 private:
 	const CGfxSemaphore* Render(CTaskGraph& taskGraph, const CGfxSemaphore* pWaitSemaphore);
@@ -33,8 +34,7 @@ private:
 
 private:
 	CGfxFrameBufferPtr m_ptrFrameBuffer;
-	CGfxRenderTexturePtr m_ptrShadowTexture;
-	CGfxRenderTexturePtr m_ptrDepthStencilTexture;
+	CGfxRenderTexturePtr m_ptrDepthTexture;
 
 private:
 	CGfxUniformCamera* m_pShadowCameraUniform[4];

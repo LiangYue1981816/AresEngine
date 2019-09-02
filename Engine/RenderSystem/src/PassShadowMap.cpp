@@ -2,20 +2,17 @@
 
 
 static const int numSubpasses = 1;
-static const int numAttachments = 2;
+static const int numAttachments = 1;
 static CGfxRenderPassPtr ptrRenderPass;
 
-void CPassShadowMap::Create(GfxPixelFormat shadowPixelFormat, GfxPixelFormat depthPixelFormat)
+void CPassShadowMap::Create(GfxPixelFormat depthPixelFormat)
 {
 	const int stencil = 0;
 	const float depth = 1.0f;
-	const float color[] = { 0.0f, 0.0f, 0.0f, 0.0f };
 
 	ptrRenderPass = GfxRenderer()->NewRenderPass(PASS_SHADOWMAP_NAME, numAttachments, numSubpasses);
-	ptrRenderPass->SetColorAttachment(0, shadowPixelFormat, 1, false, true, color[0], color[1], color[2], color[3]);
-	ptrRenderPass->SetDepthStencilAttachment(1, depthPixelFormat, 1, true, true, depth, stencil);
-	ptrRenderPass->SetSubpassOutputColorReference(0, 0);
-	ptrRenderPass->SetSubpassOutputDepthStencilReference(0, 1);
+	ptrRenderPass->SetDepthStencilAttachment(0, depthPixelFormat, 1, false, true, depth, stencil);
+	ptrRenderPass->SetSubpassOutputDepthStencilReference(0, 0);
 	ptrRenderPass->Create();
 }
 
@@ -77,15 +74,22 @@ void CPassShadowMap::SetCamera(CCamera* pCamera)
 	m_pCamera = pCamera;
 }
 
-void CPassShadowMap::SetFrameBuffer(CGfxRenderTexturePtr ptrShadowTexture, CGfxRenderTexturePtr ptrDepthStencilTexture)
+void CPassShadowMap::SetFrameBuffer(CGfxRenderTexturePtr ptrDepthTexture)
 {
-	m_ptrShadowTexture = ptrShadowTexture;
-	m_ptrDepthStencilTexture = ptrDepthStencilTexture;
+	m_ptrDepthTexture = ptrDepthTexture;
 
-	m_ptrFrameBuffer = GfxRenderer()->NewFrameBuffer(m_ptrShadowTexture->GetWidth(), m_ptrShadowTexture->GetHeight(), numAttachments);
-	m_ptrFrameBuffer->SetAttachmentTexture(0, m_ptrShadowTexture);
-	m_ptrFrameBuffer->SetAttachmentTexture(1, m_ptrDepthStencilTexture);
+	m_ptrFrameBuffer = GfxRenderer()->NewFrameBuffer(m_ptrDepthTexture->GetWidth(), m_ptrDepthTexture->GetHeight(), numAttachments);
+	m_ptrFrameBuffer->SetAttachmentTexture(0, m_ptrDepthTexture);
 	m_ptrFrameBuffer->Create(ptrRenderPass);
+}
+
+void CPassShadowMap::SetSplitFactors(float f1, float f2, float f3, float f4)
+{
+	m_splitFactors[0] = 0.0f;
+	m_splitFactors[1] = f1;
+	m_splitFactors[2] = f2;
+	m_splitFactors[3] = f3;
+	m_splitFactors[4] = f4;
 }
 
 const CGfxSemaphore* CPassShadowMap::Render(CTaskGraph& taskGraph, const CGfxSemaphore* pWaitSemaphore)
@@ -148,12 +152,11 @@ const CGfxSemaphore* CPassShadowMap::Render(CTaskGraph& taskGraph, const CGfxSem
 
 			GfxRenderer()->BeginRecord(ptrMainCommandBuffer);
 			{
-				GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, m_ptrShadowTexture, GFX_IMAGE_LAYOUT_GENERAL);
-				GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, m_ptrDepthStencilTexture, GFX_IMAGE_LAYOUT_GENERAL);
+				GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, m_ptrDepthTexture, GFX_IMAGE_LAYOUT_GENERAL);
 				GfxRenderer()->CmdBeginRenderPass(ptrMainCommandBuffer, m_ptrFrameBuffer, ptrRenderPass);
 				{
-					const float w = m_ptrShadowTexture->GetWidth();
-					const float h = m_ptrShadowTexture->GetHeight();
+					const float w = m_ptrDepthTexture->GetWidth();
+					const float h = m_ptrDepthTexture->GetHeight();
 
 					const glm::vec4 area[4] = {
 						glm::vec4(0.0f, 0.0f, 0.5f, 0.5f) * glm::vec4(w, h, w, h),
@@ -168,7 +171,7 @@ const CGfxSemaphore* CPassShadowMap::Render(CTaskGraph& taskGraph, const CGfxSem
 					}
 				}
 				GfxRenderer()->CmdEndRenderPass(ptrMainCommandBuffer);
-				GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, m_ptrShadowTexture, GFX_IMAGE_LAYOUT_COLOR_READ_ONLY_OPTIMAL);
+				GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, m_ptrDepthTexture, GFX_IMAGE_LAYOUT_DEPTH_STENCIL_READ_ONLY_OPTIMAL);
 			}
 			GfxRenderer()->EndRecord(ptrMainCommandBuffer);
 		}

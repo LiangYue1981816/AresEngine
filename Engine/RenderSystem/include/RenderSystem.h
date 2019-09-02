@@ -120,7 +120,6 @@ private:
 	CPassDefault* m_pPassDefault;
 	CPassForwardLighting* m_pPassForwardLighting;
 	CPassShadowMap* m_pPassShadowMap;
-	CPassShadowMapBlur* m_pPassShadowMapBlur;
 	CPassColorGrading* m_pPassColorGrading;
 
 private:
