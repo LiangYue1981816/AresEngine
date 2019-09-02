@@ -2,6 +2,7 @@
 #include "PreHeader.h"
 
 
+// Vertex&Instance Attributes
 #define VERTEX_ATTRIBUTE_POSITION                          0x00000001
 #define VERTEX_ATTRIBUTE_NORMAL                            0x00000002
 #define VERTEX_ATTRIBUTE_BINORMAL                          0x00000004
@@ -22,6 +23,7 @@
 #define INSTANCE_FORMAT_TRANSFORM INSTANCE_ATTRIBUTE_TRANSFORM
 
 
+// Uniform
 #define UNIFORM_ENGINE_BIND                                0
 #define UNIFORM_CAMERA_BIND                                1
 #define UNIFORM_SHADOWMAP_BIND                             2
@@ -33,6 +35,7 @@
 #define UNIFORM_COLOR_TEXTURE_NAME                         HashValue("texColor")
 
 
+// Pass
 #define PASS_DEFAULT_NAME                                  HashValue("Default")
 #define PASS_FORWARD_LIGHTING_NAME                         HashValue("ForwardLighting")
 #define PASS_SHADOWMAP_NAME                                HashValue("ShadowMap")
@@ -40,6 +43,7 @@
 #define PASS_COLOR_GRADING_NAME                            HashValue("ColorGrading")
 
 
+// RenderTexture
 #define RENDER_TEXTURE_SWAPCHAIN_DEPTH                     HashValue("RenderTextureSwapChainDepth")
 #define RENDER_TEXTURE_SWAPCHAIN_COLOR0                    HashValue("RenderTextureSwapChainColor0")
 #define RENDER_TEXTURE_SWAPCHAIN_COLOR1                    HashValue("RenderTextureSwapChainColor1")
