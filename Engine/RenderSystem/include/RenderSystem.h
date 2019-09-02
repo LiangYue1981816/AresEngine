@@ -40,20 +40,13 @@
 #define PASS_COLOR_GRADING_NAME                            HashValue("ColorGrading")
 
 
-typedef enum RenderTextureType {
-	RENDER_TEXTURE_NONE = -1,
-
-	RENDER_TEXTURE_SWAPCHAIN_DEPTH,
-	RENDER_TEXTURE_SWAPCHAIN_COLOR0,
-	RENDER_TEXTURE_SWAPCHAIN_COLOR1,
-	RENDER_TEXTURE_SWAPCHAIN_COLOR2,
-	
-	RENDER_TEXTURE_SHADOWMAP_DEPTH,
-	RENDER_TEXTURE_SHADOWMAP_COLOR,
-	RENDER_TEXTURE_SHADOWMAP_COLOR_BLUR,
-
-	RENDER_TEXTURE_COUNT
-} RenderTextureType;
+#define RENDER_TEXTURE_SWAPCHAIN_DEPTH                     HashValue("RenderTextureSwapChainDepth")
+#define RENDER_TEXTURE_SWAPCHAIN_COLOR0                    HashValue("RenderTextureSwapChainColor0")
+#define RENDER_TEXTURE_SWAPCHAIN_COLOR1                    HashValue("RenderTextureSwapChainColor1")
+#define RENDER_TEXTURE_SWAPCHAIN_COLOR2                    HashValue("RenderTextureSwapChainColor2")
+#define RENDER_TEXTURE_SHADOWMAP_DEPTH                     HashValue("RenderTextureShadowMapDepth")
+#define RENDER_TEXTURE_SHADOWMAP_COLOR                     HashValue("RenderTextureShadowMapColor")
+#define RENDER_TEXTURE_SHADOWMAP_COLOR_BLUR                HashValue("RenderTextureShadowMapColorBlur")
 
 
 class CALL_API CRenderSystem
@@ -75,13 +68,13 @@ private:
 	CGfxUniformEngine* GetEngineUniform(void) const;
 
 private:
-	void CreateRenderTexture(void);
-	void DestroyRenderTexture(void);
-	CGfxRenderTexturePtr GetRenderTexture(RenderTextureType type);
-
-private:
 	void CreateRenderPass(void);
 	void DestroyRenderPass(void);
+
+public:
+	void CreateRenderTexture(uint32_t name, CGfxRenderTexturePtr ptrRenderTexture);
+	void CreateRenderTexture(uint32_t name, GfxPixelFormat format, int width, int height, int samples = 1, bool bTransient = false);
+	CGfxRenderTexturePtr GetRenderTexture(uint32_t name);
 
 public:
 	void SetTime(float t, float dt);
@@ -127,5 +120,5 @@ private:
 	CPassColorGrading* m_pPassColorGrading;
 
 private:
-	CGfxRenderTexturePtr m_ptrRenderTextures[RENDER_TEXTURE_COUNT];
+	eastl::unordered_map<uint32_t, CGfxRenderTexturePtr> m_ptrRenderTextures;
 };
