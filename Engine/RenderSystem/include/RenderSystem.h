@@ -81,6 +81,12 @@ public:
 	CGfxRenderTexturePtr GetRenderTexture(uint32_t name);
 
 public:
+	CPassDefault* GetPassDefault(void) const;
+	CPassForwardLighting* GetPassForwardLighting(void) const;
+	CPassShadowMap* GetPassShadowMap(void) const;
+	CPassColorGrading* GetPassColorGrading(void) const;
+
+public:
 	void SetTime(float t, float dt);
 
 	void SetEnvLightFactor(float factor);

@@ -132,6 +132,26 @@ void CRenderSystem::DestroyRenderPass(void)
 	delete m_pPassColorGrading;
 }
 
+CPassDefault* CRenderSystem::GetPassDefault(void) const
+{
+	return m_pPassDefault;
+}
+
+CPassForwardLighting* CRenderSystem::GetPassForwardLighting(void) const
+{
+	return m_pPassForwardLighting;
+}
+
+CPassShadowMap* CRenderSystem::GetPassShadowMap(void) const
+{
+	return m_pPassShadowMap;
+}
+
+CPassColorGrading* CRenderSystem::GetPassColorGrading(void) const
+{
+	return m_pPassColorGrading;
+}
+
 void CRenderSystem::SetTime(float t, float dt)
 {
 	m_pEngineUniform->SetTime(t, dt);
