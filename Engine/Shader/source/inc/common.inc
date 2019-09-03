@@ -50,7 +50,7 @@ mediump vec3 BlendNormalInTangentSpace(mediump vec3 baseNormal, mediump vec3 add
 	return normalize(newBaseNormal - newAdditionalNormal);
 }
 
-highp vec2 RandomOffset(highp vec3 seed, highp int index)
+highp vec2 PoissonDiskOffset(highp vec3 seed, highp int index)
 {
 	highp vec2 offset[16] = vec2[]( 
 		vec2(-0.94201624, -0.39906216), 
