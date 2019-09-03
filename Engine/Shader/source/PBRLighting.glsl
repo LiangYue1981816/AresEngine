@@ -147,7 +147,7 @@ void main()
 //if (factor < mainShadowLevelFactor.z) finalLighting = vec3(0.0, 0.0, 1.0) * vec3(shadow);
 //if (factor < mainShadowLevelFactor.y) finalLighting = vec3(0.0, 1.0, 0.0) * vec3(shadow);
 //if (factor < mainShadowLevelFactor.x) finalLighting = vec3(1.0, 0.0, 0.0) * vec3(shadow);
-finalLighting = vec3(shadow);
+//finalLighting = vec3(shadow);
 
 	outFragColor.rgb = finalLighting;
 	outFragColor.a = 1.0;
