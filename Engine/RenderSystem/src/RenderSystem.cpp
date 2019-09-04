@@ -52,7 +52,7 @@ CRenderSystem::CRenderSystem(GfxApi api, void* hInstance, void* hWnd, void* hDC,
 	CreateRenderTexture(RENDER_TEXTURE_SWAPCHAIN_COLOR0, GfxRenderer()->GetSwapChain()->GetFrameTexture(0));
 	CreateRenderTexture(RENDER_TEXTURE_SWAPCHAIN_COLOR1, GfxRenderer()->GetSwapChain()->GetFrameTexture(1));
 	CreateRenderTexture(RENDER_TEXTURE_SWAPCHAIN_COLOR2, GfxRenderer()->GetSwapChain()->GetFrameTexture(2));
-	CreateRenderTexture(RENDER_TEXTURE_SHADOWMAP_DEPTH, GFX_PIXELFORMAT_D32_SFLOAT_PACK32, 2048, 2048);
+	CreateRenderTexture(RENDER_TEXTURE_SHADOWMAP, GFX_PIXELFORMAT_D32_SFLOAT_PACK32, 2048, 2048);
 
 	CreateRenderPass();
 }
@@ -111,10 +111,10 @@ void CRenderSystem::CreateRenderPass(void)
 	m_pPassForwardLighting->SetFrameBuffer(0, GetRenderTexture(RENDER_TEXTURE_SWAPCHAIN_COLOR0), GetRenderTexture(RENDER_TEXTURE_SWAPCHAIN_DEPTH));
 	m_pPassForwardLighting->SetFrameBuffer(1, GetRenderTexture(RENDER_TEXTURE_SWAPCHAIN_COLOR1), GetRenderTexture(RENDER_TEXTURE_SWAPCHAIN_DEPTH));
 	m_pPassForwardLighting->SetFrameBuffer(2, GetRenderTexture(RENDER_TEXTURE_SWAPCHAIN_COLOR2), GetRenderTexture(RENDER_TEXTURE_SWAPCHAIN_DEPTH));
-	m_pPassForwardLighting->SetInputShadowMapTexture(GetRenderTexture(RENDER_TEXTURE_SHADOWMAP_DEPTH));
+	m_pPassForwardLighting->SetInputShadowMapTexture(GetRenderTexture(RENDER_TEXTURE_SHADOWMAP));
 
 	m_pPassShadowMap = new CPassShadowMap(this);
-	m_pPassShadowMap->SetFrameBuffer(GetRenderTexture(RENDER_TEXTURE_SHADOWMAP_DEPTH));
+	m_pPassShadowMap->SetFrameBuffer(GetRenderTexture(RENDER_TEXTURE_SHADOWMAP));
 
 	m_pPassColorGrading = new CPassColorGrading(this);
 }

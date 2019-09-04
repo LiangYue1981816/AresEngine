@@ -39,7 +39,6 @@
 #define PASS_DEFAULT_NAME                                  HashValue("Default")
 #define PASS_FORWARD_LIGHTING_NAME                         HashValue("ForwardLighting")
 #define PASS_SHADOWMAP_NAME                                HashValue("ShadowMap")
-#define PASS_SHADOWMAP_BLUR_NAME                           HashValue("ShadowMapBlur")
 #define PASS_COLOR_GRADING_NAME                            HashValue("ColorGrading")
 
 
@@ -48,9 +47,7 @@
 #define RENDER_TEXTURE_SWAPCHAIN_COLOR0                    HashValue("RenderTextureSwapChainColor0")
 #define RENDER_TEXTURE_SWAPCHAIN_COLOR1                    HashValue("RenderTextureSwapChainColor1")
 #define RENDER_TEXTURE_SWAPCHAIN_COLOR2                    HashValue("RenderTextureSwapChainColor2")
-#define RENDER_TEXTURE_SHADOWMAP_DEPTH                     HashValue("RenderTextureShadowMapDepth")
-#define RENDER_TEXTURE_SHADOWMAP_COLOR                     HashValue("RenderTextureShadowMapColor")
-#define RENDER_TEXTURE_SHADOWMAP_COLOR_BLUR                HashValue("RenderTextureShadowMapColorBlur")
+#define RENDER_TEXTURE_SHADOWMAP                           HashValue("RenderTextureShadowMap")
 
 
 class CALL_API CRenderSystem
@@ -59,7 +56,6 @@ class CALL_API CRenderSystem
 	friend class CPassDefault;
 	friend class CPassForwardLighting;
 	friend class CPassShadowMap;
-	friend class CPassShadowMapBlur;
 	friend class CPassColorGrading;
 
 
