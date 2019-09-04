@@ -52,7 +52,7 @@ highp float ShadowValue(highp vec3 worldPosition, highp vec3 worldNormal, highp 
  	projectCoord.xy = clamp(projectCoord.xy * 0.5 + vec2(0.5), vec2(0.0), vec2(1.0));
 	projectCoord.xy = clamp(projectCoord.xy * 0.5 + texOffset[indexLevel], texOffset[indexLevel], texOffset[indexLevel] + vec2(0.5));
 
-	highp float resolution[4] = float[](2.0, 4.0, 6.0, 10.0);
+	highp float resolution[4] = float[](2.0, 2.0, 2.0, 2.0);
 	highp float curDepth = (mainShadowProjectionViewMatrix(indexLevel) * vec4(worldPosition, 1.0)).z;
 
 //	return FilterPCF(shadowmap, projectCoord.xy, curDepth, resolution[indexLevel] * 1024.0);
