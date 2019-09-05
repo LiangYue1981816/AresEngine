@@ -76,4 +76,9 @@ highp vec2 PoissonDiskOffset(highp vec3 seed, highp int index)
 	return offset[int(16.0 * fract(sin(dotProduct) * 43758.5453)) % 16];
 }
 
+mediump vec3 Desaturation(mediump vec3 luminance, mediump vec3 color, mediump float percent)
+{
+	return (1.0 - percent) * dot(luminance, color) + percent * color;
+}
+
 #endif
