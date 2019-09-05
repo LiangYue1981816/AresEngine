@@ -16,7 +16,7 @@ const eastl::string& CGfxSprivCross::Create(const uint32_t* words, size_t numWor
 	spirv_cross::CompilerGLSL::Options options;
 	options.version = version;
 	options.es = true;
-	options.vertex.fixup_clipspace = false;
+	options.vertex.fixup_clipspace = true;
 
 	spirv_cross::CompilerGLSL compiler(words, numWords);
 	compiler.set_common_options(options);
