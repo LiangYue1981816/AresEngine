@@ -19,7 +19,7 @@ const eastl::string& CGfxSprivCross::Create(const uint32_t* words, size_t numWor
 	options.vertex.fixup_clipspace = false;
 
 	spirv_cross::CompilerGLSL compiler(words, numWords);
-	compiler.set_options(options);
+	compiler.set_common_options(options);
 	m_source = compiler.compile().c_str();
 
 	const spirv_cross::ShaderResources shaderResources = compiler.get_shader_resources();
@@ -35,7 +35,7 @@ const eastl::string& CGfxSprivCross::Create(const uint32_t* words, size_t numWor
 		}
 
 		for (const auto& itPushConstant : shaderResources.push_constant_buffers) {
-			const std::vector<spirv_cross::BufferRange> ranges = compiler.get_active_buffer_ranges(itPushConstant.id);
+			const spirv_cross::SmallVector<spirv_cross::BufferRange> ranges = compiler.get_active_buffer_ranges(itPushConstant.id);
 			for (int indexRange = 0; indexRange < ranges.size(); indexRange++) {
 				const std::string member = compiler.get_member_name(itPushConstant.base_type_id, ranges[indexRange].index);
 				const std::string name = itPushConstant.name + "." + member;
