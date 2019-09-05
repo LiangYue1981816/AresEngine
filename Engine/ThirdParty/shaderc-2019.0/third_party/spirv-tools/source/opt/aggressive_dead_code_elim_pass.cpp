@@ -622,7 +622,7 @@ Pass::Status AggressiveDCEPass::ProcessImpl() {
 
   // Process module-level instructions. Now that all live instructions have
   // been marked, it is safe to remove dead global values.
-  modified |= ProcessGlobalValues();
+  // modified |= ProcessGlobalValues();
 
   // Kill all dead instructions.
   for (auto inst : to_kill_) {
