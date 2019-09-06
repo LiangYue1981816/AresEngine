@@ -27,11 +27,13 @@
 #define UNIFORM_ENGINE_BIND                                0
 #define UNIFORM_CAMERA_BIND                                1
 #define UNIFORM_SHADOWMAP_BIND                             2
+#define UNIFORM_DEPTH_TEXTURE_BIND                         2
 #define UNIFORM_COLOR_TEXTURE_BIND                         2
 
 #define UNIFORM_ENGINE_NAME                                HashValue("Engine")
 #define UNIFORM_CAMERA_NAME                                HashValue("Camera")
 #define UNIFORM_SHADOWMAP_NAME                             HashValue("texShadowMap")
+#define UNIFORM_DEPTH_TEXTURE_NAME                         HashValue("texDepth")
 #define UNIFORM_COLOR_TEXTURE_NAME                         HashValue("texColor")
 
 
@@ -39,6 +41,7 @@
 #define PASS_DEFAULT_NAME                                  HashValue("Default")
 #define PASS_FORWARD_LIGHTING_NAME                         HashValue("ForwardLighting")
 #define PASS_SHADOWMAP_NAME                                HashValue("ShadowMap")
+#define PASS_SSAO_NAME                                     HashValue("SSAO")
 #define PASS_COLOR_GRADING_NAME                            HashValue("ColorGrading")
 
 
@@ -56,6 +59,7 @@ class CALL_API CRenderSystem
 	friend class CPassDefault;
 	friend class CPassForwardLighting;
 	friend class CPassShadowMap;
+	friend class CPassSSAO;
 	friend class CPassColorGrading;
 
 
@@ -80,6 +84,7 @@ public:
 	CPassDefault* GetPassDefault(void) const;
 	CPassForwardLighting* GetPassForwardLighting(void) const;
 	CPassShadowMap* GetPassShadowMap(void) const;
+	CPassSSAO* GetPassSSAO(void) const;
 	CPassColorGrading* GetPassColorGrading(void) const;
 
 public:
@@ -122,6 +127,7 @@ private:
 	CPassDefault* m_pPassDefault;
 	CPassForwardLighting* m_pPassForwardLighting;
 	CPassShadowMap* m_pPassShadowMap;
+	CPassSSAO* m_pPassSSAO;
 	CPassColorGrading* m_pPassColorGrading;
 
 private:

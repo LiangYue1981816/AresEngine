@@ -32,6 +32,8 @@ CRenderSystem::CRenderSystem(GfxApi api, void* hInstance, void* hWnd, void* hDC,
 	, m_pPassDefault(nullptr)
 	, m_pPassForwardLighting(nullptr)
 	, m_pPassShadowMap(nullptr)
+	, m_pPassSSAO(nullptr)
+	, m_pPassColorGrading(nullptr)
 {
 	switch ((int)api) {
 	case GFX_API_GLES3:
@@ -100,6 +102,7 @@ void CRenderSystem::CreateRenderPass(void)
 	CPassDefault::Create(GFX_PIXELFORMAT_BGRA8_UNORM_PACK8, GFX_PIXELFORMAT_D32_SFLOAT_PACK32, 1);
 	CPassForwardLighting::Create(GFX_PIXELFORMAT_BGRA8_UNORM_PACK8, GFX_PIXELFORMAT_D32_SFLOAT_PACK32, 1);
 	CPassShadowMap::Create(GFX_PIXELFORMAT_D32_SFLOAT_PACK32);
+	CPassSSAO::Create(GFX_PIXELFORMAT_BGRA8_UNORM_PACK8);
 	CPassColorGrading::Create(GFX_PIXELFORMAT_BGRA8_UNORM_PACK8);
 
 	m_pPassDefault = new CPassDefault(this);
@@ -116,6 +119,8 @@ void CRenderSystem::CreateRenderPass(void)
 	m_pPassShadowMap = new CPassShadowMap(this);
 	m_pPassShadowMap->SetFrameBuffer(GetRenderTexture(RENDER_TEXTURE_SHADOWMAP));
 
+	m_pPassSSAO = new CPassSSAO(this);
+
 	m_pPassColorGrading = new CPassColorGrading(this);
 }
 
@@ -124,11 +129,13 @@ void CRenderSystem::DestroyRenderPass(void)
 	CPassDefault::Destroy();
 	CPassForwardLighting::Destroy();
 	CPassShadowMap::Destroy();
+	CPassSSAO::Destroy();
 	CPassColorGrading::Destroy();
 
 	delete m_pPassDefault;
 	delete m_pPassForwardLighting;
 	delete m_pPassShadowMap;
+	delete m_pPassSSAO;
 	delete m_pPassColorGrading;
 }
 
@@ -145,6 +152,11 @@ CPassForwardLighting* CRenderSystem::GetPassForwardLighting(void) const
 CPassShadowMap* CRenderSystem::GetPassShadowMap(void) const
 {
 	return m_pPassShadowMap;
+}
+
+CPassSSAO* CRenderSystem::GetPassSSAO(void) const
+{
+	return m_pPassSSAO;
 }
 
 CPassColorGrading* CRenderSystem::GetPassColorGrading(void) const
