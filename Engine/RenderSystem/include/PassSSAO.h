@@ -19,8 +19,8 @@ private:
 
 
 public:
-	void SetFrameBuffer(CGfxRenderTexturePtr ptrColorTexture);
 	void SetInputDepthTexture(CGfxRenderTexturePtr ptrDepthTexture);
+	void SetOutputTexture(CGfxRenderTexturePtr ptrColorTexture);
 
 private:
 	const CGfxSemaphore* Render(CTaskGraph& taskGraph, const CGfxSemaphore* pWaitSemaphore);

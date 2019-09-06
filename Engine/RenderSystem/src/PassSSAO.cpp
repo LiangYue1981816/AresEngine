@@ -48,19 +48,19 @@ CPassSSAO::~CPassSSAO(void)
 	m_ptrMainCommandBuffer[2]->Clearup();
 }
 
-void CPassSSAO::SetFrameBuffer(CGfxRenderTexturePtr ptrColorGradingTexture)
+void CPassSSAO::SetInputDepthTexture(CGfxRenderTexturePtr ptrDepthTexture)
+{
+	CGfxSampler* pSampler = GfxRenderer()->CreateSampler(GFX_FILTER_NEAREST, GFX_FILTER_NEAREST, GFX_SAMPLER_MIPMAP_MODE_NEAREST, GFX_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE);
+	m_ptrDescriptorSetPass->SetRenderTexture(UNIFORM_DEPTH_TEXTURE_NAME, ptrDepthTexture, pSampler);
+}
+
+void CPassSSAO::SetOutputTexture(CGfxRenderTexturePtr ptrColorGradingTexture)
 {
 	m_ptrColorTexture = ptrColorGradingTexture;
 
 	m_ptrFrameBuffer = GfxRenderer()->NewFrameBuffer(m_ptrColorTexture->GetWidth(), m_ptrColorTexture->GetHeight(), numAttachments);
 	m_ptrFrameBuffer->SetAttachmentTexture(0, m_ptrColorTexture);
 	m_ptrFrameBuffer->Create(ptrRenderPass);
-}
-
-void CPassSSAO::SetInputDepthTexture(CGfxRenderTexturePtr ptrDepthTexture)
-{
-	CGfxSampler* pSampler = GfxRenderer()->CreateSampler(GFX_FILTER_NEAREST, GFX_FILTER_NEAREST, GFX_SAMPLER_MIPMAP_MODE_NEAREST, GFX_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE);
-	m_ptrDescriptorSetPass->SetRenderTexture(UNIFORM_DEPTH_TEXTURE_NAME, ptrDepthTexture, pSampler);
 }
 
 const CGfxSemaphore* CPassSSAO::Render(CTaskGraph& taskGraph, const CGfxSemaphore* pWaitSemaphore)

@@ -48,19 +48,19 @@ CPassColorGrading::~CPassColorGrading(void)
 	m_ptrMainCommandBuffer[2]->Clearup();
 }
 
-void CPassColorGrading::SetFrameBuffer(CGfxRenderTexturePtr ptrColorGradingTexture)
+void CPassColorGrading::SetInputColorTexture(CGfxRenderTexturePtr ptrColorTexture)
+{
+	CGfxSampler* pSampler = GfxRenderer()->CreateSampler(GFX_FILTER_NEAREST, GFX_FILTER_NEAREST, GFX_SAMPLER_MIPMAP_MODE_NEAREST, GFX_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE);
+	m_ptrDescriptorSetPass->SetRenderTexture(UNIFORM_COLOR_TEXTURE_NAME, ptrColorTexture, pSampler);
+}
+
+void CPassColorGrading::SetOutputTexture(CGfxRenderTexturePtr ptrColorGradingTexture)
 {
 	m_ptrColorGradingTexture = ptrColorGradingTexture;
 
 	m_ptrFrameBuffer = GfxRenderer()->NewFrameBuffer(m_ptrColorGradingTexture->GetWidth(), m_ptrColorGradingTexture->GetHeight(), numAttachments);
 	m_ptrFrameBuffer->SetAttachmentTexture(0, m_ptrColorGradingTexture);
 	m_ptrFrameBuffer->Create(ptrRenderPass);
-}
-
-void CPassColorGrading::SetInputColorTexture(CGfxRenderTexturePtr ptrColorTexture)
-{
-	CGfxSampler* pSampler = GfxRenderer()->CreateSampler(GFX_FILTER_NEAREST, GFX_FILTER_NEAREST, GFX_SAMPLER_MIPMAP_MODE_NEAREST, GFX_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE);
-	m_ptrDescriptorSetPass->SetRenderTexture(UNIFORM_COLOR_TEXTURE_NAME, ptrColorTexture, pSampler);
 }
 
 const CGfxSemaphore* CPassColorGrading::Render(CTaskGraph& taskGraph, const CGfxSemaphore* pWaitSemaphore)

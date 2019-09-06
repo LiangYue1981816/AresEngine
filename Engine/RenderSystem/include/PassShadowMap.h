@@ -20,8 +20,8 @@ private:
 
 public:
 	void SetCamera(CCamera* pCamera);
-	void SetFrameBuffer(CGfxRenderTexturePtr ptrDepthTexture);
 	void SetSplitFactors(float f1, float f2, float f3, float f4);
+	void SetOutputTexture(CGfxRenderTexturePtr ptrDepthTexture);
 
 private:
 	const CGfxSemaphore* Render(CTaskGraph& taskGraph, const CGfxSemaphore* pWaitSemaphore);

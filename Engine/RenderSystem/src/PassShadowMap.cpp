@@ -74,15 +74,6 @@ void CPassShadowMap::SetCamera(CCamera* pCamera)
 	m_pCamera = pCamera;
 }
 
-void CPassShadowMap::SetFrameBuffer(CGfxRenderTexturePtr ptrDepthTexture)
-{
-	m_ptrDepthTexture = ptrDepthTexture;
-
-	m_ptrFrameBuffer = GfxRenderer()->NewFrameBuffer(m_ptrDepthTexture->GetWidth(), m_ptrDepthTexture->GetHeight(), numAttachments);
-	m_ptrFrameBuffer->SetAttachmentTexture(0, m_ptrDepthTexture);
-	m_ptrFrameBuffer->Create(ptrRenderPass);
-}
-
 void CPassShadowMap::SetSplitFactors(float f1, float f2, float f3, float f4)
 {
 	m_splitFactors[0] = 0.0f;
@@ -90,6 +81,15 @@ void CPassShadowMap::SetSplitFactors(float f1, float f2, float f3, float f4)
 	m_splitFactors[2] = f2;
 	m_splitFactors[3] = f3;
 	m_splitFactors[4] = f4;
+}
+
+void CPassShadowMap::SetOutputTexture(CGfxRenderTexturePtr ptrDepthTexture)
+{
+	m_ptrDepthTexture = ptrDepthTexture;
+
+	m_ptrFrameBuffer = GfxRenderer()->NewFrameBuffer(m_ptrDepthTexture->GetWidth(), m_ptrDepthTexture->GetHeight(), numAttachments);
+	m_ptrFrameBuffer->SetAttachmentTexture(0, m_ptrDepthTexture);
+	m_ptrFrameBuffer->Create(ptrRenderPass);
 }
 
 const CGfxSemaphore* CPassShadowMap::Render(CTaskGraph& taskGraph, const CGfxSemaphore* pWaitSemaphore)

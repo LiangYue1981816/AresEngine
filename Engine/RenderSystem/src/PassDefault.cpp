@@ -59,7 +59,7 @@ void CPassDefault::SetCamera(CCamera* pCamera)
 	}
 }
 
-void CPassDefault::SetFrameBuffer(int indexFrame, CGfxRenderTexturePtr ptrColorTexture, CGfxRenderTexturePtr ptrDepthStencilTexture)
+void CPassDefault::SetOutputTexture(int indexFrame, CGfxRenderTexturePtr ptrColorTexture, CGfxRenderTexturePtr ptrDepthStencilTexture)
 {
 	m_ptrColorTexture[indexFrame] = ptrColorTexture;
 	m_ptrDepthStencilTexture[indexFrame] = ptrDepthStencilTexture;

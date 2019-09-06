@@ -20,8 +20,8 @@ private:
 
 public:
 	void SetCamera(CCamera* pCamera);
-	void SetFrameBuffer(int indexFrame, CGfxRenderTexturePtr ptrColorTexture, CGfxRenderTexturePtr ptrDepthStencilTexture);
 	void SetInputShadowMapTexture(CGfxRenderTexturePtr ptrShadowTexture);
+	void SetOutputTexture(int indexFrame, CGfxRenderTexturePtr ptrColorTexture, CGfxRenderTexturePtr ptrDepthStencilTexture);
 
 private:
 	const CGfxSemaphore* Render(CTaskGraph& taskGraph, const CGfxSemaphore* pWaitSemaphore, int indexFrame, bool bPresent);

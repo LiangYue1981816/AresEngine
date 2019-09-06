@@ -60,7 +60,13 @@ void CPassForwardLighting::SetCamera(CCamera* pCamera)
 	}
 }
 
-void CPassForwardLighting::SetFrameBuffer(int indexFrame, CGfxRenderTexturePtr ptrColorTexture, CGfxRenderTexturePtr ptrDepthStencilTexture)
+void CPassForwardLighting::SetInputShadowMapTexture(CGfxRenderTexturePtr ptrShadowTexture)
+{
+	CGfxSampler* pSampler = GfxRenderer()->CreateSampler(GFX_FILTER_NEAREST, GFX_FILTER_NEAREST, GFX_SAMPLER_MIPMAP_MODE_NEAREST, GFX_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE);
+	m_ptrDescriptorSetPass->SetRenderTexture(UNIFORM_SHADOWMAP_NAME, ptrShadowTexture, pSampler);
+}
+
+void CPassForwardLighting::SetOutputTexture(int indexFrame, CGfxRenderTexturePtr ptrColorTexture, CGfxRenderTexturePtr ptrDepthStencilTexture)
 {
 	m_ptrColorTexture[indexFrame] = ptrColorTexture;
 	m_ptrDepthStencilTexture[indexFrame] = ptrDepthStencilTexture;
@@ -69,12 +75,6 @@ void CPassForwardLighting::SetFrameBuffer(int indexFrame, CGfxRenderTexturePtr p
 	m_ptrFrameBuffer[indexFrame]->SetAttachmentTexture(0, m_ptrColorTexture[indexFrame]);
 	m_ptrFrameBuffer[indexFrame]->SetAttachmentTexture(1, m_ptrDepthStencilTexture[indexFrame]);
 	m_ptrFrameBuffer[indexFrame]->Create(ptrRenderPass);
-}
-
-void CPassForwardLighting::SetInputShadowMapTexture(CGfxRenderTexturePtr ptrShadowTexture)
-{
-	CGfxSampler* pSampler = GfxRenderer()->CreateSampler(GFX_FILTER_NEAREST, GFX_FILTER_NEAREST, GFX_SAMPLER_MIPMAP_MODE_NEAREST, GFX_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE);
-	m_ptrDescriptorSetPass->SetRenderTexture(UNIFORM_SHADOWMAP_NAME, ptrShadowTexture, pSampler);
 }
 
 const CGfxSemaphore* CPassForwardLighting::Render(CTaskGraph& taskGraph, const CGfxSemaphore* pWaitSemaphore, int indexFrame, bool bPresent)

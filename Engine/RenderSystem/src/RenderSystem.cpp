@@ -106,18 +106,18 @@ void CRenderSystem::CreateRenderPass(void)
 	CPassColorGrading::Create(GFX_PIXELFORMAT_BGRA8_UNORM_PACK8);
 
 	m_pPassDefault = new CPassDefault(this);
-	m_pPassDefault->SetFrameBuffer(0, GetRenderTexture(RENDER_TEXTURE_SWAPCHAIN_COLOR0), GetRenderTexture(RENDER_TEXTURE_SWAPCHAIN_DEPTH));
-	m_pPassDefault->SetFrameBuffer(1, GetRenderTexture(RENDER_TEXTURE_SWAPCHAIN_COLOR1), GetRenderTexture(RENDER_TEXTURE_SWAPCHAIN_DEPTH));
-	m_pPassDefault->SetFrameBuffer(2, GetRenderTexture(RENDER_TEXTURE_SWAPCHAIN_COLOR2), GetRenderTexture(RENDER_TEXTURE_SWAPCHAIN_DEPTH));
+	m_pPassDefault->SetOutputTexture(0, GetRenderTexture(RENDER_TEXTURE_SWAPCHAIN_COLOR0), GetRenderTexture(RENDER_TEXTURE_SWAPCHAIN_DEPTH));
+	m_pPassDefault->SetOutputTexture(1, GetRenderTexture(RENDER_TEXTURE_SWAPCHAIN_COLOR1), GetRenderTexture(RENDER_TEXTURE_SWAPCHAIN_DEPTH));
+	m_pPassDefault->SetOutputTexture(2, GetRenderTexture(RENDER_TEXTURE_SWAPCHAIN_COLOR2), GetRenderTexture(RENDER_TEXTURE_SWAPCHAIN_DEPTH));
 
 	m_pPassForwardLighting = new CPassForwardLighting(this);
-	m_pPassForwardLighting->SetFrameBuffer(0, GetRenderTexture(RENDER_TEXTURE_SWAPCHAIN_COLOR0), GetRenderTexture(RENDER_TEXTURE_SWAPCHAIN_DEPTH));
-	m_pPassForwardLighting->SetFrameBuffer(1, GetRenderTexture(RENDER_TEXTURE_SWAPCHAIN_COLOR1), GetRenderTexture(RENDER_TEXTURE_SWAPCHAIN_DEPTH));
-	m_pPassForwardLighting->SetFrameBuffer(2, GetRenderTexture(RENDER_TEXTURE_SWAPCHAIN_COLOR2), GetRenderTexture(RENDER_TEXTURE_SWAPCHAIN_DEPTH));
 	m_pPassForwardLighting->SetInputShadowMapTexture(GetRenderTexture(RENDER_TEXTURE_SHADOWMAP));
+	m_pPassForwardLighting->SetOutputTexture(0, GetRenderTexture(RENDER_TEXTURE_SWAPCHAIN_COLOR0), GetRenderTexture(RENDER_TEXTURE_SWAPCHAIN_DEPTH));
+	m_pPassForwardLighting->SetOutputTexture(1, GetRenderTexture(RENDER_TEXTURE_SWAPCHAIN_COLOR1), GetRenderTexture(RENDER_TEXTURE_SWAPCHAIN_DEPTH));
+	m_pPassForwardLighting->SetOutputTexture(2, GetRenderTexture(RENDER_TEXTURE_SWAPCHAIN_COLOR2), GetRenderTexture(RENDER_TEXTURE_SWAPCHAIN_DEPTH));
 
 	m_pPassShadowMap = new CPassShadowMap(this);
-	m_pPassShadowMap->SetFrameBuffer(GetRenderTexture(RENDER_TEXTURE_SHADOWMAP));
+	m_pPassShadowMap->SetOutputTexture(GetRenderTexture(RENDER_TEXTURE_SHADOWMAP));
 
 	m_pPassSSAO = new CPassSSAO(this);
 
