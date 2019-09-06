@@ -21,16 +21,16 @@ private:
 public:
 	void SetCamera(CCamera* pCamera);
 	void SetInputTexture(CGfxRenderTexturePtr ptrShadowTexture);
-	void SetOutputTexture(int indexFrame, CGfxRenderTexturePtr ptrColorTexture, CGfxRenderTexturePtr ptrDepthStencilTexture);
+	void SetOutputTexture(CGfxRenderTexturePtr ptrColorTexture, CGfxRenderTexturePtr ptrDepthStencilTexture);
 
 private:
-	const CGfxSemaphore* Render(CTaskGraph& taskGraph, const CGfxSemaphore* pWaitSemaphore, int indexFrame, bool bPresent);
+	const CGfxSemaphore* Render(CTaskGraph& taskGraph, const CGfxSemaphore* pWaitSemaphore);
 
 
 private:
-	CGfxFrameBufferPtr m_ptrFrameBuffer[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
-	CGfxRenderTexturePtr m_ptrColorTexture[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
-	CGfxRenderTexturePtr m_ptrDepthStencilTexture[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
+	CGfxFrameBufferPtr m_ptrFrameBuffer;
+	CGfxRenderTexturePtr m_ptrColorTexture;
+	CGfxRenderTexturePtr m_ptrDepthStencilTexture;
 
 private:
 	CGfxDescriptorSetPtr m_ptrDescriptorSetPass;

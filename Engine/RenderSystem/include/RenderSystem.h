@@ -47,11 +47,14 @@
 
 
 // RenderTexture
-#define RENDER_TEXTURE_SWAPCHAIN_DEPTH                     HashValue("RenderTextureSwapChainDepth")
 #define RENDER_TEXTURE_SWAPCHAIN_COLOR0                    HashValue("RenderTextureSwapChainColor0")
 #define RENDER_TEXTURE_SWAPCHAIN_COLOR1                    HashValue("RenderTextureSwapChainColor1")
 #define RENDER_TEXTURE_SWAPCHAIN_COLOR2                    HashValue("RenderTextureSwapChainColor2")
 #define RENDER_TEXTURE_SHADOWMAP                           HashValue("RenderTextureShadowMap")
+#define RENDER_TEXTURE_FRAMEBUFFER_DEPTH                   HashValue("RenderTextureFrameBufferDepth")
+#define RENDER_TEXTURE_FRAMEBUFFER_COLOR                   HashValue("RenderTextureFrameBufferColor")
+#define RENDER_TEXTURE_FRAMEBUFFER_SSAO                    HashValue("RenderTextureFrameBufferSSAO")
+#define RENDER_TEXTURE_FRAMEBUFFER_COLOR_GRADING           HashValue("RenderTextureFrameBufferColorGrading")
 
 
 class CALL_API CRenderSystem
@@ -88,6 +91,7 @@ public:
 	CPassShadowMap* GetPassShadowMap(void) const;
 	CPassSSAO* GetPassSSAO(void) const;
 	CPassColorGrading* GetPassColorGrading(void) const;
+	CPassFinal* GetPassFinal(void) const;
 
 public:
 	void SetTime(float t, float dt);
@@ -131,6 +135,7 @@ private:
 	CPassShadowMap* m_pPassShadowMap;
 	CPassSSAO* m_pPassSSAO;
 	CPassColorGrading* m_pPassColorGrading;
+	CPassFinal* m_pPassFinal;
 
 private:
 	eastl::unordered_map<uint32_t, CGfxRenderTexturePtr> m_ptrRenderTextures;

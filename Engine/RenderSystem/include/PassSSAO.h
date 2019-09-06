@@ -19,7 +19,7 @@ private:
 
 
 public:
-	void SetInputTexture(CGfxRenderTexturePtr ptrDepthTexture);
+	void SetInputTexture(CGfxRenderTexturePtr ptrColorTexture, CGfxRenderTexturePtr ptrDepthTexture);
 	void SetOutputTexture(CGfxRenderTexturePtr ptrColorTexture);
 
 private:

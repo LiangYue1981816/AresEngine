@@ -20,7 +20,7 @@ private:
 
 public:
 	void SetInputTexture(CGfxRenderTexturePtr ptrColorTexture);
-	void SetOutputTexture(CGfxRenderTexturePtr ptrColorGradingTexture);
+	void SetOutputTexture(CGfxRenderTexturePtr ptrColorTexture);
 
 private:
 	const CGfxSemaphore* Render(CTaskGraph& taskGraph, const CGfxSemaphore* pWaitSemaphore);
@@ -28,7 +28,7 @@ private:
 
 private:
 	CGfxFrameBufferPtr m_ptrFrameBuffer;
-	CGfxRenderTexturePtr m_ptrColorGradingTexture;
+	CGfxRenderTexturePtr m_ptrColorTexture;
 
 private:
 	CGfxDescriptorSetPtr m_ptrDescriptorSetPass;

@@ -54,12 +54,12 @@ void CPassColorGrading::SetInputTexture(CGfxRenderTexturePtr ptrColorTexture)
 	m_ptrDescriptorSetPass->SetRenderTexture(UNIFORM_COLOR_TEXTURE_NAME, ptrColorTexture, pSampler);
 }
 
-void CPassColorGrading::SetOutputTexture(CGfxRenderTexturePtr ptrColorGradingTexture)
+void CPassColorGrading::SetOutputTexture(CGfxRenderTexturePtr ptrColorTexture)
 {
-	m_ptrColorGradingTexture = ptrColorGradingTexture;
+	m_ptrColorTexture = ptrColorTexture;
 
-	m_ptrFrameBuffer = GfxRenderer()->NewFrameBuffer(m_ptrColorGradingTexture->GetWidth(), m_ptrColorGradingTexture->GetHeight(), numAttachments);
-	m_ptrFrameBuffer->SetAttachmentTexture(0, m_ptrColorGradingTexture);
+	m_ptrFrameBuffer = GfxRenderer()->NewFrameBuffer(m_ptrColorTexture->GetWidth(), m_ptrColorTexture->GetHeight(), numAttachments);
+	m_ptrFrameBuffer->SetAttachmentTexture(0, m_ptrColorTexture);
 	m_ptrFrameBuffer->Create(ptrRenderPass);
 }
 
@@ -77,18 +77,18 @@ const CGfxSemaphore* CPassColorGrading::Render(CTaskGraph& taskGraph, const CGfx
 
 		GfxRenderer()->BeginRecord(ptrMainCommandBuffer);
 		{
-			GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, m_ptrColorGradingTexture, GFX_IMAGE_LAYOUT_GENERAL);
+			GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, m_ptrColorTexture, GFX_IMAGE_LAYOUT_GENERAL);
 			GfxRenderer()->CmdBeginRenderPass(ptrMainCommandBuffer, m_ptrFrameBuffer, ptrRenderPass);
 			{
-				const float w = m_ptrColorGradingTexture->GetWidth();
-				const float h = m_ptrColorGradingTexture->GetHeight();
+				const float w = m_ptrColorTexture->GetWidth();
+				const float h = m_ptrColorTexture->GetHeight();
 				const glm::vec4 scissor = glm::vec4(0.0, 0.0, w, h);
 				const glm::vec4 viewport = glm::vec4(0.0, 0.0, w, h);
 
 				m_pRenderQueue->CmdDraw(taskGraph, ptrMainCommandBuffer, m_ptrDescriptorSetPass, PASS_COLOR_GRADING_NAME, scissor, viewport, 0xffffffff);
 			}
 			GfxRenderer()->CmdEndRenderPass(ptrMainCommandBuffer);
-			GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, m_ptrColorGradingTexture, GFX_IMAGE_LAYOUT_COLOR_READ_ONLY_OPTIMAL);
+			GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, m_ptrColorTexture, GFX_IMAGE_LAYOUT_COLOR_READ_ONLY_OPTIMAL);
 		}
 		GfxRenderer()->EndRecord(ptrMainCommandBuffer);
 	}

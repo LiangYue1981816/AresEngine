@@ -59,43 +59,40 @@ void CPassDefault::SetCamera(CCamera* pCamera)
 	}
 }
 
-void CPassDefault::SetOutputTexture(int indexFrame, CGfxRenderTexturePtr ptrColorTexture, CGfxRenderTexturePtr ptrDepthStencilTexture)
+void CPassDefault::SetOutputTexture(CGfxRenderTexturePtr ptrColorTexture, CGfxRenderTexturePtr ptrDepthStencilTexture)
 {
-	m_ptrColorTexture[indexFrame] = ptrColorTexture;
-	m_ptrDepthStencilTexture[indexFrame] = ptrDepthStencilTexture;
+	m_ptrColorTexture = ptrColorTexture;
+	m_ptrDepthStencilTexture = ptrDepthStencilTexture;
 
-	m_ptrFrameBuffer[indexFrame] = GfxRenderer()->NewFrameBuffer(m_ptrColorTexture[indexFrame]->GetWidth(), m_ptrColorTexture[indexFrame]->GetHeight(), numAttachments);
-	m_ptrFrameBuffer[indexFrame]->SetAttachmentTexture(0, m_ptrColorTexture[indexFrame]);
-	m_ptrFrameBuffer[indexFrame]->SetAttachmentTexture(1, m_ptrDepthStencilTexture[indexFrame]);
-	m_ptrFrameBuffer[indexFrame]->Create(ptrRenderPass);
+	m_ptrFrameBuffer = GfxRenderer()->NewFrameBuffer(m_ptrColorTexture->GetWidth(), m_ptrColorTexture->GetHeight(), numAttachments);
+	m_ptrFrameBuffer->SetAttachmentTexture(0, m_ptrColorTexture);
+	m_ptrFrameBuffer->SetAttachmentTexture(1, m_ptrDepthStencilTexture);
+	m_ptrFrameBuffer->Create(ptrRenderPass);
 }
 
-const CGfxSemaphore* CPassDefault::Render(CTaskGraph& taskGraph, const CGfxSemaphore* pWaitSemaphore, int indexFrame, bool bPresent)
+const CGfxSemaphore* CPassDefault::Render(CTaskGraph& taskGraph, const CGfxSemaphore* pWaitSemaphore)
 {
-	if (m_pCamera && indexFrame >= 0 && indexFrame < CGfxSwapChain::SWAPCHAIN_FRAME_COUNT) {
+	if (m_pCamera) {
 		// Update
 		m_pCamera->GetCameraUniform()->Apply();
 		m_pRenderSystem->GetEngineUniform()->Apply();
 		m_ptrDescriptorSetPass->Update();
 
 		// Render
-		const CGfxFrameBufferPtr ptrFrameBuffer = m_ptrFrameBuffer[indexFrame];
-		const CGfxRenderTexturePtr ptrColorTexture = m_ptrColorTexture[indexFrame];
-		const CGfxRenderTexturePtr ptrDepthStencilTexture = m_ptrDepthStencilTexture[indexFrame];
 		const CGfxCommandBufferPtr ptrMainCommandBuffer = m_ptrMainCommandBuffer[GfxRenderer()->GetSwapChain()->GetFrameIndex()];
 		{
 			ptrMainCommandBuffer->Clearup();
 
 			GfxRenderer()->BeginRecord(ptrMainCommandBuffer);
 			{
-				GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, ptrColorTexture, GFX_IMAGE_LAYOUT_GENERAL);
-				GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, ptrDepthStencilTexture, GFX_IMAGE_LAYOUT_GENERAL);
-				GfxRenderer()->CmdBeginRenderPass(ptrMainCommandBuffer, ptrFrameBuffer, ptrRenderPass);
+				GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, m_ptrColorTexture, GFX_IMAGE_LAYOUT_GENERAL);
+				GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, m_ptrDepthStencilTexture, GFX_IMAGE_LAYOUT_GENERAL);
+				GfxRenderer()->CmdBeginRenderPass(ptrMainCommandBuffer, m_ptrFrameBuffer, ptrRenderPass);
 				{
 					m_pCamera->GetRenderQueue()->CmdDraw(taskGraph, ptrMainCommandBuffer, m_ptrDescriptorSetPass, PASS_DEFAULT_NAME, m_pCamera->GetCamera()->GetScissor(), m_pCamera->GetCamera()->GetViewport(), 0xffffffff);
 				}
 				GfxRenderer()->CmdEndRenderPass(ptrMainCommandBuffer);
-				GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, ptrColorTexture, bPresent ? GFX_IMAGE_LAYOUT_PRESENT_SRC_OPTIMAL : GFX_IMAGE_LAYOUT_COLOR_READ_ONLY_OPTIMAL);
+				GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, m_ptrColorTexture, GFX_IMAGE_LAYOUT_COLOR_READ_ONLY_OPTIMAL);
 			}
 			GfxRenderer()->EndRecord(ptrMainCommandBuffer);
 		}
