@@ -270,34 +270,87 @@ static bool InternalLoadPipelineShader(TiXmlNode* pPipelineNode, CGfxShader*& pS
 
 		LogOutput(nullptr, "%s ... ", szFileName);
 
-		char szHashName[_MAX_STRING] = { 0 };
+		struct Define {
+			const char* szName;
+		};
+
+		struct Feature {
+			const char* szName;
+			const char* szExtension;
+		};
+
+		eastl::vector<Define> defines;
+		eastl::vector<Feature> features;
+
+		if (TiXmlNode* pDefineNode = pShaderNode->FirstChild("Define")) {
+			do {
+				Define define;
+				define.szName = pDefineNode->ToElement()->AttributeString("name");
+				defines.push_back(define);
+			} while ((pDefineNode = pShaderNode->IterateChildren("Define", pDefineNode)) != nullptr);
+		}
+
+		if (TiXmlNode* pFeatureNode = pShaderNode->FirstChild("Feature")) {
+			do {
+				Feature feature;
+				feature.szName = pFeatureNode->ToElement()->AttributeString("name");
+				feature.szExtension = pFeatureNode->ToElement()->AttributeString("extension");
+				features.push_back(feature);
+			} while ((pFeatureNode = pShaderNode->IterateChildren("Feature", pFeatureNode)) != nullptr);
+		}
+
+#ifdef PLATFORM_WINDOWS
+		uint32_t maskFeatures = (1 << features.size()) - 1;
+
+		do {
+			char szHashName[1024] = { 0 };
+			strcat(szHashName, szFileName);
+
+			ShaderCompiler()->ClearMacroDefinition();
+
+			for (int index = 0; index < defines.size(); index++) {
+				strcat(szHashName, "|");
+				strcat(szHashName, defines[index].szName);
+				ShaderCompiler()->AddMacroDefinition(defines[index].szName);
+			}
+
+			for (int index = 0; index < features.size(); index++) {
+				if (maskFeatures & (1 << index)) {
+					strcat(szHashName, "|");
+					strcat(szHashName, features[index].szName);
+					ShaderCompiler()->AddMacroDefinition(features[index].szName);
+				}
+			}
+
+			char szExtName[2][_MAX_STRING] = { "vert", "frag" };
+			char szBinFileName[_MAX_STRING] = { 0 };
+			sprintf(szBinFileName, "%x.%s", HashValue(szHashName), szExtName[kind]);
+			ShaderCompiler()->Compile(FileManager()->GetFullName(szFileName), szBinFileName, (shaderc_shader_kind)kind);
+
+			if (maskFeatures) {
+				maskFeatures--;
+			}
+		} while (maskFeatures != 0);
+#endif
+
+		char szHashName[1024] = { 0 };
 		strcat(szHashName, szFileName);
 
-#ifdef PLATFORM_WINDOWS
-		ShaderCompiler()->ClearMacroDefinition();
-#endif
-		{
-			if (TiXmlNode* pDefineNode = pShaderNode->FirstChild("Define")) {
-				do {
-					if (const char* szDefine = pDefineNode->ToElement()->AttributeString("name")) {
-						strcat(szHashName, "_");
-						strcat(szHashName, szDefine);
+		for (int index = 0; index < defines.size(); index++) {
+			strcat(szHashName, "|");
+			strcat(szHashName, defines[index].szName);
+		}
 
-#ifdef PLATFORM_WINDOWS
-						ShaderCompiler()->AddMacroDefinition(szDefine);
-#endif
-					}
-				} while ((pDefineNode = pShaderNode->IterateChildren("Define", pDefineNode)) != nullptr);
+		for (int index = 0; index < features.size(); index++) {
+			if (GfxRenderer()->IsSupportExtension(features[index].szExtension)) {
+				strcat(szHashName, "|");
+				strcat(szHashName, features[index].szName);
 			}
 		}
 
 		char szExtName[2][_MAX_STRING] = { "vert", "frag" };
 		char szBinFileName[_MAX_STRING] = { 0 };
 		sprintf(szBinFileName, "%x.%s", HashValue(szHashName), szExtName[kind]);
-
-#ifdef PLATFORM_WINDOWS
-		ShaderCompiler()->Compile(FileManager()->GetFullName(szFileName), szBinFileName, (shaderc_shader_kind)kind);
-#endif
 
 		pShader = GfxRenderer()->CreateShader(szBinFileName, kind);
 		if (pShader->IsValid() == false) { err = -3; goto ERR; }
