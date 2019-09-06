@@ -1,12 +1,12 @@
 <Material>
 	<Pass name="PassColorGrading">
 		<Pipeline render_pass="PassColorGrading">
-		  <Vertex file_name="PostProcessing_ColorGrading.glsl">
+		  <Vertex file_name="ColorGrading.glsl">
 		    <Define name="VERTEX_ATTRIBUTE_POSITION" />
         <Define name="VERTEX_ATTRIBUTE_TEXCOORD0" />
         <Define name="INSTANCE_ATTRIBUTE_TRANSFORM" />
 		  </Vertex>
-		  <Fragment file_name="PostProcessing_ColorGrading.glsl">
+		  <Fragment file_name="ColorGrading.glsl">
 		  </Fragment>
 		  <State>
 		  	<Rasterization>
