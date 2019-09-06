@@ -21,6 +21,7 @@
 #include "RenderSystem/include/PassShadowMap.h"
 #include "RenderSystem/include/PassSSAO.h"
 #include "RenderSystem/include/PassColorGrading.h"
+#include "RenderSystem/include/PassFinal.h"
 #include "RenderSystem/include/RenderSystem.h"
 
 #include "Engine/include/Engine.h"

@@ -38,11 +38,12 @@
 
 
 // Pass
-#define PASS_DEFAULT_NAME                                  HashValue("Default")
-#define PASS_FORWARD_LIGHTING_NAME                         HashValue("ForwardLighting")
-#define PASS_SHADOWMAP_NAME                                HashValue("ShadowMap")
-#define PASS_SSAO_NAME                                     HashValue("SSAO")
-#define PASS_COLOR_GRADING_NAME                            HashValue("ColorGrading")
+#define PASS_DEFAULT_NAME                                  HashValue("PassDefault")
+#define PASS_FORWARD_LIGHTING_NAME                         HashValue("PassForwardLighting")
+#define PASS_SHADOWMAP_NAME                                HashValue("PassShadowMap")
+#define PASS_SSAO_NAME                                     HashValue("PassSSAO")
+#define PASS_COLOR_GRADING_NAME                            HashValue("PassColorGrading")
+#define PASS_FINAL_NAME                                    HashValue("PassFinal")
 
 
 // RenderTexture
@@ -61,6 +62,7 @@ class CALL_API CRenderSystem
 	friend class CPassShadowMap;
 	friend class CPassSSAO;
 	friend class CPassColorGrading;
+	friend class CPassFinal;
 
 
 private:

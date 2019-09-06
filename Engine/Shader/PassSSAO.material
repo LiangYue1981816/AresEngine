@@ -1,12 +1,12 @@
 <Material>
-	<Pass name="ColorGrading">
-		<Pipeline render_pass="ColorGrading">
-		  <Vertex file_name="ColorGrading.glsl">
+	<Pass name="PassSSAO">
+		<Pipeline render_pass="PassSSAO">
+		  <Vertex file_name="PostProcessing_SSAO.glsl">
 		    <Define name="VERTEX_ATTRIBUTE_POSITION" />
         <Define name="VERTEX_ATTRIBUTE_TEXCOORD0" />
         <Define name="INSTANCE_ATTRIBUTE_TRANSFORM" />
 		  </Vertex>
-		  <Fragment file_name="ColorGrading.glsl">
+		  <Fragment file_name="PostProcessing_SSAO.glsl">
 		  </Fragment>
 		  <State>
 		  	<Rasterization>

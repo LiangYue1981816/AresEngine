@@ -20,7 +20,7 @@ private:
 
 public:
 	void SetCamera(CCamera* pCamera);
-	void SetInputShadowMapTexture(CGfxRenderTexturePtr ptrShadowTexture);
+	void SetInputTexture(CGfxRenderTexturePtr ptrShadowTexture);
 	void SetOutputTexture(int indexFrame, CGfxRenderTexturePtr ptrColorTexture, CGfxRenderTexturePtr ptrDepthStencilTexture);
 
 private:

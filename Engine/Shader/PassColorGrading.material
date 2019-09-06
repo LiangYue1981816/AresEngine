@@ -1,12 +1,12 @@
 <Material>
-	<Pass name="ShadowMapBlur">
-		<Pipeline render_pass="ShadowMapBlur">
-		  <Vertex file_name="ShadowMapBlur.glsl">
+	<Pass name="PassColorGrading">
+		<Pipeline render_pass="PassColorGrading">
+		  <Vertex file_name="PostProcessing_ColorGrading.glsl">
 		    <Define name="VERTEX_ATTRIBUTE_POSITION" />
         <Define name="VERTEX_ATTRIBUTE_TEXCOORD0" />
         <Define name="INSTANCE_ATTRIBUTE_TRANSFORM" />
 		  </Vertex>
-		  <Fragment file_name="ShadowMapBlur.glsl">
+		  <Fragment file_name="PostProcessing_ColorGrading.glsl">
 		  </Fragment>
 		  <State>
 		  	<Rasterization>

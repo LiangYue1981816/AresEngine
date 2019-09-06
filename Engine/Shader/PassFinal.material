@@ -1,12 +1,12 @@
 <Material>
-	<Pass name="SSAO">
-		<Pipeline render_pass="SSAO">
-		  <Vertex file_name="SSAO.glsl">
+	<Pass name="PassFinal">
+		<Pipeline render_pass="PassFinal">
+		  <Vertex file_name="PostProcessing_Final.glsl">
 		    <Define name="VERTEX_ATTRIBUTE_POSITION" />
         <Define name="VERTEX_ATTRIBUTE_TEXCOORD0" />
         <Define name="INSTANCE_ATTRIBUTE_TRANSFORM" />
 		  </Vertex>
-		  <Fragment file_name="SSAO.glsl">
+		  <Fragment file_name="PostProcessing_Final.glsl">
 		  </Fragment>
 		  <State>
 		  	<Rasterization>

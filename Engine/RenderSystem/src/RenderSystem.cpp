@@ -111,7 +111,7 @@ void CRenderSystem::CreateRenderPass(void)
 	m_pPassDefault->SetOutputTexture(2, GetRenderTexture(RENDER_TEXTURE_SWAPCHAIN_COLOR2), GetRenderTexture(RENDER_TEXTURE_SWAPCHAIN_DEPTH));
 
 	m_pPassForwardLighting = new CPassForwardLighting(this);
-	m_pPassForwardLighting->SetInputShadowMapTexture(GetRenderTexture(RENDER_TEXTURE_SHADOWMAP));
+	m_pPassForwardLighting->SetInputTexture(GetRenderTexture(RENDER_TEXTURE_SHADOWMAP));
 	m_pPassForwardLighting->SetOutputTexture(0, GetRenderTexture(RENDER_TEXTURE_SWAPCHAIN_COLOR0), GetRenderTexture(RENDER_TEXTURE_SWAPCHAIN_DEPTH));
 	m_pPassForwardLighting->SetOutputTexture(1, GetRenderTexture(RENDER_TEXTURE_SWAPCHAIN_COLOR1), GetRenderTexture(RENDER_TEXTURE_SWAPCHAIN_DEPTH));
 	m_pPassForwardLighting->SetOutputTexture(2, GetRenderTexture(RENDER_TEXTURE_SWAPCHAIN_COLOR2), GetRenderTexture(RENDER_TEXTURE_SWAPCHAIN_DEPTH));

@@ -5,24 +5,24 @@ static const int numSubpasses = 1;
 static const int numAttachments = 1;
 static CGfxRenderPassPtr ptrRenderPass;
 
-void CPassColorGrading::Create(GfxPixelFormat colorPixelFormat)
+void CPassFinal::Create(GfxPixelFormat colorPixelFormat)
 {
 	const float color[] = { 0.0f, 0.0f, 0.0f, 0.0f };
 
-	ptrRenderPass = GfxRenderer()->NewRenderPass(PASS_COLOR_GRADING_NAME, numAttachments, numSubpasses);
+	ptrRenderPass = GfxRenderer()->NewRenderPass(PASS_FINAL_NAME, numAttachments, numSubpasses);
 	ptrRenderPass->SetColorAttachment(0, colorPixelFormat, 1, false, true, color[0], color[1], color[2], color[3]);
 	ptrRenderPass->SetSubpassOutputColorReference(0, 0);
 	ptrRenderPass->Create();
 }
 
-void CPassColorGrading::Destroy(void)
+void CPassFinal::Destroy(void)
 {
 	ptrRenderPass.Release();
 }
 
 
-CPassColorGrading::CPassColorGrading(CRenderSystem* pRenderSystem)
-	: CPassBlit("PassColorGrading.material", pRenderSystem->GetEngineUniform())
+CPassFinal::CPassFinal(CRenderSystem* pRenderSystem)
+	: CPassBlit("PassFinal.material", pRenderSystem->GetEngineUniform())
 {
 	// CommandBuffer
 	m_ptrMainCommandBuffer[0] = GfxRenderer()->NewCommandBuffer(0, true);
@@ -36,34 +36,34 @@ CPassColorGrading::CPassColorGrading(CRenderSystem* pRenderSystem)
 	ptrDescriptorLayout->SetSampledImageBinding(UNIFORM_COLOR_TEXTURE_NAME, UNIFORM_COLOR_TEXTURE_BIND);
 	ptrDescriptorLayout->Create();
 
-	m_ptrDescriptorSetPass = GfxRenderer()->NewDescriptorSet(PASS_COLOR_GRADING_NAME, ptrDescriptorLayout);
+	m_ptrDescriptorSetPass = GfxRenderer()->NewDescriptorSet(PASS_FINAL_NAME, ptrDescriptorLayout);
 	m_ptrDescriptorSetPass->SetUniformBuffer(UNIFORM_ENGINE_NAME, m_pEngineUniform->GetUniformBuffer(), 0, m_pEngineUniform->GetUniformBuffer()->GetSize());
 	m_ptrDescriptorSetPass->SetUniformBuffer(UNIFORM_CAMERA_NAME, m_pCameraUniform->GetUniformBuffer(), 0, m_pCameraUniform->GetUniformBuffer()->GetSize());
 }
 
-CPassColorGrading::~CPassColorGrading(void)
+CPassFinal::~CPassFinal(void)
 {
 	m_ptrMainCommandBuffer[0]->Clearup();
 	m_ptrMainCommandBuffer[1]->Clearup();
 	m_ptrMainCommandBuffer[2]->Clearup();
 }
 
-void CPassColorGrading::SetInputTexture(CGfxRenderTexturePtr ptrColorTexture)
+void CPassFinal::SetInputTexture(CGfxRenderTexturePtr ptrColorTexture)
 {
 	CGfxSampler* pSampler = GfxRenderer()->CreateSampler(GFX_FILTER_NEAREST, GFX_FILTER_NEAREST, GFX_SAMPLER_MIPMAP_MODE_NEAREST, GFX_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE);
 	m_ptrDescriptorSetPass->SetRenderTexture(UNIFORM_COLOR_TEXTURE_NAME, ptrColorTexture, pSampler);
 }
 
-void CPassColorGrading::SetOutputTexture(CGfxRenderTexturePtr ptrColorGradingTexture)
+void CPassFinal::SetOutputTexture(int indexFrame, CGfxRenderTexturePtr ptrColorTexture)
 {
-	m_ptrColorGradingTexture = ptrColorGradingTexture;
+	m_ptrColorTexture[indexFrame] = ptrColorTexture;
 
-	m_ptrFrameBuffer = GfxRenderer()->NewFrameBuffer(m_ptrColorGradingTexture->GetWidth(), m_ptrColorGradingTexture->GetHeight(), numAttachments);
-	m_ptrFrameBuffer->SetAttachmentTexture(0, m_ptrColorGradingTexture);
-	m_ptrFrameBuffer->Create(ptrRenderPass);
+	m_ptrFrameBuffer[indexFrame] = GfxRenderer()->NewFrameBuffer(m_ptrColorTexture[indexFrame]->GetWidth(), m_ptrColorTexture[indexFrame]->GetHeight(), numAttachments);
+	m_ptrFrameBuffer[indexFrame]->SetAttachmentTexture(0, m_ptrColorTexture[indexFrame]);
+	m_ptrFrameBuffer[indexFrame]->Create(ptrRenderPass);
 }
 
-const CGfxSemaphore* CPassColorGrading::Render(CTaskGraph& taskGraph, const CGfxSemaphore* pWaitSemaphore)
+const CGfxSemaphore* CPassFinal::Render(CTaskGraph& taskGraph, const CGfxSemaphore* pWaitSemaphore, int indexFrame, bool bPresent)
 {
 	// Update
 	m_pCameraUniform->Apply();
@@ -71,24 +71,26 @@ const CGfxSemaphore* CPassColorGrading::Render(CTaskGraph& taskGraph, const CGfx
 	m_ptrDescriptorSetPass->Update();
 
 	// Render
+	const CGfxFrameBufferPtr ptrFrameBuffer = m_ptrFrameBuffer[indexFrame];
+	const CGfxRenderTexturePtr ptrColorTexture = m_ptrColorTexture[indexFrame];
 	const CGfxCommandBufferPtr ptrMainCommandBuffer = m_ptrMainCommandBuffer[GfxRenderer()->GetSwapChain()->GetFrameIndex()];
 	{
 		ptrMainCommandBuffer->Clearup();
 
 		GfxRenderer()->BeginRecord(ptrMainCommandBuffer);
 		{
-			GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, m_ptrColorGradingTexture, GFX_IMAGE_LAYOUT_GENERAL);
-			GfxRenderer()->CmdBeginRenderPass(ptrMainCommandBuffer, m_ptrFrameBuffer, ptrRenderPass);
+			GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, ptrColorTexture, GFX_IMAGE_LAYOUT_GENERAL);
+			GfxRenderer()->CmdBeginRenderPass(ptrMainCommandBuffer, ptrFrameBuffer, ptrRenderPass);
 			{
-				const float w = m_ptrColorGradingTexture->GetWidth();
-				const float h = m_ptrColorGradingTexture->GetHeight();
+				const float w = ptrColorTexture->GetWidth();
+				const float h = ptrColorTexture->GetHeight();
 				const glm::vec4 scissor = glm::vec4(0.0, 0.0, w, h);
 				const glm::vec4 viewport = glm::vec4(0.0, 0.0, w, h);
 
-				m_pRenderQueue->CmdDraw(taskGraph, ptrMainCommandBuffer, m_ptrDescriptorSetPass, PASS_COLOR_GRADING_NAME, scissor, viewport, 0xffffffff);
+				m_pRenderQueue->CmdDraw(taskGraph, ptrMainCommandBuffer, m_ptrDescriptorSetPass, PASS_FINAL_NAME, scissor, viewport, 0xffffffff);
 			}
 			GfxRenderer()->CmdEndRenderPass(ptrMainCommandBuffer);
-			GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, m_ptrColorGradingTexture, GFX_IMAGE_LAYOUT_COLOR_READ_ONLY_OPTIMAL);
+			GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, ptrColorTexture, bPresent ? GFX_IMAGE_LAYOUT_PRESENT_SRC_OPTIMAL : GFX_IMAGE_LAYOUT_COLOR_READ_ONLY_OPTIMAL);
 		}
 		GfxRenderer()->EndRecord(ptrMainCommandBuffer);
 	}
