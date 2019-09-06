@@ -27,8 +27,8 @@
 #define UNIFORM_ENGINE_BIND                                0
 #define UNIFORM_CAMERA_BIND                                1
 #define UNIFORM_SHADOWMAP_BIND                             2
-#define UNIFORM_DEPTH_TEXTURE_BIND                         2
-#define UNIFORM_COLOR_TEXTURE_BIND                         2
+#define UNIFORM_DEPTH_TEXTURE_BIND                         3
+#define UNIFORM_COLOR_TEXTURE_BIND                         4
 
 #define UNIFORM_ENGINE_NAME                                HashValue("Engine")
 #define UNIFORM_CAMERA_NAME                                HashValue("Camera")

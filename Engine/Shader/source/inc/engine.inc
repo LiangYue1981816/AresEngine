@@ -48,8 +48,8 @@ layout (location = 13)                           in mediump vec4 inInstancePoint
 #define DESCRIPTOR_BIND_ENGINE                   0
 #define DESCRIPTOR_BIND_CAMERA                   1
 #define DESCRIPTOR_BIND_SHADOWMAP                2
-#define DESCRIPTOR_BIND_DEPTH_TEXTURE            2
-#define DESCRIPTOR_BIND_COLOR_TEXTURE            2
+#define DESCRIPTOR_BIND_DEPTH_TEXTURE            3
+#define DESCRIPTOR_BIND_COLOR_TEXTURE            4
 
 
 #define USE_CAMERA_UNIFORM                                                         \
