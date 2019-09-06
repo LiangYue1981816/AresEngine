@@ -588,9 +588,11 @@ bool CResourceLoader::LoadMaterial(const char* szFileName, CGfxMaterial* pMateri
 	//		<Pipeline render_pass="" sub_pass="">
 	//			<Vertex file_name="">
 	//				<Define name="" />
+	//				<Feature name="" extension="" />
 	//			</Vertex>
 	//			<Fragment file_name="">
 	//				<Define name="" />
+	//				<Feature name="" extension="" />
 	//			</Fragment>
 	//			<State>
 	//				<InputAssembly>
