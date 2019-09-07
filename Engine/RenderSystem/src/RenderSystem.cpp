@@ -297,8 +297,11 @@ void CRenderSystem::RenderForwardLighting(CTaskGraph& taskGraph, CCamera* pCamer
 
 	GfxRenderer()->AcquireNextFrame();
 	{
-		m_pPassShadowMap->SetCamera(pCamera);
 		m_pPassForwardLighting->SetCamera(pCamera);
+		m_pPassShadowMap->SetCamera(pCamera);
+		m_pPassSSAO->SetCamera(pCamera);
+		m_pPassColorGrading->SetCamera(pCamera);
+		m_pPassFinal->SetCamera(pCamera);
 
 		pWaitSemaphore = m_pPassShadowMap->Render(taskGraph, pWaitSemaphore);
 		pWaitSemaphore = m_pPassForwardLighting->Render(taskGraph, pWaitSemaphore);

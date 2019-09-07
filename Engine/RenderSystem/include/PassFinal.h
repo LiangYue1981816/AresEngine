@@ -2,7 +2,7 @@
 #include "RenderSystem.h"
 
 
-class CALL_API CPassFinal : CPassBlit
+class CALL_API CPassFinal : public CPassBlit
 {
 	friend class CCamera;
 	friend class CRenderSystem;
@@ -19,6 +19,7 @@ private:
 
 
 public:
+	void SetCamera(CCamera* pCamera);
 	void SetInputTexture(CGfxRenderTexturePtr ptrColorTexture);
 	void SetOutputTexture(int indexFrame, CGfxRenderTexturePtr ptrColorTexture);
 

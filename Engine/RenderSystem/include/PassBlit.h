@@ -18,10 +18,10 @@ private:
 	CGfxMeshDrawPtr m_ptrMeshDraw;
 	CGfxMaterialPtr m_ptrMaterial;
 
-private:
-	CGfxRenderQueue* m_pRenderQueue;
-
 protected:
 	CCamera* m_pCamera;
 	CRenderSystem* m_pRenderSystem;
+
+protected:
+	CGfxRenderQueue* m_pRenderQueue;
 };

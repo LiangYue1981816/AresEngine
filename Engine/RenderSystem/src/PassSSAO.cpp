@@ -22,7 +22,7 @@ void CPassSSAO::Destroy(void)
 
 
 CPassSSAO::CPassSSAO(CRenderSystem* pRenderSystem)
-	: CPassBlit("PassSSAO.material", pRenderSystem->GetEngineUniform())
+	: CPassBlit("PassSSAO.material", pRenderSystem)
 {
 	// CommandBuffer
 	m_ptrMainCommandBuffer[0] = GfxRenderer()->NewCommandBuffer(0, true);
@@ -38,8 +38,7 @@ CPassSSAO::CPassSSAO(CRenderSystem* pRenderSystem)
 	ptrDescriptorLayout->Create();
 
 	m_ptrDescriptorSetPass = GfxRenderer()->NewDescriptorSet(PASS_SSAO_NAME, ptrDescriptorLayout);
-	m_ptrDescriptorSetPass->SetUniformBuffer(UNIFORM_ENGINE_NAME, m_pEngineUniform->GetUniformBuffer(), 0, m_pEngineUniform->GetUniformBuffer()->GetSize());
-	m_ptrDescriptorSetPass->SetUniformBuffer(UNIFORM_CAMERA_NAME, m_pCameraUniform->GetUniformBuffer(), 0, m_pCameraUniform->GetUniformBuffer()->GetSize());
+	m_ptrDescriptorSetPass->SetUniformBuffer(UNIFORM_ENGINE_NAME, m_pRenderSystem->GetEngineUniform()->GetUniformBuffer(), 0, m_pRenderSystem->GetEngineUniform()->GetUniformBuffer()->GetSize());
 }
 
 CPassSSAO::~CPassSSAO(void)
@@ -47,6 +46,14 @@ CPassSSAO::~CPassSSAO(void)
 	m_ptrMainCommandBuffer[0]->Clearup();
 	m_ptrMainCommandBuffer[1]->Clearup();
 	m_ptrMainCommandBuffer[2]->Clearup();
+}
+
+void CPassSSAO::SetCamera(CCamera* pCamera)
+{
+	if (m_pCamera != pCamera) {
+		m_pCamera  = pCamera;
+		m_ptrDescriptorSetPass->SetUniformBuffer(UNIFORM_CAMERA_NAME, m_pCamera->GetCameraUniform()->GetUniformBuffer(), 0, m_pCamera->GetCameraUniform()->GetUniformBuffer()->GetSize());
+	}
 }
 
 void CPassSSAO::SetInputTexture(CGfxRenderTexturePtr ptrColorTexture, CGfxRenderTexturePtr ptrDepthTexture)
@@ -68,8 +75,8 @@ void CPassSSAO::SetOutputTexture(CGfxRenderTexturePtr ptrColorGradingTexture)
 const CGfxSemaphore* CPassSSAO::Render(CTaskGraph& taskGraph, const CGfxSemaphore* pWaitSemaphore)
 {
 	// Update
-	m_pCameraUniform->Apply();
-	m_pEngineUniform->Apply();
+	m_pCamera->GetCameraUniform()->Apply();
+	m_pRenderSystem->GetEngineUniform()->Apply();
 	m_ptrDescriptorSetPass->Update();
 
 	// Render
