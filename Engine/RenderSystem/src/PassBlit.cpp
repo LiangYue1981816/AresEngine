@@ -1,10 +1,10 @@
 #include "EngineHeader.h"
 
 
-CPassBlit::CPassBlit(const char* szMaterialFileName, CGfxUniformEngine* pEngineUniform)
+CPassBlit::CPassBlit(const char* szMaterialFileName, CRenderSystem* pRenderSystem)
 	: m_pRenderQueue(nullptr)
-	, m_pCameraUniform(nullptr)
-	, m_pEngineUniform(pEngineUniform)
+	, m_pCamera(nullptr)
+	, m_pRenderSystem(pRenderSystem)
 {
 	struct Vertex {
 		float position[3];
@@ -30,14 +30,9 @@ CPassBlit::CPassBlit(const char* szMaterialFileName, CGfxUniformEngine* pEngineU
 	m_pRenderQueue->Begin();
 	m_pRenderQueue->Add(0, m_ptrMaterial, m_ptrMeshDraw, (const uint8_t*)&matrix, sizeof(matrix));
 	m_pRenderQueue->End();
-
-	m_pCameraUniform = new CGfxUniformCamera;
-	m_pCameraUniform->SetOrtho(-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f);
-	m_pCameraUniform->SetLookat(0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
 }
 
 CPassBlit::~CPassBlit(void)
 {
 	delete m_pRenderQueue;
-	delete m_pCameraUniform;
 }

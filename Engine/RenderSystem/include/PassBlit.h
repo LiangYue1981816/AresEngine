@@ -9,7 +9,7 @@ class CALL_API CPassBlit
 
 
 protected:
-	CPassBlit(const char* szMaterialFileName, CGfxUniformEngine* pEngineUniform);
+	CPassBlit(const char* szMaterialFileName, CRenderSystem* pRenderSystem);
 	virtual ~CPassBlit(void);
 
 
@@ -18,8 +18,10 @@ private:
 	CGfxMeshDrawPtr m_ptrMeshDraw;
 	CGfxMaterialPtr m_ptrMaterial;
 
-protected:
+private:
 	CGfxRenderQueue* m_pRenderQueue;
-	CGfxUniformCamera* m_pCameraUniform;
-	CGfxUniformEngine* m_pEngineUniform;
+
+protected:
+	CCamera* m_pCamera;
+	CRenderSystem* m_pRenderSystem;
 };
