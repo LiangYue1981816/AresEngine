@@ -108,13 +108,13 @@ layout (location = 13)                           in mediump vec4 inInstancePoint
 	} engine
 
 #define USE_SHADOWMAP_UNIFORM                                                      \
-	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_SHADOWMAP) uniform sampler2D texShadowMap
+	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_SHADOWMAP) highp uniform sampler2D texShadowMap
 
 #define USE_DEPTH_TEXTURE_UNIFORM                                                  \
-	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_DEPTH_TEXTURE) uniform sampler2D texDepth
+	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_DEPTH_TEXTURE) highp uniform sampler2D texDepth
 
 #define USE_COLOR_TEXTURE_UNIFORM                                                  \
-	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_COLOR_TEXTURE) uniform sampler2D texColor
+	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_COLOR_TEXTURE) mediump uniform sampler2D texColor
 
 
 USE_CAMERA_UNIFORM;
