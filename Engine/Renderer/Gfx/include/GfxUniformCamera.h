@@ -14,6 +14,7 @@ public:
 		glm::mat4 viewInverseTransposeMatrix;
 		glm::mat4 projectionMatrix;
 		glm::mat4 projectionViewMatrix;
+		glm::mat4 projectionInverseMatrix;
 		glm::mat4 projectionViewInverseMatrix;
 	} Params;
 

@@ -42,6 +42,7 @@ void CGfxUniformCamera::SetPerspective(float fovy, float aspect, float zNear, fl
 	m_params.depth = glm::vec4(zNear, zFar, zFar - zNear, 1.0f / (zFar - zNear));
 	m_params.projectionMatrix = GfxRenderer()->GetBaseMatrix() * glm::perspective(glm::radians(fovy), aspect, zNear, zFar);
 	m_params.projectionViewMatrix = m_params.projectionMatrix * m_params.viewMatrix;
+	m_params.projectionInverseMatrix = glm::inverse(m_params.projectionMatrix);
 	m_params.projectionViewInverseMatrix = glm::inverse(m_params.projectionViewMatrix);
 }
 
@@ -59,6 +60,7 @@ void CGfxUniformCamera::SetOrtho(float left, float right, float bottom, float to
 	m_params.depth = glm::vec4(zNear, zFar, zFar - zNear, 1.0f / (zFar - zNear));
 	m_params.projectionMatrix = GfxRenderer()->GetBaseMatrix() * glm::ortho(left, right, bottom, top, zNear, zFar);
 	m_params.projectionViewMatrix = m_params.projectionMatrix * m_params.viewMatrix;
+	m_params.projectionInverseMatrix = glm::inverse(m_params.projectionMatrix);
 	m_params.projectionViewInverseMatrix = glm::inverse(m_params.projectionViewMatrix);
 }
 
