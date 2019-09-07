@@ -63,6 +63,7 @@ layout (location = 13)                           in mediump vec4 inInstancePoint
 		highp mat4 viewInverseTransposeMatrix;                                     \
 		highp mat4 projectionMatrix;                                               \
 		highp mat4 projectionViewMatrix;                                           \
+		highp mat4 projectionViewInverseMatrix;                                    \
 	} camera
 
 #define USE_ENGINE_UNIFORM                                                         \
