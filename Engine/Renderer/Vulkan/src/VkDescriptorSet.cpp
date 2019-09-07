@@ -256,8 +256,8 @@ void CVKDescriptorSet::Update(void)
 	ASSERT(m_ptrDescriptorLayout);
 
 	eastl::vector<VkWriteDescriptorSet> writes;
-	eastl::vector<VkDescriptorImageInfo> imageInfos;
-	eastl::vector<VkDescriptorBufferInfo> bufferInfos;
+	eastl::vector<VkDescriptorImageInfo> imageInfos(64);
+	eastl::vector<VkDescriptorBufferInfo> bufferInfos(64);
 
 	for (auto& itImage : m_imageDescriptorInfos) {
 		if (itImage.second.bDirty) {
