@@ -42,6 +42,7 @@ void CGfxUniformCamera::SetPerspective(float fovy, float aspect, float zNear, fl
 	m_params.depth = glm::vec4(zNear, zFar, zFar - zNear, 1.0f / (zFar - zNear));
 	m_params.projectionMatrix = GfxRenderer()->GetBaseMatrix() * glm::perspective(glm::radians(fovy), aspect, zNear, zFar);
 	m_params.projectionViewMatrix = m_params.projectionMatrix * m_params.viewMatrix;
+	m_params.projectionViewInverseMatrix = glm::inverse(m_params.projectionViewMatrix);
 }
 
 void CGfxUniformCamera::SetOrtho(float left, float right, float bottom, float top, float zNear, float zFar)
@@ -58,6 +59,7 @@ void CGfxUniformCamera::SetOrtho(float left, float right, float bottom, float to
 	m_params.depth = glm::vec4(zNear, zFar, zFar - zNear, 1.0f / (zFar - zNear));
 	m_params.projectionMatrix = GfxRenderer()->GetBaseMatrix() * glm::ortho(left, right, bottom, top, zNear, zFar);
 	m_params.projectionViewMatrix = m_params.projectionMatrix * m_params.viewMatrix;
+	m_params.projectionViewInverseMatrix = glm::inverse(m_params.projectionViewMatrix);
 }
 
 void CGfxUniformCamera::SetLookat(float eyex, float eyey, float eyez, float centerx, float centery, float centerz, float upx, float upy, float upz)
@@ -67,6 +69,7 @@ void CGfxUniformCamera::SetLookat(float eyex, float eyey, float eyez, float cent
 	m_params.viewInverseMatrix = glm::inverse(m_params.viewMatrix);
 	m_params.viewInverseTransposeMatrix = glm::transpose(m_params.viewInverseMatrix);
 	m_params.projectionViewMatrix = m_params.projectionMatrix * m_params.viewMatrix;
+	m_params.projectionViewInverseMatrix = glm::inverse(m_params.projectionViewMatrix);
 }
 
 void CGfxUniformCamera::Apply(void)

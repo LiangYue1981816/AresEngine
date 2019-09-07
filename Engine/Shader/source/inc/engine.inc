@@ -128,6 +128,7 @@ USE_CAMERA_UNIFORM;
 #define cameraViewInverseTransposeMatrix         camera.viewInverseTransposeMatrix
 #define cameraProjectionMatrix                   camera.projectionMatrix
 #define cameraProjectionViewMatrix               camera.projectionViewMatrix
+#define cameraProjectionViewInverseMatrix        camera.projectionViewInverseMatrix
 
 USE_ENGINE_UNIFORM;
 #define mainShadowLevelFactor                    engine.mainShadowLevelFactor
