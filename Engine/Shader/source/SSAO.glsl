@@ -52,7 +52,7 @@ void main()
 		vec3( 0.0352,-0.0631, 0.5460), vec3(-0.4776, 0.2847,-0.0271));
 
 	highp float curDepth = texture(texDepth, inTexcoord).r;
-	highp vec3 curPosition = ScreenToViewPosition(inTexcoord, curDepth, cameraProjectionInverseMatrix);
+	highp vec3 curPosition = ScreenToViewPosition(inTexcoord, curDepth);
 
 	highp float radius = 0.1;
 	highp float occlusion = 0.0;
