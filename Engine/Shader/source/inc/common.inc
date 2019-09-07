@@ -81,22 +81,17 @@ mediump vec3 Gray(mediump vec3 color, mediump float percent)
 	return (1.0 - percent) * dot(vec3(0.299, 0.587, 0.114), color) + percent * color;
 }
 
-highp float ScreenToViewDepth(highp float depth)
-{
-    return cameraProjectionMatrix[3][2] / (2.0 * depth - 1.0 - cameraProjectionMatrix[2][2]);
-}
-
-highp vec3 ScreenToViewPosition(highp vec2 screen, highp float depth)
+highp vec3 ScreenToViewPosition(highp vec2 screen, highp float depth, highp mat4 projectionInverseMatrix)
 {
 	highp vec4 clipPosition = vec4(screen * vec2(2.0) - vec2(1.0), depth * 2.0 - 1.0, 1.0);
-	highp vec4 viewPosition = cameraProjectionInverseMatrix * clipPosition;
+	highp vec4 viewPosition = projectionInverseMatrix * clipPosition;
 	return (viewPosition.xyz / viewPosition.w);
 }
 
-highp vec3 ScreenToWorldPosition(highp vec2 screen, highp float depth)
+highp vec3 ScreenToWorldPosition(highp vec2 screen, highp float depth, highp mat4 projectionViewInverseMatrix)
 {
 	highp vec4 clipPosition = vec4(screen * vec2(2.0) - vec2(1.0), depth * 2.0 - 1.0, 1.0);
-	highp vec4 worldPosition = cameraProjectionViewInverseMatrix * clipPosition;
+	highp vec4 worldPosition = projectionViewInverseMatrix * clipPosition;
 	return (worldPosition.xyz / worldPosition.w);
 }
 
