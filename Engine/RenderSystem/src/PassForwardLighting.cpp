@@ -100,6 +100,7 @@ const CGfxSemaphore* CPassForwardLighting::Render(CTaskGraph& taskGraph, const C
 				}
 				GfxRenderer()->CmdEndRenderPass(ptrMainCommandBuffer);
 				GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, m_ptrColorTexture, GFX_IMAGE_LAYOUT_COLOR_READ_ONLY_OPTIMAL);
+				GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, m_ptrDepthStencilTexture, GFX_IMAGE_LAYOUT_DEPTH_STENCIL_READ_ONLY_OPTIMAL);
 			}
 			GfxRenderer()->EndRecord(ptrMainCommandBuffer);
 		}
