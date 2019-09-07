@@ -71,6 +71,7 @@ void CGfxUniformCamera::SetLookat(float eyex, float eyey, float eyez, float cent
 	m_params.viewInverseMatrix = glm::inverse(m_params.viewMatrix);
 	m_params.viewInverseTransposeMatrix = glm::transpose(m_params.viewInverseMatrix);
 	m_params.projectionViewMatrix = m_params.projectionMatrix * m_params.viewMatrix;
+	m_params.projectionInverseMatrix = glm::inverse(m_params.projectionMatrix);
 	m_params.projectionViewInverseMatrix = glm::inverse(m_params.projectionViewMatrix);
 }
 

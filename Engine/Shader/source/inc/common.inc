@@ -50,7 +50,7 @@ mediump vec3 BlendNormalInTangentSpace(mediump vec3 baseNormal, mediump vec3 add
 	return normalize(newBaseNormal - newAdditionalNormal);
 }
 
-highp vec2 PoissonDiskOffset(highp vec3 seed, highp int index)
+highp vec2 PoissonDisk(highp vec3 seed, highp int index)
 {
 	highp vec2 offset[16] = vec2[]( 
 		vec2(-0.94201624, -0.39906216), 
@@ -88,16 +88,16 @@ highp float ScreenToViewDepth(highp float depth)
 
 highp vec3 ScreenToViewPosition(highp vec2 screen, highp float depth)
 {
-	highp vec4 clipPosition = vec4(screen * vec2(2.0) - vec2(1.0), 2.0 * depth - 1.0, 1.0);
+	highp vec4 clipPosition = vec4(screen * vec2(2.0) - vec2(1.0), depth * 2.0 - 1.0, 1.0);
 	highp vec4 viewPosition = cameraProjectionInverseMatrix * clipPosition;
-	return(viewPosition.xyz / viewPosition.w);
+	return (viewPosition.xyz / viewPosition.w);
 }
 
 highp vec3 ScreenToWorldPosition(highp vec2 screen, highp float depth)
 {
-	highp vec4 clipPosition = vec4(screen * vec2(2.0) - vec2(1.0), 2.0 * depth - 1.0, 1.0);
+	highp vec4 clipPosition = vec4(screen * vec2(2.0) - vec2(1.0), depth * 2.0 - 1.0, 1.0);
 	highp vec4 worldPosition = cameraProjectionViewInverseMatrix * clipPosition;
-	return(worldPosition.xyz / worldPosition.w);
+	return (worldPosition.xyz / worldPosition.w);
 }
 
 #endif
