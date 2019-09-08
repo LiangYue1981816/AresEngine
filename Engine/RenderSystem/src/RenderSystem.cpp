@@ -118,6 +118,10 @@ void CRenderSystem::CreateRenderPass(void)
 	CPassFinal::Create(GFX_PIXELFORMAT_BGRA8_UNORM_PACK8);
 
 	m_pPassPreZ = new CPassPreZ(this);
+	m_pPassPreZ->SetOutputTexture(GetRenderTexture(RENDER_TEXTURE_FRAMEBUFFER_DEPTH));
+
+	m_pPassShadowMap = new CPassShadowMap(this);
+	m_pPassShadowMap->SetOutputTexture(GetRenderTexture(RENDER_TEXTURE_SHADOWMAP));
 
 	m_pPassDefault = new CPassDefault(this);
 	m_pPassDefault->SetOutputTexture(GetRenderTexture(RENDER_TEXTURE_FRAMEBUFFER_COLOR), GetRenderTexture(RENDER_TEXTURE_FRAMEBUFFER_DEPTH));
@@ -125,9 +129,6 @@ void CRenderSystem::CreateRenderPass(void)
 	m_pPassForwardLighting = new CPassForwardLighting(this);
 	m_pPassForwardLighting->SetInputTexture(GetRenderTexture(RENDER_TEXTURE_SHADOWMAP));
 	m_pPassForwardLighting->SetOutputTexture(GetRenderTexture(RENDER_TEXTURE_FRAMEBUFFER_COLOR), GetRenderTexture(RENDER_TEXTURE_FRAMEBUFFER_DEPTH));
-
-	m_pPassShadowMap = new CPassShadowMap(this);
-	m_pPassShadowMap->SetOutputTexture(GetRenderTexture(RENDER_TEXTURE_SHADOWMAP));
 
 	m_pPassSSAO = new CPassSSAO(this);
 	m_pPassSSAO->SetInputTexture(GetRenderTexture(RENDER_TEXTURE_FRAMEBUFFER_DEPTH));
@@ -175,6 +176,11 @@ void CRenderSystem::DestroyRenderPass(void)
 	delete m_pPassFinal;
 }
 
+CPassPreZ* CRenderSystem::GetPassPreZ(void) const
+{
+	return m_pPassPreZ;
+}
+
 CPassDefault* CRenderSystem::GetPassDefault(void) const
 {
 	return m_pPassDefault;
@@ -193,6 +199,16 @@ CPassShadowMap* CRenderSystem::GetPassShadowMap(void) const
 CPassSSAO* CRenderSystem::GetPassSSAO(void) const
 {
 	return m_pPassSSAO;
+}
+
+CPassBlur* CRenderSystem::GetPassSSAOBlur(void) const
+{
+	return m_pPassSSAOBlur;
+}
+
+CPassBlend* CRenderSystem::GetPassSSAOBlend(void) const
+{
+	return m_pPassSSAOBlend;
 }
 
 CPassColorGrading* CRenderSystem::GetPassColorGrading(void) const
@@ -320,8 +336,9 @@ void CRenderSystem::RenderForwardLighting(CTaskGraph& taskGraph, CCamera* pCamer
 
 	GfxRenderer()->AcquireNextFrame();
 	{
-		m_pPassForwardLighting->SetCamera(pCamera);
 		m_pPassShadowMap->SetCamera(pCamera);
+		m_pPassPreZ->SetCamera(pCamera);
+		m_pPassForwardLighting->SetCamera(pCamera);
 		m_pPassSSAO->SetCamera(pCamera);
 		m_pPassSSAOBlur->SetCamera(pCamera);
 		m_pPassSSAOBlend->SetCamera(pCamera);
@@ -329,6 +346,7 @@ void CRenderSystem::RenderForwardLighting(CTaskGraph& taskGraph, CCamera* pCamer
 		m_pPassFinal->SetCamera(pCamera);
 
 		pWaitSemaphore = m_pPassShadowMap->Render(taskGraph, pWaitSemaphore);
+		pWaitSemaphore = m_pPassPreZ->Render(taskGraph, pWaitSemaphore);
 		pWaitSemaphore = m_pPassForwardLighting->Render(taskGraph, pWaitSemaphore);
 		pWaitSemaphore = m_pPassSSAO->Render(taskGraph, pWaitSemaphore);
 		pWaitSemaphore = m_pPassSSAOBlur->Render(taskGraph, pWaitSemaphore);

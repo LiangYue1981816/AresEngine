@@ -60,15 +60,15 @@
 
 
 // RenderTexture
-#define RENDER_TEXTURE_SWAPCHAIN_COLOR0                    HashValue("RenderTextureSwapChainColor0")
-#define RENDER_TEXTURE_SWAPCHAIN_COLOR1                    HashValue("RenderTextureSwapChainColor1")
-#define RENDER_TEXTURE_SWAPCHAIN_COLOR2                    HashValue("RenderTextureSwapChainColor2")
 #define RENDER_TEXTURE_SHADOWMAP                           HashValue("RenderTextureShadowMap")
 #define RENDER_TEXTURE_FRAMEBUFFER_DEPTH                   HashValue("RenderTextureFrameBufferDepth")
 #define RENDER_TEXTURE_FRAMEBUFFER_COLOR                   HashValue("RenderTextureFrameBufferColor")
 #define RENDER_TEXTURE_FRAMEBUFFER_HALF0                   HashValue("RenderTextureFrameBufferHalf0")
 #define RENDER_TEXTURE_FRAMEBUFFER_HALF1                   HashValue("RenderTextureFrameBufferHalf1")
 #define RENDER_TEXTURE_FRAMEBUFFER_FINAL                   HashValue("RenderTextureFrameBufferFinal")
+#define RENDER_TEXTURE_SWAPCHAIN_COLOR0                    HashValue("RenderTextureSwapChainColor0")
+#define RENDER_TEXTURE_SWAPCHAIN_COLOR1                    HashValue("RenderTextureSwapChainColor1")
+#define RENDER_TEXTURE_SWAPCHAIN_COLOR2                    HashValue("RenderTextureSwapChainColor2")
 
 
 class CALL_API CRenderSystem
@@ -103,10 +103,13 @@ public:
 	CGfxRenderTexturePtr GetRenderTexture(uint32_t name);
 
 public:
+	CPassPreZ* GetPassPreZ(void) const;
 	CPassDefault* GetPassDefault(void) const;
 	CPassForwardLighting* GetPassForwardLighting(void) const;
 	CPassShadowMap* GetPassShadowMap(void) const;
 	CPassSSAO* GetPassSSAO(void) const;
+	CPassBlur* GetPassSSAOBlur(void) const;
+	CPassBlend* GetPassSSAOBlend(void) const;
 	CPassColorGrading* GetPassColorGrading(void) const;
 	CPassFinal* GetPassFinal(void) const;
 
