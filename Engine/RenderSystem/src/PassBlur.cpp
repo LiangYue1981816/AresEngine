@@ -57,8 +57,8 @@ void CPassBlur::SetCamera(CCamera* pCamera)
 
 void CPassBlur::SetInputTexture(CGfxRenderTexturePtr ptrColorTexture)
 {
-	CGfxSampler* pSampler = GfxRenderer()->CreateSampler(GFX_FILTER_NEAREST, GFX_FILTER_LINEAR, GFX_SAMPLER_MIPMAP_MODE_NEAREST, GFX_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE);
-	m_ptrDescriptorSetPass->SetRenderTexture(UNIFORM_COLOR_TEXTURE_NAME, ptrColorTexture, pSampler);
+	CGfxSampler* pSamplerLinear = GfxRenderer()->CreateSampler(GFX_FILTER_LINEAR, GFX_FILTER_LINEAR, GFX_SAMPLER_MIPMAP_MODE_NEAREST, GFX_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE);
+	m_ptrDescriptorSetPass->SetRenderTexture(UNIFORM_COLOR_TEXTURE_NAME, ptrColorTexture, pSamplerLinear);
 }
 
 void CPassBlur::SetOutputTexture(CGfxRenderTexturePtr ptrColorTexture)

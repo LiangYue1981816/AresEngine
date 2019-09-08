@@ -10,7 +10,7 @@ void CPassShadowMap::Create(GfxPixelFormat depthPixelFormat)
 	const int stencil = 0;
 	const float depth = 1.0f;
 
-	ptrRenderPass = GfxRenderer()->NewRenderPass(PASS_SHADOWMAP_NAME, numAttachments, numSubpasses);
+	ptrRenderPass = GfxRenderer()->NewRenderPass(PASS_SHADOW_NAME, numAttachments, numSubpasses);
 	ptrRenderPass->SetDepthStencilAttachment(0, depthPixelFormat, 1, false, true, depth, stencil);
 	ptrRenderPass->SetSubpassOutputDepthStencilReference(0, 0);
 	ptrRenderPass->Create();
@@ -49,7 +49,7 @@ CPassShadowMap::CPassShadowMap(CRenderSystem* pRenderSystem)
 
 	for (int indexLevel = 0; indexLevel < 4; indexLevel++) {
 		m_pShadowCameraUniform[indexLevel] = new CGfxUniformCamera;
-		m_ptrDescriptorSetPass[indexLevel] = GfxRenderer()->NewDescriptorSet(PASS_SHADOWMAP_NAME + indexLevel, ptrDescriptorLayout);
+		m_ptrDescriptorSetPass[indexLevel] = GfxRenderer()->NewDescriptorSet(PASS_SHADOW_NAME + indexLevel, ptrDescriptorLayout);
 		m_ptrDescriptorSetPass[indexLevel]->SetUniformBuffer(UNIFORM_ENGINE_NAME, m_pRenderSystem->GetEngineUniform()->GetUniformBuffer(), 0, m_pRenderSystem->GetEngineUniform()->GetUniformBuffer()->GetSize());
 		m_ptrDescriptorSetPass[indexLevel]->SetUniformBuffer(UNIFORM_CAMERA_NAME, m_pShadowCameraUniform[indexLevel]->GetUniformBuffer(), 0, m_pShadowCameraUniform[indexLevel]->GetUniformBuffer()->GetSize());
 		m_ptrDescriptorSetPass[indexLevel]->Update();
@@ -166,8 +166,8 @@ const CGfxSemaphore* CPassShadowMap::Render(CTaskGraph& taskGraph, const CGfxSem
 					};
 
 					for (int indexLevel = 0; indexLevel < 4; indexLevel++) {
-//						m_pCamera->GetRenderQueue()->CmdDraw(taskGraph, ptrMainCommandBuffer, m_ptrDescriptorSetPass[indexLevel], PASS_SHADOWMAP_NAME, area[indexLevel], area[indexLevel], 0xffffffff);
-						m_pShadowRenderQueue[indexLevel]->CmdDraw(taskGraph, ptrMainCommandBuffer, m_ptrDescriptorSetPass[indexLevel], PASS_SHADOWMAP_NAME, area[indexLevel], area[indexLevel], 0xffffffff);
+//						m_pCamera->GetRenderQueue()->CmdDraw(taskGraph, ptrMainCommandBuffer, m_ptrDescriptorSetPass[indexLevel], PASS_SHADOW_NAME, area[indexLevel], area[indexLevel], 0xffffffff);
+						m_pShadowRenderQueue[indexLevel]->CmdDraw(taskGraph, ptrMainCommandBuffer, m_ptrDescriptorSetPass[indexLevel], PASS_SHADOW_NAME, area[indexLevel], area[indexLevel], 0xffffffff);
 					}
 				}
 				GfxRenderer()->CmdEndRenderPass(ptrMainCommandBuffer);

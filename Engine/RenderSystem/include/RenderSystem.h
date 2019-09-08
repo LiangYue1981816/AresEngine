@@ -26,34 +26,30 @@
 // Uniform
 #define UNIFORM_ENGINE_BIND                                0
 #define UNIFORM_CAMERA_BIND                                1
-#define UNIFORM_SHADOWMAP_BIND                             2
-#define UNIFORM_DEPTH_TEXTURE_BIND                         3
-#define UNIFORM_COLOR_TEXTURE_BIND                         4
-#define UNIFORM_COLOR_SRC_TEXTURE_BIND                     3
-#define UNIFORM_COLOR_DST_TEXTURE_BIND                     4
+#define UNIFORM_DEPTH_TEXTURE_BIND                         2
+#define UNIFORM_COLOR_TEXTURE_BIND                         3
+#define UNIFORM_SSAO_TEXTURE_BIND                          2
+#define UNIFORM_SHADOW_TEXTURE_BIND                        3
 
 #define UNIFORM_ENGINE_NAME                                HashValue("Engine")
 #define UNIFORM_CAMERA_NAME                                HashValue("Camera")
-#define UNIFORM_SHADOWMAP_NAME                             HashValue("texShadowMap")
 #define UNIFORM_DEPTH_TEXTURE_NAME                         HashValue("texDepth")
 #define UNIFORM_COLOR_TEXTURE_NAME                         HashValue("texColor")
-#define UNIFORM_COLOR_SRC_TEXTURE_NAME                     HashValue("texColorSrc")
-#define UNIFORM_COLOR_DST_TEXTURE_NAME                     HashValue("texColorDst")
+#define UNIFORM_SSAO_TEXTURE_NAME                          HashValue("texSSAO")
+#define UNIFORM_SHADOW_TEXTURE_NAME                        HashValue("texShadow")
 
 
 // Pass
 #define PASS_PREZ_NAME                                     HashValue("PassPreZ")
+#define PASS_SHADOW_NAME                                   HashValue("PassShadow")
 #define PASS_DEFAULT_NAME                                  HashValue("PassDefault")
 #define PASS_FORWARD_LIGHTING_NAME                         HashValue("PassForwardLighting")
-#define PASS_SHADOWMAP_NAME                                HashValue("PassShadowMap")
 #define PASS_BLUR_NAME                                     HashValue("PassBlur")
-#define PASS_BLEND_NAME                                    HashValue("PassBlend")
 #define PASS_SSAO_NAME                                     HashValue("PassSSAO")
 #define PASS_COLOR_GRADING_NAME                            HashValue("PassColorGrading")
 #define PASS_FINAL_NAME                                    HashValue("PassFinal")
 
 #define PASS_BLUR_MATERIAL_NAME                            "PassBlur.material"
-#define PASS_BLEND_MATERIAL_NAME                           "PassBlend.material"
 #define PASS_SSAO_MATERIAL_NAME                            "PassSSAO.material"
 #define PASS_COLOR_GRADING_MATERIAL_NAME                   "PassColorGrading.material"
 #define PASS_FINAL_MATERIAL_NAME                           "PassFinal.material"
@@ -79,7 +75,6 @@ class CALL_API CRenderSystem
 	friend class CPassForwardLighting;
 	friend class CPassShadowMap;
 	friend class CPassBlur;
-	friend class CPassBlend;
 	friend class CPassSSAO;
 	friend class CPassColorGrading;
 	friend class CPassFinal;
@@ -109,7 +104,6 @@ public:
 	CPassShadowMap* GetPassShadowMap(void) const;
 	CPassSSAO* GetPassSSAO(void) const;
 	CPassBlur* GetPassSSAOBlur(void) const;
-	CPassBlend* GetPassSSAOBlend(void) const;
 	CPassColorGrading* GetPassColorGrading(void) const;
 	CPassFinal* GetPassFinal(void) const;
 
@@ -156,7 +150,6 @@ private:
 	CPassShadowMap* m_pPassShadowMap;
 	CPassSSAO* m_pPassSSAO;
 	CPassBlur* m_pPassSSAOBlur;
-	CPassBlend* m_pPassSSAOBlend;
 	CPassColorGrading* m_pPassColorGrading;
 	CPassFinal* m_pPassFinal;
 
