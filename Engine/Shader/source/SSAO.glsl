@@ -116,8 +116,8 @@ void main()
 
 	highp vec2 noiseSize = vec2(textureSize(texNoise, 0));
 	highp vec2 depthSize = vec2(textureSize(texDepth, 0));
-//	highp vec2 noiseTexcoord = 8.0 * inTexcoord;
-	highp vec2 noiseTexcoord = 0.8 * inTexcoord * depthSize / noiseSize;
+//	highp vec2 noiseTexcoord = 5.0 * inTexcoord;
+	highp vec2 noiseTexcoord = 0.5 * inTexcoord * depthSize / noiseSize;
 
 	highp float curDepth = texture(texDepth, inTexcoord).r;
 	highp vec3 curPosition = ScreenToViewPosition(inTexcoord, curDepth);
@@ -144,7 +144,9 @@ void main()
 		occlusion += step(checkSamplePosition.z, samplePosition.z);
 	}
 
-	outFragColor.rgb = vec3(occlusion / float(count));
+	occlusion = clamp(occlusion / float(count) + 0.5, 0.0, 1.0);
+
+	outFragColor.rgb = vec3(occlusion);
 //	outFragColor.rgb = vec3(radius);
 	outFragColor.a = 1.0;
 }

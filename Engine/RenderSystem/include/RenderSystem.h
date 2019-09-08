@@ -57,8 +57,7 @@
 #define RENDER_TEXTURE_SHADOWMAP                           HashValue("RenderTextureShadowMap")
 #define RENDER_TEXTURE_FRAMEBUFFER_DEPTH                   HashValue("RenderTextureFrameBufferDepth")
 #define RENDER_TEXTURE_FRAMEBUFFER_COLOR                   HashValue("RenderTextureFrameBufferColor")
-#define RENDER_TEXTURE_FRAMEBUFFER_SSAO                    HashValue("RenderTextureFrameBufferSSAO")
-#define RENDER_TEXTURE_FRAMEBUFFER_COLOR_GRADING           HashValue("RenderTextureFrameBufferColorGrading")
+#define RENDER_TEXTURE_FRAMEBUFFER_HALF                    HashValue("RenderTextureFrameBufferHalf")
 
 
 class CALL_API CRenderSystem
