@@ -5,7 +5,7 @@ static const int numSubpasses = 1;
 static const int numAttachments = 1;
 static CGfxRenderPassPtr ptrRenderPass;
 
-void CPassShadowMap::Create(GfxPixelFormat depthPixelFormat)
+void CPassShadow::Create(GfxPixelFormat depthPixelFormat)
 {
 	const int stencil = 0;
 	const float depth = 1.0f;
@@ -16,13 +16,13 @@ void CPassShadowMap::Create(GfxPixelFormat depthPixelFormat)
 	ptrRenderPass->Create();
 }
 
-void CPassShadowMap::Destroy(void)
+void CPassShadow::Destroy(void)
 {
 	ptrRenderPass.Release();
 }
 
 
-CPassShadowMap::CPassShadowMap(CRenderSystem* pRenderSystem)
+CPassShadow::CPassShadow(CRenderSystem* pRenderSystem)
 	: m_pCamera(nullptr)
 	, m_pRenderSystem(pRenderSystem)
 
@@ -56,7 +56,7 @@ CPassShadowMap::CPassShadowMap(CRenderSystem* pRenderSystem)
 	}
 }
 
-CPassShadowMap::~CPassShadowMap(void)
+CPassShadow::~CPassShadow(void)
 {
 	m_ptrMainCommandBuffer[0]->Clearup();
 	m_ptrMainCommandBuffer[1]->Clearup();
@@ -69,12 +69,12 @@ CPassShadowMap::~CPassShadowMap(void)
 	}
 }
 
-void CPassShadowMap::SetCamera(CCamera* pCamera)
+void CPassShadow::SetCamera(CCamera* pCamera)
 {
 	m_pCamera = pCamera;
 }
 
-void CPassShadowMap::SetSplitFactors(float f1, float f2, float f3, float f4)
+void CPassShadow::SetSplitFactors(float f1, float f2, float f3, float f4)
 {
 	m_splitFactors[0] = 0.0f;
 	m_splitFactors[1] = f1;
@@ -83,7 +83,7 @@ void CPassShadowMap::SetSplitFactors(float f1, float f2, float f3, float f4)
 	m_splitFactors[4] = f4;
 }
 
-void CPassShadowMap::SetOutputTexture(CGfxRenderTexturePtr ptrDepthTexture)
+void CPassShadow::SetOutputTexture(CGfxRenderTexturePtr ptrDepthTexture)
 {
 	m_ptrDepthTexture = ptrDepthTexture;
 
@@ -92,7 +92,7 @@ void CPassShadowMap::SetOutputTexture(CGfxRenderTexturePtr ptrDepthTexture)
 	m_ptrFrameBuffer->Create(ptrRenderPass);
 }
 
-const CGfxSemaphore* CPassShadowMap::Render(CTaskGraph& taskGraph, const CGfxSemaphore* pWaitSemaphore)
+const CGfxSemaphore* CPassShadow::Render(CTaskGraph& taskGraph, const CGfxSemaphore* pWaitSemaphore)
 {
 	if (m_pCamera) {
 		// Update
