@@ -41,15 +41,13 @@
 
 // Pass
 #define PASS_PREZ_NAME                                     HashValue("PassPreZ")
+#define PASS_SSAO_NAME                                     HashValue("PassSSAO")
+#define PASS_SHADOW_NAME                                   HashValue("PassShadow")
 #define PASS_DEFAULT_NAME                                  HashValue("PassDefault")
 #define PASS_FORWARD_LIGHTING_NAME                         HashValue("PassForwardLighting")
-#define PASS_SHADOW_NAME                                   HashValue("PassShadow")
-#define PASS_BLUR_NAME                                     HashValue("PassBlur")
-#define PASS_SSAO_NAME                                     HashValue("PassSSAO")
 #define PASS_COLOR_GRADING_NAME                            HashValue("PassColorGrading")
 #define PASS_FINAL_NAME                                    HashValue("PassFinal")
 
-#define PASS_BLUR_MATERIAL_NAME                            "PassBlur.material"
 #define PASS_SSAO_MATERIAL_NAME                            "PassSSAO.material"
 #define PASS_COLOR_GRADING_MATERIAL_NAME                   "PassColorGrading.material"
 #define PASS_FINAL_MATERIAL_NAME                           "PassFinal.material"
@@ -59,11 +57,10 @@
 #define RENDER_TEXTURE_SWAPCHAIN_COLOR0                    HashValue("RenderTextureSwapChainColor0")
 #define RENDER_TEXTURE_SWAPCHAIN_COLOR1                    HashValue("RenderTextureSwapChainColor1")
 #define RENDER_TEXTURE_SWAPCHAIN_COLOR2                    HashValue("RenderTextureSwapChainColor2")
-#define RENDER_TEXTURE_SHADOWMAP                           HashValue("RenderTextureShadowMap")
+#define RENDER_TEXTURE_SHADOW                              HashValue("RenderTextureShadow")
 #define RENDER_TEXTURE_FRAMEBUFFER_DEPTH                   HashValue("RenderTextureFrameBufferDepth")
 #define RENDER_TEXTURE_FRAMEBUFFER_COLOR                   HashValue("RenderTextureFrameBufferColor")
-#define RENDER_TEXTURE_FRAMEBUFFER_HALF0                   HashValue("RenderTextureFrameBufferHalf0")
-#define RENDER_TEXTURE_FRAMEBUFFER_HALF1                   HashValue("RenderTextureFrameBufferHalf1")
+#define RENDER_TEXTURE_FRAMEBUFFER_SSAO                    HashValue("RenderTextureFrameBufferHalf")
 #define RENDER_TEXTURE_FRAMEBUFFER_FINAL                   HashValue("RenderTextureFrameBufferFinal")
 
 
@@ -71,11 +68,10 @@ class CALL_API CRenderSystem
 {
 	friend class CEngine;
 	friend class CPassPreZ;
+	friend class CPassSSAO;
+	friend class CPassShadow;
 	friend class CPassDefault;
 	friend class CPassForwardLighting;
-	friend class CPassShadow;
-	friend class CPassBlur;
-	friend class CPassSSAO;
 	friend class CPassColorGrading;
 	friend class CPassFinal;
 
@@ -96,6 +92,15 @@ public:
 	void CreateRenderTexture(uint32_t name, CGfxRenderTexturePtr ptrRenderTexture);
 	void CreateRenderTexture(uint32_t name, GfxPixelFormat format, int width, int height, int samples = 1, bool bTransient = false);
 	CGfxRenderTexturePtr GetRenderTexture(uint32_t name);
+
+public:
+	CPassPreZ* GetPassPreZ(void) const;
+	CPassSSAO* GetPassSSAO(void) const;
+	CPassShadow* GetPassShadow(void) const;
+	CPassDefault* GetPassDefault(void) const;
+	CPassForwardLighting* GetPassForwardLighting(void) const;
+	CPassColorGrading* GetPassColorGrading(void) const;
+	CPassFinal* GetPassFinal(void) const;
 
 public:
 	void SetTime(float t, float dt);
@@ -135,11 +140,10 @@ private:
 
 private:
 	CPassPreZ* m_pPassPreZ;
+	CPassSSAO* m_pPassSSAO;
+	CPassShadow* m_pPassShadow;
 	CPassDefault* m_pPassDefault;
 	CPassForwardLighting* m_pPassForwardLighting;
-	CPassShadow* m_pPassShadow;
-	CPassSSAO* m_pPassSSAO;
-	CPassBlur* m_pPassSSAOBlur;
 	CPassColorGrading* m_pPassColorGrading;
 	CPassFinal* m_pPassFinal;
 

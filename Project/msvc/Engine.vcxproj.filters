@@ -1572,9 +1572,6 @@
     <ClInclude Include="..\..\Engine\RenderSystem\include\PassFinal.h">
       <Filter>Engine\RenderSystem\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Engine\RenderSystem\include\PassBlur.h">
-      <Filter>Engine\RenderSystem\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Engine\RenderSystem\include\PassPreZ.h">
       <Filter>Engine\RenderSystem\Header Files</Filter>
     </ClInclude>
@@ -2283,9 +2280,6 @@
       <Filter>Engine\RenderSystem\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\RenderSystem\src\PassFinal.cpp">
-      <Filter>Engine\RenderSystem\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\RenderSystem\src\PassBlur.cpp">
       <Filter>Engine\RenderSystem\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\RenderSystem\src\PassPreZ.cpp">
