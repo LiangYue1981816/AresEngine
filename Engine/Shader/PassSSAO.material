@@ -14,5 +14,6 @@
 		  	</Rasterization>
 		  </State>
 		</Pipeline>
+		<Texture2D name="texNoise" file_name="noise.dds" min_filter="GFX_NEAREST" mag_filter="GFX_NEAREST" mipmap_mode="GFX_NEAREST" address_mode="GFX_REPEAT" />
 	</Pass>
 </Material>

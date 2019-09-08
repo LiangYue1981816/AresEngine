@@ -37,6 +37,7 @@ layout (location = 0) out mediump vec4 outFragColor;
 // Descriptor
 USE_DEPTH_TEXTURE_UNIFORM;
 USE_COLOR_TEXTURE_UNIFORM;
+DESCRIPTOR_SET_MATPASS(8) uniform sampler2D texNoise;
 
 
 void main()
