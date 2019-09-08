@@ -28,7 +28,7 @@ typedef struct PipelineState {
 	// Depth Stencil State
 	bool bEnableDepthTest = true;
 	bool bEnableDepthWrite = true;
-	GfxCompareOp depthCompareOp = GFX_COMPAREOP_LESS;
+	GfxCompareOp depthCompareOp = GFX_COMPAREOP_LEQUAL;
 
 	bool bEnableStencilTest = false;
 	uint32_t stencilFrontCompareRef = 0;

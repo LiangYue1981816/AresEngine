@@ -13,7 +13,7 @@ void CPassDefault::Create(GfxPixelFormat colorPixelFormat, GfxPixelFormat depthP
 
 	ptrRenderPass = GfxRenderer()->NewRenderPass(PASS_DEFAULT_NAME, numAttachments, numSubpasses);
 	ptrRenderPass->SetColorAttachment(0, colorPixelFormat, 1, false, true, color[0], color[1], color[2], color[3]);
-	ptrRenderPass->SetDepthStencilAttachment(1, depthPixelFormat, 1, true, true, depth, stencil);
+	ptrRenderPass->SetDepthStencilAttachment(1, depthPixelFormat, 1, false, false, depth, stencil);
 	ptrRenderPass->SetSubpassOutputColorReference(0, 0);
 	ptrRenderPass->SetSubpassOutputDepthStencilReference(0, 1);
 	ptrRenderPass->Create();

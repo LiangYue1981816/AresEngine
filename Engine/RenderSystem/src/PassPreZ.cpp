@@ -12,7 +12,7 @@ void CPassPreZ::Create(GfxPixelFormat depthPixelFormat)
 	const float color[] = { 0.1f, 0.1f, 0.1f, 0.0f };
 
 	ptrRenderPass = GfxRenderer()->NewRenderPass(PASS_PREZ_NAME, numAttachments, numSubpasses);
-	ptrRenderPass->SetDepthStencilAttachment(0, depthPixelFormat, 1, true, true, depth, stencil);
+	ptrRenderPass->SetDepthStencilAttachment(0, depthPixelFormat, 1, false, true, depth, stencil);
 	ptrRenderPass->SetSubpassOutputDepthStencilReference(0, 0);
 	ptrRenderPass->Create();
 }
