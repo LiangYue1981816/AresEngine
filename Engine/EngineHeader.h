@@ -19,6 +19,7 @@
 #include "RenderSystem/include/PassDefault.h"
 #include "RenderSystem/include/PassForwardLighting.h"
 #include "RenderSystem/include/PassShadowMap.h"
+#include "RenderSystem/include/PassBlur.h"
 #include "RenderSystem/include/PassSSAO.h"
 #include "RenderSystem/include/PassColorGrading.h"
 #include "RenderSystem/include/PassFinal.h"

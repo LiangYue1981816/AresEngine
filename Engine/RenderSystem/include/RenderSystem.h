@@ -59,7 +59,8 @@
 #define RENDER_TEXTURE_SHADOWMAP                           HashValue("RenderTextureShadowMap")
 #define RENDER_TEXTURE_FRAMEBUFFER_DEPTH                   HashValue("RenderTextureFrameBufferDepth")
 #define RENDER_TEXTURE_FRAMEBUFFER_COLOR                   HashValue("RenderTextureFrameBufferColor")
-#define RENDER_TEXTURE_FRAMEBUFFER_HALF                    HashValue("RenderTextureFrameBufferHalf")
+#define RENDER_TEXTURE_FRAMEBUFFER_HALF0                   HashValue("RenderTextureFrameBufferHalf0")
+#define RENDER_TEXTURE_FRAMEBUFFER_HALF1                   HashValue("RenderTextureFrameBufferHalf1")
 
 
 class CALL_API CRenderSystem
@@ -68,6 +69,7 @@ class CALL_API CRenderSystem
 	friend class CPassDefault;
 	friend class CPassForwardLighting;
 	friend class CPassShadowMap;
+	friend class CPassBlur;
 	friend class CPassSSAO;
 	friend class CPassColorGrading;
 	friend class CPassFinal;
@@ -139,6 +141,7 @@ private:
 	CPassForwardLighting* m_pPassForwardLighting;
 	CPassShadowMap* m_pPassShadowMap;
 	CPassSSAO* m_pPassSSAO;
+	CPassBlur* m_pPassSSAOBlur;
 	CPassColorGrading* m_pPassColorGrading;
 	CPassFinal* m_pPassFinal;
 

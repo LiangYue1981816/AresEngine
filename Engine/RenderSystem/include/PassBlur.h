@@ -2,7 +2,7 @@
 #include "RenderSystem.h"
 
 
-class CALL_API CPassColorGrading : public CPassBlit
+class CALL_API CPassBlur : public CPassBlit
 {
 	friend class CCamera;
 	friend class CRenderSystem;
@@ -14,8 +14,8 @@ private:
 
 
 private:
-	CPassColorGrading(CRenderSystem* pRenderSystem);
-	virtual ~CPassColorGrading(void);
+	CPassBlur(CRenderSystem* pRenderSystem);
+	virtual ~CPassBlur(void);
 
 
 public:

@@ -39,6 +39,17 @@ USE_COLOR_TEXTURE_UNIFORM;
 
 void main()
 {
-	outFragColor = texture(texColor, inTexcoord);
+	highp vec3 result = vec3(0.0);
+	highp vec2 texelSize = vec2(1.0) / vec2(textureSize(texColor, 0));
+
+	for (highp float x = -1.0; x <= 1.0; x++) {
+		for (highp float y = -1.0; y <= 1.0; y++) {
+			highp vec2 offset = vec2(x, y) * texelSize;
+			result += texture(texColor, inTexcoord + offset).rgb;
+		}
+	}
+
+	outFragColor.rgb = result / 9.0;
+	outFragColor.a = 1.0;
 }
 #endif
