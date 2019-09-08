@@ -41,10 +41,12 @@
 #define PASS_DEFAULT_NAME                                  HashValue("PassDefault")
 #define PASS_FORWARD_LIGHTING_NAME                         HashValue("PassForwardLighting")
 #define PASS_SHADOWMAP_NAME                                HashValue("PassShadowMap")
+#define PASS_BLUR_NAME                                     HashValue("PassBlur")
 #define PASS_SSAO_NAME                                     HashValue("PassSSAO")
 #define PASS_COLOR_GRADING_NAME                            HashValue("PassColorGrading")
 #define PASS_FINAL_NAME                                    HashValue("PassFinal")
 
+#define PASS_BLUR_MATERIAL_NAME                            "PassBlur.material"
 #define PASS_SSAO_MATERIAL_NAME                            "PassSSAO.material"
 #define PASS_COLOR_GRADING_MATERIAL_NAME                   "PassColorGrading.material"
 #define PASS_FINAL_MATERIAL_NAME                           "PassFinal.material"
