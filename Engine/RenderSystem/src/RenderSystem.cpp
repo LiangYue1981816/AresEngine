@@ -29,6 +29,7 @@ CRenderSystem::CRenderSystem(GfxApi api, void* hInstance, void* hWnd, void* hDC,
 	: m_pRenderer(nullptr)
 	, m_pEngineUniform(nullptr)
 
+	, m_pPassPreZ(nullptr)
 	, m_pPassDefault(nullptr)
 	, m_pPassForwardLighting(nullptr)
 	, m_pPassShadowMap(nullptr)
@@ -106,6 +107,7 @@ CGfxRenderTexturePtr CRenderSystem::GetRenderTexture(uint32_t name)
 
 void CRenderSystem::CreateRenderPass(void)
 {
+	CPassPreZ::Create(GFX_PIXELFORMAT_D32_SFLOAT_PACK32, 1);
 	CPassDefault::Create(GFX_PIXELFORMAT_BGRA8_UNORM_PACK8, GFX_PIXELFORMAT_D32_SFLOAT_PACK32, 1);
 	CPassForwardLighting::Create(GFX_PIXELFORMAT_BGRA8_UNORM_PACK8, GFX_PIXELFORMAT_D32_SFLOAT_PACK32, 1);
 	CPassShadowMap::Create(GFX_PIXELFORMAT_D32_SFLOAT_PACK32);
@@ -114,6 +116,8 @@ void CRenderSystem::CreateRenderPass(void)
 	CPassSSAO::Create(GFX_PIXELFORMAT_BGRA8_UNORM_PACK8);
 	CPassColorGrading::Create(GFX_PIXELFORMAT_BGRA8_UNORM_PACK8);
 	CPassFinal::Create(GFX_PIXELFORMAT_BGRA8_UNORM_PACK8);
+
+	m_pPassPreZ = new CPassPreZ(this);
 
 	m_pPassDefault = new CPassDefault(this);
 	m_pPassDefault->SetOutputTexture(GetRenderTexture(RENDER_TEXTURE_FRAMEBUFFER_COLOR), GetRenderTexture(RENDER_TEXTURE_FRAMEBUFFER_DEPTH));
@@ -150,6 +154,7 @@ void CRenderSystem::CreateRenderPass(void)
 
 void CRenderSystem::DestroyRenderPass(void)
 {
+	CPassPreZ::Destroy();
 	CPassDefault::Destroy();
 	CPassForwardLighting::Destroy();
 	CPassShadowMap::Destroy();
@@ -159,6 +164,7 @@ void CRenderSystem::DestroyRenderPass(void)
 	CPassColorGrading::Destroy();
 	CPassFinal::Destroy();
 
+	delete m_pPassPreZ;
 	delete m_pPassDefault;
 	delete m_pPassForwardLighting;
 	delete m_pPassShadowMap;

@@ -42,6 +42,7 @@
 
 
 // Pass
+#define PASS_PREZ_NAME                                     HashValue("PassPreZ")
 #define PASS_DEFAULT_NAME                                  HashValue("PassDefault")
 #define PASS_FORWARD_LIGHTING_NAME                         HashValue("PassForwardLighting")
 #define PASS_SHADOWMAP_NAME                                HashValue("PassShadowMap")
@@ -73,6 +74,7 @@
 class CALL_API CRenderSystem
 {
 	friend class CEngine;
+	friend class CPassPreZ;
 	friend class CPassDefault;
 	friend class CPassForwardLighting;
 	friend class CPassShadowMap;
@@ -145,6 +147,7 @@ private:
 	CGfxUniformEngine* m_pEngineUniform;
 
 private:
+	CPassPreZ* m_pPassPreZ;
 	CPassDefault* m_pPassDefault;
 	CPassForwardLighting* m_pPassForwardLighting;
 	CPassShadowMap* m_pPassShadowMap;
