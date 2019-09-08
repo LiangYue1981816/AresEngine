@@ -61,9 +61,9 @@ void CPassSSAO::SetInputTexture(CGfxRenderTexturePtr ptrDepthTexture)
 	m_ptrDescriptorSetPass->SetRenderTexture(UNIFORM_DEPTH_TEXTURE_NAME, ptrDepthTexture, pSamplerPoint);
 }
 
-void CPassSSAO::SetOutputTexture(CGfxRenderTexturePtr ptrColorGradingTexture)
+void CPassSSAO::SetOutputTexture(CGfxRenderTexturePtr ptrColorTexture)
 {
-	m_ptrColorTexture = ptrColorGradingTexture;
+	m_ptrColorTexture = ptrColorTexture;
 
 	m_ptrFrameBuffer = GfxRenderer()->NewFrameBuffer(m_ptrColorTexture->GetWidth(), m_ptrColorTexture->GetHeight(), numAttachments);
 	m_ptrFrameBuffer->SetAttachmentTexture(0, m_ptrColorTexture);

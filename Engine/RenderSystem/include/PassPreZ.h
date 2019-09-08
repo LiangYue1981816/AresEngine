@@ -20,7 +20,7 @@ private:
 
 public:
 	void SetCamera(CCamera* pCamera);
-	void SetOutputTexture(CGfxRenderTexturePtr ptrDepthStencilTexture);
+	void SetOutputTexture(CGfxRenderTexturePtr ptrDepthTexture);
 
 private:
 	const CGfxSemaphore* Render(CTaskGraph& taskGraph, const CGfxSemaphore* pWaitSemaphore);
@@ -28,7 +28,7 @@ private:
 
 private:
 	CGfxFrameBufferPtr m_ptrFrameBuffer;
-	CGfxRenderTexturePtr m_ptrDepthStencilTexture;
+	CGfxRenderTexturePtr m_ptrDepthTexture;
 
 private:
 	CGfxDescriptorSetPtr m_ptrDescriptorSetPass;

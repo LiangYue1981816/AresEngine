@@ -57,12 +57,12 @@ void CPassPreZ::SetCamera(CCamera* pCamera)
 	}
 }
 
-void CPassPreZ::SetOutputTexture(CGfxRenderTexturePtr ptrDepthStencilTexture)
+void CPassPreZ::SetOutputTexture(CGfxRenderTexturePtr ptrDepthTexture)
 {
-	m_ptrDepthStencilTexture = ptrDepthStencilTexture;
+	m_ptrDepthTexture = ptrDepthTexture;
 
-	m_ptrFrameBuffer = GfxRenderer()->NewFrameBuffer(m_ptrDepthStencilTexture->GetWidth(), m_ptrDepthStencilTexture->GetHeight(), numAttachments);
-	m_ptrFrameBuffer->SetAttachmentTexture(0, m_ptrDepthStencilTexture);
+	m_ptrFrameBuffer = GfxRenderer()->NewFrameBuffer(m_ptrDepthTexture->GetWidth(), m_ptrDepthTexture->GetHeight(), numAttachments);
+	m_ptrFrameBuffer->SetAttachmentTexture(0, m_ptrDepthTexture);
 	m_ptrFrameBuffer->Create(ptrRenderPass);
 }
 
@@ -81,13 +81,13 @@ const CGfxSemaphore* CPassPreZ::Render(CTaskGraph& taskGraph, const CGfxSemaphor
 
 			GfxRenderer()->BeginRecord(ptrMainCommandBuffer);
 			{
-				GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, m_ptrDepthStencilTexture, GFX_IMAGE_LAYOUT_GENERAL);
+				GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, m_ptrDepthTexture, GFX_IMAGE_LAYOUT_GENERAL);
 				GfxRenderer()->CmdBeginRenderPass(ptrMainCommandBuffer, m_ptrFrameBuffer, ptrRenderPass);
 				{
 					m_pCamera->GetRenderQueue()->CmdDraw(taskGraph, ptrMainCommandBuffer, m_ptrDescriptorSetPass, PASS_PREZ_NAME, m_pCamera->GetCamera()->GetScissor(), m_pCamera->GetCamera()->GetViewport(), 0xffffffff);
 				}
 				GfxRenderer()->CmdEndRenderPass(ptrMainCommandBuffer);
-				GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, m_ptrDepthStencilTexture, GFX_IMAGE_LAYOUT_DEPTH_STENCIL_READ_ONLY_OPTIMAL);
+				GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, m_ptrDepthTexture, GFX_IMAGE_LAYOUT_DEPTH_STENCIL_READ_ONLY_OPTIMAL);
 			}
 			GfxRenderer()->EndRecord(ptrMainCommandBuffer);
 		}
