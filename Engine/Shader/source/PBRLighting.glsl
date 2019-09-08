@@ -119,7 +119,11 @@ void main()
 	mediump float ao = 1.0;
 #endif
 
-	mediump vec3 ssao = texture(texSSAO, inTexcoord).rgb;
+	highp vec4 projectCoord = cameraProjectionViewMatrix * vec4(inPosition, 1.0);
+	projectCoord.xy = projectCoord.xy / projectCoord.w;
+ 	projectCoord.xy = projectCoord.xy * 0.5 + 0.5;
+	projectCoord.y  = 1.0 - projectCoord.y;
+	mediump vec3 ssao = texture(texSSAO, projectCoord.xy).rgb;
 
 	mediump float shadow = ShadowValue(inPosition, inNormal, texShadow);
 //	mediump float shadow = ShadowValueIrregular(inPosition, texShadow);
