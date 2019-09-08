@@ -74,15 +74,15 @@ layout (location = 0) out mediump vec4 outFragColor;
 // Descriptor
 USE_SHADOWMAP_UNIFORM;
 
-DESCRIPTOR_SET_MATPASS(8) uniform sampler2D texAlbedo;
+DESCRIPTOR_SET_MATPASS(8) mediump uniform sampler2D texAlbedo;
 #ifdef NORMAL_MAP
-DESCRIPTOR_SET_MATPASS(9) uniform sampler2D texNormal;
+DESCRIPTOR_SET_MATPASS(9) mediump uniform sampler2D texNormal;
 #endif
 #ifdef ROUGHNESS_METALLIC_SPECULAR_AO_MAP
-DESCRIPTOR_SET_MATPASS(10) uniform sampler2D texRoughnessMetallicSpecularAO;
+DESCRIPTOR_SET_MATPASS(10) mediump uniform sampler2D texRoughnessMetallicSpecularAO;
 #endif
 #ifdef ENV_MAP
-DESCRIPTOR_SET_MATPASS(11) uniform sampler2D texEnv;
+DESCRIPTOR_SET_MATPASS(11) mediump uniform sampler2D texEnv;
 #endif
 
 

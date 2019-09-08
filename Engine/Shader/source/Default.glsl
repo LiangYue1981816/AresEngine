@@ -32,15 +32,15 @@ precision mediump float;
 layout (location = 0) in mediump vec2 inTexcoord;
 
 // Output
-layout (location = 0) out vec4 outFragColor;
+layout (location = 0) out mediump vec4 outFragColor;
 
 // Descriptor
-DESCRIPTOR_SET_MATPASS(8) uniform sampler2D texAlbedo;
+DESCRIPTOR_SET_MATPASS(8) mediump uniform sampler2D texAlbedo;
 
 
 void main()
 {
-	vec4 color = texture(texAlbedo, inTexcoord);
+	mediump vec4 color = texture(texAlbedo, inTexcoord);
 
 #ifdef ALPHA_TEST
 	if (color.a < 0.5)

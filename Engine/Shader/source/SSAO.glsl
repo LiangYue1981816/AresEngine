@@ -37,7 +37,7 @@ layout (location = 0) out mediump vec4 outFragColor;
 // Descriptor
 USE_DEPTH_TEXTURE_UNIFORM;
 
-DESCRIPTOR_SET_MATPASS(8) highp uniform sampler2D texNoise;
+DESCRIPTOR_SET_MATPASS(8) mediump uniform sampler2D texNoise;
 
 
 highp float LinearDepth(highp float depth)
