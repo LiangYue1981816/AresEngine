@@ -22,7 +22,7 @@ void CPassColorGrading::Destroy(void)
 
 
 CPassColorGrading::CPassColorGrading(CRenderSystem* pRenderSystem)
-	: CPassBlit("PassColorGrading.material", pRenderSystem)
+	: CPassBlit(PASS_COLOR_GRADING_MATERIAL_NAME, pRenderSystem)
 {
 	// CommandBuffer
 	m_ptrMainCommandBuffer[0] = GfxRenderer()->NewCommandBuffer(0, true);

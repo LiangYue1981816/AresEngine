@@ -22,7 +22,7 @@ void CPassSSAO::Destroy(void)
 
 
 CPassSSAO::CPassSSAO(CRenderSystem* pRenderSystem)
-	: CPassBlit("PassSSAO.material", pRenderSystem)
+	: CPassBlit(PASS_SSAO_MATERIAL_NAME, pRenderSystem)
 {
 	// CommandBuffer
 	m_ptrMainCommandBuffer[0] = GfxRenderer()->NewCommandBuffer(0, true);

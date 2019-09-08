@@ -22,7 +22,7 @@ void CPassFinal::Destroy(void)
 
 
 CPassFinal::CPassFinal(CRenderSystem* pRenderSystem)
-	: CPassBlit("PassFinal.material", pRenderSystem)
+	: CPassBlit(PASS_FINAL_MATERIAL_NAME, pRenderSystem)
 {
 	// CommandBuffer
 	m_ptrMainCommandBuffer[0] = GfxRenderer()->NewCommandBuffer(0, true);
