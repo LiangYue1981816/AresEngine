@@ -67,6 +67,7 @@
 #define RENDER_TEXTURE_FRAMEBUFFER_COLOR                   HashValue("RenderTextureFrameBufferColor")
 #define RENDER_TEXTURE_FRAMEBUFFER_HALF0                   HashValue("RenderTextureFrameBufferHalf0")
 #define RENDER_TEXTURE_FRAMEBUFFER_HALF1                   HashValue("RenderTextureFrameBufferHalf1")
+#define RENDER_TEXTURE_FRAMEBUFFER_FINAL                   HashValue("RenderTextureFrameBufferFinal")
 
 
 class CALL_API CRenderSystem
