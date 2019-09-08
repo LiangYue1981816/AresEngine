@@ -18,7 +18,7 @@
 #include "RenderSystem/include/PassPreZ.h"
 #include "RenderSystem/include/PassDefault.h"
 #include "RenderSystem/include/PassForwardLighting.h"
-#include "RenderSystem/include/PassShadowMap.h"
+#include "RenderSystem/include/PassShadow.h"
 #include "RenderSystem/include/PassBlit.h"
 #include "RenderSystem/include/PassBlur.h"
 #include "RenderSystem/include/PassSSAO.h"

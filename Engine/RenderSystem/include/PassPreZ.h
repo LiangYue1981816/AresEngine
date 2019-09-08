@@ -9,7 +9,7 @@ class CALL_API CPassPreZ
 
 
 private:
-	static void Create(GfxPixelFormat depthPixelFormat, int samples);
+	static void Create(GfxPixelFormat depthPixelFormat);
 	static void Destroy(void);
 
 

@@ -5,14 +5,14 @@ static const int numSubpasses = 1;
 static const int numAttachments = 1;
 static CGfxRenderPassPtr ptrRenderPass;
 
-void CPassPreZ::Create(GfxPixelFormat depthPixelFormat, int samples)
+void CPassPreZ::Create(GfxPixelFormat depthPixelFormat)
 {
 	const int stencil = 0;
 	const float depth = 1.0f;
 	const float color[] = { 0.1f, 0.1f, 0.1f, 0.0f };
 
 	ptrRenderPass = GfxRenderer()->NewRenderPass(PASS_PREZ_NAME, numAttachments, numSubpasses);
-	ptrRenderPass->SetDepthStencilAttachment(0, depthPixelFormat, samples, true, true, depth, stencil);
+	ptrRenderPass->SetDepthStencilAttachment(0, depthPixelFormat, 1, true, true, depth, stencil);
 	ptrRenderPass->SetSubpassOutputDepthStencilReference(0, 0);
 	ptrRenderPass->Create();
 }

@@ -9,7 +9,7 @@ class CALL_API CPassForwardLighting
 
 
 private:
-	static void Create(GfxPixelFormat colorPixelFormat, GfxPixelFormat depthPixelFormat, int samples);
+	static void Create(GfxPixelFormat colorPixelFormat, GfxPixelFormat depthPixelFormat);
 	static void Destroy(void);
 
 

@@ -8,7 +8,7 @@ class CALL_API CCamera
 	friend class CPassPreZ;
 	friend class CPassDefault;
 	friend class CPassForwardLighting;
-	friend class CPassShadowMap;
+	friend class CPassShadow;
 	friend class CPassBlur;
 	friend class CPassSSAO;
 	friend class CPassColorGrading;

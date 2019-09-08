@@ -28,22 +28,22 @@
 #define UNIFORM_CAMERA_BIND                                1
 #define UNIFORM_DEPTH_TEXTURE_BIND                         2
 #define UNIFORM_COLOR_TEXTURE_BIND                         3
-#define UNIFORM_SSAO_TEXTURE_BIND                          2
-#define UNIFORM_SHADOW_TEXTURE_BIND                        3
+#define UNIFORM_SHADOW_TEXTURE_BIND                        2
+#define UNIFORM_SSAO_TEXTURE_BIND                          3
 
 #define UNIFORM_ENGINE_NAME                                HashValue("Engine")
 #define UNIFORM_CAMERA_NAME                                HashValue("Camera")
 #define UNIFORM_DEPTH_TEXTURE_NAME                         HashValue("texDepth")
 #define UNIFORM_COLOR_TEXTURE_NAME                         HashValue("texColor")
-#define UNIFORM_SSAO_TEXTURE_NAME                          HashValue("texSSAO")
 #define UNIFORM_SHADOW_TEXTURE_NAME                        HashValue("texShadow")
+#define UNIFORM_SSAO_TEXTURE_NAME                          HashValue("texSSAO")
 
 
 // Pass
 #define PASS_PREZ_NAME                                     HashValue("PassPreZ")
-#define PASS_SHADOW_NAME                                   HashValue("PassShadow")
 #define PASS_DEFAULT_NAME                                  HashValue("PassDefault")
 #define PASS_FORWARD_LIGHTING_NAME                         HashValue("PassForwardLighting")
+#define PASS_SHADOW_NAME                                   HashValue("PassShadow")
 #define PASS_BLUR_NAME                                     HashValue("PassBlur")
 #define PASS_SSAO_NAME                                     HashValue("PassSSAO")
 #define PASS_COLOR_GRADING_NAME                            HashValue("PassColorGrading")
@@ -56,15 +56,15 @@
 
 
 // RenderTexture
+#define RENDER_TEXTURE_SWAPCHAIN_COLOR0                    HashValue("RenderTextureSwapChainColor0")
+#define RENDER_TEXTURE_SWAPCHAIN_COLOR1                    HashValue("RenderTextureSwapChainColor1")
+#define RENDER_TEXTURE_SWAPCHAIN_COLOR2                    HashValue("RenderTextureSwapChainColor2")
 #define RENDER_TEXTURE_SHADOWMAP                           HashValue("RenderTextureShadowMap")
 #define RENDER_TEXTURE_FRAMEBUFFER_DEPTH                   HashValue("RenderTextureFrameBufferDepth")
 #define RENDER_TEXTURE_FRAMEBUFFER_COLOR                   HashValue("RenderTextureFrameBufferColor")
 #define RENDER_TEXTURE_FRAMEBUFFER_HALF0                   HashValue("RenderTextureFrameBufferHalf0")
 #define RENDER_TEXTURE_FRAMEBUFFER_HALF1                   HashValue("RenderTextureFrameBufferHalf1")
 #define RENDER_TEXTURE_FRAMEBUFFER_FINAL                   HashValue("RenderTextureFrameBufferFinal")
-#define RENDER_TEXTURE_SWAPCHAIN_COLOR0                    HashValue("RenderTextureSwapChainColor0")
-#define RENDER_TEXTURE_SWAPCHAIN_COLOR1                    HashValue("RenderTextureSwapChainColor1")
-#define RENDER_TEXTURE_SWAPCHAIN_COLOR2                    HashValue("RenderTextureSwapChainColor2")
 
 
 class CALL_API CRenderSystem
@@ -73,7 +73,7 @@ class CALL_API CRenderSystem
 	friend class CPassPreZ;
 	friend class CPassDefault;
 	friend class CPassForwardLighting;
-	friend class CPassShadowMap;
+	friend class CPassShadow;
 	friend class CPassBlur;
 	friend class CPassSSAO;
 	friend class CPassColorGrading;
@@ -96,16 +96,6 @@ public:
 	void CreateRenderTexture(uint32_t name, CGfxRenderTexturePtr ptrRenderTexture);
 	void CreateRenderTexture(uint32_t name, GfxPixelFormat format, int width, int height, int samples = 1, bool bTransient = false);
 	CGfxRenderTexturePtr GetRenderTexture(uint32_t name);
-
-public:
-	CPassPreZ* GetPassPreZ(void) const;
-	CPassDefault* GetPassDefault(void) const;
-	CPassForwardLighting* GetPassForwardLighting(void) const;
-	CPassShadowMap* GetPassShadowMap(void) const;
-	CPassSSAO* GetPassSSAO(void) const;
-	CPassBlur* GetPassSSAOBlur(void) const;
-	CPassColorGrading* GetPassColorGrading(void) const;
-	CPassFinal* GetPassFinal(void) const;
 
 public:
 	void SetTime(float t, float dt);
@@ -147,7 +137,7 @@ private:
 	CPassPreZ* m_pPassPreZ;
 	CPassDefault* m_pPassDefault;
 	CPassForwardLighting* m_pPassForwardLighting;
-	CPassShadowMap* m_pPassShadowMap;
+	CPassShadow* m_pPassShadow;
 	CPassSSAO* m_pPassSSAO;
 	CPassBlur* m_pPassSSAOBlur;
 	CPassColorGrading* m_pPassColorGrading;
