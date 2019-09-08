@@ -29,12 +29,16 @@
 #define UNIFORM_SHADOWMAP_BIND                             2
 #define UNIFORM_DEPTH_TEXTURE_BIND                         3
 #define UNIFORM_COLOR_TEXTURE_BIND                         4
+#define UNIFORM_COLOR_SRC_TEXTURE_BIND                     3
+#define UNIFORM_COLOR_DST_TEXTURE_BIND                     4
 
 #define UNIFORM_ENGINE_NAME                                HashValue("Engine")
 #define UNIFORM_CAMERA_NAME                                HashValue("Camera")
 #define UNIFORM_SHADOWMAP_NAME                             HashValue("texShadowMap")
 #define UNIFORM_DEPTH_TEXTURE_NAME                         HashValue("texDepth")
 #define UNIFORM_COLOR_TEXTURE_NAME                         HashValue("texColor")
+#define UNIFORM_COLOR_SRC_TEXTURE_NAME                     HashValue("texColorSrc")
+#define UNIFORM_COLOR_DST_TEXTURE_NAME                     HashValue("texColorDst")
 
 
 // Pass
@@ -145,6 +149,7 @@ private:
 	CPassShadowMap* m_pPassShadowMap;
 	CPassSSAO* m_pPassSSAO;
 	CPassBlur* m_pPassSSAOBlur;
+	CPassBlend* m_pPassSSAOBlend;
 	CPassColorGrading* m_pPassColorGrading;
 	CPassFinal* m_pPassFinal;
 

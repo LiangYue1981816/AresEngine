@@ -10,7 +10,7 @@ void CPassBlend::Create(GfxPixelFormat colorPixelFormat)
 	const float color[] = { 0.0f, 0.0f, 0.0f, 0.0f };
 
 	ptrRenderPass = GfxRenderer()->NewRenderPass(PASS_BLEND_NAME, numAttachments, numSubpasses);
-	ptrRenderPass->SetColorAttachment(0, colorPixelFormat, 1, false, true, color[0], color[1], color[2], color[3]);
+	ptrRenderPass->SetColorAttachment(0, colorPixelFormat, 1, false, false, color[0], color[1], color[2], color[3]);
 	ptrRenderPass->SetSubpassOutputColorReference(0, 0);
 	ptrRenderPass->Create();
 }
@@ -33,7 +33,8 @@ CPassBlend::CPassBlend(CRenderSystem* pRenderSystem)
 	CGfxDescriptorLayoutPtr ptrDescriptorLayout = GfxRenderer()->NewDescriptorLayout(DESCRIPTOR_SET_PASS);
 	ptrDescriptorLayout->SetUniformBlockBinding(UNIFORM_ENGINE_NAME, UNIFORM_ENGINE_BIND);
 	ptrDescriptorLayout->SetUniformBlockBinding(UNIFORM_CAMERA_NAME, UNIFORM_CAMERA_BIND);
-	ptrDescriptorLayout->SetSampledImageBinding(UNIFORM_COLOR_TEXTURE_NAME, UNIFORM_COLOR_TEXTURE_BIND);
+	ptrDescriptorLayout->SetSampledImageBinding(UNIFORM_COLOR_SRC_TEXTURE_NAME, UNIFORM_COLOR_SRC_TEXTURE_BIND);
+	ptrDescriptorLayout->SetSampledImageBinding(UNIFORM_COLOR_DST_TEXTURE_NAME, UNIFORM_COLOR_DST_TEXTURE_BIND);
 	ptrDescriptorLayout->Create();
 
 	m_ptrDescriptorSetPass = GfxRenderer()->NewDescriptorSet(PASS_BLEND_NAME, ptrDescriptorLayout);
@@ -58,7 +59,8 @@ void CPassBlend::SetCamera(CCamera* pCamera)
 void CPassBlend::SetInputTexture(CGfxRenderTexturePtr ptrColorTextureSrc, CGfxRenderTexturePtr ptrColorTextureDst)
 {
 	CGfxSampler* pSampler = GfxRenderer()->CreateSampler(GFX_FILTER_NEAREST, GFX_FILTER_LINEAR, GFX_SAMPLER_MIPMAP_MODE_NEAREST, GFX_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE);
-	m_ptrDescriptorSetPass->SetRenderTexture(UNIFORM_COLOR_TEXTURE_NAME, ptrColorTexture, pSampler);
+	m_ptrDescriptorSetPass->SetRenderTexture(UNIFORM_COLOR_SRC_TEXTURE_NAME, ptrColorTextureSrc, pSampler);
+	m_ptrDescriptorSetPass->SetRenderTexture(UNIFORM_COLOR_DST_TEXTURE_NAME, ptrColorTextureDst, pSampler);
 }
 
 void CPassBlend::SetOutputTexture(CGfxRenderTexturePtr ptrColorTexture)

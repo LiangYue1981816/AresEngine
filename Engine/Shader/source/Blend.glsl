@@ -34,11 +34,13 @@ layout (location = 0) in mediump vec2 inTexcoord;
 layout (location = 0) out mediump vec4 outFragColor;
 
 // Descriptor
-USE_COLOR_TEXTURE_UNIFORM;
+USE_COLOR_SRC_TEXTURE_UNIFORM;
+USE_COLOR_DST_TEXTURE_UNIFORM;
 
 
 void main()
 {
-	outFragColor = texture(texColor, inTexcoord);
+	outFragColor.rgb = texture(texColorSrc, inTexcoord).rgb * texture(texColorDst, inTexcoord).rgb;
+	outFragColor.a = 1.0;
 }
 #endif

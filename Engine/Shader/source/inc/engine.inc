@@ -50,6 +50,8 @@ layout (location = 13)                           in mediump vec4 inInstancePoint
 #define DESCRIPTOR_BIND_SHADOWMAP                2
 #define DESCRIPTOR_BIND_DEPTH_TEXTURE            3
 #define DESCRIPTOR_BIND_COLOR_TEXTURE            4
+#define DESCRIPTOR_BIND_COLOR_SRC_TEXTURE        3
+#define DESCRIPTOR_BIND_COLOR_DST_TEXTURE        4
 
 
 #define USE_CAMERA_UNIFORM                                                         \
@@ -115,6 +117,12 @@ layout (location = 13)                           in mediump vec4 inInstancePoint
 
 #define USE_COLOR_TEXTURE_UNIFORM                                                  \
 	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_COLOR_TEXTURE) mediump uniform sampler2D texColor
+
+#define USE_COLOR_SRC_TEXTURE_UNIFORM                                              \
+	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_COLOR_SRC_TEXTURE) mediump uniform sampler2D texColorSrc
+
+#define USE_COLOR_DST_TEXTURE_UNIFORM                                              \
+	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_COLOR_DST_TEXTURE) mediump uniform sampler2D texColorDst
 
 
 USE_CAMERA_UNIFORM;

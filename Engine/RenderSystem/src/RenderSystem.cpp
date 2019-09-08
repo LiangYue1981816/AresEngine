@@ -34,6 +34,7 @@ CRenderSystem::CRenderSystem(GfxApi api, void* hInstance, void* hWnd, void* hDC,
 	, m_pPassShadowMap(nullptr)
 	, m_pPassSSAO(nullptr)
 	, m_pPassSSAOBlur(nullptr)
+	, m_pPassSSAOBlend(nullptr)
 	, m_pPassColorGrading(nullptr)
 	, m_pPassFinal(nullptr)
 {
@@ -108,6 +109,7 @@ void CRenderSystem::CreateRenderPass(void)
 	CPassForwardLighting::Create(GFX_PIXELFORMAT_BGRA8_UNORM_PACK8, GFX_PIXELFORMAT_D32_SFLOAT_PACK32, 1);
 	CPassShadowMap::Create(GFX_PIXELFORMAT_D32_SFLOAT_PACK32);
 	CPassBlur::Create(GFX_PIXELFORMAT_BGRA8_UNORM_PACK8);
+	CPassBlend::Create(GFX_PIXELFORMAT_BGRA8_UNORM_PACK8);
 	CPassSSAO::Create(GFX_PIXELFORMAT_BGRA8_UNORM_PACK8);
 	CPassColorGrading::Create(GFX_PIXELFORMAT_BGRA8_UNORM_PACK8);
 	CPassFinal::Create(GFX_PIXELFORMAT_BGRA8_UNORM_PACK8);
@@ -130,12 +132,16 @@ void CRenderSystem::CreateRenderPass(void)
 	m_pPassSSAOBlur->SetInputTexture(GetRenderTexture(RENDER_TEXTURE_FRAMEBUFFER_HALF0));
 	m_pPassSSAOBlur->SetOutputTexture(GetRenderTexture(RENDER_TEXTURE_FRAMEBUFFER_HALF1));
 
+	m_pPassSSAOBlend = new CPassBlend(this);
+	m_pPassSSAOBlend->SetInputTexture(GetRenderTexture(RENDER_TEXTURE_FRAMEBUFFER_HALF1), GetRenderTexture(RENDER_TEXTURE_FRAMEBUFFER_COLOR));
+	m_pPassSSAOBlend->SetOutputTexture(GetRenderTexture(RENDER_TEXTURE_FRAMEBUFFER_COLOR));
+
 	m_pPassColorGrading = new CPassColorGrading(this);
 	//m_pPassColorGrading->SetInputTexture(GetRenderTexture(RENDER_TEXTURE_FRAMEBUFFER_SSAO));
 	//m_pPassColorGrading->SetOutputTexture(GetRenderTexture(RENDER_TEXTURE_FRAMEBUFFER_COLOR_GRADING));
 
 	m_pPassFinal = new CPassFinal(this);
-	m_pPassFinal->SetInputTexture(GetRenderTexture(RENDER_TEXTURE_FRAMEBUFFER_HALF1));
+	m_pPassFinal->SetInputTexture(GetRenderTexture(RENDER_TEXTURE_FRAMEBUFFER_COLOR));
 	m_pPassFinal->SetOutputTexture(0, GetRenderTexture(RENDER_TEXTURE_SWAPCHAIN_COLOR0));
 	m_pPassFinal->SetOutputTexture(1, GetRenderTexture(RENDER_TEXTURE_SWAPCHAIN_COLOR1));
 	m_pPassFinal->SetOutputTexture(2, GetRenderTexture(RENDER_TEXTURE_SWAPCHAIN_COLOR2));
@@ -147,6 +153,7 @@ void CRenderSystem::DestroyRenderPass(void)
 	CPassForwardLighting::Destroy();
 	CPassShadowMap::Destroy();
 	CPassBlur::Destroy();
+	CPassBlend::Destroy();
 	CPassSSAO::Destroy();
 	CPassColorGrading::Destroy();
 	CPassFinal::Destroy();
@@ -156,6 +163,7 @@ void CRenderSystem::DestroyRenderPass(void)
 	delete m_pPassShadowMap;
 	delete m_pPassSSAO;
 	delete m_pPassSSAOBlur;
+	delete m_pPassSSAOBlend;
 	delete m_pPassColorGrading;
 	delete m_pPassFinal;
 }
@@ -309,6 +317,7 @@ void CRenderSystem::RenderForwardLighting(CTaskGraph& taskGraph, CCamera* pCamer
 		m_pPassShadowMap->SetCamera(pCamera);
 		m_pPassSSAO->SetCamera(pCamera);
 		m_pPassSSAOBlur->SetCamera(pCamera);
+		m_pPassSSAOBlend->SetCamera(pCamera);
 		m_pPassColorGrading->SetCamera(pCamera);
 		m_pPassFinal->SetCamera(pCamera);
 
@@ -316,6 +325,7 @@ void CRenderSystem::RenderForwardLighting(CTaskGraph& taskGraph, CCamera* pCamer
 		pWaitSemaphore = m_pPassForwardLighting->Render(taskGraph, pWaitSemaphore);
 		pWaitSemaphore = m_pPassSSAO->Render(taskGraph, pWaitSemaphore);
 		pWaitSemaphore = m_pPassSSAOBlur->Render(taskGraph, pWaitSemaphore);
+		pWaitSemaphore = m_pPassSSAOBlend->Render(taskGraph, pWaitSemaphore);
 //		pWaitSemaphore = m_pPassColorGrading->Render(taskGraph, pWaitSemaphore);
 		pWaitSemaphore = m_pPassFinal->Render(taskGraph, pWaitSemaphore, GfxRenderer()->GetSwapChain()->GetFrameIndex(), bPresent);
 	}
