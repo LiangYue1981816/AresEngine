@@ -90,10 +90,8 @@ void main()
 {
 	mediump vec4 albedo = texture(texAlbedo, inTexcoord);
 
-#ifdef ALPHA_TEST
 	if (albedo.a < 0.5)
 		discard;
-#endif
 
 	mediump vec3 albedoColor = Gamma2Linear(albedo.rgb);
 

@@ -21,8 +21,15 @@ precision mediump float;
 #include "engine.inc"
 
 
+// Descriptor
+DESCRIPTOR_SET_MATPASS(8) mediump uniform sampler2D texAlbedo;
+
+
 void main()
 {
+	mediump vec4 color = texture(texAlbedo, inTexcoord);
 
+	if (color.a < 0.5)
+		discard;
 }
 #endif
