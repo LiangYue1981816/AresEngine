@@ -47,11 +47,10 @@ layout (location = 13)                           in mediump vec4 inInstancePoint
 
 #define DESCRIPTOR_BIND_ENGINE                   0
 #define DESCRIPTOR_BIND_CAMERA                   1
-#define DESCRIPTOR_BIND_SHADOWMAP                2
-#define DESCRIPTOR_BIND_DEPTH_TEXTURE            3
-#define DESCRIPTOR_BIND_COLOR_TEXTURE            4
-#define DESCRIPTOR_BIND_COLOR_SRC_TEXTURE        3
-#define DESCRIPTOR_BIND_COLOR_DST_TEXTURE        4
+#define DESCRIPTOR_BIND_DEPTH_TEXTURE            2
+#define DESCRIPTOR_BIND_COLOR_TEXTURE            3
+#define DESCRIPTOR_BIND_SHADOW_TEXTURE           2
+#define DESCRIPTOR_BIND_SSAO_TEXTURE             3
 
 
 #define USE_CAMERA_UNIFORM                                                         \
@@ -109,20 +108,17 @@ layout (location = 13)                           in mediump vec4 inInstancePoint
 		highp mat4 mainShadowProjectionViewMatrix[4];                              \
 	} engine
 
-#define USE_SHADOWMAP_UNIFORM                                                      \
-	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_SHADOWMAP) highp uniform sampler2D texShadowMap
-
 #define USE_DEPTH_TEXTURE_UNIFORM                                                  \
 	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_DEPTH_TEXTURE) highp uniform sampler2D texDepth
 
 #define USE_COLOR_TEXTURE_UNIFORM                                                  \
 	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_COLOR_TEXTURE) mediump uniform sampler2D texColor
 
-#define USE_COLOR_SRC_TEXTURE_UNIFORM                                              \
-	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_COLOR_SRC_TEXTURE) mediump uniform sampler2D texColorSrc
+#define USE_SHADOW_TEXTURE_UNIFORM                                                 \
+	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_SHADOW_TEXTURE) highp uniform sampler2D texShadow
 
-#define USE_COLOR_DST_TEXTURE_UNIFORM                                              \
-	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_COLOR_DST_TEXTURE) mediump uniform sampler2D texColorDst
+#define USE_SSAO_TEXTURE_UNIFORM                                                   \
+	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_SSAO_TEXTURE) mediump uniform sampler2D texSSAO
 
 
 USE_CAMERA_UNIFORM;

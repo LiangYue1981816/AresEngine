@@ -72,7 +72,8 @@ layout (location = 2) in mediump vec3 inNormal;
 layout (location = 0) out mediump vec4 outFragColor;
 
 // Descriptor
-USE_SHADOWMAP_UNIFORM;
+USE_SHADOW_TEXTURE_UNIFORM;
+USE_SSAO_TEXTURE_UNIFORM;
 
 DESCRIPTOR_SET_MATPASS(8) mediump uniform sampler2D texAlbedo;
 #ifdef NORMAL_MAP
@@ -118,8 +119,10 @@ void main()
 	mediump float ao = 1.0;
 #endif
 
-	mediump float shadow = ShadowValue(inPosition, inNormal, texShadowMap);
-//	mediump float shadow = ShadowValueIrregular(inPosition, texShadowMap);
+	mediump vec3 ssao = texture(texSSAO, inTexcoord).rgb;
+
+	mediump float shadow = ShadowValue(inPosition, inNormal, texShadow);
+//	mediump float shadow = ShadowValueIrregular(inPosition, texShadow);
 
 	mediump vec3 pointLightDirection = mainPointLightPosition - inPosition;
 	mediump vec3 pointLightColor = mainPointLightColor * LightingAttenuation(length(pointLightDirection));
@@ -135,7 +138,7 @@ void main()
 #else
 	mediump vec3 envLighting = vec3(0.0);
 #endif
-	mediump vec3 finalLighting = vec3(ao) * (ambientLighting + pointLighting + directLighting * shadow + envLighting);
+	mediump vec3 finalLighting = ao * ssao * (ambientLighting + pointLighting + directLighting * shadow + envLighting);
 
 	finalLighting = ToneMapping(finalLighting);
 	finalLighting = Linear2Gamma(finalLighting);
