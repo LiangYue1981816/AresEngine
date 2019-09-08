@@ -121,7 +121,7 @@ void CRenderSystem::CreateRenderPass(void)
 	m_pPassShadowMap->SetOutputTexture(GetRenderTexture(RENDER_TEXTURE_SHADOWMAP));
 
 	m_pPassSSAO = new CPassSSAO(this);
-	m_pPassSSAO->SetInputTexture(GetRenderTexture(RENDER_TEXTURE_FRAMEBUFFER_COLOR), GetRenderTexture(RENDER_TEXTURE_FRAMEBUFFER_DEPTH));
+	m_pPassSSAO->SetInputTexture(GetRenderTexture(RENDER_TEXTURE_FRAMEBUFFER_DEPTH));
 	m_pPassSSAO->SetOutputTexture(GetRenderTexture(RENDER_TEXTURE_FRAMEBUFFER_SSAO));
 
 	m_pPassColorGrading = new CPassColorGrading(this);

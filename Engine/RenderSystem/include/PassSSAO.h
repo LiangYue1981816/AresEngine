@@ -20,7 +20,7 @@ private:
 
 public:
 	void SetCamera(CCamera* pCamera);
-	void SetInputTexture(CGfxRenderTexturePtr ptrColorTexture, CGfxRenderTexturePtr ptrDepthTexture);
+	void SetInputTexture(CGfxRenderTexturePtr ptrDepthTexture);
 	void SetOutputTexture(CGfxRenderTexturePtr ptrColorTexture);
 
 private:
