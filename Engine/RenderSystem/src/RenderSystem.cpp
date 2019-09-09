@@ -73,9 +73,9 @@ CRenderSystem::~CRenderSystem(void)
 	DestroyRenderPass();
 	DestroyRenderTexture();
 
-	m_ptrCommandBuffer[0]->Clearup();
-	m_ptrCommandBuffer[1]->Clearup();
-	m_ptrCommandBuffer[2]->Clearup();
+	m_ptrCommandBuffer[0].Release();
+	m_ptrCommandBuffer[1].Release();
+	m_ptrCommandBuffer[2].Release();
 
 	delete m_pEngineUniform;
 	delete m_pRenderer;
