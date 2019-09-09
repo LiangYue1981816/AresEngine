@@ -74,20 +74,16 @@ void CPassSSAO::Render(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrMainComman
 	m_ptrDescriptorSetPass->Update();
 
 	// Render
-	GfxRenderer()->BeginRecord(ptrMainCommandBuffer);
+	GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, m_ptrColorTexture, GFX_IMAGE_LAYOUT_GENERAL);
+	GfxRenderer()->CmdBeginRenderPass(ptrMainCommandBuffer, m_ptrFrameBuffer, ptrRenderPass);
 	{
-		GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, m_ptrColorTexture, GFX_IMAGE_LAYOUT_GENERAL);
-		GfxRenderer()->CmdBeginRenderPass(ptrMainCommandBuffer, m_ptrFrameBuffer, ptrRenderPass);
-		{
-			const float w = m_ptrColorTexture->GetWidth();
-			const float h = m_ptrColorTexture->GetHeight();
-			const glm::vec4 scissor = glm::vec4(0.0, 0.0, w, h);
-			const glm::vec4 viewport = glm::vec4(0.0, 0.0, w, h);
+		const float w = m_ptrColorTexture->GetWidth();
+		const float h = m_ptrColorTexture->GetHeight();
+		const glm::vec4 scissor = glm::vec4(0.0, 0.0, w, h);
+		const glm::vec4 viewport = glm::vec4(0.0, 0.0, w, h);
 
-			m_pRenderQueue->CmdDraw(taskGraph, ptrMainCommandBuffer, m_ptrDescriptorSetPass, PASS_SSAO_NAME, scissor, viewport, 0xffffffff);
-		}
-		GfxRenderer()->CmdEndRenderPass(ptrMainCommandBuffer);
-		GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, m_ptrColorTexture, GFX_IMAGE_LAYOUT_COLOR_READ_ONLY_OPTIMAL);
+		m_pRenderQueue->CmdDraw(taskGraph, ptrMainCommandBuffer, m_ptrDescriptorSetPass, PASS_SSAO_NAME, scissor, viewport, 0xffffffff);
 	}
-	GfxRenderer()->EndRecord(ptrMainCommandBuffer);
+	GfxRenderer()->CmdEndRenderPass(ptrMainCommandBuffer);
+	GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, m_ptrColorTexture, GFX_IMAGE_LAYOUT_COLOR_READ_ONLY_OPTIMAL);
 }

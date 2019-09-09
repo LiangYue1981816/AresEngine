@@ -304,12 +304,15 @@ void CRenderSystem::RenderDefault(CTaskGraph& taskGraph, CCamera* pCamera, bool 
 
 	GfxRenderer()->AcquireNextFrame();
 	{
-		ptrCommandBuffer->Clearup();
-
 		m_pPassDefault->SetCamera(pCamera);
 
-		m_pPassDefault->Render(taskGraph, ptrCommandBuffer);
-		m_pPassFinal->Render(taskGraph, ptrCommandBuffer, GfxRenderer()->GetSwapChain()->GetFrameIndex(), bPresent);
+		ptrCommandBuffer->Clearup();
+		GfxRenderer()->BeginRecord(ptrCommandBuffer);
+		{
+			m_pPassDefault->Render(taskGraph, ptrCommandBuffer);
+			m_pPassFinal->Render(taskGraph, ptrCommandBuffer, GfxRenderer()->GetSwapChain()->GetFrameIndex(), bPresent);
+		}
+		GfxRenderer()->EndRecord(ptrCommandBuffer);
 	}
 	GfxRenderer()->Submit(ptrCommandBuffer, pWaitSemaphore);
 	GfxRenderer()->Present(ptrCommandBuffer->GetSemaphore());
@@ -322,8 +325,6 @@ void CRenderSystem::RenderForwardLighting(CTaskGraph& taskGraph, CCamera* pCamer
 
 	GfxRenderer()->AcquireNextFrame();
 	{
-		ptrCommandBuffer->Clearup();
-
 		m_pPassPreZ->SetCamera(pCamera);
 		m_pPassSSAO->SetCamera(pCamera);
 		m_pPassShadow->SetCamera(pCamera);
@@ -331,12 +332,17 @@ void CRenderSystem::RenderForwardLighting(CTaskGraph& taskGraph, CCamera* pCamer
 		m_pPassColorGrading->SetCamera(pCamera);
 		m_pPassFinal->SetCamera(pCamera);
 
-		m_pPassPreZ->Render(taskGraph, ptrCommandBuffer);
-		m_pPassSSAO->Render(taskGraph, ptrCommandBuffer);
-		m_pPassShadow->Render(taskGraph, ptrCommandBuffer);
-		m_pPassForwardLighting->Render(taskGraph, ptrCommandBuffer);
-		m_pPassColorGrading->Render(taskGraph, ptrCommandBuffer);
-		m_pPassFinal->Render(taskGraph, ptrCommandBuffer, GfxRenderer()->GetSwapChain()->GetFrameIndex(), bPresent);
+		ptrCommandBuffer->Clearup();
+		GfxRenderer()->BeginRecord(ptrCommandBuffer);
+		{
+			m_pPassPreZ->Render(taskGraph, ptrCommandBuffer);
+			m_pPassSSAO->Render(taskGraph, ptrCommandBuffer);
+			m_pPassShadow->Render(taskGraph, ptrCommandBuffer);
+			m_pPassForwardLighting->Render(taskGraph, ptrCommandBuffer);
+			m_pPassColorGrading->Render(taskGraph, ptrCommandBuffer);
+			m_pPassFinal->Render(taskGraph, ptrCommandBuffer, GfxRenderer()->GetSwapChain()->GetFrameIndex(), bPresent);
+		}
+		GfxRenderer()->EndRecord(ptrCommandBuffer);
 	}
 	GfxRenderer()->Submit(ptrCommandBuffer, pWaitSemaphore);
 	GfxRenderer()->Present(ptrCommandBuffer->GetSemaphore());

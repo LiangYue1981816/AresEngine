@@ -77,20 +77,16 @@ void CPassFinal::Render(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrMainComma
 	const CGfxFrameBufferPtr ptrFrameBuffer = m_ptrFrameBuffer[indexFrame];
 	const CGfxRenderTexturePtr ptrColorTexture = m_ptrColorTexture[indexFrame];
 
-	GfxRenderer()->BeginRecord(ptrMainCommandBuffer);
+	GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, ptrColorTexture, GFX_IMAGE_LAYOUT_GENERAL);
+	GfxRenderer()->CmdBeginRenderPass(ptrMainCommandBuffer, ptrFrameBuffer, ptrRenderPass);
 	{
-		GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, ptrColorTexture, GFX_IMAGE_LAYOUT_GENERAL);
-		GfxRenderer()->CmdBeginRenderPass(ptrMainCommandBuffer, ptrFrameBuffer, ptrRenderPass);
-		{
-			const float w = ptrColorTexture->GetWidth();
-			const float h = ptrColorTexture->GetHeight();
-			const glm::vec4 scissor = glm::vec4(0.0, 0.0, w, h);
-			const glm::vec4 viewport = glm::vec4(0.0, 0.0, w, h);
+		const float w = ptrColorTexture->GetWidth();
+		const float h = ptrColorTexture->GetHeight();
+		const glm::vec4 scissor = glm::vec4(0.0, 0.0, w, h);
+		const glm::vec4 viewport = glm::vec4(0.0, 0.0, w, h);
 
-			m_pRenderQueue->CmdDraw(taskGraph, ptrMainCommandBuffer, m_ptrDescriptorSetPass, PASS_FINAL_NAME, scissor, viewport, 0xffffffff);
-		}
-		GfxRenderer()->CmdEndRenderPass(ptrMainCommandBuffer);
-		GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, ptrColorTexture, bPresent ? GFX_IMAGE_LAYOUT_PRESENT_SRC_OPTIMAL : GFX_IMAGE_LAYOUT_COLOR_READ_ONLY_OPTIMAL);
+		m_pRenderQueue->CmdDraw(taskGraph, ptrMainCommandBuffer, m_ptrDescriptorSetPass, PASS_FINAL_NAME, scissor, viewport, 0xffffffff);
 	}
-	GfxRenderer()->EndRecord(ptrMainCommandBuffer);
+	GfxRenderer()->CmdEndRenderPass(ptrMainCommandBuffer);
+	GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, ptrColorTexture, bPresent ? GFX_IMAGE_LAYOUT_PRESENT_SRC_OPTIMAL : GFX_IMAGE_LAYOUT_COLOR_READ_ONLY_OPTIMAL);
 }

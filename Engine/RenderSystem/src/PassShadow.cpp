@@ -138,28 +138,24 @@ void CPassShadow::Render(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrMainComm
 	m_pRenderSystem->GetEngineUniform()->Apply();
 
 	// Render
-	GfxRenderer()->BeginRecord(ptrMainCommandBuffer);
+	GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, m_ptrDepthTexture, GFX_IMAGE_LAYOUT_GENERAL);
+	GfxRenderer()->CmdBeginRenderPass(ptrMainCommandBuffer, m_ptrFrameBuffer, ptrRenderPass);
 	{
-		GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, m_ptrDepthTexture, GFX_IMAGE_LAYOUT_GENERAL);
-		GfxRenderer()->CmdBeginRenderPass(ptrMainCommandBuffer, m_ptrFrameBuffer, ptrRenderPass);
-		{
-			const float w = m_ptrDepthTexture->GetWidth();
-			const float h = m_ptrDepthTexture->GetHeight();
+		const float w = m_ptrDepthTexture->GetWidth();
+		const float h = m_ptrDepthTexture->GetHeight();
 
-			const glm::vec4 area[4] = {
-				glm::vec4(0.0f, 0.0f, 0.5f, 0.5f) * glm::vec4(w, h, w, h),
-				glm::vec4(0.5f, 0.0f, 0.5f, 0.5f) * glm::vec4(w, h, w, h),
-				glm::vec4(0.0f, 0.5f, 0.5f, 0.5f) * glm::vec4(w, h, w, h),
-				glm::vec4(0.5f, 0.5f, 0.5f, 0.5f) * glm::vec4(w, h, w, h),
-			};
+		const glm::vec4 area[4] = {
+			glm::vec4(0.0f, 0.0f, 0.5f, 0.5f) * glm::vec4(w, h, w, h),
+			glm::vec4(0.5f, 0.0f, 0.5f, 0.5f) * glm::vec4(w, h, w, h),
+			glm::vec4(0.0f, 0.5f, 0.5f, 0.5f) * glm::vec4(w, h, w, h),
+			glm::vec4(0.5f, 0.5f, 0.5f, 0.5f) * glm::vec4(w, h, w, h),
+		};
 
-			for (int indexLevel = 0; indexLevel < 4; indexLevel++) {
+		for (int indexLevel = 0; indexLevel < 4; indexLevel++) {
 //						m_pCamera->GetRenderQueue()->CmdDraw(taskGraph, ptrMainCommandBuffer, m_ptrDescriptorSetPass[indexLevel], PASS_SHADOW_NAME, area[indexLevel], area[indexLevel], 0xffffffff);
-				m_pShadowRenderQueue[indexLevel]->CmdDraw(taskGraph, ptrMainCommandBuffer, m_ptrDescriptorSetPass[indexLevel], PASS_SHADOW_NAME, area[indexLevel], area[indexLevel], 0xffffffff);
-			}
+			m_pShadowRenderQueue[indexLevel]->CmdDraw(taskGraph, ptrMainCommandBuffer, m_ptrDescriptorSetPass[indexLevel], PASS_SHADOW_NAME, area[indexLevel], area[indexLevel], 0xffffffff);
 		}
-		GfxRenderer()->CmdEndRenderPass(ptrMainCommandBuffer);
-		GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, m_ptrDepthTexture, GFX_IMAGE_LAYOUT_DEPTH_STENCIL_READ_ONLY_OPTIMAL);
 	}
-	GfxRenderer()->EndRecord(ptrMainCommandBuffer);
+	GfxRenderer()->CmdEndRenderPass(ptrMainCommandBuffer);
+	GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, m_ptrDepthTexture, GFX_IMAGE_LAYOUT_DEPTH_STENCIL_READ_ONLY_OPTIMAL);
 }
