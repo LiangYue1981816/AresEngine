@@ -91,6 +91,7 @@ private:
 public:
 	void CreateRenderTexture(uint32_t name, CGfxRenderTexturePtr ptrRenderTexture);
 	void CreateRenderTexture(uint32_t name, GfxPixelFormat format, int width, int height, int samples = 1, bool bTransient = false);
+	void DestroyRenderTexture(void);
 	CGfxRenderTexturePtr GetRenderTexture(uint32_t name);
 
 public:

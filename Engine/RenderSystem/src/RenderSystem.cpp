@@ -71,8 +71,7 @@ CRenderSystem::CRenderSystem(GfxApi api, void* hInstance, void* hWnd, void* hDC,
 CRenderSystem::~CRenderSystem(void)
 {
 	DestroyRenderPass();
-
-	m_ptrRenderTextures.clear();
+	DestroyRenderTexture();
 
 	m_ptrCommandBuffer[0]->Clearup();
 	m_ptrCommandBuffer[1]->Clearup();
@@ -96,6 +95,11 @@ void CRenderSystem::CreateRenderTexture(uint32_t name, GfxPixelFormat format, in
 {
 	m_ptrRenderTextures[name] = GfxRenderer()->NewRenderTexture(name);
 	m_ptrRenderTextures[name]->Create(format, width, height, samples, bTransient);
+}
+
+void CRenderSystem::DestroyRenderTexture(void)
+{
+	m_ptrRenderTextures.clear();
 }
 
 CGfxRenderTexturePtr CRenderSystem::GetRenderTexture(uint32_t name)
