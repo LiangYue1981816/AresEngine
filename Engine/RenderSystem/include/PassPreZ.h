@@ -23,7 +23,7 @@ public:
 	void SetOutputTexture(CGfxRenderTexturePtr ptrDepthTexture);
 
 private:
-	void Render(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrMainCommandBuffer);
+	void Render(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer);
 
 
 private:

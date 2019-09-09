@@ -24,7 +24,7 @@ public:
 	void SetOutputTexture(int indexFrame, CGfxRenderTexturePtr ptrColorTexture);
 
 private:
-	void Render(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrMainCommandBuffer, int indexFrame, bool bPresent);
+	void Render(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer, int indexFrame, bool bPresent);
 
 
 private:
