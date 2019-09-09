@@ -24,7 +24,7 @@ public:
 	void SetOutputTexture(CGfxRenderTexturePtr ptrDepthTexture);
 
 private:
-	const CGfxSemaphore* Render(CTaskGraph& taskGraph, const CGfxSemaphore* pWaitSemaphore);
+	void Render(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrMainCommandBuffer);
 
 
 private:
@@ -39,7 +39,6 @@ private:
 private:
 	CGfxUniformCamera* m_pShadowCameraUniform[4];
 	CGfxDescriptorSetPtr m_ptrDescriptorSetPass[4];
-	CGfxCommandBufferPtr m_ptrMainCommandBuffer[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
 
 private:
 	CCamera* m_pCamera;

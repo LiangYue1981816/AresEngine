@@ -49,6 +49,10 @@ CRenderSystem::CRenderSystem(GfxApi api, void* hInstance, void* hWnd, void* hDC,
 		break;
 	}
 
+	m_ptrCommandBuffer[0] = GfxRenderer()->NewCommandBuffer(0, true);
+	m_ptrCommandBuffer[1] = GfxRenderer()->NewCommandBuffer(0, true);
+	m_ptrCommandBuffer[2] = GfxRenderer()->NewCommandBuffer(0, true);
+
 	SetVertexAttributes(vertexAttributes, VERTEX_ATTRIBUTE_COUNT);
 	SetInstanceAttributes(instanceAttributes, INSTANCE_ATTRIBUTE_COUNT);
 
@@ -67,7 +71,12 @@ CRenderSystem::CRenderSystem(GfxApi api, void* hInstance, void* hWnd, void* hDC,
 CRenderSystem::~CRenderSystem(void)
 {
 	DestroyRenderPass();
+
 	m_ptrRenderTextures.clear();
+
+	m_ptrCommandBuffer[0]->Clearup();
+	m_ptrCommandBuffer[1]->Clearup();
+	m_ptrCommandBuffer[2]->Clearup();
 
 	delete m_pEngineUniform;
 	delete m_pRenderer;
@@ -291,23 +300,30 @@ void CRenderSystem::Update(CTaskGraph& taskGraph, CCamera* pCamera) const
 void CRenderSystem::RenderDefault(CTaskGraph& taskGraph, CCamera* pCamera, bool bPresent) const
 {
 	const CGfxSemaphore* pWaitSemaphore = GfxRenderer()->GetSwapChain()->GetAcquireSemaphore();
+	const CGfxCommandBufferPtr ptrCommandBuffer = m_ptrCommandBuffer[GfxRenderer()->GetSwapChain()->GetFrameIndex()];
 
 	GfxRenderer()->AcquireNextFrame();
 	{
+		ptrCommandBuffer->Clearup();
+
 		m_pPassDefault->SetCamera(pCamera);
 
-		pWaitSemaphore = m_pPassDefault->Render(taskGraph, pWaitSemaphore);
-		pWaitSemaphore = m_pPassFinal->Render(taskGraph, pWaitSemaphore, GfxRenderer()->GetSwapChain()->GetFrameIndex(), bPresent);
+		m_pPassDefault->Render(taskGraph, ptrCommandBuffer);
+		m_pPassFinal->Render(taskGraph, ptrCommandBuffer, GfxRenderer()->GetSwapChain()->GetFrameIndex(), bPresent);
 	}
-	GfxRenderer()->Present(pWaitSemaphore);
+	GfxRenderer()->Submit(ptrCommandBuffer, pWaitSemaphore);
+	GfxRenderer()->Present(ptrCommandBuffer->GetSemaphore());
 }
 
 void CRenderSystem::RenderForwardLighting(CTaskGraph& taskGraph, CCamera* pCamera, bool bShadow, bool bPresent) const
 {
 	const CGfxSemaphore* pWaitSemaphore = GfxRenderer()->GetSwapChain()->GetAcquireSemaphore();
+	const CGfxCommandBufferPtr ptrCommandBuffer = m_ptrCommandBuffer[GfxRenderer()->GetSwapChain()->GetFrameIndex()];
 
 	GfxRenderer()->AcquireNextFrame();
 	{
+		ptrCommandBuffer->Clearup();
+
 		m_pPassPreZ->SetCamera(pCamera);
 		m_pPassSSAO->SetCamera(pCamera);
 		m_pPassShadow->SetCamera(pCamera);
@@ -315,12 +331,13 @@ void CRenderSystem::RenderForwardLighting(CTaskGraph& taskGraph, CCamera* pCamer
 		m_pPassColorGrading->SetCamera(pCamera);
 		m_pPassFinal->SetCamera(pCamera);
 
-		pWaitSemaphore = m_pPassPreZ->Render(taskGraph, pWaitSemaphore);
-		pWaitSemaphore = m_pPassSSAO->Render(taskGraph, pWaitSemaphore);
-		pWaitSemaphore = m_pPassShadow->Render(taskGraph, pWaitSemaphore);
-		pWaitSemaphore = m_pPassForwardLighting->Render(taskGraph, pWaitSemaphore);
-		pWaitSemaphore = m_pPassColorGrading->Render(taskGraph, pWaitSemaphore);
-		pWaitSemaphore = m_pPassFinal->Render(taskGraph, pWaitSemaphore, GfxRenderer()->GetSwapChain()->GetFrameIndex(), bPresent);
+		m_pPassPreZ->Render(taskGraph, ptrCommandBuffer);
+		m_pPassSSAO->Render(taskGraph, ptrCommandBuffer);
+		m_pPassShadow->Render(taskGraph, ptrCommandBuffer);
+		m_pPassForwardLighting->Render(taskGraph, ptrCommandBuffer);
+		m_pPassColorGrading->Render(taskGraph, ptrCommandBuffer);
+		m_pPassFinal->Render(taskGraph, ptrCommandBuffer, GfxRenderer()->GetSwapChain()->GetFrameIndex(), bPresent);
 	}
-	GfxRenderer()->Present(pWaitSemaphore);
+	GfxRenderer()->Submit(ptrCommandBuffer, pWaitSemaphore);
+	GfxRenderer()->Present(ptrCommandBuffer->GetSemaphore());
 }

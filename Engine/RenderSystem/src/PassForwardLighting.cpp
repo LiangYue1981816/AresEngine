@@ -29,12 +29,6 @@ CPassForwardLighting::CPassForwardLighting(CRenderSystem* pRenderSystem)
 	: m_pCamera(nullptr)
 	, m_pRenderSystem(pRenderSystem)
 {
-	// CommandBuffer
-	m_ptrMainCommandBuffer[0] = GfxRenderer()->NewCommandBuffer(0, true);
-	m_ptrMainCommandBuffer[1] = GfxRenderer()->NewCommandBuffer(0, true);
-	m_ptrMainCommandBuffer[2] = GfxRenderer()->NewCommandBuffer(0, true);
-
-	// DescriptorLayout and DescriptorSet
 	CGfxDescriptorLayoutPtr ptrDescriptorLayout = GfxRenderer()->NewDescriptorLayout(DESCRIPTOR_SET_PASS);
 	ptrDescriptorLayout->SetUniformBlockBinding(UNIFORM_ENGINE_NAME, UNIFORM_ENGINE_BIND);
 	ptrDescriptorLayout->SetUniformBlockBinding(UNIFORM_CAMERA_NAME, UNIFORM_CAMERA_BIND);
@@ -48,9 +42,7 @@ CPassForwardLighting::CPassForwardLighting(CRenderSystem* pRenderSystem)
 
 CPassForwardLighting::~CPassForwardLighting(void)
 {
-	m_ptrMainCommandBuffer[0]->Clearup();
-	m_ptrMainCommandBuffer[1]->Clearup();
-	m_ptrMainCommandBuffer[2]->Clearup();
+
 }
 
 void CPassForwardLighting::SetCamera(CCamera* pCamera)
@@ -80,37 +72,29 @@ void CPassForwardLighting::SetOutputTexture(CGfxRenderTexturePtr ptrColorTexture
 	m_ptrFrameBuffer->Create(ptrRenderPass);
 }
 
-const CGfxSemaphore* CPassForwardLighting::Render(CTaskGraph& taskGraph, const CGfxSemaphore* pWaitSemaphore)
+void CPassForwardLighting::Render(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrMainCommandBuffer)
 {
-	if (m_pCamera) {
-		// Update
-		m_pCamera->GetCameraUniform()->Apply();
-		m_pRenderSystem->GetEngineUniform()->Apply();
-		m_ptrDescriptorSetPass->Update();
+	if (m_pCamera == nullptr || m_pRenderSystem == nullptr) {
+		return;
+	}
 
-		// Render
-		const CGfxCommandBufferPtr ptrMainCommandBuffer = m_ptrMainCommandBuffer[GfxRenderer()->GetSwapChain()->GetFrameIndex()];
+	// Update
+	m_pCamera->GetCameraUniform()->Apply();
+	m_pRenderSystem->GetEngineUniform()->Apply();
+	m_ptrDescriptorSetPass->Update();
+
+	// Render
+	GfxRenderer()->BeginRecord(ptrMainCommandBuffer);
+	{
+		GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, m_ptrColorTexture, GFX_IMAGE_LAYOUT_GENERAL);
+		GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, m_ptrDepthStencilTexture, GFX_IMAGE_LAYOUT_GENERAL);
+		GfxRenderer()->CmdBeginRenderPass(ptrMainCommandBuffer, m_ptrFrameBuffer, ptrRenderPass);
 		{
-			ptrMainCommandBuffer->Clearup();
-
-			GfxRenderer()->BeginRecord(ptrMainCommandBuffer);
-			{
-				GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, m_ptrColorTexture, GFX_IMAGE_LAYOUT_GENERAL);
-				GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, m_ptrDepthStencilTexture, GFX_IMAGE_LAYOUT_GENERAL);
-				GfxRenderer()->CmdBeginRenderPass(ptrMainCommandBuffer, m_ptrFrameBuffer, ptrRenderPass);
-				{
-					m_pCamera->GetRenderQueue()->CmdDraw(taskGraph, ptrMainCommandBuffer, m_ptrDescriptorSetPass, PASS_FORWARD_LIGHTING_NAME, m_pCamera->GetCamera()->GetScissor(), m_pCamera->GetCamera()->GetViewport(), 0xffffffff);
-				}
-				GfxRenderer()->CmdEndRenderPass(ptrMainCommandBuffer);
-				GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, m_ptrColorTexture, GFX_IMAGE_LAYOUT_COLOR_READ_ONLY_OPTIMAL);
-				GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, m_ptrDepthStencilTexture, GFX_IMAGE_LAYOUT_DEPTH_STENCIL_READ_ONLY_OPTIMAL);
-			}
-			GfxRenderer()->EndRecord(ptrMainCommandBuffer);
+			m_pCamera->GetRenderQueue()->CmdDraw(taskGraph, ptrMainCommandBuffer, m_ptrDescriptorSetPass, PASS_FORWARD_LIGHTING_NAME, m_pCamera->GetCamera()->GetScissor(), m_pCamera->GetCamera()->GetViewport(), 0xffffffff);
 		}
-		GfxRenderer()->Submit(ptrMainCommandBuffer, pWaitSemaphore);
-		return ptrMainCommandBuffer->GetSemaphore();
+		GfxRenderer()->CmdEndRenderPass(ptrMainCommandBuffer);
+		GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, m_ptrColorTexture, GFX_IMAGE_LAYOUT_COLOR_READ_ONLY_OPTIMAL);
+		GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, m_ptrDepthStencilTexture, GFX_IMAGE_LAYOUT_DEPTH_STENCIL_READ_ONLY_OPTIMAL);
 	}
-	else {
-		return nullptr;
-	}
+	GfxRenderer()->EndRecord(ptrMainCommandBuffer);
 }

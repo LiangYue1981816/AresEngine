@@ -149,4 +149,7 @@ private:
 
 private:
 	eastl::unordered_map<uint32_t, CGfxRenderTexturePtr> m_ptrRenderTextures;
+
+private:
+	CGfxCommandBufferPtr m_ptrCommandBuffer[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
 };

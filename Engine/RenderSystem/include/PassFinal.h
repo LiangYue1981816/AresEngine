@@ -24,7 +24,7 @@ public:
 	void SetOutputTexture(int indexFrame, CGfxRenderTexturePtr ptrColorTexture);
 
 private:
-	const CGfxSemaphore* Render(CTaskGraph& taskGraph, const CGfxSemaphore* pWaitSemaphore, int indexFrame, bool bPresent);
+	void Render(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrMainCommandBuffer, int indexFrame, bool bPresent);
 
 
 private:
@@ -33,5 +33,4 @@ private:
 
 private:
 	CGfxDescriptorSetPtr m_ptrDescriptorSetPass;
-	CGfxCommandBufferPtr m_ptrMainCommandBuffer[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
 };

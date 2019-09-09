@@ -24,12 +24,6 @@ void CPassSSAO::Destroy(void)
 CPassSSAO::CPassSSAO(CRenderSystem* pRenderSystem)
 	: CPassBlit(PASS_SSAO_MATERIAL_NAME, pRenderSystem)
 {
-	// CommandBuffer
-	m_ptrMainCommandBuffer[0] = GfxRenderer()->NewCommandBuffer(0, true);
-	m_ptrMainCommandBuffer[1] = GfxRenderer()->NewCommandBuffer(0, true);
-	m_ptrMainCommandBuffer[2] = GfxRenderer()->NewCommandBuffer(0, true);
-
-	// DescriptorLayout and DescriptorSet
 	CGfxDescriptorLayoutPtr ptrDescriptorLayout = GfxRenderer()->NewDescriptorLayout(DESCRIPTOR_SET_PASS);
 	ptrDescriptorLayout->SetUniformBlockBinding(UNIFORM_ENGINE_NAME, UNIFORM_ENGINE_BIND);
 	ptrDescriptorLayout->SetUniformBlockBinding(UNIFORM_CAMERA_NAME, UNIFORM_CAMERA_BIND);
@@ -42,9 +36,7 @@ CPassSSAO::CPassSSAO(CRenderSystem* pRenderSystem)
 
 CPassSSAO::~CPassSSAO(void)
 {
-	m_ptrMainCommandBuffer[0]->Clearup();
-	m_ptrMainCommandBuffer[1]->Clearup();
-	m_ptrMainCommandBuffer[2]->Clearup();
+
 }
 
 void CPassSSAO::SetCamera(CCamera* pCamera)
@@ -70,35 +62,32 @@ void CPassSSAO::SetOutputTexture(CGfxRenderTexturePtr ptrColorTexture)
 	m_ptrFrameBuffer->Create(ptrRenderPass);
 }
 
-const CGfxSemaphore* CPassSSAO::Render(CTaskGraph& taskGraph, const CGfxSemaphore* pWaitSemaphore)
+void CPassSSAO::Render(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrMainCommandBuffer)
 {
+	if (m_pCamera == nullptr || m_pRenderSystem == nullptr) {
+		return;
+	}
+
 	// Update
 	m_pCamera->GetCameraUniform()->Apply();
 	m_pRenderSystem->GetEngineUniform()->Apply();
 	m_ptrDescriptorSetPass->Update();
 
 	// Render
-	const CGfxCommandBufferPtr ptrMainCommandBuffer = m_ptrMainCommandBuffer[GfxRenderer()->GetSwapChain()->GetFrameIndex()];
+	GfxRenderer()->BeginRecord(ptrMainCommandBuffer);
 	{
-		ptrMainCommandBuffer->Clearup();
-
-		GfxRenderer()->BeginRecord(ptrMainCommandBuffer);
+		GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, m_ptrColorTexture, GFX_IMAGE_LAYOUT_GENERAL);
+		GfxRenderer()->CmdBeginRenderPass(ptrMainCommandBuffer, m_ptrFrameBuffer, ptrRenderPass);
 		{
-			GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, m_ptrColorTexture, GFX_IMAGE_LAYOUT_GENERAL);
-			GfxRenderer()->CmdBeginRenderPass(ptrMainCommandBuffer, m_ptrFrameBuffer, ptrRenderPass);
-			{
-				const float w = m_ptrColorTexture->GetWidth();
-				const float h = m_ptrColorTexture->GetHeight();
-				const glm::vec4 scissor = glm::vec4(0.0, 0.0, w, h);
-				const glm::vec4 viewport = glm::vec4(0.0, 0.0, w, h);
+			const float w = m_ptrColorTexture->GetWidth();
+			const float h = m_ptrColorTexture->GetHeight();
+			const glm::vec4 scissor = glm::vec4(0.0, 0.0, w, h);
+			const glm::vec4 viewport = glm::vec4(0.0, 0.0, w, h);
 
-				m_pRenderQueue->CmdDraw(taskGraph, ptrMainCommandBuffer, m_ptrDescriptorSetPass, PASS_SSAO_NAME, scissor, viewport, 0xffffffff);
-			}
-			GfxRenderer()->CmdEndRenderPass(ptrMainCommandBuffer);
-			GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, m_ptrColorTexture, GFX_IMAGE_LAYOUT_COLOR_READ_ONLY_OPTIMAL);
+			m_pRenderQueue->CmdDraw(taskGraph, ptrMainCommandBuffer, m_ptrDescriptorSetPass, PASS_SSAO_NAME, scissor, viewport, 0xffffffff);
 		}
-		GfxRenderer()->EndRecord(ptrMainCommandBuffer);
+		GfxRenderer()->CmdEndRenderPass(ptrMainCommandBuffer);
+		GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, m_ptrColorTexture, GFX_IMAGE_LAYOUT_COLOR_READ_ONLY_OPTIMAL);
 	}
-	GfxRenderer()->Submit(ptrMainCommandBuffer, pWaitSemaphore);
-	return ptrMainCommandBuffer->GetSemaphore();
+	GfxRenderer()->EndRecord(ptrMainCommandBuffer);
 }
