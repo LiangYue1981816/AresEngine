@@ -208,7 +208,7 @@ bool CVKCommandBuffer::BeginRecord(void)
 {
 	ASSERT(m_vkCommandBuffer);
 
-	if (IsMainCommandBuffer() && IsInRenderPass() == false && m_pCommands.empty()) {
+	if (IsMainCommandBuffer() && IsInRenderPass() == false) {
 		m_pCommands.emplace_back(new CVKCommandBeginRecord(m_vkCommandBuffer));
 		return true;
 	}
@@ -223,7 +223,7 @@ bool CVKCommandBuffer::BeginRecord(const CGfxFrameBufferPtr ptrFrameBuffer, cons
 	ASSERT(ptrFrameBuffer);
 	ASSERT(m_vkCommandBuffer);
 
-	if (IsMainCommandBuffer() == false && IsInRenderPass() == false && m_pCommands.empty()) {
+	if (IsMainCommandBuffer() == false && IsInRenderPass() == false) {
 		m_indexSubpass = indexSubpass;
 		m_ptrRenderPass = ptrRenderPass;
 		m_ptrFrameBuffer = ptrFrameBuffer;
