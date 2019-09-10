@@ -299,42 +299,80 @@ static bool InternalLoadPipelineShader(TiXmlNode* pPipelineNode, CGfxShader*& pS
 			} while ((pFeatureNode = pShaderNode->IterateChildren("Feature", pFeatureNode)) != nullptr);
 		}
 
+		const char szGfxAPI[3][_MAX_STRING] = { "", "_GLES3_", "_VULKAN_" };
+		const char szPlatform[3][_MAX_STRING] = { "", "_ANDROID_", "_IOS_" };
+
 #ifdef PLATFORM_WINDOWS
-		uint32_t maskFeatures = (1 << features.size()) - 1;
+		for (int indexGfxAPI = 0; indexGfxAPI < 3; indexGfxAPI++) {
+			for (int indexPlatform = 0; indexPlatform < 3; indexPlatform++) {
+				uint32_t maskFeatures = (1 << features.size()) - 1;
 
-		do {
-			char szHashName[1024] = { 0 };
-			strcat(szHashName, szFileName);
+				do {
+					ShaderCompiler()->ClearMacroDefinition();
 
-			ShaderCompiler()->ClearMacroDefinition();
+					char szHashName[1024] = { 0 };
+					strcat(szHashName, szFileName);
 
-			for (int index = 0; index < defines.size(); index++) {
-				strcat(szHashName, "|");
-				strcat(szHashName, defines[index].szName);
-				ShaderCompiler()->AddMacroDefinition(defines[index].szName);
+					if (indexGfxAPI > 0) {
+						strcat(szHashName, "|");
+						strcat(szHashName, szGfxAPI[indexGfxAPI]);
+						ShaderCompiler()->AddMacroDefinition(szGfxAPI[indexGfxAPI]);
+					}
+
+					if (indexPlatform > 0) {
+						strcat(szHashName, "|");
+						strcat(szHashName, szPlatform[indexPlatform]);
+						ShaderCompiler()->AddMacroDefinition(szPlatform[indexPlatform]);
+					}
+
+					for (int index = 0; index < defines.size(); index++) {
+						strcat(szHashName, "|");
+						strcat(szHashName, defines[index].szName);
+						ShaderCompiler()->AddMacroDefinition(defines[index].szName);
+					}
+
+					for (int index = 0; index < features.size(); index++) {
+						if (maskFeatures & (1 << index)) {
+							strcat(szHashName, "|");
+							strcat(szHashName, features[index].szName);
+							ShaderCompiler()->AddMacroDefinition(features[index].szName);
+						}
+					}
+
+					char szBinFileName[_MAX_STRING] = { 0 };
+					sprintf(szBinFileName, "%x", HashValue(szHashName));
+					ShaderCompiler()->Compile(FileManager()->GetFullName(szFileName), szBinFileName, (shaderc_shader_kind)kind);
+
+					if (maskFeatures) {
+						maskFeatures--;
+					}
+				} while (maskFeatures != 0);
 			}
-
-			for (int index = 0; index < features.size(); index++) {
-				if (maskFeatures & (1 << index)) {
-					strcat(szHashName, "|");
-					strcat(szHashName, features[index].szName);
-					ShaderCompiler()->AddMacroDefinition(features[index].szName);
-				}
-			}
-
-			char szExtName[2][_MAX_STRING] = { "vert", "frag" };
-			char szBinFileName[_MAX_STRING] = { 0 };
-			sprintf(szBinFileName, "%x.%s", HashValue(szHashName), szExtName[kind]);
-			ShaderCompiler()->Compile(FileManager()->GetFullName(szFileName), szBinFileName, (shaderc_shader_kind)kind);
-
-			if (maskFeatures) {
-				maskFeatures--;
-			}
-		} while (maskFeatures != 0);
+		}
 #endif
 
 		char szHashName[1024] = { 0 };
 		strcat(szHashName, szFileName);
+
+		if (GfxRenderer()->GetAPI() == GFX_API_GLES3) {
+			strcat(szHashName, "|");
+			strcat(szHashName, szGfxAPI[1]);
+		}
+
+		if (GfxRenderer()->GetAPI() == GFX_API_VULKAN) {
+			strcat(szHashName, "|");
+			strcat(szHashName, szGfxAPI[2]);
+		}
+
+#ifdef PLATFORM_ANDROID
+		strcat(szHashName, "|");
+		strcat(szHashName, szPlatform[1]);
+#endif
+
+#ifdef PLATFORM_IOS
+		strcat(szHashName, "|");
+		strcat(szHashName, szPlatform[2]);
+#endif
 
 		for (int index = 0; index < defines.size(); index++) {
 			strcat(szHashName, "|");
@@ -348,9 +386,8 @@ static bool InternalLoadPipelineShader(TiXmlNode* pPipelineNode, CGfxShader*& pS
 			}
 		}
 
-		char szExtName[2][_MAX_STRING] = { "vert", "frag" };
 		char szBinFileName[_MAX_STRING] = { 0 };
-		sprintf(szBinFileName, "%x.%s", HashValue(szHashName), szExtName[kind]);
+		sprintf(szBinFileName, "%x", HashValue(szHashName));
 
 		pShader = GfxRenderer()->CreateShader(szBinFileName, kind);
 		if (pShader->IsValid() == false) { err = -3; goto ERR; }
