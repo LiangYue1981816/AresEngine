@@ -339,8 +339,9 @@ static bool InternalLoadPipelineShader(TiXmlNode* pPipelineNode, CGfxShader*& pS
 						}
 					}
 
+					char szExtName[2][_MAX_STRING] = { "vert", "frag" };
 					char szBinFileName[_MAX_STRING] = { 0 };
-					sprintf(szBinFileName, "%x", HashValue(szHashName));
+					sprintf(szBinFileName, "%x.%s", HashValue(szHashName), szExtName[kind]);
 					ShaderCompiler()->Compile(FileManager()->GetFullName(szFileName), szBinFileName, (shaderc_shader_kind)kind);
 
 					if (maskFeatures) {
@@ -386,8 +387,9 @@ static bool InternalLoadPipelineShader(TiXmlNode* pPipelineNode, CGfxShader*& pS
 			}
 		}
 
+		char szExtName[2][_MAX_STRING] = { "vert", "frag" };
 		char szBinFileName[_MAX_STRING] = { 0 };
-		sprintf(szBinFileName, "%x", HashValue(szHashName));
+		sprintf(szBinFileName, "%x.%s", HashValue(szHashName), szExtName[kind]);
 
 		pShader = GfxRenderer()->CreateShader(szBinFileName, kind);
 		if (pShader->IsValid() == false) { err = -3; goto ERR; }
