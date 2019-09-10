@@ -144,11 +144,11 @@ void main()
 
 		highp float sampleDepth = texture(texDepth, offset.xy).r;
 		highp vec3 checkSamplePosition = ScreenToViewPosition(offset.xy, sampleDepth);
-//		occlusion += step(curDepth, sampleDepth);
-		occlusion += step(checkSamplePosition.z, samplePosition.z);
+		float checkRange = smoothstep(0.0, 0.1, radius / abs(checkSamplePosition.z - curPosition.z));
+		occlusion += step(samplePosition.z, checkSamplePosition.z) * checkRange;
 	}
 
-	occlusion = clamp(occlusion / float(count), 0.0, 1.0);
+	occlusion = 1.0 - clamp(occlusion / float(count), 0.0, 1.0);
 //	occlusion = clamp(occlusion / float(count) + 0.5, 0.0, 1.0);
 
 	outFragColor.rgb = vec3(occlusion);
