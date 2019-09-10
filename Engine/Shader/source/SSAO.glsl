@@ -141,7 +141,8 @@ void main()
 
 	highp float curDepth = texture(texDepth, inTexcoord).r;
 	highp vec3 curPosition = ScreenToViewPosition(inTexcoord, curDepth);
-	highp vec3 curNormal = NormalFromDepth(curDepth);
+//	highp vec3 curNormal = NormalFromDepth(curDepth);
+	highp vec3 curNormal = normalize(cross(dFdy(curPosition), dFdx(curPosition)));
 	highp vec3 curReflect = normalize(texture(texNoise, noiseTexcoord).xyz * 2.0 - 1.0);
 
 	highp int count = 16;
