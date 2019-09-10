@@ -146,7 +146,7 @@ void main()
 	highp vec3 curReflect = normalize(texture(texNoise, noiseTexcoord).xyz * 2.0 - 1.0);
 
 	highp int count = 16;
-	highp float radius = mix(0.05, 1.0, smoothstep(0.0, 0.5, LinearDepth(curDepth) / (cameraZFar - cameraZNear)));
+	highp float radius = mix(0.035, 1.0, smoothstep(0.0, 0.45, LinearDepth(curDepth) / (cameraZFar - cameraZNear)));
 	highp float occlusion = 0.0;
 
 	for (int index = 0; index < count; index++) {
