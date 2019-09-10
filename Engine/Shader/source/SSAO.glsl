@@ -50,6 +50,23 @@ highp float LinearDepth(highp float depth)
 	return (2.0 * cameraZNear * cameraZFar) / (cameraZFar + cameraZNear - z * (cameraZFar - cameraZNear));
 }
 
+highp vec3 NormalFromDepth(highp float depth)
+{ 
+	highp vec2 offset1 = vec2(0.0, 0.001);
+	highp vec2 offset2 = vec2(0.001, 0.0);
+
+	highp float depth1 = texture(texDepth, inTexcoord + offset1).r;
+	highp float depth2 = texture(texDepth, inTexcoord + offset2).r;
+
+	highp vec3 p1 = vec3(offset1, depth1 - depth);
+	highp vec3 p2 = vec3(offset2, depth2 - depth);
+
+	highp vec3 normal = cross(p1, p2);
+	normal.z = -normal.z;
+
+	return normalize(normal);
+}
+
 void main()
 {
 	highp vec3 sample_sphere[64] = vec3[] (
@@ -120,22 +137,20 @@ void main()
 
 	highp vec2 noiseSize = vec2(textureSize(texNoise, 0));
 	highp vec2 depthSize = vec2(textureSize(texDepth, 0));
-//	highp vec2 noiseTexcoord = 10.0 * (inTexcoord + PoissonDisk(vec3(inTexcoord, 0.0), 0));
 	highp vec2 noiseTexcoord = 10.0 * (inTexcoord + PoissonDisk(vec3(inTexcoord, 0.0), 0)) * depthSize / noiseSize;
 
 	highp float curDepth = texture(texDepth, inTexcoord).r;
 	highp vec3 curPosition = ScreenToViewPosition(inTexcoord, curDepth);
-	highp vec3 curNormal = normalize(texture(texNoise, noiseTexcoord).xyz * 2.0 - 1.0);
+	highp vec3 curNormal = NormalFromDepth(curDepth);
+	highp vec3 curReflect = normalize(texture(texNoise, noiseTexcoord).xyz * 2.0 - 1.0);
 
 	highp int count = 16;
-//	highp float radius = 0.05;
-//	highp float radius = max(LinearDepth(curDepth) / (cameraZFar - cameraZNear), 0.05);
 	highp float radius = mix(0.05, 1.0, smoothstep(0.0, 0.5, LinearDepth(curDepth) / (cameraZFar - cameraZNear)));
 	highp float occlusion = 0.0;
 
 	for (int index = 0; index < count; index++) {
-		highp vec3 sampleNormal = reflect(sample_sphere[index], curNormal);
-		highp vec3 samplePosition = curPosition + sampleNormal * radius;
+		highp vec3 sampleNormal = reflect(sample_sphere[index], curReflect);
+		highp vec3 samplePosition = curPosition + sign(dot(curNormal, sampleNormal)) * sampleNormal * radius;
 
 		highp vec4 offset = vec4(samplePosition, 1.0);
         offset = cameraProjectionMatrix * offset;
@@ -149,10 +164,8 @@ void main()
 	}
 
 	occlusion = 1.0 - clamp(occlusion / float(count), 0.0, 1.0);
-//	occlusion = clamp(occlusion / float(count) + 0.5, 0.0, 1.0);
 
 	outFragColor.rgb = vec3(occlusion);
-//	outFragColor.rgb = vec3(radius);
 	outFragColor.a = 1.0;
 }
 
