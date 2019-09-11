@@ -22,6 +22,7 @@ CPassBlit::CPassBlit(const char* szMaterialFileName, CRenderSystem* pRenderSyste
 
 	m_ptrMeshDraw = GfxRenderer()->NewMeshDraw(HashValue("%s.Mesh.MeshDraw"), m_ptrMesh, 0, INSTANCE_FORMAT_TRANSFORM);
 	m_ptrMeshDraw->SetMask(0xffffffff);
+	m_ptrMeshDraw->SetRenderCallback(CPassBlit::RenderCallback, this);
 
 	m_ptrMaterial = GfxRenderer()->NewMaterial(szMaterialFileName);
 
@@ -35,4 +36,16 @@ CPassBlit::CPassBlit(const char* szMaterialFileName, CRenderSystem* pRenderSyste
 CPassBlit::~CPassBlit(void)
 {
 	delete m_pRenderQueue;
+}
+
+void CPassBlit::RenderCallback(CGfxCommandBufferPtr ptrCommandBuffer)
+{
+
+}
+
+void CPassBlit::RenderCallback(CGfxCommandBufferPtr ptrCommandBuffer, void* param)
+{
+	if (CPassBlit* pPass = (CPassBlit*)param) {
+		pPass->RenderCallback(ptrCommandBuffer);
+	}
 }

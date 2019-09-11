@@ -14,6 +14,11 @@ protected:
 
 
 private:
+	virtual void RenderCallback(CGfxCommandBufferPtr ptrCommandBuffer);
+	static  void RenderCallback(CGfxCommandBufferPtr ptrCommandBuffer, void* param);
+
+
+private:
 	CGfxMeshPtr m_ptrMesh;
 	CGfxMeshDrawPtr m_ptrMeshDraw;
 	CGfxMaterialPtr m_ptrMaterial;

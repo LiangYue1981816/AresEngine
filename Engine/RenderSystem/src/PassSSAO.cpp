@@ -87,3 +87,8 @@ void CPassSSAO::Render(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuf
 	GfxRenderer()->CmdEndRenderPass(ptrCommandBuffer);
 	GfxRenderer()->CmdSetImageLayout(ptrCommandBuffer, m_ptrColorTexture, GFX_IMAGE_LAYOUT_COLOR_READ_ONLY_OPTIMAL);
 }
+
+void CPassSSAO::RenderCallback(CGfxCommandBufferPtr ptrCommandBuffer)
+{
+
+}
