@@ -40,7 +40,7 @@ public:
 	bool InstanceBufferData(size_t size, const void* data);
 
 public:
-	void SetRenderCallback(RenderCallback callback);
+	void SetRenderCallback(RenderCallback callback, void* param);
 	void OnRenderCallback(CGfxCommandBufferPtr ptrCommandBuffer) const;
 
 public:
@@ -59,6 +59,7 @@ private:
 
 private:
 	RenderCallback m_pRenderCallback;
+	void* m_pRenderCallbackParam;
 
 private:
 	CGLES3MeshDrawManager* m_pManager;

@@ -12,6 +12,7 @@ CVKMeshDraw::CVKMeshDraw(CVKDevice* pDevice, CVKMeshDrawManager* pManager, uint3
 	, m_pInstanceBuffer{ nullptr }
 
 	, m_pRenderCallback(nullptr)
+	, m_pRenderCallbackParam(nullptr)
 {
 	ASSERT(ptrMesh);
 	ASSERT(ptrMesh->GetDraw(nameDraw));
@@ -129,15 +130,16 @@ bool CVKMeshDraw::InstanceBufferData(size_t size, const void* data)
 	return true;
 }
 
-void CVKMeshDraw::SetRenderCallback(RenderCallback callback)
+void CVKMeshDraw::SetRenderCallback(RenderCallback callback, void* param)
 {
 	m_pRenderCallback = callback;
+	m_pRenderCallbackParam = param;
 }
 
 void CVKMeshDraw::OnRenderCallback(CGfxCommandBufferPtr ptrCommandBuffer) const
 {
 	if (m_pRenderCallback) {
-		m_pRenderCallback(ptrCommandBuffer);
+		m_pRenderCallback(ptrCommandBuffer, m_pRenderCallbackParam);
 	}
 }
 

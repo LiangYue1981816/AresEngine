@@ -12,6 +12,7 @@ CGLES3MeshDraw::CGLES3MeshDraw(CGLES3MeshDrawManager* pManager, uint32_t name, c
 	, m_pVertexArrayObject{ nullptr }
 
 	, m_pRenderCallback(nullptr)
+	, m_pRenderCallbackParam(nullptr)
 {
 	ASSERT(ptrMesh);
 	ASSERT(ptrMesh->GetDraw(nameDraw));
@@ -121,15 +122,16 @@ bool CGLES3MeshDraw::InstanceBufferData(size_t size, const void* data)
 	return true;
 }
 
-void CGLES3MeshDraw::SetRenderCallback(RenderCallback callback)
+void CGLES3MeshDraw::SetRenderCallback(RenderCallback callback, void* param)
 {
 	m_pRenderCallback = callback;
+	m_pRenderCallbackParam = param;
 }
 
 void CGLES3MeshDraw::OnRenderCallback(CGfxCommandBufferPtr ptrCommandBuffer) const
 {
 	if (m_pRenderCallback) {
-		m_pRenderCallback(ptrCommandBuffer);
+		m_pRenderCallback(ptrCommandBuffer, m_pRenderCallbackParam);
 	}
 }
 

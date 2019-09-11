@@ -48,8 +48,8 @@ public:
 	virtual bool InstanceBufferData(size_t size, const void* data) = 0;
 
 public:
-	typedef void (*RenderCallback)(CGfxCommandBufferPtr);
-	virtual void SetRenderCallback(RenderCallback callback) = 0;
+	typedef void (*RenderCallback)(CGfxCommandBufferPtr, void*);
+	virtual void SetRenderCallback(RenderCallback callback, void* param) = 0;
 	virtual void OnRenderCallback(CGfxCommandBufferPtr ptrCommandBuffer) const = 0;
 
 
