@@ -40,7 +40,7 @@ CPassBlit::~CPassBlit(void)
 
 void CPassBlit::RenderCallback(CGfxCommandBufferPtr ptrCommandBuffer, void* param)
 {
-	if (CPassBlit* pPass = (CPassBlit*)param) {
-		pPass->RenderCallback(ptrCommandBuffer);
+	if (CPassBlit* pPassBlit = (CPassBlit*)param) {
+		pPassBlit->RenderCallback(ptrCommandBuffer);
 	}
 }
