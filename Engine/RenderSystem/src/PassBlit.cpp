@@ -20,7 +20,7 @@ CPassBlit::CPassBlit(const char* szMaterialFileName, CRenderSystem* pRenderSyste
 	m_ptrMesh->CreateIndexBuffer(GFX_INDEX_UNSIGNED_INT, sizeof(meshIndices), false, (const void*)meshIndices);
 	m_ptrMesh->CreateVertexBuffer(VERTEX_ATTRIBUTE_POSITION | VERTEX_ATTRIBUTE_TEXCOORD0, 0, sizeof(meshVertices), false, (const void*)meshVertices);
 
-	m_ptrMeshDraw = GfxRenderer()->NewMeshDraw(HashValue("Blit_MeshDraw"), m_ptrMesh, 0, INSTANCE_FORMAT_TRANSFORM);
+	m_ptrMeshDraw = GfxRenderer()->NewMeshDraw(HashValue("%s.Mesh.MeshDraw"), m_ptrMesh, 0, INSTANCE_FORMAT_TRANSFORM);
 	m_ptrMeshDraw->SetMask(0xffffffff);
 
 	m_ptrMaterial = GfxRenderer()->NewMaterial(szMaterialFileName);
