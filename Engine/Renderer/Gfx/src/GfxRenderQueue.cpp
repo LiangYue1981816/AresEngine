@@ -168,6 +168,7 @@ void CGfxRenderQueue::CmdDrawThread(CGfxCommandBufferPtr ptrCommandBuffer, const
 				GfxRenderer()->CmdBindMesh(ptrCommandBuffer, itMeshQueue.first);
 				for (const auto& itMeshDrawQueue : itMeshQueue.second) {
 					if (itMeshDrawQueue.first->GetMask() & mask) {
+						itMeshDrawQueue.first->OnRenderCallback(ptrCommandBuffer);
 						GfxRenderer()->CmdBindDescriptorSet(ptrCommandBuffer, GfxRenderer()->GetDescriptorSet(itMeshDrawQueue.first->GetName()));
 						GfxRenderer()->CmdUpdateInstanceBuffer(ptrCommandBuffer, itMeshDrawQueue.first, itMeshDrawQueue.second.data(), itMeshDrawQueue.second.size());
 						GfxRenderer()->CmdBindMeshDraw(ptrCommandBuffer, itMeshDrawQueue.first);

@@ -44,6 +44,10 @@ public:
 	bool InstanceBufferData(size_t size, const void* data);
 
 public:
+	void SetRenderCallback(RenderCallback callback);
+	void OnRenderCallback(CGfxCommandBufferPtr ptrCommandBuffer) const;
+
+public:
 	void Bind(VkCommandBuffer vkCommandBuffer);
 
 
@@ -55,6 +59,9 @@ private:
 	CGfxMesh::Draw* m_pMeshDraw;
 	CVKIndirectBuffer* m_pIndirectBuffer[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
 	CVKInstanceBuffer* m_pInstanceBuffer[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
+
+private:
+	RenderCallback m_pRenderCallback;
 
 private:
 	CVKDevice* m_pDevice;

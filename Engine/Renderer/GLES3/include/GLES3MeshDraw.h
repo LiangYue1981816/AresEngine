@@ -40,6 +40,10 @@ public:
 	bool InstanceBufferData(size_t size, const void* data);
 
 public:
+	void SetRenderCallback(RenderCallback callback);
+	void OnRenderCallback(CGfxCommandBufferPtr ptrCommandBuffer) const;
+
+public:
 	void Bind(void) const;
 
 
@@ -52,6 +56,9 @@ private:
 	CGLES3IndirectBuffer* m_pIndirectBuffer[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
 	CGLES3InstanceBuffer* m_pInstanceBuffer[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
 	CGLES3VertexArrayObject* m_pVertexArrayObject[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
+
+private:
+	RenderCallback m_pRenderCallback;
 
 private:
 	CGLES3MeshDrawManager* m_pManager;

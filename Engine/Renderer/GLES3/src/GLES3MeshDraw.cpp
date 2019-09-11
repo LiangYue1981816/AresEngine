@@ -10,6 +10,8 @@ CGLES3MeshDraw::CGLES3MeshDraw(CGLES3MeshDrawManager* pManager, uint32_t name, c
 	, m_pIndirectBuffer{ nullptr }
 	, m_pInstanceBuffer{ nullptr }
 	, m_pVertexArrayObject{ nullptr }
+
+	, m_pRenderCallback(nullptr)
 {
 	ASSERT(ptrMesh);
 	ASSERT(ptrMesh->GetDraw(nameDraw));
@@ -117,6 +119,18 @@ bool CGLES3MeshDraw::InstanceBufferData(size_t size, const void* data)
 	CALL_BOOL_FUNCTION_RETURN_BOOL(m_pInstanceBuffer[GLES3Renderer()->GetSwapChain()->GetFrameIndex()]->BufferData(size, data));
 	CALL_BOOL_FUNCTION_RETURN_BOOL(m_pIndirectBuffer[GLES3Renderer()->GetSwapChain()->GetFrameIndex()]->BufferData(0, m_pMeshDraw->baseVertex, m_pMeshDraw->firstIndex, m_pMeshDraw->indexCount, size / GetInstanceStride(m_pInstanceBuffer[GLES3Renderer()->GetSwapChain()->GetFrameIndex()]->GetInstanceFormat())));
 	return true;
+}
+
+void CGLES3MeshDraw::SetRenderCallback(RenderCallback callback)
+{
+	m_pRenderCallback = callback;
+}
+
+void CGLES3MeshDraw::OnRenderCallback(CGfxCommandBufferPtr ptrCommandBuffer) const
+{
+	if (m_pRenderCallback) {
+		m_pRenderCallback(ptrCommandBuffer);
+	}
 }
 
 void CGLES3MeshDraw::Bind(void) const

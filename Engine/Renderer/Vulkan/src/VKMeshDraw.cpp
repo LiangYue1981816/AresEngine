@@ -10,6 +10,8 @@ CVKMeshDraw::CVKMeshDraw(CVKDevice* pDevice, CVKMeshDrawManager* pManager, uint3
 	, m_pMeshDraw(nullptr)
 	, m_pIndirectBuffer{ nullptr }
 	, m_pInstanceBuffer{ nullptr }
+
+	, m_pRenderCallback(nullptr)
 {
 	ASSERT(ptrMesh);
 	ASSERT(ptrMesh->GetDraw(nameDraw));
@@ -125,6 +127,18 @@ bool CVKMeshDraw::InstanceBufferData(size_t size, const void* data)
 	CALL_BOOL_FUNCTION_RETURN_BOOL(m_pInstanceBuffer[VKRenderer()->GetSwapChain()->GetFrameIndex()]->BufferData(size, data));
 	CALL_BOOL_FUNCTION_RETURN_BOOL(m_pIndirectBuffer[VKRenderer()->GetSwapChain()->GetFrameIndex()]->BufferData(0, m_pMeshDraw->baseVertex, m_pMeshDraw->firstIndex, m_pMeshDraw->indexCount, size / GetInstanceStride(m_pInstanceBuffer[VKRenderer()->GetSwapChain()->GetFrameIndex()]->GetInstanceFormat())));
 	return true;
+}
+
+void CVKMeshDraw::SetRenderCallback(RenderCallback callback)
+{
+	m_pRenderCallback = callback;
+}
+
+void CVKMeshDraw::OnRenderCallback(CGfxCommandBufferPtr ptrCommandBuffer) const
+{
+	if (m_pRenderCallback) {
+		m_pRenderCallback(ptrCommandBuffer);
+	}
 }
 
 void CVKMeshDraw::Bind(VkCommandBuffer vkCommandBuffer)
