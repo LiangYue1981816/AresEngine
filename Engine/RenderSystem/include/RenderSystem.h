@@ -24,17 +24,17 @@
 
 
 // Uniform Base
-#define DESCRIPTOR_BIND_ENGINE                             0
-#define DESCRIPTOR_BIND_CAMERA                             1
+#define UNIFORM_ENGINE_BIND                                0
+#define UNIFORM_CAMERA_BIND                                1
 
 #define UNIFORM_ENGINE_NAME                                HashValue("Engine")
 #define UNIFORM_CAMERA_NAME                                HashValue("Camera")
 
 // Uniform Forward/Deferred
-#define DESCRIPTOR_BIND_DEPTH_TEXTURE                      2
-#define DESCRIPTOR_BIND_COLOR_TEXTURE                      2
-#define DESCRIPTOR_BIND_ALBEDO_AO_TEXTURE                  3
-#define DESCRIPTOR_BIND_NORMAL_ROUGHNESS_METALLIC_TEXTURE  4
+#define UNIFORM_DEPTH_TEXTURE_BIND                         2
+#define UNIFORM_COLOR_TEXTURE_BIND                         2
+#define UNIFORM_ALBEDO_AO_TEXTURE_BIND                     3
+#define UNIFORM_NORMAL_ROUGHNESS_METALLIC_TEXTURE_BIND     4
 
 #define UNIFORM_DEPTH_TEXTURE_NAME                         HashValue("texDepth")
 #define UNIFORM_COLOR_TEXTURE_NAME                         HashValue("texColor")
@@ -42,8 +42,8 @@
 #define UNIFORM_NORMAL_ROUGHNESS_METALLIC_TEXTURE_NAME     HashValue("texNormalRoughnessMetallic")
 
 // Uniform PostProcessing
-#define DESCRIPTOR_BIND_SHADOW_TEXTURE                     5
-#define DESCRIPTOR_BIND_SSAO_TEXTURE                       6
+#define UNIFORM_SHADOW_TEXTURE_BIND                        5
+#define UNIFORM_SSAO_TEXTURE_BIND                          6
 
 #define UNIFORM_SHADOW_TEXTURE_NAME                        HashValue("texShadow")
 #define UNIFORM_SSAO_TEXTURE_NAME                          HashValue("texSSAO")
