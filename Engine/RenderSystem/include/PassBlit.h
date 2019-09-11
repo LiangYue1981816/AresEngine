@@ -14,7 +14,7 @@ protected:
 
 
 private:
-	virtual void RenderCallback(CGfxCommandBufferPtr ptrCommandBuffer);
+	virtual void RenderCallback(CGfxCommandBufferPtr ptrCommandBuffer) {}
 	static  void RenderCallback(CGfxCommandBufferPtr ptrCommandBuffer, void* param);
 
 

@@ -38,11 +38,6 @@ CPassBlit::~CPassBlit(void)
 	delete m_pRenderQueue;
 }
 
-void CPassBlit::RenderCallback(CGfxCommandBufferPtr ptrCommandBuffer)
-{
-
-}
-
 void CPassBlit::RenderCallback(CGfxCommandBufferPtr ptrCommandBuffer, void* param)
 {
 	if (CPassBlit* pPass = (CPassBlit*)param) {
