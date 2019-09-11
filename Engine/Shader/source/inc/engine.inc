@@ -3,54 +3,61 @@
 
 
 #ifdef VERTEX_ATTRIBUTE_POSITION
-layout (location = 0)                            in highp vec3 inPosition;
+layout (location = 0)                                      in highp vec3 inPosition;
 #endif
 #ifdef VERTEX_ATTRIBUTE_NORMAL
-layout (location = 1)                            in mediump vec3 inNormal;
+layout (location = 1)                                      in mediump vec3 inNormal;
 #endif
 #ifdef VERTEX_ATTRIBUTE_BINORMAL
-layout (location = 2)                            in mediump vec3 inBinormal;
+layout (location = 2)                                      in mediump vec3 inBinormal;
 #endif
 #ifdef VERTEX_ATTRIBUTE_COLOR
-layout (location = 3)                            in mediump vec3 inColor;
+layout (location = 3)                                      in mediump vec3 inColor;
 #endif
 #ifdef VERTEX_ATTRIBUTE_TEXCOORD0
-layout (location = 4)                            in mediump vec2 inTexcoord0;
+layout (location = 4)                                      in mediump vec2 inTexcoord0;
 #endif
 #ifdef VERTEX_ATTRIBUTE_TEXCOORD1
-layout (location = 5)                            in mediump vec2 inTexcoord1;
+layout (location = 5)                                      in mediump vec2 inTexcoord1;
 #endif
 #ifdef VERTEX_ATTRIBUTE_INDICES
-layout (location = 6)                            in mediump vec4 inIndices;
+layout (location = 6)                                      in mediump vec4 inIndices;
 #endif
 #ifdef VERTEX_ATTRIBUTE_WEIGHTS
-layout (location = 7)                            in mediump vec4 inWeights;
+layout (location = 7)                                      in mediump vec4 inWeights;
 #endif
 
 #ifdef INSTANCE_ATTRIBUTE_TRANSFORM
-layout (location = 8)                            in highp vec4 inInstanceTransformMatrixCol0;
-layout (location = 9)                            in highp vec4 inInstanceTransformMatrixCol1;
-layout (location = 10)                           in highp vec4 inInstanceTransformMatrixCol2;
-layout (location = 11)                           in highp vec4 inInstanceTransformMatrixCol3;
+layout (location = 8)                                      in highp vec4 inInstanceTransformMatrixCol0;
+layout (location = 9)                                      in highp vec4 inInstanceTransformMatrixCol1;
+layout (location = 10)                                     in highp vec4 inInstanceTransformMatrixCol2;
+layout (location = 11)                                     in highp vec4 inInstanceTransformMatrixCol3;
 #endif
 
 #ifdef INSTANCE_ATTRIBUTE_POINTLIGHT
-layout (location = 12)                           in mediump vec4 inInstancePointLightColor;
-layout (location = 13)                           in mediump vec4 inInstancePointLightAttenuation;
+layout (location = 12)                                     in mediump vec4 inInstancePointLightColor;
+layout (location = 13)                                     in mediump vec4 inInstancePointLightAttenuation;
 #endif
 
 
-#define DESCRIPTOR_SET_PASS(b)                   layout (set = 0, binding = b)
-#define DESCRIPTOR_SET_MATPASS(b)                layout (set = 1, binding = b)
-#define DESCRIPTOR_SET_MESHDRAW(b)               layout (set = 2, binding = b)
-#define DESCRIPTOR_SET_INPUTATTACHMENT(b)        layout (set = 3, binding = b)
+#define DESCRIPTOR_SET_PASS(b)                             layout (set = 0, binding = b)
+#define DESCRIPTOR_SET_MATPASS(b)                          layout (set = 1, binding = b)
+#define DESCRIPTOR_SET_MESHDRAW(b)                         layout (set = 2, binding = b)
+#define DESCRIPTOR_SET_INPUTATTACHMENT(b)                  layout (set = 3, binding = b)
 
-#define DESCRIPTOR_BIND_ENGINE                   0
-#define DESCRIPTOR_BIND_CAMERA                   1
-#define DESCRIPTOR_BIND_DEPTH_TEXTURE            2
-#define DESCRIPTOR_BIND_COLOR_TEXTURE            3
-#define DESCRIPTOR_BIND_SHADOW_TEXTURE           2
-#define DESCRIPTOR_BIND_SSAO_TEXTURE             3
+// Base
+#define DESCRIPTOR_BIND_ENGINE                             0
+#define DESCRIPTOR_BIND_CAMERA                             1
+
+// Forward/Deferred
+#define DESCRIPTOR_BIND_DEPTH_TEXTURE                      2
+#define DESCRIPTOR_BIND_COLOR_TEXTURE                      2
+#define DESCRIPTOR_BIND_ALBEDO_AO_TEXTURE                  3
+#define DESCRIPTOR_BIND_NORMAL_ROUGHNESS_METALLIC_TEXTURE  4
+
+// PostProcessing
+#define DESCRIPTOR_BIND_SHADOW_TEXTURE                     5
+#define DESCRIPTOR_BIND_SSAO_TEXTURE                       6
 
 
 #define USE_CAMERA_UNIFORM                                                         \
@@ -113,6 +120,12 @@ layout (location = 13)                           in mediump vec4 inInstancePoint
 
 #define USE_COLOR_TEXTURE_UNIFORM                                                  \
 	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_COLOR_TEXTURE) mediump uniform sampler2D texColor
+
+#define USE_ALBEDO_AO_TEXTURE_UNIFORM                                              \
+	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_ALBEDO_AO_TEXTURE) mediump uniform sampler2D texAlbedoAO
+
+#define USE_NORMAL_ROUGHNESS_METALLIC_TEXTURE_UNIFORM                              \
+	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_NORMAL_ROUGHNESS_METALLIC_TEXTURE) mediump uniform sampler2D texNormalRoughnessMetallic
 
 #define USE_SHADOW_TEXTURE_UNIFORM                                                 \
 	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_SHADOW_TEXTURE) highp uniform sampler2D texShadow
