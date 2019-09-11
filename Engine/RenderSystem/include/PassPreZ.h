@@ -1,5 +1,5 @@
 #pragma once
-#include "RenderSystem.h"
+#include "PreHeader.h"
 
 
 class CALL_API CPassPreZ
