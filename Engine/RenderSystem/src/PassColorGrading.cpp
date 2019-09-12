@@ -41,25 +41,37 @@ CPassColorGrading::~CPassColorGrading(void)
 
 void CPassColorGrading::SetCamera(CCamera* pCamera)
 {
-	if (m_pCamera != pCamera) {
-		m_pCamera  = pCamera;
-		m_ptrDescriptorSetPass->SetUniformBuffer(UNIFORM_CAMERA_NAME, m_pCamera->GetCameraUniform()->GetUniformBuffer(), 0, m_pCamera->GetCameraUniform()->GetUniformBuffer()->GetSize());
+	if (m_pCamera == pCamera) {
+		return;
 	}
+
+	m_ptrDescriptorSetPass->SetUniformBuffer(UNIFORM_CAMERA_NAME, pCamera->GetCameraUniform()->GetUniformBuffer(), 0, pCamera->GetCameraUniform()->GetUniformBuffer()->GetSize());
+	m_pCamera = pCamera;
 }
 
 void CPassColorGrading::SetInputTexture(CGfxRenderTexturePtr ptrColorTexture)
 {
+	if (m_ptrInputColorTexture == ptrColorTexture) {
+		return;
+	}
+
 	CGfxSampler* pSamplerPoint = GfxRenderer()->CreateSampler(GFX_FILTER_NEAREST, GFX_FILTER_NEAREST, GFX_SAMPLER_MIPMAP_MODE_NEAREST, GFX_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE);
 	m_ptrDescriptorSetPass->SetRenderTexture(UNIFORM_COLOR_TEXTURE_NAME, ptrColorTexture, pSamplerPoint);
+
+	m_ptrInputColorTexture = ptrColorTexture;
 }
 
 void CPassColorGrading::SetOutputTexture(CGfxRenderTexturePtr ptrColorTexture)
 {
-	m_ptrColorTexture = ptrColorTexture;
+	if (m_ptrOutputColorTexture == ptrColorTexture) {
+		return;
+	}
 
-	m_ptrFrameBuffer = GfxRenderer()->NewFrameBuffer(m_ptrColorTexture->GetWidth(), m_ptrColorTexture->GetHeight(), numAttachments);
-	m_ptrFrameBuffer->SetAttachmentTexture(0, m_ptrColorTexture);
+	m_ptrFrameBuffer = GfxRenderer()->NewFrameBuffer(ptrColorTexture->GetWidth(), ptrColorTexture->GetHeight(), numAttachments);
+	m_ptrFrameBuffer->SetAttachmentTexture(0, ptrColorTexture);
 	m_ptrFrameBuffer->Create(ptrRenderPass);
+
+	m_ptrOutputColorTexture = ptrColorTexture;
 }
 
 void CPassColorGrading::Render(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrMainCommandBuffer)
@@ -74,16 +86,16 @@ void CPassColorGrading::Render(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrMa
 	m_ptrDescriptorSetPass->Update();
 
 	// Render
-	GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, m_ptrColorTexture, GFX_IMAGE_LAYOUT_GENERAL);
+	GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, m_ptrOutputColorTexture, GFX_IMAGE_LAYOUT_GENERAL);
 	GfxRenderer()->CmdBeginRenderPass(ptrMainCommandBuffer, m_ptrFrameBuffer, ptrRenderPass);
 	{
-		const float w = m_ptrColorTexture->GetWidth();
-		const float h = m_ptrColorTexture->GetHeight();
+		const float w = m_ptrFrameBuffer->GetWidth();
+		const float h = m_ptrFrameBuffer->GetHeight();
 		const glm::vec4 scissor = glm::vec4(0.0, 0.0, w, h);
 		const glm::vec4 viewport = glm::vec4(0.0, 0.0, w, h);
 
 		m_pRenderQueue->CmdDraw(taskGraph, ptrMainCommandBuffer, m_ptrDescriptorSetPass, PASS_COLOR_GRADING_NAME, scissor, viewport, 0xffffffff);
 	}
 	GfxRenderer()->CmdEndRenderPass(ptrMainCommandBuffer);
-	GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, m_ptrColorTexture, GFX_IMAGE_LAYOUT_COLOR_READ_ONLY_OPTIMAL);
+	GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, m_ptrOutputColorTexture, GFX_IMAGE_LAYOUT_COLOR_READ_ONLY_OPTIMAL);
 }
