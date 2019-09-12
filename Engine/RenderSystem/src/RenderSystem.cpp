@@ -65,12 +65,12 @@ CRenderSystem::CRenderSystem(GfxApi api, void* hInstance, void* hWnd, void* hDC,
 	CreateRenderTexture(RENDER_TEXTURE_FRAMEBUFFER_SSAO, GFX_PIXELFORMAT_BGRA8_UNORM_PACK8, GfxRenderer()->GetSwapChain()->GetWidth(), GfxRenderer()->GetSwapChain()->GetHeight());
 	CreateRenderTexture(RENDER_TEXTURE_FRAMEBUFFER_FINAL, GFX_PIXELFORMAT_BGRA8_UNORM_PACK8, GfxRenderer()->GetSwapChain()->GetWidth(), GfxRenderer()->GetSwapChain()->GetHeight());
 
-	CreateRenderPass();
+	CreatePass();
 }
 
 CRenderSystem::~CRenderSystem(void)
 {
-	DestroyRenderPass();
+	DestroyPass();
 	DestroyRenderTexture();
 
 	m_ptrCommandBuffer[0].Release();
@@ -149,7 +149,7 @@ CPassFinal* CRenderSystem::GetPassFinal(void) const
 	return m_pPassFinal;
 }
 
-void CRenderSystem::CreateRenderPass(void)
+void CRenderSystem::CreatePass(void)
 {
 	CPassPreZ::Create(GFX_PIXELFORMAT_D32_SFLOAT_PACK32);
 	CPassSSAO::Create(GFX_PIXELFORMAT_BGRA8_UNORM_PACK8);
@@ -168,7 +168,7 @@ void CRenderSystem::CreateRenderPass(void)
 	m_pPassFinal = new CPassFinal(this);
 }
 
-void CRenderSystem::DestroyRenderPass(void)
+void CRenderSystem::DestroyPass(void)
 {
 	CPassPreZ::Destroy();
 	CPassSSAO::Destroy();

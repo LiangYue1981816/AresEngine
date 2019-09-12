@@ -95,8 +95,8 @@ private:
 	CGfxUniformEngine* GetEngineUniform(void) const;
 
 private:
-	void CreateRenderPass(void);
-	void DestroyRenderPass(void);
+	void CreatePass(void);
+	void DestroyPass(void);
 
 public:
 	void CreateRenderTexture(uint32_t name, CGfxRenderTexturePtr ptrRenderTexture);
