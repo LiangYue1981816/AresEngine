@@ -74,19 +74,16 @@ void CPassShadow::SetSplitFactors(float f1, float f2, float f3, float f4)
 
 void CPassShadow::SetOutputTexture(CGfxRenderTexturePtr ptrDepthTexture)
 {
-	m_ptrDepthTexture = ptrDepthTexture;
-
-	m_ptrFrameBuffer = GfxRenderer()->NewFrameBuffer(m_ptrDepthTexture->GetWidth(), m_ptrDepthTexture->GetHeight(), numAttachments);
-	m_ptrFrameBuffer->SetAttachmentTexture(0, m_ptrDepthTexture);
-	m_ptrFrameBuffer->Create(ptrRenderPass);
+	if (m_ptrOutputDepthTexture != ptrDepthTexture) {
+		m_ptrFrameBuffer = GfxRenderer()->NewFrameBuffer(ptrDepthTexture->GetWidth(), ptrDepthTexture->GetHeight(), numAttachments);
+		m_ptrFrameBuffer->SetAttachmentTexture(0, ptrDepthTexture);
+		m_ptrFrameBuffer->Create(ptrRenderPass);
+		m_ptrOutputDepthTexture = ptrDepthTexture;
+	}
 }
 
 void CPassShadow::Render(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrMainCommandBuffer)
 {
-	if (m_pCamera == nullptr || m_pRenderSystem == nullptr) {
-		return;
-	}
-
 	// Update
 	const glm::camera mainCamera = m_pCamera->GetCamera()->GetCamera();
 	const glm::vec4 mainLightDirection = m_pRenderSystem->GetEngineUniform()->GetParams().mainDirectLightDirection * glm::vec4(-1.0f, -1.0f, -1.0f, 0.0f);
@@ -138,11 +135,11 @@ void CPassShadow::Render(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrMainComm
 	m_pRenderSystem->GetEngineUniform()->Apply();
 
 	// Render
-	GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, m_ptrDepthTexture, GFX_IMAGE_LAYOUT_GENERAL);
+	GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, m_ptrOutputDepthTexture, GFX_IMAGE_LAYOUT_GENERAL);
 	GfxRenderer()->CmdBeginRenderPass(ptrMainCommandBuffer, m_ptrFrameBuffer, ptrRenderPass);
 	{
-		const float w = m_ptrDepthTexture->GetWidth();
-		const float h = m_ptrDepthTexture->GetHeight();
+		const float w = m_ptrFrameBuffer->GetWidth();
+		const float h = m_ptrFrameBuffer->GetHeight();
 
 		const glm::vec4 area[4] = {
 			glm::vec4(0.0f, 0.0f, 0.5f, 0.5f) * glm::vec4(w, h, w, h),
@@ -157,5 +154,5 @@ void CPassShadow::Render(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrMainComm
 		}
 	}
 	GfxRenderer()->CmdEndRenderPass(ptrMainCommandBuffer);
-	GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, m_ptrDepthTexture, GFX_IMAGE_LAYOUT_DEPTH_STENCIL_READ_ONLY_OPTIMAL);
+	GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, m_ptrOutputDepthTexture, GFX_IMAGE_LAYOUT_DEPTH_STENCIL_READ_ONLY_OPTIMAL);
 }

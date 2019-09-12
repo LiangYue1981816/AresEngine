@@ -69,10 +69,6 @@ void CPassFinal::SetOutputTexture(int indexFrame, CGfxRenderTexturePtr ptrColorT
 
 void CPassFinal::Render(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrMainCommandBuffer, int indexFrame, bool bPresent)
 {
-	if (m_pCamera == nullptr || m_pRenderSystem == nullptr) {
-		return;
-	}
-
 	// Update
 	m_pCamera->GetCameraUniform()->Apply();
 	m_pRenderSystem->GetEngineUniform()->Apply();

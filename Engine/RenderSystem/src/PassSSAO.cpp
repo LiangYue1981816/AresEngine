@@ -42,50 +42,51 @@ CPassSSAO::~CPassSSAO(void)
 void CPassSSAO::SetCamera(CCamera* pCamera)
 {
 	if (m_pCamera != pCamera) {
-		m_pCamera  = pCamera;
-		m_ptrDescriptorSetPass->SetUniformBuffer(UNIFORM_CAMERA_NAME, m_pCamera->GetCameraUniform()->GetUniformBuffer(), 0, m_pCamera->GetCameraUniform()->GetUniformBuffer()->GetSize());
+		m_ptrDescriptorSetPass->SetUniformBuffer(UNIFORM_CAMERA_NAME, pCamera->GetCameraUniform()->GetUniformBuffer(), 0, pCamera->GetCameraUniform()->GetUniformBuffer()->GetSize());
+		m_pCamera = pCamera;
 	}
 }
 
 void CPassSSAO::SetInputTexture(CGfxRenderTexturePtr ptrDepthTexture)
 {
 	CGfxSampler* pSamplerPoint = GfxRenderer()->CreateSampler(GFX_FILTER_NEAREST, GFX_FILTER_NEAREST, GFX_SAMPLER_MIPMAP_MODE_NEAREST, GFX_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE);
-	m_ptrDescriptorSetPass->SetRenderTexture(UNIFORM_DEPTH_TEXTURE_NAME, ptrDepthTexture, pSamplerPoint);
+
+	if (m_ptrInputDepthTexture != ptrDepthTexture) {
+		m_ptrDescriptorSetPass->SetRenderTexture(UNIFORM_DEPTH_TEXTURE_NAME, ptrDepthTexture, pSamplerPoint);
+		m_ptrInputDepthTexture = ptrDepthTexture;
+	}
 }
 
 void CPassSSAO::SetOutputTexture(CGfxRenderTexturePtr ptrColorTexture)
 {
-	m_ptrColorTexture = ptrColorTexture;
-
-	m_ptrFrameBuffer = GfxRenderer()->NewFrameBuffer(m_ptrColorTexture->GetWidth(), m_ptrColorTexture->GetHeight(), numAttachments);
-	m_ptrFrameBuffer->SetAttachmentTexture(0, m_ptrColorTexture);
-	m_ptrFrameBuffer->Create(ptrRenderPass);
+	if (m_ptrOutputColorTexture != ptrColorTexture) {
+		m_ptrFrameBuffer = GfxRenderer()->NewFrameBuffer(ptrColorTexture->GetWidth(), ptrColorTexture->GetHeight(), numAttachments);
+		m_ptrFrameBuffer->SetAttachmentTexture(0, ptrColorTexture);
+		m_ptrFrameBuffer->Create(ptrRenderPass);
+		m_ptrOutputColorTexture = ptrColorTexture;
+	}
 }
 
 void CPassSSAO::Render(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer)
 {
-	if (m_pCamera == nullptr || m_pRenderSystem == nullptr) {
-		return;
-	}
-
 	// Update
 	m_pCamera->GetCameraUniform()->Apply();
 	m_pRenderSystem->GetEngineUniform()->Apply();
 	m_ptrDescriptorSetPass->Update();
 
 	// Render
-	GfxRenderer()->CmdSetImageLayout(ptrCommandBuffer, m_ptrColorTexture, GFX_IMAGE_LAYOUT_GENERAL);
+	GfxRenderer()->CmdSetImageLayout(ptrCommandBuffer, m_ptrOutputColorTexture, GFX_IMAGE_LAYOUT_GENERAL);
 	GfxRenderer()->CmdBeginRenderPass(ptrCommandBuffer, m_ptrFrameBuffer, ptrRenderPass);
 	{
-		const float w = m_ptrColorTexture->GetWidth();
-		const float h = m_ptrColorTexture->GetHeight();
+		const float w = m_ptrFrameBuffer->GetWidth();
+		const float h = m_ptrFrameBuffer->GetHeight();
 		const glm::vec4 scissor = glm::vec4(0.0, 0.0, w, h);
 		const glm::vec4 viewport = glm::vec4(0.0, 0.0, w, h);
 
 		m_pRenderQueue->CmdDraw(taskGraph, ptrCommandBuffer, m_ptrDescriptorSetPass, PASS_SSAO_NAME, scissor, viewport, 0xffffffff);
 	}
 	GfxRenderer()->CmdEndRenderPass(ptrCommandBuffer);
-	GfxRenderer()->CmdSetImageLayout(ptrCommandBuffer, m_ptrColorTexture, GFX_IMAGE_LAYOUT_COLOR_READ_ONLY_OPTIMAL);
+	GfxRenderer()->CmdSetImageLayout(ptrCommandBuffer, m_ptrOutputColorTexture, GFX_IMAGE_LAYOUT_COLOR_READ_ONLY_OPTIMAL);
 }
 
 void CPassSSAO::RenderCallback(CGfxCommandBufferPtr ptrCommandBuffer)

@@ -69,10 +69,6 @@ void CPassColorGrading::SetOutputTexture(CGfxRenderTexturePtr ptrColorTexture)
 
 void CPassColorGrading::Render(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrMainCommandBuffer)
 {
-	if (m_pCamera == nullptr || m_pRenderSystem == nullptr) {
-		return;
-	}
-
 	// Update
 	m_pCamera->GetCameraUniform()->Apply();
 	m_pRenderSystem->GetEngineUniform()->Apply();

@@ -27,11 +27,11 @@ private:
 
 
 private:
-	CGfxFrameBufferPtr m_ptrFrameBuffer;
-	CGfxRenderTexturePtr m_ptrDepthTexture;
+	CGfxDescriptorSetPtr m_ptrDescriptorSetPass;
 
 private:
-	CGfxDescriptorSetPtr m_ptrDescriptorSetPass;
+	CGfxFrameBufferPtr m_ptrFrameBuffer;
+	CGfxRenderTexturePtr m_ptrOutputDepthTexture;
 
 private:
 	CCamera* m_pCamera;

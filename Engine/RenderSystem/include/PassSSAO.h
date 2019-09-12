@@ -29,9 +29,10 @@ private:
 
 
 private:
-	CGfxFrameBufferPtr m_ptrFrameBuffer;
-	CGfxRenderTexturePtr m_ptrColorTexture;
+	CGfxDescriptorSetPtr m_ptrDescriptorSetPass;
+	CGfxRenderTexturePtr m_ptrInputDepthTexture;
 
 private:
-	CGfxDescriptorSetPtr m_ptrDescriptorSetPass;
+	CGfxFrameBufferPtr m_ptrFrameBuffer;
+	CGfxRenderTexturePtr m_ptrOutputColorTexture;
 };

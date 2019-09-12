@@ -33,12 +33,12 @@ private:
 	CGfxRenderQueue* m_pShadowRenderQueue[4];
 
 private:
-	CGfxFrameBufferPtr m_ptrFrameBuffer;
-	CGfxRenderTexturePtr m_ptrDepthTexture;
-
-private:
 	CGfxUniformCamera* m_pShadowCameraUniform[4];
 	CGfxDescriptorSetPtr m_ptrDescriptorSetPass[4];
+
+private:
+	CGfxFrameBufferPtr m_ptrFrameBuffer;
+	CGfxRenderTexturePtr m_ptrOutputDepthTexture;
 
 private:
 	CCamera* m_pCamera;
