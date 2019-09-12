@@ -64,9 +64,9 @@
 
 
 // RenderTexture
-#define RENDER_TEXTURE_SWAPCHAIN_COLOR0                    HashValue("RenderTextureSwapChainColor0")
-#define RENDER_TEXTURE_SWAPCHAIN_COLOR1                    HashValue("RenderTextureSwapChainColor1")
-#define RENDER_TEXTURE_SWAPCHAIN_COLOR2                    HashValue("RenderTextureSwapChainColor2")
+#define RENDER_TEXTURE_SWAPCHAIN_COLOR0                    0
+#define RENDER_TEXTURE_SWAPCHAIN_COLOR1                    1
+#define RENDER_TEXTURE_SWAPCHAIN_COLOR2                    2
 #define RENDER_TEXTURE_SHADOW                              HashValue("RenderTextureShadow")
 #define RENDER_TEXTURE_FRAMEBUFFER_DEPTH                   HashValue("RenderTextureFrameBufferDepth")
 #define RENDER_TEXTURE_FRAMEBUFFER_COLOR                   HashValue("RenderTextureFrameBufferColor")
