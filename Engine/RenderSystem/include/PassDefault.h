@@ -27,12 +27,12 @@ private:
 
 
 private:
-	CGfxFrameBufferPtr m_ptrFrameBuffer;
-	CGfxRenderTexturePtr m_ptrColorTexture;
-	CGfxRenderTexturePtr m_ptrDepthStencilTexture;
+	CGfxDescriptorSetPtr m_ptrDescriptorSetPass;
 
 private:
-	CGfxDescriptorSetPtr m_ptrDescriptorSetPass;
+	CGfxFrameBufferPtr m_ptrFrameBuffer;
+	CGfxRenderTexturePtr m_ptrOutputColorTexture;
+	CGfxRenderTexturePtr m_ptrOutputDepthStencilTexture;
 
 private:
 	CCamera* m_pCamera;
