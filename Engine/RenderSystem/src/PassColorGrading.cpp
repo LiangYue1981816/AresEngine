@@ -41,37 +41,30 @@ CPassColorGrading::~CPassColorGrading(void)
 
 void CPassColorGrading::SetCamera(CCamera* pCamera)
 {
-	if (m_pCamera == pCamera) {
-		return;
+	if (m_pCamera != pCamera) {
+		m_ptrDescriptorSetPass->SetUniformBuffer(UNIFORM_CAMERA_NAME, pCamera->GetCameraUniform()->GetUniformBuffer(), 0, pCamera->GetCameraUniform()->GetUniformBuffer()->GetSize());
+		m_pCamera = pCamera;
 	}
-
-	m_ptrDescriptorSetPass->SetUniformBuffer(UNIFORM_CAMERA_NAME, pCamera->GetCameraUniform()->GetUniformBuffer(), 0, pCamera->GetCameraUniform()->GetUniformBuffer()->GetSize());
-	m_pCamera = pCamera;
 }
 
 void CPassColorGrading::SetInputTexture(CGfxRenderTexturePtr ptrColorTexture)
 {
-	if (m_ptrInputColorTexture == ptrColorTexture) {
-		return;
-	}
-
 	CGfxSampler* pSamplerPoint = GfxRenderer()->CreateSampler(GFX_FILTER_NEAREST, GFX_FILTER_NEAREST, GFX_SAMPLER_MIPMAP_MODE_NEAREST, GFX_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE);
-	m_ptrDescriptorSetPass->SetRenderTexture(UNIFORM_COLOR_TEXTURE_NAME, ptrColorTexture, pSamplerPoint);
 
-	m_ptrInputColorTexture = ptrColorTexture;
+	if (m_ptrInputColorTexture != ptrColorTexture) {
+		m_ptrDescriptorSetPass->SetRenderTexture(UNIFORM_COLOR_TEXTURE_NAME, ptrColorTexture, pSamplerPoint);
+		m_ptrInputColorTexture = ptrColorTexture;
+	}
 }
 
 void CPassColorGrading::SetOutputTexture(CGfxRenderTexturePtr ptrColorTexture)
 {
-	if (m_ptrOutputColorTexture == ptrColorTexture) {
-		return;
+	if (m_ptrOutputColorTexture != ptrColorTexture) {
+		m_ptrFrameBuffer = GfxRenderer()->NewFrameBuffer(ptrColorTexture->GetWidth(), ptrColorTexture->GetHeight(), numAttachments);
+		m_ptrFrameBuffer->SetAttachmentTexture(0, ptrColorTexture);
+		m_ptrFrameBuffer->Create(ptrRenderPass);
+		m_ptrOutputColorTexture = ptrColorTexture;
 	}
-
-	m_ptrFrameBuffer = GfxRenderer()->NewFrameBuffer(ptrColorTexture->GetWidth(), ptrColorTexture->GetHeight(), numAttachments);
-	m_ptrFrameBuffer->SetAttachmentTexture(0, ptrColorTexture);
-	m_ptrFrameBuffer->Create(ptrRenderPass);
-
-	m_ptrOutputColorTexture = ptrColorTexture;
 }
 
 void CPassColorGrading::Render(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrMainCommandBuffer)

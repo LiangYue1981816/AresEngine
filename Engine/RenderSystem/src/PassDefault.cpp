@@ -45,27 +45,22 @@ CPassDefault::~CPassDefault(void)
 
 void CPassDefault::SetCamera(CCamera* pCamera)
 {
-	if (m_pCamera == pCamera) {
-		return;
+	if (m_pCamera != pCamera) {
+		m_ptrDescriptorSetPass->SetUniformBuffer(UNIFORM_CAMERA_NAME, pCamera->GetCameraUniform()->GetUniformBuffer(), 0, pCamera->GetCameraUniform()->GetUniformBuffer()->GetSize());
+		m_pCamera = pCamera;
 	}
-
-	m_ptrDescriptorSetPass->SetUniformBuffer(UNIFORM_CAMERA_NAME, pCamera->GetCameraUniform()->GetUniformBuffer(), 0, pCamera->GetCameraUniform()->GetUniformBuffer()->GetSize());
-	m_pCamera = pCamera;
 }
 
 void CPassDefault::SetOutputTexture(CGfxRenderTexturePtr ptrColorTexture, CGfxRenderTexturePtr ptrDepthStencilTexture)
 {
-	if (m_ptrOutputColorTexture == ptrColorTexture && m_ptrOutputDepthStencilTexture == ptrDepthStencilTexture) {
-		return;
+	if (m_ptrOutputColorTexture != ptrColorTexture || m_ptrOutputDepthStencilTexture != ptrDepthStencilTexture) {
+		m_ptrFrameBuffer = GfxRenderer()->NewFrameBuffer(ptrColorTexture->GetWidth(), ptrColorTexture->GetHeight(), numAttachments);
+		m_ptrFrameBuffer->SetAttachmentTexture(0, ptrColorTexture);
+		m_ptrFrameBuffer->SetAttachmentTexture(1, ptrDepthStencilTexture);
+		m_ptrFrameBuffer->Create(ptrRenderPass);
+		m_ptrOutputColorTexture = ptrColorTexture;
+		m_ptrOutputDepthStencilTexture = ptrDepthStencilTexture;
 	}
-	
-	m_ptrFrameBuffer = GfxRenderer()->NewFrameBuffer(ptrColorTexture->GetWidth(), ptrColorTexture->GetHeight(), numAttachments);
-	m_ptrFrameBuffer->SetAttachmentTexture(0, ptrColorTexture);
-	m_ptrFrameBuffer->SetAttachmentTexture(1, ptrDepthStencilTexture);
-	m_ptrFrameBuffer->Create(ptrRenderPass);
-
-	m_ptrOutputColorTexture = ptrColorTexture;
-	m_ptrOutputDepthStencilTexture = ptrDepthStencilTexture;
 }
 
 void CPassDefault::Render(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrMainCommandBuffer)
