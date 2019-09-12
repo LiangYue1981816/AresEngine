@@ -308,11 +308,13 @@ void CRenderSystem::RenderDefault(CTaskGraph& taskGraph, CCamera* pCamera, bool 
 
 	GfxRenderer()->AcquireNextFrame();
 	{
+		m_pPassPreZ->SetCamera(pCamera);
 		m_pPassDefault->SetCamera(pCamera);
 
 		ptrCommandBuffer->Clearup();
 		GfxRenderer()->BeginRecord(ptrCommandBuffer);
 		{
+			m_pPassPreZ->Render(taskGraph, ptrCommandBuffer);
 			m_pPassDefault->Render(taskGraph, ptrCommandBuffer);
 			m_pPassFinal->Render(taskGraph, ptrCommandBuffer, GfxRenderer()->GetSwapChain()->GetFrameIndex(), bPresent);
 		}
