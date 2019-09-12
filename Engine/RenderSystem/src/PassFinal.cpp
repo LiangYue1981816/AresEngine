@@ -42,24 +42,29 @@ CPassFinal::~CPassFinal(void)
 void CPassFinal::SetCamera(CCamera* pCamera)
 {
 	if (m_pCamera != pCamera) {
-		m_pCamera  = pCamera;
-		m_ptrDescriptorSetPass->SetUniformBuffer(UNIFORM_CAMERA_NAME, m_pCamera->GetCameraUniform()->GetUniformBuffer(), 0, m_pCamera->GetCameraUniform()->GetUniformBuffer()->GetSize());
+		m_ptrDescriptorSetPass->SetUniformBuffer(UNIFORM_CAMERA_NAME, pCamera->GetCameraUniform()->GetUniformBuffer(), 0, pCamera->GetCameraUniform()->GetUniformBuffer()->GetSize());
+		m_pCamera = pCamera;
 	}
 }
 
 void CPassFinal::SetInputTexture(CGfxRenderTexturePtr ptrColorTexture)
 {
 	CGfxSampler* pSamplerPoint = GfxRenderer()->CreateSampler(GFX_FILTER_NEAREST, GFX_FILTER_NEAREST, GFX_SAMPLER_MIPMAP_MODE_NEAREST, GFX_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE);
-	m_ptrDescriptorSetPass->SetRenderTexture(UNIFORM_COLOR_TEXTURE_NAME, ptrColorTexture, pSamplerPoint);
+
+	if (m_ptrInputColorTexture != ptrColorTexture) {
+		m_ptrDescriptorSetPass->SetRenderTexture(UNIFORM_COLOR_TEXTURE_NAME, ptrColorTexture, pSamplerPoint);
+		m_ptrInputColorTexture = ptrColorTexture;
+	}
 }
 
 void CPassFinal::SetOutputTexture(int indexFrame, CGfxRenderTexturePtr ptrColorTexture)
 {
-	m_ptrColorTexture[indexFrame] = ptrColorTexture;
-
-	m_ptrFrameBuffer[indexFrame] = GfxRenderer()->NewFrameBuffer(m_ptrColorTexture[indexFrame]->GetWidth(), m_ptrColorTexture[indexFrame]->GetHeight(), numAttachments);
-	m_ptrFrameBuffer[indexFrame]->SetAttachmentTexture(0, m_ptrColorTexture[indexFrame]);
-	m_ptrFrameBuffer[indexFrame]->Create(ptrRenderPass);
+	if (m_ptrOutputColorTexture[indexFrame] != ptrColorTexture) {
+		m_ptrFrameBuffer[indexFrame] = GfxRenderer()->NewFrameBuffer(ptrColorTexture->GetWidth(), ptrColorTexture->GetHeight(), numAttachments);
+		m_ptrFrameBuffer[indexFrame]->SetAttachmentTexture(0, ptrColorTexture);
+		m_ptrFrameBuffer[indexFrame]->Create(ptrRenderPass);
+		m_ptrOutputColorTexture[indexFrame] = ptrColorTexture;
+	}
 }
 
 void CPassFinal::Render(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrMainCommandBuffer, int indexFrame, bool bPresent)
@@ -75,13 +80,13 @@ void CPassFinal::Render(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrMainComma
 
 	// Render
 	const CGfxFrameBufferPtr ptrFrameBuffer = m_ptrFrameBuffer[indexFrame];
-	const CGfxRenderTexturePtr ptrColorTexture = m_ptrColorTexture[indexFrame];
+	const CGfxRenderTexturePtr ptrColorTexture = m_ptrOutputColorTexture[indexFrame];
 
 	GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, ptrColorTexture, GFX_IMAGE_LAYOUT_GENERAL);
 	GfxRenderer()->CmdBeginRenderPass(ptrMainCommandBuffer, ptrFrameBuffer, ptrRenderPass);
 	{
-		const float w = ptrColorTexture->GetWidth();
-		const float h = ptrColorTexture->GetHeight();
+		const float w = ptrFrameBuffer->GetWidth();
+		const float h = ptrFrameBuffer->GetHeight();
 		const glm::vec4 scissor = glm::vec4(0.0, 0.0, w, h);
 		const glm::vec4 viewport = glm::vec4(0.0, 0.0, w, h);
 

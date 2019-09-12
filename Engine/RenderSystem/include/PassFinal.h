@@ -28,9 +28,10 @@ private:
 
 
 private:
-	CGfxFrameBufferPtr m_ptrFrameBuffer[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
-	CGfxRenderTexturePtr m_ptrColorTexture[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
+	CGfxDescriptorSetPtr m_ptrDescriptorSetPass;
+	CGfxRenderTexturePtr m_ptrInputColorTexture;
 
 private:
-	CGfxDescriptorSetPtr m_ptrDescriptorSetPass;
+	CGfxFrameBufferPtr m_ptrFrameBuffer[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
+	CGfxRenderTexturePtr m_ptrOutputColorTexture[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
 };
