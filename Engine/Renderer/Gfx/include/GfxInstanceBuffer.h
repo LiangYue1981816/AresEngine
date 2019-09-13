@@ -1,5 +1,5 @@
 #pragma once
-#include "GfxRenderer.h"
+#include "PreHeader.h"
 
 
 class CALL_API CGfxInstanceBuffer
