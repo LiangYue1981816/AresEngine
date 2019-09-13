@@ -1,6 +1,13 @@
 #pragma once
 #include "PreHeader.h"
 
+#include "ComponentManager.h"
+#include "Component.h"
+#include "ComponentMesh.h"
+#include "ComponentSkin.h"
+#include "ComponentParticle.h"
+#include "ComponentPointLight.h"
+
 #include "SceneDefinition.h"
 #include "Scene.h"
 #include "SceneNode.h"

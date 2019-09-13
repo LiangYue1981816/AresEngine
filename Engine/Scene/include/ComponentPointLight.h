@@ -1,6 +1,5 @@
 #pragma once
 #include "PreHeader.h"
-#include "Component.h"
 
 
 class CALL_API CComponentPointLight : public CComponent
