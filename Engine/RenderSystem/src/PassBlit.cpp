@@ -1,4 +1,4 @@
-#include "EngineHeader.h"
+#include "RenderHeader.h"
 
 
 CPassBlit::CPassBlit(const char* szMaterialFileName, CRenderSystem* pRenderSystem)

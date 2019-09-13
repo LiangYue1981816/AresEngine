@@ -1,4 +1,5 @@
 #include "EngineHeader.h"
+#include "RenderHeader.h"
 
 
 static const int numSubpasses = 1;
@@ -149,8 +150,8 @@ void CPassShadow::Render(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrMainComm
 		};
 
 		for (int indexLevel = 0; indexLevel < 4; indexLevel++) {
-//			m_pCamera->GetRenderQueue()->CmdDraw(taskGraph, ptrMainCommandBuffer, m_ptrDescriptorSetPass[indexLevel], PASS_SHADOW_NAME, area[indexLevel], area[indexLevel], 0xffffffff);
-			m_pShadowRenderQueue[indexLevel]->CmdDraw(taskGraph, ptrMainCommandBuffer, m_ptrDescriptorSetPass[indexLevel], PASS_SHADOW_NAME, area[indexLevel], area[indexLevel], 0xffffffff);
+//			m_pCamera->GetRenderQueue()->CmdDraw(&taskGraph, ptrMainCommandBuffer, m_ptrDescriptorSetPass[indexLevel], PASS_SHADOW_NAME, area[indexLevel], area[indexLevel], 0xffffffff);
+			m_pShadowRenderQueue[indexLevel]->CmdDraw(&taskGraph, ptrMainCommandBuffer, m_ptrDescriptorSetPass[indexLevel], PASS_SHADOW_NAME, area[indexLevel], area[indexLevel], 0xffffffff);
 		}
 	}
 	GfxRenderer()->CmdEndRenderPass(ptrMainCommandBuffer);

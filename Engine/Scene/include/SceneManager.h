@@ -1,6 +1,7 @@
 #pragma once
 #include "PreHeader.h"
 
+#include "SceneDefinition.h"
 #include "Scene.h"
 #include "SceneNode.h"
 

@@ -1,4 +1,5 @@
 #include "EngineHeader.h"
+#include "RenderHeader.h"
 
 
 CCamera::CCamera(void)
