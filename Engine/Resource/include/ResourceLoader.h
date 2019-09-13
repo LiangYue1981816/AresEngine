@@ -1,11 +1,11 @@
 #pragma once
-#include "GfxHeader.h"
-#include "SceneHeader.h"
+#include "PreHeader.h"
 
 
 #define ResourceLoader() CResourceLoader::GetInstance()
 
 
+class CALL_API CSceneNode;
 class CALL_API CResourceLoader
 {
 	friend class CEngine;

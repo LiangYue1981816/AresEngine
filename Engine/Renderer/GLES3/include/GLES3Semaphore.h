@@ -1,5 +1,5 @@
 #pragma once
-#include "GfxRenderer.h"
+#include "GLES3Renderer.h"
 
 
 class CGLES3Semaphore : public CGfxSemaphore

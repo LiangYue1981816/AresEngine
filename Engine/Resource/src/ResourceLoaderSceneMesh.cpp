@@ -1,9 +1,6 @@
+#include "GfxHeader.h"
+#include "SceneHeader.h"
 #include "ResourceLoader.h"
-
-#include "tinyxml.h"
-#include "tinystr.h"
-#include "Stream.h"
-#include "FileManager.h"
 
 
 static bool InternalLoadDraw(TiXmlNode* pNode, const CGfxMeshPtr ptrMesh, CSceneNode* pCurrentSceneNode, uint32_t instanceFormat, int vertexBinding, int instanceBinding, int baseLevel, int numLevels)

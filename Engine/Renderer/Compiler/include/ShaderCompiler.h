@@ -1,10 +1,6 @@
 #pragma once
 #include "PreHeader.h"
 
-#include <map>
-#include <vector>
-#include <string>
-
 #ifdef PLATFORM_WINDOWS
 
 #include <shaderc/shaderc.hpp>

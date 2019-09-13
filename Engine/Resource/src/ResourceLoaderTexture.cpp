@@ -1,7 +1,6 @@
+#include "GfxHeader.h"
+#include "SceneHeader.h"
 #include "ResourceLoader.h"
-
-#include "Stream.h"
-#include "FileManager.h"
 
 #include "ThirdParty/gli/gli.hpp"
 

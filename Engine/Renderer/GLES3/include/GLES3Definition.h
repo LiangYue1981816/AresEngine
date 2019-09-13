@@ -19,6 +19,8 @@ class CGLES3Semaphore;
 class CGLES3SwapChain;
 class CGLES3RenderPass;
 class CGLES3RenderPassManager;
+class CGLES3RenderTexture;
+class CGLES3RenderTextureManager;
 class CGLES3FrameBuffer;
 class CGLES3FrameBufferManager;
 
@@ -49,8 +51,6 @@ class CGLES3Texture2DArray;
 class CGLES3Texture2DArrayManager;
 class CGLES3TextureCubemap;
 class CGLES3TextureCubemapManager;
-class CGLES3RenderTexture;
-class CGLES3RenderTextureManager;
 
 class CGLES3Mesh;
 class CGLES3MeshManager;

@@ -11,6 +11,8 @@
 #include "GLES3SwapChain.h"
 #include "GLES3RenderPass.h"
 #include "GLES3RenderPassManager.h"
+#include "GLES3RenderTexture.h"
+#include "GLES3RenderTextureManager.h"
 #include "GLES3FrameBuffer.h"
 #include "GLES3FrameBufferManager.h"
 
@@ -38,8 +40,6 @@
 #include "GLES3Texture2DArray.h"
 #include "GLES3TextureCubemap.h"
 #include "GLES3TextureManager.h"
-#include "GLES3RenderTexture.h"
-#include "GLES3RenderTextureManager.h"
 
 #include "GLES3Mesh.h"
 #include "GLES3MeshManager.h"

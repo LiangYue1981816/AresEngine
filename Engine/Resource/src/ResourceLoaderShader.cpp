@@ -1,3 +1,5 @@
+#include "GfxHeader.h"
+#include "SceneHeader.h"
 #include "ResourceLoader.h"
 
 

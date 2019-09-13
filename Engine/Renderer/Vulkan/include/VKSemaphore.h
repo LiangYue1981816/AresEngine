@@ -1,5 +1,5 @@
 #pragma once
-#include "GfxRenderer.h"
+#include "VKRenderer.h"
 
 
 class CVKSemaphore : public CGfxSemaphore

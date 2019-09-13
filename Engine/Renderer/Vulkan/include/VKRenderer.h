@@ -21,6 +21,8 @@
 #include "VKSwapChain.h"
 #include "VKRenderPass.h"
 #include "VKRenderPassManager.h"
+#include "VKRenderTexture.h"
+#include "VKRenderTextureManager.h"
 #include "VKFrameBuffer.h"
 #include "VKFrameBufferManager.h"
 
@@ -51,8 +53,6 @@
 #include "VKTexture2DArray.h"
 #include "VKTextureCubemap.h"
 #include "VKTextureManager.h"
-#include "VKRenderTexture.h"
-#include "VKRenderTextureManager.h"
 
 #include "VKMesh.h"
 #include "VKMeshManager.h"

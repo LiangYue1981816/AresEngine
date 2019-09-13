@@ -52,5 +52,7 @@
 #include "event.h"
 #include "pthread.h"
 #include "pthreadex.h"
+#include "tinyxml.h"
+#include "tinystr.h"
 #include "zzip/zzip.h"
 #include "rttr/registration"
