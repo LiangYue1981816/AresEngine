@@ -26,6 +26,7 @@
 
 #include "GfxSwapChain.h"
 #include "GfxRenderPass.h"
+#include "GfxRenderTexture.h"
 #include "GfxFrameBuffer.h"
 
 #include "GfxShader.h"
@@ -41,7 +42,6 @@
 #include "GfxTexture2D.h"
 #include "GfxTexture2DArray.h"
 #include "GfxTextureCubemap.h"
-#include "GfxRenderTexture.h"
 
 #include "GfxUniformVec1.h"
 #include "GfxUniformVec2.h"
