@@ -48,4 +48,9 @@
 
 
 #include "Define.h"
+
+#include "event.h"
+#include "pthread.h"
+#include "pthreadex.h"
+#include "zzip/zzip.h"
 #include "rttr/registration"
