@@ -3,6 +3,8 @@
 #include "Stream.h"
 #include "FileManager.h"
 
+#include "ThirdParty/gli/gli.hpp"
+
 
 static bool InternalLoadTexture2D(CGfxTexture2D* pTexture2D, const gli::texture* texture, int baseLevel, int numLevels)
 {
