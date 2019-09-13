@@ -1,5 +1,9 @@
 #include "GfxHeader.h"
 
+#include "ThirdParty/spirv-cross/spirv_cfg.hpp"
+#include "ThirdParty/spirv-cross/spirv_msl.hpp"
+#include "ThirdParty/spirv-cross/spirv_glsl.hpp"
+
 
 CGfxSprivCross::CGfxSprivCross(void)
 {

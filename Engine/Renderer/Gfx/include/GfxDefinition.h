@@ -16,6 +16,7 @@ class CALL_API CGfxSemaphore;
 
 class CALL_API CGfxSwapChain;
 class CALL_API CGfxRenderPass;
+class CALL_API CGfxRenderTexture;
 class CALL_API CGfxFrameBuffer;
 
 class CALL_API CGfxShader;
@@ -31,7 +32,6 @@ class CALL_API CGfxSampler;
 class CALL_API CGfxTexture2D;
 class CALL_API CGfxTexture2DArray;
 class CALL_API CGfxTextureCubemap;
-class CALL_API CGfxRenderTexture;
 
 class CALL_API CGfxUniformVec1;
 class CALL_API CGfxUniformVec2;
@@ -57,12 +57,12 @@ template<class T>
 class CALL_API CGfxResourcePtr;
 
 typedef CGfxResourcePtr<CGfxRenderPass> CGfxRenderPassPtr;
+typedef CGfxResourcePtr<CGfxRenderTexture> CGfxRenderTexturePtr;
 typedef CGfxResourcePtr<CGfxFrameBuffer> CGfxFrameBufferPtr;
 
 typedef CGfxResourcePtr<CGfxTexture2D> CGfxTexture2DPtr;
 typedef CGfxResourcePtr<CGfxTexture2DArray> CGfxTexture2DArrayPtr;
 typedef CGfxResourcePtr<CGfxTextureCubemap> CGfxTextureCubemapPtr;
-typedef CGfxResourcePtr<CGfxRenderTexture> CGfxRenderTexturePtr;
 typedef CGfxResourcePtr<CGfxUniformBuffer> CGfxUniformBufferPtr;
 
 typedef CGfxResourcePtr<CGfxMesh> CGfxMeshPtr;
