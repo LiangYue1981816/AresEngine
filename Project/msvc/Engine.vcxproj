@@ -188,8 +188,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Engine\BaseHeader.h" />
     <ClInclude Include="..\..\Engine\Base\include\Delegate.h" />
-    <ClInclude Include="..\..\Engine\Base\include\File.h" />
     <ClInclude Include="..\..\Engine\Base\include\FileManager.h" />
     <ClInclude Include="..\..\Engine\Base\include\Lock.h" />
     <ClInclude Include="..\..\Engine\Base\include\SharedPtr.h" />
@@ -428,6 +428,7 @@
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\src\Command\VKCommandUniformMatrix3fv.h" />
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\src\Command\VKCommandUniformMatrix4fv.h" />
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\src\Command\VKCommandUpdateInstanceBuffer.h" />
+    <ClInclude Include="..\..\Engine\RenderHeader.h" />
     <ClInclude Include="..\..\Engine\RenderSystem\include\Camera.h" />
     <ClInclude Include="..\..\Engine\RenderSystem\include\PassBlit.h" />
     <ClInclude Include="..\..\Engine\RenderSystem\include\PassColorGrading.h" />
@@ -642,7 +643,6 @@
     <ClInclude Include="..\..\Engine\ThirdParty\zzip\__mmap.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\Engine\Base\src\File.cpp" />
     <ClCompile Include="..\..\Engine\Base\src\FileManager.cpp" />
     <ClCompile Include="..\..\Engine\Base\src\Lock.cpp" />
     <ClCompile Include="..\..\Engine\Base\src\nvwa\debug_new.cpp" />

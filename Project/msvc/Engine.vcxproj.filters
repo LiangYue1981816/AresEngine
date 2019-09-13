@@ -228,9 +228,6 @@
     <ClInclude Include="..\..\Engine\Base\include\Delegate.h">
       <Filter>Engine\Base\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Engine\Base\include\File.h">
-      <Filter>Engine\Base\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Engine\Base\include\FileManager.h">
       <Filter>Engine\Base\Header Files</Filter>
     </ClInclude>
@@ -1578,6 +1575,12 @@
     <ClInclude Include="..\..\Engine\RenderSystem\include\PassShadow.h">
       <Filter>Engine\RenderSystem\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Engine\BaseHeader.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\RenderHeader.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Engine\ThirdParty\eastl\source\allocator_eastl.cpp">
@@ -1609,9 +1612,6 @@
     </ClCompile>
     <ClCompile Include="..\..\Engine\ThirdParty\eastl\source\thread_support.cpp">
       <Filter>ThirdParty\eastl</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\Base\src\File.cpp">
-      <Filter>Engine\Base\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\Base\src\FileManager.cpp">
       <Filter>Engine\Base\Source Files</Filter>
