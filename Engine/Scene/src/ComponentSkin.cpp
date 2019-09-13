@@ -1,4 +1,5 @@
 #include "SceneHeader.h"
+#include "RenderHeader.h"
 
 
 CComponentSkin::CComponentSkin(uint32_t name)
