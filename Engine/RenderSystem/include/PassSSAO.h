@@ -1,6 +1,5 @@
 #pragma once
 #include "PreHeader.h"
-#include "PassBlit.h"
 
 
 class CALL_API CPassSSAO : public CPassBlit
