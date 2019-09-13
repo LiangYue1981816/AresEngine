@@ -1,6 +1,4 @@
-#include "Utils.h"
-#include "Stream.h"
-#include "FileManager.h"
+#include "BaseHeader.h"
 
 
 CFileManager* CFileManager::pInstance = nullptr;

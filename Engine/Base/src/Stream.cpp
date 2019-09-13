@@ -1,5 +1,4 @@
-#include "Utils.h"
-#include "Stream.h"
+#include "BaseHeader.h"
 
 
 CStream::CStream(void)

@@ -1,7 +1,4 @@
-#include "Utils.h"
-#include "Lock.h"
-#include "Task.h"
-#include "TaskPool.h"
+#include "BaseHeader.h"
 
 
 CTaskPool::CTaskPool(const char* szName, int numThreads)

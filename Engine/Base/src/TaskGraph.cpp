@@ -1,7 +1,4 @@
-#include "Utils.h"
-#include "Lock.h"
-#include "Task.h"
-#include "TaskGraph.h"
+#include "BaseHeader.h"
 
 
 CTaskGraph::CTaskGraph(const char* szName, int numThreads)
