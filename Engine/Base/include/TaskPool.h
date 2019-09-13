@@ -2,7 +2,6 @@
 #include "PreHeader.h"
 
 
-class CALL_API CTask;
 class CALL_API CTaskPool
 {
 private:
