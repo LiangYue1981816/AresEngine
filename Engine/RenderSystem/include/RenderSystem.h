@@ -1,6 +1,18 @@
 #pragma once
 #include "PreHeader.h"
 
+#include "RenderSystem/include/Camera.h"
+#include "RenderSystem/include/PassBlit.h"
+#include "RenderSystem/include/PassBlur.h"
+#include "RenderSystem/include/PassCopy.h"
+#include "RenderSystem/include/PassPreZ.h"
+#include "RenderSystem/include/PassSSAO.h"
+#include "RenderSystem/include/PassShadow.h"
+#include "RenderSystem/include/PassDefault.h"
+#include "RenderSystem/include/PassForwardLighting.h"
+#include "RenderSystem/include/PassColorGrading.h"
+#include "RenderSystem/include/PassFinal.h"
+
 
 // Vertex&Instance Attributes
 #define VERTEX_ATTRIBUTE_POSITION                          0x00000001
@@ -50,6 +62,8 @@
 
 
 // Pass
+#define PASS_BLUR_NAME                                     HashValue("PassBlur")
+#define PASS_COPY_NAME                                     HashValue("PassCopy")
 #define PASS_PREZ_NAME                                     HashValue("PassPreZ")
 #define PASS_SSAO_NAME                                     HashValue("PassSSAO")
 #define PASS_SHADOW_NAME                                   HashValue("PassShadow")
@@ -58,6 +72,8 @@
 #define PASS_COLOR_GRADING_NAME                            HashValue("PassColorGrading")
 #define PASS_FINAL_NAME                                    HashValue("PassFinal")
 
+#define PASS_BLUR_MATERIAL_NAME                            "PassBlur.material"
+#define PASS_COPY_MATERIAL_NAME                            "PassCopy.material"
 #define PASS_SSAO_MATERIAL_NAME                            "PassSSAO.material"
 #define PASS_COLOR_GRADING_MATERIAL_NAME                   "PassColorGrading.material"
 #define PASS_FINAL_MATERIAL_NAME                           "PassFinal.material"
@@ -77,6 +93,8 @@
 class CALL_API CRenderSystem
 {
 	friend class CEngine;
+	friend class CPassBlur;
+	friend class CPassCopy;
 	friend class CPassPreZ;
 	friend class CPassSSAO;
 	friend class CPassShadow;
