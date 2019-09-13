@@ -1,6 +1,11 @@
 #pragma once
 #include "PreHeader.h"
 
+#include "ThirdParty/gli/gli.hpp"
+#include "ThirdParty/spirv-cross/spirv_cfg.hpp"
+#include "ThirdParty/spirv-cross/spirv_msl.hpp"
+#include "ThirdParty/spirv-cross/spirv_glsl.hpp"
+
 #include "GfxGLM.h"
 #include "GfxEnum.h"
 #include "GfxHelper.h"
