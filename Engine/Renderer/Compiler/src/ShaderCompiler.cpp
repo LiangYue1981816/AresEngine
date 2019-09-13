@@ -1,7 +1,4 @@
-#include "Utils.h"
-#include "Stream.h"
-#include "FileManager.h"
-#include "ShaderCompiler.h"
+#include "GfxHeader.h"
 
 
 #ifdef PLATFORM_WINDOWS
