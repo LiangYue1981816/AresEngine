@@ -1,5 +1,5 @@
 #pragma once
-#include "Define.h"
+#include "PreHeader.h"
 
 
 #define GET_MEM_SIZE(ptr) ((ptr) != nullptr ? (*((uint32_t*)(ptr) - 1) & 0x01FFFFFF) : 0)
