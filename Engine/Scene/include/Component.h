@@ -1,6 +1,5 @@
 #pragma once
 #include "PreHeader.h"
-#include "ComponentManager.h"
 
 
 class CALL_API CComponent

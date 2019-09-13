@@ -1,6 +1,7 @@
 #pragma once
 #include "PreHeader.h"
 
+#include "ComponentManager.h"
 #include "ComponentMesh.h"
 #include "ComponentSkin.h"
 #include "ComponentParticle.h"

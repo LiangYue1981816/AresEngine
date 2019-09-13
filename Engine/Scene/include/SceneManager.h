@@ -1,14 +1,8 @@
 #pragma once
 #include "PreHeader.h"
 
-#include "SceneDefinition.h"
 #include "Scene.h"
 #include "SceneNode.h"
-
-#include "ComponentMesh.h"
-#include "ComponentSkin.h"
-#include "ComponentParticle.h"
-#include "ComponentPointLight.h"
 
 
 class CALL_API CSceneManager
