@@ -17,7 +17,7 @@ namespace gli {
 			lodepng_state_init(&state);
 
 			error = lodepng_decode(&image, &width, &height, &state, (unsigned char *)Data, Size);
-			if (error != NO_ERROR) {
+			if (error != 0) {
 				free(image);
 				lodepng_state_cleanup(&state);
 				return texture();

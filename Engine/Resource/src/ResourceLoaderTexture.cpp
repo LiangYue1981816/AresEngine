@@ -1,8 +1,7 @@
+#include "gli.hpp"
 #include "GfxHeader.h"
 #include "SceneHeader.h"
 #include "ResourceLoader.h"
-
-#include "ThirdParty/gli/gli.hpp"
 
 
 static bool InternalLoadTexture2D(CGfxTexture2D* pTexture2D, const gli::texture* texture, int baseLevel, int numLevels)
