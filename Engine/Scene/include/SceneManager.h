@@ -8,7 +8,6 @@
 #include "ComponentParticle.h"
 #include "ComponentPointLight.h"
 
-#include "SceneDefinition.h"
 #include "Scene.h"
 #include "SceneNode.h"
 

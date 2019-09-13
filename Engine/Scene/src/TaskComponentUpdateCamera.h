@@ -1,7 +1,5 @@
 #pragma once
-#include "TaskGraph.h"
-#include "Component.h"
-#include "ComponentManager.h"
+#include "PreHeader.h"
 
 
 template<class T>
