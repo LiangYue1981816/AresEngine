@@ -40,7 +40,7 @@ layout (location = 0) out mediump vec4 outFragColor;
 // Descriptor
 USE_COLOR_TEXTURE_UNIFORM;
 
-layout(push_constant, std430) uniform PushConstantParam {
+layout(push_constant) uniform PushConstantParam {
 	float threshold;
 } Param;
 

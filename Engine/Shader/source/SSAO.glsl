@@ -43,7 +43,7 @@ USE_DEPTH_TEXTURE_UNIFORM;
 
 DESCRIPTOR_SET_MATPASS(8) mediump uniform sampler2D texNoise;
 
-layout(push_constant, std430) uniform PushConstantParam {
+layout(push_constant) uniform PushConstantParam {
 	int samples;
 	float minRadius;
 	float maxRadius;
