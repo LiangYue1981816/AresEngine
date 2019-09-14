@@ -97,5 +97,5 @@ void CPassBlurBox::Render(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrMainCom
 
 void CPassBlurBox::RenderCallback(CGfxCommandBufferPtr ptrCommandBuffer)
 {
-	GfxRenderer()->CmdUniform1i(ptrCommandBuffer, HashValue("Param.range"), m_range);
+	GfxRenderer()->CmdUniform1f(ptrCommandBuffer, HashValue("Param.range"), m_range);
 }
