@@ -70,17 +70,17 @@ void CPassSSAO::SetOutputTexture(CGfxRenderTexturePtr ptrColorTexture)
 	}
 }
 
-void CPassSSAO::SetSamples(int samples)
+void CPassSSAO::SetParamSamples(int samples)
 {
 	m_samples = samples;
 }
 
-void CPassSSAO::SetMinRadius(float minRadius)
+void CPassSSAO::SetParamMinRadius(float minRadius)
 {
 	m_minRadius = minRadius;
 }
 
-void CPassSSAO::SetMaxRadius(float maxRadius)
+void CPassSSAO::SetParamMaxRadius(float maxRadius)
 {
 	m_maxRadius = maxRadius;
 }

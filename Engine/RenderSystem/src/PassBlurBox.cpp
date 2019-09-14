@@ -68,7 +68,7 @@ void CPassBlurBox::SetOutputTexture(CGfxRenderTexturePtr ptrColorTexture)
 	}
 }
 
-void CPassBlurBox::SetRange(float range)
+void CPassBlurBox::SetParamRange(float range)
 {
 	m_range = range;
 }

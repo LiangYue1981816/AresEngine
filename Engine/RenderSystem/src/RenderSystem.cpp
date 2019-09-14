@@ -344,31 +344,44 @@ void CRenderSystem::RenderForwardLighting(CTaskGraph& taskGraph, CCamera* pCamer
 		ptrCommandBuffer->Clearup();
 		GfxRenderer()->BeginRecord(ptrCommandBuffer);
 		{
-			uint32_t rtFrameBufferDepth = RENDER_TEXTURE_FULL_DEPTH;
-			uint32_t rtFrameBufferColor = RENDER_TEXTURE_FULL_COLOR0;
-			uint32_t rtFrameBufferFinal = RENDER_TEXTURE_FULL_COLOR1;
+			uint32_t rtShadow;
+			uint32_t rtFrameBufferDepth;
+			uint32_t rtFrameBufferColor;
+			uint32_t rtFrameBufferFinal;
 
-			uint32_t rtSSAO = RENDER_TEXTURE_FULL_COLOR2;
-			uint32_t rtShadow = RENDER_TEXTURE_SHADOW;
+			uint32_t rtSSAO;
+			uint32_t rtBlur;
 
+			rtFrameBufferDepth = RENDER_TEXTURE_FULL_DEPTH;
 			m_pPassPreZ->SetCamera(pCamera);
 			m_pPassPreZ->SetOutputTexture(GetRenderTexture(rtFrameBufferDepth));
 			m_pPassPreZ->Render(taskGraph, ptrCommandBuffer);
 
+			rtSSAO = RENDER_TEXTURE_FULL_COLOR0;
 			m_pPassSSAO->SetCamera(pCamera);
 			m_pPassSSAO->SetInputTexture(GetRenderTexture(rtFrameBufferDepth));
 			m_pPassSSAO->SetOutputTexture(GetRenderTexture(rtSSAO));
 			m_pPassSSAO->Render(taskGraph, ptrCommandBuffer);
 
+			rtShadow = RENDER_TEXTURE_SHADOW;
 			m_pPassShadow->SetCamera(pCamera);
 			m_pPassShadow->SetOutputTexture(GetRenderTexture(rtShadow));
 			m_pPassShadow->Render(taskGraph, ptrCommandBuffer);
 
+			rtFrameBufferColor = RENDER_TEXTURE_FULL_COLOR1;
 			m_pPassForwardLighting->SetCamera(pCamera);
 			m_pPassForwardLighting->SetInputTexture(GetRenderTexture(rtShadow), GetRenderTexture(rtSSAO));
 			m_pPassForwardLighting->SetOutputTexture(GetRenderTexture(rtFrameBufferColor), GetRenderTexture(rtFrameBufferDepth));
 			m_pPassForwardLighting->Render(taskGraph, ptrCommandBuffer);
 
+			rtBlur = rtSSAO;
+			m_pPassBlurBox->SetCamera(pCamera);
+			m_pPassBlurBox->SetInputTexture(GetRenderTexture(rtFrameBufferColor));
+			m_pPassBlurBox->SetOutputTexture(GetRenderTexture(rtBlur));
+			m_pPassBlurBox->SetParamRange(5.0f);
+
+			rtFrameBufferFinal = rtFrameBufferColor;
+			rtFrameBufferColor = rtBlur;
 			m_pPassColorGrading->SetCamera(pCamera);
 			m_pPassColorGrading->SetInputTexture(GetRenderTexture(rtFrameBufferColor));
 			m_pPassColorGrading->SetOutputTexture(GetRenderTexture(rtFrameBufferFinal));
