@@ -38,13 +38,27 @@ const CGfxDescriptorLayoutPtr CVKPipeline::GetDescriptorLayout(int indexDescript
 
 bool CVKPipeline::CreateLayouts(void)
 {
+	eastl::unordered_map<uint32_t, VkPushConstantRange> pushConstantRanges;
+	uint32_t pushConstantOffset = 0;
+
 	for (int indexShader = 0; indexShader < compute_shader - vertex_shader + 1; indexShader++) {
 		if (m_pShaders[indexShader] && m_pShaders[indexShader]->IsValid()) {
+			uint32_t stageFlags = vkGetShaderStageFlagBits((shader_kind)indexShader);
+			uint32_t pushConstantSize = 0;
+
 			for (const auto& itPushConstant : m_pShaders[indexShader]->GetSprivCross().GetPushConstantRanges()) {
 				uint32_t name = HashValue(itPushConstant.first.c_str());
-				m_pushConstantRanges[name].stageFlags = vkGetShaderStageFlagBits((shader_kind)indexShader);
-				m_pushConstantRanges[name].offset = itPushConstant.second.offset;
+				m_pushConstantRanges[name].stageFlags = stageFlags;
+				m_pushConstantRanges[name].offset = itPushConstant.second.offset + pushConstantOffset;
 				m_pushConstantRanges[name].size = itPushConstant.second.range;
+				pushConstantSize += itPushConstant.second.range;
+			}
+
+			if (pushConstantSize != 0) {
+				pushConstantRanges[stageFlags].stageFlags = stageFlags;
+				pushConstantRanges[stageFlags].offset = pushConstantOffset;
+				pushConstantRanges[stageFlags].size = pushConstantSize;
+				pushConstantOffset += pushConstantSize;
 			}
 
 			for (const auto& itUniformBlock : m_pShaders[indexShader]->GetSprivCross().GetUniformBlockBindings()) {
@@ -71,7 +85,7 @@ bool CVKPipeline::CreateLayouts(void)
 	eastl::vector<VkPushConstantRange> ranges;
 	eastl::vector<VkDescriptorSetLayout> layouts;
 
-	for (const auto& itPushConstantRange : m_pushConstantRanges) {
+	for (const auto& itPushConstantRange : pushConstantRanges) {
 		ranges.emplace_back(itPushConstantRange.second);
 	}
 
