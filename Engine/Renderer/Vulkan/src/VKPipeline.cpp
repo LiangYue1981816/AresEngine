@@ -457,8 +457,6 @@ void CVKPipeline::Uniform1i(VkCommandBuffer vkCommandBuffer, uint32_t name, int 
 
 	if (itPushConstant != m_pushConstantRanges.end()) {
 		glm::ivec4 vec(v0, 0, 0, 0);
-
-		ASSERT(itPushConstant->second.size == sizeof(vec));
 		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, itPushConstant->second.stageFlags, itPushConstant->second.offset, itPushConstant->second.size, &vec);
 	}
 }
@@ -473,8 +471,6 @@ void CVKPipeline::Uniform2i(VkCommandBuffer vkCommandBuffer, uint32_t name, int 
 
 	if (itPushConstant != m_pushConstantRanges.end()) {
 		glm::ivec4 vec(v0, v1, 0, 0);
-
-		ASSERT(itPushConstant->second.size == sizeof(vec));
 		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, itPushConstant->second.stageFlags, itPushConstant->second.offset, itPushConstant->second.size, &vec);
 	}
 }
@@ -489,8 +485,6 @@ void CVKPipeline::Uniform3i(VkCommandBuffer vkCommandBuffer, uint32_t name, int 
 
 	if (itPushConstant != m_pushConstantRanges.end()) {
 		glm::ivec4 vec(v0, v1, v2, 0);
-
-		ASSERT(itPushConstant->second.size == sizeof(vec));
 		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, itPushConstant->second.stageFlags, itPushConstant->second.offset, itPushConstant->second.size, &vec);
 	}
 }
@@ -505,8 +499,6 @@ void CVKPipeline::Uniform4i(VkCommandBuffer vkCommandBuffer, uint32_t name, int 
 
 	if (itPushConstant != m_pushConstantRanges.end()) {
 		glm::ivec4 vec(v0, v1, v2, v3);
-
-		ASSERT(itPushConstant->second.size == sizeof(vec));
 		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, itPushConstant->second.stageFlags, itPushConstant->second.offset, itPushConstant->second.size, &vec);
 	}
 }
@@ -521,8 +513,6 @@ void CVKPipeline::Uniform1f(VkCommandBuffer vkCommandBuffer, uint32_t name, floa
 
 	if (itPushConstant != m_pushConstantRanges.end()) {
 		glm::vec4 vec(v0, 0.0f, 0.0f, 0.0f);
-
-		ASSERT(itPushConstant->second.size == sizeof(vec));
 		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, itPushConstant->second.stageFlags, itPushConstant->second.offset, itPushConstant->second.size, &vec);
 	}
 }
@@ -537,8 +527,6 @@ void CVKPipeline::Uniform2f(VkCommandBuffer vkCommandBuffer, uint32_t name, floa
 
 	if (itPushConstant != m_pushConstantRanges.end()) {
 		glm::vec4 vec(v0, v1, 0.0f, 0.0f);
-
-		ASSERT(itPushConstant->second.size == sizeof(vec));
 		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, itPushConstant->second.stageFlags, itPushConstant->second.offset, itPushConstant->second.size, &vec);
 	}
 }
@@ -553,8 +541,6 @@ void CVKPipeline::Uniform3f(VkCommandBuffer vkCommandBuffer, uint32_t name, floa
 
 	if (itPushConstant != m_pushConstantRanges.end()) {
 		glm::vec4 vec(v0, v1, v2, 0.0f);
-
-		ASSERT(itPushConstant->second.size == sizeof(vec));
 		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, itPushConstant->second.stageFlags, itPushConstant->second.offset, itPushConstant->second.size, &vec);
 	}
 }
@@ -569,8 +555,6 @@ void CVKPipeline::Uniform4f(VkCommandBuffer vkCommandBuffer, uint32_t name, floa
 
 	if (itPushConstant != m_pushConstantRanges.end()) {
 		glm::vec4 vec(v0, v1, v2, v3);
-
-		ASSERT(itPushConstant->second.size == sizeof(vec));
 		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, itPushConstant->second.stageFlags, itPushConstant->second.offset, itPushConstant->second.size, &vec);
 	}
 }
@@ -585,7 +569,6 @@ void CVKPipeline::Uniform1iv(VkCommandBuffer vkCommandBuffer, uint32_t name, int
 	const auto& itPushConstant = m_pushConstantRanges.find(name);
 
 	if (itPushConstant != m_pushConstantRanges.end()) {
-		ASSERT(itPushConstant->second.size == sizeof(*value) * count);
 		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, itPushConstant->second.stageFlags, itPushConstant->second.offset, itPushConstant->second.size, value);
 	}
 }
@@ -600,7 +583,6 @@ void CVKPipeline::Uniform2iv(VkCommandBuffer vkCommandBuffer, uint32_t name, int
 	const auto& itPushConstant = m_pushConstantRanges.find(name);
 
 	if (itPushConstant != m_pushConstantRanges.end()) {
-		ASSERT(itPushConstant->second.size == sizeof(*value) * count);
 		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, itPushConstant->second.stageFlags, itPushConstant->second.offset, itPushConstant->second.size, value);
 	}
 }
@@ -615,7 +597,6 @@ void CVKPipeline::Uniform3iv(VkCommandBuffer vkCommandBuffer, uint32_t name, int
 	const auto& itPushConstant = m_pushConstantRanges.find(name);
 
 	if (itPushConstant != m_pushConstantRanges.end()) {
-		ASSERT(itPushConstant->second.size == sizeof(*value) * count);
 		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, itPushConstant->second.stageFlags, itPushConstant->second.offset, itPushConstant->second.size, value);
 	}
 }
@@ -630,7 +611,6 @@ void CVKPipeline::Uniform4iv(VkCommandBuffer vkCommandBuffer, uint32_t name, int
 	const auto& itPushConstant = m_pushConstantRanges.find(name);
 
 	if (itPushConstant != m_pushConstantRanges.end()) {
-		ASSERT(itPushConstant->second.size == sizeof(*value) * count);
 		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, itPushConstant->second.stageFlags, itPushConstant->second.offset, itPushConstant->second.size, value);
 	}
 }
@@ -645,7 +625,6 @@ void CVKPipeline::Uniform1fv(VkCommandBuffer vkCommandBuffer, uint32_t name, int
 	const auto& itPushConstant = m_pushConstantRanges.find(name);
 
 	if (itPushConstant != m_pushConstantRanges.end()) {
-		ASSERT(itPushConstant->second.size == sizeof(*value) * count);
 		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, itPushConstant->second.stageFlags, itPushConstant->second.offset, itPushConstant->second.size, value);
 	}
 }
@@ -660,7 +639,6 @@ void CVKPipeline::Uniform2fv(VkCommandBuffer vkCommandBuffer, uint32_t name, int
 	const auto& itPushConstant = m_pushConstantRanges.find(name);
 
 	if (itPushConstant != m_pushConstantRanges.end()) {
-		ASSERT(itPushConstant->second.size == sizeof(*value) * count);
 		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, itPushConstant->second.stageFlags, itPushConstant->second.offset, itPushConstant->second.size, value);
 	}
 }
@@ -675,7 +653,6 @@ void CVKPipeline::Uniform3fv(VkCommandBuffer vkCommandBuffer, uint32_t name, int
 	const auto& itPushConstant = m_pushConstantRanges.find(name);
 
 	if (itPushConstant != m_pushConstantRanges.end()) {
-		ASSERT(itPushConstant->second.size == sizeof(*value) * count);
 		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, itPushConstant->second.stageFlags, itPushConstant->second.offset, itPushConstant->second.size, value);
 	}
 }
@@ -690,7 +667,6 @@ void CVKPipeline::Uniform4fv(VkCommandBuffer vkCommandBuffer, uint32_t name, int
 	const auto& itPushConstant = m_pushConstantRanges.find(name);
 
 	if (itPushConstant != m_pushConstantRanges.end()) {
-		ASSERT(itPushConstant->second.size == sizeof(*value) * count);
 		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, itPushConstant->second.stageFlags, itPushConstant->second.offset, itPushConstant->second.size, value);
 	}
 }
@@ -705,7 +681,6 @@ void CVKPipeline::UniformMatrix2fv(VkCommandBuffer vkCommandBuffer, uint32_t nam
 	const auto& itPushConstant = m_pushConstantRanges.find(name);
 
 	if (itPushConstant != m_pushConstantRanges.end()) {
-		ASSERT(itPushConstant->second.size == sizeof(*value) * count);
 		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, itPushConstant->second.stageFlags, itPushConstant->second.offset, itPushConstant->second.size, value);
 	}
 }
@@ -720,7 +695,6 @@ void CVKPipeline::UniformMatrix3fv(VkCommandBuffer vkCommandBuffer, uint32_t nam
 	const auto& itPushConstant = m_pushConstantRanges.find(name);
 
 	if (itPushConstant != m_pushConstantRanges.end()) {
-		ASSERT(itPushConstant->second.size == sizeof(*value) * count);
 		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, itPushConstant->second.stageFlags, itPushConstant->second.offset, itPushConstant->second.size, value);
 	}
 }
@@ -735,7 +709,6 @@ void CVKPipeline::UniformMatrix4fv(VkCommandBuffer vkCommandBuffer, uint32_t nam
 	const auto& itPushConstant = m_pushConstantRanges.find(name);
 
 	if (itPushConstant != m_pushConstantRanges.end()) {
-		ASSERT(itPushConstant->second.size == sizeof(*value) * count);
 		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, itPushConstant->second.stageFlags, itPushConstant->second.offset, itPushConstant->second.size, value);
 	}
 }
