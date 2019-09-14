@@ -305,9 +305,7 @@ void CRenderSystem::RenderDefault(CTaskGraph& taskGraph, CCamera* pCamera, bool 
 
 			m_pPassFinal->SetCamera(pCamera);
 			m_pPassFinal->SetInputTexture(GetRenderTexture(rtFrameBufferColor));
-			m_pPassFinal->SetOutputTexture(0, GetRenderTexture(RENDER_TEXTURE_SWAPCHAIN_COLOR0));
-			m_pPassFinal->SetOutputTexture(1, GetRenderTexture(RENDER_TEXTURE_SWAPCHAIN_COLOR1));
-			m_pPassFinal->SetOutputTexture(2, GetRenderTexture(RENDER_TEXTURE_SWAPCHAIN_COLOR2));
+			m_pPassFinal->SetOutputTexture(GfxRenderer()->GetSwapChain()->GetFrameIndex(), GetRenderTexture(GfxRenderer()->GetSwapChain()->GetFrameIndex()));
 			m_pPassFinal->Render(taskGraph, ptrCommandBuffer, GfxRenderer()->GetSwapChain()->GetFrameIndex(), bPresent);
 		}
 		GfxRenderer()->EndRecord(ptrCommandBuffer);
