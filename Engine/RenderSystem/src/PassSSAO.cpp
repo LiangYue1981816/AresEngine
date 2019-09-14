@@ -110,6 +110,6 @@ void CPassSSAO::Render(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuf
 void CPassSSAO::RenderCallback(CGfxCommandBufferPtr ptrCommandBuffer)
 {
 	GfxRenderer()->CmdUniform1i(ptrCommandBuffer, HashValue("Param.samples"), m_samples);
-	GfxRenderer()->CmdUniform1i(ptrCommandBuffer, HashValue("Param.minRadius"), m_minRadius);
-	GfxRenderer()->CmdUniform1i(ptrCommandBuffer, HashValue("Param.maxRadius"), m_maxRadius);
+	GfxRenderer()->CmdUniform1f(ptrCommandBuffer, HashValue("Param.minRadius"), m_minRadius);
+	GfxRenderer()->CmdUniform1f(ptrCommandBuffer, HashValue("Param.maxRadius"), m_maxRadius);
 }
