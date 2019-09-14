@@ -2,6 +2,7 @@
 #include "PreHeader.h"
 
 #include "RenderSystem/include/PassBlit.h"
+#include "RenderSystem/include/PassAdd.h"
 #include "RenderSystem/include/PassCopy.h"
 #include "RenderSystem/include/PassBlurBox.h"
 #include "RenderSystem/include/PassBlurHorizontal.h"
@@ -58,12 +59,15 @@
 // Uniform PostProcessing
 #define UNIFORM_SHADOW_TEXTURE_BIND                        5
 #define UNIFORM_SSAO_TEXTURE_BIND                          6
+#define UNIFORM_ADD_TEXTURE_BIND                           5
 
 #define UNIFORM_SHADOW_TEXTURE_NAME                        HashValue("texShadow")
 #define UNIFORM_SSAO_TEXTURE_NAME                          HashValue("texSSAO")
+#define UNIFORM_ADD_TEXTURE_NAME                           HashValue("texAdd")
 
 
 // Pass
+#define PASS_ADD_NAME                                      HashValue("PassAdd")
 #define PASS_COPY_NAME                                     HashValue("PassCopy")
 #define PASS_BLUR_BOX_NAME                                 HashValue("PassBlurBox")
 #define PASS_BLUR_HORIZONTAL_NAME                          HashValue("PassBlurHorizontal")
@@ -77,6 +81,7 @@
 #define PASS_FORWARD_LIGHTING_NAME                         HashValue("PassForwardLighting")
 #define PASS_FINAL_NAME                                    HashValue("PassFinal")
 
+#define PASS_ADD_MATERIAL_NAME                             "PassAdd.material"
 #define PASS_COPY_MATERIAL_NAME                            "PassCopy.material"
 #define PASS_BLUR_BOX_MATERIAL_NAME                        "PassBlurBox.material"
 #define PASS_BLUR_HORIZONTAL_MATERIAL_NAME                 "PassBlurHorizontal.material"
@@ -95,13 +100,14 @@
 #define RENDER_TEXTURE_FULL_DEPTH                          HashValue("RenderTextureFullDepth")
 #define RENDER_TEXTURE_FULL_COLOR0                         HashValue("RenderTextureFullColor0")
 #define RENDER_TEXTURE_FULL_COLOR1                         HashValue("RenderTextureFullColor1")
-#define RENDER_TEXTURE_FULL_COLOR2                         HashValue("RenderTextureFullColor2")
+#define RENDER_TEXTURE_HALF_COLOR0                         HashValue("RenderTextureHalfColor0")
 
 
 class CALL_API CRenderSystem
 {
 	friend class CEngine;
 	friend class CPassBlit;
+	friend class CPassAdd;
 	friend class CPassCopy;
 	friend class CPassBlurBox;
 	friend class CPassBlurHorizontal;
@@ -135,7 +141,8 @@ public:
 	CGfxRenderTexturePtr GetRenderTexture(uint32_t name) const;
 
 public:
-	CPassCopy* GetPassCopy(void) const;
+	CPassAdd* GetPassBloomAdd(void) const;
+	CPassCopy* GetPassBloomDownSample(void) const;
 	CPassThreshold* GetPassBloomThreshold(void) const;
 	CPassBlurHorizontal* GetPassBloomBlurHorizontal(void) const;
 	CPassBlurVertical* GetPassBloomBlurVertical(void) const;
@@ -184,7 +191,8 @@ private:
 	CGfxUniformEngine* m_pEngineUniform;
 
 private:
-	CPassCopy* m_pPassCopy;
+	CPassAdd* m_pPassBloomAdd;
+	CPassCopy* m_pPassBloomDownSample;
 	CPassThreshold* m_pPassBloomThreshold;
 	CPassBlurHorizontal* m_pPassBloomBlurHorizontal;
 	CPassBlurVertical* m_pPassBloomBlurVertical;

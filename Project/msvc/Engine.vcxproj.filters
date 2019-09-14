@@ -1596,6 +1596,9 @@
     <ClInclude Include="..\..\Engine\RenderSystem\include\PassThreshold.h">
       <Filter>Engine\RenderSystem\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Engine\RenderSystem\include\PassAdd.h">
+      <Filter>Engine\RenderSystem\Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Engine\ThirdParty\eastl\source\allocator_eastl.cpp">
@@ -2316,6 +2319,9 @@
       <Filter>Engine\RenderSystem\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\RenderSystem\src\PassThreshold.cpp">
+      <Filter>Engine\RenderSystem\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\RenderSystem\src\PassAdd.cpp">
       <Filter>Engine\RenderSystem\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
