@@ -40,9 +40,15 @@ layout (location = 0) out mediump vec4 outFragColor;
 // Descriptor
 USE_COLOR_TEXTURE_UNIFORM;
 
+layout(push_constant, std430) uniform PushConstantParam {
+	float threshold;
+} Param;
+
 
 void main()
 {
-	outFragColor = texture(texColor, inTexcoord);
+	mediump vec3 color = texture(texColor, inTexcoord).rgb;
+	outFragColor.rgb = dot(vec3(0.299, 0.587, 0.114), color) > Param.threshold ? color : vec3(0.0);
+	outFragColor.a = 1.0;
 }
 #endif
