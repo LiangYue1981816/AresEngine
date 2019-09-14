@@ -62,8 +62,8 @@ CRenderSystem::CRenderSystem(GfxApi api, void* hInstance, void* hWnd, void* hDC,
 	CreateRenderTexture(RENDER_TEXTURE_SHADOW, GFX_PIXELFORMAT_D32_SFLOAT_PACK32, 2048, 2048);
 	CreateRenderTexture(RENDER_TEXTURE_FRAMEBUFFER_DEPTH, GFX_PIXELFORMAT_D32_SFLOAT_PACK32, GfxRenderer()->GetSwapChain()->GetWidth(), GfxRenderer()->GetSwapChain()->GetHeight());
 	CreateRenderTexture(RENDER_TEXTURE_FRAMEBUFFER_COLOR, GFX_PIXELFORMAT_BGRA8_UNORM_PACK8, GfxRenderer()->GetSwapChain()->GetWidth(), GfxRenderer()->GetSwapChain()->GetHeight());
-	CreateRenderTexture(RENDER_TEXTURE_FRAMEBUFFER_SSAO, GFX_PIXELFORMAT_BGRA8_UNORM_PACK8, GfxRenderer()->GetSwapChain()->GetWidth(), GfxRenderer()->GetSwapChain()->GetHeight());
 	CreateRenderTexture(RENDER_TEXTURE_FRAMEBUFFER_FINAL, GFX_PIXELFORMAT_BGRA8_UNORM_PACK8, GfxRenderer()->GetSwapChain()->GetWidth(), GfxRenderer()->GetSwapChain()->GetHeight());
+	CreateRenderTexture(RENDER_TEXTURE_SSAO, GFX_PIXELFORMAT_BGRA8_UNORM_PACK8, GfxRenderer()->GetSwapChain()->GetWidth(), GfxRenderer()->GetSwapChain()->GetHeight());
 
 	CreatePass();
 }
@@ -324,31 +324,38 @@ void CRenderSystem::RenderForwardLighting(CTaskGraph& taskGraph, CCamera* pCamer
 		ptrCommandBuffer->Clearup();
 		GfxRenderer()->BeginRecord(ptrCommandBuffer);
 		{
+			uint32_t rtFrameBufferDepth = RENDER_TEXTURE_FRAMEBUFFER_DEPTH;
+			uint32_t rtFrameBufferColor = RENDER_TEXTURE_FRAMEBUFFER_COLOR;
+			uint32_t rtFrameBufferFinal = RENDER_TEXTURE_FRAMEBUFFER_FINAL;
+
+			uint32_t rtSSAO = RENDER_TEXTURE_SSAO;
+			uint32_t rtShadow = RENDER_TEXTURE_SHADOW;
+
 			m_pPassPreZ->SetCamera(pCamera);
-			m_pPassPreZ->SetOutputTexture(GetRenderTexture(RENDER_TEXTURE_FRAMEBUFFER_DEPTH));
+			m_pPassPreZ->SetOutputTexture(GetRenderTexture(rtFrameBufferDepth));
 			m_pPassPreZ->Render(taskGraph, ptrCommandBuffer);
 
 			m_pPassSSAO->SetCamera(pCamera);
-			m_pPassSSAO->SetInputTexture(GetRenderTexture(RENDER_TEXTURE_FRAMEBUFFER_DEPTH));
-			m_pPassSSAO->SetOutputTexture(GetRenderTexture(RENDER_TEXTURE_FRAMEBUFFER_SSAO));
+			m_pPassSSAO->SetInputTexture(GetRenderTexture(rtFrameBufferDepth));
+			m_pPassSSAO->SetOutputTexture(GetRenderTexture(rtSSAO));
 			m_pPassSSAO->Render(taskGraph, ptrCommandBuffer);
 
 			m_pPassShadow->SetCamera(pCamera);
-			m_pPassShadow->SetOutputTexture(GetRenderTexture(RENDER_TEXTURE_SHADOW));
+			m_pPassShadow->SetOutputTexture(GetRenderTexture(rtShadow));
 			m_pPassShadow->Render(taskGraph, ptrCommandBuffer);
 
 			m_pPassForwardLighting->SetCamera(pCamera);
-			m_pPassForwardLighting->SetInputTexture(GetRenderTexture(RENDER_TEXTURE_SHADOW), GetRenderTexture(RENDER_TEXTURE_FRAMEBUFFER_SSAO));
-			m_pPassForwardLighting->SetOutputTexture(GetRenderTexture(RENDER_TEXTURE_FRAMEBUFFER_COLOR), GetRenderTexture(RENDER_TEXTURE_FRAMEBUFFER_DEPTH));
+			m_pPassForwardLighting->SetInputTexture(GetRenderTexture(rtShadow), GetRenderTexture(rtSSAO));
+			m_pPassForwardLighting->SetOutputTexture(GetRenderTexture(rtFrameBufferColor), GetRenderTexture(rtFrameBufferDepth));
 			m_pPassForwardLighting->Render(taskGraph, ptrCommandBuffer);
 
 			m_pPassColorGrading->SetCamera(pCamera);
-			m_pPassColorGrading->SetInputTexture(GetRenderTexture(RENDER_TEXTURE_FRAMEBUFFER_COLOR));
-			m_pPassColorGrading->SetOutputTexture(GetRenderTexture(RENDER_TEXTURE_FRAMEBUFFER_FINAL));
+			m_pPassColorGrading->SetInputTexture(GetRenderTexture(rtFrameBufferColor));
+			m_pPassColorGrading->SetOutputTexture(GetRenderTexture(rtFrameBufferFinal));
 			m_pPassColorGrading->Render(taskGraph, ptrCommandBuffer);
 
 			m_pPassFinal->SetCamera(pCamera);
-			m_pPassFinal->SetInputTexture(GetRenderTexture(RENDER_TEXTURE_FRAMEBUFFER_FINAL));
+			m_pPassFinal->SetInputTexture(GetRenderTexture(rtFrameBufferFinal));
 			m_pPassFinal->SetOutputTexture(GfxRenderer()->GetSwapChain()->GetFrameIndex(), GetRenderTexture(GfxRenderer()->GetSwapChain()->GetFrameIndex()));
 			m_pPassFinal->Render(taskGraph, ptrCommandBuffer, GfxRenderer()->GetSwapChain()->GetFrameIndex(), bPresent);
 		}
