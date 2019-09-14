@@ -312,8 +312,8 @@ void CRenderSystem::RenderDefault(CTaskGraph& taskGraph, CCamera* pCamera, bool 
 		ptrCommandBuffer->Clearup();
 		GfxRenderer()->BeginRecord(ptrCommandBuffer);
 		{
-			uint32_t rtFrameBufferDepth = RENDER_TEXTURE_FRAMEBUFFER_DEPTH;
-			uint32_t rtFrameBufferColor = RENDER_TEXTURE_FRAMEBUFFER_COLOR;
+			uint32_t rtFrameBufferDepth = RENDER_TEXTURE_FULL_DEPTH;
+			uint32_t rtFrameBufferColor = RENDER_TEXTURE_FULL_COLOR0;
 
 			m_pPassPreZ->SetCamera(pCamera);
 			m_pPassPreZ->SetOutputTexture(GetRenderTexture(rtFrameBufferDepth));
@@ -344,11 +344,11 @@ void CRenderSystem::RenderForwardLighting(CTaskGraph& taskGraph, CCamera* pCamer
 		ptrCommandBuffer->Clearup();
 		GfxRenderer()->BeginRecord(ptrCommandBuffer);
 		{
-			uint32_t rtFrameBufferDepth = RENDER_TEXTURE_FRAMEBUFFER_DEPTH;
-			uint32_t rtFrameBufferColor = RENDER_TEXTURE_FRAMEBUFFER_COLOR;
-			uint32_t rtFrameBufferFinal = RENDER_TEXTURE_FRAMEBUFFER_FINAL;
+			uint32_t rtFrameBufferDepth = RENDER_TEXTURE_FULL_DEPTH;
+			uint32_t rtFrameBufferColor = RENDER_TEXTURE_FULL_COLOR0;
+			uint32_t rtFrameBufferFinal = RENDER_TEXTURE_FULL_COLOR1;
 
-			uint32_t rtSSAO = RENDER_TEXTURE_SSAO;
+			uint32_t rtSSAO = RENDER_TEXTURE_FULL_COLOR2;
 			uint32_t rtShadow = RENDER_TEXTURE_SHADOW;
 
 			m_pPassPreZ->SetCamera(pCamera);
