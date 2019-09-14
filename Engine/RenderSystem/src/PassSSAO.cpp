@@ -42,21 +42,6 @@ CPassSSAO::~CPassSSAO(void)
 
 }
 
-void CPassSSAO::SetSamples(int samples)
-{
-	m_samples = samples;
-}
-
-void CPassSSAO::SetMinRadius(float minRadius)
-{
-	m_minRadius = minRadius;
-}
-
-void CPassSSAO::SetMaxRadius(float maxRadius)
-{
-	m_maxRadius = maxRadius;
-}
-
 void CPassSSAO::SetCamera(CCamera* pCamera)
 {
 	if (m_pCamera != pCamera) {
@@ -83,6 +68,21 @@ void CPassSSAO::SetOutputTexture(CGfxRenderTexturePtr ptrColorTexture)
 		m_ptrFrameBuffer->Create(ptrRenderPass);
 		m_ptrOutputColorTexture = ptrColorTexture;
 	}
+}
+
+void CPassSSAO::SetSamples(int samples)
+{
+	m_samples = samples;
+}
+
+void CPassSSAO::SetMinRadius(float minRadius)
+{
+	m_minRadius = minRadius;
+}
+
+void CPassSSAO::SetMaxRadius(float maxRadius)
+{
+	m_maxRadius = maxRadius;
 }
 
 void CPassSSAO::Render(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer)

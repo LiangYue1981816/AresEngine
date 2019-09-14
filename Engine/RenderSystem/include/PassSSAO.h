@@ -19,13 +19,13 @@ private:
 
 
 public:
-	void SetSamples(int samples);
-	void SetMinRadius(float minRadius);
-	void SetMaxRadius(float maxRadius);
-
 	void SetCamera(CCamera* pCamera);
 	void SetInputTexture(CGfxRenderTexturePtr ptrDepthTexture);
 	void SetOutputTexture(CGfxRenderTexturePtr ptrColorTexture);
+
+	void SetSamples(int samples);
+	void SetMinRadius(float minRadius);
+	void SetMaxRadius(float maxRadius);
 
 private:
 	void Render(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer);
