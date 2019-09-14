@@ -73,15 +73,15 @@ bool CVKPipeline::CreateLayouts(void)
 	CALL_BOOL_FUNCTION_RETURN_BOOL(m_ptrDescriptorLayouts[DESCRIPTOR_SET_MESHDRAW]->Create());
 	CALL_BOOL_FUNCTION_RETURN_BOOL(m_ptrDescriptorLayouts[DESCRIPTOR_SET_INPUTATTACHMENT]->Create());
 
+	eastl::vector<VkPushConstantRange> ranges;
 	eastl::vector<VkDescriptorSetLayout> layouts;
-	eastl::vector<VkPushConstantRange> pushConstantRanges;
+
+	for (const auto& itPushConstantRange : m_pushConstantRanges) {
+		ranges.emplace_back(itPushConstantRange.second);
+	}
 
 	for (const auto& itDescriptorSet : m_ptrDescriptorLayouts) {
 		layouts.emplace_back(((CVKDescriptorLayout*)itDescriptorSet.GetPointer())->GetDescriptorLayout());
-	}
-
-	for (const auto& itPushConstantRange : m_pushConstantRanges) {
-		pushConstantRanges.emplace_back(itPushConstantRange.second);
 	}
 
 	VkPipelineLayoutCreateInfo layoutCreateInfo = {};
@@ -90,8 +90,8 @@ bool CVKPipeline::CreateLayouts(void)
 	layoutCreateInfo.flags = 0;
 	layoutCreateInfo.setLayoutCount = layouts.size();
 	layoutCreateInfo.pSetLayouts = layouts.data();
-	layoutCreateInfo.pushConstantRangeCount = pushConstantRanges.size();
-	layoutCreateInfo.pPushConstantRanges = pushConstantRanges.data();
+	layoutCreateInfo.pushConstantRangeCount = ranges.size();
+	layoutCreateInfo.pPushConstantRanges = ranges.data();
 	CALL_VK_FUNCTION_RETURN_BOOL(vkCreatePipelineLayout(m_pDevice->GetDevice(), &layoutCreateInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkPipelineLayout));
 
 	return true;
