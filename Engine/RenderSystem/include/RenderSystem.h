@@ -3,16 +3,17 @@
 
 #include "RenderSystem/include/Camera.h"
 #include "RenderSystem/include/PassBlit.h"
+#include "RenderSystem/include/PassCopy.h"
 #include "RenderSystem/include/PassBlurBox.h"
 #include "RenderSystem/include/PassBlurHorizontal.h"
 #include "RenderSystem/include/PassBlurVertical.h"
-#include "RenderSystem/include/PassCopy.h"
+#include "RenderSystem/include/PassThreshold.h"
+#include "RenderSystem/include/PassColorGrading.h"
 #include "RenderSystem/include/PassPreZ.h"
 #include "RenderSystem/include/PassSSAO.h"
 #include "RenderSystem/include/PassShadow.h"
 #include "RenderSystem/include/PassDefault.h"
 #include "RenderSystem/include/PassForwardLighting.h"
-#include "RenderSystem/include/PassColorGrading.h"
 #include "RenderSystem/include/PassFinal.h"
 
 
@@ -64,24 +65,26 @@
 
 
 // Pass
+#define PASS_COPY_NAME                                     HashValue("PassCopy")
 #define PASS_BLUR_BOX_NAME                                 HashValue("PassBlurBox")
 #define PASS_BLUR_HORIZONTAL_NAME                          HashValue("PassBlurHorizontal")
 #define PASS_BLUR_VERTICAL_NAME                            HashValue("PassBlurVertical")
-#define PASS_COPY_NAME                                     HashValue("PassCopy")
+#define PASS_THRESHOLD_NAME                                HashValue("PassThreshold")
+#define PASS_COLOR_GRADING_NAME                            HashValue("PassColorGrading")
 #define PASS_PREZ_NAME                                     HashValue("PassPreZ")
 #define PASS_SSAO_NAME                                     HashValue("PassSSAO")
 #define PASS_SHADOW_NAME                                   HashValue("PassShadow")
 #define PASS_DEFAULT_NAME                                  HashValue("PassDefault")
 #define PASS_FORWARD_LIGHTING_NAME                         HashValue("PassForwardLighting")
-#define PASS_COLOR_GRADING_NAME                            HashValue("PassColorGrading")
 #define PASS_FINAL_NAME                                    HashValue("PassFinal")
 
+#define PASS_COPY_MATERIAL_NAME                            "PassCopy.material"
 #define PASS_BLUR_BOX_MATERIAL_NAME                        "PassBlurBox.material"
 #define PASS_BLUR_HORIZONTAL_MATERIAL_NAME                 "PassBlurHorizontal.material"
 #define PASS_BLUR_VERTICAL_MATERIAL_NAME                   "PassBlurVertical.material"
-#define PASS_COPY_MATERIAL_NAME                            "PassCopy.material"
-#define PASS_SSAO_MATERIAL_NAME                            "PassSSAO.material"
+#define PASS_THRESHOLD_MATERIAL_NAME                       "PassThreshold.material"
 #define PASS_COLOR_GRADING_MATERIAL_NAME                   "PassColorGrading.material"
+#define PASS_SSAO_MATERIAL_NAME                            "PassSSAO.material"
 #define PASS_FINAL_MATERIAL_NAME                           "PassFinal.material"
 
 
@@ -92,7 +95,7 @@
 #define RENDER_TEXTURE_SHADOW                              HashValue("RenderTextureShadow")
 #define RENDER_TEXTURE_FRAMEBUFFER_DEPTH                   HashValue("RenderTextureFrameBufferDepth")
 #define RENDER_TEXTURE_FRAMEBUFFER_COLOR                   HashValue("RenderTextureFrameBufferColor")
-#define RENDER_TEXTURE_FRAMEBUFFER_SSAO                    HashValue("RenderTextureFrameBufferHalf")
+#define RENDER_TEXTURE_FRAMEBUFFER_SSAO                    HashValue("RenderTextureFrameBufferSSAO")
 #define RENDER_TEXTURE_FRAMEBUFFER_FINAL                   HashValue("RenderTextureFrameBufferFinal")
 
 
@@ -100,10 +103,11 @@ class CALL_API CRenderSystem
 {
 	friend class CEngine;
 	friend class CPassBlit;
+	friend class CPassCopy;
 	friend class CPassBlurBox;
 	friend class CPassBlurHorizontal;
 	friend class CPassBlurVertical;
-	friend class CPassCopy;
+	friend class CPassThreshold;
 	friend class CPassColorGrading;
 	friend class CPassPreZ;
 	friend class CPassSSAO;
