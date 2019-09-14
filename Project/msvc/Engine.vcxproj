@@ -431,7 +431,9 @@
     <ClInclude Include="..\..\Engine\RenderHeader.h" />
     <ClInclude Include="..\..\Engine\RenderSystem\include\Camera.h" />
     <ClInclude Include="..\..\Engine\RenderSystem\include\PassBlit.h" />
-    <ClInclude Include="..\..\Engine\RenderSystem\include\PassBlur.h" />
+    <ClInclude Include="..\..\Engine\RenderSystem\include\PassBlurBox.h" />
+    <ClInclude Include="..\..\Engine\RenderSystem\include\PassBlurHorizontal.h" />
+    <ClInclude Include="..\..\Engine\RenderSystem\include\PassBlurVertical.h" />
     <ClInclude Include="..\..\Engine\RenderSystem\include\PassColorGrading.h" />
     <ClInclude Include="..\..\Engine\RenderSystem\include\PassCopy.h" />
     <ClInclude Include="..\..\Engine\RenderSystem\include\PassDefault.h" />
@@ -777,7 +779,9 @@
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKVertexBuffer.cpp" />
     <ClCompile Include="..\..\Engine\RenderSystem\src\Camera.cpp" />
     <ClCompile Include="..\..\Engine\RenderSystem\src\PassBlit.cpp" />
-    <ClCompile Include="..\..\Engine\RenderSystem\src\PassBlur.cpp" />
+    <ClCompile Include="..\..\Engine\RenderSystem\src\PassBlurBox.cpp" />
+    <ClCompile Include="..\..\Engine\RenderSystem\src\PassBlurHorizontal.cpp" />
+    <ClCompile Include="..\..\Engine\RenderSystem\src\PassBlurVertical.cpp" />
     <ClCompile Include="..\..\Engine\RenderSystem\src\PassColorGrading.cpp" />
     <ClCompile Include="..\..\Engine\RenderSystem\src\PassCopy.cpp" />
     <ClCompile Include="..\..\Engine\RenderSystem\src\PassDefault.cpp" />

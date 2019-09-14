@@ -3,7 +3,9 @@
 
 #include "RenderSystem/include/Camera.h"
 #include "RenderSystem/include/PassBlit.h"
-#include "RenderSystem/include/PassBlur.h"
+#include "RenderSystem/include/PassBlurBox.h"
+#include "RenderSystem/include/PassBlurHorizontal.h"
+#include "RenderSystem/include/PassBlurVertical.h"
 #include "RenderSystem/include/PassCopy.h"
 #include "RenderSystem/include/PassPreZ.h"
 #include "RenderSystem/include/PassSSAO.h"
@@ -62,7 +64,9 @@
 
 
 // Pass
-#define PASS_BLUR_NAME                                     HashValue("PassBlur")
+#define PASS_BLUR_BOX_NAME                                 HashValue("PassBlurBox")
+#define PASS_BLUR_HORIZONTAL_NAME                          HashValue("PassBlurHorizontal")
+#define PASS_BLUR_VERTICAL_NAME                            HashValue("PassBlurVertical")
 #define PASS_COPY_NAME                                     HashValue("PassCopy")
 #define PASS_PREZ_NAME                                     HashValue("PassPreZ")
 #define PASS_SSAO_NAME                                     HashValue("PassSSAO")
@@ -72,7 +76,9 @@
 #define PASS_COLOR_GRADING_NAME                            HashValue("PassColorGrading")
 #define PASS_FINAL_NAME                                    HashValue("PassFinal")
 
-#define PASS_BLUR_MATERIAL_NAME                            "PassBlur.material"
+#define PASS_BLUR_BOX_MATERIAL_NAME                        "PassBlurBox.material"
+#define PASS_BLUR_HORIZONTAL_MATERIAL_NAME                 "PassBlurHorizontal.material"
+#define PASS_BLUR_VERTICAL_MATERIAL_NAME                   "PassBlurVertical.material"
 #define PASS_COPY_MATERIAL_NAME                            "PassCopy.material"
 #define PASS_SSAO_MATERIAL_NAME                            "PassSSAO.material"
 #define PASS_COLOR_GRADING_MATERIAL_NAME                   "PassColorGrading.material"
@@ -93,14 +99,17 @@
 class CALL_API CRenderSystem
 {
 	friend class CEngine;
-	friend class CPassBlur;
+	friend class CPassBlit;
+	friend class CPassBlurBox;
+	friend class CPassBlurHorizontal;
+	friend class CPassBlurVertical;
 	friend class CPassCopy;
+	friend class CPassColorGrading;
 	friend class CPassPreZ;
 	friend class CPassSSAO;
 	friend class CPassShadow;
 	friend class CPassDefault;
 	friend class CPassForwardLighting;
-	friend class CPassColorGrading;
 	friend class CPassFinal;
 
 
