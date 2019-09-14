@@ -40,11 +40,15 @@ layout (location = 0) out mediump vec4 outFragColor;
 // Descriptor
 USE_COLOR_TEXTURE_UNIFORM;
 
+layout(push_constant, std430) uniform PushConstantParam {
+	float range;
+} Param;
+
 
 void main()
 {
 	highp vec3 result = vec3(0.0);
-	highp vec2 texelSize = vec2(1.0) / vec2(textureSize(texColor, 0));
+	highp vec2 texelSize = vec2(Param.range) / vec2(textureSize(texColor, 0));
 
 	for (highp float x = -1.0; x <= 1.0; x++) {
 		for (highp float y = -1.0; y <= 1.0; y++) {

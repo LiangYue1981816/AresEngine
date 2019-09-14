@@ -23,6 +23,7 @@ void CPassBlurBox::Destroy(void)
 
 CPassBlurBox::CPassBlurBox(CRenderSystem* pRenderSystem)
 	: CPassBlit(PASS_BLUR_BOX_MATERIAL_NAME, pRenderSystem)
+	, m_range(1.0f)
 {
 	CGfxDescriptorLayoutPtr ptrDescriptorLayout = GfxRenderer()->NewDescriptorLayout(DESCRIPTOR_SET_PASS);
 	ptrDescriptorLayout->SetUniformBlockBinding(UNIFORM_ENGINE_NAME, UNIFORM_ENGINE_BIND);
@@ -67,6 +68,11 @@ void CPassBlurBox::SetOutputTexture(CGfxRenderTexturePtr ptrColorTexture)
 	}
 }
 
+void CPassBlurBox::SetRange(float range)
+{
+	m_range = range;
+}
+
 void CPassBlurBox::Render(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrMainCommandBuffer)
 {
 	// Update
@@ -87,4 +93,9 @@ void CPassBlurBox::Render(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrMainCom
 	}
 	GfxRenderer()->CmdEndRenderPass(ptrMainCommandBuffer);
 	GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, m_ptrOutputColorTexture, GFX_IMAGE_LAYOUT_COLOR_READ_ONLY_OPTIMAL);
+}
+
+void CPassBlurBox::RenderCallback(CGfxCommandBufferPtr ptrCommandBuffer)
+{
+	GfxRenderer()->CmdUniform1i(ptrCommandBuffer, HashValue("Param.range"), m_range);
 }

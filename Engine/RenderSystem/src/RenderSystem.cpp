@@ -29,6 +29,8 @@ CRenderSystem::CRenderSystem(GfxApi api, void* hInstance, void* hWnd, void* hDC,
 	: m_pRenderer(nullptr)
 	, m_pEngineUniform(nullptr)
 
+	, m_pPassCopy(nullptr)
+	, m_pPassBlurBox(nullptr)
 	, m_pPassPreZ(nullptr)
 	, m_pPassSSAO(nullptr)
 	, m_pPassShadow(nullptr)
@@ -114,6 +116,11 @@ CGfxRenderTexturePtr CRenderSystem::GetRenderTexture(uint32_t name) const
 	}
 }
 
+CPassCopy* CRenderSystem::GetPassCopy(void) const
+{
+	return m_pPassCopy;
+}
+
 CPassPreZ* CRenderSystem::GetPassPreZ(void) const
 {
 	return m_pPassPreZ;
@@ -151,6 +158,8 @@ CPassFinal* CRenderSystem::GetPassFinal(void) const
 
 void CRenderSystem::CreatePass(void)
 {
+	CPassCopy::Create(GFX_PIXELFORMAT_BGRA8_UNORM_PACK8);
+	CPassBlurBox::Create(GFX_PIXELFORMAT_BGRA8_UNORM_PACK8);
 	CPassPreZ::Create(GFX_PIXELFORMAT_D32_SFLOAT_PACK32);
 	CPassSSAO::Create(GFX_PIXELFORMAT_BGRA8_UNORM_PACK8);
 	CPassShadow::Create(GFX_PIXELFORMAT_D32_SFLOAT_PACK32);
@@ -159,6 +168,8 @@ void CRenderSystem::CreatePass(void)
 	CPassColorGrading::Create(GFX_PIXELFORMAT_BGRA8_UNORM_PACK8);
 	CPassFinal::Create(GFX_PIXELFORMAT_BGRA8_UNORM_PACK8);
 
+	m_pPassCopy = new CPassCopy(this);
+	m_pPassBlurBox = new CPassBlurBox(this);
 	m_pPassPreZ = new CPassPreZ(this);
 	m_pPassSSAO = new CPassSSAO(this);
 	m_pPassShadow = new CPassShadow(this);
@@ -170,6 +181,8 @@ void CRenderSystem::CreatePass(void)
 
 void CRenderSystem::DestroyPass(void)
 {
+	CPassCopy::Destroy();
+	CPassBlurBox::Destroy();
 	CPassPreZ::Destroy();
 	CPassSSAO::Destroy();
 	CPassShadow::Destroy();
@@ -178,6 +191,8 @@ void CRenderSystem::DestroyPass(void)
 	CPassColorGrading::Destroy();
 	CPassFinal::Destroy();
 
+	delete m_pPassCopy;
+	delete m_pPassBlurBox;
 	delete m_pPassPreZ;
 	delete m_pPassSSAO;
 	delete m_pPassShadow;

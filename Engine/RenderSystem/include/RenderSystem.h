@@ -135,6 +135,7 @@ public:
 	CGfxRenderTexturePtr GetRenderTexture(uint32_t name) const;
 
 public:
+	CPassCopy* GetPassCopy(void) const;
 	CPassPreZ* GetPassPreZ(void) const;
 	CPassSSAO* GetPassSSAO(void) const;
 	CPassShadow* GetPassShadow(void) const;
@@ -180,6 +181,8 @@ private:
 	CGfxUniformEngine* m_pEngineUniform;
 
 private:
+	CPassCopy* m_pPassCopy;
+	CPassBlurBox* m_pPassBlurBox;
 	CPassPreZ* m_pPassPreZ;
 	CPassSSAO* m_pPassSSAO;
 	CPassShadow* m_pPassShadow;
