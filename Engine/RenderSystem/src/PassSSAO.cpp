@@ -23,6 +23,9 @@ void CPassSSAO::Destroy(void)
 
 CPassSSAO::CPassSSAO(CRenderSystem* pRenderSystem)
 	: CPassBlit(PASS_SSAO_MATERIAL_NAME, pRenderSystem)
+	, m_samples(16)
+	, m_minRadius(0.045)
+	, m_maxRadius(1.0)
 {
 	CGfxDescriptorLayoutPtr ptrDescriptorLayout = GfxRenderer()->NewDescriptorLayout(DESCRIPTOR_SET_PASS);
 	ptrDescriptorLayout->SetUniformBlockBinding(UNIFORM_ENGINE_NAME, UNIFORM_ENGINE_BIND);
@@ -37,6 +40,21 @@ CPassSSAO::CPassSSAO(CRenderSystem* pRenderSystem)
 CPassSSAO::~CPassSSAO(void)
 {
 
+}
+
+void CPassSSAO::SetSamples(int samples)
+{
+	m_samples = samples;
+}
+
+void CPassSSAO::SetMinRadius(float minRadius)
+{
+	m_minRadius = minRadius;
+}
+
+void CPassSSAO::SetMaxRadius(float maxRadius)
+{
+	m_maxRadius = maxRadius;
 }
 
 void CPassSSAO::SetCamera(CCamera* pCamera)
@@ -91,5 +109,7 @@ void CPassSSAO::Render(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuf
 
 void CPassSSAO::RenderCallback(CGfxCommandBufferPtr ptrCommandBuffer)
 {
-	int a = 0;
+	GfxRenderer()->CmdUniform1i(ptrCommandBuffer, HashValue("Param.samples"), m_samples);
+	GfxRenderer()->CmdUniform1i(ptrCommandBuffer, HashValue("Param.minRadius"), m_minRadius);
+	GfxRenderer()->CmdUniform1i(ptrCommandBuffer, HashValue("Param.maxRadius"), m_maxRadius);
 }

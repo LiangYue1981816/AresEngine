@@ -43,6 +43,12 @@ USE_DEPTH_TEXTURE_UNIFORM;
 
 DESCRIPTOR_SET_MATPASS(8) mediump uniform sampler2D texNoise;
 
+layout(push_constant, std430) uniform PushConstantParam {
+	int samples;
+	float minRadius;
+	float maxRadius;
+} Param;
+
 
 highp float LinearDepth(highp float depth)
 {
@@ -145,11 +151,13 @@ void main()
 	highp vec3 curNormal = normalize(cross(dFdy(curPosition), dFdx(curPosition)));
 	highp vec3 curReflect = normalize(texture(texNoise, noiseTexcoord).xyz * 2.0 - 1.0);
 
-	highp int count = 16;
-	highp float radius = mix(0.045, 1.0, smoothstep(0.0, 0.45, LinearDepth(curDepth) / (cameraZFar - cameraZNear)));
+	highp int samples = clamp(Param.samples, 4, 64);
+	highp float minRadius = clamp(Param.minRadius, 0.02, 0.1);
+	highp float maxRadius = clamp(Param.maxRadius, 0.10, 2.0);
+	highp float radius = mix(minRadius, maxRadius, smoothstep(0.0, 0.45, LinearDepth(curDepth) / (cameraZFar - cameraZNear)));
 	highp float occlusion = 0.0;
 
-	for (int index = 0; index < count; index++) {
+	for (int index = 0; index < samples; index++) {
 		highp vec3 sampleNormal = reflect(sample_sphere[index], curReflect);
 		highp vec3 samplePosition = curPosition + sign(dot(curNormal, sampleNormal)) * sampleNormal * radius;
 
@@ -164,7 +172,7 @@ void main()
 		occlusion += step(samplePosition.z, checkSamplePosition.z) * checkRange;
 	}
 
-	occlusion = 1.0 - clamp(occlusion / float(count), 0.0, 1.0);
+	occlusion = 1.0 - clamp(occlusion / float(samples), 0.0, 1.0);
 
 	outFragColor.rgb = vec3(occlusion);
 	outFragColor.a = 1.0;
