@@ -25,7 +25,11 @@ public:
 
 private:
 	void Render(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer);
+	void RenderCallback(CGfxCommandBufferPtr ptrCommandBuffer);
 
+
+private:
+	float m_range;
 
 private:
 	CGfxDescriptorSetPtr m_ptrDescriptorSetPass;

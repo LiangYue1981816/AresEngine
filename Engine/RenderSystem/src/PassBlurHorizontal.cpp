@@ -23,6 +23,7 @@ void CPassBlurHorizontal::Destroy(void)
 
 CPassBlurHorizontal::CPassBlurHorizontal(CRenderSystem* pRenderSystem)
 	: CPassBlit(PASS_BLUR_HORIZONTAL_MATERIAL_NAME, pRenderSystem)
+	, m_range(1.0f)
 {
 	CGfxDescriptorLayoutPtr ptrDescriptorLayout = GfxRenderer()->NewDescriptorLayout(DESCRIPTOR_SET_PASS);
 	ptrDescriptorLayout->SetUniformBlockBinding(UNIFORM_ENGINE_NAME, UNIFORM_ENGINE_BIND);
@@ -87,4 +88,9 @@ void CPassBlurHorizontal::Render(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptr
 	}
 	GfxRenderer()->CmdEndRenderPass(ptrMainCommandBuffer);
 	GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, m_ptrOutputColorTexture, GFX_IMAGE_LAYOUT_COLOR_READ_ONLY_OPTIMAL);
+}
+
+void CPassBlurHorizontal::RenderCallback(CGfxCommandBufferPtr ptrCommandBuffer)
+{
+	GfxRenderer()->CmdUniform1f(ptrCommandBuffer, HashValue("Param.range"), m_range);
 }
