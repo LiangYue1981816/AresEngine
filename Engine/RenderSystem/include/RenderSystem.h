@@ -1,7 +1,6 @@
 #pragma once
 #include "PreHeader.h"
 
-#include "RenderSystem/include/Camera.h"
 #include "RenderSystem/include/PassBlit.h"
 #include "RenderSystem/include/PassCopy.h"
 #include "RenderSystem/include/PassBlurBox.h"

@@ -4,4 +4,5 @@
 #include "GfxHeader.h"
 #include "SceneHeader.h"
 
+#include "RenderSystem/include/Camera.h"
 #include "RenderSystem/include/RenderSystem.h"
