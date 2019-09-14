@@ -58,6 +58,7 @@ layout (location = 13)                                     in mediump vec4 inIns
 // PostProcessing
 #define DESCRIPTOR_BIND_SHADOW_TEXTURE                     5
 #define DESCRIPTOR_BIND_SSAO_TEXTURE                       6
+#define DESCRIPTOR_BIND_ADD_TEXTURE                        5
 
 
 #define USE_CAMERA_UNIFORM                                                         \
@@ -132,6 +133,9 @@ layout (location = 13)                                     in mediump vec4 inIns
 
 #define USE_SSAO_TEXTURE_UNIFORM                                                   \
 	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_SSAO_TEXTURE) mediump uniform sampler2D texSSAO
+
+#define USE_ADD_TEXTURE_UNIFORM                                                    \
+	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_ADD_TEXTURE) mediump uniform sampler2D texAdd
 
 
 USE_CAMERA_UNIFORM;
