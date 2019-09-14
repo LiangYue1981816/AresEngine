@@ -23,6 +23,7 @@ void CPassThreshold::Destroy(void)
 
 CPassThreshold::CPassThreshold(CRenderSystem* pRenderSystem)
 	: CPassBlit(PASS_THRESHOLD_MATERIAL_NAME, pRenderSystem)
+	, m_threshold(0.85f)
 {
 	CGfxDescriptorLayoutPtr ptrDescriptorLayout = GfxRenderer()->NewDescriptorLayout(DESCRIPTOR_SET_PASS);
 	ptrDescriptorLayout->SetUniformBlockBinding(UNIFORM_ENGINE_NAME, UNIFORM_ENGINE_BIND);
@@ -67,6 +68,11 @@ void CPassThreshold::SetOutputTexture(CGfxRenderTexturePtr ptrColorTexture)
 	}
 }
 
+void CPassThreshold::SetParamThreshold(float threshold)
+{
+	m_threshold = threshold;
+}
+
 void CPassThreshold::Render(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrMainCommandBuffer)
 {
 	// Update
@@ -87,4 +93,9 @@ void CPassThreshold::Render(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrMainC
 	}
 	GfxRenderer()->CmdEndRenderPass(ptrMainCommandBuffer);
 	GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, m_ptrOutputColorTexture, GFX_IMAGE_LAYOUT_COLOR_READ_ONLY_OPTIMAL);
+}
+
+void CPassThreshold::RenderCallback(CGfxCommandBufferPtr ptrCommandBuffer)
+{
+	GfxRenderer()->CmdUniform1f(ptrCommandBuffer, HashValue("Param.threshold"), m_threshold);
 }

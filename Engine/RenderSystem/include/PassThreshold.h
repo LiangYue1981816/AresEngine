@@ -23,9 +23,15 @@ public:
 	void SetInputTexture(CGfxRenderTexturePtr ptrColorTexture);
 	void SetOutputTexture(CGfxRenderTexturePtr ptrColorTexture);
 
+	void SetParamThreshold(float threshold);
+
 private:
 	void Render(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer);
+	void RenderCallback(CGfxCommandBufferPtr ptrCommandBuffer);
 
+
+private:
+	float m_threshold;
 
 private:
 	CGfxDescriptorSetPtr m_ptrDescriptorSetPass;

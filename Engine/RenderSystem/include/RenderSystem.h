@@ -136,13 +136,15 @@ public:
 
 public:
 	CPassCopy* GetPassCopy(void) const;
-	CPassBlurBox* GetPassBlurBox(void) const;
+	CPassThreshold* GetPassBloomThreshold(void) const;
+	CPassBlurHorizontal* GetPassBloomBlurHorizontal(void) const;
+	CPassBlurVertical* GetPassBloomBlurVertical(void) const;
+	CPassColorGrading* GetPassColorGrading(void) const;
 	CPassPreZ* GetPassPreZ(void) const;
 	CPassSSAO* GetPassSSAO(void) const;
 	CPassShadow* GetPassShadow(void) const;
 	CPassDefault* GetPassDefault(void) const;
 	CPassForwardLighting* GetPassForwardLighting(void) const;
-	CPassColorGrading* GetPassColorGrading(void) const;
 	CPassFinal* GetPassFinal(void) const;
 
 public:
@@ -183,13 +185,15 @@ private:
 
 private:
 	CPassCopy* m_pPassCopy;
-	CPassBlurBox* m_pPassBlurBox;
+	CPassThreshold* m_pPassBloomThreshold;
+	CPassBlurHorizontal* m_pPassBloomBlurHorizontal;
+	CPassBlurVertical* m_pPassBloomBlurVertical;
+	CPassColorGrading* m_pPassColorGrading;
 	CPassPreZ* m_pPassPreZ;
 	CPassSSAO* m_pPassSSAO;
 	CPassShadow* m_pPassShadow;
 	CPassDefault* m_pPassDefault;
 	CPassForwardLighting* m_pPassForwardLighting;
-	CPassColorGrading* m_pPassColorGrading;
 	CPassFinal* m_pPassFinal;
 
 private:
