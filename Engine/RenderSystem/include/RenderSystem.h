@@ -92,10 +92,10 @@
 #define RENDER_TEXTURE_SWAPCHAIN_COLOR1                    1
 #define RENDER_TEXTURE_SWAPCHAIN_COLOR2                    2
 #define RENDER_TEXTURE_SHADOW                              HashValue("RenderTextureShadow")
-#define RENDER_TEXTURE_FRAMEBUFFER_DEPTH                   HashValue("RenderTextureFrameBufferDepth")
-#define RENDER_TEXTURE_FRAMEBUFFER_COLOR                   HashValue("RenderTextureFrameBufferColor")
-#define RENDER_TEXTURE_FRAMEBUFFER_FINAL                   HashValue("RenderTextureFrameBufferFinal")
-#define RENDER_TEXTURE_SSAO                                HashValue("RenderTextureSSAO")
+#define RENDER_TEXTURE_FULL_DEPTH                          HashValue("RenderTextureFullDepth")
+#define RENDER_TEXTURE_FULL_COLOR0                         HashValue("RenderTextureFullColor0")
+#define RENDER_TEXTURE_FULL_COLOR1                         HashValue("RenderTextureFullColor1")
+#define RENDER_TEXTURE_FULL_COLOR2                         HashValue("RenderTextureFullColor2")
 
 
 class CALL_API CRenderSystem
@@ -136,6 +136,7 @@ public:
 
 public:
 	CPassCopy* GetPassCopy(void) const;
+	CPassBlurBox* GetPassBlurBox(void) const;
 	CPassPreZ* GetPassPreZ(void) const;
 	CPassSSAO* GetPassSSAO(void) const;
 	CPassShadow* GetPassShadow(void) const;
