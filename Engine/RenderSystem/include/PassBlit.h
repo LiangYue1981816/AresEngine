@@ -13,7 +13,7 @@ protected:
 	virtual ~CPassBlit(void);
 
 
-private:
+protected:
 	virtual void RenderCallback(CGfxCommandBufferPtr ptrCommandBuffer) {}
 	static  void RenderCallback(CGfxCommandBufferPtr ptrCommandBuffer, void* param);
 

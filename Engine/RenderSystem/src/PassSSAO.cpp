@@ -91,5 +91,5 @@ void CPassSSAO::Render(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuf
 
 void CPassSSAO::RenderCallback(CGfxCommandBufferPtr ptrCommandBuffer)
 {
-
+	int a = 0;
 }
