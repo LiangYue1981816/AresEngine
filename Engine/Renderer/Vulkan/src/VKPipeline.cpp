@@ -40,27 +40,22 @@ bool CVKPipeline::CreateLayouts(void)
 {
 	for (int indexShader = 0; indexShader < compute_shader - vertex_shader + 1; indexShader++) {
 		if (m_pShaders[indexShader] && m_pShaders[indexShader]->IsValid()) {
-			const eastl::unordered_map<eastl::string, PushConstantRange>& pushConstantRanges = m_pShaders[indexShader]->GetSprivCross().GetPushConstantRanges();
-			const eastl::unordered_map<eastl::string, DescriptorSetBinding>& uniformBlockBindings = m_pShaders[indexShader]->GetSprivCross().GetUniformBlockBindings();
-			const eastl::unordered_map<eastl::string, DescriptorSetBinding>& sampledImageBindings = m_pShaders[indexShader]->GetSprivCross().GetSampledImageBindings();
-			const eastl::unordered_map<eastl::string, InputAttachmentBinding>& inputAttachmentBindings = m_pShaders[indexShader]->GetSprivCross().GetInputAttachmentBindings();
-
-			for (const auto& itPushConstant : pushConstantRanges) {
+			for (const auto& itPushConstant : m_pShaders[indexShader]->GetSprivCross().GetPushConstantRanges()) {
 				uint32_t name = HashValue(itPushConstant.first.c_str());
 				m_pushConstantRanges[name].stageFlags = vkGetShaderStageFlagBits((shader_kind)indexShader);
 				m_pushConstantRanges[name].offset = itPushConstant.second.offset;
 				m_pushConstantRanges[name].size = itPushConstant.second.range;
 			}
 
-			for (const auto& itUniformBlock : uniformBlockBindings) {
+			for (const auto& itUniformBlock : m_pShaders[indexShader]->GetSprivCross().GetUniformBlockBindings()) {
 				m_ptrDescriptorLayouts[itUniformBlock.second.set]->SetUniformBlockBinding(HashValue(itUniformBlock.first.c_str()), itUniformBlock.second.binding);
 			}
 
-			for (const auto& itSampledImage : sampledImageBindings) {
+			for (const auto& itSampledImage : m_pShaders[indexShader]->GetSprivCross().GetSampledImageBindings()) {
 				m_ptrDescriptorLayouts[itSampledImage.second.set]->SetSampledImageBinding(HashValue(itSampledImage.first.c_str()), itSampledImage.second.binding);
 			}
 
-			for (const auto& itInputAttachment : inputAttachmentBindings) {
+			for (const auto& itInputAttachment : m_pShaders[indexShader]->GetSprivCross().GetInputAttachmentBindings()) {
 				uint32_t name = HashValue(itInputAttachment.first.c_str());
 				m_inputAttachmentNames[itInputAttachment.second.inputAttachmentIndex] = name;
 				m_ptrDescriptorLayouts[itInputAttachment.second.set]->SetInputAttachmentBinding(name, itInputAttachment.second.binding);

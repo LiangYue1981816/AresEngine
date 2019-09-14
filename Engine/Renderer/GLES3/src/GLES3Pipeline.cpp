@@ -66,26 +66,21 @@ bool CGLES3Pipeline::CreateLayouts(void)
 {
 	for (int indexShader = 0; indexShader < compute_shader - vertex_shader + 1; indexShader++) {
 		if (m_pShaders[indexShader] && m_pShaders[indexShader]->IsValid()) {
-			const eastl::unordered_map<eastl::string, PushConstantRange>& pushConstantRanges = m_pShaders[indexShader]->GetSprivCross().GetPushConstantRanges();
-			const eastl::unordered_map<eastl::string, DescriptorSetBinding>& uniformBlockBindings = m_pShaders[indexShader]->GetSprivCross().GetUniformBlockBindings();
-			const eastl::unordered_map<eastl::string, DescriptorSetBinding>& sampledImageBindings = m_pShaders[indexShader]->GetSprivCross().GetSampledImageBindings();
-			const eastl::unordered_map<eastl::string, InputAttachmentBinding>& inputAttachmentBindings = m_pShaders[indexShader]->GetSprivCross().GetInputAttachmentBindings();
-
-			for (const auto& itPushConstant : pushConstantRanges) {
+			for (const auto& itPushConstant : m_pShaders[indexShader]->GetSprivCross().GetPushConstantRanges()) {
 				SetUniformLocation(itPushConstant.first.c_str());
 			}
 
-			for (const auto& itUniformBlock : uniformBlockBindings) {
+			for (const auto& itUniformBlock : m_pShaders[indexShader]->GetSprivCross().GetUniformBlockBindings()) {
 				SetUniformBlockBinding(itUniformBlock.first.c_str(), itUniformBlock.second.binding);
 				m_ptrDescriptorLayouts[itUniformBlock.second.set]->SetUniformBlockBinding(HashValue(itUniformBlock.first.c_str()), itUniformBlock.second.binding);
 			}
 
-			for (const auto& itSampledImage : sampledImageBindings) {
+			for (const auto& itSampledImage : m_pShaders[indexShader]->GetSprivCross().GetSampledImageBindings()) {
 				SetSampledImageLocation(itSampledImage.first.c_str());
 				m_ptrDescriptorLayouts[itSampledImage.second.set]->SetSampledImageBinding(HashValue(itSampledImage.first.c_str()), itSampledImage.second.binding);
 			}
 
-			for (const auto& itInputAttachment : inputAttachmentBindings) {
+			for (const auto& itInputAttachment : m_pShaders[indexShader]->GetSprivCross().GetInputAttachmentBindings()) {
 				SetInputAttachmentLocation(itInputAttachment.first.c_str(), itInputAttachment.second.inputAttachmentIndex);
 				m_ptrDescriptorLayouts[itInputAttachment.second.set]->SetInputAttachmentBinding(HashValue(itInputAttachment.first.c_str()), itInputAttachment.second.binding);
 			}
