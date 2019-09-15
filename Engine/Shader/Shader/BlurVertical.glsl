@@ -49,15 +49,17 @@ void main()
 {
 	highp vec2 range = vec2(Param.range);
 
-	highp vec3 result = vec3(0.0);
+	highp float offsets[5] = float[](0.0, 1.0, 2.0, 3.0, 4.0);
+	highp float weights[5] = float[](0.2270270270, 0.1945945946, 0.1216216216, 0.0540540541, 0.0162162162);
+
 	highp vec2 texelSize = range / vec2(textureSize(texColor, 0));
+	highp vec3 result = texture(texColor, inTexcoord).rgb * weights[0];
 
-	for (highp float y = -1.0; y <= 1.0; y++) {
-		highp vec2 offset = vec2(0.0, y) * texelSize;
-		result += texture(texColor, inTexcoord + offset).rgb;
+	for (int i = 1; i < 5; i++) {
+		highp vec2 offset = vec2(0.0, offsets[i]) * texelSize;
+		result += texture(texColor, inTexcoord + offset).rgb * weights[i];
+		result += texture(texColor, inTexcoord - offset).rgb * weights[i];
 	}
-
-	result /= 3.0;
 
 	outFragColor.rgb = result;
 	outFragColor.a = 1.0;

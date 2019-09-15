@@ -23,7 +23,7 @@ void CPassBlendAdd::Destroy(void)
 
 CPassBlendAdd::CPassBlendAdd(CRenderSystem* pRenderSystem)
 	: CPassBlit(PASS_BLEND_ADD_MATERIAL_NAME, pRenderSystem)
-	, m_factor(0.25f)
+	, m_factor(0.5f)
 {
 	CGfxDescriptorLayoutPtr ptrDescriptorLayout = GfxRenderer()->NewDescriptorLayout(DESCRIPTOR_SET_PASS);
 	ptrDescriptorLayout->SetUniformBlockBinding(UNIFORM_ENGINE_NAME, UNIFORM_ENGINE_BIND);
