@@ -23,6 +23,8 @@ public:
 	void SetInputTexture(CGfxRenderTexturePtr ptrColorTexture);
 	void SetOutputTexture(CGfxRenderTexturePtr ptrColorTexture);
 
+	void SetParamRange(float range);
+
 private:
 	void Render(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer);
 	void RenderCallback(CGfxCommandBufferPtr ptrCommandBuffer);

@@ -68,6 +68,11 @@ void CPassBlurHorizontal::SetOutputTexture(CGfxRenderTexturePtr ptrColorTexture)
 	}
 }
 
+void CPassBlurHorizontal::SetParamRange(float range)
+{
+	m_range = range;
+}
+
 void CPassBlurHorizontal::Render(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrMainCommandBuffer)
 {
 	// Update
