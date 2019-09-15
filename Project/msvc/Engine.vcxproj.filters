@@ -1596,7 +1596,7 @@
     <ClInclude Include="..\..\Engine\RenderSystem\include\PassThreshold.h">
       <Filter>Engine\RenderSystem\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Engine\RenderSystem\include\PassAdd.h">
+    <ClInclude Include="..\..\Engine\RenderSystem\include\PassBlendAdd.h">
       <Filter>Engine\RenderSystem\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -2321,7 +2321,7 @@
     <ClCompile Include="..\..\Engine\RenderSystem\src\PassThreshold.cpp">
       <Filter>Engine\RenderSystem\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Engine\RenderSystem\src\PassAdd.cpp">
+    <ClCompile Include="..\..\Engine\RenderSystem\src\PassBlendAdd.cpp">
       <Filter>Engine\RenderSystem\Source Files</Filter>
     </ClCompile>
   </ItemGroup>

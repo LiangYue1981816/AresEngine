@@ -97,7 +97,7 @@ void CRenderSystem::CreatePass(void)
 	CPassShadow::Create(GFX_PIXELFORMAT_D32_SFLOAT_PACK32);
 	CPassDefault::Create(GFX_PIXELFORMAT_BGRA8_UNORM_PACK8, GFX_PIXELFORMAT_D32_SFLOAT_PACK32);
 	CPassForwardLighting::Create(GFX_PIXELFORMAT_BGRA8_UNORM_PACK8, GFX_PIXELFORMAT_D32_SFLOAT_PACK32);
-	CPassAdd::Create(GFX_PIXELFORMAT_BGRA8_UNORM_PACK8);
+	CPassBlendAdd::Create(GFX_PIXELFORMAT_BGRA8_UNORM_PACK8);
 	CPassCopy::Create(GFX_PIXELFORMAT_BGRA8_UNORM_PACK8);
 	CPassSSAO::Create(GFX_PIXELFORMAT_BGRA8_UNORM_PACK8);
 	CPassBlurBox::Create(GFX_PIXELFORMAT_BGRA8_UNORM_PACK8);
@@ -115,7 +115,7 @@ void CRenderSystem::CreatePass(void)
 	m_pPassBloomThreshold = new CPassThreshold(this);
 	m_pPassBloomBlurHorizontal = new CPassBlurHorizontal(this);
 	m_pPassBloomBlurVertical = new CPassBlurVertical(this);
-	m_pPassBloomAdd = new CPassAdd(this);
+	m_pPassBloomAdd = new CPassBlendAdd(this);
 	m_pPassColorGrading = new CPassColorGrading(this);
 	m_pPassFinal = new CPassFinal(this);
 }
@@ -126,7 +126,7 @@ void CRenderSystem::DestroyPass(void)
 	CPassShadow::Destroy();
 	CPassDefault::Destroy();
 	CPassForwardLighting::Destroy();
-	CPassAdd::Destroy();
+	CPassBlendAdd::Destroy();
 	CPassCopy::Destroy();
 	CPassSSAO::Destroy();
 	CPassBlurBox::Destroy();
@@ -217,7 +217,7 @@ CPassBlurVertical* CRenderSystem::GetPassBloomBlurVertical(void) const
 	return m_pPassBloomBlurVertical;
 }
 
-CPassAdd* CRenderSystem::GetPassBloomAdd(void) const
+CPassBlendAdd* CRenderSystem::GetPassBloomAdd(void) const
 {
 	return m_pPassBloomAdd;
 }

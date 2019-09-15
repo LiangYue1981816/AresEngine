@@ -2,7 +2,7 @@
 #include "PreHeader.h"
 
 
-class CALL_API CPassAdd : public CPassBlit
+class CALL_API CPassBlendAdd : public CPassBlit
 {
 	friend class CCamera;
 	friend class CRenderSystem;
@@ -14,8 +14,8 @@ private:
 
 
 private:
-	CPassAdd(CRenderSystem* pRenderSystem);
-	virtual ~CPassAdd(void);
+	CPassBlendAdd(CRenderSystem* pRenderSystem);
+	virtual ~CPassBlendAdd(void);
 
 
 public:

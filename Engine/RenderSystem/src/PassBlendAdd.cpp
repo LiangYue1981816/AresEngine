@@ -5,24 +5,24 @@ static const int numSubpasses = 1;
 static const int numAttachments = 1;
 static CGfxRenderPassPtr ptrRenderPass;
 
-void CPassAdd::Create(GfxPixelFormat colorPixelFormat)
+void CPassBlendAdd::Create(GfxPixelFormat colorPixelFormat)
 {
 	const float color[] = { 0.0f, 0.0f, 0.0f, 0.0f };
 
-	ptrRenderPass = GfxRenderer()->NewRenderPass(PASS_ADD_NAME, numAttachments, numSubpasses);
+	ptrRenderPass = GfxRenderer()->NewRenderPass(PASS_BLEND_ADD_NAME, numAttachments, numSubpasses);
 	ptrRenderPass->SetColorAttachment(0, colorPixelFormat, 1, false, true, color[0], color[1], color[2], color[3]);
 	ptrRenderPass->SetSubpassOutputColorReference(0, 0);
 	ptrRenderPass->Create();
 }
 
-void CPassAdd::Destroy(void)
+void CPassBlendAdd::Destroy(void)
 {
 	ptrRenderPass.Release();
 }
 
 
-CPassAdd::CPassAdd(CRenderSystem* pRenderSystem)
-	: CPassBlit(PASS_ADD_MATERIAL_NAME, pRenderSystem)
+CPassBlendAdd::CPassBlendAdd(CRenderSystem* pRenderSystem)
+	: CPassBlit(PASS_BLEND_ADD_MATERIAL_NAME, pRenderSystem)
 {
 	CGfxDescriptorLayoutPtr ptrDescriptorLayout = GfxRenderer()->NewDescriptorLayout(DESCRIPTOR_SET_PASS);
 	ptrDescriptorLayout->SetUniformBlockBinding(UNIFORM_ENGINE_NAME, UNIFORM_ENGINE_BIND);
@@ -31,16 +31,16 @@ CPassAdd::CPassAdd(CRenderSystem* pRenderSystem)
 	ptrDescriptorLayout->SetSampledImageBinding(UNIFORM_ADD_TEXTURE_NAME, UNIFORM_ADD_TEXTURE_BIND);
 	ptrDescriptorLayout->Create();
 
-	m_ptrDescriptorSetPass = GfxRenderer()->NewDescriptorSet(PASS_ADD_NAME, ptrDescriptorLayout);
+	m_ptrDescriptorSetPass = GfxRenderer()->NewDescriptorSet(PASS_BLEND_ADD_NAME, ptrDescriptorLayout);
 	m_ptrDescriptorSetPass->SetUniformBuffer(UNIFORM_ENGINE_NAME, m_pRenderSystem->GetEngineUniform()->GetUniformBuffer(), 0, m_pRenderSystem->GetEngineUniform()->GetUniformBuffer()->GetSize());
 }
 
-CPassAdd::~CPassAdd(void)
+CPassBlendAdd::~CPassBlendAdd(void)
 {
 
 }
 
-void CPassAdd::SetCamera(CCamera* pCamera)
+void CPassBlendAdd::SetCamera(CCamera* pCamera)
 {
 	if (m_pCamera != pCamera) {
 		m_ptrDescriptorSetPass->SetUniformBuffer(UNIFORM_CAMERA_NAME, pCamera->GetCameraUniform()->GetUniformBuffer(), 0, pCamera->GetCameraUniform()->GetUniformBuffer()->GetSize());
@@ -48,7 +48,7 @@ void CPassAdd::SetCamera(CCamera* pCamera)
 	}
 }
 
-void CPassAdd::SetInputTexture(CGfxRenderTexturePtr ptrColorTexture, CGfxRenderTexturePtr ptrAddTexture)
+void CPassBlendAdd::SetInputTexture(CGfxRenderTexturePtr ptrColorTexture, CGfxRenderTexturePtr ptrAddTexture)
 {
 	CGfxSampler* pSamplerPoint = GfxRenderer()->CreateSampler(GFX_FILTER_NEAREST, GFX_FILTER_NEAREST, GFX_SAMPLER_MIPMAP_MODE_NEAREST, GFX_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE);
 
@@ -60,7 +60,7 @@ void CPassAdd::SetInputTexture(CGfxRenderTexturePtr ptrColorTexture, CGfxRenderT
 	}
 }
 
-void CPassAdd::SetOutputTexture(CGfxRenderTexturePtr ptrColorTexture)
+void CPassBlendAdd::SetOutputTexture(CGfxRenderTexturePtr ptrColorTexture)
 {
 	if (m_ptrOutputColorTexture != ptrColorTexture) {
 		m_ptrFrameBuffer = GfxRenderer()->NewFrameBuffer(ptrColorTexture->GetWidth(), ptrColorTexture->GetHeight(), numAttachments);
@@ -70,7 +70,7 @@ void CPassAdd::SetOutputTexture(CGfxRenderTexturePtr ptrColorTexture)
 	}
 }
 
-void CPassAdd::Render(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrMainCommandBuffer)
+void CPassBlendAdd::Render(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrMainCommandBuffer)
 {
 	// Update
 	m_pCamera->GetCameraUniform()->Apply();
@@ -86,7 +86,7 @@ void CPassAdd::Render(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrMainCommand
 		const glm::vec4 scissor = glm::vec4(0.0, 0.0, w, h);
 		const glm::vec4 viewport = glm::vec4(0.0, 0.0, w, h);
 
-		m_pRenderQueue->CmdDraw(&taskGraph, ptrMainCommandBuffer, m_ptrDescriptorSetPass, PASS_ADD_NAME, scissor, viewport, 0xffffffff);
+		m_pRenderQueue->CmdDraw(&taskGraph, ptrMainCommandBuffer, m_ptrDescriptorSetPass, PASS_BLEND_ADD_NAME, scissor, viewport, 0xffffffff);
 	}
 	GfxRenderer()->CmdEndRenderPass(ptrMainCommandBuffer);
 	GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, m_ptrOutputColorTexture, GFX_IMAGE_LAYOUT_COLOR_READ_ONLY_OPTIMAL);

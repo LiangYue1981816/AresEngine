@@ -10,13 +10,13 @@ class CALL_API CCamera
 	friend class CPassDefault;
 	friend class CPassForwardLighting;
 	friend class CPassBlit;
-	friend class CPassAdd;
 	friend class CPassCopy;
 	friend class CPassSSAO;
+	friend class CPassThreshold;
 	friend class CPassBlurBox;
 	friend class CPassBlurHorizontal;
 	friend class CPassBlurVertical;
-	friend class CPassThreshold;
+	friend class CPassBlendAdd;
 	friend class CPassColorGrading;
 	friend class CPassFinal;
 

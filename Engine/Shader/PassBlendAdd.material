@@ -1,12 +1,12 @@
 <Material>
-	<Pass name="PassAdd">
-		<Pipeline render_pass="PassAdd">
-		  <Vertex file_name="Add.glsl">
+	<Pass name="PassBlendAdd">
+		<Pipeline render_pass="PassBlendAdd">
+		  <Vertex file_name="BlendAdd.glsl">
 		    <Define name="VERTEX_ATTRIBUTE_POSITION" />
         <Define name="VERTEX_ATTRIBUTE_TEXCOORD0" />
         <Define name="INSTANCE_ATTRIBUTE_TRANSFORM" />
 		  </Vertex>
-		  <Fragment file_name="Add.glsl">
+		  <Fragment file_name="BlendAdd.glsl">
 		  </Fragment>
 		  <State>
 		  	<Rasterization>

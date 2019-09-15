@@ -6,13 +6,13 @@
 #include "RenderSystem/include/PassDefault.h"
 #include "RenderSystem/include/PassForwardLighting.h"
 #include "RenderSystem/include/PassBlit.h"
-#include "RenderSystem/include/PassAdd.h"
 #include "RenderSystem/include/PassCopy.h"
 #include "RenderSystem/include/PassSSAO.h"
+#include "RenderSystem/include/PassThreshold.h"
 #include "RenderSystem/include/PassBlurBox.h"
 #include "RenderSystem/include/PassBlurHorizontal.h"
 #include "RenderSystem/include/PassBlurVertical.h"
-#include "RenderSystem/include/PassThreshold.h"
+#include "RenderSystem/include/PassBlendAdd.h"
 #include "RenderSystem/include/PassColorGrading.h"
 #include "RenderSystem/include/PassFinal.h"
 
@@ -67,28 +67,28 @@
 
 
 // Pass
-#define PASS_ADD_NAME                                      HashValue("PassAdd")
-#define PASS_COPY_NAME                                     HashValue("PassCopy")
-#define PASS_BLUR_BOX_NAME                                 HashValue("PassBlurBox")
-#define PASS_BLUR_HORIZONTAL_NAME                          HashValue("PassBlurHorizontal")
-#define PASS_BLUR_VERTICAL_NAME                            HashValue("PassBlurVertical")
-#define PASS_THRESHOLD_NAME                                HashValue("PassThreshold")
-#define PASS_COLOR_GRADING_NAME                            HashValue("PassColorGrading")
 #define PASS_PREZ_NAME                                     HashValue("PassPreZ")
-#define PASS_SSAO_NAME                                     HashValue("PassSSAO")
 #define PASS_SHADOW_NAME                                   HashValue("PassShadow")
 #define PASS_DEFAULT_NAME                                  HashValue("PassDefault")
 #define PASS_FORWARD_LIGHTING_NAME                         HashValue("PassForwardLighting")
+#define PASS_COPY_NAME                                     HashValue("PassCopy")
+#define PASS_SSAO_NAME                                     HashValue("PassSSAO")
+#define PASS_THRESHOLD_NAME                                HashValue("PassThreshold")
+#define PASS_BLUR_BOX_NAME                                 HashValue("PassBlurBox")
+#define PASS_BLUR_HORIZONTAL_NAME                          HashValue("PassBlurHorizontal")
+#define PASS_BLUR_VERTICAL_NAME                            HashValue("PassBlurVertical")
+#define PASS_BLEND_ADD_NAME                                HashValue("PassBlendAdd")
+#define PASS_COLOR_GRADING_NAME                            HashValue("PassColorGrading")
 #define PASS_FINAL_NAME                                    HashValue("PassFinal")
 
-#define PASS_ADD_MATERIAL_NAME                             "PassAdd.material"
 #define PASS_COPY_MATERIAL_NAME                            "PassCopy.material"
+#define PASS_SSAO_MATERIAL_NAME                            "PassSSAO.material"
+#define PASS_THRESHOLD_MATERIAL_NAME                       "PassThreshold.material"
 #define PASS_BLUR_BOX_MATERIAL_NAME                        "PassBlurBox.material"
 #define PASS_BLUR_HORIZONTAL_MATERIAL_NAME                 "PassBlurHorizontal.material"
 #define PASS_BLUR_VERTICAL_MATERIAL_NAME                   "PassBlurVertical.material"
-#define PASS_THRESHOLD_MATERIAL_NAME                       "PassThreshold.material"
+#define PASS_BLEND_ADD_MATERIAL_NAME                       "PassBlendAdd.material"
 #define PASS_COLOR_GRADING_MATERIAL_NAME                   "PassColorGrading.material"
-#define PASS_SSAO_MATERIAL_NAME                            "PassSSAO.material"
 #define PASS_FINAL_MATERIAL_NAME                           "PassFinal.material"
 
 
@@ -112,13 +112,13 @@ class CALL_API CRenderSystem
 	friend class CPassDefault;
 	friend class CPassForwardLighting;
 	friend class CPassBlit;
-	friend class CPassAdd;
 	friend class CPassCopy;
 	friend class CPassSSAO;
+	friend class CPassThreshold;
 	friend class CPassBlurBox;
 	friend class CPassBlurHorizontal;
 	friend class CPassBlurVertical;
-	friend class CPassThreshold;
+	friend class CPassBlendAdd;
 	friend class CPassColorGrading;
 	friend class CPassFinal;
 
@@ -150,7 +150,7 @@ public:
 	CPassThreshold* GetPassBloomThreshold(void) const;
 	CPassBlurHorizontal* GetPassBloomBlurHorizontal(void) const;
 	CPassBlurVertical* GetPassBloomBlurVertical(void) const;
-	CPassAdd* GetPassBloomAdd(void) const;
+	CPassBlendAdd* GetPassBloomAdd(void) const;
 	CPassColorGrading* GetPassColorGrading(void) const;
 	CPassFinal* GetPassFinal(void) const;
 
@@ -199,7 +199,7 @@ private:
 	CPassThreshold* m_pPassBloomThreshold;
 	CPassBlurHorizontal* m_pPassBloomBlurHorizontal;
 	CPassBlurVertical* m_pPassBloomBlurVertical;
-	CPassAdd* m_pPassBloomAdd;
+	CPassBlendAdd* m_pPassBloomAdd;
 	CPassColorGrading* m_pPassColorGrading;
 	CPassFinal* m_pPassFinal;
 
