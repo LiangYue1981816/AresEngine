@@ -1593,10 +1593,10 @@
     <ClInclude Include="..\..\Engine\RenderSystem\include\PassBlurVertical.h">
       <Filter>Engine\RenderSystem\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Engine\RenderSystem\include\PassThreshold.h">
+    <ClInclude Include="..\..\Engine\RenderSystem\include\PassBlendAdd.h">
       <Filter>Engine\RenderSystem\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Engine\RenderSystem\include\PassBlendAdd.h">
+    <ClInclude Include="..\..\Engine\RenderSystem\include\PassLuminanceThreshold.h">
       <Filter>Engine\RenderSystem\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -2318,10 +2318,10 @@
     <ClCompile Include="..\..\Engine\RenderSystem\src\PassBlurVertical.cpp">
       <Filter>Engine\RenderSystem\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Engine\RenderSystem\src\PassThreshold.cpp">
+    <ClCompile Include="..\..\Engine\RenderSystem\src\PassBlendAdd.cpp">
       <Filter>Engine\RenderSystem\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Engine\RenderSystem\src\PassBlendAdd.cpp">
+    <ClCompile Include="..\..\Engine\RenderSystem\src\PassLuminanceThreshold.cpp">
       <Filter>Engine\RenderSystem\Source Files</Filter>
     </ClCompile>
   </ItemGroup>

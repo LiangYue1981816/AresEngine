@@ -12,11 +12,11 @@ class CALL_API CCamera
 	friend class CPassBlit;
 	friend class CPassCopy;
 	friend class CPassSSAO;
-	friend class CPassThreshold;
 	friend class CPassBlurBox;
 	friend class CPassBlurHorizontal;
 	friend class CPassBlurVertical;
 	friend class CPassBlendAdd;
+	friend class CPassLuminanceThreshold;
 	friend class CPassColorGrading;
 	friend class CPassFinal;
 

@@ -34,10 +34,10 @@ CRenderSystem::CRenderSystem(GfxApi api, void* hInstance, void* hWnd, void* hDC,
 	, m_pPassDefault(nullptr)
 	, m_pPassForwardLighting(nullptr)
 	, m_pPassSSAO(nullptr)
-	, m_pPassBloomThreshold(nullptr)
+	, m_pPassBloomLuminanceThreshold(nullptr)
 	, m_pPassBloomBlurHorizontal(nullptr)
 	, m_pPassBloomBlurVertical(nullptr)
-	, m_pPassBloomAdd(nullptr)
+	, m_pPassBloomBlendAdd(nullptr)
 	, m_pPassColorGrading(nullptr)
 	, m_pPassFinal(nullptr)
 {
@@ -97,13 +97,13 @@ void CRenderSystem::CreatePass(void)
 	CPassShadow::Create(GFX_PIXELFORMAT_D32_SFLOAT_PACK32);
 	CPassDefault::Create(GFX_PIXELFORMAT_BGRA8_UNORM_PACK8, GFX_PIXELFORMAT_D32_SFLOAT_PACK32);
 	CPassForwardLighting::Create(GFX_PIXELFORMAT_BGRA8_UNORM_PACK8, GFX_PIXELFORMAT_D32_SFLOAT_PACK32);
-	CPassBlendAdd::Create(GFX_PIXELFORMAT_BGRA8_UNORM_PACK8);
 	CPassCopy::Create(GFX_PIXELFORMAT_BGRA8_UNORM_PACK8);
 	CPassSSAO::Create(GFX_PIXELFORMAT_BGRA8_UNORM_PACK8);
 	CPassBlurBox::Create(GFX_PIXELFORMAT_BGRA8_UNORM_PACK8);
 	CPassBlurHorizontal::Create(GFX_PIXELFORMAT_BGRA8_UNORM_PACK8);
 	CPassBlurVertical::Create(GFX_PIXELFORMAT_BGRA8_UNORM_PACK8);
-	CPassThreshold::Create(GFX_PIXELFORMAT_BGRA8_UNORM_PACK8);
+	CPassBlendAdd::Create(GFX_PIXELFORMAT_BGRA8_UNORM_PACK8);
+	CPassLuminanceThreshold::Create(GFX_PIXELFORMAT_BGRA8_UNORM_PACK8);
 	CPassColorGrading::Create(GFX_PIXELFORMAT_BGRA8_UNORM_PACK8);
 	CPassFinal::Create(GFX_PIXELFORMAT_BGRA8_UNORM_PACK8);
 
@@ -112,10 +112,10 @@ void CRenderSystem::CreatePass(void)
 	m_pPassDefault = new CPassDefault(this);
 	m_pPassForwardLighting = new CPassForwardLighting(this);
 	m_pPassSSAO = new CPassSSAO(this);
-	m_pPassBloomThreshold = new CPassThreshold(this);
+	m_pPassBloomLuminanceThreshold = new CPassLuminanceThreshold(this);
 	m_pPassBloomBlurHorizontal = new CPassBlurHorizontal(this);
 	m_pPassBloomBlurVertical = new CPassBlurVertical(this);
-	m_pPassBloomAdd = new CPassBlendAdd(this);
+	m_pPassBloomBlendAdd = new CPassBlendAdd(this);
 	m_pPassColorGrading = new CPassColorGrading(this);
 	m_pPassFinal = new CPassFinal(this);
 }
@@ -126,13 +126,13 @@ void CRenderSystem::DestroyPass(void)
 	CPassShadow::Destroy();
 	CPassDefault::Destroy();
 	CPassForwardLighting::Destroy();
-	CPassBlendAdd::Destroy();
 	CPassCopy::Destroy();
 	CPassSSAO::Destroy();
 	CPassBlurBox::Destroy();
 	CPassBlurHorizontal::Destroy();
 	CPassBlurVertical::Destroy();
-	CPassThreshold::Destroy();
+	CPassBlendAdd::Destroy();
+	CPassLuminanceThreshold::Destroy();
 	CPassColorGrading::Destroy();
 	CPassFinal::Destroy();
 
@@ -141,10 +141,10 @@ void CRenderSystem::DestroyPass(void)
 	delete m_pPassDefault;
 	delete m_pPassForwardLighting;
 	delete m_pPassSSAO;
-	delete m_pPassBloomThreshold;
+	delete m_pPassBloomLuminanceThreshold;
 	delete m_pPassBloomBlurHorizontal;
 	delete m_pPassBloomBlurVertical;
-	delete m_pPassBloomAdd;
+	delete m_pPassBloomBlendAdd;
 	delete m_pPassColorGrading;
 	delete m_pPassFinal;
 }
@@ -202,9 +202,9 @@ CPassSSAO* CRenderSystem::GetPassSSAO(void) const
 	return m_pPassSSAO;
 }
 
-CPassThreshold* CRenderSystem::GetPassBloomThreshold(void) const
+CPassLuminanceThreshold* CRenderSystem::GetPassBloomLuminanceThreshold(void) const
 {
-	return m_pPassBloomThreshold;
+	return m_pPassBloomLuminanceThreshold;
 }
 
 CPassBlurHorizontal* CRenderSystem::GetPassBloomBlurHorizontal(void) const
@@ -217,9 +217,9 @@ CPassBlurVertical* CRenderSystem::GetPassBloomBlurVertical(void) const
 	return m_pPassBloomBlurVertical;
 }
 
-CPassBlendAdd* CRenderSystem::GetPassBloomAdd(void) const
+CPassBlendAdd* CRenderSystem::GetPassBloomBlendAdd(void) const
 {
-	return m_pPassBloomAdd;
+	return m_pPassBloomBlendAdd;
 }
 
 CPassColorGrading* CRenderSystem::GetPassColorGrading(void) const
@@ -413,10 +413,10 @@ void CRenderSystem::RenderForwardLighting(CTaskGraph& taskGraph, CCamera* pCamer
 			uint32_t rtBlurVertical = RENDER_TEXTURE_HALF_COLOR0;
 			uint32_t rtBloom = RENDER_TEXTURE_FULL_COLOR0;
 			{
-				m_pPassBloomThreshold->SetCamera(pCamera);
-				m_pPassBloomThreshold->SetInputTexture(GetRenderTexture(rtColor));
-				m_pPassBloomThreshold->SetOutputTexture(GetRenderTexture(rtThreshold));
-				m_pPassBloomThreshold->Render(taskGraph, ptrCommandBuffer);
+				m_pPassBloomLuminanceThreshold->SetCamera(pCamera);
+				m_pPassBloomLuminanceThreshold->SetInputTexture(GetRenderTexture(rtColor));
+				m_pPassBloomLuminanceThreshold->SetOutputTexture(GetRenderTexture(rtThreshold));
+				m_pPassBloomLuminanceThreshold->Render(taskGraph, ptrCommandBuffer);
 
 				m_pPassBloomBlurHorizontal->SetCamera(pCamera);
 				m_pPassBloomBlurHorizontal->SetInputTexture(GetRenderTexture(rtThreshold));
@@ -428,10 +428,10 @@ void CRenderSystem::RenderForwardLighting(CTaskGraph& taskGraph, CCamera* pCamer
 				m_pPassBloomBlurVertical->SetOutputTexture(GetRenderTexture(rtBlurVertical));
 				m_pPassBloomBlurVertical->Render(taskGraph, ptrCommandBuffer);
 
-				m_pPassBloomAdd->SetCamera(pCamera);
-				m_pPassBloomAdd->SetInputTexture(GetRenderTexture(rtColor), GetRenderTexture(rtBlurVertical));
-				m_pPassBloomAdd->SetOutputTexture(GetRenderTexture(rtBloom));
-				m_pPassBloomAdd->Render(taskGraph, ptrCommandBuffer);
+				m_pPassBloomBlendAdd->SetCamera(pCamera);
+				m_pPassBloomBlendAdd->SetInputTexture(GetRenderTexture(rtColor), GetRenderTexture(rtBlurVertical));
+				m_pPassBloomBlendAdd->SetOutputTexture(GetRenderTexture(rtBloom));
+				m_pPassBloomBlendAdd->Render(taskGraph, ptrCommandBuffer);
 			}
 			rtColor = rtBlurVertical;// rtBloom;
 			rtFinal = RENDER_TEXTURE_FULL_COLOR1;

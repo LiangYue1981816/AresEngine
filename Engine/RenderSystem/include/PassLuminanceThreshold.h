@@ -2,7 +2,7 @@
 #include "PreHeader.h"
 
 
-class CALL_API CPassThreshold : public CPassBlit
+class CALL_API CPassLuminanceThreshold : public CPassBlit
 {
 	friend class CCamera;
 	friend class CRenderSystem;
@@ -14,8 +14,8 @@ private:
 
 
 private:
-	CPassThreshold(CRenderSystem* pRenderSystem);
-	virtual ~CPassThreshold(void);
+	CPassLuminanceThreshold(CRenderSystem* pRenderSystem);
+	virtual ~CPassLuminanceThreshold(void);
 
 
 public:

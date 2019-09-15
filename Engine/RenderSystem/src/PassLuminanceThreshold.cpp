@@ -5,24 +5,24 @@ static const int numSubpasses = 1;
 static const int numAttachments = 1;
 static CGfxRenderPassPtr ptrRenderPass;
 
-void CPassThreshold::Create(GfxPixelFormat colorPixelFormat)
+void CPassLuminanceThreshold::Create(GfxPixelFormat colorPixelFormat)
 {
 	const float color[] = { 0.0f, 0.0f, 0.0f, 0.0f };
 
-	ptrRenderPass = GfxRenderer()->NewRenderPass(PASS_THRESHOLD_NAME, numAttachments, numSubpasses);
+	ptrRenderPass = GfxRenderer()->NewRenderPass(PASS_LUMINANCE_THRESHOLD_NAME, numAttachments, numSubpasses);
 	ptrRenderPass->SetColorAttachment(0, colorPixelFormat, 1, false, true, color[0], color[1], color[2], color[3]);
 	ptrRenderPass->SetSubpassOutputColorReference(0, 0);
 	ptrRenderPass->Create();
 }
 
-void CPassThreshold::Destroy(void)
+void CPassLuminanceThreshold::Destroy(void)
 {
 	ptrRenderPass.Release();
 }
 
 
-CPassThreshold::CPassThreshold(CRenderSystem* pRenderSystem)
-	: CPassBlit(PASS_THRESHOLD_MATERIAL_NAME, pRenderSystem)
+CPassLuminanceThreshold::CPassLuminanceThreshold(CRenderSystem* pRenderSystem)
+	: CPassBlit(PASS_LUMINANCE_THRESHOLD_MATERIAL_NAME, pRenderSystem)
 	, m_threshold(0.65f)
 {
 	CGfxDescriptorLayoutPtr ptrDescriptorLayout = GfxRenderer()->NewDescriptorLayout(DESCRIPTOR_SET_PASS);
@@ -31,16 +31,16 @@ CPassThreshold::CPassThreshold(CRenderSystem* pRenderSystem)
 	ptrDescriptorLayout->SetSampledImageBinding(UNIFORM_COLOR_TEXTURE_NAME, UNIFORM_COLOR_TEXTURE_BIND);
 	ptrDescriptorLayout->Create();
 
-	m_ptrDescriptorSetPass = GfxRenderer()->NewDescriptorSet(PASS_THRESHOLD_NAME, ptrDescriptorLayout);
+	m_ptrDescriptorSetPass = GfxRenderer()->NewDescriptorSet(PASS_LUMINANCE_THRESHOLD_NAME, ptrDescriptorLayout);
 	m_ptrDescriptorSetPass->SetUniformBuffer(UNIFORM_ENGINE_NAME, m_pRenderSystem->GetEngineUniform()->GetUniformBuffer(), 0, m_pRenderSystem->GetEngineUniform()->GetUniformBuffer()->GetSize());
 }
 
-CPassThreshold::~CPassThreshold(void)
+CPassLuminanceThreshold::~CPassLuminanceThreshold(void)
 {
 
 }
 
-void CPassThreshold::SetCamera(CCamera* pCamera)
+void CPassLuminanceThreshold::SetCamera(CCamera* pCamera)
 {
 	if (m_pCamera != pCamera) {
 		m_ptrDescriptorSetPass->SetUniformBuffer(UNIFORM_CAMERA_NAME, pCamera->GetCameraUniform()->GetUniformBuffer(), 0, pCamera->GetCameraUniform()->GetUniformBuffer()->GetSize());
@@ -48,7 +48,7 @@ void CPassThreshold::SetCamera(CCamera* pCamera)
 	}
 }
 
-void CPassThreshold::SetInputTexture(CGfxRenderTexturePtr ptrColorTexture)
+void CPassLuminanceThreshold::SetInputTexture(CGfxRenderTexturePtr ptrColorTexture)
 {
 	CGfxSampler* pSamplerPoint = GfxRenderer()->CreateSampler(GFX_FILTER_NEAREST, GFX_FILTER_NEAREST, GFX_SAMPLER_MIPMAP_MODE_NEAREST, GFX_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE);
 
@@ -58,7 +58,7 @@ void CPassThreshold::SetInputTexture(CGfxRenderTexturePtr ptrColorTexture)
 	}
 }
 
-void CPassThreshold::SetOutputTexture(CGfxRenderTexturePtr ptrColorTexture)
+void CPassLuminanceThreshold::SetOutputTexture(CGfxRenderTexturePtr ptrColorTexture)
 {
 	if (m_ptrOutputColorTexture != ptrColorTexture) {
 		m_ptrFrameBuffer = GfxRenderer()->NewFrameBuffer(ptrColorTexture->GetWidth(), ptrColorTexture->GetHeight(), numAttachments);
@@ -68,12 +68,12 @@ void CPassThreshold::SetOutputTexture(CGfxRenderTexturePtr ptrColorTexture)
 	}
 }
 
-void CPassThreshold::SetParamThreshold(float threshold)
+void CPassLuminanceThreshold::SetParamThreshold(float threshold)
 {
 	m_threshold = threshold;
 }
 
-void CPassThreshold::Render(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrMainCommandBuffer)
+void CPassLuminanceThreshold::Render(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrMainCommandBuffer)
 {
 	// Update
 	m_pCamera->GetCameraUniform()->Apply();
@@ -89,13 +89,13 @@ void CPassThreshold::Render(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrMainC
 		const glm::vec4 scissor = glm::vec4(0.0, 0.0, w, h);
 		const glm::vec4 viewport = glm::vec4(0.0, 0.0, w, h);
 
-		m_pRenderQueue->CmdDraw(&taskGraph, ptrMainCommandBuffer, m_ptrDescriptorSetPass, PASS_THRESHOLD_NAME, scissor, viewport, 0xffffffff);
+		m_pRenderQueue->CmdDraw(&taskGraph, ptrMainCommandBuffer, m_ptrDescriptorSetPass, PASS_LUMINANCE_THRESHOLD_NAME, scissor, viewport, 0xffffffff);
 	}
 	GfxRenderer()->CmdEndRenderPass(ptrMainCommandBuffer);
 	GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, m_ptrOutputColorTexture, GFX_IMAGE_LAYOUT_COLOR_READ_ONLY_OPTIMAL);
 }
 
-void CPassThreshold::RenderCallback(CGfxCommandBufferPtr ptrCommandBuffer)
+void CPassLuminanceThreshold::RenderCallback(CGfxCommandBufferPtr ptrCommandBuffer)
 {
 	GfxRenderer()->CmdUniform1f(ptrCommandBuffer, HashValue("Param.threshold"), m_threshold);
 }
