@@ -47,9 +47,20 @@ layout(push_constant) uniform PushConstantParam {
 
 void main()
 {
+	mediump float threshold = Param.threshold;
+	mediump float softKnee = 0.5;
+
+	mediump float knee = threshold * softKnee + 1e-5;
+	mediump vec3 curve = vec3(threshold - knee, knee * 2.0, 0.25 / knee);
+
 	mediump vec3 color = texture(texColor, inTexcoord).rgb;
-	mediump float luminance = dot(vec3(0.2126, 0.7152, 0.0722), color) - Param.threshold;
-	outFragColor.rgb = color * luminance;
+	mediump float br = max(max(color.r, color.g), color.b);
+	mediump float rq = clamp(br - curve.x, 0.0, curve.y);
+	rq = curve.z * rq * rq;
+
+	color *= max(rq, br - threshold) / max(br, 1e-5);
+
+	outFragColor.rgb = color;
 	outFragColor.a = 1.0;
 }
 #endif

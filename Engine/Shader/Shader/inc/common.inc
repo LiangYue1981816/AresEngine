@@ -39,6 +39,19 @@ highp float UnpackFloat(highp vec4 encode)
 	return dot(encode, kDecodeDot);
 }
 
+mediump vec4 PackHDR(mediump vec3 color)
+{
+	color *= 1.0 / 8.0;
+    mediump float m = max(max(color.r, color.g), max(color.b, 1e-6));
+    m = ceil(m * 255.0) / 255.0;
+    return vec4(color / m, m);
+}
+
+mediump vec3 UnpackHDR(mediump vec4 color)
+{
+	return color.rgb * color.a * 8.0;
+}
+
 mediump vec3 BlendNormalInTangentSpace(mediump vec3 baseNormal, mediump vec3 additionalNormal)
 {
 	mediump vec3 newBaseNormal = vec3(baseNormal.rg, baseNormal.b + 1.0);
