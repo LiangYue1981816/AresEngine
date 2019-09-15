@@ -418,13 +418,13 @@ void CRenderSystem::RenderForwardLighting(CTaskGraph& taskGraph, CCamera* pCamer
 				m_pPassBloomLuminanceThreshold->SetOutputTexture(GetRenderTexture(rtThreshold));
 				m_pPassBloomLuminanceThreshold->Render(taskGraph, ptrCommandBuffer);
 
-				m_pPassBloomBlurHorizontal->SetParamRange(5.0);
+				m_pPassBloomBlurHorizontal->SetParamRange(2.0);
 				m_pPassBloomBlurHorizontal->SetCamera(pCamera);
 				m_pPassBloomBlurHorizontal->SetInputTexture(GetRenderTexture(rtThreshold));
 				m_pPassBloomBlurHorizontal->SetOutputTexture(GetRenderTexture(rtBlurHorizontal));
 				m_pPassBloomBlurHorizontal->Render(taskGraph, ptrCommandBuffer);
 
-				m_pPassBloomBlurVertical->SetParamRange(5.0);
+				m_pPassBloomBlurVertical->SetParamRange(2.0);
 				m_pPassBloomBlurVertical->SetCamera(pCamera);
 				m_pPassBloomBlurVertical->SetInputTexture(GetRenderTexture(rtBlurHorizontal));
 				m_pPassBloomBlurVertical->SetOutputTexture(GetRenderTexture(rtBlurVertical));

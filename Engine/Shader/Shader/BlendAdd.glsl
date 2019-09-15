@@ -55,7 +55,7 @@ void main()
 	mediump vec3 add = UnpackHDR(texture(texAdd, inTexcoord));
 	mediump vec3 color = UnpackHDR(texture(texColor, inTexcoord));
 
-	color = clamp(color + factor * add, vec3(0.0), vec3(1.0));
+	color = color + factor * add;
 
 	outFragColor = PackHDR(color);
 }
