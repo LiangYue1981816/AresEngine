@@ -48,7 +48,8 @@ layout(push_constant) uniform PushConstantParam {
 void main()
 {
 	mediump vec3 color = texture(texColor, inTexcoord).rgb;
-	outFragColor.rgb = dot(vec3(0.299, 0.587, 0.114), color) > Param.threshold ? color : vec3(0.0);
+	mediump float luminance = dot(vec3(0.2126, 0.7152, 0.0722), color) - Param.threshold;
+	outFragColor.rgb = color * luminance;
 	outFragColor.a = 1.0;
 }
 #endif

@@ -23,7 +23,7 @@ void CPassThreshold::Destroy(void)
 
 CPassThreshold::CPassThreshold(CRenderSystem* pRenderSystem)
 	: CPassBlit(PASS_THRESHOLD_MATERIAL_NAME, pRenderSystem)
-	, m_threshold(0.85f)
+	, m_threshold(0.65f)
 {
 	CGfxDescriptorLayoutPtr ptrDescriptorLayout = GfxRenderer()->NewDescriptorLayout(DESCRIPTOR_SET_PASS);
 	ptrDescriptorLayout->SetUniformBlockBinding(UNIFORM_ENGINE_NAME, UNIFORM_ENGINE_BIND);
