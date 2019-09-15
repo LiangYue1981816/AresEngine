@@ -1,12 +1,12 @@
 <Material>
-	<Pass name="PassThreshold">
-		<Pipeline render_pass="PassThreshold">
-		  <Vertex file_name="Threshold.glsl">
+	<Pass name="PassLuminanceThreshold">
+		<Pipeline render_pass="PassLuminanceThreshold">
+		  <Vertex file_name="LuminanceThreshold.glsl">
 		    <Define name="VERTEX_ATTRIBUTE_POSITION" />
         <Define name="VERTEX_ATTRIBUTE_TEXCOORD0" />
         <Define name="INSTANCE_ATTRIBUTE_TRANSFORM" />
 		  </Vertex>
-		  <Fragment file_name="Threshold.glsl">
+		  <Fragment file_name="LuminanceThreshold.glsl">
 		  </Fragment>
 		  <State>
 		  	<Rasterization>
