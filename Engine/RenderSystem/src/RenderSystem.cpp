@@ -433,7 +433,7 @@ void CRenderSystem::RenderForwardLighting(CTaskGraph& taskGraph, CCamera* pCamer
 				m_pPassBloomBlendAdd->SetOutputTexture(GetRenderTexture(rtBloom));
 				m_pPassBloomBlendAdd->Render(taskGraph, ptrCommandBuffer);
 			}
-			rtColor = rtBlurVertical;// rtBloom;
+			rtColor = rtThreshold;// rtBloom;
 			rtFinal = RENDER_TEXTURE_FULL_COLOR1;
 
 			m_pPassColorGrading->SetCamera(pCamera);
