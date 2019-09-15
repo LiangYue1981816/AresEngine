@@ -365,7 +365,7 @@ void CRenderSystem::RenderDefault(CTaskGraph& taskGraph, CCamera* pCamera, bool 
 	GfxRenderer()->Present(ptrCommandBuffer->GetSemaphore());
 }
 
-void CRenderSystem::RenderForwardLighting(CTaskGraph& taskGraph, CCamera* pCamera, bool bShadow, bool bPresent) const
+void CRenderSystem::RenderForwardLighting(CTaskGraph& taskGraph, CCamera* pCamera, bool bPresent) const
 {
 	const CGfxSemaphore* pWaitSemaphore = GfxRenderer()->GetSwapChain()->GetAcquireSemaphore();
 	const CGfxCommandBufferPtr ptrCommandBuffer = m_ptrCommandBuffer[GfxRenderer()->GetSwapChain()->GetFrameIndex()];
@@ -433,7 +433,7 @@ void CRenderSystem::RenderForwardLighting(CTaskGraph& taskGraph, CCamera* pCamer
 				m_pPassBloomAdd->SetOutputTexture(GetRenderTexture(rtBloom));
 				m_pPassBloomAdd->Render(taskGraph, ptrCommandBuffer);
 			}
-			rtColor = rtBloom;
+			rtColor = rtBlurVertical;// rtBloom;
 			rtFinal = RENDER_TEXTURE_FULL_COLOR1;
 
 			m_pPassColorGrading->SetCamera(pCamera);

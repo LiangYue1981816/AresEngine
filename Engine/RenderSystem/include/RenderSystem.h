@@ -183,7 +183,7 @@ public:
 private:
 	void Update(CTaskGraph& taskGraph, CCamera* pCamera) const;
 	void RenderDefault(CTaskGraph& taskGraph, CCamera* pCamera, bool bPresent) const;
-	void RenderForwardLighting(CTaskGraph& taskGraph, CCamera* pCamera, bool bShadow, bool bPresent) const;
+	void RenderForwardLighting(CTaskGraph& taskGraph, CCamera* pCamera, bool bPresent) const;
 
 
 private:
