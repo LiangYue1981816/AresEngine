@@ -3,6 +3,7 @@
 #ifdef VERTEX_SHADER
 precision mediump float;
 #include "engine.inc"
+#include "common.inc"
 
 
 // VERTEX_ATTRIBUTE_POSITION;
@@ -26,6 +27,7 @@ void main()
 #ifdef FRAGMENT_SHADER
 precision mediump float;
 #include "engine.inc"
+#include "common.inc"
 
 
 // Input
@@ -45,7 +47,6 @@ void main()
 	if (color.a < 0.5)
 		discard;
 
-	outFragColor.rgb = color.rgb;
-	outFragColor.a = 1.0;
+	outFragColor = PackHDR(color.rgb);
 }
 #endif

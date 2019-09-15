@@ -3,6 +3,7 @@
 #ifdef VERTEX_SHADER
 precision mediump float;
 #include "engine.inc"
+#include "common.inc"
 
 
 // VERTEX_ATTRIBUTE_POSITION;
@@ -29,6 +30,7 @@ void main()
 #ifdef FRAGMENT_SHADER
 precision mediump float;
 #include "engine.inc"
+#include "common.inc"
 
 
 // Input
@@ -55,13 +57,12 @@ void main()
 	for (highp float x = -1.0; x <= 1.0; x++) {
 		for (highp float y = -1.0; y <= 1.0; y++) {
 			highp vec2 offset = vec2(x, y) * texelSize;
-			result += texture(texColor, inTexcoord + offset).rgb;
+			result += UnpackHDR(texture(texColor, inTexcoord + offset));
 		}
 	}
 
 	result /= 9.0;
 
-	outFragColor.rgb = result;
-	outFragColor.a = 1.0;
+	outFragColor = PackHDR(result);
 }
 #endif

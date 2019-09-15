@@ -3,6 +3,7 @@
 #ifdef VERTEX_SHADER
 precision mediump float;
 #include "engine.inc"
+#include "common.inc"
 
 
 // VERTEX_ATTRIBUTE_POSITION;
@@ -29,6 +30,7 @@ void main()
 #ifdef FRAGMENT_SHADER
 precision mediump float;
 #include "engine.inc"
+#include "common.inc"
 
 
 // Input
@@ -53,14 +55,13 @@ void main()
 	mediump float knee = threshold * softKnee + 1e-5;
 	mediump vec3 curve = vec3(threshold - knee, knee * 2.0, 0.25 / knee);
 
-	mediump vec3 color = texture(texColor, inTexcoord).rgb;
+	mediump vec3 color = UnpackHDR(texture(texColor, inTexcoord));
 	mediump float br = max(max(color.r, color.g), color.b);
 	mediump float rq = clamp(br - curve.x, 0.0, curve.y);
 	rq = curve.z * rq * rq;
 
 	color *= max(rq, br - threshold) / max(br, 1e-5);
 
-	outFragColor.rgb = color;
-	outFragColor.a = 1.0;
+	outFragColor = PackHDR(color);
 }
 #endif

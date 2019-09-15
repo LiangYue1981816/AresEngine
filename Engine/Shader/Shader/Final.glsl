@@ -3,6 +3,7 @@
 #ifdef VERTEX_SHADER
 precision mediump float;
 #include "engine.inc"
+#include "common.inc"
 
 
 // VERTEX_ATTRIBUTE_POSITION;
@@ -29,6 +30,8 @@ void main()
 #ifdef FRAGMENT_SHADER
 precision mediump float;
 #include "engine.inc"
+#include "common.inc"
+#include "light.inc"
 
 
 // Input
@@ -43,6 +46,11 @@ USE_COLOR_TEXTURE_UNIFORM;
 
 void main()
 {
-	outFragColor = texture(texColor, inTexcoord);
+	mediump vec3 color = texture(texColor, inTexcoord).rgb;
+
+	color = Linear2Gamma(color);
+
+	outFragColor.rgb = color;
+	outFragColor.a = 1.0;
 }
 #endif
