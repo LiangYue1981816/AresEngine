@@ -5,19 +5,19 @@
 class CALL_API CCamera
 {
 	friend class CRenderSystem;
+	friend class CPassPreZ;
+	friend class CPassShadow;
+	friend class CPassDefault;
+	friend class CPassForwardLighting;
 	friend class CPassBlit;
 	friend class CPassAdd;
 	friend class CPassCopy;
+	friend class CPassSSAO;
 	friend class CPassBlurBox;
 	friend class CPassBlurHorizontal;
 	friend class CPassBlurVertical;
 	friend class CPassThreshold;
 	friend class CPassColorGrading;
-	friend class CPassPreZ;
-	friend class CPassSSAO;
-	friend class CPassShadow;
-	friend class CPassDefault;
-	friend class CPassForwardLighting;
 	friend class CPassFinal;
 
 

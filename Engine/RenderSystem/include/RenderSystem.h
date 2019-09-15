@@ -1,19 +1,19 @@
 #pragma once
 #include "PreHeader.h"
 
+#include "RenderSystem/include/PassPreZ.h"
+#include "RenderSystem/include/PassShadow.h"
+#include "RenderSystem/include/PassDefault.h"
+#include "RenderSystem/include/PassForwardLighting.h"
 #include "RenderSystem/include/PassBlit.h"
 #include "RenderSystem/include/PassAdd.h"
 #include "RenderSystem/include/PassCopy.h"
+#include "RenderSystem/include/PassSSAO.h"
 #include "RenderSystem/include/PassBlurBox.h"
 #include "RenderSystem/include/PassBlurHorizontal.h"
 #include "RenderSystem/include/PassBlurVertical.h"
 #include "RenderSystem/include/PassThreshold.h"
 #include "RenderSystem/include/PassColorGrading.h"
-#include "RenderSystem/include/PassPreZ.h"
-#include "RenderSystem/include/PassSSAO.h"
-#include "RenderSystem/include/PassShadow.h"
-#include "RenderSystem/include/PassDefault.h"
-#include "RenderSystem/include/PassForwardLighting.h"
 #include "RenderSystem/include/PassFinal.h"
 
 
@@ -101,24 +101,25 @@
 #define RENDER_TEXTURE_FULL_COLOR0                         HashValue("RenderTextureFullColor0")
 #define RENDER_TEXTURE_FULL_COLOR1                         HashValue("RenderTextureFullColor1")
 #define RENDER_TEXTURE_HALF_COLOR0                         HashValue("RenderTextureHalfColor0")
+#define RENDER_TEXTURE_HALF_COLOR1                         HashValue("RenderTextureHalfColor1")
 
 
 class CALL_API CRenderSystem
 {
 	friend class CEngine;
+	friend class CPassPreZ;
+	friend class CPassShadow;
+	friend class CPassDefault;
+	friend class CPassForwardLighting;
 	friend class CPassBlit;
 	friend class CPassAdd;
 	friend class CPassCopy;
+	friend class CPassSSAO;
 	friend class CPassBlurBox;
 	friend class CPassBlurHorizontal;
 	friend class CPassBlurVertical;
 	friend class CPassThreshold;
 	friend class CPassColorGrading;
-	friend class CPassPreZ;
-	friend class CPassSSAO;
-	friend class CPassShadow;
-	friend class CPassDefault;
-	friend class CPassForwardLighting;
 	friend class CPassFinal;
 
 
@@ -141,17 +142,16 @@ public:
 	CGfxRenderTexturePtr GetRenderTexture(uint32_t name) const;
 
 public:
-	CPassAdd* GetPassBloomAdd(void) const;
-	CPassCopy* GetPassBloomDownSample(void) const;
-	CPassThreshold* GetPassBloomThreshold(void) const;
-	CPassBlurHorizontal* GetPassBloomBlurHorizontal(void) const;
-	CPassBlurVertical* GetPassBloomBlurVertical(void) const;
-	CPassColorGrading* GetPassColorGrading(void) const;
 	CPassPreZ* GetPassPreZ(void) const;
-	CPassSSAO* GetPassSSAO(void) const;
 	CPassShadow* GetPassShadow(void) const;
 	CPassDefault* GetPassDefault(void) const;
 	CPassForwardLighting* GetPassForwardLighting(void) const;
+	CPassSSAO* GetPassSSAO(void) const;
+	CPassThreshold* GetPassBloomThreshold(void) const;
+	CPassBlurHorizontal* GetPassBloomBlurHorizontal(void) const;
+	CPassBlurVertical* GetPassBloomBlurVertical(void) const;
+	CPassAdd* GetPassBloomAdd(void) const;
+	CPassColorGrading* GetPassColorGrading(void) const;
 	CPassFinal* GetPassFinal(void) const;
 
 public:
@@ -191,17 +191,16 @@ private:
 	CGfxUniformEngine* m_pEngineUniform;
 
 private:
-	CPassAdd* m_pPassBloomAdd;
-	CPassCopy* m_pPassBloomDownSample;
-	CPassThreshold* m_pPassBloomThreshold;
-	CPassBlurHorizontal* m_pPassBloomBlurHorizontal;
-	CPassBlurVertical* m_pPassBloomBlurVertical;
-	CPassColorGrading* m_pPassColorGrading;
 	CPassPreZ* m_pPassPreZ;
-	CPassSSAO* m_pPassSSAO;
 	CPassShadow* m_pPassShadow;
 	CPassDefault* m_pPassDefault;
 	CPassForwardLighting* m_pPassForwardLighting;
+	CPassSSAO* m_pPassSSAO;
+	CPassThreshold* m_pPassBloomThreshold;
+	CPassBlurHorizontal* m_pPassBloomBlurHorizontal;
+	CPassBlurVertical* m_pPassBloomBlurVertical;
+	CPassAdd* m_pPassBloomAdd;
+	CPassColorGrading* m_pPassColorGrading;
 	CPassFinal* m_pPassFinal;
 
 private:
