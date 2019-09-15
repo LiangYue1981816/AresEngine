@@ -41,12 +41,21 @@ layout (location = 0) out mediump vec4 outFragColor;
 USE_COLOR_TEXTURE_UNIFORM;
 USE_ADD_TEXTURE_UNIFORM;
 
+layout(push_constant) uniform PushConstantParam {
+	float factor;
+} Param;
+
 
 void main()
 {
-	mediump vec3 color = texture(texColor, inTexcoord).rgb;
+	mediump vec3 factor = vec3(Param.factor);
+
 	mediump vec3 add = texture(texAdd, inTexcoord).rgb;
-	outFragColor.rgb = clamp(color + add, 0.0, 1.0);
+	mediump vec3 color = texture(texColor, inTexcoord).rgb;
+
+	color = clamp(color + factor * add, vec3(0.0), vec3(1.0));
+
+	outFragColor.rgb = color;
 	outFragColor.a = 1.0;
 }
 #endif

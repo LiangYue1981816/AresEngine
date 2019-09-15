@@ -47,8 +47,10 @@ layout(push_constant) uniform PushConstantParam {
 
 void main()
 {
+	highp vec2 range = vec2(Param.range);
+
 	highp vec3 result = vec3(0.0);
-	highp vec2 texelSize = vec2(Param.range) / vec2(textureSize(texColor, 0));
+	highp vec2 texelSize = range / vec2(textureSize(texColor, 0));
 
 	for (highp float x = -1.0; x <= 1.0; x++) {
 		for (highp float y = -1.0; y <= 1.0; y++) {
@@ -57,7 +59,9 @@ void main()
 		}
 	}
 
-	outFragColor.rgb = result / 9.0;
+	result /= 9.0;
+
+	outFragColor.rgb = result;
 	outFragColor.a = 1.0;
 }
 #endif

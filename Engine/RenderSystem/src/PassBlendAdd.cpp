@@ -23,6 +23,7 @@ void CPassBlendAdd::Destroy(void)
 
 CPassBlendAdd::CPassBlendAdd(CRenderSystem* pRenderSystem)
 	: CPassBlit(PASS_BLEND_ADD_MATERIAL_NAME, pRenderSystem)
+	, m_factor(0.25f)
 {
 	CGfxDescriptorLayoutPtr ptrDescriptorLayout = GfxRenderer()->NewDescriptorLayout(DESCRIPTOR_SET_PASS);
 	ptrDescriptorLayout->SetUniformBlockBinding(UNIFORM_ENGINE_NAME, UNIFORM_ENGINE_BIND);
@@ -71,6 +72,11 @@ void CPassBlendAdd::SetOutputTexture(CGfxRenderTexturePtr ptrColorTexture)
 	}
 }
 
+void CPassBlendAdd::SetFactor(float factor)
+{
+	m_factor = factor;
+}
+
 void CPassBlendAdd::Render(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrMainCommandBuffer)
 {
 	// Update
@@ -91,4 +97,9 @@ void CPassBlendAdd::Render(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrMainCo
 	}
 	GfxRenderer()->CmdEndRenderPass(ptrMainCommandBuffer);
 	GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, m_ptrOutputColorTexture, GFX_IMAGE_LAYOUT_COLOR_READ_ONLY_OPTIMAL);
+}
+
+void CPassBlendAdd::RenderCallback(CGfxCommandBufferPtr ptrCommandBuffer)
+{
+	GfxRenderer()->CmdUniform1f(ptrCommandBuffer, HashValue("Param.factor"), m_factor);
 }
