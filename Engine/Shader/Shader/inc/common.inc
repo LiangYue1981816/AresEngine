@@ -41,29 +41,39 @@ highp float UnpackFloat(highp vec4 encode)
 
 mediump vec4 PackHDR(mediump vec3 color)
 {
+#ifdef ENCODE_HDR
 /*
 	color *= 1.0 / 8.0;
 	mediump float m = max(max(color.r, color.g), max(color.b, 1e-6));
 	m = ceil(m * 255.0) / 255.0;
 	return vec4(color / m, m);
-*/
+/*/
 	// https://m17design.wordpress.com/2005/09/20/hdr-and-rgbe/
 	float maxComponent = max(max(color.r, color.g), color.b);
 	float fExp = ceil(log2(maxComponent));
 	vec4 vEncoded = vec4(color / exp2(fExp), (fExp + 128.0) / 255.0);
 	return vEncoded;
+//*/
+#else
+	return vec4(color, 1.0);
+#endif
 }
 
 mediump vec3 UnpackHDR(mediump vec4 encode)
 {
+#ifdef ENCODE_HDR
 /*
 	return encode.rgb * encode.a * 8.0;
-*/
+/*/
 	// https://m17design.wordpress.com/2005/09/20/hdr-and-rgbe/
 	vec3 vDecoded;
 	float fExp = encode.a * 255.0 - 128.0;
 	vDecoded = encode.rgb * exp2(fExp);
 	return vDecoded;
+//*/
+#else
+	return encode.rgb;
+#endif
 }
 
 mediump vec3 BlendNormalInTangentSpace(mediump vec3 baseNormal, mediump vec3 additionalNormal)
