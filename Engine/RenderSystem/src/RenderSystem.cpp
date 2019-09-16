@@ -65,10 +65,10 @@ CRenderSystem::CRenderSystem(GfxApi api, void* hInstance, void* hWnd, void* hDC,
 	CreateRenderTexture(RENDER_TEXTURE_SWAPCHAIN_COLOR2, GfxRenderer()->GetSwapChain()->GetFrameTexture(2));
 	CreateRenderTexture(RENDER_TEXTURE_SHADOW, GFX_PIXELFORMAT_D32_SFLOAT_PACK32, 2048, 2048);
 	CreateRenderTexture(RENDER_TEXTURE_FULL_DEPTH,  GFX_PIXELFORMAT_D32_SFLOAT_PACK32, GfxRenderer()->GetSwapChain()->GetWidth(), GfxRenderer()->GetSwapChain()->GetHeight());
-	CreateRenderTexture(RENDER_TEXTURE_FULL_COLOR0, GFX_PIXELFORMAT_BGRA8_UNORM_PACK8, GfxRenderer()->GetSwapChain()->GetWidth(), GfxRenderer()->GetSwapChain()->GetHeight());
-	CreateRenderTexture(RENDER_TEXTURE_FULL_COLOR1, GFX_PIXELFORMAT_BGRA8_UNORM_PACK8, GfxRenderer()->GetSwapChain()->GetWidth(), GfxRenderer()->GetSwapChain()->GetHeight());
-	CreateRenderTexture(RENDER_TEXTURE_HALF_COLOR0, GFX_PIXELFORMAT_BGRA8_UNORM_PACK8, GfxRenderer()->GetSwapChain()->GetWidth() / 2, GfxRenderer()->GetSwapChain()->GetHeight() / 2);
-	CreateRenderTexture(RENDER_TEXTURE_HALF_COLOR1, GFX_PIXELFORMAT_BGRA8_UNORM_PACK8, GfxRenderer()->GetSwapChain()->GetWidth() / 2, GfxRenderer()->GetSwapChain()->GetHeight() / 2);
+	CreateRenderTexture(RENDER_TEXTURE_FULL_COLOR0, GFX_PIXELFORMAT_BGR10A2_UNORM_PACK32, GfxRenderer()->GetSwapChain()->GetWidth(), GfxRenderer()->GetSwapChain()->GetHeight());
+	CreateRenderTexture(RENDER_TEXTURE_FULL_COLOR1, GFX_PIXELFORMAT_BGR10A2_UNORM_PACK32, GfxRenderer()->GetSwapChain()->GetWidth(), GfxRenderer()->GetSwapChain()->GetHeight());
+	CreateRenderTexture(RENDER_TEXTURE_HALF_COLOR0, GFX_PIXELFORMAT_BGR10A2_UNORM_PACK32, GfxRenderer()->GetSwapChain()->GetWidth() / 2, GfxRenderer()->GetSwapChain()->GetHeight() / 2);
+	CreateRenderTexture(RENDER_TEXTURE_HALF_COLOR1, GFX_PIXELFORMAT_BGR10A2_UNORM_PACK32, GfxRenderer()->GetSwapChain()->GetWidth() / 2, GfxRenderer()->GetSwapChain()->GetHeight() / 2);
 
 	CreatePass();
 }
@@ -95,17 +95,17 @@ void CRenderSystem::CreatePass(void)
 {
 	CPassPreZ::Create(GFX_PIXELFORMAT_D32_SFLOAT_PACK32);
 	CPassShadow::Create(GFX_PIXELFORMAT_D32_SFLOAT_PACK32);
-	CPassDefault::Create(GFX_PIXELFORMAT_BGRA8_UNORM_PACK8, GFX_PIXELFORMAT_D32_SFLOAT_PACK32);
-	CPassForwardLighting::Create(GFX_PIXELFORMAT_BGRA8_UNORM_PACK8, GFX_PIXELFORMAT_D32_SFLOAT_PACK32);
-	CPassCopy::Create(GFX_PIXELFORMAT_BGRA8_UNORM_PACK8);
-	CPassSSAO::Create(GFX_PIXELFORMAT_BGRA8_UNORM_PACK8);
-	CPassBlurBox::Create(GFX_PIXELFORMAT_BGRA8_UNORM_PACK8);
-	CPassBlurHorizontal::Create(GFX_PIXELFORMAT_BGRA8_UNORM_PACK8);
-	CPassBlurVertical::Create(GFX_PIXELFORMAT_BGRA8_UNORM_PACK8);
-	CPassBlendAdd::Create(GFX_PIXELFORMAT_BGRA8_UNORM_PACK8);
-	CPassLuminanceThreshold::Create(GFX_PIXELFORMAT_BGRA8_UNORM_PACK8);
-	CPassColorGrading::Create(GFX_PIXELFORMAT_BGRA8_UNORM_PACK8);
-	CPassFinal::Create(GFX_PIXELFORMAT_BGRA8_UNORM_PACK8);
+	CPassDefault::Create(GFX_PIXELFORMAT_BGR10A2_UNORM_PACK32, GFX_PIXELFORMAT_D32_SFLOAT_PACK32);
+	CPassForwardLighting::Create(GFX_PIXELFORMAT_BGR10A2_UNORM_PACK32, GFX_PIXELFORMAT_D32_SFLOAT_PACK32);
+	CPassCopy::Create(GFX_PIXELFORMAT_BGR10A2_UNORM_PACK32);
+	CPassSSAO::Create(GFX_PIXELFORMAT_BGR10A2_UNORM_PACK32);
+	CPassBlurBox::Create(GFX_PIXELFORMAT_BGR10A2_UNORM_PACK32);
+	CPassBlurHorizontal::Create(GFX_PIXELFORMAT_BGR10A2_UNORM_PACK32);
+	CPassBlurVertical::Create(GFX_PIXELFORMAT_BGR10A2_UNORM_PACK32);
+	CPassBlendAdd::Create(GFX_PIXELFORMAT_BGR10A2_UNORM_PACK32);
+	CPassLuminanceThreshold::Create(GFX_PIXELFORMAT_BGR10A2_UNORM_PACK32);
+	CPassColorGrading::Create(GFX_PIXELFORMAT_BGR10A2_UNORM_PACK32);
+	CPassFinal::Create(GFX_PIXELFORMAT_BGR10A2_UNORM_PACK32);
 
 	m_pPassPreZ = new CPassPreZ(this);
 	m_pPassShadow = new CPassShadow(this);
