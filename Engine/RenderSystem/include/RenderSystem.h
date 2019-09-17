@@ -101,8 +101,8 @@
 #define RENDER_TEXTURE_FULL_DEPTH                          HashValue("RenderTextureFullDepth")
 #define RENDER_TEXTURE_FULL_HDR_COLOR0                     HashValue("RenderTextureFullHdrColor0")
 #define RENDER_TEXTURE_FULL_HDR_COLOR1                     HashValue("RenderTextureFullHdrColor1")
-#define RENDER_TEXTURE_HALF_HDR_COLOR0                     HashValue("RenderTextureHalfHdrColor0")
-#define RENDER_TEXTURE_HALF_HDR_COLOR1                     HashValue("RenderTextureHalfHdrColor1")
+#define RENDER_TEXTURE_QUATER_HDR_COLOR0                   HashValue("RenderTextureQuaterHdrColor0")
+#define RENDER_TEXTURE_QUATER_HDR_COLOR1                   HashValue("RenderTextureQuaterHdrColor1")
 
 
 class CALL_API CRenderSystem
