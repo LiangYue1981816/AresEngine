@@ -26,8 +26,7 @@ void CPassForwardLighting::Destroy(void)
 
 
 CPassForwardLighting::CPassForwardLighting(CRenderSystem* pRenderSystem)
-	: m_pCamera(nullptr)
-	, m_pRenderSystem(pRenderSystem)
+	: CPassBase(pRenderSystem)
 {
 	CGfxDescriptorLayoutPtr ptrDescriptorLayout = GfxRenderer()->NewDescriptorLayout(DESCRIPTOR_SET_PASS);
 	ptrDescriptorLayout->SetUniformBlockBinding(UNIFORM_ENGINE_NAME, UNIFORM_ENGINE_BIND);

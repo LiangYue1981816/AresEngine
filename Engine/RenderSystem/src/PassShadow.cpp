@@ -24,9 +24,7 @@ void CPassShadow::Destroy(void)
 
 
 CPassShadow::CPassShadow(CRenderSystem* pRenderSystem)
-	: m_pCamera(nullptr)
-	, m_pRenderSystem(pRenderSystem)
-
+	: CPassBase(pRenderSystem)
 	, m_pShadowCamera{ nullptr }
 	, m_pShadowRenderQueue{ nullptr }
 	, m_splitFactors{ 0.0f, exp(-3.0f), exp(-2.0f), exp(-1.0f), exp(-0.0f) }
