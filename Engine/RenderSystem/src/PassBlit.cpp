@@ -2,9 +2,8 @@
 
 
 CPassBlit::CPassBlit(const char* szMaterialFileName, CRenderSystem* pRenderSystem)
-	: m_pRenderQueue(nullptr)
-	, m_pCamera(nullptr)
-	, m_pRenderSystem(pRenderSystem)
+	: CPassBase(pRenderSystem)
+	, m_pRenderQueue(nullptr)
 {
 	struct Vertex {
 		float position[3];

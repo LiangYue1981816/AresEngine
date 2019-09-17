@@ -2,7 +2,7 @@
 #include "PreHeader.h"
 
 
-class CALL_API CPassForwardLighting
+class CALL_API CPassForwardLighting : public CPassBase
 {
 	friend class CCamera;
 	friend class CRenderSystem;
@@ -36,8 +36,4 @@ private:
 	CGfxFrameBufferPtr m_ptrFrameBuffer;
 	CGfxRenderTexturePtr m_ptrOutputColorTexture;
 	CGfxRenderTexturePtr m_ptrOutputDepthStencilTexture;
-
-private:
-	CCamera* m_pCamera;
-	CRenderSystem* m_pRenderSystem;
 };

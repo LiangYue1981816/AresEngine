@@ -430,6 +430,7 @@
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\src\Command\VKCommandUpdateInstanceBuffer.h" />
     <ClInclude Include="..\..\Engine\RenderHeader.h" />
     <ClInclude Include="..\..\Engine\RenderSystem\include\Camera.h" />
+    <ClInclude Include="..\..\Engine\RenderSystem\include\PassBase.h" />
     <ClInclude Include="..\..\Engine\RenderSystem\include\PassBlendAdd.h" />
     <ClInclude Include="..\..\Engine\RenderSystem\include\PassBlit.h" />
     <ClInclude Include="..\..\Engine\RenderSystem\include\PassBlurBox.h" />
@@ -780,6 +781,7 @@
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKUniformBufferManager.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKVertexBuffer.cpp" />
     <ClCompile Include="..\..\Engine\RenderSystem\src\Camera.cpp" />
+    <ClCompile Include="..\..\Engine\RenderSystem\src\PassBase.cpp" />
     <ClCompile Include="..\..\Engine\RenderSystem\src\PassBlendAdd.cpp" />
     <ClCompile Include="..\..\Engine\RenderSystem\src\PassBlit.cpp" />
     <ClCompile Include="..\..\Engine\RenderSystem\src\PassBlurBox.cpp" />

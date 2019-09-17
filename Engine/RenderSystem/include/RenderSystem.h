@@ -1,6 +1,7 @@
 #pragma once
 #include "PreHeader.h"
 
+#include "RenderSystem/include/PassBase.h"
 #include "RenderSystem/include/PassPreZ.h"
 #include "RenderSystem/include/PassShadow.h"
 #include "RenderSystem/include/PassDefault.h"
@@ -107,6 +108,7 @@
 class CALL_API CRenderSystem
 {
 	friend class CEngine;
+	friend class CPassBase;
 	friend class CPassPreZ;
 	friend class CPassShadow;
 	friend class CPassDefault;
