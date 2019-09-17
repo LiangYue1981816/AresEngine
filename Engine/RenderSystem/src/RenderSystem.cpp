@@ -65,10 +65,10 @@ CRenderSystem::CRenderSystem(GfxApi api, void* hInstance, void* hWnd, void* hDC,
 	CreateRenderTexture(RENDER_TEXTURE_SWAPCHAIN_COLOR2, GfxRenderer()->GetSwapChain()->GetFrameTexture(2));
 	CreateRenderTexture(RENDER_TEXTURE_SHADOW, GFX_PIXELFORMAT_D32_SFLOAT_PACK32, 2048, 2048);
 	CreateRenderTexture(RENDER_TEXTURE_FULL_DEPTH,  GFX_PIXELFORMAT_D32_SFLOAT_PACK32, GfxRenderer()->GetSwapChain()->GetWidth(), GfxRenderer()->GetSwapChain()->GetHeight());
-	CreateRenderTexture(RENDER_TEXTURE_FULL_COLOR0, GFX_PIXELFORMAT_BGR10A2_UNORM_PACK32, GfxRenderer()->GetSwapChain()->GetWidth(), GfxRenderer()->GetSwapChain()->GetHeight());
-	CreateRenderTexture(RENDER_TEXTURE_FULL_COLOR1, GFX_PIXELFORMAT_BGR10A2_UNORM_PACK32, GfxRenderer()->GetSwapChain()->GetWidth(), GfxRenderer()->GetSwapChain()->GetHeight());
-	CreateRenderTexture(RENDER_TEXTURE_HALF_COLOR0, GFX_PIXELFORMAT_BGR10A2_UNORM_PACK32, GfxRenderer()->GetSwapChain()->GetWidth() / 2, GfxRenderer()->GetSwapChain()->GetHeight() / 2);
-	CreateRenderTexture(RENDER_TEXTURE_HALF_COLOR1, GFX_PIXELFORMAT_BGR10A2_UNORM_PACK32, GfxRenderer()->GetSwapChain()->GetWidth() / 2, GfxRenderer()->GetSwapChain()->GetHeight() / 2);
+	CreateRenderTexture(RENDER_TEXTURE_FULL_HDR_COLOR0, GFX_PIXELFORMAT_BGR10A2_UNORM_PACK32, GfxRenderer()->GetSwapChain()->GetWidth(), GfxRenderer()->GetSwapChain()->GetHeight());
+	CreateRenderTexture(RENDER_TEXTURE_FULL_HDR_COLOR1, GFX_PIXELFORMAT_BGR10A2_UNORM_PACK32, GfxRenderer()->GetSwapChain()->GetWidth(), GfxRenderer()->GetSwapChain()->GetHeight());
+	CreateRenderTexture(RENDER_TEXTURE_HALF_HDR_COLOR0, GFX_PIXELFORMAT_BGR10A2_UNORM_PACK32, GfxRenderer()->GetSwapChain()->GetWidth() / 2, GfxRenderer()->GetSwapChain()->GetHeight() / 2);
+	CreateRenderTexture(RENDER_TEXTURE_HALF_HDR_COLOR1, GFX_PIXELFORMAT_BGR10A2_UNORM_PACK32, GfxRenderer()->GetSwapChain()->GetWidth() / 2, GfxRenderer()->GetSwapChain()->GetHeight() / 2);
 
 	CreatePass();
 }
@@ -346,7 +346,7 @@ void CRenderSystem::RenderDefault(CTaskGraph& taskGraph, CCamera* pCamera, bool 
 				m_pPassPreZ->Render(taskGraph, ptrCommandBuffer);
 			}
 
-			uint32_t rtColor = RENDER_TEXTURE_FULL_COLOR0;
+			uint32_t rtColor = RENDER_TEXTURE_FULL_HDR_COLOR0;
 			{
 				m_pPassDefault->SetCamera(pCamera);
 				m_pPassDefault->SetOutputTexture(GetRenderTexture(rtColor), GetRenderTexture(rtDepth));
@@ -384,7 +384,7 @@ void CRenderSystem::RenderForwardLighting(CTaskGraph& taskGraph, CCamera* pCamer
 				m_pPassPreZ->Render(taskGraph, ptrCommandBuffer);
 			}
 
-			uint32_t rtSSAO = RENDER_TEXTURE_FULL_COLOR0;
+			uint32_t rtSSAO = RENDER_TEXTURE_FULL_HDR_COLOR0;
 			{
 				m_pPassSSAO->SetCamera(pCamera);
 				m_pPassSSAO->SetInputTexture(GetRenderTexture(rtDepth));
@@ -399,19 +399,19 @@ void CRenderSystem::RenderForwardLighting(CTaskGraph& taskGraph, CCamera* pCamer
 				m_pPassShadow->Render(taskGraph, ptrCommandBuffer);
 			}
 
-			uint32_t rtColor = RENDER_TEXTURE_FULL_COLOR1;
+			uint32_t rtColor = RENDER_TEXTURE_FULL_HDR_COLOR1;
 			{
 				m_pPassForwardLighting->SetCamera(pCamera);
 				m_pPassForwardLighting->SetInputTexture(GetRenderTexture(rtShadow), GetRenderTexture(rtSSAO));
 				m_pPassForwardLighting->SetOutputTexture(GetRenderTexture(rtColor), GetRenderTexture(rtDepth));
 				m_pPassForwardLighting->Render(taskGraph, ptrCommandBuffer);
 			}
-			rtFinal = RENDER_TEXTURE_FULL_COLOR0;
+			rtFinal = RENDER_TEXTURE_FULL_HDR_COLOR0;
 
-			uint32_t rtThreshold = RENDER_TEXTURE_HALF_COLOR0;
-			uint32_t rtBlurHorizontal = RENDER_TEXTURE_HALF_COLOR1;
-			uint32_t rtBlurVertical = RENDER_TEXTURE_HALF_COLOR0;
-			uint32_t rtBloom = RENDER_TEXTURE_FULL_COLOR0;
+			uint32_t rtThreshold = RENDER_TEXTURE_HALF_HDR_COLOR0;
+			uint32_t rtBlurHorizontal = RENDER_TEXTURE_HALF_HDR_COLOR1;
+			uint32_t rtBlurVertical = RENDER_TEXTURE_HALF_HDR_COLOR0;
+			uint32_t rtBloom = RENDER_TEXTURE_FULL_HDR_COLOR0;
 			{
 				m_pPassBloomLuminanceThreshold->SetCamera(pCamera);
 				m_pPassBloomLuminanceThreshold->SetInputTexture(GetRenderTexture(rtColor));
@@ -448,7 +448,7 @@ void CRenderSystem::RenderForwardLighting(CTaskGraph& taskGraph, CCamera* pCamer
 				m_pPassBloomBlendAdd->Render(taskGraph, ptrCommandBuffer);
 			}
 			rtColor = rtBloom;
-			rtFinal = RENDER_TEXTURE_FULL_COLOR1;
+			rtFinal = RENDER_TEXTURE_FULL_HDR_COLOR1;
 
 			m_pPassColorGrading->SetCamera(pCamera);
 			m_pPassColorGrading->SetInputTexture(GetRenderTexture(rtColor));

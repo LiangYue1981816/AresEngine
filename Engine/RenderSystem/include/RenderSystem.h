@@ -99,10 +99,10 @@
 #define RENDER_TEXTURE_SWAPCHAIN_COLOR2                    2
 #define RENDER_TEXTURE_SHADOW                              HashValue("RenderTextureShadow")
 #define RENDER_TEXTURE_FULL_DEPTH                          HashValue("RenderTextureFullDepth")
-#define RENDER_TEXTURE_FULL_COLOR0                         HashValue("RenderTextureFullColor0")
-#define RENDER_TEXTURE_FULL_COLOR1                         HashValue("RenderTextureFullColor1")
-#define RENDER_TEXTURE_HALF_COLOR0                         HashValue("RenderTextureHalfColor0")
-#define RENDER_TEXTURE_HALF_COLOR1                         HashValue("RenderTextureHalfColor1")
+#define RENDER_TEXTURE_FULL_HDR_COLOR0                     HashValue("RenderTextureFullHdrColor0")
+#define RENDER_TEXTURE_FULL_HDR_COLOR1                     HashValue("RenderTextureFullHdrColor1")
+#define RENDER_TEXTURE_HALF_HDR_COLOR0                     HashValue("RenderTextureHalfHdrColor0")
+#define RENDER_TEXTURE_HALF_HDR_COLOR1                     HashValue("RenderTextureHalfHdrColor1")
 
 
 class CALL_API CRenderSystem
