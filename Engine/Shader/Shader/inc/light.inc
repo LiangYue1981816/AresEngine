@@ -211,6 +211,14 @@ mediump vec3 PBRLighting(mediump vec3 normal, mediump vec3 viewDirection, medium
 	return (diffuse + specular) * ndl * lightColor;
 }
 
+mediump float PHBeckmann(mediump float ndoth, mediump float m)
+{
+	mediump float alpha = acos(ndoth);
+	mediump float ta = tan(alpha);
+	mediump float val = 1.0 / (m * m * pow(ndoth, 4.0)) * exp(-(ta * ta) / (m * m));
+	return val;
+}
+
 mediump vec3 SkinLighting(mediump vec3 normal, highp vec3 position, mediump vec3 viewDirection, mediump vec3 halfDirection, mediump vec3 lightDirection, mediump vec3 lightColor, mediump vec3 albedo, mediump vec3 fresnel, mediump float metallic, mediump float roughness, mediump sampler2D texPreIntegratedSkinLUT)
 {
 	highp float tuneCurvature = 0.001;
