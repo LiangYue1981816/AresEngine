@@ -145,6 +145,6 @@ void main()
 //	if (factor < mainShadowLevelFactor.x) finalLighting = vec3(1.0, 0.0, 0.0) * vec3(shadow);
 //	finalLighting = vec3(shadow);
 
-	outFragColor = PackHDR(directLighting);
+	outFragColor = PackHDR(finalLighting);
 }
 #endif

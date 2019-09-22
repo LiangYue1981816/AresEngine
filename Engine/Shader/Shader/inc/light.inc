@@ -221,7 +221,7 @@ mediump vec3 SkinLighting(mediump vec3 normal, highp vec3 position, mediump vec3
 	mediump vec3 diffuse = lut.rgb * albedo;
 	mediump vec3 specular = vec3(lut.a);
 
-	return (diffuse + specular) * ndl * lightColor;
+	return (diffuse + specular) * lightColor;
 }
 
 mediump vec3 EnvLighting(mediump vec3 normal, mediump vec3 viewDirection, mediump vec3 env, mediump vec3 albedo, mediump vec3 fresnel, mediump float roughness)
