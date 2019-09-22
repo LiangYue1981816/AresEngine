@@ -211,15 +211,22 @@ mediump vec3 PBRLighting(mediump vec3 normal, mediump vec3 viewDirection, medium
 	return (diffuse + specular) * ndl * lightColor;
 }
 
-mediump vec3 SkinLighting(mediump vec3 normal, highp vec3 position, mediump vec3 lightDirection, mediump vec3 lightColor, mediump vec3 albedo, mediump sampler2D texPreIntegratedSkinLUT)
+mediump vec3 SkinLighting(mediump vec3 normal, highp vec3 position, mediump vec3 viewDirection, mediump vec3 halfDirection, mediump vec3 lightDirection, mediump vec3 lightColor, mediump vec3 albedo, mediump vec3 fresnel, mediump float metallic, mediump float roughness, mediump sampler2D texPreIntegratedSkinLUT)
 {
 	highp float tuneCurvature = 0.001;
 	highp float curvature = clamp(tuneCurvature * length(fwidth(normal)) / length(fwidth(position)), 0.0, 1.0);
-	highp float ndl = dot(normal, lightDirection) * 0.5 + 0.5;
 
-	mediump vec4 lut = texture(texPreIntegratedSkinLUT, vec2(ndl, curvature));
-	mediump vec3 diffuse = lut.rgb * albedo;
-	mediump vec3 specular = vec3(lut.a);
+	mediump float ndh = dot(normal, halfDirection);
+	mediump float ndv = dot(normal, viewDirection);
+	mediump float ndl = dot(normal, lightDirection);
+
+	mediump float D = D_GGX(max(ndh, 0.0), roughness);
+	mediump float G = G_SchlickSmithGGX(max(ndv, 0.0), max(ndl, 0.0), roughness);
+	mediump vec3  F = fresnel;
+
+	mediump vec4 lut = texture(texPreIntegratedSkinLUT, vec2(ndl * 0.5 + 0.5, curvature));
+	mediump vec3 diffuse = lut.rgb * albedo * vec3(1.0 - metallic) * (vec3(1.0) - F);
+	mediump vec3 specular = D * F * G * max(ndl, 0.0);
 
 	return (diffuse + specular) * lightColor;
 }
