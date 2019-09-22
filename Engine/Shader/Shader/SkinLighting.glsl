@@ -80,10 +80,13 @@ DESCRIPTOR_SET_MATPASS(8) mediump uniform sampler2D texAlbedo;
 #ifdef NORMAL_MAP
 DESCRIPTOR_SET_MATPASS(9) mediump uniform sampler2D texNormal;
 #endif
-DESCRIPTOR_SET_MATPASS(10) mediump uniform sampler2D texPreIntegratedSkinLUT;
+#ifdef ROUGHNESS_METALLIC_SPECULAR_AO_MAP
+DESCRIPTOR_SET_MATPASS(10) mediump uniform sampler2D texRoughnessMetallicSpecularAO;
+#endif
 #ifdef ENV_MAP
 DESCRIPTOR_SET_MATPASS(11) mediump uniform sampler2D texEnv;
 #endif
+DESCRIPTOR_SET_MATPASS(12) mediump uniform sampler2D texPreIntegratedSkinLUT;
 
 
 void main()
@@ -106,10 +109,18 @@ void main()
 	mediump vec3 worldNormal = inNormal;
 #endif
 
-	mediump float roughness = 0.8;
-	mediump float metallic = 0.3;
+#ifdef ROUGHNESS_METALLIC_SPECULAR_AO_MAP
+	mediump vec4 roughness_metallic_specular_ao = texture(texRoughnessMetallicSpecularAO, inTexcoord);
+	mediump float roughness = roughness_metallic_specular_ao.r;
+	mediump float metallic = roughness_metallic_specular_ao.g;
+	mediump float specular = roughness_metallic_specular_ao.b;
+	mediump float ao = roughness_metallic_specular_ao.a;
+#else
+	mediump float roughness = 0.5;
+	mediump float metallic = 0.2;
 	mediump float specular = 1.0;
 	mediump float ao = 1.0;
+#endif
 
 	highp vec4 projectCoord = cameraProjectionViewMatrix * vec4(worldPosition, 1.0);
 	projectCoord.xy = projectCoord.xy / projectCoord.w;
