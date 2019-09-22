@@ -211,10 +211,11 @@ mediump vec3 PBRLighting(mediump vec3 normal, mediump vec3 viewDirection, medium
 	return (diffuse + specular) * ndl * lightColor;
 }
 
-mediump vec3 SkinLighting(mediump vec3 normal, mediump vec3 position, mediump vec3 lightDirection, mediump vec3 lightColor, mediump vec3 albedo, mediump sampler2D texPreIntegratedSkinLUT)
+mediump vec3 SkinLighting(mediump vec3 normal, highp vec3 position, mediump vec3 lightDirection, mediump vec3 lightColor, mediump vec3 albedo, mediump sampler2D texPreIntegratedSkinLUT)
 {
+	highp float tuneCurvature = 0.001;
+	highp float curvature = clamp(tuneCurvature * length(fwidth(normal)) / length(fwidth(position)), 0.0, 1.0);
 	mediump float ndl = max(dot(normal, lightDirection), 0.0);
-	mediump float curvature = clamp(length(fwidth(normal)) / length(fwidth(position)), 0.0, 1.0);
 
 	mediump vec4 lut = texture(texPreIntegratedSkinLUT, vec2(ndl, curvature));
 	mediump vec3 diffuse = lut.rgb;

@@ -106,18 +106,10 @@ void main()
 	mediump vec3 worldNormal = inNormal;
 #endif
 
-#ifdef ROUGHNESS_METALLIC_SPECULAR_AO_MAP
-	mediump vec4 roughness_metallic_specular_ao = texture(texRoughnessMetallicSpecularAO, inTexcoord);
-	mediump float roughness = roughness_metallic_specular_ao.r;
-	mediump float metallic = roughness_metallic_specular_ao.g;
-	mediump float specular = roughness_metallic_specular_ao.b;
-	mediump float ao = roughness_metallic_specular_ao.a;
-#else
-	mediump float roughness = 0.5;
-	mediump float metallic = 0.5;
+	mediump float roughness = 0.8;
+	mediump float metallic = 0.2;
 	mediump float specular = 1.0;
 	mediump float ao = 1.0;
-#endif
 
 	highp vec4 projectCoord = cameraProjectionViewMatrix * vec4(worldPosition, 1.0);
 	projectCoord.xy = projectCoord.xy / projectCoord.w;
@@ -131,10 +123,9 @@ void main()
 	mediump vec3 pointLightColor = mainPointLightColor * LightingAttenuation(length(pointLightDirection));
 	pointLightDirection = normalize(pointLightDirection);
 
-	mediump vec3 fresnel = Fresnel(worldNormal, worldViewDirection, albedoColor, metallic);
 	mediump vec3 ambientLighting = AmbientSH9(worldNormal, albedoColor, metallic) * ambientLightFactor;
-	mediump vec3 pointLighting = PBRLighting(worldNormal, worldViewDirection, worldHalfDirection, pointLightDirection, pointLightColor, albedoColor, fresnel, metallic, roughness) * pointLightFactor;
-	mediump vec3 directLighting = PBRLighting(worldNormal, worldViewDirection, worldHalfDirection, mainDirectLightDirection, mainDirectLightColor, albedoColor, fresnel, metallic, roughness) * directLightFactor;
+	mediump vec3 pointLighting = SkinLighting(worldNormal, worldPosition, pointLightDirection, pointLightColor, albedoColor, texPreIntegratedSkinLUT) * pointLightFactor;
+	mediump vec3 directLighting = SkinLighting(worldNormal, worldPosition, mainDirectLightDirection, mainDirectLightColor, albedoColor, texPreIntegratedSkinLUT) * directLightFactor;
 #ifdef ENV_MAP
 	mediump vec3 fresnelRoughness = FresnelRoughness(worldNormal, worldViewDirection, albedoColor, metallic, roughness);
 	mediump vec3 envLighting = EnvLighting(worldNormal, worldViewDirection, albedoColor, fresnelRoughness, roughness, texEnv, 8.0) * envLightFactor;
