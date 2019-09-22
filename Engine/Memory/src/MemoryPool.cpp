@@ -469,6 +469,7 @@ bool POOL_Free(HEAP_ALLOCATOR* pHeapAllocator, POOL_ALLOCATOR* pPoolAllocator, v
 
 				pBlockPool->dwBlockIndex--;
 
+#ifdef FREE_BLOCK_POOL
 				if (pBlockPool->dwBlockIndex == 0) {
 					if (pBlockPool->pPrev) pBlockPool->pPrev->pNext = pBlockPool->pNext;
 					if (pBlockPool->pNext) pBlockPool->pNext->pPrev = pBlockPool->pPrev;
@@ -480,7 +481,9 @@ bool POOL_Free(HEAP_ALLOCATOR* pHeapAllocator, POOL_ALLOCATOR* pPoolAllocator, v
 
 					POOL_DestroyPool(pHeapAllocator, pBlockPool);
 				}
-				else {
+				else
+#endif
+				{
 					pBlockPool->pBlockHead = pBlock;
 				}
 			}
