@@ -80,9 +80,7 @@ DESCRIPTOR_SET_MATPASS(8) mediump uniform sampler2D texAlbedo;
 #ifdef NORMAL_MAP
 DESCRIPTOR_SET_MATPASS(9) mediump uniform sampler2D texNormal;
 #endif
-#ifdef ROUGHNESS_METALLIC_SPECULAR_AO_MAP
-DESCRIPTOR_SET_MATPASS(10) mediump uniform sampler2D texRoughnessMetallicSpecularAO;
-#endif
+DESCRIPTOR_SET_MATPASS(10) mediump uniform sampler2D texPreIntegratedSkinLUT;
 #ifdef ENV_MAP
 DESCRIPTOR_SET_MATPASS(11) mediump uniform sampler2D texEnv;
 #endif
@@ -97,8 +95,9 @@ void main()
 
 	mediump vec3 albedoColor = Gamma2Linear(albedo.rgb);
 
+	highp vec3 worldPosition = inPosition;
 	highp vec3 worldCameraPosition = (cameraViewInverseMatrix * vec4(0.0, 0.0, 0.0, 1.0)).xyz;
-	mediump vec3 worldViewDirection = normalize(worldCameraPosition - inPosition);
+	mediump vec3 worldViewDirection = normalize(worldCameraPosition - worldPosition);
 	mediump vec3 worldHalfDirection = normalize(mainDirectLightDirection + worldViewDirection);
 
 #ifdef NORMAL_MAP
@@ -120,15 +119,15 @@ void main()
 	mediump float ao = 1.0;
 #endif
 
-	highp vec4 projectCoord = cameraProjectionViewMatrix * vec4(inPosition, 1.0);
+	highp vec4 projectCoord = cameraProjectionViewMatrix * vec4(worldPosition, 1.0);
 	projectCoord.xy = projectCoord.xy / projectCoord.w;
  	projectCoord.xy = projectCoord.xy * 0.5 + 0.5;
 	mediump vec3 ssao = texture(texSSAO, projectCoord.xy).rgb;
 
-	mediump float shadow = ShadowValue(inPosition, inNormal, texShadow);
-//	mediump float shadow = ShadowValueIrregular(inPosition, texShadow);
+	mediump float shadow = ShadowValue(worldPosition, inNormal, texShadow);
+//	mediump float shadow = ShadowValueIrregular(worldPosition, texShadow);
 
-	mediump vec3 pointLightDirection = mainPointLightPosition - inPosition;
+	mediump vec3 pointLightDirection = mainPointLightPosition - worldPosition;
 	mediump vec3 pointLightColor = mainPointLightColor * LightingAttenuation(length(pointLightDirection));
 	pointLightDirection = normalize(pointLightDirection);
 
@@ -148,7 +147,7 @@ void main()
 //	finalLighting = Linear2Gamma(finalLighting);
 
 //	Debug Shadow
-//	highp float factor = length(worldCameraPosition - inPosition) / (cameraZFar - cameraZNear);
+//	highp float factor = length(worldCameraPosition - worldPosition) / (cameraZFar - cameraZNear);
 //	if (factor < mainShadowLevelFactor.w) finalLighting = vec3(1.0, 1.0, 1.0) * vec3(shadow);
 //	if (factor < mainShadowLevelFactor.z) finalLighting = vec3(0.0, 0.0, 1.0) * vec3(shadow);
 //	if (factor < mainShadowLevelFactor.y) finalLighting = vec3(0.0, 1.0, 0.0) * vec3(shadow);
