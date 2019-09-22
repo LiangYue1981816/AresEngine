@@ -215,10 +215,10 @@ mediump vec3 SkinLighting(mediump vec3 normal, highp vec3 position, mediump vec3
 {
 	highp float tuneCurvature = 0.001;
 	highp float curvature = clamp(tuneCurvature * length(fwidth(normal)) / length(fwidth(position)), 0.0, 1.0);
-	mediump float ndl = max(dot(normal, lightDirection), 0.0);
+	highp float ndl = dot(normal, lightDirection) * 0.5 + 0.5;
 
 	mediump vec4 lut = texture(texPreIntegratedSkinLUT, vec2(ndl, curvature));
-	mediump vec3 diffuse = lut.rgb;
+	mediump vec3 diffuse = lut.rgb * albedo;
 	mediump vec3 specular = vec3(lut.a);
 
 	return (diffuse + specular) * ndl * lightColor;
