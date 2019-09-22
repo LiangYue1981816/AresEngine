@@ -421,11 +421,13 @@ void* POOL_Alloc(HEAP_ALLOCATOR* pHeapAllocator, POOL_ALLOCATOR* pPoolAllocator,
 					pPoolHead->pBlockPoolHead = pPoolHead->pBlockPoolFreeHead;
 				}
 
-				SET_BLOCK_DATA(pPoolHead->pBlockPoolFreeHead->pBlockHead, 0);
-				SET_BLOCK_SIZE(pPoolHead->pBlockPoolFreeHead->pBlockHead, dwMemSize);
-				pPointer = (uint32_t*)((uint8_t*)pPoolHead->pBlockPoolFreeHead->pBlockHead + sizeof(BLOCK));
+				BLOCK* pBlockHead = pPoolHead->pBlockPoolFreeHead->pBlockHead;
 
-				pPoolHead->pBlockPoolFreeHead->pBlockHead = GET_BLOCK_NEXT(pPoolHead->pBlockPoolFreeHead->pBlockHead);
+				SET_BLOCK_DATA(pBlockHead, 0);
+				SET_BLOCK_SIZE(pBlockHead, dwMemSize);
+				pPointer = (uint32_t*)((uint8_t*)pBlockHead + sizeof(BLOCK));
+
+				pPoolHead->pBlockPoolFreeHead->pBlockHead = GET_BLOCK_NEXT(pBlockHead);
 				pPoolHead->pBlockPoolFreeHead->dwBlockIndex++;
 
 				if (pPoolHead->pBlockPoolFreeHead->dwBlockIndex == pPoolHead->pBlockPoolFreeHead->dwBlockCount) {
