@@ -116,8 +116,8 @@ void main()
 	mediump float specular = roughness_metallic_specular_ao.b;
 	mediump float ao = roughness_metallic_specular_ao.a;
 #else
-	mediump float roughness = 0.5;
-	mediump float metallic = 0.2;
+	mediump float roughness = 0.35;
+	mediump float metallic = 0.15;
 	mediump float specular = 1.0;
 	mediump float ao = 1.0;
 #endif
