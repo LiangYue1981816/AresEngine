@@ -247,7 +247,7 @@ mediump vec3 SkinLighting(mediump vec3 normalBase, mediump vec3 normalDetails, h
 	mediump float hdh = dot(viewDirection + lightDirection, viewDirection + lightDirection);
 
 	mediump vec3 diffuse = texture(texPreIntegratedSkinLUT, vec2(ndl * 0.5 + 0.5, curvature)).rgb * albedo * (1.0 - metallic) * (1.0 - fresnel);
-	mediump vec3 specular = max(pow(texture(texPreIntegratedSkinLUT, vec2(ndh, roughness)).a * 2.0, 10.0) * fresnel / hdh, 0.0) * ndl * 0.0277778;
+	mediump vec3 specular = max(pow(texture(texPreIntegratedSkinLUT, vec2(ndh, roughness)).a * 2.0, 10.0) * fresnel / hdh, 0.0) * ndl * 0.0555556; // 0.0277778;
 
 	return (diffuse + specular) * lightColor;
 }
