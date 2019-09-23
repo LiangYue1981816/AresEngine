@@ -134,10 +134,10 @@ void main()
 	mediump vec3 pointLightColor = mainPointLightColor * LightingAttenuation(length(pointLightDirection));
 	pointLightDirection = normalize(pointLightDirection);
 
-	mediump vec3 fresnel = Fresnel(worldNormal, worldViewDirection, albedoColor, metallic);
+	mediump vec3 fresnel = FresnelSkin(worldViewDirection, worldHalfDirection);
 	mediump vec3 ambientLighting = AmbientSH9(worldNormal, albedoColor, metallic) * ambientLightFactor;
-	mediump vec3 pointLighting = SkinLighting(worldNormal, worldPosition, worldViewDirection, worldHalfDirection, pointLightDirection, pointLightColor, albedoColor, fresnel, metallic, roughness, texPreIntegratedSkinLUT) * pointLightFactor;
-	mediump vec3 directLighting = SkinLighting(worldNormal, worldPosition, worldViewDirection, worldHalfDirection, mainDirectLightDirection, mainDirectLightColor, albedoColor, fresnel, metallic, roughness, texPreIntegratedSkinLUT) * directLightFactor;
+	mediump vec3 pointLighting = SkinLighting(inNormal, worldNormal, worldPosition, worldViewDirection, worldHalfDirection, pointLightDirection, pointLightColor, albedoColor, fresnel, metallic, roughness, texPreIntegratedSkinLUT) * pointLightFactor;
+	mediump vec3 directLighting = SkinLighting(inNormal, worldNormal, worldPosition, worldViewDirection, worldHalfDirection, mainDirectLightDirection, mainDirectLightColor, albedoColor, fresnel, metallic, roughness, texPreIntegratedSkinLUT) * directLightFactor;
 #ifdef ENV_MAP
 	mediump vec3 fresnelRoughness = FresnelRoughness(worldNormal, worldViewDirection, albedoColor, metallic, roughness);
 	mediump vec3 envLighting = EnvLighting(worldNormal, worldViewDirection, albedoColor, fresnelRoughness, roughness, texEnv, 8.0) * envLightFactor;

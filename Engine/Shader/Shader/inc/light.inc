@@ -139,6 +139,18 @@ mediump vec3 F_Schlick(mediump vec3 specular, mediump float ndv, mediump float m
 #endif
 }
 
+mediump vec3 F_SchlickSkin(mediump float vdh)
+{
+#ifdef FAST_LIGHTING
+	mediump vec3 F0 = vec3(0.028);
+	mediump float F1 = clamp(1.0 - vdh * 1.5, 0.0, 1.0);
+	return F0 + (1.0 - F0) * F1 * F1 * F1;
+#else
+	mediump vec3 F0 = vec3(0.028);
+	return F0 + (1.0 - F0) * pow(1.0 - vdh, 5.0);
+#endif
+}
+
 mediump vec3 F_SchlickRoughness(mediump vec3 specular, mediump float ndv, mediump float metallic, mediump float roughness)
 {
 #ifdef FAST_LIGHTING
@@ -189,6 +201,12 @@ mediump vec3 Fresnel(mediump vec3 normal, mediump vec3 viewDirection, mediump ve
 	return F_Schlick(specular, ndv, metallic);
 }
 
+mediump vec3 FresnelSkin(mediump vec3 viewDirection, mediump vec3 halfDirection)
+{
+	mediump float vdh = max(dot(viewDirection, halfDirection), 0.0);
+	return F_SchlickSkin(vdh);
+}
+
 mediump vec3 FresnelRoughness(mediump vec3 normal, mediump vec3 viewDirection, mediump vec3 specular, mediump float metallic, mediump float roughness)
 {
 	mediump float ndv = max(dot(normal, viewDirection), 0.0);
@@ -219,18 +237,17 @@ mediump float PHBeckmann(mediump float ndoth, mediump float m)
 	return val;
 }
 
-mediump vec3 SkinLighting(mediump vec3 normal, highp vec3 position, mediump vec3 viewDirection, mediump vec3 halfDirection, mediump vec3 lightDirection, mediump vec3 lightColor, mediump vec3 albedo, mediump vec3 fresnel, mediump float metallic, mediump float roughness, mediump sampler2D texPreIntegratedSkinLUT)
+mediump vec3 SkinLighting(mediump vec3 normalBase, mediump vec3 normalDetails, highp vec3 position, mediump vec3 viewDirection, mediump vec3 halfDirection, mediump vec3 lightDirection, mediump vec3 lightColor, mediump vec3 albedo, mediump vec3 fresnel, mediump float metallic, mediump float roughness, mediump sampler2D texPreIntegratedSkinLUT)
 {
 	highp float tuneCurvature = 0.001;
-	highp float curvature = clamp(tuneCurvature * length(fwidth(normal)) / length(fwidth(position)), 0.0, 1.0);
+	highp float curvature = clamp(tuneCurvature * length(fwidth(normalBase)) / length(fwidth(position)), 0.0, 1.0);
 
-	mediump float ndh = dot(normal, halfDirection);
-	mediump float ndl = dot(normal, lightDirection);
-	mediump float hdh = dot(halfDirection, halfDirection);
+	mediump float ndh = dot(normalDetails, halfDirection);
+	mediump float ndl = dot(normalDetails, lightDirection);
+	mediump float hdh = dot(viewDirection + lightDirection, viewDirection + lightDirection);
 
 	mediump vec3 diffuse = texture(texPreIntegratedSkinLUT, vec2(ndl * 0.5 + 0.5, curvature)).rgb * albedo * (1.0 - metallic) * (1.0 - fresnel);
-//	mediump vec3 specular = pow(texture(texPreIntegratedSkinLUT, vec2(ndh, roughness)).a * 2.0, 10.0) * max(ndl, 0.0) * fresnel * 0.25;
-	mediump vec3 specular = max(pow(texture(texPreIntegratedSkinLUT, vec2(ndh, roughness)).a * 2.0, 10.0) * fresnel * 0.25 / hdh, 0.0);
+	mediump vec3 specular = max(pow(texture(texPreIntegratedSkinLUT, vec2(ndh, roughness)).a * 2.0, 10.0) * fresnel / hdh, 0.0) * ndl * 0.0277778;
 
 	return (diffuse + specular) * lightColor;
 }
