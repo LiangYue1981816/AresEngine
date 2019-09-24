@@ -139,15 +139,15 @@ mediump vec3 F_Schlick(mediump vec3 specular, mediump float ndv, mediump float m
 #endif
 }
 
-mediump vec3 F_SchlickSkin(mediump float vdh)
+mediump vec3 F_SchlickSkin(mediump float ndv)
 {
 #ifdef FAST_LIGHTING
 	mediump vec3 F0 = vec3(0.028);
-	mediump float F1 = clamp(1.0 - vdh * 1.5, 0.0, 1.0);
+	mediump float F1 = clamp(1.0 - ndv * 1.5, 0.0, 1.0);
 	return F0 + (1.0 - F0) * F1 * F1 * F1;
 #else
 	mediump vec3 F0 = vec3(0.028);
-	return F0 + (1.0 - F0) * pow(1.0 - vdh, 5.0);
+	return F0 + (1.0 - F0) * pow(1.0 - ndv, 5.0);
 #endif
 }
 
@@ -201,10 +201,10 @@ mediump vec3 Fresnel(mediump vec3 normal, mediump vec3 viewDirection, mediump ve
 	return F_Schlick(specular, ndv, metallic);
 }
 
-mediump vec3 FresnelSkin(mediump vec3 viewDirection, mediump vec3 halfDirection)
+mediump vec3 FresnelSkin(mediump vec3 normal, mediump vec3 viewDirection)
 {
-	mediump float vdh = max(dot(viewDirection, halfDirection), 0.0);
-	return F_SchlickSkin(vdh);
+	mediump float ndv = max(dot(normal, viewDirection), 0.0);
+	return F_SchlickSkin(ndv);
 }
 
 mediump vec3 FresnelRoughness(mediump vec3 normal, mediump vec3 viewDirection, mediump vec3 specular, mediump float metallic, mediump float roughness)
