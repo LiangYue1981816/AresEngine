@@ -245,11 +245,13 @@ mediump vec3 SkinLighting(mediump vec3 normalBase, mediump vec3 normalDetails, h
 	mediump float ndh = dot(normalDetails, halfDirection);
 	mediump float ndl = dot(normalDetails, lightDirection);
 	mediump float hdh = dot(viewDirection + lightDirection, viewDirection + lightDirection);
+	mediump float wrapped_ndl = ndl * 0.5 + 0.5;
 
-	mediump vec3 diffuse = texture(texPreIntegratedSkinLUT, vec2(ndl * 0.5 + 0.5, curvature)).rgb * albedo * (1.0 - metallic) * (1.0 - fresnel);
-	mediump vec3 specular = max(pow(texture(texPreIntegratedSkinLUT, vec2(ndh, roughness)).a * 2.0, 10.0) * fresnel / hdh, 0.0) * max(ndl, 0.0) * 0.0555556; // 0.0277778;
+	mediump vec3 diffuse = Diffuse_Lambert(albedo) * (1.0 - metallic) * (1.0 - fresnel) * max(ndl, 0.0);
+	mediump vec3 scatter = texture(texPreIntegratedSkinLUT, vec2(wrapped_ndl, curvature)).rgb * albedo * (1.0 - wrapped_ndl) * 2.0;
+	mediump vec3 specular = max(pow(texture(texPreIntegratedSkinLUT, vec2(ndh, roughness)).a * 2.0, 10.0) * fresnel / hdh, 0.0) * max(ndl, 0.0) * 0.0277778;
 
-	return (diffuse + specular) * lightColor;
+	return (diffuse + scatter + specular) * lightColor;
 }
 
 mediump vec3 EnvLighting(mediump vec3 normal, mediump vec3 viewDirection, mediump vec3 env, mediump vec3 albedo, mediump vec3 fresnel, mediump float roughness)
