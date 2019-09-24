@@ -253,7 +253,7 @@ mediump vec3 SkinLighting(mediump vec3 normalBase, mediump vec3 normalDetails, h
 
 	mediump vec3 diffuse = Diffuse_Lambert(albedo) * (1.0 - fresnel) * max(ndl, 0.0);
 	mediump vec3 scatter = texture(texPreIntegratedSkinLUT, vec2(wrapped_ndl, curvature)).rgb * albedo * (1.0 - wrapped_ndl) * 2.0;
-	mediump vec3 specular = max(pow(texture(texPreIntegratedSkinLUT, vec2(ndh, roughness)).a * 2.0, 10.0) * fresnel / hdh, 0.0) * max(ndl, 0.0) * 0.0277778;
+	mediump vec3 specular = max(pow(texture(texPreIntegratedSkinLUT, vec2(ndh, roughness)).a * 2.0, 10.0) * fresnel / hdh, 0.0) * max(ndl, 0.0) * 0.277778;
 
 	return (diffuse + scatter + specular) * lightColor;
 }
