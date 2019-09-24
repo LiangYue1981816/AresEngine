@@ -101,7 +101,6 @@ void main()
 	highp vec3 worldPosition = inPosition;
 	highp vec3 worldCameraPosition = (cameraViewInverseMatrix * vec4(0.0, 0.0, 0.0, 1.0)).xyz;
 	mediump vec3 worldViewDirection = normalize(worldCameraPosition - worldPosition);
-	mediump vec3 worldHalfDirection = normalize(mainDirectLightDirection + worldViewDirection);
 
 #ifdef NORMAL_MAP
 	mediump vec3 worldNormal = normalize(mat3(inTangent, inBinormal, inNormal) * (texture(texNormal, inTexcoord).rgb * vec3(2.0) - vec3(1.0)));
@@ -134,10 +133,10 @@ void main()
 	mediump vec3 pointLightColor = mainPointLightColor * LightingAttenuation(length(pointLightDirection));
 	pointLightDirection = normalize(pointLightDirection);
 
-	mediump vec3 fresnel = FresnelSkin(worldViewDirection, worldHalfDirection);
+	mediump vec3 fresnel = FresnelSkin(worldNormal, worldViewDirection);
 	mediump vec3 ambientLighting = AmbientSH9(worldNormal, albedoColor, 0.0) * ambientLightFactor;
-	mediump vec3 pointLighting = SkinLighting(inNormal, worldNormal, worldPosition, worldViewDirection, worldHalfDirection, pointLightDirection, pointLightColor, albedoColor, fresnel, roughness, texPreIntegratedSkinLUT) * pointLightFactor;
-	mediump vec3 directLighting = SkinLighting(inNormal, worldNormal, worldPosition, worldViewDirection, worldHalfDirection, mainDirectLightDirection, mainDirectLightColor, albedoColor, fresnel, roughness, texPreIntegratedSkinLUT) * directLightFactor;
+	mediump vec3 pointLighting = SkinLighting(inNormal, worldNormal, worldPosition, worldViewDirection, pointLightDirection, pointLightColor, albedoColor, fresnel, roughness, texPreIntegratedSkinLUT) * pointLightFactor;
+	mediump vec3 directLighting = SkinLighting(inNormal, worldNormal, worldPosition, worldViewDirection, mainDirectLightDirection, mainDirectLightColor, albedoColor, fresnel, roughness, texPreIntegratedSkinLUT) * directLightFactor;
 #ifdef ENV_MAP
 	mediump vec3 fresnelRoughness = FresnelRoughness(worldNormal, worldViewDirection, albedoColor, metallic, roughness);
 	mediump vec3 envLighting = EnvLighting(worldNormal, worldViewDirection, albedoColor, fresnelRoughness, roughness, texEnv, 8.0) * envLightFactor;

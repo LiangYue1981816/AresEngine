@@ -213,8 +213,10 @@ mediump vec3 FresnelRoughness(mediump vec3 normal, mediump vec3 viewDirection, m
 	return F_SchlickRoughness(specular, ndv, metallic, roughness);
 }
 
-mediump vec3 PBRLighting(mediump vec3 normal, mediump vec3 viewDirection, mediump vec3 halfDirection, mediump vec3 lightDirection, mediump vec3 lightColor, mediump vec3 albedo, mediump vec3 fresnel, mediump float metallic, mediump float roughness)
+mediump vec3 PBRLighting(mediump vec3 normal, mediump vec3 viewDirection, mediump vec3 lightDirection, mediump vec3 lightColor, mediump vec3 albedo, mediump vec3 fresnel, mediump float metallic, mediump float roughness)
 {
+	mediump vec3 halfDirection = normalize(lightDirection + viewDirection);
+
 	mediump float ndh = max(dot(normal, halfDirection), 0.0);
 	mediump float ndv = max(dot(normal, viewDirection), 0.0);
 	mediump float ndl = max(dot(normal, lightDirection), 0.0);
@@ -237,15 +239,17 @@ mediump float PHBeckmann(mediump float ndoth, mediump float m)
 	return val;
 }
 
-mediump vec3 SkinLighting(mediump vec3 normalBase, mediump vec3 normalDetails, highp vec3 position, mediump vec3 viewDirection, mediump vec3 halfDirection, mediump vec3 lightDirection, mediump vec3 lightColor, mediump vec3 albedo, mediump vec3 fresnel, mediump float roughness, mediump sampler2D texPreIntegratedSkinLUT)
+mediump vec3 SkinLighting(mediump vec3 normalBase, mediump vec3 normalDetails, highp vec3 position, mediump vec3 viewDirection, mediump vec3 lightDirection, mediump vec3 lightColor, mediump vec3 albedo, mediump vec3 fresnel, mediump float roughness, mediump sampler2D texPreIntegratedSkinLUT)
 {
-	highp float tuneCurvature = 0.001;
-	highp float curvature = clamp(tuneCurvature * length(fwidth(normalBase)) / length(fwidth(position)), 0.0, 1.0);
+	mediump vec3 halfDirection = normalize(lightDirection + viewDirection);
 
 	mediump float ndh = dot(normalDetails, halfDirection);
 	mediump float ndl = dot(normalDetails, lightDirection);
 	mediump float hdh = dot(viewDirection + lightDirection, viewDirection + lightDirection);
 	mediump float wrapped_ndl = ndl * 0.5 + 0.5;
+
+	highp float tuneCurvature = 0.001;
+	highp float curvature = clamp(tuneCurvature * length(fwidth(normalBase)) / length(fwidth(position)), 0.0, 1.0);
 
 	mediump vec3 diffuse = Diffuse_Lambert(albedo) * (1.0 - fresnel) * max(ndl, 0.0);
 	mediump vec3 scatter = texture(texPreIntegratedSkinLUT, vec2(wrapped_ndl, curvature)).rgb * albedo * (1.0 - wrapped_ndl) * 2.0;
