@@ -243,8 +243,8 @@ mediump vec3 SkinLighting(mediump vec3 normalBase, mediump vec3 normalDetails, h
 {
 	mediump vec3 halfDirection = normalize(viewDirection + lightDirection);
 
+	mediump float ndl = dot(normalBase, lightDirection);
 	mediump float ndh = dot(normalDetails, halfDirection);
-	mediump float ndl = dot(normalDetails, lightDirection);
 	mediump float hdh = dot(viewDirection + lightDirection, viewDirection + lightDirection);
 	mediump float wrapped_ndl = clamp(ndl * 0.5 + 0.5, 0.0, 1.0);
 
