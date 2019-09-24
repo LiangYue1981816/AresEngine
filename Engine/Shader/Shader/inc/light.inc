@@ -215,7 +215,7 @@ mediump vec3 FresnelRoughness(mediump vec3 normal, mediump vec3 viewDirection, m
 
 mediump vec3 PBRLighting(mediump vec3 normal, mediump vec3 viewDirection, mediump vec3 lightDirection, mediump vec3 lightColor, mediump vec3 albedo, mediump vec3 fresnel, mediump float metallic, mediump float roughness)
 {
-	mediump vec3 halfDirection = normalize(lightDirection + viewDirection);
+	mediump vec3 halfDirection = normalize(viewDirection + lightDirection);
 
 	mediump float ndh = max(dot(normal, halfDirection), 0.0);
 	mediump float ndv = max(dot(normal, viewDirection), 0.0);
@@ -241,7 +241,7 @@ mediump float PHBeckmann(mediump float ndoth, mediump float m)
 
 mediump vec3 SkinLighting(mediump vec3 normalBase, mediump vec3 normalDetails, highp vec3 position, mediump vec3 viewDirection, mediump vec3 lightDirection, mediump vec3 lightColor, mediump vec3 albedo, mediump vec3 fresnel, mediump float roughness, mediump sampler2D texPreIntegratedSkinLUT)
 {
-	mediump vec3 halfDirection = normalize(lightDirection + viewDirection);
+	mediump vec3 halfDirection = normalize(viewDirection + lightDirection);
 
 	mediump float ndh = dot(normalDetails, halfDirection);
 	mediump float ndl = dot(normalDetails, lightDirection);
