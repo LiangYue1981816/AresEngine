@@ -148,8 +148,11 @@ void main()
 
 	highp float curDepth = texture(texDepth, inTexcoord).r;
 	highp vec3 curPosition = ScreenToViewPosition(inTexcoord, curDepth);
-//	highp vec3 curNormal = NormalFromDepth(curDepth);
+#ifdef _VULKAN_
 	highp vec3 curNormal = normalize(cross(dFdy(curPosition), dFdx(curPosition)));
+#else
+	highp vec3 curNormal = normalize(cross(dFdx(curPosition), dFdy(curPosition)));
+#endif
 	highp vec3 curReflect = normalize(texture(texNoise, noiseTexcoord).xyz * 2.0 - 1.0);
 
 	highp int samples = clamp(Param.samples, 4, 64);
