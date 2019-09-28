@@ -107,7 +107,7 @@ void CRenderSystem::CreatePass(void)
 	CPassBlendAdd::Create(GFX_PIXELFORMAT_BGR10A2_UNORM_PACK32);
 	CPassLuminanceThreshold::Create(GFX_PIXELFORMAT_BGR10A2_UNORM_PACK32);
 	CPassColorGrading::Create(GFX_PIXELFORMAT_BGR10A2_UNORM_PACK32);
-	CPassFinal::Create(GFX_PIXELFORMAT_BGR10A2_UNORM_PACK32);
+	CPassFinal::Create(GFX_PIXELFORMAT_BGRA8_UNORM_PACK8);
 
 	m_pPassPreZ = new CPassPreZ(this);
 	m_pPassShadow = new CPassShadow(this);
