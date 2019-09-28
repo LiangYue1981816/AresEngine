@@ -34,6 +34,8 @@ CRenderSystem::CRenderSystem(GfxApi api, void* hInstance, void* hWnd, void* hDC,
 	, m_pPassDefault(nullptr)
 	, m_pPassForwardLighting(nullptr)
 	, m_pPassSSAO(nullptr)
+	, m_pPassSSAOBlurHorizontal(nullptr)
+	, m_pPassSSAOBlurVertical(nullptr)
 	, m_pPassBloomLuminanceThreshold(nullptr)
 	, m_pPassBloomBlurHorizontal(nullptr)
 	, m_pPassBloomBlurVertical(nullptr)
@@ -112,6 +114,8 @@ void CRenderSystem::CreatePass(void)
 	m_pPassDefault = new CPassDefault(this);
 	m_pPassForwardLighting = new CPassForwardLighting(this);
 	m_pPassSSAO = new CPassSSAO(this);
+	m_pPassSSAOBlurHorizontal = new CPassBlurHorizontal(this);
+	m_pPassSSAOBlurVertical = new CPassBlurVertical(this);
 	m_pPassBloomLuminanceThreshold = new CPassLuminanceThreshold(this);
 	m_pPassBloomBlurHorizontal = new CPassBlurHorizontal(this);
 	m_pPassBloomBlurVertical = new CPassBlurVertical(this);
@@ -141,6 +145,8 @@ void CRenderSystem::DestroyPass(void)
 	delete m_pPassDefault;
 	delete m_pPassForwardLighting;
 	delete m_pPassSSAO;
+	delete m_pPassSSAOBlurHorizontal;
+	delete m_pPassSSAOBlurVertical;
 	delete m_pPassBloomLuminanceThreshold;
 	delete m_pPassBloomBlurHorizontal;
 	delete m_pPassBloomBlurVertical;
@@ -200,6 +206,16 @@ CPassForwardLighting* CRenderSystem::GetPassForwardLighting(void) const
 CPassSSAO* CRenderSystem::GetPassSSAO(void) const
 {
 	return m_pPassSSAO;
+}
+
+CPassBlurHorizontal* CRenderSystem::GetPassSSAOBlurHorizontal(void) const
+{
+	return m_pPassSSAOBlurHorizontal;
+}
+
+CPassBlurVertical* CRenderSystem::GetPassSSAOBlurVertical(void) const
+{
+	return m_pPassSSAOBlurVertical;
 }
 
 CPassLuminanceThreshold* CRenderSystem::GetPassBloomLuminanceThreshold(void) const
@@ -385,11 +401,28 @@ void CRenderSystem::RenderForwardLighting(CTaskGraph& taskGraph, CCamera* pCamer
 			}
 
 			uint32_t rtSSAO = RENDER_TEXTURE_FULL_HDR_COLOR0;
+			uint32_t rtSSAOBlurHorizontal = RENDER_TEXTURE_FULL_HDR_COLOR1;
+			uint32_t rtSSAOBlurVertical = RENDER_TEXTURE_FULL_HDR_COLOR0;
 			{
 				m_pPassSSAO->SetCamera(pCamera);
+				m_pPassSSAO->SetParamSamples(8);
+				m_pPassSSAO->SetParamMinRadius(0.05f);
+				m_pPassSSAO->SetParamMaxRadius(1.50f);
 				m_pPassSSAO->SetInputTexture(GetRenderTexture(rtDepth));
 				m_pPassSSAO->SetOutputTexture(GetRenderTexture(rtSSAO));
 				m_pPassSSAO->Render(taskGraph, ptrCommandBuffer);
+
+				m_pPassSSAOBlurHorizontal->SetParamRange(1.0f);
+				m_pPassSSAOBlurHorizontal->SetCamera(pCamera);
+				m_pPassSSAOBlurHorizontal->SetInputTexture(GetRenderTexture(rtSSAO));
+				m_pPassSSAOBlurHorizontal->SetOutputTexture(GetRenderTexture(rtSSAOBlurHorizontal));
+				m_pPassSSAOBlurHorizontal->Render(taskGraph, ptrCommandBuffer);
+
+				m_pPassSSAOBlurVertical->SetParamRange(1.0f);
+				m_pPassSSAOBlurVertical->SetCamera(pCamera);
+				m_pPassSSAOBlurVertical->SetInputTexture(GetRenderTexture(rtSSAOBlurHorizontal));
+				m_pPassSSAOBlurVertical->SetOutputTexture(GetRenderTexture(rtSSAO));
+				m_pPassSSAOBlurVertical->Render(taskGraph, ptrCommandBuffer);
 			}
 
 			uint32_t rtShadow = RENDER_TEXTURE_SHADOW;
@@ -408,42 +441,42 @@ void CRenderSystem::RenderForwardLighting(CTaskGraph& taskGraph, CCamera* pCamer
 			}
 			rtFinal = RENDER_TEXTURE_FULL_HDR_COLOR0;
 
-			uint32_t rtThreshold = RENDER_TEXTURE_QUATER_HDR_COLOR0;
-			uint32_t rtBlurHorizontal = RENDER_TEXTURE_QUATER_HDR_COLOR1;
-			uint32_t rtBlurVertical = RENDER_TEXTURE_QUATER_HDR_COLOR0;
+			uint32_t rtBloomThreshold = RENDER_TEXTURE_QUATER_HDR_COLOR0;
+			uint32_t rtBloomBlurHorizontal = RENDER_TEXTURE_QUATER_HDR_COLOR1;
+			uint32_t rtBloomBlurVertical = RENDER_TEXTURE_QUATER_HDR_COLOR0;
 			uint32_t rtBloom = RENDER_TEXTURE_FULL_HDR_COLOR0;
 			{
 				m_pPassBloomLuminanceThreshold->SetCamera(pCamera);
 				m_pPassBloomLuminanceThreshold->SetInputTexture(GetRenderTexture(rtColor));
-				m_pPassBloomLuminanceThreshold->SetOutputTexture(GetRenderTexture(rtThreshold));
+				m_pPassBloomLuminanceThreshold->SetOutputTexture(GetRenderTexture(rtBloomThreshold));
 				m_pPassBloomLuminanceThreshold->Render(taskGraph, ptrCommandBuffer);
 
 				m_pPassBloomBlurHorizontal->SetParamRange(2.0);
 				m_pPassBloomBlurHorizontal->SetCamera(pCamera);
-				m_pPassBloomBlurHorizontal->SetInputTexture(GetRenderTexture(rtThreshold));
-				m_pPassBloomBlurHorizontal->SetOutputTexture(GetRenderTexture(rtBlurHorizontal));
+				m_pPassBloomBlurHorizontal->SetInputTexture(GetRenderTexture(rtBloomThreshold));
+				m_pPassBloomBlurHorizontal->SetOutputTexture(GetRenderTexture(rtBloomBlurHorizontal));
 				m_pPassBloomBlurHorizontal->Render(taskGraph, ptrCommandBuffer);
 
 				m_pPassBloomBlurVertical->SetParamRange(2.0);
 				m_pPassBloomBlurVertical->SetCamera(pCamera);
-				m_pPassBloomBlurVertical->SetInputTexture(GetRenderTexture(rtBlurHorizontal));
-				m_pPassBloomBlurVertical->SetOutputTexture(GetRenderTexture(rtBlurVertical));
+				m_pPassBloomBlurVertical->SetInputTexture(GetRenderTexture(rtBloomBlurHorizontal));
+				m_pPassBloomBlurVertical->SetOutputTexture(GetRenderTexture(rtBloomBlurVertical));
 				m_pPassBloomBlurVertical->Render(taskGraph, ptrCommandBuffer);
 
 				m_pPassBloomBlurHorizontal->SetParamRange(1.0);
 				m_pPassBloomBlurHorizontal->SetCamera(pCamera);
-				m_pPassBloomBlurHorizontal->SetInputTexture(GetRenderTexture(rtBlurVertical));
-				m_pPassBloomBlurHorizontal->SetOutputTexture(GetRenderTexture(rtBlurHorizontal));
+				m_pPassBloomBlurHorizontal->SetInputTexture(GetRenderTexture(rtBloomBlurVertical));
+				m_pPassBloomBlurHorizontal->SetOutputTexture(GetRenderTexture(rtBloomBlurHorizontal));
 				m_pPassBloomBlurHorizontal->Render(taskGraph, ptrCommandBuffer);
 
 				m_pPassBloomBlurVertical->SetParamRange(1.0);
 				m_pPassBloomBlurVertical->SetCamera(pCamera);
-				m_pPassBloomBlurVertical->SetInputTexture(GetRenderTexture(rtBlurHorizontal));
-				m_pPassBloomBlurVertical->SetOutputTexture(GetRenderTexture(rtBlurVertical));
+				m_pPassBloomBlurVertical->SetInputTexture(GetRenderTexture(rtBloomBlurHorizontal));
+				m_pPassBloomBlurVertical->SetOutputTexture(GetRenderTexture(rtBloomBlurVertical));
 				m_pPassBloomBlurVertical->Render(taskGraph, ptrCommandBuffer);
 
 				m_pPassBloomBlendAdd->SetCamera(pCamera);
-				m_pPassBloomBlendAdd->SetInputTexture(GetRenderTexture(rtColor), GetRenderTexture(rtBlurVertical));
+				m_pPassBloomBlendAdd->SetInputTexture(GetRenderTexture(rtColor), GetRenderTexture(rtBloomBlurVertical));
 				m_pPassBloomBlendAdd->SetOutputTexture(GetRenderTexture(rtBloom));
 				m_pPassBloomBlendAdd->Render(taskGraph, ptrCommandBuffer);
 			}

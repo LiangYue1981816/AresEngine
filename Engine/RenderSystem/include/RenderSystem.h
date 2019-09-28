@@ -149,6 +149,8 @@ public:
 	CPassDefault* GetPassDefault(void) const;
 	CPassForwardLighting* GetPassForwardLighting(void) const;
 	CPassSSAO* GetPassSSAO(void) const;
+	CPassBlurHorizontal* GetPassSSAOBlurHorizontal(void) const;
+	CPassBlurVertical* GetPassSSAOBlurVertical(void) const;
 	CPassLuminanceThreshold* GetPassBloomLuminanceThreshold(void) const;
 	CPassBlurHorizontal* GetPassBloomBlurHorizontal(void) const;
 	CPassBlurVertical* GetPassBloomBlurVertical(void) const;
@@ -198,6 +200,8 @@ private:
 	CPassDefault* m_pPassDefault;
 	CPassForwardLighting* m_pPassForwardLighting;
 	CPassSSAO* m_pPassSSAO;
+	CPassBlurHorizontal* m_pPassSSAOBlurHorizontal;
+	CPassBlurVertical* m_pPassSSAOBlurVertical;
 	CPassLuminanceThreshold* m_pPassBloomLuminanceThreshold;
 	CPassBlurHorizontal* m_pPassBloomBlurHorizontal;
 	CPassBlurVertical* m_pPassBloomBlurVertical;
