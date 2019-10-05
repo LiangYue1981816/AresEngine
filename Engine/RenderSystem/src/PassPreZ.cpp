@@ -31,7 +31,7 @@ CPassPreZ::CPassPreZ(CRenderSystem* pRenderSystem)
 	ptrDescriptorLayout->SetUniformBlockBinding(UNIFORM_CAMERA_NAME, UNIFORM_CAMERA_BIND);
 	ptrDescriptorLayout->Create();
 
-	m_ptrDescriptorSetPass = GfxRenderer()->NewDescriptorSet(PASS_PREZ_NAME, ptrDescriptorLayout);
+	m_ptrDescriptorSetPass = GfxRenderer()->NewDescriptorSet(HashValueFormat("%x_%p", PASS_PREZ_NAME, this), ptrDescriptorLayout);
 	m_ptrDescriptorSetPass->SetUniformBuffer(UNIFORM_ENGINE_NAME, m_pRenderSystem->GetEngineUniform()->GetUniformBuffer(), 0, m_pRenderSystem->GetEngineUniform()->GetUniformBuffer()->GetSize());
 }
 

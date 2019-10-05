@@ -30,7 +30,7 @@ CPassCopy::CPassCopy(CRenderSystem* pRenderSystem)
 	ptrDescriptorLayout->SetSampledImageBinding(UNIFORM_COLOR_TEXTURE_NAME, UNIFORM_COLOR_TEXTURE_BIND);
 	ptrDescriptorLayout->Create();
 
-	m_ptrDescriptorSetPass = GfxRenderer()->NewDescriptorSet(PASS_COPY_NAME, ptrDescriptorLayout);
+	m_ptrDescriptorSetPass = GfxRenderer()->NewDescriptorSet(HashValueFormat("%x_%p", PASS_COPY_NAME, this), ptrDescriptorLayout);
 	m_ptrDescriptorSetPass->SetUniformBuffer(UNIFORM_ENGINE_NAME, m_pRenderSystem->GetEngineUniform()->GetUniformBuffer(), 0, m_pRenderSystem->GetEngineUniform()->GetUniformBuffer()->GetSize());
 }
 
