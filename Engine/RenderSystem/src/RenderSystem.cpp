@@ -73,6 +73,13 @@ CRenderSystem::CRenderSystem(GfxApi api, void* hInstance, void* hWnd, void* hDC,
 	CreateRenderTexture(RENDER_TEXTURE_QUATER_HDR_COLOR1, GFX_PIXELFORMAT_BGR10A2_UNORM_PACK32, GfxRenderer()->GetSwapChain()->GetWidth() / 4, GfxRenderer()->GetSwapChain()->GetHeight() / 4);
 
 	CreatePass();
+
+	Settings()->SetValue("RenderSystem.SSAO.SampleCount", 8.0f);
+	Settings()->SetValue("RenderSystem.SSAO.SampleMinRadius", 0.05f);
+	Settings()->SetValue("RenderSystem.SSAO.SampleMaxRadius", 1.00f);
+	Settings()->SetValue("RenderSystem.SSAO.BlurRange", 1.00f);
+	Settings()->SetValue("RenderSystem.Bloom.BlurRange.FirstTime", 2.00f);
+	Settings()->SetValue("RenderSystem.Bloom.BlurRange.SecondTime", 1.00f);
 }
 
 CRenderSystem::~CRenderSystem(void)
@@ -404,21 +411,21 @@ void CRenderSystem::RenderForwardLighting(CTaskGraph& taskGraph, CCamera* pCamer
 			uint32_t rtSSAOBlurHorizontal = RENDER_TEXTURE_FULL_HDR_COLOR1;
 			uint32_t rtSSAOBlurVertical = RENDER_TEXTURE_FULL_HDR_COLOR0;
 			{
-				m_pPassSSAO->SetParamSamples(8);
-				m_pPassSSAO->SetParamMinRadius(0.05f);
-				m_pPassSSAO->SetParamMaxRadius(1.50f);
+				m_pPassSSAO->SetParamSamples(Settings()->GetValue("RenderSystem.SSAO.SampleCount"));
+				m_pPassSSAO->SetParamMinRadius(Settings()->GetValue("RenderSystem.SSAO.SampleMinRadius"));
+				m_pPassSSAO->SetParamMaxRadius(Settings()->GetValue("RenderSystem.SSAO.SampleMaxRadius"));
 				m_pPassSSAO->SetCamera(pCamera);
 				m_pPassSSAO->SetInputTexture(GetRenderTexture(rtDepth));
 				m_pPassSSAO->SetOutputTexture(GetRenderTexture(rtSSAO));
 				m_pPassSSAO->Render(taskGraph, ptrCommandBuffer);
 
-				m_pPassSSAOBlurHorizontal->SetParamRange(1.0f);
+				m_pPassSSAOBlurHorizontal->SetParamRange(Settings()->GetValue("RenderSystem.SSAO.BlurRange"));
 				m_pPassSSAOBlurHorizontal->SetCamera(pCamera);
 				m_pPassSSAOBlurHorizontal->SetInputTexture(GetRenderTexture(rtSSAO));
 				m_pPassSSAOBlurHorizontal->SetOutputTexture(GetRenderTexture(rtSSAOBlurHorizontal));
 				m_pPassSSAOBlurHorizontal->Render(taskGraph, ptrCommandBuffer);
 
-				m_pPassSSAOBlurVertical->SetParamRange(1.0f);
+				m_pPassSSAOBlurVertical->SetParamRange(Settings()->GetValue("RenderSystem.SSAO.BlurRange"));
 				m_pPassSSAOBlurVertical->SetCamera(pCamera);
 				m_pPassSSAOBlurVertical->SetInputTexture(GetRenderTexture(rtSSAOBlurHorizontal));
 				m_pPassSSAOBlurVertical->SetOutputTexture(GetRenderTexture(rtSSAOBlurVertical));
@@ -451,25 +458,25 @@ void CRenderSystem::RenderForwardLighting(CTaskGraph& taskGraph, CCamera* pCamer
 				m_pPassBloomLuminanceThreshold->SetOutputTexture(GetRenderTexture(rtBloomThreshold));
 				m_pPassBloomLuminanceThreshold->Render(taskGraph, ptrCommandBuffer);
 
-				m_pPassBloomBlurHorizontal->SetParamRange(2.0);
+				m_pPassBloomBlurHorizontal->SetParamRange(Settings()->GetValue("RenderSystem.Bloom.BlurRange.FirstTime"));
 				m_pPassBloomBlurHorizontal->SetCamera(pCamera);
 				m_pPassBloomBlurHorizontal->SetInputTexture(GetRenderTexture(rtBloomThreshold));
 				m_pPassBloomBlurHorizontal->SetOutputTexture(GetRenderTexture(rtBloomBlurHorizontal));
 				m_pPassBloomBlurHorizontal->Render(taskGraph, ptrCommandBuffer);
 
-				m_pPassBloomBlurVertical->SetParamRange(2.0);
+				m_pPassBloomBlurVertical->SetParamRange(Settings()->GetValue("RenderSystem.Bloom.BlurRange.FirstTime"));
 				m_pPassBloomBlurVertical->SetCamera(pCamera);
 				m_pPassBloomBlurVertical->SetInputTexture(GetRenderTexture(rtBloomBlurHorizontal));
 				m_pPassBloomBlurVertical->SetOutputTexture(GetRenderTexture(rtBloomBlurVertical));
 				m_pPassBloomBlurVertical->Render(taskGraph, ptrCommandBuffer);
 
-				m_pPassBloomBlurHorizontal->SetParamRange(1.0);
+				m_pPassBloomBlurHorizontal->SetParamRange(Settings()->GetValue("RenderSystem.Bloom.BlurRange.SecondTime"));
 				m_pPassBloomBlurHorizontal->SetCamera(pCamera);
 				m_pPassBloomBlurHorizontal->SetInputTexture(GetRenderTexture(rtBloomBlurVertical));
 				m_pPassBloomBlurHorizontal->SetOutputTexture(GetRenderTexture(rtBloomBlurHorizontal));
 				m_pPassBloomBlurHorizontal->Render(taskGraph, ptrCommandBuffer);
 
-				m_pPassBloomBlurVertical->SetParamRange(1.0);
+				m_pPassBloomBlurVertical->SetParamRange(Settings()->GetValue("RenderSystem.Bloom.BlurRange.SecondTime"));
 				m_pPassBloomBlurVertical->SetCamera(pCamera);
 				m_pPassBloomBlurVertical->SetInputTexture(GetRenderTexture(rtBloomBlurHorizontal));
 				m_pPassBloomBlurVertical->SetOutputTexture(GetRenderTexture(rtBloomBlurVertical));

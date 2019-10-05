@@ -37,17 +37,19 @@ CEngine::CEngine(GfxApi api, void* hInstance, void* hWnd, void* hDC, int width, 
 	, m_deltaTime(0.0f)
 	, m_totalTime(0.0f)
 
+	, m_pSettings(nullptr)
 	, m_pFileManager(nullptr)
 	, m_pShaderCompiler(nullptr)
 	, m_pResourceLoader(nullptr)
 
-	, m_pSettings(nullptr)
 	, m_pSceneManager(nullptr)
 	, m_pRenderSystem(nullptr)
 
 	, m_taskGraphUpdate("TashGraph_Update")
 	, m_taskGraphRender("TashGraph_Render")
 {
+	m_pSettings = new CSettings;
+
 	m_pFileManager = new CFileManager;
 	m_pFileManager->SetPath("../Data/Engine", ".xml");
 	m_pFileManager->SetPath("../Data/Engine", ".png");
@@ -66,7 +68,6 @@ CEngine::CEngine(GfxApi api, void* hInstance, void* hWnd, void* hDC, int width, 
 
 	m_pResourceLoader = new CResourceLoader;
 
-	m_pSettings = new CSettings;
 	m_pSceneManager = new CSceneManager;
 	m_pRenderSystem = new CRenderSystem(api, hInstance, hWnd, hDC, width, height, format);
 
@@ -103,11 +104,6 @@ float CEngine::GetDeltaTime(void) const
 float CEngine::GetTotalTime(void) const
 {
 	return m_totalTime;
-}
-
-CSettings* CEngine::GetSettings(void) const
-{
-	return m_pSettings;
 }
 
 CSceneManager* CEngine::GetSceneManager(void) const

@@ -7,7 +7,6 @@
 #define Engine() CEngine::GetInstance()
 
 
-#define Settings()     CEngine::GetInstance()->GetSettings()
 #define SceneManager() CEngine::GetInstance()->GetSceneManager()
 #define RenderSystem() CEngine::GetInstance()->GetRenderSystem()
 
@@ -30,7 +29,6 @@ public:
 	float GetTotalTime(void) const;
 
 public:
-	CSettings* GetSettings(void) const;
 	CSceneManager* GetSceneManager(void) const;
 	CRenderSystem* GetRenderSystem(void) const;
 
@@ -51,11 +49,12 @@ private:
 	float m_totalTime;
 
 private:
+	CSettings* m_pSettings;
 	CFileManager* m_pFileManager;
 	CShaderCompiler* m_pShaderCompiler;
 	CResourceLoader* m_pResourceLoader;
 
-	CSettings* m_pSettings;
+private:
 	CSceneManager* m_pSceneManager;
 	CRenderSystem* m_pRenderSystem;
 
