@@ -1,6 +1,7 @@
 #pragma once
 #include "PreHeader.h"
 #include "BaseHeader.h"
+#include "ConsoleHeader.h"
 #include "GfxHeader.h"
 #include "SceneHeader.h"
 #include "RenderHeader.h"

@@ -41,6 +41,7 @@ CEngine::CEngine(GfxApi api, void* hInstance, void* hWnd, void* hDC, int width, 
 	, m_pShaderCompiler(nullptr)
 	, m_pResourceLoader(nullptr)
 
+	, m_pSettings(nullptr)
 	, m_pSceneManager(nullptr)
 	, m_pRenderSystem(nullptr)
 
@@ -65,6 +66,7 @@ CEngine::CEngine(GfxApi api, void* hInstance, void* hWnd, void* hDC, int width, 
 
 	m_pResourceLoader = new CResourceLoader;
 
+	m_pSettings = new CSettings;
 	m_pSceneManager = new CSceneManager;
 	m_pRenderSystem = new CRenderSystem(api, hInstance, hWnd, hDC, width, height, format);
 
@@ -88,6 +90,7 @@ CEngine::~CEngine(void)
 	delete m_pShaderCompiler;
 	delete m_pResourceLoader;
 
+	delete m_pSettings;
 	delete m_pSceneManager;
 	delete m_pRenderSystem;
 }
@@ -100,6 +103,11 @@ float CEngine::GetDeltaTime(void) const
 float CEngine::GetTotalTime(void) const
 {
 	return m_totalTime;
+}
+
+CSettings* CEngine::GetSettings(void) const
+{
+	return m_pSettings;
 }
 
 CSceneManager* CEngine::GetSceneManager(void) const
