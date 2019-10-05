@@ -404,10 +404,10 @@ void CRenderSystem::RenderForwardLighting(CTaskGraph& taskGraph, CCamera* pCamer
 			uint32_t rtSSAOBlurHorizontal = RENDER_TEXTURE_FULL_HDR_COLOR1;
 			uint32_t rtSSAOBlurVertical = RENDER_TEXTURE_FULL_HDR_COLOR0;
 			{
-				m_pPassSSAO->SetCamera(pCamera);
 				m_pPassSSAO->SetParamSamples(8);
 				m_pPassSSAO->SetParamMinRadius(0.05f);
 				m_pPassSSAO->SetParamMaxRadius(1.50f);
+				m_pPassSSAO->SetCamera(pCamera);
 				m_pPassSSAO->SetInputTexture(GetRenderTexture(rtDepth));
 				m_pPassSSAO->SetOutputTexture(GetRenderTexture(rtSSAO));
 				m_pPassSSAO->Render(taskGraph, ptrCommandBuffer);
