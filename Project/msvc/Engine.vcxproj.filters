@@ -220,6 +220,15 @@
     <Filter Include="Engine\RenderSystem\Source Files">
       <UniqueIdentifier>{84fe1aaf-d6e8-410f-80a2-54706235ab73}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Console">
+      <UniqueIdentifier>{49c4ba9e-02f2-4453-bfb4-95c92fe83fa4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Console\Header Files">
+      <UniqueIdentifier>{12d7da8d-328f-4597-89e0-bdf975e01d71}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Console\Source Files">
+      <UniqueIdentifier>{2a6682f6-56ca-4102-8f20-bde35dae3301}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Engine\PreHeader.h">
@@ -1602,6 +1611,12 @@
     <ClInclude Include="..\..\Engine\RenderSystem\include\PassBase.h">
       <Filter>Engine\RenderSystem\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Engine\Console\include\Settings.h">
+      <Filter>Engine\Console\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ConsoleHeader.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Engine\ThirdParty\eastl\source\allocator_eastl.cpp">
@@ -2329,6 +2344,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Engine\RenderSystem\src\PassBase.cpp">
       <Filter>Engine\RenderSystem\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Console\src\Settings.cpp">
+      <Filter>Engine\Console\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

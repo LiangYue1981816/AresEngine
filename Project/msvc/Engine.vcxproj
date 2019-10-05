@@ -202,6 +202,8 @@
     <ClInclude Include="..\..\Engine\Base\src\nvwa\debug_new.h" />
     <ClInclude Include="..\..\Engine\Base\src\nvwa\fast_mutex.h" />
     <ClInclude Include="..\..\Engine\Base\src\nvwa\static_assert.h" />
+    <ClInclude Include="..\..\Engine\ConsoleHeader.h" />
+    <ClInclude Include="..\..\Engine\Console\include\Settings.h" />
     <ClInclude Include="..\..\Engine\EngineHeader.h" />
     <ClInclude Include="..\..\Engine\Engine\include\Engine.h" />
     <ClInclude Include="..\..\Engine\GfxHeader.h" />
@@ -659,6 +661,7 @@
     <ClCompile Include="..\..\Engine\Base\src\TaskGraph.cpp" />
     <ClCompile Include="..\..\Engine\Base\src\TaskPool.cpp" />
     <ClCompile Include="..\..\Engine\Base\src\Utils.cpp" />
+    <ClCompile Include="..\..\Engine\Console\src\Settings.cpp" />
     <ClCompile Include="..\..\Engine\Engine\src\Engine.cpp" />
     <ClCompile Include="..\..\Engine\Memory\src\Allocator.cpp" />
     <ClCompile Include="..\..\Engine\Memory\src\MemoryHeap.cpp" />
