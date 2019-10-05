@@ -421,7 +421,7 @@ void CRenderSystem::RenderForwardLighting(CTaskGraph& taskGraph, CCamera* pCamer
 				m_pPassSSAOBlurVertical->SetParamRange(1.0f);
 				m_pPassSSAOBlurVertical->SetCamera(pCamera);
 				m_pPassSSAOBlurVertical->SetInputTexture(GetRenderTexture(rtSSAOBlurHorizontal));
-				m_pPassSSAOBlurVertical->SetOutputTexture(GetRenderTexture(rtSSAO));
+				m_pPassSSAOBlurVertical->SetOutputTexture(GetRenderTexture(rtSSAOBlurVertical));
 				m_pPassSSAOBlurVertical->Render(taskGraph, ptrCommandBuffer);
 			}
 
