@@ -33,6 +33,9 @@
 #include "GLES3UniformBuffer.h"
 #include "GLES3UniformBufferManager.h"
 
+#include "GLES3StorageBuffer.h"
+#include "GLES3StorageBufferManager.h"
+
 #include "GLES3Sampler.h"
 #include "GLES3SamplerManager.h"
 #include "GLES3Texture.h"

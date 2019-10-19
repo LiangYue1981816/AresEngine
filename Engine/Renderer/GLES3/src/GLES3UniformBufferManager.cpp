@@ -8,8 +8,8 @@ CGLES3UniformBufferManager::CGLES3UniformBufferManager(void)
 
 CGLES3UniformBufferManager::~CGLES3UniformBufferManager(void)
 {
-	for (const auto& UniformBuffer : m_pUniformBuffers) {
-		delete UniformBuffer.second;
+	for (const auto& itUniformBuffer : m_pUniformBuffers) {
+		delete itUniformBuffer.second;
 	}
 }
 

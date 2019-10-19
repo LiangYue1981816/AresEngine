@@ -9,6 +9,7 @@ class CGLES3Buffer : public CGfxResource
 	friend class CGLES3InstanceBuffer;
 	friend class CGLES3IndirectBuffer;
 	friend class CGLES3UniformBuffer;
+	friend class CGLES3StorageBuffer;
 
 
 private:

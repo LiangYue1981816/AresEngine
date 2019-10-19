@@ -9,8 +9,8 @@ CVKUniformBufferManager::CVKUniformBufferManager(CVKDevice* pDevice)
 
 CVKUniformBufferManager::~CVKUniformBufferManager(void)
 {
-	for (const auto& UniformBuffer : m_pUniformBuffers) {
-		delete UniformBuffer.second;
+	for (const auto& itUniformBuffer : m_pUniformBuffers) {
+		delete itUniformBuffer.second;
 	}
 }
 

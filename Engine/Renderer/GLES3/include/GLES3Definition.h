@@ -41,6 +41,8 @@ class CGLES3VertexArrayObject;
 
 class CGLES3UniformBuffer;
 class CGLES3UniformBufferManager;
+class CGLES3StorageBuffer;
+class CGLES3StorageBufferManager;
 
 class CGLES3Sampler;
 class CGLES3SamplerManager;
