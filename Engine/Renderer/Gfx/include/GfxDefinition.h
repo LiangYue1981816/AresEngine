@@ -41,6 +41,7 @@ class CALL_API CGfxUniformMat4;
 class CALL_API CGfxUniformEngine;
 class CALL_API CGfxUniformCamera;
 class CALL_API CGfxUniformBuffer;
+class CALL_API CGfxStorageBuffer;
 
 class CALL_API CGfxMesh;
 class CALL_API CGfxMeshDraw;
@@ -63,7 +64,9 @@ typedef CGfxResourcePtr<CGfxFrameBuffer> CGfxFrameBufferPtr;
 typedef CGfxResourcePtr<CGfxTexture2D> CGfxTexture2DPtr;
 typedef CGfxResourcePtr<CGfxTexture2DArray> CGfxTexture2DArrayPtr;
 typedef CGfxResourcePtr<CGfxTextureCubemap> CGfxTextureCubemapPtr;
+
 typedef CGfxResourcePtr<CGfxUniformBuffer> CGfxUniformBufferPtr;
+typedef CGfxResourcePtr<CGfxStorageBuffer> CGfxStorageBufferPtr;
 
 typedef CGfxResourcePtr<CGfxMesh> CGfxMeshPtr;
 typedef CGfxResourcePtr<CGfxMeshDraw> CGfxMeshDrawPtr;

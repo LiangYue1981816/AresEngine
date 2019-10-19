@@ -46,6 +46,7 @@
 #include "GfxUniformEngine.h"
 #include "GfxUniformCamera.h"
 #include "GfxUniformBuffer.h"
+#include "GfxStorageBuffer.h"
 
 #include "GfxMesh.h"
 #include "GfxMeshDraw.h"
