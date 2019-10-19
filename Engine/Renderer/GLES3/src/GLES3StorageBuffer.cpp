@@ -7,12 +7,12 @@ CGLES3StorageBuffer::CGLES3StorageBuffer(CGLES3StorageBufferManager* pManager, s
 	, m_pBuffer(nullptr)
 {
 	m_pBuffer = new CGLES3Buffer(GL_SHADER_STORAGE_BUFFER, size, true);
-	CGfxProfiler::IncUniformBufferSize(m_pBuffer->GetSize());
+	CGfxProfiler::IncStorageBufferSize(m_pBuffer->GetSize());
 }
 
 CGLES3StorageBuffer::~CGLES3StorageBuffer(void)
 {
-	CGfxProfiler::DecUniformBufferSize(m_pBuffer->GetSize());
+	CGfxProfiler::DecStorageBufferSize(m_pBuffer->GetSize());
 	delete m_pBuffer;
 }
 

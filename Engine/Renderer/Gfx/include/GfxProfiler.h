@@ -82,6 +82,9 @@ public:
 	static void IncUniformBufferSize(size_t size);
 	static void DecUniformBufferSize(size_t size);
 
+	static void IncStorageBufferSize(size_t size);
+	static void DecStorageBufferSize(size_t size);
+
 	static void IncVertexBufferSize(size_t size);
 	static void DecVertexBufferSize(size_t size);
 
@@ -109,6 +112,7 @@ private:
 
 	static size_t textureDataSize;
 	static size_t uniformBufferSize;
+	static size_t storageBufferSize;
 	static size_t vertexBufferSize;
 	static size_t indexBufferSize;
 	static size_t instanceBufferSize;

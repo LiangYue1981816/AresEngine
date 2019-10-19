@@ -89,6 +89,8 @@ class CVKIndirectBuffer;
 
 class CVKUniformBuffer;
 class CVKUniformBufferManager;
+class CVKStorageBuffer;
+class CVKStorageBufferManager;
 
 class CVKSampler;
 class CVKSamplerManager;

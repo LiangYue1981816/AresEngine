@@ -46,6 +46,9 @@
 #include "VKUniformBuffer.h"
 #include "VKUniformBufferManager.h"
 
+#include "VKStorageBuffer.h"
+#include "VKStorageBufferManager.h"
+
 #include "VKSampler.h"
 #include "VKSamplerManager.h"
 #include "VKTexture.h"

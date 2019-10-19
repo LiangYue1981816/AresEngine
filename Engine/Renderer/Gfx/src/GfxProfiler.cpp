@@ -5,6 +5,7 @@ bool CGfxProfiler::bEnableProfiler = false;
 
 size_t CGfxProfiler::textureDataSize = 0;
 size_t CGfxProfiler::uniformBufferSize = 0;
+size_t CGfxProfiler::storageBufferSize = 0;
 size_t CGfxProfiler::vertexBufferSize = 0;
 size_t CGfxProfiler::indexBufferSize = 0;
 size_t CGfxProfiler::instanceBufferSize = 0;
@@ -36,6 +37,16 @@ void CGfxProfiler::IncUniformBufferSize(size_t size)
 void CGfxProfiler::DecUniformBufferSize(size_t size)
 {
 	uniformBufferSize -= size;
+}
+
+void CGfxProfiler::IncStorageBufferSize(size_t size)
+{
+	storageBufferSize += size;
+}
+
+void CGfxProfiler::DecStorageBufferSize(size_t size)
+{
+	storageBufferSize -= size;
 }
 
 void CGfxProfiler::IncVertexBufferSize(size_t size)
@@ -117,12 +128,13 @@ void CGfxProfiler::LogGfxMemory(void)
 	LogOutput(LOG_TAG_RENDERER, "GfxMemory\n");
 	LogOutput(LOG_TAG_RENDERER, "\tTextureData = %dKB\n", textureDataSize / 1024);
 	LogOutput(LOG_TAG_RENDERER, "\tUniformBuffer = %dKB\n", uniformBufferSize / 1024);
+	LogOutput(LOG_TAG_RENDERER, "\tStorageBuffer = %dKB\n", storageBufferSize / 1024);
 	LogOutput(LOG_TAG_RENDERER, "\tVertexBuffer = %dKB\n", vertexBufferSize / 1024);
 	LogOutput(LOG_TAG_RENDERER, "\tIndexBuffer = %dKB\n", indexBufferSize / 1024);
 	LogOutput(LOG_TAG_RENDERER, "\tInstanceBuffer = %dKB\n", instanceBufferSize / 1024);
 	LogOutput(LOG_TAG_RENDERER, "\tIndirectBuffer = %dKB\n", indirectBufferSize / 1024);
 	LogOutput(LOG_TAG_RENDERER, "\tTransferBuffer = %dKB\n", transferBufferSize / 1024);
-	LogOutput(LOG_TAG_RENDERER, "\tTotal memory = %dKB\n", (textureDataSize + uniformBufferSize + vertexBufferSize + indexBufferSize + instanceBufferSize + indirectBufferSize + transferBufferSize) / 1024);
+	LogOutput(LOG_TAG_RENDERER, "\tTotal memory = %dKB\n", (textureDataSize + uniformBufferSize + storageBufferSize + vertexBufferSize + indexBufferSize + instanceBufferSize + indirectBufferSize + transferBufferSize) / 1024);
 }
 
 void CGfxProfiler::LogProfiler(int frameCount)
