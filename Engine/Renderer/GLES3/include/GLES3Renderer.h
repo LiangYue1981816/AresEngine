@@ -114,6 +114,7 @@ public:
 	CGfxRenderTexturePtr NewRenderTexture(uint32_t name);
 
 	CGfxUniformBufferPtr NewUniformBuffer(size_t size);
+	CGfxStorageBufferPtr NewStorageBuffer(size_t size);
 
 	CGfxMeshPtr GetMesh(uint32_t name);
 	CGfxMeshPtr NewMesh(uint32_t name);
@@ -215,6 +216,7 @@ private:
 	CGLES3Texture2DArrayManager* m_pTexture2DArrayManager;
 	CGLES3TextureCubemapManager* m_pTextureCubemapManager;
 	CGLES3UniformBufferManager* m_pUniformBufferManager;
+	CGLES3StorageBufferManager* m_pStorageBufferManager;
 	CGLES3MeshManager* m_pMeshManager;
 	CGLES3MeshDrawManager* m_pMeshDrawManager;
 	CGLES3MaterialManager* m_pMaterialManager;

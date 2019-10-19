@@ -128,6 +128,7 @@ public:
 	CGfxRenderTexturePtr NewRenderTexture(uint32_t name);
 
 	CGfxUniformBufferPtr NewUniformBuffer(size_t size);
+	CGfxStorageBufferPtr NewStorageBuffer(size_t size);
 
 	CGfxMeshPtr GetMesh(uint32_t name);
 	CGfxMeshPtr NewMesh(uint32_t name);
@@ -231,6 +232,7 @@ private:
 	CVKTexture2DArrayManager* m_pTexture2DArrayManager;
 	CVKTextureCubemapManager* m_pTextureCubemapManager;
 	CVKUniformBufferManager* m_pUniformBufferManager;
+	CVKStorageBufferManager* m_pStorageBufferManager;
 	CVKMeshManager* m_pMeshManager;
 	CVKMeshDrawManager* m_pMeshDrawManager;
 	CVKMaterialManager* m_pMaterialManager;

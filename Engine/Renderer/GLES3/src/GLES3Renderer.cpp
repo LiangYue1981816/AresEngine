@@ -14,6 +14,7 @@ CGLES3Renderer::CGLES3Renderer(void* hInstance, void* hWnd, void* hDC, int width
 	, m_pTexture2DArrayManager(nullptr)
 	, m_pTextureCubemapManager(nullptr)
 	, m_pUniformBufferManager(nullptr)
+	, m_pStorageBufferManager(nullptr)
 	, m_pMeshManager(nullptr)
 	, m_pMeshDrawManager(nullptr)
 	, m_pMaterialManager(nullptr)
@@ -34,6 +35,7 @@ CGLES3Renderer::CGLES3Renderer(void* hInstance, void* hWnd, void* hDC, int width
 	m_pTexture2DArrayManager = new CGLES3Texture2DArrayManager;
 	m_pTextureCubemapManager = new CGLES3TextureCubemapManager;
 	m_pUniformBufferManager = new CGLES3UniformBufferManager;
+	m_pStorageBufferManager = new CGLES3StorageBufferManager;
 	m_pMeshManager = new CGLES3MeshManager;
 	m_pMeshDrawManager = new CGLES3MeshDrawManager;
 	m_pMaterialManager = new CGLES3MaterialManager;
@@ -58,6 +60,7 @@ CGLES3Renderer::~CGLES3Renderer(void)
 	delete m_pMaterialManager;
 	delete m_pMeshDrawManager;
 	delete m_pMeshManager;
+	delete m_pStorageBufferManager;
 	delete m_pUniformBufferManager;
 	delete m_pTextureCubemapManager;
 	delete m_pTexture2DArrayManager;
@@ -188,6 +191,11 @@ CGfxRenderTexturePtr CGLES3Renderer::NewRenderTexture(uint32_t name)
 CGfxUniformBufferPtr CGLES3Renderer::NewUniformBuffer(size_t size)
 {
 	return m_pUniformBufferManager->Create(size);
+}
+
+CGfxStorageBufferPtr CGLES3Renderer::NewStorageBuffer(size_t size)
+{
+	return m_pStorageBufferManager->Create(size);
 }
 
 CGfxMeshPtr CGLES3Renderer::GetMesh(uint32_t name)

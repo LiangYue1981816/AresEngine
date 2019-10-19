@@ -134,6 +134,7 @@ public:
 	virtual CGfxRenderTexturePtr NewRenderTexture(uint32_t name) = 0;
 
 	virtual CGfxUniformBufferPtr NewUniformBuffer(size_t size) = 0;
+	virtual CGfxStorageBufferPtr NewStorageBuffer(size_t size) = 0;
 
 	virtual CGfxMeshPtr GetMesh(uint32_t name) = 0;
 	virtual CGfxMeshPtr NewMesh(uint32_t name) = 0;
