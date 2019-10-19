@@ -242,6 +242,7 @@
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxSemaphore.h" />
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxShader.h" />
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxSprivCross.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxStorageBuffer.h" />
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxSwapChain.h" />
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxTexture2D.h" />
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxTexture2DArray.h" />
@@ -292,6 +293,8 @@
     <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3Semaphore.h" />
     <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3Shader.h" />
     <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3ShaderManager.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3StorageBuffer.h" />
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3StorageBufferManager.h" />
     <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3SwapChain.h" />
     <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3Texture.h" />
     <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3Texture2D.h" />
@@ -384,6 +387,8 @@
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKSemaphore.h" />
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKShader.h" />
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKShaderManager.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKStorageBuffer.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKStorageBufferManager.h" />
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKSwapChain.h" />
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKTexture.h" />
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKTexture2D.h" />
@@ -719,6 +724,8 @@
     <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3Semaphore.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3Shader.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3ShaderManager.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3StorageBuffer.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3StorageBufferManager.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3SwapChain.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3Texture.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3Texture2D.cpp" />
@@ -772,6 +779,8 @@
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKSemaphore.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKShader.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKShaderManager.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKStorageBuffer.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKStorageBufferManager.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKSwapChain.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKTexture.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKTexture2D.cpp" />
