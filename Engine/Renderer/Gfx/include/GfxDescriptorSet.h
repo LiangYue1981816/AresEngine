@@ -6,6 +6,7 @@ typedef struct DescriptorBufferInfo {
 	bool bDirty = false;
 	uint32_t offset = 0;
 	uint32_t range = 0;
+	CGfxStorageBufferPtr ptrStorageBuffer;
 	CGfxUniformBufferPtr ptrUniformBuffer;
 } DescriptorBufferInfo;
 
