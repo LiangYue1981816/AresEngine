@@ -359,20 +359,38 @@ void CVKDescriptorSet::Update(void)
 		if (itBuffer.second.bDirty) {
 			itBuffer.second.bDirty = false;
 
-			VkDescriptorBufferInfo bufferInfo = {};
-			bufferInfo.buffer = ((CVKUniformBuffer*)itBuffer.second.ptrUniformBuffer.GetPointer())->GetBuffer();
-			bufferInfo.offset = itBuffer.second.offset;
-			bufferInfo.range = itBuffer.second.range;
-			bufferInfos.emplace_back(bufferInfo);
+			uint32_t dstBinding;
+			VkDescriptorType descriptorType;
+
+			if (itBuffer.second.ptrUniformBuffer) {
+				VkDescriptorBufferInfo bufferInfo = {};
+				bufferInfo.buffer = ((CVKUniformBuffer*)itBuffer.second.ptrUniformBuffer.GetPointer())->GetBuffer();
+				bufferInfo.offset = itBuffer.second.offset;
+				bufferInfo.range = itBuffer.second.range;
+				bufferInfos.emplace_back(bufferInfo);
+
+				dstBinding = m_ptrDescriptorLayout->GetUniformBlockBinding(itBuffer.first);
+				descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER_DYNAMIC;
+			}
+			else if (itBuffer.second.ptrStorageBuffer) {
+				VkDescriptorBufferInfo bufferInfo = {};
+				bufferInfo.buffer = ((CVKStorageBuffer*)itBuffer.second.ptrStorageBuffer.GetPointer())->GetBuffer();
+				bufferInfo.offset = itBuffer.second.offset;
+				bufferInfo.range = itBuffer.second.range;
+				bufferInfos.emplace_back(bufferInfo);
+
+				dstBinding = m_ptrDescriptorLayout->GetStorageBlockBinding(itBuffer.first);
+				descriptorType = VK_DESCRIPTOR_TYPE_STORAGE_BUFFER;
+			}
 
 			VkWriteDescriptorSet write = {};
 			write.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
 			write.pNext = nullptr;
 			write.dstSet = m_vkDescriptorSet;
-			write.dstBinding = m_ptrDescriptorLayout->GetUniformBlockBinding(itBuffer.first);
+			write.dstBinding = dstBinding;
 			write.dstArrayElement = 0;
 			write.descriptorCount = 1;
-			write.descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER_DYNAMIC;
+			write.descriptorType = descriptorType;
 			write.pImageInfo = nullptr;
 			write.pBufferInfo = &bufferInfos[bufferInfos.size() - 1];
 			write.pTexelBufferView = nullptr;
