@@ -41,6 +41,10 @@ bool CVKDescriptorLayout::Create(void)
 		do {
 			eastl::vector<VkDescriptorSetLayoutBinding> bindings;
 			{
+				for (const auto& itBinding : m_storageBlockBindings) {
+					bindings.emplace_back(itBinding.second);
+				}
+
 				for (const auto& itBinding : m_uniformBlockBindings) {
 					bindings.emplace_back(itBinding.second);
 				}
@@ -62,6 +66,7 @@ bool CVKDescriptorLayout::Create(void)
 			layoutCreateInfo.pBindings = bindings.data();
 			CALL_VK_FUNCTION_BREAK(vkCreateDescriptorSetLayout(m_pDevice->GetDevice(), &layoutCreateInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkDescriptorLayout));
 
+			m_numDescriptors[VK_DESCRIPTOR_TYPE_STORAGE_BUFFER] = m_storageBlockBindings.size();
 			m_numDescriptors[VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER_DYNAMIC] = m_uniformBlockBindings.size();
 			m_numDescriptors[VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER] = m_sampledImageBindings.size();
 			m_numDescriptors[VK_DESCRIPTOR_TYPE_INPUT_ATTACHMENT] = m_inputAttachmentBindings.size();
@@ -76,6 +81,7 @@ bool CVKDescriptorLayout::Create(void)
 void CVKDescriptorLayout::Destroy(bool bClear)
 {
 	if (bClear) {
+		m_storageBlockBindings.clear();
 		m_uniformBlockBindings.clear();
 		m_sampledImageBindings.clear();
 		m_inputAttachmentBindings.clear();
@@ -87,6 +93,16 @@ void CVKDescriptorLayout::Destroy(bool bClear)
 
 	m_vkDescriptorLayout = VK_NULL_HANDLE;
 	memset(m_numDescriptors, 0, sizeof(m_numDescriptors));
+}
+
+void CVKDescriptorLayout::SetStorageBlockBinding(uint32_t name, uint32_t binding)
+{
+	m_storageBlockBindings[name] = {};
+	m_storageBlockBindings[name].binding = binding;
+	m_storageBlockBindings[name].descriptorType = VK_DESCRIPTOR_TYPE_STORAGE_BUFFER;
+	m_storageBlockBindings[name].descriptorCount = 1;
+	m_storageBlockBindings[name].stageFlags = VK_SHADER_STAGE_VERTEX_BIT | VK_SHADER_STAGE_FRAGMENT_BIT | VK_SHADER_STAGE_COMPUTE_BIT;
+	m_storageBlockBindings[name].pImmutableSamplers = nullptr;
 }
 
 void CVKDescriptorLayout::SetUniformBlockBinding(uint32_t name, uint32_t binding)
@@ -121,6 +137,18 @@ void CVKDescriptorLayout::SetInputAttachmentBinding(uint32_t name, uint32_t bind
 uint32_t CVKDescriptorLayout::GetSetIndex(void) const
 {
 	return m_set;
+}
+
+uint32_t CVKDescriptorLayout::GetStorageBlockBinding(uint32_t name) const
+{
+	const auto& itBinding = m_storageBlockBindings.find(name);
+
+	if (itBinding != m_storageBlockBindings.end()) {
+		return itBinding->second.binding;
+	}
+	else {
+		return -1;
+	}
 }
 
 uint32_t CVKDescriptorLayout::GetUniformBlockBinding(uint32_t name) const
@@ -159,6 +187,11 @@ uint32_t CVKDescriptorLayout::GetInputAttachmentBinding(uint32_t name) const
 	}
 }
 
+bool CVKDescriptorLayout::IsStorageBlockValid(uint32_t name) const
+{
+	return GetStorageBlockBinding(name) != -1;
+}
+
 bool CVKDescriptorLayout::IsUniformBlockValid(uint32_t name) const
 {
 	return GetUniformBlockBinding(name) != -1;
@@ -179,6 +212,10 @@ bool CVKDescriptorLayout::IsCompatible(const CGfxDescriptorLayoutPtr ptrLayout) 
 	ASSERT(ptrLayout);
 
 	if (m_set != ((CVKDescriptorLayout*)ptrLayout.GetPointer())->m_set) {
+		return false;
+	}
+
+	if (m_storageBlockBindings != ((CVKDescriptorLayout*)ptrLayout.GetPointer())->m_storageBlockBindings) {
 		return false;
 	}
 
