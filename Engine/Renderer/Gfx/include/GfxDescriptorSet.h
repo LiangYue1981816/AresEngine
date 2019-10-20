@@ -6,8 +6,8 @@ typedef struct DescriptorBufferInfo {
 	bool bDirty = false;
 	uint32_t offset = 0;
 	uint32_t range = 0;
-	CGfxStorageBufferPtr ptrStorageBuffer;
 	CGfxUniformBufferPtr ptrUniformBuffer;
+	CGfxStorageBufferPtr ptrStorageBuffer;
 } DescriptorBufferInfo;
 
 typedef struct DescriptorImageInfo {
@@ -46,6 +46,7 @@ public:
 	virtual bool SetRenderTexture(uint32_t name, const CGfxRenderTexturePtr ptrTexture, const CGfxSampler* pSampler) = 0;
 	virtual bool SetInputAttachmentTexture(uint32_t name, const CGfxRenderTexturePtr ptrTexture, const CGfxSampler* pSampler) = 0;
 	virtual bool SetUniformBuffer(uint32_t name, const CGfxUniformBufferPtr ptrUniformBuffer, uint32_t offset, uint32_t range) = 0;
+	virtual bool SetStorageBuffer(uint32_t name, const CGfxStorageBufferPtr ptrStorageBuffer, uint32_t offset, uint32_t range) = 0;
 
 public:
 	virtual const CGfxDescriptorLayoutPtr GetDescriptorLayout(void) const = 0;

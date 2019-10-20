@@ -220,6 +220,25 @@ bool CVKDescriptorSet::SetUniformBuffer(uint32_t name, const CGfxUniformBufferPt
 	}
 }
 
+bool CVKDescriptorSet::SetStorageBuffer(uint32_t name, const CGfxStorageBufferPtr ptrStorageBuffer, uint32_t offset, uint32_t range)
+{
+	ASSERT(ptrStorageBuffer);
+	ASSERT(ptrStorageBuffer->GetSize() >= offset + range);
+	ASSERT(m_vkDescriptorSet);
+	ASSERT(m_ptrDescriptorLayout);
+
+	if (m_ptrDescriptorLayout->IsStorageBlockValid(name)) {
+		m_bufferDescriptorInfos[name].bDirty = true;
+		m_bufferDescriptorInfos[name].offset = offset;
+		m_bufferDescriptorInfos[name].range = range;
+		m_bufferDescriptorInfos[name].ptrStorageBuffer = ptrStorageBuffer;
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
 const CGfxDescriptorLayoutPtr CVKDescriptorSet::GetDescriptorLayout(void) const
 {
 	ASSERT(m_ptrDescriptorLayout);

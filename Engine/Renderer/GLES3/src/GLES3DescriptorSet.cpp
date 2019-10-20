@@ -170,6 +170,23 @@ bool CGLES3DescriptorSet::SetUniformBuffer(uint32_t name, const CGfxUniformBuffe
 	}
 }
 
+bool CGLES3DescriptorSet::SetStorageBuffer(uint32_t name, const CGfxStorageBufferPtr ptrStorageBuffer, uint32_t offset, uint32_t range)
+{
+	ASSERT(ptrStorageBuffer);
+	ASSERT(ptrStorageBuffer->GetSize() >= offset + range);
+	ASSERT(m_ptrDescriptorLayout);
+
+	if (m_ptrDescriptorLayout->IsStorageBlockValid(name)) {
+		m_bufferDescriptorInfos[name].offset = offset;
+		m_bufferDescriptorInfos[name].range = range;
+		m_bufferDescriptorInfos[name].ptrStorageBuffer = ptrStorageBuffer;
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
 const CGfxDescriptorLayoutPtr CGLES3DescriptorSet::GetDescriptorLayout(void) const
 {
 	ASSERT(m_ptrDescriptorLayout);
