@@ -282,7 +282,8 @@ void CVKDescriptorSet::Update(void)
 		if (itImage.second.bDirty) {
 			itImage.second.bDirty = false;
 
-			bool bTextureInputAttachment = false;
+			uint32_t dstBinding;
+			VkDescriptorType descriptorType;
 
 			if (itImage.second.ptrTexture2D) {
 				VkDescriptorImageInfo imageInfo = {};
@@ -290,7 +291,9 @@ void CVKDescriptorSet::Update(void)
 				imageInfo.imageView = ((CVKTexture2D*)itImage.second.ptrTexture2D.GetPointer())->GetImageView();
 				imageInfo.imageLayout = CGfxHelper::IsFormatDepthOrStencil(itImage.second.ptrTexture2D->GetFormat()) ? VK_IMAGE_LAYOUT_DEPTH_STENCIL_READ_ONLY_OPTIMAL : VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
 				imageInfos.emplace_back(imageInfo);
-				bTextureInputAttachment = false;
+
+				dstBinding = m_ptrDescriptorLayout->GetSampledImageBinding(itImage.first);
+				descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
 			}
 			else if (itImage.second.ptrTexture2DArray) {
 				VkDescriptorImageInfo imageInfo = {};
@@ -298,7 +301,9 @@ void CVKDescriptorSet::Update(void)
 				imageInfo.imageView = ((CVKTexture2DArray*)itImage.second.ptrTexture2DArray.GetPointer())->GetImageView();
 				imageInfo.imageLayout = CGfxHelper::IsFormatDepthOrStencil(itImage.second.ptrTexture2DArray->GetFormat()) ? VK_IMAGE_LAYOUT_DEPTH_STENCIL_READ_ONLY_OPTIMAL : VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
 				imageInfos.emplace_back(imageInfo);
-				bTextureInputAttachment = false;
+
+				dstBinding = m_ptrDescriptorLayout->GetSampledImageBinding(itImage.first);
+				descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
 			}
 			else if (itImage.second.ptrTextureCubemap) {
 				VkDescriptorImageInfo imageInfo = {};
@@ -306,7 +311,9 @@ void CVKDescriptorSet::Update(void)
 				imageInfo.imageView = ((CVKTextureCubemap*)itImage.second.ptrTextureCubemap.GetPointer())->GetImageView();
 				imageInfo.imageLayout = CGfxHelper::IsFormatDepthOrStencil(itImage.second.ptrTextureCubemap->GetFormat()) ? VK_IMAGE_LAYOUT_DEPTH_STENCIL_READ_ONLY_OPTIMAL : VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
 				imageInfos.emplace_back(imageInfo);
-				bTextureInputAttachment = false;
+
+				dstBinding = m_ptrDescriptorLayout->GetSampledImageBinding(itImage.first);
+				descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
 			}
 			else if (itImage.second.ptrRenderTexture) {
 				VkDescriptorImageInfo imageInfo = {};
@@ -314,7 +321,9 @@ void CVKDescriptorSet::Update(void)
 				imageInfo.imageView = ((CVKRenderTexture*)itImage.second.ptrRenderTexture.GetPointer())->GetImageView();
 				imageInfo.imageLayout = CGfxHelper::IsFormatDepthOrStencil(itImage.second.ptrRenderTexture->GetFormat()) ? VK_IMAGE_LAYOUT_DEPTH_STENCIL_READ_ONLY_OPTIMAL : VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
 				imageInfos.emplace_back(imageInfo);
-				bTextureInputAttachment = false;
+
+				dstBinding = m_ptrDescriptorLayout->GetSampledImageBinding(itImage.first);
+				descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
 			}
 			else if (itImage.second.ptrInputAttachmentTexture) {
 				VkDescriptorImageInfo imageInfo = {};
@@ -322,7 +331,9 @@ void CVKDescriptorSet::Update(void)
 				imageInfo.imageView = ((CVKRenderTexture*)itImage.second.ptrInputAttachmentTexture.GetPointer())->GetImageView();
 				imageInfo.imageLayout = CGfxHelper::IsFormatDepthOrStencil(itImage.second.ptrInputAttachmentTexture->GetFormat()) ? VK_IMAGE_LAYOUT_DEPTH_STENCIL_READ_ONLY_OPTIMAL : VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
 				imageInfos.emplace_back(imageInfo);
-				bTextureInputAttachment = true;
+
+				dstBinding = m_ptrDescriptorLayout->GetInputAttachmentBinding(itImage.first);
+				descriptorType = VK_DESCRIPTOR_TYPE_INPUT_ATTACHMENT;
 			}
 			else {
 				ASSERT(false);
@@ -333,10 +344,10 @@ void CVKDescriptorSet::Update(void)
 			write.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
 			write.pNext = nullptr;
 			write.dstSet = m_vkDescriptorSet;
-			write.dstBinding = bTextureInputAttachment ? m_ptrDescriptorLayout->GetInputAttachmentBinding(itImage.first) : m_ptrDescriptorLayout->GetSampledImageBinding(itImage.first);
+			write.dstBinding = dstBinding;
 			write.dstArrayElement = 0;
 			write.descriptorCount = 1;
-			write.descriptorType = bTextureInputAttachment ? VK_DESCRIPTOR_TYPE_INPUT_ATTACHMENT : VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
+			write.descriptorType = descriptorType;
 			write.pImageInfo = &imageInfos[imageInfos.size() - 1];
 			write.pBufferInfo = nullptr;
 			write.pTexelBufferView = nullptr;
