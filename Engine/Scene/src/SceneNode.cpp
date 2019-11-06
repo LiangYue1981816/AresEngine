@@ -431,7 +431,10 @@ bool CSceneNode::UpdateTransform(void)
 		m_bUpdateTransform = false;
 		m_nUpdateTransformCount += 1;
 		m_nParentUpdateTransformCount = m_pParentNode ? m_pParentNode->m_nUpdateTransformCount : m_nParentUpdateTransformCount;
-	}
 
-	return bUpdateParent || bUpdateCurrent;
+		return true;
+	}
+	else {
+		return false;
+	}
 }
