@@ -22,15 +22,12 @@ public:
 	void SetMask(uint32_t mask);
 
 public:
-	glm::aabb GetWorldAABB(void);
-
-public:
 	virtual void TaskUpdate(float gameTime, float deltaTime);
 	virtual void TaskUpdateCamera(CGfxCamera* pCamera, CGfxRenderQueue* pRenderQueue, uint32_t mask, int indexThread);
 
 
 private:
-	InstanceData m_instanceData;
+	InstanceData m_instanceData[2];
 
 private:
 	CGfxMaterialPtr m_ptrMaterial;

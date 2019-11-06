@@ -41,29 +41,21 @@ void CComponentMesh::SetMask(uint32_t mask)
 	}
 }
 
-glm::aabb CComponentMesh::GetWorldAABB(void)
-{
-	if (m_ptrMeshDraw && m_pParentNode) {
-		return m_ptrMeshDraw->GetLocalAABB() * m_pParentNode->GetWorldTransform();
-	}
-	else {
-		return glm::aabb();
-	}
-}
-
 void CComponentMesh::TaskUpdate(float gameTime, float deltaTime)
 {
-	if (m_pParentNode && m_pParentNode->IsActive()) {
-		m_instanceData.transformMatrix = m_pParentNode->GetWorldTransform();
+	if (m_ptrMeshDraw) {
+		if (m_pParentNode && m_pParentNode->IsActive()) {
+			m_instanceData[Engine()->GetFrameCount() % 2].transformMatrix = m_pParentNode->GetWorldTransform();
+		}
 	}
 }
 
 void CComponentMesh::TaskUpdateCamera(CGfxCamera* pCamera, CGfxRenderQueue* pRenderQueue, uint32_t mask, int indexThread)
 {
-	if (m_ptrMeshDraw->GetMask() & mask) {
+	if (m_ptrMeshDraw && m_ptrMeshDraw->GetMask() & mask) {
 		if (m_pParentNode && m_pParentNode->IsActive()) {
-			if (pCamera->IsVisible(GetWorldAABB())) {
-				pRenderQueue->Add(indexThread, m_ptrMaterial, m_ptrMeshDraw, (const uint8_t*)& m_instanceData, sizeof(InstanceData));
+			if (pCamera->IsVisible(m_ptrMeshDraw->GetLocalAABB() * m_instanceData[1 - Engine()->GetFrameCount() % 2].transformMatrix)) {
+				pRenderQueue->Add(indexThread, m_ptrMaterial, m_ptrMeshDraw, (const uint8_t*)& m_instanceData[1 - Engine()->GetFrameCount() % 2], sizeof(InstanceData));
 			}
 		}
 	}
