@@ -25,6 +25,8 @@ private:
 
 
 public:
+	uint32_t GetFrameCount(void) const;
+
 	float GetDeltaTime(void) const;
 	float GetTotalTime(void) const;
 
@@ -44,6 +46,8 @@ private:
 
 
 private:
+	uint32_t m_numFrames;
+
 	float m_lastTime;
 	float m_deltaTime;
 	float m_totalTime;

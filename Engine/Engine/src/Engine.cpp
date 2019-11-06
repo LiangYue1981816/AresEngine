@@ -33,7 +33,9 @@ void CEngine::Destroy(void)
 }
 
 CEngine::CEngine(GfxApi api, void* hInstance, void* hWnd, void* hDC, int width, int height, GfxPixelFormat format)
-	: m_lastTime(0.0f)
+	: m_numFrames(0)
+
+	, m_lastTime(0.0f)
 	, m_deltaTime(0.0f)
 	, m_totalTime(0.0f)
 
@@ -96,6 +98,11 @@ CEngine::~CEngine(void)
 	delete m_pRenderSystem;
 }
 
+uint32_t CEngine::GetFrameCount(void) const
+{
+	return m_numFrames;
+}
+
 float CEngine::GetDeltaTime(void) const
 {
 	return m_deltaTime;
@@ -123,6 +130,14 @@ void CEngine::Wait(void)
 
 void CEngine::Update(void)
 {
+	float currTime = Tick() / 1000000.0f;
+
+	m_deltaTime = currTime - m_lastTime;
+	m_totalTime = m_totalTime + m_deltaTime;
+
+	m_lastTime = currTime;
+	m_numFrames = m_numFrames + 1;
+
 	event_unsignal(&m_eventFinish);
 	event_signal(&m_eventDispatch);
 }
@@ -141,12 +156,6 @@ void CEngine::RenderForwardLighting(CCamera* pCamera, bool bPresent)
 
 void CEngine::UpdateThread(void)
 {
-	float currTime = Tick() / 1000000.0f;
-
-	m_deltaTime = currTime - m_lastTime;
-	m_totalTime = m_totalTime + m_deltaTime;
-	m_lastTime = currTime;
-
 	m_pSceneManager->UpdateLogic(m_taskGraphUpdate, m_totalTime, m_deltaTime);
 }
 
