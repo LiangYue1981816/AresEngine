@@ -1,5 +1,4 @@
-#include "SceneHeader.h"
-#include "RenderHeader.h"
+#include "EngineHeader.h"
 
 
 CComponentPointLight::CComponentPointLight(uint32_t name)
