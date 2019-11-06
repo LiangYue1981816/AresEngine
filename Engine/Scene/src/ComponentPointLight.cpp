@@ -14,8 +14,8 @@ CComponentPointLight::CComponentPointLight(const CComponentPointLight& component
 	m_ptrMaterial = component.m_ptrMaterial;
 	m_ptrMeshDraw = component.m_ptrMeshDraw;
 
-	SetColor(component.m_instanceData.color.r, component.m_instanceData.color.g, component.m_instanceData.color.b);
-	SetAttenuation(component.m_instanceData.attenuation.x, component.m_instanceData.attenuation.y, component.m_instanceData.attenuation.z);
+	SetColor(component.m_instanceData[0].color.r, component.m_instanceData[0].color.g, component.m_instanceData[0].color.b);
+	SetAttenuation(component.m_instanceData[0].attenuation.x, component.m_instanceData[0].attenuation.y, component.m_instanceData[0].attenuation.z);
 }
 
 CComponentPointLight::~CComponentPointLight(void)
@@ -35,37 +35,31 @@ void CComponentPointLight::SetMeshDraw(const CGfxMeshPtr ptrMesh)
 
 void CComponentPointLight::SetColor(float red, float green, float blue)
 {
-	m_instanceData.color = glm::vec4(red, green, blue, 0.0f);
+	m_instanceData[0].color = glm::vec4(red, green, blue, 0.0f);
+	m_instanceData[1].color = glm::vec4(red, green, blue, 0.0f);
 }
 
 void CComponentPointLight::SetAttenuation(float linear, float square, float constant)
 {
-	m_instanceData.attenuation = glm::vec4(linear, square, constant, 0.0f);
-}
-
-glm::aabb CComponentPointLight::GetWorldAABB(void)
-{
-	if (m_ptrMeshDraw && m_pParentNode) {
-		return m_ptrMeshDraw->GetLocalAABB()* m_pParentNode->GetWorldTransform();
-	}
-	else {
-		return glm::aabb();
-	}
+	m_instanceData[0].attenuation = glm::vec4(linear, square, constant, 0.0f);
+	m_instanceData[1].attenuation = glm::vec4(linear, square, constant, 0.0f);
 }
 
 void CComponentPointLight::TaskUpdate(float gameTime, float deltaTime)
 {
-	if (m_pParentNode && m_pParentNode->IsActive()) {
-		m_instanceData.transformMatrix = m_pParentNode->GetWorldTransform();
+	if (m_ptrMeshDraw) {
+		if (m_pParentNode && m_pParentNode->IsActive()) {
+			m_instanceData[Engine()->GetFrameCount() % 2].transformMatrix = m_pParentNode->GetWorldTransform();
+		}
 	}
 }
 
 void CComponentPointLight::TaskUpdateCamera(CGfxCamera* pCamera, CGfxRenderQueue* pRenderQueue, uint32_t mask, int indexThread)
 {
-	if (m_ptrMeshDraw->GetMask() & mask) {
+	if (m_ptrMeshDraw && m_ptrMeshDraw->GetMask() & mask) {
 		if (m_pParentNode && m_pParentNode->IsActive()) {
-			if (pCamera->IsVisible(GetWorldAABB())) {
-				pRenderQueue->Add(indexThread, m_ptrMaterial, m_ptrMeshDraw, (const uint8_t*)& m_instanceData, sizeof(InstanceData));
+			if (pCamera->IsVisible(m_ptrMeshDraw->GetLocalAABB() * m_instanceData[1 - Engine()->GetFrameCount() % 2].transformMatrix)) {
+				pRenderQueue->Add(indexThread, m_ptrMaterial, m_ptrMeshDraw, (const uint8_t*)& m_instanceData[1 - Engine()->GetFrameCount() % 2], sizeof(InstanceData));
 			}
 		}
 	}
