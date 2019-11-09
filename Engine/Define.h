@@ -48,6 +48,14 @@
 #  endif
 #endif
 
+#define ASSERT_TEXT(expression, tag, format,  ...) \
+	do {                                           \
+		if ((!!(expression)) == false) {           \
+			LogOutput(tag, format, ##__VA_ARGS__); \
+			ASSERT(false);                         \
+		}                                          \
+	} while(false)
+
 #define ALIGN_BYTE(a, b)               ((((a) + (b) - 1) / (b)) * (b))
 #define ALIGN_4BYTE(a)                 ALIGN_BYTE(a, 4)
 #define ALIGN_16BYTE(a)                ALIGN_BYTE(a, 16)
