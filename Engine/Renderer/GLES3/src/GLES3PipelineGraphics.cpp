@@ -39,6 +39,11 @@ void CGLES3PipelineGraphics::Destroy(void)
 	m_pPipeline->Destroy();
 }
 
+bool CGLES3PipelineGraphics::IsTransparency(void) const
+{
+	return m_state.bEnableBlend;
+}
+
 void CGLES3PipelineGraphics::Bind(void) const
 {
 	m_pPipeline->Bind(&m_state);

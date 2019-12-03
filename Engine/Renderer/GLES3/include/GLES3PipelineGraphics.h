@@ -24,6 +24,9 @@ public:
 	void Destroy(void);
 
 public:
+	bool IsTransparency(void) const;
+
+public:
 	void Bind(void) const;
 	bool BindDescriptorSet(const CGfxDescriptorSetPtr ptrDescriptorSet) const;
 
