@@ -25,6 +25,9 @@ public:
 	void Destroy(void);
 
 public:
+	bool IsTransparency(void) const;
+
+public:
 	void Bind(VkCommandBuffer vkCommandBuffer);
 
 	void Uniform1i(VkCommandBuffer vkCommandBuffer, uint32_t name, int v0) const;
@@ -53,6 +56,7 @@ public:
 
 
 private:
+	PipelineState m_state;
 	CVKPipeline* m_pPipeline;
 
 private:

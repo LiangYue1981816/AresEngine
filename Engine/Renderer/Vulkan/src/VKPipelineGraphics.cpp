@@ -36,12 +36,18 @@ const bool CVKPipelineGraphics::IsCompatibleVertexFormat(uint32_t binding, uint3
 
 bool CVKPipelineGraphics::Create(const CGfxRenderPass* pRenderPass, const CGfxShader* pVertexShader, const CGfxShader* pFragmentShader, const PipelineState& state, int indexSubpass, int vertexBinding, int instanceBinding)
 {
+	m_state = state;
 	return m_pPipeline->Create(pRenderPass, pVertexShader, pFragmentShader, state, indexSubpass, vertexBinding, instanceBinding);
 }
 
 void CVKPipelineGraphics::Destroy(void)
 {
 	m_pPipeline->Destroy();
+}
+
+bool CVKPipelineGraphics::IsTransparency(void) const
+{
+	return m_state.bEnableBlend;
 }
 
 void CVKPipelineGraphics::Bind(VkCommandBuffer vkCommandBuffer)

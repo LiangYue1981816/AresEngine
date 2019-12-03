@@ -113,14 +113,16 @@ void CGfxRenderQueue::End(void)
 	}
 }
 
-void CGfxRenderQueue::CmdDraw(CTaskGraph* pTaskGraph, CGfxCommandBufferPtr ptrCommandBuffer, const CGfxDescriptorSetPtr ptrDescriptorSetPass, const uint32_t matPassName, const glm::vec4& scissor, const glm::vec4& viewport, uint32_t mask)
+void CGfxRenderQueue::CmdDraw(CTaskGraph* pTaskGraph, CGfxCommandBufferPtr ptrCommandBuffer, const CGfxDescriptorSetPtr ptrDescriptorSetPass, const uint32_t matPassName, const glm::vec4& scissor, const glm::vec4& viewport, uint32_t mask, bool bIsTransparency)
 {
 	m_pipelineMaterialQueue.clear();
 	{
 		for (const auto& itMaterialQueue : m_materialMeshDrawQueue) {
 			if (CGfxMaterialPass* pPass = (CGfxMaterialPass*)itMaterialQueue.first->GetPass(matPassName)) {
 				if (CGfxPipelineGraphics* pPipeline = (CGfxPipelineGraphics*)pPass->GetPipeline()) {
-					m_pipelineMaterialQueue[pPipeline][itMaterialQueue.first] = itMaterialQueue.first;
+					if (pPipeline->IsTransparency() == bIsTransparency) {
+						m_pipelineMaterialQueue[pPipeline][itMaterialQueue.first] = itMaterialQueue.first;
+					}
 				}
 			}
 		}

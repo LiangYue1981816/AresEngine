@@ -92,6 +92,9 @@ public:
 	virtual bool Create(const CGfxRenderPass* pRenderPass, const CGfxShader* pVertexShader, const CGfxShader* pFragmentShader, const PipelineState& state, int indexSubpass, int vertexBinding, int instanceBinding) = 0;
 	virtual void Destroy(void) = 0;
 
+public:
+	virtual bool IsTransparency(void) const = 0;
+
 
 private:
 	uint32_t m_name;
