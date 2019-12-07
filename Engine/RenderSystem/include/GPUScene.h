@@ -2,7 +2,7 @@
 #include "PreHeader.h"
 
 
-class CALL_API CGfxGPUScene
+class CALL_API CGPUScene
 {
 private:
 	typedef struct InstanceData {
@@ -16,8 +16,8 @@ private:
 
 
 public:
-	CGfxGPUScene(void);
-	virtual ~CGfxGPUScene(void);
+	CGPUScene(void);
+	virtual ~CGPUScene(void);
 
 
 public:

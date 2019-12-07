@@ -1632,8 +1632,8 @@
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKStorageBufferManager.h">
       <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxGPUScene.h">
-      <Filter>Engine\Renderer\Gfx\Header Files</Filter>
+    <ClInclude Include="..\..\Engine\RenderSystem\include\GPUScene.h">
+      <Filter>Engine\RenderSystem\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -2378,8 +2378,8 @@
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKStorageBufferManager.cpp">
       <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxGPUScene.cpp">
-      <Filter>Engine\Renderer\Gfx\Source Files</Filter>
+    <ClCompile Include="..\..\Engine\RenderSystem\src\GPUScene.cpp">
+      <Filter>Engine\RenderSystem\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

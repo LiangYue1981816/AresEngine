@@ -6,4 +6,5 @@
 #include "SceneHeader.h"
 
 #include "RenderSystem/include/Camera.h"
+#include "RenderSystem/include/GPUScene.h"
 #include "RenderSystem/include/RenderSystem.h"
