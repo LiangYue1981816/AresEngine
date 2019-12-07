@@ -52,5 +52,11 @@ void CGPUScene::ModifyInstance(uint32_t name, const InstanceData &data)
 
 void CGPUScene::Update(void)
 {
+	for (int index = 0; index < m_transferBuffer[Engine()->GetFrameCount() % 2].size(); index++) {
+		const TransferData& data = m_transferBuffer[Engine()->GetFrameCount() % 2][index];
+		m_instanceBuffer.resize(std::max(m_instanceBuffer.size(), (size_t)data.index + 1));
+		m_instanceBuffer[data.index] = data.data;
+	}
+
 	m_transferBuffer[Engine()->GetFrameCount() % 2].clear();
 }

@@ -4,11 +4,12 @@
 
 class CALL_API CGPUScene
 {
-private:
+public:
 	typedef struct InstanceData {
 		glm::mat4 transformMatrix;
 	} InstanceData;
 
+private:
 	typedef struct TransferData {
 		uint32_t index;
 		InstanceData data;
