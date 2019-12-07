@@ -2,27 +2,42 @@
 #include "PreHeader.h"
 
 
-class CALL_API CTaskGraph;
-class CALL_API CGfxRenderQueue
+class CALL_API CGfxGPUScene
 {
-public:
-	CGfxRenderQueue(void);
-	virtual ~CGfxRenderQueue(void);
+private:
+	typedef struct InstanceData {
+		glm::mat4 transformMatrix;
+	} InstanceData;
+
+	typedef struct TransferData {
+		uint32_t index;
+		InstanceData data;
+	} TransferData;
 
 
 public:
-	void Clear(void);
-	void Begin(void);
-	void Add(int indexThread, const CGfxMaterialPtr ptrMaterial, const CGfxMeshDrawPtr ptrMeshDraw, const uint8_t* pInstanceData, uint32_t size);
-	void End(void);
+	CGfxGPUScene(void);
+	virtual ~CGfxGPUScene(void);
+
 
 public:
-	virtual void CmdDraw(CTaskGraph* pTaskGraph, CGfxCommandBufferPtr ptrCommandBuffer, const CGfxDescriptorSetPtr ptrDescriptorSetPass, const uint32_t matPassName, const glm::vec4& scissor, const glm::vec4& viewport, uint32_t mask, bool bIsTransparency);
-	virtual void CmdDrawThread(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass, const int indexSubpass, const CGfxDescriptorSetPtr ptrDescriptorSetPass, const CGfxDescriptorSetPtr ptrDescriptorSetInputAttachment, const CGfxPipelineGraphics* pPipeline, const uint32_t matPassName, const glm::vec4& scissor, const glm::vec4& viewport, uint32_t mask);
+	void AddInstance(uint32_t name);
+	void RemoveInstance(uint32_t name);
+	void ModifyInstance(uint32_t name, const InstanceData &data);
+
+public:
+	void Update(void);
 
 
 private:
-	eastl::unordered_map<CGfxMaterialPtr, eastl::unordered_map<CGfxMeshPtr, eastl::unordered_map<CGfxMeshDrawPtr, eastl::vector<uint8_t>>>> m_materialMeshDrawQueue;
-	eastl::unordered_map<CGfxMaterialPtr, eastl::unordered_map<CGfxMeshPtr, eastl::unordered_map<CGfxMeshDrawPtr, eastl::vector<uint8_t>>>> m_materialMeshDrawQueueThreads[MAX_THREAD_COUNT];
-	eastl::unordered_map<const CGfxPipelineGraphics*, eastl::unordered_map<CGfxMaterialPtr, CGfxMaterialPtr>> m_pipelineMaterialQueue;
+	eastl::list<uint32_t> m_freeIndex;
+	eastl::unordered_map<uint32_t, uint32_t> m_nameIndex;
+
+private:
+	eastl::vector<InstanceData> m_instanceBuffer;
+	eastl::vector<TransferData> m_transferBuffer[2];
+
+private:
+	CGfxStorageBufferPtr m_ptrTransferBuffer;
+	CGfxStorageBufferPtr m_ptrInstanceBuffer[2];
 };

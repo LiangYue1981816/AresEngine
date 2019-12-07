@@ -15,6 +15,7 @@
 #include "GfxResourceManager.h"
 
 #include "GfxCamera.h"
+#include "GfxGPUScene.h"
 #include "GfxRenderQueue.h"
 
 #include "GfxSemaphore.h"

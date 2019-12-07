@@ -10,6 +10,7 @@ class CALL_API CGfxResource;
 class CALL_API CGfxResourceManager;
 
 class CALL_API CGfxCamera;
+class CALL_API CGfxGPUScene;
 class CALL_API CGfxRenderQueue;
 
 class CALL_API CGfxSemaphore;
