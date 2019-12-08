@@ -10,9 +10,6 @@ class CALL_API CGfxResource;
 class CALL_API CGfxResourceManager;
 
 class CALL_API CGfxCamera;
-class CALL_API CGfxRenderQueue;
-
-class CALL_API CGfxSemaphore;
 
 class CALL_API CGfxSwapChain;
 class CALL_API CGfxRenderPass;
@@ -42,6 +39,8 @@ class CALL_API CGfxUniformEngine;
 class CALL_API CGfxUniformCamera;
 class CALL_API CGfxUniformBuffer;
 class CALL_API CGfxStorageBuffer;
+
+class CALL_API CGfxSemaphore;
 
 class CALL_API CGfxMesh;
 class CALL_API CGfxMeshDraw;

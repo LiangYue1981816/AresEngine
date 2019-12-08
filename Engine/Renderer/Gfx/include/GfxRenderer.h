@@ -15,9 +15,6 @@
 #include "GfxResourceManager.h"
 
 #include "GfxCamera.h"
-#include "GfxRenderQueue.h"
-
-#include "GfxSemaphore.h"
 
 #include "GfxSwapChain.h"
 #include "GfxRenderPass.h"
@@ -47,6 +44,8 @@
 #include "GfxUniformCamera.h"
 #include "GfxUniformBuffer.h"
 #include "GfxStorageBuffer.h"
+
+#include "GfxSemaphore.h"
 
 #include "GfxMesh.h"
 #include "GfxMeshDraw.h"

@@ -3,11 +3,11 @@
 
 
 class CALL_API CTaskGraph;
-class CALL_API CGfxRenderQueue
+class CALL_API CRenderQueue
 {
 public:
-	CGfxRenderQueue(void);
-	virtual ~CGfxRenderQueue(void);
+	CRenderQueue(void);
+	virtual ~CRenderQueue(void);
 
 
 public:

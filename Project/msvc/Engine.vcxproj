@@ -234,7 +234,6 @@
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxProfiler.h" />
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxRenderer.h" />
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxRenderPass.h" />
-    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxRenderQueue.h" />
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxRenderTexture.h" />
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxResource.h" />
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxResourceManager.h" />
@@ -453,6 +452,7 @@
     <ClInclude Include="..\..\Engine\RenderSystem\include\PassPreZ.h" />
     <ClInclude Include="..\..\Engine\RenderSystem\include\PassShadow.h" />
     <ClInclude Include="..\..\Engine\RenderSystem\include\PassSSAO.h" />
+    <ClInclude Include="..\..\Engine\RenderSystem\include\RenderQueue.h" />
     <ClInclude Include="..\..\Engine\RenderSystem\include\RenderSystem.h" />
     <ClInclude Include="..\..\Engine\Resource\include\ResourceLoader.h" />
     <ClInclude Include="..\..\Engine\SceneHeader.h" />
@@ -678,7 +678,6 @@
     <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxHelper.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxProfiler.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxRenderer.cpp" />
-    <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxRenderQueue.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxResource.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxResourceManager.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxSprivCross.cpp" />
@@ -810,6 +809,7 @@
     <ClCompile Include="..\..\Engine\RenderSystem\src\PassPreZ.cpp" />
     <ClCompile Include="..\..\Engine\RenderSystem\src\PassShadow.cpp" />
     <ClCompile Include="..\..\Engine\RenderSystem\src\PassSSAO.cpp" />
+    <ClCompile Include="..\..\Engine\RenderSystem\src\RenderQueue.cpp" />
     <ClCompile Include="..\..\Engine\RenderSystem\src\RenderSystem.cpp" />
     <ClCompile Include="..\..\Engine\Resource\src\ResourceLoader.cpp" />
     <ClCompile Include="..\..\Engine\Resource\src\ResourceLoaderMaterial.cpp" />
