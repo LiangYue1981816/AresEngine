@@ -54,7 +54,7 @@ void CComponentPointLight::TaskUpdate(float gameTime, float deltaTime)
 	}
 }
 
-void CComponentPointLight::TaskUpdateCamera(CGfxCamera* pCamera, CGfxRenderQueue* pRenderQueue, uint32_t mask, int indexThread)
+void CComponentPointLight::TaskUpdateCamera(CGfxCamera* pCamera, CRenderQueue* pRenderQueue, uint32_t mask, int indexThread)
 {
 	if (m_ptrMeshDraw && m_ptrMeshDraw->GetMask() & mask) {
 		if (m_pParentNode && m_pParentNode->IsActive()) {

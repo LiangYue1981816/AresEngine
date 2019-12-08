@@ -31,7 +31,7 @@ CPassShadow::CPassShadow(CRenderSystem* pRenderSystem)
 {
 	for (int indexLevel = 0; indexLevel < 4; indexLevel++) {
 		m_pShadowCamera[indexLevel] = new CGfxCamera;
-		m_pShadowRenderQueue[indexLevel] = new CGfxRenderQueue;
+		m_pShadowRenderQueue[indexLevel] = new CRenderQueue;
 	}
 
 	CGfxDescriptorLayoutPtr ptrDescriptorLayout = GfxRenderer()->NewDescriptorLayout(DESCRIPTOR_SET_PASS);

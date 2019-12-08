@@ -2,10 +2,10 @@
 #include "PreHeader.h"
 
 
-class CALL_API CRenderSystem;
 class CALL_API CPassShadow : public CPassBase
 {
 	friend class CCamera;
+	friend class CRenderQueue;
 	friend class CRenderSystem;
 
 
@@ -30,10 +30,12 @@ private:
 
 private:
 	float m_splitFactors[5];
-	CGfxCamera* m_pShadowCamera[4];
-	CGfxRenderQueue* m_pShadowRenderQueue[4];
 
 private:
+	CRenderQueue* m_pShadowRenderQueue[4];
+
+private:
+	CGfxCamera* m_pShadowCamera[4];
 	CGfxUniformCamera* m_pShadowCameraUniform[4];
 	CGfxDescriptorSetPtr m_ptrDescriptorSetPass[4];
 

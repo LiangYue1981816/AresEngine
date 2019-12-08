@@ -45,7 +45,7 @@ public:
 
 public:
 	void UpdateLogic(CTaskGraph& taskGraph, float totalTime, float deltaTime);
-	void UpdateCamera(CTaskGraph& taskGraph, CGfxCamera* pCamera, CGfxRenderQueue* pRenderQueue, uint32_t mask);
+	void UpdateCamera(CTaskGraph& taskGraph, CGfxCamera* pCamera, CRenderQueue* pRenderQueue, uint32_t mask);
 
 
 private:

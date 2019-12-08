@@ -24,7 +24,7 @@ public:
 
 
 public:
-	void SetParams(CComponentManager<T>* pComponentManager, int numThreads, int indexThread, CGfxCamera* pCamera, CGfxRenderQueue* pRenderQueue, uint32_t mask)
+	void SetParams(CComponentManager<T>* pComponentManager, int numThreads, int indexThread, CGfxCamera* pCamera, CRenderQueue* pRenderQueue, uint32_t mask)
 	{
 		m_mask = mask;
 		m_pCamera = pCamera;
@@ -47,7 +47,7 @@ public:
 private:
 	uint32_t m_mask;
 	CGfxCamera* m_pCamera;
-	CGfxRenderQueue* m_pRenderQueue;
+	CRenderQueue* m_pRenderQueue;
 
 private:
 	int m_indexBegin;

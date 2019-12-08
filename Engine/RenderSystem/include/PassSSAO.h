@@ -2,7 +2,6 @@
 #include "PreHeader.h"
 
 
-class CALL_API CRenderSystem;
 class CALL_API CPassSSAO : public CPassBlit
 {
 	friend class CCamera;

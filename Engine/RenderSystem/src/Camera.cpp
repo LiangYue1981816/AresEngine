@@ -3,30 +3,30 @@
 
 
 CCamera::CCamera(void)
-	: m_pCamera(nullptr)
-	, m_pRenderQueue(nullptr)
+	: m_pRenderQueue(nullptr)
+	, m_pCamera(nullptr)
 	, m_pCameraUniform(nullptr)
 {
+	m_pRenderQueue = new CRenderQueue;
 	m_pCamera = new CGfxCamera;
-	m_pRenderQueue = new CGfxRenderQueue;
 	m_pCameraUniform = new CGfxUniformCamera;
 }
 
 CCamera::~CCamera(void)
 {
-	delete m_pCamera;
 	delete m_pRenderQueue;
+	delete m_pCamera;
 	delete m_pCameraUniform;
+}
+
+CRenderQueue* CCamera::GetRenderQueue(void) const
+{
+	return m_pRenderQueue;
 }
 
 CGfxCamera* CCamera::GetCamera(void) const
 {
 	return m_pCamera;
-}
-
-CGfxRenderQueue* CCamera::GetRenderQueue(void) const
-{
-	return m_pRenderQueue;
 }
 
 CGfxUniformCamera* CCamera::GetCameraUniform(void) const

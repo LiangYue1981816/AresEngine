@@ -148,7 +148,7 @@ void CSceneManager::UpdateLogic(CTaskGraph& taskGraph, float totalTime, float de
 	taskGraph.Wait();
 }
 
-void CSceneManager::UpdateCamera(CTaskGraph& taskGraph, CGfxCamera* pCamera, CGfxRenderQueue* pRenderQueue, uint32_t mask)
+void CSceneManager::UpdateCamera(CTaskGraph& taskGraph, CGfxCamera* pCamera, CRenderQueue* pRenderQueue, uint32_t mask)
 {
 	pRenderQueue->Begin();
 	{
