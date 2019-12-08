@@ -38,7 +38,7 @@ void CGPUScene::RemoveInstance(uint32_t name)
 	}
 }
 
-void CGPUScene::ModifyInstance(uint32_t name, const InstanceData &data)
+void CGPUScene::ModifyInstanceData(uint32_t name, const InstanceData &data)
 {
 	if (m_nameIndex.find(name) != m_nameIndex.end()) {
 		TransferData transfer;
@@ -47,6 +47,30 @@ void CGPUScene::ModifyInstance(uint32_t name, const InstanceData &data)
 			transfer.data = data;
 		}
 		m_transferBuffer[Engine()->GetFrameCount() % 2].emplace_back(transfer);
+	}
+}
+
+uint32_t CGPUScene::GetIndex(uint32_t name) const
+{
+	const auto& itName = m_nameIndex.find(name);
+
+	if (itName != m_nameIndex.end()) {
+		return itName->second;
+	}
+	else {
+		return INVALID_VALUE;
+	}
+}
+
+const CGPUScene::InstanceData& CGPUScene::GetInstanceData(uint32_t index) const
+{
+	static InstanceData invalidInstanceData;
+
+	if (index >= 0 && index < m_instanceBuffer.size()) {
+		return m_instanceBuffer[index];
+	}
+	else {
+		return invalidInstanceData;
 	}
 }
 

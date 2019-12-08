@@ -6,7 +6,13 @@ class CALL_API CGPUScene
 {
 public:
 	typedef struct InstanceData {
+		// Base
 		glm::mat4 transformMatrix;
+		glm::vec4 position;
+
+		// Light
+		glm::vec4 lightColor;
+		glm::vec4 lightAttenuation;
 	} InstanceData;
 
 private:
@@ -24,7 +30,11 @@ public:
 public:
 	void AddInstance(uint32_t name);
 	void RemoveInstance(uint32_t name);
-	void ModifyInstance(uint32_t name, const InstanceData &data);
+	void ModifyInstanceData(uint32_t name, const InstanceData &data);
+
+public:
+	uint32_t GetIndex(uint32_t name) const;
+	const InstanceData& GetInstanceData(uint32_t index) const;
 
 public:
 	void Update(void);
