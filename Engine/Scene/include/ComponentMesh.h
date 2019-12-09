@@ -4,12 +4,6 @@
 
 class CALL_API CComponentMesh : public CComponent
 {
-private:
-	typedef struct InstanceData {
-		glm::mat4 transformMatrix;
-	} InstanceData;
-
-
 public:
 	CComponentMesh(uint32_t name);
 	CComponentMesh(const CComponentMesh& component);
@@ -27,10 +21,9 @@ public:
 
 
 private:
-	InstanceData m_instanceData[2];
-
-private:
-	uint32_t m_indexInstance;
+	int m_indexInstance;
+	bool m_bNeedUpdateInstanceData[2];
+	CGPUScene::InstanceData m_instanceData[2];
 
 private:
 	CGfxMaterialPtr m_ptrMaterial;

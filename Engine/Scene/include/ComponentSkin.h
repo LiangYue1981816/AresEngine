@@ -15,7 +15,7 @@ public:
 
 
 private:
-	uint32_t m_indexInstance;
+	int m_indexInstance;
 };
 
 typedef CComponentPtr<CComponentSkin> CComponentSkinPtr;

@@ -4,6 +4,7 @@
 CComponentPointLight::CComponentPointLight(uint32_t name)
 	: CComponent(name)
 	, m_indexInstance(INVALID_VALUE)
+	, m_bNeedUpdateInstanceData{ false }
 {
 	m_indexInstance = RenderSystem()->GetGPUScene()->AddInstance();
 
@@ -42,32 +43,43 @@ void CComponentPointLight::SetMeshDraw(const CGfxMeshPtr ptrMesh)
 void CComponentPointLight::SetColor(float red, float green, float blue)
 {
 	m_color = glm::vec4(red, green, blue, 0.0f);
-	m_instanceData[0].color = m_color;
-	m_instanceData[1].color = m_color;
+	m_instanceData[0].lightColor = m_color;
+	m_instanceData[1].lightColor = m_color;
 }
 
 void CComponentPointLight::SetAttenuation(float linear, float square, float constant)
 {
 	m_attenuation = glm::vec4(linear, square, constant, 0.0f);
-	m_instanceData[0].attenuation = m_attenuation;
-	m_instanceData[1].attenuation = m_attenuation;
+	m_instanceData[0].lightAttenuation = m_attenuation;
+	m_instanceData[1].lightAttenuation = m_attenuation;
 }
 
 void CComponentPointLight::TaskUpdate(float gameTime, float deltaTime)
 {
+	int indexFrame = Engine()->GetFrameCount() % 2;
+
 	if (m_ptrMeshDraw) {
-		if (m_pParentNode && m_pParentNode->IsActive()) {
-			m_instanceData[Engine()->GetFrameCount() % 2].transformMatrix = m_pParentNode->GetWorldTransform();
+		if (m_pParentNode && m_pParentNode->IsActive() && m_pParentNode->UpdateTransform()) {
+			m_bNeedUpdateInstanceData[indexFrame] = true;
+			m_instanceData[indexFrame].transformMatrix = m_pParentNode->GetWorldTransform();
+			m_instanceData[indexFrame].position = m_pParentNode->GetWorldPosition();
 		}
 	}
 }
 
 void CComponentPointLight::TaskUpdateCamera(CGfxCamera* pCamera, CRenderQueue* pRenderQueue, uint32_t mask, int indexThread)
 {
+	int indexFrame = 1 - Engine()->GetFrameCount() % 2;
+
 	if (m_ptrMeshDraw && m_ptrMeshDraw->GetMask() & mask) {
 		if (m_pParentNode && m_pParentNode->IsActive()) {
-			if (pCamera->IsVisible(m_ptrMeshDraw->GetLocalAABB() * m_instanceData[1 - Engine()->GetFrameCount() % 2].transformMatrix)) {
-				pRenderQueue->Add(indexThread, m_ptrMaterial, m_ptrMeshDraw, (const uint8_t*)& m_instanceData[1 - Engine()->GetFrameCount() % 2], sizeof(InstanceData));
+			if (pCamera->IsVisible(m_ptrMeshDraw->GetLocalAABB() * m_instanceData[indexFrame].transformMatrix)) {
+				if (m_bNeedUpdateInstanceData[indexFrame]) {
+					m_bNeedUpdateInstanceData[indexFrame] = false;
+					RenderSystem()->GetGPUScene()->ModifyInstanceData(m_indexInstance, m_instanceData[indexFrame]);
+				}
+
+				pRenderQueue->Add(indexThread, m_ptrMaterial, m_ptrMeshDraw, (const uint8_t*)&m_indexInstance, sizeof(m_indexInstance));
 			}
 		}
 	}

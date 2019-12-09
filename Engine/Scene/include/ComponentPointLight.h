@@ -4,14 +4,6 @@
 
 class CALL_API CComponentPointLight : public CComponent
 {
-private:
-	typedef struct InstanceData {
-		glm::mat4 transformMatrix;
-		glm::vec4 color;
-		glm::vec4 attenuation;
-	} InstanceData;
-
-
 public:
 	CComponentPointLight(uint32_t name);
 	CComponentPointLight(const CComponentPointLight& component);
@@ -31,14 +23,13 @@ public:
 
 
 private:
-	InstanceData m_instanceData[2];
-
-private:
 	glm::vec4 m_color;
 	glm::vec4 m_attenuation;
 
 private:
-	uint32_t m_indexInstance;
+	int m_indexInstance;
+	bool m_bNeedUpdateInstanceData[2];
+	CGPUScene::InstanceData m_instanceData[2];
 
 private:
 	CGfxMaterialPtr m_ptrMaterial;
