@@ -87,7 +87,7 @@ public:
 	const glm::quat& GetWorldOrientation(void);
 	const glm::mat4& GetWorldTransform(void);
 
-private:
+public:
 	bool UpdateTransform(void);
 
 
