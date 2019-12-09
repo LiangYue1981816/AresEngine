@@ -29,6 +29,8 @@ CRenderSystem::CRenderSystem(GfxApi api, void* hInstance, void* hWnd, void* hDC,
 	: m_pRenderer(nullptr)
 	, m_pEngineUniform(nullptr)
 
+	, m_pGPUScene(nullptr)
+
 	, m_pPassPreZ(nullptr)
 	, m_pPassShadow(nullptr)
 	, m_pPassDefault(nullptr)
@@ -54,6 +56,8 @@ CRenderSystem::CRenderSystem(GfxApi api, void* hInstance, void* hWnd, void* hDC,
 		m_pEngineUniform = new CGfxUniformEngine;
 		break;
 	}
+
+	m_pGPUScene = new CGPUScene;
 
 	m_ptrCommandBuffer[0] = GfxRenderer()->NewCommandBuffer(0, true);
 	m_ptrCommandBuffer[1] = GfxRenderer()->NewCommandBuffer(0, true);
@@ -91,6 +95,8 @@ CRenderSystem::~CRenderSystem(void)
 	m_ptrCommandBuffer[1].Release();
 	m_ptrCommandBuffer[2].Release();
 
+	delete m_pGPUScene;
+
 	delete m_pEngineUniform;
 	delete m_pRenderer;
 }
@@ -98,6 +104,11 @@ CRenderSystem::~CRenderSystem(void)
 CGfxUniformEngine* CRenderSystem::GetEngineUniform(void) const
 {
 	return m_pEngineUniform;
+}
+
+CGPUScene* CRenderSystem::GetGPUScene(void) const
+{
+	return m_pGPUScene;
 }
 
 void CRenderSystem::CreatePass(void)
@@ -345,7 +356,12 @@ void CRenderSystem::SetMainShadowLookat(int indexLevel, float eyex, float eyey, 
 	m_pEngineUniform->SetMainShadowLookat(indexLevel, eyex, eyey, eyez, centerx, centery, centerz, upx, upy, upz);
 }
 
-void CRenderSystem::Update(CTaskGraph& taskGraph, CCamera* pCamera) const
+void CRenderSystem::UpdateScene(void) const
+{
+	m_pGPUScene->Update();
+}
+
+void CRenderSystem::UpdateCamera(CTaskGraph& taskGraph, CCamera* pCamera) const
 {
 	pCamera->Update(taskGraph);
 }

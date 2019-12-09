@@ -4,6 +4,9 @@
 
 class CALL_API CGPUScene
 {
+	friend class CRenderSystem;
+
+
 public:
 	typedef struct InstanceData {
 		// Base
@@ -22,7 +25,7 @@ private:
 	} TransferData;
 
 
-public:
+private:
 	CGPUScene(void);
 	virtual ~CGPUScene(void);
 
@@ -36,7 +39,7 @@ public:
 	uint32_t GetIndex(uint32_t name) const;
 	const InstanceData& GetInstanceData(uint32_t index) const;
 
-public:
+private:
 	void Update(void);
 
 

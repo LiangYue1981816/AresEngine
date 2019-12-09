@@ -133,6 +133,9 @@ private:
 private:
 	CGfxUniformEngine* GetEngineUniform(void) const;
 
+public:
+	CGPUScene* GetGPUScene(void) const;
+
 private:
 	void CreatePass(void);
 	void DestroyPass(void);
@@ -185,7 +188,8 @@ public:
 	void SetMainShadowLookat(int indexLevel, float eyex, float eyey, float eyez, float centerx, float centery, float centerz, float upx, float upy, float upz);
 
 private:
-	void Update(CTaskGraph& taskGraph, CCamera* pCamera) const;
+	void UpdateScene(void) const;
+	void UpdateCamera(CTaskGraph& taskGraph, CCamera* pCamera) const;
 	void RenderDefault(CTaskGraph& taskGraph, CCamera* pCamera, bool bPresent) const;
 	void RenderForwardLighting(CTaskGraph& taskGraph, CCamera* pCamera, bool bPresent) const;
 
@@ -193,6 +197,9 @@ private:
 private:
 	CGfxRenderer* m_pRenderer;
 	CGfxUniformEngine* m_pEngineUniform;
+
+private:
+	CGPUScene* m_pGPUScene;
 
 private:
 	CPassPreZ* m_pPassPreZ;

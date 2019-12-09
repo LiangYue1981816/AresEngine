@@ -144,13 +144,15 @@ void CEngine::Update(void)
 
 void CEngine::RenderDefault(CCamera* pCamera, bool bPresent)
 {
-	m_pRenderSystem->Update(m_taskGraphRender, pCamera);
+	m_pRenderSystem->UpdateScene();
+	m_pRenderSystem->UpdateCamera(m_taskGraphRender, pCamera);
 	m_pRenderSystem->RenderDefault(m_taskGraphRender, pCamera, bPresent);
 }
 
 void CEngine::RenderForwardLighting(CCamera* pCamera, bool bPresent)
 {
-	m_pRenderSystem->Update(m_taskGraphRender, pCamera);
+	m_pRenderSystem->UpdateScene();
+	m_pRenderSystem->UpdateCamera(m_taskGraphRender, pCamera);
 	m_pRenderSystem->RenderForwardLighting(m_taskGraphRender, pCamera, bPresent);
 }
 
