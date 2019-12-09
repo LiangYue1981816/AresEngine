@@ -49,6 +49,7 @@ public:
 	uint32_t AddInstance(void);
 	void RemoveInstance(uint32_t index);
 	void ModifyInstanceData(uint32_t index, const InstanceData &data);
+	void Clear(void);
 
 public:
 	const InstanceData& GetInstanceData(uint32_t index) const;

@@ -12,6 +12,14 @@ CGPUScene::~CGPUScene(void)
 
 }
 
+void CGPUScene::Clear(void)
+{
+	m_freeIndex.clear();
+	m_instanceBuffer.clear();
+	m_transferBuffer[0].clear();
+	m_transferBuffer[1].clear();
+}
+
 uint32_t CGPUScene::AddInstance(void)
 {
 	uint32_t index;
