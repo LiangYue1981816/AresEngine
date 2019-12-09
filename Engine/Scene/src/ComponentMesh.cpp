@@ -3,20 +3,24 @@
 
 CComponentMesh::CComponentMesh(uint32_t name)
 	: CComponent(name)
+	, m_indexInstance(INVALID_VALUE)
 {
-
+	m_indexInstance = RenderSystem()->GetGPUScene()->AddInstance();
 }
 
 CComponentMesh::CComponentMesh(const CComponentMesh& component)
 	: CComponent(component)
+	, m_indexInstance(INVALID_VALUE)
 {
+	m_indexInstance = RenderSystem()->GetGPUScene()->AddInstance();
+
 	m_ptrMaterial = component.m_ptrMaterial;
 	m_ptrMeshDraw = component.m_ptrMeshDraw;
 }
 
 CComponentMesh::~CComponentMesh(void)
 {
-
+	RenderSystem()->GetGPUScene()->RemoveInstance(m_indexInstance);
 }
 
 void CComponentMesh::SetMaterial(const CGfxMaterialPtr ptrMaterial)

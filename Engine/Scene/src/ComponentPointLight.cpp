@@ -3,14 +3,20 @@
 
 CComponentPointLight::CComponentPointLight(uint32_t name)
 	: CComponent(name)
+	, m_indexInstance(INVALID_VALUE)
 {
+	m_indexInstance = RenderSystem()->GetGPUScene()->AddInstance();
+
 	SetMaterial(GfxRenderer()->NewMaterial("PointLight.material"));
 	SetMeshDraw(GfxRenderer()->NewMesh("PointLight.mesh", 0));
 }
 
 CComponentPointLight::CComponentPointLight(const CComponentPointLight& component)
 	: CComponent(component)
+	, m_indexInstance(INVALID_VALUE)
 {
+	m_indexInstance = RenderSystem()->GetGPUScene()->AddInstance();
+
 	m_ptrMaterial = component.m_ptrMaterial;
 	m_ptrMeshDraw = component.m_ptrMeshDraw;
 
@@ -20,7 +26,7 @@ CComponentPointLight::CComponentPointLight(const CComponentPointLight& component
 
 CComponentPointLight::~CComponentPointLight(void)
 {
-
+	RenderSystem()->GetGPUScene()->RemoveInstance(m_indexInstance);
 }
 
 void CComponentPointLight::SetMaterial(const CGfxMaterialPtr ptrMaterial)

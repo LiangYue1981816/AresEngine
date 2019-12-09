@@ -12,6 +12,10 @@ public:
 public:
 	virtual void TaskUpdate(float gameTime, float deltaTime);
 	virtual void TaskUpdateCamera(CGfxCamera* pCamera, CRenderQueue* pRenderQueue, uint32_t mask, int indexThread);
+
+
+private:
+	uint32_t m_indexInstance;
 };
 
 typedef CComponentPtr<CComponentParticle> CComponentParticlePtr;

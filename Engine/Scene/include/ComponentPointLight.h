@@ -34,6 +34,9 @@ private:
 	InstanceData m_instanceData[2];
 
 private:
+	uint32_t m_indexInstance;
+
+private:
 	CGfxMaterialPtr m_ptrMaterial;
 	CGfxMeshDrawPtr m_ptrMeshDraw;
 };
