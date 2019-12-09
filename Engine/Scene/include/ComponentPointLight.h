@@ -34,6 +34,10 @@ private:
 	InstanceData m_instanceData[2];
 
 private:
+	glm::vec4 m_color;
+	glm::vec4 m_attenuation;
+
+private:
 	uint32_t m_indexInstance;
 
 private:

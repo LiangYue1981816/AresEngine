@@ -20,8 +20,8 @@ CComponentPointLight::CComponentPointLight(const CComponentPointLight& component
 	m_ptrMaterial = component.m_ptrMaterial;
 	m_ptrMeshDraw = component.m_ptrMeshDraw;
 
-	SetColor(component.m_instanceData[0].color.r, component.m_instanceData[0].color.g, component.m_instanceData[0].color.b);
-	SetAttenuation(component.m_instanceData[0].attenuation.x, component.m_instanceData[0].attenuation.y, component.m_instanceData[0].attenuation.z);
+	SetColor(component.m_color.r, component.m_color.g, component.m_color.b);
+	SetAttenuation(component.m_attenuation.x, component.m_attenuation.y, component.m_attenuation.z);
 }
 
 CComponentPointLight::~CComponentPointLight(void)
@@ -41,14 +41,16 @@ void CComponentPointLight::SetMeshDraw(const CGfxMeshPtr ptrMesh)
 
 void CComponentPointLight::SetColor(float red, float green, float blue)
 {
-	m_instanceData[0].color = glm::vec4(red, green, blue, 0.0f);
-	m_instanceData[1].color = glm::vec4(red, green, blue, 0.0f);
+	m_color = glm::vec4(red, green, blue, 0.0f);
+	m_instanceData[0].color = m_color;
+	m_instanceData[1].color = m_color;
 }
 
 void CComponentPointLight::SetAttenuation(float linear, float square, float constant)
 {
-	m_instanceData[0].attenuation = glm::vec4(linear, square, constant, 0.0f);
-	m_instanceData[1].attenuation = glm::vec4(linear, square, constant, 0.0f);
+	m_attenuation = glm::vec4(linear, square, constant, 0.0f);
+	m_instanceData[0].attenuation = m_attenuation;
+	m_instanceData[1].attenuation = m_attenuation;
 }
 
 void CComponentPointLight::TaskUpdate(float gameTime, float deltaTime)
