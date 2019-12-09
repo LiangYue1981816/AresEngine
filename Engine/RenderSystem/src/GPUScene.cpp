@@ -20,9 +20,9 @@ void CGPUScene::Clear(void)
 	m_transferBuffer[1].clear();
 }
 
-uint32_t CGPUScene::AddInstance(void)
+int CGPUScene::AddInstance(void)
 {
-	uint32_t index;
+	int index;
 
 	if (m_freeIndex.empty()) {
 		index = m_instanceBuffer.size();
@@ -36,7 +36,7 @@ uint32_t CGPUScene::AddInstance(void)
 	return index;
 }
 
-void CGPUScene::RemoveInstance(uint32_t index)
+void CGPUScene::RemoveInstance(int index)
 {
 	if (index >= 0 && index < m_instanceBuffer.size()) {
 		if (m_freeIndex.find(index) == m_freeIndex.end()) {
@@ -46,7 +46,7 @@ void CGPUScene::RemoveInstance(uint32_t index)
 	}
 }
 
-void CGPUScene::ModifyInstanceData(uint32_t index, const InstanceData &data)
+void CGPUScene::ModifyInstanceData(int index, const InstanceData &data)
 {
 	if (index >= 0 && index < m_instanceBuffer.size()) {
 		if (m_freeIndex.find(index) == m_freeIndex.end()) {
@@ -55,7 +55,7 @@ void CGPUScene::ModifyInstanceData(uint32_t index, const InstanceData &data)
 	}
 }
 
-const CGPUScene::InstanceData& CGPUScene::GetInstanceData(uint32_t index) const
+const CGPUScene::InstanceData& CGPUScene::GetInstanceData(int index) const
 {
 	static InstanceData invalid;
 

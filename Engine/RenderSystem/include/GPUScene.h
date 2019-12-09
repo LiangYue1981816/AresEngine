@@ -29,13 +29,13 @@ private:
 		{
 
 		}
-		TransferData(uint32_t _index, InstanceData _data)
+		TransferData(int _index, InstanceData _data)
 		{
 			index = _index;
 			data = _data;
 		}
 
-		uint32_t index;
+		int index;
 		InstanceData data;
 	} TransferData;
 
@@ -46,24 +46,24 @@ private:
 
 
 public:
-	uint32_t AddInstance(void);
-	void RemoveInstance(uint32_t index);
-	void ModifyInstanceData(uint32_t index, const InstanceData &data);
+	int AddInstance(void);
+	void RemoveInstance(int index);
+	void ModifyInstanceData(int index, const InstanceData &data);
 	void Clear(void);
 
 public:
-	const InstanceData& GetInstanceData(uint32_t index) const;
+	const InstanceData& GetInstanceData(int index) const;
 
 private:
 	void Update(void);
 
 
 private:
-	eastl::unordered_set<uint32_t> m_freeIndex;
+	eastl::unordered_set<int> m_freeIndex;
 
 private:
 	eastl::vector<InstanceData> m_instanceBuffer;
-	eastl::unordered_map<uint32_t, TransferData> m_transferBuffer[2];
+	eastl::unordered_map<int, TransferData> m_transferBuffer[2];
 
 private:
 	CGfxStorageBufferPtr m_ptrTransferBuffer;
