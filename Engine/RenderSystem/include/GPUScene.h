@@ -9,6 +9,11 @@ class CALL_API CGPUScene
 
 public:
 	typedef struct InstanceData {
+		InstanceData(void)
+		{
+
+		}
+
 		// Base
 		glm::mat4 transformMatrix;
 		glm::vec4 position;
@@ -20,6 +25,16 @@ public:
 
 private:
 	typedef struct TransferData {
+		TransferData(void)
+		{
+
+		}
+		TransferData(uint32_t _index, InstanceData _data)
+		{
+			index = _index;
+			data = _data;
+		}
+
 		uint32_t index;
 		InstanceData data;
 	} TransferData;
@@ -31,12 +46,11 @@ private:
 
 
 public:
-	void AddInstance(uint32_t name);
-	void RemoveInstance(uint32_t name);
-	void ModifyInstanceData(uint32_t name, const InstanceData &data);
+	uint32_t AddInstance(void);
+	void RemoveInstance(uint32_t index);
+	void ModifyInstanceData(uint32_t index, const InstanceData &data);
 
 public:
-	uint32_t GetIndex(uint32_t name) const;
 	const InstanceData& GetInstanceData(uint32_t index) const;
 
 private:
@@ -44,12 +58,11 @@ private:
 
 
 private:
-	eastl::list<uint32_t> m_freeIndex;
-	eastl::unordered_map<uint32_t, uint32_t> m_nameIndex;
+	eastl::unordered_set<uint32_t> m_freeIndex;
 
 private:
 	eastl::vector<InstanceData> m_instanceBuffer;
-	eastl::vector<TransferData> m_transferBuffer[2];
+	eastl::unordered_map<uint32_t, TransferData> m_transferBuffer[2];
 
 private:
 	CGfxStorageBufferPtr m_ptrTransferBuffer;

@@ -12,74 +12,58 @@ CGPUScene::~CGPUScene(void)
 
 }
 
-void CGPUScene::AddInstance(uint32_t name)
+uint32_t CGPUScene::AddInstance(void)
 {
-	if (m_nameIndex.find(name) == m_nameIndex.end()) {
-		TransferData transfer;
-		{
-			if (m_freeIndex.empty()) {
-				transfer.index = m_nameIndex.size();
-			}
-			else {
-				transfer.index = m_freeIndex.front(); m_freeIndex.pop_front();
-			}
+	uint32_t index;
 
-			m_nameIndex[name] = transfer.index;
-		}
-		m_transferBuffer[Engine()->GetFrameCount() % 2].emplace_back(transfer);
-	}
-}
-
-void CGPUScene::RemoveInstance(uint32_t name)
-{
-	if (m_nameIndex.find(name) != m_nameIndex.end()) {
-		m_freeIndex.push_back(m_nameIndex[name]);
-		m_nameIndex.erase(name);
-	}
-}
-
-void CGPUScene::ModifyInstanceData(uint32_t name, const InstanceData &data)
-{
-	if (m_nameIndex.find(name) != m_nameIndex.end()) {
-		TransferData transfer;
-		{
-			transfer.index = m_nameIndex[name];
-			transfer.data = data;
-		}
-		m_transferBuffer[Engine()->GetFrameCount() % 2].emplace_back(transfer);
-	}
-}
-
-uint32_t CGPUScene::GetIndex(uint32_t name) const
-{
-	const auto& itName = m_nameIndex.find(name);
-
-	if (itName != m_nameIndex.end()) {
-		return itName->second;
+	if (m_freeIndex.empty()) {
+		index = m_instanceBuffer.size();
+		m_instanceBuffer.emplace_back();
 	}
 	else {
-		return INVALID_VALUE;
+		index = *m_freeIndex.begin();
+		m_freeIndex.erase(index);
+	}
+
+	return index;
+}
+
+void CGPUScene::RemoveInstance(uint32_t index)
+{
+	if (index >= 0 && index < m_instanceBuffer.size()) {
+		if (m_freeIndex.find(index) == m_freeIndex.end()) {
+			m_freeIndex.emplace(index);
+			m_transferBuffer[Engine()->GetFrameCount() % 2].erase(index);
+		}
+	}
+}
+
+void CGPUScene::ModifyInstanceData(uint32_t index, const InstanceData &data)
+{
+	if (index >= 0 && index < m_instanceBuffer.size()) {
+		if (m_freeIndex.find(index) == m_freeIndex.end()) {
+			m_transferBuffer[Engine()->GetFrameCount() % 2][index] = TransferData(index, data);
+		}
 	}
 }
 
 const CGPUScene::InstanceData& CGPUScene::GetInstanceData(uint32_t index) const
 {
-	static InstanceData invalidInstanceData;
+	static InstanceData invalid;
 
 	if (index >= 0 && index < m_instanceBuffer.size()) {
-		return m_instanceBuffer[index];
+		if (m_freeIndex.find(index) == m_freeIndex.end()) {
+			return m_instanceBuffer[index];
+		}
 	}
-	else {
-		return invalidInstanceData;
-	}
+
+	return invalid;
 }
 
 void CGPUScene::Update(void)
 {
-	for (int index = 0; index < m_transferBuffer[Engine()->GetFrameCount() % 2].size(); index++) {
-		const TransferData& data = m_transferBuffer[Engine()->GetFrameCount() % 2][index];
-		m_instanceBuffer.resize(std::max(m_instanceBuffer.size(), (size_t)data.index + 1));
-		m_instanceBuffer[data.index] = data.data;
+	for (const auto& itTransfer : m_transferBuffer[Engine()->GetFrameCount() % 2]) {
+		m_instanceBuffer[itTransfer.second.index] = itTransfer.second.data;
 	}
 
 	m_transferBuffer[Engine()->GetFrameCount() % 2].clear();
