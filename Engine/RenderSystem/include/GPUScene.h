@@ -63,9 +63,9 @@ private:
 
 private:
 	eastl::vector<InstanceData> m_instanceBuffer;
-	eastl::unordered_map<int, TransferData> m_transferBuffer[2];
+	eastl::unordered_map<int, TransferData> m_transferBuffer;
 
 private:
 	CGfxStorageBufferPtr m_ptrTransferBuffer;
-	CGfxStorageBufferPtr m_ptrInstanceBuffer[2];
+	CGfxStorageBufferPtr m_ptrInstanceBuffer;
 };
