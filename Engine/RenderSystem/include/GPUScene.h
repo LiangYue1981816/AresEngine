@@ -53,19 +53,21 @@ public:
 
 public:
 	const InstanceData& GetInstanceData(int index) const;
+	int GetDefaultInstanceIndex(void) const;
 
 private:
 	void Update(void);
 
 
 private:
-	eastl::unordered_set<int> m_freeIndex;
+	int m_indexDefaultInstance;
 
 private:
 	eastl::vector<InstanceData> m_instanceBuffer;
 	eastl::unordered_map<int, TransferData> m_transferBuffer[MAX_THREAD_COUNT];
+	eastl::unordered_set<int> m_freeIndex;
 
 private:
-	CGfxStorageBufferPtr m_ptrTransferBuffer;
 	CGfxStorageBufferPtr m_ptrInstanceBuffer;
+	CGfxStorageBufferPtr m_ptrTransferBuffer;
 };

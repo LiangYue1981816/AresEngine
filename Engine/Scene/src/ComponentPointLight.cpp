@@ -79,7 +79,7 @@ void CComponentPointLight::TaskUpdateCamera(CGfxCamera* pCamera, CRenderQueue* p
 					RenderSystem()->GetGPUScene()->ModifyInstanceData(m_indexInstance, m_instanceData[indexFrame], indexThread);
 				}
 
-				pRenderQueue->Add(m_ptrMaterial, m_ptrMeshDraw, (const uint8_t*)&m_indexInstance, sizeof(m_indexInstance), indexThread);
+				pRenderQueue->Add(m_ptrMaterial, m_ptrMeshDraw, m_indexInstance, indexThread);
 			}
 		}
 	}

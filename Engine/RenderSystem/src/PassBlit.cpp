@@ -1,3 +1,4 @@
+#include "EngineHeader.h"
 #include "RenderHeader.h"
 
 
@@ -25,10 +26,9 @@ CPassBlit::CPassBlit(const char* szMaterialFileName, CRenderSystem* pRenderSyste
 
 	m_ptrMaterial = GfxRenderer()->NewMaterial(szMaterialFileName);
 
-	const glm::mat4 matrix = GfxRenderer()->GetBaseMatrix();
 	m_pRenderQueue = new CRenderQueue;
 	m_pRenderQueue->Begin();
-	m_pRenderQueue->Add(m_ptrMaterial, m_ptrMeshDraw, (const uint8_t*)&matrix, sizeof(matrix));
+	m_pRenderQueue->Add(m_ptrMaterial, m_ptrMeshDraw, RenderSystem()->GetGPUScene()->GetDefaultInstanceIndex());
 	m_pRenderQueue->End();
 }
 
