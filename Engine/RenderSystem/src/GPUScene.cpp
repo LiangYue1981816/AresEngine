@@ -16,6 +16,10 @@ void CGPUScene::Clear(void)
 {
 	m_freeIndex.clear();
 	m_instanceBuffer.clear();
+
+	for (int indexThread = 0; indexThread < MAX_THREAD_COUNT; indexThread++) {
+		m_transferBuffer[indexThread].clear();
+	}
 }
 
 int CGPUScene::AddInstance(void)
@@ -39,6 +43,10 @@ void CGPUScene::RemoveInstance(int index)
 	if (index >= 0 && index < m_instanceBuffer.size()) {
 		if (m_freeIndex.find(index) == m_freeIndex.end()) {
 			m_freeIndex.emplace(index);
+
+			for (int indexThread = 0; indexThread < MAX_THREAD_COUNT; indexThread++) {
+				m_transferBuffer[indexThread].erase(index);
+			}
 		}
 	}
 }
