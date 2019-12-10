@@ -51,7 +51,7 @@ void CGPUScene::RemoveInstance(int index)
 	}
 }
 
-void CGPUScene::ModifyInstanceData(int indexThread, int index, const InstanceData &data)
+void CGPUScene::ModifyInstanceData(int index, const InstanceData &data, int indexThread)
 {
 	if (indexThread >= 0 && indexThread < MAX_THREAD_COUNT) {
 		if (index >= 0 && index < m_instanceBuffer.size()) {

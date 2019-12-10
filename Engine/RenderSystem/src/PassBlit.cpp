@@ -28,7 +28,7 @@ CPassBlit::CPassBlit(const char* szMaterialFileName, CRenderSystem* pRenderSyste
 	const glm::mat4 matrix = GfxRenderer()->GetBaseMatrix();
 	m_pRenderQueue = new CRenderQueue;
 	m_pRenderQueue->Begin();
-	m_pRenderQueue->Add(0, m_ptrMaterial, m_ptrMeshDraw, (const uint8_t*)&matrix, sizeof(matrix));
+	m_pRenderQueue->Add(m_ptrMaterial, m_ptrMeshDraw, (const uint8_t*)&matrix, sizeof(matrix));
 	m_pRenderQueue->End();
 }
 

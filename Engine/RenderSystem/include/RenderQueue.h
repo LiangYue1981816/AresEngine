@@ -13,7 +13,7 @@ public:
 public:
 	void Clear(void);
 	void Begin(void);
-	void Add(int indexThread, const CGfxMaterialPtr ptrMaterial, const CGfxMeshDrawPtr ptrMeshDraw, const uint8_t* pInstanceData, uint32_t size);
+	void Add(const CGfxMaterialPtr ptrMaterial, const CGfxMeshDrawPtr ptrMeshDraw, const uint8_t* pInstanceData, uint32_t size, int indexThread = 0);
 	void End(void);
 
 public:
