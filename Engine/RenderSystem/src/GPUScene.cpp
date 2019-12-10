@@ -16,7 +16,6 @@ void CGPUScene::Clear(void)
 {
 	m_freeIndex.clear();
 	m_instanceBuffer.clear();
-	m_transferBuffer.clear();
 }
 
 int CGPUScene::AddInstance(void)
@@ -40,16 +39,17 @@ void CGPUScene::RemoveInstance(int index)
 	if (index >= 0 && index < m_instanceBuffer.size()) {
 		if (m_freeIndex.find(index) == m_freeIndex.end()) {
 			m_freeIndex.emplace(index);
-			m_transferBuffer.erase(index);
 		}
 	}
 }
 
-void CGPUScene::ModifyInstanceData(int index, const InstanceData &data)
+void CGPUScene::ModifyInstanceData(int indexThread, int index, const InstanceData &data)
 {
-	if (index >= 0 && index < m_instanceBuffer.size()) {
-		if (m_freeIndex.find(index) == m_freeIndex.end()) {
-			m_transferBuffer[index] = TransferData(index, data);
+	if (indexThread >= 0 && indexThread < MAX_THREAD_COUNT) {
+		if (index >= 0 && index < m_instanceBuffer.size()) {
+			if (m_freeIndex.find(index) == m_freeIndex.end()) {
+				m_transferBuffer[indexThread][index] = TransferData(index, data);
+			}
 		}
 	}
 }
@@ -69,9 +69,11 @@ const CGPUScene::InstanceData& CGPUScene::GetInstanceData(int index) const
 
 void CGPUScene::Update(void)
 {
-	for (const auto& itTransfer : m_transferBuffer) {
-		m_instanceBuffer[itTransfer.second.index] = itTransfer.second.data;
-	}
+	for (int indexThread = 0; indexThread < MAX_THREAD_COUNT; indexThread++) {
+		for (const auto& itTransfer : m_transferBuffer[indexThread]) {
+			m_instanceBuffer[itTransfer.second.index] = itTransfer.second.data;
+		}
 
-	m_transferBuffer.clear();
+		m_transferBuffer[indexThread].clear();
+	}
 }

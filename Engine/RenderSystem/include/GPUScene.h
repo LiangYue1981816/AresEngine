@@ -48,7 +48,7 @@ private:
 public:
 	int AddInstance(void);
 	void RemoveInstance(int index);
-	void ModifyInstanceData(int index, const InstanceData &data);
+	void ModifyInstanceData(int indexThread, int index, const InstanceData &data);
 	void Clear(void);
 
 public:
@@ -63,7 +63,7 @@ private:
 
 private:
 	eastl::vector<InstanceData> m_instanceBuffer;
-	eastl::unordered_map<int, TransferData> m_transferBuffer;
+	eastl::unordered_map<int, TransferData> m_transferBuffer[MAX_THREAD_COUNT];
 
 private:
 	CGfxStorageBufferPtr m_ptrTransferBuffer;

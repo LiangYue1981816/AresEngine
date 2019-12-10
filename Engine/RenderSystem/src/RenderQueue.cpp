@@ -87,7 +87,7 @@ void CRenderQueue::Begin(void)
 
 void CRenderQueue::Add(int indexThread, const CGfxMaterialPtr ptrMaterial, const CGfxMeshDrawPtr ptrMeshDraw, const uint8_t* pInstanceData, uint32_t size)
 {
-	if (indexThread < MAX_THREAD_COUNT) {
+	if (indexThread >= 0 && indexThread < MAX_THREAD_COUNT) {
 		eastl::vector<uint8_t>& meshDrawInstanceBuffer = m_materialMeshDrawQueueThreads[indexThread][ptrMaterial][ptrMeshDraw->GetMesh()][ptrMeshDraw];
 		meshDrawInstanceBuffer.insert(meshDrawInstanceBuffer.end(), pInstanceData, pInstanceData + size);
 	}
