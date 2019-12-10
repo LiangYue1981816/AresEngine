@@ -68,7 +68,7 @@ void CComponentMesh::TaskUpdateCamera(CGfxCamera* pCamera, CRenderQueue* pRender
 			if (pCamera->IsVisible(m_ptrMeshDraw->GetLocalAABB() * m_instanceData[indexFrame].transformMatrix)) {
 				if (m_bNeedUpdateInstanceData[indexFrame]) {
 					m_bNeedUpdateInstanceData[indexFrame] = false;
-					RenderSystem()->GetGPUScene()->ModifyInstanceData(m_indexInstance, m_instanceData[indexFrame]);
+					RenderSystem()->GetGPUScene()->ModifyInstanceData(indexThread, m_indexInstance, m_instanceData[indexFrame]);
 				}
 
 				pRenderQueue->Add(indexThread, m_ptrMaterial, m_ptrMeshDraw, (const uint8_t*)&m_indexInstance, sizeof(m_indexInstance));
