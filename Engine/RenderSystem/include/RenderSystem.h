@@ -137,16 +137,18 @@ public:
 	CGPUScene* GetGPUScene(void) const;
 
 private:
-	void CreatePass(void);
-	void DestroyPass(void);
+	void CreateRenderTextures(void);
+	void DestroyRenderTextures(void);
 
-public:
 	void CreateRenderTexture(uint32_t name, CGfxRenderTexturePtr ptrRenderTexture);
 	void CreateRenderTexture(uint32_t name, GfxPixelFormat format, int width, int height, int samples = 1, bool bTransient = false);
-	void DestroyRenderTexture(void);
+
 	CGfxRenderTexturePtr GetRenderTexture(uint32_t name) const;
 
-public:
+private:
+	void CreatePasses(void);
+	void DestroyPasses(void);
+
 	CPassPreZ* GetPassPreZ(void) const;
 	CPassShadow* GetPassShadow(void) const;
 	CPassDefault* GetPassDefault(void) const;
@@ -190,6 +192,8 @@ public:
 private:
 	void UpdateScene(void) const;
 	void UpdateCamera(CTaskGraph& taskGraph, CCamera* pCamera) const;
+
+private:
 	void RenderDefault(CTaskGraph& taskGraph, CCamera* pCamera, bool bPresent) const;
 	void RenderForwardLighting(CTaskGraph& taskGraph, CCamera* pCamera, bool bPresent) const;
 
