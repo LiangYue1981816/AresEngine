@@ -149,6 +149,7 @@ private:
 	void CreatePasses(void);
 	void DestroyPasses(void);
 
+public:
 	CPassPreZ* GetPassPreZ(void) const;
 	CPassShadow* GetPassShadow(void) const;
 	CPassDefault* GetPassDefault(void) const;
