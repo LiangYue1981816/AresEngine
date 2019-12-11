@@ -129,7 +129,7 @@ void CRenderQueue::CmdDraw(CTaskGraph* pTaskGraph, CGfxCommandBufferPtr ptrComma
 			if (CGfxMaterialPass* pPass = (CGfxMaterialPass*)itMaterialQueue.first->GetPass(matPassName)) {
 				if (CGfxPipelineGraphics* pPipeline = (CGfxPipelineGraphics*)pPass->GetPipeline()) {
 					if (pPipeline->IsTransparency() == bIsTransparency) {
-						m_pipelineMaterialQueue[pPipeline][itMaterialQueue.first] = itMaterialQueue.first;
+						m_pipelineMaterialQueue[pPipeline].emplace(itMaterialQueue.first);
 					}
 				}
 			}
@@ -173,9 +173,9 @@ void CRenderQueue::CmdDrawThread(CGfxCommandBufferPtr ptrCommandBuffer, const CG
 			GfxRenderer()->CmdBindDescriptorSet(ptrCommandBuffer, ptrDescriptorSetInputAttachment);
 			{
 				for (const auto& itMaterialQueue : m_pipelineMaterialQueue[pPipeline]) {
-					GfxRenderer()->CmdBindDescriptorSet(ptrCommandBuffer, itMaterialQueue.first->GetPass(matPassName)->GetDescriptorSet());
+					GfxRenderer()->CmdBindDescriptorSet(ptrCommandBuffer, itMaterialQueue->GetPass(matPassName)->GetDescriptorSet());
 					{
-						for (const auto& itMeshQueue : m_materialMeshDrawQueue[itMaterialQueue.first]) {
+						for (const auto& itMeshQueue : m_materialMeshDrawQueue[itMaterialQueue]) {
 							GfxRenderer()->CmdBindMesh(ptrCommandBuffer, itMeshQueue.first);
 							{
 								for (const auto& itDrawQueue : itMeshQueue.second) {
