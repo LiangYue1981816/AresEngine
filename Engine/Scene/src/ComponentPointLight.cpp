@@ -62,7 +62,7 @@ void CComponentPointLight::TaskUpdate(float gameTime, float deltaTime)
 		if (m_pParentNode && m_pParentNode->IsActive() && m_pParentNode->UpdateTransform()) {
 			m_bNeedUpdateInstanceData[indexFrame] = true;
 			m_instanceData[indexFrame].transformMatrix = m_pParentNode->GetWorldTransform();
-			m_instanceData[indexFrame].position = m_pParentNode->GetWorldPosition();
+			m_instanceData[indexFrame].center = m_instanceData[indexFrame].transformMatrix * glm::vec4(m_ptrMeshDraw->GetLocalAABB().center, 1.0f);
 		}
 	}
 }

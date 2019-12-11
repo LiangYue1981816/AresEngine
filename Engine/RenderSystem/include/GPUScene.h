@@ -16,7 +16,7 @@ public:
 
 		// Base
 		glm::mat4 transformMatrix;
-		glm::vec3 position;
+		glm::vec4 center;
 
 		// Light
 		glm::vec4 lightColor;
