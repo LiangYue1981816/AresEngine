@@ -17,6 +17,11 @@ public:
 
 
 public:
+	void Reserve(size_t size)
+	{
+		m_components.reserve(size);
+	}
+
 	bool NewComponent(uint32_t key, T component)
 	{
 		if (m_keyIndex.find(key) == m_keyIndex.end()) {
