@@ -6,7 +6,10 @@
 
 CSceneManager::CSceneManager(void)
 {
-
+	m_skinManager.Reserve(512);
+	m_meshManager.Reserve(8192);
+	m_particleManager.Reserve(2048);
+	m_pointLightManager.Reserve(4096);
 }
 
 CSceneManager::~CSceneManager(void)
