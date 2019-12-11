@@ -56,7 +56,7 @@ public:
 	int GetDefaultInstanceIndex(void) const;
 
 private:
-	void Update(void);
+	void Update(CTaskGraph& taskGraph);
 
 
 private:

@@ -353,7 +353,7 @@ void CRenderSystem::SetMainShadowLookat(int indexLevel, float eyex, float eyey, 
 	m_pEngineUniform->SetMainShadowLookat(indexLevel, eyex, eyey, eyez, centerx, centery, centerz, upx, upy, upz);
 }
 
-void CRenderSystem::UpdateScene(void) const
+void CRenderSystem::UpdateScene(CTaskGraph& taskGraph) const
 {
 	m_pGPUScene->Update();
 }

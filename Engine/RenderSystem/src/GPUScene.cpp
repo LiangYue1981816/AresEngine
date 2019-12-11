@@ -81,7 +81,7 @@ int CGPUScene::GetDefaultInstanceIndex(void) const
 	return m_indexDefaultInstance;
 }
 
-void CGPUScene::Update(void)
+void CGPUScene::Update(CTaskGraph& taskGraph)
 {
 	for (int indexThread = 0; indexThread < MAX_THREAD_COUNT; indexThread++) {
 		for (const auto& itTransfer : m_transferBuffer[indexThread]) {
