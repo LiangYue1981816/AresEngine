@@ -355,7 +355,7 @@ void CRenderSystem::SetMainShadowLookat(int indexLevel, float eyex, float eyey, 
 
 void CRenderSystem::UpdateScene(CTaskGraph& taskGraph) const
 {
-	m_pGPUScene->Update();
+	m_pGPUScene->Update(taskGraph);
 }
 
 void CRenderSystem::UpdateCamera(CTaskGraph& taskGraph, CCamera* pCamera) const
