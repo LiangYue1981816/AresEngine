@@ -2,7 +2,71 @@
 #include "RenderHeader.h"
 
 
-class CALL_API CTaskCommandBuffer : public CTask
+typedef enum SortOrder {
+	FrontToBack,
+	BackToFront
+} SortOrder;
+
+class CTaskSort : public CTask
+{
+public:
+	CTaskSort(eastl::vector<int>* pInstanceBuffer)
+		: m_pInstanceBuffer(pInstanceBuffer)
+	{
+
+	}
+	virtual ~CTaskSort(void)
+	{
+
+	}
+
+public:
+	void TaskFunc(int indexThread, void* pParams)
+	{
+		switch (order) {
+		case SortOrder::FrontToBack:
+			eastl::sort(m_pInstanceBuffer->begin(), m_pInstanceBuffer->end(), CompareForFrontToBack);
+			break;
+
+		case SortOrder::BackToFront:
+			eastl::sort(m_pInstanceBuffer->begin(), m_pInstanceBuffer->end(), CompareForBackToFront);
+			break;
+		}
+	}
+
+private:
+	static bool CompareForFrontToBack(const int& index0, const int& index1)
+	{
+		const CGPUScene::InstanceData& instanceData0 = RenderSystem()->GetGPUScene()->GetInstanceData(index0);
+		const CGPUScene::InstanceData& instanceData1 = RenderSystem()->GetGPUScene()->GetInstanceData(index1);
+		float distance0 = glm::distance2(glm::vec3(instanceData0.center.x, instanceData0.center.y, instanceData0.center.z), cameraPosition);
+		float distance1 = glm::distance2(glm::vec3(instanceData1.center.x, instanceData1.center.y, instanceData1.center.z), cameraPosition);
+		return distance0 < distance1;
+	}
+
+	static bool CompareForBackToFront(const int& index0, const int& index1)
+	{
+		const CGPUScene::InstanceData& instanceData0 = RenderSystem()->GetGPUScene()->GetInstanceData(index0);
+		const CGPUScene::InstanceData& instanceData1 = RenderSystem()->GetGPUScene()->GetInstanceData(index1);
+		float distance0 = glm::distance2(glm::vec3(instanceData0.center.x, instanceData0.center.y, instanceData0.center.z), cameraPosition);
+		float distance1 = glm::distance2(glm::vec3(instanceData1.center.x, instanceData1.center.y, instanceData1.center.z), cameraPosition);
+		return distance0 > distance1;
+	}
+
+
+public:
+	static SortOrder order;
+	static glm::vec3 cameraPosition;
+
+private:
+	eastl::vector<int>* m_pInstanceBuffer;
+};
+
+SortOrder CTaskSort::order;
+glm::vec3 CTaskSort::cameraPosition;
+
+
+class CTaskCommandBuffer : public CTask
 {
 public:
 	CTaskCommandBuffer(const CGfxDescriptorSetPtr ptrDescriptorSetPass, const CGfxDescriptorSetPtr ptrDescriptorSetInputAttachment, const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass, int indexSubpass, const CGfxPipelineGraphics* pPipeline, uint32_t matPassName, const glm::vec4& scissor, const glm::vec4& viewport, uint32_t mask)
@@ -140,22 +204,27 @@ void CRenderQueue::CmdDraw(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrComman
 		}
 	}
 
-	eastl::vector<CTaskCommandBuffer> tasks;
+	eastl::vector<CTaskSort> sortTasks;
+	{
+
+	}
+
+	eastl::vector<CTaskCommandBuffer> cmdTasks;
 	{
 		for (const auto& itPipelineQueue : m_pipelineMaterialQueue) {
 			CGfxDescriptorSetPtr ptrDescriptorSetInputAttachment = GfxRenderer()->NewDescriptorSet(itPipelineQueue.first, ptrCommandBuffer->GetFrameBuffer(), ptrCommandBuffer->GetRenderPass(), ptrCommandBuffer->GetSubpassIndex());
-			tasks.emplace_back(ptrDescriptorSetPass, ptrDescriptorSetInputAttachment, ptrCommandBuffer->GetFrameBuffer(), ptrCommandBuffer->GetRenderPass(), ptrCommandBuffer->GetSubpassIndex(), itPipelineQueue.first, matPassName, scissor, viewport, mask);
+			cmdTasks.emplace_back(ptrDescriptorSetPass, ptrDescriptorSetInputAttachment, ptrCommandBuffer->GetFrameBuffer(), ptrCommandBuffer->GetRenderPass(), ptrCommandBuffer->GetSubpassIndex(), itPipelineQueue.first, matPassName, scissor, viewport, mask);
 		}
 
-		for (int indexTask = 0; indexTask < tasks.size(); indexTask++) {
-			taskGraph.Task(&tasks[indexTask], this, nullptr);
+		for (int indexTask = 0; indexTask < cmdTasks.size(); indexTask++) {
+			taskGraph.Task(&cmdTasks[indexTask], this, nullptr);
 		}
 
 		taskGraph.Dispatch();
 		taskGraph.Wait();
 
-		for (int indexTask = 0; indexTask < tasks.size(); indexTask++) {
-			ptrCommandBuffer->CmdExecute(tasks[indexTask].GetCommandBuffer());
+		for (int indexTask = 0; indexTask < cmdTasks.size(); indexTask++) {
+			ptrCommandBuffer->CmdExecute(cmdTasks[indexTask].GetCommandBuffer());
 		}
 	}
 }
