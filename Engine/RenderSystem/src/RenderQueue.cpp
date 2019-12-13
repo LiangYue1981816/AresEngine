@@ -203,7 +203,10 @@ void CRenderQueue::CmdDraw(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrComman
 
 	eastl::vector<CTaskSort> sortTasks;
 	{
-
+		if (m_pCamera) {
+			CTaskSort::order = bIsTransparency ? SortOrder::BackToFront : SortOrder::FrontToBack;
+			CTaskSort::cameraPosition = m_pCamera->GetPosition();
+		}
 	}
 
 	eastl::vector<CTaskCommandBuffer> cmdTasks;
