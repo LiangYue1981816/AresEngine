@@ -10,10 +10,9 @@ typedef enum SortOrder {
 class CTaskSort : public CTask
 {
 public:
-	CTaskSort(eastl::vector<int>* pInstanceBuffer)
-		: m_pInstanceBuffer(pInstanceBuffer)
+	CTaskSort(eastl::unordered_map<CGfxMeshPtr, eastl::unordered_map<CGfxMeshDrawPtr, eastl::vector<int>>>& meshQueue)
 	{
-
+		m_meshQueue = meshQueue;
 	}
 	virtual ~CTaskSort(void)
 	{
@@ -25,11 +24,19 @@ public:
 	{
 		switch (order) {
 		case SortOrder::FrontToBack:
-			eastl::sort(m_pInstanceBuffer->begin(), m_pInstanceBuffer->end(), CompareForFrontToBack);
+			for (auto& itMeshQueue : m_meshQueue) {
+				for (auto& itDrawQueue : itMeshQueue.second) {
+					eastl::sort(itDrawQueue.second.begin(), itDrawQueue.second.end(), CompareForFrontToBack);
+				}
+			}
 			break;
 
 		case SortOrder::BackToFront:
-			eastl::sort(m_pInstanceBuffer->begin(), m_pInstanceBuffer->end(), CompareForBackToFront);
+			for (auto& itMeshQueue : m_meshQueue) {
+				for (auto& itDrawQueue : itMeshQueue.second) {
+					eastl::sort(itDrawQueue.second.begin(), itDrawQueue.second.end(), CompareForBackToFront);
+				}
+			}
 			break;
 		}
 	}
@@ -59,7 +66,7 @@ public:
 	static glm::vec3 cameraPosition;
 
 private:
-	eastl::vector<int>* m_pInstanceBuffer;
+	eastl::unordered_map<CGfxMeshPtr, eastl::unordered_map<CGfxMeshDrawPtr, eastl::vector<int>>> m_meshQueue;
 };
 
 SortOrder CTaskSort::order;
@@ -206,12 +213,23 @@ void CRenderQueue::CmdDraw(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrComman
 		if (m_pCamera) {
 			CTaskSort::order = bIsTransparency ? SortOrder::BackToFront : SortOrder::FrontToBack;
 			CTaskSort::cameraPosition = m_pCamera->GetPosition();
+
+			for (auto& itMaterialQueue : m_materialMeshDrawQueue) {
+				sortTasks.emplace_back(itMaterialQueue.second);
+			}
+
+			for (int indexTask = 0; indexTask < sortTasks.size(); indexTask++) {
+				taskGraph.Task(&sortTasks[indexTask], this, nullptr);
+			}
+
+			taskGraph.Dispatch();
+			taskGraph.Wait();
 		}
 	}
 
 	eastl::vector<CTaskCommandBuffer> cmdTasks;
 	{
-		for (const auto& itPipelineQueue : m_pipelineMaterialQueue) {
+		for (auto& itPipelineQueue : m_pipelineMaterialQueue) {
 			CGfxDescriptorSetPtr ptrDescriptorSetInputAttachment = GfxRenderer()->NewDescriptorSet(itPipelineQueue.first, ptrCommandBuffer->GetFrameBuffer(), ptrCommandBuffer->GetRenderPass(), ptrCommandBuffer->GetSubpassIndex());
 			cmdTasks.emplace_back(ptrDescriptorSetPass, ptrDescriptorSetInputAttachment, ptrCommandBuffer->GetFrameBuffer(), ptrCommandBuffer->GetRenderPass(), ptrCommandBuffer->GetSubpassIndex(), itPipelineQueue.first, matPassName, scissor, viewport, mask);
 		}
