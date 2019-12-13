@@ -130,6 +130,7 @@ private:
 
 
 CRenderQueue::CRenderQueue(void)
+	: m_pCamera(nullptr)
 {
 
 }
@@ -139,15 +140,11 @@ CRenderQueue::~CRenderQueue(void)
 
 }
 
-void CRenderQueue::Clear(void)
+void CRenderQueue::Begin(CGfxCamera* pCamera)
 {
+	m_pCamera = pCamera;
 	m_pipelineMaterialQueue.clear();
 	m_materialMeshDrawQueue.clear();
-}
-
-void CRenderQueue::Begin(void)
-{
-	Clear();
 }
 
 void CRenderQueue::Add(const CGfxMaterialPtr ptrMaterial, const CGfxMeshDrawPtr ptrMeshDraw, int indexInstance, int indexThread)

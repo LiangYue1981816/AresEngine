@@ -153,7 +153,7 @@ void CSceneManager::UpdateLogic(CTaskGraph& taskGraph, float totalTime, float de
 
 void CSceneManager::UpdateCamera(CTaskGraph& taskGraph, CGfxCamera* pCamera, CRenderQueue* pRenderQueue, uint32_t mask)
 {
-	pRenderQueue->Begin();
+	pRenderQueue->Begin(pCamera);
 	{
 		eastl::vector<CTaskComponentUpdateCamera<CComponentMesh>> taskUpdateCameraMeshs(taskGraph.GetNumThreads());
 		eastl::vector<CTaskComponentUpdateCamera<CComponentSkin>> taskUpdateCameraSkins(taskGraph.GetNumThreads());
