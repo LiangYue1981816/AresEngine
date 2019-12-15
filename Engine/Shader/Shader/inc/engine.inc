@@ -117,6 +117,20 @@ layout (location = 13)                                     in mediump vec4 inIns
 		highp mat4 mainShadowProjectionViewMatrix[4];                              \
 	} engine
 
+#define USE_SCENE_STORAGE                                                          \
+	struct InstanceData                                                            \
+	{                                                                              \
+		highp mat4 transformMatrix;                                                \
+		highp vec4 center;                                                         \
+		                                                                           \
+		mediump vec4 lightColor;                                                   \
+		mediump vec4 lightAttenuation;                                             \
+	};                                                                             \
+	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_SCENE) buffer SceneData                    \
+	{                                                                              \
+		InstanceData instanceData[];                                               \
+	} sceneData
+
 #define USE_DEPTH_TEXTURE_UNIFORM                                                  \
 	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_DEPTH_TEXTURE) highp uniform sampler2D texDepth
 

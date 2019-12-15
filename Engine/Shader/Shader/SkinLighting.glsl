@@ -12,6 +12,8 @@ precision mediump float;
 // VERTEX_ATTRIBUTE_TEXCOORD0;
 // INSTANCE_ATTRIBUTE_TRANSFORM;
 
+USE_SCENE_STORAGE;
+
 // Output
 layout (location = 0) out highp   vec3 outPosition;
 layout (location = 1) out mediump vec2 outTexcoord;
