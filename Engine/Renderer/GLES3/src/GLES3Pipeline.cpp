@@ -75,6 +75,10 @@ bool CGLES3Pipeline::CreateLayouts(void)
 				m_ptrDescriptorLayouts[itUniformBlock.second.set]->SetUniformBlockBinding(HashValue(itUniformBlock.first.c_str()), itUniformBlock.second.binding);
 			}
 
+			for (const auto& itStorageBlock : m_pShaders[indexShader]->GetSprivCross().GetStorageBlockBindings()) {
+				m_ptrDescriptorLayouts[itStorageBlock.second.set]->SetStorageBlockBinding(HashValue(itStorageBlock.first.c_str()), itStorageBlock.second.binding);
+			}
+
 			for (const auto& itSampledImage : m_pShaders[indexShader]->GetSprivCross().GetSampledImageBindings()) {
 				SetSampledImageLocation(itSampledImage.first.c_str());
 				m_ptrDescriptorLayouts[itSampledImage.second.set]->SetSampledImageBinding(HashValue(itSampledImage.first.c_str()), itSampledImage.second.binding);
