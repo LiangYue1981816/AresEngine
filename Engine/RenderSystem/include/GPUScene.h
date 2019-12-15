@@ -54,6 +54,7 @@ public:
 public:
 	int GetDefaultInstanceIndex(void) const;
 
+public:
 	const CGfxStorageBufferPtr GetInstanceBuffer(void) const;
 	const InstanceData& GetInstanceData(int index) const;
 
