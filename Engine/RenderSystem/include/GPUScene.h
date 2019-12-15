@@ -52,8 +52,9 @@ public:
 	void Clear(void);
 
 public:
-	const InstanceData& GetInstanceData(int index) const;
 	int GetDefaultInstanceIndex(void) const;
+	const CGfxStorageBufferPtr GetInstanceBuffer(void) const;
+	const InstanceData& GetInstanceData(int index) const;
 
 private:
 	void Update(CTaskGraph& taskGraph);

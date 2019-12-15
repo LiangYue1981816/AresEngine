@@ -65,6 +65,16 @@ void CGPUScene::ModifyInstanceData(int index, const InstanceData &data, int inde
 	}
 }
 
+int CGPUScene::GetDefaultInstanceIndex(void) const
+{
+	return m_indexDefaultInstance;
+}
+
+const CGfxStorageBufferPtr CGPUScene::GetInstanceBuffer(void) const
+{
+	return m_ptrInstanceBuffer;
+}
+
 const CGPUScene::InstanceData& CGPUScene::GetInstanceData(int index) const
 {
 	static InstanceData invalid;
@@ -76,11 +86,6 @@ const CGPUScene::InstanceData& CGPUScene::GetInstanceData(int index) const
 	}
 
 	return invalid;
-}
-
-int CGPUScene::GetDefaultInstanceIndex(void) const
-{
-	return m_indexDefaultInstance;
 }
 
 void CGPUScene::Update(CTaskGraph& taskGraph)
