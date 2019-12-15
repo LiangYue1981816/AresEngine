@@ -31,6 +31,7 @@ const eastl::string& CGfxSprivCross::Create(const uint32_t* words, size_t numWor
 		m_vertexAttributes.clear();
 		m_pushConstantRanges.clear();
 		m_uniformBlockBindings.clear();
+		m_storageBlockBindings.clear();
 		m_sampledImageBindings.clear();
 		m_inputAttachmentBindings.clear();
 
@@ -52,6 +53,13 @@ const eastl::string& CGfxSprivCross::Create(const uint32_t* words, size_t numWor
 			if (compiler.get_type(itUniform.base_type_id).basetype == spirv_cross::SPIRType::Struct) {
 				m_uniformBlockBindings[itUniform.name.c_str()].set = compiler.get_decoration(itUniform.id, spv::DecorationDescriptorSet);
 				m_uniformBlockBindings[itUniform.name.c_str()].binding = compiler.get_decoration(itUniform.id, spv::DecorationBinding);
+			}
+		}
+
+		for (const auto& itStorage : shaderResources.storage_buffers) {
+			if (compiler.get_type(itStorage.base_type_id).basetype == spirv_cross::SPIRType::Struct) {
+				m_storageBlockBindings[itStorage.name.c_str()].set = compiler.get_decoration(itStorage.id, spv::DecorationDescriptorSet);
+				m_storageBlockBindings[itStorage.name.c_str()].binding = compiler.get_decoration(itStorage.id, spv::DecorationBinding);
 			}
 		}
 
@@ -92,6 +100,11 @@ const eastl::unordered_map<eastl::string, PushConstantRange>& CGfxSprivCross::Ge
 const eastl::unordered_map<eastl::string, DescriptorSetBinding>& CGfxSprivCross::GetUniformBlockBindings(void) const
 {
 	return m_uniformBlockBindings;
+}
+
+const eastl::unordered_map<eastl::string, DescriptorSetBinding>& CGfxSprivCross::GetStorageBlockBindings(void) const
+{
+	return m_storageBlockBindings;
 }
 
 const eastl::unordered_map<eastl::string, DescriptorSetBinding>& CGfxSprivCross::GetSampledImageBindings(void) const
