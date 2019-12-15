@@ -48,6 +48,7 @@ layout (location = 13)                                     in mediump vec4 inIns
 // Base
 #define DESCRIPTOR_BIND_ENGINE                             0
 #define DESCRIPTOR_BIND_CAMERA                             1
+#define DESCRIPTOR_BIND_SCENE                              2
 
 // Forward/Deferred
 #define DESCRIPTOR_BIND_DEPTH_TEXTURE                      2
