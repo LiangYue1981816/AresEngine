@@ -42,6 +42,7 @@
 // Uniform Base
 #define UNIFORM_ENGINE_BIND                                0
 #define UNIFORM_CAMERA_BIND                                1
+#define STORAGE_SCENE_BIND                                 2
 
 #define UNIFORM_ENGINE_NAME                                HashValue("Engine")
 #define UNIFORM_CAMERA_NAME                                HashValue("Camera")

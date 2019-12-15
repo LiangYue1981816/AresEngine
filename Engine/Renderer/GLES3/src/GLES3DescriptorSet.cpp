@@ -36,8 +36,14 @@ CGLES3DescriptorSet::CGLES3DescriptorSet(CGLES3DescriptorSetManager* pManager, u
 		}
 	}
 
-	for (const auto& itbufferDescriptorInfo : ((CGLES3DescriptorSet *)ptrDescriptorSetCopyFrom.GetPointer())->m_bufferDescriptorInfos) {
-		SetUniformBuffer(itbufferDescriptorInfo.first, itbufferDescriptorInfo.second.ptrUniformBuffer, itbufferDescriptorInfo.second.offset, itbufferDescriptorInfo.second.range);
+	for (const auto& itBufferDescriptorInfo : ((CGLES3DescriptorSet *)ptrDescriptorSetCopyFrom.GetPointer())->m_bufferDescriptorInfos) {
+		if (itBufferDescriptorInfo.second.ptrUniformBuffer) {
+			SetUniformBuffer(itBufferDescriptorInfo.first, itBufferDescriptorInfo.second.ptrUniformBuffer, itBufferDescriptorInfo.second.offset, itBufferDescriptorInfo.second.range);
+		}
+
+		if (itBufferDescriptorInfo.second.ptrStorageBuffer) {
+			SetStorageBuffer(itBufferDescriptorInfo.first, itBufferDescriptorInfo.second.ptrStorageBuffer, itBufferDescriptorInfo.second.offset, itBufferDescriptorInfo.second.range);
+		}
 	}
 
 	Update();
