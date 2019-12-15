@@ -6,6 +6,8 @@ CGPUScene::CGPUScene(void)
 	: m_indexDefaultInstance(0)
 {
 	m_indexDefaultInstance = AddInstance();
+
+	m_ptrInstanceBuffer = GfxRenderer()->NewStorageBuffer(sizeof(InstanceData) * 16 * 1024);
 }
 
 CGPUScene::~CGPUScene(void)
@@ -83,11 +85,18 @@ int CGPUScene::GetDefaultInstanceIndex(void) const
 
 void CGPUScene::Update(CTaskGraph& taskGraph)
 {
+	bool bNeedUpdate = false;
+
 	for (int indexThread = 0; indexThread < MAX_THREAD_COUNT; indexThread++) {
 		for (const auto& itTransfer : m_transferBuffer[indexThread]) {
 			m_instanceBuffer[itTransfer.second.index] = itTransfer.second.data;
+			bNeedUpdate = true;
 		}
 
 		m_transferBuffer[indexThread].clear();
+	}
+
+	if (bNeedUpdate) {
+		m_ptrInstanceBuffer->BufferData(0, sizeof(InstanceData) * m_instanceBuffer.size(), m_instanceBuffer.data());
 	}
 }
