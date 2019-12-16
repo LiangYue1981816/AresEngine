@@ -399,9 +399,6 @@
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxUniformBuffer.h">
       <Filter>Engine\Renderer\Gfx\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxUniformEngine.h">
-      <Filter>Engine\Renderer\Gfx\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxUniformMat4.h">
       <Filter>Engine\Renderer\Gfx\Header Files</Filter>
     </ClInclude>
@@ -1743,9 +1740,6 @@
       <Filter>Engine\Renderer\Gfx\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxResourceManager.cpp">
-      <Filter>Engine\Renderer\Gfx\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxUniformEngine.cpp">
       <Filter>Engine\Renderer\Gfx\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxUniformMat4.cpp">
