@@ -16,7 +16,7 @@ private:
 private:
 	const VkPipelineLayout GetPipelineLayout(void) const;
 	const CGfxDescriptorLayoutPtr GetDescriptorLayout(int indexDescriptorSet) const;
-	const uint32_t GetInputAttachmentName(int inputAttachmentIndex) const;
+	const uint32_t GetInputAttachmentName(uint32_t inputAttachmentIndex) const;
 
 private:
 	bool CreateLayouts(void);

@@ -36,7 +36,7 @@ const CGfxDescriptorLayoutPtr CVKPipeline::GetDescriptorLayout(int indexDescript
 	}
 }
 
-const uint32_t CVKPipeline::GetInputAttachmentName(int inputAttachmentIndex) const
+const uint32_t CVKPipeline::GetInputAttachmentName(uint32_t inputAttachmentIndex) const
 {
 	const auto& itInputAttachmentName = m_inputAttachmentNames.find(inputAttachmentIndex);
 
