@@ -44,7 +44,7 @@ private:
 	} TransferData;
 
 
-private:
+public:
 	CGPUScene(void);
 	virtual ~CGPUScene(void);
 
