@@ -6,10 +6,10 @@
 #include "GfxHelper.h"
 #include "GfxDefinition.h"
 
+#include "GfxProfiler.h"
+
 #include "GfxSprivCross.h"
 #include "GfxVertexAttribute.h"
-
-#include "GfxProfiler.h"
 
 #include "GfxResource.h"
 #include "GfxResourceManager.h"
