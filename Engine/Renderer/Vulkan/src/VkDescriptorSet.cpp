@@ -418,7 +418,13 @@ void CVKDescriptorSet::Bind(VkCommandBuffer vkCommandBuffer, VkPipelineBindPoint
 	eastl::vector<uint32_t> offsets;
 
 	for (const auto& itBuffer : m_bufferDescriptorInfos) {
-		offsets.emplace_back(((CVKUniformBuffer*)itBuffer.second.ptrUniformBuffer.GetPointer())->GetOffset());
+		if (itBuffer.second.ptrUniformBuffer) {
+			offsets.emplace_back(((CVKUniformBuffer*)itBuffer.second.ptrUniformBuffer.GetPointer())->GetOffset());
+		}
+
+		if (itBuffer.second.ptrStorageBuffer) {
+			offsets.emplace_back(((CVKStorageBuffer*)itBuffer.second.ptrStorageBuffer.GetPointer())->GetOffset());
+		}
 	}
 
 	vkCmdBindDescriptorSets(vkCommandBuffer, vkPipelineBindPoint, vkPipelineLayout, m_ptrDescriptorLayout->GetSetIndex(), 1, &m_vkDescriptorSet, offsets.size(), offsets.data());

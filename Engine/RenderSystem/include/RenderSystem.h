@@ -46,7 +46,7 @@
 
 #define UNIFORM_ENGINE_NAME                                HashValue("Engine")
 #define UNIFORM_CAMERA_NAME                                HashValue("Camera")
-#define STORAGE_SCENE_NAME                                 HashValue("Scene")
+#define STORAGE_SCENE_NAME                                 HashValue("SceneData")
 
 // Uniform Forward/Deferred
 #define UNIFORM_DEPTH_TEXTURE_BIND                         2
