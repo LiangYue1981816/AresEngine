@@ -2,7 +2,7 @@
 #include "PreHeader.h"
 
 
-class CALL_API CGfxStorageBuffer
+class CALL_API CGfxStorageBuffer : public CGfxResource
 {
 public:
 	CGfxStorageBuffer(size_t size)
