@@ -6,7 +6,7 @@ CComponentPointLight::CComponentPointLight(uint32_t name)
 	, m_indexInstance(INVALID_VALUE)
 	, m_bNeedUpdateInstanceData{ false }
 {
-	m_indexInstance = RenderSystem()->GetGPUScene()->AddInstance();
+	m_indexInstance = RenderSystem()->AddInstance();
 
 	SetMaterial(GfxRenderer()->NewMaterial("PointLight.material"));
 	SetMeshDraw(GfxRenderer()->NewMesh("PointLight.mesh", 0));
@@ -16,7 +16,7 @@ CComponentPointLight::CComponentPointLight(const CComponentPointLight& component
 	: CComponent(component)
 	, m_indexInstance(INVALID_VALUE)
 {
-	m_indexInstance = RenderSystem()->GetGPUScene()->AddInstance();
+	m_indexInstance = RenderSystem()->AddInstance();
 
 	m_ptrMaterial = component.m_ptrMaterial;
 	m_ptrMeshDraw = component.m_ptrMeshDraw;
@@ -27,7 +27,7 @@ CComponentPointLight::CComponentPointLight(const CComponentPointLight& component
 
 CComponentPointLight::~CComponentPointLight(void)
 {
-	RenderSystem()->GetGPUScene()->RemoveInstance(m_indexInstance);
+	RenderSystem()->RemoveInstance(m_indexInstance);
 }
 
 void CComponentPointLight::SetMaterial(const CGfxMaterialPtr ptrMaterial)
@@ -76,7 +76,7 @@ void CComponentPointLight::TaskUpdateCamera(CGfxCamera* pCamera, CRenderQueue* p
 			if (pCamera->IsVisible(m_ptrMeshDraw->GetLocalAABB() * m_instanceData[indexFrame].transformMatrix)) {
 				if (m_bNeedUpdateInstanceData[indexFrame]) {
 					m_bNeedUpdateInstanceData[indexFrame] = false;
-					RenderSystem()->GetGPUScene()->ModifyInstanceData(m_indexInstance, m_instanceData[indexFrame], indexThread);
+					RenderSystem()->ModifyInstanceData(m_indexInstance, m_instanceData[indexFrame], indexThread);
 				}
 
 				pRenderQueue->Add(m_ptrMaterial, m_ptrMeshDraw, m_indexInstance, indexThread);

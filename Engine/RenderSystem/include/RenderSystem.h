@@ -134,9 +134,11 @@ private:
 
 private:
 	CGfxUniformEngine* GetEngineUniform(void) const;
-
-public:
 	CGPUScene* GetGPUScene(void) const;
+
+private:
+	void CreatePasses(void);
+	void DestroyPasses(void);
 
 private:
 	void CreateRenderTextures(void);
@@ -147,9 +149,15 @@ private:
 
 	CGfxRenderTexturePtr GetRenderTexture(uint32_t name) const;
 
-private:
-	void CreatePasses(void);
-	void DestroyPasses(void);
+public:
+	int AddInstance(void);
+	void RemoveInstance(int index);
+	void ModifyInstanceData(int index, const CGPUScene::InstanceData &data, int indexThread = 0);
+
+	int GetDefaultInstanceIndex(void) const;
+	int GetPostProcessInstnaceIndex(void) const;
+
+	const CGPUScene::InstanceData& GetInstanceData(int index) const;
 
 public:
 	void SetTime(float t, float dt);
@@ -189,8 +197,6 @@ private:
 private:
 	CGfxRenderer* m_pRenderer;
 	CGfxUniformEngine* m_pEngineUniform;
-
-private:
 	CGPUScene* m_pGPUScene;
 
 private:

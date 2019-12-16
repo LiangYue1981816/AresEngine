@@ -96,47 +96,6 @@ CGPUScene* CRenderSystem::GetGPUScene(void) const
 	return m_pGPUScene;
 }
 
-void CRenderSystem::CreateRenderTextures(void)
-{
-	CreateRenderTexture(RENDER_TEXTURE_SWAPCHAIN_COLOR0, GfxRenderer()->GetSwapChain()->GetFrameTexture(0));
-	CreateRenderTexture(RENDER_TEXTURE_SWAPCHAIN_COLOR1, GfxRenderer()->GetSwapChain()->GetFrameTexture(1));
-	CreateRenderTexture(RENDER_TEXTURE_SWAPCHAIN_COLOR2, GfxRenderer()->GetSwapChain()->GetFrameTexture(2));
-	CreateRenderTexture(RENDER_TEXTURE_SHADOW, GFX_PIXELFORMAT_D32_SFLOAT_PACK32, 2048, 2048);
-	CreateRenderTexture(RENDER_TEXTURE_FULL_DEPTH, GFX_PIXELFORMAT_D32_SFLOAT_PACK32, GfxRenderer()->GetSwapChain()->GetWidth(), GfxRenderer()->GetSwapChain()->GetHeight());
-	CreateRenderTexture(RENDER_TEXTURE_FULL_HDR_COLOR0, GFX_PIXELFORMAT_BGR10A2_UNORM_PACK32, GfxRenderer()->GetSwapChain()->GetWidth(), GfxRenderer()->GetSwapChain()->GetHeight());
-	CreateRenderTexture(RENDER_TEXTURE_FULL_HDR_COLOR1, GFX_PIXELFORMAT_BGR10A2_UNORM_PACK32, GfxRenderer()->GetSwapChain()->GetWidth(), GfxRenderer()->GetSwapChain()->GetHeight());
-	CreateRenderTexture(RENDER_TEXTURE_QUATER_HDR_COLOR0, GFX_PIXELFORMAT_BGR10A2_UNORM_PACK32, GfxRenderer()->GetSwapChain()->GetWidth() / 4, GfxRenderer()->GetSwapChain()->GetHeight() / 4);
-	CreateRenderTexture(RENDER_TEXTURE_QUATER_HDR_COLOR1, GFX_PIXELFORMAT_BGR10A2_UNORM_PACK32, GfxRenderer()->GetSwapChain()->GetWidth() / 4, GfxRenderer()->GetSwapChain()->GetHeight() / 4);
-}
-
-void CRenderSystem::DestroyRenderTextures(void)
-{
-	m_ptrRenderTextures.clear();
-}
-
-void CRenderSystem::CreateRenderTexture(uint32_t name, CGfxRenderTexturePtr ptrRenderTexture)
-{
-	m_ptrRenderTextures[name] = ptrRenderTexture;
-}
-
-void CRenderSystem::CreateRenderTexture(uint32_t name, GfxPixelFormat format, int width, int height, int samples, bool bTransient)
-{
-	m_ptrRenderTextures[name] = GfxRenderer()->NewRenderTexture(name);
-	m_ptrRenderTextures[name]->Create(format, width, height, samples, bTransient);
-}
-
-CGfxRenderTexturePtr CRenderSystem::GetRenderTexture(uint32_t name) const
-{
-	const auto& itRenderTexture = m_ptrRenderTextures.find(name);
-
-	if (itRenderTexture != m_ptrRenderTextures.end()) {
-		return itRenderTexture->second;
-	}
-	else {
-		return nullptr;
-	}
-}
-
 void CRenderSystem::CreatePasses(void)
 {
 	CPassPreZ::Create(GFX_PIXELFORMAT_D32_SFLOAT_PACK32);
@@ -197,6 +156,77 @@ void CRenderSystem::DestroyPasses(void)
 	delete m_pPassBloomBlendAdd;
 	delete m_pPassColorGrading;
 	delete m_pPassFinal;
+}
+
+void CRenderSystem::CreateRenderTextures(void)
+{
+	CreateRenderTexture(RENDER_TEXTURE_SWAPCHAIN_COLOR0, GfxRenderer()->GetSwapChain()->GetFrameTexture(0));
+	CreateRenderTexture(RENDER_TEXTURE_SWAPCHAIN_COLOR1, GfxRenderer()->GetSwapChain()->GetFrameTexture(1));
+	CreateRenderTexture(RENDER_TEXTURE_SWAPCHAIN_COLOR2, GfxRenderer()->GetSwapChain()->GetFrameTexture(2));
+	CreateRenderTexture(RENDER_TEXTURE_SHADOW, GFX_PIXELFORMAT_D32_SFLOAT_PACK32, 2048, 2048);
+	CreateRenderTexture(RENDER_TEXTURE_FULL_DEPTH, GFX_PIXELFORMAT_D32_SFLOAT_PACK32, GfxRenderer()->GetSwapChain()->GetWidth(), GfxRenderer()->GetSwapChain()->GetHeight());
+	CreateRenderTexture(RENDER_TEXTURE_FULL_HDR_COLOR0, GFX_PIXELFORMAT_BGR10A2_UNORM_PACK32, GfxRenderer()->GetSwapChain()->GetWidth(), GfxRenderer()->GetSwapChain()->GetHeight());
+	CreateRenderTexture(RENDER_TEXTURE_FULL_HDR_COLOR1, GFX_PIXELFORMAT_BGR10A2_UNORM_PACK32, GfxRenderer()->GetSwapChain()->GetWidth(), GfxRenderer()->GetSwapChain()->GetHeight());
+	CreateRenderTexture(RENDER_TEXTURE_QUATER_HDR_COLOR0, GFX_PIXELFORMAT_BGR10A2_UNORM_PACK32, GfxRenderer()->GetSwapChain()->GetWidth() / 4, GfxRenderer()->GetSwapChain()->GetHeight() / 4);
+	CreateRenderTexture(RENDER_TEXTURE_QUATER_HDR_COLOR1, GFX_PIXELFORMAT_BGR10A2_UNORM_PACK32, GfxRenderer()->GetSwapChain()->GetWidth() / 4, GfxRenderer()->GetSwapChain()->GetHeight() / 4);
+}
+
+void CRenderSystem::DestroyRenderTextures(void)
+{
+	m_ptrRenderTextures.clear();
+}
+
+void CRenderSystem::CreateRenderTexture(uint32_t name, CGfxRenderTexturePtr ptrRenderTexture)
+{
+	m_ptrRenderTextures[name] = ptrRenderTexture;
+}
+
+void CRenderSystem::CreateRenderTexture(uint32_t name, GfxPixelFormat format, int width, int height, int samples, bool bTransient)
+{
+	m_ptrRenderTextures[name] = GfxRenderer()->NewRenderTexture(name);
+	m_ptrRenderTextures[name]->Create(format, width, height, samples, bTransient);
+}
+
+CGfxRenderTexturePtr CRenderSystem::GetRenderTexture(uint32_t name) const
+{
+	const auto& itRenderTexture = m_ptrRenderTextures.find(name);
+
+	if (itRenderTexture != m_ptrRenderTextures.end()) {
+		return itRenderTexture->second;
+	}
+	else {
+		return nullptr;
+	}
+}
+
+int CRenderSystem::AddInstance(void)
+{
+	return m_pGPUScene->AddInstance();
+}
+
+void CRenderSystem::RemoveInstance(int index)
+{
+	m_pGPUScene->RemoveInstance(index);
+}
+
+void CRenderSystem::ModifyInstanceData(int index, const CGPUScene::InstanceData &data, int indexThread)
+{
+	m_pGPUScene->ModifyInstanceData(index, data, indexThread);
+}
+
+int CRenderSystem::GetDefaultInstanceIndex(void) const
+{
+	return m_pGPUScene->GetDefaultInstanceIndex();
+}
+
+int CRenderSystem::GetPostProcessInstnaceIndex(void) const
+{
+	return m_pGPUScene->GetPostProcessInstnaceIndex();
+}
+
+const CGPUScene::InstanceData& CRenderSystem::GetInstanceData(int index) const
+{
+	return m_pGPUScene->GetInstanceData(index);
 }
 
 void CRenderSystem::SetTime(float t, float dt)

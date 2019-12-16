@@ -5,19 +5,19 @@ CComponentSkin::CComponentSkin(uint32_t name)
 	: CComponent(name)
 	, m_indexInstance(INVALID_VALUE)
 {
-	m_indexInstance = RenderSystem()->GetGPUScene()->AddInstance();
+	m_indexInstance = RenderSystem()->AddInstance();
 }
 
 CComponentSkin::CComponentSkin(const CComponentSkin& component)
 	: CComponent(component)
 	, m_indexInstance(INVALID_VALUE)
 {
-	m_indexInstance = RenderSystem()->GetGPUScene()->AddInstance();
+	m_indexInstance = RenderSystem()->AddInstance();
 }
 
 CComponentSkin::~CComponentSkin(void)
 {
-	RenderSystem()->GetGPUScene()->RemoveInstance(m_indexInstance);
+	RenderSystem()->RemoveInstance(m_indexInstance);
 }
 
 void CComponentSkin::TaskUpdate(float gameTime, float deltaTime)

@@ -28,7 +28,7 @@ CPassBlit::CPassBlit(const char* szMaterialFileName, CRenderSystem* pRenderSyste
 
 	m_pRenderQueue = new CRenderQueue;
 	m_pRenderQueue->Begin(nullptr);
-	m_pRenderQueue->Add(m_ptrMaterial, m_ptrMeshDraw, RenderSystem()->GetGPUScene()->GetDefaultInstanceIndex());
+	m_pRenderQueue->Add(m_ptrMaterial, m_ptrMeshDraw, RenderSystem()->GetPostProcessInstnaceIndex());
 	m_pRenderQueue->End();
 }
 

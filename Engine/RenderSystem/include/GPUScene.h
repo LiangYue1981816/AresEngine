@@ -48,7 +48,7 @@ private:
 public:
 	int AddInstance(void);
 	void RemoveInstance(int index);
-	void ModifyInstanceData(int index, const InstanceData &data, int indexThread = 0);
+	void ModifyInstanceData(int index, const InstanceData &data, int indexThread);
 
 public:
 	int GetDefaultInstanceIndex(void) const;
