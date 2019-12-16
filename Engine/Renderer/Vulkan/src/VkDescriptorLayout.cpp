@@ -66,7 +66,7 @@ bool CVKDescriptorLayout::Create(void)
 			layoutCreateInfo.pBindings = bindings.data();
 			CALL_VK_FUNCTION_BREAK(vkCreateDescriptorSetLayout(m_pDevice->GetDevice(), &layoutCreateInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkDescriptorLayout));
 
-			m_numDescriptors[VK_DESCRIPTOR_TYPE_STORAGE_BUFFER_DYNAMIC] = m_storageBlockBindings.size();
+			m_numDescriptors[VK_DESCRIPTOR_TYPE_STORAGE_BUFFER] = m_storageBlockBindings.size();
 			m_numDescriptors[VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER_DYNAMIC] = m_uniformBlockBindings.size();
 			m_numDescriptors[VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER] = m_sampledImageBindings.size();
 			m_numDescriptors[VK_DESCRIPTOR_TYPE_INPUT_ATTACHMENT] = m_inputAttachmentBindings.size();
@@ -99,7 +99,7 @@ void CVKDescriptorLayout::SetStorageBlockBinding(uint32_t name, uint32_t binding
 {
 	m_storageBlockBindings[name] = {};
 	m_storageBlockBindings[name].binding = binding;
-	m_storageBlockBindings[name].descriptorType = VK_DESCRIPTOR_TYPE_STORAGE_BUFFER_DYNAMIC;
+	m_storageBlockBindings[name].descriptorType = VK_DESCRIPTOR_TYPE_STORAGE_BUFFER;
 	m_storageBlockBindings[name].descriptorCount = 1;
 	m_storageBlockBindings[name].stageFlags = VK_SHADER_STAGE_VERTEX_BIT | VK_SHADER_STAGE_FRAGMENT_BIT | VK_SHADER_STAGE_COMPUTE_BIT;
 	m_storageBlockBindings[name].pImmutableSamplers = nullptr;

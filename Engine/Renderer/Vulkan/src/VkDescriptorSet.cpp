@@ -386,7 +386,7 @@ void CVKDescriptorSet::Update(void)
 				bufferInfos.emplace_back(bufferInfo);
 
 				dstBinding = m_ptrDescriptorLayout->GetStorageBlockBinding(itBuffer.first);
-				descriptorType = VK_DESCRIPTOR_TYPE_STORAGE_BUFFER_DYNAMIC;
+				descriptorType = VK_DESCRIPTOR_TYPE_STORAGE_BUFFER;
 			}
 
 			VkWriteDescriptorSet write = {};
@@ -420,10 +420,6 @@ void CVKDescriptorSet::Bind(VkCommandBuffer vkCommandBuffer, VkPipelineBindPoint
 	for (const auto& itBuffer : m_bufferDescriptorInfos) {
 		if (itBuffer.second.ptrUniformBuffer) {
 			offsets.emplace_back(((CVKUniformBuffer*)itBuffer.second.ptrUniformBuffer.GetPointer())->GetOffset());
-		}
-
-		if (itBuffer.second.ptrStorageBuffer) {
-			offsets.emplace_back(((CVKStorageBuffer*)itBuffer.second.ptrStorageBuffer.GetPointer())->GetOffset());
 		}
 	}
 
