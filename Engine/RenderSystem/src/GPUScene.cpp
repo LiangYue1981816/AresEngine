@@ -3,26 +3,19 @@
 
 
 CGPUScene::CGPUScene(void)
-	: m_indexDefaultInstance(0)
+	: m_indexDefaultInstance(INVALID_VALUE)
+	, m_indexPostProcessInstnace(INVALID_VALUE)
 {
 	m_indexDefaultInstance = AddInstance();
+	m_indexPostProcessInstnace = AddInstance();
 
 	m_ptrInstanceBuffer = GfxRenderer()->NewStorageBuffer(sizeof(InstanceData) * 16 * 1024);
+	m_ptrTransferBuffer = GfxRenderer()->NewStorageBuffer(sizeof(TransferData) * 16 * 1024);
 }
 
 CGPUScene::~CGPUScene(void)
 {
-	Clear();
-}
 
-void CGPUScene::Clear(void)
-{
-	m_freeIndex.clear();
-	m_instanceBuffer.clear();
-
-	for (int indexThread = 0; indexThread < MAX_THREAD_COUNT; indexThread++) {
-		m_transferBuffer[indexThread].clear();
-	}
 }
 
 int CGPUScene::AddInstance(void)
@@ -68,6 +61,11 @@ void CGPUScene::ModifyInstanceData(int index, const InstanceData &data, int inde
 int CGPUScene::GetDefaultInstanceIndex(void) const
 {
 	return m_indexDefaultInstance;
+}
+
+int CGPUScene::GetPostProcessInstnaceIndex(void) const
+{
+	return m_indexPostProcessInstnace;
 }
 
 const CGfxStorageBufferPtr CGPUScene::GetInstanceBuffer(void) const

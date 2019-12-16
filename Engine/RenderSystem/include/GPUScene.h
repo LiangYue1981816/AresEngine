@@ -49,10 +49,10 @@ public:
 	int AddInstance(void);
 	void RemoveInstance(int index);
 	void ModifyInstanceData(int index, const InstanceData &data, int indexThread = 0);
-	void Clear(void);
 
 public:
 	int GetDefaultInstanceIndex(void) const;
+	int GetPostProcessInstnaceIndex(void) const;
 
 public:
 	const CGfxStorageBufferPtr GetInstanceBuffer(void) const;
@@ -64,6 +64,7 @@ private:
 
 private:
 	int m_indexDefaultInstance;
+	int m_indexPostProcessInstnace;
 
 private:
 	eastl::vector<InstanceData> m_instanceBuffer;
