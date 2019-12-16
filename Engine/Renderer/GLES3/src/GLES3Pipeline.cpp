@@ -98,7 +98,7 @@ bool CGLES3Pipeline::CreateLayouts(void)
 			}
 
 			for (const auto& itInputAttachment : m_pShaders[indexShader]->GetSprivCross().GetInputAttachmentBindings()) {
-				SetInputAttachmentLocation(itInputAttachment.first.c_str(), itInputAttachment.second.inputAttachmentIndex);
+				SetInputAttachmentLocation(itInputAttachment.first.c_str(), itInputAttachment.second.indexInputAttachment);
 				m_ptrDescriptorLayouts[itInputAttachment.second.set]->SetInputAttachmentBinding(HashValue(itInputAttachment.first.c_str()), itInputAttachment.second.binding);
 			}
 		}

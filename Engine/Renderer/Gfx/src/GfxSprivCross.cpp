@@ -74,7 +74,7 @@ const eastl::string& CGfxSprivCross::Create(const uint32_t* words, size_t numWor
 			if (compiler.get_type(itSubpassInput.base_type_id).basetype == spirv_cross::SPIRType::Image) {
 				m_inputAttachmentBindings[itSubpassInput.name.c_str()].set = compiler.get_decoration(itSubpassInput.id, spv::DecorationDescriptorSet);
 				m_inputAttachmentBindings[itSubpassInput.name.c_str()].binding = compiler.get_decoration(itSubpassInput.id, spv::DecorationBinding);
-				m_inputAttachmentBindings[itSubpassInput.name.c_str()].inputAttachmentIndex = compiler.get_decoration(itSubpassInput.id, spv::DecorationInputAttachmentIndex);
+				m_inputAttachmentBindings[itSubpassInput.name.c_str()].indexInputAttachment = compiler.get_decoration(itSubpassInput.id, spv::DecorationInputAttachmentIndex);
 			}
 		}
 	}

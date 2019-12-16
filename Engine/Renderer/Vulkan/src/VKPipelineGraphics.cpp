@@ -24,9 +24,9 @@ const CGfxDescriptorLayoutPtr CVKPipelineGraphics::GetDescriptorLayout(int index
 	return m_pPipeline->GetDescriptorLayout(indexDescriptorSet);
 }
 
-const uint32_t CVKPipelineGraphics::GetInputAttachmentName(uint32_t inputAttachmentIndex) const
+const uint32_t CVKPipelineGraphics::GetInputAttachmentName(int indexInputAttachment) const
 {
-	return m_pPipeline->GetInputAttachmentName(inputAttachmentIndex);
+	return m_pPipeline->GetInputAttachmentName(indexInputAttachment);
 }
 
 bool CVKPipelineGraphics::Create(const CGfxRenderPass* pRenderPass, const CGfxShader* pVertexShader, const CGfxShader* pFragmentShader, const PipelineState& state, int indexSubpass, int vertexBinding, int instanceBinding)

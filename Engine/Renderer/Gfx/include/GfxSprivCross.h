@@ -15,7 +15,7 @@ typedef struct DescriptorSetBinding {
 typedef struct InputAttachmentBinding {
 	uint32_t set;
 	uint32_t binding;
-	uint32_t inputAttachmentIndex;
+	uint32_t indexInputAttachment;
 } InputAttachmentBinding;
 
 class CALL_API CGfxSprivCross

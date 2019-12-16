@@ -36,9 +36,9 @@ const CGfxDescriptorLayoutPtr CVKPipeline::GetDescriptorLayout(int indexDescript
 	}
 }
 
-const uint32_t CVKPipeline::GetInputAttachmentName(uint32_t inputAttachmentIndex) const
+const uint32_t CVKPipeline::GetInputAttachmentName(int indexInputAttachment) const
 {
-	const auto& itInputAttachmentName = m_inputAttachmentNames.find(inputAttachmentIndex);
+	const auto& itInputAttachmentName = m_inputAttachmentNames.find(indexInputAttachment);
 
 	if (itInputAttachmentName != m_inputAttachmentNames.end()) {
 		return itInputAttachmentName->second;
@@ -90,7 +90,7 @@ bool CVKPipeline::CreateLayouts(void)
 
 			for (const auto& itInputAttachment : m_pShaders[indexShader]->GetSprivCross().GetInputAttachmentBindings()) {
 				uint32_t name = HashValue(itInputAttachment.first.c_str());
-				m_inputAttachmentNames[itInputAttachment.second.inputAttachmentIndex] = name;
+				m_inputAttachmentNames[itInputAttachment.second.indexInputAttachment] = name;
 				m_ptrDescriptorLayouts[itInputAttachment.second.set]->SetInputAttachmentBinding(name, itInputAttachment.second.binding);
 			}
 		}
