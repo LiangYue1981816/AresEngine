@@ -64,7 +64,7 @@ void CPassShadow::SetCamera(CCamera* pCamera)
 	m_pCamera = pCamera;
 }
 
-void CPassShadow::SetSplitFactors(float f1, float f2, float f3, float f4)
+void CPassShadow::SetParamSplitFactors(float f1, float f2, float f3, float f4)
 {
 	m_splitFactors[0] = 0.0f;
 	m_splitFactors[1] = f1;

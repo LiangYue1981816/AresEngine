@@ -21,8 +21,9 @@ private:
 
 public:
 	void SetCamera(CCamera* pCamera);
-	void SetSplitFactors(float f1, float f2, float f3, float f4);
 	void SetOutputTexture(CGfxRenderTexturePtr ptrDepthTexture);
+
+	void SetParamSplitFactors(float f1, float f2, float f3, float f4);
 
 private:
 	void Render(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer);

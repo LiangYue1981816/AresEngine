@@ -73,7 +73,7 @@ void CPassBlendAdd::SetOutputTexture(CGfxRenderTexturePtr ptrColorTexture)
 	}
 }
 
-void CPassBlendAdd::SetFactor(float factor)
+void CPassBlendAdd::SetParamFactor(float factor)
 {
 	m_factor = factor;
 }
