@@ -29,11 +29,6 @@ const uint32_t CVKPipelineGraphics::GetInputAttachmentName(uint32_t inputAttachm
 	return m_pPipeline->GetInputAttachmentName(inputAttachmentIndex);
 }
 
-const bool CVKPipelineGraphics::IsCompatibleVertexFormat(uint32_t binding, uint32_t format) const
-{
-	return m_pPipeline->IsCompatibleVertexFormat(binding, format);
-}
-
 bool CVKPipelineGraphics::Create(const CGfxRenderPass* pRenderPass, const CGfxShader* pVertexShader, const CGfxShader* pFragmentShader, const PipelineState& state, int indexSubpass, int vertexBinding, int instanceBinding)
 {
 	m_state = state;
@@ -48,6 +43,11 @@ void CVKPipelineGraphics::Destroy(void)
 bool CVKPipelineGraphics::IsTransparency(void) const
 {
 	return m_state.bEnableBlend;
+}
+
+bool CVKPipelineGraphics::IsCompatibleVertexFormat(uint32_t binding, uint32_t format) const
+{
+	return m_pPipeline->IsCompatibleVertexFormat(binding, format);
 }
 
 void CVKPipelineGraphics::Bind(VkCommandBuffer vkCommandBuffer)
