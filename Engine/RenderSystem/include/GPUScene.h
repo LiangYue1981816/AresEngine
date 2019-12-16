@@ -5,6 +5,10 @@
 class CALL_API CGPUScene
 {
 	friend class CRenderSystem;
+	friend class CPassPreZ;
+	friend class CPassShadow;
+	friend class CPassDefault;
+	friend class CPassForwardLighting;
 
 
 public:
@@ -45,17 +49,18 @@ private:
 	virtual ~CGPUScene(void);
 
 
+private:
+	const CGfxStorageBufferPtr GetInstanceBuffer(void) const;
+	const CGfxStorageBufferPtr GetTransferBuffer(void) const;
+
 public:
 	int AddInstance(void);
 	void RemoveInstance(int index);
 	void ModifyInstanceData(int index, const InstanceData &data, int indexThread);
 
-public:
 	int GetDefaultInstanceIndex(void) const;
 	int GetPostProcessInstnaceIndex(void) const;
 
-public:
-	const CGfxStorageBufferPtr GetInstanceBuffer(void) const;
 	const InstanceData& GetInstanceData(int index) const;
 
 private:

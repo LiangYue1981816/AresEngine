@@ -18,6 +18,16 @@ CGPUScene::~CGPUScene(void)
 
 }
 
+const CGfxStorageBufferPtr CGPUScene::GetInstanceBuffer(void) const
+{
+	return m_ptrInstanceBuffer;
+}
+
+const CGfxStorageBufferPtr CGPUScene::GetTransferBuffer(void) const
+{
+	return m_ptrTransferBuffer;
+}
+
 int CGPUScene::AddInstance(void)
 {
 	int index;
@@ -66,11 +76,6 @@ int CGPUScene::GetDefaultInstanceIndex(void) const
 int CGPUScene::GetPostProcessInstnaceIndex(void) const
 {
 	return m_indexPostProcessInstnace;
-}
-
-const CGfxStorageBufferPtr CGPUScene::GetInstanceBuffer(void) const
-{
-	return m_ptrInstanceBuffer;
 }
 
 const CGPUScene::InstanceData& CGPUScene::GetInstanceData(int index) const
