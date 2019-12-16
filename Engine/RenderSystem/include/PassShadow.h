@@ -23,6 +23,7 @@ public:
 	void SetCamera(CCamera* pCamera);
 	void SetOutputTexture(CGfxRenderTexturePtr ptrDepthTexture);
 
+	void SetParamFactor(float factor);
 	void SetParamSplitFactors(float f1, float f2, float f3, float f4);
 
 private:
@@ -30,6 +31,7 @@ private:
 
 
 private:
+	float m_factor;
 	float m_splitFactors[5];
 
 private:

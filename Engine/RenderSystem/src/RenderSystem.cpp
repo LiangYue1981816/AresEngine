@@ -66,6 +66,7 @@ CRenderSystem::CRenderSystem(GfxApi api, void* hInstance, void* hWnd, void* hDC,
 	m_ptrCommandBuffer[1] = GfxRenderer()->NewCommandBuffer(0, true);
 	m_ptrCommandBuffer[2] = GfxRenderer()->NewCommandBuffer(0, true);
 
+	Settings()->SetValue("RenderSystem.Shadow.Factor", 1.0f);
 	Settings()->SetValue("RenderSystem.SSAO.SampleCount", 8.0f);
 	Settings()->SetValue("RenderSystem.SSAO.SampleMinRadius", 0.05f);
 	Settings()->SetValue("RenderSystem.SSAO.SampleMaxRadius", 1.00f);
@@ -196,71 +197,6 @@ void CRenderSystem::DestroyPasses(void)
 	delete m_pPassBloomBlendAdd;
 	delete m_pPassColorGrading;
 	delete m_pPassFinal;
-}
-
-CPassPreZ* CRenderSystem::GetPassPreZ(void) const
-{
-	return m_pPassPreZ;
-}
-
-CPassShadow* CRenderSystem::GetPassShadow(void) const
-{
-	return m_pPassShadow;
-}
-
-CPassDefault* CRenderSystem::GetPassDefault(void) const
-{
-	return m_pPassDefault;
-}
-
-CPassForwardLighting* CRenderSystem::GetPassForwardLighting(void) const
-{
-	return m_pPassForwardLighting;
-}
-
-CPassSSAO* CRenderSystem::GetPassSSAO(void) const
-{
-	return m_pPassSSAO;
-}
-
-CPassBlurHorizontal* CRenderSystem::GetPassSSAOBlurHorizontal(void) const
-{
-	return m_pPassSSAOBlurHorizontal;
-}
-
-CPassBlurVertical* CRenderSystem::GetPassSSAOBlurVertical(void) const
-{
-	return m_pPassSSAOBlurVertical;
-}
-
-CPassLuminanceThreshold* CRenderSystem::GetPassBloomLuminanceThreshold(void) const
-{
-	return m_pPassBloomLuminanceThreshold;
-}
-
-CPassBlurHorizontal* CRenderSystem::GetPassBloomBlurHorizontal(void) const
-{
-	return m_pPassBloomBlurHorizontal;
-}
-
-CPassBlurVertical* CRenderSystem::GetPassBloomBlurVertical(void) const
-{
-	return m_pPassBloomBlurVertical;
-}
-
-CPassBlendAdd* CRenderSystem::GetPassBloomBlendAdd(void) const
-{
-	return m_pPassBloomBlendAdd;
-}
-
-CPassColorGrading* CRenderSystem::GetPassColorGrading(void) const
-{
-	return m_pPassColorGrading;
-}
-
-CPassFinal* CRenderSystem::GetPassFinal(void) const
-{
-	return m_pPassFinal;
 }
 
 void CRenderSystem::SetTime(float t, float dt)
@@ -447,6 +383,7 @@ void CRenderSystem::RenderForwardLighting(CTaskGraph& taskGraph, CCamera* pCamer
 
 			uint32_t rtShadow = RENDER_TEXTURE_SHADOW;
 			{
+				m_pPassShadow->SetParamFactor(Settings()->GetValue("RenderSystem.Shadow.Factor"));
 				m_pPassShadow->SetCamera(pCamera);
 				m_pPassShadow->SetOutputTexture(GetRenderTexture(rtShadow));
 				m_pPassShadow->Render(taskGraph, ptrCommandBuffer);

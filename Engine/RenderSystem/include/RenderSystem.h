@@ -152,21 +152,6 @@ private:
 	void DestroyPasses(void);
 
 public:
-	CPassPreZ* GetPassPreZ(void) const;
-	CPassShadow* GetPassShadow(void) const;
-	CPassDefault* GetPassDefault(void) const;
-	CPassForwardLighting* GetPassForwardLighting(void) const;
-	CPassSSAO* GetPassSSAO(void) const;
-	CPassBlurHorizontal* GetPassSSAOBlurHorizontal(void) const;
-	CPassBlurVertical* GetPassSSAOBlurVertical(void) const;
-	CPassLuminanceThreshold* GetPassBloomLuminanceThreshold(void) const;
-	CPassBlurHorizontal* GetPassBloomBlurHorizontal(void) const;
-	CPassBlurVertical* GetPassBloomBlurVertical(void) const;
-	CPassBlendAdd* GetPassBloomBlendAdd(void) const;
-	CPassColorGrading* GetPassColorGrading(void) const;
-	CPassFinal* GetPassFinal(void) const;
-
-public:
 	void SetTime(float t, float dt);
 
 	void SetEnvLightFactor(float factor);

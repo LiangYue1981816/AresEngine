@@ -27,6 +27,7 @@ CPassShadow::CPassShadow(CRenderSystem* pRenderSystem)
 	: CPassBase(pRenderSystem)
 	, m_pShadowCamera{ nullptr }
 	, m_pShadowRenderQueue{ nullptr }
+	, m_factor(1.0f)
 	, m_splitFactors{ 0.0f, exp(-3.0f), exp(-2.0f), exp(-1.0f), exp(-0.0f) }
 {
 	for (int indexLevel = 0; indexLevel < 4; indexLevel++) {
@@ -64,6 +65,11 @@ void CPassShadow::SetCamera(CCamera* pCamera)
 	m_pCamera = pCamera;
 }
 
+void CPassShadow::SetParamFactor(float factor)
+{
+	m_factor = factor;
+}
+
 void CPassShadow::SetParamSplitFactors(float f1, float f2, float f3, float f4)
 {
 	m_splitFactors[0] = 0.0f;
@@ -98,7 +104,7 @@ void CPassShadow::Render(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrMainComm
 			glm::vec4 vertexBegin = mainCamera.getFrustumVertexInWorldSpace(indexFrustumLine);
 			glm::vec4 vertexEnd = mainCamera.getFrustumVertexInWorldSpace(indexFrustumLine + 4);
 
-			vertex = vertexBegin + (vertexEnd - vertexBegin) * m_splitFactors[indexLevel];
+			vertex = vertexBegin + (vertexEnd - vertexBegin) * m_factor * m_splitFactors[indexLevel];
 			if (minVertex.x > vertex.x) minVertex.x = vertex.x;
 			if (minVertex.y > vertex.y) minVertex.y = vertex.y;
 			if (minVertex.z > vertex.z) minVertex.z = vertex.z;
@@ -106,7 +112,7 @@ void CPassShadow::Render(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrMainComm
 			if (maxVertex.y < vertex.y) maxVertex.y = vertex.y;
 			if (maxVertex.z < vertex.z) maxVertex.z = vertex.z;
 
-			vertex = vertexBegin + (vertexEnd - vertexBegin) * m_splitFactors[indexLevel + 1];
+			vertex = vertexBegin + (vertexEnd - vertexBegin) * m_factor * m_splitFactors[indexLevel + 1];
 			if (minVertex.x > vertex.x) minVertex.x = vertex.x;
 			if (minVertex.y > vertex.y) minVertex.y = vertex.y;
 			if (minVertex.z > vertex.z) minVertex.z = vertex.z;
@@ -127,7 +133,7 @@ void CPassShadow::Render(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrMainComm
 		m_pShadowCameraUniform[indexLevel]->SetLookat(sphereFrustum.center.x, sphereFrustum.center.y, sphereFrustum.center.z, sphereFrustum.center.x + mainLightDirection.x, sphereFrustum.center.y + mainLightDirection.y, sphereFrustum.center.z + mainLightDirection.z, 0.0f, 1.0f, 0.0f);
 		m_pShadowCameraUniform[indexLevel]->Apply();
 
-		m_pRenderSystem->GetEngineUniform()->SetMainShadowLevelFactor(m_splitFactors[1], m_splitFactors[2], m_splitFactors[3], m_splitFactors[4]);
+		m_pRenderSystem->GetEngineUniform()->SetMainShadowLevelFactor(m_factor * m_splitFactors[1], m_factor * m_splitFactors[2], m_factor * m_splitFactors[3], m_factor * m_splitFactors[4]);
 		m_pRenderSystem->GetEngineUniform()->SetMainShadowOrtho(indexLevel, -sphereFrustum.radius, sphereFrustum.radius, -sphereFrustum.radius, sphereFrustum.radius, zNear, zFar);
 		m_pRenderSystem->GetEngineUniform()->SetMainShadowLookat(indexLevel, sphereFrustum.center.x, sphereFrustum.center.y, sphereFrustum.center.z, sphereFrustum.center.x + mainLightDirection.x, sphereFrustum.center.y + mainLightDirection.y, sphereFrustum.center.z + mainLightDirection.z, 0.0f, 1.0f, 0.0f);
 	}
