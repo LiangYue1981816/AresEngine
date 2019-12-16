@@ -386,7 +386,7 @@ void CVKDescriptorSet::Update(void)
 				bufferInfos.emplace_back(bufferInfo);
 
 				dstBinding = m_ptrDescriptorLayout->GetStorageBlockBinding(itBuffer.first);
-				descriptorType = VK_DESCRIPTOR_TYPE_STORAGE_BUFFER;
+				descriptorType = VK_DESCRIPTOR_TYPE_STORAGE_BUFFER_DYNAMIC;
 			}
 
 			VkWriteDescriptorSet write = {};
