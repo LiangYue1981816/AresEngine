@@ -14,10 +14,7 @@ private:
 
 public:
 	const CGfxDescriptorLayoutPtr GetDescriptorLayout(int indexDescriptorSet) const;
-
-public:
 	const uint32_t GetInputAttachmentName(uint32_t inputAttachmentIndex) const;
-	const bool IsCompatibleVertexFormat(uint32_t binding, uint32_t format) const;
 
 public:
 	bool Create(const CGfxRenderPass* pRenderPass, const CGfxShader* pVertexShader, const CGfxShader* pFragmentShader, const PipelineState& state, int indexSubpass, int vertexBinding, int instanceBinding);
@@ -25,6 +22,7 @@ public:
 
 public:
 	bool IsTransparency(void) const;
+	bool IsCompatibleVertexFormat(uint32_t binding, uint32_t format) const;
 
 public:
 	void Bind(void) const;
