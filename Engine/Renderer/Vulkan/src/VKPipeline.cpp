@@ -40,11 +40,11 @@ bool CVKPipeline::CreateLayouts(void)
 {
 	eastl::unordered_map<uint32_t, VkPushConstantRange> pushConstantRanges;
 	uint32_t pushConstantOffset = 0;
+	uint32_t pushConstantSize = 0;
 
 	for (int indexShader = 0; indexShader < compute_shader - vertex_shader + 1; indexShader++) {
 		if (m_pShaders[indexShader] && m_pShaders[indexShader]->IsValid()) {
-			uint32_t stageFlags = vkGetShaderStageFlagBits((shader_kind)indexShader);
-			uint32_t pushConstantSize = 0;
+			pushConstantSize = 0;
 
 			for (const auto& itPushConstant : m_pShaders[indexShader]->GetSprivCross().GetPushConstantRanges()) {
 				uint32_t name = HashValue(itPushConstant.first.c_str());
@@ -55,22 +55,26 @@ bool CVKPipeline::CreateLayouts(void)
 			}
 
 			if (pushConstantSize != 0) {
+				uint32_t stageFlags = vkGetShaderStageFlagBits((shader_kind)indexShader);
 				pushConstantRanges[stageFlags].stageFlags = stageFlags;
 				pushConstantRanges[stageFlags].offset = pushConstantOffset;
 				pushConstantRanges[stageFlags].size = pushConstantSize;
 				pushConstantOffset += pushConstantSize;
 			}
 
-			for (const auto& itUniformBlock : m_pShaders[indexShader]->GetSprivCross().GetUniformBlockBindings()) {
-				m_ptrDescriptorLayouts[itUniformBlock.second.set]->SetUniformBlockBinding(HashValue(itUniformBlock.first.c_str()), itUniformBlock.second.binding);
+			for (const auto& itStorageBlock : m_pShaders[indexShader]->GetSprivCross().GetStorageBlockBindings()) {
+				uint32_t name = HashValue(itStorageBlock.first.c_str());
+				m_ptrDescriptorLayouts[itStorageBlock.second.set]->SetStorageBlockBinding(name, itStorageBlock.second.binding);
 			}
 
-			for (const auto& itStorageBlock : m_pShaders[indexShader]->GetSprivCross().GetStorageBlockBindings()) {
-				m_ptrDescriptorLayouts[itStorageBlock.second.set]->SetStorageBlockBinding(HashValue(itStorageBlock.first.c_str()), itStorageBlock.second.binding);
+			for (const auto& itUniformBlock : m_pShaders[indexShader]->GetSprivCross().GetUniformBlockBindings()) {
+				uint32_t name = HashValue(itUniformBlock.first.c_str());
+				m_ptrDescriptorLayouts[itUniformBlock.second.set]->SetUniformBlockBinding(name, itUniformBlock.second.binding);
 			}
 
 			for (const auto& itSampledImage : m_pShaders[indexShader]->GetSprivCross().GetSampledImageBindings()) {
-				m_ptrDescriptorLayouts[itSampledImage.second.set]->SetSampledImageBinding(HashValue(itSampledImage.first.c_str()), itSampledImage.second.binding);
+				uint32_t name = HashValue(itSampledImage.first.c_str());
+				m_ptrDescriptorLayouts[itSampledImage.second.set]->SetSampledImageBinding(name, itSampledImage.second.binding);
 			}
 
 			for (const auto& itInputAttachment : m_pShaders[indexShader]->GetSprivCross().GetInputAttachmentBindings()) {
