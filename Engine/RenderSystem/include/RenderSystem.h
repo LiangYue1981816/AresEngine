@@ -133,8 +133,8 @@ private:
 
 
 private:
-	CGfxUniformEngine* GetEngineUniform(void) const;
 	CGPUScene* GetGPUScene(void) const;
+	CUniformEngine* GetEngineUniform(void) const;
 
 private:
 	void CreatePasses(void);
@@ -196,8 +196,8 @@ private:
 
 private:
 	CGfxRenderer* m_pRenderer;
-	CGfxUniformEngine* m_pEngineUniform;
 	CGPUScene* m_pGPUScene;
+	CUniformEngine* m_pEngineUniform;
 
 private:
 	CPassPreZ* m_pPassPreZ;

@@ -28,8 +28,8 @@ static const ATTRIBUTE instanceAttributes[INSTANCE_ATTRIBUTE_COUNT] = {
 
 CRenderSystem::CRenderSystem(GfxApi api, void* hInstance, void* hWnd, void* hDC, int width, int height, GfxPixelFormat format)
 	: m_pRenderer(nullptr)
-	, m_pEngineUniform(nullptr)
 	, m_pGPUScene(nullptr)
+	, m_pEngineUniform(nullptr)
 
 	, m_pPassPreZ(nullptr)
 	, m_pPassShadow(nullptr)
@@ -51,14 +51,14 @@ CRenderSystem::CRenderSystem(GfxApi api, void* hInstance, void* hWnd, void* hDC,
 	switch ((int)api) {
 	case GFX_API_GLES3:
 		m_pRenderer = new CGLES3Renderer(hInstance, hWnd, hDC, width, height, format);
-		m_pEngineUniform = new CGfxUniformEngine;
 		m_pGPUScene = new CGPUScene;
+		m_pEngineUniform = new CUniformEngine;
 		break;
 
 	case GFX_API_VULKAN:
 		m_pRenderer = new CVKRenderer(hInstance, hWnd, hDC, width, height, format);
-		m_pEngineUniform = new CGfxUniformEngine;
 		m_pGPUScene = new CGPUScene;
+		m_pEngineUniform = new CUniformEngine;
 		break;
 	}
 
@@ -81,19 +81,19 @@ CRenderSystem::~CRenderSystem(void)
 	m_ptrCommandBuffer[1].Release();
 	m_ptrCommandBuffer[2].Release();
 
-	delete m_pGPUScene;
 	delete m_pEngineUniform;
+	delete m_pGPUScene;
 	delete m_pRenderer;
-}
-
-CGfxUniformEngine* CRenderSystem::GetEngineUniform(void) const
-{
-	return m_pEngineUniform;
 }
 
 CGPUScene* CRenderSystem::GetGPUScene(void) const
 {
 	return m_pGPUScene;
+}
+
+CUniformEngine* CRenderSystem::GetEngineUniform(void) const
+{
+	return m_pEngineUniform;
 }
 
 void CRenderSystem::CreatePasses(void)
