@@ -16,8 +16,6 @@
 #include "VKMemoryAllocator.h"
 #include "VKMemoryManager.h"
 
-#include "VKSemaphore.h"
-
 #include "VKSwapChain.h"
 #include "VKRenderPass.h"
 #include "VKRenderPassManager.h"
@@ -72,6 +70,7 @@
 #include "VKDescriptorLayout.h"
 #include "VKDescriptorLayoutManager.h"
 
+#include "VKSemaphore.h"
 #include "VKCommandBuffer.h"
 #include "VKCommandBufferManager.h"
 

@@ -14,8 +14,6 @@
 
 class CGLES3Renderer;
 
-class CGLES3Semaphore;
-
 class CGLES3SwapChain;
 class CGLES3RenderPass;
 class CGLES3RenderPassManager;
@@ -68,5 +66,6 @@ class CGLES3DescriptorSetManager;
 class CGLES3DescriptorLayout;
 class CGLES3DescriptorLayoutManager;
 
+class CGLES3Semaphore;
 class CGLES3CommandBuffer;
 class CGLES3CommandBufferManager;

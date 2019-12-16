@@ -6,8 +6,6 @@
 #include "GLES3Extension.h"
 #include "GLES3Definition.h"
 
-#include "GLES3Semaphore.h"
-
 #include "GLES3SwapChain.h"
 #include "GLES3RenderPass.h"
 #include "GLES3RenderPassManager.h"
@@ -58,6 +56,7 @@
 #include "GLES3DescriptorLayout.h"
 #include "GLES3DescriptorLayoutManager.h"
 
+#include "GLES3Semaphore.h"
 #include "GLES3CommandBuffer.h"
 #include "GLES3CommandBufferManager.h"
 

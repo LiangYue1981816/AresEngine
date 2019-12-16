@@ -44,8 +44,6 @@
 #include "GfxUniformBuffer.h"
 #include "GfxStorageBuffer.h"
 
-#include "GfxSemaphore.h"
-
 #include "GfxMesh.h"
 #include "GfxMeshDraw.h"
 
@@ -55,6 +53,7 @@
 #include "GfxDescriptorSet.h"
 #include "GfxDescriptorLayout.h"
 
+#include "GfxSemaphore.h"
 #include "GfxCommandBuffer.h"
 
 

@@ -39,8 +39,6 @@ class CALL_API CGfxUniformCamera;
 class CALL_API CGfxUniformBuffer;
 class CALL_API CGfxStorageBuffer;
 
-class CALL_API CGfxSemaphore;
-
 class CALL_API CGfxMesh;
 class CALL_API CGfxMeshDraw;
 
@@ -50,6 +48,7 @@ class CALL_API CGfxMaterialPass;
 class CALL_API CGfxDescriptorSet;
 class CALL_API CGfxDescriptorLayout;
 
+class CALL_API CGfxSemaphore;
 class CALL_API CGfxCommandBuffer;
 
 template<class T>

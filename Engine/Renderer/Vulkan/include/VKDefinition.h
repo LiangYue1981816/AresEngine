@@ -59,8 +59,6 @@ class CVKMemory;
 class CVKMemoryAllocator;
 class CVKMemoryManager;
 
-class CVKSemaphore;
-
 class CVKSwapChain;
 class CVKRenderPass;
 class CVKRenderPassManager;
@@ -117,5 +115,6 @@ class CVKDescriptorSetManager;
 class CVKDescriptorLayout;
 class CVKDescriptorLayoutManager;
 
+class CVKSemaphore;
 class CVKCommandBuffer;
 class CVKCommandBufferManager;
