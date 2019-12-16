@@ -36,15 +36,27 @@ const CGfxDescriptorLayoutPtr CVKPipeline::GetDescriptorLayout(int indexDescript
 	}
 }
 
+const uint32_t CVKPipeline::GetInputAttachmentName(int inputAttachmentIndex) const
+{
+	const auto& itInputAttachmentName = m_inputAttachmentNames.find(inputAttachmentIndex);
+
+	if (itInputAttachmentName != m_inputAttachmentNames.end()) {
+		return itInputAttachmentName->second;
+	}
+	else {
+		return INVALID_HASHNAME;
+	}
+}
+
 bool CVKPipeline::CreateLayouts(void)
 {
 	eastl::unordered_map<uint32_t, VkPushConstantRange> pushConstantRanges;
 	uint32_t pushConstantOffset = 0;
-	uint32_t pushConstantSize = 0;
 
 	for (int indexShader = 0; indexShader < compute_shader - vertex_shader + 1; indexShader++) {
 		if (m_pShaders[indexShader] && m_pShaders[indexShader]->IsValid()) {
-			pushConstantSize = 0;
+			uint32_t stageFlags = vkGetShaderStageFlagBits((shader_kind)indexShader);
+			uint32_t pushConstantSize = 0;
 
 			for (const auto& itPushConstant : m_pShaders[indexShader]->GetSprivCross().GetPushConstantRanges()) {
 				uint32_t name = HashValue(itPushConstant.first.c_str());
@@ -55,7 +67,6 @@ bool CVKPipeline::CreateLayouts(void)
 			}
 
 			if (pushConstantSize != 0) {
-				uint32_t stageFlags = vkGetShaderStageFlagBits((shader_kind)indexShader);
 				pushConstantRanges[stageFlags].stageFlags = stageFlags;
 				pushConstantRanges[stageFlags].offset = pushConstantOffset;
 				pushConstantRanges[stageFlags].size = pushConstantSize;
@@ -429,18 +440,6 @@ void CVKPipeline::Destroy(void)
 	m_ptrDescriptorLayouts[DESCRIPTOR_SET_MATPASS]->Destroy(true);
 	m_ptrDescriptorLayouts[DESCRIPTOR_SET_MESHDRAW]->Destroy(true);
 	m_ptrDescriptorLayouts[DESCRIPTOR_SET_INPUTATTACHMENT]->Destroy(true);
-}
-
-uint32_t CVKPipeline::GetInputAttachmentName(uint32_t inputAttachmentIndex) const
-{
-	const auto& itInputAttachmentName = m_inputAttachmentNames.find(inputAttachmentIndex);
-
-	if (itInputAttachmentName != m_inputAttachmentNames.end()) {
-		return itInputAttachmentName->second;
-	}
-	else {
-		return INVALID_HASHNAME;
-	}
 }
 
 bool CVKPipeline::IsCompatibleVertexFormat(uint32_t binding, uint32_t format) const
