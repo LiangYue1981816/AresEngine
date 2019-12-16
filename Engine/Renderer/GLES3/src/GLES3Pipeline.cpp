@@ -70,13 +70,14 @@ bool CGLES3Pipeline::CreateLayouts(void)
 				SetUniformLocation(itPushConstant.first.c_str());
 			}
 
+			for (const auto& itStorageBlock : m_pShaders[indexShader]->GetSprivCross().GetStorageBlockBindings()) {
+				SetStorageBlockBinding(itStorageBlock.first.c_str(), itStorageBlock.second.binding);
+				m_ptrDescriptorLayouts[itStorageBlock.second.set]->SetStorageBlockBinding(HashValue(itStorageBlock.first.c_str()), itStorageBlock.second.binding);
+			}
+
 			for (const auto& itUniformBlock : m_pShaders[indexShader]->GetSprivCross().GetUniformBlockBindings()) {
 				SetUniformBlockBinding(itUniformBlock.first.c_str(), itUniformBlock.second.binding);
 				m_ptrDescriptorLayouts[itUniformBlock.second.set]->SetUniformBlockBinding(HashValue(itUniformBlock.first.c_str()), itUniformBlock.second.binding);
-			}
-
-			for (const auto& itStorageBlock : m_pShaders[indexShader]->GetSprivCross().GetStorageBlockBindings()) {
-				m_ptrDescriptorLayouts[itStorageBlock.second.set]->SetStorageBlockBinding(HashValue(itStorageBlock.first.c_str()), itStorageBlock.second.binding);
 			}
 
 			for (const auto& itSampledImage : m_pShaders[indexShader]->GetSprivCross().GetSampledImageBindings()) {
@@ -180,8 +181,9 @@ void CGLES3Pipeline::Destroy(void)
 	m_pShaders[fragment_shader] = nullptr;
 	m_pShaders[compute_shader] = nullptr;
 
-	m_uniformLocations.clear();
+	m_storageBlockBindings.clear();
 	m_uniformBlockBindings.clear();
+	m_uniformLocations.clear();
 	m_sampledImageLocations.clear();
 	m_sampledImageTextureUnits.clear();
 	m_inputAttachmentNames.clear();
@@ -193,16 +195,29 @@ void CGLES3Pipeline::Destroy(void)
 	m_ptrDescriptorLayouts[DESCRIPTOR_SET_INPUTATTACHMENT]->Destroy(true);
 }
 
+void CGLES3Pipeline::SetStorageBlockBinding(const char* szName, uint32_t binding)
+{
+	uint32_t name = HashValue(szName);
+
+	if (m_storageBlockBindings.find(name) == m_storageBlockBindings.end()) {
+		uint32_t indexBinding = glGetProgramResourceIndex(m_program, GL_SHADER_STORAGE_BLOCK, szName);
+
+		if (indexBinding != GL_INVALID_INDEX) {
+			m_storageBlockBindings[name] = binding;
+		}
+	}
+}
+
 void CGLES3Pipeline::SetUniformBlockBinding(const char* szName, uint32_t binding)
 {
 	uint32_t name = HashValue(szName);
 
 	if (m_uniformBlockBindings.find(name) == m_uniformBlockBindings.end()) {
-		uint32_t indexBinding = glGetUniformBlockIndex(m_program, szName);
+		uint32_t indexBinding = glGetProgramResourceIndex(m_program, GL_UNIFORM_BLOCK, szName);
 
 		if (indexBinding != GL_INVALID_INDEX) {
 			m_uniformBlockBindings[name] = binding;
-			glUniformBlockBinding(m_program, indexBinding, binding);
+//			glUniformBlockBinding(m_program, indexBinding, binding);
 		}
 
 		CHECK_GL_ERROR_ASSERT();
@@ -303,6 +318,12 @@ bool CGLES3Pipeline::BindDescriptorSet(const CGfxDescriptorSetPtr ptrDescriptorS
 
 	if (ptrDescriptorLayout->IsCompatible(m_ptrDescriptorLayouts[ptrDescriptorLayout->GetSetIndex()]) == false) {
 		return false;
+	}
+
+	for (const auto& itStorageBlock : m_storageBlockBindings) {
+		if (const DescriptorBufferInfo* pDescriptorBufferInfo = ptrDescriptorSet->GetDescriptorBufferInfo(itStorageBlock.first)) {
+			((CGLES3StorageBuffer*)pDescriptorBufferInfo->ptrStorageBuffer.GetPointer())->Bind(itStorageBlock.second, pDescriptorBufferInfo->offset, pDescriptorBufferInfo->range);
+		}
 	}
 
 	for (const auto& itUniformBlock : m_uniformBlockBindings) {

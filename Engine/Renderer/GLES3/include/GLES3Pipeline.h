@@ -26,6 +26,7 @@ private:
 	void Destroy(void);
 
 private:
+	void SetStorageBlockBinding(const char* szName, uint32_t binding);
 	void SetUniformBlockBinding(const char* szName, uint32_t binding);
 	void SetUniformLocation(const char* szName);
 	void SetSampledImageLocation(const char* szName);
@@ -70,8 +71,9 @@ private:
 	CGfxDescriptorLayoutPtr m_ptrDescriptorLayouts[DESCRIPTOR_SET_COUNT];
 
 private:
-	eastl::unordered_map<uint32_t, uint32_t> m_uniformLocations;         // [name, location]
+	eastl::unordered_map<uint32_t, uint32_t> m_storageBlockBindings;     // [name, binding]
 	eastl::unordered_map<uint32_t, uint32_t> m_uniformBlockBindings;     // [name, binding]
+	eastl::unordered_map<uint32_t, uint32_t> m_uniformLocations;         // [name, location]
 	eastl::unordered_map<uint32_t, uint32_t> m_sampledImageLocations;    // [name, location]
 	eastl::unordered_map<uint32_t, uint32_t> m_sampledImageTextureUnits; // [name, texture unit]
 	eastl::unordered_map<uint32_t, uint32_t> m_inputAttachmentNames;     // [input attachment index, name]
