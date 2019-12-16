@@ -26,6 +26,18 @@ const CGfxDescriptorLayoutPtr CGLES3Pipeline::GetDescriptorLayout(int indexDescr
 	}
 }
 
+const uint32_t CGLES3Pipeline::GetInputAttachmentName(int indexInputAttachment) const
+{
+	const auto& itInputAttachmentName = m_inputAttachmentNames.find(indexInputAttachment);
+
+	if (itInputAttachmentName != m_inputAttachmentNames.end()) {
+		return itInputAttachmentName->second;
+	}
+	else {
+		return INVALID_HASHNAME;
+	}
+}
+
 bool CGLES3Pipeline::CreateProgram(const CGLES3Shader* pVertexShader, const CGLES3Shader* pFragmentShader, const CGLES3Shader* pComputeShader)
 {
 	m_pShaders[vertex_shader] = (CGLES3Shader*)pVertexShader;
@@ -254,7 +266,7 @@ void CGLES3Pipeline::SetSampledImageLocation(const char* szName)
 	}
 }
 
-void CGLES3Pipeline::SetInputAttachmentLocation(const char* szName, uint32_t inputAttachmentIndex)
+void CGLES3Pipeline::SetInputAttachmentLocation(const char* szName, int indexInputAttachment)
 {
 	uint32_t name = HashValue(szName);
 
@@ -264,22 +276,10 @@ void CGLES3Pipeline::SetInputAttachmentLocation(const char* szName, uint32_t inp
 		if (location != GL_INVALID_INDEX) {
 			m_sampledImageTextureUnits[name] = m_sampledImageLocations.size();
 			m_sampledImageLocations[name] = location;
-			m_inputAttachmentNames[inputAttachmentIndex] = name;
+			m_inputAttachmentNames[indexInputAttachment] = name;
 		}
 
 		CHECK_GL_ERROR_ASSERT();
-	}
-}
-
-uint32_t CGLES3Pipeline::GetInputAttachmentName(uint32_t inputAttachmentIndex) const
-{
-	const auto& itInputAttachmentName = m_inputAttachmentNames.find(inputAttachmentIndex);
-
-	if (itInputAttachmentName != m_inputAttachmentNames.end()) {
-		return itInputAttachmentName->second;
-	}
-	else {
-		return INVALID_HASHNAME;
 	}
 }
 
