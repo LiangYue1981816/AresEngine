@@ -28,7 +28,7 @@ layout (location = 2) out mediump vec3 outNormal;
 
 void main()
 {
-	highp mat4 worldMatrix = sceneData.instanceData[inInstanceIndex.x].transformMatrix;
+	highp mat4 worldMatrix = sceneData.instanceData[inInstanceIndex].transformMatrix;
 	highp vec3 worldPosition = (worldMatrix * vec4(inPosition.xyz, 1.0)).xyz;
 
 #ifdef NORMAL_MAP
