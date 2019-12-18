@@ -6,7 +6,6 @@
 				<Define name="VERTEX_ATTRIBUTE_NORMAL" />
 				<Define name="VERTEX_ATTRIBUTE_BINORMAL" />
 				<Define name="VERTEX_ATTRIBUTE_TEXCOORD0" />
-				<Define name="INSTANCE_ATTRIBUTE_TRANSFORM" />
 			</Vertex>
 			<Fragment file_name="Default.glsl">
 			</Fragment>
