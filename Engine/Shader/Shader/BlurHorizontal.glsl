@@ -8,7 +8,6 @@ precision mediump float;
 
 // VERTEX_ATTRIBUTE_POSITION;
 // VERTEX_ATTRIBUTE_TEXCOORD0;
-// INSTANCE_ATTRIBUTE_TRANSFORM;
 
 // Output
 layout (location = 0) out mediump vec2 outTexcoord;
@@ -21,8 +20,7 @@ void main()
 #else
 	highp mat4 projectionViewMatrix = mat4(1.0, 0.0, 0.0, 0.0, 0.0,  1.0, 0.0, 0.0, 0.0, 0.0,-0.5, 0.0, 0.0, 0.0, 1.0, 1.0);
 #endif
-	highp mat4 worldMatrix = mat4(inInstanceTransformMatrixCol0, inInstanceTransformMatrixCol1, inInstanceTransformMatrixCol2, inInstanceTransformMatrixCol3);
-	gl_Position = projectionViewMatrix * worldMatrix * vec4(inPosition.xyz, 1.0);
+	gl_Position = projectionViewMatrix * vec4(inPosition.xyz, 1.0);
 	outTexcoord = inTexcoord0;
 }
 #endif
