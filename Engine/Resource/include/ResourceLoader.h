@@ -1,5 +1,5 @@
 #pragma once
-#include "PreHeader.h"
+#include "RenderHeader.h"
 
 
 #define ResourceLoader() CResourceLoader::GetInstance()
@@ -31,7 +31,7 @@ public:
 	virtual bool LoadTextureCubemapFace(const char* szFileName, GfxCubemapFace face, CGfxTextureCubemap* pTextureCubemap, int baseLevel, int numLevels);
 
 public:
-	virtual CSceneNode* LoadSceneMesh(const char* szFileName, CSceneNode* pParentSceneNode, uint32_t instanceFormat, int vertexBinding = 0, int instanceBinding = 1, int baseLevel = 0, int numLevels = INT_MAX);
+	virtual CSceneNode* LoadSceneMesh(const char* szFileName, CSceneNode* pParentSceneNode, uint32_t instanceFormat = INSTANCE_FORMAT, int vertexBinding = 0, int instanceBinding = 1, int baseLevel = 0, int numLevels = INT_MAX);
 
 
 protected:

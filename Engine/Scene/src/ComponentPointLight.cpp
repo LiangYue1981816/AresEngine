@@ -37,7 +37,7 @@ void CComponentPointLight::SetMaterial(const CGfxMaterialPtr ptrMaterial)
 
 void CComponentPointLight::SetMeshDraw(const CGfxMeshPtr ptrMesh)
 {
-	m_ptrMeshDraw = GfxRenderer()->NewMeshDraw(ptrMesh->GetName(), ptrMesh, 0, INSTANCE_ATTRIBUTE_TRANSFORM | INSTANCE_ATTRIBUTE_POINTLIGHT_COLOR | INSTANCE_ATTRIBUTE_POINTLIGHT_ATTENUATION, 1);
+	m_ptrMeshDraw = GfxRenderer()->NewMeshDraw(ptrMesh->GetName(), ptrMesh, 0, INSTANCE_FORMAT, 1);
 }
 
 void CComponentPointLight::SetColor(float red, float green, float blue)
