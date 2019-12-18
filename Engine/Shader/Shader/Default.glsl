@@ -8,7 +8,7 @@ precision mediump float;
 
 // VERTEX_ATTRIBUTE_POSITION;
 // VERTEX_ATTRIBUTE_TEXCOORD0;
-// INSTANCE_ATTRIBUTE_TRANSFORM;
+// INSTANCE_ATTRIBUTE_INDEX;
 
 USE_SCENE_STORAGE;
 
@@ -18,7 +18,7 @@ layout (location = 0) out mediump vec2 outTexcoord;
 
 void main()
 {
-	highp mat4 worldMatrix = mat4(inInstanceTransformMatrixCol0, inInstanceTransformMatrixCol1, inInstanceTransformMatrixCol2, inInstanceTransformMatrixCol3);
+	highp mat4 worldMatrix = sceneData.instanceData[inInstanceIndex.x];
 	highp vec3 worldPosition = (worldMatrix * vec4(inPosition.xyz, 1.0)).xyz;
 
 	outTexcoord = inTexcoord0;

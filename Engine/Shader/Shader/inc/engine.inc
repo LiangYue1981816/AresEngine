@@ -27,16 +27,8 @@ layout (location = 6)                                      in mediump vec4 inInd
 layout (location = 7)                                      in mediump vec4 inWeights;
 #endif
 
-#ifdef INSTANCE_ATTRIBUTE_TRANSFORM
-layout (location = 8)                                      in highp vec4 inInstanceTransformMatrixCol0;
-layout (location = 9)                                      in highp vec4 inInstanceTransformMatrixCol1;
-layout (location = 10)                                     in highp vec4 inInstanceTransformMatrixCol2;
-layout (location = 11)                                     in highp vec4 inInstanceTransformMatrixCol3;
-#endif
-
-#ifdef INSTANCE_ATTRIBUTE_POINTLIGHT
-layout (location = 12)                                     in mediump vec4 inInstancePointLightColor;
-layout (location = 13)                                     in mediump vec4 inInstancePointLightAttenuation;
+#ifdef INSTANCE_ATTRIBUTE_INDEX
+layout (location = 8)                                      in mediump ivec4 inInstanceIndex;
 #endif
 
 
