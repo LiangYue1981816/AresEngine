@@ -1,12 +1,12 @@
 <Material>
-	<Pass name="Default">
-		<Pipeline render_pass="Default">
+	<Pass name="PassDefault">
+		<Pipeline render_pass="PassDefault">
 			<Vertex file_name="Default.glsl">
 				<Define name="VERTEX_ATTRIBUTE_POSITION" />
 				<Define name="VERTEX_ATTRIBUTE_NORMAL" />
 				<Define name="VERTEX_ATTRIBUTE_BINORMAL" />
 				<Define name="VERTEX_ATTRIBUTE_TEXCOORD0" />
-				<Define name="INSTANCE_ATTRIBUTE_TRANSFORM" />
+				<Define name="INSTANCE_ATTRIBUTE_INDEX" />
 			</Vertex>
 			<Fragment file_name="Default.glsl">
 			</Fragment>
