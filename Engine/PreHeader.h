@@ -38,6 +38,7 @@
 
 #ifdef HAVE_EASTL
 #  include <EASTL/string.h>
+#  include <EASTL/sort.h>
 #  include <EASTL/map.h>
 #  include <EASTL/list.h>
 #  include <EASTL/vector.h>
