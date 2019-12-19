@@ -4,6 +4,7 @@
 CComponentPointLight::CComponentPointLight(uint32_t name)
 	: CComponent(name)
 	, m_indexInstance(INVALID_VALUE)
+	, m_bUpdateInstanceData{ false }
 	, m_bNeedUpdateInstanceData{ false }
 {
 	m_indexInstance = RenderSystem()->AddInstance();
@@ -15,6 +16,8 @@ CComponentPointLight::CComponentPointLight(uint32_t name)
 CComponentPointLight::CComponentPointLight(const CComponentPointLight& component)
 	: CComponent(component)
 	, m_indexInstance(INVALID_VALUE)
+	, m_bUpdateInstanceData{ false }
+	, m_bNeedUpdateInstanceData{ false }
 {
 	m_indexInstance = RenderSystem()->AddInstance();
 
@@ -59,10 +62,13 @@ void CComponentPointLight::TaskUpdate(float gameTime, float deltaTime)
 	int indexFrame = Engine()->GetFrameCount() % 2;
 
 	if (m_ptrMeshDraw) {
-		if (m_pParentNode && m_pParentNode->IsActive() && m_pParentNode->UpdateTransform()) {
-			m_bNeedUpdateInstanceData[indexFrame] = true;
-			m_instanceData[indexFrame].transformMatrix = m_pParentNode->GetWorldTransform();
-			m_instanceData[indexFrame].center = m_instanceData[indexFrame].transformMatrix * glm::vec4(m_ptrMeshDraw->GetLocalAABB().center, 1.0f);
+		if (m_pParentNode && m_pParentNode->IsActive()) {
+			if (m_bUpdateInstanceData[indexFrame] == false || m_pParentNode->UpdateTransform()) {
+				m_bUpdateInstanceData[indexFrame] = true;
+				m_bNeedUpdateInstanceData[indexFrame] = true;
+				m_instanceData[indexFrame].transformMatrix = m_pParentNode->GetWorldTransform();
+				m_instanceData[indexFrame].center = m_instanceData[indexFrame].transformMatrix * glm::vec4(m_ptrMeshDraw->GetLocalAABB().center, 1.0f);
+			}
 		}
 	}
 }
@@ -71,15 +77,19 @@ void CComponentPointLight::TaskUpdateCamera(CGfxCamera* pCamera, CRenderQueue* p
 {
 	int indexFrame = 1 - Engine()->GetFrameCount() % 2;
 
-	if (m_ptrMeshDraw && m_ptrMeshDraw->GetMask() & mask) {
-		if (m_pParentNode && m_pParentNode->IsActive()) {
-			if (pCamera->IsVisible(m_ptrMeshDraw->GetLocalAABB() * m_instanceData[indexFrame].transformMatrix)) {
-				if (m_bNeedUpdateInstanceData[indexFrame]) {
-					m_bNeedUpdateInstanceData[indexFrame] = false;
-					RenderSystem()->ModifyInstanceData(m_indexInstance, m_instanceData[indexFrame], indexThread);
-				}
+	if (m_ptrMeshDraw) {
+		if (m_ptrMeshDraw->GetMask() & mask) {
+			if (m_pParentNode && m_pParentNode->IsActive()) {
+				if (m_bUpdateInstanceData[indexFrame]) {
+					if (pCamera->IsVisible(m_ptrMeshDraw->GetLocalAABB() * m_instanceData[indexFrame].transformMatrix)) {
+						if (m_bNeedUpdateInstanceData[indexFrame]) {
+							m_bNeedUpdateInstanceData[indexFrame] = false;
+							RenderSystem()->ModifyInstanceData(m_indexInstance, m_instanceData[indexFrame], indexThread);
+						}
 
-				pRenderQueue->Add(m_ptrMaterial, m_ptrMeshDraw, m_indexInstance, indexThread);
+						pRenderQueue->Add(m_ptrMaterial, m_ptrMeshDraw, m_indexInstance, indexThread);
+					}
+				}
 			}
 		}
 	}
