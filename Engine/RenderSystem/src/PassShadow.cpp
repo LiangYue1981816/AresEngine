@@ -89,7 +89,7 @@ void CPassShadow::SetOutputTexture(CGfxRenderTexturePtr ptrDepthTexture)
 	}
 }
 
-void CPassShadow::Render(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrMainCommandBuffer)
+void CPassShadow::Render(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer)
 {
 	// Update
 	const glm::camera mainCamera = m_pCamera->GetCamera()->GetCamera();
@@ -142,24 +142,28 @@ void CPassShadow::Render(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrMainComm
 	m_pRenderSystem->GetEngineUniform()->Apply();
 
 	// Render
-	GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, m_ptrOutputDepthTexture, GFX_IMAGE_LAYOUT_GENERAL);
-	GfxRenderer()->CmdBeginRenderPass(ptrMainCommandBuffer, m_ptrFrameBuffer, ptrRenderPass);
+	GfxRenderer()->CmdPushDebugGroup(ptrCommandBuffer, "PassShadow");
 	{
-		const float w = m_ptrFrameBuffer->GetWidth();
-		const float h = m_ptrFrameBuffer->GetHeight();
+		GfxRenderer()->CmdSetImageLayout(ptrCommandBuffer, m_ptrOutputDepthTexture, GFX_IMAGE_LAYOUT_GENERAL);
+		GfxRenderer()->CmdBeginRenderPass(ptrCommandBuffer, m_ptrFrameBuffer, ptrRenderPass);
+		{
+			const float w = m_ptrFrameBuffer->GetWidth();
+			const float h = m_ptrFrameBuffer->GetHeight();
 
-		const glm::vec4 area[4] = {
-			glm::vec4(0.0f, 0.0f, 0.5f, 0.5f) * glm::vec4(w, h, w, h),
-			glm::vec4(0.5f, 0.0f, 0.5f, 0.5f) * glm::vec4(w, h, w, h),
-			glm::vec4(0.0f, 0.5f, 0.5f, 0.5f) * glm::vec4(w, h, w, h),
-			glm::vec4(0.5f, 0.5f, 0.5f, 0.5f) * glm::vec4(w, h, w, h),
-		};
+			const glm::vec4 area[4] = {
+				glm::vec4(0.0f, 0.0f, 0.5f, 0.5f) * glm::vec4(w, h, w, h),
+				glm::vec4(0.5f, 0.0f, 0.5f, 0.5f) * glm::vec4(w, h, w, h),
+				glm::vec4(0.0f, 0.5f, 0.5f, 0.5f) * glm::vec4(w, h, w, h),
+				glm::vec4(0.5f, 0.5f, 0.5f, 0.5f) * glm::vec4(w, h, w, h),
+			};
 
-		for (int indexLevel = 0; indexLevel < 4; indexLevel++) {
-//			m_pCamera->GetRenderQueue()->CmdDraw&taskGraph, ptrMainCommandBuffer, m_ptrDescriptorSetPass[indexLevel], PASS_SHADOW_NAME, area[indexLevel], area[indexLevel], 0xffffffff);
-			m_pShadowRenderQueue[indexLevel]->CmdDraw(taskGraph, ptrMainCommandBuffer, m_ptrDescriptorSetPass[indexLevel], PASS_SHADOW_NAME, area[indexLevel], area[indexLevel], 0xffffffff, false);
+			for (int indexLevel = 0; indexLevel < 4; indexLevel++) {
+//				m_pCamera->GetRenderQueue()->CmdDraw&taskGraph, ptrCommandBuffer, m_ptrDescriptorSetPass[indexLevel], PASS_SHADOW_NAME, area[indexLevel], area[indexLevel], 0xffffffff);
+				m_pShadowRenderQueue[indexLevel]->CmdDraw(taskGraph, ptrCommandBuffer, m_ptrDescriptorSetPass[indexLevel], PASS_SHADOW_NAME, area[indexLevel], area[indexLevel], 0xffffffff, false);
+			}
 		}
+		GfxRenderer()->CmdEndRenderPass(ptrCommandBuffer);
+		GfxRenderer()->CmdSetImageLayout(ptrCommandBuffer, m_ptrOutputDepthTexture, GFX_IMAGE_LAYOUT_DEPTH_STENCIL_READ_ONLY_OPTIMAL);
 	}
-	GfxRenderer()->CmdEndRenderPass(ptrMainCommandBuffer);
-	GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, m_ptrOutputDepthTexture, GFX_IMAGE_LAYOUT_DEPTH_STENCIL_READ_ONLY_OPTIMAL);
+	GfxRenderer()->CmdPopDebugGroup(ptrCommandBuffer);
 }

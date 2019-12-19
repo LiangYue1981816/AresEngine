@@ -78,7 +78,7 @@ void CPassBlendAdd::SetParamFactor(float factor)
 	m_factor = factor;
 }
 
-void CPassBlendAdd::Render(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrMainCommandBuffer)
+void CPassBlendAdd::Render(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer)
 {
 	// Update
 	m_pCamera->GetCameraUniform()->Apply();
@@ -86,18 +86,22 @@ void CPassBlendAdd::Render(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrMainCo
 	m_ptrDescriptorSetPass->Update();
 
 	// Render
-	GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, m_ptrOutputColorTexture, GFX_IMAGE_LAYOUT_GENERAL);
-	GfxRenderer()->CmdBeginRenderPass(ptrMainCommandBuffer, m_ptrFrameBuffer, ptrRenderPass);
+	GfxRenderer()->CmdPushDebugGroup(ptrCommandBuffer, "PassBlendAdd");
 	{
-		const float w = m_ptrFrameBuffer->GetWidth();
-		const float h = m_ptrFrameBuffer->GetHeight();
-		const glm::vec4 scissor = glm::vec4(0.0, 0.0, w, h);
-		const glm::vec4 viewport = glm::vec4(0.0, 0.0, w, h);
+		GfxRenderer()->CmdSetImageLayout(ptrCommandBuffer, m_ptrOutputColorTexture, GFX_IMAGE_LAYOUT_GENERAL);
+		GfxRenderer()->CmdBeginRenderPass(ptrCommandBuffer, m_ptrFrameBuffer, ptrRenderPass);
+		{
+			const float w = m_ptrFrameBuffer->GetWidth();
+			const float h = m_ptrFrameBuffer->GetHeight();
+			const glm::vec4 scissor = glm::vec4(0.0, 0.0, w, h);
+			const glm::vec4 viewport = glm::vec4(0.0, 0.0, w, h);
 
-		m_pRenderQueue->CmdDraw(taskGraph, ptrMainCommandBuffer, m_ptrDescriptorSetPass, PASS_BLEND_ADD_NAME, scissor, viewport, 0xffffffff, false);
+			m_pRenderQueue->CmdDraw(taskGraph, ptrCommandBuffer, m_ptrDescriptorSetPass, PASS_BLEND_ADD_NAME, scissor, viewport, 0xffffffff, false);
+		}
+		GfxRenderer()->CmdEndRenderPass(ptrCommandBuffer);
+		GfxRenderer()->CmdSetImageLayout(ptrCommandBuffer, m_ptrOutputColorTexture, GFX_IMAGE_LAYOUT_COLOR_READ_ONLY_OPTIMAL);
 	}
-	GfxRenderer()->CmdEndRenderPass(ptrMainCommandBuffer);
-	GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, m_ptrOutputColorTexture, GFX_IMAGE_LAYOUT_COLOR_READ_ONLY_OPTIMAL);
+	GfxRenderer()->CmdPopDebugGroup(ptrCommandBuffer);
 }
 
 void CPassBlendAdd::RenderCallback(CGfxCommandBufferPtr ptrCommandBuffer)

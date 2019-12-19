@@ -74,7 +74,7 @@ void CPassLuminanceThreshold::SetParamThreshold(float threshold)
 	m_threshold = threshold;
 }
 
-void CPassLuminanceThreshold::Render(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrMainCommandBuffer)
+void CPassLuminanceThreshold::Render(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer)
 {
 	// Update
 	m_pCamera->GetCameraUniform()->Apply();
@@ -82,18 +82,22 @@ void CPassLuminanceThreshold::Render(CTaskGraph& taskGraph, CGfxCommandBufferPtr
 	m_ptrDescriptorSetPass->Update();
 
 	// Render
-	GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, m_ptrOutputColorTexture, GFX_IMAGE_LAYOUT_GENERAL);
-	GfxRenderer()->CmdBeginRenderPass(ptrMainCommandBuffer, m_ptrFrameBuffer, ptrRenderPass);
+	GfxRenderer()->CmdPushDebugGroup(ptrCommandBuffer, "PassLuminanceThreshold");
 	{
-		const float w = m_ptrFrameBuffer->GetWidth();
-		const float h = m_ptrFrameBuffer->GetHeight();
-		const glm::vec4 scissor = glm::vec4(0.0, 0.0, w, h);
-		const glm::vec4 viewport = glm::vec4(0.0, 0.0, w, h);
+		GfxRenderer()->CmdSetImageLayout(ptrCommandBuffer, m_ptrOutputColorTexture, GFX_IMAGE_LAYOUT_GENERAL);
+		GfxRenderer()->CmdBeginRenderPass(ptrCommandBuffer, m_ptrFrameBuffer, ptrRenderPass);
+		{
+			const float w = m_ptrFrameBuffer->GetWidth();
+			const float h = m_ptrFrameBuffer->GetHeight();
+			const glm::vec4 scissor = glm::vec4(0.0, 0.0, w, h);
+			const glm::vec4 viewport = glm::vec4(0.0, 0.0, w, h);
 
-		m_pRenderQueue->CmdDraw(taskGraph, ptrMainCommandBuffer, m_ptrDescriptorSetPass, PASS_LUMINANCE_THRESHOLD_NAME, scissor, viewport, 0xffffffff, false);
+			m_pRenderQueue->CmdDraw(taskGraph, ptrCommandBuffer, m_ptrDescriptorSetPass, PASS_LUMINANCE_THRESHOLD_NAME, scissor, viewport, 0xffffffff, false);
+		}
+		GfxRenderer()->CmdEndRenderPass(ptrCommandBuffer);
+		GfxRenderer()->CmdSetImageLayout(ptrCommandBuffer, m_ptrOutputColorTexture, GFX_IMAGE_LAYOUT_COLOR_READ_ONLY_OPTIMAL);
 	}
-	GfxRenderer()->CmdEndRenderPass(ptrMainCommandBuffer);
-	GfxRenderer()->CmdSetImageLayout(ptrMainCommandBuffer, m_ptrOutputColorTexture, GFX_IMAGE_LAYOUT_COLOR_READ_ONLY_OPTIMAL);
+	GfxRenderer()->CmdPopDebugGroup(ptrCommandBuffer);
 }
 
 void CPassLuminanceThreshold::RenderCallback(CGfxCommandBufferPtr ptrCommandBuffer)
