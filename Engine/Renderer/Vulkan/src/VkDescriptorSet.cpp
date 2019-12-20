@@ -7,6 +7,9 @@ CVKDescriptorSet::CVKDescriptorSet(CVKDevice* pDevice, CVKDescriptorPool* pDescr
 	, m_pDescriptorPool(pDescriptorPool)
 
 	, m_vkDescriptorSet(VK_NULL_HANDLE)
+
+	, m_bUpdateDescriptorImageInfoAll(false)
+	, m_bUpdateDescriptorBufferInfoAll(false)
 {
 	Create(ptrDescriptorLayout);
 }
@@ -17,6 +20,9 @@ CVKDescriptorSet::CVKDescriptorSet(CVKDevice* pDevice, CVKDescriptorPool* pDescr
 	, m_pDescriptorPool(pDescriptorPool)
 
 	, m_vkDescriptorSet(VK_NULL_HANDLE)
+
+	, m_bUpdateDescriptorImageInfoAll(false)
+	, m_bUpdateDescriptorBufferInfoAll(false)
 {
 	Create(ptrDescriptorSetCopyFrom->GetDescriptorLayout());
 
@@ -105,6 +111,7 @@ bool CVKDescriptorSet::SetTexture2D(uint32_t name, const CGfxTexture2DPtr ptrTex
 	ASSERT(m_ptrDescriptorLayout);
 
 	if (m_ptrDescriptorLayout->IsSampledImageValid(name)) {
+		m_bUpdateDescriptorImageInfoAll = m_bUpdateDescriptorImageInfoAll || m_imageDescriptorInfos.find(name) == m_imageDescriptorInfos.end();
 		m_imageDescriptorInfos[name].bDirty = true;
 		m_imageDescriptorInfos[name].pSampler = (CGfxSampler*)pSampler;
 		m_imageDescriptorInfos[name].ptrTexture2D = ptrTexture;
@@ -127,6 +134,7 @@ bool CVKDescriptorSet::SetTexture2DArray(uint32_t name, const CGfxTexture2DArray
 	ASSERT(m_ptrDescriptorLayout);
 
 	if (m_ptrDescriptorLayout->IsSampledImageValid(name)) {
+		m_bUpdateDescriptorImageInfoAll = m_bUpdateDescriptorImageInfoAll || m_imageDescriptorInfos.find(name) == m_imageDescriptorInfos.end();
 		m_imageDescriptorInfos[name].bDirty = true;
 		m_imageDescriptorInfos[name].pSampler = (CGfxSampler*)pSampler;
 		m_imageDescriptorInfos[name].ptrTexture2D.Release();
@@ -149,6 +157,7 @@ bool CVKDescriptorSet::SetTextureCubemap(uint32_t name, const CGfxTextureCubemap
 	ASSERT(m_ptrDescriptorLayout);
 
 	if (m_ptrDescriptorLayout->IsSampledImageValid(name)) {
+		m_bUpdateDescriptorImageInfoAll = m_bUpdateDescriptorImageInfoAll || m_imageDescriptorInfos.find(name) == m_imageDescriptorInfos.end();
 		m_imageDescriptorInfos[name].bDirty = true;
 		m_imageDescriptorInfos[name].pSampler = (CGfxSampler*)pSampler;
 		m_imageDescriptorInfos[name].ptrTexture2D.Release();
@@ -171,6 +180,7 @@ bool CVKDescriptorSet::SetRenderTexture(uint32_t name, const CGfxRenderTexturePt
 	ASSERT(m_ptrDescriptorLayout);
 
 	if (m_ptrDescriptorLayout->IsSampledImageValid(name)) {
+		m_bUpdateDescriptorImageInfoAll = m_bUpdateDescriptorImageInfoAll || m_imageDescriptorInfos.find(name) == m_imageDescriptorInfos.end();
 		m_imageDescriptorInfos[name].bDirty = true;
 		m_imageDescriptorInfos[name].pSampler = (CGfxSampler*)pSampler;
 		m_imageDescriptorInfos[name].ptrTexture2D.Release();
@@ -193,6 +203,7 @@ bool CVKDescriptorSet::SetInputAttachmentTexture(uint32_t name, const CGfxRender
 	ASSERT(m_ptrDescriptorLayout);
 
 	if (m_ptrDescriptorLayout->IsSampledImageValid(name)) {
+		m_bUpdateDescriptorImageInfoAll = m_bUpdateDescriptorImageInfoAll || m_imageDescriptorInfos.find(name) == m_imageDescriptorInfos.end();
 		m_imageDescriptorInfos[name].bDirty = true;
 		m_imageDescriptorInfos[name].pSampler = (CGfxSampler*)pSampler;
 		m_imageDescriptorInfos[name].ptrTexture2D.Release();
@@ -215,6 +226,7 @@ bool CVKDescriptorSet::SetUniformBuffer(uint32_t name, const CGfxUniformBufferPt
 	ASSERT(m_ptrDescriptorLayout);
 
 	if (m_ptrDescriptorLayout->IsUniformBlockValid(name)) {
+		m_bUpdateDescriptorBufferInfoAll = m_bUpdateDescriptorImageInfoAll || m_bufferDescriptorInfos.find(name) == m_bufferDescriptorInfos.end();
 		m_bufferDescriptorInfos[name].bDirty = true;
 		m_bufferDescriptorInfos[name].offset = offset;
 		m_bufferDescriptorInfos[name].range = range;
@@ -235,6 +247,7 @@ bool CVKDescriptorSet::SetStorageBuffer(uint32_t name, const CGfxStorageBufferPt
 	ASSERT(m_ptrDescriptorLayout);
 
 	if (m_ptrDescriptorLayout->IsStorageBlockValid(name)) {
+		m_bUpdateDescriptorBufferInfoAll = m_bUpdateDescriptorImageInfoAll || m_bufferDescriptorInfos.find(name) == m_bufferDescriptorInfos.end();
 		m_bufferDescriptorInfos[name].bDirty = true;
 		m_bufferDescriptorInfos[name].offset = offset;
 		m_bufferDescriptorInfos[name].range = range;
@@ -291,7 +304,7 @@ void CVKDescriptorSet::Update(void)
 	bufferInfos.reserve(m_bufferDescriptorInfos.size());
 
 	for (const auto& itImage : m_imageDescriptorInfos) {
-		if (itImage.second.bDirty && itImage.second.ptrTexture2D) {
+		if (itImage.second.ptrTexture2D && (itImage.second.bDirty || m_bUpdateDescriptorImageInfoAll)) {
 			VkDescriptorImageInfo imageInfo = {};
 			imageInfo.sampler = ((CVKSampler*)itImage.second.pSampler)->GetSampler();
 			imageInfo.imageView = ((CVKTexture2D*)itImage.second.ptrTexture2D.GetPointer())->GetImageView();
@@ -314,7 +327,7 @@ void CVKDescriptorSet::Update(void)
 	}
 
 	for (const auto& itImage : m_imageDescriptorInfos) {
-		if (itImage.second.bDirty && itImage.second.ptrTexture2DArray) {
+		if (itImage.second.ptrTexture2DArray && (itImage.second.bDirty || m_bUpdateDescriptorImageInfoAll)) {
 			VkDescriptorImageInfo imageInfo = {};
 			imageInfo.sampler = ((CVKSampler*)itImage.second.pSampler)->GetSampler();
 			imageInfo.imageView = ((CVKTexture2DArray*)itImage.second.ptrTexture2DArray.GetPointer())->GetImageView();
@@ -337,7 +350,7 @@ void CVKDescriptorSet::Update(void)
 	}
 
 	for (const auto& itImage : m_imageDescriptorInfos) {
-		if (itImage.second.bDirty && itImage.second.ptrTextureCubemap) {
+		if (itImage.second.ptrTextureCubemap && (itImage.second.bDirty || m_bUpdateDescriptorImageInfoAll)) {
 			VkDescriptorImageInfo imageInfo = {};
 			imageInfo.sampler = ((CVKSampler*)itImage.second.pSampler)->GetSampler();
 			imageInfo.imageView = ((CVKTextureCubemap*)itImage.second.ptrTextureCubemap.GetPointer())->GetImageView();
@@ -360,7 +373,7 @@ void CVKDescriptorSet::Update(void)
 	}
 
 	for (const auto& itImage : m_imageDescriptorInfos) {
-		if (itImage.second.bDirty && itImage.second.ptrRenderTexture) {
+		if (itImage.second.ptrRenderTexture && (itImage.second.bDirty || m_bUpdateDescriptorImageInfoAll)) {
 			VkDescriptorImageInfo imageInfo = {};
 			imageInfo.sampler = ((CVKSampler*)itImage.second.pSampler)->GetSampler();
 			imageInfo.imageView = ((CVKRenderTexture*)itImage.second.ptrRenderTexture.GetPointer())->GetImageView();
@@ -383,7 +396,7 @@ void CVKDescriptorSet::Update(void)
 	}
 
 	for (const auto& itImage : m_imageDescriptorInfos) {
-		if (itImage.second.bDirty && itImage.second.ptrInputAttachmentTexture) {
+		if (itImage.second.ptrInputAttachmentTexture && (itImage.second.bDirty || m_bUpdateDescriptorImageInfoAll)) {
 			VkDescriptorImageInfo imageInfo = {};
 			imageInfo.sampler = ((CVKSampler*)itImage.second.pSampler)->GetSampler();
 			imageInfo.imageView = ((CVKRenderTexture*)itImage.second.ptrInputAttachmentTexture.GetPointer())->GetImageView();
@@ -406,7 +419,7 @@ void CVKDescriptorSet::Update(void)
 	}
 
 	for (const auto& itBuffer : m_bufferDescriptorInfos) {
-		if (itBuffer.second.bDirty && itBuffer.second.ptrUniformBuffer) {
+		if (itBuffer.second.ptrUniformBuffer && (itBuffer.second.bDirty || m_bUpdateDescriptorBufferInfoAll)) {
 			VkDescriptorBufferInfo bufferInfo = {};
 			bufferInfo.buffer = ((CVKUniformBuffer*)itBuffer.second.ptrUniformBuffer.GetPointer())->GetBuffer();
 			bufferInfo.offset = itBuffer.second.offset;
@@ -429,7 +442,7 @@ void CVKDescriptorSet::Update(void)
 	}
 
 	for (const auto& itBuffer : m_bufferDescriptorInfos) {
-		if (itBuffer.second.bDirty && itBuffer.second.ptrStorageBuffer) {
+		if (itBuffer.second.ptrStorageBuffer && (itBuffer.second.bDirty || m_bUpdateDescriptorBufferInfoAll)) {
 			VkDescriptorBufferInfo bufferInfo = {};
 			bufferInfo.buffer = ((CVKStorageBuffer*)itBuffer.second.ptrStorageBuffer.GetPointer())->GetBuffer();
 			bufferInfo.offset = itBuffer.second.offset;
@@ -451,16 +464,19 @@ void CVKDescriptorSet::Update(void)
 		}
 	}
 
+	if (writes.empty() == false) {
+		vkUpdateDescriptorSets(m_pDevice->GetDevice(), writes.size(), writes.data(), 0, nullptr);
+	}
+
+	m_bUpdateDescriptorImageInfoAll = false;
+	m_bUpdateDescriptorBufferInfoAll = false;
+
 	for (auto& itImage : m_imageDescriptorInfos) {
 		itImage.second.bDirty = false;
 	}
 
 	for (auto& itBuffer : m_bufferDescriptorInfos) {
 		itBuffer.second.bDirty = false;
-	}
-
-	if (writes.empty() == false) {
-		vkUpdateDescriptorSets(m_pDevice->GetDevice(), writes.size(), writes.data(), 0, nullptr);
 	}
 }
 
