@@ -283,8 +283,12 @@ void CVKDescriptorSet::Update(void)
 	ASSERT(m_ptrDescriptorLayout);
 
 	eastl::vector<VkWriteDescriptorSet> writes;
-	eastl::vector<VkDescriptorImageInfo> imageInfos(64);
-	eastl::vector<VkDescriptorBufferInfo> bufferInfos(64);
+	eastl::vector<VkDescriptorImageInfo> imageInfos;
+	eastl::vector<VkDescriptorBufferInfo> bufferInfos;
+
+	writes.reserve(m_imageDescriptorInfos.size() + m_bufferDescriptorInfos.size());
+	imageInfos.reserve(m_imageDescriptorInfos.size());
+	bufferInfos.reserve(m_bufferDescriptorInfos.size());
 
 	for (const auto& itImage : m_imageDescriptorInfos) {
 		if (itImage.second.bDirty && itImage.second.ptrTexture2D) {
