@@ -219,6 +219,7 @@ bool CVKDescriptorSet::SetUniformBuffer(uint32_t name, const CGfxUniformBufferPt
 		m_bufferDescriptorInfos[name].offset = offset;
 		m_bufferDescriptorInfos[name].range = range;
 		m_bufferDescriptorInfos[name].ptrUniformBuffer = ptrUniformBuffer;
+		m_bufferDescriptorInfos[name].ptrStorageBuffer.Release();
 		return true;
 	}
 	else {
@@ -237,6 +238,7 @@ bool CVKDescriptorSet::SetStorageBuffer(uint32_t name, const CGfxStorageBufferPt
 		m_bufferDescriptorInfos[name].bDirty = true;
 		m_bufferDescriptorInfos[name].offset = offset;
 		m_bufferDescriptorInfos[name].range = range;
+		m_bufferDescriptorInfos[name].ptrUniformBuffer.Release();
 		m_bufferDescriptorInfos[name].ptrStorageBuffer = ptrStorageBuffer;
 		return true;
 	}
