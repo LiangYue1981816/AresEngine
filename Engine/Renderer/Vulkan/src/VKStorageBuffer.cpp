@@ -10,7 +10,10 @@ CVKStorageBuffer::CVKStorageBuffer(CVKDevice* pDevice, CVKStorageBufferManager* 
 	, m_size(0)
 	, m_offset(0)
 {
-	m_size = ALIGN_BYTE(size, m_pDevice->GetPhysicalDeviceLimits().nonCoherentAtomSize);
+	m_size = size;
+	m_size = ALIGN_BYTE(m_size, m_pDevice->GetPhysicalDeviceLimits().nonCoherentAtomSize);
+	m_size = ALIGN_BYTE(m_size, m_pDevice->GetPhysicalDeviceLimits().minStorageBufferOffsetAlignment);
+
 	m_pBuffer = new CVKBuffer(m_pDevice, m_size, VK_BUFFER_USAGE_STORAGE_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT);
 	CGfxProfiler::IncStorageBufferSize(m_pBuffer->GetMemorySize());
 }
