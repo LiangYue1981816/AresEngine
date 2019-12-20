@@ -468,9 +468,6 @@ void CVKDescriptorSet::Update(void)
 		vkUpdateDescriptorSets(m_pDevice->GetDevice(), writes.size(), writes.data(), 0, nullptr);
 	}
 
-	m_bUpdateDescriptorImageInfoAll = false;
-	m_bUpdateDescriptorBufferInfoAll = false;
-
 	for (auto& itImage : m_imageDescriptorInfos) {
 		itImage.second.bDirty = false;
 	}
@@ -478,6 +475,9 @@ void CVKDescriptorSet::Update(void)
 	for (auto& itBuffer : m_bufferDescriptorInfos) {
 		itBuffer.second.bDirty = false;
 	}
+
+	m_bUpdateDescriptorImageInfoAll = false;
+	m_bUpdateDescriptorBufferInfoAll = false;
 }
 
 void CVKDescriptorSet::Bind(VkCommandBuffer vkCommandBuffer, VkPipelineBindPoint vkPipelineBindPoint, VkPipelineLayout vkPipelineLayout) const
