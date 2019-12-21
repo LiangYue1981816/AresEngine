@@ -485,11 +485,16 @@ void CVKDescriptorSet::Bind(VkCommandBuffer vkCommandBuffer, VkPipelineBindPoint
 	ASSERT(m_ptrDescriptorLayout);
 
 	eastl::vector<uint32_t> offsets;
+	eastl::unordered_map<uint32_t, uint32_t> orderOffsets;
 
 	for (const auto& itBuffer : m_bufferDescriptorInfos) {
 		if (itBuffer.second.ptrUniformBuffer) {
-			offsets.emplace_back(((CVKUniformBuffer*)itBuffer.second.ptrUniformBuffer.GetPointer())->GetOffset());
+			orderOffsets[m_ptrDescriptorLayout->GetUniformBlockBinding(itBuffer.first)] = ((CVKUniformBuffer*)itBuffer.second.ptrUniformBuffer.GetPointer())->GetOffset();
 		}
+	}
+
+	for (const auto& itOffset : orderOffsets) {
+		offsets.emplace_back(itOffset.second);
 	}
 
 	vkCmdBindDescriptorSets(vkCommandBuffer, vkPipelineBindPoint, vkPipelineLayout, m_ptrDescriptorLayout->GetSetIndex(), 1, &m_vkDescriptorSet, offsets.size(), offsets.data());
