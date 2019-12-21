@@ -60,11 +60,14 @@ void CPassForwardLighting::SetInputTexture(CGfxRenderTexturePtr ptrShadowTexture
 	CGfxSampler* pSamplerPoint = GfxRenderer()->CreateSampler(GFX_FILTER_NEAREST, GFX_FILTER_NEAREST, GFX_SAMPLER_MIPMAP_MODE_NEAREST, GFX_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE);
 	CGfxSampler* pSamplerLinear = GfxRenderer()->CreateSampler(GFX_FILTER_NEAREST, GFX_FILTER_LINEAR, GFX_SAMPLER_MIPMAP_MODE_NEAREST, GFX_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE);
 
-	if (m_ptrInputShadowTexture != ptrShadowTexture || m_ptrInputSSAOTexture != ptrSSAOTexture) {
+	if (m_ptrInputShadowTexture != ptrShadowTexture) {
+		m_ptrInputShadowTexture  = ptrShadowTexture;
 		m_ptrDescriptorSetPass->SetRenderTexture(UNIFORM_SHADOW_TEXTURE_NAME, ptrShadowTexture, pSamplerPoint);
+	}
+
+	if (m_ptrInputSSAOTexture != ptrSSAOTexture) {
+		m_ptrInputSSAOTexture  = ptrSSAOTexture;
 		m_ptrDescriptorSetPass->SetRenderTexture(UNIFORM_SSAO_TEXTURE_NAME, ptrSSAOTexture, pSamplerLinear);
-		m_ptrInputShadowTexture = ptrShadowTexture;
-		m_ptrInputSSAOTexture = ptrSSAOTexture;
 	}
 }
 

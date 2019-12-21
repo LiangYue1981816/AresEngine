@@ -54,8 +54,8 @@ void CPassBlurVertical::SetInputTexture(CGfxRenderTexturePtr ptrColorTexture)
 	CGfxSampler* pSamplerLinear = GfxRenderer()->CreateSampler(GFX_FILTER_NEAREST, GFX_FILTER_LINEAR, GFX_SAMPLER_MIPMAP_MODE_NEAREST, GFX_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE);
 
 	if (m_ptrInputColorTexture != ptrColorTexture) {
+		m_ptrInputColorTexture  = ptrColorTexture;
 		m_ptrDescriptorSetPass->SetRenderTexture(UNIFORM_COLOR_TEXTURE_NAME, ptrColorTexture, pSamplerLinear);
-		m_ptrInputColorTexture = ptrColorTexture;
 	}
 }
 
