@@ -43,8 +43,8 @@ CPassCopy::~CPassCopy(void)
 void CPassCopy::SetCamera(CCamera* pCamera)
 {
 	if (m_pCamera != pCamera) {
+		m_pCamera  = pCamera;
 		m_ptrDescriptorSetPass->SetUniformBuffer(UNIFORM_CAMERA_NAME, pCamera->GetCameraUniform()->GetUniformBuffer(), 0, pCamera->GetCameraUniform()->GetUniformBuffer()->GetSize());
-		m_pCamera = pCamera;
 	}
 }
 
