@@ -104,6 +104,7 @@ bool CVKDescriptorSet::SetTexture2D(uint32_t name, const CGfxTexture2DPtr ptrTex
 
 	if (m_ptrDescriptorLayout->IsSampledImageValid(name)) {
 		m_imageDescriptorInfos[name].bDirty = true;
+		m_imageDescriptorInfos[name].binding = m_ptrDescriptorLayout->GetSampledImageBinding(name);
 		m_imageDescriptorInfos[name].pSampler = (CGfxSampler*)pSampler;
 		m_imageDescriptorInfos[name].ptrTexture2D = ptrTexture;
 		m_imageDescriptorInfos[name].ptrTexture2DArray.Release();
@@ -126,6 +127,7 @@ bool CVKDescriptorSet::SetTexture2DArray(uint32_t name, const CGfxTexture2DArray
 
 	if (m_ptrDescriptorLayout->IsSampledImageValid(name)) {
 		m_imageDescriptorInfos[name].bDirty = true;
+		m_imageDescriptorInfos[name].binding = m_ptrDescriptorLayout->GetSampledImageBinding(name);
 		m_imageDescriptorInfos[name].pSampler = (CGfxSampler*)pSampler;
 		m_imageDescriptorInfos[name].ptrTexture2D.Release();
 		m_imageDescriptorInfos[name].ptrTexture2DArray = ptrTexture;
@@ -148,6 +150,7 @@ bool CVKDescriptorSet::SetTextureCubemap(uint32_t name, const CGfxTextureCubemap
 
 	if (m_ptrDescriptorLayout->IsSampledImageValid(name)) {
 		m_imageDescriptorInfos[name].bDirty = true;
+		m_imageDescriptorInfos[name].binding = m_ptrDescriptorLayout->GetSampledImageBinding(name);
 		m_imageDescriptorInfos[name].pSampler = (CGfxSampler*)pSampler;
 		m_imageDescriptorInfos[name].ptrTexture2D.Release();
 		m_imageDescriptorInfos[name].ptrTexture2DArray.Release();
@@ -170,6 +173,7 @@ bool CVKDescriptorSet::SetRenderTexture(uint32_t name, const CGfxRenderTexturePt
 
 	if (m_ptrDescriptorLayout->IsSampledImageValid(name)) {
 		m_imageDescriptorInfos[name].bDirty = true;
+		m_imageDescriptorInfos[name].binding = m_ptrDescriptorLayout->GetSampledImageBinding(name);
 		m_imageDescriptorInfos[name].pSampler = (CGfxSampler*)pSampler;
 		m_imageDescriptorInfos[name].ptrTexture2D.Release();
 		m_imageDescriptorInfos[name].ptrTexture2DArray.Release();
@@ -192,6 +196,7 @@ bool CVKDescriptorSet::SetInputAttachmentTexture(uint32_t name, const CGfxRender
 
 	if (m_ptrDescriptorLayout->IsSampledImageValid(name)) {
 		m_imageDescriptorInfos[name].bDirty = true;
+		m_imageDescriptorInfos[name].binding = m_ptrDescriptorLayout->GetInputAttachmentBinding(name);
 		m_imageDescriptorInfos[name].pSampler = (CGfxSampler*)pSampler;
 		m_imageDescriptorInfos[name].ptrTexture2D.Release();
 		m_imageDescriptorInfos[name].ptrTexture2DArray.Release();
@@ -214,6 +219,7 @@ bool CVKDescriptorSet::SetUniformBuffer(uint32_t name, const CGfxUniformBufferPt
 
 	if (m_ptrDescriptorLayout->IsUniformBlockValid(name)) {
 		m_bufferDescriptorInfos[name].bDirty = true;
+		m_bufferDescriptorInfos[name].binding = m_ptrDescriptorLayout->GetUniformBlockBinding(name);
 		m_bufferDescriptorInfos[name].offset = offset;
 		m_bufferDescriptorInfos[name].range = range;
 		m_bufferDescriptorInfos[name].ptrUniformBuffer = ptrUniformBuffer;
@@ -234,6 +240,7 @@ bool CVKDescriptorSet::SetStorageBuffer(uint32_t name, const CGfxStorageBufferPt
 
 	if (m_ptrDescriptorLayout->IsStorageBlockValid(name)) {
 		m_bufferDescriptorInfos[name].bDirty = true;
+		m_bufferDescriptorInfos[name].binding = m_ptrDescriptorLayout->GetStorageBlockBinding(name);
 		m_bufferDescriptorInfos[name].offset = offset;
 		m_bufferDescriptorInfos[name].range = range;
 		m_bufferDescriptorInfos[name].ptrUniformBuffer.Release();
@@ -275,8 +282,9 @@ const DescriptorBufferInfo* CVKDescriptorSet::GetDescriptorBufferInfo(uint32_t n
 	}
 }
 
-void CVKDescriptorSet::Update(void)
+void CVKDescriptorSet::Bind(VkCommandBuffer vkCommandBuffer, VkPipelineBindPoint vkPipelineBindPoint, VkPipelineLayout vkPipelineLayout)
 {
+	ASSERT(vkCommandBuffer);
 	ASSERT(m_vkDescriptorSet);
 	ASSERT(m_ptrDescriptorLayout);
 
@@ -300,7 +308,7 @@ void CVKDescriptorSet::Update(void)
 			write.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
 			write.pNext = nullptr;
 			write.dstSet = m_vkDescriptorSet;
-			write.dstBinding = m_ptrDescriptorLayout->GetSampledImageBinding(itImage.first);
+			write.dstBinding = itImage.second.binding;
 			write.dstArrayElement = 0;
 			write.descriptorCount = 1;
 			write.descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
@@ -323,7 +331,7 @@ void CVKDescriptorSet::Update(void)
 			write.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
 			write.pNext = nullptr;
 			write.dstSet = m_vkDescriptorSet;
-			write.dstBinding = m_ptrDescriptorLayout->GetSampledImageBinding(itImage.first);
+			write.dstBinding = itImage.second.binding;
 			write.dstArrayElement = 0;
 			write.descriptorCount = 1;
 			write.descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
@@ -346,7 +354,7 @@ void CVKDescriptorSet::Update(void)
 			write.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
 			write.pNext = nullptr;
 			write.dstSet = m_vkDescriptorSet;
-			write.dstBinding = m_ptrDescriptorLayout->GetSampledImageBinding(itImage.first);
+			write.dstBinding = itImage.second.binding;
 			write.dstArrayElement = 0;
 			write.descriptorCount = 1;
 			write.descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
@@ -369,7 +377,7 @@ void CVKDescriptorSet::Update(void)
 			write.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
 			write.pNext = nullptr;
 			write.dstSet = m_vkDescriptorSet;
-			write.dstBinding = m_ptrDescriptorLayout->GetSampledImageBinding(itImage.first);
+			write.dstBinding = itImage.second.binding;
 			write.dstArrayElement = 0;
 			write.descriptorCount = 1;
 			write.descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
@@ -392,7 +400,7 @@ void CVKDescriptorSet::Update(void)
 			write.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
 			write.pNext = nullptr;
 			write.dstSet = m_vkDescriptorSet;
-			write.dstBinding = m_ptrDescriptorLayout->GetSampledImageBinding(itImage.first);
+			write.dstBinding = itImage.second.binding;
 			write.dstArrayElement = 0;
 			write.descriptorCount = 1;
 			write.descriptorType = VK_DESCRIPTOR_TYPE_INPUT_ATTACHMENT;
@@ -415,7 +423,7 @@ void CVKDescriptorSet::Update(void)
 			write.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
 			write.pNext = nullptr;
 			write.dstSet = m_vkDescriptorSet;
-			write.dstBinding = m_ptrDescriptorLayout->GetUniformBlockBinding(itBuffer.first);
+			write.dstBinding = itBuffer.second.binding;
 			write.dstArrayElement = 0;
 			write.descriptorCount = 1;
 			write.descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER_DYNAMIC;
@@ -438,7 +446,7 @@ void CVKDescriptorSet::Update(void)
 			write.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
 			write.pNext = nullptr;
 			write.dstSet = m_vkDescriptorSet;
-			write.dstBinding = m_ptrDescriptorLayout->GetStorageBlockBinding(itBuffer.first);
+			write.dstBinding = itBuffer.second.binding;
 			write.dstArrayElement = 0;
 			write.descriptorCount = 1;
 			write.descriptorType = VK_DESCRIPTOR_TYPE_STORAGE_BUFFER;
@@ -460,16 +468,12 @@ void CVKDescriptorSet::Update(void)
 	if (writes.empty() == false) {
 		vkUpdateDescriptorSets(m_pDevice->GetDevice(), writes.size(), writes.data(), 0, nullptr);
 	}
-}
-
-void CVKDescriptorSet::Bind(VkCommandBuffer vkCommandBuffer, VkPipelineBindPoint vkPipelineBindPoint, VkPipelineLayout vkPipelineLayout) const
-{
-	ASSERT(vkCommandBuffer);
-	ASSERT(m_vkDescriptorSet);
-	ASSERT(m_ptrDescriptorLayout);
 
 	eastl::vector<uint32_t> offsets;
 	eastl::unordered_map<uint32_t, uint32_t> orderOffsets;
+
+	offsets.reserve(m_bufferDescriptorInfos.size());
+	orderOffsets.reserve(m_bufferDescriptorInfos.size());
 
 	for (const auto& itBuffer : m_bufferDescriptorInfos) {
 		if (itBuffer.second.ptrUniformBuffer) {

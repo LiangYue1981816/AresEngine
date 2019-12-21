@@ -27,8 +27,6 @@ public:
 		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_BIND_DESCRIPTORSET, "CommandBindDescriptorSet");
 		{
 			if (m_ptrDescriptorSet) {
-				m_ptrDescriptorSet->Update();
-
 				if (m_pPipelineCompute &&
 					m_pPipelineCompute->GetDescriptorLayout(m_ptrDescriptorSet->GetDescriptorLayout()->GetSetIndex())->IsCompatible(m_ptrDescriptorSet->GetDescriptorLayout())) {
 					((CVKDescriptorSet*)m_ptrDescriptorSet.GetPointer())->Bind(m_vkCommandBuffer, VK_PIPELINE_BIND_POINT_COMPUTE, m_pPipelineCompute->GetPipelineLayout());
