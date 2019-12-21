@@ -291,7 +291,6 @@ void CVKDescriptorSet::Bind(VkCommandBuffer vkCommandBuffer, VkPipelineBindPoint
 	eastl::vector<VkWriteDescriptorSet> writes;
 	eastl::vector<VkDescriptorImageInfo> imageInfos;
 	eastl::vector<VkDescriptorBufferInfo> bufferInfos;
-
 	writes.reserve(m_imageDescriptorInfos.size() + m_bufferDescriptorInfos.size());
 	imageInfos.reserve(m_imageDescriptorInfos.size());
 	bufferInfos.reserve(m_bufferDescriptorInfos.size());
@@ -471,7 +470,6 @@ void CVKDescriptorSet::Bind(VkCommandBuffer vkCommandBuffer, VkPipelineBindPoint
 
 	eastl::vector<uint32_t> offsets;
 	eastl::unordered_map<uint32_t, uint32_t> orderOffsets;
-
 	offsets.reserve(m_bufferDescriptorInfos.size());
 	orderOffsets.reserve(m_bufferDescriptorInfos.size());
 

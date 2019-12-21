@@ -208,9 +208,10 @@ void CRenderQueue::CmdDraw(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrComman
 		}
 	}
 
-	eastl::vector<CTaskSort> sortTasks;
-	{
-		if (m_pCamera) {
+	if (m_pCamera) {
+		eastl::vector<CTaskSort> sortTasks;
+		sortTasks.reserve(m_materialMeshDrawQueue.size());
+		{
 			CTaskSort::order = bIsTransparency ? SortOrder::BackToFront : SortOrder::FrontToBack;
 			CTaskSort::cameraPosition = m_pCamera->GetPosition();
 
@@ -228,6 +229,7 @@ void CRenderQueue::CmdDraw(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrComman
 	}
 
 	eastl::vector<CTaskCommandBuffer> cmdTasks;
+	cmdTasks.reserve(m_pipelineMaterialQueue.size());
 	{
 		for (auto& itPipelineQueue : m_pipelineMaterialQueue) {
 			CGfxDescriptorSetPtr ptrDescriptorSetInputAttachment = GfxRenderer()->NewDescriptorSet(itPipelineQueue.first, ptrCommandBuffer->GetFrameBuffer(), ptrCommandBuffer->GetRenderPass(), ptrCommandBuffer->GetSubpassIndex());
