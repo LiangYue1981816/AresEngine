@@ -37,13 +37,13 @@ bool CGLES3SwapChain::Create(int width, int height, GfxPixelFormat format)
 		glBindFramebuffer(GL_FRAMEBUFFER, m_surface);
 		{
 			const float color[] = { 0.0f, 0.0f, 0.0f, 0.0f };
-			const eastl::vector<uint32_t> drawBuffers{ GL_COLOR_ATTACHMENT0 };
+			const uint32_t drawBuffer = GL_COLOR_ATTACHMENT0;
 
 			glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, CGLES3Helper::TranslateTextureTarget(((CGLES3RenderTexture*)m_ptrRenderTexture.GetPointer())->GetType()), ((CGLES3RenderTexture*)m_ptrRenderTexture.GetPointer())->GetTexture(), 0);
 			glClearBufferfv(GL_COLOR, 0, color);
 
-			glReadBuffers((int)drawBuffers.size(), drawBuffers.data());
-			glDrawBuffers((int)drawBuffers.size(), drawBuffers.data());
+			glReadBuffers(1, &drawBuffer);
+			glDrawBuffers(1, &drawBuffer);
 
 			uint32_t status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
 			ASSERT(status == GL_FRAMEBUFFER_COMPLETE);
