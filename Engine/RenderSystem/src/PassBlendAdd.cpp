@@ -45,7 +45,7 @@ CPassBlendAdd::~CPassBlendAdd(void)
 void CPassBlendAdd::SetCamera(CCamera* pCamera)
 {
 	if (m_pCamera != pCamera) {
-		m_pCamera  = pCamera;
+		m_pCamera = pCamera;
 		m_ptrDescriptorSetPass->SetUniformBuffer(UNIFORM_CAMERA_NAME, pCamera->GetCameraUniform()->GetUniformBuffer(), 0, pCamera->GetCameraUniform()->GetUniformBuffer()->GetSize());
 	}
 }
@@ -56,12 +56,12 @@ void CPassBlendAdd::SetInputTexture(CGfxRenderTexturePtr ptrColorTexture, CGfxRe
 	CGfxSampler* pSamplerPoint = GfxRenderer()->CreateSampler(GFX_FILTER_NEAREST, GFX_FILTER_NEAREST, GFX_SAMPLER_MIPMAP_MODE_NEAREST, GFX_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE);
 
 	if (m_ptrInputColorTexture != ptrColorTexture) {
-		m_ptrInputColorTexture  = ptrColorTexture;
+		m_ptrInputColorTexture = ptrColorTexture;
 		m_ptrDescriptorSetPass->SetRenderTexture(UNIFORM_COLOR_TEXTURE_NAME, ptrColorTexture, pSamplerPoint);
 	}
 
 	if (m_ptrInputAddTexture != ptrAddTexture) {
-		m_ptrInputAddTexture  = ptrAddTexture;
+		m_ptrInputAddTexture = ptrAddTexture;
 		m_ptrDescriptorSetPass->SetRenderTexture(UNIFORM_ADD_TEXTURE_NAME, ptrAddTexture, pSamplerLinear);
 	}
 }
@@ -69,10 +69,10 @@ void CPassBlendAdd::SetInputTexture(CGfxRenderTexturePtr ptrColorTexture, CGfxRe
 void CPassBlendAdd::SetOutputTexture(CGfxRenderTexturePtr ptrColorTexture)
 {
 	if (m_ptrOutputColorTexture != ptrColorTexture) {
+		m_ptrOutputColorTexture = ptrColorTexture;
 		m_ptrFrameBuffer = GfxRenderer()->NewFrameBuffer(ptrColorTexture->GetWidth(), ptrColorTexture->GetHeight(), numAttachments);
 		m_ptrFrameBuffer->SetAttachmentTexture(0, ptrColorTexture);
 		m_ptrFrameBuffer->Create(ptrRenderPass);
-		m_ptrOutputColorTexture = ptrColorTexture;
 	}
 }
 

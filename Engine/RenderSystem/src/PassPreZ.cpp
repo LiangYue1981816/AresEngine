@@ -46,7 +46,7 @@ CPassPreZ::~CPassPreZ(void)
 void CPassPreZ::SetCamera(CCamera* pCamera)
 {
 	if (m_pCamera != pCamera) {
-		m_pCamera  = pCamera;
+		m_pCamera = pCamera;
 		m_ptrDescriptorSetPass->SetUniformBuffer(UNIFORM_CAMERA_NAME, pCamera->GetCameraUniform()->GetUniformBuffer(), 0, pCamera->GetCameraUniform()->GetUniformBuffer()->GetSize());
 	}
 }
@@ -54,10 +54,10 @@ void CPassPreZ::SetCamera(CCamera* pCamera)
 void CPassPreZ::SetOutputTexture(CGfxRenderTexturePtr ptrDepthTexture)
 {
 	if (m_ptrOutputDepthTexture != ptrDepthTexture) {
+		m_ptrOutputDepthTexture = ptrDepthTexture;
 		m_ptrFrameBuffer = GfxRenderer()->NewFrameBuffer(ptrDepthTexture->GetWidth(), ptrDepthTexture->GetHeight(), numAttachments);
 		m_ptrFrameBuffer->SetAttachmentTexture(0, ptrDepthTexture);
 		m_ptrFrameBuffer->Create(ptrRenderPass);
-		m_ptrOutputDepthTexture = ptrDepthTexture;
 	}
 }
 

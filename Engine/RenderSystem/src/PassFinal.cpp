@@ -43,7 +43,7 @@ CPassFinal::~CPassFinal(void)
 void CPassFinal::SetCamera(CCamera* pCamera)
 {
 	if (m_pCamera != pCamera) {
-		m_pCamera  = pCamera;
+		m_pCamera = pCamera;
 		m_ptrDescriptorSetPass->SetUniformBuffer(UNIFORM_CAMERA_NAME, pCamera->GetCameraUniform()->GetUniformBuffer(), 0, pCamera->GetCameraUniform()->GetUniformBuffer()->GetSize());
 	}
 }
@@ -53,7 +53,7 @@ void CPassFinal::SetInputTexture(CGfxRenderTexturePtr ptrColorTexture)
 	CGfxSampler* pSamplerPoint = GfxRenderer()->CreateSampler(GFX_FILTER_NEAREST, GFX_FILTER_NEAREST, GFX_SAMPLER_MIPMAP_MODE_NEAREST, GFX_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE);
 
 	if (m_ptrInputColorTexture != ptrColorTexture) {
-		m_ptrInputColorTexture  = ptrColorTexture;
+		m_ptrInputColorTexture = ptrColorTexture;
 		m_ptrDescriptorSetPass->SetRenderTexture(UNIFORM_COLOR_TEXTURE_NAME, ptrColorTexture, pSamplerPoint);
 	}
 }
@@ -61,10 +61,10 @@ void CPassFinal::SetInputTexture(CGfxRenderTexturePtr ptrColorTexture)
 void CPassFinal::SetOutputTexture(int indexFrame, CGfxRenderTexturePtr ptrColorTexture)
 {
 	if (m_ptrOutputColorTexture[indexFrame] != ptrColorTexture) {
+		m_ptrOutputColorTexture[indexFrame] = ptrColorTexture;
 		m_ptrFrameBuffer[indexFrame] = GfxRenderer()->NewFrameBuffer(ptrColorTexture->GetWidth(), ptrColorTexture->GetHeight(), numAttachments);
 		m_ptrFrameBuffer[indexFrame]->SetAttachmentTexture(0, ptrColorTexture);
 		m_ptrFrameBuffer[indexFrame]->Create(ptrRenderPass);
-		m_ptrOutputColorTexture[indexFrame] = ptrColorTexture;
 	}
 }
 

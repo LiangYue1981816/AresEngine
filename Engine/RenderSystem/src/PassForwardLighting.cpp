@@ -50,7 +50,7 @@ CPassForwardLighting::~CPassForwardLighting(void)
 void CPassForwardLighting::SetCamera(CCamera* pCamera)
 {
 	if (m_pCamera != pCamera) {
-		m_pCamera  = pCamera;
+		m_pCamera = pCamera;
 		m_ptrDescriptorSetPass->SetUniformBuffer(UNIFORM_CAMERA_NAME, pCamera->GetCameraUniform()->GetUniformBuffer(), 0, pCamera->GetCameraUniform()->GetUniformBuffer()->GetSize());
 	}
 }
@@ -61,12 +61,12 @@ void CPassForwardLighting::SetInputTexture(CGfxRenderTexturePtr ptrShadowTexture
 	CGfxSampler* pSamplerLinear = GfxRenderer()->CreateSampler(GFX_FILTER_NEAREST, GFX_FILTER_LINEAR, GFX_SAMPLER_MIPMAP_MODE_NEAREST, GFX_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE);
 
 	if (m_ptrInputShadowTexture != ptrShadowTexture) {
-		m_ptrInputShadowTexture  = ptrShadowTexture;
+		m_ptrInputShadowTexture = ptrShadowTexture;
 		m_ptrDescriptorSetPass->SetRenderTexture(UNIFORM_SHADOW_TEXTURE_NAME, ptrShadowTexture, pSamplerPoint);
 	}
 
 	if (m_ptrInputSSAOTexture != ptrSSAOTexture) {
-		m_ptrInputSSAOTexture  = ptrSSAOTexture;
+		m_ptrInputSSAOTexture = ptrSSAOTexture;
 		m_ptrDescriptorSetPass->SetRenderTexture(UNIFORM_SSAO_TEXTURE_NAME, ptrSSAOTexture, pSamplerLinear);
 	}
 }
@@ -74,12 +74,12 @@ void CPassForwardLighting::SetInputTexture(CGfxRenderTexturePtr ptrShadowTexture
 void CPassForwardLighting::SetOutputTexture(CGfxRenderTexturePtr ptrColorTexture, CGfxRenderTexturePtr ptrDepthStencilTexture)
 {
 	if (m_ptrOutputColorTexture != ptrColorTexture || m_ptrOutputDepthStencilTexture != ptrDepthStencilTexture) {
+		m_ptrOutputColorTexture = ptrColorTexture;
+		m_ptrOutputDepthStencilTexture = ptrDepthStencilTexture;
 		m_ptrFrameBuffer = GfxRenderer()->NewFrameBuffer(ptrColorTexture->GetWidth(), ptrColorTexture->GetHeight(), numAttachments);
 		m_ptrFrameBuffer->SetAttachmentTexture(0, ptrColorTexture);
 		m_ptrFrameBuffer->SetAttachmentTexture(1, ptrDepthStencilTexture);
 		m_ptrFrameBuffer->Create(ptrRenderPass);
-		m_ptrOutputColorTexture = ptrColorTexture;
-		m_ptrOutputDepthStencilTexture = ptrDepthStencilTexture;
 	}
 }
 
