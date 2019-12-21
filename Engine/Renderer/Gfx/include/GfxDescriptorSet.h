@@ -5,6 +5,8 @@
 typedef struct DescriptorBufferInfo {
 	bool bDirty = false;
 
+	uint32_t binding = 0;
+
 	uint32_t offset = 0;
 	uint32_t range = 0;
 
@@ -14,6 +16,8 @@ typedef struct DescriptorBufferInfo {
 
 typedef struct DescriptorImageInfo {
 	bool bDirty = false;
+
+	uint32_t binding = 0;
 
 	CGfxSampler* pSampler = nullptr;
 
@@ -60,9 +64,6 @@ public:
 
 	virtual const DescriptorImageInfo* GetDescriptorImageInfo(uint32_t name) const = 0;
 	virtual const DescriptorBufferInfo* GetDescriptorBufferInfo(uint32_t name) const = 0;
-
-public:
-	virtual void Update(void) = 0;
 
 
 private:
