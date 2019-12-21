@@ -73,7 +73,6 @@ void CPassFinal::Render(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBu
 	// Update
 	m_pCamera->GetCameraUniform()->Apply();
 	m_pRenderSystem->GetEngineUniform()->Apply();
-	m_ptrDescriptorSetPass->Update();
 
 	// Render
 	const CGfxFrameBufferPtr ptrFrameBuffer = m_ptrFrameBuffer[indexFrame];

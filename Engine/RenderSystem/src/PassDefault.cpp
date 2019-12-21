@@ -70,7 +70,6 @@ void CPassDefault::Render(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommand
 	// Update
 	m_pCamera->GetCameraUniform()->Apply();
 	m_pRenderSystem->GetEngineUniform()->Apply();
-	m_ptrDescriptorSetPass->Update();
 
 	// Render
 	GfxRenderer()->CmdPushDebugGroup(ptrCommandBuffer, "PassDefault");

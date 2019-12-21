@@ -75,8 +75,6 @@ CGLES3DescriptorSet* CGLES3DescriptorSetManager::Create(const CGfxPipelineGraphi
 								((CGLES3FrameBuffer*)pFrameBuffer)->GetAttachmentTexture(itInputAttachment.first),
 								GLES3Renderer()->CreateSampler(GFX_FILTER_NEAREST, GFX_FILTER_NEAREST, GFX_SAMPLER_MIPMAP_MODE_NEAREST, GFX_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE));
 						}
-
-						pDescriptorSet->Update();
 					}
 					m_pInputAttachmentDescriptorSets[(CGLES3FrameBuffer*)pFrameBuffer][(SubpassInformation*)pSubpassInformation][(CGLES3PipelineGraphics*)pPipelineGraphics] = pDescriptorSet;
 				}

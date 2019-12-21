@@ -128,8 +128,6 @@ CVKDescriptorSet* CVKDescriptorSetManager::Create(const CGfxPipelineGraphics* pP
 								((CVKFrameBuffer*)pFrameBuffer)->GetAttachmentTexture(itInputAttachment.first),
 								VKRenderer()->CreateSampler(GFX_FILTER_NEAREST, GFX_FILTER_NEAREST, GFX_SAMPLER_MIPMAP_MODE_NEAREST, GFX_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE));
 						}
-
-						pDescriptorSet->Update();
 					}
 					m_pInputAttachmentDescriptorSets[(CVKFrameBuffer*)pFrameBuffer][(SubpassInformation*)pSubpassInformation][(CVKPipelineGraphics*)pPipelineGraphics] = pDescriptorSet;
 				}

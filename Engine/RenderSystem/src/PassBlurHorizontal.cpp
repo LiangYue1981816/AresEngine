@@ -79,7 +79,6 @@ void CPassBlurHorizontal::Render(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptr
 	// Update
 	m_pCamera->GetCameraUniform()->Apply();
 	m_pRenderSystem->GetEngineUniform()->Apply();
-	m_ptrDescriptorSetPass->Update();
 
 	// Render
 	GfxRenderer()->CmdPushDebugGroup(ptrCommandBuffer, "PassBlurHorizontal");

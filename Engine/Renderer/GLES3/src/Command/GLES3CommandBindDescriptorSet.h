@@ -25,6 +25,8 @@ public:
 		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_BIND_DESCRIPTORSET, "CommandBindDescriptorSet");
 		{
 			if (m_ptrDescriptorSet) {
+				m_ptrDescriptorSet->Update();
+
 				if (m_pPipelineCompute) {
 					m_pPipelineCompute->BindDescriptorSet(m_ptrDescriptorSet);
 				}

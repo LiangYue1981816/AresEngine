@@ -57,8 +57,6 @@ CVKDescriptorSet::CVKDescriptorSet(CVKDevice* pDevice, CVKDescriptorPool* pDescr
 			SetStorageBuffer(itBufferDescriptorInfo.first, itBufferDescriptorInfo.second.ptrStorageBuffer, itBufferDescriptorInfo.second.offset, itBufferDescriptorInfo.second.range);
 		}
 	}
-
-	Update();
 }
 
 CVKDescriptorSet::~CVKDescriptorSet(void)

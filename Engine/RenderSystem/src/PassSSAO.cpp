@@ -91,7 +91,6 @@ void CPassSSAO::Render(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuf
 	// Update
 	m_pCamera->GetCameraUniform()->Apply();
 	m_pRenderSystem->GetEngineUniform()->Apply();
-	m_ptrDescriptorSetPass->Update();
 
 	// Render
 	GfxRenderer()->CmdPushDebugGroup(ptrCommandBuffer, "PassSSAO");

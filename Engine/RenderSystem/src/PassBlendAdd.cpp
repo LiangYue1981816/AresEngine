@@ -86,7 +86,6 @@ void CPassBlendAdd::Render(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrComman
 	// Update
 	m_pCamera->GetCameraUniform()->Apply();
 	m_pRenderSystem->GetEngineUniform()->Apply();
-	m_ptrDescriptorSetPass->Update();
 
 	// Render
 	GfxRenderer()->CmdPushDebugGroup(ptrCommandBuffer, "PassBlendAdd");

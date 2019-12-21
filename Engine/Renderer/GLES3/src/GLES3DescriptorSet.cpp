@@ -45,8 +45,6 @@ CGLES3DescriptorSet::CGLES3DescriptorSet(CGLES3DescriptorSetManager* pManager, u
 			SetStorageBuffer(itBufferDescriptorInfo.first, itBufferDescriptorInfo.second.ptrStorageBuffer, itBufferDescriptorInfo.second.offset, itBufferDescriptorInfo.second.range);
 		}
 	}
-
-	Update();
 }
 
 CGLES3DescriptorSet::~CGLES3DescriptorSet(void)
