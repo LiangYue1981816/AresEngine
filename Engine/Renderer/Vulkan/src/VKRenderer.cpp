@@ -316,7 +316,7 @@ bool CVKRenderer::CmdSetImageLayout(CGfxCommandBufferPtr ptrCommandBuffer, const
 
 bool CVKRenderer::CmdSetBufferBarrier(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxStorageBufferPtr ptrBuffer, GfxAccessFlags srcAccessFlags, GfxAccessFlags dstAccessFlags, GfxPipelineStageFlags srcPipelineStageFlags, GfxPipelineStageFlags dstPipelineStageFlags)
 {
-	return true;
+	return ptrCommandBuffer->CmdSetBufferBarrier(ptrBuffer, srcAccessFlags, dstAccessFlags, srcPipelineStageFlags, dstPipelineStageFlags);
 }
 
 bool CVKRenderer::CmdBeginRenderPass(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass)

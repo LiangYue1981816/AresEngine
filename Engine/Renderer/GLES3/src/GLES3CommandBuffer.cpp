@@ -200,6 +200,11 @@ bool CGLES3CommandBuffer::CmdSetImageLayout(const CGfxRenderTexturePtr ptrTextur
 	}
 }
 
+bool CGLES3CommandBuffer::CmdSetBufferBarrier(const CGfxStorageBufferPtr ptrBuffer, GfxAccessFlags srcAccessFlags, GfxAccessFlags dstAccessFlags, GfxPipelineStageFlags srcPipelineStageFlags, GfxPipelineStageFlags dstPipelineStageFlags)
+{
+	return true;
+}
+
 bool CGLES3CommandBuffer::CmdBeginRenderPass(const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass)
 {
 	ASSERT(ptrRenderPass);

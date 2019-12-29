@@ -2,6 +2,7 @@
 #include "./Command/VKCommandBeginRecord.h"
 #include "./Command/VKCommandEndRecord.h"
 #include "./Command/VKCommandSetImageLayout.h"
+#include "./Command/VKCommandSetBufferBarrier.h"
 #include "./Command/VKCommandBeginRenderPass.h"
 #include "./Command/VKCommandNextSubPass.h"
 #include "./Command/VKCommandEndRenderPass.h"
@@ -297,6 +298,11 @@ bool CVKCommandBuffer::CmdSetImageLayout(const CGfxRenderTexturePtr ptrTexture, 
 	else {
 		return false;
 	}
+}
+
+bool CVKCommandBuffer::CmdSetBufferBarrier(const CGfxStorageBufferPtr ptrBuffer, GfxAccessFlags srcAccessFlags, GfxAccessFlags dstAccessFlags, GfxPipelineStageFlags srcPipelineStageFlags, GfxPipelineStageFlags dstPipelineStageFlags)
+{
+	return true;
 }
 
 bool CVKCommandBuffer::CmdBeginRenderPass(const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass)
