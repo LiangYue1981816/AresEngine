@@ -1,4 +1,5 @@
 #include "GLES3Renderer.h"
+#include "./Command/GLES3CommandSetBufferBarrier.h"
 #include "./Command/GLES3CommandBeginRenderPass.h"
 #include "./Command/GLES3CommandNextSubPass.h"
 #include "./Command/GLES3CommandEndRenderPass.h"
@@ -202,7 +203,15 @@ bool CGLES3CommandBuffer::CmdSetImageLayout(const CGfxRenderTexturePtr ptrTextur
 
 bool CGLES3CommandBuffer::CmdSetBufferBarrier(const CGfxStorageBufferPtr ptrBuffer, GfxPipelineStageFlagBits pipelineStage)
 {
-	return true;
+	ASSERT(ptrBuffer);
+
+	if (IsMainCommandBuffer() == true && IsInRenderPass() == false) {
+		m_pCommands.emplace_back(new CGLES3CommandSetBufferBarrier(ptrBuffer, pipelineStage));
+		return true;
+	}
+	else {
+		return false;
+	}
 }
 
 bool CGLES3CommandBuffer::CmdBeginRenderPass(const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass)
