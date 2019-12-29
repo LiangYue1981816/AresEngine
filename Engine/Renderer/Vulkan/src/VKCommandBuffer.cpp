@@ -306,7 +306,7 @@ bool CVKCommandBuffer::CmdSetBufferBarrier(const CGfxStorageBufferPtr ptrBuffer,
 	ASSERT(m_vkCommandBuffer);
 
 	if (IsMainCommandBuffer() == true && IsInRenderPass() == false) {
-		m_pCommands.emplace_back(new CVKCommandSetBufferBarrier(m_vkCommandBuffer, ptrBuffer, srcAccessFlags, dstAccessFlags, srcPipelineStageFlags, dstPipelineStageFlags));
+		m_pCommands.emplace_back(new CVKCommandSetBufferBarrier(m_vkCommandBuffer, ptrBuffer, pipelineStage));
 		return true;
 	}
 	else {
