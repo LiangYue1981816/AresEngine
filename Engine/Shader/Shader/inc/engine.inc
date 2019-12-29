@@ -40,7 +40,8 @@ layout (location = 8)                                      in mediump int inInst
 // Base
 #define DESCRIPTOR_BIND_ENGINE                             0
 #define DESCRIPTOR_BIND_CAMERA                             1
-#define DESCRIPTOR_BIND_SCENE                              2
+#define DESCRIPTOR_BIND_SCENE_DATA                         2
+#define DESCRIPTOR_BIND_TRANSFER_SCENE_DATA                3
 
 // Forward/Deferred
 #define DESCRIPTOR_BIND_DEPTH_TEXTURE                      2
@@ -109,19 +110,27 @@ layout (location = 8)                                      in mediump int inInst
 		highp mat4 mainShadowProjectionViewMatrix[4];                              \
 	} engine
 
-#define USE_SCENE_STORAGE                                                          \
-	struct InstanceData                                                            \
+	struct InstanceData
+	{
+		highp mat4 transformMatrix;
+		highp vec4 center;
+
+		mediump vec4 lightColor;
+		mediump vec4 lightAttenuation;
+	};
+
+#define USE_SCENE_DATA_STORAGE                                                     \
+	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_SCENE_DATA) buffer SceneData               \
 	{                                                                              \
-		highp mat4 transformMatrix;                                                \
-		highp vec4 center;                                                         \
-		                                                                           \
-		mediump vec4 lightColor;                                                   \
-		mediump vec4 lightAttenuation;                                             \
-	};                                                                             \
-	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_SCENE) buffer SceneData                    \
-	{                                                                              \
-		InstanceData instanceData[];                                               \
+		InstanceData data[];                                                       \
 	} sceneData
+
+#define USE_TRANSFER_SCENE_DATA_STORAGE                                            \
+	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_TRANSFER_SCENE_DATA) buffer TransferSceneData \
+	{                                                                              \
+		int index;                                                                 \
+		InstanceData data[];                                                       \
+	} transferSceneData
 
 #define USE_DEPTH_TEXTURE_UNIFORM                                                  \
 	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_DEPTH_TEXTURE) highp uniform sampler2D texDepth
