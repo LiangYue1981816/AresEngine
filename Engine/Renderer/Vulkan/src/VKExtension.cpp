@@ -48,6 +48,12 @@ VkResult vkBeginCommandBufferSecondary(VkCommandBuffer vkCommandBuffer, VkComman
 	return vkBeginCommandBuffer(vkCommandBuffer, &beginInfo);
 }
 
+VkResult vkCmdBindVertexBuffer(VkCommandBuffer vkCommandBuffer, uint32_t binding, VkBuffer vkBuffer, VkDeviceSize offset)
+{
+	vkCmdBindVertexBuffers(vkCommandBuffer, binding, 1, &vkBuffer, &offset);
+	return VK_SUCCESS;
+}
+
 VkResult vkCmdBufferMemoryBarrier(VkCommandBuffer vkCommandBuffer, VkBuffer vkBuffer, VkAccessFlags srcAccessFlags, VkAccessFlags dstAccessFlags, VkPipelineStageFlags srcPipelineStageFlags, VkPipelineStageFlags dstPipelineStageFlags, VkDeviceSize offset, VkDeviceSize size)
 {
 	VkBufferMemoryBarrier barrier = {};
@@ -61,6 +67,16 @@ VkResult vkCmdBufferMemoryBarrier(VkCommandBuffer vkCommandBuffer, VkBuffer vkBu
 	barrier.offset = offset;
 	barrier.size = size;
 	vkCmdPipelineBarrier(vkCommandBuffer, srcPipelineStageFlags, dstPipelineStageFlags, 0, 0, nullptr, 1, &barrier, 0, nullptr);
+	return VK_SUCCESS;
+}
+
+VkResult vkCmdBufferMemoryBarrierRead(VkCommandBuffer vkCommandBuffer, VkBuffer vkBuffer, VkPipelineStageFlags dstPipelineStageFlags, VkDeviceSize offset, VkDeviceSize size)
+{
+	return VK_SUCCESS;
+}
+
+VkResult vkCmdBufferMemoryBarrierWrite(VkCommandBuffer vkCommandBuffer, VkBuffer vkBuffer, VkPipelineStageFlags dstPipelineStageFlags, VkDeviceSize offset, VkDeviceSize size)
+{
 	return VK_SUCCESS;
 }
 
@@ -118,9 +134,4 @@ VkResult vkSubmitCommandBuffer(VkQueue vkQueue, VkCommandBuffer vkCommandBuffer,
 	submitInfo.signalSemaphoreCount = vkSignalSemaphore != VK_NULL_HANDLE ? 1 : 0;
 	submitInfo.pSignalSemaphores = vkSignalSemaphore != VK_NULL_HANDLE ? &vkSignalSemaphore : nullptr;
 	return vkQueueSubmit(vkQueue, 1, &submitInfo, vkFence);
-}
-
-void vkCmdBindVertexBuffer(VkCommandBuffer vkCommandBuffer, uint32_t binding, VkBuffer vkBuffer, VkDeviceSize offset)
-{
-	vkCmdBindVertexBuffers(vkCommandBuffer, binding, 1, &vkBuffer, &offset);
 }
