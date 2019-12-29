@@ -308,6 +308,11 @@ bool CGLES3Renderer::CmdSetImageLayout(CGfxCommandBufferPtr ptrCommandBuffer, co
 	return ptrCommandBuffer->CmdSetImageLayout(ptrTexture, imageLayout);
 }
 
+bool CGLES3Renderer::CmdSetBufferBarrier(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxStorageBufferPtr ptrBuffer, GfxAccessFlags srcAccessFlags, GfxAccessFlags dstAccessFlags, GfxPipelineStageFlags srcPipelineStageFlags, GfxPipelineStageFlags dstPipelineStageFlags)
+{
+	return true;
+}
+
 bool CGLES3Renderer::CmdBeginRenderPass(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass)
 {
 	return ptrCommandBuffer->CmdBeginRenderPass(ptrFrameBuffer, ptrRenderPass);
