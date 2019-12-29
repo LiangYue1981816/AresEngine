@@ -104,6 +104,16 @@ bool CVKBuffer::BufferData(size_t offset, size_t size, const void* data)
 	return true;
 }
 
+bool CVKBuffer::PipelineBarrier(VkCommandBuffer vkCommandBuffer, VkPipelineStageFlags pipelineStageFlags, VkDeviceSize offset, VkDeviceSize size)
+{
+	ASSERT(vkCommandBuffer);
+	ASSERT(m_vkBuffer);
+	ASSERT(m_vkSize >= offset + size);
+
+	CALL_VK_FUNCTION_ASSERT(vkCmdBufferMemoryBarrier(vkCommandBuffer, m_vkBuffer, pipelineStageFlags, offset, size));
+	return true;
+}
+
 bool CVKBuffer::PipelineBarrier(VkCommandBuffer vkCommandBuffer, VkAccessFlags srcAccessFlags, VkAccessFlags dstAccessFlags, VkPipelineStageFlags srcPipelineStageFlags, VkPipelineStageFlags dstPipelineStageFlags, VkDeviceSize offset, VkDeviceSize size)
 {
 	ASSERT(vkCommandBuffer);
