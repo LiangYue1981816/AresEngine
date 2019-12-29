@@ -311,11 +311,6 @@ void CRenderSystem::SetMainShadowLookat(int indexLevel, float eyex, float eyey, 
 	m_pEngineUniform->SetMainShadowLookat(indexLevel, eyex, eyey, eyez, centerx, centery, centerz, upx, upy, upz);
 }
 
-void CRenderSystem::UpdateScene(CTaskGraph& taskGraph) const
-{
-	m_pGPUScene->Update(taskGraph);
-}
-
 void CRenderSystem::UpdateCamera(CTaskGraph& taskGraph, CCamera* pCamera) const
 {
 	pCamera->Update(taskGraph);
@@ -329,6 +324,9 @@ void CRenderSystem::RenderDefault(CTaskGraph& taskGraph, CCamera* pCamera, bool 
 	GfxRenderer()->AcquireNextFrame();
 	{
 		ptrCommandBuffer->Clearup();
+
+		m_pGPUScene->Update(taskGraph, ptrCommandBuffer);
+
 		GfxRenderer()->BeginRecord(ptrCommandBuffer);
 		{
 			uint32_t rtFinal;
@@ -367,6 +365,9 @@ void CRenderSystem::RenderForwardLighting(CTaskGraph& taskGraph, CCamera* pCamer
 	GfxRenderer()->AcquireNextFrame();
 	{
 		ptrCommandBuffer->Clearup();
+
+		m_pGPUScene->Update(taskGraph, ptrCommandBuffer);
+
 		GfxRenderer()->BeginRecord(ptrCommandBuffer);
 		{
 			uint32_t rtFinal;

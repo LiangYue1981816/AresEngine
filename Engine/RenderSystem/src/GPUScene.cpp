@@ -91,7 +91,7 @@ const CGPUScene::InstanceData& CGPUScene::GetInstanceData(int index) const
 	return invalid;
 }
 
-void CGPUScene::Update(CTaskGraph& taskGraph)
+void CGPUScene::Update(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer)
 {
 	bool bNeedUpdate = false;
 

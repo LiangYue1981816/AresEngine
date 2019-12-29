@@ -179,7 +179,6 @@ public:
 	void SetMainShadowLookat(int indexLevel, float eyex, float eyey, float eyez, float centerx, float centery, float centerz, float upx, float upy, float upz);
 
 private:
-	void UpdateScene(CTaskGraph& taskGraph) const;
 	void UpdateCamera(CTaskGraph& taskGraph, CCamera* pCamera) const;
 
 private:
