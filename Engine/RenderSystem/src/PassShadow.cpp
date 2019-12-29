@@ -36,17 +36,17 @@ CPassShadow::CPassShadow(CRenderSystem* pRenderSystem)
 	}
 
 	CGfxDescriptorLayoutPtr ptrDescriptorLayout = GfxRenderer()->NewDescriptorLayout(DESCRIPTOR_SET_PASS);
-	ptrDescriptorLayout->SetStorageBlockBinding(STORAGE_SCENE_NAME, STORAGE_SCENE_BIND);
 	ptrDescriptorLayout->SetUniformBlockBinding(UNIFORM_ENGINE_NAME, UNIFORM_ENGINE_BIND);
 	ptrDescriptorLayout->SetUniformBlockBinding(UNIFORM_CAMERA_NAME, UNIFORM_CAMERA_BIND);
+	ptrDescriptorLayout->SetStorageBlockBinding(STORAGE_SCENE_DATA_NAME, STORAGE_SCENE_DATA_BIND);
 	ptrDescriptorLayout->Create();
 
 	for (int indexLevel = 0; indexLevel < 4; indexLevel++) {
 		m_pShadowCameraUniform[indexLevel] = new CGfxUniformCamera;
 		m_ptrDescriptorSetPass[indexLevel] = GfxRenderer()->NewDescriptorSet(HashValueFormat("%d_%x_%p", indexLevel, PASS_SHADOW_NAME, this), ptrDescriptorLayout);
-		m_ptrDescriptorSetPass[indexLevel]->SetStorageBuffer(STORAGE_SCENE_NAME, m_pRenderSystem->GetGPUScene()->GetInstanceBuffer(), 0, m_pRenderSystem->GetGPUScene()->GetInstanceBuffer()->GetSize());
 		m_ptrDescriptorSetPass[indexLevel]->SetUniformBuffer(UNIFORM_ENGINE_NAME, m_pRenderSystem->GetEngineUniform()->GetUniformBuffer(), 0, m_pRenderSystem->GetEngineUniform()->GetUniformBuffer()->GetSize());
 		m_ptrDescriptorSetPass[indexLevel]->SetUniformBuffer(UNIFORM_CAMERA_NAME, m_pShadowCameraUniform[indexLevel]->GetUniformBuffer(), 0, m_pShadowCameraUniform[indexLevel]->GetUniformBuffer()->GetSize());
+		m_ptrDescriptorSetPass[indexLevel]->SetStorageBuffer(STORAGE_SCENE_DATA_NAME, m_pRenderSystem->GetGPUScene()->GetInstanceBuffer(), 0, m_pRenderSystem->GetGPUScene()->GetInstanceBuffer()->GetSize());
 	}
 }
 
