@@ -443,7 +443,6 @@ typedef enum GfxAccessFlagBits {
 	GFX_ACCESS_FRAGMENT_DENSITY_MAP_READ_BIT_EXT = 0x01000000,
 	GFX_ACCESS_FLAG_BITS_MAX_ENUM = 0x7FFFFFFF
 } GfxAccessFlagBits;
-typedef uint32_t GfxAccessFlags;
 
 typedef enum GfxPipelineStageFlagBits {
 	GFX_PIPELINE_STAGE_TOP_OF_PIPE_BIT = 0x00000001,
@@ -474,4 +473,3 @@ typedef enum GfxPipelineStageFlagBits {
 	GFX_PIPELINE_STAGE_FRAGMENT_DENSITY_PROCESS_BIT_EXT = 0x00800000,
 	GFX_PIPELINE_STAGE_FLAG_BITS_MAX_ENUM = 0x7FFFFFFF
 } GfxPipelineStageFlagBits;
-typedef uint32_t GfxPipelineStageFlags;

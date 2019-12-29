@@ -314,9 +314,9 @@ bool CVKRenderer::CmdSetImageLayout(CGfxCommandBufferPtr ptrCommandBuffer, const
 	return ptrCommandBuffer->CmdSetImageLayout(ptrTexture, imageLayout);
 }
 
-bool CVKRenderer::CmdSetBufferBarrier(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxStorageBufferPtr ptrBuffer, GfxAccessFlags srcAccessFlags, GfxAccessFlags dstAccessFlags, GfxPipelineStageFlags srcPipelineStageFlags, GfxPipelineStageFlags dstPipelineStageFlags)
+bool CVKRenderer::CmdSetBufferBarrier(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxStorageBufferPtr ptrBuffer, GfxPipelineStageFlagBits pipelineStage)
 {
-	return ptrCommandBuffer->CmdSetBufferBarrier(ptrBuffer, srcAccessFlags, dstAccessFlags, srcPipelineStageFlags, dstPipelineStageFlags);
+	return ptrCommandBuffer->CmdSetBufferBarrier(ptrBuffer, pipelineStage);
 }
 
 bool CVKRenderer::CmdBeginRenderPass(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass)
