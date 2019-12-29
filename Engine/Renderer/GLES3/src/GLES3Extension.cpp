@@ -2,13 +2,6 @@
 
 
 #pragma region OpenGL extension
-void glReadBuffers(int n, const uint32_t* bufs)
-{
-	for (int indexBuffer = 0; indexBuffer < n; indexBuffer++) {
-		glReadBuffer(bufs[indexBuffer]);
-	}
-}
-
 uint32_t glGetShaderType(shader_kind kind)
 {
 	switch ((int)kind) {
@@ -40,6 +33,13 @@ uint32_t glGetProgramStage(shader_kind kind)
 
 	default:
 		return GL_INVALID_ENUM;
+	}
+}
+
+void glReadBuffers(int n, const uint32_t* bufs)
+{
+	for (int indexBuffer = 0; indexBuffer < n; indexBuffer++) {
+		glReadBuffer(bufs[indexBuffer]);
 	}
 }
 
