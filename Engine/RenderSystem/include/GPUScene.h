@@ -77,6 +77,11 @@ private:
 	eastl::unordered_set<int> m_freeIndex;
 
 private:
+	CGfxShader* m_pShaderCompute;
+	CGfxPipelineCompute* m_pPipelineCompute;
+	CGfxDescriptorSetPtr m_ptrDescriptorSet;
+
+private:
 	CGfxStorageBufferPtr m_ptrInstanceBuffer;
 	CGfxStorageBufferPtr m_ptrTransferBuffer;
 };

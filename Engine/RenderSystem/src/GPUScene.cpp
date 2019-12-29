@@ -5,12 +5,29 @@
 CGPUScene::CGPUScene(void)
 	: m_indexDefaultInstance(INVALID_VALUE)
 	, m_indexPostProcessInstnace(INVALID_VALUE)
+
+	, m_pShaderCompute(nullptr)
+	, m_pPipelineCompute(nullptr)
 {
+	char szFileName[] = "UpdateSceneData.glsl";
+	char szBinFileName[_MAX_STRING] = { 0 };
+
+	sprintf(szBinFileName, "%x.comp", HashValue(szFileName));
+	ShaderCompiler()->Compile(FileManager()->GetFullName(szFileName), szBinFileName, shaderc_compute_shader);
+
+	m_pShaderCompute = GfxRenderer()->CreateShader(szBinFileName, compute_shader);
+	m_pPipelineCompute = GfxRenderer()->CreatePipelineCompute(m_pShaderCompute);
+
+	const uint32_t size = sizeof(InstanceData) * 16 * 1024;
+	m_ptrInstanceBuffer = GfxRenderer()->NewStorageBuffer(size);
+	m_ptrTransferBuffer = GfxRenderer()->NewStorageBuffer(size);
+
+	m_ptrDescriptorSet = GfxRenderer()->NewDescriptorSet(HashValue(szFileName), m_pPipelineCompute->GetDescriptorLayout(DESCRIPTOR_SET_PASS));
+	m_ptrDescriptorSet->SetStorageBuffer(STORAGE_SCENE_DATA_NAME, m_ptrInstanceBuffer, 0, m_ptrInstanceBuffer->GetSize());
+	m_ptrDescriptorSet->SetStorageBuffer(STORAGE_TRANSFER_SCENE_DATA_NAME, m_ptrTransferBuffer, 0, m_ptrTransferBuffer->GetSize());
+
 	m_indexDefaultInstance = AddInstance();
 	m_indexPostProcessInstnace = AddInstance();
-
-	m_ptrInstanceBuffer = GfxRenderer()->NewStorageBuffer(sizeof(InstanceData) * 16 * 1024);
-	m_ptrTransferBuffer = GfxRenderer()->NewStorageBuffer(sizeof(TransferData) * 16 * 1024);
 }
 
 CGPUScene::~CGPUScene(void)
