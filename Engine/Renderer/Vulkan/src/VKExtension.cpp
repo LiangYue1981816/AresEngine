@@ -70,12 +70,7 @@ VkResult vkCmdBufferMemoryBarrier(VkCommandBuffer vkCommandBuffer, VkBuffer vkBu
 	return VK_SUCCESS;
 }
 
-VkResult vkCmdBufferMemoryBarrierRead(VkCommandBuffer vkCommandBuffer, VkBuffer vkBuffer, VkPipelineStageFlags dstPipelineStageFlags, VkDeviceSize offset, VkDeviceSize size)
-{
-	return VK_SUCCESS;
-}
-
-VkResult vkCmdBufferMemoryBarrierWrite(VkCommandBuffer vkCommandBuffer, VkBuffer vkBuffer, VkPipelineStageFlags dstPipelineStageFlags, VkDeviceSize offset, VkDeviceSize size)
+VkResult vkCmdBufferMemoryBarrier(VkCommandBuffer vkCommandBuffer, VkBuffer vkBuffer, VkPipelineStageFlags pipelineStageFlags, VkDeviceSize offset, VkDeviceSize size)
 {
 	return VK_SUCCESS;
 }
