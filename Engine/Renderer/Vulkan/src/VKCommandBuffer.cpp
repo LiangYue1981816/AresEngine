@@ -302,7 +302,16 @@ bool CVKCommandBuffer::CmdSetImageLayout(const CGfxRenderTexturePtr ptrTexture, 
 
 bool CVKCommandBuffer::CmdSetBufferBarrier(const CGfxStorageBufferPtr ptrBuffer, GfxAccessFlags srcAccessFlags, GfxAccessFlags dstAccessFlags, GfxPipelineStageFlags srcPipelineStageFlags, GfxPipelineStageFlags dstPipelineStageFlags)
 {
-	return true;
+	ASSERT(ptrBuffer);
+	ASSERT(m_vkCommandBuffer);
+
+	if (IsMainCommandBuffer() == true && IsInRenderPass() == false) {
+		m_pCommands.emplace_back(new CVKCommandSetBufferBarrier(m_vkCommandBuffer, ptrBuffer, srcAccessFlags, dstAccessFlags, srcPipelineStageFlags, dstPipelineStageFlags));
+		return true;
+	}
+	else {
+		return false;
+	}
 }
 
 bool CVKCommandBuffer::CmdBeginRenderPass(const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass)
