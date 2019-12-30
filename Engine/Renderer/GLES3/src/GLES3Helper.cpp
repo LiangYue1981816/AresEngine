@@ -375,10 +375,8 @@ GLenum CGLES3Helper::TranslateBarrier(GfxAccessFlags flags)
 {
 	GLenum barrier = 0;
 
-	for (int index = 0; index < 32; index++) {
-		if (flags & (1U << index)) {
-
-		}
+	if (flags & GFX_ACCESS_VERTEX_ATTRIBUTE_READ_BIT) {
+		barrier |= GL_VERTEX_ATTRIB_ARRAY_BARRIER_BIT;
 	}
 
 	return barrier ? barrier : GL_INVALID_ENUM;
