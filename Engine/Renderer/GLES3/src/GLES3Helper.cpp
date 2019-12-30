@@ -370,3 +370,16 @@ GLenum CGLES3Helper::TranslateTextureTarget(GfxCubemapFace face)
 		return GL_INVALID_ENUM;
 	}
 }
+
+GLenum CGLES3Helper::TranslateBarrier(GfxAccessFlags flags)
+{
+	GLenum barrier = 0;
+
+	for (int index = 0; index < 32; index++) {
+		if (flags & (1U << index)) {
+
+		}
+	}
+
+	return barrier ? barrier : GL_INVALID_ENUM;
+}

@@ -23,6 +23,7 @@ public:
 	static GLenum TranslateAddressMode(GfxSamplerAddressMode mode);
 	static GLenum TranslateTextureTarget(GfxTextureType type);
 	static GLenum TranslateTextureTarget(GfxCubemapFace face);
+	static GLenum TranslateBarrier(GfxAccessFlags flags);
 
 
 private:
