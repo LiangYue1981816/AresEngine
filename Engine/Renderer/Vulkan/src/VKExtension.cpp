@@ -72,7 +72,9 @@ VkResult vkCmdBufferMemoryBarrier(VkCommandBuffer vkCommandBuffer, VkBuffer vkBu
 
 VkResult vkCmdBufferMemoryBarrier(VkCommandBuffer vkCommandBuffer, VkBuffer vkBuffer, VkAccessFlags srcAccessFlags, VkAccessFlags dstAccessFlags, VkDeviceSize offset, VkDeviceSize size)
 {
-	return VK_SUCCESS;
+	VkPipelineStageFlags srcPipelineStageFlags = CVKHelper::GetPipelineStageFlagsByAccessFlags(srcAccessFlags);
+	VkPipelineStageFlags dstPipelineStageFlags = CVKHelper::GetPipelineStageFlagsByAccessFlags(dstAccessFlags);
+	return vkCmdBufferMemoryBarrier(vkCommandBuffer, vkBuffer, srcAccessFlags, dstAccessFlags, srcPipelineStageFlags, dstPipelineStageFlags, offset, size);
 }
 
 VkResult vkCmdImageMemoryBarrier(VkCommandBuffer vkCommandBuffer, VkImage vkImage, VkImageLayout srcLayout, VkImageLayout dstLayout, VkAccessFlags srcAccessFlags, VkAccessFlags dstAccessFlags, VkPipelineStageFlags srcPipelineStageFlags, VkPipelineStageFlags dstPipelineStageFlags, VkImageSubresourceRange range)
