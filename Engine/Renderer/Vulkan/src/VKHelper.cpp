@@ -168,6 +168,8 @@ VkPipelineStageFlags CVKHelper::GetPipelineStageFlagsByImageLayout(VkImageLayout
 
 VkPipelineStageFlags CVKHelper::GetPipelineStageFlagsByAccessFlags(VkAccessFlags access)
 {
+	// https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkAccessFlagBits.html
+
 	switch ((int)access) {
 	case VK_ACCESS_INDIRECT_COMMAND_READ_BIT:
 		return VK_PIPELINE_STAGE_DRAW_INDIRECT_BIT;
@@ -181,14 +183,14 @@ VkPipelineStageFlags CVKHelper::GetPipelineStageFlagsByAccessFlags(VkAccessFlags
 	case VK_ACCESS_UNIFORM_READ_BIT:
 		return VK_PIPELINE_STAGE_VERTEX_SHADER_BIT | VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT | VK_PIPELINE_STAGE_COMPUTE_SHADER_BIT;
 
-	case VK_ACCESS_INPUT_ATTACHMENT_READ_BIT:
-		return VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT;
-
 	case VK_ACCESS_SHADER_READ_BIT:
 		return VK_PIPELINE_STAGE_VERTEX_SHADER_BIT | VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT | VK_PIPELINE_STAGE_COMPUTE_SHADER_BIT;
 
 	case VK_ACCESS_SHADER_WRITE_BIT:
 		return VK_PIPELINE_STAGE_VERTEX_SHADER_BIT | VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT | VK_PIPELINE_STAGE_COMPUTE_SHADER_BIT;
+
+	case VK_ACCESS_INPUT_ATTACHMENT_READ_BIT:
+		return VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT;
 
 	case VK_ACCESS_COLOR_ATTACHMENT_READ_BIT:
 		return VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
@@ -213,6 +215,18 @@ VkPipelineStageFlags CVKHelper::GetPipelineStageFlagsByAccessFlags(VkAccessFlags
 
 	case VK_ACCESS_HOST_WRITE_BIT:
 		return VK_PIPELINE_STAGE_HOST_BIT;
+
+	case VK_ACCESS_MEMORY_READ_BIT:
+		return VK_PIPELINE_STAGE_ALL_COMMANDS_BIT;
+
+	case VK_ACCESS_MEMORY_WRITE_BIT:
+		return VK_PIPELINE_STAGE_ALL_COMMANDS_BIT;
+
+	case VK_ACCESS_TRANSFORM_FEEDBACK_WRITE_BIT_EXT:
+		return VK_PIPELINE_STAGE_TRANSFORM_FEEDBACK_BIT_EXT;
+
+	case VK_ACCESS_TRANSFORM_FEEDBACK_COUNTER_WRITE_BIT_EXT:
+		return VK_PIPELINE_STAGE_TRANSFORM_FEEDBACK_BIT_EXT;
 
 	default:
 		return VK_PIPELINE_STAGE_FLAG_BITS_MAX_ENUM;
@@ -293,9 +307,9 @@ VkPrimitiveTopology CVKHelper::TranslatePrimitiveTopology(GfxPrimitiveTopology t
 	}
 }
 
-VkPolygonMode CVKHelper::TranslatePolytonMode(GfxPolygonMode polygonMode)
+VkPolygonMode CVKHelper::TranslatePolytonMode(GfxPolygonMode mode)
 {
-	switch ((int)polygonMode) {
+	switch ((int)mode) {
 	case GFX_POLYGON_MODE_FILL:
 		return VK_POLYGON_MODE_FILL;
 
@@ -310,10 +324,10 @@ VkPolygonMode CVKHelper::TranslatePolytonMode(GfxPolygonMode polygonMode)
 	}
 }
 
-VkCullModeFlags CVKHelper::TranslateCullModeFlags(bool bEnableCullFace, GfxCullFace cullFace)
+VkCullModeFlags CVKHelper::TranslateCullModeFlags(bool enable, GfxCullFace face)
 {
-	if (bEnableCullFace) {
-		switch ((int)cullFace) {
+	if (enable) {
+		switch ((int)face) {
 		case GFX_CULLFACE_FRONT:
 			return VK_CULL_MODE_FRONT_BIT;
 
@@ -332,9 +346,9 @@ VkCullModeFlags CVKHelper::TranslateCullModeFlags(bool bEnableCullFace, GfxCullF
 	}
 }
 
-VkFrontFace CVKHelper::TranslateFrontFace(GfxFrontFace frontFace)
+VkFrontFace CVKHelper::TranslateFrontFace(GfxFrontFace face)
 {
-	switch ((int)frontFace) {
+	switch ((int)face) {
 	case GFX_FRONTFACE_CW:
 		return VK_FRONT_FACE_CLOCKWISE;
 
@@ -433,9 +447,9 @@ VkBlendOp CVKHelper::TranslateBlendOp(GfxBlendOp op)
 	}
 }
 
-VkBlendFactor CVKHelper::TranslateBlendFactor(GfxBlendFactor blendFactor)
+VkBlendFactor CVKHelper::TranslateBlendFactor(GfxBlendFactor factor)
 {
-	switch ((int)blendFactor) {
+	switch ((int)factor) {
 	case GFX_BLENDFACTOR_ZERO:
 		return VK_BLEND_FACTOR_ZERO;
 
@@ -534,9 +548,9 @@ VkFilter CVKHelper::TranslateFilter(GfxFilter filter)
 	}
 }
 
-VkSamplerMipmapMode CVKHelper::TranslateSamplerMipmapMode(GfxSamplerMipmapMode mipmapMode)
+VkSamplerMipmapMode CVKHelper::TranslateSamplerMipmapMode(GfxSamplerMipmapMode mode)
 {
-	switch ((int)mipmapMode) {
+	switch ((int)mode) {
 	case GFX_SAMPLER_MIPMAP_MODE_NEAREST:
 		return VK_SAMPLER_MIPMAP_MODE_NEAREST;
 
@@ -548,9 +562,9 @@ VkSamplerMipmapMode CVKHelper::TranslateSamplerMipmapMode(GfxSamplerMipmapMode m
 	}
 }
 
-VkSamplerAddressMode CVKHelper::TranslateSamplerAddressMode(GfxSamplerAddressMode addressMode)
+VkSamplerAddressMode CVKHelper::TranslateSamplerAddressMode(GfxSamplerAddressMode mode)
 {
-	switch ((int)addressMode) {
+	switch ((int)mode) {
 	case GFX_SAMPLER_ADDRESS_MODE_REPEAT:
 		return VK_SAMPLER_ADDRESS_MODE_REPEAT;
 
@@ -571,9 +585,9 @@ VkSamplerAddressMode CVKHelper::TranslateSamplerAddressMode(GfxSamplerAddressMod
 	}
 }
 
-VkImageLayout CVKHelper::TranslateImageLayout(GfxImageLayout imageLayout)
+VkImageLayout CVKHelper::TranslateImageLayout(GfxImageLayout layout)
 {
-	switch ((int)imageLayout) {
+	switch ((int)layout) {
 	case GFX_IMAGE_LAYOUT_GENERAL:
 		return VK_IMAGE_LAYOUT_GENERAL;
 
