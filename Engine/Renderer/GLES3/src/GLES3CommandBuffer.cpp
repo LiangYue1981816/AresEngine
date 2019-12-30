@@ -201,12 +201,12 @@ bool CGLES3CommandBuffer::CmdSetImageLayout(const CGfxRenderTexturePtr ptrTextur
 	}
 }
 
-bool CGLES3CommandBuffer::CmdSetBufferBarrier(const CGfxStorageBufferPtr ptrBuffer, GfxPipelineStageFlagBits pipelineStage)
+bool CGLES3CommandBuffer::CmdSetBufferBarrier(const CGfxStorageBufferPtr ptrBuffer, GfxAccessFlags srcAccessFlags, GfxAccessFlags dstAccessFlags)
 {
 	ASSERT(ptrBuffer);
 
 	if (IsMainCommandBuffer() == true && IsInRenderPass() == false) {
-		m_pCommands.emplace_back(new CGLES3CommandSetBufferBarrier(ptrBuffer, pipelineStage));
+		m_pCommands.emplace_back(new CGLES3CommandSetBufferBarrier(ptrBuffer, srcAccessFlags, dstAccessFlags));
 		return true;
 	}
 	else {

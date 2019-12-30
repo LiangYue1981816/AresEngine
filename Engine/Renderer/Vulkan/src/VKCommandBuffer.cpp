@@ -300,13 +300,13 @@ bool CVKCommandBuffer::CmdSetImageLayout(const CGfxRenderTexturePtr ptrTexture, 
 	}
 }
 
-bool CVKCommandBuffer::CmdSetBufferBarrier(const CGfxStorageBufferPtr ptrBuffer, GfxPipelineStageFlagBits pipelineStage)
+bool CVKCommandBuffer::CmdSetBufferBarrier(const CGfxStorageBufferPtr ptrBuffer, GfxAccessFlags srcAccessFlags, GfxAccessFlags dstAccessFlags)
 {
 	ASSERT(ptrBuffer);
 	ASSERT(m_vkCommandBuffer);
 
 	if (IsMainCommandBuffer() == true && IsInRenderPass() == false) {
-		m_pCommands.emplace_back(new CVKCommandSetBufferBarrier(m_vkCommandBuffer, ptrBuffer, pipelineStage));
+		m_pCommands.emplace_back(new CVKCommandSetBufferBarrier(m_vkCommandBuffer, ptrBuffer, srcAccessFlags, dstAccessFlags));
 		return true;
 	}
 	else {

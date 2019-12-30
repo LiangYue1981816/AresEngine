@@ -5,10 +5,11 @@
 class CVKCommandSetBufferBarrier : public CGfxCommandBase
 {
 public:
-	CVKCommandSetBufferBarrier(VkCommandBuffer vkCommandBuffer, const CGfxStorageBufferPtr ptrBuffer, GfxPipelineStageFlagBits pipelineStage)
+	CVKCommandSetBufferBarrier(VkCommandBuffer vkCommandBuffer, const CGfxStorageBufferPtr ptrBuffer, GfxAccessFlags srcAccessFlags, GfxAccessFlags dstAccessFlags)
 		: m_vkCommandBuffer(vkCommandBuffer)
 		, m_ptrBuffer(ptrBuffer)
-		, m_pipelineStage(pipelineStage)
+		, m_srcAccessFlags(srcAccessFlags)
+		, m_dstAccessFlags(dstAccessFlags)
 	{
 		Execute();
 	}
@@ -25,7 +26,7 @@ public:
 		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_SET_BUFFERBARRIER, "CommandSetBufferBarrier");
 		{
 			if (m_ptrBuffer) {
-				((CVKStorageBuffer*)m_ptrBuffer.GetPointer())->PipelineBarrier(m_vkCommandBuffer, m_pipelineStage, 0, m_ptrBuffer->GetSize());
+				((CVKStorageBuffer*)m_ptrBuffer.GetPointer())->PipelineBarrier(m_vkCommandBuffer, m_srcAccessFlags, m_dstAccessFlags, 0, m_ptrBuffer->GetSize());
 			}
 		}
 	}
@@ -33,7 +34,8 @@ public:
 
 private:
 	CGfxStorageBufferPtr m_ptrBuffer;
-	GfxPipelineStageFlagBits m_pipelineStage;
+	GfxAccessFlags m_srcAccessFlags;
+	GfxAccessFlags m_dstAccessFlags;
 
 private:
 	VkCommandBuffer m_vkCommandBuffer;

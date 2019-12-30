@@ -5,9 +5,10 @@
 class CGLES3CommandSetBufferBarrier : public CGfxCommandBase
 {
 public:
-	CGLES3CommandSetBufferBarrier(const CGfxStorageBufferPtr ptrBuffer, GfxPipelineStageFlagBits pipelineStage)
+	CGLES3CommandSetBufferBarrier(const CGfxStorageBufferPtr ptrBuffer, GfxAccessFlags srcAccessFlags, GfxAccessFlags dstAccessFlags)
 		: m_ptrBuffer(ptrBuffer)
-		, m_pipelineStage(pipelineStage)
+		, m_srcAccessFlags(srcAccessFlags)
+		, m_dstAccessFlags(dstAccessFlags)
 	{
 
 	}
@@ -22,7 +23,8 @@ public:
 		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_SET_BUFFERBARRIER, "CommandSetBufferBarrier");
 		{
 			if (m_ptrBuffer) {
-
+				GLenum barrier = CGLES3Helper::TranslateBarrier(m_dstAccessFlags);
+				glMemoryBarrier(barrier);
 			}
 		}
 	}
@@ -30,5 +32,6 @@ public:
 
 private:
 	CGfxStorageBufferPtr m_ptrBuffer;
-	GfxPipelineStageFlagBits m_pipelineStage;
+	GfxAccessFlags m_srcAccessFlags;
+	GfxAccessFlags m_dstAccessFlags;
 };
