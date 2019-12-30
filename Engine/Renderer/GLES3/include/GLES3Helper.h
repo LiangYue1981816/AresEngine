@@ -8,19 +8,19 @@ public:
 	static void SetupExtensions(void);
 	static bool IsSupportExtension(const char* extension);
 
-	static GLenum TranslateDataType(GfxDataType dataType);
-	static GLenum TranslateIndexType(GfxIndexType indexType);
+	static GLenum TranslateDataType(GfxDataType type);
+	static GLenum TranslateIndexType(GfxIndexType type);
 	static GLenum TranslatePrimitiveTopology(GfxPrimitiveTopology topology);
-	static GLenum TranslatePolytonMode(GfxPolygonMode polygonMode);
-	static GLenum TranslateCullFace(GfxCullFace cullFace);
-	static GLenum TranslateFrontFace(GfxFrontFace frontFace);
+	static GLenum TranslatePolytonMode(GfxPolygonMode mode);
+	static GLenum TranslateCullFace(GfxCullFace face);
+	static GLenum TranslateFrontFace(GfxFrontFace face);
 	static GLenum TranslateCompareOp(GfxCompareOp op);
 	static GLenum TranslateStencilOp(GfxStencilOp op);
 	static GLenum TranslateBlendOp(GfxBlendOp op);
-	static GLenum TranslateBlendFactor(GfxBlendFactor blendFactor);
-	static GLenum TranslateMagFilter(GfxFilter magFilter);
-	static GLenum TranslateMinFilter(GfxFilter minFilter, GfxSamplerMipmapMode mipmapMode);
-	static GLenum TranslateAddressMode(GfxSamplerAddressMode addressMode);
+	static GLenum TranslateBlendFactor(GfxBlendFactor factor);
+	static GLenum TranslateMagFilter(GfxFilter filter);
+	static GLenum TranslateMinFilter(GfxFilter filter, GfxSamplerMipmapMode mode);
+	static GLenum TranslateAddressMode(GfxSamplerAddressMode mode);
 	static GLenum TranslateTextureTarget(GfxTextureType type);
 	static GLenum TranslateTextureTarget(GfxCubemapFace face);
 

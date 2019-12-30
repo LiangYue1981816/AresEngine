@@ -19,9 +19,9 @@ bool CGLES3Helper::IsSupportExtension(const char* extension)
 	return extensions.find(HashValue(extension)) != extensions.end();
 }
 
-GLenum CGLES3Helper::TranslateDataType(GfxDataType dataType)
+GLenum CGLES3Helper::TranslateDataType(GfxDataType type)
 {
-	switch ((int)dataType) {
+	switch ((int)type) {
 	case GFX_DATA_UNSIGNED_BYTE:
 		return GL_UNSIGNED_BYTE;
 
@@ -36,9 +36,9 @@ GLenum CGLES3Helper::TranslateDataType(GfxDataType dataType)
 	}
 }
 
-GLenum CGLES3Helper::TranslateIndexType(GfxIndexType indexType)
+GLenum CGLES3Helper::TranslateIndexType(GfxIndexType type)
 {
-	switch ((int)indexType) {
+	switch ((int)type) {
 	case GFX_INDEX_UNSIGNED_SHORT:
 		return GL_UNSIGNED_SHORT;
 
@@ -76,9 +76,9 @@ GLenum CGLES3Helper::TranslatePrimitiveTopology(GfxPrimitiveTopology topology)
 	}
 }
 
-GLenum CGLES3Helper::TranslatePolytonMode(GfxPolygonMode polygonMode)
+GLenum CGLES3Helper::TranslatePolytonMode(GfxPolygonMode mode)
 {
-	switch ((int)polygonMode) {
+	switch ((int)mode) {
 	case GFX_POLYGON_MODE_FILL:
 		return GL_FILL;
 
@@ -93,9 +93,9 @@ GLenum CGLES3Helper::TranslatePolytonMode(GfxPolygonMode polygonMode)
 	}
 }
 
-GLenum CGLES3Helper::TranslateCullFace(GfxCullFace cullFace)
+GLenum CGLES3Helper::TranslateCullFace(GfxCullFace face)
 {
-	switch ((int)cullFace) {
+	switch ((int)face) {
 	case GFX_CULLFACE_FRONT:
 		return GL_FRONT;
 
@@ -110,9 +110,9 @@ GLenum CGLES3Helper::TranslateCullFace(GfxCullFace cullFace)
 	}
 }
 
-GLenum CGLES3Helper::TranslateFrontFace(GfxFrontFace frontFace)
+GLenum CGLES3Helper::TranslateFrontFace(GfxFrontFace face)
 {
-	switch ((int)frontFace) {
+	switch ((int)face) {
 	case GFX_FRONTFACE_CW:
 		return GL_CW;
 
@@ -211,9 +211,9 @@ GLenum CGLES3Helper::TranslateBlendOp(GfxBlendOp op)
 	}
 }
 
-GLenum CGLES3Helper::TranslateBlendFactor(GfxBlendFactor blendFactor)
+GLenum CGLES3Helper::TranslateBlendFactor(GfxBlendFactor factor)
 {
-	switch ((int)blendFactor) {
+	switch ((int)factor) {
 	case GFX_BLENDFACTOR_ZERO:
 		return GL_ZERO;
 
@@ -264,9 +264,9 @@ GLenum CGLES3Helper::TranslateBlendFactor(GfxBlendFactor blendFactor)
 	}
 }
 
-GLenum CGLES3Helper::TranslateMagFilter(GfxFilter magFilter)
+GLenum CGLES3Helper::TranslateMagFilter(GfxFilter filter)
 {
-	switch ((int)magFilter) {
+	switch ((int)filter) {
 	case GFX_FILTER_NEAREST:
 		return GL_NEAREST;
 
@@ -278,11 +278,11 @@ GLenum CGLES3Helper::TranslateMagFilter(GfxFilter magFilter)
 	}
 }
 
-GLenum CGLES3Helper::TranslateMinFilter(GfxFilter minFilter, GfxSamplerMipmapMode mipmapMode)
+GLenum CGLES3Helper::TranslateMinFilter(GfxFilter filter, GfxSamplerMipmapMode mode)
 {
-	switch ((int)minFilter) {
+	switch ((int)filter) {
 	case GFX_FILTER_NEAREST:
-		switch ((int)mipmapMode) {
+		switch ((int)mode) {
 		case GFX_SAMPLER_MIPMAP_MODE_NEAREST:
 			return GL_NEAREST_MIPMAP_NEAREST;
 
@@ -294,7 +294,7 @@ GLenum CGLES3Helper::TranslateMinFilter(GfxFilter minFilter, GfxSamplerMipmapMod
 		}
 		break;
 	case GFX_FILTER_LINEAR:
-		switch ((int)mipmapMode) {
+		switch ((int)mode) {
 		case GFX_SAMPLER_MIPMAP_MODE_NEAREST:
 			return GL_LINEAR_MIPMAP_NEAREST;
 
@@ -311,9 +311,9 @@ GLenum CGLES3Helper::TranslateMinFilter(GfxFilter minFilter, GfxSamplerMipmapMod
 	}
 }
 
-GLenum CGLES3Helper::TranslateAddressMode(GfxSamplerAddressMode addressMode)
+GLenum CGLES3Helper::TranslateAddressMode(GfxSamplerAddressMode mode)
 {
-	switch ((int)addressMode) {
+	switch ((int)mode) {
 	case GFX_SAMPLER_ADDRESS_MODE_REPEAT:
 		return GL_REPEAT;
 
