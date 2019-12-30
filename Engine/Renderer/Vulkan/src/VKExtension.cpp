@@ -70,31 +70,9 @@ VkResult vkCmdBufferMemoryBarrier(VkCommandBuffer vkCommandBuffer, VkBuffer vkBu
 	return VK_SUCCESS;
 }
 
-VkResult vkCmdBufferMemoryBarrier(VkCommandBuffer vkCommandBuffer, VkBuffer vkBuffer, VkPipelineStageFlags pipelineStageFlags, VkDeviceSize offset, VkDeviceSize size)
+VkResult vkCmdBufferMemoryBarrier(VkCommandBuffer vkCommandBuffer, VkBuffer vkBuffer, VkAccessFlags srcAccessFlags, VkAccessFlags dstAccessFlags, VkDeviceSize offset, VkDeviceSize size)
 {
-	VkAccessFlags srcAccessFlags;
-	VkAccessFlags dstAccessFlags;
-	VkPipelineStageFlags srcPipelineStageFlags = VK_PIPELINE_STAGE_COMPUTE_SHADER_BIT;
-	VkPipelineStageFlags dstPipelineStageFlags = pipelineStageFlags;
-
-	switch (pipelineStageFlags) {
-	case VK_PIPELINE_STAGE_VERTEX_INPUT_BIT:
-		srcAccessFlags = VK_ACCESS_SHADER_WRITE_BIT;
-		dstAccessFlags = VK_ACCESS_INDEX_READ_BIT;
-		break;
-
-	case VK_PIPELINE_STAGE_DRAW_INDIRECT_BIT:
-		srcAccessFlags = VK_ACCESS_SHADER_WRITE_BIT;
-		dstAccessFlags = VK_ACCESS_INDIRECT_COMMAND_READ_BIT;
-		break;
-
-	default:
-		srcAccessFlags = VK_ACCESS_SHADER_WRITE_BIT;
-		dstAccessFlags = VK_ACCESS_SHADER_READ_BIT;
-		break;
-	}
-
-	return vkCmdBufferMemoryBarrier(vkCommandBuffer, vkBuffer, srcAccessFlags, dstAccessFlags, srcPipelineStageFlags, dstPipelineStageFlags, offset, size);
+	return VK_SUCCESS;
 }
 
 VkResult vkCmdImageMemoryBarrier(VkCommandBuffer vkCommandBuffer, VkImage vkImage, VkImageLayout srcLayout, VkImageLayout dstLayout, VkAccessFlags srcAccessFlags, VkAccessFlags dstAccessFlags, VkPipelineStageFlags srcPipelineStageFlags, VkPipelineStageFlags dstPipelineStageFlags, VkImageSubresourceRange range)
