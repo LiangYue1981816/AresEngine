@@ -119,6 +119,17 @@ layout (location = 8)                                      in mediump int inInst
 		mediump vec4 lightAttenuation;
 	};
 
+	struct TransferData
+	{
+		highp int index;
+
+		highp mat4 transformMatrix;
+		highp vec4 center;
+
+		mediump vec4 lightColor;
+		mediump vec4 lightAttenuation;
+	};
+
 #define USE_SCENE_DATA_STORAGE                                                     \
 	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_SCENE_DATA) buffer SceneData               \
 	{                                                                              \
@@ -128,8 +139,7 @@ layout (location = 8)                                      in mediump int inInst
 #define USE_TRANSFER_SCENE_DATA_STORAGE                                            \
 	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_TRANSFER_SCENE_DATA) buffer TransferSceneData \
 	{                                                                              \
-		int index;                                                                 \
-		InstanceData data[];                                                       \
+		TransferData data[];                                                       \
 	} transferSceneData
 
 #define USE_DEPTH_TEXTURE_UNIFORM                                                  \
