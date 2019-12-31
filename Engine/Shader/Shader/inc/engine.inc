@@ -121,13 +121,8 @@ layout (location = 8)                                      in mediump int inInst
 
 	struct TransferData
 	{
-		highp int index;
-
-		highp mat4 transformMatrix;
-		highp vec4 center;
-
-		mediump vec4 lightColor;
-		mediump vec4 lightAttenuation;
+		int index;
+		InstanceData data;
 	};
 
 #define USE_SCENE_DATA_STORAGE                                                     \
