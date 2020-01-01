@@ -630,6 +630,16 @@ bool CGLES3CommandBuffer::CmdUpdateInstanceBuffer(const CGfxMeshDrawPtr ptrMeshD
 	}
 }
 
+bool CGLES3CommandBuffer::CmdDispatch(int numLocalWorkGroupX, int numLocalWorkGroupY, int numLocalWorkGroupZ)
+{
+	if (IsMainCommandBuffer() == true && IsInRenderPass() == true) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
 bool CGLES3CommandBuffer::CmdPushDebugGroup(const char* szMessage)
 {
 	m_pCommands.emplace_back(new CGLES3CommandPushDebugGroup(szMessage));

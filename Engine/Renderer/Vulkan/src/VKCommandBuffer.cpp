@@ -767,6 +767,18 @@ bool CVKCommandBuffer::CmdUpdateInstanceBuffer(const CGfxMeshDrawPtr ptrMeshDraw
 	}
 }
 
+bool CVKCommandBuffer::CmdDispatch(int numLocalWorkGroupX, int numLocalWorkGroupY, int numLocalWorkGroupZ)
+{
+	ASSERT(m_vkCommandBuffer);
+
+	if (IsMainCommandBuffer() == true && IsInRenderPass() == true) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
 bool CVKCommandBuffer::CmdPushDebugGroup(const char* szMessage)
 {
 	ASSERT(m_vkCommandBuffer);

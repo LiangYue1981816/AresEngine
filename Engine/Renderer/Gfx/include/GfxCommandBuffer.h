@@ -107,6 +107,8 @@ public:
 	virtual bool CmdDrawInstance(const CGfxMeshDrawPtr ptrMeshDraw) = 0;
 	virtual bool CmdUpdateInstanceBuffer(const CGfxMeshDrawPtr ptrMeshDraw, const uint8_t* pInstanceBuffer, uint32_t size) = 0;
 
+	virtual bool CmdDispatch(int numLocalWorkGroupX, int numLocalWorkGroupY, int numLocalWorkGroupZ) = 0;
+
 	virtual bool CmdPushDebugGroup(const char* szMessage) = 0;
 	virtual bool CmdPopDebugGroup(void) = 0;
 
