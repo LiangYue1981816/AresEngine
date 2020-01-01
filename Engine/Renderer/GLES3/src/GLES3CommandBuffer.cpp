@@ -34,6 +34,7 @@
 #include "./Command/GLES3CommandSetViewport.h"
 #include "./Command/GLES3CommandClearDepth.h"
 #include "./Command/GLES3CommandClearColor.h"
+#include "./Command/GLES3CommandDispatch.h"
 #include "./Command/GLES3CommandDrawInstance.h"
 #include "./Command/GLES3CommandDrawIndirect.h"
 #include "./Command/GLES3CommandUpdateInstanceBuffer.h"
@@ -633,6 +634,7 @@ bool CGLES3CommandBuffer::CmdUpdateInstanceBuffer(const CGfxMeshDrawPtr ptrMeshD
 bool CGLES3CommandBuffer::CmdDispatch(int numLocalWorkGroupX, int numLocalWorkGroupY, int numLocalWorkGroupZ)
 {
 	if (IsMainCommandBuffer() == true && IsInRenderPass() == true) {
+		m_pCommands.emplace_back(new CGLES3CommandDispatch(numLocalWorkGroupX, numLocalWorkGroupY, numLocalWorkGroupZ));
 		return true;
 	}
 	else {

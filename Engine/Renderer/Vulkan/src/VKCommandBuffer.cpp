@@ -34,6 +34,7 @@
 #include "./Command/VKCommandSetViewport.h"
 #include "./Command/VKCommandClearDepth.h"
 #include "./Command/VKCommandClearColor.h"
+#include "./Command/VKCommandDispatch.h"
 #include "./Command/VKCommandDrawInstance.h"
 #include "./Command/VKCommandDrawIndirect.h"
 #include "./Command/VKCommandUpdateInstanceBuffer.h"
@@ -772,6 +773,7 @@ bool CVKCommandBuffer::CmdDispatch(int numLocalWorkGroupX, int numLocalWorkGroup
 	ASSERT(m_vkCommandBuffer);
 
 	if (IsMainCommandBuffer() == true && IsInRenderPass() == true) {
+		m_pCommands.emplace_back(new CVKCommandDispatch(m_vkCommandBuffer, numLocalWorkGroupX, numLocalWorkGroupY, numLocalWorkGroupZ));
 		return true;
 	}
 	else {
