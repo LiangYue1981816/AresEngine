@@ -47,23 +47,25 @@ uint32_t CVKIndirectBuffer::GetStride(void) const
 	return sizeof(DrawCommand);
 }
 
-bool CVKIndirectBuffer::BufferData(int indexDraw, int baseVertex, int firstIndex, int indexCount, int instanceCount)
+bool CVKIndirectBuffer::BufferData(int indexDraw, int firstIndex, int baseVertex, int baseInstance, int indexCount, int instanceCount)
 {
 	if (indexDraw < 0 || (uint32_t)indexDraw >= m_draws.size()) {
 		return false;
 	}
 
-	if (m_draws[indexDraw].baseVertex == baseVertex &&
+	if (m_draws[indexDraw].indexCount == indexCount &&
+		m_draws[indexDraw].instanceCount == instanceCount &&
 		m_draws[indexDraw].firstIndex == firstIndex &&
-		m_draws[indexDraw].indexCount == indexCount &&
-		m_draws[indexDraw].instanceCount == instanceCount) {
+		m_draws[indexDraw].baseVertex == baseVertex &&
+		m_draws[indexDraw].baseInstance == baseInstance) {
 		return true;
 	}
 
-	m_draws[indexDraw].baseVertex = baseVertex;
-	m_draws[indexDraw].firstIndex = firstIndex;
 	m_draws[indexDraw].indexCount = indexCount;
 	m_draws[indexDraw].instanceCount = instanceCount;
+	m_draws[indexDraw].firstIndex = firstIndex;
+	m_draws[indexDraw].baseVertex = baseVertex;
+	m_draws[indexDraw].baseInstance = baseInstance;
 
 	return m_pBuffer->BufferData(indexDraw * sizeof(DrawCommand), sizeof(m_draws[indexDraw]), &m_draws[indexDraw]);
 }

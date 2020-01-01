@@ -19,7 +19,7 @@ public:
 	uint32_t GetStride(void) const;
 
 public:
-	bool BufferData(int indexDraw, int baseVertex, int firstIndex, int indexCount, int instanceCount);
+	bool BufferData(int indexDraw, int firstIndex, int baseVertex, int baseInstance, int indexCount, int instanceCount);
 
 public:
 	void Bind(void) const;
