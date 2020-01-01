@@ -23,8 +23,7 @@ public:
 		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_SET_BUFFERBARRIER, "CommandSetBufferBarrier");
 		{
 			if (m_ptrBuffer) {
-				GLenum barrier = CGLES3Helper::TranslateBarrier(m_dstAccessFlags);
-				glMemoryBarrier(barrier);
+				glMemoryBarrier(CGLES3Helper::TranslateBarrier(m_dstAccessFlags));
 			}
 		}
 	}
