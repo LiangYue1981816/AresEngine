@@ -105,7 +105,6 @@ public:
 	virtual bool CmdClearColor(float red, float green, float blue, float alpha) = 0;
 
 	virtual bool CmdDrawInstance(const CGfxMeshDrawPtr ptrMeshDraw) = 0;
-	virtual bool CmdDrawIndirect(const CGfxMeshDrawPtr ptrMeshDraw) = 0;
 	virtual bool CmdUpdateInstanceBuffer(const CGfxMeshDrawPtr ptrMeshDraw, const uint8_t* pInstanceBuffer, uint32_t size) = 0;
 
 	virtual bool CmdExecute(const CGfxCommandBufferPtr ptrCommandBuffer) = 0;

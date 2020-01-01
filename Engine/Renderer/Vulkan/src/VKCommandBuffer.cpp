@@ -753,20 +753,6 @@ bool CVKCommandBuffer::CmdDrawInstance(const CGfxMeshDrawPtr ptrMeshDraw)
 	}
 }
 
-bool CVKCommandBuffer::CmdDrawIndirect(const CGfxMeshDrawPtr ptrMeshDraw)
-{
-	ASSERT(ptrMeshDraw);
-	ASSERT(m_vkCommandBuffer);
-
-	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
-		m_pCommands.emplace_back(new CVKCommandDrawIndirect(m_vkCommandBuffer, m_pCurrentPipelineGraphics, ptrMeshDraw));
-		return true;
-	}
-	else {
-		return false;
-	}
-}
-
 bool CVKCommandBuffer::CmdUpdateInstanceBuffer(const CGfxMeshDrawPtr ptrMeshDraw, const uint8_t* pInstanceBuffer, uint32_t size)
 {
 	ASSERT(ptrMeshDraw);

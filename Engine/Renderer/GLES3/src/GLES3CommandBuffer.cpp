@@ -617,19 +617,6 @@ bool CGLES3CommandBuffer::CmdDrawInstance(const CGfxMeshDrawPtr ptrMeshDraw)
 	}
 }
 
-bool CGLES3CommandBuffer::CmdDrawIndirect(const CGfxMeshDrawPtr ptrMeshDraw)
-{
-	ASSERT(ptrMeshDraw);
-
-	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
-		m_pCommands.emplace_back(new CGLES3CommandDrawIndirect(m_pCurrentPipelineGraphics, ptrMeshDraw));
-		return true;
-	}
-	else {
-		return false;
-	}
-}
-
 bool CGLES3CommandBuffer::CmdUpdateInstanceBuffer(const CGfxMeshDrawPtr ptrMeshDraw, const uint8_t* pInstanceBuffer, uint32_t size)
 {
 	ASSERT(ptrMeshDraw);

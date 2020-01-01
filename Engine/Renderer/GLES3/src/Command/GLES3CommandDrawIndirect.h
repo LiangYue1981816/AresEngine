@@ -26,7 +26,7 @@ public:
 		{
 			if (m_pPipelineGraphics->IsCompatibleVertexFormat(m_ptrMeshDraw->GetVertexBinding(), m_ptrMeshDraw->GetVertexFormat()) &&
 				m_pPipelineGraphics->IsCompatibleVertexFormat(m_ptrMeshDraw->GetInstanceBinding(), m_ptrMeshDraw->GetInstanceFormat())) {
-				glDrawElementsIndirect(GL_TRIANGLES, CGLES3Helper::TranslateIndexType(m_ptrMeshDraw->GetIndexType()), (const void*)0);
+
 			}
 		}
 	}

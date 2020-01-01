@@ -80,7 +80,6 @@ public:
 	bool CmdClearColor(float red, float green, float blue, float alpha);
 
 	bool CmdDrawInstance(const CGfxMeshDrawPtr ptrMeshDraw);
-	bool CmdDrawIndirect(const CGfxMeshDrawPtr ptrMeshDraw);
 	bool CmdUpdateInstanceBuffer(const CGfxMeshDrawPtr ptrMeshDraw, const uint8_t* pInstanceBuffer, uint32_t size);
 
 	bool CmdExecute(const CGfxCommandBufferPtr ptrCommandBuffer);
