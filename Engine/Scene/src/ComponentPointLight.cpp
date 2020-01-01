@@ -67,7 +67,7 @@ void CComponentPointLight::TaskUpdate(float gameTime, float deltaTime)
 				m_bUpdateInstanceData[indexFrame] = true;
 				m_bNeedUpdateInstanceData[indexFrame] = true;
 				m_instanceData[indexFrame].transformMatrix = m_pParentNode->GetWorldTransform();
-				m_instanceData[indexFrame].center = m_instanceData[indexFrame].transformMatrix * glm::vec4(m_ptrMeshDraw->GetLocalAABB().center, 1.0f);
+				m_instanceData[indexFrame].center = m_instanceData[indexFrame].transformMatrix * glm::vec4(m_ptrMeshDraw->GetAABB().center, 1.0f);
 			}
 		}
 	}
@@ -81,7 +81,7 @@ void CComponentPointLight::TaskUpdateCamera(CGfxCamera* pCamera, CRenderQueue* p
 		if (m_ptrMeshDraw->GetMask() & mask) {
 			if (m_pParentNode && m_pParentNode->IsActive()) {
 				if (m_bUpdateInstanceData[indexFrame]) {
-					if (pCamera->IsVisible(m_ptrMeshDraw->GetLocalAABB() * m_instanceData[indexFrame].transformMatrix)) {
+					if (pCamera->IsVisible(m_ptrMeshDraw->GetAABB() * m_instanceData[indexFrame].transformMatrix)) {
 						if (m_bNeedUpdateInstanceData[indexFrame]) {
 							m_bNeedUpdateInstanceData[indexFrame] = false;
 							RenderSystem()->ModifyInstanceData(m_indexInstance, m_instanceData[indexFrame], indexThread);

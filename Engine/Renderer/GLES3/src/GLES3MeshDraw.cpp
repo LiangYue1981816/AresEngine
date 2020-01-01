@@ -53,7 +53,7 @@ CGfxMeshPtr CGLES3MeshDraw::GetMesh(void) const
 	return m_ptrMesh;
 }
 
-glm::aabb CGLES3MeshDraw::GetLocalAABB(void) const
+glm::aabb CGLES3MeshDraw::GetAABB(void) const
 {
 	return m_pMeshDraw->aabb;
 }

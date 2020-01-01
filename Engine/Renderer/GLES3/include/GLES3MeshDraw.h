@@ -19,10 +19,9 @@ public:
 
 public:
 	CGfxMeshPtr GetMesh(void) const;
+	glm::aabb GetAABB(void) const;
 
 public:
-	glm::aabb GetLocalAABB(void) const;
-
 	uint32_t GetIndexType(void) const;
 	uint32_t GetIndexCount(void) const;
 	uint32_t GetIndexFirst(void) const;

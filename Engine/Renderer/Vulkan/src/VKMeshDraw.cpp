@@ -51,7 +51,7 @@ CGfxMeshPtr CVKMeshDraw::GetMesh(void) const
 	return m_ptrMesh;
 }
 
-glm::aabb CVKMeshDraw::GetLocalAABB(void) const
+glm::aabb CVKMeshDraw::GetAABB(void) const
 {
 	return m_pMeshDraw->aabb;
 }
