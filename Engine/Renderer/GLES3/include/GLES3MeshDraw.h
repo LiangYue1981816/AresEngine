@@ -23,7 +23,6 @@ public:
 public:
 	glm::aabb GetLocalAABB(void) const;
 
-	GfxIndexType GetIndexType(void) const;
 	uint32_t GetIndexCount(void) const;
 	uint32_t GetIndexFirst(void) const;
 	uint32_t GetIndexOffset(void) const;
@@ -53,7 +52,6 @@ private:
 private:
 	CGfxMeshPtr m_ptrMesh;
 	CGfxMesh::Draw* m_pMeshDraw;
-	CGLES3IndirectBuffer* m_pIndirectBuffer[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
 	CGLES3InstanceBuffer* m_pInstanceBuffer[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
 	CGLES3VertexArrayObject* m_pVertexArrayObject[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
 

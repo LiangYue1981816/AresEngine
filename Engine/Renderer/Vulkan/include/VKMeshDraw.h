@@ -23,7 +23,6 @@ public:
 public:
 	glm::aabb GetLocalAABB(void) const;
 
-	GfxIndexType GetIndexType(void) const;
 	uint32_t GetIndexCount(void) const;
 	uint32_t GetIndexFirst(void) const;
 	uint32_t GetIndexOffset(void) const;
@@ -35,10 +34,6 @@ public:
 	uint32_t GetInstanceBinding(void) const;
 	uint32_t GetInstanceFormat(void) const;
 	uint32_t GetInstanceCount(void) const;
-
-public:
-	VkBuffer GetIndirectBuffer(void) const;
-	uint32_t GetIndirectBufferStride(void) const;
 
 public:
 	bool InstanceBufferData(size_t size, const void* data);
@@ -57,7 +52,6 @@ private:
 private:
 	CGfxMeshPtr m_ptrMesh;
 	CGfxMesh::Draw* m_pMeshDraw;
-	CVKIndirectBuffer* m_pIndirectBuffer[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
 	CVKInstanceBuffer* m_pInstanceBuffer[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
 
 private:
