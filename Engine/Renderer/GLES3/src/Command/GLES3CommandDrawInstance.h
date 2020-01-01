@@ -26,7 +26,7 @@ public:
 		{
 			if (m_pPipelineGraphics->IsCompatibleVertexFormat(m_ptrMeshDraw->GetVertexBinding(), m_ptrMeshDraw->GetVertexFormat()) &&
 				m_pPipelineGraphics->IsCompatibleVertexFormat(m_ptrMeshDraw->GetInstanceBinding(), m_ptrMeshDraw->GetInstanceFormat())) {
-				glDrawElementsInstanced(GL_TRIANGLES, m_ptrMeshDraw->GetIndexCount(), CGLES3Helper::TranslateIndexType(m_ptrMeshDraw->GetIndexType()), (const void*)m_ptrMeshDraw->GetIndexOffset(), m_ptrMeshDraw->GetInstanceCount());
+				glDrawElementsInstanced(GL_TRIANGLES, m_ptrMeshDraw->GetIndexCount(), CGLES3Helper::TranslateIndexType((GfxIndexType)m_ptrMeshDraw->GetIndexType()), (const void*)m_ptrMeshDraw->GetIndexOffset(), m_ptrMeshDraw->GetInstanceCount());
 			}
 		}
 	}

@@ -23,6 +23,7 @@ public:
 public:
 	glm::aabb GetLocalAABB(void) const;
 
+	uint32_t GetIndexType(void) const;
 	uint32_t GetIndexCount(void) const;
 	uint32_t GetIndexFirst(void) const;
 	uint32_t GetIndexOffset(void) const;

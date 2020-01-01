@@ -56,6 +56,11 @@ glm::aabb CVKMeshDraw::GetLocalAABB(void) const
 	return m_pMeshDraw->aabb;
 }
 
+uint32_t CVKMeshDraw::GetIndexType(void) const
+{
+	return m_ptrMesh->GetIndexBuffer()->GetIndexType();
+}
+
 uint32_t CVKMeshDraw::GetIndexCount(void) const
 {
 	return m_pMeshDraw->indexCount;
@@ -68,7 +73,7 @@ uint32_t CVKMeshDraw::GetIndexFirst(void) const
 
 uint32_t CVKMeshDraw::GetIndexOffset(void) const
 {
-	switch ((int)m_ptrMesh->GetIndexBuffer()->GetIndexType()) {
+	switch (GetIndexType()) {
 	case GFX_INDEX_UNSIGNED_SHORT: return m_pMeshDraw->firstIndex * 2;
 	case GFX_INDEX_UNSIGNED_INT:   return m_pMeshDraw->firstIndex * 4;
 	default:                       return 0;
