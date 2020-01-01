@@ -7,7 +7,7 @@ typedef struct DrawCommand {
 	int instanceCount = 0;
 	int firstIndex = 0;
 	int baseVertex = 0;
-	int reservedMustBeZero = 0;
+	int firstInstance = 0;
 } DrawCommand;
 
 class CALL_API CGfxIndirectBuffer
