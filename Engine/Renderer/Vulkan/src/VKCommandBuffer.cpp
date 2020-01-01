@@ -767,23 +767,8 @@ bool CVKCommandBuffer::CmdUpdateInstanceBuffer(const CGfxMeshDrawPtr ptrMeshDraw
 	}
 }
 
-bool CVKCommandBuffer::CmdExecute(const CGfxCommandBufferPtr ptrCommandBuffer)
-{
-	ASSERT(ptrCommandBuffer);
-	ASSERT(m_vkCommandBuffer);
-
-	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
-		m_pCommands.emplace_back(new CVKCommandExecute(m_vkCommandBuffer, ptrCommandBuffer));
-		return true;
-	}
-	else {
-		return false;
-	}
-}
-
 bool CVKCommandBuffer::CmdPushDebugGroup(const char* szMessage)
 {
-	ASSERT(szMessage);
 	ASSERT(m_vkCommandBuffer);
 
 	m_pCommands.emplace_back(new CVKCommandPushDebugGroup(m_vkCommandBuffer, szMessage));
@@ -796,4 +781,18 @@ bool CVKCommandBuffer::CmdPopDebugGroup(void)
 
 	m_pCommands.emplace_back(new CVKCommandPopDebugGroup(m_vkCommandBuffer));
 	return true;
+}
+
+bool CVKCommandBuffer::CmdExecute(const CGfxCommandBufferPtr ptrCommandBuffer)
+{
+	ASSERT(ptrCommandBuffer);
+	ASSERT(m_vkCommandBuffer);
+
+	if (IsMainCommandBuffer() == true && IsInRenderPass() == true && ptrCommandBuffer->IsMainCommandBuffer() == false) {
+		m_pCommands.emplace_back(new CVKCommandExecute(m_vkCommandBuffer, ptrCommandBuffer));
+		return true;
+	}
+	else {
+		return false;
+	}
 }

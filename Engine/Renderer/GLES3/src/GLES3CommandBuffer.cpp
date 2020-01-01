@@ -630,6 +630,18 @@ bool CGLES3CommandBuffer::CmdUpdateInstanceBuffer(const CGfxMeshDrawPtr ptrMeshD
 	}
 }
 
+bool CGLES3CommandBuffer::CmdPushDebugGroup(const char* szMessage)
+{
+	m_pCommands.emplace_back(new CGLES3CommandPushDebugGroup(szMessage));
+	return true;
+}
+
+bool CGLES3CommandBuffer::CmdPopDebugGroup(void)
+{
+	m_pCommands.emplace_back(new CGLES3CommandPopDebugGroup());
+	return true;
+}
+
 bool CGLES3CommandBuffer::CmdExecute(const CGfxCommandBufferPtr ptrCommandBuffer)
 {
 	ASSERT(ptrCommandBuffer);
@@ -641,18 +653,4 @@ bool CGLES3CommandBuffer::CmdExecute(const CGfxCommandBufferPtr ptrCommandBuffer
 	else {
 		return false;
 	}
-}
-
-bool CGLES3CommandBuffer::CmdPushDebugGroup(const char* szMessage)
-{
-	ASSERT(szMessage);
-
-	m_pCommands.emplace_back(new CGLES3CommandPushDebugGroup(szMessage));
-	return true;
-}
-
-bool CGLES3CommandBuffer::CmdPopDebugGroup(void)
-{
-	m_pCommands.emplace_back(new CGLES3CommandPopDebugGroup());
-	return true;
 }

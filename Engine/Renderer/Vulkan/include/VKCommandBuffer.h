@@ -92,11 +92,10 @@ public:
 	bool CmdDrawInstance(const CGfxMeshDrawPtr ptrMeshDraw);
 	bool CmdUpdateInstanceBuffer(const CGfxMeshDrawPtr ptrMeshDraw, const uint8_t* pInstanceBuffer, uint32_t size);
 
-	bool CmdExecute(const CGfxCommandBufferPtr ptrCommandBuffer);
-
-	// Other
 	bool CmdPushDebugGroup(const char* szMessage);
 	bool CmdPopDebugGroup(void);
+
+	bool CmdExecute(const CGfxCommandBufferPtr ptrCommandBuffer);
 
 
 private:
