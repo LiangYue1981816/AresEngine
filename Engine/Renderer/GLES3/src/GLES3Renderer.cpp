@@ -478,11 +478,6 @@ bool CGLES3Renderer::CmdUpdateInstanceBuffer(CGfxCommandBufferPtr ptrCommandBuff
 	return ptrCommandBuffer->CmdUpdateInstanceBuffer(ptrMeshDraw, pInstanceBuffer, size);
 }
 
-bool CGLES3Renderer::CmdExecute(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxCommandBufferPtr ptrSecondaryCommandBuffer)
-{
-	return ptrCommandBuffer->CmdExecute(ptrSecondaryCommandBuffer);
-}
-
 bool CGLES3Renderer::CmdPushDebugGroup(CGfxCommandBufferPtr ptrCommandBuffer, const char* szMessage)
 {
 	return ptrCommandBuffer->CmdPushDebugGroup(szMessage);
@@ -491,6 +486,11 @@ bool CGLES3Renderer::CmdPushDebugGroup(CGfxCommandBufferPtr ptrCommandBuffer, co
 bool CGLES3Renderer::CmdPopDebugGroup(CGfxCommandBufferPtr ptrCommandBuffer)
 {
 	return ptrCommandBuffer->CmdPopDebugGroup();
+}
+
+bool CGLES3Renderer::CmdExecute(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxCommandBufferPtr ptrSecondaryCommandBuffer)
+{
+	return ptrCommandBuffer->CmdExecute(ptrSecondaryCommandBuffer);
 }
 
 void CGLES3Renderer::Submit(const CGfxCommandBufferPtr& ptrCommandBuffer, const CGfxSemaphore* pWaitSemaphore)

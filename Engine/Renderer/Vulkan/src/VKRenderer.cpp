@@ -484,11 +484,6 @@ bool CVKRenderer::CmdUpdateInstanceBuffer(CGfxCommandBufferPtr ptrCommandBuffer,
 	return ptrCommandBuffer->CmdUpdateInstanceBuffer(ptrMeshDraw, pInstanceBuffer, size);
 }
 
-bool CVKRenderer::CmdExecute(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxCommandBufferPtr ptrSecondaryCommandBuffer)
-{
-	return ptrCommandBuffer->CmdExecute(ptrSecondaryCommandBuffer);
-}
-
 bool CVKRenderer::CmdPushDebugGroup(CGfxCommandBufferPtr ptrCommandBuffer, const char* szMessage)
 {
 	return ptrCommandBuffer->CmdPushDebugGroup(szMessage);
@@ -497,6 +492,11 @@ bool CVKRenderer::CmdPushDebugGroup(CGfxCommandBufferPtr ptrCommandBuffer, const
 bool CVKRenderer::CmdPopDebugGroup(CGfxCommandBufferPtr ptrCommandBuffer)
 {
 	return ptrCommandBuffer->CmdPopDebugGroup();
+}
+
+bool CVKRenderer::CmdExecute(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxCommandBufferPtr ptrSecondaryCommandBuffer)
+{
+	return ptrCommandBuffer->CmdExecute(ptrSecondaryCommandBuffer);
 }
 
 void CVKRenderer::Submit(const CGfxCommandBufferPtr& ptrCommandBuffer, const CGfxSemaphore* pWaitSemaphore)
