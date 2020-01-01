@@ -18,10 +18,13 @@ CVKStorageBuffer* CVKStorageBufferManager::Create(size_t size)
 {
 	mutex_autolock autolock(&lock);
 	{
-		CVKStorageBuffer* pStorageBuffer = new CVKStorageBuffer(m_pDevice, this, ALIGN_BYTE(size, m_pDevice->GetPhysicalDeviceLimits().minStorageBufferOffsetAlignment));
-		m_pStorageBuffers[pStorageBuffer] = pStorageBuffer;
-
-		return pStorageBuffer;
+		if (CVKStorageBuffer* pStorageBuffer = new CVKStorageBuffer(m_pDevice, this, ALIGN_BYTE(size, m_pDevice->GetPhysicalDeviceLimits().minStorageBufferOffsetAlignment))) {
+			m_pStorageBuffers[pStorageBuffer] = pStorageBuffer;
+			return pStorageBuffer;
+		}
+		else {
+			return nullptr;
+		}
 	}
 }
 

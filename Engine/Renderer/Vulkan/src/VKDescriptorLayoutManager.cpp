@@ -18,10 +18,13 @@ CVKDescriptorLayout* CVKDescriptorLayoutManager::Create(uint32_t set)
 {
 	mutex_autolock autolock(&lock);
 	{
-		CVKDescriptorLayout* pDescriptorLayout = new CVKDescriptorLayout(m_pDevice, this, set);
-		m_pDescriptorLayouts[pDescriptorLayout] = pDescriptorLayout;
-
-		return pDescriptorLayout;
+		if (CVKDescriptorLayout* pDescriptorLayout = new CVKDescriptorLayout(m_pDevice, this, set)) {
+			m_pDescriptorLayouts[pDescriptorLayout] = pDescriptorLayout;
+			return pDescriptorLayout;
+		}
+		else {
+			return nullptr;
+		}
 	}
 }
 

@@ -18,10 +18,13 @@ CVKFrameBuffer* CVKFrameBufferManager::Create(int width, int height, int numAtta
 {
 	mutex_autolock autolock(&lock);
 	{
-		CVKFrameBuffer* pFrameBuffer = new CVKFrameBuffer(m_pDevice, this, width, height, numAttachments);
-		m_pFrameBuffers[pFrameBuffer] = pFrameBuffer;
-
-		return pFrameBuffer;
+		if (CVKFrameBuffer* pFrameBuffer = new CVKFrameBuffer(m_pDevice, this, width, height, numAttachments)) {
+			m_pFrameBuffers[pFrameBuffer] = pFrameBuffer;
+			return pFrameBuffer;
+		}
+		else {
+			return nullptr;
+		}
 	}
 }
 

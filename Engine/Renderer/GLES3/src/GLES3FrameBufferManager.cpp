@@ -17,10 +17,13 @@ CGLES3FrameBuffer* CGLES3FrameBufferManager::Create(int width, int height, int n
 {
 	mutex_autolock autolock(&lock);
 	{
-		CGLES3FrameBuffer* pFrameBuffer = new CGLES3FrameBuffer(this, width, height, numAttachments);
-		m_pFrameBuffers[pFrameBuffer] = pFrameBuffer;
-
-		return pFrameBuffer;
+		if (CGLES3FrameBuffer* pFrameBuffer = new CGLES3FrameBuffer(this, width, height, numAttachments)) {
+			m_pFrameBuffers[pFrameBuffer] = pFrameBuffer;
+			return pFrameBuffer;
+		}
+		else {
+			return nullptr;
+		}
 	}
 }
 

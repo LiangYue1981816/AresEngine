@@ -123,7 +123,7 @@ CVKTexture2DArray* CVKTexture2DArrayManager::Create(const char* szFileName, int 
 			ResourceLoader()->LoadTexture2DArray(szFileName, m_pTextures[name], baseLevel, numLevels);
 		}
 
-		return (CVKTexture2DArray*)m_pTextures[name];
+		return m_pTextures[name];
 	}
 }
 

@@ -17,10 +17,13 @@ CGLES3UniformBuffer* CGLES3UniformBufferManager::Create(size_t size)
 {
 	mutex_autolock autolock(&lock);
 	{
-		CGLES3UniformBuffer* pUniformBuffer = new CGLES3UniformBuffer(this, size);
-		m_pUniformBuffers[pUniformBuffer] = pUniformBuffer;
-
-		return pUniformBuffer;
+		if (CGLES3UniformBuffer* pUniformBuffer = new CGLES3UniformBuffer(this, size)) {
+			m_pUniformBuffers[pUniformBuffer] = pUniformBuffer;
+			return pUniformBuffer;
+		}
+		else {
+			return nullptr;
+		}
 	}
 }
 

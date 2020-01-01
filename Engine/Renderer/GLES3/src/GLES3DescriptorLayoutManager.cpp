@@ -17,10 +17,13 @@ CGLES3DescriptorLayout* CGLES3DescriptorLayoutManager::Create(uint32_t set)
 {
 	mutex_autolock autolock(&lock);
 	{
-		CGLES3DescriptorLayout* pDescriptorLayout = new CGLES3DescriptorLayout(this, set);
-		m_pDescriptorLayouts[pDescriptorLayout] = pDescriptorLayout;
-
-		return pDescriptorLayout;
+		if (CGLES3DescriptorLayout* pDescriptorLayout = new CGLES3DescriptorLayout(this, set)) {
+			m_pDescriptorLayouts[pDescriptorLayout] = pDescriptorLayout;
+			return pDescriptorLayout;
+		}
+		else {
+			return nullptr;
+		}
 	}
 }
 
