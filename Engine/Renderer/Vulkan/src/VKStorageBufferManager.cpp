@@ -20,19 +20,21 @@ CVKStorageBuffer* CVKStorageBufferManager::Create(size_t size)
 	{
 		CVKStorageBuffer* pStorageBuffer = new CVKStorageBuffer(m_pDevice, this, ALIGN_BYTE(size, m_pDevice->GetPhysicalDeviceLimits().minStorageBufferOffsetAlignment));
 		m_pStorageBuffers[pStorageBuffer] = pStorageBuffer;
+
 		return pStorageBuffer;
 	}
 }
 
 void CVKStorageBufferManager::Destroy(CVKStorageBuffer* pStorageBuffer)
 {
-	mutex_autolock autolock(&lock);
+	ASSERT(pStorageBuffer);
 	{
-		ASSERT(pStorageBuffer);
-
-		if (m_pStorageBuffers.find(pStorageBuffer) != m_pStorageBuffers.end()) {
-			m_pStorageBuffers.erase(pStorageBuffer);
-			delete pStorageBuffer;
+		mutex_autolock autolock(&lock);
+		{
+			if (m_pStorageBuffers.find(pStorageBuffer) != m_pStorageBuffers.end()) {
+				m_pStorageBuffers.erase(pStorageBuffer);
+			}
 		}
 	}
+	delete pStorageBuffer;
 }

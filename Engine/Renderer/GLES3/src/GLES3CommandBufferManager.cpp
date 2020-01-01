@@ -19,19 +19,21 @@ CGLES3CommandBuffer* CGLES3CommandBufferManager::Create(bool bMainCommandBuffer)
 	{
 		CGLES3CommandBuffer* pCommandBuffer = new CGLES3CommandBuffer(this, bMainCommandBuffer);
 		m_pCommandBuffers[pCommandBuffer] = pCommandBuffer;
+
 		return pCommandBuffer;
 	}
 }
 
 void CGLES3CommandBufferManager::Destroy(CGLES3CommandBuffer* pCommandBuffer)
 {
-	mutex_autolock autolock(&lock);
+	ASSERT(pCommandBuffer);
 	{
-		ASSERT(pCommandBuffer);
-
-		if (m_pCommandBuffers.find(pCommandBuffer) != m_pCommandBuffers.end()) {
-			m_pCommandBuffers.erase(pCommandBuffer);
-			delete pCommandBuffer;
+		mutex_autolock autolock(&lock);
+		{
+			if (m_pCommandBuffers.find(pCommandBuffer) != m_pCommandBuffers.end()) {
+				m_pCommandBuffers.erase(pCommandBuffer);
+			}
 		}
 	}
+	delete pCommandBuffer;
 }

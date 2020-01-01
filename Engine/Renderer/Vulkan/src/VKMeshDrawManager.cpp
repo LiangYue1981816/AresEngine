@@ -43,13 +43,14 @@ CVKMeshDraw* CVKMeshDrawManager::Create(uint32_t name, const CGfxMeshPtr ptrMesh
 
 void CVKMeshDrawManager::Destroy(CVKMeshDraw* pMeshDraw)
 {
-	mutex_autolock autolock(&lock);
+	ASSERT(pMeshDraw);
 	{
-		ASSERT(pMeshDraw);
-
-		if (m_pMeshDraws.find(pMeshDraw->GetName()) != m_pMeshDraws.end()) {
-			m_pMeshDraws.erase(pMeshDraw->GetName());
-			delete pMeshDraw;
+		mutex_autolock autolock(&lock);
+		{
+			if (m_pMeshDraws.find(pMeshDraw->GetName()) != m_pMeshDraws.end()) {
+				m_pMeshDraws.erase(pMeshDraw->GetName());
+			}
 		}
 	}
+	delete pMeshDraw;
 }

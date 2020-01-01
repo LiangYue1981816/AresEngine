@@ -19,19 +19,21 @@ CGLES3StorageBuffer* CGLES3StorageBufferManager::Create(size_t size)
 	{
 		CGLES3StorageBuffer* pStorageBuffer = new CGLES3StorageBuffer(this, size);
 		m_pStorageBuffers[pStorageBuffer] = pStorageBuffer;
+
 		return pStorageBuffer;
 	}
 }
 
 void CGLES3StorageBufferManager::Destroy(CGLES3StorageBuffer* pStorageBuffer)
 {
-	mutex_autolock autolock(&lock);
+	ASSERT(pStorageBuffer);
 	{
-		ASSERT(pStorageBuffer);
-
-		if (m_pStorageBuffers.find(pStorageBuffer) != m_pStorageBuffers.end()) {
-			m_pStorageBuffers.erase(pStorageBuffer);
-			delete pStorageBuffer;
+		mutex_autolock autolock(&lock);
+		{
+			if (m_pStorageBuffers.find(pStorageBuffer) != m_pStorageBuffers.end()) {
+				m_pStorageBuffers.erase(pStorageBuffer);
+			}
 		}
 	}
+	delete pStorageBuffer;
 }

@@ -20,19 +20,21 @@ CVKDescriptorLayout* CVKDescriptorLayoutManager::Create(uint32_t set)
 	{
 		CVKDescriptorLayout* pDescriptorLayout = new CVKDescriptorLayout(m_pDevice, this, set);
 		m_pDescriptorLayouts[pDescriptorLayout] = pDescriptorLayout;
+
 		return pDescriptorLayout;
 	}
 }
 
 void CVKDescriptorLayoutManager::Destroy(CVKDescriptorLayout* pDescriptorLayout)
 {
-	mutex_autolock autolock(&lock);
+	ASSERT(pDescriptorLayout);
 	{
-		ASSERT(pDescriptorLayout);
-
-		if (m_pDescriptorLayouts.find(pDescriptorLayout) != m_pDescriptorLayouts.end()) {
-			m_pDescriptorLayouts.erase(pDescriptorLayout);
-			delete pDescriptorLayout;
+		mutex_autolock autolock(&lock);
+		{
+			if (m_pDescriptorLayouts.find(pDescriptorLayout) != m_pDescriptorLayouts.end()) {
+				m_pDescriptorLayouts.erase(pDescriptorLayout);
+			}
 		}
 	}
+	delete pDescriptorLayout;
 }

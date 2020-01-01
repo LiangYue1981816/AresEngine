@@ -19,19 +19,21 @@ CGLES3UniformBuffer* CGLES3UniformBufferManager::Create(size_t size)
 	{
 		CGLES3UniformBuffer* pUniformBuffer = new CGLES3UniformBuffer(this, size);
 		m_pUniformBuffers[pUniformBuffer] = pUniformBuffer;
+
 		return pUniformBuffer;
 	}
 }
 
 void CGLES3UniformBufferManager::Destroy(CGLES3UniformBuffer* pUniformBuffer)
 {
-	mutex_autolock autolock(&lock);
+	ASSERT(pUniformBuffer);
 	{
-		ASSERT(pUniformBuffer);
-
-		if (m_pUniformBuffers.find(pUniformBuffer) != m_pUniformBuffers.end()) {
-			m_pUniformBuffers.erase(pUniformBuffer);
-			delete pUniformBuffer;
+		mutex_autolock autolock(&lock);
+		{
+			if (m_pUniformBuffers.find(pUniformBuffer) != m_pUniformBuffers.end()) {
+				m_pUniformBuffers.erase(pUniformBuffer);
+			}
 		}
 	}
+	delete pUniformBuffer;
 }

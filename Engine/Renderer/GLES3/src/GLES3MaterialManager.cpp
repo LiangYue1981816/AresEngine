@@ -70,13 +70,14 @@ CGLES3Material* CGLES3MaterialManager::Create(const char* szFileName, int vertex
 
 void CGLES3MaterialManager::Destroy(CGLES3Material* pMaterial)
 {
-	mutex_autolock autolock(&lock);
+	ASSERT(pMaterial);
 	{
-		ASSERT(pMaterial);
-
-		if (m_pMaterials.find(pMaterial->GetName()) != m_pMaterials.end()) {
-			m_pMaterials.erase(pMaterial->GetName());
-			delete pMaterial;
+		mutex_autolock autolock(&lock);
+		{
+			if (m_pMaterials.find(pMaterial->GetName()) != m_pMaterials.end()) {
+				m_pMaterials.erase(pMaterial->GetName());
+			}
 		}
 	}
+	delete pMaterial;
 }

@@ -58,15 +58,16 @@ CGLES3Texture2D* CGLES3Texture2DManager::Create(const char* szFileName, int base
 
 void CGLES3Texture2DManager::Destroy(CGLES3Texture2D* pTexture)
 {
-	mutex_autolock autolock(&lock);
+	ASSERT(pTexture);
 	{
-		ASSERT(pTexture);
-
-		if (m_pTextures.find(pTexture->GetName()) != m_pTextures.end()) {
-			m_pTextures.erase(pTexture->GetName());
-			delete pTexture;
+		mutex_autolock autolock(&lock);
+		{
+			if (m_pTextures.find(pTexture->GetName()) != m_pTextures.end()) {
+				m_pTextures.erase(pTexture->GetName());
+			}
 		}
 	}
+	delete pTexture;
 }
 
 
@@ -126,15 +127,16 @@ CGLES3Texture2DArray* CGLES3Texture2DArrayManager::Create(const char* szFileName
 
 void CGLES3Texture2DArrayManager::Destroy(CGLES3Texture2DArray* pTexture)
 {
-	mutex_autolock autolock(&lock);
+	ASSERT(pTexture);
 	{
-		ASSERT(pTexture);
-
-		if (m_pTextures.find(pTexture->GetName()) != m_pTextures.end()) {
-			m_pTextures.erase(pTexture->GetName());
-			delete pTexture;
+		mutex_autolock autolock(&lock);
+		{
+			if (m_pTextures.find(pTexture->GetName()) != m_pTextures.end()) {
+				m_pTextures.erase(pTexture->GetName());
+			}
 		}
 	}
+	delete pTexture;
 }
 
 
@@ -194,13 +196,14 @@ CGLES3TextureCubemap* CGLES3TextureCubemapManager::Create(const char* szFileName
 
 void CGLES3TextureCubemapManager::Destroy(CGLES3TextureCubemap* pTexture)
 {
-	mutex_autolock autolock(&lock);
+	ASSERT(pTexture);
 	{
-		ASSERT(pTexture);
-
-		if (m_pTextures.find(pTexture->GetName()) != m_pTextures.end()) {
-			m_pTextures.erase(pTexture->GetName());
-			delete pTexture;
+		mutex_autolock autolock(&lock);
+		{
+			if (m_pTextures.find(pTexture->GetName()) != m_pTextures.end()) {
+				m_pTextures.erase(pTexture->GetName());
+			}
 		}
 	}
+	delete pTexture;
 }

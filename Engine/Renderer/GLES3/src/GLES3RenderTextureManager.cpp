@@ -42,13 +42,14 @@ CGLES3RenderTexture* CGLES3RenderTextureManager::Create(uint32_t name)
 
 void CGLES3RenderTextureManager::Destroy(CGLES3RenderTexture* pRenderTexture)
 {
-	mutex_autolock autolock(&lock);
+	ASSERT(pRenderTexture);
 	{
-		ASSERT(pRenderTexture);
-
-		if (m_pRenderTextures.find(pRenderTexture->GetName()) != m_pRenderTextures.end()) {
-			m_pRenderTextures.erase(pRenderTexture->GetName());
-			delete pRenderTexture;
+		mutex_autolock autolock(&lock);
+		{
+			if (m_pRenderTextures.find(pRenderTexture->GetName()) != m_pRenderTextures.end()) {
+				m_pRenderTextures.erase(pRenderTexture->GetName());
+			}
 		}
 	}
+	delete pRenderTexture;
 }

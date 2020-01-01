@@ -89,13 +89,14 @@ CGLES3DescriptorSet* CGLES3DescriptorSetManager::Create(const CGfxPipelineGraphi
 
 void CGLES3DescriptorSetManager::Destroy(CGLES3DescriptorSet* pDescriptorSet)
 {
-	mutex_autolock autolock(&lock);
+	ASSERT(pDescriptorSet);
 	{
-		ASSERT(pDescriptorSet);
-
-		if (m_pDescriptorSets.find(pDescriptorSet->GetName()) != m_pDescriptorSets.end()) {
-			m_pDescriptorSets.erase(pDescriptorSet->GetName());
-			delete pDescriptorSet;
+		mutex_autolock autolock(&lock);
+		{
+			if (m_pDescriptorSets.find(pDescriptorSet->GetName()) != m_pDescriptorSets.end()) {
+				m_pDescriptorSets.erase(pDescriptorSet->GetName());
+			}
 		}
 	}
+	delete pDescriptorSet;
 }
