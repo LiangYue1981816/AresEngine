@@ -484,6 +484,11 @@ bool CVKRenderer::CmdUpdateInstanceBuffer(CGfxCommandBufferPtr ptrCommandBuffer,
 	return ptrCommandBuffer->CmdUpdateInstanceBuffer(ptrMeshDraw, pInstanceBuffer, size);
 }
 
+bool CVKRenderer::CmdDispatch(CGfxCommandBufferPtr ptrCommandBuffer, int numLocalWorkGroupX, int numLocalWorkGroupY, int numLocalWorkGroupZ)
+{
+	return ptrCommandBuffer->CmdDispatch(numLocalWorkGroupX, numLocalWorkGroupY, numLocalWorkGroupZ);
+}
+
 bool CVKRenderer::CmdPushDebugGroup(CGfxCommandBufferPtr ptrCommandBuffer, const char* szMessage)
 {
 	return ptrCommandBuffer->CmdPushDebugGroup(szMessage);

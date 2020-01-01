@@ -206,6 +206,8 @@ public:
 	virtual bool CmdDrawInstance(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxMeshDrawPtr ptrMeshDraw) = 0;
 	virtual bool CmdUpdateInstanceBuffer(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxMeshDrawPtr ptrMeshDraw, const uint8_t* pInstanceBuffer, uint32_t size) = 0;
 
+	virtual bool CmdDispatch(CGfxCommandBufferPtr ptrCommandBuffer, int numLocalWorkGroupX, int numLocalWorkGroupY, int numLocalWorkGroupZ) = 0;
+
 	virtual bool CmdPushDebugGroup(CGfxCommandBufferPtr ptrCommandBuffer, const char* szMessage) = 0;
 	virtual bool CmdPopDebugGroup(CGfxCommandBufferPtr ptrCommandBuffer) = 0;
 

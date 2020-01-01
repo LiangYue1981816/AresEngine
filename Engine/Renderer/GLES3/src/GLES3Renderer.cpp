@@ -478,6 +478,11 @@ bool CGLES3Renderer::CmdUpdateInstanceBuffer(CGfxCommandBufferPtr ptrCommandBuff
 	return ptrCommandBuffer->CmdUpdateInstanceBuffer(ptrMeshDraw, pInstanceBuffer, size);
 }
 
+bool CGLES3Renderer::CmdDispatch(CGfxCommandBufferPtr ptrCommandBuffer, int numLocalWorkGroupX, int numLocalWorkGroupY, int numLocalWorkGroupZ)
+{
+	return ptrCommandBuffer->CmdDispatch(numLocalWorkGroupX, numLocalWorkGroupY, numLocalWorkGroupZ);
+}
+
 bool CGLES3Renderer::CmdPushDebugGroup(CGfxCommandBufferPtr ptrCommandBuffer, const char* szMessage)
 {
 	return ptrCommandBuffer->CmdPushDebugGroup(szMessage);
