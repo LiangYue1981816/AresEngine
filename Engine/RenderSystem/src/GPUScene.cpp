@@ -110,6 +110,35 @@ const CGPUScene::InstanceData& CGPUScene::GetInstanceData(int index) const
 
 void CGPUScene::Update(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer)
 {
+	eastl::vector<TransferData> datas;
+	{
+		for (int indexThread = 0; indexThread < MAX_THREAD_COUNT; indexThread++) {
+			for (const auto& itTransfer : m_transferBuffer[indexThread]) {
+				datas.emplace_back(itTransfer.second);
+			}
+
+//			m_transferBuffer[indexThread].clear();
+		}
+
+		if (datas.empty()) {
+			return;
+		}
+	}
+	m_ptrTransferBuffer->BufferData(0, sizeof(TransferData) * datas.size(), (const void*)datas.data());
+
+	GfxRenderer()->CmdPushDebugGroup(ptrCommandBuffer, "TransferSceneData");
+	{
+		GfxRenderer()->CmdSetBufferBarrier(ptrCommandBuffer, m_ptrInstanceBuffer, GFX_ACCESS_TRANSFER_READ_BIT, GFX_ACCESS_TRANSFER_WRITE_BIT);
+		{
+			GfxRenderer()->CmdBindPipelineCompute(ptrCommandBuffer, m_pPipelineCompute);
+			GfxRenderer()->CmdBindDescriptorSet(ptrCommandBuffer, m_ptrDescriptorSet);
+			GfxRenderer()->CmdDispatch(ptrCommandBuffer, 4, 1, 1);
+		}
+		GfxRenderer()->CmdSetBufferBarrier(ptrCommandBuffer, m_ptrInstanceBuffer, GFX_ACCESS_TRANSFER_WRITE_BIT, GFX_ACCESS_TRANSFER_READ_BIT);
+	}
+	GfxRenderer()->CmdPopDebugGroup(ptrCommandBuffer);
+
+	/*
 	bool bNeedUpdate = false;
 
 	for (int indexThread = 0; indexThread < MAX_THREAD_COUNT; indexThread++) {
@@ -124,4 +153,5 @@ void CGPUScene::Update(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuf
 	if (bNeedUpdate) {
 		m_ptrInstanceBuffer->BufferData(0, sizeof(InstanceData) * m_instanceBuffer.size(), m_instanceBuffer.data());
 	}
+	*/
 }

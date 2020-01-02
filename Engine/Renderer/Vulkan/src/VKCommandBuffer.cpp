@@ -366,7 +366,7 @@ bool CVKCommandBuffer::CmdBindPipelineCompute(const CGfxPipelineCompute* pPipeli
 	ASSERT(pPipelineCompute);
 	ASSERT(m_vkCommandBuffer);
 
-	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
+	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == false)) {
 		m_pCurrentPipelineCompute = (CVKPipelineCompute*)pPipelineCompute;
 		m_pCommands.emplace_back(new CVKCommandBindPipelineCompute(m_vkCommandBuffer, pPipelineCompute));
 		return true;
@@ -772,7 +772,7 @@ bool CVKCommandBuffer::CmdDispatch(int numLocalWorkGroupX, int numLocalWorkGroup
 {
 	ASSERT(m_vkCommandBuffer);
 
-	if (IsMainCommandBuffer() == true && IsInRenderPass() == true) {
+	if (IsMainCommandBuffer() == true && IsInRenderPass() == false) {
 		m_pCommands.emplace_back(new CVKCommandDispatch(m_vkCommandBuffer, numLocalWorkGroupX, numLocalWorkGroupY, numLocalWorkGroupZ));
 		return true;
 	}

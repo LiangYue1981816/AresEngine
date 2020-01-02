@@ -273,7 +273,7 @@ bool CGLES3CommandBuffer::CmdBindPipelineCompute(const CGfxPipelineCompute* pPip
 {
 	ASSERT(pPipelineCompute);
 
-	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
+	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == false)) {
 		m_pCurrentPipelineCompute = (CGLES3PipelineCompute*)pPipelineCompute;
 		m_pCommands.emplace_back(new CGLES3CommandBindPipelineCompute(pPipelineCompute));
 		return true;
@@ -633,7 +633,7 @@ bool CGLES3CommandBuffer::CmdUpdateInstanceBuffer(const CGfxMeshDrawPtr ptrMeshD
 
 bool CGLES3CommandBuffer::CmdDispatch(int numLocalWorkGroupX, int numLocalWorkGroupY, int numLocalWorkGroupZ)
 {
-	if (IsMainCommandBuffer() == true && IsInRenderPass() == true) {
+	if (IsMainCommandBuffer() == true && IsInRenderPass() == false) {
 		m_pCommands.emplace_back(new CGLES3CommandDispatch(numLocalWorkGroupX, numLocalWorkGroupY, numLocalWorkGroupZ));
 		return true;
 	}

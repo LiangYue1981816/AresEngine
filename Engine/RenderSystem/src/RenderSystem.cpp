@@ -325,10 +325,10 @@ void CRenderSystem::RenderDefault(CTaskGraph& taskGraph, CCamera* pCamera, bool 
 	{
 		ptrCommandBuffer->Clearup();
 
-		m_pGPUScene->Update(taskGraph, ptrCommandBuffer);
-
 		GfxRenderer()->BeginRecord(ptrCommandBuffer);
 		{
+			m_pGPUScene->Update(taskGraph, ptrCommandBuffer);
+
 			uint32_t rtFinal;
 
 			uint32_t rtDepth = RENDER_TEXTURE_FULL_DEPTH;
@@ -366,10 +366,10 @@ void CRenderSystem::RenderForwardLighting(CTaskGraph& taskGraph, CCamera* pCamer
 	{
 		ptrCommandBuffer->Clearup();
 
-		m_pGPUScene->Update(taskGraph, ptrCommandBuffer);
-
 		GfxRenderer()->BeginRecord(ptrCommandBuffer);
 		{
+			m_pGPUScene->Update(taskGraph, ptrCommandBuffer);
+
 			uint32_t rtFinal;
 
 			uint32_t rtDepth = RENDER_TEXTURE_FULL_DEPTH;
