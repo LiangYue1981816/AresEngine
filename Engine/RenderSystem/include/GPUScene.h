@@ -35,11 +35,11 @@ private:
 		}
 		TransferData(int _index, InstanceData _data)
 		{
-			index = _index;
+			index = glm::ivec4(_index);
 			data = _data;
 		}
 
-		int index;
+		glm::ivec4 index;
 		InstanceData data;
 	} TransferData;
 

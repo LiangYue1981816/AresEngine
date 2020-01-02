@@ -1,5 +1,5 @@
 #version 310 es
-layout (local_size_x = 4) in;
+layout (local_size_x = 8) in;
 
 precision mediump float;
 #include "engine.inc"
@@ -34,11 +34,11 @@ void main()
 		}
 
 		for (uint index = indexBegin; index < indexEnd; index++) {
-			sceneData.data[transferSceneData.data[index].index] = transferSceneData.data[index].data;
+			sceneData.data[transferSceneData.data[index].index.x] = transferSceneData.data[index].data;
 		}
 	}
 	else if (indexWork < numTransferTotal) {
-		sceneData.data[transferSceneData.data[indexWork].index] = transferSceneData.data[indexWork].data;
+		sceneData.data[transferSceneData.data[indexWork].index.x] = transferSceneData.data[indexWork].data;
 	}
 
 	barrier();

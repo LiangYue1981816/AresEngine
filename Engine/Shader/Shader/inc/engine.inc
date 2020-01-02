@@ -121,7 +121,7 @@ layout (location = 8)                                      in mediump int inInst
 
 	struct TransferData
 	{
-		int index;
+		ivec4 index;
 		InstanceData data;
 	};
 

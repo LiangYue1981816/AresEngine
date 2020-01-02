@@ -117,7 +117,7 @@ void CGPUScene::Update(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuf
 				datas.emplace_back(itTransfer.second);
 			}
 
-//			m_transferBuffer[indexThread].clear();
+			m_transferBuffer[indexThread].clear();
 		}
 
 		if (datas.empty()) {
@@ -132,12 +132,13 @@ void CGPUScene::Update(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuf
 		{
 			GfxRenderer()->CmdBindPipelineCompute(ptrCommandBuffer, m_pPipelineCompute);
 			GfxRenderer()->CmdBindDescriptorSet(ptrCommandBuffer, m_ptrDescriptorSet);
-			GfxRenderer()->CmdDispatch(ptrCommandBuffer, 4, 1, 1);
+			GfxRenderer()->CmdDispatch(ptrCommandBuffer, 8, 1, 1);
 		}
 		GfxRenderer()->CmdSetBufferBarrier(ptrCommandBuffer, m_ptrInstanceBuffer, GFX_ACCESS_TRANSFER_WRITE_BIT, GFX_ACCESS_TRANSFER_READ_BIT);
 	}
 	GfxRenderer()->CmdPopDebugGroup(ptrCommandBuffer);
 
+	// Debug
 	/*
 	bool bNeedUpdate = false;
 
