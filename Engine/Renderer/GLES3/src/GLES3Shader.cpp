@@ -40,13 +40,8 @@ bool CGLES3Shader::Create(const uint32_t* words, size_t numWords, shader_kind ki
 			ASSERT(words);
 			ASSERT(numWords);
 
-#ifdef PLATFORM_WINDOWS
-			const eastl::string strSource = m_spriv.Create(words, numWords);
-			const char* szSource = strSource.c_str();
-#else
 			const eastl::string strSource = m_spriv.Create(words, numWords, 310);
 			const char* szSource = strSource.c_str();
-#endif
 
 			m_kind = kind;
 			m_shader = glCreateShader(glGetShaderType(kind));
