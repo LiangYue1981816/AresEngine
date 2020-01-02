@@ -9,7 +9,7 @@ CGPUScene::CGPUScene(void)
 	, m_pShaderCompute(nullptr)
 	, m_pPipelineCompute(nullptr)
 {
-	char szFileName[] = "UpdateSceneData.glsl";
+	char szFileName[] = "TransferSceneData.glsl";
 	char szBinFileName[_MAX_STRING] = { 0 };
 
 	sprintf(szBinFileName, "%x.comp", HashValue(szFileName));
