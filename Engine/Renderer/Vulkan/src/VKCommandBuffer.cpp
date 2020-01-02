@@ -58,20 +58,14 @@ CVKCommandBuffer::CVKCommandBuffer(CVKDevice* pDevice, CVKCommandBufferManager* 
 
 	, m_pSemaphore(nullptr)
 {
-	if (bMainCommandBuffer) {
-		m_pSemaphore = new CVKSemaphore(m_pDevice);
-	}
-
+	m_pSemaphore = new CVKSemaphore(m_pDevice);
 	Create(vkCommandPool, bMainCommandBuffer);
 }
 
 CVKCommandBuffer::~CVKCommandBuffer(void)
 {
-	if (m_pSemaphore) {
-		delete m_pSemaphore;
-	}
-
 	Destroy();
+	delete m_pSemaphore;
 }
 
 void CVKCommandBuffer::Release(void)
@@ -82,8 +76,6 @@ void CVKCommandBuffer::Release(void)
 
 bool CVKCommandBuffer::Create(VkCommandPool vkCommandPool, bool bMainCommandBuffer)
 {
-	ASSERT(vkCommandPool);
-
 	m_vkCommandPool = vkCommandPool;
 
 	if (bMainCommandBuffer) {
@@ -107,15 +99,15 @@ bool CVKCommandBuffer::Create(VkCommandPool vkCommandPool, bool bMainCommandBuff
 
 void CVKCommandBuffer::Destroy(void)
 {
-	ASSERT(m_vkCommandBuffer);
-
 	Clearup();
 
 	if (m_vkFence) {
 		vkDestroyFence(m_pDevice->GetDevice(), m_vkFence, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
 	}
 
-	vkFreeCommandBuffers(m_pDevice->GetDevice(), m_vkCommandPool, 1, &m_vkCommandBuffer);
+	if (m_vkCommandPool && m_vkCommandBuffer) {
+		vkFreeCommandBuffers(m_pDevice->GetDevice(), m_vkCommandPool, 1, &m_vkCommandBuffer);
+	}
 
 	m_vkFence = VK_NULL_HANDLE;
 	m_vkCommandPool = VK_NULL_HANDLE;
@@ -129,19 +121,16 @@ VkFence CVKCommandBuffer::GetFence(void) const
 
 VkCommandPool CVKCommandBuffer::GetCommandPool(void) const
 {
-	ASSERT(m_vkCommandPool);
 	return m_vkCommandPool;
 }
 
 VkCommandBuffer CVKCommandBuffer::GetCommandBuffer(void) const
 {
-	ASSERT(m_vkCommandBuffer);
 	return m_vkCommandBuffer;
 }
 
 const CGfxSemaphore* CVKCommandBuffer::GetSemaphore(void) const
 {
-	ASSERT(m_pSemaphore);
 	return m_pSemaphore;
 }
 
@@ -175,10 +164,10 @@ void CVKCommandBuffer::Clearup(void)
 	}
 
 	m_pCommands.clear();
-
-	m_indexSubpass = -1;
 	m_ptrRenderPass.Release();
 	m_ptrFrameBuffer.Release();
+
+	m_indexSubpass = -1;
 	m_pCurrentPipelineCompute = nullptr;
 	m_pCurrentPipelineGraphics = nullptr;
 }
@@ -197,7 +186,6 @@ void CVKCommandBuffer::WaitForFinish(void) const
 
 void CVKCommandBuffer::ResetCommandBuffer(void) const
 {
-	ASSERT(m_vkCommandBuffer);
 	vkResetCommandBuffer(m_vkCommandBuffer, VK_COMMAND_BUFFER_RESET_RELEASE_RESOURCES_BIT);
 }
 
@@ -206,607 +194,241 @@ bool CVKCommandBuffer::IsEmpty(void) const
 	return m_pCommands.empty();
 }
 
-bool CVKCommandBuffer::BeginRecord(void)
+void CVKCommandBuffer::BeginRecord(void)
 {
-	ASSERT(m_vkCommandBuffer);
-
-	if (IsMainCommandBuffer() && IsInRenderPass() == false) {
-		m_pCommands.emplace_back(new CVKCommandBeginRecord(m_vkCommandBuffer));
-		return true;
-	}
-	else {
-		return false;
-	}
+	m_pCommands.emplace_back(new CVKCommandBeginRecord(m_vkCommandBuffer));
 }
 
-bool CVKCommandBuffer::BeginRecord(const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass, int indexSubpass)
+void CVKCommandBuffer::BeginRecord(const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass, int indexSubpass)
 {
-	ASSERT(ptrRenderPass);
-	ASSERT(ptrFrameBuffer);
-	ASSERT(m_vkCommandBuffer);
-
-	if (IsMainCommandBuffer() == false && IsInRenderPass() == false) {
-		m_indexSubpass = indexSubpass;
-		m_ptrRenderPass = ptrRenderPass;
-		m_ptrFrameBuffer = ptrFrameBuffer;
-		m_pCommands.emplace_back(new CVKCommandBeginRecord(m_vkCommandBuffer, m_ptrFrameBuffer, m_ptrRenderPass, m_indexSubpass));
-		return true;
-	}
-	else {
-		return false;
-	}
+	m_indexSubpass = indexSubpass;
+	m_ptrRenderPass = ptrRenderPass;
+	m_ptrFrameBuffer = ptrFrameBuffer;
+	m_pCommands.emplace_back(new CVKCommandBeginRecord(m_vkCommandBuffer, m_ptrFrameBuffer, m_ptrRenderPass, m_indexSubpass));
 }
 
-bool CVKCommandBuffer::EndRecord(void)
+void CVKCommandBuffer::EndRecord(void)
 {
-	ASSERT(m_vkCommandBuffer);
-
 	m_pCommands.emplace_back(new CVKCommandEndRecord(m_vkCommandBuffer));
-	return true;
 }
 
-bool CVKCommandBuffer::CmdSetImageLayout(const CGfxTexture2DPtr ptrTexture, GfxImageLayout imageLayout)
+void CVKCommandBuffer::CmdSetImageLayout(const CGfxTexture2DPtr ptrTexture, GfxImageLayout imageLayout)
 {
-	ASSERT(ptrTexture);
-	ASSERT(m_vkCommandBuffer);
-
-	if (IsMainCommandBuffer() == true && IsInRenderPass() == false) {
-		m_pCommands.emplace_back(new CVKCommandSetImageLayout(m_vkCommandBuffer, ptrTexture, imageLayout));
-		return true;
-	}
-	else {
-		return false;
-	}
+	m_pCommands.emplace_back(new CVKCommandSetImageLayout(m_vkCommandBuffer, ptrTexture, imageLayout));
 }
 
-bool CVKCommandBuffer::CmdSetImageLayout(const CGfxTexture2DArrayPtr ptrTexture, GfxImageLayout imageLayout)
+void CVKCommandBuffer::CmdSetImageLayout(const CGfxTexture2DArrayPtr ptrTexture, GfxImageLayout imageLayout)
 {
-	ASSERT(ptrTexture);
-	ASSERT(m_vkCommandBuffer);
-
-	if (IsMainCommandBuffer() == true && IsInRenderPass() == false) {
-		m_pCommands.emplace_back(new CVKCommandSetImageLayout(m_vkCommandBuffer, ptrTexture, imageLayout));
-		return true;
-	}
-	else {
-		return false;
-	}
+	m_pCommands.emplace_back(new CVKCommandSetImageLayout(m_vkCommandBuffer, ptrTexture, imageLayout));
 }
 
-bool CVKCommandBuffer::CmdSetImageLayout(const CGfxTextureCubemapPtr ptrTexture, GfxImageLayout imageLayout)
+void CVKCommandBuffer::CmdSetImageLayout(const CGfxTextureCubemapPtr ptrTexture, GfxImageLayout imageLayout)
 {
-	ASSERT(ptrTexture);
-	ASSERT(m_vkCommandBuffer);
-
-	if (IsMainCommandBuffer() == true && IsInRenderPass() == false) {
-		m_pCommands.emplace_back(new CVKCommandSetImageLayout(m_vkCommandBuffer, ptrTexture, imageLayout));
-		return true;
-	}
-	else {
-		return false;
-	}
+	m_pCommands.emplace_back(new CVKCommandSetImageLayout(m_vkCommandBuffer, ptrTexture, imageLayout));
 }
 
-bool CVKCommandBuffer::CmdSetImageLayout(const CGfxRenderTexturePtr ptrTexture, GfxImageLayout imageLayout)
+void CVKCommandBuffer::CmdSetImageLayout(const CGfxRenderTexturePtr ptrTexture, GfxImageLayout imageLayout)
 {
-	ASSERT(ptrTexture);
-	ASSERT(m_vkCommandBuffer);
-
-	if (IsMainCommandBuffer() == true && IsInRenderPass() == false) {
-		m_pCommands.emplace_back(new CVKCommandSetImageLayout(m_vkCommandBuffer, ptrTexture, imageLayout));
-		return true;
-	}
-	else {
-		return false;
-	}
+	m_pCommands.emplace_back(new CVKCommandSetImageLayout(m_vkCommandBuffer, ptrTexture, imageLayout));
 }
 
-bool CVKCommandBuffer::CmdSetBufferBarrier(const CGfxStorageBufferPtr ptrBuffer, GfxAccessFlags srcAccessFlags, GfxAccessFlags dstAccessFlags)
+void CVKCommandBuffer::CmdSetBufferBarrier(const CGfxStorageBufferPtr ptrBuffer, GfxAccessFlags srcAccessFlags, GfxAccessFlags dstAccessFlags)
 {
-	ASSERT(ptrBuffer);
-	ASSERT(m_vkCommandBuffer);
-
-	if (IsMainCommandBuffer() == true && IsInRenderPass() == false) {
-		m_pCommands.emplace_back(new CVKCommandSetBufferBarrier(m_vkCommandBuffer, ptrBuffer, srcAccessFlags, dstAccessFlags));
-		return true;
-	}
-	else {
-		return false;
-	}
+	m_pCommands.emplace_back(new CVKCommandSetBufferBarrier(m_vkCommandBuffer, ptrBuffer, srcAccessFlags, dstAccessFlags));
 }
 
-bool CVKCommandBuffer::CmdBeginRenderPass(const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass)
+void CVKCommandBuffer::CmdBeginRenderPass(const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass)
 {
-	ASSERT(ptrRenderPass);
-	ASSERT(ptrFrameBuffer);
-	ASSERT(m_vkCommandBuffer);
-
-	if (IsMainCommandBuffer() == true && IsInRenderPass() == false) {
-		m_indexSubpass = 0;
-		m_ptrRenderPass = ptrRenderPass;
-		m_ptrFrameBuffer = ptrFrameBuffer;
-		m_pCommands.emplace_back(new CVKCommandBeginRenderPass(m_vkCommandBuffer, m_ptrFrameBuffer, m_ptrRenderPass));
-		return true;
-	}
-	else {
-		return false;
-	}
+	m_indexSubpass = 0;
+	m_ptrRenderPass = ptrRenderPass;
+	m_ptrFrameBuffer = ptrFrameBuffer;
+	m_pCommands.emplace_back(new CVKCommandBeginRenderPass(m_vkCommandBuffer, m_ptrFrameBuffer, m_ptrRenderPass));
 }
 
-bool CVKCommandBuffer::CmdNextSubpass(void)
+void CVKCommandBuffer::CmdNextSubpass(void)
 {
-	ASSERT(m_vkCommandBuffer);
-
 	if (IsMainCommandBuffer() == true && IsInRenderPass() == true && m_indexSubpass < (int)m_ptrRenderPass->GetSubpassCount() - 1) {
 		m_indexSubpass += 1;
 		m_pCommands.emplace_back(new CVKCommandNextSubPass(m_vkCommandBuffer, m_ptrFrameBuffer, m_ptrRenderPass, m_indexSubpass));
-		return true;
-	}
-	else {
-		return false;
 	}
 }
 
-bool CVKCommandBuffer::CmdEndRenderPass(void)
+void CVKCommandBuffer::CmdEndRenderPass(void)
 {
-	ASSERT(m_vkCommandBuffer);
-
-	if (IsMainCommandBuffer() == true && IsInRenderPass() == true) {
+	if (m_indexSubpass >= 0) {
 		m_indexSubpass = -1;
 		m_pCommands.emplace_back(new CVKCommandEndRenderPass(m_vkCommandBuffer, m_ptrFrameBuffer, m_ptrRenderPass));
-		return true;
-	}
-	else {
-		return false;
 	}
 }
 
-bool CVKCommandBuffer::CmdBindPipelineCompute(const CGfxPipelineCompute* pPipelineCompute)
+void CVKCommandBuffer::CmdBindPipelineCompute(const CGfxPipelineCompute* pPipelineCompute)
 {
-	ASSERT(pPipelineCompute);
-	ASSERT(m_vkCommandBuffer);
-
-	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == false)) {
-		m_pCurrentPipelineCompute = (CVKPipelineCompute*)pPipelineCompute;
-		m_pCommands.emplace_back(new CVKCommandBindPipelineCompute(m_vkCommandBuffer, pPipelineCompute));
-		return true;
-	}
-	else {
-		return false;
-	}
+	m_pCurrentPipelineCompute = (CVKPipelineCompute*)pPipelineCompute;
+	m_pCommands.emplace_back(new CVKCommandBindPipelineCompute(m_vkCommandBuffer, pPipelineCompute));
 }
 
-bool CVKCommandBuffer::CmdBindPipelineGraphics(const CGfxPipelineGraphics* pPipelineGraphics)
+void CVKCommandBuffer::CmdBindPipelineGraphics(const CGfxPipelineGraphics* pPipelineGraphics)
 {
-	ASSERT(pPipelineGraphics);
-	ASSERT(m_vkCommandBuffer);
-
-	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
-		m_pCurrentPipelineGraphics = (CVKPipelineGraphics*)pPipelineGraphics;
-		m_pCommands.emplace_back(new CVKCommandBindPipelineGraphics(m_vkCommandBuffer, pPipelineGraphics));
-		return true;
-	}
-	else {
-		return false;
-	}
+	m_pCurrentPipelineGraphics = (CVKPipelineGraphics*)pPipelineGraphics;
+	m_pCommands.emplace_back(new CVKCommandBindPipelineGraphics(m_vkCommandBuffer, pPipelineGraphics));
 }
 
-bool CVKCommandBuffer::CmdBindDescriptorSet(const CGfxDescriptorSetPtr ptrDescriptorSet)
+void CVKCommandBuffer::CmdBindDescriptorSet(const CGfxDescriptorSetPtr ptrDescriptorSet)
 {
-	ASSERT(m_vkCommandBuffer);
-
-	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
-		m_pCommands.emplace_back(new CVKCommandBindDescriptorSet(m_vkCommandBuffer, m_pCurrentPipelineCompute, m_pCurrentPipelineGraphics, ptrDescriptorSet));
-		return true;
-	}
-	else {
-		return false;
-	}
+	m_pCommands.emplace_back(new CVKCommandBindDescriptorSet(m_vkCommandBuffer, m_pCurrentPipelineCompute, m_pCurrentPipelineGraphics, ptrDescriptorSet));
 }
 
-bool CVKCommandBuffer::CmdBindMesh(const CGfxMeshPtr ptrMesh)
+void CVKCommandBuffer::CmdBindMesh(const CGfxMeshPtr ptrMesh)
 {
-	ASSERT(m_vkCommandBuffer);
-
-	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
-		m_pCommands.emplace_back(new CVKCommandBindMesh(m_vkCommandBuffer, m_pCurrentPipelineGraphics, ptrMesh));
-		return true;
-	}
-	else {
-		return false;
-	}
+	m_pCommands.emplace_back(new CVKCommandBindMesh(m_vkCommandBuffer, m_pCurrentPipelineGraphics, ptrMesh));
 }
 
-bool CVKCommandBuffer::CmdBindMeshDraw(const CGfxMeshDrawPtr ptrMeshDraw)
+void CVKCommandBuffer::CmdBindMeshDraw(const CGfxMeshDrawPtr ptrMeshDraw)
 {
-	ASSERT(m_vkCommandBuffer);
-
-	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
-		m_pCommands.emplace_back(new CVKCommandBindMeshDraw(m_vkCommandBuffer, m_pCurrentPipelineGraphics, ptrMeshDraw));
-		return true;
-	}
-	else {
-		return false;
-	}
+	m_pCommands.emplace_back(new CVKCommandBindMeshDraw(m_vkCommandBuffer, m_pCurrentPipelineGraphics, ptrMeshDraw));
 }
 
-bool CVKCommandBuffer::CmdUniform1i(uint32_t name, int v0)
+void CVKCommandBuffer::CmdUniform1i(uint32_t name, int v0)
 {
-	ASSERT(m_vkCommandBuffer);
-
-	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
-		m_pCommands.emplace_back(new CVKCommandUniform1i(m_vkCommandBuffer, m_pCurrentPipelineCompute, m_pCurrentPipelineGraphics, name, v0));
-		return true;
-	}
-	else {
-		return false;
-	}
+	m_pCommands.emplace_back(new CVKCommandUniform1i(m_vkCommandBuffer, m_pCurrentPipelineCompute, m_pCurrentPipelineGraphics, name, v0));
 }
 
-bool CVKCommandBuffer::CmdUniform2i(uint32_t name, int v0, int v1)
+void CVKCommandBuffer::CmdUniform2i(uint32_t name, int v0, int v1)
 {
-	ASSERT(m_vkCommandBuffer);
-
-	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
-		m_pCommands.emplace_back(new CVKCommandUniform2i(m_vkCommandBuffer, m_pCurrentPipelineCompute, m_pCurrentPipelineGraphics, name, v0, v1));
-		return true;
-	}
-	else {
-		return false;
-	}
+	m_pCommands.emplace_back(new CVKCommandUniform2i(m_vkCommandBuffer, m_pCurrentPipelineCompute, m_pCurrentPipelineGraphics, name, v0, v1));
 }
 
-bool CVKCommandBuffer::CmdUniform3i(uint32_t name, int v0, int v1, int v2)
+void CVKCommandBuffer::CmdUniform3i(uint32_t name, int v0, int v1, int v2)
 {
-	ASSERT(m_vkCommandBuffer);
-
-	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
-		m_pCommands.emplace_back(new CVKCommandUniform3i(m_vkCommandBuffer, m_pCurrentPipelineCompute, m_pCurrentPipelineGraphics, name, v0, v1, v2));
-		return true;
-	}
-	else {
-		return false;
-	}
+	m_pCommands.emplace_back(new CVKCommandUniform3i(m_vkCommandBuffer, m_pCurrentPipelineCompute, m_pCurrentPipelineGraphics, name, v0, v1, v2));
 }
 
-bool CVKCommandBuffer::CmdUniform4i(uint32_t name, int v0, int v1, int v2, int v3)
+void CVKCommandBuffer::CmdUniform4i(uint32_t name, int v0, int v1, int v2, int v3)
 {
-	ASSERT(m_vkCommandBuffer);
-
-	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
-		m_pCommands.emplace_back(new CVKCommandUniform4i(m_vkCommandBuffer, m_pCurrentPipelineCompute, m_pCurrentPipelineGraphics, name, v0, v1, v2, v3));
-		return true;
-	}
-	else {
-		return false;
-	}
+	m_pCommands.emplace_back(new CVKCommandUniform4i(m_vkCommandBuffer, m_pCurrentPipelineCompute, m_pCurrentPipelineGraphics, name, v0, v1, v2, v3));
 }
 
-bool CVKCommandBuffer::CmdUniform1f(uint32_t name, float v0)
+void CVKCommandBuffer::CmdUniform1f(uint32_t name, float v0)
 {
-	ASSERT(m_vkCommandBuffer);
-
-	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
-		m_pCommands.emplace_back(new CVKCommandUniform1f(m_vkCommandBuffer, m_pCurrentPipelineCompute, m_pCurrentPipelineGraphics, name, v0));
-		return true;
-	}
-	else {
-		return false;
-	}
+	m_pCommands.emplace_back(new CVKCommandUniform1f(m_vkCommandBuffer, m_pCurrentPipelineCompute, m_pCurrentPipelineGraphics, name, v0));
 }
 
-bool CVKCommandBuffer::CmdUniform2f(uint32_t name, float v0, float v1)
+void CVKCommandBuffer::CmdUniform2f(uint32_t name, float v0, float v1)
 {
-	ASSERT(m_vkCommandBuffer);
-
-	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
-		m_pCommands.emplace_back(new CVKCommandUniform2f(m_vkCommandBuffer, m_pCurrentPipelineCompute, m_pCurrentPipelineGraphics, name, v0, v1));
-		return true;
-	}
-	else {
-		return false;
-	}
+	m_pCommands.emplace_back(new CVKCommandUniform2f(m_vkCommandBuffer, m_pCurrentPipelineCompute, m_pCurrentPipelineGraphics, name, v0, v1));
 }
 
-bool CVKCommandBuffer::CmdUniform3f(uint32_t name, float v0, float v1, float v2)
+void CVKCommandBuffer::CmdUniform3f(uint32_t name, float v0, float v1, float v2)
 {
-	ASSERT(m_vkCommandBuffer);
-
-	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
-		m_pCommands.emplace_back(new CVKCommandUniform3f(m_vkCommandBuffer, m_pCurrentPipelineCompute, m_pCurrentPipelineGraphics, name, v0, v1, v2));
-		return true;
-	}
-	else {
-		return false;
-	}
+	m_pCommands.emplace_back(new CVKCommandUniform3f(m_vkCommandBuffer, m_pCurrentPipelineCompute, m_pCurrentPipelineGraphics, name, v0, v1, v2));
 }
 
-bool CVKCommandBuffer::CmdUniform4f(uint32_t name, float v0, float v1, float v2, float v3)
+void CVKCommandBuffer::CmdUniform4f(uint32_t name, float v0, float v1, float v2, float v3)
 {
-	ASSERT(m_vkCommandBuffer);
-
-	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
-		m_pCommands.emplace_back(new CVKCommandUniform4f(m_vkCommandBuffer, m_pCurrentPipelineCompute, m_pCurrentPipelineGraphics, name, v0, v1, v2, v3));
-		return true;
-	}
-	else {
-		return false;
-	}
+	m_pCommands.emplace_back(new CVKCommandUniform4f(m_vkCommandBuffer, m_pCurrentPipelineCompute, m_pCurrentPipelineGraphics, name, v0, v1, v2, v3));
 }
 
-bool CVKCommandBuffer::CmdUniform1iv(uint32_t name, int count, const int* value)
+void CVKCommandBuffer::CmdUniform1iv(uint32_t name, int count, const int* value)
 {
-	ASSERT(value);
-	ASSERT(m_vkCommandBuffer);
-
-	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
-		m_pCommands.emplace_back(new CVKCommandUniform1iv(m_vkCommandBuffer, m_pCurrentPipelineCompute, m_pCurrentPipelineGraphics, name, count, value));
-		return true;
-	}
-	else {
-		return false;
-	}
+	m_pCommands.emplace_back(new CVKCommandUniform1iv(m_vkCommandBuffer, m_pCurrentPipelineCompute, m_pCurrentPipelineGraphics, name, count, value));
 }
 
-bool CVKCommandBuffer::CmdUniform2iv(uint32_t name, int count, const int* value)
+void CVKCommandBuffer::CmdUniform2iv(uint32_t name, int count, const int* value)
 {
-	ASSERT(value);
-	ASSERT(m_vkCommandBuffer);
-
-	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
-		m_pCommands.emplace_back(new CVKCommandUniform2iv(m_vkCommandBuffer, m_pCurrentPipelineCompute, m_pCurrentPipelineGraphics, name, count, value));
-		return true;
-	}
-	else {
-		return false;
-	}
+	m_pCommands.emplace_back(new CVKCommandUniform2iv(m_vkCommandBuffer, m_pCurrentPipelineCompute, m_pCurrentPipelineGraphics, name, count, value));
 }
 
-bool CVKCommandBuffer::CmdUniform3iv(uint32_t name, int count, const int* value)
+void CVKCommandBuffer::CmdUniform3iv(uint32_t name, int count, const int* value)
 {
-	ASSERT(value);
-	ASSERT(m_vkCommandBuffer);
-
-	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
-		m_pCommands.emplace_back(new CVKCommandUniform3iv(m_vkCommandBuffer, m_pCurrentPipelineCompute, m_pCurrentPipelineGraphics, name, count, value));
-		return true;
-	}
-	else {
-		return false;
-	}
+	m_pCommands.emplace_back(new CVKCommandUniform3iv(m_vkCommandBuffer, m_pCurrentPipelineCompute, m_pCurrentPipelineGraphics, name, count, value));
 }
 
-bool CVKCommandBuffer::CmdUniform4iv(uint32_t name, int count, const int* value)
+void CVKCommandBuffer::CmdUniform4iv(uint32_t name, int count, const int* value)
 {
-	ASSERT(value);
-	ASSERT(m_vkCommandBuffer);
-
-	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
-		m_pCommands.emplace_back(new CVKCommandUniform4iv(m_vkCommandBuffer, m_pCurrentPipelineCompute, m_pCurrentPipelineGraphics, name, count, value));
-		return true;
-	}
-	else {
-		return false;
-	}
+	m_pCommands.emplace_back(new CVKCommandUniform4iv(m_vkCommandBuffer, m_pCurrentPipelineCompute, m_pCurrentPipelineGraphics, name, count, value));
 }
 
-bool CVKCommandBuffer::CmdUniform1fv(uint32_t name, int count, const float* value)
+void CVKCommandBuffer::CmdUniform1fv(uint32_t name, int count, const float* value)
 {
-	ASSERT(value);
-	ASSERT(m_vkCommandBuffer);
-
-	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
-		m_pCommands.emplace_back(new CVKCommandUniform1fv(m_vkCommandBuffer, m_pCurrentPipelineCompute, m_pCurrentPipelineGraphics, name, count, value));
-		return true;
-	}
-	else {
-		return false;
-	}
+	m_pCommands.emplace_back(new CVKCommandUniform1fv(m_vkCommandBuffer, m_pCurrentPipelineCompute, m_pCurrentPipelineGraphics, name, count, value));
 }
 
-bool CVKCommandBuffer::CmdUniform2fv(uint32_t name, int count, const float* value)
+void CVKCommandBuffer::CmdUniform2fv(uint32_t name, int count, const float* value)
 {
-	ASSERT(value);
-	ASSERT(m_vkCommandBuffer);
-
-	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
-		m_pCommands.emplace_back(new CVKCommandUniform2fv(m_vkCommandBuffer, m_pCurrentPipelineCompute, m_pCurrentPipelineGraphics, name, count, value));
-		return true;
-	}
-	else {
-		return false;
-	}
+	m_pCommands.emplace_back(new CVKCommandUniform2fv(m_vkCommandBuffer, m_pCurrentPipelineCompute, m_pCurrentPipelineGraphics, name, count, value));
 }
 
-bool CVKCommandBuffer::CmdUniform3fv(uint32_t name, int count, const float* value)
+void CVKCommandBuffer::CmdUniform3fv(uint32_t name, int count, const float* value)
 {
-	ASSERT(value);
-	ASSERT(m_vkCommandBuffer);
-
-	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
-		m_pCommands.emplace_back(new CVKCommandUniform3fv(m_vkCommandBuffer, m_pCurrentPipelineCompute, m_pCurrentPipelineGraphics, name, count, value));
-		return true;
-	}
-	else {
-		return false;
-	}
+	m_pCommands.emplace_back(new CVKCommandUniform3fv(m_vkCommandBuffer, m_pCurrentPipelineCompute, m_pCurrentPipelineGraphics, name, count, value));
 }
 
-bool CVKCommandBuffer::CmdUniform4fv(uint32_t name, int count, const float* value)
+void CVKCommandBuffer::CmdUniform4fv(uint32_t name, int count, const float* value)
 {
-	ASSERT(value);
-	ASSERT(m_vkCommandBuffer);
-
-	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
-		m_pCommands.emplace_back(new CVKCommandUniform4fv(m_vkCommandBuffer, m_pCurrentPipelineCompute, m_pCurrentPipelineGraphics, name, count, value));
-		return true;
-	}
-	else {
-		return false;
-	}
+	m_pCommands.emplace_back(new CVKCommandUniform4fv(m_vkCommandBuffer, m_pCurrentPipelineCompute, m_pCurrentPipelineGraphics, name, count, value));
 }
 
-bool CVKCommandBuffer::CmdUniformMatrix2fv(uint32_t name, int count, const float* value)
+void CVKCommandBuffer::CmdUniformMatrix2fv(uint32_t name, int count, const float* value)
 {
-	ASSERT(value);
-	ASSERT(m_vkCommandBuffer);
-
-	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
-		m_pCommands.emplace_back(new CVKCommandUniformMatrix2fv(m_vkCommandBuffer, m_pCurrentPipelineCompute, m_pCurrentPipelineGraphics, name, count, value));
-		return true;
-	}
-	else {
-		return false;
-	}
+	m_pCommands.emplace_back(new CVKCommandUniformMatrix2fv(m_vkCommandBuffer, m_pCurrentPipelineCompute, m_pCurrentPipelineGraphics, name, count, value));
 }
 
-bool CVKCommandBuffer::CmdUniformMatrix3fv(uint32_t name, int count, const float* value)
+void CVKCommandBuffer::CmdUniformMatrix3fv(uint32_t name, int count, const float* value)
 {
-	ASSERT(value);
-	ASSERT(m_vkCommandBuffer);
-
-	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
-		m_pCommands.emplace_back(new CVKCommandUniformMatrix3fv(m_vkCommandBuffer, m_pCurrentPipelineCompute, m_pCurrentPipelineGraphics, name, count, value));
-		return true;
-	}
-	else {
-		return false;
-	}
+	m_pCommands.emplace_back(new CVKCommandUniformMatrix3fv(m_vkCommandBuffer, m_pCurrentPipelineCompute, m_pCurrentPipelineGraphics, name, count, value));
 }
 
-bool CVKCommandBuffer::CmdUniformMatrix4fv(uint32_t name, int count, const float* value)
+void CVKCommandBuffer::CmdUniformMatrix4fv(uint32_t name, int count, const float* value)
 {
-	ASSERT(value);
-	ASSERT(m_vkCommandBuffer);
-
-	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
-		m_pCommands.emplace_back(new CVKCommandUniformMatrix4fv(m_vkCommandBuffer, m_pCurrentPipelineCompute, m_pCurrentPipelineGraphics, name, count, value));
-		return true;
-	}
-	else {
-		return false;
-	}
+	m_pCommands.emplace_back(new CVKCommandUniformMatrix4fv(m_vkCommandBuffer, m_pCurrentPipelineCompute, m_pCurrentPipelineGraphics, name, count, value));
 }
 
-bool CVKCommandBuffer::CmdSetScissor(int x, int y, int width, int height)
+void CVKCommandBuffer::CmdSetScissor(int x, int y, int width, int height)
 {
-	ASSERT(m_vkCommandBuffer);
-
-	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
-		m_pCommands.emplace_back(new CVKCommandSetScissor(m_vkCommandBuffer, x, y, width, height));
-		return true;
-	}
-	else {
-		return false;
-	}
+	m_pCommands.emplace_back(new CVKCommandSetScissor(m_vkCommandBuffer, x, y, width, height));
 }
 
-bool CVKCommandBuffer::CmdSetViewport(int x, int y, int width, int height)
+void CVKCommandBuffer::CmdSetViewport(int x, int y, int width, int height)
 {
-	ASSERT(m_vkCommandBuffer);
-
-	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
-		m_pCommands.emplace_back(new CVKCommandSetViewport(m_vkCommandBuffer, x, y, width, height));
-		return true;
-	}
-	else {
-		return false;
-	}
+	m_pCommands.emplace_back(new CVKCommandSetViewport(m_vkCommandBuffer, x, y, width, height));
 }
 
-bool CVKCommandBuffer::CmdClearDepth(float depth)
+void CVKCommandBuffer::CmdClearDepth(float depth)
 {
-	ASSERT(m_vkCommandBuffer);
-
-	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
-		m_pCommands.emplace_back(new CVKCommandClearDepth(m_vkCommandBuffer, depth));
-		return true;
-	}
-	else {
-		return false;
-	}
+	m_pCommands.emplace_back(new CVKCommandClearDepth(m_vkCommandBuffer, depth));
 }
 
-bool CVKCommandBuffer::CmdClearColor(float red, float green, float blue, float alpha)
+void CVKCommandBuffer::CmdClearColor(float red, float green, float blue, float alpha)
 {
-	ASSERT(m_vkCommandBuffer);
-
-	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
-		m_pCommands.emplace_back(new CVKCommandClearColor(m_vkCommandBuffer, red, green, blue, alpha));
-		return true;
-	}
-	else {
-		return false;
-	}
+	m_pCommands.emplace_back(new CVKCommandClearColor(m_vkCommandBuffer, red, green, blue, alpha));
 }
 
-bool CVKCommandBuffer::CmdDrawInstance(const CGfxMeshDrawPtr ptrMeshDraw)
+void CVKCommandBuffer::CmdDrawInstance(const CGfxMeshDrawPtr ptrMeshDraw)
 {
-	ASSERT(ptrMeshDraw);
-	ASSERT(m_vkCommandBuffer);
-
-	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
-		m_pCommands.emplace_back(new CVKCommandDrawInstance(m_vkCommandBuffer, m_pCurrentPipelineGraphics, ptrMeshDraw));
-		return true;
-	}
-	else {
-		return false;
-	}
+	m_pCommands.emplace_back(new CVKCommandDrawInstance(m_vkCommandBuffer, m_pCurrentPipelineGraphics, ptrMeshDraw));
 }
 
-bool CVKCommandBuffer::CmdUpdateInstanceBuffer(const CGfxMeshDrawPtr ptrMeshDraw, const uint8_t* pInstanceBuffer, uint32_t size)
+void CVKCommandBuffer::CmdUpdateInstanceBuffer(const CGfxMeshDrawPtr ptrMeshDraw, const uint8_t* pInstanceBuffer, uint32_t size)
 {
-	ASSERT(ptrMeshDraw);
-	ASSERT(m_vkCommandBuffer);
-
-	if ((IsMainCommandBuffer() == false) || (IsMainCommandBuffer() == true && IsInRenderPass() == true)) {
-		m_pCommands.emplace_back(new CVKCommandUpdateInstanceBuffer(m_vkCommandBuffer, ptrMeshDraw, pInstanceBuffer, size));
-		return true;
-	}
-	else {
-		return false;
-	}
+	m_pCommands.emplace_back(new CVKCommandUpdateInstanceBuffer(m_vkCommandBuffer, ptrMeshDraw, pInstanceBuffer, size));
 }
 
-bool CVKCommandBuffer::CmdDispatch(int numLocalWorkGroupX, int numLocalWorkGroupY, int numLocalWorkGroupZ)
+void CVKCommandBuffer::CmdDispatch(int numLocalWorkGroupX, int numLocalWorkGroupY, int numLocalWorkGroupZ)
 {
-	ASSERT(m_vkCommandBuffer);
-
-	if (IsMainCommandBuffer() == true && IsInRenderPass() == false) {
-		m_pCommands.emplace_back(new CVKCommandDispatch(m_vkCommandBuffer, numLocalWorkGroupX, numLocalWorkGroupY, numLocalWorkGroupZ));
-		return true;
-	}
-	else {
-		return false;
-	}
+	m_pCommands.emplace_back(new CVKCommandDispatch(m_vkCommandBuffer, numLocalWorkGroupX, numLocalWorkGroupY, numLocalWorkGroupZ));
 }
 
-bool CVKCommandBuffer::CmdPushDebugGroup(const char* szMessage)
+void CVKCommandBuffer::CmdPushDebugGroup(const char* szMessage)
 {
-	ASSERT(m_vkCommandBuffer);
-
 	m_pCommands.emplace_back(new CVKCommandPushDebugGroup(m_vkCommandBuffer, szMessage));
-	return true;
 }
 
-bool CVKCommandBuffer::CmdPopDebugGroup(void)
+void CVKCommandBuffer::CmdPopDebugGroup(void)
 {
-	ASSERT(m_vkCommandBuffer);
-
 	m_pCommands.emplace_back(new CVKCommandPopDebugGroup(m_vkCommandBuffer));
-	return true;
 }
 
-bool CVKCommandBuffer::CmdExecute(const CGfxCommandBufferPtr ptrCommandBuffer)
+void CVKCommandBuffer::CmdExecute(const CGfxCommandBufferPtr ptrCommandBuffer)
 {
-	ASSERT(ptrCommandBuffer);
-	ASSERT(m_vkCommandBuffer);
-
-	if (IsMainCommandBuffer() == true && IsInRenderPass() == true && ptrCommandBuffer->IsMainCommandBuffer() == false) {
-		m_pCommands.emplace_back(new CVKCommandExecute(m_vkCommandBuffer, ptrCommandBuffer));
-		return true;
-	}
-	else {
-		return false;
-	}
+	m_pCommands.emplace_back(new CVKCommandExecute(m_vkCommandBuffer, ptrCommandBuffer));
 }
