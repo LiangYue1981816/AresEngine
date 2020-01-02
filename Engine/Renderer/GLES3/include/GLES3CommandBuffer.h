@@ -31,63 +31,63 @@ public:
 public:
 	bool IsEmpty(void) const;
 
-	bool BeginRecord(void);
-	bool BeginRecord(const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass, int indexSubpass);
-	bool EndRecord(void);
+	void BeginRecord(void);
+	void BeginRecord(const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass, int indexSubpass);
+	void EndRecord(void);
 
 	// Outside RenderPass
-	bool CmdSetImageLayout(const CGfxTexture2DPtr ptrTexture, GfxImageLayout imageLayout);
-	bool CmdSetImageLayout(const CGfxTexture2DArrayPtr ptrTexture, GfxImageLayout imageLayout);
-	bool CmdSetImageLayout(const CGfxTextureCubemapPtr ptrTexture, GfxImageLayout imageLayout);
-	bool CmdSetImageLayout(const CGfxRenderTexturePtr ptrTexture, GfxImageLayout imageLayout);
-	bool CmdSetBufferBarrier(const CGfxStorageBufferPtr ptrBuffer, GfxAccessFlags srcAccessFlags, GfxAccessFlags dstAccessFlags);
+	void CmdSetImageLayout(const CGfxTexture2DPtr ptrTexture, GfxImageLayout imageLayout);
+	void CmdSetImageLayout(const CGfxTexture2DArrayPtr ptrTexture, GfxImageLayout imageLayout);
+	void CmdSetImageLayout(const CGfxTextureCubemapPtr ptrTexture, GfxImageLayout imageLayout);
+	void CmdSetImageLayout(const CGfxRenderTexturePtr ptrTexture, GfxImageLayout imageLayout);
+	void CmdSetBufferBarrier(const CGfxStorageBufferPtr ptrBuffer, GfxAccessFlags srcAccessFlags, GfxAccessFlags dstAccessFlags);
 
 	// Inside RenderPass
-	bool CmdBeginRenderPass(const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass);
-	bool CmdNextSubpass(void);
-	bool CmdEndRenderPass(void);
+	void CmdBeginRenderPass(const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass);
+	void CmdNextSubpass(void);
+	void CmdEndRenderPass(void);
 
-	bool CmdBindPipelineCompute(const CGfxPipelineCompute* pPipelineCompute);
-	bool CmdBindPipelineGraphics(const CGfxPipelineGraphics* pPipelineGraphics);
-	bool CmdBindDescriptorSet(const CGfxDescriptorSetPtr ptrDescriptorSet);
-	bool CmdBindMesh(const CGfxMeshPtr ptrMesh);
-	bool CmdBindMeshDraw(const CGfxMeshDrawPtr ptrMeshDraw);
+	void CmdBindPipelineCompute(const CGfxPipelineCompute* pPipelineCompute);
+	void CmdBindPipelineGraphics(const CGfxPipelineGraphics* pPipelineGraphics);
+	void CmdBindDescriptorSet(const CGfxDescriptorSetPtr ptrDescriptorSet);
+	void CmdBindMesh(const CGfxMeshPtr ptrMesh);
+	void CmdBindMeshDraw(const CGfxMeshDrawPtr ptrMeshDraw);
 
-	bool CmdUniform1i(uint32_t name, int v0);
-	bool CmdUniform2i(uint32_t name, int v0, int v1);
-	bool CmdUniform3i(uint32_t name, int v0, int v1, int v2);
-	bool CmdUniform4i(uint32_t name, int v0, int v1, int v2, int v3);
-	bool CmdUniform1f(uint32_t name, float v0);
-	bool CmdUniform2f(uint32_t name, float v0, float v1);
-	bool CmdUniform3f(uint32_t name, float v0, float v1, float v2);
-	bool CmdUniform4f(uint32_t name, float v0, float v1, float v2, float v3);
-	bool CmdUniform1iv(uint32_t name, int count, const int* value);
-	bool CmdUniform2iv(uint32_t name, int count, const int* value);
-	bool CmdUniform3iv(uint32_t name, int count, const int* value);
-	bool CmdUniform4iv(uint32_t name, int count, const int* value);
-	bool CmdUniform1fv(uint32_t name, int count, const float* value);
-	bool CmdUniform2fv(uint32_t name, int count, const float* value);
-	bool CmdUniform3fv(uint32_t name, int count, const float* value);
-	bool CmdUniform4fv(uint32_t name, int count, const float* value);
-	bool CmdUniformMatrix2fv(uint32_t name, int count, const float* value);
-	bool CmdUniformMatrix3fv(uint32_t name, int count, const float* value);
-	bool CmdUniformMatrix4fv(uint32_t name, int count, const float* value);
+	void CmdUniform1i(uint32_t name, int v0);
+	void CmdUniform2i(uint32_t name, int v0, int v1);
+	void CmdUniform3i(uint32_t name, int v0, int v1, int v2);
+	void CmdUniform4i(uint32_t name, int v0, int v1, int v2, int v3);
+	void CmdUniform1f(uint32_t name, float v0);
+	void CmdUniform2f(uint32_t name, float v0, float v1);
+	void CmdUniform3f(uint32_t name, float v0, float v1, float v2);
+	void CmdUniform4f(uint32_t name, float v0, float v1, float v2, float v3);
+	void CmdUniform1iv(uint32_t name, int count, const int* value);
+	void CmdUniform2iv(uint32_t name, int count, const int* value);
+	void CmdUniform3iv(uint32_t name, int count, const int* value);
+	void CmdUniform4iv(uint32_t name, int count, const int* value);
+	void CmdUniform1fv(uint32_t name, int count, const float* value);
+	void CmdUniform2fv(uint32_t name, int count, const float* value);
+	void CmdUniform3fv(uint32_t name, int count, const float* value);
+	void CmdUniform4fv(uint32_t name, int count, const float* value);
+	void CmdUniformMatrix2fv(uint32_t name, int count, const float* value);
+	void CmdUniformMatrix3fv(uint32_t name, int count, const float* value);
+	void CmdUniformMatrix4fv(uint32_t name, int count, const float* value);
 
-	bool CmdSetScissor(int x, int y, int width, int height);
-	bool CmdSetViewport(int x, int y, int width, int height);
+	void CmdSetScissor(int x, int y, int width, int height);
+	void CmdSetViewport(int x, int y, int width, int height);
 
-	bool CmdClearDepth(float depth);
-	bool CmdClearColor(float red, float green, float blue, float alpha);
+	void CmdClearDepth(float depth);
+	void CmdClearColor(float red, float green, float blue, float alpha);
 
-	bool CmdDrawInstance(const CGfxMeshDrawPtr ptrMeshDraw);
-	bool CmdUpdateInstanceBuffer(const CGfxMeshDrawPtr ptrMeshDraw, const uint8_t* pInstanceBuffer, uint32_t size);
+	void CmdDrawInstance(const CGfxMeshDrawPtr ptrMeshDraw);
+	void CmdUpdateInstanceBuffer(const CGfxMeshDrawPtr ptrMeshDraw, const uint8_t* pInstanceBuffer, uint32_t size);
 
-	bool CmdDispatch(int numLocalWorkGroupX, int numLocalWorkGroupY, int numLocalWorkGroupZ);
+	void CmdDispatch(int numLocalWorkGroupX, int numLocalWorkGroupY, int numLocalWorkGroupZ);
 
-	bool CmdPushDebugGroup(const char* szMessage);
-	bool CmdPopDebugGroup(void);
+	void CmdPushDebugGroup(const char* szMessage);
+	void CmdPopDebugGroup(void);
 
-	bool CmdExecute(const CGfxCommandBufferPtr ptrCommandBuffer);
+	void CmdExecute(const CGfxCommandBufferPtr ptrCommandBuffer);
 
 
 private:

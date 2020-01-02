@@ -56,63 +56,63 @@ public:
 public:
 	virtual bool IsEmpty(void) const = 0;
 
-	virtual bool BeginRecord(void) = 0;
-	virtual bool BeginRecord(const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass, int indexSubpass) = 0;
-	virtual bool EndRecord(void) = 0;
+	virtual void BeginRecord(void) = 0;
+	virtual void BeginRecord(const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass, int indexSubpass) = 0;
+	virtual void EndRecord(void) = 0;
 
 	// Outside RenderPass
-	virtual bool CmdSetImageLayout(const CGfxTexture2DPtr ptrTexture, GfxImageLayout imageLayout) = 0;
-	virtual bool CmdSetImageLayout(const CGfxTexture2DArrayPtr ptrTexture, GfxImageLayout imageLayout) = 0;
-	virtual bool CmdSetImageLayout(const CGfxTextureCubemapPtr ptrTexture, GfxImageLayout imageLayout) = 0;
-	virtual bool CmdSetImageLayout(const CGfxRenderTexturePtr ptrTexture, GfxImageLayout imageLayout) = 0;
-	virtual bool CmdSetBufferBarrier(const CGfxStorageBufferPtr ptrBuffer, GfxAccessFlags srcAccessFlags, GfxAccessFlags dstAccessFlags) = 0;
+	virtual void CmdSetImageLayout(const CGfxTexture2DPtr ptrTexture, GfxImageLayout imageLayout) = 0;
+	virtual void CmdSetImageLayout(const CGfxTexture2DArrayPtr ptrTexture, GfxImageLayout imageLayout) = 0;
+	virtual void CmdSetImageLayout(const CGfxTextureCubemapPtr ptrTexture, GfxImageLayout imageLayout) = 0;
+	virtual void CmdSetImageLayout(const CGfxRenderTexturePtr ptrTexture, GfxImageLayout imageLayout) = 0;
+	virtual void CmdSetBufferBarrier(const CGfxStorageBufferPtr ptrBuffer, GfxAccessFlags srcAccessFlags, GfxAccessFlags dstAccessFlags) = 0;
 	
 	// Inside RenderPass
-	virtual bool CmdBeginRenderPass(const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass) = 0;
-	virtual bool CmdNextSubpass(void) = 0;
-	virtual bool CmdEndRenderPass(void) = 0;
+	virtual void CmdBeginRenderPass(const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass) = 0;
+	virtual void CmdNextSubpass(void) = 0;
+	virtual void CmdEndRenderPass(void) = 0;
 
-	virtual bool CmdBindPipelineCompute(const CGfxPipelineCompute* pPipelineCompute) = 0;
-	virtual bool CmdBindPipelineGraphics(const CGfxPipelineGraphics* pPipelineGraphics) = 0;
-	virtual bool CmdBindDescriptorSet(const CGfxDescriptorSetPtr ptrDescriptorSet) = 0;
-	virtual bool CmdBindMesh(const CGfxMeshPtr ptrMesh) = 0;
-	virtual bool CmdBindMeshDraw(const CGfxMeshDrawPtr ptrMeshDraw) = 0;
+	virtual void CmdBindPipelineCompute(const CGfxPipelineCompute* pPipelineCompute) = 0;
+	virtual void CmdBindPipelineGraphics(const CGfxPipelineGraphics* pPipelineGraphics) = 0;
+	virtual void CmdBindDescriptorSet(const CGfxDescriptorSetPtr ptrDescriptorSet) = 0;
+	virtual void CmdBindMesh(const CGfxMeshPtr ptrMesh) = 0;
+	virtual void CmdBindMeshDraw(const CGfxMeshDrawPtr ptrMeshDraw) = 0;
 
-	virtual bool CmdUniform1i(uint32_t name, int v0) = 0;
-	virtual bool CmdUniform2i(uint32_t name, int v0, int v1) = 0;
-	virtual bool CmdUniform3i(uint32_t name, int v0, int v1, int v2) = 0;
-	virtual bool CmdUniform4i(uint32_t name, int v0, int v1, int v2, int v3) = 0;
-	virtual bool CmdUniform1f(uint32_t name, float v0) = 0;
-	virtual bool CmdUniform2f(uint32_t name, float v0, float v1) = 0;
-	virtual bool CmdUniform3f(uint32_t name, float v0, float v1, float v2) = 0;
-	virtual bool CmdUniform4f(uint32_t name, float v0, float v1, float v2, float v3) = 0;
-	virtual bool CmdUniform1iv(uint32_t name, int count, const int* value) = 0;
-	virtual bool CmdUniform2iv(uint32_t name, int count, const int* value) = 0;
-	virtual bool CmdUniform3iv(uint32_t name, int count, const int* value) = 0;
-	virtual bool CmdUniform4iv(uint32_t name, int count, const int* value) = 0;
-	virtual bool CmdUniform1fv(uint32_t name, int count, const float* value) = 0;
-	virtual bool CmdUniform2fv(uint32_t name, int count, const float* value) = 0;
-	virtual bool CmdUniform3fv(uint32_t name, int count, const float* value) = 0;
-	virtual bool CmdUniform4fv(uint32_t name, int count, const float* value) = 0;
-	virtual bool CmdUniformMatrix2fv(uint32_t name, int count, const float* value) = 0;
-	virtual bool CmdUniformMatrix3fv(uint32_t name, int count, const float* value) = 0;
-	virtual bool CmdUniformMatrix4fv(uint32_t name, int count, const float* value) = 0;
+	virtual void CmdUniform1i(uint32_t name, int v0) = 0;
+	virtual void CmdUniform2i(uint32_t name, int v0, int v1) = 0;
+	virtual void CmdUniform3i(uint32_t name, int v0, int v1, int v2) = 0;
+	virtual void CmdUniform4i(uint32_t name, int v0, int v1, int v2, int v3) = 0;
+	virtual void CmdUniform1f(uint32_t name, float v0) = 0;
+	virtual void CmdUniform2f(uint32_t name, float v0, float v1) = 0;
+	virtual void CmdUniform3f(uint32_t name, float v0, float v1, float v2) = 0;
+	virtual void CmdUniform4f(uint32_t name, float v0, float v1, float v2, float v3) = 0;
+	virtual void CmdUniform1iv(uint32_t name, int count, const int* value) = 0;
+	virtual void CmdUniform2iv(uint32_t name, int count, const int* value) = 0;
+	virtual void CmdUniform3iv(uint32_t name, int count, const int* value) = 0;
+	virtual void CmdUniform4iv(uint32_t name, int count, const int* value) = 0;
+	virtual void CmdUniform1fv(uint32_t name, int count, const float* value) = 0;
+	virtual void CmdUniform2fv(uint32_t name, int count, const float* value) = 0;
+	virtual void CmdUniform3fv(uint32_t name, int count, const float* value) = 0;
+	virtual void CmdUniform4fv(uint32_t name, int count, const float* value) = 0;
+	virtual void CmdUniformMatrix2fv(uint32_t name, int count, const float* value) = 0;
+	virtual void CmdUniformMatrix3fv(uint32_t name, int count, const float* value) = 0;
+	virtual void CmdUniformMatrix4fv(uint32_t name, int count, const float* value) = 0;
 
-	virtual bool CmdSetScissor(int x, int y, int width, int height) = 0;
-	virtual bool CmdSetViewport(int x, int y, int width, int height) = 0;
+	virtual void CmdSetScissor(int x, int y, int width, int height) = 0;
+	virtual void CmdSetViewport(int x, int y, int width, int height) = 0;
 
-	virtual bool CmdClearDepth(float depth) = 0;
-	virtual bool CmdClearColor(float red, float green, float blue, float alpha) = 0;
+	virtual void CmdClearDepth(float depth) = 0;
+	virtual void CmdClearColor(float red, float green, float blue, float alpha) = 0;
 
-	virtual bool CmdDrawInstance(const CGfxMeshDrawPtr ptrMeshDraw) = 0;
-	virtual bool CmdUpdateInstanceBuffer(const CGfxMeshDrawPtr ptrMeshDraw, const uint8_t* pInstanceBuffer, uint32_t size) = 0;
+	virtual void CmdDrawInstance(const CGfxMeshDrawPtr ptrMeshDraw) = 0;
+	virtual void CmdUpdateInstanceBuffer(const CGfxMeshDrawPtr ptrMeshDraw, const uint8_t* pInstanceBuffer, uint32_t size) = 0;
 
-	virtual bool CmdDispatch(int numLocalWorkGroupX, int numLocalWorkGroupY, int numLocalWorkGroupZ) = 0;
+	virtual void CmdDispatch(int numLocalWorkGroupX, int numLocalWorkGroupY, int numLocalWorkGroupZ) = 0;
 
-	virtual bool CmdPushDebugGroup(const char* szMessage) = 0;
-	virtual bool CmdPopDebugGroup(void) = 0;
+	virtual void CmdPushDebugGroup(const char* szMessage) = 0;
+	virtual void CmdPopDebugGroup(void) = 0;
 
-	virtual bool CmdExecute(const CGfxCommandBufferPtr ptrCommandBuffer) = 0;
+	virtual void CmdExecute(const CGfxCommandBufferPtr ptrCommandBuffer) = 0;
 
 
 private:
