@@ -24,6 +24,15 @@ class CALL_API CGfxIndexBuffer;
 class CALL_API CGfxVertexBuffer;
 class CALL_API CGfxInstanceBuffer;
 class CALL_API CGfxIndirectBuffer;
+class CALL_API CGfxUniformBuffer;
+class CALL_API CGfxStorageBuffer;
+
+class CALL_API CGfxMultiIndexBuffer;
+class CALL_API CGfxMultiVertexBuffer;
+class CALL_API CGfxMultiIndirectBuffer;
+class CALL_API CGfxMultiInstanceBuffer;
+class CALL_API CGfxMultiUniformBuffer;
+class CALL_API CGfxMultiStorageBuffer;
 
 class CALL_API CGfxSampler;
 class CALL_API CGfxTexture2D;
@@ -36,8 +45,6 @@ class CALL_API CGfxUniformVec3;
 class CALL_API CGfxUniformVec4;
 class CALL_API CGfxUniformMat4;
 class CALL_API CGfxUniformCamera;
-class CALL_API CGfxUniformBuffer;
-class CALL_API CGfxStorageBuffer;
 
 class CALL_API CGfxMesh;
 class CALL_API CGfxMeshDraw;

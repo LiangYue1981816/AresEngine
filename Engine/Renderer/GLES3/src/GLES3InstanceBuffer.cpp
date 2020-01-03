@@ -80,3 +80,59 @@ void CGLES3InstanceBuffer::Bind(void) const
 
 	CHECK_GL_ERROR_ASSERT();
 }
+
+
+CGLES3MultiInstanceBuffer::CGLES3MultiInstanceBuffer(uint32_t instanceFormat, int instanceBinding, int count)
+	: CGfxMultiInstanceBuffer(instanceFormat, instanceBinding, count)
+	, m_index(0)
+{
+	count = std::max(1, count);
+
+	for (int index = 0; index < count; index++) {
+		m_pBuffers.emplace_back(new CGLES3InstanceBuffer(instanceFormat, instanceBinding));
+	}
+}
+
+CGLES3MultiInstanceBuffer::~CGLES3MultiInstanceBuffer(void)
+{
+	for (auto& itBuffer : m_pBuffers) {
+		delete itBuffer;
+	}
+}
+
+void CGLES3MultiInstanceBuffer::SetBufferIndex(int index)
+{
+	m_index = index;
+	m_index = std::min(m_index, (int)m_pBuffers.size());
+	m_index = std::max(m_index, 0);
+}
+
+uint32_t CGLES3MultiInstanceBuffer::GetInstanceBinding(void) const
+{
+	return m_pBuffers[m_index]->GetInstanceBinding();
+}
+
+uint32_t CGLES3MultiInstanceBuffer::GetInstanceFormat(void) const
+{
+	return m_pBuffers[m_index]->GetInstanceFormat();
+}
+
+uint32_t CGLES3MultiInstanceBuffer::GetInstanceCount(void) const
+{
+	return m_pBuffers[m_index]->GetInstanceCount();
+}
+
+uint32_t CGLES3MultiInstanceBuffer::GetSize(void) const
+{
+	return m_pBuffers[m_index]->GetSize();
+}
+
+bool CGLES3MultiInstanceBuffer::BufferData(size_t size, const void* data)
+{
+	return m_pBuffers[m_index]->BufferData(size, data);
+}
+
+void CGLES3MultiInstanceBuffer::Bind(void) const
+{
+	return m_pBuffers[m_index]->Bind();
+}
