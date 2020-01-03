@@ -90,11 +90,10 @@ void CGLES3InstanceBuffer::Bind(void) const
 CGLES3MultiInstanceBuffer::CGLES3MultiInstanceBuffer(uint32_t instanceFormat, int instanceBinding, int count)
 	: CGfxMultiInstanceBuffer(instanceFormat, instanceBinding, count)
 	, m_index(0)
+	, m_pBuffers(std::max(1, count))
 {
-	count = std::max(1, count);
-
-	for (int index = 0; index < count; index++) {
-		m_pBuffers.emplace_back(new CGLES3InstanceBuffer(instanceFormat, instanceBinding));
+	for (int index = 0; index < m_pBuffers.size(); index++) {
+		m_pBuffers[index] = new CGLES3InstanceBuffer(instanceFormat, instanceBinding);
 	}
 }
 
@@ -113,7 +112,7 @@ void CGLES3MultiInstanceBuffer::Release(void)
 void CGLES3MultiInstanceBuffer::SetBufferIndex(int index)
 {
 	m_index = index;
-	m_index = std::min(m_index, (int)m_pBuffers.size());
+	m_index = std::min(m_index, (int)m_pBuffers.size() - 1);
 	m_index = std::max(m_index, 0);
 }
 
