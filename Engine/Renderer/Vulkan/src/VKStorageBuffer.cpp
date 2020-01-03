@@ -14,7 +14,7 @@ CVKStorageBuffer::CVKStorageBuffer(CVKDevice* pDevice, CVKStorageBufferManager* 
 	m_size = ALIGN_BYTE(m_size, m_pDevice->GetPhysicalDeviceLimits().nonCoherentAtomSize);
 	m_size = ALIGN_BYTE(m_size, m_pDevice->GetPhysicalDeviceLimits().minStorageBufferOffsetAlignment);
 
-	m_pBuffer = new CVKBuffer(m_pDevice, m_size, VK_BUFFER_USAGE_STORAGE_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT);
+	m_pBuffer = new CVKBuffer(m_pDevice, m_size * CGfxSwapChain::SWAPCHAIN_FRAME_COUNT, VK_BUFFER_USAGE_STORAGE_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT);
 	CGfxProfiler::IncStorageBufferSize(m_pBuffer->GetMemorySize());
 }
 
@@ -46,15 +46,16 @@ uint32_t CVKStorageBuffer::GetOffset(void) const
 
 bool CVKStorageBuffer::BufferData(size_t offset, size_t size, const void* data)
 {
+	m_offset = VKRenderer()->GetSwapChain()->GetFrameIndex() * m_size;
 	return m_pBuffer->BufferData(m_offset + offset, size, data);
 }
 
 bool CVKStorageBuffer::PipelineBarrier(VkCommandBuffer vkCommandBuffer, VkAccessFlags srcAccessFlags, VkAccessFlags dstAccessFlags, VkDeviceSize offset, VkDeviceSize size)
 {
-	return m_pBuffer->PipelineBarrier(vkCommandBuffer, srcAccessFlags, dstAccessFlags, offset, size);
+	return m_pBuffer->PipelineBarrier(vkCommandBuffer, srcAccessFlags, dstAccessFlags, m_offset + offset, size);
 }
 
 bool CVKStorageBuffer::PipelineBarrier(VkCommandBuffer vkCommandBuffer, VkAccessFlags srcAccessFlags, VkAccessFlags dstAccessFlags, VkPipelineStageFlags srcPipelineStageFlags, VkPipelineStageFlags dstPipelineStageFlags, VkDeviceSize offset, VkDeviceSize size)
 {
-	return m_pBuffer->PipelineBarrier(vkCommandBuffer, srcAccessFlags, dstAccessFlags, srcPipelineStageFlags, dstPipelineStageFlags, offset, size);
+	return m_pBuffer->PipelineBarrier(vkCommandBuffer, srcAccessFlags, dstAccessFlags, srcPipelineStageFlags, dstPipelineStageFlags, m_offset + offset, size);
 }
