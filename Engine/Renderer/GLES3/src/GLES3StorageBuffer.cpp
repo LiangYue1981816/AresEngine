@@ -40,7 +40,7 @@ uint32_t CGLES3StorageBuffer::GetOffset(void) const
 bool CGLES3StorageBuffer::BufferData(size_t offset, size_t size, const void* data)
 {
 	m_offset = GLES3Renderer()->GetSwapChain()->GetFrameIndex() * m_size;
-	return m_pBuffer->BufferData(m_offset + offset, size, data);
+	return m_pBuffer->BufferData(m_offset + offset, size, data, false);
 }
 
 void CGLES3StorageBuffer::Bind(int binding, int offset, int size) const
