@@ -112,6 +112,8 @@ void CGPUScene::Update(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuf
 {
 	eastl::vector<TransferData> datas;
 	{
+		datas.reserve(1024);
+
 		for (int indexThread = 0; indexThread < MAX_THREAD_COUNT; indexThread++) {
 			for (const auto& itTransfer : m_transferBuffer[indexThread]) {
 				datas.emplace_back(itTransfer.second);
@@ -132,6 +134,7 @@ void CGPUScene::Update(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuf
 		{
 			GfxRenderer()->CmdBindPipelineCompute(ptrCommandBuffer, m_pPipelineCompute);
 			GfxRenderer()->CmdBindDescriptorSet(ptrCommandBuffer, m_ptrDescriptorSet);
+			GfxRenderer()->CmdUniform1i(ptrCommandBuffer, HashValue("Param.numTransfer"), datas.size());
 			GfxRenderer()->CmdDispatch(ptrCommandBuffer, 8, 1, 1);
 		}
 		GfxRenderer()->CmdSetBufferBarrier(ptrCommandBuffer, m_ptrInstanceBuffer, GFX_ACCESS_TRANSFER_WRITE_BIT, GFX_ACCESS_TRANSFER_READ_BIT);

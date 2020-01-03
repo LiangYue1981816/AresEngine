@@ -9,6 +9,11 @@ precision mediump float;
 USE_SCENE_DATA_STORAGE;
 USE_TRANSFER_SCENE_DATA_STORAGE;
 
+layout(push_constant) uniform PushConstantParam {
+	int numTransfer;
+} Param;
+
+
 void main()
 {
 	uint indexWork = uint(gl_GlobalInvocationID.x);
@@ -17,7 +22,7 @@ void main()
 	uint numWorkGroupSize = uint(gl_WorkGroupSize.x);
 	uint numWorkTotalSize = uint(numWorkGroup * numWorkGroupSize);
 
-	uint numTransferTotal = uint(transferSceneData.data.length());
+	uint numTransferTotal = uint(Param.numTransfer);
 	uint numTransferAlign = ((numTransferTotal + numWorkGroupSize - uint(1)) / numWorkGroupSize) * numWorkGroupSize;
 
 	if (numWorkTotalSize < numTransferTotal) {
