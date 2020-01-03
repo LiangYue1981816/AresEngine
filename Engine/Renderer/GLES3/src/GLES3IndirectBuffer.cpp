@@ -69,3 +69,63 @@ void CGLES3IndirectBuffer::Bind(void) const
 {
 	m_pBuffer->Bind();
 }
+
+
+CGLES3MultiIndirectBuffer::CGLES3MultiIndirectBuffer(int numDrawCommands, int count)
+	: CGfxMultiIndirectBuffer(numDrawCommands, count)
+	, m_index(0)
+	, m_pBuffers(std::max(1, count))
+{
+	for (int index = 0; index < m_pBuffers.size(); index++) {
+		m_pBuffers[index] = new CGLES3IndirectBuffer(numDrawCommands);
+	}
+}
+
+CGLES3MultiIndirectBuffer::~CGLES3MultiIndirectBuffer(void)
+{
+	for (auto& itBuffer : m_pBuffers) {
+		delete itBuffer;
+	}
+}
+
+void CGLES3MultiIndirectBuffer::Release(void)
+{
+	delete this;
+}
+
+void CGLES3MultiIndirectBuffer::SetBufferIndex(int index)
+{
+	m_index = index;
+	m_index = std::min(m_index, (int)m_pBuffers.size() - 1);
+	m_index = std::max(m_index, 0);
+}
+
+uint32_t CGLES3MultiIndirectBuffer::GetDrawCommandCount(void) const
+{
+	return m_pBuffers[m_index]->GetDrawCommandCount();
+}
+
+uint32_t CGLES3MultiIndirectBuffer::GetDrawCommandOffset(int indexDraw) const
+{
+	return m_pBuffers[m_index]->GetDrawCommandOffset(indexDraw);
+}
+
+uint32_t CGLES3MultiIndirectBuffer::GetSize(void) const
+{
+	return m_pBuffers[m_index]->GetSize();
+}
+
+uint32_t CGLES3MultiIndirectBuffer::GetStride(void) const
+{
+	return m_pBuffers[m_index]->GetStride();
+}
+
+bool CGLES3MultiIndirectBuffer::BufferData(int indexDraw, int firstIndex, int baseVertex, int baseInstance, int indexCount, int instanceCount)
+{
+	return m_pBuffers[m_index]->BufferData(indexDraw, firstIndex, baseVertex, baseInstance, indexCount, instanceCount);
+}
+
+void CGLES3MultiIndirectBuffer::Bind(void) const
+{
+	m_pBuffers[m_index]->Bind();
+}
