@@ -97,20 +97,12 @@ bool CGLES3Buffer::BufferData(size_t offset, size_t size, const void* data, bool
 	ASSERT(size);
 	ASSERT(m_size >= (uint32_t)(offset + size));
 	ASSERT(m_buffer);
-	/*
-	void* addr = nullptr;
+
 	glBindBuffer(m_target, m_buffer);
-	glMapBufferRangeAddress(m_target, offset, size, bSync ? GL_MAP_WRITE_BIT : GL_MAP_WRITE_BIT | GL_MAP_UNSYNCHRONIZED_BIT, &addr);
-	glMemcpy(addr, data, size);
-	glUnmapBuffer(m_target);
+	glBufferSubDataSync(m_target, offset, size, data, bSync);
 	glBindBuffer(m_target, 0);
 	CHECK_GL_ERROR_ASSERT();
-	/*/
-	glBindBuffer(m_target, m_buffer);
-	glBufferSubData(m_target, offset, size, data);
-	glBindBuffer(m_target, 0);
-	CHECK_GL_ERROR_ASSERT();
-	//*/
+
 	return true;
 }
 

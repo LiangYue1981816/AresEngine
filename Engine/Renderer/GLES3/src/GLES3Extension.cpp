@@ -43,14 +43,16 @@ void glReadBuffers(int n, const uint32_t* bufs)
 	}
 }
 
-void glMemcpy(void* dst, const void* src, size_t size)
+void glBufferSubDataSync(GLenum target, GLintptr offset, GLsizeiptr size, const void *data, bool sync)
 {
-	memcpy(dst, src, size);
-}
-
-void glMapBufferRangeAddress(GLenum target, GLintptr offset, GLsizeiptr length, GLbitfield access, void** addr)
-{
-	*addr = glMapBufferRange(target, offset, length, access);
+	//*
+	void* addr = nullptr;
+	glMapBufferRange(target, offset, size, sync ? GL_MAP_WRITE_BIT : GL_MAP_WRITE_BIT | GL_MAP_UNSYNCHRONIZED_BIT, &addr);
+	memcpy(addr, data, size);
+	glUnmapBuffer(target);
+	/*/
+	glBufferSubData(target, offset, size, data);
+	//*/
 }
 #pragma endregion
 
