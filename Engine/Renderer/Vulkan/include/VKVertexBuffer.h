@@ -10,6 +10,7 @@ class CVKVertexBuffer : public CGfxVertexBuffer
 private:
 	CVKVertexBuffer(CVKDevice* pDevice, uint32_t vertexFormat, int vertexBinding, size_t size, bool bDynamic);
 	virtual ~CVKVertexBuffer(void);
+	virtual void Release(void);
 
 
 public:

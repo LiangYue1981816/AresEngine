@@ -10,6 +10,7 @@ class CGLES3IndirectBuffer : public CGfxIndirectBuffer
 private:
 	CGLES3IndirectBuffer(int numDrawCommands);
 	virtual ~CGLES3IndirectBuffer(void);
+	virtual void Release(void);
 
 
 public:

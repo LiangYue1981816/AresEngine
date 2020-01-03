@@ -19,6 +19,11 @@ CGLES3VertexBuffer::~CGLES3VertexBuffer(void)
 	delete m_pBuffer;
 }
 
+void CGLES3VertexBuffer::Release(void)
+{
+	delete this;
+}
+
 uint32_t CGLES3VertexBuffer::GetVertexBinding(void) const
 {
 	return m_binding;

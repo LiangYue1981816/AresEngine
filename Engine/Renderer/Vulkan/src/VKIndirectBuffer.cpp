@@ -22,6 +22,11 @@ CVKIndirectBuffer::~CVKIndirectBuffer(void)
 	delete m_pBuffer;
 }
 
+void CVKIndirectBuffer::Release(void)
+{
+	delete this;
+}
+
 VkBuffer CVKIndirectBuffer::GetBuffer(void) const
 {
 	return m_pBuffer->GetBuffer();

@@ -26,6 +26,11 @@ CVKInstanceBuffer::~CVKInstanceBuffer(void)
 	delete m_pBuffer;
 }
 
+void CVKInstanceBuffer::Release(void)
+{
+	delete this;
+}
+
 uint32_t CVKInstanceBuffer::GetInstanceBinding(void) const
 {
 	return m_binding;

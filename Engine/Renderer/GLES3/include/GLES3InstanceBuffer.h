@@ -11,6 +11,7 @@ class CGLES3InstanceBuffer : public CGfxInstanceBuffer
 private:
 	CGLES3InstanceBuffer(uint32_t instanceFormat, int instanceBinding);
 	virtual ~CGLES3InstanceBuffer(void);
+	virtual void Release(void);
 
 
 public:
@@ -43,6 +44,7 @@ class CGLES3MultiInstanceBuffer : public CGfxMultiInstanceBuffer
 private:
 	CGLES3MultiInstanceBuffer(uint32_t instanceFormat, int instanceBinding, int count);
 	virtual ~CGLES3MultiInstanceBuffer(void);
+	virtual void Release(void);
 
 
 public:

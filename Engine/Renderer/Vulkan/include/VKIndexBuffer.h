@@ -10,6 +10,7 @@ class CVKIndexBuffer : public CGfxIndexBuffer
 private:
 	CVKIndexBuffer(CVKDevice* pDevice, GfxIndexType type, size_t size, bool bDynamic);
 	virtual ~CVKIndexBuffer(void);
+	virtual void Release(void);
 
 
 public:

@@ -21,6 +21,11 @@ CGLES3InstanceBuffer::~CGLES3InstanceBuffer(void)
 	delete m_pBuffer;
 }
 
+void CGLES3InstanceBuffer::Release(void)
+{
+	delete this;
+}
+
 uint32_t CGLES3InstanceBuffer::GetInstanceBinding(void) const
 {
 	return m_binding;
@@ -98,6 +103,11 @@ CGLES3MultiInstanceBuffer::~CGLES3MultiInstanceBuffer(void)
 	for (auto& itBuffer : m_pBuffers) {
 		delete itBuffer;
 	}
+}
+
+void CGLES3MultiInstanceBuffer::Release(void)
+{
+	delete this;
 }
 
 void CGLES3MultiInstanceBuffer::SetBufferIndex(int index)

@@ -31,6 +31,11 @@ CVKVertexBuffer::~CVKVertexBuffer(void)
 	delete m_pBuffer;
 }
 
+void CVKVertexBuffer::Release(void)
+{
+	delete this;
+}
+
 uint32_t CVKVertexBuffer::GetVertexBinding(void) const
 {
 	return m_binding;

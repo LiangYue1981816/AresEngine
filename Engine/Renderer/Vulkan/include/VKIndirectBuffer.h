@@ -10,6 +10,7 @@ class CVKIndirectBuffer : public CGfxIndirectBuffer
 private:
 	CVKIndirectBuffer(CVKDevice* pDevice, int numDrawCommands);
 	virtual ~CVKIndirectBuffer(void);
+	virtual void Release(void);
 
 
 public:

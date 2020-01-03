@@ -10,6 +10,7 @@ class CVKInstanceBuffer : public CGfxInstanceBuffer
 private:
 	CVKInstanceBuffer(CVKDevice* pDevice, uint32_t instanceFormat, int instanceBinding);
 	virtual ~CVKInstanceBuffer(void);
+	virtual void Release(void);
 
 
 public:

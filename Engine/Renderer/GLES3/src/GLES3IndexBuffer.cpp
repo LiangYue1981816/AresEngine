@@ -17,6 +17,11 @@ CGLES3IndexBuffer::~CGLES3IndexBuffer(void)
 	delete m_pBuffer;
 }
 
+void CGLES3IndexBuffer::Release(void)
+{
+	delete this;
+}
+
 GfxIndexType CGLES3IndexBuffer::GetIndexType(void) const
 {
 	return m_type;

@@ -17,6 +17,11 @@ CGLES3IndirectBuffer::~CGLES3IndirectBuffer(void)
 	delete m_pBuffer;
 }
 
+void CGLES3IndirectBuffer::Release(void)
+{
+	delete this;
+}
+
 uint32_t CGLES3IndirectBuffer::GetDrawCommandCount(void) const
 {
 	return m_draws.size();
