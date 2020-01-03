@@ -4,10 +4,7 @@
 
 class CVKIndexBuffer : public CGfxIndexBuffer
 {
-	friend class CVKMesh;
-
-
-private:
+public:
 	CVKIndexBuffer(CVKDevice* pDevice, GfxIndexType type, size_t size, bool bDynamic);
 	virtual ~CVKIndexBuffer(void);
 	virtual void Release(void);

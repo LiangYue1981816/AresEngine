@@ -4,11 +4,7 @@
 
 class CGLES3IndexBuffer : public CGfxIndexBuffer
 {
-	friend class CGLES3Mesh;
-	friend class CGLES3MultiIndexBuffer;
-
-
-private:
+public:
 	CGLES3IndexBuffer(GfxIndexType type, size_t size, bool bDynamic);
 	virtual ~CGLES3IndexBuffer(void);
 	virtual void Release(void);
@@ -35,10 +31,7 @@ private:
 
 class CGLES3MultiIndexBuffer : public CGfxMultiIndexBuffer
 {
-	friend class CGLES3Mesh;
-
-
-private:
+public:
 	CGLES3MultiIndexBuffer(GfxIndexType type, size_t size, bool bDynamic, int count);
 	virtual ~CGLES3MultiIndexBuffer(void);
 	virtual void Release(void);

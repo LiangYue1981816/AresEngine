@@ -4,11 +4,7 @@
 
 class CGLES3VertexBuffer : public CGfxVertexBuffer
 {
-	friend class CGLES3Mesh;
-	friend class CGLES3MultiVertexBuffer;
-
-
-private:
+public:
 	CGLES3VertexBuffer(uint32_t vertexFormat, int vertexBinding, size_t size, bool bDynamic);
 	virtual ~CGLES3VertexBuffer(void);
 	virtual void Release(void);
@@ -38,10 +34,7 @@ private:
 
 class CGLES3MultiVertexBuffer : public CGfxMultiVertexBuffer
 {
-	friend class CGLES3Mesh;
-
-
-private:
+public:
 	CGLES3MultiVertexBuffer(uint32_t vertexFormat, int vertexBinding, size_t size, bool bDynamic, int count);
 	virtual ~CGLES3MultiVertexBuffer(void);
 	virtual void Release(void);

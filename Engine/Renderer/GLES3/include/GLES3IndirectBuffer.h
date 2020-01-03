@@ -4,11 +4,7 @@
 
 class CGLES3IndirectBuffer : public CGfxIndirectBuffer
 {
-	friend class CGLES3MeshDraw;
-	friend class CGLES3MultiIndirectBuffer;
-
-
-private:
+public:
 	CGLES3IndirectBuffer(int numDrawCommands);
 	virtual ~CGLES3IndirectBuffer(void);
 	virtual void Release(void);
@@ -36,10 +32,7 @@ private:
 
 class CGLES3MultiIndirectBuffer : public CGfxMultiIndirectBuffer
 {
-	friend class CGLES3MeshDraw;
-
-
-private:
+public:
 	CGLES3MultiIndirectBuffer(int numDrawCommands, int count);
 	virtual ~CGLES3MultiIndirectBuffer(void);
 	virtual void Release(void);
