@@ -76,6 +76,7 @@ typedef CGfxResourcePtr<CGfxIndexBuffer> CGfxIndexBufferPtr;
 typedef CGfxResourcePtr<CGfxVertexBuffer> CGfxVertexBufferPtr;
 typedef CGfxResourcePtr<CGfxInstanceBuffer> CGfxInstanceBufferPtr;
 typedef CGfxResourcePtr<CGfxIndirectBuffer> CGfxIndirectBufferPtr;
+
 typedef CGfxResourcePtr<CGfxUniformBuffer> CGfxUniformBufferPtr;
 typedef CGfxResourcePtr<CGfxStorageBuffer> CGfxStorageBufferPtr;
 
