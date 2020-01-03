@@ -24,6 +24,7 @@ class CALL_API CGfxIndexBuffer;
 class CALL_API CGfxVertexBuffer;
 class CALL_API CGfxInstanceBuffer;
 class CALL_API CGfxIndirectBuffer;
+
 class CALL_API CGfxUniformBuffer;
 class CALL_API CGfxStorageBuffer;
 

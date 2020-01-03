@@ -30,6 +30,9 @@
 #include "GfxInstanceBuffer.h"
 #include "GfxIndirectBuffer.h"
 
+#include "GfxUniformBuffer.h"
+#include "GfxStorageBuffer.h"
+
 #include "GfxSampler.h"
 #include "GfxTexture2D.h"
 #include "GfxTexture2DArray.h"
@@ -41,8 +44,6 @@
 #include "GfxUniformVec4.h"
 #include "GfxUniformMat4.h"
 #include "GfxUniformCamera.h"
-#include "GfxUniformBuffer.h"
-#include "GfxStorageBuffer.h"
 
 #include "GfxMesh.h"
 #include "GfxMeshDraw.h"
