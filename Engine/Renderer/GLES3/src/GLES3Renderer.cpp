@@ -275,11 +275,13 @@ CGfxCommandBufferPtr CGLES3Renderer::NewCommandBuffer(uint32_t pool, bool bMainC
 
 void CGLES3Renderer::BeginRecord(CGfxCommandBufferPtr ptrCommandBuffer)
 {
+	ptrCommandBuffer->Clearup();
 	ptrCommandBuffer->BeginRecord();
 }
 
 void CGLES3Renderer::BeginRecord(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass, int indexSubpass)
 {
+	ptrCommandBuffer->Clearup();
 	ptrCommandBuffer->BeginRecord(ptrFrameBuffer, ptrRenderPass, indexSubpass);
 }
 

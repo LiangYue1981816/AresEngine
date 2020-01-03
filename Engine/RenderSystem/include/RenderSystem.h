@@ -185,7 +185,10 @@ private:
 
 private:
 	void RenderDefault(CTaskGraph& taskGraph, CCamera* pCamera, bool bPresent) const;
+	void RenderDefault(CTaskGraph& taskGraph, CCamera* pCamera, bool bPresent, CGfxCommandBufferPtr ptrCommandBuffer) const;
+
 	void RenderForwardLighting(CTaskGraph& taskGraph, CCamera* pCamera, bool bPresent) const;
+	void RenderForwardLighting(CTaskGraph& taskGraph, CCamera* pCamera, bool bPresent, CGfxCommandBufferPtr ptrCommandBuffer) const;
 
 
 private:

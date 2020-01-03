@@ -281,11 +281,13 @@ CGfxCommandBufferPtr CVKRenderer::NewCommandBuffer(uint32_t pool, bool bMainComm
 
 void CVKRenderer::BeginRecord(CGfxCommandBufferPtr ptrCommandBuffer)
 {
+	ptrCommandBuffer->Clearup();
 	ptrCommandBuffer->BeginRecord();
 }
 
 void CVKRenderer::BeginRecord(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass, int indexSubpass)
 {
+	ptrCommandBuffer->Clearup();
 	ptrCommandBuffer->BeginRecord(ptrFrameBuffer, ptrRenderPass, indexSubpass);
 }
 
