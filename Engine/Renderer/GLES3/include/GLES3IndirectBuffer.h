@@ -30,6 +30,7 @@ private:
 	CGLES3Buffer* m_pBuffer;
 };
 
+
 class CGLES3MultiIndirectBuffer : public CGfxMultiIndirectBuffer
 {
 public:

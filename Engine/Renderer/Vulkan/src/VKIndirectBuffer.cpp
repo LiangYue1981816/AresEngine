@@ -74,3 +74,63 @@ bool CVKIndirectBuffer::BufferData(int indexDraw, int firstIndex, int baseVertex
 
 	return m_pBuffer->BufferData(indexDraw * sizeof(DrawCommand), sizeof(m_draws[indexDraw]), &m_draws[indexDraw]);
 }
+
+
+CVKMultiIndirectBuffer::CVKMultiIndirectBuffer(CVKDevice* pDevice, int numDrawCommands, int count)
+	: CGfxMultiIndirectBuffer(numDrawCommands, count)
+	, m_index(0)
+	, m_pBuffers(std::max(1, count))
+{
+	for (int index = 0; index < m_pBuffers.size(); index++) {
+		m_pBuffers[index] = new CVKIndirectBuffer(pDevice, numDrawCommands);
+	}
+}
+
+CVKMultiIndirectBuffer::~CVKMultiIndirectBuffer(void)
+{
+	for (auto& itBuffer : m_pBuffers) {
+		delete itBuffer;
+	}
+}
+
+void CVKMultiIndirectBuffer::Release(void)
+{
+	delete this;
+}
+
+void CVKMultiIndirectBuffer::SetBufferIndex(int index)
+{
+	m_index = index;
+	m_index = std::min(m_index, (int)m_pBuffers.size() - 1);
+	m_index = std::max(m_index, 0);
+}
+
+VkBuffer CVKMultiIndirectBuffer::GetBuffer(void) const
+{
+	return m_pBuffers[m_index]->GetBuffer();
+}
+
+uint32_t CVKMultiIndirectBuffer::GetDrawCommandCount(void) const
+{
+	return m_pBuffers[m_index]->GetDrawCommandCount();
+}
+
+uint32_t CVKMultiIndirectBuffer::GetDrawCommandOffset(int indexDraw) const
+{
+	return m_pBuffers[m_index]->GetDrawCommandOffset(indexDraw);
+}
+
+uint32_t CVKMultiIndirectBuffer::GetSize(void) const
+{
+	return m_pBuffers[m_index]->GetSize();
+}
+
+uint32_t CVKMultiIndirectBuffer::GetStride(void) const
+{
+	return m_pBuffers[m_index]->GetStride();
+}
+
+bool CVKMultiIndirectBuffer::BufferData(int indexDraw, int firstIndex, int baseVertex, int baseInstance, int indexCount, int instanceCount)
+{
+	return m_pBuffers[m_index]->BufferData(indexDraw, firstIndex, baseVertex, baseInstance, indexCount, instanceCount);
+}

@@ -12,8 +12,6 @@ public:
 
 public:
 	VkBuffer GetBuffer(void) const;
-
-public:
 	uint32_t GetDrawCommandCount(void) const;
 	uint32_t GetDrawCommandOffset(int indexDraw) const;
 	uint32_t GetSize(void) const;
@@ -32,4 +30,32 @@ private:
 
 private:
 	CVKDevice* m_pDevice;
+};
+
+
+class CVKMultiIndirectBuffer : public CGfxMultiIndirectBuffer
+{
+public:
+	CVKMultiIndirectBuffer(CVKDevice* pDevice, int numDrawCommands, int count);
+	virtual ~CVKMultiIndirectBuffer(void);
+	virtual void Release(void);
+
+
+public:
+	void SetBufferIndex(int index);
+
+public:
+	VkBuffer GetBuffer(void) const;
+	uint32_t GetDrawCommandCount(void) const;
+	uint32_t GetDrawCommandOffset(int indexDraw) const;
+	uint32_t GetSize(void) const;
+	uint32_t GetStride(void) const;
+
+public:
+	bool BufferData(int indexDraw, int firstIndex, int baseVertex, int baseInstance, int indexCount, int instanceCount);
+
+
+private:
+	int m_index;
+	eastl::vector<CVKIndirectBuffer*> m_pBuffers;
 };

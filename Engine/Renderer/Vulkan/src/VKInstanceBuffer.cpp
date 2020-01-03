@@ -80,3 +80,63 @@ void CVKInstanceBuffer::Bind(VkCommandBuffer vkCommandBuffer) const
 	const VkDeviceSize vkOffset = 0;
 	vkCmdBindVertexBuffers(vkCommandBuffer, m_binding, 1, &vkBuffer, &vkOffset);
 }
+
+
+CVKMultiInstanceBuffer::CVKMultiInstanceBuffer(CVKDevice* pDevice, uint32_t instanceFormat, int instanceBinding, int count)
+	: CGfxMultiInstanceBuffer(instanceFormat, instanceBinding, count)
+	, m_index(0)
+	, m_pBuffers(std::max(1, count))
+{
+	for (int index = 0; index < m_pBuffers.size(); index++) {
+		m_pBuffers[index] = new CVKInstanceBuffer(pDevice, instanceFormat, instanceBinding);
+	}
+}
+
+CVKMultiInstanceBuffer::~CVKMultiInstanceBuffer(void)
+{
+	for (auto& itBuffer : m_pBuffers) {
+		delete itBuffer;
+	}
+}
+
+void CVKMultiInstanceBuffer::Release(void)
+{
+	delete this;
+}
+
+void CVKMultiInstanceBuffer::SetBufferIndex(int index)
+{
+	m_index = index;
+	m_index = std::min(m_index, (int)m_pBuffers.size() - 1);
+	m_index = std::max(m_index, 0);
+}
+
+uint32_t CVKMultiInstanceBuffer::GetInstanceBinding(void) const
+{
+	return m_pBuffers[m_index]->GetInstanceBinding();
+}
+
+uint32_t CVKMultiInstanceBuffer::GetInstanceFormat(void) const
+{
+	return m_pBuffers[m_index]->GetInstanceFormat();
+}
+
+uint32_t CVKMultiInstanceBuffer::GetInstanceCount(void) const
+{
+	return m_pBuffers[m_index]->GetInstanceCount();
+}
+
+uint32_t CVKMultiInstanceBuffer::GetSize(void) const
+{
+	return m_pBuffers[m_index]->GetSize();
+}
+
+bool CVKMultiInstanceBuffer::BufferData(size_t size, const void* data)
+{
+	return m_pBuffers[m_index]->BufferData(size, data);
+}
+
+void CVKMultiInstanceBuffer::Bind(VkCommandBuffer vkCommandBuffer) const
+{
+	m_pBuffers[m_index]->Bind(vkCommandBuffer);
+}

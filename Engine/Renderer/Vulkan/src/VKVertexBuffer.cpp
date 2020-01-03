@@ -75,3 +75,68 @@ void CVKVertexBuffer::Bind(VkCommandBuffer vkCommandBuffer) const
 	ASSERT(vkCommandBuffer);
 	vkCmdBindVertexBuffer(vkCommandBuffer, m_binding, m_pBuffer->GetBuffer(), m_offset);
 }
+
+
+CVKMultiVertexBuffer::CVKMultiVertexBuffer(CVKDevice* pDevice, uint32_t vertexFormat, int vertexBinding, size_t size, bool bDynamic, int count)
+	: CGfxMultiVertexBuffer(vertexFormat, vertexBinding, size, bDynamic, count)
+	, m_index(0)
+	, m_pBuffers(std::max(1, count))
+{
+	for (int index = 0; index < m_pBuffers.size(); index++) {
+		m_pBuffers[index] = new CVKVertexBuffer(pDevice, vertexFormat, vertexBinding, size, bDynamic);
+	}
+}
+
+CVKMultiVertexBuffer::~CVKMultiVertexBuffer(void)
+{
+	for (auto& itBuffer : m_pBuffers) {
+		delete itBuffer;
+	}
+}
+
+void CVKMultiVertexBuffer::Release(void)
+{
+	delete this;
+}
+
+void CVKMultiVertexBuffer::SetBufferIndex(int index)
+{
+	m_index = index;
+	m_index = std::min(m_index, (int)m_pBuffers.size() - 1);
+	m_index = std::max(m_index, 0);
+}
+
+uint32_t CVKMultiVertexBuffer::GetVertexBinding(void) const
+{
+	return m_pBuffers[m_index]->GetVertexBinding();
+}
+
+uint32_t CVKMultiVertexBuffer::GetVertexFormat(void) const
+{
+	return m_pBuffers[m_index]->GetVertexFormat();
+}
+
+uint32_t CVKMultiVertexBuffer::GetVertexCount(void) const
+{
+	return m_pBuffers[m_index]->GetVertexCount();
+}
+
+uint32_t CVKMultiVertexBuffer::GetSize(void) const
+{
+	return m_pBuffers[m_index]->GetSize();
+}
+
+uint32_t CVKMultiVertexBuffer::GetOffset(void) const
+{
+	return m_pBuffers[m_index]->GetOffset();
+}
+
+bool CVKMultiVertexBuffer::BufferData(size_t offset, size_t size, const void* data)
+{
+	return m_pBuffers[m_index]->BufferData(offset, size, data);
+}
+
+void CVKMultiVertexBuffer::Bind(VkCommandBuffer vkCommandBuffer) const
+{
+	m_pBuffers[m_index]->Bind(vkCommandBuffer);
+}

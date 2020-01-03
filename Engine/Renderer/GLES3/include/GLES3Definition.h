@@ -31,10 +31,17 @@ class CGLES3PipelineGraphics;
 class CGLES3PipelineGraphicsManager;
 
 class CGLES3Buffer;
+
 class CGLES3IndexBuffer;
 class CGLES3VertexBuffer;
 class CGLES3InstanceBuffer;
 class CGLES3IndirectBuffer;
+
+class CGLES3MultiIndexBuffer;
+class CGLES3MultiVertexBuffer;
+class CGLES3MultiInstanceBuffer;
+class CGLES3MultiIndirectBuffer;
+
 class CGLES3VertexArrayObject;
 
 class CGLES3UniformBuffer;

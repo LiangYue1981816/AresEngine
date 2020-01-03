@@ -32,6 +32,7 @@ private:
 	CGLES3Buffer* m_pBuffer;
 };
 
+
 class CGLES3MultiVertexBuffer : public CGfxMultiVertexBuffer
 {
 public:

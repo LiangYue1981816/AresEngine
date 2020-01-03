@@ -37,3 +37,34 @@ private:
 private:
 	CVKDevice* m_pDevice;
 };
+
+
+class CVKMultiVertexBuffer : public CGfxMultiVertexBuffer
+{
+public:
+	CVKMultiVertexBuffer(CVKDevice* pDevice, uint32_t vertexFormat, int vertexBinding, size_t size, bool bDynamic, int count);
+	virtual ~CVKMultiVertexBuffer(void);
+	virtual void Release(void);
+
+
+public:
+	void SetBufferIndex(int index);
+
+public:
+	uint32_t GetVertexBinding(void) const;
+	uint32_t GetVertexFormat(void) const;
+	uint32_t GetVertexCount(void) const;
+	uint32_t GetSize(void) const;
+	uint32_t GetOffset(void) const;
+
+public:
+	bool BufferData(size_t offset, size_t size, const void* data);
+
+public:
+	void Bind(VkCommandBuffer vkCommandBuffer) const;
+
+
+private:
+	int m_index;
+	eastl::vector<CVKVertexBuffer*> m_pBuffers;
+};

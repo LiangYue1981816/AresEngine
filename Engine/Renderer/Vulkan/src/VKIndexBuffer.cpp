@@ -72,3 +72,63 @@ void CVKIndexBuffer::Bind(VkCommandBuffer vkCommandBuffer) const
 	ASSERT(vkCommandBuffer);
 	vkCmdBindIndexBuffer(vkCommandBuffer, m_pBuffer->GetBuffer(), m_offset, CVKHelper::TranslateIndexType(m_type));
 }
+
+
+CVKMultiIndexBuffer::CVKMultiIndexBuffer(CVKDevice* pDevice, GfxIndexType type, size_t size, bool bDynamic, int count)
+	: CGfxMultiIndexBuffer(type, size, bDynamic, count)
+	, m_index(0)
+	, m_pBuffers(std::max(1, count))
+{
+	for (int index = 0; index < m_pBuffers.size(); index++) {
+		m_pBuffers[index] = new CVKIndexBuffer(pDevice, type, size, bDynamic);
+	}
+}
+
+CVKMultiIndexBuffer::~CVKMultiIndexBuffer(void)
+{
+	for (auto& itBuffer : m_pBuffers) {
+		delete itBuffer;
+	}
+}
+
+void CVKMultiIndexBuffer::Release(void)
+{
+	delete this;
+}
+
+void CVKMultiIndexBuffer::SetBufferIndex(int index)
+{
+	m_index = index;
+	m_index = std::min(m_index, (int)m_pBuffers.size() - 1);
+	m_index = std::max(m_index, 0);
+}
+
+GfxIndexType CVKMultiIndexBuffer::GetIndexType(void) const
+{
+	return m_pBuffers[m_index]->GetIndexType();
+}
+
+uint32_t CVKMultiIndexBuffer::GetIndexCount(void) const
+{
+	return m_pBuffers[m_index]->GetIndexCount();
+}
+
+uint32_t CVKMultiIndexBuffer::GetSize(void) const
+{
+	return m_pBuffers[m_index]->GetSize();
+}
+
+uint32_t CVKMultiIndexBuffer::GetOffset(void) const
+{
+	return m_pBuffers[m_index]->GetOffset();
+}
+
+bool CVKMultiIndexBuffer::BufferData(size_t offset, size_t size, const void* data)
+{
+	return m_pBuffers[m_index]->BufferData(offset, size, data);
+}
+
+void CVKMultiIndexBuffer::Bind(VkCommandBuffer vkCommandBuffer) const
+{
+	m_pBuffers[m_index]->Bind(vkCommandBuffer);
+}

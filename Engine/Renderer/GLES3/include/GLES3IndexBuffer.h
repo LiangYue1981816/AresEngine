@@ -29,6 +29,7 @@ private:
 	CGLES3Buffer* m_pBuffer;
 };
 
+
 class CGLES3MultiIndexBuffer : public CGfxMultiIndexBuffer
 {
 public:
