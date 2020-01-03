@@ -2,7 +2,7 @@
 #include "PreHeader.h"
 
 
-class CALL_API CGfxVertexBuffer
+class CALL_API CGfxVertexBuffer : public CGfxResource
 {
 public:
 	CGfxVertexBuffer(uint32_t vertexFormat, int vertexBinding, size_t size, bool bDynamic)
@@ -25,7 +25,7 @@ public:
 	virtual bool BufferData(size_t offset, size_t size, const void* data) = 0;
 };
 
-class CALL_API CGfxMultiVertexBuffer
+class CALL_API CGfxMultiVertexBuffer : public CGfxResource
 {
 public:
 	CGfxMultiVertexBuffer(uint32_t vertexFormat, int vertexBinding, size_t size, bool bDynamic, int count)

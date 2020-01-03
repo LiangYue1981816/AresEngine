@@ -2,7 +2,7 @@
 #include "PreHeader.h"
 
 
-class CALL_API CGfxIndexBuffer
+class CALL_API CGfxIndexBuffer : public CGfxResource
 {
 public:
 	CGfxIndexBuffer(GfxIndexType type, size_t size, bool bDynamic)
@@ -24,7 +24,7 @@ public:
 	virtual bool BufferData(size_t offset, size_t size, const void* data) = 0;
 };
 
-class CALL_API CGfxMultiIndexBuffer
+class CALL_API CGfxMultiIndexBuffer : public CGfxResource
 {
 public:
 	CGfxMultiIndexBuffer(GfxIndexType type, size_t size, bool bDynamic, int count)

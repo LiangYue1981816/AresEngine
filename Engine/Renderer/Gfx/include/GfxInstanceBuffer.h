@@ -2,7 +2,7 @@
 #include "PreHeader.h"
 
 
-class CALL_API CGfxInstanceBuffer
+class CALL_API CGfxInstanceBuffer : public CGfxResource
 {
 public:
 	CGfxInstanceBuffer(uint32_t instanceFormat, int instanceBinding)
@@ -25,7 +25,7 @@ public:
 	virtual bool BufferData(size_t size, const void* data) = 0;
 };
 
-class CALL_API CGfxMultiInstanceBuffer
+class CALL_API CGfxMultiInstanceBuffer : public CGfxResource
 {
 public:
 	CGfxMultiInstanceBuffer(uint32_t instanceFormat, int instanceBinding, int count)

@@ -22,17 +22,17 @@ class CALL_API CGfxPipelineGraphics;
 
 class CALL_API CGfxIndexBuffer;
 class CALL_API CGfxVertexBuffer;
-class CALL_API CGfxInstanceBuffer;
-class CALL_API CGfxIndirectBuffer;
 class CALL_API CGfxUniformBuffer;
 class CALL_API CGfxStorageBuffer;
+class CALL_API CGfxInstanceBuffer;
+class CALL_API CGfxIndirectBuffer;
 
 class CALL_API CGfxMultiIndexBuffer;
 class CALL_API CGfxMultiVertexBuffer;
-class CALL_API CGfxMultiIndirectBuffer;
-class CALL_API CGfxMultiInstanceBuffer;
 class CALL_API CGfxMultiUniformBuffer;
 class CALL_API CGfxMultiStorageBuffer;
+class CALL_API CGfxMultiIndirectBuffer;
+class CALL_API CGfxMultiInstanceBuffer;
 
 class CALL_API CGfxSampler;
 class CALL_API CGfxTexture2D;
@@ -73,8 +73,19 @@ typedef CGfxResourcePtr<CGfxTexture2D> CGfxTexture2DPtr;
 typedef CGfxResourcePtr<CGfxTexture2DArray> CGfxTexture2DArrayPtr;
 typedef CGfxResourcePtr<CGfxTextureCubemap> CGfxTextureCubemapPtr;
 
+typedef CGfxResourcePtr<CGfxIndexBuffer> CGfxIndexBufferPtr;
+typedef CGfxResourcePtr<CGfxVertexBuffer> CGfxVertexBufferPtr;
 typedef CGfxResourcePtr<CGfxUniformBuffer> CGfxUniformBufferPtr;
 typedef CGfxResourcePtr<CGfxStorageBuffer> CGfxStorageBufferPtr;
+typedef CGfxResourcePtr<CGfxInstanceBuffer> CGfxInstanceBufferPtr;
+typedef CGfxResourcePtr<CGfxIndirectBuffer> CGfxIndirectBufferPtr;
+
+typedef CGfxResourcePtr<CGfxMultiIndexBuffer> CGfxMultiIndexBufferPtr;
+typedef CGfxResourcePtr<CGfxMultiVertexBuffer> CGfxMultiVertexBufferPtr;
+typedef CGfxResourcePtr<CGfxMultiUniformBuffer> CGfxMultiUniformBufferPtr;
+typedef CGfxResourcePtr<CGfxMultiStorageBuffer> CGfxMultiStorageBufferPtr;
+typedef CGfxResourcePtr<CGfxMultiInstanceBuffer> CGfxMultiInstanceBufferPtr;
+typedef CGfxResourcePtr<CGfxMultiIndirectBuffer> CGfxMultiIndirectBufferPtr;
 
 typedef CGfxResourcePtr<CGfxDescriptorSet> CGfxDescriptorSetPtr;
 typedef CGfxResourcePtr<CGfxDescriptorLayout> CGfxDescriptorLayoutPtr;
