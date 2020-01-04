@@ -43,7 +43,7 @@ public:
 
 
 public:
-	void SetBufferIndex(int index);
+	void SetIndex(int index);
 
 public:
 	CVKIndexBuffer* GetBuffer(void) const;

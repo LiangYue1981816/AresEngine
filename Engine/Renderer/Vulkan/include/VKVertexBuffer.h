@@ -46,7 +46,7 @@ public:
 
 
 public:
-	void SetBufferIndex(int index);
+	void SetIndex(int index);
 
 public:
 	CVKVertexBuffer* GetBuffer(void) const;

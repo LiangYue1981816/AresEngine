@@ -39,7 +39,7 @@ public:
 
 
 public:
-	virtual void SetBufferIndex(int index) = 0;
+	virtual void SetIndex(int index) = 0;
 
 public:
 	virtual uint32_t GetVertexBinding(void) const = 0;

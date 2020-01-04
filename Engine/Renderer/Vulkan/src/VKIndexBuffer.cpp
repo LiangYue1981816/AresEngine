@@ -86,7 +86,7 @@ void CVKMultiIndexBuffer::Release(void)
 	delete this;
 }
 
-void CVKMultiIndexBuffer::SetBufferIndex(int index)
+void CVKMultiIndexBuffer::SetIndex(int index)
 {
 	m_index = index;
 	m_index = std::min(m_index, (int)m_pBuffers.size() - 1);

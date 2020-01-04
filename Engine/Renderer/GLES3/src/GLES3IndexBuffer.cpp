@@ -74,7 +74,7 @@ void CGLES3MultiIndexBuffer::Release(void)
 	delete this;
 }
 
-void CGLES3MultiIndexBuffer::SetBufferIndex(int index)
+void CGLES3MultiIndexBuffer::SetIndex(int index)
 {
 	m_index = index;
 	m_index = std::min(m_index, (int)m_pBuffers.size() - 1);

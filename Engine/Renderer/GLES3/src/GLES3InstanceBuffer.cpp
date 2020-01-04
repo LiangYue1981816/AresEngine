@@ -109,7 +109,7 @@ void CGLES3MultiInstanceBuffer::Release(void)
 	delete this;
 }
 
-void CGLES3MultiInstanceBuffer::SetBufferIndex(int index)
+void CGLES3MultiInstanceBuffer::SetIndex(int index)
 {
 	m_index = index;
 	m_index = std::min(m_index, (int)m_pBuffers.size() - 1);

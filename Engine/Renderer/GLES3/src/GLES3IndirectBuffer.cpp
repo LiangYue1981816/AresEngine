@@ -93,7 +93,7 @@ void CGLES3MultiIndirectBuffer::Release(void)
 	delete this;
 }
 
-void CGLES3MultiIndirectBuffer::SetBufferIndex(int index)
+void CGLES3MultiIndirectBuffer::SetIndex(int index)
 {
 	m_index = index;
 	m_index = std::min(m_index, (int)m_pBuffers.size() - 1);

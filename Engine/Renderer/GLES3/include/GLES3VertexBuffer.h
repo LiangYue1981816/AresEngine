@@ -42,7 +42,7 @@ public:
 
 
 public:
-	void SetBufferIndex(int index);
+	void SetIndex(int index);
 
 public:
 	CGLES3VertexBuffer* GetBuffer(void) const;

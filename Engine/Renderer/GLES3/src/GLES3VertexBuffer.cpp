@@ -94,7 +94,7 @@ void CGLES3MultiVertexBuffer::Release(void)
 	delete this;
 }
 
-void CGLES3MultiVertexBuffer::SetBufferIndex(int index)
+void CGLES3MultiVertexBuffer::SetIndex(int index)
 {
 	m_index = index;
 	m_index = std::min(m_index, (int)m_pBuffers.size() - 1);

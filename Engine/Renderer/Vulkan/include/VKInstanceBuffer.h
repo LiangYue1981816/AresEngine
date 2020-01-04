@@ -46,7 +46,7 @@ public:
 
 
 public:
-	void SetBufferIndex(int index);
+	void SetIndex(int index);
 
 public:
 	CVKInstanceBuffer* GetBuffer(void) const;
