@@ -95,7 +95,7 @@ void CGLES3MultiVertexArrayObject::Release(void)
 	delete this;
 }
 
-void CGLES3MultiVertexArrayObject::SetBufferIndex(int index)
+void CGLES3MultiVertexArrayObject::SetIndex(int index)
 {
 	m_index = index;
 	m_index = std::min(m_index, (int)m_pVertexArrayObjects.size() - 1);

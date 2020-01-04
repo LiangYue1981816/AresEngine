@@ -33,7 +33,7 @@ public:
 
 
 public:
-	void SetBufferIndex(int index);
+	void SetIndex(int index);
 
 public:
 	bool Create(const CGLES3IndexBuffer* pIndexBuffer, const CGLES3VertexBuffer* pVertexBuffer, const CGLES3InstanceBuffer* pInstanceBuffer);
