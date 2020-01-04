@@ -86,6 +86,16 @@ CGLES3IndexBuffer* CGLES3MultiIndexBuffer::GetBuffer(void) const
 	return m_pBuffers[m_index];
 }
 
+CGLES3IndexBuffer* CGLES3MultiIndexBuffer::GetBuffer(int index) const
+{
+	if (index >= 0 && index < m_pBuffers.size()) {
+		return m_pBuffers[m_index];
+	}
+	else {
+		return nullptr;
+	}
+}
+
 GfxIndexType CGLES3MultiIndexBuffer::GetIndexType(void) const
 {
 	return m_pBuffers[m_index]->GetIndexType();

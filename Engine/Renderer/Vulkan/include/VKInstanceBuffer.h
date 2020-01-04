@@ -50,6 +50,7 @@ public:
 
 public:
 	CVKInstanceBuffer* GetBuffer(void) const;
+	CVKInstanceBuffer* GetBuffer(int index) const;
 
 public:
 	uint32_t GetInstanceBinding(void) const;

@@ -36,6 +36,10 @@ public:
 	void SetIndex(int index);
 
 public:
+	CGLES3VertexArrayObject* GetVertexArrayObject(void) const;
+	CGLES3VertexArrayObject* GetVertexArrayObject(int index) const;
+
+public:
 	bool Create(const CGLES3IndexBuffer* pIndexBuffer, const CGLES3VertexBuffer* pVertexBuffer, const CGLES3InstanceBuffer* pInstanceBuffer);
 	void Destroy(void);
 

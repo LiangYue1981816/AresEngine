@@ -113,6 +113,16 @@ CVKInstanceBuffer* CVKMultiInstanceBuffer::GetBuffer(void) const
 	return m_pBuffers[m_index];
 }
 
+CVKInstanceBuffer* CVKMultiInstanceBuffer::GetBuffer(int index) const
+{
+	if (m_index >= 0 && m_index < m_pBuffers.size()) {
+		return m_pBuffers[m_index];
+	}
+	else {
+		return nullptr;
+	}
+}
+
 uint32_t CVKMultiInstanceBuffer::GetInstanceBinding(void) const
 {
 	return m_pBuffers[m_index]->GetInstanceBinding();

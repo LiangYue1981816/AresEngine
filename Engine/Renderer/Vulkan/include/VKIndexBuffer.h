@@ -47,6 +47,7 @@ public:
 
 public:
 	CVKIndexBuffer* GetBuffer(void) const;
+	CVKIndexBuffer* GetBuffer(int index) const;
 
 public:
 	GfxIndexType GetIndexType(void) const;

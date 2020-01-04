@@ -48,6 +48,7 @@ public:
 
 public:
 	CVKIndirectBuffer* GetBuffer(void) const;
+	CVKIndirectBuffer* GetBuffer(int index) const;
 
 public:
 	uint32_t GetDrawCommandCount(void) const;

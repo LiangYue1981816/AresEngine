@@ -121,6 +121,16 @@ CGLES3InstanceBuffer* CGLES3MultiInstanceBuffer::GetBuffer(void) const
 	return m_pBuffers[m_index];
 }
 
+CGLES3InstanceBuffer* CGLES3MultiInstanceBuffer::GetBuffer(int index) const
+{
+	if (index >= 0 && index < m_pBuffers.size()) {
+		return m_pBuffers[m_index];
+	}
+	else {
+		return nullptr;
+	}
+}
+
 uint32_t CGLES3MultiInstanceBuffer::GetInstanceBinding(void) const
 {
 	return m_pBuffers[m_index]->GetInstanceBinding();

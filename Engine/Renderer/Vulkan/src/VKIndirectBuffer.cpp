@@ -110,6 +110,16 @@ CVKIndirectBuffer* CVKMultiIndirectBuffer::GetBuffer(void) const
 	return m_pBuffers[m_index];
 }
 
+CVKIndirectBuffer* CVKMultiIndirectBuffer::GetBuffer(int index) const
+{
+	if (m_index >= 0 && m_index < m_pBuffers.size()) {
+		return m_pBuffers[m_index];
+	}
+	else {
+		return nullptr;
+	}
+}
+
 uint32_t CVKMultiIndirectBuffer::GetDrawCommandCount(void) const
 {
 	return m_pBuffers[m_index]->GetDrawCommandCount();

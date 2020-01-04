@@ -50,6 +50,7 @@ public:
 
 public:
 	CVKVertexBuffer* GetBuffer(void) const;
+	CVKVertexBuffer* GetBuffer(int index) const;
 
 public:
 	uint32_t GetVertexBinding(void) const;

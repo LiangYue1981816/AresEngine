@@ -43,6 +43,7 @@ public:
 
 public:
 	CGLES3IndexBuffer* GetBuffer(void) const;
+	CGLES3IndexBuffer* GetBuffer(int index) const;
 
 public:
 	GfxIndexType GetIndexType(void) const;

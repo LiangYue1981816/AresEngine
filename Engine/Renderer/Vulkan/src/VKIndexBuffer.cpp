@@ -98,6 +98,16 @@ CVKIndexBuffer* CVKMultiIndexBuffer::GetBuffer(void) const
 	return m_pBuffers[m_index];
 }
 
+CVKIndexBuffer* CVKMultiIndexBuffer::GetBuffer(int index) const
+{
+	if (m_index >= 0 && m_index < m_pBuffers.size()) {
+		return m_pBuffers[m_index];
+	}
+	else {
+		return nullptr;
+	}
+}
+
 GfxIndexType CVKMultiIndexBuffer::GetIndexType(void) const
 {
 	return m_pBuffers[m_index]->GetIndexType();

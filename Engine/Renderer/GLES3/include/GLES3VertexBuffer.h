@@ -46,6 +46,7 @@ public:
 
 public:
 	CGLES3VertexBuffer* GetBuffer(void) const;
+	CGLES3VertexBuffer* GetBuffer(int index) const;
 
 public:
 	uint32_t GetVertexBinding(void) const;

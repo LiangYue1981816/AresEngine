@@ -44,6 +44,7 @@ public:
 
 public:
 	CGLES3IndirectBuffer* GetBuffer(void) const;
+	CGLES3IndirectBuffer* GetBuffer(int index) const;
 
 public:
 	uint32_t GetDrawCommandCount(void) const;

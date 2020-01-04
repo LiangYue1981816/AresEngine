@@ -105,6 +105,16 @@ CGLES3IndirectBuffer* CGLES3MultiIndirectBuffer::GetBuffer(void) const
 	return m_pBuffers[m_index];
 }
 
+CGLES3IndirectBuffer* CGLES3MultiIndirectBuffer::GetBuffer(int index) const
+{
+	if (index >= 0 && index < m_pBuffers.size()) {
+		return m_pBuffers[m_index];
+	}
+	else {
+		return nullptr;
+	}
+}
+
 uint32_t CGLES3MultiIndirectBuffer::GetDrawCommandCount(void) const
 {
 	return m_pBuffers[m_index]->GetDrawCommandCount();

@@ -106,6 +106,16 @@ CGLES3VertexBuffer* CGLES3MultiVertexBuffer::GetBuffer(void) const
 	return m_pBuffers[m_index];
 }
 
+CGLES3VertexBuffer* CGLES3MultiVertexBuffer::GetBuffer(int index) const
+{
+	if (index >= 0 && index < m_pBuffers.size()) {
+		return m_pBuffers[m_index];
+	}
+	else {
+		return nullptr;
+	}
+}
+
 uint32_t CGLES3MultiVertexBuffer::GetVertexBinding(void) const
 {
 	return m_pBuffers[m_index]->GetVertexBinding();

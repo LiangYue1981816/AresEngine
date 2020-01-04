@@ -102,6 +102,21 @@ void CGLES3MultiVertexArrayObject::SetIndex(int index)
 	m_index = std::max(m_index, 0);
 }
 
+CGLES3VertexArrayObject* CGLES3MultiVertexArrayObject::GetVertexArrayObject(void) const
+{
+	return m_pVertexArrayObjects[m_index];
+}
+
+CGLES3VertexArrayObject* CGLES3MultiVertexArrayObject::GetVertexArrayObject(int index) const
+{
+	if (index >= 0 && index < m_pVertexArrayObjects.size()) {
+		return m_pVertexArrayObjects[m_index];
+	}
+	else {
+		return nullptr;
+	}
+}
+
 bool CGLES3MultiVertexArrayObject::Create(const CGLES3IndexBuffer* pIndexBuffer, const CGLES3VertexBuffer* pVertexBuffer, const CGLES3InstanceBuffer* pInstanceBuffer)
 {
 	return m_pVertexArrayObjects[m_index]->Create(pIndexBuffer, pVertexBuffer, pInstanceBuffer);
