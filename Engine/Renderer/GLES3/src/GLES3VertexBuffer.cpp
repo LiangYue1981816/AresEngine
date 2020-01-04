@@ -46,7 +46,7 @@ uint32_t CGLES3VertexBuffer::GetSize(void) const
 
 bool CGLES3VertexBuffer::BufferData(size_t offset, size_t size, const void* data)
 {
-	return m_pBuffer->BufferData(offset, size, data);
+	return m_pBuffer->BufferData(offset, size, data, false);
 }
 
 void CGLES3VertexBuffer::Bind(void) const

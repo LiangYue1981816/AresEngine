@@ -43,7 +43,7 @@ uint32_t CGLES3IndexBuffer::GetSize(void) const
 
 bool CGLES3IndexBuffer::BufferData(size_t offset, size_t size, const void* data)
 {
-	return m_pBuffer->BufferData(offset, size, data);
+	return m_pBuffer->BufferData(offset, size, data, false);
 }
 
 void CGLES3IndexBuffer::Bind(void) const
