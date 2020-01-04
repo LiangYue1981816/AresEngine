@@ -10,13 +10,12 @@ CVKVertexBuffer::CVKVertexBuffer(CVKDevice* pDevice, uint32_t vertexFormat, int 
 	, m_format(vertexFormat)
 	, m_count(size / GetVertexStride(vertexFormat))
 	, m_size(0)
-	, m_offset(0)
 {
 	m_size = size;
 	m_size = ALIGN_BYTE(m_size, m_pDevice->GetPhysicalDeviceLimits().nonCoherentAtomSize);
 
 	if (bDynamic) {
-		m_pBuffer = new CVKBuffer(m_pDevice, m_size * CGfxSwapChain::SWAPCHAIN_FRAME_COUNT, VK_BUFFER_USAGE_VERTEX_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT);
+		m_pBuffer = new CVKBuffer(m_pDevice, m_size, VK_BUFFER_USAGE_VERTEX_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT);
 		CGfxProfiler::IncVertexBufferSize(m_pBuffer->GetMemorySize());
 	}
 	else {
@@ -56,24 +55,15 @@ uint32_t CVKVertexBuffer::GetSize(void) const
 	return m_size;
 }
 
-uint32_t CVKVertexBuffer::GetOffset(void) const
-{
-	return m_offset;
-}
-
 bool CVKVertexBuffer::BufferData(size_t offset, size_t size, const void* data)
 {
-	if (m_pBuffer->IsHostVisible()) {
-		m_offset = VKRenderer()->GetSwapChain()->GetFrameIndex() * m_size;
-	}
-
-	return m_pBuffer->BufferData(m_offset + offset, size, data);
+	return m_pBuffer->BufferData(offset, size, data);
 }
 
 void CVKVertexBuffer::Bind(VkCommandBuffer vkCommandBuffer) const
 {
 	ASSERT(vkCommandBuffer);
-	vkCmdBindVertexBuffer(vkCommandBuffer, m_binding, m_pBuffer->GetBuffer(), m_offset);
+	vkCmdBindVertexBuffer(vkCommandBuffer, m_binding, m_pBuffer->GetBuffer(), 0);
 }
 
 
@@ -124,11 +114,6 @@ uint32_t CVKMultiVertexBuffer::GetVertexCount(void) const
 uint32_t CVKMultiVertexBuffer::GetSize(void) const
 {
 	return m_pBuffers[m_index]->GetSize();
-}
-
-uint32_t CVKMultiVertexBuffer::GetOffset(void) const
-{
-	return m_pBuffers[m_index]->GetOffset();
 }
 
 bool CVKMultiVertexBuffer::BufferData(size_t offset, size_t size, const void* data)

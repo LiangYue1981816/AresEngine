@@ -46,7 +46,7 @@ uint32_t CVKStorageBuffer::GetOffset(void) const
 
 bool CVKStorageBuffer::BufferData(size_t offset, size_t size, const void* data)
 {
-	m_offset = VKRenderer()->GetSwapChain()->GetFrameIndex() * m_size;
+	m_offset = m_size * VKRenderer()->GetSwapChain()->GetFrameIndex();
 	return m_pBuffer->BufferData(m_offset + offset, size, data);
 }
 
