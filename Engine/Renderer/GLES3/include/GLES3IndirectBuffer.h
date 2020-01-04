@@ -43,6 +43,9 @@ public:
 	void SetBufferIndex(int index);
 
 public:
+	CGLES3IndirectBuffer* GetBuffer(void) const;
+
+public:
 	uint32_t GetDrawCommandCount(void) const;
 	uint32_t GetDrawCommandOffset(int indexDraw) const;
 	uint32_t GetSize(void) const;

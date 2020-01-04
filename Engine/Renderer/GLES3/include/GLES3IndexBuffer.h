@@ -42,6 +42,9 @@ public:
 	void SetBufferIndex(int index);
 
 public:
+	CGLES3IndexBuffer* GetBuffer(void) const;
+
+public:
 	GfxIndexType GetIndexType(void) const;
 	uint32_t GetIndexCount(void) const;
 	uint32_t GetSize(void) const;

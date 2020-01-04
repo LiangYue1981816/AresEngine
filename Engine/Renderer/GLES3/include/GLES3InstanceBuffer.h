@@ -45,6 +45,9 @@ public:
 	void SetBufferIndex(int index);
 
 public:
+	CGLES3InstanceBuffer* GetBuffer(void) const;
+
+public:
 	uint32_t GetInstanceBinding(void) const;
 	uint32_t GetInstanceFormat(void) const;
 	uint32_t GetInstanceCount(void) const;

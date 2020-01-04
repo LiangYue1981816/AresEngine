@@ -93,6 +93,11 @@ void CVKMultiIndexBuffer::SetBufferIndex(int index)
 	m_index = std::max(m_index, 0);
 }
 
+CVKIndexBuffer* CVKMultiIndexBuffer::GetBuffer(void) const
+{
+	return m_pBuffers[m_index];
+}
+
 GfxIndexType CVKMultiIndexBuffer::GetIndexType(void) const
 {
 	return m_pBuffers[m_index]->GetIndexType();

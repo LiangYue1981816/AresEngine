@@ -101,6 +101,11 @@ void CGLES3MultiVertexBuffer::SetBufferIndex(int index)
 	m_index = std::max(m_index, 0);
 }
 
+CGLES3VertexBuffer* CGLES3MultiVertexBuffer::GetBuffer(void) const
+{
+	return m_pBuffers[m_index];
+}
+
 uint32_t CGLES3MultiVertexBuffer::GetVertexBinding(void) const
 {
 	return m_pBuffers[m_index]->GetVertexBinding();

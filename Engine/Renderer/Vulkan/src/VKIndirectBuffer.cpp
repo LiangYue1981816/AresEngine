@@ -105,9 +105,9 @@ void CVKMultiIndirectBuffer::SetBufferIndex(int index)
 	m_index = std::max(m_index, 0);
 }
 
-VkBuffer CVKMultiIndirectBuffer::GetBuffer(void) const
+CVKInstanceBuffer* CVKMultiIndirectBuffer::GetBuffer(void) const
 {
-	return m_pBuffers[m_index]->GetBuffer();
+	return m_pBuffers[m_index];
 }
 
 uint32_t CVKMultiIndirectBuffer::GetDrawCommandCount(void) const

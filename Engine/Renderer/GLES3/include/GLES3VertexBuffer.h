@@ -45,6 +45,9 @@ public:
 	void SetBufferIndex(int index);
 
 public:
+	CGLES3VertexBuffer* GetBuffer(void) const;
+
+public:
 	uint32_t GetVertexBinding(void) const;
 	uint32_t GetVertexFormat(void) const;
 	uint32_t GetVertexCount(void) const;

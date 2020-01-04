@@ -116,6 +116,11 @@ void CGLES3MultiInstanceBuffer::SetBufferIndex(int index)
 	m_index = std::max(m_index, 0);
 }
 
+CGLES3InstanceBuffer* CGLES3MultiInstanceBuffer::GetBuffer(void) const
+{
+	return m_pBuffers[m_index];
+}
+
 uint32_t CGLES3MultiInstanceBuffer::GetInstanceBinding(void) const
 {
 	return m_pBuffers[m_index]->GetInstanceBinding();

@@ -108,6 +108,11 @@ void CVKMultiInstanceBuffer::SetBufferIndex(int index)
 	m_index = std::max(m_index, 0);
 }
 
+CVKInstanceBuffer* CVKMultiInstanceBuffer::GetBuffer(void) const
+{
+	return m_pBuffers[m_index];
+}
+
 uint32_t CVKMultiInstanceBuffer::GetInstanceBinding(void) const
 {
 	return m_pBuffers[m_index]->GetInstanceBinding();

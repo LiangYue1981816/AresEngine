@@ -100,6 +100,11 @@ void CGLES3MultiIndirectBuffer::SetBufferIndex(int index)
 	m_index = std::max(m_index, 0);
 }
 
+CGLES3IndirectBuffer* CGLES3MultiIndirectBuffer::GetBuffer(void) const
+{
+	return m_pBuffers[m_index];
+}
+
 uint32_t CGLES3MultiIndirectBuffer::GetDrawCommandCount(void) const
 {
 	return m_pBuffers[m_index]->GetDrawCommandCount();

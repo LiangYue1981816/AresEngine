@@ -81,6 +81,11 @@ void CGLES3MultiIndexBuffer::SetBufferIndex(int index)
 	m_index = std::max(m_index, 0);
 }
 
+CGLES3IndexBuffer* CGLES3MultiIndexBuffer::GetBuffer(void) const
+{
+	return m_pBuffers[m_index];
+}
+
 GfxIndexType CGLES3MultiIndexBuffer::GetIndexType(void) const
 {
 	return m_pBuffers[m_index]->GetIndexType();
