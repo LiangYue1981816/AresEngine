@@ -29,7 +29,7 @@ private:
 
 private:
 	bool BufferSize(size_t size, bool bDynamic);
-	bool BufferData(size_t offset, size_t size, const void* data, bool bSync = true);
+	bool BufferData(size_t offset, size_t size, const void* data, bool bSync);
 
 private:
 	void Bind(void) const;
