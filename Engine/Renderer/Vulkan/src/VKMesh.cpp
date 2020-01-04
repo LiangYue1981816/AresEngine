@@ -5,9 +5,6 @@ CVKMesh::CVKMesh(CVKDevice* pDevice, CVKMeshManager* pManager, uint32_t name)
 	: CGfxMesh(name)
 	, m_pDevice(pDevice)
 	, m_pManager(pManager)
-
-	, m_pIndexBuffer(nullptr)
-	, m_pVertexBuffer(nullptr)
 {
 
 }
@@ -34,16 +31,16 @@ CGfxMesh::Draw* CVKMesh::GetDraw(uint32_t name)
 	}
 }
 
-CGfxIndexBuffer* CVKMesh::GetIndexBuffer(void)
+CGfxIndexBufferPtr CVKMesh::GetIndexBufferPtr(void)
 {
-	ASSERT(m_pIndexBuffer);
-	return m_pIndexBuffer;
+	ASSERT(m_ptrIndexBuffer);
+	return m_ptrIndexBuffer;
 }
 
-CGfxVertexBuffer* CVKMesh::GetVertexBuffer(void)
+CGfxVertexBufferPtr CVKMesh::GetVertexBufferPtr(void)
 {
-	ASSERT(m_pVertexBuffer);
-	return m_pVertexBuffer;
+	ASSERT(m_ptrVertexBuffer);
+	return m_ptrVertexBuffer;
 }
 
 bool CVKMesh::CreateDraw(uint32_t name, const glm::aabb& aabb, int baseVertex, int firstIndex, int indexCount)
@@ -57,9 +54,9 @@ bool CVKMesh::CreateDraw(uint32_t name, const glm::aabb& aabb, int baseVertex, i
 
 bool CVKMesh::CreateIndexBuffer(GfxIndexType type, size_t size, bool bDynamic, const void* data)
 {
-	if (m_pIndexBuffer == nullptr) {
-		m_pIndexBuffer = new CVKIndexBuffer(m_pDevice, type, size, bDynamic);
-		return m_pIndexBuffer->BufferData(0, size, data);
+	if (m_ptrIndexBuffer == nullptr) {
+		m_ptrIndexBuffer = CGfxIndexBufferPtr(new CVKIndexBuffer(m_pDevice, type, size, bDynamic));
+		return m_ptrIndexBuffer->BufferData(0, size, data);
 	}
 	else {
 		return false;
@@ -68,9 +65,9 @@ bool CVKMesh::CreateIndexBuffer(GfxIndexType type, size_t size, bool bDynamic, c
 
 bool CVKMesh::CreateVertexBuffer(uint32_t vertexFormat, int vertexBinding, size_t size, bool bDynamic, const void* data)
 {
-	if (m_pVertexBuffer == nullptr) {
-		m_pVertexBuffer = new CVKVertexBuffer(m_pDevice, vertexFormat, vertexBinding, size, bDynamic);
-		return m_pVertexBuffer->BufferData(0, size, data);
+	if (m_ptrVertexBuffer == nullptr) {
+		m_ptrVertexBuffer = CGfxVertexBufferPtr(new CVKVertexBuffer(m_pDevice, vertexFormat, vertexBinding, size, bDynamic));
+		return m_ptrVertexBuffer->BufferData(0, size, data);
 	}
 	else {
 		return false;
@@ -79,21 +76,13 @@ bool CVKMesh::CreateVertexBuffer(uint32_t vertexFormat, int vertexBinding, size_
 
 void CVKMesh::Destroy(void)
 {
-	if (m_pIndexBuffer) {
-		delete m_pIndexBuffer;
-	}
-
-	if (m_pVertexBuffer) {
-		delete m_pVertexBuffer;
-	}
-
 	m_draws.clear();
-	m_pIndexBuffer = nullptr;
-	m_pVertexBuffer = nullptr;
+	m_ptrIndexBuffer.Release();
+	m_ptrVertexBuffer.Release();
 }
 
 void CVKMesh::Bind(VkCommandBuffer vkCommandBuffer)
 {
-	m_pIndexBuffer->Bind(vkCommandBuffer);
-	m_pVertexBuffer->Bind(vkCommandBuffer);
+	((CVKIndexBuffer*)m_ptrIndexBuffer.GetPointer())->Bind(vkCommandBuffer);
+	((CVKVertexBuffer*)m_ptrVertexBuffer.GetPointer())->Bind(vkCommandBuffer);
 }

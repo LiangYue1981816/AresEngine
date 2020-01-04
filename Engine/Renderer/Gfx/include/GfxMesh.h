@@ -32,8 +32,8 @@ public:
 
 public:
 	virtual CGfxMesh::Draw* GetDraw(uint32_t name) = 0;
-	virtual CGfxIndexBuffer* GetIndexBuffer(void) = 0;
-	virtual CGfxVertexBuffer* GetVertexBuffer(void) = 0;
+	virtual CGfxIndexBufferPtr GetIndexBufferPtr(void) = 0;
+	virtual CGfxVertexBufferPtr GetVertexBufferPtr(void) = 0;
 
 public:
 	virtual bool CreateDraw(uint32_t name, const glm::aabb& aabb, int baseVertex, int firstIndex, int indexCount) = 0;

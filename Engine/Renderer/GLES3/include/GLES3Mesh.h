@@ -15,8 +15,8 @@ private:
 
 public:
 	CGfxMesh::Draw* GetDraw(uint32_t name);
-	CGfxIndexBuffer* GetIndexBuffer(void);
-	CGfxVertexBuffer* GetVertexBuffer(void);
+	CGfxIndexBufferPtr GetIndexBufferPtr(void);
+	CGfxVertexBufferPtr GetVertexBufferPtr(void);
 
 public:
 	bool CreateDraw(uint32_t name, const glm::aabb& aabb, int baseVertex, int firstIndex, int indexCount);
@@ -26,8 +26,8 @@ public:
 
 
 private:
-	CGLES3IndexBuffer* m_pIndexBuffer;
-	CGLES3VertexBuffer* m_pVertexBuffer;
+	CGfxIndexBufferPtr m_ptrIndexBuffer;
+	CGfxVertexBufferPtr m_ptrVertexBuffer;
 	eastl::unordered_map<uint32_t, CGfxMesh::Draw> m_draws;
 
 private:

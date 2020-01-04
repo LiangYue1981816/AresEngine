@@ -4,9 +4,6 @@
 CGLES3Mesh::CGLES3Mesh(CGLES3MeshManager* pManager, uint32_t name)
 	: CGfxMesh(name)
 	, m_pManager(pManager)
-
-	, m_pIndexBuffer(nullptr)
-	, m_pVertexBuffer(nullptr)
 {
 
 }
@@ -33,16 +30,16 @@ CGfxMesh::Draw* CGLES3Mesh::GetDraw(uint32_t name)
 	}
 }
 
-CGfxIndexBuffer* CGLES3Mesh::GetIndexBuffer(void)
+CGfxIndexBufferPtr CGLES3Mesh::GetIndexBufferPtr(void)
 {
-	ASSERT(m_pIndexBuffer);
-	return m_pIndexBuffer;
+	ASSERT(m_ptrIndexBuffer);
+	return m_ptrIndexBuffer;
 }
 
-CGfxVertexBuffer* CGLES3Mesh::GetVertexBuffer(void)
+CGfxVertexBufferPtr CGLES3Mesh::GetVertexBufferPtr(void)
 {
-	ASSERT(m_pVertexBuffer);
-	return m_pVertexBuffer;
+	ASSERT(m_ptrVertexBuffer);
+	return m_ptrVertexBuffer;
 }
 
 bool CGLES3Mesh::CreateDraw(uint32_t name, const glm::aabb& aabb, int baseVertex, int firstIndex, int indexCount)
@@ -56,9 +53,9 @@ bool CGLES3Mesh::CreateDraw(uint32_t name, const glm::aabb& aabb, int baseVertex
 
 bool CGLES3Mesh::CreateIndexBuffer(GfxIndexType type, size_t size, bool bDynamic, const void* data)
 {
-	if (m_pIndexBuffer == nullptr) {
-		m_pIndexBuffer = new CGLES3IndexBuffer(type, size, bDynamic);
-		return m_pIndexBuffer->BufferData(0, size, data);
+	if (m_ptrIndexBuffer == nullptr) {
+		m_ptrIndexBuffer = CGfxIndexBufferPtr(new CGLES3IndexBuffer(type, size, bDynamic));
+		return m_ptrIndexBuffer->BufferData(0, size, data);
 	}
 	else {
 		return false;
@@ -67,9 +64,9 @@ bool CGLES3Mesh::CreateIndexBuffer(GfxIndexType type, size_t size, bool bDynamic
 
 bool CGLES3Mesh::CreateVertexBuffer(uint32_t vertexFormat, int vertexBinding, size_t size, bool bDynamic, const void* data)
 {
-	if (m_pVertexBuffer == nullptr) {
-		m_pVertexBuffer = new CGLES3VertexBuffer(vertexFormat, vertexBinding, size, bDynamic);
-		return m_pVertexBuffer->BufferData(0, size, data);
+	if (m_ptrVertexBuffer == nullptr) {
+		m_ptrVertexBuffer = CGfxVertexBufferPtr(new CGLES3VertexBuffer(vertexFormat, vertexBinding, size, bDynamic));
+		return m_ptrVertexBuffer->BufferData(0, size, data);
 	}
 	else {
 		return false;
@@ -78,15 +75,7 @@ bool CGLES3Mesh::CreateVertexBuffer(uint32_t vertexFormat, int vertexBinding, si
 
 void CGLES3Mesh::Destroy(void)
 {
-	if (m_pIndexBuffer) {
-		delete m_pIndexBuffer;
-	}
-
-	if (m_pVertexBuffer) {
-		delete m_pVertexBuffer;
-	}
-
 	m_draws.clear();
-	m_pIndexBuffer = nullptr;
-	m_pVertexBuffer = nullptr;
+	m_ptrIndexBuffer.Release();
+	m_ptrVertexBuffer.Release();
 }
