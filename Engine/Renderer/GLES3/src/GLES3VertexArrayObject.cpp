@@ -1,6 +1,12 @@
 #include "GLES3Renderer.h"
 
 
+CGLES3VertexArrayObject::CGLES3VertexArrayObject(void)
+	: m_vao(0)
+{
+
+}
+
 CGLES3VertexArrayObject::CGLES3VertexArrayObject(const CGLES3IndexBuffer* pIndexBuffer, const CGLES3VertexBuffer* pVertexBuffer, const CGLES3InstanceBuffer* pInstanceBuffer)
 	: m_vao(0)
 {
@@ -10,6 +16,11 @@ CGLES3VertexArrayObject::CGLES3VertexArrayObject(const CGLES3IndexBuffer* pIndex
 CGLES3VertexArrayObject::~CGLES3VertexArrayObject(void)
 {
 	Destroy();
+}
+
+void CGLES3VertexArrayObject::Release(void)
+{
+	delete this;
 }
 
 bool CGLES3VertexArrayObject::Create(const CGLES3IndexBuffer* pIndexBuffer, const CGLES3VertexBuffer* pVertexBuffer, const CGLES3InstanceBuffer* pInstanceBuffer)
@@ -60,4 +71,48 @@ void CGLES3VertexArrayObject::Bind(void) const
 
 	GLBindVertexArray(m_vao);
 	CHECK_GL_ERROR_ASSERT();
+}
+
+
+CGLES3MultiVertexArrayObject::CGLES3MultiVertexArrayObject(int count)
+	: m_index(0)
+	, m_pVertexArrayObjects(std::max(1, count))
+{
+	for (int index = 0; index < m_pVertexArrayObjects.size(); index++) {
+		m_pVertexArrayObjects[index] = new CGLES3VertexArrayObject;
+	}
+}
+
+CGLES3MultiVertexArrayObject::~CGLES3MultiVertexArrayObject(void)
+{
+	for (auto& itVertexArrayObjects : m_pVertexArrayObjects) {
+		delete itVertexArrayObjects;
+	}
+}
+
+void CGLES3MultiVertexArrayObject::Release(void)
+{
+	delete this;
+}
+
+void CGLES3MultiVertexArrayObject::SetBufferIndex(int index)
+{
+	m_index = index;
+	m_index = std::min(m_index, (int)m_pVertexArrayObjects.size() - 1);
+	m_index = std::max(m_index, 0);
+}
+
+bool CGLES3MultiVertexArrayObject::Create(const CGLES3IndexBuffer* pIndexBuffer, const CGLES3VertexBuffer* pVertexBuffer, const CGLES3InstanceBuffer* pInstanceBuffer)
+{
+	return m_pVertexArrayObjects[m_index]->Create(pIndexBuffer, pVertexBuffer, pInstanceBuffer);
+}
+
+void CGLES3MultiVertexArrayObject::Destroy(void)
+{
+	m_pVertexArrayObjects[m_index]->Destroy();
+}
+
+void CGLES3MultiVertexArrayObject::Bind(void) const
+{
+	m_pVertexArrayObjects[m_index]->Bind();
 }
