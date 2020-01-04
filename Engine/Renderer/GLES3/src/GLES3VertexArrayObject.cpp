@@ -114,7 +114,7 @@ CGLES3VertexArrayObject* CGLES3MultiVertexArrayObject::GetVertexArrayObject(void
 CGLES3VertexArrayObject* CGLES3MultiVertexArrayObject::GetVertexArrayObject(int index) const
 {
 	if (index >= 0 && index < m_pVertexArrayObjects.size()) {
-		return m_pVertexArrayObjects[m_index];
+		return m_pVertexArrayObjects[index];
 	}
 	else {
 		return nullptr;

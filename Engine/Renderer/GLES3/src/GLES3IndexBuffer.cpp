@@ -93,7 +93,7 @@ CGLES3IndexBuffer* CGLES3MultiIndexBuffer::GetBuffer(void) const
 CGLES3IndexBuffer* CGLES3MultiIndexBuffer::GetBuffer(int index) const
 {
 	if (index >= 0 && index < m_pBuffers.size()) {
-		return m_pBuffers[m_index];
+		return m_pBuffers[index];
 	}
 	else {
 		return nullptr;

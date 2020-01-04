@@ -116,8 +116,8 @@ CVKIndirectBuffer* CVKMultiIndirectBuffer::GetBuffer(void) const
 
 CVKIndirectBuffer* CVKMultiIndirectBuffer::GetBuffer(int index) const
 {
-	if (m_index >= 0 && m_index < m_pBuffers.size()) {
-		return m_pBuffers[m_index];
+	if (index >= 0 && index < m_pBuffers.size()) {
+		return m_pBuffers[index];
 	}
 	else {
 		return nullptr;

@@ -113,7 +113,7 @@ CGLES3VertexBuffer* CGLES3MultiVertexBuffer::GetBuffer(void) const
 CGLES3VertexBuffer* CGLES3MultiVertexBuffer::GetBuffer(int index) const
 {
 	if (index >= 0 && index < m_pBuffers.size()) {
-		return m_pBuffers[m_index];
+		return m_pBuffers[index];
 	}
 	else {
 		return nullptr;
