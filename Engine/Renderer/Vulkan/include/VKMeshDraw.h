@@ -52,7 +52,7 @@ private:
 private:
 	CGfxMeshPtr m_ptrMesh;
 	CGfxMesh::Draw* m_pMeshDraw;
-	CVKInstanceBuffer* m_pInstanceBuffer[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
+	CVKMultiInstanceBuffer* m_pMultiInstanceBuffer;
 
 private:
 	RenderCallback m_pRenderCallback;

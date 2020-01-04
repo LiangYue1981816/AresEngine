@@ -52,8 +52,8 @@ private:
 private:
 	CGfxMeshPtr m_ptrMesh;
 	CGfxMesh::Draw* m_pMeshDraw;
-	CGLES3InstanceBuffer* m_pInstanceBuffer[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
-	CGLES3VertexArrayObject* m_pVertexArrayObject[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
+	CGLES3MultiInstanceBuffer* m_pMultiInstanceBuffer;
+	CGLES3MultiVertexArrayObject* m_pMultiVertexArrayObject;
 
 private:
 	RenderCallback m_pRenderCallback;
