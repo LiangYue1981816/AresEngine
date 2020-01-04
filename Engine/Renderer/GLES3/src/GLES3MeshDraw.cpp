@@ -102,26 +102,22 @@ uint32_t CGLES3MeshDraw::GetVertexCount(void) const
 
 uint32_t CGLES3MeshDraw::GetInstanceBinding(void) const
 {
-	m_pMultiInstanceBuffer->SetIndex(GLES3Renderer()->GetSwapChain()->GetFrameIndex());
-	return m_pMultiInstanceBuffer->GetInstanceBinding();
+	return m_pMultiInstanceBuffer->GetBuffer(GLES3Renderer()->GetSwapChain()->GetFrameIndex())->GetInstanceBinding();
 }
 
 uint32_t CGLES3MeshDraw::GetInstanceFormat(void) const
 {
-	m_pMultiInstanceBuffer->SetIndex(GLES3Renderer()->GetSwapChain()->GetFrameIndex());
-	return m_pMultiInstanceBuffer->GetInstanceFormat();
+	return m_pMultiInstanceBuffer->GetBuffer(GLES3Renderer()->GetSwapChain()->GetFrameIndex())->GetInstanceFormat();
 }
 
 uint32_t CGLES3MeshDraw::GetInstanceCount(void) const
 {
-	m_pMultiInstanceBuffer->SetIndex(GLES3Renderer()->GetSwapChain()->GetFrameIndex());
-	return m_pMultiInstanceBuffer->GetInstanceCount();
+	return m_pMultiInstanceBuffer->GetBuffer(GLES3Renderer()->GetSwapChain()->GetFrameIndex())->GetInstanceCount();
 }
 
 bool CGLES3MeshDraw::InstanceBufferData(size_t size, const void* data)
 {
-	CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMultiInstanceBuffer->SetIndex(GLES3Renderer()->GetSwapChain()->GetFrameIndex()));
-	CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMultiInstanceBuffer->BufferData(size, data));
+	CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMultiInstanceBuffer->GetBuffer(GLES3Renderer()->GetSwapChain()->GetFrameIndex())->BufferData(size, data));
 	return true;
 }
 
@@ -140,6 +136,5 @@ void CGLES3MeshDraw::OnRenderCallback(CGfxCommandBufferPtr ptrCommandBuffer) con
 
 void CGLES3MeshDraw::Bind(void) const
 {
-	m_pMultiVertexArrayObject->SetIndex(GLES3Renderer()->GetSwapChain()->GetFrameIndex());
-	m_pMultiVertexArrayObject->Bind();
+	m_pMultiVertexArrayObject->GetVertexArrayObject(GLES3Renderer()->GetSwapChain()->GetFrameIndex())->Bind();
 }

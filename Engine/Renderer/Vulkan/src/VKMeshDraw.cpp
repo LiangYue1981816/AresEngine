@@ -93,26 +93,22 @@ uint32_t CVKMeshDraw::GetVertexCount(void) const
 
 uint32_t CVKMeshDraw::GetInstanceBinding(void) const
 {
-	m_pMultiInstanceBuffer->SetIndex(VKRenderer()->GetSwapChain()->GetFrameIndex());
-	return m_pMultiInstanceBuffer->GetInstanceBinding();
+	return m_pMultiInstanceBuffer->GetBuffer(VKRenderer()->GetSwapChain()->GetFrameIndex())->GetInstanceBinding();
 }
 
 uint32_t CVKMeshDraw::GetInstanceFormat(void) const
 {
-	m_pMultiInstanceBuffer->SetIndex(VKRenderer()->GetSwapChain()->GetFrameIndex());
-	return m_pMultiInstanceBuffer->GetInstanceFormat();
+	return m_pMultiInstanceBuffer->GetBuffer(VKRenderer()->GetSwapChain()->GetFrameIndex())->GetInstanceFormat();
 }
 
 uint32_t CVKMeshDraw::GetInstanceCount(void) const
 {
-	m_pMultiInstanceBuffer->SetIndex(VKRenderer()->GetSwapChain()->GetFrameIndex());
-	return m_pMultiInstanceBuffer->GetInstanceCount();
+	return m_pMultiInstanceBuffer->GetBuffer(VKRenderer()->GetSwapChain()->GetFrameIndex())->GetInstanceCount();
 }
 
 bool CVKMeshDraw::InstanceBufferData(size_t size, const void* data)
 {
-	CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMultiInstanceBuffer->SetIndex(VKRenderer()->GetSwapChain()->GetFrameIndex()))
-	CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMultiInstanceBuffer->BufferData(size, data));
+	CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMultiInstanceBuffer->GetBuffer(VKRenderer()->GetSwapChain()->GetFrameIndex())->BufferData(size, data));
 	return true;
 }
 
@@ -131,6 +127,5 @@ void CVKMeshDraw::OnRenderCallback(CGfxCommandBufferPtr ptrCommandBuffer) const
 
 void CVKMeshDraw::Bind(VkCommandBuffer vkCommandBuffer)
 {
-	m_pMultiInstanceBuffer->SetIndex(VKRenderer()->GetSwapChain()->GetFrameIndex());
-	m_pMultiInstanceBuffer->Bind(vkCommandBuffer);
+	m_pMultiInstanceBuffer->GetBuffer(VKRenderer()->GetSwapChain()->GetFrameIndex())->Bind(vkCommandBuffer);
 }
