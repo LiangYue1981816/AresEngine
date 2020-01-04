@@ -38,7 +38,7 @@ public:
 
 
 public:
-	virtual void SetIndex(int index) = 0;
+	virtual bool SetIndex(int index) = 0;
 
 public:
 	virtual GfxIndexType GetIndexType(void) const = 0;

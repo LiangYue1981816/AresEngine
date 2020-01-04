@@ -33,7 +33,7 @@ public:
 
 
 public:
-	void SetIndex(int index);
+	bool SetIndex(int index);
 
 public:
 	CGLES3VertexArrayObject* GetVertexArrayObject(void) const;

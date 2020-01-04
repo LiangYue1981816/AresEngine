@@ -95,11 +95,15 @@ void CGLES3MultiVertexArrayObject::Release(void)
 	delete this;
 }
 
-void CGLES3MultiVertexArrayObject::SetIndex(int index)
+bool CGLES3MultiVertexArrayObject::SetIndex(int index)
 {
-	m_index = index;
-	m_index = std::min(m_index, (int)m_pVertexArrayObjects.size() - 1);
-	m_index = std::max(m_index, 0);
+	if (index >= 0 && index < m_pVertexArrayObjects.size()) {
+		m_index = index;
+		return true;
+	}
+	else {
+		return false;
+	}
 }
 
 CGLES3VertexArrayObject* CGLES3MultiVertexArrayObject::GetVertexArrayObject(void) const

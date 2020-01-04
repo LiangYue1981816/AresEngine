@@ -98,11 +98,15 @@ void CVKMultiIndirectBuffer::Release(void)
 	delete this;
 }
 
-void CVKMultiIndirectBuffer::SetIndex(int index)
+bool CVKMultiIndirectBuffer::SetIndex(int index)
 {
-	m_index = index;
-	m_index = std::min(m_index, (int)m_pBuffers.size() - 1);
-	m_index = std::max(m_index, 0);
+	if (index >= 0 && index < m_pBuffers.size()) {
+		m_index = index;
+		return true;
+	}
+	else {
+		return false;
+	}
 }
 
 CVKIndirectBuffer* CVKMultiIndirectBuffer::GetBuffer(void) const
