@@ -47,7 +47,7 @@ public:
 	void SetIndex(int index);
 
 public:
-	CVKInstanceBuffer* GetBuffer(void) const;
+	CVKIndirectBuffer* GetBuffer(void) const;
 
 public:
 	uint32_t GetDrawCommandCount(void) const;

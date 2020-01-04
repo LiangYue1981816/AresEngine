@@ -105,7 +105,7 @@ void CVKMultiIndirectBuffer::SetIndex(int index)
 	m_index = std::max(m_index, 0);
 }
 
-CVKInstanceBuffer* CVKMultiIndirectBuffer::GetBuffer(void) const
+CVKIndirectBuffer* CVKMultiIndirectBuffer::GetBuffer(void) const
 {
 	return m_pBuffers[m_index];
 }
