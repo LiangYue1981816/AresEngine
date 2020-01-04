@@ -54,7 +54,7 @@ glm::aabb CVKMeshDraw::GetAABB(void) const
 
 uint32_t CVKMeshDraw::GetIndexType(void) const
 {
-	return m_ptrMesh->GetIndexBuffer()->GetIndexType();
+	return m_ptrMesh->GetIndexBufferPtr()->GetIndexType();
 }
 
 uint32_t CVKMeshDraw::GetIndexCount(void) const
@@ -78,17 +78,17 @@ uint32_t CVKMeshDraw::GetIndexOffset(void) const
 
 uint32_t CVKMeshDraw::GetVertexBinding(void) const
 {
-	return m_ptrMesh->GetVertexBuffer()->GetVertexBinding();
+	return m_ptrMesh->GetVertexBufferPtr()->GetVertexBinding();
 }
 
 uint32_t CVKMeshDraw::GetVertexFormat(void) const
 {
-	return m_ptrMesh->GetVertexBuffer()->GetVertexFormat();
+	return m_ptrMesh->GetVertexBufferPtr()->GetVertexFormat();
 }
 
 uint32_t CVKMeshDraw::GetVertexCount(void) const
 {
-	return m_ptrMesh->GetVertexBuffer()->GetVertexCount();
+	return m_ptrMesh->GetVertexBufferPtr()->GetVertexCount();
 }
 
 uint32_t CVKMeshDraw::GetInstanceBinding(void) const

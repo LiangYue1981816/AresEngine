@@ -24,8 +24,8 @@ CGLES3MeshDraw::CGLES3MeshDraw(CGLES3MeshDrawManager* pManager, uint32_t name, c
 
 	for (int index = 0; index < CGfxSwapChain::SWAPCHAIN_FRAME_COUNT; index++) {
 		m_pMultiVertexArrayObject->GetVertexArrayObject(index)->Create(
-			(const CGLES3IndexBuffer*)m_ptrMesh->GetIndexBuffer(), 
-			(const CGLES3VertexBuffer*)m_ptrMesh->GetVertexBuffer(), 
+			(const CGLES3IndexBuffer*)m_ptrMesh->GetIndexBufferPtr().GetPointer(), 
+			(const CGLES3VertexBuffer*)m_ptrMesh->GetVertexBufferPtr().GetPointer(), 
 			(const CGLES3InstanceBuffer*)m_pMultiInstanceBuffer->GetBuffer(index));
 	}
 }
@@ -63,7 +63,7 @@ glm::aabb CGLES3MeshDraw::GetAABB(void) const
 
 uint32_t CGLES3MeshDraw::GetIndexType(void) const
 {
-	return m_ptrMesh->GetIndexBuffer()->GetIndexType();
+	return m_ptrMesh->GetIndexBufferPtr()->GetIndexType();
 }
 
 uint32_t CGLES3MeshDraw::GetIndexCount(void) const
@@ -87,17 +87,17 @@ uint32_t CGLES3MeshDraw::GetIndexOffset(void) const
 
 uint32_t CGLES3MeshDraw::GetVertexBinding(void) const
 {
-	return m_ptrMesh->GetVertexBuffer()->GetVertexBinding();
+	return m_ptrMesh->GetVertexBufferPtr()->GetVertexBinding();
 }
 
 uint32_t CGLES3MeshDraw::GetVertexFormat(void) const
 {
-	return m_ptrMesh->GetVertexBuffer()->GetVertexFormat();
+	return m_ptrMesh->GetVertexBufferPtr()->GetVertexFormat();
 }
 
 uint32_t CGLES3MeshDraw::GetVertexCount(void) const
 {
-	return m_ptrMesh->GetVertexBuffer()->GetVertexCount();
+	return m_ptrMesh->GetVertexBufferPtr()->GetVertexCount();
 }
 
 uint32_t CGLES3MeshDraw::GetInstanceBinding(void) const
