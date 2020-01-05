@@ -9,17 +9,15 @@ CVKVertexBuffer::CVKVertexBuffer(CVKDevice* pDevice, uint32_t vertexFormat, int 
 	, m_binding(vertexBinding)
 	, m_format(vertexFormat)
 	, m_count(size / GetVertexStride(vertexFormat))
-	, m_size(0)
 {
-	m_size = size;
-	m_size = ALIGN_BYTE(m_size, m_pDevice->GetPhysicalDeviceLimits().nonCoherentAtomSize);
+	size = ALIGN_BYTE(size, m_pDevice->GetPhysicalDeviceLimits().nonCoherentAtomSize);
 
 	if (bDynamic) {
-		m_pBuffer = new CVKBuffer(m_pDevice, m_size, VK_BUFFER_USAGE_VERTEX_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT);
+		m_pBuffer = new CVKBuffer(m_pDevice, size, VK_BUFFER_USAGE_VERTEX_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT);
 		CGfxProfiler::IncVertexBufferSize(m_pBuffer->GetMemorySize());
 	}
 	else {
-		m_pBuffer = new CVKBuffer(m_pDevice, m_size, VK_BUFFER_USAGE_VERTEX_BUFFER_BIT | VK_BUFFER_USAGE_TRANSFER_DST_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT);
+		m_pBuffer = new CVKBuffer(m_pDevice, size, VK_BUFFER_USAGE_VERTEX_BUFFER_BIT | VK_BUFFER_USAGE_TRANSFER_DST_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT);
 		CGfxProfiler::IncVertexBufferSize(m_pBuffer->GetMemorySize());
 	}
 }
@@ -52,7 +50,7 @@ uint32_t CVKVertexBuffer::GetVertexCount(void) const
 
 uint32_t CVKVertexBuffer::GetSize(void) const
 {
-	return m_size;
+	return m_pBuffer->GetSize();
 }
 
 bool CVKVertexBuffer::BufferData(size_t offset, size_t size, const void* data)

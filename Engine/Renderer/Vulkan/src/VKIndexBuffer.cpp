@@ -7,17 +7,15 @@ CVKIndexBuffer::CVKIndexBuffer(CVKDevice* pDevice, GfxIndexType type, size_t siz
 	, m_pBuffer(nullptr)
 
 	, m_type(type)
-	, m_size(0)
 {
-	m_size = size;
-	m_size = ALIGN_BYTE(m_size, m_pDevice->GetPhysicalDeviceLimits().nonCoherentAtomSize);
+	size = ALIGN_BYTE(size, m_pDevice->GetPhysicalDeviceLimits().nonCoherentAtomSize);
 
 	if (bDynamic) {
-		m_pBuffer = new CVKBuffer(m_pDevice, m_size, VK_BUFFER_USAGE_INDEX_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT);
+		m_pBuffer = new CVKBuffer(m_pDevice, size, VK_BUFFER_USAGE_INDEX_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT);
 		CGfxProfiler::IncIndexBufferSize(m_pBuffer->GetMemorySize());
 	}
 	else {
-		m_pBuffer = new CVKBuffer(m_pDevice, m_size, VK_BUFFER_USAGE_INDEX_BUFFER_BIT | VK_BUFFER_USAGE_TRANSFER_DST_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT);
+		m_pBuffer = new CVKBuffer(m_pDevice, size, VK_BUFFER_USAGE_INDEX_BUFFER_BIT | VK_BUFFER_USAGE_TRANSFER_DST_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT);
 		CGfxProfiler::IncIndexBufferSize(m_pBuffer->GetMemorySize());
 	}
 }
@@ -41,15 +39,15 @@ GfxIndexType CVKIndexBuffer::GetIndexType(void) const
 uint32_t CVKIndexBuffer::GetIndexCount(void) const
 {
 	switch (m_type) {
-	case GFX_INDEX_UNSIGNED_SHORT: return m_size / 2;
-	case GFX_INDEX_UNSIGNED_INT:   return m_size / 4;
+	case GFX_INDEX_UNSIGNED_SHORT: return m_pBuffer->GetSize() / 2;
+	case GFX_INDEX_UNSIGNED_INT:   return m_pBuffer->GetSize() / 4;
 	default:                       return 0;
 	}
 }
 
 uint32_t CVKIndexBuffer::GetSize(void) const
 {
-	return m_size;
+	return m_pBuffer->GetSize();
 }
 
 bool CVKIndexBuffer::BufferData(size_t offset, size_t size, const void* data)

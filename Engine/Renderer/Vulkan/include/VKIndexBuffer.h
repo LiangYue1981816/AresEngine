@@ -24,7 +24,6 @@ public:
 
 private:
 	GfxIndexType m_type;
-	uint32_t m_size;
 
 private:
 	CVKBuffer* m_pBuffer;
