@@ -5,17 +5,13 @@ CGLES3StorageBuffer::CGLES3StorageBuffer(CGLES3StorageBufferManager* pManager, s
 	: CGfxStorageBuffer(size)
 	, m_pManager(pManager)
 	, m_pBuffer(nullptr)
-
-	, m_size(0)
-	, m_offset(0)
 {
 	GLint minOffsetAlign;
 	glGetIntegerv(GL_SHADER_STORAGE_BUFFER_OFFSET_ALIGNMENT, &minOffsetAlign);
 
-	m_size = size;
-	m_size = ALIGN_BYTE(m_size, minOffsetAlign);
+	size = ALIGN_BYTE(size, minOffsetAlign);
 
-	m_pBuffer = new CGLES3Buffer(GL_SHADER_STORAGE_BUFFER, m_size * CGfxSwapChain::SWAPCHAIN_FRAME_COUNT, true);
+	m_pBuffer = new CGLES3Buffer(GL_SHADER_STORAGE_BUFFER, size, true);
 	CGfxProfiler::IncStorageBufferSize(m_pBuffer->GetSize());
 }
 
@@ -32,21 +28,15 @@ void CGLES3StorageBuffer::Release(void)
 
 uint32_t CGLES3StorageBuffer::GetSize(void) const
 {
-	return m_size;
-}
-
-uint32_t CGLES3StorageBuffer::GetOffset(void) const
-{
-	return m_offset;
+	return m_pBuffer->GetSize();
 }
 
 bool CGLES3StorageBuffer::BufferData(size_t offset, size_t size, const void* data)
 {
-	m_offset = m_size * GLES3Renderer()->GetSwapChain()->GetFrameIndex();
-	return m_pBuffer->BufferData(m_offset + offset, size, data, false);
+	return m_pBuffer->BufferData(offset, size, data, false);
 }
 
 void CGLES3StorageBuffer::Bind(int binding, int offset, int size) const
 {
-	m_pBuffer->Bind(binding, m_offset + offset, size);
+	m_pBuffer->Bind(binding, offset, size);
 }

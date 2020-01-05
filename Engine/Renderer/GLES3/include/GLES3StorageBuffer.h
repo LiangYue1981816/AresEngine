@@ -15,7 +15,6 @@ private:
 
 public:
 	uint32_t GetSize(void) const;
-	uint32_t GetOffset(void) const;
 
 public:
 	bool BufferData(size_t offset, size_t size, const void* data);
@@ -23,10 +22,6 @@ public:
 public:
 	void Bind(int binding, int offset, int size) const;
 
-
-private:
-	uint32_t m_size;
-	uint32_t m_offset;
 
 private:
 	CGLES3Buffer* m_pBuffer;
