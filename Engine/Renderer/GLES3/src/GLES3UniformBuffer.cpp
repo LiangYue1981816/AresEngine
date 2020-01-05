@@ -9,8 +9,11 @@ CGLES3UniformBuffer::CGLES3UniformBuffer(CGLES3UniformBufferManager* pManager, s
 	, m_size(0)
 	, m_offset(0)
 {
+	GLint minOffsetAlign;
+	glGetIntegerv(GL_UNIFORM_BUFFER_OFFSET_ALIGNMENT, &minOffsetAlign);
+
 	m_size = size;
-	m_size = ALIGN_BYTE(m_size, 16);
+	m_size = ALIGN_BYTE(m_size, minOffsetAlign);
 
 	m_pBuffer = new CGLES3Buffer(GL_UNIFORM_BUFFER, m_size * CGfxSwapChain::SWAPCHAIN_FRAME_COUNT, true);
 	CGfxProfiler::IncUniformBufferSize(m_pBuffer->GetSize());

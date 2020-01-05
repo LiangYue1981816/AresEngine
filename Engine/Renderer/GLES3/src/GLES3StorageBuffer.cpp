@@ -9,8 +9,11 @@ CGLES3StorageBuffer::CGLES3StorageBuffer(CGLES3StorageBufferManager* pManager, s
 	, m_size(0)
 	, m_offset(0)
 {
+	GLint minOffsetAlign;
+	glGetIntegerv(GL_SHADER_STORAGE_BUFFER_OFFSET_ALIGNMENT, &minOffsetAlign);
+
 	m_size = size;
-	m_size = ALIGN_BYTE(m_size, 256);
+	m_size = ALIGN_BYTE(m_size, minOffsetAlign);
 
 	m_pBuffer = new CGLES3Buffer(GL_SHADER_STORAGE_BUFFER, m_size * CGfxSwapChain::SWAPCHAIN_FRAME_COUNT, true);
 	CGfxProfiler::IncStorageBufferSize(m_pBuffer->GetSize());
