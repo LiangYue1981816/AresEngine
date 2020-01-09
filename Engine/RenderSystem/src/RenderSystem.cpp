@@ -54,9 +54,13 @@ CRenderSystem::CRenderSystem(GfxApi api, void* hInstance, void* hWnd, void* hDC,
 		break;
 	}
 
-	m_ptrCommandBuffer[0] = GfxRenderer()->NewCommandBuffer(0, true);
-	m_ptrCommandBuffer[1] = GfxRenderer()->NewCommandBuffer(0, true);
-	m_ptrCommandBuffer[2] = GfxRenderer()->NewCommandBuffer(0, true);
+	m_ptrComputeCommandBuffer[0] = GfxRenderer()->NewCommandBuffer(0, true);
+	m_ptrComputeCommandBuffer[1] = GfxRenderer()->NewCommandBuffer(0, true);
+	m_ptrComputeCommandBuffer[2] = GfxRenderer()->NewCommandBuffer(0, true);
+
+	m_ptrGraphicCommandBuffer[0] = GfxRenderer()->NewCommandBuffer(0, true);
+	m_ptrGraphicCommandBuffer[1] = GfxRenderer()->NewCommandBuffer(0, true);
+	m_ptrGraphicCommandBuffer[2] = GfxRenderer()->NewCommandBuffer(0, true);
 
 	Settings()->SetValue("RenderSystem.Shadow.Factor", 1.0f);
 	Settings()->SetValue("RenderSystem.SSAO.SampleCount", 8.0f);
@@ -69,9 +73,13 @@ CRenderSystem::CRenderSystem(GfxApi api, void* hInstance, void* hWnd, void* hDC,
 
 CRenderSystem::~CRenderSystem(void)
 {
-	m_ptrCommandBuffer[0].Release();
-	m_ptrCommandBuffer[1].Release();
-	m_ptrCommandBuffer[2].Release();
+	m_ptrComputeCommandBuffer[0].Release();
+	m_ptrComputeCommandBuffer[1].Release();
+	m_ptrComputeCommandBuffer[2].Release();
+
+	m_ptrGraphicCommandBuffer[0].Release();
+	m_ptrGraphicCommandBuffer[1].Release();
+	m_ptrGraphicCommandBuffer[2].Release();
 
 	delete m_pEngineUniform;
 	delete m_pGPUScene;
@@ -316,20 +324,34 @@ void CRenderSystem::UpdateCamera(CTaskGraph& taskGraph, CCamera* pCamera) const
 	pCamera->Update(taskGraph);
 }
 
+void CRenderSystem::UpdateGPUScene(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer) const
+{
+	m_pGPUScene->Update(taskGraph, ptrCommandBuffer);
+}
+
 void CRenderSystem::RenderDefault(CTaskGraph& taskGraph, CCamera* pCamera, bool bPresent) const
 {
 	const CGfxSemaphore* pWaitSemaphore = GfxRenderer()->GetSwapChain()->GetAcquireSemaphore();
-	const CGfxCommandBufferPtr ptrCommandBuffer = m_ptrCommandBuffer[GfxRenderer()->GetSwapChain()->GetFrameIndex()];
+	const CGfxCommandBufferPtr ptrComputeCommandBuffer = m_ptrComputeCommandBuffer[GfxRenderer()->GetSwapChain()->GetFrameIndex()];
+	const CGfxCommandBufferPtr ptrGraphicCommandBuffer = m_ptrGraphicCommandBuffer[GfxRenderer()->GetSwapChain()->GetFrameIndex()];
 
 	GfxRenderer()->AcquireNextFrame();
-	GfxRenderer()->BeginRecord(ptrCommandBuffer);
 	{
-		m_pGPUScene->Update(taskGraph, ptrCommandBuffer);
-		RenderDefault(taskGraph, pCamera, bPresent, ptrCommandBuffer);
+		GfxRenderer()->BeginRecord(ptrComputeCommandBuffer);
+		{
+			UpdateGPUScene(taskGraph, ptrComputeCommandBuffer);
+		}
+		GfxRenderer()->EndRecord(ptrComputeCommandBuffer);
+		GfxRenderer()->Submit(ptrComputeCommandBuffer, pWaitSemaphore);
+
+		GfxRenderer()->BeginRecord(ptrGraphicCommandBuffer);
+		{
+			RenderDefault(taskGraph, pCamera, bPresent, ptrGraphicCommandBuffer);
+		}
+		GfxRenderer()->EndRecord(ptrGraphicCommandBuffer);
+		GfxRenderer()->Submit(ptrGraphicCommandBuffer, ptrComputeCommandBuffer->GetSemaphore());
 	}
-	GfxRenderer()->EndRecord(ptrCommandBuffer);
-	GfxRenderer()->Submit(ptrCommandBuffer, pWaitSemaphore);
-	GfxRenderer()->Present(ptrCommandBuffer->GetSemaphore());
+	GfxRenderer()->Present(ptrGraphicCommandBuffer->GetSemaphore());
 }
 
 void CRenderSystem::RenderDefault(CTaskGraph& taskGraph, CCamera* pCamera, bool bPresent, CGfxCommandBufferPtr ptrCommandBuffer) const
@@ -360,17 +382,26 @@ void CRenderSystem::RenderDefault(CTaskGraph& taskGraph, CCamera* pCamera, bool 
 void CRenderSystem::RenderForwardLighting(CTaskGraph& taskGraph, CCamera* pCamera, bool bPresent) const
 {
 	const CGfxSemaphore* pWaitSemaphore = GfxRenderer()->GetSwapChain()->GetAcquireSemaphore();
-	const CGfxCommandBufferPtr ptrCommandBuffer = m_ptrCommandBuffer[GfxRenderer()->GetSwapChain()->GetFrameIndex()];
+	const CGfxCommandBufferPtr ptrComputeCommandBuffer = m_ptrComputeCommandBuffer[GfxRenderer()->GetSwapChain()->GetFrameIndex()];
+	const CGfxCommandBufferPtr ptrGraphicCommandBuffer = m_ptrGraphicCommandBuffer[GfxRenderer()->GetSwapChain()->GetFrameIndex()];
 
 	GfxRenderer()->AcquireNextFrame();
-	GfxRenderer()->BeginRecord(ptrCommandBuffer);
 	{
-		m_pGPUScene->Update(taskGraph, ptrCommandBuffer);
-		RenderForwardLighting(taskGraph, pCamera, bPresent, ptrCommandBuffer);
+		GfxRenderer()->BeginRecord(ptrComputeCommandBuffer);
+		{
+			UpdateGPUScene(taskGraph, ptrComputeCommandBuffer);
+		}
+		GfxRenderer()->EndRecord(ptrComputeCommandBuffer);
+		GfxRenderer()->Submit(ptrComputeCommandBuffer, pWaitSemaphore);
+
+		GfxRenderer()->BeginRecord(ptrGraphicCommandBuffer);
+		{
+			RenderForwardLighting(taskGraph, pCamera, bPresent, ptrGraphicCommandBuffer);
+		}
+		GfxRenderer()->EndRecord(ptrGraphicCommandBuffer);
+		GfxRenderer()->Submit(ptrGraphicCommandBuffer, ptrComputeCommandBuffer->GetSemaphore());
 	}
-	GfxRenderer()->EndRecord(ptrCommandBuffer);
-	GfxRenderer()->Submit(ptrCommandBuffer, pWaitSemaphore);
-	GfxRenderer()->Present(ptrCommandBuffer->GetSemaphore());
+	GfxRenderer()->Present(ptrGraphicCommandBuffer->GetSemaphore());
 }
 
 void CRenderSystem::RenderForwardLighting(CTaskGraph& taskGraph, CCamera* pCamera, bool bPresent, CGfxCommandBufferPtr ptrCommandBuffer) const

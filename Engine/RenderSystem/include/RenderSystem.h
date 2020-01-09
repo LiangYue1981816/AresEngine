@@ -184,6 +184,8 @@ private:
 	void UpdateCamera(CTaskGraph& taskGraph, CCamera* pCamera) const;
 
 private:
+	void UpdateGPUScene(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer) const;
+
 	void RenderDefault(CTaskGraph& taskGraph, CCamera* pCamera, bool bPresent) const;
 	void RenderDefault(CTaskGraph& taskGraph, CCamera* pCamera, bool bPresent, CGfxCommandBufferPtr ptrCommandBuffer) const;
 
@@ -215,5 +217,6 @@ private:
 	eastl::unordered_map<uint32_t, CGfxRenderTexturePtr> m_ptrRenderTextures;
 
 private:
-	CGfxCommandBufferPtr m_ptrCommandBuffer[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
+	CGfxCommandBufferPtr m_ptrComputeCommandBuffer[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
+	CGfxCommandBufferPtr m_ptrGraphicCommandBuffer[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
 };
