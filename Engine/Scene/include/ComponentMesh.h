@@ -11,9 +11,10 @@ public:
 
 
 public:
-	void SetMaterial(const CGfxMaterialPtr ptrMaterial);
-	void SetMeshDraw(const CGfxMeshPtr ptrMesh, uint32_t nameDraw, uint32_t instanceFormat, int instanceBinding, uint32_t nameAlias = INVALID_HASHNAME);
-	void SetMask(uint32_t mask);
+	void SetScreenSize(int indexLOD, float size);
+	void SetMaterial(int indexLOD, const CGfxMaterialPtr ptrMaterial);
+	void SetMeshDraw(int indexLOD, const CGfxMeshPtr ptrMesh, uint32_t nameDraw, uint32_t instanceFormat, int instanceBinding, uint32_t nameAlias = INVALID_HASHNAME);
+	void SetMask(int indexLOD, uint32_t mask);
 
 public:
 	virtual void TaskUpdate(float gameTime, float deltaTime);

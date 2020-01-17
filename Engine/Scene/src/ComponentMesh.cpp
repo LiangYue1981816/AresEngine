@@ -27,12 +27,17 @@ CComponentMesh::~CComponentMesh(void)
 	RenderSystem()->RemoveInstance(m_indexInstance);
 }
 
-void CComponentMesh::SetMaterial(const CGfxMaterialPtr ptrMaterial)
+void CComponentMesh::SetScreenSize(int indexLOD, float size)
+{
+
+}
+
+void CComponentMesh::SetMaterial(int indexLOD, const CGfxMaterialPtr ptrMaterial)
 {
 	m_ptrMaterial = ptrMaterial;
 }
 
-void CComponentMesh::SetMeshDraw(const CGfxMeshPtr ptrMesh, uint32_t nameDraw, uint32_t instanceFormat, int instanceBinding, uint32_t nameAlias)
+void CComponentMesh::SetMeshDraw(int indexLOD, const CGfxMeshPtr ptrMesh, uint32_t nameDraw, uint32_t instanceFormat, int instanceBinding, uint32_t nameAlias)
 {
 	if (nameAlias == INVALID_HASHNAME) {
 		m_ptrMeshDraw = GfxRenderer()->NewMeshDraw(HashValueFormat("%x_%x", ptrMesh->GetName(), nameDraw), ptrMesh, nameDraw, instanceFormat, instanceBinding);
@@ -42,7 +47,7 @@ void CComponentMesh::SetMeshDraw(const CGfxMeshPtr ptrMesh, uint32_t nameDraw, u
 	}
 }
 
-void CComponentMesh::SetMask(uint32_t mask)
+void CComponentMesh::SetMask(int indexLOD, uint32_t mask)
 {
 	if (m_ptrMeshDraw) {
 		m_ptrMeshDraw->SetMask(mask);
