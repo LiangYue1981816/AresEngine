@@ -6,6 +6,9 @@ CComponentMesh::CComponentMesh(uint32_t name)
 	, m_indexInstance(INVALID_VALUE)
 	, m_bUpdateInstanceData{ false }
 	, m_bNeedUpdateInstanceData{ false }
+
+	, m_indexLOD{ 0 }
+	, m_factor{ 0.0f }
 {
 	m_indexInstance = RenderSystem()->AddInstance();
 }
@@ -15,11 +18,17 @@ CComponentMesh::CComponentMesh(const CComponentMesh& component)
 	, m_indexInstance(INVALID_VALUE)
 	, m_bUpdateInstanceData{ false }
 	, m_bNeedUpdateInstanceData{ false }
+
+	, m_indexLOD{ 0 }
+	, m_factor{ 0.0f }
 {
 	m_indexInstance = RenderSystem()->AddInstance();
 
-	m_ptrMaterial = component.m_ptrMaterial;
-	m_ptrMeshDraw = component.m_ptrMeshDraw;
+	for (int index = 0; index < MAX_LOD_COUNT; index++) {
+		m_factor[index] = component.m_factor[index];
+		m_ptrMaterial[index] = component.m_ptrMaterial[index];
+		m_ptrMeshDraw[index] = component.m_ptrMeshDraw[index];
+	}
 }
 
 CComponentMesh::~CComponentMesh(void)
@@ -27,37 +36,37 @@ CComponentMesh::~CComponentMesh(void)
 	RenderSystem()->RemoveInstance(m_indexInstance);
 }
 
-void CComponentMesh::SetScreenSize(int indexLOD, float size)
+void CComponentMesh::SetScreenFactor(int indexLOD, float factor)
 {
-
+	m_factor[indexLOD] = factor;
 }
 
 void CComponentMesh::SetMaterial(int indexLOD, const CGfxMaterialPtr ptrMaterial)
 {
-	m_ptrMaterial = ptrMaterial;
+	m_ptrMaterial[indexLOD] = ptrMaterial;
 }
 
 void CComponentMesh::SetMeshDraw(int indexLOD, const CGfxMeshPtr ptrMesh, uint32_t nameDraw, uint32_t instanceFormat, int instanceBinding, uint32_t nameAlias)
 {
 	if (nameAlias == INVALID_HASHNAME) {
-		m_ptrMeshDraw = GfxRenderer()->NewMeshDraw(HashValueFormat("%x_%x", ptrMesh->GetName(), nameDraw), ptrMesh, nameDraw, instanceFormat, instanceBinding);
+		m_ptrMeshDraw[indexLOD] = GfxRenderer()->NewMeshDraw(HashValueFormat("%x_%x", ptrMesh->GetName(), nameDraw), ptrMesh, nameDraw, instanceFormat, instanceBinding);
 	}
 	else {
-		m_ptrMeshDraw = GfxRenderer()->NewMeshDraw(HashValueFormat("%x_%x", ptrMesh->GetName(), nameAlias), ptrMesh, nameDraw, instanceFormat, instanceBinding);
+		m_ptrMeshDraw[indexLOD] = GfxRenderer()->NewMeshDraw(HashValueFormat("%x_%x", ptrMesh->GetName(), nameAlias), ptrMesh, nameDraw, instanceFormat, instanceBinding);
 	}
 }
 
 void CComponentMesh::SetMask(int indexLOD, uint32_t mask)
 {
-	if (m_ptrMeshDraw) {
-		m_ptrMeshDraw->SetMask(mask);
+	if (m_ptrMeshDraw[indexLOD]) {
+		m_ptrMeshDraw[indexLOD]->SetMask(mask);
 	}
 }
 
 void CComponentMesh::TaskUpdate(float gameTime, float deltaTime)
 {
 	int indexFrame = Engine()->GetFrameCount() % 2;
-
+	/*
 	if (m_ptrMeshDraw) {
 		if (m_pParentNode && m_pParentNode->IsActive()) {
 			if (m_bUpdateInstanceData[indexFrame] == false || m_pParentNode->UpdateTransform()) {
@@ -68,12 +77,13 @@ void CComponentMesh::TaskUpdate(float gameTime, float deltaTime)
 			}
 		}
 	}
+	*/
 }
 
 void CComponentMesh::TaskUpdateCamera(CGfxCamera* pCamera, CRenderQueue* pRenderQueue, uint32_t mask, int indexThread)
 {
 	int indexFrame = 1 - Engine()->GetFrameCount() % 2;
-
+	/*
 	if (m_ptrMeshDraw) {
 		if (m_ptrMeshDraw->GetMask() & mask) {
 			if (m_pParentNode && m_pParentNode->IsActive()) {
@@ -90,6 +100,7 @@ void CComponentMesh::TaskUpdateCamera(CGfxCamera* pCamera, CRenderQueue* pRender
 			}
 		}
 	}
+	*/
 }
 
 int CComponentMesh::ComputeLOD(void) const

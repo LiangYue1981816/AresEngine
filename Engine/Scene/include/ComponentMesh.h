@@ -11,7 +11,7 @@ public:
 
 
 public:
-	void SetScreenSize(int indexLOD, float size);
+	void SetScreenFactor(int indexLOD, float factor);
 	void SetMaterial(int indexLOD, const CGfxMaterialPtr ptrMaterial);
 	void SetMeshDraw(int indexLOD, const CGfxMeshPtr ptrMesh, uint32_t nameDraw, uint32_t instanceFormat, int instanceBinding, uint32_t nameAlias = INVALID_HASHNAME);
 	void SetMask(int indexLOD, uint32_t mask);
@@ -31,8 +31,12 @@ private:
 	CGPUScene::InstanceData m_instanceData[2];
 
 private:
-	CGfxMaterialPtr m_ptrMaterial;
-	CGfxMeshDrawPtr m_ptrMeshDraw;
+	static const int MAX_LOD_COUNT = 8;
+
+	int m_indexLOD[2];
+	float m_factor[MAX_LOD_COUNT];
+	CGfxMaterialPtr m_ptrMaterial[MAX_LOD_COUNT];
+	CGfxMeshDrawPtr m_ptrMeshDraw[MAX_LOD_COUNT];
 };
 
 typedef CComponentPtr<CComponentMesh> CComponentMeshPtr;
