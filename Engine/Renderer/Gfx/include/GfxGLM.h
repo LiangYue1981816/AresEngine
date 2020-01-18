@@ -253,6 +253,11 @@ namespace glm {
 			return true;
 		}
 
+		vec3 size(void) const
+		{
+			return maxVertex - minVertex;
+		}
+
 	public:
 		vec3 center;
 		vec3 minVertex;
