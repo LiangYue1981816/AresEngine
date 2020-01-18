@@ -7,8 +7,7 @@ CComponentMesh::CComponentMesh(uint32_t name)
 	, m_bNeedUpdateInstanceData{ false }
 	, m_bForceUpdateInstanceData{ true, true }
 
-	, m_indexLOD{ 0 }
-	, m_factor{ 0.0f }
+	, m_LODIndex{ 0 }
 {
 	m_indexInstance = RenderSystem()->AddInstance();
 }
@@ -19,15 +18,14 @@ CComponentMesh::CComponentMesh(const CComponentMesh& component)
 	, m_bNeedUpdateInstanceData{ false }
 	, m_bForceUpdateInstanceData{ true, true }
 
-	, m_indexLOD{ 0 }
-	, m_factor{ 0.0f }
+	, m_LODIndex{ 0 }
 {
 	m_indexInstance = RenderSystem()->AddInstance();
 
 	for (int index = 0; index < MAX_LOD_COUNT; index++) {
-		m_factor[index] = component.m_factor[index];
-		m_ptrMaterial[index] = component.m_ptrMaterial[index];
-		m_ptrMeshDraw[index] = component.m_ptrMeshDraw[index];
+		m_LODMeshDraws[index].factor = component.m_LODMeshDraws[index].factor;
+		m_LODMeshDraws[index].ptrMaterial = component.m_LODMeshDraws[index].ptrMaterial;
+		m_LODMeshDraws[index].ptrMeshDraw = component.m_LODMeshDraws[index].ptrMeshDraw;
 	}
 }
 
@@ -38,28 +36,28 @@ CComponentMesh::~CComponentMesh(void)
 
 void CComponentMesh::SetScreenFactor(int indexLOD, float factor)
 {
-	m_factor[indexLOD] = factor;
+	m_LODMeshDraws[indexLOD].factor = factor;
 }
 
 void CComponentMesh::SetMaterial(int indexLOD, const CGfxMaterialPtr ptrMaterial)
 {
-	m_ptrMaterial[indexLOD] = ptrMaterial;
+	m_LODMeshDraws[indexLOD].ptrMaterial = ptrMaterial;
 }
 
 void CComponentMesh::SetMeshDraw(int indexLOD, const CGfxMeshPtr ptrMesh, uint32_t nameDraw, uint32_t instanceFormat, int instanceBinding, uint32_t nameAlias)
 {
 	if (nameAlias == INVALID_HASHNAME) {
-		m_ptrMeshDraw[indexLOD] = GfxRenderer()->NewMeshDraw(HashValueFormat("%x_%x", ptrMesh->GetName(), nameDraw), ptrMesh, nameDraw, instanceFormat, instanceBinding);
+		m_LODMeshDraws[indexLOD].ptrMeshDraw = GfxRenderer()->NewMeshDraw(HashValueFormat("%x_%x", ptrMesh->GetName(), nameDraw), ptrMesh, nameDraw, instanceFormat, instanceBinding);
 	}
 	else {
-		m_ptrMeshDraw[indexLOD] = GfxRenderer()->NewMeshDraw(HashValueFormat("%x_%x", ptrMesh->GetName(), nameAlias), ptrMesh, nameDraw, instanceFormat, instanceBinding);
+		m_LODMeshDraws[indexLOD].ptrMeshDraw = GfxRenderer()->NewMeshDraw(HashValueFormat("%x_%x", ptrMesh->GetName(), nameAlias), ptrMesh, nameDraw, instanceFormat, instanceBinding);
 	}
 }
 
 void CComponentMesh::SetMask(int indexLOD, uint32_t mask)
 {
-	if (m_ptrMeshDraw[indexLOD]) {
-		m_ptrMeshDraw[indexLOD]->SetMask(mask);
+	if (m_LODMeshDraws[indexLOD].ptrMeshDraw) {
+		m_LODMeshDraws[indexLOD].ptrMeshDraw->SetMask(mask);
 	}
 }
 

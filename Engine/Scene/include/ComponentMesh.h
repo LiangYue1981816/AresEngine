@@ -33,10 +33,14 @@ private:
 private:
 	static const int MAX_LOD_COUNT = 8;
 
-	int m_indexLOD[2];
-	float m_factor[MAX_LOD_COUNT];
-	CGfxMaterialPtr m_ptrMaterial[MAX_LOD_COUNT];
-	CGfxMeshDrawPtr m_ptrMeshDraw[MAX_LOD_COUNT];
+	struct LODMeshDraw {
+		float factor;
+		CGfxMaterialPtr ptrMaterial;
+		CGfxMeshDrawPtr ptrMeshDraw;
+	};
+
+	int m_LODIndex[2];
+	LODMeshDraw m_LODMeshDraws[MAX_LOD_COUNT];
 };
 
 typedef CComponentPtr<CComponentMesh> CComponentMeshPtr;
