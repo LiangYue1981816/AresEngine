@@ -7,7 +7,7 @@ CComponentMesh::CComponentMesh(uint32_t name)
 	, m_bNeedUpdateInstanceData{ false }
 
 	, m_cullDistance(FLT_MAX)
-	, m_cullScreenSize(FLT_MAX)
+	, m_cullScreenSize(0.0f)
 {
 	m_indexInstance = RenderSystem()->AddInstance();
 }
@@ -18,7 +18,7 @@ CComponentMesh::CComponentMesh(const CComponentMesh& component)
 	, m_bNeedUpdateInstanceData{ false }
 
 	, m_cullDistance(FLT_MAX)
-	, m_cullScreenSize(FLT_MAX)
+	, m_cullScreenSize(0.0f)
 {
 	m_indexInstance = RenderSystem()->AddInstance();
 
@@ -107,14 +107,14 @@ void CComponentMesh::TaskUpdateCamera(CGfxCamera* pCamera, CRenderQueue* pRender
 	if (ComputeLOD(indexLOD, cameraPosition, projectionMatrix, transformMatrix)) {
 		const LODMeshDraw& mesh = m_LODMeshDraws[indexLOD];
 
-		const float size2 = glm::length2(mesh.aabb.maxVertex - mesh.aabb.minVertex);
 		const float length2 = glm::length2(mesh.aabb.center - cameraPosition);
+		const float screenSize2 = glm::length2(mesh.aabb.maxVertex - mesh.aabb.minVertex) * multiple2;
 
-		if (length2 < m_cullDistance * m_cullDistance) {
+		if (length2 > m_cullDistance * m_cullDistance) {
 			return;
 		}
 
-		if (size2 * multiple2 < m_cullScreenSize * m_cullScreenSize) {
+		if (screenSize2 < m_cullScreenSize * m_cullScreenSize) {
 			return;
 		}
 
@@ -144,9 +144,9 @@ bool CComponentMesh::ComputeLOD(int& indexLOD, const glm::vec3& cameraPosition, 
 			m_LODMeshDraws[index].ptrMaterial) {
 			m_LODMeshDraws[index].aabb = m_LODMeshDraws[index].ptrMeshDraw->GetAABB() * transformMatrix;
 
-			const float size2 = glm::length2(m_LODMeshDraws[index].aabb.maxVertex - m_LODMeshDraws[index].aabb.minVertex);
 			const float length2 = glm::length2(m_LODMeshDraws[index].aabb.center - cameraPosition);
-			const float factor = glm::min((multiple2 * size2) / glm::max(1.0f, length2), 1.0f);
+			const float screenSize2 = glm::length2(m_LODMeshDraws[index].aabb.maxVertex - m_LODMeshDraws[index].aabb.minVertex) * multiple2;
+			const float factor = glm::min(screenSize2 / glm::max(1.0f, length2), 1.0f);
 
 			if (m_LODMeshDraws[index].factor >= factor) {
 				indexLOD = index;
