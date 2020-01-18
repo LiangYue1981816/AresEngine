@@ -101,20 +101,14 @@ void CComponentMesh::TaskUpdateCamera(CGfxCamera* pCamera, CRenderQueue* pRender
 	const glm::mat4& projectionMatrix = pCamera->GetProjectionMatrix();
 	const glm::mat4& transformMatrix = m_instanceData[indexFrame].transformMatrix;
 
-	const float multiple = glm::max(0.5f * projectionMatrix[0][0], 0.5f * projectionMatrix[1][1]);
-	const float multiple2 = multiple * multiple;
-
 	if (ComputeLOD(indexLOD, cameraPosition, projectionMatrix, transformMatrix)) {
 		const LODMeshDraw& mesh = m_LODMeshDraws[indexLOD];
 
-		const float length2 = glm::length2(mesh.aabb.center - cameraPosition);
-		const float screenSize2 = glm::length2(mesh.aabb.maxVertex - mesh.aabb.minVertex) * multiple2;
-
-		if (length2 > m_cullDistance * m_cullDistance) {
+		if (mesh.length2 > m_cullDistance * m_cullDistance) {
 			return;
 		}
 
-		if (screenSize2 / length2 < m_cullScreenSize * m_cullScreenSize) {
+		if (mesh.screenSize2 < m_cullScreenSize * m_cullScreenSize) {
 			return;
 		}
 
@@ -140,15 +134,15 @@ bool CComponentMesh::ComputeLOD(int& indexLOD, const glm::vec3& cameraPosition, 
 	const float multiple2 = multiple * multiple;
 
 	for (int index = MAX_LOD_COUNT - 1; index >= 0; index--) {
-		if (m_LODMeshDraws[index].ptrMeshDraw && 
-			m_LODMeshDraws[index].ptrMaterial) {
-			m_LODMeshDraws[index].aabb = m_LODMeshDraws[index].ptrMeshDraw->GetAABB() * transformMatrix;
+		if (m_LODMeshDraws[index].ptrMeshDraw && m_LODMeshDraws[index].ptrMaterial) {
+			const glm::aabb aabb = m_LODMeshDraws[index].ptrMeshDraw->GetAABB() * transformMatrix;
+			const float length2 = glm::length2(aabb.center - cameraPosition);
+			const float screenSize2 = glm::min(glm::length2(aabb.maxVertex - aabb.minVertex) * multiple2 / glm::max(1.0f, length2), 1.0f);
 
-			const float length2 = glm::length2(m_LODMeshDraws[index].aabb.center - cameraPosition);
-			const float screenSize2 = glm::length2(m_LODMeshDraws[index].aabb.maxVertex - m_LODMeshDraws[index].aabb.minVertex) * multiple2;
-			const float factor = glm::min(screenSize2 / glm::max(1.0f, length2), 1.0f);
-
-			if (m_LODMeshDraws[index].factor >= factor) {
+			if (m_LODMeshDraws[index].factor >= screenSize2) {
+				m_LODMeshDraws[index].aabb = aabb;
+				m_LODMeshDraws[index].length2 = length2;
+				m_LODMeshDraws[index].screenSize2 = screenSize2;
 				indexLOD = index;
 				break;
 			}

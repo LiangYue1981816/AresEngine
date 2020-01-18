@@ -35,7 +35,11 @@ private:
 private:
 	struct LODMeshDraw {
 		float factor;
+
 		glm::aabb aabb;
+		float length2;
+		float screenSize2;
+
 		CGfxMaterialPtr ptrMaterial;
 		CGfxMeshDrawPtr ptrMeshDraw;
 	};
