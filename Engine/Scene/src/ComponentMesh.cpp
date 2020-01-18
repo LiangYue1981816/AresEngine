@@ -81,13 +81,13 @@ void CComponentMesh::TaskUpdateCamera(CGfxCamera* pCamera, CRenderQueue* pRender
 	if (ComputeLOD(indexLOD, pCamera, m_instanceData[indexFrame].transformMatrix)) {
 		const LODMeshDraw& mesh = m_LODMeshDraws[indexLOD];
 
-		if (pCamera->IsVisible(mesh.ptrMeshDraw->GetAABB() * m_instanceData[indexFrame].transformMatrix) == false) {
+		if (pCamera->IsVisible(mesh.aabb) == false) {
 			return;
 		}
 
 		if (m_bNeedUpdateInstanceData[indexFrame]) {
 			m_bNeedUpdateInstanceData[indexFrame] = false;
-			m_instanceData[indexFrame].center = m_instanceData[indexFrame].transformMatrix * glm::vec4(mesh.ptrMeshDraw->GetAABB().center, 1.0f);
+			m_instanceData[indexFrame].center = glm::vec4(mesh.aabb.center, 1.0f);
 			RenderSystem()->ModifyInstanceData(m_indexInstance, m_instanceData[indexFrame], indexThread);
 		}
 
@@ -95,23 +95,25 @@ void CComponentMesh::TaskUpdateCamera(CGfxCamera* pCamera, CRenderQueue* pRender
 	}
 }
 
-bool CComponentMesh::ComputeLOD(int& indexLOD, const CGfxCamera* pCameram, const glm::mat4& transformMatrix) const
+bool CComponentMesh::ComputeLOD(int& indexLOD, const CGfxCamera* pCameram, const glm::mat4& transformMatrix)
 {
 	indexLOD = -1;
 
-	const glm::mat4& viewTransformMatrix = pCameram->GetViewMatrix() * transformMatrix;
+	const glm::vec3& cameraPosition = pCameram->GetPosition();
 	const glm::mat4& projectionMatrix = pCameram->GetProjectionMatrix();
-	const float multiple = std::max(0.5f * projectionMatrix[0][0], 0.5f * projectionMatrix[1][1]);
+	const float multiple = glm::max(0.5f * projectionMatrix[0][0], 0.5f * projectionMatrix[1][1]);
 	const float multiple2 = multiple * multiple;
 
 	for (int index = MAX_LOD_COUNT - 1; index >= 0; index--) {
-		if (m_LODMeshDraws[index].ptrMeshDraw) {
-			const glm::aabb aabb = m_LODMeshDraws[index].ptrMeshDraw->GetAABB() * viewTransformMatrix;
-			const float size2 = glm::length2(aabb.maxVertex - aabb.minVertex);
-			const float length2 = glm::length2(aabb.center);
-			const float screenSize = glm::min((multiple2 * size2) / std::max(1.0f, length2), 1.0f);
+		if (m_LODMeshDraws[index].ptrMeshDraw && 
+			m_LODMeshDraws[index].ptrMaterial) {
+			m_LODMeshDraws[index].aabb = m_LODMeshDraws[index].ptrMeshDraw->GetAABB() * transformMatrix;
 
-			if (m_LODMeshDraws[index].factor >= screenSize) {
+			const float size2 = glm::length2(m_LODMeshDraws[index].aabb.maxVertex - m_LODMeshDraws[index].aabb.minVertex);
+			const float length2 = glm::length2(m_LODMeshDraws[index].aabb.center - cameraPosition);
+			const float factor = glm::min((multiple2 * size2) / glm::max(1.0f, length2), 1.0f);
+
+			if (m_LODMeshDraws[index].factor >= factor) {
 				indexLOD = index;
 				break;
 			}

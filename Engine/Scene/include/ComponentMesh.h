@@ -21,7 +21,7 @@ public:
 	virtual void TaskUpdateCamera(CGfxCamera* pCamera, CRenderQueue* pRenderQueue, uint32_t mask, int indexThread);
 
 private:
-	bool ComputeLOD(int& indexLOD, const CGfxCamera* pCameram, const glm::mat4& transformMatrix) const;
+	bool ComputeLOD(int& indexLOD, const CGfxCamera* pCameram, const glm::mat4& transformMatrix);
 
 
 private:
@@ -32,6 +32,7 @@ private:
 private:
 	struct LODMeshDraw {
 		float factor;
+		glm::aabb aabb;
 		CGfxMaterialPtr ptrMaterial;
 		CGfxMeshDrawPtr ptrMeshDraw;
 	};
