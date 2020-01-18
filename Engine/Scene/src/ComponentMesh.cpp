@@ -5,6 +5,9 @@ CComponentMesh::CComponentMesh(uint32_t name)
 	: CComponent(name)
 	, m_indexInstance(INVALID_VALUE)
 	, m_bNeedUpdateInstanceData{ false }
+
+	, m_cullDistance(FLT_MAX)
+	, m_cullScreenSize(FLT_MAX)
 {
 	m_indexInstance = RenderSystem()->AddInstance();
 }
@@ -13,6 +16,9 @@ CComponentMesh::CComponentMesh(const CComponentMesh& component)
 	: CComponent(component)
 	, m_indexInstance(INVALID_VALUE)
 	, m_bNeedUpdateInstanceData{ false }
+
+	, m_cullDistance(FLT_MAX)
+	, m_cullScreenSize(FLT_MAX)
 {
 	m_indexInstance = RenderSystem()->AddInstance();
 
@@ -21,6 +27,9 @@ CComponentMesh::CComponentMesh(const CComponentMesh& component)
 		m_LODMeshDraws[index].ptrMaterial = component.m_LODMeshDraws[index].ptrMaterial;
 		m_LODMeshDraws[index].ptrMeshDraw = component.m_LODMeshDraws[index].ptrMeshDraw;
 	}
+
+	m_cullDistance = component.m_cullDistance;
+	m_cullScreenSize = component.m_cullScreenSize;
 }
 
 CComponentMesh::~CComponentMesh(void)
@@ -63,6 +72,16 @@ void CComponentMesh::SetMask(int indexLOD, uint32_t mask)
 	}
 }
 
+void CComponentMesh::SetCullDistance(float distance)
+{
+	m_cullDistance = distance;
+}
+
+void CComponentMesh::SetCullScreenSize(float screenSize)
+{
+	m_cullScreenSize = screenSize;
+}
+
 void CComponentMesh::TaskUpdate(float gameTime, float deltaTime)
 {
 	int indexFrame = Engine()->GetFrameCount() % 2;
@@ -78,8 +97,26 @@ void CComponentMesh::TaskUpdateCamera(CGfxCamera* pCamera, CRenderQueue* pRender
 	int indexLOD = 0;
 	int indexFrame = 1 - Engine()->GetFrameCount() % 2;
 
-	if (ComputeLOD(indexLOD, pCamera, m_instanceData[indexFrame].transformMatrix)) {
+	const glm::vec3& cameraPosition = pCamera->GetPosition();
+	const glm::mat4& projectionMatrix = pCamera->GetProjectionMatrix();
+	const glm::mat4& transformMatrix = m_instanceData[indexFrame].transformMatrix;
+
+	const float multiple = glm::max(0.5f * projectionMatrix[0][0], 0.5f * projectionMatrix[1][1]);
+	const float multiple2 = multiple * multiple;
+
+	if (ComputeLOD(indexLOD, cameraPosition, projectionMatrix, transformMatrix)) {
 		const LODMeshDraw& mesh = m_LODMeshDraws[indexLOD];
+
+		const float size2 = glm::length2(mesh.aabb.maxVertex - mesh.aabb.minVertex);
+		const float length2 = glm::length2(mesh.aabb.center - cameraPosition);
+
+		if (length2 < m_cullDistance * m_cullDistance) {
+			return;
+		}
+
+		if (size2 * multiple2 < m_cullScreenSize * m_cullScreenSize) {
+			return;
+		}
 
 		if (pCamera->IsVisible(mesh.aabb) == false) {
 			return;
@@ -95,12 +132,10 @@ void CComponentMesh::TaskUpdateCamera(CGfxCamera* pCamera, CRenderQueue* pRender
 	}
 }
 
-bool CComponentMesh::ComputeLOD(int& indexLOD, const CGfxCamera* pCameram, const glm::mat4& transformMatrix)
+bool CComponentMesh::ComputeLOD(int& indexLOD, const glm::vec3& cameraPosition, const glm::mat4& projectionMatrix, const glm::mat4& transformMatrix)
 {
 	indexLOD = -1;
 
-	const glm::vec3& cameraPosition = pCameram->GetPosition();
-	const glm::mat4& projectionMatrix = pCameram->GetProjectionMatrix();
 	const float multiple = glm::max(0.5f * projectionMatrix[0][0], 0.5f * projectionMatrix[1][1]);
 	const float multiple2 = multiple * multiple;
 

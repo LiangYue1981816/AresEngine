@@ -16,12 +16,15 @@ public:
 	void SetMeshDraw(int indexLOD, const CGfxMeshPtr ptrMesh, uint32_t nameDraw, uint32_t instanceFormat, int instanceBinding, uint32_t nameAlias = INVALID_HASHNAME);
 	void SetMask(int indexLOD, uint32_t mask);
 
+	void SetCullDistance(float distance);
+	void SetCullScreenSize(float screenSize);
+
 public:
 	virtual void TaskUpdate(float gameTime, float deltaTime);
 	virtual void TaskUpdateCamera(CGfxCamera* pCamera, CRenderQueue* pRenderQueue, uint32_t mask, int indexThread);
 
 private:
-	bool ComputeLOD(int& indexLOD, const CGfxCamera* pCameram, const glm::mat4& transformMatrix);
+	bool ComputeLOD(int& indexLOD, const glm::vec3& cameraPosition, const glm::mat4& projectionMatrix, const glm::mat4& transformMatrix);
 
 
 private:
@@ -39,6 +42,10 @@ private:
 
 	static const int MAX_LOD_COUNT = 8;
 	LODMeshDraw m_LODMeshDraws[MAX_LOD_COUNT];
+
+private:
+	float m_cullDistance;
+	float m_cullScreenSize;
 };
 
 typedef CComponentPtr<CComponentMesh> CComponentMeshPtr;
