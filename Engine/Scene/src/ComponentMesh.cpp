@@ -109,9 +109,9 @@ bool CComponentMesh::ComputeLOD(int& indexLOD, const CGfxCamera* pCameram, const
 			const glm::aabb aabb = m_LODMeshDraws[index].ptrMeshDraw->GetAABB() * viewTransformMatrix;
 			const float size2 = glm::length2(aabb.maxVertex - aabb.minVertex);
 			const float length2 = glm::length2(aabb.center);
-			const float screenSize = (multiple2 * size2) / std::max(1.0f, length2);
+			const float screenSize = glm::min((multiple2 * size2) / std::max(1.0f, length2), 1.0f);
 
-			if (m_LODMeshDraws[index].factor > screenSize) {
+			if (m_LODMeshDraws[index].factor >= screenSize) {
 				indexLOD = index;
 				break;
 			}
