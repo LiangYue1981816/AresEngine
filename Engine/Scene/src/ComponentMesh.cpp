@@ -5,7 +5,6 @@ CComponentMesh::CComponentMesh(uint32_t name)
 	: CComponent(name)
 	, m_indexInstance(INVALID_VALUE)
 	, m_bNeedUpdateInstanceData{ false }
-	, m_bForceUpdateInstanceData{ true, true }
 
 	, m_LODIndex{ 0 }
 {
@@ -16,7 +15,6 @@ CComponentMesh::CComponentMesh(const CComponentMesh& component)
 	: CComponent(component)
 	, m_indexInstance(INVALID_VALUE)
 	, m_bNeedUpdateInstanceData{ false }
-	, m_bForceUpdateInstanceData{ true, true }
 
 	, m_LODIndex{ 0 }
 {
@@ -72,6 +70,7 @@ void CComponentMesh::SetMask(int indexLOD, uint32_t mask)
 void CComponentMesh::TaskUpdate(float gameTime, float deltaTime)
 {
 	int indexFrame = Engine()->GetFrameCount() % 2;
+
 	/*
 	if (m_ptrMeshDraw) {
 		if (m_pParentNode && m_pParentNode->IsActive()) {

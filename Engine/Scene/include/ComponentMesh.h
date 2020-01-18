@@ -27,7 +27,6 @@ private:
 private:
 	int m_indexInstance;
 	bool m_bNeedUpdateInstanceData[2];
-	bool m_bForceUpdateInstanceData[2];
 	CGPUScene::InstanceData m_instanceData[2];
 
 private:
