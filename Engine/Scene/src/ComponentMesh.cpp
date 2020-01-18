@@ -5,7 +5,7 @@ CComponentMesh::CComponentMesh(uint32_t name)
 	: CComponent(name)
 	, m_indexInstance(INVALID_VALUE)
 	, m_bNeedUpdateInstanceData{ false }
-	, m_bForceUpdateInstanceData{ true }
+	, m_bForceUpdateInstanceData{ true, true }
 
 	, m_indexLOD{ 0 }
 	, m_factor{ 0.0f }
@@ -17,7 +17,7 @@ CComponentMesh::CComponentMesh(const CComponentMesh& component)
 	: CComponent(component)
 	, m_indexInstance(INVALID_VALUE)
 	, m_bNeedUpdateInstanceData{ false }
-	, m_bForceUpdateInstanceData{ true }
+	, m_bForceUpdateInstanceData{ true, true }
 
 	, m_indexLOD{ 0 }
 	, m_factor{ 0.0f }
