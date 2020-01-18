@@ -21,7 +21,7 @@ public:
 	virtual void TaskUpdateCamera(CGfxCamera* pCamera, CRenderQueue* pRenderQueue, uint32_t mask, int indexThread);
 
 private:
-	int ComputeLOD(void) const;
+	bool ComputeLOD(int& LODIndex) const;
 
 
 private:

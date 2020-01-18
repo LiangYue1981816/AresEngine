@@ -71,44 +71,37 @@ void CComponentMesh::TaskUpdate(float gameTime, float deltaTime)
 {
 	int indexFrame = Engine()->GetFrameCount() % 2;
 
-	/*
-	if (m_ptrMeshDraw) {
-		if (m_pParentNode && m_pParentNode->IsActive()) {
-			if (m_bUpdateInstanceData[indexFrame] == false || m_pParentNode->UpdateTransform()) {
-				m_bUpdateInstanceData[indexFrame] = true;
-				m_bNeedUpdateInstanceData[indexFrame] = true;
-				m_instanceData[indexFrame].transformMatrix = m_pParentNode->GetWorldTransform();
-				m_instanceData[indexFrame].center = m_instanceData[indexFrame].transformMatrix * glm::vec4(m_ptrMeshDraw->GetAABB().center, 1.0f);
-			}
+	if (ComputeLOD(m_LODIndex[indexFrame])) {
+		if (m_instanceData[indexFrame].transformMatrix != m_pParentNode->GetWorldTransform()) {
+			m_instanceData[indexFrame].transformMatrix  = m_pParentNode->GetWorldTransform();
+			m_instanceData[indexFrame].center = m_instanceData[indexFrame].transformMatrix * glm::vec4(m_LODMeshDraws[m_LODIndex[indexFrame]].ptrMeshDraw->GetAABB().center, 1.0f);
+			m_bNeedUpdateInstanceData[indexFrame] = true;
 		}
 	}
-	*/
 }
 
 void CComponentMesh::TaskUpdateCamera(CGfxCamera* pCamera, CRenderQueue* pRenderQueue, uint32_t mask, int indexThread)
 {
 	int indexFrame = 1 - Engine()->GetFrameCount() % 2;
-	/*
-	if (m_ptrMeshDraw) {
-		if (m_ptrMeshDraw->GetMask() & mask) {
-			if (m_pParentNode && m_pParentNode->IsActive()) {
-				if (m_bUpdateInstanceData[indexFrame]) {
-					if (pCamera->IsVisible(m_ptrMeshDraw->GetAABB() * m_instanceData[indexFrame].transformMatrix)) {
-						if (m_bNeedUpdateInstanceData[indexFrame]) {
-							m_bNeedUpdateInstanceData[indexFrame] = false;
-							RenderSystem()->ModifyInstanceData(m_indexInstance, m_instanceData[indexFrame], indexThread);
-						}
 
-						pRenderQueue->Add(m_ptrMaterial, m_ptrMeshDraw, m_indexInstance, indexThread);
-					}
-				}
-			}
+	if (m_LODIndex[indexFrame] >= 0 && m_LODIndex[indexFrame] < MAX_LOD_COUNT) {
+		const LODMeshDraw& mesh = m_LODMeshDraws[m_LODIndex[indexFrame]];
+
+		if (pCamera->IsVisible(mesh.ptrMeshDraw->GetAABB() * m_instanceData[indexFrame].transformMatrix) == false) {
+			return;
 		}
+
+		if (m_bNeedUpdateInstanceData[indexFrame]) {
+			m_bNeedUpdateInstanceData[indexFrame] = false;
+			RenderSystem()->ModifyInstanceData(m_indexInstance, m_instanceData[indexFrame], indexThread);
+		}
+
+		pRenderQueue->Add(mesh.ptrMaterial, mesh.ptrMeshDraw, m_indexInstance, indexThread);
 	}
-	*/
 }
 
-int CComponentMesh::ComputeLOD(void) const
+bool CComponentMesh::ComputeLOD(int& LODIndex) const
 {
-	return 0;
+	LODIndex = 0;
+	return true;
 }
