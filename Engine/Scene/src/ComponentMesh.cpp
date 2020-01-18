@@ -5,8 +5,6 @@ CComponentMesh::CComponentMesh(uint32_t name)
 	: CComponent(name)
 	, m_indexInstance(INVALID_VALUE)
 	, m_bNeedUpdateInstanceData{ false }
-
-	, m_LODIndex{ 0 }
 {
 	m_indexInstance = RenderSystem()->AddInstance();
 }
@@ -15,8 +13,6 @@ CComponentMesh::CComponentMesh(const CComponentMesh& component)
 	: CComponent(component)
 	, m_indexInstance(INVALID_VALUE)
 	, m_bNeedUpdateInstanceData{ false }
-
-	, m_LODIndex{ 0 }
 {
 	m_indexInstance = RenderSystem()->AddInstance();
 
@@ -71,21 +67,19 @@ void CComponentMesh::TaskUpdate(float gameTime, float deltaTime)
 {
 	int indexFrame = Engine()->GetFrameCount() % 2;
 
-	if (ComputeLOD(m_LODIndex[indexFrame])) {
-		if (m_instanceData[indexFrame].transformMatrix != m_pParentNode->GetWorldTransform()) {
-			m_instanceData[indexFrame].transformMatrix  = m_pParentNode->GetWorldTransform();
-			m_instanceData[indexFrame].center = m_instanceData[indexFrame].transformMatrix * glm::vec4(m_LODMeshDraws[m_LODIndex[indexFrame]].ptrMeshDraw->GetAABB().center, 1.0f);
-			m_bNeedUpdateInstanceData[indexFrame] = true;
-		}
+	if (m_instanceData[indexFrame].transformMatrix != m_pParentNode->GetWorldTransform()) {
+		m_instanceData[indexFrame].transformMatrix  = m_pParentNode->GetWorldTransform();
+		m_bNeedUpdateInstanceData[indexFrame] = true;
 	}
 }
 
 void CComponentMesh::TaskUpdateCamera(CGfxCamera* pCamera, CRenderQueue* pRenderQueue, uint32_t mask, int indexThread)
 {
+	int indexLOD = 0;
 	int indexFrame = 1 - Engine()->GetFrameCount() % 2;
 
-	if (m_LODIndex[indexFrame] >= 0 && m_LODIndex[indexFrame] < MAX_LOD_COUNT) {
-		const LODMeshDraw& mesh = m_LODMeshDraws[m_LODIndex[indexFrame]];
+	if (ComputeLOD(indexLOD, pCamera, m_instanceData[indexFrame].transformMatrix)) {
+		const LODMeshDraw& mesh = m_LODMeshDraws[indexLOD];
 
 		if (pCamera->IsVisible(mesh.ptrMeshDraw->GetAABB() * m_instanceData[indexFrame].transformMatrix) == false) {
 			return;
@@ -93,6 +87,7 @@ void CComponentMesh::TaskUpdateCamera(CGfxCamera* pCamera, CRenderQueue* pRender
 
 		if (m_bNeedUpdateInstanceData[indexFrame]) {
 			m_bNeedUpdateInstanceData[indexFrame] = false;
+			m_instanceData[indexFrame].center = m_instanceData[indexFrame].transformMatrix * glm::vec4(mesh.ptrMeshDraw->GetAABB().center, 1.0f);
 			RenderSystem()->ModifyInstanceData(m_indexInstance, m_instanceData[indexFrame], indexThread);
 		}
 
@@ -100,8 +95,28 @@ void CComponentMesh::TaskUpdateCamera(CGfxCamera* pCamera, CRenderQueue* pRender
 	}
 }
 
-bool CComponentMesh::ComputeLOD(int& LODIndex) const
+bool CComponentMesh::ComputeLOD(int& indexLOD, const CGfxCamera* pCameram, const glm::mat4& transformMatrix) const
 {
-	LODIndex = 0;
-	return true;
+	indexLOD = -1;
+
+	const glm::mat4& viewTransformMatrix = pCameram->GetViewMatrix() * transformMatrix;
+	const glm::mat4& projectionMatrix = pCameram->GetProjectionMatrix();
+	const float multiple = std::max(0.5f * projectionMatrix[0][0], 0.5f * projectionMatrix[1][1]);
+	const float multiple2 = multiple * multiple;
+
+	for (int index = MAX_LOD_COUNT - 1; index >= 0; index--) {
+		if (m_LODMeshDraws[index].ptrMeshDraw) {
+			const glm::aabb aabb = m_LODMeshDraws[index].ptrMeshDraw->GetAABB() * viewTransformMatrix;
+			const float size2 = glm::length2(aabb.maxVertex - aabb.minVertex);
+			const float length2 = glm::length2(aabb.center);
+			const float screenSize = (multiple2 * size2) / std::max(1.0f, length2);
+
+			if (m_LODMeshDraws[index].factor > screenSize) {
+				indexLOD = index;
+				break;
+			}
+		}
+	}
+
+	return indexLOD != -1;
 }

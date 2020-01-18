@@ -21,7 +21,7 @@ public:
 	virtual void TaskUpdateCamera(CGfxCamera* pCamera, CRenderQueue* pRenderQueue, uint32_t mask, int indexThread);
 
 private:
-	bool ComputeLOD(int& LODIndex) const;
+	bool ComputeLOD(int& indexLOD, const CGfxCamera* pCameram, const glm::mat4& transformMatrix) const;
 
 
 private:
@@ -30,15 +30,13 @@ private:
 	CGPUScene::InstanceData m_instanceData[2];
 
 private:
-	static const int MAX_LOD_COUNT = 8;
-
 	struct LODMeshDraw {
 		float factor;
 		CGfxMaterialPtr ptrMaterial;
 		CGfxMeshDrawPtr ptrMeshDraw;
 	};
 
-	int m_LODIndex[2];
+	static const int MAX_LOD_COUNT = 8;
 	LODMeshDraw m_LODMeshDraws[MAX_LOD_COUNT];
 };
 
