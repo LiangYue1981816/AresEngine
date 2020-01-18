@@ -36,28 +36,36 @@ CComponentMesh::~CComponentMesh(void)
 
 void CComponentMesh::SetScreenFactor(int indexLOD, float factor)
 {
-	m_LODMeshDraws[indexLOD].factor = factor;
+	if (indexLOD >= 0 && indexLOD < MAX_LOD_COUNT) {
+		m_LODMeshDraws[indexLOD].factor = factor;
+	}
 }
 
 void CComponentMesh::SetMaterial(int indexLOD, const CGfxMaterialPtr ptrMaterial)
 {
-	m_LODMeshDraws[indexLOD].ptrMaterial = ptrMaterial;
+	if (indexLOD >= 0 && indexLOD < MAX_LOD_COUNT) {
+		m_LODMeshDraws[indexLOD].ptrMaterial = ptrMaterial;
+	}
 }
 
 void CComponentMesh::SetMeshDraw(int indexLOD, const CGfxMeshPtr ptrMesh, uint32_t nameDraw, uint32_t instanceFormat, int instanceBinding, uint32_t nameAlias)
 {
-	if (nameAlias == INVALID_HASHNAME) {
-		m_LODMeshDraws[indexLOD].ptrMeshDraw = GfxRenderer()->NewMeshDraw(HashValueFormat("%x_%x", ptrMesh->GetName(), nameDraw), ptrMesh, nameDraw, instanceFormat, instanceBinding);
-	}
-	else {
-		m_LODMeshDraws[indexLOD].ptrMeshDraw = GfxRenderer()->NewMeshDraw(HashValueFormat("%x_%x", ptrMesh->GetName(), nameAlias), ptrMesh, nameDraw, instanceFormat, instanceBinding);
+	if (indexLOD >= 0 && indexLOD < MAX_LOD_COUNT) {
+		if (nameAlias == INVALID_HASHNAME) {
+			m_LODMeshDraws[indexLOD].ptrMeshDraw = GfxRenderer()->NewMeshDraw(HashValueFormat("%x_%x", ptrMesh->GetName(), nameDraw), ptrMesh, nameDraw, instanceFormat, instanceBinding);
+		}
+		else {
+			m_LODMeshDraws[indexLOD].ptrMeshDraw = GfxRenderer()->NewMeshDraw(HashValueFormat("%x_%x", ptrMesh->GetName(), nameAlias), ptrMesh, nameDraw, instanceFormat, instanceBinding);
+		}
 	}
 }
 
 void CComponentMesh::SetMask(int indexLOD, uint32_t mask)
 {
-	if (m_LODMeshDraws[indexLOD].ptrMeshDraw) {
-		m_LODMeshDraws[indexLOD].ptrMeshDraw->SetMask(mask);
+	if (indexLOD >= 0 && indexLOD < MAX_LOD_COUNT) {
+		if (m_LODMeshDraws[indexLOD].ptrMeshDraw) {
+			m_LODMeshDraws[indexLOD].ptrMeshDraw->SetMask(mask);
+		}
 	}
 }
 
