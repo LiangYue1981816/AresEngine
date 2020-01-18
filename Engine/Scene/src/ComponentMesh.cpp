@@ -97,11 +97,7 @@ void CComponentMesh::TaskUpdateCamera(CGfxCamera* pCamera, CRenderQueue* pRender
 	int indexLOD = 0;
 	int indexFrame = 1 - Engine()->GetFrameCount() % 2;
 
-	const glm::vec3& cameraPosition = pCamera->GetPosition();
-	const glm::mat4& projectionMatrix = pCamera->GetProjectionMatrix();
-	const glm::mat4& transformMatrix = m_instanceData[indexFrame].transformMatrix;
-
-	if (ComputeLOD(indexLOD, cameraPosition, projectionMatrix, transformMatrix)) {
+	if (ComputeLOD(indexLOD, pCamera->GetPosition(), m_instanceData[indexFrame].transformMatrix)) {
 		const LODMeshDraw& mesh = m_LODMeshDraws[indexLOD];
 
 		if (mesh.length2 > m_cullDistance * m_cullDistance) {
@@ -126,18 +122,15 @@ void CComponentMesh::TaskUpdateCamera(CGfxCamera* pCamera, CRenderQueue* pRender
 	}
 }
 
-bool CComponentMesh::ComputeLOD(int& indexLOD, const glm::vec3& cameraPosition, const glm::mat4& projectionMatrix, const glm::mat4& transformMatrix)
+bool CComponentMesh::ComputeLOD(int& indexLOD, const glm::vec3& cameraPosition, const glm::mat4& transformMatrix)
 {
 	indexLOD = -1;
-
-	const float multiple = glm::max(0.5f * projectionMatrix[0][0], 0.5f * projectionMatrix[1][1]);
-	const float multiple2 = multiple * multiple;
 
 	for (int index = MAX_LOD_COUNT - 1; index >= 0; index--) {
 		if (m_LODMeshDraws[index].ptrMeshDraw && m_LODMeshDraws[index].ptrMaterial) {
 			const glm::aabb aabb = m_LODMeshDraws[index].ptrMeshDraw->GetAABB() * transformMatrix;
 			const float length2 = glm::length2(aabb.center - cameraPosition);
-			const float screenSize2 = glm::min(glm::length2(aabb.maxVertex - aabb.minVertex) * multiple2 / glm::max(1.0f, length2), 1.0f);
+			const float screenSize2 = glm::min(glm::length2(aabb.maxVertex - aabb.minVertex) / glm::max(1.0f, length2), 1.0f);
 
 			if (m_LODMeshDraws[index].factor >= screenSize2) {
 				m_LODMeshDraws[index].aabb = aabb;
