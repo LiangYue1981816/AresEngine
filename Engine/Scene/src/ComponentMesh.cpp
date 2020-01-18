@@ -114,7 +114,7 @@ void CComponentMesh::TaskUpdateCamera(CGfxCamera* pCamera, CRenderQueue* pRender
 			return;
 		}
 
-		if (screenSize2 < m_cullScreenSize * m_cullScreenSize) {
+		if (screenSize2 / length2 < m_cullScreenSize * m_cullScreenSize) {
 			return;
 		}
 
