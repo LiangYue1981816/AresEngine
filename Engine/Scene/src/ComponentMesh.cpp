@@ -91,3 +91,8 @@ void CComponentMesh::TaskUpdateCamera(CGfxCamera* pCamera, CRenderQueue* pRender
 		}
 	}
 }
+
+int CComponentMesh::ComputeLOD(void) const
+{
+	return 0;
+}

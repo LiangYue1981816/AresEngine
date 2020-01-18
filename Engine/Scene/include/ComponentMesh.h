@@ -20,6 +20,9 @@ public:
 	virtual void TaskUpdate(float gameTime, float deltaTime);
 	virtual void TaskUpdateCamera(CGfxCamera* pCamera, CRenderQueue* pRenderQueue, uint32_t mask, int indexThread);
 
+private:
+	int ComputeLOD(void) const;
+
 
 private:
 	int m_indexInstance;
