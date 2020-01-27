@@ -2,6 +2,46 @@
 #include "PreHeader.h"
 
 
+class CALL_API CComponentBase
+{
+	template<class T>
+	friend class CComponentPtr;
+
+
+public:
+	CComponentBase(void)
+		: refCount(0)
+	{
+
+	}
+	virtual ~CComponentBase(void)
+	{
+		ASSERT(refCount == 0);
+	}
+	virtual void Release(void) = 0;
+
+public:
+	uint32_t GetRefCount(void)
+	{
+		return refCount;
+	}
+
+private:
+	uint32_t IncRefCount(void)
+	{
+		return ++refCount;
+	}
+
+	uint32_t DecRefCount(void)
+	{
+		return --refCount;
+	}
+
+
+private:
+	std::atomic_uint refCount;
+};
+
 template<class T>
 class CALL_API CComponentManager
 {
