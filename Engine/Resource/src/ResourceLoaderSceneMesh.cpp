@@ -11,14 +11,18 @@ static bool InternalLoadDraw(TiXmlNode* pNode, const CGfxMeshPtr ptrMesh, CScene
 		do {
 			CComponentMeshPtr ptrComponentMesh = pCurrentSceneNode->GetSceneManager()->CreateComponentMesh(pCurrentSceneNode->GetSceneManager()->GetNextComponentMeshName());
 			{
-				int lod = 0;
+				const char* szName = pDrawNode->ToElement()->AttributeString("name");
+				if (szName == nullptr) { err = -1; goto ERR; }
+
+				int lod = pDrawNode->ToElement()->AttributeInt("lod");
 				int mask = pDrawNode->ToElement()->AttributeInt("mask");
 				int indexDraw = pDrawNode->ToElement()->AttributeInt("index");
+
 				const char* szMaterialFileName = pDrawNode->ToElement()->AttributeString("material");
-				if (szMaterialFileName == nullptr) { err = -1; goto ERR; }
+				if (szMaterialFileName == nullptr) { err = -2; goto ERR; }
 
 				CGfxMaterialPtr ptrMaterial = GfxRenderer()->NewMaterial(szMaterialFileName, vertexBinding, instanceBinding, baseLevel, numLevels);
-				if (ptrMaterial == nullptr) { err = -2; goto ERR; }
+				if (ptrMaterial == nullptr) { err = -3; goto ERR; }
 
 				ptrComponentMesh->SetScreenFactor(lod, 1.0f / (1 << lod));
 				ptrComponentMesh->SetMaterial(lod, ptrMaterial);
