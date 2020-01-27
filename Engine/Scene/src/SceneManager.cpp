@@ -92,42 +92,26 @@ void CSceneManager::DestroyNode(CSceneNode* pNode)
 
 CComponentMeshPtr CSceneManager::CreateComponentMesh(uint32_t name)
 {
-	if (m_meshManager.NewComponent(name, CComponentMesh(name))) {
-		return CComponentMeshPtr(name, &m_meshManager);
-	}
-	else {
-		return CComponentMeshPtr();
-	}
+	m_meshManager.NewComponent(name, CComponentMesh(name));
+	return CComponentMeshPtr(name, &m_meshManager);
 }
 
 CComponentSkinPtr CSceneManager::CreateComponentSkin(uint32_t name)
 {
-	if (m_skinManager.NewComponent(name, CComponentSkin(name))) {
-		return CComponentSkinPtr(name, &m_skinManager);
-	}
-	else {
-		return CComponentSkinPtr();
-	}
+	m_skinManager.NewComponent(name, CComponentSkin(name));
+	return CComponentSkinPtr(name, &m_skinManager);
 }
 
 CComponentParticlePtr CSceneManager::CreateComponentParticle(uint32_t name)
 {
-	if (m_particleManager.NewComponent(name, CComponentParticle(name))) {
-		return CComponentParticlePtr(name, &m_particleManager);
-	}
-	else {
-		return CComponentParticlePtr();
-	}
+	m_particleManager.NewComponent(name, CComponentParticle(name));
+	return CComponentParticlePtr(name, &m_particleManager);
 }
 
 CComponentPointLightPtr CSceneManager::CreateComponentPointLight(uint32_t name)
 {
-	if (m_pointLightManager.NewComponent(name, CComponentPointLight(name))) {
-		return CComponentPointLightPtr(name, &m_pointLightManager);
-	}
-	else {
-		return CComponentPointLightPtr();
-	}
+	m_pointLightManager.NewComponent(name, CComponentPointLight(name));
+	return CComponentPointLightPtr(name, &m_pointLightManager);
 }
 
 void CSceneManager::UpdateLogic(CTaskGraph& taskGraph, float totalTime, float deltaTime)
