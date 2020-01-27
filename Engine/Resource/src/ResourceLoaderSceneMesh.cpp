@@ -9,26 +9,27 @@ static bool InternalLoadDraw(TiXmlNode* pNode, const CGfxMeshPtr ptrMesh, CScene
 
 	if (TiXmlNode* pDrawNode = pNode->FirstChild("Draw")) {
 		do {
-			CComponentMeshPtr ptrComponentMesh = pCurrentSceneNode->GetSceneManager()->CreateComponentMesh(pCurrentSceneNode->GetSceneManager()->GetNextComponentMeshName());
-			{
-				const char* szName = pDrawNode->ToElement()->AttributeString("name");
-				if (szName == nullptr) { err = -1; goto ERR; }
+			const char* szName = pDrawNode->ToElement()->AttributeString("name");
+			if (szName == nullptr) { err = -1; goto ERR; }
 
-				int lod = pDrawNode->ToElement()->AttributeInt("lod");
-				int mask = pDrawNode->ToElement()->AttributeInt("mask");
-				int indexDraw = pDrawNode->ToElement()->AttributeInt("index");
+			int lod = pDrawNode->ToElement()->AttributeInt("lod");
+			int mask = pDrawNode->ToElement()->AttributeInt("mask");
+			int indexDraw = pDrawNode->ToElement()->AttributeInt("index");
 
-				const char* szMaterialFileName = pDrawNode->ToElement()->AttributeString("material");
-				if (szMaterialFileName == nullptr) { err = -2; goto ERR; }
+			const char* szMaterialFileName = pDrawNode->ToElement()->AttributeString("material");
+			if (szMaterialFileName == nullptr) { err = -2; goto ERR; }
 
-				CGfxMaterialPtr ptrMaterial = GfxRenderer()->NewMaterial(szMaterialFileName, vertexBinding, instanceBinding, baseLevel, numLevels);
-				if (ptrMaterial == nullptr) { err = -3; goto ERR; }
+			CGfxMaterialPtr ptrMaterial = GfxRenderer()->NewMaterial(szMaterialFileName, vertexBinding, instanceBinding, baseLevel, numLevels);
+			if (ptrMaterial == nullptr) { err = -3; goto ERR; }
 
-				ptrComponentMesh->SetScreenFactor(lod, 1.0f / (1 << lod));
-				ptrComponentMesh->SetMaterial(lod, ptrMaterial);
-				ptrComponentMesh->SetMeshDraw(lod, ptrMesh, indexDraw, instanceFormat, instanceBinding);
-				ptrComponentMesh->SetMask(lod, mask);
-			}
+			CComponentMeshPtr ptrComponentMesh = pCurrentSceneNode->GetSceneManager()->CreateComponentMesh(HashValueFormat("%x_%s", ptrMesh->GetName(), szName));
+			if (ptrComponentMesh == nullptr) { err = -4; goto ERR; }
+
+			ptrComponentMesh->SetScreenFactor(lod, 1.0f / (1 << lod));
+			ptrComponentMesh->SetMaterial(lod, ptrMaterial);
+			ptrComponentMesh->SetMeshDraw(lod, ptrMesh, indexDraw, instanceFormat, instanceBinding);
+			ptrComponentMesh->SetMask(lod, mask);
+
 			pCurrentSceneNode->AttachComponentMesh(ptrComponentMesh);
 		} while ((pDrawNode = pNode->IterateChildren("Draw", pDrawNode)) != nullptr);
 	}
