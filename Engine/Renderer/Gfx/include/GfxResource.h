@@ -14,6 +14,11 @@ public:
 	{
 
 	}
+	CGfxResource(const CGfxResource& resource)
+		: refCount(0)
+	{
+		refCount.store(resource.refCount);
+	}
 	virtual ~CGfxResource(void)
 	{
 		ASSERT(refCount == 0);
