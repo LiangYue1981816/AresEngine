@@ -429,7 +429,7 @@ static bool InternalLoadPipeline(TiXmlNode* pPassNode, CGfxMaterialPass* pPass, 
 		if (pPass->SetPipeline(ptrRenderPass, pVertexShader, pFragmentShader, state, indexSubpass, vertexBinding, instanceBinding) == false) { err = -7; goto ERR; }
 #endif
 	}
-	LogOutput(LOG_TAG_RENDERER, "\t\tOK\n");
+
 	return true;
 ERR:
 	LogOutput(LOG_TAG_RENDERER, "Fail(%d)\n", err);
@@ -651,7 +651,7 @@ static bool InternalLoadPass(TiXmlNode* pPassNode, CGfxMaterialPass* pPass, int 
 {
 	int err = 0;
 
-	LogOutput(LOG_TAG_RENDERER, "\tLoadPass(%s)\n", pPassNode->ToElement()->AttributeString("name"));
+	LogOutput(LOG_TAG_RENDERER, "\tLoadPass %s\n", pPassNode->ToElement()->AttributeString("name"));
 	{
 		if (InternalLoadPipeline(pPassNode, pPass, vertexBinding, instanceBinding) == false) { err = -1; goto ERR; }
 		if (InternalLoadTexture2D(pPassNode, pPass, baseLevel, numLevels) == false) { err = -2; goto ERR; }
@@ -662,7 +662,7 @@ static bool InternalLoadPass(TiXmlNode* pPassNode, CGfxMaterialPass* pPass, int 
 		if (InternalLoadUniformVec3(pPassNode, pPass) == false) { err = -7; goto ERR; }
 		if (InternalLoadUniformVec4(pPassNode, pPass) == false) { err = -8; goto ERR; }
 	}
-	LogOutput(LOG_TAG_RENDERER, "\tOK\n");
+
 	return true;
 ERR:
 	LogOutput(LOG_TAG_RENDERER, "Fail(%d)\n", err);
@@ -727,7 +727,7 @@ bool CResourceLoader::LoadMaterial(const char* szFileName, CGfxMaterial* pMateri
 	int err = 0;
 
 	pMaterial->Destroy();
-	LogOutput(LOG_TAG_RENDERER, "LoadMaterial(%s)\n", szFileName);
+	LogOutput(LOG_TAG_RENDERER, "LoadMaterial %s\n", szFileName);
 	{
 		CStream stream;
 		if (FileManager()->LoadStream(szFileName, &stream) == false) { err = -1; goto ERR; }
@@ -746,7 +746,7 @@ bool CResourceLoader::LoadMaterial(const char* szFileName, CGfxMaterial* pMateri
 			} while ((pPassNode = pMaterialNode->IterateChildren("Pass", pPassNode)) != nullptr);
 		}
 	}
-	LogOutput(LOG_TAG_RENDERER, "OK\n");
+
 	return true;
 ERR:
 	LogOutput(LOG_TAG_RENDERER, "Fail(%d)\n", err);

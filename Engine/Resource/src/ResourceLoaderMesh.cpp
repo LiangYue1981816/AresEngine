@@ -46,7 +46,7 @@ typedef struct MeshHeader
 static bool InternalLoadDraws(CGfxMesh* pMesh, DrawHeader* drawHeaders, int numDraws)
 {
 	for (int indexDraw = 0; indexDraw < numDraws; indexDraw++) {
-		LogOutput(LOG_TAG_RENDERER, "\tLoadMeshDraw(%s) ... ", drawHeaders[indexDraw].szName);
+		LogOutput(LOG_TAG_RENDERER, "\tLoadMeshDraw %s ... ", drawHeaders[indexDraw].szName);
 		{
 			const glm::aabb aabb(
 				glm::vec3(drawHeaders[indexDraw].minx, drawHeaders[indexDraw].miny, drawHeaders[indexDraw].minz),
@@ -67,9 +67,10 @@ bool CResourceLoader::LoadMesh(const char* szFileName, CGfxMesh* pMesh, int vert
 {
 	int err = 0;
 
-	pMesh->Destroy();
-	LogOutput(LOG_TAG_RENDERER, "LoadMesh(%s) ...\n", szFileName);
+	LogOutput(LOG_TAG_RENDERER, "LoadMesh %s\n", szFileName);
 	{
+		pMesh->Destroy();
+
 		CStream stream;
 		if (FileManager()->LoadStream(szFileName, &stream) == false) { err = -1; goto ERR; }
 
@@ -88,7 +89,7 @@ bool CResourceLoader::LoadMesh(const char* szFileName, CGfxMesh* pMesh, int vert
 		if (pMesh->CreateVertexBuffer(meshHeader.format, vertexBinding, meshHeader.vertexBufferSize, false, pVertexBuffer) == false) { err = -3; goto ERR; }
 		if (InternalLoadDraws(pMesh, drawHeaders, meshHeader.numDraws) == false) { err = -4; goto ERR; }
 	}
-	LogOutput(LOG_TAG_RENDERER, "OK\n");
+
 	return true;
 ERR:
 	LogOutput(LOG_TAG_RENDERER, "Fail(%d)\n", err);
