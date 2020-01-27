@@ -391,7 +391,7 @@ static bool InternalLoadPipelineShader(TiXmlNode* pPipelineNode, CGfxShader*& pS
 		pShader = GfxRenderer()->CreateShader(szBinFileName, kind);
 		if (pShader->IsValid() == false) { err = -3; goto ERR; }
 	}
-	LogOutput(nullptr, "OK\n");
+
 	return true;
 ERR:
 	LogOutput(nullptr, "Fail(%d)\n", err);
@@ -429,6 +429,7 @@ static bool InternalLoadPipeline(TiXmlNode* pPassNode, CGfxMaterialPass* pPass, 
 		if (pPass->SetPipeline(ptrRenderPass, pVertexShader, pFragmentShader, state, indexSubpass, vertexBinding, instanceBinding) == false) { err = -7; goto ERR; }
 #endif
 	}
+
 	return true;
 ERR:
 	LogOutput(LOG_TAG_RENDERER, "Fail(%d)\n", err);

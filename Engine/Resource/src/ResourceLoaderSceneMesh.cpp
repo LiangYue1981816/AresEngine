@@ -28,6 +28,7 @@ static bool InternalLoadDraw(TiXmlNode* pNode, const CGfxMeshPtr ptrMesh, CScene
 			pCurrentSceneNode->AttachComponentMesh(ptrComponentMesh);
 		} while ((pDrawNode = pNode->IterateChildren("Draw", pDrawNode)) != nullptr);
 	}
+
 	return true;
 ERR:
 	return false;
@@ -69,6 +70,7 @@ static bool InternalLoadNode(TiXmlNode* pNode, const CGfxMeshPtr ptrMesh, CScene
 			} while ((pChildNode = pNode->IterateChildren("Node", pChildNode)) != nullptr);
 		}
 	}
+
 	return true;
 ERR:
 	pParentSceneNode->GetSceneManager()->DestroyNode(pCurrentSceneNode);
@@ -125,6 +127,7 @@ static CSceneNode* InternalLoadMesh(const char* szFileName, CSceneNode* pParentS
 		if (InternalLoadMesh(pMeshNode, pCurrentSceneNode, instanceFormat, vertexBinding, instanceBinding, baseLevel, numLevels) == false) { err = -4; goto ERR; }
 		if (pParentSceneNode->AttachNode(pCurrentSceneNode) == false) { err = -5; goto ERR; }
 	}
+
 	return pCurrentSceneNode;
 ERR:
 	pParentSceneNode->GetSceneManager()->DestroyNode(pCurrentSceneNode);
