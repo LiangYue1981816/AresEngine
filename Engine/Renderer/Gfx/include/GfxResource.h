@@ -96,17 +96,17 @@ private:
 			m_pPointer = (T*)pPointer;
 		}
 
-		if (m_pPointer) {
-			((CGfxResource*)m_pPointer)->IncRefCount();
+		if (CGfxResource* pResource = (CGfxResource*)m_pPointer) {
+			pResource->IncRefCount();
 		}
 	}
 
 public:
 	inline void Release(void)
 	{
-		if (m_pPointer) {
-			if (((CGfxResource*)m_pPointer)->DecRefCount() == 0) {
-				((CGfxResource*)m_pPointer)->Release();
+		if (CGfxResource* pResource = (CGfxResource*)m_pPointer) {
+			if (pResource->DecRefCount() == 0) {
+				pResource->Release();
 			}
 		}
 
@@ -130,8 +130,8 @@ public:
 
 	inline uint32_t GetRefCount(void) const
 	{
-		if (m_pPointer) {
-			return ((CGfxResource*)m_pPointer)->refCount;
+		if (CGfxResource* pResource = (CGfxResource*)m_pPointer) {
+			return pResource->GetRefCount();
 		}
 		else {
 			return 0;
