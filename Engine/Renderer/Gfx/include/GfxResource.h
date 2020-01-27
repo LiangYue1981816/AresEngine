@@ -150,6 +150,7 @@ private:
 	T* m_pPointer;
 };
 
+
 template<class T>
 inline bool operator == (const CGfxResourcePtr<T>& ptrLeft, const void* pPointer)
 {
@@ -262,6 +263,7 @@ inline bool operator >= (const CGfxResourcePtr<T>& ptrLeft, const CGfxResourcePt
 {
 	return ptrLeft.GetPointer() >= ptrRight.GetPointer();
 }
+
 
 template<class T>
 struct eastl::hash<CGfxResourcePtr<T>>

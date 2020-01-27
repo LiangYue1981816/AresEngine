@@ -227,10 +227,36 @@ private:
 	uint32_t* m_pRefCount;
 };
 
+
+template<class T>
+inline bool operator == (const CComponentPtr<T>& ptrLeft, const void* pPointer)
+{
+	return ptrLeft.GetPointer() == pPointer;
+}
+
+template<class T>
+inline bool operator == (const void* pPointer, const CComponentPtr<T>& ptrRight)
+{
+	return pPointer == ptrRight.GetPointer();
+}
+
 template<class T>
 inline bool operator == (const CComponentPtr<T>& ptrLeft, const CComponentPtr<T>& ptrRight)
 {
 	return ptrLeft.GetKey() == ptrRight.GetKey() && ptrLeft.GetManager() == ptrRight.GetManager();
+}
+
+
+template<class T>
+inline bool operator != (const CComponentPtr<T>& ptrLeft, const void* pPointer)
+{
+	return ptrLeft.GetPointer() != pPointer;
+}
+
+template<class T>
+inline bool operator != (const void* pPointer, const CComponentPtr<T>& ptrRight)
+{
+	return pPointer != ptrRight.GetPointer();
 }
 
 template<class T>
@@ -239,10 +265,36 @@ inline bool operator != (const CComponentPtr<T>& ptrLeft, const CComponentPtr<T>
 	return ptrLeft.GetKey() != ptrRight.GetKey() || ptrLeft.GetManager() != ptrRight.GetManager();
 }
 
+
+template<class T>
+inline bool operator < (const CComponentPtr<T>& ptrLeft, const void* pPointer)
+{
+	return ptrLeft.GetPointer() < pPointer;
+}
+
+template<class T>
+inline bool operator < (const void* pPointer, const CComponentPtr<T>& ptrRight)
+{
+	return pPointer < ptrRight.GetPointer();
+}
+
 template<class T>
 inline bool operator < (const CComponentPtr<T>& ptrLeft, const CComponentPtr<T>& ptrRight)
 {
 	return ptrLeft.GetKey() < ptrRight.GetKey();
+}
+
+
+template<class T>
+inline bool operator <= (const CComponentPtr<T>& ptrLeft, const void* pPointer)
+{
+	return ptrLeft.GetPointer() <= pPointer;
+}
+
+template<class T>
+inline bool operator <= (const void* pPointer, const CComponentPtr<T>& ptrRight)
+{
+	return pPointer <= ptrRight.GetPointer();
 }
 
 template<class T>
@@ -251,10 +303,36 @@ inline bool operator <= (const CComponentPtr<T>& ptrLeft, const CComponentPtr<T>
 	return ptrLeft.GetKey() <= ptrRight.GetKey();
 }
 
+
+template<class T>
+inline bool operator > (const CComponentPtr<T>& ptrLeft, const void* pPointer)
+{
+	return ptrLeft.GetPointer() > pPointer;
+}
+
+template<class T>
+inline bool operator > (const void* pPointer, const CComponentPtr<T>& ptrRight)
+{
+	return pPointer > ptrRight.GetPointer();
+}
+
 template<class T>
 inline bool operator > (const CComponentPtr<T>& ptrLeft, const CComponentPtr<T>& ptrRight)
 {
 	return ptrLeft.GetKey() > ptrRight.GetKey();
+}
+
+
+template<class T>
+inline bool operator >= (const CComponentPtr<T>& ptrLeft, const void* pPointer)
+{
+	return ptrLeft.GetPointer() >= pPointer;
+}
+
+template<class T>
+inline bool operator >= (const void* pPointer, const CComponentPtr<T>& ptrRight)
+{
+	return pPointer >= ptrRight.GetPointer();
 }
 
 template<class T>
@@ -262,6 +340,7 @@ inline bool operator >= (const CComponentPtr<T>& ptrLeft, const CComponentPtr<T>
 {
 	return ptrLeft.GetKey() >= ptrRight.GetKey();
 }
+
 
 template<class T>
 struct eastl::hash<CComponentPtr<T>>
