@@ -256,7 +256,7 @@ static bool InternalLoadPipelineShader(TiXmlNode* pPipelineNode, CGfxShader*& pS
 {
 	int err = 0;
 
-	LogOutput(LOG_TAG_RENDERER, "\t\t\tLoadShader");
+	LogOutput(LOG_TAG_RENDERER, "\t\t\tLoadShader ");
 	{
 		const char szExtName[2][_MAX_STRING] = { "vert", "frag" };
 		const char szShaderKind[2][_MAX_STRING] = { "Vertex", "Fragment" };
@@ -267,7 +267,7 @@ static bool InternalLoadPipelineShader(TiXmlNode* pPipelineNode, CGfxShader*& pS
 		const char* szFileName = pShaderNode->ToElement()->AttributeString("file_name");
 		if (szFileName == nullptr) { err = -2; goto ERR; }
 
-		LogOutput(nullptr, " %s %s ", szShaderKind[kind], szFileName);
+		LogOutput(nullptr, "%s %s ", szShaderKind[kind], szFileName);
 
 		struct Define {
 			const char* szName;
@@ -442,13 +442,13 @@ static bool InternalLoadTexture2D(TiXmlNode* pPassNode, CGfxMaterialPass* pPass,
 
 	if (TiXmlNode* pTextureNode = pPassNode->FirstChild("Texture2D")) {
 		do {
-			LogOutput(LOG_TAG_RENDERER, "\t\tLoadTexture2D");
+			LogOutput(LOG_TAG_RENDERER, "\t\tLoadTexture2D ");
 			{
 				const char* szName = pTextureNode->ToElement()->AttributeString("name");
 				const char* szFileName = pTextureNode->ToElement()->AttributeString("file_name");
 				if (szName == nullptr || szFileName == nullptr) { err = -1; goto ERR; }
 
-				LogOutput(nullptr, " %s ", szFileName);
+				LogOutput(nullptr, "%s ", szFileName);
 
 				GfxFilter minFilter = StringToFilter(pTextureNode->ToElement()->AttributeString("min_filter"));
 				GfxFilter magFilter = StringToFilter(pTextureNode->ToElement()->AttributeString("mag_filter"));
@@ -476,13 +476,13 @@ static bool InternalLoadTexture2DArray(TiXmlNode* pPassNode, CGfxMaterialPass* p
 
 	if (TiXmlNode* pTextureNode = pPassNode->FirstChild("Texture2DArray")) {
 		do {
-			LogOutput(LOG_TAG_RENDERER, "\t\tLoadTexture2DArray");
+			LogOutput(LOG_TAG_RENDERER, "\t\tLoadTexture2DArray ");
 			{
 				const char* szName = pTextureNode->ToElement()->AttributeString("name");
 				const char* szFileName = pTextureNode->ToElement()->AttributeString("file_name");
 				if (szName == nullptr || szFileName == nullptr) { err = -1; goto ERR; }
 
-				LogOutput(nullptr, " %s ", szFileName);
+				LogOutput(nullptr, "%s ", szFileName);
 
 				GfxFilter minFilter = StringToFilter(pTextureNode->ToElement()->AttributeString("min_filter"));
 				GfxFilter magFilter = StringToFilter(pTextureNode->ToElement()->AttributeString("mag_filter"));
@@ -510,13 +510,13 @@ static bool InternalLoadTextureCubemap(TiXmlNode* pPassNode, CGfxMaterialPass* p
 
 	if (TiXmlNode* pTextureNode = pPassNode->FirstChild("TextureCubemap")) {
 		do {
-			LogOutput(LOG_TAG_RENDERER, "\t\tLoadTextureCubemap");
+			LogOutput(LOG_TAG_RENDERER, "\t\tLoadTextureCubemap ");
 			{
 				const char* szName = pTextureNode->ToElement()->AttributeString("name");
 				const char* szFileName = pTextureNode->ToElement()->AttributeString("file_name");
 				if (szName == nullptr || szFileName == nullptr) { err = -1; goto ERR; }
 
-				LogOutput(nullptr, " %s ", szFileName);
+				LogOutput(nullptr, "%s ", szFileName);
 
 				GfxFilter minFilter = StringToFilter(pTextureNode->ToElement()->AttributeString("min_filter"));
 				GfxFilter magFilter = StringToFilter(pTextureNode->ToElement()->AttributeString("mag_filter"));
@@ -544,13 +544,13 @@ static bool InternalLoadUniformVec1(TiXmlNode* pPassNode, CGfxMaterialPass* pPas
 
 	if (TiXmlNode* pUniformNode = pPassNode->FirstChild("Uniform1f")) {
 		do {
-			LogOutput(LOG_TAG_RENDERER, "\t\tLoadUniformVec1");
+			LogOutput(LOG_TAG_RENDERER, "\t\tLoadUniformVec1 ");
 			{
 				const char* szName = pUniformNode->ToElement()->AttributeString("name");
 				const char* szValue = pUniformNode->ToElement()->AttributeString("value");
 				if (szName == nullptr || szValue == nullptr) { err = -1; goto ERR; }
 
-				LogOutput(nullptr, " %s = %s ", szName, szValue);
+				LogOutput(nullptr, "%s = %s ", szName, szValue);
 
 				float value[1] = { 0.0f };
 				pUniformNode->ToElement()->AttributeFloat1("value", value);
@@ -573,13 +573,13 @@ static bool InternalLoadUniformVec2(TiXmlNode* pPassNode, CGfxMaterialPass* pPas
 
 	if (TiXmlNode* pUniformNode = pPassNode->FirstChild("Uniform2f")) {
 		do {
-			LogOutput(LOG_TAG_RENDERER, "\t\tLoadUniformVec2");
+			LogOutput(LOG_TAG_RENDERER, "\t\tLoadUniformVec2 ");
 			{
 				const char* szName = pUniformNode->ToElement()->AttributeString("name");
 				const char* szValue = pUniformNode->ToElement()->AttributeString("value");
 				if (szName == nullptr || szValue == nullptr) { err = -1; goto ERR; }
 
-				LogOutput(nullptr, " %s = vec2(%s) ", szName, szValue);
+				LogOutput(nullptr, "%s = vec2(%s) ", szName, szValue);
 
 				float value[2] = { 0.0f };
 				pUniformNode->ToElement()->AttributeFloat2("value", value);
@@ -602,13 +602,13 @@ static bool InternalLoadUniformVec3(TiXmlNode* pPassNode, CGfxMaterialPass* pPas
 
 	if (TiXmlNode* pUniformNode = pPassNode->FirstChild("Uniform3f")) {
 		do {
-			LogOutput(LOG_TAG_RENDERER, "\t\tLoadUniformVec3");
+			LogOutput(LOG_TAG_RENDERER, "\t\tLoadUniformVec3 ");
 			{
 				const char* szName = pUniformNode->ToElement()->AttributeString("name");
 				const char* szValue = pUniformNode->ToElement()->AttributeString("value");
 				if (szName == nullptr || szValue == nullptr) { err = -1; goto ERR; }
 
-				LogOutput(nullptr, " %s = vec3(%s) ", szName, szValue);
+				LogOutput(nullptr, "%s = vec3(%s) ", szName, szValue);
 
 				float value[3] = { 0.0f };
 				pUniformNode->ToElement()->AttributeFloat3("value", value);
@@ -631,13 +631,13 @@ static bool InternalLoadUniformVec4(TiXmlNode* pPassNode, CGfxMaterialPass* pPas
 
 	if (TiXmlNode* pUniformNode = pPassNode->FirstChild("Uniform4f")) {
 		do {
-			LogOutput(LOG_TAG_RENDERER, "\t\tLoadUniformVec4");
+			LogOutput(LOG_TAG_RENDERER, "\t\tLoadUniformVec4 ");
 			{
 				const char* szName = pUniformNode->ToElement()->AttributeString("name");
 				const char* szValue = pUniformNode->ToElement()->AttributeString("value");
 				if (szName == nullptr || szValue == nullptr) { err = -1; goto ERR; }
 
-				LogOutput(nullptr, " %s = vec4(%s) ", szName, szValue);
+				LogOutput(nullptr, "%s = vec4(%s) ", szName, szValue);
 
 				float value[4] = { 0.0f };
 				pUniformNode->ToElement()->AttributeFloat4("value", value);
