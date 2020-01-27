@@ -20,7 +20,7 @@ static bool InternalLoadDraw(TiXmlNode* pNode, const CGfxMeshPtr ptrMesh, CScene
 				CGfxMaterialPtr ptrMaterial = GfxRenderer()->NewMaterial(szMaterialFileName, vertexBinding, instanceBinding, baseLevel, numLevels);
 				if (ptrMaterial == nullptr) { err = -2; goto ERR; }
 
-				ptrComponentMesh->SetScreenFactor(lod, 1.0f);
+				ptrComponentMesh->SetScreenFactor(lod, 1.0f / (1 << lod));
 				ptrComponentMesh->SetMaterial(lod, ptrMaterial);
 				ptrComponentMesh->SetMeshDraw(lod, ptrMesh, indexDraw, instanceFormat, instanceBinding);
 				ptrComponentMesh->SetMask(lod, mask);
