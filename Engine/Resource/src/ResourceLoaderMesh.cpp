@@ -46,20 +46,23 @@ typedef struct MeshHeader
 static bool InternalLoadDraws(CGfxMesh* pMesh, DrawHeader* drawHeaders, int numDraws)
 {
 	for (int indexDraw = 0; indexDraw < numDraws; indexDraw++) {
-		LogOutput(LOG_TAG_RENDERER, "\tLoadMeshDraw %s ... ", drawHeaders[indexDraw].szName);
+		LogOutput(LOG_TAG_RENDERER, "\tLoadMeshDraw %s ", drawHeaders[indexDraw].szName);
 		{
 			const glm::aabb aabb(
 				glm::vec3(drawHeaders[indexDraw].minx, drawHeaders[indexDraw].miny, drawHeaders[indexDraw].minz),
 				glm::vec3(drawHeaders[indexDraw].maxx, drawHeaders[indexDraw].maxy, drawHeaders[indexDraw].maxz));
 
 			if (pMesh->CreateDraw(indexDraw, aabb, drawHeaders[indexDraw].baseVertex, drawHeaders[indexDraw].firstIndex, drawHeaders[indexDraw].indexCount) == false) {
-				return false;
+				goto ERR;
 			}
 		}
-		LogOutput(nullptr, "OK\n");
+		LogOutput(nullptr, "\n");
 	}
 
 	return true;
+ERR:
+	LogOutput(LOG_TAG_RENDERER, "Fail\n");
+	return false;
 }
 
 
