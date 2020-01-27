@@ -256,7 +256,9 @@ static bool InternalLoadPipelineShader(TiXmlNode* pPipelineNode, CGfxShader*& pS
 {
 	int err = 0;
 
-	char szShaderKind[2][_MAX_STRING] = { "Vertex", "Fragment" };
+	const char szExtName[2][_MAX_STRING] = { "vert", "frag" };
+	const char szShaderKind[2][_MAX_STRING] = { "Vertex", "Fragment" };
+
 	LogOutput(LOG_TAG_RENDERER, "\t\t\tLoad%sShader ", szShaderKind[kind]);
 	{
 		TiXmlNode* pShaderNode = pPipelineNode->FirstChild(szShaderKind[kind]);
@@ -336,7 +338,6 @@ static bool InternalLoadPipelineShader(TiXmlNode* pPipelineNode, CGfxShader*& pS
 						}
 					}
 
-					char szExtName[2][_MAX_STRING] = { "vert", "frag" };
 					char szBinFileName[_MAX_STRING] = { 0 };
 					sprintf(szBinFileName, "%x.%s", HashValue(szHashName), szExtName[kind]);
 					ShaderCompiler()->Compile(FileManager()->GetFullName(szFileName), szBinFileName, (shaderc_shader_kind)kind);
@@ -384,7 +385,6 @@ static bool InternalLoadPipelineShader(TiXmlNode* pPipelineNode, CGfxShader*& pS
 			}
 		}
 
-		char szExtName[2][_MAX_STRING] = { "vert", "frag" };
 		char szBinFileName[_MAX_STRING] = { 0 };
 		sprintf(szBinFileName, "%x.%s", HashValue(szHashName), szExtName[kind]);
 
