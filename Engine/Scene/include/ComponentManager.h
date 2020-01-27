@@ -23,7 +23,17 @@ public:
 	{
 		ASSERT(refCount == 0);
 	}
-	virtual void Release(void) = 0;
+
+	virtual void Release(void)
+	{
+
+	}
+
+	CComponentBase& operator = (const CComponentBase& component)
+	{
+		refCount.store(component.refCount);
+		return *this;
+	}
 
 
 public:

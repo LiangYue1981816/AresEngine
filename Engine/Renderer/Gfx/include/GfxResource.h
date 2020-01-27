@@ -18,7 +18,11 @@ public:
 	{
 		ASSERT(refCount == 0);
 	}
-	virtual void Release(void) = 0;
+
+	virtual void Release(void)
+	{
+
+	}
 
 
 public:

@@ -2,7 +2,7 @@
 #include "PreHeader.h"
 
 
-class CALL_API CComponent
+class CALL_API CComponent : public CComponentBase
 {
 	friend class CSceneNode;
 
@@ -15,7 +15,8 @@ public:
 
 	}
 	CComponent(const CComponent& component)
-		: m_name(component.m_name)
+		: CComponentBase(component)
+		, m_name(component.m_name)
 		, m_pParentNode(component.m_pParentNode)
 	{
 
