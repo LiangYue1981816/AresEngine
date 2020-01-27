@@ -167,23 +167,20 @@ public:
 	CComponentPtr(void)
 		: m_key(0)
 		, m_pManager(nullptr)
-		, m_pRefCount(nullptr)
 	{
 
 	}
 	CComponentPtr(uint32_t key, CComponentManager<T>* pManager)
 		: m_key(0)
 		, m_pManager(nullptr)
-		, m_pRefCount(nullptr)
 	{
-		Set(key, pManager, nullptr);
+		Set(key, pManager);
 	}
 	CComponentPtr(const CComponentPtr<T>& ptr)
 		: m_key(0)
 		, m_pManager(nullptr)
-		, m_pRefCount(nullptr)
 	{
-		Set(ptr.m_key, ptr.m_pManager, ptr.m_pRefCount);
+		Set(ptr.m_key, ptr.m_pManager);
 	}
 	virtual ~CComponentPtr(void)
 	{
@@ -192,7 +189,7 @@ public:
 
 
 private:
-	inline void Set(uint32_t key, CComponentManager<T>* pManager, uint32_t* pRefCount)
+	inline void Set(uint32_t key, CComponentManager<T>* pManager)
 	{
 		if (m_key == key && m_pManager == pManager) {
 			return;
@@ -203,39 +200,35 @@ private:
 		if (key && pManager) {
 			m_key = key;
 			m_pManager = pManager;
-			m_pRefCount = pRefCount;
+		}
 
-			if (m_pRefCount == nullptr) {
-				m_pRefCount = (uint32_t*)AllocMemory(sizeof(*m_pRefCount)); (*m_pRefCount) = 0;
-			}
-
-			++(*m_pRefCount);
+		if (CComponentBase* pComponent = (CComponentBase*)GetPointer()) {
+			pComponent->IncRefCount();
 		}
 	}
 
 public:
 	inline void Release(void)
 	{
-		if (m_pRefCount) {
-			if (--(*m_pRefCount) == 0) {
-				FreeMemory(m_pRefCount);
+		if (CComponentBase* pComponent = (CComponentBase*)GetPointer()) {
+			if (pComponent->DecRefCount() == 0) {
+				pComponent->Release();
 				m_pManager->DeleteComponent(m_key);
 			}
 		}
 
 		m_key = 0;
 		m_pManager = nullptr;
-		m_pRefCount = nullptr;
 	}
 
-	inline uint32_t GetKey(void) const
+	inline bool IsValid(void) const
 	{
-		return m_key;
+		return GetPointer() != nullptr;
 	}
 
-	inline CComponentManager<T>* GetManager(void) const
+	inline bool IsNull(void) const
 	{
-		return m_pManager;
+		return GetPointer() == nullptr;
 	}
 
 	inline T* GetPointer(void) const
@@ -248,14 +241,19 @@ public:
 		}
 	}
 
-	inline bool IsNull(void) const
+	inline uint32_t GetRefCount(void) const
 	{
-		return m_key == 0 || m_pManager == nullptr;
+		if (CComponentBase* pComponent = (CComponentBase*)GetPointer()) {
+			return pComponent->GetRefCount();
+		}
+		else {
+			return 0;
+		}
 	}
 
 	inline CComponentPtr<T>& operator = (const CComponentPtr<T>& ptr)
 	{
-		Set(ptr.m_key, ptr.m_pManager, ptr.m_pRefCount);
+		Set(ptr.m_key, ptr.m_pManager);
 		return *this;
 	}
 
@@ -274,13 +272,15 @@ public:
 		return GetPointer();
 	}
 
+	inline operator bool(void) const
+	{
+		return GetPointer() != nullptr;
+	}
+
 
 private:
 	uint32_t m_key;
 	CComponentManager<T>* m_pManager;
-
-private:
-	uint32_t* m_pRefCount;
 };
 
 
