@@ -20,6 +20,7 @@ public:
 	}
 	virtual void Release(void) = 0;
 
+
 public:
 	uint32_t GetRefCount(void)
 	{
