@@ -15,6 +15,8 @@ enum RawVertexAttribute
 
 typedef struct DrawHeader
 {
+	char szName[260];
+
 	float minx = FLT_MAX;
 	float miny = FLT_MAX;
 	float minz = FLT_MAX;
