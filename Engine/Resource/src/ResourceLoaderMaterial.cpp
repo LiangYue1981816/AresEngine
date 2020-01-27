@@ -256,11 +256,11 @@ static bool InternalLoadPipelineShader(TiXmlNode* pPipelineNode, CGfxShader*& pS
 {
 	int err = 0;
 
-	const char szExtName[2][_MAX_STRING] = { "vert", "frag" };
-	const char szShaderKind[2][_MAX_STRING] = { "Vertex", "Fragment" };
-
-	LogOutput(LOG_TAG_RENDERER, "\t\t\tLoad%sShader ", szShaderKind[kind]);
+	LogOutput(LOG_TAG_RENDERER, "\t\t\tLoadShader");
 	{
+		const char szExtName[2][_MAX_STRING] = { "vert", "frag" };
+		const char szShaderKind[2][_MAX_STRING] = { "Vertex", "Fragment" };
+
 		TiXmlNode* pShaderNode = pPipelineNode->FirstChild(szShaderKind[kind]);
 		if (pShaderNode == nullptr) { err = -1; goto ERR; }
 
@@ -429,7 +429,6 @@ static bool InternalLoadPipeline(TiXmlNode* pPassNode, CGfxMaterialPass* pPass, 
 		if (pPass->SetPipeline(ptrRenderPass, pVertexShader, pFragmentShader, state, indexSubpass, vertexBinding, instanceBinding) == false) { err = -7; goto ERR; }
 #endif
 	}
-
 	return true;
 ERR:
 	LogOutput(LOG_TAG_RENDERER, "Fail(%d)\n", err);
@@ -733,9 +732,10 @@ bool CResourceLoader::LoadMaterial(const char* szFileName, CGfxMaterial* pMateri
 
 	int err = 0;
 
-	pMaterial->Destroy();
 	LogOutput(LOG_TAG_RENDERER, "LoadMaterial %s\n", szFileName);
 	{
+		pMaterial->Destroy();
+
 		CStream stream;
 		if (FileManager()->LoadStream(szFileName, &stream) == false) { err = -1; goto ERR; }
 
