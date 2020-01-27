@@ -93,7 +93,7 @@ private:
 		Release();
 
 		if (pPointer) {
-			m_pPointer = pPointer;
+			m_pPointer = (T*)pPointer;
 		}
 
 		if (m_pPointer) {
