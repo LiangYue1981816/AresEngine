@@ -14,6 +14,11 @@ public:
 	{
 
 	}
+	CComponentBase(const CComponentBase& component)
+		: refCount(0)
+	{
+		refCount.store(component.refCount);
+	}
 	virtual ~CComponentBase(void)
 	{
 		ASSERT(refCount == 0);
