@@ -15,8 +15,7 @@ public:
 
 	}
 	CComponent(const CComponent& component)
-		: CComponentBase(component)
-		, m_name(component.m_name)
+		: m_name(component.m_name)
 		, m_pParentNode(component.m_pParentNode)
 	{
 

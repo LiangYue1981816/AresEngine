@@ -24,6 +24,12 @@ public:
 
 	}
 
+	CGfxResource& operator = (const CGfxResource& resource)
+	{
+		refCount.store(resource.refCount);
+		return *this;
+	}
+
 
 public:
 	uint32_t GetRefCount(void)
