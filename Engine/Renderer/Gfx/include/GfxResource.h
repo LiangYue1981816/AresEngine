@@ -92,7 +92,11 @@ private:
 
 		Release();
 
-		if ((m_pPointer = (T*)pPointer) != nullptr) {
+		if (pPointer) {
+			m_pPointer = pPointer;
+		}
+
+		if (m_pPointer) {
 			((CGfxResource*)m_pPointer)->IncRefCount();
 		}
 	}
