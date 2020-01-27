@@ -463,6 +463,7 @@ static bool InternalLoadTexture2D(TiXmlNode* pPassNode, CGfxMaterialPass* pPass,
 			LogOutput(nullptr, "OK\n");
 		} while ((pTextureNode = pPassNode->IterateChildren("Texture2D", pTextureNode)) != nullptr);
 	}
+
 	return true;
 ERR:
 	LogOutput(nullptr, "Fail(%d)\n", err);
@@ -496,6 +497,7 @@ static bool InternalLoadTexture2DArray(TiXmlNode* pPassNode, CGfxMaterialPass* p
 			LogOutput(nullptr, "OK\n");
 		} while ((pTextureNode = pPassNode->IterateChildren("Texture2DArray", pTextureNode)) != nullptr);
 	}
+
 	return true;
 ERR:
 	LogOutput(nullptr, "Fail(%d)\n", err);
@@ -529,6 +531,7 @@ static bool InternalLoadTextureCubemap(TiXmlNode* pPassNode, CGfxMaterialPass* p
 			LogOutput(nullptr, "OK\n");
 		} while ((pTextureNode = pPassNode->IterateChildren("TextureCubemap", pTextureNode)) != nullptr);
 	}
+
 	return true;
 ERR:
 	LogOutput(nullptr, "Fail(%d)\n", err);
@@ -557,6 +560,7 @@ static bool InternalLoadUniformVec1(TiXmlNode* pPassNode, CGfxMaterialPass* pPas
 			LogOutput(nullptr, "OK\n");
 		} while ((pUniformNode = pPassNode->IterateChildren("Uniform1f", pUniformNode)) != nullptr);
 	}
+
 	return true;
 ERR:
 	LogOutput(nullptr, "Fail(%d)\n", err);
@@ -585,6 +589,7 @@ static bool InternalLoadUniformVec2(TiXmlNode* pPassNode, CGfxMaterialPass* pPas
 			LogOutput(nullptr, "OK\n");
 		} while ((pUniformNode = pPassNode->IterateChildren("Uniform2f", pUniformNode)) != nullptr);
 	}
+
 	return true;
 ERR:
 	LogOutput(nullptr, "Fail(%d)\n", err);
@@ -613,6 +618,7 @@ static bool InternalLoadUniformVec3(TiXmlNode* pPassNode, CGfxMaterialPass* pPas
 			LogOutput(nullptr, "OK\n");
 		} while ((pUniformNode = pPassNode->IterateChildren("Uniform3f", pUniformNode)) != nullptr);
 	}
+
 	return true;
 ERR:
 	LogOutput(nullptr, "Fail(%d)\n", err);
@@ -641,6 +647,7 @@ static bool InternalLoadUniformVec4(TiXmlNode* pPassNode, CGfxMaterialPass* pPas
 			LogOutput(nullptr, "OK\n");
 		} while ((pUniformNode = pPassNode->IterateChildren("Uniform4f", pUniformNode)) != nullptr);
 	}
+
 	return true;
 ERR:
 	LogOutput(nullptr, "Fail(%d)\n", err);
@@ -749,7 +756,7 @@ bool CResourceLoader::LoadMaterial(const char* szFileName, CGfxMaterial* pMateri
 
 	return true;
 ERR:
-	LogOutput(LOG_TAG_RENDERER, "Fail(%d)\n", err);
 	pMaterial->Destroy();
+	LogOutput(LOG_TAG_RENDERER, "Fail(%d)\n", err);
 	return false;
 }

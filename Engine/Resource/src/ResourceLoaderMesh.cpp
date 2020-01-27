@@ -92,7 +92,7 @@ bool CResourceLoader::LoadMesh(const char* szFileName, CGfxMesh* pMesh, int vert
 
 	return true;
 ERR:
-	LogOutput(LOG_TAG_RENDERER, "Fail(%d)\n", err);
 	pMesh->Destroy();
+	LogOutput(LOG_TAG_RENDERER, "Fail(%d)\n", err);
 	return false;
 }
