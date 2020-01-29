@@ -22,7 +22,7 @@ static bool InternalLoadDraw(TiXmlNode* pNode, const CGfxMeshPtr ptrMesh, CScene
 			CGfxMaterialPtr ptrMaterial = GfxRenderer()->NewMaterial(szMaterialFileName, vertexBinding, instanceBinding, baseLevel, numLevels);
 			if (ptrMaterial == nullptr) { err = -3; goto ERR; }
 
-			CComponentMeshPtr ptrComponentMesh = pCurrentSceneNode->GetSceneManager()->CreateComponentMesh(HashValueFormat("%x_%s", ptrMesh->GetName(), szName));
+			CComponentMeshPtr ptrComponentMesh = pCurrentSceneNode->GetSceneManager()->CreateComponentMesh(HashValueFormat("%x_%x_%s", pCurrentSceneNode->GetName(), ptrMesh->GetName(), szName));
 			if (ptrComponentMesh == nullptr) { err = -4; goto ERR; }
 
 			ptrComponentMesh->SetScreenFactor(lod, 1.0f / (1 << lod));
