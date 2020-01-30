@@ -57,27 +57,20 @@ class CVKMemory;
 class CVKMemoryAllocator;
 class CVKMemoryManager;
 
+class CVKTransferBuffer;
+class CVKTransferManager;
+
 class CVKRenderer;
 
 class CVKSwapChain;
 class CVKRenderPass;
-class CVKRenderPassManager;
 class CVKRenderTexture;
-class CVKRenderTextureManager;
 class CVKFrameBuffer;
-class CVKFrameBufferManager;
 
 class CVKShader;
-class CVKShaderManager;
-
 class CVKPipeline;
 class CVKPipelineCompute;
-class CVKPipelineComputeManager;
 class CVKPipelineGraphics;
-class CVKPipelineGraphicsManager;
-
-class CVKTransferBuffer;
-class CVKTransferManager;
 
 class CVKBuffer;
 
@@ -92,35 +85,23 @@ class CVKMultiInstanceBuffer;
 class CVKMultiIndirectBuffer;
 
 class CVKUniformBuffer;
-class CVKUniformBufferManager;
 class CVKStorageBuffer;
-class CVKStorageBufferManager;
 
 class CVKSampler;
-class CVKSamplerManager;
 class CVKTexture;
 class CVKTexture2D;
-class CVKTexture2DManager;
 class CVKTexture2DArray;
-class CVKTexture2DArrayManager;
 class CVKTextureCubemap;
-class CVKTextureCubemapManager;
 
 class CVKMesh;
-class CVKMeshManager;
 class CVKMeshDraw;
-class CVKMeshDrawManager;
 
 class CVKMaterial;
 class CVKMaterialPass;
-class CVKMaterialManager;
 
 class CVKDescriptorPool;
 class CVKDescriptorSet;
-class CVKDescriptorSetManager;
 class CVKDescriptorLayout;
-class CVKDescriptorLayoutManager;
 
 class CVKSemaphore;
 class CVKCommandBuffer;
-class CVKCommandBufferManager;
