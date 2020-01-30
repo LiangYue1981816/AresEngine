@@ -44,19 +44,19 @@ public:
 private:
 	static bool CompareForFrontToBack(const int& index0, const int& index1)
 	{
-		const InstanceData& instanceData0 = RenderSystem()->GetInstanceData(index0);
-		const InstanceData& instanceData1 = RenderSystem()->GetInstanceData(index1);
-		float distance0 = glm::distance2(glm::vec3(instanceData0.center.x, instanceData0.center.y, instanceData0.center.z), cameraPosition);
-		float distance1 = glm::distance2(glm::vec3(instanceData1.center.x, instanceData1.center.y, instanceData1.center.z), cameraPosition);
+		const glm::vec4& center0 = RenderSystem()->GetInstanceData(index0).center;
+		const glm::vec4& center1 = RenderSystem()->GetInstanceData(index1).center;
+		float distance0 = glm::distance2(glm::vec3(center0.x, center0.y, center0.z), cameraPosition);
+		float distance1 = glm::distance2(glm::vec3(center1.x, center1.y, center1.z), cameraPosition);
 		return distance0 < distance1;
 	}
 
 	static bool CompareForBackToFront(const int& index0, const int& index1)
 	{
-		const InstanceData& instanceData0 = RenderSystem()->GetInstanceData(index0);
-		const InstanceData& instanceData1 = RenderSystem()->GetInstanceData(index1);
-		float distance0 = glm::distance2(glm::vec3(instanceData0.center.x, instanceData0.center.y, instanceData0.center.z), cameraPosition);
-		float distance1 = glm::distance2(glm::vec3(instanceData1.center.x, instanceData1.center.y, instanceData1.center.z), cameraPosition);
+		const glm::vec4& center0 = RenderSystem()->GetInstanceData(index0).center;
+		const glm::vec4& center1 = RenderSystem()->GetInstanceData(index1).center;
+		float distance0 = glm::distance2(glm::vec3(center0.x, center0.y, center0.z), cameraPosition);
+		float distance1 = glm::distance2(glm::vec3(center1.x, center1.y, center1.z), cameraPosition);
 		return distance0 > distance1;
 	}
 
