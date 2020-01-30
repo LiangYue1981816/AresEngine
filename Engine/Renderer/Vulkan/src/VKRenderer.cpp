@@ -17,6 +17,7 @@ CVKRenderer::CVKRenderer(void* hInstance, void* hWnd, void* hDC, int width, int 
 	, m_pTextureCubemapManager(nullptr)
 	, m_pUniformBufferManager(nullptr)
 	, m_pStorageBufferManager(nullptr)
+	, m_pInstanceBufferManager(nullptr)
 	, m_pMeshManager(nullptr)
 	, m_pMeshDrawManager(nullptr)
 	, m_pMaterialManager(nullptr)
@@ -39,6 +40,7 @@ CVKRenderer::CVKRenderer(void* hInstance, void* hWnd, void* hDC, int width, int 
 	m_pTextureCubemapManager = new CVKTextureCubemapManager(m_pDevice);
 	m_pUniformBufferManager = new CVKUniformBufferManager(m_pDevice);
 	m_pStorageBufferManager = new CVKStorageBufferManager(m_pDevice);
+	m_pInstanceBufferManager = new CVKInstanceBufferManager(m_pDevice);
 	m_pMeshManager = new CVKMeshManager(m_pDevice);
 	m_pMeshDrawManager = new CVKMeshDrawManager(m_pDevice);
 	m_pMaterialManager = new CVKMaterialManager(m_pDevice);
@@ -63,6 +65,7 @@ CVKRenderer::~CVKRenderer(void)
 	delete m_pMaterialManager;
 	delete m_pMeshDrawManager;
 	delete m_pMeshManager;
+	delete m_pInstanceBufferManager;
 	delete m_pStorageBufferManager;
 	delete m_pUniformBufferManager;
 	delete m_pTextureCubemapManager;
@@ -206,7 +209,7 @@ CGfxStorageBufferPtr CVKRenderer::NewStorageBuffer(size_t size)
 
 CGfxMultiInstanceBufferPtr CVKRenderer::NewInstanceBuffer(uint32_t instanceFormat, int instanceBinding, int count)
 {
-	return CGfxMultiInstanceBufferPtr(nullptr);
+	return m_pInstanceBufferManager->Create(instanceFormat, instanceBinding, count);
 }
 
 CGfxMeshPtr CVKRenderer::GetMesh(uint32_t name)

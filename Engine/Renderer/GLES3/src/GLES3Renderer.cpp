@@ -15,6 +15,7 @@ CGLES3Renderer::CGLES3Renderer(void* hInstance, void* hWnd, void* hDC, int width
 	, m_pTextureCubemapManager(nullptr)
 	, m_pUniformBufferManager(nullptr)
 	, m_pStorageBufferManager(nullptr)
+	, m_pInstanceBufferManager(nullptr)
 	, m_pMeshManager(nullptr)
 	, m_pMeshDrawManager(nullptr)
 	, m_pMaterialManager(nullptr)
@@ -36,6 +37,7 @@ CGLES3Renderer::CGLES3Renderer(void* hInstance, void* hWnd, void* hDC, int width
 	m_pTextureCubemapManager = new CGLES3TextureCubemapManager;
 	m_pUniformBufferManager = new CGLES3UniformBufferManager;
 	m_pStorageBufferManager = new CGLES3StorageBufferManager;
+	m_pInstanceBufferManager = new CGLES3InstanceBufferManager;
 	m_pMeshManager = new CGLES3MeshManager;
 	m_pMeshDrawManager = new CGLES3MeshDrawManager;
 	m_pMaterialManager = new CGLES3MaterialManager;
@@ -60,6 +62,7 @@ CGLES3Renderer::~CGLES3Renderer(void)
 	delete m_pMaterialManager;
 	delete m_pMeshDrawManager;
 	delete m_pMeshManager;
+	delete m_pInstanceBufferManager;
 	delete m_pStorageBufferManager;
 	delete m_pUniformBufferManager;
 	delete m_pTextureCubemapManager;
@@ -200,7 +203,7 @@ CGfxStorageBufferPtr CGLES3Renderer::NewStorageBuffer(size_t size)
 
 CGfxMultiInstanceBufferPtr CGLES3Renderer::NewInstanceBuffer(uint32_t instanceFormat, int instanceBinding, int count)
 {
-	return CGfxMultiInstanceBufferPtr(nullptr);
+	return m_pInstanceBufferManager->Create(instanceFormat, instanceBinding, count);
 }
 
 CGfxMeshPtr CGLES3Renderer::GetMesh(uint32_t name)

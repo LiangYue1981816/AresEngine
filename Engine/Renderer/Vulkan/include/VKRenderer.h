@@ -237,6 +237,7 @@ private:
 	CVKTextureCubemapManager* m_pTextureCubemapManager;
 	CVKUniformBufferManager* m_pUniformBufferManager;
 	CVKStorageBufferManager* m_pStorageBufferManager;
+	CVKInstanceBufferManager* m_pInstanceBufferManager;
 	CVKMeshManager* m_pMeshManager;
 	CVKMeshDrawManager* m_pMeshDrawManager;
 	CVKMaterialManager* m_pMaterialManager;

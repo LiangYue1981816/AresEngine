@@ -220,6 +220,7 @@ private:
 	CGLES3TextureCubemapManager* m_pTextureCubemapManager;
 	CGLES3UniformBufferManager* m_pUniformBufferManager;
 	CGLES3StorageBufferManager* m_pStorageBufferManager;
+	CGLES3InstanceBufferManager* m_pInstanceBufferManager;
 	CGLES3MeshManager* m_pMeshManager;
 	CGLES3MeshDrawManager* m_pMeshDrawManager;
 	CGLES3MaterialManager* m_pMaterialManager;
