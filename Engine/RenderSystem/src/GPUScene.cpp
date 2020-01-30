@@ -100,12 +100,11 @@ const InstanceData& CGPUScene::GetInstanceData(int index) const
 	static InstanceData invalid;
 
 	if (index >= 0 && index < m_instanceBuffer.size()) {
-		if (m_freeIndex.find(index) == m_freeIndex.end()) {
-			return m_instanceBuffer[index];
-		}
+		return m_instanceBuffer[index];
 	}
-
-	return invalid;
+	else {
+		return invalid;
+	}
 }
 
 void CGPUScene::Update(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer)
