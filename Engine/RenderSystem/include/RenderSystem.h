@@ -181,16 +181,14 @@ public:
 	void SetMainShadowLookat(int indexLevel, float eyex, float eyey, float eyez, float centerx, float centery, float centerz, float upx, float upy, float upz);
 
 private:
-	void UpdateCamera(CTaskGraph& taskGraph, CCamera* pCamera) const;
+	void UpdateCamera(CTaskGraph& taskGraph, CCamera* pCamera);
+	void UpdateGPUScene(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer);
 
-private:
-	void UpdateGPUScene(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer) const;
+	void RenderDefault(CTaskGraph& taskGraph, CCamera* pCamera, bool bPresent);
+	void RenderDefault(CTaskGraph& taskGraph, CCamera* pCamera, bool bPresent, CGfxCommandBufferPtr ptrCommandBuffer);
 
-	void RenderDefault(CTaskGraph& taskGraph, CCamera* pCamera, bool bPresent) const;
-	void RenderDefault(CTaskGraph& taskGraph, CCamera* pCamera, bool bPresent, CGfxCommandBufferPtr ptrCommandBuffer) const;
-
-	void RenderForwardLighting(CTaskGraph& taskGraph, CCamera* pCamera, bool bPresent) const;
-	void RenderForwardLighting(CTaskGraph& taskGraph, CCamera* pCamera, bool bPresent, CGfxCommandBufferPtr ptrCommandBuffer) const;
+	void RenderForwardLighting(CTaskGraph& taskGraph, CCamera* pCamera, bool bPresent);
+	void RenderForwardLighting(CTaskGraph& taskGraph, CCamera* pCamera, bool bPresent, CGfxCommandBufferPtr ptrCommandBuffer);
 
 
 private:
