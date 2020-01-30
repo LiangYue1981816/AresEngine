@@ -147,12 +147,12 @@ private:
 public:
 	int AddInstance(void);
 	void RemoveInstance(int index);
-	void ModifyInstanceData(int index, const CGPUScene::InstanceData &data, int indexThread = 0);
+	void ModifyInstanceData(int index, const InstanceData &data, int indexThread = 0);
 
 	int GetDefaultInstanceIndex(void) const;
 	int GetPostProcessInstnaceIndex(void) const;
 
-	const CGPUScene::InstanceData& GetInstanceData(int index) const;
+	const InstanceData& GetInstanceData(int index) const;
 
 public:
 	void SetTime(float t, float dt);

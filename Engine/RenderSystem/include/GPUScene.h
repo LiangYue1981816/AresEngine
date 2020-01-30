@@ -2,6 +2,21 @@
 #include "PreHeader.h"
 
 
+typedef struct InstanceData {
+	InstanceData(void)
+	{
+
+	}
+
+	// Base
+	glm::mat4 transformMatrix;
+	glm::vec4 center;
+
+	// Light
+	glm::vec4 lightColor;
+	glm::vec4 lightAttenuation;
+} InstanceData;
+
 class CALL_API CGPUScene
 {
 	friend class CRenderSystem;
@@ -10,22 +25,6 @@ class CALL_API CGPUScene
 	friend class CPassDefault;
 	friend class CPassForwardLighting;
 
-
-public:
-	typedef struct InstanceData {
-		InstanceData(void)
-		{
-
-		}
-
-		// Base
-		glm::mat4 transformMatrix;
-		glm::vec4 center;
-
-		// Light
-		glm::vec4 lightColor;
-		glm::vec4 lightAttenuation;
-	} InstanceData;
 
 private:
 	typedef struct TransferData {

@@ -209,7 +209,7 @@ void CRenderSystem::RemoveInstance(int index)
 	m_pGPUScene->RemoveInstance(index);
 }
 
-void CRenderSystem::ModifyInstanceData(int index, const CGPUScene::InstanceData &data, int indexThread)
+void CRenderSystem::ModifyInstanceData(int index, const InstanceData &data, int indexThread)
 {
 	m_pGPUScene->ModifyInstanceData(index, data, indexThread);
 }
@@ -224,7 +224,7 @@ int CRenderSystem::GetPostProcessInstnaceIndex(void) const
 	return m_pGPUScene->GetPostProcessInstnaceIndex();
 }
 
-const CGPUScene::InstanceData& CRenderSystem::GetInstanceData(int index) const
+const InstanceData& CRenderSystem::GetInstanceData(int index) const
 {
 	return m_pGPUScene->GetInstanceData(index);
 }

@@ -95,7 +95,7 @@ int CGPUScene::GetPostProcessInstnaceIndex(void) const
 	return m_indexPostProcessInstnace;
 }
 
-const CGPUScene::InstanceData& CGPUScene::GetInstanceData(int index) const
+const InstanceData& CGPUScene::GetInstanceData(int index) const
 {
 	static InstanceData invalid;
 
