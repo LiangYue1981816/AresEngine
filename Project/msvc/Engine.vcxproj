@@ -258,7 +258,6 @@
     <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3TextureManager.h" />
     <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3UniformBuffer.h" />
     <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3UniformBufferManager.h" />
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3VertexArrayObject.h" />
     <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3VertexBuffer.h" />
     <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandBeginRenderPass.h" />
     <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandBindDescriptorSet.h" />
@@ -690,7 +689,6 @@
     <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3TextureManager.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3UniformBuffer.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3UniformBufferManager.cpp" />
-    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3VertexArrayObject.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3VertexBuffer.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKAllocator.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKBuffer.cpp" />
