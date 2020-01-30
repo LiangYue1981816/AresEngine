@@ -1,8 +1,6 @@
 #pragma once
 
 
-class CALL_API CGfxRenderer;
-
 class CALL_API CGfxProfiler;
 class CALL_API CGfxProfilerSample;
 
@@ -10,6 +8,8 @@ class CALL_API CGfxResource;
 class CALL_API CGfxResourceManager;
 
 class CALL_API CGfxCamera;
+
+class CALL_API CGfxRenderer;
 
 class CALL_API CGfxSwapChain;
 class CALL_API CGfxRenderPass;
@@ -25,13 +25,13 @@ class CALL_API CGfxVertexBuffer;
 class CALL_API CGfxInstanceBuffer;
 class CALL_API CGfxIndirectBuffer;
 
-class CALL_API CGfxUniformBuffer;
-class CALL_API CGfxStorageBuffer;
-
 class CALL_API CGfxMultiIndexBuffer;
 class CALL_API CGfxMultiVertexBuffer;
 class CALL_API CGfxMultiIndirectBuffer;
 class CALL_API CGfxMultiInstanceBuffer;
+
+class CALL_API CGfxUniformBuffer;
+class CALL_API CGfxStorageBuffer;
 
 class CALL_API CGfxSampler;
 class CALL_API CGfxTexture2D;
@@ -77,13 +77,13 @@ typedef CGfxResourcePtr<CGfxVertexBuffer> CGfxVertexBufferPtr;
 typedef CGfxResourcePtr<CGfxInstanceBuffer> CGfxInstanceBufferPtr;
 typedef CGfxResourcePtr<CGfxIndirectBuffer> CGfxIndirectBufferPtr;
 
-typedef CGfxResourcePtr<CGfxUniformBuffer> CGfxUniformBufferPtr;
-typedef CGfxResourcePtr<CGfxStorageBuffer> CGfxStorageBufferPtr;
-
 typedef CGfxResourcePtr<CGfxMultiIndexBuffer> CGfxMultiIndexBufferPtr;
 typedef CGfxResourcePtr<CGfxMultiVertexBuffer> CGfxMultiVertexBufferPtr;
 typedef CGfxResourcePtr<CGfxMultiInstanceBuffer> CGfxMultiInstanceBufferPtr;
 typedef CGfxResourcePtr<CGfxMultiIndirectBuffer> CGfxMultiIndirectBufferPtr;
+
+typedef CGfxResourcePtr<CGfxUniformBuffer> CGfxUniformBufferPtr;
+typedef CGfxResourcePtr<CGfxStorageBuffer> CGfxStorageBufferPtr;
 
 typedef CGfxResourcePtr<CGfxDescriptorSet> CGfxDescriptorSetPtr;
 typedef CGfxResourcePtr<CGfxDescriptorLayout> CGfxDescriptorLayoutPtr;

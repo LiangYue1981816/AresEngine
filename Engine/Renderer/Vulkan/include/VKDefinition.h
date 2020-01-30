@@ -48,8 +48,6 @@
 }
 
 
-class CVKRenderer;
-
 class CVKAllocator;
 class CVKInstance;
 class CVKDevice;
@@ -58,6 +56,8 @@ class CVKQueue;
 class CVKMemory;
 class CVKMemoryAllocator;
 class CVKMemoryManager;
+
+class CVKRenderer;
 
 class CVKSwapChain;
 class CVKRenderPass;

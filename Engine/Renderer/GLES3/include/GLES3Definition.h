@@ -24,6 +24,7 @@ class CGLES3FrameBufferManager;
 
 class CGLES3Shader;
 class CGLES3ShaderManager;
+
 class CGLES3Pipeline;
 class CGLES3PipelineCompute;
 class CGLES3PipelineComputeManager;
