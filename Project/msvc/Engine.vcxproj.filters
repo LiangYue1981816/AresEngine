@@ -1635,6 +1635,9 @@
     <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3InstanceBufferManager.h">
       <Filter>Engine\Renderer\GLES3\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKInstanceBufferManager.h">
+      <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Engine\ThirdParty\eastl\source\allocator_eastl.cpp">
@@ -2380,6 +2383,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3InstanceBufferManager.cpp">
       <Filter>Engine\Renderer\GLES3\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKInstanceBufferManager.cpp">
+      <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

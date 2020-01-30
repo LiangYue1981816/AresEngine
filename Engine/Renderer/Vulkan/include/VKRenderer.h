@@ -38,8 +38,10 @@
 #include "VKBuffer.h"
 #include "VKIndexBuffer.h"
 #include "VKVertexBuffer.h"
-#include "VKInstanceBuffer.h"
 #include "VKIndirectBuffer.h"
+
+#include "VKInstanceBuffer.h"
+#include "VKInstanceBufferManager.h"
 
 #include "VKUniformBuffer.h"
 #include "VKUniformBufferManager.h"

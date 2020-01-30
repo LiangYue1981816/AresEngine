@@ -317,6 +317,7 @@
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKIndirectBuffer.h" />
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKInstance.h" />
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKInstanceBuffer.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKInstanceBufferManager.h" />
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKMaterial.h" />
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKMaterialManager.h" />
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKMaterialPass.h" />
@@ -710,6 +711,7 @@
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKIndirectBuffer.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKInstance.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKInstanceBuffer.cpp" />
+    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKInstanceBufferManager.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKMaterial.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKMaterialManager.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKMaterialPass.cpp" />
