@@ -114,6 +114,8 @@ public:
 	CGfxUniformBufferPtr NewUniformBuffer(size_t size);
 	CGfxStorageBufferPtr NewStorageBuffer(size_t size);
 
+	CGfxMultiInstanceBufferPtr NewInstanceBuffer(uint32_t instanceFormat, int instanceBinding = 1);
+
 	CGfxMeshPtr GetMesh(uint32_t name);
 	CGfxMeshPtr NewMesh(uint32_t name);
 	CGfxMeshPtr NewMesh(const char* szFileName, int vertexBinding = 0);

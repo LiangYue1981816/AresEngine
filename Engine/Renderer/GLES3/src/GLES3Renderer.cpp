@@ -198,6 +198,11 @@ CGfxStorageBufferPtr CGLES3Renderer::NewStorageBuffer(size_t size)
 	return m_pStorageBufferManager->Create(size);
 }
 
+CGfxMultiInstanceBufferPtr CGLES3Renderer::NewInstanceBuffer(uint32_t instanceFormat, int instanceBinding)
+{
+	return CGfxMultiInstanceBufferPtr(nullptr);
+}
+
 CGfxMeshPtr CGLES3Renderer::GetMesh(uint32_t name)
 {
 	return m_pMeshManager->Get(name);

@@ -204,6 +204,11 @@ CGfxStorageBufferPtr CVKRenderer::NewStorageBuffer(size_t size)
 	return m_pStorageBufferManager->Create(size);
 }
 
+CGfxMultiInstanceBufferPtr CVKRenderer::NewInstanceBuffer(uint32_t instanceFormat, int instanceBinding)
+{
+	return CGfxMultiInstanceBufferPtr(nullptr);
+}
+
 CGfxMeshPtr CVKRenderer::GetMesh(uint32_t name)
 {
 	return m_pMeshManager->Get(name);
