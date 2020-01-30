@@ -42,9 +42,6 @@ class CGLES3MultiVertexBuffer;
 class CGLES3MultiInstanceBuffer;
 class CGLES3MultiIndirectBuffer;
 
-class CGLES3VertexArrayObject;
-class CGLES3MultiVertexArrayObject;
-
 class CGLES3UniformBuffer;
 class CGLES3UniformBufferManager;
 class CGLES3StorageBuffer;

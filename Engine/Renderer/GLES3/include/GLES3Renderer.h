@@ -26,7 +26,6 @@
 #include "GLES3VertexBuffer.h"
 #include "GLES3InstanceBuffer.h"
 #include "GLES3IndirectBuffer.h"
-#include "GLES3VertexArrayObject.h"
 
 #include "GLES3UniformBuffer.h"
 #include "GLES3UniformBufferManager.h"
