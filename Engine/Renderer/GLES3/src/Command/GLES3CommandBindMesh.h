@@ -24,7 +24,9 @@ public:
 
 		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_BIND_MESH, "CommandBindMesh");
 		{
-			((CGLES3Mesh*)m_ptrMesh.GetPointer())->Bind();
+			if (m_pPipelineGraphics->IsCompatibleVertexFormat(m_ptrMesh->GetVertexBufferPtr()->GetVertexBinding(), m_ptrMesh->GetVertexBufferPtr()->GetVertexFormat())) {
+				((CGLES3Mesh*)m_ptrMesh.GetPointer())->Bind();
+			}
 		}
 	}
 
