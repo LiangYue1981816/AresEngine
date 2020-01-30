@@ -9,7 +9,6 @@ CGLES3MeshDraw::CGLES3MeshDraw(CGLES3MeshDrawManager* pManager, uint32_t name, c
 
 	, m_pMeshDraw(nullptr)
 	, m_pMultiInstanceBuffer{ nullptr }
-	, m_pMultiVertexArrayObject{ nullptr }
 
 	, m_pRenderCallback(nullptr)
 	, m_pRenderCallbackParam(nullptr)
@@ -20,20 +19,11 @@ CGLES3MeshDraw::CGLES3MeshDraw(CGLES3MeshDrawManager* pManager, uint32_t name, c
 	m_ptrMesh = ptrMesh;
 	m_pMeshDraw = ptrMesh->GetDraw(nameDraw);
 	m_pMultiInstanceBuffer = new CGLES3MultiInstanceBuffer(instanceFormat, instanceBinding, CGfxSwapChain::SWAPCHAIN_FRAME_COUNT);
-	m_pMultiVertexArrayObject = new CGLES3MultiVertexArrayObject(CGfxSwapChain::SWAPCHAIN_FRAME_COUNT);
-
-	for (int index = 0; index < CGfxSwapChain::SWAPCHAIN_FRAME_COUNT; index++) {
-		m_pMultiVertexArrayObject->GetVertexArrayObject(index)->Create(
-			(const CGLES3IndexBuffer*)m_ptrMesh->GetIndexBufferPtr().GetPointer(), 
-			(const CGLES3VertexBuffer*)m_ptrMesh->GetVertexBufferPtr().GetPointer(), 
-			(const CGLES3InstanceBuffer*)m_pMultiInstanceBuffer->GetBuffer(index));
-	}
 }
 
 CGLES3MeshDraw::~CGLES3MeshDraw(void)
 {
 	delete m_pMultiInstanceBuffer;
-	delete m_pMultiVertexArrayObject;
 }
 
 void CGLES3MeshDraw::Release(void)
@@ -136,5 +126,5 @@ void CGLES3MeshDraw::OnRenderCallback(CGfxCommandBufferPtr ptrCommandBuffer) con
 
 void CGLES3MeshDraw::Bind(void) const
 {
-	m_pMultiVertexArrayObject->GetVertexArrayObject(GLES3Renderer()->GetSwapChain()->GetFrameIndex())->Bind();
+	((CGLES3InstanceBuffer*)m_pMultiInstanceBuffer->GetBuffer(GLES3Renderer()->GetSwapChain()->GetFrameIndex()))->Bind();
 }

@@ -24,7 +24,7 @@ public:
 
 		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_BIND_MESH, "CommandBindMesh");
 		{
-
+			((CGLES3Mesh*)m_ptrMesh.GetPointer())->Bind();
 		}
 	}
 

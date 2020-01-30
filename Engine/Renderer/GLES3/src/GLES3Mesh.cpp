@@ -79,3 +79,9 @@ void CGLES3Mesh::Destroy(void)
 	m_ptrIndexBuffer.Release();
 	m_ptrVertexBuffer.Release();
 }
+
+void CGLES3Mesh::Bind(void) const
+{
+	((CGLES3IndexBuffer*)m_ptrIndexBuffer.GetPointer())->Bind();
+	((CGLES3VertexBuffer*)m_ptrVertexBuffer.GetPointer())->Bind();
+}

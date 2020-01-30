@@ -53,7 +53,6 @@ private:
 	CGfxMeshPtr m_ptrMesh;
 	CGfxMesh::Draw* m_pMeshDraw;
 	CGLES3MultiInstanceBuffer* m_pMultiInstanceBuffer;
-	CGLES3MultiVertexArrayObject* m_pMultiVertexArrayObject;
 
 private:
 	RenderCallback m_pRenderCallback;
