@@ -31,7 +31,7 @@ CVKTexture::~CVKTexture(void)
 
 void CVKTexture::Release(void)
 {
-	delete this;
+
 }
 
 VkImage CVKTexture::GetImage(void) const

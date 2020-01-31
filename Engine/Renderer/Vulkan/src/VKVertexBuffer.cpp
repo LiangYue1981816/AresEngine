@@ -30,7 +30,7 @@ CVKVertexBuffer::~CVKVertexBuffer(void)
 
 void CVKVertexBuffer::Release(void)
 {
-	delete this;
+
 }
 
 uint32_t CVKVertexBuffer::GetVertexBinding(void) const
@@ -67,7 +67,6 @@ void CVKVertexBuffer::Bind(VkCommandBuffer vkCommandBuffer) const
 
 CVKMultiVertexBuffer::CVKMultiVertexBuffer(CVKDevice* pDevice, uint32_t vertexFormat, int vertexBinding, size_t size, bool bDynamic, int count)
 	: CGfxMultiVertexBuffer(vertexFormat, vertexBinding, size, bDynamic, count)
-	, m_index(0)
 	, m_pBuffers(std::max(1, count))
 {
 	for (int index = 0; index < m_pBuffers.size(); index++) {
@@ -84,26 +83,10 @@ CVKMultiVertexBuffer::~CVKMultiVertexBuffer(void)
 
 void CVKMultiVertexBuffer::Release(void)
 {
-	delete this;
+
 }
 
-bool CVKMultiVertexBuffer::SetIndex(int index)
-{
-	if (index >= 0 && index < m_pBuffers.size()) {
-		m_index = index;
-		return true;
-	}
-	else {
-		return false;
-	}
-}
-
-CVKVertexBuffer* CVKMultiVertexBuffer::GetBuffer(void) const
-{
-	return m_pBuffers[m_index];
-}
-
-CVKVertexBuffer* CVKMultiVertexBuffer::GetBuffer(int index) const
+CGfxVertexBuffer* CVKMultiVertexBuffer::GetBuffer(int index) const
 {
 	if (index >= 0 && index < m_pBuffers.size()) {
 		return m_pBuffers[index];
@@ -111,34 +94,4 @@ CVKVertexBuffer* CVKMultiVertexBuffer::GetBuffer(int index) const
 	else {
 		return nullptr;
 	}
-}
-
-uint32_t CVKMultiVertexBuffer::GetVertexBinding(void) const
-{
-	return m_pBuffers[m_index]->GetVertexBinding();
-}
-
-uint32_t CVKMultiVertexBuffer::GetVertexFormat(void) const
-{
-	return m_pBuffers[m_index]->GetVertexFormat();
-}
-
-uint32_t CVKMultiVertexBuffer::GetVertexCount(void) const
-{
-	return m_pBuffers[m_index]->GetVertexCount();
-}
-
-uint32_t CVKMultiVertexBuffer::GetSize(void) const
-{
-	return m_pBuffers[m_index]->GetSize();
-}
-
-bool CVKMultiVertexBuffer::BufferData(size_t offset, size_t size, const void* data)
-{
-	return m_pBuffers[m_index]->BufferData(offset, size, data);
-}
-
-void CVKMultiVertexBuffer::Bind(VkCommandBuffer vkCommandBuffer) const
-{
-	m_pBuffers[m_index]->Bind(vkCommandBuffer);
 }

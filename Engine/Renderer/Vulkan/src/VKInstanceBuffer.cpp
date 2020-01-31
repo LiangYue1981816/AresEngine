@@ -29,7 +29,9 @@ CVKInstanceBuffer::~CVKInstanceBuffer(void)
 
 void CVKInstanceBuffer::Release(void)
 {
-	m_pManager->Destroy(this);
+	if (m_pManager) {
+		m_pManager->Destroy(this);
+	}
 }
 
 uint32_t CVKInstanceBuffer::GetInstanceBinding(void) const
@@ -83,8 +85,6 @@ void CVKInstanceBuffer::Bind(VkCommandBuffer vkCommandBuffer) const
 CVKMultiInstanceBuffer::CVKMultiInstanceBuffer(CVKDevice* pDevice, CVKInstanceBufferManager* pManager, uint32_t instanceFormat, int instanceBinding, int count)
 	: CGfxMultiInstanceBuffer(instanceFormat, instanceBinding, count)
 	, m_pManager(pManager)
-
-	, m_index(0)
 	, m_pBuffers(std::max(1, count))
 {
 	for (int index = 0; index < m_pBuffers.size(); index++) {
@@ -104,23 +104,7 @@ void CVKMultiInstanceBuffer::Release(void)
 	m_pManager->Destroy(this);
 }
 
-bool CVKMultiInstanceBuffer::SetIndex(int index)
-{
-	if (index >= 0 && index < m_pBuffers.size()) {
-		m_index = index;
-		return true;
-	}
-	else {
-		return false;
-	}
-}
-
-CVKInstanceBuffer* CVKMultiInstanceBuffer::GetBuffer(void) const
-{
-	return m_pBuffers[m_index];
-}
-
-CVKInstanceBuffer* CVKMultiInstanceBuffer::GetBuffer(int index) const
+CGfxInstanceBuffer* CVKMultiInstanceBuffer::GetBuffer(int index) const
 {
 	if (index >= 0 && index < m_pBuffers.size()) {
 		return m_pBuffers[index];
@@ -128,34 +112,4 @@ CVKInstanceBuffer* CVKMultiInstanceBuffer::GetBuffer(int index) const
 	else {
 		return nullptr;
 	}
-}
-
-uint32_t CVKMultiInstanceBuffer::GetInstanceBinding(void) const
-{
-	return m_pBuffers[m_index]->GetInstanceBinding();
-}
-
-uint32_t CVKMultiInstanceBuffer::GetInstanceFormat(void) const
-{
-	return m_pBuffers[m_index]->GetInstanceFormat();
-}
-
-uint32_t CVKMultiInstanceBuffer::GetInstanceCount(void) const
-{
-	return m_pBuffers[m_index]->GetInstanceCount();
-}
-
-uint32_t CVKMultiInstanceBuffer::GetSize(void) const
-{
-	return m_pBuffers[m_index]->GetSize();
-}
-
-bool CVKMultiInstanceBuffer::BufferData(size_t size, const void* data)
-{
-	return m_pBuffers[m_index]->BufferData(size, data);
-}
-
-void CVKMultiInstanceBuffer::Bind(VkCommandBuffer vkCommandBuffer) const
-{
-	m_pBuffers[m_index]->Bind(vkCommandBuffer);
 }

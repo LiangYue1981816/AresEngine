@@ -45,26 +45,9 @@ public:
 
 
 public:
-	bool SetIndex(int index);
-
-public:
-	CVKVertexBuffer* GetBuffer(void) const;
-	CVKVertexBuffer* GetBuffer(int index) const;
-
-public:
-	uint32_t GetVertexBinding(void) const;
-	uint32_t GetVertexFormat(void) const;
-	uint32_t GetVertexCount(void) const;
-	uint32_t GetSize(void) const;
-
-public:
-	bool BufferData(size_t offset, size_t size, const void* data);
-
-public:
-	void Bind(VkCommandBuffer vkCommandBuffer) const;
+	CGfxVertexBuffer* GetBuffer(int index) const;
 
 
 private:
-	int m_index;
 	eastl::vector<CVKVertexBuffer*> m_pBuffers;
 };

@@ -19,7 +19,7 @@ CVKBuffer::~CVKBuffer(void)
 
 void CVKBuffer::Release(void)
 {
-	delete this;
+
 }
 
 bool CVKBuffer::Create(VkDeviceSize size, VkBufferUsageFlags bufferUsageFlags, VkMemoryPropertyFlags memoryPropertyFlags)

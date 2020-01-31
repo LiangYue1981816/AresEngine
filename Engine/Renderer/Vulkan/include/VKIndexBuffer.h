@@ -42,25 +42,9 @@ public:
 
 
 public:
-	bool SetIndex(int index);
-
-public:
-	CVKIndexBuffer* GetBuffer(void) const;
-	CVKIndexBuffer* GetBuffer(int index) const;
-
-public:
-	GfxIndexType GetIndexType(void) const;
-	uint32_t GetIndexCount(void) const;
-	uint32_t GetSize(void) const;
-
-public:
-	bool BufferData(size_t offset, size_t size, const void* data);
-
-public:
-	void Bind(VkCommandBuffer vkCommandBuffer) const;
+	CGfxIndexBuffer* GetBuffer(int index) const;
 
 
 private:
-	int m_index;
 	eastl::vector<CVKIndexBuffer*> m_pBuffers;
 };

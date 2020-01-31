@@ -24,7 +24,7 @@ CVKIndirectBuffer::~CVKIndirectBuffer(void)
 
 void CVKIndirectBuffer::Release(void)
 {
-	delete this;
+
 }
 
 VkBuffer CVKIndirectBuffer::GetBuffer(void) const
@@ -78,7 +78,6 @@ bool CVKIndirectBuffer::BufferData(int indexDraw, int firstIndex, int baseVertex
 
 CVKMultiIndirectBuffer::CVKMultiIndirectBuffer(CVKDevice* pDevice, int numDrawCommands, int count)
 	: CGfxMultiIndirectBuffer(numDrawCommands, count)
-	, m_index(0)
 	, m_pBuffers(std::max(1, count))
 {
 	for (int index = 0; index < m_pBuffers.size(); index++) {
@@ -95,26 +94,10 @@ CVKMultiIndirectBuffer::~CVKMultiIndirectBuffer(void)
 
 void CVKMultiIndirectBuffer::Release(void)
 {
-	delete this;
+
 }
 
-bool CVKMultiIndirectBuffer::SetIndex(int index)
-{
-	if (index >= 0 && index < m_pBuffers.size()) {
-		m_index = index;
-		return true;
-	}
-	else {
-		return false;
-	}
-}
-
-CVKIndirectBuffer* CVKMultiIndirectBuffer::GetBuffer(void) const
-{
-	return m_pBuffers[m_index];
-}
-
-CVKIndirectBuffer* CVKMultiIndirectBuffer::GetBuffer(int index) const
+CGfxIndirectBuffer* CVKMultiIndirectBuffer::GetBuffer(int index) const
 {
 	if (index >= 0 && index < m_pBuffers.size()) {
 		return m_pBuffers[index];
@@ -122,29 +105,4 @@ CVKIndirectBuffer* CVKMultiIndirectBuffer::GetBuffer(int index) const
 	else {
 		return nullptr;
 	}
-}
-
-uint32_t CVKMultiIndirectBuffer::GetDrawCommandCount(void) const
-{
-	return m_pBuffers[m_index]->GetDrawCommandCount();
-}
-
-uint32_t CVKMultiIndirectBuffer::GetDrawCommandOffset(int indexDraw) const
-{
-	return m_pBuffers[m_index]->GetDrawCommandOffset(indexDraw);
-}
-
-uint32_t CVKMultiIndirectBuffer::GetSize(void) const
-{
-	return m_pBuffers[m_index]->GetSize();
-}
-
-uint32_t CVKMultiIndirectBuffer::GetStride(void) const
-{
-	return m_pBuffers[m_index]->GetStride();
-}
-
-bool CVKMultiIndirectBuffer::BufferData(int indexDraw, int firstIndex, int baseVertex, int baseInstance, int indexCount, int instanceCount)
-{
-	return m_pBuffers[m_index]->BufferData(indexDraw, firstIndex, baseVertex, baseInstance, indexCount, instanceCount);
 }

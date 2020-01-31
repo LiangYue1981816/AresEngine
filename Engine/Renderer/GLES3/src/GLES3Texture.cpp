@@ -27,7 +27,7 @@ CGLES3Texture::~CGLES3Texture(void)
 
 void CGLES3Texture::Release(void)
 {
-	delete this;
+
 }
 
 uint32_t CGLES3Texture::GetTarget(void) const
