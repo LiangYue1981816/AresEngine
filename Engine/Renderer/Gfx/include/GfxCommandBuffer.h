@@ -75,8 +75,13 @@ public:
 	virtual void CmdBindPipelineCompute(const CGfxPipelineCompute* pPipelineCompute) = 0;
 	virtual void CmdBindPipelineGraphics(const CGfxPipelineGraphics* pPipelineGraphics) = 0;
 	virtual void CmdBindDescriptorSet(const CGfxDescriptorSetPtr ptrDescriptorSet) = 0;
-	virtual void CmdBindMesh(const CGfxMeshPtr ptrMesh) = 0;
-	virtual void CmdBindMeshDraw(const CGfxMeshDrawPtr ptrMeshDraw) = 0;
+	virtual void CmdBindIndexBuffer(const CGfxIndexBufferPtr ptrIndexBuffer) = 0;
+	virtual void CmdBindVertexBuffer(const CGfxVertexBufferPtr ptrVertexBuffer) = 0;
+	virtual void CmdBindInstanceBuffer(const CGfxInstanceBufferPtr ptrInstanceBuffer) = 0;
+
+	virtual void CmdSetIndexBuffer(const CGfxIndexBufferPtr ptrIndexBuffer, const uint8_t* pBuffer, uint32_t size) = 0;
+	virtual void CmdSetVertexBuffer(const CGfxVertexBufferPtr ptrVertexBuffer, const uint8_t* pBuffer, uint32_t size) = 0;
+	virtual void CmdSetInstanceBuffer(const CGfxInstanceBufferPtr ptrInstanceBuffer, const uint8_t* pBuffer, uint32_t size) = 0;
 
 	virtual void CmdUniform1i(uint32_t name, int v0) = 0;
 	virtual void CmdUniform2i(uint32_t name, int v0, int v1) = 0;
@@ -104,9 +109,7 @@ public:
 	virtual void CmdClearDepth(float depth) = 0;
 	virtual void CmdClearColor(float red, float green, float blue, float alpha) = 0;
 
-	virtual void CmdDrawInstance(const CGfxMeshDrawPtr ptrMeshDraw) = 0;
-	virtual void CmdUpdateInstanceBuffer(const CGfxMeshDrawPtr ptrMeshDraw, const uint8_t* pInstanceBuffer, uint32_t size) = 0;
-
+	virtual void CmdDrawInstance(int firstIndex, int indexCount, int instanceCount) = 0;
 	virtual void CmdDispatch(int numLocalWorkGroupX, int numLocalWorkGroupY, int numLocalWorkGroupZ) = 0;
 
 	virtual void CmdPushDebugGroup(const char* szMessage) = 0;
