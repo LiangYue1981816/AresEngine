@@ -91,6 +91,7 @@ void CGLES3InstanceBuffer::Bind(void) const
 CGLES3MultiInstanceBuffer::CGLES3MultiInstanceBuffer(CGLES3InstanceBufferManager* pManager, uint32_t instanceFormat, int instanceBinding, int count)
 	: CGfxMultiInstanceBuffer(instanceFormat, instanceBinding, count)
 	, m_pManager(pManager)
+
 	, m_index(0)
 	, m_pBuffers(std::max(1, count))
 {

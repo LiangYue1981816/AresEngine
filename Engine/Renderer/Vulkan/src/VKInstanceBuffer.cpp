@@ -83,6 +83,7 @@ void CVKInstanceBuffer::Bind(VkCommandBuffer vkCommandBuffer) const
 CVKMultiInstanceBuffer::CVKMultiInstanceBuffer(CVKDevice* pDevice, CVKInstanceBufferManager* pManager, uint32_t instanceFormat, int instanceBinding, int count)
 	: CGfxMultiInstanceBuffer(instanceFormat, instanceBinding, count)
 	, m_pManager(pManager)
+
 	, m_index(0)
 	, m_pBuffers(std::max(1, count))
 {
