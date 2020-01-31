@@ -40,6 +40,7 @@ private:
 	uint32_t m_name;
 	eastl::vector<float> m_value;
 
+private:
 	CGLES3PipelineCompute* m_pPipelineCompute;
 	CGLES3PipelineGraphics* m_pPipelineGraphics;
 };

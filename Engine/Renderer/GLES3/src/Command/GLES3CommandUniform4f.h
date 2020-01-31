@@ -46,6 +46,7 @@ private:
 	float m_v2;
 	float m_v3;
 
+private:
 	CGLES3PipelineCompute* m_pPipelineCompute;
 	CGLES3PipelineGraphics* m_pPipelineGraphics;
 };

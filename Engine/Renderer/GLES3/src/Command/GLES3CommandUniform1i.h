@@ -40,6 +40,7 @@ private:
 	uint32_t m_name;
 	int m_v0;
 
+private:
 	CGLES3PipelineCompute* m_pPipelineCompute;
 	CGLES3PipelineGraphics* m_pPipelineGraphics;
 };

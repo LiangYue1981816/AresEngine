@@ -33,5 +33,7 @@ public:
 
 private:
 	CGfxVertexBufferPtr m_ptrVertexBuffer;
+
+private:
 	CGLES3PipelineGraphics* m_pPipelineGraphics;
 };

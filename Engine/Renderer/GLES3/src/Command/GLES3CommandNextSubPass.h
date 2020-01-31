@@ -35,3 +35,4 @@ private:
 	CGfxRenderPassPtr m_ptrRenderPass;
 	int m_indexSubpass;
 };
+

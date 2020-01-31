@@ -33,5 +33,7 @@ public:
 
 private:
 	CGfxInstanceBufferPtr m_ptrInstanceBuffer;
+
+private:
 	CGLES3PipelineGraphics* m_pPipelineGraphics;
 };
