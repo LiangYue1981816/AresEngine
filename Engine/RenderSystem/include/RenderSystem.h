@@ -26,10 +26,12 @@
 #define VERTEX_ATTRIBUTE_TEXCOORD0                         0x00000010
 #define VERTEX_ATTRIBUTE_TEXCOORD1                         0x00000020
 #define VERTEX_ATTRIBUTE_COUNT                             6
+#define VERTEX_BINDING                                     0
 
 #define INSTANCE_ATTRIBUTE_INDEX                           0x00000001
 #define INSTANCE_ATTRIBUTE_COUNT                           1
 #define INSTANCE_FORMAT                                    INSTANCE_ATTRIBUTE_INDEX
+#define INSTANCE_BINDING                                   1
 
 
 // Uniform Base
