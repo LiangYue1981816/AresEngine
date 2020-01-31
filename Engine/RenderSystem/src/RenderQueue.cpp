@@ -200,7 +200,7 @@ void CRenderQueue::CmdDraw(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrComman
 					if (pPipeline->IsTransparency() == bIsTransparency) {
 						for (const auto& itMeshQueue : itMaterialQueue.second) {
 							for (const auto& itMeshDrawQueue : itMeshQueue.second) {
-								m_instanceBufferQueue[pPipeline][itMeshDrawQueue.first] = RenderSystem()->GetInstanceBuffer(INSTANCE_FORMAT, 1, 3);
+								m_instanceBufferQueue[pPipeline][itMeshDrawQueue.first] = RenderSystem()->GetInstanceBuffer(INSTANCE_FORMAT, 1, CGfxSwapChain::SWAPCHAIN_FRAME_COUNT);
 							}
 						}
 
@@ -276,7 +276,8 @@ void CRenderQueue::CmdDrawThread(CGfxCommandBufferPtr ptrCommandBuffer, const CG
 					GfxRenderer()->CmdBindDescriptorSet(ptrCommandBuffer, itMaterialQueue->GetPass(matPassName)->GetDescriptorSet());
 					{
 						for (const auto& itMeshQueue : m_materialMeshDrawQueue[itMaterialQueue]) {
-							GfxRenderer()->CmdBindMesh(ptrCommandBuffer, itMeshQueue.first);
+							GfxRenderer()->CmdBindIndexBuffer(ptrCommandBuffer, itMeshQueue.first->GetIndexBufferPtr());
+							GfxRenderer()->CmdBindVertexBuffer(ptrCommandBuffer, itMeshQueue.first->GetVertexBufferPtr());
 							{
 								for (const auto& itDrawQueue : itMeshQueue.second) {
 									if (itDrawQueue.first->GetMask() & mask) {
@@ -284,10 +285,10 @@ void CRenderQueue::CmdDrawThread(CGfxCommandBufferPtr ptrCommandBuffer, const CG
 
 										GfxRenderer()->CmdBindDescriptorSet(ptrCommandBuffer, GfxRenderer()->GetDescriptorSet(itDrawQueue.first->GetName()));
 										{
-											CGfxMultiInstanceBufferPtr ptrInstanceBuffer = m_instanceBufferQueue[pPipeline][itDrawQueue.first];
-											GfxRenderer()->CmdUpdateInstanceBuffer(ptrCommandBuffer, itDrawQueue.first, (const uint8_t*)itDrawQueue.second.data(), itDrawQueue.second.size() * sizeof(int));
-											GfxRenderer()->CmdBindMeshDraw(ptrCommandBuffer, itDrawQueue.first);
-											GfxRenderer()->CmdDrawInstance(ptrCommandBuffer, itDrawQueue.first);
+											CGfxInstanceBufferPtr ptrInstanceBuffer = m_instanceBufferQueue[pPipeline][itDrawQueue.first]->GetBuffer(GfxRenderer()->GetSwapChain()->GetFrameIndex());
+											GfxRenderer()->CmdSetInstanceBuffer(ptrCommandBuffer, ptrInstanceBuffer, (const uint8_t*)itDrawQueue.second.data(), itDrawQueue.second.size() * sizeof(int));
+											GfxRenderer()->CmdBindInstanceBuffer(ptrCommandBuffer, ptrInstanceBuffer);
+											GfxRenderer()->CmdDrawInstance(ptrCommandBuffer, itDrawQueue.first->GetIndexType(), itDrawQueue.first->GetIndexOffset(), itDrawQueue.first->GetIndexCount(), ptrInstanceBuffer->GetInstanceCount());
 										}
 									}
 								}
