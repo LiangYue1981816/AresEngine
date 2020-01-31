@@ -9,8 +9,12 @@
 #include "./Command/VKCommandBindPipelineCompute.h"
 #include "./Command/VKCommandBindPipelineGraphics.h"
 #include "./Command/VKCommandBindDescriptorSet.h"
-#include "./Command/VKCommandBindMesh.h"
-#include "./Command/VKCommandBindMeshDraw.h"
+#include "./Command/VKCommandBindIndexBuffer.h"
+#include "./Command/VKCommandBindVertexBuffer.h"
+#include "./Command/VKCommandBindInstanceBuffer.h"
+#include "./Command/VKCommandSetIndexBuffer.h"
+#include "./Command/VKCommandSetVertexBuffer.h"
+#include "./Command/VKCommandSetInstanceBuffer.h"
 #include "./Command/VKCommandUniform1i.h"
 #include "./Command/VKCommandUniform2i.h"
 #include "./Command/VKCommandUniform3i.h"
@@ -37,7 +41,6 @@
 #include "./Command/VKCommandDispatch.h"
 #include "./Command/VKCommandDrawInstance.h"
 #include "./Command/VKCommandDrawIndirect.h"
-#include "./Command/VKCommandUpdateInstanceBuffer.h"
 #include "./Command/VKCommandPushDebugGroup.h"
 #include "./Command/VKCommandPopDebugGroup.h"
 #include "./Command/VKCommandExecute.h"
@@ -278,14 +281,34 @@ void CVKCommandBuffer::CmdBindDescriptorSet(const CGfxDescriptorSetPtr ptrDescri
 	m_pCommands.emplace_back(new CVKCommandBindDescriptorSet(m_vkCommandBuffer, m_pCurrentPipelineCompute, m_pCurrentPipelineGraphics, ptrDescriptorSet));
 }
 
-void CVKCommandBuffer::CmdBindMesh(const CGfxMeshPtr ptrMesh)
+void CVKCommandBuffer::CmdBindIndexBuffer(const CGfxIndexBufferPtr ptrIndexBuffer)
 {
-	m_pCommands.emplace_back(new CVKCommandBindMesh(m_vkCommandBuffer, m_pCurrentPipelineGraphics, ptrMesh));
+	m_pCommands.emplace_back(new CVKCommandBindIndexBuffer(m_vkCommandBuffer, ptrIndexBuffer));
 }
 
-void CVKCommandBuffer::CmdBindMeshDraw(const CGfxMeshDrawPtr ptrMeshDraw)
+void CVKCommandBuffer::CmdBindVertexBuffer(const CGfxVertexBufferPtr ptrVertexBuffer)
 {
-	m_pCommands.emplace_back(new CVKCommandBindMeshDraw(m_vkCommandBuffer, m_pCurrentPipelineGraphics, ptrMeshDraw));
+	m_pCommands.emplace_back(new CVKCommandBindVertexBuffer(m_vkCommandBuffer, m_pCurrentPipelineGraphics, ptrVertexBuffer));
+}
+
+void CVKCommandBuffer::CmdBindInstanceBuffer(const CGfxInstanceBufferPtr ptrInstanceBuffer)
+{
+	m_pCommands.emplace_back(new CVKCommandBindInstanceBuffer(m_vkCommandBuffer, m_pCurrentPipelineGraphics, ptrInstanceBuffer));
+}
+
+void CVKCommandBuffer::CmdSetIndexBuffer(const CGfxIndexBufferPtr ptrIndexBuffer, const uint8_t* pBuffer, uint32_t size)
+{
+	m_pCommands.emplace_back(new CVKCommandSetIndexBuffer(m_vkCommandBuffer, ptrIndexBuffer, pBuffer, size));
+}
+
+void CVKCommandBuffer::CmdSetVertexBuffer(const CGfxVertexBufferPtr ptrVertexBuffer, const uint8_t* pBuffer, uint32_t size)
+{
+	m_pCommands.emplace_back(new CVKCommandSetVertexBuffer(m_vkCommandBuffer, ptrVertexBuffer, pBuffer, size));
+}
+
+void CVKCommandBuffer::CmdSetInstanceBuffer(const CGfxInstanceBufferPtr ptrInstanceBuffer, const uint8_t* pBuffer, uint32_t size)
+{
+	m_pCommands.emplace_back(new CVKCommandSetInstanceBuffer(m_vkCommandBuffer, ptrInstanceBuffer, pBuffer, size));
 }
 
 void CVKCommandBuffer::CmdUniform1i(uint32_t name, int v0)
@@ -403,14 +426,9 @@ void CVKCommandBuffer::CmdClearColor(float red, float green, float blue, float a
 	m_pCommands.emplace_back(new CVKCommandClearColor(m_vkCommandBuffer, red, green, blue, alpha));
 }
 
-void CVKCommandBuffer::CmdDrawInstance(const CGfxMeshDrawPtr ptrMeshDraw)
+void CVKCommandBuffer::CmdDrawInstance(int indexType, int indexOffset, int indexCount, int instanceCount)
 {
-	m_pCommands.emplace_back(new CVKCommandDrawInstance(m_vkCommandBuffer, m_pCurrentPipelineGraphics, ptrMeshDraw));
-}
-
-void CVKCommandBuffer::CmdUpdateInstanceBuffer(const CGfxMeshDrawPtr ptrMeshDraw, const uint8_t* pInstanceBuffer, uint32_t size)
-{
-	m_pCommands.emplace_back(new CVKCommandUpdateInstanceBuffer(m_vkCommandBuffer, ptrMeshDraw, pInstanceBuffer, size));
+	m_pCommands.emplace_back(new CVKCommandDrawInstance(m_vkCommandBuffer, indexType, indexOffset, indexCount, instanceCount));
 }
 
 void CVKCommandBuffer::CmdDispatch(int numLocalWorkGroupX, int numLocalWorkGroupY, int numLocalWorkGroupZ)

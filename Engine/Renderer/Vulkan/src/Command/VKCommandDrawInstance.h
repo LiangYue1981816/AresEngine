@@ -5,10 +5,12 @@
 class CVKCommandDrawInstance : public CGfxCommandBase
 {
 public:
-	CVKCommandDrawInstance(VkCommandBuffer vkCommandBuffer, const CGfxPipelineGraphics* pPipelineGraphics, const CGfxMeshDrawPtr ptrMeshDraw)
+	CVKCommandDrawInstance(VkCommandBuffer vkCommandBuffer, int indexType, int indexOffset, int indexCount, int instanceCount)
 		: m_vkCommandBuffer(vkCommandBuffer)
-		, m_pPipelineGraphics((CVKPipelineGraphics*)pPipelineGraphics)
-		, m_ptrMeshDraw(ptrMeshDraw)
+		, m_indexType(indexType)
+		, m_indexOffset(indexOffset)
+		, m_indexCount(indexCount)
+		, m_instanceCount(instanceCount)
 	{
 		Execute();
 	}
@@ -21,22 +23,19 @@ public:
 	virtual void Execute(void) const
 	{
 		ASSERT(m_vkCommandBuffer);
-		ASSERT(m_ptrMeshDraw);
-		ASSERT(m_pPipelineGraphics);
 
 		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_DRAW_INSTANCE, "CommandDrawInstance");
 		{
-			if (m_pPipelineGraphics->IsCompatibleVertexFormat(m_ptrMeshDraw->GetVertexBinding(), m_ptrMeshDraw->GetVertexFormat()) &&
-				m_pPipelineGraphics->IsCompatibleVertexFormat(m_ptrMeshDraw->GetInstanceBinding(), m_ptrMeshDraw->GetInstanceFormat())) {
-				vkCmdDrawIndexed(m_vkCommandBuffer, m_ptrMeshDraw->GetIndexCount(), m_ptrMeshDraw->GetInstanceCount(), m_ptrMeshDraw->GetIndexFirst(), 0, 0);
-			}
+			vkCmdDrawIndexed(m_vkCommandBuffer, m_indexCount, m_instanceCount, m_indexOffset, 0, 0);
 		}
 	}
 
 
 private:
-	CGfxMeshDrawPtr m_ptrMeshDraw;
-	CVKPipelineGraphics* m_pPipelineGraphics;
+	int m_indexType;
+	int m_indexOffset;
+	int m_indexCount;
+	int m_instanceCount;
 
 private:
 	VkCommandBuffer m_vkCommandBuffer;
