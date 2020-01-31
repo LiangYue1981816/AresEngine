@@ -9,7 +9,7 @@ CComponentPointLight::CComponentPointLight(uint32_t name)
 {
 	m_indexInstance = RenderSystem()->AddInstance();
 
-	SetMaterial(GfxRenderer()->NewMaterial("PointLight.material"));
+	SetMaterial(GfxRenderer()->NewMaterial("PointLight.material", VERTEX_BINDING, INSTANCE_BINDING));
 	SetMeshDraw(GfxRenderer()->NewMesh("PointLight.mesh", 0));
 }
 

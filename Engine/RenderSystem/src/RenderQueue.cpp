@@ -200,7 +200,7 @@ void CRenderQueue::CmdDraw(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrComman
 					if (pPipeline->IsTransparency() == bIsTransparency) {
 						for (const auto& itMeshQueue : itMaterialQueue.second) {
 							for (const auto& itMeshDrawQueue : itMeshQueue.second) {
-								m_instanceBufferQueue[pPipeline][itMeshDrawQueue.first] = RenderSystem()->GetInstanceBuffer(INSTANCE_FORMAT, 1, CGfxSwapChain::SWAPCHAIN_FRAME_COUNT);
+								m_instanceBufferQueue[pPipeline][itMeshDrawQueue.first] = RenderSystem()->GetInstanceBuffer(INSTANCE_FORMAT, INSTANCE_BINDING);
 							}
 						}
 

@@ -231,9 +231,9 @@ const InstanceData& CRenderSystem::GetInstanceData(int index)
 	return m_pGPUScene->GetInstanceData(index);
 }
 
-const CGfxMultiInstanceBufferPtr CRenderSystem::GetInstanceBuffer(uint32_t instanceFormat, int instanceBinding, int count)
+const CGfxMultiInstanceBufferPtr CRenderSystem::GetInstanceBuffer(uint32_t instanceFormat, int instanceBinding)
 {
-	return m_pInstanceBufferPool->GetInstanceBuffer(instanceFormat, instanceBinding, count);
+	return m_pInstanceBufferPool->GetInstanceBuffer(instanceFormat, instanceBinding);
 }
 
 void CRenderSystem::SetTime(float t, float dt)

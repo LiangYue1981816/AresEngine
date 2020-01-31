@@ -155,7 +155,7 @@ public:
 	int GetPostProcessInstnaceIndex(void) const;
 
 	const InstanceData& GetInstanceData(int index);
-	const CGfxMultiInstanceBufferPtr GetInstanceBuffer(uint32_t instanceFormat, int instanceBinding = 1, int count = 3);
+	const CGfxMultiInstanceBufferPtr GetInstanceBuffer(uint32_t instanceFormat, int instanceBinding);
 
 public:
 	void SetTime(float t, float dt);

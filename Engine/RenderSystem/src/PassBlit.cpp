@@ -24,7 +24,7 @@ CPassBlit::CPassBlit(const char* szMaterialFileName, CRenderSystem* pRenderSyste
 	m_ptrMeshDraw->SetMask(0xffffffff);
 	m_ptrMeshDraw->SetRenderCallback(CPassBlit::RenderCallback, this);
 
-	m_ptrMaterial = GfxRenderer()->NewMaterial(szMaterialFileName);
+	m_ptrMaterial = GfxRenderer()->NewMaterial(szMaterialFileName, VERTEX_BINDING, INSTANCE_BINDING);
 
 	m_pRenderQueue = new CRenderQueue;
 	m_pRenderQueue->Begin(nullptr);

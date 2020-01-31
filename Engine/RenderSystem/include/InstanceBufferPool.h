@@ -11,10 +11,10 @@ public:
 
 public:
 	void Clear(void);
-	CGfxMultiInstanceBufferPtr GetInstanceBuffer(uint32_t instanceFormat, int instanceBinding = 1, int count = 3);
+	CGfxMultiInstanceBufferPtr GetInstanceBuffer(uint32_t instanceFormat, int instanceBinding);
 
 
 private:
-	eastl::unordered_map<uint32_t, eastl::unordered_map<int, eastl::unordered_map<int, int>>> m_indexMultiInstanceBuffers; // [format][binding][count][index]
-	eastl::unordered_map<uint32_t, eastl::unordered_map<int, eastl::unordered_map<int, eastl::vector<CGfxMultiInstanceBufferPtr>>>> m_ptrMultiInstanceBuffers; // [format][binding][count][vector]
+	eastl::unordered_map<uint32_t, eastl::unordered_map<int, int>> m_indexMultiInstanceBuffers; // [format][binding][index]
+	eastl::unordered_map<uint32_t, eastl::unordered_map<int, eastl::vector<CGfxMultiInstanceBufferPtr>>> m_ptrMultiInstanceBuffers; // [format][binding][vector]
 };
