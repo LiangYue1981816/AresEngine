@@ -14,10 +14,13 @@ private:
 
 
 private:
+	CGLES3InstanceBuffer* Create(uint32_t instanceFormat, int instanceBinding = 1);
 	CGLES3MultiInstanceBuffer* Create(uint32_t instanceFormat, int instanceBinding = 1, int count = 3);
-	void Destroy(CGLES3MultiInstanceBuffer* pInstanceBuffer);
+	void Destroy(CGLES3InstanceBuffer* pInstanceBuffer);
+	void Destroy(CGLES3MultiInstanceBuffer* pMultiInstanceBuffer);
 
 
 private:
-	eastl::unordered_map<CGLES3MultiInstanceBuffer*, CGLES3MultiInstanceBuffer*> m_pInstanceBuffers;
+	eastl::unordered_map<CGLES3InstanceBuffer*, CGLES3InstanceBuffer*> m_pInstanceBuffers;
+	eastl::unordered_map<CGLES3MultiInstanceBuffer*, CGLES3MultiInstanceBuffer*> m_pMultiInstanceBuffers;
 };
