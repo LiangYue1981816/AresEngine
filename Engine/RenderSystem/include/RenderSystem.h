@@ -152,7 +152,8 @@ public:
 	int GetDefaultInstanceIndex(void) const;
 	int GetPostProcessInstnaceIndex(void) const;
 
-	const InstanceData& GetInstanceData(int index) const;
+	const InstanceData& GetInstanceData(int index);
+	const CGfxMultiInstanceBufferPtr GetInstanceBuffer(uint32_t instanceFormat, int instanceBinding = 1, int count = 3);
 
 public:
 	void SetTime(float t, float dt);
@@ -195,6 +196,7 @@ private:
 	CGfxRenderer* m_pRenderer;
 	CGPUScene* m_pGPUScene;
 	CUniformEngine* m_pEngineUniform;
+	CInstanceBufferPool* m_pInstanceBufferPool;
 
 private:
 	CPassPreZ* m_pPassPreZ;

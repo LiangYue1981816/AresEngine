@@ -22,6 +22,7 @@ CRenderSystem::CRenderSystem(GfxApi api, void* hInstance, void* hWnd, void* hDC,
 	: m_pRenderer(nullptr)
 	, m_pGPUScene(nullptr)
 	, m_pEngineUniform(nullptr)
+	, m_pInstanceBufferPool(nullptr)
 
 	, m_pPassPreZ(nullptr)
 	, m_pPassShadow(nullptr)
@@ -43,16 +44,16 @@ CRenderSystem::CRenderSystem(GfxApi api, void* hInstance, void* hWnd, void* hDC,
 	switch ((int)api) {
 	case GFX_API_GLES3:
 		m_pRenderer = new CGLES3Renderer(hInstance, hWnd, hDC, width, height, format);
-		m_pGPUScene = new CGPUScene;
-		m_pEngineUniform = new CUniformEngine;
 		break;
 
 	case GFX_API_VULKAN:
 		m_pRenderer = new CVKRenderer(hInstance, hWnd, hDC, width, height, format);
-		m_pGPUScene = new CGPUScene;
-		m_pEngineUniform = new CUniformEngine;
 		break;
 	}
+
+	m_pGPUScene = new CGPUScene;
+	m_pEngineUniform = new CUniformEngine;
+	m_pInstanceBufferPool = new CInstanceBufferPool;
 
 	m_ptrComputeCommandBuffer[0] = GfxRenderer()->NewCommandBuffer(0, true);
 	m_ptrComputeCommandBuffer[1] = GfxRenderer()->NewCommandBuffer(0, true);
@@ -81,6 +82,7 @@ CRenderSystem::~CRenderSystem(void)
 	m_ptrGraphicCommandBuffer[1].Release();
 	m_ptrGraphicCommandBuffer[2].Release();
 
+	delete m_pInstanceBufferPool;
 	delete m_pEngineUniform;
 	delete m_pGPUScene;
 	delete m_pRenderer;
@@ -224,9 +226,14 @@ int CRenderSystem::GetPostProcessInstnaceIndex(void) const
 	return m_pGPUScene->GetPostProcessInstnaceIndex();
 }
 
-const InstanceData& CRenderSystem::GetInstanceData(int index) const
+const InstanceData& CRenderSystem::GetInstanceData(int index)
 {
 	return m_pGPUScene->GetInstanceData(index);
+}
+
+const CGfxMultiInstanceBufferPtr CRenderSystem::GetInstanceBuffer(uint32_t instanceFormat, int instanceBinding, int count)
+{
+	return m_pInstanceBufferPool->GetInstanceBuffer(instanceFormat, instanceBinding, count);
 }
 
 void CRenderSystem::SetTime(float t, float dt)
