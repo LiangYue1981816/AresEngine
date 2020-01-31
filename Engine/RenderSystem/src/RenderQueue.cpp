@@ -191,16 +191,27 @@ void CRenderQueue::End(void)
 
 void CRenderQueue::CmdDraw(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer, const CGfxDescriptorSetPtr ptrDescriptorSetPass, const uint32_t matPassName, const glm::vec4& scissor, const glm::vec4& viewport, uint32_t mask, bool bIsTransparency)
 {
+	m_instanceBufferQueue.clear();
 	m_pipelineMaterialQueue.clear();
 	{
 		for (const auto& itMaterialQueue : m_materialMeshDrawQueue) {
 			if (CGfxMaterialPass* pPass = (CGfxMaterialPass*)itMaterialQueue.first->GetPass(matPassName)) {
 				if (CGfxPipelineGraphics* pPipeline = (CGfxPipelineGraphics*)pPass->GetPipeline()) {
 					if (pPipeline->IsTransparency() == bIsTransparency) {
+						for (const auto& itMeshQueue : itMaterialQueue.second) {
+							for (const auto& itMeshDrawQueue : itMeshQueue.second) {
+								m_instanceBufferQueue[pPipeline][itMeshDrawQueue.first] = RenderSystem()->GetInstanceBuffer(INSTANCE_FORMAT, 1, 3);
+							}
+						}
+
 						m_pipelineMaterialQueue[pPipeline].emplace(itMaterialQueue.first);
 					}
 				}
 			}
+		}
+
+		if (m_instanceBufferQueue.empty()) {
+			return;
 		}
 
 		if (m_pipelineMaterialQueue.empty()) {
