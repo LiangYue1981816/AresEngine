@@ -206,7 +206,7 @@ CGfxInstanceBufferPtr CGLES3Renderer::NewInstanceBuffer(uint32_t instanceFormat,
 	return m_pInstanceBufferManager->Create(instanceFormat, instanceBinding);
 }
 
-CGfxMultiInstanceBufferPtr CGLES3Renderer::NewInstanceBuffer(uint32_t instanceFormat, int instanceBinding, int count)
+CGfxMultiInstanceBufferPtr CGLES3Renderer::NewMultiInstanceBuffer(uint32_t instanceFormat, int instanceBinding, int count)
 {
 	return m_pInstanceBufferManager->Create(instanceFormat, instanceBinding, count);
 }

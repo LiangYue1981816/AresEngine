@@ -212,7 +212,7 @@ CGfxInstanceBufferPtr CVKRenderer::NewInstanceBuffer(uint32_t instanceFormat, in
 	return m_pInstanceBufferManager->Create(instanceFormat, instanceBinding);
 }
 
-CGfxMultiInstanceBufferPtr CVKRenderer::NewInstanceBuffer(uint32_t instanceFormat, int instanceBinding, int count)
+CGfxMultiInstanceBufferPtr CVKRenderer::NewMultiInstanceBuffer(uint32_t instanceFormat, int instanceBinding, int count)
 {
 	return m_pInstanceBufferManager->Create(instanceFormat, instanceBinding, count);
 }
