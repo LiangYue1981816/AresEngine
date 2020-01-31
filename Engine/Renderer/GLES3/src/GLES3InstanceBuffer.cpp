@@ -3,8 +3,9 @@
 
 static const int INSTANCE_BUFFER_SIZE = 64;
 
-CGLES3InstanceBuffer::CGLES3InstanceBuffer(uint32_t instanceFormat, int instanceBinding)
+CGLES3InstanceBuffer::CGLES3InstanceBuffer(CGLES3InstanceBufferManager* pManager, uint32_t instanceFormat, int instanceBinding)
 	: CGfxInstanceBuffer(instanceFormat, instanceBinding)
+	, m_pManager(pManager)
 	, m_pBuffer(nullptr)
 
 	, m_binding(instanceBinding)
@@ -23,7 +24,7 @@ CGLES3InstanceBuffer::~CGLES3InstanceBuffer(void)
 
 void CGLES3InstanceBuffer::Release(void)
 {
-	delete this;
+	m_pManager->Destroy(this);
 }
 
 uint32_t CGLES3InstanceBuffer::GetInstanceBinding(void) const
@@ -87,13 +88,14 @@ void CGLES3InstanceBuffer::Bind(void) const
 }
 
 
-CGLES3MultiInstanceBuffer::CGLES3MultiInstanceBuffer(uint32_t instanceFormat, int instanceBinding, int count)
+CGLES3MultiInstanceBuffer::CGLES3MultiInstanceBuffer(CGLES3InstanceBufferManager* pManager, uint32_t instanceFormat, int instanceBinding, int count)
 	: CGfxMultiInstanceBuffer(instanceFormat, instanceBinding, count)
+	, m_pManager(pManager)
 	, m_index(0)
 	, m_pBuffers(std::max(1, count))
 {
 	for (int index = 0; index < m_pBuffers.size(); index++) {
-		m_pBuffers[index] = new CGLES3InstanceBuffer(instanceFormat, instanceBinding);
+		m_pBuffers[index] = new CGLES3InstanceBuffer(pManager, instanceFormat, instanceBinding);
 	}
 }
 
@@ -106,7 +108,7 @@ CGLES3MultiInstanceBuffer::~CGLES3MultiInstanceBuffer(void)
 
 void CGLES3MultiInstanceBuffer::Release(void)
 {
-	delete this;
+	m_pManager->Destroy(this);
 }
 
 bool CGLES3MultiInstanceBuffer::SetIndex(int index)

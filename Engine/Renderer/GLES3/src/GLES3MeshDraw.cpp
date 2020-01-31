@@ -18,7 +18,7 @@ CGLES3MeshDraw::CGLES3MeshDraw(CGLES3MeshDrawManager* pManager, uint32_t name, c
 
 	m_ptrMesh = ptrMesh;
 	m_pMeshDraw = ptrMesh->GetDraw(nameDraw);
-	m_pMultiInstanceBuffer = new CGLES3MultiInstanceBuffer(instanceFormat, instanceBinding, CGfxSwapChain::SWAPCHAIN_FRAME_COUNT);
+	m_pMultiInstanceBuffer = new CGLES3MultiInstanceBuffer(nullptr, instanceFormat, instanceBinding, CGfxSwapChain::SWAPCHAIN_FRAME_COUNT);
 }
 
 CGLES3MeshDraw::~CGLES3MeshDraw(void)

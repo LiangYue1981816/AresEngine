@@ -22,7 +22,7 @@ CGLES3InstanceBuffer* CGLES3InstanceBufferManager::Create(uint32_t instanceForma
 {
 	mutex_autolock autolock(&lock);
 	{
-		if (CGLES3InstanceBuffer* pInstanceBuffer = new CGLES3InstanceBuffer(instanceFormat, instanceBinding)) {
+		if (CGLES3InstanceBuffer* pInstanceBuffer = new CGLES3InstanceBuffer(this, instanceFormat, instanceBinding)) {
 			m_pInstanceBuffers[pInstanceBuffer] = pInstanceBuffer;
 			return pInstanceBuffer;
 		}
@@ -36,7 +36,7 @@ CGLES3MultiInstanceBuffer* CGLES3InstanceBufferManager::Create(uint32_t instance
 {
 	mutex_autolock autolock(&lock);
 	{
-		if (CGLES3MultiInstanceBuffer* pMultiInstanceBuffer = new CGLES3MultiInstanceBuffer(instanceFormat, instanceBinding, count)) {
+		if (CGLES3MultiInstanceBuffer* pMultiInstanceBuffer = new CGLES3MultiInstanceBuffer(this, instanceFormat, instanceBinding, count)) {
 			m_pMultiInstanceBuffers[pMultiInstanceBuffer] = pMultiInstanceBuffer;
 			return pMultiInstanceBuffer;
 		}

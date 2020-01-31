@@ -4,8 +4,11 @@
 
 class CGLES3InstanceBuffer : public CGfxInstanceBuffer
 {
+	friend class CGLES3InstanceBufferManager;
+
+
 public:
-	CGLES3InstanceBuffer(uint32_t instanceFormat, int instanceBinding);
+	CGLES3InstanceBuffer(CGLES3InstanceBufferManager* pManager, uint32_t instanceFormat, int instanceBinding);
 	virtual ~CGLES3InstanceBuffer(void);
 	virtual void Release(void);
 
@@ -30,13 +33,19 @@ private:
 
 private:
 	CGLES3Buffer* m_pBuffer;
+
+private:
+	CGLES3InstanceBufferManager* m_pManager;
 };
 
 
 class CGLES3MultiInstanceBuffer : public CGfxMultiInstanceBuffer
 {
+	friend class CGLES3InstanceBufferManager;
+
+
 public:
-	CGLES3MultiInstanceBuffer(uint32_t instanceFormat, int instanceBinding, int count);
+	CGLES3MultiInstanceBuffer(CGLES3InstanceBufferManager* pManager, uint32_t instanceFormat, int instanceBinding, int count);
 	virtual ~CGLES3MultiInstanceBuffer(void);
 	virtual void Release(void);
 
@@ -64,4 +73,7 @@ public:
 private:
 	int m_index;
 	eastl::vector<CGLES3InstanceBuffer*> m_pBuffers;
+
+private:
+	CGLES3InstanceBufferManager* m_pManager;
 };
