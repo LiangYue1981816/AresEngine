@@ -39,14 +39,5 @@ public:
 
 
 public:
-	virtual bool SetIndex(int index) = 0;
-
-public:
-	virtual uint32_t GetInstanceBinding(void) const = 0;
-	virtual uint32_t GetInstanceFormat(void) const = 0;
-	virtual uint32_t GetInstanceCount(void) const = 0;
-	virtual uint32_t GetSize(void) const = 0;
-
-public:
-	virtual bool BufferData(size_t size, const void* data) = 0;
+	virtual CGfxInstanceBuffer* GetBuffer(int index) const = 0;
 };

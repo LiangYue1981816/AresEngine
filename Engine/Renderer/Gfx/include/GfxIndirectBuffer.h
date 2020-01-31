@@ -47,14 +47,5 @@ public:
 
 
 public:
-	virtual bool SetIndex(int index) = 0;
-
-public:
-	virtual uint32_t GetDrawCommandCount(void) const = 0;
-	virtual uint32_t GetDrawCommandOffset(int indexDraw) const = 0;
-	virtual uint32_t GetSize(void) const = 0;
-	virtual uint32_t GetStride(void) const = 0;
-
-public:
-	virtual bool BufferData(int indexDraw, int firstIndex, int baseVertex, int baseInstance, int indexCount, int instanceCount) = 0;
+	virtual CGfxIndirectBuffer* GetBuffer(int index) const = 0;
 };

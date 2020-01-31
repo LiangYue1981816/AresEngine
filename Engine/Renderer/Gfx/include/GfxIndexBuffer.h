@@ -38,13 +38,5 @@ public:
 
 
 public:
-	virtual bool SetIndex(int index) = 0;
-
-public:
-	virtual GfxIndexType GetIndexType(void) const = 0;
-	virtual uint32_t GetIndexCount(void) const = 0;
-	virtual uint32_t GetSize(void) const = 0;
-
-public:
-	virtual bool BufferData(size_t offset, size_t size, const void* data) = 0;
+	virtual CGfxIndexBuffer* GetBuffer(int index) const = 0;
 };
