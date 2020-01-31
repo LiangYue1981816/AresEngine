@@ -1638,6 +1638,9 @@
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKInstanceBufferManager.h">
       <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Engine\RenderSystem\include\InstanceBufferPool.h">
+      <Filter>Engine\RenderSystem\Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Engine\ThirdParty\eastl\source\allocator_eastl.cpp">
@@ -2386,6 +2389,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKInstanceBufferManager.cpp">
       <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\RenderSystem\src\InstanceBufferPool.cpp">
+      <Filter>Engine\RenderSystem\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
