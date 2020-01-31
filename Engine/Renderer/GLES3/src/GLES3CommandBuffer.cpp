@@ -9,8 +9,12 @@
 #include "./Command/GLES3CommandBindPipelineCompute.h"
 #include "./Command/GLES3CommandBindPipelineGraphics.h"
 #include "./Command/GLES3CommandBindDescriptorSet.h"
-#include "./Command/GLES3CommandBindMesh.h"
-#include "./Command/GLES3CommandBindMeshDraw.h"
+#include "./Command/GLES3CommandBindIndexBuffer.h"
+#include "./Command/GLES3CommandBindVertexBuffer.h"
+#include "./Command/GLES3CommandBindInstanceBuffer.h"
+#include "./Command/GLES3CommandSetIndexBuffer.h"
+#include "./Command/GLES3CommandSetVertexBuffer.h"
+#include "./Command/GLES3CommandSetInstanceBuffer.h"
 #include "./Command/GLES3CommandUniform1i.h"
 #include "./Command/GLES3CommandUniform2i.h"
 #include "./Command/GLES3CommandUniform3i.h"
@@ -37,7 +41,6 @@
 #include "./Command/GLES3CommandDispatch.h"
 #include "./Command/GLES3CommandDrawInstance.h"
 #include "./Command/GLES3CommandDrawIndirect.h"
-#include "./Command/GLES3CommandUpdateInstanceBuffer.h"
 #include "./Command/GLES3CommandPushDebugGroup.h"
 #include "./Command/GLES3CommandPopDebugGroup.h"
 #include "./Command/GLES3CommandExecute.h"
@@ -211,14 +214,34 @@ void CGLES3CommandBuffer::CmdBindDescriptorSet(const CGfxDescriptorSetPtr ptrDes
 	m_pCommands.emplace_back(new CGLES3CommandBindDescriptorSet(m_pCurrentPipelineCompute, m_pCurrentPipelineGraphics, ptrDescriptorSet));
 }
 
-void CGLES3CommandBuffer::CmdBindMesh(const CGfxMeshPtr ptrMesh)
+void CGLES3CommandBuffer::CmdBindIndexBuffer(const CGfxIndexBufferPtr ptrIndexBuffer)
 {
-	m_pCommands.emplace_back(new CGLES3CommandBindMesh(m_pCurrentPipelineGraphics, ptrMesh));
+	m_pCommands.emplace_back(new CGLES3CommandBindIndexBuffer(ptrIndexBuffer));
 }
 
-void CGLES3CommandBuffer::CmdBindMeshDraw(const CGfxMeshDrawPtr ptrMeshDraw)
+void CGLES3CommandBuffer::CmdBindVertexBuffer(const CGfxVertexBufferPtr ptrVertexBuffer)
 {
-	m_pCommands.emplace_back(new CGLES3CommandBindMeshDraw(m_pCurrentPipelineGraphics, ptrMeshDraw));
+	m_pCommands.emplace_back(new CGLES3CommandBindVertexBuffer(m_pCurrentPipelineGraphics, ptrVertexBuffer));
+}
+
+void CGLES3CommandBuffer::CmdBindInstanceBuffer(const CGfxInstanceBufferPtr ptrInstanceBuffer)
+{
+	m_pCommands.emplace_back(new CGLES3CommandBindInstanceBuffer(m_pCurrentPipelineGraphics, ptrInstanceBuffer));
+}
+
+void CGLES3CommandBuffer::CmdSetIndexBuffer(const CGfxIndexBufferPtr ptrIndexBuffer, const uint8_t* pBuffer, uint32_t size)
+{
+	m_pCommands.emplace_back(new CGLES3CommandSetIndexBuffer(ptrIndexBuffer, pBuffer, size));
+}
+
+void CGLES3CommandBuffer::CmdSetVertexBuffer(const CGfxVertexBufferPtr ptrVertexBuffer, const uint8_t* pBuffer, uint32_t size)
+{
+	m_pCommands.emplace_back(new CGLES3CommandSetVertexBuffer(ptrVertexBuffer, pBuffer, size));
+}
+
+void CGLES3CommandBuffer::CmdSetInstanceBuffer(const CGfxInstanceBufferPtr ptrInstanceBuffer, const uint8_t* pBuffer, uint32_t size)
+{
+	m_pCommands.emplace_back(new CGLES3CommandSetInstanceBuffer(ptrInstanceBuffer, pBuffer, size));
 }
 
 void CGLES3CommandBuffer::CmdUniform1i(uint32_t name, int v0)
@@ -336,14 +359,9 @@ void CGLES3CommandBuffer::CmdClearColor(float red, float green, float blue, floa
 	m_pCommands.emplace_back(new CGLES3CommandClearColor(red, green, blue, alpha));
 }
 
-void CGLES3CommandBuffer::CmdDrawInstance(const CGfxMeshDrawPtr ptrMeshDraw)
+void CGLES3CommandBuffer::CmdDrawInstance(int indexType, int indexOffset, int indexCount, int instanceCount)
 {
-	m_pCommands.emplace_back(new CGLES3CommandDrawInstance(m_pCurrentPipelineGraphics, ptrMeshDraw));
-}
-
-void CGLES3CommandBuffer::CmdUpdateInstanceBuffer(const CGfxMeshDrawPtr ptrMeshDraw, const uint8_t* pInstanceBuffer, uint32_t size)
-{
-	m_pCommands.emplace_back(new CGLES3CommandUpdateInstanceBuffer(ptrMeshDraw, pInstanceBuffer, size));
+	m_pCommands.emplace_back(new CGLES3CommandDrawInstance(indexType, indexOffset, indexCount, instanceCount));
 }
 
 void CGLES3CommandBuffer::CmdDispatch(int numLocalWorkGroupX, int numLocalWorkGroupY, int numLocalWorkGroupZ)

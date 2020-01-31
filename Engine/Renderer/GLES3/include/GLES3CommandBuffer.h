@@ -50,8 +50,13 @@ public:
 	void CmdBindPipelineCompute(const CGfxPipelineCompute* pPipelineCompute);
 	void CmdBindPipelineGraphics(const CGfxPipelineGraphics* pPipelineGraphics);
 	void CmdBindDescriptorSet(const CGfxDescriptorSetPtr ptrDescriptorSet);
-	void CmdBindMesh(const CGfxMeshPtr ptrMesh);
-	void CmdBindMeshDraw(const CGfxMeshDrawPtr ptrMeshDraw);
+	void CmdBindIndexBuffer(const CGfxIndexBufferPtr ptrIndexBuffer);
+	void CmdBindVertexBuffer(const CGfxVertexBufferPtr ptrVertexBuffer);
+	void CmdBindInstanceBuffer(const CGfxInstanceBufferPtr ptrInstanceBuffer);
+
+	void CmdSetIndexBuffer(const CGfxIndexBufferPtr ptrIndexBuffer, const uint8_t* pBuffer, uint32_t size);
+	void CmdSetVertexBuffer(const CGfxVertexBufferPtr ptrVertexBuffer, const uint8_t* pBuffer, uint32_t size);
+	void CmdSetInstanceBuffer(const CGfxInstanceBufferPtr ptrInstanceBuffer, const uint8_t* pBuffer, uint32_t size);
 
 	void CmdUniform1i(uint32_t name, int v0);
 	void CmdUniform2i(uint32_t name, int v0, int v1);
@@ -79,9 +84,7 @@ public:
 	void CmdClearDepth(float depth);
 	void CmdClearColor(float red, float green, float blue, float alpha);
 
-	void CmdDrawInstance(const CGfxMeshDrawPtr ptrMeshDraw);
-	void CmdUpdateInstanceBuffer(const CGfxMeshDrawPtr ptrMeshDraw, const uint8_t* pInstanceBuffer, uint32_t size);
-
+	void CmdDrawInstance(int indexType, int indexOffset, int indexCount, int instanceCount);
 	void CmdDispatch(int numLocalWorkGroupX, int numLocalWorkGroupY, int numLocalWorkGroupZ);
 
 	void CmdPushDebugGroup(const char* szMessage);

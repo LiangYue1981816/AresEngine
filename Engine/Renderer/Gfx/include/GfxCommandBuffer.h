@@ -109,7 +109,7 @@ public:
 	virtual void CmdClearDepth(float depth) = 0;
 	virtual void CmdClearColor(float red, float green, float blue, float alpha) = 0;
 
-	virtual void CmdDrawInstance(int firstIndex, int indexCount, int instanceCount) = 0;
+	virtual void CmdDrawInstance(int indexType, int indexOffset, int indexCount, int instanceCount) = 0;
 	virtual void CmdDispatch(int numLocalWorkGroupX, int numLocalWorkGroupY, int numLocalWorkGroupZ) = 0;
 
 	virtual void CmdPushDebugGroup(const char* szMessage) = 0;
