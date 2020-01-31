@@ -160,8 +160,13 @@ public:
 	void CmdBindPipelineCompute(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxPipelineCompute* pPipelineCompute);
 	void CmdBindPipelineGraphics(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxPipelineGraphics* pPipelineGraphics);
 	void CmdBindDescriptorSet(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxDescriptorSetPtr ptrDescriptorSet);
-	void CmdBindMesh(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxMeshPtr ptrMesh);
-	void CmdBindMeshDraw(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxMeshDrawPtr ptrMeshDraw);
+	void CmdBindIndexBuffer(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxIndexBufferPtr ptrIndexBuffer);
+	void CmdBindVertexBuffer(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxVertexBufferPtr ptrVertexBuffer);
+	void CmdBindInstanceBuffer(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxInstanceBufferPtr ptrInstanceBuffer);
+
+	void CmdSetIndexBuffer(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxIndexBufferPtr ptrIndexBuffer, const uint8_t* pBuffer, uint32_t size);
+	void CmdSetVertexBuffer(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxVertexBufferPtr ptrVertexBuffer, const uint8_t* pBuffer, uint32_t size);
+	void CmdSetInstanceBuffer(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxInstanceBufferPtr ptrInstanceBuffer, const uint8_t* pBuffer, uint32_t size);
 
 	void CmdUniform1i(CGfxCommandBufferPtr ptrCommandBuffer, uint32_t name, int v0);
 	void CmdUniform2i(CGfxCommandBufferPtr ptrCommandBuffer, uint32_t name, int v0, int v1);
@@ -189,9 +194,7 @@ public:
 	void CmdClearDepth(CGfxCommandBufferPtr ptrCommandBuffer, float depth);
 	void CmdClearColor(CGfxCommandBufferPtr ptrCommandBuffer, float red, float green, float blue, float alpha);
 
-	void CmdDrawInstance(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxMeshDrawPtr ptrMeshDraw);
-	void CmdUpdateInstanceBuffer(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxMeshDrawPtr ptrMeshDraw, const uint8_t* pInstanceBuffer, uint32_t size);
-
+	void CmdDrawInstance(CGfxCommandBufferPtr ptrCommandBuffer, int indexType, int indexOffset, int indexCount, int instanceCount);
 	void CmdDispatch(CGfxCommandBufferPtr ptrCommandBuffer, int numLocalWorkGroupX, int numLocalWorkGroupY, int numLocalWorkGroupZ);
 
 	void CmdPushDebugGroup(CGfxCommandBufferPtr ptrCommandBuffer, const char* szMessage);

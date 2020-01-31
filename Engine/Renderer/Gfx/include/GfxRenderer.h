@@ -178,8 +178,13 @@ public:
 	virtual void CmdBindPipelineCompute(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxPipelineCompute* pPipelineCompute) = 0;
 	virtual void CmdBindPipelineGraphics(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxPipelineGraphics* pPipelineGraphics) = 0;
 	virtual void CmdBindDescriptorSet(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxDescriptorSetPtr ptrDescriptorSet) = 0;
-	virtual void CmdBindMesh(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxMeshPtr ptrMesh) = 0;
-	virtual void CmdBindMeshDraw(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxMeshDrawPtr ptrMeshDraw) = 0;
+	virtual void CmdBindIndexBuffer(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxIndexBufferPtr ptrIndexBuffer) = 0;
+	virtual void CmdBindVertexBuffer(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxVertexBufferPtr ptrVertexBuffer) = 0;
+	virtual void CmdBindInstanceBuffer(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxInstanceBufferPtr ptrInstanceBuffer) = 0;
+
+	virtual void CmdSetIndexBuffer(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxIndexBufferPtr ptrIndexBuffer, const uint8_t* pBuffer, uint32_t size) = 0;
+	virtual void CmdSetVertexBuffer(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxVertexBufferPtr ptrVertexBuffer, const uint8_t* pBuffer, uint32_t size) = 0;
+	virtual void CmdSetInstanceBuffer(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxInstanceBufferPtr ptrInstanceBuffer, const uint8_t* pBuffer, uint32_t size) = 0;
 
 	virtual void CmdUniform1i(CGfxCommandBufferPtr ptrCommandBuffer, uint32_t name, int v0) = 0;
 	virtual void CmdUniform2i(CGfxCommandBufferPtr ptrCommandBuffer, uint32_t name, int v0, int v1) = 0;
@@ -207,9 +212,7 @@ public:
 	virtual void CmdClearDepth(CGfxCommandBufferPtr ptrCommandBuffer, float depth) = 0;
 	virtual void CmdClearColor(CGfxCommandBufferPtr ptrCommandBuffer, float red, float green, float blue, float alpha) = 0;
 
-	virtual void CmdDrawInstance(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxMeshDrawPtr ptrMeshDraw) = 0;
-	virtual void CmdUpdateInstanceBuffer(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxMeshDrawPtr ptrMeshDraw, const uint8_t* pInstanceBuffer, uint32_t size) = 0;
-
+	virtual void CmdDrawInstance(CGfxCommandBufferPtr ptrCommandBuffer, int indexType, int indexOffset, int indexCount, int instanceCount) = 0;
 	virtual void CmdDispatch(CGfxCommandBufferPtr ptrCommandBuffer, int numLocalWorkGroupX, int numLocalWorkGroupY, int numLocalWorkGroupZ) = 0;
 
 	virtual void CmdPushDebugGroup(CGfxCommandBufferPtr ptrCommandBuffer, const char* szMessage) = 0;

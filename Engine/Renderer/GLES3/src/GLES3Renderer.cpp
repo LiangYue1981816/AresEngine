@@ -358,14 +358,34 @@ void CGLES3Renderer::CmdBindDescriptorSet(CGfxCommandBufferPtr ptrCommandBuffer,
 	ptrCommandBuffer->CmdBindDescriptorSet(ptrDescriptorSet);
 }
 
-void CGLES3Renderer::CmdBindMesh(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxMeshPtr ptrMesh)
+void CGLES3Renderer::CmdBindIndexBuffer(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxIndexBufferPtr ptrIndexBuffer)
 {
-	ptrCommandBuffer->CmdBindMesh(ptrMesh);
+	ptrCommandBuffer->CmdBindIndexBuffer(ptrIndexBuffer);
 }
 
-void CGLES3Renderer::CmdBindMeshDraw(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxMeshDrawPtr ptrMeshDraw)
+void CGLES3Renderer::CmdBindVertexBuffer(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxVertexBufferPtr ptrVertexBuffer)
 {
-	ptrCommandBuffer->CmdBindMeshDraw(ptrMeshDraw);
+	ptrCommandBuffer->CmdBindVertexBuffer(ptrVertexBuffer);
+}
+
+void CGLES3Renderer::CmdBindInstanceBuffer(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxInstanceBufferPtr ptrInstanceBuffer)
+{
+	ptrCommandBuffer->CmdBindInstanceBuffer(ptrInstanceBuffer);
+}
+
+void CGLES3Renderer::CmdSetIndexBuffer(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxIndexBufferPtr ptrIndexBuffer, const uint8_t* pBuffer, uint32_t size)
+{
+	ptrCommandBuffer->CmdSetIndexBuffer(ptrIndexBuffer, pBuffer, size);
+}
+
+void CGLES3Renderer::CmdSetVertexBuffer(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxVertexBufferPtr ptrVertexBuffer, const uint8_t* pBuffer, uint32_t size)
+{
+	ptrCommandBuffer->CmdSetVertexBuffer(ptrVertexBuffer, pBuffer, size);
+}
+
+void CGLES3Renderer::CmdSetInstanceBuffer(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxInstanceBufferPtr ptrInstanceBuffer, const uint8_t* pBuffer, uint32_t size)
+{
+	ptrCommandBuffer->CmdSetInstanceBuffer(ptrInstanceBuffer, pBuffer, size);
 }
 
 void CGLES3Renderer::CmdUniform1i(CGfxCommandBufferPtr ptrCommandBuffer, uint32_t name, int v0)
@@ -483,14 +503,9 @@ void CGLES3Renderer::CmdClearColor(CGfxCommandBufferPtr ptrCommandBuffer, float 
 	ptrCommandBuffer->CmdClearColor(red, green, blue, alpha);
 }
 
-void CGLES3Renderer::CmdDrawInstance(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxMeshDrawPtr ptrMeshDraw)
+void CGLES3Renderer::CmdDrawInstance(CGfxCommandBufferPtr ptrCommandBuffer, int indexType, int indexOffset, int indexCount, int instanceCount)
 {
-	ptrCommandBuffer->CmdDrawInstance(ptrMeshDraw);
-}
-
-void CGLES3Renderer::CmdUpdateInstanceBuffer(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxMeshDrawPtr ptrMeshDraw, const uint8_t* pInstanceBuffer, uint32_t size)
-{
-	ptrCommandBuffer->CmdUpdateInstanceBuffer(ptrMeshDraw, pInstanceBuffer, size);
+	ptrCommandBuffer->CmdDrawInstance(indexType, indexOffset, indexCount, instanceCount);
 }
 
 void CGLES3Renderer::CmdDispatch(CGfxCommandBufferPtr ptrCommandBuffer, int numLocalWorkGroupX, int numLocalWorkGroupY, int numLocalWorkGroupZ)

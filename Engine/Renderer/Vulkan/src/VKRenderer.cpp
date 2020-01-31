@@ -364,14 +364,34 @@ void CVKRenderer::CmdBindDescriptorSet(CGfxCommandBufferPtr ptrCommandBuffer, co
 	ptrCommandBuffer->CmdBindDescriptorSet(ptrDescriptorSet);
 }
 
-void CVKRenderer::CmdBindMesh(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxMeshPtr ptrMesh)
+void CVKRenderer::CmdBindIndexBuffer(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxIndexBufferPtr ptrIndexBuffer)
 {
-	ptrCommandBuffer->CmdBindMesh(ptrMesh);
+	ptrCommandBuffer->CmdBindIndexBuffer(ptrIndexBuffer);
 }
 
-void CVKRenderer::CmdBindMeshDraw(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxMeshDrawPtr ptrMeshDraw)
+void CVKRenderer::CmdBindVertexBuffer(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxVertexBufferPtr ptrVertexBuffer)
 {
-	ptrCommandBuffer->CmdBindMeshDraw(ptrMeshDraw);
+	ptrCommandBuffer->CmdBindVertexBuffer(ptrVertexBuffer);
+}
+
+void CVKRenderer::CmdBindInstanceBuffer(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxInstanceBufferPtr ptrInstanceBuffer)
+{
+	ptrCommandBuffer->CmdBindInstanceBuffer(ptrInstanceBuffer);
+}
+
+void CVKRenderer::CmdSetIndexBuffer(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxIndexBufferPtr ptrIndexBuffer, const uint8_t* pBuffer, uint32_t size)
+{
+	ptrCommandBuffer->CmdSetIndexBuffer(ptrIndexBuffer, pBuffer, size);
+}
+
+void CVKRenderer::CmdSetVertexBuffer(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxVertexBufferPtr ptrVertexBuffer, const uint8_t* pBuffer, uint32_t size)
+{
+	ptrCommandBuffer->CmdSetVertexBuffer(ptrVertexBuffer, pBuffer, size);
+}
+
+void CVKRenderer::CmdSetInstanceBuffer(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxInstanceBufferPtr ptrInstanceBuffer, const uint8_t* pBuffer, uint32_t size)
+{
+	ptrCommandBuffer->CmdSetInstanceBuffer(ptrInstanceBuffer, pBuffer, size);
 }
 
 void CVKRenderer::CmdUniform1i(CGfxCommandBufferPtr ptrCommandBuffer, uint32_t name, int v0)
@@ -489,14 +509,9 @@ void CVKRenderer::CmdClearColor(CGfxCommandBufferPtr ptrCommandBuffer, float red
 	ptrCommandBuffer->CmdClearColor(red, green, blue, alpha);
 }
 
-void CVKRenderer::CmdDrawInstance(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxMeshDrawPtr ptrMeshDraw)
+void CVKRenderer::CmdDrawInstance(CGfxCommandBufferPtr ptrCommandBuffer, int indexType, int indexOffset, int indexCount, int instanceCount)
 {
-	ptrCommandBuffer->CmdDrawInstance(ptrMeshDraw);
-}
-
-void CVKRenderer::CmdUpdateInstanceBuffer(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxMeshDrawPtr ptrMeshDraw, const uint8_t* pInstanceBuffer, uint32_t size)
-{
-	ptrCommandBuffer->CmdUpdateInstanceBuffer(ptrMeshDraw, pInstanceBuffer, size);
+	ptrCommandBuffer->CmdDrawInstance(indexType, indexOffset, indexCount, instanceCount);
 }
 
 void CVKRenderer::CmdDispatch(CGfxCommandBufferPtr ptrCommandBuffer, int numLocalWorkGroupX, int numLocalWorkGroupY, int numLocalWorkGroupZ)
