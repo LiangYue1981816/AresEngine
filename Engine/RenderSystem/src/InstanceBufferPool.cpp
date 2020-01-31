@@ -19,5 +19,12 @@ void CInstanceBufferPool::Clear(void)
 
 CGfxMultiInstanceBufferPtr CInstanceBufferPool::GetInstanceBuffer(uint32_t instanceFormat, int instanceBinding, int count)
 {
-	return CGfxMultiInstanceBufferPtr(nullptr);
+	int& index = m_indexMultiInstanceBuffers[instanceFormat][instanceBinding][count];
+	eastl::vector<CGfxMultiInstanceBufferPtr>& buffers = m_ptrMultiInstanceBuffers[instanceFormat][instanceBinding][count];
+
+	if (index == buffers.size()) {
+		buffers.emplace_back(GfxRenderer()->NewMultiInstanceBuffer(instanceFormat, instanceBinding, count));
+	}
+
+	return buffers[index++];
 }
