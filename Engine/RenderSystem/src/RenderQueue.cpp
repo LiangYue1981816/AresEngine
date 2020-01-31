@@ -284,6 +284,7 @@ void CRenderQueue::CmdDrawThread(CGfxCommandBufferPtr ptrCommandBuffer, const CG
 
 										GfxRenderer()->CmdBindDescriptorSet(ptrCommandBuffer, GfxRenderer()->GetDescriptorSet(itDrawQueue.first->GetName()));
 										{
+											CGfxMultiInstanceBufferPtr ptrInstanceBuffer = m_instanceBufferQueue[pPipeline][itDrawQueue.first];
 											GfxRenderer()->CmdUpdateInstanceBuffer(ptrCommandBuffer, itDrawQueue.first, (const uint8_t*)itDrawQueue.second.data(), itDrawQueue.second.size() * sizeof(int));
 											GfxRenderer()->CmdBindMeshDraw(ptrCommandBuffer, itDrawQueue.first);
 											GfxRenderer()->CmdDrawInstance(ptrCommandBuffer, itDrawQueue.first);
