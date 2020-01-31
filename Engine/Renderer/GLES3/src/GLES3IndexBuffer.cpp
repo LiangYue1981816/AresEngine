@@ -19,7 +19,7 @@ CGLES3IndexBuffer::~CGLES3IndexBuffer(void)
 
 void CGLES3IndexBuffer::Release(void)
 {
-	delete this;
+
 }
 
 GfxIndexType CGLES3IndexBuffer::GetIndexType(void) const
@@ -54,7 +54,6 @@ void CGLES3IndexBuffer::Bind(void) const
 
 CGLES3MultiIndexBuffer::CGLES3MultiIndexBuffer(GfxIndexType type, size_t size, bool bDynamic, int count)
 	: CGfxMultiIndexBuffer(type, size, bDynamic, count)
-	, m_index(0)
 	, m_pBuffers(std::max(1, count))
 {
 	for (int index = 0; index < m_pBuffers.size(); index++) {
@@ -71,26 +70,10 @@ CGLES3MultiIndexBuffer::~CGLES3MultiIndexBuffer(void)
 
 void CGLES3MultiIndexBuffer::Release(void)
 {
-	delete this;
+
 }
 
-bool CGLES3MultiIndexBuffer::SetIndex(int index)
-{
-	if (index >= 0 && index < m_pBuffers.size()) {
-		m_index = index;
-		return true;
-	}
-	else {
-		return false;
-	}
-}
-
-CGLES3IndexBuffer* CGLES3MultiIndexBuffer::GetBuffer(void) const
-{
-	return m_pBuffers[m_index];
-}
-
-CGLES3IndexBuffer* CGLES3MultiIndexBuffer::GetBuffer(int index) const
+CGfxIndexBuffer* CGLES3MultiIndexBuffer::GetBuffer(int index) const
 {
 	if (index >= 0 && index < m_pBuffers.size()) {
 		return m_pBuffers[index];
@@ -98,29 +81,4 @@ CGLES3IndexBuffer* CGLES3MultiIndexBuffer::GetBuffer(int index) const
 	else {
 		return nullptr;
 	}
-}
-
-GfxIndexType CGLES3MultiIndexBuffer::GetIndexType(void) const
-{
-	return m_pBuffers[m_index]->GetIndexType();
-}
-
-uint32_t CGLES3MultiIndexBuffer::GetIndexCount(void) const
-{
-	return m_pBuffers[m_index]->GetIndexCount();
-}
-
-uint32_t CGLES3MultiIndexBuffer::GetSize(void) const
-{
-	return m_pBuffers[m_index]->GetSize();
-}
-
-bool CGLES3MultiIndexBuffer::BufferData(size_t offset, size_t size, const void* data)
-{
-	return m_pBuffers[m_index]->BufferData(offset, size, data);
-}
-
-void CGLES3MultiIndexBuffer::Bind(void) const
-{
-	m_pBuffers[m_index]->Bind();
 }

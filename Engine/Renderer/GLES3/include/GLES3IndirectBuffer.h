@@ -40,26 +40,9 @@ public:
 
 
 public:
-	bool SetIndex(int index);
-
-public:
-	CGLES3IndirectBuffer* GetBuffer(void) const;
-	CGLES3IndirectBuffer* GetBuffer(int index) const;
-
-public:
-	uint32_t GetDrawCommandCount(void) const;
-	uint32_t GetDrawCommandOffset(int indexDraw) const;
-	uint32_t GetSize(void) const;
-	uint32_t GetStride(void) const;
-
-public:
-	bool BufferData(int indexDraw, int firstIndex, int baseVertex, int baseInstance, int indexCount, int instanceCount);
-
-public:
-	void Bind(void) const;
+	CGfxIndirectBuffer* GetBuffer(int index) const;
 
 
 private:
-	int m_index;
 	eastl::vector<CGLES3IndirectBuffer*> m_pBuffers;
 };

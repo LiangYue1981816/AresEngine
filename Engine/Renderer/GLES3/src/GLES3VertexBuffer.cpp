@@ -21,7 +21,7 @@ CGLES3VertexBuffer::~CGLES3VertexBuffer(void)
 
 void CGLES3VertexBuffer::Release(void)
 {
-	delete this;
+
 }
 
 uint32_t CGLES3VertexBuffer::GetVertexBinding(void) const
@@ -74,7 +74,6 @@ void CGLES3VertexBuffer::Bind(void) const
 
 CGLES3MultiVertexBuffer::CGLES3MultiVertexBuffer(uint32_t vertexFormat, int vertexBinding, size_t size, bool bDynamic, int count)
 	: CGfxMultiVertexBuffer(vertexFormat, vertexBinding, size, bDynamic, count)
-	, m_index(0)
 	, m_pBuffers(std::max(1, count))
 {
 	for (int index = 0; index < m_pBuffers.size(); index++) {
@@ -91,26 +90,10 @@ CGLES3MultiVertexBuffer::~CGLES3MultiVertexBuffer(void)
 
 void CGLES3MultiVertexBuffer::Release(void)
 {
-	delete this;
+
 }
 
-bool CGLES3MultiVertexBuffer::SetIndex(int index)
-{
-	if (index >= 0 && index < m_pBuffers.size()) {
-		m_index = index;
-		return true;
-	}
-	else {
-		return false;
-	}
-}
-
-CGLES3VertexBuffer* CGLES3MultiVertexBuffer::GetBuffer(void) const
-{
-	return m_pBuffers[m_index];
-}
-
-CGLES3VertexBuffer* CGLES3MultiVertexBuffer::GetBuffer(int index) const
+CGfxVertexBuffer* CGLES3MultiVertexBuffer::GetBuffer(int index) const
 {
 	if (index >= 0 && index < m_pBuffers.size()) {
 		return m_pBuffers[index];
@@ -118,34 +101,4 @@ CGLES3VertexBuffer* CGLES3MultiVertexBuffer::GetBuffer(int index) const
 	else {
 		return nullptr;
 	}
-}
-
-uint32_t CGLES3MultiVertexBuffer::GetVertexBinding(void) const
-{
-	return m_pBuffers[m_index]->GetVertexBinding();
-}
-
-uint32_t CGLES3MultiVertexBuffer::GetVertexFormat(void) const
-{
-	return m_pBuffers[m_index]->GetVertexFormat();
-}
-
-uint32_t CGLES3MultiVertexBuffer::GetVertexCount(void) const
-{
-	return m_pBuffers[m_index]->GetVertexCount();
-}
-
-uint32_t CGLES3MultiVertexBuffer::GetSize(void) const
-{
-	return m_pBuffers[m_index]->GetSize();
-}
-
-bool CGLES3MultiVertexBuffer::BufferData(size_t offset, size_t size, const void* data)
-{
-	return m_pBuffers[m_index]->BufferData(offset, size, data);
-}
-
-void CGLES3MultiVertexBuffer::Bind(void) const
-{
-	m_pBuffers[m_index]->Bind();
 }

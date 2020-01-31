@@ -39,25 +39,9 @@ public:
 
 
 public:
-	bool SetIndex(int index);
-
-public:
-	CGLES3IndexBuffer* GetBuffer(void) const;
-	CGLES3IndexBuffer* GetBuffer(int index) const;
-
-public:
-	GfxIndexType GetIndexType(void) const;
-	uint32_t GetIndexCount(void) const;
-	uint32_t GetSize(void) const;
-
-public:
-	bool BufferData(size_t offset, size_t size, const void* data);
-
-public:
-	void Bind(void) const;
+	CGfxIndexBuffer* GetBuffer(int index) const;
 
 
 private:
-	int m_index;
 	eastl::vector<CGLES3IndexBuffer*> m_pBuffers;
 };

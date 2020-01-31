@@ -24,7 +24,9 @@ CGLES3InstanceBuffer::~CGLES3InstanceBuffer(void)
 
 void CGLES3InstanceBuffer::Release(void)
 {
-	m_pManager->Destroy(this);
+	if (m_pManager) {
+		m_pManager->Destroy(this);
+	}
 }
 
 uint32_t CGLES3InstanceBuffer::GetInstanceBinding(void) const
@@ -91,8 +93,6 @@ void CGLES3InstanceBuffer::Bind(void) const
 CGLES3MultiInstanceBuffer::CGLES3MultiInstanceBuffer(CGLES3InstanceBufferManager* pManager, uint32_t instanceFormat, int instanceBinding, int count)
 	: CGfxMultiInstanceBuffer(instanceFormat, instanceBinding, count)
 	, m_pManager(pManager)
-
-	, m_index(0)
 	, m_pBuffers(std::max(1, count))
 {
 	for (int index = 0; index < m_pBuffers.size(); index++) {
@@ -112,23 +112,7 @@ void CGLES3MultiInstanceBuffer::Release(void)
 	m_pManager->Destroy(this);
 }
 
-bool CGLES3MultiInstanceBuffer::SetIndex(int index)
-{
-	if (index >= 0 && index < m_pBuffers.size()) {
-		m_index = index;
-		return true;
-	}
-	else {
-		return false;
-	}
-}
-
-CGLES3InstanceBuffer* CGLES3MultiInstanceBuffer::GetBuffer(void) const
-{
-	return m_pBuffers[m_index];
-}
-
-CGLES3InstanceBuffer* CGLES3MultiInstanceBuffer::GetBuffer(int index) const
+CGfxInstanceBuffer* CGLES3MultiInstanceBuffer::GetBuffer(int index) const
 {
 	if (index >= 0 && index < m_pBuffers.size()) {
 		return m_pBuffers[index];
@@ -136,34 +120,4 @@ CGLES3InstanceBuffer* CGLES3MultiInstanceBuffer::GetBuffer(int index) const
 	else {
 		return nullptr;
 	}
-}
-
-uint32_t CGLES3MultiInstanceBuffer::GetInstanceBinding(void) const
-{
-	return m_pBuffers[m_index]->GetInstanceBinding();
-}
-
-uint32_t CGLES3MultiInstanceBuffer::GetInstanceFormat(void) const
-{
-	return m_pBuffers[m_index]->GetInstanceFormat();
-}
-
-uint32_t CGLES3MultiInstanceBuffer::GetInstanceCount(void) const
-{
-	return m_pBuffers[m_index]->GetInstanceCount();
-}
-
-uint32_t CGLES3MultiInstanceBuffer::GetSize(void) const
-{
-	return m_pBuffers[m_index]->GetSize();
-}
-
-bool CGLES3MultiInstanceBuffer::BufferData(size_t size, const void* data)
-{
-	return m_pBuffers[m_index]->BufferData(size, data);
-}
-
-void CGLES3MultiInstanceBuffer::Bind(void) const
-{
-	return m_pBuffers[m_index]->Bind();
 }
