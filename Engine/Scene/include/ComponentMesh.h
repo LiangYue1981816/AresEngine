@@ -13,7 +13,7 @@ public:
 public:
 	void SetScreenFactor(int indexLOD, float factor);
 	void SetMaterial(int indexLOD, const CGfxMaterialPtr ptrMaterial);
-	void SetMeshDraw(int indexLOD, const CGfxMeshPtr ptrMesh, uint32_t nameDraw, uint32_t instanceFormat, int instanceBinding, uint32_t nameAlias = INVALID_HASHNAME);
+	void SetMeshDraw(int indexLOD, const CGfxMeshPtr ptrMesh, uint32_t nameDraw, uint32_t nameAlias = INVALID_HASHNAME);
 	void SetMask(int indexLOD, uint32_t mask);
 
 	void SetCullDistance(float distance);

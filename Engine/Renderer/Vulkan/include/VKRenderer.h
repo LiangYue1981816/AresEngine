@@ -139,7 +139,7 @@ public:
 	CGfxMeshPtr NewMesh(const char* szFileName, int vertexBinding = 0);
 
 	CGfxMeshDrawPtr GetMeshDraw(uint32_t name);
-	CGfxMeshDrawPtr NewMeshDraw(uint32_t name, const CGfxMeshPtr ptrMesh, uint32_t nameDraw, uint32_t instanceFormat, int instanceBinding = 1);
+	CGfxMeshDrawPtr NewMeshDraw(uint32_t name, const CGfxMeshPtr ptrMesh, uint32_t nameDraw);
 
 	CGfxMaterialPtr GetMaterial(uint32_t name);
 	CGfxMaterialPtr NewMaterial(uint32_t name);

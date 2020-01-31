@@ -40,7 +40,7 @@ void CComponentPointLight::SetMaterial(const CGfxMaterialPtr ptrMaterial)
 
 void CComponentPointLight::SetMeshDraw(const CGfxMeshPtr ptrMesh)
 {
-	m_ptrMeshDraw = GfxRenderer()->NewMeshDraw(ptrMesh->GetName(), ptrMesh, 0, INSTANCE_FORMAT, 1);
+	m_ptrMeshDraw = GfxRenderer()->NewMeshDraw(ptrMesh->GetName(), ptrMesh, 0);
 }
 
 void CComponentPointLight::SetColor(float red, float green, float blue)

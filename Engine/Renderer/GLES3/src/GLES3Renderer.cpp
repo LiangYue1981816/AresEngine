@@ -231,9 +231,9 @@ CGfxMeshDrawPtr CGLES3Renderer::GetMeshDraw(uint32_t name)
 	return m_pMeshDrawManager->Get(name);
 }
 
-CGfxMeshDrawPtr CGLES3Renderer::NewMeshDraw(uint32_t name, const CGfxMeshPtr ptrMesh, uint32_t nameDraw, uint32_t instanceFormat, int instanceBinding)
+CGfxMeshDrawPtr CGLES3Renderer::NewMeshDraw(uint32_t name, const CGfxMeshPtr ptrMesh, uint32_t nameDraw)
 {
-	return m_pMeshDrawManager->Create(name, ptrMesh, nameDraw, instanceFormat, instanceBinding);
+	return m_pMeshDrawManager->Create(name, ptrMesh, nameDraw);
 }
 
 CGfxMaterialPtr CGLES3Renderer::GetMaterial(uint32_t name)

@@ -237,9 +237,9 @@ CGfxMeshDrawPtr CVKRenderer::GetMeshDraw(uint32_t name)
 	return m_pMeshDrawManager->Get(name);
 }
 
-CGfxMeshDrawPtr CVKRenderer::NewMeshDraw(uint32_t name, const CGfxMeshPtr ptrMesh, uint32_t nameDraw, uint32_t instanceFormat, int instanceBinding)
+CGfxMeshDrawPtr CVKRenderer::NewMeshDraw(uint32_t name, const CGfxMeshPtr ptrMesh, uint32_t nameDraw)
 {
-	return m_pMeshDrawManager->Create(name, ptrMesh, nameDraw, instanceFormat, instanceBinding);
+	return m_pMeshDrawManager->Create(name, ptrMesh, nameDraw);
 }
 
 CGfxMaterialPtr CVKRenderer::GetMaterial(uint32_t name)
