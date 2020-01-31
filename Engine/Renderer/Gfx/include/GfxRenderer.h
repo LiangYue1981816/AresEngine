@@ -107,7 +107,7 @@ public:
 public:
 	virtual CGfxShader* CreateShader(const char* szFileName, shader_kind kind) = 0;
 	virtual CGfxPipelineCompute* CreatePipelineCompute(const CGfxShader* pComputeShader) = 0;
-	virtual CGfxPipelineGraphics* CreatePipelineGraphics(const CGfxRenderPass* pRenderPass, const CGfxShader* pVertexShader, const CGfxShader* pFragmentShader, const PipelineState& state, int indexSubpass, int vertexBinding = 0, int instanceBinding = 1) = 0;
+	virtual CGfxPipelineGraphics* CreatePipelineGraphics(const CGfxRenderPass* pRenderPass, const CGfxShader* pVertexShader, const CGfxShader* pFragmentShader, const PipelineState& state, int indexSubpass, int vertexBinding, int instanceBinding) = 0;
 	virtual CGfxSampler* CreateSampler(GfxFilter minFilter, GfxFilter magFilter, GfxSamplerMipmapMode mipmapMode, GfxSamplerAddressMode addressMode) = 0;
 
 public:
@@ -134,12 +134,12 @@ public:
 	virtual CGfxUniformBufferPtr NewUniformBuffer(size_t size) = 0;
 	virtual CGfxStorageBufferPtr NewStorageBuffer(size_t size) = 0;
 
-	virtual CGfxInstanceBufferPtr NewInstanceBuffer(uint32_t instanceFormat, int instanceBinding = 1) = 0;
-	virtual CGfxMultiInstanceBufferPtr NewMultiInstanceBuffer(uint32_t instanceFormat, int instanceBinding = 1, int count = 3) = 0;
+	virtual CGfxInstanceBufferPtr NewInstanceBuffer(uint32_t instanceFormat, int instanceBinding) = 0;
+	virtual CGfxMultiInstanceBufferPtr NewMultiInstanceBuffer(uint32_t instanceFormat, int instanceBinding, int count) = 0;
 
 	virtual CGfxMeshPtr GetMesh(uint32_t name) = 0;
 	virtual CGfxMeshPtr NewMesh(uint32_t name) = 0;
-	virtual CGfxMeshPtr NewMesh(const char* szFileName, int vertexBinding = 0) = 0;
+	virtual CGfxMeshPtr NewMesh(const char* szFileName, int vertexBinding) = 0;
 
 	virtual CGfxMeshDrawPtr GetMeshDraw(uint32_t name) = 0;
 	virtual CGfxMeshDrawPtr NewMeshDraw(uint32_t name, const CGfxMeshPtr ptrMesh, uint32_t nameDraw) = 0;
@@ -147,7 +147,7 @@ public:
 	virtual CGfxMaterialPtr GetMaterial(uint32_t name) = 0;
 	virtual CGfxMaterialPtr NewMaterial(uint32_t name) = 0;
 	virtual CGfxMaterialPtr NewMaterial(uint32_t name, const CGfxMaterialPtr ptrMaterialCopyFrom) = 0;
-	virtual CGfxMaterialPtr NewMaterial(const char* szFileName, int vertexBinding = 0, int instanceBinding = 1, int baseLevel = 0, int numLevels = INT_MAX) = 0;
+	virtual CGfxMaterialPtr NewMaterial(const char* szFileName, int vertexBinding, int instanceBinding, int baseLevel = 0, int numLevels = INT_MAX) = 0;
 
 	virtual CGfxDescriptorLayoutPtr NewDescriptorLayout(uint32_t set) = 0;
 
