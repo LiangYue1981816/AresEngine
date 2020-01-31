@@ -5,6 +5,7 @@
 class CGLES3InstanceBufferManager : public CGfxResourceManager
 {
 	friend class CGLES3Renderer;
+	friend class CGLES3InstanceBuffer;
 	friend class CGLES3MultiInstanceBuffer;
 
 

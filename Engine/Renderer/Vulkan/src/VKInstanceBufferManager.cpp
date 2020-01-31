@@ -13,13 +13,17 @@ CVKInstanceBufferManager::~CVKInstanceBufferManager(void)
 	for (const auto& itInstanceBuffer : m_pInstanceBuffers) {
 		delete itInstanceBuffer.second;
 	}
+
+	for (const auto& itMultiInstanceBuffer : m_pMultiInstanceBuffers) {
+		delete itMultiInstanceBuffer.second;
+	}
 }
 
-CVKMultiInstanceBuffer* CVKInstanceBufferManager::Create(uint32_t instanceFormat, int instanceBinding, int count)
+CVKInstanceBuffer* CVKInstanceBufferManager::Create(uint32_t instanceFormat, int instanceBinding)
 {
 	mutex_autolock autolock(&lock);
 	{
-		if (CVKMultiInstanceBuffer* pInstanceBuffer = new CVKMultiInstanceBuffer(m_pDevice, instanceFormat, instanceBinding, count)) {
+		if (CVKInstanceBuffer* pInstanceBuffer = new CVKInstanceBuffer(m_pDevice, instanceFormat, instanceBinding)) {
 			m_pInstanceBuffers[pInstanceBuffer] = pInstanceBuffer;
 			return pInstanceBuffer;
 		}
@@ -29,7 +33,21 @@ CVKMultiInstanceBuffer* CVKInstanceBufferManager::Create(uint32_t instanceFormat
 	}
 }
 
-void CVKInstanceBufferManager::Destroy(CVKMultiInstanceBuffer* pInstanceBuffer)
+CVKMultiInstanceBuffer* CVKInstanceBufferManager::Create(uint32_t instanceFormat, int instanceBinding, int count)
+{
+	mutex_autolock autolock(&lock);
+	{
+		if (CVKMultiInstanceBuffer* pMultiInstanceBuffer = new CVKMultiInstanceBuffer(m_pDevice, instanceFormat, instanceBinding, count)) {
+			m_pMultiInstanceBuffers[pMultiInstanceBuffer] = pMultiInstanceBuffer;
+			return pMultiInstanceBuffer;
+		}
+		else {
+			return nullptr;
+		}
+	}
+}
+
+void CVKInstanceBufferManager::Destroy(CVKInstanceBuffer* pInstanceBuffer)
 {
 	ASSERT(pInstanceBuffer);
 	{
@@ -41,4 +59,18 @@ void CVKInstanceBufferManager::Destroy(CVKMultiInstanceBuffer* pInstanceBuffer)
 		}
 	}
 	delete pInstanceBuffer;
+}
+
+void CVKInstanceBufferManager::Destroy(CVKMultiInstanceBuffer* pMultiInstanceBuffer)
+{
+	ASSERT(pMultiInstanceBuffer);
+	{
+		mutex_autolock autolock(&lock);
+		{
+			if (m_pMultiInstanceBuffers.find(pMultiInstanceBuffer) != m_pMultiInstanceBuffers.end()) {
+				m_pMultiInstanceBuffers.erase(pMultiInstanceBuffer);
+			}
+		}
+	}
+	delete pMultiInstanceBuffer;
 }
