@@ -19,7 +19,7 @@ CVKMeshDraw::CVKMeshDraw(CVKDevice* pDevice, CVKMeshDrawManager* pManager, uint3
 
 	m_ptrMesh = ptrMesh;
 	m_pMeshDraw = ptrMesh->GetDraw(nameDraw);
-	m_pMultiInstanceBuffer = new CVKMultiInstanceBuffer(pDevice, instanceFormat, instanceBinding, CGfxSwapChain::SWAPCHAIN_FRAME_COUNT);
+	m_pMultiInstanceBuffer = new CVKMultiInstanceBuffer(pDevice, nullptr, instanceFormat, instanceBinding, CGfxSwapChain::SWAPCHAIN_FRAME_COUNT);
 }
 
 CVKMeshDraw::~CVKMeshDraw(void)

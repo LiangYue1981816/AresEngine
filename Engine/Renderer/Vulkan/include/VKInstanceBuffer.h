@@ -4,8 +4,11 @@
 
 class CVKInstanceBuffer : public CGfxInstanceBuffer
 {
+	friend class CVKInstanceBufferManager;
+
+
 public:
-	CVKInstanceBuffer(CVKDevice* pDevice, uint32_t instanceFormat, int instanceBinding);
+	CVKInstanceBuffer(CVKDevice* pDevice, CVKInstanceBufferManager* pManager, uint32_t instanceFormat, int instanceBinding);
 	virtual ~CVKInstanceBuffer(void);
 	virtual void Release(void);
 
@@ -33,13 +36,19 @@ private:
 
 private:
 	CVKDevice* m_pDevice;
+
+private:
+	CVKInstanceBufferManager* m_pManager;
 };
 
 
 class CVKMultiInstanceBuffer : public CGfxMultiInstanceBuffer
 {
+	friend class CVKInstanceBufferManager;
+
+
 public:
-	CVKMultiInstanceBuffer(CVKDevice* pDevice, uint32_t instanceFormat, int instanceBinding, int count);
+	CVKMultiInstanceBuffer(CVKDevice* pDevice, CVKInstanceBufferManager* pManager, uint32_t instanceFormat, int instanceBinding, int count);
 	virtual ~CVKMultiInstanceBuffer(void);
 	virtual void Release(void);
 
@@ -67,4 +76,7 @@ public:
 private:
 	int m_index;
 	eastl::vector<CVKInstanceBuffer*> m_pBuffers;
+
+private:
+	CVKInstanceBufferManager* m_pManager;
 };

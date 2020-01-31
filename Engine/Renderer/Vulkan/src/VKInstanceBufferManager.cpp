@@ -23,7 +23,7 @@ CVKInstanceBuffer* CVKInstanceBufferManager::Create(uint32_t instanceFormat, int
 {
 	mutex_autolock autolock(&lock);
 	{
-		if (CVKInstanceBuffer* pInstanceBuffer = new CVKInstanceBuffer(m_pDevice, instanceFormat, instanceBinding)) {
+		if (CVKInstanceBuffer* pInstanceBuffer = new CVKInstanceBuffer(m_pDevice, this, instanceFormat, instanceBinding)) {
 			m_pInstanceBuffers[pInstanceBuffer] = pInstanceBuffer;
 			return pInstanceBuffer;
 		}
@@ -37,7 +37,7 @@ CVKMultiInstanceBuffer* CVKInstanceBufferManager::Create(uint32_t instanceFormat
 {
 	mutex_autolock autolock(&lock);
 	{
-		if (CVKMultiInstanceBuffer* pMultiInstanceBuffer = new CVKMultiInstanceBuffer(m_pDevice, instanceFormat, instanceBinding, count)) {
+		if (CVKMultiInstanceBuffer* pMultiInstanceBuffer = new CVKMultiInstanceBuffer(m_pDevice, this, instanceFormat, instanceBinding, count)) {
 			m_pMultiInstanceBuffers[pMultiInstanceBuffer] = pMultiInstanceBuffer;
 			return pMultiInstanceBuffer;
 		}

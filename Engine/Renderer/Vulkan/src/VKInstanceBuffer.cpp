@@ -3,9 +3,10 @@
 
 static const int INSTANCE_BUFFER_SIZE = 64;
 
-CVKInstanceBuffer::CVKInstanceBuffer(CVKDevice* pDevice, uint32_t instanceFormat, int instanceBinding)
+CVKInstanceBuffer::CVKInstanceBuffer(CVKDevice* pDevice, CVKInstanceBufferManager* pManager, uint32_t instanceFormat, int instanceBinding)
 	: CGfxInstanceBuffer(instanceFormat, instanceBinding)
 	, m_pDevice(pDevice)
+	, m_pManager(pManager)
 	, m_pBuffer(nullptr)
 
 	, m_binding(instanceBinding)
@@ -28,7 +29,7 @@ CVKInstanceBuffer::~CVKInstanceBuffer(void)
 
 void CVKInstanceBuffer::Release(void)
 {
-	delete this;
+	m_pManager->Destroy(this);
 }
 
 uint32_t CVKInstanceBuffer::GetInstanceBinding(void) const
@@ -79,13 +80,14 @@ void CVKInstanceBuffer::Bind(VkCommandBuffer vkCommandBuffer) const
 }
 
 
-CVKMultiInstanceBuffer::CVKMultiInstanceBuffer(CVKDevice* pDevice, uint32_t instanceFormat, int instanceBinding, int count)
+CVKMultiInstanceBuffer::CVKMultiInstanceBuffer(CVKDevice* pDevice, CVKInstanceBufferManager* pManager, uint32_t instanceFormat, int instanceBinding, int count)
 	: CGfxMultiInstanceBuffer(instanceFormat, instanceBinding, count)
+	, m_pManager(pManager)
 	, m_index(0)
 	, m_pBuffers(std::max(1, count))
 {
 	for (int index = 0; index < m_pBuffers.size(); index++) {
-		m_pBuffers[index] = new CVKInstanceBuffer(pDevice, instanceFormat, instanceBinding);
+		m_pBuffers[index] = new CVKInstanceBuffer(pDevice, pManager, instanceFormat, instanceBinding);
 	}
 }
 
@@ -98,7 +100,7 @@ CVKMultiInstanceBuffer::~CVKMultiInstanceBuffer(void)
 
 void CVKMultiInstanceBuffer::Release(void)
 {
-	delete this;
+	m_pManager->Destroy(this);
 }
 
 bool CVKMultiInstanceBuffer::SetIndex(int index)
