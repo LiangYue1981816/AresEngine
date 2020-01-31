@@ -88,7 +88,7 @@ CVKMultiInstanceBuffer::CVKMultiInstanceBuffer(CVKDevice* pDevice, CVKInstanceBu
 	, m_pBuffers(std::max(1, count))
 {
 	for (int index = 0; index < m_pBuffers.size(); index++) {
-		m_pBuffers[index] = new CVKInstanceBuffer(pDevice, pManager, instanceFormat, instanceBinding);
+		m_pBuffers[index] = new CVKInstanceBuffer(pDevice, nullptr, instanceFormat, instanceBinding);
 	}
 }
 
