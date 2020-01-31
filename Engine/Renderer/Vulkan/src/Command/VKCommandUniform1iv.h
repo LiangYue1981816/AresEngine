@@ -42,6 +42,7 @@ private:
 	uint32_t m_name;
 	eastl::vector<int> m_value;
 
+private:
 	CVKPipelineCompute* m_pPipelineCompute;
 	CVKPipelineGraphics* m_pPipelineGraphics;
 

@@ -44,6 +44,7 @@ private:
 	float m_v0;
 	float m_v1;
 
+private:
 	CVKPipelineCompute* m_pPipelineCompute;
 	CVKPipelineGraphics* m_pPipelineGraphics;
 

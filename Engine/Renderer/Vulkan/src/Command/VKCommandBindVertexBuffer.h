@@ -20,9 +20,9 @@ public:
 public:
 	virtual void Execute(void) const
 	{
+		ASSERT(m_vkCommandBuffer);
 		ASSERT(m_ptrVertexBuffer);
 		ASSERT(m_pPipelineGraphics);
-		ASSERT(m_vkCommandBuffer);
 
 		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_BIND_VERTEXBUFFER, "CommandBindVertexBuffer");
 		{
@@ -35,6 +35,8 @@ public:
 
 private:
 	CGfxVertexBufferPtr m_ptrVertexBuffer;
+
+private:
 	CVKPipelineGraphics* m_pPipelineGraphics;
 
 private:

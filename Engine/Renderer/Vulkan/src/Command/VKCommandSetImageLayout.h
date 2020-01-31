@@ -41,6 +41,8 @@ public:
 public:
 	virtual void Execute(void) const
 	{
+		ASSERT(m_vkCommandBuffer);
+
 		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_SET_IMAGELAYOUT, "CommandSetImageLayout");
 		{
 			if (m_ptrTexture2D) {

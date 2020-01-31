@@ -42,6 +42,7 @@ private:
 	uint32_t m_name;
 	float m_v0;
 
+private:
 	CVKPipelineCompute* m_pPipelineCompute;
 	CVKPipelineGraphics* m_pPipelineGraphics;
 

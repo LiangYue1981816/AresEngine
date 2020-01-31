@@ -20,8 +20,8 @@ public:
 public:
 	virtual void Execute(void) const
 	{
-		ASSERT(m_ptrVertexBuffer);
 		ASSERT(m_vkCommandBuffer);
+		ASSERT(m_ptrVertexBuffer);
 
 		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_SET_VERTEXBUFFER, "CommandSetVertexBuffer");
 		{

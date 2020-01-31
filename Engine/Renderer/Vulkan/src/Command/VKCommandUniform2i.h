@@ -44,6 +44,7 @@ private:
 	int m_v0;
 	int m_v1;
 
+private:
 	CVKPipelineCompute* m_pPipelineCompute;
 	CVKPipelineGraphics* m_pPipelineGraphics;
 

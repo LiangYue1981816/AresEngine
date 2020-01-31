@@ -21,6 +21,8 @@ public:
 public:
 	virtual void Execute(void) const
 	{
+		ASSERT(m_vkCommandBuffer);
+
 		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_DISPATCH, "CommandDispatch");
 		{
 			vkCmdDispatch(m_vkCommandBuffer, m_numLocalWorkGroupX, m_numLocalWorkGroupY, m_numLocalWorkGroupZ);

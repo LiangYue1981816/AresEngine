@@ -20,8 +20,8 @@ public:
 public:
 	virtual void Execute(void) const
 	{
-		ASSERT(m_ptrInstanceBuffer);
 		ASSERT(m_vkCommandBuffer);
+		ASSERT(m_ptrInstanceBuffer);
 
 		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_SET_INSTANCEBUFFER, "CommandSetInstanceBuffer");
 		{
