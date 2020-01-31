@@ -207,6 +207,11 @@ CGfxStorageBufferPtr CVKRenderer::NewStorageBuffer(size_t size)
 	return m_pStorageBufferManager->Create(size);
 }
 
+CGfxInstanceBufferPtr CVKRenderer::NewInstanceBuffer(uint32_t instanceFormat, int instanceBinding)
+{
+	return m_pInstanceBufferManager->Create(instanceFormat, instanceBinding);
+}
+
 CGfxMultiInstanceBufferPtr CVKRenderer::NewInstanceBuffer(uint32_t instanceFormat, int instanceBinding, int count)
 {
 	return m_pInstanceBufferManager->Create(instanceFormat, instanceBinding, count);

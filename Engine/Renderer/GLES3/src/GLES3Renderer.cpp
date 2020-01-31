@@ -201,6 +201,11 @@ CGfxStorageBufferPtr CGLES3Renderer::NewStorageBuffer(size_t size)
 	return m_pStorageBufferManager->Create(size);
 }
 
+CGfxInstanceBufferPtr CGLES3Renderer::NewInstanceBuffer(uint32_t instanceFormat, int instanceBinding)
+{
+	return m_pInstanceBufferManager->Create(instanceFormat, instanceBinding);
+}
+
 CGfxMultiInstanceBufferPtr CGLES3Renderer::NewInstanceBuffer(uint32_t instanceFormat, int instanceBinding, int count)
 {
 	return m_pInstanceBufferManager->Create(instanceFormat, instanceBinding, count);

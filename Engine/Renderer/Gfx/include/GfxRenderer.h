@@ -134,6 +134,7 @@ public:
 	virtual CGfxUniformBufferPtr NewUniformBuffer(size_t size) = 0;
 	virtual CGfxStorageBufferPtr NewStorageBuffer(size_t size) = 0;
 
+	virtual CGfxInstanceBufferPtr NewInstanceBuffer(uint32_t instanceFormat, int instanceBinding = 1) = 0;
 	virtual CGfxMultiInstanceBufferPtr NewInstanceBuffer(uint32_t instanceFormat, int instanceBinding = 1, int count = 3) = 0;
 
 	virtual CGfxMeshPtr GetMesh(uint32_t name) = 0;

@@ -116,6 +116,7 @@ public:
 	CGfxUniformBufferPtr NewUniformBuffer(size_t size);
 	CGfxStorageBufferPtr NewStorageBuffer(size_t size);
 
+	CGfxInstanceBufferPtr NewInstanceBuffer(uint32_t instanceFormat, int instanceBinding = 1);
 	CGfxMultiInstanceBufferPtr NewInstanceBuffer(uint32_t instanceFormat, int instanceBinding = 1, int count = 3);
 
 	CGfxMeshPtr GetMesh(uint32_t name);

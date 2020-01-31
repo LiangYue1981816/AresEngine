@@ -15,8 +15,8 @@ private:
 
 
 private:
-	CVKInstanceBuffer* Create(uint32_t instanceFormat, int instanceBinding = 1);
-	CVKMultiInstanceBuffer* Create(uint32_t instanceFormat, int instanceBinding = 1, int count = 3);
+	CVKInstanceBuffer* Create(uint32_t instanceFormat, int instanceBinding);
+	CVKMultiInstanceBuffer* Create(uint32_t instanceFormat, int instanceBinding, int count);
 	void Destroy(CVKInstanceBuffer* pInstanceBuffer);
 	void Destroy(CVKMultiInstanceBuffer* pMultiInstanceBuffer);
 
