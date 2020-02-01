@@ -157,7 +157,6 @@ void CPassShadow::Render(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandB
 			};
 
 			for (int indexLevel = 0; indexLevel < 4; indexLevel++) {
-//				m_pCamera->GetRenderQueue()->CmdDraw&taskGraph, ptrCommandBuffer, m_ptrDescriptorSetPass[indexLevel], PASS_SHADOW_NAME, area[indexLevel], area[indexLevel], 0xffffffff);
 				m_pShadowRenderQueue[indexLevel]->CmdDraw(taskGraph, ptrCommandBuffer, m_ptrDescriptorSetPass[indexLevel], PASS_SHADOW_NAME, area[indexLevel], area[indexLevel], 0xffffffff, false);
 			}
 		}
