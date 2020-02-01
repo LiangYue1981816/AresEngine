@@ -184,7 +184,7 @@ public:
 	void SetMainShadowLookat(int indexLevel, float eyex, float eyey, float eyez, float centerx, float centery, float centerz, float upx, float upy, float upz);
 
 private:
-	void UpdateCamera(CTaskGraph& taskGraph, CCamera* pCamera);
+	void UpdateCamera(CTaskGraph& taskGraph, CCamera* pCamera, uint32_t mask, bool bComputeLOD);
 	void UpdateGPUScene(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer);
 
 	void RenderDefault(CTaskGraph& taskGraph, CCamera* pCamera, bool bPresent);

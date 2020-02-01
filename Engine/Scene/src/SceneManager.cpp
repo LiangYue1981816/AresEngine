@@ -135,7 +135,7 @@ void CSceneManager::UpdateLogic(CTaskGraph& taskGraph, float totalTime, float de
 	taskGraph.Wait();
 }
 
-void CSceneManager::UpdateCamera(CTaskGraph& taskGraph, CGfxCamera* pCamera, CRenderQueue* pRenderQueue, uint32_t mask)
+void CSceneManager::UpdateCamera(CTaskGraph& taskGraph, CGfxCamera* pCamera, CRenderQueue* pRenderQueue, uint32_t mask, bool bComputeLOD)
 {
 	pRenderQueue->Begin(pCamera);
 	{
@@ -145,10 +145,10 @@ void CSceneManager::UpdateCamera(CTaskGraph& taskGraph, CGfxCamera* pCamera, CRe
 		eastl::vector<CTaskComponentUpdateCamera<CComponentPointLight>> taskUpdateCameraPointLights(taskGraph.GetNumThreads());
 
 		for (int indexThread = 0; indexThread < taskGraph.GetNumThreads(); indexThread++) {
-			taskUpdateCameraMeshs[indexThread].SetParams(&m_meshManager, taskGraph.GetNumThreads(), indexThread, pCamera, pRenderQueue, mask);
-			taskUpdateCameraSkins[indexThread].SetParams(&m_skinManager, taskGraph.GetNumThreads(), indexThread, pCamera, pRenderQueue, mask);
-			taskUpdateCameraParticles[indexThread].SetParams(&m_particleManager, taskGraph.GetNumThreads(), indexThread, pCamera, pRenderQueue, mask);
-			taskUpdateCameraPointLights[indexThread].SetParams(&m_pointLightManager, taskGraph.GetNumThreads(), indexThread, pCamera, pRenderQueue, mask);
+			taskUpdateCameraMeshs[indexThread].SetParams(&m_meshManager, taskGraph.GetNumThreads(), indexThread, pCamera, pRenderQueue, mask, bComputeLOD);
+			taskUpdateCameraSkins[indexThread].SetParams(&m_skinManager, taskGraph.GetNumThreads(), indexThread, pCamera, pRenderQueue, mask, bComputeLOD);
+			taskUpdateCameraParticles[indexThread].SetParams(&m_particleManager, taskGraph.GetNumThreads(), indexThread, pCamera, pRenderQueue, mask, bComputeLOD);
+			taskUpdateCameraPointLights[indexThread].SetParams(&m_pointLightManager, taskGraph.GetNumThreads(), indexThread, pCamera, pRenderQueue, mask, bComputeLOD);
 
 			taskGraph.Task(&taskUpdateCameraMeshs[indexThread], nullptr, nullptr, nullptr);
 			taskGraph.Task(&taskUpdateCameraSkins[indexThread], nullptr, nullptr, nullptr);

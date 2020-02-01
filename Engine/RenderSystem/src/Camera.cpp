@@ -63,7 +63,7 @@ void CCamera::SetLookat(float eyex, float eyey, float eyez, float centerx, float
 	m_pCameraUniform->SetLookat(eyex, eyey, eyez, centerx, centery, centerz, upx, upy, upz);
 }
 
-void CCamera::Update(CTaskGraph& taskGraph) const
+void CCamera::Update(CTaskGraph& taskGraph, uint32_t mask, bool bComputeLOD) const
 {
-	SceneManager()->UpdateCamera(taskGraph, m_pCamera, m_pRenderQueue, 0xffffffff);
+	SceneManager()->UpdateCamera(taskGraph, m_pCamera, m_pRenderQueue, mask, bComputeLOD);
 }
