@@ -5,6 +5,10 @@
 class CALL_API CComponentMesh : public CComponent
 {
 public:
+	static const int MAX_LOD_COUNT = 8;
+
+
+public:
 	CComponentMesh(uint32_t name);
 	CComponentMesh(const CComponentMesh& component);
 	virtual ~CComponentMesh(void);
@@ -24,7 +28,7 @@ public:
 	virtual void TaskUpdateCamera(CGfxCamera* pCamera, CRenderQueue* pRenderQueue, uint32_t mask, int indexThread);
 
 private:
-	bool ComputeLOD(int& indexLOD, const glm::vec3& cameraPosition, const glm::mat4& transformMatrix);
+	bool ComputeLOD(const glm::vec3& cameraPosition, const glm::mat4& transformMatrix);
 
 
 private:
@@ -44,7 +48,7 @@ private:
 		CGfxMeshDrawPtr ptrMeshDraw;
 	};
 
-	static const int MAX_LOD_COUNT = 8;
+	int m_indexLOD;
 	LODMeshDraw m_LODMeshDraws[MAX_LOD_COUNT];
 
 private:

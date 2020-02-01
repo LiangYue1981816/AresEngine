@@ -6,6 +6,8 @@ CComponentMesh::CComponentMesh(uint32_t name)
 	, m_indexInstance(INVALID_VALUE)
 	, m_bNeedUpdateInstanceData{ false }
 
+	, m_indexLOD(0)
+
 	, m_cullDistance(FLT_MAX)
 	, m_cullScreenSize(0.0f)
 {
@@ -16,6 +18,8 @@ CComponentMesh::CComponentMesh(const CComponentMesh& component)
 	: CComponent(component)
 	, m_indexInstance(INVALID_VALUE)
 	, m_bNeedUpdateInstanceData{ false }
+
+	, m_indexLOD(0)
 
 	, m_cullDistance(FLT_MAX)
 	, m_cullScreenSize(0.0f)
@@ -94,11 +98,10 @@ void CComponentMesh::TaskUpdate(float gameTime, float deltaTime)
 
 void CComponentMesh::TaskUpdateCamera(CGfxCamera* pCamera, CRenderQueue* pRenderQueue, uint32_t mask, int indexThread)
 {
-	int indexLOD = 0;
 	int indexFrame = 1 - Engine()->GetFrameCount() % 2;
 
-	if (ComputeLOD(indexLOD, pCamera->GetPosition(), m_instanceData[indexFrame].transformMatrix)) {
-		const LODMeshDraw& mesh = m_LODMeshDraws[indexLOD];
+	if (ComputeLOD(pCamera->GetPosition(), m_instanceData[indexFrame].transformMatrix)) {
+		const LODMeshDraw& mesh = m_LODMeshDraws[m_indexLOD];
 
 		if (mesh.length2 > m_cullDistance * m_cullDistance) {
 			return;
@@ -122,9 +125,9 @@ void CComponentMesh::TaskUpdateCamera(CGfxCamera* pCamera, CRenderQueue* pRender
 	}
 }
 
-bool CComponentMesh::ComputeLOD(int& indexLOD, const glm::vec3& cameraPosition, const glm::mat4& transformMatrix)
+bool CComponentMesh::ComputeLOD(const glm::vec3& cameraPosition, const glm::mat4& transformMatrix)
 {
-	indexLOD = -1;
+	m_indexLOD = -1;
 
 	for (int index = MAX_LOD_COUNT - 1; index >= 0; index--) {
 		if (m_LODMeshDraws[index].ptrMeshDraw && 
@@ -134,11 +137,11 @@ bool CComponentMesh::ComputeLOD(int& indexLOD, const glm::vec3& cameraPosition, 
 			m_LODMeshDraws[index].screenSize2 = glm::min(glm::length2(m_LODMeshDraws[index].aabb.size()) / glm::max(1.0f, m_LODMeshDraws[index].length2), 1.0f);
 
 			if (m_LODMeshDraws[index].factor >= m_LODMeshDraws[index].screenSize2) {
-				indexLOD = index;
+				m_indexLOD = index;
 				break;
 			}
 		}
 	}
 
-	return indexLOD != -1;
+	return m_indexLOD != -1;
 }
