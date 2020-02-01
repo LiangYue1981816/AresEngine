@@ -28,7 +28,7 @@ public:
 	virtual void TaskUpdateCamera(CGfxCamera* pCamera, CRenderQueue* pRenderQueue, uint32_t mask, bool bComputeLOD, int indexThread);
 
 private:
-	bool ComputeLOD(const glm::vec3& cameraPosition, const glm::mat4& transformMatrix);
+	bool ComputeLOD(bool bComputeLOD, const glm::vec3& cameraPosition, const glm::mat4& transformMatrix);
 
 
 private:

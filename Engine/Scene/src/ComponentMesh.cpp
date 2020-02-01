@@ -100,7 +100,7 @@ void CComponentMesh::TaskUpdateCamera(CGfxCamera* pCamera, CRenderQueue* pRender
 {
 	int indexFrame = 1 - Engine()->GetFrameCount() % 2;
 
-	if (ComputeLOD(pCamera->GetPosition(), m_instanceData[indexFrame].transformMatrix)) {
+	if (ComputeLOD(bComputeLOD, pCamera->GetPosition(), m_instanceData[indexFrame].transformMatrix)) {
 		const LODMeshDraw& mesh = m_LODMeshDraws[m_indexLOD];
 
 		if (mesh.length2 > m_cullDistance * m_cullDistance) {
@@ -125,20 +125,22 @@ void CComponentMesh::TaskUpdateCamera(CGfxCamera* pCamera, CRenderQueue* pRender
 	}
 }
 
-bool CComponentMesh::ComputeLOD(const glm::vec3& cameraPosition, const glm::mat4& transformMatrix)
+bool CComponentMesh::ComputeLOD(bool bComputeLOD, const glm::vec3& cameraPosition, const glm::mat4& transformMatrix)
 {
-	m_indexLOD = -1;
+	if (bComputeLOD) {
+		m_indexLOD = -1;
 
-	for (int index = MAX_LOD_COUNT - 1; index >= 0; index--) {
-		if (m_LODMeshDraws[index].ptrMeshDraw && 
-			m_LODMeshDraws[index].ptrMaterial) {
-			m_LODMeshDraws[index].aabb = m_LODMeshDraws[index].ptrMeshDraw->GetAABB() * transformMatrix;
-			m_LODMeshDraws[index].length2 = glm::length2(m_LODMeshDraws[index].aabb.center - cameraPosition);
-			m_LODMeshDraws[index].screenSize2 = glm::min(glm::length2(m_LODMeshDraws[index].aabb.size()) / glm::max(1.0f, m_LODMeshDraws[index].length2), 1.0f);
+		for (int index = MAX_LOD_COUNT - 1; index >= 0; index--) {
+			if (m_LODMeshDraws[index].ptrMeshDraw &&
+				m_LODMeshDraws[index].ptrMaterial) {
+				m_LODMeshDraws[index].aabb = m_LODMeshDraws[index].ptrMeshDraw->GetAABB() * transformMatrix;
+				m_LODMeshDraws[index].length2 = glm::length2(m_LODMeshDraws[index].aabb.center - cameraPosition);
+				m_LODMeshDraws[index].screenSize2 = glm::min(glm::length2(m_LODMeshDraws[index].aabb.size()) / glm::max(1.0f, m_LODMeshDraws[index].length2), 1.0f);
 
-			if (m_LODMeshDraws[index].factor >= m_LODMeshDraws[index].screenSize2) {
-				m_indexLOD = index;
-				break;
+				if (m_LODMeshDraws[index].factor >= m_LODMeshDraws[index].screenSize2) {
+					m_indexLOD = index;
+					break;
+				}
 			}
 		}
 	}
