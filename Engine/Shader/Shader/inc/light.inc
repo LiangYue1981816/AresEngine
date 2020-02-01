@@ -187,12 +187,12 @@ mediump vec3 Env_Specular(mediump vec3 specular, mediump float ndv, mediump floa
 // BRDF Functions
 mediump vec3 AmbientSH4(mediump vec3 normal, mediump vec3 albedo, mediump float metallic)
 {
-	return Ambient_SH4((engine.ambientLightRotationMatrix * vec4(normal, 0.0)).xyz, albedo, metallic, engine.ambientLightSH0, engine.ambientLightSH3, engine.ambientLightSH6);
+	return Ambient_SH4((SHLightRotationMatrix * vec4(normal, 0.0)).xyz, albedo, metallic, SHLight0, SHLight3, SHLight6);
 }
 
 mediump vec3 AmbientSH9(mediump vec3 normal, mediump vec3 albedo, mediump float metallic)
 {
-	return Ambient_SH9((engine.ambientLightRotationMatrix * vec4(normal, 0.0)).xyz, albedo, metallic, engine.ambientLightSH0.xyz, engine.ambientLightSH1.xyz, engine.ambientLightSH2.xyz, engine.ambientLightSH3.xyz, engine.ambientLightSH4.xyz, engine.ambientLightSH5.xyz, engine.ambientLightSH6.xyz, engine.ambientLightSH7.xyz, engine.ambientLightSH8.xyz);
+	return Ambient_SH9((SHLightRotationMatrix * vec4(normal, 0.0)).xyz, albedo, metallic, SHLight0.xyz, SHLight1.xyz, SHLight2.xyz, SHLight3.xyz, SHLight4.xyz, SHLight5.xyz, SHLight6.xyz, SHLight7.xyz, SHLight8.xyz);
 }
 
 mediump vec3 Fresnel(mediump vec3 normal, mediump vec3 viewDirection, mediump vec3 specular, mediump float metallic)
@@ -280,7 +280,7 @@ mediump vec3 EnvLighting(mediump vec3 normal, mediump vec3 viewDirection, medium
 
 mediump float LightingAttenuation(mediump float dis)
 {
-	return Attenuation(dis, engine.mainPointLightAttenuation.x, engine.mainPointLightAttenuation.y, engine.mainPointLightAttenuation.z);
+	return Attenuation(dis, mainPointLightAttenuation.x, mainPointLightAttenuation.y, mainPointLightAttenuation.z);
 }
 
 #endif

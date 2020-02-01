@@ -80,16 +80,16 @@ layout (location = 8)                                      in mediump int inInst
 		                                                                           \
 		mediump vec4 lightFactor;                                                  \
 		                                                                           \
-		mediump vec4 ambientLightSH0;                                              \
-		mediump vec4 ambientLightSH1;                                              \
-		mediump vec4 ambientLightSH2;                                              \
-		mediump vec4 ambientLightSH3;                                              \
-		mediump vec4 ambientLightSH4;                                              \
-		mediump vec4 ambientLightSH5;                                              \
-		mediump vec4 ambientLightSH6;                                              \
-		mediump vec4 ambientLightSH7;                                              \
-		mediump vec4 ambientLightSH8;                                              \
-		mediump mat4 ambientLightRotationMatrix;                                   \
+		mediump vec4 ambientSHLight0;                                              \
+		mediump vec4 ambientSHLight1;                                              \
+		mediump vec4 ambientSHLight2;                                              \
+		mediump vec4 ambientSHLight3;                                              \
+		mediump vec4 ambientSHLight4;                                              \
+		mediump vec4 ambientSHLight5;                                              \
+		mediump vec4 ambientSHLight6;                                              \
+		mediump vec4 ambientSHLight7;                                              \
+		mediump vec4 ambientSHLight8;                                              \
+		mediump mat4 ambientSHLightRotationMatrix;                                 \
 		                                                                           \
 		mediump vec4 pointLightColor;                                              \
 		mediump vec4 pointLightPosition;                                           \
@@ -178,8 +178,20 @@ layout (location = 8)                                      in mediump int inInst
 #define directLightFactor                        engine.lightFactor.z
 #define envLightFactor                           engine.lightFactor.w
 
+#define SHLightRotationMatrix                    engine.ambientSHLightRotationMatrix
+#define SHLight0                                 engine.ambientSHLight0
+#define SHLight1                                 engine.ambientSHLight1
+#define SHLight2                                 engine.ambientSHLight2
+#define SHLight3                                 engine.ambientSHLight3
+#define SHLight4                                 engine.ambientSHLight4
+#define SHLight5                                 engine.ambientSHLight5
+#define SHLight6                                 engine.ambientSHLight6
+#define SHLight7                                 engine.ambientSHLight7
+#define SHLight8                                 engine.ambientSHLight8
+
 #define mainPointLightColor                      engine.pointLightColor.rgb
 #define mainPointLightPosition                   engine.pointLightPosition.xyz
+#define mainPointLightAttenuation                engine.pointLightAttenuation.xyz
 #define mainDirectLightColor                     engine.directLightColor.rgb
 #define mainDirectLightDirection                 engine.directLightDirection.xyz
 
