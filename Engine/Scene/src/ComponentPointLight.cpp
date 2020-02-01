@@ -73,7 +73,7 @@ void CComponentPointLight::TaskUpdate(float gameTime, float deltaTime)
 	}
 }
 
-void CComponentPointLight::TaskUpdateCamera(CGfxCamera* pCamera, CRenderQueue* pRenderQueue, uint32_t mask, int indexThread)
+void CComponentPointLight::TaskUpdateCamera(CGfxCamera* pCamera, CRenderQueue* pRenderQueue, uint32_t mask, bool bComputeLOD, int indexThread)
 {
 	int indexFrame = 1 - Engine()->GetFrameCount() % 2;
 

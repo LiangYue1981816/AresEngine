@@ -25,7 +25,7 @@ public:
 
 public:
 	virtual void TaskUpdate(float gameTime, float deltaTime);
-	virtual void TaskUpdateCamera(CGfxCamera* pCamera, CRenderQueue* pRenderQueue, uint32_t mask, int indexThread);
+	virtual void TaskUpdateCamera(CGfxCamera* pCamera, CRenderQueue* pRenderQueue, uint32_t mask, bool bComputeLOD, int indexThread);
 
 private:
 	bool ComputeLOD(const glm::vec3& cameraPosition, const glm::mat4& transformMatrix);

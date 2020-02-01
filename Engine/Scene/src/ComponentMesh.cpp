@@ -96,7 +96,7 @@ void CComponentMesh::TaskUpdate(float gameTime, float deltaTime)
 	}
 }
 
-void CComponentMesh::TaskUpdateCamera(CGfxCamera* pCamera, CRenderQueue* pRenderQueue, uint32_t mask, int indexThread)
+void CComponentMesh::TaskUpdateCamera(CGfxCamera* pCamera, CRenderQueue* pRenderQueue, uint32_t mask, bool bComputeLOD, int indexThread)
 {
 	int indexFrame = 1 - Engine()->GetFrameCount() % 2;
 
