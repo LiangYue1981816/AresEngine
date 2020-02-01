@@ -5,13 +5,15 @@ precision mediump float;
 #include "engine.inc"
 #include "common.inc"
 
-
 // VERTEX_ATTRIBUTE_POSITION;
 // VERTEX_ATTRIBUTE_TEXCOORD0;
 
 // Output
 layout (location = 0) out mediump vec2 outTexcoord;
 
+// Descriptor
+USE_CAMERA_UNIFORM;
+USE_ENGINE_UNIFORM;
 
 void main()
 {
@@ -33,7 +35,6 @@ precision mediump float;
 #include "common.inc"
 #include "light.inc"
 
-
 // Input
 layout (location = 0) in mediump vec2 inTexcoord;
 
@@ -41,8 +42,9 @@ layout (location = 0) in mediump vec2 inTexcoord;
 layout (location = 0) out mediump vec4 outFragColor;
 
 // Descriptor
+USE_CAMERA_UNIFORM;
+USE_ENGINE_UNIFORM;
 USE_COLOR_TEXTURE_UNIFORM;
-
 
 void main()
 {

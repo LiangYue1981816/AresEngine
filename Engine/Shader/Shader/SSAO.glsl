@@ -5,13 +5,15 @@ precision mediump float;
 #include "engine.inc"
 #include "common.inc"
 
-
 // VERTEX_ATTRIBUTE_POSITION;
 // VERTEX_ATTRIBUTE_TEXCOORD0;
 
 // Output
 layout (location = 0) out mediump vec2 outTexcoord;
 
+// Descriptor
+USE_CAMERA_UNIFORM;
+USE_ENGINE_UNIFORM;
 
 void main()
 {
@@ -32,7 +34,6 @@ precision mediump float;
 #include "engine.inc"
 #include "common.inc"
 
-
 // Input
 layout (location = 0) in mediump vec2 inTexcoord;
 
@@ -40,6 +41,8 @@ layout (location = 0) in mediump vec2 inTexcoord;
 layout (location = 0) out mediump vec4 outFragColor;
 
 // Descriptor
+USE_CAMERA_UNIFORM;
+USE_ENGINE_UNIFORM;
 USE_DEPTH_TEXTURE_UNIFORM;
 
 DESCRIPTOR_SET_MATPASS(8) mediump uniform sampler2D texNoise;
@@ -50,6 +53,19 @@ layout(push_constant) uniform PushConstantParam {
 	float maxRadius;
 } Param;
 
+highp vec3 ScreenToViewPosition(highp vec2 screen, highp float depth)
+{
+	highp vec4 clipPosition = vec4(screen * vec2(2.0) - vec2(1.0), depth * 2.0 - 1.0, 1.0);
+	highp vec4 viewPosition = cameraProjectionInverseMatrix * clipPosition;
+	return (viewPosition.xyz / viewPosition.w);
+}
+
+highp vec3 ScreenToWorldPosition(highp vec2 screen, highp float depth)
+{
+	highp vec4 clipPosition = vec4(screen * vec2(2.0) - vec2(1.0), depth * 2.0 - 1.0, 1.0);
+	highp vec4 worldPosition = cameraProjectionViewInverseMatrix * clipPosition;
+	return (worldPosition.xyz / worldPosition.w);
+}
 
 highp float LinearDepth(highp float depth)
 {

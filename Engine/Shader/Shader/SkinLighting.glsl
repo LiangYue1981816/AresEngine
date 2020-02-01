@@ -5,14 +5,11 @@ precision mediump float;
 #include "engine.inc"
 #include "common.inc"
 
-
 // VERTEX_ATTRIBUTE_POSITION;
 // VERTEX_ATTRIBUTE_NORMAL;
 // VERTEX_ATTRIBUTE_BINORMAL;
 // VERTEX_ATTRIBUTE_TEXCOORD0;
 // INSTANCE_ATTRIBUTE_INDEX;
-
-USE_SCENE_DATA_STORAGE;
 
 // Output
 layout (location = 0) out highp   vec3 outPosition;
@@ -25,6 +22,10 @@ layout (location = 4) out mediump vec3 outNormal;
 layout (location = 2) out mediump vec3 outNormal;
 #endif
 
+// Descriptor
+USE_CAMERA_UNIFORM;
+USE_ENGINE_UNIFORM;
+USE_SCENE_DATA_STORAGE;
 
 void main()
 {
@@ -59,7 +60,6 @@ precision mediump float;
 #include "light.inc"
 #include "shadow.inc"
 
-
 // Input
 layout (location = 0) in highp   vec3 inPosition;
 layout (location = 1) in mediump vec2 inTexcoord;
@@ -75,8 +75,10 @@ layout (location = 2) in mediump vec3 inNormal;
 layout (location = 0) out mediump vec4 outFragColor;
 
 // Descriptor
-USE_SHADOW_TEXTURE_UNIFORM;
+USE_CAMERA_UNIFORM;
+USE_ENGINE_UNIFORM;
 USE_SSAO_TEXTURE_UNIFORM;
+USE_SHADOW_TEXTURE_UNIFORM;
 
 DESCRIPTOR_SET_MATPASS(8) mediump uniform sampler2D texAlbedo;
 #ifdef NORMAL_MAP
@@ -89,7 +91,6 @@ DESCRIPTOR_SET_MATPASS(10) mediump uniform sampler2D texRoughnessMetallicSpecula
 DESCRIPTOR_SET_MATPASS(11) mediump uniform sampler2D texEnv;
 #endif
 DESCRIPTOR_SET_MATPASS(12) mediump uniform sampler2D texPreIntegratedSkinLUT;
-
 
 void main()
 {

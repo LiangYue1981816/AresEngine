@@ -159,7 +159,6 @@ layout (location = 8)                                      in mediump int inInst
 	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_ADD_TEXTURE) mediump uniform sampler2D texAdd
 
 
-USE_CAMERA_UNIFORM;
 #define screenWidth                              camera.screen.x
 #define screenHeight                             camera.screen.y
 
@@ -174,7 +173,6 @@ USE_CAMERA_UNIFORM;
 #define cameraProjectionInverseMatrix            camera.projectionInverseMatrix
 #define cameraProjectionViewInverseMatrix        camera.projectionViewInverseMatrix
 
-USE_ENGINE_UNIFORM;
 #define mainShadowLevelFactor                    engine.mainShadowLevelFactor
 #define mainShadowZNear(indexLevel)              engine.mainShadowDepth[indexLevel].x
 #define mainShadowZFar(indexLevel)               engine.mainShadowDepth[indexLevel].y

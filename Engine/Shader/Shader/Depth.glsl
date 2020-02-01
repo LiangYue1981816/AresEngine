@@ -5,16 +5,17 @@ precision mediump float;
 #include "engine.inc"
 #include "common.inc"
 
-
 // VERTEX_ATTRIBUTE_POSITION;
 // VERTEX_ATTRIBUTE_TEXCOORD0;
 // INSTANCE_ATTRIBUTE_INDEX;
 
-USE_SCENE_DATA_STORAGE;
-
 // Output
 layout (location = 0) out mediump vec2 outTexcoord;
 
+// Descriptor
+USE_CAMERA_UNIFORM;
+USE_ENGINE_UNIFORM;
+USE_SCENE_DATA_STORAGE;
 
 void main()
 {
@@ -31,13 +32,14 @@ precision mediump float;
 #include "engine.inc"
 #include "common.inc"
 
-
 // Input
 layout (location = 0) in mediump vec2 inTexcoord;
 
 // Descriptor
-DESCRIPTOR_SET_MATPASS(8) mediump uniform sampler2D texAlbedo;
+USE_CAMERA_UNIFORM;
+USE_ENGINE_UNIFORM;
 
+DESCRIPTOR_SET_MATPASS(8) mediump uniform sampler2D texAlbedo;
 
 void main()
 {
