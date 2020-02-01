@@ -143,11 +143,20 @@ bool CComponentMesh::ComputeLOD(bool bComputeLOD, const glm::vec3& cameraPositio
 
 				if (m_LODMeshDraws[index].factor >= m_LODMeshDraws[index].screenSize2) {
 					m_indexLOD = index;
-					break;
+					return true;
 				}
 			}
 		}
-	}
 
-	return m_indexLOD != -1;
+		return false;
+	}
+	else {
+		if (m_indexLOD != -1) {
+			m_LODMeshDraws[m_indexLOD].length2 = glm::length2(m_LODMeshDraws[m_indexLOD].aabb.center - cameraPosition);
+			m_LODMeshDraws[m_indexLOD].screenSize2 = glm::min(glm::length2(m_LODMeshDraws[m_indexLOD].aabb.size()) / glm::max(1.0f, m_LODMeshDraws[m_indexLOD].length2), 1.0f);
+			return true;
+		}
+
+		return false;
+	}
 }
