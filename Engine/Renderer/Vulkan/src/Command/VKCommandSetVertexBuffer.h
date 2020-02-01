@@ -10,7 +10,7 @@ public:
 		, m_ptrVertexBuffer(ptrVertexBuffer)
 		, m_buffer(pBuffer, pBuffer + size)
 	{
-
+		Execute();
 	}
 	virtual ~CVKCommandSetVertexBuffer(void)
 	{

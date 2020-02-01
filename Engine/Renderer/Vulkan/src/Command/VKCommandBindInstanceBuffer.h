@@ -10,7 +10,7 @@ public:
 		, m_pPipelineGraphics((CVKPipelineGraphics*)pPipelineGraphics)
 		, m_ptrInstanceBuffer(ptrInstanceBuffer)
 	{
-
+		Execute();
 	}
 	virtual ~CVKCommandBindInstanceBuffer(void)
 	{

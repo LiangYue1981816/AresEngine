@@ -10,7 +10,7 @@ public:
 		, m_ptrInstanceBuffer(ptrInstanceBuffer)
 		, m_buffer(pBuffer, pBuffer + size)
 	{
-
+		Execute();
 	}
 	virtual ~CVKCommandSetInstanceBuffer(void)
 	{

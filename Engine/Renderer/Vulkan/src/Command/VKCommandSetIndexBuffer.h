@@ -10,7 +10,7 @@ public:
 		, m_ptrIndexBuffer(ptrIndexBuffer)
 		, m_buffer(pBuffer, pBuffer + size)
 	{
-
+		Execute();
 	}
 	virtual ~CVKCommandSetIndexBuffer(void)
 	{

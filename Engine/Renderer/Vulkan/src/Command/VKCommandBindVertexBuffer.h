@@ -10,7 +10,7 @@ public:
 		, m_pPipelineGraphics((CVKPipelineGraphics*)pPipelineGraphics)
 		, m_ptrVertexBuffer(ptrVertexBuffer)
 	{
-
+		Execute();
 	}
 	virtual ~CVKCommandBindVertexBuffer(void)
 	{

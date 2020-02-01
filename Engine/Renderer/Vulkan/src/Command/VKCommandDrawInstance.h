@@ -26,7 +26,19 @@ public:
 
 		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_DRAW_INSTANCE, "CommandDrawInstance");
 		{
-//			vkCmdDrawIndexed(m_vkCommandBuffer, m_indexCount, m_instanceCount, m_indexOffset, 0, 0);
+			int indexSize = 4;
+
+			switch (m_indexType) {
+			case GFX_INDEX_UNSIGNED_SHORT:
+				indexSize = 2;
+				break;
+
+			case GFX_INDEX_UNSIGNED_INT:
+				indexSize = 4;
+				break;
+			}
+
+			vkCmdDrawIndexed(m_vkCommandBuffer, m_indexCount, m_instanceCount, m_indexOffset / indexSize, 0, 0);
 		}
 	}
 

@@ -9,7 +9,7 @@ public:
 		: m_vkCommandBuffer(vkCommandBuffer)
 		, m_ptrIndexBuffer(ptrIndexBuffer)
 	{
-
+		Execute();
 	}
 	virtual ~CVKCommandBindIndexBuffer(void)
 	{
