@@ -91,23 +91,23 @@ layout (location = 8)                                      in mediump int inInst
 		mediump vec4 ambientLightSH8;                                              \
 		mediump mat4 ambientLightRotationMatrix;                                   \
 		                                                                           \
-		mediump vec4 mainPointLightColor;                                          \
-		mediump vec4 mainPointLightPosition;                                       \
-		mediump vec4 mainPointLightAttenuation;                                    \
+		mediump vec4 pointLightColor;                                              \
+		mediump vec4 pointLightPosition;                                           \
+		mediump vec4 pointLightAttenuation;                                        \
 		                                                                           \
-		mediump vec4 mainDirectLightColor;                                         \
-		mediump vec4 mainDirectLightDirection;                                     \
+		mediump vec4 directLightColor;                                             \
+		mediump vec4 directLightDirection;                                         \
 		                                                                           \
-		mediump vec4 mainFogColor;                                                 \
-		mediump vec4 mainFogHeightParams;                                          \
-		mediump vec4 mainFogDistanceParams;                                        \
+		mediump vec4 fogColor;                                                     \
+		mediump vec4 fogHeightParams;                                              \
+		mediump vec4 fogDistanceParams;                                            \
 		                                                                           \
-		highp vec4 mainShadowLevelFactor;                                          \
-		highp vec4 mainShadowDepth[4];                                             \
-		highp mat4 mainShadowViewMatrix[4];                                        \
-		highp mat4 mainShadowViewInverseMatrix[4];                                 \
-		highp mat4 mainShadowProjectionMatrix[4];                                  \
-		highp mat4 mainShadowProjectionViewMatrix[4];                              \
+		highp vec4 shadowLevelFactor;                                              \
+		highp vec4 shadowDepth[4];                                                 \
+		highp mat4 shadowViewMatrix[4];                                            \
+		highp mat4 shadowViewInverseMatrix[4];                                     \
+		highp mat4 shadowProjectionMatrix[4];                                      \
+		highp mat4 shadowProjectionViewMatrix[4];                                  \
 	} engine
 
 	struct InstanceData
@@ -173,30 +173,30 @@ layout (location = 8)                                      in mediump int inInst
 #define cameraProjectionInverseMatrix            camera.projectionInverseMatrix
 #define cameraProjectionViewInverseMatrix        camera.projectionViewInverseMatrix
 
-#define mainShadowLevelFactor                    engine.mainShadowLevelFactor
-#define mainShadowZNear(indexLevel)              engine.mainShadowDepth[indexLevel].x
-#define mainShadowZFar(indexLevel)               engine.mainShadowDepth[indexLevel].y
-#define mainShadowViewMatrix(indexLevel)         engine.mainShadowViewMatrix[indexLevel]
-#define mainShadowViewInverseMatrix(indexLevel)  engine.mainShadowViewInverseMatrix[indexLevel]
-#define mainShadowProjectionMatrix(indexLevel)   engine.mainShadowProjectionMatrix[indexLevel]
-#define mainShadowProjectionViewMatrix(indexLevel) engine.mainShadowProjectionViewMatrix[indexLevel]
-
 #define ambientLightFactor                       engine.lightFactor.x
 #define pointLightFactor                         engine.lightFactor.y
 #define directLightFactor                        engine.lightFactor.z
 #define envLightFactor                           engine.lightFactor.w
 
-#define mainPointLightColor                      engine.mainPointLightColor.rgb
-#define mainPointLightPosition                   engine.mainPointLightPosition.xyz
-#define mainDirectLightColor                     engine.mainDirectLightColor.rgb
-#define mainDirectLightDirection                 engine.mainDirectLightDirection.xyz
+#define mainPointLightColor                      engine.pointLightColor.rgb
+#define mainPointLightPosition                   engine.pointLightPosition.xyz
+#define mainDirectLightColor                     engine.directLightColor.rgb
+#define mainDirectLightDirection                 engine.directLightDirection.xyz
 
-#define mainFogColor                             engine.mainFogColor.rgb
-#define mainFogHeightStart                       engine.mainFogHeightParams.x
-#define mainFogHeightEnd                         engine.mainFogHeightParams.y
-#define mainFogHeightDensity                     engine.mainFogHeightParams.z
-#define mainFogDistanceStart                     engine.mainFogDistanceParams.x
-#define mainFogDistanceEnd                       engine.mainFogDistanceParams.y
-#define mainFogDistanceDensity                   engine.mainFogDistanceParams.z
+#define mainFogColor                             engine.fogColor.rgb
+#define mainFogHeightStart                       engine.fogHeightParams.x
+#define mainFogHeightEnd                         engine.fogHeightParams.y
+#define mainFogHeightDensity                     engine.fogHeightParams.z
+#define mainFogDistanceStart                     engine.fogDistanceParams.x
+#define mainFogDistanceEnd                       engine.fogDistanceParams.y
+#define mainFogDistanceDensity                   engine.fogDistanceParams.z
+
+#define mainShadowLevelFactor                    engine.shadowLevelFactor
+#define mainShadowZNear(indexLevel)              engine.shadowDepth[indexLevel].x
+#define mainShadowZFar(indexLevel)               engine.shadowDepth[indexLevel].y
+#define mainShadowViewMatrix(indexLevel)         engine.shadowViewMatrix[indexLevel]
+#define mainShadowViewInverseMatrix(indexLevel)  engine.shadowViewInverseMatrix[indexLevel]
+#define mainShadowProjectionMatrix(indexLevel)   engine.shadowProjectionMatrix[indexLevel]
+#define mainShadowProjectionViewMatrix(indexLevel) engine.shadowProjectionViewMatrix[indexLevel]
 
 #endif
