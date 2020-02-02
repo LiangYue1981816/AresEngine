@@ -287,7 +287,7 @@ void CRenderQueue::CmdDrawThread(CGfxCommandBufferPtr ptrCommandBuffer, const CG
 										{
 											CGfxInstanceBufferPtr ptrInstanceBuffer = m_instanceBufferQueue[pPipeline][itDrawQueue.first]->GetBuffer(GfxRenderer()->GetSwapChain()->GetFrameIndex());
 											GfxRenderer()->CmdSetInstanceBuffer(ptrCommandBuffer, ptrInstanceBuffer, (const uint8_t*)itDrawQueue.second.data(), itDrawQueue.second.size() * sizeof(int));
-											GfxRenderer()->CmdBindInstanceBuffer(ptrCommandBuffer, ptrInstanceBuffer);
+											GfxRenderer()->CmdBindInstanceBuffer(ptrCommandBuffer, ptrInstanceBuffer, 0);
 											GfxRenderer()->CmdDrawInstance(ptrCommandBuffer, itDrawQueue.first->GetIndexType(), itDrawQueue.first->GetIndexOffset(), itDrawQueue.first->GetIndexCount(), itDrawQueue.second.size());
 										}
 									}

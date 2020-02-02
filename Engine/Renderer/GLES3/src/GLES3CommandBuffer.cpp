@@ -224,9 +224,9 @@ void CGLES3CommandBuffer::CmdBindVertexBuffer(const CGfxVertexBufferPtr ptrVerte
 	m_pCommands.emplace_back(new CGLES3CommandBindVertexBuffer(m_pCurrentPipelineGraphics, ptrVertexBuffer));
 }
 
-void CGLES3CommandBuffer::CmdBindInstanceBuffer(const CGfxInstanceBufferPtr ptrInstanceBuffer)
+void CGLES3CommandBuffer::CmdBindInstanceBuffer(const CGfxInstanceBufferPtr ptrInstanceBuffer, int offset)
 {
-	m_pCommands.emplace_back(new CGLES3CommandBindInstanceBuffer(m_pCurrentPipelineGraphics, ptrInstanceBuffer));
+	m_pCommands.emplace_back(new CGLES3CommandBindInstanceBuffer(m_pCurrentPipelineGraphics, ptrInstanceBuffer, offset));
 }
 
 void CGLES3CommandBuffer::CmdSetIndexBuffer(const CGfxIndexBufferPtr ptrIndexBuffer, const uint8_t* pBuffer, uint32_t size)

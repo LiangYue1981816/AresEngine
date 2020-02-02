@@ -368,9 +368,9 @@ void CGLES3Renderer::CmdBindVertexBuffer(CGfxCommandBufferPtr ptrCommandBuffer, 
 	ptrCommandBuffer->CmdBindVertexBuffer(ptrVertexBuffer);
 }
 
-void CGLES3Renderer::CmdBindInstanceBuffer(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxInstanceBufferPtr ptrInstanceBuffer)
+void CGLES3Renderer::CmdBindInstanceBuffer(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxInstanceBufferPtr ptrInstanceBuffer, int offset)
 {
-	ptrCommandBuffer->CmdBindInstanceBuffer(ptrInstanceBuffer);
+	ptrCommandBuffer->CmdBindInstanceBuffer(ptrInstanceBuffer, offset);
 }
 
 void CGLES3Renderer::CmdSetIndexBuffer(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxIndexBufferPtr ptrIndexBuffer, const uint8_t* pBuffer, uint32_t size)

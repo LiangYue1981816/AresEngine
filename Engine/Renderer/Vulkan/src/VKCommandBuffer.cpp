@@ -291,9 +291,9 @@ void CVKCommandBuffer::CmdBindVertexBuffer(const CGfxVertexBufferPtr ptrVertexBu
 	m_pCommands.emplace_back(new CVKCommandBindVertexBuffer(m_vkCommandBuffer, m_pCurrentPipelineGraphics, ptrVertexBuffer));
 }
 
-void CVKCommandBuffer::CmdBindInstanceBuffer(const CGfxInstanceBufferPtr ptrInstanceBuffer)
+void CVKCommandBuffer::CmdBindInstanceBuffer(const CGfxInstanceBufferPtr ptrInstanceBuffer, int offset)
 {
-	m_pCommands.emplace_back(new CVKCommandBindInstanceBuffer(m_vkCommandBuffer, m_pCurrentPipelineGraphics, ptrInstanceBuffer));
+	m_pCommands.emplace_back(new CVKCommandBindInstanceBuffer(m_vkCommandBuffer, m_pCurrentPipelineGraphics, ptrInstanceBuffer, offset));
 }
 
 void CVKCommandBuffer::CmdSetIndexBuffer(const CGfxIndexBufferPtr ptrIndexBuffer, const uint8_t* pBuffer, uint32_t size)

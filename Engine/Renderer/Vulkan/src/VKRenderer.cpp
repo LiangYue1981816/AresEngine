@@ -374,9 +374,9 @@ void CVKRenderer::CmdBindVertexBuffer(CGfxCommandBufferPtr ptrCommandBuffer, con
 	ptrCommandBuffer->CmdBindVertexBuffer(ptrVertexBuffer);
 }
 
-void CVKRenderer::CmdBindInstanceBuffer(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxInstanceBufferPtr ptrInstanceBuffer)
+void CVKRenderer::CmdBindInstanceBuffer(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxInstanceBufferPtr ptrInstanceBuffer, int offset)
 {
-	ptrCommandBuffer->CmdBindInstanceBuffer(ptrInstanceBuffer);
+	ptrCommandBuffer->CmdBindInstanceBuffer(ptrInstanceBuffer, offset);
 }
 
 void CVKRenderer::CmdSetIndexBuffer(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxIndexBufferPtr ptrIndexBuffer, const uint8_t* pBuffer, uint32_t size)

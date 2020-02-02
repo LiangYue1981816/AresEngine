@@ -5,10 +5,11 @@
 class CVKCommandBindInstanceBuffer : public CGfxCommandBase
 {
 public:
-	CVKCommandBindInstanceBuffer(VkCommandBuffer vkCommandBuffer, const CGfxPipelineGraphics* pPipelineGraphics, const CGfxInstanceBufferPtr ptrInstanceBuffer)
+	CVKCommandBindInstanceBuffer(VkCommandBuffer vkCommandBuffer, const CGfxPipelineGraphics* pPipelineGraphics, const CGfxInstanceBufferPtr ptrInstanceBuffer, int offset)
 		: m_vkCommandBuffer(vkCommandBuffer)
 		, m_pPipelineGraphics((CVKPipelineGraphics*)pPipelineGraphics)
 		, m_ptrInstanceBuffer(ptrInstanceBuffer)
+		, m_offset(offset)
 	{
 		Execute();
 	}
@@ -27,7 +28,7 @@ public:
 		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_BIND_INSTANCEBUFFER, "CommandBindInstanceBuffer");
 		{
 			if (m_pPipelineGraphics->IsCompatibleVertexFormat(m_ptrInstanceBuffer->GetInstanceBinding(), m_ptrInstanceBuffer->GetInstanceFormat())) {
-				((CVKInstanceBuffer*)m_ptrInstanceBuffer.GetPointer())->Bind(m_vkCommandBuffer);
+				((CVKInstanceBuffer*)m_ptrInstanceBuffer.GetPointer())->Bind(m_vkCommandBuffer, m_offset);
 			}
 		}
 	}
@@ -35,6 +36,7 @@ public:
 
 private:
 	CGfxInstanceBufferPtr m_ptrInstanceBuffer;
+	int m_offset;
 
 private:
 	CVKPipelineGraphics* m_pPipelineGraphics;

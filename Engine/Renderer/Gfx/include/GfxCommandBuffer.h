@@ -77,7 +77,7 @@ public:
 	virtual void CmdBindDescriptorSet(const CGfxDescriptorSetPtr ptrDescriptorSet) = 0;
 	virtual void CmdBindIndexBuffer(const CGfxIndexBufferPtr ptrIndexBuffer) = 0;
 	virtual void CmdBindVertexBuffer(const CGfxVertexBufferPtr ptrVertexBuffer) = 0;
-	virtual void CmdBindInstanceBuffer(const CGfxInstanceBufferPtr ptrInstanceBuffer) = 0;
+	virtual void CmdBindInstanceBuffer(const CGfxInstanceBufferPtr ptrInstanceBuffer, int offset) = 0;
 
 	virtual void CmdSetIndexBuffer(const CGfxIndexBufferPtr ptrIndexBuffer, const uint8_t* pBuffer, uint32_t size) = 0;
 	virtual void CmdSetVertexBuffer(const CGfxVertexBufferPtr ptrVertexBuffer, const uint8_t* pBuffer, uint32_t size) = 0;
