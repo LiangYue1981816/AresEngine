@@ -163,6 +163,7 @@ void CRenderQueue::Add(const CGfxMaterialPtr ptrMaterial, const CGfxMeshDrawPtr 
 
 void CRenderQueue::End(void)
 {
+	/*
 	m_materialMeshDrawQueue.clear();
 	{
 		auto& materialQueue = m_materialMeshDrawQueue;
@@ -187,10 +188,55 @@ void CRenderQueue::End(void)
 			}
 		}
 	}
+	*/
 }
 
 void CRenderQueue::CmdDraw(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer, const CGfxDescriptorSetPtr ptrDescriptorSetPass, const uint32_t matPassName, const glm::vec4& scissor, const glm::vec4& viewport, uint32_t mask, bool bIsTransparency)
 {
+	m_materialMeshDrawQueue.clear();
+	{
+		int offset = 0;
+		eastl::vector<int> instances;
+
+		auto& materialQueue = m_materialMeshDrawQueue;
+		{
+			for (int indexThread = 0; indexThread < MAX_THREAD_COUNT; indexThread++) {
+				for (const auto& itMaterialQueueThread : m_materialMeshDrawQueueThreads[indexThread]) {
+					auto& meshQueue = materialQueue[itMaterialQueueThread.first];
+					{
+						for (const auto& itMeshQueueThread : itMaterialQueueThread.second) {
+							auto& drawQueue = meshQueue[itMeshQueueThread.first];
+							{
+								for (const auto& itDrawQueueThread : itMeshQueueThread.second) {
+									InstanceRange& range = drawQueue[itDrawQueueThread.first];
+									{
+										range.offset = offset;
+										range.count = itDrawQueueThread.second.size();
+									}
+
+									offset += itDrawQueueThread.second.size();
+									instances.insert(instances.end(), itDrawQueueThread.second.begin(), itDrawQueueThread.second.end());
+								}
+							}
+						}
+					}
+				}
+
+				m_materialMeshDrawQueueThreads[indexThread].clear();
+			}
+		}
+
+		if (instances.empty()) {
+			return;
+		}
+
+		m_ptrInstanceBuffer = RenderSystem()->GetInstanceBuffer(INSTANCE_FORMAT, INSTANCE_BINDING);
+		GfxRenderer()->CmdSetInstanceBuffer(ptrCommandBuffer, m_ptrInstanceBuffer->GetBuffer(GfxRenderer()->GetSwapChain()->GetFrameIndex()), (const uint8_t*)instances.data(), instances.size() * sizeof(int));
+	}
+
+
+
+	/*
 	m_instanceBufferQueue.clear();
 	m_pipelineMaterialQueue.clear();
 	{
@@ -258,10 +304,12 @@ void CRenderQueue::CmdDraw(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrComman
 			ptrCommandBuffer->CmdExecute(cmdTasks[indexTask].GetCommandBuffer());
 		}
 	}
+	*/
 }
 
 void CRenderQueue::CmdDrawThread(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass, const int indexSubpass, const CGfxDescriptorSetPtr ptrDescriptorSetPass, const CGfxDescriptorSetPtr ptrDescriptorSetInputAttachment, const CGfxPipelineGraphics* pPipeline, const uint32_t matPassName, const glm::vec4& scissor, const glm::vec4& viewport, uint32_t mask)
 {
+	/*
 	GfxRenderer()->BeginRecord(ptrCommandBuffer, ptrFrameBuffer, ptrRenderPass, indexSubpass);
 	{
 		GfxRenderer()->CmdSetScissor(ptrCommandBuffer, (int)scissor.x, (int)scissor.y, (int)scissor.z, (int)scissor.w);
@@ -300,4 +348,5 @@ void CRenderQueue::CmdDrawThread(CGfxCommandBufferPtr ptrCommandBuffer, const CG
 		}
 	}
 	GfxRenderer()->EndRecord(ptrCommandBuffer);
+	*/
 }
