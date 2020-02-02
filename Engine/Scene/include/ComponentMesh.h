@@ -37,7 +37,7 @@ private:
 	InstanceData m_instanceData[2];
 
 private:
-	struct LODMeshDraw {
+	typedef struct LODMeshDraw {
 		float factor;
 
 		glm::aabb aabb;
@@ -46,7 +46,7 @@ private:
 
 		CGfxMaterialPtr ptrMaterial;
 		CGfxMeshDrawPtr ptrMeshDraw;
-	};
+	} LODMeshDraw;
 
 	int m_indexLOD;
 	LODMeshDraw m_LODMeshDraws[MAX_LOD_COUNT];
