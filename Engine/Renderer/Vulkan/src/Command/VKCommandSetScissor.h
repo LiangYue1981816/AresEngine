@@ -24,7 +24,7 @@ public:
 	{
 		ASSERT(m_vkCommandBuffer);
 
-		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_SET_SCISSOR, "CommandSetScissor");
+		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_SET_SCISSOR);
 		{
 			VkRect2D rect = {};
 			rect.offset.x = m_x;

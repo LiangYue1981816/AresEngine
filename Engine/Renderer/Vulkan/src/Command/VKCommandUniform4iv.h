@@ -25,7 +25,7 @@ public:
 		ASSERT(m_vkCommandBuffer);
 		ASSERT(m_pPipelineCompute || m_pPipelineGraphics);
 
-		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_UNIFORM4IV, "CommandUniform4iv");
+		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_UNIFORM4IV);
 		{
 			if (m_pPipelineCompute) {
 				m_pPipelineCompute->Uniform4iv(m_vkCommandBuffer, m_name, m_value.size(), m_value.data());

@@ -23,7 +23,7 @@ public:
 		ASSERT(m_vkCommandBuffer);
 		ASSERT(m_ptrInstanceBuffer);
 
-		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_SET_INSTANCEBUFFER, "CommandSetInstanceBuffer");
+		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_SET_INSTANCEBUFFER);
 		{
 			if (m_buffer.empty() == false) {
 				m_ptrInstanceBuffer->BufferData(m_buffer.size(), m_buffer.data());

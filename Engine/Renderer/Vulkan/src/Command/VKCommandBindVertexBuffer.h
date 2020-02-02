@@ -24,7 +24,7 @@ public:
 		ASSERT(m_ptrVertexBuffer);
 		ASSERT(m_pPipelineGraphics);
 
-		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_BIND_VERTEXBUFFER, "CommandBindVertexBuffer");
+		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_BIND_VERTEXBUFFER);
 		{
 			if (m_pPipelineGraphics->IsCompatibleVertexFormat(m_ptrVertexBuffer->GetVertexBinding(), m_ptrVertexBuffer->GetVertexFormat())) {
 				((CVKVertexBuffer*)m_ptrVertexBuffer.GetPointer())->Bind(m_vkCommandBuffer);

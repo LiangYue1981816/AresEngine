@@ -22,7 +22,7 @@ public:
 		ASSERT(m_vkCommandBuffer);
 		ASSERT(m_pPipelineCompute);
 
-		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_BIND_PIPELINECOMPUTE, "CommandBindPipelineCompute");
+		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_BIND_PIPELINECOMPUTE);
 		{
 			m_pPipelineCompute->Bind(m_vkCommandBuffer);
 		}

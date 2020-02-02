@@ -24,7 +24,7 @@ public:
 	{
 		ASSERT(m_vkCommandBuffer);
 
-		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_DRAW_INSTANCE, "CommandDrawInstance");
+		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_DRAW_INSTANCE);
 		{
 			int indexSize = 4;
 

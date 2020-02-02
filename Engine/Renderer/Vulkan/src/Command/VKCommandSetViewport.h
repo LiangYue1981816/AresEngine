@@ -24,7 +24,7 @@ public:
 	{
 		ASSERT(m_vkCommandBuffer);
 
-		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_SET_VIEWPORT, "CommandSetViewport");
+		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_SET_VIEWPORT);
 		{
 			VkViewport viewport = {};
 			viewport.x = m_x;

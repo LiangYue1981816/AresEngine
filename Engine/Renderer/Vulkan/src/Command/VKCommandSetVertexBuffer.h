@@ -23,7 +23,7 @@ public:
 		ASSERT(m_vkCommandBuffer);
 		ASSERT(m_ptrVertexBuffer);
 
-		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_SET_VERTEXBUFFER, "CommandSetVertexBuffer");
+		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_SET_VERTEXBUFFER);
 		{
 			if (m_buffer.empty() == false) {
 				m_ptrVertexBuffer->BufferData(0, m_buffer.size(), m_buffer.data());

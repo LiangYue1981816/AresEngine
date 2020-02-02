@@ -26,7 +26,7 @@ public:
 		ASSERT(m_vkCommandBuffer);
 		ASSERT(m_pPipelineCompute || m_pPipelineGraphics);
 
-		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_UNIFORM2I, "CommandUniform2i");
+		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_UNIFORM2I);
 		{
 			if (m_pPipelineCompute) {
 				m_pPipelineCompute->Uniform2i(m_vkCommandBuffer, m_name, m_v0, m_v1);

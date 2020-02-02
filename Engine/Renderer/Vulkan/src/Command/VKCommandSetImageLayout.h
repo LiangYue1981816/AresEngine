@@ -43,7 +43,7 @@ public:
 	{
 		ASSERT(m_vkCommandBuffer);
 
-		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_SET_IMAGELAYOUT, "CommandSetImageLayout");
+		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_SET_IMAGELAYOUT);
 		{
 			if (m_ptrTexture2D) {
 				((CVKTexture2D*)m_ptrTexture2D.GetPointer())->PipelineBarrier(m_vkCommandBuffer, CVKHelper::TranslateImageLayout(m_imageLayout));

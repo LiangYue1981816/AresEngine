@@ -24,7 +24,7 @@ public:
 		ASSERT(m_ptrFrameBuffer);
 		ASSERT(m_ptrRenderPass);
 
-		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_BEGIN_RENDERPASS, "CommandBeginRenderPass");
+		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_BEGIN_RENDERPASS);
 		{
 			eastl::vector<VkClearValue> clearValues;
 			for (int indexAttachment = 0; indexAttachment < (int)m_ptrRenderPass->GetAttachmentCount(); indexAttachment++) {

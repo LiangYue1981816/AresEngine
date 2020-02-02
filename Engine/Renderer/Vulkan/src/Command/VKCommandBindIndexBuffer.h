@@ -22,7 +22,7 @@ public:
 		ASSERT(m_vkCommandBuffer);
 		ASSERT(m_ptrIndexBuffer);
 
-		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_BIND_INDEXBUFFER, "CommandBindIndexBuffer");
+		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_BIND_INDEXBUFFER);
 		{
 			((CVKIndexBuffer*)m_ptrIndexBuffer.GetPointer())->Bind(m_vkCommandBuffer);
 		}

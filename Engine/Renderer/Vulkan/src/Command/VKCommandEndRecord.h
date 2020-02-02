@@ -20,7 +20,7 @@ public:
 	{
 		ASSERT(m_vkCommandBuffer);
 
-		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_END_RECORD, "CommandEndRecord");
+		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_END_RECORD);
 		{
 			vkEndCommandBuffer(m_vkCommandBuffer);
 		}

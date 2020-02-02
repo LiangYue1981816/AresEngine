@@ -25,7 +25,7 @@ public:
 		ASSERT(m_vkCommandBuffer);
 		ASSERT(m_pPipelineCompute || m_pPipelineGraphics);
 
-		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_UNIFORMMATRIX2FV, "CommandUniformMatrix2fv");
+		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_UNIFORMMATRIX2FV);
 		{
 			if (m_pPipelineCompute) {
 				m_pPipelineCompute->UniformMatrix2fv(m_vkCommandBuffer, m_name, m_value.size() / 4, m_value.data());
