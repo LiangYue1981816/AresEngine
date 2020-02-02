@@ -6,7 +6,7 @@
 extern "C" {
 #endif
 
-typedef struct {
+typedef struct event_t {
 	int count;
 	pthread_cond_t cond;
 	pthread_mutex_t mutex;

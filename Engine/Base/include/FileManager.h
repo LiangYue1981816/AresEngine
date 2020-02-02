@@ -13,7 +13,7 @@ class CALL_API CFileManager
 private:
 	typedef struct File {
 		ZZIP_DIR* pPack = nullptr;
-		eastl::string strFullName;
+		eastl::string strFullName = "";
 	} File;
 
 

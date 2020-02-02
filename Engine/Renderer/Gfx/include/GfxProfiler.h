@@ -8,12 +8,12 @@ public:
 	typedef struct Sample {
 		Sample(void)
 		{
-			name = nullptr;
 			Reset();
 		}
 
 		void Reset(void)
 		{
+			name = nullptr;
 			timeBegin = 0;
 			timeEnd = 0;
 			timeTotal = 0;

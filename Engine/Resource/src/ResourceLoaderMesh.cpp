@@ -3,18 +3,16 @@
 #include "ResourceLoader.h"
 
 
-enum RawVertexAttribute
-{
+typedef enum RawVertexAttribute {
 	RAW_VERTEX_ATTRIBUTE_POSITION = 1 << 0,
 	RAW_VERTEX_ATTRIBUTE_NORMAL = 1 << 1,
 	RAW_VERTEX_ATTRIBUTE_BINORMAL = 1 << 3,
 	RAW_VERTEX_ATTRIBUTE_COLOR = 1 << 4,
 	RAW_VERTEX_ATTRIBUTE_UV0 = 1 << 5,
 	RAW_VERTEX_ATTRIBUTE_UV1 = 1 << 6,
-};
+} RawVertexAttribute;
 
-typedef struct DrawHeader
-{
+typedef struct DrawHeader {
 	char szName[260];
 
 	float minx = FLT_MAX;
@@ -27,11 +25,9 @@ typedef struct DrawHeader
 	unsigned int baseVertex = 0;
 	unsigned int firstIndex = 0;
 	unsigned int indexCount = 0;
-
 } DrawHeader;
 
-typedef struct MeshHeader
-{
+typedef struct MeshHeader {
 	unsigned int format = 0;
 	unsigned int numDraws = 0;
 
@@ -40,7 +36,6 @@ typedef struct MeshHeader
 
 	unsigned int vertexBufferSize = 0;
 	unsigned int vertexBufferOffset = 0;
-
 } MeshHeader;
 
 static bool InternalLoadDraws(CGfxMesh* pMesh, DrawHeader* drawHeaders, int numDraws)
