@@ -75,14 +75,14 @@ void CGLES3InstanceBuffer::Bind(void) const
 		uint32_t attribute = (1 << indexAttribute);
 
 		if (m_format & attribute) {
-			uint32_t stride = GetInstanceStride(m_format);
-			uint32_t location = GetInstanceAttributeLocation(attribute);
-			uint32_t components = GetInstanceAttributeComponents(attribute);
-			uintptr_t offset = GetInstanceAttributeOffset(m_format, attribute);
+			uint32_t attributeStride = GetInstanceStride(m_format);
+			uint32_t attributeLocation = GetInstanceAttributeLocation(attribute);
+			uint32_t attributeComponents = GetInstanceAttributeComponents(attribute);
+			uint32_t attributeOffset = GetInstanceAttributeOffset(m_format, attribute);
 
-			glEnableVertexAttribArray(location);
-			glVertexAttribPointer(location, components, GL_FLOAT, GL_FALSE, stride, (const void*)offset);
-			glVertexAttribDivisor(location, 1);
+			glEnableVertexAttribArray(attributeLocation);
+			glVertexAttribPointer(attributeLocation, attributeComponents, GL_FLOAT, GL_FALSE, attributeStride, (const void*)attributeOffset);
+			glVertexAttribDivisor(attributeLocation, 1);
 		}
 	}
 

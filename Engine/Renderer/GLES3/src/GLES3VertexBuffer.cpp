@@ -57,14 +57,14 @@ void CGLES3VertexBuffer::Bind(void) const
 		uint32_t attribute = (1 << indexAttribute);
 
 		if (m_format & attribute) {
-			uint32_t stride = GetVertexStride(m_format);
-			uint32_t location = GetVertexAttributeLocation(attribute);
-			uint32_t components = GetVertexAttributeComponents(attribute);
-			uintptr_t offset = GetVertexAttributeOffset(m_format, attribute);
+			uint32_t attributeStride = GetVertexStride(m_format);
+			uint32_t attributeLocation = GetVertexAttributeLocation(attribute);
+			uint32_t attributeComponents = GetVertexAttributeComponents(attribute);
+			uint32_t attributeOffset = GetVertexAttributeOffset(m_format, attribute);
 
-			glEnableVertexAttribArray(location);
-			glVertexAttribPointer(location, components, GL_FLOAT, GL_FALSE, stride, (const void*)offset);
-			glVertexAttribDivisor(location, 0);
+			glEnableVertexAttribArray(attributeLocation);
+			glVertexAttribPointer(attributeLocation, attributeComponents, GL_FLOAT, GL_FALSE, attributeStride, (const void*)attributeOffset);
+			glVertexAttribDivisor(attributeLocation, 0);
 		}
 	}
 
