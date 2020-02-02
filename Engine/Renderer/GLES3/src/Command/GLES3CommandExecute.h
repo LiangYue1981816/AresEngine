@@ -20,7 +20,7 @@ public:
 	{
 		ASSERT(m_ptrCommandBuffer);
 
-		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_EXECUTE, "CommandExecute");
+		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_EXECUTE);
 		{
 			m_ptrCommandBuffer->Execute();
 		}

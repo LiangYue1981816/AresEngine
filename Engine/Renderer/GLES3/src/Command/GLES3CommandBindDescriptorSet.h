@@ -22,7 +22,7 @@ public:
 	{
 		ASSERT(m_pPipelineCompute || m_pPipelineGraphics);
 
-		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_BIND_DESCRIPTORSET, "CommandBindDescriptorSet");
+		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_BIND_DESCRIPTORSET);
 		{
 			if (m_ptrDescriptorSet) {
 				if (m_pPipelineCompute) {

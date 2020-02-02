@@ -21,7 +21,7 @@ public:
 	{
 		ASSERT(m_ptrIndexBuffer);
 
-		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_SET_INDEXBUFFER, "CommandSetIndexBuffer");
+		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_SET_INDEXBUFFER);
 		{
 			if (m_buffer.empty() == false) {
 				m_ptrIndexBuffer->BufferData(0, m_buffer.size(), m_buffer.data());

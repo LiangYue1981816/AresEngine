@@ -21,7 +21,7 @@ public:
 public:
 	virtual void Execute(void) const
 	{
-		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_SET_SCISSOR, "CommandSetScissor");
+		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_SET_SCISSOR);
 		{
 			GLEnable(GL_SCISSOR_TEST);
 			GLScissor(m_x, m_y, m_width, m_height);

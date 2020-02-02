@@ -23,7 +23,7 @@ public:
 	{
 		ASSERT(m_pPipelineCompute || m_pPipelineGraphics);
 
-		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_UNIFORM3FV, "CommandUniform3fv");
+		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_UNIFORM3FV);
 		{
 			if (m_pPipelineCompute) {
 				m_pPipelineCompute->Uniform3fv(m_name, m_value.size(), m_value.data());

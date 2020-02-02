@@ -23,7 +23,7 @@ public:
 	{
 		ASSERT(m_pPipelineCompute || m_pPipelineGraphics);
 
-		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_UNIFORMMATRIX4FV, "CommandUniformMatrix4fv");
+		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_UNIFORMMATRIX4FV);
 		{
 			if (m_pPipelineCompute) {
 				m_pPipelineCompute->UniformMatrix4fv(m_name, m_value.size() / 16, m_value.data());

@@ -20,7 +20,7 @@ public:
 public:
 	virtual void Execute(void) const
 	{
-		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_SET_BUFFERBARRIER, "CommandSetBufferBarrier");
+		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_SET_BUFFERBARRIER);
 		{
 			if (m_ptrBuffer) {
 				glMemoryBarrier(CGLES3Helper::TranslateBarrier(m_dstAccessFlags));

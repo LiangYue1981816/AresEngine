@@ -18,7 +18,7 @@ public:
 public:
 	virtual void Execute(void) const
 	{
-		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_CLEAR_DEPTH, "CommandClearDepth");
+		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_CLEAR_DEPTH);
 		{
 			GLClearDepthf(m_depth);
 			glClear(GL_DEPTH_BUFFER_BIT);

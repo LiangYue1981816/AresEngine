@@ -20,7 +20,7 @@ public:
 	{
 		ASSERT(m_ptrIndexBuffer);
 
-		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_BIND_INDEXBUFFER, "CommandBindIndexBuffer");
+		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_BIND_INDEXBUFFER);
 		{
 			((CGLES3IndexBuffer*)m_ptrIndexBuffer.GetPointer())->Bind();
 		}

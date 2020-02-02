@@ -23,7 +23,7 @@ public:
 		ASSERT(m_ptrFrameBuffer);
 		ASSERT(m_ptrRenderPass);
 
-		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_BIND_FRAMEBUFFER, "CommandBindFrameBuffer");
+		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_BIND_FRAMEBUFFER);
 		{
 			((CGLES3FrameBuffer*)m_ptrFrameBuffer.GetPointer())->Bind(m_ptrRenderPass->GetAttachments(), m_ptrRenderPass->GetSubpass(m_indexSubpass));
 		}

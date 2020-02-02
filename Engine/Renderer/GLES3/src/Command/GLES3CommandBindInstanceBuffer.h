@@ -23,7 +23,7 @@ public:
 		ASSERT(m_ptrInstanceBuffer);
 		ASSERT(m_pPipelineGraphics);
 
-		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_BIND_INSTANCEBUFFER, "CommandBindInstanceBuffer");
+		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_BIND_INSTANCEBUFFER);
 		{
 			if (m_pPipelineGraphics->IsCompatibleVertexFormat(m_ptrInstanceBuffer->GetInstanceBinding(), m_ptrInstanceBuffer->GetInstanceFormat())) {
 				((CGLES3InstanceBuffer*)m_ptrInstanceBuffer.GetPointer())->Bind(m_offset);

@@ -20,7 +20,7 @@ public:
 	{
 		ASSERT(m_ptrIndirectBuffer);
 
-		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_DRAW_INDIRECT, "CommandDrawIndirect");
+		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_DRAW_INDIRECT);
 		{
 
 		}

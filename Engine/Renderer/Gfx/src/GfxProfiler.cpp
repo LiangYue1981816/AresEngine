@@ -12,7 +12,54 @@ size_t CGfxProfiler::instanceBufferSize = 0;
 size_t CGfxProfiler::indirectBufferSize = 0;
 size_t CGfxProfiler::transferBufferSize = 0;
 
-CGfxProfiler::Sample CGfxProfiler::samples[SampleType::SAMPLE_TYPE_COUNT];
+CGfxProfiler::Sample CGfxProfiler::samples[SampleType::SAMPLE_TYPE_COUNT] = {
+	"CommandBeginRecord",              //SAMPLE_TYPE_COMMAND_BEGIN_RECORD = 0,
+	"CommandEndRecord",                //SAMPLE_TYPE_COMMAND_END_RECORD,
+	"CommandSetImageLayout",           //SAMPLE_TYPE_COMMAND_SET_IMAGELAYOUT,
+	"CommandSetBufferBarrier",         //SAMPLE_TYPE_COMMAND_SET_BUFFERBARRIER,
+	"CommandBeginRenderPass",          //SAMPLE_TYPE_COMMAND_BEGIN_RENDERPASS,
+	"CommandNextSubPass",              //SAMPLE_TYPE_COMMAND_NEXT_SUBPASS,
+	"CommandEndRenderPass",            //SAMPLE_TYPE_COMMAND_END_RENDERPASS,
+	"CommandReslove",                  //SAMPLE_TYPE_COMMAND_RESOLVE,
+	"CommandInvalidateFrameBuffer",    //SAMPLE_TYPE_COMMAND_INVALIDATE_FRAMEBUFFER,
+	"CommandBindFrameBuffer",          //SAMPLE_TYPE_COMMAND_BIND_FRAMEBUFFER,
+	"CommandBindPipelineCompute",      //SAMPLE_TYPE_COMMAND_BIND_PIPELINECOMPUTE,
+	"CommandBindPipelineGraphics",     //SAMPLE_TYPE_COMMAND_BIND_PIPELINEGRAPHICS,
+	"CommandBindDescriptorSet",        //SAMPLE_TYPE_COMMAND_BIND_DESCRIPTORSET,
+	"CommandBindIndexBuffer",          //SAMPLE_TYPE_COMMAND_BIND_INDEXBUFFER,
+	"CommandBindVertexBuffer",         //SAMPLE_TYPE_COMMAND_BIND_VERTEXBUFFER,
+	"CommandBindInstanceBuffer",       //SAMPLE_TYPE_COMMAND_BIND_INSTANCEBUFFER,
+	"CommandSetIndexBuffer",           //SAMPLE_TYPE_COMMAND_SET_INDEXBUFFER,
+	"CommandSetVertexBuffer",          //SAMPLE_TYPE_COMMAND_SET_VERTEXBUFFER,
+	"CommandSetInstanceBuffer",        //SAMPLE_TYPE_COMMAND_SET_INSTANCEBUFFER,
+	"CommandUniform1i",                //SAMPLE_TYPE_COMMAND_UNIFORM1I,
+	"CommandUniform2i",                //SAMPLE_TYPE_COMMAND_UNIFORM2I,
+	"CommandUniform3i",                //SAMPLE_TYPE_COMMAND_UNIFORM3I,
+	"CommandUniform4i",                //SAMPLE_TYPE_COMMAND_UNIFORM4I,
+	"CommandUniform1f",                //SAMPLE_TYPE_COMMAND_UNIFORM1F,
+	"CommandUniform2f",                //SAMPLE_TYPE_COMMAND_UNIFORM2F,
+	"CommandUniform3f",                //SAMPLE_TYPE_COMMAND_UNIFORM3F,
+	"CommandUniform4f",                //SAMPLE_TYPE_COMMAND_UNIFORM4F,
+	"CommandUniform1iv",               //SAMPLE_TYPE_COMMAND_UNIFORM1IV,
+	"CommandUniform2iv",               //SAMPLE_TYPE_COMMAND_UNIFORM2IV,
+	"CommandUniform3iv",               //SAMPLE_TYPE_COMMAND_UNIFORM3IV,
+	"CommandUniform4iv",               //SAMPLE_TYPE_COMMAND_UNIFORM4IV,
+	"CommandUniform1fv",               //SAMPLE_TYPE_COMMAND_UNIFORM1FV,
+	"CommandUniform2fv",               //SAMPLE_TYPE_COMMAND_UNIFORM2FV,
+	"CommandUniform3fv",               //SAMPLE_TYPE_COMMAND_UNIFORM3FV,
+	"CommandUniform4fv",               //SAMPLE_TYPE_COMMAND_UNIFORM4FV,
+	"CommandUniformMatrix2fv",         //SAMPLE_TYPE_COMMAND_UNIFORMMATRIX2FV,
+	"CommandUniformMatrix3fv",         //SAMPLE_TYPE_COMMAND_UNIFORMMATRIX3FV,
+	"CommandUniformMatrix4fv",         //SAMPLE_TYPE_COMMAND_UNIFORMMATRIX4FV,
+	"CommandSetScissor",               //SAMPLE_TYPE_COMMAND_SET_SCISSOR,
+	"CommandSetViewport",              //SAMPLE_TYPE_COMMAND_SET_VIEWPORT,
+	"CommandClearDepth",               //SAMPLE_TYPE_COMMAND_CLEAR_DEPTH,
+	"CommandClearColor",               //SAMPLE_TYPE_COMMAND_CLEAR_COLOR,
+	"CommandDispatch",                 //SAMPLE_TYPE_COMMAND_DISPATCH,
+	"CommandDrawInstance",             //SAMPLE_TYPE_COMMAND_DRAW_INSTANCE,
+	"CommandDrawIndirect",             //SAMPLE_TYPE_COMMAND_DRAW_INDIRECT,
+	"CommandExecute",                  //SAMPLE_TYPE_COMMAND_EXECUTE,
+};
 
 void CGfxProfiler::SetEnableProfiler(bool bEnable)
 {
@@ -106,21 +153,23 @@ void CGfxProfiler::ResetSamples(void)
 	}
 }
 
-void CGfxProfiler::BeginSample(SampleType type, const char* name)
+void CGfxProfiler::BeginSample(SampleType type)
 {
 	if (bEnableProfiler) {
-		samples[type].name = name;
-		samples[type].timeBegin = Tick();
+		samples[type].Begin(Tick());
 	}
 }
 
 void CGfxProfiler::EndSample(SampleType type)
 {
 	if (bEnableProfiler) {
-		samples[type].timeEnd = Tick();
-		samples[type].timeTotal += samples[type].timeEnd - samples[type].timeBegin;
-		samples[type].count += 1;
+		samples[type].End(Tick());
 	}
+}
+
+const char* CGfxProfiler::GetSampleName(SampleType type)
+{
+	return samples[type].name;
 }
 
 void CGfxProfiler::LogGfxMemory(void)
@@ -155,11 +204,10 @@ void CGfxProfiler::LogProfiler(int frameCount)
 }
 
 
-CGfxProfilerSample::CGfxProfilerSample(CGfxProfiler::SampleType type, const char* name)
+CGfxProfilerSample::CGfxProfilerSample(CGfxProfiler::SampleType type)
 	: m_type(type)
-	, m_name(name)
 {
-	CGfxProfiler::BeginSample(m_type, m_name);
+	CGfxProfiler::BeginSample(m_type);
 }
 
 CGfxProfilerSample::~CGfxProfilerSample(void)
@@ -168,7 +216,7 @@ CGfxProfilerSample::~CGfxProfilerSample(void)
 	uint32_t err = GfxRenderer()->GetLastError();
 
 	if (err != NO_ERROR) {
-		LogOutput(LOG_TAG_RENDERER, "%s error=0x%x\n", m_name, err);
+		LogOutput(LOG_TAG_RENDERER, "%s error=0x%x\n", CGfxProfiler::GetSampleName(m_type), err);
 	}
 #endif
 	CGfxProfiler::EndSample(m_type);

@@ -23,7 +23,7 @@ public:
 		ASSERT(m_ptrFrameBuffer);
 		ASSERT(m_ptrRenderPass);
 
-		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_INVALIDATE_FRAMEBUFFER, "CommandInvalidateFramebuffer");
+		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_INVALIDATE_FRAMEBUFFER);
 		{
 			((CGLES3FrameBuffer*)m_ptrFrameBuffer.GetPointer())->InvalidateFramebuffer(m_ptrRenderPass->GetAttachments(), m_ptrRenderPass->GetSubpass(m_indexSubpass));
 		}

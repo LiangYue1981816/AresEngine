@@ -24,7 +24,7 @@ public:
 	{
 		ASSERT(m_pPipelineCompute || m_pPipelineGraphics);
 
-		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_UNIFORM2F, "CommandUniform2f");
+		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_UNIFORM2F);
 		{
 			if (m_pPipelineCompute) {
 				m_pPipelineCompute->Uniform2f(m_name, m_v0, m_v1);

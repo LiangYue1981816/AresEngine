@@ -6,18 +6,30 @@ class CALL_API CGfxProfiler
 {
 public:
 	typedef struct Sample {
-		Sample(void)
+		Sample(const char* _name)
 		{
+			name = _name;
 			Reset();
 		}
 
 		void Reset(void)
 		{
-			name = nullptr;
 			timeBegin = 0;
 			timeEnd = 0;
 			timeTotal = 0;
 			count = 0;
+		}
+
+		void Begin(uint32_t _timeBegin)
+		{
+			timeBegin = _timeBegin;
+		}
+
+		void End(uint32_t _timeEnd)
+		{
+			timeEnd = _timeEnd;
+			timeTotal += timeEnd - timeBegin;
+			count += 1;
 		}
 
 		const char* name;
@@ -73,7 +85,6 @@ public:
 		SAMPLE_TYPE_COMMAND_DISPATCH,
 		SAMPLE_TYPE_COMMAND_DRAW_INSTANCE,
 		SAMPLE_TYPE_COMMAND_DRAW_INDIRECT,
-		SAMPLE_TYPE_COMMAND_UPDATE_INSTANCEBUFFER,
 		SAMPLE_TYPE_COMMAND_EXECUTE,
 		SAMPLE_TYPE_COUNT
 	} SampleType;
@@ -107,8 +118,9 @@ public:
 	static void DecTransferBufferSize(size_t size);
 
 	static void ResetSamples(void);
-	static void BeginSample(SampleType type, const char* name);
+	static void BeginSample(SampleType type);
 	static void EndSample(SampleType type);
+	static const char* GetSampleName(SampleType type);
 
 	static void LogGfxMemory(void);
 	static void LogProfiler(int frameCount);
@@ -131,11 +143,10 @@ private:
 class CALL_API CGfxProfilerSample
 {
 public:
-	CGfxProfilerSample(CGfxProfiler::SampleType type, const char* name);
+	CGfxProfilerSample(CGfxProfiler::SampleType type);
 	~CGfxProfilerSample(void);
 
 
 private:
 	CGfxProfiler::SampleType m_type;
-	const char* m_name;
 };

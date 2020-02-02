@@ -21,7 +21,7 @@ public:
 public:
 	virtual void Execute(void) const
 	{
-		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_DRAW_INSTANCE, "CommandDrawInstance");
+		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_DRAW_INSTANCE);
 		{
 			glDrawElementsInstanced(GL_TRIANGLES, m_indexCount, CGLES3Helper::TranslateIndexType((GfxIndexType)m_indexType), (const void*)m_indexOffset, m_instanceCount);
 		}

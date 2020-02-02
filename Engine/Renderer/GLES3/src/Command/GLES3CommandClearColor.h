@@ -21,7 +21,7 @@ public:
 public:
 	virtual void Execute(void) const
 	{
-		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_CLEAR_COLOR, "CommandClearColor");
+		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_CLEAR_COLOR);
 		{
 			GLClearColor(m_red, m_green, m_blue, m_alpha);
 			glClear(GL_COLOR_BUFFER_BIT);

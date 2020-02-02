@@ -20,7 +20,7 @@ public:
 public:
 	virtual void Execute(void) const
 	{
-		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_DISPATCH, "CommandDispatch");
+		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_DISPATCH);
 		{
 			glDispatchCompute(m_numLocalWorkGroupX, m_numLocalWorkGroupY, m_numLocalWorkGroupZ);
 		}

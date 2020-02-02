@@ -23,7 +23,7 @@ public:
 		ASSERT(m_ptrFrameBuffer);
 		ASSERT(m_ptrRenderPass);
 
-		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_NEXT_SUBPASS, "CommandNextSubPass");
+		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_NEXT_SUBPASS);
 		{
 
 		}
