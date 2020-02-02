@@ -25,9 +25,7 @@ CTaskGraph::CTaskGraph(const char* szName, int numThreads)
 		char szThreadName[_MAX_STRING];
 		sprintf(szThreadName, "%s_%d", szName, indexThread);
 
-		m_params[indexThread].pTaskGraph = this;
-		m_params[indexThread].indexThread = indexThread;
-
+		m_params[indexThread].Set(this, indexThread);
 		pthread_create(&m_threads[indexThread], nullptr, TaskThread, &m_params[indexThread]);
 		pthread_set_name(m_threads[indexThread], szThreadName);
 	}
