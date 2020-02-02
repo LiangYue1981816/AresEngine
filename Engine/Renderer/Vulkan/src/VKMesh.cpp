@@ -45,10 +45,7 @@ CGfxVertexBufferPtr CVKMesh::GetVertexBufferPtr(void)
 
 bool CVKMesh::CreateDraw(uint32_t name, const glm::aabb& aabb, int baseVertex, int firstIndex, int indexCount)
 {
-	m_draws[name].aabb = aabb;
-	m_draws[name].baseVertex = baseVertex;
-	m_draws[name].firstIndex = firstIndex;
-	m_draws[name].indexCount = indexCount;
+	m_draws[name].Set(aabb, baseVertex, firstIndex, indexCount);
 	return true;
 }
 

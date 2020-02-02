@@ -6,10 +6,25 @@ class CALL_API CGfxMesh : public CGfxResource
 {
 public:
 	typedef struct Draw {
+		Draw(void)
+		{
+			baseVertex = 0;
+			firstIndex = 0;
+			indexCount = 0;
+		}
+
+		void Set(const glm::aabb& _aabb, int _baseVertex, int _firstIndex, int _indexCount)
+		{
+			aabb = _aabb;
+			baseVertex = _baseVertex;
+			firstIndex = _firstIndex;
+			indexCount = _indexCount;
+		}
+
 		glm::aabb aabb;
-		int baseVertex = 0;
-		int firstIndex = 0;
-		int indexCount = 0;
+		int baseVertex;
+		int firstIndex;
+		int indexCount;
 	} Draw;
 
 
