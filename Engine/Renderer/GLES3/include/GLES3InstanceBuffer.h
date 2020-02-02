@@ -24,7 +24,7 @@ public:
 	bool BufferData(size_t size, const void* data);
 
 public:
-	void Bind(void) const;
+	void Bind(int offset) const;
 
 
 private:

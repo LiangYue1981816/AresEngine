@@ -24,7 +24,7 @@ public:
 	bool BufferData(size_t size, const void* data);
 
 public:
-	void Bind(VkCommandBuffer vkCommandBuffer) const;
+	void Bind(VkCommandBuffer vkCommandBuffer, int offset) const;
 
 
 private:

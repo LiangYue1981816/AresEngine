@@ -67,7 +67,7 @@ bool CGLES3InstanceBuffer::BufferData(size_t size, const void* data)
 	return m_pBuffer->BufferData(0, size, data, false);
 }
 
-void CGLES3InstanceBuffer::Bind(void) const
+void CGLES3InstanceBuffer::Bind(int offset) const
 {
 	m_pBuffer->Bind();
 
@@ -81,7 +81,7 @@ void CGLES3InstanceBuffer::Bind(void) const
 			uint32_t attributeOffset = GetInstanceAttributeOffset(m_format, attribute);
 
 			glEnableVertexAttribArray(attributeLocation);
-			glVertexAttribPointer(attributeLocation, attributeComponents, GL_FLOAT, GL_FALSE, attributeStride, (const void*)attributeOffset);
+			glVertexAttribPointer(attributeLocation, attributeComponents, GL_FLOAT, GL_FALSE, attributeStride, (const void*)(attributeOffset + offset));
 			glVertexAttribDivisor(attributeLocation, 1);
 		}
 	}
