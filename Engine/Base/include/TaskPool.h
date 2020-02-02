@@ -6,8 +6,8 @@ class CALL_API CTaskPool
 {
 private:
 	typedef struct ThreadParam {
-		CTaskPool* pTaskPool;
-		int indexThread;
+		CTaskPool* pTaskPool = nullptr;
+		int indexThread = 0;
 	} ThreadParam;
 
 

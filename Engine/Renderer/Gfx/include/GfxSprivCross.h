@@ -3,19 +3,19 @@
 
 
 typedef struct PushConstantRange {
-	uint32_t offset;
-	uint32_t range;
+	uint32_t offset = 0;
+	uint32_t range = 0;
 } PushConstantRange;
 
 typedef struct DescriptorSetBinding {
-	uint32_t set;
-	uint32_t binding;
+	uint32_t set = 0;
+	uint32_t binding = 0;
 } DescriptorSetBinding;
 
 typedef struct InputAttachmentBinding {
-	uint32_t set;
-	uint32_t binding;
-	uint32_t indexInputAttachment;
+	uint32_t set = 0;
+	uint32_t binding = 0;
+	uint32_t indexInputAttachment = 0;
 } InputAttachmentBinding;
 
 class CALL_API CGfxSprivCross

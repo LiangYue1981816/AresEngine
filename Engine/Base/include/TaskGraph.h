@@ -6,8 +6,8 @@ class CALL_API CTaskGraph
 {
 private:
 	typedef struct ThreadParam {
-		CTaskGraph* pTaskGraph;
-		int indexThread;
+		CTaskGraph* pTaskGraph = nullptr;
+		int indexThread = 0;
 	} ThreadParam;
 
 
