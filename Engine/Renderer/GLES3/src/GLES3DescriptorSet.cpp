@@ -64,13 +64,7 @@ bool CGLES3DescriptorSet::SetTexture2D(uint32_t name, const CGfxTexture2DPtr ptr
 	ASSERT(m_ptrDescriptorLayout);
 
 	if (m_ptrDescriptorLayout->IsSampledImageValid(name)) {
-		m_imageDescriptorInfos[name].binding = m_ptrDescriptorLayout->GetSampledImageBinding(name);
-		m_imageDescriptorInfos[name].pSampler = (CGfxSampler*)pSampler;
-		m_imageDescriptorInfos[name].ptrTexture2D = ptrTexture;
-		m_imageDescriptorInfos[name].ptrTexture2DArray.Release();
-		m_imageDescriptorInfos[name].ptrTextureCubemap.Release();
-		m_imageDescriptorInfos[name].ptrRenderTexture.Release();
-		m_imageDescriptorInfos[name].ptrInputAttachmentTexture.Release();
+		m_imageDescriptorInfos[name].Set(m_ptrDescriptorLayout->GetSampledImageBinding(name), (CGfxSampler*)pSampler, ptrTexture, nullptr, nullptr, nullptr, nullptr);
 		return true;
 	}
 	else {
@@ -85,13 +79,7 @@ bool CGLES3DescriptorSet::SetTexture2DArray(uint32_t name, const CGfxTexture2DAr
 	ASSERT(m_ptrDescriptorLayout);
 
 	if (m_ptrDescriptorLayout->IsSampledImageValid(name)) {
-		m_imageDescriptorInfos[name].binding = m_ptrDescriptorLayout->GetSampledImageBinding(name);
-		m_imageDescriptorInfos[name].pSampler = (CGfxSampler*)pSampler;
-		m_imageDescriptorInfos[name].ptrTexture2D.Release();
-		m_imageDescriptorInfos[name].ptrTexture2DArray = ptrTexture;
-		m_imageDescriptorInfos[name].ptrTextureCubemap.Release();
-		m_imageDescriptorInfos[name].ptrRenderTexture.Release();
-		m_imageDescriptorInfos[name].ptrInputAttachmentTexture.Release();
+		m_imageDescriptorInfos[name].Set(m_ptrDescriptorLayout->GetSampledImageBinding(name), (CGfxSampler*)pSampler, nullptr, ptrTexture, nullptr, nullptr, nullptr);
 		return true;
 	}
 	else {
@@ -106,13 +94,7 @@ bool CGLES3DescriptorSet::SetTextureCubemap(uint32_t name, const CGfxTextureCube
 	ASSERT(m_ptrDescriptorLayout);
 
 	if (m_ptrDescriptorLayout->IsSampledImageValid(name)) {
-		m_imageDescriptorInfos[name].binding = m_ptrDescriptorLayout->GetSampledImageBinding(name);
-		m_imageDescriptorInfos[name].pSampler = (CGfxSampler*)pSampler;
-		m_imageDescriptorInfos[name].ptrTexture2D.Release();
-		m_imageDescriptorInfos[name].ptrTexture2DArray.Release();
-		m_imageDescriptorInfos[name].ptrTextureCubemap = ptrTexture;
-		m_imageDescriptorInfos[name].ptrRenderTexture.Release();
-		m_imageDescriptorInfos[name].ptrInputAttachmentTexture.Release();
+		m_imageDescriptorInfos[name].Set(m_ptrDescriptorLayout->GetSampledImageBinding(name), (CGfxSampler*)pSampler, nullptr, nullptr, ptrTexture, nullptr, nullptr);
 		return true;
 	}
 	else {
@@ -127,13 +109,7 @@ bool CGLES3DescriptorSet::SetRenderTexture(uint32_t name, const CGfxRenderTextur
 	ASSERT(m_ptrDescriptorLayout);
 
 	if (m_ptrDescriptorLayout->IsSampledImageValid(name)) {
-		m_imageDescriptorInfos[name].binding = m_ptrDescriptorLayout->GetSampledImageBinding(name);
-		m_imageDescriptorInfos[name].pSampler = (CGfxSampler*)pSampler;
-		m_imageDescriptorInfos[name].ptrTexture2D.Release();
-		m_imageDescriptorInfos[name].ptrTexture2DArray.Release();
-		m_imageDescriptorInfos[name].ptrTextureCubemap.Release();
-		m_imageDescriptorInfos[name].ptrRenderTexture = ptrTexture;
-		m_imageDescriptorInfos[name].ptrInputAttachmentTexture.Release();
+		m_imageDescriptorInfos[name].Set(m_ptrDescriptorLayout->GetSampledImageBinding(name), (CGfxSampler*)pSampler, nullptr, nullptr, nullptr, ptrTexture, nullptr);
 		return true;
 	}
 	else {
@@ -148,13 +124,7 @@ bool CGLES3DescriptorSet::SetInputAttachmentTexture(uint32_t name, const CGfxRen
 	ASSERT(m_ptrDescriptorLayout);
 
 	if (m_ptrDescriptorLayout->IsSampledImageValid(name)) {
-		m_imageDescriptorInfos[name].binding = m_ptrDescriptorLayout->GetInputAttachmentBinding(name);
-		m_imageDescriptorInfos[name].pSampler = (CGfxSampler*)pSampler;
-		m_imageDescriptorInfos[name].ptrTexture2D.Release();
-		m_imageDescriptorInfos[name].ptrTexture2DArray.Release();
-		m_imageDescriptorInfos[name].ptrTextureCubemap.Release();
-		m_imageDescriptorInfos[name].ptrRenderTexture.Release();
-		m_imageDescriptorInfos[name].ptrInputAttachmentTexture = ptrTexture;
+		m_imageDescriptorInfos[name].Set(m_ptrDescriptorLayout->GetInputAttachmentBinding(name), (CGfxSampler*)pSampler, nullptr, nullptr, nullptr, nullptr, ptrTexture);
 		return true;
 	}
 	else {
@@ -169,10 +139,7 @@ bool CGLES3DescriptorSet::SetUniformBuffer(uint32_t name, const CGfxUniformBuffe
 	ASSERT(m_ptrDescriptorLayout);
 
 	if (m_ptrDescriptorLayout->IsUniformBlockValid(name)) {
-		m_bufferDescriptorInfos[name].binding = m_ptrDescriptorLayout->GetUniformBlockBinding(name);
-		m_bufferDescriptorInfos[name].offset = offset;
-		m_bufferDescriptorInfos[name].range = range;
-		m_bufferDescriptorInfos[name].ptrUniformBuffer = ptrUniformBuffer;
+		m_bufferDescriptorInfos[name].Set(m_ptrDescriptorLayout->GetUniformBlockBinding(name), offset, range, ptrUniformBuffer, nullptr);
 		return true;
 	}
 	else {
@@ -187,10 +154,7 @@ bool CGLES3DescriptorSet::SetStorageBuffer(uint32_t name, const CGfxStorageBuffe
 	ASSERT(m_ptrDescriptorLayout);
 
 	if (m_ptrDescriptorLayout->IsStorageBlockValid(name)) {
-		m_bufferDescriptorInfos[name].binding = m_ptrDescriptorLayout->GetStorageBlockBinding(name);
-		m_bufferDescriptorInfos[name].offset = offset;
-		m_bufferDescriptorInfos[name].range = range;
-		m_bufferDescriptorInfos[name].ptrStorageBuffer = ptrStorageBuffer;
+		m_bufferDescriptorInfos[name].Set(m_ptrDescriptorLayout->GetStorageBlockBinding(name), offset, range, nullptr, ptrStorageBuffer);
 		return true;
 	}
 	else {

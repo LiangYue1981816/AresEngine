@@ -3,20 +3,50 @@
 
 
 typedef struct DescriptorBufferInfo {
-	bool bDirty = false;
+	DescriptorBufferInfo(void)
+	{
+		bDirty = false;
+	}
 
-	uint32_t binding = 0;
-	uint32_t offset = 0;
-	uint32_t range = 0;
+	void Set(uint32_t _binding, uint32_t _offset, uint32_t _range, CGfxUniformBufferPtr _ptrUniformBuffer, CGfxStorageBufferPtr _ptrStorageBuffer)
+	{
+		bDirty = true;
+		binding = _binding;
+		offset = _offset;
+		range = _range;
+		ptrUniformBuffer = _ptrUniformBuffer;
+		ptrStorageBuffer = _ptrStorageBuffer;
+	}
+
+	bool bDirty;
+	uint32_t binding;
+	uint32_t offset;
+	uint32_t range;
 	CGfxUniformBufferPtr ptrUniformBuffer;
 	CGfxStorageBufferPtr ptrStorageBuffer;
 } DescriptorBufferInfo;
 
 typedef struct DescriptorImageInfo {
-	bool bDirty = false;
+	DescriptorImageInfo(void)
+	{
+		bDirty = false;
+	}
 
-	uint32_t binding = 0;
-	CGfxSampler* pSampler = nullptr;
+	void Set(uint32_t _binding, CGfxSampler* _pSampler, CGfxTexture2DPtr _ptrTexture2D, CGfxTexture2DArrayPtr _ptrTexture2DArray, CGfxTextureCubemapPtr _ptrTextureCubemap, CGfxRenderTexturePtr _ptrRenderTexture, CGfxRenderTexturePtr _ptrInputAttachmentTexture)
+	{
+		bDirty = true;
+		binding = _binding;
+		pSampler = _pSampler;
+		ptrTexture2D = _ptrTexture2D;
+		ptrTexture2DArray = _ptrTexture2DArray;
+		ptrTextureCubemap = _ptrTextureCubemap;
+		ptrRenderTexture = _ptrRenderTexture;
+		ptrInputAttachmentTexture = _ptrInputAttachmentTexture;
+	}
+
+	bool bDirty;
+	uint32_t binding;
+	CGfxSampler* pSampler;
 	CGfxTexture2DPtr ptrTexture2D;
 	CGfxTexture2DArrayPtr ptrTexture2DArray;
 	CGfxTextureCubemapPtr ptrTextureCubemap;
