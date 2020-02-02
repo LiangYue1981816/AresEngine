@@ -12,6 +12,18 @@ class CALL_API CFileManager
 
 private:
 	typedef struct File {
+		File(void)
+		{
+			pPack = nullptr;
+			strFullName = "";
+		}
+
+		void Set(ZZIP_DIR* _pPack, const char* _szFullName)
+		{
+			pPack = _pPack;
+			strFullName = _szFullName;
+		}
+
 		ZZIP_DIR* pPack;
 		eastl::string strFullName;
 	} File;

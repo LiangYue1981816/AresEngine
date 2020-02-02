@@ -64,9 +64,7 @@ void CFileManager::SetPath(const char* szPathName, const char* szExtName)
 			sprintf(szFileName, "%s%s", szFName, szEName);
 			sprintf(szFullName, "%s/%s", szPathName, szFileName);
 
-			uint32_t name = HashValue(szFileName);
-			m_files[name].pPack = nullptr;
-			m_files[name].strFullName = szFullName;
+			m_files[HashValue(szFileName)].Set(nullptr, szFullName);
 		} while (_findnext(hFile, &fileData) == 0);
 
 		_findclose(hFile);
@@ -99,17 +97,13 @@ void CFileManager::SetPack(const char* szPackName, const char* szExtName)
 		sprintf(szFileName, "%s%s", szFName, szEName);
 		sprintf(szFullName, "%s", pEntry->d_name);
 
-		uint32_t name = HashValue(szFileName);
-		m_files[name].pPack = pPack;
-		m_files[name].strFullName = szFullName;
+		m_files[HashValue(szFileName)].Set(pPack, szFullName);
 	}
 }
 
 void CFileManager::SetFile(const char* szFileName, const char* szFullName)
 {
-	uint32_t name = HashValue(szFileName);
-	m_files[name].pPack = nullptr;
-	m_files[name].strFullName = szFullName;
+	m_files[HashValue(szFileName)].Set(nullptr, szFullName);
 }
 
 const char* CFileManager::GetFullName(const char* szFileName)
