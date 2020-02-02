@@ -65,14 +65,10 @@ bool CVKIndirectBuffer::BufferData(int indexDraw, int firstIndex, int baseVertex
 		m_draws[indexDraw].baseInstance == baseInstance) {
 		return true;
 	}
-
-	m_draws[indexDraw].indexCount = indexCount;
-	m_draws[indexDraw].instanceCount = instanceCount;
-	m_draws[indexDraw].firstIndex = firstIndex;
-	m_draws[indexDraw].baseVertex = baseVertex;
-	m_draws[indexDraw].baseInstance = baseInstance;
-
-	return m_pBuffer->BufferData(indexDraw * sizeof(DrawCommand), sizeof(m_draws[indexDraw]), &m_draws[indexDraw]);
+	else {
+		m_draws[indexDraw].Set(indexCount, instanceCount, firstIndex, baseVertex, baseInstance);
+		return m_pBuffer->BufferData(indexDraw * sizeof(DrawCommand), sizeof(m_draws[indexDraw]), &m_draws[indexDraw]);
+	}
 }
 
 

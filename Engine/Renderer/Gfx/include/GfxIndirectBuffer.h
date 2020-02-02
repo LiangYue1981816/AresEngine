@@ -3,11 +3,29 @@
 
 
 typedef struct DrawCommand {
-	int indexCount = 0;
-	int instanceCount = 0;
-	int firstIndex = 0;
-	int baseVertex = 0;
-	int baseInstance = 0;
+	DrawCommand(void)
+	{
+		indexCount = 0;
+		instanceCount = 0;
+		firstIndex = 0;
+		baseVertex = 0;
+		baseInstance = 0;
+	}
+
+	void Set(int _indexCount, int _instanceCount, int _firstIndex, int _baseVertex, int _baseInstance)
+	{
+		indexCount = _indexCount;
+		instanceCount = _instanceCount;
+		firstIndex = _firstIndex;
+		baseVertex = _baseVertex;
+		baseInstance = _baseInstance;
+	}
+
+	int indexCount;
+	int instanceCount;
+	int firstIndex;
+	int baseVertex;
+	int baseInstance;
 } DrawCommand;
 
 class CALL_API CGfxIndirectBuffer : public CGfxResource
