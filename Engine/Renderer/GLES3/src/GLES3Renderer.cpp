@@ -373,21 +373,6 @@ void CGLES3Renderer::CmdBindInstanceBuffer(CGfxCommandBufferPtr ptrCommandBuffer
 	ptrCommandBuffer->CmdBindInstanceBuffer(ptrInstanceBuffer, offset);
 }
 
-void CGLES3Renderer::CmdSetIndexBuffer(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxIndexBufferPtr ptrIndexBuffer, const uint8_t* pBuffer, uint32_t size)
-{
-	ptrCommandBuffer->CmdSetIndexBuffer(ptrIndexBuffer, pBuffer, size);
-}
-
-void CGLES3Renderer::CmdSetVertexBuffer(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxVertexBufferPtr ptrVertexBuffer, const uint8_t* pBuffer, uint32_t size)
-{
-	ptrCommandBuffer->CmdSetVertexBuffer(ptrVertexBuffer, pBuffer, size);
-}
-
-void CGLES3Renderer::CmdSetInstanceBuffer(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxInstanceBufferPtr ptrInstanceBuffer, const uint8_t* pBuffer, uint32_t size)
-{
-	ptrCommandBuffer->CmdSetInstanceBuffer(ptrInstanceBuffer, pBuffer, size);
-}
-
 void CGLES3Renderer::CmdUniform1i(CGfxCommandBufferPtr ptrCommandBuffer, uint32_t name, int v0)
 {
 	ptrCommandBuffer->CmdUniform1i(name, v0);

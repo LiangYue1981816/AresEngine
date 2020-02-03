@@ -12,9 +12,6 @@
 #include "./Command/VKCommandBindIndexBuffer.h"
 #include "./Command/VKCommandBindVertexBuffer.h"
 #include "./Command/VKCommandBindInstanceBuffer.h"
-#include "./Command/VKCommandSetIndexBuffer.h"
-#include "./Command/VKCommandSetVertexBuffer.h"
-#include "./Command/VKCommandSetInstanceBuffer.h"
 #include "./Command/VKCommandUniform1i.h"
 #include "./Command/VKCommandUniform2i.h"
 #include "./Command/VKCommandUniform3i.h"
@@ -294,21 +291,6 @@ void CVKCommandBuffer::CmdBindVertexBuffer(const CGfxVertexBufferPtr ptrVertexBu
 void CVKCommandBuffer::CmdBindInstanceBuffer(const CGfxInstanceBufferPtr ptrInstanceBuffer, int offset)
 {
 	m_pCommands.emplace_back(new CVKCommandBindInstanceBuffer(m_vkCommandBuffer, m_pCurrentPipelineGraphics, ptrInstanceBuffer, offset));
-}
-
-void CVKCommandBuffer::CmdSetIndexBuffer(const CGfxIndexBufferPtr ptrIndexBuffer, const uint8_t* pBuffer, uint32_t size)
-{
-	m_pCommands.emplace_back(new CVKCommandSetIndexBuffer(m_vkCommandBuffer, ptrIndexBuffer, pBuffer, size));
-}
-
-void CVKCommandBuffer::CmdSetVertexBuffer(const CGfxVertexBufferPtr ptrVertexBuffer, const uint8_t* pBuffer, uint32_t size)
-{
-	m_pCommands.emplace_back(new CVKCommandSetVertexBuffer(m_vkCommandBuffer, ptrVertexBuffer, pBuffer, size));
-}
-
-void CVKCommandBuffer::CmdSetInstanceBuffer(const CGfxInstanceBufferPtr ptrInstanceBuffer, const uint8_t* pBuffer, uint32_t size)
-{
-	m_pCommands.emplace_back(new CVKCommandSetInstanceBuffer(m_vkCommandBuffer, ptrInstanceBuffer, pBuffer, size));
 }
 
 void CVKCommandBuffer::CmdUniform1i(uint32_t name, int v0)

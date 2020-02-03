@@ -12,9 +12,6 @@
 #include "./Command/GLES3CommandBindIndexBuffer.h"
 #include "./Command/GLES3CommandBindVertexBuffer.h"
 #include "./Command/GLES3CommandBindInstanceBuffer.h"
-#include "./Command/GLES3CommandSetIndexBuffer.h"
-#include "./Command/GLES3CommandSetVertexBuffer.h"
-#include "./Command/GLES3CommandSetInstanceBuffer.h"
 #include "./Command/GLES3CommandUniform1i.h"
 #include "./Command/GLES3CommandUniform2i.h"
 #include "./Command/GLES3CommandUniform3i.h"
@@ -227,21 +224,6 @@ void CGLES3CommandBuffer::CmdBindVertexBuffer(const CGfxVertexBufferPtr ptrVerte
 void CGLES3CommandBuffer::CmdBindInstanceBuffer(const CGfxInstanceBufferPtr ptrInstanceBuffer, int offset)
 {
 	m_pCommands.emplace_back(new CGLES3CommandBindInstanceBuffer(m_pCurrentPipelineGraphics, ptrInstanceBuffer, offset));
-}
-
-void CGLES3CommandBuffer::CmdSetIndexBuffer(const CGfxIndexBufferPtr ptrIndexBuffer, const uint8_t* pBuffer, uint32_t size)
-{
-	m_pCommands.emplace_back(new CGLES3CommandSetIndexBuffer(ptrIndexBuffer, pBuffer, size));
-}
-
-void CGLES3CommandBuffer::CmdSetVertexBuffer(const CGfxVertexBufferPtr ptrVertexBuffer, const uint8_t* pBuffer, uint32_t size)
-{
-	m_pCommands.emplace_back(new CGLES3CommandSetVertexBuffer(ptrVertexBuffer, pBuffer, size));
-}
-
-void CGLES3CommandBuffer::CmdSetInstanceBuffer(const CGfxInstanceBufferPtr ptrInstanceBuffer, const uint8_t* pBuffer, uint32_t size)
-{
-	m_pCommands.emplace_back(new CGLES3CommandSetInstanceBuffer(ptrInstanceBuffer, pBuffer, size));
 }
 
 void CGLES3CommandBuffer::CmdUniform1i(uint32_t name, int v0)

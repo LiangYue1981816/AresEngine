@@ -379,21 +379,6 @@ void CVKRenderer::CmdBindInstanceBuffer(CGfxCommandBufferPtr ptrCommandBuffer, c
 	ptrCommandBuffer->CmdBindInstanceBuffer(ptrInstanceBuffer, offset);
 }
 
-void CVKRenderer::CmdSetIndexBuffer(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxIndexBufferPtr ptrIndexBuffer, const uint8_t* pBuffer, uint32_t size)
-{
-	ptrCommandBuffer->CmdSetIndexBuffer(ptrIndexBuffer, pBuffer, size);
-}
-
-void CVKRenderer::CmdSetVertexBuffer(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxVertexBufferPtr ptrVertexBuffer, const uint8_t* pBuffer, uint32_t size)
-{
-	ptrCommandBuffer->CmdSetVertexBuffer(ptrVertexBuffer, pBuffer, size);
-}
-
-void CVKRenderer::CmdSetInstanceBuffer(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxInstanceBufferPtr ptrInstanceBuffer, const uint8_t* pBuffer, uint32_t size)
-{
-	ptrCommandBuffer->CmdSetInstanceBuffer(ptrInstanceBuffer, pBuffer, size);
-}
-
 void CVKRenderer::CmdUniform1i(CGfxCommandBufferPtr ptrCommandBuffer, uint32_t name, int v0)
 {
 	ptrCommandBuffer->CmdUniform1i(name, v0);

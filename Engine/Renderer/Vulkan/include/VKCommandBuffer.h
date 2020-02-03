@@ -64,10 +64,6 @@ public:
 	void CmdBindVertexBuffer(const CGfxVertexBufferPtr ptrVertexBuffer);
 	void CmdBindInstanceBuffer(const CGfxInstanceBufferPtr ptrInstanceBuffer, int offset);
 
-	void CmdSetIndexBuffer(const CGfxIndexBufferPtr ptrIndexBuffer, const uint8_t* pBuffer, uint32_t size);
-	void CmdSetVertexBuffer(const CGfxVertexBufferPtr ptrVertexBuffer, const uint8_t* pBuffer, uint32_t size);
-	void CmdSetInstanceBuffer(const CGfxInstanceBufferPtr ptrInstanceBuffer, const uint8_t* pBuffer, uint32_t size);
-
 	void CmdUniform1i(uint32_t name, int v0);
 	void CmdUniform2i(uint32_t name, int v0, int v1);
 	void CmdUniform3i(uint32_t name, int v0, int v1, int v2);
