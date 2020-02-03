@@ -79,7 +79,7 @@ void CGPUScene::ModifyInstanceData(int index, const InstanceData &data, int inde
 	if (indexThread >= 0 && indexThread < MAX_THREAD_COUNT) {
 		if (index >= 0 && index < m_instanceBuffer.size() && index != m_indexDefaultInstance) {
 			if (m_freeIndex.find(index) == m_freeIndex.end()) {
-				m_transferBuffer[indexThread][index] = TransferData(index, data);
+				m_transferBuffer[indexThread][index].Set(index, data);
 			}
 		}
 	}

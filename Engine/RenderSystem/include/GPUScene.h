@@ -32,7 +32,8 @@ private:
 		{
 
 		}
-		TransferData(int _index, InstanceData _data)
+
+		void Set(int _index, InstanceData _data)
 		{
 			index = glm::ivec4(_index);
 			data = _data;
