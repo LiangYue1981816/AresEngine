@@ -43,28 +43,36 @@ CComponentMesh::~CComponentMesh(void)
 
 void CComponentMesh::SetScreenFactor(int indexLOD, float factor)
 {
-	m_LODMeshDraws[indexLOD].screenSizeFactor = factor;
+	if (indexLOD >= 0 && indexLOD < MAX_LOD_COUNT) {
+		m_LODMeshDraws[indexLOD].screenSizeFactor = factor;
+	}
 }
 
 void CComponentMesh::SetMaterial(int indexLOD, const CGfxMaterialPtr ptrMaterial)
 {
-	m_LODMeshDraws[indexLOD].ptrMaterial = ptrMaterial;
+	if (indexLOD >= 0 && indexLOD < MAX_LOD_COUNT) {
+		m_LODMeshDraws[indexLOD].ptrMaterial = ptrMaterial;
+	}
 }
 
 void CComponentMesh::SetMeshDraw(int indexLOD, const CGfxMeshPtr ptrMesh, uint32_t nameDraw, uint32_t nameAlias)
 {
-	if (nameAlias == INVALID_HASHNAME) {
-		m_LODMeshDraws[indexLOD].ptrMeshDraw = GfxRenderer()->NewMeshDraw(HashValueFormat("%x_%x", ptrMesh->GetName(), nameDraw), ptrMesh, nameDraw);
-	}
-	else {
-		m_LODMeshDraws[indexLOD].ptrMeshDraw = GfxRenderer()->NewMeshDraw(HashValueFormat("%x_%x", ptrMesh->GetName(), nameAlias), ptrMesh, nameDraw);
+	if (indexLOD >= 0 && indexLOD < MAX_LOD_COUNT) {
+		if (nameAlias == INVALID_HASHNAME) {
+			m_LODMeshDraws[indexLOD].ptrMeshDraw = GfxRenderer()->NewMeshDraw(HashValueFormat("%x_%x", ptrMesh->GetName(), nameDraw), ptrMesh, nameDraw);
+		}
+		else {
+			m_LODMeshDraws[indexLOD].ptrMeshDraw = GfxRenderer()->NewMeshDraw(HashValueFormat("%x_%x", ptrMesh->GetName(), nameAlias), ptrMesh, nameDraw);
+		}
 	}
 }
 
 void CComponentMesh::SetMask(int indexLOD, uint32_t mask)
 {
-	if (m_LODMeshDraws[indexLOD].ptrMeshDraw) {
-		m_LODMeshDraws[indexLOD].ptrMeshDraw->SetMask(mask);
+	if (indexLOD >= 0 && indexLOD < MAX_LOD_COUNT) {
+		if (m_LODMeshDraws[indexLOD].ptrMeshDraw) {
+			m_LODMeshDraws[indexLOD].ptrMeshDraw->SetMask(mask);
+		}
 	}
 }
 
