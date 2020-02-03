@@ -163,7 +163,6 @@ void CRenderQueue::Add(const CGfxMaterialPtr ptrMaterial, const CGfxMeshDrawPtr 
 
 void CRenderQueue::End(void)
 {
-	/*
 	m_materialMeshDrawQueue.clear();
 	{
 		auto& materialQueue = m_materialMeshDrawQueue;
@@ -188,11 +187,35 @@ void CRenderQueue::End(void)
 			}
 		}
 	}
-	*/
 }
 
 void CRenderQueue::CmdDraw(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer, const CGfxDescriptorSetPtr ptrDescriptorSetPass, const uint32_t matPassName, const glm::vec4& scissor, const glm::vec4& viewport, uint32_t mask, bool bIsTransparency)
 {
+	if (m_materialMeshDrawQueue.empty()) {
+		return;
+	}
+
+	if (m_pCamera) {
+		eastl::vector<CTaskSort> sortTasks;
+		sortTasks.reserve(m_materialMeshDrawQueue.size());
+		{
+			CTaskSort::order = bIsTransparency ? SortOrder::BackToFront : SortOrder::FrontToBack;
+			CTaskSort::cameraPosition = m_pCamera->GetPosition();
+
+			for (auto& itMaterialQueue : m_materialMeshDrawQueue) {
+				sortTasks.emplace_back(itMaterialQueue.second);
+			}
+
+			for (int indexTask = 0; indexTask < sortTasks.size(); indexTask++) {
+				taskGraph.Task(&sortTasks[indexTask], this, nullptr);
+			}
+
+			taskGraph.Dispatch();
+			taskGraph.Wait();
+		}
+	}
+
+	/*
 	m_materialMeshDrawQueue.clear();
 	{
 		int offset = 0;
