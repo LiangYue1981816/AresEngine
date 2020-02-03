@@ -6,10 +6,10 @@ CComponentMesh::CComponentMesh(uint32_t name)
 	, m_indexInstance(INVALID_VALUE)
 	, m_bNeedUpdateInstanceData{ false }
 
-	, m_indexLOD(-1)
-
 	, m_cullDistance2(FLT_MAX)
 	, m_cullScreenSize2(0.0f)
+
+	, m_indexLOD(-1)
 {
 	m_indexInstance = RenderSystem()->AddInstance();
 }
@@ -19,10 +19,10 @@ CComponentMesh::CComponentMesh(const CComponentMesh& component)
 	, m_indexInstance(INVALID_VALUE)
 	, m_bNeedUpdateInstanceData{ false }
 
-	, m_indexLOD(-1)
-
 	, m_cullDistance2(FLT_MAX)
 	, m_cullScreenSize2(0.0f)
+
+	, m_indexLOD(-1)
 {
 	m_indexInstance = RenderSystem()->AddInstance();
 
