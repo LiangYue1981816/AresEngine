@@ -13,11 +13,11 @@ private:
 			screenSizeFactor = 0.0f;
 		}
 
-		glm::aabb aabb;
 		float distance2;
 		float screenSize2;
 		float screenSizeFactor;
 
+		glm::aabb aabb;
 		CGfxMaterialPtr ptrMaterial;
 		CGfxMeshDrawPtr ptrMeshDraw;
 	} LODMeshDraw;

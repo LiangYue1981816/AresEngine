@@ -89,42 +89,47 @@ void CComponentPointLight::SetCullScreenSize(float screenSize)
 
 void CComponentPointLight::TaskUpdate(float gameTime, float deltaTime)
 {
-	/*
 	int indexFrame = Engine()->GetFrameCount() % 2;
 
-	if (m_ptrMeshDraw) {
-		if (m_pParentNode && m_pParentNode->IsActive()) {
-			if (m_bUpdateInstanceData[indexFrame] == false || m_pParentNode->UpdateTransform()) {
-				m_bUpdateInstanceData[indexFrame] = true;
-				m_bNeedUpdateInstanceData[indexFrame] = true;
-				m_instanceData[indexFrame].transformMatrix = m_pParentNode->GetWorldTransform();
-				m_instanceData[indexFrame].center = m_instanceData[indexFrame].transformMatrix * glm::vec4(m_ptrMeshDraw->GetAABB().center, 1.0f);
-			}
+	if (m_ptrMeshDraw && m_ptrMaterial) {
+		if (m_instanceData[indexFrame].transformMatrix != m_pParentNode->GetWorldTransform()) {
+			m_instanceData[indexFrame].SetTransform(m_pParentNode->GetWorldTransform());
+			m_bNeedUpdateInstanceData[indexFrame] = true;
+			m_aabb = m_ptrMeshDraw->GetAABB() * m_instanceData[indexFrame].transformMatrix;
 		}
 	}
-	*/
 }
 
 void CComponentPointLight::TaskUpdateCamera(CGfxCamera* pCamera, CRenderQueue* pRenderQueue, uint32_t mask, bool bComputeLOD, int indexThread)
 {
-	/*
 	int indexFrame = 1 - Engine()->GetFrameCount() % 2;
 
-	if (m_ptrMeshDraw) {
-		if (m_ptrMeshDraw->GetMask() & mask) {
-			if (m_pParentNode && m_pParentNode->IsActive()) {
-				if (m_bUpdateInstanceData[indexFrame]) {
-					if (pCamera->IsVisible(m_ptrMeshDraw->GetAABB() * m_instanceData[indexFrame].transformMatrix)) {
-						if (m_bNeedUpdateInstanceData[indexFrame]) {
-							m_bNeedUpdateInstanceData[indexFrame] = false;
-							RenderSystem()->ModifyInstanceData(m_indexInstance, m_instanceData[indexFrame], indexThread);
-						}
+	if (m_ptrMeshDraw && m_ptrMaterial) {
+		m_distance2 = glm::length2(m_aabb.center - pCamera->GetPosition());
+		m_screenSize2 = glm::min(glm::length2(m_aabb.size()) / glm::max(1.0f, m_distance2), 1.0f);
 
-						pRenderQueue->Add(m_ptrMaterial, m_ptrMeshDraw, m_indexInstance, indexThread);
-					}
-				}
-			}
+		if ((m_ptrMeshDraw->GetMask() & mask) == 0) {
+			return;
 		}
+
+		if (m_distance2 > m_cullDistance2) {
+			return;
+		}
+
+		if (m_screenSize2 < m_cullScreenSize2) {
+			return;
+		}
+
+		if (pCamera->IsVisible(m_aabb) == false) {
+			return;
+		}
+
+		if (m_bNeedUpdateInstanceData[indexFrame]) {
+			m_bNeedUpdateInstanceData[indexFrame] = false;
+			m_instanceData[indexFrame].SetCenter(glm::vec4(m_aabb.center, 1.0f));
+			RenderSystem()->ModifyInstanceData(m_indexInstance, m_instanceData[indexFrame], indexThread);
+		}
+
+		pRenderQueue->Add(m_ptrMaterial, m_ptrMeshDraw, m_indexInstance, indexThread);
 	}
-	*/
 }

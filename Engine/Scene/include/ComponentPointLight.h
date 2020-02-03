@@ -36,10 +36,10 @@ private:
 	InstanceData m_instanceData[2];
 
 private:
-	glm::aabb m_aabb;
 	float m_distance2;
 	float m_screenSize2;
 
+	glm::aabb m_aabb;
 	CGfxMaterialPtr m_ptrMaterial;
 	CGfxMeshDrawPtr m_ptrMeshDraw;
 
