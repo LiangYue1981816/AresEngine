@@ -3,67 +3,132 @@
 
 
 typedef struct PipelineState {
+	PipelineState(void)
+	{
+		// Input Assembly State
+		bEnablePrimitiveRestart = false;
+		topology = GFX_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST;
+
+		// Rasterization State
+		bEnableRasterizerDiscard = false;
+
+		bEnableCullFace = true;
+		cullFace = GFX_CULLFACE_BACK;
+		frontFace = GFX_FRONTFACE_CCW;
+
+		bEnableDepthBias = false;
+		depthBiasSlopeFactor = 0.0f;
+		depthBiasConstantFactor = 0.0f;
+
+		polygonMode = GFX_POLYGON_MODE_FILL;
+
+		// Multisample State
+		samples = 1;
+		bEnableAlphaToCoverage = false;
+		bEnableAlphaToOne = false;
+
+		// Depth Stencil State
+		bEnableDepthTest = true;
+		bEnableDepthWrite = true;
+		depthCompareOp = GFX_COMPAREOP_LEQUAL;
+
+		bEnableStencilTest = false;
+		stencilFrontCompareRef = 0;
+		stencilFrontCompareMask = 0xFFFFFFFF;
+		stencilFrontCompareOp = GFX_COMPAREOP_ALWAYS;
+		stencilFrontOpSFail = GFX_STENCILOP_KEEP;
+		stencilFrontOpDFail = GFX_STENCILOP_KEEP;
+		stencilFrontOpDPass = GFX_STENCILOP_KEEP;
+		stencilFrontWriteMask = 0xFFFFFFFF;
+
+		stencilBackCompareRef = 0;
+		stencilBackCompareMask = 0xFFFFFFFF;
+		stencilBackCompareOp = GFX_COMPAREOP_ALWAYS;
+		stencilBackOpSFail = GFX_STENCILOP_KEEP;
+		stencilBackOpDFail = GFX_STENCILOP_KEEP;
+		stencilBackOpDPass = GFX_STENCILOP_KEEP;
+		stencilBackWriteMask = 0xFFFFFFFF;
+
+		// Color Blend State
+		bEnableBlend = false;
+		blendColorRed = 0.0f;
+		blendColorGreen = 0.0f;
+		blendColorBlue = 0.0f;
+		blendColorAlpha = 0.0f;
+		blendOpRGB = GFX_BLENDOP_ADD;
+		blendSrcRGB = GFX_BLENDFACTOR_ONE;
+		blendDstRGB = GFX_BLENDFACTOR_ZERO;
+		blendOpAlpha = GFX_BLENDOP_ADD;
+		blendSrcAlpha = GFX_BLENDFACTOR_ONE;
+		blendDstAlpha = GFX_BLENDFACTOR_ZERO;
+
+		bEnableColorRedWrite = true;
+		bEnableColorGreenWrite = true;
+		bEnableColorBlueWrite = true;
+		bEnableColorAlphaWrite = true;
+	}
+
 	// Input Assembly State
-	bool bEnablePrimitiveRestart = false;
-	GfxPrimitiveTopology topology = GFX_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST;
+	bool bEnablePrimitiveRestart;
+	GfxPrimitiveTopology topology;
 
 	// Rasterization State
-	bool bEnableRasterizerDiscard = false;
+	bool bEnableRasterizerDiscard;
 
-	bool bEnableCullFace = true;
-	GfxCullFace cullFace = GFX_CULLFACE_BACK;
-	GfxFrontFace frontFace = GFX_FRONTFACE_CCW;
+	bool bEnableCullFace;
+	GfxCullFace cullFace;
+	GfxFrontFace frontFace;
 
-	bool bEnableDepthBias = false;
-	float depthBiasSlopeFactor = 0.0f;
-	float depthBiasConstantFactor = 0.0f;
+	bool bEnableDepthBias;
+	float depthBiasSlopeFactor;
+	float depthBiasConstantFactor;
 
-	GfxPolygonMode polygonMode = GFX_POLYGON_MODE_FILL;
+	GfxPolygonMode polygonMode;
 
 	// Multisample State
-	int samples = 1;
-	bool bEnableAlphaToCoverage = false;
-	bool bEnableAlphaToOne = false;
+	int samples;
+	bool bEnableAlphaToCoverage;
+	bool bEnableAlphaToOne;
 
 	// Depth Stencil State
-	bool bEnableDepthTest = true;
-	bool bEnableDepthWrite = true;
-	GfxCompareOp depthCompareOp = GFX_COMPAREOP_LEQUAL;
+	bool bEnableDepthTest;
+	bool bEnableDepthWrite;
+	GfxCompareOp depthCompareOp;
 
-	bool bEnableStencilTest = false;
-	uint32_t stencilFrontCompareRef = 0;
-	uint32_t stencilFrontCompareMask = 0xFFFFFFFF;
-	GfxCompareOp stencilFrontCompareOp = GFX_COMPAREOP_ALWAYS;
-	GfxStencilOp stencilFrontOpSFail = GFX_STENCILOP_KEEP;
-	GfxStencilOp stencilFrontOpDFail = GFX_STENCILOP_KEEP;
-	GfxStencilOp stencilFrontOpDPass = GFX_STENCILOP_KEEP;
-	uint32_t stencilFrontWriteMask = 0xFFFFFFFF;
+	bool bEnableStencilTest;
+	uint32_t stencilFrontCompareRef;
+	uint32_t stencilFrontCompareMask;
+	GfxCompareOp stencilFrontCompareOp;
+	GfxStencilOp stencilFrontOpSFail;
+	GfxStencilOp stencilFrontOpDFail;
+	GfxStencilOp stencilFrontOpDPass;
+	uint32_t stencilFrontWriteMask;
 
-	uint32_t stencilBackCompareRef = 0;
-	uint32_t stencilBackCompareMask = 0xFFFFFFFF;
-	GfxCompareOp stencilBackCompareOp = GFX_COMPAREOP_ALWAYS;
-	GfxStencilOp stencilBackOpSFail = GFX_STENCILOP_KEEP;
-	GfxStencilOp stencilBackOpDFail = GFX_STENCILOP_KEEP;
-	GfxStencilOp stencilBackOpDPass = GFX_STENCILOP_KEEP;
-	uint32_t stencilBackWriteMask = 0xFFFFFFFF;
+	uint32_t stencilBackCompareRef;
+	uint32_t stencilBackCompareMask;
+	GfxCompareOp stencilBackCompareOp;
+	GfxStencilOp stencilBackOpSFail;
+	GfxStencilOp stencilBackOpDFail;
+	GfxStencilOp stencilBackOpDPass;
+	uint32_t stencilBackWriteMask;
 
 	// Color Blend State
-	bool bEnableBlend = false;
-	float blendColorRed = 0.0f;
-	float blendColorGreen = 0.0f;
-	float blendColorBlue = 0.0f;
-	float blendColorAlpha = 0.0f;
-	GfxBlendOp blendOpRGB = GFX_BLENDOP_ADD;
-	GfxBlendFactor blendSrcRGB = GFX_BLENDFACTOR_ONE;
-	GfxBlendFactor blendDstRGB = GFX_BLENDFACTOR_ZERO;
-	GfxBlendOp blendOpAlpha = GFX_BLENDOP_ADD;
-	GfxBlendFactor blendSrcAlpha = GFX_BLENDFACTOR_ONE;
-	GfxBlendFactor blendDstAlpha = GFX_BLENDFACTOR_ZERO;
+	bool bEnableBlend;
+	float blendColorRed;
+	float blendColorGreen;
+	float blendColorBlue;
+	float blendColorAlpha;
+	GfxBlendOp blendOpRGB;
+	GfxBlendFactor blendSrcRGB;
+	GfxBlendFactor blendDstRGB;
+	GfxBlendOp blendOpAlpha;
+	GfxBlendFactor blendSrcAlpha;
+	GfxBlendFactor blendDstAlpha;
 
-	bool bEnableColorRedWrite = true;
-	bool bEnableColorGreenWrite = true;
-	bool bEnableColorBlueWrite = true;
-	bool bEnableColorAlphaWrite = true;
+	bool bEnableColorRedWrite;
+	bool bEnableColorGreenWrite;
+	bool bEnableColorBlueWrite;
+	bool bEnableColorAlphaWrite;
 } PipelineState;
 
 class CALL_API CGfxPipelineGraphics

@@ -8,6 +8,18 @@ typedef struct InstanceData {
 
 	}
 
+	void SetTransform(const glm::mat4& _transformMatrix, const glm::vec4& _center)
+	{
+		transformMatrix = _transformMatrix;
+		center = _center;
+	}
+
+	void SetLight(const glm::vec4& _lightColor, const glm::vec4& _lightAttenuation)
+	{
+		lightColor = _lightColor;
+		lightAttenuation = _lightAttenuation;
+	}
+
 	// Base
 	glm::mat4 transformMatrix;
 	glm::vec4 center;

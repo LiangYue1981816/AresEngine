@@ -91,7 +91,7 @@ void CComponentMesh::TaskUpdate(float gameTime, float deltaTime)
 	int indexFrame = Engine()->GetFrameCount() % 2;
 
 	if (m_instanceData[indexFrame].transformMatrix != m_pParentNode->GetWorldTransform()) {
-		m_instanceData[indexFrame].transformMatrix  = m_pParentNode->GetWorldTransform();
+		m_instanceData[indexFrame].SetTransform(m_pParentNode->GetWorldTransform(), glm::vec4(m_pParentNode->GetWorldPosition(), 0.0f));
 		m_bNeedUpdateInstanceData[indexFrame] = true;
 
 		for (int index = MAX_LOD_COUNT - 1; index >= 0; index--) {

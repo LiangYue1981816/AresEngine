@@ -23,14 +23,14 @@ public:
 			count = 0;
 		}
 
-		void Begin(uint32_t _timeBegin)
+		void Begin(uint32_t _tick)
 		{
-			timeBegin = _timeBegin;
+			timeBegin = _tick;
 		}
 
-		void End(uint32_t _timeEnd)
+		void End(uint32_t _tick)
 		{
-			timeEnd = _timeEnd;
+			timeEnd = _tick;
 			timeTotal += timeEnd - timeBegin;
 			count += 1;
 		}
