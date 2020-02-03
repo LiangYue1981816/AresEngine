@@ -6,6 +6,39 @@ class CALL_API CGfxUniformCamera
 {
 public:
 	typedef struct Params {
+		void SetScreen(float width, float height)
+		{
+			screen = glm::vec4(width, height, 1.0f / width, 1.0f / height);
+		}
+
+		void SetPerspective(const glm::mat4& baseMatrix, float fovy, float aspect, float zNear, float zFar)
+		{
+			depth = glm::vec4(zNear, zFar, zFar - zNear, 1.0f / (zFar - zNear));
+			projectionMatrix = baseMatrix * glm::perspective(glm::radians(fovy), aspect, zNear, zFar);
+			projectionViewMatrix = projectionMatrix * viewMatrix;
+			projectionInverseMatrix = glm::inverse(projectionMatrix);
+			projectionViewInverseMatrix = glm::inverse(projectionViewMatrix);
+		}
+
+		void SetOrtho(const glm::mat4& baseMatrix, float left, float right, float bottom, float top, float zNear, float zFar)
+		{
+			depth = glm::vec4(zNear, zFar, zFar - zNear, 1.0f / (zFar - zNear));
+			projectionMatrix = baseMatrix * glm::ortho(left, right, bottom, top, zNear, zFar);
+			projectionViewMatrix = projectionMatrix * viewMatrix;
+			projectionInverseMatrix = glm::inverse(projectionMatrix);
+			projectionViewInverseMatrix = glm::inverse(projectionViewMatrix);
+		}
+
+		void SetLookat(float eyex, float eyey, float eyez, float centerx, float centery, float centerz, float upx, float upy, float upz)
+		{
+			viewMatrix = glm::lookAt(glm::vec3(eyex, eyey, eyez), glm::vec3(centerx, centery, centerz), glm::vec3(upx, upy, upz));
+			viewInverseMatrix = glm::inverse(viewMatrix);
+			viewInverseTransposeMatrix = glm::transpose(viewInverseMatrix);
+			projectionViewMatrix = projectionMatrix * viewMatrix;
+			projectionInverseMatrix = glm::inverse(projectionMatrix);
+			projectionViewInverseMatrix = glm::inverse(projectionViewMatrix);
+		}
+
 		glm::vec4 screen;
 		glm::vec4 depth;
 

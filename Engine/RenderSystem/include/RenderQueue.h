@@ -4,6 +4,25 @@
 
 class CALL_API CRenderQueue
 {
+private:
+	typedef struct InstanceRange {
+		InstanceRange(void)
+		{
+			offset = 0;
+			count = 0;
+		}
+
+		void Set(int _offset, int _count)
+		{
+			offset = _offset;
+			count = _count;
+		}
+
+		int offset;
+		int count;
+	} InstanceRange;
+
+
 public:
 	CRenderQueue(void);
 	virtual ~CRenderQueue(void);
@@ -23,11 +42,6 @@ private:
 	CGfxCamera* m_pCamera;
 
 private:
-	typedef struct InstanceRange {
-		int offset;
-		int count;
-	} InstanceRange;
-
 	eastl::unordered_map<CGfxMaterialPtr, eastl::unordered_map<CGfxMeshPtr, eastl::unordered_map<CGfxMeshDrawPtr, eastl::vector<int>>>> m_materialMeshDrawQueueThreads[MAX_THREAD_COUNT];
 	eastl::unordered_map<CGfxMaterialPtr, eastl::unordered_map<CGfxMeshPtr, eastl::unordered_map<CGfxMeshDrawPtr, InstanceRange>>> m_materialMeshDrawQueue;
 	eastl::unordered_map<const CGfxPipelineGraphics*, eastl::unordered_set<CGfxMaterialPtr>> m_pipelineMaterialQueue;

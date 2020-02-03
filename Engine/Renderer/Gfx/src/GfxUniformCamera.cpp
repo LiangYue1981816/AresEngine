@@ -25,7 +25,7 @@ const CGfxUniformBufferPtr CGfxUniformCamera::GetUniformBuffer(void) const
 void CGfxUniformCamera::SetScreen(float width, float height)
 {
 	m_bDirty = true;
-	m_params.screen = glm::vec4(width, height, 1.0f / width, 1.0f / height);
+	m_params.SetScreen(width, height);
 }
 
 void CGfxUniformCamera::SetPerspective(float fovy, float aspect, float zNear, float zFar)
@@ -39,11 +39,7 @@ void CGfxUniformCamera::SetPerspective(float fovy, float aspect, float zNear, fl
 	float y = zFar / zNear;
 
 	m_bDirty = true;
-	m_params.depth = glm::vec4(zNear, zFar, zFar - zNear, 1.0f / (zFar - zNear));
-	m_params.projectionMatrix = GfxRenderer()->GetBaseMatrix() * glm::perspective(glm::radians(fovy), aspect, zNear, zFar);
-	m_params.projectionViewMatrix = m_params.projectionMatrix * m_params.viewMatrix;
-	m_params.projectionInverseMatrix = glm::inverse(m_params.projectionMatrix);
-	m_params.projectionViewInverseMatrix = glm::inverse(m_params.projectionViewMatrix);
+	m_params.SetPerspective(GfxRenderer()->GetBaseMatrix(), fovy, aspect, zNear, zFar);
 }
 
 void CGfxUniformCamera::SetOrtho(float left, float right, float bottom, float top, float zNear, float zFar)
@@ -57,22 +53,13 @@ void CGfxUniformCamera::SetOrtho(float left, float right, float bottom, float to
 	float y = zFar / zNear;
 
 	m_bDirty = true;
-	m_params.depth = glm::vec4(zNear, zFar, zFar - zNear, 1.0f / (zFar - zNear));
-	m_params.projectionMatrix = GfxRenderer()->GetBaseMatrix() * glm::ortho(left, right, bottom, top, zNear, zFar);
-	m_params.projectionViewMatrix = m_params.projectionMatrix * m_params.viewMatrix;
-	m_params.projectionInverseMatrix = glm::inverse(m_params.projectionMatrix);
-	m_params.projectionViewInverseMatrix = glm::inverse(m_params.projectionViewMatrix);
+	m_params.SetOrtho(GfxRenderer()->GetBaseMatrix(), left, right, bottom, top, zNear, zFar);
 }
 
 void CGfxUniformCamera::SetLookat(float eyex, float eyey, float eyez, float centerx, float centery, float centerz, float upx, float upy, float upz)
 {
 	m_bDirty = true;
-	m_params.viewMatrix = glm::lookAt(glm::vec3(eyex, eyey, eyez), glm::vec3(centerx, centery, centerz), glm::vec3(upx, upy, upz));
-	m_params.viewInverseMatrix = glm::inverse(m_params.viewMatrix);
-	m_params.viewInverseTransposeMatrix = glm::transpose(m_params.viewInverseMatrix);
-	m_params.projectionViewMatrix = m_params.projectionMatrix * m_params.viewMatrix;
-	m_params.projectionInverseMatrix = glm::inverse(m_params.projectionMatrix);
-	m_params.projectionViewInverseMatrix = glm::inverse(m_params.projectionViewMatrix);
+	m_params.SetLookat(eyex, eyey, eyez, centerx, centery, centerz, upx, upy, upz);
 }
 
 void CGfxUniformCamera::Apply(void)

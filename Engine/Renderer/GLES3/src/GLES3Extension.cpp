@@ -63,6 +63,14 @@ void glBufferSubDataSync(GLenum target, GLintptr offset, GLsizeiptr size, const 
 
 #pragma region OpenGL state cache
 typedef struct ScissorParam {
+	void Reset(void)
+	{
+		x = GL_INVALID_VALUE;
+		y = GL_INVALID_VALUE;
+		width = GL_INVALID_VALUE;
+		height = GL_INVALID_VALUE;
+	}
+
 	int x;
 	int y;
 	int width;
@@ -70,6 +78,14 @@ typedef struct ScissorParam {
 } ScissorParam;
 
 typedef struct ViewportParam {
+	void Reset(void)
+	{
+		x = GL_INVALID_VALUE;
+		y = GL_INVALID_VALUE;
+		width = GL_INVALID_VALUE;
+		height = GL_INVALID_VALUE;
+	}
+
 	int x;
 	int y;
 	int width;
@@ -77,6 +93,14 @@ typedef struct ViewportParam {
 } ViewportParam;
 
 typedef struct ClearColorParam {
+	void Reset(void)
+	{
+		red = GL_INVALID_VALUE;
+		green = GL_INVALID_VALUE;
+		blue = GL_INVALID_VALUE;
+		alpha = GL_INVALID_VALUE;
+	}
+
 	float red;
 	float green;
 	float blue;
@@ -84,48 +108,108 @@ typedef struct ClearColorParam {
 } ClearColorParam;
 
 typedef struct ClearDepthParam {
+	void Reset(void)
+	{
+		depth = GL_INVALID_VALUE;
+	}
+
 	float depth;
 } ClearDepthParam;
 
 typedef struct ClearStencilParam {
+	void Reset(void)
+	{
+		stencil = GL_INVALID_VALUE;
+	}
+
 	int stencil;
 } ClearStencilParam;
 
 typedef struct PolygonModeParam {
+	void Reset(void)
+	{
+		mode = GL_INVALID_VALUE;
+	}
+
 	uint32_t mode;
 } PolygonModeParam;
 
 typedef struct CullFaceParam {
+	void Reset(void)
+	{
+		mode = GL_INVALID_VALUE;
+	}
+
 	uint32_t mode;
 } CullFaceParam;
 
 typedef struct FrontFaceParam {
+	void Reset(void)
+	{
+		mode = GL_INVALID_VALUE;
+	}
+
 	uint32_t mode;
 } FrontFaceParam;
 
 typedef struct LineWidthParam {
+	void Reset(void)
+	{
+		width = GL_INVALID_VALUE;
+	}
+
 	float width;
 } LineWidthParam;
 
 typedef struct PolygonOffsetParam {
+	void Reset(void)
+	{
+		factor = GL_INVALID_VALUE;
+		units = GL_INVALID_VALUE;
+	}
+
 	float factor;
 	float units;
 } PolygonOffsetParam;
 
 typedef struct DepthRangefParam {
+	void Reset(void)
+	{
+		n = GL_INVALID_VALUE;
+		f = GL_INVALID_VALUE;
+	}
+
 	float n;
 	float f;
 } DepthRangefParam;
 
 typedef struct DepthFuncParam {
+	void Reset(void)
+	{
+		func = GL_INVALID_VALUE;
+	}
+
 	uint32_t func;
 } DepthFuncParam;
 
 typedef struct DepthMaskParam {
+	void Reset(void)
+	{
+		flag = GL_INVALID_VALUE;
+	}
+
 	uint32_t flag;
 } DepthMaskParam;
 
 typedef struct ColorMaskParam {
+	void Reset(void)
+	{
+		red = GL_INVALID_VALUE;
+		green = GL_INVALID_VALUE;
+		blue = GL_INVALID_VALUE;
+		alpha = GL_INVALID_VALUE;
+	}
+
 	uint32_t red;
 	uint32_t green;
 	uint32_t blue;
@@ -133,22 +217,49 @@ typedef struct ColorMaskParam {
 } ColorMaskParam;
 
 typedef struct StencilOpParam {
+	void Reset(void)
+	{
+		sfail = GL_INVALID_VALUE;
+		dpfail = GL_INVALID_VALUE;
+		dppass = GL_INVALID_VALUE;
+	}
+
 	uint32_t sfail;
 	uint32_t dpfail;
 	uint32_t dppass;
 } StencilOpParam;
 
 typedef struct StencilFuncParam {
+	void Reset(void)
+	{
+		func = GL_INVALID_VALUE;
+		ref = GL_INVALID_VALUE;
+		mask = GL_INVALID_VALUE;
+	}
+
 	uint32_t func;
 	uint32_t ref;
 	uint32_t mask;
 } StencilFuncParam;
 
 typedef struct StencilMaskParam {
+	void Reset(void)
+	{
+		mask = GL_INVALID_VALUE;
+	}
+
 	uint32_t mask;
 } StencilMaskParam;
 
 typedef struct BlendFuncParam {
+	void Reset(void)
+	{
+		srcRGB = GL_INVALID_VALUE;
+		dstRGB = GL_INVALID_VALUE;
+		srcAlpha = GL_INVALID_VALUE;
+		dstAlpha = GL_INVALID_VALUE;
+	}
+
 	uint32_t srcRGB;
 	uint32_t dstRGB;
 	uint32_t srcAlpha;
@@ -156,11 +267,25 @@ typedef struct BlendFuncParam {
 } BlendFuncParam;
 
 typedef struct BlendEquationParam {
+	void Reset(void)
+	{
+		modeRGB = GL_INVALID_VALUE;
+		modeAlpha = GL_INVALID_VALUE;
+	}
+
 	uint32_t modeRGB;
 	uint32_t modeAlpha;
 } BlendEquationParam;
 
 typedef struct BlendColorParam {
+	void Reset(void)
+	{
+		red = GL_INVALID_VALUE;
+		green = GL_INVALID_VALUE;
+		blue = GL_INVALID_VALUE;
+		alpha = GL_INVALID_VALUE;
+	}
+
 	float red;
 	float green;
 	float blue;
@@ -168,12 +293,27 @@ typedef struct BlendColorParam {
 } BlendColorParam;
 
 typedef struct FrameBufferAttachmentParam {
+	void Reset(void)
+	{
+		textarget = GL_INVALID_VALUE;
+		texture = GL_INVALID_VALUE;
+		level = GL_INVALID_VALUE;
+	}
+
 	uint32_t textarget;
 	uint32_t texture;
 	int level;
 } FrameBufferAttachmentParam;
 
 typedef struct FrameBufferParam {
+	void Reset(void)
+	{
+		framebuffer = GL_INVALID_VALUE;
+		attachments.clear();
+		readbuffers.clear();
+		drawbuffers.clear();
+	}
+
 	uint32_t framebuffer;
 	eastl::unordered_map<uint32_t, eastl::unordered_map<uint32_t, FrameBufferAttachmentParam>> attachments;
 	eastl::unordered_map<uint32_t, eastl::vector<uint32_t>> readbuffers;
@@ -181,6 +321,30 @@ typedef struct FrameBufferParam {
 } FrameBufferParam;
 
 typedef struct ProgramParam {
+	void Reset(void)
+	{
+		program = GL_INVALID_VALUE;
+		uniform1i.clear();
+		uniform2i.clear();
+		uniform3i.clear();
+		uniform4i.clear();
+		uniform1f.clear();
+		uniform2f.clear();
+		uniform3f.clear();
+		uniform4f.clear();
+		uniform1iv.clear();
+		uniform2iv.clear();
+		uniform3iv.clear();
+		uniform4iv.clear();
+		uniform1fv.clear();
+		uniform2fv.clear();
+		uniform3fv.clear();
+		uniform4fv.clear();
+		uniformMatrix2fv.clear();
+		uniformMatrix3fv.clear();
+		uniformMatrix4fv.clear();
+	}
+
 	uint32_t program;
 	eastl::unordered_map<int, eastl::unordered_map<int, int>> uniform1i;
 	eastl::unordered_map<int, eastl::unordered_map<int, int[2]>> uniform2i;
@@ -204,15 +368,34 @@ typedef struct ProgramParam {
 } ProgramParam;
 
 typedef struct VertexArrayParam {
+	void Reset(void)
+	{
+		array = GL_INVALID_VALUE;
+	}
+
 	uint32_t array;
 } VertexArrayParam;
 
 typedef struct BufferBaseParam {
+	void Reset(void)
+	{
+		index = GL_INVALID_VALUE;
+		buffer = GL_INVALID_VALUE;
+	}
+
 	uint32_t index;
 	uint32_t buffer;
 } BufferBaseParam;
 
 typedef struct BufferRangeParam {
+	void Reset(void)
+	{
+		index = GL_INVALID_VALUE;
+		buffer = GL_INVALID_VALUE;
+		offset = GL_INVALID_VALUE;
+		size = GL_INVALID_VALUE;
+	}
+
 	uint32_t index;
 	uint32_t buffer;
 	int offset;
@@ -220,6 +403,12 @@ typedef struct BufferRangeParam {
 } BufferRangeParam;
 
 typedef struct TextureParam {
+	void Reset(void)
+	{
+		target = GL_INVALID_VALUE;
+		texture = GL_INVALID_VALUE;
+	}
+
 	uint32_t target;
 	uint32_t texture;
 } TextureParam;
@@ -260,87 +449,39 @@ static eastl::unordered_map<GLuint, TextureParam> Textures;
 
 void GLResetContext(void)
 {
+	Scissor.Reset();
+	Viewport.Reset();
+	ClearColor.Reset();
+	ClearDepth.Reset();
+	ClearStencil.Reset();
+	PolygonMode.Reset();
+	CullFace.Reset();
+	FrontFace.Reset();
+	LineWidth.Reset();
+	PolygonOffset.Reset();
+	DepthRangef.Reset();
+	DepthFunc.Reset();
+	DepthMask.Reset();
+	ColorMask.Reset();
+	StencilFrontOp.Reset();
+	StencilFrontFunc.Reset();
+	StencilFrontMask.Reset();
+	StencilBackOp.Reset();
+	StencilBackFunc.Reset();
+	StencilBackMask.Reset();
+	BlendFunc.Reset();
+	BlendEquation.Reset();
+	BlendColor.Reset();
+	VertexArray.Reset();
+	Program.Reset();
+
 	Caps.clear();
-	Samplers.clear();
-	Textures.clear();
 	Buffers.clear();
 	BufferBases.clear();
 	BufferRanges.clear();
 	FrameBuffers.clear();
-	Program.uniform1i.clear();
-	Program.uniform2i.clear();
-	Program.uniform3i.clear();
-	Program.uniform4i.clear();
-	Program.uniform1f.clear();
-	Program.uniform2f.clear();
-	Program.uniform3f.clear();
-	Program.uniform4f.clear();
-	Program.uniform1iv.clear();
-	Program.uniform2iv.clear();
-	Program.uniform3iv.clear();
-	Program.uniform4iv.clear();
-	Program.uniform1fv.clear();
-	Program.uniform2fv.clear();
-	Program.uniform3fv.clear();
-	Program.uniform4fv.clear();
-	Program.uniformMatrix2fv.clear();
-	Program.uniformMatrix3fv.clear();
-	Program.uniformMatrix4fv.clear();
-
-	Scissor.x = GL_INVALID_VALUE;
-	Scissor.y = GL_INVALID_VALUE;
-	Scissor.width = GL_INVALID_VALUE;
-	Scissor.height = GL_INVALID_VALUE;
-	Viewport.x = GL_INVALID_VALUE;
-	Viewport.y = GL_INVALID_VALUE;
-	Viewport.width = GL_INVALID_VALUE;
-	Viewport.height = GL_INVALID_VALUE;
-	ClearColor.red = GL_INVALID_VALUE;
-	ClearColor.green = GL_INVALID_VALUE;
-	ClearColor.blue = GL_INVALID_VALUE;
-	ClearColor.alpha = GL_INVALID_VALUE;
-	ClearDepth.depth = GL_INVALID_VALUE;
-	ClearStencil.stencil = GL_INVALID_VALUE;
-	PolygonMode.mode = GL_INVALID_ENUM;
-	CullFace.mode = GL_INVALID_ENUM;
-	FrontFace.mode = GL_INVALID_ENUM;
-	LineWidth.width = GL_INVALID_VALUE;
-	PolygonOffset.factor = GL_INVALID_VALUE;
-	PolygonOffset.units = GL_INVALID_VALUE;
-	DepthRangef.n = GL_INVALID_VALUE;
-	DepthRangef.f = GL_INVALID_VALUE;
-	DepthFunc.func = GL_INVALID_ENUM;
-	DepthMask.flag = GL_INVALID_VALUE;
-	ColorMask.red = GL_INVALID_VALUE;
-	ColorMask.green = GL_INVALID_VALUE;
-	ColorMask.blue = GL_INVALID_VALUE;
-	ColorMask.alpha = GL_INVALID_VALUE;
-	StencilFrontOp.dpfail = GL_INVALID_ENUM;
-	StencilFrontOp.dppass = GL_INVALID_ENUM;
-	StencilFrontOp.sfail = GL_INVALID_ENUM;
-	StencilFrontFunc.func = GL_INVALID_ENUM;
-	StencilFrontFunc.mask = GL_INVALID_ENUM;
-	StencilFrontFunc.ref = GL_INVALID_ENUM;
-	StencilFrontMask.mask = GL_INVALID_ENUM;
-	StencilBackOp.dpfail = GL_INVALID_ENUM;
-	StencilBackOp.dppass = GL_INVALID_ENUM;
-	StencilBackOp.sfail = GL_INVALID_ENUM;
-	StencilBackFunc.func = GL_INVALID_ENUM;
-	StencilBackFunc.mask = GL_INVALID_ENUM;
-	StencilBackFunc.ref = GL_INVALID_ENUM;
-	StencilBackMask.mask = GL_INVALID_ENUM;
-	BlendFunc.srcRGB = GL_INVALID_ENUM;
-	BlendFunc.dstRGB = GL_INVALID_ENUM;
-	BlendFunc.srcAlpha = GL_INVALID_ENUM;
-	BlendFunc.dstAlpha = GL_INVALID_ENUM;
-	BlendEquation.modeRGB = GL_INVALID_ENUM;
-	BlendEquation.modeAlpha = GL_INVALID_ENUM;
-	BlendColor.red = GL_INVALID_VALUE;
-	BlendColor.green = GL_INVALID_VALUE;
-	BlendColor.blue = GL_INVALID_VALUE;
-	BlendColor.alpha = GL_INVALID_VALUE;
-	VertexArray.array = GL_INVALID_VALUE;
-	Program.program = GL_INVALID_VALUE;
+	Samplers.clear();
+	Textures.clear();
 }
 
 void GLEnable(GLenum cap)

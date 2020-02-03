@@ -208,12 +208,7 @@ void CRenderQueue::CmdDraw(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrComman
 							auto& drawQueue = meshQueue[itMeshQueueThread.first];
 							{
 								for (const auto& itDrawQueueThread : itMeshQueueThread.second) {
-									InstanceRange& range = drawQueue[itDrawQueueThread.first];
-									{
-										range.offset = offset;
-										range.count = itDrawQueueThread.second.size();
-									}
-
+									drawQueue[itDrawQueueThread.first].Set(offset, itDrawQueueThread.second.size());
 									offset += itDrawQueueThread.second.size();
 									instances.insert(instances.end(), itDrawQueueThread.second.begin(), itDrawQueueThread.second.end());
 								}
