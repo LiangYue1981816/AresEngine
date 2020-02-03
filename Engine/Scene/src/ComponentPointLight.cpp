@@ -5,6 +5,12 @@ CComponentPointLight::CComponentPointLight(uint32_t name)
 	: CComponent(name)
 	, m_indexInstance(INVALID_VALUE)
 	, m_bNeedUpdateInstanceData{ false }
+
+	, m_distance2(0.0f)
+	, m_screenSize2(0.0f)
+
+	, m_cullDistance2(FLT_MAX)
+	, m_cullScreenSize2(0.0f)
 {
 	m_indexInstance = RenderSystem()->AddInstance();
 
@@ -16,6 +22,9 @@ CComponentPointLight::CComponentPointLight(const CComponentPointLight& component
 	: CComponent(component)
 	, m_indexInstance(INVALID_VALUE)
 	, m_bNeedUpdateInstanceData{ false }
+
+	, m_cullDistance2(FLT_MAX)
+	, m_cullScreenSize2(0.0f)
 {
 	m_indexInstance = RenderSystem()->AddInstance();
 
@@ -29,11 +38,6 @@ CComponentPointLight::CComponentPointLight(const CComponentPointLight& component
 CComponentPointLight::~CComponentPointLight(void)
 {
 	RenderSystem()->RemoveInstance(m_indexInstance);
-}
-
-void CComponentPointLight::SetScreenFactor(float factor)
-{
-	m_screenSizeFactor = factor;
 }
 
 void CComponentPointLight::SetMaterial(const CGfxMaterialPtr ptrMaterial)
@@ -69,12 +73,12 @@ void CComponentPointLight::SetAttenuation(float linear, float square, float cons
 
 void CComponentPointLight::SetCullDistance(float distance)
 {
-	m_cullDistance = distance;
+	m_cullDistance2 = distance * distance;
 }
 
 void CComponentPointLight::SetCullScreenSize(float screenSize)
 {
-	m_cullScreenSize = screenSize;
+	m_cullScreenSize2 = screenSize * screenSize;
 }
 
 void CComponentPointLight::TaskUpdate(float gameTime, float deltaTime)

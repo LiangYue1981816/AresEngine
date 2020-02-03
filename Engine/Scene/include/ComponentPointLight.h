@@ -11,7 +11,6 @@ public:
 
 
 public:
-	void SetScreenFactor(float factor);
 	void SetMaterial(const CGfxMaterialPtr ptrMaterial);
 	void SetMeshDraw(const CGfxMeshPtr ptrMesh);
 	void SetMask(uint32_t mask);
@@ -40,15 +39,15 @@ private:
 	float m_screenSizeFactor;
 
 	glm::aabb m_aabb;
-	float m_length2;
+	float m_distance2;
 	float m_screenSize2;
 
 	CGfxMaterialPtr m_ptrMaterial;
 	CGfxMeshDrawPtr m_ptrMeshDraw;
 
 private:
-	float m_cullDistance;
-	float m_cullScreenSize;
+	float m_cullDistance2;
+	float m_cullScreenSize2;
 };
 
 typedef CComponentPtr<CComponentPointLight> CComponentPointLightPtr;

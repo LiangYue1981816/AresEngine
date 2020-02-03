@@ -8,8 +8,8 @@ CComponentMesh::CComponentMesh(uint32_t name)
 
 	, m_indexLOD(-1)
 
-	, m_cullDistance(FLT_MAX)
-	, m_cullScreenSize(0.0f)
+	, m_cullDistance2(FLT_MAX)
+	, m_cullScreenSize2(0.0f)
 {
 	m_indexInstance = RenderSystem()->AddInstance();
 }
@@ -21,8 +21,8 @@ CComponentMesh::CComponentMesh(const CComponentMesh& component)
 
 	, m_indexLOD(-1)
 
-	, m_cullDistance(FLT_MAX)
-	, m_cullScreenSize(0.0f)
+	, m_cullDistance2(FLT_MAX)
+	, m_cullScreenSize2(0.0f)
 {
 	m_indexInstance = RenderSystem()->AddInstance();
 
@@ -32,8 +32,8 @@ CComponentMesh::CComponentMesh(const CComponentMesh& component)
 		m_LODMeshDraws[index].ptrMeshDraw = component.m_LODMeshDraws[index].ptrMeshDraw;
 	}
 
-	m_cullDistance = component.m_cullDistance;
-	m_cullScreenSize = component.m_cullScreenSize;
+	m_cullDistance2 = component.m_cullDistance2;
+	m_cullScreenSize2 = component.m_cullScreenSize2;
 }
 
 CComponentMesh::~CComponentMesh(void)
@@ -78,12 +78,12 @@ void CComponentMesh::SetMask(int indexLOD, uint32_t mask)
 
 void CComponentMesh::SetCullDistance(float distance)
 {
-	m_cullDistance = distance;
+	m_cullDistance2 = distance * distance;
 }
 
 void CComponentMesh::SetCullScreenSize(float screenSize)
 {
-	m_cullScreenSize = screenSize;
+	m_cullScreenSize2 = screenSize * screenSize;
 }
 
 void CComponentMesh::TaskUpdate(float gameTime, float deltaTime)
@@ -111,11 +111,11 @@ void CComponentMesh::TaskUpdateCamera(CGfxCamera* pCamera, CRenderQueue* pRender
 			return;
 		}
 
-		if (m_LODMeshDraws[m_indexLOD].length2 > m_cullDistance * m_cullDistance) {
+		if (m_LODMeshDraws[m_indexLOD].distance2 > m_cullDistance2) {
 			return;
 		}
 
-		if (m_LODMeshDraws[m_indexLOD].screenSize2 < m_cullScreenSize * m_cullScreenSize) {
+		if (m_LODMeshDraws[m_indexLOD].screenSize2 < m_cullScreenSize2) {
 			return;
 		}
 
@@ -140,8 +140,8 @@ bool CComponentMesh::ComputeLOD(bool bComputeLOD, const glm::vec3& cameraPositio
 
 		for (int index = MAX_LOD_COUNT - 1; index >= 0; index--) {
 			if (m_LODMeshDraws[index].ptrMeshDraw && m_LODMeshDraws[index].ptrMaterial) {
-				m_LODMeshDraws[index].length2 = glm::length2(m_LODMeshDraws[index].aabb.center - cameraPosition);
-				m_LODMeshDraws[index].screenSize2 = glm::min(glm::length2(m_LODMeshDraws[index].aabb.size()) / glm::max(1.0f, m_LODMeshDraws[index].length2), 1.0f);
+				m_LODMeshDraws[index].distance2 = glm::length2(m_LODMeshDraws[index].aabb.center - cameraPosition);
+				m_LODMeshDraws[index].screenSize2 = glm::min(glm::length2(m_LODMeshDraws[index].aabb.size()) / glm::max(1.0f, m_LODMeshDraws[index].distance2), 1.0f);
 
 				if (m_LODMeshDraws[index].screenSizeFactor >= m_LODMeshDraws[index].screenSize2) {
 					m_indexLOD = index;
@@ -154,8 +154,8 @@ bool CComponentMesh::ComputeLOD(bool bComputeLOD, const glm::vec3& cameraPositio
 	}
 	else {
 		if (m_indexLOD != -1) {
-			m_LODMeshDraws[m_indexLOD].length2 = glm::length2(m_LODMeshDraws[m_indexLOD].aabb.center - cameraPosition);
-			m_LODMeshDraws[m_indexLOD].screenSize2 = glm::min(glm::length2(m_LODMeshDraws[m_indexLOD].aabb.size()) / glm::max(1.0f, m_LODMeshDraws[m_indexLOD].length2), 1.0f);
+			m_LODMeshDraws[m_indexLOD].distance2 = glm::length2(m_LODMeshDraws[m_indexLOD].aabb.center - cameraPosition);
+			m_LODMeshDraws[m_indexLOD].screenSize2 = glm::min(glm::length2(m_LODMeshDraws[m_indexLOD].aabb.size()) / glm::max(1.0f, m_LODMeshDraws[m_indexLOD].distance2), 1.0f);
 			return true;
 		}
 

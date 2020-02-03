@@ -8,16 +8,15 @@ private:
 	typedef struct LODMeshDraw {
 		LODMeshDraw(void)
 		{
-			screenSizeFactor = 0.0f;
-			length2 = 0.0f;
+			distance2 = 0.0f;
 			screenSize2 = 0.0f;
+			screenSizeFactor = 0.0f;
 		}
 
-		float screenSizeFactor;
-
 		glm::aabb aabb;
-		float length2;
+		float distance2;
 		float screenSize2;
+		float screenSizeFactor;
 
 		CGfxMaterialPtr ptrMaterial;
 		CGfxMeshDrawPtr ptrMeshDraw;
@@ -61,8 +60,8 @@ private:
 	LODMeshDraw m_LODMeshDraws[MAX_LOD_COUNT];
 
 private:
-	float m_cullDistance;
-	float m_cullScreenSize;
+	float m_cullDistance2;
+	float m_cullScreenSize2;
 };
 
 typedef CComponentPtr<CComponentMesh> CComponentMeshPtr;
