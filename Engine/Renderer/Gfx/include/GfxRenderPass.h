@@ -27,6 +27,16 @@ typedef struct AttachmentInformation {
 		bClear = true;
 	}
 
+	void Set(GfxPixelFormat _format, int _samples, bool _bInvalidation, bool _bClear, float _depth, int _stencil)
+	{
+		format = _format;
+		samples = _samples;
+		bInvalidation = _bInvalidation;
+		bClear = _bClear;
+		clearValue.depth = _depth;
+		clearValue.stencil = _stencil;
+	}
+
 	void Set(GfxPixelFormat _format, int _samples, bool _bInvalidation, bool _bClear, float _red, float _green, float _blue, float _alpha)
 	{
 		format = _format;
@@ -37,16 +47,6 @@ typedef struct AttachmentInformation {
 		clearValue.color[1] = _green;
 		clearValue.color[2] = _blue;
 		clearValue.color[3] = _alpha;
-	}
-
-	void Set(GfxPixelFormat _format, int _samples, bool _bInvalidation, bool _bClear, float _depth, int _stencil)
-	{
-		format = _format;
-		samples = _samples;
-		bInvalidation = _bInvalidation;
-		bClear = _bClear;
-		clearValue.depth = _depth;
-		clearValue.stencil = _stencil;
 	}
 
 	GfxPixelFormat format;
@@ -62,19 +62,19 @@ typedef struct SubpassInformation {
 		depthStencilAttachment = -1;
 	}
 
-	void SetDepthStencilAttachment(int indexAttachment)
-	{
-		depthStencilAttachment = indexAttachment;
-	}
-
-	void SetInputAttachment(int indexAttachment)
+	void SetInputColorAttachment(int indexAttachment)
 	{
 		inputAttachments[indexAttachment] = indexAttachment;
 	}
 
-	void SetOutputAttachment(int indexAttachment)
+	void SetOutputColorAttachment(int indexAttachment)
 	{
 		outputAttachments[indexAttachment] = indexAttachment;
+	}
+
+	void SetOutputDepthStencilAttachment(int indexAttachment)
+	{
+		depthStencilAttachment = indexAttachment;
 	}
 
 	void SetResolveAttachment(int indexAttachment)

@@ -191,7 +191,7 @@ bool CVKRenderPass::SetSubpassInputColorReference(int indexSubpass, int indexAtt
 		return false;
 	}
 
-	m_subpasses[indexSubpass].SetInputAttachment(indexAttachment);
+	m_subpasses[indexSubpass].SetInputColorAttachment(indexAttachment);
 	return true;
 }
 
@@ -209,7 +209,7 @@ bool CVKRenderPass::SetSubpassOutputColorReference(int indexSubpass, int indexAt
 		return false;
 	}
 
-	m_subpasses[indexSubpass].SetOutputAttachment(indexAttachment);
+	m_subpasses[indexSubpass].SetOutputColorAttachment(indexAttachment);
 	return true;
 }
 
@@ -227,7 +227,7 @@ bool CVKRenderPass::SetSubpassOutputDepthStencilReference(int indexSubpass, int 
 		return false;
 	}
 
-	m_subpasses[indexSubpass].SetDepthStencilAttachment(indexAttachment);
+	m_subpasses[indexSubpass].SetOutputDepthStencilAttachment(indexAttachment);
 	return true;
 }
 

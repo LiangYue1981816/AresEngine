@@ -76,7 +76,7 @@ bool CGLES3RenderPass::SetSubpassInputColorReference(int indexSubpass, int index
 		return false;
 	}
 
-	m_subpasses[indexSubpass].SetInputAttachment(indexAttachment);
+	m_subpasses[indexSubpass].SetInputColorAttachment(indexAttachment);
 	return true;
 }
 
@@ -94,7 +94,7 @@ bool CGLES3RenderPass::SetSubpassOutputColorReference(int indexSubpass, int inde
 		return false;
 	}
 
-	m_subpasses[indexSubpass].SetOutputAttachment(indexAttachment);
+	m_subpasses[indexSubpass].SetOutputColorAttachment(indexAttachment);
 	return true;
 }
 
@@ -112,7 +112,7 @@ bool CGLES3RenderPass::SetSubpassOutputDepthStencilReference(int indexSubpass, i
 		return false;
 	}
 
-	m_subpasses[indexSubpass].SetDepthStencilAttachment(indexAttachment);
+	m_subpasses[indexSubpass].SetOutputDepthStencilAttachment(indexAttachment);
 	return true;
 }
 
