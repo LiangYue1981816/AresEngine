@@ -9,7 +9,10 @@ public:
 		Sample(const char* _name)
 		{
 			name = _name;
-			Reset();
+			timeBegin = 0;
+			timeEnd = 0;
+			timeTotal = 0;
+			count = 0;
 		}
 
 		void Reset(void)
