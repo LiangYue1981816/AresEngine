@@ -31,6 +31,11 @@ CComponentPointLight::~CComponentPointLight(void)
 	RenderSystem()->RemoveInstance(m_indexInstance);
 }
 
+void CComponentPointLight::SetScreenFactor(float factor)
+{
+	m_screenSizeFactor = factor;
+}
+
 void CComponentPointLight::SetMaterial(const CGfxMaterialPtr ptrMaterial)
 {
 	m_ptrMaterial = ptrMaterial;
@@ -39,6 +44,13 @@ void CComponentPointLight::SetMaterial(const CGfxMaterialPtr ptrMaterial)
 void CComponentPointLight::SetMeshDraw(const CGfxMeshPtr ptrMesh)
 {
 	m_ptrMeshDraw = GfxRenderer()->NewMeshDraw(ptrMesh->GetName(), ptrMesh, 0);
+}
+
+void CComponentPointLight::SetMask(uint32_t mask)
+{
+	if (m_ptrMeshDraw) {
+		m_ptrMeshDraw->SetMask(mask);
+	}
 }
 
 void CComponentPointLight::SetColor(float red, float green, float blue)
@@ -53,6 +65,16 @@ void CComponentPointLight::SetAttenuation(float linear, float square, float cons
 	m_attenuation = glm::vec4(linear, square, constant, 0.0f);
 	m_instanceData[0].SetLightAttenuation(m_attenuation);
 	m_instanceData[1].SetLightAttenuation(m_attenuation);
+}
+
+void CComponentPointLight::SetCullDistance(float distance)
+{
+	m_cullDistance = distance;
+}
+
+void CComponentPointLight::SetCullScreenSize(float screenSize)
+{
+	m_cullScreenSize = screenSize;
 }
 
 void CComponentPointLight::TaskUpdate(float gameTime, float deltaTime)

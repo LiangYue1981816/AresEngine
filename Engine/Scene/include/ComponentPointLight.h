@@ -11,11 +11,16 @@ public:
 
 
 public:
+	void SetScreenFactor(float factor);
 	void SetMaterial(const CGfxMaterialPtr ptrMaterial);
 	void SetMeshDraw(const CGfxMeshPtr ptrMesh);
+	void SetMask(uint32_t mask);
 
 	void SetColor(float red, float green, float blue);
 	void SetAttenuation(float linear, float square, float constant);
+
+	void SetCullDistance(float distance);
+	void SetCullScreenSize(float screenSize);
 
 public:
 	virtual void TaskUpdate(float gameTime, float deltaTime);
@@ -32,8 +37,18 @@ private:
 	InstanceData m_instanceData[2];
 
 private:
+	float m_screenSizeFactor;
+
+	glm::aabb m_aabb;
+	float m_length2;
+	float m_screenSize2;
+
 	CGfxMaterialPtr m_ptrMaterial;
 	CGfxMeshDrawPtr m_ptrMeshDraw;
+
+private:
+	float m_cullDistance;
+	float m_cullScreenSize;
 };
 
 typedef CComponentPtr<CComponentPointLight> CComponentPointLightPtr;
