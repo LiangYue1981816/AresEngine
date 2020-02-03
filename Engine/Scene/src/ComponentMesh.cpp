@@ -91,7 +91,7 @@ void CComponentMesh::TaskUpdate(float gameTime, float deltaTime)
 	int indexFrame = Engine()->GetFrameCount() % 2;
 
 	if (m_instanceData[indexFrame].transformMatrix != m_pParentNode->GetWorldTransform()) {
-		m_instanceData[indexFrame].SetTransform(m_pParentNode->GetWorldTransform(), glm::vec4(m_pParentNode->GetWorldPosition(), 0.0f));
+		m_instanceData[indexFrame].SetTransform(m_pParentNode->GetWorldTransform());
 		m_bNeedUpdateInstanceData[indexFrame] = true;
 
 		for (int index = MAX_LOD_COUNT - 1; index >= 0; index--) {
@@ -123,7 +123,7 @@ void CComponentMesh::TaskUpdateCamera(CGfxCamera* pCamera, CRenderQueue* pRender
 
 		if (m_bNeedUpdateInstanceData[indexFrame]) {
 			m_bNeedUpdateInstanceData[indexFrame] = false;
-			m_instanceData[indexFrame].center = glm::vec4(mesh.aabb.center, 1.0f);
+			m_instanceData[indexFrame].SetCenter(glm::vec4(mesh.aabb.center, 1.0f));
 			RenderSystem()->ModifyInstanceData(m_indexInstance, m_instanceData[indexFrame], indexThread);
 		}
 

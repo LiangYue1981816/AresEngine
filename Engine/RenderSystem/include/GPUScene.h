@@ -8,9 +8,13 @@ typedef struct InstanceData {
 
 	}
 
-	void SetTransform(const glm::mat4& _transformMatrix, const glm::vec4& _center)
+	void SetTransform(const glm::mat4& _transformMatrix)
 	{
 		transformMatrix = _transformMatrix;
+	}
+
+	void SetCenter(const glm::vec4& _center)
+	{
 		center = _center;
 	}
 
