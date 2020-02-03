@@ -4,6 +4,26 @@
 
 class CALL_API CComponentMesh : public CComponent
 {
+private:
+	typedef struct LODMeshDraw {
+		LODMeshDraw(void)
+		{
+			factor = 0.0f;
+			length2 = 0.0f;
+			screenSize2 = 0.0f;
+		}
+
+		float factor;
+
+		glm::aabb aabb;
+		float length2;
+		float screenSize2;
+
+		CGfxMaterialPtr ptrMaterial;
+		CGfxMeshDrawPtr ptrMeshDraw;
+	} LODMeshDraw;
+
+
 public:
 	static const int MAX_LOD_COUNT = 8;
 
@@ -37,17 +57,6 @@ private:
 	InstanceData m_instanceData[2];
 
 private:
-	typedef struct LODMeshDraw {
-		float factor;
-
-		glm::aabb aabb;
-		float length2;
-		float screenSize2;
-
-		CGfxMaterialPtr ptrMaterial;
-		CGfxMeshDrawPtr ptrMeshDraw;
-	} LODMeshDraw;
-
 	int m_indexLOD;
 	LODMeshDraw m_LODMeshDraws[MAX_LOD_COUNT];
 

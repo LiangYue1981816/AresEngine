@@ -15,27 +15,27 @@ typedef enum RawVertexAttribute {
 typedef struct DrawHeader {
 	char szName[260];
 
-	float minx = FLT_MAX;
-	float miny = FLT_MAX;
-	float minz = FLT_MAX;
-	float maxx = -FLT_MAX;
-	float maxy = -FLT_MAX;
-	float maxz = -FLT_MAX;
+	float minx;
+	float miny;
+	float minz;
+	float maxx;
+	float maxy;
+	float maxz;
 
-	unsigned int baseVertex = 0;
-	unsigned int firstIndex = 0;
-	unsigned int indexCount = 0;
+	unsigned int baseVertex;
+	unsigned int firstIndex;
+	unsigned int indexCount;
 } DrawHeader;
 
 typedef struct MeshHeader {
-	unsigned int format = 0;
-	unsigned int numDraws = 0;
+	unsigned int format;
+	unsigned int numDraws;
 
-	unsigned int indexBufferSize = 0;
-	unsigned int indexBufferOffset = 0;
+	unsigned int indexBufferSize;
+	unsigned int indexBufferOffset;
 
-	unsigned int vertexBufferSize = 0;
-	unsigned int vertexBufferOffset = 0;
+	unsigned int vertexBufferSize;
+	unsigned int vertexBufferOffset;
 } MeshHeader;
 
 static bool InternalLoadDraws(CGfxMesh* pMesh, DrawHeader* drawHeaders, int numDraws)
