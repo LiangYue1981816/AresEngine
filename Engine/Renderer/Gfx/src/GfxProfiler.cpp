@@ -190,7 +190,7 @@ void CGfxProfiler::LogProfiler(int frameCount)
 
 		float totalTime = 0.0f;
 		for (int indexSample = 0; indexSample < SampleType::SAMPLE_TYPE_COUNT; indexSample++) {
-			if (samples[indexSample].name) {
+			if (samples[indexSample].count) {
 				LogOutput(LOG_TAG_RENDERER, "\t%s time = %3.3fms count = %d\n", samples[indexSample].name, samples[indexSample].timeTotal / frameCount / 1000.0f, samples[indexSample].count / frameCount);
 				totalTime += samples[indexSample].timeTotal / frameCount / 1000.0f;
 			}
