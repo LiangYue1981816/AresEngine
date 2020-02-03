@@ -226,7 +226,7 @@ void CRenderQueue::CmdDraw(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrComman
 		}
 
 		m_ptrInstanceBuffer = RenderSystem()->GetInstanceBuffer(INSTANCE_FORMAT, INSTANCE_BINDING);
-		GfxRenderer()->CmdSetInstanceBuffer(ptrCommandBuffer, m_ptrInstanceBuffer->GetBuffer(GfxRenderer()->GetSwapChain()->GetFrameIndex()), (const uint8_t*)instances.data(), instances.size() * sizeof(int));
+		m_ptrInstanceBuffer->GetBuffer(GfxRenderer()->GetSwapChain()->GetFrameIndex())->BufferData(instances.size() * sizeof(int), (const uint8_t*)instances.data());
 	}
 
 
