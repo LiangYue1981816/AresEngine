@@ -109,6 +109,10 @@ void CComponentMesh::TaskUpdateCamera(CGfxCamera* pCamera, CRenderQueue* pRender
 	if (ComputeLOD(bComputeLOD, pCamera->GetPosition())) {
 		const LODMeshDraw& mesh = m_LODMeshDraws[m_indexLOD];
 
+		if (mesh.ptrMeshDraw->GetMask() & mask == 0) {
+			return;
+		}
+
 		if (mesh.length2 > m_cullDistance * m_cullDistance) {
 			return;
 		}
