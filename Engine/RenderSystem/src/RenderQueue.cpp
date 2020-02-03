@@ -176,7 +176,9 @@ void CRenderQueue::End(void)
 							{
 								for (const auto& itDrawQueueThread : itMeshQueueThread.second) {
 									auto& instanceBuffer = drawQueue[itDrawQueueThread.first];
-									instanceBuffer.insert(instanceBuffer.end(), itDrawQueueThread.second.begin(), itDrawQueueThread.second.end());
+									{
+										instanceBuffer.insert(instanceBuffer.end(), itDrawQueueThread.second.begin(), itDrawQueueThread.second.end());
+									}
 								}
 							}
 						}
@@ -212,6 +214,62 @@ void CRenderQueue::CmdDraw(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrComman
 
 			taskGraph.Dispatch();
 			taskGraph.Wait();
+		}
+	}
+
+	m_materialMeshDrawInstanceRangeQueue.clear();
+	{
+		int offset = 0;
+		eastl::vector<int> instances;
+
+		auto& materialQueue = m_materialMeshDrawInstanceRangeQueue;
+		{
+			for (const auto& itMaterialQueue : m_materialMeshDrawQueue) {
+				auto& meshQueue = materialQueue[itMaterialQueue.first];
+				{
+					for (const auto& itMeshQueue : itMaterialQueue.second) {
+						auto& drawQueue = meshQueue[itMeshQueue.first];
+						{
+							for (const auto& itDrawQueue : itMeshQueue.second) {
+								auto& instanceRange = drawQueue[itDrawQueue.first];
+								{
+									instanceRange.Set(offset, itDrawQueue.second.size());
+								}
+								offset += itDrawQueue.second.size();
+								instances.insert(instances.end(), itDrawQueue.second.begin(), itDrawQueue.second.end());
+							}
+						}
+					}
+				}
+			}
+		}
+
+		if (m_materialMeshDrawInstanceRangeQueue.empty()) {
+			return;
+		}
+
+		if (instances.empty()) {
+			return;
+		}
+
+		m_ptrInstanceBuffer = RenderSystem()->GetInstanceBuffer(INSTANCE_FORMAT, INSTANCE_BINDING);
+		m_ptrInstanceBuffer->GetBuffer(GfxRenderer()->GetSwapChain()->GetFrameIndex())->BufferData(instances.size() * sizeof(int), (const uint8_t*)instances.data());
+	}
+
+	m_pipelineMaterialQueue.clear();
+	{
+		for (const auto& itMaterialQueue : m_materialMeshDrawInstanceRangeQueue) {
+			if (CGfxMaterialPass* pPass = (CGfxMaterialPass*)itMaterialQueue.first->GetPass(matPassName)) {
+				if (CGfxPipelineGraphics* pPipeline = (CGfxPipelineGraphics*)pPass->GetPipeline()) {
+					if (pPipeline->IsTransparency() == bIsTransparency) {
+						m_pipelineMaterialQueue[pPipeline].emplace(itMaterialQueue.first);
+					}
+				}
+			}
+		}
+
+		if (m_pipelineMaterialQueue.empty()) {
+			return;
 		}
 	}
 
