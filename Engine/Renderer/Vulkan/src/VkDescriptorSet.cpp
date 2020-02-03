@@ -103,7 +103,7 @@ bool CVKDescriptorSet::SetTexture2D(uint32_t name, const CGfxTexture2DPtr ptrTex
 	ASSERT(m_ptrDescriptorLayout);
 
 	if (m_ptrDescriptorLayout->IsSampledImageValid(name)) {
-		m_imageDescriptorInfos[name].Set(m_ptrDescriptorLayout->GetSampledImageBinding(name), (CGfxSampler*)pSampler, ptrTexture, nullptr, nullptr, nullptr, nullptr);
+		m_imageDescriptorInfos[name].SetTexture2D(m_ptrDescriptorLayout->GetSampledImageBinding(name), (CGfxSampler*)pSampler, ptrTexture);
 		return true;
 	}
 	else {
@@ -119,7 +119,7 @@ bool CVKDescriptorSet::SetTexture2DArray(uint32_t name, const CGfxTexture2DArray
 	ASSERT(m_ptrDescriptorLayout);
 
 	if (m_ptrDescriptorLayout->IsSampledImageValid(name)) {
-		m_imageDescriptorInfos[name].Set(m_ptrDescriptorLayout->GetSampledImageBinding(name), (CGfxSampler*)pSampler, nullptr, ptrTexture, nullptr, nullptr, nullptr);
+		m_imageDescriptorInfos[name].SetTexture2DArray(m_ptrDescriptorLayout->GetSampledImageBinding(name), (CGfxSampler*)pSampler, ptrTexture);
 		return true;
 	}
 	else {
@@ -135,7 +135,7 @@ bool CVKDescriptorSet::SetTextureCubemap(uint32_t name, const CGfxTextureCubemap
 	ASSERT(m_ptrDescriptorLayout);
 
 	if (m_ptrDescriptorLayout->IsSampledImageValid(name)) {
-		m_imageDescriptorInfos[name].Set(m_ptrDescriptorLayout->GetSampledImageBinding(name), (CGfxSampler*)pSampler, nullptr, nullptr, ptrTexture, nullptr, nullptr);
+		m_imageDescriptorInfos[name].SetTextureCubemap(m_ptrDescriptorLayout->GetSampledImageBinding(name), (CGfxSampler*)pSampler, ptrTexture);
 		return true;
 	}
 	else {
@@ -151,7 +151,7 @@ bool CVKDescriptorSet::SetRenderTexture(uint32_t name, const CGfxRenderTexturePt
 	ASSERT(m_ptrDescriptorLayout);
 
 	if (m_ptrDescriptorLayout->IsSampledImageValid(name)) {
-		m_imageDescriptorInfos[name].Set(m_ptrDescriptorLayout->GetSampledImageBinding(name), (CGfxSampler*)pSampler, nullptr, nullptr, nullptr, ptrTexture, nullptr);
+		m_imageDescriptorInfos[name].SetRenderTexture(m_ptrDescriptorLayout->GetSampledImageBinding(name), (CGfxSampler*)pSampler, ptrTexture);
 		return true;
 	}
 	else {
@@ -167,7 +167,7 @@ bool CVKDescriptorSet::SetInputAttachmentTexture(uint32_t name, const CGfxRender
 	ASSERT(m_ptrDescriptorLayout);
 
 	if (m_ptrDescriptorLayout->IsSampledImageValid(name)) {
-		m_imageDescriptorInfos[name].Set(m_ptrDescriptorLayout->GetInputAttachmentBinding(name), (CGfxSampler*)pSampler, nullptr, nullptr, nullptr, nullptr, ptrTexture);
+		m_imageDescriptorInfos[name].SetInputAttachmentTexture(m_ptrDescriptorLayout->GetInputAttachmentBinding(name), (CGfxSampler*)pSampler, ptrTexture);
 		return true;
 	}
 	else {
@@ -183,7 +183,7 @@ bool CVKDescriptorSet::SetUniformBuffer(uint32_t name, const CGfxUniformBufferPt
 	ASSERT(m_ptrDescriptorLayout);
 
 	if (m_ptrDescriptorLayout->IsUniformBlockValid(name)) {
-		m_bufferDescriptorInfos[name].Set(m_ptrDescriptorLayout->GetUniformBlockBinding(name), offset, range, ptrUniformBuffer, nullptr);
+		m_bufferDescriptorInfos[name].SetUniformBuffer(m_ptrDescriptorLayout->GetUniformBlockBinding(name), offset, range, ptrUniformBuffer);
 		return true;
 	}
 	else {
@@ -199,7 +199,7 @@ bool CVKDescriptorSet::SetStorageBuffer(uint32_t name, const CGfxStorageBufferPt
 	ASSERT(m_ptrDescriptorLayout);
 
 	if (m_ptrDescriptorLayout->IsStorageBlockValid(name)) {
-		m_bufferDescriptorInfos[name].Set(m_ptrDescriptorLayout->GetStorageBlockBinding(name), offset, range, nullptr, ptrStorageBuffer);
+		m_bufferDescriptorInfos[name].SetStorageBuffer(m_ptrDescriptorLayout->GetStorageBlockBinding(name), offset, range, ptrStorageBuffer);
 		return true;
 	}
 	else {
