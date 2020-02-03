@@ -4,19 +4,17 @@
 CComponentPointLight::CComponentPointLight(uint32_t name)
 	: CComponent(name)
 	, m_indexInstance(INVALID_VALUE)
-	, m_bUpdateInstanceData{ false }
 	, m_bNeedUpdateInstanceData{ false }
 {
 	m_indexInstance = RenderSystem()->AddInstance();
 
 	SetMaterial(GfxRenderer()->NewMaterial("PointLight.material", VERTEX_BINDING, INSTANCE_BINDING));
-	SetMeshDraw(GfxRenderer()->NewMesh("PointLight.mesh", 0));
+	SetMeshDraw(GfxRenderer()->NewMesh("PointLight.mesh", VERTEX_BINDING));
 }
 
 CComponentPointLight::CComponentPointLight(const CComponentPointLight& component)
 	: CComponent(component)
 	, m_indexInstance(INVALID_VALUE)
-	, m_bUpdateInstanceData{ false }
 	, m_bNeedUpdateInstanceData{ false }
 {
 	m_indexInstance = RenderSystem()->AddInstance();
@@ -46,19 +44,20 @@ void CComponentPointLight::SetMeshDraw(const CGfxMeshPtr ptrMesh)
 void CComponentPointLight::SetColor(float red, float green, float blue)
 {
 	m_color = glm::vec4(red, green, blue, 0.0f);
-	m_instanceData[0].lightColor = m_color;
-	m_instanceData[1].lightColor = m_color;
+	m_instanceData[0].SetLightColor(m_color);
+	m_instanceData[1].SetLightColor(m_color);
 }
 
 void CComponentPointLight::SetAttenuation(float linear, float square, float constant)
 {
 	m_attenuation = glm::vec4(linear, square, constant, 0.0f);
-	m_instanceData[0].lightAttenuation = m_attenuation;
-	m_instanceData[1].lightAttenuation = m_attenuation;
+	m_instanceData[0].SetLightAttenuation(m_attenuation);
+	m_instanceData[1].SetLightAttenuation(m_attenuation);
 }
 
 void CComponentPointLight::TaskUpdate(float gameTime, float deltaTime)
 {
+	/*
 	int indexFrame = Engine()->GetFrameCount() % 2;
 
 	if (m_ptrMeshDraw) {
@@ -71,10 +70,12 @@ void CComponentPointLight::TaskUpdate(float gameTime, float deltaTime)
 			}
 		}
 	}
+	*/
 }
 
 void CComponentPointLight::TaskUpdateCamera(CGfxCamera* pCamera, CRenderQueue* pRenderQueue, uint32_t mask, bool bComputeLOD, int indexThread)
 {
+	/*
 	int indexFrame = 1 - Engine()->GetFrameCount() % 2;
 
 	if (m_ptrMeshDraw) {
@@ -93,4 +94,5 @@ void CComponentPointLight::TaskUpdateCamera(CGfxCamera* pCamera, CRenderQueue* p
 			}
 		}
 	}
+	*/
 }
