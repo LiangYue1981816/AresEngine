@@ -3,20 +3,90 @@
 
 
 typedef struct ClearValue {
-	int stencil = 0;
-	float depth = 1.0f;
-	float color[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
+	ClearValue(void)
+	{
+		stencil = 0;
+		depth = 1.0f;
+		color[0] = 0.0f;
+		color[1] = 0.0f;
+		color[2] = 0.0f;
+		color[3] = 0.0f;
+	}
+
+	int stencil;
+	float depth;
+	float color[4];
 } ClearValue;
 
 typedef struct AttachmentInformation {
-	GfxPixelFormat format = GFX_PIXELFORMAT_UNDEFINED;
-	int samples = 1;
-	bool bInvalidation = false;
-	bool bClear = true;
+	AttachmentInformation(void)
+	{
+		format = GFX_PIXELFORMAT_UNDEFINED;
+		samples = 1;
+		bInvalidation = false;
+		bClear = true;
+	}
+
+	void Set(GfxPixelFormat _format, int _samples, bool _bInvalidation, bool _bClear, float _red, float _green, float _blue, float _alpha)
+	{
+		format = _format;
+		samples = _samples;
+		bInvalidation = _bInvalidation;
+		bClear = _bClear;
+		clearValue.color[0] = _red;
+		clearValue.color[1] = _green;
+		clearValue.color[2] = _blue;
+		clearValue.color[3] = _alpha;
+	}
+
+	void Set(GfxPixelFormat _format, int _samples, bool _bInvalidation, bool _bClear, float _depth, int _stencil)
+	{
+		format = _format;
+		samples = _samples;
+		bInvalidation = _bInvalidation;
+		bClear = _bClear;
+		clearValue.depth = _depth;
+		clearValue.stencil = _stencil;
+	}
+
+	GfxPixelFormat format;
+	int samples;
+	bool bInvalidation;
+	bool bClear;
 	ClearValue clearValue;
 } AttachmentInformation;
 
 typedef struct SubpassInformation {
+	SubpassInformation(void)
+	{
+		depthStencilAttachment = -1;
+	}
+
+	void SetDepthStencilAttachment(int indexAttachment)
+	{
+		depthStencilAttachment = indexAttachment;
+	}
+
+	void SetInputAttachment(int indexAttachment)
+	{
+		inputAttachments[indexAttachment] = indexAttachment;
+	}
+
+	void SetOutputAttachment(int indexAttachment)
+	{
+		outputAttachments[indexAttachment] = indexAttachment;
+	}
+
+	void SetResolveAttachment(int indexAttachment)
+	{
+		resolveAttachments[indexAttachment] = indexAttachment;
+	}
+
+	void SetPreserveAttachment(int indexAttachment)
+	{
+		preserveAttachments[indexAttachment] = indexAttachment;
+	}
+
 	int depthStencilAttachment = -1;
 	eastl::unordered_map<int, int> inputAttachments;
 	eastl::unordered_map<int, int> outputAttachments;

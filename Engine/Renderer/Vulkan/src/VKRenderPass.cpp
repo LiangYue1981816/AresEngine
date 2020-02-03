@@ -159,15 +159,7 @@ bool CVKRenderPass::SetColorAttachment(int indexAttachment, GfxPixelFormat forma
 		return false;
 	}
 
-	m_attachments[indexAttachment].format = format;
-	m_attachments[indexAttachment].samples = samples;
-	m_attachments[indexAttachment].bInvalidation = bInvalidation;
-	m_attachments[indexAttachment].bClear = bClear;
-	m_attachments[indexAttachment].clearValue.color[0] = red;
-	m_attachments[indexAttachment].clearValue.color[1] = green;
-	m_attachments[indexAttachment].clearValue.color[2] = blue;
-	m_attachments[indexAttachment].clearValue.color[3] = alpha;
-
+	m_attachments[indexAttachment].Set(format, samples, bInvalidation, bClear, red, green, blue, alpha);
 	return true;
 }
 
@@ -181,13 +173,7 @@ bool CVKRenderPass::SetDepthStencilAttachment(int indexAttachment, GfxPixelForma
 		return false;
 	}
 
-	m_attachments[indexAttachment].format = format;
-	m_attachments[indexAttachment].samples = samples;
-	m_attachments[indexAttachment].bInvalidation = bInvalidation;
-	m_attachments[indexAttachment].bClear = bClear;
-	m_attachments[indexAttachment].clearValue.depth = depth;
-	m_attachments[indexAttachment].clearValue.stencil = stencil;
-
+	m_attachments[indexAttachment].Set(format, samples, bInvalidation, bClear, depth, stencil);
 	return true;
 }
 
@@ -205,7 +191,7 @@ bool CVKRenderPass::SetSubpassInputColorReference(int indexSubpass, int indexAtt
 		return false;
 	}
 
-	m_subpasses[indexSubpass].inputAttachments[indexAttachment] = indexAttachment;
+	m_subpasses[indexSubpass].SetInputAttachment(indexAttachment);
 	return true;
 }
 
@@ -223,7 +209,7 @@ bool CVKRenderPass::SetSubpassOutputColorReference(int indexSubpass, int indexAt
 		return false;
 	}
 
-	m_subpasses[indexSubpass].outputAttachments[indexAttachment] = indexAttachment;
+	m_subpasses[indexSubpass].SetOutputAttachment(indexAttachment);
 	return true;
 }
 
@@ -241,7 +227,7 @@ bool CVKRenderPass::SetSubpassOutputDepthStencilReference(int indexSubpass, int 
 		return false;
 	}
 
-	m_subpasses[indexSubpass].depthStencilAttachment = indexAttachment;
+	m_subpasses[indexSubpass].SetDepthStencilAttachment(indexAttachment);
 	return true;
 }
 
@@ -255,7 +241,7 @@ bool CVKRenderPass::SetSubpassResolveReference(int indexSubpass, int indexAttach
 		return false;
 	}
 
-	m_subpasses[indexSubpass].resolveAttachments[indexAttachment] = indexAttachment;
+	m_subpasses[indexSubpass].SetResolveAttachment(indexAttachment);
 	return true;
 }
 

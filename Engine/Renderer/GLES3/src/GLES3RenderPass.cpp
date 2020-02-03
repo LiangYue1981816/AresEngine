@@ -44,15 +44,7 @@ bool CGLES3RenderPass::SetColorAttachment(int indexAttachment, GfxPixelFormat fo
 		return false;
 	}
 
-	m_attachments[indexAttachment].format = format;
-	m_attachments[indexAttachment].samples = samples;
-	m_attachments[indexAttachment].bInvalidation = bInvalidation;
-	m_attachments[indexAttachment].bClear = bClear;
-	m_attachments[indexAttachment].clearValue.color[0] = red;
-	m_attachments[indexAttachment].clearValue.color[1] = green;
-	m_attachments[indexAttachment].clearValue.color[2] = blue;
-	m_attachments[indexAttachment].clearValue.color[3] = alpha;
-
+	m_attachments[indexAttachment].Set(format, samples, bInvalidation, bClear, red, green, blue, alpha);
 	return true;
 }
 
@@ -66,13 +58,7 @@ bool CGLES3RenderPass::SetDepthStencilAttachment(int indexAttachment, GfxPixelFo
 		return false;
 	}
 
-	m_attachments[indexAttachment].format = format;
-	m_attachments[indexAttachment].samples = samples;
-	m_attachments[indexAttachment].bInvalidation = bInvalidation;
-	m_attachments[indexAttachment].bClear = bClear;
-	m_attachments[indexAttachment].clearValue.depth = depth;
-	m_attachments[indexAttachment].clearValue.stencil = stencil;
-
+	m_attachments[indexAttachment].Set(format, samples, bInvalidation, bClear, depth, stencil);
 	return true;
 }
 
@@ -90,7 +76,7 @@ bool CGLES3RenderPass::SetSubpassInputColorReference(int indexSubpass, int index
 		return false;
 	}
 
-	m_subpasses[indexSubpass].inputAttachments[indexAttachment] = indexAttachment;
+	m_subpasses[indexSubpass].SetInputAttachment(indexAttachment);
 	return true;
 }
 
@@ -108,7 +94,7 @@ bool CGLES3RenderPass::SetSubpassOutputColorReference(int indexSubpass, int inde
 		return false;
 	}
 
-	m_subpasses[indexSubpass].outputAttachments[indexAttachment] = indexAttachment;
+	m_subpasses[indexSubpass].SetOutputAttachment(indexAttachment);
 	return true;
 }
 
@@ -126,7 +112,7 @@ bool CGLES3RenderPass::SetSubpassOutputDepthStencilReference(int indexSubpass, i
 		return false;
 	}
 
-	m_subpasses[indexSubpass].depthStencilAttachment = indexAttachment;
+	m_subpasses[indexSubpass].SetDepthStencilAttachment(indexAttachment);
 	return true;
 }
 
@@ -140,7 +126,7 @@ bool CGLES3RenderPass::SetSubpassResolveReference(int indexSubpass, int indexAtt
 		return false;
 	}
 
-	m_subpasses[indexSubpass].resolveAttachments[indexAttachment] = indexAttachment;
+	m_subpasses[indexSubpass].SetResolveAttachment(indexAttachment);
 	return true;
 }
 
