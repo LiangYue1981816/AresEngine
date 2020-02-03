@@ -107,7 +107,7 @@ void CComponentMesh::TaskUpdateCamera(CGfxCamera* pCamera, CRenderQueue* pRender
 	int indexFrame = 1 - Engine()->GetFrameCount() % 2;
 
 	if (ComputeLOD(bComputeLOD, pCamera->GetPosition())) {
-		if (m_LODMeshDraws[m_indexLOD].ptrMeshDraw->GetMask() & mask == 0) {
+		if ((m_LODMeshDraws[m_indexLOD].ptrMeshDraw->GetMask() & mask) == 0) {
 			return;
 		}
 
