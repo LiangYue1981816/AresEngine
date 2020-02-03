@@ -221,6 +221,10 @@ void CRenderQueue::CmdDraw(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrComman
 			}
 		}
 
+		if (m_materialMeshDrawQueue.empty()) {
+			return;
+		}
+
 		if (instances.empty()) {
 			return;
 		}
