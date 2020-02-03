@@ -27,7 +27,7 @@ CComponentMesh::CComponentMesh(const CComponentMesh& component)
 	m_indexInstance = RenderSystem()->AddInstance();
 
 	for (int index = 0; index < MAX_LOD_COUNT; index++) {
-		m_LODMeshDraws[index].factor = component.m_LODMeshDraws[index].factor;
+		m_LODMeshDraws[index].screenSizeFactor = component.m_LODMeshDraws[index].screenSizeFactor;
 		m_LODMeshDraws[index].ptrMaterial = component.m_LODMeshDraws[index].ptrMaterial;
 		m_LODMeshDraws[index].ptrMeshDraw = component.m_LODMeshDraws[index].ptrMeshDraw;
 	}
@@ -43,36 +43,28 @@ CComponentMesh::~CComponentMesh(void)
 
 void CComponentMesh::SetScreenFactor(int indexLOD, float factor)
 {
-	if (indexLOD >= 0 && indexLOD < MAX_LOD_COUNT) {
-		m_LODMeshDraws[indexLOD].factor = factor;
-	}
+	m_LODMeshDraws[indexLOD].screenSizeFactor = factor;
 }
 
 void CComponentMesh::SetMaterial(int indexLOD, const CGfxMaterialPtr ptrMaterial)
 {
-	if (indexLOD >= 0 && indexLOD < MAX_LOD_COUNT) {
-		m_LODMeshDraws[indexLOD].ptrMaterial = ptrMaterial;
-	}
+	m_LODMeshDraws[indexLOD].ptrMaterial = ptrMaterial;
 }
 
 void CComponentMesh::SetMeshDraw(int indexLOD, const CGfxMeshPtr ptrMesh, uint32_t nameDraw, uint32_t nameAlias)
 {
-	if (indexLOD >= 0 && indexLOD < MAX_LOD_COUNT) {
-		if (nameAlias == INVALID_HASHNAME) {
-			m_LODMeshDraws[indexLOD].ptrMeshDraw = GfxRenderer()->NewMeshDraw(HashValueFormat("%x_%x", ptrMesh->GetName(), nameDraw), ptrMesh, nameDraw);
-		}
-		else {
-			m_LODMeshDraws[indexLOD].ptrMeshDraw = GfxRenderer()->NewMeshDraw(HashValueFormat("%x_%x", ptrMesh->GetName(), nameAlias), ptrMesh, nameDraw);
-		}
+	if (nameAlias == INVALID_HASHNAME) {
+		m_LODMeshDraws[indexLOD].ptrMeshDraw = GfxRenderer()->NewMeshDraw(HashValueFormat("%x_%x", ptrMesh->GetName(), nameDraw), ptrMesh, nameDraw);
+	}
+	else {
+		m_LODMeshDraws[indexLOD].ptrMeshDraw = GfxRenderer()->NewMeshDraw(HashValueFormat("%x_%x", ptrMesh->GetName(), nameAlias), ptrMesh, nameDraw);
 	}
 }
 
 void CComponentMesh::SetMask(int indexLOD, uint32_t mask)
 {
-	if (indexLOD >= 0 && indexLOD < MAX_LOD_COUNT) {
-		if (m_LODMeshDraws[indexLOD].ptrMeshDraw) {
-			m_LODMeshDraws[indexLOD].ptrMeshDraw->SetMask(mask);
-		}
+	if (m_LODMeshDraws[indexLOD].ptrMeshDraw) {
+		m_LODMeshDraws[indexLOD].ptrMeshDraw->SetMask(mask);
 	}
 }
 
@@ -107,31 +99,29 @@ void CComponentMesh::TaskUpdateCamera(CGfxCamera* pCamera, CRenderQueue* pRender
 	int indexFrame = 1 - Engine()->GetFrameCount() % 2;
 
 	if (ComputeLOD(bComputeLOD, pCamera->GetPosition())) {
-		const LODMeshDraw& mesh = m_LODMeshDraws[m_indexLOD];
-
-		if (mesh.ptrMeshDraw->GetMask() & mask == 0) {
+		if (m_LODMeshDraws[m_indexLOD].ptrMeshDraw->GetMask() & mask == 0) {
 			return;
 		}
 
-		if (mesh.length2 > m_cullDistance * m_cullDistance) {
+		if (m_LODMeshDraws[m_indexLOD].length2 > m_cullDistance * m_cullDistance) {
 			return;
 		}
 
-		if (mesh.screenSize2 < m_cullScreenSize * m_cullScreenSize) {
+		if (m_LODMeshDraws[m_indexLOD].screenSize2 < m_cullScreenSize * m_cullScreenSize) {
 			return;
 		}
 
-		if (pCamera->IsVisible(mesh.aabb) == false) {
+		if (pCamera->IsVisible(m_LODMeshDraws[m_indexLOD].aabb) == false) {
 			return;
 		}
 
 		if (m_bNeedUpdateInstanceData[indexFrame]) {
 			m_bNeedUpdateInstanceData[indexFrame] = false;
-			m_instanceData[indexFrame].SetCenter(glm::vec4(mesh.aabb.center, 1.0f));
+			m_instanceData[indexFrame].SetCenter(glm::vec4(m_LODMeshDraws[m_indexLOD].aabb.center, 1.0f));
 			RenderSystem()->ModifyInstanceData(m_indexInstance, m_instanceData[indexFrame], indexThread);
 		}
 
-		pRenderQueue->Add(mesh.ptrMaterial, mesh.ptrMeshDraw, m_indexInstance, indexThread);
+		pRenderQueue->Add(m_LODMeshDraws[m_indexLOD].ptrMaterial, m_LODMeshDraws[m_indexLOD].ptrMeshDraw, m_indexInstance, indexThread);
 	}
 }
 
@@ -145,7 +135,7 @@ bool CComponentMesh::ComputeLOD(bool bComputeLOD, const glm::vec3& cameraPositio
 				m_LODMeshDraws[index].length2 = glm::length2(m_LODMeshDraws[index].aabb.center - cameraPosition);
 				m_LODMeshDraws[index].screenSize2 = glm::min(glm::length2(m_LODMeshDraws[index].aabb.size()) / glm::max(1.0f, m_LODMeshDraws[index].length2), 1.0f);
 
-				if (m_LODMeshDraws[index].factor >= m_LODMeshDraws[index].screenSize2) {
+				if (m_LODMeshDraws[index].screenSizeFactor >= m_LODMeshDraws[index].screenSize2) {
 					m_indexLOD = index;
 					return true;
 				}

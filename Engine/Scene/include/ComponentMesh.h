@@ -8,12 +8,12 @@ private:
 	typedef struct LODMeshDraw {
 		LODMeshDraw(void)
 		{
-			factor = 0.0f;
+			screenSizeFactor = 0.0f;
 			length2 = 0.0f;
 			screenSize2 = 0.0f;
 		}
 
-		float factor;
+		float screenSizeFactor;
 
 		glm::aabb aabb;
 		float length2;
