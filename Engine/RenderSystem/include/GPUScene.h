@@ -18,9 +18,13 @@ typedef struct InstanceData {
 		center = _center;
 	}
 
-	void SetLight(const glm::vec4& _lightColor, const glm::vec4& _lightAttenuation)
+	void SetLightColor(const glm::vec4& _lightColor)
 	{
 		lightColor = _lightColor;
+	}
+
+	void SetLightAttenuation(const glm::vec4& _lightAttenuation)
+	{
 		lightAttenuation = _lightAttenuation;
 	}
 
