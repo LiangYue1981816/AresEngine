@@ -36,8 +36,6 @@ private:
 	InstanceData m_instanceData[2];
 
 private:
-	float m_screenSizeFactor;
-
 	glm::aabb m_aabb;
 	float m_distance2;
 	float m_screenSize2;

@@ -23,6 +23,9 @@ CComponentPointLight::CComponentPointLight(const CComponentPointLight& component
 	, m_indexInstance(INVALID_VALUE)
 	, m_bNeedUpdateInstanceData{ false }
 
+	, m_distance2(0.0f)
+	, m_screenSize2(0.0f)
+
 	, m_cullDistance2(FLT_MAX)
 	, m_cullScreenSize2(0.0f)
 {
@@ -30,6 +33,9 @@ CComponentPointLight::CComponentPointLight(const CComponentPointLight& component
 
 	m_ptrMaterial = component.m_ptrMaterial;
 	m_ptrMeshDraw = component.m_ptrMeshDraw;
+
+	m_cullDistance2 = component.m_cullDistance2;
+	m_cullScreenSize2 = component.m_cullScreenSize2;
 
 	SetColor(component.m_color.r, component.m_color.g, component.m_color.b);
 	SetAttenuation(component.m_attenuation.x, component.m_attenuation.y, component.m_attenuation.z);
