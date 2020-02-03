@@ -3,16 +3,54 @@
 
 
 typedef struct PushConstantRange {
-	uint32_t offset = 0;
-	uint32_t range = 0;
+	PushConstantRange(void)
+	{
+		offset = 0;
+		range = 0;
+	}
+
+	void Set(uint32_t _offset, uint32_t _range)
+	{
+		offset = _offset;
+		range = _range;
+	}
+
+	uint32_t offset;
+	uint32_t range;
 } PushConstantRange;
 
 typedef struct DescriptorSetBinding {
-	uint32_t set = 0;
-	uint32_t binding = 0;
+	DescriptorSetBinding(void)
+	{
+		set = 0;
+		binding = 0;
+	}
+
+	void Set(uint32_t _set, uint32_t _binding)
+	{
+		set = _set;
+		binding = _binding;
+	}
+
+	uint32_t set;
+	uint32_t binding;
 } DescriptorSetBinding;
 
 typedef struct InputAttachmentBinding {
+	InputAttachmentBinding(void)
+	{
+		set = 0;
+		binding = 0;
+		indexInputAttachment = 0;
+	}
+
+	void Set(uint32_t _set, uint32_t _binding, uint32_t _indexInputAttachment)
+	{
+		set = _set;
+		binding = _binding;
+		indexInputAttachment = _indexInputAttachment;
+	}
+
 	uint32_t set = 0;
 	uint32_t binding = 0;
 	uint32_t indexInputAttachment = 0;

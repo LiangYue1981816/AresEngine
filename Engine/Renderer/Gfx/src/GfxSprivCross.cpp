@@ -44,37 +44,40 @@ const eastl::string& CGfxSprivCross::Create(const uint32_t* words, size_t numWor
 			for (int indexRange = 0; indexRange < ranges.size(); indexRange++) {
 				const std::string member = compiler.get_member_name(itPushConstant.base_type_id, ranges[indexRange].index);
 				const std::string name = itPushConstant.name + "." + member;
-				m_pushConstantRanges[name.c_str()].offset = ranges[indexRange].offset;
-				m_pushConstantRanges[name.c_str()].range = ranges[indexRange].range;
+				m_pushConstantRanges[name.c_str()].Set(ranges[indexRange].offset, ranges[indexRange].range);
 			}
 		}
 
 		for (const auto& itUniform : shaderResources.uniform_buffers) {
 			if (compiler.get_type(itUniform.base_type_id).basetype == spirv_cross::SPIRType::Struct) {
-				m_uniformBlockBindings[itUniform.name.c_str()].set = compiler.get_decoration(itUniform.id, spv::DecorationDescriptorSet);
-				m_uniformBlockBindings[itUniform.name.c_str()].binding = compiler.get_decoration(itUniform.id, spv::DecorationBinding);
+				m_uniformBlockBindings[itUniform.name.c_str()].Set(
+					compiler.get_decoration(itUniform.id, spv::DecorationDescriptorSet), 
+					compiler.get_decoration(itUniform.id, spv::DecorationBinding));
 			}
 		}
 
 		for (const auto& itStorage : shaderResources.storage_buffers) {
 			if (compiler.get_type(itStorage.base_type_id).basetype == spirv_cross::SPIRType::Struct) {
-				m_storageBlockBindings[itStorage.name.c_str()].set = compiler.get_decoration(itStorage.id, spv::DecorationDescriptorSet);
-				m_storageBlockBindings[itStorage.name.c_str()].binding = compiler.get_decoration(itStorage.id, spv::DecorationBinding);
+				m_storageBlockBindings[itStorage.name.c_str()].Set(
+					compiler.get_decoration(itStorage.id, spv::DecorationDescriptorSet), 
+					compiler.get_decoration(itStorage.id, spv::DecorationBinding));
 			}
 		}
 
 		for (const auto& itSampledImage : shaderResources.sampled_images) {
 			if (compiler.get_type(itSampledImage.base_type_id).basetype == spirv_cross::SPIRType::SampledImage) {
-				m_sampledImageBindings[itSampledImage.name.c_str()].set = compiler.get_decoration(itSampledImage.id, spv::DecorationDescriptorSet);
-				m_sampledImageBindings[itSampledImage.name.c_str()].binding = compiler.get_decoration(itSampledImage.id, spv::DecorationBinding);
+				m_sampledImageBindings[itSampledImage.name.c_str()].Set(
+					compiler.get_decoration(itSampledImage.id, spv::DecorationDescriptorSet), 
+					compiler.get_decoration(itSampledImage.id, spv::DecorationBinding));
 			}
 		}
 
 		for (const auto& itSubpassInput : shaderResources.subpass_inputs) {
 			if (compiler.get_type(itSubpassInput.base_type_id).basetype == spirv_cross::SPIRType::Image) {
-				m_inputAttachmentBindings[itSubpassInput.name.c_str()].set = compiler.get_decoration(itSubpassInput.id, spv::DecorationDescriptorSet);
-				m_inputAttachmentBindings[itSubpassInput.name.c_str()].binding = compiler.get_decoration(itSubpassInput.id, spv::DecorationBinding);
-				m_inputAttachmentBindings[itSubpassInput.name.c_str()].indexInputAttachment = compiler.get_decoration(itSubpassInput.id, spv::DecorationInputAttachmentIndex);
+				m_inputAttachmentBindings[itSubpassInput.name.c_str()].Set(
+					compiler.get_decoration(itSubpassInput.id, spv::DecorationDescriptorSet), 
+					compiler.get_decoration(itSubpassInput.id, spv::DecorationBinding), 
+					compiler.get_decoration(itSubpassInput.id, spv::DecorationInputAttachmentIndex));
 			}
 		}
 	}
