@@ -6,9 +6,6 @@ CComponentPointLight::CComponentPointLight(uint32_t name)
 	, m_indexInstance(INVALID_VALUE)
 	, m_bNeedUpdateInstanceData{ false }
 
-	, m_distance2(0.0f)
-	, m_screenSize2(0.0f)
-
 	, m_cullDistance2(FLT_MAX)
 	, m_cullScreenSize2(0.0f)
 {
@@ -22,9 +19,6 @@ CComponentPointLight::CComponentPointLight(const CComponentPointLight& component
 	: CComponent(component)
 	, m_indexInstance(INVALID_VALUE)
 	, m_bNeedUpdateInstanceData{ false }
-
-	, m_distance2(0.0f)
-	, m_screenSize2(0.0f)
 
 	, m_cullDistance2(FLT_MAX)
 	, m_cullScreenSize2(0.0f)
@@ -66,15 +60,23 @@ void CComponentPointLight::SetMask(uint32_t mask)
 void CComponentPointLight::SetColor(float red, float green, float blue)
 {
 	m_color = glm::vec4(red, green, blue, 0.0f);
+
 	m_instanceData[0].SetLightColor(m_color);
 	m_instanceData[1].SetLightColor(m_color);
+
+	m_bNeedUpdateInstanceData[0] = true;
+	m_bNeedUpdateInstanceData[1] = true;
 }
 
 void CComponentPointLight::SetAttenuation(float linear, float square, float constant)
 {
 	m_attenuation = glm::vec4(linear, square, constant, 0.0f);
+
 	m_instanceData[0].SetLightAttenuation(m_attenuation);
 	m_instanceData[1].SetLightAttenuation(m_attenuation);
+
+	m_bNeedUpdateInstanceData[0] = true;
+	m_bNeedUpdateInstanceData[1] = true;
 }
 
 void CComponentPointLight::SetCullDistance(float distance)
@@ -95,6 +97,7 @@ void CComponentPointLight::TaskUpdate(float gameTime, float deltaTime)
 		if (m_instanceData[indexFrame].transformMatrix != m_pParentNode->GetWorldTransform()) {
 			m_instanceData[indexFrame].SetTransform(m_pParentNode->GetWorldTransform());
 			m_bNeedUpdateInstanceData[indexFrame] = true;
+
 			m_aabb = m_ptrMeshDraw->GetAABB() * m_instanceData[indexFrame].transformMatrix;
 		}
 	}
