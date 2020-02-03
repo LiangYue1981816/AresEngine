@@ -165,9 +165,9 @@ void CRenderQueue::End(void)
 {
 	m_materialMeshDrawQueue.clear();
 	{
-		auto& materialQueue = m_materialMeshDrawQueue;
-		{
-			for (int indexThread = 0; indexThread < MAX_THREAD_COUNT; indexThread++) {
+		for (int indexThread = 0; indexThread < MAX_THREAD_COUNT; indexThread++) {
+			auto& materialQueue = m_materialMeshDrawQueue;
+			{
 				for (const auto& itMaterialQueueThread : m_materialMeshDrawQueueThreads[indexThread]) {
 					auto& meshQueue = materialQueue[itMaterialQueueThread.first];
 					{
@@ -184,9 +184,9 @@ void CRenderQueue::End(void)
 						}
 					}
 				}
-
-				m_materialMeshDrawQueueThreads[indexThread].clear();
 			}
+
+			m_materialMeshDrawQueueThreads[indexThread].clear();
 		}
 	}
 }
@@ -199,7 +199,6 @@ void CRenderQueue::CmdDraw(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrComman
 
 	if (m_pCamera) {
 		eastl::vector<CTaskSort> sortTasks;
-		sortTasks.reserve(m_materialMeshDrawQueue.size());
 		{
 			CTaskSort::order = bIsTransparency ? SortOrder::BackToFront : SortOrder::FrontToBack;
 			CTaskSort::cameraPosition = m_pCamera->GetPosition();
@@ -274,7 +273,6 @@ void CRenderQueue::CmdDraw(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrComman
 	}
 
 	eastl::vector<CTaskCommandBuffer> cmdTasks;
-	cmdTasks.reserve(m_pipelineMaterialQueue.size());
 	{
 		for (auto& itPipelineQueue : m_pipelineMaterialQueue) {
 			CGfxDescriptorSetPtr ptrDescriptorSetInputAttachment = GfxRenderer()->NewDescriptorSet(itPipelineQueue.first, ptrCommandBuffer->GetFrameBuffer(), ptrCommandBuffer->GetRenderPass(), ptrCommandBuffer->GetSubpassIndex());
