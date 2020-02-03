@@ -273,98 +273,6 @@ void CRenderQueue::CmdDraw(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrComman
 		}
 	}
 
-	/*
-	m_materialMeshDrawQueue.clear();
-	{
-		int offset = 0;
-		eastl::vector<int> instances;
-
-		auto& materialQueue = m_materialMeshDrawQueue;
-		{
-			for (int indexThread = 0; indexThread < MAX_THREAD_COUNT; indexThread++) {
-				for (const auto& itMaterialQueueThread : m_materialMeshDrawQueueThreads[indexThread]) {
-					auto& meshQueue = materialQueue[itMaterialQueueThread.first];
-					{
-						for (const auto& itMeshQueueThread : itMaterialQueueThread.second) {
-							auto& drawQueue = meshQueue[itMeshQueueThread.first];
-							{
-								for (const auto& itDrawQueueThread : itMeshQueueThread.second) {
-									drawQueue[itDrawQueueThread.first].Set(offset, itDrawQueueThread.second.size());
-									offset += itDrawQueueThread.second.size();
-									instances.insert(instances.end(), itDrawQueueThread.second.begin(), itDrawQueueThread.second.end());
-								}
-							}
-						}
-					}
-				}
-
-				m_materialMeshDrawQueueThreads[indexThread].clear();
-			}
-		}
-
-		if (m_materialMeshDrawQueue.empty()) {
-			return;
-		}
-
-		if (instances.empty()) {
-			return;
-		}
-
-		m_ptrInstanceBuffer = RenderSystem()->GetInstanceBuffer(INSTANCE_FORMAT, INSTANCE_BINDING);
-		m_ptrInstanceBuffer->GetBuffer(GfxRenderer()->GetSwapChain()->GetFrameIndex())->BufferData(instances.size() * sizeof(int), (const uint8_t*)instances.data());
-	}
-
-
-
-	/*
-	m_instanceBufferQueue.clear();
-	m_pipelineMaterialQueue.clear();
-	{
-		for (const auto& itMaterialQueue : m_materialMeshDrawQueue) {
-			if (CGfxMaterialPass* pPass = (CGfxMaterialPass*)itMaterialQueue.first->GetPass(matPassName)) {
-				if (CGfxPipelineGraphics* pPipeline = (CGfxPipelineGraphics*)pPass->GetPipeline()) {
-					if (pPipeline->IsTransparency() == bIsTransparency) {
-						for (const auto& itMeshQueue : itMaterialQueue.second) {
-							for (const auto& itMeshDrawQueue : itMeshQueue.second) {
-								m_instanceBufferQueue[pPipeline][itMeshDrawQueue.first] = RenderSystem()->GetInstanceBuffer(INSTANCE_FORMAT, INSTANCE_BINDING);
-							}
-						}
-
-						m_pipelineMaterialQueue[pPipeline].emplace(itMaterialQueue.first);
-					}
-				}
-			}
-		}
-
-		if (m_instanceBufferQueue.empty()) {
-			return;
-		}
-
-		if (m_pipelineMaterialQueue.empty()) {
-			return;
-		}
-	}
-
-	if (m_pCamera) {
-		eastl::vector<CTaskSort> sortTasks;
-		sortTasks.reserve(m_materialMeshDrawQueue.size());
-		{
-			CTaskSort::order = bIsTransparency ? SortOrder::BackToFront : SortOrder::FrontToBack;
-			CTaskSort::cameraPosition = m_pCamera->GetPosition();
-
-			for (auto& itMaterialQueue : m_materialMeshDrawQueue) {
-				sortTasks.emplace_back(itMaterialQueue.second);
-			}
-
-			for (int indexTask = 0; indexTask < sortTasks.size(); indexTask++) {
-				taskGraph.Task(&sortTasks[indexTask], this, nullptr);
-			}
-
-			taskGraph.Dispatch();
-			taskGraph.Wait();
-		}
-	}
-
 	eastl::vector<CTaskCommandBuffer> cmdTasks;
 	cmdTasks.reserve(m_pipelineMaterialQueue.size());
 	{
@@ -384,7 +292,6 @@ void CRenderQueue::CmdDraw(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrComman
 			ptrCommandBuffer->CmdExecute(cmdTasks[indexTask].GetCommandBuffer());
 		}
 	}
-	*/
 }
 
 void CRenderQueue::CmdDrawThread(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass, const int indexSubpass, const CGfxDescriptorSetPtr ptrDescriptorSetPass, const CGfxDescriptorSetPtr ptrDescriptorSetInputAttachment, const CGfxPipelineGraphics* pPipeline, const uint32_t matPassName, const glm::vec4& scissor, const glm::vec4& viewport, uint32_t mask)
