@@ -152,6 +152,7 @@ void CRenderQueue::Begin(CGfxCamera* pCamera)
 	m_pCamera = pCamera;
 	m_pipelineMaterialQueue.clear();
 	m_materialMeshDrawQueue.clear();
+	m_materialMeshDrawInstanceRangeQueue.clear();
 }
 
 void CRenderQueue::Add(const CGfxMaterialPtr ptrMaterial, const CGfxMeshDrawPtr ptrMeshDraw, int indexInstance, int indexThread)
@@ -294,7 +295,6 @@ void CRenderQueue::CmdDraw(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrComman
 
 void CRenderQueue::CmdDrawThread(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass, const int indexSubpass, const CGfxDescriptorSetPtr ptrDescriptorSetPass, const CGfxDescriptorSetPtr ptrDescriptorSetInputAttachment, const CGfxPipelineGraphics* pPipeline, const uint32_t matPassName, const glm::vec4& scissor, const glm::vec4& viewport, uint32_t mask)
 {
-	/*
 	GfxRenderer()->BeginRecord(ptrCommandBuffer, ptrFrameBuffer, ptrRenderPass, indexSubpass);
 	{
 		GfxRenderer()->CmdSetScissor(ptrCommandBuffer, (int)scissor.x, (int)scissor.y, (int)scissor.z, (int)scissor.w);
@@ -308,7 +308,7 @@ void CRenderQueue::CmdDrawThread(CGfxCommandBufferPtr ptrCommandBuffer, const CG
 				for (const auto& itMaterialQueue : m_pipelineMaterialQueue[pPipeline]) {
 					GfxRenderer()->CmdBindDescriptorSet(ptrCommandBuffer, itMaterialQueue->GetPass(matPassName)->GetDescriptorSet());
 					{
-						for (const auto& itMeshQueue : m_materialMeshDrawQueue[itMaterialQueue]) {
+						for (const auto& itMeshQueue : m_materialMeshDrawInstanceRangeQueue[itMaterialQueue]) {
 							GfxRenderer()->CmdBindIndexBuffer(ptrCommandBuffer, itMeshQueue.first->GetIndexBufferPtr());
 							GfxRenderer()->CmdBindVertexBuffer(ptrCommandBuffer, itMeshQueue.first->GetVertexBufferPtr());
 							{
@@ -318,10 +318,8 @@ void CRenderQueue::CmdDrawThread(CGfxCommandBufferPtr ptrCommandBuffer, const CG
 
 										GfxRenderer()->CmdBindDescriptorSet(ptrCommandBuffer, GfxRenderer()->GetDescriptorSet(itDrawQueue.first->GetName()));
 										{
-											CGfxInstanceBufferPtr ptrInstanceBuffer = m_instanceBufferQueue[pPipeline][itDrawQueue.first]->GetBuffer(GfxRenderer()->GetSwapChain()->GetFrameIndex());
-											GfxRenderer()->CmdSetInstanceBuffer(ptrCommandBuffer, ptrInstanceBuffer, (const uint8_t*)itDrawQueue.second.data(), itDrawQueue.second.size() * sizeof(int));
-											GfxRenderer()->CmdBindInstanceBuffer(ptrCommandBuffer, ptrInstanceBuffer, 0);
-											GfxRenderer()->CmdDrawInstance(ptrCommandBuffer, itDrawQueue.first->GetIndexType(), itDrawQueue.first->GetIndexOffset(), itDrawQueue.first->GetIndexCount(), itDrawQueue.second.size());
+											GfxRenderer()->CmdBindInstanceBuffer(ptrCommandBuffer, m_ptrInstanceBuffer->GetBuffer(GfxRenderer()->GetSwapChain()->GetFrameIndex()), itDrawQueue.second.offset * sizeof(int));
+											GfxRenderer()->CmdDrawInstance(ptrCommandBuffer, itDrawQueue.first->GetIndexType(), itDrawQueue.first->GetIndexOffset(), itDrawQueue.first->GetIndexCount(), itDrawQueue.second.count);
 										}
 									}
 								}
@@ -333,5 +331,4 @@ void CRenderQueue::CmdDrawThread(CGfxCommandBufferPtr ptrCommandBuffer, const CG
 		}
 	}
 	GfxRenderer()->EndRecord(ptrCommandBuffer);
-	*/
 }
