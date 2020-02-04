@@ -257,7 +257,7 @@ void CRenderQueue::CmdDraw(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrComman
 
 	m_pipelineMaterialQueue.clear();
 	{
-		for (const auto& itMaterialQueue : m_materialMeshDrawInstanceRangeQueue) {
+		for (const auto& itMaterialQueue : m_materialMeshDrawQueue) {
 			if (CGfxMaterialPass* pPass = (CGfxMaterialPass*)itMaterialQueue.first->GetPass(matPassName)) {
 				if (CGfxPipelineGraphics* pPipeline = (CGfxPipelineGraphics*)pPass->GetPipeline()) {
 					if (pPipeline->IsTransparency() == bIsTransparency) {
