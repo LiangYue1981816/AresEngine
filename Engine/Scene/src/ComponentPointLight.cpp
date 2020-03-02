@@ -13,6 +13,7 @@ CComponentPointLight::CComponentPointLight(uint32_t name)
 
 	SetMaterial(GfxRenderer()->NewMaterial("PointLight.material", VERTEX_BINDING, INSTANCE_BINDING));
 	SetMeshDraw(GfxRenderer()->NewMesh("PointLight.mesh", VERTEX_BINDING));
+	SetMask(0xffffffff);
 }
 
 CComponentPointLight::CComponentPointLight(const CComponentPointLight& component)
@@ -93,11 +94,11 @@ void CComponentPointLight::TaskUpdate(float gameTime, float deltaTime)
 {
 	int indexFrame = Engine()->GetFrameCount() % 2;
 
-	if (m_ptrMeshDraw && m_ptrMaterial) {
-		if (m_instanceData[indexFrame].transformMatrix != m_pParentNode->GetWorldTransform()) {
-			m_instanceData[indexFrame].SetTransform(m_pParentNode->GetWorldTransform());
-			m_bNeedUpdateInstanceData[indexFrame] = true;
+	if (m_instanceData[indexFrame].transformMatrix != m_pParentNode->GetWorldTransform()) {
+		m_instanceData[indexFrame].SetTransform(m_pParentNode->GetWorldTransform());
+		m_bNeedUpdateInstanceData[indexFrame] = true;
 
+		if (m_ptrMeshDraw && m_ptrMaterial) {
 			m_aabb = m_ptrMeshDraw->GetAABB() * m_instanceData[indexFrame].transformMatrix;
 		}
 	}

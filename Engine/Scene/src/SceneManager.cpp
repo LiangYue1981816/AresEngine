@@ -125,10 +125,12 @@ void CSceneManager::UpdateLogic(CTaskGraph& taskGraph, float totalTime, float de
 		taskUpdateLogicMeshs[indexThread].SetParams(&m_meshManager, taskGraph.GetNumThreads(), indexThread, totalTime, deltaTime);
 		taskUpdateLogicSkins[indexThread].SetParams(&m_skinManager, taskGraph.GetNumThreads(), indexThread, totalTime, deltaTime);
 		taskUpdateLogicParticles[indexThread].SetParams(&m_particleManager, taskGraph.GetNumThreads(), indexThread, totalTime, deltaTime);
+		taskUpdateLogicPointLights[indexThread].SetParams(&m_pointLightManager, taskGraph.GetNumThreads(), indexThread, totalTime, deltaTime);
 
 		taskGraph.Task(&taskUpdateLogicMeshs[indexThread], nullptr, nullptr, nullptr);
 		taskGraph.Task(&taskUpdateLogicSkins[indexThread], nullptr, nullptr, nullptr);
 		taskGraph.Task(&taskUpdateLogicParticles[indexThread], nullptr, nullptr, nullptr);
+		taskGraph.Task(&taskUpdateLogicPointLights[indexThread], nullptr, nullptr, nullptr);
 	}
 
 	taskGraph.Dispatch();
