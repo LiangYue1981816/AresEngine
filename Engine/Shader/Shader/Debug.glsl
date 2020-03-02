@@ -9,6 +9,9 @@ USE_CAMERA_UNIFORM;
 USE_ENGINE_UNIFORM;
 USE_SCENE_DATA_STORAGE;
 
+// Output
+// ...
+
 // Descriptor
 // ...
 
@@ -28,6 +31,9 @@ precision mediump float;
 
 USE_CAMERA_UNIFORM;
 USE_ENGINE_UNIFORM;
+
+// Input
+// ...
 
 // Output
 layout (location = 0) out mediump vec4 outFragColor;

@@ -8,6 +8,9 @@ precision mediump float;
 USE_SCENE_DATA_STORAGE;
 USE_TRANSFER_SCENE_DATA_STORAGE;
 
+// Output
+// ...
+
 // Descriptor
 layout(push_constant) uniform PushConstantParam {
 	int numTransfer;

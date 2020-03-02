@@ -36,6 +36,9 @@ USE_ENGINE_UNIFORM;
 // Input
 layout (location = 0) in mediump vec2 inTexcoord;
 
+// Output
+// ...
+
 // Descriptor
 DESCRIPTOR_SET_MATPASS(8) mediump uniform sampler2D texAlbedo;
 
