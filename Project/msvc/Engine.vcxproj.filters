@@ -2393,6 +2393,15 @@
     <ClCompile Include="..\..\Engine\RenderSystem\src\InstanceBufferPool.cpp">
       <Filter>Engine\RenderSystem\Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Engine\RenderSystem\src\RenderDefault.cpp">
+      <Filter>Engine\RenderSystem\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\RenderSystem\src\RenderDeferredLighting.cpp">
+      <Filter>Engine\RenderSystem\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\RenderSystem\src\RenderForwardLighting.cpp">
+      <Filter>Engine\RenderSystem\Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\..\Engine\ThirdParty\rttr\CMakeLists.txt">

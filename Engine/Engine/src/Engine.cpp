@@ -162,6 +162,18 @@ void CEngine::RenderForwardLighting(CCamera* pCamera, bool bPresent)
 	m_pRenderSystem->RenderForwardLighting(m_taskGraphRender, pCamera, bPresent);
 }
 
+void CEngine::RenderDeferredLighting(CCamera* pCamera, bool bPresent)
+{
+	m_pRenderSystem->UpdateCamera(m_taskGraphRender, pCamera, 0xffffffff, true);
+	m_pRenderSystem->RenderDeferredLighting(m_taskGraphRender, pCamera, bPresent);
+}
+
+void CEngine::RenderTileBaseDeferredLighting(CCamera* pCamera, bool bPresent)
+{
+	m_pRenderSystem->UpdateCamera(m_taskGraphRender, pCamera, 0xffffffff, true);
+	m_pRenderSystem->RenderTileBaseDeferredLighting(m_taskGraphRender, pCamera, bPresent);
+}
+
 void CEngine::UpdateThread(void)
 {
 	m_pSceneManager->UpdateLogic(m_taskGraphUpdate, m_totalTime, m_deltaTime);

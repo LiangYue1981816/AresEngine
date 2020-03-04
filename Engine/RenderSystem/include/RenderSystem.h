@@ -187,11 +187,18 @@ private:
 	void UpdateCamera(CTaskGraph& taskGraph, CCamera* pCamera, uint32_t mask, bool bComputeLOD);
 	void UpdateGPUScene(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer);
 
+private:
 	void RenderDefault(CTaskGraph& taskGraph, CCamera* pCamera, bool bPresent);
 	void RenderDefault(CTaskGraph& taskGraph, CCamera* pCamera, bool bPresent, CGfxCommandBufferPtr ptrCommandBuffer);
 
 	void RenderForwardLighting(CTaskGraph& taskGraph, CCamera* pCamera, bool bPresent);
 	void RenderForwardLighting(CTaskGraph& taskGraph, CCamera* pCamera, bool bPresent, CGfxCommandBufferPtr ptrCommandBuffer);
+
+	void RenderDeferredLighting(CTaskGraph& taskGraph, CCamera* pCamera, bool bPresent);
+	void RenderDeferredLighting(CTaskGraph& taskGraph, CCamera* pCamera, bool bPresent, CGfxCommandBufferPtr ptrCommandBuffer);
+
+	void RenderTileBaseDeferredLighting(CTaskGraph& taskGraph, CCamera* pCamera, bool bPresent);
+	void RenderTileBaseDeferredLighting(CTaskGraph& taskGraph, CCamera* pCamera, bool bPresent, CGfxCommandBufferPtr ptrCommandBuffer);
 
 
 private:
