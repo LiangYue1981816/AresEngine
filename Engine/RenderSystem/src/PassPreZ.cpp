@@ -2,6 +2,8 @@
 #include "RenderHeader.h"
 
 
+static const int indexAttachmentDepthStencil = 0;
+
 static const int numSubpasses = 1;
 static const int numAttachments = 1;
 static CGfxRenderPassPtr ptrRenderPass;
@@ -13,8 +15,8 @@ void CPassPreZ::Create(GfxPixelFormat depthPixelFormat)
 	const float color[] = { 0.1f, 0.1f, 0.1f, 0.0f };
 
 	ptrRenderPass = GfxRenderer()->NewRenderPass(PASS_PREZ_NAME, numAttachments, numSubpasses);
-	ptrRenderPass->SetDepthStencilAttachment(0, depthPixelFormat, 1, false, true, depth, stencil);
-	ptrRenderPass->SetSubpassOutputDepthStencilReference(0, 0);
+	ptrRenderPass->SetDepthStencilAttachment(indexAttachmentDepthStencil, depthPixelFormat, 1, false, true, depth, stencil);
+	ptrRenderPass->SetSubpassOutputDepthStencilReference(0, indexAttachmentDepthStencil);
 	ptrRenderPass->Create();
 }
 
@@ -56,7 +58,7 @@ void CPassPreZ::SetOutputTexture(CGfxRenderTexturePtr ptrDepthTexture)
 	if (m_ptrOutputDepthTexture != ptrDepthTexture) {
 		m_ptrOutputDepthTexture = ptrDepthTexture;
 		m_ptrFrameBuffer = GfxRenderer()->NewFrameBuffer(ptrDepthTexture->GetWidth(), ptrDepthTexture->GetHeight(), numAttachments);
-		m_ptrFrameBuffer->SetAttachmentTexture(0, ptrDepthTexture);
+		m_ptrFrameBuffer->SetAttachmentTexture(indexAttachmentDepthStencil, ptrDepthTexture);
 		m_ptrFrameBuffer->Create(ptrRenderPass);
 	}
 }

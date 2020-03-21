@@ -2,6 +2,9 @@
 #include "RenderHeader.h"
 
 
+static const int indexAttachmentColor = 0;
+static const int indexAttachmentDepthStencil = 1;
+
 static const int numSubpasses = 1;
 static const int numAttachments = 2;
 static CGfxRenderPassPtr ptrRenderPass;
@@ -13,10 +16,10 @@ void CPassForwardLighting::Create(GfxPixelFormat colorPixelFormat, GfxPixelForma
 	const float color[] = { 0.1f, 0.1f, 0.1f, 0.0f };
 
 	ptrRenderPass = GfxRenderer()->NewRenderPass(PASS_FORWARD_LIGHTING_NAME, numAttachments, numSubpasses);
-	ptrRenderPass->SetColorAttachment(0, colorPixelFormat, 1, false, true, color[0], color[1], color[2], color[3]);
-	ptrRenderPass->SetDepthStencilAttachment(1, depthPixelFormat, 1, false, false, depth, stencil);
-	ptrRenderPass->SetSubpassOutputColorReference(0, 0);
-	ptrRenderPass->SetSubpassOutputDepthStencilReference(0, 1);
+	ptrRenderPass->SetColorAttachment(indexAttachmentColor, colorPixelFormat, 1, false, true, color[0], color[1], color[2], color[3]);
+	ptrRenderPass->SetDepthStencilAttachment(indexAttachmentDepthStencil, depthPixelFormat, 1, false, false, depth, stencil);
+	ptrRenderPass->SetSubpassOutputColorReference(0, indexAttachmentColor);
+	ptrRenderPass->SetSubpassOutputDepthStencilReference(0, indexAttachmentDepthStencil);
 	ptrRenderPass->Create();
 }
 
@@ -77,8 +80,8 @@ void CPassForwardLighting::SetOutputTexture(CGfxRenderTexturePtr ptrColorTexture
 		m_ptrOutputColorTexture = ptrColorTexture;
 		m_ptrOutputDepthStencilTexture = ptrDepthStencilTexture;
 		m_ptrFrameBuffer = GfxRenderer()->NewFrameBuffer(ptrColorTexture->GetWidth(), ptrColorTexture->GetHeight(), numAttachments);
-		m_ptrFrameBuffer->SetAttachmentTexture(0, ptrColorTexture);
-		m_ptrFrameBuffer->SetAttachmentTexture(1, ptrDepthStencilTexture);
+		m_ptrFrameBuffer->SetAttachmentTexture(indexAttachmentColor, ptrColorTexture);
+		m_ptrFrameBuffer->SetAttachmentTexture(indexAttachmentDepthStencil, ptrDepthStencilTexture);
 		m_ptrFrameBuffer->Create(ptrRenderPass);
 	}
 }

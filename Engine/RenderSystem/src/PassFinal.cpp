@@ -2,6 +2,8 @@
 #include "RenderHeader.h"
 
 
+static const int indexAttachmentColor = 0;
+
 static const int numSubpasses = 1;
 static const int numAttachments = 1;
 static CGfxRenderPassPtr ptrRenderPass;
@@ -11,8 +13,8 @@ void CPassFinal::Create(GfxPixelFormat colorPixelFormat)
 	const float color[] = { 0.0f, 0.0f, 0.0f, 0.0f };
 
 	ptrRenderPass = GfxRenderer()->NewRenderPass(PASS_FINAL_NAME, numAttachments, numSubpasses);
-	ptrRenderPass->SetColorAttachment(0, colorPixelFormat, 1, false, true, color[0], color[1], color[2], color[3]);
-	ptrRenderPass->SetSubpassOutputColorReference(0, 0);
+	ptrRenderPass->SetColorAttachment(indexAttachmentColor, colorPixelFormat, 1, false, true, color[0], color[1], color[2], color[3]);
+	ptrRenderPass->SetSubpassOutputColorReference(0, indexAttachmentColor);
 	ptrRenderPass->Create();
 }
 
@@ -63,7 +65,7 @@ void CPassFinal::SetOutputTexture(int indexFrame, CGfxRenderTexturePtr ptrColorT
 	if (m_ptrOutputColorTexture[indexFrame] != ptrColorTexture) {
 		m_ptrOutputColorTexture[indexFrame] = ptrColorTexture;
 		m_ptrFrameBuffer[indexFrame] = GfxRenderer()->NewFrameBuffer(ptrColorTexture->GetWidth(), ptrColorTexture->GetHeight(), numAttachments);
-		m_ptrFrameBuffer[indexFrame]->SetAttachmentTexture(0, ptrColorTexture);
+		m_ptrFrameBuffer[indexFrame]->SetAttachmentTexture(indexAttachmentColor, ptrColorTexture);
 		m_ptrFrameBuffer[indexFrame]->Create(ptrRenderPass);
 	}
 }
