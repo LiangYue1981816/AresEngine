@@ -143,12 +143,6 @@ layout (location = 8)                                      in mediump int inInst
 #define USE_COLOR_TEXTURE_UNIFORM                                                  \
 	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_COLOR_TEXTURE) mediump uniform sampler2D texColor
 
-#define USE_ALBEDO_AO_TEXTURE_UNIFORM                                              \
-	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_ALBEDO_AO_TEXTURE) mediump uniform sampler2D texAlbedoAO
-
-#define USE_NORMAL_ROUGHNESS_METALLIC_TEXTURE_UNIFORM                              \
-	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_NORMAL_ROUGHNESS_METALLIC_TEXTURE) mediump uniform sampler2D texNormalRoughnessMetallic
-
 #define USE_SHADOW_TEXTURE_UNIFORM                                                 \
 	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_SHADOW_TEXTURE) highp uniform sampler2D texShadow
 

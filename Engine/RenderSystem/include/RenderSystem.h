@@ -49,13 +49,9 @@
 // Uniform Forward/Deferred
 #define UNIFORM_DEPTH_TEXTURE_BIND                         2
 #define UNIFORM_COLOR_TEXTURE_BIND                         2
-#define UNIFORM_ALBEDO_AO_TEXTURE_BIND                     3
-#define UNIFORM_NORMAL_ROUGHNESS_METALLIC_TEXTURE_BIND     4
 
 #define UNIFORM_DEPTH_TEXTURE_NAME                         HashValue("texDepth")
 #define UNIFORM_COLOR_TEXTURE_NAME                         HashValue("texColor")
-#define UNIFORM_ALBEDO_AO_TEXTURE_NAME                     HashValue("texAlbedoAO")
-#define UNIFORM_NORMAL_ROUGHNESS_METALLIC_TEXTURE_NAME     HashValue("texNormalRoughnessMetallic")
 
 // Uniform PostProcessing
 #define UNIFORM_SHADOW_TEXTURE_BIND                        5

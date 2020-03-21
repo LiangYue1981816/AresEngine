@@ -2,21 +2,63 @@
 #include "RenderHeader.h"
 
 
+static const int indexAttachmentColor = 0;
+static const int indexAttachmentGBufferA = 1;
+static const int indexAttachmentGBufferB = 2;
+static const int indexAttachmentGBufferC = 3;
+static const int indexAttachmentDepthStencil = 4;
+
+static const int numSubpasses = 2;
+static const int numAttachments = 5;
+static CGfxRenderPassPtr ptrRenderPass;
+
+
 void CPassDeferredLighting::Create(GfxPixelFormat colorPixelFormat, GfxPixelFormat depthPixelFormat)
 {
+	const int stencil = 0;
+	const float depth = 1.0f;
+	const float color[] = { 0.1f, 0.1f, 0.1f, 0.0f };
 
+	ptrRenderPass = GfxRenderer()->NewRenderPass(PASS_DEFERRED_LIGHTING_NAME, numAttachments, numSubpasses);
+	{
+		ptrRenderPass->SetColorAttachment(indexAttachmentColor, colorPixelFormat, 1, false, true, color[0], color[1], color[2], color[3]);
+		ptrRenderPass->SetColorAttachment(indexAttachmentGBufferA, colorPixelFormat, 1, false, true, color[0], color[1], color[2], color[3]);
+		ptrRenderPass->SetColorAttachment(indexAttachmentGBufferB, colorPixelFormat, 1, false, true, color[0], color[1], color[2], color[3]);
+		ptrRenderPass->SetColorAttachment(indexAttachmentGBufferC, colorPixelFormat, 1, false, true, color[0], color[1], color[2], color[3]);
+		ptrRenderPass->SetDepthStencilAttachment(indexAttachmentDepthStencil, depthPixelFormat, 1, false, false, depth, stencil);
+
+		ptrRenderPass->SetSubpassOutputColorReference(0, indexAttachmentGBufferA);
+		ptrRenderPass->SetSubpassOutputColorReference(0, indexAttachmentGBufferB);
+		ptrRenderPass->SetSubpassOutputColorReference(0, indexAttachmentGBufferC);
+		ptrRenderPass->SetSubpassOutputDepthStencilReference(0, indexAttachmentDepthStencil);
+
+		ptrRenderPass->SetSubpassInputColorReference(1, indexAttachmentGBufferA);
+		ptrRenderPass->SetSubpassInputColorReference(1, indexAttachmentGBufferB);
+		ptrRenderPass->SetSubpassInputColorReference(1, indexAttachmentGBufferC);
+		ptrRenderPass->SetSubpassInputColorReference(1, indexAttachmentDepthStencil);
+		ptrRenderPass->SetSubpassOutputColorReference(1, indexAttachmentColor);
+	}
+	ptrRenderPass->Create();
 }
 
 void CPassDeferredLighting::Destroy(void)
 {
-
+	ptrRenderPass.Release();
 }
 
 
 CPassDeferredLighting::CPassDeferredLighting(CRenderSystem* pRenderSystem)
 	: CPassBase(pRenderSystem)
 {
+	CGfxDescriptorLayoutPtr ptrDescriptorLayout = GfxRenderer()->NewDescriptorLayout(DESCRIPTOR_SET_PASS);
+	ptrDescriptorLayout->SetUniformBlockBinding(UNIFORM_ENGINE_NAME, UNIFORM_ENGINE_BIND);
+	ptrDescriptorLayout->SetUniformBlockBinding(UNIFORM_CAMERA_NAME, UNIFORM_CAMERA_BIND);
+	ptrDescriptorLayout->SetStorageBlockBinding(STORAGE_SCENE_DATA_NAME, STORAGE_SCENE_DATA_BIND);
+	ptrDescriptorLayout->Create();
 
+	m_ptrDescriptorSetPass = GfxRenderer()->NewDescriptorSet(HashValueFormat("%x_%p", PASS_DEFERRED_LIGHTING_NAME, this), ptrDescriptorLayout);
+	m_ptrDescriptorSetPass->SetUniformBuffer(UNIFORM_ENGINE_NAME, m_pRenderSystem->GetEngineUniform()->GetUniformBuffer(), 0, m_pRenderSystem->GetEngineUniform()->GetUniformBuffer()->GetSize());
+	m_ptrDescriptorSetPass->SetStorageBuffer(STORAGE_SCENE_DATA_NAME, m_pRenderSystem->GetGPUScene()->GetInstanceBuffer(), 0, m_pRenderSystem->GetGPUScene()->GetInstanceBuffer()->GetSize());
 }
 
 CPassDeferredLighting::~CPassDeferredLighting(void)
