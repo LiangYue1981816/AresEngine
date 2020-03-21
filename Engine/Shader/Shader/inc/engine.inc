@@ -44,15 +44,17 @@ layout (location = 8)                                      in mediump int inInst
 #define DESCRIPTOR_BIND_TRANSFER_SCENE_DATA                3
 
 // Forward/Deferred
-#define DESCRIPTOR_BIND_DEPTH_TEXTURE                      2
-#define DESCRIPTOR_BIND_COLOR_TEXTURE                      2
-#define DESCRIPTOR_BIND_ALBEDO_AO_TEXTURE                  3
-#define DESCRIPTOR_BIND_NORMAL_ROUGHNESS_METALLIC_TEXTURE  4
+#define DESCRIPTOR_BIND_DEPTH_TEXTURE                      4
+#define DESCRIPTOR_BIND_COLOR_TEXTURE                      5
+#define DESCRIPTOR_BIND_GBUFFERA_TEXTURE                   6
+#define DESCRIPTOR_BIND_GBUFFERB_TEXTURE                   7
+#define DESCRIPTOR_BIND_GBUFFERC_TEXTURE                   8
+#define DESCRIPTOR_BIND_GBUFFERD_TEXTURE                   9
 
 // PostProcessing
-#define DESCRIPTOR_BIND_SHADOW_TEXTURE                     5
-#define DESCRIPTOR_BIND_SSAO_TEXTURE                       6
-#define DESCRIPTOR_BIND_ADD_TEXTURE                        5
+#define DESCRIPTOR_BIND_SHADOW_TEXTURE                     10
+#define DESCRIPTOR_BIND_SSAO_TEXTURE                       11
+#define DESCRIPTOR_BIND_ADD_TEXTURE                        12
 
 
 #define USE_CAMERA_UNIFORM                                                         \

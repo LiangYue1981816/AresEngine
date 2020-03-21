@@ -47,16 +47,24 @@
 #define STORAGE_TRANSFER_SCENE_DATA_NAME                   HashValue("TransferSceneData")
 
 // Uniform Forward/Deferred
-#define UNIFORM_DEPTH_TEXTURE_BIND                         2
-#define UNIFORM_COLOR_TEXTURE_BIND                         2
+#define UNIFORM_DEPTH_TEXTURE_BIND                         4
+#define UNIFORM_COLOR_TEXTURE_BIND                         5
+#define UNIFORM_GBUFFERA_TEXTURE_BIND                      6
+#define UNIFORM_GBUFFERB_TEXTURE_BIND                      7
+#define UNIFORM_GBUFFERC_TEXTURE_BIND                      8
+#define UNIFORM_GBUFFERD_TEXTURE_BIND                      9
 
 #define UNIFORM_DEPTH_TEXTURE_NAME                         HashValue("texDepth")
 #define UNIFORM_COLOR_TEXTURE_NAME                         HashValue("texColor")
+#define UNIFORM_GBUFFERA_TEXTURE_NAME                      HashValue("texGBufferA")
+#define UNIFORM_GBUFFERB_TEXTURE_NAME                      HashValue("texGBufferB")
+#define UNIFORM_GBUFFERC_TEXTURE_NAME                      HashValue("texGBufferC")
+#define UNIFORM_GBUFFERD_TEXTURE_NAME                      HashValue("texGBufferD")
 
 // Uniform PostProcessing
-#define UNIFORM_SHADOW_TEXTURE_BIND                        5
-#define UNIFORM_SSAO_TEXTURE_BIND                          6
-#define UNIFORM_ADD_TEXTURE_BIND                           5
+#define UNIFORM_SHADOW_TEXTURE_BIND                        10
+#define UNIFORM_SSAO_TEXTURE_BIND                          11
+#define UNIFORM_ADD_TEXTURE_BIND                           12
 
 #define UNIFORM_SHADOW_TEXTURE_NAME                        HashValue("texShadow")
 #define UNIFORM_SSAO_TEXTURE_NAME                          HashValue("texSSAO")
