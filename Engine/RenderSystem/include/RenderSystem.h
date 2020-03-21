@@ -74,6 +74,7 @@
 // Pass
 #define PASS_PREZ_NAME                                     HashValue("PassPreZ")
 #define PASS_SHADOW_NAME                                   HashValue("PassShadow")
+#define PASS_GBUFFER_NAME                                  HashValue("PassGBuffer")
 #define PASS_DEFAULT_NAME                                  HashValue("PassDefault")
 #define PASS_FORWARD_LIGHTING_NAME                         HashValue("PassForwardLighting")
 #define PASS_DEFERRED_LIGHTING_NAME                        HashValue("PassDeferredLighting")
@@ -219,6 +220,7 @@ private:
 	CPassShadow* m_pPassShadow;
 	CPassDefault* m_pPassDefault;
 	CPassForwardLighting* m_pPassForwardLighting;
+	CPassDeferredLighting* m_pPassDeferredLighting;
 	CPassSSAO* m_pPassSSAO;
 	CPassBlurHorizontal* m_pPassSSAOBlurHorizontal;
 	CPassBlurVertical* m_pPassSSAOBlurVertical;
