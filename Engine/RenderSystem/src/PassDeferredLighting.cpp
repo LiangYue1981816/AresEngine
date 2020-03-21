@@ -2,6 +2,49 @@
 #include "RenderHeader.h"
 
 
+void CPassDeferredLighting::Create(GfxPixelFormat colorPixelFormat, GfxPixelFormat depthPixelFormat)
+{
+
+}
+
+void CPassDeferredLighting::Destroy(void)
+{
+
+}
+
+
+CPassDeferredLighting::CPassDeferredLighting(CRenderSystem* pRenderSystem)
+	: CPassBase(pRenderSystem)
+{
+
+}
+
+CPassDeferredLighting::~CPassDeferredLighting(void)
+{
+
+}
+
+void CPassDeferredLighting::SetCamera(CCamera* pCamera)
+{
+
+}
+
+void CPassDeferredLighting::SetInputTexture(CGfxRenderTexturePtr ptrShadowTexture, CGfxRenderTexturePtr ptrSSAOTexture)
+{
+
+}
+
+void CPassDeferredLighting::SetOutputTexture(CGfxRenderTexturePtr ptrColorTexture, CGfxRenderTexturePtr ptrGBufferATexture, CGfxRenderTexturePtr ptrGBufferBTexture, CGfxRenderTexturePtr ptrGBufferCTexture, CGfxRenderTexturePtr ptrDepthStencilTexture)
+{
+
+}
+
+void CPassDeferredLighting::Render(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer)
+{
+
+}
+
+
 /*
 static const int numSubpasses = 1;
 static const int numAttachments = 2;
