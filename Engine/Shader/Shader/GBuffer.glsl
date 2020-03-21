@@ -55,6 +55,8 @@ precision mediump float;
 USE_CAMERA_UNIFORM;
 USE_ENGINE_UNIFORM;
 
+#include "light.inc"
+
 // Input
 layout (location = 0) in mediump vec2 inTexcoord;
 #ifdef NORMAL_MAP
@@ -67,8 +69,8 @@ layout (location = 1) in mediump vec3 inNormal;
 
 // Output
 layout (location = 0) out mediump vec4 outFragGBufferA;
-layout (location = 0) out mediump vec4 outFragGBufferB;
-layout (location = 0) out mediump vec4 outFragGBufferC;
+layout (location = 1) out mediump vec4 outFragGBufferB;
+layout (location = 2) out mediump vec4 outFragGBufferC;
 
 // Descriptor
 DESCRIPTOR_SET_MATPASS(8) mediump uniform sampler2D texAlbedo;
@@ -81,9 +83,9 @@ DESCRIPTOR_SET_MATPASS(10) mediump uniform sampler2D texRoughnessMetallicSpecula
 
 void main()
 {
-	mediump vec4 color = texture(texAlbedo, inTexcoord);
+	mediump vec4 albedo = texture(texAlbedo, inTexcoord);
 
-	if (color.a < 0.5)
+	if (albedo.a < 0.5)
 		discard;
 
 	outFragGBufferA.rgb = Gamma2Linear(albedo.rgb);
