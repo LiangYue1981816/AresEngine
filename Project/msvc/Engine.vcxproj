@@ -404,6 +404,7 @@
     <ClInclude Include="..\..\Engine\RenderSystem\include\PassColorGrading.h" />
     <ClInclude Include="..\..\Engine\RenderSystem\include\PassCopy.h" />
     <ClInclude Include="..\..\Engine\RenderSystem\include\PassDefault.h" />
+    <ClInclude Include="..\..\Engine\RenderSystem\include\PassDeferredLighting.h" />
     <ClInclude Include="..\..\Engine\RenderSystem\include\PassFinal.h" />
     <ClInclude Include="..\..\Engine\RenderSystem\include\PassForwardLighting.h" />
     <ClInclude Include="..\..\Engine\RenderSystem\include\PassLuminanceThreshold.h" />
@@ -763,6 +764,7 @@
     <ClCompile Include="..\..\Engine\RenderSystem\src\PassColorGrading.cpp" />
     <ClCompile Include="..\..\Engine\RenderSystem\src\PassCopy.cpp" />
     <ClCompile Include="..\..\Engine\RenderSystem\src\PassDefault.cpp" />
+    <ClCompile Include="..\..\Engine\RenderSystem\src\PassDeferredLighting.cpp" />
     <ClCompile Include="..\..\Engine\RenderSystem\src\PassFinal.cpp" />
     <ClCompile Include="..\..\Engine\RenderSystem\src\PassForwardLighting.cpp" />
     <ClCompile Include="..\..\Engine\RenderSystem\src\PassLuminanceThreshold.cpp" />

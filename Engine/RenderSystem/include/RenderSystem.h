@@ -6,6 +6,7 @@
 #include "RenderSystem/include/PassShadow.h"
 #include "RenderSystem/include/PassDefault.h"
 #include "RenderSystem/include/PassForwardLighting.h"
+#include "RenderSystem/include/PassDeferredLighting.h"
 #include "RenderSystem/include/PassBlit.h"
 #include "RenderSystem/include/PassCopy.h"
 #include "RenderSystem/include/PassSSAO.h"
@@ -112,6 +113,7 @@ class CALL_API CRenderSystem
 	friend class CPassShadow;
 	friend class CPassDefault;
 	friend class CPassForwardLighting;
+	friend class CPassDeferredLighting;
 	friend class CPassBlit;
 	friend class CPassCopy;
 	friend class CPassSSAO;
