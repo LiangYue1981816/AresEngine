@@ -2,6 +2,7 @@
 #include "RenderHeader.h"
 
 
+/*
 static const int numSubpasses = 1;
 static const int numAttachments = 2;
 static CGfxRenderPassPtr ptrRenderPass;
@@ -105,3 +106,4 @@ void CPassDeferredLighting::Render(CTaskGraph& taskGraph, CGfxCommandBufferPtr p
 	}
 	GfxRenderer()->CmdPopDebugGroup(ptrCommandBuffer);
 }
+*/
