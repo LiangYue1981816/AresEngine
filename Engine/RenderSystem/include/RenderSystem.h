@@ -105,6 +105,10 @@
 #define RENDER_TEXTURE_SWAPCHAIN_COLOR0                    0
 #define RENDER_TEXTURE_SWAPCHAIN_COLOR1                    1
 #define RENDER_TEXTURE_SWAPCHAIN_COLOR2                    2
+#define RENDER_TEXTURE_GBUFFER0                            HashValue("RenderTextureGBuffer0")
+#define RENDER_TEXTURE_GBUFFER1                            HashValue("RenderTextureGBuffer1")
+#define RENDER_TEXTURE_GBUFFER2                            HashValue("RenderTextureGBuffer2")
+#define RENDER_TEXTURE_GBUFFER3                            HashValue("RenderTextureGBuffer3")
 #define RENDER_TEXTURE_SHADOW                              HashValue("RenderTextureShadow")
 #define RENDER_TEXTURE_FULL_DEPTH                          HashValue("RenderTextureFullDepth")
 #define RENDER_TEXTURE_FULL_HDR_COLOR0                     HashValue("RenderTextureFullHdrColor0")
