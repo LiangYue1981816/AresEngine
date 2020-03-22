@@ -42,6 +42,7 @@ class CALL_API CGPUScene
 	friend class CRenderSystem;
 	friend class CPassPreZ;
 	friend class CPassShadow;
+	friend class CPassGBuffer;
 	friend class CPassDefault;
 	friend class CPassForwardLighting;
 	friend class CPassDeferredLighting;
