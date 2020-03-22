@@ -3,9 +3,9 @@
 
 
 static const int indexAttachmentColor = 0;
-static const int indexAttachmentGBufferA = 1;
-static const int indexAttachmentGBufferB = 2;
-static const int indexAttachmentGBufferC = 3;
+static const int indexAttachmentGBuffer0 = 1;
+static const int indexAttachmentGBuffer1 = 2;
+static const int indexAttachmentGBuffer2 = 3;
 static const int indexAttachmentDepthStencil = 4;
 
 static const int numSubpasses = 3;
@@ -21,17 +21,17 @@ void CPassDeferredLighting::Create(GfxPixelFormat colorPixelFormat, GfxPixelForm
 
 	ptrRenderPass = GfxRenderer()->NewRenderPass(PASS_DEFERRED_LIGHTING_NAME, numAttachments, numSubpasses);
 	ptrRenderPass->SetColorAttachment(indexAttachmentColor, colorPixelFormat, 1, false, true, color[0], color[1], color[2], color[3]);
-	ptrRenderPass->SetColorAttachment(indexAttachmentGBufferA, colorPixelFormat, 1, false, true, color[0], color[1], color[2], color[3]);
-	ptrRenderPass->SetColorAttachment(indexAttachmentGBufferB, colorPixelFormat, 1, false, true, color[0], color[1], color[2], color[3]);
-	ptrRenderPass->SetColorAttachment(indexAttachmentGBufferC, colorPixelFormat, 1, false, true, color[0], color[1], color[2], color[3]);
+	ptrRenderPass->SetColorAttachment(indexAttachmentGBuffer0, colorPixelFormat, 1, false, true, color[0], color[1], color[2], color[3]);
+	ptrRenderPass->SetColorAttachment(indexAttachmentGBuffer1, colorPixelFormat, 1, false, true, color[0], color[1], color[2], color[3]);
+	ptrRenderPass->SetColorAttachment(indexAttachmentGBuffer2, colorPixelFormat, 1, false, true, color[0], color[1], color[2], color[3]);
 	ptrRenderPass->SetDepthStencilAttachment(indexAttachmentDepthStencil, depthPixelFormat, 1, false, false, depth, stencil);
-	ptrRenderPass->SetSubpassOutputColorReference(0, indexAttachmentGBufferA);
-	ptrRenderPass->SetSubpassOutputColorReference(0, indexAttachmentGBufferB);
-	ptrRenderPass->SetSubpassOutputColorReference(0, indexAttachmentGBufferC);
+	ptrRenderPass->SetSubpassOutputColorReference(0, indexAttachmentGBuffer0);
+	ptrRenderPass->SetSubpassOutputColorReference(0, indexAttachmentGBuffer1);
+	ptrRenderPass->SetSubpassOutputColorReference(0, indexAttachmentGBuffer2);
 	ptrRenderPass->SetSubpassOutputDepthStencilReference(0, indexAttachmentDepthStencil);
-	ptrRenderPass->SetSubpassInputColorReference(1, indexAttachmentGBufferA);
-	ptrRenderPass->SetSubpassInputColorReference(1, indexAttachmentGBufferB);
-	ptrRenderPass->SetSubpassInputColorReference(1, indexAttachmentGBufferC);
+	ptrRenderPass->SetSubpassInputColorReference(1, indexAttachmentGBuffer0);
+	ptrRenderPass->SetSubpassInputColorReference(1, indexAttachmentGBuffer1);
+	ptrRenderPass->SetSubpassInputColorReference(1, indexAttachmentGBuffer2);
 	ptrRenderPass->SetSubpassInputColorReference(1, indexAttachmentDepthStencil);
 	ptrRenderPass->SetSubpassOutputColorReference(1, indexAttachmentColor);
 	ptrRenderPass->SetSubpassOutputColorReference(2, indexAttachmentColor);
@@ -107,19 +107,19 @@ void CPassDeferredLighting::SetInputTexture(CGfxRenderTexturePtr ptrShadowTextur
 	}
 }
 
-void CPassDeferredLighting::SetOutputTexture(CGfxRenderTexturePtr ptrColorTexture, CGfxRenderTexturePtr ptrGBufferATexture, CGfxRenderTexturePtr ptrGBufferBTexture, CGfxRenderTexturePtr ptrGBufferCTexture, CGfxRenderTexturePtr ptrDepthStencilTexture)
+void CPassDeferredLighting::SetOutputTexture(CGfxRenderTexturePtr ptrColorTexture, CGfxRenderTexturePtr ptrGBuffer0Texture, CGfxRenderTexturePtr ptrGBuffer1Texture, CGfxRenderTexturePtr ptrGBuffer2Texture, CGfxRenderTexturePtr ptrDepthStencilTexture)
 {
-	if (m_ptrOutputColorTexture != ptrColorTexture || m_ptrOutputGBufferATexture != ptrGBufferATexture ||m_ptrOutputGBufferBTexture != ptrGBufferBTexture || m_ptrOutputGBufferCTexture != ptrGBufferCTexture ||m_ptrOutputDepthStencilTexture != ptrDepthStencilTexture) {
+	if (m_ptrOutputColorTexture != ptrColorTexture || m_ptrOutputGBuffer0Texture != ptrGBuffer0Texture ||m_ptrOutputGBuffer1Texture != ptrGBuffer1Texture || m_ptrOutputGBuffer2Texture != ptrGBuffer2Texture ||m_ptrOutputDepthStencilTexture != ptrDepthStencilTexture) {
 		m_ptrOutputColorTexture = ptrColorTexture;
-		m_ptrOutputGBufferATexture = ptrGBufferATexture;
-		m_ptrOutputGBufferBTexture = ptrGBufferBTexture;
-		m_ptrOutputGBufferCTexture = ptrGBufferCTexture;
+		m_ptrOutputGBuffer0Texture = ptrGBuffer0Texture;
+		m_ptrOutputGBuffer1Texture = ptrGBuffer1Texture;
+		m_ptrOutputGBuffer2Texture = ptrGBuffer2Texture;
 		m_ptrOutputDepthStencilTexture = ptrDepthStencilTexture;
 		m_ptrFrameBuffer = GfxRenderer()->NewFrameBuffer(ptrColorTexture->GetWidth(), ptrColorTexture->GetHeight(), numAttachments);
 		m_ptrFrameBuffer->SetAttachmentTexture(indexAttachmentColor, ptrColorTexture);
-		m_ptrFrameBuffer->SetAttachmentTexture(indexAttachmentGBufferA, ptrGBufferATexture);
-		m_ptrFrameBuffer->SetAttachmentTexture(indexAttachmentGBufferB, ptrGBufferBTexture);
-		m_ptrFrameBuffer->SetAttachmentTexture(indexAttachmentGBufferC, ptrGBufferCTexture);
+		m_ptrFrameBuffer->SetAttachmentTexture(indexAttachmentGBuffer0, ptrGBuffer0Texture);
+		m_ptrFrameBuffer->SetAttachmentTexture(indexAttachmentGBuffer1, ptrGBuffer1Texture);
+		m_ptrFrameBuffer->SetAttachmentTexture(indexAttachmentGBuffer2, ptrGBuffer2Texture);
 		m_ptrFrameBuffer->SetAttachmentTexture(indexAttachmentDepthStencil, ptrDepthStencilTexture);
 		m_ptrFrameBuffer->Create(ptrRenderPass);
 	}

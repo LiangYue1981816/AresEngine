@@ -49,17 +49,17 @@
 // Uniform Forward/Deferred
 #define UNIFORM_DEPTH_TEXTURE_BIND                         4
 #define UNIFORM_COLOR_TEXTURE_BIND                         5
-#define UNIFORM_GBUFFERA_TEXTURE_BIND                      6
-#define UNIFORM_GBUFFERB_TEXTURE_BIND                      7
-#define UNIFORM_GBUFFERC_TEXTURE_BIND                      8
-#define UNIFORM_GBUFFERD_TEXTURE_BIND                      9
+#define UNIFORM_GBUFFER0_TEXTURE_BIND                      6
+#define UNIFORM_GBUFFER1_TEXTURE_BIND                      7
+#define UNIFORM_GBUFFER2_TEXTURE_BIND                      8
+#define UNIFORM_GBUFFER3_TEXTURE_BIND                      9
 
 #define UNIFORM_DEPTH_TEXTURE_NAME                         HashValue("texDepth")
 #define UNIFORM_COLOR_TEXTURE_NAME                         HashValue("texColor")
-#define UNIFORM_GBUFFERA_TEXTURE_NAME                      HashValue("texGBufferA")
-#define UNIFORM_GBUFFERB_TEXTURE_NAME                      HashValue("texGBufferB")
-#define UNIFORM_GBUFFERC_TEXTURE_NAME                      HashValue("texGBufferC")
-#define UNIFORM_GBUFFERD_TEXTURE_NAME                      HashValue("texGBufferD")
+#define UNIFORM_GBUFFER0_TEXTURE_NAME                      HashValue("texGBuffer0")
+#define UNIFORM_GBUFFER1_TEXTURE_NAME                      HashValue("texGBuffer1")
+#define UNIFORM_GBUFFER2_TEXTURE_NAME                      HashValue("texGBuffer2")
+#define UNIFORM_GBUFFER3_TEXTURE_NAME                      HashValue("texGBuffer3")
 
 // Uniform PostProcessing
 #define UNIFORM_SHADOW_TEXTURE_BIND                        10

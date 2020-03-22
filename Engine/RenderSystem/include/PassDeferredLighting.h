@@ -21,7 +21,7 @@ private:
 public:
 	void SetCamera(CCamera* pCamera);
 	void SetInputTexture(CGfxRenderTexturePtr ptrShadowTexture, CGfxRenderTexturePtr ptrSSAOTexture);
-	void SetOutputTexture(CGfxRenderTexturePtr ptrColorTexture, CGfxRenderTexturePtr ptrGBufferATexture, CGfxRenderTexturePtr ptrGBufferBTexture, CGfxRenderTexturePtr ptrGBufferCTexture, CGfxRenderTexturePtr ptrDepthStencilTexture);
+	void SetOutputTexture(CGfxRenderTexturePtr ptrColorTexture, CGfxRenderTexturePtr ptrGBuffer0Texture, CGfxRenderTexturePtr ptrGBuffer1Texture, CGfxRenderTexturePtr ptrGBuffer2Texture, CGfxRenderTexturePtr ptrDepthStencilTexture);
 
 private:
 	void Render(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer);
@@ -37,8 +37,8 @@ private:
 private:
 	CGfxFrameBufferPtr m_ptrFrameBuffer;
 	CGfxRenderTexturePtr m_ptrOutputColorTexture;
-	CGfxRenderTexturePtr m_ptrOutputGBufferATexture; // Albedo
-	CGfxRenderTexturePtr m_ptrOutputGBufferBTexture; // Normal
-	CGfxRenderTexturePtr m_ptrOutputGBufferCTexture; // Roughness Metallic Specular AO
+	CGfxRenderTexturePtr m_ptrOutputGBuffer0Texture; // Albedo
+	CGfxRenderTexturePtr m_ptrOutputGBuffer1Texture; // Normal
+	CGfxRenderTexturePtr m_ptrOutputGBuffer2Texture; // Roughness Metallic Specular AO
 	CGfxRenderTexturePtr m_ptrOutputDepthStencilTexture;
 };
