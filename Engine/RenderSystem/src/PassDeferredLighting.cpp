@@ -52,7 +52,7 @@ CPassDeferredLighting::CPassDeferredLighting(CRenderSystem* pRenderSystem)
 	ptrDescriptorLayout0->SetStorageBlockBinding(STORAGE_SCENE_DATA_NAME, STORAGE_SCENE_DATA_BIND);
 	ptrDescriptorLayout0->Create();
 
-	m_ptrDescriptorSetPass0 = GfxRenderer()->NewDescriptorSet(HashValueFormat("%x_%p_0", PASS_DEFERRED_LIGHTING_NAME, this), ptrDescriptorLayout0);
+	m_ptrDescriptorSetPass0 = GfxRenderer()->NewDescriptorSet(HashValueFormat("%x_%p", PASS_DEFERRED_LIGHTING_GBUFFER_NAME, this), ptrDescriptorLayout0);
 	m_ptrDescriptorSetPass0->SetUniformBuffer(UNIFORM_ENGINE_NAME, m_pRenderSystem->GetEngineUniform()->GetUniformBuffer(), 0, m_pRenderSystem->GetEngineUniform()->GetUniformBuffer()->GetSize());
 	m_ptrDescriptorSetPass0->SetStorageBuffer(STORAGE_SCENE_DATA_NAME, m_pRenderSystem->GetGPUScene()->GetInstanceBuffer(), 0, m_pRenderSystem->GetGPUScene()->GetInstanceBuffer()->GetSize());
 
@@ -63,7 +63,7 @@ CPassDeferredLighting::CPassDeferredLighting(CRenderSystem* pRenderSystem)
 	ptrDescriptorLayout1->SetSampledImageBinding(UNIFORM_SHADOW_TEXTURE_NAME, UNIFORM_SHADOW_TEXTURE_BIND);
 	ptrDescriptorLayout1->Create();
 
-	m_ptrDescriptorSetPass1 = GfxRenderer()->NewDescriptorSet(HashValueFormat("%x_%p_1", PASS_DEFERRED_LIGHTING_NAME, this), ptrDescriptorLayout1);
+	m_ptrDescriptorSetPass1 = GfxRenderer()->NewDescriptorSet(HashValueFormat("%x_%p", PASS_DEFERRED_LIGHTING_SHADING_NAME, this), ptrDescriptorLayout1);
 	m_ptrDescriptorSetPass1->SetUniformBuffer(UNIFORM_ENGINE_NAME, m_pRenderSystem->GetEngineUniform()->GetUniformBuffer(), 0, m_pRenderSystem->GetEngineUniform()->GetUniformBuffer()->GetSize());
 }
 

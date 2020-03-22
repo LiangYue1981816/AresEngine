@@ -74,10 +74,12 @@
 // Pass
 #define PASS_PREZ_NAME                                     HashValue("PassPreZ")
 #define PASS_SHADOW_NAME                                   HashValue("PassShadow")
-#define PASS_GBUFFER_NAME                                  HashValue("PassGBuffer")
 #define PASS_DEFAULT_NAME                                  HashValue("PassDefault")
 #define PASS_FORWARD_LIGHTING_NAME                         HashValue("PassForwardLighting")
 #define PASS_DEFERRED_LIGHTING_NAME                        HashValue("PassDeferredLighting")
+#define PASS_DEFERRED_LIGHTING_GBUFFER_NAME                HashValue("PassDeferredLighting_GBuffer")
+#define PASS_DEFERRED_LIGHTING_SHADING_NAME                HashValue("PassDeferredLighting_Shading")
+#define PASS_DEFERRED_LIGHTING_SHADOW_NAME                 HashValue("PassDeferredLighting_Shadow")
 #define PASS_COPY_NAME                                     HashValue("PassCopy")
 #define PASS_SSAO_NAME                                     HashValue("PassSSAO")
 #define PASS_BLUR_BOX_NAME                                 HashValue("PassBlurBox")
