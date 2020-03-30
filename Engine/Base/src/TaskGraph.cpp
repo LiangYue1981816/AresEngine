@@ -12,22 +12,20 @@ CTaskGraph::CTaskGraph(const char* szName, int numThreads)
 	}
 
 	m_bExit = false;
-
-	event_init(&m_eventReady, 1);
-	event_init(&m_eventFinish, 1);
-	event_init(&m_eventDispatch, 0);
-	atomic_spin_init(&m_lockTaskList);
-
-	m_params.resize(numThreads);
 	m_threads.resize(numThreads);
 
 	for (int indexThread = 0; indexThread < m_threads.size(); indexThread++) {
 		char szThreadName[_MAX_STRING];
 		sprintf(szThreadName, "%s_%d", szName, indexThread);
 
-		m_params[indexThread].Set(this, indexThread);
-		pthread_create(&m_threads[indexThread], nullptr, TaskThread, &m_params[indexThread]);
-		pthread_set_name(m_threads[indexThread], szThreadName);
+		m_threads[indexThread].pTaskGraph = this;
+		m_threads[indexThread].indexThread = indexThread;
+
+		event_init(&m_threads[indexThread].eventFinish, 1);
+		event_init(&m_threads[indexThread].eventDispatch, 0);
+
+		pthread_create(&m_threads[indexThread].thread, nullptr, TaskThread, &m_threads[indexThread]);
+		pthread_set_name(m_threads[indexThread].thread, szThreadName);
 	}
 }
 
@@ -35,110 +33,93 @@ CTaskGraph::~CTaskGraph(void)
 {
 	m_bExit = true;
 
-	event_signal(&m_eventDispatch);
-
 	for (int indexThread = 0; indexThread < m_threads.size(); indexThread++) {
-		pthread_join(m_threads[indexThread], nullptr);
-	}
+		event_signal(&m_threads[indexThread].eventDispatch);
+		pthread_join(m_threads[indexThread].thread, nullptr);
 
-	event_destroy(&m_eventReady);
-	event_destroy(&m_eventFinish);
-	event_destroy(&m_eventDispatch);
+		event_destroy(&m_threads[indexThread].eventFinish);
+		event_destroy(&m_threads[indexThread].eventDispatch);
+	}
 }
 
-int CTaskGraph::GetNumThreads(void) const
+void CTaskGraph::Task(CTask* pTask, void* pParam, event_t* pEventSignal, event_t* pEventWait)
 {
-	return m_threads.size();
-}
+	pTask->SetParam(pParam);
+	pTask->SetEvent(pEventSignal);
+	pTask->Unsignal();
 
-void CTaskGraph::Task(CTask* pTask, void* pParams, event_t* pEventSignal, event_t* pEventWait)
-{
-	pTask->SetTaskParams(pParams);
-	pTask->SetTaskEventSignal(pEventSignal);
-
-	atomic_spin_lock(&m_lockTaskList);
-	{
-		pTask->pNext = m_pTaskListHeads[pEventWait];
-		m_pTaskListHeads[pEventWait] = pTask;
-		m_pTaskListDependence[pEventWait] = pEventSignal;
-	}
-	atomic_spin_unlock(&m_lockTaskList);
+	pTask->pNext = m_pTaskStacks[pEventWait];
+	m_pTaskStacks[pEventWait] = pTask;
+	m_pDependence[pEventWait] = pEventSignal;
 }
 
 void CTaskGraph::Dispatch(void)
 {
 	for (int indexThread = 0; indexThread < m_threads.size(); indexThread++) {
-		event_unsignal(&m_eventReady);
-		event_unsignal(&m_eventFinish);
+		event_reset(&m_threads[indexThread].eventFinish);
+		event_signal(&m_threads[indexThread].eventDispatch);
 	}
-
-	event_signal(&m_eventDispatch);
 }
 
 void CTaskGraph::Wait(void)
 {
-	event_wait(&m_eventFinish);
-
-	m_pTaskListHeads.clear();
-	m_pTaskListDependence.clear();
-}
-
-void* CTaskGraph::TaskThread(void* pParams)
-{
-	CTaskGraph* pTaskGraph = ((ThreadParam*)pParams)->pTaskGraph;
-	int indexThread = ((ThreadParam*)pParams)->indexThread;
-
-	while (true) {
-		event_wait(&pTaskGraph->m_eventDispatch);
-		{
-			// Check if the thread needs to exit
-			if (pTaskGraph->m_bExit) {
-				break;
-			}
-
-			// Waiting for all threads ready
-			event_signal(&pTaskGraph->m_eventReady);
-			event_wait(&pTaskGraph->m_eventReady);
-
-			// Run tasks
-			event_t* pEvent = nullptr;
-			do {
-				if (pEvent) {
-					event_wait(pEvent);
-				}
-
-				if (CTask** ppTaskListHead = &pTaskGraph->m_pTaskListHeads[pEvent]) {
-					while (true) {
-						bool bFinish = false;
-						CTask* pTask = nullptr;
-
-						atomic_spin_lock(&pTaskGraph->m_lockTaskList);
-						{
-							if (*ppTaskListHead) {
-								pTask = *ppTaskListHead;
-								*ppTaskListHead = pTask->pNext;
-							}
-							else {
-								bFinish = true;
-							}
-						}
-						atomic_spin_unlock(&pTaskGraph->m_lockTaskList);
-
-						if (pTask) {
-							pTask->TaskFunc(indexThread, pTask->GetTaskParams());
-							pTask->SetTaskSignal();
-						}
-
-						if (bFinish) {
-							break;
-						}
-					}
-				}
-			} while ((pEvent = pTaskGraph->m_pTaskListDependence[pEvent]) != nullptr);
-		}
-		event_reset(&pTaskGraph->m_eventDispatch);
-		event_signal(&pTaskGraph->m_eventFinish);
+	for (int indexThread = 0; indexThread < m_threads.size(); indexThread++) {
+		event_wait(&m_threads[indexThread].eventFinish);
 	}
 
+	m_pTaskStacks.clear();
+	m_pDependence.clear();
+}
+
+void* CTaskGraph::TaskThread(void* pParam)
+{
+	Thread* pThread = (Thread*)pParam;
+
+	while (true) {
+		event_wait(&pThread->eventDispatch);
+		event_reset(&pThread->eventDispatch);
+		{
+			if (pThread->pTaskGraph->m_bExit) {
+				goto RET;
+			}
+
+			event_reset(&pThread->eventFinish);
+			{
+				event_t* pEvent = nullptr;
+				do {
+					if (pEvent) {
+						event_wait(pEvent);
+					}
+
+					if (pThread->pTaskGraph->m_pTaskStacks.find(pEvent) == pThread->pTaskGraph->m_pTaskStacks.end()) {
+						break;
+					}
+
+					do {
+						CTask* pTaskNext = nullptr;
+						CTask* pTaskHead = pThread->pTaskGraph->m_pTaskStacks[pEvent].load(std::memory_order_relaxed);
+						do {
+							if (pTaskHead) {
+								pTaskNext = pTaskHead->pNext;
+							}
+							else {
+								break;
+							}
+						} while (!pThread->pTaskGraph->m_pTaskStacks[pEvent].compare_exchange_weak(pTaskHead, pTaskNext, std::memory_order_release, std::memory_order_relaxed));
+
+						if (pTaskHead) {
+							pTaskHead->TaskFunc(pThread->indexThread);
+							pTaskHead->Signal();
+						}
+						else {
+							break;
+						}
+					} while (true);
+				} while (pEvent = pThread->pTaskGraph->m_pDependence[pEvent]);
+			}
+			event_signal(&pThread->eventFinish);
+		}
+	}
+RET:
 	return nullptr;
 }

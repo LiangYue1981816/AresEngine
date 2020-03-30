@@ -2,7 +2,7 @@
 
 
 CTaskPool::CTaskPool(const char* szName, int numThreads)
-	: m_pTaskListHead(nullptr)
+	: m_pTaskStack(nullptr)
 {
 	if (numThreads == -1) {
 		numThreads = NumCpuCores();
@@ -11,102 +11,103 @@ CTaskPool::CTaskPool(const char* szName, int numThreads)
 	if (numThreads > MAX_THREAD_COUNT) {
 		numThreads = MAX_THREAD_COUNT;
 	}
-
-	event_init(&m_eventExit, 0);
-	atomic_spin_init(&m_lockTaskList);
-
-	m_params.resize(numThreads);
+	
+	m_bExit = false;
 	m_threads.resize(numThreads);
 
 	for (int indexThread = 0; indexThread < m_threads.size(); indexThread++) {
 		char szThreadName[_MAX_STRING];
 		sprintf(szThreadName, "%s_%d", szName, indexThread);
 
-		m_params[indexThread].Set(this, indexThread);
-		pthread_create(&m_threads[indexThread], nullptr, TaskThread, &m_params[indexThread]);
-		pthread_set_name(m_threads[indexThread], szThreadName);
+		m_threads[indexThread].pTaskPool = this;
+		m_threads[indexThread].indexThread = indexThread;
+
+		event_init(&m_threads[indexThread].eventFinish, 1);
+		event_init(&m_threads[indexThread].eventDispatch, 0);
+
+		pthread_create(&m_threads[indexThread].thread, nullptr, TaskThread, &m_threads[indexThread]);
+		pthread_set_name(m_threads[indexThread].thread, szThreadName);
 	}
 }
 
 CTaskPool::~CTaskPool(void)
 {
-	event_signal(&m_eventExit);
+	m_bExit = true;
 
 	for (int indexThread = 0; indexThread < m_threads.size(); indexThread++) {
-		pthread_join(m_threads[indexThread], nullptr);
+		event_signal(&m_threads[indexThread].eventDispatch);
+		pthread_join(m_threads[indexThread].thread, nullptr);
+
+		event_destroy(&m_threads[indexThread].eventFinish);
+		event_destroy(&m_threads[indexThread].eventDispatch);
 	}
-
-	event_destroy(&m_eventExit);
 }
 
-int CTaskPool::GetNumThreads(void) const
+void CTaskPool::Task(CTask* pTask, void* pParam, event_t* pEventSignal)
 {
-	return m_threads.size();
+	pTask->SetParam(pParam);
+	pTask->SetEvent(pEventSignal);
+	pTask->Unsignal();
+
+	CTask* pTaskHead = m_pTaskStack.load(std::memory_order_relaxed);
+	do {
+		pTask->pNext = pTaskHead;
+	} while (!m_pTaskStack.compare_exchange_weak(pTaskHead, pTask, std::memory_order_release, std::memory_order_relaxed));
 }
 
-void CTaskPool::Task(CTask* pTask, void* pParams, event_t* pEventSignal, bool bHighPriority)
+void CTaskPool::Dispatch(void)
 {
-	pTask->SetTaskParams(pParams);
-	pTask->SetTaskEventSignal(pEventSignal);
-
-	atomic_spin_lock(&m_lockTaskList);
-	{
-		if (bHighPriority == false && m_pTaskListHead) {
-			CTask* pLastTask = m_pTaskListHead;
-
-			while (pLastTask->pNext) {
-				pLastTask = pLastTask->pNext;
-			}
-
-			pTask->pNext = nullptr;
-			pLastTask->pNext = pTask;
-		}
-		else {
-			pTask->pNext = m_pTaskListHead;
-			m_pTaskListHead = pTask;
-		}
+	for (int indexThread = 0; indexThread < m_threads.size(); indexThread++) {
+		event_reset(&m_threads[indexThread].eventFinish);
+		event_signal(&m_threads[indexThread].eventDispatch);
 	}
-	atomic_spin_unlock(&m_lockTaskList);
 }
 
-void* CTaskPool::TaskThread(void* pParams)
+void CTaskPool::Wait(void)
 {
-	CTaskPool* pTaskPool = ((ThreadParam*)pParams)->pTaskPool;
-	int indexThread = ((ThreadParam*)pParams)->indexThread;
+	for (int indexThread = 0; indexThread < m_threads.size(); indexThread++) {
+		event_wait(&m_threads[indexThread].eventFinish);
+	}
+}
+
+void* CTaskPool::TaskThread(void* pParam)
+{
+	Thread* pThread = (Thread*)pParam;
 
 	while (true) {
-		// Check if the thread needs to exit
-		if (event_wait_timeout(&pTaskPool->m_eventExit, 1) == 0) {
-			break;
-		}
+		event_wait(&pThread->eventDispatch);
+		event_reset(&pThread->eventDispatch);
+		{
+			if (pThread->pTaskPool->m_bExit) {
+				goto RET;
+			}
 
-		// Run tasks
-		do {
-			bool bFinish = false;
-			CTask* pTask = nullptr;
-
-			atomic_spin_lock(&pTaskPool->m_lockTaskList);
+			event_reset(&pThread->eventFinish);
 			{
-				if (pTaskPool->m_pTaskListHead) {
-					pTask = pTaskPool->m_pTaskListHead;
-					pTaskPool->m_pTaskListHead = pTask->pNext;
-				}
-				else {
-					bFinish = true;
-				}
-			}
-			atomic_spin_unlock(&pTaskPool->m_lockTaskList);
+				do {
+					CTask* pTaskNext = nullptr;
+					CTask* pTaskHead = pThread->pTaskPool->m_pTaskStack.load(std::memory_order_relaxed);
+					do {
+						if (pTaskHead) {
+							pTaskNext = pTaskHead->pNext;
+						}
+						else {
+							break;
+						}
+					} while (!pThread->pTaskPool->m_pTaskStack.compare_exchange_weak(pTaskHead, pTaskNext, std::memory_order_release, std::memory_order_relaxed));
 
-			if (pTask) {
-				pTask->TaskFunc(indexThread, pTask->GetTaskParams());
-				pTask->SetTaskSignal();
+					if (pTaskHead) {
+						pTaskHead->TaskFunc(pThread->indexThread);
+						pTaskHead->Signal();
+					}
+					else {
+						break;
+					}
+				} while (true);
 			}
-
-			if (bFinish) {
-				break;
-			}
-		} while (true);
+			event_signal(&pThread->eventFinish);
+		}
 	}
-
+RET:
 	return nullptr;
 }

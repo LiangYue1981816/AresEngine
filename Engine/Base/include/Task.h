@@ -9,24 +9,69 @@ class CALL_API CTask
 
 
 public:
-	CTask(void);
-	virtual ~CTask(void);
+	CTask(void)
+		: m_pParam(nullptr)
+		, m_pEvent(nullptr)
+
+		, pNext(nullptr)
+	{
+
+	}
+	virtual ~CTask(void)
+	{
+
+	}
 
 
 public:
-	virtual void TaskFunc(int indexThread, void* pParams) = 0;
+	void SetParam(void* pParam)
+	{
+		m_pParam = pParam;
+	}
+
+	void SetEvent(event_t* pEvent)
+	{
+		m_pEvent = pEvent;
+	}
+
+	void Signal(void)
+	{
+		if (m_pEvent) {
+			event_signal(m_pEvent);
+		}
+	}
+
+	void Unsignal(void)
+	{
+		if (m_pEvent) {
+			event_unsignal(m_pEvent);
+		}
+	}
+
+	void Wait(void)
+	{
+		if (m_pEvent) {
+			event_wait(m_pEvent);
+		}
+	}
+
+	void Wait(int msec)
+	{
+		if (m_pEvent) {
+			event_wait_timeout(m_pEvent, msec);
+		}
+	}
 
 private:
-	inline void SetTaskSignal(void);
-	inline void SetTaskEventSignal(event_t* pEventSignal);
+	virtual void TaskFunc(int indexThread)
+	{
 
-	inline void SetTaskParams(void* pParams);
-	inline void* GetTaskParams(void) const;
+	}
 
 
 private:
-	void* m_pTaskParams;
-	event_t* m_pTaskEventSignal;
+	void* m_pParam;
+	event_t* m_pEvent;
 
 private:
 	CTask* pNext;
@@ -48,7 +93,7 @@ public:
 
 
 public:
-	virtual void TaskFunc(int indexThread, void* pParams)
+	virtual void TaskFunc(int indexThread)
 	{
 		m_function();
 	}

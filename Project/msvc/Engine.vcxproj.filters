@@ -2027,9 +2027,6 @@
     <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3Shader.cpp">
       <Filter>Engine\Renderer\GLES3\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Engine\Base\src\Task.cpp">
-      <Filter>Engine\Base\Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Engine\Base\src\TaskPool.cpp">
       <Filter>Engine\Base\Source Files</Filter>
     </ClCompile>

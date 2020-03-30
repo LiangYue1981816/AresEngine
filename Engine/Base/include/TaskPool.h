@@ -5,22 +5,15 @@
 class CALL_API CTaskPool
 {
 private:
-	typedef struct ThreadParam {
-		ThreadParam(void)
-		{
-			pTaskPool = nullptr;
-			indexThread = 0;
-		}
-
-		void Set(CTaskPool* _pTaskPool, int _indexThread)
-		{
-			pTaskPool = _pTaskPool;
-			indexThread = _indexThread;
-		}
-
+	typedef struct Thread {
 		CTaskPool* pTaskPool;
 		int indexThread;
-	} ThreadParam;
+
+		pthread_t thread;
+
+		event_t eventFinish;
+		event_t eventDispatch;
+	} Thread;
 
 
 public:
@@ -29,21 +22,19 @@ public:
 
 
 public:
-	int GetNumThreads(void) const;
+	void Task(CTask* pTask, void* pParam, event_t* pEventSignal);
 
-public:
-	void Task(CTask* pTask, void* pParams, event_t* pEventSignal, bool bHighPriority = false);
-
-private:
-	static void* TaskThread(void* pParams);
-
+	void Dispatch(void);
+	void Wait(void);
 
 private:
-	event_t m_eventExit;
-	eastl::vector<pthread_t> m_threads;
-	eastl::vector<ThreadParam> m_params;
+	static void* TaskThread(void* pParam);
+
 
 private:
-	std::atomic_flag m_lockTaskList;
-	CTask* m_pTaskListHead;
+	bool m_bExit;
+	eastl::vector<Thread> m_threads;
+
+private:
+	std::atomic<CTask*> m_pTaskStack;
 };
