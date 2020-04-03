@@ -42,6 +42,11 @@ CTaskGraph::~CTaskGraph(void)
 	}
 }
 
+int CTaskGraph::GetNumThreads(void) const
+{
+	return m_threads.size();
+}
+
 void CTaskGraph::Task(CTask* pTask, void* pParam, event_t* pEventSignal, event_t* pEventWait)
 {
 	pTask->SetParam(pParam);

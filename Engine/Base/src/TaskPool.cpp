@@ -42,6 +42,11 @@ CTaskPool::~CTaskPool(void)
 	}
 }
 
+int CTaskPool::GetNumThreads(void) const
+{
+	return m_threads.size();
+}
+
 void CTaskPool::Task(CTask* pTask, void* pParam, event_t* pEventSignal)
 {
 	pTask->SetParam(pParam);

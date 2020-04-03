@@ -22,6 +22,9 @@ public:
 
 
 public:
+	int GetNumThreads(void) const;
+
+public:
 	void Task(CTask* pTask, void* pParam, event_t* pEventSignal);
 
 	void Dispatch(void);
