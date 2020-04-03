@@ -36,6 +36,6 @@ private:
 	eastl::vector<Thread> m_threads;
 
 private:
+	eastl::unordered_map<event_t*, CTaskStack> m_tasks;
 	eastl::unordered_map<event_t*, event_t*> m_pDependence;
-	eastl::unordered_map<event_t*, std::atomic<CTask*>> m_pTaskStacks;
 };

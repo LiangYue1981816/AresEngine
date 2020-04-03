@@ -36,5 +36,5 @@ private:
 	eastl::vector<Thread> m_threads;
 
 private:
-	std::atomic<CTask*> m_pTaskStack;
+	CTaskStack m_tasks;
 };

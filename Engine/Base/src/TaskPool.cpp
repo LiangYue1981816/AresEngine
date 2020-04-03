@@ -2,7 +2,6 @@
 
 
 CTaskPool::CTaskPool(const char* szName, int numThreads)
-	: m_pTaskStack(nullptr)
 {
 	if (numThreads == -1) {
 		numThreads = NumCpuCores();
@@ -11,7 +10,7 @@ CTaskPool::CTaskPool(const char* szName, int numThreads)
 	if (numThreads > MAX_THREAD_COUNT) {
 		numThreads = MAX_THREAD_COUNT;
 	}
-	
+
 	m_bExit = false;
 	m_threads.resize(numThreads);
 
@@ -49,10 +48,7 @@ void CTaskPool::Task(CTask* pTask, void* pParam, event_t* pEventSignal)
 	pTask->SetEvent(pEventSignal);
 	pTask->Unsignal();
 
-	CTask* pTaskHead = m_pTaskStack.load(std::memory_order_relaxed);
-	do {
-		pTask->pNext = pTaskHead;
-	} while (!m_pTaskStack.compare_exchange_weak(pTaskHead, pTask, std::memory_order_release, std::memory_order_relaxed));
+	m_tasks.Push(pTask);
 }
 
 void CTaskPool::Dispatch(void)
@@ -85,20 +81,9 @@ void* CTaskPool::TaskThread(void* pParam)
 			event_reset(&pThread->eventFinish);
 			{
 				do {
-					CTask* pTaskNext = nullptr;
-					CTask* pTaskHead = pThread->pTaskPool->m_pTaskStack.load(std::memory_order_relaxed);
-					do {
-						if (pTaskHead) {
-							pTaskNext = pTaskHead->pNext;
-						}
-						else {
-							break;
-						}
-					} while (!pThread->pTaskPool->m_pTaskStack.compare_exchange_weak(pTaskHead, pTaskNext, std::memory_order_release, std::memory_order_relaxed));
-
-					if (pTaskHead) {
-						pTaskHead->TaskFunc(pThread->indexThread);
-						pTaskHead->Signal();
+					if (CTask* pTask = pThread->pTaskPool->m_tasks.Pop()) {
+						pTask->TaskFunc(pThread->indexThread);
+						pTask->Signal();
 					}
 					else {
 						break;

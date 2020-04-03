@@ -48,8 +48,7 @@ void CTaskGraph::Task(CTask* pTask, void* pParam, event_t* pEventSignal, event_t
 	pTask->SetEvent(pEventSignal);
 	pTask->Unsignal();
 
-	pTask->pNext = m_pTaskStacks[pEventWait];
-	m_pTaskStacks[pEventWait] = pTask;
+	m_tasks[pEventWait].Push(pTask);
 	m_pDependence[pEventWait] = pEventSignal;
 }
 
@@ -67,7 +66,7 @@ void CTaskGraph::Wait(void)
 		event_wait(&m_threads[indexThread].eventFinish);
 	}
 
-	m_pTaskStacks.clear();
+	m_tasks.clear();
 	m_pDependence.clear();
 }
 
@@ -86,30 +85,22 @@ void* CTaskGraph::TaskThread(void* pParam)
 			event_reset(&pThread->eventFinish);
 			{
 				event_t* pEvent = nullptr;
+
 				do {
 					if (pEvent) {
 						event_wait(pEvent);
 					}
 
-					if (pThread->pTaskGraph->m_pTaskStacks.find(pEvent) == pThread->pTaskGraph->m_pTaskStacks.end()) {
+					const auto& itTaskStack = pThread->pTaskGraph->m_tasks.find(pEvent);
+
+					if (itTaskStack == pThread->pTaskGraph->m_tasks.end()) {
 						break;
 					}
 
 					do {
-						CTask* pTaskNext = nullptr;
-						CTask* pTaskHead = pThread->pTaskGraph->m_pTaskStacks[pEvent].load(std::memory_order_relaxed);
-						do {
-							if (pTaskHead) {
-								pTaskNext = pTaskHead->pNext;
-							}
-							else {
-								break;
-							}
-						} while (!pThread->pTaskGraph->m_pTaskStacks[pEvent].compare_exchange_weak(pTaskHead, pTaskNext, std::memory_order_release, std::memory_order_relaxed));
-
-						if (pTaskHead) {
-							pTaskHead->TaskFunc(pThread->indexThread);
-							pTaskHead->Signal();
+						if (CTask* pTask = itTaskStack->second.Pop()) {
+							pTask->TaskFunc(pThread->indexThread);
+							pTask->Signal();
 						}
 						else {
 							break;

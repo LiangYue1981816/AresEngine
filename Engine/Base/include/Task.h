@@ -6,6 +6,7 @@ class CALL_API CTask
 {
 	friend class CTaskPool;
 	friend class CTaskGraph;
+	friend class CTaskStack;
 
 
 public:
@@ -101,4 +102,61 @@ public:
 
 private:
 	std::function<void()> m_function;
+};
+
+
+class CALL_API CTaskStack
+{
+public:
+	CTaskStack(void)
+		: m_pTaskStack(nullptr)
+	{
+
+	}
+	CTaskStack(const CTaskStack& copy)
+		: m_pTaskStack(copy.Head())
+	{
+
+	}
+	virtual ~CTaskStack(void)
+	{
+
+	}
+
+
+public:
+	void Push(CTask* pTask)
+	{
+		CTask* pTaskHead = m_pTaskStack.load(std::memory_order_relaxed);
+
+		do {
+			pTask->pNext = pTaskHead;
+		} while (!m_pTaskStack.compare_exchange_weak(pTaskHead, pTask, std::memory_order_release, std::memory_order_relaxed));
+	}
+
+	CTask* Pop(void)
+	{
+		CTask* pTaskNext = nullptr;
+		CTask* pTaskHead = m_pTaskStack.load(std::memory_order_relaxed);
+
+		do {
+			if (pTaskHead) {
+				pTaskNext = pTaskHead->pNext;
+			}
+			else {
+				break;
+			}
+		} while (!m_pTaskStack.compare_exchange_weak(pTaskHead, pTaskNext, std::memory_order_release, std::memory_order_relaxed));
+
+		return pTaskHead;
+	}
+
+	CTask* Head(void) const
+	{
+		return m_pTaskStack.load(std::memory_order_relaxed);
+	}
+
+
+private:
+	std::atomic<CTask*> m_pTaskStack;
 };
