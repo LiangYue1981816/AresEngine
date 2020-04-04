@@ -2,11 +2,11 @@
 #include "PreHeader.h"
 
 
-class CALL_API CStream
+class CALL_API CFileStream
 {
 public:
-	CStream(void);
-	virtual ~CStream(void);
+	CFileStream(void);
+	virtual ~CFileStream(void);
 
 
 private:
@@ -19,7 +19,7 @@ public:
 public:
 	bool SetStream(uint8_t* pAddress, size_t size);
 
-	bool CopyFrom(const CStream* pStream);
+	bool CopyFrom(const CFileStream* pStream);
 	bool LoadFromFile(const char* szFileName);
 	bool LoadFromPack(const char* szPackName, const char* szFileName);
 	bool LoadFromPack(ZZIP_DIR* pPack, const char* szFileName);
@@ -72,13 +72,13 @@ private:
 
 
 template<typename T>
-inline CStream& operator << (CStream& stream, T& value)
+inline CFileStream& operator << (CFileStream& stream, T& value)
 {
 	stream.Read((void*)& value, sizeof(value), 1);
 	return stream;
 }
 
-inline CStream& operator << (CStream& stream, char*& value)
+inline CFileStream& operator << (CFileStream& stream, char*& value)
 {
 	size_t count;
 	stream << count;
@@ -86,7 +86,7 @@ inline CStream& operator << (CStream& stream, char*& value)
 	return stream;
 }
 
-inline CStream& operator << (CStream& stream, eastl::string& value)
+inline CFileStream& operator << (CFileStream& stream, eastl::string& value)
 {
 	size_t count;
 	stream << count; value.resize(count);
@@ -95,7 +95,7 @@ inline CStream& operator << (CStream& stream, eastl::string& value)
 }
 
 template<typename T>
-inline CStream& operator << (CStream& stream, eastl::vector<T>& values)
+inline CFileStream& operator << (CFileStream& stream, eastl::vector<T>& values)
 {
 	values.clear();
 
@@ -112,7 +112,7 @@ inline CStream& operator << (CStream& stream, eastl::vector<T>& values)
 }
 
 template<typename K, typename T>
-inline CStream& operator << (CStream& stream, eastl::map<K, T>& values)
+inline CFileStream& operator << (CFileStream& stream, eastl::map<K, T>& values)
 {
 	values.clear();
 
