@@ -56,7 +56,7 @@ private:
 	InstanceData m_instanceData[2];
 
 private:
-	int m_indexLOD;
+	int m_LODIndex;
 	LODMeshDraw m_LODMeshDraws[MAX_LOD_COUNT];
 
 private:
