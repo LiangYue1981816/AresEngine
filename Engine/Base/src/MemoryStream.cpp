@@ -53,29 +53,6 @@ void CMemoryStream::Free(void)
 	m_position = 0;
 }
 
-bool CMemoryStream::CopyFrom(const CMemoryStream* pStream)
-{
-	if (pStream == nullptr) {
-		return false;
-	}
-
-	if (pStream->IsValid() == false) {
-		return false;
-	}
-
-	if (IsValid()) {
-		return false;
-	}
-
-	if (Alloc(pStream->GetFullSize()) == false) {
-		return false;
-	}
-
-	memcpy(m_pAddress, pStream->GetAddress(), pStream->GetFullSize());
-
-	return true;
-}
-
 bool CMemoryStream::SetStream(uint8_t* pAddress, size_t size)
 {
 	if (pAddress == nullptr) {

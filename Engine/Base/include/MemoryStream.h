@@ -16,7 +16,6 @@ public:
 	bool Alloc(size_t size);
 	void Free(void);
 
-	bool CopyFrom(const CMemoryStream* pStream);
 	bool SetStream(uint8_t* pAddress, size_t size);
 
 public:
