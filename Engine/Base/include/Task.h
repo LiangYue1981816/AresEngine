@@ -10,64 +10,22 @@ class CALL_API CTask
 
 
 public:
-	CTask(void)
-		: m_pParam(nullptr)
-		, m_pEvent(nullptr)
-
-		, pNext(nullptr)
-	{
-
-	}
-	virtual ~CTask(void)
-	{
-
-	}
+	CTask(void);
+	virtual ~CTask(void);
 
 
 public:
-	void SetParam(void* pParam)
-	{
-		m_pParam = pParam;
-	}
+	void SetParam(void* pParam);
+	void SetEvent(event_t* pEvent);
 
-	void SetEvent(event_t* pEvent)
-	{
-		m_pEvent = pEvent;
-	}
+	void Signal(void);
+	void Unsignal(void);
 
-	void Signal(void)
-	{
-		if (m_pEvent) {
-			event_signal(m_pEvent);
-		}
-	}
-
-	void Unsignal(void)
-	{
-		if (m_pEvent) {
-			event_unsignal(m_pEvent);
-		}
-	}
-
-	void Wait(void)
-	{
-		if (m_pEvent) {
-			event_wait(m_pEvent);
-		}
-	}
-
-	void Wait(int msec)
-	{
-		if (m_pEvent) {
-			event_wait_timeout(m_pEvent, msec);
-		}
-	}
+	void Wait(void);
+	void Wait(int msec);
 
 private:
-	virtual void TaskFunc(int indexThread)
-	{
-
-	}
+	virtual void TaskFunc(int indexThread);
 
 
 private:
@@ -83,21 +41,12 @@ class CALL_API CTaskLambda : public CTask
 {
 public:
 	template<class Func, class... Args>
-	CTaskLambda(Func&& func, Args&& ... args)
-	{
-		m_function = [=]() { func(args...); };
-	}
-	virtual ~CTaskLambda(void)
-	{
-
-	}
+	CTaskLambda(Func&& func, Args&& ... args);
+	virtual ~CTaskLambda(void);
 
 
 public:
-	virtual void TaskFunc(int indexThread)
-	{
-		m_function();
-	}
+	virtual void TaskFunc(int indexThread);
 
 
 private:
@@ -108,53 +57,15 @@ private:
 class CALL_API CTaskStack
 {
 public:
-	CTaskStack(void)
-		: m_pTaskStack(nullptr)
-	{
-
-	}
-	CTaskStack(const CTaskStack& copy)
-		: m_pTaskStack(copy.Head())
-	{
-
-	}
-	virtual ~CTaskStack(void)
-	{
-
-	}
+	CTaskStack(void);
+	CTaskStack(const CTaskStack& copy);
+	virtual ~CTaskStack(void);
 
 
 public:
-	void Push(CTask* pTask)
-	{
-		CTask* pTaskHead = m_pTaskStack.load(std::memory_order_relaxed);
-
-		do {
-			pTask->pNext = pTaskHead;
-		} while (!m_pTaskStack.compare_exchange_weak(pTaskHead, pTask, std::memory_order_release, std::memory_order_relaxed));
-	}
-
-	CTask* Pop(void)
-	{
-		CTask* pTaskNext = nullptr;
-		CTask* pTaskHead = m_pTaskStack.load(std::memory_order_relaxed);
-
-		do {
-			if (pTaskHead) {
-				pTaskNext = pTaskHead->pNext;
-			}
-			else {
-				break;
-			}
-		} while (!m_pTaskStack.compare_exchange_weak(pTaskHead, pTaskNext, std::memory_order_release, std::memory_order_relaxed));
-
-		return pTaskHead;
-	}
-
-	CTask* Head(void) const
-	{
-		return m_pTaskStack.load(std::memory_order_relaxed);
-	}
+	void Push(CTask* pTask);
+	CTask* Pop(void);
+	CTask* Head(void) const;
 
 
 private:

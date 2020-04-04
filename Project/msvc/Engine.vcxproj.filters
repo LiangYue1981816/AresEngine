@@ -2405,6 +2405,9 @@
     <ClCompile Include="..\..\Engine\RenderSystem\src\PassDeferredLighting.cpp">
       <Filter>Engine\RenderSystem\Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Engine\Base\src\Task.cpp">
+      <Filter>Engine\Base\Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\..\Engine\ThirdParty\rttr\CMakeLists.txt">

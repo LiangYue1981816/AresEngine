@@ -623,6 +623,7 @@
     <ClCompile Include="..\..\Engine\Base\src\nvwa\debug_new.cpp" />
     <ClCompile Include="..\..\Engine\Base\src\nvwa\operator_new.cpp" />
     <ClCompile Include="..\..\Engine\Base\src\Stream.cpp" />
+    <ClCompile Include="..\..\Engine\Base\src\Task.cpp" />
     <ClCompile Include="..\..\Engine\Base\src\TaskGraph.cpp" />
     <ClCompile Include="..\..\Engine\Base\src\TaskPool.cpp" />
     <ClCompile Include="..\..\Engine\Base\src\Utils.cpp" />
