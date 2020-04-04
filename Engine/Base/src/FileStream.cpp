@@ -23,6 +23,11 @@ CFileStream::~CFileStream(void)
 	Free();
 }
 
+bool CFileStream::IsValid(void) const
+{
+	return m_pAddress != nullptr && m_size > 0;
+}
+
 bool CFileStream::Alloc(size_t size)
 {
 	if (size == 0) {
@@ -55,9 +60,31 @@ void CFileStream::Free(void)
 	m_position = 0;
 }
 
-bool CFileStream::IsValid(void) const
+bool CFileStream::CopyFrom(const CFileStream* pStream)
 {
-	return m_pAddress != nullptr && m_size > 0;
+	if (pStream == nullptr) {
+		return false;
+	}
+
+	if (pStream->IsValid() == false) {
+		return false;
+	}
+
+	if (IsValid()) {
+		return false;
+	}
+
+	if (Alloc(pStream->GetFullSize()) == false) {
+		return false;
+	}
+
+	SetName(pStream->GetName());
+	SetPack(pStream->GetPack());
+	SetPackName(pStream->GetPackName());
+	SetFileName(pStream->GetFileName());
+	memcpy(m_pAddress, pStream->GetAddress(), pStream->GetFullSize());
+
+	return true;
 }
 
 bool CFileStream::SetStream(uint8_t* pAddress, size_t size)
@@ -83,133 +110,111 @@ bool CFileStream::SetStream(uint8_t* pAddress, size_t size)
 	return true;
 }
 
-bool CFileStream::CopyFrom(const CFileStream* pStream)
-{
-	Free();
-
-	if (pStream == nullptr) {
-		return false;
-	}
-
-	if (pStream->IsValid() == false) {
-		return false;
-	}
-
-	if (Alloc(pStream->GetFullSize()) == false) {
-		return false;
-	}
-
-	SetName(pStream->GetName());
-	SetPack(pStream->GetPack());
-	SetPackName(pStream->GetPackName());
-	SetFileName(pStream->GetFileName());
-	memcpy(m_pAddress, pStream->GetAddress(), pStream->GetFullSize());
-
-	return true;
-}
-
 bool CFileStream::LoadFromFile(const char* szFileName)
 {
-	Free();
-	{
-		if (szFileName == nullptr) {
-			return false;
-		}
-
-		if (FILE* pFile = fopen(szFileName, "rb")) {
-			do {
-				if (Alloc(fsize(pFile)) == false) {
-					break;
-				}
-
-				if (m_size != fread(m_pAddress, 1, m_size, pFile)) {
-					break;
-				}
-
-				SetFileName(szFileName);
-				fclose(pFile);
-
-				return true;
-			} while (false);
-
-			fclose(pFile);
-		}
+	if (szFileName == nullptr) {
+		return false;
 	}
-	Free();
+
+	if (IsValid()) {
+		return false;
+	}
+
+	if (FILE* pFile = fopen(szFileName, "rb")) {
+		do {
+			if (Alloc(fsize(pFile)) == false) {
+				break;
+			}
+
+			if (m_size != fread(m_pAddress, 1, m_size, pFile)) {
+				break;
+			}
+
+			SetFileName(szFileName);
+			fclose(pFile);
+
+			return true;
+		} while (false);
+
+		fclose(pFile);
+	}
+
 	return false;
 }
 
 bool CFileStream::LoadFromPack(const char* szPackName, const char* szFileName)
 {
-	Free();
-	{
-		if (szPackName == nullptr) {
-			return false;
-		}
-
-		if (szFileName == nullptr) {
-			return false;
-		}
-
-		if (ZZIP_DIR* pPack = zzip_opendir(szPackName)) {
-			do {
-				if (LoadFromPack(pPack, szFileName) == false) {
-					break;
-				}
-
-				SetPackName(szPackName);
-				SetFileName(szFileName);
-				zzip_closedir(pPack);
-
-				return true;
-			} while (false);
-
-			zzip_closedir(pPack);
-		}
+	if (szPackName == nullptr) {
+		return false;
 	}
-	Free();
+
+	if (szFileName == nullptr) {
+		return false;
+	}
+
+	if (IsValid()) {
+		return false;
+	}
+
+	if (ZZIP_DIR* pPack = zzip_opendir(szPackName)) {
+		do {
+			if (LoadFromPack(pPack, szFileName) == false) {
+				break;
+			}
+
+			SetPackName(szPackName);
+			SetFileName(szFileName);
+			zzip_closedir(pPack);
+
+			return true;
+		} while (false);
+
+		zzip_closedir(pPack);
+	}
+
 	return false;
 }
 
 bool CFileStream::LoadFromPack(ZZIP_DIR* pPack, const char* szFileName)
 {
-	Free();
-	{
-		if (pPack == nullptr) {
-			return false;
-		}
-
-		if (szFileName == nullptr) {
-			return false;
-		}
-
-		if (ZZIP_FILE* pFile = zzip_file_open(pPack, szFileName, ZZIP_ONLYZIP | ZZIP_CASELESS)) {
-			do {
-				ZZIP_STAT zstat;
-
-				if (zzip_file_stat(pFile, &zstat) != ZZIP_NO_ERROR) {
-					break;
-				}
-
-				if (Alloc(zstat.st_size) == false) {
-					break;
-				}
-
-				if (m_size != zzip_file_read(pFile, m_pAddress, m_size)) {
-					break;
-				}
-
-				SetPack(pPack);
-				SetFileName(szFileName);
-				zzip_file_close(pFile);
-
-				return true;
-			} while (false);
-
-			zzip_file_close(pFile);
-		}
+	if (pPack == nullptr) {
+		return false;
 	}
-	Free();
+
+	if (szFileName == nullptr) {
+		return false;
+	}
+
+	if (IsValid()) {
+		return false;
+	}
+
+	if (ZZIP_FILE* pFile = zzip_file_open(pPack, szFileName, ZZIP_ONLYZIP | ZZIP_CASELESS)) {
+		do {
+			ZZIP_STAT zstat;
+
+			if (zzip_file_stat(pFile, &zstat) != ZZIP_NO_ERROR) {
+				break;
+			}
+
+			if (Alloc(zstat.st_size) == false) {
+				break;
+			}
+
+			if (m_size != zzip_file_read(pFile, m_pAddress, m_size)) {
+				break;
+			}
+
+			SetPack(pPack);
+			SetFileName(szFileName);
+			zzip_file_close(pFile);
+
+			return true;
+		} while (false);
+
+		zzip_file_close(pFile);
+	}
+
 	return false;
 }
 

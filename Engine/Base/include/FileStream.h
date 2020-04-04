@@ -9,17 +9,17 @@ public:
 	virtual ~CFileStream(void);
 
 
-private:
-	bool Alloc(size_t size);
-	void Free(void);
-
 public:
 	bool IsValid(void) const;
 
 public:
-	bool SetStream(uint8_t* pAddress, size_t size);
+	bool Alloc(size_t size);
+	void Free(void);
 
 	bool CopyFrom(const CFileStream* pStream);
+	bool SetStream(uint8_t* pAddress, size_t size);
+
+public:
 	bool LoadFromFile(const char* szFileName);
 	bool LoadFromPack(const char* szPackName, const char* szFileName);
 	bool LoadFromPack(ZZIP_DIR* pPack, const char* szFileName);
@@ -69,63 +69,3 @@ private:
 	int m_size;
 	int m_position;
 };
-
-
-template<typename T>
-inline CFileStream& operator << (CFileStream& stream, T& value)
-{
-	stream.Read((void*)& value, sizeof(value), 1);
-	return stream;
-}
-
-inline CFileStream& operator << (CFileStream& stream, char*& value)
-{
-	size_t count;
-	stream << count;
-	stream.Read((void*)value, sizeof(char), count);
-	return stream;
-}
-
-inline CFileStream& operator << (CFileStream& stream, eastl::string& value)
-{
-	size_t count;
-	stream << count; value.resize(count);
-	stream.Read((void*)value.data(), sizeof(char), count);
-	return stream;
-}
-
-template<typename T>
-inline CFileStream& operator << (CFileStream& stream, eastl::vector<T>& values)
-{
-	values.clear();
-
-	size_t count;
-	stream << count;
-
-	for (size_t index = 0; index < count; index++) {
-		T value;
-		stream << value;
-		values.emplace_back(value);
-	}
-
-	return stream;
-}
-
-template<typename K, typename T>
-inline CFileStream& operator << (CFileStream& stream, eastl::map<K, T>& values)
-{
-	values.clear();
-
-	size_t count;
-	stream << count;
-
-	for (size_t index = 0; index < count; index++) {
-		K key;
-		T value;
-		stream << key;
-		stream << value;
-		values.insert(eastl::map<K, T>::value_type(key, value));
-	}
-
-	return stream;
-}
