@@ -6,6 +6,9 @@ CComponentPointLight::CComponentPointLight(uint32_t name)
 	, m_indexInstance(INVALID_VALUE)
 	, m_bNeedUpdateInstanceData{ false }
 
+	, m_distance2(0.0f)
+	, m_screenSize2(0.0f)
+
 	, m_cullDistance2(FLT_MAX)
 	, m_cullScreenSize2(0.0f)
 {
@@ -20,6 +23,9 @@ CComponentPointLight::CComponentPointLight(const CComponentPointLight& component
 	: CComponent(component)
 	, m_indexInstance(INVALID_VALUE)
 	, m_bNeedUpdateInstanceData{ false }
+
+	, m_distance2(0.0f)
+	, m_screenSize2(0.0f)
 
 	, m_cullDistance2(FLT_MAX)
 	, m_cullScreenSize2(0.0f)
