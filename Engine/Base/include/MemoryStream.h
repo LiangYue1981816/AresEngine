@@ -2,11 +2,11 @@
 #include "PreHeader.h"
 
 
-class CALL_API CStream
+class CALL_API CMemoryStream
 {
 public:
-	CStream(void);
-	virtual ~CStream(void);
+	CMemoryStream(void);
+	virtual ~CMemoryStream(void);
 
 
 private:
@@ -19,7 +19,7 @@ public:
 public:
 	bool SetStream(uint8_t* pAddress, size_t size);
 
-	bool CopyFrom(const CStream* pStream);
+	bool CopyFrom(const CMemoryStream* pStream);
 	bool LoadFromFile(const char* szFileName);
 	bool LoadFromPack(const char* szPackName, const char* szFileName);
 	bool LoadFromPack(ZZIP_DIR* pPack, const char* szFileName);
@@ -72,13 +72,13 @@ private:
 
 
 template<typename T>
-inline CStream& operator << (CStream& stream, T& value)
+inline CMemoryStream& operator << (CMemoryStream& stream, T& value)
 {
 	stream.Read((void*)& value, sizeof(value), 1);
 	return stream;
 }
 
-inline CStream& operator << (CStream& stream, char*& value)
+inline CMemoryStream& operator << (CMemoryStream& stream, char*& value)
 {
 	size_t count;
 	stream << count;
@@ -86,7 +86,7 @@ inline CStream& operator << (CStream& stream, char*& value)
 	return stream;
 }
 
-inline CStream& operator << (CStream& stream, eastl::string& value)
+inline CMemoryStream& operator << (CMemoryStream& stream, eastl::string& value)
 {
 	size_t count;
 	stream << count; value.resize(count);
@@ -95,7 +95,7 @@ inline CStream& operator << (CStream& stream, eastl::string& value)
 }
 
 template<typename T>
-inline CStream& operator << (CStream& stream, eastl::vector<T>& values)
+inline CMemoryStream& operator << (CMemoryStream& stream, eastl::vector<T>& values)
 {
 	values.clear();
 
@@ -112,7 +112,7 @@ inline CStream& operator << (CStream& stream, eastl::vector<T>& values)
 }
 
 template<typename K, typename T>
-inline CStream& operator << (CStream& stream, eastl::map<K, T>& values)
+inline CMemoryStream& operator << (CMemoryStream& stream, eastl::map<K, T>& values)
 {
 	values.clear();
 

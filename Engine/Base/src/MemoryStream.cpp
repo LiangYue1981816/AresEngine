@@ -1,7 +1,7 @@
 #include "BaseHeader.h"
 
 
-CStream::CStream(void)
+CMemoryStream::CMemoryStream(void)
 	: m_dwName(INVALID_HASHNAME)
 	, m_szName{ 0 }
 
@@ -18,12 +18,12 @@ CStream::CStream(void)
 
 }
 
-CStream::~CStream(void)
+CMemoryStream::~CMemoryStream(void)
 {
 	Free();
 }
 
-bool CStream::Alloc(size_t size)
+bool CMemoryStream::Alloc(size_t size)
 {
 	if (size == 0) {
 		return false;
@@ -42,7 +42,7 @@ bool CStream::Alloc(size_t size)
 	return true;
 }
 
-void CStream::Free(void)
+void CMemoryStream::Free(void)
 {
 	if (m_bAlloced) {
 		delete[] m_pAddress;
@@ -55,12 +55,12 @@ void CStream::Free(void)
 	m_position = 0;
 }
 
-bool CStream::IsValid(void) const
+bool CMemoryStream::IsValid(void) const
 {
 	return m_pAddress != nullptr && m_size > 0;
 }
 
-bool CStream::SetStream(uint8_t* pAddress, size_t size)
+bool CMemoryStream::SetStream(uint8_t* pAddress, size_t size)
 {
 	if (pAddress == nullptr) {
 		return false;
@@ -83,7 +83,7 @@ bool CStream::SetStream(uint8_t* pAddress, size_t size)
 	return true;
 }
 
-bool CStream::CopyFrom(const CStream* pStream)
+bool CMemoryStream::CopyFrom(const CMemoryStream* pStream)
 {
 	Free();
 
@@ -108,7 +108,7 @@ bool CStream::CopyFrom(const CStream* pStream)
 	return true;
 }
 
-bool CStream::LoadFromFile(const char* szFileName)
+bool CMemoryStream::LoadFromFile(const char* szFileName)
 {
 	Free();
 	{
@@ -139,7 +139,7 @@ bool CStream::LoadFromFile(const char* szFileName)
 	return false;
 }
 
-bool CStream::LoadFromPack(const char* szPackName, const char* szFileName)
+bool CMemoryStream::LoadFromPack(const char* szPackName, const char* szFileName)
 {
 	Free();
 	{
@@ -171,7 +171,7 @@ bool CStream::LoadFromPack(const char* szPackName, const char* szFileName)
 	return false;
 }
 
-bool CStream::LoadFromPack(ZZIP_DIR* pPack, const char* szFileName)
+bool CMemoryStream::LoadFromPack(ZZIP_DIR* pPack, const char* szFileName)
 {
 	Free();
 	{
@@ -213,7 +213,7 @@ bool CStream::LoadFromPack(ZZIP_DIR* pPack, const char* szFileName)
 	return false;
 }
 
-bool CStream::Reload(void)
+bool CMemoryStream::Reload(void)
 {
 	ZZIP_DIR* pPack = m_pPack;
 
@@ -238,7 +238,7 @@ bool CStream::Reload(void)
 	return false;
 }
 
-bool CStream::SetName(const char* szName)
+bool CMemoryStream::SetName(const char* szName)
 {
 	if (szName == nullptr) {
 		return false;
@@ -250,17 +250,17 @@ bool CStream::SetName(const char* szName)
 	return true;
 }
 
-const char* CStream::GetName(void) const
+const char* CMemoryStream::GetName(void) const
 {
 	return m_szName;
 }
 
-uint32_t CStream::GetHashName(void) const
+uint32_t CMemoryStream::GetHashName(void) const
 {
 	return m_dwName;
 }
 
-bool CStream::SetFileName(const char* szFileName)
+bool CMemoryStream::SetFileName(const char* szFileName)
 {
 	if (szFileName == nullptr) {
 		return false;
@@ -279,12 +279,12 @@ bool CStream::SetFileName(const char* szFileName)
 	return true;
 }
 
-const char* CStream::GetFileName(void) const
+const char* CMemoryStream::GetFileName(void) const
 {
 	return m_szFileName;
 }
 
-bool CStream::SetPackName(const char* szPackName)
+bool CMemoryStream::SetPackName(const char* szPackName)
 {
 	if (szPackName == nullptr) {
 		return false;
@@ -295,12 +295,12 @@ bool CStream::SetPackName(const char* szPackName)
 	return true;
 }
 
-const char* CStream::GetPackName(void) const
+const char* CMemoryStream::GetPackName(void) const
 {
 	return m_szPackName;
 }
 
-bool CStream::SetPack(ZZIP_DIR* pPack)
+bool CMemoryStream::SetPack(ZZIP_DIR* pPack)
 {
 	if (pPack == nullptr) {
 		return false;
@@ -311,37 +311,37 @@ bool CStream::SetPack(ZZIP_DIR* pPack)
 	return true;
 }
 
-ZZIP_DIR* CStream::GetPack(void) const
+ZZIP_DIR* CMemoryStream::GetPack(void) const
 {
 	return m_pPack;
 }
 
-size_t CStream::GetFullSize(void) const
+size_t CMemoryStream::GetFullSize(void) const
 {
 	return m_size;
 }
 
-size_t CStream::GetFreeSize(void) const
+size_t CMemoryStream::GetFreeSize(void) const
 {
 	return m_size - m_position;
 }
 
-size_t CStream::GetCurrentPosition(void) const
+size_t CMemoryStream::GetCurrentPosition(void) const
 {
 	return m_position;
 }
 
-void* CStream::GetAddress(void) const
+void* CMemoryStream::GetAddress(void) const
 {
 	return m_pAddress;
 }
 
-void* CStream::GetCurrentAddress(void) const
+void* CMemoryStream::GetCurrentAddress(void) const
 {
 	return m_pAddress + m_position;
 }
 
-size_t CStream::Read(void* pBuffer, size_t size, size_t count)
+size_t CMemoryStream::Read(void* pBuffer, size_t size, size_t count)
 {
 	if (pBuffer == nullptr) {
 		return 0;
@@ -366,7 +366,7 @@ size_t CStream::Read(void* pBuffer, size_t size, size_t count)
 	return readSize / size;
 }
 
-bool CStream::Seek(int offset, int origin)
+bool CMemoryStream::Seek(int offset, int origin)
 {
 	if (IsValid() == false) {
 		return false;
@@ -414,7 +414,7 @@ bool CStream::Seek(int offset, int origin)
 	return true;
 }
 
-bool CStream::IsEOF(void) const
+bool CMemoryStream::IsEOF(void) const
 {
 	return GetFreeSize() == 0;
 }
