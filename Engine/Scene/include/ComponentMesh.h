@@ -49,3 +49,5 @@ private:
 	float m_cullDistance2;
 	float m_cullScreenSize2;
 };
+
+typedef CComponentPtr<CComponentMesh> CComponentMeshPtr;

@@ -10,8 +10,8 @@ public:
 	virtual ~CComponentSkin(void);
 
 public:
-	virtual void TaskUpdate(float gameTime, float deltaTime);
-	virtual void TaskUpdateCamera(CGfxCamera* pCamera, CRenderQueue* pRenderQueue, uint32_t mask, bool bComputeLOD, int indexThread);
+	virtual bool TaskUpdate(float gameTime, float deltaTime);
+	virtual bool TaskUpdateCamera(CGfxCamera* pCamera, CRenderQueue* pRenderQueue, uint32_t mask, bool bComputeLOD, int indexThread);
 
 
 private:

@@ -20,12 +20,12 @@ CComponentSkin::~CComponentSkin(void)
 	RenderSystem()->RemoveInstance(m_indexInstance);
 }
 
-void CComponentSkin::TaskUpdate(float gameTime, float deltaTime)
+bool CComponentSkin::TaskUpdate(float gameTime, float deltaTime)
 {
-
+	return true;
 }
 
-void CComponentSkin::TaskUpdateCamera(CGfxCamera* pCamera, CRenderQueue* pRenderQueue, uint32_t mask, bool bComputeLOD, int indexThread)
+bool CComponentSkin::TaskUpdateCamera(CGfxCamera* pCamera, CRenderQueue* pRenderQueue, uint32_t mask, bool bComputeLOD, int indexThread)
 {
-
+	return true;
 }

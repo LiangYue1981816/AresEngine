@@ -22,10 +22,10 @@ CComponentParticle::~CComponentParticle(void)
 
 bool CComponentParticle::TaskUpdate(float gameTime, float deltaTime)
 {
-
+	return true;
 }
 
 bool CComponentParticle::TaskUpdateCamera(CGfxCamera* pCamera, CRenderQueue* pRenderQueue, uint32_t mask, bool bComputeLOD, int indexThread)
 {
-
+	return true;
 }

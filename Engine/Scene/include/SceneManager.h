@@ -4,8 +4,7 @@
 #include "ComponentManager.h"
 #include "Component.h"
 #include "ComponentMesh.h"
-#include "ComponentSkinMesh.h"
-#include "ComponentStaticMesh.h"
+#include "ComponentSkin.h"
 #include "ComponentParticle.h"
 #include "ComponentPointLight.h"
 

@@ -90,7 +90,7 @@ void CComponentPointLight::SetCullScreenSize(float screenSize)
 	m_cullScreenSize2 = screenSize * screenSize;
 }
 
-void CComponentPointLight::TaskUpdate(float gameTime, float deltaTime)
+bool CComponentPointLight::TaskUpdate(float gameTime, float deltaTime)
 {
 	int indexFrame = Engine()->GetFrameCount() % 2;
 
@@ -101,10 +101,15 @@ void CComponentPointLight::TaskUpdate(float gameTime, float deltaTime)
 		if (m_ptrMeshDraw && m_ptrMaterial) {
 			m_aabb = m_ptrMeshDraw->GetAABB() * m_instanceData[indexFrame].transformMatrix;
 		}
+
+		return true;
+	}
+	else {
+		return false;
 	}
 }
 
-void CComponentPointLight::TaskUpdateCamera(CGfxCamera* pCamera, CRenderQueue* pRenderQueue, uint32_t mask, bool bComputeLOD, int indexThread)
+bool CComponentPointLight::TaskUpdateCamera(CGfxCamera* pCamera, CRenderQueue* pRenderQueue, uint32_t mask, bool bComputeLOD, int indexThread)
 {
 	int indexFrame = 1 - Engine()->GetFrameCount() % 2;
 
@@ -113,19 +118,19 @@ void CComponentPointLight::TaskUpdateCamera(CGfxCamera* pCamera, CRenderQueue* p
 		m_screenSize2 = glm::min(glm::length2(m_aabb.size()) / glm::max(1.0f, m_distance2), 1.0f);
 
 		if ((m_ptrMeshDraw->GetMask() & mask) == 0) {
-			return;
+			return false;
 		}
 
 		if (m_distance2 > m_cullDistance2) {
-			return;
+			return false;
 		}
 
 		if (m_screenSize2 < m_cullScreenSize2) {
-			return;
+			return false;
 		}
 
 		if (pCamera->IsVisible(m_aabb) == false) {
-			return;
+			return false;
 		}
 
 		if (m_bNeedUpdateInstanceData[indexFrame]) {
@@ -135,5 +140,10 @@ void CComponentPointLight::TaskUpdateCamera(CGfxCamera* pCamera, CRenderQueue* p
 		}
 
 		pRenderQueue->Add(m_ptrMaterial, m_ptrMeshDraw, m_indexInstance, indexThread);
+
+		return true;
+	}
+	else {
+		return false;
 	}
 }
