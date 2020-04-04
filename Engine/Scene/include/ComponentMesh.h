@@ -35,7 +35,7 @@ private:
 private:
 	static const int MAX_LOD_COUNT = 8;
 
-	int m_index;
+	int m_indexLOD;
 
 	float m_distance2[MAX_LOD_COUNT];
 	float m_screenSize2[MAX_LOD_COUNT];
