@@ -4,25 +4,6 @@
 
 class CALL_API CComponentMesh : public CComponent
 {
-private:
-	typedef struct LODMeshDraw {
-		LODMeshDraw(void)
-		{
-			distance2 = 0.0f;
-			screenSize2 = 0.0f;
-			screenSizeFactor = 0.0f;
-		}
-
-		float distance2;
-		float screenSize2;
-		float screenSizeFactor;
-
-		glm::aabb aabb;
-		CGfxMaterialPtr ptrMaterial;
-		CGfxMeshDrawPtr ptrMeshDraw;
-	} LODMeshDraw;
-
-
 public:
 	CComponentMesh(uint32_t name);
 	CComponentMesh(const CComponentMesh& component);
@@ -52,12 +33,19 @@ private:
 	InstanceData m_instanceData[2];
 
 private:
-	float m_cullDistance2;
-	float m_cullScreenSize2;
-
-private:
 	static const int MAX_LOD_COUNT = 8;
 
-	int m_LODIndex;
-	LODMeshDraw m_LODMeshDraws[MAX_LOD_COUNT];
+	int m_index;
+
+	float m_distance2[MAX_LOD_COUNT];
+	float m_screenSize2[MAX_LOD_COUNT];
+	float m_screenSizeFactor[MAX_LOD_COUNT];
+
+	glm::aabb m_aabb[MAX_LOD_COUNT];
+	CGfxMaterialPtr m_ptrMaterial[MAX_LOD_COUNT];
+	CGfxMeshDrawPtr m_ptrMeshDraw[MAX_LOD_COUNT];
+
+private:
+	float m_cullDistance2;
+	float m_cullScreenSize2;
 };
