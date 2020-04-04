@@ -30,7 +30,7 @@ CPassShadow::CPassShadow(CRenderSystem* pRenderSystem)
 	, m_pShadowCamera{ nullptr }
 	, m_pShadowRenderQueue{ nullptr }
 	, m_factor(1.0f)
-	, m_splitFactors{ 0.0f, exp(-3.0f), exp(-2.0f), exp(-1.0f), exp(-0.0f) }
+	, m_splitFactors{ 0.0f, exp(-4.0f), exp(-3.0f), exp(-2.0f), exp(-1.0f) }
 {
 	for (int indexLevel = 0; indexLevel < 4; indexLevel++) {
 		m_pShadowCamera[indexLevel] = new CGfxCamera;
