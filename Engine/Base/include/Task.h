@@ -25,7 +25,7 @@ public:
 	void Wait(int msec);
 
 private:
-	virtual void TaskFunc(int indexThread);
+	virtual void TaskFunc(int indexThread) = 0;
 
 
 private:

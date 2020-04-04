@@ -53,11 +53,6 @@ void CTask::Wait(int msec)
 	}
 }
 
-void CTask::TaskFunc(int indexThread)
-{
-
-}
-
 
 template<class Func, class... Args>
 CTaskLambda::CTaskLambda(Func&& func, Args&& ... args)
