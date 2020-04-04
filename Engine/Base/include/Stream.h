@@ -129,3 +129,22 @@ inline CStream& operator << (CStream& stream, eastl::map<K, T>& values)
 
 	return stream;
 }
+
+template<typename K, typename T>
+inline CStream& operator << (CStream& stream, eastl::unordered_map<K, T>& values)
+{
+	values.clear();
+
+	size_t count;
+	stream << count;
+
+	for (size_t index = 0; index < count; index++) {
+		K key;
+		T value;
+		stream << key;
+		stream << value;
+		values.insert(eastl::unordered_map<K, T>::value_type(key, value));
+	}
+
+	return stream;
+}

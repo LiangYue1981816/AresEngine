@@ -148,7 +148,9 @@
     <ClInclude Include="..\..\Engine\BaseHeader.h" />
     <ClInclude Include="..\..\Engine\Base\include\Delegate.h" />
     <ClInclude Include="..\..\Engine\Base\include\FileManager.h" />
+    <ClInclude Include="..\..\Engine\Base\include\FileStream.h" />
     <ClInclude Include="..\..\Engine\Base\include\Lock.h" />
+    <ClInclude Include="..\..\Engine\Base\include\MemoryStream.h" />
     <ClInclude Include="..\..\Engine\Base\include\SharedPtr.h" />
     <ClInclude Include="..\..\Engine\Base\include\Stream.h" />
     <ClInclude Include="..\..\Engine\Base\include\Task.h" />
@@ -619,7 +621,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Engine\Base\src\FileManager.cpp" />
+    <ClCompile Include="..\..\Engine\Base\src\FileStream.cpp" />
     <ClCompile Include="..\..\Engine\Base\src\Lock.cpp" />
+    <ClCompile Include="..\..\Engine\Base\src\MemoryStream.cpp" />
     <ClCompile Include="..\..\Engine\Base\src\nvwa\debug_new.cpp" />
     <ClCompile Include="..\..\Engine\Base\src\nvwa\operator_new.cpp" />
     <ClCompile Include="..\..\Engine\Base\src\Stream.cpp" />
