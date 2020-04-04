@@ -2,30 +2,29 @@
 
 
 CComponentSkin::CComponentSkin(uint32_t name)
-	: CComponent(name)
-	, m_indexInstance(INVALID_VALUE)
+	: CComponentMesh(name)
 {
-	m_indexInstance = RenderSystem()->AddInstance();
+
 }
 
 CComponentSkin::CComponentSkin(const CComponentSkin& component)
-	: CComponent(component)
-	, m_indexInstance(INVALID_VALUE)
+	: CComponentMesh(component)
 {
-	m_indexInstance = RenderSystem()->AddInstance();
+
 }
 
 CComponentSkin::~CComponentSkin(void)
 {
-	RenderSystem()->RemoveInstance(m_indexInstance);
+
 }
 
 bool CComponentSkin::TaskUpdate(float gameTime, float deltaTime)
 {
+	CComponentMesh::TaskUpdate(gameTime, deltaTime);
 	return true;
 }
 
 bool CComponentSkin::TaskUpdateCamera(CGfxCamera* pCamera, CRenderQueue* pRenderQueue, uint32_t mask, bool bComputeLOD, int indexThread)
 {
-	return true;
+	return CComponentMesh::TaskUpdateCamera(pCamera, pRenderQueue, mask, bComputeLOD, indexThread);
 }
