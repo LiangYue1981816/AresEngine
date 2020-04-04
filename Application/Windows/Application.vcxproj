@@ -116,7 +116,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>GLES_VER=310;GLM_FORCE_AVX2;GLM_FORCE_DEPTH_ZERO_TO_ONE;NOMINMAX;MEMORY_ALLOCATOR;PLATFORM_WINDOWS;__LP64__;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>GLES_VER=310;GLM_FORCE_AVX2;GLM_FORCE_DEPTH_ZERO_TO_ONE;MEMORY_ALLOCATOR;PLATFORM_WINDOWS;VK_USE_PLATFORM_WIN32_KHR;__LP64__;_WINDOWS;_USRDLL;DEBUG;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(VULKAN_SDK)/include;$(VULKAN_SDK)/spirv-tools/include;$(VULKAN_SDK)/shaderc/libshaderc/include;$(VULKAN_SDK)/shaderc/libshaderc_util/include;../../Engine;../../Engine/ThirdParty;../../Engine/ThirdParty/eastl;../../Engine/ThirdParty/es;../../Engine/ThirdParty/event;../../Engine/ThirdParty/gl3w;../../Engine/ThirdParty/gli;../../Engine/ThirdParty/glm;../../Engine/ThirdParty/glslc;../../Engine/ThirdParty/lodepng;../../Engine/ThirdParty/pthread/include;../../Engine/ThirdParty/pthreadex;../../Engine/ThirdParty/rbtree;../../Engine/ThirdParty/spirv-cross;../../Engine/ThirdParty/tinyxml;../../Engine/ThirdParty/zlib;./;./nvwa</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4996;4312;4267;4251;4244;4311;4302</DisableSpecificWarnings>
@@ -136,7 +136,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>GLES_VER=310;GLM_FORCE_AVX2;GLM_FORCE_DEPTH_ZERO_TO_ONE;HAVE_EASTL;MEMORY_ALLOCATOR;PLATFORM_WINDOWS;__LP64__;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>GLES_VER=310;GLM_FORCE_AVX2;GLM_FORCE_DEPTH_ZERO_TO_ONE;MEMORY_ALLOCATOR;PLATFORM_WINDOWS;VK_USE_PLATFORM_WIN32_KHR;__LP64__;_WINDOWS;_USRDLL;NDEBUG;HAVE_EASTL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(VULKAN_SDK)/include;$(VULKAN_SDK)/spirv-tools/include;$(VULKAN_SDK)/shaderc/libshaderc/include;$(VULKAN_SDK)/shaderc/libshaderc_util/include;../../Engine;../../Engine/ThirdParty;../../Engine/ThirdParty/eastl;../../Engine/ThirdParty/es;../../Engine/ThirdParty/event;../../Engine/ThirdParty/gl3w;../../Engine/ThirdParty/gli;../../Engine/ThirdParty/glm;../../Engine/ThirdParty/glslc;../../Engine/ThirdParty/lodepng;../../Engine/ThirdParty/pthread/include;../../Engine/ThirdParty/pthreadex;../../Engine/ThirdParty/rbtree;../../Engine/ThirdParty/spirv-cross;../../Engine/ThirdParty/tinyxml;../../Engine/ThirdParty/zlib;./;./nvwa</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4996;4312;4267;4251;4244;4311;4302</DisableSpecificWarnings>
@@ -158,7 +158,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>GLES_VER=310;GLM_FORCE_AVX2;GLM_FORCE_DEPTH_ZERO_TO_ONE;HAVE_EASTL;MEMORY_ALLOCATOR;PLATFORM_WINDOWS;__LP64__;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>GLES_VER=310;GLM_FORCE_AVX2;GLM_FORCE_DEPTH_ZERO_TO_ONE;MEMORY_ALLOCATOR;PLATFORM_WINDOWS;VK_USE_PLATFORM_WIN32_KHR;__LP64__;_WINDOWS;_USRDLL;NDEBUG;HAVE_EASTL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(VULKAN_SDK)/include;$(VULKAN_SDK)/spirv-tools/include;$(VULKAN_SDK)/shaderc/libshaderc/include;$(VULKAN_SDK)/shaderc/libshaderc_util/include;../../Engine;../../Engine/ThirdParty;../../Engine/ThirdParty/eastl;../../Engine/ThirdParty/es;../../Engine/ThirdParty/event;../../Engine/ThirdParty/gl3w;../../Engine/ThirdParty/gli;../../Engine/ThirdParty/glm;../../Engine/ThirdParty/glslc;../../Engine/ThirdParty/lodepng;../../Engine/ThirdParty/pthread/include;../../Engine/ThirdParty/pthreadex;../../Engine/ThirdParty/rbtree;../../Engine/ThirdParty/spirv-cross;../../Engine/ThirdParty/tinyxml;../../Engine/ThirdParty/zlib;./;./nvwa</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4996;4312;4267;4251;4244;4311;4302</DisableSpecificWarnings>
