@@ -40,7 +40,7 @@ public:
 		m_pComponentManager = pComponentManager;
 	}
 
-	void TaskFunc(int indexThread, void* pParams)
+	void TaskFunc(int indexThread)
 	{
 		for (int index = m_indexBegin; index < m_indexEnd; index++) {
 			m_pComponentManager->GetComponentByIndex(index)->TaskUpdateCamera(m_pCamera, m_pRenderQueue, m_mask, m_bComputeLOD, indexThread);

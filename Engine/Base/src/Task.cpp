@@ -15,6 +15,11 @@ CTask::~CTask(void)
 
 }
 
+void* CTask::GetParam(void) const
+{
+	return m_pParam;
+}
+
 void CTask::SetParam(void* pParam)
 {
 	m_pParam = pParam;

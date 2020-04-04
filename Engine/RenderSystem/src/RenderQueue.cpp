@@ -20,7 +20,7 @@ public:
 	}
 
 public:
-	void TaskFunc(int indexThread, void* pParams)
+	void TaskFunc(int indexThread)
 	{
 		switch (order) {
 		case SortOrder::FrontToBack:
@@ -106,9 +106,9 @@ public:
 		return m_ptrCommandBuffer;
 	}
 
-	void TaskFunc(int indexThread, void* pParams)
+	void TaskFunc(int indexThread)
 	{
-		CRenderQueue* pRenderQueue = (CRenderQueue*)pParams;
+		CRenderQueue* pRenderQueue = (CRenderQueue*)GetParam();
 
 		m_ptrCommandBuffer = GfxRenderer()->NewCommandBuffer(indexThread, false);
 		pRenderQueue->CmdDrawThread(m_ptrCommandBuffer, m_ptrFrameBuffer, m_ptrRenderPass, m_indexSubpass, m_ptrDescriptorSetPass, m_ptrDescriptorSetInputAttachment, m_pPipeline, m_matPassName, m_scissor, m_viewport, m_mask);

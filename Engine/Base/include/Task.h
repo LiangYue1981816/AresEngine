@@ -15,6 +15,8 @@ public:
 
 
 public:
+	void* GetParam(void) const;
+
 	void SetParam(void* pParam);
 	void SetEvent(event_t* pEvent);
 
