@@ -102,6 +102,7 @@ void CRenderSystem::RenderTileBaseDeferredLighting(CTaskGraph& taskGraph, CCamer
 	uint32_t rtShadow = RENDER_TEXTURE_SHADOW;
 	{
 		m_pPassShadow->SetParamFactor(Settings()->GetValue("RenderSystem.Shadow.Factor"));
+		m_pPassShadow->SetParamSplitFactors(Settings()->GetValue("RenderSystem.Shadow.SplitFactor0"), Settings()->GetValue("RenderSystem.Shadow.SplitFactor1"), Settings()->GetValue("RenderSystem.Shadow.SplitFactor2"), Settings()->GetValue("RenderSystem.Shadow.SplitFactor3"));
 		m_pPassShadow->SetCamera(pCamera);
 		m_pPassShadow->SetOutputTexture(GetRenderTexture(rtShadow));
 		m_pPassShadow->Render(taskGraph, ptrCommandBuffer);
