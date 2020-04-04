@@ -12,33 +12,13 @@ public:
 public:
 	bool IsValid(void) const;
 
-public:
+private:
 	bool Alloc(size_t size);
 	void Free(void);
 
-	bool CopyFrom(const CFileStream* pStream);
-	bool SetStream(uint8_t* pAddress, size_t size);
-
 public:
 	bool LoadFromFile(const char* szFileName);
-	bool LoadFromPack(const char* szPackName, const char* szFileName);
 	bool LoadFromPack(ZZIP_DIR* pPack, const char* szFileName);
-
-	bool Reload(void);
-
-public:
-	bool SetName(const char* szName);
-	const char* GetName(void) const;
-	uint32_t GetHashName(void) const;
-
-	bool SetFileName(const char* szFileName);
-	const char* GetFileName(void) const;
-
-	bool SetPackName(const char* szPackName);
-	const char* GetPackName(void) const;
-
-	bool SetPack(ZZIP_DIR* pPack);
-	ZZIP_DIR* GetPack(void) const;
 
 public:
 	size_t GetFullSize(void) const;
@@ -55,12 +35,9 @@ public:
 
 
 private:
-	uint32_t m_dwName;
-	char m_szName[_MAX_STRING];
-
+	FILE* m_pFile;
 	ZZIP_DIR* m_pPack;
-	char m_szPackName[_MAX_STRING];
-	char m_szFileName[_MAX_STRING];
+	ZZIP_FILE* m_pPackFile;
 
 private:
 	bool m_bAlloced;

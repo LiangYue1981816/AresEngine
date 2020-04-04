@@ -2,12 +2,9 @@
 
 
 CFileStream::CFileStream(void)
-	: m_dwName(INVALID_HASHNAME)
-	, m_szName{ 0 }
-
+	: m_pFile(nullptr)
 	, m_pPack(nullptr)
-	, m_szPackName{ 0 }
-	, m_szFileName{ 0 }
+	, m_pPackFile(nullptr)
 
 	, m_bAlloced(false)
 	, m_pAddress(nullptr)
@@ -60,58 +57,9 @@ void CFileStream::Free(void)
 	m_position = 0;
 }
 
-bool CFileStream::CopyFrom(const CFileStream* pStream)
-{
-	if (pStream == nullptr) {
-		return false;
-	}
-
-	if (pStream->IsValid() == false) {
-		return false;
-	}
-
-	if (IsValid()) {
-		return false;
-	}
-
-	if (Alloc(pStream->GetFullSize()) == false) {
-		return false;
-	}
-
-	SetName(pStream->GetName());
-	SetPack(pStream->GetPack());
-	SetPackName(pStream->GetPackName());
-	SetFileName(pStream->GetFileName());
-	memcpy(m_pAddress, pStream->GetAddress(), pStream->GetFullSize());
-
-	return true;
-}
-
-bool CFileStream::SetStream(uint8_t* pAddress, size_t size)
-{
-	if (pAddress == nullptr) {
-		return false;
-	}
-
-	if (size == 0) {
-		return false;
-	}
-
-	if (IsValid()) {
-		return false;
-	}
-
-	m_bAlloced = false;
-	m_pAddress = pAddress;
-
-	m_size = size;
-	m_position = 0;
-
-	return true;
-}
-
 bool CFileStream::LoadFromFile(const char* szFileName)
 {
+	/*
 	if (szFileName == nullptr) {
 		return false;
 	}
@@ -130,7 +78,6 @@ bool CFileStream::LoadFromFile(const char* szFileName)
 				break;
 			}
 
-			SetFileName(szFileName);
 			fclose(pFile);
 
 			return true;
@@ -140,43 +87,13 @@ bool CFileStream::LoadFromFile(const char* szFileName)
 	}
 
 	return false;
-}
-
-bool CFileStream::LoadFromPack(const char* szPackName, const char* szFileName)
-{
-	if (szPackName == nullptr) {
-		return false;
-	}
-
-	if (szFileName == nullptr) {
-		return false;
-	}
-
-	if (IsValid()) {
-		return false;
-	}
-
-	if (ZZIP_DIR* pPack = zzip_opendir(szPackName)) {
-		do {
-			if (LoadFromPack(pPack, szFileName) == false) {
-				break;
-			}
-
-			SetPackName(szPackName);
-			SetFileName(szFileName);
-			zzip_closedir(pPack);
-
-			return true;
-		} while (false);
-
-		zzip_closedir(pPack);
-	}
-
+	*/
 	return false;
 }
 
 bool CFileStream::LoadFromPack(ZZIP_DIR* pPack, const char* szFileName)
 {
+	/*
 	if (pPack == nullptr) {
 		return false;
 	}
@@ -205,8 +122,6 @@ bool CFileStream::LoadFromPack(ZZIP_DIR* pPack, const char* szFileName)
 				break;
 			}
 
-			SetPack(pPack);
-			SetFileName(szFileName);
 			zzip_file_close(pFile);
 
 			return true;
@@ -216,109 +131,8 @@ bool CFileStream::LoadFromPack(ZZIP_DIR* pPack, const char* szFileName)
 	}
 
 	return false;
-}
-
-bool CFileStream::Reload(void)
-{
-	ZZIP_DIR* pPack = m_pPack;
-
-	char szPackName[_MAX_STRING];
-	char szFileName[_MAX_STRING];
-
-	strcpy(szPackName, m_szPackName);
-	strcpy(szFileName, m_szFileName);
-
-	if (strlen(szFileName)) {
-		if (pPack) {
-			return LoadFromPack(pPack, szFileName);
-		}
-
-		if (strlen(szPackName)) {
-			return LoadFromPack(szPackName, szFileName);
-		}
-
-		return LoadFromFile(szFileName);
-	}
-
+	*/
 	return false;
-}
-
-bool CFileStream::SetName(const char* szName)
-{
-	if (szName == nullptr) {
-		return false;
-	}
-
-	strcpy(m_szName, szName);
-	m_dwName = HashValue(m_szName);
-
-	return true;
-}
-
-const char* CFileStream::GetName(void) const
-{
-	return m_szName;
-}
-
-uint32_t CFileStream::GetHashName(void) const
-{
-	return m_dwName;
-}
-
-bool CFileStream::SetFileName(const char* szFileName)
-{
-	if (szFileName == nullptr) {
-		return false;
-	}
-
-	char szName[_MAX_STRING];
-	char szFName[_MAX_STRING];
-	char szEName[_MAX_STRING];
-
-	strcpy(m_szFileName, szFileName);
-	splitfilename(m_szFileName, szFName, szEName);
-	sprintf(szName, "%s%s", szFName, szEName);
-
-	SetName(szName);
-
-	return true;
-}
-
-const char* CFileStream::GetFileName(void) const
-{
-	return m_szFileName;
-}
-
-bool CFileStream::SetPackName(const char* szPackName)
-{
-	if (szPackName == nullptr) {
-		return false;
-	}
-
-	strcpy(m_szPackName, szPackName);
-
-	return true;
-}
-
-const char* CFileStream::GetPackName(void) const
-{
-	return m_szPackName;
-}
-
-bool CFileStream::SetPack(ZZIP_DIR* pPack)
-{
-	if (pPack == nullptr) {
-		return false;
-	}
-
-	m_pPack = pPack;
-
-	return true;
-}
-
-ZZIP_DIR* CFileStream::GetPack(void) const
-{
-	return m_pPack;
 }
 
 size_t CFileStream::GetFullSize(void) const
