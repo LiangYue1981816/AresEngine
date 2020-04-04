@@ -28,8 +28,8 @@ public:
 
 
 public:
-	virtual void TaskUpdate(float gameTime, float deltaTime) = 0;
-	virtual void TaskUpdateCamera(CGfxCamera* pCamera, CRenderQueue* pRenderQueue, uint32_t mask, bool bComputeLOD, int indexThread) = 0;
+	virtual bool TaskUpdate(float gameTime, float deltaTime) = 0;
+	virtual bool TaskUpdateCamera(CGfxCamera* pCamera, CRenderQueue* pRenderQueue, uint32_t mask, bool bComputeLOD, int indexThread) = 0;
 
 
 protected:

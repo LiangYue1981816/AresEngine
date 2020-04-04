@@ -86,7 +86,7 @@ void CComponentMesh::SetCullScreenSize(float screenSize)
 	m_cullScreenSize2 = screenSize * screenSize;
 }
 
-void CComponentMesh::TaskUpdate(float gameTime, float deltaTime)
+bool CComponentMesh::TaskUpdate(float gameTime, float deltaTime)
 {
 	int indexFrame = Engine()->GetFrameCount() % 2;
 
@@ -99,10 +99,15 @@ void CComponentMesh::TaskUpdate(float gameTime, float deltaTime)
 				m_LODMeshDraws[index].aabb = m_LODMeshDraws[index].ptrMeshDraw->GetAABB() * m_instanceData[indexFrame].transformMatrix;
 			}
 		}
+
+		return true;
+	}
+	else {
+		return false;
 	}
 }
 
-void CComponentMesh::TaskUpdateCamera(CGfxCamera* pCamera, CRenderQueue* pRenderQueue, uint32_t mask, bool bComputeLOD, int indexThread)
+bool CComponentMesh::TaskUpdateCamera(CGfxCamera* pCamera, CRenderQueue* pRenderQueue, uint32_t mask, bool bComputeLOD, int indexThread)
 {
 	int indexFrame = 1 - Engine()->GetFrameCount() % 2;
 
@@ -130,6 +135,11 @@ void CComponentMesh::TaskUpdateCamera(CGfxCamera* pCamera, CRenderQueue* pRender
 		}
 
 		pRenderQueue->Add(m_LODMeshDraws[m_LODIndex].ptrMaterial, m_LODMeshDraws[m_LODIndex].ptrMeshDraw, m_indexInstance, indexThread);
+
+		return true;
+	}
+	else {
+		return false;
 	}
 }
 

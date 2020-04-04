@@ -24,10 +24,6 @@ private:
 
 
 public:
-	static const int MAX_LOD_COUNT = 8;
-
-
-public:
 	CComponentMesh(uint32_t name);
 	CComponentMesh(const CComponentMesh& component);
 	virtual ~CComponentMesh(void);
@@ -43,8 +39,8 @@ public:
 	void SetCullScreenSize(float screenSize);
 
 public:
-	virtual void TaskUpdate(float gameTime, float deltaTime);
-	virtual void TaskUpdateCamera(CGfxCamera* pCamera, CRenderQueue* pRenderQueue, uint32_t mask, bool bComputeLOD, int indexThread);
+	virtual bool TaskUpdate(float gameTime, float deltaTime);
+	virtual bool TaskUpdateCamera(CGfxCamera* pCamera, CRenderQueue* pRenderQueue, uint32_t mask, bool bComputeLOD, int indexThread);
 
 private:
 	bool ComputeLOD(bool bComputeLOD, const glm::vec3& cameraPosition);
@@ -56,12 +52,12 @@ private:
 	InstanceData m_instanceData[2];
 
 private:
-	int m_LODIndex;
-	LODMeshDraw m_LODMeshDraws[MAX_LOD_COUNT];
-
-private:
 	float m_cullDistance2;
 	float m_cullScreenSize2;
-};
 
-typedef CComponentPtr<CComponentMesh> CComponentMeshPtr;
+private:
+	static const int MAX_LOD_COUNT = 8;
+
+	int m_LODIndex;
+	LODMeshDraw m_LODMeshDraws[MAX_LOD_COUNT];
+};
