@@ -93,7 +93,6 @@ bool CFileStream::LoadFromFile(const char* szFileName)
 
 bool CFileStream::LoadFromPack(ZZIP_DIR* pPack, const char* szFileName)
 {
-	/*
 	if (pPack == nullptr) {
 		return false;
 	}
@@ -114,15 +113,10 @@ bool CFileStream::LoadFromPack(ZZIP_DIR* pPack, const char* szFileName)
 				break;
 			}
 
-			if (Alloc(zstat.st_size) == false) {
-				break;
-			}
-
-			if (m_size != zzip_file_read(pFile, m_pAddress, m_size)) {
-				break;
-			}
-
-			zzip_file_close(pFile);
+			m_pPack = pPack;
+			m_pPackFile = pFile;
+			m_fileSize = zstat.st_size;
+			m_filePosition = 0;
 
 			return true;
 		} while (false);
@@ -130,8 +124,6 @@ bool CFileStream::LoadFromPack(ZZIP_DIR* pPack, const char* szFileName)
 		zzip_file_close(pFile);
 	}
 
-	return false;
-	*/
 	return false;
 }
 
