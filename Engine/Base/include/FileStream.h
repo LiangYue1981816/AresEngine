@@ -38,6 +38,8 @@ private:
 	ZZIP_FILE* m_pPackFile;
 
 private:
+	static const int CACHE_SIZE = 1 * 1024;
+
 	bool m_bAlloced;
 	uint8_t* m_pBuffer;
 
