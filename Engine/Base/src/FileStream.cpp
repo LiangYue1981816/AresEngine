@@ -203,7 +203,23 @@ size_t CFileStream::Read(void* pBuffer, size_t size, size_t count)
 	readSize = std::min(readSize, GetFreeSize());
 
 	do {
+		if (m_bNeedUpdateCache) {
+			m_bNeedUpdateCache = false;
 
+			m_bufferOffset = m_filePosition;
+			m_bufferPosition = 0;
+			m_bufferCacheSize = std::min(m_bufferSize, m_fileSize - m_filePosition);
+
+			if (m_pFile) {
+				fread(m_pBuffer, 1, m_bufferCacheSize, m_pFile);
+			}
+
+			if (m_pPack && m_pPackFile) {
+				zzip_file_read(m_pPackFile, m_pBuffer, m_bufferCacheSize);
+			}
+
+			m_filePosition += m_bufferCacheSize;
+		}
 	} while (copySize != readSize);
 
 	return readSize / size;
@@ -262,8 +278,14 @@ bool CFileStream::Seek(int offset, int origin)
 		zzip_seek(m_pPackFile, m_filePosition, SEEK_SET);
 	}
 
-	if (m_filePosition >= m_bufferOffset && m_filePosition < m_bufferOffset + m_bufferCacheSize) {
-		m_bufferPosition = m_filePosition - m_bufferOffset;
+	if (m_bufferCacheSize) {
+		if (m_filePosition >= m_bufferOffset && m_filePosition < m_bufferOffset + m_bufferCacheSize) {
+			m_bufferPosition = m_filePosition - m_bufferOffset;
+			m_bNeedUpdateCache = false;
+		}
+		else {
+			m_bNeedUpdateCache = true;
+		}
 	}
 
 	return true;
