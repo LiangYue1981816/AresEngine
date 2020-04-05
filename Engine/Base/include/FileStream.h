@@ -40,12 +40,12 @@ private:
 private:
 	static const int CACHE_SIZE = 1 * 1024;
 
+	uint8_t* m_pBuffer;
+
 	int m_fileSize;
 	int m_filePosition;
 
 	int m_bufferSize;
 	int m_bufferOffset;
 	int m_bufferPosition;
-
-	uint8_t* m_pBuffer;
 };

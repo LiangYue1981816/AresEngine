@@ -18,7 +18,7 @@ CMemoryStream::~CMemoryStream(void)
 
 bool CMemoryStream::IsValid(void) const
 {
-	return m_pBuffer != nullptr && m_size > 0;
+	return m_pBuffer != nullptr;
 }
 
 bool CMemoryStream::Alloc(size_t size)

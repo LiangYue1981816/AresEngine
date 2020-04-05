@@ -6,14 +6,14 @@ CFileStream::CFileStream(void)
 	, m_pPack(nullptr)
 	, m_pPackFile(nullptr)
 
+	, m_pBuffer(nullptr)
+
 	, m_fileSize(0)
 	, m_filePosition(0)
 
 	, m_bufferSize(0)
 	, m_bufferOffset(0)
 	, m_bufferPosition(0)
-
-	, m_pBuffer(nullptr)
 {
 
 }
@@ -25,7 +25,7 @@ CFileStream::~CFileStream(void)
 
 bool CFileStream::IsValid(void) const
 {
-	return (m_pFile != nullptr) || (m_pPack != nullptr && m_pPackFile != nullptr);
+	return (m_pBuffer != nullptr) && ((m_pFile != nullptr) || (m_pPack != nullptr && m_pPackFile != nullptr));
 }
 
 bool CFileStream::Alloc(size_t size)
@@ -34,24 +34,26 @@ bool CFileStream::Alloc(size_t size)
 		return false;
 	}
 
+	m_pBuffer = new uint8_t[size];
+
 	m_bufferSize = size;
 	m_bufferOffset = INT_MIN;
 	m_bufferPosition = 0;
-
-	m_pBuffer = new uint8_t[size];
 
 	return true;
 }
 
 void CFileStream::Free(void)
 {
-	delete[] m_pBuffer;
+	if (m_pBuffer) {
+		delete[] m_pBuffer;
+	}
+
+	m_pBuffer = nullptr;
 
 	m_bufferSize = 0;
 	m_bufferOffset = 0;
 	m_bufferPosition = 0;
-
-	m_pBuffer = nullptr;
 }
 
 bool CFileStream::LoadFromFile(const char* szFileName)
@@ -73,6 +75,7 @@ bool CFileStream::LoadFromFile(const char* szFileName)
 			}
 
 			m_pFile = pFile;
+
 			m_fileSize = size;
 			m_filePosition = 0;
 
@@ -111,6 +114,7 @@ bool CFileStream::LoadFromPack(ZZIP_DIR* pPack, const char* szFileName)
 
 			m_pPack = pPack;
 			m_pPackFile = pFile;
+
 			m_fileSize = zstat.st_size;
 			m_filePosition = 0;
 
