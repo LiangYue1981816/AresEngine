@@ -211,11 +211,11 @@ void CRenderQueue::CmdDraw(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxComma
 			}
 
 			for (int indexTask = 0; indexTask < sortTasks.size(); indexTask++) {
-				taskGraph.Task(&sortTasks[indexTask], this, nullptr);
+				taskPool.Task(&sortTasks[indexTask], this, nullptr);
 			}
 
-			taskGraph.Dispatch();
-			taskGraph.Wait();
+			taskPool.Dispatch();
+			taskPool.Wait();
 		}
 	}
 
@@ -285,11 +285,11 @@ void CRenderQueue::CmdDraw(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxComma
 		}
 
 		for (int indexTask = 0; indexTask < cmdTasks.size(); indexTask++) {
-			taskGraph.Task(&cmdTasks[indexTask], this, nullptr);
+			taskPool.Task(&cmdTasks[indexTask], this, nullptr);
 		}
 
-		taskGraph.Dispatch();
-		taskGraph.Wait();
+		taskPool.Dispatch();
+		taskPool.Wait();
 
 		for (int indexTask = 0; indexTask < cmdTasks.size(); indexTask++) {
 			ptrCommandBuffer->CmdExecute(cmdTasks[indexTask].GetCommandBuffer());
