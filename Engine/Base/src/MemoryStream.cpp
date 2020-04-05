@@ -76,6 +76,78 @@ bool CMemoryStream::SetStream(uint8_t* pAddress, size_t size)
 	return true;
 }
 
+bool CMemoryStream::LoadFromFile(const char* szFileName)
+{
+	if (szFileName == nullptr) {
+		return false;
+	}
+
+	if (IsValid()) {
+		return false;
+	}
+
+	if (FILE* pFile = fopen(szFileName, "rb")) {
+		do {
+			if (Alloc(fsize(pFile)) == false) {
+				break;
+			}
+
+			if (m_size != fread(m_pAddress, 1, m_size, pFile)) {
+				break;
+			}
+
+			fclose(pFile);
+
+			return true;
+		} while (false);
+
+		fclose(pFile);
+	}
+
+	return false;
+}
+
+bool CMemoryStream::LoadFromPack(ZZIP_DIR* pPack, const char* szFileName)
+{
+	if (pPack == nullptr) {
+		return false;
+	}
+
+	if (szFileName == nullptr) {
+		return false;
+	}
+
+	if (IsValid()) {
+		return false;
+	}
+
+	if (ZZIP_FILE* pFile = zzip_file_open(pPack, szFileName, ZZIP_ONLYZIP | ZZIP_CASELESS)) {
+		do {
+			ZZIP_STAT zstat;
+
+			if (zzip_file_stat(pFile, &zstat) != ZZIP_NO_ERROR) {
+				break;
+			}
+
+			if (Alloc(zstat.st_size) == false) {
+				break;
+			}
+
+			if (m_size != zzip_file_read(pFile, m_pAddress, m_size)) {
+				break;
+			}
+
+			zzip_file_close(pFile);
+
+			return true;
+		} while (false);
+
+		zzip_file_close(pFile);
+	}
+
+	return false;
+}
+
 size_t CMemoryStream::GetFullSize(void) const
 {
 	return m_size;

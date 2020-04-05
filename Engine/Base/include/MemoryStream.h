@@ -19,6 +19,10 @@ public:
 	bool SetStream(uint8_t* pAddress, size_t size);
 
 public:
+	bool LoadFromFile(const char* szFileName);
+	bool LoadFromPack(ZZIP_DIR* pPack, const char* szFileName);
+
+public:
 	size_t GetFullSize(void) const;
 	size_t GetFreeSize(void) const;
 	size_t GetCurrentPosition(void) const;
