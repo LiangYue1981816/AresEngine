@@ -14,7 +14,7 @@ CMemoryStream::CMemoryStream(void)
 
 CMemoryStream::~CMemoryStream(void)
 {
-
+	Close();
 }
 
 bool CMemoryStream::IsValid(void) const

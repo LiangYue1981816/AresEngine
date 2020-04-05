@@ -8,5 +8,5 @@ CStream::CStream(void)
 
 CStream::~CStream(void)
 {
-	Close();
+
 }

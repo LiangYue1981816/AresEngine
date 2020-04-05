@@ -23,7 +23,7 @@ CFileStream::CFileStream(void)
 
 CFileStream::~CFileStream(void)
 {
-
+	Close();
 }
 
 bool CFileStream::IsValid(void) const
