@@ -62,7 +62,6 @@ void CFileStream::Free(void)
 
 bool CFileStream::LoadFromFile(const char* szFileName)
 {
-	/*
 	if (szFileName == nullptr) {
 		return false;
 	}
@@ -72,26 +71,15 @@ bool CFileStream::LoadFromFile(const char* szFileName)
 	}
 
 	if (FILE* pFile = fopen(szFileName, "rb")) {
-		do {
-			if (Alloc(fsize(pFile)) == false) {
-				break;
-			}
+		m_pFile = pFile;
+		m_fileSize = fsize(pFile);
+		m_filePosition = 0;
 
-			if (m_size != fread(m_pAddress, 1, m_size, pFile)) {
-				break;
-			}
-
-			fclose(pFile);
-
-			return true;
-		} while (false);
-
-		fclose(pFile);
+		return true;
 	}
-
-	return false;
-	*/
-	return false;
+	else {
+		return false;
+	}
 }
 
 bool CFileStream::LoadFromPack(ZZIP_DIR* pPack, const char* szFileName)
