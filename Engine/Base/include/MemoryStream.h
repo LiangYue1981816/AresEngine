@@ -13,7 +13,7 @@ public:
 	bool IsValid(void) const;
 
 public:
-	bool SetStream(uint8_t* pAddress, size_t size);
+	bool SetStream(uint8_t* pBuffer, size_t size);
 	bool LoadFromFile(const char* szFileName);
 	bool LoadFromPack(ZZIP_DIR* pPack, const char* szFileName);
 	void Close(void);

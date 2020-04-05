@@ -21,9 +21,9 @@ bool CMemoryStream::IsValid(void) const
 	return m_pBuffer != nullptr;
 }
 
-bool CMemoryStream::SetStream(uint8_t* pAddress, size_t size)
+bool CMemoryStream::SetStream(uint8_t* pBuffer, size_t size)
 {
-	if (pAddress == nullptr) {
+	if (pBuffer == nullptr) {
 		return false;
 	}
 
@@ -36,7 +36,7 @@ bool CMemoryStream::SetStream(uint8_t* pAddress, size_t size)
 	}
 
 	m_bAlloced = false;
-	m_pBuffer = pAddress;
+	m_pBuffer = pBuffer;
 
 	m_bufferSize = size;
 	m_bufferPosition = 0;
