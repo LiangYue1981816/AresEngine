@@ -82,6 +82,8 @@ bool CFileStream::LoadFromFile(const char* szFileName)
 			m_fileSize = size;
 			m_filePosition = 0;
 
+			Alloc(std::min(size_t(1 * 1024), GetFullSize()));
+
 			return true;
 		} while (false);
 
@@ -117,6 +119,8 @@ bool CFileStream::LoadFromPack(ZZIP_DIR* pPack, const char* szFileName)
 			m_pPackFile = pFile;
 			m_fileSize = zstat.st_size;
 			m_filePosition = 0;
+
+			Alloc(std::min(size_t(1 * 1024), GetFullSize()));
 
 			return true;
 		} while (false);
