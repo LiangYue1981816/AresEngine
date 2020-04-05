@@ -181,7 +181,29 @@ size_t CFileStream::GetCurrentPosition(void) const
 
 size_t CFileStream::Read(void* pBuffer, size_t size, size_t count)
 {
-	return 0;
+	if (pBuffer == nullptr) {
+		return 0;
+	}
+
+	if (size == 0 || count == 0) {
+		return 0;
+	}
+
+	if (IsValid() == false) {
+		return 0;
+	}
+
+	size_t readSize = 0;
+	size_t copySize = 0;
+
+	readSize = size * count;
+	readSize = std::min(readSize, GetFreeSize());
+
+	do {
+
+	} while (copySize != readSize);
+
+	return readSize / size;
 }
 
 bool CFileStream::Seek(int offset, int origin)
