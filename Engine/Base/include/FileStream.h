@@ -48,4 +48,5 @@ private:
 	int m_bufferSize;
 	int m_bufferOffset;
 	int m_bufferPosition;
+	int m_bufferCacheSize;
 };

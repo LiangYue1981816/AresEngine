@@ -14,6 +14,7 @@ CFileStream::CFileStream(void)
 	, m_bufferSize(0)
 	, m_bufferOffset(0)
 	, m_bufferPosition(0)
+	, m_bufferCacheSize(0)
 {
 
 }
@@ -39,6 +40,7 @@ bool CFileStream::Alloc(size_t size)
 	m_bufferSize = size;
 	m_bufferOffset = 0;
 	m_bufferPosition = 0;
+	m_bufferCacheSize = 0;
 
 	return true;
 }
@@ -51,6 +53,7 @@ void CFileStream::Free(void)
 	m_bufferSize = 0;
 	m_bufferOffset = 0;
 	m_bufferPosition = 0;
+	m_bufferCacheSize = 0;
 }
 
 bool CFileStream::LoadFromFile(const char* szFileName)
