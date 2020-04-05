@@ -49,4 +49,5 @@ private:
 	int m_bufferOffset;
 	int m_bufferPosition;
 	int m_bufferCacheSize;
+	bool m_bNeedUpdateCache;
 };
