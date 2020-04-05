@@ -203,6 +203,10 @@ size_t CFileStream::Read(void* pBuffer, size_t size, size_t count)
 	readSize = std::min(readSize, GetFreeSize());
 
 	do {
+		if (m_bufferPosition == m_bufferCacheSize) {
+			m_bNeedUpdateCache = true;
+		}
+
 		if (m_bNeedUpdateCache) {
 			m_bNeedUpdateCache = false;
 
