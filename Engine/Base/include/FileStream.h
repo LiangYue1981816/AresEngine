@@ -47,5 +47,6 @@ private:
 	int m_filePosition;
 
 	int m_bufferSize;
+	int m_bufferOffset;
 	int m_bufferPosition;
 };
