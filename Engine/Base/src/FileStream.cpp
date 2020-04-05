@@ -259,6 +259,10 @@ bool CFileStream::Seek(int offset, int origin)
 		zzip_seek(m_pPackFile, m_filePosition, SEEK_SET);
 	}
 
+	if (m_filePosition >= m_bufferOffset && m_filePosition < m_bufferOffset + m_bufferCacheSize) {
+		m_bufferPosition = m_filePosition - m_bufferOffset;
+	}
+
 	return true;
 }
 
