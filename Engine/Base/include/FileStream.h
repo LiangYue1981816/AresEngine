@@ -40,6 +40,9 @@ private:
 	bool m_bAlloced;
 	uint8_t* m_pAddress;
 
-	int m_size;
-	int m_position;
+	int m_fileSize;
+	int m_filePosition;
+
+	int m_bufferSize;
+	int m_bufferPosition;
 };

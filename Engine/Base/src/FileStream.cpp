@@ -9,8 +9,11 @@ CFileStream::CFileStream(void)
 	, m_bAlloced(false)
 	, m_pAddress(nullptr)
 
-	, m_size(0)
-	, m_position(0)
+	, m_fileSize(0)
+	, m_filePosition(0)
+
+	, m_bufferSize(0)
+	, m_bufferPosition(0)
 {
 
 }
@@ -22,7 +25,7 @@ CFileStream::~CFileStream(void)
 
 bool CFileStream::IsValid(void) const
 {
-	return m_pAddress != nullptr && m_size > 0;
+	return m_pFile != nullptr || (m_pPack != nullptr && m_pPackFile != nullptr);
 }
 
 bool CFileStream::Alloc(size_t size)
@@ -38,8 +41,8 @@ bool CFileStream::Alloc(size_t size)
 	m_bAlloced = true;
 	m_pAddress = new uint8_t[size];
 
-	m_size = size;
-	m_position = 0;
+	m_bufferSize = size;
+	m_bufferPosition = 0;
 
 	return true;
 }
@@ -53,8 +56,8 @@ void CFileStream::Free(void)
 	m_bAlloced = false;
 	m_pAddress = nullptr;
 
-	m_size = 0;
-	m_position = 0;
+	m_bufferSize = 0;
+	m_bufferPosition = 0;
 }
 
 bool CFileStream::LoadFromFile(const char* szFileName)
@@ -137,17 +140,17 @@ bool CFileStream::LoadFromPack(ZZIP_DIR* pPack, const char* szFileName)
 
 size_t CFileStream::GetFullSize(void) const
 {
-	return m_size;
+	return m_fileSize;
 }
 
 size_t CFileStream::GetFreeSize(void) const
 {
-	return m_size - m_position;
+	return m_fileSize - m_filePosition;
 }
 
 size_t CFileStream::GetCurrentPosition(void) const
 {
-	return m_position;
+	return m_filePosition;
 }
 
 size_t CFileStream::Read(void* pBuffer, size_t size, size_t count)
