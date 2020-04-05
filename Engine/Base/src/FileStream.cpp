@@ -226,6 +226,14 @@ bool CFileStream::Seek(int offset, int origin)
 		break;
 	}
 
+	if (m_pFile) {
+		fseek(m_pFile, m_filePosition, SEEK_SET);
+	}
+
+	if (m_pPack && m_pPackFile) {
+		zzip_seek(m_pPackFile, m_filePosition, SEEK_SET);
+	}
+
 	return true;
 }
 
