@@ -20,12 +20,12 @@ CFileStream::CFileStream(void)
 
 CFileStream::~CFileStream(void)
 {
-	Free();
+	Close();
 }
 
 bool CFileStream::IsValid(void) const
 {
-	return m_pFile != nullptr || (m_pPack != nullptr && m_pPackFile != nullptr);
+	return (m_pFile != nullptr) || (m_pPack != nullptr && m_pPackFile != nullptr);
 }
 
 bool CFileStream::Alloc(size_t size)
@@ -125,6 +125,26 @@ bool CFileStream::LoadFromPack(ZZIP_DIR* pPack, const char* szFileName)
 	}
 
 	return false;
+}
+
+void CFileStream::Close(void)
+{
+	if (m_pFile) {
+		fclose(m_pFile);
+	}
+
+	if (m_pPack && m_pPackFile) {
+		zzip_file_close(m_pPackFile);
+	}
+
+	m_pFile = nullptr;
+	m_pPack = nullptr;
+	m_pPackFile = nullptr;
+
+	m_fileSize = 0;
+	m_filePosition = 0;
+
+	Free();
 }
 
 size_t CFileStream::GetFullSize(void) const

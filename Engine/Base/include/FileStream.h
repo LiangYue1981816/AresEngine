@@ -19,6 +19,7 @@ private:
 public:
 	bool LoadFromFile(const char* szFileName);
 	bool LoadFromPack(ZZIP_DIR* pPack, const char* szFileName);
+	void Close(void);
 
 public:
 	size_t GetFullSize(void) const;
