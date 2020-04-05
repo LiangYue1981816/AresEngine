@@ -183,34 +183,33 @@ size_t CFileStream::Read(void* pBuffer, size_t size, size_t count)
 
 bool CFileStream::Seek(int offset, int origin)
 {
-	/*
 	if (IsValid() == false) {
 		return false;
 	}
 
 	switch (origin) {
 	case SEEK_CUR:
-		if (m_position + offset < 0) {
+		if (m_filePosition + offset < 0) {
 			return false;
 		}
 
-		if (m_position + offset > m_size) {
+		if (m_filePosition + offset > m_fileSize) {
 			return false;
 		}
 
-		m_position = m_position + offset;
+		m_filePosition = m_filePosition + offset;
 
 		break;
 	case SEEK_END:
-		if (m_size + offset < 0) {
+		if (m_fileSize + offset < 0) {
 			return false;
 		}
 
-		if (m_size + offset > m_size) {
+		if (m_fileSize + offset > m_fileSize) {
 			return false;
 		}
 
-		m_position = m_size + offset;
+		m_filePosition = m_fileSize + offset;
 
 		break;
 	case SEEK_SET:
@@ -218,17 +217,15 @@ bool CFileStream::Seek(int offset, int origin)
 			return false;
 		}
 
-		if (offset > m_size) {
+		if (offset > m_fileSize) {
 			return false;
 		}
 
-		m_position = offset;
+		m_filePosition = offset;
 
 		break;
 	}
 
-	return true;
-	*/
 	return true;
 }
 
