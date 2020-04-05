@@ -224,6 +224,12 @@ size_t CFileStream::Read(void* pBuffer, size_t size, size_t count)
 
 			m_filePosition += m_bufferCacheSize;
 		}
+
+		size_t size = std::min((size_t)(m_bufferCacheSize - m_bufferPosition), (readSize - copySize));
+		memcpy((uint8_t*)pBuffer + copySize, m_pBuffer + m_bufferPosition, size);
+
+		copySize += size;
+		m_bufferPosition += size;
 	} while (copySize != readSize);
 
 	return readSize / size;
