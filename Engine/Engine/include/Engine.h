@@ -66,6 +66,8 @@ private:
 	CRenderSystem* m_pRenderSystem;
 
 private:
+	CTaskPool m_taskPoolUpdate;
+	CTaskPool m_taskPoolRender;
 	CTaskGraph m_taskGraphUpdate;
 	CTaskGraph m_taskGraphRender;
 

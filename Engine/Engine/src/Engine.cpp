@@ -47,6 +47,8 @@ CEngine::CEngine(GfxApi api, void* hInstance, void* hWnd, void* hDC, int width, 
 	, m_pSceneManager(nullptr)
 	, m_pRenderSystem(nullptr)
 
+	, m_taskPoolUpdate("TashPool_Update")
+	, m_taskPoolRender("TashPool_Render")
 	, m_taskGraphUpdate("TashGraph_Update")
 	, m_taskGraphRender("TashGraph_Render")
 {
