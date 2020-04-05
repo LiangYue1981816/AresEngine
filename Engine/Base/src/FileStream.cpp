@@ -30,35 +30,6 @@ bool CFileStream::IsValid(void) const
 	return (m_pBuffer != nullptr) && ((m_pFile != nullptr) || (m_pPack != nullptr && m_pPackFile != nullptr));
 }
 
-bool CFileStream::Alloc(size_t size)
-{
-	if (size == 0) {
-		return false;
-	}
-
-	m_pBuffer = new uint8_t[size];
-
-	m_bufferSize = size;
-	m_bufferOffset = 0;
-	m_bufferPosition = 0;
-	m_bufferCacheSize = 0;
-	m_bNeedUpdateCache = true;
-
-	return true;
-}
-
-void CFileStream::Free(void)
-{
-	delete[] m_pBuffer;
-	m_pBuffer = nullptr;
-
-	m_bufferSize = 0;
-	m_bufferOffset = 0;
-	m_bufferPosition = 0;
-	m_bufferCacheSize = 0;
-	m_bNeedUpdateCache = false;
-}
-
 bool CFileStream::LoadFromFile(const char* szFileName)
 {
 	if (szFileName == nullptr) {
@@ -71,18 +42,24 @@ bool CFileStream::LoadFromFile(const char* szFileName)
 
 	if (FILE* pFile = fopen(szFileName, "rb")) {
 		do {
-			size_t size = fsize(pFile);
+			size_t fileSize = fsize(pFile);
+			size_t bufferSize = std::min((size_t)BUFFER_SIZE, fileSize);
 
-			if (size == 0) {
+			if (fileSize == 0) {
 				break;
 			}
 
 			m_pFile = pFile;
+			m_pBuffer = new uint8_t[bufferSize];
 
-			m_fileSize = size;
+			m_fileSize = fileSize;
 			m_filePosition = 0;
 
-			Alloc(std::min((size_t)CACHE_SIZE, GetFullSize()));
+			m_bufferSize = bufferSize;
+			m_bufferOffset = 0;
+			m_bufferPosition = 0;
+			m_bufferCacheSize = 0;
+			m_bNeedUpdateCache = true;
 
 			return true;
 		} while (false);
@@ -115,13 +92,25 @@ bool CFileStream::LoadFromPack(ZZIP_DIR* pPack, const char* szFileName)
 				break;
 			}
 
+			size_t fileSize = zstat.st_size;
+			size_t bufferSize = std::min((size_t)BUFFER_SIZE, fileSize);
+
+			if (fileSize == 0) {
+				break;
+			}
+
 			m_pPack = pPack;
 			m_pPackFile = pFile;
+			m_pBuffer = new uint8_t[bufferSize];
 
-			m_fileSize = zstat.st_size;
+			m_fileSize = fileSize;
 			m_filePosition = 0;
 
-			Alloc(std::min((size_t)CACHE_SIZE, GetFullSize()));
+			m_bufferSize = bufferSize;
+			m_bufferOffset = 0;
+			m_bufferPosition = 0;
+			m_bufferCacheSize = 0;
+			m_bNeedUpdateCache = true;
 
 			return true;
 		} while (false);
@@ -146,10 +135,17 @@ void CFileStream::Close(void)
 	m_pPack = nullptr;
 	m_pPackFile = nullptr;
 
+	delete[] m_pBuffer;
+	m_pBuffer = nullptr;
+
 	m_fileSize = 0;
 	m_filePosition = 0;
 
-	Free();
+	m_bufferSize = 0;
+	m_bufferOffset = 0;
+	m_bufferPosition = 0;
+	m_bufferCacheSize = 0;
+	m_bNeedUpdateCache = false;
 }
 
 size_t CFileStream::GetFullSize(void) const

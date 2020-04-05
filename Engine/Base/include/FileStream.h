@@ -12,10 +12,6 @@ public:
 public:
 	bool IsValid(void) const;
 
-private:
-	bool Alloc(size_t size);
-	void Free(void);
-
 public:
 	bool LoadFromFile(const char* szFileName);
 	bool LoadFromPack(ZZIP_DIR* pPack, const char* szFileName);
@@ -38,7 +34,7 @@ private:
 	ZZIP_FILE* m_pPackFile;
 
 private:
-	static const int CACHE_SIZE = 1 * 1024;
+	static const int BUFFER_SIZE = 1 * 1024;
 
 	uint8_t* m_pBuffer;
 
