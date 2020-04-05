@@ -5,8 +5,8 @@ CMemoryStream::CMemoryStream(void)
 	: m_bAlloced(false)
 	, m_pBuffer(nullptr)
 
-	, m_size(0)
-	, m_position(0)
+	, m_bufferSize(0)
+	, m_bufferPosition(0)
 {
 
 }
@@ -38,8 +38,8 @@ bool CMemoryStream::SetStream(uint8_t* pAddress, size_t size)
 	m_bAlloced = false;
 	m_pBuffer = pAddress;
 
-	m_size = size;
-	m_position = 0;
+	m_bufferSize = size;
+	m_bufferPosition = 0;
 
 	return true;
 }
@@ -65,8 +65,8 @@ bool CMemoryStream::LoadFromFile(const char* szFileName)
 			m_bAlloced = true;
 			m_pBuffer = new uint8_t[size];
 
-			m_size = size;
-			m_position = 0;
+			m_bufferSize = size;
+			m_bufferPosition = 0;
 
 			fread(m_pBuffer, 1, size, pFile);
 			fclose(pFile);
@@ -111,8 +111,8 @@ bool CMemoryStream::LoadFromPack(ZZIP_DIR* pPack, const char* szFileName)
 			m_bAlloced = true;
 			m_pBuffer = new uint8_t[size];
 
-			m_size = size;
-			m_position = 0;
+			m_bufferSize = size;
+			m_bufferPosition = 0;
 
 			zzip_file_read(pFile, m_pBuffer, size);
 			zzip_file_close(pFile);
@@ -135,14 +135,14 @@ void CMemoryStream::Close(void)
 	m_bAlloced = false;
 	m_pBuffer = nullptr;
 
-	m_size = 0;
-	m_position = 0;
+	m_bufferSize = 0;
+	m_bufferPosition = 0;
 }
 
 size_t CMemoryStream::GetFullSize(void) const
 {
 	if (IsValid()) {
-		return m_size;
+		return m_bufferSize;
 	}
 	else {
 		return 0;
@@ -152,7 +152,7 @@ size_t CMemoryStream::GetFullSize(void) const
 size_t CMemoryStream::GetFreeSize(void) const
 {
 	if (IsValid()) {
-		return m_size - m_position;
+		return m_bufferSize - m_bufferPosition;
 	}
 	else {
 		return 0;
@@ -162,7 +162,7 @@ size_t CMemoryStream::GetFreeSize(void) const
 size_t CMemoryStream::GetCurrentPosition(void) const
 {
 	if (IsValid()) {
-		return m_position;
+		return m_bufferPosition;
 	}
 	else {
 		return 0;
@@ -182,7 +182,7 @@ void* CMemoryStream::GetAddress(void) const
 void* CMemoryStream::GetCurrentAddress(void) const
 {
 	if (IsValid()) {
-		return m_pBuffer + m_position;
+		return m_pBuffer + m_bufferPosition;
 	}
 	else {
 		return nullptr;
@@ -208,8 +208,8 @@ size_t CMemoryStream::Read(void* pBuffer, size_t size, size_t count)
 	readSize = size * count;
 	readSize = std::min(readSize, GetFreeSize());
 
-	memcpy(pBuffer, m_pBuffer + m_position, readSize);
-	m_position += readSize;
+	memcpy(pBuffer, m_pBuffer + m_bufferPosition, readSize);
+	m_bufferPosition += readSize;
 
 	return readSize / size;
 }
@@ -222,27 +222,27 @@ bool CMemoryStream::Seek(int offset, int origin)
 
 	switch (origin) {
 	case SEEK_CUR:
-		if (m_position + offset < 0) {
+		if (m_bufferPosition + offset < 0) {
 			return false;
 		}
 
-		if (m_position + offset > m_size) {
+		if (m_bufferPosition + offset > m_bufferSize) {
 			return false;
 		}
 
-		m_position = m_position + offset;
+		m_bufferPosition = m_bufferPosition + offset;
 
 		break;
 	case SEEK_END:
-		if (m_size + offset < 0) {
+		if (m_bufferSize + offset < 0) {
 			return false;
 		}
 
-		if (m_size + offset > m_size) {
+		if (m_bufferSize + offset > m_bufferSize) {
 			return false;
 		}
 
-		m_position = m_size + offset;
+		m_bufferPosition = m_bufferSize + offset;
 
 		break;
 	case SEEK_SET:
@@ -250,11 +250,11 @@ bool CMemoryStream::Seek(int offset, int origin)
 			return false;
 		}
 
-		if (offset > m_size) {
+		if (offset > m_bufferSize) {
 			return false;
 		}
 
-		m_position = offset;
+		m_bufferPosition = offset;
 
 		break;
 	}
