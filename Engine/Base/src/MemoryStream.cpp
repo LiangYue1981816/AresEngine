@@ -2,7 +2,8 @@
 
 
 CMemoryStream::CMemoryStream(void)
-	: m_bAlloced(false)
+	: CStream()
+	, m_bAlloced(false)
 	, m_pBuffer(nullptr)
 
 	, m_bufferSize(0)
@@ -13,7 +14,7 @@ CMemoryStream::CMemoryStream(void)
 
 CMemoryStream::~CMemoryStream(void)
 {
-	Close();
+
 }
 
 bool CMemoryStream::IsValid(void) const

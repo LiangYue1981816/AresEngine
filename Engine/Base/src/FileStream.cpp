@@ -2,7 +2,8 @@
 
 
 CFileStream::CFileStream(void)
-	: m_pFile(nullptr)
+	: CStream()
+	, m_pFile(nullptr)
 	, m_pPack(nullptr)
 	, m_pPackFile(nullptr)
 
@@ -22,7 +23,7 @@ CFileStream::CFileStream(void)
 
 CFileStream::~CFileStream(void)
 {
-	Close();
+
 }
 
 bool CFileStream::IsValid(void) const
