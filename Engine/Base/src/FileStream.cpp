@@ -45,10 +45,7 @@ bool CFileStream::Alloc(size_t size)
 
 void CFileStream::Free(void)
 {
-	if (m_pBuffer) {
-		delete[] m_pBuffer;
-	}
-
+	delete[] m_pBuffer;
 	m_pBuffer = nullptr;
 
 	m_bufferSize = 0;
