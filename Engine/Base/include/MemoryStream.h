@@ -16,9 +16,9 @@ public:
 	bool Alloc(size_t size);
 	void Free(void);
 
+public:
 	bool SetStream(uint8_t* pAddress, size_t size);
 
-public:
 	bool LoadFromFile(const char* szFileName);
 	bool LoadFromPack(ZZIP_DIR* pPack, const char* szFileName);
 
