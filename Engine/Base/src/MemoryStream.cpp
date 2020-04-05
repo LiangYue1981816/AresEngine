@@ -3,7 +3,7 @@
 
 CMemoryStream::CMemoryStream(void)
 	: m_bAlloced(false)
-	, m_pAddress(nullptr)
+	, m_pBuffer(nullptr)
 
 	, m_size(0)
 	, m_position(0)
@@ -18,7 +18,7 @@ CMemoryStream::~CMemoryStream(void)
 
 bool CMemoryStream::IsValid(void) const
 {
-	return m_pAddress != nullptr && m_size > 0;
+	return m_pBuffer != nullptr && m_size > 0;
 }
 
 bool CMemoryStream::Alloc(size_t size)
@@ -32,7 +32,7 @@ bool CMemoryStream::Alloc(size_t size)
 	}
 
 	m_bAlloced = true;
-	m_pAddress = new uint8_t[size];
+	m_pBuffer = new uint8_t[size];
 
 	m_size = size;
 	m_position = 0;
@@ -43,11 +43,11 @@ bool CMemoryStream::Alloc(size_t size)
 void CMemoryStream::Free(void)
 {
 	if (m_bAlloced) {
-		delete[] m_pAddress;
+		delete[] m_pBuffer;
 	}
 
 	m_bAlloced = false;
-	m_pAddress = nullptr;
+	m_pBuffer = nullptr;
 
 	m_size = 0;
 	m_position = 0;
@@ -68,7 +68,7 @@ bool CMemoryStream::SetStream(uint8_t* pAddress, size_t size)
 	}
 
 	m_bAlloced = false;
-	m_pAddress = pAddress;
+	m_pBuffer = pAddress;
 
 	m_size = size;
 	m_position = 0;
@@ -92,7 +92,7 @@ bool CMemoryStream::LoadFromFile(const char* szFileName)
 				break;
 			}
 
-			if (m_size != fread(m_pAddress, 1, m_size, pFile)) {
+			if (m_size != fread(m_pBuffer, 1, m_size, pFile)) {
 				break;
 			}
 
@@ -133,7 +133,7 @@ bool CMemoryStream::LoadFromPack(ZZIP_DIR* pPack, const char* szFileName)
 				break;
 			}
 
-			if (m_size != zzip_file_read(pFile, m_pAddress, m_size)) {
+			if (m_size != zzip_file_read(pFile, m_pBuffer, m_size)) {
 				break;
 			}
 
@@ -165,12 +165,12 @@ size_t CMemoryStream::GetCurrentPosition(void) const
 
 void* CMemoryStream::GetAddress(void) const
 {
-	return m_pAddress;
+	return m_pBuffer;
 }
 
 void* CMemoryStream::GetCurrentAddress(void) const
 {
-	return m_pAddress + m_position;
+	return m_pBuffer + m_position;
 }
 
 size_t CMemoryStream::Read(void* pBuffer, size_t size, size_t count)
@@ -192,7 +192,7 @@ size_t CMemoryStream::Read(void* pBuffer, size_t size, size_t count)
 	readSize = size * count;
 	readSize = std::min(readSize, GetFreeSize());
 
-	memcpy(pBuffer, m_pAddress + m_position, readSize);
+	memcpy(pBuffer, m_pBuffer + m_position, readSize);
 	m_position += readSize;
 
 	return readSize / size;

@@ -7,7 +7,7 @@ CFileStream::CFileStream(void)
 	, m_pPackFile(nullptr)
 
 	, m_bAlloced(false)
-	, m_pAddress(nullptr)
+	, m_pBuffer(nullptr)
 
 	, m_fileSize(0)
 	, m_filePosition(0)
@@ -39,7 +39,7 @@ bool CFileStream::Alloc(size_t size)
 	}
 
 	m_bAlloced = true;
-	m_pAddress = new uint8_t[size];
+	m_pBuffer = new uint8_t[size];
 
 	m_bufferSize = size;
 	m_bufferPosition = 0;
@@ -50,11 +50,11 @@ bool CFileStream::Alloc(size_t size)
 void CFileStream::Free(void)
 {
 	if (m_bAlloced) {
-		delete[] m_pAddress;
+		delete[] m_pBuffer;
 	}
 
 	m_bAlloced = false;
-	m_pAddress = nullptr;
+	m_pBuffer = nullptr;
 
 	m_bufferSize = 0;
 	m_bufferPosition = 0;
@@ -162,7 +162,7 @@ size_t CFileStream::Read(void* pBuffer, size_t size, size_t count)
 	readSize = size * count;
 	readSize = std::min(readSize, GetFreeSize());
 
-	memcpy(pBuffer, m_pAddress + m_position, readSize);
+	memcpy(pBuffer, m_pBuffer + m_position, readSize);
 	m_position += readSize;
 
 	return readSize / size;

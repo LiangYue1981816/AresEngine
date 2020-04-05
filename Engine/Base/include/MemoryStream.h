@@ -38,7 +38,7 @@ public:
 
 private:
 	bool m_bAlloced;
-	uint8_t* m_pAddress;
+	uint8_t* m_pBuffer;
 
 	int m_size;
 	int m_position;
