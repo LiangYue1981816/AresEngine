@@ -37,7 +37,7 @@ bool CFileStream::Alloc(size_t size)
 	m_pBuffer = new uint8_t[size];
 
 	m_bufferSize = size;
-	m_bufferOffset = INT_MIN;
+	m_bufferOffset = 0;
 	m_bufferPosition = 0;
 
 	return true;
