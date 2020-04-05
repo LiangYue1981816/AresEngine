@@ -170,7 +170,7 @@ std::string LoadShader(const char* szFileName)
 
 bool LoadShaderStream(const char* szFileName, std::vector<uint32_t>& words, uint32_t hash)
 {
-	CStream stream;
+	CMemoryStream stream;
 	if (FileManager()->LoadStream(szFileName, &stream)) {
 		uint32_t dwHashValue;
 

@@ -737,7 +737,7 @@ bool CResourceLoader::LoadMaterial(const char* szFileName, CGfxMaterial* pMateri
 	{
 		pMaterial->Destroy();
 
-		CStream stream;
+		CMemoryStream stream;
 		if (FileManager()->LoadStream(szFileName, &stream) == false) { err = -1; goto ERR; }
 
 		TiXmlDocument xmlDoc;

@@ -119,7 +119,7 @@ static CSceneNode* InternalLoadMesh(const char* szFileName, CSceneNode* pParentS
 
 	CSceneNode* pCurrentSceneNode = nullptr;
 	{
-		CStream stream;
+		CMemoryStream stream;
 		if (FileManager()->LoadStream(szFileName, &stream) == false) { err = -1; goto ERR; }
 
 		TiXmlDocument xmlDoc;

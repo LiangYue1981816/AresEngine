@@ -69,7 +69,7 @@ bool CResourceLoader::LoadMesh(const char* szFileName, CGfxMesh* pMesh, int vert
 	{
 		pMesh->Destroy();
 
-		CStream stream;
+		CMemoryStream stream;
 		if (FileManager()->LoadStream(szFileName, &stream) == false) { err = -1; goto ERR; }
 
 		MeshHeader meshHeader;

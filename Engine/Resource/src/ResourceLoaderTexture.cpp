@@ -201,7 +201,7 @@ static bool InternalLoadTextureCubemapFace(CGfxTextureCubemap* pTextureCubemap, 
 
 bool CResourceLoader::LoadTexture2D(const char* szFileName, CGfxTexture2D* pTexture2D, int baseLevel, int numLevels)
 {
-	CStream stream;
+	CMemoryStream stream;
 	if (FileManager()->LoadStream(szFileName, &stream) == false) return false;
 
 	const gli::texture texture = gli::load((const char*)stream.GetAddress(), stream.GetFullSize());
@@ -214,7 +214,7 @@ bool CResourceLoader::LoadTexture2D(const char* szFileName, CGfxTexture2D* pText
 
 bool CResourceLoader::LoadTexture2DArray(const char* szFileName, CGfxTexture2DArray* pTexture2DArray, int baseLevel, int numLevels)
 {
-	CStream stream;
+	CMemoryStream stream;
 	if (FileManager()->LoadStream(szFileName, &stream) == false) return false;
 
 	const gli::texture texture = gli::load((const char*)stream.GetAddress(), stream.GetFullSize());
@@ -227,7 +227,7 @@ bool CResourceLoader::LoadTexture2DArray(const char* szFileName, CGfxTexture2DAr
 
 bool CResourceLoader::LoadTexture2DArrayLayer(const char* szFileName, int layer, CGfxTexture2DArray* pTexture2DArray, int baseLevel, int numLevels)
 {
-	CStream stream;
+	CMemoryStream stream;
 	if (FileManager()->LoadStream(szFileName, &stream) == false) return false;
 
 	const gli::texture texture = gli::load((const char*)stream.GetAddress(), stream.GetFullSize());
@@ -240,7 +240,7 @@ bool CResourceLoader::LoadTexture2DArrayLayer(const char* szFileName, int layer,
 
 bool CResourceLoader::LoadTextureCubemap(const char* szFileName, CGfxTextureCubemap* pTextureCubemap, int baseLevel, int numLevels)
 {
-	CStream stream;
+	CMemoryStream stream;
 	if (FileManager()->LoadStream(szFileName, &stream) == false) return false;
 
 	const gli::texture texture = gli::load((const char*)stream.GetAddress(), stream.GetFullSize());
@@ -253,7 +253,7 @@ bool CResourceLoader::LoadTextureCubemap(const char* szFileName, CGfxTextureCube
 
 bool CResourceLoader::LoadTextureCubemapFace(const char* szFileName, GfxCubemapFace face, CGfxTextureCubemap* pTextureCubemap, int baseLevel, int numLevels)
 {
-	CStream stream;
+	CMemoryStream stream;
 	if (FileManager()->LoadStream(szFileName, &stream) == false) return false;
 
 	const gli::texture texture = gli::load((const char*)stream.GetAddress(), stream.GetFullSize());
