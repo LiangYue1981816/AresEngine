@@ -13,44 +13,12 @@ CMemoryStream::CMemoryStream(void)
 
 CMemoryStream::~CMemoryStream(void)
 {
-	Free();
+	Close();
 }
 
 bool CMemoryStream::IsValid(void) const
 {
 	return m_pBuffer != nullptr;
-}
-
-bool CMemoryStream::Alloc(size_t size)
-{
-	if (size == 0) {
-		return false;
-	}
-
-	if (IsValid()) {
-		return false;
-	}
-
-	m_bAlloced = true;
-	m_pBuffer = new uint8_t[size];
-
-	m_size = size;
-	m_position = 0;
-
-	return true;
-}
-
-void CMemoryStream::Free(void)
-{
-	if (m_bAlloced) {
-		delete[] m_pBuffer;
-	}
-
-	m_bAlloced = false;
-	m_pBuffer = nullptr;
-
-	m_size = 0;
-	m_position = 0;
 }
 
 bool CMemoryStream::SetStream(uint8_t* pAddress, size_t size)
@@ -88,14 +56,19 @@ bool CMemoryStream::LoadFromFile(const char* szFileName)
 
 	if (FILE* pFile = fopen(szFileName, "rb")) {
 		do {
-			if (Alloc(fsize(pFile)) == false) {
+			size_t size = fsize(pFile);
+
+			if (size == 0) {
 				break;
 			}
 
-			if (m_size != fread(m_pBuffer, 1, m_size, pFile)) {
-				break;
-			}
+			m_bAlloced = true;
+			m_pBuffer = new uint8_t[size];
 
+			m_size = size;
+			m_position = 0;
+
+			fread(m_pBuffer, 1, size, pFile);
 			fclose(pFile);
 
 			return true;
@@ -129,14 +102,19 @@ bool CMemoryStream::LoadFromPack(ZZIP_DIR* pPack, const char* szFileName)
 				break;
 			}
 
-			if (Alloc(zstat.st_size) == false) {
+			size_t size = zstat.st_size;
+
+			if (size == 0) {
 				break;
 			}
 
-			if (m_size != zzip_file_read(pFile, m_pBuffer, m_size)) {
-				break;
-			}
+			m_bAlloced = true;
+			m_pBuffer = new uint8_t[size];
 
+			m_size = size;
+			m_position = 0;
+
+			zzip_file_read(pFile, m_pBuffer, size);
 			zzip_file_close(pFile);
 
 			return true;
@@ -146,6 +124,19 @@ bool CMemoryStream::LoadFromPack(ZZIP_DIR* pPack, const char* szFileName)
 	}
 
 	return false;
+}
+
+void CMemoryStream::Close(void)
+{
+	if (m_bAlloced) {
+		delete[] m_pBuffer;
+	}
+
+	m_bAlloced = false;
+	m_pBuffer = nullptr;
+
+	m_size = 0;
+	m_position = 0;
 }
 
 size_t CMemoryStream::GetFullSize(void) const

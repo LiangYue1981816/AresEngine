@@ -13,14 +13,10 @@ public:
 	bool IsValid(void) const;
 
 public:
-	bool Alloc(size_t size);
-	void Free(void);
-
-public:
 	bool SetStream(uint8_t* pAddress, size_t size);
-
 	bool LoadFromFile(const char* szFileName);
 	bool LoadFromPack(ZZIP_DIR* pPack, const char* szFileName);
+	void Close(void);
 
 public:
 	size_t GetFullSize(void) const;
