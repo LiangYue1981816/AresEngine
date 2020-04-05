@@ -150,27 +150,52 @@ bool CMemoryStream::LoadFromPack(ZZIP_DIR* pPack, const char* szFileName)
 
 size_t CMemoryStream::GetFullSize(void) const
 {
-	return m_size;
+	if (IsValid()) {
+		return m_size;
+	}
+	else {
+		return 0;
+	}
 }
 
 size_t CMemoryStream::GetFreeSize(void) const
 {
-	return m_size - m_position;
+	if (IsValid()) {
+		return m_size - m_position;
+	}
+	else {
+		return 0;
+	}
 }
 
 size_t CMemoryStream::GetCurrentPosition(void) const
 {
-	return m_position;
+	if (IsValid()) {
+		return m_position;
+	}
+	else {
+		return 0;
+	}
 }
 
 void* CMemoryStream::GetAddress(void) const
 {
-	return m_pBuffer;
+	if (IsValid()) {
+		return m_pBuffer;
+	}
+	else {
+		return nullptr;
+	}
 }
 
 void* CMemoryStream::GetCurrentAddress(void) const
 {
-	return m_pBuffer + m_position;
+	if (IsValid()) {
+		return m_pBuffer + m_position;
+	}
+	else {
+		return nullptr;
+	}
 }
 
 size_t CMemoryStream::Read(void* pBuffer, size_t size, size_t count)

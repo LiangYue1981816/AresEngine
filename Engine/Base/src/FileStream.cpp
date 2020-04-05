@@ -35,10 +35,6 @@ bool CFileStream::Alloc(size_t size)
 		return false;
 	}
 
-	if (IsValid()) {
-		return false;
-	}
-
 	m_bAlloced = true;
 	m_pBuffer = new uint8_t[size];
 
@@ -155,44 +151,36 @@ void CFileStream::Close(void)
 
 size_t CFileStream::GetFullSize(void) const
 {
-	return m_fileSize;
+	if (IsValid()) {
+		return m_fileSize;
+	}
+	else {
+		return 0;
+	}
 }
 
 size_t CFileStream::GetFreeSize(void) const
 {
-	return m_fileSize - m_filePosition;
+	if (IsValid()) {
+		return m_fileSize - m_bufferOffset - m_bufferPosition;
+	}
+	else {
+		return 0;
+	}
 }
 
 size_t CFileStream::GetCurrentPosition(void) const
 {
-	return m_filePosition;
+	if (IsValid()) {
+		return m_bufferOffset + m_bufferPosition;
+	}
+	else {
+		return 0;
+	}
 }
 
 size_t CFileStream::Read(void* pBuffer, size_t size, size_t count)
 {
-	/*
-	if (pBuffer == nullptr) {
-		return 0;
-	}
-
-	if (size == 0 || count == 0) {
-		return 0;
-	}
-
-	if (IsValid() == false) {
-		return 0;
-	}
-
-	size_t readSize;
-
-	readSize = size * count;
-	readSize = std::min(readSize, GetFreeSize());
-
-	memcpy(pBuffer, m_pBuffer + m_position, readSize);
-	m_position += readSize;
-
-	return readSize / size;
-	*/
 	return 0;
 }
 
