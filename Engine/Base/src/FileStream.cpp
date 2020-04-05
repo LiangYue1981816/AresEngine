@@ -71,15 +71,24 @@ bool CFileStream::LoadFromFile(const char* szFileName)
 	}
 
 	if (FILE* pFile = fopen(szFileName, "rb")) {
-		m_pFile = pFile;
-		m_fileSize = fsize(pFile);
-		m_filePosition = 0;
+		do {
+			size_t size = fsize(pFile);
 
-		return true;
+			if (size == 0) {
+				break;
+			}
+
+			m_pFile = pFile;
+			m_fileSize = size;
+			m_filePosition = 0;
+
+			return true;
+		} while (false);
+
+		fclose(pFile);
 	}
-	else {
-		return false;
-	}
+
+	return false;
 }
 
 bool CFileStream::LoadFromPack(ZZIP_DIR* pPack, const char* szFileName)
