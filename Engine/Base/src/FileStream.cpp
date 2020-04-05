@@ -150,18 +150,9 @@ size_t CFileStream::GetCurrentPosition(void) const
 	return m_position;
 }
 
-void* CFileStream::GetAddress(void) const
-{
-	return m_pAddress;
-}
-
-void* CFileStream::GetCurrentAddress(void) const
-{
-	return m_pAddress + m_position;
-}
-
 size_t CFileStream::Read(void* pBuffer, size_t size, size_t count)
 {
+	/*
 	if (pBuffer == nullptr) {
 		return 0;
 	}
@@ -183,10 +174,13 @@ size_t CFileStream::Read(void* pBuffer, size_t size, size_t count)
 	m_position += readSize;
 
 	return readSize / size;
+	*/
+	return 0;
 }
 
 bool CFileStream::Seek(int offset, int origin)
 {
+	/*
 	if (IsValid() == false) {
 		return false;
 	}
@@ -230,6 +224,8 @@ bool CFileStream::Seek(int offset, int origin)
 		break;
 	}
 
+	return true;
+	*/
 	return true;
 }
 

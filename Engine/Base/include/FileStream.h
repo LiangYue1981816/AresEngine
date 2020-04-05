@@ -25,9 +25,6 @@ public:
 	size_t GetFreeSize(void) const;
 	size_t GetCurrentPosition(void) const;
 
-	void* GetAddress(void) const;
-	void* GetCurrentAddress(void) const;
-
 public:
 	size_t Read(void* pBuffer, size_t size, size_t count);
 	bool Seek(int offset, int origin);
