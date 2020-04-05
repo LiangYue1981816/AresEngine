@@ -24,7 +24,7 @@ public:
 	void SetOutputTexture(CGfxRenderTexturePtr ptrColorTexture, CGfxRenderTexturePtr ptrGBuffer0Texture, CGfxRenderTexturePtr ptrGBuffer1Texture, CGfxRenderTexturePtr ptrGBuffer2Texture, CGfxRenderTexturePtr ptrDepthStencilTexture);
 
 private:
-	void Render(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer);
+	void Render(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer);
 
 
 private:

@@ -90,7 +90,7 @@ void CPassShadow::SetOutputTexture(CGfxRenderTexturePtr ptrDepthTexture)
 	}
 }
 
-void CPassShadow::Render(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer)
+void CPassShadow::Render(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer)
 {
 	// Update
 	const glm::camera mainCamera = m_pCamera->GetCamera()->GetCamera();
@@ -128,7 +128,7 @@ void CPassShadow::Render(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandB
 
 		m_pShadowCamera[indexLevel]->SetOrtho(-sphereFrustum.radius, sphereFrustum.radius, -sphereFrustum.radius, sphereFrustum.radius, zNear, zFar);
 		m_pShadowCamera[indexLevel]->SetLookat(sphereFrustum.center.x, sphereFrustum.center.y, sphereFrustum.center.z, sphereFrustum.center.x + mainLightDirection.x, sphereFrustum.center.y + mainLightDirection.y, sphereFrustum.center.z + mainLightDirection.z, 0.0f, 1.0f, 0.0f);
-		SceneManager()->UpdateCamera(taskGraph, m_pShadowCamera[indexLevel], m_pShadowRenderQueue[indexLevel], 0xffffffff, false);
+		SceneManager()->UpdateCamera(taskPool, taskGraph, m_pShadowCamera[indexLevel], m_pShadowRenderQueue[indexLevel], 0xffffffff, false);
 
 		m_pShadowCameraUniform[indexLevel]->SetOrtho(-sphereFrustum.radius, sphereFrustum.radius, -sphereFrustum.radius, sphereFrustum.radius, zNear, zFar);
 		m_pShadowCameraUniform[indexLevel]->SetLookat(sphereFrustum.center.x, sphereFrustum.center.y, sphereFrustum.center.z, sphereFrustum.center.x + mainLightDirection.x, sphereFrustum.center.y + mainLightDirection.y, sphereFrustum.center.z + mainLightDirection.z, 0.0f, 1.0f, 0.0f);
@@ -159,7 +159,7 @@ void CPassShadow::Render(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandB
 			};
 
 			for (int indexLevel = 0; indexLevel < 4; indexLevel++) {
-				m_pShadowRenderQueue[indexLevel]->CmdDraw(taskGraph, ptrCommandBuffer, m_ptrDescriptorSetPass[indexLevel], PASS_SHADOW_NAME, area[indexLevel], area[indexLevel], 0xffffffff, false);
+				m_pShadowRenderQueue[indexLevel]->CmdDraw(taskPool, taskGraph, ptrCommandBuffer, m_ptrDescriptorSetPass[indexLevel], PASS_SHADOW_NAME, area[indexLevel], area[indexLevel], 0xffffffff, false);
 			}
 		}
 		GfxRenderer()->CmdEndRenderPass(ptrCommandBuffer);

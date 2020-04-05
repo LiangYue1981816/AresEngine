@@ -26,7 +26,7 @@ public:
 	void SetParamThreshold(float threshold);
 
 private:
-	void Render(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer);
+	void Render(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer);
 	void RenderCallback(CGfxCommandBufferPtr ptrCommandBuffer);
 
 

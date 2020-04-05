@@ -125,7 +125,7 @@ void CPassDeferredLighting::SetOutputTexture(CGfxRenderTexturePtr ptrColorTextur
 	}
 }
 
-void CPassDeferredLighting::Render(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer)
+void CPassDeferredLighting::Render(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer)
 {
 
 }

@@ -76,7 +76,7 @@ void CPassBlurBox::SetParamRange(float range)
 	m_range = range;
 }
 
-void CPassBlurBox::Render(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer)
+void CPassBlurBox::Render(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer)
 {
 	// Update
 	m_pCamera->GetCameraUniform()->Apply();
@@ -93,7 +93,7 @@ void CPassBlurBox::Render(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommand
 			const glm::vec4 scissor = glm::vec4(0.0, 0.0, w, h);
 			const glm::vec4 viewport = glm::vec4(0.0, 0.0, w, h);
 
-			m_pRenderQueue->CmdDraw(taskGraph, ptrCommandBuffer, m_ptrDescriptorSetPass, PASS_BLUR_BOX_NAME, scissor, viewport, 0xffffffff, false);
+			m_pRenderQueue->CmdDraw(taskPool, taskGraph, ptrCommandBuffer, m_ptrDescriptorSetPass, PASS_BLUR_BOX_NAME, scissor, viewport, 0xffffffff, false);
 		}
 		GfxRenderer()->CmdEndRenderPass(ptrCommandBuffer);
 		GfxRenderer()->CmdSetImageLayout(ptrCommandBuffer, m_ptrOutputColorTexture, GFX_IMAGE_LAYOUT_COLOR_READ_ONLY_OPTIMAL);

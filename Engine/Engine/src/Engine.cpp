@@ -154,31 +154,31 @@ void CEngine::Update(void)
 
 void CEngine::RenderDefault(CCamera* pCamera, bool bPresent)
 {
-	m_pRenderSystem->UpdateCamera(m_taskGraphRender, pCamera, 0xffffffff, true);
-	m_pRenderSystem->RenderDefault(m_taskGraphRender, pCamera, bPresent);
+	m_pRenderSystem->UpdateCamera(m_taskPoolRender, m_taskGraphRender, pCamera, 0xffffffff, true);
+	m_pRenderSystem->RenderDefault(m_taskPoolRender, m_taskGraphRender, pCamera, bPresent);
 }
 
 void CEngine::RenderForwardLighting(CCamera* pCamera, bool bPresent)
 {
-	m_pRenderSystem->UpdateCamera(m_taskGraphRender, pCamera, 0xffffffff, true);
-	m_pRenderSystem->RenderForwardLighting(m_taskGraphRender, pCamera, bPresent);
+	m_pRenderSystem->UpdateCamera(m_taskPoolRender, m_taskGraphRender, pCamera, 0xffffffff, true);
+	m_pRenderSystem->RenderForwardLighting(m_taskPoolRender, m_taskGraphRender, pCamera, bPresent);
 }
 
 void CEngine::RenderDeferredLighting(CCamera* pCamera, bool bPresent)
 {
-	m_pRenderSystem->UpdateCamera(m_taskGraphRender, pCamera, 0xffffffff, true);
-	m_pRenderSystem->RenderDeferredLighting(m_taskGraphRender, pCamera, bPresent);
+	m_pRenderSystem->UpdateCamera(m_taskPoolRender, m_taskGraphRender, pCamera, 0xffffffff, true);
+	m_pRenderSystem->RenderDeferredLighting(m_taskPoolRender, m_taskGraphRender, pCamera, bPresent);
 }
 
 void CEngine::RenderTileBaseDeferredLighting(CCamera* pCamera, bool bPresent)
 {
-	m_pRenderSystem->UpdateCamera(m_taskGraphRender, pCamera, 0xffffffff, true);
-	m_pRenderSystem->RenderTileBaseDeferredLighting(m_taskGraphRender, pCamera, bPresent);
+	m_pRenderSystem->UpdateCamera(m_taskPoolRender, m_taskGraphRender, pCamera, 0xffffffff, true);
+	m_pRenderSystem->RenderTileBaseDeferredLighting(m_taskPoolRender, m_taskGraphRender, pCamera, bPresent);
 }
 
 void CEngine::UpdateThread(void)
 {
-	m_pSceneManager->UpdateLogic(m_taskGraphUpdate, m_totalTime, m_deltaTime);
+	m_pSceneManager->UpdateLogic(m_taskPoolUpdate, m_taskGraphUpdate, m_totalTime, m_deltaTime);
 }
 
 void* CEngine::WorkThread(void* pParams)

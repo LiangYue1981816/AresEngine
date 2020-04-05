@@ -85,7 +85,7 @@ public:
 	const InstanceData& GetInstanceData(int index) const;
 
 private:
-	void Update(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer);
+	void Update(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer);
 
 
 private:

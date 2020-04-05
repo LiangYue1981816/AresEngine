@@ -4,7 +4,7 @@
 #include "GLES3Renderer.h"
 
 
-void CRenderSystem::RenderDefault(CTaskGraph& taskGraph, CCamera* pCamera, bool bPresent)
+void CRenderSystem::RenderDefault(CTaskPool& taskPool, CTaskGraph& taskGraph, CCamera* pCamera, bool bPresent)
 {
 	m_pInstanceBufferPool->Clear();
 
@@ -16,14 +16,14 @@ void CRenderSystem::RenderDefault(CTaskGraph& taskGraph, CCamera* pCamera, bool 
 	{
 		GfxRenderer()->BeginRecord(ptrComputeCommandBuffer);
 		{
-			UpdateGPUScene(taskGraph, ptrComputeCommandBuffer);
+			UpdateGPUScene(taskPool, taskGraph, ptrComputeCommandBuffer);
 		}
 		GfxRenderer()->EndRecord(ptrComputeCommandBuffer);
 		GfxRenderer()->Submit(ptrComputeCommandBuffer, pWaitSemaphore);
 
 		GfxRenderer()->BeginRecord(ptrGraphicCommandBuffer);
 		{
-			RenderDefault(taskGraph, pCamera, bPresent, ptrGraphicCommandBuffer);
+			RenderDefault(taskPool, taskGraph, pCamera, bPresent, ptrGraphicCommandBuffer);
 		}
 		GfxRenderer()->EndRecord(ptrGraphicCommandBuffer);
 		GfxRenderer()->Submit(ptrGraphicCommandBuffer, ptrComputeCommandBuffer->GetSemaphore());
@@ -31,7 +31,7 @@ void CRenderSystem::RenderDefault(CTaskGraph& taskGraph, CCamera* pCamera, bool 
 	GfxRenderer()->Present(ptrGraphicCommandBuffer->GetSemaphore());
 }
 
-void CRenderSystem::RenderDefault(CTaskGraph& taskGraph, CCamera* pCamera, bool bPresent, CGfxCommandBufferPtr ptrCommandBuffer)
+void CRenderSystem::RenderDefault(CTaskPool& taskPool, CTaskGraph& taskGraph, CCamera* pCamera, bool bPresent, CGfxCommandBufferPtr ptrCommandBuffer)
 {
 	uint32_t rtFinal;
 
@@ -39,19 +39,19 @@ void CRenderSystem::RenderDefault(CTaskGraph& taskGraph, CCamera* pCamera, bool 
 	{
 		m_pPassPreZ->SetCamera(pCamera);
 		m_pPassPreZ->SetOutputTexture(GetRenderTexture(rtDepth));
-		m_pPassPreZ->Render(taskGraph, ptrCommandBuffer);
+		m_pPassPreZ->Render(taskPool, taskGraph, ptrCommandBuffer);
 	}
 
 	uint32_t rtColor = RENDER_TEXTURE_FULL_HDR_COLOR0;
 	{
 		m_pPassDefault->SetCamera(pCamera);
 		m_pPassDefault->SetOutputTexture(GetRenderTexture(rtColor), GetRenderTexture(rtDepth));
-		m_pPassDefault->Render(taskGraph, ptrCommandBuffer);
+		m_pPassDefault->Render(taskPool, taskGraph, ptrCommandBuffer);
 	}
 	rtFinal = rtColor;
 
 	m_pPassFinal->SetCamera(pCamera);
 	m_pPassFinal->SetInputTexture(GetRenderTexture(rtFinal));
 	m_pPassFinal->SetOutputTexture(GfxRenderer()->GetSwapChain()->GetFrameIndex(), GetRenderTexture(GfxRenderer()->GetSwapChain()->GetFrameIndex()));
-	m_pPassFinal->Render(taskGraph, ptrCommandBuffer, GfxRenderer()->GetSwapChain()->GetFrameIndex(), bPresent);
+	m_pPassFinal->Render(taskPool, taskGraph, ptrCommandBuffer, GfxRenderer()->GetSwapChain()->GetFrameIndex(), bPresent);
 }

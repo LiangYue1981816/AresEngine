@@ -44,8 +44,8 @@ public:
 	CComponentPointLightPtr CreateComponentPointLight(uint32_t name);
 
 public:
-	void UpdateLogic(CTaskGraph& taskGraph, float totalTime, float deltaTime);
-	void UpdateCamera(CTaskGraph& taskGraph, CGfxCamera* pCamera, CRenderQueue* pRenderQueue, uint32_t mask, bool bComputeLOD);
+	void UpdateLogic(CTaskPool& taskPool, CTaskGraph& taskGraph, float totalTime, float deltaTime);
+	void UpdateCamera(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCamera* pCamera, CRenderQueue* pRenderQueue, uint32_t mask, bool bComputeLOD);
 
 
 private:

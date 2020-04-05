@@ -70,7 +70,7 @@ void CPassCopy::SetOutputTexture(CGfxRenderTexturePtr ptrColorTexture)
 	}
 }
 
-void CPassCopy::Render(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer)
+void CPassCopy::Render(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer)
 {
 	// Update
 	m_pCamera->GetCameraUniform()->Apply();
@@ -87,7 +87,7 @@ void CPassCopy::Render(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuf
 			const glm::vec4 scissor = glm::vec4(0.0, 0.0, w, h);
 			const glm::vec4 viewport = glm::vec4(0.0, 0.0, w, h);
 
-			m_pRenderQueue->CmdDraw(taskGraph, ptrCommandBuffer, m_ptrDescriptorSetPass, PASS_COPY_NAME, scissor, viewport, 0xffffffff, false);
+			m_pRenderQueue->CmdDraw(taskPool, taskGraph, ptrCommandBuffer, m_ptrDescriptorSetPass, PASS_COPY_NAME, scissor, viewport, 0xffffffff, false);
 		}
 		GfxRenderer()->CmdEndRenderPass(ptrCommandBuffer);
 		GfxRenderer()->CmdSetImageLayout(ptrCommandBuffer, m_ptrOutputColorTexture, GFX_IMAGE_LAYOUT_COLOR_READ_ONLY_OPTIMAL);

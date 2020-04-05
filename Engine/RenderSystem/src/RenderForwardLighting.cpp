@@ -4,7 +4,7 @@
 #include "GLES3Renderer.h"
 
 
-void CRenderSystem::RenderForwardLighting(CTaskGraph& taskGraph, CCamera* pCamera, bool bPresent)
+void CRenderSystem::RenderForwardLighting(CTaskPool& taskPool, CTaskGraph& taskGraph, CCamera* pCamera, bool bPresent)
 {
 	m_pInstanceBufferPool->Clear();
 
@@ -16,14 +16,14 @@ void CRenderSystem::RenderForwardLighting(CTaskGraph& taskGraph, CCamera* pCamer
 	{
 		GfxRenderer()->BeginRecord(ptrComputeCommandBuffer);
 		{
-			UpdateGPUScene(taskGraph, ptrComputeCommandBuffer);
+			UpdateGPUScene(taskPool, taskGraph, ptrComputeCommandBuffer);
 		}
 		GfxRenderer()->EndRecord(ptrComputeCommandBuffer);
 		GfxRenderer()->Submit(ptrComputeCommandBuffer, pWaitSemaphore);
 
 		GfxRenderer()->BeginRecord(ptrGraphicCommandBuffer);
 		{
-			RenderForwardLighting(taskGraph, pCamera, bPresent, ptrGraphicCommandBuffer);
+			RenderForwardLighting(taskPool, taskGraph, pCamera, bPresent, ptrGraphicCommandBuffer);
 		}
 		GfxRenderer()->EndRecord(ptrGraphicCommandBuffer);
 		GfxRenderer()->Submit(ptrGraphicCommandBuffer, ptrComputeCommandBuffer->GetSemaphore());
@@ -31,7 +31,7 @@ void CRenderSystem::RenderForwardLighting(CTaskGraph& taskGraph, CCamera* pCamer
 	GfxRenderer()->Present(ptrGraphicCommandBuffer->GetSemaphore());
 }
 
-void CRenderSystem::RenderForwardLighting(CTaskGraph& taskGraph, CCamera* pCamera, bool bPresent, CGfxCommandBufferPtr ptrCommandBuffer)
+void CRenderSystem::RenderForwardLighting(CTaskPool& taskPool, CTaskGraph& taskGraph, CCamera* pCamera, bool bPresent, CGfxCommandBufferPtr ptrCommandBuffer)
 {
 	uint32_t rtFinal;
 
@@ -39,7 +39,7 @@ void CRenderSystem::RenderForwardLighting(CTaskGraph& taskGraph, CCamera* pCamer
 	{
 		m_pPassPreZ->SetCamera(pCamera);
 		m_pPassPreZ->SetOutputTexture(GetRenderTexture(rtDepth));
-		m_pPassPreZ->Render(taskGraph, ptrCommandBuffer);
+		m_pPassPreZ->Render(taskPool, taskGraph, ptrCommandBuffer);
 	}
 
 	uint32_t rtSSAO = RENDER_TEXTURE_FULL_HDR_COLOR0;
@@ -52,19 +52,19 @@ void CRenderSystem::RenderForwardLighting(CTaskGraph& taskGraph, CCamera* pCamer
 		m_pPassSSAO->SetCamera(pCamera);
 		m_pPassSSAO->SetInputTexture(GetRenderTexture(rtDepth));
 		m_pPassSSAO->SetOutputTexture(GetRenderTexture(rtSSAO));
-		m_pPassSSAO->Render(taskGraph, ptrCommandBuffer);
+		m_pPassSSAO->Render(taskPool, taskGraph, ptrCommandBuffer);
 
 		m_pPassSSAOBlurHorizontal->SetParamRange(Settings()->GetValue("RenderSystem.SSAO.BlurRange"));
 		m_pPassSSAOBlurHorizontal->SetCamera(pCamera);
 		m_pPassSSAOBlurHorizontal->SetInputTexture(GetRenderTexture(rtSSAO));
 		m_pPassSSAOBlurHorizontal->SetOutputTexture(GetRenderTexture(rtSSAOBlurHorizontal));
-		m_pPassSSAOBlurHorizontal->Render(taskGraph, ptrCommandBuffer);
+		m_pPassSSAOBlurHorizontal->Render(taskPool, taskGraph, ptrCommandBuffer);
 
 		m_pPassSSAOBlurVertical->SetParamRange(Settings()->GetValue("RenderSystem.SSAO.BlurRange"));
 		m_pPassSSAOBlurVertical->SetCamera(pCamera);
 		m_pPassSSAOBlurVertical->SetInputTexture(GetRenderTexture(rtSSAOBlurHorizontal));
 		m_pPassSSAOBlurVertical->SetOutputTexture(GetRenderTexture(rtSSAOBlurVertical));
-		m_pPassSSAOBlurVertical->Render(taskGraph, ptrCommandBuffer);
+		m_pPassSSAOBlurVertical->Render(taskPool, taskGraph, ptrCommandBuffer);
 	}
 
 	uint32_t rtShadow = RENDER_TEXTURE_SHADOW;
@@ -73,7 +73,7 @@ void CRenderSystem::RenderForwardLighting(CTaskGraph& taskGraph, CCamera* pCamer
 		m_pPassShadow->SetParamSplitFactors(Settings()->GetValue("RenderSystem.Shadow.SplitFactor0"), Settings()->GetValue("RenderSystem.Shadow.SplitFactor1"), Settings()->GetValue("RenderSystem.Shadow.SplitFactor2"), Settings()->GetValue("RenderSystem.Shadow.SplitFactor3"));
 		m_pPassShadow->SetCamera(pCamera);
 		m_pPassShadow->SetOutputTexture(GetRenderTexture(rtShadow));
-		m_pPassShadow->Render(taskGraph, ptrCommandBuffer);
+		m_pPassShadow->Render(taskPool, taskGraph, ptrCommandBuffer);
 	}
 
 	uint32_t rtColor = RENDER_TEXTURE_FULL_HDR_COLOR1;
@@ -81,7 +81,7 @@ void CRenderSystem::RenderForwardLighting(CTaskGraph& taskGraph, CCamera* pCamer
 		m_pPassForwardLighting->SetCamera(pCamera);
 		m_pPassForwardLighting->SetInputTexture(GetRenderTexture(rtShadow), GetRenderTexture(rtSSAO));
 		m_pPassForwardLighting->SetOutputTexture(GetRenderTexture(rtColor), GetRenderTexture(rtDepth));
-		m_pPassForwardLighting->Render(taskGraph, ptrCommandBuffer);
+		m_pPassForwardLighting->Render(taskPool, taskGraph, ptrCommandBuffer);
 	}
 	rtFinal = RENDER_TEXTURE_FULL_HDR_COLOR0;
 
@@ -93,36 +93,36 @@ void CRenderSystem::RenderForwardLighting(CTaskGraph& taskGraph, CCamera* pCamer
 		m_pPassBloomLuminanceThreshold->SetCamera(pCamera);
 		m_pPassBloomLuminanceThreshold->SetInputTexture(GetRenderTexture(rtColor));
 		m_pPassBloomLuminanceThreshold->SetOutputTexture(GetRenderTexture(rtBloomThreshold));
-		m_pPassBloomLuminanceThreshold->Render(taskGraph, ptrCommandBuffer);
+		m_pPassBloomLuminanceThreshold->Render(taskPool, taskGraph, ptrCommandBuffer);
 
 		m_pPassBloomBlurHorizontal->SetParamRange(Settings()->GetValue("RenderSystem.Bloom.BlurRange.FirstTime"));
 		m_pPassBloomBlurHorizontal->SetCamera(pCamera);
 		m_pPassBloomBlurHorizontal->SetInputTexture(GetRenderTexture(rtBloomThreshold));
 		m_pPassBloomBlurHorizontal->SetOutputTexture(GetRenderTexture(rtBloomBlurHorizontal));
-		m_pPassBloomBlurHorizontal->Render(taskGraph, ptrCommandBuffer);
+		m_pPassBloomBlurHorizontal->Render(taskPool, taskGraph, ptrCommandBuffer);
 
 		m_pPassBloomBlurVertical->SetParamRange(Settings()->GetValue("RenderSystem.Bloom.BlurRange.FirstTime"));
 		m_pPassBloomBlurVertical->SetCamera(pCamera);
 		m_pPassBloomBlurVertical->SetInputTexture(GetRenderTexture(rtBloomBlurHorizontal));
 		m_pPassBloomBlurVertical->SetOutputTexture(GetRenderTexture(rtBloomBlurVertical));
-		m_pPassBloomBlurVertical->Render(taskGraph, ptrCommandBuffer);
+		m_pPassBloomBlurVertical->Render(taskPool, taskGraph, ptrCommandBuffer);
 
 		m_pPassBloomBlurHorizontal->SetParamRange(Settings()->GetValue("RenderSystem.Bloom.BlurRange.SecondTime"));
 		m_pPassBloomBlurHorizontal->SetCamera(pCamera);
 		m_pPassBloomBlurHorizontal->SetInputTexture(GetRenderTexture(rtBloomBlurVertical));
 		m_pPassBloomBlurHorizontal->SetOutputTexture(GetRenderTexture(rtBloomBlurHorizontal));
-		m_pPassBloomBlurHorizontal->Render(taskGraph, ptrCommandBuffer);
+		m_pPassBloomBlurHorizontal->Render(taskPool, taskGraph, ptrCommandBuffer);
 
 		m_pPassBloomBlurVertical->SetParamRange(Settings()->GetValue("RenderSystem.Bloom.BlurRange.SecondTime"));
 		m_pPassBloomBlurVertical->SetCamera(pCamera);
 		m_pPassBloomBlurVertical->SetInputTexture(GetRenderTexture(rtBloomBlurHorizontal));
 		m_pPassBloomBlurVertical->SetOutputTexture(GetRenderTexture(rtBloomBlurVertical));
-		m_pPassBloomBlurVertical->Render(taskGraph, ptrCommandBuffer);
+		m_pPassBloomBlurVertical->Render(taskPool, taskGraph, ptrCommandBuffer);
 
 		m_pPassBloomBlendAdd->SetCamera(pCamera);
 		m_pPassBloomBlendAdd->SetInputTexture(GetRenderTexture(rtColor), GetRenderTexture(rtBloomBlurVertical));
 		m_pPassBloomBlendAdd->SetOutputTexture(GetRenderTexture(rtBloom));
-		m_pPassBloomBlendAdd->Render(taskGraph, ptrCommandBuffer);
+		m_pPassBloomBlendAdd->Render(taskPool, taskGraph, ptrCommandBuffer);
 	}
 	rtColor = rtBloom;
 	rtFinal = RENDER_TEXTURE_FULL_HDR_COLOR1;
@@ -130,10 +130,10 @@ void CRenderSystem::RenderForwardLighting(CTaskGraph& taskGraph, CCamera* pCamer
 	m_pPassColorGrading->SetCamera(pCamera);
 	m_pPassColorGrading->SetInputTexture(GetRenderTexture(rtColor));
 	m_pPassColorGrading->SetOutputTexture(GetRenderTexture(rtFinal));
-	m_pPassColorGrading->Render(taskGraph, ptrCommandBuffer);
+	m_pPassColorGrading->Render(taskPool, taskGraph, ptrCommandBuffer);
 
 	m_pPassFinal->SetCamera(pCamera);
 	m_pPassFinal->SetInputTexture(GetRenderTexture(rtFinal));
 	m_pPassFinal->SetOutputTexture(GfxRenderer()->GetSwapChain()->GetFrameIndex(), GetRenderTexture(GfxRenderer()->GetSwapChain()->GetFrameIndex()));
-	m_pPassFinal->Render(taskGraph, ptrCommandBuffer, GfxRenderer()->GetSwapChain()->GetFrameIndex(), bPresent);
+	m_pPassFinal->Render(taskPool, taskGraph, ptrCommandBuffer, GfxRenderer()->GetSwapChain()->GetFrameIndex(), bPresent);
 }

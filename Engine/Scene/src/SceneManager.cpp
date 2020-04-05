@@ -114,7 +114,7 @@ CComponentPointLightPtr CSceneManager::CreateComponentPointLight(uint32_t name)
 	return CComponentPointLightPtr(name, &m_pointLightManager);
 }
 
-void CSceneManager::UpdateLogic(CTaskGraph& taskGraph, float totalTime, float deltaTime)
+void CSceneManager::UpdateLogic(CTaskPool& taskPool, CTaskGraph& taskGraph, float totalTime, float deltaTime)
 {
 	eastl::vector<CTaskComponentUpdateLogic<CComponentMesh>> taskUpdateLogicMeshs(taskGraph.GetNumThreads());
 	eastl::vector<CTaskComponentUpdateLogic<CComponentSkin>> taskUpdateLogicSkins(taskGraph.GetNumThreads());
@@ -137,7 +137,7 @@ void CSceneManager::UpdateLogic(CTaskGraph& taskGraph, float totalTime, float de
 	taskGraph.Wait();
 }
 
-void CSceneManager::UpdateCamera(CTaskGraph& taskGraph, CGfxCamera* pCamera, CRenderQueue* pRenderQueue, uint32_t mask, bool bComputeLOD)
+void CSceneManager::UpdateCamera(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCamera* pCamera, CRenderQueue* pRenderQueue, uint32_t mask, bool bComputeLOD)
 {
 	pRenderQueue->Begin(pCamera);
 	{

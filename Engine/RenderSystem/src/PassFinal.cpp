@@ -70,7 +70,7 @@ void CPassFinal::SetOutputTexture(int indexFrame, CGfxRenderTexturePtr ptrColorT
 	}
 }
 
-void CPassFinal::Render(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer, int indexFrame, bool bPresent)
+void CPassFinal::Render(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer, int indexFrame, bool bPresent)
 {
 	// Update
 	m_pCamera->GetCameraUniform()->Apply();
@@ -90,7 +90,7 @@ void CPassFinal::Render(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBu
 			const glm::vec4 scissor = glm::vec4(0.0, 0.0, w, h);
 			const glm::vec4 viewport = glm::vec4(0.0, 0.0, w, h);
 
-			m_pRenderQueue->CmdDraw(taskGraph, ptrCommandBuffer, m_ptrDescriptorSetPass, PASS_FINAL_NAME, scissor, viewport, 0xffffffff, false);
+			m_pRenderQueue->CmdDraw(taskPool, taskGraph, ptrCommandBuffer, m_ptrDescriptorSetPass, PASS_FINAL_NAME, scissor, viewport, 0xffffffff, false);
 		}
 		GfxRenderer()->CmdEndRenderPass(ptrCommandBuffer);
 		GfxRenderer()->CmdSetImageLayout(ptrCommandBuffer, ptrColorTexture, bPresent ? GFX_IMAGE_LAYOUT_PRESENT_SRC_OPTIMAL : GFX_IMAGE_LAYOUT_COLOR_READ_ONLY_OPTIMAL);

@@ -44,7 +44,7 @@ public:
 	void SetLookat(float eyex, float eyey, float eyez, float centerx, float centery, float centerz, float upx, float upy, float upz);
 
 private:
-	void Update(CTaskGraph& taskGraph, uint32_t mask, bool bComputeLOD) const;
+	void Update(CTaskPool& taskPool, CTaskGraph& taskGraph, uint32_t mask, bool bComputeLOD) const;
 
 
 private:

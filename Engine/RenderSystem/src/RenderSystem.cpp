@@ -335,12 +335,12 @@ void CRenderSystem::SetMainShadowLookat(int indexLevel, float eyex, float eyey, 
 	m_pEngineUniform->SetMainShadowLookat(indexLevel, eyex, eyey, eyez, centerx, centery, centerz, upx, upy, upz);
 }
 
-void CRenderSystem::UpdateCamera(CTaskGraph& taskGraph, CCamera* pCamera, uint32_t mask, bool bComputeLOD)
+void CRenderSystem::UpdateCamera(CTaskPool& taskPool, CTaskGraph& taskGraph, CCamera* pCamera, uint32_t mask, bool bComputeLOD)
 {
-	pCamera->Update(taskGraph, mask, bComputeLOD);
+	pCamera->Update(taskPool, taskGraph, mask, bComputeLOD);
 }
 
-void CRenderSystem::UpdateGPUScene(CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer)
+void CRenderSystem::UpdateGPUScene(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer)
 {
-	m_pGPUScene->Update(taskGraph, ptrCommandBuffer);
+	m_pGPUScene->Update(taskPool, taskGraph, ptrCommandBuffer);
 }
