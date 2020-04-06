@@ -28,8 +28,8 @@ private:
 
 
 private:
-	CGfxDescriptorSetPtr m_ptrDescriptorSetPass0;
-	CGfxDescriptorSetPtr m_ptrDescriptorSetPass1;
+	CGfxDescriptorSetPtr m_ptrDescriptorSetPass_Subpass0;
+	CGfxDescriptorSetPtr m_ptrDescriptorSetPass_Subpass1;
 	CGfxRenderTexturePtr m_ptrInputShadowTexture;
 	CGfxRenderTexturePtr m_ptrInputSSAOTexture;
 
