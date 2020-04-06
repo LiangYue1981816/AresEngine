@@ -10,13 +10,14 @@ USE_ENGINE_UNIFORM;
 USE_SCENE_DATA_STORAGE;
 
 // Output
-layout (location = 0) out mediump vec2 outTexcoord;
+layout (location = 0) out highp   vec3 outPosition;
+layout (location = 1) out mediump vec2 outTexcoord;
 #ifdef NORMAL_MAP
-layout (location = 1) out mediump vec3 outTangent;
-layout (location = 2) out mediump vec3 outBinormal;
-layout (location = 3) out mediump vec3 outNormal;
+layout (location = 2) out mediump vec3 outTangent;
+layout (location = 3) out mediump vec3 outBinormal;
+layout (location = 4) out mediump vec3 outNormal;
 #else
-layout (location = 1) out mediump vec3 outNormal;
+layout (location = 2) out mediump vec3 outNormal;
 #endif
 
 // Descriptor
@@ -41,6 +42,7 @@ void main()
 	outNormal = worldNormal;
 #endif
 
+	outPosition = worldPosition;
 	outTexcoord = inTexcoord0;
 
 	gl_Position = cameraProjectionViewMatrix * vec4(worldPosition, 1.0);
@@ -54,23 +56,28 @@ precision mediump float;
 
 USE_CAMERA_UNIFORM;
 USE_ENGINE_UNIFORM;
+USE_SSAO_TEXTURE_UNIFORM;
+USE_SHADOW_TEXTURE_UNIFORM;
 
 #include "light.inc"
+#include "shadow.inc"
 
 // Input
-layout (location = 0) in mediump vec2 inTexcoord;
+layout (location = 0) in highp   vec3 inPosition;
+layout (location = 1) in mediump vec2 inTexcoord;
 #ifdef NORMAL_MAP
-layout (location = 1) in mediump vec3 inTangent;
-layout (location = 2) in mediump vec3 inBinormal;
-layout (location = 3) in mediump vec3 inNormal;
+layout (location = 2) in mediump vec3 inTangent;
+layout (location = 3) in mediump vec3 inBinormal;
+layout (location = 4) in mediump vec3 inNormal;
 #else
-layout (location = 1) in mediump vec3 inNormal;
+layout (location = 2) in mediump vec3 inNormal;
 #endif
 
 // Output
-layout (location = 0) out mediump vec4 outFragGBufferA;
-layout (location = 1) out mediump vec4 outFragGBufferB;
-layout (location = 2) out mediump vec4 outFragGBufferC;
+layout (location = 0) out mediump vec4 outFragColor;
+layout (location = 1) out mediump vec4 outFragGBufferA;
+layout (location = 2) out mediump vec4 outFragGBufferB;
+layout (location = 3) out mediump vec4 outFragGBufferC;
 
 // Descriptor
 DESCRIPTOR_SET_MATPASS(8) mediump uniform sampler2D texAlbedo;
@@ -80,6 +87,9 @@ DESCRIPTOR_SET_MATPASS(9) mediump uniform sampler2D texNormal;
 #ifdef ROUGHNESS_METALLIC_SPECULAR_AO_MAP
 DESCRIPTOR_SET_MATPASS(10) mediump uniform sampler2D texRoughnessMetallicSpecularAO;
 #endif
+#ifdef ENV_MAP
+DESCRIPTOR_SET_MATPASS(11) mediump uniform sampler2D texEnv;
+#endif
 
 void main()
 {
@@ -88,17 +98,16 @@ void main()
 	if (albedo.a < 0.5)
 		discard;
 
-	outFragGBufferA.rgb = Gamma2Linear(albedo.rgb);
-	outFragGBufferA.a = 1.0;
+	mediump vec3 albedoColor = Gamma2Linear(albedo.rgb);
+
+	highp vec3 worldCameraPosition = (cameraViewInverseMatrix * vec4(0.0, 0.0, 0.0, 1.0)).xyz;
+	mediump vec3 worldViewDirection = normalize(worldCameraPosition - inPosition);
 
 #ifdef NORMAL_MAP
 	mediump vec3 worldNormal = normalize(mat3(inTangent, inBinormal, inNormal) * (texture(texNormal, inTexcoord).rgb * vec3(2.0) - vec3(1.0)));
 #else
 	mediump vec3 worldNormal = inNormal;
 #endif
-
-	outFragGBufferB.rgb = worldNormal;
-	outFragGBufferB.a = 1.0;
 
 #ifdef ROUGHNESS_METALLIC_SPECULAR_AO_MAP
 	mediump vec4 roughness_metallic_specular_ao = texture(texRoughnessMetallicSpecularAO, inTexcoord);
@@ -113,6 +122,45 @@ void main()
 	mediump float ao = 1.0;
 #endif
 
-	outFragGBufferC = vec4(roughness, metallic, specular, ao);
+	highp vec4 projectCoord = cameraProjectionViewMatrix * vec4(inPosition, 1.0);
+	projectCoord.xy = projectCoord.xy / projectCoord.w;
+ 	projectCoord.xy = projectCoord.xy * 0.5 + 0.5;
+	mediump vec3 ssao = texture(texSSAO, projectCoord.xy).rgb;
+
+	mediump float shadow = ShadowValue(inPosition, inNormal, texShadow);
+//	mediump float shadow = ShadowValueIrregular(inPosition, texShadow);
+
+	mediump vec3 pointLightDirection = mainPointLightPosition - inPosition;
+	mediump vec3 pointLightColor = mainPointLightColor * LightingAttenuation(length(pointLightDirection));
+	pointLightDirection = normalize(pointLightDirection);
+
+	mediump vec3 fresnel = Fresnel(worldNormal, worldViewDirection, albedoColor, metallic);
+	mediump vec3 ambientLighting = AmbientSH9(worldNormal, albedoColor, metallic) * ambientLightFactor;
+	mediump vec3 directLighting = PBRLighting(worldNormal, worldViewDirection, mainDirectLightDirection, mainDirectLightColor, albedoColor, fresnel, metallic, roughness) * directLightFactor;
+#ifdef ENV_MAP
+	mediump vec3 fresnelRoughness = FresnelRoughness(worldNormal, worldViewDirection, albedoColor, metallic, roughness);
+	mediump vec3 envLighting = EnvLighting(worldNormal, worldViewDirection, albedoColor, fresnelRoughness, roughness, texEnv, 8.0) * envLightFactor;
+#else
+	mediump vec3 envLighting = vec3(0.0);
+#endif
+	mediump vec3 finalLighting = ao * ssao * (ambientLighting + directLighting * shadow + envLighting);
+
+//	Debug Shadow
+//	highp float factor = length(worldCameraPosition - inPosition) / (cameraZFar - cameraZNear);
+//	if (factor < mainShadowLevelFactor.w) finalLighting = vec3(1.0, 1.0, 1.0) * vec3(shadow);
+//	if (factor < mainShadowLevelFactor.z) finalLighting = vec3(0.0, 0.0, 1.0) * vec3(shadow);
+//	if (factor < mainShadowLevelFactor.y) finalLighting = vec3(0.0, 1.0, 0.0) * vec3(shadow);
+//	if (factor < mainShadowLevelFactor.x) finalLighting = vec3(1.0, 0.0, 0.0) * vec3(shadow);
+//	finalLighting = vec3(shadow);
+
+	outFragColor = PackHDR(finalLighting);
+
+	outFragGBufferA.rgb = Gamma2Linear(albedo.rgb);
+	outFragGBufferA.a = 1.0;
+
+	outFragGBufferB.rgb = worldNormal;
+	outFragGBufferB.a = 1.0;
+
+	outFragGBufferC = vec4(roughness, metallic, specular, ao * ssao);
 }
 #endif

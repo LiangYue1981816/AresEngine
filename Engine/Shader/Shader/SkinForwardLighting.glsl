@@ -145,9 +145,6 @@ void main()
 #endif
 	mediump vec3 finalLighting = ao * ssao * (ambientLighting + pointLighting + directLighting * shadow + envLighting);
 
-//	finalLighting = ToneMapping(finalLighting);
-//	finalLighting = Linear2Gamma(finalLighting);
-
 //	Debug Shadow
 //	highp float factor = length(worldCameraPosition - worldPosition) / (cameraZFar - cameraZNear);
 //	if (factor < mainShadowLevelFactor.w) finalLighting = vec3(1.0, 1.0, 1.0) * vec3(shadow);
