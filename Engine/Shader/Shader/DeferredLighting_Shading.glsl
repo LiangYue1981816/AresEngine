@@ -40,9 +40,9 @@ USE_ENGINE_UNIFORM;
 layout (location = 0) out mediump vec4 outFragColor;
 
 // Descriptor
-layout (input_attachment_index = 0, binding = 1) uniform mediump subpassInput texGBuffer0;
-layout (input_attachment_index = 1, binding = 2) uniform mediump subpassInput texGBuffer1;
-layout (input_attachment_index = 2, binding = 3) uniform mediump subpassInput texGBuffer2;
+DESCRIPTOR_SET_INPUTATTACHMENT(1, 6) uniform mediump subpassInput texGBuffer0;
+DESCRIPTOR_SET_INPUTATTACHMENT(2, 7) uniform mediump subpassInput texGBuffer1;
+DESCRIPTOR_SET_INPUTATTACHMENT(3, 8) uniform mediump subpassInput texGBuffer2;
 
 void main()
 {
