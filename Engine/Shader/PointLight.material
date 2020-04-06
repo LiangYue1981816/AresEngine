@@ -1,12 +1,28 @@
 <Material>
 	<Pass name="PassDefault">
 		<Pipeline render_pass="PassDefault">
-			<Vertex file_name="Debug.glsl">
+			<Vertex file_name="Default.glsl">
 				<Define name="VERTEX_ATTRIBUTE_POSITION" />
 				<Define name="VERTEX_ATTRIBUTE_NORMAL" />
+				<Define name="VERTEX_ATTRIBUTE_BINORMAL" />
+				<Define name="VERTEX_ATTRIBUTE_TEXCOORD0" />
 				<Define name="INSTANCE_ATTRIBUTE_INDEX" />
 			</Vertex>
-			<Fragment file_name="Debug.glsl">
+			<Fragment file_name="Default.glsl">
+			</Fragment>
+		</Pipeline>
+		<Texture2D name="texAlbedo" file_name="Sponza_Arch_Albedo.dds" min_filter="GFX_LINEAR" mag_filter="GFX_LINEAR" mipmap_mode="GFX_NEAREST" address_mode="GFX_REPEAT" />
+	</Pass>
+	<Pass name="PassDeferredLighting_Shading">
+		<Pipeline render_pass="PassDeferredLighting" sub_pass="1">
+			<Vertex file_name="DeferredLighting_Shading.glsl">
+				<Define name="VERTEX_ATTRIBUTE_POSITION" />
+				<Define name="VERTEX_ATTRIBUTE_NORMAL" />
+				<Define name="VERTEX_ATTRIBUTE_BINORMAL" />
+				<Define name="VERTEX_ATTRIBUTE_TEXCOORD0" />
+				<Define name="INSTANCE_ATTRIBUTE_INDEX" />
+			</Vertex>
+			<Fragment file_name="DeferredLighting_Shading.glsl">
 			</Fragment>
 		</Pipeline>
 	</Pass>
