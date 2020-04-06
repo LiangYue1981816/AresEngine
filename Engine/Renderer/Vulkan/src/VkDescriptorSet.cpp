@@ -166,7 +166,7 @@ bool CVKDescriptorSet::SetInputAttachmentTexture(uint32_t name, const CGfxRender
 	ASSERT(m_vkDescriptorSet);
 	ASSERT(m_ptrDescriptorLayout);
 
-	if (m_ptrDescriptorLayout->IsSampledImageValid(name)) {
+	if (m_ptrDescriptorLayout->IsInputAttachmentValid(name)) {
 		m_imageDescriptorInfos[name].SetInputAttachmentTexture(m_ptrDescriptorLayout->GetInputAttachmentBinding(name), (CGfxSampler*)pSampler, ptrTexture);
 		return true;
 	}

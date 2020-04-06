@@ -123,7 +123,7 @@ bool CGLES3DescriptorSet::SetInputAttachmentTexture(uint32_t name, const CGfxRen
 	ASSERT(ptrTexture);
 	ASSERT(m_ptrDescriptorLayout);
 
-	if (m_ptrDescriptorLayout->IsSampledImageValid(name)) {
+	if (m_ptrDescriptorLayout->IsInputAttachmentValid(name)) {
 		m_imageDescriptorInfos[name].SetInputAttachmentTexture(m_ptrDescriptorLayout->GetInputAttachmentBinding(name), (CGfxSampler*)pSampler, ptrTexture);
 		return true;
 	}
