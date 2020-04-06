@@ -20,7 +20,7 @@ private:
 
 public:
 	void SetCamera(CCamera* pCamera);
-	void SetInputTexture(CGfxRenderTexturePtr ptrShadowTexture, CGfxRenderTexturePtr ptrSSAOTexture);
+	void SetInputTexture(CGfxRenderTexturePtr ptrDepthTexture, CGfxRenderTexturePtr ptrShadowTexture, CGfxRenderTexturePtr ptrSSAOTexture);
 	void SetOutputTexture(CGfxRenderTexturePtr ptrColorTexture, CGfxRenderTexturePtr ptrGBuffer0Texture, CGfxRenderTexturePtr ptrGBuffer1Texture, CGfxRenderTexturePtr ptrGBuffer2Texture, CGfxRenderTexturePtr ptrDepthStencilTexture);
 
 private:
@@ -30,6 +30,7 @@ private:
 private:
 	CGfxDescriptorSetPtr m_ptrDescriptorSetPass_Subpass0;
 	CGfxDescriptorSetPtr m_ptrDescriptorSetPass_Subpass1;
+	CGfxRenderTexturePtr m_ptrInputDepthTexture;
 	CGfxRenderTexturePtr m_ptrInputShadowTexture;
 	CGfxRenderTexturePtr m_ptrInputSSAOTexture;
 

@@ -30,6 +30,7 @@ precision mediump float;
 
 USE_CAMERA_UNIFORM;
 USE_ENGINE_UNIFORM;
+USE_DEPTH_TEXTURE_UNIFORM;
 
 #include "light.inc"
 

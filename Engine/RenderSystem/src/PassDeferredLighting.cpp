@@ -76,6 +76,7 @@ CPassDeferredLighting::CPassDeferredLighting(CRenderSystem* pRenderSystem)
 		ptrDescriptorLayout->SetUniformBlockBinding(UNIFORM_ENGINE_NAME, UNIFORM_ENGINE_BIND);
 		ptrDescriptorLayout->SetUniformBlockBinding(UNIFORM_CAMERA_NAME, UNIFORM_CAMERA_BIND);
 		ptrDescriptorLayout->SetStorageBlockBinding(STORAGE_SCENE_DATA_NAME, STORAGE_SCENE_DATA_BIND);
+		ptrDescriptorLayout->SetSampledImageBinding(UNIFORM_DEPTH_TEXTURE_NAME, UNIFORM_DEPTH_TEXTURE_BIND);
 		ptrDescriptorLayout->Create();
 
 		m_ptrDescriptorSetPass_Subpass1 = GfxRenderer()->NewDescriptorSet(HashValueFormat("%x_%p", PASS_DEFERRED_LIGHTING_SHADING_NAME, this), ptrDescriptorLayout);
@@ -98,7 +99,7 @@ void CPassDeferredLighting::SetCamera(CCamera* pCamera)
 	}
 }
 
-void CPassDeferredLighting::SetInputTexture(CGfxRenderTexturePtr ptrShadowTexture, CGfxRenderTexturePtr ptrSSAOTexture)
+void CPassDeferredLighting::SetInputTexture(CGfxRenderTexturePtr ptrDepthTexture, CGfxRenderTexturePtr ptrShadowTexture, CGfxRenderTexturePtr ptrSSAOTexture)
 {
 	CGfxSampler* pSamplerPoint = GfxRenderer()->CreateSampler(GFX_FILTER_NEAREST, GFX_FILTER_NEAREST, GFX_SAMPLER_MIPMAP_MODE_NEAREST, GFX_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE);
 	CGfxSampler* pSamplerLinear = GfxRenderer()->CreateSampler(GFX_FILTER_NEAREST, GFX_FILTER_LINEAR, GFX_SAMPLER_MIPMAP_MODE_NEAREST, GFX_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE);
@@ -111,6 +112,11 @@ void CPassDeferredLighting::SetInputTexture(CGfxRenderTexturePtr ptrShadowTextur
 	if (m_ptrInputSSAOTexture != ptrSSAOTexture) {
 		m_ptrInputSSAOTexture = ptrSSAOTexture;
 		m_ptrDescriptorSetPass_Subpass0->SetRenderTexture(UNIFORM_SSAO_TEXTURE_NAME, ptrSSAOTexture, pSamplerLinear);
+	}
+
+	if (m_ptrInputDepthTexture != ptrDepthTexture) {
+		m_ptrInputDepthTexture = ptrDepthTexture;
+		m_ptrDescriptorSetPass_Subpass1->SetRenderTexture(UNIFORM_DEPTH_TEXTURE_NAME, ptrDepthTexture, pSamplerPoint);
 	}
 }
 

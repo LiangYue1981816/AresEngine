@@ -82,7 +82,7 @@ void CRenderSystem::RenderDeferredLighting(CTaskPool& taskPool, CTaskGraph& task
 	uint32_t rtGBuffer2 = RENDER_TEXTURE_GBUFFER2;
 	{
 		m_pPassDeferredLighting->SetCamera(pCamera);
-		m_pPassDeferredLighting->SetInputTexture(GetRenderTexture(rtShadow), GetRenderTexture(rtSSAO));
+		m_pPassDeferredLighting->SetInputTexture(GetRenderTexture(rtDepth), GetRenderTexture(rtShadow), GetRenderTexture(rtSSAO));
 		m_pPassDeferredLighting->SetOutputTexture(GetRenderTexture(rtColor), GetRenderTexture(rtGBuffer0), GetRenderTexture(rtGBuffer1), GetRenderTexture(rtGBuffer2), GetRenderTexture(rtDepth));
 		m_pPassDeferredLighting->Render(taskPool, taskGraph, ptrCommandBuffer);
 	}

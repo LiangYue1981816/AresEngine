@@ -181,9 +181,9 @@ void main()
 		highp vec3 samplePosition = curPosition + sign(dot(curNormal, sampleNormal)) * sampleNormal * radius;
 
 		highp vec4 offset = vec4(samplePosition, 1.0);
-        offset = cameraProjectionMatrix * offset;
-        offset.xy = offset.xy / offset.w;
-        offset.xy = offset.xy * 0.5 + 0.5;
+		offset = cameraProjectionMatrix * offset;
+		offset.xy = offset.xy / offset.w;
+		offset.xy = offset.xy * 0.5 + 0.5;
 
 		highp float sampleDepth = texture(texDepth, offset.xy).r;
 		highp vec3 checkSamplePosition = ScreenToViewPosition(offset.xy, sampleDepth);
