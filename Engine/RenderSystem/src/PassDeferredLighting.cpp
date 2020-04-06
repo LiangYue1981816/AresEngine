@@ -31,9 +31,9 @@ void CPassDeferredLighting::Create(GfxPixelFormat colorPixelFormat, GfxPixelForm
 
 	ptrRenderPass = GfxRenderer()->NewRenderPass(PASS_DEFERRED_LIGHTING_NAME, numAttachments, numSubpasses);
 	ptrRenderPass->SetColorAttachment(indexAttachmentColor, colorPixelFormat, 1, false, true, color[0], color[1], color[2], color[3]);
-	ptrRenderPass->SetColorAttachment(indexAttachmentGBuffer0, colorPixelFormat, 1, false, true, color[0], color[1], color[2], color[3]);
-	ptrRenderPass->SetColorAttachment(indexAttachmentGBuffer1, colorPixelFormat, 1, false, true, color[0], color[1], color[2], color[3]);
-	ptrRenderPass->SetColorAttachment(indexAttachmentGBuffer2, colorPixelFormat, 1, false, true, color[0], color[1], color[2], color[3]);
+	ptrRenderPass->SetColorAttachment(indexAttachmentGBuffer0, GFX_PIXELFORMAT_BGRA8_UNORM_PACK8, 1, false, true, color[0], color[1], color[2], color[3]);
+	ptrRenderPass->SetColorAttachment(indexAttachmentGBuffer1, GFX_PIXELFORMAT_BGRA8_UNORM_PACK8, 1, false, true, color[0], color[1], color[2], color[3]);
+	ptrRenderPass->SetColorAttachment(indexAttachmentGBuffer2, GFX_PIXELFORMAT_BGRA8_UNORM_PACK8, 1, false, true, color[0], color[1], color[2], color[3]);
 	ptrRenderPass->SetDepthStencilAttachment(indexAttachmentDepthStencil, depthPixelFormat, 1, false, false, depth, stencil);
 	ptrRenderPass->SetSubpassOutputColorReference(0, indexAttachmentColor);
 	ptrRenderPass->SetSubpassOutputColorReference(0, indexAttachmentGBuffer0);
