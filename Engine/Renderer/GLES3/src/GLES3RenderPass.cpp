@@ -80,6 +80,24 @@ bool CGLES3RenderPass::SetSubpassInputColorReference(int indexSubpass, int index
 	return true;
 }
 
+bool CGLES3RenderPass::SetSubpassInputDepthStencilReference(int indexSubpass, int indexAttachment)
+{
+	if (indexSubpass < 0 || indexSubpass >= m_subpasses.size()) {
+		return false;
+	}
+
+	if (indexAttachment < 0 || indexAttachment >= m_attachments.size()) {
+		return false;
+	}
+
+	if (CGfxHelper::IsFormatDepthOrStencil(m_attachments[indexAttachment].format) == false) {
+		return false;
+	}
+
+	m_subpasses[indexSubpass].SetInputDepthStencilAttachment(indexAttachment);
+	return true;
+}
+
 bool CGLES3RenderPass::SetSubpassOutputColorReference(int indexSubpass, int indexAttachment)
 {
 	if (indexSubpass < 0 || indexSubpass >= m_subpasses.size()) {

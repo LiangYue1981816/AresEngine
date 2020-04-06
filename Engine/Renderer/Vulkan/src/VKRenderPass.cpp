@@ -195,6 +195,24 @@ bool CVKRenderPass::SetSubpassInputColorReference(int indexSubpass, int indexAtt
 	return true;
 }
 
+bool CVKRenderPass::SetSubpassInputDepthStencilReference(int indexSubpass, int indexAttachment)
+{
+	if (indexSubpass < 0 || indexSubpass >= m_subpasses.size()) {
+		return false;
+	}
+
+	if (indexAttachment < 0 || indexAttachment >= m_attachments.size()) {
+		return false;
+	}
+
+	if (CGfxHelper::IsFormatDepthOrStencil(m_attachments[indexAttachment].format) == false) {
+		return false;
+	}
+
+	m_subpasses[indexSubpass].SetInputDepthStencilAttachment(indexAttachment);
+	return true;
+}
+
 bool CVKRenderPass::SetSubpassOutputColorReference(int indexSubpass, int indexAttachment)
 {
 	if (indexSubpass < 0 || indexSubpass >= m_subpasses.size()) {

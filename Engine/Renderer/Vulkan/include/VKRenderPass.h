@@ -25,6 +25,7 @@ public:
 	bool SetDepthStencilAttachment(int indexAttachment, GfxPixelFormat format, int samples, bool bInvalidation, bool bClear, float depth = 1.0f, int stencil = 0);
 
 	bool SetSubpassInputColorReference(int indexSubpass, int indexAttachment);
+	bool SetSubpassInputDepthStencilReference(int indexSubpass, int indexAttachment);
 	bool SetSubpassOutputColorReference(int indexSubpass, int indexAttachment);
 	bool SetSubpassOutputDepthStencilReference(int indexSubpass, int indexAttachment);
 	bool SetSubpassResolveReference(int indexSubpass, int indexAttachment);
