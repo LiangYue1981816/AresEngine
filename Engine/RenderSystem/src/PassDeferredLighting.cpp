@@ -2,13 +2,23 @@
 #include "RenderHeader.h"
 
 
+////////////////////////////////////////////////////////////////////////////////////
+// SubPass0 AmbientLighting DirectionLighting EnvLighting GBuffer
+//    Color = ao * ssao * (ambientLighting + directLighting * shadow + envLighting)
+//    GBuffer0 = Albedo
+//    GBuffer1 = Normal
+//    GBuffer2 = Roughness Metallic Specular (AO * SSAO)
+// SubPass1 PointLighting
+//    Color += ao * ssao * pointLighting
+//==================================================================================
+
 static const int indexAttachmentColor = 0;
 static const int indexAttachmentGBuffer0 = 1;
 static const int indexAttachmentGBuffer1 = 2;
 static const int indexAttachmentGBuffer2 = 3;
 static const int indexAttachmentDepthStencil = 4;
 
-static const int numSubpasses = 3;
+static const int numSubpasses = 2;
 static const int numAttachments = 5;
 static CGfxRenderPassPtr ptrRenderPass;
 
@@ -25,6 +35,7 @@ void CPassDeferredLighting::Create(GfxPixelFormat colorPixelFormat, GfxPixelForm
 	ptrRenderPass->SetColorAttachment(indexAttachmentGBuffer1, colorPixelFormat, 1, false, true, color[0], color[1], color[2], color[3]);
 	ptrRenderPass->SetColorAttachment(indexAttachmentGBuffer2, colorPixelFormat, 1, false, true, color[0], color[1], color[2], color[3]);
 	ptrRenderPass->SetDepthStencilAttachment(indexAttachmentDepthStencil, depthPixelFormat, 1, false, false, depth, stencil);
+	ptrRenderPass->SetSubpassOutputColorReference(0, indexAttachmentColor);
 	ptrRenderPass->SetSubpassOutputColorReference(0, indexAttachmentGBuffer0);
 	ptrRenderPass->SetSubpassOutputColorReference(0, indexAttachmentGBuffer1);
 	ptrRenderPass->SetSubpassOutputColorReference(0, indexAttachmentGBuffer2);
@@ -32,9 +43,8 @@ void CPassDeferredLighting::Create(GfxPixelFormat colorPixelFormat, GfxPixelForm
 	ptrRenderPass->SetSubpassInputColorReference(1, indexAttachmentGBuffer0);
 	ptrRenderPass->SetSubpassInputColorReference(1, indexAttachmentGBuffer1);
 	ptrRenderPass->SetSubpassInputColorReference(1, indexAttachmentGBuffer2);
-	ptrRenderPass->SetSubpassInputColorReference(1, indexAttachmentDepthStencil);
 	ptrRenderPass->SetSubpassOutputColorReference(1, indexAttachmentColor);
-	ptrRenderPass->SetSubpassOutputColorReference(2, indexAttachmentColor);
+	ptrRenderPass->SetSubpassOutputDepthStencilReference(1, indexAttachmentDepthStencil);
 	ptrRenderPass->Create();
 }
 
@@ -51,6 +61,8 @@ CPassDeferredLighting::CPassDeferredLighting(CRenderSystem* pRenderSystem)
 	ptrDescriptorLayout0->SetUniformBlockBinding(UNIFORM_ENGINE_NAME, UNIFORM_ENGINE_BIND);
 	ptrDescriptorLayout0->SetUniformBlockBinding(UNIFORM_CAMERA_NAME, UNIFORM_CAMERA_BIND);
 	ptrDescriptorLayout0->SetStorageBlockBinding(STORAGE_SCENE_DATA_NAME, STORAGE_SCENE_DATA_BIND);
+	ptrDescriptorLayout0->SetSampledImageBinding(UNIFORM_SSAO_TEXTURE_NAME, UNIFORM_SSAO_TEXTURE_BIND);
+	ptrDescriptorLayout0->SetSampledImageBinding(UNIFORM_SHADOW_TEXTURE_NAME, UNIFORM_SHADOW_TEXTURE_BIND);
 	ptrDescriptorLayout0->Create();
 
 	m_ptrDescriptorSetPass0 = GfxRenderer()->NewDescriptorSet(HashValueFormat("%x_%p", PASS_DEFERRED_LIGHTING_GBUFFER_NAME, this), ptrDescriptorLayout0);
@@ -60,20 +72,12 @@ CPassDeferredLighting::CPassDeferredLighting(CRenderSystem* pRenderSystem)
 	CGfxDescriptorLayoutPtr ptrDescriptorLayout1 = GfxRenderer()->NewDescriptorLayout(DESCRIPTOR_SET_PASS);
 	ptrDescriptorLayout1->SetUniformBlockBinding(UNIFORM_ENGINE_NAME, UNIFORM_ENGINE_BIND);
 	ptrDescriptorLayout1->SetUniformBlockBinding(UNIFORM_CAMERA_NAME, UNIFORM_CAMERA_BIND);
+	ptrDescriptorLayout1->SetStorageBlockBinding(STORAGE_SCENE_DATA_NAME, STORAGE_SCENE_DATA_BIND);
 	ptrDescriptorLayout1->Create();
 
 	m_ptrDescriptorSetPass1 = GfxRenderer()->NewDescriptorSet(HashValueFormat("%x_%p", PASS_DEFERRED_LIGHTING_SHADING_NAME, this), ptrDescriptorLayout1);
 	m_ptrDescriptorSetPass1->SetUniformBuffer(UNIFORM_ENGINE_NAME, m_pRenderSystem->GetEngineUniform()->GetUniformBuffer(), 0, m_pRenderSystem->GetEngineUniform()->GetUniformBuffer()->GetSize());
-
-	CGfxDescriptorLayoutPtr ptrDescriptorLayout2 = GfxRenderer()->NewDescriptorLayout(DESCRIPTOR_SET_PASS);
-	ptrDescriptorLayout2->SetUniformBlockBinding(UNIFORM_ENGINE_NAME, UNIFORM_ENGINE_BIND);
-	ptrDescriptorLayout2->SetUniformBlockBinding(UNIFORM_CAMERA_NAME, UNIFORM_CAMERA_BIND);
-	ptrDescriptorLayout2->SetSampledImageBinding(UNIFORM_SSAO_TEXTURE_NAME, UNIFORM_SSAO_TEXTURE_BIND);
-	ptrDescriptorLayout2->SetSampledImageBinding(UNIFORM_SHADOW_TEXTURE_NAME, UNIFORM_SHADOW_TEXTURE_BIND);
-	ptrDescriptorLayout2->Create();
-
-	m_ptrDescriptorSetPass2 = GfxRenderer()->NewDescriptorSet(HashValueFormat("%x_%p", PASS_DEFERRED_LIGHTING_SHADOW_NAME, this), ptrDescriptorLayout2);
-	m_ptrDescriptorSetPass2->SetUniformBuffer(UNIFORM_ENGINE_NAME, m_pRenderSystem->GetEngineUniform()->GetUniformBuffer(), 0, m_pRenderSystem->GetEngineUniform()->GetUniformBuffer()->GetSize());
+	m_ptrDescriptorSetPass1->SetStorageBuffer(STORAGE_SCENE_DATA_NAME, m_pRenderSystem->GetGPUScene()->GetInstanceBuffer(), 0, m_pRenderSystem->GetGPUScene()->GetInstanceBuffer()->GetSize());
 }
 
 CPassDeferredLighting::~CPassDeferredLighting(void)
@@ -87,7 +91,6 @@ void CPassDeferredLighting::SetCamera(CCamera* pCamera)
 		m_pCamera = pCamera;
 		m_ptrDescriptorSetPass0->SetUniformBuffer(UNIFORM_CAMERA_NAME, pCamera->GetCameraUniform()->GetUniformBuffer(), 0, pCamera->GetCameraUniform()->GetUniformBuffer()->GetSize());
 		m_ptrDescriptorSetPass1->SetUniformBuffer(UNIFORM_CAMERA_NAME, pCamera->GetCameraUniform()->GetUniformBuffer(), 0, pCamera->GetCameraUniform()->GetUniformBuffer()->GetSize());
-		m_ptrDescriptorSetPass2->SetUniformBuffer(UNIFORM_CAMERA_NAME, pCamera->GetCameraUniform()->GetUniformBuffer(), 0, pCamera->GetCameraUniform()->GetUniformBuffer()->GetSize());
 	}
 }
 
@@ -98,12 +101,12 @@ void CPassDeferredLighting::SetInputTexture(CGfxRenderTexturePtr ptrShadowTextur
 
 	if (m_ptrInputShadowTexture != ptrShadowTexture) {
 		m_ptrInputShadowTexture = ptrShadowTexture;
-		m_ptrDescriptorSetPass2->SetRenderTexture(UNIFORM_SHADOW_TEXTURE_NAME, ptrShadowTexture, pSamplerPoint);
+		m_ptrDescriptorSetPass0->SetRenderTexture(UNIFORM_SHADOW_TEXTURE_NAME, ptrShadowTexture, pSamplerPoint);
 	}
 
 	if (m_ptrInputSSAOTexture != ptrSSAOTexture) {
 		m_ptrInputSSAOTexture = ptrSSAOTexture;
-		m_ptrDescriptorSetPass2->SetRenderTexture(UNIFORM_SSAO_TEXTURE_NAME, ptrSSAOTexture, pSamplerLinear);
+		m_ptrDescriptorSetPass0->SetRenderTexture(UNIFORM_SSAO_TEXTURE_NAME, ptrSSAOTexture, pSamplerLinear);
 	}
 }
 

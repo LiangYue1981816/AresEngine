@@ -79,7 +79,6 @@
 #define PASS_DEFERRED_LIGHTING_NAME                        HashValue("PassDeferredLighting")
 #define PASS_DEFERRED_LIGHTING_GBUFFER_NAME                HashValue("PassDeferredLighting_GBuffer")
 #define PASS_DEFERRED_LIGHTING_SHADING_NAME                HashValue("PassDeferredLighting_Shading")
-#define PASS_DEFERRED_LIGHTING_SHADOW_NAME                 HashValue("PassDeferredLighting_Shadow")
 #define PASS_COPY_NAME                                     HashValue("PassCopy")
 #define PASS_SSAO_NAME                                     HashValue("PassSSAO")
 #define PASS_BLUR_BOX_NAME                                 HashValue("PassBlurBox")
