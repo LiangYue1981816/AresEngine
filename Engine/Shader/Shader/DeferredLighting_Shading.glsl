@@ -40,15 +40,15 @@ USE_ENGINE_UNIFORM;
 layout (location = 0) out mediump vec4 outFragColor;
 
 // Descriptor
-layout (input_attachment_index = 0, binding = 1) uniform mediump subpassInput texGBufferA;
-layout (input_attachment_index = 1, binding = 2) uniform mediump subpassInput texGBufferB;
-layout (input_attachment_index = 2, binding = 3) uniform mediump subpassInput texGBufferC;
+layout (input_attachment_index = 0, binding = 1) uniform mediump subpassInput inFragGBuffer0;
+layout (input_attachment_index = 1, binding = 2) uniform mediump subpassInput inFragGBuffer1;
+layout (input_attachment_index = 2, binding = 3) uniform mediump subpassInput inFragGBuffer2;
 
 void main()
 {
-	vec4 texAlbedo = subpassLoad(texGBufferA);
-	vec4 texNormal = subpassLoad(texGBufferB);
-	vec4 texRoughnessMetallicSpecularAO = subpassLoad(texGBufferC);
+	vec4 texAlbedo = subpassLoad(inFragGBuffer0);
+	vec4 texNormal = subpassLoad(inFragGBuffer1);
+	vec4 texRoughnessMetallicSpecularAO = subpassLoad(inFragGBuffer2);
 	
 	outFragColor.rgb = texAlbedo.rgb;
 	outFragColor.a = 1.0;
