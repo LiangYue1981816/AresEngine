@@ -19,6 +19,9 @@
 			</Vertex>
 			<Fragment file_name="DeferredLighting_Shading.glsl">
 			</Fragment>
+			<Depth>
+				<DepthWrite enable="GFX_FALSE" />
+			</Depth>
 		</Pipeline>
 	</Pass>
 </Material>
