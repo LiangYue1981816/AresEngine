@@ -67,6 +67,11 @@ typedef struct SubpassInformation {
 		inputAttachments[indexAttachment] = indexAttachment;
 	}
 
+	void SetInputDepthStencilAttachment(int indexAttachment)
+	{
+		inputAttachments[indexAttachment] = indexAttachment;
+	}
+
 	void SetOutputColorAttachment(int indexAttachment)
 	{
 		outputAttachments[indexAttachment] = indexAttachment;
