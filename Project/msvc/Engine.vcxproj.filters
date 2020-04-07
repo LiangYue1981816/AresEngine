@@ -1581,9 +1581,6 @@
     <ClInclude Include="..\..\Engine\RenderHeader.h">
       <Filter>Engine</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Engine\RenderSystem\include\PassCopy.h">
-      <Filter>Engine\RenderSystem\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Engine\RenderSystem\include\PassBlurBox.h">
       <Filter>Engine\RenderSystem\Header Files</Filter>
     </ClInclude>
@@ -1649,6 +1646,12 @@
     </ClInclude>
     <ClInclude Include="..\..\Engine\Base\include\FileStream.h">
       <Filter>Engine\Base\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\RenderSystem\include\PassCopyColor.h">
+      <Filter>Engine\RenderSystem\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\RenderSystem\include\PassCopyDepth.h">
+      <Filter>Engine\RenderSystem\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -2345,9 +2348,6 @@
     <ClCompile Include="..\..\Engine\RenderSystem\src\PassShadow.cpp">
       <Filter>Engine\RenderSystem\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Engine\RenderSystem\src\PassCopy.cpp">
-      <Filter>Engine\RenderSystem\Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Engine\RenderSystem\src\PassBlurBox.cpp">
       <Filter>Engine\RenderSystem\Source Files</Filter>
     </ClCompile>
@@ -2419,6 +2419,12 @@
     </ClCompile>
     <ClCompile Include="..\..\Engine\Base\src\FileStream.cpp">
       <Filter>Engine\Base\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\RenderSystem\src\PassCopyColor.cpp">
+      <Filter>Engine\RenderSystem\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\RenderSystem\src\PassCopyDepth.cpp">
+      <Filter>Engine\RenderSystem\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

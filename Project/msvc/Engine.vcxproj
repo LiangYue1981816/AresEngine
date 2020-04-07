@@ -404,7 +404,8 @@
     <ClInclude Include="..\..\Engine\RenderSystem\include\PassBlurHorizontal.h" />
     <ClInclude Include="..\..\Engine\RenderSystem\include\PassBlurVertical.h" />
     <ClInclude Include="..\..\Engine\RenderSystem\include\PassColorGrading.h" />
-    <ClInclude Include="..\..\Engine\RenderSystem\include\PassCopy.h" />
+    <ClInclude Include="..\..\Engine\RenderSystem\include\PassCopyColor.h" />
+    <ClInclude Include="..\..\Engine\RenderSystem\include\PassCopyDepth.h" />
     <ClInclude Include="..\..\Engine\RenderSystem\include\PassDefault.h" />
     <ClInclude Include="..\..\Engine\RenderSystem\include\PassDeferredLighting.h" />
     <ClInclude Include="..\..\Engine\RenderSystem\include\PassFinal.h" />
@@ -766,7 +767,8 @@
     <ClCompile Include="..\..\Engine\RenderSystem\src\PassBlurHorizontal.cpp" />
     <ClCompile Include="..\..\Engine\RenderSystem\src\PassBlurVertical.cpp" />
     <ClCompile Include="..\..\Engine\RenderSystem\src\PassColorGrading.cpp" />
-    <ClCompile Include="..\..\Engine\RenderSystem\src\PassCopy.cpp" />
+    <ClCompile Include="..\..\Engine\RenderSystem\src\PassCopyColor.cpp" />
+    <ClCompile Include="..\..\Engine\RenderSystem\src\PassCopyDepth.cpp" />
     <ClCompile Include="..\..\Engine\RenderSystem\src\PassDefault.cpp" />
     <ClCompile Include="..\..\Engine\RenderSystem\src\PassDeferredLighting.cpp" />
     <ClCompile Include="..\..\Engine\RenderSystem\src\PassFinal.cpp" />

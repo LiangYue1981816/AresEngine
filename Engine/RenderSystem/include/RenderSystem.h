@@ -8,7 +8,8 @@
 #include "RenderSystem/include/PassForwardLighting.h"
 #include "RenderSystem/include/PassDeferredLighting.h"
 #include "RenderSystem/include/PassBlit.h"
-#include "RenderSystem/include/PassCopy.h"
+#include "RenderSystem/include/PassCopyColor.h"
+#include "RenderSystem/include/PassCopyDepth.h"
 #include "RenderSystem/include/PassSSAO.h"
 #include "RenderSystem/include/PassBlurBox.h"
 #include "RenderSystem/include/PassBlurHorizontal.h"
@@ -127,7 +128,8 @@ class CALL_API CRenderSystem
 	friend class CPassForwardLighting;
 	friend class CPassDeferredLighting;
 	friend class CPassBlit;
-	friend class CPassCopy;
+	friend class CPassCopyColor;
+	friend class CPassCopyDepth;
 	friend class CPassSSAO;
 	friend class CPassBlurBox;
 	friend class CPassBlurHorizontal;
@@ -227,6 +229,8 @@ private:
 	CPassDefault* m_pPassDefault;
 	CPassForwardLighting* m_pPassForwardLighting;
 	CPassDeferredLighting* m_pPassDeferredLighting;
+	CPassCopyColor* m_pPassCopyColor;
+	CPassCopyDepth* m_pPassCopyDepth;
 	CPassSSAO* m_pPassSSAO;
 	CPassBlurHorizontal* m_pPassSSAOBlurHorizontal;
 	CPassBlurVertical* m_pPassSSAOBlurVertical;
