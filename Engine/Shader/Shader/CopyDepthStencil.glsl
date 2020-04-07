@@ -41,13 +41,13 @@ USE_DEPTH_TEXTURE_UNIFORM;
 layout (location = 0) in mediump vec2 inTexcoord;
 
 // Output
-layout (location = 0) out mediump vec4 outFragColor;
+layout (location = 0) out highp float outFragDepth;
 
 // Descriptor
 // ...
 
 void main()
 {
-	outFragColor = texture(texDepth, inTexcoord);
+	outFragDepth = texture(texDepth, inTexcoord).r;
 }
 #endif
