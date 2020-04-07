@@ -8,7 +8,7 @@ static const int numSubpasses = 1;
 static const int numAttachments = 1;
 static CGfxRenderPassPtr ptrRenderPass;
 
-void CPassCopy::Create(GfxPixelFormat colorPixelFormat)
+void CPassCopyColor::Create(GfxPixelFormat colorPixelFormat)
 {
 	const float color[] = { 0.0f, 0.0f, 0.0f, 0.0f };
 
@@ -18,13 +18,13 @@ void CPassCopy::Create(GfxPixelFormat colorPixelFormat)
 	ptrRenderPass->Create();
 }
 
-void CPassCopy::Destroy(void)
+void CPassCopyColor::Destroy(void)
 {
 	ptrRenderPass.Release();
 }
 
 
-CPassCopy::CPassCopy(CRenderSystem* pRenderSystem)
+CPassCopyColor::CPassCopyColor(CRenderSystem* pRenderSystem)
 	: CPassBlit(PASS_COPY_MATERIAL_NAME, pRenderSystem)
 {
 	CGfxDescriptorLayoutPtr ptrDescriptorLayout = GfxRenderer()->NewDescriptorLayout(DESCRIPTOR_SET_PASS);
@@ -37,12 +37,12 @@ CPassCopy::CPassCopy(CRenderSystem* pRenderSystem)
 	m_ptrDescriptorSetPass->SetUniformBuffer(UNIFORM_ENGINE_NAME, m_pRenderSystem->GetEngineUniform()->GetUniformBuffer(), 0, m_pRenderSystem->GetEngineUniform()->GetUniformBuffer()->GetSize());
 }
 
-CPassCopy::~CPassCopy(void)
+CPassCopyColor::~CPassCopyColor(void)
 {
 
 }
 
-void CPassCopy::SetCamera(CCamera* pCamera)
+void CPassCopyColor::SetCamera(CCamera* pCamera)
 {
 	if (m_pCamera != pCamera) {
 		m_pCamera = pCamera;
@@ -50,7 +50,7 @@ void CPassCopy::SetCamera(CCamera* pCamera)
 	}
 }
 
-void CPassCopy::SetInputTexture(CGfxRenderTexturePtr ptrColorTexture)
+void CPassCopyColor::SetInputTexture(CGfxRenderTexturePtr ptrColorTexture)
 {
 	CGfxSampler* pSamplerPoint = GfxRenderer()->CreateSampler(GFX_FILTER_NEAREST, GFX_FILTER_NEAREST, GFX_SAMPLER_MIPMAP_MODE_NEAREST, GFX_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE);
 
@@ -60,7 +60,7 @@ void CPassCopy::SetInputTexture(CGfxRenderTexturePtr ptrColorTexture)
 	}
 }
 
-void CPassCopy::SetOutputTexture(CGfxRenderTexturePtr ptrColorTexture)
+void CPassCopyColor::SetOutputTexture(CGfxRenderTexturePtr ptrColorTexture)
 {
 	if (m_ptrOutputColorTexture != ptrColorTexture) {
 		m_ptrOutputColorTexture = ptrColorTexture;
@@ -70,7 +70,7 @@ void CPassCopy::SetOutputTexture(CGfxRenderTexturePtr ptrColorTexture)
 	}
 }
 
-void CPassCopy::Render(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer)
+void CPassCopyColor::Render(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer)
 {
 	// Update
 	m_pCamera->GetCameraUniform()->Apply();
