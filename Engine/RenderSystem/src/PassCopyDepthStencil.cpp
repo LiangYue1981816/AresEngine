@@ -31,7 +31,7 @@ CPassCopyDepthStencil::CPassCopyDepthStencil(CRenderSystem* pRenderSystem)
 	CGfxDescriptorLayoutPtr ptrDescriptorLayout = GfxRenderer()->NewDescriptorLayout(DESCRIPTOR_SET_PASS);
 	ptrDescriptorLayout->SetUniformBlockBinding(UNIFORM_ENGINE_NAME, UNIFORM_ENGINE_BIND);
 	ptrDescriptorLayout->SetUniformBlockBinding(UNIFORM_CAMERA_NAME, UNIFORM_CAMERA_BIND);
-	ptrDescriptorLayout->SetSampledImageBinding(UNIFORM_COLOR_TEXTURE_NAME, UNIFORM_COLOR_TEXTURE_BIND);
+	ptrDescriptorLayout->SetSampledImageBinding(UNIFORM_DEPTH_TEXTURE_NAME, UNIFORM_DEPTH_TEXTURE_BIND);
 	ptrDescriptorLayout->Create();
 
 	m_ptrDescriptorSetPass = GfxRenderer()->NewDescriptorSet(HashValueFormat("%x_%p", PASS_COPY_DEPTH_STENCIL_NAME, this), ptrDescriptorLayout);
@@ -57,7 +57,7 @@ void CPassCopyDepthStencil::SetInputTexture(CGfxRenderTexturePtr ptrDepthStencil
 
 	if (m_ptrInputDepthStencilTexture != ptrDepthStencilTexture) {
 		m_ptrInputDepthStencilTexture = ptrDepthStencilTexture;
-		m_ptrDescriptorSetPass->SetRenderTexture(UNIFORM_COLOR_TEXTURE_NAME, ptrDepthStencilTexture, pSamplerPoint);
+		m_ptrDescriptorSetPass->SetRenderTexture(UNIFORM_DEPTH_TEXTURE_NAME, ptrDepthStencilTexture, pSamplerPoint);
 	}
 }
 
