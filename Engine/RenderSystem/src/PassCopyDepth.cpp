@@ -2,7 +2,7 @@
 #include "RenderHeader.h"
 
 
-static const int indexAttachmentColor = 0;
+static const int indexAttachmentDepth = 0;
 
 static const int numSubpasses = 1;
 static const int numAttachments = 1;
@@ -10,11 +10,12 @@ static CGfxRenderPassPtr ptrRenderPass;
 
 void CPassCopyDepth::Create(GfxPixelFormat depthPixelFormat)
 {
-	const float color[] = { 0.0f, 0.0f, 0.0f, 0.0f };
+	const int stencil = 0;
+	const float depth = 1.0f;
 
 	ptrRenderPass = GfxRenderer()->NewRenderPass(PASS_COPY_DEPTH_NAME, numAttachments, numSubpasses);
-	ptrRenderPass->SetColorAttachment(indexAttachmentColor, depthPixelFormat, 1, false, true, color[0], color[1], color[2], color[3]);
-	ptrRenderPass->SetSubpassOutputColorReference(0, indexAttachmentColor);
+	ptrRenderPass->SetDepthStencilAttachment(indexAttachmentDepth, depthPixelFormat, 1, false, false, depth, stencil);
+	ptrRenderPass->SetSubpassOutputDepthStencilReference(0, indexAttachmentDepth);
 	ptrRenderPass->Create();
 }
 
@@ -65,7 +66,7 @@ void CPassCopyDepth::SetOutputTexture(CGfxRenderTexturePtr ptrDepthTexture)
 	if (m_ptrOutputDepthTexture != ptrDepthTexture) {
 		m_ptrOutputDepthTexture = ptrDepthTexture;
 		m_ptrFrameBuffer = GfxRenderer()->NewFrameBuffer(ptrDepthTexture->GetWidth(), ptrDepthTexture->GetHeight(), numAttachments);
-		m_ptrFrameBuffer->SetAttachmentTexture(indexAttachmentColor, ptrDepthTexture);
+		m_ptrFrameBuffer->SetAttachmentTexture(indexAttachmentDepth, ptrDepthTexture);
 		m_ptrFrameBuffer->Create(ptrRenderPass);
 	}
 }
