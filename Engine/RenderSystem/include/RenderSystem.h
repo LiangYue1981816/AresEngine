@@ -113,6 +113,7 @@
 #define RENDER_TEXTURE_GBUFFER3                            HashValue("RenderTextureGBuffer3")
 #define RENDER_TEXTURE_SHADOW                              HashValue("RenderTextureShadow")
 #define RENDER_TEXTURE_FULL_DEPTH                          HashValue("RenderTextureFullDepth")
+#define RENDER_TEXTURE_FULL_DEPTH_COPY                     HashValue("RenderTextureFullDepthCopy")
 #define RENDER_TEXTURE_FULL_HDR_COLOR0                     HashValue("RenderTextureFullHdrColor0")
 #define RENDER_TEXTURE_FULL_HDR_COLOR1                     HashValue("RenderTextureFullHdrColor1")
 #define RENDER_TEXTURE_QUATER_HDR_COLOR0                   HashValue("RenderTextureQuaterHdrColor0")
