@@ -9,7 +9,7 @@
 #include "RenderSystem/include/PassDeferredLighting.h"
 #include "RenderSystem/include/PassBlit.h"
 #include "RenderSystem/include/PassCopyColor.h"
-#include "RenderSystem/include/PassCopyDepth.h"
+#include "RenderSystem/include/PassCopyDepthStencil.h"
 #include "RenderSystem/include/PassSSAO.h"
 #include "RenderSystem/include/PassBlurBox.h"
 #include "RenderSystem/include/PassBlurHorizontal.h"
@@ -81,7 +81,7 @@
 #define PASS_DEFERRED_LIGHTING_GBUFFER_NAME                HashValue("PassDeferredLighting_GBuffer")
 #define PASS_DEFERRED_LIGHTING_SHADING_NAME                HashValue("PassDeferredLighting_Shading")
 #define PASS_COPY_COLOR_NAME                               HashValue("PassCopyColor")
-#define PASS_COPY_DEPTH_NAME                               HashValue("PassCopyDepth")
+#define PASS_COPY_DEPTH_STENCIL_NAME                       HashValue("PassCopyDepthStencil")
 #define PASS_SSAO_NAME                                     HashValue("PassSSAO")
 #define PASS_BLUR_BOX_NAME                                 HashValue("PassBlurBox")
 #define PASS_BLUR_HORIZONTAL_NAME                          HashValue("PassBlurHorizontal")
@@ -129,7 +129,7 @@ class CALL_API CRenderSystem
 	friend class CPassDeferredLighting;
 	friend class CPassBlit;
 	friend class CPassCopyColor;
-	friend class CPassCopyDepth;
+	friend class CPassCopyDepthStencil;
 	friend class CPassSSAO;
 	friend class CPassBlurBox;
 	friend class CPassBlurHorizontal;
@@ -230,7 +230,7 @@ private:
 	CPassForwardLighting* m_pPassForwardLighting;
 	CPassDeferredLighting* m_pPassDeferredLighting;
 	CPassCopyColor* m_pPassCopyColor;
-	CPassCopyDepth* m_pPassCopyDepth;
+	CPassCopyDepthStencil* m_pPassCopyDepthStencil;
 	CPassSSAO* m_pPassSSAO;
 	CPassBlurHorizontal* m_pPassSSAOBlurHorizontal;
 	CPassBlurVertical* m_pPassSSAOBlurVertical;

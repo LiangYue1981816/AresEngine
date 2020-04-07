@@ -1650,7 +1650,7 @@
     <ClInclude Include="..\..\Engine\RenderSystem\include\PassCopyColor.h">
       <Filter>Engine\RenderSystem\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Engine\RenderSystem\include\PassCopyDepth.h">
+    <ClInclude Include="..\..\Engine\RenderSystem\include\PassCopyDepthStencil.h">
       <Filter>Engine\RenderSystem\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -2423,7 +2423,7 @@
     <ClCompile Include="..\..\Engine\RenderSystem\src\PassCopyColor.cpp">
       <Filter>Engine\RenderSystem\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Engine\RenderSystem\src\PassCopyDepth.cpp">
+    <ClCompile Include="..\..\Engine\RenderSystem\src\PassCopyDepthStencil.cpp">
       <Filter>Engine\RenderSystem\Source Files</Filter>
     </ClCompile>
   </ItemGroup>

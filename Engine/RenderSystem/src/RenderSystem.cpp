@@ -30,7 +30,7 @@ CRenderSystem::CRenderSystem(GfxApi api, void* hInstance, void* hWnd, void* hDC,
 	, m_pPassForwardLighting(nullptr)
 	, m_pPassDeferredLighting(nullptr)
 	, m_pPassCopyColor(nullptr)
-	, m_pPassCopyDepth(nullptr)
+	, m_pPassCopyDepthStencil(nullptr)
 	, m_pPassSSAO(nullptr)
 	, m_pPassSSAOBlurHorizontal(nullptr)
 	, m_pPassSSAOBlurVertical(nullptr)
@@ -109,7 +109,7 @@ void CRenderSystem::CreatePasses(void)
 	CPassForwardLighting::Create(GFX_PIXELFORMAT_BGR10A2_UNORM_PACK32, GFX_PIXELFORMAT_D32_SFLOAT_PACK32);
 	CPassDeferredLighting::Create(GFX_PIXELFORMAT_BGR10A2_UNORM_PACK32, GFX_PIXELFORMAT_D32_SFLOAT_PACK32);
 	CPassCopyColor::Create(GFX_PIXELFORMAT_BGR10A2_UNORM_PACK32);
-	CPassCopyDepth::Create(GFX_PIXELFORMAT_D32_SFLOAT_PACK32);
+	CPassCopyDepthStencil::Create(GFX_PIXELFORMAT_D32_SFLOAT_PACK32);
 	CPassSSAO::Create(GFX_PIXELFORMAT_BGR10A2_UNORM_PACK32);
 	CPassBlurBox::Create(GFX_PIXELFORMAT_BGR10A2_UNORM_PACK32);
 	CPassBlurHorizontal::Create(GFX_PIXELFORMAT_BGR10A2_UNORM_PACK32);
@@ -125,7 +125,7 @@ void CRenderSystem::CreatePasses(void)
 	m_pPassForwardLighting = new CPassForwardLighting(this);
 	m_pPassDeferredLighting = new CPassDeferredLighting(this);
 	m_pPassCopyColor = new CPassCopyColor(this);
-	m_pPassCopyDepth = new CPassCopyDepth(this);
+	m_pPassCopyDepthStencil = new CPassCopyDepthStencil(this);
 	m_pPassSSAO = new CPassSSAO(this);
 	m_pPassSSAOBlurHorizontal = new CPassBlurHorizontal(this);
 	m_pPassSSAOBlurVertical = new CPassBlurVertical(this);
@@ -145,7 +145,7 @@ void CRenderSystem::DestroyPasses(void)
 	CPassForwardLighting::Destroy();
 	CPassDeferredLighting::Destroy();
 	CPassCopyColor::Destroy();
-	CPassCopyDepth::Destroy();
+	CPassCopyDepthStencil::Destroy();
 	CPassSSAO::Destroy();
 	CPassBlurBox::Destroy();
 	CPassBlurHorizontal::Destroy();
@@ -161,7 +161,7 @@ void CRenderSystem::DestroyPasses(void)
 	delete m_pPassForwardLighting;
 	delete m_pPassDeferredLighting;
 	delete m_pPassCopyColor;
-	delete m_pPassCopyDepth;
+	delete m_pPassCopyDepthStencil;
 	delete m_pPassSSAO;
 	delete m_pPassSSAOBlurHorizontal;
 	delete m_pPassSSAOBlurVertical;
