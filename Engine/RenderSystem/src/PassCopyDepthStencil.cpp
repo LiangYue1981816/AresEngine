@@ -78,7 +78,7 @@ void CPassCopyDepthStencil::Render(CTaskPool& taskPool, CTaskGraph& taskGraph, C
 	m_pRenderSystem->GetEngineUniform()->Apply();
 
 	// Render
-	GfxRenderer()->CmdPushDebugGroup(ptrCommandBuffer, "PassCopyDepth");
+	GfxRenderer()->CmdPushDebugGroup(ptrCommandBuffer, "PassCopyDepthStencil");
 	{
 		GfxRenderer()->CmdSetImageLayout(ptrCommandBuffer, m_ptrOutputDepthStencilTexture, GFX_IMAGE_LAYOUT_GENERAL);
 		GfxRenderer()->CmdBeginRenderPass(ptrCommandBuffer, m_ptrFrameBuffer, ptrRenderPass);
