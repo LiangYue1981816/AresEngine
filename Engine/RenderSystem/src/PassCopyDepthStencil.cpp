@@ -26,7 +26,7 @@ void CPassCopyDepthStencil::Destroy(void)
 
 
 CPassCopyDepthStencil::CPassCopyDepthStencil(CRenderSystem* pRenderSystem)
-	: CPassBlit(PASS_COPY_MATERIAL_NAME, pRenderSystem)
+	: CPassBlit(PASS_COPY_DEPTH_STENCIL_MATERIAL_NAME, pRenderSystem)
 {
 	CGfxDescriptorLayoutPtr ptrDescriptorLayout = GfxRenderer()->NewDescriptorLayout(DESCRIPTOR_SET_PASS);
 	ptrDescriptorLayout->SetUniformBlockBinding(UNIFORM_ENGINE_NAME, UNIFORM_ENGINE_BIND);
