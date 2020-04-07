@@ -2,26 +2,26 @@
 #include "PreHeader.h"
 
 
-class CALL_API CPassCopy : public CPassBlit
+class CALL_API CPassCopyDepth : public CPassBlit
 {
 	friend class CCamera;
 	friend class CRenderSystem;
 
 
 private:
-	static void Create(GfxPixelFormat colorPixelFormat);
+	static void Create(GfxPixelFormat depthPixelFormat);
 	static void Destroy(void);
 
 
 private:
-	CPassCopy(CRenderSystem* pRenderSystem);
-	virtual ~CPassCopy(void);
+	CPassCopyDepth(CRenderSystem* pRenderSystem);
+	virtual ~CPassCopyDepth(void);
 
 
 public:
 	void SetCamera(CCamera* pCamera);
-	void SetInputTexture(CGfxRenderTexturePtr ptrColorTexture);
-	void SetOutputTexture(CGfxRenderTexturePtr ptrColorTexture);
+	void SetInputTexture(CGfxRenderTexturePtr ptrDepthTexture);
+	void SetOutputTexture(CGfxRenderTexturePtr ptrDepthTexture);
 
 private:
 	void Render(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer);
@@ -29,9 +29,9 @@ private:
 
 private:
 	CGfxDescriptorSetPtr m_ptrDescriptorSetPass;
-	CGfxRenderTexturePtr m_ptrInputColorTexture;
+	CGfxRenderTexturePtr m_ptrInputDepthTexture;
 
 private:
 	CGfxFrameBufferPtr m_ptrFrameBuffer;
-	CGfxRenderTexturePtr m_ptrOutputColorTexture;
+	CGfxRenderTexturePtr m_ptrOutputDepthTexture;
 };
