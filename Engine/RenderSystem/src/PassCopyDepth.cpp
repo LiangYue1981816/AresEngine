@@ -2,30 +2,30 @@
 #include "RenderHeader.h"
 
 
-static const int indexAttachmentDepth = 0;
+static const int indexAttachmentDepthStencil = 0;
 
 static const int numSubpasses = 1;
 static const int numAttachments = 1;
 static CGfxRenderPassPtr ptrRenderPass;
 
-void CPassCopyDepth::Create(GfxPixelFormat depthPixelFormat)
+void CPassCopyDepthStencil::Create(GfxPixelFormat depthPixelFormat)
 {
 	const int stencil = 0;
 	const float depth = 1.0f;
 
 	ptrRenderPass = GfxRenderer()->NewRenderPass(PASS_COPY_DEPTH_NAME, numAttachments, numSubpasses);
-	ptrRenderPass->SetDepthStencilAttachment(indexAttachmentDepth, depthPixelFormat, 1, false, false, depth, stencil);
-	ptrRenderPass->SetSubpassOutputDepthStencilReference(0, indexAttachmentDepth);
+	ptrRenderPass->SetDepthStencilAttachment(indexAttachmentDepthStencil, depthPixelFormat, 1, false, false, depth, stencil);
+	ptrRenderPass->SetSubpassOutputDepthStencilReference(0, indexAttachmentDepthStencil);
 	ptrRenderPass->Create();
 }
 
-void CPassCopyDepth::Destroy(void)
+void CPassCopyDepthStencil::Destroy(void)
 {
 	ptrRenderPass.Release();
 }
 
 
-CPassCopyDepth::CPassCopyDepth(CRenderSystem* pRenderSystem)
+CPassCopyDepthStencil::CPassCopyDepthStencil(CRenderSystem* pRenderSystem)
 	: CPassBlit(PASS_COPY_MATERIAL_NAME, pRenderSystem)
 {
 	CGfxDescriptorLayoutPtr ptrDescriptorLayout = GfxRenderer()->NewDescriptorLayout(DESCRIPTOR_SET_PASS);
@@ -38,12 +38,12 @@ CPassCopyDepth::CPassCopyDepth(CRenderSystem* pRenderSystem)
 	m_ptrDescriptorSetPass->SetUniformBuffer(UNIFORM_ENGINE_NAME, m_pRenderSystem->GetEngineUniform()->GetUniformBuffer(), 0, m_pRenderSystem->GetEngineUniform()->GetUniformBuffer()->GetSize());
 }
 
-CPassCopyDepth::~CPassCopyDepth(void)
+CPassCopyDepthStencil::~CPassCopyDepthStencil(void)
 {
 
 }
 
-void CPassCopyDepth::SetCamera(CCamera* pCamera)
+void CPassCopyDepthStencil::SetCamera(CCamera* pCamera)
 {
 	if (m_pCamera != pCamera) {
 		m_pCamera = pCamera;
@@ -51,27 +51,27 @@ void CPassCopyDepth::SetCamera(CCamera* pCamera)
 	}
 }
 
-void CPassCopyDepth::SetInputTexture(CGfxRenderTexturePtr ptrDepthTexture)
+void CPassCopyDepthStencil::SetInputTexture(CGfxRenderTexturePtr ptrDepthStencilTexture)
 {
 	CGfxSampler* pSamplerPoint = GfxRenderer()->CreateSampler(GFX_FILTER_NEAREST, GFX_FILTER_NEAREST, GFX_SAMPLER_MIPMAP_MODE_NEAREST, GFX_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE);
 
-	if (m_ptrInputDepthTexture != ptrDepthTexture) {
-		m_ptrInputDepthTexture = ptrDepthTexture;
-		m_ptrDescriptorSetPass->SetRenderTexture(UNIFORM_COLOR_TEXTURE_NAME, ptrDepthTexture, pSamplerPoint);
+	if (m_ptrInputDepthStencilTexture != ptrDepthStencilTexture) {
+		m_ptrInputDepthStencilTexture = ptrDepthStencilTexture;
+		m_ptrDescriptorSetPass->SetRenderTexture(UNIFORM_COLOR_TEXTURE_NAME, ptrDepthStencilTexture, pSamplerPoint);
 	}
 }
 
-void CPassCopyDepth::SetOutputTexture(CGfxRenderTexturePtr ptrDepthTexture)
+void CPassCopyDepthStencil::SetOutputTexture(CGfxRenderTexturePtr ptrDepthStencilTexture)
 {
-	if (m_ptrOutputDepthTexture != ptrDepthTexture) {
-		m_ptrOutputDepthTexture = ptrDepthTexture;
-		m_ptrFrameBuffer = GfxRenderer()->NewFrameBuffer(ptrDepthTexture->GetWidth(), ptrDepthTexture->GetHeight(), numAttachments);
-		m_ptrFrameBuffer->SetAttachmentTexture(indexAttachmentDepth, ptrDepthTexture);
+	if (m_ptrOutputDepthStencilTexture != ptrDepthStencilTexture) {
+		m_ptrOutputDepthStencilTexture = ptrDepthStencilTexture;
+		m_ptrFrameBuffer = GfxRenderer()->NewFrameBuffer(ptrDepthStencilTexture->GetWidth(), ptrDepthStencilTexture->GetHeight(), numAttachments);
+		m_ptrFrameBuffer->SetAttachmentTexture(indexAttachmentDepthStencil, ptrDepthStencilTexture);
 		m_ptrFrameBuffer->Create(ptrRenderPass);
 	}
 }
 
-void CPassCopyDepth::Render(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer)
+void CPassCopyDepthStencil::Render(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer)
 {
 	// Update
 	m_pCamera->GetCameraUniform()->Apply();
@@ -80,7 +80,7 @@ void CPassCopyDepth::Render(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxComm
 	// Render
 	GfxRenderer()->CmdPushDebugGroup(ptrCommandBuffer, "PassCopyDepth");
 	{
-		GfxRenderer()->CmdSetImageLayout(ptrCommandBuffer, m_ptrOutputDepthTexture, GFX_IMAGE_LAYOUT_GENERAL);
+		GfxRenderer()->CmdSetImageLayout(ptrCommandBuffer, m_ptrOutputDepthStencilTexture, GFX_IMAGE_LAYOUT_GENERAL);
 		GfxRenderer()->CmdBeginRenderPass(ptrCommandBuffer, m_ptrFrameBuffer, ptrRenderPass);
 		{
 			const float w = m_ptrFrameBuffer->GetWidth();
@@ -91,7 +91,7 @@ void CPassCopyDepth::Render(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxComm
 			m_pRenderQueue->CmdDraw(taskPool, taskGraph, ptrCommandBuffer, m_ptrDescriptorSetPass, PASS_COPY_DEPTH_NAME, scissor, viewport, 0xffffffff, false);
 		}
 		GfxRenderer()->CmdEndRenderPass(ptrCommandBuffer);
-		GfxRenderer()->CmdSetImageLayout(ptrCommandBuffer, m_ptrOutputDepthTexture, GFX_IMAGE_LAYOUT_COLOR_READ_ONLY_OPTIMAL);
+		GfxRenderer()->CmdSetImageLayout(ptrCommandBuffer, m_ptrOutputDepthStencilTexture, GFX_IMAGE_LAYOUT_COLOR_READ_ONLY_OPTIMAL);
 	}
 	GfxRenderer()->CmdPopDebugGroup(ptrCommandBuffer);
 }
