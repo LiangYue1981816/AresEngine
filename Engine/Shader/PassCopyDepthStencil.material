@@ -1,12 +1,12 @@
 <Material>
 	<Pass name="PassCopy">
-		<Pipeline render_pass="PassCopy">
-		  <Vertex file_name="Copy.glsl">
+		<Pipeline render_pass="PassCopyDepthStencil">
+		  <Vertex file_name="CopyDepthStencil.glsl">
 		    <Define name="VERTEX_ATTRIBUTE_POSITION" />
         <Define name="VERTEX_ATTRIBUTE_TEXCOORD0" />
         <Define name="INSTANCE_ATTRIBUTE_INDEX" />
 		  </Vertex>
-		  <Fragment file_name="Copy.glsl">
+		  <Fragment file_name="CopyDepthStencil.glsl">
 		  </Fragment>
 		  <State>
 		  	<Rasterization>
