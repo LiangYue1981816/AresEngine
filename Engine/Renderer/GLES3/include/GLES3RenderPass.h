@@ -25,6 +25,7 @@ public:
 	bool SetSubpassInputDepthStencilReference(int indexSubpass, int indexAttachment);
 	bool SetSubpassOutputColorReference(int indexSubpass, int indexAttachment);
 	bool SetSubpassOutputDepthStencilReference(int indexSubpass, int indexAttachment);
+	bool SetSubpassDepthStencilReference(int indexSubpass, int indexAttachment);
 	bool SetSubpassResolveReference(int indexSubpass, int indexAttachment);
 	bool SetSubpassPreserveReference(int indexSubpass, int indexAttachment);
 

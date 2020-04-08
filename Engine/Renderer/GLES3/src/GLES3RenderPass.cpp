@@ -134,6 +134,24 @@ bool CGLES3RenderPass::SetSubpassOutputDepthStencilReference(int indexSubpass, i
 	return true;
 }
 
+bool CGLES3RenderPass::SetSubpassDepthStencilReference(int indexSubpass, int indexAttachment)
+{
+	if (indexSubpass < 0 || indexSubpass >= m_subpasses.size()) {
+		return false;
+	}
+
+	if (indexAttachment < 0 || indexAttachment >= m_attachments.size()) {
+		return false;
+	}
+
+	if (CGfxHelper::IsFormatDepthOrStencil(m_attachments[indexAttachment].format) == false) {
+		return false;
+	}
+
+	m_subpasses[indexSubpass].SetDepthStencilAttachment(indexAttachment);
+	return true;
+}
+
 bool CGLES3RenderPass::SetSubpassResolveReference(int indexSubpass, int indexAttachment)
 {
 	if (indexSubpass < 0 || indexSubpass >= m_subpasses.size()) {

@@ -79,6 +79,11 @@ typedef struct SubpassInformation {
 
 	void SetOutputDepthStencilAttachment(int indexAttachment)
 	{
+		outputAttachments[indexAttachment] = indexAttachment;
+	}
+
+	void SetDepthStencilAttachment(int indexAttachment)
+	{
 		depthStencilAttachment = indexAttachment;
 	}
 
@@ -130,6 +135,7 @@ public:
 	virtual bool SetSubpassInputDepthStencilReference(int indexSubpass, int indexAttachment) = 0;
 	virtual bool SetSubpassOutputColorReference(int indexSubpass, int indexAttachment) = 0;
 	virtual bool SetSubpassOutputDepthStencilReference(int indexSubpass, int indexAttachment) = 0;
+	virtual bool SetSubpassDepthStencilReference(int indexSubpass, int indexAttachment) = 0;
 	virtual bool SetSubpassResolveReference(int indexSubpass, int indexAttachment) = 0;
 	virtual bool SetSubpassPreserveReference(int indexSubpass, int indexAttachment) = 0;
 

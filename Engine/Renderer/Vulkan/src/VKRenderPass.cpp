@@ -249,6 +249,24 @@ bool CVKRenderPass::SetSubpassOutputDepthStencilReference(int indexSubpass, int 
 	return true;
 }
 
+bool CVKRenderPass::SetSubpassDepthStencilReference(int indexSubpass, int indexAttachment)
+{
+	if (indexSubpass < 0 || indexSubpass >= m_subpasses.size()) {
+		return false;
+	}
+
+	if (indexAttachment < 0 || indexAttachment >= m_attachments.size()) {
+		return false;
+	}
+
+	if (CGfxHelper::IsFormatDepthOrStencil(m_attachments[indexAttachment].format) == false) {
+		return false;
+	}
+
+	m_subpasses[indexSubpass].SetDepthStencilAttachment(indexAttachment);
+	return true;
+}
+
 bool CVKRenderPass::SetSubpassResolveReference(int indexSubpass, int indexAttachment)
 {
 	if (indexSubpass < 0 || indexSubpass >= m_subpasses.size()) {
