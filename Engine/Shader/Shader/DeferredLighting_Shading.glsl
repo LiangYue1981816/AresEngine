@@ -45,17 +45,27 @@ DESCRIPTOR_SET_INPUTATTACHMENT(1, 6) uniform mediump subpassInput texGBuffer0;
 DESCRIPTOR_SET_INPUTATTACHMENT(2, 7) uniform mediump subpassInput texGBuffer1;
 DESCRIPTOR_SET_INPUTATTACHMENT(3, 8) uniform mediump subpassInput texGBuffer2;
 
+highp vec3 ScreenToWorldPosition(highp vec2 screen, highp float depth)
+{
+	highp vec4 clipPosition = vec4(screen * vec2(2.0) - vec2(1.0), depth * 2.0 - 1.0, 1.0);
+	highp vec4 worldPosition = cameraProjectionViewInverseMatrix * clipPosition;
+	return (worldPosition.xyz / worldPosition.w);
+}
+
 void main()
 {
-	highp vec4 texCoord = inPosition;
-	texCoord.xy = texCoord.xy / texCoord.w;
-	texCoord.xy = texCoord.xy * 0.5 + 0.5;
+	highp vec4 projectCoord = inPosition;
+	projectCoord.xy = projectCoord.xy / projectCoord.w;
+ 	projectCoord.xy = projectCoord.xy * 0.5 + 0.5;
+	
+	highp float depth = texture(texDepth, projectCoord.xy).r;
+	highp vec3 worldPosition = ScreenToWorldPosition(projectCoord.xy, depth);
 
 	mediump vec4 texAlbedo = subpassLoad(texGBuffer0);
 	mediump vec4 texNormal = subpassLoad(texGBuffer1);
 	mediump vec4 texRoughnessMetallicSpecularAO = subpassLoad(texGBuffer2);
 
-	outFragColor.rgb = vec3(texCoord.x, texCoord.y, 0.0);
+	outFragColor.rgb = worldPosition;
 	outFragColor.a = 1.0;
 }
 #endif

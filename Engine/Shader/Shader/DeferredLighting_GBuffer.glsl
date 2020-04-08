@@ -130,10 +130,6 @@ void main()
 	mediump float shadow = ShadowValue(inPosition, inNormal, texShadow);
 //	mediump float shadow = ShadowValueIrregular(inPosition, texShadow);
 
-	mediump vec3 pointLightDirection = mainPointLightPosition - inPosition;
-	mediump vec3 pointLightColor = mainPointLightColor * LightingAttenuation(length(pointLightDirection));
-	pointLightDirection = normalize(pointLightDirection);
-
 	mediump vec3 fresnel = Fresnel(worldNormal, worldViewDirection, albedoColor, metallic);
 	mediump vec3 ambientLighting = AmbientSH9(worldNormal, albedoColor, metallic) * ambientLightFactor;
 	mediump vec3 directLighting = PBRLighting(worldNormal, worldViewDirection, mainDirectLightDirection, mainDirectLightColor, albedoColor, fresnel, metallic, roughness) * directLightFactor;
