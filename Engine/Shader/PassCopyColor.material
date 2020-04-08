@@ -1,5 +1,5 @@
 <Material>
-	<Pass name="PassCopy">
+	<Pass name="PassCopyColor">
 		<Pipeline render_pass="PassCopyColor">
 		  <Vertex file_name="CopyColor.glsl">
 		    <Define name="VERTEX_ATTRIBUTE_POSITION" />

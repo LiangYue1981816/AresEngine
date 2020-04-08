@@ -1,5 +1,5 @@
 <Material>
-	<Pass name="PassCopy">
+	<Pass name="PassCopyDepthStencil">
 		<Pipeline render_pass="PassCopyDepthStencil">
 		  <Vertex file_name="CopyDepthStencil.glsl">
 		    <Define name="VERTEX_ATTRIBUTE_POSITION" />
