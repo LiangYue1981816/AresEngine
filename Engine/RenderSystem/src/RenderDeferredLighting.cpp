@@ -42,6 +42,14 @@ void CRenderSystem::RenderDeferredLighting(CTaskPool& taskPool, CTaskGraph& task
 		m_pPassPreZ->Render(taskPool, taskGraph, ptrCommandBuffer);
 	}
 
+	uint32_t rtDepthCopy = RENDER_TEXTURE_FULL_DEPTH_COPY;
+	{
+		m_pPassCopyDepthStencil->SetCamera(pCamera);
+		m_pPassCopyDepthStencil->SetInputTexture(GetRenderTexture(rtDepth));
+		m_pPassCopyDepthStencil->SetOutputTexture(GetRenderTexture(rtDepthCopy));
+		m_pPassCopyDepthStencil->Render(taskPool, taskGraph, ptrCommandBuffer);
+	}
+
 	uint32_t rtSSAO = RENDER_TEXTURE_FULL_HDR_COLOR0;
 	uint32_t rtSSAOBlurHorizontal = RENDER_TEXTURE_FULL_HDR_COLOR1;
 	uint32_t rtSSAOBlurVertical = RENDER_TEXTURE_FULL_HDR_COLOR0;
@@ -82,7 +90,7 @@ void CRenderSystem::RenderDeferredLighting(CTaskPool& taskPool, CTaskGraph& task
 	uint32_t rtGBuffer2 = RENDER_TEXTURE_GBUFFER2;
 	{
 		m_pPassDeferredLighting->SetCamera(pCamera);
-		m_pPassDeferredLighting->SetInputTexture(GetRenderTexture(rtDepth), GetRenderTexture(rtShadow), GetRenderTexture(rtSSAO));
+		m_pPassDeferredLighting->SetInputTexture(GetRenderTexture(rtDepthCopy), GetRenderTexture(rtShadow), GetRenderTexture(rtSSAO));
 		m_pPassDeferredLighting->SetOutputTexture(GetRenderTexture(rtColor), GetRenderTexture(rtGBuffer0), GetRenderTexture(rtGBuffer1), GetRenderTexture(rtGBuffer2), GetRenderTexture(rtDepth));
 		m_pPassDeferredLighting->Render(taskPool, taskGraph, ptrCommandBuffer);
 	}
