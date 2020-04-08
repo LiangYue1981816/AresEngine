@@ -39,12 +39,12 @@ void CPassDeferredLighting::Create(GfxPixelFormat colorPixelFormat, GfxPixelForm
 	ptrRenderPass->SetSubpassOutputColorReference(0, indexAttachmentGBuffer0);
 	ptrRenderPass->SetSubpassOutputColorReference(0, indexAttachmentGBuffer1);
 	ptrRenderPass->SetSubpassOutputColorReference(0, indexAttachmentGBuffer2);
-	ptrRenderPass->SetSubpassOutputDepthStencilReference(0, indexAttachmentDepthStencil);
+	ptrRenderPass->SetSubpassDepthStencilReference(0, indexAttachmentDepthStencil);
 	ptrRenderPass->SetSubpassInputColorReference(1, indexAttachmentGBuffer0);
 	ptrRenderPass->SetSubpassInputColorReference(1, indexAttachmentGBuffer1);
 	ptrRenderPass->SetSubpassInputColorReference(1, indexAttachmentGBuffer2);
 	ptrRenderPass->SetSubpassOutputColorReference(1, indexAttachmentColor);
-	ptrRenderPass->SetSubpassOutputDepthStencilReference(1, indexAttachmentDepthStencil);
+	ptrRenderPass->SetSubpassDepthStencilReference(1, indexAttachmentDepthStencil);
 	ptrRenderPass->Create();
 }
 

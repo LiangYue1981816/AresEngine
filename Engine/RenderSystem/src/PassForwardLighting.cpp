@@ -19,7 +19,7 @@ void CPassForwardLighting::Create(GfxPixelFormat colorPixelFormat, GfxPixelForma
 	ptrRenderPass->SetColorAttachment(indexAttachmentColor, colorPixelFormat, 1, false, true, color[0], color[1], color[2], color[3]);
 	ptrRenderPass->SetDepthStencilAttachment(indexAttachmentDepthStencil, depthPixelFormat, 1, false, false, depth, stencil);
 	ptrRenderPass->SetSubpassOutputColorReference(0, indexAttachmentColor);
-	ptrRenderPass->SetSubpassOutputDepthStencilReference(0, indexAttachmentDepthStencil);
+	ptrRenderPass->SetSubpassDepthStencilReference(0, indexAttachmentDepthStencil);
 	ptrRenderPass->Create();
 }
 

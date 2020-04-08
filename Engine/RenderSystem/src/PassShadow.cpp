@@ -15,7 +15,7 @@ void CPassShadow::Create(GfxPixelFormat depthPixelFormat)
 
 	ptrRenderPass = GfxRenderer()->NewRenderPass(PASS_SHADOW_NAME, numAttachments, numSubpasses);
 	ptrRenderPass->SetDepthStencilAttachment(indexAttachmentDepthStencil, depthPixelFormat, 1, false, true, depth, stencil);
-	ptrRenderPass->SetSubpassOutputDepthStencilReference(0, indexAttachmentDepthStencil);
+	ptrRenderPass->SetSubpassDepthStencilReference(0, indexAttachmentDepthStencil);
 	ptrRenderPass->Create();
 }
 
