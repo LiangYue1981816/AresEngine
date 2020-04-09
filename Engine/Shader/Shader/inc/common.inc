@@ -118,4 +118,22 @@ mediump vec3 Gray(mediump vec3 color, mediump float percent)
 	return (1.0 - percent) * dot(vec3(0.299, 0.587, 0.114), color) + percent * color;
 }
 
+mediump vec2 NormalEncode(mediump vec3 normal)
+{
+	// https://aras-p.info/texts/CompactNormalStorage.html
+	mediump float p = sqrt(normal.z * 8.0 + 8.0);
+	mediump vec2 encode = vec2(normal.xy / p + 0.5);
+	return encode;
+}
+
+mediump vec3 NormalDecode(mediump vec2 encode)
+{
+	// https://aras-p.info/texts/CompactNormalStorage.html
+	mediump vec2 e = encode * 4.0 - 2.0;
+	mediump float f = dot(e, e);
+	mediump float g = sqrt(1.0 - f / 4.0);
+	mediump vec3 normal = vec3(e * g, 1.0 - f / 2.0f);
+	return normal;
+}
+
 #endif
