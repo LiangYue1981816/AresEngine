@@ -61,24 +61,61 @@ bool CVKRenderPass::Create(void)
 
 			for (int indexSubpass = 0; indexSubpass < m_subpasses.size(); indexSubpass++) {
 				for (const auto& itInputAttachment : m_subpasses[indexSubpass].inputAttachments) {
-					VkAttachmentReference attachment = {};
-					attachment.attachment = itInputAttachment.first;
-					attachment.layout = CGfxHelper::IsFormatDepthOrStencil(m_attachments[itInputAttachment.first].format) ? VK_IMAGE_LAYOUT_DEPTH_STENCIL_READ_ONLY_OPTIMAL : VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
-					inputAttachmentReferences[indexSubpass].emplace_back(attachment);
+					if (CGfxHelper::IsFormatColor(m_attachments[itInputAttachment.first].format)) {
+						VkAttachmentReference attachment = {};
+						attachment.attachment = itInputAttachment.first;
+						attachment.layout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
+						inputAttachmentReferences[indexSubpass].emplace_back(attachment);
+					}
+					else if (CGfxHelper::IsFormatDepthOrStencil(m_attachments[itInputAttachment.first].format)) {
+						VkAttachmentReference attachment = {};
+						attachment.attachment = itInputAttachment.first;
+						attachment.layout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_READ_ONLY_OPTIMAL;
+						inputAttachmentReferences[indexSubpass].emplace_back(attachment);
+					}
+					else {
+						VkAttachmentReference attachment = {};
+						attachment.attachment = itInputAttachment.first;
+						attachment.layout = VK_IMAGE_LAYOUT_GENERAL;
+						inputAttachmentReferences[indexSubpass].emplace_back(attachment);
+					}
 				}
 
 				for (const auto& itOutputAttachment : m_subpasses[indexSubpass].outputAttachments) {
-					VkAttachmentReference attachment = {};
-					attachment.attachment = itOutputAttachment.first;
-					attachment.layout = CGfxHelper::IsFormatDepthOrStencil(m_attachments[itOutputAttachment.first].format) ? VK_IMAGE_LAYOUT_GENERAL : VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL; // Layout for color attachment can only be VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL or VK_IMAGE_LAYOUT_GENERAL.
-					outputAttachmentReferences[indexSubpass].emplace_back(attachment);
+					// Layout for color attachment can only be VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL or VK_IMAGE_LAYOUT_GENERAL.
+					if (CGfxHelper::IsFormatColor(m_attachments[itOutputAttachment.first].format)) {
+						VkAttachmentReference attachment = {};
+						attachment.attachment = itOutputAttachment.first;
+						attachment.layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
+						outputAttachmentReferences[indexSubpass].emplace_back(attachment);
+					}
+					else {
+						VkAttachmentReference attachment = {};
+						attachment.attachment = itOutputAttachment.first;
+						attachment.layout = VK_IMAGE_LAYOUT_GENERAL;
+						outputAttachmentReferences[indexSubpass].emplace_back(attachment);
+					}
 				}
 
 				for (const auto& itResolveAttachment : m_subpasses[indexSubpass].resolveAttachments) {
-					VkAttachmentReference attachment = {};
-					attachment.attachment = itResolveAttachment.first;
-					attachment.layout = CGfxHelper::IsFormatDepthOrStencil(m_attachments[itResolveAttachment.first].format) ? VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL : VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
-					resolveAttachmentReferences[indexSubpass].emplace_back(attachment);
+					if (CGfxHelper::IsFormatColor(m_attachments[itResolveAttachment.first].format)) {
+						VkAttachmentReference attachment = {};
+						attachment.attachment = itResolveAttachment.first;
+						attachment.layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
+						resolveAttachmentReferences[indexSubpass].emplace_back(attachment);
+					}
+					else if (CGfxHelper::IsFormatDepthOrStencil(m_attachments[itResolveAttachment.first].format)) {
+						VkAttachmentReference attachment = {};
+						attachment.attachment = itResolveAttachment.first;
+						attachment.layout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
+						resolveAttachmentReferences[indexSubpass].emplace_back(attachment);
+					}
+					else {
+						VkAttachmentReference attachment = {};
+						attachment.attachment = itResolveAttachment.first;
+						attachment.layout = VK_IMAGE_LAYOUT_GENERAL;
+						resolveAttachmentReferences[indexSubpass].emplace_back(attachment);
+					}
 				}
 
 				for (const auto& itPreserveAttachment : m_subpasses[indexSubpass].preserveAttachments) {
