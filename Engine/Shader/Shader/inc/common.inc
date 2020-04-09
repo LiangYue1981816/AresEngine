@@ -121,18 +121,29 @@ mediump vec3 Gray(mediump vec3 color, mediump float percent)
 mediump vec2 NormalEncode(mediump vec3 normal)
 {
 	// https://aras-p.info/texts/CompactNormalStorage.html
+	/*
 	mediump float p = sqrt(normal.z * 8.0 + 8.0);
 	mediump vec2 encode = vec2(normal.xy / p + 0.5);
+	*/
+	mediump float scale = 1.7777;
+	mediump vec2 encode = ((normal.xy / (normal.z + 1.0)) / scale) * 0.5 + 0.5;
 	return encode;
 }
 
 mediump vec3 NormalDecode(mediump vec2 encode)
 {
 	// https://aras-p.info/texts/CompactNormalStorage.html
+	/*
 	mediump vec2 e = encode * 4.0 - 2.0;
 	mediump float f = dot(e, e);
 	mediump float g = sqrt(1.0 - f / 4.0);
 	mediump vec3 normal = vec3(e * g, 1.0 - f / 2.0f);
+	*/
+	mediump float scale = 1.7777;
+	mediump vec3 e = vec3(encode.xy, 0.0) * vec3(2.0 * scale, 2.0 * scale, 0.0) + vec3(-scale, -scale, 1.0);
+	mediump float f = dot(e, e);
+	mediump float g = 2.0 / f;
+	mediump vec3 normal = vec3(g * e.xy, g - 1.0);
 	return normal;
 }
 
