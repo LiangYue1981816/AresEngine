@@ -48,7 +48,6 @@ layout (location = 0) out mediump vec4 outFragColor;
 // Descriptor
 DESCRIPTOR_SET_INPUTATTACHMENT(1, 6) uniform mediump subpassInput texGBuffer0;
 DESCRIPTOR_SET_INPUTATTACHMENT(2, 7) uniform mediump subpassInput texGBuffer1;
-DESCRIPTOR_SET_INPUTATTACHMENT(3, 8) uniform mediump subpassInput texGBuffer2;
 
 highp vec3 ScreenToWorldPosition(highp vec2 screen, highp float depth)
 {
@@ -59,26 +58,23 @@ highp vec3 ScreenToWorldPosition(highp vec2 screen, highp float depth)
 
 void main()
 {
+	mediump vec4 pixelColorGBuffer0 = subpassLoad(texGBuffer0);
+	mediump vec4 pixelColorGBuffer1 = subpassLoad(texGBuffer1);
+
 	highp vec4 projectCoord = inPosition;
 	projectCoord.xy = projectCoord.xy / projectCoord.w;
  	projectCoord.xy = projectCoord.xy * 0.5 + 0.5;
 
-	mediump vec4 texAlbedo = subpassLoad(texGBuffer0);
-	mediump vec4 texNormal = subpassLoad(texGBuffer1);
-	mediump vec4 texRoughnessMetallicSpecularAO = subpassLoad(texGBuffer2);
-
 	highp float depth = texture(texDepth, projectCoord.xy).r;
 	highp vec3 worldPosition = ScreenToWorldPosition(projectCoord.xy, depth);
-
 	highp vec3 worldCameraPosition = (cameraViewInverseMatrix * vec4(0.0, 0.0, 0.0, 1.0)).xyz;
 	mediump vec3 worldViewDirection = normalize(worldCameraPosition - worldPosition);
-	mediump vec3 worldNormal = texNormal.xyz;
+	mediump vec3 worldNormal = NormalDecode(pixelColorGBuffer1.rg);
 
-	mediump vec3 albedo = texAlbedo.rgb;
-	mediump float roughness = texRoughnessMetallicSpecularAO.r;
-	mediump float metallic = texRoughnessMetallicSpecularAO.g;
-	mediump float specular = texRoughnessMetallicSpecularAO.b;
-	mediump float ao = texRoughnessMetallicSpecularAO.a;
+	mediump vec3 albedo = pixelColorGBuffer0.rgb;
+	mediump float ao = pixelColorGBuffer0.a;
+	mediump float roughness = pixelColorGBuffer1.b;
+	mediump float metallic = pixelColorGBuffer1.a;
 
 	mediump vec3 fresnel = Fresnel(worldNormal, worldViewDirection, albedo.rgb, metallic);
 

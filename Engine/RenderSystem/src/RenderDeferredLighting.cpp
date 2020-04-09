@@ -87,11 +87,10 @@ void CRenderSystem::RenderDeferredLighting(CTaskPool& taskPool, CTaskGraph& task
 	uint32_t rtColor = RENDER_TEXTURE_FULL_HDR_COLOR1;
 	uint32_t rtGBuffer0 = RENDER_TEXTURE_GBUFFER0;
 	uint32_t rtGBuffer1 = RENDER_TEXTURE_GBUFFER1;
-	uint32_t rtGBuffer2 = RENDER_TEXTURE_GBUFFER2;
 	{
 		m_pPassDeferredLighting->SetCamera(pCamera);
 		m_pPassDeferredLighting->SetInputTexture(GetRenderTexture(rtDepthCopy), GetRenderTexture(rtShadow), GetRenderTexture(rtSSAO));
-		m_pPassDeferredLighting->SetOutputTexture(GetRenderTexture(rtColor), GetRenderTexture(rtGBuffer0), GetRenderTexture(rtGBuffer1), GetRenderTexture(rtGBuffer2), GetRenderTexture(rtDepth));
+		m_pPassDeferredLighting->SetOutputTexture(GetRenderTexture(rtColor), GetRenderTexture(rtGBuffer0), GetRenderTexture(rtGBuffer1), GetRenderTexture(rtDepth));
 		m_pPassDeferredLighting->Render(taskPool, taskGraph, ptrCommandBuffer);
 	}
 	rtFinal = RENDER_TEXTURE_FULL_HDR_COLOR0;

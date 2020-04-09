@@ -77,7 +77,6 @@ layout (location = 2) in mediump vec3 inNormal;
 layout (location = 0) out mediump vec4 outFragColor;
 layout (location = 1) out mediump vec4 outFragGBuffer0;
 layout (location = 2) out mediump vec4 outFragGBuffer1;
-layout (location = 3) out mediump vec4 outFragGBuffer2;
 
 // Descriptor
 DESCRIPTOR_SET_MATPASS(8) mediump uniform sampler2D texAlbedo;
@@ -125,7 +124,7 @@ void main()
 	highp vec4 projectCoord = cameraProjectionViewMatrix * vec4(inPosition, 1.0);
 	projectCoord.xy = projectCoord.xy / projectCoord.w;
  	projectCoord.xy = projectCoord.xy * 0.5 + 0.5;
-	mediump vec3 ssao = texture(texSSAO, projectCoord.xy).rgb;
+	mediump float ssao = texture(texSSAO, projectCoord.xy).r;
 
 	mediump float shadow = ShadowValue(inPosition, inNormal, texShadow);
 //	mediump float shadow = ShadowValueIrregular(inPosition, texShadow);
@@ -152,11 +151,10 @@ void main()
 	outFragColor = PackHDR(finalLighting);
 
 	outFragGBuffer0.rgb = Gamma2Linear(albedo.rgb);
-	outFragGBuffer0.a = 1.0;
+	outFragGBuffer0.a = ao * ssao;
 
-	outFragGBuffer1.rgb = worldNormal;
-	outFragGBuffer1.a = 1.0;
-
-	outFragGBuffer2 = vec4(roughness, metallic, specular, ao * ssao);
+	outFragGBuffer1.rg = NormalEncode(worldNormal);
+	outFragGBuffer1.b = roughness;
+	outFragGBuffer1.a = metallic;
 }
 #endif
