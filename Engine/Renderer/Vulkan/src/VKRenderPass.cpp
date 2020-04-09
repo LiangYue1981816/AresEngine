@@ -70,7 +70,7 @@ bool CVKRenderPass::Create(void)
 				for (const auto& itOutputAttachment : m_subpasses[indexSubpass].outputAttachments) {
 					VkAttachmentReference attachment = {};
 					attachment.attachment = itOutputAttachment.first;
-					attachment.layout = CGfxHelper::IsFormatDepthOrStencil(m_attachments[itOutputAttachment.first].format) ? VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL : VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
+					attachment.layout = CGfxHelper::IsFormatDepthOrStencil(m_attachments[itOutputAttachment.first].format) ? VK_IMAGE_LAYOUT_GENERAL : VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL; // Layout for color attachment can only be VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL or VK_IMAGE_LAYOUT_GENERAL.
 					outputAttachmentReferences[indexSubpass].emplace_back(attachment);
 				}
 
