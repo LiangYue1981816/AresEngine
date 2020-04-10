@@ -39,7 +39,7 @@ CComponentPointLight::CComponentPointLight(const CComponentPointLight& component
 	m_cullScreenSize2 = component.m_cullScreenSize2;
 
 	SetColor(component.m_color.r, component.m_color.g, component.m_color.b);
-	SetAttenuation(component.m_attenuation.x, component.m_attenuation.y, component.m_attenuation.z);
+	SetAttenuation(component.m_attenuation.x, component.m_attenuation.y, component.m_attenuation.z, component.m_attenuation.w);
 }
 
 CComponentPointLight::~CComponentPointLight(void)
