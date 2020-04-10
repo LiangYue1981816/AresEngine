@@ -76,9 +76,17 @@ void main()
 	mediump float roughness = pixelColorGBuffer1.b;
 	mediump float metallic = pixelColorGBuffer1.a;
 
-	mediump vec3 fresnel = Fresnel(worldNormal, worldViewDirection, albedo.rgb, metallic);
+	highp vec3 pointLightPosition = sceneData.data[inInstanceIndex].center.xyz;
+	highp vec3 pointLightDirection = normalize(pointLightPosition - worldPosition);
+	highp float distance = length(pointLightPosition - worldPosition);
 
-	outFragColor.rgb = fresnel;
+	mediump vec3 pointLightAttenuation = sceneData.data[inInstanceIndex].lightAttenuation.xyz;
+	mediump vec3 pointLightColor = sceneData.data[inInstanceIndex].lightColor.rgb * Attenuation(distance, pointLightAttenuation.x, pointLightAttenuation.y, pointLightAttenuation.z);
+
+	mediump vec3 fresnel = Fresnel(worldNormal, worldViewDirection, albedo.rgb, metallic);
+	mediump vec3 pointLighting = PBRLighting(worldNormal, worldViewDirection, pointLightDirection, pointLightColor, albedo, fresnel, metallic, roughness) * pointLightFactor;
+
+	outFragColor.rgb = ao * pointLighting;
 	outFragColor.a = 1.0;
 }
 #endif
