@@ -88,7 +88,7 @@ void main()
 	mediump vec3 fresnel = Fresnel(worldNormal, worldViewDirection, albedo.rgb, metallic);
 	mediump vec3 pointLighting = PBRLighting(worldNormal, worldViewDirection, pointLightDirection, pointLightColor, albedo, fresnel, metallic, roughness) * pointLightFactor;
 
-	outFragColor.rgb = pointLightRange > distance ? ao * pointLighting : 0.0;
+	outFragColor.rgb = (pointLightRange > distance) ? (ao * pointLighting) : vec3(0.0);
 	outFragColor.a = 1.0;
 }
 #endif
