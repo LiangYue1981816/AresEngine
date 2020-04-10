@@ -16,7 +16,7 @@ public:
 	void SetMask(uint32_t mask);
 
 	void SetColor(float red, float green, float blue);
-	void SetAttenuation(float linear, float square, float constant);
+	void SetAttenuation(float linear, float square, float constant, float range);
 
 	void SetCullDistance(float distance);
 	void SetCullScreenSize(float screenSize);

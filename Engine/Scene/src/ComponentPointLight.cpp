@@ -75,9 +75,9 @@ void CComponentPointLight::SetColor(float red, float green, float blue)
 	m_bNeedUpdateInstanceData[1] = true;
 }
 
-void CComponentPointLight::SetAttenuation(float linear, float square, float constant)
+void CComponentPointLight::SetAttenuation(float linear, float square, float constant, float range)
 {
-	m_attenuation = glm::vec4(linear, square, constant, 0.0f);
+	m_attenuation = glm::vec4(linear, square, constant, range);
 
 	m_instanceData[0].SetLightAttenuation(m_attenuation);
 	m_instanceData[1].SetLightAttenuation(m_attenuation);
