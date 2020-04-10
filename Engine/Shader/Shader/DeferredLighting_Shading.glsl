@@ -82,7 +82,8 @@ void main()
 
 	mediump vec3 pointLighting = vec3(0.0);
 
-	if(pointLightRange > distance) {
+	if(pointLightRange > distance)
+	{
 		mediump vec3 pointLightDirection = normalize(pointLightPosition - worldPosition);
 		mediump vec3 pointLightAttenuation = sceneData.data[inInstanceIndex].lightAttenuation.xyz;
 		mediump vec3 pointLightColor = sceneData.data[inInstanceIndex].lightColor.rgb * Attenuation(distance, pointLightAttenuation.x, pointLightAttenuation.y, pointLightAttenuation.z);
