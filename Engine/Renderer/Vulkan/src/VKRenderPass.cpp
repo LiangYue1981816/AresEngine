@@ -83,18 +83,10 @@ bool CVKRenderPass::Create(void)
 
 				for (const auto& itOutputAttachment : m_subpasses[indexSubpass].outputAttachments) {
 					// Layout for color attachment can only be VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL or VK_IMAGE_LAYOUT_GENERAL.
-					if (CGfxHelper::IsFormatColor(m_attachments[itOutputAttachment.first].format)) {
-						VkAttachmentReference attachment = {};
-						attachment.attachment = itOutputAttachment.first;
-						attachment.layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
-						outputAttachmentReferences[indexSubpass].emplace_back(attachment);
-					}
-					else {
-						VkAttachmentReference attachment = {};
-						attachment.attachment = itOutputAttachment.first;
-						attachment.layout = VK_IMAGE_LAYOUT_GENERAL;
-						outputAttachmentReferences[indexSubpass].emplace_back(attachment);
-					}
+					VkAttachmentReference attachment = {};
+					attachment.attachment = itOutputAttachment.first;
+					attachment.layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL; // VK_IMAGE_LAYOUT_GENERAL
+					outputAttachmentReferences[indexSubpass].emplace_back(attachment);
 				}
 
 				for (const auto& itResolveAttachment : m_subpasses[indexSubpass].resolveAttachments) {
