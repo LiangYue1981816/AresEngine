@@ -78,6 +78,16 @@ public:
 		m_components.reserve(size);
 	}
 
+	bool IsExist(uint32_t key) const
+	{
+		if (m_keyIndex.find(key) != m_keyIndex.end()) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
 	bool NewComponent(uint32_t key, T component)
 	{
 		if (m_keyIndex.find(key) == m_keyIndex.end()) {
