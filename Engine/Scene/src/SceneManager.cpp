@@ -56,7 +56,7 @@ uint32_t CSceneManager::GetNextComponentPointLightName(void) const
 	return HashValueFormat("_POINTLIGHT_%d", count++);
 }
 
-CScene* CSceneManager::CreateScene(uint32_t name)
+CScene* CSceneManager::GetOrCreateScene(uint32_t name)
 {
 	if (m_pScenes[name] == nullptr) {
 		m_pScenes[name] = new CScene(name, this);
@@ -73,7 +73,7 @@ void CSceneManager::DestroyScene(CScene* pScene)
 	}
 }
 
-CSceneNode* CSceneManager::CreateNode(uint32_t name)
+CSceneNode* CSceneManager::GetOrCreateNode(uint32_t name)
 {
 	if (m_pNodes[name] == nullptr) {
 		m_pNodes[name] = new CSceneNode(name, this);
@@ -90,27 +90,39 @@ void CSceneManager::DestroyNode(CSceneNode* pNode)
 	}
 }
 
-CComponentMeshPtr CSceneManager::CreateComponentMesh(uint32_t name)
+CComponentMeshPtr CSceneManager::GetOrCreateComponentMesh(uint32_t name)
 {
-	m_meshManager.NewComponent(name, CComponentMesh(name));
+	if (m_meshManager.IsExist(name) == false) {
+		m_meshManager.NewComponent(name, CComponentMesh(name));
+	}
+
 	return CComponentMeshPtr(name, &m_meshManager);
 }
 
-CComponentSkinPtr CSceneManager::CreateComponentSkin(uint32_t name)
+CComponentSkinPtr CSceneManager::GetOrCreateComponentSkin(uint32_t name)
 {
-	m_skinManager.NewComponent(name, CComponentSkin(name));
+	if (m_skinManager.IsExist(name) == false) {
+		m_skinManager.NewComponent(name, CComponentSkin(name));
+	}
+
 	return CComponentSkinPtr(name, &m_skinManager);
 }
 
-CComponentParticlePtr CSceneManager::CreateComponentParticle(uint32_t name)
+CComponentParticlePtr CSceneManager::GetOrCreateComponentParticle(uint32_t name)
 {
-	m_particleManager.NewComponent(name, CComponentParticle(name));
+	if (m_particleManager.IsExist(name) == false) {
+		m_particleManager.NewComponent(name, CComponentParticle(name));
+	}
+
 	return CComponentParticlePtr(name, &m_particleManager);
 }
 
-CComponentPointLightPtr CSceneManager::CreateComponentPointLight(uint32_t name)
+CComponentPointLightPtr CSceneManager::GetOrCreateComponentPointLight(uint32_t name)
 {
-	m_pointLightManager.NewComponent(name, CComponentPointLight(name));
+	if (m_pointLightManager.IsExist(name) == false) {
+		m_pointLightManager.NewComponent(name, CComponentPointLight(name));
+	}
+
 	return CComponentPointLightPtr(name, &m_pointLightManager);
 }
 

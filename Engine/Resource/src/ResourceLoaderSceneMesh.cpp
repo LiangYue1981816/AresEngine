@@ -22,7 +22,7 @@ static bool InternalLoadDraw(TiXmlNode* pNode, const CGfxMeshPtr ptrMesh, CScene
 			CGfxMaterialPtr ptrMaterial = GfxRenderer()->NewMaterial(szMaterialFileName, vertexBinding, instanceBinding, baseLevel, numLevels);
 			if (ptrMaterial == nullptr) { err = -3; goto ERR; }
 
-			CComponentMeshPtr ptrComponentMesh = pCurrentSceneNode->GetSceneManager()->CreateComponentMesh(HashValueFormat("%x_%x_%s", pCurrentSceneNode->GetName(), ptrMesh->GetName(), szName));
+			CComponentMeshPtr ptrComponentMesh = pCurrentSceneNode->GetSceneManager()->GetOrCreateComponentMesh(HashValueFormat("%x_%x_%s", pCurrentSceneNode->GetName(), ptrMesh->GetName(), szName));
 			if (ptrComponentMesh == nullptr) { err = -4; goto ERR; }
 
 			ptrComponentMesh->SetScreenFactor(lod, 1.0f / (1 << lod));
@@ -45,7 +45,7 @@ static bool InternalLoadNode(TiXmlNode* pNode, const CGfxMeshPtr ptrMesh, CScene
 
 	CSceneNode* pCurrentSceneNode = nullptr;
 	{
-		pCurrentSceneNode = pParentSceneNode->GetSceneManager()->CreateNode(pParentSceneNode->GetSceneManager()->GetNextNodeName());
+		pCurrentSceneNode = pParentSceneNode->GetSceneManager()->GetOrCreateNode(pParentSceneNode->GetSceneManager()->GetNextNodeName());
 		{
 			float scale[3];
 			float rotation[4];
@@ -128,7 +128,7 @@ static CSceneNode* InternalLoadMesh(const char* szFileName, CSceneNode* pParentS
 		TiXmlNode* pMeshNode = xmlDoc.FirstChild("Mesh");
 		if (pMeshNode == nullptr) { err = -3; goto ERR; }
 
-		pCurrentSceneNode = pParentSceneNode->GetSceneManager()->CreateNode(pParentSceneNode->GetSceneManager()->GetNextNodeName());
+		pCurrentSceneNode = pParentSceneNode->GetSceneManager()->GetOrCreateNode(pParentSceneNode->GetSceneManager()->GetNextNodeName());
 		if (InternalLoadMesh(pMeshNode, pCurrentSceneNode, vertexBinding, instanceBinding, baseLevel, numLevels) == false) { err = -4; goto ERR; }
 		if (pParentSceneNode->AttachNode(pCurrentSceneNode) == false) { err = -5; goto ERR; }
 	}

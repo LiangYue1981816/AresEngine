@@ -30,18 +30,18 @@ public:
 	uint32_t GetNextComponentPointLightName(void) const;
 
 public:
-	CScene* CreateScene(uint32_t name);
+	CScene* GetOrCreateScene(uint32_t name);
 	void DestroyScene(CScene* pScene);
 
 public:
-	CSceneNode* CreateNode(uint32_t name);
+	CSceneNode* GetOrCreateNode(uint32_t name);
 	void DestroyNode(CSceneNode* pNode);
 
 public:
-	CComponentMeshPtr CreateComponentMesh(uint32_t name);
-	CComponentSkinPtr CreateComponentSkin(uint32_t name);
-	CComponentParticlePtr CreateComponentParticle(uint32_t name);
-	CComponentPointLightPtr CreateComponentPointLight(uint32_t name);
+	CComponentMeshPtr GetOrCreateComponentMesh(uint32_t name);
+	CComponentSkinPtr GetOrCreateComponentSkin(uint32_t name);
+	CComponentParticlePtr GetOrCreateComponentParticle(uint32_t name);
+	CComponentPointLightPtr GetOrCreateComponentPointLight(uint32_t name);
 
 public:
 	void UpdateLogic(CTaskPool& taskPool, CTaskGraph& taskGraph, float totalTime, float deltaTime);
