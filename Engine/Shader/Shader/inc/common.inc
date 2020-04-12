@@ -165,7 +165,8 @@ mediump vec3 ViewSpaceNormalDecode(mediump vec2 encode)
 
 highp vec4 ScreenToViewPosition(highp vec2 screen, highp float depth, highp mat4 projectionInverseMatrix)
 {
-	highp vec4 clipPosition = vec4(vec3(screen, depth) * 2.0 - 1.0, 1.0);
+	highp vec4 clipPosition = vec4(screen * 2.0 - 1.0, depth, 1.0);       // NDC DepthRange [ 0, 1] Vulkan DirectX
+//	highp vec4 clipPosition = vec4(vec3(screen, depth) * 2.0 - 1.0, 1.0); // NDC DepthRange [-1, 1] OpenGL
 	highp vec4 viewPosition = projectionInverseMatrix * clipPosition;
 	return viewPosition.xyzw / viewPosition.w;
 }
