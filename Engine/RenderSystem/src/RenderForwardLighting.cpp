@@ -47,8 +47,10 @@ void CRenderSystem::RenderForwardLighting(CTaskPool& taskPool, CTaskGraph& taskG
 	uint32_t rtSSAOBlurVertical = RENDER_TEXTURE_FULL_HDR_COLOR0;
 	{
 		m_pPassSSAO->SetParamSamples(Settings()->GetValue("RenderSystem.SSAO.SampleCount"));
-		m_pPassSSAO->SetParamMinRadius(Settings()->GetValue("RenderSystem.SSAO.SampleMinRadius"));
-		m_pPassSSAO->SetParamMaxRadius(Settings()->GetValue("RenderSystem.SSAO.SampleMaxRadius"));
+		m_pPassSSAO->SetParamMinSampleRadius(Settings()->GetValue("RenderSystem.SSAO.MinSampleRadius"));
+		m_pPassSSAO->SetParamMaxSampleRadius(Settings()->GetValue("RenderSystem.SSAO.MaxSampleRadius"));
+		m_pPassSSAO->SetParamMinDepthRange(Settings()->GetValue("RenderSystem.SSAO.MinDepthRange"));
+		m_pPassSSAO->SetParamMaxDepthRange(Settings()->GetValue("RenderSystem.SSAO.MaxDepthRange"));
 		m_pPassSSAO->SetCamera(pCamera);
 		m_pPassSSAO->SetInputTexture(GetRenderTexture(rtDepth));
 		m_pPassSSAO->SetOutputTexture(GetRenderTexture(rtSSAO));

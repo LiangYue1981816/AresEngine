@@ -27,8 +27,10 @@ void CPassSSAO::Destroy(void)
 CPassSSAO::CPassSSAO(CRenderSystem* pRenderSystem)
 	: CPassBlit(PASS_SSAO_MATERIAL_NAME, pRenderSystem)
 	, m_samples(16)
-	, m_minRadius(0.045f)
-	, m_maxRadius(1.0f)
+	, m_minSampleRadius(0.02f)
+	, m_maxSampleRadius(1.25f)
+	, m_minDepthRange(0.0f)
+	, m_maxDepthRange(0.2f)
 {
 	CGfxDescriptorLayoutPtr ptrDescriptorLayout = GfxRenderer()->NewDescriptorLayout(DESCRIPTOR_SET_PASS);
 	ptrDescriptorLayout->SetUniformBlockBinding(UNIFORM_ENGINE_NAME, UNIFORM_ENGINE_BIND);
@@ -78,14 +80,24 @@ void CPassSSAO::SetParamSamples(int samples)
 	m_samples = samples;
 }
 
-void CPassSSAO::SetParamMinRadius(float minRadius)
+void CPassSSAO::SetParamMinSampleRadius(float minRadius)
 {
-	m_minRadius = minRadius;
+	m_minSampleRadius = minRadius;
 }
 
-void CPassSSAO::SetParamMaxRadius(float maxRadius)
+void CPassSSAO::SetParamMaxSampleRadius(float maxRadius)
 {
-	m_maxRadius = maxRadius;
+	m_maxSampleRadius = maxRadius;
+}
+
+void CPassSSAO::SetParamMinDepthRange(float minDepth)
+{
+	m_minDepthRange = minDepth;
+}
+
+void CPassSSAO::SetParamMaxDepthRange(float maxDepth)
+{
+	m_maxDepthRange = maxDepth;
 }
 
 void CPassSSAO::Render(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer)
@@ -116,6 +128,8 @@ void CPassSSAO::Render(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBu
 void CPassSSAO::RenderCallback(CGfxCommandBufferPtr ptrCommandBuffer)
 {
 	GfxRenderer()->CmdUniform1i(ptrCommandBuffer, HashValue("Param.samples"), m_samples);
-	GfxRenderer()->CmdUniform1f(ptrCommandBuffer, HashValue("Param.minRadius"), m_minRadius);
-	GfxRenderer()->CmdUniform1f(ptrCommandBuffer, HashValue("Param.maxRadius"), m_maxRadius);
+	GfxRenderer()->CmdUniform1f(ptrCommandBuffer, HashValue("Param.minSampleRadius"), m_minSampleRadius);
+	GfxRenderer()->CmdUniform1f(ptrCommandBuffer, HashValue("Param.maxSampleRadius"), m_maxSampleRadius);
+	GfxRenderer()->CmdUniform1f(ptrCommandBuffer, HashValue("Param.minDepthRange"), m_minDepthRange);
+	GfxRenderer()->CmdUniform1f(ptrCommandBuffer, HashValue("Param.maxDepthRange"), m_maxDepthRange);
 }

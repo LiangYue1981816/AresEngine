@@ -48,8 +48,10 @@ DESCRIPTOR_SET_MATPASS(8) mediump uniform sampler2D texNoise;
 
 layout(push_constant) uniform PushConstantParam {
 	int samples;
-	float minRadius;
-	float maxRadius;
+	float minSampleRadius;
+	float maxSampleRadius;
+	float minDepthRange;
+	float maxDepthRange;
 } Param;
 
 void main()
@@ -134,9 +136,12 @@ void main()
 	highp vec3 curReflect = normalize(texture(texNoise, noiseTexcoord).xyz * 2.0 - 1.0);
 
 	highp int samples = clamp(Param.samples, 4, 64);
-	highp float minRadius = Param.minRadius;
-	highp float maxRadius = Param.maxRadius;
-	highp float radius = mix(minRadius, maxRadius, smoothstep(0.0, 0.2, LinearDepth(curDepth, cameraZNear, cameraZFar) / (cameraZFar - cameraZNear)));
+	highp float minSampleRadius = Param.minSampleRadius;
+	highp float maxSampleRadius = Param.maxSampleRadius;
+	highp float minDepthRange = Param.minDepthRange;
+	highp float maxDepthRange = Param.maxDepthRange;
+
+	highp float radius = mix(minSampleRadius, maxSampleRadius, smoothstep(minDepthRange, maxDepthRange, LinearDepth(curDepth, cameraZNear, cameraZFar) / (cameraZFar - cameraZNear)));
 	highp float occlusion = 0.0;
 
 	for (int index = 0; index < samples; index++) {

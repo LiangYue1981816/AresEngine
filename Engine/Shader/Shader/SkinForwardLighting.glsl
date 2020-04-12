@@ -124,7 +124,7 @@ void main()
 	highp vec4 projectCoord = cameraProjectionViewMatrix * vec4(worldPosition, 1.0);
 	projectCoord.xy = projectCoord.xy / projectCoord.w;
  	projectCoord.xy = projectCoord.xy * 0.5 + 0.5;
-	mediump vec3 ssao = texture(texSSAO, projectCoord.xy).rgb;
+	mediump float ssao = texture(texSSAO, projectCoord.xy).r;
 
 	mediump float shadow = ShadowValue(worldPosition, inNormal, texShadow);
 //	mediump float shadow = ShadowValueIrregular(worldPosition, texShadow);

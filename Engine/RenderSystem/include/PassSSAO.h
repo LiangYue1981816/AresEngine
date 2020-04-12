@@ -24,8 +24,10 @@ public:
 	void SetOutputTexture(CGfxRenderTexturePtr ptrColorTexture);
 
 	void SetParamSamples(int samples);
-	void SetParamMinRadius(float minRadius);
-	void SetParamMaxRadius(float maxRadius);
+	void SetParamMinSampleRadius(float minRadius);
+	void SetParamMaxSampleRadius(float maxRadius);
+	void SetParamMinDepthRange(float minDepth);
+	void SetParamMaxDepthRange(float maxDepth);
 
 private:
 	void Render(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer);
@@ -34,8 +36,10 @@ private:
 
 private:
 	int m_samples;
-	float m_minRadius;
-	float m_maxRadius;
+	float m_minSampleRadius;
+	float m_maxSampleRadius;
+	float m_minDepthRange;
+	float m_maxDepthRange;
 
 private:
 	CGfxDescriptorSetPtr m_ptrDescriptorSetPass;
