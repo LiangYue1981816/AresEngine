@@ -103,7 +103,7 @@ void main()
 	mediump vec3 worldViewDirection = normalize(worldCameraPosition - worldPosition);
 
 #ifdef NORMAL_MAP
-	mediump vec3 worldNormal = normalize(mat3(inTangent, inBinormal, inNormal) * (texture(texNormal, inTexcoord).rgb * vec3(2.0) - vec3(1.0)));
+	mediump vec3 worldNormal = normalize(mat3(inTangent, inBinormal, inNormal) * (texture(texNormal, inTexcoord).rgb * 2.0 - 1.0));
 #else
 	mediump vec3 worldNormal = inNormal;
 #endif
