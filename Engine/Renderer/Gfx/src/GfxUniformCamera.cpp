@@ -30,13 +30,8 @@ void CGfxUniformCamera::SetScreen(float width, float height)
 
 void CGfxUniformCamera::SetPerspective(float fovy, float aspect, float zNear, float zFar)
 {
-	// [-1 1]
-	//float x = (1.0f - zFar / zNear) / 2.0f;
-	//float y = (1.0f + zFar / zNear) / 2.0f;
-
-	// [0 1]
-	float x = 1.0f - zFar / zNear;
-	float y = zFar / zNear;
+	// [-1 1] OpenGL
+	// [ 0 1] Vulkan DirectX
 
 	m_bDirty = true;
 	m_params.SetPerspective(GfxRenderer()->GetBaseMatrix(), fovy, aspect, zNear, zFar);
@@ -44,13 +39,8 @@ void CGfxUniformCamera::SetPerspective(float fovy, float aspect, float zNear, fl
 
 void CGfxUniformCamera::SetOrtho(float left, float right, float bottom, float top, float zNear, float zFar)
 {
-	// [-1 1]
-	//float x = (1.0f - zFar / zNear) / 2.0f;
-	//float y = (1.0f + zFar / zNear) / 2.0f;
-
-	// [0 1]
-	float x = 1.0f - zFar / zNear;
-	float y = zFar / zNear;
+	// [-1 1] OpenGL
+	// [ 0 1] Vulkan DirectX
 
 	m_bDirty = true;
 	m_params.SetOrtho(GfxRenderer()->GetBaseMatrix(), left, right, bottom, top, zNear, zFar);
