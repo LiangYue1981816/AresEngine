@@ -49,13 +49,6 @@ layout (location = 0) out mediump vec4 outFragColor;
 DESCRIPTOR_SET_INPUTATTACHMENT(1, 6) uniform mediump subpassInput texGBuffer0;
 DESCRIPTOR_SET_INPUTATTACHMENT(2, 7) uniform mediump subpassInput texGBuffer1;
 
-highp vec3 ScreenToWorldPosition(highp vec2 screen, highp float depth)
-{
-	highp vec4 clipPosition = vec4(screen * vec2(2.0) - vec2(1.0), depth * 2.0 - 1.0, 1.0);
-	highp vec4 worldPosition = cameraProjectionViewInverseMatrix * clipPosition;
-	return (worldPosition.xyz / worldPosition.w);
-}
-
 void main()
 {
 	mediump vec4 pixelColorGBuffer0 = subpassLoad(texGBuffer0);
@@ -66,7 +59,7 @@ void main()
  	projectCoord.xy = projectCoord.xy * 0.5 + 0.5;
 
 	highp float depth = texture(texDepth, projectCoord.xy).r;
-	highp vec3 worldPosition = ScreenToWorldPosition(projectCoord.xy, depth);
+	highp vec3 worldPosition = ScreenToWorldPosition(projectCoord.xy, depth, cameraProjectionInverseMatrix, cameraViewInverseMatrix).xyz;
 	highp vec3 worldCameraPosition = (cameraViewInverseMatrix * vec4(0.0, 0.0, 0.0, 1.0)).xyz;
 	mediump vec3 worldViewDirection = normalize(worldCameraPosition - worldPosition);
 	mediump vec3 worldNormal = NormalDecode(pixelColorGBuffer1.rg);

@@ -52,43 +52,6 @@ layout(push_constant) uniform PushConstantParam {
 	float maxRadius;
 } Param;
 
-highp vec3 ScreenToViewPosition(highp vec2 screen, highp float depth)
-{
-	highp vec4 clipPosition = vec4(screen * vec2(2.0) - vec2(1.0), depth * 2.0 - 1.0, 1.0);
-	highp vec4 viewPosition = cameraProjectionInverseMatrix * clipPosition;
-	return (viewPosition.xyz / viewPosition.w);
-}
-
-highp vec3 ScreenToWorldPosition(highp vec2 screen, highp float depth)
-{
-	highp vec4 clipPosition = vec4(screen * vec2(2.0) - vec2(1.0), depth * 2.0 - 1.0, 1.0);
-	highp vec4 worldPosition = cameraProjectionViewInverseMatrix * clipPosition;
-	return (worldPosition.xyz / worldPosition.w);
-}
-
-highp float LinearDepth(highp float depth)
-{
-	highp float z = depth * 2.0 - 1.0;
-	return (2.0 * cameraZNear * cameraZFar) / (cameraZFar + cameraZNear - z * (cameraZFar - cameraZNear));
-}
-
-highp vec3 NormalFromDepth(highp float depth)
-{ 
-	highp vec2 offset1 = vec2(0.0, 0.001);
-	highp vec2 offset2 = vec2(0.001, 0.0);
-
-	highp float depth1 = texture(texDepth, inTexcoord + offset1).r;
-	highp float depth2 = texture(texDepth, inTexcoord + offset2).r;
-
-	highp vec3 p1 = vec3(offset1, depth1 - depth);
-	highp vec3 p2 = vec3(offset2, depth2 - depth);
-
-	highp vec3 normal = cross(p1, p2);
-	normal.z = -normal.z;
-
-	return normalize(normal);
-}
-
 void main()
 {
 	highp vec3 sample_sphere[64] = vec3[] (
@@ -162,7 +125,7 @@ void main()
 	highp vec2 noiseTexcoord = 10.0 * (inTexcoord + PoissonDisk(vec3(inTexcoord, 0.0), 0)) * depthSize / noiseSize;
 
 	highp float curDepth = texture(texDepth, inTexcoord).r;
-	highp vec3 curPosition = ScreenToViewPosition(inTexcoord, curDepth);
+	highp vec3 curPosition = ScreenToViewPosition(inTexcoord, curDepth, cameraProjectionInverseMatrix).xyz;
 #ifdef _VULKAN_
 	highp vec3 curNormal = normalize(cross(dFdy(curPosition), dFdx(curPosition)));
 #else
@@ -173,7 +136,7 @@ void main()
 	highp int samples = clamp(Param.samples, 4, 64);
 	highp float minRadius = clamp(Param.minRadius, 0.02, 0.1);
 	highp float maxRadius = clamp(Param.maxRadius, 0.10, 2.0);
-	highp float radius = mix(minRadius, maxRadius, smoothstep(0.0, 0.45, LinearDepth(curDepth) / (cameraZFar - cameraZNear)));
+	highp float radius = mix(minRadius, maxRadius, smoothstep(0.0, 0.45, LinearDepth(curDepth, cameraZNear, cameraZFar) / (cameraZFar - cameraZNear)));
 	highp float occlusion = 0.0;
 
 	for (int index = 0; index < samples; index++) {
@@ -186,7 +149,7 @@ void main()
 		offset.xy = offset.xy * 0.5 + 0.5;
 
 		highp float sampleDepth = texture(texDepth, offset.xy).r;
-		highp vec3 checkSamplePosition = ScreenToViewPosition(offset.xy, sampleDepth);
+		highp vec3 checkSamplePosition = ScreenToViewPosition(offset.xy, sampleDepth, cameraProjectionInverseMatrix).xyz;
 		float checkRange = smoothstep(0.0, 0.1, radius / abs(checkSamplePosition.z - curPosition.z));
 		occlusion += step(samplePosition.z, checkSamplePosition.z) * checkRange;
 	}
