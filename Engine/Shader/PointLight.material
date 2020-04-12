@@ -19,9 +19,16 @@
 			</Vertex>
 			<Fragment file_name="DeferredLighting_Shading.glsl">
 			</Fragment>
-			<Depth>
-				<DepthWrite enable="GFX_FALSE" />
-			</Depth>
+			<State>
+				<Depth>
+					<DepthWrite enable="GFX_FALSE" />
+				</Depth>
+				<ColorBlend>
+					<Blend enable="GFX_TRUE" />
+					<RGBBlend blend_op="GFX_ADD" src_factor="GFX_ONE" dst_factor="GFX_ONE" />
+					<AlphaBlend blend_op="GFX_ADD" src_factor="GFX_ONE" dst_factor="GFX_ZERO" />
+				</ColorBlend>
+			</State>
 		</Pipeline>
 	</Pass>
 </Material>
