@@ -68,8 +68,8 @@ CRenderSystem::CRenderSystem(GfxApi api, void* hInstance, void* hWnd, void* hDC,
 
 	Settings()->SetValue("RenderSystem.Shadow.Factor", 1.0f);
 	Settings()->SetValue("RenderSystem.SSAO.SampleCount", 8.0f);
-	Settings()->SetValue("RenderSystem.SSAO.SampleMinRadius", 0.05f);
-	Settings()->SetValue("RenderSystem.SSAO.SampleMaxRadius", 1.00f);
+	Settings()->SetValue("RenderSystem.SSAO.SampleMinRadius", 0.02f);
+	Settings()->SetValue("RenderSystem.SSAO.SampleMaxRadius", 1.25f);
 	Settings()->SetValue("RenderSystem.SSAO.BlurRange", 1.00f);
 	Settings()->SetValue("RenderSystem.Bloom.BlurRange.FirstTime", 2.00f);
 	Settings()->SetValue("RenderSystem.Bloom.BlurRange.SecondTime", 1.00f);
