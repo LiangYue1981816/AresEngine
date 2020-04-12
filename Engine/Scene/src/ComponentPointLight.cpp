@@ -14,7 +14,7 @@ CComponentPointLight::CComponentPointLight(uint32_t name)
 {
 	m_indexInstance = RenderSystem()->AddInstance();
 
-	SetMaterial(GfxRenderer()->NewMaterial("PointLight.material", VERTEX_BINDING, INSTANCE_BINDING));
+	SetMaterial(GfxRenderer()->NewMaterial("PointLightCullFaceBack.material", VERTEX_BINDING, INSTANCE_BINDING), GfxRenderer()->NewMaterial("PointLightCullFaceFront.material", VERTEX_BINDING, INSTANCE_BINDING));
 	SetMeshDraw(GfxRenderer()->NewMesh("PointLight.mesh", VERTEX_BINDING));
 	SetMask(0xffffffff);
 }
@@ -32,7 +32,8 @@ CComponentPointLight::CComponentPointLight(const CComponentPointLight& component
 {
 	m_indexInstance = RenderSystem()->AddInstance();
 
-	m_ptrMaterial = component.m_ptrMaterial;
+	m_ptrMaterialCullFaceBack = component.m_ptrMaterialCullFaceBack;
+	m_ptrMaterialCullFaceFront = component.m_ptrMaterialCullFaceFront;
 	m_ptrMeshDraw = component.m_ptrMeshDraw;
 
 	m_cullDistance2 = component.m_cullDistance2;
@@ -47,9 +48,10 @@ CComponentPointLight::~CComponentPointLight(void)
 	RenderSystem()->RemoveInstance(m_indexInstance);
 }
 
-void CComponentPointLight::SetMaterial(const CGfxMaterialPtr ptrMaterial)
+void CComponentPointLight::SetMaterial(const CGfxMaterialPtr ptrMaterialCullFaceBack, const CGfxMaterialPtr ptrMaterialCullFaceFront)
 {
-	m_ptrMaterial = ptrMaterial;
+	m_ptrMaterialCullFaceBack = ptrMaterialCullFaceBack;
+	m_ptrMaterialCullFaceFront = ptrMaterialCullFaceFront;
 }
 
 void CComponentPointLight::SetMeshDraw(const CGfxMeshPtr ptrMesh)
@@ -104,7 +106,7 @@ bool CComponentPointLight::TaskUpdate(float gameTime, float deltaTime)
 		m_instanceData[indexFrame].SetTransform(m_pParentNode->GetWorldTransform());
 		m_bNeedUpdateInstanceData[indexFrame] = true;
 
-		if (m_ptrMeshDraw && m_ptrMaterial) {
+		if (m_ptrMeshDraw && m_ptrMaterialCullFaceBack && m_ptrMaterialCullFaceFront) {
 			m_aabb = m_ptrMeshDraw->GetAABB() * m_instanceData[indexFrame].transformMatrix;
 		}
 
@@ -119,7 +121,7 @@ bool CComponentPointLight::TaskUpdateCamera(CGfxCamera* pCamera, CRenderQueue* p
 {
 	int indexFrame = 1 - Engine()->GetFrameCount() % 2;
 
-	if (m_ptrMeshDraw && m_ptrMaterial) {
+	if (m_ptrMeshDraw && m_ptrMaterialCullFaceBack && m_ptrMaterialCullFaceFront) {
 		m_distance2 = glm::length2(m_aabb.center - pCamera->GetPosition());
 		m_screenSize2 = glm::min(glm::length2(m_aabb.size()) / glm::max(1.0f, m_distance2), 1.0f);
 
@@ -145,7 +147,12 @@ bool CComponentPointLight::TaskUpdateCamera(CGfxCamera* pCamera, CRenderQueue* p
 			RenderSystem()->ModifyInstanceData(m_indexInstance, m_instanceData[indexFrame], indexThread);
 		}
 
-		pRenderQueue->Add(m_ptrMaterial, m_ptrMeshDraw, m_indexInstance, indexThread);
+		if (glm::sphere(m_aabb.center, m_attenuation.w).inside(pCamera->GetPosition())) {
+			pRenderQueue->Add(m_ptrMaterialCullFaceFront, m_ptrMeshDraw, m_indexInstance, indexThread);
+		}
+		else {
+			pRenderQueue->Add(m_ptrMaterialCullFaceBack, m_ptrMeshDraw, m_indexInstance, indexThread);
+		}
 
 		return true;
 	}

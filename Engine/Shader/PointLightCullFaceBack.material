@@ -21,8 +21,12 @@
 			</Fragment>
 			<State>
 				<Depth>
+					<DepthTest enable="GFX_TRUE" compare_op="GFX_COMPAREOP_LEQUAL" />
 					<DepthWrite enable="GFX_FALSE" />
 				</Depth>
+				<Rasterization>
+					<Cull enable="GFX_TRUE" cull_face="GFX_BACK" />
+				</Rasterization>
 				<ColorBlend>
 					<Blend enable="GFX_TRUE" />
 					<RGBBlend blend_op="GFX_ADD" src_factor="GFX_ONE" dst_factor="GFX_ONE" />

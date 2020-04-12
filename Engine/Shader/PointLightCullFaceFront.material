@@ -1,0 +1,38 @@
+<Material>
+	<Pass name="PassDefault">
+		<Pipeline render_pass="PassDefault">
+			<Vertex file_name="Debug.glsl">
+				<Define name="VERTEX_ATTRIBUTE_POSITION" />
+				<Define name="VERTEX_ATTRIBUTE_NORMAL" />
+				<Define name="INSTANCE_ATTRIBUTE_INDEX" />
+			</Vertex>
+			<Fragment file_name="Debug.glsl">
+			</Fragment>
+		</Pipeline>
+	</Pass>
+	<Pass name="PassDeferredLighting_Shading">
+		<Pipeline render_pass="PassDeferredLighting" sub_pass="1">
+			<Vertex file_name="DeferredLighting_Shading.glsl">
+				<Define name="VERTEX_ATTRIBUTE_POSITION" />
+				<Define name="VERTEX_ATTRIBUTE_NORMAL" />
+				<Define name="INSTANCE_ATTRIBUTE_INDEX" />
+			</Vertex>
+			<Fragment file_name="DeferredLighting_Shading.glsl">
+			</Fragment>
+			<State>
+				<Depth>
+					<DepthTest enable="GFX_FALSE" compare_op="GFX_COMPAREOP_LEQUAL" />
+					<DepthWrite enable="GFX_FALSE" />
+				</Depth>
+				<Rasterization>
+					<Cull enable="GFX_TRUE" cull_face="GFX_FRONT" />
+				</Rasterization>
+				<ColorBlend>
+					<Blend enable="GFX_TRUE" />
+					<RGBBlend blend_op="GFX_ADD" src_factor="GFX_ONE" dst_factor="GFX_ONE" />
+					<AlphaBlend blend_op="GFX_ADD" src_factor="GFX_ONE" dst_factor="GFX_ZERO" />
+				</ColorBlend>
+			</State>
+		</Pipeline>
+	</Pass>
+</Material>

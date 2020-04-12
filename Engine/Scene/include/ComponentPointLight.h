@@ -11,7 +11,7 @@ public:
 
 
 public:
-	void SetMaterial(const CGfxMaterialPtr ptrMaterial);
+	void SetMaterial(const CGfxMaterialPtr ptrMaterialCullFaceBack, const CGfxMaterialPtr ptrMaterialCullFaceFront);
 	void SetMeshDraw(const CGfxMeshPtr ptrMesh);
 	void SetMask(uint32_t mask);
 
@@ -40,7 +40,8 @@ private:
 	float m_screenSize2;
 
 	glm::aabb m_aabb;
-	CGfxMaterialPtr m_ptrMaterial;
+	CGfxMaterialPtr m_ptrMaterialCullFaceBack;
+	CGfxMaterialPtr m_ptrMaterialCullFaceFront;
 	CGfxMeshDrawPtr m_ptrMeshDraw;
 
 private:
