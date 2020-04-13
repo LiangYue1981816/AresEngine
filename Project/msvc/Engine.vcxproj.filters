@@ -2426,6 +2426,9 @@
     <ClCompile Include="..\..\Engine\RenderSystem\src\PassCopyDepthStencil.cpp">
       <Filter>Engine\RenderSystem\Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Engine\RenderSystem\src\RenderPass.cpp">
+      <Filter>Engine\RenderSystem\Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\..\Engine\ThirdParty\rttr\CMakeLists.txt">
