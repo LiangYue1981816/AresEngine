@@ -479,9 +479,9 @@ void CVKRenderer::CmdSetScissor(CGfxCommandBufferPtr ptrCommandBuffer, int x, in
 	ptrCommandBuffer->CmdSetScissor(x, y, width, height);
 }
 
-void CVKRenderer::CmdSetViewport(CGfxCommandBufferPtr ptrCommandBuffer, int x, int y, int width, int height)
+void CVKRenderer::CmdSetViewport(CGfxCommandBufferPtr ptrCommandBuffer, int x, int y, int width, int height, float znear, float zfar)
 {
-	ptrCommandBuffer->CmdSetViewport(x, y, width, height);
+	ptrCommandBuffer->CmdSetViewport(x, y, width, height, znear, zfar);
 }
 
 void CVKRenderer::CmdClearDepth(CGfxCommandBufferPtr ptrCommandBuffer, float depth)

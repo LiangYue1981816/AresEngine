@@ -473,9 +473,9 @@ void CGLES3Renderer::CmdSetScissor(CGfxCommandBufferPtr ptrCommandBuffer, int x,
 	ptrCommandBuffer->CmdSetScissor(x, y, width, height);
 }
 
-void CGLES3Renderer::CmdSetViewport(CGfxCommandBufferPtr ptrCommandBuffer, int x, int y, int width, int height)
+void CGLES3Renderer::CmdSetViewport(CGfxCommandBufferPtr ptrCommandBuffer, int x, int y, int width, int height, float znear, float zfar)
 {
-	ptrCommandBuffer->CmdSetViewport(x, y, width, height);
+	ptrCommandBuffer->CmdSetViewport(x, y, width, height, znear, zfar);
 }
 
 void CGLES3Renderer::CmdClearDepth(CGfxCommandBufferPtr ptrCommandBuffer, float depth)

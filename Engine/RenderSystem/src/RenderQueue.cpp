@@ -76,7 +76,7 @@ glm::vec3 CTaskSort::cameraPosition;
 class CTaskCommandBuffer : public CTask
 {
 public:
-	CTaskCommandBuffer(const CGfxDescriptorSetPtr ptrDescriptorSetPass, const CGfxDescriptorSetPtr ptrDescriptorSetInputAttachment, const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass, int indexSubpass, const CGfxPipelineGraphics* pPipeline, uint32_t matPassName, const glm::vec4& scissor, const glm::vec4& viewport, uint32_t mask)
+	CTaskCommandBuffer(const CGfxDescriptorSetPtr ptrDescriptorSetPass, const CGfxDescriptorSetPtr ptrDescriptorSetInputAttachment, const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass, int indexSubpass, const CGfxPipelineGraphics* pPipeline, uint32_t matPassName, const glm::vec4& scissor, const glm::vec4& viewport, float znear, float zfar, uint32_t mask)
 		: m_ptrDescriptorSetPass(ptrDescriptorSetPass)
 		, m_ptrDescriptorSetInputAttachment(ptrDescriptorSetInputAttachment)
 
@@ -89,6 +89,8 @@ public:
 
 		, m_scissor(scissor)
 		, m_viewport(viewport)
+		, m_znear(znear)
+		, m_zfar(zfar)
 
 		, m_mask(mask)
 	{
@@ -111,7 +113,7 @@ public:
 		CRenderQueue* pRenderQueue = (CRenderQueue*)GetParam();
 
 		m_ptrCommandBuffer = GfxRenderer()->NewCommandBuffer(indexThread, false);
-		pRenderQueue->CmdDrawThread(m_ptrCommandBuffer, m_ptrFrameBuffer, m_ptrRenderPass, m_indexSubpass, m_ptrDescriptorSetPass, m_ptrDescriptorSetInputAttachment, m_pPipeline, m_matPassName, m_scissor, m_viewport, m_mask);
+		pRenderQueue->CmdDrawThread(m_ptrCommandBuffer, m_ptrFrameBuffer, m_ptrRenderPass, m_indexSubpass, m_ptrDescriptorSetPass, m_ptrDescriptorSetInputAttachment, m_pPipeline, m_matPassName, m_scissor, m_viewport, m_znear, m_zfar, m_mask);
 	}
 
 
@@ -128,6 +130,8 @@ private:
 
 	const glm::vec4 m_scissor;
 	const glm::vec4 m_viewport;
+	const float m_znear;
+	const float m_zfar;
 
 	const uint32_t m_mask;
 
@@ -192,7 +196,7 @@ void CRenderQueue::End(void)
 	}
 }
 
-void CRenderQueue::CmdDraw(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer, const CGfxDescriptorSetPtr ptrDescriptorSetPass, const uint32_t matPassName, const glm::vec4& scissor, const glm::vec4& viewport, uint32_t mask, bool bIsTransparency)
+void CRenderQueue::CmdDraw(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer, const CGfxDescriptorSetPtr ptrDescriptorSetPass, const uint32_t matPassName, const glm::vec4& scissor, const glm::vec4& viewport, float znear, float zfar, uint32_t mask, bool bIsTransparency)
 {
 	if (m_materialMeshDrawQueue.empty()) {
 		return;
@@ -297,12 +301,12 @@ void CRenderQueue::CmdDraw(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxComma
 	}
 }
 
-void CRenderQueue::CmdDrawThread(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass, const int indexSubpass, const CGfxDescriptorSetPtr ptrDescriptorSetPass, const CGfxDescriptorSetPtr ptrDescriptorSetInputAttachment, const CGfxPipelineGraphics* pPipeline, const uint32_t matPassName, const glm::vec4& scissor, const glm::vec4& viewport, uint32_t mask)
+void CRenderQueue::CmdDrawThread(CGfxCommandBufferPtr ptrCommandBuffer, const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass, const int indexSubpass, const CGfxDescriptorSetPtr ptrDescriptorSetPass, const CGfxDescriptorSetPtr ptrDescriptorSetInputAttachment, const CGfxPipelineGraphics* pPipeline, const uint32_t matPassName, const glm::vec4& scissor, const glm::vec4& viewport, float znear, float zfar, uint32_t mask)
 {
 	GfxRenderer()->BeginRecord(ptrCommandBuffer, ptrFrameBuffer, ptrRenderPass, indexSubpass);
 	{
 		GfxRenderer()->CmdSetScissor(ptrCommandBuffer, (int)scissor.x, (int)scissor.y, (int)scissor.z, (int)scissor.w);
-		GfxRenderer()->CmdSetViewport(ptrCommandBuffer, (int)viewport.x, (int)viewport.y, (int)viewport.z, (int)viewport.w);
+		GfxRenderer()->CmdSetViewport(ptrCommandBuffer, (int)viewport.x, (int)viewport.y, (int)viewport.z, (int)viewport.w, znear, zfar);
 
 		GfxRenderer()->CmdBindPipelineGraphics(ptrCommandBuffer, pPipeline);
 		{

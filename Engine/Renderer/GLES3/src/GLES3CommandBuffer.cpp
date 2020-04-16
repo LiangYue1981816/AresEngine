@@ -326,9 +326,9 @@ void CGLES3CommandBuffer::CmdSetScissor(int x, int y, int width, int height)
 	m_pCommands.emplace_back(new CGLES3CommandSetScissor(x, y, width, height));
 }
 
-void CGLES3CommandBuffer::CmdSetViewport(int x, int y, int width, int height)
+void CGLES3CommandBuffer::CmdSetViewport(int x, int y, int width, int height, float znear, float zfar)
 {
-	m_pCommands.emplace_back(new CGLES3CommandSetViewport(x, y, width, height));
+	m_pCommands.emplace_back(new CGLES3CommandSetViewport(x, y, width, height, znear, zfar));
 }
 
 void CGLES3CommandBuffer::CmdClearDepth(float depth)

@@ -18,6 +18,7 @@ extern void GLDisable(GLenum cap);
 
 extern void GLScissor(GLint x, GLint y, GLsizei width, GLsizei height);
 extern void GLViewport(GLint x, GLint y, GLsizei width, GLsizei height);
+extern void GLDepthRange(GLfloat znear, GLfloat zfar);
 
 extern void GLClearColor(GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha);
 extern void GLClearDepthf(GLfloat depth);

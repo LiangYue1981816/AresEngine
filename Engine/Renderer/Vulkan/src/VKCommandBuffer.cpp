@@ -393,9 +393,9 @@ void CVKCommandBuffer::CmdSetScissor(int x, int y, int width, int height)
 	m_pCommands.emplace_back(new CVKCommandSetScissor(m_vkCommandBuffer, x, y, width, height));
 }
 
-void CVKCommandBuffer::CmdSetViewport(int x, int y, int width, int height)
+void CVKCommandBuffer::CmdSetViewport(int x, int y, int width, int height, float znear, float zfar)
 {
-	m_pCommands.emplace_back(new CVKCommandSetViewport(m_vkCommandBuffer, x, y, width, height));
+	m_pCommands.emplace_back(new CVKCommandSetViewport(m_vkCommandBuffer, x, y, width, height, znear, zfar));
 }
 
 void CVKCommandBuffer::CmdClearDepth(float depth)

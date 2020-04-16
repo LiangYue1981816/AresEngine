@@ -75,7 +75,7 @@ public:
 	void CmdUniformMatrix4fv(uint32_t name, int count, const float* value);
 
 	void CmdSetScissor(int x, int y, int width, int height);
-	void CmdSetViewport(int x, int y, int width, int height);
+	void CmdSetViewport(int x, int y, int width, int height, float znear, float zfar);
 
 	void CmdClearDepth(float depth);
 	void CmdClearColor(float red, float green, float blue, float alpha);

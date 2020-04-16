@@ -5,12 +5,14 @@
 class CVKCommandSetViewport : public CGfxCommandBase
 {
 public:
-	CVKCommandSetViewport(VkCommandBuffer vkCommandBuffer, int x, int y, int width, int height)
+	CVKCommandSetViewport(VkCommandBuffer vkCommandBuffer, int x, int y, int width, int height, float znear, float zfar)
 		: m_vkCommandBuffer(vkCommandBuffer)
 		, m_x(x)
 		, m_y(y)
 		, m_width(width)
 		, m_height(height)
+		, m_znear(znear)
+		, m_zfar(zfar)
 	{
 		Execute();
 	}
@@ -31,8 +33,8 @@ public:
 			viewport.y = m_y;
 			viewport.width = m_width;
 			viewport.height = m_height;
-			viewport.minDepth = 0.0f;
-			viewport.maxDepth = 1.0f;
+			viewport.minDepth = m_znear;
+			viewport.maxDepth = m_zfar;
 			vkCmdSetViewport(m_vkCommandBuffer, 0, 1, &viewport);
 		}
 	}
@@ -43,6 +45,8 @@ private:
 	int m_y;
 	int m_width;
 	int m_height;
+	float m_znear;
+	float m_zfar;
 
 private:
 	VkCommandBuffer m_vkCommandBuffer;

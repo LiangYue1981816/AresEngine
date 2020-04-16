@@ -89,8 +89,10 @@ void CPassFinal::Render(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandB
 			const float h = ptrFrameBuffer->GetHeight();
 			const glm::vec4 scissor = glm::vec4(0.0, 0.0, w, h);
 			const glm::vec4 viewport = glm::vec4(0.0, 0.0, w, h);
+			const float znear = 0.0f;
+			const float zfar = 1.0f;
 
-			m_pRenderQueue->CmdDraw(taskPool, taskGraph, ptrCommandBuffer, m_ptrDescriptorSetPass, PASS_FINAL_NAME, scissor, viewport, 0xffffffff, false);
+			m_pRenderQueue->CmdDraw(taskPool, taskGraph, ptrCommandBuffer, m_ptrDescriptorSetPass, PASS_FINAL_NAME, scissor, viewport, znear, zfar, 0xffffffff, false);
 		}
 		GfxRenderer()->CmdEndRenderPass(ptrCommandBuffer);
 		GfxRenderer()->CmdSetImageLayout(ptrCommandBuffer, ptrColorTexture, bPresent ? GFX_IMAGE_LAYOUT_PRESENT_SRC_OPTIMAL : GFX_IMAGE_LAYOUT_COLOR_READ_ONLY_OPTIMAL);

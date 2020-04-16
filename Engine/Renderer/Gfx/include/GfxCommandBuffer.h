@@ -100,7 +100,7 @@ public:
 	virtual void CmdUniformMatrix4fv(uint32_t name, int count, const float* value) = 0;
 
 	virtual void CmdSetScissor(int x, int y, int width, int height) = 0;
-	virtual void CmdSetViewport(int x, int y, int width, int height) = 0;
+	virtual void CmdSetViewport(int x, int y, int width, int height, float znear, float zfar) = 0;
 
 	virtual void CmdClearDepth(float depth) = 0;
 	virtual void CmdClearColor(float red, float green, float blue, float alpha) = 0;

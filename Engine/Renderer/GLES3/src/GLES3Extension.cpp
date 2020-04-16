@@ -84,12 +84,16 @@ typedef struct ViewportParam {
 		y = GL_INVALID_VALUE;
 		width = GL_INVALID_VALUE;
 		height = GL_INVALID_VALUE;
+		znear = 0.0f;
+		zfar = 1.0f;
 	}
 
 	int x;
 	int y;
 	int width;
 	int height;
+	float znear;
+	float zfar;
 } ViewportParam;
 
 typedef struct ClearColorParam {
@@ -549,6 +553,15 @@ void GLViewport(GLint x, GLint y, GLsizei width, GLsizei height)
 		Viewport.width = width;
 		Viewport.height = height;
 		glViewport(x, y, width, height);
+	}
+}
+
+void GLDepthRange(GLfloat znear, GLfloat zfar)
+{
+	if (Viewport.znear != znear || Viewport.zfar != zfar) {
+		Viewport.znear = znear;
+		Viewport.zfar = zfar;
+		glDepthRangef(znear, zfar);
 	}
 }
 

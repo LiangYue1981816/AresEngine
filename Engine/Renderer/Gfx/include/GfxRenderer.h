@@ -203,7 +203,7 @@ public:
 	virtual void CmdUniformMatrix4fv(CGfxCommandBufferPtr ptrCommandBuffer, uint32_t name, int count, const float* value) = 0;
 
 	virtual void CmdSetScissor(CGfxCommandBufferPtr ptrCommandBuffer, int x, int y, int width, int height) = 0;
-	virtual void CmdSetViewport(CGfxCommandBufferPtr ptrCommandBuffer, int x, int y, int width, int height) = 0;
+	virtual void CmdSetViewport(CGfxCommandBufferPtr ptrCommandBuffer, int x, int y, int width, int height, float znear, float zfar) = 0;
 
 	virtual void CmdClearDepth(CGfxCommandBufferPtr ptrCommandBuffer, float depth) = 0;
 	virtual void CmdClearColor(CGfxCommandBufferPtr ptrCommandBuffer, float red, float green, float blue, float alpha) = 0;
