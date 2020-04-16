@@ -390,6 +390,12 @@ namespace glm {
 
 		}
 
+		void setDepthRange(float minz, float maxz)
+		{
+			znear = glm::max(glm::min(minz, maxz), 0.0f);
+			zfar = glm::min(glm::max(minz, maxz), 1.0f);
+		}
+
 		void setScissor(float x, float y, float width, float height)
 		{
 			scissor.x = x;
@@ -556,6 +562,9 @@ namespace glm {
 		}
 
 	public:
+		float znear;
+		float zfar;
+
 		vec4 scissor;
 		vec4 viewport;
 

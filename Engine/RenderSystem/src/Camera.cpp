@@ -34,6 +34,11 @@ CGfxUniformCamera* CCamera::GetCameraUniform(void) const
 	return m_pCameraUniform;
 }
 
+void CCamera::SetDepthRange(float minz, float maxz)
+{
+	m_pCamera->SetDepthRange(minz, maxz);
+}
+
 void CCamera::SetScissor(float x, float y, float width, float height)
 {
 	m_pCamera->SetScissor(x, y, width, height);

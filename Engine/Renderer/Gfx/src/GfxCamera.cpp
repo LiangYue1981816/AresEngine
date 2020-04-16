@@ -11,6 +11,11 @@ CGfxCamera::~CGfxCamera(void)
 
 }
 
+void CGfxCamera::SetDepthRange(float minz, float maxz)
+{
+	m_camera.setDepthRange(minz, maxz);
+}
+
 void CGfxCamera::SetScissor(float x, float y, float width, float height)
 {
 	m_camera.setScissor(x, y, width, height);

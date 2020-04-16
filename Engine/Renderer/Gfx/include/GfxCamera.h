@@ -10,6 +10,8 @@ public:
 
 
 public:
+	void SetDepthRange(float minz, float maxz);
+
 	void SetScissor(float x, float y, float width, float height);
 	void SetViewport(float x, float y, float width, float height);
 

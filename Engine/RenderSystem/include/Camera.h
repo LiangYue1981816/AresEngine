@@ -38,6 +38,7 @@ private:
 	CGfxUniformCamera* GetCameraUniform(void) const;
 
 public:
+	void SetDepthRange(float minz, float maxz);
 	void SetScissor(float x, float y, float width, float height);
 	void SetViewport(float x, float y, float width, float height);
 	void SetPerspective(float fovy, float aspect, float zNear, float zFar);
