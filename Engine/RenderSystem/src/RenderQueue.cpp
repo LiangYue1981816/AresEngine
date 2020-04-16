@@ -285,7 +285,7 @@ void CRenderQueue::CmdDraw(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxComma
 
 		for (auto& itPipelineQueue : m_pipelineMaterialQueue) {
 			CGfxDescriptorSetPtr ptrDescriptorSetInputAttachment = GfxRenderer()->NewDescriptorSet(itPipelineQueue.first, ptrCommandBuffer->GetFrameBuffer(), ptrCommandBuffer->GetRenderPass(), ptrCommandBuffer->GetSubpassIndex());
-			cmdTasks.emplace_back(ptrDescriptorSetPass, ptrDescriptorSetInputAttachment, ptrCommandBuffer->GetFrameBuffer(), ptrCommandBuffer->GetRenderPass(), ptrCommandBuffer->GetSubpassIndex(), itPipelineQueue.first, matPassName, scissor, viewport, mask);
+			cmdTasks.emplace_back(ptrDescriptorSetPass, ptrDescriptorSetInputAttachment, ptrCommandBuffer->GetFrameBuffer(), ptrCommandBuffer->GetRenderPass(), ptrCommandBuffer->GetSubpassIndex(), itPipelineQueue.first, matPassName, scissor, viewport, znear, zfar, mask);
 		}
 
 		for (int indexTask = 0; indexTask < cmdTasks.size(); indexTask++) {

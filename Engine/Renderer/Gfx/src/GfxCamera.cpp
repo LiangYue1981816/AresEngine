@@ -46,6 +46,16 @@ const glm::camera& CGfxCamera::GetCamera(void) const
 	return m_camera;
 }
 
+const float CGfxCamera::GetZNear(void) const
+{
+	return m_camera.znear;
+}
+
+const float CGfxCamera::GetZFar(void) const
+{
+	return m_camera.zfar;
+}
+
 const glm::vec4& CGfxCamera::GetScissor(void) const
 {
 	return m_camera.scissor;

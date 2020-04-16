@@ -22,6 +22,9 @@ public:
 public:
 	const glm::camera& GetCamera(void) const;
 
+	const float GetZNear(void) const;
+	const float GetZFar(void) const;
+
 	const glm::vec4& GetScissor(void) const;
 	const glm::vec4& GetViewport(void) const;
 

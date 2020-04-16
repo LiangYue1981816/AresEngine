@@ -158,8 +158,11 @@ void CPassShadow::Render(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommand
 				glm::vec4(0.5f, 0.5f, 0.5f, 0.5f) * glm::vec4(w, h, w, h),
 			};
 
+			const float znear = 0.0f;
+			const float zfar = 1.0f;
+
 			for (int indexLevel = 0; indexLevel < 4; indexLevel++) {
-				m_pShadowRenderQueue[indexLevel]->CmdDraw(taskPool, taskGraph, ptrCommandBuffer, m_ptrDescriptorSetPass[indexLevel], PASS_SHADOW_NAME, area[indexLevel], area[indexLevel], 0xffffffff, false);
+				m_pShadowRenderQueue[indexLevel]->CmdDraw(taskPool, taskGraph, ptrCommandBuffer, m_ptrDescriptorSetPass[indexLevel], PASS_SHADOW_NAME, area[indexLevel], area[indexLevel], znear, zfar, 0xffffffff, false);
 			}
 		}
 		GfxRenderer()->CmdEndRenderPass(ptrCommandBuffer);
