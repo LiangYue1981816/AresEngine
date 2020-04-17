@@ -385,9 +385,16 @@ namespace glm {
 
 	typedef struct camera {
 	public:
+		void zero(void)
+		{
+			znear = 0.0f;
+			zfar = 1.0f;
+		}
+
+	public:
 		camera(void)
 		{
-
+			zero();
 		}
 
 		void setDepthRange(float minz, float maxz)
