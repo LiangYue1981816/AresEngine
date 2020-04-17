@@ -38,14 +38,14 @@ void CRenderSystem::RenderForwardLighting(CTaskPool& taskPool, CTaskGraph& taskG
 		InternalPassPreZ(taskPool, taskGraph, pCamera, ptrCommandBuffer, rtOutDepth);
 	}
 	{
+		uint32_t rtOutShadow = RENDER_TEXTURE_SHADOW;
+		InternalPassShadow(taskPool, taskGraph, pCamera, ptrCommandBuffer, rtOutShadow);
+	}
+	{
 		uint32_t rtInDepth = RENDER_TEXTURE_FULL_DEPTH;
 		uint32_t rtOutSSAO = RENDER_TEXTURE_FULL_HDR_COLOR0;
 		uint32_t rtTempBlur = RENDER_TEXTURE_FULL_HDR_COLOR1;
 		InternalPassSSAO(taskPool, taskGraph, pCamera, ptrCommandBuffer, rtInDepth, rtOutSSAO, rtTempBlur);
-	}
-	{
-		uint32_t rtOutShadow = RENDER_TEXTURE_SHADOW;
-		InternalPassShadow(taskPool, taskGraph, pCamera, ptrCommandBuffer, rtOutShadow);
 	}
 	{
 		uint32_t rtInShadow = RENDER_TEXTURE_SHADOW;

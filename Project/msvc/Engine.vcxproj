@@ -751,6 +751,7 @@
     <ClCompile Include="..\..\Engine\RenderSystem\src\RenderPass.cpp" />
     <ClCompile Include="..\..\Engine\RenderSystem\src\RenderQueue.cpp" />
     <ClCompile Include="..\..\Engine\RenderSystem\src\RenderSystem.cpp" />
+    <ClCompile Include="..\..\Engine\RenderSystem\src\RenderTileBaseDeferredLighting.cpp" />
     <ClCompile Include="..\..\Engine\RenderSystem\src\UniformEngine.cpp" />
     <ClCompile Include="..\..\Engine\Resource\src\ResourceLoader.cpp" />
     <ClCompile Include="..\..\Engine\Resource\src\ResourceLoaderMaterial.cpp" />

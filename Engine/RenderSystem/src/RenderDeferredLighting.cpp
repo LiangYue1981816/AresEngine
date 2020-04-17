@@ -38,9 +38,8 @@ void CRenderSystem::RenderDeferredLighting(CTaskPool& taskPool, CTaskGraph& task
 		InternalPassPreZ(taskPool, taskGraph, pCamera, ptrCommandBuffer, rtOutDepth);
 	}
 	{
-		uint32_t rtInDepth = RENDER_TEXTURE_FULL_DEPTH;
-		uint32_t rtOutDepth = RENDER_TEXTURE_FULL_DEPTH_COPY;
-		InternalPassCopyDepthStencil(taskPool, taskGraph, pCamera, ptrCommandBuffer, rtInDepth, rtOutDepth);
+		uint32_t rtOutShadow = RENDER_TEXTURE_SHADOW;
+		InternalPassShadow(taskPool, taskGraph, pCamera, ptrCommandBuffer, rtOutShadow);
 	}
 	{
 		uint32_t rtInDepth = RENDER_TEXTURE_FULL_DEPTH;
@@ -49,8 +48,9 @@ void CRenderSystem::RenderDeferredLighting(CTaskPool& taskPool, CTaskGraph& task
 		InternalPassSSAO(taskPool, taskGraph, pCamera, ptrCommandBuffer, rtInDepth, rtOutSSAO, rtTempBlur);
 	}
 	{
-		uint32_t rtOutShadow = RENDER_TEXTURE_SHADOW;
-		InternalPassShadow(taskPool, taskGraph, pCamera, ptrCommandBuffer, rtOutShadow);
+		uint32_t rtInDepth = RENDER_TEXTURE_FULL_DEPTH;
+		uint32_t rtOutDepth = RENDER_TEXTURE_FULL_DEPTH_COPY;
+		InternalPassCopyDepthStencil(taskPool, taskGraph, pCamera, ptrCommandBuffer, rtInDepth, rtOutDepth);
 	}
 	{
 		uint32_t rtInDepth = RENDER_TEXTURE_FULL_DEPTH_COPY;
@@ -79,36 +79,4 @@ void CRenderSystem::RenderDeferredLighting(CTaskPool& taskPool, CTaskGraph& task
 		uint32_t rtInColor = RENDER_TEXTURE_FULL_HDR_COLOR1;
 		InternalPassFinal(taskPool, taskGraph, pCamera, ptrCommandBuffer, rtInColor, bPresent);
 	}
-}
-
-void CRenderSystem::RenderTileBaseDeferredLighting(CTaskPool& taskPool, CTaskGraph& taskGraph, CCamera* pCamera, bool bPresent)
-{
-	m_pInstanceBufferPool->Clear();
-
-	const CGfxSemaphore* pWaitSemaphore = GfxRenderer()->GetSwapChain()->GetAcquireSemaphore();
-	const CGfxCommandBufferPtr ptrComputeCommandBuffer = m_ptrComputeCommandBuffer[GfxRenderer()->GetSwapChain()->GetFrameIndex()];
-	const CGfxCommandBufferPtr ptrGraphicCommandBuffer = m_ptrGraphicCommandBuffer[GfxRenderer()->GetSwapChain()->GetFrameIndex()];
-
-	GfxRenderer()->AcquireNextFrame();
-	{
-		GfxRenderer()->BeginRecord(ptrComputeCommandBuffer);
-		{
-			UpdateGPUScene(taskPool, taskGraph, ptrComputeCommandBuffer);
-		}
-		GfxRenderer()->EndRecord(ptrComputeCommandBuffer);
-		GfxRenderer()->Submit(ptrComputeCommandBuffer, pWaitSemaphore);
-
-		GfxRenderer()->BeginRecord(ptrGraphicCommandBuffer);
-		{
-			RenderDeferredLighting(taskPool, taskGraph, pCamera, bPresent, ptrGraphicCommandBuffer);
-		}
-		GfxRenderer()->EndRecord(ptrGraphicCommandBuffer);
-		GfxRenderer()->Submit(ptrGraphicCommandBuffer, ptrComputeCommandBuffer->GetSemaphore());
-	}
-	GfxRenderer()->Present(ptrGraphicCommandBuffer->GetSemaphore());
-}
-
-void CRenderSystem::RenderTileBaseDeferredLighting(CTaskPool& taskPool, CTaskGraph& taskGraph, CCamera* pCamera, bool bPresent, CGfxCommandBufferPtr ptrCommandBuffer)
-{
-
 }
