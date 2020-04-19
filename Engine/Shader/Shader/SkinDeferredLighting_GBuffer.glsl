@@ -75,6 +75,8 @@ layout (location = 2) in mediump vec3 inNormal;
 
 // Output
 layout (location = 0) out mediump vec4 outFragColor;
+layout (location = 1) out mediump vec4 outFragGBuffer0;
+layout (location = 2) out mediump vec4 outFragGBuffer1;
 
 // Descriptor
 DESCRIPTOR_SET_MATPASS(8) mediump uniform sampler2D texAlbedo;
@@ -154,5 +156,12 @@ void main()
 //	finalLighting = vec3(shadow);
 
 	outFragColor = PackHDR(finalLighting);
+
+	outFragGBuffer0.rgb = Gamma2Linear(albedo.rgb);
+	outFragGBuffer0.a = ao * ssao;
+
+	outFragGBuffer1.rg = NormalEncode(worldNormal);
+	outFragGBuffer1.b = roughness;
+	outFragGBuffer1.a = metallic;
 }
 #endif
