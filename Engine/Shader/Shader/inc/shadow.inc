@@ -55,8 +55,8 @@ highp float ShadowValue(highp vec3 worldPosition, highp vec3 worldNormal, highp 
 	highp float resolution[4] = float[](2.0, 2.0, 2.0, 2.0);
 	highp float curDepth = (mainShadowProjectionViewMatrix(indexLevel) * vec4(worldPosition, 1.0)).z;
 
-//	return FilterPCF(texShadow, projectCoord.xy, curDepth, resolution[indexLevel] * 1024.0);
-	return LinearFilterPCF(texShadow, projectCoord.xy, curDepth, resolution[indexLevel] * 1024.0);
+//	return FilterPCF(texShadow, projectCoord.xy, curDepth, resolution[indexLevel] * 2048.0);
+	return LinearFilterPCF(texShadow, projectCoord.xy, curDepth, resolution[indexLevel] * 2048.0);
 }
 
 #endif
