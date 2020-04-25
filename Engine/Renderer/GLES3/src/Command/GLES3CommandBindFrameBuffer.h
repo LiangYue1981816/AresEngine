@@ -5,10 +5,11 @@
 class CGLES3CommandBindFrameBuffer : public CGfxCommandBase
 {
 public:
-	CGLES3CommandBindFrameBuffer(const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass, int indexSubpass)
+	CGLES3CommandBindFrameBuffer(const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass, int indexSubpass, bool bClear)
 		: m_ptrFrameBuffer(ptrFrameBuffer)
 		, m_ptrRenderPass(ptrRenderPass)
 		, m_indexSubpass(indexSubpass)
+		, m_bClear(bClear)
 	{
 
 	}
@@ -25,7 +26,7 @@ public:
 
 		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_BIND_FRAMEBUFFER);
 		{
-			((CGLES3FrameBuffer*)m_ptrFrameBuffer.GetPointer())->Bind(m_ptrRenderPass->GetAttachments(), m_ptrRenderPass->GetSubpass(m_indexSubpass));
+			((CGLES3FrameBuffer*)m_ptrFrameBuffer.GetPointer())->Bind(m_ptrRenderPass->GetAttachments(), m_ptrRenderPass->GetSubpass(m_indexSubpass), m_bClear);
 		}
 	}
 
@@ -34,4 +35,5 @@ private:
 	CGfxFrameBufferPtr m_ptrFrameBuffer;
 	CGfxRenderPassPtr m_ptrRenderPass;
 	int m_indexSubpass;
+	bool m_bClear;
 };

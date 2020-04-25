@@ -89,7 +89,7 @@ const CGfxRenderTexturePtr CGLES3FrameBuffer::GetAttachmentTexture(int indexAtta
 	}
 }
 
-void CGLES3FrameBuffer::Bind(const AttachmentInformation* pAttachmentInformations, const SubpassInformation* pSubpassInformation) const
+void CGLES3FrameBuffer::Bind(const AttachmentInformation* pAttachmentInformations, const SubpassInformation* pSubpassInformation, bool bClear) const
 {
 	ASSERT(pAttachmentInformations);
 	ASSERT(pSubpassInformation);
@@ -112,7 +112,7 @@ void CGLES3FrameBuffer::Bind(const AttachmentInformation* pAttachmentInformation
 					ASSERT(CGfxHelper::IsFormatColor(ptrOutputTexture->GetFormat()));
 
 					GLBindFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + indexAttachment, CGLES3Helper::TranslateTextureTarget(((CGLES3RenderTexture*)ptrOutputTexture.GetPointer())->GetType()), ((CGLES3RenderTexture*)ptrOutputTexture.GetPointer())->GetTexture(), 0);
-					if (pAttachmentInformations[itOutputAttachment.first].bClear) {
+					if (bClear && pAttachmentInformations[itOutputAttachment.first].bClear) {
 						attachmentClearValues[indexAttachment] = pAttachmentInformations[itOutputAttachment.first].clearValue;
 					}
 
@@ -126,19 +126,19 @@ void CGLES3FrameBuffer::Bind(const AttachmentInformation* pAttachmentInformation
 
 				if (CGfxHelper::IsFormatDepthOnly(ptrDepthStencilTexture->GetFormat())) {
 					GLBindFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, CGLES3Helper::TranslateTextureTarget(((CGLES3RenderTexture*)ptrDepthStencilTexture.GetPointer())->GetType()), ((CGLES3RenderTexture*)ptrDepthStencilTexture.GetPointer())->GetTexture(), 0);
-					if (pAttachmentInformations[pSubpassInformation->depthStencilAttachment].bClear) {
+					if (bClear && pAttachmentInformations[pSubpassInformation->depthStencilAttachment].bClear) {
 						attachmentClearValues[GL_DEPTH] = pAttachmentInformations[pSubpassInformation->depthStencilAttachment].clearValue;
 					}
 				}
 				else if (CGfxHelper::IsFormatStencilOnly(ptrDepthStencilTexture->GetFormat())) {
 					GLBindFramebufferTexture2D(GL_FRAMEBUFFER, GL_STENCIL_ATTACHMENT, CGLES3Helper::TranslateTextureTarget(((CGLES3RenderTexture*)ptrDepthStencilTexture.GetPointer())->GetType()), ((CGLES3RenderTexture*)ptrDepthStencilTexture.GetPointer())->GetTexture(), 0);
-					if (pAttachmentInformations[pSubpassInformation->depthStencilAttachment].bClear) {
+					if (bClear && pAttachmentInformations[pSubpassInformation->depthStencilAttachment].bClear) {
 						attachmentClearValues[GL_STENCIL] = pAttachmentInformations[pSubpassInformation->depthStencilAttachment].clearValue;
 					}
 				}
 				else if (CGfxHelper::IsFormatDepthAndStencil(ptrDepthStencilTexture->GetFormat())) {
 					GLBindFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, CGLES3Helper::TranslateTextureTarget(((CGLES3RenderTexture*)ptrDepthStencilTexture.GetPointer())->GetType()), ((CGLES3RenderTexture*)ptrDepthStencilTexture.GetPointer())->GetTexture(), 0);
-					if (pAttachmentInformations[pSubpassInformation->depthStencilAttachment].bClear) {
+					if (bClear && pAttachmentInformations[pSubpassInformation->depthStencilAttachment].bClear) {
 						attachmentClearValues[GL_DEPTH_STENCIL] = pAttachmentInformations[pSubpassInformation->depthStencilAttachment].clearValue;
 					}
 				}

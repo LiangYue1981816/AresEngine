@@ -26,7 +26,7 @@ public:
 	const CGfxRenderTexturePtr GetAttachmentTexture(int indexAttachment) const;
 
 public:
-	void Bind(const AttachmentInformation* pAttachmentInformations, const SubpassInformation* pSubpassInformation) const;
+	void Bind(const AttachmentInformation* pAttachmentInformations, const SubpassInformation* pSubpassInformation, bool bClear) const;
 	void Resolve(const AttachmentInformation* pAttachmentInformations, const SubpassInformation* pSubpassInformation) const;
 	void InvalidateFramebuffer(const AttachmentInformation* pAttachmentInformations, const SubpassInformation* pSubpassInformation) const;
 
