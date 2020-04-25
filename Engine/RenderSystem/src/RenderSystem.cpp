@@ -111,7 +111,7 @@ void CRenderSystem::CreatePasses(void)
 	CPassForwardLighting::Create(GFX_PIXELFORMAT_BGR10A2_UNORM_PACK32, GFX_PIXELFORMAT_D32_SFLOAT_PACK32);
 	CPassDeferredLighting::Create(GFX_PIXELFORMAT_BGR10A2_UNORM_PACK32, GFX_PIXELFORMAT_D32_SFLOAT_PACK32);
 	CPassCopyColor::Create(GFX_PIXELFORMAT_BGR10A2_UNORM_PACK32);
-	CPassCopyDepthStencil::Create(GFX_PIXELFORMAT_D32_SFLOAT_PACK32);
+	CPassCopyDepthStencil::Create(GFX_PIXELFORMAT_BGRA8_UNORM_PACK8);
 	CPassSSAO::Create(GFX_PIXELFORMAT_BGR10A2_UNORM_PACK32);
 	CPassBlurBox::Create(GFX_PIXELFORMAT_BGR10A2_UNORM_PACK32);
 	CPassBlurHorizontal::Create(GFX_PIXELFORMAT_BGR10A2_UNORM_PACK32);
@@ -186,7 +186,7 @@ void CRenderSystem::CreateRenderTextures(void)
 //	CreateRenderTexture(RENDER_TEXTURE_GBUFFER3, GFX_PIXELFORMAT_BGRA8_UNORM_PACK8, GfxRenderer()->GetSwapChain()->GetWidth(), GfxRenderer()->GetSwapChain()->GetHeight());
 	CreateRenderTexture(RENDER_TEXTURE_SHADOW, GFX_PIXELFORMAT_D32_SFLOAT_PACK32, 4096, 4096);
 	CreateRenderTexture(RENDER_TEXTURE_FULL_DEPTH, GFX_PIXELFORMAT_D32_SFLOAT_PACK32, GfxRenderer()->GetSwapChain()->GetWidth(), GfxRenderer()->GetSwapChain()->GetHeight());
-	CreateRenderTexture(RENDER_TEXTURE_FULL_DEPTH_COPY, GFX_PIXELFORMAT_D32_SFLOAT_PACK32, GfxRenderer()->GetSwapChain()->GetWidth(), GfxRenderer()->GetSwapChain()->GetHeight());
+	CreateRenderTexture(RENDER_TEXTURE_FULL_DEPTH_COPY, GFX_PIXELFORMAT_BGRA8_UNORM_PACK8, GfxRenderer()->GetSwapChain()->GetWidth(), GfxRenderer()->GetSwapChain()->GetHeight());
 	CreateRenderTexture(RENDER_TEXTURE_FULL_HDR_COLOR0, GFX_PIXELFORMAT_BGR10A2_UNORM_PACK32, GfxRenderer()->GetSwapChain()->GetWidth(), GfxRenderer()->GetSwapChain()->GetHeight());
 	CreateRenderTexture(RENDER_TEXTURE_FULL_HDR_COLOR1, GFX_PIXELFORMAT_BGR10A2_UNORM_PACK32, GfxRenderer()->GetSwapChain()->GetWidth(), GfxRenderer()->GetSwapChain()->GetHeight());
 	CreateRenderTexture(RENDER_TEXTURE_QUATER_HDR_COLOR0, GFX_PIXELFORMAT_BGR10A2_UNORM_PACK32, GfxRenderer()->GetSwapChain()->GetWidth() / 4, GfxRenderer()->GetSwapChain()->GetHeight() / 4);

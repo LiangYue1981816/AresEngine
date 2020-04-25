@@ -10,12 +10,11 @@ static CGfxRenderPassPtr ptrRenderPass;
 
 void CPassCopyDepthStencil::Create(GfxPixelFormat depthPixelFormat)
 {
-	const int stencil = 0;
-	const float depth = 1.0f;
+	const float color[] = { 0.0f, 0.0f, 0.0f, 0.0f };
 
 	ptrRenderPass = GfxRenderer()->NewRenderPass(PASS_COPY_DEPTH_STENCIL_NAME, numAttachments, numSubpasses);
-	ptrRenderPass->SetDepthStencilAttachment(indexAttachmentDepthStencil, depthPixelFormat, 1, false, false, depth, stencil);
-	ptrRenderPass->SetSubpassOutputDepthStencilReference(0, indexAttachmentDepthStencil);
+	ptrRenderPass->SetColorAttachment(indexAttachmentDepthStencil, depthPixelFormat, 1, false, true, color[0], color[1], color[2], color[3]);
+	ptrRenderPass->SetSubpassOutputColorReference(0, indexAttachmentDepthStencil);
 	ptrRenderPass->Create();
 }
 
@@ -93,7 +92,7 @@ void CPassCopyDepthStencil::Render(CTaskPool& taskPool, CTaskGraph& taskGraph, C
 			m_pRenderQueue->CmdDraw(taskPool, taskGraph, ptrCommandBuffer, m_ptrDescriptorSetPass, PASS_COPY_DEPTH_STENCIL_NAME, scissor, viewport, znear, zfar, 0xffffffff, false);
 		}
 		GfxRenderer()->CmdEndRenderPass(ptrCommandBuffer);
-		GfxRenderer()->CmdSetImageLayout(ptrCommandBuffer, m_ptrOutputDepthStencilTexture, GFX_IMAGE_LAYOUT_DEPTH_STENCIL_READ_ONLY_OPTIMAL);
+		GfxRenderer()->CmdSetImageLayout(ptrCommandBuffer, m_ptrOutputDepthStencilTexture, GFX_IMAGE_LAYOUT_COLOR_READ_ONLY_OPTIMAL);
 	}
 	GfxRenderer()->CmdPopDebugGroup(ptrCommandBuffer);
 }
