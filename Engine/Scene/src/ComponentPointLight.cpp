@@ -4,7 +4,6 @@
 CComponentPointLight::CComponentPointLight(uint32_t name)
 	: CComponent(name)
 	, m_indexInstance(INVALID_VALUE)
-	, m_bUpdateInstanceData(true)
 	, m_bNeedUpdateInstanceData{ false }
 
 	, m_distance2(0.0f)
@@ -102,14 +101,14 @@ void CComponentPointLight::SetCullScreenSize(float screenSize)
 bool CComponentPointLight::TaskUpdate(float gameTime, float deltaTime)
 {
 	int indexFrame = Engine()->GetFrameCount() % 2;
+	glm::mat4 transformMatrix = m_pParentNode->GetWorldTransform();
 
-	if (m_bUpdateInstanceData || m_instanceData[indexFrame].transformMatrix != m_pParentNode->GetWorldTransform()) {
-		m_bUpdateInstanceData = false;
+	if (m_instanceData[indexFrame].transformMatrix != transformMatrix) {
+		m_instanceData[indexFrame].transformMatrix  = transformMatrix;
 		m_bNeedUpdateInstanceData[indexFrame] = true;
-		m_instanceData[indexFrame].SetTransform(m_pParentNode->GetWorldTransform());
 
 		if (m_ptrMeshDraw && m_ptrMaterialCullFaceBack && m_ptrMaterialCullFaceFront) {
-			m_aabb = m_ptrMeshDraw->GetAABB() * m_instanceData[indexFrame].transformMatrix;
+			m_aabb = m_ptrMeshDraw->GetAABB() * transformMatrix;
 		}
 
 		return true;

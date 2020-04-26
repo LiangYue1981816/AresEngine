@@ -4,7 +4,6 @@
 CComponentMesh::CComponentMesh(uint32_t name)
 	: CComponent(name)
 	, m_indexInstance(INVALID_VALUE)
-	, m_bUpdateInstanceData(true)
 	, m_bNeedUpdateInstanceData{ false }
 
 	, m_indexLOD(-1)
@@ -96,15 +95,15 @@ void CComponentMesh::SetCullScreenSize(float screenSize)
 bool CComponentMesh::TaskUpdate(float gameTime, float deltaTime)
 {
 	int indexFrame = Engine()->GetFrameCount() % 2;
+	glm::mat4 transformMatrix = m_pParentNode->GetWorldTransform();
 
-	if (m_bUpdateInstanceData || m_instanceData[indexFrame].transformMatrix != m_pParentNode->GetWorldTransform()) {
-		m_bUpdateInstanceData = false;
+	if (m_instanceData[indexFrame].transformMatrix != transformMatrix) {
+		m_instanceData[indexFrame].transformMatrix  = transformMatrix;
 		m_bNeedUpdateInstanceData[indexFrame] = true;
-		m_instanceData[indexFrame].SetTransform(m_pParentNode->GetWorldTransform());
 
 		for (int indexLOD = MAX_LOD_COUNT - 1; indexLOD >= 0; indexLOD--) {
 			if (m_ptrMeshDraw[indexLOD] && m_ptrMaterial[indexLOD]) {
-				m_aabb[indexLOD] = m_ptrMeshDraw[indexLOD]->GetAABB() * m_instanceData[indexFrame].transformMatrix;
+				m_aabb[indexLOD] = m_ptrMeshDraw[indexLOD]->GetAABB() * transformMatrix;
 			}
 		}
 
