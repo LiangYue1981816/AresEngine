@@ -99,7 +99,6 @@ bool CComponentMesh::TaskUpdate(float gameTime, float deltaTime)
 
 	if (m_instanceData[indexFrame].transformMatrix != transformMatrix) {
 		m_instanceData[indexFrame].transformMatrix  = transformMatrix;
-		m_bNeedUpdateInstanceData[indexFrame] = true;
 
 		for (int indexLOD = MAX_LOD_COUNT - 1; indexLOD >= 0; indexLOD--) {
 			if (m_ptrMeshDraw[indexLOD] && m_ptrMaterial[indexLOD]) {
@@ -107,6 +106,7 @@ bool CComponentMesh::TaskUpdate(float gameTime, float deltaTime)
 			}
 		}
 
+		m_bNeedUpdateInstanceData[indexFrame] = true;
 		return true;
 	}
 	else {

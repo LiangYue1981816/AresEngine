@@ -105,12 +105,12 @@ bool CComponentPointLight::TaskUpdate(float gameTime, float deltaTime)
 
 	if (m_instanceData[indexFrame].transformMatrix != transformMatrix) {
 		m_instanceData[indexFrame].transformMatrix  = transformMatrix;
-		m_bNeedUpdateInstanceData[indexFrame] = true;
 
 		if (m_ptrMeshDraw && m_ptrMaterialCullFaceBack && m_ptrMaterialCullFaceFront) {
 			m_aabb = m_ptrMeshDraw->GetAABB() * transformMatrix;
 		}
 
+		m_bNeedUpdateInstanceData[indexFrame] = true;
 		return true;
 	}
 	else {
