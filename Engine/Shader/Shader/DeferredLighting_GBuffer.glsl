@@ -129,8 +129,13 @@ void main()
 	mediump float shadow = ShadowValue(inPosition, inNormal, texShadow);
 //	mediump float shadow = ShadowValueIrregular(inPosition, texShadow);
 
+	mediump vec3 pointLightDirection = mainPointLightPosition - inPosition;
+	mediump vec3 pointLightColor = mainPointLightColor * LightingAttenuation(length(pointLightDirection));
+	pointLightDirection = normalize(pointLightDirection);
+
 	mediump vec3 fresnel = Fresnel(worldNormal, worldViewDirection, albedoColor, metallic);
 	mediump vec3 ambientLighting = AmbientSH9(worldNormal, albedoColor, metallic) * ambientLightFactor;
+	mediump vec3 pointLighting = PBRLighting(worldNormal, worldViewDirection, pointLightDirection, pointLightColor, albedoColor, fresnel, metallic, roughness) * pointLightFactor;
 	mediump vec3 directLighting = PBRLighting(worldNormal, worldViewDirection, mainDirectLightDirection, mainDirectLightColor, albedoColor, fresnel, metallic, roughness) * directLightFactor;
 #ifdef ENV_MAP
 	mediump vec3 fresnelRoughness = FresnelRoughness(worldNormal, worldViewDirection, albedoColor, metallic, roughness);
@@ -138,7 +143,7 @@ void main()
 #else
 	mediump vec3 envLighting = vec3(0.0);
 #endif
-	mediump vec3 finalLighting = ao * ssao * (ambientLighting + directLighting * shadow + envLighting);
+	mediump vec3 finalLighting = ao * ssao * (ambientLighting + pointLighting + directLighting * shadow + envLighting);
 
 //	Debug Shadow
 //	highp float factor = length(worldCameraPosition - inPosition) / (cameraZFar - cameraZNear);
