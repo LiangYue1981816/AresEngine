@@ -32,6 +32,7 @@ private:
 
 private:
 	int m_indexInstance;
+	bool m_bUpdateInstanceData;
 	bool m_bNeedUpdateInstanceData[2];
 	InstanceData m_instanceData[2];
 
