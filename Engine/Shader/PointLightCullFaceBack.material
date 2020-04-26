@@ -25,6 +25,7 @@
 					<DepthWrite enable="GFX_FALSE" />
 				</Depth>
 				<Rasterization>
+					<DepthClamp enable="GFX_TRUE" />
 					<Cull enable="GFX_TRUE" cull_face="GFX_BACK" />
 				</Rasterization>
 				<ColorBlend>

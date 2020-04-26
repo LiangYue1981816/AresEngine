@@ -300,7 +300,7 @@ bool CVKPipeline::Create(const CGfxRenderPass* pRenderPass, const CGfxShader* pV
 			rasterizationState.sType = VK_STRUCTURE_TYPE_PIPELINE_RASTERIZATION_STATE_CREATE_INFO;
 			rasterizationState.pNext = nullptr;
 			rasterizationState.flags = 0;
-			rasterizationState.depthClampEnable = VK_TRUE;
+			rasterizationState.depthClampEnable = state.bEnableDepthClamp ? VK_TRUE : VK_FALSE;
 			rasterizationState.rasterizerDiscardEnable = state.bEnableRasterizerDiscard ? VK_TRUE : VK_FALSE;
 			rasterizationState.polygonMode = CVKHelper::TranslatePolytonMode(state.polygonMode);
 			rasterizationState.cullMode = CVKHelper::TranslateCullModeFlags(state.bEnableCullFace, state.cullFace);

@@ -164,15 +164,18 @@ static bool InternalLoadPipelineState(TiXmlNode* pPipelineNode, PipelineState& s
 			}
 
 			if (TiXmlNode* pRasterizationNode = pStateNode->FirstChild("Rasterization")) {
-				if (TiXmlNode* pCullNode = pRasterizationNode->FirstChild("Cull")) {
-					state.bEnableCullFace = StringToBool(pCullNode->ToElement()->AttributeString("enable"));
-					state.cullFace = StringToCullFace(pCullNode->ToElement()->AttributeString("cull_face"));
-					state.frontFace = StringToFrontFace(pCullNode->ToElement()->AttributeString("front_face"));
+				if (TiXmlNode* pDepthClampNode = pRasterizationNode->FirstChild("DepthClamp")) {
+					state.bEnableDepthClamp = StringToBool(pDepthClampNode->ToElement()->AttributeString("enable"));
 				}
 				if (TiXmlNode* pDepthBiasNode = pRasterizationNode->FirstChild("DepthBias")) {
 					state.bEnableDepthBias = StringToBool(pDepthBiasNode->ToElement()->AttributeString("enable"));
 					state.depthBiasSlopeFactor = pDepthBiasNode->ToElement()->AttributeFloat("slope_factor");
 					state.depthBiasConstantFactor = pDepthBiasNode->ToElement()->AttributeFloat("constant_factor");
+				}
+				if (TiXmlNode* pCullNode = pRasterizationNode->FirstChild("Cull")) {
+					state.bEnableCullFace = StringToBool(pCullNode->ToElement()->AttributeString("enable"));
+					state.cullFace = StringToCullFace(pCullNode->ToElement()->AttributeString("cull_face"));
+					state.frontFace = StringToFrontFace(pCullNode->ToElement()->AttributeString("front_face"));
 				}
 			}
 
@@ -696,8 +699,9 @@ bool CResourceLoader::LoadMaterial(const char* szFileName, CGfxMaterial* pMateri
 	//					<PrimitiveTopology topology="" />
 	//				</InputAssembly>
 	//				<Rasterization>
-	//					<Cull enable="" cull_face="" front_face="" />
+	//					<DepthClamp enable="" />
 	//					<DepthBias enable="" slope_factor="" constant_factor="" />
+	//					<Cull enable="" cull_face="" front_face="" />
 	//				</Rasterization>
 	//				<Multisample>
 	//					<Sample count="" />

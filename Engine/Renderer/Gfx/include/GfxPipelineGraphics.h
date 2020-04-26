@@ -10,6 +10,7 @@ typedef struct PipelineState {
 		topology = GFX_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST;
 
 		// Rasterization State
+		bEnableDepthClamp = false;
 		bEnableRasterizerDiscard = false;
 
 		bEnableCullFace = true;
@@ -73,6 +74,7 @@ typedef struct PipelineState {
 	GfxPrimitiveTopology topology;
 
 	// Rasterization State
+	bool bEnableDepthClamp;
 	bool bEnableRasterizerDiscard;
 
 	bool bEnableCullFace;
