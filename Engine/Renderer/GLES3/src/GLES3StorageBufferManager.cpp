@@ -29,14 +29,11 @@ CGLES3StorageBuffer* CGLES3StorageBufferManager::Create(size_t size)
 
 void CGLES3StorageBufferManager::Destroy(CGLES3StorageBuffer* pStorageBuffer)
 {
-	ASSERT(pStorageBuffer);
+	mutex_autolock autolock(&lock);
 	{
-		mutex_autolock autolock(&lock);
-		{
-			if (m_pStorageBuffers.find(pStorageBuffer) != m_pStorageBuffers.end()) {
-				m_pStorageBuffers.erase(pStorageBuffer);
-			}
+		if (m_pStorageBuffers.find(pStorageBuffer) != m_pStorageBuffers.end()) {
+			m_pStorageBuffers.erase(pStorageBuffer);
+			delete pStorageBuffer;
 		}
 	}
-	delete pStorageBuffer;
 }

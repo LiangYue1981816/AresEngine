@@ -58,14 +58,11 @@ CGLES3Mesh* CGLES3MeshManager::Create(const char* szFileName, int vertexBinding)
 
 void CGLES3MeshManager::Destroy(CGLES3Mesh* pMesh)
 {
-	ASSERT(pMesh);
+	mutex_autolock autolock(&lock);
 	{
-		mutex_autolock autolock(&lock);
-		{
-			if (m_pMeshs.find(pMesh->GetName()) != m_pMeshs.end()) {
-				m_pMeshs.erase(pMesh->GetName());
-			}
+		if (m_pMeshs.find(pMesh->GetName()) != m_pMeshs.end()) {
+			m_pMeshs.erase(pMesh->GetName());
+			delete pMesh;
 		}
 	}
-	delete pMesh;
 }

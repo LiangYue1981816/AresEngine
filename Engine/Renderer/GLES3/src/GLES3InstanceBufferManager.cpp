@@ -48,28 +48,22 @@ CGLES3MultiInstanceBuffer* CGLES3InstanceBufferManager::Create(uint32_t instance
 
 void CGLES3InstanceBufferManager::Destroy(CGLES3InstanceBuffer* pInstanceBuffer)
 {
-	ASSERT(pInstanceBuffer);
+	mutex_autolock autolock(&lock);
 	{
-		mutex_autolock autolock(&lock);
-		{
-			if (m_pInstanceBuffers.find(pInstanceBuffer) != m_pInstanceBuffers.end()) {
-				m_pInstanceBuffers.erase(pInstanceBuffer);
-			}
+		if (m_pInstanceBuffers.find(pInstanceBuffer) != m_pInstanceBuffers.end()) {
+			m_pInstanceBuffers.erase(pInstanceBuffer);
+			delete pInstanceBuffer;
 		}
 	}
-	delete pInstanceBuffer;
 }
 
 void CGLES3InstanceBufferManager::Destroy(CGLES3MultiInstanceBuffer* pMultiInstanceBuffer)
 {
-	ASSERT(pMultiInstanceBuffer);
+	mutex_autolock autolock(&lock);
 	{
-		mutex_autolock autolock(&lock);
-		{
-			if (m_pMultiInstanceBuffers.find(pMultiInstanceBuffer) != m_pMultiInstanceBuffers.end()) {
-				m_pMultiInstanceBuffers.erase(pMultiInstanceBuffer);
-			}
+		if (m_pMultiInstanceBuffers.find(pMultiInstanceBuffer) != m_pMultiInstanceBuffers.end()) {
+			m_pMultiInstanceBuffers.erase(pMultiInstanceBuffer);
+			delete pMultiInstanceBuffer;
 		}
 	}
-	delete pMultiInstanceBuffer;
 }

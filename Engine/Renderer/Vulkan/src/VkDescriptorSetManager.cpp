@@ -144,8 +144,6 @@ void CVKDescriptorSetManager::Destroy(CVKDescriptorSet* pDescriptorSet)
 {
 	mutex_autolock autolock(&lock);
 	{
-		ASSERT(pDescriptorSet);
-
 		if (m_pDescriptorSets.find(pDescriptorSet->GetName()) != m_pDescriptorSets.end()) {
 			m_pDescriptorSets.erase(pDescriptorSet->GetName());
 

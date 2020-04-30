@@ -29,14 +29,11 @@ CGLES3CommandBuffer* CGLES3CommandBufferManager::Create(bool bMainCommandBuffer)
 
 void CGLES3CommandBufferManager::Destroy(CGLES3CommandBuffer* pCommandBuffer)
 {
-	ASSERT(pCommandBuffer);
+	mutex_autolock autolock(&lock);
 	{
-		mutex_autolock autolock(&lock);
-		{
-			if (m_pCommandBuffers.find(pCommandBuffer) != m_pCommandBuffers.end()) {
-				m_pCommandBuffers.erase(pCommandBuffer);
-			}
+		if (m_pCommandBuffers.find(pCommandBuffer) != m_pCommandBuffers.end()) {
+			m_pCommandBuffers.erase(pCommandBuffer);
+			delete pCommandBuffer;
 		}
 	}
-	delete pCommandBuffer;
 }

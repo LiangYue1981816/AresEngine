@@ -30,14 +30,11 @@ CVKStorageBuffer* CVKStorageBufferManager::Create(size_t size)
 
 void CVKStorageBufferManager::Destroy(CVKStorageBuffer* pStorageBuffer)
 {
-	ASSERT(pStorageBuffer);
+	mutex_autolock autolock(&lock);
 	{
-		mutex_autolock autolock(&lock);
-		{
-			if (m_pStorageBuffers.find(pStorageBuffer) != m_pStorageBuffers.end()) {
-				m_pStorageBuffers.erase(pStorageBuffer);
-			}
+		if (m_pStorageBuffers.find(pStorageBuffer) != m_pStorageBuffers.end()) {
+			m_pStorageBuffers.erase(pStorageBuffer);
+			delete pStorageBuffer;
 		}
 	}
-	delete pStorageBuffer;
 }

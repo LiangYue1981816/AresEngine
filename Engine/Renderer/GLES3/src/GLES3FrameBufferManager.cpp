@@ -29,14 +29,11 @@ CGLES3FrameBuffer* CGLES3FrameBufferManager::Create(int width, int height, int n
 
 void CGLES3FrameBufferManager::Destroy(CGLES3FrameBuffer* pFrameBuffer)
 {
-	ASSERT(pFrameBuffer);
+	mutex_autolock autolock(&lock);
 	{
-		mutex_autolock autolock(&lock);
-		{
-			if (m_pFrameBuffers.find(pFrameBuffer) != m_pFrameBuffers.end()) {
-				m_pFrameBuffers.erase(pFrameBuffer);
-			}
+		if (m_pFrameBuffers.find(pFrameBuffer) != m_pFrameBuffers.end()) {
+			m_pFrameBuffers.erase(pFrameBuffer);
+			delete pFrameBuffer;
 		}
 	}
-	delete pFrameBuffer;
 }

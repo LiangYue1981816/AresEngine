@@ -59,16 +59,13 @@ CVKTexture2D* CVKTexture2DManager::Create(const char* szFileName, int baseLevel,
 
 void CVKTexture2DManager::Destroy(CVKTexture2D* pTexture)
 {
-	ASSERT(pTexture);
+	mutex_autolock autolock(&lock);
 	{
-		mutex_autolock autolock(&lock);
-		{
-			if (m_pTextures.find(pTexture->GetName()) != m_pTextures.end()) {
-				m_pTextures.erase(pTexture->GetName());
-			}
+		if (m_pTextures.find(pTexture->GetName()) != m_pTextures.end()) {
+			m_pTextures.erase(pTexture->GetName());
+			delete pTexture;
 		}
 	}
-	delete pTexture;
 }
 
 
@@ -129,16 +126,13 @@ CVKTexture2DArray* CVKTexture2DArrayManager::Create(const char* szFileName, int 
 
 void CVKTexture2DArrayManager::Destroy(CVKTexture2DArray* pTexture)
 {
-	ASSERT(pTexture);
+	mutex_autolock autolock(&lock);
 	{
-		mutex_autolock autolock(&lock);
-		{
-			if (m_pTextures.find(pTexture->GetName()) != m_pTextures.end()) {
-				m_pTextures.erase(pTexture->GetName());
-			}
+		if (m_pTextures.find(pTexture->GetName()) != m_pTextures.end()) {
+			m_pTextures.erase(pTexture->GetName());
+			delete pTexture;
 		}
 	}
-	delete pTexture;
 }
 
 
@@ -199,14 +193,11 @@ CVKTextureCubemap* CVKTextureCubemapManager::Create(const char* szFileName, int 
 
 void CVKTextureCubemapManager::Destroy(CVKTextureCubemap* pTexture)
 {
-	ASSERT(pTexture);
+	mutex_autolock autolock(&lock);
 	{
-		mutex_autolock autolock(&lock);
-		{
-			if (m_pTextures.find(pTexture->GetName()) != m_pTextures.end()) {
-				m_pTextures.erase(pTexture->GetName());
-			}
+		if (m_pTextures.find(pTexture->GetName()) != m_pTextures.end()) {
+			m_pTextures.erase(pTexture->GetName());
+			delete pTexture;
 		}
 	}
-	delete pTexture;
 }

@@ -43,14 +43,11 @@ CVKRenderPass* CVKRenderPassManager::Create(uint32_t name, int numAttachments, i
 
 void CVKRenderPassManager::Destroy(CVKRenderPass* pRenderPass)
 {
-	ASSERT(pRenderPass);
+	mutex_autolock autolock(&lock);
 	{
-		mutex_autolock autolock(&lock);
-		{
-			if (m_pRenderPasses.find(pRenderPass->GetName()) != m_pRenderPasses.end()) {
-				m_pRenderPasses.erase(pRenderPass->GetName());
-			}
+		if (m_pRenderPasses.find(pRenderPass->GetName()) != m_pRenderPasses.end()) {
+			m_pRenderPasses.erase(pRenderPass->GetName());
+			delete pRenderPass;
 		}
 	}
-	delete pRenderPass;
 }

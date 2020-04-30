@@ -54,7 +54,6 @@ void CVKCommandBufferManager::Destroy(CVKCommandBuffer* pCommandBuffer)
 {
 	mutex_autolock autolock(&lock);
 	{
-		ASSERT(pCommandBuffer);
 		m_pCommandBuffers[pCommandBuffer->GetCommandPool()][pCommandBuffer->IsMainCommandBuffer()].emplace_back(pCommandBuffer);
 	}
 }

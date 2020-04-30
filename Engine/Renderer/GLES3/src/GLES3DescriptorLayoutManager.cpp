@@ -29,14 +29,11 @@ CGLES3DescriptorLayout* CGLES3DescriptorLayoutManager::Create(uint32_t set)
 
 void CGLES3DescriptorLayoutManager::Destroy(CGLES3DescriptorLayout* pDescriptorLayout)
 {
-	ASSERT(pDescriptorLayout);
+	mutex_autolock autolock(&lock);
 	{
-		mutex_autolock autolock(&lock);
-		{
-			if (m_pDescriptorLayouts.find(pDescriptorLayout) != m_pDescriptorLayouts.end()) {
-				m_pDescriptorLayouts.erase(pDescriptorLayout);
-			}
+		if (m_pDescriptorLayouts.find(pDescriptorLayout) != m_pDescriptorLayouts.end()) {
+			m_pDescriptorLayouts.erase(pDescriptorLayout);
+			delete pDescriptorLayout;
 		}
 	}
-	delete pDescriptorLayout;
 }

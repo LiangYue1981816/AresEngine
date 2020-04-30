@@ -43,14 +43,11 @@ CVKRenderTexture* CVKRenderTextureManager::Create(uint32_t name)
 
 void CVKRenderTextureManager::Destroy(CVKRenderTexture* pRenderTexture)
 {
-	ASSERT(pRenderTexture);
+	mutex_autolock autolock(&lock);
 	{
-		mutex_autolock autolock(&lock);
-		{
-			if (m_pRenderTextures.find(pRenderTexture->GetName()) != m_pRenderTextures.end()) {
-				m_pRenderTextures.erase(pRenderTexture->GetName());
-			}
+		if (m_pRenderTextures.find(pRenderTexture->GetName()) != m_pRenderTextures.end()) {
+			m_pRenderTextures.erase(pRenderTexture->GetName());
+			delete pRenderTexture;
 		}
 	}
-	delete pRenderTexture;
 }

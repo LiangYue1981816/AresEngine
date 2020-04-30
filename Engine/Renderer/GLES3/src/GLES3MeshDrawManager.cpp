@@ -42,14 +42,11 @@ CGLES3MeshDraw* CGLES3MeshDrawManager::Create(uint32_t name, const CGfxMeshPtr p
 
 void CGLES3MeshDrawManager::Destroy(CGLES3MeshDraw* pMeshDraw)
 {
-	ASSERT(pMeshDraw);
+	mutex_autolock autolock(&lock);
 	{
-		mutex_autolock autolock(&lock);
-		{
-			if (m_pMeshDraws.find(pMeshDraw->GetName()) != m_pMeshDraws.end()) {
-				m_pMeshDraws.erase(pMeshDraw->GetName());
-			}
+		if (m_pMeshDraws.find(pMeshDraw->GetName()) != m_pMeshDraws.end()) {
+			m_pMeshDraws.erase(pMeshDraw->GetName());
+			delete pMeshDraw;
 		}
 	}
-	delete pMeshDraw;
 }

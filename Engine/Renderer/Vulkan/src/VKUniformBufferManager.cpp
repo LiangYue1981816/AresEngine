@@ -30,14 +30,11 @@ CVKUniformBuffer* CVKUniformBufferManager::Create(size_t size)
 
 void CVKUniformBufferManager::Destroy(CVKUniformBuffer* pUniformBuffer)
 {
-	ASSERT(pUniformBuffer);
+	mutex_autolock autolock(&lock);
 	{
-		mutex_autolock autolock(&lock);
-		{
-			if (m_pUniformBuffers.find(pUniformBuffer) != m_pUniformBuffers.end()) {
-				m_pUniformBuffers.erase(pUniformBuffer);
-			}
+		if (m_pUniformBuffers.find(pUniformBuffer) != m_pUniformBuffers.end()) {
+			m_pUniformBuffers.erase(pUniformBuffer);
+			delete pUniformBuffer;
 		}
 	}
-	delete pUniformBuffer;
 }

@@ -30,14 +30,11 @@ CVKDescriptorLayout* CVKDescriptorLayoutManager::Create(uint32_t set)
 
 void CVKDescriptorLayoutManager::Destroy(CVKDescriptorLayout* pDescriptorLayout)
 {
-	ASSERT(pDescriptorLayout);
+	mutex_autolock autolock(&lock);
 	{
-		mutex_autolock autolock(&lock);
-		{
-			if (m_pDescriptorLayouts.find(pDescriptorLayout) != m_pDescriptorLayouts.end()) {
-				m_pDescriptorLayouts.erase(pDescriptorLayout);
-			}
+		if (m_pDescriptorLayouts.find(pDescriptorLayout) != m_pDescriptorLayouts.end()) {
+			m_pDescriptorLayouts.erase(pDescriptorLayout);
+			delete pDescriptorLayout;
 		}
 	}
-	delete pDescriptorLayout;
 }

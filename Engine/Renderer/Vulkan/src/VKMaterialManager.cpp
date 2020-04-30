@@ -71,14 +71,11 @@ CVKMaterial* CVKMaterialManager::Create(const char* szFileName, int vertexBindin
 
 void CVKMaterialManager::Destroy(CVKMaterial* pMaterial)
 {
-	ASSERT(pMaterial);
+	mutex_autolock autolock(&lock);
 	{
-		mutex_autolock autolock(&lock);
-		{
-			if (m_pMaterials.find(pMaterial->GetName()) != m_pMaterials.end()) {
-				m_pMaterials.erase(pMaterial->GetName());
-			}
+		if (m_pMaterials.find(pMaterial->GetName()) != m_pMaterials.end()) {
+			m_pMaterials.erase(pMaterial->GetName());
+			delete pMaterial;
 		}
 	}
-	delete pMaterial;
 }

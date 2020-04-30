@@ -30,14 +30,11 @@ CVKFrameBuffer* CVKFrameBufferManager::Create(int width, int height, int numAtta
 
 void CVKFrameBufferManager::Destroy(CVKFrameBuffer* pFrameBuffer)
 {
-	ASSERT(pFrameBuffer);
+	mutex_autolock autolock(&lock);
 	{
-		mutex_autolock autolock(&lock);
-		{
-			if (m_pFrameBuffers.find(pFrameBuffer) != m_pFrameBuffers.end()) {
-				m_pFrameBuffers.erase(pFrameBuffer);
-			}
+		if (m_pFrameBuffers.find(pFrameBuffer) != m_pFrameBuffers.end()) {
+			m_pFrameBuffers.erase(pFrameBuffer);
+			delete pFrameBuffer;
 		}
 	}
-	delete pFrameBuffer;
 }

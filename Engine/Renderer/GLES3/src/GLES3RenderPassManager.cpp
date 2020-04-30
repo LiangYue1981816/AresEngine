@@ -42,14 +42,11 @@ CGLES3RenderPass* CGLES3RenderPassManager::Create(uint32_t name, int numAttachme
 
 void CGLES3RenderPassManager::Destroy(CGLES3RenderPass* pRenderPass)
 {
-	ASSERT(pRenderPass);
+	mutex_autolock autolock(&lock);
 	{
-		mutex_autolock autolock(&lock);
-		{
-			if (m_pRenderPasses.find(pRenderPass->GetName()) != m_pRenderPasses.end()) {
-				m_pRenderPasses.erase(pRenderPass->GetName());
-			}
+		if (m_pRenderPasses.find(pRenderPass->GetName()) != m_pRenderPasses.end()) {
+			m_pRenderPasses.erase(pRenderPass->GetName());
+			delete pRenderPass;
 		}
 	}
-	delete pRenderPass;
 }
