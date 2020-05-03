@@ -1,5 +1,5 @@
 #version 310 es
-layout (local_size_x = 8) in;
+layout (local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 
 precision mediump float;
 #include "engine.inc"
@@ -18,6 +18,7 @@ layout(push_constant) uniform PushConstantParam {
 
 void main()
 {
+	/*
 	uint indexWork = uint(gl_GlobalInvocationID.x);
 
 	uint numWorkGroup = uint(gl_NumWorkGroups.x);
@@ -47,6 +48,9 @@ void main()
 	else if (indexWork < numTransferTotal) {
 		sceneData.data[transferSceneData.data[indexWork].index.x] = transferSceneData.data[indexWork].data;
 	}
+	*/
 
+	uint indexWork = uint(gl_GlobalInvocationID.x);
+	sceneData.data[transferSceneData.data[indexWork].index.x] = transferSceneData.data[indexWork].data;
 	barrier();
 }
