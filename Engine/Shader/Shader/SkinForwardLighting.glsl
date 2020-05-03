@@ -30,9 +30,9 @@ void main()
 
 #ifdef NORMAL_MAP
 	mediump vec3 worldNormal = normalize((worldMatrix * vec4(inNormal, 0.0f)).xyz);
-	mediump vec3 worldBinormal = normalize((worldMatrix * vec4(inBinormal, 0.0f)).xyz);
-	mediump vec3 worldTangent = cross(worldBinormal, worldNormal);
-	worldBinormal = cross(worldNormal, worldTangent);
+	mediump vec3 worldBinormal = normalize((worldMatrix * vec4(inBinormal.xyz, 0.0f)).xyz);
+	mediump vec3 worldTangent = cross(worldBinormal, worldNormal) * inBinormal.w;
+	worldBinormal = cross(worldNormal, worldTangent) * inBinormal.w;
 
 	outTangent = worldTangent;
 	outBinormal = worldBinormal;
