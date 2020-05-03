@@ -66,9 +66,11 @@ void CTaskPool::Dispatch(void)
 
 void CTaskPool::Wait(void)
 {
-	for (int indexThread = 0; indexThread < m_threads.size(); indexThread++) {
-		event_wait(&m_threads[indexThread].eventFinish);
-	}
+	do {
+		for (int indexThread = 0; indexThread < m_threads.size(); indexThread++) {
+			event_wait(&m_threads[indexThread].eventFinish);
+		}
+	} while (m_tasks.IsEmpty() == false);
 }
 
 void* CTaskPool::TaskThread(void* pParam)

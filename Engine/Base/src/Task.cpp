@@ -123,3 +123,8 @@ CTask* CTaskStack::Head(void) const
 {
 	return m_pTaskStack.load(std::memory_order_relaxed);
 }
+
+bool CTaskStack::IsEmpty(void) const
+{
+	return Head() == nullptr;
+}

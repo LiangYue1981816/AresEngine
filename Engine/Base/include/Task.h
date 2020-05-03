@@ -68,6 +68,7 @@ public:
 	void Push(CTask* pTask);
 	CTask* Pop(void);
 	CTask* Head(void) const;
+	bool IsEmpty(void) const;
 
 
 private:
