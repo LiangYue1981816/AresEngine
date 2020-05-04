@@ -8,13 +8,28 @@ static const ATTRIBUTE* pInstanceAttributes = nullptr;
 static uint32_t numInstanceAttributes = 0;
 
 
+static uint32_t GetSize(uint32_t type)
+{
+	switch (type) {
+	case GFX_DATA_SINT8:   return 1;
+	case GFX_DATA_UINT8:   return 1;
+	case GFX_DATA_SINT16:  return 2;
+	case GFX_DATA_UINT16:  return 2;
+	case GFX_DATA_SINT32:  return 4;
+	case GFX_DATA_UINT32:  return 4;
+	case GFX_DATA_FLOAT16: return 4;
+	case GFX_DATA_FLOAT32: return 4;
+	default:               return 0;
+	}
+}
+
 static uint32_t GetStride(uint32_t format, const ATTRIBUTE* attributes, uint32_t count)
 {
 	uint32_t stride = 0;
 
 	for (uint32_t indexAttribute = 0; indexAttribute < count; indexAttribute++) {
 		if (format & attributes[indexAttribute].flag) {
-			stride += attributes[indexAttribute].components * attributes[indexAttribute].size;
+			stride += attributes[indexAttribute].components * GetSize(attributes[indexAttribute].type);
 		}
 	}
 
@@ -36,7 +51,7 @@ static uint32_t GetAttributeSize(uint32_t attribute, const ATTRIBUTE* attributes
 {
 	for (uint32_t indexAttribute = 0; indexAttribute < count; indexAttribute++) {
 		if (attribute == attributes[indexAttribute].flag) {
-			return attributes[indexAttribute].size;
+			return GetSize(attributes[indexAttribute].type);
 		}
 	}
 
@@ -49,7 +64,7 @@ static uint32_t GetAttributeOffset(uint32_t format, uint32_t attribute, const AT
 
 	for (uint32_t indexAttribute = 0; indexAttribute < count; indexAttribute++) {
 		if (attribute == attributes[indexAttribute].flag) return offset;
-		if (format & attributes[indexAttribute].flag) offset += attributes[indexAttribute].components * attributes[indexAttribute].size;
+		if (format & attributes[indexAttribute].flag) offset += attributes[indexAttribute].components * GetSize(attributes[indexAttribute].type);
 	}
 
 	return -1;
