@@ -28,7 +28,7 @@ layout (location = 7)                                      in mediump vec4 inWei
 #endif
 
 #ifdef INSTANCE_ATTRIBUTE_INDEX
-layout (location = 8)                                      in mediump int inInstanceIndex;
+layout (location = 8)                                      in highp int inInstanceIndex;
 #endif
 
 
