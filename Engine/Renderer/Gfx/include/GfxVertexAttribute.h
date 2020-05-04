@@ -7,6 +7,7 @@ typedef struct ATTRIBUTE {
 	uint32_t size;
 	uint32_t components;
 	uint32_t location;
+	uint32_t type;
 	uint32_t format;
 	const char* name;
 } ATTRIBUTE;
