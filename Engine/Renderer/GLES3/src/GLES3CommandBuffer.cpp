@@ -56,11 +56,12 @@ CGLES3CommandBuffer::CGLES3CommandBuffer(CGLES3CommandBufferManager* pManager, b
 
 CGLES3CommandBuffer::~CGLES3CommandBuffer(void)
 {
-	Clearup();
+
 }
 
 void CGLES3CommandBuffer::Release(void)
 {
+	Clearup();
 	m_pManager->Destroy(this);
 }
 
