@@ -114,6 +114,17 @@ static uint32_t GetAttributeFormat(uint32_t attribute, const ATTRIBUTE* attribut
 	return -1;
 }
 
+static uint32_t GetAttributeNormalized(uint32_t attribute, const ATTRIBUTE* attributes, uint32_t count)
+{
+	for (uint32_t indexAttribute = 0; indexAttribute < count; indexAttribute++) {
+		if (attribute == attributes[indexAttribute].flag) {
+			return attributes[indexAttribute].normalized;
+		}
+	}
+
+	return FALSE;
+}
+
 
 CALL_API void SetVertexAttributes(const ATTRIBUTE* pAttributes, uint32_t count)
 {
@@ -166,6 +177,11 @@ CALL_API uint32_t GetVertexAttributeFormat(uint32_t attribute)
 	return GetAttributeFormat(attribute, pVertexAttributes, numVertexAttributes);
 }
 
+CALL_API uint32_t GetVertexAttributeNormalized(uint32_t attribute)
+{
+	return GetAttributeNormalized(attribute, pVertexAttributes, numVertexAttributes);
+}
+
 
 CALL_API void SetInstanceAttributes(const ATTRIBUTE* pAttributes, uint32_t count)
 {
@@ -216,4 +232,9 @@ CALL_API uint32_t GetInstanceAttributeType(uint32_t attribute)
 CALL_API uint32_t GetInstanceAttributeFormat(uint32_t attribute)
 {
 	return GetAttributeFormat(attribute, pInstanceAttributes, numInstanceAttributes);
+}
+
+CALL_API uint32_t GetInstanceAttributeNormalized(uint32_t attribute)
+{
+	return GetAttributeNormalized(attribute, pInstanceAttributes, numInstanceAttributes);
 }
