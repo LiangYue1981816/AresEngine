@@ -22,14 +22,29 @@ bool CGLES3Helper::IsSupportExtension(const char* extension)
 GLenum CGLES3Helper::TranslateDataType(GfxDataType type)
 {
 	switch ((int)type) {
-	case GFX_DATA_UNSIGNED_BYTE:
+	case GFX_DATA_SINT8:
+		return GL_BYTE;
+
+	case GFX_DATA_UINT8:
 		return GL_UNSIGNED_BYTE;
 
-	case GFX_DATA_UNSIGNED_SHORT:
+	case GFX_DATA_SINT16:
+		return GL_SHORT;
+
+	case GFX_DATA_UINT16:
 		return GL_UNSIGNED_SHORT;
 
-	case GFX_DATA_UNSIGNED_INT:
+	case GFX_DATA_SINT32:
+		return GL_INT;
+
+	case GFX_DATA_UINT32:
 		return GL_UNSIGNED_INT;
+
+	case GFX_DATA_FLOAT16:
+		return GL_HALF_FLOAT;
+
+	case GFX_DATA_FLOAT32:
+		return GL_FLOAT;
 
 	default:
 		return GL_INVALID_ENUM;
