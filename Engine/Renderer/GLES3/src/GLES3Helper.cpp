@@ -54,10 +54,10 @@ GLenum CGLES3Helper::TranslateDataType(GfxDataType type)
 GLenum CGLES3Helper::TranslateIndexType(GfxIndexType type)
 {
 	switch ((int)type) {
-	case GFX_INDEX_UNSIGNED_SHORT:
+	case GFX_INDEX_UINT16:
 		return GL_UNSIGNED_SHORT;
 
-	case GFX_INDEX_UNSIGNED_INT:
+	case GFX_INDEX_UINT32:
 		return GL_UNSIGNED_INT;
 
 	default:

@@ -29,11 +29,11 @@ public:
 			int indexSize = 4;
 
 			switch (m_indexType) {
-			case GFX_INDEX_UNSIGNED_SHORT:
+			case GFX_INDEX_UINT16:
 				indexSize = 2;
 				break;
 
-			case GFX_INDEX_UNSIGNED_INT:
+			case GFX_INDEX_UINT32:
 				indexSize = 4;
 				break;
 			}

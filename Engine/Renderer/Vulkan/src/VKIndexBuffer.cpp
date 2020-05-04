@@ -39,9 +39,9 @@ GfxIndexType CVKIndexBuffer::GetIndexType(void) const
 uint32_t CVKIndexBuffer::GetIndexCount(void) const
 {
 	switch (m_type) {
-	case GFX_INDEX_UNSIGNED_SHORT: return m_pBuffer->GetSize() / 2;
-	case GFX_INDEX_UNSIGNED_INT:   return m_pBuffer->GetSize() / 4;
-	default:                       return 0;
+	case GFX_INDEX_UINT16: return m_pBuffer->GetSize() / 2;
+	case GFX_INDEX_UINT32: return m_pBuffer->GetSize() / 4;
+	default:               return 0;
 	}
 }
 

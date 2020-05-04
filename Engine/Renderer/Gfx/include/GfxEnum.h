@@ -268,8 +268,8 @@ typedef enum GfxDataType {
 
 typedef enum GfxIndexType {
 	GFX_INDEX_INVALID_ENUM = -1,
-	GFX_INDEX_UNSIGNED_SHORT,
-	GFX_INDEX_UNSIGNED_INT,
+	GFX_INDEX_UINT16,
+	GFX_INDEX_UINT32,
 } GfxIndexType;
 
 typedef enum GfxPrimitiveTopology {

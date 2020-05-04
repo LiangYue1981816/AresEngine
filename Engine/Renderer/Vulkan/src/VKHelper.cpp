@@ -523,10 +523,10 @@ VkImageViewType CVKHelper::TranslateImageViewType(GfxTextureType type)
 VkIndexType CVKHelper::TranslateIndexType(GfxIndexType type)
 {
 	switch ((int)type) {
-	case GFX_INDEX_UNSIGNED_SHORT:
+	case GFX_INDEX_UINT16:
 		return VK_INDEX_TYPE_UINT16;
 
-	case GFX_INDEX_UNSIGNED_INT:
+	case GFX_INDEX_UINT32:
 		return VK_INDEX_TYPE_UINT32;
 
 	default:
