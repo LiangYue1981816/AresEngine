@@ -14,7 +14,7 @@ static const ATTRIBUTE vertexAttributes[VERTEX_ATTRIBUTE_COUNT] = {
 };
 
 static const ATTRIBUTE instanceAttributes[INSTANCE_ATTRIBUTE_COUNT] = {
-	{ INSTANCE_ATTRIBUTE_INDEX,   8, 1, GFX_DATA_SINT32,  GFX_PIXELFORMAT_R32_SINT_PACK32,     "inInstanceIndex" },
+	{ INSTANCE_ATTRIBUTE_INDEX,   8, 1, GFX_DATA_UINT32,  GFX_PIXELFORMAT_R32_UINT_PACK32,     "inInstanceIndex" },
 };
 
 
