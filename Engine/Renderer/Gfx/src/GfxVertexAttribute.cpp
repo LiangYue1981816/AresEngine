@@ -92,6 +92,17 @@ static uint32_t GetAttributeLocation(uint32_t attribute, const ATTRIBUTE* attrib
 	return -1;
 }
 
+static uint32_t GetAttributeType(uint32_t attribute, const ATTRIBUTE* attributes, uint32_t count)
+{
+	for (uint32_t indexAttribute = 0; indexAttribute < count; indexAttribute++) {
+		if (attribute == attributes[indexAttribute].flag) {
+			return attributes[indexAttribute].type;
+		}
+	}
+
+	return -1;
+}
+
 static uint32_t GetAttributeFormat(uint32_t attribute, const ATTRIBUTE* attributes, uint32_t count)
 {
 	for (uint32_t indexAttribute = 0; indexAttribute < count; indexAttribute++) {
@@ -145,6 +156,11 @@ CALL_API uint32_t GetVertexAttributeLocation(uint32_t attribute)
 	return GetAttributeLocation(attribute, pVertexAttributes, numVertexAttributes);
 }
 
+CALL_API uint32_t GetVertexAttributeType(uint32_t attribute)
+{
+	return GetAttributeType(attribute, pVertexAttributes, numVertexAttributes);
+}
+
 CALL_API uint32_t GetVertexAttributeFormat(uint32_t attribute)
 {
 	return GetAttributeFormat(attribute, pVertexAttributes, numVertexAttributes);
@@ -190,6 +206,11 @@ CALL_API uint32_t GetInstanceAttributeComponents(uint32_t attribute)
 CALL_API uint32_t GetInstanceAttributeLocation(uint32_t attribute)
 {
 	return GetAttributeLocation(attribute, pInstanceAttributes, numInstanceAttributes);
+}
+
+CALL_API uint32_t GetInstanceAttributeType(uint32_t attribute)
+{
+	return GetAttributeType(attribute, pInstanceAttributes, numInstanceAttributes);
 }
 
 CALL_API uint32_t GetInstanceAttributeFormat(uint32_t attribute)
