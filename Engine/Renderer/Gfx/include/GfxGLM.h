@@ -432,6 +432,7 @@ namespace glm {
 			float yFar = zFar * tanHalfFovy;
 
 			projectionMatrix = glm::perspective(angle, aspect, zNear, zFar);
+			projectionInverseMatrix = glm::inverse(projectionMatrix);
 
 			planes[0][0] = plane(vec3(0.0f, 0.0f, 0.0f), vec3(0.0f, -d, -1.0f));
 			planes[1][0] = plane(vec3(0.0f, 0.0f, 0.0f), vec3(0.0f, d, -1.0f));
@@ -453,6 +454,7 @@ namespace glm {
 		void setOrtho(float left, float right, float bottom, float top, float zNear, float zFar)
 		{
 			projectionMatrix = glm::ortho(left, right, bottom, top, zNear, zFar);
+			projectionInverseMatrix = glm::inverse(projectionMatrix);
 
 			planes[0][0] = plane(vec3(0.0f, top, 0.0f), vec3(0.0f, -1.0f, 0.0f));
 			planes[1][0] = plane(vec3(0.0f, bottom, 0.0f), vec3(0.0f, 1.0f, 0.0f));
@@ -580,6 +582,7 @@ namespace glm {
 		vec3 up;
 
 		mat4 projectionMatrix;
+		mat4 projectionInverseMatrix;
 		mat4 viewMatrix;
 		mat4 viewInverseMatrix;
 		mat4 viewInverseTransposeMatrix;
