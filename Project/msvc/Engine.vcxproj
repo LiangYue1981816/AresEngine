@@ -363,6 +363,7 @@
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\src\Command\VKCommandUpdateInstanceBuffer.h" />
     <ClInclude Include="..\..\Engine\RenderHeader.h" />
     <ClInclude Include="..\..\Engine\RenderSystem\include\Camera.h" />
+    <ClInclude Include="..\..\Engine\RenderSystem\include\Cluster.h" />
     <ClInclude Include="..\..\Engine\RenderSystem\include\GPUScene.h" />
     <ClInclude Include="..\..\Engine\RenderSystem\include\InstanceBufferPool.h" />
     <ClInclude Include="..\..\Engine\RenderSystem\include\PassBase.h" />
@@ -726,6 +727,7 @@
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKUniformBufferManager.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKVertexBuffer.cpp" />
     <ClCompile Include="..\..\Engine\RenderSystem\src\Camera.cpp" />
+    <ClCompile Include="..\..\Engine\RenderSystem\src\Cluster.cpp" />
     <ClCompile Include="..\..\Engine\RenderSystem\src\GPUScene.cpp" />
     <ClCompile Include="..\..\Engine\RenderSystem\src\InstanceBufferPool.cpp" />
     <ClCompile Include="..\..\Engine\RenderSystem\src\PassBase.cpp" />

@@ -1653,6 +1653,9 @@
     <ClInclude Include="..\..\Engine\RenderSystem\include\PassCopyDepthStencil.h">
       <Filter>Engine\RenderSystem\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Engine\RenderSystem\include\Cluster.h">
+      <Filter>Engine\RenderSystem\Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Engine\ThirdParty\eastl\source\allocator_eastl.cpp">
@@ -2430,6 +2433,9 @@
       <Filter>Engine\RenderSystem\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\RenderSystem\src\RenderTileBaseDeferredLighting.cpp">
+      <Filter>Engine\RenderSystem\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\RenderSystem\src\Cluster.cpp">
       <Filter>Engine\RenderSystem\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
