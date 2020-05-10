@@ -42,20 +42,6 @@ CRenderSystem::CRenderSystem(GfxApi api, void* hInstance, void* hWnd, void* hDC,
 	, m_pPassColorGrading(nullptr)
 	, m_pPassFinal(nullptr)
 {
-	Settings()->SetValue("RenderSystem.Shadow.Factor", 1.0f);
-	Settings()->SetValue("RenderSystem.Shadow.SplitFactor0", exp(-4.0f));
-	Settings()->SetValue("RenderSystem.Shadow.SplitFactor1", exp(-3.0f));
-	Settings()->SetValue("RenderSystem.Shadow.SplitFactor2", exp(-2.0f));
-	Settings()->SetValue("RenderSystem.Shadow.SplitFactor3", exp(-1.0f));
-	Settings()->SetValue("RenderSystem.SSAO.SampleCount", 8.0f);
-	Settings()->SetValue("RenderSystem.SSAO.MinSampleRadius", 0.02f);
-	Settings()->SetValue("RenderSystem.SSAO.MaxSampleRadius", 1.25f);
-	Settings()->SetValue("RenderSystem.SSAO.MinDepthRange", 0.00f);
-	Settings()->SetValue("RenderSystem.SSAO.MaxDepthRange", 0.20f);
-	Settings()->SetValue("RenderSystem.SSAO.BlurRange", 1.00f);
-	Settings()->SetValue("RenderSystem.Bloom.BlurRange.FirstTime", 2.00f);
-	Settings()->SetValue("RenderSystem.Bloom.BlurRange.SecondTime", 1.00f);
-
 	SetVertexAttributes(vertexAttributes, VERTEX_ATTRIBUTE_COUNT);
 	SetInstanceAttributes(instanceAttributes, INSTANCE_ATTRIBUTE_COUNT);
 
@@ -77,10 +63,23 @@ CRenderSystem::CRenderSystem(GfxApi api, void* hInstance, void* hWnd, void* hDC,
 	m_ptrComputeCommandBuffer[0] = GfxRenderer()->NewCommandBuffer(0, true);
 	m_ptrComputeCommandBuffer[1] = GfxRenderer()->NewCommandBuffer(0, true);
 	m_ptrComputeCommandBuffer[2] = GfxRenderer()->NewCommandBuffer(0, true);
-
 	m_ptrGraphicCommandBuffer[0] = GfxRenderer()->NewCommandBuffer(0, true);
 	m_ptrGraphicCommandBuffer[1] = GfxRenderer()->NewCommandBuffer(0, true);
 	m_ptrGraphicCommandBuffer[2] = GfxRenderer()->NewCommandBuffer(0, true);
+
+	Settings()->SetValue("RenderSystem.Shadow.Factor", 1.0f);
+	Settings()->SetValue("RenderSystem.Shadow.SplitFactor0", exp(-4.0f));
+	Settings()->SetValue("RenderSystem.Shadow.SplitFactor1", exp(-3.0f));
+	Settings()->SetValue("RenderSystem.Shadow.SplitFactor2", exp(-2.0f));
+	Settings()->SetValue("RenderSystem.Shadow.SplitFactor3", exp(-1.0f));
+	Settings()->SetValue("RenderSystem.SSAO.SampleCount", 8.0f);
+	Settings()->SetValue("RenderSystem.SSAO.MinSampleRadius", 0.02f);
+	Settings()->SetValue("RenderSystem.SSAO.MaxSampleRadius", 1.25f);
+	Settings()->SetValue("RenderSystem.SSAO.MinDepthRange", 0.00f);
+	Settings()->SetValue("RenderSystem.SSAO.MaxDepthRange", 0.20f);
+	Settings()->SetValue("RenderSystem.SSAO.BlurRange", 1.00f);
+	Settings()->SetValue("RenderSystem.Bloom.BlurRange.FirstTime", 2.00f);
+	Settings()->SetValue("RenderSystem.Bloom.BlurRange.SecondTime", 1.00f);
 }
 
 CRenderSystem::~CRenderSystem(void)
