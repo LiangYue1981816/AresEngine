@@ -359,7 +359,13 @@ void CRenderSystem::UpdateCamera(CTaskPool& taskPool, CTaskGraph& taskGraph, CCa
 	pCamera->Update(taskPool, taskGraph, mask, bComputeLOD);
 }
 
-void CRenderSystem::UpdateGPUScene(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer)
+void CRenderSystem::UpdateScene(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer)
 {
 	m_pGPUScene->Update(taskPool, taskGraph, ptrCommandBuffer);
+}
+
+void CRenderSystem::UpdateCluster(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer, CCamera* pCamera)
+{
+	m_pCluster->SetCamera(pCamera);
+	m_pCluster->Update(taskPool, taskGraph, ptrCommandBuffer);
 }

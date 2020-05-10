@@ -16,7 +16,7 @@ void CRenderSystem::RenderDefault(CTaskPool& taskPool, CTaskGraph& taskGraph, CC
 	{
 		GfxRenderer()->BeginRecord(ptrComputeCommandBuffer);
 		{
-			UpdateGPUScene(taskPool, taskGraph, ptrComputeCommandBuffer);
+			UpdateScene(taskPool, taskGraph, ptrComputeCommandBuffer);
 		}
 		GfxRenderer()->EndRecord(ptrComputeCommandBuffer);
 		GfxRenderer()->Submit(ptrComputeCommandBuffer, pWaitSemaphore);

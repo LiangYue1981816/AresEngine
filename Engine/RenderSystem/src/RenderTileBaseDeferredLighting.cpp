@@ -16,7 +16,7 @@ void CRenderSystem::RenderTileBaseDeferredLighting(CTaskPool& taskPool, CTaskGra
 	{
 		GfxRenderer()->BeginRecord(ptrComputeCommandBuffer);
 		{
-			UpdateGPUScene(taskPool, taskGraph, ptrComputeCommandBuffer);
+			UpdateScene(taskPool, taskGraph, ptrComputeCommandBuffer);
 		}
 		GfxRenderer()->EndRecord(ptrComputeCommandBuffer);
 		GfxRenderer()->Submit(ptrComputeCommandBuffer, pWaitSemaphore);
