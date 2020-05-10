@@ -16,16 +16,23 @@ CCluster::~CCluster(void)
 
 }
 
+const CGfxStorageBufferPtr CCluster::GetLightListBuffer(void) const
+{
+	return m_ptrLightListBuffer;
+}
+
 void CCluster::SetCamera(CCamera* pCamera)
 {
 	if (m_pCamera != pCamera) {
 		m_pCamera = pCamera;
+		m_ptrDescriptorSet->SetUniformBuffer(UNIFORM_CAMERA_NAME, pCamera->GetCameraUniform()->GetUniformBuffer(), 0, pCamera->GetCameraUniform()->GetUniformBuffer()->GetSize());
 	}
 }
 
 void CCluster::Update(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer)
 {
-
+	// Update
+	m_pCamera->GetCameraUniform()->Apply();
 }
 
 

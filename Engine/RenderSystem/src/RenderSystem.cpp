@@ -20,6 +20,7 @@ static const ATTRIBUTE instanceAttributes[INSTANCE_ATTRIBUTE_COUNT] = {
 
 CRenderSystem::CRenderSystem(GfxApi api, void* hInstance, void* hWnd, void* hDC, int width, int height, GfxPixelFormat format)
 	: m_pRenderer(nullptr)
+	, m_pCluster(nullptr)
 	, m_pGPUScene(nullptr)
 	, m_pEngineUniform(nullptr)
 	, m_pInstanceBufferPool(nullptr)
@@ -54,6 +55,7 @@ CRenderSystem::CRenderSystem(GfxApi api, void* hInstance, void* hWnd, void* hDC,
 		break;
 	}
 
+	m_pCluster = new CCluster(width, height, 16, 8);
 	m_pGPUScene = new CGPUScene;
 	m_pEngineUniform = new CUniformEngine;
 	m_pInstanceBufferPool = new CInstanceBufferPool;
@@ -90,7 +92,13 @@ CRenderSystem::~CRenderSystem(void)
 	delete m_pInstanceBufferPool;
 	delete m_pEngineUniform;
 	delete m_pGPUScene;
+	delete m_pCluster;
 	delete m_pRenderer;
+}
+
+CCluster* CRenderSystem::GetCluster(void) const
+{
+	return m_pCluster;
 }
 
 CGPUScene* CRenderSystem::GetGPUScene(void) const

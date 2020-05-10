@@ -6,6 +6,7 @@ class CALL_API CCamera
 {
 	friend class CRenderQueue;
 	friend class CRenderSystem;
+	friend class CCluster;
 	friend class CPassBase;
 	friend class CPassPreZ;
 	friend class CPassShadow;

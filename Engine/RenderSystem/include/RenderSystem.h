@@ -148,6 +148,7 @@ private:
 
 
 private:
+	CCluster* GetCluster(void) const;
 	CGPUScene* GetGPUScene(void) const;
 	CUniformEngine* GetEngineUniform(void) const;
 
@@ -233,6 +234,7 @@ private:
 
 private:
 	CGfxRenderer* m_pRenderer;
+	CCluster* m_pCluster;
 	CGPUScene* m_pGPUScene;
 	CUniformEngine* m_pEngineUniform;
 	CInstanceBufferPool* m_pInstanceBufferPool;

@@ -4,10 +4,18 @@
 
 class CALL_API CCluster
 {
+	friend class CRenderSystem;
+	friend class CPassForwardLighting;
+	friend class CPassDeferredLighting;
+
+
 public:
 	CCluster(int screenWidth, int screenHeight, int tileSize, int numSlices);
 	virtual ~CCluster(void);
 
+
+private:
+	const CGfxStorageBufferPtr GetLightListBuffer(void) const;
 
 public:
 	void SetCamera(CCamera* pCamera);
