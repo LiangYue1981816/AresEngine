@@ -18,9 +18,8 @@ CGPUScene::CGPUScene(void)
 	m_pShaderCompute = GfxRenderer()->CreateShader(szBinFileName, compute_shader);
 	m_pPipelineCompute = GfxRenderer()->CreatePipelineCompute(m_pShaderCompute);
 
-	const uint32_t size = sizeof(InstanceData) * 16 * 1024;
-	m_ptrInstanceBuffer = GfxRenderer()->NewStorageBuffer(size);
-	m_ptrTransferBuffer = GfxRenderer()->NewStorageBuffer(size);
+	m_ptrInstanceBuffer = GfxRenderer()->NewStorageBuffer(sizeof(InstanceData) * 16 * 1024);
+	m_ptrTransferBuffer = GfxRenderer()->NewStorageBuffer(sizeof(TransferData) *  4 * 1024);
 
 	m_ptrDescriptorSet = GfxRenderer()->NewDescriptorSet(HashValue(szFileName), m_pPipelineCompute->GetDescriptorLayout(DESCRIPTOR_SET_PASS));
 	m_ptrDescriptorSet->SetStorageBuffer(STORAGE_SCENE_DATA_NAME, m_ptrInstanceBuffer, 0, m_ptrInstanceBuffer->GetSize());
