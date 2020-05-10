@@ -17,8 +17,8 @@ CCluster::CCluster(int screenWidth, int screenHeight, int tileSize, int numSlice
 	m_pShaderCompute = GfxRenderer()->CreateShader(szBinFileName, compute_shader);
 	m_pPipelineCompute = GfxRenderer()->CreatePipelineCompute(m_pShaderCompute);
 
-	m_ptrClusterBuffer = GfxRenderer()->NewStorageBuffer(4 * 1024 * 1024);
-	m_ptrLightListBuffer = GfxRenderer()->NewStorageBuffer(1 * 1024 * 1024);
+	m_ptrClusterBuffer = GfxRenderer()->NewStorageBuffer((int)(1.0f * screenWidth / tileSize + 0.5f) * (int)(1.0f * screenHeight / tileSize + 0.5f) * numSlices * 32);
+	m_ptrLightListBuffer = GfxRenderer()->NewStorageBuffer(1 * 1024 * 1024); // 32 * 1024 * 16 = 524288
 }
 
 CCluster::~CCluster(void)
