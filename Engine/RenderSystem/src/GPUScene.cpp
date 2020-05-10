@@ -133,7 +133,6 @@ void CGPUScene::Update(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBu
 		{
 			GfxRenderer()->CmdBindPipelineCompute(ptrCommandBuffer, m_pPipelineCompute);
 			GfxRenderer()->CmdBindDescriptorSet(ptrCommandBuffer, m_ptrDescriptorSet);
-			GfxRenderer()->CmdUniform1i(ptrCommandBuffer, HashValue("Param.numTransfer"), datas.size());
 			GfxRenderer()->CmdDispatch(ptrCommandBuffer, datas.size(), 1, 1);
 		}
 		GfxRenderer()->CmdSetBufferBarrier(ptrCommandBuffer, m_ptrInstanceBuffer, GFX_ACCESS_TRANSFER_WRITE_BIT, GFX_ACCESS_TRANSFER_READ_BIT);
