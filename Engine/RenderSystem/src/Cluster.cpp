@@ -8,7 +8,17 @@ CCluster::CCluster(int screenWidth, int screenHeight, int tileSize, int numSlice
 	, m_pShaderCompute(nullptr)
 	, m_pPipelineCompute(nullptr)
 {
+	char szFileName[] = "Cluster.glsl";
+	char szBinFileName[_MAX_STRING] = { 0 };
 
+	sprintf(szBinFileName, "%x.comp", HashValue(szFileName));
+	ShaderCompiler()->Compile(FileManager()->GetFullName(szFileName), szBinFileName, shaderc_compute_shader);
+
+	m_pShaderCompute = GfxRenderer()->CreateShader(szBinFileName, compute_shader);
+	m_pPipelineCompute = GfxRenderer()->CreatePipelineCompute(m_pShaderCompute);
+
+	m_ptrClusterBuffer = GfxRenderer()->NewStorageBuffer(4 * 1024 * 1024);
+	m_ptrLightListBuffer = GfxRenderer()->NewStorageBuffer(1 * 1024 * 1024);
 }
 
 CCluster::~CCluster(void)
