@@ -23,7 +23,7 @@ void CRenderSystem::RenderTileBaseDeferredLighting(CTaskPool& taskPool, CTaskGra
 
 		GfxRenderer()->BeginRecord(ptrGraphicCommandBuffer);
 		{
-			RenderDeferredLighting(taskPool, taskGraph, pCamera, bPresent, ptrGraphicCommandBuffer);
+			RenderDeferredLighting(taskPool, taskGraph, ptrGraphicCommandBuffer, pCamera, bPresent);
 		}
 		GfxRenderer()->EndRecord(ptrGraphicCommandBuffer);
 		GfxRenderer()->Submit(ptrGraphicCommandBuffer, ptrComputeCommandBuffer->GetSemaphore());
@@ -31,7 +31,7 @@ void CRenderSystem::RenderTileBaseDeferredLighting(CTaskPool& taskPool, CTaskGra
 	GfxRenderer()->Present(ptrGraphicCommandBuffer->GetSemaphore());
 }
 
-void CRenderSystem::RenderTileBaseDeferredLighting(CTaskPool& taskPool, CTaskGraph& taskGraph, CCamera* pCamera, bool bPresent, CGfxCommandBufferPtr ptrCommandBuffer)
+void CRenderSystem::RenderTileBaseDeferredLighting(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer, CCamera* pCamera, bool bPresent)
 {
 
 }

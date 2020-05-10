@@ -4,7 +4,7 @@
 #include "GLES3Renderer.h"
 
 
-void CRenderSystem::InternalPassCopyColor(CTaskPool& taskPool, CTaskGraph& taskGraph, CCamera* pCamera, CGfxCommandBufferPtr ptrCommandBuffer, uint32_t rtInColor, uint32_t rtOutColor)
+void CRenderSystem::InternalPassCopyColor(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer, CCamera* pCamera, uint32_t rtInColor, uint32_t rtOutColor)
 {
 	m_pPassCopyColor->SetCamera(pCamera);
 	m_pPassCopyColor->SetInputTexture(GetRenderTexture(rtInColor));
@@ -12,7 +12,7 @@ void CRenderSystem::InternalPassCopyColor(CTaskPool& taskPool, CTaskGraph& taskG
 	m_pPassCopyColor->Render(taskPool, taskGraph, ptrCommandBuffer);
 }
 
-void CRenderSystem::InternalPassCopyDepthStencil(CTaskPool& taskPool, CTaskGraph& taskGraph, CCamera* pCamera, CGfxCommandBufferPtr ptrCommandBuffer, uint32_t rtInDepth, uint32_t rtOutDepth)
+void CRenderSystem::InternalPassCopyDepthStencil(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer, CCamera* pCamera, uint32_t rtInDepth, uint32_t rtOutDepth)
 {
 	m_pPassCopyDepthStencil->SetCamera(pCamera);
 	m_pPassCopyDepthStencil->SetInputTexture(GetRenderTexture(rtInDepth));
@@ -20,14 +20,14 @@ void CRenderSystem::InternalPassCopyDepthStencil(CTaskPool& taskPool, CTaskGraph
 	m_pPassCopyDepthStencil->Render(taskPool, taskGraph, ptrCommandBuffer);
 }
 
-void CRenderSystem::InternalPassPreZ(CTaskPool& taskPool, CTaskGraph& taskGraph, CCamera* pCamera, CGfxCommandBufferPtr ptrCommandBuffer, uint32_t rtOutDepth)
+void CRenderSystem::InternalPassPreZ(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer, CCamera* pCamera, uint32_t rtOutDepth)
 {
 	m_pPassPreZ->SetCamera(pCamera);
 	m_pPassPreZ->SetOutputTexture(GetRenderTexture(rtOutDepth));
 	m_pPassPreZ->Render(taskPool, taskGraph, ptrCommandBuffer);
 }
 
-void CRenderSystem::InternalPassSSAO(CTaskPool& taskPool, CTaskGraph& taskGraph, CCamera* pCamera, CGfxCommandBufferPtr ptrCommandBuffer, uint32_t rtInDepth, uint32_t rtOutSSAO, uint32_t rtTempBlur)
+void CRenderSystem::InternalPassSSAO(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer, CCamera* pCamera, uint32_t rtInDepth, uint32_t rtOutSSAO, uint32_t rtTempBlur)
 {
 	m_pPassSSAO->SetCamera(pCamera);
 	m_pPassSSAO->SetInputTexture(GetRenderTexture(rtInDepth));
@@ -52,7 +52,7 @@ void CRenderSystem::InternalPassSSAO(CTaskPool& taskPool, CTaskGraph& taskGraph,
 	m_pPassSSAOBlurVertical->Render(taskPool, taskGraph, ptrCommandBuffer);
 }
 
-void CRenderSystem::InternalPassShadow(CTaskPool& taskPool, CTaskGraph& taskGraph, CCamera* pCamera, CGfxCommandBufferPtr ptrCommandBuffer, uint32_t rtOutShadow)
+void CRenderSystem::InternalPassShadow(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer, CCamera* pCamera, uint32_t rtOutShadow)
 {
 	m_pPassShadow->SetCamera(pCamera);
 	m_pPassShadow->SetOutputTexture(GetRenderTexture(rtOutShadow));
@@ -61,7 +61,7 @@ void CRenderSystem::InternalPassShadow(CTaskPool& taskPool, CTaskGraph& taskGrap
 	m_pPassShadow->Render(taskPool, taskGraph, ptrCommandBuffer);
 }
 
-void CRenderSystem::InternalPassForwardLighting(CTaskPool& taskPool, CTaskGraph& taskGraph, CCamera* pCamera, CGfxCommandBufferPtr ptrCommandBuffer, uint32_t rtInShadow, uint32_t rtInSSAO, uint32_t rtOutColor, uint32_t rtOutDepth)
+void CRenderSystem::InternalPassForwardLighting(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer, CCamera* pCamera, uint32_t rtInShadow, uint32_t rtInSSAO, uint32_t rtOutColor, uint32_t rtOutDepth)
 {
 	m_pPassForwardLighting->SetCamera(pCamera);
 	m_pPassForwardLighting->SetInputTexture(GetRenderTexture(rtInShadow), GetRenderTexture(rtInSSAO));
@@ -69,7 +69,7 @@ void CRenderSystem::InternalPassForwardLighting(CTaskPool& taskPool, CTaskGraph&
 	m_pPassForwardLighting->Render(taskPool, taskGraph, ptrCommandBuffer);
 }
 
-void CRenderSystem::InternalPassDeferredLighting(CTaskPool& taskPool, CTaskGraph& taskGraph, CCamera* pCamera, CGfxCommandBufferPtr ptrCommandBuffer, uint32_t rtInDepth, uint32_t rtInShadow, uint32_t rtInSSAO, uint32_t rtOutColor, uint32_t rtOutDepth, uint32_t rtOutGBuffer0, uint32_t rtOutGBuffer1)
+void CRenderSystem::InternalPassDeferredLighting(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer, CCamera* pCamera, uint32_t rtInDepth, uint32_t rtInShadow, uint32_t rtInSSAO, uint32_t rtOutColor, uint32_t rtOutDepth, uint32_t rtOutGBuffer0, uint32_t rtOutGBuffer1)
 {
 	m_pPassDeferredLighting->SetCamera(pCamera);
 	m_pPassDeferredLighting->SetInputTexture(GetRenderTexture(rtInDepth), GetRenderTexture(rtInShadow), GetRenderTexture(rtInSSAO));
@@ -77,7 +77,7 @@ void CRenderSystem::InternalPassDeferredLighting(CTaskPool& taskPool, CTaskGraph
 	m_pPassDeferredLighting->Render(taskPool, taskGraph, ptrCommandBuffer);
 }
 
-void CRenderSystem::InternalPassBloom(CTaskPool& taskPool, CTaskGraph& taskGraph, CCamera* pCamera, CGfxCommandBufferPtr ptrCommandBuffer, uint32_t rtInColor, uint32_t rtOutBloom, uint32_t rtTempThreshold, uint32_t rtTempBlur0, uint32_t rtTempBlur1)
+void CRenderSystem::InternalPassBloom(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer, CCamera* pCamera, uint32_t rtInColor, uint32_t rtOutBloom, uint32_t rtTempThreshold, uint32_t rtTempBlur0, uint32_t rtTempBlur1)
 {
 	m_pPassBloomLuminanceThreshold->SetCamera(pCamera);
 	m_pPassBloomLuminanceThreshold->SetInputTexture(GetRenderTexture(rtInColor));
@@ -114,7 +114,7 @@ void CRenderSystem::InternalPassBloom(CTaskPool& taskPool, CTaskGraph& taskGraph
 	m_pPassBloomBlendAdd->Render(taskPool, taskGraph, ptrCommandBuffer);
 }
 
-void CRenderSystem::InternalPassColorGrading(CTaskPool& taskPool, CTaskGraph& taskGraph, CCamera* pCamera, CGfxCommandBufferPtr ptrCommandBuffer, uint32_t rtInColor, uint32_t rtOutColor)
+void CRenderSystem::InternalPassColorGrading(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer, CCamera* pCamera, uint32_t rtInColor, uint32_t rtOutColor)
 {
 	m_pPassColorGrading->SetCamera(pCamera);
 	m_pPassColorGrading->SetInputTexture(GetRenderTexture(rtInColor));
@@ -122,7 +122,7 @@ void CRenderSystem::InternalPassColorGrading(CTaskPool& taskPool, CTaskGraph& ta
 	m_pPassColorGrading->Render(taskPool, taskGraph, ptrCommandBuffer);
 }
 
-void CRenderSystem::InternalPassFinal(CTaskPool& taskPool, CTaskGraph& taskGraph, CCamera* pCamera, CGfxCommandBufferPtr ptrCommandBuffer, uint32_t rtInColor, bool bPresent)
+void CRenderSystem::InternalPassFinal(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer, CCamera* pCamera, uint32_t rtInColor, bool bPresent)
 {
 	m_pPassFinal->SetCamera(pCamera);
 	m_pPassFinal->SetInputTexture(GetRenderTexture(rtInColor));

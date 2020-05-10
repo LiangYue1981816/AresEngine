@@ -23,7 +23,7 @@ void CRenderSystem::RenderDeferredLighting(CTaskPool& taskPool, CTaskGraph& task
 
 		GfxRenderer()->BeginRecord(ptrGraphicCommandBuffer);
 		{
-			RenderDeferredLighting(taskPool, taskGraph, pCamera, bPresent, ptrGraphicCommandBuffer);
+			RenderDeferredLighting(taskPool, taskGraph, ptrGraphicCommandBuffer, pCamera, bPresent);
 		}
 		GfxRenderer()->EndRecord(ptrGraphicCommandBuffer);
 		GfxRenderer()->Submit(ptrGraphicCommandBuffer, ptrComputeCommandBuffer->GetSemaphore());
@@ -31,26 +31,26 @@ void CRenderSystem::RenderDeferredLighting(CTaskPool& taskPool, CTaskGraph& task
 	GfxRenderer()->Present(ptrGraphicCommandBuffer->GetSemaphore());
 }
 
-void CRenderSystem::RenderDeferredLighting(CTaskPool& taskPool, CTaskGraph& taskGraph, CCamera* pCamera, bool bPresent, CGfxCommandBufferPtr ptrCommandBuffer)
+void CRenderSystem::RenderDeferredLighting(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer, CCamera* pCamera, bool bPresent)
 {
 	{
 		uint32_t rtOutDepth = RENDER_TEXTURE_FULL_DEPTH;
-		InternalPassPreZ(taskPool, taskGraph, pCamera, ptrCommandBuffer, rtOutDepth);
+		InternalPassPreZ(taskPool, taskGraph, ptrCommandBuffer, pCamera, rtOutDepth);
 	}
 	{
 		uint32_t rtOutShadow = RENDER_TEXTURE_SHADOW;
-		InternalPassShadow(taskPool, taskGraph, pCamera, ptrCommandBuffer, rtOutShadow);
+		InternalPassShadow(taskPool, taskGraph, ptrCommandBuffer, pCamera, rtOutShadow);
 	}
 	{
 		uint32_t rtInDepth = RENDER_TEXTURE_FULL_DEPTH;
 		uint32_t rtOutSSAO = RENDER_TEXTURE_FULL_HDR_COLOR0;
 		uint32_t rtTempBlur = RENDER_TEXTURE_FULL_HDR_COLOR1;
-		InternalPassSSAO(taskPool, taskGraph, pCamera, ptrCommandBuffer, rtInDepth, rtOutSSAO, rtTempBlur);
+		InternalPassSSAO(taskPool, taskGraph, ptrCommandBuffer, pCamera, rtInDepth, rtOutSSAO, rtTempBlur);
 	}
 	{
 		uint32_t rtInDepth = RENDER_TEXTURE_FULL_DEPTH;
 		uint32_t rtOutDepth = RENDER_TEXTURE_FULL_DEPTH_COPY;
-		InternalPassCopyDepthStencil(taskPool, taskGraph, pCamera, ptrCommandBuffer, rtInDepth, rtOutDepth);
+		InternalPassCopyDepthStencil(taskPool, taskGraph, ptrCommandBuffer, pCamera, rtInDepth, rtOutDepth);
 	}
 	{
 		uint32_t rtInDepth = RENDER_TEXTURE_FULL_DEPTH_COPY;
@@ -60,7 +60,7 @@ void CRenderSystem::RenderDeferredLighting(CTaskPool& taskPool, CTaskGraph& task
 		uint32_t rtOutDepth = RENDER_TEXTURE_FULL_DEPTH;
 		uint32_t rtGBuffer0 = RENDER_TEXTURE_GBUFFER0;
 		uint32_t rtGBuffer1 = RENDER_TEXTURE_GBUFFER1;
-		InternalPassDeferredLighting(taskPool, taskGraph, pCamera, ptrCommandBuffer, rtInDepth, rtInShadow, rtInSSAO, rtOutColor, rtOutDepth, rtGBuffer0, rtGBuffer1);
+		InternalPassDeferredLighting(taskPool, taskGraph, ptrCommandBuffer, pCamera, rtInDepth, rtInShadow, rtInSSAO, rtOutColor, rtOutDepth, rtGBuffer0, rtGBuffer1);
 	}
 	{
 		uint32_t rtInColor = RENDER_TEXTURE_FULL_HDR_COLOR1;
@@ -68,15 +68,15 @@ void CRenderSystem::RenderDeferredLighting(CTaskPool& taskPool, CTaskGraph& task
 		uint32_t rtTempThreshold = RENDER_TEXTURE_QUATER_HDR_COLOR0;
 		uint32_t rtTempBlur0 = RENDER_TEXTURE_QUATER_HDR_COLOR0;
 		uint32_t rtTempBlur1 = RENDER_TEXTURE_QUATER_HDR_COLOR1;
-		InternalPassBloom(taskPool, taskGraph, pCamera, ptrCommandBuffer, rtInColor, rtOutBloom, rtTempThreshold, rtTempBlur0, rtTempBlur1);
+		InternalPassBloom(taskPool, taskGraph, ptrCommandBuffer, pCamera, rtInColor, rtOutBloom, rtTempThreshold, rtTempBlur0, rtTempBlur1);
 	}
 	{
 		uint32_t rtInColor = RENDER_TEXTURE_FULL_HDR_COLOR0;
 		uint32_t rtOutColor = RENDER_TEXTURE_FULL_HDR_COLOR1;
-		InternalPassColorGrading(taskPool, taskGraph, pCamera, ptrCommandBuffer, rtInColor, rtOutColor);
+		InternalPassColorGrading(taskPool, taskGraph, ptrCommandBuffer, pCamera, rtInColor, rtOutColor);
 	}
 	{
 		uint32_t rtInColor = RENDER_TEXTURE_FULL_HDR_COLOR1;
-		InternalPassFinal(taskPool, taskGraph, pCamera, ptrCommandBuffer, rtInColor, bPresent);
+		InternalPassFinal(taskPool, taskGraph, ptrCommandBuffer, pCamera, rtInColor, bPresent);
 	}
 }
