@@ -2,6 +2,33 @@
 #include "RenderHeader.h"
 
 
+CCluster::CCluster(int screenWidth, int screenHeight, int tileSize, int numSlices)
+	: m_pCamera(nullptr)
+
+	, m_pShaderCompute(nullptr)
+	, m_pPipelineCompute(nullptr)
+{
+
+}
+
+CCluster::~CCluster(void)
+{
+
+}
+
+void CCluster::SetCamera(CCamera* pCamera)
+{
+	if (m_pCamera != pCamera) {
+		m_pCamera = pCamera;
+	}
+}
+
+void CCluster::Update(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer)
+{
+
+}
+
+
 /*
 CGPUScene::CGPUScene(void)
 	: m_indexDefaultInstance(INVALID_VALUE)
