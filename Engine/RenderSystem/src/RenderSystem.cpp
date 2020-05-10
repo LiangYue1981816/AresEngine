@@ -56,7 +56,7 @@ CRenderSystem::CRenderSystem(GfxApi api, void* hInstance, void* hWnd, void* hDC,
 	}
 
 	m_pCluster = new CCluster(width, height, 16, 8);
-	m_pGPUScene = new CGPUScene;
+	m_pGPUScene = new CGPUScene(32 * 1024, 1024);
 	m_pEngineUniform = new CUniformEngine;
 	m_pInstanceBufferPool = new CInstanceBufferPool;
 

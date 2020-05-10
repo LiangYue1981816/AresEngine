@@ -2,8 +2,11 @@
 #include "RenderHeader.h"
 
 
-CGPUScene::CGPUScene(void)
-	: m_indexDefaultInstance(INVALID_VALUE)
+CGPUScene::CGPUScene(int maxInstanceCount, int maxTransferCount)
+	: MAX_INSTANCE_COUNT(maxInstanceCount)
+	, MAX_TRANSFER_COUNT(maxTransferCount)
+
+	, m_indexDefaultInstance(INVALID_VALUE)
 	, m_indexPostProcessInstnace(INVALID_VALUE)
 
 	, m_pShaderCompute(nullptr)
@@ -18,8 +21,8 @@ CGPUScene::CGPUScene(void)
 	m_pShaderCompute = GfxRenderer()->CreateShader(szBinFileName, compute_shader);
 	m_pPipelineCompute = GfxRenderer()->CreatePipelineCompute(m_pShaderCompute);
 
-	m_ptrInstanceBuffer = GfxRenderer()->NewStorageBuffer(sizeof(InstanceData) * 16 * 1024);
-	m_ptrTransferBuffer = GfxRenderer()->NewStorageBuffer(sizeof(TransferData) *  4 * 1024);
+	m_ptrInstanceBuffer = GfxRenderer()->NewStorageBuffer(sizeof(InstanceData) * MAX_INSTANCE_COUNT);
+	m_ptrTransferBuffer = GfxRenderer()->NewStorageBuffer(sizeof(TransferData) * MAX_TRANSFER_COUNT);
 
 	m_ptrDescriptorSet = GfxRenderer()->NewDescriptorSet(HashValue(szFileName), m_pPipelineCompute->GetDescriptorLayout(DESCRIPTOR_SET_PASS));
 	m_ptrDescriptorSet->SetStorageBuffer(STORAGE_SCENE_DATA_NAME, m_ptrInstanceBuffer, 0, m_ptrInstanceBuffer->GetSize());
@@ -111,16 +114,28 @@ void CGPUScene::Update(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBu
 {
 	eastl::vector<TransferData> datas;
 	{
-		datas.reserve(1024);
+		datas.reserve(MAX_TRANSFER_COUNT);
 
 		for (int indexThread = 0; indexThread < MAX_THREAD_COUNT; indexThread++) {
-			for (const auto& itTransfer : m_transferBuffer[indexThread]) {
-				datas.emplace_back(itTransfer.second);
-			}
+			do {
+				if (datas.size() == MAX_TRANSFER_COUNT) {
+					goto FULL;
+				}
 
-			m_transferBuffer[indexThread].clear();
+				if (m_transferBuffer[indexThread].empty()) {
+					break;
+				}
+
+				const auto& itTransfer = m_transferBuffer[indexThread].begin();
+				{
+					if (itTransfer->second.index.x < MAX_INSTANCE_COUNT) {
+						datas.emplace_back(itTransfer->second);
+					}
+				}
+				m_transferBuffer[indexThread].erase(itTransfer);
+			} while (true);
 		}
-
+FULL:
 		if (datas.empty()) {
 			return;
 		}

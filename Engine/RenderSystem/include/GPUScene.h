@@ -66,7 +66,7 @@ private:
 
 
 public:
-	CGPUScene(void);
+	CGPUScene(int maxInstanceCount, int maxTransferCount);
 	virtual ~CGPUScene(void);
 
 
@@ -87,6 +87,10 @@ public:
 private:
 	void Update(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer);
 
+
+private:
+	int MAX_INSTANCE_COUNT;
+	int MAX_TRANSFER_COUNT;
 
 private:
 	int m_indexDefaultInstance;
