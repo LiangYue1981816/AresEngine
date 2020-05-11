@@ -196,6 +196,11 @@ void CRenderQueue::End(void)
 	}
 }
 
+const eastl::vector<int>& CRenderQueue::GetInstanceBuffer(const CGfxMaterialPtr ptrMaterial, const CGfxMeshDrawPtr ptrMeshDraw)
+{
+	return m_materialMeshDrawQueue[ptrMaterial][ptrMeshDraw->GetMesh()][ptrMeshDraw];
+}
+
 void CRenderQueue::CmdDraw(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer, const CGfxDescriptorSetPtr ptrDescriptorSetPass, const uint32_t matPassName, const glm::vec4& scissor, const glm::vec4& viewport, float znear, float zfar, uint32_t mask, bool bIsTransparency)
 {
 	if (m_materialMeshDrawQueue.empty()) {
