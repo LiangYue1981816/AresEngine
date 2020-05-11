@@ -20,8 +20,8 @@ static const ATTRIBUTE instanceAttributes[INSTANCE_ATTRIBUTE_COUNT] = {
 
 CRenderSystem::CRenderSystem(GfxApi api, void* hInstance, void* hWnd, void* hDC, int width, int height, GfxPixelFormat format)
 	: m_pRenderer(nullptr)
-	, m_pCluster(nullptr)
 	, m_pGPUScene(nullptr)
+	, m_pCluster(nullptr)
 	, m_pEngineUniform(nullptr)
 	, m_pInstanceBufferPool(nullptr)
 
@@ -55,8 +55,13 @@ CRenderSystem::CRenderSystem(GfxApi api, void* hInstance, void* hWnd, void* hDC,
 		break;
 	}
 
-	m_pCluster = new CCluster(width, height, 16, 8);
-	m_pGPUScene = new CGPUScene(32 * 1024, 1024);
+	const int MAX_INSTANCE_COUNT = 32 * 1024;
+	const int MAX_TRANSFER_COUNT = 1024;
+	const int TILE_SIZE = 16;
+	const int SLICES_COUNT = 8;
+
+	m_pGPUScene = new CGPUScene(MAX_INSTANCE_COUNT, MAX_TRANSFER_COUNT);
+	m_pCluster = new CCluster(this, width, height, TILE_SIZE, SLICES_COUNT, MAX_INSTANCE_COUNT);
 	m_pEngineUniform = new CUniformEngine;
 	m_pInstanceBufferPool = new CInstanceBufferPool;
 
@@ -94,19 +99,19 @@ CRenderSystem::~CRenderSystem(void)
 
 	delete m_pInstanceBufferPool;
 	delete m_pEngineUniform;
-	delete m_pGPUScene;
 	delete m_pCluster;
+	delete m_pGPUScene;
 	delete m_pRenderer;
-}
-
-CCluster* CRenderSystem::GetCluster(void) const
-{
-	return m_pCluster;
 }
 
 CGPUScene* CRenderSystem::GetGPUScene(void) const
 {
 	return m_pGPUScene;
+}
+
+CCluster* CRenderSystem::GetCluster(void) const
+{
+	return m_pCluster;
 }
 
 CUniformEngine* CRenderSystem::GetEngineUniform(void) const

@@ -112,6 +112,7 @@ const InstanceData& CGPUScene::GetInstanceData(int index) const
 
 void CGPUScene::Update(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer)
 {
+	// Update
 	eastl::vector<TransferData> datas;
 	{
 		datas.reserve(MAX_TRANSFER_COUNT);
@@ -142,6 +143,7 @@ FULL:
 	}
 	m_ptrTransferBuffer->BufferData(0, sizeof(TransferData) * datas.size(), (const void*)datas.data());
 
+	// Transfer
 	GfxRenderer()->CmdPushDebugGroup(ptrCommandBuffer, "TransferSceneData");
 	{
 		GfxRenderer()->CmdSetBufferBarrier(ptrCommandBuffer, m_ptrInstanceBuffer, GFX_ACCESS_TRANSFER_READ_BIT, GFX_ACCESS_TRANSFER_WRITE_BIT);

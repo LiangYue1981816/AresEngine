@@ -10,12 +10,13 @@ class CALL_API CCluster
 
 
 public:
-	CCluster(int screenWidth, int screenHeight, int tileSize, int numSlices);
+	CCluster(CRenderSystem* pRenderSystem, int screenWidth, int screenHeight, int tileSize, int numSlices, int maxInstanceCount);
 	virtual ~CCluster(void);
 
 
 private:
-	const CGfxStorageBufferPtr GetLightListBuffer(void) const;
+	const CGfxStorageBufferPtr GetClusterBuffer(void) const;
+	const CGfxStorageBufferPtr GetCullLightListBuffer(void) const;
 
 public:
 	void SetCamera(CCamera* pCamera);
@@ -25,7 +26,11 @@ private:
 
 
 private:
+	int MAX_INSTANCE_COUNT;
+
+private:
 	CCamera* m_pCamera;
+	CRenderSystem* m_pRenderSystem;
 
 private:
 	CGfxShader* m_pShaderCompute;
@@ -34,5 +39,12 @@ private:
 
 private:
 	CGfxStorageBufferPtr m_ptrClusterBuffer;
-	CGfxStorageBufferPtr m_ptrLightListBuffer;
+	CGfxStorageBufferPtr m_ptrFullLightListBuffer;
+	CGfxStorageBufferPtr m_ptrCullLightListBuffer;
+
+private:
+	CGfxMeshPtr m_ptrMesh;
+	CGfxMeshDrawPtr m_ptrMeshDraw;
+	CGfxMaterialPtr m_ptrMaterialCullFaceBack;
+	CGfxMaterialPtr m_ptrMaterialCullFaceFront;
 };

@@ -41,11 +41,17 @@
 #define UNIFORM_CAMERA_BIND                                1
 #define STORAGE_SCENE_DATA_BIND                            2
 #define STORAGE_TRANSFER_SCENE_DATA_BIND                   3
+#define STORAGE_CLUSTER_BIND                               4
+#define STORAGE_FULL_LIGHT_LIST_BIND                       5
+#define STORAGE_CULL_LIGHT_LIST_BIND                       6
 
 #define UNIFORM_ENGINE_NAME                                HashValue("Engine")
 #define UNIFORM_CAMERA_NAME                                HashValue("Camera")
 #define STORAGE_SCENE_DATA_NAME                            HashValue("SceneData")
 #define STORAGE_TRANSFER_SCENE_DATA_NAME                   HashValue("TransferSceneData")
+#define STORAGE_CLUSTER_NAME                               HashValue("Cluster")
+#define STORAGE_FULL_LIGHT_LIST_NAME                       HashValue("FullLightList")
+#define STORAGE_CULL_LIGHT_LIST_NAME                       HashValue("CullLightList")
 
 // Uniform Forward/Deferred
 #define UNIFORM_DEPTH_TEXTURE_BIND                         4
@@ -123,6 +129,7 @@
 class CALL_API CRenderSystem
 {
 	friend class CEngine;
+	friend class CCluster;
 	friend class CPassBase;
 	friend class CPassPreZ;
 	friend class CPassShadow;
@@ -148,8 +155,8 @@ private:
 
 
 private:
-	CCluster* GetCluster(void) const;
 	CGPUScene* GetGPUScene(void) const;
+	CCluster* GetCluster(void) const;
 	CUniformEngine* GetEngineUniform(void) const;
 
 private:
@@ -235,8 +242,8 @@ private:
 
 private:
 	CGfxRenderer* m_pRenderer;
-	CCluster* m_pCluster;
 	CGPUScene* m_pGPUScene;
+	CCluster* m_pCluster;
 	CUniformEngine* m_pEngineUniform;
 	CInstanceBufferPool* m_pInstanceBufferPool;
 

@@ -40,6 +40,7 @@ typedef struct InstanceData {
 class CALL_API CGPUScene
 {
 	friend class CRenderSystem;
+	friend class CCluster;
 	friend class CPassPreZ;
 	friend class CPassShadow;
 	friend class CPassDefault;
