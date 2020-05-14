@@ -42,6 +42,7 @@ layout (location = 8)                                      in highp int inInstan
 #define DESCRIPTOR_BIND_CAMERA                             1
 #define DESCRIPTOR_BIND_SCENE_DATA                         2
 #define DESCRIPTOR_BIND_TRANSFER_SCENE_DATA                3
+#define DESCRIPTOR_BIND_TRANSFER_SCENE_DATA_INDEX          4
 
 // Forward/Deferred
 #define DESCRIPTOR_BIND_DEPTH_TEXTURE                      4
@@ -121,12 +122,6 @@ layout (location = 8)                                      in highp int inInstan
 		mediump vec4 lightAttenuation;
 	};
 
-	struct TransferData
-	{
-		ivec4 index;
-		InstanceData data;
-	};
-
 #define USE_SCENE_DATA_STORAGE                                                     \
 	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_SCENE_DATA) buffer SceneData               \
 	{                                                                              \
@@ -136,8 +131,14 @@ layout (location = 8)                                      in highp int inInstan
 #define USE_TRANSFER_SCENE_DATA_STORAGE                                            \
 	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_TRANSFER_SCENE_DATA) buffer TransferSceneData \
 	{                                                                              \
-		TransferData data[];                                                       \
+		InstanceData data[];                                                       \
 	} transferSceneData
+
+#define USE_TRANSFER_SCENE_DATA_INDEX_STORAGE                                      \
+	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_TRANSFER_SCENE_DATA_INDEX) buffer TransferSceneDataIndex \
+	{                                                                              \
+		int index[];                                                               \
+	} transferSceneDataIndex
 
 #define USE_DEPTH_TEXTURE_UNIFORM                                                  \
 	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_DEPTH_TEXTURE) highp uniform sampler2D texDepth

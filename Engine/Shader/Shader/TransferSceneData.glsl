@@ -7,6 +7,7 @@ precision mediump float;
 
 USE_SCENE_DATA_STORAGE;
 USE_TRANSFER_SCENE_DATA_STORAGE;
+USE_TRANSFER_SCENE_DATA_INDEX_STORAGE;
 
 // Output
 // ...
@@ -17,6 +18,6 @@ USE_TRANSFER_SCENE_DATA_STORAGE;
 void main()
 {
 	uint indexWork = uint(gl_GlobalInvocationID.x);
-	sceneData.data[transferSceneData.data[indexWork].index.x] = transferSceneData.data[indexWork].data;
+	sceneData.data[transferSceneDataIndex.index[indexWork]] = transferSceneData.data[indexWork];
 	barrier();
 }

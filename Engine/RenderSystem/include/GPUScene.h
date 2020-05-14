@@ -48,24 +48,6 @@ class CALL_API CGPUScene
 	friend class CPassDeferredLighting;
 
 
-private:
-	typedef struct TransferData {
-		TransferData(void)
-		{
-
-		}
-
-		void Set(int _index, InstanceData _data)
-		{
-			index = glm::ivec4(_index);
-			data = _data;
-		}
-
-		glm::ivec4 index;
-		InstanceData data;
-	} TransferData;
-
-
 public:
 	CGPUScene(int maxInstanceCount, int maxTransferCount);
 	virtual ~CGPUScene(void);
@@ -73,15 +55,15 @@ public:
 
 private:
 	const CGfxStorageBufferPtr GetInstanceBuffer(void) const;
-	const CGfxStorageBufferPtr GetTransferBuffer(void) const;
+
+public:
+	int GetDefaultInstanceIndex(void) const;
+	int GetPostProcessInstnaceIndex(void) const;
 
 public:
 	int AddInstance(void);
 	void RemoveInstance(int index);
 	void ModifyInstanceData(int index, const InstanceData &data, int indexThread);
-
-	int GetDefaultInstanceIndex(void) const;
-	int GetPostProcessInstnaceIndex(void) const;
 
 	const InstanceData& GetInstanceData(int index) const;
 
@@ -98,16 +80,19 @@ private:
 	int m_indexPostProcessInstnace;
 
 private:
-	eastl::vector<InstanceData> m_instanceBuffer;
-	eastl::unordered_map<int, TransferData> m_transferBuffer[MAX_THREAD_COUNT];
 	eastl::unordered_set<int> m_freeIndex;
+	eastl::vector<InstanceData> m_instanceDataBuffer;
+
+private:
+	eastl::unordered_set<int> m_transferIndexBuffer[MAX_THREAD_COUNT];
+
+private:
+	CGfxStorageBufferPtr m_ptrInstanceDataBuffer;
+	CGfxStorageBufferPtr m_ptrTransferDataBuffer;
+	CGfxStorageBufferPtr m_ptrTransferIndexBuffer;
 
 private:
 	CGfxShader* m_pShaderCompute;
 	CGfxPipelineCompute* m_pPipelineCompute;
 	CGfxDescriptorSetPtr m_ptrDescriptorSet;
-
-private:
-	CGfxStorageBufferPtr m_ptrInstanceBuffer;
-	CGfxStorageBufferPtr m_ptrTransferBuffer;
 };
