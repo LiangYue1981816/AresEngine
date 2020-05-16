@@ -25,9 +25,9 @@ CCluster::CCluster(CRenderSystem* pRenderSystem, int screenWidth, int screenHeig
 
 	m_ptrDescriptorSet = GfxRenderer()->NewDescriptorSet(HashValue(szFileName), m_pPipelineCompute->GetDescriptorLayout(DESCRIPTOR_SET_PASS));
 	m_ptrDescriptorSet->SetStorageBuffer(STORAGE_SCENE_DATA_NAME, m_pRenderSystem->GetGPUScene()->GetInstanceBuffer(), 0, m_pRenderSystem->GetGPUScene()->GetInstanceBuffer()->GetSize());
-	m_ptrDescriptorSet->SetStorageBuffer(STORAGE_CLUSTER_NAME, m_ptrClusterBuffer, 0, m_ptrClusterBuffer->GetSize());
-	m_ptrDescriptorSet->SetStorageBuffer(STORAGE_FULL_LIGHT_LIST_NAME, m_ptrFullLightListBuffer, 0, m_ptrFullLightListBuffer->GetSize());
-	m_ptrDescriptorSet->SetStorageBuffer(STORAGE_CULL_LIGHT_LIST_NAME, m_ptrCullLightListBuffer, 0, m_ptrCullLightListBuffer->GetSize());
+	m_ptrDescriptorSet->SetStorageBuffer(STORAGE_CLUSTER_DATA_NAME, m_ptrClusterBuffer, 0, m_ptrClusterBuffer->GetSize());
+	m_ptrDescriptorSet->SetStorageBuffer(STORAGE_FULL_LIGHT_LIST_DATA_NAME, m_ptrFullLightListBuffer, 0, m_ptrFullLightListBuffer->GetSize());
+	m_ptrDescriptorSet->SetStorageBuffer(STORAGE_CULL_LIGHT_LIST_DATA_NAME, m_ptrCullLightListBuffer, 0, m_ptrCullLightListBuffer->GetSize());
 
 	m_ptrMesh = GfxRenderer()->NewMesh("PointLight.mesh", VERTEX_BINDING);
 	m_ptrMeshDraw = GfxRenderer()->NewMeshDraw(m_ptrMesh->GetName(), m_ptrMesh, 0);

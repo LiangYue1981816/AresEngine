@@ -43,19 +43,22 @@ layout (location = 8)                                      in highp int inInstan
 #define DESCRIPTOR_BIND_SCENE_DATA                         2
 #define DESCRIPTOR_BIND_TRANSFER_SCENE_DATA                3
 #define DESCRIPTOR_BIND_TRANSFER_SCENE_DATA_INDEX          4
+#define DESCRIPTOR_BIND_CLUSTER_DATA                       5
+#define DESCRIPTOR_BIND_FULL_LIGHT_LIST_DATA               6
+#define DESCRIPTOR_BIND_CULL_LIGHT_LIST_DATA               7
 
 // Forward/Deferred
-#define DESCRIPTOR_BIND_DEPTH_TEXTURE                      4
-#define DESCRIPTOR_BIND_COLOR_TEXTURE                      5
-#define DESCRIPTOR_BIND_GBUFFERA_TEXTURE                   6
-#define DESCRIPTOR_BIND_GBUFFERB_TEXTURE                   7
-#define DESCRIPTOR_BIND_GBUFFERC_TEXTURE                   8
-#define DESCRIPTOR_BIND_GBUFFERD_TEXTURE                   9
+#define DESCRIPTOR_BIND_DEPTH_TEXTURE                      8
+#define DESCRIPTOR_BIND_COLOR_TEXTURE                      9
+#define DESCRIPTOR_BIND_GBUFFERA_TEXTURE                   10
+#define DESCRIPTOR_BIND_GBUFFERB_TEXTURE                   11
+#define DESCRIPTOR_BIND_GBUFFERC_TEXTURE                   12
+#define DESCRIPTOR_BIND_GBUFFERD_TEXTURE                   13
 
 // PostProcessing
-#define DESCRIPTOR_BIND_SHADOW_TEXTURE                     10
-#define DESCRIPTOR_BIND_SSAO_TEXTURE                       11
-#define DESCRIPTOR_BIND_ADD_TEXTURE                        12
+#define DESCRIPTOR_BIND_SHADOW_TEXTURE                     16
+#define DESCRIPTOR_BIND_SSAO_TEXTURE                       17
+#define DESCRIPTOR_BIND_ADD_TEXTURE                        18
 
 
 #define USE_CAMERA_UNIFORM                                                         \
@@ -122,6 +125,12 @@ layout (location = 8)                                      in highp int inInstan
 		mediump vec4 lightAttenuation;
 	};
 
+	struct Cluster
+	{
+		highp vec4 minVertex;
+		highp vec4 maxVertex;
+	};
+
 #define USE_SCENE_DATA_STORAGE                                                     \
 	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_SCENE_DATA) buffer SceneData               \
 	{                                                                              \
@@ -139,6 +148,24 @@ layout (location = 8)                                      in highp int inInstan
 	{                                                                              \
 		int index[];                                                               \
 	} transferSceneDataIndex
+
+#define USE_CLUSTER_DATA_STORAGE                                                   \
+	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_CLUSTER_DATA) buffer ClusterData           \
+	{                                                                              \
+		Cluster data[];                                                            \
+	} clusterData
+
+#define USE_FULL_LIGHT_LIST_DATA_STORAGE                                           \
+	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_FULL_LIGHT_LIST_DATA) buffer FullLightListData \
+	{                                                                              \
+		int index[];                                                               \
+	} fullLightListData
+
+#define USE_CULL_LIGHT_LIST_DATA_STORAGE                                           \
+	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_CULL_LIGHT_LIST_DATA) buffer CullLightListData \
+	{                                                                              \
+		int index[];                                                               \
+	} cullLightListData
 
 #define USE_DEPTH_TEXTURE_UNIFORM                                                  \
 	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_DEPTH_TEXTURE) highp uniform sampler2D texDepth

@@ -51,17 +51,17 @@
 #define STORAGE_SCENE_DATA_NAME                            HashValue("SceneData")
 #define STORAGE_TRANSFER_SCENE_DATA_NAME                   HashValue("TransferSceneData")
 #define STORAGE_TRANSFER_SCENE_DATA_INDEX_NAME             HashValue("TransferSceneDataIndex")
-#define STORAGE_CLUSTER_NAME                               HashValue("Cluster")
-#define STORAGE_FULL_LIGHT_LIST_NAME                       HashValue("FullLightList")
-#define STORAGE_CULL_LIGHT_LIST_NAME                       HashValue("CullLightList")
+#define STORAGE_CLUSTER_DATA_NAME                          HashValue("ClusterData")
+#define STORAGE_FULL_LIGHT_LIST_DATA_NAME                  HashValue("FullLightListData")
+#define STORAGE_CULL_LIGHT_LIST_DATA_NAME                  HashValue("CullLightListData")
 
 // Uniform Forward/Deferred
-#define UNIFORM_DEPTH_TEXTURE_BIND                         4
-#define UNIFORM_COLOR_TEXTURE_BIND                         5
-#define UNIFORM_GBUFFER0_TEXTURE_BIND                      6
-#define UNIFORM_GBUFFER1_TEXTURE_BIND                      7
-#define UNIFORM_GBUFFER2_TEXTURE_BIND                      8
-#define UNIFORM_GBUFFER3_TEXTURE_BIND                      9
+#define UNIFORM_DEPTH_TEXTURE_BIND                         8
+#define UNIFORM_COLOR_TEXTURE_BIND                         9
+#define UNIFORM_GBUFFER0_TEXTURE_BIND                      10
+#define UNIFORM_GBUFFER1_TEXTURE_BIND                      11
+#define UNIFORM_GBUFFER2_TEXTURE_BIND                      12
+#define UNIFORM_GBUFFER3_TEXTURE_BIND                      13
 
 #define UNIFORM_DEPTH_TEXTURE_NAME                         HashValue("texDepth")
 #define UNIFORM_COLOR_TEXTURE_NAME                         HashValue("texColor")
@@ -71,9 +71,9 @@
 #define UNIFORM_GBUFFER3_TEXTURE_NAME                      HashValue("texGBuffer3")
 
 // Uniform PostProcessing
-#define UNIFORM_SHADOW_TEXTURE_BIND                        10
-#define UNIFORM_SSAO_TEXTURE_BIND                          11
-#define UNIFORM_ADD_TEXTURE_BIND                           12
+#define UNIFORM_SHADOW_TEXTURE_BIND                        16
+#define UNIFORM_SSAO_TEXTURE_BIND                          17
+#define UNIFORM_ADD_TEXTURE_BIND                           18
 
 #define UNIFORM_SHADOW_TEXTURE_NAME                        HashValue("texShadow")
 #define UNIFORM_SSAO_TEXTURE_NAME                          HashValue("texSSAO")

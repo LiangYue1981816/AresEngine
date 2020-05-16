@@ -5,6 +5,11 @@ precision mediump float;
 #include "engine.inc"
 #include "common.inc"
 
+USE_SCENE_DATA_STORAGE;
+USE_CLUSTER_DATA_STORAGE;
+USE_FULL_LIGHT_LIST_DATA_STORAGE;
+USE_CULL_LIGHT_LIST_DATA_STORAGE;
+
 // Output
 // ...
 
