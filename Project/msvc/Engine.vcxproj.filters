@@ -229,6 +229,15 @@
     <Filter Include="Engine\Console\Source Files">
       <UniqueIdentifier>{2a6682f6-56ca-4102-8f20-bde35dae3301}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Utils">
+      <UniqueIdentifier>{14b63d1c-8544-461b-bb93-09701cfd87a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Utils\Header Files">
+      <UniqueIdentifier>{81761131-6677-43c8-aeab-44b12fe60680}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Utils\Source Files">
+      <UniqueIdentifier>{2d125e1d-6133-4025-ad16-d66a97faabfa}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Engine\PreHeader.h">
@@ -1656,6 +1665,12 @@
     <ClInclude Include="..\..\Engine\RenderSystem\include\Cluster.h">
       <Filter>Engine\RenderSystem\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Engine\Utils\include\TextureLayout2D.h">
+      <Filter>Engine\Utils\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\UtilsHeader.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Engine\ThirdParty\eastl\source\allocator_eastl.cpp">
@@ -2437,6 +2452,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Engine\RenderSystem\src\Cluster.cpp">
       <Filter>Engine\RenderSystem\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Utils\src\TextureLayout2D.cpp">
+      <Filter>Engine\Utils\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

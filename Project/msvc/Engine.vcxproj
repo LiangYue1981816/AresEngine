@@ -588,6 +588,8 @@
     <ClInclude Include="..\..\Engine\ThirdParty\zzip\__dirent.h" />
     <ClInclude Include="..\..\Engine\ThirdParty\zzip\__hints.h" />
     <ClInclude Include="..\..\Engine\ThirdParty\zzip\__mmap.h" />
+    <ClInclude Include="..\..\Engine\UtilsHeader.h" />
+    <ClInclude Include="..\..\Engine\Utils\include\TextureLayout2D.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Engine\Base\src\FileManager.cpp" />
@@ -850,6 +852,7 @@
     <ClCompile Include="..\..\Engine\ThirdParty\zzip\plugin.c" />
     <ClCompile Include="..\..\Engine\ThirdParty\zzip\stat.c" />
     <ClCompile Include="..\..\Engine\ThirdParty\zzip\zip.c" />
+    <ClCompile Include="..\..\Engine\Utils\src\TextureLayout2D.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\..\Engine\ThirdParty\rttr\CMakeLists.txt" />
