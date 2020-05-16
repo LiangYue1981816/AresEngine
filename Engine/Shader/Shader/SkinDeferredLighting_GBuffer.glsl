@@ -145,7 +145,7 @@ void main()
 #else
 	mediump vec3 envLighting = vec3(0.0);
 #endif
-	mediump vec3 finalLighting = ao * ssao * (ambientLighting + pointLighting + directLighting * shadow + envLighting * clamp(shadow + 0.1, 0.0, 1.0));
+	mediump vec3 finalLighting = ao * ssao * (ambientLighting * (vec3(1.0) + envLighting) + pointLighting + directLighting * shadow);
 
 //	Debug Shadow
 //	highp float factor = length(worldCameraPosition - worldPosition) / (cameraZFar - cameraZNear);
