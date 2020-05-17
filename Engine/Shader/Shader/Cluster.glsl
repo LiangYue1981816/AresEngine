@@ -41,10 +41,10 @@ void main()
 	highp float tileSize = float(Param.tileSize);
 	highp float numDepthSlices = float(Param.numDepthSlices);
 
-	highp vec2 minScreenPosition = vec2(float(gl_GlobalInvocationID.x) + 0.0, float(gl_GlobalInvocationID.y) + 0.0) * tileSize / camera.screen.xy;
-	highp vec2 maxScreenPosition = vec2(float(gl_GlobalInvocationID.x) + 1.0, float(gl_GlobalInvocationID.y) + 1.0) * tileSize / camera.screen.xy;
-	highp float minDepthValue = (float(gl_GlobalInvocationID.z) + 0.0) / numDepthSlices;
-	highp float maxDepthValue = (float(gl_GlobalInvocationID.z) + 1.0) / numDepthSlices;
+	highp vec2 minScreenPosition = vec2(float(gl_GlobalInvocationID.x + uint(0)), float(gl_GlobalInvocationID.y + uint(0))) * tileSize / camera.screen.xy;
+	highp vec2 maxScreenPosition = vec2(float(gl_GlobalInvocationID.x + uint(1)), float(gl_GlobalInvocationID.y + uint(1))) * tileSize / camera.screen.xy;
+	highp float minDepthValue = (float(gl_GlobalInvocationID.z + uint(0))) / numDepthSlices;
+	highp float maxDepthValue = (float(gl_GlobalInvocationID.z + uint(1))) / numDepthSlices;
 
 	highp vec3 minViewPositionNear = ScreenToViewPosition(minScreenPosition, minDepthValue, camera.projectionInverseMatrix).xyz;
 	highp vec3 maxViewPositionNear = ScreenToViewPosition(maxScreenPosition, minDepthValue, camera.projectionInverseMatrix).xyz;
@@ -58,13 +58,12 @@ void main()
     highp int visibleLightIndices[100];
 
 	for (int i = 0; i < fullLightListData.index.length(); i++) {
-		InstanceData instance = sceneData.data[fullLightListData.index[i]];
-
-		highp vec3 spherePosition = instance.center.xyz;
-		highp float radius = instance.lightAttenuation.w;
+		highp int indexLight = fullLightListData.index[i];
+		highp vec3 spherePosition = sceneData.data[indexLight].center.xyz;
+		highp float radius = sceneData.data[indexLight].lightAttenuation.w;
 
 		if (Intersection(minAABBPosition, maxAABBPosition, spherePosition, radius)) {
-			visibleLightIndices[visibleLightCount] = fullLightListData.index[i];
+			visibleLightIndices[visibleLightCount] = indexLight;
 			visibleLightCount += 1;
 		}
 

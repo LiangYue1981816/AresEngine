@@ -23,7 +23,7 @@ CCluster::CCluster(CRenderSystem* pRenderSystem, int screenWidth, int screenHeig
 	m_pShaderCompute = GfxRenderer()->CreateShader(szBinFileName, compute_shader);
 	m_pPipelineCompute = GfxRenderer()->CreatePipelineCompute(m_pShaderCompute);
 
-	m_ptrClusterBuffer = GfxRenderer()->NewStorageBuffer(VERTICAL_TILE_COUNT * HORIZONTAL_TILE_COUNT * DEPTH_SLICE_COUNT * 32);
+	m_ptrClusterBuffer = GfxRenderer()->NewStorageBuffer(HORIZONTAL_TILE_COUNT * VERTICAL_TILE_COUNT * DEPTH_SLICE_COUNT * 32);
 	m_ptrFullLightListBuffer = GfxRenderer()->NewStorageBuffer(MAX_INSTANCE_COUNT * sizeof(int));
 	m_ptrCullLightListBuffer = GfxRenderer()->NewStorageBuffer(MAX_INSTANCE_COUNT * sizeof(int));
 
