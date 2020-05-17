@@ -26,7 +26,11 @@ private:
 
 
 private:
-	int MAX_INSTANCE_COUNT;
+	const int MAX_INSTANCE_COUNT;
+	const int HORIZONTAL_TILE_COUNT;
+	const int VERTICAL_TILE_COUNT;
+	const int DEPTH_SLICE_COUNT;
+	const int TILE_SIZE;
 
 private:
 	CCamera* m_pCamera;
