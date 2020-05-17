@@ -5,6 +5,7 @@ precision mediump float;
 #include "engine.inc"
 #include "common.inc"
 
+USE_CAMERA_UNIFORM;
 USE_SCENE_DATA_STORAGE;
 USE_CLUSTER_DATA_STORAGE;
 USE_FULL_LIGHT_LIST_DATA_STORAGE;
@@ -14,8 +15,73 @@ USE_CULL_LIGHT_LIST_DATA_STORAGE;
 // ...
 
 // Descriptor
+layout(push_constant) uniform PushConstantParam {
+	int tileSize;
+	int numDepthSlices;
+} Param;
+
+bool Intersection(highp vec3 minAABBPosition, highp vec3 maxAABBPosition, highp vec3 spherePosition, highp float radius)
+{
+	highp float dis2 = 0.0;
+
+	for (int i = 0; i < 3; i++) {
+		if (spherePosition[i] < minAABBPosition[i]) {
+			dis2 += (spherePosition[i] - minAABBPosition[i]) * (spherePosition[i] - minAABBPosition[i]);
+		}
+		if (spherePosition[i] > maxAABBPosition[i]) {
+			dis2 += (spherePosition[i] - maxAABBPosition[i]) * (spherePosition[i] - maxAABBPosition[i]);
+		}
+	}
+
+	return dis2 <= (radius * radius);
+}
 
 void main()
 {
+	highp float tileSize = float(Param.tileSize);
+	highp float numDepthSlices = float(Param.numDepthSlices);
+
+	highp vec2 minScreenPosition = vec2(float(gl_GlobalInvocationID.x) + 0.0, float(gl_GlobalInvocationID.y) + 0.0) * tileSize / camera.screen.xy;
+	highp vec2 maxScreenPosition = vec2(float(gl_GlobalInvocationID.x) + 1.0, float(gl_GlobalInvocationID.y) + 1.0) * tileSize / camera.screen.xy;
+	highp float minDepthValue = (float(gl_GlobalInvocationID.z) + 0.0) / numDepthSlices;
+	highp float maxDepthValue = (float(gl_GlobalInvocationID.z) + 1.0) / numDepthSlices;
+
+	highp vec3 minViewPositionNear = ScreenToViewPosition(minScreenPosition, minDepthValue, camera.projectionInverseMatrix).xyz;
+	highp vec3 maxViewPositionNear = ScreenToViewPosition(maxScreenPosition, minDepthValue, camera.projectionInverseMatrix).xyz;
+	highp vec3 minViewPositionFar = ScreenToViewPosition(minScreenPosition, maxDepthValue, camera.projectionInverseMatrix).xyz;
+	highp vec3 maxViewPositionFar = ScreenToViewPosition(maxScreenPosition, maxDepthValue, camera.projectionInverseMatrix).xyz;
+
+	highp vec3 minAABBPosition = min(min(minViewPositionNear, maxViewPositionNear), min(minViewPositionFar, maxViewPositionFar));
+	highp vec3 maxAABBPosition = max(max(minViewPositionNear, maxViewPositionNear), max(minViewPositionFar, maxViewPositionFar));
+
+	highp int visibleLightCount = 0;
+    highp int visibleLightIndices[100];
+
+	for (int i = 0; i < fullLightListData.index.length(); i++) {
+		InstanceData instance = sceneData.data[fullLightListData.index[i]];
+
+		highp vec3 spherePosition = instance.center.xyz;
+		highp float radius = instance.lightAttenuation.w;
+
+		if (Intersection(minAABBPosition, maxAABBPosition, spherePosition, radius)) {
+			visibleLightIndices[visibleLightCount] = fullLightListData.index[i];
+			visibleLightCount += 1;
+		}
+
+		if (visibleLightCount == 100) {
+			break;
+		}
+	}
+
 	barrier();
+
+	highp int offset = atomicAdd(cullLightListData.count, visibleLightCount);
+	highp int tileIndex = int(gl_WorkGroupID.z * gl_NumWorkGroups.x * gl_NumWorkGroups.y + gl_WorkGroupID.y * gl_NumWorkGroups.x + gl_WorkGroupID.x);
+
+	for (int i = 0; i < visibleLightCount; i++) {
+		cullLightListData.index[offset + i] = visibleLightIndices[i];
+	}
+
+	clusterData.data[tileIndex].minAABBPosition = vec4(minAABBPosition, float(offset));
+	clusterData.data[tileIndex].maxAABBPosition = vec4(maxAABBPosition, float(visibleLightCount));
 }

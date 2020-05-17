@@ -127,8 +127,8 @@ layout (location = 8)                                      in highp int inInstan
 
 	struct Cluster
 	{
-		highp vec4 minVertex;
-		highp vec4 maxVertex;
+		highp vec4 minAABBPosition;
+		highp vec4 maxAABBPosition;
 	};
 
 #define USE_SCENE_DATA_STORAGE                                                     \
@@ -164,6 +164,7 @@ layout (location = 8)                                      in highp int inInstan
 #define USE_CULL_LIGHT_LIST_DATA_STORAGE                                           \
 	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_CULL_LIGHT_LIST_DATA) buffer CullLightListData \
 	{                                                                              \
+		int count;                                                                 \
 		int index[];                                                               \
 	} cullLightListData
 

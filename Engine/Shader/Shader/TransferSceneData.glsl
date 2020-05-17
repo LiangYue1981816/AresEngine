@@ -19,5 +19,4 @@ void main()
 {
 	uint indexWork = uint(gl_GlobalInvocationID.x);
 	sceneData.data[transferSceneDataIndex.index[indexWork]] = transferSceneData.data[indexWork];
-	barrier();
 }
