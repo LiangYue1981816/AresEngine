@@ -57,7 +57,7 @@ void main()
 	highp vec3 maxAABBPosition = max(max(minViewPositionNear, maxViewPositionNear), max(minViewPositionFar, maxViewPositionFar));
 
 	highp int visibleLightCount = 0;
-    highp int visibleLightIndices[100];
+	highp int visibleLightIndices[256];
 
 	for (int i = 0; i < numPointLights; i++) {
 		highp int indexLight = fullLightListData.index[i];
@@ -69,10 +69,12 @@ void main()
 			visibleLightCount += 1;
 		}
 
-		if (visibleLightCount == 100) {
+		if (visibleLightCount == 256) {
 			break;
 		}
 	}
+
+	cullLightListData.count = 0;
 
 	barrier();
 
