@@ -21,6 +21,13 @@ void CRenderSystem::RenderTileBaseDeferredLighting(CTaskPool& taskPool, CTaskGra
 		GfxRenderer()->EndRecord(ptrComputeCommandBuffer);
 		GfxRenderer()->Submit(ptrComputeCommandBuffer, pWaitSemaphore);
 
+		GfxRenderer()->BeginRecord(ptrComputeCommandBuffer);
+		{
+			UpdateCluster(taskPool, taskGraph, ptrComputeCommandBuffer, pCamera);
+		}
+		GfxRenderer()->EndRecord(ptrComputeCommandBuffer);
+		GfxRenderer()->Submit(ptrComputeCommandBuffer, pWaitSemaphore);
+
 		GfxRenderer()->BeginRecord(ptrGraphicCommandBuffer);
 		{
 			RenderDeferredLighting(taskPool, taskGraph, ptrGraphicCommandBuffer, pCamera, bPresent);
