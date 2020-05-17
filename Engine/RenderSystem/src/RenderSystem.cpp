@@ -65,12 +65,9 @@ CRenderSystem::CRenderSystem(GfxApi api, void* hInstance, void* hWnd, void* hDC,
 	m_pEngineUniform = new CUniformEngine;
 	m_pInstanceBufferPool = new CInstanceBufferPool;
 
-	m_ptrComputeCommandBuffer[0] = GfxRenderer()->NewCommandBuffer(0, true);
-	m_ptrComputeCommandBuffer[1] = GfxRenderer()->NewCommandBuffer(0, true);
-	m_ptrComputeCommandBuffer[2] = GfxRenderer()->NewCommandBuffer(0, true);
-	m_ptrGraphicCommandBuffer[0] = GfxRenderer()->NewCommandBuffer(0, true);
-	m_ptrGraphicCommandBuffer[1] = GfxRenderer()->NewCommandBuffer(0, true);
-	m_ptrGraphicCommandBuffer[2] = GfxRenderer()->NewCommandBuffer(0, true);
+	CreateCommandBuffers();
+	CreateRenderTextures();
+	CreatePasses();
 
 	Settings()->SetValue("RenderSystem.Shadow.Factor", 1.0f);
 	Settings()->SetValue("RenderSystem.Shadow.SplitFactor0", exp(-4.0f));
@@ -89,13 +86,9 @@ CRenderSystem::CRenderSystem(GfxApi api, void* hInstance, void* hWnd, void* hDC,
 
 CRenderSystem::~CRenderSystem(void)
 {
-	m_ptrComputeCommandBuffer[0].Release();
-	m_ptrComputeCommandBuffer[1].Release();
-	m_ptrComputeCommandBuffer[2].Release();
-
-	m_ptrGraphicCommandBuffer[0].Release();
-	m_ptrGraphicCommandBuffer[1].Release();
-	m_ptrGraphicCommandBuffer[2].Release();
+	DestroyPasses();
+	DestroyRenderTextures();
+	DestroyCommandBuffers();
 
 	delete m_pInstanceBufferPool;
 	delete m_pEngineUniform;
@@ -189,6 +182,26 @@ void CRenderSystem::DestroyPasses(void)
 	delete m_pPassBloomBlendAdd;
 	delete m_pPassColorGrading;
 	delete m_pPassFinal;
+}
+
+void CRenderSystem::CreateCommandBuffers(void)
+{
+	m_ptrComputeCommandBuffer[0] = GfxRenderer()->NewCommandBuffer(0, true);
+	m_ptrComputeCommandBuffer[1] = GfxRenderer()->NewCommandBuffer(0, true);
+	m_ptrComputeCommandBuffer[2] = GfxRenderer()->NewCommandBuffer(0, true);
+	m_ptrGraphicCommandBuffer[0] = GfxRenderer()->NewCommandBuffer(0, true);
+	m_ptrGraphicCommandBuffer[1] = GfxRenderer()->NewCommandBuffer(0, true);
+	m_ptrGraphicCommandBuffer[2] = GfxRenderer()->NewCommandBuffer(0, true);
+}
+
+void CRenderSystem::DestroyCommandBuffers(void)
+{
+	m_ptrComputeCommandBuffer[0].Release();
+	m_ptrComputeCommandBuffer[1].Release();
+	m_ptrComputeCommandBuffer[2].Release();
+	m_ptrGraphicCommandBuffer[0].Release();
+	m_ptrGraphicCommandBuffer[1].Release();
+	m_ptrGraphicCommandBuffer[2].Release();
 }
 
 void CRenderSystem::CreateRenderTextures(void)

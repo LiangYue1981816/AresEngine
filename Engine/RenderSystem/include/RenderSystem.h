@@ -166,6 +166,10 @@ private:
 	void DestroyPasses(void);
 
 private:
+	void CreateCommandBuffers(void);
+	void DestroyCommandBuffers(void);
+
+private:
 	void CreateRenderTextures(void);
 	void DestroyRenderTextures(void);
 

@@ -77,9 +77,6 @@ CEngine::CEngine(GfxApi api, void* hInstance, void* hWnd, void* hDC, int width, 
 	m_pSceneManager = new CSceneManager;
 	m_pRenderSystem = new CRenderSystem(api, hInstance, hWnd, hDC, width, height, format);
 
-	m_pRenderSystem->CreateRenderTextures();
-	m_pRenderSystem->CreatePasses();
-
 	event_init(&m_eventExit, 0);
 	event_init(&m_eventFinish, 1);
 	event_init(&m_eventDispatch, 0);
@@ -95,9 +92,6 @@ CEngine::~CEngine(void)
 	event_destroy(&m_eventExit);
 	event_destroy(&m_eventFinish);
 	event_destroy(&m_eventDispatch);
-
-	m_pRenderSystem->DestroyPasses();
-	m_pRenderSystem->DestroyRenderTextures();
 
 	delete m_pFileManager;
 	delete m_pShaderCompiler;
