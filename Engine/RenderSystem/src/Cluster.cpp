@@ -75,7 +75,7 @@ void CCluster::Update(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBuf
 	instance.insert(instance.end(), instnaces0.begin(), instnaces0.end());
 	instance.insert(instance.end(), instnaces1.begin(), instnaces1.end());
 
-	m_ptrFullLightListBuffer->BufferData(0, std::min((int)instance.size(), MAX_INSTANCE_COUNT), instance.data());
+	m_ptrFullLightListBuffer->BufferData(0, sizeof(int) * std::min((int)instance.size(), MAX_INSTANCE_COUNT), instance.data());
 
 	// Cluster
 	GfxRenderer()->CmdPushDebugGroup(ptrCommandBuffer, "Cluster");
