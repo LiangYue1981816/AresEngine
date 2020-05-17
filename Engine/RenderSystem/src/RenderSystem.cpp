@@ -56,7 +56,7 @@ CRenderSystem::CRenderSystem(GfxApi api, void* hInstance, void* hWnd, void* hDC,
 	}
 
 	const int MAX_INSTANCE_COUNT = 32 * 1024;
-	const int MAX_TRANSFER_COUNT = 1024;
+	const int MAX_TRANSFER_COUNT =  1 * 1024;
 	const int TILE_SIZE = 16;
 	const int SLICES_COUNT = 8;
 

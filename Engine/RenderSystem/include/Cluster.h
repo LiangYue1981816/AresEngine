@@ -45,10 +45,4 @@ private:
 	CGfxStorageBufferPtr m_ptrClusterBuffer;
 	CGfxStorageBufferPtr m_ptrFullLightListBuffer;
 	CGfxStorageBufferPtr m_ptrCullLightListBuffer;
-
-private:
-	CGfxMeshPtr m_ptrMesh;
-	CGfxMeshDrawPtr m_ptrMeshDraw;
-	CGfxMaterialPtr m_ptrMaterialCullFaceBack;
-	CGfxMaterialPtr m_ptrMaterialCullFaceFront;
 };

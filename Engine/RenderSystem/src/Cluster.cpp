@@ -32,11 +32,6 @@ CCluster::CCluster(CRenderSystem* pRenderSystem, int screenWidth, int screenHeig
 	m_ptrDescriptorSet->SetStorageBuffer(STORAGE_CLUSTER_DATA_NAME, m_ptrClusterBuffer, 0, m_ptrClusterBuffer->GetSize());
 	m_ptrDescriptorSet->SetStorageBuffer(STORAGE_FULL_LIGHT_LIST_DATA_NAME, m_ptrFullLightListBuffer, 0, m_ptrFullLightListBuffer->GetSize());
 	m_ptrDescriptorSet->SetStorageBuffer(STORAGE_CULL_LIGHT_LIST_DATA_NAME, m_ptrCullLightListBuffer, 0, m_ptrCullLightListBuffer->GetSize());
-
-	m_ptrMesh = GfxRenderer()->NewMesh("PointLight.mesh", VERTEX_BINDING);
-	m_ptrMeshDraw = GfxRenderer()->NewMeshDraw(m_ptrMesh->GetName(), m_ptrMesh, 0);
-	m_ptrMaterialCullFaceBack = GfxRenderer()->NewMaterial("PointLightCullFaceBack.material", VERTEX_BINDING, INSTANCE_BINDING);
-	m_ptrMaterialCullFaceFront = GfxRenderer()->NewMaterial("PointLightCullFaceFront.material", VERTEX_BINDING, INSTANCE_BINDING);
 }
 
 CCluster::~CCluster(void)
@@ -67,8 +62,14 @@ void CCluster::Update(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBuf
 	// Update
 	m_pCamera->GetCameraUniform()->Apply();
 
-	const eastl::vector<int>& instnaces0 = m_pCamera->GetRenderQueue()->GetInstanceBuffer(m_ptrMaterialCullFaceFront, m_ptrMeshDraw);
-	const eastl::vector<int>& instnaces1 = m_pCamera->GetRenderQueue()->GetInstanceBuffer(m_ptrMaterialCullFaceBack, m_ptrMeshDraw);
+	// Update Light list
+	CGfxMeshPtr ptrMesh = GfxRenderer()->NewMesh("PointLight.mesh", VERTEX_BINDING);
+	CGfxMeshDrawPtr ptrMeshDraw = GfxRenderer()->NewMeshDraw(ptrMesh->GetName(), ptrMesh, 0);
+	CGfxMaterialPtr ptrMaterialCullFaceBack = GfxRenderer()->NewMaterial("PointLightCullFaceBack.material", VERTEX_BINDING, INSTANCE_BINDING);
+	CGfxMaterialPtr ptrMaterialCullFaceFront = GfxRenderer()->NewMaterial("PointLightCullFaceFront.material", VERTEX_BINDING, INSTANCE_BINDING);
+
+	const eastl::vector<int>& instnaces0 = m_pCamera->GetRenderQueue()->GetInstanceBuffer(ptrMaterialCullFaceFront, ptrMeshDraw);
+	const eastl::vector<int>& instnaces1 = m_pCamera->GetRenderQueue()->GetInstanceBuffer(ptrMaterialCullFaceBack, ptrMeshDraw);
 
 	eastl::vector<int> instance;
 	instance.insert(instance.end(), instnaces0.begin(), instnaces0.end());
