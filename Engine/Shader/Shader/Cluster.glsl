@@ -18,6 +18,7 @@ USE_CULL_LIGHT_LIST_DATA_STORAGE;
 layout(push_constant) uniform PushConstantParam {
 	int tileSize;
 	int numDepthSlices;
+	int numPointLights;
 } Param;
 
 bool Intersection(highp vec3 minAABBPosition, highp vec3 maxAABBPosition, highp vec3 spherePosition, highp float radius)
@@ -38,13 +39,14 @@ bool Intersection(highp vec3 minAABBPosition, highp vec3 maxAABBPosition, highp 
 
 void main()
 {
-	highp float tileSize = float(Param.tileSize);
-	highp float numDepthSlices = float(Param.numDepthSlices);
+	highp int tileSize = Param.tileSize;
+	highp int numDepthSlices = Param.numDepthSlices;
+	highp int numPointLights = Param.numPointLights;
 
-	highp vec2 minScreenPosition = vec2(float(gl_GlobalInvocationID.x + uint(0)), float(gl_GlobalInvocationID.y + uint(0))) * tileSize / camera.screen.xy;
-	highp vec2 maxScreenPosition = vec2(float(gl_GlobalInvocationID.x + uint(1)), float(gl_GlobalInvocationID.y + uint(1))) * tileSize / camera.screen.xy;
-	highp float minDepthValue = (float(gl_GlobalInvocationID.z + uint(0))) / numDepthSlices;
-	highp float maxDepthValue = (float(gl_GlobalInvocationID.z + uint(1))) / numDepthSlices;
+	highp vec2 minScreenPosition = vec2(float(gl_GlobalInvocationID.x + uint(0)), float(gl_GlobalInvocationID.y + uint(0))) * float(tileSize) / camera.screen.xy;
+	highp vec2 maxScreenPosition = vec2(float(gl_GlobalInvocationID.x + uint(1)), float(gl_GlobalInvocationID.y + uint(1))) * float(tileSize) / camera.screen.xy;
+	highp float minDepthValue = (float(gl_GlobalInvocationID.z + uint(0))) / float(numDepthSlices);
+	highp float maxDepthValue = (float(gl_GlobalInvocationID.z + uint(1))) / float(numDepthSlices);
 
 	highp vec3 minViewPositionNear = ScreenToViewPosition(minScreenPosition, minDepthValue, camera.projectionInverseMatrix).xyz;
 	highp vec3 maxViewPositionNear = ScreenToViewPosition(maxScreenPosition, minDepthValue, camera.projectionInverseMatrix).xyz;
@@ -57,7 +59,7 @@ void main()
 	highp int visibleLightCount = 0;
     highp int visibleLightIndices[100];
 
-	for (int i = 0; i < fullLightListData.index.length(); i++) {
+	for (int i = 0; i < numPointLights; i++) {
 		highp int indexLight = fullLightListData.index[i];
 		highp vec3 spherePosition = sceneData.data[indexLight].center.xyz;
 		highp float radius = sceneData.data[indexLight].lightAttenuation.w;
