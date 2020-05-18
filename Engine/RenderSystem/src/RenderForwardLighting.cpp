@@ -4,7 +4,7 @@
 #include "GLES3Renderer.h"
 
 
-void CRenderSystem::RenderForwardLighting(CTaskPool& taskPool, CTaskGraph& taskGraph, CCamera* pCamera, bool bPresent)
+void CRenderSystem::RenderForwardShading(CTaskPool& taskPool, CTaskGraph& taskGraph, CCamera* pCamera, bool bPresent)
 {
 	m_pInstanceBufferPool->Clear();
 
@@ -23,7 +23,7 @@ void CRenderSystem::RenderForwardLighting(CTaskPool& taskPool, CTaskGraph& taskG
 
 		GfxRenderer()->BeginRecord(ptrGraphicCommandBuffer);
 		{
-			RenderForwardLighting(taskPool, taskGraph, ptrGraphicCommandBuffer, pCamera, bPresent);
+			RenderForwardShading(taskPool, taskGraph, ptrGraphicCommandBuffer, pCamera, bPresent);
 		}
 		GfxRenderer()->EndRecord(ptrGraphicCommandBuffer);
 		GfxRenderer()->Submit(ptrGraphicCommandBuffer, ptrComputeCommandBuffer->GetSemaphore());
@@ -31,7 +31,7 @@ void CRenderSystem::RenderForwardLighting(CTaskPool& taskPool, CTaskGraph& taskG
 	GfxRenderer()->Present(ptrGraphicCommandBuffer->GetSemaphore());
 }
 
-void CRenderSystem::RenderForwardLighting(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer, CCamera* pCamera, bool bPresent)
+void CRenderSystem::RenderForwardShading(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer, CCamera* pCamera, bool bPresent)
 {
 	{
 		uint32_t rtOutDepth = RENDER_TEXTURE_FULL_DEPTH;

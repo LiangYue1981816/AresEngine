@@ -152,22 +152,22 @@ void CEngine::RenderDefault(CCamera* pCamera, bool bPresent)
 	m_pRenderSystem->RenderDefault(m_taskPoolRender, m_taskGraphRender, pCamera, bPresent);
 }
 
-void CEngine::RenderForwardLighting(CCamera* pCamera, bool bPresent)
+void CEngine::RenderForwardShading(CCamera* pCamera, bool bPresent)
 {
 	m_pRenderSystem->UpdateCamera(m_taskPoolRender, m_taskGraphRender, pCamera, 0xffffffff, true);
-	m_pRenderSystem->RenderForwardLighting(m_taskPoolRender, m_taskGraphRender, pCamera, bPresent);
+	m_pRenderSystem->RenderForwardShading(m_taskPoolRender, m_taskGraphRender, pCamera, bPresent);
 }
 
-void CEngine::RenderDeferredLighting(CCamera* pCamera, bool bPresent)
+void CEngine::RenderDeferredShading(CCamera* pCamera, bool bPresent)
 {
 	m_pRenderSystem->UpdateCamera(m_taskPoolRender, m_taskGraphRender, pCamera, 0xffffffff, true);
-	m_pRenderSystem->RenderDeferredLighting(m_taskPoolRender, m_taskGraphRender, pCamera, bPresent);
+	m_pRenderSystem->RenderDeferredShading(m_taskPoolRender, m_taskGraphRender, pCamera, bPresent);
 }
 
-void CEngine::RenderTileDeferredLighting(CCamera* pCamera, bool bPresent)
+void CEngine::RenderTileDeferredShading(CCamera* pCamera, bool bPresent)
 {
 	m_pRenderSystem->UpdateCamera(m_taskPoolRender, m_taskGraphRender, pCamera, 0xffffffff, true);
-	m_pRenderSystem->RenderTileDeferredLighting(m_taskPoolRender, m_taskGraphRender, pCamera, bPresent);
+	m_pRenderSystem->RenderTileDeferredShading(m_taskPoolRender, m_taskGraphRender, pCamera, bPresent);
 }
 
 void CEngine::UpdateThread(void)

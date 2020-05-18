@@ -39,9 +39,9 @@ public:
 	void Update(void);
 
 	void RenderDefault(CCamera* pCamera, bool bPresent);
-	void RenderForwardLighting(CCamera* pCamera, bool bPresent);
-	void RenderDeferredLighting(CCamera* pCamera, bool bPresent);
-	void RenderTileDeferredLighting(CCamera* pCamera, bool bPresent);
+	void RenderForwardShading(CCamera* pCamera, bool bPresent);
+	void RenderDeferredShading(CCamera* pCamera, bool bPresent);
+	void RenderTileDeferredShading(CCamera* pCamera, bool bPresent);
 
 private:
 	void UpdateThread(void);
