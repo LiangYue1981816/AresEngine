@@ -164,10 +164,10 @@ void CEngine::RenderDeferredLighting(CCamera* pCamera, bool bPresent)
 	m_pRenderSystem->RenderDeferredLighting(m_taskPoolRender, m_taskGraphRender, pCamera, bPresent);
 }
 
-void CEngine::RenderTileBaseDeferredLighting(CCamera* pCamera, bool bPresent)
+void CEngine::RenderTileDeferredLighting(CCamera* pCamera, bool bPresent)
 {
 	m_pRenderSystem->UpdateCamera(m_taskPoolRender, m_taskGraphRender, pCamera, 0xffffffff, true);
-	m_pRenderSystem->RenderTileBaseDeferredLighting(m_taskPoolRender, m_taskGraphRender, pCamera, bPresent);
+	m_pRenderSystem->RenderTileDeferredLighting(m_taskPoolRender, m_taskGraphRender, pCamera, bPresent);
 }
 
 void CEngine::UpdateThread(void)
