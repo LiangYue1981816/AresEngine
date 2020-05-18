@@ -1560,9 +1560,6 @@
     <ClInclude Include="..\..\Engine\RenderSystem\include\PassDefault.h">
       <Filter>Engine\RenderSystem\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Engine\RenderSystem\include\PassForwardLighting.h">
-      <Filter>Engine\RenderSystem\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Engine\RenderSystem\include\RenderSystem.h">
       <Filter>Engine\RenderSystem\Header Files</Filter>
     </ClInclude>
@@ -1647,9 +1644,6 @@
     <ClInclude Include="..\..\Engine\RenderSystem\include\InstanceBufferPool.h">
       <Filter>Engine\RenderSystem\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Engine\RenderSystem\include\PassDeferredLighting.h">
-      <Filter>Engine\RenderSystem\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Engine\Base\include\MemoryStream.h">
       <Filter>Engine\Base\Header Files</Filter>
     </ClInclude>
@@ -1670,6 +1664,15 @@
     </ClInclude>
     <ClInclude Include="..\..\Engine\UtilsHeader.h">
       <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\RenderSystem\include\PassDeferredShading.h">
+      <Filter>Engine\RenderSystem\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\RenderSystem\include\PassForwardShading.h">
+      <Filter>Engine\RenderSystem\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\RenderSystem\include\PassTileDeferredShading.h">
+      <Filter>Engine\RenderSystem\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -2342,9 +2345,6 @@
     <ClCompile Include="..\..\Engine\RenderSystem\src\PassDefault.cpp">
       <Filter>Engine\RenderSystem\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Engine\RenderSystem\src\PassForwardLighting.cpp">
-      <Filter>Engine\RenderSystem\Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Engine\RenderSystem\src\RenderSystem.cpp">
       <Filter>Engine\RenderSystem\Source Files</Filter>
     </ClCompile>
@@ -2420,15 +2420,6 @@
     <ClCompile Include="..\..\Engine\RenderSystem\src\RenderDefault.cpp">
       <Filter>Engine\RenderSystem\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Engine\RenderSystem\src\RenderDeferredLighting.cpp">
-      <Filter>Engine\RenderSystem\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\RenderSystem\src\RenderForwardLighting.cpp">
-      <Filter>Engine\RenderSystem\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\RenderSystem\src\PassDeferredLighting.cpp">
-      <Filter>Engine\RenderSystem\Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Engine\Base\src\Task.cpp">
       <Filter>Engine\Base\Source Files</Filter>
     </ClCompile>
@@ -2453,7 +2444,22 @@
     <ClCompile Include="..\..\Engine\Utils\src\TextureLayout2D.cpp">
       <Filter>Engine\Utils\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Engine\RenderSystem\src\RenderTileDeferredLighting.cpp">
+    <ClCompile Include="..\..\Engine\RenderSystem\src\PassDeferredShading.cpp">
+      <Filter>Engine\RenderSystem\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\RenderSystem\src\PassForwardShading.cpp">
+      <Filter>Engine\RenderSystem\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\RenderSystem\src\PassTileDeferredShading.cpp">
+      <Filter>Engine\RenderSystem\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\RenderSystem\src\RenderDeferredShading.cpp">
+      <Filter>Engine\RenderSystem\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\RenderSystem\src\RenderForwardShading.cpp">
+      <Filter>Engine\RenderSystem\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\RenderSystem\src\RenderTileDeferredShading.cpp">
       <Filter>Engine\RenderSystem\Source Files</Filter>
     </ClCompile>
   </ItemGroup>

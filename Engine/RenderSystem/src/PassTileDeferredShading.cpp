@@ -11,7 +11,7 @@
 // SubPass1 PointLighting
 //    Color += ao * ssao * pointLighting
 //==================================================================================
-
+/*
 static const int indexAttachmentColor = 0;
 static const int indexAttachmentGBuffer0 = 1;
 static const int indexAttachmentGBuffer1 = 2;
@@ -22,7 +22,7 @@ static const int numAttachments = 4;
 static CGfxRenderPassPtr ptrRenderPass;
 
 
-void CPassDeferredLighting::Create(GfxPixelFormat colorPixelFormat, GfxPixelFormat depthPixelFormat)
+void CPassDeferredShading::Create(GfxPixelFormat colorPixelFormat, GfxPixelFormat depthPixelFormat)
 {
 	const int stencil = 0;
 	const float depth = 1.0f;
@@ -44,13 +44,13 @@ void CPassDeferredLighting::Create(GfxPixelFormat colorPixelFormat, GfxPixelForm
 	ptrRenderPass->Create();
 }
 
-void CPassDeferredLighting::Destroy(void)
+void CPassDeferredShading::Destroy(void)
 {
 	ptrRenderPass.Release();
 }
 
 
-CPassDeferredLighting::CPassDeferredLighting(CRenderSystem* pRenderSystem)
+CPassDeferredShading::CPassDeferredShading(CRenderSystem* pRenderSystem)
 	: CPassBase(pRenderSystem)
 {
 	{
@@ -81,12 +81,12 @@ CPassDeferredLighting::CPassDeferredLighting(CRenderSystem* pRenderSystem)
 	}
 }
 
-CPassDeferredLighting::~CPassDeferredLighting(void)
+CPassDeferredShading::~CPassDeferredShading(void)
 {
 
 }
 
-void CPassDeferredLighting::SetCamera(CCamera* pCamera)
+void CPassDeferredShading::SetCamera(CCamera* pCamera)
 {
 	if (m_pCamera != pCamera) {
 		m_pCamera = pCamera;
@@ -95,7 +95,7 @@ void CPassDeferredLighting::SetCamera(CCamera* pCamera)
 	}
 }
 
-void CPassDeferredLighting::SetInputTexture(CGfxRenderTexturePtr ptrDepthTexture, CGfxRenderTexturePtr ptrShadowTexture, CGfxRenderTexturePtr ptrSSAOTexture)
+void CPassDeferredShading::SetInputTexture(CGfxRenderTexturePtr ptrDepthTexture, CGfxRenderTexturePtr ptrShadowTexture, CGfxRenderTexturePtr ptrSSAOTexture)
 {
 	CGfxSampler* pSamplerPoint = GfxRenderer()->CreateSampler(GFX_FILTER_NEAREST, GFX_FILTER_NEAREST, GFX_SAMPLER_MIPMAP_MODE_NEAREST, GFX_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE);
 	CGfxSampler* pSamplerLinear = GfxRenderer()->CreateSampler(GFX_FILTER_NEAREST, GFX_FILTER_LINEAR, GFX_SAMPLER_MIPMAP_MODE_NEAREST, GFX_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE);
@@ -116,7 +116,7 @@ void CPassDeferredLighting::SetInputTexture(CGfxRenderTexturePtr ptrDepthTexture
 	}
 }
 
-void CPassDeferredLighting::SetOutputTexture(CGfxRenderTexturePtr ptrColorTexture, CGfxRenderTexturePtr ptrGBuffer0Texture, CGfxRenderTexturePtr ptrGBuffer1Texture, CGfxRenderTexturePtr ptrDepthStencilTexture)
+void CPassDeferredShading::SetOutputTexture(CGfxRenderTexturePtr ptrColorTexture, CGfxRenderTexturePtr ptrGBuffer0Texture, CGfxRenderTexturePtr ptrGBuffer1Texture, CGfxRenderTexturePtr ptrDepthStencilTexture)
 {
 	if (m_ptrOutputColorTexture != ptrColorTexture || m_ptrOutputGBuffer0Texture != ptrGBuffer0Texture || m_ptrOutputGBuffer1Texture != ptrGBuffer1Texture || m_ptrOutputDepthStencilTexture != ptrDepthStencilTexture) {
 		m_ptrOutputColorTexture = ptrColorTexture;
@@ -132,7 +132,7 @@ void CPassDeferredLighting::SetOutputTexture(CGfxRenderTexturePtr ptrColorTextur
 	}
 }
 
-void CPassDeferredLighting::Render(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer)
+void CPassDeferredShading::Render(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer)
 {
 	// Update
 	m_pCamera->GetCameraUniform()->Apply();
@@ -159,3 +159,4 @@ void CPassDeferredLighting::Render(CTaskPool& taskPool, CTaskGraph& taskGraph, C
 	}
 	GfxRenderer()->CmdPopDebugGroup(ptrCommandBuffer);
 }
+*/
