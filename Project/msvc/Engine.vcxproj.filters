@@ -2447,14 +2447,14 @@
     <ClCompile Include="..\..\Engine\RenderSystem\src\RenderPass.cpp">
       <Filter>Engine\RenderSystem\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Engine\RenderSystem\src\RenderTileBaseDeferredLighting.cpp">
-      <Filter>Engine\RenderSystem\Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Engine\RenderSystem\src\Cluster.cpp">
       <Filter>Engine\RenderSystem\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\Utils\src\TextureLayout2D.cpp">
       <Filter>Engine\Utils\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\RenderSystem\src\RenderTileDeferredLighting.cpp">
+      <Filter>Engine\RenderSystem\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
