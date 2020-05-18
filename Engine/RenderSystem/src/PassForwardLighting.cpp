@@ -9,7 +9,7 @@ static const int numSubpasses = 1;
 static const int numAttachments = 2;
 static CGfxRenderPassPtr ptrRenderPass;
 
-void CPassForwardLighting::Create(GfxPixelFormat colorPixelFormat, GfxPixelFormat depthPixelFormat)
+void CPassForwardShading::Create(GfxPixelFormat colorPixelFormat, GfxPixelFormat depthPixelFormat)
 {
 	const int stencil = 0;
 	const float depth = 1.0f;
@@ -23,13 +23,13 @@ void CPassForwardLighting::Create(GfxPixelFormat colorPixelFormat, GfxPixelForma
 	ptrRenderPass->Create();
 }
 
-void CPassForwardLighting::Destroy(void)
+void CPassForwardShading::Destroy(void)
 {
 	ptrRenderPass.Release();
 }
 
 
-CPassForwardLighting::CPassForwardLighting(CRenderSystem* pRenderSystem)
+CPassForwardShading::CPassForwardShading(CRenderSystem* pRenderSystem)
 	: CPassBase(pRenderSystem)
 {
 	CGfxDescriptorLayoutPtr ptrDescriptorLayout = GfxRenderer()->NewDescriptorLayout(DESCRIPTOR_SET_PASS);
@@ -45,12 +45,12 @@ CPassForwardLighting::CPassForwardLighting(CRenderSystem* pRenderSystem)
 	m_ptrDescriptorSetPass->SetStorageBuffer(STORAGE_SCENE_DATA_NAME, m_pRenderSystem->GetGPUScene()->GetInstanceBuffer(), 0, m_pRenderSystem->GetGPUScene()->GetInstanceBuffer()->GetSize());
 }
 
-CPassForwardLighting::~CPassForwardLighting(void)
+CPassForwardShading::~CPassForwardShading(void)
 {
 
 }
 
-void CPassForwardLighting::SetCamera(CCamera* pCamera)
+void CPassForwardShading::SetCamera(CCamera* pCamera)
 {
 	if (m_pCamera != pCamera) {
 		m_pCamera = pCamera;
@@ -58,7 +58,7 @@ void CPassForwardLighting::SetCamera(CCamera* pCamera)
 	}
 }
 
-void CPassForwardLighting::SetInputTexture(CGfxRenderTexturePtr ptrShadowTexture, CGfxRenderTexturePtr ptrSSAOTexture)
+void CPassForwardShading::SetInputTexture(CGfxRenderTexturePtr ptrShadowTexture, CGfxRenderTexturePtr ptrSSAOTexture)
 {
 	CGfxSampler* pSamplerPoint = GfxRenderer()->CreateSampler(GFX_FILTER_NEAREST, GFX_FILTER_NEAREST, GFX_SAMPLER_MIPMAP_MODE_NEAREST, GFX_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE);
 	CGfxSampler* pSamplerLinear = GfxRenderer()->CreateSampler(GFX_FILTER_NEAREST, GFX_FILTER_LINEAR, GFX_SAMPLER_MIPMAP_MODE_NEAREST, GFX_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE);
@@ -74,7 +74,7 @@ void CPassForwardLighting::SetInputTexture(CGfxRenderTexturePtr ptrShadowTexture
 	}
 }
 
-void CPassForwardLighting::SetOutputTexture(CGfxRenderTexturePtr ptrColorTexture, CGfxRenderTexturePtr ptrDepthStencilTexture)
+void CPassForwardShading::SetOutputTexture(CGfxRenderTexturePtr ptrColorTexture, CGfxRenderTexturePtr ptrDepthStencilTexture)
 {
 	if (m_ptrOutputColorTexture != ptrColorTexture || m_ptrOutputDepthStencilTexture != ptrDepthStencilTexture) {
 		m_ptrOutputColorTexture = ptrColorTexture;
@@ -86,7 +86,7 @@ void CPassForwardLighting::SetOutputTexture(CGfxRenderTexturePtr ptrColorTexture
 	}
 }
 
-void CPassForwardLighting::Render(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer)
+void CPassForwardShading::Render(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer)
 {
 	// Update
 	m_pCamera->GetCameraUniform()->Apply();

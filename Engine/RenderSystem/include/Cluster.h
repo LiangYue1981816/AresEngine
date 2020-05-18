@@ -5,8 +5,8 @@
 class CALL_API CCluster
 {
 	friend class CRenderSystem;
-	friend class CPassForwardLighting;
-	friend class CPassDeferredLighting;
+	friend class CPassForwardShading;
+	friend class CPassDeferredShading;
 
 
 public:

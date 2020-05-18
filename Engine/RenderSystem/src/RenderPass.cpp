@@ -63,18 +63,18 @@ void CRenderSystem::InternalPassShadow(CTaskPool& taskPool, CTaskGraph& taskGrap
 
 void CRenderSystem::InternalPassForwardLighting(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer, CCamera* pCamera, uint32_t rtInShadow, uint32_t rtInSSAO, uint32_t rtOutColor, uint32_t rtOutDepth)
 {
-	m_pPassForwardLighting->SetCamera(pCamera);
-	m_pPassForwardLighting->SetInputTexture(GetRenderTexture(rtInShadow), GetRenderTexture(rtInSSAO));
-	m_pPassForwardLighting->SetOutputTexture(GetRenderTexture(rtOutColor), GetRenderTexture(rtOutDepth));
-	m_pPassForwardLighting->Render(taskPool, taskGraph, ptrCommandBuffer);
+	m_pPassForwardShading->SetCamera(pCamera);
+	m_pPassForwardShading->SetInputTexture(GetRenderTexture(rtInShadow), GetRenderTexture(rtInSSAO));
+	m_pPassForwardShading->SetOutputTexture(GetRenderTexture(rtOutColor), GetRenderTexture(rtOutDepth));
+	m_pPassForwardShading->Render(taskPool, taskGraph, ptrCommandBuffer);
 }
 
 void CRenderSystem::InternalPassDeferredLighting(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer, CCamera* pCamera, uint32_t rtInDepth, uint32_t rtInShadow, uint32_t rtInSSAO, uint32_t rtOutColor, uint32_t rtOutDepth, uint32_t rtOutGBuffer0, uint32_t rtOutGBuffer1)
 {
-	m_pPassDeferredLighting->SetCamera(pCamera);
-	m_pPassDeferredLighting->SetInputTexture(GetRenderTexture(rtInDepth), GetRenderTexture(rtInShadow), GetRenderTexture(rtInSSAO));
-	m_pPassDeferredLighting->SetOutputTexture(GetRenderTexture(rtOutColor), GetRenderTexture(rtOutGBuffer0), GetRenderTexture(rtOutGBuffer1), GetRenderTexture(rtOutDepth));
-	m_pPassDeferredLighting->Render(taskPool, taskGraph, ptrCommandBuffer);
+	m_pPassDeferredShading->SetCamera(pCamera);
+	m_pPassDeferredShading->SetInputTexture(GetRenderTexture(rtInDepth), GetRenderTexture(rtInShadow), GetRenderTexture(rtInSSAO));
+	m_pPassDeferredShading->SetOutputTexture(GetRenderTexture(rtOutColor), GetRenderTexture(rtOutGBuffer0), GetRenderTexture(rtOutGBuffer1), GetRenderTexture(rtOutDepth));
+	m_pPassDeferredShading->Render(taskPool, taskGraph, ptrCommandBuffer);
 }
 
 void CRenderSystem::InternalPassBloom(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer, CCamera* pCamera, uint32_t rtInColor, uint32_t rtOutBloom, uint32_t rtTempThreshold, uint32_t rtTempBlur0, uint32_t rtTempBlur1)

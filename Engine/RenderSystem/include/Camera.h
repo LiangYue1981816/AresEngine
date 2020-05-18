@@ -11,8 +11,8 @@ class CALL_API CCamera
 	friend class CPassPreZ;
 	friend class CPassShadow;
 	friend class CPassDefault;
-	friend class CPassForwardLighting;
-	friend class CPassDeferredLighting;
+	friend class CPassForwardShading;
+	friend class CPassDeferredShading;
 	friend class CPassBlit;
 	friend class CPassCopyColor;
 	friend class CPassCopyDepthStencil;
