@@ -150,9 +150,14 @@ void CGPUScene::Update(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBu
 	{
 		GfxRenderer()->CmdSetBufferBarrier(ptrCommandBuffer, m_ptrInstanceDataBuffer, GFX_ACCESS_TRANSFER_READ_BIT, GFX_ACCESS_TRANSFER_WRITE_BIT);
 		{
+			const int local_size_x = 128;
+			const int local_size_y = 1;
+			const int local_size_z = 1;
+
 			GfxRenderer()->CmdBindPipelineCompute(ptrCommandBuffer, m_pPipelineCompute);
 			GfxRenderer()->CmdBindDescriptorSet(ptrCommandBuffer, m_ptrDescriptorSet);
-			GfxRenderer()->CmdDispatch(ptrCommandBuffer, datas.size(), 1, 1);
+			GfxRenderer()->CmdUniform1i(ptrCommandBuffer, HashValue("Param.numTransfers"), datas.size());
+			GfxRenderer()->CmdDispatch(ptrCommandBuffer, datas.size() / local_size_x, 1 / local_size_y, 1 / local_size_z);
 		}
 		GfxRenderer()->CmdSetBufferBarrier(ptrCommandBuffer, m_ptrInstanceDataBuffer, GFX_ACCESS_TRANSFER_WRITE_BIT, GFX_ACCESS_TRANSFER_READ_BIT);
 	}

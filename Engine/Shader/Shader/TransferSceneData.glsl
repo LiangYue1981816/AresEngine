@@ -1,5 +1,5 @@
 #version 310 es
-layout (local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
+layout (local_size_x = 128, local_size_y = 1, local_size_z = 1) in;
 
 precision mediump float;
 #include "engine.inc"
@@ -13,10 +13,16 @@ USE_TRANSFER_SCENE_DATA_INDEX_STORAGE;
 // ...
 
 // Descriptor
-// ...
+layout(push_constant) uniform PushConstantParam {
+	int numTransfers;
+} Param;
 
 void main()
 {
-	uint indexWork = gl_GlobalInvocationID.x;
-	sceneData.data[transferSceneDataIndex.index[indexWork]] = transferSceneData.data[indexWork];
+	int numTransfers = Param.numTransfers;
+	int indexTransfer = int(gl_GlobalInvocationID.x);
+
+	if (indexTransfer < numTransfers) {
+		sceneData.data[transferSceneDataIndex.index[indexTransfer]] = transferSceneData.data[indexTransfer];
+	}
 }
