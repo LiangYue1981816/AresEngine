@@ -37,7 +37,7 @@ USE_CAMERA_UNIFORM;
 USE_ENGINE_UNIFORM;
 USE_COLOR_TEXTURE_UNIFORM;
 
-#include "light.inc"
+#include "lighting.inc"
 
 // Input
 layout (location = 0) in mediump vec2 inTexcoord;

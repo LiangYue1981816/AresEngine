@@ -59,7 +59,7 @@ USE_ENGINE_UNIFORM;
 USE_SSAO_TEXTURE_UNIFORM;
 USE_SHADOW_TEXTURE_UNIFORM;
 
-#include "light.inc"
+#include "lighting.inc"
 #include "shadow.inc"
 
 // Input

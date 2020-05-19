@@ -36,7 +36,7 @@ USE_ENGINE_UNIFORM;
 USE_SCENE_DATA_STORAGE;
 USE_DEPTH_TEXTURE_UNIFORM;
 
-#include "light.inc"
+#include "lighting.inc"
 
 // Input
 layout (location = 0) in highp vec4 inPosition;
