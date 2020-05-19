@@ -8,12 +8,7 @@
 		  </Vertex>
 		  <Fragment file_name="PostProcess_ScreenSpaceAmbientOcclusion.glsl">
 		  </Fragment>
-		  <State>
-		  	<Rasterization>
-		  		<Cull enable="GFX_FALSE" cull_face="GFX_FRONT_AND_BACK" front_face="GFX_CCW" />
-		  	</Rasterization>
-		  </State>
 		</Pipeline>
-		<Texture2D name="texNoise" file_name="noise.dds" min_filter="GFX_NEAREST" mag_filter="GFX_NEAREST" mipmap_mode="GFX_NEAREST" address_mode="GFX_REPEAT" />
+		<Texture2D name="texNoise" file_name="Noise.dds" min_filter="GFX_NEAREST" mag_filter="GFX_NEAREST" mipmap_mode="GFX_NEAREST" address_mode="GFX_REPEAT" />
 	</Pass>
 </Material>

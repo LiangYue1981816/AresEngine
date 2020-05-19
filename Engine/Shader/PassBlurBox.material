@@ -8,11 +8,6 @@
 		  </Vertex>
 		  <Fragment file_name="PostProcess_BlurBox.glsl">
 		  </Fragment>
-		  <State>
-		  	<Rasterization>
-		  		<Cull enable="GFX_FALSE" cull_face="GFX_FRONT_AND_BACK" front_face="GFX_CCW" />
-		  	</Rasterization>
-		  </State>
 		</Pipeline>
 	</Pass>
 </Material>

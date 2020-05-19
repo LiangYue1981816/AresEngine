@@ -1,6 +1,6 @@
 <Material>
-	<Pass name="PassDefault">
-		<Pipeline render_pass="PassDefault">
+	<Pass name="PassUnlit">
+		<Pipeline render_pass="PassUnlit">
 			<Vertex file_name="Debug.glsl">
 				<Define name="VERTEX_ATTRIBUTE_POSITION" />
 				<Define name="VERTEX_ATTRIBUTE_NORMAL" />
