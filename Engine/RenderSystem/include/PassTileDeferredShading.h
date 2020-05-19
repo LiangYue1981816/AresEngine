@@ -2,8 +2,7 @@
 #include "PreHeader.h"
 
 
-/*
-class CALL_API CPassDeferredShading : public CPassBase
+class CALL_API CPassTileDeferredShading : public CPassBase
 {
 	friend class CCamera;
 	friend class CRenderSystem;
@@ -15,8 +14,8 @@ private:
 
 
 private:
-	CPassDeferredShading(CRenderSystem* pRenderSystem);
-	virtual ~CPassDeferredShading(void);
+	CPassTileDeferredShading(CRenderSystem* pRenderSystem);
+	virtual ~CPassTileDeferredShading(void);
 
 
 public:
@@ -42,4 +41,3 @@ private:
 	CGfxRenderTexturePtr m_ptrOutputGBuffer1Texture; // Normal Roughness Metallic
 	CGfxRenderTexturePtr m_ptrOutputDepthStencilTexture;
 };
-*/

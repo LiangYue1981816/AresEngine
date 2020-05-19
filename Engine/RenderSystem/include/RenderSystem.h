@@ -139,6 +139,7 @@ class CALL_API CRenderSystem
 	friend class CPassDefault;
 	friend class CPassForwardShading;
 	friend class CPassDeferredShading;
+	friend class CPassTileDeferredShading;
 	friend class CPassBlit;
 	friend class CPassCopyColor;
 	friend class CPassCopyDepthStencil;
