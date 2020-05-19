@@ -106,11 +106,11 @@
 #define PASS_COLOR_GRADING_NAME                            HashValue("PassColorGrading")
 #define PASS_FINAL_NAME                                    HashValue("PassFinal")
 
+// Material
 #define PASS_COPY_COLOR_MATERIAL_NAME                      "PassCopyColor.material"
 #define PASS_COPY_DEPTH_STENCIL_MATERIAL_NAME              "PassCopyDepthStencil.material"
 
-#define PASS_TILE_DEFERRED_SHADING_LIGHTING_MATERIAL_NAME  "PassTileDeferredShading_Lighting.material"
-
+#define PASS_TILE_DEFERRED_SHADING_MATERIAL_NAME           "PassTileDeferredShading.material"
 #define PASS_SSAO_MATERIAL_NAME                            "PassSSAO.material"
 #define PASS_BLUR_BOX_MATERIAL_NAME                        "PassBlurBox.material"
 #define PASS_BLUR_HORIZONTAL_MATERIAL_NAME                 "PassBlurHorizontal.material"

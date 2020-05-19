@@ -51,7 +51,7 @@ void CPassTileDeferredShading::Destroy(void)
 
 
 CPassTileDeferredShading::CPassTileDeferredShading(CRenderSystem* pRenderSystem)
-	: CPassBlit(PASS_TILE_DEFERRED_SHADING_LIGHTING_MATERIAL_NAME, pRenderSystem)
+	: CPassBlit(PASS_TILE_DEFERRED_SHADING_MATERIAL_NAME, pRenderSystem)
 {
 	{
 		CGfxDescriptorLayoutPtr ptrDescriptorLayout = GfxRenderer()->NewDescriptorLayout(DESCRIPTOR_SET_PASS);
