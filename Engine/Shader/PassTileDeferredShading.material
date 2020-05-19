@@ -1,0 +1,13 @@
+<Material>
+	<Pass name="PassTileDeferredShading_Lighting">
+		<Pipeline render_pass="PassTileDeferredShading">
+		  <Vertex file_name="PostProcess_TileDeferredShading.glsl">
+		    <Define name="VERTEX_ATTRIBUTE_POSITION" />
+        <Define name="VERTEX_ATTRIBUTE_TEXCOORD0" />
+        <Define name="INSTANCE_ATTRIBUTE_INDEX" />
+		  </Vertex>
+		  <Fragment file_name="PostProcess_TileDeferredShading.glsl">
+		  </Fragment>
+		</Pipeline>
+	</Pass>
+</Material>
