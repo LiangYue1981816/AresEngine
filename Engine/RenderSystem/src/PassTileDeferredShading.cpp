@@ -11,6 +11,7 @@
 // SubPass1 PointLighting
 //    Color += ao * ssao * pointLighting
 //==================================================================================
+
 static const int indexAttachmentColor = 0;
 static const int indexAttachmentGBuffer0 = 1;
 static const int indexAttachmentGBuffer1 = 2;
