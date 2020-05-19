@@ -2,7 +2,7 @@
 #include "PreHeader.h"
 
 
-class CALL_API CPassDefault : public CPassBase
+class CALL_API CPassUnlit : public CPassBase
 {
 	friend class CCamera;
 	friend class CRenderSystem;
@@ -14,8 +14,8 @@ private:
 
 
 private:
-	CPassDefault(CRenderSystem* pRenderSystem);
-	virtual ~CPassDefault(void);
+	CPassUnlit(CRenderSystem* pRenderSystem);
+	virtual ~CPassUnlit(void);
 
 
 public:

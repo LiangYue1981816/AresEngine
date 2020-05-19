@@ -44,9 +44,9 @@ void CRenderSystem::RenderUnlit(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfx
 
 	uint32_t rtColor = RENDER_TEXTURE_FULL_HDR_COLOR0;
 	{
-		m_pPassDefault->SetCamera(pCamera);
-		m_pPassDefault->SetOutputTexture(GetRenderTexture(rtColor), GetRenderTexture(rtDepth));
-		m_pPassDefault->Render(taskPool, taskGraph, ptrCommandBuffer);
+		m_pPassUnlit->SetCamera(pCamera);
+		m_pPassUnlit->SetOutputTexture(GetRenderTexture(rtColor), GetRenderTexture(rtDepth));
+		m_pPassUnlit->Render(taskPool, taskGraph, ptrCommandBuffer);
 	}
 	rtFinal = rtColor;
 

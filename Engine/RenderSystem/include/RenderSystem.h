@@ -145,7 +145,7 @@ class CALL_API CRenderSystem
 	friend class CPassBase;
 	friend class CPassPreZ;
 	friend class CPassShadow;
-	friend class CPassDefault;
+	friend class CPassUnlit;
 	friend class CPassForwardShading;
 	friend class CPassDeferredShading;
 	friend class CPassTileDeferredShading;
@@ -267,7 +267,7 @@ private:
 private:
 	CPassPreZ* m_pPassPreZ;
 	CPassShadow* m_pPassShadow;
-	CPassDefault* m_pPassDefault;
+	CPassUnlit* m_pPassUnlit;
 	CPassForwardShading* m_pPassForwardShading;
 	CPassDeferredShading* m_pPassDeferredShading;
 	CPassCopyColor* m_pPassCopyColor;

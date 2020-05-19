@@ -27,7 +27,7 @@ CRenderSystem::CRenderSystem(GfxApi api, void* hInstance, void* hWnd, void* hDC,
 
 	, m_pPassPreZ(nullptr)
 	, m_pPassShadow(nullptr)
-	, m_pPassDefault(nullptr)
+	, m_pPassUnlit(nullptr)
 	, m_pPassForwardShading(nullptr)
 	, m_pPassDeferredShading(nullptr)
 	, m_pPassCopyColor(nullptr)
@@ -116,7 +116,7 @@ void CRenderSystem::CreatePasses(void)
 {
 	CPassPreZ::Create(GFX_PIXELFORMAT_D32_SFLOAT_PACK32);
 	CPassShadow::Create(GFX_PIXELFORMAT_D32_SFLOAT_PACK32);
-	CPassDefault::Create(GFX_PIXELFORMAT_BGR10A2_UNORM_PACK32, GFX_PIXELFORMAT_D32_SFLOAT_PACK32);
+	CPassUnlit::Create(GFX_PIXELFORMAT_BGR10A2_UNORM_PACK32, GFX_PIXELFORMAT_D32_SFLOAT_PACK32);
 	CPassForwardShading::Create(GFX_PIXELFORMAT_BGR10A2_UNORM_PACK32, GFX_PIXELFORMAT_D32_SFLOAT_PACK32);
 	CPassDeferredShading::Create(GFX_PIXELFORMAT_BGR10A2_UNORM_PACK32, GFX_PIXELFORMAT_D32_SFLOAT_PACK32);
 	CPassCopyColor::Create(GFX_PIXELFORMAT_BGR10A2_UNORM_PACK32);
@@ -132,7 +132,7 @@ void CRenderSystem::CreatePasses(void)
 
 	m_pPassPreZ = new CPassPreZ(this);
 	m_pPassShadow = new CPassShadow(this);
-	m_pPassDefault = new CPassDefault(this);
+	m_pPassUnlit = new CPassUnlit(this);
 	m_pPassForwardShading = new CPassForwardShading(this);
 	m_pPassDeferredShading = new CPassDeferredShading(this);
 	m_pPassCopyColor = new CPassCopyColor(this);
@@ -152,7 +152,7 @@ void CRenderSystem::DestroyPasses(void)
 {
 	CPassPreZ::Destroy();
 	CPassShadow::Destroy();
-	CPassDefault::Destroy();
+	CPassUnlit::Destroy();
 	CPassForwardShading::Destroy();
 	CPassDeferredShading::Destroy();
 	CPassCopyColor::Destroy();
@@ -168,7 +168,7 @@ void CRenderSystem::DestroyPasses(void)
 
 	delete m_pPassPreZ;
 	delete m_pPassShadow;
-	delete m_pPassDefault;
+	delete m_pPassUnlit;
 	delete m_pPassForwardShading;
 	delete m_pPassDeferredShading;
 	delete m_pPassCopyColor;

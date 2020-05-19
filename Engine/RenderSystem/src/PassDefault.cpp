@@ -9,7 +9,7 @@ static const int numSubpasses = 1;
 static const int numAttachments = 2;
 static CGfxRenderPassPtr ptrRenderPass;
 
-void CPassDefault::Create(GfxPixelFormat colorPixelFormat, GfxPixelFormat depthPixelFormat)
+void CPassUnlit::Create(GfxPixelFormat colorPixelFormat, GfxPixelFormat depthPixelFormat)
 {
 	const int stencil = 0;
 	const float depth = 1.0f;
@@ -23,13 +23,13 @@ void CPassDefault::Create(GfxPixelFormat colorPixelFormat, GfxPixelFormat depthP
 	ptrRenderPass->Create();
 }
 
-void CPassDefault::Destroy(void)
+void CPassUnlit::Destroy(void)
 {
 	ptrRenderPass.Release();
 }
 
 
-CPassDefault::CPassDefault(CRenderSystem* pRenderSystem)
+CPassUnlit::CPassUnlit(CRenderSystem* pRenderSystem)
 	: CPassBase(pRenderSystem)
 {
 	CGfxDescriptorLayoutPtr ptrDescriptorLayout = GfxRenderer()->NewDescriptorLayout(DESCRIPTOR_SET_PASS);
@@ -43,12 +43,12 @@ CPassDefault::CPassDefault(CRenderSystem* pRenderSystem)
 	m_ptrDescriptorSetPass->SetStorageBuffer(STORAGE_SCENE_DATA_NAME, m_pRenderSystem->GetGPUScene()->GetInstanceBuffer(), 0, m_pRenderSystem->GetGPUScene()->GetInstanceBuffer()->GetSize());
 }
 
-CPassDefault::~CPassDefault(void)
+CPassUnlit::~CPassUnlit(void)
 {
 
 }
 
-void CPassDefault::SetCamera(CCamera* pCamera)
+void CPassUnlit::SetCamera(CCamera* pCamera)
 {
 	if (m_pCamera != pCamera) {
 		m_pCamera = pCamera;
@@ -56,7 +56,7 @@ void CPassDefault::SetCamera(CCamera* pCamera)
 	}
 }
 
-void CPassDefault::SetOutputTexture(CGfxRenderTexturePtr ptrColorTexture, CGfxRenderTexturePtr ptrDepthStencilTexture)
+void CPassUnlit::SetOutputTexture(CGfxRenderTexturePtr ptrColorTexture, CGfxRenderTexturePtr ptrDepthStencilTexture)
 {
 	if (m_ptrOutputColorTexture != ptrColorTexture || m_ptrOutputDepthStencilTexture != ptrDepthStencilTexture) {
 		m_ptrOutputColorTexture = ptrColorTexture;
@@ -68,7 +68,7 @@ void CPassDefault::SetOutputTexture(CGfxRenderTexturePtr ptrColorTexture, CGfxRe
 	}
 }
 
-void CPassDefault::Render(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer)
+void CPassUnlit::Render(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer)
 {
 	// Update
 	m_pCamera->GetCameraUniform()->Apply();

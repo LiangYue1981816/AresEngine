@@ -43,7 +43,7 @@ class CALL_API CGPUScene
 	friend class CCluster;
 	friend class CPassPreZ;
 	friend class CPassShadow;
-	friend class CPassDefault;
+	friend class CPassUnlit;
 	friend class CPassForwardShading;
 	friend class CPassDeferredShading;
 	friend class CPassTileDeferredShading;
