@@ -84,7 +84,8 @@
 // Pass
 #define PASS_PREZ_NAME                                     HashValue("PassPreZ")
 #define PASS_SHADOW_NAME                                   HashValue("PassShadow")
-#define PASS_DEFAULT_NAME                                  HashValue("PassDefault")
+
+#define PASS_UNLIT_NAME                                    HashValue("PassUnlit")
 #define PASS_FORWARD_SHADING_NAME                          HashValue("PassForwardShading")
 #define PASS_DEFERRED_SHADING_NAME                         HashValue("PassDeferredShading")
 #define PASS_DEFERRED_SHADING_GBUFFER_NAME                 HashValue("PassDeferredShading_GBuffer")
@@ -105,17 +106,17 @@
 #define PASS_COLOR_GRADING_NAME                            HashValue("PassColorGrading")
 #define PASS_FINAL_NAME                                    HashValue("PassFinal")
 
-#define PASS_TILE_DEFERRED_SHADING_LIGHTING_MATERIAL_NAME  "PassTileDeferredShading_Lighting.material"
-
 #define PASS_COPY_COLOR_MATERIAL_NAME                      "PassCopyColor.material"
 #define PASS_COPY_DEPTH_STENCIL_MATERIAL_NAME              "PassCopyDepthStencil.material"
 
+#define PASS_TILE_DEFERRED_SHADING_LIGHTING_MATERIAL_NAME  "PassTileDeferredShading_Lighting.material"
+
+#define PASS_SSAO_MATERIAL_NAME                            "PassSSAO.material"
 #define PASS_BLUR_BOX_MATERIAL_NAME                        "PassBlurBox.material"
 #define PASS_BLUR_HORIZONTAL_MATERIAL_NAME                 "PassBlurHorizontal.material"
 #define PASS_BLUR_VERTICAL_MATERIAL_NAME                   "PassBlurVertical.material"
 #define PASS_BLEND_ADD_MATERIAL_NAME                       "PassBlendAdd.material"
 #define PASS_LUMINANCE_THRESHOLD_MATERIAL_NAME             "PassLuminanceThreshold.material"
-#define PASS_SSAO_MATERIAL_NAME                            "PassSSAO.material"
 #define PASS_COLOR_GRADING_MATERIAL_NAME                   "PassColorGrading.material"
 #define PASS_FINAL_MATERIAL_NAME                           "PassFinal.material"
 
