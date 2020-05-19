@@ -1,12 +1,12 @@
 <Material>
 	<Pass name="PassBlurVertical">
 		<Pipeline render_pass="PassBlurVertical">
-		  <Vertex file_name="BlurVertical.glsl">
+		  <Vertex file_name="PostProcess_BlurVertical.glsl">
 		    <Define name="VERTEX_ATTRIBUTE_POSITION" />
         <Define name="VERTEX_ATTRIBUTE_TEXCOORD0" />
         <Define name="INSTANCE_ATTRIBUTE_INDEX" />
 		  </Vertex>
-		  <Fragment file_name="BlurVertical.glsl">
+		  <Fragment file_name="PostProcess_BlurVertical.glsl">
 		  </Fragment>
 		  <State>
 		  	<Rasterization>

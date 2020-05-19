@@ -1,12 +1,12 @@
 <Material>
 	<Pass name="PassFinal">
 		<Pipeline render_pass="PassFinal">
-		  <Vertex file_name="Final.glsl">
+		  <Vertex file_name="PostProcess_Final.glsl">
 		    <Define name="VERTEX_ATTRIBUTE_POSITION" />
         <Define name="VERTEX_ATTRIBUTE_TEXCOORD0" />
         <Define name="INSTANCE_ATTRIBUTE_INDEX" />
 		  </Vertex>
-		  <Fragment file_name="Final.glsl">
+		  <Fragment file_name="PostProcess_Final.glsl">
 		  </Fragment>
 		  <State>
 		  	<Rasterization>

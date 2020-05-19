@@ -1,12 +1,12 @@
 <Material>
 	<Pass name="PassSSAO">
 		<Pipeline render_pass="PassSSAO">
-		  <Vertex file_name="SSAO.glsl">
+		  <Vertex file_name="PostProcess_ScreenSpaceAmbientOcclusion.glsl">
 		    <Define name="VERTEX_ATTRIBUTE_POSITION" />
         <Define name="VERTEX_ATTRIBUTE_TEXCOORD0" />
         <Define name="INSTANCE_ATTRIBUTE_INDEX" />
 		  </Vertex>
-		  <Fragment file_name="SSAO.glsl">
+		  <Fragment file_name="PostProcess_ScreenSpaceAmbientOcclusion.glsl">
 		  </Fragment>
 		  <State>
 		  	<Rasterization>

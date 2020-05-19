@@ -10,14 +10,14 @@
 			</Fragment>
 		</Pipeline>
 	</Pass>
-	<Pass name="PassDeferredLighting_Shading">
-		<Pipeline render_pass="PassDeferredLighting" sub_pass="1">
-			<Vertex file_name="DeferredLighting_Shading.glsl">
+	<Pass name="PassDeferredShading_Lighting">
+		<Pipeline render_pass="PassDeferredShading" sub_pass="1">
+			<Vertex file_name="Base_DeferredShading_Lighting.glsl">
 				<Define name="VERTEX_ATTRIBUTE_POSITION" />
 				<Define name="VERTEX_ATTRIBUTE_NORMAL" />
 				<Define name="INSTANCE_ATTRIBUTE_INDEX" />
 			</Vertex>
-			<Fragment file_name="DeferredLighting_Shading.glsl">
+			<Fragment file_name="Base_DeferredShading_Lighting.glsl">
 			</Fragment>
 			<State>
 				<Depth>
