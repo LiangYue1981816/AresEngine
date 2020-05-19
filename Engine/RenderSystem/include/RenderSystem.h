@@ -270,6 +270,7 @@ private:
 	CPassUnlit* m_pPassUnlit;
 	CPassForwardShading* m_pPassForwardShading;
 	CPassDeferredShading* m_pPassDeferredShading;
+	CPassTileDeferredShading* m_pPassTileDeferredShading;
 	CPassCopyColor* m_pPassCopyColor;
 	CPassCopyDepthStencil* m_pPassCopyDepthStencil;
 	CPassSSAO* m_pPassSSAO;

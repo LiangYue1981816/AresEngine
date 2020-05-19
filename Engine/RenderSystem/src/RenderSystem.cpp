@@ -30,6 +30,7 @@ CRenderSystem::CRenderSystem(GfxApi api, void* hInstance, void* hWnd, void* hDC,
 	, m_pPassUnlit(nullptr)
 	, m_pPassForwardShading(nullptr)
 	, m_pPassDeferredShading(nullptr)
+	, m_pPassTileDeferredShading(nullptr)
 	, m_pPassCopyColor(nullptr)
 	, m_pPassCopyDepthStencil(nullptr)
 	, m_pPassSSAO(nullptr)
@@ -119,6 +120,7 @@ void CRenderSystem::CreatePasses(void)
 	CPassUnlit::Create(GFX_PIXELFORMAT_BGR10A2_UNORM_PACK32, GFX_PIXELFORMAT_D32_SFLOAT_PACK32);
 	CPassForwardShading::Create(GFX_PIXELFORMAT_BGR10A2_UNORM_PACK32, GFX_PIXELFORMAT_D32_SFLOAT_PACK32);
 	CPassDeferredShading::Create(GFX_PIXELFORMAT_BGR10A2_UNORM_PACK32, GFX_PIXELFORMAT_D32_SFLOAT_PACK32);
+	CPassTileDeferredShading::Create(GFX_PIXELFORMAT_BGR10A2_UNORM_PACK32, GFX_PIXELFORMAT_D32_SFLOAT_PACK32);
 	CPassCopyColor::Create(GFX_PIXELFORMAT_BGR10A2_UNORM_PACK32);
 	CPassCopyDepthStencil::Create(GFX_PIXELFORMAT_BGRA8_UNORM_PACK8);
 	CPassSSAO::Create(GFX_PIXELFORMAT_BGR10A2_UNORM_PACK32);
@@ -135,6 +137,7 @@ void CRenderSystem::CreatePasses(void)
 	m_pPassUnlit = new CPassUnlit(this);
 	m_pPassForwardShading = new CPassForwardShading(this);
 	m_pPassDeferredShading = new CPassDeferredShading(this);
+	m_pPassTileDeferredShading = new CPassTileDeferredShading(this);
 	m_pPassCopyColor = new CPassCopyColor(this);
 	m_pPassCopyDepthStencil = new CPassCopyDepthStencil(this);
 	m_pPassSSAO = new CPassSSAO(this);
@@ -155,6 +158,7 @@ void CRenderSystem::DestroyPasses(void)
 	CPassUnlit::Destroy();
 	CPassForwardShading::Destroy();
 	CPassDeferredShading::Destroy();
+	CPassTileDeferredShading::Destroy();
 	CPassCopyColor::Destroy();
 	CPassCopyDepthStencil::Destroy();
 	CPassSSAO::Destroy();
@@ -171,6 +175,7 @@ void CRenderSystem::DestroyPasses(void)
 	delete m_pPassUnlit;
 	delete m_pPassForwardShading;
 	delete m_pPassDeferredShading;
+	delete m_pPassTileDeferredShading;
 	delete m_pPassCopyColor;
 	delete m_pPassCopyDepthStencil;
 	delete m_pPassSSAO;
