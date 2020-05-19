@@ -2,13 +2,13 @@
 #include "PreHeader.h"
 
 #include "RenderSystem/include/PassBase.h"
+#include "RenderSystem/include/PassBlit.h"
 #include "RenderSystem/include/PassPreZ.h"
 #include "RenderSystem/include/PassShadow.h"
 #include "RenderSystem/include/PassDefault.h"
 #include "RenderSystem/include/PassForwardShading.h"
 #include "RenderSystem/include/PassDeferredShading.h"
 #include "RenderSystem/include/PassTileDeferredShading.h"
-#include "RenderSystem/include/PassBlit.h"
 #include "RenderSystem/include/PassCopyColor.h"
 #include "RenderSystem/include/PassCopyDepthStencil.h"
 #include "RenderSystem/include/PassSSAO.h"
@@ -43,9 +43,9 @@
 #define STORAGE_SCENE_DATA_BIND                            2
 #define STORAGE_TRANSFER_SCENE_DATA_BIND                   3
 #define STORAGE_TRANSFER_SCENE_DATA_INDEX_BIND             4
-#define STORAGE_CLUSTER_BIND                               5
-#define STORAGE_FULL_LIGHT_LIST_BIND                       6
-#define STORAGE_CULL_LIGHT_LIST_BIND                       7
+#define STORAGE_CLUSTER_DATA_BIND                          5
+#define STORAGE_FULL_LIGHT_LIST_DATA_BIND                  6
+#define STORAGE_CULL_LIGHT_LIST_DATA_BIND                  7
 
 #define UNIFORM_ENGINE_NAME                                HashValue("Engine")
 #define UNIFORM_CAMERA_NAME                                HashValue("Camera")
@@ -85,12 +85,17 @@
 #define PASS_PREZ_NAME                                     HashValue("PassPreZ")
 #define PASS_SHADOW_NAME                                   HashValue("PassShadow")
 #define PASS_DEFAULT_NAME                                  HashValue("PassDefault")
-#define PASS_FORWARD_LIGHTING_NAME                         HashValue("PassForwardLighting")
-#define PASS_DEFERRED_LIGHTING_NAME                        HashValue("PassDeferredLighting")
-#define PASS_DEFERRED_LIGHTING_GBUFFER_NAME                HashValue("PassDeferredLighting_GBuffer")
-#define PASS_DEFERRED_LIGHTING_SHADING_NAME                HashValue("PassDeferredLighting_Shading")
+#define PASS_FORWARD_SHADING_NAME                          HashValue("PassForwardShading")
+#define PASS_DEFERRED_SHADING_NAME                         HashValue("PassDeferredShading")
+#define PASS_DEFERRED_SHADING_GBUFFER_NAME                 HashValue("PassDeferredShading_GBuffer")
+#define PASS_DEFERRED_SHADING_LIGHTING_NAME                HashValue("PassDeferredShading_Lighting")
+#define PASS_TILE_DEFERRED_SHADING_NAME                    HashValue("PassTileDeferredShading")
+#define PASS_TILE_DEFERRED_SHADING_GBUFFER_NAME            HashValue("PassTileDeferredShading_GBuffer")
+#define PASS_TILE_DEFERRED_SHADING_LIGHTING_NAME           HashValue("PassTileDeferredShading_Lighting")
+
 #define PASS_COPY_COLOR_NAME                               HashValue("PassCopyColor")
 #define PASS_COPY_DEPTH_STENCIL_NAME                       HashValue("PassCopyDepthStencil")
+
 #define PASS_SSAO_NAME                                     HashValue("PassSSAO")
 #define PASS_BLUR_BOX_NAME                                 HashValue("PassBlurBox")
 #define PASS_BLUR_HORIZONTAL_NAME                          HashValue("PassBlurHorizontal")
@@ -100,8 +105,11 @@
 #define PASS_COLOR_GRADING_NAME                            HashValue("PassColorGrading")
 #define PASS_FINAL_NAME                                    HashValue("PassFinal")
 
+#define PASS_TILE_DEFERRED_SHADING_LIGHTING_MATERIAL_NAME  "PassTileDeferredShading_Lighting.material"
+
 #define PASS_COPY_COLOR_MATERIAL_NAME                      "PassCopyColor.material"
 #define PASS_COPY_DEPTH_STENCIL_MATERIAL_NAME              "PassCopyDepthStencil.material"
+
 #define PASS_SSAO_MATERIAL_NAME                            "PassSSAO.material"
 #define PASS_BLUR_BOX_MATERIAL_NAME                        "PassBlurBox.material"
 #define PASS_BLUR_HORIZONTAL_MATERIAL_NAME                 "PassBlurHorizontal.material"

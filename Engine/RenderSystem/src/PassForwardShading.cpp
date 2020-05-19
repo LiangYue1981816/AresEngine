@@ -15,7 +15,7 @@ void CPassForwardShading::Create(GfxPixelFormat colorPixelFormat, GfxPixelFormat
 	const float depth = 1.0f;
 	const float color[] = { 0.1f, 0.1f, 0.1f, 0.0f };
 
-	ptrRenderPass = GfxRenderer()->NewRenderPass(PASS_FORWARD_LIGHTING_NAME, numAttachments, numSubpasses);
+	ptrRenderPass = GfxRenderer()->NewRenderPass(PASS_FORWARD_SHADING_NAME, numAttachments, numSubpasses);
 	ptrRenderPass->SetColorAttachment(indexAttachmentColor, colorPixelFormat, 1, false, true, color[0], color[1], color[2], color[3]);
 	ptrRenderPass->SetDepthStencilAttachment(indexAttachmentDepthStencil, depthPixelFormat, 1, false, false, depth, stencil);
 	ptrRenderPass->SetSubpassOutputColorReference(0, indexAttachmentColor);
@@ -40,7 +40,7 @@ CPassForwardShading::CPassForwardShading(CRenderSystem* pRenderSystem)
 	ptrDescriptorLayout->SetSampledImageBinding(UNIFORM_SHADOW_TEXTURE_NAME, UNIFORM_SHADOW_TEXTURE_BIND);
 	ptrDescriptorLayout->Create();
 
-	m_ptrDescriptorSetPass = GfxRenderer()->NewDescriptorSet(HashValueFormat("%x_%p", PASS_FORWARD_LIGHTING_NAME, this), ptrDescriptorLayout);
+	m_ptrDescriptorSetPass = GfxRenderer()->NewDescriptorSet(HashValueFormat("%x_%p", PASS_FORWARD_SHADING_NAME, this), ptrDescriptorLayout);
 	m_ptrDescriptorSetPass->SetUniformBuffer(UNIFORM_ENGINE_NAME, m_pRenderSystem->GetEngineUniform()->GetUniformBuffer(), 0, m_pRenderSystem->GetEngineUniform()->GetUniformBuffer()->GetSize());
 	m_ptrDescriptorSetPass->SetStorageBuffer(STORAGE_SCENE_DATA_NAME, m_pRenderSystem->GetGPUScene()->GetInstanceBuffer(), 0, m_pRenderSystem->GetGPUScene()->GetInstanceBuffer()->GetSize());
 }
@@ -93,14 +93,14 @@ void CPassForwardShading::Render(CTaskPool& taskPool, CTaskGraph& taskGraph, CGf
 	m_pRenderSystem->GetEngineUniform()->Apply();
 
 	// Render
-	GfxRenderer()->CmdPushDebugGroup(ptrCommandBuffer, "PassForwardLighting");
+	GfxRenderer()->CmdPushDebugGroup(ptrCommandBuffer, "PassForwardShading");
 	{
 		GfxRenderer()->CmdSetImageLayout(ptrCommandBuffer, m_ptrOutputColorTexture, GFX_IMAGE_LAYOUT_GENERAL);
 		GfxRenderer()->CmdSetImageLayout(ptrCommandBuffer, m_ptrOutputDepthStencilTexture, GFX_IMAGE_LAYOUT_GENERAL);
 		GfxRenderer()->CmdBeginRenderPass(ptrCommandBuffer, m_ptrFrameBuffer, ptrRenderPass);
 		{
-			m_pCamera->GetRenderQueue()->CmdDraw(taskPool, taskGraph, ptrCommandBuffer, m_ptrDescriptorSetPass, PASS_FORWARD_LIGHTING_NAME, m_pCamera->GetCamera()->GetScissor(), m_pCamera->GetCamera()->GetViewport(), m_pCamera->GetCamera()->GetZNear(), m_pCamera->GetCamera()->GetZFar(), 0xffffffff, false);
-			m_pCamera->GetRenderQueue()->CmdDraw(taskPool, taskGraph, ptrCommandBuffer, m_ptrDescriptorSetPass, PASS_FORWARD_LIGHTING_NAME, m_pCamera->GetCamera()->GetScissor(), m_pCamera->GetCamera()->GetViewport(), m_pCamera->GetCamera()->GetZNear(), m_pCamera->GetCamera()->GetZFar(), 0xffffffff, true);
+			m_pCamera->GetRenderQueue()->CmdDraw(taskPool, taskGraph, ptrCommandBuffer, m_ptrDescriptorSetPass, PASS_FORWARD_SHADING_NAME, m_pCamera->GetCamera()->GetScissor(), m_pCamera->GetCamera()->GetViewport(), m_pCamera->GetCamera()->GetZNear(), m_pCamera->GetCamera()->GetZFar(), 0xffffffff, false);
+			m_pCamera->GetRenderQueue()->CmdDraw(taskPool, taskGraph, ptrCommandBuffer, m_ptrDescriptorSetPass, PASS_FORWARD_SHADING_NAME, m_pCamera->GetCamera()->GetScissor(), m_pCamera->GetCamera()->GetViewport(), m_pCamera->GetCamera()->GetZNear(), m_pCamera->GetCamera()->GetZFar(), 0xffffffff, true);
 		}
 		GfxRenderer()->CmdEndRenderPass(ptrCommandBuffer);
 		GfxRenderer()->CmdSetImageLayout(ptrCommandBuffer, m_ptrOutputColorTexture, GFX_IMAGE_LAYOUT_COLOR_READ_ONLY_OPTIMAL);
