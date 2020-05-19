@@ -4,7 +4,7 @@
 #include "GLES3Renderer.h"
 
 
-void CRenderSystem::RenderDefault(CTaskPool& taskPool, CTaskGraph& taskGraph, CCamera* pCamera, bool bPresent)
+void CRenderSystem::RenderUnlit(CTaskPool& taskPool, CTaskGraph& taskGraph, CCamera* pCamera, bool bPresent)
 {
 	m_pInstanceBufferPool->Clear();
 
@@ -23,7 +23,7 @@ void CRenderSystem::RenderDefault(CTaskPool& taskPool, CTaskGraph& taskGraph, CC
 
 		GfxRenderer()->BeginRecord(ptrGraphicCommandBuffer);
 		{
-			RenderDefault(taskPool, taskGraph, ptrGraphicCommandBuffer, pCamera, bPresent);
+			RenderUnlit(taskPool, taskGraph, ptrGraphicCommandBuffer, pCamera, bPresent);
 		}
 		GfxRenderer()->EndRecord(ptrGraphicCommandBuffer);
 		GfxRenderer()->Submit(ptrGraphicCommandBuffer, ptrComputeCommandBuffer->GetSemaphore());
@@ -31,7 +31,7 @@ void CRenderSystem::RenderDefault(CTaskPool& taskPool, CTaskGraph& taskGraph, CC
 	GfxRenderer()->Present(ptrGraphicCommandBuffer->GetSemaphore());
 }
 
-void CRenderSystem::RenderDefault(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer, CCamera* pCamera, bool bPresent)
+void CRenderSystem::RenderUnlit(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer, CCamera* pCamera, bool bPresent)
 {
 	uint32_t rtFinal;
 

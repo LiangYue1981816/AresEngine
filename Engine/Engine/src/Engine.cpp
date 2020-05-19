@@ -146,10 +146,10 @@ void CEngine::Update(void)
 	event_signal(&m_eventDispatch);
 }
 
-void CEngine::RenderDefault(CCamera* pCamera, bool bPresent)
+void CEngine::RenderUnlit(CCamera* pCamera, bool bPresent)
 {
 	m_pRenderSystem->UpdateCamera(m_taskPoolRender, m_taskGraphRender, pCamera, 0xffffffff, true);
-	m_pRenderSystem->RenderDefault(m_taskPoolRender, m_taskGraphRender, pCamera, bPresent);
+	m_pRenderSystem->RenderUnlit(m_taskPoolRender, m_taskGraphRender, pCamera, bPresent);
 }
 
 void CEngine::RenderForwardShading(CCamera* pCamera, bool bPresent)

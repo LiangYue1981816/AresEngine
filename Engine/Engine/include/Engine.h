@@ -38,7 +38,7 @@ public:
 	void Wait(void);
 	void Update(void);
 
-	void RenderDefault(CCamera* pCamera, bool bPresent);
+	void RenderUnlit(CCamera* pCamera, bool bPresent);
 	void RenderForwardShading(CCamera* pCamera, bool bPresent);
 	void RenderDeferredShading(CCamera* pCamera, bool bPresent);
 	void RenderTileDeferredShading(CCamera* pCamera, bool bPresent);
