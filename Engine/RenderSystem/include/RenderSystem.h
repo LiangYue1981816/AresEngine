@@ -5,7 +5,7 @@
 #include "RenderSystem/include/PassBlit.h"
 #include "RenderSystem/include/PassPreZ.h"
 #include "RenderSystem/include/PassShadow.h"
-#include "RenderSystem/include/PassDefault.h"
+#include "RenderSystem/include/PassUnlit.h"
 #include "RenderSystem/include/PassForwardShading.h"
 #include "RenderSystem/include/PassDeferredShading.h"
 #include "RenderSystem/include/PassTileDeferredShading.h"

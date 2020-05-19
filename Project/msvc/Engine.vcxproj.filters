@@ -1554,56 +1554,11 @@
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKSemaphore.h">
       <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Engine\RenderSystem\include\Camera.h">
-      <Filter>Engine\RenderSystem\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\RenderSystem\include\PassDefault.h">
-      <Filter>Engine\RenderSystem\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\RenderSystem\include\RenderSystem.h">
-      <Filter>Engine\RenderSystem\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\RenderSystem\include\PassColorGrading.h">
-      <Filter>Engine\RenderSystem\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\RenderSystem\include\PassBlit.h">
-      <Filter>Engine\RenderSystem\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\RenderSystem\include\PassSSAO.h">
-      <Filter>Engine\RenderSystem\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\RenderSystem\include\PassFinal.h">
-      <Filter>Engine\RenderSystem\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\RenderSystem\include\PassPreZ.h">
-      <Filter>Engine\RenderSystem\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\RenderSystem\include\PassShadow.h">
-      <Filter>Engine\RenderSystem\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Engine\BaseHeader.h">
       <Filter>Engine</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\RenderHeader.h">
       <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\RenderSystem\include\PassBlurBox.h">
-      <Filter>Engine\RenderSystem\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\RenderSystem\include\PassBlurHorizontal.h">
-      <Filter>Engine\RenderSystem\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\RenderSystem\include\PassBlurVertical.h">
-      <Filter>Engine\RenderSystem\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\RenderSystem\include\PassBlendAdd.h">
-      <Filter>Engine\RenderSystem\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\RenderSystem\include\PassLuminanceThreshold.h">
-      <Filter>Engine\RenderSystem\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\RenderSystem\include\PassBase.h">
-      <Filter>Engine\RenderSystem\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Console\include\Settings.h">
       <Filter>Engine\Console\Header Files</Filter>
@@ -1626,23 +1581,11 @@
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKStorageBufferManager.h">
       <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Engine\RenderSystem\include\GPUScene.h">
-      <Filter>Engine\RenderSystem\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\RenderSystem\include\RenderQueue.h">
-      <Filter>Engine\RenderSystem\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\RenderSystem\include\UniformEngine.h">
-      <Filter>Engine\RenderSystem\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3InstanceBufferManager.h">
       <Filter>Engine\Renderer\GLES3\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKInstanceBufferManager.h">
       <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\RenderSystem\include\InstanceBufferPool.h">
-      <Filter>Engine\RenderSystem\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Base\include\MemoryStream.h">
       <Filter>Engine\Base\Header Files</Filter>
@@ -1650,28 +1593,85 @@
     <ClInclude Include="..\..\Engine\Base\include\FileStream.h">
       <Filter>Engine\Base\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Engine\RenderSystem\include\PassCopyColor.h">
-      <Filter>Engine\RenderSystem\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\RenderSystem\include\PassCopyDepthStencil.h">
-      <Filter>Engine\RenderSystem\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\RenderSystem\include\Cluster.h">
-      <Filter>Engine\RenderSystem\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Engine\Utils\include\TextureLayout2D.h">
       <Filter>Engine\Utils\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\UtilsHeader.h">
       <Filter>Engine</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Engine\RenderSystem\include\Camera.h">
+      <Filter>Engine\RenderSystem\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\RenderSystem\include\Cluster.h">
+      <Filter>Engine\RenderSystem\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\RenderSystem\include\GPUScene.h">
+      <Filter>Engine\RenderSystem\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\RenderSystem\include\InstanceBufferPool.h">
+      <Filter>Engine\RenderSystem\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\RenderSystem\include\PassBase.h">
+      <Filter>Engine\RenderSystem\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\RenderSystem\include\PassBlendAdd.h">
+      <Filter>Engine\RenderSystem\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\RenderSystem\include\PassBlit.h">
+      <Filter>Engine\RenderSystem\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\RenderSystem\include\PassBlurBox.h">
+      <Filter>Engine\RenderSystem\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\RenderSystem\include\PassBlurHorizontal.h">
+      <Filter>Engine\RenderSystem\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\RenderSystem\include\PassBlurVertical.h">
+      <Filter>Engine\RenderSystem\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\RenderSystem\include\PassColorGrading.h">
+      <Filter>Engine\RenderSystem\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\RenderSystem\include\PassCopyColor.h">
+      <Filter>Engine\RenderSystem\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\RenderSystem\include\PassCopyDepthStencil.h">
+      <Filter>Engine\RenderSystem\Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Engine\RenderSystem\include\PassDeferredShading.h">
+      <Filter>Engine\RenderSystem\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\RenderSystem\include\PassFinal.h">
       <Filter>Engine\RenderSystem\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\RenderSystem\include\PassForwardShading.h">
       <Filter>Engine\RenderSystem\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Engine\RenderSystem\include\PassLuminanceThreshold.h">
+      <Filter>Engine\RenderSystem\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\RenderSystem\include\PassPreZ.h">
+      <Filter>Engine\RenderSystem\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\RenderSystem\include\PassShadow.h">
+      <Filter>Engine\RenderSystem\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\RenderSystem\include\PassSSAO.h">
+      <Filter>Engine\RenderSystem\Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Engine\RenderSystem\include\PassTileDeferredShading.h">
+      <Filter>Engine\RenderSystem\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\RenderSystem\include\PassUnlit.h">
+      <Filter>Engine\RenderSystem\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\RenderSystem\include\RenderQueue.h">
+      <Filter>Engine\RenderSystem\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\RenderSystem\include\RenderSystem.h">
+      <Filter>Engine\RenderSystem\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\RenderSystem\include\UniformEngine.h">
       <Filter>Engine\RenderSystem\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -2339,51 +2339,6 @@
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKSemaphore.cpp">
       <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Engine\RenderSystem\src\Camera.cpp">
-      <Filter>Engine\RenderSystem\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\RenderSystem\src\PassDefault.cpp">
-      <Filter>Engine\RenderSystem\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\RenderSystem\src\RenderSystem.cpp">
-      <Filter>Engine\RenderSystem\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\RenderSystem\src\PassColorGrading.cpp">
-      <Filter>Engine\RenderSystem\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\RenderSystem\src\PassBlit.cpp">
-      <Filter>Engine\RenderSystem\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\RenderSystem\src\PassSSAO.cpp">
-      <Filter>Engine\RenderSystem\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\RenderSystem\src\PassFinal.cpp">
-      <Filter>Engine\RenderSystem\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\RenderSystem\src\PassPreZ.cpp">
-      <Filter>Engine\RenderSystem\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\RenderSystem\src\PassShadow.cpp">
-      <Filter>Engine\RenderSystem\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\RenderSystem\src\PassBlurBox.cpp">
-      <Filter>Engine\RenderSystem\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\RenderSystem\src\PassBlurHorizontal.cpp">
-      <Filter>Engine\RenderSystem\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\RenderSystem\src\PassBlurVertical.cpp">
-      <Filter>Engine\RenderSystem\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\RenderSystem\src\PassBlendAdd.cpp">
-      <Filter>Engine\RenderSystem\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\RenderSystem\src\PassLuminanceThreshold.cpp">
-      <Filter>Engine\RenderSystem\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\RenderSystem\src\PassBase.cpp">
-      <Filter>Engine\RenderSystem\Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Engine\Console\src\Settings.cpp">
       <Filter>Engine\Console\Source Files</Filter>
     </ClCompile>
@@ -2399,26 +2354,11 @@
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKStorageBufferManager.cpp">
       <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Engine\RenderSystem\src\GPUScene.cpp">
-      <Filter>Engine\RenderSystem\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\RenderSystem\src\RenderQueue.cpp">
-      <Filter>Engine\RenderSystem\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\RenderSystem\src\UniformEngine.cpp">
-      <Filter>Engine\RenderSystem\Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3InstanceBufferManager.cpp">
       <Filter>Engine\Renderer\GLES3\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKInstanceBufferManager.cpp">
       <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\RenderSystem\src\InstanceBufferPool.cpp">
-      <Filter>Engine\RenderSystem\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\RenderSystem\src\RenderDefault.cpp">
-      <Filter>Engine\RenderSystem\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\Base\src\Task.cpp">
       <Filter>Engine\Base\Source Files</Filter>
@@ -2429,28 +2369,73 @@
     <ClCompile Include="..\..\Engine\Base\src\FileStream.cpp">
       <Filter>Engine\Base\Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Engine\Utils\src\TextureLayout2D.cpp">
+      <Filter>Engine\Utils\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\RenderSystem\src\Camera.cpp">
+      <Filter>Engine\RenderSystem\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\RenderSystem\src\Cluster.cpp">
+      <Filter>Engine\RenderSystem\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\RenderSystem\src\GPUScene.cpp">
+      <Filter>Engine\RenderSystem\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\RenderSystem\src\InstanceBufferPool.cpp">
+      <Filter>Engine\RenderSystem\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\RenderSystem\src\PassBase.cpp">
+      <Filter>Engine\RenderSystem\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\RenderSystem\src\PassBlendAdd.cpp">
+      <Filter>Engine\RenderSystem\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\RenderSystem\src\PassBlit.cpp">
+      <Filter>Engine\RenderSystem\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\RenderSystem\src\PassBlurBox.cpp">
+      <Filter>Engine\RenderSystem\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\RenderSystem\src\PassBlurHorizontal.cpp">
+      <Filter>Engine\RenderSystem\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\RenderSystem\src\PassBlurVertical.cpp">
+      <Filter>Engine\RenderSystem\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\RenderSystem\src\PassColorGrading.cpp">
+      <Filter>Engine\RenderSystem\Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Engine\RenderSystem\src\PassCopyColor.cpp">
       <Filter>Engine\RenderSystem\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\RenderSystem\src\PassCopyDepthStencil.cpp">
       <Filter>Engine\RenderSystem\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Engine\RenderSystem\src\RenderPass.cpp">
-      <Filter>Engine\RenderSystem\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\RenderSystem\src\Cluster.cpp">
-      <Filter>Engine\RenderSystem\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\Utils\src\TextureLayout2D.cpp">
-      <Filter>Engine\Utils\Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Engine\RenderSystem\src\PassDeferredShading.cpp">
+      <Filter>Engine\RenderSystem\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\RenderSystem\src\PassFinal.cpp">
       <Filter>Engine\RenderSystem\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\RenderSystem\src\PassForwardShading.cpp">
       <Filter>Engine\RenderSystem\Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Engine\RenderSystem\src\PassLuminanceThreshold.cpp">
+      <Filter>Engine\RenderSystem\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\RenderSystem\src\PassPreZ.cpp">
+      <Filter>Engine\RenderSystem\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\RenderSystem\src\PassShadow.cpp">
+      <Filter>Engine\RenderSystem\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\RenderSystem\src\PassSSAO.cpp">
+      <Filter>Engine\RenderSystem\Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Engine\RenderSystem\src\PassTileDeferredShading.cpp">
+      <Filter>Engine\RenderSystem\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\RenderSystem\src\PassUnlit.cpp">
       <Filter>Engine\RenderSystem\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\RenderSystem\src\RenderDeferredShading.cpp">
@@ -2459,7 +2444,22 @@
     <ClCompile Include="..\..\Engine\RenderSystem\src\RenderForwardShading.cpp">
       <Filter>Engine\RenderSystem\Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Engine\RenderSystem\src\RenderPass.cpp">
+      <Filter>Engine\RenderSystem\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\RenderSystem\src\RenderQueue.cpp">
+      <Filter>Engine\RenderSystem\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\RenderSystem\src\RenderSystem.cpp">
+      <Filter>Engine\RenderSystem\Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Engine\RenderSystem\src\RenderTileDeferredShading.cpp">
+      <Filter>Engine\RenderSystem\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\RenderSystem\src\RenderUnlit.cpp">
+      <Filter>Engine\RenderSystem\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\RenderSystem\src\UniformEngine.cpp">
       <Filter>Engine\RenderSystem\Source Files</Filter>
     </ClCompile>
   </ItemGroup>

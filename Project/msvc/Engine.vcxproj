@@ -375,7 +375,6 @@
     <ClInclude Include="..\..\Engine\RenderSystem\include\PassColorGrading.h" />
     <ClInclude Include="..\..\Engine\RenderSystem\include\PassCopyColor.h" />
     <ClInclude Include="..\..\Engine\RenderSystem\include\PassCopyDepthStencil.h" />
-    <ClInclude Include="..\..\Engine\RenderSystem\include\PassDefault.h" />
     <ClInclude Include="..\..\Engine\RenderSystem\include\PassDeferredShading.h" />
     <ClInclude Include="..\..\Engine\RenderSystem\include\PassFinal.h" />
     <ClInclude Include="..\..\Engine\RenderSystem\include\PassForwardShading.h" />
@@ -384,6 +383,7 @@
     <ClInclude Include="..\..\Engine\RenderSystem\include\PassShadow.h" />
     <ClInclude Include="..\..\Engine\RenderSystem\include\PassSSAO.h" />
     <ClInclude Include="..\..\Engine\RenderSystem\include\PassTileDeferredShading.h" />
+    <ClInclude Include="..\..\Engine\RenderSystem\include\PassUnlit.h" />
     <ClInclude Include="..\..\Engine\RenderSystem\include\RenderQueue.h" />
     <ClInclude Include="..\..\Engine\RenderSystem\include\RenderSystem.h" />
     <ClInclude Include="..\..\Engine\RenderSystem\include\UniformEngine.h" />
@@ -742,7 +742,6 @@
     <ClCompile Include="..\..\Engine\RenderSystem\src\PassColorGrading.cpp" />
     <ClCompile Include="..\..\Engine\RenderSystem\src\PassCopyColor.cpp" />
     <ClCompile Include="..\..\Engine\RenderSystem\src\PassCopyDepthStencil.cpp" />
-    <ClCompile Include="..\..\Engine\RenderSystem\src\PassDefault.cpp" />
     <ClCompile Include="..\..\Engine\RenderSystem\src\PassDeferredShading.cpp" />
     <ClCompile Include="..\..\Engine\RenderSystem\src\PassFinal.cpp" />
     <ClCompile Include="..\..\Engine\RenderSystem\src\PassForwardShading.cpp" />
@@ -751,13 +750,14 @@
     <ClCompile Include="..\..\Engine\RenderSystem\src\PassShadow.cpp" />
     <ClCompile Include="..\..\Engine\RenderSystem\src\PassSSAO.cpp" />
     <ClCompile Include="..\..\Engine\RenderSystem\src\PassTileDeferredShading.cpp" />
-    <ClCompile Include="..\..\Engine\RenderSystem\src\RenderDefault.cpp" />
+    <ClCompile Include="..\..\Engine\RenderSystem\src\PassUnlit.cpp" />
     <ClCompile Include="..\..\Engine\RenderSystem\src\RenderDeferredShading.cpp" />
     <ClCompile Include="..\..\Engine\RenderSystem\src\RenderForwardShading.cpp" />
     <ClCompile Include="..\..\Engine\RenderSystem\src\RenderPass.cpp" />
     <ClCompile Include="..\..\Engine\RenderSystem\src\RenderQueue.cpp" />
     <ClCompile Include="..\..\Engine\RenderSystem\src\RenderSystem.cpp" />
     <ClCompile Include="..\..\Engine\RenderSystem\src\RenderTileDeferredShading.cpp" />
+    <ClCompile Include="..\..\Engine\RenderSystem\src\RenderUnlit.cpp" />
     <ClCompile Include="..\..\Engine\RenderSystem\src\UniformEngine.cpp" />
     <ClCompile Include="..\..\Engine\Resource\src\ResourceLoader.cpp" />
     <ClCompile Include="..\..\Engine\Resource\src\ResourceLoaderMaterial.cpp" />
