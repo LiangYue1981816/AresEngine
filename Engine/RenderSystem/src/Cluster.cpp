@@ -4,6 +4,7 @@
 
 CCluster::CCluster(void)
 	: m_pCamera(nullptr)
+
 	, m_pShaderCompute(nullptr)
 	, m_pPipelineCompute(nullptr)
 {
