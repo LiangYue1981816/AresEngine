@@ -106,7 +106,7 @@
 #define PASS_COLOR_GRADING_NAME                            HashValue("PassColorGrading")
 #define PASS_FINAL_NAME                                    HashValue("PassFinal")
 
-// Material
+// Pass Material
 #define PASS_COPY_COLOR_MATERIAL_NAME                      "PassCopyColor.material"
 #define PASS_COPY_DEPTH_STENCIL_MATERIAL_NAME              "PassCopyDepthStencil.material"
 
@@ -121,7 +121,7 @@
 #define PASS_FINAL_MATERIAL_NAME                           "PassFinal.material"
 
 
-// RenderTexture
+// Render Texture
 #define RENDER_TEXTURE_SWAPCHAIN_COLOR0                    0
 #define RENDER_TEXTURE_SWAPCHAIN_COLOR1                    1
 #define RENDER_TEXTURE_SWAPCHAIN_COLOR2                    2
@@ -138,11 +138,13 @@
 #define RENDER_TEXTURE_QUATER_HDR_COLOR1                   HashValue("RenderTextureQuaterHdrColor1")
 
 
-const int MAX_GPUSCENE_INSTANCE_COUNT = 32 * 1024;
-const int MAX_GPUSCENE_TRANSFER_COUNT =  1 * 1024;
+// GPUScene
+#define MAX_GPUSCENE_INSTANCE_COUNT                        32 * 1024;
+#define MAX_GPUSCENE_TRANSFER_COUNT                        1  * 1024;
 
-const int CLUSTER_TILE_SIZE = 16;
-const int CLUSTER_SLICES_COUNT = 8;
+// Cluster
+#define CLUSTER_TILE_SIZE                                  16;
+#define CLUSTER_SLICES_COUNT                               8;
 
 
 class CALL_API CRenderSystem
