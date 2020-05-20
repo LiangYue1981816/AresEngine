@@ -56,12 +56,7 @@ CRenderSystem::CRenderSystem(GfxApi api, void* hInstance, void* hWnd, void* hDC,
 		break;
 	}
 
-	const int MAX_INSTANCE_COUNT = 32 * 1024;
-	const int MAX_TRANSFER_COUNT =  1 * 1024;
-	const int TILE_SIZE = 16;
-	const int SLICES_COUNT = 8;
-
-	m_pGPUScene = new CGPUScene(MAX_INSTANCE_COUNT, MAX_TRANSFER_COUNT);
+	m_pGPUScene = new CGPUScene;
 	m_pCluster = new CCluster(this, width, height, TILE_SIZE, SLICES_COUNT, MAX_INSTANCE_COUNT);
 	m_pEngineUniform = new CUniformEngine;
 	m_pInstanceBufferPool = new CInstanceBufferPool;

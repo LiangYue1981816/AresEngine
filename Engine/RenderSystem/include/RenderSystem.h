@@ -139,12 +139,12 @@
 
 
 // GPUScene
-#define MAX_GPUSCENE_INSTANCE_COUNT                        32 * 1024;
-#define MAX_GPUSCENE_TRANSFER_COUNT                        1  * 1024;
+#define MAX_GPUSCENE_INSTANCE_COUNT                        (32 * 1024)
+#define MAX_GPUSCENE_TRANSFER_COUNT                        (1  * 1024)
 
 // Cluster
-#define CLUSTER_TILE_SIZE                                  16;
-#define CLUSTER_SLICES_COUNT                               8;
+#define CLUSTER_TILE_SIZE                                  16
+#define CLUSTER_SLICES_COUNT                               8
 
 
 class CALL_API CRenderSystem

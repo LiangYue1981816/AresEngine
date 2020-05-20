@@ -2,12 +2,9 @@
 #include "RenderHeader.h"
 
 
-CGPUScene::CGPUScene(int maxInstanceCount, int maxTransferCount)
+CGPUScene::CGPUScene(void)
 	: m_pShaderCompute(nullptr)
 	, m_pPipelineCompute(nullptr)
-
-	, MAX_INSTANCE_COUNT(maxInstanceCount)
-	, MAX_TRANSFER_COUNT(maxTransferCount)
 
 	, m_indexDefaultInstance(INVALID_VALUE)
 	, m_indexPostProcessInstnace(INVALID_VALUE)
@@ -21,9 +18,9 @@ CGPUScene::CGPUScene(int maxInstanceCount, int maxTransferCount)
 	m_pShaderCompute = GfxRenderer()->CreateShader(szBinFileName, compute_shader);
 	m_pPipelineCompute = GfxRenderer()->CreatePipelineCompute(m_pShaderCompute);
 
-	m_ptrInstanceDataBuffer = GfxRenderer()->NewStorageBuffer(sizeof(InstanceData) * MAX_INSTANCE_COUNT);
-	m_ptrTransferDataBuffer = GfxRenderer()->NewStorageBuffer(sizeof(InstanceData) * MAX_TRANSFER_COUNT);
-	m_ptrTransferIndexBuffer = GfxRenderer()->NewStorageBuffer(sizeof(int) * MAX_TRANSFER_COUNT);
+	m_ptrInstanceDataBuffer = GfxRenderer()->NewStorageBuffer(sizeof(InstanceData) * MAX_GPUSCENE_INSTANCE_COUNT);
+	m_ptrTransferDataBuffer = GfxRenderer()->NewStorageBuffer(sizeof(InstanceData) * MAX_GPUSCENE_TRANSFER_COUNT);
+	m_ptrTransferIndexBuffer = GfxRenderer()->NewStorageBuffer(sizeof(int) * MAX_GPUSCENE_TRANSFER_COUNT);
 
 	m_ptrDescriptorSet = GfxRenderer()->NewDescriptorSet(HashValue(szFileName), m_pPipelineCompute->GetDescriptorLayout(DESCRIPTOR_SET_PASS));
 	m_ptrDescriptorSet->SetStorageBuffer(STORAGE_SCENE_DATA_NAME, m_ptrInstanceDataBuffer, 0, m_ptrInstanceDataBuffer->GetSize());
@@ -113,12 +110,12 @@ void CGPUScene::Update(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBu
 	eastl::vector<InstanceData> datas;
 	eastl::vector<int> indices;
 	{
-		datas.reserve(MAX_TRANSFER_COUNT);
-		indices.reserve(MAX_TRANSFER_COUNT);
+		datas.reserve(MAX_GPUSCENE_TRANSFER_COUNT);
+		indices.reserve(MAX_GPUSCENE_TRANSFER_COUNT);
 
 		for (int indexThread = 0; indexThread < MAX_THREAD_COUNT; indexThread++) {
 			do {
-				if (datas.size() == MAX_TRANSFER_COUNT) {
+				if (datas.size() == MAX_GPUSCENE_TRANSFER_COUNT) {
 					goto TRANSFER_FULL;
 				}
 
@@ -128,7 +125,7 @@ void CGPUScene::Update(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBu
 
 				const auto& itTransferIndex = m_transferIndexBuffer[indexThread].begin();
 				{
-					if (*itTransferIndex < MAX_INSTANCE_COUNT) {
+					if (*itTransferIndex < MAX_GPUSCENE_INSTANCE_COUNT) {
 						datas.emplace_back(m_instanceDataBuffer[*itTransferIndex]);
 						indices.emplace_back(*itTransferIndex);
 					}
