@@ -79,8 +79,8 @@ void CCluster::Update(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBuf
 		{
 			GfxRenderer()->CmdBindPipelineCompute(ptrCommandBuffer, m_pPipelineCompute);
 			GfxRenderer()->CmdBindDescriptorSet(ptrCommandBuffer, m_ptrDescriptorSet);
-			GfxRenderer()->CmdUniform1i(ptrCommandBuffer, HashValue("Param.tileSizeX"), m_pCamera->GetCamera()->GetViewport().z / CLUSTER_HORIZONTAL_TILE_COUNT);
-			GfxRenderer()->CmdUniform1i(ptrCommandBuffer, HashValue("Param.tileSizeY"), m_pCamera->GetCamera()->GetViewport().w / CLUSTER_VERTICAL_TILE_COUNT);
+			GfxRenderer()->CmdUniform1f(ptrCommandBuffer, HashValue("Param.tileSizeX"), m_pCamera->GetCamera()->GetViewport().z / CLUSTER_HORIZONTAL_TILE_COUNT);
+			GfxRenderer()->CmdUniform1f(ptrCommandBuffer, HashValue("Param.tileSizeY"), m_pCamera->GetCamera()->GetViewport().w / CLUSTER_VERTICAL_TILE_COUNT);
 			GfxRenderer()->CmdUniform1i(ptrCommandBuffer, HashValue("Param.numDepthTiles"), CLUSTER_DEPTH_TILE_COUNT);
 			GfxRenderer()->CmdUniform1i(ptrCommandBuffer, HashValue("Param.numPointLights"), std::min((int)instance.size(), MAX_GPUSCENE_INSTANCE_COUNT));
 			GfxRenderer()->CmdDispatch(ptrCommandBuffer, CLUSTER_HORIZONTAL_TILE_COUNT, CLUSTER_VERTICAL_TILE_COUNT, CLUSTER_DEPTH_TILE_COUNT);
