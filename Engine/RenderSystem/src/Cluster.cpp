@@ -17,7 +17,7 @@ CCluster::CCluster(void)
 	m_pShaderCompute = GfxRenderer()->CreateShader(szBinFileName, compute_shader);
 	m_pPipelineCompute = GfxRenderer()->CreatePipelineCompute(m_pShaderCompute);
 
-	m_ptrClusterBuffer = GfxRenderer()->NewStorageBuffer(CLUSTER_HORIZONTAL_TILE_COUNT * CLUSTER_VERTICAL_TILE_COUNT * CLUSTER_DEPTH_SLICES_COUNT * 32);
+	m_ptrClusterBuffer = GfxRenderer()->NewStorageBuffer(CLUSTER_HORIZONTAL_TILE_COUNT * CLUSTER_VERTICAL_TILE_COUNT * CLUSTER_DEPTH_TILE_COUNT * 32);
 	m_ptrFullLightListBuffer = GfxRenderer()->NewStorageBuffer(MAX_GPUSCENE_INSTANCE_COUNT * sizeof(int));
 	m_ptrCullLightListBuffer = GfxRenderer()->NewStorageBuffer(MAX_GPUSCENE_INSTANCE_COUNT * sizeof(int));
 
@@ -81,9 +81,9 @@ void CCluster::Update(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBuf
 			GfxRenderer()->CmdBindDescriptorSet(ptrCommandBuffer, m_ptrDescriptorSet);
 			GfxRenderer()->CmdUniform1i(ptrCommandBuffer, HashValue("Param.tileSizeX"), m_pCamera->GetCamera()->GetViewport().z / CLUSTER_HORIZONTAL_TILE_COUNT);
 			GfxRenderer()->CmdUniform1i(ptrCommandBuffer, HashValue("Param.tileSizeY"), m_pCamera->GetCamera()->GetViewport().w / CLUSTER_VERTICAL_TILE_COUNT);
-			GfxRenderer()->CmdUniform1i(ptrCommandBuffer, HashValue("Param.numDepthSlices"), CLUSTER_DEPTH_SLICES_COUNT);
+			GfxRenderer()->CmdUniform1i(ptrCommandBuffer, HashValue("Param.numDepthTiles"), CLUSTER_DEPTH_TILE_COUNT);
 			GfxRenderer()->CmdUniform1i(ptrCommandBuffer, HashValue("Param.numPointLights"), std::min((int)instance.size(), MAX_GPUSCENE_INSTANCE_COUNT));
-			GfxRenderer()->CmdDispatch(ptrCommandBuffer, CLUSTER_HORIZONTAL_TILE_COUNT, CLUSTER_VERTICAL_TILE_COUNT, CLUSTER_DEPTH_SLICES_COUNT);
+			GfxRenderer()->CmdDispatch(ptrCommandBuffer, CLUSTER_HORIZONTAL_TILE_COUNT, CLUSTER_VERTICAL_TILE_COUNT, CLUSTER_DEPTH_TILE_COUNT);
 		}
 		GfxRenderer()->CmdSetBufferBarrier(ptrCommandBuffer, m_ptrCullLightListBuffer, GFX_ACCESS_TRANSFER_WRITE_BIT, GFX_ACCESS_TRANSFER_READ_BIT);
 		GfxRenderer()->CmdSetBufferBarrier(ptrCommandBuffer, m_ptrClusterBuffer, GFX_ACCESS_TRANSFER_WRITE_BIT, GFX_ACCESS_TRANSFER_READ_BIT);

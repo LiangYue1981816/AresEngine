@@ -145,7 +145,7 @@
 // Cluster
 #define CLUSTER_HORIZONTAL_TILE_COUNT                      80
 #define CLUSTER_VERTICAL_TILE_COUNT                        45
-#define CLUSTER_DEPTH_SLICES_COUNT                         8
+#define CLUSTER_DEPTH_TILE_COUNT                           8
 
 
 class CALL_API CRenderSystem
