@@ -40,7 +40,6 @@ void CPassTileDeferredShading::Create(GfxPixelFormat colorPixelFormat, GfxPixelF
 	ptrRenderPass->SetSubpassInputColorReference(1, indexAttachmentGBuffer0);
 	ptrRenderPass->SetSubpassInputColorReference(1, indexAttachmentGBuffer1);
 	ptrRenderPass->SetSubpassOutputColorReference(1, indexAttachmentColor);
-	ptrRenderPass->SetSubpassDepthStencilReference(1, indexAttachmentDepthStencil);
 	ptrRenderPass->Create();
 }
 
