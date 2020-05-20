@@ -11,7 +11,7 @@ class CALL_API CCluster
 
 
 public:
-	CCluster(CRenderSystem* pRenderSystem, int screenWidth, int screenHeight, int tileSize, int numSlices, int maxInstanceCount);
+	CCluster(void);
 	virtual ~CCluster(void);
 
 
@@ -27,15 +27,7 @@ private:
 
 
 private:
-	const int MAX_INSTANCE_COUNT;
-	const int HORIZONTAL_TILE_COUNT;
-	const int VERTICAL_TILE_COUNT;
-	const int DEPTH_SLICE_COUNT;
-	const int TILE_SIZE;
-
-private:
 	CCamera* m_pCamera;
-	CRenderSystem* m_pRenderSystem;
 
 private:
 	CGfxShader* m_pShaderCompute;

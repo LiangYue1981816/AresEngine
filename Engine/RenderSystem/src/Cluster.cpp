@@ -2,15 +2,8 @@
 #include "RenderHeader.h"
 
 
-CCluster::CCluster(CRenderSystem* pRenderSystem, int screenWidth, int screenHeight, int tileSize, int numSlices, int maxInstanceCount)
-	: MAX_INSTANCE_COUNT(maxInstanceCount)
-	, HORIZONTAL_TILE_COUNT((int)(1.0f * screenWidth / tileSize + 0.5f))
-	, VERTICAL_TILE_COUNT((int)(1.0f * screenHeight / tileSize + 0.5f))
-	, DEPTH_SLICE_COUNT(numSlices)
-	, TILE_SIZE(tileSize)
-
-	, m_pRenderSystem(pRenderSystem)
-	, m_pCamera(nullptr)
+CCluster::CCluster(void)
+	: m_pCamera(nullptr)
 	, m_pShaderCompute(nullptr)
 	, m_pPipelineCompute(nullptr)
 {
@@ -23,12 +16,12 @@ CCluster::CCluster(CRenderSystem* pRenderSystem, int screenWidth, int screenHeig
 	m_pShaderCompute = GfxRenderer()->CreateShader(szBinFileName, compute_shader);
 	m_pPipelineCompute = GfxRenderer()->CreatePipelineCompute(m_pShaderCompute);
 
-	m_ptrClusterBuffer = GfxRenderer()->NewStorageBuffer(HORIZONTAL_TILE_COUNT * VERTICAL_TILE_COUNT * DEPTH_SLICE_COUNT * 32);
-	m_ptrFullLightListBuffer = GfxRenderer()->NewStorageBuffer(MAX_INSTANCE_COUNT * sizeof(int));
-	m_ptrCullLightListBuffer = GfxRenderer()->NewStorageBuffer(MAX_INSTANCE_COUNT * sizeof(int));
+	m_ptrClusterBuffer = GfxRenderer()->NewStorageBuffer(CLUSTER_HORIZONTAL_TILE_COUNT * CLUSTER_VERTICAL_TILE_COUNT * CLUSTER_DEPTH_SLICES_COUNT * 32);
+	m_ptrFullLightListBuffer = GfxRenderer()->NewStorageBuffer(MAX_GPUSCENE_INSTANCE_COUNT * sizeof(int));
+	m_ptrCullLightListBuffer = GfxRenderer()->NewStorageBuffer(MAX_GPUSCENE_INSTANCE_COUNT * sizeof(int));
 
 	m_ptrDescriptorSet = GfxRenderer()->NewDescriptorSet(HashValue(szFileName), m_pPipelineCompute->GetDescriptorLayout(DESCRIPTOR_SET_PASS));
-	m_ptrDescriptorSet->SetStorageBuffer(STORAGE_SCENE_DATA_NAME, m_pRenderSystem->GetGPUScene()->GetInstanceBuffer(), 0, m_pRenderSystem->GetGPUScene()->GetInstanceBuffer()->GetSize());
+	m_ptrDescriptorSet->SetStorageBuffer(STORAGE_SCENE_DATA_NAME, RenderSystem()->GetGPUScene()->GetInstanceBuffer(), 0, RenderSystem()->GetGPUScene()->GetInstanceBuffer()->GetSize());
 	m_ptrDescriptorSet->SetStorageBuffer(STORAGE_CLUSTER_DATA_NAME, m_ptrClusterBuffer, 0, m_ptrClusterBuffer->GetSize());
 	m_ptrDescriptorSet->SetStorageBuffer(STORAGE_FULL_LIGHT_LIST_DATA_NAME, m_ptrFullLightListBuffer, 0, m_ptrFullLightListBuffer->GetSize());
 	m_ptrDescriptorSet->SetStorageBuffer(STORAGE_CULL_LIGHT_LIST_DATA_NAME, m_ptrCullLightListBuffer, 0, m_ptrCullLightListBuffer->GetSize());
@@ -75,7 +68,7 @@ void CCluster::Update(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBuf
 	instance.insert(instance.end(), instnaces0.begin(), instnaces0.end());
 	instance.insert(instance.end(), instnaces1.begin(), instnaces1.end());
 
-	m_ptrFullLightListBuffer->BufferData(0, sizeof(int) * std::min((int)instance.size(), MAX_INSTANCE_COUNT), instance.data());
+	m_ptrFullLightListBuffer->BufferData(0, sizeof(int) * std::min((int)instance.size(), MAX_GPUSCENE_INSTANCE_COUNT), instance.data());
 
 	// Cluster
 	GfxRenderer()->CmdPushDebugGroup(ptrCommandBuffer, "Cluster");
@@ -85,10 +78,11 @@ void CCluster::Update(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBuf
 		{
 			GfxRenderer()->CmdBindPipelineCompute(ptrCommandBuffer, m_pPipelineCompute);
 			GfxRenderer()->CmdBindDescriptorSet(ptrCommandBuffer, m_ptrDescriptorSet);
-			GfxRenderer()->CmdUniform1i(ptrCommandBuffer, HashValue("Param.tileSize"), TILE_SIZE);
-			GfxRenderer()->CmdUniform1i(ptrCommandBuffer, HashValue("Param.numDepthSlices"), DEPTH_SLICE_COUNT);
-			GfxRenderer()->CmdUniform1i(ptrCommandBuffer, HashValue("Param.numPointLights"), std::min((int)instance.size(), MAX_INSTANCE_COUNT));
-			GfxRenderer()->CmdDispatch(ptrCommandBuffer, HORIZONTAL_TILE_COUNT, VERTICAL_TILE_COUNT, DEPTH_SLICE_COUNT);
+			GfxRenderer()->CmdUniform1i(ptrCommandBuffer, HashValue("Param.tileSizeX"), m_pCamera->GetCamera()->GetViewport().z / CLUSTER_HORIZONTAL_TILE_COUNT);
+			GfxRenderer()->CmdUniform1i(ptrCommandBuffer, HashValue("Param.tileSizeY"), m_pCamera->GetCamera()->GetViewport().w / CLUSTER_VERTICAL_TILE_COUNT);
+			GfxRenderer()->CmdUniform1i(ptrCommandBuffer, HashValue("Param.numDepthSlices"), CLUSTER_DEPTH_SLICES_COUNT);
+			GfxRenderer()->CmdUniform1i(ptrCommandBuffer, HashValue("Param.numPointLights"), std::min((int)instance.size(), MAX_GPUSCENE_INSTANCE_COUNT));
+			GfxRenderer()->CmdDispatch(ptrCommandBuffer, CLUSTER_HORIZONTAL_TILE_COUNT, CLUSTER_VERTICAL_TILE_COUNT, CLUSTER_DEPTH_SLICES_COUNT);
 		}
 		GfxRenderer()->CmdSetBufferBarrier(ptrCommandBuffer, m_ptrCullLightListBuffer, GFX_ACCESS_TRANSFER_WRITE_BIT, GFX_ACCESS_TRANSFER_READ_BIT);
 		GfxRenderer()->CmdSetBufferBarrier(ptrCommandBuffer, m_ptrClusterBuffer, GFX_ACCESS_TRANSFER_WRITE_BIT, GFX_ACCESS_TRANSFER_READ_BIT);
