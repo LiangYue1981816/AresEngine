@@ -18,7 +18,7 @@ static const ATTRIBUTE instanceAttributes[INSTANCE_ATTRIBUTE_COUNT] = {
 };
 
 
-CRenderSystem::CRenderSystem(GfxApi api, void* hInstance, void* hWnd, void* hDC, int width, int height, GfxPixelFormat format)
+CRenderSystem::CRenderSystem(void)
 	: m_pRenderer(nullptr)
 	, m_pGPUScene(nullptr)
 	, m_pCluster(nullptr)
@@ -46,25 +46,6 @@ CRenderSystem::CRenderSystem(GfxApi api, void* hInstance, void* hWnd, void* hDC,
 	SetVertexAttributes(vertexAttributes, VERTEX_ATTRIBUTE_COUNT);
 	SetInstanceAttributes(instanceAttributes, INSTANCE_ATTRIBUTE_COUNT);
 
-	switch ((int)api) {
-	case GFX_API_GLES3:
-		m_pRenderer = new CGLES3Renderer(hInstance, hWnd, hDC, width, height, format);
-		break;
-
-	case GFX_API_VULKAN:
-		m_pRenderer = new CVKRenderer(hInstance, hWnd, hDC, width, height, format);
-		break;
-	}
-
-	m_pGPUScene = new CGPUScene;
-	m_pCluster = new CCluster(this, width, height);
-	m_pEngineUniform = new CUniformEngine;
-	m_pInstanceBufferPool = new CInstanceBufferPool;
-
-	CreateCommandBuffers();
-	CreateRenderTextures();
-	CreatePasses();
-
 	Settings()->SetValue("RenderSystem.Shadow.Factor", 1.0f);
 	Settings()->SetValue("RenderSystem.Shadow.SplitFactor0", exp(-4.0f));
 	Settings()->SetValue("RenderSystem.Shadow.SplitFactor1", exp(-3.0f));
@@ -82,15 +63,7 @@ CRenderSystem::CRenderSystem(GfxApi api, void* hInstance, void* hWnd, void* hDC,
 
 CRenderSystem::~CRenderSystem(void)
 {
-	DestroyPasses();
-	DestroyRenderTextures();
-	DestroyCommandBuffers();
-
-	delete m_pInstanceBufferPool;
-	delete m_pEngineUniform;
-	delete m_pCluster;
-	delete m_pGPUScene;
-	delete m_pRenderer;
+	Destroy();
 }
 
 CGPUScene* CRenderSystem::GetGPUScene(void) const
@@ -106,6 +79,41 @@ CCluster* CRenderSystem::GetCluster(void) const
 CUniformEngine* CRenderSystem::GetEngineUniform(void) const
 {
 	return m_pEngineUniform;
+}
+
+void CRenderSystem::Create(GfxApi api, void* hInstance, void* hWnd, void* hDC, int width, int height, GfxPixelFormat format)
+{
+	switch ((int)api) {
+	case GFX_API_GLES3:
+		m_pRenderer = new CGLES3Renderer(hInstance, hWnd, hDC, width, height, format);
+		break;
+
+	case GFX_API_VULKAN:
+		m_pRenderer = new CVKRenderer(hInstance, hWnd, hDC, width, height, format);
+		break;
+	}
+
+	m_pGPUScene = new CGPUScene;
+	m_pCluster = new CCluster;
+	m_pEngineUniform = new CUniformEngine;
+	m_pInstanceBufferPool = new CInstanceBufferPool;
+
+	CreateCommandBuffers();
+	CreateRenderTextures();
+	CreatePasses();
+}
+
+void CRenderSystem::Destroy(void)
+{
+	DestroyPasses();
+	DestroyRenderTextures();
+	DestroyCommandBuffers();
+
+	delete m_pInstanceBufferPool;
+	delete m_pEngineUniform;
+	delete m_pCluster;
+	delete m_pGPUScene;
+	delete m_pRenderer;
 }
 
 void CRenderSystem::CreatePasses(void)

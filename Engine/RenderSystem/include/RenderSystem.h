@@ -173,7 +173,7 @@ class CALL_API CRenderSystem
 
 
 private:
-	CRenderSystem(GfxApi api, void* hInstance, void* hWnd, void* hDC, int width, int height, GfxPixelFormat format);
+	CRenderSystem(void);
 	virtual ~CRenderSystem(void);
 
 
@@ -181,6 +181,10 @@ private:
 	CGPUScene* GetGPUScene(void) const;
 	CCluster* GetCluster(void) const;
 	CUniformEngine* GetEngineUniform(void) const;
+
+private:
+	void Create(GfxApi api, void* hInstance, void* hWnd, void* hDC, int width, int height, GfxPixelFormat format);
+	void Destroy(void);
 
 private:
 	void CreatePasses(void);

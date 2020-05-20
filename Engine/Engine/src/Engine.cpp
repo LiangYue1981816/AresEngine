@@ -75,7 +75,8 @@ CEngine::CEngine(GfxApi api, void* hInstance, void* hWnd, void* hDC, int width, 
 	m_pResourceLoader = new CResourceLoader;
 
 	m_pSceneManager = new CSceneManager;
-	m_pRenderSystem = new CRenderSystem(api, hInstance, hWnd, hDC, width, height, format);
+	m_pRenderSystem = new CRenderSystem;
+	m_pRenderSystem->Create(api, hInstance, hWnd, hDC, width, height, format);
 
 	event_init(&m_eventExit, 0);
 	event_init(&m_eventFinish, 1);
