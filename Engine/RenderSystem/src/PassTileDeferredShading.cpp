@@ -63,7 +63,7 @@ CPassTileDeferredShading::CPassTileDeferredShading(CRenderSystem* pRenderSystem)
 
 		m_ptrDescriptorSetPass_Subpass0 = GfxRenderer()->NewDescriptorSet(HashValueFormat("%x_%p", PASS_TILE_DEFERRED_SHADING_GBUFFER_NAME, this), ptrDescriptorLayout);
 		m_ptrDescriptorSetPass_Subpass0->SetUniformBuffer(UNIFORM_ENGINE_NAME, m_pRenderSystem->GetEngineUniform()->GetUniformBuffer(), 0, m_pRenderSystem->GetEngineUniform()->GetUniformBuffer()->GetSize());
-		m_ptrDescriptorSetPass_Subpass0->SetStorageBuffer(STORAGE_SCENE_DATA_NAME, m_pRenderSystem->GetGPUScene()->GetInstanceBuffer(), 0, m_pRenderSystem->GetGPUScene()->GetInstanceBuffer()->GetSize());
+		m_ptrDescriptorSetPass_Subpass0->SetStorageBuffer(STORAGE_SCENE_DATA_NAME, m_pRenderSystem->GetScene()->GetInstanceBuffer(), 0, m_pRenderSystem->GetScene()->GetInstanceBuffer()->GetSize());
 	}
 
 	{
@@ -78,7 +78,7 @@ CPassTileDeferredShading::CPassTileDeferredShading(CRenderSystem* pRenderSystem)
 
 		m_ptrDescriptorSetPass_Subpass1 = GfxRenderer()->NewDescriptorSet(HashValueFormat("%x_%p", PASS_TILE_DEFERRED_SHADING_LIGHTING_NAME, this), ptrDescriptorLayout);
 		m_ptrDescriptorSetPass_Subpass1->SetUniformBuffer(UNIFORM_ENGINE_NAME, m_pRenderSystem->GetEngineUniform()->GetUniformBuffer(), 0, m_pRenderSystem->GetEngineUniform()->GetUniformBuffer()->GetSize());
-		m_ptrDescriptorSetPass_Subpass1->SetStorageBuffer(STORAGE_SCENE_DATA_NAME, m_pRenderSystem->GetGPUScene()->GetInstanceBuffer(), 0, m_pRenderSystem->GetGPUScene()->GetInstanceBuffer()->GetSize());
+		m_ptrDescriptorSetPass_Subpass1->SetStorageBuffer(STORAGE_SCENE_DATA_NAME, m_pRenderSystem->GetScene()->GetInstanceBuffer(), 0, m_pRenderSystem->GetScene()->GetInstanceBuffer()->GetSize());
 		m_ptrDescriptorSetPass_Subpass1->SetStorageBuffer(STORAGE_CLUSTER_DATA_NAME, m_pRenderSystem->GetCluster()->GetClusterBuffer(), 0, m_pRenderSystem->GetCluster()->GetClusterBuffer()->GetSize());
 		m_ptrDescriptorSetPass_Subpass1->SetStorageBuffer(STORAGE_CULL_LIGHT_LIST_DATA_NAME, m_pRenderSystem->GetCluster()->GetCullLightListBuffer(), 0, m_pRenderSystem->GetCluster()->GetCullLightListBuffer()->GetSize());
 	}

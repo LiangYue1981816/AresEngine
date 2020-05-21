@@ -2,7 +2,7 @@
 #include "RenderHeader.h"
 
 
-CCluster::CCluster(void)
+CGPUCluster::CGPUCluster(void)
 	: m_pCamera(nullptr)
 
 	, m_pShaderCompute(nullptr)
@@ -22,28 +22,28 @@ CCluster::CCluster(void)
 	m_ptrCullLightListBuffer = GfxRenderer()->NewStorageBuffer(MAX_GPUSCENE_INSTANCE_COUNT * sizeof(int));
 
 	m_ptrDescriptorSet = GfxRenderer()->NewDescriptorSet(HashValue(szFileName), m_pPipelineCompute->GetDescriptorLayout(DESCRIPTOR_SET_PASS));
-	m_ptrDescriptorSet->SetStorageBuffer(STORAGE_SCENE_DATA_NAME, RenderSystem()->GetGPUScene()->GetInstanceBuffer(), 0, RenderSystem()->GetGPUScene()->GetInstanceBuffer()->GetSize());
+	m_ptrDescriptorSet->SetStorageBuffer(STORAGE_SCENE_DATA_NAME, RenderSystem()->GetScene()->GetInstanceBuffer(), 0, RenderSystem()->GetScene()->GetInstanceBuffer()->GetSize());
 	m_ptrDescriptorSet->SetStorageBuffer(STORAGE_CLUSTER_DATA_NAME, m_ptrClusterBuffer, 0, m_ptrClusterBuffer->GetSize());
 	m_ptrDescriptorSet->SetStorageBuffer(STORAGE_FULL_LIGHT_LIST_DATA_NAME, m_ptrFullLightListBuffer, 0, m_ptrFullLightListBuffer->GetSize());
 	m_ptrDescriptorSet->SetStorageBuffer(STORAGE_CULL_LIGHT_LIST_DATA_NAME, m_ptrCullLightListBuffer, 0, m_ptrCullLightListBuffer->GetSize());
 }
 
-CCluster::~CCluster(void)
+CGPUCluster::~CGPUCluster(void)
 {
 
 }
 
-const CGfxStorageBufferPtr CCluster::GetClusterBuffer(void) const
+const CGfxStorageBufferPtr CGPUCluster::GetClusterBuffer(void) const
 {
 	return m_ptrClusterBuffer;
 }
 
-const CGfxStorageBufferPtr CCluster::GetCullLightListBuffer(void) const
+const CGfxStorageBufferPtr CGPUCluster::GetCullLightListBuffer(void) const
 {
 	return m_ptrCullLightListBuffer;
 }
 
-void CCluster::SetCamera(CCamera* pCamera)
+void CGPUCluster::SetCamera(CCamera* pCamera)
 {
 	if (m_pCamera != pCamera) {
 		m_pCamera = pCamera;
@@ -51,7 +51,7 @@ void CCluster::SetCamera(CCamera* pCamera)
 	}
 }
 
-void CCluster::Update(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer)
+void CGPUCluster::Update(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer)
 {
 	// Update
 	m_pCamera->GetCameraUniform()->Apply();

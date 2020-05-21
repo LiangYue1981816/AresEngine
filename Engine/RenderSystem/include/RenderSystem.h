@@ -151,7 +151,8 @@
 class CALL_API CRenderSystem
 {
 	friend class CEngine;
-	friend class CCluster;
+	friend class CGPUScene;
+	friend class CGPUCluster;
 	friend class CPassBase;
 	friend class CPassBlit;
 	friend class CPassPreZ;
@@ -178,8 +179,8 @@ private:
 
 
 private:
-	CGPUScene* GetGPUScene(void) const;
-	CCluster* GetCluster(void) const;
+	CGPUScene* GetScene(void) const;
+	CGPUCluster* GetCluster(void) const;
 	CUniformEngine* GetEngineUniform(void) const;
 
 private:
@@ -275,7 +276,7 @@ private:
 private:
 	CGfxRenderer* m_pRenderer;
 	CGPUScene* m_pGPUScene;
-	CCluster* m_pCluster;
+	CGPUCluster* m_pGPUCluster;
 	CUniformEngine* m_pEngineUniform;
 	CInstanceBufferPool* m_pInstanceBufferPool;
 

@@ -2,20 +2,17 @@
 #include "PreHeader.h"
 
 
-class CALL_API CCluster
+class CALL_API CGPUCluster
 {
 	friend class CRenderSystem;
-	friend class CPassForwardShading;
-	friend class CPassDeferredShading;
-	friend class CPassTileDeferredShading;
-
-
-public:
-	CCluster(void);
-	virtual ~CCluster(void);
 
 
 private:
+	CGPUCluster(void);
+	virtual ~CGPUCluster(void);
+
+
+public:
 	const CGfxStorageBufferPtr GetClusterBuffer(void) const;
 	const CGfxStorageBufferPtr GetCullLightListBuffer(void) const;
 

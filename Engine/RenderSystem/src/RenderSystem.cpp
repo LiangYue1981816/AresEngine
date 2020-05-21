@@ -21,7 +21,7 @@ static const ATTRIBUTE instanceAttributes[INSTANCE_ATTRIBUTE_COUNT] = {
 CRenderSystem::CRenderSystem(void)
 	: m_pRenderer(nullptr)
 	, m_pGPUScene(nullptr)
-	, m_pCluster(nullptr)
+	, m_pGPUCluster(nullptr)
 	, m_pEngineUniform(nullptr)
 	, m_pInstanceBufferPool(nullptr)
 
@@ -66,14 +66,14 @@ CRenderSystem::~CRenderSystem(void)
 	Destroy();
 }
 
-CGPUScene* CRenderSystem::GetGPUScene(void) const
+CGPUScene* CRenderSystem::GetScene(void) const
 {
 	return m_pGPUScene;
 }
 
-CCluster* CRenderSystem::GetCluster(void) const
+CGPUCluster* CRenderSystem::GetCluster(void) const
 {
-	return m_pCluster;
+	return m_pGPUCluster;
 }
 
 CUniformEngine* CRenderSystem::GetEngineUniform(void) const
@@ -94,7 +94,7 @@ void CRenderSystem::Create(GfxApi api, void* hInstance, void* hWnd, void* hDC, i
 	}
 
 	m_pGPUScene = new CGPUScene;
-	m_pCluster = new CCluster;
+	m_pGPUCluster = new CGPUCluster;
 	m_pEngineUniform = new CUniformEngine;
 	m_pInstanceBufferPool = new CInstanceBufferPool;
 
@@ -111,7 +111,7 @@ void CRenderSystem::Destroy(void)
 
 	delete m_pInstanceBufferPool;
 	delete m_pEngineUniform;
-	delete m_pCluster;
+	delete m_pGPUCluster;
 	delete m_pGPUScene;
 	delete m_pRenderer;
 }
@@ -395,6 +395,6 @@ void CRenderSystem::UpdateScene(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfx
 
 void CRenderSystem::UpdateCluster(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer, CCamera* pCamera)
 {
-	m_pCluster->SetCamera(pCamera);
-	m_pCluster->Update(taskPool, taskGraph, ptrCommandBuffer);
+	m_pGPUCluster->SetCamera(pCamera);
+	m_pGPUCluster->Update(taskPool, taskGraph, ptrCommandBuffer);
 }

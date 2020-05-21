@@ -40,21 +40,14 @@ typedef struct InstanceData {
 class CALL_API CGPUScene
 {
 	friend class CRenderSystem;
-	friend class CCluster;
-	friend class CPassPreZ;
-	friend class CPassShadow;
-	friend class CPassUnlit;
-	friend class CPassForwardShading;
-	friend class CPassDeferredShading;
-	friend class CPassTileDeferredShading;
 
 
-public:
+private:
 	CGPUScene(void);
 	virtual ~CGPUScene(void);
 
 
-private:
+public:
 	const CGfxStorageBufferPtr GetInstanceBuffer(void) const;
 
 public:
@@ -65,7 +58,6 @@ public:
 	int AddInstance(void);
 	void RemoveInstance(int index);
 	void ModifyInstanceData(int index, const InstanceData &data, int indexThread);
-
 	const InstanceData& GetInstanceData(int index) const;
 
 private:
