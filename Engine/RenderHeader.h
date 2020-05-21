@@ -5,8 +5,8 @@
 #include "ConsoleHeader.h"
 
 #include "RenderSystem/include/Camera.h"
-#include "RenderSystem/include/Cluster.h"
 #include "RenderSystem/include/GPUScene.h"
+#include "RenderSystem/include/GPUCluster.h"
 #include "RenderSystem/include/UniformEngine.h"
 #include "RenderSystem/include/InstanceBufferPool.h"
 #include "RenderSystem/include/RenderQueue.h"

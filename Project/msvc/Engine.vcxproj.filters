@@ -1602,9 +1602,6 @@
     <ClInclude Include="..\..\Engine\RenderSystem\include\Camera.h">
       <Filter>Engine\RenderSystem\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Engine\RenderSystem\include\Cluster.h">
-      <Filter>Engine\RenderSystem\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Engine\RenderSystem\include\GPUScene.h">
       <Filter>Engine\RenderSystem\Header Files</Filter>
     </ClInclude>
@@ -1672,6 +1669,9 @@
       <Filter>Engine\RenderSystem\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\RenderSystem\include\UniformEngine.h">
+      <Filter>Engine\RenderSystem\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\RenderSystem\include\GPUCluster.h">
       <Filter>Engine\RenderSystem\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -2375,9 +2375,6 @@
     <ClCompile Include="..\..\Engine\RenderSystem\src\Camera.cpp">
       <Filter>Engine\RenderSystem\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Engine\RenderSystem\src\Cluster.cpp">
-      <Filter>Engine\RenderSystem\Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Engine\RenderSystem\src\GPUScene.cpp">
       <Filter>Engine\RenderSystem\Source Files</Filter>
     </ClCompile>
@@ -2460,6 +2457,9 @@
       <Filter>Engine\RenderSystem\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\RenderSystem\src\UniformEngine.cpp">
+      <Filter>Engine\RenderSystem\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\RenderSystem\src\GPUCluster.cpp">
       <Filter>Engine\RenderSystem\Source Files</Filter>
     </ClCompile>
   </ItemGroup>

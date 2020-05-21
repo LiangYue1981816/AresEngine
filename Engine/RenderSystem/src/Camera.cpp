@@ -98,6 +98,11 @@ const float CCamera::GetScissorHeight(void) const
 	return m_pCamera->GetScissor().w;
 }
 
+const glm::vec4& CCamera::GetScissor(void) const
+{
+	return m_pCamera->GetScissor();
+}
+
 const float CCamera::GetViewportX(void) const
 {
 	return m_pCamera->GetViewport().x;
@@ -116,6 +121,11 @@ const float CCamera::GetViewportWidth(void) const
 const float CCamera::GetViewportHeight(void) const
 {
 	return m_pCamera->GetViewport().w;
+}
+
+const glm::vec4& CCamera::GetViewport(void) const
+{
+	return m_pCamera->GetViewport();
 }
 
 const glm::vec3& CCamera::GetPosition(void) const

@@ -58,11 +58,13 @@ public:
 	const float GetScissorY(void) const;
 	const float GetScissorWidth(void) const;
 	const float GetScissorHeight(void) const;
+	const glm::vec4& GetScissor(void) const;
 
 	const float GetViewportX(void) const;
 	const float GetViewportY(void) const;
 	const float GetViewportWidth(void) const;
 	const float GetViewportHeight(void) const;
+	const glm::vec4& GetViewport(void) const;
 
 	const glm::vec3& GetPosition(void) const;
 	const glm::vec3& GetForwardDirection(void) const;
