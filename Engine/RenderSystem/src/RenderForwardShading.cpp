@@ -58,8 +58,8 @@ void CRenderSystem::RenderForwardShading(CTaskPool& taskPool, CTaskGraph& taskGr
 		uint32_t rtInColor = RENDER_TEXTURE_FULL_HDR_COLOR1;
 		uint32_t rtOutBloom = RENDER_TEXTURE_FULL_HDR_COLOR0;
 		uint32_t rtTempThreshold = RENDER_TEXTURE_QUATER_HDR_COLOR0;
-		uint32_t rtTempBlur0 = RENDER_TEXTURE_QUATER_HDR_COLOR0;
-		uint32_t rtTempBlur1 = RENDER_TEXTURE_QUATER_HDR_COLOR1;
+		uint32_t rtTempBlur0 = RENDER_TEXTURE_QUATER_HDR_COLOR1;
+		uint32_t rtTempBlur1 = RENDER_TEXTURE_QUATER_HDR_COLOR0;
 		InternalPassBloom(taskPool, taskGraph, ptrCommandBuffer, pCamera, rtInColor, rtOutBloom, rtTempThreshold, rtTempBlur0, rtTempBlur1);
 	}
 	{
