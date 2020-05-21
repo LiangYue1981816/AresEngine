@@ -16,8 +16,9 @@ USE_CULL_LIGHT_LIST_DATA_STORAGE;
 
 // Descriptor
 layout(push_constant) uniform PushConstantParam {
-	int tileSize;
-	int numDepthSlices;
+	float tileSizeX;
+	float tileSizeY;
+	int numDepthTiles;
 	int numPointLights;
 } Param;
 
@@ -39,14 +40,14 @@ bool Intersection(highp vec3 minAABBPosition, highp vec3 maxAABBPosition, highp 
 
 void main()
 {
-	highp int tileSize = Param.tileSize;
-	highp int numDepthSlices = Param.numDepthSlices;
+	highp vec2 tileSize = vec2(Param.tileSizeX, Param.tileSizeY);
+	highp int numDepthTiles = Param.numDepthTiles;
 	highp int numPointLights = Param.numPointLights;
 
-	highp vec2 minScreenPosition = vec2(float(gl_GlobalInvocationID.x + uint(0)), float(gl_GlobalInvocationID.y + uint(0))) * float(tileSize) / camera.screen.xy;
-	highp vec2 maxScreenPosition = vec2(float(gl_GlobalInvocationID.x + uint(1)), float(gl_GlobalInvocationID.y + uint(1))) * float(tileSize) / camera.screen.xy;
-	highp float minDepthValue = (float(gl_GlobalInvocationID.z + uint(0))) / float(numDepthSlices);
-	highp float maxDepthValue = (float(gl_GlobalInvocationID.z + uint(1))) / float(numDepthSlices);
+	highp vec2 minScreenPosition = vec2(float(gl_GlobalInvocationID.x + uint(0)), float(gl_GlobalInvocationID.y + uint(0))) * tileSize / camera.screen.xy;
+	highp vec2 maxScreenPosition = vec2(float(gl_GlobalInvocationID.x + uint(1)), float(gl_GlobalInvocationID.y + uint(1))) * tileSize / camera.screen.xy;
+	highp float minDepthValue = (float(gl_GlobalInvocationID.z + uint(0))) / float(numDepthTiles);
+	highp float maxDepthValue = (float(gl_GlobalInvocationID.z + uint(1))) / float(numDepthTiles);
 
 	highp vec3 minViewPositionNear = ScreenToViewPosition(minScreenPosition, minDepthValue, camera.projectionInverseMatrix).xyz;
 	highp vec3 maxViewPositionNear = ScreenToViewPosition(maxScreenPosition, minDepthValue, camera.projectionInverseMatrix).xyz;
