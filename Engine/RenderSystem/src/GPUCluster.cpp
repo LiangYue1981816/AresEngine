@@ -8,7 +8,7 @@ CGPUCluster::CGPUCluster(void)
 	, m_pShaderCompute(nullptr)
 	, m_pPipelineCompute(nullptr)
 {
-	char szFileName[] = "Cluster.glsl";
+	char szFileName[] = "GPU_Cluster.glsl";
 	char szBinFileName[_MAX_STRING] = { 0 };
 
 	sprintf(szBinFileName, "%x.comp", HashValue(szFileName));

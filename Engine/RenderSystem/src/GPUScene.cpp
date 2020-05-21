@@ -9,7 +9,7 @@ CGPUScene::CGPUScene(void)
 	, m_indexDefaultInstance(INVALID_VALUE)
 	, m_indexPostProcessInstnace(INVALID_VALUE)
 {
-	char szFileName[] = "TransferSceneData.glsl";
+	char szFileName[] = "GPU_TransferSceneData.glsl";
 	char szBinFileName[_MAX_STRING] = { 0 };
 
 	sprintf(szBinFileName, "%x.comp", HashValue(szFileName));
