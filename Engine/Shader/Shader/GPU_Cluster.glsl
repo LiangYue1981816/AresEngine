@@ -44,10 +44,10 @@ void main()
 	highp int numDepthTiles = Param.numDepthTiles;
 	highp int numPointLights = Param.numPointLights;
 
-	highp vec2 minScreenPosition = vec2(float(gl_GlobalInvocationID.x + uint(0)), float(gl_GlobalInvocationID.y + uint(0))) * tileSize / camera.screen.xy;
-	highp vec2 maxScreenPosition = vec2(float(gl_GlobalInvocationID.x + uint(1)), float(gl_GlobalInvocationID.y + uint(1))) * tileSize / camera.screen.xy;
-	highp float minDepthValue = (float(gl_GlobalInvocationID.z + uint(0))) / float(numDepthTiles);
-	highp float maxDepthValue = (float(gl_GlobalInvocationID.z + uint(1))) / float(numDepthTiles);
+	highp vec2 minScreenPosition = (vec2(float(gl_GlobalInvocationID.x), float(gl_GlobalInvocationID.y)) + vec2(0.0, 0.0)) * tileSize / camera.screen.xy;
+	highp vec2 maxScreenPosition = (vec2(float(gl_GlobalInvocationID.x), float(gl_GlobalInvocationID.y)) + vec2(1.0, 1.0)) * tileSize / camera.screen.xy;
+	highp float minDepthValue = (float(gl_GlobalInvocationID.z) + 0.0) / float(numDepthTiles);
+	highp float maxDepthValue = (float(gl_GlobalInvocationID.z) + 1.0) / float(numDepthTiles);
 
 	highp vec3 minViewPositionNear = ScreenToViewPosition(minScreenPosition, minDepthValue, camera.projectionInverseMatrix).xyz;
 	highp vec3 maxViewPositionNear = ScreenToViewPosition(maxScreenPosition, minDepthValue, camera.projectionInverseMatrix).xyz;
