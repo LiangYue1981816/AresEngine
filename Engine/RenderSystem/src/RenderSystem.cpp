@@ -246,18 +246,6 @@ void CRenderSystem::CreateRenderTexture(uint32_t name, GfxPixelFormat format, in
 	m_ptrRenderTextures[name]->Create(format, width, height, samples, bTransient);
 }
 
-CGfxRenderTexturePtr CRenderSystem::GetRenderTexture(uint32_t name) const
-{
-	const auto& itRenderTexture = m_ptrRenderTextures.find(name);
-
-	if (itRenderTexture != m_ptrRenderTextures.end()) {
-		return itRenderTexture->second;
-	}
-	else {
-		return nullptr;
-	}
-}
-
 int CRenderSystem::AddInstance(void)
 {
 	return m_pGPUScene->AddInstance();

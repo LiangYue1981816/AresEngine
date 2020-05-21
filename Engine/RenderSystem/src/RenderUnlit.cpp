@@ -38,20 +38,20 @@ void CRenderSystem::RenderUnlit(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfx
 	uint32_t rtDepth = RENDER_TEXTURE_FULL_DEPTH;
 	{
 		m_pPassPreZ->SetCamera(pCamera);
-		m_pPassPreZ->SetOutputTexture(GetRenderTexture(rtDepth));
+		m_pPassPreZ->SetOutputTexture(m_ptrRenderTextures[rtDepth]);
 		m_pPassPreZ->Render(taskPool, taskGraph, ptrCommandBuffer);
 	}
 
 	uint32_t rtColor = RENDER_TEXTURE_FULL_HDR_COLOR0;
 	{
 		m_pPassUnlit->SetCamera(pCamera);
-		m_pPassUnlit->SetOutputTexture(GetRenderTexture(rtColor), GetRenderTexture(rtDepth));
+		m_pPassUnlit->SetOutputTexture(m_ptrRenderTextures[rtColor], m_ptrRenderTextures[rtDepth]);
 		m_pPassUnlit->Render(taskPool, taskGraph, ptrCommandBuffer);
 	}
 	rtFinal = rtColor;
 
 	m_pPassFinal->SetCamera(pCamera);
-	m_pPassFinal->SetInputTexture(GetRenderTexture(rtFinal));
-	m_pPassFinal->SetOutputTexture(GfxRenderer()->GetSwapChain()->GetFrameIndex(), GetRenderTexture(GfxRenderer()->GetSwapChain()->GetFrameIndex()));
+	m_pPassFinal->SetInputTexture(m_ptrRenderTextures[rtFinal]);
+	m_pPassFinal->SetOutputTexture(GfxRenderer()->GetSwapChain()->GetFrameIndex(), m_ptrRenderTextures[GfxRenderer()->GetSwapChain()->GetFrameIndex()]);
 	m_pPassFinal->Render(taskPool, taskGraph, ptrCommandBuffer, GfxRenderer()->GetSwapChain()->GetFrameIndex(), bPresent);
 }
