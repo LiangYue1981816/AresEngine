@@ -164,7 +164,6 @@ class CALL_API CRenderSystem
 	friend class CPassCopyColor;
 	friend class CPassCopyDepthStencil;
 	friend class CPassSSAO;
-	friend class CPassBlurBox;
 	friend class CPassBlurHorizontal;
 	friend class CPassBlurVertical;
 	friend class CPassBlendAdd;
@@ -185,22 +184,16 @@ private:
 
 private:
 	void Create(GfxApi api, void* hInstance, void* hWnd, void* hDC, int width, int height, GfxPixelFormat format);
-	void Destroy(void);
-
-private:
 	void CreatePasses(void);
-	void DestroyPasses(void);
-
-private:
 	void CreateCommandBuffers(void);
-	void DestroyCommandBuffers(void);
-
-private:
 	void CreateRenderTextures(void);
-	void DestroyRenderTextures(void);
-
 	void CreateRenderTexture(uint32_t name, CGfxRenderTexturePtr ptrRenderTexture);
 	void CreateRenderTexture(uint32_t name, GfxPixelFormat format, int width, int height, int samples = 1, bool bTransient = false);
+
+	void Destroy(void);
+	void DestroyPasses(void);
+	void DestroyCommandBuffers(void);
+	void DestroyRenderTextures(void);
 
 public:
 	int AddInstance(void);

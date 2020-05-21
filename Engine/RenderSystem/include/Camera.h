@@ -19,7 +19,6 @@ class CALL_API CCamera
 	friend class CPassCopyColor;
 	friend class CPassCopyDepthStencil;
 	friend class CPassSSAO;
-	friend class CPassBlurBox;
 	friend class CPassBlurHorizontal;
 	friend class CPassBlurVertical;
 	friend class CPassBlendAdd;

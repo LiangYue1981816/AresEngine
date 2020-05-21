@@ -103,19 +103,6 @@ void CRenderSystem::Create(GfxApi api, void* hInstance, void* hWnd, void* hDC, i
 	CreatePasses();
 }
 
-void CRenderSystem::Destroy(void)
-{
-	DestroyPasses();
-	DestroyRenderTextures();
-	DestroyCommandBuffers();
-
-	delete m_pInstanceBufferPool;
-	delete m_pEngineUniform;
-	delete m_pGPUCluster;
-	delete m_pGPUScene;
-	delete m_pRenderer;
-}
-
 void CRenderSystem::CreatePasses(void)
 {
 	CPassPreZ::Create(GFX_PIXELFORMAT_D32_SFLOAT_PACK32);
@@ -152,6 +139,59 @@ void CRenderSystem::CreatePasses(void)
 	m_pPassBloomBlendAdd = new CPassBlendAdd(this);
 	m_pPassColorGrading = new CPassColorGrading(this);
 	m_pPassFinal = new CPassFinal(this);
+}
+
+void CRenderSystem::CreateCommandBuffers(void)
+{
+	m_ptrComputeCommandBuffer[0] = GfxRenderer()->NewCommandBuffer(0, true);
+	m_ptrComputeCommandBuffer[1] = GfxRenderer()->NewCommandBuffer(0, true);
+	m_ptrComputeCommandBuffer[2] = GfxRenderer()->NewCommandBuffer(0, true);
+
+	m_ptrGraphicCommandBuffer[0] = GfxRenderer()->NewCommandBuffer(0, true);
+	m_ptrGraphicCommandBuffer[1] = GfxRenderer()->NewCommandBuffer(0, true);
+	m_ptrGraphicCommandBuffer[2] = GfxRenderer()->NewCommandBuffer(0, true);
+}
+
+void CRenderSystem::CreateRenderTextures(void)
+{
+	CreateRenderTexture(RENDER_TEXTURE_SWAPCHAIN_COLOR0, GfxRenderer()->GetSwapChain()->GetFrameTexture(0));
+	CreateRenderTexture(RENDER_TEXTURE_SWAPCHAIN_COLOR1, GfxRenderer()->GetSwapChain()->GetFrameTexture(1));
+	CreateRenderTexture(RENDER_TEXTURE_SWAPCHAIN_COLOR2, GfxRenderer()->GetSwapChain()->GetFrameTexture(2));
+	CreateRenderTexture(RENDER_TEXTURE_GBUFFER0, GFX_PIXELFORMAT_BGRA8_UNORM_PACK8, GfxRenderer()->GetSwapChain()->GetWidth(), GfxRenderer()->GetSwapChain()->GetHeight());
+	CreateRenderTexture(RENDER_TEXTURE_GBUFFER1, GFX_PIXELFORMAT_BGRA8_UNORM_PACK8, GfxRenderer()->GetSwapChain()->GetWidth(), GfxRenderer()->GetSwapChain()->GetHeight());
+//	CreateRenderTexture(RENDER_TEXTURE_GBUFFER2, GFX_PIXELFORMAT_BGRA8_UNORM_PACK8, GfxRenderer()->GetSwapChain()->GetWidth(), GfxRenderer()->GetSwapChain()->GetHeight());
+//	CreateRenderTexture(RENDER_TEXTURE_GBUFFER3, GFX_PIXELFORMAT_BGRA8_UNORM_PACK8, GfxRenderer()->GetSwapChain()->GetWidth(), GfxRenderer()->GetSwapChain()->GetHeight());
+	CreateRenderTexture(RENDER_TEXTURE_SHADOW, GFX_PIXELFORMAT_D32_SFLOAT_PACK32, 4096, 4096);
+	CreateRenderTexture(RENDER_TEXTURE_FULL_DEPTH, GFX_PIXELFORMAT_D32_SFLOAT_PACK32, GfxRenderer()->GetSwapChain()->GetWidth(), GfxRenderer()->GetSwapChain()->GetHeight());
+	CreateRenderTexture(RENDER_TEXTURE_FULL_DEPTH_COPY, GFX_PIXELFORMAT_BGRA8_UNORM_PACK8, GfxRenderer()->GetSwapChain()->GetWidth(), GfxRenderer()->GetSwapChain()->GetHeight());
+	CreateRenderTexture(RENDER_TEXTURE_FULL_HDR_COLOR0, GFX_PIXELFORMAT_BGR10A2_UNORM_PACK32, GfxRenderer()->GetSwapChain()->GetWidth(), GfxRenderer()->GetSwapChain()->GetHeight());
+	CreateRenderTexture(RENDER_TEXTURE_FULL_HDR_COLOR1, GFX_PIXELFORMAT_BGR10A2_UNORM_PACK32, GfxRenderer()->GetSwapChain()->GetWidth(), GfxRenderer()->GetSwapChain()->GetHeight());
+	CreateRenderTexture(RENDER_TEXTURE_QUATER_HDR_COLOR0, GFX_PIXELFORMAT_BGR10A2_UNORM_PACK32, GfxRenderer()->GetSwapChain()->GetWidth() / 4, GfxRenderer()->GetSwapChain()->GetHeight() / 4);
+	CreateRenderTexture(RENDER_TEXTURE_QUATER_HDR_COLOR1, GFX_PIXELFORMAT_BGR10A2_UNORM_PACK32, GfxRenderer()->GetSwapChain()->GetWidth() / 4, GfxRenderer()->GetSwapChain()->GetHeight() / 4);
+}
+
+void CRenderSystem::CreateRenderTexture(uint32_t name, CGfxRenderTexturePtr ptrRenderTexture)
+{
+	m_ptrRenderTextures[name] = ptrRenderTexture;
+}
+
+void CRenderSystem::CreateRenderTexture(uint32_t name, GfxPixelFormat format, int width, int height, int samples, bool bTransient)
+{
+	m_ptrRenderTextures[name] = GfxRenderer()->NewRenderTexture(name);
+	m_ptrRenderTextures[name]->Create(format, width, height, samples, bTransient);
+}
+
+void CRenderSystem::Destroy(void)
+{
+	DestroyPasses();
+	DestroyRenderTextures();
+	DestroyCommandBuffers();
+
+	delete m_pInstanceBufferPool;
+	delete m_pEngineUniform;
+	delete m_pGPUCluster;
+	delete m_pGPUScene;
+	delete m_pRenderer;
 }
 
 void CRenderSystem::DestroyPasses(void)
@@ -192,58 +232,20 @@ void CRenderSystem::DestroyPasses(void)
 	delete m_pPassFinal;
 }
 
-void CRenderSystem::CreateCommandBuffers(void)
-{
-	m_ptrComputeCommandBuffer[0] = GfxRenderer()->NewCommandBuffer(0, true);
-	m_ptrComputeCommandBuffer[1] = GfxRenderer()->NewCommandBuffer(0, true);
-	m_ptrComputeCommandBuffer[2] = GfxRenderer()->NewCommandBuffer(0, true);
-	m_ptrGraphicCommandBuffer[0] = GfxRenderer()->NewCommandBuffer(0, true);
-	m_ptrGraphicCommandBuffer[1] = GfxRenderer()->NewCommandBuffer(0, true);
-	m_ptrGraphicCommandBuffer[2] = GfxRenderer()->NewCommandBuffer(0, true);
-}
-
 void CRenderSystem::DestroyCommandBuffers(void)
 {
 	m_ptrComputeCommandBuffer[0].Release();
 	m_ptrComputeCommandBuffer[1].Release();
 	m_ptrComputeCommandBuffer[2].Release();
+
 	m_ptrGraphicCommandBuffer[0].Release();
 	m_ptrGraphicCommandBuffer[1].Release();
 	m_ptrGraphicCommandBuffer[2].Release();
 }
 
-void CRenderSystem::CreateRenderTextures(void)
-{
-	CreateRenderTexture(RENDER_TEXTURE_SWAPCHAIN_COLOR0, GfxRenderer()->GetSwapChain()->GetFrameTexture(0));
-	CreateRenderTexture(RENDER_TEXTURE_SWAPCHAIN_COLOR1, GfxRenderer()->GetSwapChain()->GetFrameTexture(1));
-	CreateRenderTexture(RENDER_TEXTURE_SWAPCHAIN_COLOR2, GfxRenderer()->GetSwapChain()->GetFrameTexture(2));
-	CreateRenderTexture(RENDER_TEXTURE_GBUFFER0, GFX_PIXELFORMAT_BGRA8_UNORM_PACK8, GfxRenderer()->GetSwapChain()->GetWidth(), GfxRenderer()->GetSwapChain()->GetHeight());
-	CreateRenderTexture(RENDER_TEXTURE_GBUFFER1, GFX_PIXELFORMAT_BGRA8_UNORM_PACK8, GfxRenderer()->GetSwapChain()->GetWidth(), GfxRenderer()->GetSwapChain()->GetHeight());
-//	CreateRenderTexture(RENDER_TEXTURE_GBUFFER2, GFX_PIXELFORMAT_BGRA8_UNORM_PACK8, GfxRenderer()->GetSwapChain()->GetWidth(), GfxRenderer()->GetSwapChain()->GetHeight());
-//	CreateRenderTexture(RENDER_TEXTURE_GBUFFER3, GFX_PIXELFORMAT_BGRA8_UNORM_PACK8, GfxRenderer()->GetSwapChain()->GetWidth(), GfxRenderer()->GetSwapChain()->GetHeight());
-	CreateRenderTexture(RENDER_TEXTURE_SHADOW, GFX_PIXELFORMAT_D32_SFLOAT_PACK32, 4096, 4096);
-	CreateRenderTexture(RENDER_TEXTURE_FULL_DEPTH, GFX_PIXELFORMAT_D32_SFLOAT_PACK32, GfxRenderer()->GetSwapChain()->GetWidth(), GfxRenderer()->GetSwapChain()->GetHeight());
-	CreateRenderTexture(RENDER_TEXTURE_FULL_DEPTH_COPY, GFX_PIXELFORMAT_BGRA8_UNORM_PACK8, GfxRenderer()->GetSwapChain()->GetWidth(), GfxRenderer()->GetSwapChain()->GetHeight());
-	CreateRenderTexture(RENDER_TEXTURE_FULL_HDR_COLOR0, GFX_PIXELFORMAT_BGR10A2_UNORM_PACK32, GfxRenderer()->GetSwapChain()->GetWidth(), GfxRenderer()->GetSwapChain()->GetHeight());
-	CreateRenderTexture(RENDER_TEXTURE_FULL_HDR_COLOR1, GFX_PIXELFORMAT_BGR10A2_UNORM_PACK32, GfxRenderer()->GetSwapChain()->GetWidth(), GfxRenderer()->GetSwapChain()->GetHeight());
-	CreateRenderTexture(RENDER_TEXTURE_QUATER_HDR_COLOR0, GFX_PIXELFORMAT_BGR10A2_UNORM_PACK32, GfxRenderer()->GetSwapChain()->GetWidth() / 4, GfxRenderer()->GetSwapChain()->GetHeight() / 4);
-	CreateRenderTexture(RENDER_TEXTURE_QUATER_HDR_COLOR1, GFX_PIXELFORMAT_BGR10A2_UNORM_PACK32, GfxRenderer()->GetSwapChain()->GetWidth() / 4, GfxRenderer()->GetSwapChain()->GetHeight() / 4);
-}
-
 void CRenderSystem::DestroyRenderTextures(void)
 {
 	m_ptrRenderTextures.clear();
-}
-
-void CRenderSystem::CreateRenderTexture(uint32_t name, CGfxRenderTexturePtr ptrRenderTexture)
-{
-	m_ptrRenderTextures[name] = ptrRenderTexture;
-}
-
-void CRenderSystem::CreateRenderTexture(uint32_t name, GfxPixelFormat format, int width, int height, int samples, bool bTransient)
-{
-	m_ptrRenderTextures[name] = GfxRenderer()->NewRenderTexture(name);
-	m_ptrRenderTextures[name]->Create(format, width, height, samples, bTransient);
 }
 
 int CRenderSystem::AddInstance(void)
