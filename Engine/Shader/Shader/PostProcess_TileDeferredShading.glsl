@@ -61,6 +61,9 @@ layout(push_constant) uniform PushConstantParam {
 void main()
 {
 	highp vec2 tileSize = vec2(Param.tileSizeX, Param.tileSizeY);
+	highp int numWidthTiles = int(screenWidth / tileSize.x);
+	highp int numHeightTiles = int(screenHeight / tileSize.y);
+	highp int numDepthTiles = Param.numDepthTiles;
 
 	mediump vec4 pixelColorGBuffer0 = subpassLoad(texGBuffer0);
 	mediump vec4 pixelColorGBuffer1 = subpassLoad(texGBuffer1);
@@ -76,7 +79,34 @@ void main()
 	mediump float roughness = pixelColorGBuffer1.b;
 	mediump float metallic = pixelColorGBuffer1.a;
 
-	outFragColor.rgb = albedo;
+	highp int indexTileX = int(inTexcoord.x * float(numWidthTiles));
+	highp int indexTileY = int(inTexcoord.y * float(numHeightTiles));
+	highp int indexTileZ = int(LinearDepth(depth, cameraZNear, cameraZFar) / (cameraZFar - cameraZNear) * float(numDepthTiles));
+	highp int indexTile = int(indexTileZ * numWidthTiles * numHeightTiles + indexTileY * numWidthTiles + indexTileX);
+
+	highp int offset = int(clusterData.data[indexTile].minAABBPosition.w);
+	highp int count = int(clusterData.data[indexTile].maxAABBPosition.w);
+
+	mediump vec3 pointLighting = vec3(0.0);
+
+	for (int index = offset; index < count; index++)
+	{
+		highp vec3 pointLightPosition = sceneData.data[index].center.xyz;
+		highp float pointLightRange = sceneData.data[index].lightAttenuation.w;
+		highp float distance = length(pointLightPosition - worldPosition);
+
+		if(pointLightRange > distance)
+		{
+			mediump vec3 pointLightDirection = normalize(pointLightPosition - worldPosition);
+			mediump vec3 pointLightAttenuation = sceneData.data[index].lightAttenuation.xyz;
+			mediump vec3 pointLightColor = sceneData.data[index].lightColor.rgb * Attenuation(distance, pointLightAttenuation.x, pointLightAttenuation.y, pointLightAttenuation.z);
+			mediump vec3 fresnel = Fresnel(worldNormal, worldViewDirection, albedo.rgb, metallic);
+			mediump vec3 lighting = PBRLighting(worldNormal, worldViewDirection, pointLightDirection, pointLightColor, albedo, fresnel, metallic, roughness) * pointLightFactor;
+			pointLighting += ao * lighting;
+		}
+	}
+
+	outFragColor.rgb = pointLighting;
 	outFragColor.a = 1.0;
 }
 #endif
