@@ -186,6 +186,7 @@ layout (location = 8)                                      in highp int inInstan
 
 #define screenWidth                              camera.screen.x
 #define screenHeight                             camera.screen.y
+#define screenSize                               camera.screen.xy
 
 #define cameraZNear                              camera.depth.x
 #define cameraZFar                               camera.depth.y
