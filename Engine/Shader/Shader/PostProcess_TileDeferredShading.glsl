@@ -112,6 +112,10 @@ void main()
 		}
 	}
 
+//	outFragColor.rgb = vec3(float(indexTileX) / float(numWidthTiles));
+//	outFragColor.rgb = vec3(float(indexTileY) / float(numHeightTiles));
+//	outFragColor.rgb = vec3(float(indexTileZ) / float(numDepthTiles));
+//	outFragColor.rgb = vec3(float(indexTileX) / float(numWidthTiles), float(indexTileY) / float(numHeightTiles), float(indexTileZ) / float(numDepthTiles));
 	outFragColor.rgb = pointLighting;
 	outFragColor.a = 1.0;
 }
