@@ -183,4 +183,12 @@ highp float LinearDepth(highp float depth, highp float zNear, highp float zFar)
 	highp float z = depth * 2.0 - 1.0;
 	return (2.0 * zNear * zFar) / (zFar + zNear - z * (zFar - zNear));
 }
+
+highp vec3 LineIntersectionToZPlane(highp vec3 from, highp vec3 to, highp float length)
+{
+	highp vec3 normal = vec3(0.0, 0.0, 1.0);
+	highp vec3 direction = to - from;
+	highp vec3 result = from + (length - dot(normal, from)) / dot(normal, direction) * direction;
+	return result;
+}
 #endif
