@@ -59,6 +59,8 @@ layout(push_constant) uniform PushConstantParam {
 
 void main()
 {
+	highp vec2 tileSize = vec2(Param.tileSizeX, Param.tileSizeY);
+
 	mediump vec4 pixelColorGBuffer0 = subpassLoad(texGBuffer0);
 	mediump vec4 pixelColorGBuffer1 = subpassLoad(texGBuffer1);
 
