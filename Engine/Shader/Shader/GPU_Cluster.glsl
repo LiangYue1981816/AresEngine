@@ -46,13 +46,16 @@ void main()
 
 	highp vec2 minScreenPosition = (vec2(float(gl_GlobalInvocationID.x), float(gl_GlobalInvocationID.y)) + vec2(0.0, 0.0)) * tileSize / screenSize;
 	highp vec2 maxScreenPosition = (vec2(float(gl_GlobalInvocationID.x), float(gl_GlobalInvocationID.y)) + vec2(1.0, 1.0)) * tileSize / screenSize;
-	highp float minDepthValue = (float(gl_GlobalInvocationID.z) + 0.0) / float(numDepthTiles);
-	highp float maxDepthValue = (float(gl_GlobalInvocationID.z) + 1.0) / float(numDepthTiles);
+	highp float minDepthValue = -cameraZNear * pow(cameraZFar / cameraZNear, (float(gl_GlobalInvocationID.z) + 0.0) / float(numDepthTiles));
+	highp float maxDepthValue = -cameraZNear * pow(cameraZFar / cameraZNear, (float(gl_GlobalInvocationID.z) + 1.0) / float(numDepthTiles));
 
-	highp vec3 minViewPositionNear = ScreenToViewPosition(minScreenPosition, minDepthValue, camera.projectionInverseMatrix).xyz;
-	highp vec3 maxViewPositionNear = ScreenToViewPosition(maxScreenPosition, minDepthValue, camera.projectionInverseMatrix).xyz;
-	highp vec3 minViewPositionFar = ScreenToViewPosition(minScreenPosition, maxDepthValue, camera.projectionInverseMatrix).xyz;
-	highp vec3 maxViewPositionFar = ScreenToViewPosition(maxScreenPosition, maxDepthValue, camera.projectionInverseMatrix).xyz;
+	highp vec3 minViewPosition = ScreenToViewPosition(minScreenPosition, 0.0, camera.projectionInverseMatrix).xyz;
+	highp vec3 maxViewPosition = ScreenToViewPosition(maxScreenPosition, 0.0, camera.projectionInverseMatrix).xyz;
+
+	highp vec3 minViewPositionNear = LineIntersectionToZPlane(vec3(0.0), minViewPosition, minDepthValue);
+	highp vec3 maxViewPositionNear = LineIntersectionToZPlane(vec3(0.0), maxViewPosition, minDepthValue);
+	highp vec3 minViewPositionFar = LineIntersectionToZPlane(vec3(0.0), minViewPosition, maxDepthValue);
+	highp vec3 maxViewPositionFar = LineIntersectionToZPlane(vec3(0.0), maxViewPosition, maxDepthValue);
 
 	highp vec3 minAABBPosition = min(min(minViewPositionNear, maxViewPositionNear), min(minViewPositionFar, maxViewPositionFar));
 	highp vec3 maxAABBPosition = max(max(minViewPositionNear, maxViewPositionNear), max(minViewPositionFar, maxViewPositionFar));

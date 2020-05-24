@@ -80,9 +80,12 @@ void main()
 	mediump float roughness = pixelColorGBuffer1.b;
 	mediump float metallic = pixelColorGBuffer1.a;
 
+	highp float scale = float(numDepthTiles) / log2(cameraZFar / cameraZNear);
+	highp float bias = -float(numDepthTiles) * log2(cameraZNear) / log2(cameraZFar / cameraZNear);
+
 	highp int indexTileX = int(inTexcoord.x * float(numWidthTiles));
 	highp int indexTileY = int(inTexcoord.y * float(numHeightTiles));
-	highp int indexTileZ = int(LinearDepth(depth, cameraZNear, cameraZFar) / (cameraZFar - cameraZNear) * float(numDepthTiles));
+	highp int indexTileZ = int(log2(LinearDepth(depth, cameraZNear, cameraZFar)) * scale + bias);
 	highp int indexTile = int(indexTileZ * numWidthTiles * numHeightTiles + indexTileY * numWidthTiles + indexTileX);
 
 	highp int offset = int(clusterData.data[indexTile].minAABBPosition.w);
