@@ -8,6 +8,13 @@
 		  </Vertex>
 		  <Fragment file_name="PostProcess_TileDeferredShading.glsl">
 		  </Fragment>
+		  <State>
+				<ColorBlend>
+					<Blend enable="GFX_TRUE" />
+					<RGBBlend blend_op="GFX_ADD" src_factor="GFX_ONE" dst_factor="GFX_ONE" />
+					<AlphaBlend blend_op="GFX_ADD" src_factor="GFX_ONE" dst_factor="GFX_ZERO" />
+				</ColorBlend>
+			</State>
 		</Pipeline>
 	</Pass>
 </Material>
