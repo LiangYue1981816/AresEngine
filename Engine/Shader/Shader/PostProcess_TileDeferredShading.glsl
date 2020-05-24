@@ -64,7 +64,7 @@ void main()
 
 	highp int numWidthTiles = int(screenWidth / tileSize.x);
 	highp int numHeightTiles = int(screenHeight / tileSize.y);
-	highp int numDepthTiles = Param.numDepthTiles;
+	highp int numDepthTiles = int(Param.numDepthTiles);
 
 	mediump vec4 pixelColorGBuffer0 = subpassLoad(texGBuffer0);
 	mediump vec4 pixelColorGBuffer1 = subpassLoad(texGBuffer1);
