@@ -170,4 +170,5 @@ void CPassTileDeferredShading::RenderCallback(CGfxCommandBufferPtr ptrCommandBuf
 {
 	GfxRenderer()->CmdUniform1f(ptrCommandBuffer, HashValue("Param.tileSizeX"), m_pCamera->GetViewportWidth() / CLUSTER_HORIZONTAL_TILE_COUNT);
 	GfxRenderer()->CmdUniform1f(ptrCommandBuffer, HashValue("Param.tileSizeY"), m_pCamera->GetViewportHeight() / CLUSTER_VERTICAL_TILE_COUNT);
+	GfxRenderer()->CmdUniform1i(ptrCommandBuffer, HashValue("Param.numDepthTiles"), CLUSTER_DEPTH_TILE_COUNT);
 }

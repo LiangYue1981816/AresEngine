@@ -55,6 +55,7 @@ DESCRIPTOR_SET_INPUTATTACHMENT(2, 7) uniform mediump subpassInput texGBuffer1;
 layout(push_constant) uniform PushConstantParam {
 	float tileSizeX;
 	float tileSizeY;
+	int numDepthTiles;
 } Param;
 
 void main()
