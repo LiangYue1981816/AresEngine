@@ -61,6 +61,7 @@ layout(push_constant) uniform PushConstantParam {
 void main()
 {
 	highp vec2 tileSize = vec2(Param.tileSizeX, Param.tileSizeY);
+
 	highp int numWidthTiles = int(screenWidth / tileSize.x);
 	highp int numHeightTiles = int(screenHeight / tileSize.y);
 	highp int numDepthTiles = Param.numDepthTiles;
@@ -91,15 +92,17 @@ void main()
 
 	for (int index = offset; index < count; index++)
 	{
-		highp vec3 pointLightPosition = sceneData.data[index].center.xyz;
-		highp float pointLightRange = sceneData.data[index].lightAttenuation.w;
+		highp int indexInstance = cullLightListData.index[index];
+
+		highp vec3 pointLightPosition = sceneData.data[indexInstance].center.xyz;
+		highp float pointLightRange = sceneData.data[indexInstance].lightAttenuation.w;
 		highp float distance = length(pointLightPosition - worldPosition);
 
 		if(pointLightRange > distance)
 		{
 			mediump vec3 pointLightDirection = normalize(pointLightPosition - worldPosition);
-			mediump vec3 pointLightAttenuation = sceneData.data[index].lightAttenuation.xyz;
-			mediump vec3 pointLightColor = sceneData.data[index].lightColor.rgb * Attenuation(distance, pointLightAttenuation.x, pointLightAttenuation.y, pointLightAttenuation.z);
+			mediump vec3 pointLightAttenuation = sceneData.data[indexInstance].lightAttenuation.xyz;
+			mediump vec3 pointLightColor = sceneData.data[indexInstance].lightColor.rgb * Attenuation(distance, pointLightAttenuation.x, pointLightAttenuation.y, pointLightAttenuation.z);
 			mediump vec3 fresnel = Fresnel(worldNormal, worldViewDirection, albedo.rgb, metallic);
 			mediump vec3 lighting = PBRLighting(worldNormal, worldViewDirection, pointLightDirection, pointLightColor, albedo, fresnel, metallic, roughness) * pointLightFactor;
 			pointLighting += ao * lighting;
