@@ -49,9 +49,31 @@ layout (location = 0) in mediump vec2 inTexcoord;
 layout (location = 0) out mediump vec4 outFragColor;
 
 // Descriptor
-// ...
+DESCRIPTOR_SET_INPUTATTACHMENT(1, 6) uniform mediump subpassInput texGBuffer0;
+DESCRIPTOR_SET_INPUTATTACHMENT(2, 7) uniform mediump subpassInput texGBuffer1;
+
+layout(push_constant) uniform PushConstantParam {
+	float tileSizeX;
+	float tileSizeY;
+} Param;
 
 void main()
 {
+	mediump vec4 pixelColorGBuffer0 = subpassLoad(texGBuffer0);
+	mediump vec4 pixelColorGBuffer1 = subpassLoad(texGBuffer1);
+
+	highp float depth = UnpackFloat(texture(texDepth, inTexcoord.xy));
+	highp vec3 worldPosition = ScreenToWorldPosition(inTexcoord.xy, depth, cameraProjectionInverseMatrix, cameraViewInverseMatrix).xyz;
+	highp vec3 worldCameraPosition = (cameraViewInverseMatrix * vec4(0.0, 0.0, 0.0, 1.0)).xyz;
+	mediump vec3 worldViewDirection = normalize(worldCameraPosition - worldPosition);
+	mediump vec3 worldNormal = NormalDecode(pixelColorGBuffer1.rg);
+
+	mediump vec3 albedo = pixelColorGBuffer0.rgb;
+	mediump float ao = pixelColorGBuffer0.a;
+	mediump float roughness = pixelColorGBuffer1.b;
+	mediump float metallic = pixelColorGBuffer1.a;
+
+	outFragColor.rgb = albedo;
+	outFragColor.a = 1.0;
 }
 #endif

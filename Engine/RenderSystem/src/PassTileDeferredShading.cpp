@@ -165,3 +165,9 @@ void CPassTileDeferredShading::Render(CTaskPool& taskPool, CTaskGraph& taskGraph
 	}
 	GfxRenderer()->CmdPopDebugGroup(ptrCommandBuffer);
 }
+
+void CPassTileDeferredShading::RenderCallback(CGfxCommandBufferPtr ptrCommandBuffer)
+{
+	GfxRenderer()->CmdUniform1f(ptrCommandBuffer, HashValue("Param.tileSizeX"), m_pCamera->GetViewportWidth() / CLUSTER_HORIZONTAL_TILE_COUNT);
+	GfxRenderer()->CmdUniform1f(ptrCommandBuffer, HashValue("Param.tileSizeY"), m_pCamera->GetViewportHeight() / CLUSTER_VERTICAL_TILE_COUNT);
+}
