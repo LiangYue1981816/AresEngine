@@ -93,9 +93,9 @@ void main()
 
 	mediump vec3 pointLighting = vec3(0.0);
 
-	for (int index = offset; index < count; index++)
+	for (int index = 0; index < count; index++)
 	{
-		highp int indexInstance = cullLightListData.index[index];
+		highp int indexInstance = cullLightListData.index[index + offset];
 
 		highp vec3 pointLightPosition = sceneData.data[indexInstance].center.xyz;
 		highp float pointLightRange = sceneData.data[indexInstance].lightAttenuation.w;
