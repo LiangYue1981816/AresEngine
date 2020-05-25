@@ -155,7 +155,7 @@ void CPassTileDeferredShading::Render(CTaskPool& taskPool, CTaskGraph& taskGraph
 
 			m_pCamera->GetRenderQueue()->CmdDraw(taskPool, taskGraph, ptrCommandBuffer, m_ptrDescriptorSetPass_Subpass0, PASS_TILE_DEFERRED_SHADING_GBUFFER_NAME, m_pCamera->GetScissor(), m_pCamera->GetViewport(), m_pCamera->GetZNear(), m_pCamera->GetZFar(), 0xffffffff, false);
 			ptrCommandBuffer->CmdNextSubpass();
-			m_pRenderQueue->CmdDraw(taskPool, taskGraph, ptrCommandBuffer, m_ptrDescriptorSetPass_Subpass1, PASS_TILE_DEFERRED_SHADING_LIGHTING_NAME, m_pCamera->GetScissor(), m_pCamera->GetViewport(), znear, zfar, 0xffffffff, false);
+			m_pRenderQueue->CmdDraw(taskPool, taskGraph, ptrCommandBuffer, m_ptrDescriptorSetPass_Subpass1, PASS_TILE_DEFERRED_SHADING_LIGHTING_NAME, m_pCamera->GetScissor(), m_pCamera->GetViewport(), znear, zfar, 0xffffffff, true);
 		}
 		GfxRenderer()->CmdEndRenderPass(ptrCommandBuffer);
 		GfxRenderer()->CmdSetImageLayout(ptrCommandBuffer, m_ptrOutputColorTexture, GFX_IMAGE_LAYOUT_COLOR_READ_ONLY_OPTIMAL);
