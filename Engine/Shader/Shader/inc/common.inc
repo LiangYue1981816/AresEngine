@@ -192,7 +192,7 @@ highp vec3 LineIntersectionToZPlane(highp vec3 from, highp vec3 to, highp float 
 	return result;
 }
 
-mediump bool Intersection(highp vec3 minAABBPosition, highp vec3 maxAABBPosition, highp vec3 spherePosition, highp float radius)
+bool Intersection(highp vec3 minAABBPosition, highp vec3 maxAABBPosition, highp vec3 spherePosition, highp float radius)
 {
 	highp float dis2 = 0.0;
 
