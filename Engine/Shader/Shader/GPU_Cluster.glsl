@@ -48,7 +48,7 @@ void main()
 	highp int visibleLightIndices[256];
 
 	for (int i = 0; i < numPointLights; i++) {
-		highp int indexLight = GetLightIndexFromFullList(i);
+		highp int indexLight = GetFullLightListIndex(i);
 		highp vec3 spherePosition = GetInstance(indexLight).center.xyz;
 		highp float radius = GetInstance(indexLight).lightAttenuation.w;
 
@@ -62,15 +62,15 @@ void main()
 		}
 	}
 
-	cullLightListData.count = 0;
+	ZeroCullLightListCount();
 
 	barrier();
 
-	highp int offset = atomicAdd(cullLightListData.count, visibleLightCount);
+	highp int offset = AddCullLightListCount(visibleLightCount);
 	highp int tileIndex = int(gl_WorkGroupID.z * gl_NumWorkGroups.x * gl_NumWorkGroups.y + gl_WorkGroupID.y * gl_NumWorkGroups.x + gl_WorkGroupID.x);
 
 	for (int i = 0; i < visibleLightCount; i++) {
-		cullLightListData.index[offset + i] = visibleLightIndices[i];
+		SetCullLightListIndex(offset + i, visibleLightIndices[i]);
 	}
 
 	SetCluster(tileIndex, minAABBPosition, maxAABBPosition, offset, visibleLightCount);

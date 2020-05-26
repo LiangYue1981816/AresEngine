@@ -192,7 +192,7 @@ layout (location = 8)                                      in highp int inInstan
 		highp int indexLights[];                                                   \
 	} fullLightListData;                                                           \
 	                                                                               \
-	highp int GetLightIndexFromFullList(highp int index)                           \
+	highp int GetFullLightListIndex(highp int index)                               \
 	{                                                                              \
 		return fullLightListData.indexLights[index];                               \
 	}
@@ -201,8 +201,33 @@ layout (location = 8)                                      in highp int inInstan
 	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_CULL_LIGHT_LIST_DATA) buffer CullLightListData \
 	{                                                                              \
 		highp int count;                                                           \
-		highp int index[];                                                         \
-	} cullLightListData;
+		highp int indexLights[];                                                   \
+	} cullLightListData;                                                           \
+	                                                                               \
+	highp int GeCullLightListCount()                                               \
+	{                                                                              \
+		return cullLightListData.count;                                            \
+	}                                                                              \
+	                                                                               \
+	void ZeroCullLightListCount()                                                  \
+	{                                                                              \
+		cullLightListData.count = 0;                                               \
+	}                                                                              \
+	                                                                               \
+	highp int AddCullLightListCount(highp int count)                               \
+	{                                                                              \
+		return atomicAdd(cullLightListData.count, count);                          \
+	}                                                                              \
+	                                                                               \
+	highp int GetCullLightListIndex(highp int index)                               \
+	{                                                                              \
+		return cullLightListData.indexLights[index];                               \
+	}                                                                              \
+	                                                                               \
+	void SetCullLightListIndex(highp int index, highp int indexLight)              \
+	{                                                                              \
+		cullLightListData.indexLights[index] = indexLight;                         \
+	}
 
 #define USE_DEPTH_TEXTURE_UNIFORM                                                  \
 	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_DEPTH_TEXTURE) highp uniform sampler2D texDepth;
