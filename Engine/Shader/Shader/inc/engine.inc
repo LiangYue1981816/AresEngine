@@ -74,7 +74,7 @@ layout (location = 8)                                      in highp int inInstan
 		highp mat4 projectionViewMatrix;                                           \
 		highp mat4 projectionInverseMatrix;                                        \
 		highp mat4 projectionViewInverseMatrix;                                    \
-	} camera
+	} camera;
 
 #define USE_ENGINE_UNIFORM                                                         \
 	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_ENGINE) uniform Engine                     \
@@ -114,7 +114,7 @@ layout (location = 8)                                      in highp int inInstan
 		highp mat4 shadowViewInverseMatrix[4];                                     \
 		highp mat4 shadowProjectionMatrix[4];                                      \
 		highp mat4 shadowProjectionViewMatrix[4];                                  \
-	} engine
+	} engine;
 
 	struct InstanceData
 	{
@@ -135,53 +135,53 @@ layout (location = 8)                                      in highp int inInstan
 	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_SCENE_DATA) buffer SceneData               \
 	{                                                                              \
 		InstanceData data[];                                                       \
-	} sceneData
+	} sceneData;
 
 #define USE_TRANSFER_SCENE_DATA_STORAGE                                            \
 	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_TRANSFER_SCENE_DATA) buffer TransferSceneData \
 	{                                                                              \
 		InstanceData data[];                                                       \
-	} transferSceneData
+	} transferSceneData;
 
 #define USE_TRANSFER_SCENE_DATA_INDEX_STORAGE                                      \
 	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_TRANSFER_SCENE_DATA_INDEX) buffer TransferSceneDataIndex \
 	{                                                                              \
 		int index[];                                                               \
-	} transferSceneDataIndex
+	} transferSceneDataIndex;
 
 #define USE_CLUSTER_DATA_STORAGE                                                   \
 	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_CLUSTER_DATA) buffer ClusterData           \
 	{                                                                              \
 		Cluster data[];                                                            \
-	} clusterData
+	} clusterData;
 
 #define USE_FULL_LIGHT_LIST_DATA_STORAGE                                           \
 	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_FULL_LIGHT_LIST_DATA) buffer FullLightListData \
 	{                                                                              \
 		int index[];                                                               \
-	} fullLightListData
+	} fullLightListData;
 
 #define USE_CULL_LIGHT_LIST_DATA_STORAGE                                           \
 	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_CULL_LIGHT_LIST_DATA) buffer CullLightListData \
 	{                                                                              \
 		int count;                                                                 \
 		int index[];                                                               \
-	} cullLightListData
+	} cullLightListData;
 
 #define USE_DEPTH_TEXTURE_UNIFORM                                                  \
-	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_DEPTH_TEXTURE) highp uniform sampler2D texDepth
+	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_DEPTH_TEXTURE) highp uniform sampler2D texDepth;
 
 #define USE_COLOR_TEXTURE_UNIFORM                                                  \
-	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_COLOR_TEXTURE) mediump uniform sampler2D texColor
+	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_COLOR_TEXTURE) mediump uniform sampler2D texColor;
 
 #define USE_SHADOW_TEXTURE_UNIFORM                                                 \
-	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_SHADOW_TEXTURE) highp uniform sampler2D texShadow
+	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_SHADOW_TEXTURE) highp uniform sampler2D texShadow;
 
 #define USE_SSAO_TEXTURE_UNIFORM                                                   \
-	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_SSAO_TEXTURE) mediump uniform sampler2D texSSAO
+	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_SSAO_TEXTURE) mediump uniform sampler2D texSSAO;
 
 #define USE_ADD_TEXTURE_UNIFORM                                                    \
-	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_ADD_TEXTURE) mediump uniform sampler2D texAdd
+	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_ADD_TEXTURE) mediump uniform sampler2D texAdd;
 
 
 #define screenWidth                              camera.screen.x

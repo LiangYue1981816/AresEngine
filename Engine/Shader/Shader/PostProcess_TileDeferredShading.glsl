@@ -5,8 +5,8 @@ precision mediump float;
 #include "engine.inc"
 #include "common.inc"
 
-USE_CAMERA_UNIFORM;
-USE_ENGINE_UNIFORM;
+USE_CAMERA_UNIFORM
+USE_ENGINE_UNIFORM
 
 // Output
 layout (location = 0) out mediump vec2 outTexcoord;
@@ -33,12 +33,12 @@ precision mediump float;
 #include "engine.inc"
 #include "common.inc"
 
-USE_CAMERA_UNIFORM;
-USE_ENGINE_UNIFORM;
-USE_SCENE_DATA_STORAGE;
-USE_CLUSTER_DATA_STORAGE;
-USE_CULL_LIGHT_LIST_DATA_STORAGE;
-USE_DEPTH_TEXTURE_UNIFORM;
+USE_CAMERA_UNIFORM
+USE_ENGINE_UNIFORM
+USE_SCENE_DATA_STORAGE
+USE_CLUSTER_DATA_STORAGE
+USE_CULL_LIGHT_LIST_DATA_STORAGE
+USE_DEPTH_TEXTURE_UNIFORM
 
 #include "lighting.inc"
 

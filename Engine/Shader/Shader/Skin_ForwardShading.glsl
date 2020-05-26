@@ -5,9 +5,9 @@ precision mediump float;
 #include "engine.inc"
 #include "common.inc"
 
-USE_CAMERA_UNIFORM;
-USE_ENGINE_UNIFORM;
-USE_SCENE_DATA_STORAGE;
+USE_CAMERA_UNIFORM
+USE_ENGINE_UNIFORM
+USE_SCENE_DATA_STORAGE
 
 // Output
 layout (location = 0) out highp   vec3 outPosition;
@@ -54,10 +54,10 @@ precision mediump float;
 #include "engine.inc"
 #include "common.inc"
 
-USE_CAMERA_UNIFORM;
-USE_ENGINE_UNIFORM;
-USE_SSAO_TEXTURE_UNIFORM;
-USE_SHADOW_TEXTURE_UNIFORM;
+USE_CAMERA_UNIFORM
+USE_ENGINE_UNIFORM
+USE_SSAO_TEXTURE_UNIFORM
+USE_SHADOW_TEXTURE_UNIFORM
 
 #include "lighting.inc"
 #include "shadow.inc"
