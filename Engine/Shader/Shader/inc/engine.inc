@@ -180,6 +180,16 @@ layout (location = 8)                                      in highp int inInstan
 		return clusterData.clusters[index];                                        \
 	}                                                                              \
 	                                                                               \
+	highp int GetClusterLightOffset(highp int index)                               \
+	{                                                                              \
+		return int(clusterData.clusters[index].minAABBPosition.w);                 \
+	}                                                                              \
+	                                                                               \
+	highp int GetClusterLightCount(highp int index)                                \
+	{                                                                              \
+		return int(clusterData.clusters[index].maxAABBPosition.w);                 \
+	}                                                                              \
+	                                                                               \
 	void SetCluster(highp int index, highp vec3 minAABBPosition, highp vec3 maxAABBPosition, highp int offset, highp int count) \
 	{                                                                              \
 		clusterData.clusters[index].minAABBPosition = vec4(minAABBPosition, float(offset)); \

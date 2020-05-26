@@ -88,24 +88,24 @@ void main()
 	highp int indexTileZ = int(log2(LinearDepth(depth, cameraZNear, cameraZFar)) * scale + bias);
 	highp int indexTile = int(indexTileZ * numWidthTiles * numHeightTiles + indexTileY * numWidthTiles + indexTileX);
 
-	highp int offset = int(GetCluster(indexTile).minAABBPosition.w);
-	highp int count = int(GetCluster(indexTile).maxAABBPosition.w);
+	highp int offset = GetClusterLightOffset(indexTile);
+	highp int count = GetClusterLightCount(indexTile);
 
 	mediump vec3 pointLighting = vec3(0.0);
 
 	for (int index = 0; index < count; index++)
 	{
-		highp int indexInstance = cullLightListData.index[index + offset];
+		highp int indexLight = GetCullLightListIndex(index + offset);
 
-		highp vec3 pointLightPosition = GetInstance(indexInstance).center.xyz;
-		highp float pointLightRange = GetInstance(indexInstance).lightAttenuation.w;
+		highp vec3 pointLightPosition = GetInstance(indexLight).center.xyz;
+		highp float pointLightRange = GetInstance(indexLight).lightAttenuation.w;
 		highp float distance = length(pointLightPosition - worldPosition);
 
 		if(pointLightRange > distance)
 		{
 			mediump vec3 pointLightDirection = normalize(pointLightPosition - worldPosition);
-			mediump vec3 pointLightAttenuation = GetInstance(indexInstance).lightAttenuation.xyz;
-			mediump vec3 pointLightColor = GetInstance(indexInstance).lightColor.rgb * Attenuation(distance, pointLightAttenuation.x, pointLightAttenuation.y, pointLightAttenuation.z);
+			mediump vec3 pointLightAttenuation = GetInstance(indexLight).lightAttenuation.xyz;
+			mediump vec3 pointLightColor = GetInstance(indexLight).lightColor.rgb * Attenuation(distance, pointLightAttenuation.x, pointLightAttenuation.y, pointLightAttenuation.z);
 			mediump vec3 fresnel = Fresnel(worldNormal, worldViewDirection, albedo.rgb, metallic);
 			mediump vec3 lighting = PBRLighting(worldNormal, worldViewDirection, pointLightDirection, pointLightColor, albedo, fresnel, metallic, roughness) * pointLightFactor;
 			pointLighting += ao * lighting;

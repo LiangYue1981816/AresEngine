@@ -44,8 +44,8 @@ void main()
 	highp vec3 minAABBPosition = min(min(minViewPositionNear, maxViewPositionNear), min(minViewPositionFar, maxViewPositionFar));
 	highp vec3 maxAABBPosition = max(max(minViewPositionNear, maxViewPositionNear), max(minViewPositionFar, maxViewPositionFar));
 
-	highp int visibleLightCount = 0;
-	highp int visibleLightIndices[256];
+	highp int count = 0;
+	highp int indexLights[256];
 
 	for (int i = 0; i < numPointLights; i++) {
 		highp int indexLight = GetFullLightListIndex(i);
@@ -53,11 +53,11 @@ void main()
 		highp float radius = GetInstance(indexLight).lightAttenuation.w;
 
 		if (Intersection(minAABBPosition, maxAABBPosition, spherePosition, radius)) {
-			visibleLightIndices[visibleLightCount] = indexLight;
-			visibleLightCount += 1;
+			indexLights[count] = indexLight;
+			count += 1;
 		}
 
-		if (visibleLightCount == 256) {
+		if (count == 256) {
 			break;
 		}
 	}
@@ -66,12 +66,12 @@ void main()
 
 	barrier();
 
-	highp int offset = AddCullLightListCount(visibleLightCount);
-	highp int tileIndex = int(gl_WorkGroupID.z * gl_NumWorkGroups.x * gl_NumWorkGroups.y + gl_WorkGroupID.y * gl_NumWorkGroups.x + gl_WorkGroupID.x);
+	highp int offset = AddCullLightListCount(count);
+	highp int indexTile = int(gl_WorkGroupID.z * gl_NumWorkGroups.x * gl_NumWorkGroups.y + gl_WorkGroupID.y * gl_NumWorkGroups.x + gl_WorkGroupID.x);
 
-	for (int i = 0; i < visibleLightCount; i++) {
-		SetCullLightListIndex(offset + i, visibleLightIndices[i]);
+	for (int i = 0; i < count; i++) {
+		SetCullLightListIndex(offset + i, indexLights[i]);
 	}
 
-	SetCluster(tileIndex, minAABBPosition, maxAABBPosition, offset, visibleLightCount);
+	SetCluster(indexTile, minAABBPosition, maxAABBPosition, offset, count);
 }
