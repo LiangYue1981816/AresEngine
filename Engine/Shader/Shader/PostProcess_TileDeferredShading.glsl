@@ -97,15 +97,15 @@ void main()
 	{
 		highp int indexInstance = cullLightListData.index[index + offset];
 
-		highp vec3 pointLightPosition = sceneData.data[indexInstance].center.xyz;
-		highp float pointLightRange = sceneData.data[indexInstance].lightAttenuation.w;
+		highp vec3 pointLightPosition = GetInstance(indexInstance).center.xyz;
+		highp float pointLightRange = GetInstance(indexInstance).lightAttenuation.w;
 		highp float distance = length(pointLightPosition - worldPosition);
 
 		if(pointLightRange > distance)
 		{
 			mediump vec3 pointLightDirection = normalize(pointLightPosition - worldPosition);
-			mediump vec3 pointLightAttenuation = sceneData.data[indexInstance].lightAttenuation.xyz;
-			mediump vec3 pointLightColor = sceneData.data[indexInstance].lightColor.rgb * Attenuation(distance, pointLightAttenuation.x, pointLightAttenuation.y, pointLightAttenuation.z);
+			mediump vec3 pointLightAttenuation = GetInstance(indexInstance).lightAttenuation.xyz;
+			mediump vec3 pointLightColor = GetInstance(indexInstance).lightColor.rgb * Attenuation(distance, pointLightAttenuation.x, pointLightAttenuation.y, pointLightAttenuation.z);
 			mediump vec3 fresnel = Fresnel(worldNormal, worldViewDirection, albedo.rgb, metallic);
 			mediump vec3 lighting = PBRLighting(worldNormal, worldViewDirection, pointLightDirection, pointLightColor, albedo, fresnel, metallic, roughness) * pointLightFactor;
 			pointLighting += ao * lighting;

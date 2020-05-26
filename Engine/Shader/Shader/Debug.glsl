@@ -17,7 +17,7 @@ USE_SCENE_DATA_STORAGE
 
 void main()
 {
-	highp mat4 worldMatrix = sceneData.data[inInstanceIndex].transformMatrix;
+	highp mat4 worldMatrix = GetInstance(inInstanceIndex).transformMatrix;
 	highp vec3 worldPosition = (worldMatrix * vec4(inPosition.xyz, 1.0)).xyz;
 
 	gl_Position = cameraProjectionViewMatrix * vec4(worldPosition, 1.0);

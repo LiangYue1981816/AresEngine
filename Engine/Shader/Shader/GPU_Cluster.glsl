@@ -49,8 +49,8 @@ void main()
 
 	for (int i = 0; i < numPointLights; i++) {
 		highp int indexLight = fullLightListData.index[i];
-		highp vec3 spherePosition = sceneData.data[indexLight].center.xyz;
-		highp float radius = sceneData.data[indexLight].lightAttenuation.w;
+		highp vec3 spherePosition = GetInstance(indexLight).center.xyz;
+		highp float radius = GetInstance(indexLight).lightAttenuation.w;
 
 		if (Intersection(minAABBPosition, maxAABBPosition, spherePosition, radius)) {
 			visibleLightIndices[visibleLightCount] = indexLight;

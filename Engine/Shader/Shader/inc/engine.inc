@@ -116,7 +116,7 @@ layout (location = 8)                                      in highp int inInstan
 		highp mat4 shadowProjectionViewMatrix[4];                                  \
 	} engine;
 
-	struct InstanceData
+	struct Instance
 	{
 		highp mat4 transformMatrix;
 		highp vec4 center;
@@ -134,20 +134,40 @@ layout (location = 8)                                      in highp int inInstan
 #define USE_SCENE_DATA_STORAGE                                                     \
 	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_SCENE_DATA) buffer SceneData               \
 	{                                                                              \
-		InstanceData data[];                                                       \
-	} sceneData;
+		Instance instances[];                                                      \
+	} sceneData;                                                                   \
+	                                                                               \
+	Instance GetInstance(highp int index)                                          \
+	{                                                                              \
+		return sceneData.instances[index];                                         \
+	}                                                                              \
+	                                                                               \
+	void SetInstance(highp int index, Instance instance)                           \
+	{                                                                              \
+		sceneData.instances[index] = instance;                                     \
+	}
 
 #define USE_TRANSFER_SCENE_DATA_STORAGE                                            \
 	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_TRANSFER_SCENE_DATA) buffer TransferSceneData \
 	{                                                                              \
-		InstanceData data[];                                                       \
-	} transferSceneData;
+		Instance instances[];                                                      \
+	} transferSceneData;                                                           \
+	                                                                               \
+	Instance GetTransferInstance(highp int index)                                  \
+	{                                                                              \
+		return transferSceneData.instances[index];                                 \
+	}
 
 #define USE_TRANSFER_SCENE_DATA_INDEX_STORAGE                                      \
 	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_TRANSFER_SCENE_DATA_INDEX) buffer TransferSceneDataIndex \
 	{                                                                              \
-		int index[];                                                               \
-	} transferSceneDataIndex;
+		highp int index[];                                                         \
+	} transferSceneDataIndex;                                                      \
+	                                                                               \
+	highp int GetTransferIndex(highp int index)                                    \
+	{                                                                              \
+		return transferSceneDataIndex.index[index];                                \
+	}
 
 #define USE_CLUSTER_DATA_STORAGE                                                   \
 	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_CLUSTER_DATA) buffer ClusterData           \
