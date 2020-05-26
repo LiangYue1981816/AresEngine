@@ -73,6 +73,5 @@ void main()
 		cullLightListData.index[offset + i] = visibleLightIndices[i];
 	}
 
-	clusterData.data[tileIndex].minAABBPosition = vec4(minAABBPosition, float(offset));
-	clusterData.data[tileIndex].maxAABBPosition = vec4(maxAABBPosition, float(visibleLightCount));
+	SetCluster(tileIndex, minAABBPosition, maxAABBPosition, offset, visibleLightCount);
 }

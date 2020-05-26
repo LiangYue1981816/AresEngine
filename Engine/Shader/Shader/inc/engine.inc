@@ -172,8 +172,19 @@ layout (location = 8)                                      in highp int inInstan
 #define USE_CLUSTER_DATA_STORAGE                                                   \
 	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_CLUSTER_DATA) buffer ClusterData           \
 	{                                                                              \
-		Cluster data[];                                                            \
-	} clusterData;
+		Cluster clusters[];                                                        \
+	} clusterData;                                                                 \
+	                                                                               \
+	Cluster GetCluster(highp int index)                                            \
+	{                                                                              \
+		return clusterData.clusters[index];                                        \
+	}                                                                              \
+	                                                                               \
+	void SetCluster(highp int index, highp vec3 minAABBPosition, highp vec3 maxAABBPosition, highp int offset, highp int count) \
+	{                                                                              \
+		clusterData.clusters[index].minAABBPosition = vec4(minAABBPosition, float(offset)); \
+		clusterData.clusters[index].maxAABBPosition = vec4(maxAABBPosition, float(count));  \
+	}
 
 #define USE_FULL_LIGHT_LIST_DATA_STORAGE                                           \
 	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_FULL_LIGHT_LIST_DATA) buffer FullLightListData \

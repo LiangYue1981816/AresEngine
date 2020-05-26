@@ -88,8 +88,8 @@ void main()
 	highp int indexTileZ = int(log2(LinearDepth(depth, cameraZNear, cameraZFar)) * scale + bias);
 	highp int indexTile = int(indexTileZ * numWidthTiles * numHeightTiles + indexTileY * numWidthTiles + indexTileX);
 
-	highp int offset = int(clusterData.data[indexTile].minAABBPosition.w);
-	highp int count = int(clusterData.data[indexTile].maxAABBPosition.w);
+	highp int offset = int(GetCluster(indexTile).minAABBPosition.w);
+	highp int count = int(GetCluster(indexTile).maxAABBPosition.w);
 
 	mediump vec3 pointLighting = vec3(0.0);
 
