@@ -161,12 +161,12 @@ layout (location = 8)                                      in highp int inInstan
 #define USE_TRANSFER_SCENE_DATA_INDEX_STORAGE                                      \
 	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_TRANSFER_SCENE_DATA_INDEX) buffer TransferSceneDataIndex \
 	{                                                                              \
-		highp int index[];                                                         \
+		highp int indexInstances[];                                                \
 	} transferSceneDataIndex;                                                      \
 	                                                                               \
 	highp int GetTransferIndex(highp int index)                                    \
 	{                                                                              \
-		return transferSceneDataIndex.index[index];                                \
+		return transferSceneDataIndex.indexInstances[index];                       \
 	}
 
 #define USE_CLUSTER_DATA_STORAGE                                                   \
@@ -189,14 +189,19 @@ layout (location = 8)                                      in highp int inInstan
 #define USE_FULL_LIGHT_LIST_DATA_STORAGE                                           \
 	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_FULL_LIGHT_LIST_DATA) buffer FullLightListData \
 	{                                                                              \
-		int index[];                                                               \
-	} fullLightListData;
+		highp int indexLights[];                                                   \
+	} fullLightListData;                                                           \
+	                                                                               \
+	highp int GetLightIndexFromFullList(highp int index)                           \
+	{                                                                              \
+		return fullLightListData.indexLights[index];                               \
+	}
 
 #define USE_CULL_LIGHT_LIST_DATA_STORAGE                                           \
 	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_CULL_LIGHT_LIST_DATA) buffer CullLightListData \
 	{                                                                              \
-		int count;                                                                 \
-		int index[];                                                               \
+		highp int count;                                                           \
+		highp int index[];                                                         \
 	} cullLightListData;
 
 #define USE_DEPTH_TEXTURE_UNIFORM                                                  \

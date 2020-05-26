@@ -48,7 +48,7 @@ void main()
 	highp int visibleLightIndices[256];
 
 	for (int i = 0; i < numPointLights; i++) {
-		highp int indexLight = fullLightListData.index[i];
+		highp int indexLight = GetLightIndexFromFullList(i);
 		highp vec3 spherePosition = GetInstance(indexLight).center.xyz;
 		highp float radius = GetInstance(indexLight).lightAttenuation.w;
 
