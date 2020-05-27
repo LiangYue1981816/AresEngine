@@ -64,6 +64,7 @@ void main()
 
 	ZeroCullLightListCount();
 
+	memoryBarrierBuffer();
 	barrier();
 
 	highp int offset = AddCullLightListCount(count);
