@@ -49,7 +49,7 @@ void main()
 
 	for (int i = 0; i < numPointLights; i++) {
 		highp int indexLight = GetFullLightListIndex(i);
-		highp vec3 spherePosition = GetInstance(indexLight).center.xyz;
+		highp vec3 spherePosition = (cameraViewMatrix * GetInstance(indexLight).center).xyz;
 		highp float radius = GetInstance(indexLight).lightAttenuation.w;
 
 		if (Intersection(minAABBPosition, maxAABBPosition, spherePosition, radius)) {
