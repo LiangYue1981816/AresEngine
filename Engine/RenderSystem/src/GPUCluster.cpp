@@ -5,24 +5,26 @@
 CGPUCluster::CGPUCluster(void)
 	: m_pCamera(nullptr)
 
-	, m_pShaderCompute(nullptr)
-	, m_pPipelineCompute(nullptr)
+	, m_pClusterShaderCompute(nullptr)
+	, m_pClusterPipelineCompute(nullptr)
 {
-	char szFileName[] = "GPU_Cluster.glsl";
-	char szBinFileName[_MAX_STRING] = { 0 };
-
-	sprintf(szBinFileName, "%x.comp", HashValue(szFileName));
-	ShaderCompiler()->Compile(FileManager()->GetFullName(szFileName), szBinFileName, shaderc_compute_shader);
-
-	m_pShaderCompute = GfxRenderer()->CreateShader(szBinFileName, compute_shader);
-	m_pPipelineCompute = GfxRenderer()->CreatePipelineCompute(m_pShaderCompute);
-
 	m_ptrClusterBuffer = GfxRenderer()->NewStorageBuffer(CLUSTER_HORIZONTAL_TILE_COUNT * CLUSTER_VERTICAL_TILE_COUNT * CLUSTER_DEPTH_TILE_COUNT * 32);
 	m_ptrFullLightListBuffer = GfxRenderer()->NewStorageBuffer(MAX_GPUSCENE_INSTANCE_COUNT * sizeof(int));
 	m_ptrCullLightListBuffer = GfxRenderer()->NewStorageBuffer(MAX_GPUSCENE_INSTANCE_COUNT * sizeof(int));
 
-	m_ptrDescriptorSet = GfxRenderer()->NewDescriptorSet(HashValue(szFileName), m_pPipelineCompute->GetDescriptorLayout(DESCRIPTOR_SET_PASS));
-	m_ptrDescriptorSet->SetStorageBuffer(STORAGE_CLUSTER_DATA_NAME, m_ptrClusterBuffer, 0, m_ptrClusterBuffer->GetSize());
+	{
+		char szFileName[] = "GPU_Cluster.glsl";
+		char szBinFileName[_MAX_STRING] = { 0 };
+
+		sprintf(szBinFileName, "%x.comp", HashValue(szFileName));
+		ShaderCompiler()->Compile(FileManager()->GetFullName(szFileName), szBinFileName, shaderc_compute_shader);
+
+		m_pClusterShaderCompute = GfxRenderer()->CreateShader(szBinFileName, compute_shader);
+		m_pClusterPipelineCompute = GfxRenderer()->CreatePipelineCompute(m_pClusterShaderCompute);
+
+		m_ptrClusterDescriptorSet = GfxRenderer()->NewDescriptorSet(HashValue(szFileName), m_pClusterPipelineCompute->GetDescriptorLayout(DESCRIPTOR_SET_PASS));
+		m_ptrClusterDescriptorSet->SetStorageBuffer(STORAGE_CLUSTER_DATA_NAME, m_ptrClusterBuffer, 0, m_ptrClusterBuffer->GetSize());
+	}
 }
 
 CGPUCluster::~CGPUCluster(void)
@@ -44,7 +46,7 @@ void CGPUCluster::SetCamera(CCamera* pCamera)
 {
 	if (m_pCamera != pCamera) {
 		m_pCamera = pCamera;
-		m_ptrDescriptorSet->SetUniformBuffer(UNIFORM_CAMERA_NAME, pCamera->GetCameraUniform()->GetUniformBuffer(), 0, pCamera->GetCameraUniform()->GetUniformBuffer()->GetSize());
+		m_ptrClusterDescriptorSet->SetUniformBuffer(UNIFORM_CAMERA_NAME, pCamera->GetCameraUniform()->GetUniformBuffer(), 0, pCamera->GetCameraUniform()->GetUniformBuffer()->GetSize());
 	}
 }
 
@@ -73,8 +75,8 @@ void CGPUCluster::Update(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommand
 	{
 		GfxRenderer()->CmdSetBufferBarrier(ptrCommandBuffer, m_ptrClusterBuffer, GFX_ACCESS_TRANSFER_READ_BIT, GFX_ACCESS_TRANSFER_WRITE_BIT);
 		{
-			GfxRenderer()->CmdBindPipelineCompute(ptrCommandBuffer, m_pPipelineCompute);
-			GfxRenderer()->CmdBindDescriptorSet(ptrCommandBuffer, m_ptrDescriptorSet);
+			GfxRenderer()->CmdBindPipelineCompute(ptrCommandBuffer, m_pClusterPipelineCompute);
+			GfxRenderer()->CmdBindDescriptorSet(ptrCommandBuffer, m_ptrClusterDescriptorSet);
 			GfxRenderer()->CmdDispatch(ptrCommandBuffer, CLUSTER_HORIZONTAL_TILE_COUNT, CLUSTER_VERTICAL_TILE_COUNT, CLUSTER_DEPTH_TILE_COUNT);
 		}
 		GfxRenderer()->CmdSetBufferBarrier(ptrCommandBuffer, m_ptrClusterBuffer, GFX_ACCESS_TRANSFER_WRITE_BIT, GFX_ACCESS_TRANSFER_READ_BIT);

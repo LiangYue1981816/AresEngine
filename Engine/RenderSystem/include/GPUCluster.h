@@ -27,9 +27,9 @@ private:
 	CCamera* m_pCamera;
 
 private:
-	CGfxShader* m_pShaderCompute;
-	CGfxPipelineCompute* m_pPipelineCompute;
-	CGfxDescriptorSetPtr m_ptrDescriptorSet;
+	CGfxShader* m_pClusterShaderCompute;
+	CGfxPipelineCompute* m_pClusterPipelineCompute;
+	CGfxDescriptorSetPtr m_ptrClusterDescriptorSet;
 
 private:
 	CGfxStorageBufferPtr m_ptrClusterBuffer;
