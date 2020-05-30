@@ -224,7 +224,7 @@ layout (location = 8)                                      in highp int inInstan
 		return cullLightListData.indexLights[0];                                   \
 	}                                                                              \
 	                                                                               \
-	void ZeroCullLightListCount()                                                  \
+	void ResetCullLightListCount()                                                 \
 	{                                                                              \
 		cullLightListData.indexLights[0] = 0;                                      \
 	}                                                                              \

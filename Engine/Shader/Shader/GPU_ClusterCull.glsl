@@ -46,7 +46,7 @@ void main()
 		}
 	}
 
-	ZeroCullLightListCount();
+	ResetCullLightListCount();
 
 	memoryBarrierBuffer();
 	barrier();
