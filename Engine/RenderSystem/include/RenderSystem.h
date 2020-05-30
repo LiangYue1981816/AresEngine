@@ -143,9 +143,9 @@
 #define MAX_GPUSCENE_TRANSFER_COUNT                        (1  * 1024)
 
 // Cluster
-#define CLUSTER_HORIZONTAL_TILE_COUNT                      80
-#define CLUSTER_VERTICAL_TILE_COUNT                        45
 #define CLUSTER_DEPTH_TILE_COUNT                           8
+#define CLUSTER_WIDTH_TILE_COUNT                           80
+#define CLUSTER_HEIGHT_TILE_COUNT                          45
 
 
 class CALL_API CRenderSystem

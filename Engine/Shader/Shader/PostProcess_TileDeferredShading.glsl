@@ -53,18 +53,16 @@ DESCRIPTOR_SET_INPUTATTACHMENT(1, 6) uniform mediump subpassInput texGBuffer0;
 DESCRIPTOR_SET_INPUTATTACHMENT(2, 7) uniform mediump subpassInput texGBuffer1;
 
 layout(push_constant) uniform PushConstantParam {
-	float tileSizeX;
-	float tileSizeY;
 	int numDepthTiles;
+	int numWidthTiles;
+	int numHeightTiles;
 } Param;
 
 void main()
 {
-	highp vec2 tileSize = vec2(Param.tileSizeX, Param.tileSizeY);
-
-	highp int numWidthTiles = int(floor(screenWidth / tileSize.x + 0.5));
-	highp int numHeightTiles = int(floor(screenHeight / tileSize.y + 0.5));
-	highp int numDepthTiles = int(Param.numDepthTiles);
+	highp int numDepthTiles = Param.numDepthTiles;
+	highp int numWidthTiles = Param.numWidthTiles;
+	highp int numHeightTiles = Param.numHeightTiles;
 
 	mediump vec4 pixelColorGBuffer0 = subpassLoad(texGBuffer0);
 	mediump vec4 pixelColorGBuffer1 = subpassLoad(texGBuffer1);
