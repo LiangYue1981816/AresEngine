@@ -34,5 +34,5 @@ void main()
 	highp vec3 minAABBPosition = min(min(minViewPositionNear, maxViewPositionNear), min(minViewPositionFar, maxViewPositionFar));
 	highp vec3 maxAABBPosition = max(max(minViewPositionNear, maxViewPositionNear), max(minViewPositionFar, maxViewPositionFar));
 
-	SetCluster(indexTile, minAABBPosition, maxAABBPosition, 0, 0);
+	SetCluster(indexTile, minAABBPosition, maxAABBPosition);
 }

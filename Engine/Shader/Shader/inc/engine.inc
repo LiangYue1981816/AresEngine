@@ -190,10 +190,16 @@ layout (location = 8)                                      in highp int inInstan
 		return int(clusterData.clusters[index].maxAABBPosition.w);                 \
 	}                                                                              \
 	                                                                               \
-	void SetCluster(highp int index, highp vec3 minAABBPosition, highp vec3 maxAABBPosition, highp int offset, highp int count) \
+	void SetCluster(highp int index, highp vec3 minAABBPosition, highp vec3 maxAABBPosition) \
 	{                                                                              \
-		clusterData.clusters[index].minAABBPosition = vec4(minAABBPosition, float(offset)); \
-		clusterData.clusters[index].maxAABBPosition = vec4(maxAABBPosition, float(count));  \
+		clusterData.clusters[index].minAABBPosition.xyz = minAABBPosition;         \
+		clusterData.clusters[index].maxAABBPosition.xyz = maxAABBPosition;         \
+	}                                                                              \
+	                                                                               \
+	void SetClusterLightInfo(highp int index, highp int offset, highp int count)   \
+	{                                                                              \
+		clusterData.clusters[index].minAABBPosition.w = float(offset);             \
+		clusterData.clusters[index].maxAABBPosition.w = float(count);              \
 	}
 
 #define USE_FULL_LIGHT_LIST_DATA_STORAGE                                           \
