@@ -39,7 +39,7 @@ CGPUCluster::CGPUCluster(void)
 		m_pClusterCullShaderCompute = GfxRenderer()->CreateShader(szBinFileName, compute_shader);
 		m_pClusterCullPipelineCompute = GfxRenderer()->CreatePipelineCompute(m_pClusterCullShaderCompute);
 
-		m_ptrClusterCullDescriptorSet = GfxRenderer()->NewDescriptorSet(HashValue(szFileName), m_pClusterPipelineCompute->GetDescriptorLayout(DESCRIPTOR_SET_PASS));
+		m_ptrClusterCullDescriptorSet = GfxRenderer()->NewDescriptorSet(HashValue(szFileName), m_pClusterCullPipelineCompute->GetDescriptorLayout(DESCRIPTOR_SET_PASS));
 		m_ptrClusterCullDescriptorSet->SetStorageBuffer(STORAGE_SCENE_DATA_NAME, RenderSystem()->GetScene()->GetInstanceBuffer(), 0, RenderSystem()->GetScene()->GetInstanceBuffer()->GetSize());
 		m_ptrClusterCullDescriptorSet->SetStorageBuffer(STORAGE_CLUSTER_DATA_NAME, m_ptrClusterBuffer, 0, m_ptrClusterBuffer->GetSize());
 		m_ptrClusterCullDescriptorSet->SetStorageBuffer(STORAGE_FULL_LIGHT_LIST_DATA_NAME, m_ptrFullLightListBuffer, 0, m_ptrFullLightListBuffer->GetSize());
