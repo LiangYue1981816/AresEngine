@@ -33,8 +33,8 @@ void main()
 	highp float minDepthValue = cameraZNear * pow(cameraZFar / cameraZNear, float(gl_WorkGroupID.z + uint(0)) / float(numDepthTiles));
 	highp float maxDepthValue = cameraZNear * pow(cameraZFar / cameraZNear, float(gl_WorkGroupID.z + uint(1)) / float(numDepthTiles));
 
-	highp vec3 minViewPosition = ScreenToViewPosition(minScreenPosition, 0.0, camera.projectionInverseMatrix).xyz;
-	highp vec3 maxViewPosition = ScreenToViewPosition(maxScreenPosition, 0.0, camera.projectionInverseMatrix).xyz;
+	highp vec3 minViewPosition = ScreenToViewPosition(minScreenPosition, 0.0, cameraProjectionInverseMatrix).xyz;
+	highp vec3 maxViewPosition = ScreenToViewPosition(maxScreenPosition, 0.0, cameraProjectionInverseMatrix).xyz;
 
 	highp vec3 minViewPositionNear = LineIntersectionToZPlane(vec3(0.0), minViewPosition, minDepthValue);
 	highp vec3 maxViewPositionNear = LineIntersectionToZPlane(vec3(0.0), maxViewPosition, minDepthValue);
