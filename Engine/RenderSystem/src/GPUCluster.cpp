@@ -105,4 +105,18 @@ void CGPUCluster::Update(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommand
 	GfxRenderer()->CmdPopDebugGroup(ptrCommandBuffer);
 
 	// Cluster Cull
+	GfxRenderer()->CmdPushDebugGroup(ptrCommandBuffer, "ClusterCull");
+	{
+		GfxRenderer()->CmdSetBufferBarrier(ptrCommandBuffer, m_ptrClusterBuffer, GFX_ACCESS_TRANSFER_READ_BIT, GFX_ACCESS_TRANSFER_WRITE_BIT);
+		GfxRenderer()->CmdSetBufferBarrier(ptrCommandBuffer, m_ptrCullLightListBuffer, GFX_ACCESS_TRANSFER_READ_BIT, GFX_ACCESS_TRANSFER_WRITE_BIT);
+		{
+			GfxRenderer()->CmdBindPipelineCompute(ptrCommandBuffer, m_pClusterCullPipelineCompute);
+			GfxRenderer()->CmdBindDescriptorSet(ptrCommandBuffer, m_ptrClusterCullDescriptorSet);
+			GfxRenderer()->CmdUniform1i(ptrCommandBuffer, HashValue("Param.numPointLights"), std::min((int)instance.size(), MAX_GPUSCENE_INSTANCE_COUNT));
+			GfxRenderer()->CmdDispatch(ptrCommandBuffer, CLUSTER_HORIZONTAL_TILE_COUNT, CLUSTER_VERTICAL_TILE_COUNT, CLUSTER_DEPTH_TILE_COUNT);
+		}
+		GfxRenderer()->CmdSetBufferBarrier(ptrCommandBuffer, m_ptrCullLightListBuffer, GFX_ACCESS_TRANSFER_WRITE_BIT, GFX_ACCESS_TRANSFER_READ_BIT);
+		GfxRenderer()->CmdSetBufferBarrier(ptrCommandBuffer, m_ptrClusterBuffer, GFX_ACCESS_TRANSFER_WRITE_BIT, GFX_ACCESS_TRANSFER_READ_BIT);
+	}
+	GfxRenderer()->CmdPopDebugGroup(ptrCommandBuffer);
 }
