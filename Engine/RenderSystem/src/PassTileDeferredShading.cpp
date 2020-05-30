@@ -169,6 +169,6 @@ void CPassTileDeferredShading::Render(CTaskPool& taskPool, CTaskGraph& taskGraph
 void CPassTileDeferredShading::RenderCallback(CGfxCommandBufferPtr ptrCommandBuffer)
 {
 	GfxRenderer()->CmdUniform1i(ptrCommandBuffer, HashValue("Param.numDepthTiles"), CLUSTER_DEPTH_TILE_COUNT);
-	GfxRenderer()->CmdUniform1f(ptrCommandBuffer, HashValue("Param.numWidthTiles"), CLUSTER_WIDTH_TILE_COUNT);
-	GfxRenderer()->CmdUniform1f(ptrCommandBuffer, HashValue("Param.numHeightTiles"), CLUSTER_HEIGHT_TILE_COUNT);
+	GfxRenderer()->CmdUniform1i(ptrCommandBuffer, HashValue("Param.numWidthTiles"), CLUSTER_WIDTH_TILE_COUNT);
+	GfxRenderer()->CmdUniform1i(ptrCommandBuffer, HashValue("Param.numHeightTiles"), CLUSTER_HEIGHT_TILE_COUNT);
 }
