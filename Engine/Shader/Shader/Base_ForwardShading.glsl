@@ -29,7 +29,7 @@ void main()
 	highp vec3 worldPosition = (worldMatrix * vec4(inPosition.xyz, 1.0)).xyz;
 
 #ifdef NORMAL_MAP
-	mediump vec3 worldNormal = normalize((worldMatrix * vec4(inNormal, 0.0f)).xyz);
+	mediump vec3 worldNormal = normalize((worldMatrix * vec4(inNormal.xyz, 0.0f)).xyz);
 	mediump vec3 worldBinormal = normalize((worldMatrix * vec4(inBinormal.xyz, 0.0f)).xyz);
 	mediump vec3 worldTangent = cross(worldBinormal, worldNormal) * inBinormal.w;
 	worldBinormal = cross(worldNormal, worldTangent) * inBinormal.w;
@@ -38,7 +38,7 @@ void main()
 	outBinormal = worldBinormal;
 	outNormal = worldNormal;
 #else
-	mediump vec3 worldNormal = normalize((worldMatrix * vec4(inNormal, 0.0f)).xyz);
+	mediump vec3 worldNormal = normalize((worldMatrix * vec4(inNormal.xyz, 0.0f)).xyz);
 	outNormal = worldNormal;
 #endif
 
