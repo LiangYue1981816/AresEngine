@@ -6,13 +6,13 @@
 layout (location = 0)                                      in highp vec3 inPosition;
 #endif
 #ifdef VERTEX_ATTRIBUTE_NORMAL
-layout (location = 1)                                      in mediump vec3 inNormal;
+layout (location = 1)                                      in mediump vec4 inNormal;
 #endif
 #ifdef VERTEX_ATTRIBUTE_BINORMAL
 layout (location = 2)                                      in mediump vec4 inBinormal;
 #endif
 #ifdef VERTEX_ATTRIBUTE_COLOR
-layout (location = 3)                                      in mediump vec3 inColor;
+layout (location = 3)                                      in mediump vec4 inColor;
 #endif
 #ifdef VERTEX_ATTRIBUTE_TEXCOORD0
 layout (location = 4)                                      in mediump vec2 inTexcoord0;
