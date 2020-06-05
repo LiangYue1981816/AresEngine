@@ -17,7 +17,7 @@ static uint32_t GetSize(uint32_t type)
 	case GFX_DATA_UINT16:  return 2;
 	case GFX_DATA_SINT32:  return 4;
 	case GFX_DATA_UINT32:  return 4;
-	case GFX_DATA_FLOAT16: return 4;
+	case GFX_DATA_FLOAT16: return 2;
 	case GFX_DATA_FLOAT32: return 4;
 	default:               return 0;
 	}
