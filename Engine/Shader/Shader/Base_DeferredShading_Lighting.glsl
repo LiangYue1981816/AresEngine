@@ -11,7 +11,7 @@ USE_SCENE_DATA_STORAGE
 
 // Output
 layout (location = 0) out highp vec4 outPosition;
-layout (location = 1) flat out highp int outInstanceIndex;
+layout (location = 1) out highp flat int outInstanceIndex;
 
 // Descriptor
 // ...
@@ -40,7 +40,7 @@ USE_DEPTH_TEXTURE_UNIFORM
 
 // Input
 layout (location = 0) in highp vec4 inPosition;
-layout (location = 1) flat in highp int inInstanceIndex;
+layout (location = 1) in highp flat int inInstanceIndex;
 
 // Output
 layout (location = 0) out mediump vec4 outFragColor;
