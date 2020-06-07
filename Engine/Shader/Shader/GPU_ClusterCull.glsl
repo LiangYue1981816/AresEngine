@@ -25,6 +25,8 @@ layout(push_constant) uniform PushConstantParam {
 
 void main()
 {
+	indexLightCount = 0;
+
 	highp int indexTile = int(gl_WorkGroupID.z * gl_NumWorkGroups.x * gl_NumWorkGroups.y + gl_WorkGroupID.y * gl_NumWorkGroups.x + gl_WorkGroupID.x);
 	highp int numPointLights = Param.numPointLights;
 
@@ -50,9 +52,6 @@ void main()
 		}
 	}
 
-	indexLightCount = 0;
-
-	memoryBarrierBuffer();
 	barrier();
 
 	highp int offset = atomicAdd(indexLightCount, count);
