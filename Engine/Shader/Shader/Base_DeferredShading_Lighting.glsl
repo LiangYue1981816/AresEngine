@@ -18,9 +18,9 @@ layout (location = 1) out highp flat int outInstanceIndex;
 
 void main()
 {
-	outInstanceIndex = inInstanceIndex;
+	outInstanceIndex = int(inInstanceIndex);
 
-	highp mat4 worldMatrix = GetInstance(inInstanceIndex).transformMatrix;
+	highp mat4 worldMatrix = GetInstance(int(inInstanceIndex)).transformMatrix;
 	highp vec3 worldPosition = (worldMatrix * vec4(inPosition.xyz, 1.0)).xyz;
 	gl_Position = outPosition = cameraProjectionViewMatrix * vec4(worldPosition, 1.0);
 }

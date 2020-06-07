@@ -28,7 +28,11 @@ layout (location = 7)                                      in mediump vec4 inWei
 #endif
 
 #ifdef INSTANCE_ATTRIBUTE_INDEX
-layout (location = 8)                                      in highp int inInstanceIndex;
+#ifdef _VULKAN_
+layout (location = 8)                                      in mediump int inInstanceIndex;
+#else
+layout (location = 8)                                      in mediump float inInstanceIndex;
+#endif
 #endif
 
 
