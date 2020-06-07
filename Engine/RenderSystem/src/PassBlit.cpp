@@ -12,7 +12,7 @@ CPassBlit::CPassBlit(const char* szMaterialFileName, CRenderSystem* pRenderSyste
 	};
 
 	const glm::aabb aabb;
-	const int meshIndices[] = { 0, 3, 2, 2, 1, 0 };
+	const int meshIndices[] = { 0, 1, 2, 2, 3, 0 };
 	const Vertex meshVertices[] = { {-1.0f, -1.0f, 0.0f, 0.0f, 0.0f}, {1.0f, -1.0f, 0.0f, 1.0f, 0.0f}, {1.0f, 1.0f, 0.0f, 1.0f, 1.0f}, {-1.0f, 1.0f, 0.0f, 0.0f, 1.0f} };
 
 	m_ptrMesh = GfxRenderer()->NewMesh(HashValueFormat("%s.Mesh", szMaterialFileName));
