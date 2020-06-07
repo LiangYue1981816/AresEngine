@@ -1,13 +1,18 @@
 <Material>
-	<Pass name="PassBlurBox">
-		<Pipeline render_pass="PassBlurBox">
-		  <Vertex file_name="PostProcess_BlurBox.glsl">
-		    <Define name="VERTEX_ATTRIBUTE_POSITION" />
+  <Pass name="PassBlurBox">
+    <Pipeline render_pass="PassBlurBox">
+      <Vertex file_name="PostProcess_BlurBox.glsl">
+        <Define name="VERTEX_ATTRIBUTE_POSITION" />
         <Define name="VERTEX_ATTRIBUTE_TEXCOORD0" />
         <Define name="INSTANCE_ATTRIBUTE_INDEX" />
-		  </Vertex>
-		  <Fragment file_name="PostProcess_BlurBox.glsl">
-		  </Fragment>
-		</Pipeline>
-	</Pass>
+      </Vertex>
+      <Fragment file_name="PostProcess_BlurBox.glsl">
+      </Fragment>
+      <State>
+        <Rasterization>
+          <Cull enable="GFX_FALSE" cull_face="GFX_BACK" front_face="GFX_FRONTFACE_CCW" />
+        </Rasterization>
+      </State>
+    </Pipeline>
+  </Pass>
 </Material>

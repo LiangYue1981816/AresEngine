@@ -1,20 +1,23 @@
 <Material>
-	<Pass name="PassTileDeferredShading_Lighting">
-		<Pipeline render_pass="PassTileDeferredShading">
-		  <Vertex file_name="PostProcess_TileDeferredShading.glsl">
-		    <Define name="VERTEX_ATTRIBUTE_POSITION" />
+  <Pass name="PassTileDeferredShading_Lighting">
+    <Pipeline render_pass="PassTileDeferredShading">
+      <Vertex file_name="PostProcess_TileDeferredShading.glsl">
+        <Define name="VERTEX_ATTRIBUTE_POSITION" />
         <Define name="VERTEX_ATTRIBUTE_TEXCOORD0" />
         <Define name="INSTANCE_ATTRIBUTE_INDEX" />
-		  </Vertex>
-		  <Fragment file_name="PostProcess_TileDeferredShading.glsl">
-		  </Fragment>
-		  <State>
-				<ColorBlend>
-					<Blend enable="GFX_TRUE" />
-					<RGBBlend blend_op="GFX_ADD" src_factor="GFX_ONE" dst_factor="GFX_ONE" />
-					<AlphaBlend blend_op="GFX_ADD" src_factor="GFX_ONE" dst_factor="GFX_ZERO" />
-				</ColorBlend>
-			</State>
-		</Pipeline>
-	</Pass>
+      </Vertex>
+      <Fragment file_name="PostProcess_TileDeferredShading.glsl">
+      </Fragment>
+      <State>
+        <Rasterization>
+          <Cull enable="GFX_FALSE" cull_face="GFX_BACK" front_face="GFX_FRONTFACE_CCW" />
+        </Rasterization>
+        <ColorBlend>
+          <Blend enable="GFX_TRUE" />
+          <RGBBlend blend_op="GFX_ADD" src_factor="GFX_ONE" dst_factor="GFX_ONE" />
+          <AlphaBlend blend_op="GFX_ADD" src_factor="GFX_ONE" dst_factor="GFX_ZERO" />
+        </ColorBlend>
+      </State>
+    </Pipeline>
+  </Pass>
 </Material>

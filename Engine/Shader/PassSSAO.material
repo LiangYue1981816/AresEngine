@@ -1,14 +1,19 @@
 <Material>
-	<Pass name="PassSSAO">
-		<Pipeline render_pass="PassSSAO">
-		  <Vertex file_name="PostProcess_ScreenSpaceAmbientOcclusion.glsl">
-		    <Define name="VERTEX_ATTRIBUTE_POSITION" />
+  <Pass name="PassSSAO">
+    <Pipeline render_pass="PassSSAO">
+      <Vertex file_name="PostProcess_ScreenSpaceAmbientOcclusion.glsl">
+        <Define name="VERTEX_ATTRIBUTE_POSITION" />
         <Define name="VERTEX_ATTRIBUTE_TEXCOORD0" />
         <Define name="INSTANCE_ATTRIBUTE_INDEX" />
-		  </Vertex>
-		  <Fragment file_name="PostProcess_ScreenSpaceAmbientOcclusion.glsl">
-		  </Fragment>
-		</Pipeline>
-		<Texture2D name="texNoise" file_name="Noise.dds" min_filter="GFX_NEAREST" mag_filter="GFX_NEAREST" mipmap_mode="GFX_NEAREST" address_mode="GFX_REPEAT" />
-	</Pass>
+      </Vertex>
+      <Fragment file_name="PostProcess_ScreenSpaceAmbientOcclusion.glsl">
+      </Fragment>
+      <State>
+        <Rasterization>
+          <Cull enable="GFX_FALSE" cull_face="GFX_BACK" front_face="GFX_FRONTFACE_CCW" />
+        </Rasterization>
+      </State>
+    </Pipeline>
+    <Texture2D name="texNoise" file_name="Noise.dds" min_filter="GFX_NEAREST" mag_filter="GFX_NEAREST" mipmap_mode="GFX_NEAREST" address_mode="GFX_REPEAT" />
+  </Pass>
 </Material>
