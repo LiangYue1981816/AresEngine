@@ -61,6 +61,13 @@ void CRenderSystem::InternalPassShadow(CTaskPool& taskPool, CTaskGraph& taskGrap
 	m_pPassShadow->Render(taskPool, taskGraph, ptrCommandBuffer);
 }
 
+void CRenderSystem::InternalPassUnlit(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer, CCamera* pCamera, uint32_t rtOutColor, uint32_t rtOutDepth)
+{
+	m_pPassUnlit->SetCamera(pCamera);
+	m_pPassUnlit->SetOutputTexture(m_ptrRenderTextures[rtOutColor], m_ptrRenderTextures[rtOutDepth]);
+	m_pPassUnlit->Render(taskPool, taskGraph, ptrCommandBuffer);
+}
+
 void CRenderSystem::InternalPassForwardLighting(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer, CCamera* pCamera, uint32_t rtInShadow, uint32_t rtInSSAO, uint32_t rtOutColor, uint32_t rtOutDepth)
 {
 	m_pPassForwardShading->SetCamera(pCamera);
