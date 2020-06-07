@@ -1,5 +1,5 @@
 #version 310 es
-layout (local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
+layout (local_size_x = 16, local_size_y = 9, local_size_z = 4) in;
 
 precision mediump float;
 #include "engine.inc"
@@ -15,19 +15,18 @@ USE_CULL_LIGHT_LIST_DATA_STORAGE
 // ...
 
 // Descriptor
-layout (std430, binding = 8) buffer IndexLightCount {
-    int indexLightCount;
-};
-
 layout(push_constant) uniform PushConstantParam {
 	int numPointLights;
 } Param;
+
+// Shared
+shared int indexLightCount;
 
 void main()
 {
 	indexLightCount = 0;
 
-	highp int indexTile = int(gl_WorkGroupID.z * gl_NumWorkGroups.x * gl_NumWorkGroups.y + gl_WorkGroupID.y * gl_NumWorkGroups.x + gl_WorkGroupID.x);
+	highp int indexTile = int(gl_LocalInvocationID.z * gl_WorkGroupSize.x * gl_WorkGroupSize.y + gl_LocalInvocationID.y * gl_WorkGroupSize.x + gl_LocalInvocationID.x);
 	highp int numPointLights = Param.numPointLights;
 
 	highp vec3 minAABBPosition = GetCluster(indexTile).minAABBPosition.xyz;
