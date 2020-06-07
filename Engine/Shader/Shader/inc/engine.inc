@@ -223,29 +223,14 @@ layout (location = 8)                                      in mediump float inIn
 		highp int indexLights[];                                                   \
 	} cullLightListData;                                                           \
 	                                                                               \
-	highp int GeCullLightListCount()                                               \
-	{                                                                              \
-		return cullLightListData.indexLights[0];                                   \
-	}                                                                              \
-	                                                                               \
-	void ResetCullLightListCount()                                                 \
-	{                                                                              \
-		cullLightListData.indexLights[0] = 0;                                      \
-	}                                                                              \
-	                                                                               \
-	highp int AddCullLightListCount(highp int count)                               \
-	{                                                                              \
-		return atomicAdd(cullLightListData.indexLights[0], count);                 \
-	}                                                                              \
-	                                                                               \
 	highp int GetCullLightListIndex(highp int index)                               \
 	{                                                                              \
-		return cullLightListData.indexLights[index + 1];                           \
+		return cullLightListData.indexLights[index];                               \
 	}                                                                              \
 	                                                                               \
 	void SetCullLightListIndex(highp int index, highp int indexLight)              \
 	{                                                                              \
-		cullLightListData.indexLights[index + 1] = indexLight;                     \
+		cullLightListData.indexLights[index] = indexLight;                         \
 	}
 
 #define USE_DEPTH_TEXTURE_UNIFORM                                                  \

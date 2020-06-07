@@ -15,6 +15,10 @@ USE_CULL_LIGHT_LIST_DATA_STORAGE
 // ...
 
 // Descriptor
+layout (std430, binding = 8) buffer IndexLightCount {
+    int indexLightCount;
+};
+
 layout(push_constant) uniform PushConstantParam {
 	int numPointLights;
 } Param;
@@ -46,12 +50,12 @@ void main()
 		}
 	}
 
-	ResetCullLightListCount();
+	indexLightCount = 0;
 
 	memoryBarrierBuffer();
 	barrier();
 
-	highp int offset = AddCullLightListCount(count);
+	highp int offset = atomicAdd(indexLightCount, count);
 
 	for (int i = 0; i < count; i++) {
 		SetCullLightListIndex(offset + i, indexLights[i]);
