@@ -139,7 +139,7 @@ void main()
 	mediump vec3 directLighting = PBRLighting(worldNormal, worldViewDirection, mainDirectLightDirection, mainDirectLightColor, albedoColor, fresnel, metallic, roughness) * directLightFactor;
 #ifdef ENV_MAP
 	mediump vec3 fresnelRoughness = FresnelRoughness(worldNormal, worldViewDirection, albedoColor, metallic, roughness);
-	mediump vec3 envLighting = EnvLighting(worldNormal, worldViewDirection, albedoColor, fresnelRoughness, roughness, texEnv, 8.0) * envLightFactor;
+	mediump vec3 envLighting = EnvLighting(worldNormal, worldViewDirection, vec3(1.0), fresnelRoughness, roughness, texEnv, 8.0) * envLightFactor;
 #else
 	mediump vec3 envLighting = vec3(0.0);
 #endif
