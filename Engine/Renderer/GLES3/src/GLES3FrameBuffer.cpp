@@ -155,18 +155,25 @@ void CGLES3FrameBuffer::Bind(const AttachmentInformation* pAttachmentInformation
 	for (const auto& itClearValue : attachmentClearValues) {
 		switch (itClearValue.first) {
 		case GL_DEPTH:
+			GLDepthMask(GL_TRUE);
 			glClearBufferfv(GL_DEPTH, 0, &itClearValue.second.depth);
 			break;
 
 		case GL_STENCIL:
+			GLStencilBackMask(GL_TRUE);
+			GLStencilFrontMask(GL_TRUE);
 			glClearBufferiv(GL_STENCIL, 0, &itClearValue.second.stencil);
 			break;
 
 		case GL_DEPTH_STENCIL:
+			GLDepthMask(GL_TRUE);
+			GLStencilBackMask(GL_TRUE);
+			GLStencilFrontMask(GL_TRUE);
 			glClearBufferfi(GL_DEPTH_STENCIL, 0, itClearValue.second.depth, itClearValue.second.stencil);
 			break;
 
 		default:
+			GLColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
 			glClearBufferfv(GL_COLOR, itClearValue.first, itClearValue.second.color);
 			break;
 		}
