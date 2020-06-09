@@ -9,6 +9,10 @@
       <Fragment file_name="PostProcess_BlurHorizontal.glsl">
       </Fragment>
       <State>
+        <Depth>
+          <DepthTest enable="GFX_FALSE" compare_op="GFX_COMPAREOP_ALWAYS" />
+          <DepthWrite enable="GFX_FALSE" />
+        </Depth>
         <Rasterization>
           <Cull enable="GFX_FALSE" cull_face="GFX_BACK" front_face="GFX_FRONTFACE_CCW" />
         </Rasterization>
