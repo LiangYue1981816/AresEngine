@@ -101,6 +101,26 @@ mediump float D_GGX(mediump float ndh, mediump float roughness)
 	return a2 / (PI * d * d);
 }
 
+mediump float D_Ashikhmin(mediump float ndh, mediump float roughness)
+{
+	// Ashikhmin 2007, "Distribution-based BRDFs"
+	mediump float a2 = roughness * roughness;
+	mediump float cos2h = ndh * ndh;
+	mediump float sin2h = max(1.0 - cos2h, 0.0078125); // 2^(-14/2), so sin2h^2 > 0 in fp16
+	mediump float sin4h = sin2h * sin2h;
+	mediump float cot2 = -cos2h / (a2 * sin2h);
+	return 1.0 / (PI * (4.0 * a2 + 1.0) * sin4h) * (4.0 * exp(cot2) + sin4h);
+}
+
+mediump float D_Charlie(mediump float ndh, mediump float roughness)
+{
+	// Estevez and Kulla 2017, "Production Friendly Microfacet Sheen BRDF"
+	mediump float invAlpha = 1.0 / roughness;
+	mediump float cos2h = ndh * ndh;
+	mediump float sin2h = max(1.0 - cos2h, 0.0078125); // 2^(-14/2), so sin2h^2 > 0 in fp16
+	return (2.0 + invAlpha) * pow(sin2h, invAlpha * 0.5) / (2.0 * PI);
+}
+
 mediump float G_Neumann(mediump float ndv, mediump float ndl)
 {
 	return 0.25 / max(ndv, ndl);
