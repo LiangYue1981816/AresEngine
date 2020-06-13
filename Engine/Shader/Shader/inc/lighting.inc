@@ -288,23 +288,6 @@ mediump float PHBeckmann(mediump float ndoth, mediump float m)
 
 mediump vec3 SkinLighting(mediump vec3 normalBase, mediump vec3 normalDetails, highp vec3 position, mediump vec3 viewDirection, mediump vec3 lightDirection, mediump vec3 lightColor, mediump vec3 albedo, mediump vec3 fresnel, mediump float roughness, mediump sampler2D texSkinLUT)
 {
-/*
-	mediump vec3 halfDirection = normalize(viewDirection + lightDirection);
-
-	mediump float ndl = dot(normalBase, lightDirection);
-	mediump float ndh = dot(normalDetails, halfDirection);
-	mediump float hdh = dot(viewDirection + lightDirection, viewDirection + lightDirection);
-	mediump float wrapped_ndl = clamp(ndl * 0.5 + 0.5, 0.0, 1.0);
-
-	highp float tuneCurvature = 0.001;
-	highp float curvature = clamp(tuneCurvature * length(fwidth(normalBase)) / length(fwidth(position)), 0.0, 1.0);
-
-	mediump vec3 diffuseLighting = Diffuse_Lambert(albedo) * max(ndl, 0.0);
-	mediump vec3 scatterLighting = texture(texSkinLUT, vec2(wrapped_ndl, curvature)).rgb * albedo * (1.0 - wrapped_ndl) * 0.5;
-	mediump vec3 specularLighting = max(pow(texture(texSkinLUT, vec2(ndh, roughness)).a * 2.0, 10.0) * fresnel / hdh, 0.0) * max(ndl, 0.0) * 0.8;
-
-	return (diffuseLighting + scatterLighting + specularLighting) * lightColor;
-*/
 	mediump vec3 halfDirection = normalize(viewDirection + lightDirection);
 
 	mediump float ndl = dot(normalBase, lightDirection);
