@@ -254,7 +254,7 @@ mediump vec3 PBRLighting(mediump vec3 normal, mediump vec3 viewDirection, medium
 	mediump float G = G_SchlickSmithGGX(ndv, ndl, roughness);
 	mediump vec3  F = fresnel;
 
-	mediump vec3 diffuseLighting = Diffuse_Lambert(albedo) * (1.0 - metallic) * (1.0 - fresnel);
+	mediump vec3 diffuseLighting = Diffuse_Lambert(albedo) * (1.0 - metallic);
 	mediump vec3 specularLighting = D * F * G;
 
 	return (diffuseLighting + specularLighting) * ndl * lightColor;
@@ -272,7 +272,7 @@ mediump vec3 ClothLighting(mediump vec3 normal, mediump vec3 viewDirection, medi
 	mediump float G = G_Ashikhmin(ndv, ndl);
 	mediump vec3  F = fresnel;
 
-	mediump vec3 diffuseLighting = Diffuse_Lambert(albedo) * (1.0 - metallic) * (1.0 - fresnel);
+	mediump vec3 diffuseLighting = Diffuse_Lambert(albedo) * (1.0 - metallic);
 	mediump vec3 specularLighting = D * F * G;
 
 	return (diffuseLighting + specularLighting) * ndl * lightColor;
@@ -299,7 +299,7 @@ mediump vec3 SkinLighting(mediump vec3 normalBase, mediump vec3 normalDetails, h
 	highp float tuneCurvature = 0.001;
 	highp float curvature = clamp(tuneCurvature * length(fwidth(normalBase)) / length(fwidth(position)), 0.0, 1.0);
 
-	mediump vec3 diffuseLighting = Diffuse_Lambert(albedo) * (1.0 - fresnel) * max(ndl, 0.0);
+	mediump vec3 diffuseLighting = Diffuse_Lambert(albedo) * max(ndl, 0.0);
 	mediump vec3 scatterLighting = texture(texSkinLUT, vec2(wrapped_ndl, curvature)).rgb * albedo * (1.0 - wrapped_ndl) * 0.5;
 	mediump vec3 specularLighting = max(pow(texture(texSkinLUT, vec2(ndh, roughness)).a * 2.0, 10.0) * fresnel / hdh, 0.0) * max(ndl, 0.0) * 0.8;
 
