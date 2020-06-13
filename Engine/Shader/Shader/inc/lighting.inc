@@ -261,11 +261,12 @@ mediump vec3 ClothLighting(mediump vec3 normal, mediump vec3 viewDirection, medi
 
 //	mediump float D = D_Ashikhmin(ndh, roughness) / (4.0 * (ndl + ndv - ndl * ndv));
 	mediump float D = D_Charlie(ndh, roughness) / (4.0 * (ndl + ndv - ndl * ndv));
-	mediump float G = G_SchlickSmithGGX(ndv, ndl, roughness);
+//	mediump float G = G_SchlickSmithGGX(ndv, ndl, roughness);
 	mediump vec3  F = fresnel;
 
 	mediump vec3 diffuse = Diffuse_Lambert(albedo) * (1.0 - metallic) * (1.0 - fresnel);
-	mediump vec3 specular = D * F * G;
+//	mediump vec3 specular = D * F * G;
+	mediump vec3 specular = D * F;
 
 	return (diffuse + specular) * ndl * lightColor;
 }
