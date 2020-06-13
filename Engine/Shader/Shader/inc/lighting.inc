@@ -192,7 +192,7 @@ mediump vec3 F_SchlickRoughness(mediump vec3 specular, mediump float ndv, medium
 #endif
 }
 
-mediump vec3 Env_Specular(mediump vec3 specular, mediump float ndv, mediump float roughness)
+mediump vec3 Env_Specular(mediump vec3 fresnel, mediump float ndv, mediump float roughness)
 {
 #ifdef FAST_LIGHTING
 	mediump vec4 c0 = vec4(-1.0, -0.0275, -0.572, 0.022);
@@ -201,14 +201,14 @@ mediump vec3 Env_Specular(mediump vec3 specular, mediump float ndv, mediump floa
 	mediump float a001 = clamp(0.3 / (ndv + 0.3), 0.0, 1.0);
 	mediump float a004 = min(r.x * r.x, a001 * a001 * a001) * r.x + r.y;
 	mediump vec2 AB = vec2(-1.04, 1.04) * a004 + r.zw;
-	return specular * AB.x + AB.y;
+	return fresnel * AB.x + AB.y;
 #else
 	mediump vec4 c0 = vec4(-1.0, -0.0275, -0.572, 0.022);
 	mediump vec4 c1 = vec4( 1.0,  0.0425,  1.04, -0.04 );
 	mediump vec4 r = roughness * c0 + c1;
 	mediump float a004 = min(r.x * r.x, exp2(-9.28 * ndv)) * r.x + r.y;
 	mediump vec2 AB = vec2(-1.04, 1.04) * a004 + r.zw;
-	return specular * AB.x + AB.y;
+	return fresnel * AB.x + AB.y;
 #endif
 }
 
