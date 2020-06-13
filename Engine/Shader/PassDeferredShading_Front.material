@@ -1,15 +1,4 @@
 <Material>
-  <Pass name="PassUnlit">
-    <Pipeline render_pass="PassUnlit">
-      <Vertex file_name="Unlit.glsl">
-        <Define name="VERTEX_ATTRIBUTE_POSITION" />
-        <Define name="VERTEX_ATTRIBUTE_NORMAL" />
-        <Define name="INSTANCE_ATTRIBUTE_INDEX" />
-      </Vertex>
-      <Fragment file_name="Unlit.glsl">
-      </Fragment>
-    </Pipeline>
-  </Pass>
   <Pass name="PassDeferredShading_Lighting">
     <Pipeline render_pass="PassDeferredShading" sub_pass="1">
       <Vertex file_name="DeferredShading.glsl">
