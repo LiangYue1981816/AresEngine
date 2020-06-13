@@ -260,7 +260,7 @@ mediump vec3 PBRLighting(mediump vec3 normal, mediump vec3 viewDirection, medium
 	return (diffuseLighting + specularLighting) * ndl * lightColor;
 }
 
-mediump vec3 ClothLighting(mediump vec3 normal, mediump vec3 viewDirection, mediump vec3 lightDirection, mediump vec3 lightColor, mediump vec3 albedo, mediump vec3 fresnel, mediump float metallic, mediump float roughness)
+mediump vec3 ClothLighting(mediump vec3 normal, mediump vec3 viewDirection, mediump vec3 lightDirection, mediump vec3 lightColor, mediump vec3 albedo, mediump vec3 fresnel, mediump float roughness)
 {
 	mediump vec3 halfDirection = normalize(viewDirection + lightDirection);
 
@@ -272,7 +272,7 @@ mediump vec3 ClothLighting(mediump vec3 normal, mediump vec3 viewDirection, medi
 	mediump float G = G_Ashikhmin(ndv, ndl);
 	mediump vec3  F = fresnel;
 
-	mediump vec3 diffuseLighting = Diffuse_Lambert(albedo) * (1.0 - metallic);
+	mediump vec3 diffuseLighting = Diffuse_Lambert(albedo);
 	mediump vec3 specularLighting = D * F * G;
 
 	return (diffuseLighting + specularLighting) * ndl * lightColor;
