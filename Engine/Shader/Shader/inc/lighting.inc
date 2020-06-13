@@ -251,6 +251,25 @@ mediump vec3 PBRLighting(mediump vec3 normal, mediump vec3 viewDirection, medium
 	return (diffuse + specular) * ndl * lightColor;
 }
 
+mediump vec3 ClothLighting(mediump vec3 normal, mediump vec3 viewDirection, mediump vec3 lightDirection, mediump vec3 lightColor, mediump vec3 albedo, mediump vec3 fresnel, mediump float metallic, mediump float roughness)
+{
+	mediump vec3 halfDirection = normalize(viewDirection + lightDirection);
+
+	mediump float ndh = max(dot(normal, halfDirection), 0.0);
+	mediump float ndv = max(dot(normal, viewDirection), 0.0);
+	mediump float ndl = max(dot(normal, lightDirection), 0.0);
+
+//	mediump float D = D_Ashikhmin(ndh, roughness) / (4.0 * (ndl + ndv - ndl * ndv));
+	mediump float D = D_Charlie(ndh, roughness) / (4.0 * (ndl + ndv - ndl * ndv));
+	mediump float G = G_SchlickSmithGGX(ndv, ndl, roughness);
+	mediump vec3  F = fresnel;
+
+	mediump vec3 diffuse = Diffuse_Lambert(albedo) * (1.0 - metallic) * (1.0 - fresnel);
+	mediump vec3 specular = D * F * G;
+
+	return (diffuse + specular) * ndl * lightColor;
+}
+
 mediump float PHBeckmann(mediump float ndoth, mediump float m)
 {
 	mediump float alpha = acos(ndoth);
