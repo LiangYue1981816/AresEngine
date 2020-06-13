@@ -25,7 +25,7 @@ void CPassBlurBox::Destroy(void)
 
 
 CPassBlurBox::CPassBlurBox(CRenderSystem* pRenderSystem)
-	: CPassBlit(PASS_BLUR_BOX_MATERIAL_NAME, pRenderSystem)
+	: CPassBlit("PassBlurBox.material", pRenderSystem)
 	, m_range(1.0f)
 {
 	CGfxDescriptorLayoutPtr ptrDescriptorLayout = GfxRenderer()->NewDescriptorLayout(DESCRIPTOR_SET_PASS);

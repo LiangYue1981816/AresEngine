@@ -25,7 +25,7 @@ void CPassBlurVertical::Destroy(void)
 
 
 CPassBlurVertical::CPassBlurVertical(CRenderSystem* pRenderSystem)
-	: CPassBlit(PASS_BLUR_VERTICAL_MATERIAL_NAME, pRenderSystem)
+	: CPassBlit("PassBlurVertical.material", pRenderSystem)
 	, m_range(1.0f)
 {
 	CGfxDescriptorLayoutPtr ptrDescriptorLayout = GfxRenderer()->NewDescriptorLayout(DESCRIPTOR_SET_PASS);

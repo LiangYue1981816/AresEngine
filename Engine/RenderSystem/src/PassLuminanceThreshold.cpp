@@ -25,7 +25,7 @@ void CPassLuminanceThreshold::Destroy(void)
 
 
 CPassLuminanceThreshold::CPassLuminanceThreshold(CRenderSystem* pRenderSystem)
-	: CPassBlit(PASS_LUMINANCE_THRESHOLD_MATERIAL_NAME, pRenderSystem)
+	: CPassBlit("PassLuminanceThreshold.material", pRenderSystem)
 	, m_threshold(0.65f)
 {
 	CGfxDescriptorLayoutPtr ptrDescriptorLayout = GfxRenderer()->NewDescriptorLayout(DESCRIPTOR_SET_PASS);

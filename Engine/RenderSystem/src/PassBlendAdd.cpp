@@ -25,7 +25,7 @@ void CPassBlendAdd::Destroy(void)
 
 
 CPassBlendAdd::CPassBlendAdd(CRenderSystem* pRenderSystem)
-	: CPassBlit(PASS_BLEND_ADD_MATERIAL_NAME, pRenderSystem)
+	: CPassBlit("PassBlendAdd.material", pRenderSystem)
 	, m_factor(1.0f)
 {
 	CGfxDescriptorLayoutPtr ptrDescriptorLayout = GfxRenderer()->NewDescriptorLayout(DESCRIPTOR_SET_PASS);

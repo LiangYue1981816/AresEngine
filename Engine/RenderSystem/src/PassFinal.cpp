@@ -25,7 +25,7 @@ void CPassFinal::Destroy(void)
 
 
 CPassFinal::CPassFinal(CRenderSystem* pRenderSystem)
-	: CPassBlit(PASS_FINAL_MATERIAL_NAME, pRenderSystem)
+	: CPassBlit("PassFinal.material", pRenderSystem)
 {
 	CGfxDescriptorLayoutPtr ptrDescriptorLayout = GfxRenderer()->NewDescriptorLayout(DESCRIPTOR_SET_PASS);
 	ptrDescriptorLayout->SetUniformBlockBinding(UNIFORM_ENGINE_NAME, UNIFORM_ENGINE_BIND);

@@ -25,7 +25,7 @@ void CPassSSAO::Destroy(void)
 
 
 CPassSSAO::CPassSSAO(CRenderSystem* pRenderSystem)
-	: CPassBlit(PASS_SSAO_MATERIAL_NAME, pRenderSystem)
+	: CPassBlit("PassSSAO.material", pRenderSystem)
 	, m_samples(16)
 	, m_minSampleRadius(0.02f)
 	, m_maxSampleRadius(1.25f)

@@ -25,7 +25,7 @@ void CPassColorGrading::Destroy(void)
 
 
 CPassColorGrading::CPassColorGrading(CRenderSystem* pRenderSystem)
-	: CPassBlit(PASS_COLOR_GRADING_MATERIAL_NAME, pRenderSystem)
+	: CPassBlit("PassColorGrading.material", pRenderSystem)
 {
 	CGfxDescriptorLayoutPtr ptrDescriptorLayout = GfxRenderer()->NewDescriptorLayout(DESCRIPTOR_SET_PASS);
 	ptrDescriptorLayout->SetUniformBlockBinding(UNIFORM_ENGINE_NAME, UNIFORM_ENGINE_BIND);

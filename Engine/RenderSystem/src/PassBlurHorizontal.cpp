@@ -25,7 +25,7 @@ void CPassBlurHorizontal::Destroy(void)
 
 
 CPassBlurHorizontal::CPassBlurHorizontal(CRenderSystem* pRenderSystem)
-	: CPassBlit(PASS_BLUR_HORIZONTAL_MATERIAL_NAME, pRenderSystem)
+	: CPassBlit("PassBlurHorizontal.material", pRenderSystem)
 	, m_range(1.0f)
 {
 	CGfxDescriptorLayoutPtr ptrDescriptorLayout = GfxRenderer()->NewDescriptorLayout(DESCRIPTOR_SET_PASS);

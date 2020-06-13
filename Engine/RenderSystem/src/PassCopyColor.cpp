@@ -25,7 +25,7 @@ void CPassCopyColor::Destroy(void)
 
 
 CPassCopyColor::CPassCopyColor(CRenderSystem* pRenderSystem)
-	: CPassBlit(PASS_COPY_COLOR_MATERIAL_NAME, pRenderSystem)
+	: CPassBlit("PassCopyColor.material", pRenderSystem)
 {
 	CGfxDescriptorLayoutPtr ptrDescriptorLayout = GfxRenderer()->NewDescriptorLayout(DESCRIPTOR_SET_PASS);
 	ptrDescriptorLayout->SetUniformBlockBinding(UNIFORM_ENGINE_NAME, UNIFORM_ENGINE_BIND);
