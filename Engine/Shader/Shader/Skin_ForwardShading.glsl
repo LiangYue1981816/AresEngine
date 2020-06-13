@@ -87,7 +87,7 @@ DESCRIPTOR_SET_MATPASS(10) mediump uniform sampler2D texRoughnessMetallicSpecula
 #ifdef ENV_MAP
 DESCRIPTOR_SET_MATPASS(11) mediump uniform sampler2D texEnv;
 #endif
-DESCRIPTOR_SET_MATPASS(12) mediump uniform sampler2D texPreIntegratedSkinLUT;
+DESCRIPTOR_SET_MATPASS(12) mediump uniform sampler2D texSkinLUT;
 
 void main()
 {
@@ -135,8 +135,8 @@ void main()
 
 	mediump vec3 fresnel = FresnelSkin(worldNormal, worldViewDirection);
 	mediump vec3 ambientLighting = AmbientSH9(worldNormal, albedoColor, 0.0) * ambientLightFactor;
-	mediump vec3 pointLighting = SkinLighting(inNormal, worldNormal, worldPosition, worldViewDirection, pointLightDirection, pointLightColor, albedoColor, fresnel, roughness, texPreIntegratedSkinLUT) * pointLightFactor;
-	mediump vec3 directLighting = SkinLighting(inNormal, worldNormal, worldPosition, worldViewDirection, mainDirectLightDirection, mainDirectLightColor, albedoColor, fresnel, roughness, texPreIntegratedSkinLUT) * directLightFactor;
+	mediump vec3 pointLighting = SkinLighting(inNormal, worldNormal, worldPosition, worldViewDirection, pointLightDirection, pointLightColor, albedoColor, fresnel, roughness, texSkinLUT) * pointLightFactor;
+	mediump vec3 directLighting = SkinLighting(inNormal, worldNormal, worldPosition, worldViewDirection, mainDirectLightDirection, mainDirectLightColor, albedoColor, fresnel, roughness, texSkinLUT) * directLightFactor;
 #ifdef ENV_MAP
 	mediump vec3 fresnelRoughness = FresnelRoughness(worldNormal, worldViewDirection, albedoColor, metallic, roughness);
 	mediump vec3 envLighting = EnvLighting(worldNormal, worldViewDirection, vec3(1.0), fresnelRoughness, roughness, texEnv, 8.0) * envLightFactor;

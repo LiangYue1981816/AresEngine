@@ -239,7 +239,7 @@ mediump float PHBeckmann(mediump float ndoth, mediump float m)
 	return val;
 }
 
-mediump vec3 SkinLighting(mediump vec3 normalBase, mediump vec3 normalDetails, highp vec3 position, mediump vec3 viewDirection, mediump vec3 lightDirection, mediump vec3 lightColor, mediump vec3 albedo, mediump vec3 fresnel, mediump float roughness, mediump sampler2D texPreIntegratedSkinLUT)
+mediump vec3 SkinLighting(mediump vec3 normalBase, mediump vec3 normalDetails, highp vec3 position, mediump vec3 viewDirection, mediump vec3 lightDirection, mediump vec3 lightColor, mediump vec3 albedo, mediump vec3 fresnel, mediump float roughness, mediump sampler2D texSkinLUT)
 {
 /*
 	mediump vec3 halfDirection = normalize(viewDirection + lightDirection);
@@ -253,8 +253,8 @@ mediump vec3 SkinLighting(mediump vec3 normalBase, mediump vec3 normalDetails, h
 	highp float curvature = clamp(tuneCurvature * length(fwidth(normalBase)) / length(fwidth(position)), 0.0, 1.0);
 
 	mediump vec3 diffuse = Diffuse_Lambert(albedo) * (1.0 - fresnel) * max(ndl, 0.0);
-	mediump vec3 scatter = texture(texPreIntegratedSkinLUT, vec2(wrapped_ndl, curvature)).rgb * albedo * (1.0 - wrapped_ndl) * 0.5;
-	mediump vec3 specular = max(pow(texture(texPreIntegratedSkinLUT, vec2(ndh, roughness)).a * 2.0, 10.0) * fresnel / hdh, 0.0) * max(ndl, 0.0) * 0.8;
+	mediump vec3 scatter = texture(texSkinLUT, vec2(wrapped_ndl, curvature)).rgb * albedo * (1.0 - wrapped_ndl) * 0.5;
+	mediump vec3 specular = max(pow(texture(texSkinLUT, vec2(ndh, roughness)).a * 2.0, 10.0) * fresnel / hdh, 0.0) * max(ndl, 0.0) * 0.8;
 
 	return (diffuse + scatter + specular) * lightColor;
 */
@@ -269,8 +269,8 @@ mediump vec3 SkinLighting(mediump vec3 normalBase, mediump vec3 normalDetails, h
 	highp float curvature = 1.0 - clamp(tuneCurvature * length(fwidth(normalBase)) / length(fwidth(position)), 0.0, 1.0);
 
 	mediump vec3 diffuse = Diffuse_Lambert(albedo) * 0.15;
-	mediump vec3 scatter = texture(texPreIntegratedSkinLUT, vec2(wrapped_ndl, curvature)).rgb * albedo * 0.1;
-	mediump vec3 specular = max(pow(texture(texPreIntegratedSkinLUT, vec2(ndh, roughness)).a * 2.0, 10.0) * fresnel / hdh, 0.0) * max(ndl, 0.0) * 0.5;
+	mediump vec3 scatter = texture(texSkinLUT, vec2(wrapped_ndl, curvature)).rgb * albedo * 0.1;
+	mediump vec3 specular = max(pow(texture(texSkinLUT, vec2(ndh, roughness)).a * 2.0, 10.0) * fresnel / hdh, 0.0) * max(ndl, 0.0) * 0.5;
 
 	return (diffuse + scatter + specular) * lightColor;
 }
