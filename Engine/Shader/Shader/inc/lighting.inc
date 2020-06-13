@@ -103,7 +103,8 @@ mediump float D_GGX(mediump float ndh, mediump float roughness)
 
 mediump float D_Ashikhmin(mediump float ndh, mediump float roughness)
 {
-	// Ashikhmin 2007, "Distribution-based BRDFs"
+	// https://www.shadertoy.com/view/4tfBzn
+	// https://knarkowicz.wordpress.com/2018/01/04/cloth-shading/
 	mediump float a2 = roughness * roughness;
 	mediump float cos2h = ndh * ndh;
 	mediump float sin2h = max(1.0 - cos2h, 0.0078125); // 2^(-14/2), so sin2h^2 > 0 in fp16
@@ -114,11 +115,19 @@ mediump float D_Ashikhmin(mediump float ndh, mediump float roughness)
 
 mediump float D_Charlie(mediump float ndh, mediump float roughness)
 {
-	// Estevez and Kulla 2017, "Production Friendly Microfacet Sheen BRDF"
+	// https://www.shadertoy.com/view/4tfBzn
+	// https://knarkowicz.wordpress.com/2018/01/04/cloth-shading/
 	mediump float invAlpha = 1.0 / roughness;
 	mediump float cos2h = ndh * ndh;
 	mediump float sin2h = max(1.0 - cos2h, 0.0078125); // 2^(-14/2), so sin2h^2 > 0 in fp16
 	return (2.0 + invAlpha) * pow(sin2h, invAlpha * 0.5) / (2.0 * PI);
+}
+
+mediump float G_Ashikhmin(mediump float ndv, mediump float ndl)
+{
+	// https://www.shadertoy.com/view/4tfBzn
+	// https://knarkowicz.wordpress.com/2018/01/04/cloth-shading/
+	return 1.0 / (4.0 * (ndl + ndv - ndl * ndv));
 }
 
 mediump float G_Neumann(mediump float ndv, mediump float ndl)
@@ -259,14 +268,12 @@ mediump vec3 ClothLighting(mediump vec3 normal, mediump vec3 viewDirection, medi
 	mediump float ndv = max(dot(normal, viewDirection), 0.0);
 	mediump float ndl = max(dot(normal, lightDirection), 0.0);
 
-//	mediump float D = D_Ashikhmin(ndh, roughness) / (4.0 * (ndl + ndv - ndl * ndv));
-	mediump float D = D_Charlie(ndh, roughness) / (4.0 * (ndl + ndv - ndl * ndv));
-//	mediump float G = G_SchlickSmithGGX(ndv, ndl, roughness);
+	mediump float D = D_Charlie(ndh, roughness);
+	mediump float G = G_Ashikhmin(ndv, ndl);
 	mediump vec3  F = fresnel;
 
 	mediump vec3 diffuse = Diffuse_Lambert(albedo) * (1.0 - metallic) * (1.0 - fresnel);
-//	mediump vec3 specular = D * F * G;
-	mediump vec3 specular = D * F;
+	mediump vec3 specular = D * F * G;
 
 	return (diffuse + specular) * ndl * lightColor;
 }
