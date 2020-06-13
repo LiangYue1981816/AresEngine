@@ -14,7 +14,7 @@ CComponentPointLight::CComponentPointLight(uint32_t name)
 {
 	m_indexInstance = RenderSystem()->AddInstance();
 
-	SetMaterial(GfxRenderer()->NewMaterial("PointLightCullFaceBack.material", VERTEX_BINDING, INSTANCE_BINDING), GfxRenderer()->NewMaterial("PointLightCullFaceFront.material", VERTEX_BINDING, INSTANCE_BINDING));
+	SetMaterial(GfxRenderer()->NewMaterial("PassDeferredShading_Back.material", VERTEX_BINDING, INSTANCE_BINDING), GfxRenderer()->NewMaterial("PassDeferredShading_Front.material", VERTEX_BINDING, INSTANCE_BINDING));
 	SetMeshDraw(GfxRenderer()->NewMesh("PointLight.mesh", VERTEX_BINDING));
 	SetMask(0xffffffff);
 }
