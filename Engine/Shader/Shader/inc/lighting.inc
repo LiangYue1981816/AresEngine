@@ -306,24 +306,25 @@ mediump vec3 SkinLighting(mediump vec3 normalBase, mediump vec3 normalDetails, h
 	return (diffuseLighting + scatterLighting + specularLighting) * lightColor;
 }
 
-mediump vec3 EnvLighting(mediump vec3 normal, mediump vec3 viewDirection, mediump vec3 env, mediump vec3 albedo, mediump vec3 fresnel, mediump float roughness)
+mediump vec3 EnvLighting(mediump vec3 normal, mediump vec3 viewDirection, mediump vec3 env, mediump vec3 albedo, mediump vec3 specular, mediump float metallic, mediump float roughness)
 {
 	mediump float ndv = max(dot(normal, viewDirection), 0.0);
+	mediump vec3 fresnel = F_SchlickRoughness(specular, ndv, metallic, roughness);
 	return Env_Specular(fresnel, ndv, roughness) * env * albedo;
 }
 
-mediump vec3 EnvLighting(mediump vec3 normal, mediump vec3 viewDirection, mediump vec3 albedo, mediump vec3 fresnel, mediump float roughness, mediump sampler2D texEnv, mediump float maxLods)
+mediump vec3 EnvLighting(mediump vec3 normal, mediump vec3 viewDirection, mediump vec3 albedo, mediump vec3 specular, mediump float metallic, mediump float roughness, mediump sampler2D texEnv, mediump float maxLods)
 {
 	mediump vec3 R = reflect(-viewDirection, normal);
 	mediump vec3 env = Gamma2Linear(textureLod(texEnv, SphericalSampleing(R), roughness * maxLods).rgb);
-	return EnvLighting(normal, viewDirection, env, albedo, fresnel, roughness);
+	return EnvLighting(normal, viewDirection, env, albedo, specular, metallic, roughness);
 }
 
-mediump vec3 EnvLighting(mediump vec3 normal, mediump vec3 viewDirection, mediump vec3 albedo, mediump vec3 fresnel, mediump float roughness, mediump samplerCube texEnv, mediump float maxLods)
+mediump vec3 EnvLighting(mediump vec3 normal, mediump vec3 viewDirection, mediump vec3 albedo, mediump vec3 specular, mediump float metallic, mediump float roughness, mediump samplerCube texEnv, mediump float maxLods)
 {
 	mediump vec3 R = reflect(-viewDirection, normal);
 	mediump vec3 env = Gamma2Linear(textureLod(texEnv, R, roughness * maxLods).rgb);
-	return EnvLighting(normal, viewDirection, env, albedo, fresnel, roughness);
+	return EnvLighting(normal, viewDirection, env, albedo, specular, metallic, roughness);
 }
 
 mediump float LightingAttenuation(mediump float dis)
