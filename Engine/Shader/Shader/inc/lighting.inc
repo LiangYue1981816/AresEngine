@@ -156,14 +156,14 @@ mediump float G_SchlickSmithGGX(mediump float ndv, mediump float ndl, mediump fl
 	return 0.25 / (ggx1 * ggx2);
 }
 
-mediump vec3 F_Schlick(mediump vec3 specular, mediump float ndv, mediump float metallic)
+mediump vec3 F_Schlick(mediump vec3 albedo, mediump float specular, mediump float metallic, mediump float ndv)
 {
 #ifdef FAST_LIGHTING
-	mediump vec3 F0 = mix(vec3(0.04), specular, metallic);
+	mediump vec3 F0 = mix(vec3(0.08 * specular), albedo, metallic);
 	mediump float F1 = clamp(1.0 - ndv * 1.5, 0.0, 1.0);
 	return F0 + (1.0 - F0) * F1 * F1 * F1;
 #else
-	mediump vec3 F0 = mix(vec3(0.04), specular, metallic);
+	mediump vec3 F0 = mix(vec3(0.08 * specular), albedo, metallic);
 	return F0 + (1.0 - F0) * pow(1.0 - ndv, 5.0);
 #endif
 }
@@ -180,14 +180,14 @@ mediump vec3 F_SchlickSkin(mediump float ndv)
 #endif
 }
 
-mediump vec3 F_SchlickRoughness(mediump vec3 specular, mediump float ndv, mediump float metallic, mediump float roughness)
+mediump vec3 F_SchlickRoughness(mediump vec3 albedo, mediump float specular, mediump float metallic, mediump float roughness, mediump float ndv)
 {
 #ifdef FAST_LIGHTING
-	mediump vec3 F0 = mix(vec3(0.04), specular, metallic);
+	mediump vec3 F0 = mix(vec3(0.08 * specular), albedo, metallic);
 	mediump float F1 = clamp(1.0 - ndv * 1.5, 0.0, 1.0);
 	return F0 + (max(vec3(1.0 - roughness), F0) - F0) * F1 * F1 * F1;
 #else
-	mediump vec3 F0 = mix(vec3(0.04), specular, metallic);
+	mediump vec3 F0 = mix(vec3(0.08 * specular), albedo, metallic);
 	return F0 + (max(vec3(1.0 - roughness), F0) - F0) * pow(1.0 - ndv, 5.0);
 #endif
 }
@@ -224,10 +224,10 @@ mediump vec3 AmbientSH9(mediump vec3 normal, mediump vec3 albedo, mediump float 
 	return Ambient_SH9((SHLightRotationMatrix * vec4(normal, 0.0)).xyz, albedo, metallic, SHLight0.xyz, SHLight1.xyz, SHLight2.xyz, SHLight3.xyz, SHLight4.xyz, SHLight5.xyz, SHLight6.xyz, SHLight7.xyz, SHLight8.xyz);
 }
 
-mediump vec3 Fresnel(mediump vec3 normal, mediump vec3 viewDirection, mediump vec3 specular, mediump float metallic)
+mediump vec3 Fresnel(mediump vec3 normal, mediump vec3 viewDirection, mediump vec3 albedo, mediump float specular, mediump float metallic)
 {
 	mediump float ndv = max(dot(normal, viewDirection), 0.0);
-	return F_Schlick(specular, ndv, metallic);
+	return F_Schlick(albedo, specular, metallic, ndv);
 }
 
 mediump vec3 FresnelSkin(mediump vec3 normal, mediump vec3 viewDirection)
@@ -236,13 +236,13 @@ mediump vec3 FresnelSkin(mediump vec3 normal, mediump vec3 viewDirection)
 	return F_SchlickSkin(ndv);
 }
 
-mediump vec3 FresnelRoughness(mediump vec3 normal, mediump vec3 viewDirection, mediump vec3 specular, mediump float metallic, mediump float roughness)
+mediump vec3 FresnelRoughness(mediump vec3 normal, mediump vec3 viewDirection, mediump vec3 albedo, mediump float specular, mediump float metallic, mediump float roughness)
 {
 	mediump float ndv = max(dot(normal, viewDirection), 0.0);
-	return F_SchlickRoughness(specular, ndv, metallic, roughness);
+	return F_SchlickRoughness(albedo, specular, metallic, roughness, ndv);
 }
 
-mediump vec3 PBRLighting(mediump vec3 normal, mediump vec3 viewDirection, mediump vec3 lightDirection, mediump vec3 lightColor, mediump vec3 albedo, mediump vec3 specular, mediump float metallic, mediump float roughness)
+mediump vec3 PBRLighting(mediump vec3 normal, mediump vec3 viewDirection, mediump vec3 lightDirection, mediump vec3 lightColor, mediump vec3 albedo, mediump float specular, mediump float metallic, mediump float roughness)
 {
 	mediump vec3 halfDirection = normalize(viewDirection + lightDirection);
 
@@ -252,7 +252,7 @@ mediump vec3 PBRLighting(mediump vec3 normal, mediump vec3 viewDirection, medium
 
 	mediump float D = D_GGX(ndh, roughness);
 	mediump float G = G_SchlickSmithGGX(ndv, ndl, roughness);
-	mediump vec3  F = F_Schlick(specular, ndv, metallic);
+	mediump vec3  F = F_Schlick(albedo, specular, metallic, ndv);
 
 	mediump vec3 diffuseLighting = Diffuse_Lambert(albedo) * (1.0 - metallic);
 	mediump vec3 specularLighting = D * F * G;
@@ -260,7 +260,7 @@ mediump vec3 PBRLighting(mediump vec3 normal, mediump vec3 viewDirection, medium
 	return (diffuseLighting + specularLighting) * ndl * lightColor;
 }
 
-mediump vec3 ClothLighting(mediump vec3 normal, mediump vec3 viewDirection, mediump vec3 lightDirection, mediump vec3 lightColor, mediump vec3 albedo, mediump vec3 specular, mediump float roughness)
+mediump vec3 ClothLighting(mediump vec3 normal, mediump vec3 viewDirection, mediump vec3 lightDirection, mediump vec3 lightColor, mediump vec3 albedo, mediump float specular, mediump float roughness)
 {
 	mediump vec3 halfDirection = normalize(viewDirection + lightDirection);
 
@@ -270,7 +270,7 @@ mediump vec3 ClothLighting(mediump vec3 normal, mediump vec3 viewDirection, medi
 
 	mediump float D = D_Charlie(ndh, roughness);
 	mediump float G = G_Ashikhmin(ndv, ndl);
-	mediump vec3  F = F_Schlick(specular, ndv, 0.0);
+	mediump vec3  F = F_Schlick(albedo, specular, 0.0, ndv);
 
 	mediump vec3 diffuseLighting = Diffuse_Lambert(albedo);
 	mediump vec3 specularLighting = D * F * G;
@@ -306,21 +306,21 @@ mediump vec3 SkinLighting(mediump vec3 normalBase, mediump vec3 normalDetails, h
 	return (diffuseLighting + scatterLighting + specularLighting) * lightColor;
 }
 
-mediump vec3 EnvLighting(mediump vec3 normal, mediump vec3 viewDirection, mediump vec3 env, mediump vec3 albedo, mediump vec3 specular, mediump float metallic, mediump float roughness)
+mediump vec3 EnvLighting(mediump vec3 normal, mediump vec3 viewDirection, mediump vec3 env, mediump vec3 albedo, mediump float specular, mediump float metallic, mediump float roughness)
 {
 	mediump float ndv = max(dot(normal, viewDirection), 0.0);
-	mediump vec3 fresnel = F_SchlickRoughness(specular, ndv, metallic, roughness);
+	mediump vec3 fresnel = F_SchlickRoughness(albedo, specular, metallic, roughness, ndv);
 	return Env_Specular(fresnel, ndv, roughness) * env * albedo;
 }
 
-mediump vec3 EnvLighting(mediump vec3 normal, mediump vec3 viewDirection, mediump vec3 albedo, mediump vec3 specular, mediump float metallic, mediump float roughness, mediump sampler2D texEnv, mediump float maxLods)
+mediump vec3 EnvLighting(mediump vec3 normal, mediump vec3 viewDirection, mediump vec3 albedo, mediump float specular, mediump float metallic, mediump float roughness, mediump sampler2D texEnv, mediump float maxLods)
 {
 	mediump vec3 R = reflect(-viewDirection, normal);
 	mediump vec3 env = Gamma2Linear(textureLod(texEnv, SphericalSampleing(R), roughness * maxLods).rgb);
 	return EnvLighting(normal, viewDirection, env, albedo, specular, metallic, roughness);
 }
 
-mediump vec3 EnvLighting(mediump vec3 normal, mediump vec3 viewDirection, mediump vec3 albedo, mediump vec3 specular, mediump float metallic, mediump float roughness, mediump samplerCube texEnv, mediump float maxLods)
+mediump vec3 EnvLighting(mediump vec3 normal, mediump vec3 viewDirection, mediump vec3 albedo, mediump float specular, mediump float metallic, mediump float roughness, mediump samplerCube texEnv, mediump float maxLods)
 {
 	mediump vec3 R = reflect(-viewDirection, normal);
 	mediump vec3 env = Gamma2Linear(textureLod(texEnv, R, roughness * maxLods).rgb);
