@@ -80,7 +80,7 @@ void main()
 		mediump vec3 pointLightDirection = normalize(pointLightPosition - worldPosition);
 		mediump vec3 pointLightAttenuation = GetInstance(inInstanceIndex).lightAttenuation.xyz;
 		mediump vec3 pointLightColor = GetInstance(inInstanceIndex).lightColor.rgb * Attenuation(distance, pointLightAttenuation.x, pointLightAttenuation.y, pointLightAttenuation.z);
-		mediump vec3 lighting = PBRLighting(worldNormal, worldViewDirection, pointLightDirection, pointLightColor, albedo, albedo, metallic, roughness) * pointLightFactor;
+		mediump vec3 lighting = PBRLighting(worldNormal, worldViewDirection, pointLightDirection, pointLightColor, albedo, 0.5, metallic, roughness) * pointLightFactor;
 		pointLighting = ao * lighting;
 	}
 

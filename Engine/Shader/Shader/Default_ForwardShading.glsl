@@ -115,7 +115,7 @@ void main()
 #else
 	mediump float roughness = 0.5;
 	mediump float metallic = 0.5;
-	mediump float specular = 1.0;
+	mediump float specular = 0.5;
 	mediump float ao = 1.0;
 #endif
 
@@ -132,10 +132,10 @@ void main()
 	pointLightDirection = normalize(pointLightDirection);
 
 	mediump vec3 ambientLighting = AmbientSH9(worldNormal, albedoColor, metallic) * ambientLightFactor;
-	mediump vec3 pointLighting = PBRLighting(worldNormal, worldViewDirection, pointLightDirection, pointLightColor, albedoColor, albedoColor, metallic, roughness) * pointLightFactor;
-	mediump vec3 directLighting = PBRLighting(worldNormal, worldViewDirection, mainDirectLightDirection, mainDirectLightColor, albedoColor, albedoColor, metallic, roughness) * directLightFactor;
+	mediump vec3 pointLighting = PBRLighting(worldNormal, worldViewDirection, pointLightDirection, pointLightColor, albedoColor, specular, metallic, roughness) * pointLightFactor;
+	mediump vec3 directLighting = PBRLighting(worldNormal, worldViewDirection, mainDirectLightDirection, mainDirectLightColor, albedoColor, specular, metallic, roughness) * directLightFactor;
 #ifdef ENV_MAP
-	mediump vec3 envLighting = EnvLighting(worldNormal, worldViewDirection, vec3(1.0), vec3(1.0), metallic, roughness, texEnv, 8.0) * envLightFactor;
+	mediump vec3 envLighting = EnvLighting(worldNormal, worldViewDirection, albedoColor, specular, metallic, roughness, texEnv, 8.0) * envLightFactor;
 #else
 	mediump vec3 envLighting = vec3(0.0);
 #endif
