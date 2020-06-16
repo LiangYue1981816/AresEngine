@@ -156,39 +156,39 @@ mediump float G_SchlickSmithGGX(mediump float ndv, mediump float ndl, mediump fl
 	return 0.25 / (ggx1 * ggx2);
 }
 
-mediump vec3 F_Schlick(mediump vec3 albedo, mediump float specular, mediump float metallic, mediump float ndv)
+mediump vec3 F_Schlick(mediump vec3 albedo, mediump float specular, mediump float metallic, mediump float cosTheta)
 {
 #ifdef FAST_LIGHTING
 	mediump vec3 F0 = mix(vec3(0.08 * specular), albedo, metallic);
-	mediump float F1 = clamp(1.0 - ndv * 1.5, 0.0, 1.0);
+	mediump float F1 = clamp(1.0 - cosTheta * 1.5, 0.0, 1.0);
 	return F0 + (1.0 - F0) * F1 * F1 * F1;
 #else
 	mediump vec3 F0 = mix(vec3(0.08 * specular), albedo, metallic);
-	return F0 + (1.0 - F0) * pow(1.0 - ndv, 5.0);
+	return F0 + (1.0 - F0) * pow(1.0 - cosTheta, 5.0);
 #endif
 }
 
-mediump vec3 F_SchlickSkin(mediump float ndv)
+mediump vec3 F_SchlickSkin(mediump float cosTheta)
 {
 #ifdef FAST_LIGHTING
 	mediump vec3 F0 = vec3(0.028);
-	mediump float F1 = clamp(1.0 - ndv * 1.5, 0.0, 1.0);
+	mediump float F1 = clamp(1.0 - cosTheta * 1.5, 0.0, 1.0);
 	return F0 + (1.0 - F0) * F1 * F1 * F1;
 #else
 	mediump vec3 F0 = vec3(0.028);
-	return F0 + (1.0 - F0) * pow(1.0 - ndv, 5.0);
+	return F0 + (1.0 - F0) * pow(1.0 - cosTheta, 5.0);
 #endif
 }
 
-mediump vec3 F_SchlickRoughness(mediump vec3 albedo, mediump float specular, mediump float metallic, mediump float roughness, mediump float ndv)
+mediump vec3 F_SchlickRoughness(mediump vec3 albedo, mediump float specular, mediump float metallic, mediump float roughness, mediump float cosTheta)
 {
 #ifdef FAST_LIGHTING
 	mediump vec3 F0 = mix(vec3(0.08 * specular), albedo, metallic);
-	mediump float F1 = clamp(1.0 - ndv * 1.5, 0.0, 1.0);
+	mediump float F1 = clamp(1.0 - cosTheta * 1.5, 0.0, 1.0);
 	return F0 + (max(vec3(1.0 - roughness), F0) - F0) * F1 * F1 * F1;
 #else
 	mediump vec3 F0 = mix(vec3(0.08 * specular), albedo, metallic);
-	return F0 + (max(vec3(1.0 - roughness), F0) - F0) * pow(1.0 - ndv, 5.0);
+	return F0 + (max(vec3(1.0 - roughness), F0) - F0) * pow(1.0 - cosTheta, 5.0);
 #endif
 }
 
@@ -224,24 +224,6 @@ mediump vec3 AmbientSH9(mediump vec3 normal, mediump vec3 albedo, mediump float 
 	return Ambient_SH9((SHLightRotationMatrix * vec4(normal, 0.0)).xyz, albedo, metallic, SHLight0.xyz, SHLight1.xyz, SHLight2.xyz, SHLight3.xyz, SHLight4.xyz, SHLight5.xyz, SHLight6.xyz, SHLight7.xyz, SHLight8.xyz);
 }
 
-mediump vec3 Fresnel(mediump vec3 normal, mediump vec3 viewDirection, mediump vec3 albedo, mediump float specular, mediump float metallic)
-{
-	mediump float ndv = max(dot(normal, viewDirection), 0.0);
-	return F_Schlick(albedo, specular, metallic, ndv);
-}
-
-mediump vec3 FresnelSkin(mediump vec3 normal, mediump vec3 viewDirection)
-{
-	mediump float ndv = max(dot(normal, viewDirection), 0.0);
-	return F_SchlickSkin(ndv);
-}
-
-mediump vec3 FresnelRoughness(mediump vec3 normal, mediump vec3 viewDirection, mediump vec3 albedo, mediump float specular, mediump float metallic, mediump float roughness)
-{
-	mediump float ndv = max(dot(normal, viewDirection), 0.0);
-	return F_SchlickRoughness(albedo, specular, metallic, roughness, ndv);
-}
-
 mediump vec3 PBRLighting(mediump vec3 normal, mediump vec3 viewDirection, mediump vec3 lightDirection, mediump vec3 lightColor, mediump vec3 albedo, mediump float specular, mediump float metallic, mediump float roughness)
 {
 	mediump vec3 halfDirection = normalize(viewDirection + lightDirection);
@@ -252,7 +234,7 @@ mediump vec3 PBRLighting(mediump vec3 normal, mediump vec3 viewDirection, medium
 
 	mediump float D = D_GGX(ndh, roughness);
 	mediump float G = G_SchlickSmithGGX(ndv, ndl, roughness);
-	mediump vec3  F = F_Schlick(albedo, specular, metallic, ndv);
+	mediump vec3  F = F_Schlick(albedo, specular, metallic, ndh);
 
 	mediump vec3 diffuseLighting = Diffuse_Lambert(albedo) * (1.0 - metallic);
 	mediump vec3 specularLighting = D * F * G;
@@ -270,7 +252,7 @@ mediump vec3 ClothLighting(mediump vec3 normal, mediump vec3 viewDirection, medi
 
 	mediump float D = D_Charlie(ndh, roughness);
 	mediump float G = G_Ashikhmin(ndv, ndl);
-	mediump vec3  F = F_Schlick(albedo, specular, 0.0, ndv);
+	mediump vec3  F = F_Schlick(albedo, specular, 0.0, ndh);
 
 	mediump vec3 diffuseLighting = Diffuse_Lambert(albedo);
 	mediump vec3 specularLighting = D * F * G;
@@ -301,7 +283,7 @@ mediump vec3 SkinLighting(mediump vec3 normalBase, mediump vec3 normalDetails, h
 
 	mediump vec3 diffuseLighting = Diffuse_Lambert(albedo) * 0.15;
 	mediump vec3 scatterLighting = texture(texSkinLUT, vec2(wrapped_ndl, curvature)).rgb * albedo * 0.1;
-	mediump vec3 specularLighting = max(pow(texture(texSkinLUT, vec2(ndh, roughness)).a * 2.0, 10.0) * F_SchlickSkin(ndv) / hdh, 0.0) * max(ndl, 0.0) * 0.5;
+	mediump vec3 specularLighting = max(pow(texture(texSkinLUT, vec2(ndh, roughness)).a * 2.0, 10.0) * F_SchlickSkin(ndh) / hdh, 0.0) * max(ndl, 0.0) * 0.5;
 
 	return (diffuseLighting + scatterLighting + specularLighting) * lightColor;
 }
