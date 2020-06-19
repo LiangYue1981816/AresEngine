@@ -276,7 +276,6 @@ mediump vec3 SkinLighting(mediump vec3 normalBase, mediump vec3 normalDetails, h
 {
 	mediump vec3 halfDirection = normalize(viewDirection + lightDirection);
 
-	mediump float ndv = max(dot(normalBase, viewDirection), 0.0);
 	mediump float ndl = max(dot(normalBase, lightDirection), 0.0);
 	mediump float ndh = max(dot(normalDetails, halfDirection), 0.0);
 	mediump float hdh = max(dot(viewDirection + lightDirection, viewDirection + lightDirection), 0.0);
