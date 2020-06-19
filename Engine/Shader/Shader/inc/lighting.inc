@@ -158,6 +158,7 @@ mediump float G_SchlickSmithGGX(mediump float ndv, mediump float ndl, mediump fl
 
 mediump vec3 F_Schlick(mediump vec3 albedo, mediump float specular, mediump float metallic, mediump float cosTheta)
 {
+	// https://en.wikipedia.org/wiki/Schlick%27s_approximation
 #ifdef FAST_LIGHTING
 	mediump vec3 F0 = mix(vec3(0.08 * specular), albedo, metallic);
 	mediump float F1 = clamp(1.0 - cosTheta * 1.5, 0.0, 1.0);
@@ -170,6 +171,7 @@ mediump vec3 F_Schlick(mediump vec3 albedo, mediump float specular, mediump floa
 
 mediump vec3 F_SchlickSkin(mediump float cosTheta)
 {
+	// https://en.wikipedia.org/wiki/Schlick%27s_approximation
 #ifdef FAST_LIGHTING
 	mediump vec3 F0 = vec3(0.028);
 	mediump float F1 = clamp(1.0 - cosTheta * 1.5, 0.0, 1.0);
