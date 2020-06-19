@@ -231,10 +231,11 @@ mediump vec3 PBRLighting(mediump vec3 normal, mediump vec3 viewDirection, medium
 	mediump float ndh = max(dot(normal, halfDirection), 0.0);
 	mediump float ndv = max(dot(normal, viewDirection), 0.0);
 	mediump float ndl = max(dot(normal, lightDirection), 0.0);
+	mediump float vdh = max(dot(viewDirection, halfDirection), 0.0);
 
 	mediump float D = D_GGX(ndh, roughness);
 	mediump float G = G_SchlickSmithGGX(ndv, ndl, roughness);
-	mediump vec3  F = F_Schlick(albedo, specular, metallic, ndh);
+	mediump vec3  F = F_Schlick(albedo, specular, metallic, vdh);
 
 	mediump vec3 diffuseLighting = Diffuse_Lambert(albedo) * (1.0 - metallic);
 	mediump vec3 specularLighting = D * F * G;
@@ -249,10 +250,11 @@ mediump vec3 ClothLighting(mediump vec3 normal, mediump vec3 viewDirection, medi
 	mediump float ndh = max(dot(normal, halfDirection), 0.0);
 	mediump float ndv = max(dot(normal, viewDirection), 0.0);
 	mediump float ndl = max(dot(normal, lightDirection), 0.0);
+	mediump float vdh = max(dot(viewDirection, halfDirection), 0.0);
 
 	mediump float D = D_Charlie(ndh, roughness);
 	mediump float G = G_Ashikhmin(ndv, ndl);
-	mediump vec3  F = F_Schlick(albedo, specular, 0.0, ndh);
+	mediump vec3  F = F_Schlick(albedo, specular, 0.0, vdh);
 
 	mediump vec3 diffuseLighting = Diffuse_Lambert(albedo);
 	mediump vec3 specularLighting = D * F * G;
@@ -276,6 +278,7 @@ mediump vec3 SkinLighting(mediump vec3 normalBase, mediump vec3 normalDetails, h
 	mediump float ndl = max(dot(normalBase, lightDirection), 0.0);
 	mediump float ndh = max(dot(normalDetails, halfDirection), 0.0);
 	mediump float hdh = max(dot(viewDirection + lightDirection, viewDirection + lightDirection), 0.0);
+	mediump float vdh = max(dot(viewDirection, halfDirection), 0.0);
 	mediump float wrapped_ndl = clamp(ndl * 0.5 + 0.5, 0.0, 1.0);
 
 	highp float tuneCurvature = 0.025;
@@ -283,7 +286,7 @@ mediump vec3 SkinLighting(mediump vec3 normalBase, mediump vec3 normalDetails, h
 
 	mediump vec3 diffuseLighting = Diffuse_Lambert(albedo) * 0.15;
 	mediump vec3 scatterLighting = texture(texSkinLUT, vec2(wrapped_ndl, curvature)).rgb * albedo * 0.1;
-	mediump vec3 specularLighting = max(pow(texture(texSkinLUT, vec2(ndh, roughness)).a * 2.0, 10.0) * F_SchlickSkin(ndh) / hdh, 0.0) * max(ndl, 0.0) * 0.5;
+	mediump vec3 specularLighting = max(pow(texture(texSkinLUT, vec2(ndh, roughness)).a * 2.0, 10.0) * F_SchlickSkin(vdh) / hdh, 0.0) * max(ndl, 0.0) * 0.5;
 
 	return (diffuseLighting + scatterLighting + specularLighting) * lightColor;
 }
