@@ -64,11 +64,17 @@ void CRenderSystem::RenderForwardShading(CTaskPool& taskPool, CTaskGraph& taskGr
 	}
 	{
 		uint32_t rtInColor = RENDER_TEXTURE_FULL_HDR_COLOR0;
-		uint32_t rtOutColor = RENDER_TEXTURE_FULL_HDR_COLOR1;
-		InternalPassColorGrading(taskPool, taskGraph, ptrCommandBuffer, pCamera, rtInColor, rtOutColor);
+		uint32_t rtOutEyeAdaptation = RENDER_TEXTURE_FULL_HDR_COLOR1;
+		uint32_t rtTempColor = RENDER_TEXTURE_QUATER_HDR_COLOR0;
+		InternalPassEyeAdaptation(taskPool, taskGraph, ptrCommandBuffer, pCamera, rtInColor, rtOutEyeAdaptation, rtTempColor);
 	}
 	{
 		uint32_t rtInColor = RENDER_TEXTURE_FULL_HDR_COLOR1;
+		uint32_t rtOutColorGrading = RENDER_TEXTURE_FULL_HDR_COLOR0;
+		InternalPassColorGrading(taskPool, taskGraph, ptrCommandBuffer, pCamera, rtInColor, rtOutColorGrading);
+	}
+	{
+		uint32_t rtInColor = RENDER_TEXTURE_FULL_HDR_COLOR0;
 		InternalPassFinal(taskPool, taskGraph, ptrCommandBuffer, pCamera, rtInColor, bPresent);
 	}
 }

@@ -129,22 +129,15 @@ void CRenderSystem::InternalPassBloom(CTaskPool& taskPool, CTaskGraph& taskGraph
 	m_pPassBloomBlendAdd->Render(taskPool, taskGraph, ptrCommandBuffer);
 }
 
-void CRenderSystem::InternalPassEyeAdaptation(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer, CCamera* pCamera, uint32_t rtInColor, uint32_t rtOutColor, uint32_t rtTempBlur0, uint32_t rtTempBlur1)
+void CRenderSystem::InternalPassEyeAdaptation(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer, CCamera* pCamera, uint32_t rtInColor, uint32_t rtOutColor, uint32_t rtTempColor)
 {
-	m_pPassBloomBlurHorizontal->SetCamera(pCamera);
-	m_pPassBloomBlurHorizontal->SetInputTexture(m_ptrRenderTextures[rtInColor]);
-	m_pPassBloomBlurHorizontal->SetOutputTexture(m_ptrRenderTextures[rtTempBlur0]);
-	m_pPassBloomBlurHorizontal->SetParamRange(Settings()->GetValue("RenderSystem.Bloom.BlurRange.FirstTime"));
-	m_pPassBloomBlurHorizontal->Render(taskPool, taskGraph, ptrCommandBuffer);
-
-	m_pPassBloomBlurVertical->SetCamera(pCamera);
-	m_pPassBloomBlurVertical->SetInputTexture(m_ptrRenderTextures[rtTempBlur0]);
-	m_pPassBloomBlurVertical->SetOutputTexture(m_ptrRenderTextures[rtTempBlur1]);
-	m_pPassBloomBlurVertical->SetParamRange(Settings()->GetValue("RenderSystem.Bloom.BlurRange.FirstTime"));
-	m_pPassBloomBlurVertical->Render(taskPool, taskGraph, ptrCommandBuffer);
+	m_pPassCopyColor->SetCamera(pCamera);
+	m_pPassCopyColor->SetInputTexture(m_ptrRenderTextures[rtInColor]);
+	m_pPassCopyColor->SetOutputTexture(m_ptrRenderTextures[rtTempColor]);
+	m_pPassCopyColor->Render(taskPool, taskGraph, ptrCommandBuffer);
 
 	m_pPassCopyColor->SetCamera(pCamera);
-	m_pPassCopyColor->SetInputTexture(m_ptrRenderTextures[rtTempBlur1]);
+	m_pPassCopyColor->SetInputTexture(m_ptrRenderTextures[rtTempColor]);
 	m_pPassCopyColor->SetOutputTexture(m_ptrRenderTextures[rtOutColor]);
 	m_pPassCopyColor->Render(taskPool, taskGraph, ptrCommandBuffer);
 }
