@@ -255,7 +255,8 @@ mediump vec3 ClothLighting(mediump vec3 normal, mediump vec3 viewDirection, medi
 	mediump float vdh = max(dot(viewDirection, halfDirection), 0.0);
 
 	mediump float D = D_Charlie(ndh, roughness);
-	mediump float G = G_Ashikhmin(ndv, ndl);
+//	mediump float G = G_Ashikhmin(ndv, ndl);
+	mediump float G = G_SchlickSmithGGX(ndv, ndl, roughness);
 	mediump vec3  F = F_Schlick(albedo, specular, 0.0, vdh);
 
 	mediump vec3 diffuseLighting = Diffuse_Lambert(albedo);
