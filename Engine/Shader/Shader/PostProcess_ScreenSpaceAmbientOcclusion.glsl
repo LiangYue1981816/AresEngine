@@ -1,7 +1,7 @@
 #version 310 es
 
 #ifdef VERTEX_SHADER
-precision mediump float;
+precision highp float;
 #include "engine.inc"
 #include "common.inc"
 
@@ -9,7 +9,7 @@ USE_CAMERA_UNIFORM
 USE_ENGINE_UNIFORM
 
 // Output
-layout (location = 0) out mediump vec2 outTexcoord;
+layout (location = 0) out vec2 outTexcoord;
 
 // Descriptor
 // ...
@@ -17,11 +17,11 @@ layout (location = 0) out mediump vec2 outTexcoord;
 void main()
 {
 #ifdef _VULKAN_
-	highp mat4 projectionViewMatrix = mat4(1.0, 0.0, 0.0, 0.0, 0.0, -1.0, 0.0, 0.0, 0.0, 0.0, -0.5, 0.0, 0.0, 0.0, 1.0, 1.0);
-	highp mat4 worldMatrix = mat4(1.0, 0.0, 0.0, 0.0, 0.0, -1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0);
+	mat4 projectionViewMatrix = mat4(1.0, 0.0, 0.0, 0.0, 0.0, -1.0, 0.0, 0.0, 0.0, 0.0, -0.5, 0.0, 0.0, 0.0, 1.0, 1.0);
+	mat4 worldMatrix = mat4(1.0, 0.0, 0.0, 0.0, 0.0, -1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0);
 #else
-	highp mat4 projectionViewMatrix = mat4(1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, -0.5, 0.0, 0.0, 0.0, 1.0, 1.0);
-	highp mat4 worldMatrix = mat4(1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0);
+	mat4 projectionViewMatrix = mat4(1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, -0.5, 0.0, 0.0, 0.0, 1.0, 1.0);
+	mat4 worldMatrix = mat4(1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0);
 #endif
 	gl_Position = projectionViewMatrix * worldMatrix * vec4(inPosition.xyz, 1.0);
 	outTexcoord = inTexcoord0;
@@ -29,7 +29,7 @@ void main()
 #endif
 
 #ifdef FRAGMENT_SHADER
-precision mediump float;
+precision highp float;
 #include "engine.inc"
 #include "common.inc"
 
@@ -38,13 +38,13 @@ USE_ENGINE_UNIFORM
 USE_DEPTH_TEXTURE_UNIFORM
 
 // Input
-layout (location = 0) in mediump vec2 inTexcoord;
+layout (location = 0) in vec2 inTexcoord;
 
 // Output
-layout (location = 0) out mediump vec4 outFragColor;
+layout (location = 0) out vec4 outFragColor;
 
 // Descriptor
-DESCRIPTOR_SET_MATPASS(8) mediump uniform sampler2D texNoise;
+DESCRIPTOR_SET_MATPASS(8) uniform sampler2D texNoise;
 
 layout(push_constant) uniform PushConstantParam {
 	int samples;
@@ -56,7 +56,7 @@ layout(push_constant) uniform PushConstantParam {
 
 void main()
 {
-	highp vec3 sample_sphere[64] = vec3[] (
+	vec3 sample_sphere[64] = vec3[] (
 		vec3(0.93400, 0.36000, -0.79600), 
 		vec3(0.79200, -0.31600, -0.30000), 
 		vec3(0.50000, -0.32400, 0.88400), 
@@ -122,39 +122,39 @@ void main()
 		vec3(0.01800, 0.96400, -0.39400), 
 		vec3(-0.16800, -0.51000, -0.43000));
 
-	highp vec2 noiseSize = vec2(textureSize(texNoise, 0));
-	highp vec2 depthSize = vec2(textureSize(texDepth, 0));
-	highp vec2 noiseTexcoord = 10.0 * (inTexcoord + PoissonDisk(vec3(inTexcoord, 0.0), 0)) * depthSize / noiseSize;
+	vec2 noiseSize = vec2(textureSize(texNoise, 0));
+	vec2 depthSize = vec2(textureSize(texDepth, 0));
+	vec2 noiseTexcoord = 10.0 * (inTexcoord + PoissonDisk(vec3(inTexcoord, 0.0), 0)) * depthSize / noiseSize;
 
-	highp float curDepth = texture(texDepth, inTexcoord).r;
-	highp vec3 curPosition = ScreenToViewPosition(inTexcoord, curDepth, cameraProjectionInverseMatrix).xyz;
+	float curDepth = texture(texDepth, inTexcoord).r;
+	vec3 curPosition = ScreenToViewPosition(inTexcoord, curDepth, cameraProjectionInverseMatrix).xyz;
 #ifdef _VULKAN_
-	highp vec3 curNormal = normalize(cross(dFdy(curPosition), dFdx(curPosition)));
+	vec3 curNormal = normalize(cross(dFdy(curPosition), dFdx(curPosition)));
 #else
-	highp vec3 curNormal = normalize(cross(dFdx(curPosition), dFdy(curPosition)));
+	vec3 curNormal = normalize(cross(dFdx(curPosition), dFdy(curPosition)));
 #endif
-	highp vec3 curReflect = normalize(texture(texNoise, noiseTexcoord).xyz * 2.0 - 1.0);
+	vec3 curReflect = normalize(texture(texNoise, noiseTexcoord).xyz * 2.0 - 1.0);
 
-	highp int samples = clamp(Param.samples, 4, 64);
-	highp float minSampleRadius = Param.minSampleRadius;
-	highp float maxSampleRadius = Param.maxSampleRadius;
-	highp float minDepthRange = Param.minDepthRange;
-	highp float maxDepthRange = Param.maxDepthRange;
+	int samples = clamp(Param.samples, 4, 64);
+	float minSampleRadius = Param.minSampleRadius;
+	float maxSampleRadius = Param.maxSampleRadius;
+	float minDepthRange = Param.minDepthRange;
+	float maxDepthRange = Param.maxDepthRange;
 
-	highp float radius = mix(minSampleRadius, maxSampleRadius, smoothstep(minDepthRange, maxDepthRange, LinearDepth(curDepth, cameraZNear, cameraZFar) / (cameraZFar - cameraZNear)));
-	highp float occlusion = 0.0;
+	float radius = mix(minSampleRadius, maxSampleRadius, smoothstep(minDepthRange, maxDepthRange, LinearDepth(curDepth, cameraZNear, cameraZFar) / (cameraZFar - cameraZNear)));
+	float occlusion = 0.0;
 
 	for (int index = 0; index < samples; index++) {
-		highp vec3 sampleNormal = reflect(sample_sphere[index], curReflect);
-		highp vec3 samplePosition = curPosition + sign(dot(curNormal, sampleNormal)) * sampleNormal * radius;
+		vec3 sampleNormal = reflect(sample_sphere[index], curReflect);
+		vec3 samplePosition = curPosition + sign(dot(curNormal, sampleNormal)) * sampleNormal * radius;
 
-		highp vec4 offset = vec4(samplePosition, 1.0);
+		vec4 offset = vec4(samplePosition, 1.0);
 		offset = cameraProjectionMatrix * offset;
 		offset.xy = offset.xy / offset.w;
 		offset.xy = offset.xy * 0.5 + 0.5;
 
-		highp float sampleDepth = texture(texDepth, offset.xy).r;
-		highp vec3 checkSamplePosition = ScreenToViewPosition(offset.xy, sampleDepth, cameraProjectionInverseMatrix).xyz;
+		float sampleDepth = texture(texDepth, offset.xy).r;
+		vec3 checkSamplePosition = ScreenToViewPosition(offset.xy, sampleDepth, cameraProjectionInverseMatrix).xyz;
 		float checkRange = smoothstep(0.0, 0.1, radius / abs(checkSamplePosition.z - curPosition.z));
 		occlusion += step(samplePosition.z, checkSamplePosition.z) * checkRange;
 	}

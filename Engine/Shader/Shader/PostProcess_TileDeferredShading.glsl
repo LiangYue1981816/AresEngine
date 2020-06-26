@@ -1,7 +1,7 @@
 #version 310 es
 
 #ifdef VERTEX_SHADER
-precision mediump float;
+precision highp float;
 #include "engine.inc"
 #include "common.inc"
 
@@ -9,7 +9,7 @@ USE_CAMERA_UNIFORM
 USE_ENGINE_UNIFORM
 
 // Output
-layout (location = 0) out mediump vec2 outTexcoord;
+layout (location = 0) out vec2 outTexcoord;
 
 // Descriptor
 // ...
@@ -17,11 +17,11 @@ layout (location = 0) out mediump vec2 outTexcoord;
 void main()
 {
 #ifdef _VULKAN_
-	highp mat4 projectionViewMatrix = mat4(1.0, 0.0, 0.0, 0.0, 0.0, -1.0, 0.0, 0.0, 0.0, 0.0, -0.5, 0.0, 0.0, 0.0, 1.0, 1.0);
-	highp mat4 worldMatrix = mat4(1.0, 0.0, 0.0, 0.0, 0.0, -1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0);
+	mat4 projectionViewMatrix = mat4(1.0, 0.0, 0.0, 0.0, 0.0, -1.0, 0.0, 0.0, 0.0, 0.0, -0.5, 0.0, 0.0, 0.0, 1.0, 1.0);
+	mat4 worldMatrix = mat4(1.0, 0.0, 0.0, 0.0, 0.0, -1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0);
 #else
-	highp mat4 projectionViewMatrix = mat4(1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, -0.5, 0.0, 0.0, 0.0, 1.0, 1.0);
-	highp mat4 worldMatrix = mat4(1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0);
+	mat4 projectionViewMatrix = mat4(1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, -0.5, 0.0, 0.0, 0.0, 1.0, 1.0);
+	mat4 worldMatrix = mat4(1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0);
 #endif
 	gl_Position = projectionViewMatrix * worldMatrix * vec4(inPosition.xyz, 1.0);
 	outTexcoord = inTexcoord0;
@@ -29,7 +29,7 @@ void main()
 #endif
 
 #ifdef FRAGMENT_SHADER
-precision mediump float;
+precision highp float;
 #include "engine.inc"
 #include "common.inc"
 
@@ -43,14 +43,14 @@ USE_DEPTH_TEXTURE_UNIFORM
 #include "lighting.inc"
 
 // Input
-layout (location = 0) in mediump vec2 inTexcoord;
+layout (location = 0) in vec2 inTexcoord;
 
 // Output
-layout (location = 0) out mediump vec4 outFragColor;
+layout (location = 0) out vec4 outFragColor;
 
 // Descriptor
-DESCRIPTOR_SET_INPUTATTACHMENT(1, 6) uniform mediump subpassInput texGBuffer0;
-DESCRIPTOR_SET_INPUTATTACHMENT(2, 7) uniform mediump subpassInput texGBuffer1;
+DESCRIPTOR_SET_INPUTATTACHMENT(1, 6) uniform highp subpassInput texGBuffer0;
+DESCRIPTOR_SET_INPUTATTACHMENT(2, 7) uniform highp subpassInput texGBuffer1;
 
 layout(push_constant) uniform PushConstantParam {
 	int numDepthTiles;
@@ -60,51 +60,51 @@ layout(push_constant) uniform PushConstantParam {
 
 void main()
 {
-	highp int numDepthTiles = Param.numDepthTiles;
-	highp int numWidthTiles = Param.numWidthTiles;
-	highp int numHeightTiles = Param.numHeightTiles;
+	int numDepthTiles = Param.numDepthTiles;
+	int numWidthTiles = Param.numWidthTiles;
+	int numHeightTiles = Param.numHeightTiles;
 
-	mediump vec4 pixelColorGBuffer0 = subpassLoad(texGBuffer0);
-	mediump vec4 pixelColorGBuffer1 = subpassLoad(texGBuffer1);
+	vec4 pixelColorGBuffer0 = subpassLoad(texGBuffer0);
+	vec4 pixelColorGBuffer1 = subpassLoad(texGBuffer1);
 
-	highp float depth = UnpackFloat(texture(texDepth, inTexcoord.xy));
-	highp vec3 worldPosition = ScreenToWorldPosition(inTexcoord.xy, depth, cameraProjectionInverseMatrix, cameraViewInverseMatrix).xyz;
-	highp vec3 worldCameraPosition = (cameraViewInverseMatrix * vec4(0.0, 0.0, 0.0, 1.0)).xyz;
-	mediump vec3 worldViewDirection = normalize(worldCameraPosition - worldPosition);
-	mediump vec3 worldNormal = NormalDecode(pixelColorGBuffer1.rg);
+	float depth = UnpackFloat(texture(texDepth, inTexcoord.xy));
+	vec3 worldPosition = ScreenToWorldPosition(inTexcoord.xy, depth, cameraProjectionInverseMatrix, cameraViewInverseMatrix).xyz;
+	vec3 worldCameraPosition = (cameraViewInverseMatrix * vec4(0.0, 0.0, 0.0, 1.0)).xyz;
+	vec3 worldViewDirection = normalize(worldCameraPosition - worldPosition);
+	vec3 worldNormal = NormalDecode(pixelColorGBuffer1.rg);
 
-	mediump vec3 albedo = pixelColorGBuffer0.rgb;
-	mediump float ao = pixelColorGBuffer0.a;
-	mediump float roughness = pixelColorGBuffer1.b;
-	mediump float metallic = pixelColorGBuffer1.a;
+	vec3 albedo = pixelColorGBuffer0.rgb;
+	float ao = pixelColorGBuffer0.a;
+	float roughness = pixelColorGBuffer1.b;
+	float metallic = pixelColorGBuffer1.a;
 
-	highp float scale = float(numDepthTiles) / log2(cameraZFar / cameraZNear);
-	highp float bias = -float(numDepthTiles) * log2(cameraZNear) / log2(cameraZFar / cameraZNear);
+	float scale = float(numDepthTiles) / log2(cameraZFar / cameraZNear);
+	float bias = -float(numDepthTiles) * log2(cameraZNear) / log2(cameraZFar / cameraZNear);
 
-	highp int indexTileX = int(inTexcoord.x * float(numWidthTiles));
-	highp int indexTileY = int(inTexcoord.y * float(numHeightTiles));
-	highp int indexTileZ = int(log2(LinearDepth(depth, cameraZNear, cameraZFar)) * scale + bias);
-	highp int indexTile = int(indexTileZ * numWidthTiles * numHeightTiles + indexTileY * numWidthTiles + indexTileX);
+	int indexTileX = int(inTexcoord.x * float(numWidthTiles));
+	int indexTileY = int(inTexcoord.y * float(numHeightTiles));
+	int indexTileZ = int(log2(LinearDepth(depth, cameraZNear, cameraZFar)) * scale + bias);
+	int indexTile = int(indexTileZ * numWidthTiles * numHeightTiles + indexTileY * numWidthTiles + indexTileX);
 
-	highp int offset = GetClusterLightOffset(indexTile);
-	highp int count = GetClusterLightCount(indexTile);
+	int offset = GetClusterLightOffset(indexTile);
+	int count = GetClusterLightCount(indexTile);
 
-	mediump vec3 pointLighting = vec3(0.0);
+	vec3 pointLighting = vec3(0.0);
 
 	for (int index = 0; index < count; index++)
 	{
-		highp int indexLight = GetCullLightListIndex(index + offset);
+		int indexLight = GetCullLightListIndex(index + offset);
 
-		highp vec3 pointLightPosition = GetInstance(indexLight).center.xyz;
-		highp float pointLightRange = GetInstance(indexLight).lightAttenuation.w;
-		highp float distance = length(pointLightPosition - worldPosition);
+		vec3 pointLightPosition = GetInstance(indexLight).center.xyz;
+		float pointLightRange = GetInstance(indexLight).lightAttenuation.w;
+		float distance = length(pointLightPosition - worldPosition);
 
 		if(pointLightRange > distance)
 		{
-			mediump vec3 pointLightDirection = normalize(pointLightPosition - worldPosition);
-			mediump vec3 pointLightAttenuation = GetInstance(indexLight).lightAttenuation.xyz;
-			mediump vec3 pointLightColor = GetInstance(indexLight).lightColor.rgb * Attenuation(distance, pointLightAttenuation.x, pointLightAttenuation.y, pointLightAttenuation.z);
-			mediump vec3 lighting = PBRLighting(worldNormal, worldViewDirection, pointLightDirection, pointLightColor, albedo, 0.5, metallic, roughness) * pointLightFactor;
+			vec3 pointLightDirection = normalize(pointLightPosition - worldPosition);
+			vec3 pointLightAttenuation = GetInstance(indexLight).lightAttenuation.xyz;
+			vec3 pointLightColor = GetInstance(indexLight).lightColor.rgb * Attenuation(distance, pointLightAttenuation.x, pointLightAttenuation.y, pointLightAttenuation.z);
+			vec3 lighting = PBRLighting(worldNormal, worldViewDirection, pointLightDirection, pointLightColor, albedo, 0.5, metallic, roughness) * pointLightFactor;
 			pointLighting += ao * lighting;
 		}
 	}

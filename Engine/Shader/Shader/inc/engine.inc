@@ -3,35 +3,35 @@
 
 
 #ifdef VERTEX_ATTRIBUTE_POSITION
-layout (location = 0)                                      in highp vec3 inPosition;
+layout (location = 0)                                      in vec3 inPosition;
 #endif
 #ifdef VERTEX_ATTRIBUTE_NORMAL
-layout (location = 1)                                      in mediump vec4 inNormal;
+layout (location = 1)                                      in vec4 inNormal;
 #endif
 #ifdef VERTEX_ATTRIBUTE_BINORMAL
-layout (location = 2)                                      in mediump vec4 inBinormal;
+layout (location = 2)                                      in vec4 inBinormal;
 #endif
 #ifdef VERTEX_ATTRIBUTE_COLOR
-layout (location = 3)                                      in mediump vec4 inColor;
+layout (location = 3)                                      in vec4 inColor;
 #endif
 #ifdef VERTEX_ATTRIBUTE_TEXCOORD0
-layout (location = 4)                                      in mediump vec2 inTexcoord0;
+layout (location = 4)                                      in vec2 inTexcoord0;
 #endif
 #ifdef VERTEX_ATTRIBUTE_TEXCOORD1
-layout (location = 5)                                      in mediump vec2 inTexcoord1;
+layout (location = 5)                                      in vec2 inTexcoord1;
 #endif
 #ifdef VERTEX_ATTRIBUTE_INDICES
-layout (location = 6)                                      in mediump vec4 inIndices;
+layout (location = 6)                                      in vec4 inIndices;
 #endif
 #ifdef VERTEX_ATTRIBUTE_WEIGHTS
-layout (location = 7)                                      in mediump vec4 inWeights;
+layout (location = 7)                                      in vec4 inWeights;
 #endif
 
 #ifdef INSTANCE_ATTRIBUTE_INDEX
 #ifdef _VULKAN_
-layout (location = 8)                                      in mediump int inInstanceIndex;
+layout (location = 8)                                      in int inInstanceIndex;
 #else
-layout (location = 8)                                      in mediump float inInstanceIndex;
+layout (location = 8)                                      in float inInstanceIndex;
 #endif
 #endif
 
@@ -68,71 +68,71 @@ layout (location = 8)                                      in mediump float inIn
 #define USE_CAMERA_UNIFORM                                                         \
 	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_CAMERA) uniform Camera                     \
 	{                                                                              \
-		highp vec4 screen;                                                         \
-		highp vec4 depth;                                                          \
+		vec4 screen;                                                         \
+		vec4 depth;                                                          \
 		                                                                           \
-		highp mat4 viewMatrix;                                                     \
-		highp mat4 viewInverseMatrix;                                              \
-		highp mat4 viewInverseTransposeMatrix;                                     \
-		highp mat4 projectionMatrix;                                               \
-		highp mat4 projectionViewMatrix;                                           \
-		highp mat4 projectionInverseMatrix;                                        \
-		highp mat4 projectionViewInverseMatrix;                                    \
+		mat4 viewMatrix;                                                     \
+		mat4 viewInverseMatrix;                                              \
+		mat4 viewInverseTransposeMatrix;                                     \
+		mat4 projectionMatrix;                                               \
+		mat4 projectionViewMatrix;                                           \
+		mat4 projectionInverseMatrix;                                        \
+		mat4 projectionViewInverseMatrix;                                    \
 	} camera;
 
 #define USE_ENGINE_UNIFORM                                                         \
 	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_ENGINE) uniform Engine                     \
 	{                                                                              \
-		mediump vec4 time;                                                         \
-		mediump vec4 sinTime;                                                      \
-		mediump vec4 cosTime;                                                      \
-		mediump vec4 deltaTime;                                                    \
+		vec4 time;                                                         \
+		vec4 sinTime;                                                      \
+		vec4 cosTime;                                                      \
+		vec4 deltaTime;                                                    \
 		                                                                           \
-		mediump vec4 lightFactor;                                                  \
+		vec4 lightFactor;                                                  \
 		                                                                           \
-		mediump vec4 ambientSHLight0;                                              \
-		mediump vec4 ambientSHLight1;                                              \
-		mediump vec4 ambientSHLight2;                                              \
-		mediump vec4 ambientSHLight3;                                              \
-		mediump vec4 ambientSHLight4;                                              \
-		mediump vec4 ambientSHLight5;                                              \
-		mediump vec4 ambientSHLight6;                                              \
-		mediump vec4 ambientSHLight7;                                              \
-		mediump vec4 ambientSHLight8;                                              \
-		mediump mat4 ambientSHLightRotationMatrix;                                 \
+		vec4 ambientSHLight0;                                              \
+		vec4 ambientSHLight1;                                              \
+		vec4 ambientSHLight2;                                              \
+		vec4 ambientSHLight3;                                              \
+		vec4 ambientSHLight4;                                              \
+		vec4 ambientSHLight5;                                              \
+		vec4 ambientSHLight6;                                              \
+		vec4 ambientSHLight7;                                              \
+		vec4 ambientSHLight8;                                              \
+		mat4 ambientSHLightRotationMatrix;                                 \
 		                                                                           \
-		mediump vec4 pointLightColor;                                              \
-		mediump vec4 pointLightPosition;                                           \
-		mediump vec4 pointLightAttenuation;                                        \
+		vec4 pointLightColor;                                              \
+		vec4 pointLightPosition;                                           \
+		vec4 pointLightAttenuation;                                        \
 		                                                                           \
-		mediump vec4 directLightColor;                                             \
-		mediump vec4 directLightDirection;                                         \
+		vec4 directLightColor;                                             \
+		vec4 directLightDirection;                                         \
 		                                                                           \
-		mediump vec4 fogColor;                                                     \
-		mediump vec4 fogHeightParams;                                              \
-		mediump vec4 fogDistanceParams;                                            \
+		vec4 fogColor;                                                     \
+		vec4 fogHeightParams;                                              \
+		vec4 fogDistanceParams;                                            \
 		                                                                           \
-		highp vec4 shadowLevelFactor;                                              \
-		highp vec4 shadowDepth[4];                                                 \
-		highp mat4 shadowViewMatrix[4];                                            \
-		highp mat4 shadowViewInverseMatrix[4];                                     \
-		highp mat4 shadowProjectionMatrix[4];                                      \
-		highp mat4 shadowProjectionViewMatrix[4];                                  \
+		vec4 shadowLevelFactor;                                              \
+		vec4 shadowDepth[4];                                                 \
+		mat4 shadowViewMatrix[4];                                            \
+		mat4 shadowViewInverseMatrix[4];                                     \
+		mat4 shadowProjectionMatrix[4];                                      \
+		mat4 shadowProjectionViewMatrix[4];                                  \
 	} engine;
 
 	struct Instance
 	{
-		highp mat4 transformMatrix;
-		highp vec4 center;
+		mat4 transformMatrix;
+		vec4 center;
 
-		mediump vec4 lightColor;
-		mediump vec4 lightAttenuation;
+		vec4 lightColor;
+		vec4 lightAttenuation;
 	};
 
 	struct Cluster
 	{
-		highp vec4 minAABBPosition;
-		highp vec4 maxAABBPosition;
+		vec4 minAABBPosition;
+		vec4 maxAABBPosition;
 	};
 
 #define USE_SCENE_DATA_STORAGE                                                     \
@@ -141,12 +141,12 @@ layout (location = 8)                                      in mediump float inIn
 		Instance instances[];                                                      \
 	} sceneData;                                                                   \
 	                                                                               \
-	Instance GetInstance(highp int index)                                          \
+	Instance GetInstance(int index)                                          \
 	{                                                                              \
 		return sceneData.instances[index];                                         \
 	}                                                                              \
 	                                                                               \
-	void SetInstance(highp int index, Instance instance)                           \
+	void SetInstance(int index, Instance instance)                           \
 	{                                                                              \
 		sceneData.instances[index] = instance;                                     \
 	}
@@ -157,7 +157,7 @@ layout (location = 8)                                      in mediump float inIn
 		Instance instances[];                                                      \
 	} transferSceneData;                                                           \
 	                                                                               \
-	Instance GetTransferInstance(highp int index)                                  \
+	Instance GetTransferInstance(int index)                                  \
 	{                                                                              \
 		return transferSceneData.instances[index];                                 \
 	}
@@ -165,10 +165,10 @@ layout (location = 8)                                      in mediump float inIn
 #define USE_TRANSFER_SCENE_DATA_INDEX_STORAGE                                      \
 	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_TRANSFER_SCENE_DATA_INDEX) buffer TransferSceneDataIndex \
 	{                                                                              \
-		highp int indexInstances[];                                                \
+		int indexInstances[];                                                \
 	} transferSceneDataIndex;                                                      \
 	                                                                               \
-	highp int GetTransferIndex(highp int index)                                    \
+	int GetTransferIndex(int index)                                    \
 	{                                                                              \
 		return transferSceneDataIndex.indexInstances[index];                       \
 	}
@@ -179,28 +179,28 @@ layout (location = 8)                                      in mediump float inIn
 		Cluster clusters[];                                                        \
 	} clusterData;                                                                 \
 	                                                                               \
-	Cluster GetCluster(highp int index)                                            \
+	Cluster GetCluster(int index)                                            \
 	{                                                                              \
 		return clusterData.clusters[index];                                        \
 	}                                                                              \
 	                                                                               \
-	highp int GetClusterLightOffset(highp int index)                               \
+	int GetClusterLightOffset(int index)                               \
 	{                                                                              \
 		return int(clusterData.clusters[index].minAABBPosition.w);                 \
 	}                                                                              \
 	                                                                               \
-	highp int GetClusterLightCount(highp int index)                                \
+	int GetClusterLightCount(int index)                                \
 	{                                                                              \
 		return int(clusterData.clusters[index].maxAABBPosition.w);                 \
 	}                                                                              \
 	                                                                               \
-	void SetCluster(highp int index, highp vec3 minAABBPosition, highp vec3 maxAABBPosition) \
+	void SetCluster(int index, vec3 minAABBPosition, vec3 maxAABBPosition) \
 	{                                                                              \
 		clusterData.clusters[index].minAABBPosition.xyz = minAABBPosition;         \
 		clusterData.clusters[index].maxAABBPosition.xyz = maxAABBPosition;         \
 	}                                                                              \
 	                                                                               \
-	void SetClusterLightInfo(highp int index, highp int offset, highp int count)   \
+	void SetClusterLightInfo(int index, int offset, int count)   \
 	{                                                                              \
 		clusterData.clusters[index].minAABBPosition.w = float(offset);             \
 		clusterData.clusters[index].maxAABBPosition.w = float(count);              \
@@ -209,10 +209,10 @@ layout (location = 8)                                      in mediump float inIn
 #define USE_FULL_LIGHT_LIST_DATA_STORAGE                                           \
 	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_FULL_LIGHT_LIST_DATA) buffer FullLightListData \
 	{                                                                              \
-		highp int indexLights[];                                                   \
+		int indexLights[];                                                   \
 	} fullLightListData;                                                           \
 	                                                                               \
-	highp int GetFullLightListIndex(highp int index)                               \
+	int GetFullLightListIndex(int index)                               \
 	{                                                                              \
 		return fullLightListData.indexLights[index];                               \
 	}
@@ -220,33 +220,33 @@ layout (location = 8)                                      in mediump float inIn
 #define USE_CULL_LIGHT_LIST_DATA_STORAGE                                           \
 	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_CULL_LIGHT_LIST_DATA) buffer CullLightListData \
 	{                                                                              \
-		highp int indexLights[];                                                   \
+		int indexLights[];                                                   \
 	} cullLightListData;                                                           \
 	                                                                               \
-	highp int GetCullLightListIndex(highp int index)                               \
+	int GetCullLightListIndex(int index)                               \
 	{                                                                              \
 		return cullLightListData.indexLights[index];                               \
 	}                                                                              \
 	                                                                               \
-	void SetCullLightListIndex(highp int index, highp int indexLight)              \
+	void SetCullLightListIndex(int index, int indexLight)              \
 	{                                                                              \
 		cullLightListData.indexLights[index] = indexLight;                         \
 	}
 
 #define USE_DEPTH_TEXTURE_UNIFORM                                                  \
-	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_DEPTH_TEXTURE) highp uniform sampler2D texDepth;
+	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_DEPTH_TEXTURE) uniform sampler2D texDepth;
 
 #define USE_COLOR_TEXTURE_UNIFORM                                                  \
-	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_COLOR_TEXTURE) mediump uniform sampler2D texColor;
+	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_COLOR_TEXTURE) uniform sampler2D texColor;
 
 #define USE_SHADOW_TEXTURE_UNIFORM                                                 \
-	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_SHADOW_TEXTURE) highp uniform sampler2D texShadow;
+	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_SHADOW_TEXTURE) uniform sampler2D texShadow;
 
 #define USE_SSAO_TEXTURE_UNIFORM                                                   \
-	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_SSAO_TEXTURE) mediump uniform sampler2D texSSAO;
+	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_SSAO_TEXTURE) uniform sampler2D texSSAO;
 
 #define USE_ADD_TEXTURE_UNIFORM                                                    \
-	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_ADD_TEXTURE) mediump uniform sampler2D texAdd;
+	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_ADD_TEXTURE) uniform sampler2D texAdd;
 
 
 #define screenWidth                              camera.screen.x

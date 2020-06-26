@@ -1,7 +1,7 @@
 #version 310 es
 
 #ifdef VERTEX_SHADER
-precision mediump float;
+precision highp float;
 #include "engine.inc"
 #include "common.inc"
 
@@ -9,7 +9,7 @@ USE_CAMERA_UNIFORM
 USE_ENGINE_UNIFORM
 
 // Output
-layout (location = 0) out mediump vec2 outTexcoord;
+layout (location = 0) out vec2 outTexcoord;
 
 // Descriptor
 // ...
@@ -17,11 +17,11 @@ layout (location = 0) out mediump vec2 outTexcoord;
 void main()
 {
 #ifdef _VULKAN_
-	highp mat4 projectionViewMatrix = mat4(1.0, 0.0, 0.0, 0.0, 0.0, -1.0, 0.0, 0.0, 0.0, 0.0, -0.5, 0.0, 0.0, 0.0, 1.0, 1.0);
-	highp mat4 worldMatrix = mat4(1.0, 0.0, 0.0, 0.0, 0.0, -1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0);
+	mat4 projectionViewMatrix = mat4(1.0, 0.0, 0.0, 0.0, 0.0, -1.0, 0.0, 0.0, 0.0, 0.0, -0.5, 0.0, 0.0, 0.0, 1.0, 1.0);
+	mat4 worldMatrix = mat4(1.0, 0.0, 0.0, 0.0, 0.0, -1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0);
 #else
-	highp mat4 projectionViewMatrix = mat4(1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, -0.5, 0.0, 0.0, 0.0, 1.0, 1.0);
-	highp mat4 worldMatrix = mat4(1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0);
+	mat4 projectionViewMatrix = mat4(1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, -0.5, 0.0, 0.0, 0.0, 1.0, 1.0);
+	mat4 worldMatrix = mat4(1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0);
 #endif
 	gl_Position = projectionViewMatrix * worldMatrix * vec4(inPosition.xyz, 1.0);
 	outTexcoord = inTexcoord0;
@@ -29,7 +29,7 @@ void main()
 #endif
 
 #ifdef FRAGMENT_SHADER
-precision mediump float;
+precision highp float;
 #include "engine.inc"
 #include "common.inc"
 
@@ -38,10 +38,10 @@ USE_ENGINE_UNIFORM
 USE_COLOR_TEXTURE_UNIFORM
 
 // Input
-layout (location = 0) in mediump vec2 inTexcoord;
+layout (location = 0) in vec2 inTexcoord;
 
 // Output
-layout (location = 0) out mediump vec4 outFragColor;
+layout (location = 0) out vec4 outFragColor;
 
 // Descriptor
 layout(push_constant) uniform PushConstantParam {
@@ -50,14 +50,14 @@ layout(push_constant) uniform PushConstantParam {
 
 void main()
 {
-	highp vec2 range = vec2(Param.range);
+	vec2 range = vec2(Param.range);
 
-	highp vec3 result = vec3(0.0);
-	highp vec2 texelSize = range / vec2(textureSize(texColor, 0));
+	vec3 result = vec3(0.0);
+	vec2 texelSize = range / vec2(textureSize(texColor, 0));
 
-	for (highp float x = -1.0; x <= 1.0; x++) {
-		for (highp float y = -1.0; y <= 1.0; y++) {
-			highp vec2 offset = vec2(x, y) * texelSize;
+	for (float x = -1.0; x <= 1.0; x++) {
+		for (float y = -1.0; y <= 1.0; y++) {
+			vec2 offset = vec2(x, y) * texelSize;
 			result += UnpackHDR(texture(texColor, inTexcoord + offset));
 		}
 	}

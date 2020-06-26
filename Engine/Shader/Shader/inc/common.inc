@@ -4,47 +4,47 @@
 #define PI 3.1415926535897932384626433832795
 
 
-highp float pow2(highp float x)
+float pow2(float x)
 {
 	return x * x;
 }
 
-highp float pow3(highp float x)
+float pow3(float x)
 {
 	return x * x * x;
 }
 
-highp vec3 pow2(highp vec3 x)
+vec3 pow2(vec3 x)
 {
 	return x * x;
 }
 
-highp vec3 pow3(highp vec3 x)
+vec3 pow3(vec3 x)
 {
 	return x * x * x;
 }
 
-highp vec4 PackFloat(highp float value)
+vec4 PackFloat(float value)
 {
-	highp vec4 kEncodeMul = vec4(1.0, 255.0, 65025.0, 16581375.0);
-	highp vec4 enc = kEncodeMul * value;
+	vec4 kEncodeMul = vec4(1.0, 255.0, 65025.0, 16581375.0);
+	vec4 enc = kEncodeMul * value;
 	enc  = fract(enc);
 	enc -= enc.yzww / 255.0;
 	return enc;
 }
 
-highp float UnpackFloat(highp vec4 encode) 
+float UnpackFloat(vec4 encode) 
 {
-	highp vec4 kDecodeDot = vec4(1.0, 1.0 / 255.0, 1.0 / 65025.0, 1.0 / 16581375.0);
+	vec4 kDecodeDot = vec4(1.0, 1.0 / 255.0, 1.0 / 65025.0, 1.0 / 16581375.0);
 	return dot(encode, kDecodeDot);
 }
 
-mediump vec4 PackHDR(mediump vec3 color)
+vec4 PackHDR(vec3 color)
 {
 #ifdef ENCODE_HDR
 /*
 	color *= 1.0 / 8.0;
-	mediump float m = max(max(color.r, color.g), max(color.b, 1e-6));
+	float m = max(max(color.r, color.g), max(color.b, 1e-6));
 	m = ceil(m * 255.0) / 255.0;
 	return vec4(color / m, m);
 /*/
@@ -59,7 +59,7 @@ mediump vec4 PackHDR(mediump vec3 color)
 #endif
 }
 
-mediump vec3 UnpackHDR(mediump vec4 encode)
+vec3 UnpackHDR(vec4 encode)
 {
 #ifdef ENCODE_HDR
 /*
@@ -76,10 +76,10 @@ mediump vec3 UnpackHDR(mediump vec4 encode)
 #endif
 }
 
-mediump vec3 BlendNormalInTangentSpace(mediump vec3 baseNormal, mediump vec3 additionalNormal)
+vec3 BlendNormalInTangentSpace(vec3 baseNormal, vec3 additionalNormal)
 {
-	mediump vec3 newBaseNormal = vec3(baseNormal.rg, baseNormal.b + 1.0);
-	mediump vec3 newAdditionalNormal = vec3(additionalNormal.rg * (-1.0), additionalNormal.b);
+	vec3 newBaseNormal = vec3(baseNormal.rg, baseNormal.b + 1.0);
+	vec3 newAdditionalNormal = vec3(additionalNormal.rg * (-1.0), additionalNormal.b);
 	
 	newBaseNormal = newBaseNormal * dot(newBaseNormal, newAdditionalNormal);
 	newAdditionalNormal = newAdditionalNormal * (baseNormal.b + 1.0);
@@ -87,9 +87,9 @@ mediump vec3 BlendNormalInTangentSpace(mediump vec3 baseNormal, mediump vec3 add
 	return normalize(newBaseNormal - newAdditionalNormal);
 }
 
-highp vec2 PoissonDisk(highp vec3 seed, highp int index)
+vec2 PoissonDisk(vec3 seed, int index)
 {
-	highp vec2 offset[16] = vec2[]( 
+	vec2 offset[16] = vec2[]( 
 		vec2(-0.94201624, -0.39906216), 
 		vec2( 0.94558609, -0.76890725), 
 		vec2(-0.094184101,-0.92938870), 
@@ -108,93 +108,93 @@ highp vec2 PoissonDisk(highp vec3 seed, highp int index)
 		vec2( 0.14383161, -0.14100790) 
 	);
 
-	highp vec4 seed4 = vec4(floor(seed * 1000.0), index);
-	highp float dotProduct = dot(seed4, vec4(12.9898, 78.233, 45.164, 94.673));
+	vec4 seed4 = vec4(floor(seed * 1000.0), index);
+	float dotProduct = dot(seed4, vec4(12.9898, 78.233, 45.164, 94.673));
 	return offset[int(16.0 * fract(sin(dotProduct) * 43758.5453)) % 16];
 }
 
-mediump vec3 Gray(mediump vec3 color, mediump float percent)
+vec3 Gray(vec3 color, float percent)
 {
 	return (1.0 - percent) * dot(vec3(0.299, 0.587, 0.114), color) + percent * color;
 }
 
-mediump vec2 NormalEncode(mediump vec3 normal)
+vec2 NormalEncode(vec3 normal)
 {
-	mediump float f = dot(vec3(1.0), abs(normal));
-	mediump float x = normal.x / f;
-	mediump float y = normal.y / f;
-	mediump float z = normal.z;
-	mediump vec2 encode = vec2(
+	float f = dot(vec3(1.0), abs(normal));
+	float x = normal.x / f;
+	float y = normal.y / f;
+	float z = normal.z;
+	vec2 encode = vec2(
 		z <= 0.0 ? ((1.0 - abs(y)) * (x >= 0.0 ? 1.0 : -1.0)) : x, 
 		z <= 0.0 ? ((1.0 - abs(x)) * (y >= 0.0 ? 1.0 : -1.0)) : y);
 	encode = encode * 0.5 + 0.5;
 	return encode;
 }
 
-mediump vec3 NormalDecode(mediump vec2 encode)
+vec3 NormalDecode(vec2 encode)
 {
 	encode = encode * 2.0 - 1.0;
-	mediump float f = dot(vec2(1.0), abs(encode));
-	mediump float x = encode.x;
-	mediump float y = encode.y;
-	mediump float z = 1.0 - f;
-	mediump vec3 normal = vec3(
+	float f = dot(vec2(1.0), abs(encode));
+	float x = encode.x;
+	float y = encode.y;
+	float z = 1.0 - f;
+	vec3 normal = vec3(
 		z < 0.0 ? ((1.0 - abs(y)) * (x >= 0.0 ? 1.0 : -1.0)) : x,
 		z < 0.0 ? ((1.0 - abs(x)) * (y >= 0.0 ? 1.0 : -1.0)) : y,
 		z);
 	return normalize(normal);
 }
 
-mediump vec2 ViewSpaceNormalEncode(mediump vec3 normal)
+vec2 ViewSpaceNormalEncode(vec3 normal)
 {
 	// https://aras-p.info/texts/CompactNormalStorage.html
-	mediump float p = sqrt(normal.z * 8.0 + 8.0);
-	mediump vec2 encode = vec2(normal.xy / p + 0.5);
+	float p = sqrt(normal.z * 8.0 + 8.0);
+	vec2 encode = vec2(normal.xy / p + 0.5);
 	return encode;
 }
 
-mediump vec3 ViewSpaceNormalDecode(mediump vec2 encode)
+vec3 ViewSpaceNormalDecode(vec2 encode)
 {
 	// https://aras-p.info/texts/CompactNormalStorage.html
-	mediump vec2 e = encode * 4.0 - 2.0;
-	mediump float f = dot(e, e);
-	mediump float g = sqrt(1.0 - f / 4.0);
-	mediump vec3 normal = vec3(e * g, 1.0 - f / 2.0f);
+	vec2 e = encode * 4.0 - 2.0;
+	float f = dot(e, e);
+	float g = sqrt(1.0 - f / 4.0);
+	vec3 normal = vec3(e * g, 1.0 - f / 2.0f);
 	return normal;
 }
 
-highp vec4 ScreenToViewPosition(highp vec2 screen, highp float depth, highp mat4 projectionInverseMatrix)
+vec4 ScreenToViewPosition(vec2 screen, float depth, mat4 projectionInverseMatrix)
 {
-	highp vec4 clipPosition = vec4(screen * 2.0 - 1.0, depth, 1.0);       // NDC DepthRange [ 0, 1] Vulkan DirectX
-//	highp vec4 clipPosition = vec4(vec3(screen, depth) * 2.0 - 1.0, 1.0); // NDC DepthRange [-1, 1] OpenGL
-	highp vec4 viewPosition = projectionInverseMatrix * clipPosition;
+	vec4 clipPosition = vec4(screen * 2.0 - 1.0, depth, 1.0);       // NDC DepthRange [ 0, 1] Vulkan DirectX
+//	vec4 clipPosition = vec4(vec3(screen, depth) * 2.0 - 1.0, 1.0); // NDC DepthRange [-1, 1] OpenGL
+	vec4 viewPosition = projectionInverseMatrix * clipPosition;
 	return viewPosition.xyzw / viewPosition.w;
 }
 
-highp vec4 ScreenToWorldPosition(highp vec2 screen, highp float depth, highp mat4 projectionInverseMatrix, highp mat4 viewInverseMatrix)
+vec4 ScreenToWorldPosition(vec2 screen, float depth, mat4 projectionInverseMatrix, mat4 viewInverseMatrix)
 {
-	highp vec4 viewPosition = ScreenToViewPosition(screen, depth, projectionInverseMatrix);
-	highp vec4 worldPosition = viewInverseMatrix * viewPosition;
+	vec4 viewPosition = ScreenToViewPosition(screen, depth, projectionInverseMatrix);
+	vec4 worldPosition = viewInverseMatrix * viewPosition;
 	return worldPosition;
 }
 
-highp float LinearDepth(highp float depth, highp float zNear, highp float zFar)
+float LinearDepth(float depth, float zNear, float zFar)
 {
-	highp float z = depth * 2.0 - 1.0;
+	float z = depth * 2.0 - 1.0;
 	return (2.0 * zNear * zFar) / (zFar + zNear - z * (zFar - zNear));
 }
 
-highp vec3 LineIntersectionToZPlane(highp vec3 from, highp vec3 to, highp float length)
+vec3 LineIntersectionToZPlane(vec3 from, vec3 to, float length)
 {
-	highp vec3 normal = vec3(0.0, 0.0, 1.0);
-	highp vec3 direction = to - from;
-	highp vec3 result = from + (length - dot(normal, from)) / dot(normal, direction) * direction;
+	vec3 normal = vec3(0.0, 0.0, 1.0);
+	vec3 direction = to - from;
+	vec3 result = from + (length - dot(normal, from)) / dot(normal, direction) * direction;
 	return result;
 }
 
-bool Intersection(highp vec3 minAABBPosition, highp vec3 maxAABBPosition, highp vec3 spherePosition, highp float radius)
+bool Intersection(vec3 minAABBPosition, vec3 maxAABBPosition, vec3 spherePosition, float radius)
 {
-	highp float dis2 = 0.0;
+	float dis2 = 0.0;
 
 	for (int i = 0; i < 3; i++) {
 		if (spherePosition[i] < minAABBPosition[i]) {

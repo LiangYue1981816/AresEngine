@@ -1,7 +1,7 @@
 #version 310 es
 layout (local_size_x = 16, local_size_y = 8, local_size_z = 8) in;
 
-precision mediump float;
+precision highp float;
 #include "engine.inc"
 #include "common.inc"
 
@@ -26,20 +26,20 @@ void main()
 {
 	indexLightCount = 0;
 
-	highp int indexTile = int(gl_LocalInvocationID.z * gl_WorkGroupSize.x * gl_WorkGroupSize.y + gl_LocalInvocationID.y * gl_WorkGroupSize.x + gl_LocalInvocationID.x);
-	highp int numPointLights = Param.numPointLights;
+	int indexTile = int(gl_LocalInvocationID.z * gl_WorkGroupSize.x * gl_WorkGroupSize.y + gl_LocalInvocationID.y * gl_WorkGroupSize.x + gl_LocalInvocationID.x);
+	int numPointLights = Param.numPointLights;
 
-	highp vec3 minAABBPosition = GetCluster(indexTile).minAABBPosition.xyz;
-	highp vec3 maxAABBPosition = GetCluster(indexTile).maxAABBPosition.xyz;
+	vec3 minAABBPosition = GetCluster(indexTile).minAABBPosition.xyz;
+	vec3 maxAABBPosition = GetCluster(indexTile).maxAABBPosition.xyz;
 
-	highp int count = 0;
-	highp int indexLights[256];
+	int count = 0;
+	int indexLights[256];
 
 	for (int i = 0; i < numPointLights; i++) {
-		highp int indexLight = GetFullLightListIndex(i);
+		int indexLight = GetFullLightListIndex(i);
 
-		highp vec3 center = (cameraViewMatrix * GetInstance(indexLight).center).xyz;
-		highp float radius = GetInstance(indexLight).lightAttenuation.w;
+		vec3 center = (cameraViewMatrix * GetInstance(indexLight).center).xyz;
+		float radius = GetInstance(indexLight).lightAttenuation.w;
 
 		if (Intersection(minAABBPosition, maxAABBPosition, center, radius)) {
 			indexLights[count] = indexLight;
@@ -53,7 +53,7 @@ void main()
 
 	barrier();
 
-	highp int offset = atomicAdd(indexLightCount, count);
+	int offset = atomicAdd(indexLightCount, count);
 
 	for (int i = 0; i < count; i++) {
 		SetCullLightListIndex(offset + i, indexLights[i]);
