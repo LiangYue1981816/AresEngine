@@ -68,56 +68,56 @@ layout (location = 8)                                      in float inInstanceIn
 #define USE_CAMERA_UNIFORM                                                         \
 	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_CAMERA) uniform Camera                     \
 	{                                                                              \
-		vec4 screen;                                                         \
-		vec4 depth;                                                          \
+		vec4 screen;                                                               \
+		vec4 depth;                                                                \
 		                                                                           \
-		mat4 viewMatrix;                                                     \
-		mat4 viewInverseMatrix;                                              \
-		mat4 viewInverseTransposeMatrix;                                     \
-		mat4 projectionMatrix;                                               \
-		mat4 projectionViewMatrix;                                           \
-		mat4 projectionInverseMatrix;                                        \
-		mat4 projectionViewInverseMatrix;                                    \
+		mat4 viewMatrix;                                                           \
+		mat4 viewInverseMatrix;                                                    \
+		mat4 viewInverseTransposeMatrix;                                           \
+		mat4 projectionMatrix;                                                     \
+		mat4 projectionViewMatrix;                                                 \
+		mat4 projectionInverseMatrix;                                              \
+		mat4 projectionViewInverseMatrix;                                          \
 	} camera;
 
 #define USE_ENGINE_UNIFORM                                                         \
 	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_ENGINE) uniform Engine                     \
 	{                                                                              \
-		vec4 time;                                                         \
-		vec4 sinTime;                                                      \
-		vec4 cosTime;                                                      \
-		vec4 deltaTime;                                                    \
+		vec4 time;                                                                 \
+		vec4 sinTime;                                                              \
+		vec4 cosTime;                                                              \
+		vec4 deltaTime;                                                            \
 		                                                                           \
-		vec4 lightFactor;                                                  \
+		vec4 lightFactor;                                                          \
 		                                                                           \
-		vec4 ambientSHLight0;                                              \
-		vec4 ambientSHLight1;                                              \
-		vec4 ambientSHLight2;                                              \
-		vec4 ambientSHLight3;                                              \
-		vec4 ambientSHLight4;                                              \
-		vec4 ambientSHLight5;                                              \
-		vec4 ambientSHLight6;                                              \
-		vec4 ambientSHLight7;                                              \
-		vec4 ambientSHLight8;                                              \
-		mat4 ambientSHLightRotationMatrix;                                 \
+		vec4 ambientSHLight0;                                                      \
+		vec4 ambientSHLight1;                                                      \
+		vec4 ambientSHLight2;                                                      \
+		vec4 ambientSHLight3;                                                      \
+		vec4 ambientSHLight4;                                                      \
+		vec4 ambientSHLight5;                                                      \
+		vec4 ambientSHLight6;                                                      \
+		vec4 ambientSHLight7;                                                      \
+		vec4 ambientSHLight8;                                                      \
+		mat4 ambientSHLightRotationMatrix;                                         \
 		                                                                           \
-		vec4 pointLightColor;                                              \
-		vec4 pointLightPosition;                                           \
-		vec4 pointLightAttenuation;                                        \
+		vec4 pointLightColor;                                                      \
+		vec4 pointLightPosition;                                                   \
+		vec4 pointLightAttenuation;                                                \
 		                                                                           \
-		vec4 directLightColor;                                             \
-		vec4 directLightDirection;                                         \
+		vec4 directLightColor;                                                     \
+		vec4 directLightDirection;                                                 \
 		                                                                           \
-		vec4 fogColor;                                                     \
-		vec4 fogHeightParams;                                              \
-		vec4 fogDistanceParams;                                            \
+		vec4 fogColor;                                                             \
+		vec4 fogHeightParams;                                                      \
+		vec4 fogDistanceParams;                                                    \
 		                                                                           \
-		vec4 shadowLevelFactor;                                              \
-		vec4 shadowDepth[4];                                                 \
-		mat4 shadowViewMatrix[4];                                            \
-		mat4 shadowViewInverseMatrix[4];                                     \
-		mat4 shadowProjectionMatrix[4];                                      \
-		mat4 shadowProjectionViewMatrix[4];                                  \
+		vec4 shadowLevelFactor;                                                    \
+		vec4 shadowDepth[4];                                                       \
+		mat4 shadowViewMatrix[4];                                                  \
+		mat4 shadowViewInverseMatrix[4];                                           \
+		mat4 shadowProjectionMatrix[4];                                            \
+		mat4 shadowProjectionViewMatrix[4];                                        \
 	} engine;
 
 	struct Instance
@@ -141,12 +141,12 @@ layout (location = 8)                                      in float inInstanceIn
 		Instance instances[];                                                      \
 	} sceneData;                                                                   \
 	                                                                               \
-	Instance GetInstance(int index)                                          \
+	Instance GetInstance(int index)                                                \
 	{                                                                              \
 		return sceneData.instances[index];                                         \
 	}                                                                              \
 	                                                                               \
-	void SetInstance(int index, Instance instance)                           \
+	void SetInstance(int index, Instance instance)                                 \
 	{                                                                              \
 		sceneData.instances[index] = instance;                                     \
 	}
@@ -157,7 +157,7 @@ layout (location = 8)                                      in float inInstanceIn
 		Instance instances[];                                                      \
 	} transferSceneData;                                                           \
 	                                                                               \
-	Instance GetTransferInstance(int index)                                  \
+	Instance GetTransferInstance(int index)                                        \
 	{                                                                              \
 		return transferSceneData.instances[index];                                 \
 	}
@@ -165,10 +165,10 @@ layout (location = 8)                                      in float inInstanceIn
 #define USE_TRANSFER_SCENE_DATA_INDEX_STORAGE                                      \
 	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_TRANSFER_SCENE_DATA_INDEX) buffer TransferSceneDataIndex \
 	{                                                                              \
-		int indexInstances[];                                                \
+		int indexInstances[];                                                      \
 	} transferSceneDataIndex;                                                      \
 	                                                                               \
-	int GetTransferIndex(int index)                                    \
+	int GetTransferIndex(int index)                                                \
 	{                                                                              \
 		return transferSceneDataIndex.indexInstances[index];                       \
 	}
@@ -179,28 +179,28 @@ layout (location = 8)                                      in float inInstanceIn
 		Cluster clusters[];                                                        \
 	} clusterData;                                                                 \
 	                                                                               \
-	Cluster GetCluster(int index)                                            \
+	Cluster GetCluster(int index)                                                  \
 	{                                                                              \
 		return clusterData.clusters[index];                                        \
 	}                                                                              \
 	                                                                               \
-	int GetClusterLightOffset(int index)                               \
+	int GetClusterLightOffset(int index)                                           \
 	{                                                                              \
 		return int(clusterData.clusters[index].minAABBPosition.w);                 \
 	}                                                                              \
 	                                                                               \
-	int GetClusterLightCount(int index)                                \
+	int GetClusterLightCount(int index)                                            \
 	{                                                                              \
 		return int(clusterData.clusters[index].maxAABBPosition.w);                 \
 	}                                                                              \
 	                                                                               \
-	void SetCluster(int index, vec3 minAABBPosition, vec3 maxAABBPosition) \
+	void SetCluster(int index, vec3 minAABBPosition, vec3 maxAABBPosition)         \
 	{                                                                              \
 		clusterData.clusters[index].minAABBPosition.xyz = minAABBPosition;         \
 		clusterData.clusters[index].maxAABBPosition.xyz = maxAABBPosition;         \
 	}                                                                              \
 	                                                                               \
-	void SetClusterLightInfo(int index, int offset, int count)   \
+	void SetClusterLightInfo(int index, int offset, int count)                     \
 	{                                                                              \
 		clusterData.clusters[index].minAABBPosition.w = float(offset);             \
 		clusterData.clusters[index].maxAABBPosition.w = float(count);              \
@@ -209,10 +209,10 @@ layout (location = 8)                                      in float inInstanceIn
 #define USE_FULL_LIGHT_LIST_DATA_STORAGE                                           \
 	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_FULL_LIGHT_LIST_DATA) buffer FullLightListData \
 	{                                                                              \
-		int indexLights[];                                                   \
+		int indexLights[];                                                         \
 	} fullLightListData;                                                           \
 	                                                                               \
-	int GetFullLightListIndex(int index)                               \
+	int GetFullLightListIndex(int index)                                           \
 	{                                                                              \
 		return fullLightListData.indexLights[index];                               \
 	}
@@ -220,15 +220,15 @@ layout (location = 8)                                      in float inInstanceIn
 #define USE_CULL_LIGHT_LIST_DATA_STORAGE                                           \
 	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_CULL_LIGHT_LIST_DATA) buffer CullLightListData \
 	{                                                                              \
-		int indexLights[];                                                   \
+		int indexLights[];                                                         \
 	} cullLightListData;                                                           \
 	                                                                               \
-	int GetCullLightListIndex(int index)                               \
+	int GetCullLightListIndex(int index)                                           \
 	{                                                                              \
 		return cullLightListData.indexLights[index];                               \
 	}                                                                              \
 	                                                                               \
-	void SetCullLightListIndex(int index, int indexLight)              \
+	void SetCullLightListIndex(int index, int indexLight)                          \
 	{                                                                              \
 		cullLightListData.indexLights[index] = indexLight;                         \
 	}
