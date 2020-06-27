@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2019 Arm Limited
+ * Copyright 2016-2020 Arm Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -61,7 +61,7 @@ void CFG::build_immediate_dominators()
 			if (immediate_dominators[block])
 			{
 				assert(immediate_dominators[edge]);
-				immediate_dominators[block] = find_common_dominator(block, edge);
+				immediate_dominators[block] = find_common_dominator(immediate_dominators[block], edge);
 			}
 			else
 				immediate_dominators[block] = edge;
@@ -163,7 +163,7 @@ bool CFG::post_order_visit(uint32_t block_id)
 		{
 			auto &pred = pred_itr->second;
 			auto succ_itr = succeeding_edges.find(block_id);
-			uint32_t num_succeeding_edges = 0;
+			size_t num_succeeding_edges = 0;
 			if (succ_itr != end(succeeding_edges))
 				num_succeeding_edges = succ_itr->second.size();
 
@@ -237,13 +237,13 @@ uint32_t CFG::find_loop_dominator(uint32_t block_id) const
 		for (auto &pred : itr->second)
 		{
 			auto &pred_block = compiler.get<SPIRBlock>(pred);
-			if (pred_block.merge == SPIRBlock::MergeLoop && pred_block.merge_block == block_id)
+			if (pred_block.merge == SPIRBlock::MergeLoop && pred_block.merge_block == ID(block_id))
 			{
 				pred_block_id = pred;
 				ignore_loop_header = true;
 				break;
 			}
-			else if (pred_block.merge == SPIRBlock::MergeSelection && pred_block.next_block == block_id)
+			else if (pred_block.merge == SPIRBlock::MergeSelection && pred_block.next_block == ID(block_id))
 			{
 				pred_block_id = pred;
 				break;
@@ -268,14 +268,14 @@ uint32_t CFG::find_loop_dominator(uint32_t block_id) const
 	return block_id;
 }
 
-bool CFG::node_terminates_control_flow_in_sub_graph(uint32_t from, uint32_t to) const
+bool CFG::node_terminates_control_flow_in_sub_graph(BlockID from, BlockID to) const
 {
 	// Walk backwards, starting from "to" block.
 	// Only follow pred edges if they have a 1:1 relationship, or a merge relationship.
 	// If we cannot find a path to "from", we must assume that to is inside control flow in some way.
 
 	auto &from_block = compiler.get<SPIRBlock>(from);
-	uint32_t ignore_block_id = 0;
+	BlockID ignore_block_id = 0;
 	if (from_block.merge == SPIRBlock::MergeLoop)
 		ignore_block_id = from_block.merge_block;
 

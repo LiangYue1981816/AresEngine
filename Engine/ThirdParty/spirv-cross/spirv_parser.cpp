@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 Arm Limited
+ * Copyright 2018-2020 Arm Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -60,6 +60,7 @@ static bool is_valid_spirv_version(uint32_t version)
 	case 0x10200: // SPIR-V 1.2
 	case 0x10300: // SPIR-V 1.3
 	case 0x10400: // SPIR-V 1.4
+	case 0x10500: // SPIR-V 1.5
 		return true;
 
 	default:
@@ -85,6 +86,11 @@ void Parser::parse()
 		SPIRV_CROSS_THROW("Invalid SPIRV format.");
 
 	uint32_t bound = s[3];
+
+	const uint32_t MaximumNumberOfIDs = 0x3fffff;
+	if (bound > MaximumNumberOfIDs)
+		SPIRV_CROSS_THROW("ID bound exceeds limit of 0x3fffff.\n");
+
 	ir.set_id_bounds(bound);
 
 	uint32_t offset = 5;
@@ -278,7 +284,9 @@ void Parser::parse(const Instruction &instruction)
 
 		// Strings need nul-terminator and consume the whole word.
 		uint32_t strlen_words = uint32_t((e.name.size() + 1 + 3) >> 2);
-		e.interface_variables.insert(end(e.interface_variables), ops + strlen_words + 2, ops + instruction.length);
+
+		for (uint32_t i = strlen_words + 2; i < instruction.length; i++)
+			e.interface_variables.push_back(ops[i]);
 
 		// Set the name of the entry point in case OpName is not provided later.
 		ir.set_name(ops[1], e.name);
@@ -658,7 +666,7 @@ void Parser::parse(const Instruction &instruction)
 				}
 			}
 
-			if (type.type_alias == 0)
+			if (type.type_alias == TypeID(0))
 				global_struct_cache.push_back(id);
 		}
 		break;
@@ -675,11 +683,19 @@ void Parser::parse(const Instruction &instruction)
 		break;
 	}
 
-	case OpTypeAccelerationStructureNV:
+	case OpTypeAccelerationStructureKHR:
 	{
 		uint32_t id = ops[0];
 		auto &type = set<SPIRType>(id);
-		type.basetype = SPIRType::AccelerationStructureNV;
+		type.basetype = SPIRType::AccelerationStructure;
+		break;
+	}
+
+	case OpTypeRayQueryProvisionalKHR:
+	{
+		uint32_t id = ops[0];
+		auto &type = set<SPIRType>(id);
+		type.basetype = SPIRType::RayQuery;
 		break;
 	}
 
@@ -700,15 +716,6 @@ void Parser::parse(const Instruction &instruction)
 		}
 
 		set<SPIRVariable>(id, type, storage, initializer);
-
-		// hlsl based shaders don't have those decorations. force them and then reset when reading/writing images
-		auto &ttype = get<SPIRType>(type);
-		if (ttype.basetype == SPIRType::BaseType::Image)
-		{
-			ir.set_decoration(id, DecorationNonWritable);
-			ir.set_decoration(id, DecorationNonReadable);
-		}
-
 		break;
 	}
 
@@ -772,7 +779,7 @@ void Parser::parse(const Instruction &instruction)
 	{
 		uint32_t id = ops[1];
 		uint32_t type = ops[0];
-		make_constant_null(id, type);
+		ir.make_constant_null(id, type, true);
 		break;
 	}
 
@@ -1008,12 +1015,12 @@ void Parser::parse(const Instruction &instruction)
 		ir.block_meta[current_block->self] |= ParsedIR::BLOCK_META_LOOP_HEADER_BIT;
 		ir.block_meta[current_block->merge_block] |= ParsedIR::BLOCK_META_LOOP_MERGE_BIT;
 
-		ir.continue_block_to_loop_header[current_block->continue_block] = current_block->self;
+		ir.continue_block_to_loop_header[current_block->continue_block] = BlockID(current_block->self);
 
 		// Don't add loop headers to continue blocks,
 		// which would make it impossible branch into the loop header since
 		// they are treated as continues.
-		if (current_block->continue_block != current_block->self)
+		if (current_block->continue_block != BlockID(current_block->self))
 			ir.block_meta[current_block->continue_block] |= ParsedIR::BLOCK_META_CONTINUE_BIT;
 
 		if (length >= 3)
@@ -1137,46 +1144,4 @@ bool Parser::variable_storage_is_aliased(const SPIRVariable &v) const
 
 	return !is_restrict && (ssbo || image || counter);
 }
-
-void Parser::make_constant_null(uint32_t id, uint32_t type)
-{
-	auto &constant_type = get<SPIRType>(type);
-
-	if (constant_type.pointer)
-	{
-		auto &constant = set<SPIRConstant>(id, type);
-		constant.make_null(constant_type);
-	}
-	else if (!constant_type.array.empty())
-	{
-		assert(constant_type.parent_type);
-		uint32_t parent_id = ir.increase_bound_by(1);
-		make_constant_null(parent_id, constant_type.parent_type);
-
-		if (!constant_type.array_size_literal.back())
-			SPIRV_CROSS_THROW("Array size of OpConstantNull must be a literal.");
-
-		SmallVector<uint32_t> elements(constant_type.array.back());
-		for (uint32_t i = 0; i < constant_type.array.back(); i++)
-			elements[i] = parent_id;
-		set<SPIRConstant>(id, type, elements.data(), uint32_t(elements.size()), false);
-	}
-	else if (!constant_type.member_types.empty())
-	{
-		uint32_t member_ids = ir.increase_bound_by(uint32_t(constant_type.member_types.size()));
-		SmallVector<uint32_t> elements(constant_type.member_types.size());
-		for (uint32_t i = 0; i < constant_type.member_types.size(); i++)
-		{
-			make_constant_null(member_ids + i, constant_type.member_types[i]);
-			elements[i] = member_ids + i;
-		}
-		set<SPIRConstant>(id, type, elements.data(), uint32_t(elements.size()), false);
-	}
-	else
-	{
-		auto &constant = set<SPIRConstant>(id, type);
-		constant.make_null(constant_type);
-	}
-}
-
 } // namespace SPIRV_CROSS_NAMESPACE
