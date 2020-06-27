@@ -112,7 +112,7 @@ void CRenderSystem::CreatePasses(void)
 	CPassDeferredShading::Create(GFX_PIXELFORMAT_RG11B10_UFLOAT_PACK32, GFX_PIXELFORMAT_D32_SFLOAT_PACK32);
 	CPassTileDeferredShading::Create(GFX_PIXELFORMAT_RG11B10_UFLOAT_PACK32, GFX_PIXELFORMAT_D32_SFLOAT_PACK32);
 	CPassCopyColor::Create(GFX_PIXELFORMAT_RG11B10_UFLOAT_PACK32);
-	CPassCopyDepthStencil::Create(GFX_PIXELFORMAT_BGRA8_UNORM_PACK8);
+	CPassCopyDepthStencil::Create(GFX_PIXELFORMAT_RGBA8_UNORM_PACK8);
 	CPassSSAO::Create(GFX_PIXELFORMAT_RG11B10_UFLOAT_PACK32);
 	CPassBlurBox::Create(GFX_PIXELFORMAT_RG11B10_UFLOAT_PACK32);
 	CPassBlurHorizontal::Create(GFX_PIXELFORMAT_RG11B10_UFLOAT_PACK32);
@@ -120,7 +120,7 @@ void CRenderSystem::CreatePasses(void)
 	CPassBlendAdd::Create(GFX_PIXELFORMAT_RG11B10_UFLOAT_PACK32);
 	CPassLuminanceThreshold::Create(GFX_PIXELFORMAT_RG11B10_UFLOAT_PACK32);
 	CPassColorGrading::Create(GFX_PIXELFORMAT_RG11B10_UFLOAT_PACK32);
-	CPassFinal::Create(GFX_PIXELFORMAT_BGRA8_UNORM_PACK8);
+	CPassFinal::Create(GFX_PIXELFORMAT_RGBA8_UNORM_PACK8);
 
 	m_pPassPreZ = new CPassPreZ(this);
 	m_pPassShadow = new CPassShadow(this);
@@ -158,12 +158,12 @@ void CRenderSystem::CreateRenderTextures(void)
 	CreateRenderTexture(RENDER_TEXTURE_SWAPCHAIN_COLOR1, GfxRenderer()->GetSwapChain()->GetFrameTexture(1));
 	CreateRenderTexture(RENDER_TEXTURE_SWAPCHAIN_COLOR2, GfxRenderer()->GetSwapChain()->GetFrameTexture(2));
 	CreateRenderTexture(RENDER_TEXTURE_SHADOW, GFX_PIXELFORMAT_D32_SFLOAT_PACK32, 4096, 4096);
-	CreateRenderTexture(RENDER_TEXTURE_GBUFFER0, GFX_PIXELFORMAT_BGRA8_UNORM_PACK8, GfxRenderer()->GetSwapChain()->GetWidth(), GfxRenderer()->GetSwapChain()->GetHeight());
-	CreateRenderTexture(RENDER_TEXTURE_GBUFFER1, GFX_PIXELFORMAT_BGRA8_UNORM_PACK8, GfxRenderer()->GetSwapChain()->GetWidth(), GfxRenderer()->GetSwapChain()->GetHeight());
-//	CreateRenderTexture(RENDER_TEXTURE_GBUFFER2, GFX_PIXELFORMAT_BGRA8_UNORM_PACK8, GfxRenderer()->GetSwapChain()->GetWidth(), GfxRenderer()->GetSwapChain()->GetHeight());
-//	CreateRenderTexture(RENDER_TEXTURE_GBUFFER3, GFX_PIXELFORMAT_BGRA8_UNORM_PACK8, GfxRenderer()->GetSwapChain()->GetWidth(), GfxRenderer()->GetSwapChain()->GetHeight());
+	CreateRenderTexture(RENDER_TEXTURE_GBUFFER0, GFX_PIXELFORMAT_RGBA8_UNORM_PACK8, GfxRenderer()->GetSwapChain()->GetWidth(), GfxRenderer()->GetSwapChain()->GetHeight());
+	CreateRenderTexture(RENDER_TEXTURE_GBUFFER1, GFX_PIXELFORMAT_RGBA8_UNORM_PACK8, GfxRenderer()->GetSwapChain()->GetWidth(), GfxRenderer()->GetSwapChain()->GetHeight());
+//	CreateRenderTexture(RENDER_TEXTURE_GBUFFER2, GFX_PIXELFORMAT_RGBA8_UNORM_PACK8, GfxRenderer()->GetSwapChain()->GetWidth(), GfxRenderer()->GetSwapChain()->GetHeight());
+//	CreateRenderTexture(RENDER_TEXTURE_GBUFFER3, GFX_PIXELFORMAT_RGBA8_UNORM_PACK8, GfxRenderer()->GetSwapChain()->GetWidth(), GfxRenderer()->GetSwapChain()->GetHeight());
 	CreateRenderTexture(RENDER_TEXTURE_FULL_DEPTH, GFX_PIXELFORMAT_D32_SFLOAT_PACK32, GfxRenderer()->GetSwapChain()->GetWidth(), GfxRenderer()->GetSwapChain()->GetHeight());
-	CreateRenderTexture(RENDER_TEXTURE_FULL_DEPTH_COPY, GFX_PIXELFORMAT_BGRA8_UNORM_PACK8, GfxRenderer()->GetSwapChain()->GetWidth(), GfxRenderer()->GetSwapChain()->GetHeight());
+	CreateRenderTexture(RENDER_TEXTURE_FULL_DEPTH_COPY, GFX_PIXELFORMAT_RGBA8_UNORM_PACK8, GfxRenderer()->GetSwapChain()->GetWidth(), GfxRenderer()->GetSwapChain()->GetHeight());
 	CreateRenderTexture(RENDER_TEXTURE_FULL_HDR_COLOR0, GFX_PIXELFORMAT_RG11B10_UFLOAT_PACK32, GfxRenderer()->GetSwapChain()->GetWidth(), GfxRenderer()->GetSwapChain()->GetHeight());
 	CreateRenderTexture(RENDER_TEXTURE_FULL_HDR_COLOR1, GFX_PIXELFORMAT_RG11B10_UFLOAT_PACK32, GfxRenderer()->GetSwapChain()->GetWidth(), GfxRenderer()->GetSwapChain()->GetHeight());
 	CreateRenderTexture(RENDER_TEXTURE_QUATER_HDR_COLOR0, GFX_PIXELFORMAT_RG11B10_UFLOAT_PACK32, GfxRenderer()->GetSwapChain()->GetWidth() / 4, GfxRenderer()->GetSwapChain()->GetHeight() / 4);
