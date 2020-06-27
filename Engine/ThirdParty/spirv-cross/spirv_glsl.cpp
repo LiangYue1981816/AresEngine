@@ -11095,6 +11095,7 @@ const char *CompilerGLSL::flags_to_qualifiers_glsl(const SPIRType &type, const B
 	    type.basetype != SPIRType::Sampler)
 		return "";
 
+	/*
 	if (options.es)
 	{
 		auto &execution = get_entry_point();
@@ -11137,6 +11138,9 @@ const char *CompilerGLSL::flags_to_qualifiers_glsl(const SPIRType &type, const B
 	}
 	else
 		return "";
+	/*/
+	return "";
+	//*/
 }
 
 const char *CompilerGLSL::to_precision_qualifiers_glsl(uint32_t id)
