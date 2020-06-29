@@ -33,14 +33,12 @@ void main()
 	vec3 worldBinormal = normalize((worldMatrix * vec4(inBinormal.xyz, 0.0f)).xyz);
 	vec3 worldTangent = cross(worldBinormal, worldNormal) * inBinormal.w;
 	worldBinormal = cross(worldNormal, worldTangent) * inBinormal.w;
-
-	outNormal = clamp(worldNormal, vec3(-1.0), vec3(1.0));
-	outTangent = clamp(worldTangent, vec3(-1.0), vec3(1.0));
-	outBinormal = clamp(worldBinormal, vec3(-1.0), vec3(1.0));
+	outNormal = worldNormal;
+	outTangent = worldTangent;
+	outBinormal = worldBinormal;
 #else
 	vec3 worldNormal = normalize((worldMatrix * vec4(inNormal.xyz, 0.0f)).xyz);
-	
-	outNormal = clamp(worldNormal, vec3(-1.0), vec3(1.0));
+	outNormal = worldNormal;
 #endif
 
 	outPosition = worldPosition;
