@@ -5,6 +5,10 @@
 #include "common.inc"
 
 
+const vec3 minLighting = vec3(0.0);
+const vec3 maxLighting = vec3(10.0);
+	
+	
 // Utils
 vec2 SphericalSampleing(vec3 v)
 {
@@ -69,8 +73,12 @@ vec3 Ambient_SH4(vec3 normal, vec3 albedo, float metallic, vec4 shRed, vec4 shGr
 
 	vec4 basis = vec4(1.0, factor * y, factor * z, factor * x);
 	vec3 diffuse = vec3(dot(basis, shRed), dot(basis, shGreen), dot(basis, shBlue));
+	vec3 finalLighting = vec3(1.0 - metallic) * diffuse * albedo / PI;
 
-	return vec3(1.0 - metallic) * diffuse * albedo / PI;
+	finalLighting = max(finalLighting, minLighting);
+	finalLighting = min(finalLighting, maxLighting);
+
+	return finalLighting;
 }
 
 vec3 Ambient_SH9(vec3 normal, vec3 albedo, float metallic, vec3 shRed0, vec3 shRed1, vec3 shRed2, vec3 shGreen0, vec3 shGreen1, vec3 shGreen2, vec3 shBlue0, vec3 shBlue1, vec3 shBlue2)
@@ -84,8 +92,12 @@ vec3 Ambient_SH9(vec3 normal, vec3 albedo, float metallic, vec3 shRed0, vec3 shR
 	vec3 basis1 = vec3(factor * x, x * y, y * z);
 	vec3 basis2 = vec3(z * z * 3.0f - 1.0f, x * z, x * x - y * y);
 	vec3 diffuse = basis0 * mat3(shRed0, shGreen0, shBlue0) + basis1 * mat3(shRed1, shGreen1, shBlue1) + basis2 * mat3(shRed2, shGreen2, shBlue2);
+	vec3 finalLighting = vec3(1.0 - metallic) * diffuse * albedo / PI;
 
-	return vec3(1.0 - metallic) * diffuse * albedo / PI;
+	finalLighting = max(finalLighting, minLighting);
+	finalLighting = min(finalLighting, maxLighting);
+	
+	return finalLighting;
 }
 
 vec3 Diffuse_Lambert(vec3 albedo)
@@ -241,8 +253,12 @@ vec3 PBRLighting(vec3 normal, vec3 viewDirection, vec3 lightDirection, vec3 ligh
 
 	vec3 diffuseLighting = Diffuse_Lambert(albedo) * (1.0 - metallic);
 	vec3 specularLighting = D * F * G;
+	vec3 finalLighting = (diffuseLighting + specularLighting) * ndl * lightColor;
 
-	return (diffuseLighting + specularLighting) * ndl * lightColor;
+	finalLighting = max(finalLighting, minLighting);
+	finalLighting = min(finalLighting, maxLighting);
+
+	return finalLighting;
 }
 
 vec3 ClothLighting(vec3 normal, vec3 viewDirection, vec3 lightDirection, vec3 lightColor, vec3 albedo, float specular, float roughness)
@@ -255,14 +271,17 @@ vec3 ClothLighting(vec3 normal, vec3 viewDirection, vec3 lightDirection, vec3 li
 	float vdh = max(dot(viewDirection, halfDirection), 0.0);
 
 	float D = D_Charlie(ndh, roughness);
-//	float G = G_Ashikhmin(ndv, ndl);
-	float G = G_SchlickSmithGGX(ndv, ndl, roughness);
+	float G = G_Ashikhmin(ndv, ndl);
 	vec3  F = F_Schlick(albedo, specular, 0.0, vdh);
 
 	vec3 diffuseLighting = Diffuse_Lambert(albedo);
 	vec3 specularLighting = D * F * G;
+	vec3 finalLighting = (diffuseLighting + specularLighting) * ndl * lightColor;
 
-	return (diffuseLighting + specularLighting) * ndl * lightColor;
+	finalLighting = max(finalLighting, minLighting);
+	finalLighting = min(finalLighting, maxLighting);
+
+	return finalLighting;
 }
 
 float PHBeckmann(float ndoth, float m)
@@ -289,8 +308,12 @@ vec3 SkinLighting(vec3 normalBase, vec3 normalDetails, vec3 position, vec3 viewD
 	vec3 diffuseLighting = Diffuse_Lambert(albedo) * 0.15;
 	vec3 scatterLighting = texture(texSkinLUT, vec2(wrapped_ndl, curvature)).rgb * albedo * 0.1;
 	vec3 specularLighting = max(pow(texture(texSkinLUT, vec2(ndh, roughness)).a * 2.0, 10.0) * F_SchlickSkin(vdh) / hdh, 0.0) * max(ndl, 0.0) * 0.5;
+	vec3 finalLighting = (diffuseLighting + scatterLighting + specularLighting) * lightColor;
 
-	return (diffuseLighting + scatterLighting + specularLighting) * lightColor;
+	finalLighting = max(finalLighting, minLighting);
+	finalLighting = min(finalLighting, maxLighting);
+
+	return finalLighting;
 }
 
 vec3 EnvLighting(vec3 normal, vec3 viewDirection, vec3 env, vec3 albedo, float specular, float metallic, float roughness)
