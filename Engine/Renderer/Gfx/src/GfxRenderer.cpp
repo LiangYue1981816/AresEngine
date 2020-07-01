@@ -1,9 +1,5 @@
 #include "GfxHeader.h"
 
-#ifdef PLATFORM_WINDOWS
-#  include <gl3w.h>
-#endif
-
 
 CGfxRenderer* CGfxRenderer::pInstance = nullptr;
 CGfxRenderer* CGfxRenderer::GetInstance(void)
@@ -14,10 +10,6 @@ CGfxRenderer* CGfxRenderer::GetInstance(void)
 CGfxRenderer::CGfxRenderer(void* hInstance, void* hWnd, void* hDC, int width, int height, GfxPixelFormat format)
 {
 	pInstance = this;
-
-#ifdef PLATFORM_WINDOWS
-	gl3wInit();
-#endif
 }
 
 CGfxRenderer::~CGfxRenderer(void)
