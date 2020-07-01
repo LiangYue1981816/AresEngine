@@ -97,6 +97,7 @@ void CRenderSystem::InternalPassBloom(CTaskPool& taskPool, CTaskGraph& taskGraph
 	m_pPassBloomLuminanceThreshold->SetCamera(pCamera);
 	m_pPassBloomLuminanceThreshold->SetInputTexture(m_ptrRenderTextures[rtInColor]);
 	m_pPassBloomLuminanceThreshold->SetOutputTexture(m_ptrRenderTextures[rtTempThreshold]);
+	m_pPassBloomLuminanceThreshold->SetParamThreshold(Settings()->GetValue("RenderSystem.Bloom.LuminanceThreshold"));
 	m_pPassBloomLuminanceThreshold->Render(taskPool, taskGraph, ptrCommandBuffer);
 
 	m_pPassBloomBlurHorizontal->SetCamera(pCamera);

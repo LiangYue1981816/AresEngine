@@ -57,8 +57,9 @@ CRenderSystem::CRenderSystem(void)
 	Settings()->SetValue("RenderSystem.SSAO.MinDepthRange", 0.00f);
 	Settings()->SetValue("RenderSystem.SSAO.MaxDepthRange", 0.20f);
 	Settings()->SetValue("RenderSystem.SSAO.BlurRange", 1.00f);
-	Settings()->SetValue("RenderSystem.Bloom.BlurRange.FirstTime", 2.00f);
-	Settings()->SetValue("RenderSystem.Bloom.BlurRange.SecondTime", 1.00f);
+	Settings()->SetValue("RenderSystem.Bloom.LuminanceThreshold", 1.00f);
+	Settings()->SetValue("RenderSystem.Bloom.BlurRange.FirstTime", 1.00f);
+	Settings()->SetValue("RenderSystem.Bloom.BlurRange.SecondTime", 0.75f);
 }
 
 CRenderSystem::~CRenderSystem(void)
