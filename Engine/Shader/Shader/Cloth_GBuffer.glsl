@@ -102,10 +102,11 @@ void main()
 	vec3 worldViewDirection = normalize(worldCameraPosition - inPosition);
 
 #ifdef NORMAL_MAP
-	vec3 worldNormal = normalize(mat3(inTangent, inBinormal, inNormal) * (texture(texNormal, inTexcoord).rgb * 2.0 - 1.0));
+	vec3 worldNormal = mat3(inTangent, inBinormal, inNormal) * (texture(texNormal, inTexcoord).rgb * 2.0 - 1.0);
 #else
 	vec3 worldNormal = inNormal;
 #endif
+	worldNormal = normalize(worldNormal);
 
 #ifdef ROUGHNESS_METALLIC_SPECULAR_AO_MAP
 	vec4 roughness_metallic_specular_ao = texture(texRoughnessMetallicSpecularAO, inTexcoord);
