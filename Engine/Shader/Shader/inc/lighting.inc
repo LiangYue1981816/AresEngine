@@ -6,7 +6,7 @@
 
 
 const vec3 minLighting = vec3(0.0);
-const vec3 maxLighting = vec3(10.0);
+const vec3 maxLighting = vec3(2.0);
 	
 	
 // Utils
