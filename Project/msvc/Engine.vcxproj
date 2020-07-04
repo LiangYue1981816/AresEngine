@@ -364,6 +364,7 @@
     <ClInclude Include="..\..\Engine\RenderHeader.h" />
     <ClInclude Include="..\..\Engine\RenderSystem\include\Camera.h" />
     <ClInclude Include="..\..\Engine\RenderSystem\include\GPUCluster.h" />
+    <ClInclude Include="..\..\Engine\RenderSystem\include\GPUClusterCull.h" />
     <ClInclude Include="..\..\Engine\RenderSystem\include\GPUScene.h" />
     <ClInclude Include="..\..\Engine\RenderSystem\include\InstanceBufferPool.h" />
     <ClInclude Include="..\..\Engine\RenderSystem\include\PassAutoExposure.h" />
@@ -734,6 +735,7 @@
     <ClCompile Include="..\..\Engine\RenderSystem\src\ComputeCluster.cpp" />
     <ClCompile Include="..\..\Engine\RenderSystem\src\ComputeScene.cpp" />
     <ClCompile Include="..\..\Engine\RenderSystem\src\GPUCluster.cpp" />
+    <ClCompile Include="..\..\Engine\RenderSystem\src\GPUClusterCull.cpp" />
     <ClCompile Include="..\..\Engine\RenderSystem\src\GPUScene.cpp" />
     <ClCompile Include="..\..\Engine\RenderSystem\src\InstanceBufferPool.cpp" />
     <ClCompile Include="..\..\Engine\RenderSystem\src\PassAutoExposure.cpp" />
