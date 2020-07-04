@@ -39,7 +39,7 @@ CPassAutoExposure::CPassAutoExposure(CRenderSystem* pRenderSystem)
 		m_pShaderCompute = GfxRenderer()->CreateShader(szBinFileName, compute_shader);
 		m_pPipelineCompute = GfxRenderer()->CreatePipelineCompute(m_pShaderCompute);
 
-		m_ptrDescriptorSetEyeHistogram = GfxRenderer()->NewDescriptorSet(HashValue(szFileName), m_pPipelineCompute->GetDescriptorLayout(DESCRIPTOR_SET_PASS));
+		m_ptrDescriptorSet = GfxRenderer()->NewDescriptorSet(HashValue(szFileName), m_pPipelineCompute->GetDescriptorLayout(DESCRIPTOR_SET_PASS));
 	}
 
 	{
@@ -49,8 +49,8 @@ CPassAutoExposure::CPassAutoExposure(CRenderSystem* pRenderSystem)
 		ptrDescriptorLayout->SetSampledImageBinding(UNIFORM_COLOR_TEXTURE_NAME, UNIFORM_COLOR_TEXTURE_BIND);
 		ptrDescriptorLayout->Create();
 
-		m_ptrDescriptorSetAutoExposure = GfxRenderer()->NewDescriptorSet(HashValueFormat("%x_%p", PASS_AUTO_EXPOSURE_NAME, this), ptrDescriptorLayout);
-		m_ptrDescriptorSetAutoExposure->SetUniformBuffer(UNIFORM_ENGINE_NAME, m_pRenderSystem->GetEngineUniform()->GetUniformBuffer(), 0, m_pRenderSystem->GetEngineUniform()->GetUniformBuffer()->GetSize());
+		m_ptrDescriptorSetPass = GfxRenderer()->NewDescriptorSet(HashValueFormat("%x_%p", PASS_AUTO_EXPOSURE_NAME, this), ptrDescriptorLayout);
+		m_ptrDescriptorSetPass->SetUniformBuffer(UNIFORM_ENGINE_NAME, m_pRenderSystem->GetEngineUniform()->GetUniformBuffer(), 0, m_pRenderSystem->GetEngineUniform()->GetUniformBuffer()->GetSize());
 	}
 }
 
@@ -63,7 +63,7 @@ void CPassAutoExposure::SetCamera(CCamera* pCamera)
 {
 	if (m_pCamera != pCamera) {
 		m_pCamera = pCamera;
-		m_ptrDescriptorSetAutoExposure->SetUniformBuffer(UNIFORM_CAMERA_NAME, pCamera->GetCameraUniform()->GetUniformBuffer(), 0, pCamera->GetCameraUniform()->GetUniformBuffer()->GetSize());
+		m_ptrDescriptorSetPass->SetUniformBuffer(UNIFORM_CAMERA_NAME, pCamera->GetCameraUniform()->GetUniformBuffer(), 0, pCamera->GetCameraUniform()->GetUniformBuffer()->GetSize());
 	}
 }
 
@@ -73,7 +73,7 @@ void CPassAutoExposure::SetInputReferenceTexture(CGfxRenderTexturePtr ptrInputRe
 
 	if (m_ptrInputReferenceTexture != ptrInputReferenceTexture) {
 		m_ptrInputReferenceTexture = ptrInputReferenceTexture;
-		m_ptrDescriptorSetEyeHistogram->SetRenderTexture(UNIFORM_COLOR_TEXTURE_NAME, ptrInputReferenceTexture, pSamplerPoint);
+		m_ptrDescriptorSet->SetRenderTexture(UNIFORM_COLOR_TEXTURE_NAME, ptrInputReferenceTexture, pSamplerPoint);
 	}
 }
 
@@ -83,7 +83,7 @@ void CPassAutoExposure::SetInputTexture(CGfxRenderTexturePtr ptrColorTexture)
 
 	if (m_ptrInputColorTexture != ptrColorTexture) {
 		m_ptrInputColorTexture = ptrColorTexture;
-		m_ptrDescriptorSetAutoExposure->SetRenderTexture(UNIFORM_COLOR_TEXTURE_NAME, ptrColorTexture, pSamplerPoint);
+		m_ptrDescriptorSetPass->SetRenderTexture(UNIFORM_COLOR_TEXTURE_NAME, ptrColorTexture, pSamplerPoint);
 	}
 }
 
@@ -116,7 +116,7 @@ void CPassAutoExposure::Render(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxC
 			const float znear = 0.0f;
 			const float zfar = 1.0f;
 
-			m_pRenderQueue->CmdDraw(taskPool, taskGraph, ptrCommandBuffer, m_ptrDescriptorSetAutoExposure, PASS_AUTO_EXPOSURE_NAME, scissor, viewport, znear, zfar, 0xffffffff, false);
+			m_pRenderQueue->CmdDraw(taskPool, taskGraph, ptrCommandBuffer, m_ptrDescriptorSetPass, PASS_AUTO_EXPOSURE_NAME, scissor, viewport, znear, zfar, 0xffffffff, false);
 		}
 		GfxRenderer()->CmdEndRenderPass(ptrCommandBuffer);
 		GfxRenderer()->CmdSetImageLayout(ptrCommandBuffer, m_ptrOutputColorTexture, GFX_IMAGE_LAYOUT_COLOR_READ_ONLY_OPTIMAL);

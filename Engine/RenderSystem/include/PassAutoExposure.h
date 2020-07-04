@@ -31,11 +31,11 @@ private:
 private:
 	CGfxShader* m_pShaderCompute;
 	CGfxPipelineCompute* m_pPipelineCompute;
-	CGfxDescriptorSetPtr m_ptrDescriptorSetEyeHistogram;
+	CGfxDescriptorSetPtr m_ptrDescriptorSet;
 	CGfxRenderTexturePtr m_ptrInputReferenceTexture;
 
 private:
-	CGfxDescriptorSetPtr m_ptrDescriptorSetAutoExposure;
+	CGfxDescriptorSetPtr m_ptrDescriptorSetPass;
 	CGfxRenderTexturePtr m_ptrInputColorTexture;
 
 private:
