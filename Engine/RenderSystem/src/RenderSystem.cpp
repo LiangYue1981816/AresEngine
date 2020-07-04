@@ -40,6 +40,7 @@ CRenderSystem::CRenderSystem(void)
 	, m_pPassBloomBlurHorizontal(nullptr)
 	, m_pPassBloomBlurVertical(nullptr)
 	, m_pPassBloomBlendAdd(nullptr)
+	, m_pPassAutoExposure(nullptr)
 	, m_pPassColorGrading(nullptr)
 	, m_pPassFinal(nullptr)
 {
@@ -120,6 +121,7 @@ void CRenderSystem::CreatePasses(void)
 	CPassBlurVertical::Create(GFX_PIXELFORMAT_RG11B10_UFLOAT_PACK32);
 	CPassBlendAdd::Create(GFX_PIXELFORMAT_RG11B10_UFLOAT_PACK32);
 	CPassLuminanceThreshold::Create(GFX_PIXELFORMAT_RG11B10_UFLOAT_PACK32);
+	CPassAutoExposure::Create(GFX_PIXELFORMAT_RG11B10_UFLOAT_PACK32);
 	CPassColorGrading::Create(GFX_PIXELFORMAT_RG11B10_UFLOAT_PACK32);
 	CPassFinal::Create(GFX_PIXELFORMAT_RGBA8_UNORM_PACK8);
 
@@ -138,6 +140,7 @@ void CRenderSystem::CreatePasses(void)
 	m_pPassBloomBlurHorizontal = new CPassBlurHorizontal(this);
 	m_pPassBloomBlurVertical = new CPassBlurVertical(this);
 	m_pPassBloomBlendAdd = new CPassBlendAdd(this);
+	m_pPassAutoExposure = new CPassAutoExposure(this);
 	m_pPassColorGrading = new CPassColorGrading(this);
 	m_pPassFinal = new CPassFinal(this);
 }
@@ -211,6 +214,7 @@ void CRenderSystem::DestroyPasses(void)
 	CPassBlurVertical::Destroy();
 	CPassBlendAdd::Destroy();
 	CPassLuminanceThreshold::Destroy();
+	CPassAutoExposure::Destroy();
 	CPassColorGrading::Destroy();
 	CPassFinal::Destroy();
 
@@ -229,6 +233,7 @@ void CRenderSystem::DestroyPasses(void)
 	delete m_pPassBloomBlurHorizontal;
 	delete m_pPassBloomBlurVertical;
 	delete m_pPassBloomBlendAdd;
+	delete m_pPassAutoExposure;
 	delete m_pPassColorGrading;
 	delete m_pPassFinal;
 }

@@ -104,6 +104,7 @@
 #define PASS_BLUR_VERTICAL_NAME                            HashValue("PassBlurVertical")
 #define PASS_BLEND_ADD_NAME                                HashValue("PassBlendAdd")
 #define PASS_LUMINANCE_THRESHOLD_NAME                      HashValue("PassLuminanceThreshold")
+#define PASS_AUTO_EXPOSURE_NAME                            HashValue("PassAutoExposure")
 #define PASS_COLOR_GRADING_NAME                            HashValue("PassColorGrading")
 #define PASS_FINAL_NAME                                    HashValue("PassFinal")
 
@@ -278,6 +279,7 @@ private:
 	CPassBlurHorizontal* m_pPassBloomBlurHorizontal;
 	CPassBlurVertical* m_pPassBloomBlurVertical;
 	CPassBlendAdd* m_pPassBloomBlendAdd;
+	CPassAutoExposure* m_pPassAutoExposure;
 	CPassColorGrading* m_pPassColorGrading;
 	CPassFinal* m_pPassFinal;
 
