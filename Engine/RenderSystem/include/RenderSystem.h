@@ -17,6 +17,7 @@
 #include "RenderSystem/include/PassBlurVertical.h"
 #include "RenderSystem/include/PassBlendAdd.h"
 #include "RenderSystem/include/PassLuminanceThreshold.h"
+#include "RenderSystem/include/PassAutoExposure.h"
 #include "RenderSystem/include/PassColorGrading.h"
 #include "RenderSystem/include/PassFinal.h"
 
@@ -155,6 +156,7 @@ class CALL_API CRenderSystem
 	friend class CPassBlurVertical;
 	friend class CPassBlendAdd;
 	friend class CPassLuminanceThreshold;
+	friend class CPassAutoExposure;
 	friend class CPassColorGrading;
 	friend class CPassFinal;
 

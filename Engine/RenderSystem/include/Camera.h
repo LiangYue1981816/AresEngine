@@ -24,6 +24,7 @@ class CALL_API CCamera
 	friend class CPassBlurVertical;
 	friend class CPassBlendAdd;
 	friend class CPassLuminanceThreshold;
+	friend class CPassAutoExposure;
 	friend class CPassColorGrading;
 	friend class CPassFinal;
 
