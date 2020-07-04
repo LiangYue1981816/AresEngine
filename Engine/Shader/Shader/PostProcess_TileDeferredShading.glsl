@@ -67,7 +67,7 @@ void main()
 	vec4 pixelColorGBuffer0 = subpassLoad(texGBuffer0);
 	vec4 pixelColorGBuffer1 = subpassLoad(texGBuffer1);
 
-	float depth = UnpackFloat(texture(texDepth, inTexcoord.xy));
+	float depth = texture(texDepth, inTexcoord.xy).r;
 	vec3 worldPosition = ScreenToWorldPosition(inTexcoord.xy, depth, cameraProjectionInverseMatrix, cameraViewInverseMatrix).xyz;
 	vec3 worldCameraPosition = (cameraViewInverseMatrix * vec4(0.0, 0.0, 0.0, 1.0)).xyz;
 	vec3 worldViewDirection = normalize(worldCameraPosition - worldPosition);

@@ -58,7 +58,7 @@ void main()
 	projectCoord.xy = projectCoord.xy / projectCoord.w;
  	projectCoord.xy = projectCoord.xy * 0.5 + 0.5;
 
-	float depth = UnpackFloat(texture(texDepth, projectCoord.xy));
+	float depth = texture(texDepth, projectCoord.xy).r;
 	vec3 worldPosition = ScreenToWorldPosition(projectCoord.xy, depth, cameraProjectionInverseMatrix, cameraViewInverseMatrix).xyz;
 	vec3 worldCameraPosition = (cameraViewInverseMatrix * vec4(0.0, 0.0, 0.0, 1.0)).xyz;
 	vec3 worldViewDirection = normalize(worldCameraPosition - worldPosition);
