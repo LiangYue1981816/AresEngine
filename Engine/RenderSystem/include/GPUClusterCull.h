@@ -1,7 +1,7 @@
 #pragma once
 #include "PreHeader.h"
 
-
+/*
 class CALL_API CGPUCluster
 {
 	friend class CRenderSystem;
@@ -41,3 +41,4 @@ private:
 	CGfxStorageBufferPtr m_ptrFullLightListBuffer;
 	CGfxStorageBufferPtr m_ptrCullLightListBuffer;
 };
+*/

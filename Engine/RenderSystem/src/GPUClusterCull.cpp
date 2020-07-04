@@ -1,7 +1,7 @@
 #include "EngineHeader.h"
 #include "RenderHeader.h"
 
-
+/*
 CGPUCluster::CGPUCluster(void)
 	: m_pCamera(nullptr)
 
@@ -120,3 +120,4 @@ void CGPUCluster::Compute(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxComman
 	}
 	GfxRenderer()->CmdPopDebugGroup(ptrCommandBuffer);
 }
+*/
