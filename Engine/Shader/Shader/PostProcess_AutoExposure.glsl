@@ -51,10 +51,7 @@ layout (location = 0) out vec4 outFragColor;
 void main()
 {
 	vec3 color = UnpackHDR(texture(texColor, inTexcoord));
-
-	color = ToneMapping(color);
-
-	outFragColor.rgb = color;
+	outFragColor.rgb = color * 0.5;
 	outFragColor.a = 1.0;
 }
 #endif
