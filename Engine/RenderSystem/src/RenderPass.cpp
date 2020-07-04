@@ -130,17 +130,17 @@ void CRenderSystem::InternalPassBloom(CTaskPool& taskPool, CTaskGraph& taskGraph
 	m_pPassBloomBlendAdd->Render(taskPool, taskGraph, ptrCommandBuffer);
 }
 
-void CRenderSystem::InternalPassEyeAdaptation(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer, CCamera* pCamera, uint32_t rtInColor, uint32_t rtOutColor, uint32_t rtTempColor)
+void CRenderSystem::InternalPassEyeAdaptation(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer, CCamera* pCamera, uint32_t rtInColor, uint32_t rtOutColor, uint32_t rtOutScaleColor)
 {
 	m_pPassCopyColor->SetCamera(pCamera);
 	m_pPassCopyColor->SetInputTexture(m_ptrRenderTextures[rtInColor]);
-	m_pPassCopyColor->SetOutputTexture(m_ptrRenderTextures[rtTempColor]);
+	m_pPassCopyColor->SetOutputTexture(m_ptrRenderTextures[rtOutScaleColor]);
 	m_pPassCopyColor->Render(taskPool, taskGraph, ptrCommandBuffer);
 
-	m_pPassCopyColor->SetCamera(pCamera);
-	m_pPassCopyColor->SetInputTexture(m_ptrRenderTextures[rtTempColor]);
-	m_pPassCopyColor->SetOutputTexture(m_ptrRenderTextures[rtOutColor]);
-	m_pPassCopyColor->Render(taskPool, taskGraph, ptrCommandBuffer);
+	m_pPassAutoExposure->SetCamera(pCamera);
+	m_pPassAutoExposure->SetInputTexture(m_ptrRenderTextures[rtInColor]);
+	m_pPassAutoExposure->SetOutputTexture(m_ptrRenderTextures[rtOutColor]);
+	m_pPassAutoExposure->Render(taskPool, taskGraph, ptrCommandBuffer);
 }
 
 void CRenderSystem::InternalPassColorGrading(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer, CCamera* pCamera, uint32_t rtInColor, uint32_t rtOutColor)

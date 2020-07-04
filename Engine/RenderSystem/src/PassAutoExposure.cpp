@@ -89,7 +89,7 @@ void CPassAutoExposure::Render(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxC
 			const float znear = 0.0f;
 			const float zfar = 1.0f;
 
-			m_pRenderQueue->CmdDraw(taskPool, taskGraph, ptrCommandBuffer, m_ptrDescriptorSetPass, PASS_COLOR_GRADING_NAME, scissor, viewport, znear, zfar, 0xffffffff, false);
+			m_pRenderQueue->CmdDraw(taskPool, taskGraph, ptrCommandBuffer, m_ptrDescriptorSetPass, PASS_AUTO_EXPOSURE_NAME, scissor, viewport, znear, zfar, 0xffffffff, false);
 		}
 		GfxRenderer()->CmdEndRenderPass(ptrCommandBuffer);
 		GfxRenderer()->CmdSetImageLayout(ptrCommandBuffer, m_ptrOutputColorTexture, GFX_IMAGE_LAYOUT_COLOR_READ_ONLY_OPTIMAL);
