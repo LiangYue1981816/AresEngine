@@ -224,8 +224,10 @@ public:
 
 private:
 	void UpdateCamera(CTaskPool& taskPool, CTaskGraph& taskGraph, CCamera* pCamera, uint32_t mask, bool bComputeLOD);
-	void UpdateScene(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer);
-	void UpdateCluster(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer, CCamera* pCamera);
+
+private:
+	void ComputeScene(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer);
+	void ComputeCluster(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer, CCamera* pCamera);
 
 private:
 	void RenderUnlit(CTaskPool& taskPool, CTaskGraph& taskGraph, CCamera* pCamera, bool bPresent);

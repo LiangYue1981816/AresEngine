@@ -16,7 +16,7 @@ void CRenderSystem::RenderForwardShading(CTaskPool& taskPool, CTaskGraph& taskGr
 	{
 		GfxRenderer()->BeginRecord(ptrComputeCommandBuffer);
 		{
-			UpdateScene(taskPool, taskGraph, ptrComputeCommandBuffer);
+			ComputeScene(taskPool, taskGraph, ptrComputeCommandBuffer);
 		}
 		GfxRenderer()->EndRecord(ptrComputeCommandBuffer);
 		GfxRenderer()->Submit(ptrComputeCommandBuffer, pWaitSemaphore);
