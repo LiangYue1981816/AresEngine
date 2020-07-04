@@ -31,7 +31,6 @@ private:
 private:
 	CGfxShader* m_pShaderCompute;
 	CGfxPipelineCompute* m_pPipelineCompute;
-
 	CGfxDescriptorSetPtr m_ptrDescriptorSetEyeHistogram;
 	CGfxDescriptorSetPtr m_ptrDescriptorSetAutoExposure;
 	CGfxRenderTexturePtr m_ptrInputColorTexture;
