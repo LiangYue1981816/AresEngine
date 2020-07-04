@@ -76,12 +76,12 @@ private:
 	eastl::unordered_set<int> m_transferIndexBuffer[MAX_THREAD_COUNT];
 
 private:
-	CGfxStorageBufferPtr m_ptrInstanceDataBuffer;
-	CGfxStorageBufferPtr m_ptrTransferDataBuffer;
-	CGfxStorageBufferPtr m_ptrTransferIndexBuffer;
-
-private:
 	CGfxShader* m_pShaderCompute;
 	CGfxPipelineCompute* m_pPipelineCompute;
 	CGfxDescriptorSetPtr m_ptrDescriptorSet;
+
+private:
+	CGfxStorageBufferPtr m_ptrInstanceDataBuffer;
+	CGfxStorageBufferPtr m_ptrTransferDataBuffer;
+	CGfxStorageBufferPtr m_ptrTransferIndexBuffer;
 };
