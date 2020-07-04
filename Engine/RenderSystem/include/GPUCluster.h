@@ -31,6 +31,7 @@ private:
 	CGfxPipelineCompute* m_pClusterPipelineCompute;
 	CGfxDescriptorSetPtr m_ptrClusterDescriptorSet;
 
+private:
 	CGfxShader* m_pClusterCullShaderCompute;
 	CGfxPipelineCompute* m_pClusterCullPipelineCompute;
 	CGfxDescriptorSetPtr m_ptrClusterCullDescriptorSet;
