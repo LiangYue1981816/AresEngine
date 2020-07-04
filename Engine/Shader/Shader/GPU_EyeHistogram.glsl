@@ -5,8 +5,7 @@ precision highp float;
 #include "engine.inc"
 #include "common.inc"
 
-USE_CAMERA_UNIFORM
-USE_CLUSTER_DATA_STORAGE
+USE_COLOR_TEXTURE_UNIFORM
 
 // Output
 // ...
@@ -16,23 +15,5 @@ USE_CLUSTER_DATA_STORAGE
 
 void main()
 {
-	int indexTile = int(gl_WorkGroupID.z * gl_NumWorkGroups.x * gl_NumWorkGroups.y + gl_WorkGroupID.y * gl_NumWorkGroups.x + gl_WorkGroupID.x);
 
-	vec2 minScreenPosition = vec2(float(gl_WorkGroupID.x + uint(0)), float(gl_WorkGroupID.y + uint(0))) / vec2(float(gl_NumWorkGroups.x), float(gl_NumWorkGroups.y));
-	vec2 maxScreenPosition = vec2(float(gl_WorkGroupID.x + uint(1)), float(gl_WorkGroupID.y + uint(1))) / vec2(float(gl_NumWorkGroups.x), float(gl_NumWorkGroups.y));
-	float minDepthValue = -cameraZNear * pow(cameraZFar / cameraZNear, float(gl_WorkGroupID.z + uint(0)) / float(gl_NumWorkGroups.z));
-	float maxDepthValue = -cameraZNear * pow(cameraZFar / cameraZNear, float(gl_WorkGroupID.z + uint(1)) / float(gl_NumWorkGroups.z));
-
-	vec3 minViewPosition = ScreenToViewPosition(minScreenPosition, 0.0, cameraProjectionInverseMatrix).xyz;
-	vec3 maxViewPosition = ScreenToViewPosition(maxScreenPosition, 0.0, cameraProjectionInverseMatrix).xyz;
-
-	vec3 minViewPositionNear = LineIntersectionToZPlane(vec3(0.0), minViewPosition, minDepthValue);
-	vec3 maxViewPositionNear = LineIntersectionToZPlane(vec3(0.0), maxViewPosition, minDepthValue);
-	vec3 minViewPositionFar = LineIntersectionToZPlane(vec3(0.0), minViewPosition, maxDepthValue);
-	vec3 maxViewPositionFar = LineIntersectionToZPlane(vec3(0.0), maxViewPosition, maxDepthValue);
-
-	vec3 minAABBPosition = min(min(minViewPositionNear, maxViewPositionNear), min(minViewPositionFar, maxViewPositionFar));
-	vec3 maxAABBPosition = max(max(minViewPositionNear, maxViewPositionNear), max(minViewPositionFar, maxViewPositionFar));
-
-	SetCluster(indexTile, minAABBPosition, maxAABBPosition);
 }

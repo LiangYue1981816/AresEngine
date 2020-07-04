@@ -20,6 +20,7 @@ private:
 
 public:
 	void SetCamera(CCamera* pCamera);
+	void SetInputReferenceTexture(CGfxRenderTexturePtr ptrInputReferenceTexture);
 	void SetInputTexture(CGfxRenderTexturePtr ptrColorTexture);
 	void SetOutputTexture(CGfxRenderTexturePtr ptrColorTexture);
 
@@ -28,8 +29,13 @@ private:
 
 
 private:
-	CGfxDescriptorSetPtr m_ptrDescriptorSetPass;
+	CGfxShader* m_pShaderCompute;
+	CGfxPipelineCompute* m_pPipelineCompute;
+
+	CGfxDescriptorSetPtr m_ptrDescriptorSetEyeHistogram;
+	CGfxDescriptorSetPtr m_ptrDescriptorSetAutoExposure;
 	CGfxRenderTexturePtr m_ptrInputColorTexture;
+	CGfxRenderTexturePtr m_ptrInputReferenceTexture;
 
 private:
 	CGfxFrameBufferPtr m_ptrFrameBuffer;
