@@ -366,6 +366,7 @@
     <ClInclude Include="..\..\Engine\RenderSystem\include\GPUCluster.h" />
     <ClInclude Include="..\..\Engine\RenderSystem\include\GPUScene.h" />
     <ClInclude Include="..\..\Engine\RenderSystem\include\InstanceBufferPool.h" />
+    <ClInclude Include="..\..\Engine\RenderSystem\include\PassAutoExposure.h" />
     <ClInclude Include="..\..\Engine\RenderSystem\include\PassBase.h" />
     <ClInclude Include="..\..\Engine\RenderSystem\include\PassBlendAdd.h" />
     <ClInclude Include="..\..\Engine\RenderSystem\include\PassBlit.h" />
@@ -733,6 +734,7 @@
     <ClCompile Include="..\..\Engine\RenderSystem\src\GPUCluster.cpp" />
     <ClCompile Include="..\..\Engine\RenderSystem\src\GPUScene.cpp" />
     <ClCompile Include="..\..\Engine\RenderSystem\src\InstanceBufferPool.cpp" />
+    <ClCompile Include="..\..\Engine\RenderSystem\src\PassAutoExposure.cpp" />
     <ClCompile Include="..\..\Engine\RenderSystem\src\PassBase.cpp" />
     <ClCompile Include="..\..\Engine\RenderSystem\src\PassBlendAdd.cpp" />
     <ClCompile Include="..\..\Engine\RenderSystem\src\PassBlit.cpp" />
