@@ -104,7 +104,7 @@ const InstanceData& CGPUScene::GetInstanceData(int index) const
 	}
 }
 
-void CGPUScene::Update(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer)
+void CGPUScene::Compute(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer)
 {
 	// Update
 	eastl::vector<InstanceData> datas;
