@@ -44,8 +44,8 @@ public:
 private:
 	static bool CompareForFrontToBack(const int& index0, const int& index1)
 	{
-		const glm::vec4& center0 = RenderSystem()->GetInstanceData(index0).center;
-		const glm::vec4& center1 = RenderSystem()->GetInstanceData(index1).center;
+		const glm::vec4& center0 = RenderSystem()->GetInstance(index0).center;
+		const glm::vec4& center1 = RenderSystem()->GetInstance(index1).center;
 		float distance0 = glm::distance2(glm::vec3(center0.x, center0.y, center0.z), cameraPosition);
 		float distance1 = glm::distance2(glm::vec3(center1.x, center1.y, center1.z), cameraPosition);
 		return distance0 < distance1;
@@ -53,8 +53,8 @@ private:
 
 	static bool CompareForBackToFront(const int& index0, const int& index1)
 	{
-		const glm::vec4& center0 = RenderSystem()->GetInstanceData(index0).center;
-		const glm::vec4& center1 = RenderSystem()->GetInstanceData(index1).center;
+		const glm::vec4& center0 = RenderSystem()->GetInstance(index0).center;
+		const glm::vec4& center1 = RenderSystem()->GetInstance(index1).center;
 		float distance0 = glm::distance2(glm::vec3(center0.x, center0.y, center0.z), cameraPosition);
 		float distance1 = glm::distance2(glm::vec3(center1.x, center1.y, center1.z), cameraPosition);
 		return distance0 > distance1;
