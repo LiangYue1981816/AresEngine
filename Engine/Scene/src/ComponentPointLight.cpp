@@ -4,7 +4,7 @@
 CComponentPointLight::CComponentPointLight(uint32_t name)
 	: CComponent(name)
 	, m_indexInstance(INVALID_VALUE)
-	, m_bNeedUpdateInstanceData{ false }
+	, m_bNeedUpdateInstance{ false }
 
 	, m_distance2(0.0f)
 	, m_screenSize2(0.0f)
@@ -22,7 +22,7 @@ CComponentPointLight::CComponentPointLight(uint32_t name)
 CComponentPointLight::CComponentPointLight(const CComponentPointLight& component)
 	: CComponent(component)
 	, m_indexInstance(INVALID_VALUE)
-	, m_bNeedUpdateInstanceData{ false }
+	, m_bNeedUpdateInstance{ false }
 
 	, m_distance2(0.0f)
 	, m_screenSize2(0.0f)
@@ -70,22 +70,22 @@ void CComponentPointLight::SetColor(float red, float green, float blue)
 {
 	m_color = glm::vec4(red, green, blue, 0.0f);
 
-	m_instanceData[0].SetLightColor(m_color);
-	m_instanceData[1].SetLightColor(m_color);
+	m_instances[0].SetLightColor(m_color);
+	m_instances[1].SetLightColor(m_color);
 
-	m_bNeedUpdateInstanceData[0] = true;
-	m_bNeedUpdateInstanceData[1] = true;
+	m_bNeedUpdateInstance[0] = true;
+	m_bNeedUpdateInstance[1] = true;
 }
 
 void CComponentPointLight::SetAttenuation(float linear, float square, float constant, float range)
 {
 	m_attenuation = glm::vec4(linear, square, constant, range);
 
-	m_instanceData[0].SetLightAttenuation(m_attenuation);
-	m_instanceData[1].SetLightAttenuation(m_attenuation);
+	m_instances[0].SetLightAttenuation(m_attenuation);
+	m_instances[1].SetLightAttenuation(m_attenuation);
 
-	m_bNeedUpdateInstanceData[0] = true;
-	m_bNeedUpdateInstanceData[1] = true;
+	m_bNeedUpdateInstance[0] = true;
+	m_bNeedUpdateInstance[1] = true;
 }
 
 void CComponentPointLight::SetCullDistance(float distance)
@@ -103,14 +103,14 @@ bool CComponentPointLight::TaskUpdate(float gameTime, float deltaTime)
 	int indexFrame = Engine()->GetFrameCount() % 2;
 	glm::mat4 transformMatrix = m_pParentNode->GetWorldTransform();
 
-	if (m_instanceData[indexFrame].transformMatrix != transformMatrix) {
-		m_instanceData[indexFrame].transformMatrix  = transformMatrix;
+	if (m_instances[indexFrame].transformMatrix != transformMatrix) {
+		m_instances[indexFrame].transformMatrix  = transformMatrix;
 
 		if (m_ptrMeshDraw && m_ptrMaterialCullFaceBack && m_ptrMaterialCullFaceFront) {
 			m_aabb = m_ptrMeshDraw->GetAABB() * transformMatrix;
 		}
 
-		m_bNeedUpdateInstanceData[indexFrame] = true;
+		m_bNeedUpdateInstance[indexFrame] = true;
 		return true;
 	}
 	else {
@@ -142,10 +142,10 @@ bool CComponentPointLight::TaskUpdateCamera(CGfxCamera* pCamera, CRenderQueue* p
 			return false;
 		}
 
-		if (m_bNeedUpdateInstanceData[indexFrame]) {
-			m_bNeedUpdateInstanceData[indexFrame] = false;
-			m_instanceData[indexFrame].SetCenter(glm::vec4(m_aabb.center, 1.0f));
-			RenderSystem()->ModifyInstanceData(m_indexInstance, m_instanceData[indexFrame], indexThread);
+		if (m_bNeedUpdateInstance[indexFrame]) {
+			m_bNeedUpdateInstance[indexFrame] = false;
+			m_instances[indexFrame].SetCenter(glm::vec4(m_aabb.center, 1.0f));
+			RenderSystem()->ModifyInstanceData(m_indexInstance, m_instances[indexFrame], indexThread);
 		}
 
 		if (glm::sphere(m_aabb.center, m_attenuation.w).inside(pCamera->GetPosition())) {

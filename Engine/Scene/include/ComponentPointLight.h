@@ -32,8 +32,8 @@ private:
 
 private:
 	int m_indexInstance;
-	bool m_bNeedUpdateInstanceData[2];
-	InstanceData m_instanceData[2];
+	bool m_bNeedUpdateInstance[2];
+	InstanceData m_instances[2];
 
 private:
 	float m_distance2;

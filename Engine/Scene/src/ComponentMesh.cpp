@@ -4,7 +4,7 @@
 CComponentMesh::CComponentMesh(uint32_t name)
 	: CComponent(name)
 	, m_indexInstance(INVALID_VALUE)
-	, m_bNeedUpdateInstanceData{ false }
+	, m_bNeedUpdateInstance{ false }
 
 	, m_indexLOD(-1)
 	, m_distance2{ 0.0f }
@@ -20,7 +20,7 @@ CComponentMesh::CComponentMesh(uint32_t name)
 CComponentMesh::CComponentMesh(const CComponentMesh& component)
 	: CComponent(component)
 	, m_indexInstance(INVALID_VALUE)
-	, m_bNeedUpdateInstanceData{ false }
+	, m_bNeedUpdateInstance{ false }
 
 	, m_indexLOD(-1)
 	, m_distance2{ 0.0f }
@@ -97,8 +97,8 @@ bool CComponentMesh::TaskUpdate(float gameTime, float deltaTime)
 	int indexFrame = Engine()->GetFrameCount() % 2;
 	glm::mat4 transformMatrix = m_pParentNode->GetWorldTransform();
 
-	if (m_instanceData[indexFrame].transformMatrix != transformMatrix) {
-		m_instanceData[indexFrame].transformMatrix  = transformMatrix;
+	if (m_instances[indexFrame].transformMatrix != transformMatrix) {
+		m_instances[indexFrame].transformMatrix  = transformMatrix;
 
 		for (int indexLOD = MAX_LOD_COUNT - 1; indexLOD >= 0; indexLOD--) {
 			if (m_ptrMeshDraw[indexLOD] && m_ptrMaterial[indexLOD]) {
@@ -106,7 +106,7 @@ bool CComponentMesh::TaskUpdate(float gameTime, float deltaTime)
 			}
 		}
 
-		m_bNeedUpdateInstanceData[indexFrame] = true;
+		m_bNeedUpdateInstance[indexFrame] = true;
 		return true;
 	}
 	else {
@@ -135,10 +135,10 @@ bool CComponentMesh::TaskUpdateCamera(CGfxCamera* pCamera, CRenderQueue* pRender
 			return false;
 		}
 
-		if (m_bNeedUpdateInstanceData[indexFrame]) {
-			m_bNeedUpdateInstanceData[indexFrame] = false;
-			m_instanceData[indexFrame].SetCenter(glm::vec4(m_aabb[m_indexLOD].center, 1.0f));
-			RenderSystem()->ModifyInstanceData(m_indexInstance, m_instanceData[indexFrame], indexThread);
+		if (m_bNeedUpdateInstance[indexFrame]) {
+			m_bNeedUpdateInstance[indexFrame] = false;
+			m_instances[indexFrame].SetCenter(glm::vec4(m_aabb[m_indexLOD].center, 1.0f));
+			RenderSystem()->ModifyInstanceData(m_indexInstance, m_instances[indexFrame], indexThread);
 		}
 
 		pRenderQueue->Add(m_ptrMaterial[m_indexLOD], m_ptrMeshDraw[m_indexLOD], m_indexInstance, indexThread);
