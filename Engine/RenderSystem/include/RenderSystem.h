@@ -200,12 +200,12 @@ public:
 	int GetPostProcessInstnaceIndex(void) const;
 
 public:
+	CUniformEngine* GetEngineUniform(void) const;
+
 	const CGfxUniformBufferPtr GetEngineUniformBuffer(void) const;
 	const CGfxMultiInstanceBufferPtr GetInstanceBuffer(uint32_t instanceFormat, int instanceBinding);
 
 public:
-	CUniformEngine* GetEngineUniform(void) const;
-
 	const CGfxStorageBufferPtr GetClusterBuffer(void) const;
 	const CGfxStorageBufferPtr GetFullLightListBuffer(void) const;
 	const CGfxStorageBufferPtr GetCullLightListBuffer(void) const;
