@@ -181,6 +181,7 @@ private:
 	void CreatePasses(void);
 	void CreateComputes(void);
 	void CreateCommandBuffers(void);
+	void CreateStorageBuffers(void);
 	void CreateRenderTextures(void);
 	void CreateRenderTexture(uint32_t name, CGfxRenderTexturePtr ptrRenderTexture);
 	void CreateRenderTexture(uint32_t name, GfxPixelFormat format, int width, int height, int samples = 1, bool bTransient = false);
@@ -190,6 +191,7 @@ private:
 	void DestroyPasses(void);
 	void DestroyComputes(void);
 	void DestroyCommandBuffers(void);
+	void DestroyStorageBuffers(void);
 	void DestroyRenderTextures(void);
 
 public:

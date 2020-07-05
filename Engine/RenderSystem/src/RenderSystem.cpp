@@ -87,10 +87,11 @@ CUniformEngine* CRenderSystem::GetEngineUniform(void) const
 void CRenderSystem::Create(GfxApi api, void* hInstance, void* hWnd, void* hDC, int width, int height, GfxPixelFormat format)
 {
 	CreateRenderer(api, hInstance, hWnd, hDC, width, height, format);
-	CreateCommandBuffers();
-	CreateRenderTextures();
-	CreateComputes();
 	CreatePasses();
+	CreateComputes();
+	CreateCommandBuffers();
+	CreateStorageBuffers();
+	CreateRenderTextures();
 }
 
 void CRenderSystem::CreateRenderer(GfxApi api, void* hInstance, void* hWnd, void* hDC, int width, int height, GfxPixelFormat format)
@@ -166,6 +167,11 @@ void CRenderSystem::CreateCommandBuffers(void)
 	m_ptrGraphicCommandBuffer[2] = GfxRenderer()->NewCommandBuffer(0, true);
 }
 
+void CRenderSystem::CreateStorageBuffers(void)
+{
+
+}
+
 void CRenderSystem::CreateRenderTextures(void)
 {
 	CreateRenderTexture(RENDER_TEXTURE_SWAPCHAIN_COLOR0, GfxRenderer()->GetSwapChain()->GetFrameTexture(0));
@@ -199,6 +205,7 @@ void CRenderSystem::Destroy(void)
 {
 	DestroyPasses();
 	DestroyComputes();
+	DestroyStorageBuffers();
 	DestroyRenderTextures();
 	DestroyCommandBuffers();
 	DestroyRenderer();
@@ -266,6 +273,11 @@ void CRenderSystem::DestroyCommandBuffers(void)
 	m_ptrGraphicCommandBuffer[0].Release();
 	m_ptrGraphicCommandBuffer[1].Release();
 	m_ptrGraphicCommandBuffer[2].Release();
+}
+
+void CRenderSystem::DestroyStorageBuffers(void)
+{
+
 }
 
 void CRenderSystem::DestroyRenderTextures(void)
