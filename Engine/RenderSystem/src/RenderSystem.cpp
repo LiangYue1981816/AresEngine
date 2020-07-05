@@ -25,6 +25,7 @@ CRenderSystem::CRenderSystem(void)
 
 	, m_pGPUScene(nullptr)
 	, m_pGPUCluster(nullptr)
+	, m_pGPUClusterCull(nullptr)
 
 	, m_pPassPreZ(nullptr)
 	, m_pPassShadow(nullptr)
@@ -149,6 +150,7 @@ void CRenderSystem::CreateComputes(void)
 {
 	m_pGPUScene = new CGPUScene(this);
 	m_pGPUCluster = new CGPUCluster(this);
+	m_pGPUClusterCull = new CGPUClusterCull(this);
 }
 
 void CRenderSystem::CreateCommandBuffers(void)
@@ -261,6 +263,7 @@ void CRenderSystem::DestroyPasses(void)
 
 void CRenderSystem::DestroyComputes(void)
 {
+	delete m_pGPUClusterCull;
 	delete m_pGPUCluster;
 	delete m_pGPUScene;
 }

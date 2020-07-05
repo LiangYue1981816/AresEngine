@@ -8,6 +8,7 @@ class CALL_API CCamera
 	friend class CRenderSystem;
 	friend class CGPUScene;
 	friend class CGPUCluster;
+	friend class CGPUClusterCull;
 	friend class CPassBase;
 	friend class CPassBlit;
 	friend class CPassPreZ;

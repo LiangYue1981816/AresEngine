@@ -144,6 +144,7 @@ class CALL_API CRenderSystem
 	friend class CEngine;
 	friend class CGPUScene;
 	friend class CGPUCluster;
+	friend class CGPUClusterCull;
 	friend class CPassBase;
 	friend class CPassBlit;
 	friend class CPassPreZ;
@@ -285,6 +286,7 @@ private:
 private:
 	CGPUScene* m_pGPUScene;
 	CGPUCluster* m_pGPUCluster;
+	CGPUClusterCull* m_pGPUClusterCull;
 
 private:
 	CPassPreZ* m_pPassPreZ;

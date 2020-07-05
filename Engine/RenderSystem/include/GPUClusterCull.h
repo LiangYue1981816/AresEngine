@@ -1,20 +1,16 @@
 #pragma once
 #include "PreHeader.h"
 
-/*
-class CALL_API CGPUCluster
+
+class CALL_API CGPUClusterCull
 {
 	friend class CRenderSystem;
 
 
 private:
-	CGPUCluster(CRenderSystem* pRenderSystem);
-	virtual ~CGPUCluster(void);
+	CGPUClusterCull(CRenderSystem* pRenderSystem);
+	virtual ~CGPUClusterCull(void);
 
-
-public:
-	const CGfxStorageBufferPtr GetClusterBuffer(void) const;
-	const CGfxStorageBufferPtr GetCullLightListBuffer(void) const;
 
 public:
 	void SetCamera(CCamera* pCamera);
@@ -27,21 +23,10 @@ private:
 	CCamera* m_pCamera;
 
 private:
-	CGfxShader* m_pClusterShaderCompute;
-	CGfxPipelineCompute* m_pClusterPipelineCompute;
-	CGfxDescriptorSetPtr m_ptrClusterDescriptorSet;
-
-private:
-	CGfxShader* m_pClusterCullShaderCompute;
-	CGfxPipelineCompute* m_pClusterCullPipelineCompute;
-	CGfxDescriptorSetPtr m_ptrClusterCullDescriptorSet;
-
-private:
-	CGfxStorageBufferPtr m_ptrClusterBuffer;
-	CGfxStorageBufferPtr m_ptrFullLightListBuffer;
-	CGfxStorageBufferPtr m_ptrCullLightListBuffer;
+	CGfxShader* m_pShaderCompute;
+	CGfxPipelineCompute* m_pPipelineCompute;
+	CGfxDescriptorSetPtr m_ptrDescriptorSet;
 
 private:
 	CRenderSystem* m_pRenderSystem;
 };
-*/
