@@ -26,32 +26,15 @@ void CPassAutoExposure::Destroy(void)
 
 CPassAutoExposure::CPassAutoExposure(CRenderSystem* pRenderSystem)
 	: CPassBlit("PassAutoExposure.material", pRenderSystem)
-	, m_pShaderCompute(nullptr)
-	, m_pPipelineCompute(nullptr)
 {
-	{
-		char szFileName[] = "GPU_EyeHistogram.glsl";
-		char szBinFileName[_MAX_STRING] = { 0 };
+	CGfxDescriptorLayoutPtr ptrDescriptorLayout = GfxRenderer()->NewDescriptorLayout(DESCRIPTOR_SET_PASS);
+	ptrDescriptorLayout->SetUniformBlockBinding(UNIFORM_ENGINE_NAME, UNIFORM_ENGINE_BIND);
+	ptrDescriptorLayout->SetUniformBlockBinding(UNIFORM_CAMERA_NAME, UNIFORM_CAMERA_BIND);
+	ptrDescriptorLayout->SetSampledImageBinding(UNIFORM_COLOR_TEXTURE_NAME, UNIFORM_COLOR_TEXTURE_BIND);
+	ptrDescriptorLayout->Create();
 
-		sprintf(szBinFileName, "%x.comp", HashValue(szFileName));
-		ShaderCompiler()->Compile(FileManager()->GetFullName(szFileName), szBinFileName, shaderc_compute_shader);
-
-		m_pShaderCompute = GfxRenderer()->CreateShader(szBinFileName, compute_shader);
-		m_pPipelineCompute = GfxRenderer()->CreatePipelineCompute(m_pShaderCompute);
-
-		m_ptrDescriptorSet = GfxRenderer()->NewDescriptorSet(HashValue(szFileName), m_pPipelineCompute->GetDescriptorLayout(DESCRIPTOR_SET_PASS));
-	}
-
-	{
-		CGfxDescriptorLayoutPtr ptrDescriptorLayout = GfxRenderer()->NewDescriptorLayout(DESCRIPTOR_SET_PASS);
-		ptrDescriptorLayout->SetUniformBlockBinding(UNIFORM_ENGINE_NAME, UNIFORM_ENGINE_BIND);
-		ptrDescriptorLayout->SetUniformBlockBinding(UNIFORM_CAMERA_NAME, UNIFORM_CAMERA_BIND);
-		ptrDescriptorLayout->SetSampledImageBinding(UNIFORM_COLOR_TEXTURE_NAME, UNIFORM_COLOR_TEXTURE_BIND);
-		ptrDescriptorLayout->Create();
-
-		m_ptrDescriptorSetPass = GfxRenderer()->NewDescriptorSet(HashValueFormat("%x_%p", PASS_AUTO_EXPOSURE_NAME, this), ptrDescriptorLayout);
-		m_ptrDescriptorSetPass->SetUniformBuffer(UNIFORM_ENGINE_NAME, m_pRenderSystem->GetEngineUniformBuffer(), 0, m_pRenderSystem->GetEngineUniformBuffer()->GetSize());
-	}
+	m_ptrDescriptorSetPass = GfxRenderer()->NewDescriptorSet(HashValueFormat("%x_%p", PASS_AUTO_EXPOSURE_NAME, this), ptrDescriptorLayout);
+	m_ptrDescriptorSetPass->SetUniformBuffer(UNIFORM_ENGINE_NAME, m_pRenderSystem->GetEngineUniformBuffer(), 0, m_pRenderSystem->GetEngineUniformBuffer()->GetSize());
 }
 
 CPassAutoExposure::~CPassAutoExposure(void)
@@ -64,16 +47,6 @@ void CPassAutoExposure::SetCamera(CCamera* pCamera)
 	if (m_pCamera != pCamera) {
 		m_pCamera = pCamera;
 		m_ptrDescriptorSetPass->SetUniformBuffer(UNIFORM_CAMERA_NAME, pCamera->GetCameraUniform()->GetUniformBuffer(), 0, pCamera->GetCameraUniform()->GetUniformBuffer()->GetSize());
-	}
-}
-
-void CPassAutoExposure::SetInputReferenceTexture(CGfxRenderTexturePtr ptrInputReferenceTexture)
-{
-	CGfxSampler* pSamplerPoint = GfxRenderer()->CreateSampler(GFX_FILTER_NEAREST, GFX_FILTER_NEAREST, GFX_SAMPLER_MIPMAP_MODE_NEAREST, GFX_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE);
-
-	if (m_ptrInputReferenceTexture != ptrInputReferenceTexture) {
-		m_ptrInputReferenceTexture = ptrInputReferenceTexture;
-		m_ptrDescriptorSet->SetRenderTexture(UNIFORM_COLOR_TEXTURE_NAME, ptrInputReferenceTexture, pSamplerPoint);
 	}
 }
 

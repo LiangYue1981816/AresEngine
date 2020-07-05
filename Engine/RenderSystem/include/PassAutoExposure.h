@@ -20,19 +20,12 @@ private:
 
 public:
 	void SetCamera(CCamera* pCamera);
-	void SetInputReferenceTexture(CGfxRenderTexturePtr ptrInputReferenceTexture);
 	void SetInputTexture(CGfxRenderTexturePtr ptrColorTexture);
 	void SetOutputTexture(CGfxRenderTexturePtr ptrColorTexture);
 
 private:
 	void Render(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer);
 
-
-private:
-	CGfxShader* m_pShaderCompute;
-	CGfxPipelineCompute* m_pPipelineCompute;
-	CGfxDescriptorSetPtr m_ptrDescriptorSet;
-	CGfxRenderTexturePtr m_ptrInputReferenceTexture;
 
 private:
 	CGfxDescriptorSetPtr m_ptrDescriptorSetPass;
