@@ -304,6 +304,11 @@ void CRenderSystem::ModifyInstanceData(int index, const InstanceData &data, int 
 	m_pGPUScene->ModifyInstanceData(index, data, indexThread);
 }
 
+const InstanceData& CRenderSystem::GetInstanceData(int index) const
+{
+	return m_pGPUScene->GetInstanceData(index);
+}
+
 int CRenderSystem::GetDefaultInstanceIndex(void) const
 {
 	return m_pGPUScene->GetDefaultInstanceIndex();
@@ -312,11 +317,6 @@ int CRenderSystem::GetDefaultInstanceIndex(void) const
 int CRenderSystem::GetPostProcessInstnaceIndex(void) const
 {
 	return m_pGPUScene->GetPostProcessInstnaceIndex();
-}
-
-const InstanceData& CRenderSystem::GetInstanceData(int index)
-{
-	return m_pGPUScene->GetInstanceData(index);
 }
 
 const CGfxMultiInstanceBufferPtr CRenderSystem::GetInstanceBuffer(uint32_t instanceFormat, int instanceBinding)
