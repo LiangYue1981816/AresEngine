@@ -2474,12 +2474,6 @@
     <ClCompile Include="..\..\Engine\RenderSystem\src\PassAutoExposure.cpp">
       <Filter>Engine\RenderSystem\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Engine\RenderSystem\src\ComputeCluster.cpp">
-      <Filter>Engine\RenderSystem\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\RenderSystem\src\ComputeScene.cpp">
-      <Filter>Engine\RenderSystem\Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Engine\RenderSystem\src\GPUClusterCull.cpp">
       <Filter>Engine\RenderSystem\Source Files</Filter>
     </ClCompile>

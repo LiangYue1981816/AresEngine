@@ -16,7 +16,9 @@ void CRenderSystem::RenderUnlit(CTaskPool& taskPool, CTaskGraph& taskGraph, CCam
 	{
 		GfxRenderer()->BeginRecord(ptrComputeCommandBuffer);
 		{
-			ComputeScene(taskPool, taskGraph, ptrComputeCommandBuffer);
+			{
+				InternalComputeScene(taskPool, taskGraph, ptrComputeCommandBuffer);
+			}
 		}
 		GfxRenderer()->EndRecord(ptrComputeCommandBuffer);
 		GfxRenderer()->Submit(ptrComputeCommandBuffer, pWaitSemaphore);

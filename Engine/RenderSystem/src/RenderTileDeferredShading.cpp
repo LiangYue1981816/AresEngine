@@ -16,8 +16,15 @@ void CRenderSystem::RenderTileDeferredShading(CTaskPool& taskPool, CTaskGraph& t
 	{
 		GfxRenderer()->BeginRecord(ptrComputeCommandBuffer);
 		{
-			ComputeScene(taskPool, taskGraph, ptrComputeCommandBuffer);
-			ComputeCluster(taskPool, taskGraph, ptrComputeCommandBuffer, pCamera);
+			{
+				InternalComputeScene(taskPool, taskGraph, ptrComputeCommandBuffer);
+			}
+			{
+				InternalComputeCluster(taskPool, taskGraph, ptrComputeCommandBuffer, pCamera);
+			}
+			{
+				InternalComputeClusterCull(taskPool, taskGraph, ptrComputeCommandBuffer, pCamera);
+			}
 		}
 		GfxRenderer()->EndRecord(ptrComputeCommandBuffer);
 		GfxRenderer()->Submit(ptrComputeCommandBuffer, pWaitSemaphore);

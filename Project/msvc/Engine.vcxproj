@@ -733,8 +733,6 @@
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKUniformBufferManager.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKVertexBuffer.cpp" />
     <ClCompile Include="..\..\Engine\RenderSystem\src\Camera.cpp" />
-    <ClCompile Include="..\..\Engine\RenderSystem\src\ComputeCluster.cpp" />
-    <ClCompile Include="..\..\Engine\RenderSystem\src\ComputeScene.cpp" />
     <ClCompile Include="..\..\Engine\RenderSystem\src\GPUCluster.cpp" />
     <ClCompile Include="..\..\Engine\RenderSystem\src\GPUClusterCull.cpp" />
     <ClCompile Include="..\..\Engine\RenderSystem\src\GPUEyeHistogram.cpp" />

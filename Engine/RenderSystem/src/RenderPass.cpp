@@ -4,6 +4,28 @@
 #include "GLES3Renderer.h"
 
 
+void CRenderSystem::InternalComputeScene(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer)
+{
+	m_pGPUScene->Compute(taskPool, taskGraph, ptrCommandBuffer);
+}
+
+void CRenderSystem::InternalComputeCluster(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer, CCamera* pCamera)
+{
+	m_pGPUCluster->SetCamera(pCamera);
+	m_pGPUCluster->Compute(taskPool, taskGraph, ptrCommandBuffer);
+}
+
+void CRenderSystem::InternalComputeClusterCull(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer, CCamera* pCamera)
+{
+	m_pGPUClusterCull->SetCamera(pCamera);
+	m_pGPUClusterCull->Compute(taskPool, taskGraph, ptrCommandBuffer);
+}
+
+void CRenderSystem::InternalComputeEyeHistogram(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer, CCamera* pCamera)
+{
+
+}
+
 void CRenderSystem::InternalPassCopyColor(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer, CCamera* pCamera, uint32_t rtInColor, uint32_t rtOutColor)
 {
 	m_pPassCopyColor->SetCamera(pCamera);

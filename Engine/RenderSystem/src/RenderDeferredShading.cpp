@@ -16,7 +16,9 @@ void CRenderSystem::RenderDeferredShading(CTaskPool& taskPool, CTaskGraph& taskG
 	{
 		GfxRenderer()->BeginRecord(ptrComputeCommandBuffer);
 		{
-			ComputeScene(taskPool, taskGraph, ptrComputeCommandBuffer);
+			{
+				InternalComputeScene(taskPool, taskGraph, ptrComputeCommandBuffer);
+			}
 		}
 		GfxRenderer()->EndRecord(ptrComputeCommandBuffer);
 		GfxRenderer()->Submit(ptrComputeCommandBuffer, pWaitSemaphore);
