@@ -8,7 +8,7 @@ class CALL_API CGPUCluster
 
 
 private:
-	CGPUCluster(void);
+	CGPUCluster(CRenderSystem* pRenderSystem);
 	virtual ~CGPUCluster(void);
 
 
@@ -40,4 +40,7 @@ private:
 	CGfxStorageBufferPtr m_ptrClusterBuffer;
 	CGfxStorageBufferPtr m_ptrFullLightListBuffer;
 	CGfxStorageBufferPtr m_ptrCullLightListBuffer;
+
+private:
+	CRenderSystem* m_pRenderSystem;
 };
