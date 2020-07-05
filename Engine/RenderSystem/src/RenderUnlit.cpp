@@ -23,27 +23,22 @@ void CRenderSystem::RenderUnlit(CTaskPool& taskPool, CTaskGraph& taskGraph, CCam
 
 		GfxRenderer()->BeginRecord(ptrGraphicCommandBuffer);
 		{
-			RenderUnlit(taskPool, taskGraph, ptrGraphicCommandBuffer, pCamera, bPresent);
+			{
+				uint32_t rtOutDepth = RENDER_TEXTURE_FULL_DEPTH;
+				InternalPassPreZ(taskPool, taskGraph, ptrGraphicCommandBuffer, pCamera, rtOutDepth);
+			}
+			{
+				uint32_t rtOutColor = RENDER_TEXTURE_FULL_HDR_COLOR0;
+				uint32_t rtOutDepth = RENDER_TEXTURE_FULL_DEPTH;
+				InternalPassUnlit(taskPool, taskGraph, ptrGraphicCommandBuffer, pCamera, rtOutColor, rtOutDepth);
+			}
+			{
+				uint32_t rtInColor = RENDER_TEXTURE_FULL_HDR_COLOR0;
+				InternalPassFinal(taskPool, taskGraph, ptrGraphicCommandBuffer, pCamera, rtInColor, bPresent);
+			}
 		}
 		GfxRenderer()->EndRecord(ptrGraphicCommandBuffer);
 		GfxRenderer()->Submit(ptrGraphicCommandBuffer, ptrComputeCommandBuffer->GetSemaphore());
 	}
 	GfxRenderer()->Present(ptrGraphicCommandBuffer->GetSemaphore());
-}
-
-void CRenderSystem::RenderUnlit(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer, CCamera* pCamera, bool bPresent)
-{
-	{
-		uint32_t rtOutDepth = RENDER_TEXTURE_FULL_DEPTH;
-		InternalPassPreZ(taskPool, taskGraph, ptrCommandBuffer, pCamera, rtOutDepth);
-	}
-	{
-		uint32_t rtOutColor = RENDER_TEXTURE_FULL_HDR_COLOR0;
-		uint32_t rtOutDepth = RENDER_TEXTURE_FULL_DEPTH;
-		InternalPassUnlit(taskPool, taskGraph, ptrCommandBuffer, pCamera, rtOutColor, rtOutDepth);
-	}
-	{
-		uint32_t rtInColor = RENDER_TEXTURE_FULL_HDR_COLOR0;
-		InternalPassFinal(taskPool, taskGraph, ptrCommandBuffer, pCamera, rtInColor, bPresent);
-	}
 }
