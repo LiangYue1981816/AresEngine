@@ -324,7 +324,7 @@ const CGfxMultiInstanceBufferPtr CRenderSystem::GetInstanceBuffer(uint32_t insta
 	return m_pInstanceBufferPool->GetInstanceBuffer(instanceFormat, instanceBinding);
 }
 
-const CGfxStorageBufferPtr CRenderSystem::GetInstanceBuffer(void) const
+const CGfxStorageBufferPtr CRenderSystem::GetInstanceDataBuffer(void) const
 {
 	return m_ptrInstanceDataBuffer;
 }

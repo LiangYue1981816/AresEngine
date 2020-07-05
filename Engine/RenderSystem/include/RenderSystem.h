@@ -207,7 +207,7 @@ public:
 	const CGfxMultiInstanceBufferPtr GetInstanceBuffer(uint32_t instanceFormat, int instanceBinding);
 
 public:
-	const CGfxStorageBufferPtr GetInstanceBuffer(void) const;
+	const CGfxStorageBufferPtr GetInstanceDataBuffer(void) const;
 	const CGfxStorageBufferPtr GetTransferDataBuffer(void) const;
 	const CGfxStorageBufferPtr GetTransferIndexBuffer(void) const;
 
