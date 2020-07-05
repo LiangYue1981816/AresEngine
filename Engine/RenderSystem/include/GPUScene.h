@@ -48,9 +48,6 @@ private:
 
 
 public:
-	const CGfxStorageBufferPtr GetInstanceBuffer(void) const;
-
-public:
 	int GetDefaultInstanceIndex(void) const;
 	int GetPostProcessInstnaceIndex(void) const;
 
@@ -79,9 +76,4 @@ private:
 	CGfxShader* m_pShaderCompute;
 	CGfxPipelineCompute* m_pPipelineCompute;
 	CGfxDescriptorSetPtr m_ptrDescriptorSet;
-
-private:
-	CGfxStorageBufferPtr m_ptrInstanceDataBuffer;
-	CGfxStorageBufferPtr m_ptrTransferDataBuffer;
-	CGfxStorageBufferPtr m_ptrTransferIndexBuffer;
 };

@@ -18,14 +18,10 @@ CGPUScene::CGPUScene(void)
 	m_pShaderCompute = GfxRenderer()->CreateShader(szBinFileName, compute_shader);
 	m_pPipelineCompute = GfxRenderer()->CreatePipelineCompute(m_pShaderCompute);
 
-	m_ptrInstanceDataBuffer = GfxRenderer()->NewStorageBuffer(sizeof(InstanceData) * MAX_GPUSCENE_INSTANCE_COUNT);
-	m_ptrTransferDataBuffer = GfxRenderer()->NewStorageBuffer(sizeof(InstanceData) * MAX_GPUSCENE_TRANSFER_COUNT);
-	m_ptrTransferIndexBuffer = GfxRenderer()->NewStorageBuffer(sizeof(int) * MAX_GPUSCENE_TRANSFER_COUNT);
-
 	m_ptrDescriptorSet = GfxRenderer()->NewDescriptorSet(HashValue(szFileName), m_pPipelineCompute->GetDescriptorLayout(DESCRIPTOR_SET_PASS));
-	m_ptrDescriptorSet->SetStorageBuffer(STORAGE_SCENE_DATA_NAME, m_ptrInstanceDataBuffer, 0, m_ptrInstanceDataBuffer->GetSize());
-	m_ptrDescriptorSet->SetStorageBuffer(STORAGE_TRANSFER_SCENE_DATA_NAME, m_ptrTransferDataBuffer, 0, m_ptrTransferDataBuffer->GetSize());
-	m_ptrDescriptorSet->SetStorageBuffer(STORAGE_TRANSFER_SCENE_DATA_INDEX_NAME, m_ptrTransferIndexBuffer, 0, m_ptrTransferIndexBuffer->GetSize());
+	m_ptrDescriptorSet->SetStorageBuffer(STORAGE_SCENE_DATA_NAME, RenderSystem()->GetInstanceDataBuffer(), 0, RenderSystem()->GetInstanceDataBuffer()->GetSize());
+	m_ptrDescriptorSet->SetStorageBuffer(STORAGE_TRANSFER_SCENE_DATA_NAME, RenderSystem()->GetTransferDataBuffer(), 0, RenderSystem()->GetTransferDataBuffer()->GetSize());
+	m_ptrDescriptorSet->SetStorageBuffer(STORAGE_TRANSFER_SCENE_DATA_INDEX_NAME, RenderSystem()->GetTransferIndexBuffer(), 0, RenderSystem()->GetTransferIndexBuffer()->GetSize());
 
 	m_indexDefaultInstance = AddInstance();
 	m_indexPostProcessInstnace = AddInstance();
@@ -34,11 +30,6 @@ CGPUScene::CGPUScene(void)
 CGPUScene::~CGPUScene(void)
 {
 
-}
-
-const CGfxStorageBufferPtr CGPUScene::GetInstanceBuffer(void) const
-{
-	return m_ptrInstanceDataBuffer;
 }
 
 int CGPUScene::GetDefaultInstanceIndex(void) const
@@ -139,13 +130,13 @@ void CGPUScene::Compute(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandB
 			return;
 		}
 	}
-	m_ptrTransferDataBuffer->BufferData(0, sizeof(InstanceData) * datas.size(), (const void*)datas.data());
-	m_ptrTransferIndexBuffer->BufferData(0, sizeof(int) * indices.size(), (const void*)indices.data());
+	RenderSystem()->GetTransferDataBuffer()->BufferData(0, sizeof(InstanceData) * datas.size(), (const void*)datas.data());
+	RenderSystem()->GetTransferIndexBuffer()->BufferData(0, sizeof(int) * indices.size(), (const void*)indices.data());
 
 	// Transfer
 	GfxRenderer()->CmdPushDebugGroup(ptrCommandBuffer, "TransferSceneData");
 	{
-		GfxRenderer()->CmdSetBufferBarrier(ptrCommandBuffer, m_ptrInstanceDataBuffer, GFX_ACCESS_TRANSFER_READ_BIT, GFX_ACCESS_TRANSFER_WRITE_BIT);
+		GfxRenderer()->CmdSetBufferBarrier(ptrCommandBuffer, RenderSystem()->GetInstanceDataBuffer(), GFX_ACCESS_TRANSFER_READ_BIT, GFX_ACCESS_TRANSFER_WRITE_BIT);
 		{
 			const int local_size_x = 128;
 			const int local_size_y = 1;
@@ -156,7 +147,7 @@ void CGPUScene::Compute(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandB
 			GfxRenderer()->CmdUniform1i(ptrCommandBuffer, HashValue("Param.numTransfers"), (int)datas.size());
 			GfxRenderer()->CmdDispatch(ptrCommandBuffer, (int)datas.size() / local_size_x + 1, 0 / local_size_y + 1, 0 / local_size_z + 1);
 		}
-		GfxRenderer()->CmdSetBufferBarrier(ptrCommandBuffer, m_ptrInstanceDataBuffer, GFX_ACCESS_TRANSFER_WRITE_BIT, GFX_ACCESS_TRANSFER_READ_BIT);
+		GfxRenderer()->CmdSetBufferBarrier(ptrCommandBuffer, RenderSystem()->GetInstanceDataBuffer(), GFX_ACCESS_TRANSFER_WRITE_BIT, GFX_ACCESS_TRANSFER_READ_BIT);
 	}
 	GfxRenderer()->CmdPopDebugGroup(ptrCommandBuffer);
 
@@ -174,7 +165,7 @@ void CGPUScene::Compute(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandB
 	}
 
 	if (bNeedUpdate) {
-		m_ptrInstanceDataBuffer->BufferData(0, sizeof(InstanceData) * m_instanceDataBuffer.size(), m_instanceDataBuffer.data());
+		RenderSystem()->GetInstanceDataBuffer()->BufferData(0, sizeof(InstanceData) * m_instanceDataBuffer.size(), m_instanceDataBuffer.data());
 	}
 	*/
 }
