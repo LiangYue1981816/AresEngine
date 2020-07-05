@@ -1,11 +1,11 @@
 #pragma once
 #include "PreHeader.h"
 
+#include "RenderSystem/include/PassBase.h"
 #include "RenderSystem/include/GPUScene.h"
 #include "RenderSystem/include/GPUCluster.h"
 #include "RenderSystem/include/GPUClusterCull.h"
 #include "RenderSystem/include/GPUEyeHistogram.h"
-#include "RenderSystem/include/PassBase.h"
 #include "RenderSystem/include/PassBlit.h"
 #include "RenderSystem/include/PassPreZ.h"
 #include "RenderSystem/include/PassShadow.h"

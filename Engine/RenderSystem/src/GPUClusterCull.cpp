@@ -3,9 +3,7 @@
 
 
 CGPUClusterCull::CGPUClusterCull(CRenderSystem* pRenderSystem)
-	: m_pRenderSystem(pRenderSystem)
-	, m_pCamera(nullptr)
-
+	: CPassBase(pRenderSystem)
 	, m_pShaderCompute(nullptr)
 	, m_pPipelineCompute(nullptr)
 {

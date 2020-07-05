@@ -2,7 +2,7 @@
 #include "PreHeader.h"
 
 
-class CALL_API CGPUClusterCull
+class CALL_API CGPUClusterCull : public CPassBase
 {
 	friend class CRenderSystem;
 
@@ -20,13 +20,7 @@ private:
 
 
 private:
-	CCamera* m_pCamera;
-
-private:
 	CGfxShader* m_pShaderCompute;
 	CGfxPipelineCompute* m_pPipelineCompute;
 	CGfxDescriptorSetPtr m_ptrDescriptorSet;
-
-private:
-	CRenderSystem* m_pRenderSystem;
 };

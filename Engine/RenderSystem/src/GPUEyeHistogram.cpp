@@ -3,8 +3,7 @@
 
 
 CGPUEyeHistogram::CGPUEyeHistogram(CRenderSystem* pRenderSystem)
-	: m_pRenderSystem(pRenderSystem)
-
+	: CPassBase(pRenderSystem)
 	, m_pShaderCompute(nullptr)
 	, m_pPipelineCompute(nullptr)
 {

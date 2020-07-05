@@ -2,7 +2,7 @@
 #include "PreHeader.h"
 
 
-class CALL_API CGPUEyeHistogram
+class CALL_API CGPUEyeHistogram : public CPassBase
 {
 	friend class CRenderSystem;
 
@@ -24,7 +24,4 @@ private:
 	CGfxPipelineCompute* m_pPipelineCompute;
 	CGfxDescriptorSetPtr m_ptrDescriptorSet;
 	CGfxRenderTexturePtr m_ptrInputColorTexture;
-
-private:
-	CRenderSystem* m_pRenderSystem;
 };
