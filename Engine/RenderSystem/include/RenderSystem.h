@@ -207,6 +207,8 @@ public:
 
 public:
 	const CGfxStorageBufferPtr GetInstanceBuffer(void) const;
+	const CGfxStorageBufferPtr GetTransferDataBuffer(void) const;
+	const CGfxStorageBufferPtr GetTransferIndexBuffer(void) const;
 
 public:
 	void SetTime(float t, float dt);

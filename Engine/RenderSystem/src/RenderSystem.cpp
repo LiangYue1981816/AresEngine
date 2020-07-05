@@ -329,6 +329,16 @@ const CGfxStorageBufferPtr CRenderSystem::GetInstanceBuffer(void) const
 	return m_ptrInstanceDataBuffer;
 }
 
+const CGfxStorageBufferPtr CRenderSystem::GetTransferDataBuffer(void) const
+{
+	return m_ptrTransferDataBuffer;
+}
+
+const CGfxStorageBufferPtr CRenderSystem::GetTransferIndexBuffer(void) const
+{
+	return m_ptrTransferIndexBuffer;
+}
+
 void CRenderSystem::SetTime(float t, float dt)
 {
 	m_pEngineUniform->SetTime(t, dt);
