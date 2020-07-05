@@ -169,7 +169,9 @@ void CRenderSystem::CreateCommandBuffers(void)
 
 void CRenderSystem::CreateStorageBuffers(void)
 {
-
+	m_ptrInstanceDataBuffer = GfxRenderer()->NewStorageBuffer(sizeof(InstanceData) * MAX_GPUSCENE_INSTANCE_COUNT);
+	m_ptrTransferDataBuffer = GfxRenderer()->NewStorageBuffer(sizeof(InstanceData) * MAX_GPUSCENE_TRANSFER_COUNT);
+	m_ptrTransferIndexBuffer = GfxRenderer()->NewStorageBuffer(sizeof(int) * MAX_GPUSCENE_TRANSFER_COUNT);
 }
 
 void CRenderSystem::CreateRenderTextures(void)
@@ -277,7 +279,9 @@ void CRenderSystem::DestroyCommandBuffers(void)
 
 void CRenderSystem::DestroyStorageBuffers(void)
 {
-
+	m_ptrInstanceDataBuffer.Release();
+	m_ptrTransferDataBuffer.Release();
+	m_ptrTransferIndexBuffer.Release();
 }
 
 void CRenderSystem::DestroyRenderTextures(void)
@@ -318,6 +322,11 @@ const InstanceData& CRenderSystem::GetInstanceData(int index)
 const CGfxMultiInstanceBufferPtr CRenderSystem::GetInstanceBuffer(uint32_t instanceFormat, int instanceBinding)
 {
 	return m_pInstanceBufferPool->GetInstanceBuffer(instanceFormat, instanceBinding);
+}
+
+const CGfxStorageBufferPtr CRenderSystem::GetInstanceBuffer(void) const
+{
+	return m_ptrInstanceDataBuffer;
 }
 
 void CRenderSystem::SetTime(float t, float dt)

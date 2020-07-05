@@ -206,6 +206,9 @@ public:
 	const CGfxMultiInstanceBufferPtr GetInstanceBuffer(uint32_t instanceFormat, int instanceBinding);
 
 public:
+	const CGfxStorageBufferPtr GetInstanceBuffer(void) const;
+
+public:
 	void SetTime(float t, float dt);
 
 	void SetEnvLightFactor(float factor);
@@ -295,6 +298,11 @@ private:
 	CPassAutoExposure* m_pPassAutoExposure;
 	CPassColorGrading* m_pPassColorGrading;
 	CPassFinal* m_pPassFinal;
+
+private:
+	CGfxStorageBufferPtr m_ptrInstanceDataBuffer;
+	CGfxStorageBufferPtr m_ptrTransferDataBuffer;
+	CGfxStorageBufferPtr m_ptrTransferIndexBuffer;
 
 private:
 	eastl::unordered_map<uint32_t, CGfxRenderTexturePtr> m_ptrRenderTextures;
