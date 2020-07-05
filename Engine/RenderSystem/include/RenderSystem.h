@@ -287,6 +287,7 @@ private:
 	CGPUScene* m_pGPUScene;
 	CGPUCluster* m_pGPUCluster;
 	CGPUClusterCull* m_pGPUClusterCull;
+	CGPUEyeHistogram* m_pGPUEyeHistogram;
 
 private:
 	CPassPreZ* m_pPassPreZ;
