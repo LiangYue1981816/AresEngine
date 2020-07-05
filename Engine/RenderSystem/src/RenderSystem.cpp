@@ -314,6 +314,11 @@ int CRenderSystem::GetPostProcessInstnaceIndex(void) const
 	return m_pGPUScene->GetPostProcessInstnaceIndex();
 }
 
+const CGfxUniformBufferPtr CRenderSystem::GetEngineUniformBuffer(void) const
+{
+	return m_pEngineUniform->GetUniformBuffer();
+}
+
 const CGfxMultiInstanceBufferPtr CRenderSystem::GetInstanceBuffer(uint32_t instanceFormat, int instanceBinding)
 {
 	return m_pInstanceBufferPool->GetInstanceBuffer(instanceFormat, instanceBinding);

@@ -203,6 +203,7 @@ public:
 	int GetPostProcessInstnaceIndex(void) const;
 
 public:
+	const CGfxUniformBufferPtr GetEngineUniformBuffer(void) const;
 	const CGfxMultiInstanceBufferPtr GetInstanceBuffer(uint32_t instanceFormat, int instanceBinding);
 
 public:
