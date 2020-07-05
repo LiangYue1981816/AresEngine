@@ -325,6 +325,11 @@ const CGfxMultiInstanceBufferPtr CRenderSystem::GetInstanceBuffer(uint32_t insta
 	return m_pInstanceBufferPool->GetInstanceBuffer(instanceFormat, instanceBinding);
 }
 
+CUniformEngine* CRenderSystem::GetEngineUniform(void) const
+{
+	return m_pEngineUniform;
+}
+
 const CGfxStorageBufferPtr CRenderSystem::GetClusterBuffer(void) const
 {
 	return m_ptrClusterBuffer;
@@ -353,11 +358,6 @@ const CGfxStorageBufferPtr CRenderSystem::GetTransferDataBuffer(void) const
 const CGfxStorageBufferPtr CRenderSystem::GetTransferIndexBuffer(void) const
 {
 	return m_ptrTransferIndexBuffer;
-}
-
-CUniformEngine* CRenderSystem::GetEngineUniform(void) const
-{
-	return m_pEngineUniform;
 }
 
 void CRenderSystem::SetTime(float t, float dt)

@@ -204,6 +204,8 @@ public:
 	const CGfxMultiInstanceBufferPtr GetInstanceBuffer(uint32_t instanceFormat, int instanceBinding);
 
 public:
+	CUniformEngine* GetEngineUniform(void) const;
+
 	const CGfxStorageBufferPtr GetClusterBuffer(void) const;
 	const CGfxStorageBufferPtr GetFullLightListBuffer(void) const;
 	const CGfxStorageBufferPtr GetCullLightListBuffer(void) const;
@@ -213,8 +215,6 @@ public:
 	const CGfxStorageBufferPtr GetTransferIndexBuffer(void) const;
 
 public:
-	CUniformEngine* GetEngineUniform(void) const;
-
 	void SetTime(float t, float dt);
 
 	void SetEnvLightFactor(float factor);
