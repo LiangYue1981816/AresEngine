@@ -69,11 +69,6 @@ CRenderSystem::~CRenderSystem(void)
 	Destroy();
 }
 
-CGPUScene* CRenderSystem::GetScene(void) const
-{
-	return m_pGPUScene;
-}
-
 CGPUCluster* CRenderSystem::GetCluster(void) const
 {
 	return m_pGPUCluster;

@@ -171,7 +171,6 @@ private:
 
 
 private:
-	CGPUScene* GetScene(void) const;
 	CGPUCluster* GetCluster(void) const;
 	CUniformEngine* GetEngineUniform(void) const;
 
