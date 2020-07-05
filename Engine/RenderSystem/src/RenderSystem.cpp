@@ -20,10 +20,11 @@ static const ATTRIBUTE instanceAttributes[INSTANCE_ATTRIBUTE_COUNT] = {
 
 CRenderSystem::CRenderSystem(void)
 	: m_pRenderer(nullptr)
-	, m_pGPUScene(nullptr)
-	, m_pGPUCluster(nullptr)
 	, m_pEngineUniform(nullptr)
 	, m_pInstanceBufferPool(nullptr)
+
+	, m_pGPUScene(nullptr)
+	, m_pGPUCluster(nullptr)
 
 	, m_pPassPreZ(nullptr)
 	, m_pPassShadow(nullptr)

@@ -263,10 +263,12 @@ private:
 
 private:
 	CGfxRenderer* m_pRenderer;
-	CGPUScene* m_pGPUScene;
-	CGPUCluster* m_pGPUCluster;
 	CUniformEngine* m_pEngineUniform;
 	CInstanceBufferPool* m_pInstanceBufferPool;
+
+private:
+	CGPUScene* m_pGPUScene;
+	CGPUCluster* m_pGPUCluster;
 
 private:
 	CPassPreZ* m_pPassPreZ;
