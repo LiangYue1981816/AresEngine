@@ -8,4 +8,7 @@ void CRenderSystem::ComputeCluster(CTaskPool& taskPool, CTaskGraph& taskGraph, C
 {
 	m_pGPUCluster->SetCamera(pCamera);
 	m_pGPUCluster->Compute(taskPool, taskGraph, ptrCommandBuffer);
+
+	m_pGPUClusterCull->SetCamera(pCamera);
+	m_pGPUClusterCull->Compute(taskPool, taskGraph, ptrCommandBuffer);
 }
