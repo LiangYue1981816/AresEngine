@@ -147,7 +147,7 @@ void CRenderSystem::CreatePasses(void)
 
 void CRenderSystem::CreateComputes(void)
 {
-	m_pGPUScene = new CGPUScene;
+	m_pGPUScene = new CGPUScene(this);
 	m_pGPUCluster = new CGPUCluster;
 }
 

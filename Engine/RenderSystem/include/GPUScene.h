@@ -43,7 +43,7 @@ class CALL_API CGPUScene
 
 
 private:
-	CGPUScene(void);
+	CGPUScene(CRenderSystem* pRenderSystem);
 	virtual ~CGPUScene(void);
 
 
@@ -76,4 +76,7 @@ private:
 	CGfxShader* m_pShaderCompute;
 	CGfxPipelineCompute* m_pPipelineCompute;
 	CGfxDescriptorSetPtr m_ptrDescriptorSet;
+
+private:
+	CRenderSystem* m_pRenderSystem;
 };
