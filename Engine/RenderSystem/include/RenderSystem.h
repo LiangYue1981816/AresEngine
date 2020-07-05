@@ -177,14 +177,18 @@ private:
 
 private:
 	void Create(GfxApi api, void* hInstance, void* hWnd, void* hDC, int width, int height, GfxPixelFormat format);
+	void CreateRenderer(GfxApi api, void* hInstance, void* hWnd, void* hDC, int width, int height, GfxPixelFormat format);
 	void CreatePasses(void);
+	void CreateComputes(void);
 	void CreateCommandBuffers(void);
 	void CreateRenderTextures(void);
 	void CreateRenderTexture(uint32_t name, CGfxRenderTexturePtr ptrRenderTexture);
 	void CreateRenderTexture(uint32_t name, GfxPixelFormat format, int width, int height, int samples = 1, bool bTransient = false);
 
 	void Destroy(void);
+	void DestroyRenderer(void);
 	void DestroyPasses(void);
+	void DestroyComputes(void);
 	void DestroyCommandBuffers(void);
 	void DestroyRenderTextures(void);
 

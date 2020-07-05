@@ -86,6 +86,15 @@ CUniformEngine* CRenderSystem::GetEngineUniform(void) const
 
 void CRenderSystem::Create(GfxApi api, void* hInstance, void* hWnd, void* hDC, int width, int height, GfxPixelFormat format)
 {
+	CreateRenderer(api, hInstance, hWnd, hDC, width, height, format);
+	CreateCommandBuffers();
+	CreateRenderTextures();
+	CreateComputes();
+	CreatePasses();
+}
+
+void CRenderSystem::CreateRenderer(GfxApi api, void* hInstance, void* hWnd, void* hDC, int width, int height, GfxPixelFormat format)
+{
 	switch ((int)api) {
 	case GFX_API_GLES3:
 		m_pRenderer = new CGLES3Renderer(hInstance, hWnd, hDC, width, height, format);
@@ -96,14 +105,8 @@ void CRenderSystem::Create(GfxApi api, void* hInstance, void* hWnd, void* hDC, i
 		break;
 	}
 
-	m_pGPUScene = new CGPUScene;
-	m_pGPUCluster = new CGPUCluster;
 	m_pEngineUniform = new CUniformEngine;
 	m_pInstanceBufferPool = new CInstanceBufferPool;
-
-	CreateCommandBuffers();
-	CreateRenderTextures();
-	CreatePasses();
 }
 
 void CRenderSystem::CreatePasses(void)
@@ -144,6 +147,12 @@ void CRenderSystem::CreatePasses(void)
 	m_pPassAutoExposure = new CPassAutoExposure(this);
 	m_pPassColorGrading = new CPassColorGrading(this);
 	m_pPassFinal = new CPassFinal(this);
+}
+
+void CRenderSystem::CreateComputes(void)
+{
+	m_pGPUScene = new CGPUScene;
+	m_pGPUCluster = new CGPUCluster;
 }
 
 void CRenderSystem::CreateCommandBuffers(void)
@@ -189,13 +198,16 @@ void CRenderSystem::CreateRenderTexture(uint32_t name, GfxPixelFormat format, in
 void CRenderSystem::Destroy(void)
 {
 	DestroyPasses();
+	DestroyComputes();
 	DestroyRenderTextures();
 	DestroyCommandBuffers();
+	DestroyRenderer();
+}
 
+void CRenderSystem::DestroyRenderer(void)
+{
 	delete m_pInstanceBufferPool;
 	delete m_pEngineUniform;
-	delete m_pGPUCluster;
-	delete m_pGPUScene;
 	delete m_pRenderer;
 }
 
@@ -237,6 +249,12 @@ void CRenderSystem::DestroyPasses(void)
 	delete m_pPassAutoExposure;
 	delete m_pPassColorGrading;
 	delete m_pPassFinal;
+}
+
+void CRenderSystem::DestroyComputes(void)
+{
+	delete m_pGPUCluster;
+	delete m_pGPUScene;
 }
 
 void CRenderSystem::DestroyCommandBuffers(void)
