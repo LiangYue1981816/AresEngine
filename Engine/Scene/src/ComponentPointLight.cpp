@@ -145,7 +145,7 @@ bool CComponentPointLight::TaskUpdateCamera(CGfxCamera* pCamera, CRenderQueue* p
 		if (m_bNeedUpdateInstance[indexFrame]) {
 			m_bNeedUpdateInstance[indexFrame] = false;
 			m_instances[indexFrame].SetCenter(glm::vec4(m_aabb.center, 1.0f));
-			RenderSystem()->ModifyInstanceData(m_indexInstance, m_instances[indexFrame], indexThread);
+			RenderSystem()->ModifyInstance(m_indexInstance, m_instances[indexFrame], indexThread);
 		}
 
 		if (glm::sphere(m_aabb.center, m_attenuation.w).inside(pCamera->GetPosition())) {

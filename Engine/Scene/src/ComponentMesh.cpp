@@ -138,7 +138,7 @@ bool CComponentMesh::TaskUpdateCamera(CGfxCamera* pCamera, CRenderQueue* pRender
 		if (m_bNeedUpdateInstance[indexFrame]) {
 			m_bNeedUpdateInstance[indexFrame] = false;
 			m_instances[indexFrame].SetCenter(glm::vec4(m_aabb[m_indexLOD].center, 1.0f));
-			RenderSystem()->ModifyInstanceData(m_indexInstance, m_instances[indexFrame], indexThread);
+			RenderSystem()->ModifyInstance(m_indexInstance, m_instances[indexFrame], indexThread);
 		}
 
 		pRenderQueue->Add(m_ptrMaterial[m_indexLOD], m_ptrMeshDraw[m_indexLOD], m_indexInstance, indexThread);

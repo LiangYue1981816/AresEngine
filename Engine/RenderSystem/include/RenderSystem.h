@@ -195,8 +195,8 @@ private:
 public:
 	int AddInstance(void);
 	void RemoveInstance(int index);
-	void ModifyInstanceData(int index, const InstanceData &data, int indexThread);
-	const InstanceData& GetInstanceData(int index) const;
+	void ModifyInstance(int index, const InstanceData &data, int indexThread);
+	const InstanceData& GetInstance(int index) const;
 
 	int GetDefaultInstanceIndex(void) const;
 	int GetPostProcessInstnaceIndex(void) const;

@@ -298,14 +298,14 @@ void CRenderSystem::RemoveInstance(int index)
 	m_pGPUScene->RemoveInstance(index);
 }
 
-void CRenderSystem::ModifyInstanceData(int index, const InstanceData &data, int indexThread)
+void CRenderSystem::ModifyInstance(int index, const InstanceData &data, int indexThread)
 {
-	m_pGPUScene->ModifyInstanceData(index, data, indexThread);
+	m_pGPUScene->ModifyInstance(index, data, indexThread);
 }
 
-const InstanceData& CRenderSystem::GetInstanceData(int index) const
+const InstanceData& CRenderSystem::GetInstance(int index) const
 {
-	return m_pGPUScene->GetInstanceData(index);
+	return m_pGPUScene->GetInstance(index);
 }
 
 int CRenderSystem::GetDefaultInstanceIndex(void) const
