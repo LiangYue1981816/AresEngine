@@ -2,8 +2,9 @@
 #include "RenderHeader.h"
 
 /*
-CGPUCluster::CGPUCluster(void)
-	: m_pCamera(nullptr)
+CGPUCluster::CGPUCluster(CRenderSystem* pRenderSystem)
+	: m_pRenderSystem(pRenderSystem)
+	, m_pCamera(nullptr)
 
 	, m_pClusterShaderCompute(nullptr)
 	, m_pClusterPipelineCompute(nullptr)
@@ -40,7 +41,7 @@ CGPUCluster::CGPUCluster(void)
 		m_pClusterCullPipelineCompute = GfxRenderer()->CreatePipelineCompute(m_pClusterCullShaderCompute);
 
 		m_ptrClusterCullDescriptorSet = GfxRenderer()->NewDescriptorSet(HashValue(szFileName), m_pClusterCullPipelineCompute->GetDescriptorLayout(DESCRIPTOR_SET_PASS));
-		m_ptrClusterCullDescriptorSet->SetStorageBuffer(STORAGE_SCENE_DATA_NAME, RenderSystem()->GetInstanceDataBuffer(), 0, RenderSystem()->GetInstanceDataBuffer()->GetSize());
+		m_ptrClusterCullDescriptorSet->SetStorageBuffer(STORAGE_SCENE_DATA_NAME, m_pRenderSystem->GetInstanceDataBuffer(), 0, m_pRenderSystem->GetInstanceDataBuffer()->GetSize());
 		m_ptrClusterCullDescriptorSet->SetStorageBuffer(STORAGE_CLUSTER_DATA_NAME, m_ptrClusterBuffer, 0, m_ptrClusterBuffer->GetSize());
 		m_ptrClusterCullDescriptorSet->SetStorageBuffer(STORAGE_FULL_LIGHT_LIST_DATA_NAME, m_ptrFullLightListBuffer, 0, m_ptrFullLightListBuffer->GetSize());
 		m_ptrClusterCullDescriptorSet->SetStorageBuffer(STORAGE_CULL_LIGHT_LIST_DATA_NAME, m_ptrCullLightListBuffer, 0, m_ptrCullLightListBuffer->GetSize());
