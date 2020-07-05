@@ -87,11 +87,11 @@ CUniformEngine* CRenderSystem::GetEngineUniform(void) const
 void CRenderSystem::Create(GfxApi api, void* hInstance, void* hWnd, void* hDC, int width, int height, GfxPixelFormat format)
 {
 	CreateRenderer(api, hInstance, hWnd, hDC, width, height, format);
-	CreatePasses();
-	CreateComputes();
 	CreateCommandBuffers();
 	CreateStorageBuffers();
 	CreateRenderTextures();
+	CreateComputes();
+	CreatePasses();
 }
 
 void CRenderSystem::CreateRenderer(GfxApi api, void* hInstance, void* hWnd, void* hDC, int width, int height, GfxPixelFormat format)
