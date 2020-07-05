@@ -70,16 +70,6 @@ CRenderSystem::~CRenderSystem(void)
 	Destroy();
 }
 
-CGPUCluster* CRenderSystem::GetCluster(void) const
-{
-	return m_pGPUCluster;
-}
-
-CUniformEngine* CRenderSystem::GetEngineUniform(void) const
-{
-	return m_pEngineUniform;
-}
-
 void CRenderSystem::Create(GfxApi api, void* hInstance, void* hWnd, void* hDC, int width, int height, GfxPixelFormat format)
 {
 	CreateRenderer(api, hInstance, hWnd, hDC, width, height, format);
@@ -363,6 +353,11 @@ const CGfxStorageBufferPtr CRenderSystem::GetTransferDataBuffer(void) const
 const CGfxStorageBufferPtr CRenderSystem::GetTransferIndexBuffer(void) const
 {
 	return m_ptrTransferIndexBuffer;
+}
+
+CUniformEngine* CRenderSystem::GetEngineUniform(void) const
+{
+	return m_pEngineUniform;
 }
 
 void CRenderSystem::SetTime(float t, float dt)

@@ -172,10 +172,6 @@ private:
 
 
 private:
-	CGPUCluster* GetCluster(void) const;
-	CUniformEngine* GetEngineUniform(void) const;
-
-private:
 	void Create(GfxApi api, void* hInstance, void* hWnd, void* hDC, int width, int height, GfxPixelFormat format);
 	void CreateRenderer(GfxApi api, void* hInstance, void* hWnd, void* hDC, int width, int height, GfxPixelFormat format);
 	void CreatePasses(void);
@@ -217,6 +213,8 @@ public:
 	const CGfxStorageBufferPtr GetTransferIndexBuffer(void) const;
 
 public:
+	CUniformEngine* GetEngineUniform(void) const;
+
 	void SetTime(float t, float dt);
 
 	void SetEnvLightFactor(float factor);

@@ -2,7 +2,7 @@
 #include "RenderHeader.h"
 
 
-CGPUCluster::CGPUCluster(CRenderSystem* pRenderSystem)
+CGPUClusterCull::CGPUClusterCull(CRenderSystem* pRenderSystem)
 	: m_pRenderSystem(pRenderSystem)
 	, m_pCamera(nullptr)
 
@@ -25,12 +25,12 @@ CGPUCluster::CGPUCluster(CRenderSystem* pRenderSystem)
 	m_ptrDescriptorSet->SetStorageBuffer(STORAGE_CULL_LIGHT_LIST_DATA_NAME, m_pRenderSystem->GetCullLightListBuffer(), 0, m_pRenderSystem->GetCullLightListBuffer()->GetSize());
 }
 
-CGPUCluster::~CGPUCluster(void)
+CGPUClusterCull::~CGPUClusterCull(void)
 {
 
 }
 
-void CGPUCluster::SetCamera(CCamera* pCamera)
+void CGPUClusterCull::SetCamera(CCamera* pCamera)
 {
 	if (m_pCamera != pCamera) {
 		m_pCamera = pCamera;
@@ -38,7 +38,7 @@ void CGPUCluster::SetCamera(CCamera* pCamera)
 	}
 }
 
-void CGPUCluster::Compute(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer)
+void CGPUClusterCull::Compute(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer)
 {
 	// Update
 	m_pCamera->GetCameraUniform()->Apply();
