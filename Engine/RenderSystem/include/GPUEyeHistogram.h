@@ -1,7 +1,7 @@
 #pragma once
 #include "PreHeader.h"
 
-
+/*
 class CALL_API CPassAutoExposure : public CPassBlit
 {
 	friend class CCamera;
@@ -42,3 +42,4 @@ private:
 	CGfxFrameBufferPtr m_ptrFrameBuffer;
 	CGfxRenderTexturePtr m_ptrOutputColorTexture;
 };
+*/

@@ -4,6 +4,7 @@
 #include "RenderSystem/include/GPUScene.h"
 #include "RenderSystem/include/GPUCluster.h"
 #include "RenderSystem/include/GPUClusterCull.h"
+#include "RenderSystem/include/GPUEyeHistogram.h"
 #include "RenderSystem/include/PassBase.h"
 #include "RenderSystem/include/PassBlit.h"
 #include "RenderSystem/include/PassPreZ.h"
@@ -145,6 +146,7 @@ class CALL_API CRenderSystem
 	friend class CGPUScene;
 	friend class CGPUCluster;
 	friend class CGPUClusterCull;
+	friend class CGPUEyeHistogram;
 	friend class CPassBase;
 	friend class CPassBlit;
 	friend class CPassPreZ;

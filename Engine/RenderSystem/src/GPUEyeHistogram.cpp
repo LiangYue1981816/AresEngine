@@ -1,7 +1,7 @@
 #include "EngineHeader.h"
 #include "RenderHeader.h"
 
-
+/*
 static const int indexAttachmentColor = 0;
 
 static const int numSubpasses = 1;
@@ -123,3 +123,4 @@ void CPassAutoExposure::Render(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxC
 	}
 	GfxRenderer()->CmdPopDebugGroup(ptrCommandBuffer);
 }
+*/
