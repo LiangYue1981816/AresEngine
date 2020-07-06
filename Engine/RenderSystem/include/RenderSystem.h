@@ -128,6 +128,7 @@
 #define RENDER_TEXTURE_FULL_HDR_COLOR1                     HashValue("RenderTextureFullHdrColor1")
 #define RENDER_TEXTURE_QUATER_HDR_COLOR0                   HashValue("RenderTextureQuaterHdrColor0")
 #define RENDER_TEXTURE_QUATER_HDR_COLOR1                   HashValue("RenderTextureQuaterHdrColor1")
+#define RENDER_TEXTURE_HISTOGRAM_HDR_COLOR                 HashValue("RenderTextureHistogramHdrColor")
 
 
 // GPUScene
@@ -138,6 +139,11 @@
 #define CLUSTER_WIDTH_TILE_COUNT                           16
 #define CLUSTER_HEIGHT_TILE_COUNT                          8
 #define CLUSTER_DEPTH_TILE_COUNT                           8
+
+// Histogram
+#define HISTOGRAM_COUNT                                    64
+#define HISTOGRAM_TEXTURE_WIDTH                            128
+#define HISTOGRAM_TEXTURE_HEIGHT                           128
 
 
 class CALL_API CRenderSystem
