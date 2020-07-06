@@ -141,7 +141,7 @@
 #define CLUSTER_DEPTH_TILE_COUNT                           8
 
 // Histogram
-#define HISTOGRAM_COUNT                                    64
+#define HISTOGRAM_SIZE                                     64
 #define HISTOGRAM_TEXTURE_WIDTH                            128
 #define HISTOGRAM_TEXTURE_HEIGHT                           128
 
@@ -221,6 +221,8 @@ public:
 	const CGfxStorageBufferPtr GetInstanceDataBuffer(void) const;
 	const CGfxStorageBufferPtr GetTransferDataBuffer(void) const;
 	const CGfxStorageBufferPtr GetTransferIndexBuffer(void) const;
+
+	const CGfxStorageBufferPtr GetHistogramBuffer(void) const;
 
 public:
 	void SetTime(float t, float dt);
@@ -317,6 +319,8 @@ private:
 	CGfxStorageBufferPtr m_ptrInstanceDataBuffer;
 	CGfxStorageBufferPtr m_ptrTransferDataBuffer;
 	CGfxStorageBufferPtr m_ptrTransferIndexBuffer;
+
+	CGfxStorageBufferPtr m_ptrHistogramBuffer;
 
 private:
 	eastl::unordered_map<uint32_t, CGfxRenderTexturePtr> m_ptrRenderTextures;

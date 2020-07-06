@@ -165,6 +165,8 @@ void CRenderSystem::CreateStorageBuffers(void)
 	m_ptrClusterBuffer = GfxRenderer()->NewStorageBuffer(CLUSTER_WIDTH_TILE_COUNT * CLUSTER_HEIGHT_TILE_COUNT * CLUSTER_DEPTH_TILE_COUNT * 32);
 	m_ptrFullLightListBuffer = GfxRenderer()->NewStorageBuffer(MAX_GPUSCENE_INSTANCE_COUNT * sizeof(int));
 	m_ptrCullLightListBuffer = GfxRenderer()->NewStorageBuffer(MAX_GPUSCENE_INSTANCE_COUNT * sizeof(int));
+
+	m_ptrHistogramBuffer = GfxRenderer()->NewStorageBuffer(HISTOGRAM_SIZE * sizeof(int));
 }
 
 void CRenderSystem::CreateRenderTextures(void)
@@ -362,6 +364,11 @@ const CGfxStorageBufferPtr CRenderSystem::GetTransferDataBuffer(void) const
 const CGfxStorageBufferPtr CRenderSystem::GetTransferIndexBuffer(void) const
 {
 	return m_ptrTransferIndexBuffer;
+}
+
+const CGfxStorageBufferPtr CRenderSystem::GetHistogramBuffer(void) const
+{
+	return m_ptrHistogramBuffer;
 }
 
 void CRenderSystem::SetTime(float t, float dt)
