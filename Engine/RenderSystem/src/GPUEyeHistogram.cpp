@@ -17,6 +17,7 @@ CGPUEyeHistogram::CGPUEyeHistogram(CRenderSystem* pRenderSystem)
 	m_pPipelineCompute = GfxRenderer()->CreatePipelineCompute(m_pShaderCompute);
 
 	m_ptrDescriptorSet = GfxRenderer()->NewDescriptorSet(HashValue(szFileName), m_pPipelineCompute->GetDescriptorLayout(DESCRIPTOR_SET_PASS));
+	m_ptrDescriptorSet->SetStorageBuffer(STORAGE_HISTOGRAM_DATA_NAME, m_pRenderSystem->GetHistogramBuffer(), 0, m_pRenderSystem->GetHistogramBuffer()->GetSize());
 }
 
 CGPUEyeHistogram::~CGPUEyeHistogram(void)
@@ -36,5 +37,6 @@ void CGPUEyeHistogram::SetInputTexture(CGfxRenderTexturePtr ptrColorTexture)
 
 void CGPUEyeHistogram::Compute(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer)
 {
-
+	static int data[HISTOGRAM_SIZE] = { 0 };
+	m_pRenderSystem->GetHistogramBuffer()->BufferData(0, m_pRenderSystem->GetHistogramBuffer()->GetSize(), data);
 }
