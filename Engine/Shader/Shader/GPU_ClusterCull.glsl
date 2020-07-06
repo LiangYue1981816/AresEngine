@@ -38,8 +38,8 @@ void main()
 	for (int i = 0; i < numPointLights; i++) {
 		int indexLight = GetFullLightListIndex(i);
 
-		vec3 center = (cameraViewMatrix * GetInstance(indexLight).center).xyz;
-		float radius = GetInstance(indexLight).lightAttenuation.w;
+		vec3 center = (cameraViewMatrix * sceneData.instances[indexLight].center).xyz;
+		float radius = sceneData.instances[indexLight].lightAttenuation.w;
 
 		if (Intersection(minAABBPosition, maxAABBPosition, center, radius)) {
 			indexLights[count] = indexLight;

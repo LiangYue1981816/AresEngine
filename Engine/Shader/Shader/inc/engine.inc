@@ -140,17 +140,7 @@ layout (location = 8)                                      in float inInstanceIn
 	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_SCENE_DATA) buffer SceneData               \
 	{                                                                              \
 		Instance instances[];                                                      \
-	} sceneData;                                                                   \
-	                                                                               \
-	Instance GetInstance(int index)                                                \
-	{                                                                              \
-		return sceneData.instances[index];                                         \
-	}                                                                              \
-	                                                                               \
-	void SetInstance(int index, Instance instance)                                 \
-	{                                                                              \
-		sceneData.instances[index] = instance;                                     \
-	}
+	} sceneData;
 
 #define USE_TRANSFER_SCENE_DATA_STORAGE                                            \
 	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_TRANSFER_SCENE_DATA) buffer TransferSceneData \

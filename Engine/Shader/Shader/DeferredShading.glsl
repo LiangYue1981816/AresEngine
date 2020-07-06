@@ -20,7 +20,7 @@ void main()
 {
 	outInstanceIndex = int(inInstanceIndex);
 
-	mat4 worldMatrix = GetInstance(int(inInstanceIndex)).transformMatrix;
+	mat4 worldMatrix = sceneData.instances[int(inInstanceIndex)].transformMatrix;
 	vec3 worldPosition = (worldMatrix * vec4(inPosition.xyz, 1.0)).xyz;
 	gl_Position = outPosition = cameraProjectionViewMatrix * vec4(worldPosition, 1.0);
 }
@@ -69,8 +69,8 @@ void main()
 	float roughness = pixelColorGBuffer1.b;
 	float metallic = pixelColorGBuffer1.a;
 
-	vec3 pointLightPosition = GetInstance(inInstanceIndex).center.xyz;
-	float pointLightRange = GetInstance(inInstanceIndex).lightAttenuation.w;
+	vec3 pointLightPosition = sceneData.instances[inInstanceIndex].center.xyz;
+	float pointLightRange = sceneData.instances[inInstanceIndex].lightAttenuation.w;
 	float distance = length(pointLightPosition - worldPosition);
 
 	vec3 pointLighting = vec3(0.0);
@@ -78,8 +78,8 @@ void main()
 	if(pointLightRange > distance)
 	{
 		vec3 pointLightDirection = normalize(pointLightPosition - worldPosition);
-		vec3 pointLightAttenuation = GetInstance(inInstanceIndex).lightAttenuation.xyz;
-		vec3 pointLightColor = GetInstance(inInstanceIndex).lightColor.rgb * Attenuation(distance, pointLightAttenuation.x, pointLightAttenuation.y, pointLightAttenuation.z);
+		vec3 pointLightAttenuation = sceneData.instances[inInstanceIndex].lightAttenuation.xyz;
+		vec3 pointLightColor = sceneData.instances[inInstanceIndex].lightColor.rgb * Attenuation(distance, pointLightAttenuation.x, pointLightAttenuation.y, pointLightAttenuation.z);
 		vec3 lighting = PBRLighting(worldNormal, worldViewDirection, pointLightDirection, pointLightColor, albedo, 0.5, metallic, roughness) * pointLightFactor;
 		pointLighting = ao * lighting;
 	}

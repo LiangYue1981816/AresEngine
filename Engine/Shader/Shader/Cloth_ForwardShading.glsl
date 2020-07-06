@@ -25,7 +25,7 @@ layout (location = 2) out vec3 outNormal;
 
 void main()
 {
-	mat4 worldMatrix = GetInstance(int(inInstanceIndex)).transformMatrix;
+	mat4 worldMatrix = sceneData.instances[int(inInstanceIndex)].transformMatrix;
 	vec3 worldPosition = (worldMatrix * vec4(inPosition.xyz, 1.0)).xyz;
 
 #ifdef NORMAL_MAP
