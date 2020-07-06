@@ -63,6 +63,7 @@ layout (location = 8)                                      in float inInstanceIn
 #define DESCRIPTOR_BIND_SHADOW_TEXTURE                     16
 #define DESCRIPTOR_BIND_SSAO_TEXTURE                       17
 #define DESCRIPTOR_BIND_ADD_TEXTURE                        18
+#define DESCRIPTOR_BIND_HISTOGRAM                          19
 
 
 #define USE_CAMERA_UNIFORM                                                         \
@@ -232,6 +233,12 @@ layout (location = 8)                                      in float inInstanceIn
 	{                                                                              \
 		cullLightListData.indexLights[index] = indexLight;                         \
 	}
+
+#define USE_HISTOGRAM_STORAGE                                                      \
+	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_CULL_LIGHT_LIST_DATA) buffer HistogramData \
+	{                                                                              \
+		uint histogram[64];                                                        \
+	} histogramData;
 
 #define USE_DEPTH_TEXTURE_UNIFORM                                                  \
 	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_DEPTH_TEXTURE) uniform sampler2D texDepth;
