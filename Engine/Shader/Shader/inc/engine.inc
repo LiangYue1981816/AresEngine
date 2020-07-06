@@ -175,7 +175,7 @@ layout (location = 8)                                      in float inInstanceIn
 #define USE_HISTOGRAM_STORAGE                                                      \
 	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_CULL_LIGHT_LIST_DATA) buffer HistogramData \
 	{                                                                              \
-		uint histogram[64];                                                        \
+		uint histogram[];                                                          \
 	} histogramData;
 
 #define USE_DEPTH_TEXTURE_UNIFORM                                                  \
