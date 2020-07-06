@@ -93,7 +93,7 @@ void main()
 
 	for (int index = 0; index < count; index++)
 	{
-		int indexLight = GetCullLightListIndex(index + offset);
+		int indexLight = cullLightListData.indexLights[index + offset];
 
 		vec3 pointLightPosition = sceneData.instances[indexLight].center.xyz;
 		float pointLightRange = sceneData.instances[indexLight].lightAttenuation.w;

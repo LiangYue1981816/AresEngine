@@ -164,28 +164,13 @@ layout (location = 8)                                      in float inInstanceIn
 	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_FULL_LIGHT_LIST_DATA) buffer FullLightListData \
 	{                                                                              \
 		int indexLights[];                                                         \
-	} fullLightListData;                                                           \
-	                                                                               \
-	int GetFullLightListIndex(int index)                                           \
-	{                                                                              \
-		return fullLightListData.indexLights[index];                               \
-	}
+	} fullLightListData;
 
 #define USE_CULL_LIGHT_LIST_DATA_STORAGE                                           \
 	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_CULL_LIGHT_LIST_DATA) buffer CullLightListData \
 	{                                                                              \
 		int indexLights[];                                                         \
-	} cullLightListData;                                                           \
-	                                                                               \
-	int GetCullLightListIndex(int index)                                           \
-	{                                                                              \
-		return cullLightListData.indexLights[index];                               \
-	}                                                                              \
-	                                                                               \
-	void SetCullLightListIndex(int index, int indexLight)                          \
-	{                                                                              \
-		cullLightListData.indexLights[index] = indexLight;                         \
-	}
+	} cullLightListData;
 
 #define USE_HISTOGRAM_STORAGE                                                      \
 	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_CULL_LIGHT_LIST_DATA) buffer HistogramData \

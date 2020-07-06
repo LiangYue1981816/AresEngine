@@ -36,7 +36,7 @@ void main()
 	int indexLights[256];
 
 	for (int i = 0; i < numPointLights; i++) {
-		int indexLight = GetFullLightListIndex(i);
+		int indexLight = fullLightListData.indexLights[i];
 
 		vec3 center = (cameraViewMatrix * sceneData.instances[indexLight].center).xyz;
 		float radius = sceneData.instances[indexLight].lightAttenuation.w;
@@ -56,7 +56,7 @@ void main()
 	int offset = atomicAdd(indexLightCount, count);
 
 	for (int i = 0; i < count; i++) {
-		SetCullLightListIndex(offset + i, indexLights[i]);
+		cullLightListData.indexLights[offset + i] = indexLights[i];
 	}
 
 	clusterData.clusters[indexTile].minAABBPosition.w = float(offset);
