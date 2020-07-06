@@ -23,6 +23,6 @@ void main()
 	int indexTransfer = int(gl_GlobalInvocationID.x);
 
 	if (indexTransfer < numTransfers) {
-		sceneData.instances[GetTransferIndex(indexTransfer)] = GetTransferInstance(indexTransfer);
+		sceneData.instances[GetTransferIndex(indexTransfer)] = transferSceneData.instances[indexTransfer];
 	}
 }
