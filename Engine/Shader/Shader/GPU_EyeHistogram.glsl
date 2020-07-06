@@ -15,7 +15,7 @@ USE_COLOR_TEXTURE_UNIFORM
 // ...
 
 // Shared
-shared uint share_histogram[64];
+shared uint share_histogram[HISTOGRAM_SIZE];
 
 
 float GetHistogram(float linear, float minLogValue, float maxLogValue)
@@ -31,7 +31,7 @@ void main()
 	const float minLogValue = log2(minLinearValue);
 	const float maxLogValue = log2(maxLinearValue);
 
-	if (gl_LocalInvocationIndex < uint(64)) {
+	if (gl_LocalInvocationIndex < uint(HISTOGRAM_SIZE)) {
 		share_histogram[gl_LocalInvocationIndex] = uint(0);
 	}
 
@@ -43,11 +43,11 @@ void main()
 	float l = clamp(max(color.r, max(color.g, color.b)), minLinearValue, maxLinearValue);
 	float h = GetHistogram(l, minLogValue, maxLogValue);
 
-	atomicAdd(share_histogram[int(h * (64.0 - 1.0))], uint(1));
+	atomicAdd(share_histogram[int(h * (float(HISTOGRAM_SIZE) - 1.0))], uint(1));
 
 	barrier();
 
-	if (gl_LocalInvocationIndex < uint(64)) {
+	if (gl_LocalInvocationIndex < uint(HISTOGRAM_SIZE)) {
 		atomicAdd(histogramData.histogram[gl_LocalInvocationIndex], share_histogram[gl_LocalInvocationIndex]);
 	}
 }

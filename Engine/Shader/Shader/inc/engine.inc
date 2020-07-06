@@ -172,6 +172,7 @@ layout (location = 8)                                      in float inInstanceIn
 		int indexLights[];                                                         \
 	} cullLightListData;
 
+#define HISTOGRAM_SIZE 64
 #define USE_HISTOGRAM_STORAGE                                                      \
 	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_CULL_LIGHT_LIST_DATA) buffer HistogramData \
 	{                                                                              \
