@@ -34,5 +34,6 @@ void main()
 	vec3 minAABBPosition = min(min(minViewPositionNear, maxViewPositionNear), min(minViewPositionFar, maxViewPositionFar));
 	vec3 maxAABBPosition = max(max(minViewPositionNear, maxViewPositionNear), max(minViewPositionFar, maxViewPositionFar));
 
-	SetCluster(indexTile, minAABBPosition, maxAABBPosition);
+	clusterData.clusters[indexTile].minAABBPosition.xyz = minAABBPosition;
+	clusterData.clusters[indexTile].maxAABBPosition.xyz = maxAABBPosition;
 }

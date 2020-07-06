@@ -29,8 +29,8 @@ void main()
 	int indexTile = int(gl_LocalInvocationID.z * gl_WorkGroupSize.x * gl_WorkGroupSize.y + gl_LocalInvocationID.y * gl_WorkGroupSize.x + gl_LocalInvocationID.x);
 	int numPointLights = Param.numPointLights;
 
-	vec3 minAABBPosition = GetCluster(indexTile).minAABBPosition.xyz;
-	vec3 maxAABBPosition = GetCluster(indexTile).maxAABBPosition.xyz;
+	vec3 minAABBPosition = clusterData.clusters[indexTile].minAABBPosition.xyz;
+	vec3 maxAABBPosition = clusterData.clusters[indexTile].maxAABBPosition.xyz;
 
 	int count = 0;
 	int indexLights[256];
@@ -59,5 +59,6 @@ void main()
 		SetCullLightListIndex(offset + i, indexLights[i]);
 	}
 
-	SetClusterLightInfo(indexTile, offset, count);
+	clusterData.clusters[indexTile].minAABBPosition.w = float(offset);
+	clusterData.clusters[indexTile].maxAABBPosition.w = float(count);
 }

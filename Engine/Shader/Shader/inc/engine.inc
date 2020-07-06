@@ -152,45 +152,13 @@ layout (location = 8)                                      in float inInstanceIn
 	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_TRANSFER_SCENE_DATA_INDEX) buffer TransferSceneDataIndex \
 	{                                                                              \
 		int indexInstances[];                                                      \
-	} transferSceneDataIndex;                                                      \
-	                                                                               \
-	int GetTransferIndex(int index)                                                \
-	{                                                                              \
-		return transferSceneDataIndex.indexInstances[index];                       \
-	}
+	} transferSceneDataIndex;
 
 #define USE_CLUSTER_DATA_STORAGE                                                   \
 	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_CLUSTER_DATA) buffer ClusterData           \
 	{                                                                              \
 		Cluster clusters[];                                                        \
-	} clusterData;                                                                 \
-	                                                                               \
-	Cluster GetCluster(int index)                                                  \
-	{                                                                              \
-		return clusterData.clusters[index];                                        \
-	}                                                                              \
-	                                                                               \
-	int GetClusterLightOffset(int index)                                           \
-	{                                                                              \
-		return int(clusterData.clusters[index].minAABBPosition.w);                 \
-	}                                                                              \
-	                                                                               \
-	int GetClusterLightCount(int index)                                            \
-	{                                                                              \
-		return int(clusterData.clusters[index].maxAABBPosition.w);                 \
-	}                                                                              \
-	                                                                               \
-	void SetCluster(int index, vec3 minAABBPosition, vec3 maxAABBPosition)         \
-	{                                                                              \
-		clusterData.clusters[index].minAABBPosition.xyz = minAABBPosition;         \
-		clusterData.clusters[index].maxAABBPosition.xyz = maxAABBPosition;         \
-	}                                                                              \
-	                                                                               \
-	void SetClusterLightInfo(int index, int offset, int count)                     \
-	{                                                                              \
-		clusterData.clusters[index].minAABBPosition.w = float(offset);             \
-		clusterData.clusters[index].maxAABBPosition.w = float(count);              \
-	}
+	} clusterData;
 
 #define USE_FULL_LIGHT_LIST_DATA_STORAGE                                           \
 	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_FULL_LIGHT_LIST_DATA) buffer FullLightListData \
