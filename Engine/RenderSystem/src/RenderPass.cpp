@@ -21,9 +21,10 @@ void CRenderSystem::InternalComputeClusterCull(CTaskPool& taskPool, CTaskGraph& 
 	m_pGPUClusterCull->Compute(taskPool, taskGraph, ptrCommandBuffer);
 }
 
-void CRenderSystem::InternalComputeEyeHistogram(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer, CCamera* pCamera)
+void CRenderSystem::InternalComputeEyeHistogram(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer, uint32_t rtInColor)
 {
-
+	m_pGPUEyeHistogram->SetInputTexture(m_ptrRenderTextures[rtInColor]);
+	m_pGPUEyeHistogram->Compute(taskPool, taskGraph, ptrCommandBuffer);
 }
 
 void CRenderSystem::InternalPassCopyColor(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer, CCamera* pCamera, uint32_t rtInColor, uint32_t rtOutColor)
@@ -152,11 +153,11 @@ void CRenderSystem::InternalPassBloom(CTaskPool& taskPool, CTaskGraph& taskGraph
 	m_pPassBloomBlendAdd->Render(taskPool, taskGraph, ptrCommandBuffer);
 }
 
-void CRenderSystem::InternalPassEyeAdaptation(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer, CCamera* pCamera, uint32_t rtInColor, uint32_t rtOutColor, uint32_t rtOutScaleColor)
+void CRenderSystem::InternalPassEyeAdaptation(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer, CCamera* pCamera, uint32_t rtInColor, uint32_t rtOutColor, uint32_t rtOutDownSample)
 {
 	m_pPassCopyColor->SetCamera(pCamera);
 	m_pPassCopyColor->SetInputTexture(m_ptrRenderTextures[rtInColor]);
-	m_pPassCopyColor->SetOutputTexture(m_ptrRenderTextures[rtOutScaleColor]);
+	m_pPassCopyColor->SetOutputTexture(m_ptrRenderTextures[rtOutDownSample]);
 	m_pPassCopyColor->Render(taskPool, taskGraph, ptrCommandBuffer);
 
 	m_pPassAutoExposure->SetCamera(pCamera);
