@@ -144,6 +144,7 @@
 
 // Histogram
 #define HISTOGRAM_SIZE                                     64
+#define HISTOGRAM_WORKGROUP_SIZE                           16
 #define HISTOGRAM_TEXTURE_WIDTH                            128
 #define HISTOGRAM_TEXTURE_HEIGHT                           128
 

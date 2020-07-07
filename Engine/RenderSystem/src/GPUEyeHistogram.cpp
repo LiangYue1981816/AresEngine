@@ -37,6 +37,20 @@ void CGPUEyeHistogram::SetInputTexture(CGfxRenderTexturePtr ptrColorTexture)
 
 void CGPUEyeHistogram::Compute(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer)
 {
+	// Update
 	static int data[HISTOGRAM_SIZE] = { 0 };
 	m_pRenderSystem->GetHistogramBuffer()->BufferData(0, m_pRenderSystem->GetHistogramBuffer()->GetSize(), data);
+
+	// Compute
+	GfxRenderer()->CmdPushDebugGroup(ptrCommandBuffer, "EyeHistogram");
+	{
+		GfxRenderer()->CmdSetBufferBarrier(ptrCommandBuffer, m_pRenderSystem->GetHistogramBuffer(), GFX_ACCESS_TRANSFER_READ_BIT, GFX_ACCESS_TRANSFER_WRITE_BIT);
+		{
+			GfxRenderer()->CmdBindPipelineCompute(ptrCommandBuffer, m_pPipelineCompute);
+			GfxRenderer()->CmdBindDescriptorSet(ptrCommandBuffer, m_ptrDescriptorSet);
+			GfxRenderer()->CmdDispatch(ptrCommandBuffer, m_ptrInputColorTexture->GetWidth() / HISTOGRAM_WORKGROUP_SIZE, m_ptrInputColorTexture->GetHeight() / HISTOGRAM_WORKGROUP_SIZE, 1);
+		}
+		GfxRenderer()->CmdSetBufferBarrier(ptrCommandBuffer, m_pRenderSystem->GetHistogramBuffer(), GFX_ACCESS_TRANSFER_WRITE_BIT, GFX_ACCESS_TRANSFER_READ_BIT);
+	}
+	GfxRenderer()->CmdPopDebugGroup(ptrCommandBuffer);
 }
