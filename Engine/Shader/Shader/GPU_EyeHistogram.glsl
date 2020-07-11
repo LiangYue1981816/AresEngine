@@ -6,7 +6,7 @@ precision highp float;
 #include "common.inc"
 
 USE_HISTOGRAM_STORAGE
-USE_COLOR_IMAGE_UNIFORM(rgba16f)
+USE_COLOR_IMAGE_UNIFORM(rgba16f, readonly)
 
 // Output
 // ...

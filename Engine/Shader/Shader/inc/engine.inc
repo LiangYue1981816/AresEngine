@@ -198,8 +198,8 @@ layout (location = 8)                                      in float inInstanceIn
 #define USE_ADD_TEXTURE_UNIFORM                                                    \
 	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_ADD_TEXTURE) uniform sampler2D texAdd;
 
-#define USE_COLOR_IMAGE_UNIFORM(format)                                            \
-	DESCRIPTOR_SET_PASS_IMAGE(DESCRIPTOR_BIND_COLOR_TEXTURE, format) uniform coherent highp image2D texColor;
+#define USE_COLOR_IMAGE_UNIFORM(format, memory)                                    \
+	DESCRIPTOR_SET_PASS_IMAGE(DESCRIPTOR_BIND_COLOR_TEXTURE, format) uniform memory highp image2D texColor;
 
 
 #define screenWidth                              camera.screen.x
