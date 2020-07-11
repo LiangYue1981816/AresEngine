@@ -12,7 +12,7 @@ USE_COLOR_TEXTURE_UNIFORM
 // ...
 
 // Descriptor
-// ...
+layout(binding = 0, rgba16f) uniform readonly highp image2D inImage;
 
 // Shared
 shared uint share_histogram[HISTOGRAM_SIZE];
@@ -37,13 +37,17 @@ void main()
 
 	barrier();
 
-	vec2 texCoord = vec2(gl_GlobalInvocationID.xy) / vec2(textureSize(texColor, 0));
-	vec3 color = texture(texColor, texCoord).rgb;
+	ivec2 size = imageSize(inImage);
+	ivec2 texcoord = ivec2(gl_GlobalInvocationID.xy);
 
-	float l = clamp(max(color.r, max(color.g, color.b)), minLinearValue, maxLinearValue);
-	float h = GetHistogram(l, minLogValue, maxLogValue);
+	if (gl_GlobalInvocationID.x < uint(size.x) && gl_GlobalInvocationID.y < uint(size.y))
+	{
+		vec4 color = imageLoad(inImage, texcoord);
+		float l = clamp(max(color.r, max(color.g, color.b)), minLinearValue, maxLinearValue);
+		float h = GetHistogram(l, minLogValue, maxLogValue);
 
-	atomicAdd(share_histogram[int(h * (float(HISTOGRAM_SIZE) - 1.0))], uint(1));
+		atomicAdd(share_histogram[int(h * (float(HISTOGRAM_SIZE) - 1.0))], uint(1));
+	}
 
 	barrier();
 
