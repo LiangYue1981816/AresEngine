@@ -37,12 +37,13 @@ layout (location = 8)                                      in float inInstanceIn
 
 
 #define DESCRIPTOR_SET_PASS(b)                             layout (set = 0, binding = b)
-#define DESCRIPTOR_SET_PASS(b,f)                           layout (set = 0, binding = b, f)
 #define DESCRIPTOR_SET_MATPASS(b)                          layout (set = 1, binding = b)
-#define DESCRIPTOR_SET_MATPASS(b,f)                        layout (set = 1, binding = b, f)
 #define DESCRIPTOR_SET_MESHDRAW(b)                         layout (set = 2, binding = b)
-#define DESCRIPTOR_SET_MESHDRAW(b,f)                       layout (set = 2, binding = b, f)
 #define DESCRIPTOR_SET_INPUTATTACHMENT(i,b)                layout (set = 3, input_attachment_index = i, binding = b)
+
+#define DESCRIPTOR_SET_PASS_IMAGE(b,f)                     layout (set = 0, binding = b, f)
+#define DESCRIPTOR_SET_MATPASS_IMAGE(b,f)                  layout (set = 1, binding = b, f)
+#define DESCRIPTOR_SET_MESHDRAW_IMAGE(b,f)                 layout (set = 2, binding = b, f)
 
 // Base
 #define DESCRIPTOR_BIND_ENGINE                             0
@@ -196,6 +197,9 @@ layout (location = 8)                                      in float inInstanceIn
 
 #define USE_ADD_TEXTURE_UNIFORM                                                    \
 	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_ADD_TEXTURE) uniform sampler2D texAdd;
+
+#define USE_COLOR_IMAGE_UNIFORM(format)                                            \
+	DESCRIPTOR_SET_PASS_IMAGE(DESCRIPTOR_BIND_COLOR_TEXTURE, format) uniform coherent highp image2D texColor;
 
 
 #define screenWidth                              camera.screen.x

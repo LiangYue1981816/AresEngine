@@ -6,13 +6,13 @@ precision highp float;
 #include "common.inc"
 
 USE_HISTOGRAM_STORAGE
-USE_COLOR_TEXTURE_UNIFORM
+USE_COLOR_IMAGE_UNIFORM(rgba16f)
 
 // Output
 // ...
 
 // Descriptor
-layout(binding = 0, rgba16f) uniform readonly highp image2D inImage;
+// ...
 
 // Shared
 shared uint share_histogram[HISTOGRAM_SIZE];
@@ -37,12 +37,12 @@ void main()
 
 	barrier();
 
-	ivec2 size = imageSize(inImage);
+	ivec2 size = imageSize(texColor);
 	ivec2 texcoord = ivec2(gl_GlobalInvocationID.xy);
 
 	if (gl_GlobalInvocationID.x < uint(size.x) && gl_GlobalInvocationID.y < uint(size.y))
 	{
-		vec4 color = imageLoad(inImage, texcoord);
+		vec4 color = imageLoad(texColor, texcoord);
 		float l = clamp(max(color.r, max(color.g, color.b)), minLinearValue, maxLinearValue);
 		float h = GetHistogram(l, minLogValue, maxLogValue);
 
