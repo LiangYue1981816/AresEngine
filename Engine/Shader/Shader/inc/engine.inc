@@ -37,8 +37,11 @@ layout (location = 8)                                      in float inInstanceIn
 
 
 #define DESCRIPTOR_SET_PASS(b)                             layout (set = 0, binding = b)
+#define DESCRIPTOR_SET_PASS(b,f)                           layout (set = 0, binding = b, f)
 #define DESCRIPTOR_SET_MATPASS(b)                          layout (set = 1, binding = b)
+#define DESCRIPTOR_SET_MATPASS(b,f)                        layout (set = 1, binding = b, f)
 #define DESCRIPTOR_SET_MESHDRAW(b)                         layout (set = 2, binding = b)
+#define DESCRIPTOR_SET_MESHDRAW(b,f)                       layout (set = 2, binding = b, f)
 #define DESCRIPTOR_SET_INPUTATTACHMENT(i,b)                layout (set = 3, input_attachment_index = i, binding = b)
 
 // Base
