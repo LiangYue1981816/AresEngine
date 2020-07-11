@@ -72,6 +72,7 @@ public:
 	const eastl::unordered_map<eastl::string, PushConstantRange>& GetPushConstantRanges(void) const;
 	const eastl::unordered_map<eastl::string, DescriptorSetBinding>& GetUniformBlockBindings(void) const;
 	const eastl::unordered_map<eastl::string, DescriptorSetBinding>& GetStorageBlockBindings(void) const;
+	const eastl::unordered_map<eastl::string, DescriptorSetBinding>& GetStorageImageBindings(void) const;
 	const eastl::unordered_map<eastl::string, DescriptorSetBinding>& GetSampledImageBindings(void) const;
 	const eastl::unordered_map<eastl::string, InputAttachmentBinding>& GetInputAttachmentBindings(void) const;
 
@@ -82,6 +83,7 @@ private:
 	eastl::unordered_map<eastl::string, PushConstantRange> m_pushConstantRanges;
 	eastl::unordered_map<eastl::string, DescriptorSetBinding> m_uniformBlockBindings;
 	eastl::unordered_map<eastl::string, DescriptorSetBinding> m_storageBlockBindings;
+	eastl::unordered_map<eastl::string, DescriptorSetBinding> m_storageImageBindings;
 	eastl::unordered_map<eastl::string, DescriptorSetBinding> m_sampledImageBindings;
 	eastl::unordered_map<eastl::string, InputAttachmentBinding> m_inputAttachmentBindings;
 };

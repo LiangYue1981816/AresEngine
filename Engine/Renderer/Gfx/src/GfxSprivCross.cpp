@@ -66,6 +66,14 @@ const eastl::string& CGfxSprivCross::Create(const uint32_t* words, size_t numWor
 			}
 		}
 
+		for (const auto& itStorageImage : shaderResources.storage_images) {
+			if (compiler.get_type(itStorageImage.base_type_id).basetype == spirv_cross::SPIRType::Image) {
+				m_storageImageBindings[itStorageImage.name.c_str()].Set(
+					compiler.get_decoration(itStorageImage.id, spv::DecorationDescriptorSet),
+					compiler.get_decoration(itStorageImage.id, spv::DecorationBinding));
+			}
+		}
+
 		for (const auto& itSampledImage : shaderResources.sampled_images) {
 			if (compiler.get_type(itSampledImage.base_type_id).basetype == spirv_cross::SPIRType::SampledImage) {
 				m_sampledImageBindings[itSampledImage.name.c_str()].Set(
@@ -110,6 +118,11 @@ const eastl::unordered_map<eastl::string, DescriptorSetBinding>& CGfxSprivCross:
 const eastl::unordered_map<eastl::string, DescriptorSetBinding>& CGfxSprivCross::GetStorageBlockBindings(void) const
 {
 	return m_storageBlockBindings;
+}
+
+const eastl::unordered_map<eastl::string, DescriptorSetBinding>& CGfxSprivCross::GetStorageImageBindings(void) const
+{
+	return m_storageImageBindings;
 }
 
 const eastl::unordered_map<eastl::string, DescriptorSetBinding>& CGfxSprivCross::GetSampledImageBindings(void) const
