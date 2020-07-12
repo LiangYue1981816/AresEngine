@@ -30,6 +30,7 @@ private:
 	void SetUniformLocation(const char* szName);
 	void SetUniformBlockBinding(const char* szName, uint32_t binding);
 	void SetStorageBlockBinding(const char* szName, uint32_t binding);
+	void SetStorageImageBinding(const char* szName, uint32_t binding);
 	void SetSampledImageBinding(const char* szName);
 	void SetInputAttachmentBinding(const char* szName, int indexInputAttachment);
 

@@ -92,6 +92,11 @@ bool CGLES3Pipeline::CreateLayouts(void)
 				m_ptrDescriptorLayouts[itStorageBlock.second.set]->SetStorageBlockBinding(HashValue(itStorageBlock.first.c_str()), itStorageBlock.second.binding);
 			}
 
+			for (const auto& itStorageImage : m_pShaders[indexShader]->GetSprivCross().GetStorageImageBindings()) {
+				SetStorageImageBinding(itStorageImage.first.c_str(), itStorageImage.second.binding);
+				m_ptrDescriptorLayouts[itStorageImage.second.set]->SetStorageImageBinding(HashValue(itStorageImage.first.c_str()), itStorageImage.second.binding);
+			}
+
 			for (const auto& itSampledImage : m_pShaders[indexShader]->GetSprivCross().GetSampledImageBindings()) {
 				SetSampledImageBinding(itSampledImage.first.c_str());
 				m_ptrDescriptorLayouts[itSampledImage.second.set]->SetSampledImageBinding(HashValue(itSampledImage.first.c_str()), itSampledImage.second.binding);
@@ -249,6 +254,11 @@ void CGLES3Pipeline::SetStorageBlockBinding(const char* szName, uint32_t binding
 			m_storageBlockBindings[name] = binding;
 		}
 	}
+}
+
+void CGLES3Pipeline::SetStorageImageBinding(const char* szName, uint32_t binding)
+{
+
 }
 
 void CGLES3Pipeline::SetSampledImageBinding(const char* szName)
