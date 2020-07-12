@@ -50,6 +50,7 @@ typedef struct DescriptorImageInfo {
 		ptrImage2D = _ptrImage2D;
 		ptrImage2DArray.Release();
 		ptrImageCubemap.Release();
+		ptrImageRenderTexture.Release();
 		ptrTexture2D.Release();
 		ptrTexture2DArray.Release();
 		ptrTextureCubemap.Release();
@@ -65,6 +66,7 @@ typedef struct DescriptorImageInfo {
 		ptrImage2D.Release();
 		ptrImage2DArray = _ptrImage2DArray;
 		ptrImageCubemap.Release();
+		ptrImageRenderTexture.Release();
 		ptrTexture2D.Release();
 		ptrTexture2DArray.Release();
 		ptrTextureCubemap.Release();
@@ -80,6 +82,23 @@ typedef struct DescriptorImageInfo {
 		ptrImage2D.Release();
 		ptrImage2DArray.Release();
 		ptrImageCubemap = _ptrImageCubemap;
+		ptrImageRenderTexture.Release();
+		ptrTexture2D.Release();
+		ptrTexture2DArray.Release();
+		ptrTextureCubemap.Release();
+		ptrRenderTexture.Release();
+		ptrInputAttachmentTexture.Release();
+	}
+
+	void SetImageRenderTexture(uint32_t _binding, CGfxRenderTexturePtr _ptrImageRenderTexture)
+	{
+		bDirty = true;
+		binding = _binding;
+		pSampler = nullptr;
+		ptrImage2D.Release();
+		ptrImage2DArray.Release();
+		ptrImageCubemap.Release();
+		ptrImageRenderTexture = _ptrImageRenderTexture;
 		ptrTexture2D.Release();
 		ptrTexture2DArray.Release();
 		ptrTextureCubemap.Release();
@@ -95,6 +114,7 @@ typedef struct DescriptorImageInfo {
 		ptrImage2D.Release();
 		ptrImage2DArray.Release();
 		ptrImageCubemap.Release();
+		ptrImageRenderTexture.Release();
 		ptrTexture2D = _ptrTexture2D;
 		ptrTexture2DArray.Release();
 		ptrTextureCubemap.Release();
@@ -110,6 +130,7 @@ typedef struct DescriptorImageInfo {
 		ptrImage2D.Release();
 		ptrImage2DArray.Release();
 		ptrImageCubemap.Release();
+		ptrImageRenderTexture.Release();
 		ptrTexture2D.Release();
 		ptrTexture2DArray = _ptrTexture2DArray;
 		ptrTextureCubemap.Release();
@@ -125,6 +146,7 @@ typedef struct DescriptorImageInfo {
 		ptrImage2D.Release();
 		ptrImage2DArray.Release();
 		ptrImageCubemap.Release();
+		ptrImageRenderTexture.Release();
 		ptrTexture2D.Release();
 		ptrTexture2DArray.Release();
 		ptrTextureCubemap = _ptrTextureCubemap;
@@ -140,6 +162,7 @@ typedef struct DescriptorImageInfo {
 		ptrImage2D.Release();
 		ptrImage2DArray.Release();
 		ptrImageCubemap.Release();
+		ptrImageRenderTexture.Release();
 		ptrTexture2D.Release();
 		ptrTexture2DArray.Release();
 		ptrTextureCubemap.Release();
@@ -155,6 +178,7 @@ typedef struct DescriptorImageInfo {
 		ptrImage2D.Release();
 		ptrImage2DArray.Release();
 		ptrImageCubemap.Release();
+		ptrImageRenderTexture.Release();
 		ptrTexture2D.Release();
 		ptrTexture2DArray.Release();
 		ptrTextureCubemap.Release();
@@ -169,6 +193,7 @@ typedef struct DescriptorImageInfo {
 	CGfxTexture2DPtr ptrImage2D;
 	CGfxTexture2DArrayPtr ptrImage2DArray;
 	CGfxTextureCubemapPtr ptrImageCubemap;
+	CGfxRenderTexturePtr ptrImageRenderTexture;
 	CGfxTexture2DPtr ptrTexture2D;
 	CGfxTexture2DArrayPtr ptrTexture2DArray;
 	CGfxTextureCubemapPtr ptrTextureCubemap;
@@ -201,6 +226,7 @@ public:
 	virtual bool SetImage2D(uint32_t name, const CGfxTexture2DPtr ptrImage) = 0;
 	virtual bool SetImage2DArray(uint32_t name, const CGfxTexture2DArrayPtr ptrImage) = 0;
 	virtual bool SetImageCubemap(uint32_t name, const CGfxTextureCubemapPtr ptrImage) = 0;
+	virtual bool SetImageRenderTexture(uint32_t name, const CGfxRenderTexturePtr ptrImage) = 0;
 	virtual bool SetTexture2D(uint32_t name, const CGfxTexture2DPtr ptrTexture, const CGfxSampler* pSampler) = 0;
 	virtual bool SetTexture2DArray(uint32_t name, const CGfxTexture2DArrayPtr ptrTexture, const CGfxSampler* pSampler) = 0;
 	virtual bool SetTextureCubemap(uint32_t name, const CGfxTextureCubemapPtr ptrTexture, const CGfxSampler* pSampler) = 0;

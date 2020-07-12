@@ -20,6 +20,7 @@ public:
 	bool SetImage2D(uint32_t name, const CGfxTexture2DPtr ptrImage);
 	bool SetImage2DArray(uint32_t name, const CGfxTexture2DArrayPtr ptrImage);
 	bool SetImageCubemap(uint32_t name, const CGfxTextureCubemapPtr ptrImage);
+	bool SetImageRenderTexture(uint32_t name, const CGfxRenderTexturePtr ptrImage);
 	bool SetTexture2D(uint32_t name, const CGfxTexture2DPtr ptrTexture, const CGfxSampler* pSampler);
 	bool SetTexture2DArray(uint32_t name, const CGfxTexture2DArrayPtr ptrTexture, const CGfxSampler* pSampler);
 	bool SetTextureCubemap(uint32_t name, const CGfxTextureCubemapPtr ptrTexture, const CGfxSampler* pSampler);

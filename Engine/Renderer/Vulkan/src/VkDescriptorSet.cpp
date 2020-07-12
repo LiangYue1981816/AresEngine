@@ -172,6 +172,21 @@ bool CVKDescriptorSet::SetImageCubemap(uint32_t name, const CGfxTextureCubemapPt
 	}
 }
 
+bool CVKDescriptorSet::SetImageRenderTexture(uint32_t name, const CGfxRenderTexturePtr ptrImage)
+{
+	ASSERT(ptrImage);
+	ASSERT(m_vkDescriptorSet);
+	ASSERT(m_ptrDescriptorLayout);
+
+	if (m_ptrDescriptorLayout->IsStorageImageValid(name)) {
+		m_imageDescriptorInfos[name].SetImageRenderTexture(m_ptrDescriptorLayout->GetStorageImageBinding(name), ptrImage);
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
 bool CVKDescriptorSet::SetTexture2D(uint32_t name, const CGfxTexture2DPtr ptrTexture, const CGfxSampler* pSampler)
 {
 	ASSERT(pSampler);

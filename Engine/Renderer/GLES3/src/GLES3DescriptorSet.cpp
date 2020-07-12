@@ -129,6 +129,20 @@ bool CGLES3DescriptorSet::SetImageCubemap(uint32_t name, const CGfxTextureCubema
 	}
 }
 
+bool CGLES3DescriptorSet::SetImageRenderTexture(uint32_t name, const CGfxRenderTexturePtr ptrImage)
+{
+	ASSERT(ptrImage);
+	ASSERT(m_ptrDescriptorLayout);
+
+	if (m_ptrDescriptorLayout->IsStorageImageValid(name)) {
+		m_imageDescriptorInfos[name].SetImageRenderTexture(m_ptrDescriptorLayout->GetStorageImageBinding(name), ptrImage);
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
 bool CGLES3DescriptorSet::SetTexture2D(uint32_t name, const CGfxTexture2DPtr ptrTexture, const CGfxSampler* pSampler)
 {
 	ASSERT(pSampler);

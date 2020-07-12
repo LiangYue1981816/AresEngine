@@ -29,7 +29,7 @@ void CGPUEyeHistogram::SetInputTexture(CGfxRenderTexturePtr ptrColorTexture)
 {
 	if (m_ptrInputColorTexture != ptrColorTexture) {
 		m_ptrInputColorTexture = ptrColorTexture;
-		m_ptrDescriptorSet->SetImage2D(UNIFORM_COLOR_IMAGE_NAME, ptrColorTexture);
+		m_ptrDescriptorSet->SetImageRenderTexture(UNIFORM_COLOR_IMAGE_NAME, ptrColorTexture);
 	}
 }
 
