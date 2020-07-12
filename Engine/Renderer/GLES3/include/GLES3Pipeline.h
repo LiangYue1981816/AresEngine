@@ -27,11 +27,11 @@ private:
 	void Destroy(void);
 
 private:
-	void SetStorageBlockBinding(const char* szName, uint32_t binding);
-	void SetUniformBlockBinding(const char* szName, uint32_t binding);
 	void SetUniformLocation(const char* szName);
-	void SetSampledImageLocation(const char* szName);
-	void SetInputAttachmentLocation(const char* szName, int indexInputAttachment);
+	void SetUniformBlockBinding(const char* szName, uint32_t binding);
+	void SetStorageBlockBinding(const char* szName, uint32_t binding);
+	void SetSampledImageBinding(const char* szName);
+	void SetInputAttachmentBinding(const char* szName, int indexInputAttachment);
 
 private:
 	bool IsCompatibleVertexFormat(uint32_t binding, uint32_t format) const;
@@ -71,10 +71,10 @@ private:
 	CGfxDescriptorLayoutPtr m_ptrDescriptorLayouts[DESCRIPTOR_SET_COUNT];
 
 private:
-	eastl::unordered_map<uint32_t, uint32_t> m_storageBlockBindings;     // [name, binding]
-	eastl::unordered_map<uint32_t, uint32_t> m_uniformBlockBindings;     // [name, binding]
 	eastl::unordered_map<uint32_t, uint32_t> m_uniformLocations;         // [name, location]
-	eastl::unordered_map<uint32_t, uint32_t> m_sampledImageLocations;    // [name, location]
+	eastl::unordered_map<uint32_t, uint32_t> m_uniformBlockBindings;     // [name, binding]
+	eastl::unordered_map<uint32_t, uint32_t> m_storageBlockBindings;     // [name, binding]
+	eastl::unordered_map<uint32_t, uint32_t> m_sampledImageBindings;     // [name, binding]
 	eastl::unordered_map<uint32_t, uint32_t> m_sampledImageTextureUnits; // [name, texture unit]
 	eastl::unordered_map<uint32_t, uint32_t> m_inputAttachmentNames;     // [input attachment index, name]
 	eastl::unordered_map<uint32_t, uint32_t> m_vertexFormats;            // [binding, format]

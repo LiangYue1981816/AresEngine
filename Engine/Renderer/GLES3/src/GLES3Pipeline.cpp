@@ -93,12 +93,12 @@ bool CGLES3Pipeline::CreateLayouts(void)
 			}
 
 			for (const auto& itSampledImage : m_pShaders[indexShader]->GetSprivCross().GetSampledImageBindings()) {
-				SetSampledImageLocation(itSampledImage.first.c_str());
+				SetSampledImageBinding(itSampledImage.first.c_str());
 				m_ptrDescriptorLayouts[itSampledImage.second.set]->SetSampledImageBinding(HashValue(itSampledImage.first.c_str()), itSampledImage.second.binding);
 			}
 
 			for (const auto& itInputAttachment : m_pShaders[indexShader]->GetSprivCross().GetInputAttachmentBindings()) {
-				SetInputAttachmentLocation(itInputAttachment.first.c_str(), itInputAttachment.second.indexInputAttachment);
+				SetInputAttachmentBinding(itInputAttachment.first.c_str(), itInputAttachment.second.indexInputAttachment);
 				m_ptrDescriptorLayouts[itInputAttachment.second.set]->SetInputAttachmentBinding(HashValue(itInputAttachment.first.c_str()), itInputAttachment.second.binding);
 			}
 		}
@@ -193,10 +193,10 @@ void CGLES3Pipeline::Destroy(void)
 	m_pShaders[fragment_shader] = nullptr;
 	m_pShaders[compute_shader] = nullptr;
 
-	m_storageBlockBindings.clear();
-	m_uniformBlockBindings.clear();
 	m_uniformLocations.clear();
-	m_sampledImageLocations.clear();
+	m_uniformBlockBindings.clear();
+	m_storageBlockBindings.clear();
+	m_sampledImageBindings.clear();
 	m_sampledImageTextureUnits.clear();
 	m_inputAttachmentNames.clear();
 	m_vertexFormats.clear();
@@ -207,16 +207,18 @@ void CGLES3Pipeline::Destroy(void)
 	m_ptrDescriptorLayouts[DESCRIPTOR_SET_INPUTATTACHMENT]->Destroy(true);
 }
 
-void CGLES3Pipeline::SetStorageBlockBinding(const char* szName, uint32_t binding)
+void CGLES3Pipeline::SetUniformLocation(const char* szName)
 {
 	uint32_t name = HashValue(szName);
 
-	if (m_storageBlockBindings.find(name) == m_storageBlockBindings.end()) {
-		uint32_t indexBinding = glGetProgramResourceIndex(m_program, GL_SHADER_STORAGE_BLOCK, szName);
+	if (m_uniformLocations.find(name) == m_uniformLocations.end()) {
+		uint32_t location = glGetUniformLocation(m_program, szName);
 
-		if (indexBinding != GL_INVALID_INDEX) {
-			m_storageBlockBindings[name] = binding;
+		if (location != GL_INVALID_INDEX) {
+			m_uniformLocations[name] = location;
 		}
+
+		CHECK_GL_ERROR_ASSERT();
 	}
 }
 
@@ -235,47 +237,45 @@ void CGLES3Pipeline::SetUniformBlockBinding(const char* szName, uint32_t binding
 	}
 }
 
-void CGLES3Pipeline::SetUniformLocation(const char* szName)
+void CGLES3Pipeline::SetStorageBlockBinding(const char* szName, uint32_t binding)
 {
 	uint32_t name = HashValue(szName);
 
-	if (m_uniformLocations.find(name) == m_uniformLocations.end()) {
+	if (m_storageBlockBindings.find(name) == m_storageBlockBindings.end()) {
+		uint32_t indexBinding = glGetProgramResourceIndex(m_program, GL_SHADER_STORAGE_BLOCK, szName);
+
+		if (indexBinding != GL_INVALID_INDEX) {
+			m_storageBlockBindings[name] = binding;
+		}
+	}
+}
+
+void CGLES3Pipeline::SetSampledImageBinding(const char* szName)
+{
+	uint32_t name = HashValue(szName);
+
+	if (m_sampledImageBindings.find(name) == m_sampledImageBindings.end()) {
 		uint32_t location = glGetUniformLocation(m_program, szName);
 
 		if (location != GL_INVALID_INDEX) {
-			m_uniformLocations[name] = location;
+			m_sampledImageTextureUnits[name] = m_sampledImageBindings.size();
+			m_sampledImageBindings[name] = location;
 		}
 
 		CHECK_GL_ERROR_ASSERT();
 	}
 }
 
-void CGLES3Pipeline::SetSampledImageLocation(const char* szName)
+void CGLES3Pipeline::SetInputAttachmentBinding(const char* szName, int indexInputAttachment)
 {
 	uint32_t name = HashValue(szName);
 
-	if (m_sampledImageLocations.find(name) == m_sampledImageLocations.end()) {
+	if (m_sampledImageBindings.find(name) == m_sampledImageBindings.end()) {
 		uint32_t location = glGetUniformLocation(m_program, szName);
 
 		if (location != GL_INVALID_INDEX) {
-			m_sampledImageTextureUnits[name] = m_sampledImageLocations.size();
-			m_sampledImageLocations[name] = location;
-		}
-
-		CHECK_GL_ERROR_ASSERT();
-	}
-}
-
-void CGLES3Pipeline::SetInputAttachmentLocation(const char* szName, int indexInputAttachment)
-{
-	uint32_t name = HashValue(szName);
-
-	if (m_sampledImageLocations.find(name) == m_sampledImageLocations.end()) {
-		uint32_t location = glGetUniformLocation(m_program, szName);
-
-		if (location != GL_INVALID_INDEX) {
-			m_sampledImageTextureUnits[name] = m_sampledImageLocations.size();
-			m_sampledImageLocations[name] = location;
+			m_sampledImageTextureUnits[name] = m_sampledImageBindings.size();
+			m_sampledImageBindings[name] = location;
 			m_inputAttachmentNames[indexInputAttachment] = name;
 		}
 
@@ -331,7 +331,7 @@ bool CGLES3Pipeline::BindDescriptorSet(const CGfxDescriptorSetPtr ptrDescriptorS
 		}
 	}
 
-	for (const auto& itSampledImage : m_sampledImageLocations) {
+	for (const auto& itSampledImage : m_sampledImageBindings) {
 		if (const DescriptorImageInfo* pDescriptorImageInfo = ptrDescriptorSet->GetDescriptorImageInfo(itSampledImage.first)) {
 			const auto& itTextureUnit = m_sampledImageTextureUnits.find(itSampledImage.first);
 
