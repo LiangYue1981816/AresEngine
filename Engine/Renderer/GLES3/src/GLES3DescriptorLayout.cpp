@@ -27,11 +27,17 @@ bool CGLES3DescriptorLayout::Create(void)
 void CGLES3DescriptorLayout::Destroy(bool bClear)
 {
 	if (bClear) {
-		m_storageBlockBindings.clear();
 		m_uniformBlockBindings.clear();
+		m_storageBlockBindings.clear();
+		m_storageImageBindings.clear();
 		m_sampledImageBindings.clear();
 		m_inputAttachmentBindings.clear();
 	}
+}
+
+void CGLES3DescriptorLayout::SetUniformBlockBinding(uint32_t name, uint32_t binding)
+{
+	m_uniformBlockBindings[name] = binding;
 }
 
 void CGLES3DescriptorLayout::SetStorageBlockBinding(uint32_t name, uint32_t binding)
@@ -39,9 +45,9 @@ void CGLES3DescriptorLayout::SetStorageBlockBinding(uint32_t name, uint32_t bind
 	m_storageBlockBindings[name] = binding;
 }
 
-void CGLES3DescriptorLayout::SetUniformBlockBinding(uint32_t name, uint32_t binding)
+void CGLES3DescriptorLayout::SetStorageImageBinding(uint32_t name, uint32_t binding)
 {
-	m_uniformBlockBindings[name] = binding;
+	m_storageImageBindings[name] = binding;
 }
 
 void CGLES3DescriptorLayout::SetSampledImageBinding(uint32_t name, uint32_t binding)
@@ -59,6 +65,18 @@ uint32_t CGLES3DescriptorLayout::GetSetIndex(void) const
 	return m_set;
 }
 
+uint32_t CGLES3DescriptorLayout::GetUniformBlockBinding(uint32_t name) const
+{
+	const auto& itBinding = m_uniformBlockBindings.find(name);
+
+	if (itBinding != m_uniformBlockBindings.end()) {
+		return itBinding->second;
+	}
+	else {
+		return -1;
+	}
+}
+
 uint32_t CGLES3DescriptorLayout::GetStorageBlockBinding(uint32_t name) const
 {
 	const auto& itBinding = m_storageBlockBindings.find(name);
@@ -71,11 +89,11 @@ uint32_t CGLES3DescriptorLayout::GetStorageBlockBinding(uint32_t name) const
 	}
 }
 
-uint32_t CGLES3DescriptorLayout::GetUniformBlockBinding(uint32_t name) const
+uint32_t CGLES3DescriptorLayout::GetStorageImageBinding(uint32_t name) const
 {
-	const auto& itBinding = m_uniformBlockBindings.find(name);
+	const auto& itBinding = m_storageImageBindings.find(name);
 
-	if (itBinding != m_uniformBlockBindings.end()) {
+	if (itBinding != m_storageImageBindings.end()) {
 		return itBinding->second;
 	}
 	else {
@@ -107,14 +125,19 @@ uint32_t CGLES3DescriptorLayout::GetInputAttachmentBinding(uint32_t name) const
 	}
 }
 
+bool CGLES3DescriptorLayout::IsUniformBlockValid(uint32_t name) const
+{
+	return GetUniformBlockBinding(name) != -1;
+}
+
 bool CGLES3DescriptorLayout::IsStorageBlockValid(uint32_t name) const
 {
 	return GetStorageBlockBinding(name) != -1;
 }
 
-bool CGLES3DescriptorLayout::IsUniformBlockValid(uint32_t name) const
+bool CGLES3DescriptorLayout::IsStorageImageValid(uint32_t name) const
 {
-	return GetUniformBlockBinding(name) != -1;
+	return GetStorageImageBinding(name) != -1;
 }
 
 bool CGLES3DescriptorLayout::IsSampledImageValid(uint32_t name) const
@@ -135,11 +158,15 @@ bool CGLES3DescriptorLayout::IsCompatible(const CGfxDescriptorLayoutPtr ptrLayou
 		return false;
 	}
 
+	if (m_uniformBlockBindings != ((CGLES3DescriptorLayout*)ptrLayout.GetPointer())->m_uniformBlockBindings) {
+		return false;
+	}
+
 	if (m_storageBlockBindings != ((CGLES3DescriptorLayout*)ptrLayout.GetPointer())->m_storageBlockBindings) {
 		return false;
 	}
 
-	if (m_uniformBlockBindings != ((CGLES3DescriptorLayout*)ptrLayout.GetPointer())->m_uniformBlockBindings) {
+	if (m_storageImageBindings != ((CGLES3DescriptorLayout*)ptrLayout.GetPointer())->m_storageImageBindings) {
 		return false;
 	}
 

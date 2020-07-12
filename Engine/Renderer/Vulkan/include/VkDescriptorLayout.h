@@ -22,21 +22,24 @@ public:
 	void Destroy(bool bClear = true);
 
 public:
-	void SetStorageBlockBinding(uint32_t name, uint32_t binding);
 	void SetUniformBlockBinding(uint32_t name, uint32_t binding);
+	void SetStorageBlockBinding(uint32_t name, uint32_t binding);
+	void SetStorageImageBinding(uint32_t name, uint32_t binding);
 	void SetSampledImageBinding(uint32_t name, uint32_t binding);
 	void SetInputAttachmentBinding(uint32_t name, uint32_t binding);
 
 public:
 	uint32_t GetSetIndex(void) const;
-	uint32_t GetStorageBlockBinding(uint32_t name) const;
 	uint32_t GetUniformBlockBinding(uint32_t name) const;
+	uint32_t GetStorageBlockBinding(uint32_t name) const;
+	uint32_t GetStorageImageBinding(uint32_t name) const;
 	uint32_t GetSampledImageBinding(uint32_t name) const;
 	uint32_t GetInputAttachmentBinding(uint32_t name) const;
 
 public:
-	bool IsStorageBlockValid(uint32_t name) const;
 	bool IsUniformBlockValid(uint32_t name) const;
+	bool IsStorageBlockValid(uint32_t name) const;
+	bool IsStorageImageValid(uint32_t name) const;
 	bool IsSampledImageValid(uint32_t name) const;
 	bool IsInputAttachmentValid(uint32_t name) const;
 	bool IsCompatible(const CGfxDescriptorLayoutPtr ptrLayout) const;
@@ -48,8 +51,9 @@ private:
 private:
 	uint32_t m_set;
 	uint32_t m_numDescriptors[VK_DESCRIPTOR_TYPE_RANGE_SIZE];
-	eastl::unordered_map<uint32_t, VkDescriptorSetLayoutBinding> m_storageBlockBindings;    // [name, binding]
 	eastl::unordered_map<uint32_t, VkDescriptorSetLayoutBinding> m_uniformBlockBindings;    // [name, binding]
+	eastl::unordered_map<uint32_t, VkDescriptorSetLayoutBinding> m_storageBlockBindings;    // [name, binding]
+	eastl::unordered_map<uint32_t, VkDescriptorSetLayoutBinding> m_storageImageBindings;    // [name, binding]
 	eastl::unordered_map<uint32_t, VkDescriptorSetLayoutBinding> m_sampledImageBindings;    // [name, binding]
 	eastl::unordered_map<uint32_t, VkDescriptorSetLayoutBinding> m_inputAttachmentBindings; // [name, binding]
 
