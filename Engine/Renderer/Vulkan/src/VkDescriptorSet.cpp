@@ -195,7 +195,7 @@ bool CVKDescriptorSet::SetTexture2D(uint32_t name, const CGfxTexture2DPtr ptrTex
 	ASSERT(m_ptrDescriptorLayout);
 
 	if (m_ptrDescriptorLayout->IsSampledImageValid(name)) {
-		m_imageDescriptorInfos[name].SetTexture2D(m_ptrDescriptorLayout->GetSampledImageBinding(name), (CGfxSampler*)pSampler, ptrTexture);
+		m_imageDescriptorInfos[name].SetTexture2D(m_ptrDescriptorLayout->GetSampledImageBinding(name), ptrTexture, (CGfxSampler*)pSampler);
 		return true;
 	}
 	else {
@@ -211,7 +211,7 @@ bool CVKDescriptorSet::SetTexture2DArray(uint32_t name, const CGfxTexture2DArray
 	ASSERT(m_ptrDescriptorLayout);
 
 	if (m_ptrDescriptorLayout->IsSampledImageValid(name)) {
-		m_imageDescriptorInfos[name].SetTexture2DArray(m_ptrDescriptorLayout->GetSampledImageBinding(name), (CGfxSampler*)pSampler, ptrTexture);
+		m_imageDescriptorInfos[name].SetTexture2DArray(m_ptrDescriptorLayout->GetSampledImageBinding(name), ptrTexture, (CGfxSampler*)pSampler);
 		return true;
 	}
 	else {
@@ -227,7 +227,7 @@ bool CVKDescriptorSet::SetTextureCubemap(uint32_t name, const CGfxTextureCubemap
 	ASSERT(m_ptrDescriptorLayout);
 
 	if (m_ptrDescriptorLayout->IsSampledImageValid(name)) {
-		m_imageDescriptorInfos[name].SetTextureCubemap(m_ptrDescriptorLayout->GetSampledImageBinding(name), (CGfxSampler*)pSampler, ptrTexture);
+		m_imageDescriptorInfos[name].SetTextureCubemap(m_ptrDescriptorLayout->GetSampledImageBinding(name), ptrTexture, (CGfxSampler*)pSampler);
 		return true;
 	}
 	else {
@@ -243,7 +243,7 @@ bool CVKDescriptorSet::SetRenderTexture(uint32_t name, const CGfxRenderTexturePt
 	ASSERT(m_ptrDescriptorLayout);
 
 	if (m_ptrDescriptorLayout->IsSampledImageValid(name)) {
-		m_imageDescriptorInfos[name].SetRenderTexture(m_ptrDescriptorLayout->GetSampledImageBinding(name), (CGfxSampler*)pSampler, ptrTexture);
+		m_imageDescriptorInfos[name].SetRenderTexture(m_ptrDescriptorLayout->GetSampledImageBinding(name), ptrTexture, (CGfxSampler*)pSampler);
 		return true;
 	}
 	else {
@@ -259,7 +259,7 @@ bool CVKDescriptorSet::SetInputAttachmentTexture(uint32_t name, const CGfxRender
 	ASSERT(m_ptrDescriptorLayout);
 
 	if (m_ptrDescriptorLayout->IsInputAttachmentValid(name)) {
-		m_imageDescriptorInfos[name].SetInputAttachmentTexture(m_ptrDescriptorLayout->GetInputAttachmentBinding(name), (CGfxSampler*)pSampler, ptrTexture);
+		m_imageDescriptorInfos[name].SetInputAttachmentTexture(m_ptrDescriptorLayout->GetInputAttachmentBinding(name), ptrTexture, (CGfxSampler*)pSampler);
 		return true;
 	}
 	else {
