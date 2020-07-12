@@ -78,9 +78,8 @@ bool CGLES3Pipeline::CreateLayouts(void)
 {
 	for (int indexShader = 0; indexShader < compute_shader - vertex_shader + 1; indexShader++) {
 		if (m_pShaders[indexShader] && m_pShaders[indexShader]->IsValid()) {
-			for (const auto& itStorageBlock : m_pShaders[indexShader]->GetSprivCross().GetStorageBlockBindings()) {
-				SetStorageBlockBinding(itStorageBlock.first.c_str(), itStorageBlock.second.binding);
-				m_ptrDescriptorLayouts[itStorageBlock.second.set]->SetStorageBlockBinding(HashValue(itStorageBlock.first.c_str()), itStorageBlock.second.binding);
+			for (const auto& itPushConstant : m_pShaders[indexShader]->GetSprivCross().GetPushConstantRanges()) {
+				SetUniformLocation(itPushConstant.first.c_str());
 			}
 
 			for (const auto& itUniformBlock : m_pShaders[indexShader]->GetSprivCross().GetUniformBlockBindings()) {
@@ -88,8 +87,9 @@ bool CGLES3Pipeline::CreateLayouts(void)
 				m_ptrDescriptorLayouts[itUniformBlock.second.set]->SetUniformBlockBinding(HashValue(itUniformBlock.first.c_str()), itUniformBlock.second.binding);
 			}
 
-			for (const auto& itPushConstant : m_pShaders[indexShader]->GetSprivCross().GetPushConstantRanges()) {
-				SetUniformLocation(itPushConstant.first.c_str());
+			for (const auto& itStorageBlock : m_pShaders[indexShader]->GetSprivCross().GetStorageBlockBindings()) {
+				SetStorageBlockBinding(itStorageBlock.first.c_str(), itStorageBlock.second.binding);
+				m_ptrDescriptorLayouts[itStorageBlock.second.set]->SetStorageBlockBinding(HashValue(itStorageBlock.first.c_str()), itStorageBlock.second.binding);
 			}
 
 			for (const auto& itSampledImage : m_pShaders[indexShader]->GetSprivCross().GetSampledImageBindings()) {
