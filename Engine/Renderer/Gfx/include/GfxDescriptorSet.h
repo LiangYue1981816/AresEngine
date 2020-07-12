@@ -198,6 +198,9 @@ public:
 public:
 	virtual bool SetUniformBuffer(uint32_t name, const CGfxUniformBufferPtr ptrUniformBuffer, uint32_t offset, uint32_t range) = 0;
 	virtual bool SetStorageBuffer(uint32_t name, const CGfxStorageBufferPtr ptrStorageBuffer, uint32_t offset, uint32_t range) = 0;
+	virtual bool SetImage2D(uint32_t name, const CGfxTexture2DPtr ptrImage) = 0;
+	virtual bool SetImage2DArray(uint32_t name, const CGfxTexture2DArrayPtr ptrImage) = 0;
+	virtual bool SetImageCubemap(uint32_t name, const CGfxTextureCubemapPtr ptrImage) = 0;
 	virtual bool SetTexture2D(uint32_t name, const CGfxTexture2DPtr ptrTexture, const CGfxSampler* pSampler) = 0;
 	virtual bool SetTexture2DArray(uint32_t name, const CGfxTexture2DArrayPtr ptrTexture, const CGfxSampler* pSampler) = 0;
 	virtual bool SetTextureCubemap(uint32_t name, const CGfxTextureCubemapPtr ptrTexture, const CGfxSampler* pSampler) = 0;
