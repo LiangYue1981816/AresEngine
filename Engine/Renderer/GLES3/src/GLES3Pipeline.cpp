@@ -196,6 +196,7 @@ void CGLES3Pipeline::Destroy(void)
 	m_uniformLocations.clear();
 	m_uniformBlockBindings.clear();
 	m_storageBlockBindings.clear();
+	m_storageImageBindings.clear();
 	m_sampledImageBindings.clear();
 	m_sampledImageTextureUnits.clear();
 	m_inputAttachmentNames.clear();
@@ -319,16 +320,20 @@ bool CGLES3Pipeline::BindDescriptorSet(const CGfxDescriptorSetPtr ptrDescriptorS
 		return false;
 	}
 
+	for (const auto& itUniformBlock : m_uniformBlockBindings) {
+		if (const DescriptorBufferInfo* pDescriptorBufferInfo = ptrDescriptorSet->GetDescriptorBufferInfo(itUniformBlock.first)) {
+			((CGLES3UniformBuffer*)pDescriptorBufferInfo->ptrUniformBuffer.GetPointer())->Bind(itUniformBlock.second, pDescriptorBufferInfo->offset, pDescriptorBufferInfo->range);
+		}
+	}
+
 	for (const auto& itStorageBlock : m_storageBlockBindings) {
 		if (const DescriptorBufferInfo* pDescriptorBufferInfo = ptrDescriptorSet->GetDescriptorBufferInfo(itStorageBlock.first)) {
 			((CGLES3StorageBuffer*)pDescriptorBufferInfo->ptrStorageBuffer.GetPointer())->Bind(itStorageBlock.second, pDescriptorBufferInfo->offset, pDescriptorBufferInfo->range);
 		}
 	}
 
-	for (const auto& itUniformBlock : m_uniformBlockBindings) {
-		if (const DescriptorBufferInfo* pDescriptorBufferInfo = ptrDescriptorSet->GetDescriptorBufferInfo(itUniformBlock.first)) {
-			((CGLES3UniformBuffer*)pDescriptorBufferInfo->ptrUniformBuffer.GetPointer())->Bind(itUniformBlock.second, pDescriptorBufferInfo->offset, pDescriptorBufferInfo->range);
-		}
+	for (const auto& itStorageImage : m_storageImageBindings) {
+
 	}
 
 	for (const auto& itSampledImage : m_sampledImageBindings) {

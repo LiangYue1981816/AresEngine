@@ -74,6 +74,7 @@ private:
 	eastl::unordered_map<uint32_t, uint32_t> m_uniformLocations;         // [name, location]
 	eastl::unordered_map<uint32_t, uint32_t> m_uniformBlockBindings;     // [name, binding]
 	eastl::unordered_map<uint32_t, uint32_t> m_storageBlockBindings;     // [name, binding]
+	eastl::unordered_map<uint32_t, uint32_t> m_storageImageBindings;     // [name, binding]
 	eastl::unordered_map<uint32_t, uint32_t> m_sampledImageBindings;     // [name, binding]
 	eastl::unordered_map<uint32_t, uint32_t> m_sampledImageTextureUnits; // [name, texture unit]
 	eastl::unordered_map<uint32_t, uint32_t> m_inputAttachmentNames;     // [input attachment index, name]
