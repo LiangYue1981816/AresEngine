@@ -49,7 +49,7 @@ bool CVKDescriptorLayout::Create(void)
 					bindings.emplace_back(itBinding.second);
 				}
 
-				for (const auto& itBining : m_storageImageBindings) {
+				for (const auto& itBinding : m_storageImageBindings) {
 					bindings.emplace_back(itBinding.second);
 				}
 
