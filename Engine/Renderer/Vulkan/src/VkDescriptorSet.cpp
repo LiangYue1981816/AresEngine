@@ -21,6 +21,22 @@ CVKDescriptorSet::CVKDescriptorSet(CVKDevice* pDevice, CVKDescriptorPool* pDescr
 	Create(ptrDescriptorSetCopyFrom->GetDescriptorLayout());
 
 	for (const auto& itImageDescriptorInfo : ((CVKDescriptorSet *)ptrDescriptorSetCopyFrom.GetPointer())->m_imageDescriptorInfos) {
+		if (itImageDescriptorInfo.second.ptrImage2D) {
+			SetImage2D(itImageDescriptorInfo.first, itImageDescriptorInfo.second.ptrImage2D);
+		}
+
+		if (itImageDescriptorInfo.second.ptrImage2DArray) {
+			SetImage2DArray(itImageDescriptorInfo.first, itImageDescriptorInfo.second.ptrImage2DArray);
+		}
+
+		if (itImageDescriptorInfo.second.ptrImageCubemap) {
+			SetImageCubemap(itImageDescriptorInfo.first, itImageDescriptorInfo.second.ptrImageCubemap);
+		}
+
+		if (itImageDescriptorInfo.second.ptrImageRenderTexture) {
+			SetImageRenderTexture(itImageDescriptorInfo.first, itImageDescriptorInfo.second.ptrImageRenderTexture);
+		}
+
 		if (itImageDescriptorInfo.second.ptrTexture2D) {
 			SetTexture2D(itImageDescriptorInfo.first, itImageDescriptorInfo.second.ptrTexture2D, itImageDescriptorInfo.second.pSampler);
 		}
@@ -297,6 +313,15 @@ const DescriptorBufferInfo* CVKDescriptorSet::GetDescriptorBufferInfo(uint32_t n
 	}
 }
 
+static VkDescriptorBufferInfo DescriptorBufferInfo(VkBuffer buffer, VkDeviceSize offset, VkDeviceSize range)
+{
+	VkDescriptorBufferInfo bufferInfo = {};
+	bufferInfo.buffer = buffer;
+	bufferInfo.offset = offset;
+	bufferInfo.range = range;
+	return bufferInfo;
+}
+
 static VkDescriptorImageInfo DescriptorImageInfo(VkSampler sampler, VkImageView imageView, VkImageLayout imageLayout)
 {
 	VkDescriptorImageInfo imageInfo = {};
@@ -306,13 +331,36 @@ static VkDescriptorImageInfo DescriptorImageInfo(VkSampler sampler, VkImageView 
 	return imageInfo;
 }
 
-static VkDescriptorBufferInfo DescriptorBufferInfo(VkBuffer buffer, VkDeviceSize offset, VkDeviceSize range)
+static VkWriteDescriptorSet UniformBufferWriteDescriptorSet(VkDescriptorSet dstSet, uint32_t dstBinding, const VkDescriptorBufferInfo* pBufferInfo)
 {
-	VkDescriptorBufferInfo bufferInfo = {};
-	bufferInfo.buffer = buffer;
-	bufferInfo.offset = offset;
-	bufferInfo.range = range;
-	return bufferInfo;
+	VkWriteDescriptorSet write = {};
+	write.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
+	write.pNext = nullptr;
+	write.dstSet = dstSet;
+	write.dstBinding = dstBinding;
+	write.dstArrayElement = 0;
+	write.descriptorCount = 1;
+	write.descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER_DYNAMIC;
+	write.pImageInfo = nullptr;
+	write.pBufferInfo = pBufferInfo;
+	write.pTexelBufferView = nullptr;
+	return write;
+}
+
+static VkWriteDescriptorSet StorageBufferWriteDescriptorSet(VkDescriptorSet dstSet, uint32_t dstBinding, const VkDescriptorBufferInfo* pBufferInfo)
+{
+	VkWriteDescriptorSet write = {};
+	write.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
+	write.pNext = nullptr;
+	write.dstSet = dstSet;
+	write.dstBinding = dstBinding;
+	write.dstArrayElement = 0;
+	write.descriptorCount = 1;
+	write.descriptorType = VK_DESCRIPTOR_TYPE_STORAGE_BUFFER;
+	write.pImageInfo = nullptr;
+	write.pBufferInfo = pBufferInfo;
+	write.pTexelBufferView = nullptr;
+	return write;
 }
 
 static VkWriteDescriptorSet StorageImageWriteDescriptorSet(VkDescriptorSet dstSet, uint32_t dstBinding, const VkDescriptorImageInfo* pImageInfo)
@@ -363,38 +411,6 @@ static VkWriteDescriptorSet InputAttachmentWriteDescriptorSet(VkDescriptorSet ds
 	return write;
 }
 
-static VkWriteDescriptorSet UniformBufferWriteDescriptorSet(VkDescriptorSet dstSet, uint32_t dstBinding, const VkDescriptorBufferInfo* pBufferInfo)
-{
-	VkWriteDescriptorSet write = {};
-	write.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
-	write.pNext = nullptr;
-	write.dstSet = dstSet;
-	write.dstBinding = dstBinding;
-	write.dstArrayElement = 0;
-	write.descriptorCount = 1;
-	write.descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER_DYNAMIC;
-	write.pImageInfo = nullptr;
-	write.pBufferInfo = pBufferInfo;
-	write.pTexelBufferView = nullptr;
-	return write;
-}
-
-static VkWriteDescriptorSet StorageBufferWriteDescriptorSet(VkDescriptorSet dstSet, uint32_t dstBinding, const VkDescriptorBufferInfo* pBufferInfo)
-{
-	VkWriteDescriptorSet write = {};
-	write.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
-	write.pNext = nullptr;
-	write.dstSet = dstSet;
-	write.dstBinding = dstBinding;
-	write.dstArrayElement = 0;
-	write.descriptorCount = 1;
-	write.descriptorType = VK_DESCRIPTOR_TYPE_STORAGE_BUFFER;
-	write.pImageInfo = nullptr;
-	write.pBufferInfo = pBufferInfo;
-	write.pTexelBufferView = nullptr;
-	return write;
-}
-
 void CVKDescriptorSet::Bind(VkCommandBuffer vkCommandBuffer, VkPipelineBindPoint vkPipelineBindPoint, VkPipelineLayout vkPipelineLayout)
 {
 	ASSERT(vkCommandBuffer);
@@ -407,6 +423,36 @@ void CVKDescriptorSet::Bind(VkCommandBuffer vkCommandBuffer, VkPipelineBindPoint
 	writes.reserve(m_imageDescriptorInfos.size() + m_bufferDescriptorInfos.size());
 	imageInfos.reserve(m_imageDescriptorInfos.size());
 	bufferInfos.reserve(m_bufferDescriptorInfos.size());
+
+	for (auto& itBuffer : m_bufferDescriptorInfos) {
+		if (itBuffer.second.bDirty) {
+			itBuffer.second.bDirty = false;
+
+			if (itBuffer.second.ptrUniformBuffer) {
+				bufferInfos.emplace_back(DescriptorBufferInfo(
+					((CVKUniformBuffer*)itBuffer.second.ptrUniformBuffer.GetPointer())->GetBuffer(),
+					itBuffer.second.offset,
+					itBuffer.second.range));
+
+				writes.emplace_back(UniformBufferWriteDescriptorSet(
+					m_vkDescriptorSet,
+					itBuffer.second.binding,
+					&bufferInfos[bufferInfos.size() - 1]));
+			}
+
+			if (itBuffer.second.ptrStorageBuffer) {
+				bufferInfos.emplace_back(DescriptorBufferInfo(
+					((CVKStorageBuffer*)itBuffer.second.ptrStorageBuffer.GetPointer())->GetBuffer(),
+					itBuffer.second.offset,
+					itBuffer.second.range));
+
+				writes.emplace_back(StorageBufferWriteDescriptorSet(
+					m_vkDescriptorSet,
+					itBuffer.second.binding,
+					&bufferInfos[bufferInfos.size() - 1]));
+			}
+		}
+	}
 
 	for (auto& itImage : m_imageDescriptorInfos) {
 		if (itImage.second.bDirty) {
@@ -427,7 +473,7 @@ void CVKDescriptorSet::Bind(VkCommandBuffer vkCommandBuffer, VkPipelineBindPoint
 			if (itImage.second.ptrImage2DArray) {
 				imageInfos.emplace_back(DescriptorImageInfo(
 					VK_NULL_HANDLE,
-					((CVKTexture2D*)itImage.second.ptrImage2DArray.GetPointer())->GetImageView(),
+					((CVKTexture2DArray*)itImage.second.ptrImage2DArray.GetPointer())->GetImageView(),
 					CGfxHelper::IsFormatDepthOrStencil(itImage.second.ptrImage2DArray->GetFormat()) ? VK_IMAGE_LAYOUT_DEPTH_STENCIL_READ_ONLY_OPTIMAL : VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL));
 
 				writes.emplace_back(StorageImageWriteDescriptorSet(
@@ -439,8 +485,20 @@ void CVKDescriptorSet::Bind(VkCommandBuffer vkCommandBuffer, VkPipelineBindPoint
 			if (itImage.second.ptrImageCubemap) {
 				imageInfos.emplace_back(DescriptorImageInfo(
 					VK_NULL_HANDLE,
-					((CVKTexture2D*)itImage.second.ptrImageCubemap.GetPointer())->GetImageView(),
+					((CVKTextureCubemap*)itImage.second.ptrImageCubemap.GetPointer())->GetImageView(),
 					CGfxHelper::IsFormatDepthOrStencil(itImage.second.ptrImageCubemap->GetFormat()) ? VK_IMAGE_LAYOUT_DEPTH_STENCIL_READ_ONLY_OPTIMAL : VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL));
+
+				writes.emplace_back(StorageImageWriteDescriptorSet(
+					m_vkDescriptorSet,
+					itImage.second.binding,
+					&imageInfos[imageInfos.size() - 1]));
+			}
+
+			if (itImage.second.ptrImageRenderTexture) {
+				imageInfos.emplace_back(DescriptorImageInfo(
+					VK_NULL_HANDLE,
+					((CVKRenderTexture*)itImage.second.ptrImageRenderTexture.GetPointer())->GetImageView(),
+					CGfxHelper::IsFormatDepthOrStencil(itImage.second.ptrImageRenderTexture->GetFormat()) ? VK_IMAGE_LAYOUT_DEPTH_STENCIL_READ_ONLY_OPTIMAL : VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL));
 
 				writes.emplace_back(StorageImageWriteDescriptorSet(
 					m_vkDescriptorSet,
@@ -506,36 +564,6 @@ void CVKDescriptorSet::Bind(VkCommandBuffer vkCommandBuffer, VkPipelineBindPoint
 					m_vkDescriptorSet,
 					itImage.second.binding,
 					&imageInfos[imageInfos.size() - 1]));
-			}
-		}
-	}
-
-	for (auto& itBuffer : m_bufferDescriptorInfos) {
-		if (itBuffer.second.bDirty) {
-			itBuffer.second.bDirty = false;
-
-			if (itBuffer.second.ptrUniformBuffer) {
-				bufferInfos.emplace_back(DescriptorBufferInfo(
-					((CVKUniformBuffer*)itBuffer.second.ptrUniformBuffer.GetPointer())->GetBuffer(), 
-					itBuffer.second.offset, 
-					itBuffer.second.range));
-
-				writes.emplace_back(UniformBufferWriteDescriptorSet(
-					m_vkDescriptorSet,
-					itBuffer.second.binding,
-					&bufferInfos[bufferInfos.size() - 1]));
-			}
-
-			if (itBuffer.second.ptrStorageBuffer) {
-				bufferInfos.emplace_back(DescriptorBufferInfo(
-					((CVKStorageBuffer*)itBuffer.second.ptrStorageBuffer.GetPointer())->GetBuffer(),
-					itBuffer.second.offset,
-					itBuffer.second.range));
-
-				writes.emplace_back(StorageBufferWriteDescriptorSet(
-					m_vkDescriptorSet,
-					itBuffer.second.binding,
-					&bufferInfos[bufferInfos.size() - 1]));
 			}
 		}
 	}
