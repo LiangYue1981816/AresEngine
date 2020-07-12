@@ -23,8 +23,8 @@ private:
 	CVKDescriptorPool* GetDescriptorPool(void) const;
 
 public:
-	bool SetUniformBuffer(uint32_t name, const CGfxUniformBufferPtr ptrUniformBuffer, uint32_t offset, uint32_t range);
-	bool SetStorageBuffer(uint32_t name, const CGfxStorageBufferPtr ptrStorageBuffer, uint32_t offset, uint32_t range);
+	bool SetUniformBuffer(uint32_t name, const CGfxUniformBufferPtr ptrBuffer, uint32_t offset, uint32_t range);
+	bool SetStorageBuffer(uint32_t name, const CGfxStorageBufferPtr ptrBuffer, uint32_t offset, uint32_t range);
 	bool SetImage2D(uint32_t name, const CGfxTexture2DPtr ptrImage);
 	bool SetImage2DArray(uint32_t name, const CGfxTexture2DArrayPtr ptrImage);
 	bool SetImageCubemap(uint32_t name, const CGfxTextureCubemapPtr ptrImage);

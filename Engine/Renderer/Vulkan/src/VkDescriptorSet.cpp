@@ -95,15 +95,15 @@ CVKDescriptorPool* CVKDescriptorSet::GetDescriptorPool(void) const
 	return m_pDescriptorPool;
 }
 
-bool CVKDescriptorSet::SetUniformBuffer(uint32_t name, const CGfxUniformBufferPtr ptrUniformBuffer, uint32_t offset, uint32_t range)
+bool CVKDescriptorSet::SetUniformBuffer(uint32_t name, const CGfxUniformBufferPtr ptrBuffer, uint32_t offset, uint32_t range)
 {
-	ASSERT(ptrUniformBuffer);
-	ASSERT(ptrUniformBuffer->GetSize() >= offset + range);
+	ASSERT(ptrBuffer);
+	ASSERT(ptrBuffer->GetSize() >= offset + range);
 	ASSERT(m_vkDescriptorSet);
 	ASSERT(m_ptrDescriptorLayout);
 
 	if (m_ptrDescriptorLayout->IsUniformBlockValid(name)) {
-		m_bufferDescriptorInfos[name].SetUniformBuffer(m_ptrDescriptorLayout->GetUniformBlockBinding(name), ptrUniformBuffer, offset, range);
+		m_bufferDescriptorInfos[name].SetUniformBuffer(m_ptrDescriptorLayout->GetUniformBlockBinding(name), ptrBuffer, offset, range);
 		return true;
 	}
 	else {
@@ -111,15 +111,15 @@ bool CVKDescriptorSet::SetUniformBuffer(uint32_t name, const CGfxUniformBufferPt
 	}
 }
 
-bool CVKDescriptorSet::SetStorageBuffer(uint32_t name, const CGfxStorageBufferPtr ptrStorageBuffer, uint32_t offset, uint32_t range)
+bool CVKDescriptorSet::SetStorageBuffer(uint32_t name, const CGfxStorageBufferPtr ptrBuffer, uint32_t offset, uint32_t range)
 {
-	ASSERT(ptrStorageBuffer);
-	ASSERT(ptrStorageBuffer->GetSize() >= offset + range);
+	ASSERT(ptrBuffer);
+	ASSERT(ptrBuffer->GetSize() >= offset + range);
 	ASSERT(m_vkDescriptorSet);
 	ASSERT(m_ptrDescriptorLayout);
 
 	if (m_ptrDescriptorLayout->IsStorageBlockValid(name)) {
-		m_bufferDescriptorInfos[name].SetStorageBuffer(m_ptrDescriptorLayout->GetStorageBlockBinding(name), ptrStorageBuffer, offset, range);
+		m_bufferDescriptorInfos[name].SetStorageBuffer(m_ptrDescriptorLayout->GetStorageBlockBinding(name), ptrBuffer, offset, range);
 		return true;
 	}
 	else {
