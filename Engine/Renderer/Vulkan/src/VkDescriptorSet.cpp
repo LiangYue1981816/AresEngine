@@ -397,109 +397,100 @@ void CVKDescriptorSet::Bind(VkCommandBuffer vkCommandBuffer, VkPipelineBindPoint
 		if (itImage.second.bDirty) {
 			itImage.second.bDirty = false;
 
-			if (itImage.second.ptrTexture2D) {
-				VkDescriptorImageInfo imageInfo = {};
-				imageInfo.sampler = ((CVKSampler*)itImage.second.pSampler)->GetSampler();
-				imageInfo.imageView = ((CVKTexture2D*)itImage.second.ptrTexture2D.GetPointer())->GetImageView();
-				imageInfo.imageLayout = CGfxHelper::IsFormatDepthOrStencil(itImage.second.ptrTexture2D->GetFormat()) ? VK_IMAGE_LAYOUT_DEPTH_STENCIL_READ_ONLY_OPTIMAL : VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
-				imageInfos.emplace_back(imageInfo);
+			if (itImage.second.ptrImage2D) {
+				imageInfos.emplace_back(DescriptorImageInfo(
+					VK_NULL_HANDLE,
+					((CVKTexture2D*)itImage.second.ptrImage2D.GetPointer())->GetImageView(),
+					CGfxHelper::IsFormatDepthOrStencil(itImage.second.ptrImage2D->GetFormat()) ? VK_IMAGE_LAYOUT_DEPTH_STENCIL_READ_ONLY_OPTIMAL : VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL));
 
-				VkWriteDescriptorSet write = {};
-				write.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
-				write.pNext = nullptr;
-				write.dstSet = m_vkDescriptorSet;
-				write.dstBinding = itImage.second.binding;
-				write.dstArrayElement = 0;
-				write.descriptorCount = 1;
-				write.descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
-				write.pImageInfo = &imageInfos[imageInfos.size() - 1];
-				write.pBufferInfo = nullptr;
-				write.pTexelBufferView = nullptr;
-				writes.emplace_back(write);
+				writes.emplace_back(StorageImageWriteDescriptorSet(
+					m_vkDescriptorSet,
+					itImage.second.binding,
+					&imageInfos[imageInfos.size() - 1]));
+			}
+
+			if (itImage.second.ptrImage2DArray) {
+				imageInfos.emplace_back(DescriptorImageInfo(
+					VK_NULL_HANDLE,
+					((CVKTexture2D*)itImage.second.ptrImage2DArray.GetPointer())->GetImageView(),
+					CGfxHelper::IsFormatDepthOrStencil(itImage.second.ptrImage2DArray->GetFormat()) ? VK_IMAGE_LAYOUT_DEPTH_STENCIL_READ_ONLY_OPTIMAL : VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL));
+
+				writes.emplace_back(StorageImageWriteDescriptorSet(
+					m_vkDescriptorSet,
+					itImage.second.binding,
+					&imageInfos[imageInfos.size() - 1]));
+			}
+
+			if (itImage.second.ptrImageCubemap) {
+				imageInfos.emplace_back(DescriptorImageInfo(
+					VK_NULL_HANDLE,
+					((CVKTexture2D*)itImage.second.ptrImageCubemap.GetPointer())->GetImageView(),
+					CGfxHelper::IsFormatDepthOrStencil(itImage.second.ptrImageCubemap->GetFormat()) ? VK_IMAGE_LAYOUT_DEPTH_STENCIL_READ_ONLY_OPTIMAL : VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL));
+
+				writes.emplace_back(StorageImageWriteDescriptorSet(
+					m_vkDescriptorSet,
+					itImage.second.binding,
+					&imageInfos[imageInfos.size() - 1]));
+			}
+
+			if (itImage.second.ptrTexture2D) {
+				imageInfos.emplace_back(DescriptorImageInfo(
+					((CVKSampler*)itImage.second.pSampler)->GetSampler(),
+					((CVKTexture2D*)itImage.second.ptrTexture2D.GetPointer())->GetImageView(),
+					CGfxHelper::IsFormatDepthOrStencil(itImage.second.ptrTexture2D->GetFormat()) ? VK_IMAGE_LAYOUT_DEPTH_STENCIL_READ_ONLY_OPTIMAL : VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL));
+
+				writes.emplace_back(SampledImageWriteDescriptorSet(
+					m_vkDescriptorSet,
+					itImage.second.binding,
+					&imageInfos[imageInfos.size() - 1]));
 			}
 
 			if (itImage.second.ptrTexture2DArray) {
-				VkDescriptorImageInfo imageInfo = {};
-				imageInfo.sampler = ((CVKSampler*)itImage.second.pSampler)->GetSampler();
-				imageInfo.imageView = ((CVKTexture2DArray*)itImage.second.ptrTexture2DArray.GetPointer())->GetImageView();
-				imageInfo.imageLayout = CGfxHelper::IsFormatDepthOrStencil(itImage.second.ptrTexture2DArray->GetFormat()) ? VK_IMAGE_LAYOUT_DEPTH_STENCIL_READ_ONLY_OPTIMAL : VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
-				imageInfos.emplace_back(imageInfo);
+				imageInfos.emplace_back(DescriptorImageInfo(
+					((CVKSampler*)itImage.second.pSampler)->GetSampler(),
+					((CVKTexture2DArray*)itImage.second.ptrTexture2DArray.GetPointer())->GetImageView(),
+					CGfxHelper::IsFormatDepthOrStencil(itImage.second.ptrTexture2DArray->GetFormat()) ? VK_IMAGE_LAYOUT_DEPTH_STENCIL_READ_ONLY_OPTIMAL : VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL));
 
-				VkWriteDescriptorSet write = {};
-				write.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
-				write.pNext = nullptr;
-				write.dstSet = m_vkDescriptorSet;
-				write.dstBinding = itImage.second.binding;
-				write.dstArrayElement = 0;
-				write.descriptorCount = 1;
-				write.descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
-				write.pImageInfo = &imageInfos[imageInfos.size() - 1];
-				write.pBufferInfo = nullptr;
-				write.pTexelBufferView = nullptr;
-				writes.emplace_back(write);
+				writes.emplace_back(SampledImageWriteDescriptorSet(
+					m_vkDescriptorSet,
+					itImage.second.binding,
+					&imageInfos[imageInfos.size() - 1]));
 			}
 
 			if (itImage.second.ptrTextureCubemap) {
-				VkDescriptorImageInfo imageInfo = {};
-				imageInfo.sampler = ((CVKSampler*)itImage.second.pSampler)->GetSampler();
-				imageInfo.imageView = ((CVKTextureCubemap*)itImage.second.ptrTextureCubemap.GetPointer())->GetImageView();
-				imageInfo.imageLayout = CGfxHelper::IsFormatDepthOrStencil(itImage.second.ptrTextureCubemap->GetFormat()) ? VK_IMAGE_LAYOUT_DEPTH_STENCIL_READ_ONLY_OPTIMAL : VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
-				imageInfos.emplace_back(imageInfo);
+				imageInfos.emplace_back(DescriptorImageInfo(
+					((CVKSampler*)itImage.second.pSampler)->GetSampler(),
+					((CVKTextureCubemap*)itImage.second.ptrTextureCubemap.GetPointer())->GetImageView(),
+					CGfxHelper::IsFormatDepthOrStencil(itImage.second.ptrTextureCubemap->GetFormat()) ? VK_IMAGE_LAYOUT_DEPTH_STENCIL_READ_ONLY_OPTIMAL : VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL));
 
-				VkWriteDescriptorSet write = {};
-				write.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
-				write.pNext = nullptr;
-				write.dstSet = m_vkDescriptorSet;
-				write.dstBinding = itImage.second.binding;
-				write.dstArrayElement = 0;
-				write.descriptorCount = 1;
-				write.descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
-				write.pImageInfo = &imageInfos[imageInfos.size() - 1];
-				write.pBufferInfo = nullptr;
-				write.pTexelBufferView = nullptr;
-				writes.emplace_back(write);
+				writes.emplace_back(SampledImageWriteDescriptorSet(
+					m_vkDescriptorSet,
+					itImage.second.binding,
+					&imageInfos[imageInfos.size() - 1]));
 			}
 
 			if (itImage.second.ptrRenderTexture) {
-				VkDescriptorImageInfo imageInfo = {};
-				imageInfo.sampler = ((CVKSampler*)itImage.second.pSampler)->GetSampler();
-				imageInfo.imageView = ((CVKRenderTexture*)itImage.second.ptrRenderTexture.GetPointer())->GetImageView();
-				imageInfo.imageLayout = CGfxHelper::IsFormatDepthOrStencil(itImage.second.ptrRenderTexture->GetFormat()) ? VK_IMAGE_LAYOUT_DEPTH_STENCIL_READ_ONLY_OPTIMAL : VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
-				imageInfos.emplace_back(imageInfo);
+				imageInfos.emplace_back(DescriptorImageInfo(
+					((CVKSampler*)itImage.second.pSampler)->GetSampler(),
+					((CVKRenderTexture*)itImage.second.ptrRenderTexture.GetPointer())->GetImageView(),
+					CGfxHelper::IsFormatDepthOrStencil(itImage.second.ptrRenderTexture->GetFormat()) ? VK_IMAGE_LAYOUT_DEPTH_STENCIL_READ_ONLY_OPTIMAL : VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL));
 
-				VkWriteDescriptorSet write = {};
-				write.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
-				write.pNext = nullptr;
-				write.dstSet = m_vkDescriptorSet;
-				write.dstBinding = itImage.second.binding;
-				write.dstArrayElement = 0;
-				write.descriptorCount = 1;
-				write.descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
-				write.pImageInfo = &imageInfos[imageInfos.size() - 1];
-				write.pBufferInfo = nullptr;
-				write.pTexelBufferView = nullptr;
-				writes.emplace_back(write);
+				writes.emplace_back(SampledImageWriteDescriptorSet(
+					m_vkDescriptorSet,
+					itImage.second.binding,
+					&imageInfos[imageInfos.size() - 1]));
 			}
 
 			if (itImage.second.ptrInputAttachmentTexture) {
-				VkDescriptorImageInfo imageInfo = {};
-				imageInfo.sampler = ((CVKSampler*)itImage.second.pSampler)->GetSampler();
-				imageInfo.imageView = ((CVKRenderTexture*)itImage.second.ptrInputAttachmentTexture.GetPointer())->GetImageView();
-				imageInfo.imageLayout = CGfxHelper::IsFormatDepthOrStencil(itImage.second.ptrInputAttachmentTexture->GetFormat()) ? VK_IMAGE_LAYOUT_DEPTH_STENCIL_READ_ONLY_OPTIMAL : VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
-				imageInfos.emplace_back(imageInfo);
+				imageInfos.emplace_back(DescriptorImageInfo(
+					((CVKSampler*)itImage.second.pSampler)->GetSampler(),
+					((CVKRenderTexture*)itImage.second.ptrInputAttachmentTexture.GetPointer())->GetImageView(),
+					CGfxHelper::IsFormatDepthOrStencil(itImage.second.ptrInputAttachmentTexture->GetFormat()) ? VK_IMAGE_LAYOUT_DEPTH_STENCIL_READ_ONLY_OPTIMAL : VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL));
 
-				VkWriteDescriptorSet write = {};
-				write.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
-				write.pNext = nullptr;
-				write.dstSet = m_vkDescriptorSet;
-				write.dstBinding = itImage.second.binding;
-				write.dstArrayElement = 0;
-				write.descriptorCount = 1;
-				write.descriptorType = VK_DESCRIPTOR_TYPE_INPUT_ATTACHMENT;
-				write.pImageInfo = &imageInfos[imageInfos.size() - 1];
-				write.pBufferInfo = nullptr;
-				write.pTexelBufferView = nullptr;
-				writes.emplace_back(write);
+				writes.emplace_back(InputAttachmentWriteDescriptorSet(
+					m_vkDescriptorSet,
+					itImage.second.binding,
+					&imageInfos[imageInfos.size() - 1]));
 			}
 		}
 	}
@@ -509,45 +500,27 @@ void CVKDescriptorSet::Bind(VkCommandBuffer vkCommandBuffer, VkPipelineBindPoint
 			itBuffer.second.bDirty = false;
 
 			if (itBuffer.second.ptrUniformBuffer) {
-				VkDescriptorBufferInfo bufferInfo = {};
-				bufferInfo.buffer = ((CVKUniformBuffer*)itBuffer.second.ptrUniformBuffer.GetPointer())->GetBuffer();
-				bufferInfo.offset = itBuffer.second.offset;
-				bufferInfo.range = itBuffer.second.range;
-				bufferInfos.emplace_back(bufferInfo);
+				bufferInfos.emplace_back(DescriptorBufferInfo(
+					((CVKUniformBuffer*)itBuffer.second.ptrUniformBuffer.GetPointer())->GetBuffer(), 
+					itBuffer.second.offset, 
+					itBuffer.second.range));
 
-				VkWriteDescriptorSet write = {};
-				write.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
-				write.pNext = nullptr;
-				write.dstSet = m_vkDescriptorSet;
-				write.dstBinding = itBuffer.second.binding;
-				write.dstArrayElement = 0;
-				write.descriptorCount = 1;
-				write.descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER_DYNAMIC;
-				write.pImageInfo = nullptr;
-				write.pBufferInfo = &bufferInfos[bufferInfos.size() - 1];
-				write.pTexelBufferView = nullptr;
-				writes.emplace_back(write);
+				writes.emplace_back(UniformBufferWriteDescriptorSet(
+					m_vkDescriptorSet,
+					itBuffer.second.binding,
+					&bufferInfos[bufferInfos.size() - 1]));
 			}
 
 			if (itBuffer.second.ptrStorageBuffer) {
-				VkDescriptorBufferInfo bufferInfo = {};
-				bufferInfo.buffer = ((CVKStorageBuffer*)itBuffer.second.ptrStorageBuffer.GetPointer())->GetBuffer();
-				bufferInfo.offset = itBuffer.second.offset;
-				bufferInfo.range = itBuffer.second.range;
-				bufferInfos.emplace_back(bufferInfo);
+				bufferInfos.emplace_back(DescriptorBufferInfo(
+					((CVKStorageBuffer*)itBuffer.second.ptrStorageBuffer.GetPointer())->GetBuffer(),
+					itBuffer.second.offset,
+					itBuffer.second.range));
 
-				VkWriteDescriptorSet write = {};
-				write.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
-				write.pNext = nullptr;
-				write.dstSet = m_vkDescriptorSet;
-				write.dstBinding = itBuffer.second.binding;
-				write.dstArrayElement = 0;
-				write.descriptorCount = 1;
-				write.descriptorType = VK_DESCRIPTOR_TYPE_STORAGE_BUFFER;
-				write.pImageInfo = nullptr;
-				write.pBufferInfo = &bufferInfos[bufferInfos.size() - 1];
-				write.pTexelBufferView = nullptr;
-				writes.emplace_back(write);
+				writes.emplace_back(StorageBufferWriteDescriptorSet(
+					m_vkDescriptorSet,
+					itBuffer.second.binding,
+					&bufferInfos[bufferInfos.size() - 1]));
 			}
 		}
 	}
