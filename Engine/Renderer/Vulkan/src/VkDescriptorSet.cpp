@@ -127,6 +127,51 @@ bool CVKDescriptorSet::SetStorageBuffer(uint32_t name, const CGfxStorageBufferPt
 	}
 }
 
+bool CVKDescriptorSet::SetImage2D(uint32_t name, const CGfxTexture2DPtr ptrImage)
+{
+	ASSERT(ptrImage);
+	ASSERT(m_vkDescriptorSet);
+	ASSERT(m_ptrDescriptorLayout);
+
+	if (m_ptrDescriptorLayout->IsStorageImageValid(name)) {
+		m_imageDescriptorInfos[name].SetImage2D(m_ptrDescriptorLayout->GetStorageImageBinding(name), ptrImage);
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+bool CVKDescriptorSet::SetImage2DArray(uint32_t name, const CGfxTexture2DArrayPtr ptrImage)
+{
+	ASSERT(ptrImage);
+	ASSERT(m_vkDescriptorSet);
+	ASSERT(m_ptrDescriptorLayout);
+
+	if (m_ptrDescriptorLayout->IsStorageImageValid(name)) {
+		m_imageDescriptorInfos[name].SetImage2DArray(m_ptrDescriptorLayout->GetStorageImageBinding(name), ptrImage);
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+bool CVKDescriptorSet::SetImageCubemap(uint32_t name, const CGfxTextureCubemapPtr ptrImage)
+{
+	ASSERT(ptrImage);
+	ASSERT(m_vkDescriptorSet);
+	ASSERT(m_ptrDescriptorLayout);
+
+	if (m_ptrDescriptorLayout->IsStorageImageValid(name)) {
+		m_imageDescriptorInfos[name].SetImageCubemap(m_ptrDescriptorLayout->GetStorageImageBinding(name), ptrImage);
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
 bool CVKDescriptorSet::SetTexture2D(uint32_t name, const CGfxTexture2DPtr ptrTexture, const CGfxSampler* pSampler)
 {
 	ASSERT(pSampler);
