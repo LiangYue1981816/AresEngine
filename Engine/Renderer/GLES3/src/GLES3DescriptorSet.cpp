@@ -57,6 +57,36 @@ void CGLES3DescriptorSet::Release(void)
 	m_pManager->Destroy(this);
 }
 
+bool CGLES3DescriptorSet::SetUniformBuffer(uint32_t name, const CGfxUniformBufferPtr ptrUniformBuffer, uint32_t offset, uint32_t range)
+{
+	ASSERT(ptrUniformBuffer);
+	ASSERT(ptrUniformBuffer->GetSize() >= offset + range);
+	ASSERT(m_ptrDescriptorLayout);
+
+	if (m_ptrDescriptorLayout->IsUniformBlockValid(name)) {
+		m_bufferDescriptorInfos[name].SetUniformBuffer(m_ptrDescriptorLayout->GetUniformBlockBinding(name), offset, range, ptrUniformBuffer);
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+bool CGLES3DescriptorSet::SetStorageBuffer(uint32_t name, const CGfxStorageBufferPtr ptrStorageBuffer, uint32_t offset, uint32_t range)
+{
+	ASSERT(ptrStorageBuffer);
+	ASSERT(ptrStorageBuffer->GetSize() >= offset + range);
+	ASSERT(m_ptrDescriptorLayout);
+
+	if (m_ptrDescriptorLayout->IsStorageBlockValid(name)) {
+		m_bufferDescriptorInfos[name].SetStorageBuffer(m_ptrDescriptorLayout->GetStorageBlockBinding(name), offset, range, ptrStorageBuffer);
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
 bool CGLES3DescriptorSet::SetTexture2D(uint32_t name, const CGfxTexture2DPtr ptrTexture, const CGfxSampler* pSampler)
 {
 	ASSERT(pSampler);
@@ -125,36 +155,6 @@ bool CGLES3DescriptorSet::SetInputAttachmentTexture(uint32_t name, const CGfxRen
 
 	if (m_ptrDescriptorLayout->IsInputAttachmentValid(name)) {
 		m_imageDescriptorInfos[name].SetInputAttachmentTexture(m_ptrDescriptorLayout->GetInputAttachmentBinding(name), (CGfxSampler*)pSampler, ptrTexture);
-		return true;
-	}
-	else {
-		return false;
-	}
-}
-
-bool CGLES3DescriptorSet::SetUniformBuffer(uint32_t name, const CGfxUniformBufferPtr ptrUniformBuffer, uint32_t offset, uint32_t range)
-{
-	ASSERT(ptrUniformBuffer);
-	ASSERT(ptrUniformBuffer->GetSize() >= offset + range);
-	ASSERT(m_ptrDescriptorLayout);
-
-	if (m_ptrDescriptorLayout->IsUniformBlockValid(name)) {
-		m_bufferDescriptorInfos[name].SetUniformBuffer(m_ptrDescriptorLayout->GetUniformBlockBinding(name), offset, range, ptrUniformBuffer);
-		return true;
-	}
-	else {
-		return false;
-	}
-}
-
-bool CGLES3DescriptorSet::SetStorageBuffer(uint32_t name, const CGfxStorageBufferPtr ptrStorageBuffer, uint32_t offset, uint32_t range)
-{
-	ASSERT(ptrStorageBuffer);
-	ASSERT(ptrStorageBuffer->GetSize() >= offset + range);
-	ASSERT(m_ptrDescriptorLayout);
-
-	if (m_ptrDescriptorLayout->IsStorageBlockValid(name)) {
-		m_bufferDescriptorInfos[name].SetStorageBuffer(m_ptrDescriptorLayout->GetStorageBlockBinding(name), offset, range, ptrStorageBuffer);
 		return true;
 	}
 	else {
