@@ -15,6 +15,22 @@ CGLES3DescriptorSet::CGLES3DescriptorSet(CGLES3DescriptorSetManager* pManager, u
 	, m_ptrDescriptorLayout(ptrDescriptorSetCopyFrom->GetDescriptorLayout())
 {
 	for (const auto& itImageDescriptorInfo : ((CGLES3DescriptorSet *)ptrDescriptorSetCopyFrom.GetPointer())->m_imageDescriptorInfos) {
+		if (itImageDescriptorInfo.second.ptrImage2D) {
+			SetImage2D(itImageDescriptorInfo.first, itImageDescriptorInfo.second.ptrImage2D);
+		}
+
+		if (itImageDescriptorInfo.second.ptrImage2DArray) {
+			SetImage2DArray(itImageDescriptorInfo.first, itImageDescriptorInfo.second.ptrImage2DArray);
+		}
+
+		if (itImageDescriptorInfo.second.ptrImageCubemap) {
+			SetImageCubemap(itImageDescriptorInfo.first, itImageDescriptorInfo.second.ptrImageCubemap);
+		}
+
+		if (itImageDescriptorInfo.second.ptrImageRenderTexture) {
+			SetImageRenderTexture(itImageDescriptorInfo.first, itImageDescriptorInfo.second.ptrImageRenderTexture);
+		}
+
 		if (itImageDescriptorInfo.second.ptrTexture2D) {
 			SetTexture2D(itImageDescriptorInfo.first, itImageDescriptorInfo.second.ptrTexture2D, itImageDescriptorInfo.second.pSampler);
 		}
@@ -57,14 +73,14 @@ void CGLES3DescriptorSet::Release(void)
 	m_pManager->Destroy(this);
 }
 
-bool CGLES3DescriptorSet::SetUniformBuffer(uint32_t name, const CGfxUniformBufferPtr ptrUniformBuffer, uint32_t offset, uint32_t range)
+bool CGLES3DescriptorSet::SetUniformBuffer(uint32_t name, const CGfxUniformBufferPtr ptrBuffer, uint32_t offset, uint32_t range)
 {
-	ASSERT(ptrUniformBuffer);
-	ASSERT(ptrUniformBuffer->GetSize() >= offset + range);
+	ASSERT(ptrBuffer);
+	ASSERT(ptrBuffer->GetSize() >= offset + range);
 	ASSERT(m_ptrDescriptorLayout);
 
 	if (m_ptrDescriptorLayout->IsUniformBlockValid(name)) {
-		m_bufferDescriptorInfos[name].SetUniformBuffer(m_ptrDescriptorLayout->GetUniformBlockBinding(name), offset, range, ptrUniformBuffer);
+		m_bufferDescriptorInfos[name].SetUniformBuffer(m_ptrDescriptorLayout->GetUniformBlockBinding(name), ptrBuffer, offset, range);
 		return true;
 	}
 	else {
@@ -72,14 +88,14 @@ bool CGLES3DescriptorSet::SetUniformBuffer(uint32_t name, const CGfxUniformBuffe
 	}
 }
 
-bool CGLES3DescriptorSet::SetStorageBuffer(uint32_t name, const CGfxStorageBufferPtr ptrStorageBuffer, uint32_t offset, uint32_t range)
+bool CGLES3DescriptorSet::SetStorageBuffer(uint32_t name, const CGfxStorageBufferPtr ptrBuffer, uint32_t offset, uint32_t range)
 {
-	ASSERT(ptrStorageBuffer);
-	ASSERT(ptrStorageBuffer->GetSize() >= offset + range);
+	ASSERT(ptrBuffer);
+	ASSERT(ptrBuffer->GetSize() >= offset + range);
 	ASSERT(m_ptrDescriptorLayout);
 
 	if (m_ptrDescriptorLayout->IsStorageBlockValid(name)) {
-		m_bufferDescriptorInfos[name].SetStorageBuffer(m_ptrDescriptorLayout->GetStorageBlockBinding(name), offset, range, ptrStorageBuffer);
+		m_bufferDescriptorInfos[name].SetStorageBuffer(m_ptrDescriptorLayout->GetStorageBlockBinding(name), ptrBuffer, offset, range);
 		return true;
 	}
 	else {

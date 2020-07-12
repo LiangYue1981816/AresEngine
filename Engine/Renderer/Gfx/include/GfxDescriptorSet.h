@@ -8,7 +8,7 @@ typedef struct DescriptorBufferInfo {
 		bDirty = false;
 	}
 
-	void SetUniformBuffer(uint32_t _binding, uint32_t _offset, uint32_t _range, CGfxUniformBufferPtr _ptrBuffer)
+	void SetUniformBuffer(uint32_t _binding, CGfxUniformBufferPtr _ptrBuffer, uint32_t _offset, uint32_t _range)
 	{
 		bDirty = true;
 		binding = _binding;
@@ -18,7 +18,7 @@ typedef struct DescriptorBufferInfo {
 		ptrStorageBuffer.Release();
 	}
 
-	void SetStorageBuffer(uint32_t _binding, uint32_t _offset, uint32_t _range, CGfxStorageBufferPtr _ptrBuffer)
+	void SetStorageBuffer(uint32_t _binding, CGfxStorageBufferPtr _ptrBuffer, uint32_t _offset, uint32_t _range)
 	{
 		bDirty = true;
 		binding = _binding;
@@ -221,8 +221,8 @@ public:
 
 
 public:
-	virtual bool SetUniformBuffer(uint32_t name, const CGfxUniformBufferPtr ptrUniformBuffer, uint32_t offset, uint32_t range) = 0;
-	virtual bool SetStorageBuffer(uint32_t name, const CGfxStorageBufferPtr ptrStorageBuffer, uint32_t offset, uint32_t range) = 0;
+	virtual bool SetUniformBuffer(uint32_t name, const CGfxUniformBufferPtr ptrBuffer, uint32_t offset, uint32_t range) = 0;
+	virtual bool SetStorageBuffer(uint32_t name, const CGfxStorageBufferPtr ptrBuffer, uint32_t offset, uint32_t range) = 0;
 	virtual bool SetImage2D(uint32_t name, const CGfxTexture2DPtr ptrImage) = 0;
 	virtual bool SetImage2DArray(uint32_t name, const CGfxTexture2DArrayPtr ptrImage) = 0;
 	virtual bool SetImageCubemap(uint32_t name, const CGfxTextureCubemapPtr ptrImage) = 0;
