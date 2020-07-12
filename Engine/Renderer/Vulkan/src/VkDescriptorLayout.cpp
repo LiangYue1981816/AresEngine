@@ -123,12 +123,12 @@ void CVKDescriptorLayout::SetStorageBlockBinding(uint32_t name, uint32_t binding
 
 void CVKDescriptorLayout::SetStorageImageBinding(uint32_t name, uint32_t binding)
 {
-	m_storageBlockBindings[name] = {};
-	m_storageBlockBindings[name].binding = binding;
-	m_storageBlockBindings[name].descriptorType = VK_DESCRIPTOR_TYPE_STORAGE_IMAGE;
-	m_storageBlockBindings[name].descriptorCount = 1;
-	m_storageBlockBindings[name].stageFlags = VK_SHADER_STAGE_VERTEX_BIT | VK_SHADER_STAGE_FRAGMENT_BIT | VK_SHADER_STAGE_COMPUTE_BIT;
-	m_storageBlockBindings[name].pImmutableSamplers = nullptr;
+	m_storageImageBindings[name] = {};
+	m_storageImageBindings[name].binding = binding;
+	m_storageImageBindings[name].descriptorType = VK_DESCRIPTOR_TYPE_STORAGE_IMAGE;
+	m_storageImageBindings[name].descriptorCount = 1;
+	m_storageImageBindings[name].stageFlags = VK_SHADER_STAGE_VERTEX_BIT | VK_SHADER_STAGE_FRAGMENT_BIT | VK_SHADER_STAGE_COMPUTE_BIT;
+	m_storageImageBindings[name].pImmutableSamplers = nullptr;
 }
 
 void CVKDescriptorLayout::SetSampledImageBinding(uint32_t name, uint32_t binding)
