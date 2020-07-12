@@ -185,7 +185,7 @@ void CRenderSystem::CreateRenderTextures(void)
 	CreateRenderTexture(RENDER_TEXTURE_FULL_HDR_COLOR1, GFX_PIXELFORMAT_RG11B10_UFLOAT_PACK32, GfxRenderer()->GetSwapChain()->GetWidth(), GfxRenderer()->GetSwapChain()->GetHeight());
 	CreateRenderTexture(RENDER_TEXTURE_QUATER_HDR_COLOR0, GFX_PIXELFORMAT_RG11B10_UFLOAT_PACK32, GfxRenderer()->GetSwapChain()->GetWidth() / 4, GfxRenderer()->GetSwapChain()->GetHeight() / 4);
 	CreateRenderTexture(RENDER_TEXTURE_QUATER_HDR_COLOR1, GFX_PIXELFORMAT_RG11B10_UFLOAT_PACK32, GfxRenderer()->GetSwapChain()->GetWidth() / 4, GfxRenderer()->GetSwapChain()->GetHeight() / 4);
-	CreateRenderTexture(RENDER_TEXTURE_HISTOGRAM_HDR_COLOR, GFX_PIXELFORMAT_RG11B10_UFLOAT_PACK32, HISTOGRAM_TEXTURE_WIDTH, HISTOGRAM_TEXTURE_HEIGHT);
+	CreateRenderTexture(RENDER_TEXTURE_HISTOGRAM_HDR_COLOR, GFX_PIXELFORMAT_RGBA16_SFLOAT_PACK16, HISTOGRAM_TEXTURE_WIDTH, HISTOGRAM_TEXTURE_HEIGHT);
 }
 
 void CRenderSystem::CreateRenderTexture(uint32_t name, CGfxRenderTexturePtr ptrRenderTexture)
