@@ -37,12 +37,12 @@ void main()
 
 	barrier();
 
-	ivec2 size = imageSize(texColor);
+	ivec2 size = imageSize(imgColor);
 	ivec2 texcoord = ivec2(gl_GlobalInvocationID.xy);
 
 	if (gl_GlobalInvocationID.x < uint(size.x) && gl_GlobalInvocationID.y < uint(size.y))
 	{
-		vec4 color = imageLoad(texColor, texcoord);
+		vec4 color = imageLoad(imgColor, texcoord);
 		float l = clamp(max(color.r, max(color.g, color.b)), minLinearValue, maxLinearValue);
 		float h = GetHistogram(l, minLogValue, maxLogValue);
 

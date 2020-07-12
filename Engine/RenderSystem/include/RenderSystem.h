@@ -62,6 +62,7 @@
 #define STORAGE_CULL_LIGHT_LIST_DATA_NAME                  HashValue("CullLightListData")
 
 // Uniform Forward/Deferred
+#define UNIFORM_COLOR_IMAGE_BIND                           8
 #define UNIFORM_DEPTH_TEXTURE_BIND                         8
 #define UNIFORM_COLOR_TEXTURE_BIND                         9
 #define UNIFORM_GBUFFER0_TEXTURE_BIND                      10
@@ -69,6 +70,7 @@
 #define UNIFORM_GBUFFER2_TEXTURE_BIND                      12
 #define UNIFORM_GBUFFER3_TEXTURE_BIND                      13
 
+#define UNIFORM_COLOR_IMAGE_NAME                           HashValue("imgColor")
 #define UNIFORM_DEPTH_TEXTURE_NAME                         HashValue("texDepth")
 #define UNIFORM_COLOR_TEXTURE_NAME                         HashValue("texColor")
 #define UNIFORM_GBUFFER0_TEXTURE_NAME                      HashValue("texGBuffer0")

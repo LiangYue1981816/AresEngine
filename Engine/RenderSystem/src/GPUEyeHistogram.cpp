@@ -27,11 +27,9 @@ CGPUEyeHistogram::~CGPUEyeHistogram(void)
 
 void CGPUEyeHistogram::SetInputTexture(CGfxRenderTexturePtr ptrColorTexture)
 {
-	CGfxSampler* pSamplerPoint = GfxRenderer()->CreateSampler(GFX_FILTER_NEAREST, GFX_FILTER_NEAREST, GFX_SAMPLER_MIPMAP_MODE_NEAREST, GFX_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE);
-
 	if (m_ptrInputColorTexture != ptrColorTexture) {
 		m_ptrInputColorTexture = ptrColorTexture;
-		m_ptrDescriptorSet->SetRenderTexture(UNIFORM_COLOR_TEXTURE_NAME, ptrColorTexture, pSamplerPoint);
+		m_ptrDescriptorSet->SetImage2D(UNIFORM_COLOR_IMAGE_NAME, ptrColorTexture);
 	}
 }
 
