@@ -83,6 +83,11 @@ bool CVKPipeline::CreateLayouts(void)
 				m_ptrDescriptorLayouts[itStorageBlock.second.set]->SetStorageBlockBinding(name, itStorageBlock.second.binding);
 			}
 
+			for (const auto& itStorageImage : m_pShaders[indexShader]->GetSprivCross().GetStorageImageBindings()) {
+				uint32_t name = HashValue(itStorageImage.first.c_str());
+				m_ptrDescriptorLayouts[itStorageImage.second.set]->SetStorageImageBinding(name, itStorageImage.second.binding);
+			}
+
 			for (const auto& itSampledImage : m_pShaders[indexShader]->GetSprivCross().GetSampledImageBindings()) {
 				uint32_t name = HashValue(itSampledImage.first.c_str());
 				m_ptrDescriptorLayouts[itSampledImage.second.set]->SetSampledImageBinding(name, itSampledImage.second.binding);
