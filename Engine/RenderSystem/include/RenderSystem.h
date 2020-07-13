@@ -132,7 +132,9 @@
 #define RENDER_TEXTURE_FULL_HDR_COLOR1                     HashValue("RenderTextureFullHdrColor1")
 #define RENDER_TEXTURE_QUATER_HDR_COLOR0                   HashValue("RenderTextureQuaterHdrColor0")
 #define RENDER_TEXTURE_QUATER_HDR_COLOR1                   HashValue("RenderTextureQuaterHdrColor1")
-#define RENDER_TEXTURE_HISTOGRAM_HDR_COLOR                 HashValue("RenderTextureHistogramHdrColor")
+#define RENDER_TEXTURE_HISTOGRAM_HDR_COLOR0                HashValue("RenderTextureHistogramHdrColor0")
+#define RENDER_TEXTURE_HISTOGRAM_HDR_COLOR1                HashValue("RenderTextureHistogramHdrColor1")
+#define RENDER_TEXTURE_HISTOGRAM_HDR_COLOR2                HashValue("RenderTextureHistogramHdrColor2")
 
 
 // GPUScene

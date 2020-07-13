@@ -20,8 +20,8 @@ void CRenderSystem::RenderForwardShading(CTaskPool& taskPool, CTaskGraph& taskGr
 				InternalComputeScene(taskPool, taskGraph, ptrComputeCommandBuffer);
 			}
 			{
-				uint32_t rtInColor = RENDER_TEXTURE_HISTOGRAM_HDR_COLOR;
-				InternalComputeEyeHistogram(taskPool, taskGraph, ptrComputeCommandBuffer, rtInColor);
+				uint32_t rtInColors[] = { RENDER_TEXTURE_HISTOGRAM_HDR_COLOR0,RENDER_TEXTURE_HISTOGRAM_HDR_COLOR1,RENDER_TEXTURE_HISTOGRAM_HDR_COLOR2 };
+				InternalComputeEyeHistogram(taskPool, taskGraph, ptrComputeCommandBuffer, rtInColors[GfxRenderer()->GetSwapChain()->GetFrameIndex()]);
 			}
 		}
 		GfxRenderer()->EndRecord(ptrComputeCommandBuffer);
@@ -61,8 +61,8 @@ void CRenderSystem::RenderForwardShading(CTaskPool& taskPool, CTaskGraph& taskGr
 			{
 				uint32_t rtInColor = RENDER_TEXTURE_FULL_HDR_COLOR0;
 				uint32_t rtOutEyeAdaptation = RENDER_TEXTURE_FULL_HDR_COLOR1;
-				uint32_t rtOutDownSample = RENDER_TEXTURE_HISTOGRAM_HDR_COLOR;
-				InternalPassEyeAdaptation(taskPool, taskGraph, ptrGraphicCommandBuffer, pCamera, rtInColor, rtOutEyeAdaptation, rtOutDownSample);
+				uint32_t rtOutDownSamples[] = { RENDER_TEXTURE_HISTOGRAM_HDR_COLOR0,RENDER_TEXTURE_HISTOGRAM_HDR_COLOR1,RENDER_TEXTURE_HISTOGRAM_HDR_COLOR2 };
+				InternalPassEyeAdaptation(taskPool, taskGraph, ptrGraphicCommandBuffer, pCamera, rtInColor, rtOutEyeAdaptation, rtOutDownSamples[GfxRenderer()->GetSwapChain()->GetFrameIndex()]);
 			}
 			{
 				uint32_t rtInColor = RENDER_TEXTURE_FULL_HDR_COLOR1;
