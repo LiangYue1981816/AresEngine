@@ -7,6 +7,7 @@ precision highp float;
 
 USE_CAMERA_UNIFORM
 USE_ENGINE_UNIFORM
+USE_HISTOGRAM_STORAGE
 
 // Output
 layout (location = 0) out vec2 outTexcoord;
