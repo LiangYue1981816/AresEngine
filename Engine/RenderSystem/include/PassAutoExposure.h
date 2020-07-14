@@ -23,9 +23,19 @@ public:
 	void SetInputTexture(CGfxRenderTexturePtr ptrColorTexture);
 	void SetOutputTexture(CGfxRenderTexturePtr ptrColorTexture);
 
+	void SetParamLower(float lower);
+	void SetParamUpper(float upper);
+	void SetParamLuminance(float luminance);
+
 private:
 	void Render(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer);
+	void RenderCallback(CGfxCommandBufferPtr ptrCommandBuffer);
 
+
+private:
+	float m_lower;
+	float m_upper;
+	float m_luminance;
 
 private:
 	CGfxDescriptorSetPtr m_ptrDescriptorSetPass;

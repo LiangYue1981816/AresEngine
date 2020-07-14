@@ -26,11 +26,15 @@ void CPassAutoExposure::Destroy(void)
 
 CPassAutoExposure::CPassAutoExposure(CRenderSystem* pRenderSystem)
 	: CPassBlit("PassAutoExposure.material", pRenderSystem)
+	, m_lower(0.05f)
+	, m_upper(0.95f)
+	, m_luminance(0.5f)
 {
 	CGfxDescriptorLayoutPtr ptrDescriptorLayout = GfxRenderer()->NewDescriptorLayout(DESCRIPTOR_SET_PASS);
 	ptrDescriptorLayout->SetUniformBlockBinding(UNIFORM_ENGINE_NAME, UNIFORM_ENGINE_BIND);
 	ptrDescriptorLayout->SetUniformBlockBinding(UNIFORM_CAMERA_NAME, UNIFORM_CAMERA_BIND);
 	ptrDescriptorLayout->SetSampledImageBinding(UNIFORM_COLOR_TEXTURE_NAME, UNIFORM_COLOR_TEXTURE_BIND);
+	ptrDescriptorLayout->SetStorageBlockBinding(STORAGE_HISTOGRAM_DATA_NAME, STORAGE_HISTOGRAM_DATA_BIND);
 	ptrDescriptorLayout->Create();
 
 	m_ptrDescriptorSetPass = GfxRenderer()->NewDescriptorSet(HashValueFormat("%x_%p", PASS_AUTO_EXPOSURE_NAME, this), ptrDescriptorLayout);
@@ -71,6 +75,21 @@ void CPassAutoExposure::SetOutputTexture(CGfxRenderTexturePtr ptrColorTexture)
 	}
 }
 
+void CPassAutoExposure::SetParamLower(float lower)
+{
+	m_lower = lower;
+}
+
+void CPassAutoExposure::SetParamUpper(float upper)
+{
+	m_upper = upper;
+}
+
+void CPassAutoExposure::SetParamLuminance(float luminance)
+{
+	m_luminance = luminance;
+}
+
 void CPassAutoExposure::Render(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer)
 {
 	// Update
@@ -96,4 +115,11 @@ void CPassAutoExposure::Render(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxC
 		GfxRenderer()->CmdSetImageLayout(ptrCommandBuffer, m_ptrOutputColorTexture, GFX_IMAGE_LAYOUT_COLOR_READ_ONLY_OPTIMAL);
 	}
 	GfxRenderer()->CmdPopDebugGroup(ptrCommandBuffer);
+}
+
+void CPassAutoExposure::RenderCallback(CGfxCommandBufferPtr ptrCommandBuffer)
+{
+	GfxRenderer()->CmdUniform1f(ptrCommandBuffer, HashValue("Param.lower"), m_lower);
+	GfxRenderer()->CmdUniform1f(ptrCommandBuffer, HashValue("Param.upper"), m_upper);
+	GfxRenderer()->CmdUniform1f(ptrCommandBuffer, HashValue("Param.luminance"), m_luminance);
 }

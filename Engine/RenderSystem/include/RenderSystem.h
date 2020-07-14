@@ -82,7 +82,7 @@
 #define UNIFORM_SHADOW_TEXTURE_BIND                        16
 #define UNIFORM_SSAO_TEXTURE_BIND                          17
 #define UNIFORM_ADD_TEXTURE_BIND                           18
-#define STORAGE_HISTOGRAM_BIND                             19
+#define STORAGE_HISTOGRAM_DATA_BIND                        19
 
 #define UNIFORM_SHADOW_TEXTURE_NAME                        HashValue("texShadow")
 #define UNIFORM_SSAO_TEXTURE_NAME                          HashValue("texSSAO")
