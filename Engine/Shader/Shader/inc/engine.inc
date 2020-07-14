@@ -69,7 +69,7 @@ layout (location = 8)                                      in float inInstanceIn
 #define DESCRIPTOR_BIND_SHADOW_TEXTURE                     16
 #define DESCRIPTOR_BIND_SSAO_TEXTURE                       17
 #define DESCRIPTOR_BIND_ADD_TEXTURE                        18
-#define DESCRIPTOR_BIND_HISTOGRAM                          19
+#define DESCRIPTOR_BIND_HISTOGRAM_DATA                     19
 
 
 #define USE_CAMERA_UNIFORM                                                         \
@@ -180,7 +180,7 @@ layout (location = 8)                                      in float inInstanceIn
 
 #define HISTOGRAM_SIZE 64
 #define USE_HISTOGRAM_STORAGE                                                      \
-	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_CULL_LIGHT_LIST_DATA) buffer HistogramData \
+	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_HISTOGRAM_DATA) buffer HistogramData       \
 	{                                                                              \
 		uint histogram[];                                                          \
 	} histogramData;
