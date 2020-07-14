@@ -26,9 +26,9 @@ void CPassAutoExposure::Destroy(void)
 
 CPassAutoExposure::CPassAutoExposure(CRenderSystem* pRenderSystem)
 	: CPassBlit("PassAutoExposure.material", pRenderSystem)
-	, m_lower(0.05f)
-	, m_upper(0.95f)
-	, m_luminance(0.5f)
+	, m_lower(0.10f)
+	, m_upper(0.90f)
+	, m_luminance(0.25f)
 {
 	CGfxDescriptorLayoutPtr ptrDescriptorLayout = GfxRenderer()->NewDescriptorLayout(DESCRIPTOR_SET_PASS);
 	ptrDescriptorLayout->SetUniformBlockBinding(UNIFORM_ENGINE_NAME, UNIFORM_ENGINE_BIND);
