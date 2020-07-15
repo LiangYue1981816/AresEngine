@@ -41,14 +41,14 @@ uint32_t CGLES3UniformBuffer::GetOffset(void) const
 	return m_pBuffer->GetOffset();
 }
 
-bool CGLES3UniformBuffer::BufferRange(size_t offset, size_t range)
-{
-	return m_pBuffer->BufferRange(offset, range);
-}
-
 bool CGLES3UniformBuffer::BufferData(size_t offset, size_t size, const void* data)
 {
 	return m_pBuffer->BufferData(offset, size, data, false);
+}
+
+bool CGLES3UniformBuffer::BufferRange(size_t offset, size_t range)
+{
+	return m_pBuffer->BufferRange(offset, range);
 }
 
 void CGLES3UniformBuffer::Bind(int binding) const

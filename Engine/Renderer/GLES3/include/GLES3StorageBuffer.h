@@ -19,8 +19,8 @@ public:
 	uint32_t GetOffset(void) const;
 
 public:
-	bool BufferRange(size_t offset, size_t range);
 	bool BufferData(size_t offset, size_t size, const void* data);
+	bool BufferRange(size_t offset, size_t range);
 
 public:
 	void Bind(int binding) const;

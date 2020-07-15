@@ -21,6 +21,6 @@ public:
 	virtual uint32_t GetOffset(void) const = 0;
 
 public:
-	virtual bool BufferRange(size_t offset, size_t range) = 0;
 	virtual bool BufferData(size_t offset, size_t size, const void* data) = 0;
+	virtual bool BufferRange(size_t offset, size_t range) = 0;
 };
