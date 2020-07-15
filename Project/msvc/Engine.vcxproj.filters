@@ -1542,9 +1542,6 @@
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxHelper.h">
       <Filter>Engine\Renderer\Gfx\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxUniformCamera.h">
-      <Filter>Engine\Renderer\Gfx\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxSemaphore.h">
       <Filter>Engine\Renderer\Gfx\Header Files</Filter>
     </ClInclude>
@@ -1681,6 +1678,9 @@
       <Filter>Engine\RenderSystem\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\RenderSystem\include\GPUEyeHistogram.h">
+      <Filter>Engine\RenderSystem\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\RenderSystem\include\UniformCamera.h">
       <Filter>Engine\RenderSystem\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -2339,9 +2339,6 @@
     <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxHelper.cpp">
       <Filter>Engine\Renderer\Gfx\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxUniformCamera.cpp">
-      <Filter>Engine\Renderer\Gfx\Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3Semaphore.cpp">
       <Filter>Engine\Renderer\GLES3\Source Files</Filter>
     </ClCompile>
@@ -2478,6 +2475,9 @@
       <Filter>Engine\RenderSystem\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\RenderSystem\src\GPUEyeHistogram.cpp">
+      <Filter>Engine\RenderSystem\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\RenderSystem\src\UniformCamera.cpp">
       <Filter>Engine\RenderSystem\Source Files</Filter>
     </ClCompile>
   </ItemGroup>

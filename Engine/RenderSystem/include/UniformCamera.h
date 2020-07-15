@@ -2,7 +2,7 @@
 #include "PreHeader.h"
 
 
-class CALL_API CGfxUniformCamera
+class CALL_API CUniformCamera
 {
 public:
 	typedef struct Params {
@@ -53,8 +53,8 @@ public:
 
 
 public:
-	CGfxUniformCamera(void);
-	virtual ~CGfxUniformCamera(void);
+	CUniformCamera(void);
+	virtual ~CUniformCamera(void);
 
 
 public:

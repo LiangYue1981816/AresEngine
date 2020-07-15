@@ -174,7 +174,6 @@
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxTexture2DArray.h" />
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxTextureCubeMap.h" />
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxUniformBuffer.h" />
-    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxUniformCamera.h" />
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxUniformMat4.h" />
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxUniformVec1.h" />
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxUniformVec2.h" />
@@ -389,6 +388,7 @@
     <ClInclude Include="..\..\Engine\RenderSystem\include\PassUnlit.h" />
     <ClInclude Include="..\..\Engine\RenderSystem\include\RenderQueue.h" />
     <ClInclude Include="..\..\Engine\RenderSystem\include\RenderSystem.h" />
+    <ClInclude Include="..\..\Engine\RenderSystem\include\UniformCamera.h" />
     <ClInclude Include="..\..\Engine\RenderSystem\include\UniformEngine.h" />
     <ClInclude Include="..\..\Engine\Resource\include\ResourceLoader.h" />
     <ClInclude Include="..\..\Engine\SceneHeader.h" />
@@ -621,7 +621,6 @@
     <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxResource.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxResourceManager.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxSprivCross.cpp" />
-    <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxUniformCamera.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxUniformMat4.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxUniformVec1.cpp" />
     <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxUniformVec2.cpp" />
@@ -764,6 +763,7 @@
     <ClCompile Include="..\..\Engine\RenderSystem\src\RenderSystem.cpp" />
     <ClCompile Include="..\..\Engine\RenderSystem\src\RenderTileDeferredShading.cpp" />
     <ClCompile Include="..\..\Engine\RenderSystem\src\RenderUnlit.cpp" />
+    <ClCompile Include="..\..\Engine\RenderSystem\src\UniformCamera.cpp" />
     <ClCompile Include="..\..\Engine\RenderSystem\src\UniformEngine.cpp" />
     <ClCompile Include="..\..\Engine\Resource\src\ResourceLoader.cpp" />
     <ClCompile Include="..\..\Engine\Resource\src\ResourceLoaderMaterial.cpp" />

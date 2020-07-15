@@ -43,7 +43,6 @@ class CALL_API CGfxUniformVec2;
 class CALL_API CGfxUniformVec3;
 class CALL_API CGfxUniformVec4;
 class CALL_API CGfxUniformMat4;
-class CALL_API CGfxUniformCamera;
 
 class CALL_API CGfxMesh;
 class CALL_API CGfxMeshDraw;
