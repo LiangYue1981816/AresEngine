@@ -26,18 +26,23 @@ private:
 	uint32_t GetTarget(void) const;
 	uint32_t GetBuffer(void) const;
 	uint32_t GetSize(void) const;
+	uint32_t GetRange(void) const;
+	uint32_t GetOffset(void) const;
 
 private:
 	bool BufferSize(size_t size, bool bDynamic);
 	bool BufferData(size_t offset, size_t size, const void* data, bool bSync);
+	bool BufferRange(size_t offset, size_t range);
 
 private:
 	void Bind(void) const;
-	void Bind(int binding, int offset, int size) const;
+	void BindRange(int binding) const;
 
 
 private:
 	uint32_t m_target;
 	uint32_t m_buffer;
 	uint32_t m_size;
+	uint32_t m_range;
+	uint32_t m_offset;
 };
