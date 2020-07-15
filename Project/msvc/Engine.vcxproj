@@ -388,7 +388,6 @@
     <ClInclude Include="..\..\Engine\RenderSystem\include\PassUnlit.h" />
     <ClInclude Include="..\..\Engine\RenderSystem\include\RenderQueue.h" />
     <ClInclude Include="..\..\Engine\RenderSystem\include\RenderSystem.h" />
-    <ClInclude Include="..\..\Engine\RenderSystem\include\UniformCamera.h" />
     <ClInclude Include="..\..\Engine\RenderSystem\include\UniformEngine.h" />
     <ClInclude Include="..\..\Engine\Resource\include\ResourceLoader.h" />
     <ClInclude Include="..\..\Engine\SceneHeader.h" />
@@ -763,7 +762,6 @@
     <ClCompile Include="..\..\Engine\RenderSystem\src\RenderSystem.cpp" />
     <ClCompile Include="..\..\Engine\RenderSystem\src\RenderTileDeferredShading.cpp" />
     <ClCompile Include="..\..\Engine\RenderSystem\src\RenderUnlit.cpp" />
-    <ClCompile Include="..\..\Engine\RenderSystem\src\UniformCamera.cpp" />
     <ClCompile Include="..\..\Engine\RenderSystem\src\UniformEngine.cpp" />
     <ClCompile Include="..\..\Engine\Resource\src\ResourceLoader.cpp" />
     <ClCompile Include="..\..\Engine\Resource\src\ResourceLoaderMaterial.cpp" />
