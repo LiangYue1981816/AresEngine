@@ -5,8 +5,6 @@ CGLES3Buffer::CGLES3Buffer(uint32_t target, size_t size, bool bDynamic)
 	: m_target(0)
 	, m_buffer(0)
 	, m_size(0)
-	, m_range(0)
-	, m_offset(0)
 {
 	Create(target, size, bDynamic);
 }
@@ -40,8 +38,6 @@ bool CGLES3Buffer::Create(uint32_t target, size_t size, bool bDynamic)
 
 	m_target = target;
 	m_size = size;
-	m_range = size;
-	m_offset = 0;
 
 	glGenBuffers(1, &m_buffer);
 	glBindBuffer(m_target, m_buffer);
@@ -81,16 +77,6 @@ uint32_t CGLES3Buffer::GetSize(void) const
 	return m_size;
 }
 
-uint32_t CGLES3Buffer::GetRange(void) const
-{
-	return m_range;
-}
-
-uint32_t CGLES3Buffer::GetOffset(void) const
-{
-	return m_offset;
-}
-
 bool CGLES3Buffer::BufferSize(size_t size, bool bDynamic)
 {
 	ASSERT(size);
@@ -120,18 +106,6 @@ bool CGLES3Buffer::BufferData(size_t offset, size_t size, const void* data, bool
 	return true;
 }
 
-bool CGLES3Buffer::BufferRange(size_t offset, size_t range)
-{
-	if (offset + range <= m_size) {
-		m_offset = offset;
-		m_range = range;
-		return true;
-	}
-	else {
-		return false;
-	}
-}
-
 void CGLES3Buffer::Bind(void) const
 {
 	ASSERT(m_buffer);
@@ -140,10 +114,10 @@ void CGLES3Buffer::Bind(void) const
 	CHECK_GL_ERROR_ASSERT();
 }
 
-void CGLES3Buffer::BindRange(int binding) const
+void CGLES3Buffer::BindRange(int binding, size_t offset, size_t range) const
 {
 	ASSERT(m_buffer);
 
-	GLBindBufferRange(m_target, binding, m_buffer, m_offset, m_range);
+	GLBindBufferRange(m_target, binding, m_buffer, offset, range);
 	CHECK_GL_ERROR_ASSERT();
 }
