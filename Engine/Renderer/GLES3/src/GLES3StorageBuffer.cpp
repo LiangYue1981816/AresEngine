@@ -31,27 +31,12 @@ uint32_t CGLES3StorageBuffer::GetSize(void) const
 	return m_pBuffer->GetSize();
 }
 
-uint32_t CGLES3StorageBuffer::GetRange(void) const
-{
-	return m_pBuffer->GetRange();
-}
-
-uint32_t CGLES3StorageBuffer::GetOffset(void) const
-{
-	return m_pBuffer->GetOffset();
-}
-
 bool CGLES3StorageBuffer::BufferData(size_t offset, size_t size, const void* data)
 {
 	return m_pBuffer->BufferData(offset, size, data, false);
 }
 
-bool CGLES3StorageBuffer::BufferRange(size_t offset, size_t range)
+void CGLES3StorageBuffer::Bind(int binding, size_t offset, size_t range) const
 {
-	return m_pBuffer->BufferRange(offset, range);
-}
-
-void CGLES3StorageBuffer::Bind(int binding) const
-{
-	return m_pBuffer->BindRange(binding);
+	m_pBuffer->BindRange(binding, offset, range);
 }

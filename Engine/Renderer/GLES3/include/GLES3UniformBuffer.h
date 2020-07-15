@@ -15,15 +15,12 @@ private:
 
 public:
 	uint32_t GetSize(void) const;
-	uint32_t GetRange(void) const;
-	uint32_t GetOffset(void) const;
 
 public:
 	bool BufferData(size_t offset, size_t size, const void* data);
-	bool BufferRange(size_t offset, size_t range);
 
 public:
-	void Bind(int binding) const;
+	void Bind(int binding, size_t offset, size_t range) const;
 
 
 private:

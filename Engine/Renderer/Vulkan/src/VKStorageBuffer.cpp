@@ -35,24 +35,9 @@ uint32_t CVKStorageBuffer::GetSize(void) const
 	return m_pBuffer->GetSize();
 }
 
-uint32_t CVKStorageBuffer::GetRange(void) const
-{
-	return m_pBuffer->GetRange();
-}
-
-uint32_t CVKStorageBuffer::GetOffset(void) const
-{
-	return m_pBuffer->GetOffset();
-}
-
 bool CVKStorageBuffer::BufferData(size_t offset, size_t size, const void* data)
 {
 	return m_pBuffer->BufferData(offset, size, data);
-}
-
-bool CVKStorageBuffer::BufferRange(size_t offset, size_t range)
-{
-	return m_pBuffer->BufferRange(offset, range);
 }
 
 bool CVKStorageBuffer::PipelineBarrier(VkCommandBuffer vkCommandBuffer, VkAccessFlags srcAccessFlags, VkAccessFlags dstAccessFlags, VkDeviceSize offset, VkDeviceSize size)
