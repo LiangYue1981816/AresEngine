@@ -6,7 +6,6 @@
 
 #include "RenderSystem/include/Camera.h"
 #include "RenderSystem/include/UniformEngine.h"
-#include "RenderSystem/include/UniformCamera.h"
 #include "RenderSystem/include/InstanceBufferPool.h"
 #include "RenderSystem/include/RenderQueue.h"
 #include "RenderSystem/include/RenderSystem.h"
