@@ -5,18 +5,18 @@
 CCamera::CCamera(void)
 	: m_pRenderQueue(nullptr)
 	, m_pCamera(nullptr)
-	, m_pCameraUniform(nullptr)
+	, m_bDirty(false)
+	, m_offset(0)
 {
 	m_pRenderQueue = new CRenderQueue;
 	m_pCamera = new CGfxCamera;
-	m_pCameraUniform = new CGfxUniformCamera;
+	m_ptrUniformBuffer = GfxRenderer()->NewUniformBuffer(CGfxSwapChain::SWAPCHAIN_FRAME_COUNT * sizeof(m_params));
 }
 
 CCamera::~CCamera(void)
 {
 	delete m_pRenderQueue;
 	delete m_pCamera;
-	delete m_pCameraUniform;
 }
 
 CRenderQueue* CCamera::GetRenderQueue(void) const
@@ -24,14 +24,14 @@ CRenderQueue* CCamera::GetRenderQueue(void) const
 	return m_pRenderQueue;
 }
 
-CGfxCamera* CCamera::GetCamera(void) const
+uint32_t CCamera::GetUniformBufferOffset(void) const
 {
-	return m_pCamera;
+	return m_offset;
 }
 
-CGfxUniformCamera* CCamera::GetCameraUniform(void) const
+CGfxUniformBufferPtr CCamera::GetUniformBuffer(void) const
 {
-	return m_pCameraUniform;
+	return m_ptrUniformBuffer;
 }
 
 void CCamera::SetDepthRange(float minz, float maxz)
@@ -47,25 +47,55 @@ void CCamera::SetScissor(float x, float y, float width, float height)
 void CCamera::SetViewport(float x, float y, float width, float height)
 {
 	m_pCamera->SetViewport(x, y, width, height);
-	m_pCameraUniform->SetScreen(width, height);
+
+	m_bDirty = true;
+	m_params.screen = glm::vec4(width, height, 1.0f / width, 1.0f / height);
 }
 
 void CCamera::SetPerspective(float fovy, float aspect, float zNear, float zFar)
 {
 	m_pCamera->SetPerspective(fovy, aspect, zNear, zFar);
-	m_pCameraUniform->SetPerspective(fovy, aspect, zNear, zFar);
+
+	m_bDirty = true;
+	m_params.depth = glm::vec4(zNear, zFar, zFar - zNear, 1.0f / (zFar - zNear));
+	m_params.projectionMatrix = GfxRenderer()->GetBaseMatrix() * glm::perspective(glm::radians(fovy), aspect, zNear, zFar);
+	m_params.projectionViewMatrix = m_params.projectionMatrix * m_params.viewMatrix;
+	m_params.projectionInverseMatrix = glm::inverse(m_params.projectionMatrix);
+	m_params.projectionViewInverseMatrix = glm::inverse(m_params.projectionViewMatrix);
 }
 
 void CCamera::SetOrtho(float left, float right, float bottom, float top, float zNear, float zFar)
 {
 	m_pCamera->SetOrtho(left, right, bottom, top, zNear, zFar);
-	m_pCameraUniform->SetOrtho(left, right, bottom, top, zNear, zFar);
+
+	m_bDirty = true;
+	m_params.depth = glm::vec4(zNear, zFar, zFar - zNear, 1.0f / (zFar - zNear));
+	m_params.projectionMatrix = GfxRenderer()->GetBaseMatrix() * glm::ortho(left, right, bottom, top, zNear, zFar);
+	m_params.projectionViewMatrix = m_params.projectionMatrix * m_params.viewMatrix;
+	m_params.projectionInverseMatrix = glm::inverse(m_params.projectionMatrix);
+	m_params.projectionViewInverseMatrix = glm::inverse(m_params.projectionViewMatrix);
 }
 
 void CCamera::SetLookat(float eyex, float eyey, float eyez, float centerx, float centery, float centerz, float upx, float upy, float upz)
 {
 	m_pCamera->SetLookat(eyex, eyey, eyez, centerx, centery, centerz, upx, upy, upz);
-	m_pCameraUniform->SetLookat(eyex, eyey, eyez, centerx, centery, centerz, upx, upy, upz);
+
+	m_bDirty = true;
+	m_params.viewMatrix = glm::lookAt(glm::vec3(eyex, eyey, eyez), glm::vec3(centerx, centery, centerz), glm::vec3(upx, upy, upz));
+	m_params.viewInverseMatrix = glm::inverse(m_params.viewMatrix);
+	m_params.viewInverseTransposeMatrix = glm::transpose(m_params.viewInverseMatrix);
+	m_params.projectionViewMatrix = m_params.projectionMatrix * m_params.viewMatrix;
+	m_params.projectionInverseMatrix = glm::inverse(m_params.projectionMatrix);
+	m_params.projectionViewInverseMatrix = glm::inverse(m_params.projectionViewMatrix);
+}
+
+void CCamera::Apply(void)
+{
+	if (m_bDirty) {
+		m_bDirty = false;
+		m_offset = (GfxRenderer()->GetSwapChain()->GetFrameIndex() % CGfxSwapChain::SWAPCHAIN_FRAME_COUNT) * sizeof(m_params);
+		m_ptrUniformBuffer->BufferData(m_offset, sizeof(m_params), &m_params);
+	}
 }
 
 const float CCamera::GetZNear(void) const

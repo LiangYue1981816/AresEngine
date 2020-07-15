@@ -4,31 +4,19 @@
 
 class CALL_API CCamera
 {
-	friend class CRenderQueue;
-	friend class CRenderSystem;
-	friend class CGPUScene;
-	friend class CGPUCluster;
-	friend class CGPUClusterCull;
-	friend class CGPUEyeHistogram;
-	friend class CPassBase;
-	friend class CPassBlit;
-	friend class CPassPreZ;
-	friend class CPassShadow;
-	friend class CPassUnlit;
-	friend class CPassForwardShading;
-	friend class CPassDeferredShading;
-	friend class CPassTileDeferredShading;
-	friend class CPassCopyColor;
-	friend class CPassCopyDepthStencil;
-	friend class CPassSSAO;
-	friend class CPassBlurBox;
-	friend class CPassBlurHorizontal;
-	friend class CPassBlurVertical;
-	friend class CPassBlendAdd;
-	friend class CPassLuminanceThreshold;
-	friend class CPassAutoExposure;
-	friend class CPassColorGrading;
-	friend class CPassFinal;
+private:
+	typedef struct Params {
+		glm::vec4 screen;
+		glm::vec4 depth;
+
+		glm::mat4 viewMatrix;
+		glm::mat4 viewInverseMatrix;
+		glm::mat4 viewInverseTransposeMatrix;
+		glm::mat4 projectionMatrix;
+		glm::mat4 projectionViewMatrix;
+		glm::mat4 projectionInverseMatrix;
+		glm::mat4 projectionViewInverseMatrix;
+	} Params;
 
 
 public:
@@ -36,12 +24,12 @@ public:
 	virtual ~CCamera(void);
 
 
-private:
+public:
 	CRenderQueue* GetRenderQueue(void) const;
 
-private:
-	CGfxCamera* GetCamera(void) const;
-	CGfxUniformCamera* GetCameraUniform(void) const;
+public:
+	uint32_t GetUniformBufferOffset(void) const;
+	CGfxUniformBufferPtr GetUniformBuffer(void) const;
 
 public:
 	void SetDepthRange(float minz, float maxz);
@@ -52,6 +40,8 @@ public:
 	void SetPerspective(float fovy, float aspect, float zNear, float zFar);
 	void SetOrtho(float left, float right, float bottom, float top, float zNear, float zFar);
 	void SetLookat(float eyex, float eyey, float eyez, float centerx, float centery, float centerz, float upx, float upy, float upz);
+
+	void Apply(void);
 
 public:
 	const float GetZNear(void) const;
@@ -87,14 +77,19 @@ public:
 	bool IsVisible(const glm::aabb& aabb) const;
 	bool IsVisible(const glm::sphere& sphere) const;
 
-private:
+public:
 	void Update(CTaskPool& taskPool, CTaskGraph& taskGraph, uint32_t mask, bool bComputeLOD) const;
 
+
+private:
+	bool m_bDirty;
+	Params m_params;
+	uint32_t m_offset;
 
 private:
 	CRenderQueue* m_pRenderQueue;
 
 private:
 	CGfxCamera* m_pCamera;
-	CGfxUniformCamera* m_pCameraUniform;
+	CGfxUniformBufferPtr m_ptrUniformBuffer;
 };
