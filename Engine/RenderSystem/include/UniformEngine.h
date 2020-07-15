@@ -4,7 +4,7 @@
 
 class CALL_API CUniformEngine
 {
-public:
+private:
 	typedef struct Params {
 		void SetTime(float t, float dt)
 		{
@@ -160,8 +160,8 @@ public:
 
 
 public:
-	const Params& GetParams(void) const;
-	const CGfxUniformBufferPtr GetUniformBuffer(void) const;
+	uint32_t GetUniformBufferOffset(void) const;
+	CGfxUniformBufferPtr GetUniformBuffer(void) const;
 
 public:
 	void SetTime(float t, float dt);
