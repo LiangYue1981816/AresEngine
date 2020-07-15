@@ -579,11 +579,11 @@ void CVKDescriptorSet::Bind(VkCommandBuffer vkCommandBuffer, VkPipelineBindPoint
 
 	for (const auto& itBuffer : m_bufferDescriptorInfos) {
 		if (itBuffer.second.ptrUniformBuffer) {
-			orderOffsets[m_ptrDescriptorLayout->GetUniformBlockBinding(itBuffer.first)] = ((CVKUniformBuffer*)itBuffer.second.ptrUniformBuffer.GetPointer())->GetOffset();
+			orderOffsets[m_ptrDescriptorLayout->GetUniformBlockBinding(itBuffer.first)] = itBuffer.second.offset;
 		}
 
 		if (itBuffer.second.ptrStorageBuffer) {
-			orderOffsets[m_ptrDescriptorLayout->GetStorageBlockBinding(itBuffer.first)] = ((CVKStorageBuffer*)itBuffer.second.ptrStorageBuffer.GetPointer())->GetOffset();
+			orderOffsets[m_ptrDescriptorLayout->GetStorageBlockBinding(itBuffer.first)] = itBuffer.second.offset;
 		}
 	}
 
