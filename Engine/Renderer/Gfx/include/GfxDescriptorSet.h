@@ -11,22 +11,30 @@ typedef struct DescriptorBufferInfo {
 
 	void SetUniformBuffer(uint32_t _binding, CGfxUniformBufferPtr _ptrBuffer, uint32_t _offset, uint32_t _range)
 	{
-		bDirty = true;
-		binding = _binding;
+		if (binding != _binding || ptrUniformBuffer != _ptrBuffer) {
+			bDirty = true;
+			binding = _binding;
+			ptrUniformBuffer = _ptrBuffer;
+		}
+
 		offset = _offset;
 		range = _range;
-		ptrUniformBuffer = _ptrBuffer;
+		
 		ptrStorageBuffer.Release();
 	}
 
 	void SetStorageBuffer(uint32_t _binding, CGfxStorageBufferPtr _ptrBuffer, uint32_t _offset, uint32_t _range)
 	{
-		bDirty = true;
-		binding = _binding;
+		if (binding != _binding || ptrStorageBuffer != _ptrBuffer) {
+			bDirty = true;
+			binding = _binding;
+			ptrStorageBuffer = _ptrBuffer;
+		}
+
 		offset = _offset;
 		range = _range;
+
 		ptrUniformBuffer.Release();
-		ptrStorageBuffer = _ptrBuffer;
 	}
 
 	bool bDirty;
@@ -46,10 +54,13 @@ typedef struct DescriptorImageInfo {
 
 	void SetImage2D(uint32_t _binding, CGfxTexture2DPtr _ptrImage)
 	{
-		bDirty = true;
-		binding = _binding;
+		if (binding != _binding || ptrImage2D != _ptrImage) {
+			bDirty = true;
+			binding = _binding;
+			ptrImage2D = _ptrImage;
+		}
+
 		pSampler = nullptr;
-		ptrImage2D = _ptrImage;
 		ptrImage2DArray.Release();
 		ptrImageCubemap.Release();
 		ptrImageRenderTexture.Release();
@@ -62,11 +73,14 @@ typedef struct DescriptorImageInfo {
 
 	void SetImage2DArray(uint32_t _binding, CGfxTexture2DArrayPtr _ptrImage)
 	{
-		bDirty = true;
-		binding = _binding;
+		if (binding != _binding || ptrImage2DArray != _ptrImage) {
+			bDirty = true;
+			binding = _binding;
+			ptrImage2DArray = _ptrImage;
+		}
+
 		pSampler = nullptr;
 		ptrImage2D.Release();
-		ptrImage2DArray = _ptrImage;
 		ptrImageCubemap.Release();
 		ptrImageRenderTexture.Release();
 		ptrTexture2D.Release();
@@ -78,12 +92,15 @@ typedef struct DescriptorImageInfo {
 
 	void SetImageCubemap(uint32_t _binding, CGfxTextureCubemapPtr _ptrImage)
 	{
-		bDirty = true;
-		binding = _binding;
+		if (binding != _binding || ptrImageCubemap != _ptrImage) {
+			bDirty = true;
+			binding = _binding;
+			ptrImageCubemap = _ptrImage;
+		}
+
 		pSampler = nullptr;
 		ptrImage2D.Release();
 		ptrImage2DArray.Release();
-		ptrImageCubemap = _ptrImage;
 		ptrImageRenderTexture.Release();
 		ptrTexture2D.Release();
 		ptrTexture2DArray.Release();
@@ -94,13 +111,16 @@ typedef struct DescriptorImageInfo {
 
 	void SetImageRenderTexture(uint32_t _binding, CGfxRenderTexturePtr _ptrImage)
 	{
-		bDirty = true;
-		binding = _binding;
+		if (binding != _binding || ptrImageRenderTexture != _ptrImage) {
+			bDirty = true;
+			binding = _binding;
+			ptrImageRenderTexture = _ptrImage;
+		}
+
 		pSampler = nullptr;
 		ptrImage2D.Release();
 		ptrImage2DArray.Release();
 		ptrImageCubemap.Release();
-		ptrImageRenderTexture = _ptrImage;
 		ptrTexture2D.Release();
 		ptrTexture2DArray.Release();
 		ptrTextureCubemap.Release();
@@ -110,14 +130,17 @@ typedef struct DescriptorImageInfo {
 
 	void SetTexture2D(uint32_t _binding, CGfxTexture2DPtr _ptrTexture, CGfxSampler* _pSampler)
 	{
-		bDirty = true;
-		binding = _binding;
-		pSampler = _pSampler;
+		if (binding != _binding || ptrTexture2D != _ptrTexture || pSampler != _pSampler) {
+			bDirty = true;
+			binding = _binding;
+			pSampler = _pSampler;
+			ptrTexture2D = _ptrTexture;
+		}
+
 		ptrImage2D.Release();
 		ptrImage2DArray.Release();
 		ptrImageCubemap.Release();
 		ptrImageRenderTexture.Release();
-		ptrTexture2D = _ptrTexture;
 		ptrTexture2DArray.Release();
 		ptrTextureCubemap.Release();
 		ptrRenderTexture.Release();
@@ -126,15 +149,18 @@ typedef struct DescriptorImageInfo {
 
 	void SetTexture2DArray(uint32_t _binding, CGfxTexture2DArrayPtr _ptrTexture, CGfxSampler* _pSampler)
 	{
-		bDirty = true;
-		binding = _binding;
-		pSampler = _pSampler;
+		if (binding != _binding || ptrTexture2DArray != _ptrTexture || pSampler != _pSampler) {
+			bDirty = true;
+			binding = _binding;
+			pSampler = _pSampler;
+			ptrTexture2DArray = _ptrTexture;
+		}
+
 		ptrImage2D.Release();
 		ptrImage2DArray.Release();
 		ptrImageCubemap.Release();
 		ptrImageRenderTexture.Release();
 		ptrTexture2D.Release();
-		ptrTexture2DArray = _ptrTexture;
 		ptrTextureCubemap.Release();
 		ptrRenderTexture.Release();
 		ptrInputAttachmentTexture.Release();
@@ -142,25 +168,32 @@ typedef struct DescriptorImageInfo {
 
 	void SetTextureCubemap(uint32_t _binding, CGfxTextureCubemapPtr _ptrTexture, CGfxSampler* _pSampler)
 	{
-		bDirty = true;
-		binding = _binding;
-		pSampler = _pSampler;
+		if (binding != _binding || ptrTextureCubemap != _ptrTexture || pSampler != _pSampler) {
+			bDirty = true;
+			binding = _binding;
+			pSampler = _pSampler;
+			ptrTextureCubemap = _ptrTexture;
+		}
+
 		ptrImage2D.Release();
 		ptrImage2DArray.Release();
 		ptrImageCubemap.Release();
 		ptrImageRenderTexture.Release();
 		ptrTexture2D.Release();
 		ptrTexture2DArray.Release();
-		ptrTextureCubemap = _ptrTexture;
 		ptrRenderTexture.Release();
 		ptrInputAttachmentTexture.Release();
 	}
 
 	void SetRenderTexture(uint32_t _binding, CGfxRenderTexturePtr _ptrTexture, CGfxSampler* _pSampler)
 	{
-		bDirty = true;
-		binding = _binding;
-		pSampler = _pSampler;
+		if (binding != _binding || ptrRenderTexture != _ptrTexture || pSampler != _pSampler) {
+			bDirty = true;
+			binding = _binding;
+			pSampler = _pSampler;
+			ptrRenderTexture = _ptrTexture;
+		}
+
 		ptrImage2D.Release();
 		ptrImage2DArray.Release();
 		ptrImageCubemap.Release();
@@ -168,15 +201,18 @@ typedef struct DescriptorImageInfo {
 		ptrTexture2D.Release();
 		ptrTexture2DArray.Release();
 		ptrTextureCubemap.Release();
-		ptrRenderTexture = _ptrTexture;
 		ptrInputAttachmentTexture.Release();
 	}
 
 	void SetInputAttachmentTexture(uint32_t _binding, CGfxRenderTexturePtr _ptrTexture, CGfxSampler* _pSampler)
 	{
-		bDirty = true;
-		binding = _binding;
-		pSampler = _pSampler;
+		if (binding != _binding || ptrInputAttachmentTexture != _ptrTexture || pSampler != _pSampler) {
+			bDirty = true;
+			binding = _binding;
+			pSampler = _pSampler;
+			ptrInputAttachmentTexture = _ptrTexture;
+		}
+
 		ptrImage2D.Release();
 		ptrImage2DArray.Release();
 		ptrImageCubemap.Release();
@@ -185,9 +221,7 @@ typedef struct DescriptorImageInfo {
 		ptrTexture2DArray.Release();
 		ptrTextureCubemap.Release();
 		ptrRenderTexture.Release();
-		ptrInputAttachmentTexture = _ptrTexture;
 	}
-
 
 	bool bDirty;
 	uint32_t binding;
