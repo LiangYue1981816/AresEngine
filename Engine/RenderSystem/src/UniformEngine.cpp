@@ -131,7 +131,7 @@ static void SHRotate(float shRedRotate[9], float shGreenRotate[9], float shBlueR
 CUniformEngine::CUniformEngine(void)
 	: m_bDirty(false)
 {
-	m_ptrUniformBuffer = GfxRenderer()->NewUniformBuffer(sizeof(m_params));
+	m_ptrUniformBuffer = GfxRenderer()->NewUniformBuffer(CGfxSwapChain::SWAPCHAIN_FRAME_COUNT * sizeof(m_params));
 }
 
 CUniformEngine::~CUniformEngine(void)
@@ -267,10 +267,10 @@ void CUniformEngine::SetMainShadowLookat(int indexLevel, float eyex, float eyey,
 	}
 }
 
-void CUniformEngine::Apply(void)
+void CUniformEngine::Apply(uint32_t indexFrame)
 {
 	if (m_bDirty) {
 		m_bDirty = false;
-		m_ptrUniformBuffer->BufferData(0, sizeof(m_params), &m_params);
+		m_ptrUniformBuffer->BufferData((indexFrame % CGfxSwapChain::SWAPCHAIN_FRAME_COUNT) * sizeof(m_params), sizeof(m_params), &m_params);
 	}
 }

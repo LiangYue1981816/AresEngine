@@ -4,7 +4,7 @@
 CGfxUniformCamera::CGfxUniformCamera(void)
 	: m_bDirty(false)
 {
-	m_ptrUniformBuffer = GfxRenderer()->NewUniformBuffer(sizeof(m_params));
+	m_ptrUniformBuffer = GfxRenderer()->NewUniformBuffer(CGfxSwapChain::SWAPCHAIN_FRAME_COUNT * sizeof(m_params));
 }
 
 CGfxUniformCamera::~CGfxUniformCamera(void)
@@ -52,10 +52,10 @@ void CGfxUniformCamera::SetLookat(float eyex, float eyey, float eyez, float cent
 	m_params.SetLookat(eyex, eyey, eyez, centerx, centery, centerz, upx, upy, upz);
 }
 
-void CGfxUniformCamera::Apply(void)
+void CGfxUniformCamera::Apply(uint32_t indexFrame)
 {
 	if (m_bDirty) {
 		m_bDirty = false;
-		m_ptrUniformBuffer->BufferData(0, sizeof(m_params), &m_params);
+		m_ptrUniformBuffer->BufferData((indexFrame % CGfxSwapChain::SWAPCHAIN_FRAME_COUNT) * sizeof(m_params), sizeof(m_params), &m_params);
 	}
 }
