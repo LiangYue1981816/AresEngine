@@ -6,6 +6,7 @@ typedef struct DescriptorBufferInfo {
 	DescriptorBufferInfo(void)
 	{
 		bDirty = false;
+		binding = INVALID_VALUE;
 	}
 
 	void SetUniformBuffer(uint32_t _binding, CGfxUniformBufferPtr _ptrBuffer, uint32_t _offset, uint32_t _range)
@@ -40,6 +41,7 @@ typedef struct DescriptorImageInfo {
 	DescriptorImageInfo(void)
 	{
 		bDirty = false;
+		binding = INVALID_VALUE;
 	}
 
 	void SetImage2D(uint32_t _binding, CGfxTexture2DPtr _ptrImage)
