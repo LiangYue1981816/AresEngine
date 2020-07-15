@@ -27,10 +27,6 @@ public:
 
 
 private:
-	uint32_t m_range;
-	uint32_t m_offset;
-
-private:
 	CGLES3Buffer* m_pBuffer;
 
 private:

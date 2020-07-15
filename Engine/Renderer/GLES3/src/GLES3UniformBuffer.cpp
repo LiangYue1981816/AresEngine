@@ -5,16 +5,12 @@ CGLES3UniformBuffer::CGLES3UniformBuffer(CGLES3UniformBufferManager* pManager, s
 	: CGfxUniformBuffer(size)
 	, m_pManager(pManager)
 	, m_pBuffer(nullptr)
-
-	, m_range(0)
-	, m_offset(0)
 {
 	GLint minOffsetAlign;
 	glGetIntegerv(GL_UNIFORM_BUFFER_OFFSET_ALIGNMENT, &minOffsetAlign);
 
 	size = ALIGN_BYTE(size, minOffsetAlign);
 
-	m_range = size;
 	m_pBuffer = new CGLES3Buffer(GL_UNIFORM_BUFFER, size, true);
 	CGfxProfiler::IncUniformBufferSize(m_pBuffer->GetSize());
 }
@@ -37,24 +33,17 @@ uint32_t CGLES3UniformBuffer::GetSize(void) const
 
 uint32_t CGLES3UniformBuffer::GetRange(void) const
 {
-	return m_range;
+	return m_pBuffer->GetRange();
 }
 
 uint32_t CGLES3UniformBuffer::GetOffset(void) const
 {
-	return m_offset;
+	return m_pBuffer->GetOffset();
 }
 
 bool CGLES3UniformBuffer::BufferRange(size_t offset, size_t range)
 {
-	if (offset + range <= m_pBuffer->GetSize()) {
-		m_offset = offset;
-		m_range = range;
-		return true;
-	}
-	else {
-		return false;
-	}
+	return m_pBuffer->BufferRange(offset, range);
 }
 
 bool CGLES3UniformBuffer::BufferData(size_t offset, size_t size, const void* data)
@@ -64,5 +53,5 @@ bool CGLES3UniformBuffer::BufferData(size_t offset, size_t size, const void* dat
 
 void CGLES3UniformBuffer::Bind(int binding) const
 {
-	m_pBuffer->Bind(binding, m_offset, m_range);
+	m_pBuffer->BindRange(binding);
 }

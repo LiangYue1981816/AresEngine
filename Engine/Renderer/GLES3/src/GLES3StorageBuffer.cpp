@@ -5,16 +5,12 @@ CGLES3StorageBuffer::CGLES3StorageBuffer(CGLES3StorageBufferManager* pManager, s
 	: CGfxStorageBuffer(size)
 	, m_pManager(pManager)
 	, m_pBuffer(nullptr)
-
-	, m_range(0)
-	, m_offset(0)
 {
 	GLint minOffsetAlign;
 	glGetIntegerv(GL_SHADER_STORAGE_BUFFER_OFFSET_ALIGNMENT, &minOffsetAlign);
 
 	size = ALIGN_BYTE(size, minOffsetAlign);
 
-	m_range = size;
 	m_pBuffer = new CGLES3Buffer(GL_SHADER_STORAGE_BUFFER, size, true);
 	CGfxProfiler::IncStorageBufferSize(m_pBuffer->GetSize());
 }
@@ -37,24 +33,17 @@ uint32_t CGLES3StorageBuffer::GetSize(void) const
 
 uint32_t CGLES3StorageBuffer::GetRange(void) const
 {
-	return m_range;
+	return m_pBuffer->GetRange();
 }
 
 uint32_t CGLES3StorageBuffer::GetOffset(void) const
 {
-	return m_offset;
+	return m_pBuffer->GetOffset();
 }
 
 bool CGLES3StorageBuffer::BufferRange(size_t offset, size_t range)
 {
-	if (offset + range <= m_pBuffer->GetSize()) {
-		m_offset = offset;
-		m_range = range;
-		return true;
-	}
-	else {
-		return false;
-	}
+	return m_pBuffer->BufferRange(offset, range);
 }
 
 bool CGLES3StorageBuffer::BufferData(size_t offset, size_t size, const void* data)
@@ -64,5 +53,5 @@ bool CGLES3StorageBuffer::BufferData(size_t offset, size_t size, const void* dat
 
 void CGLES3StorageBuffer::Bind(int binding) const
 {
-	m_pBuffer->Bind(binding, m_offset, m_range);
+	return m_pBuffer->BindRange(binding);
 }
