@@ -2,6 +2,7 @@
 #include "PreHeader.h"
 
 
+class CALL_API CRenderQueue;
 class CALL_API CCamera
 {
 private:
