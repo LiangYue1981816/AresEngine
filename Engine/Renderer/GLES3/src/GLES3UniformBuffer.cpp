@@ -6,16 +6,16 @@ CGLES3UniformBuffer::CGLES3UniformBuffer(CGLES3UniformBufferManager* pManager, s
 	, m_pManager(pManager)
 	, m_pBuffer(nullptr)
 
-	, m_size(0)
+	, m_range(0)
 	, m_offset(0)
 {
 	GLint minOffsetAlign;
 	glGetIntegerv(GL_UNIFORM_BUFFER_OFFSET_ALIGNMENT, &minOffsetAlign);
 
-	m_size = size;
-	m_size = ALIGN_BYTE(m_size, minOffsetAlign);
+	size = ALIGN_BYTE(size, minOffsetAlign);
 
-	m_pBuffer = new CGLES3Buffer(GL_UNIFORM_BUFFER, m_size * CGfxSwapChain::SWAPCHAIN_FRAME_COUNT, true);
+	m_range = size;
+	m_pBuffer = new CGLES3Buffer(GL_UNIFORM_BUFFER, size, true);
 	CGfxProfiler::IncUniformBufferSize(m_pBuffer->GetSize());
 }
 
@@ -32,7 +32,12 @@ void CGLES3UniformBuffer::Release(void)
 
 uint32_t CGLES3UniformBuffer::GetSize(void) const
 {
-	return m_size;
+	return m_pBuffer->GetSize();
+}
+
+uint32_t CGLES3UniformBuffer::GetRange(void) const
+{
+	return m_range;
 }
 
 uint32_t CGLES3UniformBuffer::GetOffset(void) const
@@ -40,13 +45,24 @@ uint32_t CGLES3UniformBuffer::GetOffset(void) const
 	return m_offset;
 }
 
-bool CGLES3UniformBuffer::BufferData(size_t offset, size_t size, const void* data)
+bool CGLES3UniformBuffer::BufferRange(size_t offset, size_t range)
 {
-	m_offset = m_size * GLES3Renderer()->GetSwapChain()->GetFrameIndex();
-	return m_pBuffer->BufferData(m_offset + offset, size, data, false);
+	if (offset + range <= m_pBuffer->GetSize()) {
+		m_offset = offset;
+		m_range = range;
+		return true;
+	}
+	else {
+		return false;
+	}
 }
 
-void CGLES3UniformBuffer::Bind(int binding, int offset, int size) const
+bool CGLES3UniformBuffer::BufferData(size_t offset, size_t size, const void* data)
 {
-	m_pBuffer->Bind(binding, m_offset + offset, size);
+	return m_pBuffer->BufferData(offset, size, data, false);
+}
+
+void CGLES3UniformBuffer::Bind(int binding) const
+{
+	m_pBuffer->Bind(binding, m_offset, m_range);
 }

@@ -7,14 +7,14 @@ CVKUniformBuffer::CVKUniformBuffer(CVKDevice* pDevice, CVKUniformBufferManager* 
 	, m_pManager(pManager)
 	, m_pBuffer(nullptr)
 
-	, m_size(0)
+	, m_range(0)
 	, m_offset(0)
 {
-	m_size = size;
-	m_size = ALIGN_BYTE(m_size, m_pDevice->GetPhysicalDeviceLimits().nonCoherentAtomSize);
-	m_size = ALIGN_BYTE(m_size, m_pDevice->GetPhysicalDeviceLimits().minUniformBufferOffsetAlignment);
+	size = ALIGN_BYTE(size, m_pDevice->GetPhysicalDeviceLimits().nonCoherentAtomSize);
+	size = ALIGN_BYTE(size, m_pDevice->GetPhysicalDeviceLimits().minUniformBufferOffsetAlignment);
 
-	m_pBuffer = new CVKBuffer(m_pDevice, m_size * CGfxSwapChain::SWAPCHAIN_FRAME_COUNT, VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT);
+	m_range = size;
+	m_pBuffer = new CVKBuffer(m_pDevice, size, VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT);
 	CGfxProfiler::IncUniformBufferSize(m_pBuffer->GetMemorySize());
 }
 
@@ -36,7 +36,12 @@ VkBuffer CVKUniformBuffer::GetBuffer(void) const
 
 uint32_t CVKUniformBuffer::GetSize(void) const
 {
-	return m_size;
+	return m_pBuffer->GetSize();
+}
+
+uint32_t CVKUniformBuffer::GetRange(void) const
+{
+	return m_range;
 }
 
 uint32_t CVKUniformBuffer::GetOffset(void) const
@@ -44,8 +49,19 @@ uint32_t CVKUniformBuffer::GetOffset(void) const
 	return m_offset;
 }
 
+bool CVKUniformBuffer::BufferRange(size_t offset, size_t range)
+{
+	if (offset + range <= m_pBuffer->GetSize()) {
+		m_offset = offset;
+		m_range = range;
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
 bool CVKUniformBuffer::BufferData(size_t offset, size_t size, const void* data)
 {
-	m_offset = m_size * VKRenderer()->GetSwapChain()->GetFrameIndex();
-	return m_pBuffer->BufferData(m_offset + offset, size, data);
+	return m_pBuffer->BufferData(offset, size, data);
 }
