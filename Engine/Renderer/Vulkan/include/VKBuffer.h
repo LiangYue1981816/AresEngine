@@ -27,10 +27,13 @@ private:
 private:
 	VkBuffer GetBuffer(void) const;
 	VkDeviceSize GetSize(void) const;
+	VkDeviceSize GetRange(void) const;
+	VkDeviceSize GetOffset(void) const;
 	VkDeviceSize GetMemorySize(void) const;
 
 private:
 	bool BufferData(size_t offset, size_t size, const void* data);
+	bool BufferRange(size_t offset, size_t range);
 
 private:
 	bool PipelineBarrier(VkCommandBuffer vkCommandBuffer, VkAccessFlags srcAccessFlags, VkAccessFlags dstAccessFlags, VkDeviceSize offset, VkDeviceSize size);
@@ -47,6 +50,8 @@ private:
 private:
 	VkBuffer m_vkBuffer;
 	VkDeviceSize m_vkSize;
+	VkDeviceSize m_vkRange;
+	VkDeviceSize m_vkOffset;
 	VkBufferUsageFlags m_vkBufferUsageFlags;
 
 private:

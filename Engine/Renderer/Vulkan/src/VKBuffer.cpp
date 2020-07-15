@@ -7,6 +7,8 @@ CVKBuffer::CVKBuffer(CVKDevice* pDevice, VkDeviceSize size, VkBufferUsageFlags b
 
 	, m_vkBuffer(VK_NULL_HANDLE)
 	, m_vkSize(0)
+	, m_vkRange(0)
+	, m_vkOffset(0)
 	, m_vkBufferUsageFlags(0)
 {
 	Create(size, bufferUsageFlags, memoryPropertyFlags);
@@ -29,6 +31,8 @@ bool CVKBuffer::Create(VkDeviceSize size, VkBufferUsageFlags bufferUsageFlags, V
 	ASSERT(memoryPropertyFlags);
 
 	m_vkSize = size;
+	m_vkRange = size;
+	m_vkOffset = 0;
 	m_vkBufferUsageFlags = bufferUsageFlags;
 
 	VkBufferCreateInfo createInfo = {};
@@ -83,6 +87,16 @@ VkDeviceSize CVKBuffer::GetMemorySize(void) const
 	return m_pMemory->GetSize();
 }
 
+VkDeviceSize CVKBuffer::GetRange(void) const
+{
+	return m_vkRange;
+}
+
+VkDeviceSize CVKBuffer::GetOffset(void) const
+{
+	return m_vkOffset;
+}
+
 bool CVKBuffer::BufferData(size_t offset, size_t size, const void* data)
 {
 	ASSERT(data);
@@ -102,6 +116,18 @@ bool CVKBuffer::BufferData(size_t offset, size_t size, const void* data)
 	}
 
 	return true;
+}
+
+bool CVKBuffer::BufferRange(size_t offset, size_t range)
+{
+	if (offset + range <= m_vkSize) {
+		m_vkOffset = offset;
+		m_vkRange = range;
+		return true;
+	}
+	else {
+		return false;
+	}
 }
 
 bool CVKBuffer::PipelineBarrier(VkCommandBuffer vkCommandBuffer, VkAccessFlags srcAccessFlags, VkAccessFlags dstAccessFlags, VkDeviceSize offset, VkDeviceSize size)
