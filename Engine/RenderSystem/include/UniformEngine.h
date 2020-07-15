@@ -190,12 +190,13 @@ public:
 	void SetMainShadowOrtho(int indexLevel, float left, float right, float bottom, float top, float zNear, float zFar);
 	void SetMainShadowLookat(int indexLevel, float eyex, float eyey, float eyez, float centerx, float centery, float centerz, float upx, float upy, float upz);
 
-	void Apply(uint32_t indexFrame);
+	void Apply(void);
 
 
 private:
 	bool m_bDirty;
 	Params m_params;
+	uint32_t m_offset;
 
 private:
 	CGfxUniformBufferPtr m_ptrUniformBuffer;
