@@ -103,7 +103,7 @@ void CCamera::Apply(void)
 {
 	if (m_bDirty) {
 		m_bDirty = false;
-		m_offset = (GfxRenderer()->GetSwapChain()->GetFrameIndex() % CGfxSwapChain::SWAPCHAIN_FRAME_COUNT) * sizeof(m_params);
+		m_offset = GfxRenderer()->GetSwapChain()->GetFrameIndex() * sizeof(m_params);
 		m_ptrUniformBuffer->BufferData(m_offset, sizeof(m_params), &m_params);
 	}
 }
