@@ -52,7 +52,7 @@ void CPassUnlit::SetCamera(CCamera* pCamera)
 {
 	if (m_pCamera != pCamera) {
 		m_pCamera = pCamera;
-		m_ptrDescriptorSetPass->SetUniformBuffer(UNIFORM_CAMERA_NAME, pCamera->GetCameraUniform()->GetUniformBuffer(), 0, pCamera->GetCameraUniform()->GetUniformBuffer()->GetSize());
+		m_ptrDescriptorSetPass->SetUniformBuffer(UNIFORM_CAMERA_NAME, pCamera->GetUniformBuffer(), 0, pCamera->GetUniformBuffer()->GetSize());
 	}
 }
 
@@ -71,7 +71,7 @@ void CPassUnlit::SetOutputTexture(CGfxRenderTexturePtr ptrColorTexture, CGfxRend
 void CPassUnlit::Render(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer)
 {
 	// Update
-	m_pCamera->GetCameraUniform()->Apply();
+	m_pCamera->Apply();
 	m_pRenderSystem->GetEngineUniform()->Apply();
 
 	// Render

@@ -28,10 +28,10 @@ void CPassShadow::Destroy(void)
 CPassShadow::CPassShadow(CRenderSystem* pRenderSystem)
 	: CPassBase(pRenderSystem)
 	, m_pShadowCamera{ nullptr }
-	, m_pShadowRenderQueue{ nullptr }
 	, m_factor(1.0f)
 	, m_splitFactors{ 0.0f, exp(-4.0f), exp(-3.0f), exp(-2.0f), exp(-1.0f) }
 {
+	/*
 	for (int indexLevel = 0; indexLevel < 4; indexLevel++) {
 		m_pShadowCamera[indexLevel] = new CGfxCamera;
 		m_pShadowRenderQueue[indexLevel] = new CRenderQueue;
@@ -50,15 +50,18 @@ CPassShadow::CPassShadow(CRenderSystem* pRenderSystem)
 		m_ptrDescriptorSetPass[indexLevel]->SetUniformBuffer(UNIFORM_CAMERA_NAME, m_pShadowCameraUniform[indexLevel]->GetUniformBuffer(), 0, m_pShadowCameraUniform[indexLevel]->GetUniformBuffer()->GetSize());
 		m_ptrDescriptorSetPass[indexLevel]->SetStorageBuffer(STORAGE_SCENE_DATA_NAME, m_pRenderSystem->GetInstanceDataBuffer(), 0, m_pRenderSystem->GetInstanceDataBuffer()->GetSize());
 	}
+	*/
 }
 
 CPassShadow::~CPassShadow(void)
 {
+	/*
 	for (int indexLevel = 0; indexLevel < 4; indexLevel++) {
 		delete m_pShadowCamera[indexLevel];
 		delete m_pShadowRenderQueue[indexLevel];
 		delete m_pShadowCameraUniform[indexLevel];
 	}
+	*/
 }
 
 void CPassShadow::SetCamera(CCamera* pCamera)
@@ -92,6 +95,7 @@ void CPassShadow::SetOutputTexture(CGfxRenderTexturePtr ptrDepthTexture)
 
 void CPassShadow::Render(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer)
 {
+	/*
 	// Update
 	const glm::camera mainCamera = m_pCamera->GetCamera()->GetCamera();
 	const glm::vec4 mainLightDirection = m_pRenderSystem->GetEngineUniform()->GetParams().mainDirectLightDirection * glm::vec4(-1.0f, -1.0f, -1.0f, 0.0f);
@@ -169,4 +173,5 @@ void CPassShadow::Render(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommand
 		GfxRenderer()->CmdSetImageLayout(ptrCommandBuffer, m_ptrOutputDepthTexture, GFX_IMAGE_LAYOUT_DEPTH_STENCIL_READ_ONLY_OPTIMAL);
 	}
 	GfxRenderer()->CmdPopDebugGroup(ptrCommandBuffer);
+	*/
 }
