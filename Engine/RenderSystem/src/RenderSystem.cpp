@@ -161,13 +161,13 @@ void CRenderSystem::CreateCommandBuffers(void)
 
 void CRenderSystem::CreateStorageBuffers(void)
 {
-	m_ptrInstanceDataBuffer = GfxRenderer()->NewStorageBuffer(sizeof(InstanceData) * MAX_GPUSCENE_INSTANCE_COUNT);
-	m_ptrTransferDataBuffer = GfxRenderer()->NewStorageBuffer(sizeof(InstanceData) * MAX_GPUSCENE_TRANSFER_COUNT);
+	m_ptrInstanceBuffer = GfxRenderer()->NewStorageBuffer(sizeof(InstanceData) * MAX_GPUSCENE_INSTANCE_COUNT);
+	m_ptrTransferBuffer = GfxRenderer()->NewStorageBuffer(sizeof(InstanceData) * MAX_GPUSCENE_TRANSFER_COUNT);
 	m_ptrTransferIndexBuffer = GfxRenderer()->NewStorageBuffer(sizeof(int) * MAX_GPUSCENE_TRANSFER_COUNT);
 
-	m_ptrClusterDataBuffer = GfxRenderer()->NewStorageBuffer(CLUSTER_WIDTH_TILE_COUNT * CLUSTER_HEIGHT_TILE_COUNT * CLUSTER_DEPTH_TILE_COUNT * 32);
-	m_ptrFullLightListBuffer = GfxRenderer()->NewStorageBuffer(MAX_GPUSCENE_INSTANCE_COUNT * sizeof(int));
-	m_ptrCullLightListBuffer = GfxRenderer()->NewStorageBuffer(MAX_GPUSCENE_INSTANCE_COUNT * sizeof(int));
+	m_ptrClusterBuffer = GfxRenderer()->NewStorageBuffer(CLUSTER_WIDTH_TILE_COUNT * CLUSTER_HEIGHT_TILE_COUNT * CLUSTER_DEPTH_TILE_COUNT * 32);
+	m_ptrFullLightIndexBuffer = GfxRenderer()->NewStorageBuffer(MAX_GPUSCENE_INSTANCE_COUNT * sizeof(int));
+	m_ptrCullLightIndexBuffer = GfxRenderer()->NewStorageBuffer(MAX_GPUSCENE_INSTANCE_COUNT * sizeof(int));
 
 	m_ptrHistogramBuffer = GfxRenderer()->NewStorageBuffer(HISTOGRAM_SIZE * sizeof(int));
 }
@@ -282,13 +282,13 @@ void CRenderSystem::DestroyCommandBuffers(void)
 
 void CRenderSystem::DestroyStorageBuffers(void)
 {
-	m_ptrInstanceDataBuffer.Release();
-	m_ptrTransferDataBuffer.Release();
+	m_ptrInstanceBuffer.Release();
+	m_ptrTransferBuffer.Release();
 	m_ptrTransferIndexBuffer.Release();
 
-	m_ptrClusterDataBuffer.Release();
-	m_ptrFullLightListBuffer.Release();
-	m_ptrCullLightListBuffer.Release();
+	m_ptrClusterBuffer.Release();
+	m_ptrFullLightIndexBuffer.Release();
+	m_ptrCullLightIndexBuffer.Release();
 }
 
 void CRenderSystem::DestroyRenderTextures(void)
@@ -341,29 +341,29 @@ const CGfxMultiInstanceBufferPtr CRenderSystem::GetInstanceBuffer(uint32_t insta
 	return m_pInstanceBufferPool->GetInstanceBuffer(instanceFormat, instanceBinding);
 }
 
-const CGfxStorageBufferPtr CRenderSystem::GetClusterDataBuffer(void) const
+const CGfxStorageBufferPtr CRenderSystem::GetClusterBuffer(void) const
 {
-	return m_ptrClusterDataBuffer;
+	return m_ptrClusterBuffer;
 }
 
-const CGfxStorageBufferPtr CRenderSystem::GetFullLightListBuffer(void) const
+const CGfxStorageBufferPtr CRenderSystem::GetFullLightIndexBuffer(void) const
 {
-	return m_ptrFullLightListBuffer;
+	return m_ptrFullLightIndexBuffer;
 }
 
-const CGfxStorageBufferPtr CRenderSystem::GetCullLightListBuffer(void) const
+const CGfxStorageBufferPtr CRenderSystem::GetCullLightIndexBuffer(void) const
 {
-	return m_ptrCullLightListBuffer;
+	return m_ptrCullLightIndexBuffer;
 }
 
-const CGfxStorageBufferPtr CRenderSystem::GetInstanceDataBuffer(void) const
+const CGfxStorageBufferPtr CRenderSystem::GetInstanceBuffer(void) const
 {
-	return m_ptrInstanceDataBuffer;
+	return m_ptrInstanceBuffer;
 }
 
-const CGfxStorageBufferPtr CRenderSystem::GetTransferDataBuffer(void) const
+const CGfxStorageBufferPtr CRenderSystem::GetTransferBuffer(void) const
 {
-	return m_ptrTransferDataBuffer;
+	return m_ptrTransferBuffer;
 }
 
 const CGfxStorageBufferPtr CRenderSystem::GetTransferIndexBuffer(void) const

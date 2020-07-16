@@ -221,12 +221,12 @@ public:
 	const CGfxMultiInstanceBufferPtr GetInstanceBuffer(uint32_t instanceFormat, int instanceBinding) const;
 
 public:
-	const CGfxStorageBufferPtr GetClusterDataBuffer(void) const;
-	const CGfxStorageBufferPtr GetFullLightListBuffer(void) const;
-	const CGfxStorageBufferPtr GetCullLightListBuffer(void) const;
+	const CGfxStorageBufferPtr GetClusterBuffer(void) const;
+	const CGfxStorageBufferPtr GetFullLightIndexBuffer(void) const;
+	const CGfxStorageBufferPtr GetCullLightIndexBuffer(void) const;
 
-	const CGfxStorageBufferPtr GetInstanceDataBuffer(void) const;
-	const CGfxStorageBufferPtr GetTransferDataBuffer(void) const;
+	const CGfxStorageBufferPtr GetInstanceBuffer(void) const;
+	const CGfxStorageBufferPtr GetTransferBuffer(void) const;
 	const CGfxStorageBufferPtr GetTransferIndexBuffer(void) const;
 
 	const CGfxStorageBufferPtr GetHistogramBuffer(void) const;
@@ -319,12 +319,12 @@ private:
 	CPassFinal* m_pPassFinal;
 
 private:
-	CGfxStorageBufferPtr m_ptrClusterDataBuffer;
-	CGfxStorageBufferPtr m_ptrFullLightListBuffer;
-	CGfxStorageBufferPtr m_ptrCullLightListBuffer;
+	CGfxStorageBufferPtr m_ptrClusterBuffer;
+	CGfxStorageBufferPtr m_ptrFullLightIndexBuffer;
+	CGfxStorageBufferPtr m_ptrCullLightIndexBuffer;
 
-	CGfxStorageBufferPtr m_ptrInstanceDataBuffer;
-	CGfxStorageBufferPtr m_ptrTransferDataBuffer;
+	CGfxStorageBufferPtr m_ptrInstanceBuffer;
+	CGfxStorageBufferPtr m_ptrTransferBuffer;
 	CGfxStorageBufferPtr m_ptrTransferIndexBuffer;
 
 	CGfxStorageBufferPtr m_ptrHistogramBuffer;
