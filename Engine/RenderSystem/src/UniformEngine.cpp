@@ -140,17 +140,17 @@ CUniformEngine::~CUniformEngine(void)
 
 }
 
-const CUniformEngine::Params& CUniformEngine::GetParams(void) const
+CUniformEngine::Params CUniformEngine::GetParams(void) const
 {
 	return m_params;
 }
 
-const uint32_t CUniformEngine::GetUniformBufferOffset(void) const
+uint32_t CUniformEngine::GetUniformBufferOffset(void) const
 {
 	return m_offset;
 }
 
-const CGfxUniformBufferPtr CUniformEngine::GetUniformBuffer(void) const
+CGfxUniformBufferPtr CUniformEngine::GetUniformBuffer(void) const
 {
 	return m_ptrUniformBuffer;
 }

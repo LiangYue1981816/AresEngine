@@ -19,27 +19,27 @@ CCamera::~CCamera(void)
 	delete m_pCamera;
 }
 
-const CCamera::Params& CCamera::GetParams(void) const
+CCamera::Params CCamera::GetParams(void) const
 {
 	return m_params;
 }
 
-const CGfxCamera* CCamera::GetCamera(void) const
+CGfxCamera* CCamera::GetCamera(void) const
 {
 	return m_pCamera;
 }
 
-const CRenderQueue* CCamera::GetRenderQueue(void) const
+CRenderQueue* CCamera::GetRenderQueue(void) const
 {
 	return m_pRenderQueue;
 }
 
-const uint32_t CCamera::GetUniformBufferOffset(void) const
+uint32_t CCamera::GetUniformBufferOffset(void) const
 {
 	return m_offset;
 }
 
-const CGfxUniformBufferPtr CCamera::GetUniformBuffer(void) const
+CGfxUniformBufferPtr CCamera::GetUniformBuffer(void) const
 {
 	return m_ptrUniformBuffer;
 }

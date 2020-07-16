@@ -26,13 +26,13 @@ public:
 
 
 public:
-	const Params& GetParams(void) const;
-	const CGfxCamera* GetCamera(void) const;
-	const CRenderQueue* GetRenderQueue(void) const;
+	Params GetParams(void) const;
+	CGfxCamera* GetCamera(void) const;
+	CRenderQueue* GetRenderQueue(void) const;
 
 public:
-	const uint32_t GetUniformBufferOffset(void) const;
-	const CGfxUniformBufferPtr GetUniformBuffer(void) const;
+	uint32_t GetUniformBufferOffset(void) const;
+	CGfxUniformBufferPtr GetUniformBuffer(void) const;
 
 public:
 	void SetDepthRange(float minz, float maxz);

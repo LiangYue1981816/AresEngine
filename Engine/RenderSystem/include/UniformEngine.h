@@ -50,11 +50,11 @@ public:
 
 
 public:
-	const Params& GetParams(void) const;
+	Params GetParams(void) const;
 
 public:
-	const uint32_t GetUniformBufferOffset(void) const;
-	const CGfxUniformBufferPtr GetUniformBuffer(void) const;
+	uint32_t GetUniformBufferOffset(void) const;
+	CGfxUniformBufferPtr GetUniformBuffer(void) const;
 
 public:
 	void SetTime(float t, float dt);
