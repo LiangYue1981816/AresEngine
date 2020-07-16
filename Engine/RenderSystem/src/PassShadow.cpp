@@ -128,7 +128,6 @@ void CPassShadow::Render(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommand
 		m_pShadowCamera[indexLevel]->Apply();
 	}
 
-	m_pCamera->Apply();
 	m_pRenderSystem->GetEngineUniform()->Apply();
 
 	// Render
