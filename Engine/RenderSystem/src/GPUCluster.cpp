@@ -35,18 +35,18 @@ void CGPUCluster::Compute(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxComman
 
 	// Update DescriptorSet
 	m_ptrDescriptorSet->SetUniformBuffer(UNIFORM_CAMERA_NAME, m_pCamera->GetUniformBuffer(), m_pCamera->GetUniformBufferOffset(), m_pCamera->GetUniformBuffer()->GetSize());
-	m_ptrDescriptorSet->SetStorageBuffer(STORAGE_CLUSTER_DATA_NAME, m_pRenderSystem->GetClusterDataBuffer(), 0, m_pRenderSystem->GetClusterDataBuffer()->GetSize());
+	m_ptrDescriptorSet->SetStorageBuffer(STORAGE_CLUSTER_DATA_NAME, m_pRenderSystem->GetClusterBuffer(), 0, m_pRenderSystem->GetClusterBuffer()->GetSize());
 
 	// Compute
 	GfxRenderer()->CmdPushDebugGroup(ptrCommandBuffer, "Cluster");
 	{
-		GfxRenderer()->CmdSetBufferBarrier(ptrCommandBuffer, m_pRenderSystem->GetClusterDataBuffer(), GFX_ACCESS_TRANSFER_READ_BIT, GFX_ACCESS_TRANSFER_WRITE_BIT);
+		GfxRenderer()->CmdSetBufferBarrier(ptrCommandBuffer, m_pRenderSystem->GetClusterBuffer(), GFX_ACCESS_TRANSFER_READ_BIT, GFX_ACCESS_TRANSFER_WRITE_BIT);
 		{
 			GfxRenderer()->CmdBindPipelineCompute(ptrCommandBuffer, m_pPipelineCompute);
 			GfxRenderer()->CmdBindDescriptorSet(ptrCommandBuffer, m_ptrDescriptorSet);
 			GfxRenderer()->CmdDispatch(ptrCommandBuffer, CLUSTER_WIDTH_TILE_COUNT, CLUSTER_HEIGHT_TILE_COUNT, CLUSTER_DEPTH_TILE_COUNT);
 		}
-		GfxRenderer()->CmdSetBufferBarrier(ptrCommandBuffer, m_pRenderSystem->GetClusterDataBuffer(), GFX_ACCESS_TRANSFER_WRITE_BIT, GFX_ACCESS_TRANSFER_READ_BIT);
+		GfxRenderer()->CmdSetBufferBarrier(ptrCommandBuffer, m_pRenderSystem->GetClusterBuffer(), GFX_ACCESS_TRANSFER_WRITE_BIT, GFX_ACCESS_TRANSFER_READ_BIT);
 	}
 	GfxRenderer()->CmdPopDebugGroup(ptrCommandBuffer);
 }

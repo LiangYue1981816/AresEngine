@@ -37,7 +37,7 @@ CPassPreZ::CPassPreZ(CRenderSystem* pRenderSystem)
 
 	m_ptrDescriptorSetPass = GfxRenderer()->NewDescriptorSet(HashValueFormat("%x_%p", PASS_PREZ_NAME, this), ptrDescriptorLayout);
 	m_ptrDescriptorSetPass->SetUniformBuffer(UNIFORM_ENGINE_NAME, m_pRenderSystem->GetEngineUniformBuffer(), 0, m_pRenderSystem->GetEngineUniformBuffer()->GetSize());
-	m_ptrDescriptorSetPass->SetStorageBuffer(STORAGE_SCENE_DATA_NAME, m_pRenderSystem->GetInstanceDataBuffer(), 0, m_pRenderSystem->GetInstanceDataBuffer()->GetSize());
+	m_ptrDescriptorSetPass->SetStorageBuffer(STORAGE_SCENE_DATA_NAME, m_pRenderSystem->GetInstanceBuffer(), 0, m_pRenderSystem->GetInstanceBuffer()->GetSize());
 }
 
 CPassPreZ::~CPassPreZ(void)

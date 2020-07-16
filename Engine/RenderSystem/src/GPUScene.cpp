@@ -20,8 +20,8 @@ CGPUScene::CGPUScene(CRenderSystem* pRenderSystem)
 	m_pPipelineCompute = GfxRenderer()->CreatePipelineCompute(m_pShaderCompute);
 
 	m_ptrDescriptorSet = GfxRenderer()->NewDescriptorSet(HashValue(szFileName), m_pPipelineCompute->GetDescriptorLayout(DESCRIPTOR_SET_PASS));
-	m_ptrDescriptorSet->SetStorageBuffer(STORAGE_SCENE_DATA_NAME, m_pRenderSystem->GetInstanceDataBuffer(), 0, m_pRenderSystem->GetInstanceDataBuffer()->GetSize());
-	m_ptrDescriptorSet->SetStorageBuffer(STORAGE_TRANSFER_SCENE_DATA_NAME, m_pRenderSystem->GetTransferDataBuffer(), 0, m_pRenderSystem->GetTransferDataBuffer()->GetSize());
+	m_ptrDescriptorSet->SetStorageBuffer(STORAGE_SCENE_DATA_NAME, m_pRenderSystem->GetInstanceBuffer(), 0, m_pRenderSystem->GetInstanceBuffer()->GetSize());
+	m_ptrDescriptorSet->SetStorageBuffer(STORAGE_TRANSFER_SCENE_DATA_NAME, m_pRenderSystem->GetTransferBuffer(), 0, m_pRenderSystem->GetTransferBuffer()->GetSize());
 	m_ptrDescriptorSet->SetStorageBuffer(STORAGE_TRANSFER_SCENE_DATA_INDEX_NAME, m_pRenderSystem->GetTransferIndexBuffer(), 0, m_pRenderSystem->GetTransferIndexBuffer()->GetSize());
 
 	m_indexDefaultInstance = AddInstance();
@@ -131,13 +131,13 @@ void CGPUScene::Compute(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandB
 			return;
 		}
 	}
-	m_pRenderSystem->GetTransferDataBuffer()->BufferData(0, sizeof(InstanceData) * datas.size(), (const void*)datas.data());
+	m_pRenderSystem->GetTransferBuffer()->BufferData(0, sizeof(InstanceData) * datas.size(), (const void*)datas.data());
 	m_pRenderSystem->GetTransferIndexBuffer()->BufferData(0, sizeof(int) * indices.size(), (const void*)indices.data());
 
 	// Transfer
 	GfxRenderer()->CmdPushDebugGroup(ptrCommandBuffer, "TransferSceneData");
 	{
-		GfxRenderer()->CmdSetBufferBarrier(ptrCommandBuffer, m_pRenderSystem->GetInstanceDataBuffer(), GFX_ACCESS_TRANSFER_READ_BIT, GFX_ACCESS_TRANSFER_WRITE_BIT);
+		GfxRenderer()->CmdSetBufferBarrier(ptrCommandBuffer, m_pRenderSystem->GetInstanceBuffer(), GFX_ACCESS_TRANSFER_READ_BIT, GFX_ACCESS_TRANSFER_WRITE_BIT);
 		{
 			const int local_size_x = 128;
 			const int local_size_y = 1;
@@ -148,7 +148,7 @@ void CGPUScene::Compute(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandB
 			GfxRenderer()->CmdUniform1i(ptrCommandBuffer, HashValue("Param.numTransfers"), (int)datas.size());
 			GfxRenderer()->CmdDispatch(ptrCommandBuffer, (int)datas.size() / local_size_x + 1, 0 / local_size_y + 1, 0 / local_size_z + 1);
 		}
-		GfxRenderer()->CmdSetBufferBarrier(ptrCommandBuffer, m_pRenderSystem->GetInstanceDataBuffer(), GFX_ACCESS_TRANSFER_WRITE_BIT, GFX_ACCESS_TRANSFER_READ_BIT);
+		GfxRenderer()->CmdSetBufferBarrier(ptrCommandBuffer, m_pRenderSystem->GetInstanceBuffer(), GFX_ACCESS_TRANSFER_WRITE_BIT, GFX_ACCESS_TRANSFER_READ_BIT);
 	}
 	GfxRenderer()->CmdPopDebugGroup(ptrCommandBuffer);
 }

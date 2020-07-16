@@ -42,7 +42,7 @@ CPassShadow::CPassShadow(CRenderSystem* pRenderSystem)
 		m_ptrDescriptorSetPass[indexLevel] = GfxRenderer()->NewDescriptorSet(HashValueFormat("%d_%x_%p", indexLevel, PASS_SHADOW_NAME, this), ptrDescriptorLayout);
 		m_ptrDescriptorSetPass[indexLevel]->SetUniformBuffer(UNIFORM_ENGINE_NAME, m_pRenderSystem->GetEngineUniformBuffer(), 0, m_pRenderSystem->GetEngineUniformBuffer()->GetSize());
 		m_ptrDescriptorSetPass[indexLevel]->SetUniformBuffer(UNIFORM_CAMERA_NAME, m_pShadowCamera[indexLevel]->GetUniformBuffer(), 0, m_pShadowCamera[indexLevel]->GetUniformBuffer()->GetSize());
-		m_ptrDescriptorSetPass[indexLevel]->SetStorageBuffer(STORAGE_SCENE_DATA_NAME, m_pRenderSystem->GetInstanceDataBuffer(), 0, m_pRenderSystem->GetInstanceDataBuffer()->GetSize());
+		m_ptrDescriptorSetPass[indexLevel]->SetStorageBuffer(STORAGE_SCENE_DATA_NAME, m_pRenderSystem->GetInstanceBuffer(), 0, m_pRenderSystem->GetInstanceBuffer()->GetSize());
 	}
 }
 

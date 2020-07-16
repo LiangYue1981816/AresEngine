@@ -35,10 +35,10 @@ void CGPUClusterCull::Compute(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCo
 
 	// Update DescriptorSet
 	m_ptrDescriptorSet->SetUniformBuffer(UNIFORM_CAMERA_NAME, m_pCamera->GetUniformBuffer(), m_pCamera->GetUniformBufferOffset(), m_pCamera->GetUniformBuffer()->GetSize());
-	m_ptrDescriptorSet->SetStorageBuffer(STORAGE_SCENE_DATA_NAME, m_pRenderSystem->GetInstanceDataBuffer(), 0, m_pRenderSystem->GetInstanceDataBuffer()->GetSize());
-	m_ptrDescriptorSet->SetStorageBuffer(STORAGE_CLUSTER_DATA_NAME, m_pRenderSystem->GetClusterDataBuffer(), 0, m_pRenderSystem->GetClusterDataBuffer()->GetSize());
-	m_ptrDescriptorSet->SetStorageBuffer(STORAGE_FULL_LIGHT_LIST_DATA_NAME, m_pRenderSystem->GetFullLightListBuffer(), 0, m_pRenderSystem->GetFullLightListBuffer()->GetSize());
-	m_ptrDescriptorSet->SetStorageBuffer(STORAGE_CULL_LIGHT_LIST_DATA_NAME, m_pRenderSystem->GetCullLightListBuffer(), 0, m_pRenderSystem->GetCullLightListBuffer()->GetSize());
+	m_ptrDescriptorSet->SetStorageBuffer(STORAGE_SCENE_DATA_NAME, m_pRenderSystem->GetInstanceBuffer(), 0, m_pRenderSystem->GetInstanceBuffer()->GetSize());
+	m_ptrDescriptorSet->SetStorageBuffer(STORAGE_CLUSTER_DATA_NAME, m_pRenderSystem->GetClusterBuffer(), 0, m_pRenderSystem->GetClusterBuffer()->GetSize());
+	m_ptrDescriptorSet->SetStorageBuffer(STORAGE_FULL_LIGHT_LIST_DATA_NAME, m_pRenderSystem->GetFullLightIndexBuffer(), 0, m_pRenderSystem->GetFullLightIndexBuffer()->GetSize());
+	m_ptrDescriptorSet->SetStorageBuffer(STORAGE_CULL_LIGHT_LIST_DATA_NAME, m_pRenderSystem->GetCullLightIndexBuffer(), 0, m_pRenderSystem->GetCullLightIndexBuffer()->GetSize());
 
 	// Update Buffer
 	CGfxMeshPtr ptrMesh = GfxRenderer()->NewMesh("PointLight.mesh", VERTEX_BINDING);
@@ -53,21 +53,21 @@ void CGPUClusterCull::Compute(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCo
 	instance.insert(instance.end(), instnaces0.begin(), instnaces0.end());
 	instance.insert(instance.end(), instnaces1.begin(), instnaces1.end());
 
-	m_pRenderSystem->GetFullLightListBuffer()->BufferData(0, sizeof(int) * std::min((int)instance.size(), MAX_GPUSCENE_INSTANCE_COUNT), instance.data());
+	m_pRenderSystem->GetFullLightIndexBuffer()->BufferData(0, sizeof(int) * std::min((int)instance.size(), MAX_GPUSCENE_INSTANCE_COUNT), instance.data());
 
 	// Compute
 	GfxRenderer()->CmdPushDebugGroup(ptrCommandBuffer, "ClusterCull");
 	{
-		GfxRenderer()->CmdSetBufferBarrier(ptrCommandBuffer, m_pRenderSystem->GetClusterDataBuffer(), GFX_ACCESS_TRANSFER_READ_BIT, GFX_ACCESS_TRANSFER_WRITE_BIT);
-		GfxRenderer()->CmdSetBufferBarrier(ptrCommandBuffer, m_pRenderSystem->GetCullLightListBuffer(), GFX_ACCESS_TRANSFER_READ_BIT, GFX_ACCESS_TRANSFER_WRITE_BIT);
+		GfxRenderer()->CmdSetBufferBarrier(ptrCommandBuffer, m_pRenderSystem->GetClusterBuffer(), GFX_ACCESS_TRANSFER_READ_BIT, GFX_ACCESS_TRANSFER_WRITE_BIT);
+		GfxRenderer()->CmdSetBufferBarrier(ptrCommandBuffer, m_pRenderSystem->GetCullLightIndexBuffer(), GFX_ACCESS_TRANSFER_READ_BIT, GFX_ACCESS_TRANSFER_WRITE_BIT);
 		{
 			GfxRenderer()->CmdBindPipelineCompute(ptrCommandBuffer, m_pPipelineCompute);
 			GfxRenderer()->CmdBindDescriptorSet(ptrCommandBuffer, m_ptrDescriptorSet);
 			GfxRenderer()->CmdUniform1i(ptrCommandBuffer, HashValue("Param.numPointLights"), std::min((int)instance.size(), MAX_GPUSCENE_INSTANCE_COUNT));
 			GfxRenderer()->CmdDispatch(ptrCommandBuffer, 1, 1, 1);
 		}
-		GfxRenderer()->CmdSetBufferBarrier(ptrCommandBuffer, m_pRenderSystem->GetCullLightListBuffer(), GFX_ACCESS_TRANSFER_WRITE_BIT, GFX_ACCESS_TRANSFER_READ_BIT);
-		GfxRenderer()->CmdSetBufferBarrier(ptrCommandBuffer, m_pRenderSystem->GetClusterDataBuffer(), GFX_ACCESS_TRANSFER_WRITE_BIT, GFX_ACCESS_TRANSFER_READ_BIT);
+		GfxRenderer()->CmdSetBufferBarrier(ptrCommandBuffer, m_pRenderSystem->GetCullLightIndexBuffer(), GFX_ACCESS_TRANSFER_WRITE_BIT, GFX_ACCESS_TRANSFER_READ_BIT);
+		GfxRenderer()->CmdSetBufferBarrier(ptrCommandBuffer, m_pRenderSystem->GetClusterBuffer(), GFX_ACCESS_TRANSFER_WRITE_BIT, GFX_ACCESS_TRANSFER_READ_BIT);
 	}
 	GfxRenderer()->CmdPopDebugGroup(ptrCommandBuffer);
 }
