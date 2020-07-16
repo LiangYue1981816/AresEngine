@@ -36,7 +36,7 @@ void CGPUCluster::Compute(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxComman
 	m_pCamera->Apply();
 
 	// Update DescriptorSet
-	m_ptrDescriptorSet->SetUniformBuffer(UNIFORM_CAMERA_NAME, m_pCamera->GetUniformBuffer(), m_pCamera->GetUniformBufferOffset(), m_pCamera->GetUniformBuffer()->GetSize());
+	m_ptrDescriptorSet->SetUniformBuffer(UNIFORM_CAMERA_NAME, m_pCamera->GetUniformBuffer(), m_pCamera->GetUniformBufferOffset(), m_pCamera->GetUniformBufferSize());
 
 	// Compute
 	GfxRenderer()->CmdPushDebugGroup(ptrCommandBuffer, "Cluster");
