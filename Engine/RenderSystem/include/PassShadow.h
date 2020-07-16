@@ -35,11 +35,9 @@ private:
 	float m_splitFactors[5];
 
 private:
-	CRenderQueue* m_pShadowRenderQueue[4];
+	CCamera* m_pShadowCamera[4];
 
 private:
-	CGfxCamera* m_pShadowCamera[4];
-	CGfxUniformCamera* m_pShadowCameraUniform[4];
 	CGfxDescriptorSetPtr m_ptrDescriptorSetPass[4];
 
 private:
