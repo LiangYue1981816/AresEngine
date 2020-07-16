@@ -34,6 +34,11 @@ CRenderQueue* CCamera::GetRenderQueue(void) const
 	return m_pRenderQueue;
 }
 
+uint32_t CCamera::GetUniformBufferSize(void) const
+{
+	return sizeof(m_params);
+}
+
 uint32_t CCamera::GetUniformBufferOffset(void) const
 {
 	return m_offset;

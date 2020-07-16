@@ -53,6 +53,7 @@ public:
 	const Params& GetParams(void) const;
 
 public:
+	uint32_t GetUniformBufferSize(void) const;
 	uint32_t GetUniformBufferOffset(void) const;
 	CGfxUniformBufferPtr GetUniformBuffer(void) const;
 
