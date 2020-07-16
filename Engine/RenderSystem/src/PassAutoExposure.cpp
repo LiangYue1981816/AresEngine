@@ -54,14 +54,17 @@ void CPassAutoExposure::SetCamera(CCamera* pCamera)
 void CPassAutoExposure::SetInputTexture(CGfxRenderTexturePtr ptrColorTexture)
 {
 	CGfxSampler* pSamplerPoint = GfxRenderer()->CreateSampler(GFX_FILTER_NEAREST, GFX_FILTER_NEAREST, GFX_SAMPLER_MIPMAP_MODE_NEAREST, GFX_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE);
-	m_ptrInputColorTexture = ptrColorTexture;
-	m_ptrDescriptorSetPass->SetRenderTexture(UNIFORM_COLOR_TEXTURE_NAME, ptrColorTexture, pSamplerPoint);
+
+	if (m_ptrInputColorTexture != ptrColorTexture) {
+		m_ptrInputColorTexture  = ptrColorTexture;
+		m_ptrDescriptorSetPass->SetRenderTexture(UNIFORM_COLOR_TEXTURE_NAME, ptrColorTexture, pSamplerPoint);
+	}
 }
 
 void CPassAutoExposure::SetOutputTexture(CGfxRenderTexturePtr ptrColorTexture)
 {
 	if (m_ptrOutputColorTexture != ptrColorTexture) {
-		m_ptrOutputColorTexture = ptrColorTexture;
+		m_ptrOutputColorTexture  = ptrColorTexture;
 		m_ptrFrameBuffer = GfxRenderer()->NewFrameBuffer(ptrColorTexture->GetWidth(), ptrColorTexture->GetHeight(), numAttachments);
 		m_ptrFrameBuffer->SetAttachmentTexture(indexAttachmentColor, ptrColorTexture);
 		m_ptrFrameBuffer->Create(ptrRenderPass);

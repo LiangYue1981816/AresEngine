@@ -34,7 +34,6 @@ CPassCopyColor::CPassCopyColor(CRenderSystem* pRenderSystem)
 	ptrDescriptorLayout->Create();
 
 	m_ptrDescriptorSetPass = GfxRenderer()->NewDescriptorSet(HashValueFormat("%x_%p", PASS_COPY_COLOR_NAME, this), ptrDescriptorLayout);
-	m_ptrDescriptorSetPass->SetUniformBuffer(UNIFORM_ENGINE_NAME, m_pRenderSystem->GetEngineUniformBuffer(), 0, m_pRenderSystem->GetEngineUniformBuffer()->GetSize());
 }
 
 CPassCopyColor::~CPassCopyColor(void)
@@ -44,10 +43,7 @@ CPassCopyColor::~CPassCopyColor(void)
 
 void CPassCopyColor::SetCamera(CCamera* pCamera)
 {
-	if (m_pCamera != pCamera) {
-		m_pCamera = pCamera;
-		m_ptrDescriptorSetPass->SetUniformBuffer(UNIFORM_CAMERA_NAME, pCamera->GetUniformBuffer(), 0, pCamera->GetUniformBuffer()->GetSize());
-	}
+	m_pCamera = pCamera;
 }
 
 void CPassCopyColor::SetInputTexture(CGfxRenderTexturePtr ptrColorTexture)
@@ -55,7 +51,7 @@ void CPassCopyColor::SetInputTexture(CGfxRenderTexturePtr ptrColorTexture)
 	CGfxSampler* pSamplerPoint = GfxRenderer()->CreateSampler(GFX_FILTER_NEAREST, GFX_FILTER_NEAREST, GFX_SAMPLER_MIPMAP_MODE_NEAREST, GFX_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE);
 
 	if (m_ptrInputColorTexture != ptrColorTexture) {
-		m_ptrInputColorTexture = ptrColorTexture;
+		m_ptrInputColorTexture  = ptrColorTexture;
 		m_ptrDescriptorSetPass->SetRenderTexture(UNIFORM_COLOR_TEXTURE_NAME, ptrColorTexture, pSamplerPoint);
 	}
 }
@@ -63,7 +59,7 @@ void CPassCopyColor::SetInputTexture(CGfxRenderTexturePtr ptrColorTexture)
 void CPassCopyColor::SetOutputTexture(CGfxRenderTexturePtr ptrColorTexture)
 {
 	if (m_ptrOutputColorTexture != ptrColorTexture) {
-		m_ptrOutputColorTexture = ptrColorTexture;
+		m_ptrOutputColorTexture  = ptrColorTexture;
 		m_ptrFrameBuffer = GfxRenderer()->NewFrameBuffer(ptrColorTexture->GetWidth(), ptrColorTexture->GetHeight(), numAttachments);
 		m_ptrFrameBuffer->SetAttachmentTexture(indexAttachmentColor, ptrColorTexture);
 		m_ptrFrameBuffer->Create(ptrRenderPass);
@@ -75,6 +71,10 @@ void CPassCopyColor::Render(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxComm
 	// Update
 	m_pCamera->Apply();
 	m_pRenderSystem->GetEngineUniform()->Apply();
+
+	// Update DescriptorSet
+	m_ptrDescriptorSetPass->SetUniformBuffer(UNIFORM_CAMERA_NAME, m_pCamera->GetUniformBuffer(), m_pCamera->GetUniformBufferOffset(), m_pCamera->GetUniformBuffer()->GetSize());
+	m_ptrDescriptorSetPass->SetUniformBuffer(UNIFORM_ENGINE_NAME, m_pRenderSystem->GetEngineUniform()->GetUniformBuffer(), m_pRenderSystem->GetEngineUniform()->GetUniformBufferOffset(), m_pRenderSystem->GetEngineUniform()->GetUniformBuffer()->GetSize());
 
 	// Render
 	GfxRenderer()->CmdPushDebugGroup(ptrCommandBuffer, "PassCopyColor");

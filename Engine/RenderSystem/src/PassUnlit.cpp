@@ -39,7 +39,6 @@ CPassUnlit::CPassUnlit(CRenderSystem* pRenderSystem)
 	ptrDescriptorLayout->Create();
 
 	m_ptrDescriptorSetPass = GfxRenderer()->NewDescriptorSet(HashValueFormat("%x_%p", PASS_UNLIT_NAME, this), ptrDescriptorLayout);
-	m_ptrDescriptorSetPass->SetUniformBuffer(UNIFORM_ENGINE_NAME, m_pRenderSystem->GetEngineUniformBuffer(), 0, m_pRenderSystem->GetEngineUniformBuffer()->GetSize());
 	m_ptrDescriptorSetPass->SetStorageBuffer(STORAGE_SCENE_DATA_NAME, m_pRenderSystem->GetInstanceBuffer(), 0, m_pRenderSystem->GetInstanceBuffer()->GetSize());
 }
 
@@ -50,16 +49,13 @@ CPassUnlit::~CPassUnlit(void)
 
 void CPassUnlit::SetCamera(CCamera* pCamera)
 {
-	if (m_pCamera != pCamera) {
-		m_pCamera = pCamera;
-		m_ptrDescriptorSetPass->SetUniformBuffer(UNIFORM_CAMERA_NAME, pCamera->GetUniformBuffer(), 0, pCamera->GetUniformBuffer()->GetSize());
-	}
+	m_pCamera = pCamera;
 }
 
 void CPassUnlit::SetOutputTexture(CGfxRenderTexturePtr ptrColorTexture, CGfxRenderTexturePtr ptrDepthStencilTexture)
 {
 	if (m_ptrOutputColorTexture != ptrColorTexture || m_ptrOutputDepthStencilTexture != ptrDepthStencilTexture) {
-		m_ptrOutputColorTexture = ptrColorTexture;
+		m_ptrOutputColorTexture  = ptrColorTexture;
 		m_ptrOutputDepthStencilTexture = ptrDepthStencilTexture;
 		m_ptrFrameBuffer = GfxRenderer()->NewFrameBuffer(ptrColorTexture->GetWidth(), ptrColorTexture->GetHeight(), numAttachments);
 		m_ptrFrameBuffer->SetAttachmentTexture(indexAttachmentColor, ptrColorTexture);
@@ -73,6 +69,10 @@ void CPassUnlit::Render(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandB
 	// Update
 	m_pCamera->Apply();
 	m_pRenderSystem->GetEngineUniform()->Apply();
+
+	// Update DescriptorSet
+	m_ptrDescriptorSetPass->SetUniformBuffer(UNIFORM_CAMERA_NAME, m_pCamera->GetUniformBuffer(), m_pCamera->GetUniformBufferOffset(), m_pCamera->GetUniformBuffer()->GetSize());
+	m_ptrDescriptorSetPass->SetUniformBuffer(UNIFORM_ENGINE_NAME, m_pRenderSystem->GetEngineUniform()->GetUniformBuffer(), m_pRenderSystem->GetEngineUniform()->GetUniformBufferOffset(), m_pRenderSystem->GetEngineUniform()->GetUniformBuffer()->GetSize());
 
 	// Render
 	GfxRenderer()->CmdPushDebugGroup(ptrCommandBuffer, "PassDefault");

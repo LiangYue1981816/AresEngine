@@ -63,7 +63,6 @@ CPassDeferredShading::CPassDeferredShading(CRenderSystem* pRenderSystem)
 		ptrDescriptorLayout->Create();
 
 		m_ptrDescriptorSetPass_Subpass0 = GfxRenderer()->NewDescriptorSet(HashValueFormat("%x_%p", PASS_DEFERRED_SHADING_GBUFFER_NAME, this), ptrDescriptorLayout);
-		m_ptrDescriptorSetPass_Subpass0->SetUniformBuffer(UNIFORM_ENGINE_NAME, m_pRenderSystem->GetEngineUniformBuffer(), 0, m_pRenderSystem->GetEngineUniformBuffer()->GetSize());
 		m_ptrDescriptorSetPass_Subpass0->SetStorageBuffer(STORAGE_SCENE_DATA_NAME, m_pRenderSystem->GetInstanceBuffer(), 0, m_pRenderSystem->GetInstanceBuffer()->GetSize());
 	}
 
@@ -76,7 +75,6 @@ CPassDeferredShading::CPassDeferredShading(CRenderSystem* pRenderSystem)
 		ptrDescriptorLayout->Create();
 
 		m_ptrDescriptorSetPass_Subpass1 = GfxRenderer()->NewDescriptorSet(HashValueFormat("%x_%p", PASS_DEFERRED_SHADING_LIGHTING_NAME, this), ptrDescriptorLayout);
-		m_ptrDescriptorSetPass_Subpass1->SetUniformBuffer(UNIFORM_ENGINE_NAME, m_pRenderSystem->GetEngineUniformBuffer(), 0, m_pRenderSystem->GetEngineUniformBuffer()->GetSize());
 		m_ptrDescriptorSetPass_Subpass1->SetStorageBuffer(STORAGE_SCENE_DATA_NAME, m_pRenderSystem->GetInstanceBuffer(), 0, m_pRenderSystem->GetInstanceBuffer()->GetSize());
 	}
 }
@@ -88,11 +86,7 @@ CPassDeferredShading::~CPassDeferredShading(void)
 
 void CPassDeferredShading::SetCamera(CCamera* pCamera)
 {
-	if (m_pCamera != pCamera) {
-		m_pCamera = pCamera;
-		m_ptrDescriptorSetPass_Subpass0->SetUniformBuffer(UNIFORM_CAMERA_NAME, pCamera->GetUniformBuffer(), 0, pCamera->GetUniformBuffer()->GetSize());
-		m_ptrDescriptorSetPass_Subpass1->SetUniformBuffer(UNIFORM_CAMERA_NAME, pCamera->GetUniformBuffer(), 0, pCamera->GetUniformBuffer()->GetSize());
-	}
+	m_pCamera = pCamera;
 }
 
 void CPassDeferredShading::SetInputTexture(CGfxRenderTexturePtr ptrDepthTexture, CGfxRenderTexturePtr ptrShadowTexture, CGfxRenderTexturePtr ptrSSAOTexture)
@@ -101,17 +95,17 @@ void CPassDeferredShading::SetInputTexture(CGfxRenderTexturePtr ptrDepthTexture,
 	CGfxSampler* pSamplerLinear = GfxRenderer()->CreateSampler(GFX_FILTER_NEAREST, GFX_FILTER_LINEAR, GFX_SAMPLER_MIPMAP_MODE_NEAREST, GFX_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE);
 
 	if (m_ptrInputShadowTexture != ptrShadowTexture) {
-		m_ptrInputShadowTexture = ptrShadowTexture;
+		m_ptrInputShadowTexture  = ptrShadowTexture;
 		m_ptrDescriptorSetPass_Subpass0->SetRenderTexture(UNIFORM_SHADOW_TEXTURE_NAME, ptrShadowTexture, pSamplerPoint);
 	}
 
 	if (m_ptrInputSSAOTexture != ptrSSAOTexture) {
-		m_ptrInputSSAOTexture = ptrSSAOTexture;
+		m_ptrInputSSAOTexture  = ptrSSAOTexture;
 		m_ptrDescriptorSetPass_Subpass0->SetRenderTexture(UNIFORM_SSAO_TEXTURE_NAME, ptrSSAOTexture, pSamplerLinear);
 	}
 
 	if (m_ptrInputDepthTexture != ptrDepthTexture) {
-		m_ptrInputDepthTexture = ptrDepthTexture;
+		m_ptrInputDepthTexture  = ptrDepthTexture;
 		m_ptrDescriptorSetPass_Subpass1->SetRenderTexture(UNIFORM_DEPTH_TEXTURE_NAME, ptrDepthTexture, pSamplerPoint);
 	}
 }
@@ -119,7 +113,7 @@ void CPassDeferredShading::SetInputTexture(CGfxRenderTexturePtr ptrDepthTexture,
 void CPassDeferredShading::SetOutputTexture(CGfxRenderTexturePtr ptrColorTexture, CGfxRenderTexturePtr ptrGBuffer0Texture, CGfxRenderTexturePtr ptrGBuffer1Texture, CGfxRenderTexturePtr ptrDepthStencilTexture)
 {
 	if (m_ptrOutputColorTexture != ptrColorTexture || m_ptrOutputGBuffer0Texture != ptrGBuffer0Texture || m_ptrOutputGBuffer1Texture != ptrGBuffer1Texture || m_ptrOutputDepthStencilTexture != ptrDepthStencilTexture) {
-		m_ptrOutputColorTexture = ptrColorTexture;
+		m_ptrOutputColorTexture  = ptrColorTexture;
 		m_ptrOutputGBuffer0Texture = ptrGBuffer0Texture;
 		m_ptrOutputGBuffer1Texture = ptrGBuffer1Texture;
 		m_ptrOutputDepthStencilTexture = ptrDepthStencilTexture;
@@ -137,6 +131,12 @@ void CPassDeferredShading::Render(CTaskPool& taskPool, CTaskGraph& taskGraph, CG
 	// Update
 	m_pCamera->Apply();
 	m_pRenderSystem->GetEngineUniform()->Apply();
+
+	// Update DescriptorSet
+	m_ptrDescriptorSetPass_Subpass0->SetUniformBuffer(UNIFORM_CAMERA_NAME, m_pCamera->GetUniformBuffer(), m_pCamera->GetUniformBufferOffset(), m_pCamera->GetUniformBuffer()->GetSize());
+	m_ptrDescriptorSetPass_Subpass1->SetUniformBuffer(UNIFORM_CAMERA_NAME, m_pCamera->GetUniformBuffer(), m_pCamera->GetUniformBufferOffset(), m_pCamera->GetUniformBuffer()->GetSize());
+	m_ptrDescriptorSetPass_Subpass0->SetUniformBuffer(UNIFORM_ENGINE_NAME, m_pRenderSystem->GetEngineUniform()->GetUniformBuffer(), m_pRenderSystem->GetEngineUniform()->GetUniformBufferOffset(), m_pRenderSystem->GetEngineUniform()->GetUniformBuffer()->GetSize());
+	m_ptrDescriptorSetPass_Subpass1->SetUniformBuffer(UNIFORM_ENGINE_NAME, m_pRenderSystem->GetEngineUniform()->GetUniformBuffer(), m_pRenderSystem->GetEngineUniform()->GetUniformBufferOffset(), m_pRenderSystem->GetEngineUniform()->GetUniformBuffer()->GetSize());
 
 	// Render
 	GfxRenderer()->CmdPushDebugGroup(ptrCommandBuffer, "PassDeferredShading");

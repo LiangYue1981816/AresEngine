@@ -40,8 +40,6 @@ CPassShadow::CPassShadow(CRenderSystem* pRenderSystem)
 	for (int indexLevel = 0; indexLevel < 4; indexLevel++) {
 		m_pShadowCamera[indexLevel] = new CCamera;
 		m_ptrDescriptorSetPass[indexLevel] = GfxRenderer()->NewDescriptorSet(HashValueFormat("%d_%x_%p", indexLevel, PASS_SHADOW_NAME, this), ptrDescriptorLayout);
-		m_ptrDescriptorSetPass[indexLevel]->SetUniformBuffer(UNIFORM_ENGINE_NAME, m_pRenderSystem->GetEngineUniformBuffer(), 0, m_pRenderSystem->GetEngineUniformBuffer()->GetSize());
-		m_ptrDescriptorSetPass[indexLevel]->SetUniformBuffer(UNIFORM_CAMERA_NAME, m_pShadowCamera[indexLevel]->GetUniformBuffer(), 0, m_pShadowCamera[indexLevel]->GetUniformBuffer()->GetSize());
 		m_ptrDescriptorSetPass[indexLevel]->SetStorageBuffer(STORAGE_SCENE_DATA_NAME, m_pRenderSystem->GetInstanceBuffer(), 0, m_pRenderSystem->GetInstanceBuffer()->GetSize());
 	}
 }
@@ -75,7 +73,7 @@ void CPassShadow::SetParamSplitFactors(float f1, float f2, float f3, float f4)
 void CPassShadow::SetOutputTexture(CGfxRenderTexturePtr ptrDepthTexture)
 {
 	if (m_ptrOutputDepthTexture != ptrDepthTexture) {
-		m_ptrOutputDepthTexture = ptrDepthTexture;
+		m_ptrOutputDepthTexture  = ptrDepthTexture;
 		m_ptrFrameBuffer = GfxRenderer()->NewFrameBuffer(ptrDepthTexture->GetWidth(), ptrDepthTexture->GetHeight(), numAttachments);
 		m_ptrFrameBuffer->SetAttachmentTexture(indexAttachmentDepthStencil, ptrDepthTexture);
 		m_ptrFrameBuffer->Create(ptrRenderPass);
@@ -129,6 +127,12 @@ void CPassShadow::Render(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommand
 	}
 
 	m_pRenderSystem->GetEngineUniform()->Apply();
+
+	// Update DescriptorSet
+	for (int indexLevel = 0; indexLevel < 4; indexLevel++) {
+		m_ptrDescriptorSetPass[indexLevel]->SetUniformBuffer(UNIFORM_CAMERA_NAME, m_pShadowCamera[indexLevel]->GetUniformBuffer(), m_pShadowCamera[indexLevel]->GetUniformBufferOffset(), m_pShadowCamera[indexLevel]->GetUniformBuffer()->GetSize());
+		m_ptrDescriptorSetPass[indexLevel]->SetUniformBuffer(UNIFORM_ENGINE_NAME, m_pRenderSystem->GetEngineUniform()->GetUniformBuffer(), m_pRenderSystem->GetEngineUniform()->GetUniformBufferOffset(), m_pRenderSystem->GetEngineUniform()->GetUniformBuffer()->GetSize());
+	}
 
 	// Render
 	GfxRenderer()->CmdPushDebugGroup(ptrCommandBuffer, "PassShadow");

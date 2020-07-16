@@ -36,7 +36,6 @@ CPassPreZ::CPassPreZ(CRenderSystem* pRenderSystem)
 	ptrDescriptorLayout->Create();
 
 	m_ptrDescriptorSetPass = GfxRenderer()->NewDescriptorSet(HashValueFormat("%x_%p", PASS_PREZ_NAME, this), ptrDescriptorLayout);
-	m_ptrDescriptorSetPass->SetUniformBuffer(UNIFORM_ENGINE_NAME, m_pRenderSystem->GetEngineUniformBuffer(), 0, m_pRenderSystem->GetEngineUniformBuffer()->GetSize());
 	m_ptrDescriptorSetPass->SetStorageBuffer(STORAGE_SCENE_DATA_NAME, m_pRenderSystem->GetInstanceBuffer(), 0, m_pRenderSystem->GetInstanceBuffer()->GetSize());
 }
 
@@ -47,16 +46,13 @@ CPassPreZ::~CPassPreZ(void)
 
 void CPassPreZ::SetCamera(CCamera* pCamera)
 {
-	if (m_pCamera != pCamera) {
-		m_pCamera = pCamera;
-		m_ptrDescriptorSetPass->SetUniformBuffer(UNIFORM_CAMERA_NAME, pCamera->GetUniformBuffer(), 0, pCamera->GetUniformBuffer()->GetSize());
-	}
+	m_pCamera = pCamera;
 }
 
 void CPassPreZ::SetOutputTexture(CGfxRenderTexturePtr ptrDepthTexture)
 {
 	if (m_ptrOutputDepthTexture != ptrDepthTexture) {
-		m_ptrOutputDepthTexture = ptrDepthTexture;
+		m_ptrOutputDepthTexture  = ptrDepthTexture;
 		m_ptrFrameBuffer = GfxRenderer()->NewFrameBuffer(ptrDepthTexture->GetWidth(), ptrDepthTexture->GetHeight(), numAttachments);
 		m_ptrFrameBuffer->SetAttachmentTexture(indexAttachmentDepthStencil, ptrDepthTexture);
 		m_ptrFrameBuffer->Create(ptrRenderPass);
@@ -68,6 +64,10 @@ void CPassPreZ::Render(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBu
 	// Update
 	m_pCamera->Apply();
 	m_pRenderSystem->GetEngineUniform()->Apply();
+
+	// Update DescriptorSet
+	m_ptrDescriptorSetPass->SetUniformBuffer(UNIFORM_CAMERA_NAME, m_pCamera->GetUniformBuffer(), m_pCamera->GetUniformBufferOffset(), m_pCamera->GetUniformBuffer()->GetSize());
+	m_ptrDescriptorSetPass->SetUniformBuffer(UNIFORM_ENGINE_NAME, m_pRenderSystem->GetEngineUniform()->GetUniformBuffer(), m_pRenderSystem->GetEngineUniform()->GetUniformBufferOffset(), m_pRenderSystem->GetEngineUniform()->GetUniformBuffer()->GetSize());
 
 	// Render
 	GfxRenderer()->CmdPushDebugGroup(ptrCommandBuffer, "PassPreZ");
