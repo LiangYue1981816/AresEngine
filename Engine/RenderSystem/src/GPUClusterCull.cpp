@@ -15,12 +15,7 @@ CGPUClusterCull::CGPUClusterCull(CRenderSystem* pRenderSystem)
 
 	m_pShaderCompute = GfxRenderer()->CreateShader(szBinFileName, compute_shader);
 	m_pPipelineCompute = GfxRenderer()->CreatePipelineCompute(m_pShaderCompute);
-
 	m_ptrDescriptorSet = GfxRenderer()->NewDescriptorSet(HashValue(szFileName), m_pPipelineCompute->GetDescriptorLayout(DESCRIPTOR_SET_PASS));
-	m_ptrDescriptorSet->SetStorageBuffer(STORAGE_SCENE_DATA_NAME, m_pRenderSystem->GetInstanceDataBuffer(), 0, m_pRenderSystem->GetInstanceDataBuffer()->GetSize());
-	m_ptrDescriptorSet->SetStorageBuffer(STORAGE_CLUSTER_DATA_NAME, m_pRenderSystem->GetClusterBuffer(), 0, m_pRenderSystem->GetClusterBuffer()->GetSize());
-	m_ptrDescriptorSet->SetStorageBuffer(STORAGE_FULL_LIGHT_LIST_DATA_NAME, m_pRenderSystem->GetFullLightListBuffer(), 0, m_pRenderSystem->GetFullLightListBuffer()->GetSize());
-	m_ptrDescriptorSet->SetStorageBuffer(STORAGE_CULL_LIGHT_LIST_DATA_NAME, m_pRenderSystem->GetCullLightListBuffer(), 0, m_pRenderSystem->GetCullLightListBuffer()->GetSize());
 }
 
 CGPUClusterCull::~CGPUClusterCull(void)
@@ -30,10 +25,7 @@ CGPUClusterCull::~CGPUClusterCull(void)
 
 void CGPUClusterCull::SetCamera(CCamera* pCamera)
 {
-	if (m_pCamera != pCamera) {
-		m_pCamera = pCamera;
-		m_ptrDescriptorSet->SetUniformBuffer(UNIFORM_CAMERA_NAME, pCamera->GetUniformBuffer(), 0, pCamera->GetUniformBuffer()->GetSize());
-	}
+	m_pCamera = pCamera;
 }
 
 void CGPUClusterCull::Compute(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer)
@@ -41,7 +33,14 @@ void CGPUClusterCull::Compute(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCo
 	// Update
 	m_pCamera->Apply();
 
-	// Update Light list
+	// Update DescriptorSet
+	m_ptrDescriptorSet->SetUniformBuffer(UNIFORM_CAMERA_NAME, m_pCamera->GetUniformBuffer(), m_pCamera->GetUniformBufferOffset(), m_pCamera->GetUniformBuffer()->GetSize());
+	m_ptrDescriptorSet->SetStorageBuffer(STORAGE_SCENE_DATA_NAME, m_pRenderSystem->GetInstanceDataBuffer(), 0, m_pRenderSystem->GetInstanceDataBuffer()->GetSize());
+	m_ptrDescriptorSet->SetStorageBuffer(STORAGE_CLUSTER_DATA_NAME, m_pRenderSystem->GetClusterDataBuffer(), 0, m_pRenderSystem->GetClusterDataBuffer()->GetSize());
+	m_ptrDescriptorSet->SetStorageBuffer(STORAGE_FULL_LIGHT_LIST_DATA_NAME, m_pRenderSystem->GetFullLightListBuffer(), 0, m_pRenderSystem->GetFullLightListBuffer()->GetSize());
+	m_ptrDescriptorSet->SetStorageBuffer(STORAGE_CULL_LIGHT_LIST_DATA_NAME, m_pRenderSystem->GetCullLightListBuffer(), 0, m_pRenderSystem->GetCullLightListBuffer()->GetSize());
+
+	// Update Buffer
 	CGfxMeshPtr ptrMesh = GfxRenderer()->NewMesh("PointLight.mesh", VERTEX_BINDING);
 	CGfxMeshDrawPtr ptrMeshDraw = GfxRenderer()->NewMeshDraw(ptrMesh->GetName(), ptrMesh, 0);
 	CGfxMaterialPtr ptrMaterialCullFaceBack = GfxRenderer()->NewMaterial("PassDeferredShading_Back.material", VERTEX_BINDING, INSTANCE_BINDING);
@@ -59,7 +58,7 @@ void CGPUClusterCull::Compute(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCo
 	// Compute
 	GfxRenderer()->CmdPushDebugGroup(ptrCommandBuffer, "ClusterCull");
 	{
-		GfxRenderer()->CmdSetBufferBarrier(ptrCommandBuffer, m_pRenderSystem->GetClusterBuffer(), GFX_ACCESS_TRANSFER_READ_BIT, GFX_ACCESS_TRANSFER_WRITE_BIT);
+		GfxRenderer()->CmdSetBufferBarrier(ptrCommandBuffer, m_pRenderSystem->GetClusterDataBuffer(), GFX_ACCESS_TRANSFER_READ_BIT, GFX_ACCESS_TRANSFER_WRITE_BIT);
 		GfxRenderer()->CmdSetBufferBarrier(ptrCommandBuffer, m_pRenderSystem->GetCullLightListBuffer(), GFX_ACCESS_TRANSFER_READ_BIT, GFX_ACCESS_TRANSFER_WRITE_BIT);
 		{
 			GfxRenderer()->CmdBindPipelineCompute(ptrCommandBuffer, m_pPipelineCompute);
@@ -68,7 +67,7 @@ void CGPUClusterCull::Compute(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCo
 			GfxRenderer()->CmdDispatch(ptrCommandBuffer, 1, 1, 1);
 		}
 		GfxRenderer()->CmdSetBufferBarrier(ptrCommandBuffer, m_pRenderSystem->GetCullLightListBuffer(), GFX_ACCESS_TRANSFER_WRITE_BIT, GFX_ACCESS_TRANSFER_READ_BIT);
-		GfxRenderer()->CmdSetBufferBarrier(ptrCommandBuffer, m_pRenderSystem->GetClusterBuffer(), GFX_ACCESS_TRANSFER_WRITE_BIT, GFX_ACCESS_TRANSFER_READ_BIT);
+		GfxRenderer()->CmdSetBufferBarrier(ptrCommandBuffer, m_pRenderSystem->GetClusterDataBuffer(), GFX_ACCESS_TRANSFER_WRITE_BIT, GFX_ACCESS_TRANSFER_READ_BIT);
 	}
 	GfxRenderer()->CmdPopDebugGroup(ptrCommandBuffer);
 }

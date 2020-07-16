@@ -221,7 +221,7 @@ public:
 	const CGfxMultiInstanceBufferPtr GetInstanceBuffer(uint32_t instanceFormat, int instanceBinding) const;
 
 public:
-	const CGfxStorageBufferPtr GetClusterBuffer(void) const;
+	const CGfxStorageBufferPtr GetClusterDataBuffer(void) const;
 	const CGfxStorageBufferPtr GetFullLightListBuffer(void) const;
 	const CGfxStorageBufferPtr GetCullLightListBuffer(void) const;
 
@@ -319,7 +319,7 @@ private:
 	CPassFinal* m_pPassFinal;
 
 private:
-	CGfxStorageBufferPtr m_ptrClusterBuffer;
+	CGfxStorageBufferPtr m_ptrClusterDataBuffer;
 	CGfxStorageBufferPtr m_ptrFullLightListBuffer;
 	CGfxStorageBufferPtr m_ptrCullLightListBuffer;
 
