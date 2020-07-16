@@ -18,11 +18,7 @@ CGPUScene::CGPUScene(CRenderSystem* pRenderSystem)
 
 	m_pShaderCompute = GfxRenderer()->CreateShader(szBinFileName, compute_shader);
 	m_pPipelineCompute = GfxRenderer()->CreatePipelineCompute(m_pShaderCompute);
-
 	m_ptrDescriptorSet = GfxRenderer()->NewDescriptorSet(HashValue(szFileName), m_pPipelineCompute->GetDescriptorLayout(DESCRIPTOR_SET_PASS));
-	m_ptrDescriptorSet->SetStorageBuffer(STORAGE_SCENE_DATA_NAME, m_pRenderSystem->GetInstanceBuffer(), 0, m_pRenderSystem->GetInstanceBuffer()->GetSize());
-	m_ptrDescriptorSet->SetStorageBuffer(STORAGE_TRANSFER_SCENE_DATA_NAME, m_pRenderSystem->GetTransferBuffer(), 0, m_pRenderSystem->GetTransferBuffer()->GetSize());
-	m_ptrDescriptorSet->SetStorageBuffer(STORAGE_TRANSFER_SCENE_DATA_INDEX_NAME, m_pRenderSystem->GetTransferIndexBuffer(), 0, m_pRenderSystem->GetTransferIndexBuffer()->GetSize());
 
 	m_indexDefaultInstance = AddInstance();
 	m_indexPostProcessInstnace = AddInstance();
@@ -98,7 +94,12 @@ const InstanceData& CGPUScene::GetInstance(int index) const
 
 void CGPUScene::Compute(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer)
 {
-	// Update
+	// Update DescriptorSet
+	m_ptrDescriptorSet->SetStorageBuffer(STORAGE_SCENE_DATA_NAME, m_pRenderSystem->GetInstanceBuffer(), 0, m_pRenderSystem->GetInstanceBuffer()->GetSize());
+	m_ptrDescriptorSet->SetStorageBuffer(STORAGE_TRANSFER_SCENE_DATA_NAME, m_pRenderSystem->GetTransferBuffer(), 0, m_pRenderSystem->GetTransferBuffer()->GetSize());
+	m_ptrDescriptorSet->SetStorageBuffer(STORAGE_TRANSFER_SCENE_DATA_INDEX_NAME, m_pRenderSystem->GetTransferIndexBuffer(), 0, m_pRenderSystem->GetTransferIndexBuffer()->GetSize());
+
+	// Update Buffer
 	eastl::vector<InstanceData> datas;
 	eastl::vector<int> indices;
 	{
@@ -134,7 +135,7 @@ void CGPUScene::Compute(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandB
 	m_pRenderSystem->GetTransferBuffer()->BufferData(0, sizeof(InstanceData) * datas.size(), (const void*)datas.data());
 	m_pRenderSystem->GetTransferIndexBuffer()->BufferData(0, sizeof(int) * indices.size(), (const void*)indices.data());
 
-	// Transfer
+	// Compute
 	GfxRenderer()->CmdPushDebugGroup(ptrCommandBuffer, "TransferSceneData");
 	{
 		GfxRenderer()->CmdSetBufferBarrier(ptrCommandBuffer, m_pRenderSystem->GetInstanceBuffer(), GFX_ACCESS_TRANSFER_READ_BIT, GFX_ACCESS_TRANSFER_WRITE_BIT);
