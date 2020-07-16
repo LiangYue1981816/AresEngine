@@ -5,7 +5,7 @@
 class CALL_API CRenderQueue;
 class CALL_API CCamera
 {
-private:
+public:
 	typedef struct Params {
 		glm::vec4 screen;
 		glm::vec4 depth;
@@ -26,6 +26,7 @@ public:
 
 
 public:
+	Params GetParams(void) const;
 	CRenderQueue* GetRenderQueue(void) const;
 
 public:

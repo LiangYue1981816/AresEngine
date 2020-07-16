@@ -19,6 +19,11 @@ CCamera::~CCamera(void)
 	delete m_pCamera;
 }
 
+CCamera::Params CCamera::GetParams(void) const
+{
+	return m_params;
+}
+
 CRenderQueue* CCamera::GetRenderQueue(void) const
 {
 	return m_pRenderQueue;

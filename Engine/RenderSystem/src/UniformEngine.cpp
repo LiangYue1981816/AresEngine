@@ -140,6 +140,11 @@ CUniformEngine::~CUniformEngine(void)
 
 }
 
+CUniformEngine::Params CUniformEngine::GetParams(void) const
+{
+	return m_params;
+}
+
 uint32_t CUniformEngine::GetUniformBufferOffset(void) const
 {
 	return m_offset;

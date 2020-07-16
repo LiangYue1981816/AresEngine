@@ -4,7 +4,7 @@
 
 class CALL_API CUniformEngine
 {
-private:
+public:
 	typedef struct Params {
 		glm::vec4 time;
 		glm::vec4 sinTime;
@@ -48,6 +48,9 @@ public:
 	CUniformEngine(void);
 	virtual ~CUniformEngine(void);
 
+
+public:
+	Params GetParams(void) const;
 
 public:
 	uint32_t GetUniformBufferOffset(void) const;
