@@ -8,8 +8,8 @@ precision highp float;
 USE_CAMERA_UNIFORM
 USE_SCENE_DATA_STORAGE
 USE_CLUSTER_DATA_STORAGE
-USE_FULL_LIGHT_LIST_DATA_STORAGE
-USE_CULL_LIGHT_LIST_DATA_STORAGE
+USE_FULL_LIGHT_INDEX_DATA_STORAGE
+USE_CULL_LIGHT_INDEX_DATA_STORAGE
 
 // Output
 // ...
@@ -36,7 +36,7 @@ void main()
 	int indexLights[256];
 
 	for (int i = 0; i < numPointLights; i++) {
-		int indexLight = fullLightListData.indexLights[i];
+		int indexLight = fullLightIndexData.indexLights[i];
 
 		vec3 center = (cameraViewMatrix * sceneData.instances[indexLight].center).xyz;
 		float radius = sceneData.instances[indexLight].lightAttenuation.w;
@@ -56,7 +56,7 @@ void main()
 	int offset = atomicAdd(indexLightCount, count);
 
 	for (int i = 0; i < count; i++) {
-		cullLightListData.indexLights[offset + i] = indexLights[i];
+		cullLightIndexData.indexLights[offset + i] = indexLights[i];
 	}
 
 	clusterData.clusters[indexTile].minAABBPosition.w = float(offset);

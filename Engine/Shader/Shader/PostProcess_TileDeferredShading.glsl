@@ -35,10 +35,10 @@ precision highp float;
 
 USE_CAMERA_UNIFORM
 USE_ENGINE_UNIFORM
+USE_DEPTH_TEXTURE_UNIFORM
 USE_SCENE_DATA_STORAGE
 USE_CLUSTER_DATA_STORAGE
-USE_CULL_LIGHT_LIST_DATA_STORAGE
-USE_DEPTH_TEXTURE_UNIFORM
+USE_CULL_LIGHT_INDEX_DATA_STORAGE
 
 #include "lighting.inc"
 
@@ -93,7 +93,7 @@ void main()
 
 	for (int index = 0; index < count; index++)
 	{
-		int indexLight = cullLightListData.indexLights[index + offset];
+		int indexLight = cullLightIndexData.indexLights[index + offset];
 
 		vec3 pointLightPosition = sceneData.instances[indexLight].center.xyz;
 		float pointLightRange = sceneData.instances[indexLight].lightAttenuation.w;

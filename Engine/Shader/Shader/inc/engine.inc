@@ -52,8 +52,8 @@ layout (location = 8)                                      in float inInstanceIn
 #define DESCRIPTOR_BIND_TRANSFER_SCENE_DATA                3
 #define DESCRIPTOR_BIND_TRANSFER_SCENE_DATA_INDEX          4
 #define DESCRIPTOR_BIND_CLUSTER_DATA                       5
-#define DESCRIPTOR_BIND_FULL_LIGHT_LIST_DATA               6
-#define DESCRIPTOR_BIND_CULL_LIGHT_LIST_DATA               7
+#define DESCRIPTOR_BIND_FULL_LIGHT_INDEX_DATA              6
+#define DESCRIPTOR_BIND_CULL_LIGHT_INDEX_DATA              7
 
 // Forward/Deferred
 #define DESCRIPTOR_BIND_COLOR_IMAGE                        8
@@ -166,17 +166,17 @@ layout (location = 8)                                      in float inInstanceIn
 		Cluster clusters[];                                                        \
 	} clusterData;
 
-#define USE_FULL_LIGHT_LIST_DATA_STORAGE                                           \
-	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_FULL_LIGHT_LIST_DATA) buffer FullLightListData \
+#define USE_FULL_LIGHT_INDEX_DATA_STORAGE                                           \
+	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_FULL_LIGHT_INDEX_DATA) buffer FullLightIndexData \
 	{                                                                              \
 		int indexLights[];                                                         \
-	} fullLightListData;
+	} fullLightIndexData;
 
-#define USE_CULL_LIGHT_LIST_DATA_STORAGE                                           \
-	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_CULL_LIGHT_LIST_DATA) buffer CullLightListData \
+#define USE_CULL_LIGHT_INDEX_DATA_STORAGE                                           \
+	DESCRIPTOR_SET_PASS(DESCRIPTOR_BIND_CULL_LIGHT_INDEX_DATA) buffer CullLightIndexData \
 	{                                                                              \
 		int indexLights[];                                                         \
-	} cullLightListData;
+	} cullLightIndexData;
 
 #define HISTOGRAM_SIZE 64
 #define USE_HISTOGRAM_STORAGE                                                      \
