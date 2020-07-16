@@ -49,8 +49,8 @@
 #define STORAGE_TRANSFER_SCENE_DATA_BIND                   3
 #define STORAGE_TRANSFER_SCENE_DATA_INDEX_BIND             4
 #define STORAGE_CLUSTER_DATA_BIND                          5
-#define STORAGE_FULL_LIGHT_LIST_DATA_BIND                  6
-#define STORAGE_CULL_LIGHT_LIST_DATA_BIND                  7
+#define STORAGE_FULL_LIGHT_INDEX_DATA_BIND                 6
+#define STORAGE_CULL_LIGHT_INDEX_DATA_BIND                 7
 
 #define UNIFORM_ENGINE_NAME                                HashValue("Engine")
 #define UNIFORM_CAMERA_NAME                                HashValue("Camera")
@@ -58,8 +58,8 @@
 #define STORAGE_TRANSFER_SCENE_DATA_NAME                   HashValue("TransferSceneData")
 #define STORAGE_TRANSFER_SCENE_DATA_INDEX_NAME             HashValue("TransferSceneDataIndex")
 #define STORAGE_CLUSTER_DATA_NAME                          HashValue("ClusterData")
-#define STORAGE_FULL_LIGHT_LIST_DATA_NAME                  HashValue("FullLightListData")
-#define STORAGE_CULL_LIGHT_LIST_DATA_NAME                  HashValue("CullLightListData")
+#define STORAGE_FULL_LIGHT_INDEX_DATA_NAME                 HashValue("FullLightIndexData")
+#define STORAGE_CULL_LIGHT_INDEX_DATA_NAME                 HashValue("CullLightIndexData")
 
 // Uniform Forward/Deferred
 #define UNIFORM_COLOR_IMAGE_BIND                           8

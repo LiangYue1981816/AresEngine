@@ -73,14 +73,14 @@ CPassTileDeferredShading::CPassTileDeferredShading(CRenderSystem* pRenderSystem)
 		ptrDescriptorLayout->SetSampledImageBinding(UNIFORM_DEPTH_TEXTURE_NAME, UNIFORM_DEPTH_TEXTURE_BIND);
 		ptrDescriptorLayout->SetStorageBlockBinding(STORAGE_SCENE_DATA_NAME, STORAGE_SCENE_DATA_BIND);
 		ptrDescriptorLayout->SetStorageBlockBinding(STORAGE_CLUSTER_DATA_NAME, STORAGE_CLUSTER_DATA_BIND);
-		ptrDescriptorLayout->SetStorageBlockBinding(STORAGE_CULL_LIGHT_LIST_DATA_NAME, STORAGE_CULL_LIGHT_LIST_DATA_BIND);
+		ptrDescriptorLayout->SetStorageBlockBinding(STORAGE_CULL_LIGHT_INDEX_DATA_NAME, STORAGE_CULL_LIGHT_INDEX_DATA_BIND);
 		ptrDescriptorLayout->Create();
 
 		m_ptrDescriptorSetPass_Subpass1 = GfxRenderer()->NewDescriptorSet(HashValueFormat("%x_%p", PASS_TILE_DEFERRED_SHADING_LIGHTING_NAME, this), ptrDescriptorLayout);
 		m_ptrDescriptorSetPass_Subpass1->SetUniformBuffer(UNIFORM_ENGINE_NAME, m_pRenderSystem->GetEngineUniformBuffer(), 0, m_pRenderSystem->GetEngineUniformBuffer()->GetSize());
 		m_ptrDescriptorSetPass_Subpass1->SetStorageBuffer(STORAGE_SCENE_DATA_NAME, m_pRenderSystem->GetInstanceBuffer(), 0, m_pRenderSystem->GetInstanceBuffer()->GetSize());
 		m_ptrDescriptorSetPass_Subpass1->SetStorageBuffer(STORAGE_CLUSTER_DATA_NAME, m_pRenderSystem->GetClusterBuffer(), 0, m_pRenderSystem->GetClusterBuffer()->GetSize());
-		m_ptrDescriptorSetPass_Subpass1->SetStorageBuffer(STORAGE_CULL_LIGHT_LIST_DATA_NAME, m_pRenderSystem->GetCullLightIndexBuffer(), 0, m_pRenderSystem->GetCullLightIndexBuffer()->GetSize());
+		m_ptrDescriptorSetPass_Subpass1->SetStorageBuffer(STORAGE_CULL_LIGHT_INDEX_DATA_NAME, m_pRenderSystem->GetCullLightIndexBuffer(), 0, m_pRenderSystem->GetCullLightIndexBuffer()->GetSize());
 	}
 }
 
