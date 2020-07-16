@@ -85,7 +85,6 @@ void CPassShadow::SetOutputTexture(CGfxRenderTexturePtr ptrDepthTexture)
 void CPassShadow::Render(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer)
 {
 	// Update
-	/*
 	const glm::camera mainCamera = m_pCamera->GetCamera()->GetCamera();
 	const glm::vec4 mainLightDirection = m_pRenderSystem->GetEngineUniform()->GetParams().mainDirectLightDirection * glm::vec4(-1.0f, -1.0f, -1.0f, 0.0f);
 	
@@ -119,20 +118,17 @@ void CPassShadow::Render(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommand
 		const float zNear = -500.0f;
 		glm::sphere sphereFrustum = glm::sphere(minVertex, maxVertex);
 
-		m_pShadowCamera[indexLevel]->SetOrtho(-sphereFrustum.radius, sphereFrustum.radius, -sphereFrustum.radius, sphereFrustum.radius, zNear, zFar);
-		m_pShadowCamera[indexLevel]->SetLookat(sphereFrustum.center.x, sphereFrustum.center.y, sphereFrustum.center.z, sphereFrustum.center.x + mainLightDirection.x, sphereFrustum.center.y + mainLightDirection.y, sphereFrustum.center.z + mainLightDirection.z, 0.0f, 1.0f, 0.0f);
-		SceneManager()->UpdateCamera(taskPool, taskGraph, m_pShadowCamera[indexLevel], m_pShadowRenderQueue[indexLevel], 0xffffffff, false);
-
-		m_pShadowCameraUniform[indexLevel]->SetOrtho(-sphereFrustum.radius, sphereFrustum.radius, -sphereFrustum.radius, sphereFrustum.radius, zNear, zFar);
-		m_pShadowCameraUniform[indexLevel]->SetLookat(sphereFrustum.center.x, sphereFrustum.center.y, sphereFrustum.center.z, sphereFrustum.center.x + mainLightDirection.x, sphereFrustum.center.y + mainLightDirection.y, sphereFrustum.center.z + mainLightDirection.z, 0.0f, 1.0f, 0.0f);
-		m_pShadowCameraUniform[indexLevel]->Apply();
-
 		m_pRenderSystem->GetEngineUniform()->SetMainShadowLevelFactor(m_factor * m_splitFactors[1], m_factor * m_splitFactors[2], m_factor * m_splitFactors[3], m_factor * m_splitFactors[4]);
 		m_pRenderSystem->GetEngineUniform()->SetMainShadowOrtho(indexLevel, -sphereFrustum.radius, sphereFrustum.radius, -sphereFrustum.radius, sphereFrustum.radius, zNear, zFar);
 		m_pRenderSystem->GetEngineUniform()->SetMainShadowLookat(indexLevel, sphereFrustum.center.x, sphereFrustum.center.y, sphereFrustum.center.z, sphereFrustum.center.x + mainLightDirection.x, sphereFrustum.center.y + mainLightDirection.y, sphereFrustum.center.z + mainLightDirection.z, 0.0f, 1.0f, 0.0f);
+
+		m_pShadowCamera[indexLevel]->SetOrtho(-sphereFrustum.radius, sphereFrustum.radius, -sphereFrustum.radius, sphereFrustum.radius, zNear, zFar);
+		m_pShadowCamera[indexLevel]->SetLookat(sphereFrustum.center.x, sphereFrustum.center.y, sphereFrustum.center.z, sphereFrustum.center.x + mainLightDirection.x, sphereFrustum.center.y + mainLightDirection.y, sphereFrustum.center.z + mainLightDirection.z, 0.0f, 1.0f, 0.0f);
+		m_pShadowCamera[indexLevel]->Update(taskPool, taskGraph, 0xffffffff, false);
+		m_pShadowCamera[indexLevel]->Apply();
 	}
 
-	m_pCamera->GetCameraUniform()->Apply();
+	m_pCamera->Apply();
 	m_pRenderSystem->GetEngineUniform()->Apply();
 
 	// Render
@@ -155,12 +151,11 @@ void CPassShadow::Render(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommand
 			const float zfar = 1.0f;
 
 			for (int indexLevel = 0; indexLevel < 4; indexLevel++) {
-				m_pShadowRenderQueue[indexLevel]->CmdDraw(taskPool, taskGraph, ptrCommandBuffer, m_ptrDescriptorSetPass[indexLevel], PASS_SHADOW_NAME, area[indexLevel], area[indexLevel], znear, zfar, 0xffffffff, false);
+				m_pShadowCamera[indexLevel]->GetRenderQueue()->CmdDraw(taskPool, taskGraph, ptrCommandBuffer, m_ptrDescriptorSetPass[indexLevel], PASS_SHADOW_NAME, area[indexLevel], area[indexLevel], znear, zfar, 0xffffffff, false);
 			}
 		}
 		GfxRenderer()->CmdEndRenderPass(ptrCommandBuffer);
 		GfxRenderer()->CmdSetImageLayout(ptrCommandBuffer, m_ptrOutputDepthTexture, GFX_IMAGE_LAYOUT_DEPTH_STENCIL_READ_ONLY_OPTIMAL);
 	}
 	GfxRenderer()->CmdPopDebugGroup(ptrCommandBuffer);
-	*/
 }
