@@ -26,8 +26,10 @@ public:
 
 
 public:
-	Params GetParams(void) const;
-	CGfxCamera* GetCamera(void) const;
+	const Params& GetParams(void) const;
+	const CGfxCamera* GetCamera(void) const;
+
+public:
 	CRenderQueue* GetRenderQueue(void) const;
 
 public:

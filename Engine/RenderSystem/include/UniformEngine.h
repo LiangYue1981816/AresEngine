@@ -50,7 +50,7 @@ public:
 
 
 public:
-	Params GetParams(void) const;
+	const Params& GetParams(void) const;
 
 public:
 	uint32_t GetUniformBufferOffset(void) const;

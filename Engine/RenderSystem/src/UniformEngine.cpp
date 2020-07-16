@@ -140,7 +140,7 @@ CUniformEngine::~CUniformEngine(void)
 
 }
 
-CUniformEngine::Params CUniformEngine::GetParams(void) const
+const CUniformEngine::Params& CUniformEngine::GetParams(void) const
 {
 	return m_params;
 }

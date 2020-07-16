@@ -19,12 +19,12 @@ CCamera::~CCamera(void)
 	delete m_pCamera;
 }
 
-CCamera::Params CCamera::GetParams(void) const
+const CCamera::Params& CCamera::GetParams(void) const
 {
 	return m_params;
 }
 
-CGfxCamera* CCamera::GetCamera(void) const
+const CGfxCamera* CCamera::GetCamera(void) const
 {
 	return m_pCamera;
 }
