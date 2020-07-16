@@ -38,7 +38,6 @@ CPassAutoExposure::CPassAutoExposure(CRenderSystem* pRenderSystem)
 	ptrDescriptorLayout->Create();
 
 	m_ptrDescriptorSetPass = GfxRenderer()->NewDescriptorSet(HashValueFormat("%x_%p", PASS_AUTO_EXPOSURE_NAME, this), ptrDescriptorLayout);
-	m_ptrDescriptorSetPass->SetUniformBuffer(UNIFORM_ENGINE_NAME, m_pRenderSystem->GetEngineUniformBuffer(), 0, m_pRenderSystem->GetEngineUniformBuffer()->GetSize());
 	m_ptrDescriptorSetPass->SetStorageBuffer(STORAGE_HISTOGRAM_DATA_NAME, m_pRenderSystem->GetHistogramBuffer(), 0, m_pRenderSystem->GetHistogramBuffer()->GetSize());
 }
 
@@ -49,20 +48,14 @@ CPassAutoExposure::~CPassAutoExposure(void)
 
 void CPassAutoExposure::SetCamera(CCamera* pCamera)
 {
-	if (m_pCamera != pCamera) {
-		m_pCamera = pCamera;
-		m_ptrDescriptorSetPass->SetUniformBuffer(UNIFORM_CAMERA_NAME, pCamera->GetUniformBuffer(), 0, pCamera->GetUniformBuffer()->GetSize());
-	}
+	m_pCamera = pCamera;
 }
 
 void CPassAutoExposure::SetInputTexture(CGfxRenderTexturePtr ptrColorTexture)
 {
 	CGfxSampler* pSamplerPoint = GfxRenderer()->CreateSampler(GFX_FILTER_NEAREST, GFX_FILTER_NEAREST, GFX_SAMPLER_MIPMAP_MODE_NEAREST, GFX_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE);
-
-	if (m_ptrInputColorTexture != ptrColorTexture) {
-		m_ptrInputColorTexture = ptrColorTexture;
-		m_ptrDescriptorSetPass->SetRenderTexture(UNIFORM_COLOR_TEXTURE_NAME, ptrColorTexture, pSamplerPoint);
-	}
+	m_ptrInputColorTexture = ptrColorTexture;
+	m_ptrDescriptorSetPass->SetRenderTexture(UNIFORM_COLOR_TEXTURE_NAME, ptrColorTexture, pSamplerPoint);
 }
 
 void CPassAutoExposure::SetOutputTexture(CGfxRenderTexturePtr ptrColorTexture)
@@ -95,6 +88,10 @@ void CPassAutoExposure::Render(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxC
 	// Update
 	m_pCamera->Apply();
 	m_pRenderSystem->GetEngineUniform()->Apply();
+
+	// Update DescriptorSet
+	m_ptrDescriptorSetPass->SetUniformBuffer(UNIFORM_CAMERA_NAME, m_pCamera->GetUniformBuffer(), m_pCamera->GetUniformBufferOffset(), m_pCamera->GetUniformBuffer()->GetSize());
+	m_ptrDescriptorSetPass->SetUniformBuffer(UNIFORM_ENGINE_NAME, m_pRenderSystem->GetEngineUniform()->GetUniformBuffer(), m_pRenderSystem->GetEngineUniform()->GetUniformBufferOffset(), m_pRenderSystem->GetEngineUniform()->GetUniformBuffer()->GetSize());
 
 	// Render
 	GfxRenderer()->CmdPushDebugGroup(ptrCommandBuffer, "PassAutoExposure");

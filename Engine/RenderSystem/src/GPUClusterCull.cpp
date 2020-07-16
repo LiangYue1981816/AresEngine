@@ -15,7 +15,12 @@ CGPUClusterCull::CGPUClusterCull(CRenderSystem* pRenderSystem)
 
 	m_pShaderCompute = GfxRenderer()->CreateShader(szBinFileName, compute_shader);
 	m_pPipelineCompute = GfxRenderer()->CreatePipelineCompute(m_pShaderCompute);
+
 	m_ptrDescriptorSet = GfxRenderer()->NewDescriptorSet(HashValue(szFileName), m_pPipelineCompute->GetDescriptorLayout(DESCRIPTOR_SET_PASS));
+	m_ptrDescriptorSet->SetStorageBuffer(STORAGE_SCENE_DATA_NAME, m_pRenderSystem->GetInstanceBuffer(), 0, m_pRenderSystem->GetInstanceBuffer()->GetSize());
+	m_ptrDescriptorSet->SetStorageBuffer(STORAGE_CLUSTER_DATA_NAME, m_pRenderSystem->GetClusterBuffer(), 0, m_pRenderSystem->GetClusterBuffer()->GetSize());
+	m_ptrDescriptorSet->SetStorageBuffer(STORAGE_FULL_LIGHT_INDEX_DATA_NAME, m_pRenderSystem->GetFullLightIndexBuffer(), 0, m_pRenderSystem->GetFullLightIndexBuffer()->GetSize());
+	m_ptrDescriptorSet->SetStorageBuffer(STORAGE_CULL_LIGHT_INDEX_DATA_NAME, m_pRenderSystem->GetCullLightIndexBuffer(), 0, m_pRenderSystem->GetCullLightIndexBuffer()->GetSize());
 }
 
 CGPUClusterCull::~CGPUClusterCull(void)
@@ -35,10 +40,6 @@ void CGPUClusterCull::Compute(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCo
 
 	// Update DescriptorSet
 	m_ptrDescriptorSet->SetUniformBuffer(UNIFORM_CAMERA_NAME, m_pCamera->GetUniformBuffer(), m_pCamera->GetUniformBufferOffset(), m_pCamera->GetUniformBuffer()->GetSize());
-	m_ptrDescriptorSet->SetStorageBuffer(STORAGE_SCENE_DATA_NAME, m_pRenderSystem->GetInstanceBuffer(), 0, m_pRenderSystem->GetInstanceBuffer()->GetSize());
-	m_ptrDescriptorSet->SetStorageBuffer(STORAGE_CLUSTER_DATA_NAME, m_pRenderSystem->GetClusterBuffer(), 0, m_pRenderSystem->GetClusterBuffer()->GetSize());
-	m_ptrDescriptorSet->SetStorageBuffer(STORAGE_FULL_LIGHT_INDEX_DATA_NAME, m_pRenderSystem->GetFullLightIndexBuffer(), 0, m_pRenderSystem->GetFullLightIndexBuffer()->GetSize());
-	m_ptrDescriptorSet->SetStorageBuffer(STORAGE_CULL_LIGHT_INDEX_DATA_NAME, m_pRenderSystem->GetCullLightIndexBuffer(), 0, m_pRenderSystem->GetCullLightIndexBuffer()->GetSize());
 
 	// Update Buffer
 	CGfxMeshPtr ptrMesh = GfxRenderer()->NewMesh("PointLight.mesh", VERTEX_BINDING);

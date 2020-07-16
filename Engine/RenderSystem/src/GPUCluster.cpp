@@ -15,7 +15,9 @@ CGPUCluster::CGPUCluster(CRenderSystem* pRenderSystem)
 
 	m_pShaderCompute = GfxRenderer()->CreateShader(szBinFileName, compute_shader);
 	m_pPipelineCompute = GfxRenderer()->CreatePipelineCompute(m_pShaderCompute);
+
 	m_ptrDescriptorSet = GfxRenderer()->NewDescriptorSet(HashValue(szFileName), m_pPipelineCompute->GetDescriptorLayout(DESCRIPTOR_SET_PASS));
+	m_ptrDescriptorSet->SetStorageBuffer(STORAGE_CLUSTER_DATA_NAME, m_pRenderSystem->GetClusterBuffer(), 0, m_pRenderSystem->GetClusterBuffer()->GetSize());
 }
 
 CGPUCluster::~CGPUCluster(void)
@@ -35,7 +37,6 @@ void CGPUCluster::Compute(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxComman
 
 	// Update DescriptorSet
 	m_ptrDescriptorSet->SetUniformBuffer(UNIFORM_CAMERA_NAME, m_pCamera->GetUniformBuffer(), m_pCamera->GetUniformBufferOffset(), m_pCamera->GetUniformBuffer()->GetSize());
-	m_ptrDescriptorSet->SetStorageBuffer(STORAGE_CLUSTER_DATA_NAME, m_pRenderSystem->GetClusterBuffer(), 0, m_pRenderSystem->GetClusterBuffer()->GetSize());
 
 	// Compute
 	GfxRenderer()->CmdPushDebugGroup(ptrCommandBuffer, "Cluster");
