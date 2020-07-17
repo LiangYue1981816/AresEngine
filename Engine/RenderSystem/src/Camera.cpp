@@ -10,7 +10,7 @@ CCamera::CCamera(void)
 {
 	m_pRenderQueue = new CRenderQueue;
 	m_pCamera = new CGfxCamera;
-	m_ptrUniformBuffer = GfxRenderer()->NewUniformBuffer(CGfxSwapChain::SWAPCHAIN_FRAME_COUNT * sizeof(m_params));
+	m_ptrUniformBuffer = GfxRenderer()->NewUniformBuffer(CGfxSwapChain::SWAPCHAIN_FRAME_COUNT * GfxRenderer()->AlignUniformBufferOffset(sizeof(m_params)));
 }
 
 CCamera::~CCamera(void)
@@ -108,7 +108,7 @@ void CCamera::Apply(void)
 {
 	if (m_bDirty) {
 		m_bDirty = false;
-		m_offset = GfxRenderer()->GetSwapChain()->GetFrameIndex() * sizeof(m_params);
+		m_offset = GfxRenderer()->GetSwapChain()->GetFrameIndex() * GfxRenderer()->AlignUniformBufferOffset(sizeof(m_params));
 		m_ptrUniformBuffer->BufferData(m_offset, sizeof(m_params), &m_params);
 	}
 }
