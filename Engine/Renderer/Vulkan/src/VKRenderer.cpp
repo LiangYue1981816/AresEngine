@@ -107,6 +107,16 @@ bool CVKRenderer::IsSupportExtension(const char* extension) const
 	return false;
 }
 
+uint32_t CVKRenderer::AlignUniformBufferOffset(uint32_t size) const
+{
+	return ALIGN_BYTE(size, m_pDevice->GetPhysicalDeviceLimits().minUniformBufferOffsetAlignment);
+}
+
+uint32_t CVKRenderer::AlignStorageBufferOffset(uint32_t size) const
+{
+	return ALIGN_BYTE(size, m_pDevice->GetPhysicalDeviceLimits().minStorageBufferOffsetAlignment);
+}
+
 CGfxShader* CVKRenderer::CreateShader(const char* szFileName, shader_kind kind)
 {
 	return m_pShaderManager->Create(szFileName, kind);

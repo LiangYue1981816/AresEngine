@@ -103,6 +103,9 @@ public:
 public:
 	virtual bool IsSupportExtension(const char* extension) const = 0;
 
+	virtual uint32_t AlignUniformBufferOffset(uint32_t size) const = 0;
+	virtual uint32_t AlignStorageBufferOffset(uint32_t size) const = 0;
+
 public:
 	virtual CGfxShader* CreateShader(const char* szFileName, shader_kind kind) = 0;
 	virtual CGfxPipelineCompute* CreatePipelineCompute(const CGfxShader* pComputeShader) = 0;

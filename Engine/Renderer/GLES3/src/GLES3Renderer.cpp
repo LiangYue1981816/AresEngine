@@ -108,6 +108,28 @@ bool CGLES3Renderer::IsSupportExtension(const char* extension) const
 	return CGLES3Helper::IsSupportExtension(extension);
 }
 
+uint32_t CGLES3Renderer::AlignUniformBufferOffset(uint32_t size) const
+{
+	static GLint minOffsetAlign = 0;
+
+	if (minOffsetAlign == 0) {
+		glGetIntegerv(GL_UNIFORM_BUFFER_OFFSET_ALIGNMENT, &minOffsetAlign);
+	}
+
+	return ALIGN_BYTE(size, minOffsetAlign);
+}
+
+uint32_t CGLES3Renderer::AlignStorageBufferOffset(uint32_t size) const
+{
+	static GLint minOffsetAlign = 0;
+
+	if (minOffsetAlign == 0) {
+		glGetIntegerv(GL_SHADER_STORAGE_BUFFER_OFFSET_ALIGNMENT, &minOffsetAlign);
+	}
+
+	return ALIGN_BYTE(size, minOffsetAlign);
+}
+
 CGfxShader* CGLES3Renderer::CreateShader(const char* szFileName, shader_kind kind)
 {
 	return m_pShaderManager->Create(szFileName, kind);
