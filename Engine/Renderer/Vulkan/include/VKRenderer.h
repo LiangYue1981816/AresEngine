@@ -101,6 +101,9 @@ public:
 public:
 	bool IsSupportExtension(const char* extension) const;
 
+	uint32_t AlignUniformBufferOffset(uint32_t size) const;
+	uint32_t AlignStorageBufferOffset(uint32_t size) const;
+
 public:
 	CGfxShader* CreateShader(const char* szFileName, shader_kind kind);
 	CGfxPipelineCompute* CreatePipelineCompute(const CGfxShader* pComputeShader);
