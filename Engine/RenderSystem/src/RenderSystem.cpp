@@ -21,6 +21,7 @@ static const ATTRIBUTE instanceAttributes[INSTANCE_ATTRIBUTE_COUNT] = {
 CRenderSystem::CRenderSystem(void)
 	: m_pRenderer(nullptr)
 	, m_pEngineUniform(nullptr)
+	, m_pHistogramStorage(nullptr)
 	, m_pInstanceBufferPool(nullptr)
 
 	, m_pGPUScene(nullptr)
@@ -97,6 +98,7 @@ void CRenderSystem::CreateRenderer(GfxApi api, void* hInstance, void* hWnd, void
 	}
 
 	m_pEngineUniform = new CUniformEngine;
+	m_pHistogramStorage = new CStorageHistogram;
 	m_pInstanceBufferPool = new CInstanceBufferPool;
 }
 
@@ -168,8 +170,6 @@ void CRenderSystem::CreateStorageBuffers(void)
 	m_ptrClusterBuffer = GfxRenderer()->NewStorageBuffer(CLUSTER_WIDTH_TILE_COUNT * CLUSTER_HEIGHT_TILE_COUNT * CLUSTER_DEPTH_TILE_COUNT * 32);
 	m_ptrFullLightIndexBuffer = GfxRenderer()->NewStorageBuffer(MAX_GPUSCENE_INSTANCE_COUNT * sizeof(int));
 	m_ptrCullLightIndexBuffer = GfxRenderer()->NewStorageBuffer(MAX_GPUSCENE_INSTANCE_COUNT * sizeof(int));
-
-	m_ptrHistogramBuffer = GfxRenderer()->NewStorageBuffer(HISTOGRAM_SIZE * sizeof(int));
 }
 
 void CRenderSystem::CreateRenderTextures(void)
@@ -217,6 +217,7 @@ void CRenderSystem::Destroy(void)
 void CRenderSystem::DestroyRenderer(void)
 {
 	delete m_pInstanceBufferPool;
+	delete m_pHistogramStorage;
 	delete m_pEngineUniform;
 	delete m_pRenderer;
 }
@@ -331,6 +332,11 @@ CUniformEngine* CRenderSystem::GetEngineUniform(void) const
 	return m_pEngineUniform;
 }
 
+CStorageHistogram* CRenderSystem::GetHistogramStorage(void) const
+{
+	return m_pHistogramStorage;
+}
+
 const CGfxUniformBufferPtr CRenderSystem::GetEngineUniformBuffer(void) const
 {
 	return m_pEngineUniform->GetUniformBuffer();
@@ -369,11 +375,6 @@ const CGfxStorageBufferPtr CRenderSystem::GetTransferBuffer(void) const
 const CGfxStorageBufferPtr CRenderSystem::GetTransferIndexBuffer(void) const
 {
 	return m_ptrTransferIndexBuffer;
-}
-
-const CGfxStorageBufferPtr CRenderSystem::GetHistogramBuffer(void) const
-{
-	return m_ptrHistogramBuffer;
 }
 
 void CRenderSystem::SetTime(float t, float dt)

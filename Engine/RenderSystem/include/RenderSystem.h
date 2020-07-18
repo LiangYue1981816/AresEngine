@@ -216,6 +216,7 @@ public:
 
 public:
 	CUniformEngine* GetEngineUniform(void) const;
+	CStorageHistogram* GetHistogramStorage(void) const;
 
 	const CGfxUniformBufferPtr GetEngineUniformBuffer(void) const;
 	const CGfxMultiInstanceBufferPtr GetInstanceBuffer(uint32_t instanceFormat, int instanceBinding) const;
@@ -228,8 +229,6 @@ public:
 	const CGfxStorageBufferPtr GetInstanceBuffer(void) const;
 	const CGfxStorageBufferPtr GetTransferBuffer(void) const;
 	const CGfxStorageBufferPtr GetTransferIndexBuffer(void) const;
-
-	const CGfxStorageBufferPtr GetHistogramBuffer(void) const;
 
 public:
 	void SetTime(float t, float dt);
@@ -290,6 +289,7 @@ private:
 private:
 	CGfxRenderer* m_pRenderer;
 	CUniformEngine* m_pEngineUniform;
+	CStorageHistogram* m_pHistogramStorage;
 	CInstanceBufferPool* m_pInstanceBufferPool;
 
 private:
@@ -326,8 +326,6 @@ private:
 	CGfxStorageBufferPtr m_ptrInstanceBuffer;
 	CGfxStorageBufferPtr m_ptrTransferBuffer;
 	CGfxStorageBufferPtr m_ptrTransferIndexBuffer;
-
-	CGfxStorageBufferPtr m_ptrHistogramBuffer;
 
 private:
 	eastl::unordered_map<uint32_t, CGfxRenderTexturePtr> m_ptrRenderTextures;
