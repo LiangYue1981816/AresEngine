@@ -572,10 +572,7 @@ void CVKDescriptorSet::Bind(VkCommandBuffer vkCommandBuffer, VkPipelineBindPoint
 		vkUpdateDescriptorSets(m_pDevice->GetDevice(), writes.size(), writes.data(), 0, nullptr);
 	}
 
-	eastl::vector<uint32_t> offsets;
-	eastl::unordered_map<uint32_t, uint32_t> orderOffsets;
-	offsets.reserve(m_bufferDescriptorInfos.size());
-	orderOffsets.reserve(m_bufferDescriptorInfos.size());
+	eastl::map<uint32_t, uint32_t> orderOffsets;
 
 	for (const auto& itBuffer : m_bufferDescriptorInfos) {
 		if (itBuffer.second.ptrUniformBuffer) {
@@ -586,6 +583,9 @@ void CVKDescriptorSet::Bind(VkCommandBuffer vkCommandBuffer, VkPipelineBindPoint
 			orderOffsets[m_ptrDescriptorLayout->GetStorageBlockBinding(itBuffer.first)] = itBuffer.second.offset;
 		}
 	}
+
+	eastl::vector<uint32_t> offsets;
+	offsets.reserve(orderOffsets.size());
 
 	for (const auto& itOffset : orderOffsets) {
 		offsets.emplace_back(itOffset.second);
