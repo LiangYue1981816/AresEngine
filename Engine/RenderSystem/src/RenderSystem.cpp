@@ -68,8 +68,8 @@ CRenderSystem::CRenderSystem(void)
 	Settings()->SetValue("RenderSystem.AutoExposure.Lower", 0.10f);
 	Settings()->SetValue("RenderSystem.AutoExposure.Upper", 0.90f);
 	Settings()->SetValue("RenderSystem.AutoExposure.Luminance", 0.25f);
-	Settings()->SetValue("RenderSystem.AutoExposure.MinScaleLuminance", 0.25f);
-	Settings()->SetValue("RenderSystem.AutoExposure.MaxScaleLuminance", 1.50f);
+	Settings()->SetValue("RenderSystem.AutoExposure.MinScaleLuminance", 0.20f);
+	Settings()->SetValue("RenderSystem.AutoExposure.MaxScaleLuminance", 2.00f);
 }
 
 CRenderSystem::~CRenderSystem(void)
