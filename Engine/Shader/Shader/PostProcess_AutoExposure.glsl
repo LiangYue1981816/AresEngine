@@ -51,6 +51,8 @@ layout(push_constant) uniform PushConstantParam{
 	float lower;
 	float upper;
 	float luminance;
+	float minScaleLuminance;
+	float maxScaleLuminance;
 } Param;
 
 
@@ -70,6 +72,8 @@ void main()
 	float lower = Param.lower;
 	float upper = Param.upper;
 	float luminance = Param.luminance;
+	float minScaleLuminance = Param.minScaleLuminance;
+	float maxScaleLuminance = Param.maxScaleLuminance;
 
 	vec3 color = UnpackHDR(texture(texColor, inTexcoord));
 
@@ -98,9 +102,12 @@ void main()
 	}
 
 	float averageLuminance = totalLuminance / float(totalCount);
-	float scaleLuminance = luminance / averageLuminance;
+	float scaleLuminance = clamp(luminance / averageLuminance, minScaleLuminance, maxScaleLuminance);
 
-	outFragColor.rgb = color * scaleLuminance;
+	vec3 scaleColor = color * scaleLuminance;
+	vec3 finalColor = mix(color, scaleColor, 0.5);
+
+	outFragColor.rgb = finalColor;
 	outFragColor.a = 1.0;
 }
 #endif

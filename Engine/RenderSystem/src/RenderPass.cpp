@@ -166,6 +166,7 @@ void CRenderSystem::InternalPassEyeAdaptation(CTaskPool& taskPool, CTaskGraph& t
 	m_pPassAutoExposure->SetParamLower(Settings()->GetValue("RenderSystem.AutoExposure.Lower"));
 	m_pPassAutoExposure->SetParamUpper(Settings()->GetValue("RenderSystem.AutoExposure.Upper"));
 	m_pPassAutoExposure->SetParamLuminance(Settings()->GetValue("RenderSystem.AutoExposure.Luminance"));
+	m_pPassAutoExposure->SetParamLuminanceScaleRange(Settings()->GetValue("RenderSystem.AutoExposure.MinScaleLuminance"), Settings()->GetValue("RenderSystem.AutoExposure.MaxScaleLuminance"));
 	m_pPassAutoExposure->Render(taskPool, taskGraph, ptrCommandBuffer);
 }
 

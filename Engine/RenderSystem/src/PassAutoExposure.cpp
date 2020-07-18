@@ -29,6 +29,8 @@ CPassAutoExposure::CPassAutoExposure(CRenderSystem* pRenderSystem)
 	, m_lower(0.10f)
 	, m_upper(0.90f)
 	, m_luminance(0.25f)
+	, m_minScaleLuminance(0.85f)
+	, m_maxScaleLuminance(1.15f)
 {
 	CGfxDescriptorLayoutPtr ptrDescriptorLayout = GfxRenderer()->NewDescriptorLayout(DESCRIPTOR_SET_PASS);
 	ptrDescriptorLayout->SetUniformBlockBinding(UNIFORM_ENGINE_NAME, UNIFORM_ENGINE_BIND);
@@ -85,6 +87,12 @@ void CPassAutoExposure::SetParamLuminance(float luminance)
 	m_luminance = luminance;
 }
 
+void CPassAutoExposure::SetParamLuminanceScaleRange(float minScaleLuminance, float maxScaleLuminance)
+{
+	m_minScaleLuminance = minScaleLuminance;
+	m_maxScaleLuminance = maxScaleLuminance;
+}
+
 void CPassAutoExposure::Render(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer)
 {
 	// Update
@@ -122,4 +130,6 @@ void CPassAutoExposure::RenderCallback(CGfxCommandBufferPtr ptrCommandBuffer)
 	GfxRenderer()->CmdUniform1f(ptrCommandBuffer, HashValue("Param.lower"), m_lower);
 	GfxRenderer()->CmdUniform1f(ptrCommandBuffer, HashValue("Param.upper"), m_upper);
 	GfxRenderer()->CmdUniform1f(ptrCommandBuffer, HashValue("Param.luminance"), m_luminance);
+	GfxRenderer()->CmdUniform1f(ptrCommandBuffer, HashValue("Param.minScaleLuminance"), m_minScaleLuminance);
+	GfxRenderer()->CmdUniform1f(ptrCommandBuffer, HashValue("Param.maxScaleLuminance"), m_maxScaleLuminance);
 }
