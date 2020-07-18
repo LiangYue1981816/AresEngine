@@ -2,6 +2,7 @@
 #include "PreHeader.h"
 
 
+/*
 class CALL_API CUniformEngine
 {
 public:
@@ -95,3 +96,4 @@ private:
 private:
 	CGfxUniformBufferPtr m_ptrUniformBuffer;
 };
+*/
