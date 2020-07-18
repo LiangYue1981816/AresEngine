@@ -67,7 +67,7 @@ CRenderSystem::CRenderSystem(void)
 	Settings()->SetValue("RenderSystem.Bloom.BlurRange.SecondTime", 0.75f);
 	Settings()->SetValue("RenderSystem.AutoExposure.Lower", 0.10f);
 	Settings()->SetValue("RenderSystem.AutoExposure.Upper", 0.90f);
-	Settings()->SetValue("RenderSystem.AutoExposure.Luminance", 0.25f);
+	Settings()->SetValue("RenderSystem.AutoExposure.Luminance", 0.15f);
 	Settings()->SetValue("RenderSystem.AutoExposure.MinScaleLuminance", 0.20f);
 	Settings()->SetValue("RenderSystem.AutoExposure.MaxScaleLuminance", 2.00f);
 }

@@ -28,7 +28,7 @@ CPassAutoExposure::CPassAutoExposure(CRenderSystem* pRenderSystem)
 	: CPassBlit("PassAutoExposure.material", pRenderSystem)
 	, m_lower(0.10f)
 	, m_upper(0.90f)
-	, m_luminance(0.25f)
+	, m_luminance(0.15f)
 	, m_minScaleLuminance(0.20f)
 	, m_maxScaleLuminance(2.00f)
 {
