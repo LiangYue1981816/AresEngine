@@ -25,6 +25,10 @@ void CRenderSystem::RenderTileDeferredShading(CTaskPool& taskPool, CTaskGraph& t
 			{
 				InternalComputeClusterCull(taskPool, taskGraph, ptrComputeCommandBuffer, pCamera);
 			}
+			{
+				uint32_t rtInColors[] = { RENDER_TEXTURE_HISTOGRAM_HDR_COLOR0,RENDER_TEXTURE_HISTOGRAM_HDR_COLOR1,RENDER_TEXTURE_HISTOGRAM_HDR_COLOR2 };
+				InternalComputeEyeHistogram(taskPool, taskGraph, ptrComputeCommandBuffer, rtInColors[GfxRenderer()->GetSwapChain()->GetFrameIndex()]);
+			}
 		}
 		GfxRenderer()->EndRecord(ptrComputeCommandBuffer);
 		GfxRenderer()->Submit(ptrComputeCommandBuffer, pWaitSemaphore);
@@ -70,11 +74,17 @@ void CRenderSystem::RenderTileDeferredShading(CTaskPool& taskPool, CTaskGraph& t
 			}
 			{
 				uint32_t rtInColor = RENDER_TEXTURE_FULL_HDR_COLOR0;
-				uint32_t rtOutColor = RENDER_TEXTURE_FULL_HDR_COLOR1;
-				InternalPassColorGrading(taskPool, taskGraph, ptrGraphicCommandBuffer, pCamera, rtInColor, rtOutColor);
+				uint32_t rtOutEyeAdaptation = RENDER_TEXTURE_FULL_HDR_COLOR1;
+				uint32_t rtOutDownSamples[] = { RENDER_TEXTURE_HISTOGRAM_HDR_COLOR0,RENDER_TEXTURE_HISTOGRAM_HDR_COLOR1,RENDER_TEXTURE_HISTOGRAM_HDR_COLOR2 };
+				InternalPassEyeAdaptation(taskPool, taskGraph, ptrGraphicCommandBuffer, pCamera, rtInColor, rtOutEyeAdaptation, rtOutDownSamples[GfxRenderer()->GetSwapChain()->GetFrameIndex()]);
 			}
 			{
 				uint32_t rtInColor = RENDER_TEXTURE_FULL_HDR_COLOR1;
+				uint32_t rtOutColor = RENDER_TEXTURE_FULL_HDR_COLOR0;
+				InternalPassColorGrading(taskPool, taskGraph, ptrGraphicCommandBuffer, pCamera, rtInColor, rtOutColor);
+			}
+			{
+				uint32_t rtInColor = RENDER_TEXTURE_FULL_HDR_COLOR0;
 				InternalPassFinal(taskPool, taskGraph, ptrGraphicCommandBuffer, pCamera, rtInColor, bPresent);
 			}
 		}
