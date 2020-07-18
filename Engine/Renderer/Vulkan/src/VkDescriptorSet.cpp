@@ -356,7 +356,7 @@ static VkWriteDescriptorSet StorageBufferWriteDescriptorSet(VkDescriptorSet dstS
 	write.dstBinding = dstBinding;
 	write.dstArrayElement = 0;
 	write.descriptorCount = 1;
-	write.descriptorType = VK_DESCRIPTOR_TYPE_STORAGE_BUFFER;
+	write.descriptorType = VK_DESCRIPTOR_TYPE_STORAGE_BUFFER_DYNAMIC;
 	write.pImageInfo = nullptr;
 	write.pBufferInfo = pBufferInfo;
 	write.pTexelBufferView = nullptr;

@@ -33,20 +33,22 @@ bool CVKDescriptorPool::Create(void)
 {
 	m_numSets = numMaxSets;
 	m_numDescriptors[VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER] = numUniformBuffers;
+	m_numDescriptors[VK_DESCRIPTOR_TYPE_STORAGE_BUFFER] = numStorageBuffers;
 	m_numDescriptors[VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER_DYNAMIC] = numUniformBuffers;
+	m_numDescriptors[VK_DESCRIPTOR_TYPE_STORAGE_BUFFER_DYNAMIC] = numStorageBuffers;
 	m_numDescriptors[VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER] = numCombinedImageSamplers;
 	m_numDescriptors[VK_DESCRIPTOR_TYPE_STORAGE_IMAGE] = numStorageImages;
-	m_numDescriptors[VK_DESCRIPTOR_TYPE_STORAGE_BUFFER] = numStorageBuffers;
 	m_numDescriptors[VK_DESCRIPTOR_TYPE_STORAGE_TEXEL_BUFFER] = numStorageTexelBuffers;
 	m_numDescriptors[VK_DESCRIPTOR_TYPE_UNIFORM_TEXEL_BUFFER] = numUniformTexelBuffers;
 	m_numDescriptors[VK_DESCRIPTOR_TYPE_INPUT_ATTACHMENT] = numInputAttachments;
 
 	VkDescriptorPoolSize poolSizes[] = {
 		{ VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, m_numDescriptors[VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER] },
+		{ VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, m_numDescriptors[VK_DESCRIPTOR_TYPE_STORAGE_BUFFER] },
 		{ VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER_DYNAMIC, m_numDescriptors[VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER_DYNAMIC] },
+		{ VK_DESCRIPTOR_TYPE_STORAGE_BUFFER_DYNAMIC, m_numDescriptors[VK_DESCRIPTOR_TYPE_STORAGE_BUFFER_DYNAMIC] },
 		{ VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, m_numDescriptors[VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER] },
 		{ VK_DESCRIPTOR_TYPE_STORAGE_IMAGE, m_numDescriptors[VK_DESCRIPTOR_TYPE_STORAGE_IMAGE] },
-		{ VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, m_numDescriptors[VK_DESCRIPTOR_TYPE_STORAGE_BUFFER] },
 		{ VK_DESCRIPTOR_TYPE_STORAGE_TEXEL_BUFFER, m_numDescriptors[VK_DESCRIPTOR_TYPE_STORAGE_TEXEL_BUFFER] },
 		{ VK_DESCRIPTOR_TYPE_UNIFORM_TEXEL_BUFFER, m_numDescriptors[VK_DESCRIPTOR_TYPE_UNIFORM_TEXEL_BUFFER] },
 		{ VK_DESCRIPTOR_TYPE_INPUT_ATTACHMENT, m_numDescriptors[VK_DESCRIPTOR_TYPE_INPUT_ATTACHMENT] },
@@ -156,10 +158,11 @@ bool CVKDescriptorPool::FreeDescriptorSet(CVKDescriptorSet* pDescriptorSet)
 	if (m_pDescriptorSets.empty()) {
 		m_numSets = numMaxSets;
 		m_numDescriptors[VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER] = numUniformBuffers;
+		m_numDescriptors[VK_DESCRIPTOR_TYPE_STORAGE_BUFFER] = numStorageBuffers;
 		m_numDescriptors[VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER_DYNAMIC] = numUniformBuffers;
+		m_numDescriptors[VK_DESCRIPTOR_TYPE_STORAGE_BUFFER_DYNAMIC] = numStorageBuffers;
 		m_numDescriptors[VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER] = numCombinedImageSamplers;
 		m_numDescriptors[VK_DESCRIPTOR_TYPE_STORAGE_IMAGE] = numStorageImages;
-		m_numDescriptors[VK_DESCRIPTOR_TYPE_STORAGE_BUFFER] = numStorageBuffers;
 		m_numDescriptors[VK_DESCRIPTOR_TYPE_STORAGE_TEXEL_BUFFER] = numStorageTexelBuffers;
 		m_numDescriptors[VK_DESCRIPTOR_TYPE_UNIFORM_TEXEL_BUFFER] = numUniformTexelBuffers;
 		m_numDescriptors[VK_DESCRIPTOR_TYPE_INPUT_ATTACHMENT] = numInputAttachments;
