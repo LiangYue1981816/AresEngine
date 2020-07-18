@@ -38,7 +38,6 @@ CPassAutoExposure::CPassAutoExposure(CRenderSystem* pRenderSystem)
 	ptrDescriptorLayout->Create();
 
 	m_ptrDescriptorSetPass = GfxRenderer()->NewDescriptorSet(HashValueFormat("%x_%p", PASS_AUTO_EXPOSURE_NAME, this), ptrDescriptorLayout);
-	m_ptrDescriptorSetPass->SetStorageBuffer(STORAGE_HISTOGRAM_DATA_NAME, m_pRenderSystem->GetHistogramBuffer(), 0, m_pRenderSystem->GetHistogramBuffer()->GetSize());
 }
 
 CPassAutoExposure::~CPassAutoExposure(void)
@@ -95,6 +94,7 @@ void CPassAutoExposure::Render(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxC
 	// Update DescriptorSet
 	m_ptrDescriptorSetPass->SetUniformBuffer(UNIFORM_CAMERA_NAME, m_pCamera->GetUniformBuffer(), m_pCamera->GetUniformBufferOffset(), m_pCamera->GetUniformBufferSize());
 	m_ptrDescriptorSetPass->SetUniformBuffer(UNIFORM_ENGINE_NAME, m_pRenderSystem->GetEngineUniform()->GetUniformBuffer(), m_pRenderSystem->GetEngineUniform()->GetUniformBufferOffset(), m_pRenderSystem->GetEngineUniform()->GetUniformBufferSize());
+	m_ptrDescriptorSetPass->SetStorageBuffer(STORAGE_HISTOGRAM_DATA_NAME, m_pRenderSystem->GetHistogramStorage()->GetStorageBuffer(), m_pRenderSystem->GetHistogramStorage()->GetStorageBufferOffset(), m_pRenderSystem->GetHistogramStorage()->GetStorageBufferSize());
 
 	// Render
 	GfxRenderer()->CmdPushDebugGroup(ptrCommandBuffer, "PassAutoExposure");
