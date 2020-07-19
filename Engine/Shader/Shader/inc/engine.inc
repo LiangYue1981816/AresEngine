@@ -56,8 +56,7 @@ layout (location = 8)                                      in float inInstanceIn
 #define DESCRIPTOR_BIND_CULL_LIGHT_INDEX_DATA              7
 
 // Forward/Deferred
-#define DESCRIPTOR_BIND_COLOR_IMAGE                        8
-
+#define DESCRIPTOR_BIND_COLOR_IMAGE                        4
 #define DESCRIPTOR_BIND_DEPTH_TEXTURE                      8
 #define DESCRIPTOR_BIND_COLOR_TEXTURE                      9
 #define DESCRIPTOR_BIND_GBUFFERA_TEXTURE                   10

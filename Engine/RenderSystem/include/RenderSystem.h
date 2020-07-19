@@ -62,7 +62,7 @@
 #define STORAGE_CULL_LIGHT_INDEX_DATA_NAME                 HashValue("CullLightIndexData")
 
 // Uniform Forward/Deferred
-#define UNIFORM_COLOR_IMAGE_BIND                           8
+#define UNIFORM_COLOR_IMAGE_BIND                           4
 #define UNIFORM_DEPTH_TEXTURE_BIND                         8
 #define UNIFORM_COLOR_TEXTURE_BIND                         9
 #define UNIFORM_GBUFFER0_TEXTURE_BIND                      10
