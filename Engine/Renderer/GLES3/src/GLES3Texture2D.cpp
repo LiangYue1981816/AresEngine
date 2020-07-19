@@ -74,3 +74,8 @@ void CGLES3Texture2D::Bind(uint32_t unit) const
 {
 	m_pTexture->Bind(unit);
 }
+
+void CGLES3Texture2D::BindImageTexture(uint32_t unit, int level) const
+{
+	m_pTexture->BindImageTexture(unit, level, -1);
+}

@@ -70,3 +70,8 @@ void CGLES3RenderTexture::Bind(uint32_t unit) const
 {
 	m_pTexture->Bind(unit);
 }
+
+void CGLES3RenderTexture::BindImageTexture(uint32_t unit) const
+{
+	m_pTexture->BindImageTexture(unit, 0, -1);
+}
