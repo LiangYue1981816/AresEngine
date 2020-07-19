@@ -976,7 +976,6 @@ void GLBindImageTexture(GLuint unit, GLuint texture, GLint level, GLint layer, G
 		Images[unit].layer = layer;
 		Images[unit].access = access;
 		Images[unit].format = format;
-		glActiveTexture(GL_TEXTURE0 + unit);
 		glBindImageTexture(unit, texture, level, layer != GL_INVALID_VALUE ? GL_TRUE : GL_FALSE, layer, access, format);
 	}
 }
