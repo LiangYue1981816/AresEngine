@@ -347,7 +347,27 @@ bool CGLES3Pipeline::BindDescriptorSet(const CGfxDescriptorSetPtr ptrDescriptorS
 	}
 
 	for (const auto& itStorageImage : m_storageImageBindings) {
+		if (const DescriptorImageInfo* pDescriptorImageInfo = ptrDescriptorSet->GetDescriptorImageInfo(itStorageImage.first)) {
+			if (pDescriptorImageInfo->ptrImage2D) {
+				((CGLES3Texture2D*)pDescriptorImageInfo->ptrImage2D.GetPointer())->BindImageTexture(itStorageImage.second, pDescriptorImageInfo->level);
+				continue;
+			}
 
+			if (pDescriptorImageInfo->ptrImage2DArray) {
+				((CGLES3Texture2DArray*)pDescriptorImageInfo->ptrImage2DArray.GetPointer())->BindImageTexture(itStorageImage.second, pDescriptorImageInfo->level, pDescriptorImageInfo->layer);
+				continue;
+			}
+
+			if (pDescriptorImageInfo->ptrImageCubemap) {
+				((CGLES3TextureCubemap*)pDescriptorImageInfo->ptrImageCubemap.GetPointer())->BindImageTexture(itStorageImage.second, pDescriptorImageInfo->level, pDescriptorImageInfo->layer);
+				continue;
+			}
+
+			if (pDescriptorImageInfo->ptrImageRenderTexture) {
+				((CGLES3RenderTexture*)pDescriptorImageInfo->ptrImageRenderTexture.GetPointer())->BindImageTexture(itStorageImage.second);
+				continue;
+			}
+		}
 	}
 
 	for (const auto& itSampledImage : m_sampledImageBindings) {
