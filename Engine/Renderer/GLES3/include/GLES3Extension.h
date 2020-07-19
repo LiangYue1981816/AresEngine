@@ -55,6 +55,7 @@ extern void GLBindBufferRange(GLenum target, GLuint index, GLuint buffer, GLint 
 
 extern void GLBindSampler(GLuint unit, GLuint sampler);
 extern void GLBindTexture(GLuint unit, GLenum target, GLuint texture);
+extern void GLBindImageTexture(GLuint unit, GLuint texture, GLint level, GLint layer, GLenum access, GLenum format);
 
 extern void GLBindFramebuffer(GLenum target, GLuint framebuffer);
 extern void GLBindFramebufferTexture2D(GLenum target, GLenum attachment, GLenum textarget, GLuint texture, GLint level);

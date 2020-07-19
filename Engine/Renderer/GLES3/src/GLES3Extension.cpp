@@ -417,6 +417,23 @@ typedef struct TextureParam {
 	uint32_t texture;
 } TextureParam;
 
+typedef struct ImageParam {
+	void Reset(void)
+	{
+		texture = GL_INVALID_VALUE;
+		level = GL_INVALID_VALUE;
+		layer = GL_INVALID_VALUE;
+		access = GL_INVALID_VALUE;
+		format = GL_INVALID_VALUE;
+	}
+
+	uint32_t texture;
+	uint32_t level;
+	uint32_t layer;
+	uint32_t access;
+	uint32_t format;
+} ImageParam;
+
 static ScissorParam Scissor;
 static ViewportParam Viewport;
 static ClearColorParam ClearColor;
@@ -450,6 +467,7 @@ static eastl::unordered_map<GLenum, BufferRangeParam> BufferRanges;
 static eastl::unordered_map<GLenum, FrameBufferParam> FrameBuffers;
 static eastl::unordered_map<GLuint, GLuint> Samplers;
 static eastl::unordered_map<GLuint, TextureParam> Textures;
+static eastl::unordered_map<GLuint, ImageParam> Images;
 
 void GLResetContext(void)
 {
@@ -486,6 +504,7 @@ void GLResetContext(void)
 	FrameBuffers.clear();
 	Samplers.clear();
 	Textures.clear();
+	Images.clear();
 }
 
 void GLEnable(GLenum cap)
@@ -946,6 +965,19 @@ void GLBindTexture(GLuint unit, GLenum target, GLuint texture)
 		Textures[unit].texture = texture;
 		glActiveTexture(GL_TEXTURE0 + unit);
 		glBindTexture(target, texture);
+	}
+}
+
+void GLBindImageTexture(GLuint unit, GLuint texture, GLint level, GLint layer, GLenum access, GLenum format)
+{
+	if (Images.find(unit) == Images.end() || Images[unit].texture != texture || Images[unit].level != level || Images[unit].layer != layer || Images[unit].access != access || Images[unit].format != format) {
+		Images[unit].texture = texture;
+		Images[unit].level = level;
+		Images[unit].layer = layer;
+		Images[unit].access = access;
+		Images[unit].format = format;
+		glActiveTexture(GL_TEXTURE0 + unit);
+		glBindImageTexture(unit, texture, level, layer != GL_INVALID_VALUE ? GL_TRUE : GL_FALSE, layer, access, format);
 	}
 }
 
