@@ -46,7 +46,7 @@ private:
 
 private:
 	void Bind(uint32_t unit) const;
-	void BindImageTexture(uint32_t unit, int level, int layer, uint32_t access) const;
+	void BindImageTexture(uint32_t unit, int level, int layer) const;
 
 
 private:

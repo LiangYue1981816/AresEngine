@@ -336,7 +336,7 @@ void CGLES3Texture::Bind(uint32_t unit) const
 	CHECK_GL_ERROR_ASSERT();
 }
 
-void CGLES3Texture::BindImageTexture(uint32_t unit, int level, int layer, uint32_t access) const
+void CGLES3Texture::BindImageTexture(uint32_t unit, int level, int layer) const
 {
 	ASSERT(m_target);
 	ASSERT(m_texture);
@@ -346,6 +346,6 @@ void CGLES3Texture::BindImageTexture(uint32_t unit, int level, int layer, uint32
 	gli::gl GL(gli::gl::PROFILE_ES30);
 	gli::gl::format glFormat = GL.translate((gli::format)m_format);
 
-	GLBindImageTexture(unit, m_texture, level, layer, access, glFormat.Internal);
+	GLBindImageTexture(unit, m_texture, level, layer, GL_READ_WRITE, glFormat.Internal);
 	CHECK_GL_ERROR_ASSERT();
 }
