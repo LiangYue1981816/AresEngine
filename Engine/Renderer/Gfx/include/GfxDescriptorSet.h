@@ -52,11 +52,12 @@ typedef struct DescriptorImageInfo {
 		binding = INVALID_VALUE;
 	}
 
-	void SetImage2D(uint32_t _binding, CGfxTexture2DPtr _ptrImage)
+	void SetImage2D(uint32_t _binding, CGfxTexture2DPtr _ptrImage, uint32_t _level)
 	{
-		if (binding != _binding || ptrImage2D != _ptrImage) {
+		if (binding != _binding || ptrImage2D != _ptrImage || level != _level) {
 			bDirty = true;
 			binding = _binding;
+			level = _level;
 			ptrImage2D = _ptrImage;
 		}
 
@@ -71,11 +72,13 @@ typedef struct DescriptorImageInfo {
 		ptrInputAttachmentTexture.Release();
 	}
 
-	void SetImage2DArray(uint32_t _binding, CGfxTexture2DArrayPtr _ptrImage)
+	void SetImage2DArray(uint32_t _binding, CGfxTexture2DArrayPtr _ptrImage, uint32_t _level, uint32_t _layer)
 	{
-		if (binding != _binding || ptrImage2DArray != _ptrImage) {
+		if (binding != _binding || ptrImage2DArray != _ptrImage || level != _level || layer != _layer) {
 			bDirty = true;
 			binding = _binding;
+			level = _level;
+			layer = _layer;
 			ptrImage2DArray = _ptrImage;
 		}
 
@@ -90,11 +93,13 @@ typedef struct DescriptorImageInfo {
 		ptrInputAttachmentTexture.Release();
 	}
 
-	void SetImageCubemap(uint32_t _binding, CGfxTextureCubemapPtr _ptrImage)
+	void SetImageCubemap(uint32_t _binding, CGfxTextureCubemapPtr _ptrImage, uint32_t _level, uint32_t _layer)
 	{
-		if (binding != _binding || ptrImageCubemap != _ptrImage) {
+		if (binding != _binding || ptrImageCubemap != _ptrImage || level != _level || layer != _layer) {
 			bDirty = true;
 			binding = _binding;
+			level = _level;
+			layer = _layer;
 			ptrImageCubemap = _ptrImage;
 		}
 
@@ -225,6 +230,8 @@ typedef struct DescriptorImageInfo {
 
 	bool bDirty;
 	uint32_t binding;
+	uint32_t level;
+	uint32_t layer;
 	CGfxSampler* pSampler;
 	CGfxTexture2DPtr ptrImage2D;
 	CGfxTexture2DArrayPtr ptrImage2DArray;
@@ -259,9 +266,9 @@ public:
 public:
 	virtual bool SetUniformBuffer(uint32_t name, const CGfxUniformBufferPtr ptrBuffer, uint32_t offset, uint32_t range) = 0;
 	virtual bool SetStorageBuffer(uint32_t name, const CGfxStorageBufferPtr ptrBuffer, uint32_t offset, uint32_t range) = 0;
-	virtual bool SetImage2D(uint32_t name, const CGfxTexture2DPtr ptrImage) = 0;
-	virtual bool SetImage2DArray(uint32_t name, const CGfxTexture2DArrayPtr ptrImage) = 0;
-	virtual bool SetImageCubemap(uint32_t name, const CGfxTextureCubemapPtr ptrImage) = 0;
+	virtual bool SetImage2D(uint32_t name, const CGfxTexture2DPtr ptrImage, uint32_t level) = 0;
+	virtual bool SetImage2DArray(uint32_t name, const CGfxTexture2DArrayPtr ptrImage, uint32_t level, uint32_t layer) = 0;
+	virtual bool SetImageCubemap(uint32_t name, const CGfxTextureCubemapPtr ptrImage, uint32_t level, uint32_t layer) = 0;
 	virtual bool SetImageRenderTexture(uint32_t name, const CGfxRenderTexturePtr ptrImage) = 0;
 	virtual bool SetTexture2D(uint32_t name, const CGfxTexture2DPtr ptrTexture, const CGfxSampler* pSampler) = 0;
 	virtual bool SetTexture2DArray(uint32_t name, const CGfxTexture2DArrayPtr ptrTexture, const CGfxSampler* pSampler) = 0;
