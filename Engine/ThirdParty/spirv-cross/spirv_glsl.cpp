@@ -11139,7 +11139,7 @@ const char *CompilerGLSL::flags_to_qualifiers_glsl(const SPIRType &type, const B
 	else
 		return "";
 	/*/
-	return "";
+	return "highp ";
 	//*/
 }
 
