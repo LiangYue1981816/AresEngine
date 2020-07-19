@@ -258,7 +258,11 @@ void CGLES3Pipeline::SetStorageBlockBinding(const char* szName, uint32_t binding
 
 void CGLES3Pipeline::SetStorageImageBinding(const char* szName, uint32_t binding)
 {
+	uint32_t name = HashValue(szName);
 
+	if (m_storageImageBindings.find(name) == m_storageImageBindings.end()) {
+		m_storageImageBindings[name] = binding;
+	}
 }
 
 void CGLES3Pipeline::SetSampledImageBinding(const char* szName)
