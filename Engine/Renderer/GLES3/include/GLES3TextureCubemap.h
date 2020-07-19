@@ -31,6 +31,7 @@ public:
 
 public:
 	void Bind(uint32_t unit) const;
+	void BindImageTexture(uint32_t unit, int level, int layer) const;
 
 
 private:

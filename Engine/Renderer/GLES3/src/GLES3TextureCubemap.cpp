@@ -68,3 +68,8 @@ void CGLES3TextureCubemap::Bind(uint32_t unit) const
 {
 	m_pTexture->Bind(unit);
 }
+
+void CGLES3TextureCubemap::BindImageTexture(uint32_t unit, int level, int layer) const
+{
+	m_pTexture->BindImageTexture(unit, level, layer);
+}
