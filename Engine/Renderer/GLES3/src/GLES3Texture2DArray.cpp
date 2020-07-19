@@ -73,3 +73,8 @@ void CGLES3Texture2DArray::Bind(uint32_t unit) const
 {
 	m_pTexture->Bind(unit);
 }
+
+void CGLES3Texture2DArray::BindImageTexture(uint32_t unit, int level, int layer) const
+{
+	m_pTexture->BindImageTexture(unit, level, layer);
+}
