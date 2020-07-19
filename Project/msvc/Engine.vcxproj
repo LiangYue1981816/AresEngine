@@ -550,11 +550,15 @@
     <ClInclude Include="..\..\Engine\ThirdParty\rttr\visitor.h" />
     <ClInclude Include="..\..\Engine\ThirdParty\rttr\wrapper_mapper.h" />
     <ClInclude Include="..\..\Engine\ThirdParty\spirv-cross\GLSL.std.450.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\spirv-cross\spirv.h" />
     <ClInclude Include="..\..\Engine\ThirdParty\spirv-cross\spirv.hpp" />
     <ClInclude Include="..\..\Engine\ThirdParty\spirv-cross\spirv_cfg.hpp" />
     <ClInclude Include="..\..\Engine\ThirdParty\spirv-cross\spirv_common.hpp" />
     <ClInclude Include="..\..\Engine\ThirdParty\spirv-cross\spirv_cpp.hpp" />
     <ClInclude Include="..\..\Engine\ThirdParty\spirv-cross\spirv_cross.hpp" />
+    <ClInclude Include="..\..\Engine\ThirdParty\spirv-cross\spirv_cross_c.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\spirv-cross\spirv_cross_containers.hpp" />
+    <ClInclude Include="..\..\Engine\ThirdParty\spirv-cross\spirv_cross_error_handling.hpp" />
     <ClInclude Include="..\..\Engine\ThirdParty\spirv-cross\spirv_cross_parsed_ir.hpp" />
     <ClInclude Include="..\..\Engine\ThirdParty\spirv-cross\spirv_cross_util.hpp" />
     <ClInclude Include="..\..\Engine\ThirdParty\spirv-cross\spirv_glsl.hpp" />
@@ -826,6 +830,7 @@
     <ClCompile Include="..\..\Engine\ThirdParty\spirv-cross\spirv_cfg.cpp" />
     <ClCompile Include="..\..\Engine\ThirdParty\spirv-cross\spirv_cpp.cpp" />
     <ClCompile Include="..\..\Engine\ThirdParty\spirv-cross\spirv_cross.cpp" />
+    <ClCompile Include="..\..\Engine\ThirdParty\spirv-cross\spirv_cross_c.cpp" />
     <ClCompile Include="..\..\Engine\ThirdParty\spirv-cross\spirv_cross_parsed_ir.cpp" />
     <ClCompile Include="..\..\Engine\ThirdParty\spirv-cross\spirv_cross_util.cpp" />
     <ClCompile Include="..\..\Engine\ThirdParty\spirv-cross\spirv_glsl.cpp" />

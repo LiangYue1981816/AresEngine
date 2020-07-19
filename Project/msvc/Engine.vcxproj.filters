@@ -1683,6 +1683,18 @@
     <ClInclude Include="..\..\Engine\RenderSystem\include\StorageHistogram.h">
       <Filter>Engine\RenderSystem\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\spirv-cross\spirv.h">
+      <Filter>ThirdParty\spirv-cross</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\spirv-cross\spirv_cross_c.h">
+      <Filter>ThirdParty\spirv-cross</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\spirv-cross\spirv_cross_containers.hpp">
+      <Filter>ThirdParty\spirv-cross</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\spirv-cross\spirv_cross_error_handling.hpp">
+      <Filter>ThirdParty\spirv-cross</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Engine\ThirdParty\eastl\source\allocator_eastl.cpp">
@@ -2479,6 +2491,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Engine\RenderSystem\src\StorageHistogram.cpp">
       <Filter>Engine\RenderSystem\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\spirv-cross\spirv_cross_c.cpp">
+      <Filter>ThirdParty\spirv-cross</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
