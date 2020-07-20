@@ -980,6 +980,34 @@ void GLBindImageTexture(GLuint unit, GLuint texture, GLint level, GLint layer, G
 	}
 }
 
+void GLInitFramebuffer(GLuint framebuffer)
+{
+	const uint32_t targets[3] = { GL_DRAW_FRAMEBUFFER, GL_READ_FRAMEBUFFER, GL_FRAMEBUFFER };
+
+	for (int indexTarget = 0; indexTarget < 3; indexTarget++) {
+		const uint32_t target = targets[indexTarget];
+		const auto &itFrameBufferAttachment = FrameBuffers[target].attachments.find(framebuffer);
+		const auto &itFrameBufferDraw = FrameBuffers[target].drawbuffers.find(framebuffer);
+		const auto &itFrameBufferRead = FrameBuffers[target].readbuffers.find(framebuffer);
+
+		if (FrameBuffers[target].framebuffer == framebuffer) {
+			FrameBuffers[target].framebuffer = 0;
+		}
+
+		if (itFrameBufferAttachment != FrameBuffers[target].attachments.end()) {
+			FrameBuffers[target].attachments.erase(itFrameBufferAttachment);
+		}
+
+		if (itFrameBufferDraw != FrameBuffers[target].drawbuffers.end()) {
+			FrameBuffers[target].drawbuffers.erase(itFrameBufferDraw);
+		}
+
+		if (itFrameBufferRead != FrameBuffers[target].readbuffers.end()) {
+			FrameBuffers[target].readbuffers.erase(itFrameBufferRead);
+		}
+	}
+}
+
 void GLBindFramebuffer(GLenum target, GLuint framebuffer)
 {
 	switch ((int)target) {

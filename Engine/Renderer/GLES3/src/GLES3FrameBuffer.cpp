@@ -45,6 +45,9 @@ bool CGLES3FrameBuffer::Create(const CGfxRenderPassPtr ptrRenderPass)
 	glGenFramebuffers(1, &m_resolve);
 	CHECK_GL_ERROR_ASSERT();
 
+	GLInitFramebuffer(m_fbo);
+	GLInitFramebuffer(m_resolve);
+
 	return true;
 }
 
