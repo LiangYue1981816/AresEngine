@@ -62,7 +62,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>GLES_VER=310;GLM_FORCE_AVX2;GLM_FORCE_DEPTH_ZERO_TO_ONE;MEMORY_ALLOCATOR;PLATFORM_WINDOWS;VK_USE_PLATFORM_WIN32_KHR;__LP64__;_WINDOWS;_LIB;NDEBUG;HAVE_EASTL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(VULKAN_SDK)/include;$(VULKAN_SDK)/include/spirv-tools;../../Engine;../../Engine/ThirdParty;../../Engine/ThirdParty/eastl;../../Engine/ThirdParty/es;../../Engine/ThirdParty/event;../../Engine/ThirdParty/gl3w;../../Engine/ThirdParty/gli;../../Engine/ThirdParty/glm;../../Engine/ThirdParty/glslc;../../Engine/ThirdParty/lodepng;../../Engine/ThirdParty/pthread/include;../../Engine/ThirdParty/pthreadex;../../Engine/ThirdParty/rbtree;../../Engine/ThirdParty/spirv-cross;../../Engine/ThirdParty/tinyxml;../../Engine/ThirdParty/zlib;../../Engine/ThirdParty/shaderc-2019.0/libshaderc/include;../../Engine/ThirdParty/shaderc-2019.0/libshaderc_util/include;../../Engine/Base/include;../../Engine/Memory/include;../../Engine/Renderer/Gfx/include;../../Engine/Renderer/GLES3/include;../../Engine/Renderer/Vulkan/include;../../Engine/Renderer/Compiler/include;../../Engine/RenderSystem/include;../../Engine/Resource/include;../../Engine/Scene/include;../../Engine/Engine/include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(VULKAN_SDK)/include;$(VULKAN_SDK)/include/spirv-tools;../../Engine;../../Engine/ThirdParty;../../Engine/ThirdParty/eastl;../../Engine/ThirdParty/es;../../Engine/ThirdParty/event;../../Engine/ThirdParty/gl3w;../../Engine/ThirdParty/glfw\include;../../Engine/ThirdParty/gli;../../Engine/ThirdParty/glm;../../Engine/ThirdParty/glslc;../../Engine/ThirdParty/imgui;../../Engine/ThirdParty/lodepng;../../Engine/ThirdParty/pthread/include;../../Engine/ThirdParty/pthreadex;../../Engine/ThirdParty/rbtree;../../Engine/ThirdParty/spirv-cross;../../Engine/ThirdParty/tinyxml;../../Engine/ThirdParty/zlib;../../Engine/ThirdParty/shaderc-2019.0/libshaderc/include;../../Engine/ThirdParty/shaderc-2019.0/libshaderc_util/include;../../Engine/Base/include;../../Engine/Memory/include;../../Engine/Renderer/Gfx/include;../../Engine/Renderer/GLES3/include;../../Engine/Renderer/Vulkan/include;../../Engine/Renderer/Compiler/include;../../Engine/RenderSystem/include;../../Engine/Resource/include;../../Engine/Scene/include;../../Engine/Engine/include</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <DisableSpecificWarnings>4996;4312;4267;4251;4244;4311;4302</DisableSpecificWarnings>
@@ -77,10 +77,10 @@
       <AdditionalDependencies>vulkan-1.lib;shaderc_combined.lib;pthreadVC2.lib;opengl32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Lib>
-      <AdditionalDependencies>vulkan-1.lib;shaderc_combined.lib;opengl32.lib;pthreadVC2.lib;</AdditionalDependencies>
+      <AdditionalDependencies>vulkan-1.lib;shaderc_combined.lib;opengl32.lib;glfw3.lib;pthreadVC2.lib;</AdditionalDependencies>
     </Lib>
     <Lib>
-      <AdditionalLibraryDirectories>$(VULKAN_SDK)/Lib;../../Engine/ThirdParty/pthread/x64</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(VULKAN_SDK)/Lib;../../Engine/ThirdParty/pthread/x64;../../Engine/ThirdParty/glfw/lib-vc2010-64</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Develop|x64'">
@@ -91,7 +91,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>GLES_VER=310;GLM_FORCE_AVX2;GLM_FORCE_DEPTH_ZERO_TO_ONE;MEMORY_ALLOCATOR;PLATFORM_WINDOWS;VK_USE_PLATFORM_WIN32_KHR;__LP64__;_WINDOWS;_LIB;NDEBUG;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(VULKAN_SDK)/include;$(VULKAN_SDK)/include/spirv-tools;../../Engine;../../Engine/ThirdParty;../../Engine/ThirdParty/eastl;../../Engine/ThirdParty/es;../../Engine/ThirdParty/event;../../Engine/ThirdParty/gl3w;../../Engine/ThirdParty/gli;../../Engine/ThirdParty/glm;../../Engine/ThirdParty/glslc;../../Engine/ThirdParty/lodepng;../../Engine/ThirdParty/pthread/include;../../Engine/ThirdParty/pthreadex;../../Engine/ThirdParty/rbtree;../../Engine/ThirdParty/spirv-cross;../../Engine/ThirdParty/tinyxml;../../Engine/ThirdParty/zlib;../../Engine/ThirdParty/shaderc-2019.0/libshaderc/include;../../Engine/ThirdParty/shaderc-2019.0/libshaderc_util/include;../../Engine/Base/include;../../Engine/Memory/include;../../Engine/Renderer/Gfx/include;../../Engine/Renderer/GLES3/include;../../Engine/Renderer/Vulkan/include;../../Engine/Renderer/Compiler/include;../../Engine/RenderSystem/include;../../Engine/Resource/include;../../Engine/Scene/include;../../Engine/Engine/include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(VULKAN_SDK)/include;$(VULKAN_SDK)/include/spirv-tools;../../Engine;../../Engine/ThirdParty;../../Engine/ThirdParty/eastl;../../Engine/ThirdParty/es;../../Engine/ThirdParty/event;../../Engine/ThirdParty/gl3w;../../Engine/ThirdParty/glfw\include;../../Engine/ThirdParty/gli;../../Engine/ThirdParty/glm;../../Engine/ThirdParty/glslc;../../Engine/ThirdParty/imgui;../../Engine/ThirdParty/lodepng;../../Engine/ThirdParty/pthread/include;../../Engine/ThirdParty/pthreadex;../../Engine/ThirdParty/rbtree;../../Engine/ThirdParty/spirv-cross;../../Engine/ThirdParty/tinyxml;../../Engine/ThirdParty/zlib;../../Engine/ThirdParty/shaderc-2019.0/libshaderc/include;../../Engine/ThirdParty/shaderc-2019.0/libshaderc_util/include;../../Engine/Base/include;../../Engine/Memory/include;../../Engine/Renderer/Gfx/include;../../Engine/Renderer/GLES3/include;../../Engine/Renderer/Vulkan/include;../../Engine/Renderer/Compiler/include;../../Engine/RenderSystem/include;../../Engine/Resource/include;../../Engine/Scene/include;../../Engine/Engine/include</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <DisableSpecificWarnings>4996;4312;4267;4251;4244;4311;4302</DisableSpecificWarnings>
@@ -106,10 +106,10 @@
       <AdditionalDependencies>vulkan-1.lib;shaderc_combined.lib;pthreadVC2.lib;opengl32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Lib>
-      <AdditionalDependencies>vulkan-1.lib;shaderc_combined.lib;opengl32.lib;pthreadVC2.lib;</AdditionalDependencies>
+      <AdditionalDependencies>vulkan-1.lib;shaderc_combined.lib;opengl32.lib;glfw3.lib;pthreadVC2.lib;</AdditionalDependencies>
     </Lib>
     <Lib>
-      <AdditionalLibraryDirectories>$(VULKAN_SDK)/Lib;../../Engine/ThirdParty/pthread/x64</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(VULKAN_SDK)/Lib;../../Engine/ThirdParty/pthread/x64;../../Engine/ThirdParty/glfw/lib-vc2010-64</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -408,6 +408,15 @@
     <ClInclude Include="..\..\Engine\ThirdParty\gl3w\gl3w.h" />
     <ClInclude Include="..\..\Engine\ThirdParty\gl3w\glcorearb.h" />
     <ClInclude Include="..\..\Engine\ThirdParty\glslc\file_includer.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\imgui\imconfig.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\imgui\imgui.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\imgui\imgui_impl_glfw.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\imgui\imgui_impl_opengl3.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\imgui\imgui_impl_vulkan.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\imgui\imgui_internal.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\imgui\imstb_rectpack.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\imgui\imstb_textedit.h" />
+    <ClInclude Include="..\..\Engine\ThirdParty\imgui\imstb_truetype.h" />
     <ClInclude Include="..\..\Engine\ThirdParty\lodepng\lodepng.h" />
     <ClInclude Include="..\..\Engine\ThirdParty\pthreadex\pthreadex.h" />
     <ClInclude Include="..\..\Engine\ThirdParty\rbtree\rbtree.h" />
@@ -795,6 +804,12 @@
     <ClCompile Include="..\..\Engine\ThirdParty\event\event.c" />
     <ClCompile Include="..\..\Engine\ThirdParty\gl3w\gl3w.c" />
     <ClCompile Include="..\..\Engine\ThirdParty\glslc\file_includer.cc" />
+    <ClCompile Include="..\..\Engine\ThirdParty\imgui\imgui.cpp" />
+    <ClCompile Include="..\..\Engine\ThirdParty\imgui\imgui_draw.cpp" />
+    <ClCompile Include="..\..\Engine\ThirdParty\imgui\imgui_impl_glfw.cpp" />
+    <ClCompile Include="..\..\Engine\ThirdParty\imgui\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="..\..\Engine\ThirdParty\imgui\imgui_impl_vulkan.cpp" />
+    <ClCompile Include="..\..\Engine\ThirdParty\imgui\imgui_widgets.cpp" />
     <ClCompile Include="..\..\Engine\ThirdParty\lodepng\lodepng.cpp" />
     <ClCompile Include="..\..\Engine\ThirdParty\pthreadex\pthreadex.c" />
     <ClCompile Include="..\..\Engine\ThirdParty\rbtree\rbtree.cpp" />
@@ -875,6 +890,9 @@
     <None Include="..\..\Engine\ThirdParty\rttr\registration_friend" />
     <None Include="..\..\Engine\ThirdParty\rttr\rttr.cmake" />
     <None Include="..\..\Engine\ThirdParty\rttr\type" />
+  </ItemGroup>
+  <ItemGroup>
+    <Natvis Include="..\..\Engine\ThirdParty\imgui\imgui.natvis" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

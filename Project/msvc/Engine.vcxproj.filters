@@ -238,6 +238,9 @@
     <Filter Include="Engine\Utils\Source Files">
       <UniqueIdentifier>{2d125e1d-6133-4025-ad16-d66a97faabfa}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ThirdParty\imgui">
+      <UniqueIdentifier>{00a5e55d-05c0-4729-9193-8256171974ac}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Engine\PreHeader.h">
@@ -1695,6 +1698,33 @@
     <ClInclude Include="..\..\Engine\ThirdParty\spirv-cross\spirv_cross_error_handling.hpp">
       <Filter>ThirdParty\spirv-cross</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\imgui\imconfig.h">
+      <Filter>ThirdParty\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\imgui\imgui.h">
+      <Filter>ThirdParty\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\imgui\imgui_impl_glfw.h">
+      <Filter>ThirdParty\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\imgui\imgui_impl_opengl3.h">
+      <Filter>ThirdParty\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\imgui\imgui_impl_vulkan.h">
+      <Filter>ThirdParty\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\imgui\imgui_internal.h">
+      <Filter>ThirdParty\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\imgui\imstb_rectpack.h">
+      <Filter>ThirdParty\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\imgui\imstb_textedit.h">
+      <Filter>ThirdParty\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\imgui\imstb_truetype.h">
+      <Filter>ThirdParty\imgui</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Engine\ThirdParty\eastl\source\allocator_eastl.cpp">
@@ -2495,6 +2525,24 @@
     <ClCompile Include="..\..\Engine\ThirdParty\spirv-cross\spirv_cross_c.cpp">
       <Filter>ThirdParty\spirv-cross</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\imgui\imgui.cpp">
+      <Filter>ThirdParty\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\imgui\imgui_draw.cpp">
+      <Filter>ThirdParty\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\imgui\imgui_impl_glfw.cpp">
+      <Filter>ThirdParty\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\imgui\imgui_impl_opengl3.cpp">
+      <Filter>ThirdParty\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\imgui\imgui_impl_vulkan.cpp">
+      <Filter>ThirdParty\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\imgui\imgui_widgets.cpp">
+      <Filter>ThirdParty\imgui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\..\Engine\ThirdParty\rttr\CMakeLists.txt">
@@ -2514,5 +2562,10 @@
     <None Include="..\..\Engine\ThirdParty\rttr\type">
       <Filter>ThirdParty\rttr</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Natvis Include="..\..\Engine\ThirdParty\imgui\imgui.natvis">
+      <Filter>ThirdParty\imgui</Filter>
+    </Natvis>
   </ItemGroup>
 </Project>
