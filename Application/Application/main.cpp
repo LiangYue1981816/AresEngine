@@ -71,7 +71,7 @@ int main(int argc, char** argv)
 			continue;
 		}
 
-		pApplication->Tick();
+		pApplication->Update();
 	}
 
 	//
