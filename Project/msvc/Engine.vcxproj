@@ -113,6 +113,7 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Engine\Application.h" />
     <ClInclude Include="..\..\Engine\BaseHeader.h" />
     <ClInclude Include="..\..\Engine\Base\include\Delegate.h" />
     <ClInclude Include="..\..\Engine\Base\include\FileManager.h" />
@@ -133,7 +134,6 @@
     <ClInclude Include="..\..\Engine\Console\include\Settings.h" />
     <ClInclude Include="..\..\Engine\EngineHeader.h" />
     <ClInclude Include="..\..\Engine\Engine\include\Engine.h" />
-    <ClInclude Include="..\..\Engine\Framework\include\Application.h" />
     <ClInclude Include="..\..\Engine\GfxHeader.h" />
     <ClInclude Include="..\..\Engine\Memory\include\Allocator.h" />
     <ClInclude Include="..\..\Engine\Memory\src\MemoryHeap.h" />

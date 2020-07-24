@@ -1740,8 +1740,8 @@
     <ClInclude Include="..\..\Engine\ThirdParty\imgui\imgui_impl_win32.h">
       <Filter>ThirdParty\imgui</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Engine\Framework\include\Application.h">
-      <Filter>Engine\Framework\Header Files</Filter>
+    <ClInclude Include="..\..\Engine\Application.h">
+      <Filter>Engine</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
