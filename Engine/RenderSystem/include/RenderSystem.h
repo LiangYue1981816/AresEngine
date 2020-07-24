@@ -191,7 +191,6 @@ private:
 	void CreateRenderer(GfxApi api, void* hInstance, void* hWnd, void* hDC, int width, int height, GfxPixelFormat format);
 	void CreatePasses(void);
 	void CreateComputes(void);
-	void CreateCommandBuffers(void);
 	void CreateStorageBuffers(void);
 	void CreateRenderTextures(void);
 	void CreateRenderTexture(uint32_t name, CGfxRenderTexturePtr ptrRenderTexture);
@@ -201,7 +200,6 @@ private:
 	void DestroyRenderer(void);
 	void DestroyPasses(void);
 	void DestroyComputes(void);
-	void DestroyCommandBuffers(void);
 	void DestroyStorageBuffers(void);
 	void DestroyRenderTextures(void);
 
@@ -329,8 +327,4 @@ private:
 
 private:
 	eastl::unordered_map<uint32_t, CGfxRenderTexturePtr> m_ptrRenderTextures;
-
-private:
-	CGfxCommandBufferPtr m_ptrComputeCommandBuffer[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
-	CGfxCommandBufferPtr m_ptrGraphicCommandBuffer[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
 };

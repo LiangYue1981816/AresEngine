@@ -80,7 +80,6 @@ CRenderSystem::~CRenderSystem(void)
 void CRenderSystem::Create(GfxApi api, void* hInstance, void* hWnd, void* hDC, int width, int height, GfxPixelFormat format)
 {
 	CreateRenderer(api, hInstance, hWnd, hDC, width, height, format);
-	CreateCommandBuffers();
 	CreateStorageBuffers();
 	CreateRenderTextures();
 	CreateComputes();
@@ -152,17 +151,6 @@ void CRenderSystem::CreateComputes(void)
 	m_pGPUEyeHistogram = new CGPUEyeHistogram(this);
 }
 
-void CRenderSystem::CreateCommandBuffers(void)
-{
-	m_ptrComputeCommandBuffer[0] = GfxRenderer()->NewCommandBuffer(0, true);
-	m_ptrComputeCommandBuffer[1] = GfxRenderer()->NewCommandBuffer(0, true);
-	m_ptrComputeCommandBuffer[2] = GfxRenderer()->NewCommandBuffer(0, true);
-
-	m_ptrGraphicCommandBuffer[0] = GfxRenderer()->NewCommandBuffer(0, true);
-	m_ptrGraphicCommandBuffer[1] = GfxRenderer()->NewCommandBuffer(0, true);
-	m_ptrGraphicCommandBuffer[2] = GfxRenderer()->NewCommandBuffer(0, true);
-}
-
 void CRenderSystem::CreateStorageBuffers(void)
 {
 	m_ptrInstanceBuffer = GfxRenderer()->NewStorageBuffer(sizeof(InstanceData) * MAX_GPUSCENE_INSTANCE_COUNT);
@@ -212,7 +200,6 @@ void CRenderSystem::Destroy(void)
 	DestroyComputes();
 	DestroyStorageBuffers();
 	DestroyRenderTextures();
-	DestroyCommandBuffers();
 	DestroyRenderer();
 }
 
@@ -270,17 +257,6 @@ void CRenderSystem::DestroyComputes(void)
 	delete m_pGPUClusterCull;
 	delete m_pGPUCluster;
 	delete m_pGPUScene;
-}
-
-void CRenderSystem::DestroyCommandBuffers(void)
-{
-	m_ptrComputeCommandBuffer[0].Release();
-	m_ptrComputeCommandBuffer[1].Release();
-	m_ptrComputeCommandBuffer[2].Release();
-
-	m_ptrGraphicCommandBuffer[0].Release();
-	m_ptrGraphicCommandBuffer[1].Release();
-	m_ptrGraphicCommandBuffer[2].Release();
 }
 
 void CRenderSystem::DestroyStorageBuffers(void)
