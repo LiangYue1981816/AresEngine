@@ -38,8 +38,9 @@ void CApplication::Update(void)
 
 		lastTick = Tick();
 	}
-
-	Sleep(1);
+	else {
+		Sleep(1);
+	}
 }
 
 LRESULT CApplication::WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
