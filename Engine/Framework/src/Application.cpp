@@ -38,9 +38,6 @@ void CApplication::Update(void)
 
 		lastTick = Tick();
 	}
-	else {
-		Sleep(1);
-	}
 }
 
 int64_t CApplication::WndProc(void* hWnd, uint32_t msg, uint64_t wParam, int64_t lParam)
