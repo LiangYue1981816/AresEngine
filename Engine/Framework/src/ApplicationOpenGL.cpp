@@ -6,6 +6,12 @@
 #include "imgui_impl_opengl3.h"
 
 #include "Application.h"
+#include "EngineHeader.h"
+
+
+CCamera* pMainCamera = nullptr;
+CGfxCommandBufferPtr ptrComputeCommandBuffers[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
+CGfxCommandBufferPtr ptrGraphicCommandBuffers[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
 
 
 CApplicationOpenGL::CApplicationOpenGL(void)
@@ -123,14 +129,14 @@ bool CApplicationOpenGL::Create(void* hInstance, void* hWnd, void* hDC, int widt
 	FileManager()->SetPath("../Data", ".mesh");
 	FileManager()->SetPath("../Data", ".material");
 
-	m_pCamera = new CCamera;
+	pMainCamera = new CCamera;
 
-	m_ptrComputeCommandBuffer[0] = GfxRenderer()->NewCommandBuffer(0, true);
-	m_ptrComputeCommandBuffer[1] = GfxRenderer()->NewCommandBuffer(0, true);
-	m_ptrComputeCommandBuffer[2] = GfxRenderer()->NewCommandBuffer(0, true);
-	m_ptrGraphicCommandBuffer[0] = GfxRenderer()->NewCommandBuffer(0, true);
-	m_ptrGraphicCommandBuffer[1] = GfxRenderer()->NewCommandBuffer(0, true);
-	m_ptrGraphicCommandBuffer[2] = GfxRenderer()->NewCommandBuffer(0, true);
+	ptrComputeCommandBuffers[0] = GfxRenderer()->NewCommandBuffer(0, true);
+	ptrComputeCommandBuffers[1] = GfxRenderer()->NewCommandBuffer(0, true);
+	ptrComputeCommandBuffers[2] = GfxRenderer()->NewCommandBuffer(0, true);
+	ptrGraphicCommandBuffers[0] = GfxRenderer()->NewCommandBuffer(0, true);
+	ptrGraphicCommandBuffers[1] = GfxRenderer()->NewCommandBuffer(0, true);
+	ptrGraphicCommandBuffers[2] = GfxRenderer()->NewCommandBuffer(0, true);
 
 	//
 	// 3. Setup ImGui
@@ -174,14 +180,14 @@ void CApplicationOpenGL::Destroy(void)
 	//
 	// 2. Destroy Engine
 	//
-	delete m_pCamera;
+	delete pMainCamera;
 
-	m_ptrComputeCommandBuffer[0].Release();
-	m_ptrComputeCommandBuffer[1].Release();
-	m_ptrComputeCommandBuffer[2].Release();
-	m_ptrGraphicCommandBuffer[0].Release();
-	m_ptrGraphicCommandBuffer[1].Release();
-	m_ptrGraphicCommandBuffer[2].Release();
+	ptrComputeCommandBuffers[0].Release();
+	ptrComputeCommandBuffers[1].Release();
+	ptrComputeCommandBuffers[2].Release();
+	ptrGraphicCommandBuffers[0].Release();
+	ptrGraphicCommandBuffers[1].Release();
+	ptrGraphicCommandBuffers[2].Release();
 
 	DestroyEngine();
 }
@@ -189,8 +195,8 @@ void CApplicationOpenGL::Destroy(void)
 void CApplicationOpenGL::UpdateInternal(float deltaTime)
 {
 	const CGfxSemaphore* pWaitSemaphore = GfxRenderer()->GetSwapChain()->GetAcquireSemaphore();
-	const CGfxCommandBufferPtr ptrComputeCommandBuffer = m_ptrComputeCommandBuffer[GfxRenderer()->GetSwapChain()->GetFrameIndex()];
-	const CGfxCommandBufferPtr ptrGraphicCommandBuffer = m_ptrGraphicCommandBuffer[GfxRenderer()->GetSwapChain()->GetFrameIndex()];
+	const CGfxCommandBufferPtr ptrComputeCommandBuffer = ptrComputeCommandBuffers[GfxRenderer()->GetSwapChain()->GetFrameIndex()];
+	const CGfxCommandBufferPtr ptrGraphicCommandBuffer = ptrGraphicCommandBuffers[GfxRenderer()->GetSwapChain()->GetFrameIndex()];
 
 	GfxRenderer()->AcquireNextFrame();
 	{

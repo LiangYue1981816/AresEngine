@@ -2,6 +2,7 @@
 #include "imgui_impl_win32.h"
 
 #include "Application.h"
+#include "EngineHeader.h"
 
 
 // Forward declare message handler from imgui_impl_win32.cpp
@@ -12,8 +13,6 @@ CApplication::CApplication(void)
 	: m_hDC(nullptr)
 	, m_width(0)
 	, m_height(0)
-
-	, m_pCamera(nullptr)
 	
 	, m_lastTick(0)
 {

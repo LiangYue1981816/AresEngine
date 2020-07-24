@@ -1,5 +1,5 @@
 #pragma once
-#include "EngineHeader.h"
+#include "PreHeader.h"
 
 
 class CALL_API CApplication
@@ -25,11 +25,6 @@ protected:
 	void* m_hDC;
 	int m_width;
 	int m_height;
-
-protected:
-	CCamera* m_pCamera;
-	CGfxCommandBufferPtr m_ptrComputeCommandBuffer[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
-	CGfxCommandBufferPtr m_ptrGraphicCommandBuffer[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
 
 private:
 	uint32_t m_lastTick;
