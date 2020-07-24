@@ -241,6 +241,13 @@ void CApplicationOpenGL::UpdateInternal(float deltaTime)
 			ImGui::End();
 		}
 
+		Engine()->Wait();
+		{
+			// ...
+		}
+		Engine()->Update();
+		Engine()->RenderTileDeferredShading(pMainCamera, ptrComputeCommandBuffer, ptrGraphicCommandBuffer, pWaitSemaphore);
+
 		// Rendering
 		ImGui::Render();
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
