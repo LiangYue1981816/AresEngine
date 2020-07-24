@@ -66,7 +66,7 @@ void CPassFinal::SetOutputTexture(int indexFrame, CGfxRenderTexturePtr ptrColorT
 	}
 }
 
-void CPassFinal::Render(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer, int indexFrame, bool bPresent)
+void CPassFinal::Render(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer, int indexFrame)
 {
 	// Update
 	m_pCamera->Apply();
@@ -95,7 +95,7 @@ void CPassFinal::Render(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandB
 			m_pRenderQueue->CmdDraw(taskPool, taskGraph, ptrCommandBuffer, m_ptrDescriptorSetPass, PASS_FINAL_NAME, scissor, viewport, znear, zfar, 0xffffffff, false);
 		}
 		GfxRenderer()->CmdEndRenderPass(ptrCommandBuffer);
-		GfxRenderer()->CmdSetImageLayout(ptrCommandBuffer, ptrColorTexture, bPresent ? GFX_IMAGE_LAYOUT_PRESENT_SRC_OPTIMAL : GFX_IMAGE_LAYOUT_COLOR_READ_ONLY_OPTIMAL);
+		GfxRenderer()->CmdSetImageLayout(ptrCommandBuffer, ptrColorTexture, GFX_IMAGE_LAYOUT_PRESENT_SRC_OPTIMAL);
 	}
 	GfxRenderer()->CmdPopDebugGroup(ptrCommandBuffer);
 }
