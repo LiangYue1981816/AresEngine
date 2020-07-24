@@ -147,28 +147,28 @@ void CEngine::Update(void)
 	event_signal(&m_eventDispatch);
 }
 
-void CEngine::RenderUnlit(CCamera* pCamera, bool bPresent)
+void CEngine::RenderUnlit(CCamera* pCamera, CGfxCommandBufferPtr ptrComputeCommandBuffer, CGfxCommandBufferPtr ptrGraphicCommandBuffer, const CGfxSemaphore* pWaitSemaphore)
 {
 	m_pRenderSystem->UpdateCamera(m_taskPoolRender, m_taskGraphRender, pCamera, 0xffffffff, true);
-	m_pRenderSystem->RenderUnlit(m_taskPoolRender, m_taskGraphRender, pCamera, bPresent);
+	m_pRenderSystem->RenderUnlit(m_taskPoolRender, m_taskGraphRender, pCamera, ptrComputeCommandBuffer, ptrGraphicCommandBuffer, pWaitSemaphore);
 }
 
-void CEngine::RenderForwardShading(CCamera* pCamera, bool bPresent)
+void CEngine::RenderForwardShading(CCamera* pCamera, CGfxCommandBufferPtr ptrComputeCommandBuffer, CGfxCommandBufferPtr ptrGraphicCommandBuffer, const CGfxSemaphore* pWaitSemaphore)
 {
 	m_pRenderSystem->UpdateCamera(m_taskPoolRender, m_taskGraphRender, pCamera, 0xffffffff, true);
-	m_pRenderSystem->RenderForwardShading(m_taskPoolRender, m_taskGraphRender, pCamera, bPresent);
+	m_pRenderSystem->RenderForwardShading(m_taskPoolRender, m_taskGraphRender, pCamera, ptrComputeCommandBuffer, ptrGraphicCommandBuffer, pWaitSemaphore);
 }
 
-void CEngine::RenderDeferredShading(CCamera* pCamera, bool bPresent)
+void CEngine::RenderDeferredShading(CCamera* pCamera, CGfxCommandBufferPtr ptrComputeCommandBuffer, CGfxCommandBufferPtr ptrGraphicCommandBuffer, const CGfxSemaphore* pWaitSemaphore)
 {
 	m_pRenderSystem->UpdateCamera(m_taskPoolRender, m_taskGraphRender, pCamera, 0xffffffff, true);
-	m_pRenderSystem->RenderDeferredShading(m_taskPoolRender, m_taskGraphRender, pCamera, bPresent);
+	m_pRenderSystem->RenderDeferredShading(m_taskPoolRender, m_taskGraphRender, pCamera, ptrComputeCommandBuffer, ptrGraphicCommandBuffer, pWaitSemaphore);
 }
 
-void CEngine::RenderTileDeferredShading(CCamera* pCamera, bool bPresent)
+void CEngine::RenderTileDeferredShading(CCamera* pCamera, CGfxCommandBufferPtr ptrComputeCommandBuffer, CGfxCommandBufferPtr ptrGraphicCommandBuffer, const CGfxSemaphore* pWaitSemaphore)
 {
 	m_pRenderSystem->UpdateCamera(m_taskPoolRender, m_taskGraphRender, pCamera, 0xffffffff, true);
-	m_pRenderSystem->RenderTileDeferredShading(m_taskPoolRender, m_taskGraphRender, pCamera, bPresent);
+	m_pRenderSystem->RenderTileDeferredShading(m_taskPoolRender, m_taskGraphRender, pCamera, ptrComputeCommandBuffer, ptrGraphicCommandBuffer, pWaitSemaphore);
 }
 
 void CEngine::UpdateThread(void)

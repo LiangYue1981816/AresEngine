@@ -2,7 +2,6 @@
 #include "imgui_impl_win32.h"
 
 #include "Application.h"
-#include "EngineHeader.h"
 
 
 // Forward declare message handler from imgui_impl_win32.cpp

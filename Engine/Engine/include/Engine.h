@@ -38,10 +38,10 @@ public:
 	void Wait(void);
 	void Update(void);
 
-	void RenderUnlit(CCamera* pCamera, bool bPresent);
-	void RenderForwardShading(CCamera* pCamera, bool bPresent);
-	void RenderDeferredShading(CCamera* pCamera, bool bPresent);
-	void RenderTileDeferredShading(CCamera* pCamera, bool bPresent);
+	void RenderUnlit(CCamera* pCamera, CGfxCommandBufferPtr ptrComputeCommandBuffer, CGfxCommandBufferPtr ptrGraphicCommandBuffer, const CGfxSemaphore* pWaitSemaphore);
+	void RenderForwardShading(CCamera* pCamera, CGfxCommandBufferPtr ptrComputeCommandBuffer, CGfxCommandBufferPtr ptrGraphicCommandBuffer, const CGfxSemaphore* pWaitSemaphore);
+	void RenderDeferredShading(CCamera* pCamera, CGfxCommandBufferPtr ptrComputeCommandBuffer, CGfxCommandBufferPtr ptrGraphicCommandBuffer, const CGfxSemaphore* pWaitSemaphore);
+	void RenderTileDeferredShading(CCamera* pCamera, CGfxCommandBufferPtr ptrComputeCommandBuffer, CGfxCommandBufferPtr ptrGraphicCommandBuffer, const CGfxSemaphore* pWaitSemaphore);
 
 private:
 	void UpdateThread(void);
