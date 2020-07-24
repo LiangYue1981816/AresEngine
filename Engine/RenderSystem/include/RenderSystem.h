@@ -258,10 +258,10 @@ private:
 	void UpdateCamera(CTaskPool& taskPool, CTaskGraph& taskGraph, CCamera* pCamera, uint32_t mask, bool bComputeLOD);
 
 private:
-	void RenderUnlit(CTaskPool& taskPool, CTaskGraph& taskGraph, CCamera* pCamera, bool bPresent);
-	void RenderForwardShading(CTaskPool& taskPool, CTaskGraph& taskGraph, CCamera* pCamera, bool bPresent);
-	void RenderDeferredShading(CTaskPool& taskPool, CTaskGraph& taskGraph, CCamera* pCamera, bool bPresent);
-	void RenderTileDeferredShading(CTaskPool& taskPool, CTaskGraph& taskGraph, CCamera* pCamera, bool bPresent);
+	void RenderUnlit(CTaskPool& taskPool, CTaskGraph& taskGraph, CCamera* pCamera, CGfxCommandBufferPtr ptrComputeCommandBuffer, CGfxCommandBufferPtr ptrGraphicCommandBuffer, const CGfxSemaphore* pWaitSemaphore);
+	void RenderForwardShading(CTaskPool& taskPool, CTaskGraph& taskGraph, CCamera* pCamera, CGfxCommandBufferPtr ptrComputeCommandBuffer, CGfxCommandBufferPtr ptrGraphicCommandBuffer, const CGfxSemaphore* pWaitSemaphore);
+	void RenderDeferredShading(CTaskPool& taskPool, CTaskGraph& taskGraph, CCamera* pCamera, CGfxCommandBufferPtr ptrComputeCommandBuffer, CGfxCommandBufferPtr ptrGraphicCommandBuffer, const CGfxSemaphore* pWaitSemaphore);
+	void RenderTileDeferredShading(CTaskPool& taskPool, CTaskGraph& taskGraph, CCamera* pCamera, CGfxCommandBufferPtr ptrComputeCommandBuffer, CGfxCommandBufferPtr ptrGraphicCommandBuffer, const CGfxSemaphore* pWaitSemaphore);
 
 private:
 	void InternalComputeScene(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer);
@@ -281,7 +281,7 @@ private:
 	void InternalPassBloom(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer, CCamera* pCamera, uint32_t rtInColor, uint32_t rtOutColor, uint32_t rtTempThreshold, uint32_t rtTempBlur0, uint32_t rtTempBlur1);
 	void InternalPassEyeAdaptation(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer, CCamera* pCamera, uint32_t rtInColor, uint32_t rtOutColor, uint32_t rtOutDownSample);
 	void InternalPassColorGrading(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer, CCamera* pCamera, uint32_t rtInColor, uint32_t rtOutColor);
-	void InternalPassFinal(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer, CCamera* pCamera, uint32_t rtInColor, bool bPresent);
+	void InternalPassFinal(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer, CCamera* pCamera, uint32_t rtInColor);
 
 
 private:

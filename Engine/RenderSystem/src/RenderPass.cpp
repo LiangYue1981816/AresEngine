@@ -178,10 +178,10 @@ void CRenderSystem::InternalPassColorGrading(CTaskPool& taskPool, CTaskGraph& ta
 	m_pPassColorGrading->Render(taskPool, taskGraph, ptrCommandBuffer);
 }
 
-void CRenderSystem::InternalPassFinal(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer, CCamera* pCamera, uint32_t rtInColor, bool bPresent)
+void CRenderSystem::InternalPassFinal(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommandBufferPtr ptrCommandBuffer, CCamera* pCamera, uint32_t rtInColor)
 {
 	m_pPassFinal->SetCamera(pCamera);
 	m_pPassFinal->SetInputTexture(m_ptrRenderTextures[rtInColor]);
 	m_pPassFinal->SetOutputTexture(GfxRenderer()->GetSwapChain()->GetFrameIndex(), m_ptrRenderTextures[GfxRenderer()->GetSwapChain()->GetFrameIndex()]);
-	m_pPassFinal->Render(taskPool, taskGraph, ptrCommandBuffer, GfxRenderer()->GetSwapChain()->GetFrameIndex(), bPresent);
+	m_pPassFinal->Render(taskPool, taskGraph, ptrCommandBuffer, GfxRenderer()->GetSwapChain()->GetFrameIndex());
 }
