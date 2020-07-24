@@ -1716,9 +1716,6 @@
     <ClInclude Include="..\..\Engine\ThirdParty\imgui\imgui.h">
       <Filter>ThirdParty\imgui</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Engine\ThirdParty\imgui\imgui_impl_glfw.h">
-      <Filter>ThirdParty\imgui</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Engine\ThirdParty\imgui\imgui_impl_opengl3.h">
       <Filter>ThirdParty\imgui</Filter>
     </ClInclude>
@@ -2550,9 +2547,6 @@
       <Filter>ThirdParty\imgui</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\ThirdParty\imgui\imgui_draw.cpp">
-      <Filter>ThirdParty\imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\ThirdParty\imgui\imgui_impl_glfw.cpp">
       <Filter>ThirdParty\imgui</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\ThirdParty\imgui\imgui_impl_opengl3.cpp">

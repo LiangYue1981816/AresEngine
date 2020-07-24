@@ -24,7 +24,7 @@ void CApplicationVulkan::Destroy(void)
 
 }
 
-void CApplicationVulkan::TickInternal(void)
+void CApplicationVulkan::UpdateInternal(float deltaTime)
 {
 
 }

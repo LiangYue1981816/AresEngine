@@ -12,12 +12,12 @@ public:
 public:
 	virtual bool Create(void* hInstance, void* hWnd, void* hDC, int width, int height) = 0;
 	virtual void Destroy(void) = 0;
+	virtual void Update(void);
 
 private:
-	virtual void TickInternal(void) = 0;
+	virtual void UpdateInternal(float deltaTime) = 0;
 
 public:
-	void Tick(void);
 	LRESULT WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 
@@ -25,6 +25,9 @@ protected:
 	void* m_hDC;
 	int m_width;
 	int m_height;
+
+private:
+	uint32_t m_lastTick;
 };
 
 
@@ -40,7 +43,7 @@ public:
 	virtual void Destroy(void);
 
 private:
-	virtual void TickInternal(void);
+	virtual void UpdateInternal(float deltaTime);
 };
 
 
@@ -56,5 +59,5 @@ public:
 	virtual void Destroy(void);
 
 private:
-	virtual void TickInternal(void);
+	virtual void UpdateInternal(float deltaTime);
 };

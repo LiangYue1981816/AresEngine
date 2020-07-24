@@ -411,7 +411,6 @@
     <ClInclude Include="..\..\Engine\ThirdParty\glslc\file_includer.h" />
     <ClInclude Include="..\..\Engine\ThirdParty\imgui\imconfig.h" />
     <ClInclude Include="..\..\Engine\ThirdParty\imgui\imgui.h" />
-    <ClInclude Include="..\..\Engine\ThirdParty\imgui\imgui_impl_glfw.h" />
     <ClInclude Include="..\..\Engine\ThirdParty\imgui\imgui_impl_opengl3.h" />
     <ClInclude Include="..\..\Engine\ThirdParty\imgui\imgui_impl_vulkan.h" />
     <ClInclude Include="..\..\Engine\ThirdParty\imgui\imgui_impl_win32.h" />
@@ -812,7 +811,6 @@
     <ClCompile Include="..\..\Engine\ThirdParty\glslc\file_includer.cc" />
     <ClCompile Include="..\..\Engine\ThirdParty\imgui\imgui.cpp" />
     <ClCompile Include="..\..\Engine\ThirdParty\imgui\imgui_draw.cpp" />
-    <ClCompile Include="..\..\Engine\ThirdParty\imgui\imgui_impl_glfw.cpp" />
     <ClCompile Include="..\..\Engine\ThirdParty\imgui\imgui_impl_opengl3.cpp" />
     <ClCompile Include="..\..\Engine\ThirdParty\imgui\imgui_impl_vulkan.cpp" />
     <ClCompile Include="..\..\Engine\ThirdParty\imgui\imgui_impl_win32.cpp" />
