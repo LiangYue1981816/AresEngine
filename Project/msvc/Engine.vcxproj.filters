@@ -241,6 +241,18 @@
     <Filter Include="ThirdParty\imgui">
       <UniqueIdentifier>{00a5e55d-05c0-4729-9193-8256171974ac}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ThirdParty\wgl">
+      <UniqueIdentifier>{a8e9ff81-55da-411e-916c-3110184ff5f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Framework">
+      <UniqueIdentifier>{260b444b-757d-400c-810b-38f7690a8d5d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Framework\Header Files">
+      <UniqueIdentifier>{f7ad6cac-6da7-4114-a6ba-a535709f433f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Framework\Source Files">
+      <UniqueIdentifier>{6b4a24a2-22e8-442f-9806-7f0f9e8ee617}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Engine\PreHeader.h">
@@ -1725,6 +1737,15 @@
     <ClInclude Include="..\..\Engine\ThirdParty\imgui\imstb_truetype.h">
       <Filter>ThirdParty\imgui</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\wgl\WGLExtensions.h">
+      <Filter>ThirdParty\wgl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ThirdParty\imgui\imgui_impl_win32.h">
+      <Filter>ThirdParty\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Framework\include\Application.h">
+      <Filter>Engine\Framework\Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Engine\ThirdParty\eastl\source\allocator_eastl.cpp">
@@ -2542,6 +2563,21 @@
     </ClCompile>
     <ClCompile Include="..\..\Engine\ThirdParty\imgui\imgui_widgets.cpp">
       <Filter>ThirdParty\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\wgl\WGLExtensions.cpp">
+      <Filter>ThirdParty\wgl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ThirdParty\imgui\imgui_impl_win32.cpp">
+      <Filter>ThirdParty\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Framework\src\Application.cpp">
+      <Filter>Engine\Framework\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Framework\src\ApplicationOpenGL.cpp">
+      <Filter>Engine\Framework\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Framework\src\ApplicationVulkan.cpp">
+      <Filter>Engine\Framework\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

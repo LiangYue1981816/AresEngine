@@ -1,10 +1,8 @@
 #pragma once
-#include <stdio.h>
-#include <stdlib.h>
-#include <windows.h>
+#include "PreHeader.h"
 
 
-class CApplication
+class CALL_API CApplication
 {
 public:
 	CApplication(void);
@@ -30,7 +28,7 @@ protected:
 };
 
 
-class CApplicationOpenGL : public CApplication
+class CALL_API CApplicationOpenGL : public CApplication
 {
 public:
 	CApplicationOpenGL(void);
@@ -46,7 +44,7 @@ private:
 };
 
 
-class CApplicationVulkan : public CApplication
+class CALL_API CApplicationVulkan : public CApplication
 {
 public:
 	CApplicationVulkan(void);
