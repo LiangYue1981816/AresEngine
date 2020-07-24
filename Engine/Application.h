@@ -1,5 +1,8 @@
 #pragma once
-#include "PreHeader.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdint.h>
+#include "Define.h"
 
 
 class CALL_API CApplication
@@ -18,7 +21,7 @@ private:
 	virtual void UpdateInternal(float deltaTime) = 0;
 
 public:
-	LRESULT WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+	int64_t WndProc(void* hWnd, uint32_t msg, uint64_t wParam, int64_t lParam);
 
 
 protected:

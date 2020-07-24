@@ -43,7 +43,7 @@ void CApplication::Update(void)
 	}
 }
 
-LRESULT CApplication::WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
+int64_t CApplication::WndProc(void* hWnd, uint32_t msg, uint64_t wParam, int64_t lParam)
 {
-	return ImGui_ImplWin32_WndProcHandler(hWnd, msg, wParam, lParam);
+	return ImGui_ImplWin32_WndProcHandler((HWND)hWnd, msg, wParam, lParam);
 }
