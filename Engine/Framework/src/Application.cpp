@@ -13,8 +13,6 @@ CApplication::CApplication(void)
 	: m_hDC(nullptr)
 	, m_width(0)
 	, m_height(0)
-	
-	, m_lastTick(0)
 {
 
 }
@@ -26,8 +24,8 @@ CApplication::~CApplication(void)
 
 void CApplication::Update(void)
 {
-	uint32_t currTick = Tick();
-	float deltaTime = (currTick - m_lastTick) / 1000000.0f;
+	static uint32_t lastTick = 0;
+	float deltaTime = (Tick() - lastTick) / 1000000.0f;
 
 	if (deltaTime > 1.0f / 60.0f) {
 		static bool bFirstFrame = true;
@@ -38,7 +36,7 @@ void CApplication::Update(void)
 		}
 		bFirstFrame = false;
 
-		m_lastTick = Tick();
+		lastTick = Tick();
 	}
 
 	Sleep(1);

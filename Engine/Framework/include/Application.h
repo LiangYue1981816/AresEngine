@@ -25,9 +25,6 @@ protected:
 	void* m_hDC;
 	int m_width;
 	int m_height;
-
-private:
-	uint32_t m_lastTick;
 };
 
 
