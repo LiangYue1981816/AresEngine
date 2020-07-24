@@ -164,10 +164,16 @@ bool CApplicationOpenGL::Create(void* hInstance, void* hWnd, void* hDC, int widt
 
 void CApplicationOpenGL::Destroy(void)
 {
+	//
+	// 1. Destroy ImGui
+	//
 	ImGui_ImplOpenGL3_Shutdown();
 	ImGui_ImplWin32_Shutdown();
 	ImGui::DestroyContext();
 
+	//
+	// 2. Destroy Engine
+	//
 	delete m_pCamera;
 
 	m_ptrComputeCommandBuffer[0].Release();
