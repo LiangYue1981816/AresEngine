@@ -110,7 +110,27 @@ bool CApplicationOpenGL::Create(void* hInstance, void* hWnd, void* hDC, int widt
 	//
 	// 2. Setup Engine
 	//
-	// ...
+	CreateEngine(GFX_API_GLES3, hInstance, hWnd, GetDC((HWND)hWnd), width, height, GFX_PIXELFORMAT_BGRA8_UNORM_PACK8);
+
+	FileManager()->SetPath("../Data", ".xml");
+	FileManager()->SetPath("../Data", ".png");
+	FileManager()->SetPath("../Data", ".tga");
+	FileManager()->SetPath("../Data", ".dds");
+	FileManager()->SetPath("../Data", ".glsl");
+	FileManager()->SetPath("../Data", ".vert");
+	FileManager()->SetPath("../Data", ".frag");
+	FileManager()->SetPath("../Data", ".comp");
+	FileManager()->SetPath("../Data", ".mesh");
+	FileManager()->SetPath("../Data", ".material");
+
+	m_pCamera = new CCamera;
+
+	m_ptrComputeCommandBuffer[0] = GfxRenderer()->NewCommandBuffer(0, true);
+	m_ptrComputeCommandBuffer[1] = GfxRenderer()->NewCommandBuffer(0, true);
+	m_ptrComputeCommandBuffer[2] = GfxRenderer()->NewCommandBuffer(0, true);
+	m_ptrGraphicCommandBuffer[0] = GfxRenderer()->NewCommandBuffer(0, true);
+	m_ptrGraphicCommandBuffer[1] = GfxRenderer()->NewCommandBuffer(0, true);
+	m_ptrGraphicCommandBuffer[2] = GfxRenderer()->NewCommandBuffer(0, true);
 
 	//
 	// 3. Setup ImGui
@@ -147,6 +167,17 @@ void CApplicationOpenGL::Destroy(void)
 	ImGui_ImplOpenGL3_Shutdown();
 	ImGui_ImplWin32_Shutdown();
 	ImGui::DestroyContext();
+
+	delete m_pCamera;
+
+	m_ptrComputeCommandBuffer[0].Release();
+	m_ptrComputeCommandBuffer[1].Release();
+	m_ptrComputeCommandBuffer[2].Release();
+	m_ptrGraphicCommandBuffer[0].Release();
+	m_ptrGraphicCommandBuffer[1].Release();
+	m_ptrGraphicCommandBuffer[2].Release();
+
+	DestroyEngine();
 }
 
 bool show_demo_window = true;
