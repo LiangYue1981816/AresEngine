@@ -9,9 +9,38 @@
 #include "EngineHeader.h"
 
 
+#define RAND() ((rand() % 10000) / 10000.0f)
+
+
+float speed = 1.5f;
+float angleX = 0.0f;
+float angleY = 135.0f;
+BOOL bLButtonDown = FALSE;
+BOOL bMoveForward = FALSE;
+BOOL bMoveBackward = FALSE;
+BOOL bMoveLeft = FALSE;
+BOOL bMoveRight = FALSE;
+BOOL bMoveUp = FALSE;
+BOOL bMoveDown = FALSE;
+POINT ptLastPoint = { -1, -1 };
+
 CCamera* pMainCamera = nullptr;
+CScene* pLightScene = nullptr;
+CScene* pMainScene = nullptr;
+
 CGfxCommandBufferPtr ptrComputeCommandBuffers[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
 CGfxCommandBufferPtr ptrGraphicCommandBuffers[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
+
+
+void OnLButtonDown(int x, int y);
+void OnLButtonUp(int x, int y);
+void OnMouseMove(int x, int y, int ppi = 100);
+void OnKeyDown(WPARAM wParam);
+void OnKeyUp(WPARAM wParam);
+
+void UpdateInput(void);
+void UpdateCamera(CCamera* pCamera, int width, int height, float deltaTime);
+void UpdateRenderSolution(void);
 
 
 CApplicationOpenGL::CApplicationOpenGL(void)
@@ -138,6 +167,56 @@ bool CApplicationOpenGL::Create(void* hInstance, void* hWnd, void* hDC, int widt
 
 	pMainCamera = new CCamera;
 
+	pLightScene = SceneManager()->GetOrCreateScene(HashValue("LightScene"));
+	{
+		float maxSize = 1.0f;
+		float maxRangeX = 13.5f;
+		float maxRangeY = 11.0f;
+		float maxRangeZ = 6.0f;
+
+		srand(0x0816);
+
+		pLightScene->GetRootNode()->SetWorldScale(1.0f, 1.0f, 1.0f);
+		pLightScene->GetRootNode()->SetWorldPosition(-0.5f, 0.0f, 0.0f);
+
+		for (int index = 0; index < 200; index++) {
+			float scale = RAND() * maxSize;
+			float positionx = (2.0f * RAND() - 1.0f) * maxRangeX;
+			float positiony = RAND() * maxRangeY;
+			float positionz = (2.0f * RAND() - 1.0f) * maxRangeZ;
+
+			CComponentPointLightPtr ptrPointLight = SceneManager()->GetOrCreateComponentPointLight(SceneManager()->GetNextComponentPointLightName());
+			ptrPointLight->SetColor(4.0f, 4.0f, 4.0f);
+			ptrPointLight->SetAttenuation(3.0f, 2.0f, 1.0f, scale);
+
+			CSceneNode *pPointLightNode = SceneManager()->GetOrCreateNode(SceneManager()->GetNextNodeName());
+			pPointLightNode->SetWorldScale(scale, scale, scale);
+			pPointLightNode->SetWorldPosition(positionx, positiony, positionz);
+			pPointLightNode->AttachComponentPointLight(ptrPointLight);
+			pLightScene->GetRootNode()->AttachNode(pPointLightNode);
+		}
+	}
+
+	pMainScene = SceneManager()->GetOrCreateScene(HashValue("MainScene"));
+	{
+		pMainScene->GetRootNode()->SetWorldScale(1.0f, 1.0f, 1.0f);
+		pMainScene->GetRootNode()->SetWorldPosition(0.0f, 0.0f, 0.0f);
+
+		CSceneNode *pSponzaSceneNode = ResourceLoader()->LoadSceneMesh("Sponza.xml", pMainScene->GetRootNode(), VERTEX_BINDING, INSTANCE_BINDING);
+		pSponzaSceneNode->SetWorldScale(1.0f, 1.0f, 1.0f);
+		pSponzaSceneNode->SetWorldPosition(0.0f, 0.0f, 0.0f);
+
+		CSceneNode *pMarcusSceneNode = ResourceLoader()->LoadSceneMesh("Marcus.xml", pMainScene->GetRootNode(), VERTEX_BINDING, INSTANCE_BINDING);
+		pMarcusSceneNode->SetWorldScale(1.0f, 1.0f, 1.0f);
+		pMarcusSceneNode->SetWorldPosition(0.0f, 0.0f, 0.0f);
+		pMarcusSceneNode->SetWorldDirection(-1.0f, 0.0f, -1.0);
+
+		CSceneNode *pHeadSceneNode = ResourceLoader()->LoadSceneMesh("MaleHead.xml", pMainScene->GetRootNode(), VERTEX_BINDING, INSTANCE_BINDING);
+		pHeadSceneNode->SetWorldScale(1.0f, 1.0f, 1.0f);
+		pHeadSceneNode->SetWorldPosition(-1.0f, 1.0f, 0.0f);
+		pHeadSceneNode->SetWorldDirection(-1.0f, 0.0f, -1.0f);
+	}
+
 	//
 	// 3. Setup ImGui
 	//
@@ -180,6 +259,8 @@ void CApplicationOpenGL::Destroy(void)
 	//
 	// 2. Destroy Engine
 	//
+	SceneManager()->DestroyScene(pMainScene);
+	SceneManager()->DestroyScene(pLightScene);
 	delete pMainCamera;
 
 	ptrComputeCommandBuffers[0].Release();
@@ -243,7 +324,9 @@ void CApplicationOpenGL::UpdateInternal(float deltaTime)
 
 		Engine()->Wait();
 		{
-			// ...
+			UpdateInput();
+			UpdateRenderSolution();
+			UpdateCamera(pMainCamera, m_width, m_height, deltaTime);
 		}
 		Engine()->Update();
 		Engine()->RenderTileDeferredShading(pMainCamera, ptrComputeCommandBuffer, ptrGraphicCommandBuffer, pWaitSemaphore);
@@ -253,4 +336,173 @@ void CApplicationOpenGL::UpdateInternal(float deltaTime)
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 	}
 	GfxRenderer()->Present(ptrGraphicCommandBuffer->GetSemaphore());
+}
+
+void OnLButtonDown(int x, int y)
+{
+	ptLastPoint.x = x;
+	ptLastPoint.y = y;
+
+	bLButtonDown = TRUE;
+}
+
+void OnLButtonUp(int x, int y)
+{
+	ptLastPoint.x = -1;
+	ptLastPoint.y = -1;
+
+	bMoveForward = FALSE;
+	bMoveBackward = FALSE;
+	bMoveLeft = FALSE;
+	bMoveRight = FALSE;
+	bMoveUp = FALSE;
+	bMoveDown = FALSE;
+
+	bLButtonDown = FALSE;
+}
+
+void OnMouseMove(int x, int y, int ppi)
+{
+	if (bLButtonDown == TRUE) {
+		if (ptLastPoint.x != -1 && ptLastPoint.y != -1) {
+			angleX += 0.5f * (y - ptLastPoint.y) * 100.0f / ppi;
+			angleY += 0.5f * (ptLastPoint.x - x) * 100.0f / ppi;
+
+			ptLastPoint.x = x;
+			ptLastPoint.y = y;
+		}
+	}
+}
+
+void OnKeyDown(WPARAM wParam)
+{
+	switch (wParam) {
+	case 'W': bMoveForward = TRUE; break;
+	case 'S': bMoveBackward = TRUE; break;
+	case 'A': bMoveLeft = TRUE; break;
+	case 'D': bMoveRight = TRUE; break;
+	case 'E': bMoveUp = TRUE; break;
+	case 'Q': bMoveDown = TRUE; break;
+	}
+}
+
+void OnKeyUp(WPARAM wParam)
+{
+	switch (wParam) {
+	case 'W': bMoveForward = FALSE; break;
+	case 'S': bMoveBackward = FALSE; break;
+	case 'A': bMoveLeft = FALSE; break;
+	case 'D': bMoveRight = FALSE; break;
+	case 'E': bMoveUp = FALSE; break;
+	case 'Q': bMoveDown = FALSE; break;
+	}
+}
+
+void UpdateInput(void)
+{
+	// Mouse
+	{
+		ImVec2 curMousePos = ImGui::GetMousePos();
+		int x = (int)curMousePos.x;
+		int y = (int)curMousePos.y;
+
+		if (ImGui::IsMouseDown(ImGuiMouseButton_Left)) {
+			OnLButtonDown(x, y);
+		}
+
+		if (ImGui::IsMouseReleased(ImGuiMouseButton_Left)) {
+			OnLButtonUp(x, y);
+		}
+
+		OnMouseMove(x, y);
+	}
+
+	// Key
+	{
+		if (ImGui::IsKeyDown('W')) OnKeyDown('W');
+		if (ImGui::IsKeyDown('S')) OnKeyDown('S');
+		if (ImGui::IsKeyDown('A')) OnKeyDown('A');
+		if (ImGui::IsKeyDown('D')) OnKeyDown('D');
+		if (ImGui::IsKeyDown('E')) OnKeyDown('E');
+		if (ImGui::IsKeyDown('Q')) OnKeyDown('Q');
+
+		if (ImGui::IsKeyReleased('W')) OnKeyUp('W');
+		if (ImGui::IsKeyReleased('S')) OnKeyUp('S');
+		if (ImGui::IsKeyReleased('A')) OnKeyUp('A');
+		if (ImGui::IsKeyReleased('D')) OnKeyUp('D');
+		if (ImGui::IsKeyReleased('E')) OnKeyUp('E');
+		if (ImGui::IsKeyReleased('Q')) OnKeyUp('Q');
+	}
+}
+
+void UpdateCamera(CCamera* pCamera, int width, int height, float deltaTime)
+{
+	static glm::vec3 position(-2.09197688f, 1.52254741f, 1.16247618f);
+	static glm::vec3 forward(0.0f, 0.0f, 1.0f);
+	static glm::vec3 up(0.0f, 1.0f, 0.0f);
+	static glm::vec3 left(1.0f, 0.0f, 0.0f);
+
+	// Viewport and Perspective
+	{
+		pCamera->SetScissor(0.0f, 0.0f, 1.0f * width, 1.0f * height);
+		pCamera->SetViewport(0.0f, 0.0f, 1.0f * width, 1.0f * height);
+		pCamera->SetPerspective(45.0f, 1.0f * width / height, 0.01f, 150.0f);
+	}
+
+	// Rotate
+	{
+		if (angleX < -85.0f) angleX = -85.0f;
+		if (angleX > 85.0f) angleX = 85.0f;
+
+		glm::mat4 rotatex = glm::rotate(glm::mat4(), glm::radians(angleX), glm::vec3(1.0f, 0.0f, 0.0f));
+		glm::mat4 rotatey = glm::rotate(glm::mat4(), glm::radians(angleY), glm::vec3(0.0f, 1.0f, 0.0f));
+		glm::mat4 rotation = rotatey * rotatex;
+
+		forward = glm::mat3(rotation) * glm::vec3(0.0f, 0.0f, 1.0f);
+		left = glm::cross(up, forward);
+
+		pCamera->SetLookat(position.x, position.y, position.z, position.x + forward.x, position.y + forward.y, position.z + forward.z, 0.0f, 1.0f, 0.0f);
+	}
+
+	// Translate
+	{
+		if (bMoveForward) position += forward * speed * deltaTime;
+		if (bMoveBackward) position -= forward * speed * deltaTime;
+		if (bMoveLeft) position += left * speed * deltaTime;
+		if (bMoveRight) position -= left * speed * deltaTime;
+		if (bMoveUp) position += up * speed * deltaTime;
+		if (bMoveDown) position -= up * speed * deltaTime;
+
+		pCamera->SetLookat(position.x, position.y, position.z, position.x + forward.x, position.y + forward.y, position.z + forward.z, 0.0f, 1.0f, 0.0f);
+	}
+}
+
+void UpdateRenderSolution(void)
+{
+	float shRed[9] = { 0.588794f, 0.254506f, 0.082485f, 0.028278f, 0.036788f, 0.086514f, 0.018185f, 0.021567f, 0.006525f };
+	float shGreen[9] = { 0.599826f, 0.275154f, 0.076468f, 0.028166f, 0.032798f, 0.082039f, 0.014064f, 0.020624f, 0.001984f };
+	float shBlue[9] = { 0.558644f, 0.387983f, 0.073534f, 0.024760f, 0.029393f, 0.076786f, 0.008863f, 0.017515f, -0.004231f };
+
+	static float angle = 0.0f; angle += 0.002f;
+	glm::vec4 directLightDirection = glm::rotate(glm::mat4(), angle, glm::vec3(0.0f, 1.0f, 0.0f)) * glm::vec4(0.35f, -1.0f, 0.0f, 0.0f);
+
+	RenderSystem()->SetEnvLightFactor(1.5f);
+
+	RenderSystem()->SetAmbientLightFactor(0.5f);
+	RenderSystem()->SetAmbientLightSH(shRed, shGreen, shBlue);
+
+	RenderSystem()->SetMainDirectLightFactor(1.5f);
+	RenderSystem()->SetMainDirectLightColor(3.5f, 3.5f, 3.5f);
+	RenderSystem()->SetMainDirectLightDirection(directLightDirection.x, directLightDirection.y, directLightDirection.z);
+
+	RenderSystem()->SetMainPointLightFactor(1.0f);
+	RenderSystem()->SetMainPointLightColor(1.0f, 1.0f, 1.0f);
+	RenderSystem()->SetMainPointLightPosition(0.0f, 0.0f, 0.0f, 1.0f);
+	RenderSystem()->SetMainPointLightAttenuation(1.0f, 1.0f, 1.0f);
+
+	Settings()->SetValue("RenderSystem.Shadow.Factor", 1.0f);
+	Settings()->SetValue("RenderSystem.Shadow.SplitFactor0", exp(-4.0f));
+	Settings()->SetValue("RenderSystem.Shadow.SplitFactor1", exp(-3.0f));
+	Settings()->SetValue("RenderSystem.Shadow.SplitFactor2", exp(-2.0f));
+	Settings()->SetValue("RenderSystem.Shadow.SplitFactor3", exp(-1.0f));
 }
