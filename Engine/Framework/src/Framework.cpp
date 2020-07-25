@@ -26,9 +26,9 @@ void CFramework::Destroy(void)
 
 
 CFramework::CFramework(int width, int height)
-	: m_mode(EDITOR_MODE)
-	, m_pGame(nullptr)
+	: m_pGame(nullptr)
 	, m_pEditor(nullptr)
+	, m_workMode(WORK_MODE_EDITOR)
 {
 	pInstance = this;
 
@@ -42,32 +42,51 @@ CFramework::~CFramework(void)
 	delete m_pEditor;
 }
 
+void CFramework::SetWorkMode(CFramework::WorkMode mode)
+{
+	m_workMode = mode;
+}
+
+CWorkModeBase* CFramework::GetWorkMode(void) const
+{
+	switch (m_workMode) {
+	case WORK_MODE_GAME:
+		return m_pGame;
+
+	case WORK_MODE_EDITOR:
+		return m_pEditor;
+	}
+
+	ASSERT(0);
+	return nullptr;
+}
+
 void CFramework::OnLButtonDown(int x, int y)
 {
-
+	GetWorkMode()->OnLButtonDown(x, y);
 }
 
 void CFramework::OnLButtonRelease(int x, int y)
 {
-
+	GetWorkMode()->OnLButtonRelease(x, y);
 }
 
 void CFramework::OnMouseMove(int x, int y, int ppi)
 {
-
+	GetWorkMode()->OnMouseMove(x, y, ppi);
 }
 
 void CFramework::OnKeyDown(int key)
 {
-
+	GetWorkMode()->OnKeyDown(key);
 }
 
 void CFramework::OnKeyRelease(int key)
 {
-
+	GetWorkMode()->OnKeyRelease(key);
 }
 
 void CFramework::Update(float deltaTime)
 {
-
+	GetWorkMode()->Update(deltaTime);
 }

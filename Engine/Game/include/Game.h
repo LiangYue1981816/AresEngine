@@ -1,15 +1,14 @@
 #pragma once
-#include "EngineHeader.h"
+#include "WorkModeBase.h"
 
 
-class CGame
+class CGame : public CWorkModeBase
 {
 public:
 	CGame(int width, int height);
 	virtual ~CGame(void);
 
 
-	// Input
 public:
 	void OnLButtonDown(int x, int y);
 	void OnLButtonRelease(int x, int y);
@@ -18,7 +17,6 @@ public:
 	void OnKeyDown(int key);
 	void OnKeyRelease(int key);
 
-	// Update
 public:
 	void Update(float deltaTime);
 	void UpdateCamera(float deltaTime);

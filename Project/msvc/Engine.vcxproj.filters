@@ -1770,6 +1770,9 @@
     <ClInclude Include="..\..\Engine\Game\include\Game.h">
       <Filter>Engine\Game\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Engine\Framework\include\WorkModeBase.h">
+      <Filter>Engine\Framework\Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Engine\ThirdParty\eastl\source\allocator_eastl.cpp">

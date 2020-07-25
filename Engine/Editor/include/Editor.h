@@ -1,15 +1,14 @@
 #pragma once
-#include "EngineHeader.h"
+#include "WorkModeBase.h"
 
 
-class CEditor
+class CEditor : public CWorkModeBase
 {
 public:
 	CEditor(int width, int height);
 	virtual ~CEditor(void);
 
 
-	// Input
 public:
 	void OnLButtonDown(int x, int y);
 	void OnLButtonRelease(int x, int y);
@@ -18,7 +17,6 @@ public:
 	void OnKeyDown(int key);
 	void OnKeyRelease(int key);
 
-	// Update
 public:
 	void Update(float deltaTime);
 	void UpdateCamera(float deltaTime);

@@ -4,14 +4,15 @@
 
 class CGame;
 class CEditor;
+class CWorkModeBase;
 
 class CFramework
 {
 public:
-	enum Mode
+	enum WorkMode
 	{
-		GAME_MODE,
-		EDITOR_MODE
+		WORK_MODE_GAME,
+		WORK_MODE_EDITOR,
 	};
 
 
@@ -26,7 +27,10 @@ private:
 	virtual ~CFramework(void);
 
 
-	// Input
+public:
+	void SetWorkMode(WorkMode workMode);
+	CWorkModeBase* GetWorkMode(void) const;
+
 public:
 	void OnLButtonDown(int x, int y);
 	void OnLButtonRelease(int x, int y);
@@ -35,15 +39,14 @@ public:
 	void OnKeyDown(int key);
 	void OnKeyRelease(int key);
 
-	// Update
 public:
 	void Update(float deltaTime);
 
 
 private:
-	Mode m_mode;
 	CGame* m_pGame;
 	CEditor* m_pEditor;
+	WorkMode m_workMode;
 
 private:
 	static CFramework* pInstance;
