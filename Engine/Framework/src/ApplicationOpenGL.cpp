@@ -129,14 +129,14 @@ bool CApplicationOpenGL::Create(void* hInstance, void* hWnd, void* hDC, int widt
 	FileManager()->SetPath("../Data", ".mesh");
 	FileManager()->SetPath("../Data", ".material");
 
-	pMainCamera = new CCamera;
-
 	ptrComputeCommandBuffers[0] = GfxRenderer()->NewCommandBuffer(0, true);
 	ptrComputeCommandBuffers[1] = GfxRenderer()->NewCommandBuffer(0, true);
 	ptrComputeCommandBuffers[2] = GfxRenderer()->NewCommandBuffer(0, true);
 	ptrGraphicCommandBuffers[0] = GfxRenderer()->NewCommandBuffer(0, true);
 	ptrGraphicCommandBuffers[1] = GfxRenderer()->NewCommandBuffer(0, true);
 	ptrGraphicCommandBuffers[2] = GfxRenderer()->NewCommandBuffer(0, true);
+
+	pMainCamera = new CCamera;
 
 	//
 	// 3. Setup ImGui
