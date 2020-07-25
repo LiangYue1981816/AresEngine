@@ -2,6 +2,9 @@
 #include "EngineHeader.h"
 
 
+class CGame;
+class CEditor;
+
 class CFramework
 {
 public:
@@ -26,30 +29,13 @@ public:
 
 	// Update
 public:
-	void UpdateGame(float deltaTime);
+	void UpdatePlay(float deltaTime);
 	void UpdateEditor(float deltaTime);
 
-private:
-	void UpdateEditorMainCamera(float deltaTime);
-
 
 private:
-	float m_cameraAngleX;
-	float m_cameraAngleY;
-	float m_cameraMoveSpeed;
-
-private:
-	POINT m_ptMousePosition;
-	bool m_bLButtonDown;
-	bool m_bMoveForward;
-	bool m_bMoveBackward;
-	bool m_bMoveLeft;
-	bool m_bMoveRight;
-	bool m_bMoveUp;
-	bool m_bMoveDown;
-
-private:
-	CCamera* m_pMainCamera;
+	CGame* m_pGame;
+	CEditor* m_pEditor;
 
 private:
 	static CFramework* pInstance;
