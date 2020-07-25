@@ -39,9 +39,12 @@ void CApplication::Update(void)
 		lastTick = Tick();
 	}
 	/*/
-	static uint32_t lastTick = 0;
-	UpdateInternal((Tick() - lastTick) / 1000000.0f);
-	lastTick = Tick();
+	uint32_t currTick = Tick();
+	{
+		static uint32_t lastTick = 0;
+		UpdateInternal((currTick - lastTick) / 1000000.0f);
+		lastTick = currTick;
+	}
 	//*/
 }
 
