@@ -2,6 +2,7 @@
 #include "imgui_impl_win32.h"
 
 #include "Application.h"
+#include "Framework.h"
 
 
 CApplicationVulkan::CApplicationVulkan(void)
