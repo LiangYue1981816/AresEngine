@@ -23,6 +23,7 @@ CApplication::~CApplication(void)
 
 void CApplication::Update(void)
 {
+	/*
 	static uint32_t lastTick = 0;
 	float deltaTime = (Tick() - lastTick) / 1000000.0f;
 
@@ -37,6 +38,11 @@ void CApplication::Update(void)
 
 		lastTick = Tick();
 	}
+	/*/
+	static uint32_t lastTick = 0;
+	UpdateInternal((Tick() - lastTick) / 1000000.0f);
+	lastTick = Tick();
+	//*/
 }
 
 int64_t CApplication::WndProc(void* hWnd, uint32_t msg, uint64_t wParam, int64_t lParam)
