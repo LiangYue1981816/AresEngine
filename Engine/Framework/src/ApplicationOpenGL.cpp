@@ -316,11 +316,6 @@ void UpdateRenderSolution(void)
 	RenderSystem()->SetMainDirectLightColor(3.5f, 3.5f, 3.5f);
 	RenderSystem()->SetMainDirectLightDirection(directLightDirection.x, directLightDirection.y, directLightDirection.z);
 
-	RenderSystem()->SetMainPointLightFactor(1.0f);
-	RenderSystem()->SetMainPointLightColor(1.0f, 1.0f, 1.0f);
-	RenderSystem()->SetMainPointLightPosition(0.0f, 0.0f, 0.0f, 1.0f);
-	RenderSystem()->SetMainPointLightAttenuation(1.0f, 1.0f, 1.0f);
-
 	Settings()->SetValue("RenderSystem.Shadow.Factor", 1.0f);
 	Settings()->SetValue("RenderSystem.Shadow.SplitFactor0", exp(-4.0f));
 	Settings()->SetValue("RenderSystem.Shadow.SplitFactor1", exp(-3.0f));
