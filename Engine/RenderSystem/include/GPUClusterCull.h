@@ -20,6 +20,12 @@ private:
 
 
 private:
+	CGfxMeshPtr m_ptrMesh;
+	CGfxMeshDrawPtr m_ptrMeshDraw;
+	CGfxMaterialPtr m_ptrMaterialCullFaceBack;
+	CGfxMaterialPtr m_ptrMaterialCullFaceFront;
+
+private:
 	CGfxShader* m_pShaderCompute;
 	CGfxPipelineCompute* m_pPipelineCompute;
 	CGfxDescriptorSetPtr m_ptrDescriptorSet;

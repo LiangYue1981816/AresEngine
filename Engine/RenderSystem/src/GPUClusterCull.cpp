@@ -21,6 +21,11 @@ CGPUClusterCull::CGPUClusterCull(CRenderSystem* pRenderSystem)
 	m_ptrDescriptorSet->SetStorageBuffer(STORAGE_CLUSTER_DATA_NAME, m_pRenderSystem->GetClusterBuffer(), 0, m_pRenderSystem->GetClusterBuffer()->GetSize());
 	m_ptrDescriptorSet->SetStorageBuffer(STORAGE_FULL_LIGHT_INDEX_DATA_NAME, m_pRenderSystem->GetFullLightIndexBuffer(), 0, m_pRenderSystem->GetFullLightIndexBuffer()->GetSize());
 	m_ptrDescriptorSet->SetStorageBuffer(STORAGE_CULL_LIGHT_INDEX_DATA_NAME, m_pRenderSystem->GetCullLightIndexBuffer(), 0, m_pRenderSystem->GetCullLightIndexBuffer()->GetSize());
+
+	m_ptrMesh = GfxRenderer()->NewMesh("PointLight.mesh", VERTEX_BINDING);
+	m_ptrMeshDraw = GfxRenderer()->NewMeshDraw(m_ptrMesh->GetName(), m_ptrMesh, 0);
+	m_ptrMaterialCullFaceBack = GfxRenderer()->NewMaterial("PassDeferredShading_Back.material", VERTEX_BINDING, INSTANCE_BINDING);
+	m_ptrMaterialCullFaceFront = GfxRenderer()->NewMaterial("PassDeferredShading_Front.material", VERTEX_BINDING, INSTANCE_BINDING);
 }
 
 CGPUClusterCull::~CGPUClusterCull(void)
@@ -42,13 +47,8 @@ void CGPUClusterCull::Compute(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCo
 	m_ptrDescriptorSet->SetUniformBuffer(UNIFORM_CAMERA_NAME, m_pCamera->GetUniformBuffer(), m_pCamera->GetUniformBufferOffset(), m_pCamera->GetUniformBufferSize());
 
 	// Update Buffer
-	CGfxMeshPtr ptrMesh = GfxRenderer()->NewMesh("PointLight.mesh", VERTEX_BINDING);
-	CGfxMeshDrawPtr ptrMeshDraw = GfxRenderer()->NewMeshDraw(ptrMesh->GetName(), ptrMesh, 0);
-	CGfxMaterialPtr ptrMaterialCullFaceBack = GfxRenderer()->NewMaterial("PassDeferredShading_Back.material", VERTEX_BINDING, INSTANCE_BINDING);
-	CGfxMaterialPtr ptrMaterialCullFaceFront = GfxRenderer()->NewMaterial("PassDeferredShading_Front.material", VERTEX_BINDING, INSTANCE_BINDING);
-
-	const eastl::vector<int>& instnaces0 = m_pCamera->GetRenderQueue()->GetInstanceBuffer(ptrMaterialCullFaceFront, ptrMeshDraw);
-	const eastl::vector<int>& instnaces1 = m_pCamera->GetRenderQueue()->GetInstanceBuffer(ptrMaterialCullFaceBack, ptrMeshDraw);
+	const eastl::vector<int>& instnaces0 = m_pCamera->GetRenderQueue()->GetInstanceBuffer(m_ptrMaterialCullFaceFront, m_ptrMeshDraw);
+	const eastl::vector<int>& instnaces1 = m_pCamera->GetRenderQueue()->GetInstanceBuffer(m_ptrMaterialCullFaceBack, m_ptrMeshDraw);
 
 	eastl::vector<int> instance;
 	instance.insert(instance.end(), instnaces0.begin(), instnaces0.end());
