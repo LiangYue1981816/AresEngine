@@ -2,6 +2,11 @@
 #include "EngineHeader.h"
 
 
+#define CreateFramework(width, height) CFramework::Create((width), (height))
+#define DestroyFramework() CFramework::Destroy()
+#define Framework() CFramework::GetInstance()
+
+
 class CGame;
 class CEditor;
 class CWorkModeBase;
@@ -41,6 +46,7 @@ public:
 
 public:
 	void Update(float deltaTime);
+	void Render(CGfxCommandBufferPtr ptrComputeCommandBuffer, CGfxCommandBufferPtr ptrGraphicCommandBuffer, const CGfxSemaphore* pWaitSemaphore);
 
 
 private:

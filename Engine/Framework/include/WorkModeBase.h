@@ -25,4 +25,5 @@ public:
 
 public:
 	virtual void Update(float deltaTime) = 0;
+	virtual void Render(CGfxCommandBufferPtr ptrComputeCommandBuffer, CGfxCommandBufferPtr ptrGraphicCommandBuffer, const CGfxSemaphore* pWaitSemaphore) = 0;
 };

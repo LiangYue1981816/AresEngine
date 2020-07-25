@@ -3,6 +3,12 @@
 #include "Framework.h"
 
 
+// Test
+#pragma region
+CScene* pLightScene = nullptr;
+CScene* pMainScene = nullptr;
+#pragma endregion
+
 CFramework* CFramework::pInstance = nullptr;
 CFramework* CFramework::GetInstance(void)
 {
@@ -34,10 +40,69 @@ CFramework::CFramework(int width, int height)
 
 	m_pGame = new CGame(width, height);
 	m_pEditor = new CEditor(width, height);
+
+	// Test
+#pragma region
+	pLightScene = SceneManager()->GetOrCreateScene(HashValue("LightScene"));
+	{
+		float maxSize = 1.0f;
+		float maxRangeX = 13.5f;
+		float maxRangeY = 11.0f;
+		float maxRangeZ = 6.0f;
+
+		srand(0x0816);
+
+		pLightScene->GetRootNode()->SetWorldScale(1.0f, 1.0f, 1.0f);
+		pLightScene->GetRootNode()->SetWorldPosition(-0.5f, 0.0f, 0.0f);
+
+		for (int index = 0; index < 200; index++) {
+			float scale = RAND() * maxSize;
+			float positionx = (2.0f * RAND() - 1.0f) * maxRangeX;
+			float positiony = RAND() * maxRangeY;
+			float positionz = (2.0f * RAND() - 1.0f) * maxRangeZ;
+
+			CComponentPointLightPtr ptrPointLight = SceneManager()->GetOrCreateComponentPointLight(SceneManager()->GetNextComponentPointLightName());
+			ptrPointLight->SetColor(4.0f, 4.0f, 4.0f);
+			ptrPointLight->SetAttenuation(3.0f, 2.0f, 1.0f, scale);
+
+			CSceneNode *pPointLightNode = SceneManager()->GetOrCreateNode(SceneManager()->GetNextNodeName());
+			pPointLightNode->SetWorldScale(scale, scale, scale);
+			pPointLightNode->SetWorldPosition(positionx, positiony, positionz);
+			pPointLightNode->AttachComponentPointLight(ptrPointLight);
+			pLightScene->GetRootNode()->AttachNode(pPointLightNode);
+		}
+	}
+
+	pMainScene = SceneManager()->GetOrCreateScene(HashValue("MainScene"));
+	{
+		pMainScene->GetRootNode()->SetWorldScale(1.0f, 1.0f, 1.0f);
+		pMainScene->GetRootNode()->SetWorldPosition(0.0f, 0.0f, 0.0f);
+
+		CSceneNode *pSponzaSceneNode = ResourceLoader()->LoadSceneMesh("Sponza.xml", pMainScene->GetRootNode(), VERTEX_BINDING, INSTANCE_BINDING);
+		pSponzaSceneNode->SetWorldScale(1.0f, 1.0f, 1.0f);
+		pSponzaSceneNode->SetWorldPosition(0.0f, 0.0f, 0.0f);
+
+		CSceneNode *pMarcusSceneNode = ResourceLoader()->LoadSceneMesh("Marcus.xml", pMainScene->GetRootNode(), VERTEX_BINDING, INSTANCE_BINDING);
+		pMarcusSceneNode->SetWorldScale(1.0f, 1.0f, 1.0f);
+		pMarcusSceneNode->SetWorldPosition(0.0f, 0.0f, 0.0f);
+		pMarcusSceneNode->SetWorldDirection(-1.0f, 0.0f, -1.0);
+
+		CSceneNode *pHeadSceneNode = ResourceLoader()->LoadSceneMesh("MaleHead.xml", pMainScene->GetRootNode(), VERTEX_BINDING, INSTANCE_BINDING);
+		pHeadSceneNode->SetWorldScale(1.0f, 1.0f, 1.0f);
+		pHeadSceneNode->SetWorldPosition(-1.0f, 1.0f, 0.0f);
+		pHeadSceneNode->SetWorldDirection(-1.0f, 0.0f, -1.0f);
+	}
+#pragma endregion
 }
 
 CFramework::~CFramework(void)
 {
+	// Test
+#pragma region
+	SceneManager()->DestroyScene(pMainScene);
+	SceneManager()->DestroyScene(pLightScene);
+#pragma endregion
+
 	delete m_pGame;
 	delete m_pEditor;
 }
@@ -89,4 +154,9 @@ void CFramework::OnKeyRelease(int key)
 void CFramework::Update(float deltaTime)
 {
 	GetWorkMode()->Update(deltaTime);
+}
+
+void CFramework::Render(CGfxCommandBufferPtr ptrComputeCommandBuffer, CGfxCommandBufferPtr ptrGraphicCommandBuffer, const CGfxSemaphore* pWaitSemaphore)
+{
+	GetWorkMode()->Render(ptrComputeCommandBuffer, ptrGraphicCommandBuffer, pWaitSemaphore);
 }

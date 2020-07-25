@@ -109,3 +109,6 @@
 		return nullptr;                          \
 	}                                            \
 }
+
+
+#define RAND() ((rand() % 10000) / 10000.0f)

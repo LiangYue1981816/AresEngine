@@ -21,6 +21,9 @@ public:
 	void Update(float deltaTime);
 	void UpdateCamera(float deltaTime);
 
+public:
+	void Render(CGfxCommandBufferPtr ptrComputeCommandBuffer, CGfxCommandBufferPtr ptrGraphicCommandBuffer, const CGfxSemaphore* pWaitSemaphore);
+
 
 private:
 	float m_cameraAngleX;

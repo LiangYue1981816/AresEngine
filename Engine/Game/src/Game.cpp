@@ -125,3 +125,8 @@ void CGame::UpdateCamera(float deltaTime)
 		m_pMainCamera->SetLookat(position.x, position.y, position.z, position.x + forward.x, position.y + forward.y, position.z + forward.z, 0.0f, 1.0f, 0.0f);
 	}
 }
+
+void CGame::Render(CGfxCommandBufferPtr ptrComputeCommandBuffer, CGfxCommandBufferPtr ptrGraphicCommandBuffer, const CGfxSemaphore* pWaitSemaphore)
+{
+	Engine()->RenderTileDeferredShading(m_pMainCamera, ptrComputeCommandBuffer, ptrGraphicCommandBuffer, pWaitSemaphore);
+}
