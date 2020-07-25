@@ -26,7 +26,8 @@ void CFramework::Destroy(void)
 
 
 CFramework::CFramework(int width, int height)
-	: m_pGame(nullptr)
+	: m_mode(EDITOR_MODE)
+	, m_pGame(nullptr)
 	, m_pEditor(nullptr)
 {
 	pInstance = this;
@@ -66,12 +67,7 @@ void CFramework::OnKeyRelease(int key)
 
 }
 
-void CFramework::UpdatePlay(float deltaTime)
-{
-
-}
-
-void CFramework::UpdateEditor(float deltaTime)
+void CFramework::Update(float deltaTime)
 {
 
 }

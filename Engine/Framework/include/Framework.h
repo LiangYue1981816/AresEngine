@@ -8,6 +8,14 @@ class CEditor;
 class CFramework
 {
 public:
+	enum Mode
+	{
+		GAME_MODE,
+		EDITOR_MODE
+	};
+
+
+public:
 	static CFramework* GetInstance(void);
 	static void Create(int width, int height);
 	static void Destroy(void);
@@ -29,11 +37,11 @@ public:
 
 	// Update
 public:
-	void UpdatePlay(float deltaTime);
-	void UpdateEditor(float deltaTime);
+	void Update(float deltaTime);
 
 
 private:
+	Mode m_mode;
 	CGame* m_pGame;
 	CEditor* m_pEditor;
 
