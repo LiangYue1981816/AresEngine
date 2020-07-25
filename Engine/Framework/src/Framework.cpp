@@ -1,45 +1,156 @@
-#include "imgui.h"
-#include "imgui_impl_win32.h"
-
-#include "Application.h"
-#include "EngineHeader.h"
+#include "Framework.h"
 
 
-extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
-
-
-CApplication::CApplication(void)
-	: m_hDC(nullptr)
-	, m_width(0)
-	, m_height(0)
+CFramework* CFramework::pInstance = nullptr;
+CFramework* CFramework::GetInstance(void)
 {
-
+	return pInstance;
 }
 
-CApplication::~CApplication(void)
+void CFramework::Create(int width, int height)
 {
-
-}
-
-void CApplication::Update(void)
-{
-	static uint32_t lastTick = 0;
-	float deltaTime = (Tick() - lastTick) / 1000000.0f;
-
-	if (deltaTime > 1.0f / 60.0f) {
-		static bool bFirstFrame = true;
-		{
-			if (bFirstFrame == false) {
-				UpdateInternal(deltaTime);
-			}
-		}
-		bFirstFrame = false;
-
-		lastTick = Tick();
+	if (pInstance == nullptr) {
+		pInstance = new CFramework(width, height);
 	}
 }
 
-int64_t CApplication::WndProc(void* hWnd, uint32_t msg, uint64_t wParam, int64_t lParam)
+void CFramework::Destroy(void)
 {
-	return ImGui_ImplWin32_WndProcHandler((HWND)hWnd, msg, wParam, lParam);
+	if (pInstance) {
+		delete pInstance;
+		pInstance = nullptr;
+	}
+}
+
+
+CFramework::CFramework(int width, int height)
+	: m_pMainCamera(nullptr)
+	, m_cameraAngleX(0.0f)
+	, m_cameraAngleY(135.0f)
+	, m_cameraMoveSpeed(1.5f)
+
+	, m_bLButtonDown(false)
+	, m_bMoveForward(false)
+	, m_bMoveBackward(false)
+	, m_bMoveLeft(false)
+	, m_bMoveRight(false)
+	, m_bMoveUp(false)
+	, m_bMoveDown(false)
+	, m_ptMousePosition{ -1, -1 }
+{
+	pInstance = this;
+
+	m_pMainCamera = new CCamera;
+	m_pMainCamera->SetScissor(0.0f, 0.0f, 1.0f * width, 1.0f * height);
+	m_pMainCamera->SetViewport(0.0f, 0.0f, 1.0f * width, 1.0f * height);
+	m_pMainCamera->SetPerspective(45.0f, 1.0f * width / height, 0.01f, 150.0f);
+}
+
+CFramework::~CFramework(void)
+{
+	delete m_pMainCamera;
+}
+
+void CFramework::OnLButtonDown(int x, int y)
+{
+	m_bLButtonDown = true;
+
+	m_ptMousePosition.x = x;
+	m_ptMousePosition.y = y;
+}
+
+void CFramework::OnLButtonRelease(int x, int y)
+{
+	m_bLButtonDown = false;
+	m_bMoveForward = false;
+	m_bMoveBackward = false;
+	m_bMoveLeft = false;
+	m_bMoveRight = false;
+	m_bMoveUp = false;
+	m_bMoveDown = false;
+
+	m_ptMousePosition.x = -1;
+	m_ptMousePosition.y = -1;
+}
+
+void CFramework::OnMouseMove(int x, int y, int ppi)
+{
+	if (m_bLButtonDown) {
+		if (m_ptMousePosition.x != -1 && m_ptMousePosition.y != -1) {
+			m_cameraAngleX += 0.5f * (y - m_ptMousePosition.y) * 100.0f / ppi;
+			m_cameraAngleY += 0.5f * (m_ptMousePosition.x - x) * 100.0f / ppi;
+
+			m_ptMousePosition.x = x;
+			m_ptMousePosition.y = y;
+		}
+	}
+}
+
+void CFramework::OnKeyDown(int key)
+{
+	switch (key) {
+	case 'W': m_bMoveForward = true; break;
+	case 'S': m_bMoveBackward = true; break;
+	case 'A': m_bMoveLeft = true; break;
+	case 'D': m_bMoveRight = true; break;
+	case 'E': m_bMoveUp = true; break;
+	case 'Q': m_bMoveDown = true; break;
+	}
+}
+
+void CFramework::OnKeyRelease(int key)
+{
+	switch (key) {
+	case 'W': m_bMoveForward = false; break;
+	case 'S': m_bMoveBackward = false; break;
+	case 'A': m_bMoveLeft = false; break;
+	case 'D': m_bMoveRight = false; break;
+	case 'E': m_bMoveUp = false; break;
+	case 'Q': m_bMoveDown = false; break;
+	}
+}
+
+void CFramework::UpdateGame(float deltaTime)
+{
+
+}
+
+void CFramework::UpdateEditor(float deltaTime)
+{
+	UpdateEditorMainCamera(deltaTime);
+}
+
+void CFramework::UpdateEditorMainCamera(float deltaTime)
+{
+	static glm::vec3 position(-2.09197688f, 1.52254741f, 1.16247618f);
+	static glm::vec3 forward(0.0f, 0.0f, 1.0f);
+	static glm::vec3 up(0.0f, 1.0f, 0.0f);
+	static glm::vec3 left(1.0f, 0.0f, 0.0f);
+
+	// Rotate
+	{
+		if (m_cameraAngleX < -85.0f) m_cameraAngleX = -85.0f;
+		if (m_cameraAngleX > 85.0f) m_cameraAngleX = 85.0f;
+
+		glm::mat4 rotatex = glm::rotate(glm::mat4(), glm::radians(m_cameraAngleX), glm::vec3(1.0f, 0.0f, 0.0f));
+		glm::mat4 rotatey = glm::rotate(glm::mat4(), glm::radians(m_cameraAngleY), glm::vec3(0.0f, 1.0f, 0.0f));
+		glm::mat4 rotation = rotatey * rotatex;
+
+		forward = glm::mat3(rotation) * glm::vec3(0.0f, 0.0f, 1.0f);
+		left = glm::cross(up, forward);
+
+		m_pMainCamera->SetLookat(position.x, position.y, position.z, position.x + forward.x, position.y + forward.y, position.z + forward.z, 0.0f, 1.0f, 0.0f);
+	}
+
+	// Translate
+	{
+		if (m_bMoveForward) position += forward * m_cameraMoveSpeed * deltaTime;
+		if (m_bMoveBackward) position -= forward * m_cameraMoveSpeed * deltaTime;
+		if (m_bMoveLeft) position += left * m_cameraMoveSpeed * deltaTime;
+		if (m_bMoveRight) position -= left * m_cameraMoveSpeed * deltaTime;
+		if (m_bMoveUp) position += up * m_cameraMoveSpeed * deltaTime;
+		if (m_bMoveDown) position -= up * m_cameraMoveSpeed * deltaTime;
+
+		m_pMainCamera->SetLookat(position.x, position.y, position.z, position.x + forward.x, position.y + forward.y, position.z + forward.z, 0.0f, 1.0f, 0.0f);
+	}
 }
