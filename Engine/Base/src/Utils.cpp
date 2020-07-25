@@ -85,9 +85,11 @@ CALL_API void LogOutput(const char* szTag, const char* szFormat, ...)
 		OutputDebugString(szTag);
 		OutputDebugString(": ");
 		OutputDebugString(szText);
+		printf("%s: %s", szTag, szText);
 	}
 	else {
 		OutputDebugString(szText);
+		printf("%s", szText);
 	}
 #elif PLATFORM_ANDROID
 	if (szTag) {
