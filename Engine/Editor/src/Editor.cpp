@@ -29,24 +29,28 @@ CEditor::~CEditor(void)
 
 void CEditor::OnLButtonDown(int x, int y)
 {
-	m_bLButtonDown = true;
+	if (m_bLButtonDown == false) {
+		m_bLButtonDown = true;
 
-	m_ptMousePosition.x = x;
-	m_ptMousePosition.y = y;
+		m_ptMousePosition.x = x;
+		m_ptMousePosition.y = y;
+	}
 }
 
 void CEditor::OnLButtonRelease(int x, int y)
 {
-	m_bLButtonDown = false;
-	m_bMoveForward = false;
-	m_bMoveBackward = false;
-	m_bMoveLeft = false;
-	m_bMoveRight = false;
-	m_bMoveUp = false;
-	m_bMoveDown = false;
+	if (m_bLButtonDown) {
+		m_bLButtonDown = false;
+		m_bMoveForward = false;
+		m_bMoveBackward = false;
+		m_bMoveLeft = false;
+		m_bMoveRight = false;
+		m_bMoveUp = false;
+		m_bMoveDown = false;
 
-	m_ptMousePosition.x = -1;
-	m_ptMousePosition.y = -1;
+		m_ptMousePosition.x = -1;
+		m_ptMousePosition.y = -1;
+	}
 }
 
 void CEditor::OnMouseMove(int x, int y, int ppi)
