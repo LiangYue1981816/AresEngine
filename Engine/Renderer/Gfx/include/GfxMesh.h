@@ -2,7 +2,7 @@
 #include "PreHeader.h"
 
 
-class CALL_API CGfxMesh : public CGfxResource
+class CGfxMesh : public CGfxResource
 {
 public:
 	typedef struct Draw {

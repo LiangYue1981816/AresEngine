@@ -2,7 +2,7 @@
 #include "PreHeader.h"
 
 
-class CALL_API CStream
+class CStream
 {
 public:
 	CStream(void);

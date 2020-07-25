@@ -5,8 +5,8 @@
 #define ResourceLoader() CResourceLoader::GetInstance()
 
 
-class CALL_API CSceneNode;
-class CALL_API CResourceLoader
+class CSceneNode;
+class CResourceLoader
 {
 	friend class CEngine;
 

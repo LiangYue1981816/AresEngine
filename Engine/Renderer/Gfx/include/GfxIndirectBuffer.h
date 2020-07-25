@@ -28,7 +28,7 @@ typedef struct DrawCommand {
 	int baseInstance;
 } DrawCommand;
 
-class CALL_API CGfxIndirectBuffer : public CGfxResource
+class CGfxIndirectBuffer : public CGfxResource
 {
 public:
 	CGfxIndirectBuffer(int numDrawCommands)
@@ -51,7 +51,7 @@ public:
 	virtual bool BufferData(int indexDraw, int firstIndex, int baseVertex, int baseInstance, int indexCount, int instanceCount) = 0;
 };
 
-class CALL_API CGfxMultiIndirectBuffer : public CGfxResource
+class CGfxMultiIndirectBuffer : public CGfxResource
 {
 public:
 	CGfxMultiIndirectBuffer(int numDrawCommands, int count)

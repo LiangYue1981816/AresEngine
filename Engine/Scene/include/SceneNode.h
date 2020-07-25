@@ -2,7 +2,7 @@
 #include "PreHeader.h"
 
 
-class CALL_API CSceneNode
+class CSceneNode
 {
 	friend class CScene;
 	friend class CSceneManager;

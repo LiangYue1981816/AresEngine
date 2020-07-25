@@ -2,7 +2,7 @@
 #include "PreHeader.h"
 
 
-class CALL_API CInstanceBufferPool
+class CInstanceBufferPool
 {
 public:
 	CInstanceBufferPool(void);

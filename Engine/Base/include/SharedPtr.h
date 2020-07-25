@@ -3,7 +3,7 @@
 
 
 template<class T>
-class CALL_API CSharedPtr
+class CSharedPtr
 {
 public:
 	CSharedPtr(void)

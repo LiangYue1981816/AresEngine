@@ -37,7 +37,7 @@ typedef struct InstanceData {
 	glm::vec4 lightAttenuation;
 } InstanceData;
 
-class CALL_API CGPUScene : public CPassBase
+class CGPUScene : public CPassBase
 {
 	friend class CRenderSystem;
 

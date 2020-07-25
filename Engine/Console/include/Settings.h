@@ -5,7 +5,7 @@
 #define Settings() CSettings::GetInstance()
 
 
-class CALL_API CSettings
+class CSettings
 {
 	friend class CEngine;
 

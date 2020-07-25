@@ -2,7 +2,7 @@
 #include "PreHeader.h"
 
 
-class CALL_API CPassLuminanceThreshold : public CPassBlit
+class CPassLuminanceThreshold : public CPassBlit
 {
 	friend class CCamera;
 	friend class CRenderSystem;

@@ -2,7 +2,7 @@
 #include "PreHeader.h"
 
 
-class CALL_API CGfxSwapChain
+class CGfxSwapChain
 {
 public:
 	CGfxSwapChain(int width, int height, GfxPixelFormat format)

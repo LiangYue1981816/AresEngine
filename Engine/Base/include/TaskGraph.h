@@ -2,7 +2,7 @@
 #include "PreHeader.h"
 
 
-class CALL_API CTaskGraph
+class CTaskGraph
 {
 private:
 	typedef struct Thread {

@@ -2,7 +2,7 @@
 #include "PreHeader.h"
 
 
-class CALL_API CGfxResource
+class CGfxResource
 {
 	template<class T>
 	friend class CGfxResourcePtr;
@@ -59,7 +59,7 @@ private:
 };
 
 template<class T>
-class CALL_API CGfxResourcePtr
+class CGfxResourcePtr
 {
 public:
 	CGfxResourcePtr(void)

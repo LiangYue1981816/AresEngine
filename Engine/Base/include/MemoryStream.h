@@ -2,7 +2,7 @@
 #include "PreHeader.h"
 
 
-class CALL_API CMemoryStream : public CStream
+class CMemoryStream : public CStream
 {
 public:
 	CMemoryStream(void);

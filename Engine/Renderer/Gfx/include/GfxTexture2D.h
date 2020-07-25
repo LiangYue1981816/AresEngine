@@ -2,7 +2,7 @@
 #include "PreHeader.h"
 
 
-class CALL_API CGfxTexture2D : public CGfxResource
+class CGfxTexture2D : public CGfxResource
 {
 public:
 	CGfxTexture2D(uint32_t name)

@@ -5,7 +5,7 @@
 #define FileManager() CFileManager::GetInstance()
 
 
-class CALL_API CFileManager
+class CFileManager
 {
 	friend class CEngine;
 

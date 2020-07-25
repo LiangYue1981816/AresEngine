@@ -2,7 +2,7 @@
 #include "PreHeader.h"
 
 
-class CALL_API CGfxTextureCubemap : public CGfxResource
+class CGfxTextureCubemap : public CGfxResource
 {
 public:
 	CGfxTextureCubemap(uint32_t name)

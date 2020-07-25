@@ -2,7 +2,7 @@
 #include "PreHeader.h"
 
 
-class CALL_API CGPUEyeHistogram : public CPassBase
+class CGPUEyeHistogram : public CPassBase
 {
 	friend class CRenderSystem;
 

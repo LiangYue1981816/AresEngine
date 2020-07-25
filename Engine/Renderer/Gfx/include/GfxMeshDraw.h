@@ -2,7 +2,7 @@
 #include "PreHeader.h"
 
 
-class CALL_API CGfxMeshDraw : public CGfxResource
+class CGfxMeshDraw : public CGfxResource
 {
 public:
 	CGfxMeshDraw(uint32_t name, const CGfxMeshPtr ptrMesh, uint32_t nameDraw)

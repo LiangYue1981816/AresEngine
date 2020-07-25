@@ -2,8 +2,8 @@
 #include "PreHeader.h"
 
 
-class CALL_API CRenderQueue;
-class CALL_API CCamera
+class CRenderQueue;
+class CCamera
 {
 public:
 	typedef struct Params {

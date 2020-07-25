@@ -2,7 +2,7 @@
 #include "PreHeader.h"
 
 
-class CALL_API CGfxMaterialPass
+class CGfxMaterialPass
 {
 public:
 	CGfxMaterialPass(uint32_t name)

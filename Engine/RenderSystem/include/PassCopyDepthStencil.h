@@ -2,7 +2,7 @@
 #include "PreHeader.h"
 
 
-class CALL_API CPassCopyDepthStencil : public CPassBlit
+class CPassCopyDepthStencil : public CPassBlit
 {
 	friend class CCamera;
 	friend class CRenderSystem;

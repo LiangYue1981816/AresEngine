@@ -11,7 +11,7 @@
 #define RenderSystem() CEngine::GetInstance()->GetRenderSystem()
 
 
-class CALL_API CEngine
+class CEngine
 {
 public:
 	static CEngine* GetInstance(void);

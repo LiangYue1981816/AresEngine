@@ -2,7 +2,7 @@
 #include "PreHeader.h"
 
 
-class CALL_API CComponentBase
+class CComponentBase
 {
 	template<class T>
 	friend class CComponentPtr;
@@ -59,7 +59,7 @@ private:
 };
 
 template<class T>
-class CALL_API CComponentManager
+class CComponentManager
 {
 public:
 	CComponentManager(void)
@@ -171,7 +171,7 @@ private:
 };
 
 template<class T>
-class CALL_API CComponentPtr
+class CComponentPtr
 {
 public:
 	CComponentPtr(void)

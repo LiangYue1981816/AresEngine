@@ -2,7 +2,7 @@
 #include "PreHeader.h"
 
 
-class CALL_API CGfxPipelineCompute
+class CGfxPipelineCompute
 {
 public:
 	CGfxPipelineCompute(uint32_t name)

@@ -2,7 +2,7 @@
 #include "PreHeader.h"
 
 
-class CALL_API mutex_autolock
+class mutex_autolock
 {
 public:
 	mutex_autolock(pthread_mutex_t* mutex);
@@ -13,7 +13,7 @@ private:
 	pthread_mutex_t* m_mutex;
 };
 
-class CALL_API atomic_spin_autolock
+class atomic_spin_autolock
 {
 public:
 	atomic_spin_autolock(std::atomic_flag* flag);

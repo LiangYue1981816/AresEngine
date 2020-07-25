@@ -2,7 +2,7 @@
 #include "PreHeader.h"
 
 
-class CALL_API CGfxFrameBuffer : public CGfxResource
+class CGfxFrameBuffer : public CGfxResource
 {
 public:
 	CGfxFrameBuffer(int width, int height, int numAttachments)

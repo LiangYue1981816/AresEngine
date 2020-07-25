@@ -2,7 +2,7 @@
 #include "PreHeader.h"
 
 
-class CALL_API CPassAutoExposure : public CPassBlit
+class CPassAutoExposure : public CPassBlit
 {
 	friend class CCamera;
 	friend class CRenderSystem;

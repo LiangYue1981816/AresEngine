@@ -2,7 +2,7 @@
 #include "PreHeader.h"
 
 
-class CALL_API CPassBlurBox : public CPassBlit
+class CPassBlurBox : public CPassBlit
 {
 	friend class CCamera;
 	friend class CRenderSystem;

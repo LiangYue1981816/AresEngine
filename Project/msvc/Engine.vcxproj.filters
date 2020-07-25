@@ -1743,6 +1743,9 @@
     <ClInclude Include="..\..\Engine\Application.h">
       <Filter>Engine</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Engine\Framework\include\Framework.h">
+      <Filter>Engine\Framework\Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Engine\ThirdParty\eastl\source\allocator_eastl.cpp">

@@ -2,7 +2,7 @@
 #include "PreHeader.h"
 
 
-class CALL_API CGfxSemaphore
+class CGfxSemaphore
 {
 public:
 	CGfxSemaphore(void)

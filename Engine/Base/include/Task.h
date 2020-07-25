@@ -2,7 +2,7 @@
 #include "PreHeader.h"
 
 
-class CALL_API CTask
+class CTask
 {
 	friend class CTaskPool;
 	friend class CTaskGraph;
@@ -39,7 +39,7 @@ private:
 };
 
 
-class CALL_API CTaskLambda : public CTask
+class CTaskLambda : public CTask
 {
 public:
 	template<class Func, class... Args>
@@ -56,7 +56,7 @@ private:
 };
 
 
-class CALL_API CTaskStack
+class CTaskStack
 {
 public:
 	CTaskStack(void);

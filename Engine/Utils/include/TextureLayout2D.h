@@ -2,7 +2,7 @@
 #include "PreHeader.h"
 
 
-class CALL_API CTextureLayout2D
+class CTextureLayout2D
 {
 public:
 	CTextureLayout2D(int width, int height);

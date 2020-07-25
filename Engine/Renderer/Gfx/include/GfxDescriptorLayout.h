@@ -2,7 +2,7 @@
 #include "PreHeader.h"
 
 
-class CALL_API CGfxDescriptorLayout : public CGfxResource
+class CGfxDescriptorLayout : public CGfxResource
 {
 public:
 	CGfxDescriptorLayout(uint32_t set)

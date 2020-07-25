@@ -2,7 +2,7 @@
 #include "PreHeader.h"
 
 
-class CALL_API CComponentParticle : public CComponent
+class CComponentParticle : public CComponent
 {
 public:
 	CComponentParticle(uint32_t name);

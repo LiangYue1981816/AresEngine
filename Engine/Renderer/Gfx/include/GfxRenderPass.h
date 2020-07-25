@@ -104,7 +104,7 @@ typedef struct SubpassInformation {
 	eastl::unordered_map<int, int> preserveAttachments;
 } SubpassInformation;
 
-class CALL_API CGfxRenderPass : public CGfxResource
+class CGfxRenderPass : public CGfxResource
 {
 public:
 	CGfxRenderPass(uint32_t name, int numAttachments, int numSubpasses)

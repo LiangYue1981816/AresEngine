@@ -2,7 +2,7 @@
 #include "PreHeader.h"
 
 
-class CALL_API CGfxUniformVec1
+class CGfxUniformVec1
 {
 public:
 	CGfxUniformVec1(void);

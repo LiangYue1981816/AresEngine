@@ -56,7 +56,7 @@ typedef struct InputAttachmentBinding {
 	uint32_t indexInputAttachment = 0;
 } InputAttachmentBinding;
 
-class CALL_API CGfxSprivCross
+class CGfxSprivCross
 {
 public:
 	CGfxSprivCross(void);

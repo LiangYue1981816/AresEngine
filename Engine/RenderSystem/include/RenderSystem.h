@@ -153,7 +153,7 @@
 #define HISTOGRAM_TEXTURE_HEIGHT                           128
 
 
-class CALL_API CRenderSystem
+class CRenderSystem
 {
 	friend class CEngine;
 	friend class CGPUScene;

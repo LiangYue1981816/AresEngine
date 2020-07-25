@@ -2,7 +2,7 @@
 #include "PreHeader.h"
 
 
-class CALL_API CUniformEngine
+class CUniformEngine
 {
 public:
 	typedef struct Params {

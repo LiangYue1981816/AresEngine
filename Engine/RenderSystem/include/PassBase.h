@@ -2,7 +2,7 @@
 #include "PreHeader.h"
 
 
-class CALL_API CPassBase
+class CPassBase
 {
 	friend class CCamera;
 	friend class CRenderSystem;

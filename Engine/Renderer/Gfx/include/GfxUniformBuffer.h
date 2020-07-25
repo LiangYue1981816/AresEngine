@@ -2,7 +2,7 @@
 #include "PreHeader.h"
 
 
-class CALL_API CGfxUniformBuffer : public CGfxResource
+class CGfxUniformBuffer : public CGfxResource
 {
 public:
 	CGfxUniformBuffer(size_t size)

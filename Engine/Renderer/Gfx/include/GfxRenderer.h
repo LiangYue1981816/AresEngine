@@ -73,7 +73,7 @@ typedef enum GfxApi {
 } GfxApi;
 
 
-class CALL_API CGfxRenderer
+class CGfxRenderer
 {
 public:
 	static CGfxRenderer* GetInstance(void);

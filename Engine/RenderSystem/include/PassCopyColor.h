@@ -2,7 +2,7 @@
 #include "PreHeader.h"
 
 
-class CALL_API CPassCopyColor : public CPassBlit
+class CPassCopyColor : public CPassBlit
 {
 	friend class CCamera;
 	friend class CRenderSystem;

@@ -2,7 +2,7 @@
 #include "PreHeader.h"
 
 
-class CALL_API CGfxMaterial : public CGfxResource
+class CGfxMaterial : public CGfxResource
 {
 public:
 	CGfxMaterial(uint32_t name)

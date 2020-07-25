@@ -2,7 +2,7 @@
 #include "PreHeader.h"
 
 
-class CALL_API CGPUClusterCull : public CPassBase
+class CGPUClusterCull : public CPassBase
 {
 	friend class CRenderSystem;
 

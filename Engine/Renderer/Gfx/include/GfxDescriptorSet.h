@@ -244,7 +244,7 @@ typedef struct DescriptorImageInfo {
 	CGfxRenderTexturePtr ptrInputAttachmentTexture;
 } DescriptorImageInfo;
 
-class CALL_API CGfxDescriptorSet : public CGfxResource
+class CGfxDescriptorSet : public CGfxResource
 {
 public:
 	CGfxDescriptorSet(uint32_t name, const CGfxDescriptorLayoutPtr ptrDescriptorLayout)

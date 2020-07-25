@@ -2,7 +2,7 @@
 #include "PreHeader.h"
 
 
-class CALL_API CGfxUniformMat4
+class CGfxUniformMat4
 {
 public:
 	CGfxUniformMat4(void);

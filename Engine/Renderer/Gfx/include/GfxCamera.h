@@ -2,7 +2,7 @@
 #include "PreHeader.h"
 
 
-class CALL_API CGfxCamera
+class CGfxCamera
 {
 public:
 	CGfxCamera(void);

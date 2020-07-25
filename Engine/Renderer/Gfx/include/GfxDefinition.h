@@ -1,63 +1,63 @@
 #pragma once
 
 
-class CALL_API CGfxProfiler;
-class CALL_API CGfxProfilerSample;
+class CGfxProfiler;
+class CGfxProfilerSample;
 
-class CALL_API CGfxResource;
-class CALL_API CGfxResourceManager;
+class CGfxResource;
+class CGfxResourceManager;
 
-class CALL_API CGfxCamera;
+class CGfxCamera;
 
-class CALL_API CGfxRenderer;
+class CGfxRenderer;
 
-class CALL_API CGfxSwapChain;
-class CALL_API CGfxRenderPass;
-class CALL_API CGfxRenderTexture;
-class CALL_API CGfxFrameBuffer;
+class CGfxSwapChain;
+class CGfxRenderPass;
+class CGfxRenderTexture;
+class CGfxFrameBuffer;
 
-class CALL_API CGfxShader;
-class CALL_API CGfxPipelineCompute;
-class CALL_API CGfxPipelineGraphics;
+class CGfxShader;
+class CGfxPipelineCompute;
+class CGfxPipelineGraphics;
 
-class CALL_API CGfxIndexBuffer;
-class CALL_API CGfxVertexBuffer;
-class CALL_API CGfxInstanceBuffer;
-class CALL_API CGfxIndirectBuffer;
+class CGfxIndexBuffer;
+class CGfxVertexBuffer;
+class CGfxInstanceBuffer;
+class CGfxIndirectBuffer;
 
-class CALL_API CGfxMultiIndexBuffer;
-class CALL_API CGfxMultiVertexBuffer;
-class CALL_API CGfxMultiIndirectBuffer;
-class CALL_API CGfxMultiInstanceBuffer;
+class CGfxMultiIndexBuffer;
+class CGfxMultiVertexBuffer;
+class CGfxMultiIndirectBuffer;
+class CGfxMultiInstanceBuffer;
 
-class CALL_API CGfxUniformBuffer;
-class CALL_API CGfxStorageBuffer;
+class CGfxUniformBuffer;
+class CGfxStorageBuffer;
 
-class CALL_API CGfxSampler;
-class CALL_API CGfxTexture2D;
-class CALL_API CGfxTexture2DArray;
-class CALL_API CGfxTextureCubemap;
+class CGfxSampler;
+class CGfxTexture2D;
+class CGfxTexture2DArray;
+class CGfxTextureCubemap;
 
-class CALL_API CGfxUniformVec1;
-class CALL_API CGfxUniformVec2;
-class CALL_API CGfxUniformVec3;
-class CALL_API CGfxUniformVec4;
-class CALL_API CGfxUniformMat4;
+class CGfxUniformVec1;
+class CGfxUniformVec2;
+class CGfxUniformVec3;
+class CGfxUniformVec4;
+class CGfxUniformMat4;
 
-class CALL_API CGfxMesh;
-class CALL_API CGfxMeshDraw;
+class CGfxMesh;
+class CGfxMeshDraw;
 
-class CALL_API CGfxMaterial;
-class CALL_API CGfxMaterialPass;
+class CGfxMaterial;
+class CGfxMaterialPass;
 
-class CALL_API CGfxDescriptorSet;
-class CALL_API CGfxDescriptorLayout;
+class CGfxDescriptorSet;
+class CGfxDescriptorLayout;
 
-class CALL_API CGfxSemaphore;
-class CALL_API CGfxCommandBuffer;
+class CGfxSemaphore;
+class CGfxCommandBuffer;
 
 template<class T>
-class CALL_API CGfxResourcePtr;
+class CGfxResourcePtr;
 
 typedef CGfxResourcePtr<CGfxRenderPass> CGfxRenderPassPtr;
 typedef CGfxResourcePtr<CGfxRenderTexture> CGfxRenderTexturePtr;

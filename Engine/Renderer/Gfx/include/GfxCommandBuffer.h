@@ -2,7 +2,7 @@
 #include "PreHeader.h"
 
 
-class CALL_API CGfxCommandBase
+class CGfxCommandBase
 {
 public:
 	CGfxCommandBase(void)
@@ -19,7 +19,7 @@ public:
 	virtual void Execute(void) const = 0;
 };
 
-class CALL_API CGfxCommandBuffer : public CGfxResource
+class CGfxCommandBuffer : public CGfxResource
 {
 public:
 	CGfxCommandBuffer(bool bMainCommandBuffer)

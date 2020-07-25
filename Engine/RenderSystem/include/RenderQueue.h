@@ -2,7 +2,7 @@
 #include "PreHeader.h"
 
 
-class CALL_API CRenderQueue
+class CRenderQueue
 {
 private:
 	typedef struct InstanceRange {

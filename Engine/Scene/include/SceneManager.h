@@ -12,7 +12,7 @@
 #include "SceneNode.h"
 
 
-class CALL_API CSceneManager
+class CSceneManager
 {
 	friend class CEngine;
 

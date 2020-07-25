@@ -2,7 +2,7 @@
 #include "PreHeader.h"
 
 
-class CALL_API CGfxResourceManager
+class CGfxResourceManager
 {
 public:
 	CGfxResourceManager(void);

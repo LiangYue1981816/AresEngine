@@ -2,7 +2,7 @@
 #include "PreHeader.h"
 
 
-class CALL_API CGfxHelper
+class CGfxHelper
 {
 public:
 	static bool IsFormatDepthOnly(GfxPixelFormat format);

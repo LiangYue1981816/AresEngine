@@ -2,7 +2,7 @@
 #include "PreHeader.h"
 
 
-class CALL_API CComponentPointLight : public CComponent
+class CComponentPointLight : public CComponent
 {
 public:
 	CComponentPointLight(uint32_t name);

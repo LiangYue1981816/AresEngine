@@ -2,7 +2,7 @@
 #include "PreHeader.h"
 
 
-class CALL_API CGfxProfiler
+class CGfxProfiler
 {
 public:
 	typedef struct Sample {
@@ -140,7 +140,7 @@ private:
 	static Sample samples[SampleType::SAMPLE_TYPE_COUNT];
 };
 
-class CALL_API CGfxProfilerSample
+class CGfxProfilerSample
 {
 public:
 	CGfxProfilerSample(CGfxProfiler::SampleType type);

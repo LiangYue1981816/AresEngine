@@ -2,7 +2,7 @@
 #include "PreHeader.h"
 
 
-class CALL_API CPassForwardShading : public CPassBase
+class CPassForwardShading : public CPassBase
 {
 	friend class CCamera;
 	friend class CRenderSystem;

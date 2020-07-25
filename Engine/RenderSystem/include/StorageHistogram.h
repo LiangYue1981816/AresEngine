@@ -2,7 +2,7 @@
 #include "PreHeader.h"
 
 
-class CALL_API CStorageHistogram
+class CStorageHistogram
 {
 public:
 	CStorageHistogram(void);

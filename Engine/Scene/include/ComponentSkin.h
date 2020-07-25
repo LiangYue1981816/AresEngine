@@ -2,7 +2,7 @@
 #include "PreHeader.h"
 
 
-class CALL_API CComponentSkin : public CComponentMesh
+class CComponentSkin : public CComponentMesh
 {
 public:
 	CComponentSkin(uint32_t name);

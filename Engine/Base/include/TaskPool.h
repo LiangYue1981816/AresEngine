@@ -2,7 +2,7 @@
 #include "PreHeader.h"
 
 
-class CALL_API CTaskPool
+class CTaskPool
 {
 private:
 	typedef struct Thread {
