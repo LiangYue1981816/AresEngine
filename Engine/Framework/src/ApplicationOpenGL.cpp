@@ -118,18 +118,8 @@ bool CApplicationOpenGL::Create(void* hInstance, void* hWnd, void* hDC, int widt
 	//
 	// 2. Setup Engine
 	//
-	CreateEngine(GFX_API_GLES3, hInstance, hWnd, GetDC((HWND)hWnd), width, height, GFX_PIXELFORMAT_BGRA8_UNORM_PACK8);
-
-	FileManager()->SetPath("../Data", ".xml");
-	FileManager()->SetPath("../Data", ".png");
-	FileManager()->SetPath("../Data", ".tga");
-	FileManager()->SetPath("../Data", ".dds");
-	FileManager()->SetPath("../Data", ".glsl");
-	FileManager()->SetPath("../Data", ".vert");
-	FileManager()->SetPath("../Data", ".frag");
-	FileManager()->SetPath("../Data", ".comp");
-	FileManager()->SetPath("../Data", ".mesh");
-	FileManager()->SetPath("../Data", ".material");
+	CreateEngine(GFX_API_GLES3, hInstance, hWnd, GetDC((HWND)hWnd), width, height, GFX_PIXELFORMAT_BGRA8_UNORM_PACK8, "../Data");
+	CreateFramework(width, height);
 
 	ptrComputeCommandBuffers[0] = GfxRenderer()->NewCommandBuffer(0, true);
 	ptrComputeCommandBuffers[1] = GfxRenderer()->NewCommandBuffer(0, true);
@@ -137,8 +127,6 @@ bool CApplicationOpenGL::Create(void* hInstance, void* hWnd, void* hDC, int widt
 	ptrGraphicCommandBuffers[0] = GfxRenderer()->NewCommandBuffer(0, true);
 	ptrGraphicCommandBuffers[1] = GfxRenderer()->NewCommandBuffer(0, true);
 	ptrGraphicCommandBuffers[2] = GfxRenderer()->NewCommandBuffer(0, true);
-
-	CreateFramework(width, height);
 
 	//
 	// 3. Setup ImGui

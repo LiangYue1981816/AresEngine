@@ -50,26 +50,6 @@ CRenderSystem::CRenderSystem(void)
 {
 	SetVertexAttributes(vertexAttributes, VERTEX_ATTRIBUTE_COUNT);
 	SetInstanceAttributes(instanceAttributes, INSTANCE_ATTRIBUTE_COUNT);
-
-	Settings()->SetValue("RenderSystem.Shadow.Factor", 1.0f);
-	Settings()->SetValue("RenderSystem.Shadow.SplitFactor0", exp(-4.0f));
-	Settings()->SetValue("RenderSystem.Shadow.SplitFactor1", exp(-3.0f));
-	Settings()->SetValue("RenderSystem.Shadow.SplitFactor2", exp(-2.0f));
-	Settings()->SetValue("RenderSystem.Shadow.SplitFactor3", exp(-1.0f));
-	Settings()->SetValue("RenderSystem.SSAO.SampleCount", 8.0f);
-	Settings()->SetValue("RenderSystem.SSAO.MinSampleRadius", 0.02f);
-	Settings()->SetValue("RenderSystem.SSAO.MaxSampleRadius", 1.25f);
-	Settings()->SetValue("RenderSystem.SSAO.MinDepthRange", 0.00f);
-	Settings()->SetValue("RenderSystem.SSAO.MaxDepthRange", 0.20f);
-	Settings()->SetValue("RenderSystem.SSAO.BlurRange", 1.00f);
-	Settings()->SetValue("RenderSystem.Bloom.LuminanceThreshold", 1.00f);
-	Settings()->SetValue("RenderSystem.Bloom.BlurRange.FirstTime", 1.00f);
-	Settings()->SetValue("RenderSystem.Bloom.BlurRange.SecondTime", 0.75f);
-	Settings()->SetValue("RenderSystem.AutoExposure.Lower", 0.10f);
-	Settings()->SetValue("RenderSystem.AutoExposure.Upper", 0.90f);
-	Settings()->SetValue("RenderSystem.AutoExposure.Luminance", 0.15f);
-	Settings()->SetValue("RenderSystem.AutoExposure.MinScaleLuminance", 0.20f);
-	Settings()->SetValue("RenderSystem.AutoExposure.MaxScaleLuminance", 2.00f);
 }
 
 CRenderSystem::~CRenderSystem(void)

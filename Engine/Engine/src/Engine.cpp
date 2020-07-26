@@ -11,10 +11,10 @@ CEngine* CEngine::GetInstance(void)
 	return pInstance;
 }
 
-void CEngine::Create(GfxApi api, void* hInstance, void* hWnd, void* hDC, int width, int height, GfxPixelFormat format)
+void CEngine::Create(GfxApi api, void* hInstance, void* hWnd, void* hDC, int width, int height, GfxPixelFormat format, const char* szPath)
 {
 	if (pInstance == nullptr) {
-		pInstance = new CEngine(api, hInstance, hWnd, hDC, width, height, format);
+		pInstance = new CEngine(api, hInstance, hWnd, hDC, width, height, format, szPath);
 	}
 }
 
@@ -32,7 +32,7 @@ void CEngine::Destroy(void)
 #endif
 }
 
-CEngine::CEngine(GfxApi api, void* hInstance, void* hWnd, void* hDC, int width, int height, GfxPixelFormat format)
+CEngine::CEngine(GfxApi api, void* hInstance, void* hWnd, void* hDC, int width, int height, GfxPixelFormat format, const char* szPath)
 	: m_numFrames(0)
 
 	, m_lastTime(0.0f)
@@ -40,9 +40,10 @@ CEngine::CEngine(GfxApi api, void* hInstance, void* hWnd, void* hDC, int width, 
 	, m_totalTime(0.0f)
 
 	, m_pSettings(nullptr)
+
 	, m_pFileManager(nullptr)
-	, m_pShaderCompiler(nullptr)
 	, m_pResourceLoader(nullptr)
+	, m_pShaderCompiler(nullptr)
 
 	, m_pSceneManager(nullptr)
 	, m_pRenderSystem(nullptr)
@@ -55,24 +56,42 @@ CEngine::CEngine(GfxApi api, void* hInstance, void* hWnd, void* hDC, int width, 
 	pInstance = this;
 
 	m_pSettings = new CSettings;
+	m_pSettings->SetValue("RenderSystem.Shadow.Factor", 1.0f);
+	m_pSettings->SetValue("RenderSystem.Shadow.SplitFactor0", exp(-4.0f));
+	m_pSettings->SetValue("RenderSystem.Shadow.SplitFactor1", exp(-3.0f));
+	m_pSettings->SetValue("RenderSystem.Shadow.SplitFactor2", exp(-2.0f));
+	m_pSettings->SetValue("RenderSystem.Shadow.SplitFactor3", exp(-1.0f));
+	m_pSettings->SetValue("RenderSystem.SSAO.SampleCount", 8.0f);
+	m_pSettings->SetValue("RenderSystem.SSAO.MinSampleRadius", 0.02f);
+	m_pSettings->SetValue("RenderSystem.SSAO.MaxSampleRadius", 1.25f);
+	m_pSettings->SetValue("RenderSystem.SSAO.MinDepthRange", 0.00f);
+	m_pSettings->SetValue("RenderSystem.SSAO.MaxDepthRange", 0.20f);
+	m_pSettings->SetValue("RenderSystem.SSAO.BlurRange", 1.00f);
+	m_pSettings->SetValue("RenderSystem.Bloom.LuminanceThreshold", 1.00f);
+	m_pSettings->SetValue("RenderSystem.Bloom.BlurRange.FirstTime", 1.00f);
+	m_pSettings->SetValue("RenderSystem.Bloom.BlurRange.SecondTime", 0.75f);
+	m_pSettings->SetValue("RenderSystem.AutoExposure.Lower", 0.10f);
+	m_pSettings->SetValue("RenderSystem.AutoExposure.Upper", 0.90f);
+	m_pSettings->SetValue("RenderSystem.AutoExposure.Luminance", 0.15f);
+	m_pSettings->SetValue("RenderSystem.AutoExposure.MinScaleLuminance", 0.20f);
+	m_pSettings->SetValue("RenderSystem.AutoExposure.MaxScaleLuminance", 2.00f);
 
 	m_pFileManager = new CFileManager;
-	m_pFileManager->SetPath("../Data/Engine", ".xml");
-	m_pFileManager->SetPath("../Data/Engine", ".png");
-	m_pFileManager->SetPath("../Data/Engine", ".tga");
-	m_pFileManager->SetPath("../Data/Engine", ".dds");
-	m_pFileManager->SetPath("../Data/Engine", ".glsl");
-	m_pFileManager->SetPath("../Data/Engine", ".vert");
-	m_pFileManager->SetPath("../Data/Engine", ".frag");
-	m_pFileManager->SetPath("../Data/Engine", ".comp");
-	m_pFileManager->SetPath("../Data/Engine", ".mesh");
-	m_pFileManager->SetPath("../Data/Engine", ".material");
+	m_pFileManager->SetPath(szPath, ".xml");
+	m_pFileManager->SetPath(szPath, ".png");
+	m_pFileManager->SetPath(szPath, ".tga");
+	m_pFileManager->SetPath(szPath, ".dds");
+	m_pFileManager->SetPath(szPath, ".glsl");
+	m_pFileManager->SetPath(szPath, ".vert");
+	m_pFileManager->SetPath(szPath, ".frag");
+	m_pFileManager->SetPath(szPath, ".comp");
+	m_pFileManager->SetPath(szPath, ".mesh");
+	m_pFileManager->SetPath(szPath, ".material");
 
+	m_pResourceLoader = new CResourceLoader;
 	m_pShaderCompiler = new CShaderCompiler;
 	m_pShaderCompiler->SetCachePath("../Data/Engine/ShaderCache");
 	m_pShaderCompiler->AddIncludePath("../Data/Engine/Shader/inc");
-
-	m_pResourceLoader = new CResourceLoader;
 
 	m_pSceneManager = new CSceneManager;
 	m_pRenderSystem = new CRenderSystem;
@@ -94,11 +113,12 @@ CEngine::~CEngine(void)
 	event_destroy(&m_eventFinish);
 	event_destroy(&m_eventDispatch);
 
-	delete m_pFileManager;
-	delete m_pShaderCompiler;
-	delete m_pResourceLoader;
-
 	delete m_pSettings;
+
+	delete m_pFileManager;
+	delete m_pResourceLoader;
+	delete m_pShaderCompiler;
+
 	delete m_pSceneManager;
 	delete m_pRenderSystem;
 }

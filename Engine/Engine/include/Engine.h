@@ -2,7 +2,7 @@
 #include "PreHeader.h"
 
 
-#define CreateEngine(api, hInstance, hWnd, hDC, width, height, format) CEngine::Create((api), (hInstance), (hWnd), (hDC), (width), (height), (format))
+#define CreateEngine(api, hInstance, hWnd, hDC, width, height, format, path) CEngine::Create((api), (hInstance), (hWnd), (hDC), (width), (height), (format), (path))
 #define DestroyEngine() CEngine::Destroy()
 #define Engine() CEngine::GetInstance()
 
@@ -15,12 +15,12 @@ class CEngine
 {
 public:
 	static CEngine* GetInstance(void);
-	static void Create(GfxApi api, void* hInstance, void* hWnd, void* hDC, int width, int height, GfxPixelFormat format);
+	static void Create(GfxApi api, void* hInstance, void* hWnd, void* hDC, int width, int height, GfxPixelFormat format, const char* szPath);
 	static void Destroy(void);
 
 
 private:
-	CEngine(GfxApi api, void* hInstance, void* hWnd, void* hDC, int width, int height, GfxPixelFormat format);
+	CEngine(GfxApi api, void* hInstance, void* hWnd, void* hDC, int width, int height, GfxPixelFormat format, const char* szPath);
 	virtual ~CEngine(void);
 
 
@@ -57,9 +57,11 @@ private:
 
 private:
 	CSettings* m_pSettings;
+
+private:
 	CFileManager* m_pFileManager;
-	CShaderCompiler* m_pShaderCompiler;
 	CResourceLoader* m_pResourceLoader;
+	CShaderCompiler* m_pShaderCompiler;
 
 private:
 	CSceneManager* m_pSceneManager;
