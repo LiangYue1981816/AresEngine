@@ -320,7 +320,12 @@ vec3 EnvLighting(vec3 normal, vec3 viewDirection, vec3 env, vec3 albedo, float s
 {
 	float ndv = max(dot(normal, viewDirection), 0.0);
 	vec3 fresnel = F_SchlickRoughness(albedo, specular, metallic, roughness, ndv);
-	return Env_Specular(fresnel, ndv, roughness) * env * albedo;
+	vec3 finalLighting = Env_Specular(fresnel, ndv, roughness) * env * albedo;
+
+	finalLighting = max(finalLighting, minLighting);
+	finalLighting = min(finalLighting, maxLighting);
+
+	return finalLighting;
 }
 
 vec3 EnvLighting(vec3 normal, vec3 viewDirection, vec3 albedo, float specular, float metallic, float roughness, sampler2D texEnv, float maxLods)
