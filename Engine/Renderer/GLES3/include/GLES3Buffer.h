@@ -15,7 +15,7 @@ class CGLES3Buffer : public CGfxResource
 private:
 	CGLES3Buffer(uint32_t target, size_t size, bool bDynamic);
 	virtual ~CGLES3Buffer(void);
-	virtual void Release(void);
+	virtual void Release(void) {}
 
 
 private:

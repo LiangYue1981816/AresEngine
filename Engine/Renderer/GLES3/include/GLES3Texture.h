@@ -13,7 +13,7 @@ class CGLES3Texture : public CGfxResource
 private:
 	CGLES3Texture(void);
 	virtual ~CGLES3Texture(void);
-	virtual void Release(void);
+	virtual void Release(void) {}
 
 
 private:

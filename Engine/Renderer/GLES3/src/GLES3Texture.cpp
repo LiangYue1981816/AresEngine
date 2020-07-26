@@ -25,11 +25,6 @@ CGLES3Texture::~CGLES3Texture(void)
 	Destroy();
 }
 
-void CGLES3Texture::Release(void)
-{
-
-}
-
 uint32_t CGLES3Texture::GetTarget(void) const
 {
 	ASSERT(m_target);

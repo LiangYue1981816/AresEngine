@@ -14,11 +14,6 @@ CGLES3Buffer::~CGLES3Buffer(void)
 	Destroy();
 }
 
-void CGLES3Buffer::Release(void)
-{
-
-}
-
 bool CGLES3Buffer::Create(uint32_t target, size_t size, bool bDynamic)
 {
 	ASSERT(size);

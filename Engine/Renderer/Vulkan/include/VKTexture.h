@@ -14,7 +14,7 @@ class CVKTexture : public CGfxResource
 private:
 	CVKTexture(CVKDevice* pDevice);
 	virtual ~CVKTexture(void);
-	virtual void Release(void);
+	virtual void Release(void) {}
 
 
 private:

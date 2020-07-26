@@ -29,11 +29,6 @@ CVKTexture::~CVKTexture(void)
 	Destroy();
 }
 
-void CVKTexture::Release(void)
-{
-
-}
-
 VkImage CVKTexture::GetImage(void) const
 {
 	ASSERT(m_vkImage);

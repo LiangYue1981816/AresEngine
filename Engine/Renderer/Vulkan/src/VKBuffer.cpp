@@ -17,11 +17,6 @@ CVKBuffer::~CVKBuffer(void)
 	Destroy();
 }
 
-void CVKBuffer::Release(void)
-{
-
-}
-
 bool CVKBuffer::Create(VkDeviceSize size, VkBufferUsageFlags bufferUsageFlags, VkMemoryPropertyFlags memoryPropertyFlags)
 {
 	ASSERT(size);
