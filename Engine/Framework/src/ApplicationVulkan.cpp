@@ -75,6 +75,7 @@ bool CApplicationVulkan::Create(void* hInstance, void* hWnd, void* hDC, int widt
 	init_info.CheckVkResultFn = check_vk_result;
 	ImGui_ImplVulkan_Init(&init_info, wd->RenderPass);
 	*/
+	ImGui_ImplVulkanH_CreateOrResizeWindow
 
 	return true;
 }
