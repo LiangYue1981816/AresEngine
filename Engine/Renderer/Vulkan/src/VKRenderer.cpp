@@ -81,6 +81,51 @@ CVKRenderer::~CVKRenderer(void)
 	delete m_pInstance;
 }
 
+VkInstance CVKRenderer::GetInstance(void) const
+{
+	return m_pInstance->GetInstance();
+}
+
+VkSurface CVKRenderer::GetSurface(void) const
+{
+	return m_pInstance->GetSurface();
+}
+
+VkDevice CVKRenderer::GetDevice(void) const
+{
+	return m_pDevice->GetDevice();
+}
+
+VkPhysicalDevice CVKRenderer::GetPhysicalDevice(void) const
+{
+	return m_pDevice->GetPhysicalDevice();
+}
+
+VkSwapchain CVKRenderer::GetSwapchain(void) const
+{
+	return m_pSwapChain->GetSwapchain();
+}
+
+VkSemaphore CVKRenderer::GetSwapchainSemaphore(void) const
+{
+	return m_pSwapChain->GetSemaphore();
+}
+
+VkImage CVKRenderer::GetSwapchainImage(int index) const
+{
+	return m_pSwapChain->GetImage(index);
+}
+
+VkQueue CVKRenderer::GetQueue(void) const
+{
+	return m_pDevice->GetQueue()->GetQueue();
+}
+
+uint32_t CVKRenderer::GetQueueFamilyIndex(void) const
+{
+	return m_pDevice->GetQueue()->GetQueueFamilyIndex();
+}
+
 GfxApi CVKRenderer::GetAPI(void) const
 {
 	return GFX_API_VULKAN;

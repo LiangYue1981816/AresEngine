@@ -88,6 +88,18 @@ public:
 
 
 public:
+	VkInstance GetInstance(void) const;
+	VkSurface GetSurface(void) const;
+	VkDevice GetDevice(void) const;
+	VkPhysicalDevice GetPhysicalDevice(void) const;
+	VkSwapchain GetSwapchain(void) const;
+	VkSemaphore GetSwapchainSemaphore(void) const;
+	VkImage GetSwapchainImage(int index) const;
+	VkQueue GetQueue(void) const;
+	uint32_t GetQueueFamilyIndex(void) const;
+
+
+public:
 	GfxApi GetAPI(void) const;
 	const glm::mat4& GetBaseMatrix(void) const;
 
