@@ -81,7 +81,7 @@ VkInstance CVKInstance::GetInstance(void) const
 	return m_vkInstance;
 }
 
-VkSurfaceKHR CVKInstance::GetSurface(void) const
+VkSurface CVKInstance::GetSurface(void) const
 {
 	ASSERT(m_vkSurface);
 	return m_vkSurface;

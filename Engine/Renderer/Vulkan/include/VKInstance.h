@@ -18,7 +18,7 @@ public:
 
 public:
 	VkInstance GetInstance(void) const;
-	VkSurfaceKHR GetSurface(void) const;
+	VkSurface GetSurface(void) const;
 	CVKAllocator* GetAllocator(void) const;
 
 private:
@@ -37,7 +37,7 @@ private:
 
 private:
 	VkInstance m_vkInstance;
-	VkSurfaceKHR m_vkSurface;
+	VkSurface m_vkSurface;
 
 #ifdef DEBUG
 	VkDebugReportCallbackEXT m_vkDebugReportCallback;

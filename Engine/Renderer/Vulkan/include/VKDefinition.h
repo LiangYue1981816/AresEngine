@@ -49,6 +49,7 @@
 
 
 typedef VkSwapchainKHR VkSwapchain;
+typedef VkSurfaceKHR VkSurface;
 
 
 class CVKAllocator;
