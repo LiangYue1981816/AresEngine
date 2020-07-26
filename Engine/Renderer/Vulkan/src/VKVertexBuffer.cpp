@@ -30,7 +30,7 @@ CVKVertexBuffer::~CVKVertexBuffer(void)
 
 void CVKVertexBuffer::Release(void)
 {
-
+	delete this;
 }
 
 uint32_t CVKVertexBuffer::GetVertexBinding(void) const
@@ -83,7 +83,7 @@ CVKMultiVertexBuffer::~CVKMultiVertexBuffer(void)
 
 void CVKMultiVertexBuffer::Release(void)
 {
-
+	delete this;
 }
 
 CGfxVertexBuffer* CVKMultiVertexBuffer::GetBuffer(int index) const

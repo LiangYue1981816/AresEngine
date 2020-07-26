@@ -19,7 +19,7 @@ CGLES3IndirectBuffer::~CGLES3IndirectBuffer(void)
 
 void CGLES3IndirectBuffer::Release(void)
 {
-
+	delete this;
 }
 
 uint32_t CGLES3IndirectBuffer::GetDrawCommandCount(void) const
@@ -85,7 +85,7 @@ CGLES3MultiIndirectBuffer::~CGLES3MultiIndirectBuffer(void)
 
 void CGLES3MultiIndirectBuffer::Release(void)
 {
-
+	delete this;
 }
 
 CGfxIndirectBuffer* CGLES3MultiIndirectBuffer::GetBuffer(int index) const

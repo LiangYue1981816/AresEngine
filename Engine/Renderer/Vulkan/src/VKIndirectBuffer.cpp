@@ -24,7 +24,7 @@ CVKIndirectBuffer::~CVKIndirectBuffer(void)
 
 void CVKIndirectBuffer::Release(void)
 {
-
+	delete this;
 }
 
 VkBuffer CVKIndirectBuffer::GetBuffer(void) const
@@ -90,7 +90,7 @@ CVKMultiIndirectBuffer::~CVKMultiIndirectBuffer(void)
 
 void CVKMultiIndirectBuffer::Release(void)
 {
-
+	delete this;
 }
 
 CGfxIndirectBuffer* CVKMultiIndirectBuffer::GetBuffer(int index) const

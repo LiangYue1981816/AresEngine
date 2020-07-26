@@ -19,7 +19,7 @@ CGLES3IndexBuffer::~CGLES3IndexBuffer(void)
 
 void CGLES3IndexBuffer::Release(void)
 {
-
+	delete this;
 }
 
 GfxIndexType CGLES3IndexBuffer::GetIndexType(void) const
@@ -70,7 +70,7 @@ CGLES3MultiIndexBuffer::~CGLES3MultiIndexBuffer(void)
 
 void CGLES3MultiIndexBuffer::Release(void)
 {
-
+	delete this;
 }
 
 CGfxIndexBuffer* CGLES3MultiIndexBuffer::GetBuffer(int index) const

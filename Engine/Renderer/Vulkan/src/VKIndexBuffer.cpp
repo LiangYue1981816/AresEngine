@@ -28,7 +28,7 @@ CVKIndexBuffer::~CVKIndexBuffer(void)
 
 void CVKIndexBuffer::Release(void)
 {
-
+	delete this;
 }
 
 GfxIndexType CVKIndexBuffer::GetIndexType(void) const
@@ -80,7 +80,7 @@ CVKMultiIndexBuffer::~CVKMultiIndexBuffer(void)
 
 void CVKMultiIndexBuffer::Release(void)
 {
-
+	delete this;
 }
 
 CGfxIndexBuffer* CVKMultiIndexBuffer::GetBuffer(int index) const
