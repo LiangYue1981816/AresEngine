@@ -62,8 +62,8 @@ void CRenderSystem::Create(GfxApi api, void* hInstance, void* hWnd, void* hDC, i
 	CreateRenderer(api, hInstance, hWnd, hDC, width, height, format);
 	CreateStorageBuffers();
 	CreateRenderTextures();
-	CreateComputes();
 	CreatePasses();
+	CreateComputes();
 }
 
 void CRenderSystem::CreateRenderer(GfxApi api, void* hInstance, void* hWnd, void* hDC, int width, int height, GfxPixelFormat format)
@@ -103,6 +103,7 @@ void CRenderSystem::CreatePasses(void)
 	CPassColorGrading::Create(GFX_PIXELFORMAT_RG11B10_UFLOAT_PACK32);
 	CPassFinal::Create(GFX_PIXELFORMAT_RGBA8_UNORM_PACK8);
 
+	m_pGPUScene = new CGPUScene(this);
 	m_pPassPreZ = new CPassPreZ(this);
 	m_pPassShadow = new CPassShadow(this);
 	m_pPassUnlit = new CPassUnlit(this);
@@ -125,7 +126,6 @@ void CRenderSystem::CreatePasses(void)
 
 void CRenderSystem::CreateComputes(void)
 {
-	m_pGPUScene = new CGPUScene(this);
 	m_pGPUCluster = new CGPUCluster(this);
 	m_pGPUClusterCull = new CGPUClusterCull(this);
 	m_pGPUEyeHistogram = new CGPUEyeHistogram(this);
@@ -211,6 +211,7 @@ void CRenderSystem::DestroyPasses(void)
 	CPassColorGrading::Destroy();
 	CPassFinal::Destroy();
 
+	delete m_pGPUScene;
 	delete m_pPassPreZ;
 	delete m_pPassShadow;
 	delete m_pPassUnlit;
@@ -236,7 +237,6 @@ void CRenderSystem::DestroyComputes(void)
 	delete m_pGPUEyeHistogram;
 	delete m_pGPUClusterCull;
 	delete m_pGPUCluster;
-	delete m_pGPUScene;
 }
 
 void CRenderSystem::DestroyStorageBuffers(void)
