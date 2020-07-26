@@ -12,8 +12,8 @@
 void UpdateInput(void);
 void UpdateRenderSolution(void);
 
-CGfxCommandBufferPtr ptrComputeCommandBuffers[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
-CGfxCommandBufferPtr ptrGraphicCommandBuffers[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
+static CGfxCommandBufferPtr ptrComputeCommandBuffers[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
+static CGfxCommandBufferPtr ptrGraphicCommandBuffers[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
 
 
 CApplicationOpenGL::CApplicationOpenGL(void)
@@ -111,9 +111,7 @@ bool CApplicationOpenGL::Create(void* hInstance, void* hWnd, void* hDC, int widt
 	wglDeleteContext(hOldRC);
 	wglMakeCurrent((HDC)hDC, hNewRC);
 
-	if (gl3wInit() != NO_ERROR) {
-		return false;
-	}
+	gl3wInit();
 
 	//
 	// 2. Setup Engine
@@ -147,13 +145,8 @@ bool CApplicationOpenGL::Create(void* hInstance, void* hWnd, void* hDC, int widt
 	//
 	// 5. Setup Platform/Renderer bindings
 	//
-	if (ImGui_ImplWin32_Init((HWND)hWnd) == false) {
-		return false;
-	}
-
-	if (ImGui_ImplOpenGL3_Init("#version 300 es") == false) {
-		return false;
-	}
+	ImGui_ImplWin32_Init((HWND)hWnd);
+	ImGui_ImplOpenGL3_Init("#version 300 es");
 
 	return true;
 }
