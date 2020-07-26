@@ -269,7 +269,7 @@ void UpdateInput(void)
 		int x = (int)curMousePos.x;
 		int y = (int)curMousePos.y;
 
-		if (ImGui::IsMouseDown(ImGuiMouseButton_Left)) {
+		if (ImGui::IsMouseDown(ImGuiMouseButton_Left) && ImGui::IsAnyWindowHovered() == false) {
 			Framework()->OnLButtonDown(x, y);
 		}
 
