@@ -2,8 +2,6 @@
 #include "VKRenderer.h"
 
 
-typedef VkSwapchainKHR VkSwapchain;
-
 class CVKSwapChain : public CGfxSwapChain
 {
 	friend class CVKRenderer;
@@ -49,7 +47,7 @@ public:
 
 
 private:
-	VkSwapchainKHR m_vkSwapchain;
+	VkSwapchain m_vkSwapchain;
 
 private:
 	VkImage m_vkImages[SWAPCHAIN_FRAME_COUNT];

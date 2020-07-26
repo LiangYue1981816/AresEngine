@@ -48,6 +48,9 @@
 }
 
 
+typedef VkSwapchainKHR VkSwapchain;
+
+
 class CVKAllocator;
 class CVKInstance;
 class CVKDevice;
