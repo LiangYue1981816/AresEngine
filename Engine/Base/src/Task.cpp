@@ -96,26 +96,23 @@ CTaskStack::~CTaskStack(void)
 void CTaskStack::Push(CTask* pTask)
 {
 	CTask* pTaskHead = m_pTaskStack.load(std::memory_order_acquire);
-
-	do {
-		pTask->pNext = pTaskHead;
-	} while (!m_pTaskStack.compare_exchange_weak(pTaskHead, pTask, std::memory_order_release, std::memory_order_acquire));
+	{
+		do {
+			pTask->pNext = pTaskHead;
+		} while (!m_pTaskStack.compare_exchange_weak(pTaskHead, pTask, std::memory_order_release, std::memory_order_acquire));
+	}
 }
 
 CTask* CTaskStack::Pop(void)
 {
-	CTask* pTaskNext = nullptr;
 	CTask* pTaskHead = m_pTaskStack.load(std::memory_order_acquire);
-
-	do {
-		if (pTaskHead) {
-			pTaskNext = pTaskHead->pNext;
-		}
-		else {
-			break;
-		}
-	} while (!m_pTaskStack.compare_exchange_weak(pTaskHead, pTaskNext, std::memory_order_release, std::memory_order_acquire));
-
+	{
+		do {
+			if (pTaskHead == nullptr) {
+				break;
+			}
+		} while (!m_pTaskStack.compare_exchange_weak(pTaskHead, pTaskHead->pNext, std::memory_order_release, std::memory_order_acquire));
+	}
 	return pTaskHead;
 }
 
