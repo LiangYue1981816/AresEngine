@@ -195,6 +195,25 @@ void CVKSwapChain::DestroyRenderTextures(void)
 	}
 }
 
+VkImage CVKSwapChain::GetImage(int index) const
+{
+	ASSERT(index >= 0 && index < SWAPCHAIN_FRAME_COUNT);
+	ASSERT(m_vkImages[index]);
+	return m_vkImages[index];
+}
+
+VkSwapchain CVKSwapChain::GetSwapchain(void) const
+{
+	ASSERT(m_vkSwapchain);
+	return m_vkSwapchain;
+}
+
+VkSemaphore CVKSwapChain::GetSemaphore(void) const
+{
+	ASSERT(m_pAcquireSemaphore);
+	return ((CVKSemaphore *)m_pAcquireSemaphore)->GetSemaphore();
+}
+
 const CGfxSemaphore* CVKSwapChain::GetAcquireSemaphore(void) const
 {
 	ASSERT(m_pAcquireSemaphore);

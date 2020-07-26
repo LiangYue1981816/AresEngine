@@ -2,6 +2,8 @@
 #include "VKRenderer.h"
 
 
+typedef VkSwapchainKHR VkSwapchain;
+
 class CVKSwapChain : public CGfxSwapChain
 {
 	friend class CVKRenderer;
@@ -25,6 +27,10 @@ private:
 	void DestroyRenderTextures(void);
 
 public:
+	VkImage GetImage(int index) const;
+	VkSwapchain GetSwapchain(void) const;
+	VkSemaphore GetSemaphore(void) const;
+
 	const CGfxSemaphore* GetAcquireSemaphore(void) const;
 
 public:
