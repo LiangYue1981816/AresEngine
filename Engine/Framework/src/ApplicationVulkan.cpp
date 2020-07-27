@@ -129,7 +129,7 @@ static void ImGui_ImplVulkan_CreateWindow(uint32_t width, uint32_t height, VkFor
 	}
 }
 
-static void ImGui_ImplVulkan_DestritWindow(VkAllocationCallbacks* allocator, VkRenderPass* pRenderPass, VkImageView* imageViews[3], VkFramebuffer* framebuffers[3])
+static void ImGui_ImplVulkan_DestritWindow(VkAllocationCallbacks* allocator, VkRenderPass* renderPass, VkImageView* imageViews[3], VkFramebuffer* framebuffers[3])
 {
 	for (uint32_t i = 0; i < 3; i++) {
 		vkDestroyFramebuffer(VKRenderer()->GetDevice(), *framebuffers[i], allocator);
@@ -141,8 +141,8 @@ static void ImGui_ImplVulkan_DestritWindow(VkAllocationCallbacks* allocator, VkR
 		imageViews[i] = VK_NULL_HANDLE;
 	}
 
-	vkDestroyRenderPass(VKRenderer()->GetDevice(), *pRenderPass, allocator);
-	*pRenderPass = VK_NULL_HANDLE;
+	vkDestroyRenderPass(VKRenderer()->GetDevice(), *renderPass, allocator);
+	*renderPass = VK_NULL_HANDLE;
 }
 
 
