@@ -86,11 +86,6 @@ VkInstance CVKRenderer::GetInstance(void) const
 	return m_pInstance->GetInstance();
 }
 
-VkSurface CVKRenderer::GetSurface(void) const
-{
-	return m_pInstance->GetSurface();
-}
-
 VkDevice CVKRenderer::GetDevice(void) const
 {
 	return m_pDevice->GetDevice();
@@ -99,16 +94,6 @@ VkDevice CVKRenderer::GetDevice(void) const
 VkPhysicalDevice CVKRenderer::GetPhysicalDevice(void) const
 {
 	return m_pDevice->GetPhysicalDevice();
-}
-
-VkSwapchain CVKRenderer::GetSwapchain(void) const
-{
-	return m_pSwapChain->GetSwapchain();
-}
-
-VkSemaphore CVKRenderer::GetSwapchainSemaphore(void) const
-{
-	return m_pSwapChain->GetSemaphore();
 }
 
 VkImage CVKRenderer::GetSwapchainImage(int index) const
