@@ -399,8 +399,15 @@ void CApplicationVulkan::UpdateInternal(float deltaTime)
 		Framework()->Render(ptrComputeCommandBuffer, ptrGraphicCommandBuffer, pWaitSemaphore);
 
 		// Render ImGui
-//		ImGui::Render();
-//		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+		ImGui::Render();
+		ImGui_ImplVulkan_FrameRender(
+			((CVKCommandBuffer*)ptrImGuiCommandBuffer.GetPointer())->GetCommandBuffer(), 
+			((CVKCommandBuffer*)ptrImGuiCommandBuffer.GetPointer())->GetFence(), 
+			((CVKSemaphore*)((CVKCommandBuffer*)ptrGraphicCommandBuffer.GetPointer())->GetSemaphore())->GetSemaphore(), 
+			((CVKSemaphore*)((CVKCommandBuffer*)ptrImGuiCommandBuffer.GetPointer())->GetSemaphore())->GetSemaphore(),
+			vkRenderPass, vkFramebuffers[GfxRenderer()->GetSwapChain()->GetFrameIndex()], 
+			m_width, m_height,
+			ImGui::GetDrawData());
 	}
-	GfxRenderer()->Present(ptrGraphicCommandBuffer->GetSemaphore());
+	GfxRenderer()->Present(ptrImGuiCommandBuffer->GetSemaphore());
 }
