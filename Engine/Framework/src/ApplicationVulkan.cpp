@@ -56,6 +56,7 @@ static void ImGui_ImplVulkan_CreateDescriptorPool(VkAllocationCallbacks* allocat
 static void ImGui_ImplVulkan_DestroyDescriptorPool(VkAllocationCallbacks* allocator, VkDescriptorPool* pool)
 {
 	vkDestroyDescriptorPool(VKRenderer()->GetDevice(), *pool, allocator);
+	*pool = VK_NULL_HANDLE;
 }
 
 static void ImGui_ImplVulkan_CreateWindow(uint32_t width, uint32_t height, VkFormat format, VkAllocationCallbacks* allocator, VkRenderPass* renderPass, VkImageView* imageViews, VkFramebuffer* framebuffers)
@@ -129,15 +130,15 @@ static void ImGui_ImplVulkan_CreateWindow(uint32_t width, uint32_t height, VkFor
 	}
 }
 
-static void ImGui_ImplVulkan_DestritWindow(VkAllocationCallbacks* allocator, VkRenderPass* renderPass, VkImageView* imageViews[3], VkFramebuffer* framebuffers[3])
+static void ImGui_ImplVulkan_DestroyWindow(VkAllocationCallbacks* allocator, VkRenderPass* renderPass, VkImageView* imageViews, VkFramebuffer* framebuffers)
 {
 	for (uint32_t i = 0; i < 3; i++) {
-		vkDestroyFramebuffer(VKRenderer()->GetDevice(), *framebuffers[i], allocator);
+		vkDestroyFramebuffer(VKRenderer()->GetDevice(), framebuffers[i], allocator);
 		framebuffers[i] = VK_NULL_HANDLE;
 	}
 
 	for (uint32_t i = 0; i < 3; i++) {
-		vkDestroyImageView(VKRenderer()->GetDevice(), *imageViews[i], allocator);
+		vkDestroyImageView(VKRenderer()->GetDevice(), imageViews[i], allocator);
 		imageViews[i] = VK_NULL_HANDLE;
 	}
 
@@ -198,22 +199,22 @@ bool CApplicationVulkan::Create(void* hInstance, void* hWnd, void* hDC, int widt
 	// 4. Setup Platform/Renderer bindings
 	//
 	ImGui_ImplWin32_Init((HWND)hWnd);
+	ImGui_ImplVulkan_CreateDescriptorPool(nullptr, &vkDescriptorPool);
+	ImGui_ImplVulkan_CreateWindow(m_width, m_height, (VkFormat)GFX_PIXELFORMAT_BGRA8_UNORM_PACK8, nullptr, &vkRenderPass, vkImageViews, vkFramebuffers);
 
-	/*
 	ImGui_ImplVulkan_InitInfo init_info = {};
-	init_info.Instance = g_Instance;
-	init_info.PhysicalDevice = g_PhysicalDevice;
-	init_info.Device = g_Device;
-	init_info.QueueFamily = g_QueueFamily;
-	init_info.Queue = g_Queue;
-	init_info.PipelineCache = g_PipelineCache;
-	init_info.DescriptorPool = g_DescriptorPool;
-	init_info.Allocator = g_Allocator;
-	init_info.MinImageCount = g_MinImageCount;
-	init_info.ImageCount = wd->ImageCount;
+	init_info.Instance = VKRenderer()->GetInstance();
+	init_info.PhysicalDevice = VKRenderer()->GetPhysicalDevice();
+	init_info.Device = VKRenderer()->GetDevice();
+	init_info.QueueFamily = VKRenderer()->GetQueueFamilyIndex();
+	init_info.Queue = VKRenderer()->GetQueue();
+	init_info.PipelineCache = VK_NULL_HANDLE;
+	init_info.DescriptorPool = vkDescriptorPool;
+	init_info.Allocator = nullptr;
+	init_info.MinImageCount = 3;
+	init_info.ImageCount = 3;
 	init_info.CheckVkResultFn = check_vk_result;
-	ImGui_ImplVulkan_Init(&init_info, wd->RenderPass);
-	*/
+	ImGui_ImplVulkan_Init(&init_info, vkRenderPass);
 
 	return true;
 }
@@ -223,6 +224,8 @@ void CApplicationVulkan::Destroy(void)
 	//
 	// 1. Destroy ImGui
 	//
+	ImGui_ImplVulkan_DestroyDescriptorPool(nullptr, &vkDescriptorPool);
+	ImGui_ImplVulkan_DestroyWindow(nullptr, &vkRenderPass, vkImageViews, vkFramebuffers);
 	ImGui_ImplVulkan_Shutdown();
 	ImGui_ImplWin32_Shutdown();
 	ImGui::DestroyContext();
