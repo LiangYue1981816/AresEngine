@@ -7,8 +7,14 @@
 #include "VKRenderer.h"
 
 
+static VkDescriptorPool vkDescriptorPool = VK_NULL_HANDLE;
+static VkRenderPass vkRenderPass = VK_NULL_HANDLE;
+static VkImageView vkImageViews[3] = { VK_NULL_HANDLE , VK_NULL_HANDLE , VK_NULL_HANDLE };
+static VkFramebuffer vkFramebuffers[3] = { VK_NULL_HANDLE , VK_NULL_HANDLE , VK_NULL_HANDLE };
+
 static CGfxCommandBufferPtr ptrComputeCommandBuffers[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
 static CGfxCommandBufferPtr ptrGraphicCommandBuffers[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
+static CGfxCommandBufferPtr ptrImGuiCommandBuffers[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
 
 
 static void check_vk_result(VkResult err)
@@ -22,7 +28,37 @@ static void check_vk_result(VkResult err)
 		abort();
 }
 
-static void ImGui_ImplVulkan_CreateWindow(VkDevice device, uint32_t width, uint32_t height, VkFormat format, VkAllocationCallbacks* allocator, VkImage images[3], VkRenderPass* pRenderPass, VkImageView* pImageViews[3], VkFramebuffer* pFramebuffers[3])
+static void ImGui_ImplVulkan_CreateDescriptorPool(VkAllocationCallbacks* allocator, VkDescriptorPool* pool)
+{
+	VkDescriptorPoolSize pool_sizes[] =
+	{
+		{ VK_DESCRIPTOR_TYPE_SAMPLER, 1000 },
+		{ VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, 1000 },
+		{ VK_DESCRIPTOR_TYPE_SAMPLED_IMAGE, 1000 },
+		{ VK_DESCRIPTOR_TYPE_STORAGE_IMAGE, 1000 },
+		{ VK_DESCRIPTOR_TYPE_UNIFORM_TEXEL_BUFFER, 1000 },
+		{ VK_DESCRIPTOR_TYPE_STORAGE_TEXEL_BUFFER, 1000 },
+		{ VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, 1000 },
+		{ VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, 1000 },
+		{ VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER_DYNAMIC, 1000 },
+		{ VK_DESCRIPTOR_TYPE_STORAGE_BUFFER_DYNAMIC, 1000 },
+		{ VK_DESCRIPTOR_TYPE_INPUT_ATTACHMENT, 1000 }
+	};
+	VkDescriptorPoolCreateInfo info = {};
+	info.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_POOL_CREATE_INFO;
+	info.flags = VK_DESCRIPTOR_POOL_CREATE_FREE_DESCRIPTOR_SET_BIT;
+	info.maxSets = 1000 * IM_ARRAYSIZE(pool_sizes);
+	info.poolSizeCount = (uint32_t)IM_ARRAYSIZE(pool_sizes);
+	info.pPoolSizes = pool_sizes;
+	check_vk_result(vkCreateDescriptorPool(VKRenderer()->GetDevice(), &info, allocator, pool));
+}
+
+static void ImGui_ImplVulkan_DestroyDescriptorPool(VkAllocationCallbacks* allocator, VkDescriptorPool* pool)
+{
+	vkDestroyDescriptorPool(VKRenderer()->GetDevice(), *pool, allocator);
+}
+
+static void ImGui_ImplVulkan_CreateWindow(uint32_t width, uint32_t height, VkFormat format, VkAllocationCallbacks* allocator, VkRenderPass* renderPass, VkImageView* imageViews, VkFramebuffer* framebuffers)
 {
 	{
 		VkAttachmentDescription attachment = {};
@@ -56,7 +92,7 @@ static void ImGui_ImplVulkan_CreateWindow(VkDevice device, uint32_t width, uint3
 		info.pSubpasses = &subpass;
 		info.dependencyCount = 1;
 		info.pDependencies = &dependency;
-		check_vk_result(vkCreateRenderPass(device, &info, allocator, pRenderPass));
+		check_vk_result(vkCreateRenderPass(VKRenderer()->GetDevice(), &info, allocator, renderPass));
 	}
 	{
 		VkImageViewCreateInfo info = {};
@@ -71,15 +107,15 @@ static void ImGui_ImplVulkan_CreateWindow(VkDevice device, uint32_t width, uint3
 		info.subresourceRange = image_range;
 		for (uint32_t i = 0; i < 3; i++)
 		{
-			info.image = images[i];
-			check_vk_result(vkCreateImageView(device, &info, allocator, pImageViews[i]));
+			info.image = VKRenderer()->GetSwapchainImage(i);
+			check_vk_result(vkCreateImageView(VKRenderer()->GetDevice(), &info, allocator, &imageViews[i]));
 		}
 	}
 	{
 		VkImageView attachment[1];
 		VkFramebufferCreateInfo info = {};
 		info.sType = VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO;
-		info.renderPass = *pRenderPass;
+		info.renderPass = *renderPass;
 		info.attachmentCount = 1;
 		info.pAttachments = attachment;
 		info.width = width;
@@ -87,15 +123,26 @@ static void ImGui_ImplVulkan_CreateWindow(VkDevice device, uint32_t width, uint3
 		info.layers = 1;
 		for (uint32_t i = 0; i < 3; i++)
 		{
-			attachment[0] = *pImageViews[i];
-			check_vk_result(vkCreateFramebuffer(device, &info, allocator, pFramebuffers[i]));
+			attachment[0] = imageViews[i];
+			check_vk_result(vkCreateFramebuffer(VKRenderer()->GetDevice(), &info, allocator, &framebuffers[i]));
 		}
 	}
 }
 
-static void ImGui_ImplVulkan_CreateCommandBuffer()
+static void ImGui_ImplVulkan_DestritWindow(VkAllocationCallbacks* allocator, VkRenderPass* pRenderPass, VkImageView* imageViews[3], VkFramebuffer* framebuffers[3])
 {
+	for (uint32_t i = 0; i < 3; i++) {
+		vkDestroyFramebuffer(VKRenderer()->GetDevice(), *framebuffers[i], allocator);
+		framebuffers[i] = VK_NULL_HANDLE;
+	}
 
+	for (uint32_t i = 0; i < 3; i++) {
+		vkDestroyImageView(VKRenderer()->GetDevice(), *imageViews[i], allocator);
+		imageViews[i] = VK_NULL_HANDLE;
+	}
+
+	vkDestroyRenderPass(VKRenderer()->GetDevice(), *pRenderPass, allocator);
+	*pRenderPass = VK_NULL_HANDLE;
 }
 
 
@@ -127,6 +174,9 @@ bool CApplicationVulkan::Create(void* hInstance, void* hWnd, void* hDC, int widt
 	ptrGraphicCommandBuffers[0] = GfxRenderer()->NewCommandBuffer(0, true);
 	ptrGraphicCommandBuffers[1] = GfxRenderer()->NewCommandBuffer(0, true);
 	ptrGraphicCommandBuffers[2] = GfxRenderer()->NewCommandBuffer(0, true);
+	ptrImGuiCommandBuffers[0] = GfxRenderer()->NewCommandBuffer(0, true);
+	ptrImGuiCommandBuffers[1] = GfxRenderer()->NewCommandBuffer(1, true);
+	ptrImGuiCommandBuffers[2] = GfxRenderer()->NewCommandBuffer(2, true);
 
 	//
 	// 2. Setup ImGui
@@ -186,6 +236,9 @@ void CApplicationVulkan::Destroy(void)
 	ptrGraphicCommandBuffers[0].Release();
 	ptrGraphicCommandBuffers[1].Release();
 	ptrGraphicCommandBuffers[2].Release();
+	ptrImGuiCommandBuffers[0].Release();
+	ptrImGuiCommandBuffers[1].Release();
+	ptrImGuiCommandBuffers[2].Release();
 
 	DestroyFramework();
 	DestroyEngine();
