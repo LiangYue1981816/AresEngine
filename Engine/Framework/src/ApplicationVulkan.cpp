@@ -31,7 +31,7 @@ static void check_vk_result(VkResult err)
 		abort();
 }
 
-static void ImGui_ImplVulkan_CreateDescriptorPool(VkAllocationCallbacks* allocator, VkDescriptorPool* pool)
+static void ImGui_ImplVulkan_CreateDescriptorPool(VkAllocationCallbacks* allocator, VkDescriptorPool* descriptor_pool)
 {
 	VkDescriptorPoolSize pool_sizes[] =
 	{
@@ -53,16 +53,16 @@ static void ImGui_ImplVulkan_CreateDescriptorPool(VkAllocationCallbacks* allocat
 	info.maxSets = 1000 * IM_ARRAYSIZE(pool_sizes);
 	info.poolSizeCount = (uint32_t)IM_ARRAYSIZE(pool_sizes);
 	info.pPoolSizes = pool_sizes;
-	check_vk_result(vkCreateDescriptorPool(VKRenderer()->GetDevice(), &info, allocator, pool));
+	check_vk_result(vkCreateDescriptorPool(VKRenderer()->GetDevice(), &info, allocator, descriptor_pool));
 }
 
-static void ImGui_ImplVulkan_DestroyDescriptorPool(VkAllocationCallbacks* allocator, VkDescriptorPool* pool)
+static void ImGui_ImplVulkan_DestroyDescriptorPool(VkAllocationCallbacks* allocator, VkDescriptorPool* descriptor_pool)
 {
-	vkDestroyDescriptorPool(VKRenderer()->GetDevice(), *pool, allocator);
-	*pool = VK_NULL_HANDLE;
+	vkDestroyDescriptorPool(VKRenderer()->GetDevice(), *descriptor_pool, allocator);
+	*descriptor_pool = VK_NULL_HANDLE;
 }
 
-static void ImGui_ImplVulkan_CreateWindow(uint32_t width, uint32_t height, VkFormat format, VkAllocationCallbacks* allocator, VkRenderPass* renderPass, VkImageView* imageViews, VkFramebuffer* framebuffers)
+static void ImGui_ImplVulkan_CreateWindow(uint32_t width, uint32_t height, VkFormat format, VkAllocationCallbacks* allocator, VkRenderPass* render_pass, VkImageView* image_views, VkFramebuffer* frame_buffers)
 {
 	{
 		VkAttachmentDescription attachment = {};
@@ -96,7 +96,7 @@ static void ImGui_ImplVulkan_CreateWindow(uint32_t width, uint32_t height, VkFor
 		info.pSubpasses = &subpass;
 		info.dependencyCount = 1;
 		info.pDependencies = &dependency;
-		check_vk_result(vkCreateRenderPass(VKRenderer()->GetDevice(), &info, allocator, renderPass));
+		check_vk_result(vkCreateRenderPass(VKRenderer()->GetDevice(), &info, allocator, render_pass));
 	}
 	{
 		VkImageViewCreateInfo info = {};
@@ -112,14 +112,14 @@ static void ImGui_ImplVulkan_CreateWindow(uint32_t width, uint32_t height, VkFor
 		for (uint32_t i = 0; i < 3; i++)
 		{
 			info.image = VKRenderer()->GetSwapchainImage(i);
-			check_vk_result(vkCreateImageView(VKRenderer()->GetDevice(), &info, allocator, &imageViews[i]));
+			check_vk_result(vkCreateImageView(VKRenderer()->GetDevice(), &info, allocator, &image_views[i]));
 		}
 	}
 	{
 		VkImageView attachment[1];
 		VkFramebufferCreateInfo info = {};
 		info.sType = VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO;
-		info.renderPass = *renderPass;
+		info.renderPass = *render_pass;
 		info.attachmentCount = 1;
 		info.pAttachments = attachment;
 		info.width = width;
@@ -127,30 +127,31 @@ static void ImGui_ImplVulkan_CreateWindow(uint32_t width, uint32_t height, VkFor
 		info.layers = 1;
 		for (uint32_t i = 0; i < 3; i++)
 		{
-			attachment[0] = imageViews[i];
-			check_vk_result(vkCreateFramebuffer(VKRenderer()->GetDevice(), &info, allocator, &framebuffers[i]));
+			attachment[0] = image_views[i];
+			check_vk_result(vkCreateFramebuffer(VKRenderer()->GetDevice(), &info, allocator, &frame_buffers[i]));
 		}
 	}
 }
 
-static void ImGui_ImplVulkan_DestroyWindow(VkAllocationCallbacks* allocator, VkRenderPass* renderPass, VkImageView* imageViews, VkFramebuffer* framebuffers)
+static void ImGui_ImplVulkan_DestroyWindow(VkAllocationCallbacks* allocator, VkRenderPass* render_pass, VkImageView* image_views, VkFramebuffer* frame_buffers)
 {
 	for (uint32_t i = 0; i < 3; i++) {
-		vkDestroyFramebuffer(VKRenderer()->GetDevice(), framebuffers[i], allocator);
-		framebuffers[i] = VK_NULL_HANDLE;
+		vkDestroyFramebuffer(VKRenderer()->GetDevice(), frame_buffers[i], allocator);
+		frame_buffers[i] = VK_NULL_HANDLE;
 	}
 
 	for (uint32_t i = 0; i < 3; i++) {
-		vkDestroyImageView(VKRenderer()->GetDevice(), imageViews[i], allocator);
-		imageViews[i] = VK_NULL_HANDLE;
+		vkDestroyImageView(VKRenderer()->GetDevice(), image_views[i], allocator);
+		image_views[i] = VK_NULL_HANDLE;
 	}
 
-	vkDestroyRenderPass(VKRenderer()->GetDevice(), *renderPass, allocator);
-	*renderPass = VK_NULL_HANDLE;
+	vkDestroyRenderPass(VKRenderer()->GetDevice(), *render_pass, allocator);
+	*render_pass = VK_NULL_HANDLE;
 }
 
 static void ImGui_ImplVulkan_FrameRender(ImGui_ImplVulkanH_Window* wd, ImDrawData* draw_data)
 {
+	/*
 	VkResult err;
 
 	VkSemaphore image_acquired_semaphore = wd->FrameSemaphores[wd->SemaphoreIndex].ImageAcquiredSemaphore;
@@ -209,6 +210,7 @@ static void ImGui_ImplVulkan_FrameRender(ImGui_ImplVulkanH_Window* wd, ImDrawDat
 		err = vkQueueSubmit(g_Queue, 1, &info, fd->Fence);
 		check_vk_result(err);
 	}
+	*/
 }
 
 
