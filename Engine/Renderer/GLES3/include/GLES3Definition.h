@@ -5,7 +5,10 @@
 #  define CHECK_GL_ERROR_ASSERT()                \
    {                                             \
       GLenum err = glGetError();                 \
-      ASSERT(err == GL_NO_ERROR);                \
+      if (err != GL_NO_ERROR) {                  \
+         LogOutput(LOG_TAG_ERROR, "\nglGetError=%x\n", err); \
+         ASSERT(err == GL_NO_ERROR);             \
+	  }                                          \
    }
 #else
 #  define CHECK_GL_ERROR_ASSERT()

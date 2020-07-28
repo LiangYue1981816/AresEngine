@@ -62,6 +62,8 @@
 #define ALIGN_1KBYTE(a)                ALIGN_BYTE(a, 1024)
 #define ALIGN_4KBYTE(a)                ALIGN_BYTE(a, 4096)
 
+#define LOG_TAG_ERROR                  "Error"
+#define LOG_TAG_WARNING                "Warning"
 #define LOG_TAG_MEMORY                 "Memory"
 #define LOG_TAG_RENDERER               "GfxRenderer"
 
