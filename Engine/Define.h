@@ -65,7 +65,7 @@
 #define LOG_TAG_ERROR                  "Error"
 #define LOG_TAG_WARNING                "Warning"
 #define LOG_TAG_MEMORY                 "Memory"
-#define LOG_TAG_RENDERER               "GfxRenderer"
+#define LOG_TAG_RENDERER               "Renderer"
 
 #define MAX_THREAD_COUNT               32
 
