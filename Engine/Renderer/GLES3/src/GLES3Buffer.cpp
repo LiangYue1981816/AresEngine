@@ -88,15 +88,15 @@ bool CGLES3Buffer::BufferSize(size_t size, bool bDynamic)
 
 bool CGLES3Buffer::BufferData(size_t offset, size_t size, const void* data, bool bSync)
 {
-	ASSERT(data);
-	ASSERT(size);
-	ASSERT(m_size >= (uint32_t)(offset + size));
 	ASSERT(m_buffer);
+	ASSERT(m_size >= (uint32_t)(offset + size));
 
-	glBindBuffer(m_target, m_buffer);
-	glBufferSubDataSync(m_target, offset, size, data, bSync);
-	glBindBuffer(m_target, 0);
-	CHECK_GL_ERROR_ASSERT();
+	if (size && data) {
+		glBindBuffer(m_target, m_buffer);
+		glBufferSubDataSync(m_target, offset, size, data, bSync);
+		glBindBuffer(m_target, 0);
+		CHECK_GL_ERROR_ASSERT();
+	}
 
 	return true;
 }
