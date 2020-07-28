@@ -130,7 +130,7 @@ void CPassShadow::Render(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxCommand
 
 	// Update DescriptorSet
 	for (int indexLevel = 0; indexLevel < 4; indexLevel++) {
-		m_ptrDescriptorSetPass[indexLevel]->SetUniformBuffer(UNIFORM_CAMERA_NAME, m_pShadowCamera[indexLevel]->GetUniformBuffer(), m_pShadowCamera[indexLevel]->GetUniformBufferOffset(), m_pShadowCamera[indexLevel]->GetUniformBuffer()->GetSize());
+		m_ptrDescriptorSetPass[indexLevel]->SetUniformBuffer(UNIFORM_CAMERA_NAME, m_pShadowCamera[indexLevel]->GetUniformBuffer(), m_pShadowCamera[indexLevel]->GetUniformBufferOffset(), m_pShadowCamera[indexLevel]->GetUniformBufferSize());
 		m_ptrDescriptorSetPass[indexLevel]->SetUniformBuffer(UNIFORM_ENGINE_NAME, m_pRenderSystem->GetEngineUniform()->GetUniformBuffer(), m_pRenderSystem->GetEngineUniform()->GetUniformBufferOffset(), m_pRenderSystem->GetEngineUniform()->GetUniformBufferSize());
 	}
 
