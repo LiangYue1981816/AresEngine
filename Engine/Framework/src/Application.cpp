@@ -105,6 +105,8 @@ void UpdateRenderSolution(void)
 	RenderSystem()->SetAmbientLightFactor(0.5f);
 	RenderSystem()->SetAmbientLightSH(shRed, shGreen, shBlue);
 
+	RenderSystem()->SetMainPointLightFactor(1.0f);
+
 	RenderSystem()->SetMainDirectLightFactor(1.5f);
 	RenderSystem()->SetMainDirectLightColor(3.5f, 3.5f, 3.5f);
 	RenderSystem()->SetMainDirectLightDirection(directLightDirection.x, directLightDirection.y, directLightDirection.z);
