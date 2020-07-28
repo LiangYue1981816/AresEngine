@@ -313,11 +313,10 @@ const DescriptorBufferInfo* CVKDescriptorSet::GetDescriptorBufferInfo(uint32_t n
 	}
 }
 
-static VkDescriptorBufferInfo DescriptorBufferInfo(VkBuffer buffer, VkDeviceSize offset, VkDeviceSize range)
+static VkDescriptorBufferInfo DescriptorBufferInfo(VkBuffer buffer, VkDeviceSize range)
 {
 	VkDescriptorBufferInfo bufferInfo = {};
 	bufferInfo.buffer = buffer;
-	bufferInfo.offset = offset;
 	bufferInfo.range = range;
 	return bufferInfo;
 }
@@ -431,7 +430,6 @@ void CVKDescriptorSet::Bind(VkCommandBuffer vkCommandBuffer, VkPipelineBindPoint
 			if (itBuffer.second.ptrUniformBuffer) {
 				bufferInfos.emplace_back(DescriptorBufferInfo(
 					((CVKUniformBuffer*)itBuffer.second.ptrUniformBuffer.GetPointer())->GetBuffer(),
-					itBuffer.second.offset,
 					itBuffer.second.range));
 
 				writes.emplace_back(UniformBufferWriteDescriptorSet(
@@ -443,7 +441,6 @@ void CVKDescriptorSet::Bind(VkCommandBuffer vkCommandBuffer, VkPipelineBindPoint
 			if (itBuffer.second.ptrStorageBuffer) {
 				bufferInfos.emplace_back(DescriptorBufferInfo(
 					((CVKStorageBuffer*)itBuffer.second.ptrStorageBuffer.GetPointer())->GetBuffer(),
-					itBuffer.second.offset,
 					itBuffer.second.range));
 
 				writes.emplace_back(StorageBufferWriteDescriptorSet(
