@@ -193,7 +193,7 @@ bool CGLES3Texture::Texture2DData(GfxPixelFormat format, int level, int xoffset,
 	gli::gl::format glFormat = GL.translate((gli::format)format);
 
 	glBindTexture(m_target, m_texture);
-	glTexSubImage2D(m_target, level, xoffset, yoffset, width, height, glFormat.External, GL_UNSIGNED_BYTE, data);
+	glTexSubImage2D(m_target, level, xoffset, yoffset, width, height, glFormat.External, glFormat.Type, data);
 	glBindTexture(m_target, 0);
 	CHECK_GL_ERROR_ASSERT();
 
@@ -242,7 +242,7 @@ bool CGLES3Texture::Texture2DArrayData(GfxPixelFormat format, int layer, int lev
 	gli::gl::format glFormat = GL.translate((gli::format)format);
 
 	glBindTexture(m_target, m_texture);
-	glTexSubImage3D(m_target, level, xoffset, yoffset, layer, width, height, 1, glFormat.External, GL_UNSIGNED_BYTE, data);
+	glTexSubImage3D(m_target, level, xoffset, yoffset, layer, width, height, 1, glFormat.External, glFormat.Type, data);
 	glBindTexture(m_target, 0);
 	CHECK_GL_ERROR_ASSERT();
 
@@ -291,7 +291,7 @@ bool CGLES3Texture::TextureCubemapData(GfxPixelFormat format, GfxCubemapFace fac
 	gli::gl::format glFormat = GL.translate((gli::format)format);
 
 	glBindTexture(m_target, m_texture);
-	glTexSubImage2D(CGLES3Helper::TranslateTextureTarget(face), level, xoffset, yoffset, width, height, glFormat.External, GL_UNSIGNED_BYTE, data);
+	glTexSubImage2D(CGLES3Helper::TranslateTextureTarget(face), level, xoffset, yoffset, width, height, glFormat.External, glFormat.Type, data);
 	glBindTexture(m_target, 0);
 	CHECK_GL_ERROR_ASSERT();
 
