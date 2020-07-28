@@ -104,7 +104,7 @@ void main()
 			vec3 pointLightDirection = normalize(pointLightPosition - worldPosition);
 			vec3 pointLightAttenuation = sceneData.instances[indexLight].lightAttenuation.xyz;
 			vec3 pointLightColor = sceneData.instances[indexLight].lightColor.rgb * Attenuation(distance, pointLightAttenuation.x, pointLightAttenuation.y, pointLightAttenuation.z);
-			vec3 lighting = PBRLighting(worldNormal, worldViewDirection, pointLightDirection, pointLightColor, albedo, 0.5, metallic, roughness) * pointLightFactor;
+			vec3 lighting = PBRLighting(worldNormal, worldViewDirection, pointLightDirection, pointLightColor, albedo, 0.5, metallic, roughness);
 			pointLighting += ao * lighting;
 		}
 	}
