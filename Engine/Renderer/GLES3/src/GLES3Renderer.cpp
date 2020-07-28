@@ -549,7 +549,6 @@ void CGLES3Renderer::Submit(const CGfxCommandBufferPtr& ptrCommandBuffer, const 
 
 void CGLES3Renderer::AcquireNextFrame(void)
 {
-	GLResetContext();
 	m_pSwapChain->AcquireNextFrame();
 }
 
