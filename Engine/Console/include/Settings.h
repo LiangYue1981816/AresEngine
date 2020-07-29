@@ -28,8 +28,11 @@ private:
 
 public:
 	void Register(const char* szName, const char* szDescription, float defaultValue);
-	void SetValue(const char* szName, float value);
+	void GetNames(eastl::vector<eastl::string>& names) const;
+
+	bool SetValue(const char* szName, float value);
 	float GetValue(const char* szName) const;
+	eastl::string GetDescription(const char* szName) const;
 
 
 private:

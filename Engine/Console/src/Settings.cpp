@@ -23,12 +23,25 @@ void CSettings::Register(const char* szName, const char* szDescription, float de
 	m_variables[szName].value = defaultValue;
 }
 
-void CSettings::SetValue(const char* szName, float value)
+void CSettings::GetNames(eastl::vector<eastl::string>& names) const
+{
+	names.clear();
+
+	for (const auto& itVariable : m_variables) {
+		names.emplace_back(itVariable.first);
+	}
+}
+
+bool CSettings::SetValue(const char* szName, float value)
 {
 	const auto& itVariable = m_variables.find(szName);
 
 	if (itVariable != m_variables.end()) {
 		itVariable->second.value = value;
+		return true;
+	}
+	else {
+		return false;
 	}
 }
 
@@ -41,5 +54,17 @@ float CSettings::GetValue(const char* szName) const
 	}
 	else {
 		return 0.0f;
+	}
+}
+
+eastl::string CSettings::GetDescription(const char* szName) const
+{
+	const auto& itVariable = m_variables.find(szName);
+
+	if (itVariable != m_variables.end()) {
+		return itVariable->second.description;
+	}
+	else {
+		return "";
 	}
 }
