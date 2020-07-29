@@ -17,12 +17,29 @@ CSettings::~CSettings(void)
 	pInstance = nullptr;
 }
 
-void CSettings::SetValue(const char* szName, float value)
+void CSettings::Register(const char* szName, const char* szDescription, float defaultValue)
 {
-	m_values[szName] = value;
+	m_variables[szName].description = szDescription;
+	m_variables[szName].value = defaultValue;
 }
 
-float CSettings::GetValue(const char* szName)
+void CSettings::SetValue(const char* szName, float value)
 {
-	return m_values[szName];
+	const auto& itVariable = m_variables.find(szName);
+
+	if (itVariable != m_variables.end()) {
+		itVariable->second.value = value;
+	}
+}
+
+float CSettings::GetValue(const char* szName) const
+{
+	const auto& itVariable = m_variables.find(szName);
+
+	if (itVariable != m_variables.end()) {
+		return itVariable->second.value;
+	}
+	else {
+		return 0.0f;
+	}
 }
