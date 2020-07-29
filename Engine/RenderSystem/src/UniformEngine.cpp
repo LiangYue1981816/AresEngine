@@ -133,6 +133,11 @@ CUniformEngine::CUniformEngine(void)
 	, m_offset(0)
 {
 	m_ptrUniformBuffer = GfxRenderer()->NewUniformBuffer(CGfxSwapChain::SWAPCHAIN_FRAME_COUNT * GfxRenderer()->AlignUniformBufferOffset(sizeof(m_params)));
+
+	SetEnvLightFactor(1.0f);
+	SetAmbientLightFactor(1.0f);
+	SetMainPointLightFactor(1.0f);
+	SetMainDirectLightFactor(1.0f);
 }
 
 CUniformEngine::~CUniformEngine(void)
