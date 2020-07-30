@@ -94,6 +94,7 @@ static bool CompileShader(std::string& source, shaderc_shader_kind kind, const s
 	shaderc::SpvCompilationResult module = compiler.CompileGlslToSpv(source, kind, "SPIR-V Compiler", options);
 
 	if (module.GetCompilationStatus() != shaderc_compilation_status_success) {
+		LogOutput(LOG_ERROR, nullptr, "\n");
 		LogOutput(LOG_ERROR, nullptr, "Source:\n");
 		LogOutput(LOG_ERROR, nullptr, "%s\n", source.c_str());
 		LogOutput(LOG_ERROR, nullptr, "Compile Fail:\n");
