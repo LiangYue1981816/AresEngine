@@ -170,19 +170,19 @@ static size_t total_object_cnt = 0;
  * @param line  source line number if non-zero; indication that \e ptr
  *              is the caller address otherwise
  */
-static void print_position(const void* ptr, int line)
+static void print_position(int prio, const void* ptr, int line)
 {
     if (line != 0)          // Is file/line information present?
     {
-        LogOutput(LOG_ERROR, LOG_TAG_MEMORY, "%s:%d", (const char*)ptr, line);
+        LogOutput(prio, nullptr, "%s:%d", (const char*)ptr, line);
     }
     else if (ptr != nullptr)   // Is caller address present?
     {
-		LogOutput(LOG_ERROR, LOG_TAG_MEMORY, "%p", ptr);
+		LogOutput(prio, nullptr, "%p", ptr);
     }
     else                    // No information is present
     {
-		LogOutput(LOG_ERROR, LOG_TAG_MEMORY, "<Unknown>");
+		LogOutput(prio, nullptr, "<Unknown>");
     }
 }
 
@@ -267,7 +267,7 @@ void free_pointer(void* usr_ptr, void* addr, bool is_array)
     {
         {
 			LogOutput(LOG_ERROR, LOG_TAG_MEMORY, "delete%s: invalid pointer %p (", is_array ? "[]" : "", usr_ptr);
-            print_position(addr, 0);
+            print_position(LOG_ERROR, addr, 0);
 			LogOutput(LOG_ERROR, LOG_TAG_MEMORY, ")\n");
         }
         check_mem_corruption();
@@ -281,12 +281,12 @@ void free_pointer(void* usr_ptr, void* addr, bool is_array)
         else
             msg = "delete after new[]";
 		LogOutput(LOG_ERROR, LOG_TAG_MEMORY, "%s: pointer %p (size %lu)\n\tat ", msg, (char*)ptr + ALIGNED_LIST_ITEM_SIZE, (unsigned long)ptr->size);
-        print_position(addr, 0);
+        print_position(LOG_ERROR, addr, 0);
 		LogOutput(LOG_ERROR, LOG_TAG_MEMORY, "\n\toriginally allocated at ");
         if (ptr->line != 0)
-            print_position(ptr->file, ptr->line);
+            print_position(LOG_ERROR, ptr->file, ptr->line);
         else
-            print_position(ptr->addr, ptr->line);
+            print_position(LOG_ERROR, ptr->addr, ptr->line);
 		LogOutput(LOG_ERROR, LOG_TAG_MEMORY, "\n");
         _DEBUG_NEW_ERROR_ACTION;
     }
@@ -333,10 +333,10 @@ int dump_memory_objects()
 #endif
 		LogOutput(LOG_INFO, LOG_TAG_MEMORY, "object at %p (size %lu, ", usr_ptr, (unsigned long)ptr->size);
         if (ptr->line != 0)
-            print_position(ptr->file, ptr->line);
+            print_position(LOG_INFO, ptr->file, ptr->line);
         else
-            print_position(ptr->addr, ptr->line);
-		LogOutput(LOG_INFO, LOG_TAG_MEMORY, ")\n");
+            print_position(LOG_INFO, ptr->addr, ptr->line);
+		LogOutput(LOG_INFO, nullptr, ")\n");
         
 		object_cnt++;
 		total_size += ptr->size;
@@ -379,9 +379,9 @@ int check_mem_corruption()
         }
 #endif
         if (ptr->line != 0)
-            print_position(ptr->file, ptr->line);
+            print_position(LOG_INFO, ptr->file, ptr->line);
         else
-            print_position(ptr->addr, ptr->line);
+            print_position(LOG_INFO, ptr->addr, ptr->line);
 		LogOutput(LOG_INFO, LOG_TAG_MEMORY, ")\n");
         ++corrupt_cnt;
     }

@@ -75,19 +75,21 @@ void UpdateInput(void)
 
 	// Key
 	{
-		if (ImGui::IsKeyDown('W')) Framework()->OnKeyDown('W');
-		if (ImGui::IsKeyDown('S')) Framework()->OnKeyDown('S');
-		if (ImGui::IsKeyDown('A')) Framework()->OnKeyDown('A');
-		if (ImGui::IsKeyDown('D')) Framework()->OnKeyDown('D');
-		if (ImGui::IsKeyDown('E')) Framework()->OnKeyDown('E');
-		if (ImGui::IsKeyDown('Q')) Framework()->OnKeyDown('Q');
+		if (ImGui::IsAnyWindowHovered() == false) {
+			if (ImGui::IsKeyDown('W')) Framework()->OnKeyDown('W');
+			if (ImGui::IsKeyDown('S')) Framework()->OnKeyDown('S');
+			if (ImGui::IsKeyDown('A')) Framework()->OnKeyDown('A');
+			if (ImGui::IsKeyDown('D')) Framework()->OnKeyDown('D');
+			if (ImGui::IsKeyDown('E')) Framework()->OnKeyDown('E');
+			if (ImGui::IsKeyDown('Q')) Framework()->OnKeyDown('Q');
 
-		if (ImGui::IsKeyReleased('W')) Framework()->OnKeyRelease('W');
-		if (ImGui::IsKeyReleased('S')) Framework()->OnKeyRelease('S');
-		if (ImGui::IsKeyReleased('A')) Framework()->OnKeyRelease('A');
-		if (ImGui::IsKeyReleased('D')) Framework()->OnKeyRelease('D');
-		if (ImGui::IsKeyReleased('E')) Framework()->OnKeyRelease('E');
-		if (ImGui::IsKeyReleased('Q')) Framework()->OnKeyRelease('Q');
+			if (ImGui::IsKeyReleased('W')) Framework()->OnKeyRelease('W');
+			if (ImGui::IsKeyReleased('S')) Framework()->OnKeyRelease('S');
+			if (ImGui::IsKeyReleased('A')) Framework()->OnKeyRelease('A');
+			if (ImGui::IsKeyReleased('D')) Framework()->OnKeyRelease('D');
+			if (ImGui::IsKeyReleased('E')) Framework()->OnKeyRelease('E');
+			if (ImGui::IsKeyReleased('Q')) Framework()->OnKeyRelease('Q');
+		}
 	}
 }
 

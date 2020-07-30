@@ -240,8 +240,8 @@ bool CApplicationVulkan::Create(void* hInstance, void* hWnd, void* hDC, int widt
 	// 3. Setup ImGui style
 	//
 //	ImGui::StyleColorsDark();
-	ImGui::StyleColorsLight();
-//	ImGui::StyleColorsClassic();
+//	ImGui::StyleColorsLight();
+	ImGui::StyleColorsClassic();
 
 	//
 	// 4. Setup Platform/Renderer bindings
