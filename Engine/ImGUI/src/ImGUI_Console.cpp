@@ -1,4 +1,5 @@
 #include "ImGUIHeader.h"
+#include "RenderHeader.h"
 
 
 static int   Stricmp(const char* s1, const char* s2) { int d; while ((d = toupper(*s2) - toupper(*s1)) == 0 && *s1) { s1++; s2++; } return d; }
@@ -9,12 +10,32 @@ static void  Strtrim(char* s) { char* str_end = s + strlen(s); while (str_end > 
 
 CImGUI_Console::CImGUI_Console(void)
 {
+	ClearLog();
+	memset(InputBuf, 0, sizeof(InputBuf));
+	HistoryPos = -1;
 
+	AutoScroll = true;
+	ScrollToBottom = false;
+
+	Commands.push_back("HELP");
+	Commands.push_back("HISTORY");
+	Commands.push_back("CLEAR");
+
+	eastl::vector<eastl::string> names;
+	Settings()->GetNames(names);
+
+	for (const auto& itName : names) {
+		Commands.push_back(itName.c_str());
+	}
 }
 
 CImGUI_Console::~CImGUI_Console(void)
 {
+	ClearLog();
 
+	for (int i = 0; i < History.Size; i++) {
+		free(History[i]);
+	}
 }
 
 void CImGUI_Console::ClearLog()
