@@ -17,15 +17,15 @@ CImGUI_Console::CImGUI_Console(void)
 	AutoScroll = true;
 	ScrollToBottom = false;
 
-	Commands.push_back("HELP");
-	Commands.push_back("HISTORY");
-	Commands.push_back("CLEAR");
+	Commands.push_back(Strdup("HELP"));
+	Commands.push_back(Strdup("HISTORY"));
+	Commands.push_back(Strdup("CLEAR"));
 
 	eastl::vector<eastl::string> names;
 	Settings()->GetNames(names);
 
 	for (const auto& itName : names) {
-		Commands.push_back(itName.c_str());
+		Commands.push_back(Strdup(itName.c_str()));
 	}
 }
 
@@ -35,6 +35,10 @@ CImGUI_Console::~CImGUI_Console(void)
 
 	for (int i = 0; i < History.Size; i++) {
 		free(History[i]);
+	}
+
+	for (int i = 0; i < Commands.Size; i++) {
+		free(Commands[i]);
 	}
 }
 
