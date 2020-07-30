@@ -71,7 +71,7 @@ CALL_API unsigned int HashValue(const unsigned char* pBuffer, int length, int st
 	return dwHashValue ? dwHashValue : INVALID_HASHVALUE;
 }
 
-CALL_API void LogOutput(const char* szTag, const char* szFormat, ...)
+CALL_API void LogOutput(int prio, const char* szTag, const char* szFormat, ...)
 {
 	va_list vaList;
 	char szText[128 * 1024] = { 0 };
@@ -80,32 +80,43 @@ CALL_API void LogOutput(const char* szTag, const char* szFormat, ...)
 	vsprintf(szText, szFormat, vaList);
 	va_end(vaList);
 
-#ifdef PLATFORM_WINDOWS
-	if (szTag) {
-		OutputDebugString(szTag);
-		OutputDebugString(": ");
-		OutputDebugString(szText);
-		printf("%s: %s", szTag, szText);
-	}
-	else {
-		OutputDebugString(szText);
-		printf("%s", szText);
-	}
-#elif PLATFORM_ANDROID
-	if (szTag) {
-		__android_log_print(ANDROID_LOG_INFO, szTag, "%s", szText);
-	}
-	else {
-		__android_log_print(ANDROID_LOG_INFO, "", "%s", szText);
-	}
-#else
-	if (szTag) {
-		printf("%s: %s", szTag, szText);
-	}
-	else {
-		printf("%s", szText);
-	}
+#ifndef DEBUG
+	if (prio == LOG_WARN || prio == LOG_ERROR)
 #endif
+	{
+#ifdef PLATFORM_WINDOWS
+		switch (prio) {
+		case LOG_WARN:  printf("\033[33m"); break; // Yellow
+		case LOG_ERROR: printf("\033[31m"); break; // Red
+		}
+		if (szTag) {
+			OutputDebugString("\n");
+			OutputDebugString(szTag);
+			OutputDebugString(": ");
+			OutputDebugString(szText);
+			printf("\n%s: %s", szTag, szText);
+		}
+		else {
+			OutputDebugString(szText);
+			printf("%s", szText);
+		}
+		printf("\033[0m");
+#elif PLATFORM_ANDROID
+		if (szTag) {
+			__android_log_print(ANDROID_LOG_INFO, szTag, "%s", szText);
+		}
+		else {
+			__android_log_print(ANDROID_LOG_INFO, "", "%s", szText);
+		}
+#else
+		if (szTag) {
+			printf("\n%s: %s", szTag, szText);
+		}
+		else {
+			printf("%s", szText);
+		}
+#endif
+	}
 }
 
 CALL_API void splitfilename(const char* name, char* fname, char* ext)

@@ -7,7 +7,11 @@ CALL_API unsigned int Tick(void);
 CALL_API unsigned int HashValue(const char* szString);
 CALL_API unsigned int HashValueFormat(const char* szFormat, ...);
 CALL_API unsigned int HashValue(const unsigned char* pBuffer, int length, int stride = 1);
-CALL_API void LogOutput(const char* szTag, const char* szFormat, ...);
+
+#define LOG_INFO  0
+#define LOG_WARN  1
+#define LOG_ERROR 2
+CALL_API void LogOutput(int prio, const char* szTag, const char* szFormat, ...);
 
 CALL_API void splitfilename(const char* name, char* fname, char* ext);
 CALL_API int fexist(const char* name);
