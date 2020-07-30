@@ -1,6 +1,8 @@
 #pragma once
 #include "PreHeader.h"
 
+#include "gli.hpp"
+
 #include "GfxGLM.h"
 #include "GfxEnum.h"
 #include "GfxHelper.h"

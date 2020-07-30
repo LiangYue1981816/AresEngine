@@ -1,5 +1,4 @@
 #include "GLES3Renderer.h"
-#include "gli.hpp"
 
 
 CGLES3Texture::CGLES3Texture(void)
