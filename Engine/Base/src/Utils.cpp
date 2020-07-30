@@ -73,17 +73,17 @@ CALL_API unsigned int HashValue(const unsigned char* pBuffer, int length, int st
 
 CALL_API void LogOutput(int prio, const char* szTag, const char* szFormat, ...)
 {
-	va_list vaList;
-	char szText[128 * 1024] = { 0 };
-
-	va_start(vaList, szFormat);
-	vsprintf(szText, szFormat, vaList);
-	va_end(vaList);
-
 #ifndef DEBUG
 	if (prio == LOG_WARN || prio == LOG_ERROR)
 #endif
 	{
+		va_list vaList;
+		char szText[128 * 1024] = { 0 };
+
+		va_start(vaList, szFormat);
+		vsprintf(szText, szFormat, vaList);
+		va_end(vaList);
+
 #ifdef PLATFORM_WINDOWS
 		switch (prio) {
 		case LOG_WARN:  printf("\033[33m"); break; // Yellow
