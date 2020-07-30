@@ -91,7 +91,11 @@ void CImGUI_Console::ExecCommand(const char* command_line)
 		}
 	}
 	else {
-		AddLog("Unknown command: '%s'\n", command_line);
+		float value;
+		char name[256];
+		sscanf(command_line, "%s %f", name, &value);
+
+		Settings()->SetValue(name, value);
 	}
 
 	// On command input, we scroll to bottom even if AutoScroll==false
