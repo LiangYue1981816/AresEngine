@@ -75,6 +75,7 @@ CEngine::CEngine(GfxApi api, void* hInstance, void* hWnd, void* hDC, int width, 
 	m_pSettings->Register("RenderSystem.AutoExposure.Luminance", "", 0.15f);
 	m_pSettings->Register("RenderSystem.AutoExposure.MinScaleLuminance", "", 0.20f);
 	m_pSettings->Register("RenderSystem.AutoExposure.MaxScaleLuminance", "", 2.00f);
+	m_pSettings->Load("settings.ini");
 
 	m_pFileManager = new CFileManager;
 	m_pFileManager->SetPath(szPath, ".xml");

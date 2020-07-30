@@ -68,3 +68,17 @@ eastl::string CSettings::GetDescription(const char* szName) const
 		return "";
 	}
 }
+
+void CSettings::Load(const char* szFileName)
+{
+	if (FILE *pFile = fopen(szFileName, "rb")) {
+		while (!feof(pFile)) {
+			char szName[256];
+			float value;
+
+			fscanf(pFile, "%s = %f", szName, &value);
+			SetValue(szName, value);
+		}
+		fclose(pFile);
+	}
+}

@@ -34,6 +34,9 @@ public:
 	float GetValue(const char* szName) const;
 	eastl::string GetDescription(const char* szName) const;
 
+public:
+	void Load(const char* szFileName);
+
 
 private:
 	eastl::map<eastl::string, Variable> m_variables;
