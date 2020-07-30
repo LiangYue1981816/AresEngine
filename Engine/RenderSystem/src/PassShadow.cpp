@@ -1,4 +1,3 @@
-#include "SceneHeader.h"
 #include "RenderHeader.h"
 
 

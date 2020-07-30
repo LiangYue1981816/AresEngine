@@ -1,7 +1,4 @@
 #include "GLES3Renderer.h"
-#ifdef PLATFORM_WINDOWS
-#  include <gl3w.h>
-#endif
 
 
 CGLES3Renderer::CGLES3Renderer(void* hInstance, void* hWnd, void* hDC, int width, int height, GfxPixelFormat format)
@@ -28,10 +25,6 @@ CGLES3Renderer::CGLES3Renderer(void* hInstance, void* hWnd, void* hDC, int width
 	, m_pDescriptorSetManager(nullptr)
 	, m_pCommandBufferManager(nullptr)
 {
-#ifdef PLATFORM_WINDOWS
-	gl3wInit();
-#endif
-
 	CGLES3Helper::SetupExtensions();
 
 	m_pShaderManager = new CGLES3ShaderManager;
