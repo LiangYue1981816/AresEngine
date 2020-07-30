@@ -153,12 +153,12 @@ void CVKMemoryManager::Log(void)
 {
 	mutex_autolock autolock(&lock);
 	{
-		LogOutput(LOG_TAG_RENDERER, "MemoryManager:\n");
+		LogOutput(LOG_INFO, LOG_TAG_RENDERER, "MemoryManager:\n");
 
 		for (const auto& itAllocator : m_pAllocatorListHeads) {
 			if (CVKMemoryAllocator* pAllocator = itAllocator.second) {
 				do {
-					LogOutput(LOG_TAG_RENDERER, "\tAllocator: type=%d free=%d full=%d commitment=%d device_local=%s host_visible=%s host_coherent=%s host_cached=%s\n",
+					LogOutput(LOG_INFO, LOG_TAG_RENDERER, "\tAllocator: type=%d free=%d full=%d commitment=%d device_local=%s host_visible=%s host_coherent=%s host_cached=%s\n",
 						pAllocator->GetMemoryTypeIndex(),
 						pAllocator->GetFreeSize(),
 						pAllocator->GetFullSize(),

@@ -59,9 +59,9 @@ static std::string PreprocessShader(std::string& source, shaderc_shader_kind kin
 	shaderc::PreprocessedSourceCompilationResult module = compiler.PreprocessGlsl(source, kind, "SPIR-V Preprocess", options);
 
 	if (module.GetCompilationStatus() != shaderc_compilation_status_success) {
-		LogOutput(nullptr, "\n");
-		LogOutput(nullptr, "Preprocess Fail:\n");
-		LogOutput(nullptr, "%s\n", module.GetErrorMessage().c_str());
+		LogOutput(LOG_ERROR, nullptr, "\n");
+		LogOutput(LOG_ERROR, nullptr, "Preprocess Fail:\n");
+		LogOutput(LOG_ERROR, nullptr, "%s\n", module.GetErrorMessage().c_str());
 		return "";
 	}
 
@@ -94,10 +94,10 @@ static bool CompileShader(std::string& source, shaderc_shader_kind kind, const s
 	shaderc::SpvCompilationResult module = compiler.CompileGlslToSpv(source, kind, "SPIR-V Compiler", options);
 
 	if (module.GetCompilationStatus() != shaderc_compilation_status_success) {
-		LogOutput(nullptr, "Source:\n");
-		LogOutput(nullptr, "%s\n", source.c_str());
-		LogOutput(nullptr, "Compile Fail:\n");
-		LogOutput(nullptr, "%s\n", module.GetErrorMessage().c_str());
+		LogOutput(LOG_ERROR, nullptr, "Source:\n");
+		LogOutput(LOG_ERROR, nullptr, "%s\n", source.c_str());
+		LogOutput(LOG_ERROR, nullptr, "Compile Fail:\n");
+		LogOutput(LOG_ERROR, nullptr, "%s\n", module.GetErrorMessage().c_str());
 		return false;
 	}
 

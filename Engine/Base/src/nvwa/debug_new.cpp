@@ -174,15 +174,15 @@ static void print_position(const void* ptr, int line)
 {
     if (line != 0)          // Is file/line information present?
     {
-        LogOutput(LOG_TAG_MEMORY, "%s:%d", (const char*)ptr, line);
+        LogOutput(LOG_ERROR, LOG_TAG_MEMORY, "%s:%d", (const char*)ptr, line);
     }
     else if (ptr != nullptr)   // Is caller address present?
     {
-		LogOutput(LOG_TAG_MEMORY, "%p", ptr);
+		LogOutput(LOG_ERROR, LOG_TAG_MEMORY, "%p", ptr);
     }
     else                    // No information is present
     {
-		LogOutput(LOG_TAG_MEMORY, "<Unknown>");
+		LogOutput(LOG_ERROR, LOG_TAG_MEMORY, "<Unknown>");
     }
 }
 
@@ -225,7 +225,7 @@ void* alloc_mem(size_t size, const char* file, int line, bool is_array)
 	new_ptr_list_t* ptr = (new_ptr_list_t*)AllocMemory(s);
     if (ptr == nullptr)
     {
-		LogOutput(LOG_TAG_MEMORY, "Out of memory when allocating %lu bytes\n", (unsigned long)size);
+		LogOutput(LOG_ERROR, LOG_TAG_MEMORY, "Out of memory when allocating %lu bytes\n", (unsigned long)size);
         _DEBUG_NEW_ERROR_ACTION;
     }
     void* usr_ptr = (char*)ptr + ALIGNED_LIST_ITEM_SIZE;
@@ -266,9 +266,9 @@ void free_pointer(void* usr_ptr, void* addr, bool is_array)
     if (ptr->magic != DEBUG_NEW_MAGIC)
     {
         {
-			LogOutput(LOG_TAG_MEMORY, "delete%s: invalid pointer %p (", is_array ? "[]" : "", usr_ptr);
+			LogOutput(LOG_ERROR, LOG_TAG_MEMORY, "delete%s: invalid pointer %p (", is_array ? "[]" : "", usr_ptr);
             print_position(addr, 0);
-			LogOutput(LOG_TAG_MEMORY, ")\n");
+			LogOutput(LOG_ERROR, LOG_TAG_MEMORY, ")\n");
         }
         check_mem_corruption();
         _DEBUG_NEW_ERROR_ACTION;
@@ -280,14 +280,14 @@ void free_pointer(void* usr_ptr, void* addr, bool is_array)
             msg = "delete[] after new";
         else
             msg = "delete after new[]";
-		LogOutput(LOG_TAG_MEMORY, "%s: pointer %p (size %lu)\n\tat ", msg, (char*)ptr + ALIGNED_LIST_ITEM_SIZE, (unsigned long)ptr->size);
+		LogOutput(LOG_ERROR, LOG_TAG_MEMORY, "%s: pointer %p (size %lu)\n\tat ", msg, (char*)ptr + ALIGNED_LIST_ITEM_SIZE, (unsigned long)ptr->size);
         print_position(addr, 0);
-		LogOutput(LOG_TAG_MEMORY, "\n\toriginally allocated at ");
+		LogOutput(LOG_ERROR, LOG_TAG_MEMORY, "\n\toriginally allocated at ");
         if (ptr->line != 0)
             print_position(ptr->file, ptr->line);
         else
             print_position(ptr->addr, ptr->line);
-		LogOutput(LOG_TAG_MEMORY, "\n");
+		LogOutput(LOG_ERROR, LOG_TAG_MEMORY, "\n");
         _DEBUG_NEW_ERROR_ACTION;
     }
 #if _DEBUG_NEW_TAILCHECK
@@ -323,26 +323,26 @@ int dump_memory_objects()
         const char* const usr_ptr = (char*)ptr + ALIGNED_LIST_ITEM_SIZE;
         if (ptr->magic != DEBUG_NEW_MAGIC)
         {
-			LogOutput(LOG_TAG_MEMORY, "warning: heap data corrupt near %p\n", usr_ptr);
+			LogOutput(LOG_ERROR, LOG_TAG_MEMORY, "warning: heap data corrupt near %p\n", usr_ptr);
         }
 #if _DEBUG_NEW_TAILCHECK
         if (!check_tail(ptr))
         {
-			LogOutput(LOG_TAG_MEMORY, "warning: overwritten past end of object at %p\n", usr_ptr);
+			LogOutput(LOG_INFO, LOG_TAG_MEMORY, "warning: overwritten past end of object at %p\n", usr_ptr);
         }
 #endif
-		LogOutput(LOG_TAG_MEMORY, "object at %p (size %lu, ", usr_ptr, (unsigned long)ptr->size);
+		LogOutput(LOG_INFO, LOG_TAG_MEMORY, "object at %p (size %lu, ", usr_ptr, (unsigned long)ptr->size);
         if (ptr->line != 0)
             print_position(ptr->file, ptr->line);
         else
             print_position(ptr->addr, ptr->line);
-		LogOutput(LOG_TAG_MEMORY, ")\n");
+		LogOutput(LOG_INFO, LOG_TAG_MEMORY, ")\n");
         
 		object_cnt++;
 		total_size += ptr->size;
     }
 
-	LogOutput(LOG_TAG_MEMORY, "*** %d objects found, total size %d\n", object_cnt, total_size);
+	LogOutput(LOG_INFO, LOG_TAG_MEMORY, "*** %d objects found, total size %d\n", object_cnt, total_size);
     return object_cnt;
 }
 
@@ -356,7 +356,7 @@ int check_mem_corruption()
 {
     int corrupt_cnt = 0;
     fast_mutex_autolock lock_ptr(new_ptr_lock);
-	LogOutput(LOG_TAG_MEMORY, "*** Checking for memory corruption: START\n");
+	LogOutput(LOG_INFO, LOG_TAG_MEMORY, "*** Checking for memory corruption: START\n");
     for (new_ptr_list_t* ptr = new_ptr_list.next; ptr != &new_ptr_list; ptr = ptr->next)
     {
         const char* const usr_ptr = (char*)ptr + ALIGNED_LIST_ITEM_SIZE;
@@ -370,22 +370,22 @@ int check_mem_corruption()
         if (ptr->magic != DEBUG_NEW_MAGIC)
         {
 #endif
-			LogOutput(LOG_TAG_MEMORY, "Heap data corrupt near %p (size %lu, ", usr_ptr, (unsigned long)ptr->size);
+			LogOutput(LOG_ERROR, LOG_TAG_MEMORY, "Heap data corrupt near %p (size %lu, ", usr_ptr, (unsigned long)ptr->size);
 #if _DEBUG_NEW_TAILCHECK
         }
         else
         {
-			LogOutput(LOG_TAG_MEMORY, "Overwritten past end of object at %p (size %lu, ", usr_ptr, (unsigned long)ptr->size);
+			LogOutput(LOG_INFO, LOG_TAG_MEMORY, "Overwritten past end of object at %p (size %lu, ", usr_ptr, (unsigned long)ptr->size);
         }
 #endif
         if (ptr->line != 0)
             print_position(ptr->file, ptr->line);
         else
             print_position(ptr->addr, ptr->line);
-		LogOutput(LOG_TAG_MEMORY, ")\n");
+		LogOutput(LOG_INFO, LOG_TAG_MEMORY, ")\n");
         ++corrupt_cnt;
     }
-	LogOutput(LOG_TAG_MEMORY, "*** Checking for memory corruption: %d FOUND\n", corrupt_cnt);
+	LogOutput(LOG_INFO, LOG_TAG_MEMORY, "*** Checking for memory corruption: %d FOUND\n", corrupt_cnt);
     return corrupt_cnt;
 }
 

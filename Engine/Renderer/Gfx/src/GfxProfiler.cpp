@@ -171,32 +171,32 @@ const char* CGfxProfiler::GetSampleName(SampleType type)
 
 void CGfxProfiler::LogGfxMemory(void)
 {
-	LogOutput(LOG_TAG_RENDERER, "GfxMemory\n");
-	LogOutput(LOG_TAG_RENDERER, "\tTextureData = %dKB\n", textureDataSize / 1024);
-	LogOutput(LOG_TAG_RENDERER, "\tUniformBuffer = %dKB\n", uniformBufferSize / 1024);
-	LogOutput(LOG_TAG_RENDERER, "\tStorageBuffer = %dKB\n", storageBufferSize / 1024);
-	LogOutput(LOG_TAG_RENDERER, "\tVertexBuffer = %dKB\n", vertexBufferSize / 1024);
-	LogOutput(LOG_TAG_RENDERER, "\tIndexBuffer = %dKB\n", indexBufferSize / 1024);
-	LogOutput(LOG_TAG_RENDERER, "\tInstanceBuffer = %dKB\n", instanceBufferSize / 1024);
-	LogOutput(LOG_TAG_RENDERER, "\tIndirectBuffer = %dKB\n", indirectBufferSize / 1024);
-	LogOutput(LOG_TAG_RENDERER, "\tTransferBuffer = %dKB\n", transferBufferSize / 1024);
-	LogOutput(LOG_TAG_RENDERER, "\tTotal memory = %dKB\n", (textureDataSize + uniformBufferSize + storageBufferSize + vertexBufferSize + indexBufferSize + instanceBufferSize + indirectBufferSize + transferBufferSize) / 1024);
+	LogOutput(LOG_INFO, LOG_TAG_RENDERER, "GfxMemory\n");
+	LogOutput(LOG_INFO, LOG_TAG_RENDERER, "\tTextureData = %dKB\n", textureDataSize / 1024);
+	LogOutput(LOG_INFO, LOG_TAG_RENDERER, "\tUniformBuffer = %dKB\n", uniformBufferSize / 1024);
+	LogOutput(LOG_INFO, LOG_TAG_RENDERER, "\tStorageBuffer = %dKB\n", storageBufferSize / 1024);
+	LogOutput(LOG_INFO, LOG_TAG_RENDERER, "\tVertexBuffer = %dKB\n", vertexBufferSize / 1024);
+	LogOutput(LOG_INFO, LOG_TAG_RENDERER, "\tIndexBuffer = %dKB\n", indexBufferSize / 1024);
+	LogOutput(LOG_INFO, LOG_TAG_RENDERER, "\tInstanceBuffer = %dKB\n", instanceBufferSize / 1024);
+	LogOutput(LOG_INFO, LOG_TAG_RENDERER, "\tIndirectBuffer = %dKB\n", indirectBufferSize / 1024);
+	LogOutput(LOG_INFO, LOG_TAG_RENDERER, "\tTransferBuffer = %dKB\n", transferBufferSize / 1024);
+	LogOutput(LOG_INFO, LOG_TAG_RENDERER, "\tTotal memory = %dKB\n", (textureDataSize + uniformBufferSize + storageBufferSize + vertexBufferSize + indexBufferSize + instanceBufferSize + indirectBufferSize + transferBufferSize) / 1024);
 }
 
 void CGfxProfiler::LogProfiler(int frameCount)
 {
 	if (bEnableProfiler) {
-		LogOutput(LOG_TAG_RENDERER, "GfxProfiler\n");
+		LogOutput(LOG_INFO, LOG_TAG_RENDERER, "GfxProfiler\n");
 
 		float totalTime = 0.0f;
 		for (int indexSample = 0; indexSample < SampleType::SAMPLE_TYPE_COUNT; indexSample++) {
 			if (samples[indexSample].count) {
-				LogOutput(LOG_TAG_RENDERER, "\t%s time = %3.3fms count = %d\n", samples[indexSample].name, samples[indexSample].timeTotal / frameCount / 1000.0f, samples[indexSample].count / frameCount);
+				LogOutput(LOG_INFO, LOG_TAG_RENDERER, "\t%s time = %3.3fms count = %d\n", samples[indexSample].name, samples[indexSample].timeTotal / frameCount / 1000.0f, samples[indexSample].count / frameCount);
 				totalTime += samples[indexSample].timeTotal / frameCount / 1000.0f;
 			}
 		}
 
-		LogOutput(LOG_TAG_RENDERER, "\tTotal time=%3.3fms\n", totalTime);
+		LogOutput(LOG_INFO, LOG_TAG_RENDERER, "\tTotal time=%3.3fms\n", totalTime);
 	}
 }
 
@@ -213,7 +213,7 @@ CGfxProfilerSample::~CGfxProfilerSample(void)
 	uint32_t err = GfxRenderer()->GetLastError();
 
 	if (err != NO_ERROR) {
-		LogOutput(LOG_TAG_RENDERER, "%s error=0x%x\n", CGfxProfiler::GetSampleName(m_type), err);
+		LogOutput(LOG_ERROR, LOG_TAG_RENDERER, "%s error=0x%x\n", CGfxProfiler::GetSampleName(m_type), err);
 	}
 #endif
 	CGfxProfiler::EndSample(m_type);
