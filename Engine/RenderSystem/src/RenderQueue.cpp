@@ -1,5 +1,4 @@
 #include "EngineHeader.h"
-#include "RenderHeader.h"
 
 
 typedef enum SortOrder {

@@ -1,7 +1,4 @@
-#include "EngineHeader.h"
 #include "RenderHeader.h"
-#include "VKRenderer.h"
-#include "GLES3Renderer.h"
 
 
 void CRenderSystem::RenderForwardShading(CTaskPool& taskPool, CTaskGraph& taskGraph, CCamera* pCamera, CGfxCommandBufferPtr ptrComputeCommandBuffer, CGfxCommandBufferPtr ptrGraphicCommandBuffer, const CGfxSemaphore* pWaitSemaphore)
