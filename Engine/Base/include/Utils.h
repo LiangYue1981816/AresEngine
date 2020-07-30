@@ -11,6 +11,7 @@ CALL_API unsigned int HashValue(const unsigned char* pBuffer, int length, int st
 #define LOG_INFO  0
 #define LOG_WARN  1
 #define LOG_ERROR 2
+#define LOG_DEBUG 3
 CALL_API void LogOutput(int prio, const char* szTag, const char* szFormat, ...);
 
 CALL_API void splitfilename(const char* name, char* fname, char* ext);
