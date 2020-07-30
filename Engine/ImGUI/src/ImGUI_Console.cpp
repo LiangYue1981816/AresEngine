@@ -1,7 +1,4 @@
-#include <ctype.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include "ImGUI_Console.h"
+#include "ImGUIHeader.h"
 
 
 static int   Stricmp(const char* s1, const char* s2) { int d; while ((d = toupper(*s2) - toupper(*s1)) == 0 && *s1) { s1++; s2++; } return d; }

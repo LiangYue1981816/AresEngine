@@ -271,6 +271,15 @@
     <Filter Include="Engine\Game\Source Files">
       <UniqueIdentifier>{3070f557-bda0-4a67-b47a-51cf6f087e41}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\ImGUI">
+      <UniqueIdentifier>{b1c8de2b-38a9-424a-ade5-bcf027ed86ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\ImGUI\Header Files">
+      <UniqueIdentifier>{5274404f-6035-4373-9491-12835820822d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\ImGUI\Source Files">
+      <UniqueIdentifier>{1be8f184-26dc-4c77-a90c-acce526ebe42}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Engine\PreHeader.h">
@@ -1773,6 +1782,12 @@
     <ClInclude Include="..\..\Engine\Framework\include\WorkModeBase.h">
       <Filter>Engine\Framework\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Engine\ImGUI\include\ImGUI_Console.h">
+      <Filter>Engine\ImGUI\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\ImGUIHeader.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Engine\ThirdParty\eastl\source\allocator_eastl.cpp">
@@ -2611,6 +2626,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Engine\Game\src\Game.cpp">
       <Filter>Engine\Game\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\ImGUI\src\ImGUI_Console.cpp">
+      <Filter>Engine\ImGUI\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
