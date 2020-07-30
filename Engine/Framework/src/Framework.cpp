@@ -35,11 +35,15 @@ CFramework::CFramework(int width, int height)
 	: m_pGame(nullptr)
 	, m_pEditor(nullptr)
 	, m_workMode(WORK_MODE_EDITOR)
+
+	, m_pImGUI_Console(nullptr)
 {
 	pInstance = this;
 
 	m_pGame = new CGame(width, height);
 	m_pEditor = new CEditor(width, height);
+
+	m_pImGUI_Console = new CImGUI_Console();
 
 	// Test
 #pragma region
@@ -103,6 +107,8 @@ CFramework::~CFramework(void)
 	SceneManager()->DestroyScene(pLightScene);
 #pragma endregion
 
+	delete m_pImGUI_Console;
+
 	delete m_pGame;
 	delete m_pEditor;
 }
@@ -158,5 +164,7 @@ void CFramework::Update(float deltaTime)
 
 void CFramework::Render(CGfxCommandBufferPtr ptrComputeCommandBuffer, CGfxCommandBufferPtr ptrGraphicCommandBuffer, const CGfxSemaphore* pWaitSemaphore)
 {
+	m_pImGUI_Console->Draw();
+
 	GetWorkMode()->Render(ptrComputeCommandBuffer, ptrGraphicCommandBuffer, pWaitSemaphore);
 }

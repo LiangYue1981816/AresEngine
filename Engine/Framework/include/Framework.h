@@ -55,5 +55,8 @@ private:
 	WorkMode m_workMode;
 
 private:
+	CImGUI_Console* m_pImGUI_Console;
+
+private:
 	static CFramework* pInstance;
 };
