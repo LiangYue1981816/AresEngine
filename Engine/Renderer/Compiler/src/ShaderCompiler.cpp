@@ -106,49 +106,46 @@ static bool CompileShader(std::string& source, shaderc_shader_kind kind, const s
 	return true;
 }
 
-std::vector<uint32_t> CShaderCompiler::Compile(const char* szInputFileName, const char* szOutputFileName, shaderc_shader_kind kind)
+bool CShaderCompiler::Compile(const char* szInputFileName, const char* szOutputFileName, shaderc_shader_kind kind)
 {
-	std::vector<uint32_t> words;
-	{
-		do {
-			shaderc::CompileOptions options(m_options);
+	shaderc::CompileOptions options(m_options);
 
-			for (const auto& itMacroDefinition : m_strMacroDefinitionNames) {
-				options.AddMacroDefinition(itMacroDefinition);
-			}
-
-			for (const auto& itMacroDefinition : m_strMacroDefinitionNameAndValues) {
-				options.AddMacroDefinition(itMacroDefinition.first, itMacroDefinition.second);
-			}
-
-			const char szKindDefine[3][_MAX_STRING] = { "VERTEX_SHADER", "FRAGMENT_SHADER", "COMPUTE_SHADER" };
-			options.AddMacroDefinition(szKindDefine[kind]);
-
-			std::string source = LoadShader(szInputFileName);
-			if (source.empty()) break;
-
-			std::string preprocess = PreprocessShader(source, kind, m_compiler, options);
-			if (preprocess.empty()) break;
-
-			uint32_t hash = HashValue(preprocess.c_str());
-
-			char szBinFileName[_MAX_STRING] = { 0 };
-			sprintf(szBinFileName, "%s/%s", m_szCachePath, szOutputFileName);
-
-			if (LoadShaderBinary(szBinFileName, words, hash) == false) {
-				if (CompileShader(source, kind, m_compiler, options, words) == false) {
-					break;
-				}
-
-				if (SaveShaderBinary(szBinFileName, words, hash) == false) {
-					break;
-				}
-
-				FileManager()->SetFile(szOutputFileName, szBinFileName);
-			}
-		} while (false);
+	for (const auto& itMacroDefinition : m_strMacroDefinitionNames) {
+		options.AddMacroDefinition(itMacroDefinition);
 	}
-	return words;
+
+	for (const auto& itMacroDefinition : m_strMacroDefinitionNameAndValues) {
+		options.AddMacroDefinition(itMacroDefinition.first, itMacroDefinition.second);
+	}
+
+	const char szKindDefine[3][_MAX_STRING] = { "VERTEX_SHADER", "FRAGMENT_SHADER", "COMPUTE_SHADER" };
+	options.AddMacroDefinition(szKindDefine[kind]);
+
+	std::string source = LoadShader(szInputFileName);
+	if (source.empty()) return false;
+
+	std::string preprocess = PreprocessShader(source, kind, m_compiler, options);
+	if (preprocess.empty()) return false;
+
+	uint32_t hash = HashValue(preprocess.c_str());
+
+	char szBinFileName[_MAX_STRING] = { 0 };
+	sprintf(szBinFileName, "%s/%s", m_szCachePath, szOutputFileName);
+
+	std::vector<uint32_t> words;
+	if (LoadShaderBinary(szBinFileName, words, hash) == false) {
+		if (CompileShader(source, kind, m_compiler, options, words) == false) {
+			return false;
+		}
+
+		if (SaveShaderBinary(szBinFileName, words, hash) == false) {
+			return false;
+		}
+
+		FileManager()->SetFile(szOutputFileName, szBinFileName);
+	}
+
+	return true;
 }
 
 #endif

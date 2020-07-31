@@ -343,7 +343,10 @@ static bool InternalLoadPipelineShader(TiXmlNode* pPipelineNode, CGfxShader*& pS
 
 					char szBinFileName[_MAX_STRING] = { 0 };
 					sprintf(szBinFileName, "%x.%s", HashValue(szHashName), szExtName[kind]);
-					ShaderCompiler()->Compile(FileManager()->GetFullName(szFileName), szBinFileName, (shaderc_shader_kind)kind);
+
+					if (ShaderCompiler()->Compile(FileManager()->GetFullName(szFileName), szBinFileName, (shaderc_shader_kind)kind) == false) {
+						err = -3; goto ERR;
+					}
 
 					if (maskFeatures) {
 						maskFeatures--;
@@ -392,7 +395,7 @@ static bool InternalLoadPipelineShader(TiXmlNode* pPipelineNode, CGfxShader*& pS
 		sprintf(szBinFileName, "%x.%s", HashValue(szHashName), szExtName[kind]);
 
 		pShader = GfxRenderer()->CreateShader(szBinFileName, kind);
-		if (pShader->IsValid() == false) { err = -3; goto ERR; }
+		if (pShader->IsValid() == false) { err = -4; goto ERR; }
 	}
 	LogOutput(LOG_INFO, nullptr, "\n");
 	return true;
@@ -422,15 +425,9 @@ static bool InternalLoadPipeline(TiXmlNode* pPassNode, CGfxMaterialPass* pPass, 
 
 		CGfxShader* pVertexShader = nullptr;
 		CGfxShader* pFragmentShader = nullptr;
-#ifdef PLATFORM_WINDOWS
-		InternalLoadPipelineShader(pPipelineNode, pVertexShader, vertex_shader);
-		InternalLoadPipelineShader(pPipelineNode, pFragmentShader, fragment_shader);
-		pPass->SetPipeline(ptrRenderPass, pVertexShader, pFragmentShader, state, indexSubpass, vertexBinding, instanceBinding);
-#else
 		if (InternalLoadPipelineShader(pPipelineNode, pVertexShader, vertex_shader) == false) { err = -5; goto ERR; }
 		if (InternalLoadPipelineShader(pPipelineNode, pFragmentShader, fragment_shader) == false) { err = -6; goto ERR; }
 		if (pPass->SetPipeline(ptrRenderPass, pVertexShader, pFragmentShader, state, indexSubpass, vertexBinding, instanceBinding) == false) { err = -7; goto ERR; }
-#endif
 	}
 
 	return true;
