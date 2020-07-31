@@ -1,7 +1,11 @@
 #pragma once
-#include "GfxHeader.h"
-
 #include "Vulkan/Vulkan.h"
+
+#define VK_FORMAT_RANGE_SIZE (VK_FORMAT_ASTC_12x12_SRGB_BLOCK - VK_FORMAT_UNDEFINED + 1)
+#define VK_DESCRIPTOR_TYPE_RANGE_SIZE (VK_DESCRIPTOR_TYPE_INPUT_ATTACHMENT - VK_DESCRIPTOR_TYPE_SAMPLER + 1)
+
+
+#include "GfxHeader.h"
 
 #include "VKHelper.h"
 #include "VKExtension.h"
