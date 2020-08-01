@@ -313,24 +313,28 @@ int dump_memory_objects()
         const char* const usr_ptr = (char*)ptr + ALIGNED_LIST_ITEM_SIZE;
         if (ptr->magic != DEBUG_NEW_MAGIC)
         {
-			LogOutput(LOG_ERROR, LOG_TAG_MEMORY, "warning: heap data corrupt near %p ", usr_ptr);
+			LogOutput(LOG_ERROR, LOG_TAG_MEMORY, "invalid pointer %p ", usr_ptr);
+
+			if (ptr->line != 0)
+				print_position(LOG_ERROR, ptr->file, ptr->line);
+			else
+				print_position(LOG_ERROR, ptr->addr, ptr->line);
         }
-#if _DEBUG_NEW_TAILCHECK
-        if (!check_tail(ptr))
-        {
-			LogOutput(LOG_INFO, LOG_TAG_MEMORY, "warning: overwritten past end of object at %p ", usr_ptr);
-        }
-#endif
-		if (ptr->line != 0)
-            print_position(LOG_INFO, ptr->file, ptr->line);
-        else
-            print_position(LOG_INFO, ptr->addr, ptr->line);
-        
+		else
+		{
+			LogOutput(LOG_INFO, LOG_TAG_MEMORY, "memory pointer %p size %lu bytes ", usr_ptr, ptr->size);
+
+			if (ptr->line != 0)
+				print_position(LOG_INFO, ptr->file, ptr->line);
+			else
+				print_position(LOG_INFO, ptr->addr, ptr->line);
+		}
+
 		object_cnt++;
 		total_size += ptr->size;
     }
 
-	LogOutput(LOG_INFO, LOG_TAG_MEMORY, "*** %d objects found, total size %d", object_cnt, total_size);
+	LogOutput(LOG_INFO, LOG_TAG_MEMORY, "*** %d objects found, total size %lu bytes", object_cnt, total_size);
     return object_cnt;
 }
 
