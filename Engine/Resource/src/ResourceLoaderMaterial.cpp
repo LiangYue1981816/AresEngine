@@ -398,6 +398,7 @@ static bool InternalLoadPipelineShader(TiXmlNode* pPipelineNode, CGfxShader*& pS
 		if (pShader->IsValid() == false) { err = -4; goto ERR; }
 	}
 
+	LogOutput(LOG_INFO, nullptr, "OK");
 	return true;
 ERR:
 	LogOutput(LOG_INFO, nullptr, "Fail(%d)", err);
@@ -463,6 +464,7 @@ static bool InternalLoadTexture2D(TiXmlNode* pPassNode, CGfxMaterialPass* pPass,
 		} while ((pTextureNode = pPassNode->IterateChildren("Texture2D", pTextureNode)) != nullptr);
 	}
 
+	LogOutput(LOG_INFO, nullptr, "OK");
 	return true;
 ERR:
 	LogOutput(LOG_INFO, nullptr, "Fail(%d)", err);
@@ -496,6 +498,7 @@ static bool InternalLoadTexture2DArray(TiXmlNode* pPassNode, CGfxMaterialPass* p
 		} while ((pTextureNode = pPassNode->IterateChildren("Texture2DArray", pTextureNode)) != nullptr);
 	}
 
+	LogOutput(LOG_INFO, nullptr, "OK");
 	return true;
 ERR:
 	LogOutput(LOG_INFO, nullptr, "Fail(%d)", err);
@@ -529,6 +532,7 @@ static bool InternalLoadTextureCubemap(TiXmlNode* pPassNode, CGfxMaterialPass* p
 		} while ((pTextureNode = pPassNode->IterateChildren("TextureCubemap", pTextureNode)) != nullptr);
 	}
 
+	LogOutput(LOG_INFO, nullptr, "OK");
 	return true;
 ERR:
 	LogOutput(LOG_INFO, nullptr, "Fail(%d)", err);
@@ -557,6 +561,7 @@ static bool InternalLoadUniformVec1(TiXmlNode* pPassNode, CGfxMaterialPass* pPas
 		} while ((pUniformNode = pPassNode->IterateChildren("Uniform1f", pUniformNode)) != nullptr);
 	}
 
+	LogOutput(LOG_INFO, nullptr, "OK");
 	return true;
 ERR:
 	LogOutput(LOG_INFO, nullptr, "Fail(%d)", err);
@@ -585,6 +590,7 @@ static bool InternalLoadUniformVec2(TiXmlNode* pPassNode, CGfxMaterialPass* pPas
 		} while ((pUniformNode = pPassNode->IterateChildren("Uniform2f", pUniformNode)) != nullptr);
 	}
 
+	LogOutput(LOG_INFO, nullptr, "OK");
 	return true;
 ERR:
 	LogOutput(LOG_INFO, nullptr, "Fail(%d)", err);
@@ -613,6 +619,7 @@ static bool InternalLoadUniformVec3(TiXmlNode* pPassNode, CGfxMaterialPass* pPas
 		} while ((pUniformNode = pPassNode->IterateChildren("Uniform3f", pUniformNode)) != nullptr);
 	}
 
+	LogOutput(LOG_INFO, nullptr, "OK");
 	return true;
 ERR:
 	LogOutput(LOG_INFO, nullptr, "Fail(%d)", err);
@@ -641,6 +648,7 @@ static bool InternalLoadUniformVec4(TiXmlNode* pPassNode, CGfxMaterialPass* pPas
 		} while ((pUniformNode = pPassNode->IterateChildren("Uniform4f", pUniformNode)) != nullptr);
 	}
 
+	LogOutput(LOG_INFO, nullptr, "OK");
 	return true;
 ERR:
 	LogOutput(LOG_INFO, nullptr, "Fail(%d)", err);

@@ -53,6 +53,7 @@ static bool InternalLoadDraws(CGfxMesh* pMesh, DrawHeader* drawHeaders, int numD
 		}
 	}
 
+	LogOutput(LOG_INFO, nullptr, "OK");
 	return true;
 ERR:
 	LogOutput(LOG_INFO, nullptr, "Fail");
