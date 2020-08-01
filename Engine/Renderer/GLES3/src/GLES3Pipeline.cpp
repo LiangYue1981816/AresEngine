@@ -67,7 +67,7 @@ bool CGLES3Pipeline::CreateProgram(const CGLES3Shader* pVertexShader, const CGLE
 
 		LogOutput(LOG_ERROR, nullptr, "\n");
 		LogOutput(LOG_ERROR, nullptr, "Program Link Error:\n");
-		LogOutput(LOG_ERROR, nullptr, "%s\n", szError);
+		LogOutput(LOG_ERROR, nullptr, "%s", szError);
 
 		return false;
 	}

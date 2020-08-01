@@ -6,7 +6,7 @@
    {                                             \
       GLenum err = glGetError();                 \
       if (err != GL_NO_ERROR) {                  \
-         LogOutput(LOG_ERROR, LOG_TAG_RENDERER, "\nglGetError=0x%x\n", err); \
+         LogOutput(LOG_ERROR, LOG_TAG_RENDERER, "glGetError=0x%x", err); \
          ASSERT(err == GL_NO_ERROR);             \
 	  }                                          \
    }

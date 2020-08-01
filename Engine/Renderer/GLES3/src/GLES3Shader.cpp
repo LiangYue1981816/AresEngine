@@ -63,7 +63,7 @@ bool CGLES3Shader::Create(const uint32_t* words, size_t numWords, shader_kind ki
 				LogOutput(LOG_ERROR, nullptr, "\n");
 				LogOutput(LOG_ERROR, nullptr, "%s\n", szSource);
 				LogOutput(LOG_ERROR, nullptr, "Compile Error:\n");
-				LogOutput(LOG_ERROR, nullptr, "%s\n", szError);
+				LogOutput(LOG_ERROR, nullptr, "%s", szError);
 
 				break;
 			}

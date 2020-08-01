@@ -9,27 +9,27 @@ PFN_vkDestroyDebugReportCallbackEXT vkDestroyDebugReportCallback = nullptr;
 VkBool32 VKAPI_PTR DebugReportCallback(VkDebugReportFlagsEXT flags, VkDebugReportObjectTypeEXT objectType, uint64_t object, size_t location, int32_t messageCode, const char* pLayerPrefix, const char* pMessage, void* pUserData)
 {
 	if (flags & VK_DEBUG_REPORT_ERROR_BIT_EXT) {
-		LogOutput(LOG_ERROR, LOG_TAG_RENDERER, "Vulkan Error [%s] Code %d : %s\n", pLayerPrefix, messageCode, pMessage);
+		LogOutput(LOG_ERROR, LOG_TAG_RENDERER, "Vulkan Error [%s] Code %d : %s", pLayerPrefix, messageCode, pMessage);
 		return VK_FALSE;
 	}
 
 	if (flags & VK_DEBUG_REPORT_WARNING_BIT_EXT) {
-		LogOutput(LOG_WARN, LOG_TAG_RENDERER, "Vulkan Warning [%s] Code %d : %s\n", pLayerPrefix, messageCode, pMessage);
+		LogOutput(LOG_WARN, LOG_TAG_RENDERER, "Vulkan Warning [%s] Code %d : %s", pLayerPrefix, messageCode, pMessage);
 		return VK_FALSE;
 	}
 
 	if (flags & VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT) {
-		LogOutput(LOG_WARN, LOG_TAG_RENDERER, "Vulkan Preformance [%s] Code %d : %s\n", pLayerPrefix, messageCode, pMessage);
+		LogOutput(LOG_WARN, LOG_TAG_RENDERER, "Vulkan Preformance [%s] Code %d : %s", pLayerPrefix, messageCode, pMessage);
 		return VK_FALSE;
 	}
 
 	if (flags & VK_DEBUG_REPORT_INFORMATION_BIT_EXT) {
-		LogOutput(LOG_INFO, LOG_TAG_RENDERER, "Vulkan Information [%s] Code %d : %s\n", pLayerPrefix, messageCode, pMessage);
+		LogOutput(LOG_INFO, LOG_TAG_RENDERER, "Vulkan Information [%s] Code %d : %s", pLayerPrefix, messageCode, pMessage);
 		return VK_FALSE;
 	}
 
 	if (flags & VK_DEBUG_REPORT_DEBUG_BIT_EXT) {
-		LogOutput(LOG_INFO, LOG_TAG_RENDERER, "Vulkan Debug [%s] Code %d : %s\n", pLayerPrefix, messageCode, pMessage);
+		LogOutput(LOG_INFO, LOG_TAG_RENDERER, "Vulkan Debug [%s] Code %d : %s", pLayerPrefix, messageCode, pMessage);
 		return VK_FALSE;
 	}
 

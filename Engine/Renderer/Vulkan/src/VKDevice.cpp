@@ -150,7 +150,7 @@ bool CVKDevice::CreateDevice(VkPhysicalDevice vkPhysicalDevice, uint32_t queueFa
 	vkGetPhysicalDeviceFeatures(m_vkPhysicalDevice, &m_vkPhysicalDeviceFeatures);
 	vkGetPhysicalDeviceProperties(m_vkPhysicalDevice, &m_vkPhysicalDeviceProperties);
 	vkGetPhysicalDeviceMemoryProperties(m_vkPhysicalDevice, &m_vkPhysicalDeviceMemoryProperties);
-	LogOutput(LOG_INFO, LOG_TAG_RENDERER, "Vulkan Device = %s\n", m_vkPhysicalDeviceProperties.deviceName);
+	LogOutput(LOG_INFO, LOG_TAG_RENDERER, "Vulkan Device = %s", m_vkPhysicalDeviceProperties.deviceName);
 
 	const float queuePpriorities[1] = { 1.0f };
 	VkDeviceQueueCreateInfo queueCreateInfo = {};
