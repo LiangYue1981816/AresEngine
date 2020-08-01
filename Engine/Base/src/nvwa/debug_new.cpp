@@ -174,11 +174,11 @@ static void print_position(int prio, const void* ptr, int line)
 {
     if (line != 0)          // Is file/line information present?
     {
-        LogOutput(prio, nullptr, "%s:%d", (const char*)ptr, line);
+        LogOutput(prio, nullptr, "(%s:%d)", (const char*)ptr, line);
     }
     else if (ptr != nullptr)   // Is caller address present?
     {
-		LogOutput(prio, nullptr, "%p", ptr);
+		LogOutput(prio, nullptr, "(%p)", ptr);
     }
     else                    // No information is present
     {
