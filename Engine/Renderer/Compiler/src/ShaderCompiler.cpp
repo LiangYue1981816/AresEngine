@@ -61,7 +61,7 @@ static std::string PreprocessShader(std::string& source, shaderc_shader_kind kin
 	if (module.GetCompilationStatus() != shaderc_compilation_status_success) {
 		LogOutput(LOG_ERROR, nullptr, "\n");
 		LogOutput(LOG_ERROR, nullptr, "Preprocess Fail:\n");
-		LogOutput(LOG_ERROR, nullptr, "%s\n", module.GetErrorMessage().c_str());
+		LogOutput(LOG_ERROR, nullptr, "%s", module.GetErrorMessage().c_str());
 		return "";
 	}
 
@@ -98,7 +98,7 @@ static bool CompileShader(std::string& source, shaderc_shader_kind kind, const s
 		LogOutput(LOG_ERROR, nullptr, "Source:\n");
 		LogOutput(LOG_ERROR, nullptr, "%s\n", source.c_str());
 		LogOutput(LOG_ERROR, nullptr, "Compile Fail:\n");
-		LogOutput(LOG_ERROR, nullptr, "%s\n", module.GetErrorMessage().c_str());
+		LogOutput(LOG_ERROR, nullptr, "%s", module.GetErrorMessage().c_str());
 		return false;
 	}
 
