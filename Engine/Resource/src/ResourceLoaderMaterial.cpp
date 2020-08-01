@@ -461,10 +461,10 @@ static bool InternalLoadTexture2D(TiXmlNode* pPassNode, CGfxMaterialPass* pPass,
 					pPass->SetTexture2D(HashValue(szName), szFileName, baseLevel, numLevels);
 				}
 			}
+			LogOutput(LOG_INFO, nullptr, "OK");
 		} while ((pTextureNode = pPassNode->IterateChildren("Texture2D", pTextureNode)) != nullptr);
 	}
 
-	LogOutput(LOG_INFO, nullptr, "OK");
 	return true;
 ERR:
 	LogOutput(LOG_INFO, nullptr, "Fail(%d)", err);
@@ -495,10 +495,10 @@ static bool InternalLoadTexture2DArray(TiXmlNode* pPassNode, CGfxMaterialPass* p
 					pPass->SetTexture2DArray(HashValue(szName), szFileName, baseLevel, numLevels);
 				}
 			}
+			LogOutput(LOG_INFO, nullptr, "OK");
 		} while ((pTextureNode = pPassNode->IterateChildren("Texture2DArray", pTextureNode)) != nullptr);
 	}
 
-	LogOutput(LOG_INFO, nullptr, "OK");
 	return true;
 ERR:
 	LogOutput(LOG_INFO, nullptr, "Fail(%d)", err);
@@ -529,10 +529,10 @@ static bool InternalLoadTextureCubemap(TiXmlNode* pPassNode, CGfxMaterialPass* p
 					pPass->SetTextureCubemap(HashValue(szName), szFileName, baseLevel, numLevels);
 				}
 			}
+			LogOutput(LOG_INFO, nullptr, "OK");
 		} while ((pTextureNode = pPassNode->IterateChildren("TextureCubemap", pTextureNode)) != nullptr);
 	}
 
-	LogOutput(LOG_INFO, nullptr, "OK");
 	return true;
 ERR:
 	LogOutput(LOG_INFO, nullptr, "Fail(%d)", err);
@@ -558,10 +558,10 @@ static bool InternalLoadUniformVec1(TiXmlNode* pPassNode, CGfxMaterialPass* pPas
 
 				pPass->SetUniformVec1(HashValue(szName), value[0]);
 			}
+			LogOutput(LOG_INFO, nullptr, "OK");
 		} while ((pUniformNode = pPassNode->IterateChildren("Uniform1f", pUniformNode)) != nullptr);
 	}
 
-	LogOutput(LOG_INFO, nullptr, "OK");
 	return true;
 ERR:
 	LogOutput(LOG_INFO, nullptr, "Fail(%d)", err);
@@ -587,10 +587,10 @@ static bool InternalLoadUniformVec2(TiXmlNode* pPassNode, CGfxMaterialPass* pPas
 
 				pPass->SetUniformVec2(HashValue(szName), value[0], value[1]);
 			}
+			LogOutput(LOG_INFO, nullptr, "OK");
 		} while ((pUniformNode = pPassNode->IterateChildren("Uniform2f", pUniformNode)) != nullptr);
 	}
 
-	LogOutput(LOG_INFO, nullptr, "OK");
 	return true;
 ERR:
 	LogOutput(LOG_INFO, nullptr, "Fail(%d)", err);
@@ -616,10 +616,10 @@ static bool InternalLoadUniformVec3(TiXmlNode* pPassNode, CGfxMaterialPass* pPas
 
 				pPass->SetUniformVec3(HashValue(szName), value[0], value[1], value[2]);
 			}
+			LogOutput(LOG_INFO, nullptr, "OK");
 		} while ((pUniformNode = pPassNode->IterateChildren("Uniform3f", pUniformNode)) != nullptr);
 	}
 
-	LogOutput(LOG_INFO, nullptr, "OK");
 	return true;
 ERR:
 	LogOutput(LOG_INFO, nullptr, "Fail(%d)", err);
@@ -645,10 +645,10 @@ static bool InternalLoadUniformVec4(TiXmlNode* pPassNode, CGfxMaterialPass* pPas
 
 				pPass->SetUniformVec4(HashValue(szName), value[0], value[1], value[2], value[3]);
 			}
+			LogOutput(LOG_INFO, nullptr, "OK");
 		} while ((pUniformNode = pPassNode->IterateChildren("Uniform4f", pUniformNode)) != nullptr);
 	}
 
-	LogOutput(LOG_INFO, nullptr, "OK");
 	return true;
 ERR:
 	LogOutput(LOG_INFO, nullptr, "Fail(%d)", err);
