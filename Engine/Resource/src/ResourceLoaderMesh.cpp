@@ -51,12 +51,11 @@ static bool InternalLoadDraws(CGfxMesh* pMesh, DrawHeader* drawHeaders, int numD
 				goto ERR;
 			}
 		}
-		LogOutput(LOG_INFO, nullptr, "\n");
 	}
 
 	return true;
 ERR:
-	LogOutput(LOG_INFO, LOG_TAG_RENDERER, "Fail\n");
+	LogOutput(LOG_INFO, nullptr, "Fail");
 	return false;
 }
 
@@ -65,7 +64,7 @@ bool CResourceLoader::LoadMesh(const char* szFileName, CGfxMesh* pMesh, int vert
 {
 	int err = 0;
 
-	LogOutput(LOG_INFO, LOG_TAG_RENDERER, "LoadMesh %s\n", szFileName);
+	LogOutput(LOG_INFO, LOG_TAG_RENDERER, "LoadMesh %s", szFileName);
 	{
 		pMesh->Destroy();
 
@@ -91,6 +90,6 @@ bool CResourceLoader::LoadMesh(const char* szFileName, CGfxMesh* pMesh, int vert
 	return true;
 ERR:
 	pMesh->Destroy();
-	LogOutput(LOG_INFO, LOG_TAG_RENDERER, "Fail(%d)\n", err);
+	LogOutput(LOG_INFO, LOG_TAG_RENDERER, "Fail(%d)", err);
 	return false;
 }
