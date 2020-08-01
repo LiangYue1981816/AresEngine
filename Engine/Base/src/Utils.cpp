@@ -90,10 +90,11 @@ CALL_API void LogOutput(int prio, const char* szTag, const char* szFormat, ...)
 		case LOG_ERROR: printf("\033[31m"); break; // Red
 		}
 		if (szTag) {
+			OutputDebugString("\n");
 			OutputDebugString(szTag);
 			OutputDebugString(": ");
 			OutputDebugString(szText);
-			printf("%s: %s", szTag, szText);
+			printf("\n%s: %s", szTag, szText);
 		}
 		else {
 			OutputDebugString(szText);
@@ -109,7 +110,7 @@ CALL_API void LogOutput(int prio, const char* szTag, const char* szFormat, ...)
 		}
 #else
 		if (szTag) {
-			printf("%s: %s", szTag, szText);
+			printf("\n%s: %s", szTag, szText);
 		}
 		else {
 			printf("%s", szText);
