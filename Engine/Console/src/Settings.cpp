@@ -82,3 +82,13 @@ void CSettings::Load(const char* szFileName)
 		fclose(pFile);
 	}
 }
+
+void CSettings::Save(const char* szFileName) const
+{
+	if (FILE *pFile = fopen(szFileName, "wb")) {
+		for (const auto& itVariable : m_variables) {
+			fprintf(pFile, "%s = %5.5f\n", itVariable.first.c_str(), itVariable.second.value);
+		}
+		fclose(pFile);
+	}
+}

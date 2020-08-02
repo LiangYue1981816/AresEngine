@@ -36,6 +36,7 @@ public:
 
 public:
 	void Load(const char* szFileName);
+	void Save(const char* szFileName) const;
 
 
 private:
