@@ -223,6 +223,18 @@ void CImGUI_Console::Draw()
 
 	ImVec2 windowSize = ImGui::GetCurrentWindow()->Size;
 
+	if (ImGui::Button("Load")) {
+		Settings()->Load("settings.ini");
+	}
+
+	ImGui::SameLine();
+
+	if (ImGui::Button("Save")) {
+		Settings()->Save("settings.ini");
+	}
+
+	ImGui::Separator();
+
 	// Reserve enough left-over height for 1 separator + 1 input text
 	const float footer_height_to_reserve = ImGui::GetStyle().ItemSpacing.y + ImGui::GetFrameHeightWithSpacing();
 	ImGui::BeginChild("ScrollingRegion", ImVec2(0, -footer_height_to_reserve), false, ImGuiWindowFlags_HorizontalScrollbar);
