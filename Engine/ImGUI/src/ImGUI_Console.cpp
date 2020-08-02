@@ -221,6 +221,8 @@ void CImGUI_Console::Draw()
 		return;
 	}
 
+	ImVec2 windowSize = ImGui::GetCurrentWindow()->Size;
+
 	// Reserve enough left-over height for 1 separator + 1 input text
 	const float footer_height_to_reserve = ImGui::GetStyle().ItemSpacing.y + ImGui::GetFrameHeightWithSpacing();
 	ImGui::BeginChild("ScrollingRegion", ImVec2(0, -footer_height_to_reserve), false, ImGuiWindowFlags_HorizontalScrollbar);
@@ -282,7 +284,7 @@ void CImGUI_Console::Draw()
 	// Command-line
 	bool reclaim_focus = false;
 	ImGuiInputTextFlags input_text_flags = ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_CallbackCompletion | ImGuiInputTextFlags_CallbackHistory;
-	if (ImGui::InputText("Input", InputBuf, IM_ARRAYSIZE(InputBuf), input_text_flags, &TextEditCallbackStub, (void*)this)) {
+	if (ImGui::InputTextEx("Input", NULL, InputBuf, IM_ARRAYSIZE(InputBuf), ImVec2(windowSize.x, 0), input_text_flags, &TextEditCallbackStub, (void*)this)) {
 		char* s = InputBuf;
 		Strtrim(s);
 		if (s[0]) {
