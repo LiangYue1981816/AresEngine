@@ -72,7 +72,7 @@ CEngine::CEngine(GfxApi api, void* hInstance, void* hWnd, void* hDC, int width, 
 	m_pSettings->Register("RenderSystem.Bloom.BlurRange.SecondTime", "", 0.75f);
 	m_pSettings->Register("RenderSystem.AutoExposure.Lower", "", 0.50f);
 	m_pSettings->Register("RenderSystem.AutoExposure.Upper", "", 0.90f);
-	m_pSettings->Register("RenderSystem.AutoExposure.Luminance", "", 0.10f);
+	m_pSettings->Register("RenderSystem.AutoExposure.Luminance", "", 0.05f);
 	m_pSettings->Register("RenderSystem.AutoExposure.MinScaleLuminance", "", 0.20f);
 	m_pSettings->Register("RenderSystem.AutoExposure.MaxScaleLuminance", "", 2.00f);
 	m_pSettings->Load("settings.ini");
