@@ -32,7 +32,7 @@ int main(int argc, char** argv)
 	// 2. Create window
 	//
 	WNDCLASSEX wc = { sizeof(WNDCLASSEX), CS_CLASSDC, WndProc, 0L, 0L, GetModuleHandle(NULL), NULL, NULL, NULL, NULL, "Framework", NULL }; RegisterClassEx(&wc);
-	HWND hWnd = CreateWindow(wc.lpszClassName, "Framework", WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX, 100, 100, 1200, 700, NULL, NULL, wc.hInstance, NULL);
+	HWND hWnd = CreateWindow(wc.lpszClassName, "Framework", WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX, 100, 100, 1300, 700, NULL, NULL, wc.hInstance, NULL);
 
 	ShowWindow(hWnd, SW_SHOWDEFAULT);
 	UpdateWindow(hWnd);
