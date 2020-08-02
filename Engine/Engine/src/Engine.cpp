@@ -61,11 +61,11 @@ CEngine::CEngine(GfxApi api, void* hInstance, void* hWnd, void* hDC, int width, 
 	m_pSettings->Register("RenderSystem.Shadow.SplitFactor1", "", exp(-3.0f));
 	m_pSettings->Register("RenderSystem.Shadow.SplitFactor2", "", exp(-2.0f));
 	m_pSettings->Register("RenderSystem.Shadow.SplitFactor3", "", exp(-1.0f));
-	m_pSettings->Register("RenderSystem.SSAO.SampleCount", "", 8.0f);
+	m_pSettings->Register("RenderSystem.SSAO.SampleCount", "", 16.0f);
 	m_pSettings->Register("RenderSystem.SSAO.MinSampleRadius", "", 0.02f);
 	m_pSettings->Register("RenderSystem.SSAO.MaxSampleRadius", "", 1.25f);
 	m_pSettings->Register("RenderSystem.SSAO.MinDepthRange", "", 0.00f);
-	m_pSettings->Register("RenderSystem.SSAO.MaxDepthRange", "", 0.20f);
+	m_pSettings->Register("RenderSystem.SSAO.MaxDepthRange", "", 0.30f);
 	m_pSettings->Register("RenderSystem.SSAO.BlurRange", "", 1.00f);
 	m_pSettings->Register("RenderSystem.Bloom.LuminanceThreshold", "", 1.00f);
 	m_pSettings->Register("RenderSystem.Bloom.BlurRange.FirstTime", "", 1.00f);
