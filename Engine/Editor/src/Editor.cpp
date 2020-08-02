@@ -132,5 +132,8 @@ void CEditor::UpdateCamera(float deltaTime)
 
 void CEditor::Render(CGfxCommandBufferPtr ptrComputeCommandBuffer, CGfxCommandBufferPtr ptrGraphicCommandBuffer, const CGfxSemaphore* pWaitSemaphore)
 {
+//	Engine()->RenderUnlit(m_pMainCamera, ptrComputeCommandBuffer, ptrGraphicCommandBuffer, pWaitSemaphore);
+//	Engine()->RenderForwardShading(m_pMainCamera, ptrComputeCommandBuffer, ptrGraphicCommandBuffer, pWaitSemaphore);
+//	Engine()->RenderDeferredShading(m_pMainCamera, ptrComputeCommandBuffer, ptrGraphicCommandBuffer, pWaitSemaphore);
 	Engine()->RenderTileDeferredShading(m_pMainCamera, ptrComputeCommandBuffer, ptrGraphicCommandBuffer, pWaitSemaphore);
 }
