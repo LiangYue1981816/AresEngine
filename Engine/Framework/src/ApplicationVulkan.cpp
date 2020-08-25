@@ -346,10 +346,6 @@ void CApplicationVulkan::UpdateInternal(float deltaTime)
 
 	GfxRenderer()->AcquireNextFrame();
 	{
-		ImGui_ImplVulkan_NewFrame();
-		ImGui_ImplWin32_NewFrame();
-		ImGui::NewFrame();
-
 		// Update
 		Engine()->Wait();
 		{
@@ -359,9 +355,14 @@ void CApplicationVulkan::UpdateInternal(float deltaTime)
 		}
 		Engine()->Update();
 
+		// Render
+		ImGui_ImplVulkan_NewFrame();
+		ImGui_ImplWin32_NewFrame();
+		ImGui::NewFrame();
+
 		// Render Scene
 		Framework()->Render(ptrComputeCommandBuffer, ptrGraphicCommandBuffer, pWaitSemaphore);
-
+		
 		// Render ImGui
 		ImGui::Render();
 		ImGui_ImplVulkan_FrameRender(

@@ -202,10 +202,6 @@ void CApplicationOpenGL::UpdateInternal(float deltaTime)
 
 	GfxRenderer()->AcquireNextFrame();
 	{
-		ImGui_ImplOpenGL3_NewFrame();
-		ImGui_ImplWin32_NewFrame();
-		ImGui::NewFrame();
-
 		// Update
 		Engine()->Wait();
 		{
@@ -214,6 +210,11 @@ void CApplicationOpenGL::UpdateInternal(float deltaTime)
 			Framework()->Update(deltaTime);
 		}
 		Engine()->Update();
+
+		// Render
+		ImGui_ImplOpenGL3_NewFrame();
+		ImGui_ImplWin32_NewFrame();
+		ImGui::NewFrame();
 
 		// Render Scene
 		Framework()->Render(ptrComputeCommandBuffer, ptrGraphicCommandBuffer, pWaitSemaphore);
