@@ -469,6 +469,16 @@ static eastl::unordered_map<GLuint, GLuint> Samplers;
 static eastl::unordered_map<GLuint, TextureParam> Textures;
 static eastl::unordered_map<GLuint, ImageParam> Images;
 
+void GLInit(void)
+{
+
+}
+
+void GLExit(void)
+{
+
+}
+
 void GLResetContext(void)
 {
 	Scissor.Reset();
