@@ -25,6 +25,7 @@ CGLES3Renderer::CGLES3Renderer(void* hInstance, void* hWnd, void* hDC, int width
 	, m_pDescriptorSetManager(nullptr)
 	, m_pCommandBufferManager(nullptr)
 {
+	GLInit();
 	CGLES3Helper::SetupExtensions();
 
 	m_pShaderManager = new CGLES3ShaderManager;
@@ -73,6 +74,8 @@ CGLES3Renderer::~CGLES3Renderer(void)
 	delete m_pPipelineComputeManager;
 	delete m_pPipelineGraphicsManager;
 	delete m_pDescriptorLayoutManager;
+
+	GLExit();
 }
 
 GfxApi CGLES3Renderer::GetAPI(void) const

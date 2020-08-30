@@ -13,7 +13,7 @@ extern void glBufferSubDataSync(GLenum target, GLintptr offset, GLsizeiptr size,
 #pragma region OpenGL state cache
 extern void GLInit(void);
 extern void GLExit(void);
-extern void GLResetContext(void);
+extern void GLReset(void);
 
 extern void GLEnable(GLenum cap);
 extern void GLDisable(GLenum cap);

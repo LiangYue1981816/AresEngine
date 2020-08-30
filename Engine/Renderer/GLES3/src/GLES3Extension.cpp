@@ -434,87 +434,96 @@ typedef struct ImageParam {
 	uint32_t format;
 } ImageParam;
 
-static ScissorParam Scissor;
-static ViewportParam Viewport;
-static ClearColorParam ClearColor;
-static ClearDepthParam ClearDepth;
-static ClearStencilParam ClearStencil;
-static PolygonModeParam PolygonMode;
-static CullFaceParam CullFace;
-static FrontFaceParam FrontFace;
-static LineWidthParam LineWidth;
-static PolygonOffsetParam PolygonOffset;
-static DepthRangefParam DepthRangef;
-static DepthFuncParam DepthFunc;
-static DepthMaskParam DepthMask;
-static ColorMaskParam ColorMask;
-static StencilOpParam StencilFrontOp;
-static StencilFuncParam StencilFrontFunc;
-static StencilMaskParam StencilFrontMask;
-static StencilOpParam StencilBackOp;
-static StencilFuncParam StencilBackFunc;
-static StencilMaskParam StencilBackMask;
-static BlendFuncParam BlendFunc;
-static BlendEquationParam BlendEquation;
-static BlendColorParam BlendColor;
-static VertexArrayParam VertexArray;
-static ProgramParam Program;
+typedef struct GLContext {
+	ScissorParam Scissor;
+	ViewportParam Viewport;
+	ClearColorParam ClearColor;
+	ClearDepthParam ClearDepth;
+	ClearStencilParam ClearStencil;
+	PolygonModeParam PolygonMode;
+	CullFaceParam CullFace;
+	FrontFaceParam FrontFace;
+	LineWidthParam LineWidth;
+	PolygonOffsetParam PolygonOffset;
+	DepthRangefParam DepthRangef;
+	DepthFuncParam DepthFunc;
+	DepthMaskParam DepthMask;
+	ColorMaskParam ColorMask;
+	StencilOpParam StencilFrontOp;
+	StencilFuncParam StencilFrontFunc;
+	StencilMaskParam StencilFrontMask;
+	StencilOpParam StencilBackOp;
+	StencilFuncParam StencilBackFunc;
+	StencilMaskParam StencilBackMask;
+	BlendFuncParam BlendFunc;
+	BlendEquationParam BlendEquation;
+	BlendColorParam BlendColor;
+	VertexArrayParam VertexArray;
+	ProgramParam Program;
 
-static eastl::unordered_map<GLenum, GLboolean> Caps;
-static eastl::unordered_map<GLenum, GLuint> Buffers;
-static eastl::unordered_map<GLenum, BufferBaseParam> BufferBases;
-static eastl::unordered_map<GLenum, BufferRangeParam> BufferRanges;
-static eastl::unordered_map<GLenum, FrameBufferParam> FrameBuffers;
-static eastl::unordered_map<GLuint, GLuint> Samplers;
-static eastl::unordered_map<GLuint, TextureParam> Textures;
-static eastl::unordered_map<GLuint, ImageParam> Images;
+	eastl::unordered_map<GLenum, GLboolean> Caps;
+	eastl::unordered_map<GLenum, GLuint> Buffers;
+	eastl::unordered_map<GLenum, BufferBaseParam> BufferBases;
+	eastl::unordered_map<GLenum, BufferRangeParam> BufferRanges;
+	eastl::unordered_map<GLenum, FrameBufferParam> FrameBuffers;
+	eastl::unordered_map<GLuint, GLuint> Samplers;
+	eastl::unordered_map<GLuint, TextureParam> Textures;
+	eastl::unordered_map<GLuint, ImageParam> Images;
+} GLContext;
+
+static GLContext* pGLContext = nullptr;
 
 void GLInit(void)
 {
-
+	if (pGLContext == nullptr) {
+		pGLContext = new GLContext;
+	}
 }
 
 void GLExit(void)
 {
-
+	if (pGLContext) {
+		delete pGLContext;
+		pGLContext = nullptr;
+	}
 }
 
-void GLResetContext(void)
+void GLReset(void)
 {
-	Scissor.Reset();
-	Viewport.Reset();
-	ClearColor.Reset();
-	ClearDepth.Reset();
-	ClearStencil.Reset();
-	PolygonMode.Reset();
-	CullFace.Reset();
-	FrontFace.Reset();
-	LineWidth.Reset();
-	PolygonOffset.Reset();
-	DepthRangef.Reset();
-	DepthFunc.Reset();
-	DepthMask.Reset();
-	ColorMask.Reset();
-	StencilFrontOp.Reset();
-	StencilFrontFunc.Reset();
-	StencilFrontMask.Reset();
-	StencilBackOp.Reset();
-	StencilBackFunc.Reset();
-	StencilBackMask.Reset();
-	BlendFunc.Reset();
-	BlendEquation.Reset();
-	BlendColor.Reset();
-	VertexArray.Reset();
-	Program.Reset();
+	pGLContext->Scissor.Reset();
+	pGLContext->Viewport.Reset();
+	pGLContext->ClearColor.Reset();
+	pGLContext->ClearDepth.Reset();
+	pGLContext->ClearStencil.Reset();
+	pGLContext->PolygonMode.Reset();
+	pGLContext->CullFace.Reset();
+	pGLContext->FrontFace.Reset();
+	pGLContext->LineWidth.Reset();
+	pGLContext->PolygonOffset.Reset();
+	pGLContext->DepthRangef.Reset();
+	pGLContext->DepthFunc.Reset();
+	pGLContext->DepthMask.Reset();
+	pGLContext->ColorMask.Reset();
+	pGLContext->StencilFrontOp.Reset();
+	pGLContext->StencilFrontFunc.Reset();
+	pGLContext->StencilFrontMask.Reset();
+	pGLContext->StencilBackOp.Reset();
+	pGLContext->StencilBackFunc.Reset();
+	pGLContext->StencilBackMask.Reset();
+	pGLContext->BlendFunc.Reset();
+	pGLContext->BlendEquation.Reset();
+	pGLContext->BlendColor.Reset();
+	pGLContext->VertexArray.Reset();
+	pGLContext->Program.Reset();
 
-	Caps.clear();
-	Buffers.clear();
-	BufferBases.clear();
-	BufferRanges.clear();
-	FrameBuffers.clear();
-	Samplers.clear();
-	Textures.clear();
-	Images.clear();
+	pGLContext->Caps.clear();
+	pGLContext->Buffers.clear();
+	pGLContext->BufferBases.clear();
+	pGLContext->BufferRanges.clear();
+	pGLContext->FrameBuffers.clear();
+	pGLContext->Samplers.clear();
+	pGLContext->Textures.clear();
+	pGLContext->Images.clear();
 }
 
 void GLEnable(GLenum cap)
@@ -532,8 +541,8 @@ void GLEnable(GLenum cap)
 	case GL_SCISSOR_TEST:
 	case GL_STENCIL_TEST:
 	case GL_SAMPLE_MASK:
-		if (Caps.find(cap) == Caps.end() || Caps[cap] != GL_TRUE) {
-			Caps[cap] = GL_TRUE;
+		if (pGLContext->Caps.find(cap) == pGLContext->Caps.end() || pGLContext->Caps[cap] != GL_TRUE) {
+			pGLContext->Caps[cap] = GL_TRUE;
 			glEnable(cap);
 		}
 		break;
@@ -555,8 +564,8 @@ void GLDisable(GLenum cap)
 	case GL_SCISSOR_TEST:
 	case GL_STENCIL_TEST:
 	case GL_SAMPLE_MASK:
-		if (Caps.find(cap) == Caps.end() || Caps[cap] != GL_FALSE) {
-			Caps[cap] = GL_FALSE;
+		if (pGLContext->Caps.find(cap) == pGLContext->Caps.end() || pGLContext->Caps[cap] != GL_FALSE) {
+			pGLContext->Caps[cap] = GL_FALSE;
 			glDisable(cap);
 		}
 		break;
@@ -565,222 +574,222 @@ void GLDisable(GLenum cap)
 
 void GLScissor(GLint x, GLint y, GLsizei width, GLsizei height)
 {
-	if (Scissor.x != x || Scissor.y != y || Scissor.width != width || Scissor.height != height) {
-		Scissor.x = x;
-		Scissor.y = y;
-		Scissor.width = width;
-		Scissor.height = height;
+	if (pGLContext->Scissor.x != x || pGLContext->Scissor.y != y || pGLContext->Scissor.width != width || pGLContext->Scissor.height != height) {
+		pGLContext->Scissor.x = x;
+		pGLContext->Scissor.y = y;
+		pGLContext->Scissor.width = width;
+		pGLContext->Scissor.height = height;
 		glScissor(x, y, width, height);
 	}
 }
 
 void GLViewport(GLint x, GLint y, GLsizei width, GLsizei height)
 {
-	if (Viewport.x != x || Viewport.y != y || Viewport.width != width || Viewport.height != height) {
-		Viewport.x = x;
-		Viewport.y = y;
-		Viewport.width = width;
-		Viewport.height = height;
+	if (pGLContext->Viewport.x != x || pGLContext->Viewport.y != y || pGLContext->Viewport.width != width || pGLContext->Viewport.height != height) {
+		pGLContext->Viewport.x = x;
+		pGLContext->Viewport.y = y;
+		pGLContext->Viewport.width = width;
+		pGLContext->Viewport.height = height;
 		glViewport(x, y, width, height);
 	}
 }
 
 void GLDepthRange(GLfloat znear, GLfloat zfar)
 {
-	if (Viewport.znear != znear || Viewport.zfar != zfar) {
-		Viewport.znear = znear;
-		Viewport.zfar = zfar;
+	if (pGLContext->Viewport.znear != znear || pGLContext->Viewport.zfar != zfar) {
+		pGLContext->Viewport.znear = znear;
+		pGLContext->Viewport.zfar = zfar;
 		glDepthRangef(znear, zfar);
 	}
 }
 
 void GLClearColor(GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha)
 {
-	if (ClearColor.red != red || ClearColor.green != green || ClearColor.blue != blue || ClearColor.alpha != alpha) {
-		ClearColor.red = red;
-		ClearColor.green = green;
-		ClearColor.blue = blue;
-		ClearColor.alpha = alpha;
+	if (pGLContext->ClearColor.red != red || pGLContext->ClearColor.green != green || pGLContext->ClearColor.blue != blue || pGLContext->ClearColor.alpha != alpha) {
+		pGLContext->ClearColor.red = red;
+		pGLContext->ClearColor.green = green;
+		pGLContext->ClearColor.blue = blue;
+		pGLContext->ClearColor.alpha = alpha;
 		glClearColor(red, green, blue, alpha);
 	}
 }
 
 void GLClearDepthf(GLfloat depth)
 {
-	if (ClearDepth.depth != depth) {
-		ClearDepth.depth = depth;
-		glClearDepthf(ClearDepth.depth);
+	if (pGLContext->ClearDepth.depth != depth) {
+		pGLContext->ClearDepth.depth = depth;
+		glClearDepthf(depth);
 	}
 }
 
 void GLClearStencil(GLint stencil)
 {
-	if (ClearStencil.stencil != stencil) {
-		ClearStencil.stencil = stencil;
+	if (pGLContext->ClearStencil.stencil != stencil) {
+		pGLContext->ClearStencil.stencil = stencil;
 		GLClearStencil(stencil);
 	}
 }
 
 void GLPolygonMode(GLenum mode)
 {
-	if (PolygonMode.mode != mode) {
-		PolygonMode.mode = mode;
+	if (pGLContext->PolygonMode.mode != mode) {
+		pGLContext->PolygonMode.mode = mode;
 		glPolygonMode(GL_FRONT_AND_BACK, mode);
 	}
 }
 
 void GLCullFace(GLenum mode)
 {
-	if (CullFace.mode != mode) {
-		CullFace.mode = mode;
+	if (pGLContext->CullFace.mode != mode) {
+		pGLContext->CullFace.mode = mode;
 		glCullFace(mode);
 	}
 }
 
 void GLFrontFace(GLenum mode)
 {
-	if (FrontFace.mode != mode) {
-		FrontFace.mode = mode;
+	if (pGLContext->FrontFace.mode != mode) {
+		pGLContext->FrontFace.mode = mode;
 		glFrontFace(mode);
 	}
 }
 
 void GLLineWidth(GLfloat width)
 {
-	if (LineWidth.width != width) {
-		LineWidth.width = width;
+	if (pGLContext->LineWidth.width != width) {
+		pGLContext->LineWidth.width = width;
 		glLineWidth(width);
 	}
 }
 
 void GLPolygonOffset(GLfloat factor, GLfloat units)
 {
-	if (PolygonOffset.factor != factor || PolygonOffset.units != units) {
-		PolygonOffset.factor = factor;
-		PolygonOffset.units = units;
+	if (pGLContext->PolygonOffset.factor != factor || pGLContext->PolygonOffset.units != units) {
+		pGLContext->PolygonOffset.factor = factor;
+		pGLContext->PolygonOffset.units = units;
 		glPolygonOffset(factor, units);
 	}
 }
 
 void GLDepthRangef(GLfloat n, GLfloat f)
 {
-	if (DepthRangef.n != n || DepthRangef.f != f) {
-		DepthRangef.n = n;
-		DepthRangef.f = f;
+	if (pGLContext->DepthRangef.n != n || pGLContext->DepthRangef.f != f) {
+		pGLContext->DepthRangef.n = n;
+		pGLContext->DepthRangef.f = f;
 		glDepthRangef(n, f);
 	}
 }
 
 void GLDepthFunc(GLenum func)
 {
-	if (DepthFunc.func != func) {
-		DepthFunc.func = func;
+	if (pGLContext->DepthFunc.func != func) {
+		pGLContext->DepthFunc.func = func;
 		glDepthFunc(func);
 	}
 }
 
 void GLDepthMask(GLboolean flag)
 {
-	if (DepthMask.flag != flag) {
-		DepthMask.flag = flag;
+	if (pGLContext->DepthMask.flag != flag) {
+		pGLContext->DepthMask.flag = flag;
 		glDepthMask(flag);
 	}
 }
 
 void GLColorMask(GLboolean red, GLboolean green, GLboolean blue, GLboolean alpha)
 {
-	if (ColorMask.red != red || ColorMask.green != green || ColorMask.blue != blue || ColorMask.alpha != alpha) {
-		ColorMask.red = red;
-		ColorMask.green = green;
-		ColorMask.blue = blue;
-		ColorMask.alpha = alpha;
+	if (pGLContext->ColorMask.red != red || pGLContext->ColorMask.green != green || pGLContext->ColorMask.blue != blue || pGLContext->ColorMask.alpha != alpha) {
+		pGLContext->ColorMask.red = red;
+		pGLContext->ColorMask.green = green;
+		pGLContext->ColorMask.blue = blue;
+		pGLContext->ColorMask.alpha = alpha;
 		glColorMask(red, green, blue, alpha);
 	}
 }
 
 void GLStencilFrontOp(GLenum sfail, GLenum dpfail, GLenum dppass)
 {
-	if (StencilFrontOp.sfail != sfail || StencilFrontOp.dpfail != dpfail || StencilFrontOp.dppass != dppass) {
-		StencilFrontOp.sfail = sfail;
-		StencilFrontOp.dpfail = dpfail;
-		StencilFrontOp.dppass = dppass;
+	if (pGLContext->StencilFrontOp.sfail != sfail || pGLContext->StencilFrontOp.dpfail != dpfail || pGLContext->StencilFrontOp.dppass != dppass) {
+		pGLContext->StencilFrontOp.sfail = sfail;
+		pGLContext->StencilFrontOp.dpfail = dpfail;
+		pGLContext->StencilFrontOp.dppass = dppass;
 		glStencilOpSeparate(GL_FRONT, sfail, dpfail, dppass);
 	}
 }
 
 void GLStencilFrontFunc(GLenum func, GLint ref, GLuint mask)
 {
-	if (StencilFrontFunc.func != func || StencilFrontFunc.ref != ref || StencilFrontFunc.mask != mask) {
-		StencilFrontFunc.func = func;
-		StencilFrontFunc.ref = ref;
-		StencilFrontFunc.mask = mask;
+	if (pGLContext->StencilFrontFunc.func != func || pGLContext->StencilFrontFunc.ref != ref || pGLContext->StencilFrontFunc.mask != mask) {
+		pGLContext->StencilFrontFunc.func = func;
+		pGLContext->StencilFrontFunc.ref = ref;
+		pGLContext->StencilFrontFunc.mask = mask;
 		glStencilFuncSeparate(GL_FRONT, func, ref, mask);
 	}
 }
 
 void GLStencilFrontMask(GLuint mask)
 {
-	if (StencilFrontMask.mask != mask) {
-		StencilFrontMask.mask = mask;
+	if (pGLContext->StencilFrontMask.mask != mask) {
+		pGLContext->StencilFrontMask.mask = mask;
 		glStencilMaskSeparate(GL_FRONT, mask);
 	}
 }
 
 void GLStencilBackOp(GLenum sfail, GLenum dpfail, GLenum dppass)
 {
-	if (StencilBackOp.sfail != sfail || StencilBackOp.dpfail != dpfail || StencilBackOp.dppass != dppass) {
-		StencilBackOp.sfail = sfail;
-		StencilBackOp.dpfail = dpfail;
-		StencilBackOp.dppass = dppass;
+	if (pGLContext->StencilBackOp.sfail != sfail || pGLContext->StencilBackOp.dpfail != dpfail || pGLContext->StencilBackOp.dppass != dppass) {
+		pGLContext->StencilBackOp.sfail = sfail;
+		pGLContext->StencilBackOp.dpfail = dpfail;
+		pGLContext->StencilBackOp.dppass = dppass;
 		glStencilOpSeparate(GL_BACK, sfail, dpfail, dppass);
 	}
 }
 
 void GLStencilBackFunc(GLenum func, GLint ref, GLuint mask)
 {
-	if (StencilBackFunc.func != func || StencilBackFunc.ref != ref || StencilBackFunc.mask != mask) {
-		StencilBackFunc.func = func;
-		StencilBackFunc.ref = ref;
-		StencilBackFunc.mask = mask;
+	if (pGLContext->StencilBackFunc.func != func || pGLContext->StencilBackFunc.ref != ref || pGLContext->StencilBackFunc.mask != mask) {
+		pGLContext->StencilBackFunc.func = func;
+		pGLContext->StencilBackFunc.ref = ref;
+		pGLContext->StencilBackFunc.mask = mask;
 		glStencilFuncSeparate(GL_BACK, func, ref, mask);
 	}
 }
 
 void GLStencilBackMask(GLuint mask)
 {
-	if (StencilBackMask.mask != mask) {
-		StencilBackMask.mask = mask;
+	if (pGLContext->StencilBackMask.mask != mask) {
+		pGLContext->StencilBackMask.mask = mask;
 		glStencilMaskSeparate(GL_BACK, mask);
 	}
 }
 
 void GLBlendFunc(GLenum srcRGB, GLenum dstRGB, GLenum srcAlpha, GLenum dstAlpha)
 {
-	if (BlendFunc.srcRGB != srcRGB || BlendFunc.dstRGB != dstRGB || BlendFunc.srcAlpha != srcAlpha || BlendFunc.dstAlpha != dstAlpha) {
-		BlendFunc.srcRGB = srcRGB;
-		BlendFunc.dstRGB = dstRGB;
-		BlendFunc.srcAlpha = srcAlpha;
-		BlendFunc.dstAlpha = dstAlpha;
+	if (pGLContext->BlendFunc.srcRGB != srcRGB || pGLContext->BlendFunc.dstRGB != dstRGB || pGLContext->BlendFunc.srcAlpha != srcAlpha || pGLContext->BlendFunc.dstAlpha != dstAlpha) {
+		pGLContext->BlendFunc.srcRGB = srcRGB;
+		pGLContext->BlendFunc.dstRGB = dstRGB;
+		pGLContext->BlendFunc.srcAlpha = srcAlpha;
+		pGLContext->BlendFunc.dstAlpha = dstAlpha;
 		glBlendFuncSeparate(srcRGB, dstRGB, srcAlpha, dstAlpha);
 	}
 }
 
 void GLBlendEquation(GLenum modeRGB, GLenum modeAlpha)
 {
-	if (BlendEquation.modeRGB != modeRGB || BlendEquation.modeAlpha != modeAlpha) {
-		BlendEquation.modeRGB = modeRGB;
-		BlendEquation.modeAlpha = modeAlpha;
+	if (pGLContext->BlendEquation.modeRGB != modeRGB || pGLContext->BlendEquation.modeAlpha != modeAlpha) {
+		pGLContext->BlendEquation.modeRGB = modeRGB;
+		pGLContext->BlendEquation.modeAlpha = modeAlpha;
 		glBlendEquationSeparate(modeRGB, modeAlpha);
 	}
 }
 
 void GLBlendColor(GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha)
 {
-	if (BlendColor.red != red || BlendColor.green != green || BlendColor.blue != blue || BlendColor.alpha != alpha) {
-		BlendColor.red = red;
-		BlendColor.green = green;
-		BlendColor.blue = blue;
-		BlendColor.alpha = alpha;
+	if (pGLContext->BlendColor.red != red || pGLContext->BlendColor.green != green || pGLContext->BlendColor.blue != blue || pGLContext->BlendColor.alpha != alpha) {
+		pGLContext->BlendColor.red = red;
+		pGLContext->BlendColor.green = green;
+		pGLContext->BlendColor.blue = blue;
+		pGLContext->BlendColor.alpha = alpha;
 		glBlendColor(red, green, blue, alpha);
 	}
 }
@@ -897,8 +906,8 @@ void GLBindState(const PipelineState* state)
 
 void GLBindVertexArray(GLuint array)
 {
-	if (VertexArray.array != array) {
-		VertexArray.array = array;
+	if (pGLContext->VertexArray.array != array) {
+		pGLContext->VertexArray.array = array;
 		glBindVertexArray(array);
 	}
 }
@@ -918,8 +927,8 @@ void GLBindBuffer(GLenum target, GLuint buffer)
 	case GL_DRAW_INDIRECT_BUFFER:
 	case GL_DISPATCH_INDIRECT_BUFFER:
 	case GL_SHADER_STORAGE_BUFFER:
-		if (Buffers.find(target) == Buffers.end() || Buffers[target] != buffer) {
-			Buffers[target] = buffer;
+		if (pGLContext->Buffers.find(target) == pGLContext->Buffers.end() || pGLContext->Buffers[target] != buffer) {
+			pGLContext->Buffers[target] = buffer;
 			glBindBuffer(target, buffer);
 		}
 		break;
@@ -933,9 +942,9 @@ void GLBindBufferBase(GLenum target, GLuint index, GLuint buffer)
 	case GL_UNIFORM_BUFFER:
 	case GL_ATOMIC_COUNTER_BUFFER:
 	case GL_SHADER_STORAGE_BUFFER:
-		if (BufferBases.find(target) == BufferBases.end() || BufferBases[target].index != index || BufferBases[target].buffer != buffer) {
-			BufferBases[target].index = index;
-			BufferBases[target].buffer = buffer;
+		if (pGLContext->BufferBases.find(target) == pGLContext->BufferBases.end() || pGLContext->BufferBases[target].index != index || pGLContext->BufferBases[target].buffer != buffer) {
+			pGLContext->BufferBases[target].index = index;
+			pGLContext->BufferBases[target].buffer = buffer;
 			glBindBufferBase(target, index, buffer);
 		}
 		break;
@@ -949,11 +958,11 @@ void GLBindBufferRange(GLenum target, GLuint index, GLuint buffer, GLint offset,
 	case GL_UNIFORM_BUFFER:
 	case GL_ATOMIC_COUNTER_BUFFER:
 	case GL_SHADER_STORAGE_BUFFER:
-		if (BufferRanges.find(target) == BufferRanges.end() || BufferRanges[target].index != index || BufferRanges[target].buffer != buffer || BufferRanges[target].offset != offset || BufferRanges[target].size != size) {
-			BufferRanges[target].index = index;
-			BufferRanges[target].buffer = buffer;
-			BufferRanges[target].offset = offset;
-			BufferRanges[target].size = size;
+		if (pGLContext->BufferRanges.find(target) == pGLContext->BufferRanges.end() || pGLContext->BufferRanges[target].index != index || pGLContext->BufferRanges[target].buffer != buffer || pGLContext->BufferRanges[target].offset != offset || pGLContext->BufferRanges[target].size != size) {
+			pGLContext->BufferRanges[target].index = index;
+			pGLContext->BufferRanges[target].buffer = buffer;
+			pGLContext->BufferRanges[target].offset = offset;
+			pGLContext->BufferRanges[target].size = size;
 			glBindBufferRange(target, index, buffer, offset, size);
 		}
 		break;
@@ -962,17 +971,17 @@ void GLBindBufferRange(GLenum target, GLuint index, GLuint buffer, GLint offset,
 
 void GLBindSampler(GLuint unit, GLuint sampler)
 {
-	if (Samplers.find(unit) == Samplers.end() || Samplers[unit] != sampler) {
-		Samplers[unit] = sampler;
+	if (pGLContext->Samplers.find(unit) == pGLContext->Samplers.end() || pGLContext->Samplers[unit] != sampler) {
+		pGLContext->Samplers[unit] = sampler;
 		glBindSampler(unit, sampler);
 	}
 }
 
 void GLBindTexture(GLuint unit, GLenum target, GLuint texture)
 {
-	if (Textures.find(unit) == Textures.end() || Textures[unit].target != target || Textures[unit].texture != texture) {
-		Textures[unit].target = target;
-		Textures[unit].texture = texture;
+	if (pGLContext->Textures.find(unit) == pGLContext->Textures.end() || pGLContext->Textures[unit].target != target || pGLContext->Textures[unit].texture != texture) {
+		pGLContext->Textures[unit].target = target;
+		pGLContext->Textures[unit].texture = texture;
 		glActiveTexture(GL_TEXTURE0 + unit);
 		glBindTexture(target, texture);
 	}
@@ -980,12 +989,12 @@ void GLBindTexture(GLuint unit, GLenum target, GLuint texture)
 
 void GLBindImageTexture(GLuint unit, GLuint texture, GLint level, GLint layer, GLenum access, GLenum format)
 {
-	if (Images.find(unit) == Images.end() || Images[unit].texture != texture || Images[unit].level != level || Images[unit].layer != layer || Images[unit].access != access || Images[unit].format != format) {
-		Images[unit].texture = texture;
-		Images[unit].level = level;
-		Images[unit].layer = layer;
-		Images[unit].access = access;
-		Images[unit].format = format;
+	if (pGLContext->Images.find(unit) == pGLContext->Images.end() || pGLContext->Images[unit].texture != texture || pGLContext->Images[unit].level != level || pGLContext->Images[unit].layer != layer || pGLContext->Images[unit].access != access || pGLContext->Images[unit].format != format) {
+		pGLContext->Images[unit].texture = texture;
+		pGLContext->Images[unit].level = level;
+		pGLContext->Images[unit].layer = layer;
+		pGLContext->Images[unit].access = access;
+		pGLContext->Images[unit].format = format;
 		glBindImageTexture(unit, texture, level, layer >= 0 ? GL_FALSE : GL_TRUE, layer, access, format);
 	}
 }
@@ -996,24 +1005,24 @@ void GLInitFramebuffer(GLuint framebuffer)
 
 	for (int indexTarget = 0; indexTarget < 3; indexTarget++) {
 		const uint32_t target = targets[indexTarget];
-		const auto &itFrameBufferAttachment = FrameBuffers[target].attachments.find(framebuffer);
-		const auto &itFrameBufferDraw = FrameBuffers[target].drawbuffers.find(framebuffer);
-		const auto &itFrameBufferRead = FrameBuffers[target].readbuffers.find(framebuffer);
+		const auto &itFrameBufferAttachment = pGLContext->FrameBuffers[target].attachments.find(framebuffer);
+		const auto &itFrameBufferDraw = pGLContext->FrameBuffers[target].drawbuffers.find(framebuffer);
+		const auto &itFrameBufferRead = pGLContext->FrameBuffers[target].readbuffers.find(framebuffer);
 
-		if (FrameBuffers[target].framebuffer == framebuffer) {
-			FrameBuffers[target].framebuffer = 0;
+		if (pGLContext->FrameBuffers[target].framebuffer == framebuffer) {
+			pGLContext->FrameBuffers[target].framebuffer = 0;
 		}
 
-		if (itFrameBufferAttachment != FrameBuffers[target].attachments.end()) {
-			FrameBuffers[target].attachments.erase(itFrameBufferAttachment);
+		if (itFrameBufferAttachment != pGLContext->FrameBuffers[target].attachments.end()) {
+			pGLContext->FrameBuffers[target].attachments.erase(itFrameBufferAttachment);
 		}
 
-		if (itFrameBufferDraw != FrameBuffers[target].drawbuffers.end()) {
-			FrameBuffers[target].drawbuffers.erase(itFrameBufferDraw);
+		if (itFrameBufferDraw != pGLContext->FrameBuffers[target].drawbuffers.end()) {
+			pGLContext->FrameBuffers[target].drawbuffers.erase(itFrameBufferDraw);
 		}
 
-		if (itFrameBufferRead != FrameBuffers[target].readbuffers.end()) {
-			FrameBuffers[target].readbuffers.erase(itFrameBufferRead);
+		if (itFrameBufferRead != pGLContext->FrameBuffers[target].readbuffers.end()) {
+			pGLContext->FrameBuffers[target].readbuffers.erase(itFrameBufferRead);
 		}
 	}
 }
@@ -1024,8 +1033,8 @@ void GLBindFramebuffer(GLenum target, GLuint framebuffer)
 	case GL_FRAMEBUFFER:
 	case GL_DRAW_FRAMEBUFFER:
 	case GL_READ_FRAMEBUFFER:
-		if (FrameBuffers.find(target) == FrameBuffers.end() || FrameBuffers[target].framebuffer != framebuffer) {
-			FrameBuffers[target].framebuffer = framebuffer;
+		if (pGLContext->FrameBuffers.find(target) == pGLContext->FrameBuffers.end() || pGLContext->FrameBuffers[target].framebuffer != framebuffer) {
+			pGLContext->FrameBuffers[target].framebuffer = framebuffer;
 			glBindFramebuffer(target, framebuffer);
 		}
 		break;
@@ -1034,15 +1043,15 @@ void GLBindFramebuffer(GLenum target, GLuint framebuffer)
 
 void GLBindFramebufferTexture2D(GLenum target, GLenum attachment, GLenum textarget, GLuint texture, GLint level)
 {
-	if (FrameBuffers.find(target) != FrameBuffers.end()) {
-		uint32_t framebuffer = FrameBuffers[target].framebuffer;
-		if (FrameBuffers[target].attachments[framebuffer].find(attachment) == FrameBuffers[target].attachments[framebuffer].end() || 
-			FrameBuffers[target].attachments[framebuffer][attachment].textarget != textarget || 
-			FrameBuffers[target].attachments[framebuffer][attachment].texture != texture || 
-			FrameBuffers[target].attachments[framebuffer][attachment].level != level) {
-			FrameBuffers[target].attachments[framebuffer][attachment].textarget = textarget;
-			FrameBuffers[target].attachments[framebuffer][attachment].texture = texture;
-			FrameBuffers[target].attachments[framebuffer][attachment].level = level;
+	if (pGLContext->FrameBuffers.find(target) != pGLContext->FrameBuffers.end()) {
+		uint32_t framebuffer = pGLContext->FrameBuffers[target].framebuffer;
+		if (pGLContext->FrameBuffers[target].attachments[framebuffer].find(attachment) == pGLContext->FrameBuffers[target].attachments[framebuffer].end() ||
+			pGLContext->FrameBuffers[target].attachments[framebuffer][attachment].textarget != textarget ||
+			pGLContext->FrameBuffers[target].attachments[framebuffer][attachment].texture != texture ||
+			pGLContext->FrameBuffers[target].attachments[framebuffer][attachment].level != level) {
+			pGLContext->FrameBuffers[target].attachments[framebuffer][attachment].textarget = textarget;
+			pGLContext->FrameBuffers[target].attachments[framebuffer][attachment].texture = texture;
+			pGLContext->FrameBuffers[target].attachments[framebuffer][attachment].level = level;
 			glFramebufferTexture2D(target, attachment, textarget, texture, level);
 		}
 	}
@@ -1050,16 +1059,16 @@ void GLBindFramebufferTexture2D(GLenum target, GLenum attachment, GLenum textarg
 
 void GLReadBuffers(GLenum target, GLsizei n, const GLenum* bufs)
 {
-	if (FrameBuffers.find(target) != FrameBuffers.end()) {
+	if (pGLContext->FrameBuffers.find(target) != pGLContext->FrameBuffers.end()) {
 		bool bReset = false;
-		uint32_t framebuffer = FrameBuffers[target].framebuffer;
+		uint32_t framebuffer = pGLContext->FrameBuffers[target].framebuffer;
 
-		if (n != FrameBuffers[target].readbuffers[framebuffer].size()) {
+		if (n != pGLContext->FrameBuffers[target].readbuffers[framebuffer].size()) {
 			bReset = true;
 		}
 		else {
 			for (int indexBuffer = 0; indexBuffer < n; indexBuffer++) {
-				if (bufs[indexBuffer] != FrameBuffers[target].readbuffers[framebuffer][indexBuffer]) {
+				if (bufs[indexBuffer] != pGLContext->FrameBuffers[target].readbuffers[framebuffer][indexBuffer]) {
 					bReset = true;
 					break;
 				}
@@ -1067,10 +1076,10 @@ void GLReadBuffers(GLenum target, GLsizei n, const GLenum* bufs)
 		}
 
 		if (bReset) {
-			FrameBuffers[target].readbuffers[framebuffer].clear();
+			pGLContext->FrameBuffers[target].readbuffers[framebuffer].clear();
 
 			for (int indexBuffer = 0; indexBuffer < n; indexBuffer++) {
-				FrameBuffers[target].readbuffers[framebuffer].emplace_back(bufs[indexBuffer]);
+				pGLContext->FrameBuffers[target].readbuffers[framebuffer].emplace_back(bufs[indexBuffer]);
 			}
 
 			glReadBuffers(n, bufs);
@@ -1083,16 +1092,16 @@ void GLReadBuffers(GLenum target, GLsizei n, const GLenum* bufs)
 
 void GLDrawBuffers(GLenum target, GLsizei n, const GLenum* bufs)
 {
-	if (FrameBuffers.find(target) != FrameBuffers.end()) {
+	if (pGLContext->FrameBuffers.find(target) != pGLContext->FrameBuffers.end()) {
 		bool bReset = false;
-		uint32_t framebuffer = FrameBuffers[target].framebuffer;
+		uint32_t framebuffer = pGLContext->FrameBuffers[target].framebuffer;
 
-		if (n != FrameBuffers[target].drawbuffers[framebuffer].size()) {
+		if (n != pGLContext->FrameBuffers[target].drawbuffers[framebuffer].size()) {
 			bReset = true;
 		}
 		else {
 			for (int indexBuffer = 0; indexBuffer < n; indexBuffer++) {
-				if (bufs[indexBuffer] != FrameBuffers[target].drawbuffers[framebuffer][indexBuffer]) {
+				if (bufs[indexBuffer] != pGLContext->FrameBuffers[target].drawbuffers[framebuffer][indexBuffer]) {
 					bReset = true;
 					break;
 				}
@@ -1100,10 +1109,10 @@ void GLDrawBuffers(GLenum target, GLsizei n, const GLenum* bufs)
 		}
 
 		if (bReset) {
-			FrameBuffers[target].drawbuffers[framebuffer].clear();
+			pGLContext->FrameBuffers[target].drawbuffers[framebuffer].clear();
 
 			for (int indexBuffer = 0; indexBuffer < n; indexBuffer++) {
-				FrameBuffers[target].drawbuffers[framebuffer].emplace_back(bufs[indexBuffer]);
+				pGLContext->FrameBuffers[target].drawbuffers[framebuffer].emplace_back(bufs[indexBuffer]);
 			}
 
 			glDrawBuffers(n, bufs);
@@ -1116,123 +1125,123 @@ void GLDrawBuffers(GLenum target, GLsizei n, const GLenum* bufs)
 
 void GLUseProgram(GLuint program)
 {
-	if (Program.program != program) {
-		Program.program = program;
-		Program.uniform1i[program].clear();
-		Program.uniform2i[program].clear();
-		Program.uniform3i[program].clear();
-		Program.uniform4i[program].clear();
-		Program.uniform1f[program].clear();
-		Program.uniform2f[program].clear();
-		Program.uniform3f[program].clear();
-		Program.uniform4f[program].clear();
-		Program.uniform1iv[program].clear();
-		Program.uniform2iv[program].clear();
-		Program.uniform3iv[program].clear();
-		Program.uniform4iv[program].clear();
-		Program.uniform1fv[program].clear();
-		Program.uniform2fv[program].clear();
-		Program.uniform3fv[program].clear();
-		Program.uniform4fv[program].clear();
-		Program.uniformMatrix2fv[program].clear();
-		Program.uniformMatrix3fv[program].clear();
-		Program.uniformMatrix4fv[program].clear();
+	if (pGLContext->Program.program != program) {
+		pGLContext->Program.program = program;
+		pGLContext->Program.uniform1i[program].clear();
+		pGLContext->Program.uniform2i[program].clear();
+		pGLContext->Program.uniform3i[program].clear();
+		pGLContext->Program.uniform4i[program].clear();
+		pGLContext->Program.uniform1f[program].clear();
+		pGLContext->Program.uniform2f[program].clear();
+		pGLContext->Program.uniform3f[program].clear();
+		pGLContext->Program.uniform4f[program].clear();
+		pGLContext->Program.uniform1iv[program].clear();
+		pGLContext->Program.uniform2iv[program].clear();
+		pGLContext->Program.uniform3iv[program].clear();
+		pGLContext->Program.uniform4iv[program].clear();
+		pGLContext->Program.uniform1fv[program].clear();
+		pGLContext->Program.uniform2fv[program].clear();
+		pGLContext->Program.uniform3fv[program].clear();
+		pGLContext->Program.uniform4fv[program].clear();
+		pGLContext->Program.uniformMatrix2fv[program].clear();
+		pGLContext->Program.uniformMatrix3fv[program].clear();
+		pGLContext->Program.uniformMatrix4fv[program].clear();
 		glUseProgram(program);
 	}
 }
 
 void GLUniform1i(GLint location, GLint v0)
 {
-	if (Program.uniform1i[Program.program].find(location) == Program.uniform1i[Program.program].end() ||
-		Program.uniform1i[Program.program][location] != v0) {
-		Program.uniform1i[Program.program][location] = v0;
+	if (pGLContext->Program.uniform1i[pGLContext->Program.program].find(location) == pGLContext->Program.uniform1i[pGLContext->Program.program].end() ||
+		pGLContext->Program.uniform1i[pGLContext->Program.program][location] != v0) {
+		pGLContext->Program.uniform1i[pGLContext->Program.program][location] = v0;
 		glUniform1i(location, v0);
 	}
 }
 
 void GLUniform2i(GLint location, GLint v0, GLint v1)
 {
-	if (Program.uniform2i[Program.program].find(location) == Program.uniform2i[Program.program].end() ||
-		Program.uniform2i[Program.program][location][0] != v0 ||
-		Program.uniform2i[Program.program][location][1] != v1) {
-		Program.uniform2i[Program.program][location][0] = v0;
-		Program.uniform2i[Program.program][location][1] = v1;
+	if (pGLContext->Program.uniform2i[pGLContext->Program.program].find(location) == pGLContext->Program.uniform2i[pGLContext->Program.program].end() ||
+		pGLContext->Program.uniform2i[pGLContext->Program.program][location][0] != v0 ||
+		pGLContext->Program.uniform2i[pGLContext->Program.program][location][1] != v1) {
+		pGLContext->Program.uniform2i[pGLContext->Program.program][location][0] = v0;
+		pGLContext->Program.uniform2i[pGLContext->Program.program][location][1] = v1;
 		glUniform2i(location, v0, v1);
 	}
 }
 
 void GLUniform3i(GLint location, GLint v0, GLint v1, GLint v2)
 {
-	if (Program.uniform3i[Program.program].find(location) == Program.uniform3i[Program.program].end() ||
-		Program.uniform3i[Program.program][location][0] != v0 ||
-		Program.uniform3i[Program.program][location][1] != v1 ||
-		Program.uniform3i[Program.program][location][2] != v2) {
-		Program.uniform3i[Program.program][location][0] = v0;
-		Program.uniform3i[Program.program][location][1] = v1;
-		Program.uniform3i[Program.program][location][2] = v2;
+	if (pGLContext->Program.uniform3i[pGLContext->Program.program].find(location) == pGLContext->Program.uniform3i[pGLContext->Program.program].end() ||
+		pGLContext->Program.uniform3i[pGLContext->Program.program][location][0] != v0 ||
+		pGLContext->Program.uniform3i[pGLContext->Program.program][location][1] != v1 ||
+		pGLContext->Program.uniform3i[pGLContext->Program.program][location][2] != v2) {
+		pGLContext->Program.uniform3i[pGLContext->Program.program][location][0] = v0;
+		pGLContext->Program.uniform3i[pGLContext->Program.program][location][1] = v1;
+		pGLContext->Program.uniform3i[pGLContext->Program.program][location][2] = v2;
 		glUniform3i(location, v0, v1, v2);
 	}
 }
 
 void GLUniform4i(GLint location, GLint v0, GLint v1, GLint v2, GLint v3)
 {
-	if (Program.uniform4i[Program.program].find(location) == Program.uniform4i[Program.program].end() ||
-		Program.uniform4i[Program.program][location][0] != v0 ||
-		Program.uniform4i[Program.program][location][1] != v1 ||
-		Program.uniform4i[Program.program][location][2] != v2 ||
-		Program.uniform4i[Program.program][location][3] != v3) {
-		Program.uniform4i[Program.program][location][0] = v0;
-		Program.uniform4i[Program.program][location][1] = v1;
-		Program.uniform4i[Program.program][location][2] = v2;
-		Program.uniform4i[Program.program][location][3] = v3;
+	if (pGLContext->Program.uniform4i[pGLContext->Program.program].find(location) == pGLContext->Program.uniform4i[pGLContext->Program.program].end() ||
+		pGLContext->Program.uniform4i[pGLContext->Program.program][location][0] != v0 ||
+		pGLContext->Program.uniform4i[pGLContext->Program.program][location][1] != v1 ||
+		pGLContext->Program.uniform4i[pGLContext->Program.program][location][2] != v2 ||
+		pGLContext->Program.uniform4i[pGLContext->Program.program][location][3] != v3) {
+		pGLContext->Program.uniform4i[pGLContext->Program.program][location][0] = v0;
+		pGLContext->Program.uniform4i[pGLContext->Program.program][location][1] = v1;
+		pGLContext->Program.uniform4i[pGLContext->Program.program][location][2] = v2;
+		pGLContext->Program.uniform4i[pGLContext->Program.program][location][3] = v3;
 		glUniform4i(location, v0, v1, v2, v3);
 	}
 }
 
 void GLUniform1f(GLint location, GLfloat v0)
 {
-	if (Program.uniform1f[Program.program].find(location) == Program.uniform1f[Program.program].end() ||
-		Program.uniform1f[Program.program][location] != v0) {
-		Program.uniform1f[Program.program][location] = v0;
+	if (pGLContext->Program.uniform1f[pGLContext->Program.program].find(location) == pGLContext->Program.uniform1f[pGLContext->Program.program].end() ||
+		pGLContext->Program.uniform1f[pGLContext->Program.program][location] != v0) {
+		pGLContext->Program.uniform1f[pGLContext->Program.program][location] = v0;
 		glUniform1f(location, v0);
 	}
 }
 
 void GLUniform2f(GLint location, GLfloat v0, GLfloat v1)
 {
-	if (Program.uniform2f[Program.program].find(location) == Program.uniform2f[Program.program].end() ||
-		Program.uniform2f[Program.program][location][0] != v0 ||
-		Program.uniform2f[Program.program][location][1] != v1) {
-		Program.uniform2f[Program.program][location][0] = v0;
-		Program.uniform2f[Program.program][location][1] = v1;
+	if (pGLContext->Program.uniform2f[pGLContext->Program.program].find(location) == pGLContext->Program.uniform2f[pGLContext->Program.program].end() ||
+		pGLContext->Program.uniform2f[pGLContext->Program.program][location][0] != v0 ||
+		pGLContext->Program.uniform2f[pGLContext->Program.program][location][1] != v1) {
+		pGLContext->Program.uniform2f[pGLContext->Program.program][location][0] = v0;
+		pGLContext->Program.uniform2f[pGLContext->Program.program][location][1] = v1;
 		glUniform2f(location, v0, v1);
 	}
 }
 
 void GLUniform3f(GLint location, GLfloat v0, GLfloat v1, GLfloat v2)
 {
-	if (Program.uniform3f[Program.program].find(location) == Program.uniform3f[Program.program].end() ||
-		Program.uniform3f[Program.program][location][0] != v0 ||
-		Program.uniform3f[Program.program][location][1] != v1 ||
-		Program.uniform3f[Program.program][location][2] != v2) {
-		Program.uniform3f[Program.program][location][0] = v0;
-		Program.uniform3f[Program.program][location][1] = v1;
-		Program.uniform3f[Program.program][location][2] = v2;
+	if (pGLContext->Program.uniform3f[pGLContext->Program.program].find(location) == pGLContext->Program.uniform3f[pGLContext->Program.program].end() ||
+		pGLContext->Program.uniform3f[pGLContext->Program.program][location][0] != v0 ||
+		pGLContext->Program.uniform3f[pGLContext->Program.program][location][1] != v1 ||
+		pGLContext->Program.uniform3f[pGLContext->Program.program][location][2] != v2) {
+		pGLContext->Program.uniform3f[pGLContext->Program.program][location][0] = v0;
+		pGLContext->Program.uniform3f[pGLContext->Program.program][location][1] = v1;
+		pGLContext->Program.uniform3f[pGLContext->Program.program][location][2] = v2;
 		glUniform3f(location, v0, v1, v2);
 	}
 }
 
 void GLUniform4f(GLint location, GLfloat v0, GLfloat v1, GLfloat v2, GLfloat v3)
 {
-	if (Program.uniform4f[Program.program].find(location) == Program.uniform4f[Program.program].end() ||
-		Program.uniform4f[Program.program][location][0] != v0 ||
-		Program.uniform4f[Program.program][location][1] != v1 ||
-		Program.uniform4f[Program.program][location][2] != v2 ||
-		Program.uniform4f[Program.program][location][3] != v3) {
-		Program.uniform4f[Program.program][location][0] = v0;
-		Program.uniform4f[Program.program][location][1] = v1;
-		Program.uniform4f[Program.program][location][2] = v2;
-		Program.uniform4f[Program.program][location][3] = v3;
+	if (pGLContext->Program.uniform4f[pGLContext->Program.program].find(location) == pGLContext->Program.uniform4f[pGLContext->Program.program].end() ||
+		pGLContext->Program.uniform4f[pGLContext->Program.program][location][0] != v0 ||
+		pGLContext->Program.uniform4f[pGLContext->Program.program][location][1] != v1 ||
+		pGLContext->Program.uniform4f[pGLContext->Program.program][location][2] != v2 ||
+		pGLContext->Program.uniform4f[pGLContext->Program.program][location][3] != v3) {
+		pGLContext->Program.uniform4f[pGLContext->Program.program][location][0] = v0;
+		pGLContext->Program.uniform4f[pGLContext->Program.program][location][1] = v1;
+		pGLContext->Program.uniform4f[pGLContext->Program.program][location][2] = v2;
+		pGLContext->Program.uniform4f[pGLContext->Program.program][location][3] = v3;
 		glUniform4f(location, v0, v1, v2, v3);
 	}
 }
@@ -1240,9 +1249,9 @@ void GLUniform4f(GLint location, GLfloat v0, GLfloat v1, GLfloat v2, GLfloat v3)
 void GLUniform1iv(GLint location, GLsizei count, const GLint* value)
 {
 	eastl::vector<int> values(value, value + count);
-	if (Program.uniform1iv[Program.program].find(location) == Program.uniform1iv[Program.program].end() ||
-		Program.uniform1iv[Program.program][location] != values) {
-		Program.uniform1iv[Program.program][location] = values;
+	if (pGLContext->Program.uniform1iv[pGLContext->Program.program].find(location) == pGLContext->Program.uniform1iv[pGLContext->Program.program].end() ||
+		pGLContext->Program.uniform1iv[pGLContext->Program.program][location] != values) {
+		pGLContext->Program.uniform1iv[pGLContext->Program.program][location] = values;
 		glUniform1iv(location, count, value);
 	}
 }
@@ -1250,9 +1259,9 @@ void GLUniform1iv(GLint location, GLsizei count, const GLint* value)
 void GLUniform2iv(GLint location, GLsizei count, const GLint* value)
 {
 	eastl::vector<int> values(value, value + count);
-	if (Program.uniform2iv[Program.program].find(location) == Program.uniform2iv[Program.program].end() ||
-		Program.uniform2iv[Program.program][location] != values) {
-		Program.uniform2iv[Program.program][location] = values;
+	if (pGLContext->Program.uniform2iv[pGLContext->Program.program].find(location) == pGLContext->Program.uniform2iv[pGLContext->Program.program].end() ||
+		pGLContext->Program.uniform2iv[pGLContext->Program.program][location] != values) {
+		pGLContext->Program.uniform2iv[pGLContext->Program.program][location] = values;
 		glUniform2iv(location, count, value);
 	}
 }
@@ -1260,9 +1269,9 @@ void GLUniform2iv(GLint location, GLsizei count, const GLint* value)
 void GLUniform3iv(GLint location, GLsizei count, const GLint* value)
 {
 	eastl::vector<int> values(value, value + count);
-	if (Program.uniform3iv[Program.program].find(location) == Program.uniform3iv[Program.program].end() ||
-		Program.uniform3iv[Program.program][location] != values) {
-		Program.uniform3iv[Program.program][location] = values;
+	if (pGLContext->Program.uniform3iv[pGLContext->Program.program].find(location) == pGLContext->Program.uniform3iv[pGLContext->Program.program].end() ||
+		pGLContext->Program.uniform3iv[pGLContext->Program.program][location] != values) {
+		pGLContext->Program.uniform3iv[pGLContext->Program.program][location] = values;
 		glUniform3iv(location, count, value);
 	}
 }
@@ -1270,9 +1279,9 @@ void GLUniform3iv(GLint location, GLsizei count, const GLint* value)
 void GLUniform4iv(GLint location, GLsizei count, const GLint* value)
 {
 	eastl::vector<int> values(value, value + count);
-	if (Program.uniform4iv[Program.program].find(location) == Program.uniform4iv[Program.program].end() ||
-		Program.uniform4iv[Program.program][location] != values) {
-		Program.uniform4iv[Program.program][location] = values;
+	if (pGLContext->Program.uniform4iv[pGLContext->Program.program].find(location) == pGLContext->Program.uniform4iv[pGLContext->Program.program].end() ||
+		pGLContext->Program.uniform4iv[pGLContext->Program.program][location] != values) {
+		pGLContext->Program.uniform4iv[pGLContext->Program.program][location] = values;
 		glUniform4iv(location, count, value);
 	}
 }
@@ -1280,9 +1289,9 @@ void GLUniform4iv(GLint location, GLsizei count, const GLint* value)
 void GLUniform1fv(GLint location, GLsizei count, const GLfloat* value)
 {
 	eastl::vector<float> values(value, value + count);
-	if (Program.uniform1fv[Program.program].find(location) == Program.uniform1fv[Program.program].end() ||
-		Program.uniform1fv[Program.program][location] != values) {
-		Program.uniform1fv[Program.program][location] = values;
+	if (pGLContext->Program.uniform1fv[pGLContext->Program.program].find(location) == pGLContext->Program.uniform1fv[pGLContext->Program.program].end() ||
+		pGLContext->Program.uniform1fv[pGLContext->Program.program][location] != values) {
+		pGLContext->Program.uniform1fv[pGLContext->Program.program][location] = values;
 		glUniform1fv(location, count, value);
 	}
 }
@@ -1290,9 +1299,9 @@ void GLUniform1fv(GLint location, GLsizei count, const GLfloat* value)
 void GLUniform2fv(GLint location, GLsizei count, const GLfloat* value)
 {
 	eastl::vector<float> values(value, value + count);
-	if (Program.uniform2fv[Program.program].find(location) == Program.uniform2fv[Program.program].end() ||
-		Program.uniform2fv[Program.program][location] != values) {
-		Program.uniform2fv[Program.program][location] = values;
+	if (pGLContext->Program.uniform2fv[pGLContext->Program.program].find(location) == pGLContext->Program.uniform2fv[pGLContext->Program.program].end() ||
+		pGLContext->Program.uniform2fv[pGLContext->Program.program][location] != values) {
+		pGLContext->Program.uniform2fv[pGLContext->Program.program][location] = values;
 		glUniform2fv(location, count, value);
 	}
 }
@@ -1300,9 +1309,9 @@ void GLUniform2fv(GLint location, GLsizei count, const GLfloat* value)
 void GLUniform3fv(GLint location, GLsizei count, const GLfloat* value)
 {
 	eastl::vector<float> values(value, value + count);
-	if (Program.uniform3fv[Program.program].find(location) == Program.uniform3fv[Program.program].end() ||
-		Program.uniform3fv[Program.program][location] != values) {
-		Program.uniform3fv[Program.program][location] = values;
+	if (pGLContext->Program.uniform3fv[pGLContext->Program.program].find(location) == pGLContext->Program.uniform3fv[pGLContext->Program.program].end() ||
+		pGLContext->Program.uniform3fv[pGLContext->Program.program][location] != values) {
+		pGLContext->Program.uniform3fv[pGLContext->Program.program][location] = values;
 		glUniform3fv(location, count, value);
 	}
 }
@@ -1310,9 +1319,9 @@ void GLUniform3fv(GLint location, GLsizei count, const GLfloat* value)
 void GLUniform4fv(GLint location, GLsizei count, const GLfloat* value)
 {
 	eastl::vector<float> values(value, value + count);
-	if (Program.uniform4fv[Program.program].find(location) == Program.uniform4fv[Program.program].end() ||
-		Program.uniform4fv[Program.program][location] != values) {
-		Program.uniform4fv[Program.program][location] = values;
+	if (pGLContext->Program.uniform4fv[pGLContext->Program.program].find(location) == pGLContext->Program.uniform4fv[pGLContext->Program.program].end() ||
+		pGLContext->Program.uniform4fv[pGLContext->Program.program][location] != values) {
+		pGLContext->Program.uniform4fv[pGLContext->Program.program][location] = values;
 		glUniform4fv(location, count, value);
 	}
 }
@@ -1320,9 +1329,9 @@ void GLUniform4fv(GLint location, GLsizei count, const GLfloat* value)
 void GLUniformMatrix2fv(GLint location, GLsizei count, const GLfloat* value)
 {
 	eastl::vector<float> values(value, value + 4 * count);
-	if (Program.uniformMatrix2fv[Program.program].find(location) == Program.uniformMatrix2fv[Program.program].end() ||
-		Program.uniformMatrix2fv[Program.program][location] != values) {
-		Program.uniformMatrix2fv[Program.program][location] = values;
+	if (pGLContext->Program.uniformMatrix2fv[pGLContext->Program.program].find(location) == pGLContext->Program.uniformMatrix2fv[pGLContext->Program.program].end() ||
+		pGLContext->Program.uniformMatrix2fv[pGLContext->Program.program][location] != values) {
+		pGLContext->Program.uniformMatrix2fv[pGLContext->Program.program][location] = values;
 		glUniformMatrix2fv(location, count, GL_FALSE, value);
 	}
 }
@@ -1330,9 +1339,9 @@ void GLUniformMatrix2fv(GLint location, GLsizei count, const GLfloat* value)
 void GLUniformMatrix3fv(GLint location, GLsizei count, const GLfloat* value)
 {
 	eastl::vector<float> values(value, value + 9 * count);
-	if (Program.uniformMatrix3fv[Program.program].find(location) == Program.uniformMatrix3fv[Program.program].end() ||
-		Program.uniformMatrix3fv[Program.program][location] != values) {
-		Program.uniformMatrix3fv[Program.program][location] = values;
+	if (pGLContext->Program.uniformMatrix3fv[pGLContext->Program.program].find(location) == pGLContext->Program.uniformMatrix3fv[pGLContext->Program.program].end() ||
+		pGLContext->Program.uniformMatrix3fv[pGLContext->Program.program][location] != values) {
+		pGLContext->Program.uniformMatrix3fv[pGLContext->Program.program][location] = values;
 		glUniformMatrix3fv(location, count, GL_FALSE, value);
 	}
 }
@@ -1340,9 +1349,9 @@ void GLUniformMatrix3fv(GLint location, GLsizei count, const GLfloat* value)
 void GLUniformMatrix4fv(GLint location, GLsizei count, const GLfloat* value)
 {
 	eastl::vector<float> values(value, value + 16 * count);
-	if (Program.uniformMatrix4fv[Program.program].find(location) == Program.uniformMatrix4fv[Program.program].end() ||
-		Program.uniformMatrix4fv[Program.program][location] != values) {
-		Program.uniformMatrix4fv[Program.program][location] = values;
+	if (pGLContext->Program.uniformMatrix4fv[pGLContext->Program.program].find(location) == pGLContext->Program.uniformMatrix4fv[pGLContext->Program.program].end() ||
+		pGLContext->Program.uniformMatrix4fv[pGLContext->Program.program][location] != values) {
+		pGLContext->Program.uniformMatrix4fv[pGLContext->Program.program][location] = values;
 		glUniformMatrix4fv(location, count, GL_FALSE, value);
 	}
 }
