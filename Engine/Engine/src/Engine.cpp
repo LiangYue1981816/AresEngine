@@ -1,10 +1,6 @@
 #include "EngineHeader.h"
 
 
-extern int dump_memory_objects();
-extern int check_mem_corruption();
-
-
 CEngine* CEngine::pInstance = nullptr;
 CEngine* CEngine::GetInstance(void)
 {
@@ -26,10 +22,6 @@ void CEngine::Destroy(void)
 	}
 
 	CGfxProfiler::LogGfxMemory();
-
-#if defined (_DEBUG) || defined (DEBUG)
-	dump_memory_objects();
-#endif
 }
 
 CEngine::CEngine(GfxApi api, void* hInstance, void* hWnd, void* hDC, int width, int height, GfxPixelFormat format, const char* szPath)

@@ -6,6 +6,9 @@
 #include "imgui_impl_win32.h"
 
 
+extern int dump_memory_objects();
+extern int check_mem_corruption();
+
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 
@@ -19,7 +22,9 @@ CApplication::CApplication(void)
 
 CApplication::~CApplication(void)
 {
-
+#if defined (_DEBUG) || defined (DEBUG)
+	dump_memory_objects();
+#endif
 }
 
 void CApplication::Update(void)
