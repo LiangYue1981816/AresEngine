@@ -1,9 +1,0 @@
-build/
-build-*/
-*.pyc
-*.swp
-compile_commands.json
-.ycm_extra_conf.py
-cscope.*
-android_test/libs
-.DS_Store
