@@ -28,6 +28,7 @@ public:
 
 private:
 	virtual void TaskFunc(int indexThread) = 0;
+	virtual void TaskFinish(void) {};
 
 
 private:
