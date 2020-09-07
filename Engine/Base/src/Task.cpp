@@ -82,12 +82,6 @@ CTaskStack::CTaskStack(void)
 
 }
 
-CTaskStack::CTaskStack(const CTaskStack& copy)
-	: m_pTaskStack(copy.Head())
-{
-
-}
-
 CTaskStack::~CTaskStack(void)
 {
 

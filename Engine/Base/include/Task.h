@@ -61,7 +61,6 @@ class CTaskStack
 {
 public:
 	CTaskStack(void);
-	CTaskStack(const CTaskStack& copy);
 	virtual ~CTaskStack(void);
 
 
