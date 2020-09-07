@@ -91,6 +91,7 @@ void* CTaskPool::TaskThread(void* pParam)
 					if (CTask* pTask = pThread->pTaskPool->m_tasks.Pop()) {
 						pTask->TaskFunc(pThread->indexThread);
 						pTask->Signal();
+						pTask->TaskFinish();
 					}
 					else {
 						break;

@@ -106,6 +106,7 @@ void* CTaskGraph::TaskThread(void* pParam)
 						if (CTask* pTask = itTaskStack->second.Pop()) {
 							pTask->TaskFunc(pThread->indexThread);
 							pTask->Signal();
+							pTask->TaskFinish();
 						}
 						else {
 							break;
