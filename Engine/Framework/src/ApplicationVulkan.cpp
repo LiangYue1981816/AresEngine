@@ -271,7 +271,9 @@ bool CApplicationVulkan::Create(void* hInstance, void* hWnd, void* hDC, int widt
 
 	// Upload Fonts
 	{
-		VkCommandBuffer command_buffer = ((CVKCommandBuffer*)Framework()->GetImGuiCommandBuffer().GetPointer())->GetCommandBuffer();
+		CGfxCommandBufferPtr ptrCommandBuffer = GfxRenderer()->NewCommandBuffer(0, true);
+
+		VkCommandBuffer command_buffer = ((CVKCommandBuffer*)ptrCommandBuffer.GetPointer())->GetCommandBuffer();
 		check_vk_result(vkResetCommandBuffer(command_buffer, VK_COMMAND_BUFFER_RESET_RELEASE_RESOURCES_BIT));
 
 		VkCommandBufferBeginInfo begin_info = {};
