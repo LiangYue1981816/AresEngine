@@ -43,21 +43,7 @@ int main(int argc, char** argv)
 	RECT rcWindow;
 	GetClientRect(hWnd, &rcWindow);
 
-	switch (type) {
-	case RENDERER_TYPE_OPENGL:
-		pApplication = new CApplicationOpenGL;
-		break;
-
-	case RENDERER_TYPE_VULKAN:
-		pApplication = new CApplicationVulkan;
-		break;
-
-	default:
-		pApplication = new CApplicationVulkan;
-		break;
-	}
-
-	pApplication->Create(wc.hInstance, hWnd, GetDC((HWND)hWnd), rcWindow.right - rcWindow.left + 1, rcWindow.bottom - rcWindow.top + 1);
+	pApplication = CreateApplication(type, wc.hInstance, hWnd, GetDC((HWND)hWnd), rcWindow.right - rcWindow.left + 1, rcWindow.bottom - rcWindow.top + 1);
 
 	//
 	// 4. Main loop
@@ -77,8 +63,7 @@ int main(int argc, char** argv)
 	//
 	// 5. Destroy application
 	//
-	pApplication->Destroy();
-	delete pApplication;
+	DestroyApplication(pApplication);
 
 	//
 	// 6. Destroy window

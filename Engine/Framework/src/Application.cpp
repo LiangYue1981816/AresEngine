@@ -1,9 +1,7 @@
 #include "Application.h"
 #include "ApplicationGLES3.h"
 #include "ApplicationVulkan.h"
-
 #include "Framework.h"
-#include "EngineHeader.h"
 
 #include "imgui.h"
 #include "imgui_impl_win32.h"

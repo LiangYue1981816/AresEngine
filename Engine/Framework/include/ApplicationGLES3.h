@@ -14,7 +14,6 @@ public:
 	virtual bool Create(void* hInstance, void* hWnd, void* hDC, int width, int height);
 	virtual void Destroy(void);
 
-
 private:
 	virtual void UpdateInternal(float deltaTime);
 
