@@ -141,10 +141,11 @@ CWorkModeBase* CFramework::GetWorkMode(void) const
 
 	case WORK_MODE_EDITOR:
 		return m_pEditor;
-	}
 
-	ASSERT(0);
-	return nullptr;
+	default:
+		ASSERT(0);
+		return nullptr;
+	}
 }
 
 void CFramework::OnLButtonDown(int x, int y)
@@ -172,6 +173,18 @@ void CFramework::OnKeyRelease(int key)
 	GetWorkMode()->OnKeyRelease(key);
 }
 
+void CFramework::Update(float deltaTime)
+{
+	GetWorkMode()->Update(deltaTime);
+}
+
+void CFramework::Render(CGfxCommandBufferPtr ptrComputeCommandBuffer, CGfxCommandBufferPtr ptrGraphicCommandBuffer, const CGfxSemaphore* pWaitSemaphore)
+{
+	m_pImGUI_Console->Draw();
+
+	GetWorkMode()->Render(ptrComputeCommandBuffer, ptrGraphicCommandBuffer, pWaitSemaphore);
+}
+
 CGfxCommandBufferPtr CFramework::GetTransferCommandBuffer(void)
 {
 	return m_ptrTransferCommandBuffers[GfxRenderer()->GetSwapChain()->GetFrameIndex()];
@@ -190,16 +203,4 @@ CGfxCommandBufferPtr CFramework::GetGraphicCommandBuffer(void)
 CGfxCommandBufferPtr CFramework::GetImGuiCommandBuffer(void)
 {
 	return m_ptrImGuiCommandBuffers[GfxRenderer()->GetSwapChain()->GetFrameIndex()];
-}
-
-void CFramework::Update(float deltaTime)
-{
-	GetWorkMode()->Update(deltaTime);
-}
-
-void CFramework::Render(CGfxCommandBufferPtr ptrComputeCommandBuffer, CGfxCommandBufferPtr ptrGraphicCommandBuffer, const CGfxSemaphore* pWaitSemaphore)
-{
-	m_pImGUI_Console->Draw();
-
-	GetWorkMode()->Render(ptrComputeCommandBuffer, ptrGraphicCommandBuffer, pWaitSemaphore);
 }

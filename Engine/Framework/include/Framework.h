@@ -45,14 +45,14 @@ public:
 	void OnKeyRelease(int key);
 
 public:
+	void Update(float deltaTime);
+	void Render(CGfxCommandBufferPtr ptrComputeCommandBuffer, CGfxCommandBufferPtr ptrGraphicCommandBuffer, const CGfxSemaphore* pWaitSemaphore);
+
+public:
 	CGfxCommandBufferPtr GetTransferCommandBuffer(void);
 	CGfxCommandBufferPtr GetComputeCommandBuffer(void);
 	CGfxCommandBufferPtr GetGraphicCommandBuffer(void);
 	CGfxCommandBufferPtr GetImGuiCommandBuffer(void);
-
-public:
-	void Update(float deltaTime);
-	void Render(CGfxCommandBufferPtr ptrComputeCommandBuffer, CGfxCommandBufferPtr ptrGraphicCommandBuffer, const CGfxSemaphore* pWaitSemaphore);
 
 
 private:
