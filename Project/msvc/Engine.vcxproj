@@ -409,7 +409,6 @@
     <ClInclude Include="..\..\Engine\Scene\include\ComponentPointLight.h" />
     <ClInclude Include="..\..\Engine\Scene\include\ComponentSkin.h" />
     <ClInclude Include="..\..\Engine\Scene\include\Scene.h" />
-    <ClInclude Include="..\..\Engine\Scene\include\SceneDefinition.h" />
     <ClInclude Include="..\..\Engine\Scene\include\SceneManager.h" />
     <ClInclude Include="..\..\Engine\Scene\include\SceneNode.h" />
     <ClInclude Include="..\..\Engine\Scene\src\TaskComponentUpdateCamera.h" />

@@ -546,9 +546,6 @@
     <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3VertexBuffer.h">
       <Filter>Engine\Renderer\GLES3\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Engine\Scene\include\SceneDefinition.h">
-      <Filter>Engine\Scene\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Engine\ThirdParty\event\event.h">
       <Filter>ThirdParty\event</Filter>
     </ClInclude>
