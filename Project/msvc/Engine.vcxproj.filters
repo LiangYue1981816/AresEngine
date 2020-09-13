@@ -1788,10 +1788,10 @@
     <ClInclude Include="..\..\Engine\Framework\include\WorkMode.h">
       <Filter>Engine\Framework\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Engine\Framework\include\ApplicationGL.h">
+    <ClInclude Include="..\..\Engine\Framework\include\ApplicationVulkan.h">
       <Filter>Engine\Framework\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Engine\Framework\include\ApplicationVulkan.h">
+    <ClInclude Include="..\..\Engine\Framework\include\ApplicationGLES3.h">
       <Filter>Engine\Framework\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -2633,7 +2633,7 @@
     <ClCompile Include="..\..\Engine\ImGUI\src\ImGUI_Console.cpp">
       <Filter>Engine\ImGUI\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Engine\Framework\src\ApplicationGL.cpp">
+    <ClCompile Include="..\..\Engine\Framework\src\ApplicationGLES3.cpp">
       <Filter>Engine\Framework\Source Files</Filter>
     </ClCompile>
   </ItemGroup>

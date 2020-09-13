@@ -3,11 +3,11 @@
 #include "GLES3Renderer.h"
 
 
-class CApplicationGL : public CApplication
+class CApplicationGLES3 : public CApplication
 {
 public:
-	CApplicationGL(void);
-	virtual ~CApplicationGL(void);
+	CApplicationGLES3(void);
+	virtual ~CApplicationGLES3(void);
 
 
 public:

@@ -1,5 +1,5 @@
 #include "Framework.h"
-#include "ApplicationGL.h"
+#include "ApplicationGLES3.h"
 
 #include "imgui.h"
 #include "imgui_impl_win32.h"
@@ -13,7 +13,7 @@ extern void UpdateInput(void);
 extern void UpdateRenderSolution(void);
 
 
-CApplicationGL::CApplicationGL(void)
+CApplicationGLES3::CApplicationGLES3(void)
 	: m_hDC(nullptr)
 	, m_width(0)
 	, m_height(0)
@@ -21,12 +21,12 @@ CApplicationGL::CApplicationGL(void)
 
 }
 
-CApplicationGL::~CApplicationGL(void)
+CApplicationGLES3::~CApplicationGLES3(void)
 {
 
 }
 
-bool CApplicationGL::Create(void* hInstance, void* hWnd, void* hDC, int width, int height)
+bool CApplicationGLES3::Create(void* hInstance, void* hWnd, void* hDC, int width, int height)
 {
 	m_hDC = hDC;
 	m_width = width;
@@ -163,7 +163,7 @@ bool CApplicationGL::Create(void* hInstance, void* hWnd, void* hDC, int width, i
 	return true;
 }
 
-void CApplicationGL::Destroy(void)
+void CApplicationGLES3::Destroy(void)
 {
 	//
 	// 1. Destroy ImGui
@@ -179,7 +179,7 @@ void CApplicationGL::Destroy(void)
 	DestroyEngine();
 }
 
-void CApplicationGL::UpdateInternal(float deltaTime)
+void CApplicationGLES3::UpdateInternal(float deltaTime)
 {
 	const CGfxSemaphore* pWaitSemaphore = GfxRenderer()->GetSwapChain()->GetAcquireSemaphore();
 	const CGfxCommandBufferPtr ptrComputeCommandBuffer = Framework()->GetComputeCommandBuffer();

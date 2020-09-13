@@ -135,7 +135,7 @@
     <ClInclude Include="..\..\Engine\Editor\include\Editor.h" />
     <ClInclude Include="..\..\Engine\EngineHeader.h" />
     <ClInclude Include="..\..\Engine\Engine\include\Engine.h" />
-    <ClInclude Include="..\..\Engine\Framework\include\ApplicationGL.h" />
+    <ClInclude Include="..\..\Engine\Framework\include\ApplicationGLES3.h" />
     <ClInclude Include="..\..\Engine\Framework\include\ApplicationVulkan.h" />
     <ClInclude Include="..\..\Engine\Framework\include\Framework.h" />
     <ClInclude Include="..\..\Engine\Framework\include\WorkMode.h" />
@@ -634,7 +634,7 @@
     <ClCompile Include="..\..\Engine\Editor\src\Editor.cpp" />
     <ClCompile Include="..\..\Engine\Engine\src\Engine.cpp" />
     <ClCompile Include="..\..\Engine\Framework\src\Application.cpp" />
-    <ClCompile Include="..\..\Engine\Framework\src\ApplicationGL.cpp" />
+    <ClCompile Include="..\..\Engine\Framework\src\ApplicationGLES3.cpp" />
     <ClCompile Include="..\..\Engine\Framework\src\ApplicationVulkan.cpp" />
     <ClCompile Include="..\..\Engine\Framework\src\Framework.cpp" />
     <ClCompile Include="..\..\Engine\Game\src\Game.cpp" />
