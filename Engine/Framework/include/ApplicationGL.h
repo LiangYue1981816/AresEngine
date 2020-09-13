@@ -1,25 +1,26 @@
 #pragma once
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdint.h>
-#include "Define.h"
+#include "Application.h"
+#include "GLES3Renderer.h"
 
 
-class CALL_API CApplication
+class CApplicationGL : public CApplication
 {
 public:
-	CApplication(void);
-	virtual ~CApplication(void);
+	CApplicationGL(void);
+	virtual ~CApplicationGL(void);
 
 
 public:
-	virtual bool Create(void* hInstance, void* hWnd, void* hDC, int width, int height) = 0;
-	virtual void Destroy(void) = 0;
-	virtual void Update(void);
+	virtual bool Create(void* hInstance, void* hWnd, void* hDC, int width, int height);
+	virtual void Destroy(void);
+
 
 private:
-	virtual void UpdateInternal(float deltaTime) = 0;
+	virtual void UpdateInternal(float deltaTime);
 
-public:
-	int64_t WndProc(void* hWnd, uint32_t msg, uint64_t wParam, int64_t lParam);
+
+private:
+	void* m_hDC;
+	int m_width;
+	int m_height;
 };

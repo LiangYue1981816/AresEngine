@@ -1,6 +1,5 @@
 #include "Framework.h"
-#include "Application.h"
-#include "VKRenderer.h"
+#include "ApplicationVulkan.h"
 
 #include "imgui.h"
 #include "imgui_impl_win32.h"
@@ -188,197 +187,180 @@ static void ImGui_ImplVulkan_FrameRender(VkCommandBuffer command_buffer, VkFence
 }
 
 
-class CALL_API CApplicationVulkan : public CApplication
+CApplicationVulkan::CApplicationVulkan(void)
+	: m_hDC(nullptr)
+	, m_width(0)
+	, m_height(0)
 {
-public:
-	CApplicationVulkan(void)
-		: m_hDC(nullptr)
-		, m_width(0)
-		, m_height(0)
+	m_vkDescriptorPool = VK_NULL_HANDLE;
+
+	m_vkRenderPass = VK_NULL_HANDLE;
+
+	m_vkImageViews[0] = VK_NULL_HANDLE;
+	m_vkImageViews[1] = VK_NULL_HANDLE;
+	m_vkImageViews[2] = VK_NULL_HANDLE;
+
+	m_vkFramebuffers[0] = VK_NULL_HANDLE;
+	m_vkFramebuffers[1] = VK_NULL_HANDLE;
+	m_vkFramebuffers[2] = VK_NULL_HANDLE;
+}
+
+CApplicationVulkan::~CApplicationVulkan(void)
+{
+
+}
+
+
+bool CApplicationVulkan::Create(void* hInstance, void* hWnd, void* hDC, int width, int height)
+{
+	m_hDC = hDC;
+	m_width = width;
+	m_height = height;
+
+	//
+	// 1. Setup Engine
+	//
+	CreateEngine(GFX_API_VULKAN, hInstance, hWnd, GetDC((HWND)hWnd), width, height, GFX_PIXELFORMAT_BGRA8_UNORM_PACK8, "../Data");
+	CreateFramework(width, height);
+
+	//
+	// 2. Setup ImGui
+	//
+	IMGUI_CHECKVERSION();
+	ImGui::CreateContext();
+	ImGuiIO& io = ImGui::GetIO(); (void)io;
+	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard; // Enable Keyboard Controls
+	io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;  // Enable Gamepad Controls
+
+	//
+	// 3. Setup ImGui style
+	//
+//	ImGui::StyleColorsDark();
+//	ImGui::StyleColorsLight();
+	ImGui::StyleColorsClassic();
+
+	//
+	// 4. Setup Platform/Renderer bindings
+	//
+	ImGui_ImplWin32_Init((HWND)hWnd);
+	ImGui_ImplVulkan_CreateDescriptorPool(nullptr, &m_vkDescriptorPool);
+	ImGui_ImplVulkan_CreateWindow(m_width, m_height, (VkFormat)GFX_PIXELFORMAT_BGRA8_UNORM_PACK8, nullptr, &m_vkRenderPass, m_vkImageViews, m_vkFramebuffers);
+
+	ImGui_ImplVulkan_InitInfo init_info = {};
+	init_info.Instance = VKRenderer()->GetInstance();
+	init_info.PhysicalDevice = VKRenderer()->GetPhysicalDevice();
+	init_info.Device = VKRenderer()->GetDevice();
+	init_info.QueueFamily = VKRenderer()->GetQueueFamilyIndex();
+	init_info.Queue = VKRenderer()->GetQueue();
+	init_info.PipelineCache = VK_NULL_HANDLE;
+	init_info.DescriptorPool = m_vkDescriptorPool;
+	init_info.Allocator = nullptr;
+	init_info.MinImageCount = 3;
+	init_info.ImageCount = 3;
+	init_info.CheckVkResultFn = check_vk_result;
+	ImGui_ImplVulkan_Init(&init_info, m_vkRenderPass);
+
+	//
+	// 5. Upload Fonts
+	//
+	// Load Fonts
+	// - If no fonts are loaded, dear imgui will use the default font. You can also load multiple fonts and use ImGui::PushFont()/PopFont() to select them.
+	// - AddFontFromFileTTF() will return the ImFont* so you can store it if you need to select the font among multiple.
+	// - If the file cannot be loaded, the function will return NULL. Please handle those errors in your application (e.g. use an assertion, or display an error and quit).
+	// - The fonts will be rasterized at a given size (w/ oversampling) and stored into a texture when calling ImFontAtlas::Build()/GetTexDataAsXXXX(), which ImGui_ImplXXXX_NewFrame below will call.
+	// - Read 'docs/FONTS.md' for more instructions and details.
+	// - Remember that in C/C++ if you want to include a backslash \ in a string literal you need to write a double backslash \\ !
+	//io.Fonts->AddFontDefault();
+	//io.Fonts->AddFontFromFileTTF("../../misc/fonts/Roboto-Medium.ttf", 16.0f);
+	//io.Fonts->AddFontFromFileTTF("../../misc/fonts/Cousine-Regular.ttf", 15.0f);
+	//io.Fonts->AddFontFromFileTTF("../../misc/fonts/DroidSans.ttf", 16.0f);
+	//io.Fonts->AddFontFromFileTTF("../../misc/fonts/ProggyTiny.ttf", 10.0f);
+	//ImFont* font = io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\ArialUni.ttf", 18.0f, NULL, io.Fonts->GetGlyphRangesJapanese());
+	//IM_ASSERT(font != NULL);
+	io.Fonts->AddFontFromFileTTF("VeraMono.ttf", 14.0f);
+
+	// Upload Fonts
 	{
-		m_vkDescriptorPool = VK_NULL_HANDLE;
+		CGfxCommandBufferPtr ptrCommandBuffer = GfxRenderer()->NewCommandBuffer(0, true);
 
-		m_vkRenderPass = VK_NULL_HANDLE;
+		VkCommandBuffer command_buffer = ((CVKCommandBuffer*)ptrCommandBuffer.GetPointer())->GetCommandBuffer();
+		check_vk_result(vkResetCommandBuffer(command_buffer, VK_COMMAND_BUFFER_RESET_RELEASE_RESOURCES_BIT));
 
-		m_vkImageViews[0] = VK_NULL_HANDLE;
-		m_vkImageViews[1] = VK_NULL_HANDLE;
-		m_vkImageViews[2] = VK_NULL_HANDLE;
+		VkCommandBufferBeginInfo begin_info = {};
+		begin_info.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
+		begin_info.flags |= VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT;
+		check_vk_result(vkBeginCommandBuffer(command_buffer, &begin_info));
 
-		m_vkFramebuffers[0] = VK_NULL_HANDLE;
-		m_vkFramebuffers[1] = VK_NULL_HANDLE;
-		m_vkFramebuffers[2] = VK_NULL_HANDLE;
+		ImGui_ImplVulkan_CreateFontsTexture(command_buffer);
+
+		VkSubmitInfo end_info = {};
+		end_info.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
+		end_info.commandBufferCount = 1;
+		end_info.pCommandBuffers = &command_buffer;
+		check_vk_result(vkEndCommandBuffer(command_buffer));
+		check_vk_result(vkQueueSubmit(VKRenderer()->GetQueue(), 1, &end_info, VK_NULL_HANDLE));
+
+		check_vk_result(vkDeviceWaitIdle(VKRenderer()->GetDevice()));
+		ImGui_ImplVulkan_DestroyFontUploadObjects();
 	}
-	virtual ~CApplicationVulkan(void)
+
+	return true;
+}
+
+void CApplicationVulkan::Destroy(void)
+{
+	//
+	// 1. Destroy ImGui
+	//
+	ImGui_ImplVulkan_DestroyDescriptorPool(nullptr, &m_vkDescriptorPool);
+	ImGui_ImplVulkan_DestroyWindow(nullptr, &m_vkRenderPass, m_vkImageViews, m_vkFramebuffers);
+	ImGui_ImplVulkan_Shutdown();
+	ImGui_ImplWin32_Shutdown();
+	ImGui::DestroyContext();
+
+	//
+	// 2. Destroy Engine
+	//
+	DestroyFramework();
+	DestroyEngine();
+}
+
+void CApplicationVulkan::UpdateInternal(float deltaTime)
+{
+	const CGfxSemaphore* pWaitSemaphore = GfxRenderer()->GetSwapChain()->GetAcquireSemaphore();
+	const CGfxCommandBufferPtr ptrComputeCommandBuffer = Framework()->GetComputeCommandBuffer();
+	const CGfxCommandBufferPtr ptrGraphicCommandBuffer = Framework()->GetGraphicCommandBuffer();
+	const CGfxCommandBufferPtr ptrImGuiCommandBuffer = Framework()->GetImGuiCommandBuffer();
+
+	GfxRenderer()->AcquireNextFrame();
 	{
-
-	}
-
-
-public:
-	virtual bool Create(void* hInstance, void* hWnd, void* hDC, int width, int height)
-	{
-		m_hDC = hDC;
-		m_width = width;
-		m_height = height;
-
-		//
-		// 1. Setup Engine
-		//
-		CreateEngine(GFX_API_VULKAN, hInstance, hWnd, GetDC((HWND)hWnd), width, height, GFX_PIXELFORMAT_BGRA8_UNORM_PACK8, "../Data");
-		CreateFramework(width, height);
-
-		//
-		// 2. Setup ImGui
-		//
-		IMGUI_CHECKVERSION();
-		ImGui::CreateContext();
-		ImGuiIO& io = ImGui::GetIO(); (void)io;
-		io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard; // Enable Keyboard Controls
-		io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;  // Enable Gamepad Controls
-
-		//
-		// 3. Setup ImGui style
-		//
-//		ImGui::StyleColorsDark();
-//		ImGui::StyleColorsLight();
-		ImGui::StyleColorsClassic();
-
-		//
-		// 4. Setup Platform/Renderer bindings
-		//
-		ImGui_ImplWin32_Init((HWND)hWnd);
-		ImGui_ImplVulkan_CreateDescriptorPool(nullptr, &m_vkDescriptorPool);
-		ImGui_ImplVulkan_CreateWindow(m_width, m_height, (VkFormat)GFX_PIXELFORMAT_BGRA8_UNORM_PACK8, nullptr, &m_vkRenderPass, m_vkImageViews, m_vkFramebuffers);
-
-		ImGui_ImplVulkan_InitInfo init_info = {};
-		init_info.Instance = VKRenderer()->GetInstance();
-		init_info.PhysicalDevice = VKRenderer()->GetPhysicalDevice();
-		init_info.Device = VKRenderer()->GetDevice();
-		init_info.QueueFamily = VKRenderer()->GetQueueFamilyIndex();
-		init_info.Queue = VKRenderer()->GetQueue();
-		init_info.PipelineCache = VK_NULL_HANDLE;
-		init_info.DescriptorPool = m_vkDescriptorPool;
-		init_info.Allocator = nullptr;
-		init_info.MinImageCount = 3;
-		init_info.ImageCount = 3;
-		init_info.CheckVkResultFn = check_vk_result;
-		ImGui_ImplVulkan_Init(&init_info, m_vkRenderPass);
-
-		//
-		// 5. Upload Fonts
-		//
-		// Load Fonts
-		// - If no fonts are loaded, dear imgui will use the default font. You can also load multiple fonts and use ImGui::PushFont()/PopFont() to select them.
-		// - AddFontFromFileTTF() will return the ImFont* so you can store it if you need to select the font among multiple.
-		// - If the file cannot be loaded, the function will return NULL. Please handle those errors in your application (e.g. use an assertion, or display an error and quit).
-		// - The fonts will be rasterized at a given size (w/ oversampling) and stored into a texture when calling ImFontAtlas::Build()/GetTexDataAsXXXX(), which ImGui_ImplXXXX_NewFrame below will call.
-		// - Read 'docs/FONTS.md' for more instructions and details.
-		// - Remember that in C/C++ if you want to include a backslash \ in a string literal you need to write a double backslash \\ !
-		//io.Fonts->AddFontDefault();
-		//io.Fonts->AddFontFromFileTTF("../../misc/fonts/Roboto-Medium.ttf", 16.0f);
-		//io.Fonts->AddFontFromFileTTF("../../misc/fonts/Cousine-Regular.ttf", 15.0f);
-		//io.Fonts->AddFontFromFileTTF("../../misc/fonts/DroidSans.ttf", 16.0f);
-		//io.Fonts->AddFontFromFileTTF("../../misc/fonts/ProggyTiny.ttf", 10.0f);
-		//ImFont* font = io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\ArialUni.ttf", 18.0f, NULL, io.Fonts->GetGlyphRangesJapanese());
-		//IM_ASSERT(font != NULL);
-		io.Fonts->AddFontFromFileTTF("VeraMono.ttf", 14.0f);
-
-		// Upload Fonts
+		// Update
+		Engine()->Wait();
 		{
-			CGfxCommandBufferPtr ptrCommandBuffer = GfxRenderer()->NewCommandBuffer(0, true);
-
-			VkCommandBuffer command_buffer = ((CVKCommandBuffer*)ptrCommandBuffer.GetPointer())->GetCommandBuffer();
-			check_vk_result(vkResetCommandBuffer(command_buffer, VK_COMMAND_BUFFER_RESET_RELEASE_RESOURCES_BIT));
-
-			VkCommandBufferBeginInfo begin_info = {};
-			begin_info.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
-			begin_info.flags |= VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT;
-			check_vk_result(vkBeginCommandBuffer(command_buffer, &begin_info));
-
-			ImGui_ImplVulkan_CreateFontsTexture(command_buffer);
-
-			VkSubmitInfo end_info = {};
-			end_info.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
-			end_info.commandBufferCount = 1;
-			end_info.pCommandBuffers = &command_buffer;
-			check_vk_result(vkEndCommandBuffer(command_buffer));
-			check_vk_result(vkQueueSubmit(VKRenderer()->GetQueue(), 1, &end_info, VK_NULL_HANDLE));
-
-			check_vk_result(vkDeviceWaitIdle(VKRenderer()->GetDevice()));
-			ImGui_ImplVulkan_DestroyFontUploadObjects();
+			UpdateInput();
+			UpdateRenderSolution();
+			Framework()->Update(deltaTime);
 		}
+		Engine()->Update();
 
-		return true;
+		// Render
+		ImGui_ImplVulkan_NewFrame();
+		ImGui_ImplWin32_NewFrame();
+		ImGui::NewFrame();
+
+		// Render Scene
+		Framework()->Render(ptrComputeCommandBuffer, ptrGraphicCommandBuffer, pWaitSemaphore);
+
+		// Render ImGui
+		ImGui::Render();
+		ImGui_ImplVulkan_FrameRender(
+			((CVKCommandBuffer*)ptrImGuiCommandBuffer.GetPointer())->GetCommandBuffer(),
+			((CVKCommandBuffer*)ptrImGuiCommandBuffer.GetPointer())->GetFence(),
+			((CVKSemaphore*)((CVKCommandBuffer*)ptrGraphicCommandBuffer.GetPointer())->GetSemaphore())->GetSemaphore(),
+			((CVKSemaphore*)((CVKCommandBuffer*)ptrImGuiCommandBuffer.GetPointer())->GetSemaphore())->GetSemaphore(),
+			m_vkRenderPass, m_vkFramebuffers[GfxRenderer()->GetSwapChain()->GetFrameIndex()],
+			m_width, m_height,
+			ImGui::GetDrawData());
 	}
-
-	virtual void Destroy(void)
-	{
-		//
-		// 1. Destroy ImGui
-		//
-		ImGui_ImplVulkan_DestroyDescriptorPool(nullptr, &m_vkDescriptorPool);
-		ImGui_ImplVulkan_DestroyWindow(nullptr, &m_vkRenderPass, m_vkImageViews, m_vkFramebuffers);
-		ImGui_ImplVulkan_Shutdown();
-		ImGui_ImplWin32_Shutdown();
-		ImGui::DestroyContext();
-
-		//
-		// 2. Destroy Engine
-		//
-		DestroyFramework();
-		DestroyEngine();
-	}
-
-private:
-	virtual void UpdateInternal(float deltaTime)
-	{
-		const CGfxSemaphore* pWaitSemaphore = GfxRenderer()->GetSwapChain()->GetAcquireSemaphore();
-		const CGfxCommandBufferPtr ptrComputeCommandBuffer = Framework()->GetComputeCommandBuffer();
-		const CGfxCommandBufferPtr ptrGraphicCommandBuffer = Framework()->GetGraphicCommandBuffer();
-		const CGfxCommandBufferPtr ptrImGuiCommandBuffer = Framework()->GetImGuiCommandBuffer();
-
-		GfxRenderer()->AcquireNextFrame();
-		{
-			// Update
-			Engine()->Wait();
-			{
-				UpdateInput();
-				UpdateRenderSolution();
-				Framework()->Update(deltaTime);
-			}
-			Engine()->Update();
-
-			// Render
-			ImGui_ImplVulkan_NewFrame();
-			ImGui_ImplWin32_NewFrame();
-			ImGui::NewFrame();
-
-			// Render Scene
-			Framework()->Render(ptrComputeCommandBuffer, ptrGraphicCommandBuffer, pWaitSemaphore);
-
-			// Render ImGui
-			ImGui::Render();
-			ImGui_ImplVulkan_FrameRender(
-				((CVKCommandBuffer*)ptrImGuiCommandBuffer.GetPointer())->GetCommandBuffer(),
-				((CVKCommandBuffer*)ptrImGuiCommandBuffer.GetPointer())->GetFence(),
-				((CVKSemaphore*)((CVKCommandBuffer*)ptrGraphicCommandBuffer.GetPointer())->GetSemaphore())->GetSemaphore(),
-				((CVKSemaphore*)((CVKCommandBuffer*)ptrImGuiCommandBuffer.GetPointer())->GetSemaphore())->GetSemaphore(),
-				m_vkRenderPass, m_vkFramebuffers[GfxRenderer()->GetSwapChain()->GetFrameIndex()],
-				m_width, m_height,
-				ImGui::GetDrawData());
-		}
-		GfxRenderer()->Present(ptrImGuiCommandBuffer->GetSemaphore());
-	}
-
-
-private:
-	void* m_hDC;
-	int m_width;
-	int m_height;
-
-private:
-	VkDescriptorPool m_vkDescriptorPool;
-	VkRenderPass m_vkRenderPass;
-	VkImageView m_vkImageViews[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
-	VkFramebuffer m_vkFramebuffers[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
-};
+	GfxRenderer()->Present(ptrImGuiCommandBuffer->GetSemaphore());
+}

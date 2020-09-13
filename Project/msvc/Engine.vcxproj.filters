@@ -1779,14 +1779,20 @@
     <ClInclude Include="..\..\Engine\Game\include\Game.h">
       <Filter>Engine\Game\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Engine\Framework\include\WorkModeBase.h">
-      <Filter>Engine\Framework\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Engine\ImGUI\include\ImGUI_Console.h">
       <Filter>Engine\ImGUI\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\ImGUIHeader.h">
       <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Framework\include\WorkMode.h">
+      <Filter>Engine\Framework\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Framework\include\ApplicationGL.h">
+      <Filter>Engine\Framework\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Framework\include\ApplicationVulkan.h">
+      <Filter>Engine\Framework\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -2612,9 +2618,6 @@
     <ClCompile Include="..\..\Engine\Framework\src\Application.cpp">
       <Filter>Engine\Framework\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Engine\Framework\src\ApplicationOpenGL.cpp">
-      <Filter>Engine\Framework\Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Engine\Framework\src\ApplicationVulkan.cpp">
       <Filter>Engine\Framework\Source Files</Filter>
     </ClCompile>
@@ -2629,6 +2632,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Engine\ImGUI\src\ImGUI_Console.cpp">
       <Filter>Engine\ImGUI\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Framework\src\ApplicationGL.cpp">
+      <Filter>Engine\Framework\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

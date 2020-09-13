@@ -23,3 +23,7 @@ private:
 public:
 	int64_t WndProc(void* hWnd, uint32_t msg, uint64_t wParam, int64_t lParam);
 };
+
+
+CALL_API CApplication* CreateApplication(int api, void* hInstance, void* hWnd, void* hDC, int width, int height);
+CALL_API void DestroyApplication(CApplication* pApplication);

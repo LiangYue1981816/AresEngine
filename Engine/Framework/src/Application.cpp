@@ -1,4 +1,7 @@
 #include "Application.h"
+#include "ApplicationGL.h"
+#include "ApplicationVulkan.h"
+
 #include "Framework.h"
 #include "EngineHeader.h"
 
@@ -10,6 +13,38 @@ extern int dump_memory_objects();
 extern int check_mem_corruption();
 
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+
+
+CALL_API CApplication* CreateApplication(int api, void* hInstance, void* hWnd, void* hDC, int width, int height)
+{
+	CApplication* pApplication = nullptr;
+
+	switch (api) {
+	case GFX_API_GLES3:
+		pApplication = new CApplicationGL;
+		pApplication->Create(hInstance, hWnd, hDC, width, height);
+		break;
+
+	case GFX_API_VULKAN:
+		pApplication = new CApplicationVulkan;
+		pApplication->Create(hInstance, hWnd, hDC, width, height);
+		break;
+
+	default:
+		ASSERT(0);
+		break;
+	}
+
+	return pApplication;
+}
+
+CALL_API void DestroyApplication(CApplication* pApplication)
+{
+	if (pApplication) {
+		pApplication->Destroy();
+		delete pApplication;
+	}
+}
 
 
 CApplication::CApplication(void)
