@@ -192,6 +192,9 @@ class CALL_API CApplicationVulkan : public CApplication
 {
 public:
 	CApplicationVulkan(void)
+		: m_hDC(nullptr)
+		, m_width(0)
+		, m_height(0)
 	{
 		m_vkDescriptorPool = VK_NULL_HANDLE;
 
@@ -367,6 +370,11 @@ private:
 		GfxRenderer()->Present(ptrImGuiCommandBuffer->GetSemaphore());
 	}
 
+
+private:
+	void* m_hDC;
+	int m_width;
+	int m_height;
 
 private:
 	VkDescriptorPool m_vkDescriptorPool;

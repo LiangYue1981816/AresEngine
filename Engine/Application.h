@@ -22,10 +22,4 @@ private:
 
 public:
 	int64_t WndProc(void* hWnd, uint32_t msg, uint64_t wParam, int64_t lParam);
-
-
-protected:
-	void* m_hDC;
-	int m_width;
-	int m_height;
 };

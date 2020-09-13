@@ -13,9 +13,6 @@ extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg
 
 
 CApplication::CApplication(void)
-	: m_hDC(nullptr)
-	, m_width(0)
-	, m_height(0)
 {
 
 }

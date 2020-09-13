@@ -18,6 +18,9 @@ class CApplicationOpenGL : public CApplication
 {
 public:
 	CApplicationOpenGL(void)
+		: m_hDC(nullptr)
+		, m_width(0)
+		, m_height(0)
 	{
 
 	}
@@ -214,4 +217,10 @@ private:
 		}
 		GfxRenderer()->Present(ptrGraphicCommandBuffer->GetSemaphore());
 	}
+
+
+private:
+	void* m_hDC;
+	int m_width;
+	int m_height;
 };
