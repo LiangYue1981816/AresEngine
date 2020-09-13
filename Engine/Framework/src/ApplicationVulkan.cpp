@@ -15,10 +15,6 @@ static VkRenderPass vkRenderPass = VK_NULL_HANDLE;
 static VkImageView vkImageViews[3] = { VK_NULL_HANDLE , VK_NULL_HANDLE , VK_NULL_HANDLE };
 static VkFramebuffer vkFramebuffers[3] = { VK_NULL_HANDLE , VK_NULL_HANDLE , VK_NULL_HANDLE };
 
-static CGfxCommandBufferPtr ptrComputeCommandBuffers[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
-static CGfxCommandBufferPtr ptrGraphicCommandBuffers[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
-static CGfxCommandBufferPtr ptrImGuiCommandBuffers[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
-
 
 static void check_vk_result(VkResult err)
 {
@@ -217,16 +213,6 @@ bool CApplicationVulkan::Create(void* hInstance, void* hWnd, void* hDC, int widt
 	CreateEngine(GFX_API_VULKAN, hInstance, hWnd, GetDC((HWND)hWnd), width, height, GFX_PIXELFORMAT_BGRA8_UNORM_PACK8, "../Data");
 	CreateFramework(width, height);
 
-	ptrComputeCommandBuffers[0] = GfxRenderer()->NewCommandBuffer(0, true);
-	ptrComputeCommandBuffers[1] = GfxRenderer()->NewCommandBuffer(0, true);
-	ptrComputeCommandBuffers[2] = GfxRenderer()->NewCommandBuffer(0, true);
-	ptrGraphicCommandBuffers[0] = GfxRenderer()->NewCommandBuffer(0, true);
-	ptrGraphicCommandBuffers[1] = GfxRenderer()->NewCommandBuffer(0, true);
-	ptrGraphicCommandBuffers[2] = GfxRenderer()->NewCommandBuffer(0, true);
-	ptrImGuiCommandBuffers[0] = GfxRenderer()->NewCommandBuffer(0, true);
-	ptrImGuiCommandBuffers[1] = GfxRenderer()->NewCommandBuffer(1, true);
-	ptrImGuiCommandBuffers[2] = GfxRenderer()->NewCommandBuffer(2, true);
-
 	//
 	// 2. Setup ImGui
 	//
@@ -285,7 +271,7 @@ bool CApplicationVulkan::Create(void* hInstance, void* hWnd, void* hDC, int widt
 
 	// Upload Fonts
 	{
-		VkCommandBuffer command_buffer = ((CVKCommandBuffer*)ptrImGuiCommandBuffers[0].GetPointer())->GetCommandBuffer();
+		VkCommandBuffer command_buffer = ((CVKCommandBuffer*)Framework()->GetImGuiCommandBuffer().GetPointer())->GetCommandBuffer();
 		check_vk_result(vkResetCommandBuffer(command_buffer, VK_COMMAND_BUFFER_RESET_RELEASE_RESOURCES_BIT));
 
 		VkCommandBufferBeginInfo begin_info = {};
@@ -323,16 +309,6 @@ void CApplicationVulkan::Destroy(void)
 	//
 	// 2. Destroy Engine
 	//
-	ptrComputeCommandBuffers[0].Release();
-	ptrComputeCommandBuffers[1].Release();
-	ptrComputeCommandBuffers[2].Release();
-	ptrGraphicCommandBuffers[0].Release();
-	ptrGraphicCommandBuffers[1].Release();
-	ptrGraphicCommandBuffers[2].Release();
-	ptrImGuiCommandBuffers[0].Release();
-	ptrImGuiCommandBuffers[1].Release();
-	ptrImGuiCommandBuffers[2].Release();
-
 	DestroyFramework();
 	DestroyEngine();
 }
@@ -340,9 +316,9 @@ void CApplicationVulkan::Destroy(void)
 void CApplicationVulkan::UpdateInternal(float deltaTime)
 {
 	const CGfxSemaphore* pWaitSemaphore = GfxRenderer()->GetSwapChain()->GetAcquireSemaphore();
-	const CGfxCommandBufferPtr ptrComputeCommandBuffer = ptrComputeCommandBuffers[GfxRenderer()->GetSwapChain()->GetFrameIndex()];
-	const CGfxCommandBufferPtr ptrGraphicCommandBuffer = ptrGraphicCommandBuffers[GfxRenderer()->GetSwapChain()->GetFrameIndex()];
-	const CGfxCommandBufferPtr ptrImGuiCommandBuffer = ptrImGuiCommandBuffers[GfxRenderer()->GetSwapChain()->GetFrameIndex()];
+	const CGfxCommandBufferPtr ptrComputeCommandBuffer = Framework()->GetComputeCommandBuffer();
+	const CGfxCommandBufferPtr ptrGraphicCommandBuffer = Framework()->GetGraphicCommandBuffer();
+	const CGfxCommandBufferPtr ptrImGuiCommandBuffer = Framework()->GetImGuiCommandBuffer();
 
 	GfxRenderer()->AcquireNextFrame();
 	{

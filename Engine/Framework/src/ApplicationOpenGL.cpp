@@ -13,9 +13,6 @@
 extern void UpdateInput(void);
 extern void UpdateRenderSolution(void);
 
-static CGfxCommandBufferPtr ptrComputeCommandBuffers[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
-static CGfxCommandBufferPtr ptrGraphicCommandBuffers[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
-
 
 CApplicationOpenGL::CApplicationOpenGL(void)
 {
@@ -120,13 +117,6 @@ bool CApplicationOpenGL::Create(void* hInstance, void* hWnd, void* hDC, int widt
 	CreateEngine(GFX_API_GLES3, hInstance, hWnd, GetDC((HWND)hWnd), width, height, GFX_PIXELFORMAT_BGRA8_UNORM_PACK8, "../Data");
 	CreateFramework(width, height);
 
-	ptrComputeCommandBuffers[0] = GfxRenderer()->NewCommandBuffer(0, true);
-	ptrComputeCommandBuffers[1] = GfxRenderer()->NewCommandBuffer(0, true);
-	ptrComputeCommandBuffers[2] = GfxRenderer()->NewCommandBuffer(0, true);
-	ptrGraphicCommandBuffers[0] = GfxRenderer()->NewCommandBuffer(0, true);
-	ptrGraphicCommandBuffers[1] = GfxRenderer()->NewCommandBuffer(0, true);
-	ptrGraphicCommandBuffers[2] = GfxRenderer()->NewCommandBuffer(0, true);
-
 	//
 	// 3. Setup ImGui
 	//
@@ -183,13 +173,6 @@ void CApplicationOpenGL::Destroy(void)
 	//
 	// 2. Destroy Engine
 	//
-	ptrComputeCommandBuffers[0].Release();
-	ptrComputeCommandBuffers[1].Release();
-	ptrComputeCommandBuffers[2].Release();
-	ptrGraphicCommandBuffers[0].Release();
-	ptrGraphicCommandBuffers[1].Release();
-	ptrGraphicCommandBuffers[2].Release();
-
 	DestroyFramework();
 	DestroyEngine();
 }
@@ -197,8 +180,8 @@ void CApplicationOpenGL::Destroy(void)
 void CApplicationOpenGL::UpdateInternal(float deltaTime)
 {
 	const CGfxSemaphore* pWaitSemaphore = GfxRenderer()->GetSwapChain()->GetAcquireSemaphore();
-	const CGfxCommandBufferPtr ptrComputeCommandBuffer = ptrComputeCommandBuffers[GfxRenderer()->GetSwapChain()->GetFrameIndex()];
-	const CGfxCommandBufferPtr ptrGraphicCommandBuffer = ptrGraphicCommandBuffers[GfxRenderer()->GetSwapChain()->GetFrameIndex()];
+	const CGfxCommandBufferPtr ptrComputeCommandBuffer = Framework()->GetComputeCommandBuffer();
+	const CGfxCommandBufferPtr ptrGraphicCommandBuffer = Framework()->GetGraphicCommandBuffer();
 
 	GfxRenderer()->AcquireNextFrame();
 	{

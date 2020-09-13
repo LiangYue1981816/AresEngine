@@ -49,10 +49,10 @@ public:
 	void Render(CGfxCommandBufferPtr ptrComputeCommandBuffer, CGfxCommandBufferPtr ptrGraphicCommandBuffer, const CGfxSemaphore* pWaitSemaphore);
 
 public:
-	CGfxCommandBufferPtr GetTransferCommandBuffer(void);
-	CGfxCommandBufferPtr GetComputeCommandBuffer(void);
-	CGfxCommandBufferPtr GetGraphicCommandBuffer(void);
-	CGfxCommandBufferPtr GetImGuiCommandBuffer(void);
+	const CGfxCommandBufferPtr GetTransferCommandBuffer(void) const;
+	const CGfxCommandBufferPtr GetComputeCommandBuffer(void) const;
+	const CGfxCommandBufferPtr GetGraphicCommandBuffer(void) const;
+	const CGfxCommandBufferPtr GetImGuiCommandBuffer(void) const;
 
 
 private:

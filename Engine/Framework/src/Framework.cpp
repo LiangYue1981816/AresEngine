@@ -185,22 +185,22 @@ void CFramework::Render(CGfxCommandBufferPtr ptrComputeCommandBuffer, CGfxComman
 	GetWorkMode()->Render(ptrComputeCommandBuffer, ptrGraphicCommandBuffer, pWaitSemaphore);
 }
 
-CGfxCommandBufferPtr CFramework::GetTransferCommandBuffer(void)
+const CGfxCommandBufferPtr CFramework::GetTransferCommandBuffer(void) const
 {
 	return m_ptrTransferCommandBuffers[GfxRenderer()->GetSwapChain()->GetFrameIndex()];
 }
 
-CGfxCommandBufferPtr CFramework::GetComputeCommandBuffer(void)
+const CGfxCommandBufferPtr CFramework::GetComputeCommandBuffer(void) const
 {
 	return m_ptrComputeCommandBuffers[GfxRenderer()->GetSwapChain()->GetFrameIndex()];
 }
 
-CGfxCommandBufferPtr CFramework::GetGraphicCommandBuffer(void)
+const CGfxCommandBufferPtr CFramework::GetGraphicCommandBuffer(void) const
 {
 	return m_ptrGraphicCommandBuffers[GfxRenderer()->GetSwapChain()->GetFrameIndex()];
 }
 
-CGfxCommandBufferPtr CFramework::GetImGuiCommandBuffer(void)
+const CGfxCommandBufferPtr CFramework::GetImGuiCommandBuffer(void) const
 {
 	return m_ptrImGuiCommandBuffers[GfxRenderer()->GetSwapChain()->GetFrameIndex()];
 }
