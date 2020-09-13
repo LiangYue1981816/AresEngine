@@ -35,7 +35,7 @@ public:
 	void BeginRecord(const CGfxFrameBufferPtr ptrFrameBuffer, const CGfxRenderPassPtr ptrRenderPass, int indexSubpass);
 	void EndRecord(void);
 
-	// Outside RenderPass
+	// Data Transfer
 	void CmdBufferData(const CGfxIndexBufferPtr ptrBuffer, size_t offset, size_t size, const void* data);
 	void CmdBufferData(const CGfxVertexBufferPtr ptrBuffer, size_t offset, size_t size, const void* data);
 	void CmdBufferData(const CGfxInstanceBufferPtr ptrBuffer, size_t offset, size_t size, const void* data);
@@ -47,6 +47,7 @@ public:
 	void CmdTexture2DArrayData(const CGfxTexture2DArrayPtr ptrTexture, GfxPixelFormat format, int layer, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data);
 	void CmdTextureCubemapData(const CGfxTextureCubemapPtr ptrTexture, GfxPixelFormat format, GfxCubemapFace face, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data);
 
+	// Outside RenderPass
 	void CmdSetImageLayout(const CGfxTexture2DPtr ptrTexture, GfxImageLayout imageLayout);
 	void CmdSetImageLayout(const CGfxTexture2DArrayPtr ptrTexture, GfxImageLayout imageLayout);
 	void CmdSetImageLayout(const CGfxTextureCubemapPtr ptrTexture, GfxImageLayout imageLayout);
