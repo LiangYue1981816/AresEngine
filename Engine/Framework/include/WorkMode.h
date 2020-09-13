@@ -2,14 +2,14 @@
 #include "EngineHeader.h"
 
 
-class CWorkModeBase
+class CWorkMode
 {
 public:
-	CWorkModeBase(void)
+	CWorkMode(void)
 	{
 
 	}
-	virtual ~CWorkModeBase(void)
+	virtual ~CWorkMode(void)
 	{
 
 	}

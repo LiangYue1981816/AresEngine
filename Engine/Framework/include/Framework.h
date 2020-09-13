@@ -9,7 +9,7 @@
 
 class CGame;
 class CEditor;
-class CWorkModeBase;
+class CWorkMode;
 
 class CFramework
 {
@@ -34,7 +34,7 @@ private:
 
 public:
 	void SetWorkMode(WorkMode workMode);
-	CWorkModeBase* GetWorkMode(void) const;
+	CWorkMode* GetWorkMode(void) const;
 
 public:
 	void OnLButtonDown(int x, int y);

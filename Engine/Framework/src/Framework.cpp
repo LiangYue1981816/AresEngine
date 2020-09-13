@@ -133,7 +133,7 @@ void CFramework::SetWorkMode(CFramework::WorkMode mode)
 	m_workMode = mode;
 }
 
-CWorkModeBase* CFramework::GetWorkMode(void) const
+CWorkMode* CFramework::GetWorkMode(void) const
 {
 	switch (m_workMode) {
 	case WORK_MODE_GAME:

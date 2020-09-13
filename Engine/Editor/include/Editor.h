@@ -1,8 +1,8 @@
 #pragma once
-#include "WorkModeBase.h"
+#include "WorkMode.h"
 
 
-class CEditor : public CWorkModeBase
+class CEditor : public CWorkMode
 {
 public:
 	CEditor(int width, int height);

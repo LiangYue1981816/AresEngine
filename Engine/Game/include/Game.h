@@ -1,8 +1,8 @@
 #pragma once
-#include "WorkModeBase.h"
+#include "WorkMode.h"
 
 
-class CGame : public CWorkModeBase
+class CGame : public CWorkMode
 {
 public:
 	CGame(int width, int height);
