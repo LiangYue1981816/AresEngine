@@ -1794,6 +1794,9 @@
     <ClInclude Include="..\..\Engine\Framework\include\ApplicationGLES3.h">
       <Filter>Engine\Framework\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Engine\Define.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Engine\ThirdParty\eastl\source\allocator_eastl.cpp">

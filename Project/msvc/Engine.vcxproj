@@ -132,6 +132,7 @@
     <ClInclude Include="..\..\Engine\Base\src\nvwa\static_assert.h" />
     <ClInclude Include="..\..\Engine\ConsoleHeader.h" />
     <ClInclude Include="..\..\Engine\Console\include\Settings.h" />
+    <ClInclude Include="..\..\Engine\Define.h" />
     <ClInclude Include="..\..\Engine\Editor\include\Editor.h" />
     <ClInclude Include="..\..\Engine\EngineHeader.h" />
     <ClInclude Include="..\..\Engine\Engine\include\Engine.h" />
