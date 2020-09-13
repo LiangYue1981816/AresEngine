@@ -29,35 +29,3 @@ protected:
 	int m_width;
 	int m_height;
 };
-
-
-class CALL_API CApplicationOpenGL : public CApplication
-{
-public:
-	CApplicationOpenGL(void);
-	virtual ~CApplicationOpenGL(void);
-
-
-public:
-	virtual bool Create(void* hInstance, void* hWnd, void* hDC, int width, int height);
-	virtual void Destroy(void);
-
-private:
-	virtual void UpdateInternal(float deltaTime);
-};
-
-
-class CALL_API CApplicationVulkan : public CApplication
-{
-public:
-	CApplicationVulkan(void);
-	virtual ~CApplicationVulkan(void);
-
-
-public:
-	virtual bool Create(void* hInstance, void* hWnd, void* hDC, int width, int height);
-	virtual void Destroy(void);
-
-private:
-	virtual void UpdateInternal(float deltaTime);
-};
