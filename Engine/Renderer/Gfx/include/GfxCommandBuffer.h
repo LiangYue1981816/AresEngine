@@ -61,6 +61,17 @@ public:
 	virtual void EndRecord(void) = 0;
 
 	// Outside RenderPass
+	virtual void CmdBufferData(const CGfxIndexBufferPtr ptrBuffer, size_t offset, size_t size, const void* data) = 0;
+	virtual void CmdBufferData(const CGfxVertexBufferPtr ptrBuffer, size_t offset, size_t size, const void* data) = 0;
+	virtual void CmdBufferData(const CGfxInstanceBufferPtr ptrBuffer, size_t offset, size_t size, const void* data) = 0;
+	virtual void CmdBufferData(const CGfxIndirectBufferPtr ptrBuffer, size_t offset, size_t size, const void* data) = 0;
+	virtual void CmdBufferData(const CGfxUniformBufferPtr ptrBuffer, size_t offset, size_t size, const void* data) = 0;
+	virtual void CmdBufferData(const CGfxStorageBufferPtr ptrBuffer, size_t offset, size_t size, const void* data) = 0;
+
+	virtual void CmdTexture2DData(const CGfxTexture2DPtr ptrTexture, GfxPixelFormat format, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data) = 0;
+	virtual void CmdTexture2DArrayData(const CGfxTexture2DArrayPtr ptrTexture, GfxPixelFormat format, int layer, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data) = 0;
+	virtual void CmdTextureCubemapData(const CGfxTextureCubemapPtr ptrTexture, GfxPixelFormat format, GfxCubemapFace face, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data) = 0;
+
 	virtual void CmdSetImageLayout(const CGfxTexture2DPtr ptrTexture, GfxImageLayout imageLayout) = 0;
 	virtual void CmdSetImageLayout(const CGfxTexture2DArrayPtr ptrTexture, GfxImageLayout imageLayout) = 0;
 	virtual void CmdSetImageLayout(const CGfxTextureCubemapPtr ptrTexture, GfxImageLayout imageLayout) = 0;

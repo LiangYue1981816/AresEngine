@@ -212,6 +212,51 @@ void CVKCommandBuffer::EndRecord(void)
 	m_pCommands.emplace_back(new CVKCommandEndRecord(m_vkCommandBuffer));
 }
 
+void CVKCommandBuffer::CmdBufferData(const CGfxIndexBufferPtr ptrBuffer, size_t offset, size_t size, const void* data)
+{
+
+}
+
+void CVKCommandBuffer::CmdBufferData(const CGfxVertexBufferPtr ptrBuffer, size_t offset, size_t size, const void* data)
+{
+
+}
+
+void CVKCommandBuffer::CmdBufferData(const CGfxInstanceBufferPtr ptrBuffer, size_t offset, size_t size, const void* data)
+{
+
+}
+
+void CVKCommandBuffer::CmdBufferData(const CGfxIndirectBufferPtr ptrBuffer, size_t offset, size_t size, const void* data)
+{
+
+}
+
+void CVKCommandBuffer::CmdBufferData(const CGfxUniformBufferPtr ptrBuffer, size_t offset, size_t size, const void* data)
+{
+
+}
+
+void CVKCommandBuffer::CmdBufferData(const CGfxStorageBufferPtr ptrBuffer, size_t offset, size_t size, const void* data)
+{
+
+}
+
+void CVKCommandBuffer::CmdTexture2DData(const CGfxTexture2DPtr ptrTexture, GfxPixelFormat format, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
+{
+
+}
+
+void CVKCommandBuffer::CmdTexture2DArrayData(const CGfxTexture2DArrayPtr ptrTexture, GfxPixelFormat format, int layer, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
+{
+
+}
+
+void CVKCommandBuffer::CmdTextureCubemapData(const CGfxTextureCubemapPtr ptrTexture, GfxPixelFormat format, GfxCubemapFace face, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
+{
+
+}
+
 void CVKCommandBuffer::CmdSetImageLayout(const CGfxTexture2DPtr ptrTexture, GfxImageLayout imageLayout)
 {
 	m_pCommands.emplace_back(new CVKCommandSetImageLayout(m_vkCommandBuffer, ptrTexture, imageLayout));

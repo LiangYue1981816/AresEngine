@@ -139,6 +139,51 @@ void CGLES3CommandBuffer::EndRecord(void)
 
 }
 
+void CGLES3CommandBuffer::CmdBufferData(const CGfxIndexBufferPtr ptrBuffer, size_t offset, size_t size, const void* data)
+{
+
+}
+
+void CGLES3CommandBuffer::CmdBufferData(const CGfxVertexBufferPtr ptrBuffer, size_t offset, size_t size, const void* data)
+{
+
+}
+
+void CGLES3CommandBuffer::CmdBufferData(const CGfxInstanceBufferPtr ptrBuffer, size_t offset, size_t size, const void* data)
+{
+
+}
+
+void CGLES3CommandBuffer::CmdBufferData(const CGfxIndirectBufferPtr ptrBuffer, size_t offset, size_t size, const void* data)
+{
+
+}
+
+void CGLES3CommandBuffer::CmdBufferData(const CGfxUniformBufferPtr ptrBuffer, size_t offset, size_t size, const void* data)
+{
+
+}
+
+void CGLES3CommandBuffer::CmdBufferData(const CGfxStorageBufferPtr ptrBuffer, size_t offset, size_t size, const void* data)
+{
+
+}
+
+void CGLES3CommandBuffer::CmdTexture2DData(const CGfxTexture2DPtr ptrTexture, GfxPixelFormat format, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
+{
+
+}
+
+void CGLES3CommandBuffer::CmdTexture2DArrayData(const CGfxTexture2DArrayPtr ptrTexture, GfxPixelFormat format, int layer, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
+{
+
+}
+
+void CGLES3CommandBuffer::CmdTextureCubemapData(const CGfxTextureCubemapPtr ptrTexture, GfxPixelFormat format, GfxCubemapFace face, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
+{
+
+}
+
 void CGLES3CommandBuffer::CmdSetImageLayout(const CGfxTexture2DPtr ptrTexture, GfxImageLayout imageLayout)
 {
 
