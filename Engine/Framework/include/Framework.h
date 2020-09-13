@@ -45,17 +45,31 @@ public:
 	void OnKeyRelease(int key);
 
 public:
+	CGfxCommandBufferPtr GetTransferCommandBuffer(void);
+	CGfxCommandBufferPtr GetComputeCommandBuffer(void);
+	CGfxCommandBufferPtr GetGraphicCommandBuffer(void);
+	CGfxCommandBufferPtr GetImGuiCommandBuffer(void);
+
+public:
 	void Update(float deltaTime);
 	void Render(CGfxCommandBufferPtr ptrComputeCommandBuffer, CGfxCommandBufferPtr ptrGraphicCommandBuffer, const CGfxSemaphore* pWaitSemaphore);
 
 
 private:
-	CGame* m_pGame;
-	CEditor* m_pEditor;
 	WorkMode m_workMode;
 
 private:
+	CGame* m_pGame;
+	CEditor* m_pEditor;
+
+private:
 	CImGUI_Console* m_pImGUI_Console;
+
+private:
+	CGfxCommandBufferPtr m_ptrTransferCommandBuffers[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
+	CGfxCommandBufferPtr m_ptrComputeCommandBuffers[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
+	CGfxCommandBufferPtr m_ptrGraphicCommandBuffers[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
+	CGfxCommandBufferPtr m_ptrImGuiCommandBuffers[CGfxSwapChain::SWAPCHAIN_FRAME_COUNT];
 
 private:
 	static CFramework* pInstance;

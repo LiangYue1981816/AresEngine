@@ -32,13 +32,21 @@ void CFramework::Destroy(void)
 
 
 CFramework::CFramework(int width, int height)
-	: m_pGame(nullptr)
+	: m_workMode(WORK_MODE_EDITOR)
+
+	, m_pGame(nullptr)
 	, m_pEditor(nullptr)
-	, m_workMode(WORK_MODE_EDITOR)
 
 	, m_pImGUI_Console(nullptr)
 {
 	pInstance = this;
+
+	for (int index = 0; index < CGfxSwapChain::SWAPCHAIN_FRAME_COUNT; index++) {
+		m_ptrTransferCommandBuffers[index] = GfxRenderer()->NewCommandBuffer(index, true);
+		m_ptrComputeCommandBuffers[index] = GfxRenderer()->NewCommandBuffer(index, true);
+		m_ptrGraphicCommandBuffers[index] = GfxRenderer()->NewCommandBuffer(index, true);
+		m_ptrImGuiCommandBuffers[index] = GfxRenderer()->NewCommandBuffer(index, true);
+	}
 
 	m_pGame = new CGame(width, height);
 	m_pEditor = new CEditor(width, height);
@@ -107,6 +115,13 @@ CFramework::~CFramework(void)
 	SceneManager()->DestroyScene(pLightScene);
 #pragma endregion
 
+	for (int index = 0; index < CGfxSwapChain::SWAPCHAIN_FRAME_COUNT; index++) {
+		m_ptrTransferCommandBuffers[index].Release();
+		m_ptrComputeCommandBuffers[index].Release();
+		m_ptrGraphicCommandBuffers[index].Release();
+		m_ptrImGuiCommandBuffers[index].Release();
+	}
+
 	delete m_pImGUI_Console;
 
 	delete m_pGame;
@@ -155,6 +170,26 @@ void CFramework::OnKeyDown(int key)
 void CFramework::OnKeyRelease(int key)
 {
 	GetWorkMode()->OnKeyRelease(key);
+}
+
+CGfxCommandBufferPtr CFramework::GetTransferCommandBuffer(void)
+{
+	return m_ptrTransferCommandBuffers[GfxRenderer()->GetSwapChain()->GetFrameIndex()];
+}
+
+CGfxCommandBufferPtr CFramework::GetComputeCommandBuffer(void)
+{
+	return m_ptrComputeCommandBuffers[GfxRenderer()->GetSwapChain()->GetFrameIndex()];
+}
+
+CGfxCommandBufferPtr CFramework::GetGraphicCommandBuffer(void)
+{
+	return m_ptrGraphicCommandBuffers[GfxRenderer()->GetSwapChain()->GetFrameIndex()];
+}
+
+CGfxCommandBufferPtr CFramework::GetImGuiCommandBuffer(void)
+{
+	return m_ptrImGuiCommandBuffers[GfxRenderer()->GetSwapChain()->GetFrameIndex()];
 }
 
 void CFramework::Update(float deltaTime)
