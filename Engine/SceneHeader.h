@@ -4,5 +4,4 @@
 #include "RenderHeader.h"
 #include "ConsoleHeader.h"
 
-#include "Scene/include/SceneDefinition.h"
 #include "Scene/include/SceneManager.h"
