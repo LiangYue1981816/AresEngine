@@ -15,6 +15,8 @@ extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg
 
 CALL_API CApplication* CreateApplication(int api, void* hInstance, void* hWnd, void* hDC, int width, int height)
 {
+	InitAllocator();
+
 	CApplication* pApplication = nullptr;
 
 	switch (api) {
@@ -46,6 +48,8 @@ CALL_API void DestroyApplication(CApplication* pApplication)
 #if defined (_DEBUG) || defined (DEBUG)
 	dump_memory_objects();
 #endif
+
+	ExitAllocator();
 }
 
 
