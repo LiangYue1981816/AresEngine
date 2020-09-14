@@ -42,6 +42,10 @@ CALL_API void DestroyApplication(CApplication* pApplication)
 		pApplication->Destroy();
 		delete pApplication;
 	}
+
+#if defined (_DEBUG) || defined (DEBUG)
+	dump_memory_objects();
+#endif
 }
 
 
@@ -52,9 +56,7 @@ CApplication::CApplication(void)
 
 CApplication::~CApplication(void)
 {
-#if defined (_DEBUG) || defined (DEBUG)
-	dump_memory_objects();
-#endif
+
 }
 
 void CApplication::Update(void)
