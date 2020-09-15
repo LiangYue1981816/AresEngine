@@ -215,32 +215,32 @@ void CVKCommandBuffer::EndRecord(void)
 
 void CVKCommandBuffer::CmdBufferData(const CGfxIndexBufferPtr ptrBuffer, size_t offset, size_t size, const void* data)
 {
-
+	m_pCommands.emplace_back(new CVKCommandBufferData(m_pDevice, m_vkCommandBuffer, ptrBuffer, offset, size, data));
 }
 
 void CVKCommandBuffer::CmdBufferData(const CGfxVertexBufferPtr ptrBuffer, size_t offset, size_t size, const void* data)
 {
-
+	m_pCommands.emplace_back(new CVKCommandBufferData(m_pDevice, m_vkCommandBuffer, ptrBuffer, offset, size, data));
 }
 
 void CVKCommandBuffer::CmdBufferData(const CGfxInstanceBufferPtr ptrBuffer, size_t offset, size_t size, const void* data)
 {
-
+	m_pCommands.emplace_back(new CVKCommandBufferData(m_pDevice, m_vkCommandBuffer, ptrBuffer, offset, size, data));
 }
 
 void CVKCommandBuffer::CmdBufferData(const CGfxIndirectBufferPtr ptrBuffer, size_t offset, size_t size, const void* data)
 {
-
+	m_pCommands.emplace_back(new CVKCommandBufferData(m_pDevice, m_vkCommandBuffer, ptrBuffer, offset, size, data));
 }
 
 void CVKCommandBuffer::CmdBufferData(const CGfxUniformBufferPtr ptrBuffer, size_t offset, size_t size, const void* data)
 {
-
+	m_pCommands.emplace_back(new CVKCommandBufferData(m_pDevice, m_vkCommandBuffer, ptrBuffer, offset, size, data));
 }
 
 void CVKCommandBuffer::CmdBufferData(const CGfxStorageBufferPtr ptrBuffer, size_t offset, size_t size, const void* data)
 {
-
+	m_pCommands.emplace_back(new CVKCommandBufferData(m_pDevice, m_vkCommandBuffer, ptrBuffer, offset, size, data));
 }
 
 void CVKCommandBuffer::CmdTextureData(const CGfxTexture2DPtr ptrTexture, GfxPixelFormat format, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
