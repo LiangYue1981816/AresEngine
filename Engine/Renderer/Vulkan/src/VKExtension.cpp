@@ -113,6 +113,19 @@ VkResult vkCmdImageMemoryBarrier(VkCommandBuffer vkCommandBuffer, VkImage vkImag
 	return vkCmdImageMemoryBarrier(vkCommandBuffer, vkImage, srcLayout, dstLayout, srcAccessFlags, dstAccessFlags, srcPipelineStageFlags, dstPipelineStageFlags, range);
 }
 
+VkResult vkCmdTransferBufferData(VkCommandBuffer vkCommandBuffer, VkBuffer vkSrcBuffer, VkBuffer vkDstBuffer, VkBufferUsageFlags vkDstBufferUsageFlags, VkDeviceSize offset, VkDeviceSize size)
+{
+	VkBufferCopy region = {};
+	region.srcOffset = 0;
+	region.dstOffset = offset;
+	region.size = size;
+	vkCmdCopyBuffer(vkCommandBuffer, vkSrcBuffer, vkDstBuffer, 1, &region);
+
+	VkAccessFlags dstAccessFlags = CVKHelper::GetAccessMaskByBufferUsage(vkDstBufferUsageFlags);
+	VkPipelineStageFlags dstPipelineStageFlags = CVKHelper::GetPipelineStageFlagsByBufferUsage(vkDstBufferUsageFlags);
+	vkCmdBufferMemoryBarrier(vkCommandBuffer, vkDstBuffer, VK_ACCESS_TRANSFER_WRITE_BIT, dstAccessFlags, VK_PIPELINE_STAGE_TRANSFER_BIT, dstPipelineStageFlags, offset, size);
+}
+
 VkResult vkSubmitCommandBuffer(VkQueue vkQueue, VkCommandBuffer vkCommandBuffer, VkFence vkFence)
 {
 	return vkSubmitCommandBuffer(vkQueue, vkCommandBuffer, vkFence, VK_NULL_HANDLE, 0, VK_NULL_HANDLE);
