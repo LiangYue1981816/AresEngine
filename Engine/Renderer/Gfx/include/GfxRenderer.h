@@ -34,6 +34,7 @@
 
 #include "GfxUniformBuffer.h"
 #include "GfxStorageBuffer.h"
+#include "GfxTransferBuffer.h"
 
 #include "GfxSampler.h"
 #include "GfxTexture2D.h"

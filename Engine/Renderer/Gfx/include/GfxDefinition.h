@@ -32,6 +32,7 @@ class CGfxMultiInstanceBuffer;
 
 class CGfxUniformBuffer;
 class CGfxStorageBuffer;
+class CGfxTransferBuffer;
 
 class CGfxSampler;
 class CGfxTexture2D;
@@ -83,6 +84,7 @@ typedef CGfxResourcePtr<CGfxMultiIndirectBuffer> CGfxMultiIndirectBufferPtr;
 
 typedef CGfxResourcePtr<CGfxUniformBuffer> CGfxUniformBufferPtr;
 typedef CGfxResourcePtr<CGfxStorageBuffer> CGfxStorageBufferPtr;
+typedef CGfxResourcePtr<CGfxTransferBuffer> CGfxTransferBufferPtr;
 
 typedef CGfxResourcePtr<CGfxDescriptorSet> CGfxDescriptorSetPtr;
 typedef CGfxResourcePtr<CGfxDescriptorLayout> CGfxDescriptorLayoutPtr;
