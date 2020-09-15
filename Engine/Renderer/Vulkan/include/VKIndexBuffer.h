@@ -31,20 +31,3 @@ private:
 private:
 	CVKDevice* m_pDevice;
 };
-
-
-class CVKMultiIndexBuffer : public CGfxMultiIndexBuffer
-{
-public:
-	CVKMultiIndexBuffer(CVKDevice* pDevice, GfxIndexType type, size_t size, bool bDynamic, int count);
-	virtual ~CVKMultiIndexBuffer(void);
-	virtual void Release(void);
-
-
-public:
-	CGfxIndexBuffer* GetBuffer(int index) const;
-
-
-private:
-	eastl::vector<CVKIndexBuffer*> m_pBuffers;
-};

@@ -72,35 +72,3 @@ void CGLES3VertexBuffer::Bind(void) const
 
 	CHECK_GL_ERROR_ASSERT();
 }
-
-
-CGLES3MultiVertexBuffer::CGLES3MultiVertexBuffer(uint32_t vertexFormat, int vertexBinding, size_t size, bool bDynamic, int count)
-	: CGfxMultiVertexBuffer(vertexFormat, vertexBinding, size, bDynamic, count)
-	, m_pBuffers(std::max(1, count))
-{
-	for (int index = 0; index < m_pBuffers.size(); index++) {
-		m_pBuffers[index] = new CGLES3VertexBuffer(vertexFormat, vertexBinding, size, bDynamic);
-	}
-}
-
-CGLES3MultiVertexBuffer::~CGLES3MultiVertexBuffer(void)
-{
-	for (auto& itBuffer : m_pBuffers) {
-		delete itBuffer;
-	}
-}
-
-void CGLES3MultiVertexBuffer::Release(void)
-{
-	delete this;
-}
-
-CGfxVertexBuffer* CGLES3MultiVertexBuffer::GetBuffer(int index) const
-{
-	if (index >= 0 && index < m_pBuffers.size()) {
-		return m_pBuffers[index];
-	}
-	else {
-		return nullptr;
-	}
-}

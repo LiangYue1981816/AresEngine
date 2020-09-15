@@ -50,20 +50,3 @@ public:
 public:
 	virtual bool BufferData(int indexDraw, int firstIndex, int baseVertex, int baseInstance, int indexCount, int instanceCount) = 0;
 };
-
-class CGfxMultiIndirectBuffer : public CGfxResource
-{
-public:
-	CGfxMultiIndirectBuffer(int numDrawCommands, int count)
-	{
-
-	}
-	virtual ~CGfxMultiIndirectBuffer(void)
-	{
-
-	}
-
-
-public:
-	virtual CGfxIndirectBuffer* GetBuffer(int index) const = 0;
-};

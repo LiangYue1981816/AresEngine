@@ -32,20 +32,3 @@ private:
 private:
 	CVKDevice* m_pDevice;
 };
-
-
-class CVKMultiIndirectBuffer : public CGfxMultiIndirectBuffer
-{
-public:
-	CVKMultiIndirectBuffer(CVKDevice* pDevice, int numDrawCommands, int count);
-	virtual ~CVKMultiIndirectBuffer(void);
-	virtual void Release(void);
-
-
-public:
-	CGfxIndirectBuffer* GetBuffer(int index) const;
-
-
-private:
-	eastl::vector<CVKIndirectBuffer*> m_pBuffers;
-};

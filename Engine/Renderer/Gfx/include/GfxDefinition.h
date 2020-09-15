@@ -24,12 +24,6 @@ class CGfxIndexBuffer;
 class CGfxVertexBuffer;
 class CGfxInstanceBuffer;
 class CGfxIndirectBuffer;
-
-class CGfxMultiIndexBuffer;
-class CGfxMultiVertexBuffer;
-class CGfxMultiIndirectBuffer;
-class CGfxMultiInstanceBuffer;
-
 class CGfxUniformBuffer;
 class CGfxStorageBuffer;
 class CGfxTransferBuffer;
@@ -76,12 +70,6 @@ typedef CGfxResourcePtr<CGfxIndexBuffer> CGfxIndexBufferPtr;
 typedef CGfxResourcePtr<CGfxVertexBuffer> CGfxVertexBufferPtr;
 typedef CGfxResourcePtr<CGfxInstanceBuffer> CGfxInstanceBufferPtr;
 typedef CGfxResourcePtr<CGfxIndirectBuffer> CGfxIndirectBufferPtr;
-
-typedef CGfxResourcePtr<CGfxMultiIndexBuffer> CGfxMultiIndexBufferPtr;
-typedef CGfxResourcePtr<CGfxMultiVertexBuffer> CGfxMultiVertexBufferPtr;
-typedef CGfxResourcePtr<CGfxMultiInstanceBuffer> CGfxMultiInstanceBufferPtr;
-typedef CGfxResourcePtr<CGfxMultiIndirectBuffer> CGfxMultiIndirectBufferPtr;
-
 typedef CGfxResourcePtr<CGfxUniformBuffer> CGfxUniformBufferPtr;
 typedef CGfxResourcePtr<CGfxStorageBuffer> CGfxStorageBufferPtr;
 typedef CGfxResourcePtr<CGfxTransferBuffer> CGfxTransferBufferPtr;

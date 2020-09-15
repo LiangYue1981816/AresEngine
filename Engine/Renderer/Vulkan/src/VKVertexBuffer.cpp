@@ -63,35 +63,3 @@ void CVKVertexBuffer::Bind(VkCommandBuffer vkCommandBuffer) const
 	ASSERT(vkCommandBuffer);
 	vkCmdBindVertexBuffer(vkCommandBuffer, m_binding, m_pBuffer->GetBuffer(), 0);
 }
-
-
-CVKMultiVertexBuffer::CVKMultiVertexBuffer(CVKDevice* pDevice, uint32_t vertexFormat, int vertexBinding, size_t size, bool bDynamic, int count)
-	: CGfxMultiVertexBuffer(vertexFormat, vertexBinding, size, bDynamic, count)
-	, m_pBuffers(std::max(1, count))
-{
-	for (int index = 0; index < m_pBuffers.size(); index++) {
-		m_pBuffers[index] = new CVKVertexBuffer(pDevice, vertexFormat, vertexBinding, size, bDynamic);
-	}
-}
-
-CVKMultiVertexBuffer::~CVKMultiVertexBuffer(void)
-{
-	for (auto& itBuffer : m_pBuffers) {
-		delete itBuffer;
-	}
-}
-
-void CVKMultiVertexBuffer::Release(void)
-{
-	delete this;
-}
-
-CGfxVertexBuffer* CVKMultiVertexBuffer::GetBuffer(int index) const
-{
-	if (index >= 0 && index < m_pBuffers.size()) {
-		return m_pBuffers[index];
-	}
-	else {
-		return nullptr;
-	}
-}

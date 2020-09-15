@@ -70,35 +70,3 @@ bool CVKIndirectBuffer::BufferData(int indexDraw, int firstIndex, int baseVertex
 		return m_pBuffer->BufferData(indexDraw * sizeof(DrawCommand), sizeof(m_draws[indexDraw]), &m_draws[indexDraw]);
 	}
 }
-
-
-CVKMultiIndirectBuffer::CVKMultiIndirectBuffer(CVKDevice* pDevice, int numDrawCommands, int count)
-	: CGfxMultiIndirectBuffer(numDrawCommands, count)
-	, m_pBuffers(std::max(1, count))
-{
-	for (int index = 0; index < m_pBuffers.size(); index++) {
-		m_pBuffers[index] = new CVKIndirectBuffer(pDevice, numDrawCommands);
-	}
-}
-
-CVKMultiIndirectBuffer::~CVKMultiIndirectBuffer(void)
-{
-	for (auto& itBuffer : m_pBuffers) {
-		delete itBuffer;
-	}
-}
-
-void CVKMultiIndirectBuffer::Release(void)
-{
-	delete this;
-}
-
-CGfxIndirectBuffer* CVKMultiIndirectBuffer::GetBuffer(int index) const
-{
-	if (index >= 0 && index < m_pBuffers.size()) {
-		return m_pBuffers[index];
-	}
-	else {
-		return nullptr;
-	}
-}

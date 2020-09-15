@@ -31,7 +31,6 @@
 #include "GfxVertexBuffer.h"
 #include "GfxInstanceBuffer.h"
 #include "GfxIndirectBuffer.h"
-
 #include "GfxUniformBuffer.h"
 #include "GfxStorageBuffer.h"
 #include "GfxTransferBuffer.h"

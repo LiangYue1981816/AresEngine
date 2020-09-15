@@ -38,26 +38,3 @@ private:
 private:
 	CGLES3InstanceBufferManager* m_pManager;
 };
-
-
-class CGLES3MultiInstanceBuffer : public CGfxMultiInstanceBuffer
-{
-	friend class CGLES3InstanceBufferManager;
-
-
-private:
-	CGLES3MultiInstanceBuffer(CGLES3InstanceBufferManager* pManager, uint32_t instanceFormat, int instanceBinding, int count);
-	virtual ~CGLES3MultiInstanceBuffer(void);
-	virtual void Release(void);
-
-
-public:
-	CGfxInstanceBuffer* GetBuffer(int index) const;
-
-
-private:
-	eastl::vector<CGLES3InstanceBuffer*> m_pBuffers;
-
-private:
-	CGLES3InstanceBufferManager* m_pManager;
-};

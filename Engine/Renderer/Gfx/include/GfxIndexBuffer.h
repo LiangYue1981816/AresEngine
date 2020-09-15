@@ -23,20 +23,3 @@ public:
 public:
 	virtual bool BufferData(size_t offset, size_t size, const void* data) = 0;
 };
-
-class CGfxMultiIndexBuffer : public CGfxResource
-{
-public:
-	CGfxMultiIndexBuffer(GfxIndexType type, size_t size, bool bDynamic, int count)
-	{
-
-	}
-	virtual ~CGfxMultiIndexBuffer(void)
-	{
-
-	}
-
-
-public:
-	virtual CGfxIndexBuffer* GetBuffer(int index) const = 0;
-};

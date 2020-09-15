@@ -29,20 +29,3 @@ private:
 private:
 	CGLES3Buffer* m_pBuffer;
 };
-
-
-class CGLES3MultiIndirectBuffer : public CGfxMultiIndirectBuffer
-{
-public:
-	CGLES3MultiIndirectBuffer(int numDrawCommands, int count);
-	virtual ~CGLES3MultiIndirectBuffer(void);
-	virtual void Release(void);
-
-
-public:
-	CGfxIndirectBuffer* GetBuffer(int index) const;
-
-
-private:
-	eastl::vector<CGLES3IndirectBuffer*> m_pBuffers;
-};

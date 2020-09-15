@@ -41,26 +41,3 @@ private:
 private:
 	CVKInstanceBufferManager* m_pManager;
 };
-
-
-class CVKMultiInstanceBuffer : public CGfxMultiInstanceBuffer
-{
-	friend class CVKInstanceBufferManager;
-
-
-private:
-	CVKMultiInstanceBuffer(CVKDevice* pDevice, CVKInstanceBufferManager* pManager, uint32_t instanceFormat, int instanceBinding, int count);
-	virtual ~CVKMultiInstanceBuffer(void);
-	virtual void Release(void);
-
-
-public:
-	CGfxInstanceBuffer* GetBuffer(int index) const;
-
-
-private:
-	eastl::vector<CVKInstanceBuffer*> m_pBuffers;
-
-private:
-	CVKInstanceBufferManager* m_pManager;
-};

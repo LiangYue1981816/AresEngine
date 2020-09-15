@@ -50,35 +50,3 @@ void CGLES3IndexBuffer::Bind(void) const
 {
 	m_pBuffer->Bind();
 }
-
-
-CGLES3MultiIndexBuffer::CGLES3MultiIndexBuffer(GfxIndexType type, size_t size, bool bDynamic, int count)
-	: CGfxMultiIndexBuffer(type, size, bDynamic, count)
-	, m_pBuffers(std::max(1, count))
-{
-	for (int index = 0; index < m_pBuffers.size(); index++) {
-		m_pBuffers[index] = new CGLES3IndexBuffer(type, size, bDynamic);
-	}
-}
-
-CGLES3MultiIndexBuffer::~CGLES3MultiIndexBuffer(void)
-{
-	for (auto& itBuffer : m_pBuffers) {
-		delete itBuffer;
-	}
-}
-
-void CGLES3MultiIndexBuffer::Release(void)
-{
-	delete this;
-}
-
-CGfxIndexBuffer* CGLES3MultiIndexBuffer::GetBuffer(int index) const
-{
-	if (index >= 0 && index < m_pBuffers.size()) {
-		return m_pBuffers[index];
-	}
-	else {
-		return nullptr;
-	}
-}

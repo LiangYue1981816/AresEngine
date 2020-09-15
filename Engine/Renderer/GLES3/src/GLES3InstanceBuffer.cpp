@@ -90,36 +90,3 @@ void CGLES3InstanceBuffer::Bind(int offset) const
 
 	CHECK_GL_ERROR_ASSERT();
 }
-
-
-CGLES3MultiInstanceBuffer::CGLES3MultiInstanceBuffer(CGLES3InstanceBufferManager* pManager, uint32_t instanceFormat, int instanceBinding, int count)
-	: CGfxMultiInstanceBuffer(instanceFormat, instanceBinding, count)
-	, m_pManager(pManager)
-	, m_pBuffers(std::max(1, count))
-{
-	for (int index = 0; index < m_pBuffers.size(); index++) {
-		m_pBuffers[index] = new CGLES3InstanceBuffer(nullptr, instanceFormat, instanceBinding);
-	}
-}
-
-CGLES3MultiInstanceBuffer::~CGLES3MultiInstanceBuffer(void)
-{
-	for (auto& itBuffer : m_pBuffers) {
-		delete itBuffer;
-	}
-}
-
-void CGLES3MultiInstanceBuffer::Release(void)
-{
-	m_pManager->Destroy(this);
-}
-
-CGfxInstanceBuffer* CGLES3MultiInstanceBuffer::GetBuffer(int index) const
-{
-	if (index >= 0 && index < m_pBuffers.size()) {
-		return m_pBuffers[index];
-	}
-	else {
-		return nullptr;
-	}
-}

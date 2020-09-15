@@ -80,36 +80,3 @@ void CVKInstanceBuffer::Bind(VkCommandBuffer vkCommandBuffer, int offset) const
 	ASSERT(vkCommandBuffer);
 	vkCmdBindVertexBuffer(vkCommandBuffer, m_binding, m_pBuffer->GetBuffer(), offset);
 }
-
-
-CVKMultiInstanceBuffer::CVKMultiInstanceBuffer(CVKDevice* pDevice, CVKInstanceBufferManager* pManager, uint32_t instanceFormat, int instanceBinding, int count)
-	: CGfxMultiInstanceBuffer(instanceFormat, instanceBinding, count)
-	, m_pManager(pManager)
-	, m_pBuffers(std::max(1, count))
-{
-	for (int index = 0; index < m_pBuffers.size(); index++) {
-		m_pBuffers[index] = new CVKInstanceBuffer(pDevice, nullptr, instanceFormat, instanceBinding);
-	}
-}
-
-CVKMultiInstanceBuffer::~CVKMultiInstanceBuffer(void)
-{
-	for (auto& itBuffer : m_pBuffers) {
-		delete itBuffer;
-	}
-}
-
-void CVKMultiInstanceBuffer::Release(void)
-{
-	m_pManager->Destroy(this);
-}
-
-CGfxInstanceBuffer* CVKMultiInstanceBuffer::GetBuffer(int index) const
-{
-	if (index >= 0 && index < m_pBuffers.size()) {
-		return m_pBuffers[index];
-	}
-	else {
-		return nullptr;
-	}
-}

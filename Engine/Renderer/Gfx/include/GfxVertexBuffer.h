@@ -24,20 +24,3 @@ public:
 public:
 	virtual bool BufferData(size_t offset, size_t size, const void* data) = 0;
 };
-
-class CGfxMultiVertexBuffer : public CGfxResource
-{
-public:
-	CGfxMultiVertexBuffer(uint32_t vertexFormat, int vertexBinding, size_t size, bool bDynamic, int count)
-	{
-
-	}
-	virtual ~CGfxMultiVertexBuffer(void)
-	{
-
-	}
-
-
-public:
-	virtual CGfxVertexBuffer* GetBuffer(int index) const = 0;
-};

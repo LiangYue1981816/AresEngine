@@ -28,20 +28,3 @@ private:
 private:
 	CGLES3Buffer* m_pBuffer;
 };
-
-
-class CGLES3MultiIndexBuffer : public CGfxMultiIndexBuffer
-{
-public:
-	CGLES3MultiIndexBuffer(GfxIndexType type, size_t size, bool bDynamic, int count);
-	virtual ~CGLES3MultiIndexBuffer(void);
-	virtual void Release(void);
-
-
-public:
-	CGfxIndexBuffer* GetBuffer(int index) const;
-
-
-private:
-	eastl::vector<CGLES3IndexBuffer*> m_pBuffers;
-};

@@ -31,20 +31,3 @@ private:
 private:
 	CGLES3Buffer* m_pBuffer;
 };
-
-
-class CGLES3MultiVertexBuffer : public CGfxMultiVertexBuffer
-{
-public:
-	CGLES3MultiVertexBuffer(uint32_t vertexFormat, int vertexBinding, size_t size, bool bDynamic, int count);
-	virtual ~CGLES3MultiVertexBuffer(void);
-	virtual void Release(void);
-
-
-public:
-	CGfxVertexBuffer* GetBuffer(int index) const;
-
-
-private:
-	eastl::vector<CGLES3VertexBuffer*> m_pBuffers;
-};
