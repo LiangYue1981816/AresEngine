@@ -1794,6 +1794,9 @@
     <ClInclude Include="..\..\Engine\Define.h">
       <Filter>Engine</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxTransferBuffer.h">
+      <Filter>Engine\Renderer\Gfx\Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Engine\ThirdParty\eastl\source\allocator_eastl.cpp">

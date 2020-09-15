@@ -183,6 +183,7 @@
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxTexture2D.h" />
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxTexture2DArray.h" />
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxTextureCubeMap.h" />
+    <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxTransferBuffer.h" />
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxUniformBuffer.h" />
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxUniformMat4.h" />
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxUniformVec1.h" />
