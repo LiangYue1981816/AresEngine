@@ -4,7 +4,6 @@
 
 class CGLES3InstanceBuffer : public CGfxInstanceBuffer
 {
-	friend class CGLES3MultiInstanceBuffer;
 	friend class CGLES3InstanceBufferManager;
 
 

@@ -34,6 +34,11 @@ void CVKInstanceBuffer::Release(void)
 	}
 }
 
+VkBuffer CVKInstanceBuffer::GetBuffer(void) const
+{
+	return m_pBuffer->GetBuffer();
+}
+
 uint32_t CVKInstanceBuffer::GetInstanceBinding(void) const
 {
 	return m_binding;

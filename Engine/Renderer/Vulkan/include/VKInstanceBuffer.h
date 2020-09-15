@@ -4,7 +4,6 @@
 
 class CVKInstanceBuffer : public CGfxInstanceBuffer
 {
-	friend class CVKMultiInstanceBuffer;
 	friend class CVKInstanceBufferManager;
 
 
@@ -13,6 +12,9 @@ private:
 	virtual ~CVKInstanceBuffer(void);
 	virtual void Release(void);
 
+
+public:
+	VkBuffer GetBuffer(void) const;
 
 public:
 	uint32_t GetInstanceBinding(void) const;

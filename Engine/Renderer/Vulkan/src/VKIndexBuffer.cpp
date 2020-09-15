@@ -31,6 +31,11 @@ void CVKIndexBuffer::Release(void)
 	delete this;
 }
 
+VkBuffer CVKIndexBuffer::GetBuffer(void) const
+{
+	return m_pBuffer->GetBuffer();
+}
+
 GfxIndexType CVKIndexBuffer::GetIndexType(void) const
 {
 	return m_type;
