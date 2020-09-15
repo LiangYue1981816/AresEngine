@@ -252,11 +252,6 @@ CGfxInstanceBufferPtr CVKRenderer::NewInstanceBuffer(uint32_t instanceFormat, in
 	return m_pInstanceBufferManager->Create(instanceFormat, instanceBinding);
 }
 
-CGfxMultiInstanceBufferPtr CVKRenderer::NewMultiInstanceBuffer(uint32_t instanceFormat, int instanceBinding, int count)
-{
-	return m_pInstanceBufferManager->Create(instanceFormat, instanceBinding, count);
-}
-
 CGfxMeshPtr CVKRenderer::GetMesh(uint32_t name)
 {
 	return m_pMeshManager->Get(name);
