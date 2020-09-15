@@ -18,7 +18,7 @@ public:
 	}
 
 public:
-	virtual void Execute(void) const
+	virtual void Execute(void)
 	{
 		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_DISPATCH);
 		{

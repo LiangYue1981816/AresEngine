@@ -16,7 +16,7 @@ public:
 
 
 public:
-	virtual void Execute(void) const = 0;
+	virtual void Execute(void) = 0;
 };
 
 class CGfxCommandBuffer : public CGfxResource

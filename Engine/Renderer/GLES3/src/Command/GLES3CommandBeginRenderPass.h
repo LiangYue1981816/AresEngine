@@ -17,7 +17,7 @@ public:
 	}
 
 public:
-	virtual void Execute(void) const
+	virtual void Execute(void)
 	{
 		ASSERT(m_ptrFrameBuffer);
 		ASSERT(m_ptrRenderPass);

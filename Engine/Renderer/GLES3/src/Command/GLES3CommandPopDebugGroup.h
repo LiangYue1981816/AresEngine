@@ -16,7 +16,7 @@ public:
 	}
 
 public:
-	virtual void Execute(void) const
+	virtual void Execute(void)
 	{
 #ifdef PLATFORM_WINDOWS
 		glPopDebugGroup();

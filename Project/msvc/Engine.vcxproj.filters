@@ -1308,9 +1308,6 @@
     <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandUniformMatrix4fv.h">
       <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandUpdateInstanceBuffer.h">
-      <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKInstance.h">
       <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
     </ClInclude>
@@ -1796,6 +1793,48 @@
     </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxTransferBuffer.h">
       <Filter>Engine\Renderer\Gfx\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\src\Command\VKCommandBeginRecord.h">
+      <Filter>Engine\Renderer\Vulkan\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\src\Command\VKCommandBindIndexBuffer.h">
+      <Filter>Engine\Renderer\Vulkan\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\src\Command\VKCommandBindInstanceBuffer.h">
+      <Filter>Engine\Renderer\Vulkan\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\src\Command\VKCommandBindVertexBuffer.h">
+      <Filter>Engine\Renderer\Vulkan\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\src\Command\VKCommandBufferData.h">
+      <Filter>Engine\Renderer\Vulkan\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\src\Command\VKCommandDispatch.h">
+      <Filter>Engine\Renderer\Vulkan\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\src\Command\VKCommandEndRecord.h">
+      <Filter>Engine\Renderer\Vulkan\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\src\Command\VKCommandSetBufferBarrier.h">
+      <Filter>Engine\Renderer\Vulkan\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\Vulkan\src\Command\VKCommandSetImageLayout.h">
+      <Filter>Engine\Renderer\Vulkan\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandBindIndexBuffer.h">
+      <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandBindInstanceBuffer.h">
+      <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandBindVertexBuffer.h">
+      <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandDispatch.h">
+      <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandSetBufferBarrier.h">
+      <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

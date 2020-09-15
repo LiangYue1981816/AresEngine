@@ -19,7 +19,7 @@ public:
 	}
 
 public:
-	virtual void Execute(void) const
+	virtual void Execute(void)
 	{
 		ASSERT(m_vkCommandBuffer);
 		ASSERT(m_pPipelineCompute || m_pPipelineGraphics);

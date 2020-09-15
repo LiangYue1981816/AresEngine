@@ -17,7 +17,7 @@ public:
 	}
 
 public:
-	virtual void Execute(void) const
+	virtual void Execute(void)
 	{
 #ifdef PLATFORM_WINDOWS
 		glPushDebugGroup(GL_DEBUG_SOURCE_APPLICATION, 0, -1, m_strMessage.c_str());
