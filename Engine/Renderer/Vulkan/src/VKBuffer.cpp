@@ -78,6 +78,12 @@ VkDeviceSize CVKBuffer::GetMemorySize(void) const
 	return m_pMemory->GetSize();
 }
 
+VkBufferUsageFlags CVKBuffer::GetBufferUsageFlags(void) const
+{
+	ASSERT(m_vkBufferUsageFlags);
+	return m_vkBufferUsageFlags;
+}
+
 bool CVKBuffer::BufferData(size_t offset, size_t size, const void* data)
 {
 	ASSERT(m_vkBuffer);
