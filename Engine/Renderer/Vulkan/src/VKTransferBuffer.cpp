@@ -3,38 +3,44 @@
 
 CVKTransferBuffer::CVKTransferBuffer(CVKDevice* pDevice, size_t size)
 	: CGfxTransferBuffer(size)
+	, m_pDevice(pDevice)
+	, m_pBuffer(nullptr)
 {
+	size = ALIGN_BYTE(size, m_pDevice->GetPhysicalDeviceLimits().nonCoherentAtomSize);
 
+	m_pBuffer = new CVKBuffer(m_pDevice, size, VK_BUFFER_USAGE_TRANSFER_SRC_BIT | VK_BUFFER_USAGE_TRANSFER_DST_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT);
+	CGfxProfiler::IncVertexBufferSize(m_pBuffer->GetMemorySize());
 }
 
 CVKTransferBuffer::~CVKTransferBuffer(void)
 {
-
+	CGfxProfiler::DecVertexBufferSize(m_pBuffer->GetMemorySize());
+	delete m_pBuffer;
 }
 
 void CVKTransferBuffer::Release(void)
 {
-
+	delete this;
 }
 
 VkBuffer CVKTransferBuffer::GetBuffer(void) const
 {
-	return VK_NULL_HANDLE;
+	return m_pBuffer->GetBuffer();
 }
 
 uint32_t CVKTransferBuffer::GetSize(void) const
 {
-	return 0;
+	return m_pBuffer->GetSize();
 }
 
 uint32_t CVKTransferBuffer::GetMemorySize(void) const
 {
-	return 0;
+	return m_pBuffer->GetMemorySize();
 }
 
 bool CVKTransferBuffer::BufferData(size_t offset, size_t size, const void* data)
 {
-	return false;
+	return m_pBuffer->BufferData(offset, size, data);
 }
 
 /*
