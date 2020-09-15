@@ -1,6 +1,42 @@
 #include "VKRenderer.h"
 
 
+CVKTransferBuffer::CVKTransferBuffer(CVKDevice* pDevice, size_t size)
+	: CGfxTransferBuffer(size)
+{
+
+}
+
+CVKTransferBuffer::~CVKTransferBuffer(void)
+{
+
+}
+
+void CVKTransferBuffer::Release(void)
+{
+
+}
+
+VkBuffer CVKTransferBuffer::GetBuffer(void) const
+{
+	return VK_NULL_HANDLE;
+}
+
+uint32_t CVKTransferBuffer::GetSize(void) const
+{
+	return 0;
+}
+
+uint32_t CVKTransferBuffer::GetMemorySize(void) const
+{
+	return 0;
+}
+
+bool CVKTransferBuffer::BufferData(size_t offset, size_t size, const void* data)
+{
+	return false;
+}
+
 /*
 CVKTransferBuffer::CVKTransferBuffer(CVKDevice* pDevice, CVKMemory* pMemory, VkQueue vkQueue, VkCommandPool vkCommandPool, VkDeviceSize size)
 	: m_pDevice(pDevice)
