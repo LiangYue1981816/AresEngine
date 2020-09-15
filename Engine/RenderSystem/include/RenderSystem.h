@@ -217,7 +217,7 @@ public:
 	CStorageHistogram* GetHistogramStorage(void) const;
 
 	const CGfxUniformBufferPtr GetEngineUniformBuffer(void) const;
-	const CGfxMultiInstanceBufferPtr GetInstanceBuffer(uint32_t instanceFormat, int instanceBinding) const;
+	const CGfxInstanceBufferPtr GetInstanceBuffer(uint32_t instanceFormat, int instanceBinding) const;
 
 public:
 	const CGfxStorageBufferPtr GetClusterBuffer(void) const;

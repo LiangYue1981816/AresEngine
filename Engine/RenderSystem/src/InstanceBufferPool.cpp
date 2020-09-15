@@ -13,16 +13,16 @@ CInstanceBufferPool::~CInstanceBufferPool(void)
 
 void CInstanceBufferPool::Clear(void)
 {
-	m_indexMultiInstanceBuffers.clear();
+	m_indexInstanceBuffers.clear();
 }
 
-CGfxMultiInstanceBufferPtr CInstanceBufferPool::GetInstanceBuffer(uint32_t instanceFormat, int instanceBinding)
+CGfxInstanceBufferPtr CInstanceBufferPool::GetInstanceBuffer(uint32_t instanceFormat, int instanceBinding)
 {
-	int& index = m_indexMultiInstanceBuffers[instanceFormat][instanceBinding];
-	eastl::vector<CGfxMultiInstanceBufferPtr>& buffers = m_ptrMultiInstanceBuffers[instanceFormat][instanceBinding];
+	int& index = m_indexInstanceBuffers[instanceFormat][instanceBinding];
+	eastl::vector<CGfxInstanceBufferPtr>& buffers = m_ptrInstanceBuffers[instanceFormat][instanceBinding];
 
 	if (index == buffers.size()) {
-		buffers.emplace_back(GfxRenderer()->NewMultiInstanceBuffer(instanceFormat, instanceBinding, CGfxSwapChain::SWAPCHAIN_FRAME_COUNT));
+		buffers.emplace_back(GfxRenderer()->NewInstanceBuffer(instanceFormat, instanceBinding));
 	}
 
 	return buffers[index++];

@@ -48,5 +48,5 @@ private:
 	eastl::unordered_map<CGfxMaterialPtr, eastl::unordered_map<CGfxMeshPtr, eastl::unordered_map<CGfxMeshDrawPtr, eastl::vector<int>>>> m_materialMeshDrawQueue;
 	eastl::unordered_map<CGfxMaterialPtr, eastl::unordered_map<CGfxMeshPtr, eastl::unordered_map<CGfxMeshDrawPtr, InstanceRange>>> m_materialMeshDrawInstanceRangeQueue;
 	eastl::unordered_map<const CGfxPipelineGraphics*, eastl::unordered_set<CGfxMaterialPtr>> m_pipelineMaterialQueue;
-	CGfxMultiInstanceBufferPtr m_ptrInstanceBuffer;
+	CGfxInstanceBufferPtr m_ptrInstanceBuffer;
 };

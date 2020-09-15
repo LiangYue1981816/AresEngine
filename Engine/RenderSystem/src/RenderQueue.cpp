@@ -263,7 +263,7 @@ void CRenderQueue::CmdDraw(CTaskPool& taskPool, CTaskGraph& taskGraph, CGfxComma
 		}
 
 		m_ptrInstanceBuffer = RenderSystem()->GetInstanceBuffer(INSTANCE_FORMAT, INSTANCE_BINDING);
-		m_ptrInstanceBuffer->GetBuffer(GfxRenderer()->GetSwapChain()->GetFrameIndex())->BufferData(instances.size() * sizeof(int), (const uint8_t*)instances.data());
+		m_ptrInstanceBuffer->BufferData(instances.size() * sizeof(int), (const uint8_t*)instances.data());
 	}
 
 	m_pipelineMaterialQueue.clear();
@@ -330,7 +330,7 @@ void CRenderQueue::CmdDrawThread(CGfxCommandBufferPtr ptrCommandBuffer, const CG
 
 										GfxRenderer()->CmdBindDescriptorSet(ptrCommandBuffer, GfxRenderer()->GetDescriptorSet(itDrawQueue.first->GetName()));
 										{
-											GfxRenderer()->CmdBindInstanceBuffer(ptrCommandBuffer, m_ptrInstanceBuffer->GetBuffer(GfxRenderer()->GetSwapChain()->GetFrameIndex()), itDrawQueue.second.offset * sizeof(int));
+											GfxRenderer()->CmdBindInstanceBuffer(ptrCommandBuffer, m_ptrInstanceBuffer, itDrawQueue.second.offset * sizeof(int));
 											GfxRenderer()->CmdDrawInstance(ptrCommandBuffer, itDrawQueue.first->GetIndexType(), itDrawQueue.first->GetIndexOffset(), itDrawQueue.first->GetIndexCount(), itDrawQueue.second.count);
 										}
 									}
