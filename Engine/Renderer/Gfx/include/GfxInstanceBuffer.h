@@ -24,20 +24,3 @@ public:
 public:
 	virtual bool BufferData(size_t size, const void* data) = 0;
 };
-
-class CGfxMultiInstanceBuffer : public CGfxResource
-{
-public:
-	CGfxMultiInstanceBuffer(uint32_t instanceFormat, int instanceBinding, int count)
-	{
-
-	}
-	virtual ~CGfxMultiInstanceBuffer(void)
-	{
-
-	}
-
-
-public:
-	virtual CGfxInstanceBuffer* GetBuffer(int index) const = 0;
-};
