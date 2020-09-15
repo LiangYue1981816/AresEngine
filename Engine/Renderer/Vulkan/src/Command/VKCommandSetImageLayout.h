@@ -45,6 +45,7 @@ public:
 
 		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_SET_IMAGELAYOUT);
 		{
+			/*
 			if (m_ptrTexture2D) {
 				((CVKTexture2D*)m_ptrTexture2D.GetPointer())->PipelineBarrier(m_vkCommandBuffer, CVKHelper::TranslateImageLayout(m_imageLayout));
 			}
@@ -60,6 +61,7 @@ public:
 			if (m_ptrRenderTexture) {
 				((CVKRenderTexture*)m_ptrRenderTexture.GetPointer())->PipelineBarrier(m_vkCommandBuffer, CVKHelper::TranslateImageLayout(m_imageLayout));
 			}
+			*/
 		}
 	}
 

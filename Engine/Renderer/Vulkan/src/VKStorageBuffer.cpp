@@ -39,7 +39,7 @@ bool CVKStorageBuffer::BufferData(size_t offset, size_t size, const void* data)
 {
 	return m_pBuffer->BufferData(offset, size, data);
 }
-
+/*
 bool CVKStorageBuffer::PipelineBarrier(VkCommandBuffer vkCommandBuffer, VkAccessFlags srcAccessFlags, VkAccessFlags dstAccessFlags, VkDeviceSize offset, VkDeviceSize size)
 {
 	return m_pBuffer->PipelineBarrier(vkCommandBuffer, srcAccessFlags, dstAccessFlags, offset, size);
@@ -49,3 +49,4 @@ bool CVKStorageBuffer::PipelineBarrier(VkCommandBuffer vkCommandBuffer, VkAccess
 {
 	return m_pBuffer->PipelineBarrier(vkCommandBuffer, srcAccessFlags, dstAccessFlags, srcPipelineStageFlags, dstPipelineStageFlags, offset, size);
 }
+*/

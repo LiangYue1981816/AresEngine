@@ -299,6 +299,7 @@ bool CVKTexture::TextureCubemapData(GfxPixelFormat format, GfxCubemapFace face, 
 //	return m_pDevice->GetTransferManager()->TransferTextureCubemapData(this, VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL, face, level, xoffset, yoffset, width, height, size, data);
 }
 
+/*
 bool CVKTexture::PipelineBarrier(VkCommandBuffer vkCommandBuffer, VkImageLayout imageLayout)
 {
 	ASSERT(vkCommandBuffer);
@@ -336,3 +337,4 @@ bool CVKTexture::PipelineBarrier(VkCommandBuffer vkCommandBuffer, VkImageLayout 
 
 	return true;
 }
+*/

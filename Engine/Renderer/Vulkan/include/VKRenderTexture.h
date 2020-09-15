@@ -31,10 +31,6 @@ public:
 	bool Create(GfxPixelFormat format, int width, int height, int samples = 1, bool bTransient = false);
 	void Destroy(void);
 
-public:
-	bool PipelineBarrier(VkCommandBuffer vkCommandBuffer, VkImageLayout imageLayout);
-	bool PipelineBarrier(VkCommandBuffer vkCommandBuffer, VkImageLayout imageLayout, VkAccessFlags srcAccessFlags, VkAccessFlags dstAccessFlags, VkPipelineStageFlags srcPipelineStageFlags, VkPipelineStageFlags dstPipelineStageFlags);
-
 
 private:
 	CVKTexture* m_pTexture;

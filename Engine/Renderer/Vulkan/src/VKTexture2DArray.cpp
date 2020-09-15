@@ -89,7 +89,7 @@ bool CVKTexture2DArray::Texture2DArrayDataCompressed(GfxPixelFormat format, int 
 {
 	return m_pTexture->Texture2DArrayData(format, layer, level, xoffset, yoffset, width, height, size, data);
 }
-
+/*
 bool CVKTexture2DArray::PipelineBarrier(VkCommandBuffer vkCommandBuffer, VkImageLayout imageLayout)
 {
 	return m_pTexture->PipelineBarrier(vkCommandBuffer, imageLayout);
@@ -99,3 +99,4 @@ bool CVKTexture2DArray::PipelineBarrier(VkCommandBuffer vkCommandBuffer, VkImage
 {
 	return m_pTexture->PipelineBarrier(vkCommandBuffer, imageLayout, srcAccessFlags, dstAccessFlags, srcPipelineStageFlags, dstPipelineStageFlags);
 }
+*/

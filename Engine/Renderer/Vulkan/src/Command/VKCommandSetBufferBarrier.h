@@ -25,9 +25,11 @@ public:
 
 		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_SET_BUFFERBARRIER);
 		{
+			/*
 			if (m_ptrBuffer) {
 				((CVKStorageBuffer*)m_ptrBuffer.GetPointer())->PipelineBarrier(m_vkCommandBuffer, m_srcAccessFlags, m_dstAccessFlags, 0, m_ptrBuffer->GetSize());
 			}
+			*/
 		}
 	}
 

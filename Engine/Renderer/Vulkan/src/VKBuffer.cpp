@@ -100,7 +100,7 @@ bool CVKBuffer::BufferData(size_t offset, size_t size, const void* data)
 
 	return true;
 }
-
+/*
 bool CVKBuffer::PipelineBarrier(VkCommandBuffer vkCommandBuffer, VkAccessFlags srcAccessFlags, VkAccessFlags dstAccessFlags, VkDeviceSize offset, VkDeviceSize size)
 {
 	ASSERT(vkCommandBuffer);
@@ -120,7 +120,7 @@ bool CVKBuffer::PipelineBarrier(VkCommandBuffer vkCommandBuffer, VkAccessFlags s
 	CALL_VK_FUNCTION_ASSERT(vkCmdBufferMemoryBarrier(vkCommandBuffer, m_vkBuffer, srcAccessFlags, dstAccessFlags, srcPipelineStageFlags, dstPipelineStageFlags, offset, size));
 	return true;
 }
-
+*/
 bool CVKBuffer::IsDeviceLocal(void) const
 {
 	ASSERT(m_pMemory);

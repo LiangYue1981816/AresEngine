@@ -112,7 +112,7 @@ void CVKRenderTexture::Destroy(void)
 {
 	m_pTexture->Destroy();
 }
-
+/*
 bool CVKRenderTexture::PipelineBarrier(VkCommandBuffer vkCommandBuffer, VkImageLayout imageLayout)
 {
 	return m_pTexture->PipelineBarrier(vkCommandBuffer, imageLayout);
@@ -122,3 +122,4 @@ bool CVKRenderTexture::PipelineBarrier(VkCommandBuffer vkCommandBuffer, VkImageL
 {
 	return m_pTexture->PipelineBarrier(vkCommandBuffer, imageLayout, srcAccessFlags, dstAccessFlags, srcPipelineStageFlags, dstPipelineStageFlags);
 }
+*/
