@@ -68,6 +68,30 @@ public:
 	virtual void Execute(void) const
 	{
 		ASSERT(m_vkCommandBuffer);
+
+		if (m_ptrIndexBuffer) {
+
+		}
+
+		if (m_ptrVertexBuffer) {
+
+		}
+
+		if (m_ptrInstanceBuffer) {
+
+		}
+
+		if (m_ptrIndirectBuffer) {
+
+		}
+
+		if (m_ptrUniformBuffer) {
+
+		}
+
+		if (m_ptrStorageBuffer) {
+
+		}
 	}
 
 

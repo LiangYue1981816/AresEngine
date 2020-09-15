@@ -33,11 +33,6 @@ uint32_t CVKTransferBuffer::GetSize(void) const
 	return m_pBuffer->GetSize();
 }
 
-uint32_t CVKTransferBuffer::GetMemorySize(void) const
-{
-	return m_pBuffer->GetMemorySize();
-}
-
 bool CVKTransferBuffer::BufferData(size_t offset, size_t size, const void* data)
 {
 	return m_pBuffer->BufferData(offset, size, data);

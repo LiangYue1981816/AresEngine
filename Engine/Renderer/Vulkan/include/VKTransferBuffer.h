@@ -12,8 +12,9 @@ public:
 
 public:
 	VkBuffer GetBuffer(void) const;
+
+public:
 	uint32_t GetSize(void) const;
-	uint32_t GetMemorySize(void) const;
 
 public:
 	bool BufferData(size_t offset, size_t size, const void* data);
