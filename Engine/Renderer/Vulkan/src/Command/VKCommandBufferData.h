@@ -5,8 +5,9 @@
 class CVKCommandBufferData : public CGfxCommandBase
 {
 public:
-	CVKCommandBufferData(VkCommandBuffer vkCommandBuffer, const CGfxIndexBufferPtr ptrBuffer, size_t offset, size_t size, const void* data)
-		: m_vkCommandBuffer(vkCommandBuffer)
+	CVKCommandBufferData(CVKDevice* pDevice, VkCommandBuffer vkCommandBuffer, const CGfxIndexBufferPtr ptrBuffer, size_t offset, size_t size, const void* data)
+		: m_pDevice(pDevice)
+		, m_vkCommandBuffer(vkCommandBuffer)
 		, m_ptrIndexBuffer(ptrBuffer)
 		, m_offset(offset)
 		, m_size(size)
@@ -14,8 +15,9 @@ public:
 	{
 		Execute();
 	}
-	CVKCommandBufferData(VkCommandBuffer vkCommandBuffer, const CGfxVertexBufferPtr ptrBuffer, size_t offset, size_t size, const void* data)
-		: m_vkCommandBuffer(vkCommandBuffer)
+	CVKCommandBufferData(CVKDevice* pDevice, VkCommandBuffer vkCommandBuffer, const CGfxVertexBufferPtr ptrBuffer, size_t offset, size_t size, const void* data)
+		: m_pDevice(pDevice)
+		, m_vkCommandBuffer(vkCommandBuffer)
 		, m_ptrVertexBuffer(ptrBuffer)
 		, m_offset(offset)
 		, m_size(size)
@@ -23,8 +25,9 @@ public:
 	{
 		Execute();
 	}
-	CVKCommandBufferData(VkCommandBuffer vkCommandBuffer, const CGfxInstanceBufferPtr ptrBuffer, size_t offset, size_t size, const void* data)
-		: m_vkCommandBuffer(vkCommandBuffer)
+	CVKCommandBufferData(CVKDevice* pDevice, VkCommandBuffer vkCommandBuffer, const CGfxInstanceBufferPtr ptrBuffer, size_t offset, size_t size, const void* data)
+		: m_pDevice(pDevice)
+		, m_vkCommandBuffer(vkCommandBuffer)
 		, m_ptrInstanceBuffer(ptrBuffer)
 		, m_offset(offset)
 		, m_size(size)
@@ -32,8 +35,9 @@ public:
 	{
 		Execute();
 	}
-	CVKCommandBufferData(VkCommandBuffer vkCommandBuffer, const CGfxIndirectBufferPtr ptrBuffer, size_t offset, size_t size, const void* data)
-		: m_vkCommandBuffer(vkCommandBuffer)
+	CVKCommandBufferData(CVKDevice* pDevice, VkCommandBuffer vkCommandBuffer, const CGfxIndirectBufferPtr ptrBuffer, size_t offset, size_t size, const void* data)
+		: m_pDevice(pDevice)
+		, m_vkCommandBuffer(vkCommandBuffer)
 		, m_ptrIndirectBuffer(ptrBuffer)
 		, m_offset(offset)
 		, m_size(size)
@@ -41,8 +45,9 @@ public:
 	{
 		Execute();
 	}
-	CVKCommandBufferData(VkCommandBuffer vkCommandBuffer, const CGfxUniformBufferPtr ptrBuffer, size_t offset, size_t size, const void* data)
-		: m_vkCommandBuffer(vkCommandBuffer)
+	CVKCommandBufferData(CVKDevice* pDevice, VkCommandBuffer vkCommandBuffer, const CGfxUniformBufferPtr ptrBuffer, size_t offset, size_t size, const void* data)
+		: m_pDevice(pDevice)
+		, m_vkCommandBuffer(vkCommandBuffer)
 		, m_ptrUniformBuffer(ptrBuffer)
 		, m_offset(offset)
 		, m_size(size)
@@ -50,8 +55,9 @@ public:
 	{
 		Execute();
 	}
-	CVKCommandBufferData(VkCommandBuffer vkCommandBuffer, const CGfxStorageBufferPtr ptrBuffer, size_t offset, size_t size, const void* data)
-		: m_vkCommandBuffer(vkCommandBuffer)
+	CVKCommandBufferData(CVKDevice* pDevice, VkCommandBuffer vkCommandBuffer, const CGfxStorageBufferPtr ptrBuffer, size_t offset, size_t size, const void* data)
+		: m_pDevice(pDevice)
+		, m_vkCommandBuffer(vkCommandBuffer)
 		, m_ptrStorageBuffer(ptrBuffer)
 		, m_offset(offset)
 		, m_size(size)
@@ -70,27 +76,27 @@ public:
 		ASSERT(m_vkCommandBuffer);
 
 		if (m_ptrIndexBuffer) {
-
+			return;
 		}
 
 		if (m_ptrVertexBuffer) {
-
+			return;
 		}
 
 		if (m_ptrInstanceBuffer) {
-
+			return;
 		}
 
 		if (m_ptrIndirectBuffer) {
-
+			return;
 		}
 
 		if (m_ptrUniformBuffer) {
-
+			return;
 		}
 
 		if (m_ptrStorageBuffer) {
-
+			return;
 		}
 	}
 
@@ -100,9 +106,9 @@ private:
 	size_t m_size;
 	const void* m_data;
 
-private:
 	CGfxTransferBufferPtr m_ptrTransferBuffer;
 
+private:
 	CGfxIndexBufferPtr m_ptrIndexBuffer;
 	CGfxVertexBufferPtr m_ptrVertexBuffer;
 	CGfxInstanceBufferPtr m_ptrInstanceBuffer;
@@ -112,4 +118,7 @@ private:
 
 private:
 	VkCommandBuffer m_vkCommandBuffer;
+
+private:
+	CVKDevice* m_pDevice;
 };
