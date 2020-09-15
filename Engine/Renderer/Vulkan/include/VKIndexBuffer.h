@@ -12,6 +12,7 @@ public:
 
 public:
 	VkBuffer GetBuffer(void) const;
+	VkBufferUsageFlags GetBufferUsageFlags(void) const;
 
 public:
 	GfxIndexType GetIndexType(void) const;

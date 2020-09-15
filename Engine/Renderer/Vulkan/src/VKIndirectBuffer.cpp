@@ -32,6 +32,11 @@ VkBuffer CVKIndirectBuffer::GetBuffer(void) const
 	return m_pBuffer->GetBuffer();
 }
 
+VkBufferUsageFlags CVKIndirectBuffer::GetBufferUsageFlags(void) const
+{
+	return m_pBuffer->GetBufferUsageFlags();
+}
+
 uint32_t CVKIndirectBuffer::GetDrawCommandCount(void) const
 {
 	return m_draws.size();

@@ -36,6 +36,11 @@ VkBuffer CVKIndexBuffer::GetBuffer(void) const
 	return m_pBuffer->GetBuffer();
 }
 
+VkBufferUsageFlags CVKIndexBuffer::GetBufferUsageFlags(void) const
+{
+	return m_pBuffer->GetBufferUsageFlags();
+}
+
 GfxIndexType CVKIndexBuffer::GetIndexType(void) const
 {
 	return m_type;

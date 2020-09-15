@@ -38,6 +38,11 @@ VkBuffer CVKVertexBuffer::GetBuffer(void) const
 	return m_pBuffer->GetBuffer();
 }
 
+VkBufferUsageFlags CVKVertexBuffer::GetBufferUsageFlags(void) const
+{
+	return m_pBuffer->GetBufferUsageFlags();
+}
+
 uint32_t CVKVertexBuffer::GetVertexBinding(void) const
 {
 	return m_binding;

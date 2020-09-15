@@ -15,6 +15,7 @@ private:
 
 public:
 	VkBuffer GetBuffer(void) const;
+	VkBufferUsageFlags GetBufferUsageFlags(void) const;
 
 public:
 	uint32_t GetInstanceBinding(void) const;

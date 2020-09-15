@@ -30,6 +30,11 @@ VkBuffer CVKStorageBuffer::GetBuffer(void) const
 	return m_pBuffer->GetBuffer();
 }
 
+VkBufferUsageFlags CVKStorageBuffer::GetBufferUsageFlags(void) const
+{
+	return m_pBuffer->GetBufferUsageFlags();
+}
+
 uint32_t CVKStorageBuffer::GetSize(void) const
 {
 	return m_pBuffer->GetSize();
