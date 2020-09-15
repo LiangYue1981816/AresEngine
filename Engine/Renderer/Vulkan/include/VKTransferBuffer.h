@@ -2,6 +2,7 @@
 #include "VKRenderer.h"
 
 
+/*
 class CVKTransferBuffer
 {
 	friend class CVKBuffer;
@@ -47,3 +48,4 @@ private:
 private:
 	CVKDevice* m_pDevice;
 };
+*/

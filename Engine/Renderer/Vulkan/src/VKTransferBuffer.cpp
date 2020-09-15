@@ -1,6 +1,7 @@
 #include "VKRenderer.h"
 
 
+/*
 CVKTransferBuffer::CVKTransferBuffer(CVKDevice* pDevice, CVKMemory* pMemory, VkQueue vkQueue, VkCommandPool vkCommandPool, VkDeviceSize size)
 	: m_pDevice(pDevice)
 	, m_pMemory(pMemory)
@@ -256,3 +257,4 @@ bool CVKTransferBuffer::IsTransferFinish(void) const
 	ASSERT(m_vkFence);
 	return vkGetFenceStatus(m_pDevice->GetDevice(), m_vkFence) == VK_SUCCESS;
 }
+*/

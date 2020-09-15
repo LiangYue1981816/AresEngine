@@ -1,6 +1,7 @@
 #include "VKRenderer.h"
 
 
+/*
 CVKTransferManager::CVKTransferManager(CVKDevice* pDevice, uint32_t queueFamilyIndex)
 	: m_pDevice(pDevice)
 
@@ -79,3 +80,4 @@ bool CVKTransferManager::TransferTextureCubemapData(CVKTexture* pDstTexture, VkI
 {
 	return AcquireTransferBuffer(size)->TransferTextureCubemapData(pDstTexture, dstImageLayout, face, level, xoffset, yoffset, width, height, size, data);
 }
+*/

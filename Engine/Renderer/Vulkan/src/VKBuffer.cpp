@@ -89,11 +89,13 @@ bool CVKBuffer::BufferData(size_t offset, size_t size, const void* data)
 			CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->CopyData(offset, size, data));
 			CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->EndMap());
 		}
+		/*
 		else {
 			VkAccessFlags dstAccessFlags = CVKHelper::GetAccessMaskByBufferUsage(m_vkBufferUsageFlags);
 			VkPipelineStageFlags dstPipelineStageFlags = CVKHelper::GetPipelineStageFlagsByBufferUsage(m_vkBufferUsageFlags);
 			CALL_BOOL_FUNCTION_RETURN_BOOL(m_pDevice->GetTransferManager()->TransferBufferData(this, dstAccessFlags, dstPipelineStageFlags, offset, size, data));
 		}
+		*/
 	}
 
 	return true;

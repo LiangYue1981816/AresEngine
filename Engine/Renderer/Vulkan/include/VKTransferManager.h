@@ -2,6 +2,7 @@
 #include "VKRenderer.h"
 
 
+/*
 class CVKTransferManager
 {
 	friend class CVKDevice;
@@ -35,3 +36,4 @@ private:
 private:
 	CVKDevice* m_pDevice;
 };
+*/
