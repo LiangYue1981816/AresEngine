@@ -25,7 +25,6 @@ VkResult vkBeginCommandBufferPrimary(VkCommandBuffer vkCommandBuffer, VkCommandB
 	beginInfo.pNext = nullptr;
 	beginInfo.flags = flags;
 	beginInfo.pInheritanceInfo = nullptr;
-
 	return vkBeginCommandBuffer(vkCommandBuffer, &beginInfo);
 }
 
@@ -68,7 +67,6 @@ VkResult vkCmdBufferMemoryBarrier(VkCommandBuffer vkCommandBuffer, VkBuffer vkBu
 	barrier.buffer = vkBuffer;
 	barrier.offset = offset;
 	barrier.size = size;
-
 	vkCmdPipelineBarrier(vkCommandBuffer, srcPipelineStageFlags, dstPipelineStageFlags, 0, 0, nullptr, 1, &barrier, 0, nullptr);
 	return VK_SUCCESS;
 }
@@ -77,7 +75,6 @@ VkResult vkCmdBufferMemoryBarrier(VkCommandBuffer vkCommandBuffer, VkBuffer vkBu
 {
 	VkPipelineStageFlags srcPipelineStageFlags = CVKHelper::GetPipelineStageFlagsByAccessFlags(srcAccessFlags);
 	VkPipelineStageFlags dstPipelineStageFlags = CVKHelper::GetPipelineStageFlagsByAccessFlags(dstAccessFlags);
-
 	vkCmdBufferMemoryBarrier(vkCommandBuffer, vkBuffer, srcAccessFlags, dstAccessFlags, srcPipelineStageFlags, dstPipelineStageFlags, offset, size);
 	return VK_SUCCESS;
 }
@@ -95,7 +92,6 @@ VkResult vkCmdImageMemoryBarrier(VkCommandBuffer vkCommandBuffer, VkImage vkImag
 	barrier.dstQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
 	barrier.image = vkImage;
 	barrier.subresourceRange = range;
-
 	vkCmdPipelineBarrier(vkCommandBuffer, srcPipelineStageFlags, dstPipelineStageFlags, 0, 0, nullptr, 0, nullptr, 1, &barrier);
 	return VK_SUCCESS;
 }
@@ -126,7 +122,6 @@ VkResult vkCmdBufferData(VkCommandBuffer vkCommandBuffer, VkBuffer vkSrcBuffer, 
 	region.srcOffset = srcOffset;
 	region.dstOffset = dstOffset;
 	region.size = size;
-
 	vkCmdCopyBuffer(vkCommandBuffer, vkSrcBuffer, vkDstBuffer, 1, &region);
 	return VK_SUCCESS;
 }
@@ -145,7 +140,6 @@ VkResult vkCmdTextureData(VkCommandBuffer vkCommandBuffer, VkBuffer vkSrcBuffer,
 	region.imageSubresource.mipLevel = level;
 	region.imageSubresource.baseArrayLayer = layer;
 	region.imageSubresource.layerCount = 1;
-
 	vkCmdCopyBufferToImage(vkCommandBuffer, vkSrcBuffer, vkDstImage, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, 1, &region);
 	return VK_SUCCESS;
 }
@@ -167,6 +161,5 @@ VkResult vkSubmitCommandBuffer(VkQueue vkQueue, VkCommandBuffer vkCommandBuffer,
 	submitInfo.pWaitDstStageMask = vkWaitSemaphore != VK_NULL_HANDLE ? &waitStageFlags : nullptr;
 	submitInfo.signalSemaphoreCount = vkSignalSemaphore != VK_NULL_HANDLE ? 1 : 0;
 	submitInfo.pSignalSemaphores = vkSignalSemaphore != VK_NULL_HANDLE ? &vkSignalSemaphore : nullptr;
-
 	return vkQueueSubmit(vkQueue, 1, &submitInfo, vkFence);
 }
