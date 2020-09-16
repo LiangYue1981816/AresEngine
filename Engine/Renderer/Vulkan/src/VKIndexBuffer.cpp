@@ -65,8 +65,3 @@ bool CVKIndexBuffer::BufferData(size_t offset, size_t size, const void* data)
 	return m_pBuffer->BufferData(offset, size, data);
 }
 
-void CVKIndexBuffer::Bind(VkCommandBuffer vkCommandBuffer) const
-{
-	ASSERT(vkCommandBuffer);
-	vkCmdBindIndexBuffer(vkCommandBuffer, m_pBuffer->GetBuffer(), 0, CVKHelper::TranslateIndexType(m_type));
-}

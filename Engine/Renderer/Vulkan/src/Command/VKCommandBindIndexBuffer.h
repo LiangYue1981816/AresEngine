@@ -24,7 +24,7 @@ public:
 
 		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_BIND_INDEXBUFFER);
 		{
-			((CVKIndexBuffer*)m_ptrIndexBuffer.GetPointer())->Bind(m_vkCommandBuffer);
+			vkCmdBindIndexBuffer(m_vkCommandBuffer, ((CVKIndexBuffer*)m_ptrIndexBuffer.GetPointer())->GetBuffer(), 0, CVKHelper::TranslateIndexType(((CVKIndexBuffer*)m_ptrIndexBuffer.GetPointer())->GetIndexType()));
 		}
 	}
 
