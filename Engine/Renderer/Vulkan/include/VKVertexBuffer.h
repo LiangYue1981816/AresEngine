@@ -23,9 +23,6 @@ public:
 public:
 	bool BufferData(size_t offset, size_t size, const void* data);
 
-public:
-	void Bind(VkCommandBuffer vkCommandBuffer) const;
-
 
 private:
 	uint32_t m_binding;

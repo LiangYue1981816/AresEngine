@@ -77,9 +77,3 @@ void CVKMesh::Destroy(void)
 	m_ptrIndexBuffer.Release();
 	m_ptrVertexBuffer.Release();
 }
-
-void CVKMesh::Bind(VkCommandBuffer vkCommandBuffer)
-{
-	((CVKIndexBuffer*)m_ptrIndexBuffer.GetPointer())->Bind(vkCommandBuffer);
-	((CVKVertexBuffer*)m_ptrVertexBuffer.GetPointer())->Bind(vkCommandBuffer);
-}

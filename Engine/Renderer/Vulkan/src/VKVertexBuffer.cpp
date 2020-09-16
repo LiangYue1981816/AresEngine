@@ -67,9 +67,3 @@ bool CVKVertexBuffer::BufferData(size_t offset, size_t size, const void* data)
 {
 	return m_pBuffer->BufferData(offset, size, data);
 }
-
-void CVKVertexBuffer::Bind(VkCommandBuffer vkCommandBuffer) const
-{
-	ASSERT(vkCommandBuffer);
-	vkCmdBindVertexBuffer(vkCommandBuffer, m_binding, m_pBuffer->GetBuffer(), 0);
-}
