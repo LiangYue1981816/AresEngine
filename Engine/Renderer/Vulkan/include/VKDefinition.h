@@ -37,6 +37,16 @@
 	}                                            \
 }
 
+#define CALL_VK_FUNCTION_RETURN_RESULT(func)     \
+{                                                \
+	VkResult err = func;                         \
+	if (err != VK_SUCCESS) {                     \
+		CVKInstance::SetLastError(err);          \
+		ASSERT(false);                           \
+		return err;                              \
+	}                                            \
+}
+
 #define CALL_VK_FUNCTION_RETURN_NULLPTR(func)    \
 {                                                \
 	VkResult err = func;                         \

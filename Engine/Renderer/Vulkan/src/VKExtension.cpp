@@ -25,7 +25,8 @@ VkResult vkBeginCommandBufferPrimary(VkCommandBuffer vkCommandBuffer, VkCommandB
 	beginInfo.pNext = nullptr;
 	beginInfo.flags = flags;
 	beginInfo.pInheritanceInfo = nullptr;
-	return vkBeginCommandBuffer(vkCommandBuffer, &beginInfo);
+	CALL_VK_FUNCTION_RETURN_RESULT(vkBeginCommandBuffer(vkCommandBuffer, &beginInfo));
+	return VK_SUCCESS;
 }
 
 VkResult vkBeginCommandBufferSecondary(VkCommandBuffer vkCommandBuffer, VkCommandBufferUsageFlags flags, VkFramebuffer vkFrameBuffer, VkRenderPass vkRenderPass, uint32_t indexSubpass, VkBool32 occlusionQueryEnable, VkQueryControlFlags queryFlags, VkQueryPipelineStatisticFlags pipelineStatistics)
@@ -45,7 +46,8 @@ VkResult vkBeginCommandBufferSecondary(VkCommandBuffer vkCommandBuffer, VkComman
 	beginInfo.pNext = nullptr;
 	beginInfo.flags = flags;
 	beginInfo.pInheritanceInfo = &inheritanceInfo;
-	return vkBeginCommandBuffer(vkCommandBuffer, &beginInfo);
+	CALL_VK_FUNCTION_RETURN_RESULT(vkBeginCommandBuffer(vkCommandBuffer, &beginInfo));
+	return VK_SUCCESS;
 }
 
 VkResult vkCmdBindVertexBuffer(VkCommandBuffer vkCommandBuffer, uint32_t binding, VkBuffer vkBuffer, VkDeviceSize offset)
@@ -74,7 +76,8 @@ VkResult vkCmdBufferMemoryBarrier(VkCommandBuffer vkCommandBuffer, VkBuffer vkBu
 {
 	VkPipelineStageFlags srcPipelineStageFlags = CVKHelper::GetPipelineStageFlagsByAccessFlags(srcAccessFlags);
 	VkPipelineStageFlags dstPipelineStageFlags = CVKHelper::GetPipelineStageFlagsByAccessFlags(dstAccessFlags);
-	return vkCmdBufferMemoryBarrier(vkCommandBuffer, vkBuffer, srcAccessFlags, dstAccessFlags, srcPipelineStageFlags, dstPipelineStageFlags, offset, size);
+	CALL_VK_FUNCTION_RETURN_RESULT(vkCmdBufferMemoryBarrier(vkCommandBuffer, vkBuffer, srcAccessFlags, dstAccessFlags, srcPipelineStageFlags, dstPipelineStageFlags, offset, size));
+	return VK_SUCCESS;
 }
 
 VkResult vkCmdImageMemoryBarrier(VkCommandBuffer vkCommandBuffer, VkImage vkImage, VkImageLayout srcLayout, VkImageLayout dstLayout, VkAccessFlags srcAccessFlags, VkAccessFlags dstAccessFlags, VkPipelineStageFlags srcPipelineStageFlags, VkPipelineStageFlags dstPipelineStageFlags, VkImageSubresourceRange range)
@@ -110,7 +113,8 @@ VkResult vkCmdImageMemoryBarrier(VkCommandBuffer vkCommandBuffer, VkImage vkImag
 		dstPipelineStageFlags |= VK_PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT;
 	}
 
-	return vkCmdImageMemoryBarrier(vkCommandBuffer, vkImage, srcLayout, dstLayout, srcAccessFlags, dstAccessFlags, srcPipelineStageFlags, dstPipelineStageFlags, range);
+	CALL_VK_FUNCTION_RETURN_RESULT(vkCmdImageMemoryBarrier(vkCommandBuffer, vkImage, srcLayout, dstLayout, srcAccessFlags, dstAccessFlags, srcPipelineStageFlags, dstPipelineStageFlags, range));
+	return VK_SUCCESS;
 }
 
 VkResult vkCmdTransferBufferData(VkCommandBuffer vkCommandBuffer, VkBuffer vkSrcBuffer, VkBuffer vkDstBuffer, VkBufferUsageFlags vkDstBufferUsageFlags, VkDeviceSize offset, VkDeviceSize size)
@@ -123,12 +127,43 @@ VkResult vkCmdTransferBufferData(VkCommandBuffer vkCommandBuffer, VkBuffer vkSrc
 
 	VkAccessFlags dstAccessFlags = CVKHelper::GetAccessMaskByBufferUsage(vkDstBufferUsageFlags);
 	VkPipelineStageFlags dstPipelineStageFlags = CVKHelper::GetPipelineStageFlagsByBufferUsage(vkDstBufferUsageFlags);
-	vkCmdBufferMemoryBarrier(vkCommandBuffer, vkDstBuffer, VK_ACCESS_TRANSFER_WRITE_BIT, dstAccessFlags, VK_PIPELINE_STAGE_TRANSFER_BIT, dstPipelineStageFlags, offset, size);
+	CALL_VK_FUNCTION_RETURN_RESULT(vkCmdBufferMemoryBarrier(vkCommandBuffer, vkDstBuffer, VK_ACCESS_TRANSFER_WRITE_BIT, dstAccessFlags, VK_PIPELINE_STAGE_TRANSFER_BIT, dstPipelineStageFlags, offset, size));
+	return VK_SUCCESS;
+}
+
+VkResult vkCmdTextureData(VkCommandBuffer vkCommandBuffer, VkBuffer vkSrcBuffer, VkImage vkDstImage, VkImageLayout vkSrcImageLayout, VkImageLayout vkDstImageLayout, VkImageAspectFlags vkAspectMask, int32_t xoffset, int32_t yoffset, uint32_t width, uint32_t height, uint32_t level, uint32_t layer)
+{
+	VkBufferImageCopy region = {};
+	region.bufferOffset = 0;
+	region.imageOffset.x = xoffset;
+	region.imageOffset.y = yoffset;
+	region.imageOffset.z = 0;
+	region.imageExtent.width = width;
+	region.imageExtent.height = height;
+	region.imageExtent.depth = 1;
+	region.imageSubresource.aspectMask = vkAspectMask;
+	region.imageSubresource.mipLevel = level;
+	region.imageSubresource.baseArrayLayer = layer;
+	region.imageSubresource.layerCount = 1;
+
+	VkImageSubresourceRange range = {};
+	range.aspectMask = vkAspectMask;
+	range.baseMipLevel = level;
+	range.levelCount = 1;
+	range.baseArrayLayer = layer;
+	range.layerCount = 1;
+
+	CALL_VK_FUNCTION_RETURN_RESULT(vkCmdImageMemoryBarrier(vkCommandBuffer, vkDstImage, vkSrcImageLayout, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, range));
+	vkCmdCopyBufferToImage(vkCommandBuffer, vkSrcBuffer, vkDstImage, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, 1, &region);
+	CALL_VK_FUNCTION_RETURN_RESULT(vkCmdImageMemoryBarrier(vkCommandBuffer, vkDstImage, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, vkDstImageLayout, range));
+
+	return VK_SUCCESS;
 }
 
 VkResult vkSubmitCommandBuffer(VkQueue vkQueue, VkCommandBuffer vkCommandBuffer, VkFence vkFence)
 {
-	return vkSubmitCommandBuffer(vkQueue, vkCommandBuffer, vkFence, VK_NULL_HANDLE, 0, VK_NULL_HANDLE);
+	CALL_VK_FUNCTION_RETURN_RESULT(vkSubmitCommandBuffer(vkQueue, vkCommandBuffer, vkFence, VK_NULL_HANDLE, 0, VK_NULL_HANDLE));
+	return VK_SUCCESS;
 }
 
 VkResult vkSubmitCommandBuffer(VkQueue vkQueue, VkCommandBuffer vkCommandBuffer, VkFence vkFence, VkSemaphore vkWaitSemaphore, VkPipelineStageFlags waitStageFlags, VkSemaphore vkSignalSemaphore)
@@ -143,5 +178,6 @@ VkResult vkSubmitCommandBuffer(VkQueue vkQueue, VkCommandBuffer vkCommandBuffer,
 	submitInfo.pWaitDstStageMask = vkWaitSemaphore != VK_NULL_HANDLE ? &waitStageFlags : nullptr;
 	submitInfo.signalSemaphoreCount = vkSignalSemaphore != VK_NULL_HANDLE ? 1 : 0;
 	submitInfo.pSignalSemaphores = vkSignalSemaphore != VK_NULL_HANDLE ? &vkSignalSemaphore : nullptr;
-	return vkQueueSubmit(vkQueue, 1, &submitInfo, vkFence);
+	CALL_VK_FUNCTION_RETURN_RESULT(vkQueueSubmit(vkQueue, 1, &submitInfo, vkFence));
+	return VK_SUCCESS;
 }
