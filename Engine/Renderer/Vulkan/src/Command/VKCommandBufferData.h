@@ -131,8 +131,8 @@ public:
 			ASSERT(0);
 		}
 
-		vkCmdBufferData(m_vkCommandBuffer, vkSrcBuffer, 0, vkDstBuffer, m_offset, m_size);
-		vkCmdBufferMemoryBarrier(m_vkCommandBuffer, vkDstBuffer, VK_ACCESS_TRANSFER_WRITE_BIT, CVKHelper::GetAccessMaskByBufferUsage(vkBufferUsageFlags), VK_PIPELINE_STAGE_TRANSFER_BIT, CVKHelper::GetPipelineStageFlagsByBufferUsage(vkBufferUsageFlags), m_offset, m_size);
+		CALL_VK_FUNCTION_ASSERT(vkCmdBufferData(m_vkCommandBuffer, vkSrcBuffer, 0, vkDstBuffer, m_offset, m_size));
+		CALL_VK_FUNCTION_ASSERT(vkCmdBufferMemoryBarrier(m_vkCommandBuffer, vkDstBuffer, VK_ACCESS_TRANSFER_WRITE_BIT, CVKHelper::GetAccessMaskByBufferUsage(vkBufferUsageFlags), VK_PIPELINE_STAGE_TRANSFER_BIT, CVKHelper::GetPipelineStageFlagsByBufferUsage(vkBufferUsageFlags), m_offset, m_size));
 	}
 
 
