@@ -87,19 +87,13 @@ class CVKPipelineCompute;
 class CVKPipelineGraphics;
 
 class CVKBuffer;
-
 class CVKIndexBuffer;
 class CVKVertexBuffer;
 class CVKInstanceBuffer;
 class CVKIndirectBuffer;
-
-class CVKMultiIndexBuffer;
-class CVKMultiVertexBuffer;
-class CVKMultiInstanceBuffer;
-class CVKMultiIndirectBuffer;
-
 class CVKUniformBuffer;
 class CVKStorageBuffer;
+class CVKTransferBuffer;
 
 class CVKSampler;
 class CVKTexture;

@@ -28,7 +28,7 @@ public:
 		CGfxProfilerSample sample(CGfxProfiler::SAMPLE_TYPE_COMMAND_BIND_INSTANCEBUFFER);
 		{
 			if (m_pPipelineGraphics->IsCompatibleVertexFormat(m_ptrInstanceBuffer->GetInstanceBinding(), m_ptrInstanceBuffer->GetInstanceFormat())) {
-				((CVKInstanceBuffer*)m_ptrInstanceBuffer.GetPointer())->Bind(m_vkCommandBuffer, m_offset);
+				vkCmdBindVertexBuffer(m_vkCommandBuffer, m_ptrInstanceBuffer->GetInstanceBinding(), ((CVKInstanceBuffer*)m_ptrInstanceBuffer.GetPointer())->GetBuffer(), m_offset);
 			}
 		}
 	}
