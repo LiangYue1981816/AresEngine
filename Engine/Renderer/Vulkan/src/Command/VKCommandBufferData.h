@@ -13,6 +13,9 @@ public:
 		, m_size(size)
 		, m_data(data)
 	{
+		m_ptrTransferBuffer = new CVKTransferBuffer(pDevice, size);
+		m_ptrTransferBuffer->BufferData(0, size, data);
+
 		Execute();
 	}
 	CVKCommandBufferData(CVKDevice* pDevice, VkCommandBuffer vkCommandBuffer, const CGfxVertexBufferPtr ptrBuffer, size_t offset, size_t size, const void* data)
@@ -23,6 +26,9 @@ public:
 		, m_size(size)
 		, m_data(data)
 	{
+		m_ptrTransferBuffer = new CVKTransferBuffer(pDevice, size);
+		m_ptrTransferBuffer->BufferData(0, size, data);
+
 		Execute();
 	}
 	CVKCommandBufferData(CVKDevice* pDevice, VkCommandBuffer vkCommandBuffer, const CGfxInstanceBufferPtr ptrBuffer, size_t offset, size_t size, const void* data)
@@ -33,6 +39,9 @@ public:
 		, m_size(size)
 		, m_data(data)
 	{
+		m_ptrTransferBuffer = new CVKTransferBuffer(pDevice, size);
+		m_ptrTransferBuffer->BufferData(0, size, data);
+
 		Execute();
 	}
 	CVKCommandBufferData(CVKDevice* pDevice, VkCommandBuffer vkCommandBuffer, const CGfxIndirectBufferPtr ptrBuffer, size_t offset, size_t size, const void* data)
@@ -43,6 +52,9 @@ public:
 		, m_size(size)
 		, m_data(data)
 	{
+		m_ptrTransferBuffer = new CVKTransferBuffer(pDevice, size);
+		m_ptrTransferBuffer->BufferData(0, size, data);
+
 		Execute();
 	}
 	CVKCommandBufferData(CVKDevice* pDevice, VkCommandBuffer vkCommandBuffer, const CGfxUniformBufferPtr ptrBuffer, size_t offset, size_t size, const void* data)
@@ -53,6 +65,9 @@ public:
 		, m_size(size)
 		, m_data(data)
 	{
+		m_ptrTransferBuffer = new CVKTransferBuffer(pDevice, size);
+		m_ptrTransferBuffer->BufferData(0, size, data);
+
 		Execute();
 	}
 	CVKCommandBufferData(CVKDevice* pDevice, VkCommandBuffer vkCommandBuffer, const CGfxStorageBufferPtr ptrBuffer, size_t offset, size_t size, const void* data)
@@ -63,6 +78,9 @@ public:
 		, m_size(size)
 		, m_data(data)
 	{
+		m_ptrTransferBuffer = new CVKTransferBuffer(pDevice, size);
+		m_ptrTransferBuffer->BufferData(0, size, data);
+
 		Execute();
 	}
 	virtual ~CVKCommandBufferData(void)
@@ -74,30 +92,6 @@ public:
 	virtual void Execute(void)
 	{
 		ASSERT(m_vkCommandBuffer);
-
-		if (m_ptrIndexBuffer) {
-			return;
-		}
-
-		if (m_ptrVertexBuffer) {
-			return;
-		}
-
-		if (m_ptrInstanceBuffer) {
-			return;
-		}
-
-		if (m_ptrIndirectBuffer) {
-			return;
-		}
-
-		if (m_ptrUniformBuffer) {
-			return;
-		}
-
-		if (m_ptrStorageBuffer) {
-			return;
-		}
 	}
 
 
