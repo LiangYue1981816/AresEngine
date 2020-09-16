@@ -20,7 +20,6 @@ private:
 private:
 	VkImage GetImage(void) const;
 	VkImageView GetImageView(void) const;
-	VkImageLayout GetImageLayout(void) const;
 	VkImageAspectFlags GetImageAspectFlags(void) const;
 
 	GfxTextureType GetType(void) const;
@@ -48,7 +47,6 @@ private:
 
 	VkImage m_vkImage;
 	VkImageView m_vkImageView;
-	VkImageLayout m_vkImageLayout;
 	VkImageAspectFlags m_vkImageAspectFlags;
 
 private:

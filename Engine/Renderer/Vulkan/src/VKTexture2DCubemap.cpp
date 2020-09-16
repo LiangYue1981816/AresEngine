@@ -20,14 +20,14 @@ void CVKTextureCubemap::Release(void)
 	m_pManager->Destroy(this);
 }
 
+VkImage CVKTextureCubemap::GetImage(void) const
+{
+	return m_pTexture->GetImage();
+}
+
 VkImageView CVKTextureCubemap::GetImageView(void) const
 {
 	return m_pTexture->GetImageView();
-}
-
-VkImageLayout CVKTextureCubemap::GetImageLayout(void) const
-{
-	return m_pTexture->GetImageLayout();
 }
 
 VkImageAspectFlags CVKTextureCubemap::GetImageAspectFlags(void) const

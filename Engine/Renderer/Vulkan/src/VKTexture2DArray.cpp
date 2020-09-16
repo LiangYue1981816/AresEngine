@@ -20,14 +20,14 @@ void CVKTexture2DArray::Release(void)
 	m_pManager->Destroy(this);
 }
 
+VkImage CVKTexture2DArray::GetImage(void) const
+{
+	return m_pTexture->GetImage();
+}
+
 VkImageView CVKTexture2DArray::GetImageView(void) const
 {
 	return m_pTexture->GetImageView();
-}
-
-VkImageLayout CVKTexture2DArray::GetImageLayout(void) const
-{
-	return m_pTexture->GetImageLayout();
 }
 
 VkImageAspectFlags CVKTexture2DArray::GetImageAspectFlags(void) const

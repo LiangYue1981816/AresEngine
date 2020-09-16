@@ -20,14 +20,14 @@ void CVKRenderTexture::Release(void)
 	m_pManager->Destroy(this);
 }
 
+VkImage CVKRenderTexture::GetImage(void) const
+{
+	return m_pTexture->GetImage();
+}
+
 VkImageView CVKRenderTexture::GetImageView(void) const
 {
 	return m_pTexture->GetImageView();
-}
-
-VkImageLayout CVKRenderTexture::GetImageLayout(void) const
-{
-	return m_pTexture->GetImageLayout();
 }
 
 VkImageAspectFlags CVKRenderTexture::GetImageAspectFlags(void) const

@@ -9,7 +9,6 @@ CVKTexture::CVKTexture(CVKDevice* pDevice)
 
 	, m_vkImage(VK_NULL_HANDLE)
 	, m_vkImageView(VK_NULL_HANDLE)
-	, m_vkImageLayout(VK_IMAGE_LAYOUT_UNDEFINED)
 	, m_vkImageAspectFlags(0)
 
 	, m_type(GFX_TEXTURE_INVALID_ENUM)
@@ -39,11 +38,6 @@ VkImageView CVKTexture::GetImageView(void) const
 {
 	ASSERT(m_vkImageView);
 	return m_vkImageView;
-}
-
-VkImageLayout CVKTexture::GetImageLayout(void) const
-{
-	return m_vkImageLayout;
 }
 
 VkImageAspectFlags CVKTexture::GetImageAspectFlags(void) const
@@ -99,7 +93,6 @@ bool CVKTexture::Create(GfxTextureType type, GfxPixelFormat format, int width, i
 
 			m_vkImage = vkImage;
 			m_vkImageView = VK_NULL_HANDLE;
-			m_vkImageLayout = VK_IMAGE_LAYOUT_UNDEFINED;
 			m_vkImageAspectFlags = imageAspectFlags;
 
 			m_type = type;
@@ -142,7 +135,6 @@ bool CVKTexture::Create(GfxTextureType type, GfxPixelFormat format, int width, i
 
 			m_vkImage = VK_NULL_HANDLE;
 			m_vkImageView = VK_NULL_HANDLE;
-			m_vkImageLayout = VK_IMAGE_LAYOUT_UNDEFINED;
 			m_vkImageAspectFlags = imageAspectFlags;
 
 			m_type = type;
@@ -231,7 +223,6 @@ void CVKTexture::Destroy(void)
 
 	m_vkImage = VK_NULL_HANDLE;
 	m_vkImageView = VK_NULL_HANDLE;
-	m_vkImageLayout = VK_IMAGE_LAYOUT_UNDEFINED;
 	m_vkImageAspectFlags = 0;
 
 	m_type = GFX_TEXTURE_INVALID_ENUM;

@@ -14,8 +14,8 @@ private:
 
 
 public:
+	VkImage GetImage(void) const;
 	VkImageView GetImageView(void) const;
-	VkImageLayout GetImageLayout(void) const;
 	VkImageAspectFlags GetImageAspectFlags(void) const;
 
 public:
