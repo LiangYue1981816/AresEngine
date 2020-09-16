@@ -246,8 +246,6 @@ void CVKTexture::Destroy(void)
 
 bool CVKTexture::Texture2DData(GfxPixelFormat format, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
 {
-	ASSERT(size);
-	ASSERT(data);
 	ASSERT(m_vkImage);
 	ASSERT(m_vkImageView);
 	ASSERT(m_bExtern == false);
@@ -264,8 +262,6 @@ bool CVKTexture::Texture2DData(GfxPixelFormat format, int level, int xoffset, in
 
 bool CVKTexture::Texture2DArrayData(GfxPixelFormat format, int layer, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
 {
-	ASSERT(size);
-	ASSERT(data);
 	ASSERT(m_vkImage);
 	ASSERT(m_vkImageView);
 	ASSERT(m_bExtern == false);
@@ -283,8 +279,6 @@ bool CVKTexture::Texture2DArrayData(GfxPixelFormat format, int layer, int level,
 
 bool CVKTexture::TextureCubemapData(GfxPixelFormat format, GfxCubemapFace face, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
 {
-	ASSERT(size);
-	ASSERT(data);
 	ASSERT(m_vkImage);
 	ASSERT(m_vkImageView);
 	ASSERT(m_bExtern == false);
