@@ -120,25 +120,21 @@ VkResult vkCmdImageMemoryBarrier(VkCommandBuffer vkCommandBuffer, VkImage vkImag
 	return VK_SUCCESS;
 }
 
-VkResult vkCmdTransferBufferData(VkCommandBuffer vkCommandBuffer, VkBuffer vkSrcBuffer, VkBuffer vkDstBuffer, VkBufferUsageFlags vkDstBufferUsageFlags, VkDeviceSize offset, VkDeviceSize size)
+VkResult vkCmdBufferData(VkCommandBuffer vkCommandBuffer, VkBuffer vkSrcBuffer, VkDeviceSize srcOffset, VkBuffer vkDstBuffer, VkDeviceSize dstOffset, VkDeviceSize size)
 {
 	VkBufferCopy region = {};
-	region.srcOffset = 0;
-	region.dstOffset = offset;
+	region.srcOffset = srcOffset;
+	region.dstOffset = dstOffset;
 	region.size = size;
 
-	VkAccessFlags dstAccessFlags = CVKHelper::GetAccessMaskByBufferUsage(vkDstBufferUsageFlags);
-	VkPipelineStageFlags dstPipelineStageFlags = CVKHelper::GetPipelineStageFlagsByBufferUsage(vkDstBufferUsageFlags);
-
 	vkCmdCopyBuffer(vkCommandBuffer, vkSrcBuffer, vkDstBuffer, 1, &region);
-	vkCmdBufferMemoryBarrier(vkCommandBuffer, vkDstBuffer, VK_ACCESS_TRANSFER_WRITE_BIT, dstAccessFlags, VK_PIPELINE_STAGE_TRANSFER_BIT, dstPipelineStageFlags, offset, size);
 	return VK_SUCCESS;
 }
 
-VkResult vkCmdTextureData(VkCommandBuffer vkCommandBuffer, VkBuffer vkSrcBuffer, VkImage vkDstImage, VkImageLayout vkSrcImageLayout, VkImageLayout vkDstImageLayout, VkImageAspectFlags vkAspectMask, int32_t xoffset, int32_t yoffset, uint32_t width, uint32_t height, uint32_t level, uint32_t layer)
+VkResult vkCmdTextureData(VkCommandBuffer vkCommandBuffer, VkBuffer vkSrcBuffer, VkDeviceSize bufferOffset, VkImage vkDstImage, VkImageAspectFlags vkAspectMask, int32_t xoffset, int32_t yoffset, uint32_t width, uint32_t height, uint32_t level, uint32_t layer)
 {
 	VkBufferImageCopy region = {};
-	region.bufferOffset = 0;
+	region.bufferOffset = bufferOffset;
 	region.imageOffset.x = xoffset;
 	region.imageOffset.y = yoffset;
 	region.imageOffset.z = 0;
@@ -150,16 +146,7 @@ VkResult vkCmdTextureData(VkCommandBuffer vkCommandBuffer, VkBuffer vkSrcBuffer,
 	region.imageSubresource.baseArrayLayer = layer;
 	region.imageSubresource.layerCount = 1;
 
-	VkImageSubresourceRange range = {};
-	range.aspectMask = vkAspectMask;
-	range.baseMipLevel = level;
-	range.levelCount = 1;
-	range.baseArrayLayer = layer;
-	range.layerCount = 1;
-
-	vkCmdImageMemoryBarrier(vkCommandBuffer, vkDstImage, vkSrcImageLayout, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, range);
 	vkCmdCopyBufferToImage(vkCommandBuffer, vkSrcBuffer, vkDstImage, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, 1, &region);
-	vkCmdImageMemoryBarrier(vkCommandBuffer, vkDstImage, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, vkDstImageLayout, range);
 	return VK_SUCCESS;
 }
 

@@ -15,8 +15,8 @@ extern VkResult vkCmdBufferMemoryBarrier(VkCommandBuffer vkCommandBuffer, VkBuff
 extern VkResult vkCmdImageMemoryBarrier(VkCommandBuffer vkCommandBuffer, VkImage vkImage, VkImageLayout srcLayout, VkImageLayout dstLayout, VkAccessFlags srcAccessFlags, VkAccessFlags dstAccessFlags, VkPipelineStageFlags srcPipelineStageFlags, VkPipelineStageFlags dstPipelineStageFlags, VkImageSubresourceRange range);
 extern VkResult vkCmdImageMemoryBarrier(VkCommandBuffer vkCommandBuffer, VkImage vkImage, VkImageLayout srcLayout, VkImageLayout dstLayout, VkImageSubresourceRange range);
 
-extern VkResult vkCmdBufferData(VkCommandBuffer vkCommandBuffer, VkBuffer vkSrcBuffer, VkBuffer vkDstBuffer, VkBufferUsageFlags vkDstBufferUsageFlags, VkDeviceSize offset, VkDeviceSize size);
-extern VkResult vkCmdTextureData(VkCommandBuffer vkCommandBuffer, VkBuffer vkSrcBuffer, VkImage vkDstImage, VkImageLayout vkSrcImageLayout, VkImageLayout vkDstImageLayout, VkImageAspectFlags vkAspectMask, int32_t xoffset, int32_t yoffset, uint32_t width, uint32_t height, uint32_t level, uint32_t layer);
+extern VkResult vkCmdBufferData(VkCommandBuffer vkCommandBuffer, VkBuffer vkSrcBuffer, VkDeviceSize srcOffset, VkBuffer vkDstBuffer, VkDeviceSize dstOffset, VkDeviceSize size);
+extern VkResult vkCmdTextureData(VkCommandBuffer vkCommandBuffer, VkBuffer vkSrcBuffer, VkDeviceSize bufferOffset, VkImage vkDstImage, VkImageAspectFlags vkAspectMask, int32_t xoffset, int32_t yoffset, uint32_t width, uint32_t height, uint32_t level, uint32_t layer);
 
 extern VkResult vkSubmitCommandBuffer(VkQueue vkQueue, VkCommandBuffer vkCommandBuffer, VkFence vkFence);
 extern VkResult vkSubmitCommandBuffer(VkQueue vkQueue, VkCommandBuffer vkCommandBuffer, VkFence vkFence, VkSemaphore vkWaitSemaphore, VkPipelineStageFlags waitStageFlags, VkSemaphore vkSignalSemaphore);
