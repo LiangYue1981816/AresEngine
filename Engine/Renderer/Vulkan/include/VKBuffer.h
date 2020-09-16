@@ -4,7 +4,6 @@
 
 class CVKBuffer : public CGfxResource
 {
-	friend class CVKTexture;
 	friend class CVKIndexBuffer;
 	friend class CVKVertexBuffer;
 	friend class CVKInstanceBuffer;
@@ -31,14 +30,14 @@ private:
 	VkBufferUsageFlags GetBufferUsageFlags(void) const;
 
 private:
-	bool BufferData(size_t offset, size_t size, const void* data);
-
-private:
 	bool IsDeviceLocal(void) const;
 	bool IsHostVisible(void) const;
 	bool IsHostCoherent(void) const;
 	bool IsHostCached(void) const;
 	bool IsLazilyAllocated(void) const;
+
+private:
+	bool BufferData(size_t offset, size_t size, const void* data);
 
 
 private:

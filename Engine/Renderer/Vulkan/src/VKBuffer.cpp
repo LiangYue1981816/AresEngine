@@ -49,14 +49,15 @@ bool CVKBuffer::Create(VkDeviceSize size, VkBufferUsageFlags bufferUsageFlags, V
 
 void CVKBuffer::Destroy(void)
 {
-	ASSERT(m_vkBuffer);
 	ASSERT(m_pMemory);
+	ASSERT(m_vkBuffer);
 
 	vkDestroyBuffer(m_pDevice->GetDevice(), m_vkBuffer, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
 	m_pDevice->GetMemoryManager()->FreeMemory(m_pMemory);
 
 	m_pMemory = nullptr;
 	m_vkBuffer = VK_NULL_HANDLE;
+	m_vkSize = 0;
 	m_vkBufferUsageFlags = 0;
 }
 
@@ -82,26 +83,6 @@ VkBufferUsageFlags CVKBuffer::GetBufferUsageFlags(void) const
 {
 	ASSERT(m_vkBufferUsageFlags);
 	return m_vkBufferUsageFlags;
-}
-
-bool CVKBuffer::BufferData(size_t offset, size_t size, const void* data)
-{
-	ASSERT(m_vkBuffer);
-	ASSERT(m_vkSize >= offset + size);
-
-	if (size && data) {
-		if (m_pMemory->IsHostVisible()) {
-			CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->BeginMap());
-			CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->CopyData(offset, size, data));
-			CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->EndMap());
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-
-	return true;
 }
 
 bool CVKBuffer::IsDeviceLocal(void) const
@@ -132,4 +113,25 @@ bool CVKBuffer::IsLazilyAllocated(void) const
 {
 	ASSERT(m_pMemory);
 	return m_pMemory->IsLazilyAllocated();
+}
+
+bool CVKBuffer::BufferData(size_t offset, size_t size, const void* data)
+{
+	ASSERT(m_pMemory);
+	ASSERT(m_vkBuffer);
+	ASSERT(m_vkSize >= offset + size);
+
+	if (size && data) {
+		if (m_pMemory->IsHostVisible()) {
+			CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->BeginMap());
+			CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->CopyData(offset, size, data));
+			CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->EndMap());
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	return true;
 }
