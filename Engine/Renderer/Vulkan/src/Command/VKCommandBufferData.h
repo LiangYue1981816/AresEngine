@@ -92,6 +92,47 @@ public:
 	virtual void Execute(void)
 	{
 		ASSERT(m_vkCommandBuffer);
+
+		VkBuffer vkSrcBuffer;
+		VkBuffer vkDstBuffer;
+		VkBufferUsageFlags vkBufferUsageFlags;
+
+		if (m_ptrIndexBuffer) {
+			vkSrcBuffer = ((CVKTransferBuffer*)m_ptrTransferBuffer.GetPointer())->GetBuffer();
+			vkDstBuffer = ((CVKIndexBuffer*)m_ptrIndexBuffer.GetPointer())->GetBuffer();
+			vkBufferUsageFlags = ((CVKIndexBuffer*)m_ptrIndexBuffer.GetPointer())->GetBufferUsageFlags();
+		}
+		else if (m_ptrVertexBuffer) {
+			vkSrcBuffer = ((CVKTransferBuffer*)m_ptrTransferBuffer.GetPointer())->GetBuffer();
+			vkDstBuffer = ((CVKIndexBuffer*)m_ptrVertexBuffer.GetPointer())->GetBuffer();
+			vkBufferUsageFlags = ((CVKIndexBuffer*)m_ptrVertexBuffer.GetPointer())->GetBufferUsageFlags();
+		}
+		else if (m_ptrInstanceBuffer) {
+			vkSrcBuffer = ((CVKTransferBuffer*)m_ptrTransferBuffer.GetPointer())->GetBuffer();
+			vkDstBuffer = ((CVKIndexBuffer*)m_ptrInstanceBuffer.GetPointer())->GetBuffer();
+			vkBufferUsageFlags = ((CVKIndexBuffer*)m_ptrInstanceBuffer.GetPointer())->GetBufferUsageFlags();
+		}
+		else if (m_ptrIndirectBuffer) {
+			vkSrcBuffer = ((CVKTransferBuffer*)m_ptrTransferBuffer.GetPointer())->GetBuffer();
+			vkDstBuffer = ((CVKIndexBuffer*)m_ptrIndirectBuffer.GetPointer())->GetBuffer();
+			vkBufferUsageFlags = ((CVKIndexBuffer*)m_ptrIndirectBuffer.GetPointer())->GetBufferUsageFlags();
+		}
+		else if (m_ptrUniformBuffer) {
+			vkSrcBuffer = ((CVKTransferBuffer*)m_ptrTransferBuffer.GetPointer())->GetBuffer();
+			vkDstBuffer = ((CVKIndexBuffer*)m_ptrUniformBuffer.GetPointer())->GetBuffer();
+			vkBufferUsageFlags = ((CVKIndexBuffer*)m_ptrUniformBuffer.GetPointer())->GetBufferUsageFlags();
+		}
+		else if (m_ptrStorageBuffer) {
+			vkSrcBuffer = ((CVKTransferBuffer*)m_ptrTransferBuffer.GetPointer())->GetBuffer();
+			vkDstBuffer = ((CVKIndexBuffer*)m_ptrStorageBuffer.GetPointer())->GetBuffer();
+			vkBufferUsageFlags = ((CVKIndexBuffer*)m_ptrStorageBuffer.GetPointer())->GetBufferUsageFlags();
+		}
+		else {
+			ASSERT(0);
+		}
+
+		vkCmdBufferData(m_vkCommandBuffer, vkSrcBuffer, 0, vkDstBuffer, m_offset, m_size);
+		vkCmdBufferMemoryBarrier(m_vkCommandBuffer, vkDstBuffer, VK_ACCESS_TRANSFER_WRITE_BIT, CVKHelper::GetAccessMaskByBufferUsage(vkBufferUsageFlags), VK_PIPELINE_STAGE_TRANSFER_BIT, CVKHelper::GetPipelineStageFlagsByBufferUsage(vkBufferUsageFlags), m_offset, m_size);
 	}
 
 
