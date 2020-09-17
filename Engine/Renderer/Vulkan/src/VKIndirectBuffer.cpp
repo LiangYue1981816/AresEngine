@@ -37,6 +37,16 @@ VkBufferUsageFlags CVKIndirectBuffer::GetBufferUsageFlags(void) const
 	return m_pBuffer->GetBufferUsageFlags();
 }
 
+VkDeviceSize CVKIndirectBuffer::GetBufferSize(void) const
+{
+	return m_pBuffer->GetBufferSize();
+}
+
+VkDeviceSize CVKIndirectBuffer::GetMemorySize(void) const
+{
+	return m_pBuffer->GetMemorySize();
+}
+
 uint32_t CVKIndirectBuffer::GetDrawCommandCount(void) const
 {
 	return m_draws.size();
@@ -45,11 +55,6 @@ uint32_t CVKIndirectBuffer::GetDrawCommandCount(void) const
 uint32_t CVKIndirectBuffer::GetDrawCommandOffset(int indexDraw) const
 {
 	return indexDraw * sizeof(DrawCommand);
-}
-
-uint32_t CVKIndirectBuffer::GetSize(void) const
-{
-	return m_pBuffer->GetSize();
 }
 
 uint32_t CVKIndirectBuffer::GetStride(void) const
@@ -70,8 +75,7 @@ bool CVKIndirectBuffer::BufferData(int indexDraw, int firstIndex, int baseVertex
 		m_draws[indexDraw].baseInstance == baseInstance) {
 		return true;
 	}
-	else {
-		m_draws[indexDraw].Set(indexCount, instanceCount, firstIndex, baseVertex, baseInstance);
-		return m_pBuffer->BufferData(indexDraw * sizeof(DrawCommand), sizeof(m_draws[indexDraw]), &m_draws[indexDraw]);
-	}
+
+	m_draws[indexDraw].Set(indexCount, instanceCount, firstIndex, baseVertex, baseInstance);
+	return m_pBuffer->BufferData(indexDraw * sizeof(DrawCommand), sizeof(m_draws[indexDraw]), &m_draws[indexDraw]);
 }

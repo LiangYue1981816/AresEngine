@@ -44,7 +44,6 @@ public:
 public:
 	virtual uint32_t GetDrawCommandCount(void) const = 0;
 	virtual uint32_t GetDrawCommandOffset(int indexDraw) const = 0;
-	virtual uint32_t GetSize(void) const = 0;
 	virtual uint32_t GetStride(void) const = 0;
 
 public:

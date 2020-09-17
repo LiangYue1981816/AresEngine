@@ -13,11 +13,12 @@ public:
 public:
 	VkBuffer GetBuffer(void) const;
 	VkBufferUsageFlags GetBufferUsageFlags(void) const;
+	VkDeviceSize GetBufferSize(void) const;
+	VkDeviceSize GetMemorySize(void) const;
 
 public:
 	uint32_t GetDrawCommandCount(void) const;
 	uint32_t GetDrawCommandOffset(int indexDraw) const;
-	uint32_t GetSize(void) const;
 	uint32_t GetStride(void) const;
 
 public:
