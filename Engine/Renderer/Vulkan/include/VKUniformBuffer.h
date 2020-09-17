@@ -5,7 +5,7 @@
 class CVKUniformBuffer : public CGfxUniformBuffer
 {
 public:
-	CVKUniformBuffer(CVKDevice* pDevice, size_t size);
+	CVKUniformBuffer(CVKDevice* pDevice, size_t size, bool bDynamic);
 	virtual ~CVKUniformBuffer(void);
 	virtual void Release(void);
 

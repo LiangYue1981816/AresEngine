@@ -1,7 +1,7 @@
 #include "VKRenderer.h"
 
 
-CVKIndirectBuffer::CVKIndirectBuffer(CVKDevice* pDevice, int numDrawCommands)
+CVKIndirectBuffer::CVKIndirectBuffer(CVKDevice* pDevice, int numDrawCommands, bool bDynamic)
 	: CGfxIndirectBuffer(numDrawCommands)
 	, m_pDevice(pDevice)
 	, m_pBuffer(nullptr)
@@ -12,7 +12,13 @@ CVKIndirectBuffer::CVKIndirectBuffer(CVKDevice* pDevice, int numDrawCommands)
 	size = sizeof(DrawCommand);
 	size = ALIGN_BYTE(size, m_pDevice->GetPhysicalDeviceLimits().nonCoherentAtomSize) * numDrawCommands;
 
-	m_pBuffer = new CVKBuffer(m_pDevice, size, VK_BUFFER_USAGE_INDIRECT_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT);
+	if (bDynamic) {
+		m_pBuffer = new CVKBuffer(m_pDevice, size, VK_BUFFER_USAGE_INDIRECT_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT);
+	}
+	else {
+		m_pBuffer = new CVKBuffer(m_pDevice, size, VK_BUFFER_USAGE_INDIRECT_BUFFER_BIT | VK_BUFFER_USAGE_TRANSFER_DST_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT);
+	}
+
 	CGfxProfiler::IncIndirectBufferSize(m_pBuffer->GetMemorySize());
 }
 

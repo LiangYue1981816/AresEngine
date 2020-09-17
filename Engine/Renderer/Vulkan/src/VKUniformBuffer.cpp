@@ -1,7 +1,7 @@
 #include "VKRenderer.h"
 
 
-CVKUniformBuffer::CVKUniformBuffer(CVKDevice* pDevice, size_t size)
+CVKUniformBuffer::CVKUniformBuffer(CVKDevice* pDevice, size_t size, bool bDynamic)
 	: CGfxUniformBuffer(size)
 	, m_pDevice(pDevice)
 	, m_pBuffer(nullptr)
@@ -9,7 +9,13 @@ CVKUniformBuffer::CVKUniformBuffer(CVKDevice* pDevice, size_t size)
 	size = ALIGN_BYTE(size, m_pDevice->GetPhysicalDeviceLimits().nonCoherentAtomSize);
 	size = ALIGN_BYTE(size, m_pDevice->GetPhysicalDeviceLimits().minUniformBufferOffsetAlignment);
 
-	m_pBuffer = new CVKBuffer(m_pDevice, size, VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT);
+	if (bDynamic) {
+		m_pBuffer = new CVKBuffer(m_pDevice, size, VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT);
+	}
+	else {
+		m_pBuffer = new CVKBuffer(m_pDevice, size, VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT | VK_BUFFER_USAGE_TRANSFER_DST_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT);
+	}
+
 	CGfxProfiler::IncUniformBufferSize(m_pBuffer->GetMemorySize());
 }
 

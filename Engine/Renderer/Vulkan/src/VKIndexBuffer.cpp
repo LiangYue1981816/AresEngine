@@ -22,12 +22,12 @@ CVKIndexBuffer::CVKIndexBuffer(CVKDevice* pDevice, GfxIndexType type, size_t siz
 
 	if (bDynamic) {
 		m_pBuffer = new CVKBuffer(m_pDevice, size, VK_BUFFER_USAGE_INDEX_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT);
+		CGfxProfiler::IncIndexBufferSize(m_pBuffer->GetMemorySize());
 	}
 	else {
 		m_pBuffer = new CVKBuffer(m_pDevice, size, VK_BUFFER_USAGE_INDEX_BUFFER_BIT | VK_BUFFER_USAGE_TRANSFER_DST_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT);
+		CGfxProfiler::IncIndexBufferSize(m_pBuffer->GetMemorySize());
 	}
-
-	CGfxProfiler::IncIndexBufferSize(m_pBuffer->GetMemorySize());
 }
 
 CVKIndexBuffer::~CVKIndexBuffer(void)

@@ -1,7 +1,7 @@
 #include "VKRenderer.h"
 
 
-CVKStorageBuffer::CVKStorageBuffer(CVKDevice* pDevice, size_t size)
+CVKStorageBuffer::CVKStorageBuffer(CVKDevice* pDevice, size_t size, bool bDynamic)
 	: CGfxStorageBuffer(size)
 	, m_pDevice(pDevice)
 	, m_pBuffer(nullptr)
@@ -9,7 +9,13 @@ CVKStorageBuffer::CVKStorageBuffer(CVKDevice* pDevice, size_t size)
 	size = ALIGN_BYTE(size, m_pDevice->GetPhysicalDeviceLimits().nonCoherentAtomSize);
 	size = ALIGN_BYTE(size, m_pDevice->GetPhysicalDeviceLimits().minStorageBufferOffsetAlignment);
 
-	m_pBuffer = new CVKBuffer(m_pDevice, size, VK_BUFFER_USAGE_STORAGE_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT);
+	if (bDynamic) {
+		m_pBuffer = new CVKBuffer(m_pDevice, size, VK_BUFFER_USAGE_STORAGE_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT);
+	}
+	else {
+		m_pBuffer = new CVKBuffer(m_pDevice, size, VK_BUFFER_USAGE_STORAGE_BUFFER_BIT | VK_BUFFER_USAGE_TRANSFER_DST_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT);
+	}
+
 	CGfxProfiler::IncStorageBufferSize(m_pBuffer->GetMemorySize());
 }
 

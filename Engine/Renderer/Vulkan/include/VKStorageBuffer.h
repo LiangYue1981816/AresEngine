@@ -5,7 +5,7 @@
 class CVKStorageBuffer : public CGfxStorageBuffer
 {
 public:
-	CVKStorageBuffer(CVKDevice* pDevice, size_t size);
+	CVKStorageBuffer(CVKDevice* pDevice, size_t size, bool bDynamic);
 	virtual ~CVKStorageBuffer(void);
 	virtual void Release(void);
 
