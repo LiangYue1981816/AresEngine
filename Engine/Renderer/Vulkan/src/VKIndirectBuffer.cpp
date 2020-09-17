@@ -45,19 +45,19 @@ VkDeviceSize CVKIndirectBuffer::GetBufferSize(void) const
 	return m_pBuffer->GetBufferSize();
 }
 
-uint32_t CVKIndirectBuffer::GetDrawCommandCount(void) const
+uint32_t CVKIndirectBuffer::GetCount(void) const
 {
 	return m_count;
-}
-
-uint32_t CVKIndirectBuffer::GetDrawCommandOffset(int indexDraw) const
-{
-	return indexDraw * sizeof(DrawCommand);
 }
 
 uint32_t CVKIndirectBuffer::GetStride(void) const
 {
 	return sizeof(DrawCommand);
+}
+
+uint32_t CVKIndirectBuffer::GetOffset(int indexDraw) const
+{
+	return indexDraw * sizeof(DrawCommand);
 }
 
 bool CVKIndirectBuffer::BufferData(int indexDraw, int firstIndex, int baseVertex, int baseInstance, int indexCount, int instanceCount)

@@ -16,9 +16,9 @@ public:
 	VkDeviceSize GetBufferSize(void) const;
 
 public:
-	uint32_t GetDrawCommandCount(void) const;
-	uint32_t GetDrawCommandOffset(int indexDraw) const;
+	uint32_t GetCount(void) const;
 	uint32_t GetStride(void) const;
+	uint32_t GetOffset(int indexDraw) const;
 
 public:
 	bool BufferData(int indexDraw, int firstIndex, int baseVertex, int baseInstance, int indexCount, int instanceCount);
