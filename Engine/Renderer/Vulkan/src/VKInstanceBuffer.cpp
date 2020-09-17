@@ -1,8 +1,6 @@
 #include "VKRenderer.h"
 
 
-static const int INSTANCE_BUFFER_SIZE = 1;
-
 CVKInstanceBuffer::CVKInstanceBuffer(CVKDevice* pDevice, CVKInstanceBufferManager* pManager, uint32_t instanceFormat, int instanceBinding)
 	: CGfxInstanceBuffer(instanceFormat, instanceBinding)
 	, m_pManager(pManager)
@@ -14,7 +12,7 @@ CVKInstanceBuffer::CVKInstanceBuffer(CVKDevice* pDevice, CVKInstanceBufferManage
 	, m_count(0)
 {
 	size_t size;
-	size = INSTANCE_BUFFER_SIZE;
+	size = 1;
 	size = ALIGN_BYTE(size, m_pDevice->GetPhysicalDeviceLimits().nonCoherentAtomSize);
 
 	m_pBuffer = new CVKBuffer(m_pDevice, size, VK_BUFFER_USAGE_VERTEX_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT);
@@ -76,7 +74,7 @@ bool CVKInstanceBuffer::BufferData(size_t size, const void* data)
 		{
 			delete m_pBuffer;
 
-			size_t newSize = INSTANCE_BUFFER_SIZE;
+			size_t newSize = 1;
 			while (newSize < size) newSize <<= 1;
 
 			newSize = ALIGN_BYTE(newSize, m_pDevice->GetPhysicalDeviceLimits().nonCoherentAtomSize);
