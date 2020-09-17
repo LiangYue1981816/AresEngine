@@ -11,8 +11,8 @@ enum RendererType {
 
 
 // Global variable
-RendererType type = RENDERER_TYPE_VULKAN;
 CApplication* pApplication = NULL;
+RendererType type = RENDERER_TYPE_VULKAN;
 
 
 // Forward declarations of helper functions
@@ -37,12 +37,12 @@ int main(int argc, char** argv)
 	ShowWindow(hWnd, SW_SHOWDEFAULT);
 	UpdateWindow(hWnd);
 
-	//
-	// 3. Create application
-	//
 	RECT rcWindow;
 	GetClientRect(hWnd, &rcWindow);
 
+	//
+	// 3. Create application
+	//
 	pApplication = CreateApplication(type, wc.hInstance, hWnd, GetDC((HWND)hWnd), rcWindow.right - rcWindow.left + 1, rcWindow.bottom - rcWindow.top + 1);
 
 	//
@@ -77,6 +77,7 @@ int main(int argc, char** argv)
 // Paser command line
 void ParseCommandLine(int argc, char** argv)
 {
+	/*
 	type = RENDERER_TYPE_VULKAN;
 
 	if (argc > 1) {
@@ -88,6 +89,7 @@ void ParseCommandLine(int argc, char** argv)
 			type = RENDERER_TYPE_VULKAN;
 		}
 	}
+	*/
 }
 
 // Win32 message handler

@@ -1,5 +1,4 @@
 #include "Application.h"
-#include "ApplicationGLES3.h"
 #include "ApplicationVulkan.h"
 #include "Framework.h"
 
@@ -20,11 +19,6 @@ CALL_API CApplication* CreateApplication(int api, void* hInstance, void* hWnd, v
 	CApplication* pApplication = nullptr;
 
 	switch (api) {
-	case GFX_API_GLES3:
-		pApplication = new CApplicationGLES3;
-		pApplication->Create(hInstance, hWnd, hDC, width, height);
-		break;
-
 	case GFX_API_VULKAN:
 		pApplication = new CApplicationVulkan;
 		pApplication->Create(hInstance, hWnd, hDC, width, height);

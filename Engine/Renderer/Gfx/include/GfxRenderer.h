@@ -70,8 +70,8 @@
 
 
 typedef enum GfxApi {
-	GFX_API_GLES3 = 0,
-	GFX_API_VULKAN
+	GFX_API_VULKAN = 0,
+	GFX_API_GLES3
 } GfxApi;
 
 

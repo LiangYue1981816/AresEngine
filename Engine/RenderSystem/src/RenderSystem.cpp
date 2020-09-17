@@ -1,6 +1,5 @@
 #include "RenderHeader.h"
 #include "VKRenderer.h"
-#include "GLES3Renderer.h"
 
 
 static const ATTRIBUTE vertexAttributes[VERTEX_ATTRIBUTE_COUNT] = {
@@ -68,12 +67,12 @@ void CRenderSystem::Create(GfxApi api, void* hInstance, void* hWnd, void* hDC, i
 void CRenderSystem::CreateRenderer(GfxApi api, void* hInstance, void* hWnd, void* hDC, int width, int height, GfxPixelFormat format)
 {
 	switch ((int)api) {
-	case GFX_API_GLES3:
-		m_pRenderer = new CGLES3Renderer(hInstance, hWnd, hDC, width, height, format);
-		break;
-
 	case GFX_API_VULKAN:
 		m_pRenderer = new CVKRenderer(hInstance, hWnd, hDC, width, height, format);
+		break;
+
+	default:
+		ASSERT(false);
 		break;
 	}
 

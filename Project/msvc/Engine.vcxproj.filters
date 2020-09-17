@@ -55,9 +55,6 @@
     <Filter Include="Engine\Renderer\Gfx">
       <UniqueIdentifier>{1b244f2d-d387-4731-b3a9-208e0f2f8e3c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\Renderer\GLES3">
-      <UniqueIdentifier>{724c4537-be92-492a-9695-9815b831d3a2}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine\Scene\Header Files">
       <UniqueIdentifier>{d3d8c327-4347-47f1-9f5a-b8cafd5f2a9b}</UniqueIdentifier>
     </Filter>
@@ -66,12 +63,6 @@
     </Filter>
     <Filter Include="Engine\Scene\Source Files\Task">
       <UniqueIdentifier>{c9d2405f-5972-418e-9f6e-20063beca15f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Renderer\GLES3\Source Files">
-      <UniqueIdentifier>{f5b7790c-132f-4b57-8dfd-851bc96c4eec}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Renderer\GLES3\Source Files\Commands">
-      <UniqueIdentifier>{abc92e7c-8319-42c2-8570-1970e1aa2ae1}</UniqueIdentifier>
     </Filter>
     <Filter Include="Engine\Base\Source Files\nvwa">
       <UniqueIdentifier>{91402fba-68fc-4dbb-9af9-fb34f1c5eacd}</UniqueIdentifier>
@@ -96,9 +87,6 @@
     </Filter>
     <Filter Include="ThirdParty\zzip">
       <UniqueIdentifier>{352143c8-88bf-40da-a4e6-e568baf4780c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Renderer\GLES3\Header Files">
-      <UniqueIdentifier>{74c2d916-bd47-4ba2-9680-6e7f712348f3}</UniqueIdentifier>
     </Filter>
     <Filter Include="ThirdParty\eastl">
       <UniqueIdentifier>{0cb87225-90c0-4190-a7a8-d4ded44c1884}</UniqueIdentifier>
@@ -471,81 +459,6 @@
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxVertexBuffer.h">
       <Filter>Engine\Renderer\Gfx\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3CommandBuffer.h">
-      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3CommandBufferManager.h">
-      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3Definition.h">
-      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3Extension.h">
-      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3FrameBuffer.h">
-      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3FrameBufferManager.h">
-      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3IndexBuffer.h">
-      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3InstanceBuffer.h">
-      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3Material.h">
-      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3MaterialManager.h">
-      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3MaterialPass.h">
-      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3Mesh.h">
-      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3MeshManager.h">
-      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3Renderer.h">
-      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3RenderPass.h">
-      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3RenderPassManager.h">
-      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3Sampler.h">
-      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3SamplerManager.h">
-      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3ShaderManager.h">
-      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3SwapChain.h">
-      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3Texture2D.h">
-      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3Texture2DArray.h">
-      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3UniformBuffer.h">
-      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3UniformBufferManager.h">
-      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3VertexBuffer.h">
-      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Engine\ThirdParty\event\event.h">
       <Filter>ThirdParty\event</Filter>
     </ClInclude>
@@ -663,12 +576,6 @@
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxMeshDraw.h">
       <Filter>Engine\Renderer\Gfx\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3MeshDraw.h">
-      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3MeshDrawManager.h">
-      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Engine\ThirdParty\spirv-cross\GLSL.std.450.h">
       <Filter>ThirdParty\spirv-cross</Filter>
     </ClInclude>
@@ -711,44 +618,11 @@
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxIndirectBuffer.h">
       <Filter>Engine\Renderer\Gfx\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3IndirectBuffer.h">
-      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxRenderTexture.h">
       <Filter>Engine\Renderer\Gfx\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3RenderTexture.h">
-      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3RenderTextureManager.h">
-      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3Texture.h">
-      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3Helper.h">
-      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3TextureManager.h">
-      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3PipelineManager.h">
-      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxSprivCross.h">
       <Filter>Engine\Renderer\Gfx\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3Pipeline.h">
-      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3PipelineCompute.h">
-      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3PipelineGraphics.h">
-      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3Shader.h">
-      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Base\include\Task.h">
       <Filter>Engine\Base\Header Files</Filter>
@@ -758,9 +632,6 @@
     </ClInclude>
     <ClInclude Include="..\..\Engine\ThirdParty\pthreadex\pthreadex.h">
       <Filter>ThirdParty\pthreadex</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3Buffer.h">
-      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\ThirdParty\rttr\access_levels.h">
       <Filter>ThirdParty\rttr</Filter>
@@ -1182,131 +1053,8 @@
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxDescriptorSet.h">
       <Filter>Engine\Renderer\Gfx\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3DescriptorLayout.h">
-      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3DescriptorSet.h">
-      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3DescriptorLayoutManager.h">
-      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3DescriptorSetManager.h">
-      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKRenderer.h">
       <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandBeginRenderPass.h">
-      <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandBindDescriptorSet.h">
-      <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandBindFrameBuffer.h">
-      <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandBindPipelineCompute.h">
-      <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandBindPipelineGraphics.h">
-      <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandClearColor.h">
-      <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandClearDepth.h">
-      <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandDrawIndirect.h">
-      <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandDrawInstance.h">
-      <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandEndRenderPass.h">
-      <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandExecute.h">
-      <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandInvalidateFramebuffer.h">
-      <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandNextSubPass.h">
-      <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandPopDebugGroup.h">
-      <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandPushDebugGroup.h">
-      <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandResolve.h">
-      <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandSetScissor.h">
-      <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandSetViewport.h">
-      <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandUniform1f.h">
-      <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandUniform1fv.h">
-      <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandUniform1i.h">
-      <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandUniform1iv.h">
-      <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandUniform2f.h">
-      <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandUniform2fv.h">
-      <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandUniform2i.h">
-      <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandUniform2iv.h">
-      <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandUniform3f.h">
-      <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandUniform3fv.h">
-      <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandUniform3i.h">
-      <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandUniform3iv.h">
-      <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandUniform4f.h">
-      <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandUniform4fv.h">
-      <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandUniform4i.h">
-      <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandUniform4iv.h">
-      <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandUniformMatrix2fv.h">
-      <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandUniformMatrix3fv.h">
-      <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandUniformMatrix4fv.h">
-      <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKInstance.h">
       <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
@@ -1346,9 +1094,6 @@
     </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKTransferBuffer.h">
       <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3TextureCubemap.h">
-      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKCommandBuffer.h">
       <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
@@ -1581,9 +1326,6 @@
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxSemaphore.h">
       <Filter>Engine\Renderer\Gfx\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3Semaphore.h">
-      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKSemaphore.h">
       <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
     </ClInclude>
@@ -1602,20 +1344,11 @@
     <ClInclude Include="..\..\Engine\Renderer\Gfx\include\GfxStorageBuffer.h">
       <Filter>Engine\Renderer\Gfx\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3StorageBuffer.h">
-      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3StorageBufferManager.h">
-      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKStorageBuffer.h">
       <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKStorageBufferManager.h">
       <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\include\GLES3InstanceBufferManager.h">
-      <Filter>Engine\Renderer\GLES3\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKInstanceBufferManager.h">
       <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
@@ -1785,9 +1518,6 @@
     <ClInclude Include="..\..\Engine\Framework\include\ApplicationVulkan.h">
       <Filter>Engine\Framework\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Engine\Framework\include\ApplicationGLES3.h">
-      <Filter>Engine\Framework\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Engine\Define.h">
       <Filter>Engine</Filter>
     </ClInclude>
@@ -1820,21 +1550,6 @@
     </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\src\Command\VKCommandSetImageLayout.h">
       <Filter>Engine\Renderer\Vulkan\Source Files\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandBindIndexBuffer.h">
-      <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandBindInstanceBuffer.h">
-      <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandBindVertexBuffer.h">
-      <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandDispatch.h">
-      <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\GLES3\src\Command\GLES3CommandSetBufferBarrier.h">
-      <Filter>Engine\Renderer\GLES3\Source Files\Commands</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1961,78 +1676,6 @@
     <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxVertexAttribute.cpp">
       <Filter>Engine\Renderer\Gfx\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3CommandBuffer.cpp">
-      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3CommandBufferManager.cpp">
-      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3Extension.cpp">
-      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3FrameBuffer.cpp">
-      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3FrameBufferManager.cpp">
-      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3IndexBuffer.cpp">
-      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3InstanceBuffer.cpp">
-      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3Material.cpp">
-      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3MaterialManager.cpp">
-      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3MaterialPass.cpp">
-      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3Mesh.cpp">
-      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3MeshManager.cpp">
-      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3Renderer.cpp">
-      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3RenderPass.cpp">
-      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3RenderPassManager.cpp">
-      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3Sampler.cpp">
-      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3SamplerManager.cpp">
-      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3ShaderManager.cpp">
-      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3SwapChain.cpp">
-      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3Texture2D.cpp">
-      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3Texture2DArray.cpp">
-      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3UniformBuffer.cpp">
-      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3UniformBufferManager.cpp">
-      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3VertexBuffer.cpp">
-      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Engine\ThirdParty\event\event.c">
       <Filter>ThirdParty\event</Filter>
     </ClCompile>
@@ -2147,12 +1790,6 @@
     <ClCompile Include="..\..\Engine\Resource\src\ResourceLoaderSceneMesh.cpp">
       <Filter>Engine\Resource\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3MeshDraw.cpp">
-      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3MeshDrawManager.cpp">
-      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Engine\ThirdParty\spirv-cross\spirv_cfg.cpp">
       <Filter>ThirdParty\spirv-cross</Filter>
     </ClCompile>
@@ -2183,50 +1820,14 @@
     <ClCompile Include="..\..\Engine\ThirdParty\spirv-cross\spirv_reflect.cpp">
       <Filter>ThirdParty\spirv-cross</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3IndirectBuffer.cpp">
-      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3RenderTexture.cpp">
-      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3RenderTextureManager.cpp">
-      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3Texture.cpp">
-      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3Helper.cpp">
-      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3TextureManager.cpp">
-      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3PipelineManager.cpp">
-      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxSprivCross.cpp">
       <Filter>Engine\Renderer\Gfx\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3Pipeline.cpp">
-      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3PipelineCompute.cpp">
-      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3PipelineGraphics.cpp">
-      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3Shader.cpp">
-      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\Base\src\TaskPool.cpp">
       <Filter>Engine\Base\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\ThirdParty\pthreadex\pthreadex.c">
       <Filter>ThirdParty\pthreadex</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3Buffer.cpp">
-      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\ThirdParty\rttr\constructor.cpp">
       <Filter>ThirdParty\rttr</Filter>
@@ -2315,18 +1916,6 @@
     <ClCompile Include="..\..\Engine\ThirdParty\rttr\detail\variant\variant_compare.cpp">
       <Filter>ThirdParty\rttr\detail\variant</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3DescriptorLayout.cpp">
-      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3DescriptorSet.cpp">
-      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3DescriptorLayoutManager.cpp">
-      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3DescriptorSetManager.cpp">
-      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKRenderer.cpp">
       <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
     </ClCompile>
@@ -2365,9 +1954,6 @@
     </ClCompile>
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKTransferBuffer.cpp">
       <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3TextureCubemap.cpp">
-      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKCommandBuffer.cpp">
       <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
@@ -2492,29 +2078,17 @@
     <ClCompile Include="..\..\Engine\Renderer\Gfx\src\GfxHelper.cpp">
       <Filter>Engine\Renderer\Gfx\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3Semaphore.cpp">
-      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKSemaphore.cpp">
       <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\Console\src\Settings.cpp">
       <Filter>Engine\Console\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3StorageBuffer.cpp">
-      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3StorageBufferManager.cpp">
-      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKStorageBuffer.cpp">
       <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKStorageBufferManager.cpp">
       <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\Renderer\GLES3\src\GLES3InstanceBufferManager.cpp">
-      <Filter>Engine\Renderer\GLES3\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKInstanceBufferManager.cpp">
       <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
@@ -2674,9 +2248,6 @@
     </ClCompile>
     <ClCompile Include="..\..\Engine\ImGUI\src\ImGUI_Console.cpp">
       <Filter>Engine\ImGUI\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\Framework\src\ApplicationGLES3.cpp">
-      <Filter>Engine\Framework\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
