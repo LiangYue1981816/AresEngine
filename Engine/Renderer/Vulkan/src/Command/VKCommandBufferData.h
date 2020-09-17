@@ -128,7 +128,7 @@ public:
 			vkBufferUsageFlags = ((CVKIndexBuffer*)m_ptrStorageBuffer.GetPointer())->GetBufferUsageFlags();
 		}
 		else {
-			ASSERT(0);
+			ASSERT(false);
 		}
 
 		CALL_VK_FUNCTION_ASSERT(vkCmdBufferData(m_vkCommandBuffer, vkSrcBuffer, 0, vkDstBuffer, m_offset, m_size));

@@ -31,7 +31,7 @@ CALL_API CApplication* CreateApplication(int api, void* hInstance, void* hWnd, v
 		break;
 
 	default:
-		ASSERT(0);
+		ASSERT(false);
 		break;
 	}
 

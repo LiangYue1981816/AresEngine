@@ -143,7 +143,7 @@ CWorkMode* CFramework::GetWorkMode(void) const
 		return m_pEditor;
 
 	default:
-		ASSERT(0);
+		ASSERT(false);
 		return nullptr;
 	}
 }

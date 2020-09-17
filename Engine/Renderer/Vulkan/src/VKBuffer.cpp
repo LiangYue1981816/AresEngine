@@ -63,64 +63,51 @@ void CVKBuffer::Destroy(void)
 
 VkBuffer CVKBuffer::GetBuffer(void) const
 {
-	ASSERT(m_vkBuffer);
 	return m_vkBuffer;
 }
 
 VkDeviceSize CVKBuffer::GetSize(void) const
 {
-	ASSERT(m_vkSize);
 	return m_vkSize;
 }
 
 VkDeviceSize CVKBuffer::GetMemorySize(void) const
 {
-	ASSERT(m_pMemory);
 	return m_pMemory->GetSize();
 }
 
 VkBufferUsageFlags CVKBuffer::GetBufferUsageFlags(void) const
 {
-	ASSERT(m_vkBufferUsageFlags);
 	return m_vkBufferUsageFlags;
 }
 
 bool CVKBuffer::IsDeviceLocal(void) const
 {
-	ASSERT(m_pMemory);
 	return m_pMemory->IsDeviceLocal();
 }
 
 bool CVKBuffer::IsHostVisible(void) const
 {
-	ASSERT(m_pMemory);
 	return m_pMemory->IsHostVisible();
 }
 
 bool CVKBuffer::IsHostCoherent(void) const
 {
-	ASSERT(m_pMemory);
 	return m_pMemory->IsHostCoherent();
 }
 
 bool CVKBuffer::IsHostCached(void) const
 {
-	ASSERT(m_pMemory);
 	return m_pMemory->IsHostCached();
 }
 
 bool CVKBuffer::IsLazilyAllocated(void) const
 {
-	ASSERT(m_pMemory);
 	return m_pMemory->IsLazilyAllocated();
 }
 
 bool CVKBuffer::BufferData(size_t offset, size_t size, const void* data)
 {
-	ASSERT(m_pMemory);
-	ASSERT(m_vkBuffer);
-	ASSERT(m_vkSize >= offset + size);
-
 	if (size && data) {
 		if (m_pMemory->IsHostVisible()) {
 			CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->BeginMap());
