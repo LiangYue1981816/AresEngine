@@ -14,7 +14,6 @@ public:
 	VkBuffer GetBuffer(void) const;
 	VkBufferUsageFlags GetBufferUsageFlags(void) const;
 	VkDeviceSize GetBufferSize(void) const;
-	VkDeviceSize GetMemorySize(void) const;
 
 public:
 	uint32_t GetVertexBinding(void) const;

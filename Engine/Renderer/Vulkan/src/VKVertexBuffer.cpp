@@ -50,11 +50,6 @@ VkDeviceSize CVKVertexBuffer::GetBufferSize(void) const
 	return m_pBuffer->GetBufferSize();
 }
 
-VkDeviceSize CVKVertexBuffer::GetMemorySize(void) const
-{
-	return m_pBuffer->GetMemorySize();
-}
-
 uint32_t CVKVertexBuffer::GetVertexBinding(void) const
 {
 	return m_binding;

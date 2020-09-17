@@ -42,11 +42,6 @@ VkDeviceSize CVKUniformBuffer::GetBufferSize(void) const
 	return m_pBuffer->GetBufferSize();
 }
 
-VkDeviceSize CVKUniformBuffer::GetMemorySize(void) const
-{
-	return m_pBuffer->GetMemorySize();
-}
-
 size_t CVKUniformBuffer::GetSize(void) const
 {
 	return m_pBuffer->GetBufferSize();

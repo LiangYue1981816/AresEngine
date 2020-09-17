@@ -36,11 +36,6 @@ VkDeviceSize CVKTransferBuffer::GetBufferSize(void) const
 	return m_pBuffer->GetBufferSize();
 }
 
-VkDeviceSize CVKTransferBuffer::GetMemorySize(void) const
-{
-	return m_pBuffer->GetMemorySize();
-}
-
 bool CVKTransferBuffer::BufferData(size_t offset, size_t size, const void* data)
 {
 	return m_pBuffer->BufferData(offset, size, data);
