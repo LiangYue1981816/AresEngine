@@ -30,6 +30,7 @@ private:
 	VkBufferUsageFlags GetBufferUsageFlags(void) const;
 
 private:
+	bool IsValid(void) const;
 	bool IsDeviceLocal(void) const;
 	bool IsHostVisible(void) const;
 	bool IsHostCoherent(void) const;

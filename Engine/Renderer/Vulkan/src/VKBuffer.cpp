@@ -81,6 +81,11 @@ VkBufferUsageFlags CVKBuffer::GetBufferUsageFlags(void) const
 	return m_vkBufferUsageFlags;
 }
 
+bool CVKBuffer::IsValid(void) const
+{
+	return m_vkBuffer && m_pMemory;
+}
+
 bool CVKBuffer::IsDeviceLocal(void) const
 {
 	return m_pMemory->IsDeviceLocal();
@@ -115,10 +120,7 @@ bool CVKBuffer::BufferData(size_t offset, size_t size, const void* data)
 			CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->EndMap());
 			return true;
 		}
-		else {
-			return false;
-		}
 	}
 
-	return true;
+	return false;
 }
