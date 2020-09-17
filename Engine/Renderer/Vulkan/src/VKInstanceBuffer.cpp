@@ -27,7 +27,12 @@ CVKInstanceBuffer::~CVKInstanceBuffer(void)
 
 void CVKInstanceBuffer::Release(void)
 {
-	m_pManager->Destroy(this);
+	if (m_pManager) {
+		m_pManager->Destroy(this);
+	}
+	else {
+		delete this;
+	}
 }
 
 VkBuffer CVKInstanceBuffer::GetBuffer(void) const
