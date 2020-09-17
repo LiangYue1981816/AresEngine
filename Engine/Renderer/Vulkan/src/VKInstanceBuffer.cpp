@@ -11,7 +11,7 @@ CVKInstanceBuffer::CVKInstanceBuffer(CVKDevice* pDevice, uint32_t instanceFormat
 	, m_count(0)
 {
 	size_t size;
-	size = 4;
+	size = GetInstanceStride(instanceFormat);
 	size = ALIGN_BYTE(size, m_pDevice->GetPhysicalDeviceLimits().nonCoherentAtomSize);
 
 	m_pBuffer = new CVKBuffer(m_pDevice, size, VK_BUFFER_USAGE_VERTEX_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT, CGfxProfiler::BufferType::BUFFER_TYPE_INSTANCE_BUFFER);
