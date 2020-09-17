@@ -13,18 +13,15 @@ CVKIndirectBuffer::CVKIndirectBuffer(CVKDevice* pDevice, int numDrawCommands, bo
 	size = ALIGN_BYTE(size, m_pDevice->GetPhysicalDeviceLimits().nonCoherentAtomSize) * numDrawCommands;
 
 	if (bDynamic) {
-		m_pBuffer = new CVKBuffer(m_pDevice, size, VK_BUFFER_USAGE_INDIRECT_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT);
+		m_pBuffer = new CVKBuffer(m_pDevice, size, VK_BUFFER_USAGE_INDIRECT_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT, CGfxProfiler::BufferType::BUFFER_TYPE_INDIRECT_BUFFER);
 	}
 	else {
-		m_pBuffer = new CVKBuffer(m_pDevice, size, VK_BUFFER_USAGE_INDIRECT_BUFFER_BIT | VK_BUFFER_USAGE_TRANSFER_DST_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT);
+		m_pBuffer = new CVKBuffer(m_pDevice, size, VK_BUFFER_USAGE_INDIRECT_BUFFER_BIT | VK_BUFFER_USAGE_TRANSFER_DST_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, CGfxProfiler::BufferType::BUFFER_TYPE_INDIRECT_BUFFER);
 	}
-
-	CGfxProfiler::IncIndirectBufferSize(m_pBuffer->GetMemorySize());
 }
 
 CVKIndirectBuffer::~CVKIndirectBuffer(void)
 {
-	CGfxProfiler::DecIndirectBufferSize(m_pBuffer->GetMemorySize());
 	delete m_pBuffer;
 }
 

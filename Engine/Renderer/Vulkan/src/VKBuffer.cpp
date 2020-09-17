@@ -1,9 +1,11 @@
 #include "VKRenderer.h"
 
 
-CVKBuffer::CVKBuffer(CVKDevice* pDevice, VkDeviceSize bufferSize, VkBufferUsageFlags bufferUsageFlags, VkMemoryPropertyFlags memoryPropertyFlags)
+CVKBuffer::CVKBuffer(CVKDevice* pDevice, VkDeviceSize bufferSize, VkBufferUsageFlags bufferUsageFlags, VkMemoryPropertyFlags memoryPropertyFlags, CGfxProfiler::BufferType type)
 	: m_pDevice(pDevice)
 	, m_pMemory(nullptr)
+
+	, m_type(type)
 
 	, m_vkBuffer(VK_NULL_HANDLE)
 	, m_vkBufferSize(0)
@@ -25,17 +27,22 @@ CVKBuffer::CVKBuffer(CVKDevice* pDevice, VkDeviceSize bufferSize, VkBufferUsageF
 	createInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
 	createInfo.queueFamilyIndexCount = 0;
 	createInfo.pQueueFamilyIndices = nullptr;
-	vkCreateBuffer(m_pDevice->GetDevice(), &createInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkBuffer);
+	CALL_VK_FUNCTION_ASSERT(vkCreateBuffer(m_pDevice->GetDevice(), &createInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkBuffer));
 
 	VkMemoryRequirements requirements;
 	vkGetBufferMemoryRequirements(m_pDevice->GetDevice(), m_vkBuffer, &requirements);
 
 	m_pMemory = m_pDevice->GetMemoryManager()->AllocMemory(requirements.size, requirements.alignment, memoryPropertyFlags, VK_RESOURCE_TYPE_BUFFER);
-	m_pMemory->BindBuffer(m_vkBuffer);
+	if (m_pMemory == nullptr) ASSERT(false);
+	if (m_pMemory->BindBuffer(m_vkBuffer) == false) ASSERT(false);
+
+	CGfxProfiler::IncBufferSize(m_type, m_pMemory->GetSize());
 }
 
 CVKBuffer::~CVKBuffer(void)
 {
+	CGfxProfiler::DecBufferSize(m_type, m_pMemory->GetSize());
+
 	vkDestroyBuffer(m_pDevice->GetDevice(), m_vkBuffer, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
 	m_pDevice->GetMemoryManager()->FreeMemory(m_pMemory);
 }

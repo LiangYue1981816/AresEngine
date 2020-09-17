@@ -8,13 +8,11 @@ CVKTransferBuffer::CVKTransferBuffer(CVKDevice* pDevice, size_t size)
 {
 	size = ALIGN_BYTE(size, m_pDevice->GetPhysicalDeviceLimits().nonCoherentAtomSize);
 
-	m_pBuffer = new CVKBuffer(m_pDevice, size, VK_BUFFER_USAGE_TRANSFER_SRC_BIT | VK_BUFFER_USAGE_TRANSFER_DST_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT);
-	CGfxProfiler::IncVertexBufferSize(m_pBuffer->GetMemorySize());
+	m_pBuffer = new CVKBuffer(m_pDevice, size, VK_BUFFER_USAGE_TRANSFER_SRC_BIT | VK_BUFFER_USAGE_TRANSFER_DST_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT, CGfxProfiler::BufferType::BUFFER_TYPE_TRANSFER_BNUFER);
 }
 
 CVKTransferBuffer::~CVKTransferBuffer(void)
 {
-	CGfxProfiler::DecVertexBufferSize(m_pBuffer->GetMemorySize());
 	delete m_pBuffer;
 }
 
