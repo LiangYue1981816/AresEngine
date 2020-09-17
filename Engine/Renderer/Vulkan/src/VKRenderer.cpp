@@ -15,9 +15,6 @@ CVKRenderer::CVKRenderer(void* hInstance, void* hWnd, void* hDC, int width, int 
 	, m_pTexture2DManager(nullptr)
 	, m_pTexture2DArrayManager(nullptr)
 	, m_pTextureCubemapManager(nullptr)
-	, m_pUniformBufferManager(nullptr)
-	, m_pStorageBufferManager(nullptr)
-	, m_pInstanceBufferManager(nullptr)
 	, m_pMeshManager(nullptr)
 	, m_pMeshDrawManager(nullptr)
 	, m_pMaterialManager(nullptr)
@@ -38,9 +35,6 @@ CVKRenderer::CVKRenderer(void* hInstance, void* hWnd, void* hDC, int width, int 
 	m_pTexture2DManager = new CVKTexture2DManager(m_pDevice);
 	m_pTexture2DArrayManager = new CVKTexture2DArrayManager(m_pDevice);
 	m_pTextureCubemapManager = new CVKTextureCubemapManager(m_pDevice);
-	m_pUniformBufferManager = new CVKUniformBufferManager(m_pDevice);
-	m_pStorageBufferManager = new CVKStorageBufferManager(m_pDevice);
-	m_pInstanceBufferManager = new CVKInstanceBufferManager(m_pDevice);
 	m_pMeshManager = new CVKMeshManager(m_pDevice);
 	m_pMeshDrawManager = new CVKMeshDrawManager(m_pDevice);
 	m_pMaterialManager = new CVKMaterialManager(m_pDevice);
@@ -65,9 +59,6 @@ CVKRenderer::~CVKRenderer(void)
 	delete m_pMaterialManager;
 	delete m_pMeshDrawManager;
 	delete m_pMeshManager;
-	delete m_pInstanceBufferManager;
-	delete m_pStorageBufferManager;
-	delete m_pUniformBufferManager;
 	delete m_pTextureCubemapManager;
 	delete m_pTexture2DArrayManager;
 	delete m_pTexture2DManager;
@@ -235,21 +226,6 @@ CGfxRenderTexturePtr CVKRenderer::GetRenderTexture(uint32_t name)
 CGfxRenderTexturePtr CVKRenderer::NewRenderTexture(uint32_t name)
 {
 	return m_pRenderTextureManager->Create(name);
-}
-
-CGfxUniformBufferPtr CVKRenderer::NewUniformBuffer(size_t size)
-{
-	return m_pUniformBufferManager->Create(size);
-}
-
-CGfxStorageBufferPtr CVKRenderer::NewStorageBuffer(size_t size)
-{
-	return m_pStorageBufferManager->Create(size);
-}
-
-CGfxInstanceBufferPtr CVKRenderer::NewInstanceBuffer(uint32_t instanceFormat, int instanceBinding)
-{
-	return m_pInstanceBufferManager->Create(instanceFormat, instanceBinding);
 }
 
 CGfxMeshPtr CVKRenderer::GetMesh(uint32_t name)

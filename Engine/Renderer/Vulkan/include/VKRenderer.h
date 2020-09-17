@@ -144,10 +144,6 @@ public:
 	CGfxRenderTexturePtr GetRenderTexture(uint32_t name);
 	CGfxRenderTexturePtr NewRenderTexture(uint32_t name);
 
-	CGfxUniformBufferPtr NewUniformBuffer(size_t size);
-	CGfxStorageBufferPtr NewStorageBuffer(size_t size);
-	CGfxInstanceBufferPtr NewInstanceBuffer(uint32_t instanceFormat, int instanceBinding);
-
 	CGfxMeshPtr GetMesh(uint32_t name);
 	CGfxMeshPtr NewMesh(uint32_t name);
 	CGfxMeshPtr NewMesh(const char* szFileName, int vertexBinding);
@@ -249,9 +245,6 @@ private:
 	CVKTexture2DManager* m_pTexture2DManager;
 	CVKTexture2DArrayManager* m_pTexture2DArrayManager;
 	CVKTextureCubemapManager* m_pTextureCubemapManager;
-	CVKUniformBufferManager* m_pUniformBufferManager;
-	CVKStorageBufferManager* m_pStorageBufferManager;
-	CVKInstanceBufferManager* m_pInstanceBufferManager;
 	CVKMeshManager* m_pMeshManager;
 	CVKMeshDrawManager* m_pMeshDrawManager;
 	CVKMaterialManager* m_pMaterialManager;
