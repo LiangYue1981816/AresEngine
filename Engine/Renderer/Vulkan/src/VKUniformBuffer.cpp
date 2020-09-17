@@ -3,8 +3,8 @@
 
 CVKUniformBuffer::CVKUniformBuffer(CVKDevice* pDevice, CVKUniformBufferManager* pManager, size_t size)
 	: CGfxUniformBuffer(size)
-	, m_pDevice(pDevice)
 	, m_pManager(pManager)
+	, m_pDevice(pDevice)
 	, m_pBuffer(nullptr)
 {
 	size = ALIGN_BYTE(size, m_pDevice->GetPhysicalDeviceLimits().nonCoherentAtomSize);
@@ -22,7 +22,12 @@ CVKUniformBuffer::~CVKUniformBuffer(void)
 
 void CVKUniformBuffer::Release(void)
 {
-	m_pManager->Destroy(this);
+	if (m_pManager) {
+		m_pManager->Destroy(this);
+	}
+	else {
+		delete this;
+	}
 }
 
 VkBuffer CVKUniformBuffer::GetBuffer(void) const
@@ -35,9 +40,14 @@ VkBufferUsageFlags CVKUniformBuffer::GetBufferUsageFlags(void) const
 	return m_pBuffer->GetBufferUsageFlags();
 }
 
-uint32_t CVKUniformBuffer::GetSize(void) const
+VkDeviceSize CVKUniformBuffer::GetBufferSize(void) const
 {
-	return m_pBuffer->GetSize();
+	return m_pBuffer->GetBufferSize();
+}
+
+VkDeviceSize CVKUniformBuffer::GetMemorySize(void) const
+{
+	return m_pBuffer->GetMemorySize();
 }
 
 bool CVKUniformBuffer::BufferData(size_t offset, size_t size, const void* data)
