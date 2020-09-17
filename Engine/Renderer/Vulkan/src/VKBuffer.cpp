@@ -1,26 +1,26 @@
 #include "VKRenderer.h"
 
 
-CVKBuffer::CVKBuffer(CVKDevice* pDevice, VkDeviceSize size, VkBufferUsageFlags bufferUsageFlags, VkMemoryPropertyFlags memoryPropertyFlags)
+CVKBuffer::CVKBuffer(CVKDevice* pDevice, VkDeviceSize bufferSize, VkBufferUsageFlags bufferUsageFlags, VkMemoryPropertyFlags memoryPropertyFlags)
 	: m_pDevice(pDevice)
 	, m_pMemory(nullptr)
 
 	, m_vkBuffer(VK_NULL_HANDLE)
-	, m_vkSize(0)
+	, m_vkBufferSize(0)
 	, m_vkBufferUsageFlags(0)
 {
-	ASSERT(size);
+	ASSERT(bufferSize);
 	ASSERT(bufferUsageFlags);
 	ASSERT(memoryPropertyFlags);
 
-	m_vkSize = size;
+	m_vkBufferSize = bufferSize;
 	m_vkBufferUsageFlags = bufferUsageFlags;
 
 	VkBufferCreateInfo createInfo = {};
 	createInfo.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
 	createInfo.pNext = nullptr;
 	createInfo.flags = 0;
-	createInfo.size = size;
+	createInfo.size = bufferSize;
 	createInfo.usage = bufferUsageFlags;
 	createInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
 	createInfo.queueFamilyIndexCount = 0;
@@ -45,19 +45,19 @@ VkBuffer CVKBuffer::GetBuffer(void) const
 	return m_vkBuffer;
 }
 
-VkDeviceSize CVKBuffer::GetSize(void) const
+VkBufferUsageFlags CVKBuffer::GetBufferUsageFlags(void) const
 {
-	return m_vkSize;
+	return m_vkBufferUsageFlags;
+}
+
+VkDeviceSize CVKBuffer::GetBufferSize(void) const
+{
+	return m_vkBufferSize;
 }
 
 VkDeviceSize CVKBuffer::GetMemorySize(void) const
 {
 	return m_pMemory->GetSize();
-}
-
-VkBufferUsageFlags CVKBuffer::GetBufferUsageFlags(void) const
-{
-	return m_vkBufferUsageFlags;
 }
 
 bool CVKBuffer::IsDeviceLocal(void) const
