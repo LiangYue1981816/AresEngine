@@ -4,11 +4,8 @@
 
 class CVKStorageBuffer : public CGfxStorageBuffer
 {
-	friend class CVKStorageBufferManager;
-
-
-private:
-	CVKStorageBuffer(CVKDevice* pDevice, CVKStorageBufferManager* pManager, size_t size);
+public:
+	CVKStorageBuffer(CVKDevice* pDevice, size_t size);
 	virtual ~CVKStorageBuffer(void);
 	virtual void Release(void);
 
@@ -31,7 +28,4 @@ private:
 
 private:
 	CVKDevice* m_pDevice;
-
-private:
-	CVKStorageBufferManager* m_pManager;
 };

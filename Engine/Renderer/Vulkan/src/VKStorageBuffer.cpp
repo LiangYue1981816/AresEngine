@@ -1,9 +1,8 @@
 #include "VKRenderer.h"
 
 
-CVKStorageBuffer::CVKStorageBuffer(CVKDevice* pDevice, CVKStorageBufferManager* pManager, size_t size)
+CVKStorageBuffer::CVKStorageBuffer(CVKDevice* pDevice, size_t size)
 	: CGfxStorageBuffer(size)
-	, m_pManager(pManager)
 	, m_pDevice(pDevice)
 	, m_pBuffer(nullptr)
 {
@@ -22,12 +21,7 @@ CVKStorageBuffer::~CVKStorageBuffer(void)
 
 void CVKStorageBuffer::Release(void)
 {
-	if (m_pManager) {
-		m_pManager->Destroy(this);
-	}
-	else {
-		delete this;
-	}
+	delete this;
 }
 
 VkBuffer CVKStorageBuffer::GetBuffer(void) const

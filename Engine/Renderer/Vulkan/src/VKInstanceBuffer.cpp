@@ -1,9 +1,8 @@
 #include "VKRenderer.h"
 
 
-CVKInstanceBuffer::CVKInstanceBuffer(CVKDevice* pDevice, CVKInstanceBufferManager* pManager, uint32_t instanceFormat, int instanceBinding)
+CVKInstanceBuffer::CVKInstanceBuffer(CVKDevice* pDevice, uint32_t instanceFormat, int instanceBinding)
 	: CGfxInstanceBuffer(instanceFormat, instanceBinding)
-	, m_pManager(pManager)
 	, m_pDevice(pDevice)
 	, m_pBuffer(nullptr)
 
@@ -27,12 +26,7 @@ CVKInstanceBuffer::~CVKInstanceBuffer(void)
 
 void CVKInstanceBuffer::Release(void)
 {
-	if (m_pManager) {
-		m_pManager->Destroy(this);
-	}
-	else {
-		delete this;
-	}
+	delete this;
 }
 
 VkBuffer CVKInstanceBuffer::GetBuffer(void) const
