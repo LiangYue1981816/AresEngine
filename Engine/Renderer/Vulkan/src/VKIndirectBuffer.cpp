@@ -40,19 +40,14 @@ VkDeviceSize CVKIndirectBuffer::GetBufferSize(void) const
 	return m_pBuffer->GetBufferSize();
 }
 
-uint32_t CVKIndirectBuffer::GetCount(void) const
-{
-	return m_count;
-}
-
-uint32_t CVKIndirectBuffer::GetStride(void) const
-{
-	return sizeof(DrawCommand);
-}
-
 uint32_t CVKIndirectBuffer::GetOffset(int indexDraw) const
 {
 	return indexDraw * sizeof(DrawCommand);
+}
+
+uint32_t CVKIndirectBuffer::GetCount(void) const
+{
+	return m_count;
 }
 
 bool CVKIndirectBuffer::BufferData(uint32_t count, const DrawCommand* data)
