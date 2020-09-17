@@ -1,60 +1,50 @@
 #pragma once
 #include "PreHeader.h"
 
-#include "gli.hpp"
+#include "gli/gli.hpp"
+#include "glm/glm.hpp"
+#include "glm/gtx/quaternion.hpp"
+#include "glm/gtc/matrix_transform.hpp"
 
 #include "GfxGLM.h"
 #include "GfxEnum.h"
 #include "GfxHelper.h"
 #include "GfxDefinition.h"
-
 #include "GfxProfiler.h"
-
 #include "GfxSprivCross.h"
 #include "GfxVertexAttribute.h"
-
 #include "GfxResource.h"
 #include "GfxResourceManager.h"
-
 #include "GfxCamera.h"
-
 #include "GfxSwapChain.h"
 #include "GfxRenderPass.h"
 #include "GfxRenderTexture.h"
 #include "GfxFrameBuffer.h"
-
 #include "GfxShader.h"
 #include "GfxPipelineCompute.h"
 #include "GfxPipelineGraphics.h"
-
 #include "GfxIndexBuffer.h"
 #include "GfxVertexBuffer.h"
-#include "GfxInstanceBuffer.h"
-#include "GfxIndirectBuffer.h"
 #include "GfxUniformBuffer.h"
 #include "GfxStorageBuffer.h"
+#include "GfxInstanceBuffer.h"
+#include "GfxIndirectBuffer.h"
 #include "GfxTransferBuffer.h"
-
 #include "GfxSampler.h"
 #include "GfxTexture2D.h"
 #include "GfxTexture2DArray.h"
 #include "GfxTextureCubemap.h"
-
 #include "GfxUniformVec1.h"
 #include "GfxUniformVec2.h"
 #include "GfxUniformVec3.h"
 #include "GfxUniformVec4.h"
 #include "GfxUniformMat4.h"
-
 #include "GfxMesh.h"
 #include "GfxMeshDraw.h"
-
 #include "GfxMaterial.h"
 #include "GfxMaterialPass.h"
-
 #include "GfxDescriptorSet.h"
 #include "GfxDescriptorLayout.h"
-
 #include "GfxSemaphore.h"
 #include "GfxCommandBuffer.h"
 
