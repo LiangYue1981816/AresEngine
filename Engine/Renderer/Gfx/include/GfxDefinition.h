@@ -22,10 +22,10 @@ class CGfxPipelineGraphics;
 
 class CGfxIndexBuffer;
 class CGfxVertexBuffer;
-class CGfxInstanceBuffer;
-class CGfxIndirectBuffer;
 class CGfxUniformBuffer;
 class CGfxStorageBuffer;
+class CGfxInstanceBuffer;
+class CGfxIndirectBuffer;
 class CGfxTransferBuffer;
 
 class CGfxSampler;
@@ -51,6 +51,7 @@ class CGfxDescriptorLayout;
 class CGfxSemaphore;
 class CGfxCommandBuffer;
 
+
 template<class T>
 class CGfxResourcePtr;
 
@@ -58,21 +59,21 @@ typedef CGfxResourcePtr<CGfxRenderPass> CGfxRenderPassPtr;
 typedef CGfxResourcePtr<CGfxRenderTexture> CGfxRenderTexturePtr;
 typedef CGfxResourcePtr<CGfxFrameBuffer> CGfxFrameBufferPtr;
 
-typedef CGfxResourcePtr<CGfxMesh> CGfxMeshPtr;
-typedef CGfxResourcePtr<CGfxMeshDraw> CGfxMeshDrawPtr;
-typedef CGfxResourcePtr<CGfxMaterial> CGfxMaterialPtr;
+typedef CGfxResourcePtr<CGfxIndexBuffer> CGfxIndexBufferPtr;
+typedef CGfxResourcePtr<CGfxVertexBuffer> CGfxVertexBufferPtr;
+typedef CGfxResourcePtr<CGfxUniformBuffer> CGfxUniformBufferPtr;
+typedef CGfxResourcePtr<CGfxStorageBuffer> CGfxStorageBufferPtr;
+typedef CGfxResourcePtr<CGfxInstanceBuffer> CGfxInstanceBufferPtr;
+typedef CGfxResourcePtr<CGfxIndirectBuffer> CGfxIndirectBufferPtr;
+typedef CGfxResourcePtr<CGfxTransferBuffer> CGfxTransferBufferPtr;
 
 typedef CGfxResourcePtr<CGfxTexture2D> CGfxTexture2DPtr;
 typedef CGfxResourcePtr<CGfxTexture2DArray> CGfxTexture2DArrayPtr;
 typedef CGfxResourcePtr<CGfxTextureCubemap> CGfxTextureCubemapPtr;
 
-typedef CGfxResourcePtr<CGfxIndexBuffer> CGfxIndexBufferPtr;
-typedef CGfxResourcePtr<CGfxVertexBuffer> CGfxVertexBufferPtr;
-typedef CGfxResourcePtr<CGfxInstanceBuffer> CGfxInstanceBufferPtr;
-typedef CGfxResourcePtr<CGfxIndirectBuffer> CGfxIndirectBufferPtr;
-typedef CGfxResourcePtr<CGfxUniformBuffer> CGfxUniformBufferPtr;
-typedef CGfxResourcePtr<CGfxStorageBuffer> CGfxStorageBufferPtr;
-typedef CGfxResourcePtr<CGfxTransferBuffer> CGfxTransferBufferPtr;
+typedef CGfxResourcePtr<CGfxMesh> CGfxMeshPtr;
+typedef CGfxResourcePtr<CGfxMeshDraw> CGfxMeshDrawPtr;
+typedef CGfxResourcePtr<CGfxMaterial> CGfxMaterialPtr;
 
 typedef CGfxResourcePtr<CGfxDescriptorSet> CGfxDescriptorSetPtr;
 typedef CGfxResourcePtr<CGfxDescriptorLayout> CGfxDescriptorLayoutPtr;
