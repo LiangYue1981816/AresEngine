@@ -26,7 +26,7 @@ public:
 
 
 private:
-	eastl::vector<DrawCommand> m_draws;
+	uint32_t m_count;
 
 private:
 	CVKBuffer* m_pBuffer;
