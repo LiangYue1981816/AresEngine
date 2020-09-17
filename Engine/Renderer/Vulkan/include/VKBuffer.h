@@ -20,17 +20,12 @@ private:
 
 
 private:
-	bool Create(VkDeviceSize size, VkBufferUsageFlags bufferUsageFlags, VkMemoryPropertyFlags memoryPropertyFlags);
-	void Destroy(void);
-
-private:
 	VkBuffer GetBuffer(void) const;
 	VkDeviceSize GetSize(void) const;
 	VkDeviceSize GetMemorySize(void) const;
 	VkBufferUsageFlags GetBufferUsageFlags(void) const;
 
 private:
-	bool IsValid(void) const;
 	bool IsDeviceLocal(void) const;
 	bool IsHostVisible(void) const;
 	bool IsHostCoherent(void) const;

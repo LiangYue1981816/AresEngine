@@ -86,13 +86,16 @@ bool CVKMemory::BeginMap(void)
 
 bool CVKMemory::CopyData(VkDeviceSize offset, VkDeviceSize size, const void* data)
 {
+	ASSERT(data);
+	ASSERT(size);
+
 	if (IsHostVisible() == false) {
 		return false;
 	}
 
-	ASSERT(data);
-	ASSERT(size);
-	ASSERT(m_memorySize - m_memoryPadding >= offset + size);
+	if (m_memorySize - m_memoryPadding < offset + size) {
+		return false;
+	}
 
 	memcpy((uint8_t*)m_pAllocator->GetMemoryAddress() + m_memoryOffset + m_memoryPadding + offset, data, size);
 	return true;
