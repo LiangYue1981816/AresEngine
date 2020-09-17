@@ -20,6 +20,9 @@ public:
 	VkDeviceSize GetMemorySize(void) const;
 
 public:
+	size_t GetSize(void) const;
+
+public:
 	bool BufferData(size_t offset, size_t size, const void* data);
 
 
