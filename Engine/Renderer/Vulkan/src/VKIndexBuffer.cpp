@@ -53,12 +53,12 @@ VkDeviceSize CVKIndexBuffer::GetBufferSize(void) const
 	return m_pBuffer->GetBufferSize();
 }
 
-GfxIndexType CVKIndexBuffer::GetIndexType(void) const
+GfxIndexType CVKIndexBuffer::GetType(void) const
 {
 	return m_type;
 }
 
-uint32_t CVKIndexBuffer::GetIndexCount(void) const
+uint32_t CVKIndexBuffer::GetCount(void) const
 {
 	return m_count;
 }

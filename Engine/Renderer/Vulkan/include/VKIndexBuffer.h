@@ -16,8 +16,8 @@ public:
 	VkDeviceSize GetBufferSize(void) const;
 
 public:
-	GfxIndexType GetIndexType(void) const;
-	uint32_t GetIndexCount(void) const;
+	GfxIndexType GetType(void) const;
+	uint32_t GetCount(void) const;
 
 public:
 	bool BufferData(size_t offset, size_t size, const void* data);
