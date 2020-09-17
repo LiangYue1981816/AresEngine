@@ -2,35 +2,41 @@
 #include "PreHeader.h"
 
 
-class CGfxProfiler
+class CGfxProfilerSample
 {
 public:
+	CGfxProfilerSample(const char* name);
+	~CGfxProfilerSample(void);
+
+
+private:
+	uint32_t m_name;
+};
+
+class CGfxProfiler
+{
+	friend class CGfxProfilerSample;
+
+
+public:
 	typedef struct Sample {
-		Sample(const char* _name)
+		Sample(void)
 		{
-			name = _name;
+			name = nullptr;
 			timeBegin = 0;
 			timeEnd = 0;
 			timeTotal = 0;
 			count = 0;
 		}
 
-		void Reset(void)
+		void Begin(void)
 		{
-			timeBegin = 0;
-			timeEnd = 0;
-			timeTotal = 0;
-			count = 0;
+			timeBegin = Tick();
 		}
 
-		void Begin(uint32_t _tick)
+		void End(void)
 		{
-			timeBegin = _tick;
-		}
-
-		void End(uint32_t _tick)
-		{
-			timeEnd = _tick;
+			timeEnd = Tick();
 			timeTotal += timeEnd - timeBegin;
 			count += 1;
 		}
@@ -42,111 +48,44 @@ public:
 		uint32_t count;
 	} Sample;
 
-	typedef enum SampleType {
-		SAMPLE_TYPE_COMMAND_BEGIN_RECORD = 0,
-		SAMPLE_TYPE_COMMAND_END_RECORD,
-		SAMPLE_TYPE_COMMAND_SET_IMAGELAYOUT,
-		SAMPLE_TYPE_COMMAND_SET_BUFFERBARRIER,
-		SAMPLE_TYPE_COMMAND_BEGIN_RENDERPASS,
-		SAMPLE_TYPE_COMMAND_NEXT_SUBPASS,
-		SAMPLE_TYPE_COMMAND_END_RENDERPASS,
-		SAMPLE_TYPE_COMMAND_RESOLVE,
-		SAMPLE_TYPE_COMMAND_INVALIDATE_FRAMEBUFFER,
-		SAMPLE_TYPE_COMMAND_BIND_FRAMEBUFFER,
-		SAMPLE_TYPE_COMMAND_BIND_PIPELINECOMPUTE,
-		SAMPLE_TYPE_COMMAND_BIND_PIPELINEGRAPHICS,
-		SAMPLE_TYPE_COMMAND_BIND_DESCRIPTORSET,
-		SAMPLE_TYPE_COMMAND_BIND_INDEXBUFFER,
-		SAMPLE_TYPE_COMMAND_BIND_VERTEXBUFFER,
-		SAMPLE_TYPE_COMMAND_BIND_INSTANCEBUFFER,
-		SAMPLE_TYPE_COMMAND_UNIFORM1I,
-		SAMPLE_TYPE_COMMAND_UNIFORM2I,
-		SAMPLE_TYPE_COMMAND_UNIFORM3I,
-		SAMPLE_TYPE_COMMAND_UNIFORM4I,
-		SAMPLE_TYPE_COMMAND_UNIFORM1F,
-		SAMPLE_TYPE_COMMAND_UNIFORM2F,
-		SAMPLE_TYPE_COMMAND_UNIFORM3F,
-		SAMPLE_TYPE_COMMAND_UNIFORM4F,
-		SAMPLE_TYPE_COMMAND_UNIFORM1IV,
-		SAMPLE_TYPE_COMMAND_UNIFORM2IV,
-		SAMPLE_TYPE_COMMAND_UNIFORM3IV,
-		SAMPLE_TYPE_COMMAND_UNIFORM4IV,
-		SAMPLE_TYPE_COMMAND_UNIFORM1FV,
-		SAMPLE_TYPE_COMMAND_UNIFORM2FV,
-		SAMPLE_TYPE_COMMAND_UNIFORM3FV,
-		SAMPLE_TYPE_COMMAND_UNIFORM4FV,
-		SAMPLE_TYPE_COMMAND_UNIFORMMATRIX2FV,
-		SAMPLE_TYPE_COMMAND_UNIFORMMATRIX3FV,
-		SAMPLE_TYPE_COMMAND_UNIFORMMATRIX4FV,
-		SAMPLE_TYPE_COMMAND_SET_SCISSOR,
-		SAMPLE_TYPE_COMMAND_SET_VIEWPORT,
-		SAMPLE_TYPE_COMMAND_CLEAR_DEPTH,
-		SAMPLE_TYPE_COMMAND_CLEAR_COLOR,
-		SAMPLE_TYPE_COMMAND_DISPATCH,
-		SAMPLE_TYPE_COMMAND_DRAW_INSTANCE,
-		SAMPLE_TYPE_COMMAND_DRAW_INDIRECT,
-		SAMPLE_TYPE_COMMAND_EXECUTE,
-		SAMPLE_TYPE_COUNT
-	} SampleType;
+	typedef enum BufferType {
+		BUFFER_TYPE_INDEX_BUFFER = 0,
+		BUFFER_TYPE_VERTEX_BUFFER,
+		BUFFER_TYPE_UNIFORM_BUFFER,
+		BUFFER_TYPE_STORAGE_BUFFER,
+		BUFFER_TYPE_INSTANCE_BUFFER,
+		BUFFER_TYPE_INDIRECT_BUFFER,
+		BUFFER_TYPE_TRANSFER_BNUFER,
+		BUFFER_TYPE_COUNT
+	} BufferType;
+
+	typedef enum TextureType {
+		TEXTURE_TYPE_TEXTURE2D = 0,
+		TEXTURE_TYPE_TEXTURE2D_ARRAY,
+		TEXTURE_TYPE_TEXTURE_CUBEMAP,
+		TEXTURE_TYPE_RENDER_TEXTURE,
+		TEXTURE_TYPE_COUNT
+	} TextureType;
 
 
 public:
-	static void SetEnableProfiler(bool bEnable);
+	static void SetEnable(bool bEnableProfiler);
 
-	static void IncTextureDataSize(size_t size);
-	static void DecTextureDataSize(size_t size);
+	static void IncBufferSize(BufferType type, size_t size);
+	static void DecBufferSize(BufferType type, size_t size);
 
-	static void IncUniformBufferSize(size_t size);
-	static void DecUniformBufferSize(size_t size);
-
-	static void IncStorageBufferSize(size_t size);
-	static void DecStorageBufferSize(size_t size);
-
-	static void IncVertexBufferSize(size_t size);
-	static void DecVertexBufferSize(size_t size);
-
-	static void IncIndexBufferSize(size_t size);
-	static void DecIndexBufferSize(size_t size);
-
-	static void IncInstanceBufferSize(size_t size);
-	static void DecInstanceBufferSize(size_t size);
-
-	static void IncIndirectBufferSize(size_t size);
-	static void DecIndirectBufferSize(size_t size);
-
-	static void IncTransferBufferSize(size_t size);
-	static void DecTransferBufferSize(size_t size);
-
-	static void ResetSamples(void);
-	static void BeginSample(SampleType type);
-	static void EndSample(SampleType type);
-	static const char* GetSampleName(SampleType type);
+	static void IncTextureSize(TextureType type, size_t size);
+	static void DecTextureSzie(TextureType type, size_t size);
 
 	static void LogGfxMemory(void);
-	static void LogProfiler(int frameCount);
-
-private:
-	static bool bEnableProfiler;
-
-	static size_t textureDataSize;
-	static size_t uniformBufferSize;
-	static size_t storageBufferSize;
-	static size_t vertexBufferSize;
-	static size_t indexBufferSize;
-	static size_t instanceBufferSize;
-	static size_t indirectBufferSize;
-	static size_t transferBufferSize;
-
-	static Sample samples[SampleType::SAMPLE_TYPE_COUNT];
-};
-
-class CGfxProfilerSample
-{
-public:
-	CGfxProfilerSample(CGfxProfiler::SampleType type);
-	~CGfxProfilerSample(void);
+	static void LogProfiler(uint32_t frames);
 
 
 private:
-	CGfxProfiler::SampleType m_type;
+	static bool bEnable;
+	static size_t bufferSizes[BUFFER_TYPE_COUNT];
+	static size_t bufferCounts[BUFFER_TYPE_COUNT];
+	static size_t textureSizes[TEXTURE_TYPE_COUNT];
+	static size_t textureCounts[TEXTURE_TYPE_COUNT];
+	static eastl::unordered_map<uint32_t, Sample> samples;
 };
