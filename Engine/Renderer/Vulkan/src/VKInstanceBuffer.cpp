@@ -42,17 +42,17 @@ VkDeviceSize CVKInstanceBuffer::GetBufferSize(void) const
 	return m_pBuffer->GetBufferSize();
 }
 
-uint32_t CVKInstanceBuffer::GetInstanceBinding(void) const
+uint32_t CVKInstanceBuffer::GetBinding(void) const
 {
 	return m_binding;
 }
 
-uint32_t CVKInstanceBuffer::GetInstanceFormat(void) const
+uint32_t CVKInstanceBuffer::GetFormat(void) const
 {
 	return m_format;
 }
 
-uint32_t CVKInstanceBuffer::GetInstanceCount(void) const
+uint32_t CVKInstanceBuffer::GetCount(void) const
 {
 	return m_count;
 }

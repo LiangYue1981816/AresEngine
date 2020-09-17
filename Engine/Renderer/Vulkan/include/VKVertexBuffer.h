@@ -16,9 +16,9 @@ public:
 	VkDeviceSize GetBufferSize(void) const;
 
 public:
-	uint32_t GetVertexBinding(void) const;
-	uint32_t GetVertexFormat(void) const;
-	uint32_t GetVertexCount(void) const;
+	uint32_t GetBinding(void) const;
+	uint32_t GetFormat(void) const;
+	uint32_t GetCount(void) const;
 
 public:
 	bool BufferData(size_t offset, size_t size, const void* data);

@@ -16,9 +16,9 @@ public:
 	VkDeviceSize GetBufferSize(void) const;
 
 public:
-	uint32_t GetInstanceBinding(void) const;
-	uint32_t GetInstanceFormat(void) const;
-	uint32_t GetInstanceCount(void) const;
+	uint32_t GetBinding(void) const;
+	uint32_t GetFormat(void) const;
+	uint32_t GetCount(void) const;
 
 public:
 	bool BufferData(size_t size, const void* data);
