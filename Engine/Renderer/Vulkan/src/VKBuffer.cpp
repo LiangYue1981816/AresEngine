@@ -55,10 +55,11 @@ void CVKBuffer::Destroy(void)
 	vkDestroyBuffer(m_pDevice->GetDevice(), m_vkBuffer, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
 	m_pDevice->GetMemoryManager()->FreeMemory(m_pMemory);
 
-	m_pMemory = nullptr;
 	m_vkBuffer = VK_NULL_HANDLE;
 	m_vkSize = 0;
 	m_vkBufferUsageFlags = 0;
+
+	m_pMemory = nullptr;
 }
 
 VkBuffer CVKBuffer::GetBuffer(void) const
