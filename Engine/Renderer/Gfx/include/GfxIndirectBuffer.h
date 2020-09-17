@@ -31,7 +31,7 @@ typedef struct DrawCommand {
 class CGfxIndirectBuffer : public CGfxResource
 {
 public:
-	CGfxIndirectBuffer(int numDrawCommands)
+	CGfxIndirectBuffer(void)
 	{
 
 	}
@@ -47,5 +47,5 @@ public:
 	virtual uint32_t GetOffset(int indexDraw) const = 0;
 
 public:
-	virtual bool BufferData(int indexDraw, int firstIndex, int baseVertex, int baseInstance, int indexCount, int instanceCount) = 0;
+	virtual bool BufferData(uint32_t count, const DrawCommand* data) = 0;
 };

@@ -5,7 +5,7 @@
 class CVKIndirectBuffer : public CGfxIndirectBuffer
 {
 public:
-	CVKIndirectBuffer(CVKDevice* pDevice, int numDrawCommands, bool bDynamic);
+	CVKIndirectBuffer(CVKDevice* pDevice);
 	virtual ~CVKIndirectBuffer(void);
 	virtual void Release(void);
 
@@ -21,7 +21,7 @@ public:
 	uint32_t GetOffset(int indexDraw) const;
 
 public:
-	bool BufferData(int indexDraw, int firstIndex, int baseVertex, int baseInstance, int indexCount, int instanceCount);
+	bool BufferData(uint32_t count, const DrawCommand* data);
 
 
 private:
