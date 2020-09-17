@@ -49,8 +49,8 @@ bool CVKBuffer::Create(VkDeviceSize size, VkBufferUsageFlags bufferUsageFlags, V
 
 void CVKBuffer::Destroy(void)
 {
-	ASSERT(m_pMemory);
 	ASSERT(m_vkBuffer);
+	ASSERT(m_pMemory);
 
 	vkDestroyBuffer(m_pDevice->GetDevice(), m_vkBuffer, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
 	m_pDevice->GetMemoryManager()->FreeMemory(m_pMemory);
