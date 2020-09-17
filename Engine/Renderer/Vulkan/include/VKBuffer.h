@@ -6,10 +6,10 @@ class CVKBuffer : public CGfxResource
 {
 	friend class CVKIndexBuffer;
 	friend class CVKVertexBuffer;
-	friend class CVKInstanceBuffer;
-	friend class CVKIndirectBuffer;
 	friend class CVKUniformBuffer;
 	friend class CVKStorageBuffer;
+	friend class CVKInstanceBuffer;
+	friend class CVKIndirectBuffer;
 	friend class CVKTransferBuffer;
 
 
