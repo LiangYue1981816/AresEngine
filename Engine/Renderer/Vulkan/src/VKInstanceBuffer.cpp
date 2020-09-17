@@ -1,12 +1,12 @@
 #include "VKRenderer.h"
 
 
-static const int INSTANCE_BUFFER_SIZE = 64;
+static const int INSTANCE_BUFFER_SIZE = 1;
 
 CVKInstanceBuffer::CVKInstanceBuffer(CVKDevice* pDevice, CVKInstanceBufferManager* pManager, uint32_t instanceFormat, int instanceBinding)
 	: CGfxInstanceBuffer(instanceFormat, instanceBinding)
-	, m_pDevice(pDevice)
 	, m_pManager(pManager)
+	, m_pDevice(pDevice)
 	, m_pBuffer(nullptr)
 
 	, m_binding(instanceBinding)
@@ -29,9 +29,7 @@ CVKInstanceBuffer::~CVKInstanceBuffer(void)
 
 void CVKInstanceBuffer::Release(void)
 {
-	if (m_pManager) {
-		m_pManager->Destroy(this);
-	}
+	m_pManager->Destroy(this);
 }
 
 VkBuffer CVKInstanceBuffer::GetBuffer(void) const
@@ -42,6 +40,16 @@ VkBuffer CVKInstanceBuffer::GetBuffer(void) const
 VkBufferUsageFlags CVKInstanceBuffer::GetBufferUsageFlags(void) const
 {
 	return m_pBuffer->GetBufferUsageFlags();
+}
+
+VkDeviceSize CVKInstanceBuffer::GetBufferSize(void) const
+{
+	return m_pBuffer->GetBufferSize();
+}
+
+VkDeviceSize CVKInstanceBuffer::GetMemorySize(void) const
+{
+	return m_pBuffer->GetMemorySize();
 }
 
 uint32_t CVKInstanceBuffer::GetInstanceBinding(void) const
@@ -59,16 +67,11 @@ uint32_t CVKInstanceBuffer::GetInstanceCount(void) const
 	return m_count;
 }
 
-uint32_t CVKInstanceBuffer::GetSize(void) const
-{
-	return m_pBuffer->GetSize();
-}
-
 bool CVKInstanceBuffer::BufferData(size_t size, const void* data)
 {
 	m_count = size / GetInstanceStride(m_format);
 
-	if (m_pBuffer->GetSize() < size) {
+	if (m_pBuffer->GetBufferSize() < size) {
 		CGfxProfiler::DecInstanceBufferSize(m_pBuffer->GetMemorySize());
 		{
 			delete m_pBuffer;
