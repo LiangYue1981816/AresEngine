@@ -19,7 +19,6 @@ public:
 	virtual uint32_t GetVertexBinding(void) const = 0;
 	virtual uint32_t GetVertexFormat(void) const = 0;
 	virtual uint32_t GetVertexCount(void) const = 0;
-	virtual uint32_t GetSize(void) const = 0;
 
 public:
 	virtual bool BufferData(size_t offset, size_t size, const void* data) = 0;

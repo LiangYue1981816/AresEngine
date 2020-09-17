@@ -13,11 +13,12 @@ public:
 public:
 	VkBuffer GetBuffer(void) const;
 	VkBufferUsageFlags GetBufferUsageFlags(void) const;
+	VkDeviceSize GetBufferSize(void) const;
+	VkDeviceSize GetMemorySize(void) const;
 
 public:
 	GfxIndexType GetIndexType(void) const;
 	uint32_t GetIndexCount(void) const;
-	uint32_t GetSize(void) const;
 
 public:
 	bool BufferData(size_t offset, size_t size, const void* data);
@@ -25,6 +26,7 @@ public:
 
 private:
 	GfxIndexType m_type;
+	uint32_t m_count;
 
 private:
 	CVKBuffer* m_pBuffer;
