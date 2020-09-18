@@ -39,6 +39,23 @@ static size_t textureCounts[GFX_TEXTURE_COUNT] = { 0 };
 static eastl::unordered_map<uint32_t, Sample> samples;
 
 
+CGfxProfilerSample::CGfxProfilerSample(const char* name)
+	: m_name(HashValue(name))
+{
+	if (bEnable) {
+		samples[m_name].name = name;
+		samples[m_name].Begin();
+	}
+}
+
+CGfxProfilerSample::~CGfxProfilerSample(void)
+{
+	if (bEnable) {
+		samples[m_name].End();
+	}
+}
+
+
 void CGfxProfiler::SetEnable(bool bEnableProfiler)
 {
 	bEnable = bEnableProfiler;
@@ -78,22 +95,6 @@ void CGfxProfiler::LogProfiler(uint32_t frames)
 
 }
 
-
-CGfxProfilerSample::CGfxProfilerSample(const char* name)
-	: m_name(HashValue(name))
-{
-	if (bEnable) {
-		samples[m_name].name = name;
-		samples[m_name].Begin();
-	}
-}
-
-CGfxProfilerSample::~CGfxProfilerSample(void)
-{
-	if (bEnable) {
-		samples[m_name].End();
-	}
-}
 
 /*
 void CGfxProfiler::LogGfxMemory(void)
