@@ -1,12 +1,42 @@
 #include "GfxHeader.h"
 
 
-bool CGfxProfiler::bEnable = false;
-size_t CGfxProfiler::bufferSizes[GFX_BUFFER_TYPE_COUNT] = { 0 };
-size_t CGfxProfiler::bufferCounts[GFX_BUFFER_TYPE_COUNT] = { 0 };
-size_t CGfxProfiler::textureSizes[GFX_TEXTURE_COUNT] = { 0 };
-size_t CGfxProfiler::textureCounts[GFX_TEXTURE_COUNT] = { 0 };
-eastl::unordered_map<uint32_t, CGfxProfiler::Sample> CGfxProfiler::samples;
+typedef struct Sample {
+	Sample(void)
+	{
+		name = nullptr;
+		timeBegin = 0;
+		timeEnd = 0;
+		timeTotal = 0;
+		count = 0;
+	}
+
+	void Begin(void)
+	{
+		timeBegin = Tick();
+	}
+
+	void End(void)
+	{
+		timeEnd = Tick();
+		timeTotal += timeEnd - timeBegin;
+		count += 1;
+	}
+
+	const char* name;
+	uint32_t timeBegin;
+	uint32_t timeEnd;
+	uint32_t timeTotal;
+	uint32_t count;
+} Sample;
+
+
+static bool bEnable = false;
+static size_t bufferSizes[GFX_BUFFER_TYPE_COUNT] = { 0 };
+static size_t bufferCounts[GFX_BUFFER_TYPE_COUNT] = { 0 };
+static size_t textureSizes[GFX_TEXTURE_COUNT] = { 0 };
+static size_t textureCounts[GFX_TEXTURE_COUNT] = { 0 };
+static eastl::unordered_map<uint32_t, Sample> samples;
 
 
 void CGfxProfiler::SetEnable(bool bEnableProfiler)
@@ -52,16 +82,16 @@ void CGfxProfiler::LogProfiler(uint32_t frames)
 CGfxProfilerSample::CGfxProfilerSample(const char* name)
 	: m_name(HashValue(name))
 {
-	if (CGfxProfiler::bEnable) {
-		CGfxProfiler::samples[m_name].name = name;
-		CGfxProfiler::samples[m_name].Begin();
+	if (bEnable) {
+		samples[m_name].name = name;
+		samples[m_name].Begin();
 	}
 }
 
 CGfxProfilerSample::~CGfxProfilerSample(void)
 {
-	if (CGfxProfiler::bEnable) {
-		CGfxProfiler::samples[m_name].End();
+	if (bEnable) {
+		samples[m_name].End();
 	}
 }
 
