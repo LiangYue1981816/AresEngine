@@ -2,10 +2,10 @@
 
 
 bool CGfxProfiler::bEnable = false;
-size_t CGfxProfiler::bufferSizes[BUFFER_TYPE_COUNT] = { 0 };
-size_t CGfxProfiler::bufferCounts[BUFFER_TYPE_COUNT] = { 0 };
-size_t CGfxProfiler::textureSizes[TEXTURE_TYPE_COUNT] = { 0 };
-size_t CGfxProfiler::textureCounts[TEXTURE_TYPE_COUNT] = { 0 };
+size_t CGfxProfiler::bufferSizes[GFX_BUFFER_TYPE_COUNT] = { 0 };
+size_t CGfxProfiler::bufferCounts[GFX_BUFFER_TYPE_COUNT] = { 0 };
+size_t CGfxProfiler::textureSizes[GFX_TEXTURE_COUNT] = { 0 };
+size_t CGfxProfiler::textureCounts[GFX_TEXTURE_COUNT] = { 0 };
 eastl::unordered_map<uint32_t, CGfxProfiler::Sample> CGfxProfiler::samples;
 
 
@@ -14,25 +14,25 @@ void CGfxProfiler::SetEnable(bool bEnableProfiler)
 	bEnable = bEnableProfiler;
 }
 
-void CGfxProfiler::IncBufferSize(CGfxProfiler::BufferType type, size_t size)
+void CGfxProfiler::IncBufferSize(GfxBufferType type, size_t size)
 {
 	bufferSizes[type] += size;
 	bufferCounts[type] += 1;
 }
 
-void CGfxProfiler::DecBufferSize(CGfxProfiler::BufferType type, size_t size)
+void CGfxProfiler::DecBufferSize(GfxBufferType type, size_t size)
 {
 	bufferSizes[type] -= size;
 	bufferCounts[type] -= 1;
 }
 
-void CGfxProfiler::IncTextureSize(CGfxProfiler::TextureType type, size_t size)
+void CGfxProfiler::IncTextureSize(GfxTextureType type, size_t size)
 {
 	textureSizes[type] += size;
 	textureCounts[type] += 1;
 }
 
-void CGfxProfiler::DecTextureSzie(CGfxProfiler::TextureType type, size_t size)
+void CGfxProfiler::DecTextureSzie(GfxTextureType type, size_t size)
 {
 	textureSizes[type] -= size;
 	textureCounts[type] -= 1;

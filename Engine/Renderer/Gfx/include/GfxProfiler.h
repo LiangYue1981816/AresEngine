@@ -48,34 +48,15 @@ public:
 		uint32_t count;
 	} Sample;
 
-	typedef enum BufferType {
-		BUFFER_TYPE_INDEX_BUFFER = 0,
-		BUFFER_TYPE_VERTEX_BUFFER,
-		BUFFER_TYPE_UNIFORM_BUFFER,
-		BUFFER_TYPE_STORAGE_BUFFER,
-		BUFFER_TYPE_INSTANCE_BUFFER,
-		BUFFER_TYPE_INDIRECT_BUFFER,
-		BUFFER_TYPE_TRANSFER_BNUFER,
-		BUFFER_TYPE_COUNT
-	} BufferType;
-
-	typedef enum TextureType {
-		TEXTURE_TYPE_TEXTURE2D = 0,
-		TEXTURE_TYPE_TEXTURE2D_ARRAY,
-		TEXTURE_TYPE_TEXTURE_CUBEMAP,
-		TEXTURE_TYPE_RENDER_TEXTURE,
-		TEXTURE_TYPE_COUNT
-	} TextureType;
-
 
 public:
 	static void SetEnable(bool bEnableProfiler);
 
-	static void IncBufferSize(BufferType type, size_t size);
-	static void DecBufferSize(BufferType type, size_t size);
+	static void IncBufferSize(GfxBufferType type, size_t size);
+	static void DecBufferSize(GfxBufferType type, size_t size);
 
-	static void IncTextureSize(TextureType type, size_t size);
-	static void DecTextureSzie(TextureType type, size_t size);
+	static void IncTextureSize(GfxTextureType type, size_t size);
+	static void DecTextureSzie(GfxTextureType type, size_t size);
 
 	static void LogGfxMemory(void);
 	static void LogProfiler(uint32_t frames);
@@ -83,9 +64,9 @@ public:
 
 private:
 	static bool bEnable;
-	static size_t bufferSizes[BUFFER_TYPE_COUNT];
-	static size_t bufferCounts[BUFFER_TYPE_COUNT];
-	static size_t textureSizes[TEXTURE_TYPE_COUNT];
-	static size_t textureCounts[TEXTURE_TYPE_COUNT];
+	static size_t bufferSizes[GFX_BUFFER_TYPE_COUNT];
+	static size_t bufferCounts[GFX_BUFFER_TYPE_COUNT];
+	static size_t textureSizes[GFX_TEXTURE_COUNT];
+	static size_t textureCounts[GFX_TEXTURE_COUNT];
 	static eastl::unordered_map<uint32_t, Sample> samples;
 };
