@@ -155,13 +155,11 @@ CVKTexture::~CVKTexture(void)
 
 VkImage CVKTexture::GetImage(void) const
 {
-	ASSERT(m_vkImage);
 	return m_vkImage;
 }
 
 VkImageView CVKTexture::GetImageView(void) const
 {
-	ASSERT(m_vkImageView);
 	return m_vkImageView;
 }
 
