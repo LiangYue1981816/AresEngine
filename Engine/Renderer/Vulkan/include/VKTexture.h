@@ -11,7 +11,8 @@ class CVKTexture : public CGfxResource
 
 
 private:
-	CVKTexture(CVKDevice* pDevice);
+	CVKTexture(CVKDevice* pDevice, GfxTextureType type, GfxPixelFormat format, int width, int height, int layers, int levels, int samples, VkImageAspectFlags imageAspectFlags, VkImage vkImage);
+	CVKTexture(CVKDevice* pDevice, GfxTextureType type, GfxPixelFormat format, int width, int height, int layers, int levels, int samples, VkImageAspectFlags imageAspectFlags, VkImageUsageFlags imageUsageFlags, VkImageTiling imageTiling);
 	virtual ~CVKTexture(void);
 	virtual void Release(void) {}
 
@@ -29,11 +30,6 @@ private:
 	int GetLayers(void) const;
 	int GetLevels(void) const;
 	int GetSamples(void) const;
-
-private:
-	bool Create(GfxTextureType type, GfxPixelFormat format, int width, int height, int layers, int levels, int samples, VkImageAspectFlags imageAspectFlags, VkImage vkImage);
-	bool Create(GfxTextureType type, GfxPixelFormat format, int width, int height, int layers, int levels, int samples, VkImageAspectFlags imageAspectFlags, VkImageUsageFlags imageUsageFlags, VkImageTiling imageTiling);
-	void Destroy(void);
 
 
 private:
