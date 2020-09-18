@@ -81,6 +81,8 @@ class CVKRenderPass;
 class CVKRenderTexture;
 class CVKFrameBuffer;
 
+class CVKRenderTextureManager;
+
 class CVKShader;
 class CVKPipeline;
 class CVKPipelineCompute;
