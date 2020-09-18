@@ -133,8 +133,7 @@ CVKTexture::CVKTexture(CVKDevice* pDevice, GfxTextureType type, GfxPixelFormat f
 	vkGetImageMemoryRequirements(m_pDevice->GetDevice(), m_vkImage, &requirements);
 
 	m_pMemory = m_pDevice->GetMemoryManager()->AllocMemory(requirements.size, requirements.alignment, memoryPropertyFlags, imageTiling == VK_IMAGE_TILING_LINEAR ? VK_RESOURCE_TYPE_IMAGE_LINEAR : VK_RESOURCE_TYPE_IMAGE_OPTIMAL);
-	if (m_pMemory == nullptr) ASSERT(false);
-	if (m_pMemory->BindImage(m_vkImage) == false) ASSERT(false);
+	m_pMemory->BindImage(m_vkImage);
 }
 
 CVKTexture::~CVKTexture(void)

@@ -33,8 +33,7 @@ CVKBuffer::CVKBuffer(CVKDevice* pDevice, VkDeviceSize bufferSize, VkBufferUsageF
 	vkGetBufferMemoryRequirements(m_pDevice->GetDevice(), m_vkBuffer, &requirements);
 
 	m_pMemory = m_pDevice->GetMemoryManager()->AllocMemory(requirements.size, requirements.alignment, memoryPropertyFlags, VK_RESOURCE_TYPE_BUFFER);
-	if (m_pMemory == nullptr) ASSERT(false);
-	if (m_pMemory->BindBuffer(m_vkBuffer) == false) ASSERT(false);
+	m_pMemory->BindBuffer(m_vkBuffer);
 
 	CGfxProfiler::IncBufferSize(m_type, m_pMemory->GetSize());
 }
