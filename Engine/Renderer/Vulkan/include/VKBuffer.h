@@ -14,7 +14,7 @@ class CVKBuffer : public CGfxResource
 
 
 private:
-	CVKBuffer(CVKDevice* pDevice, VkDeviceSize bufferSize, VkBufferUsageFlags bufferUsageFlags, VkMemoryPropertyFlags memoryPropertyFlags, CGfxProfiler::BufferType type);
+	CVKBuffer(CVKDevice* pDevice, VkDeviceSize bufferSize, VkBufferUsageFlags bufferUsageFlags, VkMemoryPropertyFlags memoryPropertyFlags, GfxBufferType type);
 	virtual ~CVKBuffer(void);
 	virtual void Release(void) {}
 
@@ -37,7 +37,7 @@ private:
 
 
 private:
-	CGfxProfiler::BufferType m_type;
+	GfxBufferType m_type;
 
 private:
 	VkBuffer m_vkBuffer;

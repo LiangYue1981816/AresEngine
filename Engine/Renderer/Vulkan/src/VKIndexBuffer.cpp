@@ -21,10 +21,10 @@ CVKIndexBuffer::CVKIndexBuffer(CVKDevice* pDevice, GfxIndexType type, size_t siz
 	size = ALIGN_BYTE(size, m_pDevice->GetPhysicalDeviceLimits().nonCoherentAtomSize);
 
 	if (bDynamic) {
-		m_pBuffer = new CVKBuffer(m_pDevice, size, VK_BUFFER_USAGE_INDEX_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT, CGfxProfiler::BufferType::BUFFER_TYPE_INDEX_BUFFER);
+		m_pBuffer = new CVKBuffer(m_pDevice, size, VK_BUFFER_USAGE_INDEX_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT, GFX_BUFFER_INDEX_BUFFER);
 	}
 	else {
-		m_pBuffer = new CVKBuffer(m_pDevice, size, VK_BUFFER_USAGE_INDEX_BUFFER_BIT | VK_BUFFER_USAGE_TRANSFER_DST_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, CGfxProfiler::BufferType::BUFFER_TYPE_INDEX_BUFFER);
+		m_pBuffer = new CVKBuffer(m_pDevice, size, VK_BUFFER_USAGE_INDEX_BUFFER_BIT | VK_BUFFER_USAGE_TRANSFER_DST_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, GFX_BUFFER_INDEX_BUFFER);
 	}
 }
 

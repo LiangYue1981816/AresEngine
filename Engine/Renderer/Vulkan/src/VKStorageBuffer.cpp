@@ -10,10 +10,10 @@ CVKStorageBuffer::CVKStorageBuffer(CVKDevice* pDevice, size_t size, bool bDynami
 	size = ALIGN_BYTE(size, m_pDevice->GetPhysicalDeviceLimits().minStorageBufferOffsetAlignment);
 
 	if (bDynamic) {
-		m_pBuffer = new CVKBuffer(m_pDevice, size, VK_BUFFER_USAGE_STORAGE_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT, CGfxProfiler::BufferType::BUFFER_TYPE_STORAGE_BUFFER);
+		m_pBuffer = new CVKBuffer(m_pDevice, size, VK_BUFFER_USAGE_STORAGE_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT, GFX_BUFFER_STORAGE_BUFFER);
 	}
 	else {
-		m_pBuffer = new CVKBuffer(m_pDevice, size, VK_BUFFER_USAGE_STORAGE_BUFFER_BIT | VK_BUFFER_USAGE_TRANSFER_DST_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, CGfxProfiler::BufferType::BUFFER_TYPE_STORAGE_BUFFER);
+		m_pBuffer = new CVKBuffer(m_pDevice, size, VK_BUFFER_USAGE_STORAGE_BUFFER_BIT | VK_BUFFER_USAGE_TRANSFER_DST_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, GFX_BUFFER_STORAGE_BUFFER);
 	}
 }
 

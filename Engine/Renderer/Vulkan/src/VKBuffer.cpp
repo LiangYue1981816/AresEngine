@@ -1,7 +1,7 @@
 #include "VKRenderer.h"
 
 
-CVKBuffer::CVKBuffer(CVKDevice* pDevice, VkDeviceSize bufferSize, VkBufferUsageFlags bufferUsageFlags, VkMemoryPropertyFlags memoryPropertyFlags, CGfxProfiler::BufferType type)
+CVKBuffer::CVKBuffer(CVKDevice* pDevice, VkDeviceSize bufferSize, VkBufferUsageFlags bufferUsageFlags, VkMemoryPropertyFlags memoryPropertyFlags, GfxBufferType type)
 	: m_pDevice(pDevice)
 	, m_pMemory(nullptr)
 
