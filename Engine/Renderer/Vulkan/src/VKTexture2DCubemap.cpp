@@ -13,7 +13,7 @@ CVKTextureCubemap::CVKTextureCubemap(CVKDevice* pDevice, CVKTextureCubemapManage
 		format,
 		width,
 		height,
-		1,
+		6,
 		levels,
 		1,
 		VK_IMAGE_ASPECT_COLOR_BIT,
