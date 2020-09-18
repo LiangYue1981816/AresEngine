@@ -8,7 +8,6 @@ class CVKTexture : public CGfxResource
 	friend class CVKTexture2DArray;
 	friend class CVKTextureCubemap;
 	friend class CVKRenderTexture;
-	friend class CVKTransferBuffer;
 
 
 private:
