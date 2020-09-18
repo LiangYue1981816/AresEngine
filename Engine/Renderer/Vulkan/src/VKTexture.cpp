@@ -142,19 +142,19 @@ CVKTexture::CVKTexture(CVKDevice* pDevice, GfxTextureType type, GfxPixelFormat f
 
 CVKTexture::~CVKTexture(void)
 {
-	if (m_bExtern == false) {
-		if (m_vkImage) {
-			vkDestroyImage(m_pDevice->GetDevice(), m_vkImage, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
-		}
-	}
-
 	if (m_vkImageView) {
 		vkDestroyImageView(m_pDevice->GetDevice(), m_vkImageView, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
 	}
 
-	if (m_pMemory) {
-		CGfxProfiler::DecTextureSzie(m_type, m_pMemory->GetSize());
-		m_pDevice->GetMemoryManager()->FreeMemory(m_pMemory);
+	if (m_bExtern == false) {
+		if (m_vkImage) {
+			vkDestroyImage(m_pDevice->GetDevice(), m_vkImage, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
+		}
+
+		if (m_pMemory) {
+			CGfxProfiler::DecTextureSzie(m_type, m_pMemory->GetSize());
+			m_pDevice->GetMemoryManager()->FreeMemory(m_pMemory);
+		}
 	}
 }
 
