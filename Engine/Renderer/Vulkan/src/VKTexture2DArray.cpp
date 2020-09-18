@@ -7,6 +7,9 @@ CVKTexture2DArray::CVKTexture2DArray(CVKDevice* pDevice, CVKTexture2DArrayManage
 	, m_pDevice(pDevice)
 	, m_pTexture(nullptr)
 {
+	ASSERT(CVKHelper::IsFormatSupported((VkFormat)format));
+	ASSERT(CGfxHelper::IsFormatColor(format));
+
 	m_pTexture = new CVKTexture(
 		pDevice,
 		GFX_TEXTURE_2D_ARRAY,
@@ -17,7 +20,7 @@ CVKTexture2DArray::CVKTexture2DArray(CVKDevice* pDevice, CVKTexture2DArrayManage
 		levels,
 		1,
 		VK_IMAGE_ASPECT_COLOR_BIT,
-		VK_IMAGE_USAGE_SAMPLED_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT,
+		VK_IMAGE_USAGE_SAMPLED_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_STORAGE_BIT,
 		VK_IMAGE_TILING_OPTIMAL);
 }
 

@@ -7,6 +7,9 @@ CVKRenderTexture::CVKRenderTexture(CVKDevice* pDevice, CVKRenderTextureManager* 
 	, m_pDevice(pDevice)
 	, m_pTexture(nullptr)
 {
+	ASSERT(CVKHelper::IsFormatSupported((VkFormat)format));
+	ASSERT(CGfxHelper::IsFormatColor(format) || CGfxHelper::IsFormatDepthOnly(format) || CGfxHelper::IsFormatStencilOnly(format) || CGfxHelper::IsFormatDepthAndStencil(format));
+
 	VkImageAspectFlags imageAspectFlags;
 
 	if (CGfxHelper::IsFormatDepthOnly(format)) {
@@ -41,6 +44,9 @@ CVKRenderTexture::CVKRenderTexture(CVKDevice* pDevice, CVKRenderTextureManager* 
 	, m_pDevice(pDevice)
 	, m_pTexture(nullptr)
 {
+	ASSERT(CVKHelper::IsFormatSupported((VkFormat)format));
+	ASSERT(CGfxHelper::IsFormatColor(format) || CGfxHelper::IsFormatDepthOnly(format) || CGfxHelper::IsFormatStencilOnly(format) || CGfxHelper::IsFormatDepthAndStencil(format));
+
 	VkImageAspectFlags imageAspectFlags;
 	VkImageUsageFlags imageUsageFlags;
 
