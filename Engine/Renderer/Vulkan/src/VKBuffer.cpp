@@ -33,17 +33,23 @@ CVKBuffer::CVKBuffer(CVKDevice* pDevice, VkDeviceSize bufferSize, VkBufferUsageF
 	vkGetBufferMemoryRequirements(m_pDevice->GetDevice(), m_vkBuffer, &requirements);
 
 	m_pMemory = m_pDevice->GetMemoryManager()->AllocMemory(requirements.size, requirements.alignment, memoryPropertyFlags, VK_RESOURCE_TYPE_BUFFER);
-	m_pMemory->BindBuffer(m_vkBuffer);
 
-	CGfxProfiler::IncBufferSize(m_type, m_pMemory->GetSize());
+	if (m_pMemory) {
+		m_pMemory->BindBuffer(m_vkBuffer);
+		CGfxProfiler::IncBufferSize(m_type, m_pMemory->GetSize());
+	}
 }
 
 CVKBuffer::~CVKBuffer(void)
 {
-	CGfxProfiler::DecBufferSize(m_type, m_pMemory->GetSize());
+	if (m_vkBuffer) {
+		vkDestroyBuffer(m_pDevice->GetDevice(), m_vkBuffer, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
+	}
 
-	vkDestroyBuffer(m_pDevice->GetDevice(), m_vkBuffer, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
-	m_pDevice->GetMemoryManager()->FreeMemory(m_pMemory);
+	if (m_pMemory) {
+		CGfxProfiler::DecBufferSize(m_type, m_pMemory->GetSize());
+		m_pDevice->GetMemoryManager()->FreeMemory(m_pMemory);
+	}
 }
 
 VkBuffer CVKBuffer::GetBuffer(void) const
@@ -63,38 +69,68 @@ VkDeviceSize CVKBuffer::GetBufferSize(void) const
 
 VkDeviceSize CVKBuffer::GetMemorySize(void) const
 {
-	return m_pMemory->GetSize();
+	if (m_pMemory) {
+		return m_pMemory->GetSize();
+	}
+	else {
+		return 0;
+	}
 }
 
 bool CVKBuffer::IsDeviceLocal(void) const
 {
-	return m_pMemory->IsDeviceLocal();
+	if (m_pMemory) {
+		return m_pMemory->IsDeviceLocal();
+	}
+	else {
+		return false;
+	}
 }
 
 bool CVKBuffer::IsHostVisible(void) const
 {
-	return m_pMemory->IsHostVisible();
+	if (m_pMemory) {
+		return m_pMemory->IsHostVisible();
+	}
+	else {
+		return false;
+	}
 }
 
 bool CVKBuffer::IsHostCoherent(void) const
 {
-	return m_pMemory->IsHostCoherent();
+	if (m_pMemory) {
+		return m_pMemory->IsHostCoherent();
+	}
+	else {
+		return false;
+	}
 }
 
 bool CVKBuffer::IsHostCached(void) const
 {
-	return m_pMemory->IsHostCached();
+	if (m_pMemory) {
+		return m_pMemory->IsHostCached();
+	}
+	else {
+		return false;
+	}
 }
 
 bool CVKBuffer::IsLazilyAllocated(void) const
 {
-	return m_pMemory->IsLazilyAllocated();
+	if (m_pMemory) {
+		return m_pMemory->IsLazilyAllocated();
+	}
+	else {
+		return false;
+	}
 }
 
 bool CVKBuffer::BufferData(size_t offset, size_t size, const void* data)
 {
 	if (size && data) {
-		if (m_pMemory->IsHostVisible()) {
+		if (m_pMemory && m_pMemory->IsHostVisible()) {
 			CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->BeginMap());
 			CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->CopyData(offset, size, data));
 			CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->EndMap());
