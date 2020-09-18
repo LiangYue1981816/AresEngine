@@ -1,13 +1,24 @@
 #include "VKRenderer.h"
 
 
-CVKTexture2D::CVKTexture2D(CVKDevice* pDevice, CVKTexture2DManager* pManager, uint32_t name)
+CVKTexture2D::CVKTexture2D(CVKDevice* pDevice, CVKTexture2DManager* pManager, uint32_t name, GfxPixelFormat format, int width, int height, int levels, int samples)
 	: CGfxTexture2D(name)
-	, m_pDevice(pDevice)
 	, m_pManager(pManager)
+	, m_pDevice(pDevice)
 	, m_pTexture(nullptr)
 {
-	m_pTexture = new CVKTexture(m_pDevice);
+	m_pTexture = new CVKTexture(
+		pDevice, 
+		samples == 1 ? GFX_TEXTURE_2D : GFX_TEXTURE_2D_MULTISAMPLE, 
+		format, 
+		width, 
+		height, 
+		1, 
+		levels, 
+		samples, 
+		VK_IMAGE_ASPECT_COLOR_BIT, 
+		VK_IMAGE_USAGE_SAMPLED_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT, 
+		VK_IMAGE_TILING_OPTIMAL);
 }
 
 CVKTexture2D::~CVKTexture2D(void)
@@ -17,87 +28,90 @@ CVKTexture2D::~CVKTexture2D(void)
 
 void CVKTexture2D::Release(void)
 {
-	m_pManager->Destroy(this);
+	if (m_pManager) {
+		m_pManager->Destroy(this);
+	}
+	else {
+		delete this;
+	}
 }
 
 VkImage CVKTexture2D::GetImage(void) const
 {
-	return m_pTexture->GetImage();
+	if (m_pTexture) {
+		return m_pTexture->GetImage();
+	}
+	else {
+		return VK_NULL_HANDLE;
+	}
 }
 
 VkImageView CVKTexture2D::GetImageView(void) const
 {
-	return m_pTexture->GetImageView();
+	if (m_pTexture) {
+		return m_pTexture->GetImageView();
+	}
+	else {
+		return VK_NULL_HANDLE;
+	}
 }
 
 VkImageAspectFlags CVKTexture2D::GetImageAspectFlags(void) const
 {
-	return m_pTexture->GetImageAspectFlags();
-}
-
-GfxTextureType CVKTexture2D::GetType(void) const
-{
-	return m_pTexture->GetType();
+	if (m_pTexture) {
+		return m_pTexture->GetImageAspectFlags();
+	}
+	else {
+		return 0;
+	}
 }
 
 GfxPixelFormat CVKTexture2D::GetFormat(void) const
 {
-	return m_pTexture->GetFormat();
+	if (m_pTexture) {
+		return m_pTexture->GetFormat();
+	}
+	else {
+		return GFX_PIXELFORMAT_UNDEFINED;
+	}
 }
 
 int CVKTexture2D::GetWidth(void) const
 {
-	return m_pTexture->GetWidth();
+	if (m_pTexture) {
+		return m_pTexture->GetWidth();
+	}
+	else {
+		return 0;
+	}
 }
 
 int CVKTexture2D::GetHeight(void) const
 {
-	return m_pTexture->GetHeight();
+	if (m_pTexture) {
+		return m_pTexture->GetHeight();
+	}
+	else {
+		return 0;
+	}
 }
 
 int CVKTexture2D::GetLevels(void) const
 {
-	return m_pTexture->GetLevels();
+	if (m_pTexture) {
+		return m_pTexture->GetLevels();
+	}
+	else {
+		return 0;
+	}
 }
 
 int CVKTexture2D::GetSamples(void) const
 {
-	return m_pTexture->GetSamples();
-}
-
-bool CVKTexture2D::Create(GfxPixelFormat format, int width, int height, int levels, int samples)
-{
-	if (CVKHelper::IsFormatSupported((VkFormat)format) && CGfxHelper::IsFormatColor(format)) {
-		samples = std::max(samples, 1);
-		return m_pTexture->Create(samples == 1 ? GFX_TEXTURE_2D : GFX_TEXTURE_2D_MULTISAMPLE, format, width, height, 1, levels, samples, VK_IMAGE_ASPECT_COLOR_BIT, VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT | VK_IMAGE_USAGE_STORAGE_BIT, VK_IMAGE_TILING_OPTIMAL);
+	if (m_pTexture) {
+		return m_pTexture->GetSamples();
 	}
 	else {
-		return false;
+		return 0;
 	}
 }
-
-void CVKTexture2D::Destroy(void)
-{
-	m_pTexture->Destroy();
-}
-
-bool CVKTexture2D::Texture2DData(GfxPixelFormat format, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
-{
-	return m_pTexture->Texture2DData(format, level, xoffset, yoffset, width, height, size, data);
-}
-
-bool CVKTexture2D::Texture2DDataCompressed(GfxPixelFormat format, int level, int xoffset, int yoffset, int width, int height, uint32_t size, const void* data)
-{
-	return m_pTexture->Texture2DData(format, level, xoffset, yoffset, width, height, size, data);
-}
-/*
-bool CVKTexture2D::PipelineBarrier(VkCommandBuffer vkCommandBuffer, VkImageLayout imageLayout)
-{
-	return m_pTexture->PipelineBarrier(vkCommandBuffer, imageLayout);
-}
-
-bool CVKTexture2D::PipelineBarrier(VkCommandBuffer vkCommandBuffer, VkImageLayout imageLayout, VkAccessFlags srcAccessFlags, VkAccessFlags dstAccessFlags, VkPipelineStageFlags srcPipelineStageFlags, VkPipelineStageFlags dstPipelineStageFlags)
-{
-	return m_pTexture->PipelineBarrier(vkCommandBuffer, imageLayout, srcAccessFlags, dstAccessFlags, srcPipelineStageFlags, dstPipelineStageFlags);
-}
-*/

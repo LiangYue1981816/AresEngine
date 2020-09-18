@@ -101,6 +101,8 @@ class CVKTexture2D;
 class CVKTexture2DArray;
 class CVKTextureCubemap;
 
+class CVKTexture2DManager;
+
 class CVKMesh;
 class CVKMeshDraw;
 
