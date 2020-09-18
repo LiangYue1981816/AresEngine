@@ -38,80 +38,40 @@ void CVKTexture2D::Release(void)
 
 VkImage CVKTexture2D::GetImage(void) const
 {
-	if (m_pTexture) {
-		return m_pTexture->GetImage();
-	}
-	else {
-		return VK_NULL_HANDLE;
-	}
+	return m_pTexture->GetImage();
 }
 
 VkImageView CVKTexture2D::GetImageView(void) const
 {
-	if (m_pTexture) {
-		return m_pTexture->GetImageView();
-	}
-	else {
-		return VK_NULL_HANDLE;
-	}
+	return m_pTexture->GetImageView();
 }
 
 VkImageAspectFlags CVKTexture2D::GetImageAspectFlags(void) const
 {
-	if (m_pTexture) {
-		return m_pTexture->GetImageAspectFlags();
-	}
-	else {
-		return 0;
-	}
+	return m_pTexture->GetImageAspectFlags();
 }
 
 GfxPixelFormat CVKTexture2D::GetFormat(void) const
 {
-	if (m_pTexture) {
-		return m_pTexture->GetFormat();
-	}
-	else {
-		return GFX_PIXELFORMAT_UNDEFINED;
-	}
+	return m_pTexture->GetFormat();
 }
 
 int CVKTexture2D::GetWidth(void) const
 {
-	if (m_pTexture) {
-		return m_pTexture->GetWidth();
-	}
-	else {
-		return 0;
-	}
+	return m_pTexture->GetWidth();
 }
 
 int CVKTexture2D::GetHeight(void) const
 {
-	if (m_pTexture) {
-		return m_pTexture->GetHeight();
-	}
-	else {
-		return 0;
-	}
+	return m_pTexture->GetHeight();
 }
 
 int CVKTexture2D::GetLevels(void) const
 {
-	if (m_pTexture) {
-		return m_pTexture->GetLevels();
-	}
-	else {
-		return 0;
-	}
+	return m_pTexture->GetLevels();
 }
 
 int CVKTexture2D::GetSamples(void) const
 {
-	if (m_pTexture) {
-		return m_pTexture->GetSamples();
-	}
-	else {
-		return 0;
-	}
+	return m_pTexture->GetSamples();
 }
