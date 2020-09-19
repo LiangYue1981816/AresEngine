@@ -66,25 +66,33 @@ bool CVKRenderPass::Create(void)
 				}
 
 				for (const auto& itOutputAttachment : m_subpasses[indexSubpass].outputAttachments) {
-					// Layout for color attachment can only be VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL or VK_IMAGE_LAYOUT_GENERAL.
+					// Note: Layout for color attachment can only be VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL or VK_IMAGE_LAYOUT_GENERAL.
 					VkAttachmentReference attachment = {};
 					attachment.attachment = itOutputAttachment.first;
 					attachment.layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL; // VK_IMAGE_LAYOUT_GENERAL
 					subpassAttachments[indexSubpass].outputAttachments.emplace_back(attachment);
 				}
 
-				for (const auto& itResolveAttachment : m_subpasses[indexSubpass].resolveAttachments) {
-					if (CGfxHelper::IsFormatColor(m_attachments[itResolveAttachment.first].format)) {
-						VkAttachmentReference attachment = {};
-						attachment.attachment = itResolveAttachment.first;
-						attachment.layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
-						subpassAttachments[indexSubpass].resolveAttachments.emplace_back(attachment);
+				if (m_subpasses[indexSubpass].resolveAttachments.empty() == false) {
+					// Note: resolveAttachments is an optional array of outputAttachments size
+					if (m_subpasses[indexSubpass].resolveAttachments.size() != m_subpasses[indexSubpass].outputAttachments.size()) {
+						ASSERT(false);
+						break;
 					}
-					else {
-						VkAttachmentReference attachment = {};
-						attachment.attachment = itResolveAttachment.first;
-						attachment.layout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
-						subpassAttachments[indexSubpass].resolveAttachments.emplace_back(attachment);
+
+					for (const auto& itResolveAttachment : m_subpasses[indexSubpass].resolveAttachments) {
+						if (CGfxHelper::IsFormatColor(m_attachments[itResolveAttachment.first].format)) {
+							VkAttachmentReference attachment = {};
+							attachment.attachment = itResolveAttachment.first;
+							attachment.layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
+							subpassAttachments[indexSubpass].resolveAttachments.emplace_back(attachment);
+						}
+						else {
+							VkAttachmentReference attachment = {};
+							attachment.attachment = itResolveAttachment.first;
+							attachment.layout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
+							subpassAttachments[indexSubpass].resolveAttachments.emplace_back(attachment);
+						}
 					}
 				}
 
