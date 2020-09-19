@@ -27,26 +27,26 @@ typedef struct AttachmentInformation {
 		bClear = true;
 	}
 
-	void Set(GfxPixelFormat _format, int _samples, bool _bInvalidation, bool _bClear, float _depth, int _stencil)
+	void Set(GfxPixelFormat _format, int _samples, bool _bInvalidation, bool _bClear, float _clearDepth, int _clearStencil)
 	{
 		format = _format;
 		samples = _samples;
 		bInvalidation = _bInvalidation;
 		bClear = _bClear;
-		clearValue.depth = _depth;
-		clearValue.stencil = _stencil;
+		clearValue.depth = _clearDepth;
+		clearValue.stencil = _clearStencil;
 	}
 
-	void Set(GfxPixelFormat _format, int _samples, bool _bInvalidation, bool _bClear, float _red, float _green, float _blue, float _alpha)
+	void Set(GfxPixelFormat _format, int _samples, bool _bInvalidation, bool _bClear, float _clearRed, float _clearGreen, float _clearBlue, float _clearAlpha)
 	{
 		format = _format;
 		samples = _samples;
 		bInvalidation = _bInvalidation;
 		bClear = _bClear;
-		clearValue.color[0] = _red;
-		clearValue.color[1] = _green;
-		clearValue.color[2] = _blue;
-		clearValue.color[3] = _alpha;
+		clearValue.color[0] = _clearRed;
+		clearValue.color[1] = _clearGreen;
+		clearValue.color[2] = _clearBlue;
+		clearValue.color[3] = _clearAlpha;
 	}
 
 	GfxPixelFormat format;
