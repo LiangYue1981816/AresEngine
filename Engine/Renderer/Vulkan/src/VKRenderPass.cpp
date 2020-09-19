@@ -3,6 +3,216 @@
 
 CVKRenderPass::CVKRenderPass(CVKDevice* pDevice, CVKRenderPassManager* pManager, uint32_t name, int numAttachments, int numSubpasses)
 	: CGfxRenderPass(name, numAttachments, numSubpasses)
+	, m_pManager(pManager)
+	, m_pDevice(pDevice)
+
+	, m_vkRenderPass(VK_NULL_HANDLE)
+
+	, m_attachments(numAttachments)
+	, m_subpasses(numSubpasses)
+{
+
+}
+
+CVKRenderPass::~CVKRenderPass(void)
+{
+	Destroy(true);
+}
+
+void CVKRenderPass::Release(void)
+{
+	if (m_pManager) {
+		m_pManager->Destroy(this);
+	}
+	else {
+		delete this;
+	}
+}
+
+VkRenderPass CVKRenderPass::GetRenderPass(void) const
+{
+	return m_vkRenderPass;
+}
+
+bool CVKRenderPass::Create(void)
+{
+	return true;
+}
+
+void CVKRenderPass::Destroy(bool bClear /*= true*/)
+{
+	if (bClear) {
+		m_attachments.clear();
+		m_subpasses.clear();
+	}
+
+	if (m_vkRenderPass) {
+		vkDestroyRenderPass(m_pDevice->GetDevice(), m_vkRenderPass, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
+	}
+
+	m_vkRenderPass = VK_NULL_HANDLE;
+}
+
+bool CVKRenderPass::SetColorAttachment(int indexAttachment, GfxPixelFormat format, int samples, bool bInvalidation, bool bClear, float clearRed /*= 0.0f*/, float clearGreen /*= 0.0f*/, float clearBlue /*= 0.0f*/, float clearAlpha /*= 0.0f*/)
+{
+	if (CGfxHelper::IsFormatColor(format) == false) {
+		return false;
+	}
+
+	if (indexAttachment < 0 || indexAttachment >= m_attachments.size()) {
+		return false;
+	}
+
+	m_attachments[indexAttachment].Set(format, samples, bInvalidation, bClear, clearRed, clearGreen, clearBlue, clearAlpha);
+	return true;
+}
+
+bool CVKRenderPass::SetDepthStencilAttachment(int indexAttachment, GfxPixelFormat format, int samples, bool bInvalidation, bool bClear, float clearDepth /*= 1.0f*/, int clearStencil /*= 0*/)
+{
+	if (CGfxHelper::IsFormatDepthOrStencil(format) == false) {
+		return false;
+	}
+
+	if (indexAttachment < 0 || indexAttachment >= m_attachments.size()) {
+		return false;
+	}
+
+	m_attachments[indexAttachment].Set(format, samples, bInvalidation, bClear, clearDepth, clearStencil);
+	return true;
+}
+
+bool CVKRenderPass::SetSubpassInputReference(int indexSubpass, int indexAttachment)
+{
+	if (indexSubpass < 0 || indexSubpass >= m_subpasses.size()) {
+		return false;
+	}
+
+	if (indexAttachment < 0 || indexAttachment >= m_attachments.size()) {
+		return false;
+	}
+
+	m_subpasses[indexSubpass].SetInputAttachment(indexAttachment);
+	return true;
+}
+
+bool CVKRenderPass::SetSubpassOutputReference(int indexSubpass, int indexAttachment)
+{
+	if (indexSubpass < 0 || indexSubpass >= m_subpasses.size()) {
+		return false;
+	}
+
+	if (indexAttachment < 0 || indexAttachment >= m_attachments.size()) {
+		return false;
+	}
+
+	m_subpasses[indexSubpass].SetOutputAttachment(indexAttachment);
+	return true;
+}
+
+bool CVKRenderPass::SetSubpassResolveReference(int indexSubpass, int indexAttachment)
+{
+	if (indexSubpass < 0 || indexSubpass >= m_subpasses.size()) {
+		return false;
+	}
+
+	if (indexAttachment < 0 || indexAttachment >= m_attachments.size()) {
+		return false;
+	}
+
+	m_subpasses[indexSubpass].SetResolveAttachment(indexAttachment);
+	return true;
+}
+
+bool CVKRenderPass::SetSubpassPreserveReference(int indexSubpass, int indexAttachment)
+{
+	if (indexSubpass < 0 || indexSubpass >= m_subpasses.size()) {
+		return false;
+	}
+
+	if (indexAttachment < 0 || indexAttachment >= m_attachments.size()) {
+		return false;
+	}
+
+	m_subpasses[indexSubpass].SetPreserveAttachment(indexAttachment);
+	return true;
+}
+
+bool CVKRenderPass::SetSubpassDepthStencilReference(int indexSubpass, int indexAttachment)
+{
+	if (CGfxHelper::IsFormatDepthOrStencil(m_attachments[indexAttachment].format) == false) {
+		return false;
+	}
+
+	if (indexSubpass < 0 || indexSubpass >= m_subpasses.size()) {
+		return false;
+	}
+
+	if (indexAttachment < 0 || indexAttachment >= m_attachments.size()) {
+		return false;
+	}
+
+	m_subpasses[indexSubpass].SetDepthStencilAttachment(indexAttachment);
+	return true;
+}
+
+uint32_t CVKRenderPass::GetAttachmentCount(void) const
+{
+	return m_attachments.size();
+}
+
+const AttachmentInformation* CVKRenderPass::GetAttachments(void) const
+{
+	return m_attachments.data();
+}
+
+const AttachmentInformation* CVKRenderPass::GetAttachment(int indexAttachment) const
+{
+	if (indexAttachment >= 0 && indexAttachment < m_attachments.size()) {
+		return &m_attachments[indexAttachment];
+	}
+	else {
+		return nullptr;
+	}
+}
+
+uint32_t CVKRenderPass::GetSubpassCount(void) const
+{
+	return m_subpasses.size();
+}
+
+uint32_t CVKRenderPass::GetSubpassInputAttachmentCount(int indexSubpass) const
+{
+	if (indexSubpass >= 0 && indexSubpass < m_subpasses.size()) {
+		return m_subpasses[indexSubpass].inputAttachments.size();
+	}
+	else {
+		return 0;
+	}
+}
+
+uint32_t CVKRenderPass::GetSubpassOutputAttachmentCount(int indexSubpass) const
+{
+	if (indexSubpass >= 0 && indexSubpass < m_subpasses.size()) {
+		return m_subpasses[indexSubpass].outputAttachments.size();
+	}
+	else {
+		return 0;
+	}
+}
+
+const SubpassInformation* CVKRenderPass::GetSubpass(int indexSubpass) const
+{
+	if (indexSubpass >= 0 && indexSubpass < m_subpasses.size()) {
+		return &m_subpasses[indexSubpass];
+	}
+	else {
+		return nullptr;
+	}
+}
+
+/*
+CVKRenderPass::CVKRenderPass(CVKDevice* pDevice, CVKRenderPassManager* pManager, uint32_t name, int numAttachments, int numSubpasses)
+	: CGfxRenderPass(name, numAttachments, numSubpasses)
 	, m_pDevice(pDevice)
 	, m_pManager(pManager)
 
@@ -369,3 +579,4 @@ const SubpassInformation* CVKRenderPass::GetSubpass(int indexSubpass) const
 		return nullptr;
 	}
 }
+*/

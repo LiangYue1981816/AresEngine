@@ -78,6 +78,7 @@ class CVKRenderPass;
 class CVKRenderTexture;
 class CVKFrameBuffer;
 
+class CVKRenderPassManager;
 class CVKRenderTextureManager;
 
 class CVKShader;

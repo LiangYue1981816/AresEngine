@@ -4,10 +4,7 @@
 
 class CVKRenderPass : public CGfxRenderPass
 {
-	friend class CVKRenderPassManager;
-
-
-private:
+public:
 	CVKRenderPass(CVKDevice* pDevice, CVKRenderPassManager* pManager, uint32_t name, int numAttachments, int numSubpasses);
 	virtual ~CVKRenderPass(void);
 	virtual void Release(void);
@@ -21,16 +18,14 @@ public:
 	void Destroy(bool bClear = true);
 
 public:
-	bool SetColorAttachment(int indexAttachment, GfxPixelFormat format, int samples, bool bInvalidation, bool bClear, float red = 0.0f, float green = 0.0f, float blue = 0.0f, float alpha = 0.0f);
-	bool SetDepthStencilAttachment(int indexAttachment, GfxPixelFormat format, int samples, bool bInvalidation, bool bClear, float depth = 1.0f, int stencil = 0);
+	bool SetColorAttachment(int indexAttachment, GfxPixelFormat format, int samples, bool bInvalidation, bool bClear, float clearRed = 0.0f, float clearGreen = 0.0f, float clearBlue = 0.0f, float clearAlpha = 0.0f);
+	bool SetDepthStencilAttachment(int indexAttachment, GfxPixelFormat format, int samples, bool bInvalidation, bool bClear, float clearDepth = 1.0f, int clearStencil = 0);
 
-	bool SetSubpassInputColorReference(int indexSubpass, int indexAttachment);
-	bool SetSubpassInputDepthStencilReference(int indexSubpass, int indexAttachment);
-	bool SetSubpassOutputColorReference(int indexSubpass, int indexAttachment);
-	bool SetSubpassOutputDepthStencilReference(int indexSubpass, int indexAttachment);
-	bool SetSubpassDepthStencilReference(int indexSubpass, int indexAttachment);
+	bool SetSubpassInputReference(int indexSubpass, int indexAttachment);
+	bool SetSubpassOutputReference(int indexSubpass, int indexAttachment);
 	bool SetSubpassResolveReference(int indexSubpass, int indexAttachment);
 	bool SetSubpassPreserveReference(int indexSubpass, int indexAttachment);
+	bool SetSubpassDepthStencilReference(int indexSubpass, int indexAttachment);
 
 public:
 	uint32_t GetAttachmentCount(void) const;
