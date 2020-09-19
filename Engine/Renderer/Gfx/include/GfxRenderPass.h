@@ -62,29 +62,14 @@ typedef struct SubpassInformation {
 		depthStencilAttachment = -1;
 	}
 
-	void SetInputColorAttachment(int indexAttachment)
+	void SetInputAttachment(int indexAttachment)
 	{
 		inputAttachments[indexAttachment] = indexAttachment;
 	}
 
-	void SetInputDepthStencilAttachment(int indexAttachment)
-	{
-		inputAttachments[indexAttachment] = indexAttachment;
-	}
-
-	void SetOutputColorAttachment(int indexAttachment)
+	void SetOutputAttachment(int indexAttachment)
 	{
 		outputAttachments[indexAttachment] = indexAttachment;
-	}
-
-	void SetOutputDepthStencilAttachment(int indexAttachment)
-	{
-		outputAttachments[indexAttachment] = indexAttachment;
-	}
-
-	void SetDepthStencilAttachment(int indexAttachment)
-	{
-		depthStencilAttachment = indexAttachment;
 	}
 
 	void SetResolveAttachment(int indexAttachment)
@@ -97,11 +82,16 @@ typedef struct SubpassInformation {
 		preserveAttachments[indexAttachment] = indexAttachment;
 	}
 
-	int depthStencilAttachment = -1;
+	void SetDepthStencilAttachment(int indexAttachment)
+	{
+		depthStencilAttachment = indexAttachment;
+	}
+
 	eastl::unordered_map<int, int> inputAttachments;
 	eastl::unordered_map<int, int> outputAttachments;
 	eastl::unordered_map<int, int> resolveAttachments;
 	eastl::unordered_map<int, int> preserveAttachments;
+	int depthStencilAttachment;
 } SubpassInformation;
 
 class CGfxRenderPass : public CGfxResource
