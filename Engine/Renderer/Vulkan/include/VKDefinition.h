@@ -71,9 +71,6 @@ class CVKMemory;
 class CVKMemoryAllocator;
 class CVKMemoryManager;
 
-class CVKTransferBuffer;
-class CVKTransferManager;
-
 class CVKRenderer;
 
 class CVKSwapChain;
@@ -102,7 +99,6 @@ class CVKTexture;
 class CVKTexture2D;
 class CVKTexture2DArray;
 class CVKTextureCubemap;
-
 class CVKTexture2DManager;
 class CVKTexture2DArrayManager;
 class CVKTextureCubemapManager;
