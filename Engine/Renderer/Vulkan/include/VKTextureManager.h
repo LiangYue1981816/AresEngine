@@ -15,8 +15,7 @@ private:
 
 private:
 	CVKTexture2D* Get(uint32_t name);
-	CVKTexture2D* Create(uint32_t name);
-	CVKTexture2D* Create(const char* szFileName, int baseLevel, int numLevels);
+	CVKTexture2D* Create(uint32_t name, GfxPixelFormat format, int width, int height, int levels, int samples);
 	void Destroy(CVKTexture2D* pTexture);
 
 
@@ -41,8 +40,7 @@ private:
 
 private:
 	CVKTexture2DArray* Get(uint32_t name);
-	CVKTexture2DArray* Create(uint32_t name);
-	CVKTexture2DArray* Create(const char* szFileName, int baseLevel, int numLevels);
+	CVKTexture2DArray* Create(uint32_t name, GfxPixelFormat format, int width, int height, int layers, int levels);
 	void Destroy(CVKTexture2DArray* pTexture);
 
 
@@ -67,8 +65,7 @@ private:
 
 private:
 	CVKTextureCubemap* Get(uint32_t name);
-	CVKTextureCubemap* Create(uint32_t name);
-	CVKTextureCubemap* Create(const char* szFileName, int baseLevel, int numLevels);
+	CVKTextureCubemap* Create(uint32_t name, GfxPixelFormat format, int width, int height, int levels);
 	void Destroy(CVKTextureCubemap* pTexture);
 
 

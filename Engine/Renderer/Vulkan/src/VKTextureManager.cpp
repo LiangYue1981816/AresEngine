@@ -1,5 +1,4 @@
 #include "VKRenderer.h"
-#include "ResourceLoader.h"
 
 
 CVKTexture2DManager::CVKTexture2DManager(CVKDevice* pDevice)
@@ -30,27 +29,12 @@ CVKTexture2D* CVKTexture2DManager::Get(uint32_t name)
 	}
 }
 
-CVKTexture2D* CVKTexture2DManager::Create(uint32_t name)
+CVKTexture2D* CVKTexture2DManager::Create(uint32_t name, GfxPixelFormat format, int width, int height, int levels, int samples)
 {
 	mutex_autolock autolock(&lock);
 	{
 		if (m_pTextures[name] == nullptr) {
-			m_pTextures[name] = new CVKTexture2D(m_pDevice, this, name);
-		}
-
-		return m_pTextures[name];
-	}
-}
-
-CVKTexture2D* CVKTexture2DManager::Create(const char* szFileName, int baseLevel, int numLevels)
-{
-	mutex_autolock autolock(&lock);
-	{
-		uint32_t name = HashValue(szFileName);
-
-		if (m_pTextures[name] == nullptr) {
-			m_pTextures[name] = new CVKTexture2D(m_pDevice, this, name);
-			ResourceLoader()->LoadTexture2D(szFileName, m_pTextures[name], baseLevel, numLevels);
+			m_pTextures[name] = new CVKTexture2D(m_pDevice, this, name, format, width, height, levels, samples);
 		}
 
 		return m_pTextures[name];
@@ -97,27 +81,12 @@ CVKTexture2DArray* CVKTexture2DArrayManager::Get(uint32_t name)
 	}
 }
 
-CVKTexture2DArray* CVKTexture2DArrayManager::Create(uint32_t name)
+CVKTexture2DArray* CVKTexture2DArrayManager::Create(uint32_t name, GfxPixelFormat format, int width, int height, int layers, int levels)
 {
 	mutex_autolock autolock(&lock);
 	{
 		if (m_pTextures[name] == nullptr) {
-			m_pTextures[name] = new CVKTexture2DArray(m_pDevice, this, name);
-		}
-
-		return m_pTextures[name];
-	}
-}
-
-CVKTexture2DArray* CVKTexture2DArrayManager::Create(const char* szFileName, int baseLevel, int numLevels)
-{
-	mutex_autolock autolock(&lock);
-	{
-		uint32_t name = HashValue(szFileName);
-
-		if (m_pTextures[name] == nullptr) {
-			m_pTextures[name] = new CVKTexture2DArray(m_pDevice, this, name);
-			ResourceLoader()->LoadTexture2DArray(szFileName, m_pTextures[name], baseLevel, numLevels);
+			m_pTextures[name] = new CVKTexture2DArray(m_pDevice, this, name, format, width, height, layers, levels);
 		}
 
 		return m_pTextures[name];
@@ -164,27 +133,12 @@ CVKTextureCubemap* CVKTextureCubemapManager::Get(uint32_t name)
 	}
 }
 
-CVKTextureCubemap* CVKTextureCubemapManager::Create(uint32_t name)
+CVKTextureCubemap* CVKTextureCubemapManager::Create(uint32_t name, GfxPixelFormat format, int width, int height, int levels)
 {
 	mutex_autolock autolock(&lock);
 	{
 		if (m_pTextures[name] == nullptr) {
-			m_pTextures[name] = new CVKTextureCubemap(m_pDevice, this, name);
-		}
-
-		return m_pTextures[name];
-	}
-}
-
-CVKTextureCubemap* CVKTextureCubemapManager::Create(const char* szFileName, int baseLevel, int numLevels)
-{
-	mutex_autolock autolock(&lock);
-	{
-		uint32_t name = HashValue(szFileName);
-
-		if (m_pTextures[name] == nullptr) {
-			m_pTextures[name] = new CVKTextureCubemap(m_pDevice, this, name);
-			ResourceLoader()->LoadTextureCubemap(szFileName, m_pTextures[name], baseLevel, numLevels);
+			m_pTextures[name] = new CVKTextureCubemap(m_pDevice, this, name, format, width, height, levels);
 		}
 
 		return m_pTextures[name];
