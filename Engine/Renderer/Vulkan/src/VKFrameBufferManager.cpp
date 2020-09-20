@@ -18,13 +18,9 @@ CVKFrameBuffer* CVKFrameBufferManager::Create(int width, int height, int numAtta
 {
 	mutex_autolock autolock(&lock);
 	{
-		if (CVKFrameBuffer* pFrameBuffer = new CVKFrameBuffer(m_pDevice, this, width, height, numAttachments)) {
-			m_pFrameBuffers[pFrameBuffer] = pFrameBuffer;
-			return pFrameBuffer;
-		}
-		else {
-			return nullptr;
-		}
+		CVKFrameBuffer* pFrameBuffer = new CVKFrameBuffer(m_pDevice, this, width, height, numAttachments);
+		m_pFrameBuffers[pFrameBuffer] = pFrameBuffer;
+		return pFrameBuffer;
 	}
 }
 
@@ -32,9 +28,7 @@ void CVKFrameBufferManager::Destroy(CVKFrameBuffer* pFrameBuffer)
 {
 	mutex_autolock autolock(&lock);
 	{
-		if (m_pFrameBuffers.find(pFrameBuffer) != m_pFrameBuffers.end()) {
-			m_pFrameBuffers.erase(pFrameBuffer);
-			delete pFrameBuffer;
-		}
+		m_pFrameBuffers.erase(pFrameBuffer);
+		delete pFrameBuffer;
 	}
 }
