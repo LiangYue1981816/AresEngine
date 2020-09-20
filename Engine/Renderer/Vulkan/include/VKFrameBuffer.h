@@ -4,10 +4,7 @@
 
 class CVKFrameBuffer : public CGfxFrameBuffer
 {
-	friend class CVKFrameBufferManager;
-
-
-private:
+public:
 	CVKFrameBuffer(CVKDevice* pDevice, CVKFrameBufferManager* pManager, int width, int height, int numAttachments);
 	virtual ~CVKFrameBuffer(void);
 	virtual void Release(void);

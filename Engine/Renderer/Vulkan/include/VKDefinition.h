@@ -101,6 +101,7 @@ class CVKDescriptorLayout;
 class CVKSemaphore;
 class CVKCommandBuffer;
 
+class CVKFrameBufferManager;
 class CVKRenderPassManager;
 class CVKRenderTextureManager;
 class CVKTexture2DManager;
