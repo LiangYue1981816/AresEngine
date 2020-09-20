@@ -16,9 +16,6 @@ public:
 
 
 public:
-	virtual const CGfxSemaphore* GetAcquireSemaphore(void) const = 0;
-
-public:
 	virtual GfxPixelFormat GetFormat(void) const = 0;
 
 	virtual int GetWidth(void) const = 0;
@@ -29,6 +26,7 @@ public:
 	virtual const CGfxRenderTexturePtr GetFrameTexture(int index) const = 0;
 
 public:
+	virtual const CGfxSemaphore* GetAcquireSemaphore(void) const = 0;
 	virtual void Present(const CGfxSemaphore* pWaitSemaphore) = 0;
 	virtual void AcquireNextFrame(void) = 0;
 
