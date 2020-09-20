@@ -29,8 +29,6 @@ public:
 	VkSwapchain GetSwapchain(void) const;
 	VkSemaphore GetSemaphore(void) const;
 
-	const CGfxSemaphore* GetAcquireSemaphore(void) const;
-
 public:
 	GfxPixelFormat GetFormat(void) const;
 
@@ -42,6 +40,7 @@ public:
 	const CGfxRenderTexturePtr GetFrameTexture(int index) const;
 
 public:
+	const CGfxSemaphore* GetAcquireSemaphore(void) const;
 	void Present(const CGfxSemaphore* pWaitSemaphore);
 	void AcquireNextFrame(void);
 
