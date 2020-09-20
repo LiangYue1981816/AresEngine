@@ -27,7 +27,6 @@ private:
 public:
 	VkImage GetImage(int index) const;
 	VkSwapchain GetSwapchain(void) const;
-	VkSemaphore GetSemaphore(void) const;
 
 public:
 	GfxPixelFormat GetFormat(void) const;
@@ -41,8 +40,8 @@ public:
 
 public:
 	const CGfxSemaphore* GetAcquireSemaphore(void) const;
-	void Present(const CGfxSemaphore* pWaitSemaphore);
-	void AcquireNextFrame(void);
+	bool Present(const CGfxSemaphore* pWaitSemaphore);
+	bool AcquireNextFrame(void);
 
 
 private:

@@ -27,8 +27,8 @@ public:
 
 public:
 	virtual const CGfxSemaphore* GetAcquireSemaphore(void) const = 0;
-	virtual void Present(const CGfxSemaphore* pWaitSemaphore) = 0;
-	virtual void AcquireNextFrame(void) = 0;
+	virtual bool Present(const CGfxSemaphore* pWaitSemaphore) = 0;
+	virtual bool AcquireNextFrame(void) = 0;
 
 
 public:
