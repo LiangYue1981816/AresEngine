@@ -102,6 +102,14 @@ bool CVKRenderPass::Create(void)
 				attachment.layout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
 				subpassAttachments[indexSubpass].depthStencilAttachment = attachment;
 			}
+
+			if (subpassAttachments[indexSubpass].outputAttachments.empty()) {
+				return false;
+			}
+		}
+
+		if (subpassAttachments.empty()) {
+			return false;
 		}
 	}
 
