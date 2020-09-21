@@ -16,10 +16,6 @@ private:
 
 
 private:
-	bool Create(const CGfxDescriptorLayoutPtr ptrDescriptorLayout);
-	void Destroy(void);
-
-private:
 	CVKDescriptorPool* GetDescriptorPool(void) const;
 
 public:
@@ -39,9 +35,6 @@ public:
 	const CGfxDescriptorLayoutPtr GetDescriptorLayout(void) const;
 	const DescriptorImageInfo* GetDescriptorImageInfo(uint32_t name) const;
 	const DescriptorBufferInfo* GetDescriptorBufferInfo(uint32_t name) const;
-
-public:
-	void Bind(VkCommandBuffer vkCommandBuffer, VkPipelineBindPoint vkPipelineBindPoint, VkPipelineLayout vkPipelineLayout);
 
 
 private:
