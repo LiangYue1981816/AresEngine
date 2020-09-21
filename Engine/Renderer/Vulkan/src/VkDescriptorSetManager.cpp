@@ -3,15 +3,16 @@
 
 CVKDescriptorSetManager::CVKDescriptorSetManager(CVKDevice* pDevice)
 	: m_pDevice(pDevice)
-	, m_pPoolListHead(nullptr)
-	, m_pInputAttachmentPoolListHead(nullptr)
+
+	, m_pGeneralPoolList(nullptr)
+	, m_pInputAttachmentPoolList(nullptr)
 {
 
 }
 
 CVKDescriptorSetManager::~CVKDescriptorSetManager(void)
 {
-	if (CVKDescriptorPool* pDescriptorPool = m_pPoolListHead) {
+	if (CVKDescriptorPool* pDescriptorPool = m_pGeneralPoolList) {
 		CVKDescriptorPool* pDescriptorPoolNext = nullptr;
 		do {
 			pDescriptorPoolNext = pDescriptorPool->pNext;
@@ -19,7 +20,7 @@ CVKDescriptorSetManager::~CVKDescriptorSetManager(void)
 		} while ((pDescriptorPool = pDescriptorPoolNext) != nullptr);
 	}
 
-	if (CVKDescriptorPool* pDescriptorPool = m_pInputAttachmentPoolListHead) {
+	if (CVKDescriptorPool* pDescriptorPool = m_pInputAttachmentPoolList) {
 		CVKDescriptorPool* pDescriptorPoolNext = nullptr;
 		do {
 			pDescriptorPoolNext = pDescriptorPool->pNext;
@@ -43,10 +44,10 @@ CVKDescriptorSet* CVKDescriptorSetManager::Get(uint32_t name)
 	}
 }
 
-CVKDescriptorSet* CVKDescriptorSetManager::CreateInternal(CVKDescriptorPool** ppPoolListHead, uint32_t name, const CGfxDescriptorLayoutPtr ptrDescriptorLayout)
+CVKDescriptorSet* CVKDescriptorSetManager::CreateInternal(CVKDescriptorPool** ppPoolList, uint32_t name, const CGfxDescriptorLayoutPtr ptrDescriptorLayout)
 {
 	do {
-		if (CVKDescriptorPool* pDescriptorPool = *ppPoolListHead) {
+		if (CVKDescriptorPool* pDescriptorPool = *ppPoolList) {
 			do {
 				if (CVKDescriptorSet* pDescriptorSet = pDescriptorPool->AllocDescriptorSet(name, ptrDescriptorLayout)) {
 					return pDescriptorSet;
@@ -56,20 +57,20 @@ CVKDescriptorSet* CVKDescriptorSetManager::CreateInternal(CVKDescriptorPool** pp
 
 		CVKDescriptorPool* pDescriptorPool = new CVKDescriptorPool(m_pDevice, this);
 		{
-			if ((*ppPoolListHead) != nullptr) {
-				(*ppPoolListHead)->pPrev = pDescriptorPool;
-				pDescriptorPool->pNext = (*ppPoolListHead);
+			if ((*ppPoolList) != nullptr) {
+				(*ppPoolList)->pPrev = pDescriptorPool;
+				pDescriptorPool->pNext = (*ppPoolList);
 			}
 
-			*ppPoolListHead = pDescriptorPool;
+			*ppPoolList = pDescriptorPool;
 		}
 	} while (true);
 }
 
-CVKDescriptorSet* CVKDescriptorSetManager::CreateInternal(CVKDescriptorPool** ppPoolListHead, uint32_t name, const CGfxDescriptorSetPtr ptrDescriptorSetCopyFrom)
+CVKDescriptorSet* CVKDescriptorSetManager::CreateInternal(CVKDescriptorPool** ppPoolList, uint32_t name, const CGfxDescriptorSetPtr ptrDescriptorSetCopyFrom)
 {
 	do {
-		if (CVKDescriptorPool* pDescriptorPool = *ppPoolListHead) {
+		if (CVKDescriptorPool* pDescriptorPool = *ppPoolList) {
 			do {
 				if (CVKDescriptorSet* pDescriptorSet = pDescriptorPool->AllocDescriptorSet(name, ptrDescriptorSetCopyFrom)) {
 					return pDescriptorSet;
@@ -79,12 +80,12 @@ CVKDescriptorSet* CVKDescriptorSetManager::CreateInternal(CVKDescriptorPool** pp
 
 		CVKDescriptorPool* pDescriptorPool = new CVKDescriptorPool(m_pDevice, this);
 		{
-			if ((*ppPoolListHead) != nullptr) {
-				(*ppPoolListHead)->pPrev = pDescriptorPool;
-				pDescriptorPool->pNext = (*ppPoolListHead);
+			if ((*ppPoolList) != nullptr) {
+				(*ppPoolList)->pPrev = pDescriptorPool;
+				pDescriptorPool->pNext = (*ppPoolList);
 			}
 
-			*ppPoolListHead = pDescriptorPool;
+			*ppPoolList = pDescriptorPool;
 		}
 	} while (true);
 }
@@ -94,7 +95,7 @@ CVKDescriptorSet* CVKDescriptorSetManager::Create(uint32_t name, const CGfxDescr
 	mutex_autolock autolock(&lock);
 	{
 		if (m_pDescriptorSets[name] == nullptr) {
-			m_pDescriptorSets[name] = CreateInternal(&m_pPoolListHead, name, ptrDescriptorLayout);
+			m_pDescriptorSets[name] = CreateInternal(&m_pGeneralPoolList, name, ptrDescriptorLayout);
 		}
 
 		return m_pDescriptorSets[name];
@@ -106,7 +107,7 @@ CVKDescriptorSet* CVKDescriptorSetManager::Create(uint32_t name, const CGfxDescr
 	mutex_autolock autolock(&lock);
 	{
 		if (m_pDescriptorSets[name] == nullptr) {
-			m_pDescriptorSets[name] = CreateInternal(&m_pPoolListHead, name, ptrDescriptorSetCopyFrom);
+			m_pDescriptorSets[name] = CreateInternal(&m_pGeneralPoolList, name, ptrDescriptorSetCopyFrom);
 		}
 
 		return m_pDescriptorSets[name];
@@ -118,9 +119,9 @@ CVKDescriptorSet* CVKDescriptorSetManager::Create(const CGfxPipelineGraphics* pP
 	mutex_autolock autolock(&lock);
 	{
 		if (const SubpassInformation* pSubpassInformation = pRenderPass->GetSubpass(indexSubpass)) {
-			if (pSubpassInformation->inputAttachments.size()) {
+			if (pSubpassInformation->inputAttachments.empty() == false) {
 				if (m_pInputAttachmentDescriptorSets[(CVKFrameBuffer*)pFrameBuffer][(SubpassInformation*)pSubpassInformation][(CVKPipelineGraphics*)pPipelineGraphics] == nullptr) {
-					CVKDescriptorSet* pDescriptorSet = CreateInternal(&m_pInputAttachmentPoolListHead, INVALID_HASHNAME, pPipelineGraphics->GetDescriptorLayout(DESCRIPTOR_SET_INPUTATTACHMENT));
+					CVKDescriptorSet* pDescriptorSet = CreateInternal(&m_pInputAttachmentPoolList, INVALID_HASHNAME, pPipelineGraphics->GetDescriptorLayout(DESCRIPTOR_SET_INPUTATTACHMENT));
 					{
 						for (const auto& itInputAttachment : pSubpassInformation->inputAttachments) {
 							pDescriptorSet->SetInputAttachmentTexture(
@@ -144,11 +145,9 @@ void CVKDescriptorSetManager::Destroy(CVKDescriptorSet* pDescriptorSet)
 {
 	mutex_autolock autolock(&lock);
 	{
-		if (m_pDescriptorSets.find(pDescriptorSet->GetName()) != m_pDescriptorSets.end()) {
-			m_pDescriptorSets.erase(pDescriptorSet->GetName());
+		m_pDescriptorSets.erase(pDescriptorSet->GetName());
 
-			CVKDescriptorPool* pDescriptorPool = pDescriptorSet->GetDescriptorPool();
-
+		if (CVKDescriptorPool* pDescriptorPool = pDescriptorSet->GetDescriptorPool()) {
 			if (pDescriptorPool->FreeDescriptorSet(pDescriptorSet)) {
 				if (pDescriptorPool->pPrev) {
 					pDescriptorPool->pPrev->pNext = pDescriptorPool->pNext;
@@ -158,8 +157,16 @@ void CVKDescriptorSetManager::Destroy(CVKDescriptorSet* pDescriptorSet)
 					pDescriptorPool->pNext->pPrev = pDescriptorPool->pPrev;
 				}
 
-				if (m_pPoolListHead == pDescriptorPool) {
-					m_pPoolListHead =  pDescriptorPool->pNext;
+				if (pDescriptorPool) {
+					if (m_pGeneralPoolList == pDescriptorPool) {
+						m_pGeneralPoolList =  pDescriptorPool->pNext;
+					}
+				}
+
+				if (pDescriptorPool) {
+					if (m_pInputAttachmentPoolList == pDescriptorPool) {
+						m_pInputAttachmentPoolList =  pDescriptorPool->pNext;
+					}
 				}
 
 				delete pDescriptorPool;
