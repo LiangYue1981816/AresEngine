@@ -36,8 +36,8 @@ CVKDescriptorSet::CVKDescriptorSet(CVKDevice* pDevice, CVKDescriptorPool* pDescr
 	descriptorAllocInfo.pSetLayouts = &vkDescriptorSetLayout;
 	CALL_VK_FUNCTION_ASSERT(vkAllocateDescriptorSets(m_pDevice->GetDevice(), &descriptorAllocInfo, &m_vkDescriptorSet));
 
-	m_imageDescriptorInfos = ((CVKDescriptorSet *)ptrDescriptorSetCopyFrom.GetPointer())->m_imageDescriptorInfos;
-	m_bufferDescriptorInfos = ((CVKDescriptorSet *)ptrDescriptorSetCopyFrom.GetPointer())->m_bufferDescriptorInfos;
+	m_imageDescriptorInfos = ((CVKDescriptorSet*)ptrDescriptorSetCopyFrom.GetPointer())->m_imageDescriptorInfos;
+	m_bufferDescriptorInfos = ((CVKDescriptorSet*)ptrDescriptorSetCopyFrom.GetPointer())->m_bufferDescriptorInfos;
 }
 
 CVKDescriptorSet::~CVKDescriptorSet(void)
