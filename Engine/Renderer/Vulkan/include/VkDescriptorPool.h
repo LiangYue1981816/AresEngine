@@ -14,10 +14,6 @@ private:
 
 
 private:
-	bool Create(void);
-	void Destroy(void);
-
-private:
 	VkDescriptorPool GetDescriptorPool(void) const;
 	CVKDescriptorSetManager* GetDescriptorSetManager(void) const;
 

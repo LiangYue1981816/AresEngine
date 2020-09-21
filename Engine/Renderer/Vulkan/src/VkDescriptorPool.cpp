@@ -3,16 +3,16 @@
 
 const uint32_t numMaxSets = 256;
 const uint32_t numUniformBuffers = 1024;
+const uint32_t numStorageImages = 256;
+const uint32_t numStorageBuffers = 256;
+const uint32_t numStorageTexelBuffers = 256;
+const uint32_t numUniformTexelBuffers = 256;
 const uint32_t numCombinedImageSamplers = 512;
-const uint32_t numStorageImages = 32;
-const uint32_t numStorageBuffers = 32;
-const uint32_t numStorageTexelBuffers = 32;
-const uint32_t numUniformTexelBuffers = 32;
-const uint32_t numInputAttachments = 32;
+const uint32_t numInputAttachments = 128;
 
 CVKDescriptorPool::CVKDescriptorPool(CVKDevice* pDevice, CVKDescriptorSetManager* pManager)
-	: m_pDevice(pDevice)
-	, m_pManager(pManager)
+	: m_pManager(pManager)
+	, m_pDevice(pDevice)
 
 	, m_numSets(0)
 	, m_numDescriptors{ 0 }
@@ -21,25 +21,15 @@ CVKDescriptorPool::CVKDescriptorPool(CVKDevice* pDevice, CVKDescriptorSetManager
 	, pNext(nullptr)
 	, pPrev(nullptr)
 {
-	Create();
-}
-
-CVKDescriptorPool::~CVKDescriptorPool(void)
-{
-	Destroy();
-}
-
-bool CVKDescriptorPool::Create(void)
-{
 	m_numSets = numMaxSets;
 	m_numDescriptors[VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER] = numUniformBuffers;
 	m_numDescriptors[VK_DESCRIPTOR_TYPE_STORAGE_BUFFER] = numStorageBuffers;
 	m_numDescriptors[VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER_DYNAMIC] = numUniformBuffers;
 	m_numDescriptors[VK_DESCRIPTOR_TYPE_STORAGE_BUFFER_DYNAMIC] = numStorageBuffers;
-	m_numDescriptors[VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER] = numCombinedImageSamplers;
 	m_numDescriptors[VK_DESCRIPTOR_TYPE_STORAGE_IMAGE] = numStorageImages;
 	m_numDescriptors[VK_DESCRIPTOR_TYPE_STORAGE_TEXEL_BUFFER] = numStorageTexelBuffers;
 	m_numDescriptors[VK_DESCRIPTOR_TYPE_UNIFORM_TEXEL_BUFFER] = numUniformTexelBuffers;
+	m_numDescriptors[VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER] = numCombinedImageSamplers;
 	m_numDescriptors[VK_DESCRIPTOR_TYPE_INPUT_ATTACHMENT] = numInputAttachments;
 
 	VkDescriptorPoolSize poolSizes[] = {
@@ -47,10 +37,10 @@ bool CVKDescriptorPool::Create(void)
 		{ VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, m_numDescriptors[VK_DESCRIPTOR_TYPE_STORAGE_BUFFER] },
 		{ VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER_DYNAMIC, m_numDescriptors[VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER_DYNAMIC] },
 		{ VK_DESCRIPTOR_TYPE_STORAGE_BUFFER_DYNAMIC, m_numDescriptors[VK_DESCRIPTOR_TYPE_STORAGE_BUFFER_DYNAMIC] },
-		{ VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, m_numDescriptors[VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER] },
 		{ VK_DESCRIPTOR_TYPE_STORAGE_IMAGE, m_numDescriptors[VK_DESCRIPTOR_TYPE_STORAGE_IMAGE] },
 		{ VK_DESCRIPTOR_TYPE_STORAGE_TEXEL_BUFFER, m_numDescriptors[VK_DESCRIPTOR_TYPE_STORAGE_TEXEL_BUFFER] },
 		{ VK_DESCRIPTOR_TYPE_UNIFORM_TEXEL_BUFFER, m_numDescriptors[VK_DESCRIPTOR_TYPE_UNIFORM_TEXEL_BUFFER] },
+		{ VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, m_numDescriptors[VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER] },
 		{ VK_DESCRIPTOR_TYPE_INPUT_ATTACHMENT, m_numDescriptors[VK_DESCRIPTOR_TYPE_INPUT_ATTACHMENT] },
 	};
 
@@ -61,43 +51,31 @@ bool CVKDescriptorPool::Create(void)
 	poolCreateInfo.maxSets = numMaxSets;
 	poolCreateInfo.poolSizeCount = sizeof(poolSizes) / sizeof(VkDescriptorPoolSize);
 	poolCreateInfo.pPoolSizes = poolSizes;
-	CALL_VK_FUNCTION_RETURN_BOOL(vkCreateDescriptorPool(m_pDevice->GetDevice(), &poolCreateInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkDescriptorPool));
-
-	return true;
+	CALL_VK_FUNCTION_ASSERT(vkCreateDescriptorPool(m_pDevice->GetDevice(), &poolCreateInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkDescriptorPool));
 }
 
-void CVKDescriptorPool::Destroy(void)
+CVKDescriptorPool::~CVKDescriptorPool(void)
 {
-	ASSERT(m_vkDescriptorPool);
-
 	for (const auto& itDescriptorSet : m_pDescriptorSets) {
 		delete itDescriptorSet.second;
 	}
 
 	vkResetDescriptorPool(m_pDevice->GetDevice(), m_vkDescriptorPool, 0);
 	vkDestroyDescriptorPool(m_pDevice->GetDevice(), m_vkDescriptorPool, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
-
-	m_vkDescriptorPool = VK_NULL_HANDLE;
-	memset(m_numDescriptors, 0, sizeof(m_numDescriptors));
 }
 
 VkDescriptorPool CVKDescriptorPool::GetDescriptorPool(void) const
 {
-	ASSERT(m_vkDescriptorPool);
 	return m_vkDescriptorPool;
 }
 
 CVKDescriptorSetManager* CVKDescriptorPool::GetDescriptorSetManager(void) const
 {
-	ASSERT(m_pManager);
 	return m_pManager;
 }
 
 CVKDescriptorSet* CVKDescriptorPool::AllocDescriptorSet(uint32_t name, const CGfxDescriptorLayoutPtr ptrDescriptorLayout)
 {
-	ASSERT(m_vkDescriptorPool);
-	ASSERT(ptrDescriptorLayout);
-
 	if (m_numSets == 0) {
 		return nullptr;
 	}
@@ -111,20 +89,17 @@ CVKDescriptorSet* CVKDescriptorPool::AllocDescriptorSet(uint32_t name, const CGf
 	CVKDescriptorSet* pDescriptorSet = new CVKDescriptorSet(m_pDevice, this, name, ptrDescriptorLayout);
 	m_pDescriptorSets[pDescriptorSet] = pDescriptorSet;
 
-	m_numSets -= 1;
-
 	for (int indexType = 0; indexType < VK_DESCRIPTOR_TYPE_RANGE_SIZE; indexType++) {
 		m_numDescriptors[indexType] -= ((CVKDescriptorLayout*)ptrDescriptorLayout.GetPointer())->GetNumDescriptors()[indexType];
 	}
+
+	m_numSets -= 1;
 
 	return pDescriptorSet;
 }
 
 CVKDescriptorSet* CVKDescriptorPool::AllocDescriptorSet(uint32_t name, const CGfxDescriptorSetPtr ptrDescriptorSetCopyFrom)
 {
-	ASSERT(m_vkDescriptorPool);
-	ASSERT(ptrDescriptorSetCopyFrom);
-
 	if (m_numSets == 0) {
 		return nullptr;
 	}
@@ -138,35 +113,34 @@ CVKDescriptorSet* CVKDescriptorPool::AllocDescriptorSet(uint32_t name, const CGf
 	CVKDescriptorSet* pDescriptorSet = new CVKDescriptorSet(m_pDevice, this, name, ptrDescriptorSetCopyFrom);
 	m_pDescriptorSets[pDescriptorSet] = pDescriptorSet;
 
-	m_numSets -= 1;
-
 	for (int indexType = 0; indexType < VK_DESCRIPTOR_TYPE_RANGE_SIZE; indexType++) {
 		m_numDescriptors[indexType] -= ((CVKDescriptorLayout*)ptrDescriptorSetCopyFrom->GetDescriptorLayout().GetPointer())->GetNumDescriptors()[indexType];
 	}
+
+	m_numSets -= 1;
 
 	return pDescriptorSet;
 }
 
 bool CVKDescriptorPool::FreeDescriptorSet(CVKDescriptorSet* pDescriptorSet)
 {
-	ASSERT(pDescriptorSet);
-	ASSERT(m_vkDescriptorPool);
-
 	m_pDescriptorSets.erase(pDescriptorSet);
 	delete pDescriptorSet;
 
 	if (m_pDescriptorSets.empty()) {
+		// Resetting a descriptor pool recycles all of the resources from all of the descriptor sets allocated from the descriptor pool back to the descriptor pool, and the descriptor sets are implicitly freed.
+		CALL_VK_FUNCTION_ASSERT(vkResetDescriptorPool(m_pDevice->GetDevice(), m_vkDescriptorPool, 0));
+
 		m_numSets = numMaxSets;
 		m_numDescriptors[VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER] = numUniformBuffers;
 		m_numDescriptors[VK_DESCRIPTOR_TYPE_STORAGE_BUFFER] = numStorageBuffers;
 		m_numDescriptors[VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER_DYNAMIC] = numUniformBuffers;
 		m_numDescriptors[VK_DESCRIPTOR_TYPE_STORAGE_BUFFER_DYNAMIC] = numStorageBuffers;
-		m_numDescriptors[VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER] = numCombinedImageSamplers;
 		m_numDescriptors[VK_DESCRIPTOR_TYPE_STORAGE_IMAGE] = numStorageImages;
 		m_numDescriptors[VK_DESCRIPTOR_TYPE_STORAGE_TEXEL_BUFFER] = numStorageTexelBuffers;
 		m_numDescriptors[VK_DESCRIPTOR_TYPE_UNIFORM_TEXEL_BUFFER] = numUniformTexelBuffers;
+		m_numDescriptors[VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER] = numCombinedImageSamplers;
 		m_numDescriptors[VK_DESCRIPTOR_TYPE_INPUT_ATTACHMENT] = numInputAttachments;
-		CALL_VK_FUNCTION_ASSERT(vkResetDescriptorPool(m_pDevice->GetDevice(), m_vkDescriptorPool, 0));
 		return true;
 	}
 	else {
