@@ -159,7 +159,7 @@ void CVKDescriptorSetManager::Destroy(CVKDescriptorSet* pDescriptorSet)
 				}
 
 				if (m_pPoolListHead == pDescriptorPool) {
-					m_pPoolListHead = pDescriptorPool->pNext;
+					m_pPoolListHead =  pDescriptorPool->pNext;
 				}
 
 				delete pDescriptorPool;
