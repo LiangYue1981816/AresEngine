@@ -137,8 +137,6 @@ public:
 	virtual CGfxMaterialPtr NewMaterial(uint32_t name, const CGfxMaterialPtr ptrMaterialCopyFrom) = 0;
 	virtual CGfxMaterialPtr NewMaterial(const char* szFileName, int vertexBinding, int instanceBinding, int baseLevel = 0, int numLevels = INT_MAX) = 0;
 
-	virtual CGfxDescriptorLayoutPtr NewDescriptorLayout(uint32_t set) = 0;
-
 	virtual CGfxDescriptorSetPtr GetDescriptorSet(uint32_t name) = 0;
 	virtual CGfxDescriptorSetPtr NewDescriptorSet(uint32_t name, const CGfxDescriptorLayoutPtr ptrDescriptorLayout) = 0;
 	virtual CGfxDescriptorSetPtr NewDescriptorSet(uint32_t name, const CGfxDescriptorSetPtr ptrDescriptorSetCopyFrom) = 0;

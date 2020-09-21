@@ -70,11 +70,10 @@
 #include "VKMaterialPass.h"
 #include "VKMaterialManager.h"
 
+#include "VKDescriptorLayout.h"
 #include "VKDescriptorPool.h"
 #include "VKDescriptorSet.h"
 #include "VKDescriptorSetManager.h"
-#include "VKDescriptorLayout.h"
-#include "VKDescriptorLayoutManager.h"
 
 #include "VKSemaphore.h"
 #include "VKCommandBuffer.h"
@@ -155,8 +154,6 @@ public:
 	CGfxMaterialPtr NewMaterial(uint32_t name);
 	CGfxMaterialPtr NewMaterial(uint32_t name, const CGfxMaterialPtr ptrMaterialCopyFrom);
 	CGfxMaterialPtr NewMaterial(const char* szFileName, int vertexBinding, int instanceBinding, int baseLevel = 0, int numLevels = INT_MAX);
-
-	CGfxDescriptorLayoutPtr NewDescriptorLayout(uint32_t set);
 
 	CGfxDescriptorSetPtr GetDescriptorSet(uint32_t name);
 	CGfxDescriptorSetPtr NewDescriptorSet(uint32_t name, const CGfxDescriptorLayoutPtr ptrDescriptorLayout);
@@ -240,7 +237,6 @@ private:
 	CVKShaderManager* m_pShaderManager;
 	CVKPipelineComputeManager* m_pPipelineComputeManager;
 	CVKPipelineGraphicsManager* m_pPipelineGraphicsManager;
-	CVKDescriptorLayoutManager* m_pDescriptorLayoutManager;
 	CVKSamplerManager* m_pSamplerManager;
 	CVKTexture2DManager* m_pTexture2DManager;
 	CVKTexture2DArrayManager* m_pTexture2DArrayManager;

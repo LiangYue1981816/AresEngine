@@ -10,7 +10,6 @@ CVKRenderer::CVKRenderer(void* hInstance, void* hWnd, void* hDC, int width, int 
 	, m_pShaderManager(nullptr)
 	, m_pPipelineComputeManager(nullptr)
 	, m_pPipelineGraphicsManager(nullptr)
-	, m_pDescriptorLayoutManager(nullptr)
 	, m_pSamplerManager(nullptr)
 	, m_pTexture2DManager(nullptr)
 	, m_pTexture2DArrayManager(nullptr)
@@ -30,7 +29,6 @@ CVKRenderer::CVKRenderer(void* hInstance, void* hWnd, void* hDC, int width, int 
 	m_pShaderManager = new CVKShaderManager(m_pDevice);
 	m_pPipelineComputeManager = new CVKPipelineComputeManager(m_pDevice);
 	m_pPipelineGraphicsManager = new CVKPipelineGraphicsManager(m_pDevice);
-	m_pDescriptorLayoutManager = new CVKDescriptorLayoutManager(m_pDevice);
 	m_pSamplerManager = new CVKSamplerManager(m_pDevice);
 	m_pTexture2DManager = new CVKTexture2DManager(m_pDevice);
 	m_pTexture2DArrayManager = new CVKTexture2DArrayManager(m_pDevice);
@@ -66,7 +64,6 @@ CVKRenderer::~CVKRenderer(void)
 	delete m_pShaderManager;
 	delete m_pPipelineComputeManager;
 	delete m_pPipelineGraphicsManager;
-	delete m_pDescriptorLayoutManager;
 
 	delete m_pDevice;
 	delete m_pInstance;
@@ -271,11 +268,6 @@ CGfxMaterialPtr CVKRenderer::NewMaterial(uint32_t name, const CGfxMaterialPtr pt
 CGfxMaterialPtr CVKRenderer::NewMaterial(const char* szFileName, int vertexBinding, int instanceBinding, int baseLevel, int numLevels)
 {
 	return m_pMaterialManager->Create(szFileName, vertexBinding, instanceBinding, baseLevel, numLevels);
-}
-
-CGfxDescriptorLayoutPtr CVKRenderer::NewDescriptorLayout(uint32_t set)
-{
-	return m_pDescriptorLayoutManager->Create(set);
 }
 
 CGfxDescriptorSetPtr CVKRenderer::GetDescriptorSet(uint32_t name)

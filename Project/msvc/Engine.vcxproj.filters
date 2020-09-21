@@ -1107,9 +1107,6 @@
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VkDescriptorLayout.h">
       <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKDescriptorLayoutManager.h">
-      <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Engine\Renderer\Vulkan\include\VKTexture2D.h">
       <Filter>Engine\Renderer\Vulkan\Header Files</Filter>
     </ClInclude>
@@ -1965,9 +1962,6 @@
       <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VkDescriptorLayout.cpp">
-      <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKDescriptorLayoutManager.cpp">
       <Filter>Engine\Renderer\Vulkan\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\Renderer\Vulkan\src\VKTexture2D.cpp">
