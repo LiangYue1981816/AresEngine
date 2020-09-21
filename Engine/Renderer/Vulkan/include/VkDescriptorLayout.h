@@ -4,11 +4,8 @@
 
 class CVKDescriptorLayout : public CGfxDescriptorLayout
 {
-	friend class CVKDescriptorLayoutManager;
-
-
-private:
-	CVKDescriptorLayout(CVKDevice* pDevice, CVKDescriptorLayoutManager* pManager, uint32_t set);
+public:
+	CVKDescriptorLayout(CVKDevice* pDevice, uint32_t set);
 	virtual ~CVKDescriptorLayout(void);
 	virtual void Release(void);
 
@@ -59,9 +56,6 @@ private:
 
 private:
 	CVKDevice* m_pDevice;
-
-private:
-	CVKDescriptorLayoutManager* m_pManager;
 };
 
 inline bool operator == (const VkDescriptorSetLayoutBinding& left, const VkDescriptorSetLayoutBinding& right)

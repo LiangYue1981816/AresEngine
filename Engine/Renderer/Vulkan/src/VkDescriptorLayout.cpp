@@ -1,6 +1,134 @@
 #include "VKRenderer.h"
 
 
+CVKDescriptorLayout::CVKDescriptorLayout(CVKDevice* pDevice, uint32_t set)
+	: CGfxDescriptorLayout(set)
+	, m_pDevice(pDevice)
+
+	, m_vkDescriptorLayout(VK_NULL_HANDLE)
+
+	, m_set(set)
+	, m_numDescriptors{ 0 }
+{
+
+}
+
+CVKDescriptorLayout::~CVKDescriptorLayout(void)
+{
+
+}
+
+void CVKDescriptorLayout::Release(void)
+{
+
+}
+
+VkDescriptorSetLayout CVKDescriptorLayout::GetDescriptorLayout(void) const
+{
+
+}
+
+const uint32_t* CVKDescriptorLayout::GetNumDescriptors(void) const
+{
+
+}
+
+bool CVKDescriptorLayout::Create(void)
+{
+
+}
+
+void CVKDescriptorLayout::Destroy(bool bClear /*= true*/)
+{
+
+}
+
+void CVKDescriptorLayout::SetUniformBlockBinding(uint32_t name, uint32_t binding)
+{
+
+}
+
+void CVKDescriptorLayout::SetStorageBlockBinding(uint32_t name, uint32_t binding)
+{
+
+}
+
+void CVKDescriptorLayout::SetStorageImageBinding(uint32_t name, uint32_t binding)
+{
+
+}
+
+void CVKDescriptorLayout::SetSampledImageBinding(uint32_t name, uint32_t binding)
+{
+
+}
+
+void CVKDescriptorLayout::SetInputAttachmentBinding(uint32_t name, uint32_t binding)
+{
+
+}
+
+uint32_t CVKDescriptorLayout::GetSetIndex(void) const
+{
+
+}
+
+uint32_t CVKDescriptorLayout::GetUniformBlockBinding(uint32_t name) const
+{
+
+}
+
+uint32_t CVKDescriptorLayout::GetStorageBlockBinding(uint32_t name) const
+{
+
+}
+
+uint32_t CVKDescriptorLayout::GetStorageImageBinding(uint32_t name) const
+{
+
+}
+
+uint32_t CVKDescriptorLayout::GetSampledImageBinding(uint32_t name) const
+{
+
+}
+
+uint32_t CVKDescriptorLayout::GetInputAttachmentBinding(uint32_t name) const
+{
+
+}
+
+bool CVKDescriptorLayout::IsUniformBlockValid(uint32_t name) const
+{
+
+}
+
+bool CVKDescriptorLayout::IsStorageBlockValid(uint32_t name) const
+{
+
+}
+
+bool CVKDescriptorLayout::IsStorageImageValid(uint32_t name) const
+{
+
+}
+
+bool CVKDescriptorLayout::IsSampledImageValid(uint32_t name) const
+{
+
+}
+
+bool CVKDescriptorLayout::IsInputAttachmentValid(uint32_t name) const
+{
+
+}
+
+bool CVKDescriptorLayout::IsCompatible(const CGfxDescriptorLayoutPtr ptrLayout) const
+{
+
+}
+
+/*
 CVKDescriptorLayout::CVKDescriptorLayout(CVKDevice* pDevice, CVKDescriptorLayoutManager* pManager, uint32_t set)
 	: CGfxDescriptorLayout(set)
 	, m_pDevice(pDevice)
@@ -270,3 +398,4 @@ bool CVKDescriptorLayout::IsCompatible(const CGfxDescriptorLayoutPtr ptrLayout) 
 
 	return true;
 }
+*/
