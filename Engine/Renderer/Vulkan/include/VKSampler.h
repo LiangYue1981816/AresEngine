@@ -12,10 +12,6 @@ private:
 	virtual ~CVKSampler(void);
 
 
-private:
-	bool Create(GfxFilter minFilter, GfxFilter magFilter, GfxSamplerMipmapMode mipmapMode, GfxSamplerAddressMode addressMode);
-	void Destroy(void);
-
 public:
 	VkSampler GetSampler(void) const;
 

@@ -6,16 +6,6 @@ CVKSampler::CVKSampler(CVKDevice* pDevice, GfxFilter minFilter, GfxFilter magFil
 	, m_pDevice(pDevice)
 	, m_vkSampler(VK_NULL_HANDLE)
 {
-	Create(minFilter, magFilter, mipmapMode, addressMode);
-}
-
-CVKSampler::~CVKSampler(void)
-{
-	Destroy();
-}
-
-bool CVKSampler::Create(GfxFilter minFilter, GfxFilter magFilter, GfxSamplerMipmapMode mipmapMode, GfxSamplerAddressMode addressMode)
-{
 	VkSamplerCreateInfo samplerCreateInfo = {};
 	samplerCreateInfo.sType = VK_STRUCTURE_TYPE_SAMPLER_CREATE_INFO;
 	samplerCreateInfo.pNext = nullptr;
@@ -32,24 +22,18 @@ bool CVKSampler::Create(GfxFilter minFilter, GfxFilter magFilter, GfxSamplerMipm
 	samplerCreateInfo.compareEnable = VK_FALSE;
 	samplerCreateInfo.compareOp = VK_COMPARE_OP_NEVER;
 	samplerCreateInfo.minLod = 0.0f;
-	samplerCreateInfo.maxLod = FLT_MAX;
+	samplerCreateInfo.maxLod = 1.0f;
 	samplerCreateInfo.borderColor = VK_BORDER_COLOR_FLOAT_OPAQUE_WHITE;
 	samplerCreateInfo.unnormalizedCoordinates = VK_FALSE;
-	CALL_VK_FUNCTION_RETURN_BOOL(vkCreateSampler(m_pDevice->GetDevice(), &samplerCreateInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkSampler));
-
-	return true;
+	CALL_VK_FUNCTION_ASSERT(vkCreateSampler(m_pDevice->GetDevice(), &samplerCreateInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkSampler));
 }
 
-void CVKSampler::Destroy(void)
+CVKSampler::~CVKSampler(void)
 {
-	ASSERT(m_vkSampler);
-
 	vkDestroySampler(m_pDevice->GetDevice(), m_vkSampler, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
-	m_vkSampler = VK_NULL_HANDLE;
 }
 
 VkSampler CVKSampler::GetSampler(void) const
 {
-	ASSERT(m_vkSampler);
 	return m_vkSampler;
 }
