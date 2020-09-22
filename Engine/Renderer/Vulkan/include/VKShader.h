@@ -4,31 +4,25 @@
 
 class CVKShader : public CGfxShader
 {
-	friend class CVKShaderManager;
-
-
-private:
-	CVKShader(CVKDevice* pDevice, uint32_t name);
+public:
+	CVKShader(CVKDevice* pDevice, uint32_t name, const uint32_t* words, size_t numWords, shader_kind kind);
 	virtual ~CVKShader(void);
+	virtual void Release(void);
 
 
 public:
 	VkShaderModule GetShader(void) const;
 
 public:
-	uint32_t GetKind(void) const;
-	const CGfxSprivCross& GetSprivCross(void) const;
-
-public:
-	bool Create(const uint32_t* words, size_t numWords, shader_kind kind);
-	void Destroy(void);
-
-public:
 	bool IsValid(void) const;
+
+public:
+	shader_kind GetKind(void) const;
+	const CGfxSprivCross& GetSprivCross(void) const;
 
 
 private:
-	uint32_t m_kind;
+	shader_kind m_kind;
 	VkShaderModule m_vkShader;
 
 private:

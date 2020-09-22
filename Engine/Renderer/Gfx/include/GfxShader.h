@@ -3,6 +3,8 @@
 
 
 typedef enum shader_kind {
+	invalid_shader = -1,
+
 	// Forced shader kinds. These shader kinds force the compiler to compile the
 	// source code as the specified kind of shader.
 	vertex_shader,
@@ -53,15 +55,11 @@ public:
 
 
 public:
-	virtual uint32_t GetKind(void) const = 0;
-	virtual const CGfxSprivCross& GetSprivCross(void) const = 0;
-
-public:
-	virtual bool Create(const uint32_t* words, size_t numWords, shader_kind kind) = 0;
-	virtual void Destroy(void) = 0;
-
-public:
 	virtual bool IsValid(void) const = 0;
+
+public:
+	virtual shader_kind GetKind(void) const = 0;
+	virtual const CGfxSprivCross& GetSprivCross(void) const = 0;
 
 
 private:
