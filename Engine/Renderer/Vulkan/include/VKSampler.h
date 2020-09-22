@@ -4,12 +4,10 @@
 
 class CVKSampler : public CGfxSampler
 {
-	friend class CVKSamplerManager;
-
-
-private:
+public:
 	CVKSampler(CVKDevice* pDevice, GfxFilter minFilter, GfxFilter magFilter, GfxSamplerMipmapMode mipmapMode, GfxSamplerAddressMode addressMode);
 	virtual ~CVKSampler(void);
+	virtual void Release(void);
 
 
 public:

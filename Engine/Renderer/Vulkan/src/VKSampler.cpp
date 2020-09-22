@@ -33,6 +33,11 @@ CVKSampler::~CVKSampler(void)
 	vkDestroySampler(m_pDevice->GetDevice(), m_vkSampler, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
 }
 
+void CVKSampler::Release(void)
+{
+	delete this;
+}
+
 VkSampler CVKSampler::GetSampler(void) const
 {
 	return m_vkSampler;
