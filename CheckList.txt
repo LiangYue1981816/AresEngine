@@ -1,0 +1,39 @@
+class CVKAllocator;
+class CVKInstance;
+class CVKDevice;
+class CVKQueue;
+class CVKMemory;
+class CVKMemoryAllocator;
+class CVKMemoryManager;
+class CVKRenderer;
+class CVKPipeline;
+class CVKPipelineCompute;
+class CVKPipelineGraphics;
+class CVKMesh;
+class CVKMeshDraw;
+class CVKMaterial;
+class CVKMaterialPass;
+class CVKSemaphore;
+class CVKCommandBuffer;
+
+class CVKSwapChain; OK
+class CVKRenderPass; OK
+class CVKFrameBuffer; OK
+class CVKDescriptorPool;
+class CVKDescriptorSet; OK
+class CVKDescriptorLayout; OK
+class CVKShader;
+class CVKBuffer;
+class CVKIndexBuffer;
+class CVKVertexBuffer;
+class CVKUniformBuffer;
+class CVKStorageBuffer;
+class CVKInstanceBuffer;
+class CVKIndirectBuffer;
+class CVKTransferBuffer;
+class CVKSampler;
+class CVKTexture;
+class CVKTexture2D;
+class CVKTexture2DArray;
+class CVKTextureCubemap;
+class CVKRenderTexture;
