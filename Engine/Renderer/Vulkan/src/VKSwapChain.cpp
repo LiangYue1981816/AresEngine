@@ -63,14 +63,13 @@ CVKSwapChain::CVKSwapChain(CVKDevice* pDevice, int width, int height, GfxPixelFo
 	, m_pDevice(pDevice)
 	, m_pAcquireSemaphore(nullptr)
 
+	, m_indexFrame(0)
 	, m_vkImages{ VK_NULL_HANDLE }
 	, m_vkSwapchain(VK_NULL_HANDLE)
 
 	, m_format(format)
 	, m_width(width)
 	, m_height(height)
-
-	, m_indexFrame(0)
 {
 	VkSurfaceCapabilitiesKHR capabilities;
 	eastl::vector<VkPresentModeKHR> modes;

@@ -48,6 +48,7 @@ private:
 	VkSwapchain m_vkSwapchain;
 
 private:
+	int m_indexFrame;
 	VkImage m_vkImages[SWAPCHAIN_FRAME_COUNT];
 	CGfxRenderTexturePtr m_ptrRenderTextures[SWAPCHAIN_FRAME_COUNT];
 
@@ -56,8 +57,6 @@ private:
 
 	int m_width;
 	int m_height;
-
-	int m_indexFrame;
 
 private:
 	CGfxSemaphore* m_pAcquireSemaphore;
