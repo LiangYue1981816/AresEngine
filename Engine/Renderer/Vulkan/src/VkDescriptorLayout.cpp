@@ -238,6 +238,10 @@ bool CVKDescriptorLayout::IsInputAttachmentValid(uint32_t name) const
 
 bool CVKDescriptorLayout::IsCompatible(const CGfxDescriptorLayoutPtr ptrLayout) const
 {
+	if (ptrLayout == nullptr) {
+		return false;
+	}
+
 	if (m_set != ((CVKDescriptorLayout*)ptrLayout.GetPointer())->m_set) {
 		return false;
 	}

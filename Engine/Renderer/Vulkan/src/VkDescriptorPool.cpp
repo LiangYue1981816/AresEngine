@@ -76,6 +76,10 @@ CVKDescriptorSetManager* CVKDescriptorPool::GetDescriptorSetManager(void) const
 
 CVKDescriptorSet* CVKDescriptorPool::AllocDescriptorSet(uint32_t name, const CGfxDescriptorLayoutPtr ptrDescriptorLayout)
 {
+	if (ptrDescriptorLayout == nullptr) {
+		return nullptr;
+	}
+
 	if (m_numSets == 0) {
 		return nullptr;
 	}
@@ -100,6 +104,10 @@ CVKDescriptorSet* CVKDescriptorPool::AllocDescriptorSet(uint32_t name, const CGf
 
 CVKDescriptorSet* CVKDescriptorPool::AllocDescriptorSet(uint32_t name, const CGfxDescriptorSetPtr ptrDescriptorSetCopyFrom)
 {
+	if (ptrDescriptorSetCopyFrom == nullptr) {
+		return nullptr;
+	}
+
 	if (m_numSets == 0) {
 		return nullptr;
 	}

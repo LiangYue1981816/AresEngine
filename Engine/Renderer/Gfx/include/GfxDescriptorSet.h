@@ -252,6 +252,11 @@ public:
 	{
 
 	}
+	CGfxDescriptorSet(uint32_t name, const CGfxDescriptorSetPtr ptrDescriptorSetCopyFrom)
+		: m_name(name)
+	{
+
+	}
 	virtual ~CGfxDescriptorSet(void)
 	{
 
