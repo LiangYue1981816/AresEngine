@@ -5,6 +5,191 @@ CVKPipeline::CVKPipeline(CVKDevice* pDevice, VkPipelineCache vkPipelineCache)
 	: m_pDevice(pDevice)
 	, m_pShaders{ nullptr }
 
+	, m_vkPipeline(VK_NULL_HANDLE)
+	, m_vkPipelineLayout(VK_NULL_HANDLE)
+	, m_vkPipelineCache(vkPipelineCache)
+{
+	m_ptrDescriptorLayouts[DESCRIPTOR_SET_PASS] = new CVKDescriptorLayout(pDevice, DESCRIPTOR_SET_PASS);
+	m_ptrDescriptorLayouts[DESCRIPTOR_SET_MATPASS] = new CVKDescriptorLayout(pDevice, DESCRIPTOR_SET_MATPASS);
+	m_ptrDescriptorLayouts[DESCRIPTOR_SET_MESHDRAW] = new CVKDescriptorLayout(pDevice, DESCRIPTOR_SET_MESHDRAW);
+	m_ptrDescriptorLayouts[DESCRIPTOR_SET_INPUTATTACHMENT] = new CVKDescriptorLayout(pDevice, DESCRIPTOR_SET_INPUTATTACHMENT);
+}
+
+CVKPipeline::~CVKPipeline(void)
+{
+	Destroy();
+}
+
+const VkPipelineLayout CVKPipeline::GetPipelineLayout(void) const
+{
+	return m_vkPipelineLayout;
+}
+
+const CGfxDescriptorLayoutPtr CVKPipeline::GetDescriptorLayout(int indexDescriptorSet) const
+{
+	if (indexDescriptorSet >= 0 && indexDescriptorSet < DESCRIPTOR_SET_COUNT) {
+		return m_ptrDescriptorLayouts[indexDescriptorSet];
+	}
+	else {
+		return nullptr;
+	}
+}
+
+const uint32_t CVKPipeline::GetInputAttachmentName(int indexInputAttachment) const
+{
+	const auto& itInputAttachmentName = m_inputAttachmentNames.find(indexInputAttachment);
+
+	if (itInputAttachmentName != m_inputAttachmentNames.end()) {
+		return itInputAttachmentName->second;
+	}
+	else {
+		return INVALID_HASHNAME;
+	}
+}
+
+bool CVKPipeline::CreateLayouts(void)
+{
+	eastl::vector<VkDescriptorSetLayout> layouts;
+	eastl::vector<VkPushConstantRange> ranges;
+	{
+		for (int indexShader = 0; indexShader < compute_shader - vertex_shader + 1; indexShader++) {
+			if (m_pShaders[indexShader] && m_pShaders[indexShader]->IsValid()) {
+				for (const auto& itUniformBlock : m_pShaders[indexShader]->GetSprivCross().GetUniformBlockBindings()) {
+					if (itUniformBlock.second.set >= 0 && itUniformBlock.second.set < DESCRIPTOR_SET_COUNT) {
+						uint32_t name = HashValue(itUniformBlock.first.c_str());
+						m_ptrDescriptorLayouts[itUniformBlock.second.set]->SetUniformBlockBinding(name, itUniformBlock.second.binding);
+					}
+					else {
+						return false;
+					}
+				}
+
+				for (const auto& itStorageBlock : m_pShaders[indexShader]->GetSprivCross().GetStorageBlockBindings()) {
+					if (itStorageBlock.second.set >= 0 && itStorageBlock.second.set < DESCRIPTOR_SET_COUNT) {
+						uint32_t name = HashValue(itStorageBlock.first.c_str());
+						m_ptrDescriptorLayouts[itStorageBlock.second.set]->SetStorageBlockBinding(name, itStorageBlock.second.binding);
+					}
+					else {
+						return false;
+					}
+				}
+
+				for (const auto& itStorageImage : m_pShaders[indexShader]->GetSprivCross().GetStorageImageBindings()) {
+					if (itStorageImage.second.set >= 0 && itStorageImage.second.set < DESCRIPTOR_SET_COUNT) {
+						uint32_t name = HashValue(itStorageImage.first.c_str());
+						m_ptrDescriptorLayouts[itStorageImage.second.set]->SetStorageImageBinding(name, itStorageImage.second.binding);
+					}
+					else {
+						return false;
+					}
+				}
+
+				for (const auto& itSampledImage : m_pShaders[indexShader]->GetSprivCross().GetSampledImageBindings()) {
+					if (itSampledImage.second.set >= 0 && itSampledImage.second.set < DESCRIPTOR_SET_COUNT) {
+						uint32_t name = HashValue(itSampledImage.first.c_str());
+						m_ptrDescriptorLayouts[itSampledImage.second.set]->SetSampledImageBinding(name, itSampledImage.second.binding);
+					}
+					else {
+						return false;
+					}
+				}
+
+				for (const auto& itInputAttachment : m_pShaders[indexShader]->GetSprivCross().GetInputAttachmentBindings()) {
+					if (itInputAttachment.second.set >= 0 && itInputAttachment.second.set < DESCRIPTOR_SET_COUNT) {
+						uint32_t name = HashValue(itInputAttachment.first.c_str());
+						m_inputAttachmentNames[itInputAttachment.second.indexInputAttachment] = name;
+						m_ptrDescriptorLayouts[itInputAttachment.second.set]->SetInputAttachmentBinding(name, itInputAttachment.second.binding);
+					}
+					else {
+						return false;
+					}
+				}
+
+				for (const auto& itPushConstant : m_pShaders[indexShader]->GetSprivCross().GetPushConstantRanges()) {
+					if (itPushConstant.second.offset + itPushConstant.second.range <= m_pDevice->GetPhysicalDeviceLimits().maxPushConstantsSize) {
+						uint32_t name = HashValue(itPushConstant.first.c_str());
+						m_pushConstantRanges[name].stageFlags = vkGetShaderStageFlagBits((shader_kind)indexShader);
+						m_pushConstantRanges[name].offset = itPushConstant.second.offset;
+						m_pushConstantRanges[name].size = itPushConstant.second.range;
+						ranges.emplace_back(m_pushConstantRanges[name]);
+					}
+					else {
+						return false;
+					}
+				}
+			}
+		}
+
+		for (int indexDescriptorLayout = 0; indexDescriptorLayout < DESCRIPTOR_SET_COUNT; indexDescriptorLayout++) {
+			if (m_ptrDescriptorLayouts[indexDescriptorLayout]->Create()) {
+				layouts.emplace_back(((CVKDescriptorLayout*)m_ptrDescriptorLayouts[indexDescriptorLayout].GetPointer())->GetDescriptorLayout());
+			}
+		}
+	}
+
+	VkPipelineLayoutCreateInfo layoutCreateInfo = {};
+	layoutCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
+	layoutCreateInfo.pNext = nullptr;
+	layoutCreateInfo.flags = 0;
+	layoutCreateInfo.setLayoutCount = layouts.size();
+	layoutCreateInfo.pSetLayouts = layouts.data();
+	layoutCreateInfo.pushConstantRangeCount = ranges.size();
+	layoutCreateInfo.pPushConstantRanges = ranges.data();
+	CALL_VK_FUNCTION_RETURN_BOOL(vkCreatePipelineLayout(m_pDevice->GetDevice(), &layoutCreateInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkPipelineLayout));
+
+	return true;
+}
+
+bool CVKPipeline::CreateShaderStages(eastl::vector<VkPipelineShaderStageCreateInfo>& shaders)
+{
+	for (int indexShader = 0; indexShader < compute_shader - vertex_shader + 1; indexShader++) {
+		if (m_pShaders[indexShader] && m_pShaders[indexShader]->IsValid()) {
+			VkPipelineShaderStageCreateInfo shaderStageCreateInfo = {};
+			shaderStageCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
+			shaderStageCreateInfo.pNext = nullptr;
+			shaderStageCreateInfo.flags = 0;
+			shaderStageCreateInfo.stage = vkGetShaderStageFlagBits((shader_kind)indexShader);
+			shaderStageCreateInfo.module = ((CVKShader*)m_pShaders[indexShader])->GetShader();
+			shaderStageCreateInfo.pName = "main";
+			shaderStageCreateInfo.pSpecializationInfo = nullptr;
+			shaders.emplace_back(shaderStageCreateInfo);
+		}
+	}
+
+	return true;
+}
+
+bool CVKPipeline::CreateVertexInputState(eastl::vector<VkVertexInputBindingDescription>& inputBindingDescriptions, eastl::vector<VkVertexInputAttributeDescription>& inputAttributeDescriptions, int vertexBinding, int instanceBinding)
+{
+	return true;
+}
+
+bool CVKPipeline::Create(const CGfxShader* pComputeShader)
+{
+	return true;
+}
+
+bool CVKPipeline::Create(const CGfxRenderPass* pRenderPass, const CGfxShader* pVertexShader, const CGfxShader* pFragmentShader, const PipelineState& state, int indexSubpass, int vertexBinding, int instanceBinding)
+{
+	return true;
+}
+
+void CVKPipeline::Destroy(void)
+{
+
+}
+
+bool CVKPipeline::IsCompatibleVertexFormat(uint32_t binding, uint32_t format) const
+{
+	return true;
+}
+
+
+/*
+CVKPipeline::CVKPipeline(CVKDevice* pDevice, VkPipelineCache vkPipelineCache)
+	: m_pDevice(pDevice)
+	, m_pShaders{ nullptr }
+
 	, m_vkPipelineCache(vkPipelineCache)
 	, m_vkPipeline(VK_NULL_HANDLE)
 	, m_vkPipelineLayout(VK_NULL_HANDLE)
@@ -733,3 +918,4 @@ void CVKPipeline::UniformMatrix4fv(VkCommandBuffer vkCommandBuffer, uint32_t nam
 		vkCmdPushConstants(vkCommandBuffer, m_vkPipelineLayout, itPushConstant->second.stageFlags, itPushConstant->second.offset, itPushConstant->second.size, value);
 	}
 }
+*/
