@@ -5,7 +5,7 @@
 class CGfxIndexBuffer : public CGfxResource
 {
 public:
-	CGfxIndexBuffer(GfxIndexType type, size_t size, bool bDynamic)
+	CGfxIndexBuffer(void)
 	{
 
 	}

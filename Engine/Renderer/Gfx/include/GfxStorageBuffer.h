@@ -5,7 +5,7 @@
 class CGfxStorageBuffer : public CGfxResource
 {
 public:
-	CGfxStorageBuffer(size_t size)
+	CGfxStorageBuffer(void)
 	{
 
 	}

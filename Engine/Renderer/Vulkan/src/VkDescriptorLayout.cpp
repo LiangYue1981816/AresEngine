@@ -2,8 +2,7 @@
 
 
 CVKDescriptorLayout::CVKDescriptorLayout(CVKDevice* pDevice, uint32_t set)
-	: CGfxDescriptorLayout(set)
-	, m_pDevice(pDevice)
+	: m_pDevice(pDevice)
 
 	, m_vkDescriptorLayout(VK_NULL_HANDLE)
 

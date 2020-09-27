@@ -2,9 +2,9 @@
 
 
 CVKRenderPass::CVKRenderPass(CVKDevice* pDevice, CVKRenderPassManager* pManager, uint32_t name, int numAttachments, int numSubpasses)
-	: CGfxRenderPass(name, numAttachments, numSubpasses)
-	, m_pManager(pManager)
+	: CGfxRenderPass(name)
 	, m_pDevice(pDevice)
+	, m_pManager(pManager)
 
 	, m_vkRenderPass(VK_NULL_HANDLE)
 

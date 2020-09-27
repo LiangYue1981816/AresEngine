@@ -2,8 +2,7 @@
 
 
 CVKTransferBuffer::CVKTransferBuffer(CVKDevice* pDevice, size_t size)
-	: CGfxTransferBuffer(size)
-	, m_pDevice(pDevice)
+	: m_pDevice(pDevice)
 	, m_pBuffer(nullptr)
 {
 	size = ALIGN_BYTE(size, m_pDevice->GetPhysicalDeviceLimits().nonCoherentAtomSize);

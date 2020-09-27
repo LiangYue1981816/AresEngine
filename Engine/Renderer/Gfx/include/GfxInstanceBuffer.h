@@ -5,7 +5,7 @@
 class CGfxInstanceBuffer : public CGfxResource
 {
 public:
-	CGfxInstanceBuffer(uint32_t instanceFormat, int instanceBinding)
+	CGfxInstanceBuffer(void)
 	{
 
 	}

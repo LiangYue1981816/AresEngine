@@ -59,8 +59,7 @@ static VkSurfaceFormatKHR GetSwapchainFormat(const eastl::vector<VkSurfaceFormat
 
 
 CVKSwapChain::CVKSwapChain(CVKDevice* pDevice, int width, int height, GfxPixelFormat format)
-	: CGfxSwapChain(width, height, format)
-	, m_pDevice(pDevice)
+	: m_pDevice(pDevice)
 	, m_pAcquireSemaphore(nullptr)
 
 	, m_indexFrame(0)

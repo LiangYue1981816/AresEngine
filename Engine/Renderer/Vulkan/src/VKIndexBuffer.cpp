@@ -11,8 +11,7 @@ static uint32_t IndexCount(GfxIndexType type, size_t size)
 }
 
 CVKIndexBuffer::CVKIndexBuffer(CVKDevice* pDevice, GfxIndexType type, size_t size, bool bDynamic)
-	: CGfxIndexBuffer(type, size, bDynamic)
-	, m_pDevice(pDevice)
+	: m_pDevice(pDevice)
 	, m_pBuffer(nullptr)
 
 	, m_type(type)

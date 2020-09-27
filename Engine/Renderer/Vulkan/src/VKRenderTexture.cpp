@@ -3,8 +3,8 @@
 
 CVKRenderTexture::CVKRenderTexture(CVKDevice* pDevice, CVKRenderTextureManager* pManager, uint32_t name, HANDLE hExternalTexture, GfxPixelFormat format, int width, int height, int samples /*= 1*/)
 	: CGfxRenderTexture(name)
-	, m_pManager(pManager)
 	, m_pDevice(pDevice)
+	, m_pManager(pManager)
 	, m_pTexture(nullptr)
 {
 	ASSERT(CVKHelper::IsFormatSupported((VkFormat)format));

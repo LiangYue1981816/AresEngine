@@ -2,8 +2,8 @@
 
 
 CVKSampler::CVKSampler(CVKDevice* pDevice, GfxFilter minFilter, GfxFilter magFilter, GfxSamplerMipmapMode mipmapMode, GfxSamplerAddressMode addressMode)
-	: CGfxSampler(minFilter, magFilter, mipmapMode, addressMode)
-	, m_pDevice(pDevice)
+	: m_pDevice(pDevice)
+
 	, m_vkSampler(VK_NULL_HANDLE)
 {
 	VkSamplerCreateInfo samplerCreateInfo = {};

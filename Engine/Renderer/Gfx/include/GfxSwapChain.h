@@ -5,7 +5,7 @@
 class CGfxSwapChain
 {
 public:
-	CGfxSwapChain(int width, int height, GfxPixelFormat format)
+	CGfxSwapChain(void)
 	{
 
 	}

@@ -97,7 +97,7 @@ typedef struct SubpassInformation {
 class CGfxRenderPass : public CGfxResource
 {
 public:
-	CGfxRenderPass(uint32_t name, int numAttachments, int numSubpasses)
+	CGfxRenderPass(uint32_t name)
 		: m_name(name)
 	{
 

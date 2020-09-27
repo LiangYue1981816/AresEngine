@@ -5,7 +5,7 @@
 class CGfxSampler
 {
 public:
-	CGfxSampler(GfxFilter minFilter, GfxFilter magFilter, GfxSamplerMipmapMode mipmapMode, GfxSamplerAddressMode addressMode)
+	CGfxSampler(void)
 	{
 
 	}

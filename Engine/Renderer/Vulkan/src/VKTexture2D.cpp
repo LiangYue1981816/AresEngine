@@ -3,8 +3,8 @@
 
 CVKTexture2D::CVKTexture2D(CVKDevice* pDevice, CVKTexture2DManager* pManager, uint32_t name, GfxPixelFormat format, int width, int height, int levels, int samples)
 	: CGfxTexture2D(name)
-	, m_pManager(pManager)
 	, m_pDevice(pDevice)
+	, m_pManager(pManager)
 	, m_pTexture(nullptr)
 {
 	ASSERT(CVKHelper::IsFormatSupported((VkFormat)format));

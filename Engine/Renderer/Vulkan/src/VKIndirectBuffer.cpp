@@ -2,8 +2,7 @@
 
 
 CVKIndirectBuffer::CVKIndirectBuffer(CVKDevice* pDevice)
-	: CGfxIndirectBuffer()
-	, m_pDevice(pDevice)
+	: m_pDevice(pDevice)
 	, m_pBuffer(nullptr)
 
 	, m_count(0)

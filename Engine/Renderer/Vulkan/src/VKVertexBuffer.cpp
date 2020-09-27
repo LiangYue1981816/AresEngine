@@ -7,8 +7,7 @@ static uint32_t VertexCount(uint32_t vertexFormat, size_t size)
 }
 
 CVKVertexBuffer::CVKVertexBuffer(CVKDevice* pDevice, uint32_t vertexFormat, int vertexBinding, size_t size, bool bDynamic)
-	: CGfxVertexBuffer(vertexFormat, vertexBinding, size, bDynamic)
-	, m_pDevice(pDevice)
+	: m_pDevice(pDevice)
 	, m_pBuffer(nullptr)
 
 	, m_binding(vertexBinding)

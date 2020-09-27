@@ -247,12 +247,7 @@ typedef struct DescriptorImageInfo {
 class CGfxDescriptorSet : public CGfxResource
 {
 public:
-	CGfxDescriptorSet(uint32_t name, const CGfxDescriptorLayoutPtr ptrDescriptorLayout)
-		: m_name(name)
-	{
-
-	}
-	CGfxDescriptorSet(uint32_t name, const CGfxDescriptorSetPtr ptrDescriptorSetCopyFrom)
+	CGfxDescriptorSet(uint32_t name)
 		: m_name(name)
 	{
 

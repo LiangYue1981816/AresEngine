@@ -5,7 +5,7 @@
 class CGfxUniformBuffer : public CGfxResource
 {
 public:
-	CGfxUniformBuffer(size_t size)
+	CGfxUniformBuffer(void)
 	{
 
 	}

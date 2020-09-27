@@ -3,8 +3,8 @@
 
 CVKTextureCubemap::CVKTextureCubemap(CVKDevice* pDevice, CVKTextureCubemapManager* pManager, uint32_t name, GfxPixelFormat format, int width, int height, int levels)
 	: CGfxTextureCubemap(name)
-	, m_pManager(pManager)
 	, m_pDevice(pDevice)
+	, m_pManager(pManager)
 	, m_pTexture(nullptr)
 {
 	ASSERT(CVKHelper::IsFormatSupported((VkFormat)format));

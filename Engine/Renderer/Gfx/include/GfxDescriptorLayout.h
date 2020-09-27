@@ -5,7 +5,7 @@
 class CGfxDescriptorLayout : public CGfxResource
 {
 public:
-	CGfxDescriptorLayout(uint32_t set)
+	CGfxDescriptorLayout(void)
 	{
 
 	}

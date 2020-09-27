@@ -2,8 +2,7 @@
 
 
 CVKUniformBuffer::CVKUniformBuffer(CVKDevice* pDevice, size_t size, bool bDynamic)
-	: CGfxUniformBuffer(size)
-	, m_pDevice(pDevice)
+	: m_pDevice(pDevice)
 	, m_pBuffer(nullptr)
 {
 	size = ALIGN_BYTE(size, m_pDevice->GetPhysicalDeviceLimits().nonCoherentAtomSize);

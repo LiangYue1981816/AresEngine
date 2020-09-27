@@ -5,7 +5,7 @@
 class CGfxFrameBuffer : public CGfxResource
 {
 public:
-	CGfxFrameBuffer(int width, int height, int numAttachments)
+	CGfxFrameBuffer(void)
 	{
 
 	}

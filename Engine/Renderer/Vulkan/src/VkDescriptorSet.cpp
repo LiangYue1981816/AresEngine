@@ -2,7 +2,7 @@
 
 
 CVKDescriptorSet::CVKDescriptorSet(CVKDevice* pDevice, CVKDescriptorPool* pDescriptorPool, uint32_t name, const CGfxDescriptorLayoutPtr ptrDescriptorLayout)
-	: CGfxDescriptorSet(name, ptrDescriptorLayout)
+	: CGfxDescriptorSet(name)
 	, m_pDevice(pDevice)
 	, m_pDescriptorPool(pDescriptorPool)
 
@@ -20,7 +20,7 @@ CVKDescriptorSet::CVKDescriptorSet(CVKDevice* pDevice, CVKDescriptorPool* pDescr
 }
 
 CVKDescriptorSet::CVKDescriptorSet(CVKDevice* pDevice, CVKDescriptorPool* pDescriptorPool, uint32_t name, const CGfxDescriptorSetPtr ptrDescriptorSetCopyFrom)
-	: CGfxDescriptorSet(name, ptrDescriptorSetCopyFrom)
+	: CGfxDescriptorSet(name)
 	, m_pDevice(pDevice)
 	, m_pDescriptorPool(pDescriptorPool)
 

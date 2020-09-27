@@ -2,9 +2,8 @@
 
 
 CVKFrameBuffer::CVKFrameBuffer(CVKDevice* pDevice, CVKFrameBufferManager* pManager, int width, int height, int numAttachments)
-	: CGfxFrameBuffer(width, height, numAttachments)
+	: m_pDevice(pDevice)
 	, m_pManager(pManager)
-	, m_pDevice(pDevice)
 
 	, m_vkFrameBuffer(VK_NULL_HANDLE)
 

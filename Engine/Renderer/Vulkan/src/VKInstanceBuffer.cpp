@@ -2,8 +2,7 @@
 
 
 CVKInstanceBuffer::CVKInstanceBuffer(CVKDevice* pDevice, uint32_t instanceFormat, int instanceBinding)
-	: CGfxInstanceBuffer(instanceFormat, instanceBinding)
-	, m_pDevice(pDevice)
+	: m_pDevice(pDevice)
 	, m_pBuffer(nullptr)
 
 	, m_binding(instanceBinding)

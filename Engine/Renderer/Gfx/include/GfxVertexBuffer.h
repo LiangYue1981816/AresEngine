@@ -5,7 +5,7 @@
 class CGfxVertexBuffer : public CGfxResource
 {
 public:
-	CGfxVertexBuffer(uint32_t vertexFormat, int vertexBinding, size_t size, bool bDynamic)
+	CGfxVertexBuffer(void)
 	{
 
 	}
