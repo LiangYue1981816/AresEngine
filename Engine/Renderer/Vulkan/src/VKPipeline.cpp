@@ -161,27 +161,142 @@ bool CVKPipeline::CreateShaderStages(eastl::vector<VkPipelineShaderStageCreateIn
 
 bool CVKPipeline::CreateVertexInputState(eastl::vector<VkVertexInputBindingDescription>& inputBindingDescriptions, eastl::vector<VkVertexInputAttributeDescription>& inputAttributeDescriptions, int vertexBinding, int instanceBinding)
 {
+	const eastl::vector<eastl::string>& vertexAttributes = m_pShaders[vertex_shader]->GetSprivCross().GetVertexAttributes();
+
+	uint32_t vertexFormat = 0;
+	uint32_t instanceFormat = 0;
+
+	for (const auto& itVertexAttribute : vertexAttributes) {
+		vertexFormat |= GetVertexAttribute(itVertexAttribute.c_str());
+		instanceFormat |= GetInstanceAttribute(itVertexAttribute.c_str());
+	}
+
+	if (vertexFormat) {
+		m_vertexFormats[vertexBinding] = vertexFormat;
+
+		for (const auto& itVertexAttribute : vertexAttributes) {
+			if (uint32_t attribute = GetVertexAttribute(itVertexAttribute.c_str())) {
+				VkVertexInputAttributeDescription inputAttributeDescription = {};
+				inputAttributeDescription.binding = vertexBinding;
+				inputAttributeDescription.location = GetVertexAttributeLocation(attribute);
+				inputAttributeDescription.format = (VkFormat)GetVertexAttributeFormat(attribute);
+				inputAttributeDescription.offset = GetVertexAttributeOffset(vertexFormat, attribute);
+				inputAttributeDescriptions.emplace_back(inputAttributeDescription);
+			}
+		}
+
+		VkVertexInputBindingDescription inputBindingDescription;
+		inputBindingDescription.binding = vertexBinding;
+		inputBindingDescription.stride = GetVertexStride(vertexFormat);
+		inputBindingDescription.inputRate = VK_VERTEX_INPUT_RATE_VERTEX;
+		inputBindingDescriptions.emplace_back(inputBindingDescription);
+	}
+
+	if (instanceFormat) {
+		m_vertexFormats[instanceBinding] = instanceFormat;
+
+		for (const auto& itVertexAttribute : vertexAttributes) {
+			if (uint32_t attribute = GetInstanceAttribute(itVertexAttribute.c_str())) {
+				VkVertexInputAttributeDescription inputAttributeDescription = {};
+				inputAttributeDescription.binding = instanceBinding;
+				inputAttributeDescription.location = GetInstanceAttributeLocation(attribute);
+				inputAttributeDescription.format = (VkFormat)GetInstanceAttributeFormat(attribute);
+				inputAttributeDescription.offset = GetInstanceAttributeOffset(instanceFormat, attribute);
+				inputAttributeDescriptions.emplace_back(inputAttributeDescription);
+			}
+		}
+
+		VkVertexInputBindingDescription inputBindingDescription;
+		inputBindingDescription.binding = instanceBinding;
+		inputBindingDescription.stride = GetInstanceStride(instanceFormat);
+		inputBindingDescription.inputRate = VK_VERTEX_INPUT_RATE_INSTANCE;
+		inputBindingDescriptions.emplace_back(inputBindingDescription);
+	}
+
 	return true;
 }
 
 bool CVKPipeline::Create(const CGfxShader* pComputeShader)
 {
+	m_pShaders[compute_shader] = (CGfxShader*)pComputeShader;
+
+	CALL_BOOL_FUNCTION_RETURN_BOOL(CreateLayouts());
+
+	VkPipelineShaderStageCreateInfo shaderStageCreateInfo = {};
+	shaderStageCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
+	shaderStageCreateInfo.pNext = nullptr;
+	shaderStageCreateInfo.flags = 0;
+	shaderStageCreateInfo.stage = VK_SHADER_STAGE_COMPUTE_BIT;
+	shaderStageCreateInfo.module = ((CVKShader*)m_pShaders[compute_shader])->GetShader();
+	shaderStageCreateInfo.pName = "main";
+	shaderStageCreateInfo.pSpecializationInfo = nullptr;
+
+	VkComputePipelineCreateInfo pipelineCreateInfo = {};
+	pipelineCreateInfo.sType = VK_STRUCTURE_TYPE_COMPUTE_PIPELINE_CREATE_INFO;
+	pipelineCreateInfo.pNext = nullptr;
+	pipelineCreateInfo.flags = 0;
+	pipelineCreateInfo.stage = shaderStageCreateInfo;
+	pipelineCreateInfo.layout = m_vkPipelineLayout;
+	pipelineCreateInfo.basePipelineHandle = VK_NULL_HANDLE;
+	pipelineCreateInfo.basePipelineIndex = 0;
+	CALL_VK_FUNCTION_RETURN_BOOL(vkCreateComputePipelines(m_pDevice->GetDevice(), m_vkPipelineCache, 1, &pipelineCreateInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkPipeline));
+
 	return true;
 }
 
 bool CVKPipeline::Create(const CGfxRenderPass* pRenderPass, const CGfxShader* pVertexShader, const CGfxShader* pFragmentShader, const PipelineState& state, int indexSubpass, int vertexBinding, int instanceBinding)
 {
+	m_pShaders[vertex_shader] = (CGfxShader*)pVertexShader;
+	m_pShaders[fragment_shader] = (CGfxShader*)pFragmentShader;
+
+	eastl::vector<VkPipelineShaderStageCreateInfo> shaders;
+	eastl::vector<VkVertexInputBindingDescription> inputBindingDescriptions;
+	eastl::vector<VkVertexInputAttributeDescription> inputAttributeDescriptions;
+
+	CALL_BOOL_FUNCTION_RETURN_BOOL(CreateLayouts());
+	CALL_BOOL_FUNCTION_RETURN_BOOL(CreateShaderStages(shaders));
+	CALL_BOOL_FUNCTION_RETURN_BOOL(CreateVertexInputState(inputBindingDescriptions, inputAttributeDescriptions, vertexBinding, instanceBinding));
+
 	return true;
 }
 
 void CVKPipeline::Destroy(void)
 {
+	if (m_vkPipeline) {
+		vkDestroyPipeline(m_pDevice->GetDevice(), m_vkPipeline, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
+	}
 
+	if (m_vkPipelineLayout) {
+		vkDestroyPipelineLayout(m_pDevice->GetDevice(), m_vkPipelineLayout, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
+	}
+
+	m_vkPipeline = VK_NULL_HANDLE;
+	m_vkPipelineLayout = VK_NULL_HANDLE;
+
+	m_pShaders[vertex_shader] = nullptr;
+	m_pShaders[fragment_shader] = nullptr;
+	m_pShaders[compute_shader] = nullptr;
+
+	m_vertexFormats.clear();
+	m_inputAttachmentNames.clear();
+	m_pushConstantRanges.clear();
+
+	m_ptrDescriptorLayouts[DESCRIPTOR_SET_PASS]->Destroy(true);
+	m_ptrDescriptorLayouts[DESCRIPTOR_SET_MATPASS]->Destroy(true);
+	m_ptrDescriptorLayouts[DESCRIPTOR_SET_MESHDRAW]->Destroy(true);
+	m_ptrDescriptorLayouts[DESCRIPTOR_SET_INPUTATTACHMENT]->Destroy(true);
 }
 
 bool CVKPipeline::IsCompatibleVertexFormat(uint32_t binding, uint32_t format) const
 {
-	return true;
+	const auto& itFormat = m_vertexFormats.find(binding);
+
+	if (itFormat != m_vertexFormats.end()) {
+		return itFormat->second == format && itFormat->second != 0;
+	}
+	else {
+		return false;
+	}
 }
 
 
