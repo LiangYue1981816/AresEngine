@@ -5,10 +5,11 @@ CVKBuffer::CVKBuffer(CVKDevice* pDevice, VkDeviceSize bufferSize, VkBufferUsageF
 	: m_pDevice(pDevice)
 	, m_pMemory(nullptr)
 
+	, m_type(GFX_BUFFER_INVALID_ENUM)
+
 	, m_vkBuffer(VK_NULL_HANDLE)
 	, m_vkBufferSize(0)
 	, m_vkBufferUsageFlags(0)
-	, m_type(GFX_BUFFER_INVALID_ENUM)
 {
 	m_type = type;
 
