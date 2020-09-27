@@ -5,8 +5,6 @@ CVKBuffer::CVKBuffer(CVKDevice* pDevice, VkDeviceSize bufferSize, VkBufferUsageF
 	: m_pDevice(pDevice)
 	, m_pMemory(nullptr)
 
-	, m_type(type)
-
 	, m_vkBuffer(VK_NULL_HANDLE)
 	, m_vkBufferSize(0)
 	, m_vkBufferUsageFlags(0)
@@ -14,6 +12,8 @@ CVKBuffer::CVKBuffer(CVKDevice* pDevice, VkDeviceSize bufferSize, VkBufferUsageF
 	ASSERT(bufferSize);
 	ASSERT(bufferUsageFlags);
 	ASSERT(memoryPropertyFlags);
+
+	m_type = type;
 
 	m_vkBufferSize = bufferSize;
 	m_vkBufferUsageFlags = bufferUsageFlags;
