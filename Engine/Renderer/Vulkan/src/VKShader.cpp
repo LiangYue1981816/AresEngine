@@ -6,6 +6,7 @@ CVKShader::CVKShader(CVKDevice* pDevice, uint32_t name, const uint32_t* words, s
 	, m_pDevice(pDevice)
 
 	, m_vkShader(VK_NULL_HANDLE)
+
 	, m_kind(kind)
 {
 	m_spriv.Create(words, numWords, 310);

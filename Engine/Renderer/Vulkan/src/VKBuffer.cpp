@@ -5,17 +5,12 @@ CVKBuffer::CVKBuffer(CVKDevice* pDevice, VkDeviceSize bufferSize, VkBufferUsageF
 	: m_pDevice(pDevice)
 	, m_pMemory(nullptr)
 
-	, m_type(GFX_BUFFER_INVALID_ENUM)
+	, m_type(type)
 
 	, m_vkBuffer(VK_NULL_HANDLE)
-	, m_vkBufferSize(0)
-	, m_vkBufferUsageFlags(0)
+	, m_vkBufferSize(bufferSize)
+	, m_vkBufferUsageFlags(bufferUsageFlags)
 {
-	m_type = type;
-
-	m_vkBufferSize = bufferSize;
-	m_vkBufferUsageFlags = bufferUsageFlags;
-
 	VkBufferCreateInfo createInfo = {};
 	createInfo.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
 	createInfo.pNext = nullptr;
