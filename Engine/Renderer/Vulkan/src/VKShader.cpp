@@ -5,10 +5,9 @@ CVKShader::CVKShader(CVKDevice* pDevice, uint32_t name, const uint32_t* words, s
 	: CGfxShader(name)
 	, m_pDevice(pDevice)
 
-	, m_kind(invalid_shader)
 	, m_vkShader(VK_NULL_HANDLE)
+	, m_kind(kind)
 {
-	m_kind = kind;
 	m_spriv.Create(words, numWords, 310);
 
 	VkShaderModuleCreateInfo shaderCreateInfo = {};

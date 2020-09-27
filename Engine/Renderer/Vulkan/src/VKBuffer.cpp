@@ -8,11 +8,8 @@ CVKBuffer::CVKBuffer(CVKDevice* pDevice, VkDeviceSize bufferSize, VkBufferUsageF
 	, m_vkBuffer(VK_NULL_HANDLE)
 	, m_vkBufferSize(0)
 	, m_vkBufferUsageFlags(0)
+	, m_type(GFX_BUFFER_INVALID_ENUM)
 {
-	ASSERT(bufferSize);
-	ASSERT(bufferUsageFlags);
-	ASSERT(memoryPropertyFlags);
-
 	m_type = type;
 
 	m_vkBufferSize = bufferSize;
