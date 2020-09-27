@@ -1,7 +1,7 @@
 #include "VKRenderer.h"
 
 
-CVKPipelineCompute::CVKPipelineCompute(uint32_t name, CVKDevice* pDevice, VkPipelineCache vkPipelineCache, const CGfxShader* pComputeShader)
+CVKPipelineCompute::CVKPipelineCompute(CVKDevice* pDevice, uint32_t name, VkPipelineCache vkPipelineCache, const CGfxShader* pComputeShader)
 	: CGfxPipelineCompute(name)
 	, m_pDevice(pDevice)
 	, m_pPipeline(nullptr)

@@ -5,7 +5,7 @@
 class CVKPipelineGraphics : public CGfxPipelineGraphics
 {
 public:
-	CVKPipelineGraphics(uint32_t name, CVKDevice* pDevice, VkPipelineCache vkPipelineCache, const CGfxRenderPass* pRenderPass, const CGfxShader* pVertexShader, const CGfxShader* pFragmentShader, const PipelineState& state, int indexSubpass, int vertexBinding, int instanceBinding);
+	CVKPipelineGraphics(CVKDevice* pDevice, uint32_t name, VkPipelineCache vkPipelineCache, const CGfxRenderPass* pRenderPass, const CGfxShader* pVertexShader, const CGfxShader* pFragmentShader, const PipelineState& state, int indexSubpass, int vertexBinding, int instanceBinding);
 	virtual ~CVKPipelineGraphics(void);
 
 

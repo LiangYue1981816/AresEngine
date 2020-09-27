@@ -1,7 +1,7 @@
 #include "VKRenderer.h"
 
 
-CVKPipelineGraphics::CVKPipelineGraphics(uint32_t name, CVKDevice* pDevice, VkPipelineCache vkPipelineCache, const CGfxRenderPass* pRenderPass, const CGfxShader* pVertexShader, const CGfxShader* pFragmentShader, const PipelineState& state, int indexSubpass, int vertexBinding, int instanceBinding)
+CVKPipelineGraphics::CVKPipelineGraphics(CVKDevice* pDevice, uint32_t name, VkPipelineCache vkPipelineCache, const CGfxRenderPass* pRenderPass, const CGfxShader* pVertexShader, const CGfxShader* pFragmentShader, const PipelineState& state, int indexSubpass, int vertexBinding, int instanceBinding)
 	: CGfxPipelineGraphics(name)
 	, m_pDevice(pDevice)
 	, m_pPipeline(nullptr)
