@@ -9,7 +9,8 @@ class CVKPipeline
 
 
 private:
-	CVKPipeline(CVKDevice* pDevice, VkPipelineCache vkPipelineCache);
+	CVKPipeline(CVKDevice* pDevice, VkPipelineCache vkPipelineCache, const CGfxShader* pComputeShader);
+	CVKPipeline(CVKDevice* pDevice, VkPipelineCache vkPipelineCache, const CGfxRenderPass* pRenderPass, const CGfxShader* pVertexShader, const CGfxShader* pFragmentShader, const PipelineState& state, int indexSubpass, int vertexBinding, int instanceBinding);
 	virtual ~CVKPipeline(void);
 
 
@@ -22,10 +23,6 @@ private:
 	bool CreateLayouts(void);
 	bool CreateShaderStages(eastl::vector<VkPipelineShaderStageCreateInfo>& shaders);
 	bool CreateVertexInputState(eastl::vector<VkVertexInputBindingDescription>& inputBindingDescriptions, eastl::vector<VkVertexInputAttributeDescription>& inputAttributeDescriptions, int vertexBinding, int instanceBinding);
-
-	bool Create(const CGfxShader* pComputeShader);
-	bool Create(const CGfxRenderPass* pRenderPass, const CGfxShader* pVertexShader, const CGfxShader* pFragmentShader, const PipelineState& state, int indexSubpass, int vertexBinding, int instanceBinding);
-	void Destroy(void);
 
 private:
 	bool IsCompatibleVertexFormat(uint32_t binding, uint32_t format) const;
