@@ -51,7 +51,7 @@ typedef struct PipelineState {
 		stencilBackWriteMask = 0xFFFFFFFF;
 
 		// Color Blend State
-		for (int index = 0; index < 8; index++) {
+		for (int index = 0; index < 4; index++) {
 			bEnableBlend[index] = false;
 			bEnableColorRedWrite[index] = true;
 			bEnableColorGreenWrite[index] = true;
@@ -118,17 +118,17 @@ typedef struct PipelineState {
 	uint32_t stencilBackWriteMask;
 
 	// Color Blend State
-	bool bEnableBlend[8];
-	bool bEnableColorRedWrite[8];
-	bool bEnableColorGreenWrite[8];
-	bool bEnableColorBlueWrite[8];
-	bool bEnableColorAlphaWrite[8];
-	GfxBlendOp blendOpRGB[8];
-	GfxBlendFactor blendSrcRGB[8];
-	GfxBlendFactor blendDstRGB[8];
-	GfxBlendOp blendOpAlpha[8];
-	GfxBlendFactor blendSrcAlpha[8];
-	GfxBlendFactor blendDstAlpha[8];
+	bool bEnableBlend[4];
+	bool bEnableColorRedWrite[4];
+	bool bEnableColorGreenWrite[4];
+	bool bEnableColorBlueWrite[4];
+	bool bEnableColorAlphaWrite[4];
+	GfxBlendOp blendOpRGB[4];
+	GfxBlendFactor blendSrcRGB[4];
+	GfxBlendFactor blendDstRGB[4];
+	GfxBlendOp blendOpAlpha[4];
+	GfxBlendFactor blendSrcAlpha[4];
+	GfxBlendFactor blendDstAlpha[4];
 	float blendColorRed;
 	float blendColorGreen;
 	float blendColorBlue;
