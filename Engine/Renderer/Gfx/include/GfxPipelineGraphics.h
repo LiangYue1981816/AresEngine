@@ -51,22 +51,25 @@ typedef struct PipelineState {
 		stencilBackWriteMask = 0xFFFFFFFF;
 
 		// Color Blend State
-		bEnableBlend = false;
+		for (int index = 0; index < 8; index++) {
+			bEnableBlend[index] = false;
+			bEnableColorRedWrite[index] = true;
+			bEnableColorGreenWrite[index] = true;
+			bEnableColorBlueWrite[index] = true;
+			bEnableColorAlphaWrite[index] = true;
+			blendOpRGB[index] = GFX_BLENDOP_ADD;
+			blendSrcRGB[index] = GFX_BLENDFACTOR_ONE;
+			blendDstRGB[index] = GFX_BLENDFACTOR_ZERO;
+			blendOpAlpha[index] = GFX_BLENDOP_ADD;
+			blendSrcAlpha[index] = GFX_BLENDFACTOR_ONE;
+			blendDstAlpha[index] = GFX_BLENDFACTOR_ZERO;
+		}
+
 		blendColorRed = 0.0f;
 		blendColorGreen = 0.0f;
 		blendColorBlue = 0.0f;
 		blendColorAlpha = 0.0f;
-		blendOpRGB = GFX_BLENDOP_ADD;
-		blendSrcRGB = GFX_BLENDFACTOR_ONE;
-		blendDstRGB = GFX_BLENDFACTOR_ZERO;
-		blendOpAlpha = GFX_BLENDOP_ADD;
-		blendSrcAlpha = GFX_BLENDFACTOR_ONE;
-		blendDstAlpha = GFX_BLENDFACTOR_ZERO;
 
-		bEnableColorRedWrite = true;
-		bEnableColorGreenWrite = true;
-		bEnableColorBlueWrite = true;
-		bEnableColorAlphaWrite = true;
 	}
 
 	// Input Assembly State
@@ -115,22 +118,22 @@ typedef struct PipelineState {
 	uint32_t stencilBackWriteMask;
 
 	// Color Blend State
-	bool bEnableBlend;
+	bool bEnableBlend[8];
+	bool bEnableColorRedWrite[8];
+	bool bEnableColorGreenWrite[8];
+	bool bEnableColorBlueWrite[8];
+	bool bEnableColorAlphaWrite[8];
+	GfxBlendOp blendOpRGB[8];
+	GfxBlendFactor blendSrcRGB[8];
+	GfxBlendFactor blendDstRGB[8];
+	GfxBlendOp blendOpAlpha[8];
+	GfxBlendFactor blendSrcAlpha[8];
+	GfxBlendFactor blendDstAlpha[8];
 	float blendColorRed;
 	float blendColorGreen;
 	float blendColorBlue;
 	float blendColorAlpha;
-	GfxBlendOp blendOpRGB;
-	GfxBlendFactor blendSrcRGB;
-	GfxBlendFactor blendDstRGB;
-	GfxBlendOp blendOpAlpha;
-	GfxBlendFactor blendSrcAlpha;
-	GfxBlendFactor blendDstAlpha;
 
-	bool bEnableColorRedWrite;
-	bool bEnableColorGreenWrite;
-	bool bEnableColorBlueWrite;
-	bool bEnableColorAlphaWrite;
 } PipelineState;
 
 class CGfxPipelineGraphics
