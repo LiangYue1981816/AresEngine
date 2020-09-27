@@ -24,10 +24,6 @@ public:
 public:
 	virtual const CGfxDescriptorLayoutPtr GetDescriptorLayout(int indexDescriptorSet) const = 0;
 
-public:
-	virtual bool Create(const CGfxShader* pComputeShader) = 0;
-	virtual void Destroy(void) = 0;
-
 
 private:
 	uint32_t m_name;
