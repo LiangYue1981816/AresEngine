@@ -23,6 +23,8 @@ public:
 
 private:
 	shader_kind m_kind;
+
+private:
 	VkShaderModule m_vkShader;
 
 private:
