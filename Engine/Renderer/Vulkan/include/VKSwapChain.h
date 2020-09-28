@@ -45,18 +45,18 @@ public:
 
 
 private:
+	GfxPixelFormat m_format;
+
+	int m_width;
+	int m_height;
+
+private:
 	VkSwapchain m_vkSwapchain;
 
 private:
 	int m_indexFrame;
 	VkImage m_vkImages[SWAPCHAIN_FRAME_COUNT];
 	CGfxRenderTexturePtr m_ptrRenderTextures[SWAPCHAIN_FRAME_COUNT];
-
-private:
-	GfxPixelFormat m_format;
-
-	int m_width;
-	int m_height;
 
 private:
 	CGfxSemaphore* m_pAcquireSemaphore;

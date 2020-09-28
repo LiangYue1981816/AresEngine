@@ -62,23 +62,23 @@ CVKSwapChain::CVKSwapChain(CVKDevice* pDevice, int width, int height, GfxPixelFo
 	: m_pDevice(pDevice)
 	, m_pAcquireSemaphore(nullptr)
 
-	, m_indexFrame(0)
-	, m_vkImages{ VK_NULL_HANDLE }
-	, m_vkSwapchain(VK_NULL_HANDLE)
-
 	, m_format(format)
 	, m_width(width)
 	, m_height(height)
+
+	, m_indexFrame(0)
+	, m_vkImages{ VK_NULL_HANDLE }
+	, m_vkSwapchain(VK_NULL_HANDLE)
 {
 	VkSurfaceCapabilitiesKHR capabilities;
 	eastl::vector<VkPresentModeKHR> modes;
 	eastl::vector<VkSurfaceFormatKHR> formats;
-	CALL_BOOL_FUNCTION_ASSERT(IsSurfaceSupport());
-	CALL_BOOL_FUNCTION_ASSERT(EnumDeviceSurfaceModes(modes));
-	CALL_BOOL_FUNCTION_ASSERT(EnumDeviceSurfaceFormats(formats));
-	CALL_BOOL_FUNCTION_ASSERT(EnumDeviceSurfaceCapabilities(capabilities));
-	CALL_BOOL_FUNCTION_ASSERT(CreateSwapChain(modes, formats, capabilities));
-	CALL_BOOL_FUNCTION_ASSERT(CreateRenderTextures());
+	CALL_BOOL_FUNCTION_RETURN(IsSurfaceSupport());
+	CALL_BOOL_FUNCTION_RETURN(EnumDeviceSurfaceModes(modes));
+	CALL_BOOL_FUNCTION_RETURN(EnumDeviceSurfaceFormats(formats));
+	CALL_BOOL_FUNCTION_RETURN(EnumDeviceSurfaceCapabilities(capabilities));
+	CALL_BOOL_FUNCTION_RETURN(CreateSwapChain(modes, formats, capabilities));
+	CALL_BOOL_FUNCTION_RETURN(CreateRenderTextures());
 
 	m_pAcquireSemaphore = new CVKSemaphore(m_pDevice);
 }
