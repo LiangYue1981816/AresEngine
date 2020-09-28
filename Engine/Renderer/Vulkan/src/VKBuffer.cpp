@@ -20,27 +20,26 @@ CVKBuffer::CVKBuffer(CVKDevice* pDevice, VkDeviceSize bufferSize, VkBufferUsageF
 	createInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
 	createInfo.queueFamilyIndexCount = 0;
 	createInfo.pQueueFamilyIndices = nullptr;
-	CALL_VK_FUNCTION_ASSERT(vkCreateBuffer(m_pDevice->GetDevice(), &createInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkBuffer));
+	CALL_VK_FUNCTION_RETURN(vkCreateBuffer(m_pDevice->GetDevice(), &createInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkBuffer));
 
 	VkMemoryRequirements requirements;
 	vkGetBufferMemoryRequirements(m_pDevice->GetDevice(), m_vkBuffer, &requirements);
 
 	m_pMemory = m_pDevice->GetMemoryManager()->AllocMemory(requirements.size, requirements.alignment, memoryPropertyFlags, VK_RESOURCE_TYPE_BUFFER);
+	m_pMemory->BindBuffer(m_vkBuffer);
 
-	if (m_pMemory) {
-		m_pMemory->BindBuffer(m_vkBuffer);
-		CGfxProfiler::IncBufferSize(m_type, m_pMemory->GetSize());
-	}
+	CGfxProfiler::IncBufferSize(m_type, GetMemorySize());
 }
 
 CVKBuffer::~CVKBuffer(void)
 {
+	CGfxProfiler::DecBufferSize(m_type, GetMemorySize());
+
 	if (m_vkBuffer) {
 		vkDestroyBuffer(m_pDevice->GetDevice(), m_vkBuffer, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
 	}
 
 	if (m_pMemory) {
-		CGfxProfiler::DecBufferSize(m_type, m_pMemory->GetSize());
 		m_pDevice->GetMemoryManager()->FreeMemory(m_pMemory);
 	}
 }
