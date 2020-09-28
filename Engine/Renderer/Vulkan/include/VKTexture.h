@@ -21,6 +21,7 @@ private:
 	VkImage GetImage(void) const;
 	VkImageView GetImageView(void) const;
 	VkImageAspectFlags GetImageAspectFlags(void) const;
+	VkDeviceSize GetMemorySize(void) const;
 
 	GfxTextureType GetType(void) const;
 	GfxPixelFormat GetFormat(void) const;

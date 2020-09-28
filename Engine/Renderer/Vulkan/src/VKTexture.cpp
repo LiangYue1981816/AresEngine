@@ -38,7 +38,7 @@ CVKTexture::CVKTexture(CVKDevice* pDevice, GfxTextureType type, GfxPixelFormat f
 	viewCreateInfo.format = (VkFormat)format;
 	viewCreateInfo.components = CVKHelper::GetFormatComponentMapping((VkFormat)format);
 	viewCreateInfo.subresourceRange = { imageAspectFlags, 0, (uint32_t)levels, 0, (uint32_t)layers };
-	CALL_VK_FUNCTION_ASSERT(vkCreateImageView(m_pDevice->GetDevice(), &viewCreateInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkImageView));
+	CALL_VK_FUNCTION_RETURN(vkCreateImageView(m_pDevice->GetDevice(), &viewCreateInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkImageView));
 }
 
 CVKTexture::CVKTexture(CVKDevice* pDevice, GfxTextureType type, GfxPixelFormat format, int width, int height, int layers, int levels, int samples, VkImageAspectFlags imageAspectFlags, VkImageUsageFlags imageUsageFlags, VkImageTiling imageTiling)
@@ -91,7 +91,7 @@ CVKTexture::CVKTexture(CVKDevice* pDevice, GfxTextureType type, GfxPixelFormat f
 	case GFX_TEXTURE_CUBE_MAP: imageCreateInfo.flags = VK_IMAGE_CREATE_CUBE_COMPATIBLE_BIT; break;
 	case GFX_TEXTURE_2D_ARRAY: imageCreateInfo.flags = VK_IMAGE_CREATE_2D_ARRAY_COMPATIBLE_BIT; break;
 	}
-	CALL_VK_FUNCTION_ASSERT(vkCreateImage(m_pDevice->GetDevice(), &imageCreateInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkImage));
+	CALL_VK_FUNCTION_RETURN(vkCreateImage(m_pDevice->GetDevice(), &imageCreateInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkImage));
 
 	VkImageViewCreateInfo viewCreateInfo = {};
 	viewCreateInfo.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
@@ -102,7 +102,7 @@ CVKTexture::CVKTexture(CVKDevice* pDevice, GfxTextureType type, GfxPixelFormat f
 	viewCreateInfo.format = (VkFormat)format;
 	viewCreateInfo.components = CVKHelper::GetFormatComponentMapping((VkFormat)format);
 	viewCreateInfo.subresourceRange = { imageAspectFlags, 0, (uint32_t)levels, 0, (uint32_t)layers };
-	CALL_VK_FUNCTION_ASSERT(vkCreateImageView(m_pDevice->GetDevice(), &viewCreateInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkImageView));
+	CALL_VK_FUNCTION_RETURN(vkCreateImageView(m_pDevice->GetDevice(), &viewCreateInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkImageView));
 
 	VkMemoryPropertyFlags memoryPropertyFlags =
 		imageTiling == VK_IMAGE_TILING_LINEAR ?
@@ -115,15 +115,15 @@ CVKTexture::CVKTexture(CVKDevice* pDevice, GfxTextureType type, GfxPixelFormat f
 	vkGetImageMemoryRequirements(m_pDevice->GetDevice(), m_vkImage, &requirements);
 
 	m_pMemory = m_pDevice->GetMemoryManager()->AllocMemory(requirements.size, requirements.alignment, memoryPropertyFlags, imageTiling == VK_IMAGE_TILING_LINEAR ? VK_RESOURCE_TYPE_IMAGE_LINEAR : VK_RESOURCE_TYPE_IMAGE_OPTIMAL);
+	m_pMemory->BindImage(m_vkImage);
 
-	if (m_pMemory) {
-		m_pMemory->BindImage(m_vkImage);
-		CGfxProfiler::IncTextureSize(m_type, m_pMemory->GetSize());
-	}
+	CGfxProfiler::IncTextureSize(m_type, m_pMemory->GetSize());
 }
 
 CVKTexture::~CVKTexture(void)
 {
+	CGfxProfiler::DecTextureSzie(m_type, GetMemorySize());
+
 	if (m_vkImageView) {
 		vkDestroyImageView(m_pDevice->GetDevice(), m_vkImageView, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
 	}
@@ -134,7 +134,6 @@ CVKTexture::~CVKTexture(void)
 		}
 
 		if (m_pMemory) {
-			CGfxProfiler::DecTextureSzie(m_type, m_pMemory->GetSize());
 			m_pDevice->GetMemoryManager()->FreeMemory(m_pMemory);
 		}
 	}
@@ -153,6 +152,16 @@ VkImageView CVKTexture::GetImageView(void) const
 VkImageAspectFlags CVKTexture::GetImageAspectFlags(void) const
 {
 	return m_vkImageAspectFlags;
+}
+
+VkDeviceSize CVKTexture::GetMemorySize(void) const
+{
+	if (m_pMemory) {
+		return m_pMemory->GetSize();
+	}
+	else {
+		return 0;
+	}
 }
 
 GfxTextureType CVKTexture::GetType(void) const
