@@ -48,18 +48,10 @@ bool CVKRenderPass::Create(void)
 	{
 		for (int indexSubpass = 0; indexSubpass < m_subpasses.size(); indexSubpass++) {
 			for (const auto& itInputAttachment : m_subpasses[indexSubpass].inputAttachments) {
-				if (CGfxHelper::IsFormatColor(m_attachments[itInputAttachment.first].format)) {
-					VkAttachmentReference attachment = {};
-					attachment.attachment = itInputAttachment.first;
-					attachment.layout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
-					subpassAttachments[indexSubpass].inputAttachments.emplace_back(attachment);
-				}
-				else {
-					VkAttachmentReference attachment = {};
-					attachment.attachment = itInputAttachment.first;
-					attachment.layout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_READ_ONLY_OPTIMAL;
-					subpassAttachments[indexSubpass].inputAttachments.emplace_back(attachment);
-				}
+				VkAttachmentReference attachment = {};
+				attachment.attachment = itInputAttachment.first;
+				attachment.layout = CGfxHelper::IsFormatColor(m_attachments[itInputAttachment.first].format) ? VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL : VK_IMAGE_LAYOUT_DEPTH_STENCIL_READ_ONLY_OPTIMAL;
+				subpassAttachments[indexSubpass].inputAttachments.emplace_back(attachment);
 			}
 
 			for (const auto& itOutputAttachment : m_subpasses[indexSubpass].outputAttachments) {
@@ -77,18 +69,10 @@ bool CVKRenderPass::Create(void)
 				}
 
 				for (const auto& itResolveAttachment : m_subpasses[indexSubpass].resolveAttachments) {
-					if (CGfxHelper::IsFormatColor(m_attachments[itResolveAttachment.first].format)) {
-						VkAttachmentReference attachment = {};
-						attachment.attachment = itResolveAttachment.first;
-						attachment.layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
-						subpassAttachments[indexSubpass].resolveAttachments.emplace_back(attachment);
-					}
-					else {
-						VkAttachmentReference attachment = {};
-						attachment.attachment = itResolveAttachment.first;
-						attachment.layout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
-						subpassAttachments[indexSubpass].resolveAttachments.emplace_back(attachment);
-					}
+					VkAttachmentReference attachment = {};
+					attachment.attachment = itResolveAttachment.first;
+					attachment.layout = CGfxHelper::IsFormatColor(m_attachments[itResolveAttachment.first].format) ? VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL : VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
+					subpassAttachments[indexSubpass].resolveAttachments.emplace_back(attachment);
 				}
 			}
 
