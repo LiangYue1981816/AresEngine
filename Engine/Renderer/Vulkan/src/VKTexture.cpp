@@ -7,10 +7,6 @@ CVKTexture::CVKTexture(CVKDevice* pDevice, GfxTextureType type, GfxPixelFormat f
 
 	, m_bExtern(false)
 
-	, m_vkImage(VK_NULL_HANDLE)
-	, m_vkImageView(VK_NULL_HANDLE)
-	, m_vkImageAspectFlags(0)
-
 	, m_type(type)
 	, m_format(format)
 
@@ -19,6 +15,10 @@ CVKTexture::CVKTexture(CVKDevice* pDevice, GfxTextureType type, GfxPixelFormat f
 	, m_layers(layers)
 	, m_levels(levels)
 	, m_samples(samples)
+
+	, m_vkImage(VK_NULL_HANDLE)
+	, m_vkImageView(VK_NULL_HANDLE)
+	, m_vkImageAspectFlags(0)
 {
 	ASSERT(vkImage);
 	ASSERT(imageAspectFlags);
@@ -47,10 +47,6 @@ CVKTexture::CVKTexture(CVKDevice* pDevice, GfxTextureType type, GfxPixelFormat f
 
 	, m_bExtern(false)
 
-	, m_vkImage(VK_NULL_HANDLE)
-	, m_vkImageView(VK_NULL_HANDLE)
-	, m_vkImageAspectFlags(0)
-
 	, m_type(type)
 	, m_format(format)
 
@@ -59,6 +55,10 @@ CVKTexture::CVKTexture(CVKDevice* pDevice, GfxTextureType type, GfxPixelFormat f
 	, m_layers(layers)
 	, m_levels(levels)
 	, m_samples(samples)
+
+	, m_vkImage(VK_NULL_HANDLE)
+	, m_vkImageView(VK_NULL_HANDLE)
+	, m_vkImageAspectFlags(0)
 {
 	ASSERT(imageUsageFlags);
 	ASSERT(imageAspectFlags);

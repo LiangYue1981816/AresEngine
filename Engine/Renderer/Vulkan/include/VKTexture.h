@@ -36,10 +36,6 @@ private:
 private:
 	bool m_bExtern;
 
-	VkImage m_vkImage;
-	VkImageView m_vkImageView;
-	VkImageAspectFlags m_vkImageAspectFlags;
-
 private:
 	GfxTextureType m_type;
 	GfxPixelFormat m_format;
@@ -49,6 +45,11 @@ private:
 	int m_layers;
 	int m_levels;
 	int m_samples;
+
+private:
+	VkImage m_vkImage;
+	VkImageView m_vkImageView;
+	VkImageAspectFlags m_vkImageAspectFlags;
 
 private:
 	CVKMemory* m_pMemory;

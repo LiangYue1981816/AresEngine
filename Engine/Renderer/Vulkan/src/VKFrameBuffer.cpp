@@ -5,11 +5,11 @@ CVKFrameBuffer::CVKFrameBuffer(CVKDevice* pDevice, CVKFrameBufferManager* pManag
 	: m_pDevice(pDevice)
 	, m_pManager(pManager)
 
-	, m_vkFrameBuffer(VK_NULL_HANDLE)
-
 	, m_width(width)
 	, m_height(height)
 	, m_ptrAttachmentTextures(numAttachments)
+
+	, m_vkFrameBuffer(VK_NULL_HANDLE)
 {
 
 }
