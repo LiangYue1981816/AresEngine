@@ -39,11 +39,11 @@ public:
 
 
 private:
-	VkRenderPass m_vkRenderPass;
-
-private:
 	eastl::vector<AttachmentInformation> m_attachments;
 	eastl::vector<SubpassInformation> m_subpasses;
+
+private:
+	VkRenderPass m_vkRenderPass;
 
 private:
 	CVKDevice* m_pDevice;
