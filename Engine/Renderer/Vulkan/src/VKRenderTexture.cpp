@@ -8,6 +8,7 @@ CVKRenderTexture::CVKRenderTexture(CVKDevice* pDevice, CVKRenderTextureManager* 
 	, m_pTexture(nullptr)
 {
 	ASSERT(CVKHelper::IsFormatSupported((VkFormat)format));
+	ASSERT(CGfxHelper::IsFormatColor(format) || CGfxHelper::IsFormatDepthOrStencil(format));
 
 	VkImageAspectFlags imageAspectFlags;
 
@@ -44,6 +45,7 @@ CVKRenderTexture::CVKRenderTexture(CVKDevice* pDevice, CVKRenderTextureManager* 
 	, m_pTexture(nullptr)
 {
 	ASSERT(CVKHelper::IsFormatSupported((VkFormat)format));
+	ASSERT(CGfxHelper::IsFormatColor(format) || CGfxHelper::IsFormatDepthOrStencil(format));
 
 	VkImageAspectFlags imageAspectFlags;
 	VkImageUsageFlags imageUsageFlags;
