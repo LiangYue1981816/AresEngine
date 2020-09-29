@@ -16,6 +16,7 @@ CVKDescriptorPool::CVKDescriptorPool(CVKDevice* pDevice, CVKDescriptorSetManager
 
 	, m_numSets(0)
 	, m_numDescriptors{ 0 }
+
 	, m_vkDescriptorPool(VK_NULL_HANDLE)
 
 	, pNext(nullptr)
@@ -51,7 +52,7 @@ CVKDescriptorPool::CVKDescriptorPool(CVKDevice* pDevice, CVKDescriptorSetManager
 	poolCreateInfo.maxSets = numMaxSets;
 	poolCreateInfo.poolSizeCount = sizeof(poolSizes) / sizeof(VkDescriptorPoolSize);
 	poolCreateInfo.pPoolSizes = poolSizes;
-	CALL_VK_FUNCTION_ASSERT(vkCreateDescriptorPool(m_pDevice->GetDevice(), &poolCreateInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkDescriptorPool));
+	CALL_VK_FUNCTION_RETURN(vkCreateDescriptorPool(m_pDevice->GetDevice(), &poolCreateInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkDescriptorPool));
 }
 
 CVKDescriptorPool::~CVKDescriptorPool(void)
@@ -149,6 +150,7 @@ bool CVKDescriptorPool::FreeDescriptorSet(CVKDescriptorSet* pDescriptorSet)
 		m_numDescriptors[VK_DESCRIPTOR_TYPE_UNIFORM_TEXEL_BUFFER] = numUniformTexelBuffers;
 		m_numDescriptors[VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER] = numCombinedImageSamplers;
 		m_numDescriptors[VK_DESCRIPTOR_TYPE_INPUT_ATTACHMENT] = numInputAttachments;
+
 		return true;
 	}
 	else {
