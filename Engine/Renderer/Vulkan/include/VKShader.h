@@ -23,12 +23,10 @@ public:
 
 private:
 	shader_kind m_kind;
+	CGfxSprivCross m_spriv;
 
 private:
 	VkShaderModule m_vkShader;
-
-private:
-	CGfxSprivCross m_spriv;
 
 private:
 	CVKDevice* m_pDevice;

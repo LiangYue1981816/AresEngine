@@ -17,7 +17,7 @@ CVKShader::CVKShader(CVKDevice* pDevice, uint32_t name, const uint32_t* words, s
 	shaderCreateInfo.flags = 0;
 	shaderCreateInfo.codeSize = sizeof(uint32_t) * numWords;
 	shaderCreateInfo.pCode = words;
-	CALL_VK_FUNCTION_ASSERT(vkCreateShaderModule(m_pDevice->GetDevice(), &shaderCreateInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkShader));
+	CALL_VK_FUNCTION_RETURN(vkCreateShaderModule(m_pDevice->GetDevice(), &shaderCreateInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkShader));
 }
 
 CVKShader::~CVKShader(void)
