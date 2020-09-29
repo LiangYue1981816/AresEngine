@@ -159,6 +159,7 @@ public:
 	virtual const CGfxDescriptorLayoutPtr GetDescriptorLayout(int indexDescriptorSet) const = 0;
 
 public:
+	virtual bool IsCompatibleVertexFormat(uint32_t binding, uint32_t format) const = 0;
 	virtual bool IsTransparency(void) const = 0;
 
 

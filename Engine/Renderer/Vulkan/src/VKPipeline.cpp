@@ -11,7 +11,7 @@ CVKPipeline::CVKPipeline(CVKDevice* pDevice, VkPipelineCache vkPipelineCache, co
 {
 	m_pShaders[compute_shader] = (CGfxShader*)pComputeShader;
 
-	CALL_BOOL_FUNCTION_ASSERT(CreateLayouts());
+	CALL_BOOL_FUNCTION_RETURN(CreateLayouts());
 
 	VkPipelineShaderStageCreateInfo shaderStageCreateInfo = {};
 	shaderStageCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
@@ -30,7 +30,7 @@ CVKPipeline::CVKPipeline(CVKDevice* pDevice, VkPipelineCache vkPipelineCache, co
 	pipelineCreateInfo.layout = m_vkPipelineLayout;
 	pipelineCreateInfo.basePipelineHandle = VK_NULL_HANDLE;
 	pipelineCreateInfo.basePipelineIndex = 0;
-	CALL_VK_FUNCTION_ASSERT(vkCreateComputePipelines(m_pDevice->GetDevice(), m_vkPipelineCache, 1, &pipelineCreateInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkPipeline));
+	CALL_BOOL_FUNCTION_RETURN(vkCreateComputePipelines(m_pDevice->GetDevice(), m_vkPipelineCache, 1, &pipelineCreateInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkPipeline));
 }
 
 CVKPipeline::CVKPipeline(CVKDevice* pDevice, VkPipelineCache vkPipelineCache, const CGfxRenderPass* pRenderPass, const CGfxShader* pVertexShader, const CGfxShader* pFragmentShader, const PipelineState& state, int indexSubpass, int vertexBinding, int instanceBinding)
@@ -48,9 +48,9 @@ CVKPipeline::CVKPipeline(CVKDevice* pDevice, VkPipelineCache vkPipelineCache, co
 	eastl::vector<VkVertexInputBindingDescription> inputBindingDescriptions;
 	eastl::vector<VkVertexInputAttributeDescription> inputAttributeDescriptions;
 
-	CALL_BOOL_FUNCTION_ASSERT(CreateLayouts());
-	CALL_BOOL_FUNCTION_ASSERT(CreateShaderStages(shaders));
-	CALL_BOOL_FUNCTION_ASSERT(CreateVertexInputState(inputBindingDescriptions, inputAttributeDescriptions, vertexBinding, instanceBinding));
+	CALL_BOOL_FUNCTION_RETURN(CreateLayouts());
+	CALL_BOOL_FUNCTION_RETURN(CreateShaderStages(shaders));
+	CALL_BOOL_FUNCTION_RETURN(CreateVertexInputState(inputBindingDescriptions, inputAttributeDescriptions, vertexBinding, instanceBinding));
 
 	VkPipelineVertexInputStateCreateInfo vertexInputeState = {};
 	vertexInputeState.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
@@ -191,7 +191,7 @@ CVKPipeline::CVKPipeline(CVKDevice* pDevice, VkPipelineCache vkPipelineCache, co
 	pipelineCreateInfo.subpass = indexSubpass;
 	pipelineCreateInfo.basePipelineHandle = VK_NULL_HANDLE;
 	pipelineCreateInfo.basePipelineIndex = 0;
-	CALL_VK_FUNCTION_ASSERT(vkCreateGraphicsPipelines(m_pDevice->GetDevice(), m_vkPipelineCache, 1, &pipelineCreateInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkPipeline));
+	CALL_BOOL_FUNCTION_RETURN(vkCreateGraphicsPipelines(m_pDevice->GetDevice(), m_vkPipelineCache, 1, &pipelineCreateInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkPipeline));
 }
 
 CVKPipeline::~CVKPipeline(void)
@@ -247,7 +247,8 @@ bool CVKPipeline::CreateLayouts(void)
 				for (const auto& itUniformBlock : m_pShaders[indexShader]->GetSprivCross().GetUniformBlockBindings()) {
 					if (itUniformBlock.second.set >= 0 && itUniformBlock.second.set < DESCRIPTOR_SET_COUNT) {
 						uint32_t name = HashValue(itUniformBlock.first.c_str());
-						m_ptrDescriptorLayouts[itUniformBlock.second.set]->SetUniformBlockBinding(name, itUniformBlock.second.binding);
+						uint32_t binding = itUniformBlock.second.binding;
+						m_ptrDescriptorLayouts[itUniformBlock.second.set]->SetUniformBlockBinding(name, binding);
 					}
 					else {
 						return false;
@@ -257,7 +258,8 @@ bool CVKPipeline::CreateLayouts(void)
 				for (const auto& itStorageBlock : m_pShaders[indexShader]->GetSprivCross().GetStorageBlockBindings()) {
 					if (itStorageBlock.second.set >= 0 && itStorageBlock.second.set < DESCRIPTOR_SET_COUNT) {
 						uint32_t name = HashValue(itStorageBlock.first.c_str());
-						m_ptrDescriptorLayouts[itStorageBlock.second.set]->SetStorageBlockBinding(name, itStorageBlock.second.binding);
+						uint32_t binding = itStorageBlock.second.binding;
+						m_ptrDescriptorLayouts[itStorageBlock.second.set]->SetStorageBlockBinding(name, binding);
 					}
 					else {
 						return false;
@@ -267,7 +269,8 @@ bool CVKPipeline::CreateLayouts(void)
 				for (const auto& itStorageImage : m_pShaders[indexShader]->GetSprivCross().GetStorageImageBindings()) {
 					if (itStorageImage.second.set >= 0 && itStorageImage.second.set < DESCRIPTOR_SET_COUNT) {
 						uint32_t name = HashValue(itStorageImage.first.c_str());
-						m_ptrDescriptorLayouts[itStorageImage.second.set]->SetStorageImageBinding(name, itStorageImage.second.binding);
+						uint32_t binding = itStorageImage.second.binding;
+						m_ptrDescriptorLayouts[itStorageImage.second.set]->SetStorageImageBinding(name, binding);
 					}
 					else {
 						return false;
@@ -277,7 +280,8 @@ bool CVKPipeline::CreateLayouts(void)
 				for (const auto& itSampledImage : m_pShaders[indexShader]->GetSprivCross().GetSampledImageBindings()) {
 					if (itSampledImage.second.set >= 0 && itSampledImage.second.set < DESCRIPTOR_SET_COUNT) {
 						uint32_t name = HashValue(itSampledImage.first.c_str());
-						m_ptrDescriptorLayouts[itSampledImage.second.set]->SetSampledImageBinding(name, itSampledImage.second.binding);
+						uint32_t binding = itSampledImage.second.binding;
+						m_ptrDescriptorLayouts[itSampledImage.second.set]->SetSampledImageBinding(name, binding);
 					}
 					else {
 						return false;
@@ -287,8 +291,9 @@ bool CVKPipeline::CreateLayouts(void)
 				for (const auto& itInputAttachment : m_pShaders[indexShader]->GetSprivCross().GetInputAttachmentBindings()) {
 					if (itInputAttachment.second.set >= 0 && itInputAttachment.second.set < DESCRIPTOR_SET_COUNT) {
 						uint32_t name = HashValue(itInputAttachment.first.c_str());
+						uint32_t binding = itInputAttachment.second.binding;
 						m_inputAttachmentNames[itInputAttachment.second.indexInputAttachment] = name;
-						m_ptrDescriptorLayouts[itInputAttachment.second.set]->SetInputAttachmentBinding(name, itInputAttachment.second.binding);
+						m_ptrDescriptorLayouts[itInputAttachment.second.set]->SetInputAttachmentBinding(name, binding);
 					}
 					else {
 						return false;
@@ -298,9 +303,11 @@ bool CVKPipeline::CreateLayouts(void)
 				for (const auto& itPushConstant : m_pShaders[indexShader]->GetSprivCross().GetPushConstantRanges()) {
 					if (itPushConstant.second.offset + itPushConstant.second.range <= m_pDevice->GetPhysicalDeviceLimits().maxPushConstantsSize) {
 						uint32_t name = HashValue(itPushConstant.first.c_str());
+						uint32_t offset = itPushConstant.second.offset;
+						uint32_t range = itPushConstant.second.range;
 						m_pushConstantRanges[name].stageFlags = vkGetShaderStageFlagBits((shader_kind)indexShader);
-						m_pushConstantRanges[name].offset = itPushConstant.second.offset;
-						m_pushConstantRanges[name].size = itPushConstant.second.range;
+						m_pushConstantRanges[name].offset = offset;
+						m_pushConstantRanges[name].size = range;
 						ranges.emplace_back(m_pushConstantRanges[name]);
 					}
 					else {

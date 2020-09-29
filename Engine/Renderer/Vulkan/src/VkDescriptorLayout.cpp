@@ -4,10 +4,10 @@
 CVKDescriptorLayout::CVKDescriptorLayout(CVKDevice* pDevice, uint32_t set)
 	: m_pDevice(pDevice)
 
-	, m_vkDescriptorLayout(VK_NULL_HANDLE)
-
 	, m_set(set)
 	, m_numDescriptors{ 0 }
+
+	, m_vkDescriptorLayout(VK_NULL_HANDLE)
 {
 
 }

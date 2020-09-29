@@ -29,17 +29,17 @@ private:
 
 
 private:
-	VkPipeline m_vkPipeline;
-	VkPipelineLayout m_vkPipelineLayout;
-	VkPipelineCache m_vkPipelineCache;
-
-private:
 	CGfxShader* m_pShaders[compute_shader - vertex_shader + 1];
 	CGfxDescriptorLayoutPtr m_ptrDescriptorLayouts[DESCRIPTOR_SET_COUNT];
 
 	eastl::unordered_map<uint32_t, uint32_t> m_vertexFormats;                 // [binding, format]
 	eastl::unordered_map<uint32_t, uint32_t> m_inputAttachmentNames;          // [input attachment index, name]
 	eastl::unordered_map<uint32_t, VkPushConstantRange> m_pushConstantRanges; // [name, push constant]
+
+private:
+	VkPipeline m_vkPipeline;
+	VkPipelineLayout m_vkPipelineLayout;
+	VkPipelineCache m_vkPipelineCache;
 
 private:
 	CVKDevice* m_pDevice;
