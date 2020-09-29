@@ -16,7 +16,7 @@ CVKDescriptorSet::CVKDescriptorSet(CVKDevice* pDevice, CVKDescriptorPool* pDescr
 	descriptorAllocInfo.descriptorPool = pDescriptorPool->GetDescriptorPool();
 	descriptorAllocInfo.descriptorSetCount = 1;
 	descriptorAllocInfo.pSetLayouts = &vkDescriptorSetLayout;
-	CALL_VK_FUNCTION_ASSERT(vkAllocateDescriptorSets(m_pDevice->GetDevice(), &descriptorAllocInfo, &m_vkDescriptorSet));
+	CALL_VK_FUNCTION_RETURN(vkAllocateDescriptorSets(m_pDevice->GetDevice(), &descriptorAllocInfo, &m_vkDescriptorSet));
 }
 
 CVKDescriptorSet::CVKDescriptorSet(CVKDevice* pDevice, CVKDescriptorPool* pDescriptorPool, uint32_t name, const CGfxDescriptorSetPtr ptrDescriptorSetCopyFrom)
@@ -34,7 +34,7 @@ CVKDescriptorSet::CVKDescriptorSet(CVKDevice* pDevice, CVKDescriptorPool* pDescr
 	descriptorAllocInfo.descriptorPool = pDescriptorPool->GetDescriptorPool();
 	descriptorAllocInfo.descriptorSetCount = 1;
 	descriptorAllocInfo.pSetLayouts = &vkDescriptorSetLayout;
-	CALL_VK_FUNCTION_ASSERT(vkAllocateDescriptorSets(m_pDevice->GetDevice(), &descriptorAllocInfo, &m_vkDescriptorSet));
+	CALL_VK_FUNCTION_RETURN(vkAllocateDescriptorSets(m_pDevice->GetDevice(), &descriptorAllocInfo, &m_vkDescriptorSet));
 
 	m_imageDescriptorInfos = ((CVKDescriptorSet*)ptrDescriptorSetCopyFrom.GetPointer())->m_imageDescriptorInfos;
 	m_bufferDescriptorInfos = ((CVKDescriptorSet*)ptrDescriptorSetCopyFrom.GetPointer())->m_bufferDescriptorInfos;
