@@ -9,27 +9,27 @@ PFN_vkDestroyDebugReportCallbackEXT vkDestroyDebugReportCallback = nullptr;
 VkBool32 VKAPI_PTR DebugReportCallback(VkDebugReportFlagsEXT flags, VkDebugReportObjectTypeEXT objectType, uint64_t object, size_t location, int32_t messageCode, const char* pLayerPrefix, const char* pMessage, void* pUserData)
 {
 	if (flags & VK_DEBUG_REPORT_ERROR_BIT_EXT) {
-		LogOutput(LOG_ERROR, LOG_TAG_RENDERER, "Vulkan Error [%s] Code %d : %s", pLayerPrefix, messageCode, pMessage);
+		LogOutput(LOG_ERROR, LOG_TAG_RENDERER, "Vulkan Error [%s] Code (%d) : %s", pLayerPrefix, messageCode, pMessage);
 		return VK_FALSE;
 	}
 
 	if (flags & VK_DEBUG_REPORT_WARNING_BIT_EXT) {
-		LogOutput(LOG_WARN, LOG_TAG_RENDERER, "Vulkan Warning [%s] Code %d : %s", pLayerPrefix, messageCode, pMessage);
+		LogOutput(LOG_WARN, LOG_TAG_RENDERER, "Vulkan Warning [%s] Code (%d) : %s", pLayerPrefix, messageCode, pMessage);
 		return VK_FALSE;
 	}
 
 	if (flags & VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT) {
-		LogOutput(LOG_WARN, LOG_TAG_RENDERER, "Vulkan Preformance [%s] Code %d : %s", pLayerPrefix, messageCode, pMessage);
+		LogOutput(LOG_WARN, LOG_TAG_RENDERER, "Vulkan Preformance Warning [%s] Code (%d) : %s", pLayerPrefix, messageCode, pMessage);
 		return VK_FALSE;
 	}
 
 	if (flags & VK_DEBUG_REPORT_INFORMATION_BIT_EXT) {
-		LogOutput(LOG_INFO, LOG_TAG_RENDERER, "Vulkan Information [%s] Code %d : %s", pLayerPrefix, messageCode, pMessage);
+		LogOutput(LOG_INFO, LOG_TAG_RENDERER, "Vulkan Information [%s] Code (%d) : %s", pLayerPrefix, messageCode, pMessage);
 		return VK_FALSE;
 	}
 
 	if (flags & VK_DEBUG_REPORT_DEBUG_BIT_EXT) {
-		LogOutput(LOG_INFO, LOG_TAG_RENDERER, "Vulkan Debug [%s] Code %d : %s", pLayerPrefix, messageCode, pMessage);
+		LogOutput(LOG_INFO, LOG_TAG_RENDERER, "Vulkan Debug [%s] Code (%d) : %s", pLayerPrefix, messageCode, pMessage);
 		return VK_FALSE;
 	}
 
@@ -77,19 +77,16 @@ CVKInstance::~CVKInstance(void)
 
 VkInstance CVKInstance::GetInstance(void) const
 {
-	ASSERT(m_vkInstance);
 	return m_vkInstance;
 }
 
 VkSurface CVKInstance::GetSurface(void) const
 {
-	ASSERT(m_vkSurface);
 	return m_vkSurface;
 }
 
 CVKAllocator* CVKInstance::GetAllocator(void) const
 {
-	ASSERT(m_pAllocator);
 	return m_pAllocator;
 }
 
@@ -245,16 +242,19 @@ bool CVKInstance::CreateSurface(void* hInstance, void* hWnd)
 void CVKInstance::DestroyInstance(void)
 {
 #ifdef DEBUG
-	vkDestroyDebugReportCallback(m_vkInstance, m_vkDebugReportCallback, m_pAllocator->GetAllocationCallbacks());
-	m_vkDebugReportCallback = VK_NULL_HANDLE;
+	if (m_vkDebugReportCallback) {
+		vkDestroyDebugReportCallback(m_vkInstance, m_vkDebugReportCallback, m_pAllocator->GetAllocationCallbacks());
+	}
 #endif
 
-	vkDestroyInstance(m_vkInstance, m_pAllocator->GetAllocationCallbacks());
-	m_vkInstance = VK_NULL_HANDLE;
+	if (m_vkInstance) {
+		vkDestroyInstance(m_vkInstance, m_pAllocator->GetAllocationCallbacks());
+	}
 }
 
 void CVKInstance::DestroySurface(void)
 {
-	vkDestroySurfaceKHR(m_vkInstance, m_vkSurface, m_pAllocator->GetAllocationCallbacks());
-	m_vkSurface = VK_NULL_HANDLE;
+	if (m_vkSurface) {
+		vkDestroySurfaceKHR(m_vkInstance, m_vkSurface, m_pAllocator->GetAllocationCallbacks());
+	}
 }

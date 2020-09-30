@@ -7,14 +7,15 @@ class CVKInstance
 	friend class CVKRenderer;
 
 
+public:
+	static void SetLastError(VkResult err);
+	static VkResult GetLastError(void);
+
+
 private:
 	CVKInstance(void* hInstance, void* hWnd);
 	virtual ~CVKInstance(void);
 
-
-public:
-	static void SetLastError(VkResult err);
-	static VkResult GetLastError(void);
 
 public:
 	VkInstance GetInstance(void) const;
