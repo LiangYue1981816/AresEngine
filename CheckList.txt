@@ -1,7 +1,7 @@
 class CVKAllocator;				Done
-class CVKInstance;
-class CVKDevice;
-class CVKQueue;
+class CVKInstance;				Done
+class CVKDevice;					Done
+class CVKQueue;						Done
 class CVKMemory;
 class CVKMemoryAllocator;
 class CVKMemoryManager;
