@@ -1,4 +1,4 @@
-class CVKAllocator;
+class CVKAllocator;				Done
 class CVKInstance;
 class CVKDevice;
 class CVKQueue;
@@ -6,35 +6,35 @@ class CVKMemory;
 class CVKMemoryAllocator;
 class CVKMemoryManager;
 class CVKRenderer;
-class CVKSwapChain;
-class CVKRenderPass;
-class CVKRenderTexture;
-class CVKFrameBuffer;
-class CVKShader;
-class CVKPipeline;
-class CVKPipelineCompute;
-class CVKPipelineGraphics;
-class CVKBuffer;
-class CVKIndexBuffer;
-class CVKVertexBuffer;
-class CVKUniformBuffer;
-class CVKStorageBuffer;
-class CVKInstanceBuffer;
-class CVKIndirectBuffer;
-class CVKTransferBuffer;
-class CVKSampler;
-class CVKTexture;
-class CVKTexture2D;
-class CVKTexture2DArray;
-class CVKTextureCubemap;
+class CVKSwapChain;				Done
+class CVKRenderPass;			Done
+class CVKRenderTexture;		Done
+class CVKFrameBuffer;			Done
+class CVKShader;					Done
+class CVKPipeline;				Done
+class CVKPipelineCompute;	Done
+class CVKPipelineGraphics;Done
+class CVKBuffer;					Done
+class CVKIndexBuffer;			Done
+class CVKVertexBuffer;		Done
+class CVKUniformBuffer;		Done
+class CVKStorageBuffer;		Done
+class CVKInstanceBuffer;	Done
+class CVKIndirectBuffer;	Done
+class CVKTransferBuffer;	Done
+class CVKSampler;					Done
+class CVKTexture;					Done
+class CVKTexture2D;				Done
+class CVKTexture2DArray;	Done
+class CVKTextureCubemap;	Done
 class CVKMesh;
 class CVKMeshDraw;
 class CVKMaterial;
 class CVKMaterialPass;
-class CVKDescriptorPool;
-class CVKDescriptorSet;
-class CVKDescriptorLayout;
-class CVKSemaphore;
+class CVKDescriptorPool;	Done
+class CVKDescriptorSet;		Done
+class CVKDescriptorLayout;Done
+class CVKSemaphore;				Done
 class CVKCommandBuffer;
 
 class CVKFrameBufferManager;
