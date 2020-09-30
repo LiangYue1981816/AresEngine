@@ -93,10 +93,12 @@ CVKAllocator* CVKInstance::GetAllocator(void) const
 bool CVKInstance::EnumerateInstanceLayerProperties(eastl::vector<const char*>& enabledInstanceLayers) const
 {
 	uint32_t numLayers;
+	eastl::vector<VkLayerProperties> layers;
+
 	CALL_VK_FUNCTION_RETURN_BOOL(vkEnumerateInstanceLayerProperties(&numLayers, nullptr));
 	if (numLayers == 0) return false;
 
-	eastl::vector<VkLayerProperties> layers(numLayers);
+	layers.resize(numLayers);
 	CALL_VK_FUNCTION_RETURN_BOOL(vkEnumerateInstanceLayerProperties(&numLayers, layers.data()));
 
 	for (int indexLayer = 0; indexLayer < layers.size(); indexLayer++) {
@@ -115,10 +117,12 @@ bool CVKInstance::EnumerateInstanceLayerProperties(eastl::vector<const char*>& e
 bool CVKInstance::EnumerateInstanceExtensionProperties(eastl::vector<const char*>& enabledInstanceExtensions) const
 {
 	uint32_t numExtensions;
+	eastl::vector<VkExtensionProperties> extensions;
+
 	CALL_VK_FUNCTION_RETURN_BOOL(vkEnumerateInstanceExtensionProperties(nullptr, &numExtensions, nullptr));
 	if (numExtensions == 0) return false;
 
-	eastl::vector<VkExtensionProperties> extensions(numExtensions);
+	extensions.resize(numExtensions);
 	CALL_VK_FUNCTION_RETURN_BOOL(vkEnumerateInstanceExtensionProperties(nullptr, &numExtensions, extensions.data()));
 
 	bool bSurfaceExtension = false;

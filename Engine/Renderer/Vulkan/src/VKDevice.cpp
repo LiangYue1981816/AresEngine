@@ -3,6 +3,8 @@
 
 CVKDevice::CVKDevice(CVKInstance* pInstance)
 	: m_pInstance(pInstance)
+	, m_pQueue(nullptr)
+	, m_pMemoryManager(nullptr)
 
 	, m_vkDevice(VK_NULL_HANDLE)
 	, m_vkPhysicalDevice(VK_NULL_HANDLE)
@@ -10,9 +12,6 @@ CVKDevice::CVKDevice(CVKInstance* pInstance)
 	, m_vkPhysicalDeviceFeatures{}
 	, m_vkPhysicalDeviceProperties{}
 	, m_vkPhysicalDeviceMemoryProperties{}
-
-	, m_pQueue(nullptr)
-	, m_pMemoryManager(nullptr)
 {
 	uint32_t deviceIndex;
 	uint32_t queueFamilyIndex;
@@ -36,6 +35,7 @@ CVKDevice::~CVKDevice(void)
 bool CVKDevice::EnumeratePhysicalDevices(eastl::vector<VkPhysicalDevice>& devices) const
 {
 	uint32_t numDevices;
+
 	CALL_VK_FUNCTION_RETURN_BOOL(vkEnumeratePhysicalDevices(m_pInstance->GetInstance(), &numDevices, nullptr));
 	if (numDevices == 0) return false;
 
@@ -47,7 +47,7 @@ bool CVKDevice::EnumeratePhysicalDevices(eastl::vector<VkPhysicalDevice>& device
 
 bool CVKDevice::SelectPhysicalDevices(eastl::vector<VkPhysicalDevice> & devices, uint32_t & deviceIndex, uint32_t & queueFamilyIndex) const
 {
-	uint32_t familyIndex = UINT32_MAX;
+	uint32_t familyIndex;
 
 	for (int indexDevice = 0; indexDevice < devices.size(); indexDevice++) {
 		if (CheckPhysicalDeviceCapabilities(devices[indexDevice]) == false) continue;
@@ -83,10 +83,12 @@ bool CVKDevice::CheckPhysicalDeviceCapabilities(VkPhysicalDevice vkPhysicalDevic
 bool CVKDevice::CheckPhysicalDeviceExtensionProperties(VkPhysicalDevice vkPhysicalDevice) const
 {
 	uint32_t numExtensions;
+	eastl::vector<VkExtensionProperties> extensions;
+
 	CALL_VK_FUNCTION_RETURN_BOOL(vkEnumerateDeviceExtensionProperties(vkPhysicalDevice, nullptr, &numExtensions, nullptr));
 	if (numExtensions == 0) return false;
 
-	eastl::vector<VkExtensionProperties> extensions(numExtensions);
+	extensions.resize(numExtensions);
 	CALL_VK_FUNCTION_RETURN_BOOL(vkEnumerateDeviceExtensionProperties(vkPhysicalDevice, nullptr, &numExtensions, extensions.data()));
 
 	bool bSwapchainExtension = false;
@@ -113,11 +115,12 @@ bool CVKDevice::CheckPhysicalDeviceExtensionProperties(VkPhysicalDevice vkPhysic
 bool CVKDevice::CheckPhysicalDeviceQueueFamilyProperties(VkPhysicalDevice vkPhysicalDevice, uint32_t & queueFamilyIndex) const
 {
 	uint32_t numQueueFamilies;
+	eastl::vector<VkQueueFamilyProperties> queueFamilies;
 
 	vkGetPhysicalDeviceQueueFamilyProperties(vkPhysicalDevice, &numQueueFamilies, nullptr);
 	if (numQueueFamilies == 0) return false;
 
-	eastl::vector<VkQueueFamilyProperties> queueFamilies(numQueueFamilies);
+	queueFamilies.resize(numQueueFamilies);
 	vkGetPhysicalDeviceQueueFamilyProperties(vkPhysicalDevice, &numQueueFamilies, queueFamilies.data());
 
 	for (int indexQueueFamilie = 0; indexQueueFamilie < queueFamilies.size(); indexQueueFamilie++) {
@@ -139,15 +142,17 @@ bool CVKDevice::CheckPhysicalDeviceQueueFamilyProperties(VkPhysicalDevice vkPhys
 
 bool CVKDevice::CreateDevice(VkPhysicalDevice vkPhysicalDevice, uint32_t queueFamilyIndex)
 {
-	ASSERT(vkPhysicalDevice);
-
 	m_vkPhysicalDevice = vkPhysicalDevice;
 
-	CVKHelper::SetupFormat(m_vkPhysicalDevice);
-	vkGetPhysicalDeviceFeatures(m_vkPhysicalDevice, &m_vkPhysicalDeviceFeatures);
-	vkGetPhysicalDeviceProperties(m_vkPhysicalDevice, &m_vkPhysicalDeviceProperties);
-	vkGetPhysicalDeviceMemoryProperties(m_vkPhysicalDevice, &m_vkPhysicalDeviceMemoryProperties);
-	LogOutput(LOG_INFO, LOG_TAG_RENDERER, "Vulkan Device = %s", m_vkPhysicalDeviceProperties.deviceName);
+	CVKHelper::SetupFormat(vkPhysicalDevice);
+	vkGetPhysicalDeviceFeatures(vkPhysicalDevice, &m_vkPhysicalDeviceFeatures);
+	vkGetPhysicalDeviceProperties(vkPhysicalDevice, &m_vkPhysicalDeviceProperties);
+	vkGetPhysicalDeviceMemoryProperties(vkPhysicalDevice, &m_vkPhysicalDeviceMemoryProperties);
+	LogOutput(LOG_INFO, LOG_TAG_RENDERER,
+		"Vulkan Device = %s API Version = %d.%d.%d Driver Version = %d.%d.%d",
+		m_vkPhysicalDeviceProperties.deviceName,
+		VK_VERSION_MAJOR(m_vkPhysicalDeviceProperties.apiVersion), VK_VERSION_MINOR(m_vkPhysicalDeviceProperties.apiVersion), VK_VERSION_PATCH(m_vkPhysicalDeviceProperties.apiVersion),
+		VK_VERSION_MAJOR(m_vkPhysicalDeviceProperties.driverVersion), VK_VERSION_MINOR(m_vkPhysicalDeviceProperties.driverVersion), VK_VERSION_PATCH(m_vkPhysicalDeviceProperties.driverVersion));
 
 	const float queuePpriorities[1] = { 1.0f };
 	VkDeviceQueueCreateInfo queueCreateInfo = {};
@@ -170,30 +175,25 @@ bool CVKDevice::CreateDevice(VkPhysicalDevice vkPhysicalDevice, uint32_t queueFa
 	deviceCreateInfo.enabledExtensionCount = 1;
 	deviceCreateInfo.ppEnabledExtensionNames = &szSwapchainExtension;
 	deviceCreateInfo.pEnabledFeatures = &m_vkPhysicalDeviceFeatures;
-	CALL_VK_FUNCTION_RETURN_BOOL(vkCreateDevice(m_vkPhysicalDevice, &deviceCreateInfo, m_pInstance->GetAllocator()->GetAllocationCallbacks(), &m_vkDevice));
+	CALL_VK_FUNCTION_RETURN_BOOL(vkCreateDevice(vkPhysicalDevice, &deviceCreateInfo, m_pInstance->GetAllocator()->GetAllocationCallbacks(), &m_vkDevice));
 
 	return true;
 }
 
 void CVKDevice::DestroyDevice(void)
 {
-	ASSERT(m_vkDevice);
-
-	vkDestroyDevice(m_vkDevice, m_pInstance->GetAllocator()->GetAllocationCallbacks());
-
-	m_vkDevice = VK_NULL_HANDLE;
-	m_vkPhysicalDevice = VK_NULL_HANDLE;
+	if (m_vkDevice) {
+		vkDestroyDevice(m_vkDevice, m_pInstance->GetAllocator()->GetAllocationCallbacks());
+	}
 }
 
 VkDevice CVKDevice::GetDevice(void) const
 {
-	ASSERT(m_vkDevice);
 	return m_vkDevice;
 }
 
 VkPhysicalDevice CVKDevice::GetPhysicalDevice(void) const
 {
-	ASSERT(m_vkPhysicalDevice);
 	return m_vkPhysicalDevice;
 }
 
@@ -214,18 +214,15 @@ const VkPhysicalDeviceMemoryProperties& CVKDevice::GetPhysicalDeviceMemoryProper
 
 CVKInstance* CVKDevice::GetInstance(void) const
 {
-	ASSERT(m_pInstance);
 	return m_pInstance;
 }
 
 CVKQueue* CVKDevice::GetQueue(void) const
 {
-	ASSERT(m_pQueue);
 	return m_pQueue;
 }
 
 CVKMemoryManager* CVKDevice::GetMemoryManager(void) const
 {
-	ASSERT(m_pMemoryManager);
 	return m_pMemoryManager;
 }
