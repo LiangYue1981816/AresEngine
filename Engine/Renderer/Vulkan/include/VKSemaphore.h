@@ -9,10 +9,6 @@ public:
 	virtual ~CVKSemaphore(void);
 
 
-private:
-	bool Create(void);
-	void Destroy(void);
-
 public:
 	VkSemaphore GetSemaphore(void) const;
 
