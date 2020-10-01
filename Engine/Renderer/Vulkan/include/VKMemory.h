@@ -1,5 +1,4 @@
 #pragma once
-#include "rbtree.h"
 #include "VKRenderer.h"
 
 
@@ -10,14 +9,6 @@ typedef enum VkResourceType {
 	VK_RESOURCE_TYPE_IMAGE_LINEAR,
 	VK_RESOURCE_TYPE_IMAGE_OPTIMAL,
 } VkResourceType;
-
-typedef struct mem_node {
-	mem_node(CVKMemory* pFreeMemory);
-	~mem_node(void);
-
-	rb_node node;
-	CVKMemory* pMemory;
-} mem_node;
 
 
 class CVKMemory
