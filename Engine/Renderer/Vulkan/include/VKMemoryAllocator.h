@@ -38,7 +38,6 @@ private:
 	VkDeviceSize GetFullSize(void) const;
 	VkDeviceSize GetCommitmentSize(void) const;
 
-	uint32_t GetMemoryTypeIndex(void) const;
 	VkMemoryPropertyFlags GetMemoryPropertyFlags(void) const;
 
 private:
@@ -70,13 +69,8 @@ private:
 	VkDeviceSize m_memoryFreeSize;
 	VkDeviceSize m_memoryFullSize;
 
-	uint32_t m_memoryTypeIndex;
 	VkMemoryPropertyFlags m_memoryPropertyFlags;
 
 private:
 	CVKDevice* m_pDevice;
-
-private:
-	CVKMemoryAllocator* pNext;
-	CVKMemoryAllocator* pPrev;
 };

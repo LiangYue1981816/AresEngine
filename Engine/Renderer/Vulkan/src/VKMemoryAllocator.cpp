@@ -9,11 +9,7 @@ CVKMemoryAllocator::CVKMemoryAllocator(CVKDevice* pDevice, uint32_t memoryTypeIn
 
 	, m_memoryFreeSize(memorySize)
 	, m_memoryFullSize(memorySize)
-	, m_memoryTypeIndex(memoryTypeIndex)
 	, m_memoryPropertyFlags(pDevice->GetPhysicalDeviceMemoryProperties().memoryTypes[memoryTypeIndex].propertyFlags)
-
-	, pNext(nullptr)
-	, pPrev(nullptr)
 {
 	VkMemoryAllocateInfo allocateInfo = {};
 	allocateInfo.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
@@ -66,11 +62,6 @@ VkDeviceSize CVKMemoryAllocator::GetCommitmentSize(void) const
 	VkDeviceSize size;
 	vkGetDeviceMemoryCommitment(m_pDevice->GetDevice(), m_vkMemory, &size);
 	return size;
-}
-
-uint32_t CVKMemoryAllocator::GetMemoryTypeIndex(void) const
-{
-	return m_memoryTypeIndex;
 }
 
 VkMemoryPropertyFlags CVKMemoryAllocator::GetMemoryPropertyFlags(void) const
