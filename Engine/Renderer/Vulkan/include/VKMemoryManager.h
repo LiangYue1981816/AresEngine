@@ -10,25 +10,18 @@ class CVKMemoryManager
 
 
 private:
-	CVKMemoryManager(CVKDevice* pDevice);
+	CVKMemoryManager(CVKDevice* pDevice, VkDeviceSize vkHostMemorySize, VkDeviceSize vkHostOrCacheMemorySize, VkDeviceSize vkHostOrCacheOrDeviceMemorySize, VkDeviceSize vkDeviceMemorySize, VkDeviceSize vkDeviceOrLazilyMemorySize);
 	virtual ~CVKMemoryManager(void);
 
-
-private:
-	uint32_t GetMemoryTypeIndex(const VkPhysicalDeviceMemoryProperties& memoryProperties, VkMemoryPropertyFlags& memoryPropertyFlags, VkDeviceSize memorySize);
 
 public:
 	CVKMemory* AllocMemory(VkDeviceSize memorySize, VkDeviceSize memoryAlignment, VkMemoryPropertyFlags memoryPropertyFlags, VkResourceType type);
 	void FreeMemory(CVKMemory* pMemory);
 
-public:
-	void Log(void);
-
 
 private:
 	pthread_mutex_t lock;
-	eastl::unordered_map<uint32_t, VkDeviceSize> m_allocatedMemoryHeapSize;
-	eastl::unordered_map<uint32_t, CVKMemoryAllocator*> m_pAllocatorListHeads;
+	eastl::unordered_map<uint32_t, CVKMemoryAllocator*> m_pAllocators;
 
 private:
 	CVKDevice* m_pDevice;
