@@ -106,7 +106,7 @@ bool CVKMemory::CopyDataToHost(VkDeviceSize offset, VkDeviceSize size, void* dat
 	return true;
 }
 
-bool CVKMemory::EndMap(void)
+bool CVKMemory::EndMap(bool bFlush)
 {
 	if (IsHostVisible() == false) {
 		return false;
@@ -118,7 +118,13 @@ bool CVKMemory::EndMap(void)
 	range.memory = m_pAllocator->GetMemory();
 	range.offset = GetOffset();
 	range.size = GetSize();
-	CALL_VK_FUNCTION_RETURN_BOOL(vkFlushMappedMemoryRanges(m_pDevice->GetDevice(), 1, &range));
+
+	if (bFlush) {
+		CALL_VK_FUNCTION_RETURN_BOOL(vkFlushMappedMemoryRanges(m_pDevice->GetDevice(), 1, &range));
+	}
+	else {
+		CALL_VK_FUNCTION_RETURN_BOOL(vkInvalidateMappedMemoryRanges(m_pDevice->GetDevice(), 1, &range));
+	}
 
 	return true;
 }

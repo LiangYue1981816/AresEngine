@@ -38,7 +38,7 @@ public:
 	bool BeginMap(void);
 	bool CopyDataToDevice(VkDeviceSize offset, VkDeviceSize size, const void* data);
 	bool CopyDataToHost(VkDeviceSize offset, VkDeviceSize size, void* data);
-	bool EndMap(void);
+	bool EndMap(bool bFlush);
 
 public:
 	bool IsDeviceLocal(void) const;

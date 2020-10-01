@@ -125,7 +125,7 @@ bool CVKBuffer::BufferData(size_t offset, size_t size, const void* data)
 		if (m_pMemory && m_pMemory->IsHostVisible()) {
 			CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->BeginMap());
 			CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->CopyDataToDevice(offset, size, data));
-			CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->EndMap());
+			CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->EndMap(true));
 			return true;
 		}
 	}
