@@ -20,5 +20,5 @@ public:
 	virtual uint32_t GetCount(void) const = 0;
 
 public:
-	virtual bool BufferData(size_t offset, size_t size, const void* data) = 0;
+	virtual bool CopyDataToDevice(size_t offset, size_t size, const void* data) = 0;
 };

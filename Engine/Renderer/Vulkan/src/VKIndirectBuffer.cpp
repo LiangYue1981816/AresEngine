@@ -49,7 +49,7 @@ uint32_t CVKIndirectBuffer::GetCount(void) const
 	return m_count;
 }
 
-bool CVKIndirectBuffer::BufferData(uint32_t count, const DrawCommand* data)
+bool CVKIndirectBuffer::CopyDataToDevice(uint32_t count, const DrawCommand* data)
 {
 	m_count = count;
 
@@ -63,5 +63,5 @@ bool CVKIndirectBuffer::BufferData(uint32_t count, const DrawCommand* data)
 		m_pBuffer = new CVKBuffer(m_pDevice, newSize, VK_BUFFER_USAGE_INDIRECT_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT, GFX_BUFFER_INDIRECT_BUFFER);
 	}
 
-	return m_pBuffer->BufferData(0, sizeof(DrawCommand) * count, data);
+	return m_pBuffer->CopyDataToDevice(0, sizeof(DrawCommand) * count, data);
 }

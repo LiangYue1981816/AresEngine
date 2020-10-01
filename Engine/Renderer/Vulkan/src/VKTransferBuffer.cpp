@@ -7,7 +7,7 @@ CVKTransferBuffer::CVKTransferBuffer(CVKDevice* pDevice, size_t size)
 {
 	size = ALIGN_BYTE(size, m_pDevice->GetPhysicalDeviceLimits().nonCoherentAtomSize);
 
-	m_pBuffer = new CVKBuffer(m_pDevice, size, VK_BUFFER_USAGE_TRANSFER_SRC_BIT | VK_BUFFER_USAGE_TRANSFER_DST_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT, GFX_BUFFER_TRANSFER_BNUFER);
+	m_pBuffer = new CVKBuffer(m_pDevice, size, VK_BUFFER_USAGE_TRANSFER_SRC_BIT | VK_BUFFER_USAGE_TRANSFER_DST_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_CACHED_BIT, GFX_BUFFER_TRANSFER_BNUFER);
 }
 
 CVKTransferBuffer::~CVKTransferBuffer(void)
@@ -35,7 +35,12 @@ VkDeviceSize CVKTransferBuffer::GetBufferSize(void) const
 	return m_pBuffer->GetBufferSize();
 }
 
-bool CVKTransferBuffer::BufferData(size_t offset, size_t size, const void* data)
+bool CVKTransferBuffer::CopyDataToDevice(size_t offset, size_t size, const void* data)
 {
-	return m_pBuffer->BufferData(offset, size, data);
+	return m_pBuffer->CopyDataToDevice(offset, size, data);
+}
+
+bool CVKTransferBuffer::CopyDataToHost(size_t offset, size_t size, void* data)
+{
+	return m_pBuffer->CopyDataToHost(offset, size, data);
 }

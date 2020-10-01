@@ -46,5 +46,5 @@ public:
 	virtual uint32_t GetCount(void) const = 0;
 
 public:
-	virtual bool BufferData(uint32_t count, const DrawCommand* data) = 0;
+	virtual bool CopyDataToDevice(uint32_t count, const DrawCommand* data) = 0;
 };

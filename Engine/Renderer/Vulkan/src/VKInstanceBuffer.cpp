@@ -56,7 +56,7 @@ uint32_t CVKInstanceBuffer::GetCount(void) const
 	return m_count;
 }
 
-bool CVKInstanceBuffer::BufferData(size_t size, const void* data)
+bool CVKInstanceBuffer::CopyDataToDevice(size_t size, const void* data)
 {
 	m_count = size / GetInstanceStride(m_format);
 
@@ -70,5 +70,5 @@ bool CVKInstanceBuffer::BufferData(size_t size, const void* data)
 		m_pBuffer = new CVKBuffer(m_pDevice, newSize, VK_BUFFER_USAGE_VERTEX_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT, GFX_BUFFER_INSTANCE_BUFFER);
 	}
 
-	return m_pBuffer->BufferData(0, size, data);
+	return m_pBuffer->CopyDataToDevice(0, size, data);
 }

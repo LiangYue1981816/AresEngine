@@ -20,7 +20,7 @@ public:
 	uint32_t GetCount(void) const;
 
 public:
-	bool BufferData(size_t offset, size_t size, const void* data);
+	bool CopyDataToDevice(size_t offset, size_t size, const void* data);
 
 
 private:

@@ -20,7 +20,7 @@ public:
 	uint32_t GetCount(void) const;
 
 public:
-	bool BufferData(uint32_t count, const DrawCommand* data);
+	bool CopyDataToDevice(uint32_t count, const DrawCommand* data);
 
 
 private:

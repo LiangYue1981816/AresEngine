@@ -64,7 +64,7 @@ uint32_t CVKVertexBuffer::GetCount(void) const
 	return m_count;
 }
 
-bool CVKVertexBuffer::BufferData(size_t offset, size_t size, const void* data)
+bool CVKVertexBuffer::CopyDataToDevice(size_t offset, size_t size, const void* data)
 {
-	return m_pBuffer->BufferData(offset, size, data);
+	return m_pBuffer->CopyDataToDevice(offset, size, data);
 }

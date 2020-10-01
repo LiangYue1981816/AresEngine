@@ -46,7 +46,7 @@ size_t CVKStorageBuffer::GetSize(void) const
 	return m_pBuffer->GetBufferSize();
 }
 
-bool CVKStorageBuffer::BufferData(size_t offset, size_t size, const void* data)
+bool CVKStorageBuffer::CopyDataToDevice(size_t offset, size_t size, const void* data)
 {
-	return m_pBuffer->BufferData(offset, size, data);
+	return m_pBuffer->CopyDataToDevice(offset, size, data);
 }
