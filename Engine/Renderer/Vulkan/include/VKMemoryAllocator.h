@@ -1,6 +1,22 @@
 #pragma once
-#include "rbtree.h"
 #include "VKRenderer.h"
+#include "rbtree.h"
+
+
+typedef struct mem_node {
+	mem_node(CVKMemory* _pMemory)
+	{
+		pMemory = _pMemory;
+		pMemory->pMemoryNode = this;
+	}
+	~mem_node(void)
+	{
+		pMemory->pMemoryNode = nullptr;
+	}
+
+	rb_node node;
+	CVKMemory* pMemory;
+} mem_node;
 
 
 class CVKMemoryAllocator
@@ -13,10 +29,6 @@ private:
 	CVKMemoryAllocator(CVKDevice* pDevice, uint32_t memoryTypeIndex, VkDeviceSize memorySize);
 	virtual ~CVKMemoryAllocator(void);
 
-
-private:
-	bool Create(uint32_t memoryTypeIndex, VkDeviceSize memorySize);
-	void Destroy(void);
 
 private:
 	void* GetMemoryAddress(void) const;

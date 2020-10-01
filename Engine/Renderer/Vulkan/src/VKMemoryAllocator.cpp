@@ -7,38 +7,20 @@ CVKMemoryAllocator::CVKMemoryAllocator(CVKDevice* pDevice, uint32_t memoryTypeIn
 	, m_pMemoryAddress(nullptr)
 	, m_vkMemory(VK_NULL_HANDLE)
 
-	, m_memoryFreeSize(0)
-	, m_memoryFullSize(0)
-	, m_memoryTypeIndex(0)
-	, m_memoryPropertyFlags(0)
+	, m_memoryFreeSize(memorySize)
+	, m_memoryFullSize(memorySize)
+	, m_memoryTypeIndex(memoryTypeIndex)
+	, m_memoryPropertyFlags(pDevice->GetPhysicalDeviceMemoryProperties().memoryTypes[memoryTypeIndex].propertyFlags)
 
 	, pNext(nullptr)
 	, pPrev(nullptr)
 {
-	Create(memoryTypeIndex, memorySize);
-}
-
-CVKMemoryAllocator::~CVKMemoryAllocator(void)
-{
-	Destroy();
-}
-
-bool CVKMemoryAllocator::Create(uint32_t memoryTypeIndex, VkDeviceSize memorySize)
-{
-	ASSERT(memorySize);
-	ASSERT(memoryTypeIndex != INVALID_VALUE);
-
-	m_memoryFreeSize = memorySize;
-	m_memoryFullSize = memorySize;
-	m_memoryTypeIndex = memoryTypeIndex;
-	m_memoryPropertyFlags = m_pDevice->GetPhysicalDeviceMemoryProperties().memoryTypes[memoryTypeIndex].propertyFlags;
-
 	VkMemoryAllocateInfo allocateInfo = {};
 	allocateInfo.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
 	allocateInfo.pNext = nullptr;
 	allocateInfo.allocationSize = memorySize;
 	allocateInfo.memoryTypeIndex = memoryTypeIndex;
-	CALL_VK_FUNCTION_RETURN_BOOL(vkAllocateMemory(m_pDevice->GetDevice(), &allocateInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkMemory));
+	CALL_VK_FUNCTION_RETURN(vkAllocateMemory(m_pDevice->GetDevice(), &allocateInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkMemory));
 
 	if (IsHostVisible()) {
 		vkMapMemory(m_pDevice->GetDevice(), m_vkMemory, 0, VK_WHOLE_SIZE, 0, &m_pMemoryAddress);
@@ -46,14 +28,10 @@ bool CVKMemoryAllocator::Create(uint32_t memoryTypeIndex, VkDeviceSize memorySiz
 
 	InitNodes();
 	InsertMemory(new CVKMemory(m_pDevice, this, memorySize, 0));
-
-	return true;
 }
 
-void CVKMemoryAllocator::Destroy(void)
+CVKMemoryAllocator::~CVKMemoryAllocator(void)
 {
-	ASSERT(m_vkMemory);
-
 	FreeNodes();
 
 	if (IsHostVisible()) {
@@ -61,25 +39,15 @@ void CVKMemoryAllocator::Destroy(void)
 	}
 
 	vkFreeMemory(m_pDevice->GetDevice(), m_vkMemory, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
-
-	m_pMemoryAddress = nullptr;
-	m_vkMemory = VK_NULL_HANDLE;
-
-	m_memoryFreeSize = 0;
-	m_memoryFullSize = 0;
-	m_memoryTypeIndex = 0;
-	m_memoryPropertyFlags = 0;
 }
 
 void* CVKMemoryAllocator::GetMemoryAddress(void) const
 {
-	ASSERT(m_pMemoryAddress);
 	return m_pMemoryAddress;
 }
 
 VkDeviceMemory CVKMemoryAllocator::GetMemory(void) const
 {
-	ASSERT(m_vkMemory);
 	return m_vkMemory;
 }
 
@@ -128,8 +96,6 @@ CVKMemory* CVKMemoryAllocator::AllocMemory(VkDeviceSize size, VkDeviceSize align
 	//             |
 	//             Allocated Memory Handle
 
-	ASSERT(m_vkMemory);
-
 	if (m_memoryFreeSize >= size) {
 		VkDeviceSize offset;
 		VkDeviceSize padding;
@@ -137,8 +103,8 @@ CVKMemory* CVKMemoryAllocator::AllocMemory(VkDeviceSize size, VkDeviceSize align
 		if (CVKMemory* pMemory = SearchMemory(size, alignment, type, offset, padding)) {
 			RemoveMemory(pMemory);
 
-			if (pMemory->m_memorySize - padding > size) {
-				CVKMemory* pMemoryNext = new CVKMemory(m_pDevice, this, pMemory->m_memorySize - padding - size, pMemory->m_memoryOffset + padding + size);
+			if (pMemory->m_memorySize > padding + size) {
+				CVKMemory* pMemoryNext = new CVKMemory(m_pDevice, this, pMemory->m_memorySize - (padding + size), pMemory->m_memoryOffset + padding + size);
 				{
 					pMemoryNext->pNext = pMemory->pNext;
 					pMemoryNext->pPrev = pMemory;
@@ -157,7 +123,6 @@ CVKMemory* CVKMemoryAllocator::AllocMemory(VkDeviceSize size, VkDeviceSize align
 			pMemory->type = type;
 			pMemory->m_memoryPadding = padding;
 
-			ASSERT(m_memoryFreeSize >= pMemory->m_memorySize);
 			m_memoryFreeSize -= pMemory->m_memorySize;
 
 			return pMemory;
@@ -169,10 +134,6 @@ CVKMemory* CVKMemoryAllocator::AllocMemory(VkDeviceSize size, VkDeviceSize align
 
 void CVKMemoryAllocator::FreeMemory(CVKMemory* pMemory)
 {
-	ASSERT(m_vkMemory);
-	ASSERT(pMemory);
-	ASSERT(pMemory->type != VK_RESOURCE_TYPE_FREE);
-
 	m_memoryFreeSize += pMemory->m_memorySize;
 
 	pMemory->type = VK_RESOURCE_TYPE_FREE;
@@ -202,9 +163,6 @@ void CVKMemoryAllocator::FreeNodes(void)
 		delete itNode.first->pMemory;
 		delete itNode.first;
 	}
-
-	m_root = RB_ROOT;
-	m_nodes.clear();
 }
 
 void CVKMemoryAllocator::InsertMemory(CVKMemory* pMemory)
@@ -335,19 +293,14 @@ CVKMemory* CVKMemoryAllocator::SearchMemory(VkDeviceSize size, VkDeviceSize alig
 		}
 		padding = offset - pMemoryNodeCur->pMemory->m_memoryOffset;
 
-		if (pMemoryNodeCur->pMemory->m_memorySize < padding) {
-			node = node->rb_right;
-			continue;
-		}
-
-		if (pMemoryNodeCur->pMemory->m_memorySize - padding < size) {
+		if (pMemoryNodeCur->pMemory->m_memorySize < padding + size) {
 			node = node->rb_right;
 			continue;
 		}
 
 		pMemoryNode = pMemoryNodeCur;
 
-		if (pMemoryNodeCur->pMemory->m_memorySize - padding > size) {
+		if (pMemoryNodeCur->pMemory->m_memorySize > padding + size) {
 			node = node->rb_left;
 			continue;
 		}
