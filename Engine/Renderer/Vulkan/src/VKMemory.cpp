@@ -148,18 +148,3 @@ bool CVKMemory::IsHostVisible(void) const
 {
 	return m_pAllocator->IsHostVisible();
 }
-
-bool CVKMemory::IsHostCoherent(void) const
-{
-	return m_pAllocator->IsHostCoherent();
-}
-
-bool CVKMemory::IsHostCached(void) const
-{
-	return m_pAllocator->IsHostCached();
-}
-
-bool CVKMemory::IsLazilyAllocated(void) const
-{
-	return m_pAllocator->IsLazilyAllocated();
-}

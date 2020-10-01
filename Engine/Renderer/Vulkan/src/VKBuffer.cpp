@@ -89,36 +89,6 @@ bool CVKBuffer::IsHostVisible(void) const
 	}
 }
 
-bool CVKBuffer::IsHostCoherent(void) const
-{
-	if (m_pMemory) {
-		return m_pMemory->IsHostCoherent();
-	}
-	else {
-		return false;
-	}
-}
-
-bool CVKBuffer::IsHostCached(void) const
-{
-	if (m_pMemory) {
-		return m_pMemory->IsHostCached();
-	}
-	else {
-		return false;
-	}
-}
-
-bool CVKBuffer::IsLazilyAllocated(void) const
-{
-	if (m_pMemory) {
-		return m_pMemory->IsLazilyAllocated();
-	}
-	else {
-		return false;
-	}
-}
-
 bool CVKBuffer::BufferData(size_t offset, size_t size, const void* data)
 {
 	if (size && data) {

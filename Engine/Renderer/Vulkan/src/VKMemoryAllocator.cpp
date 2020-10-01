@@ -320,18 +320,3 @@ bool CVKMemoryAllocator::IsHostVisible(void) const
 {
 	return (m_memoryPropertyFlags & VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT) != 0;
 }
-
-bool CVKMemoryAllocator::IsHostCoherent(void) const
-{
-	return (m_memoryPropertyFlags & VK_MEMORY_PROPERTY_HOST_COHERENT_BIT) != 0;
-}
-
-bool CVKMemoryAllocator::IsHostCached(void) const
-{
-	return (m_memoryPropertyFlags & VK_MEMORY_PROPERTY_HOST_CACHED_BIT) != 0;
-}
-
-bool CVKMemoryAllocator::IsLazilyAllocated(void) const
-{
-	return (m_memoryPropertyFlags & VK_MEMORY_PROPERTY_LAZILY_ALLOCATED_BIT) != 0;
-}
