@@ -35,7 +35,7 @@ public:
 	bool BindBuffer(VkBuffer vkBuffer) const;
 
 public:
-	bool BeginMap(void);
+	bool BeginMap(bool bInvalidate);
 	bool CopyDataToDevice(VkDeviceSize offset, VkDeviceSize size, const void* data);
 	bool CopyDataToHost(VkDeviceSize offset, VkDeviceSize size, void* data);
 	bool EndMap(bool bFlush);

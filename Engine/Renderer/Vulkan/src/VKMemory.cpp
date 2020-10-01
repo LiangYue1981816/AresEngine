@@ -67,9 +67,23 @@ bool CVKMemory::BindBuffer(VkBuffer vkBuffer) const
 	return true;
 }
 
-bool CVKMemory::BeginMap(void)
+bool CVKMemory::BeginMap(bool bInvalidate)
 {
-	return IsHostVisible();
+	if (IsHostVisible() == false) {
+		return false;
+	}
+
+	if (bInvalidate) {
+		VkMappedMemoryRange range = {};
+		range.sType = VK_STRUCTURE_TYPE_MAPPED_MEMORY_RANGE;
+		range.pNext = nullptr;
+		range.memory = m_pAllocator->GetMemory();
+		range.offset = GetOffset();
+		range.size = GetSize();
+		CALL_VK_FUNCTION_RETURN_BOOL(vkInvalidateMappedMemoryRanges(m_pDevice->GetDevice(), 1, &range));
+	}
+
+	return true;
 }
 
 bool CVKMemory::CopyDataToDevice(VkDeviceSize offset, VkDeviceSize size, const void* data)
@@ -112,18 +126,14 @@ bool CVKMemory::EndMap(bool bFlush)
 		return false;
 	}
 
-	VkMappedMemoryRange range = {};
-	range.sType = VK_STRUCTURE_TYPE_MAPPED_MEMORY_RANGE;
-	range.pNext = nullptr;
-	range.memory = m_pAllocator->GetMemory();
-	range.offset = GetOffset();
-	range.size = GetSize();
-
 	if (bFlush) {
+		VkMappedMemoryRange range = {};
+		range.sType = VK_STRUCTURE_TYPE_MAPPED_MEMORY_RANGE;
+		range.pNext = nullptr;
+		range.memory = m_pAllocator->GetMemory();
+		range.offset = GetOffset();
+		range.size = GetSize();
 		CALL_VK_FUNCTION_RETURN_BOOL(vkFlushMappedMemoryRanges(m_pDevice->GetDevice(), 1, &range));
-	}
-	else {
-		CALL_VK_FUNCTION_RETURN_BOOL(vkInvalidateMappedMemoryRanges(m_pDevice->GetDevice(), 1, &range));
 	}
 
 	return true;
