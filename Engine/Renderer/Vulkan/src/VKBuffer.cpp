@@ -89,13 +89,27 @@ bool CVKBuffer::IsHostVisible(void) const
 	}
 }
 
-bool CVKBuffer::BufferData(size_t offset, size_t size, const void* data)
+bool CVKBuffer::CopyDataToDevice(size_t offset, size_t size, const void* data)
 {
 	if (size && data) {
 		if (m_pMemory && m_pMemory->IsHostVisible()) {
 			CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->BeginMap(false));
 			CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->CopyDataToDevice(offset, size, data));
 			CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->EndMap(true));
+			return true;
+		}
+	}
+
+	return false;
+}
+
+bool CVKBuffer::CopyDataToHost(size_t offset, size_t size, void* data)
+{
+	if (size && data) {
+		if (m_pMemory && m_pMemory->IsHostVisible()) {
+			CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->BeginMap(true));
+			CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->CopyDataToHost(offset, size, data));
+			CALL_BOOL_FUNCTION_RETURN_BOOL(m_pMemory->EndMap(false));
 			return true;
 		}
 	}

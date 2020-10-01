@@ -30,7 +30,8 @@ private:
 	bool IsHostVisible(void) const;
 
 private:
-	bool BufferData(size_t offset, size_t size, const void* data);
+	bool CopyDataToDevice(size_t offset, size_t size, const void* data);
+	bool CopyDataToHost(size_t offset, size_t size, void* data);
 
 
 private:
