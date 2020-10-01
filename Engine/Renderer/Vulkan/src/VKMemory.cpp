@@ -72,7 +72,7 @@ bool CVKMemory::BeginMap(void)
 	return IsHostVisible();
 }
 
-bool CVKMemory::CopyData(VkDeviceSize offset, VkDeviceSize size, const void* data)
+bool CVKMemory::CopyDataToDevice(VkDeviceSize offset, VkDeviceSize size, const void* data)
 {
 	ASSERT(data);
 	ASSERT(size);
@@ -86,6 +86,23 @@ bool CVKMemory::CopyData(VkDeviceSize offset, VkDeviceSize size, const void* dat
 	}
 
 	memcpy((uint8_t*)m_pAllocator->GetMemoryAddress() + GetOffset() + offset, data, size);
+	return true;
+}
+
+bool CVKMemory::CopyDataToHost(VkDeviceSize offset, VkDeviceSize size, void* data)
+{
+	ASSERT(data);
+	ASSERT(size);
+
+	if (IsHostVisible() == false) {
+		return false;
+	}
+
+	if (GetSize() < offset + size) {
+		return false;
+	}
+
+	memcpy(data, (uint8_t*)m_pAllocator->GetMemoryAddress() + GetOffset() + offset, size);
 	return true;
 }
 
