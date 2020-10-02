@@ -11,7 +11,6 @@ CVKInstanceBuffer::CVKInstanceBuffer(CVKDevice* pDevice, uint32_t instanceFormat
 {
 	size_t size;
 	size = GetInstanceStride(instanceFormat);
-	size = ALIGN_BYTE(size, m_pDevice->GetPhysicalDeviceLimits().nonCoherentAtomSize);
 
 	m_pBuffer = new CVKBuffer(m_pDevice, size, VK_BUFFER_USAGE_VERTEX_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT, GFX_BUFFER_INSTANCE_BUFFER);
 }
@@ -66,7 +65,6 @@ bool CVKInstanceBuffer::CopyDataToDevice(size_t size, const void* data)
 		size_t newSize = 1;
 		while (newSize < size) newSize <<= 1;
 
-		newSize = ALIGN_BYTE(newSize, m_pDevice->GetPhysicalDeviceLimits().nonCoherentAtomSize);
 		m_pBuffer = new CVKBuffer(m_pDevice, newSize, VK_BUFFER_USAGE_VERTEX_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT, GFX_BUFFER_INSTANCE_BUFFER);
 	}
 

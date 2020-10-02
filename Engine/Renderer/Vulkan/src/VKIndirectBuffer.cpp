@@ -9,7 +9,6 @@ CVKIndirectBuffer::CVKIndirectBuffer(CVKDevice* pDevice)
 {
 	size_t size;
 	size = sizeof(DrawCommand);
-	size = ALIGN_BYTE(size, m_pDevice->GetPhysicalDeviceLimits().nonCoherentAtomSize);
 
 	m_pBuffer = new CVKBuffer(m_pDevice, size, VK_BUFFER_USAGE_INDIRECT_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT, GFX_BUFFER_INDIRECT_BUFFER);
 }
@@ -59,7 +58,6 @@ bool CVKIndirectBuffer::CopyDataToDevice(uint32_t count, const DrawCommand* data
 		size_t newSize = 1;
 		while (newSize < sizeof(DrawCommand) * count) newSize <<= 1;
 
-		newSize = ALIGN_BYTE(newSize, m_pDevice->GetPhysicalDeviceLimits().nonCoherentAtomSize);
 		m_pBuffer = new CVKBuffer(m_pDevice, newSize, VK_BUFFER_USAGE_INDIRECT_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT, GFX_BUFFER_INDIRECT_BUFFER);
 	}
 

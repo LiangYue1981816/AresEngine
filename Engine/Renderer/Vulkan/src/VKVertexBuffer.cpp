@@ -14,8 +14,6 @@ CVKVertexBuffer::CVKVertexBuffer(CVKDevice* pDevice, uint32_t vertexFormat, int 
 	, m_format(vertexFormat)
 	, m_count(VertexCount(vertexFormat, size))
 {
-	size = ALIGN_BYTE(size, m_pDevice->GetPhysicalDeviceLimits().nonCoherentAtomSize);
-
 	if (bDynamic) {
 		m_pBuffer = new CVKBuffer(m_pDevice, size, VK_BUFFER_USAGE_VERTEX_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT, GFX_BUFFER_VERTEX_BUFFER);
 	}

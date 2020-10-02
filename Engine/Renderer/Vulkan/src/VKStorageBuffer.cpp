@@ -5,7 +5,6 @@ CVKStorageBuffer::CVKStorageBuffer(CVKDevice* pDevice, size_t size, bool bDynami
 	: m_pDevice(pDevice)
 	, m_pBuffer(nullptr)
 {
-	size = ALIGN_BYTE(size, m_pDevice->GetPhysicalDeviceLimits().nonCoherentAtomSize);
 	size = ALIGN_BYTE(size, m_pDevice->GetPhysicalDeviceLimits().minStorageBufferOffsetAlignment);
 
 	if (bDynamic) {
