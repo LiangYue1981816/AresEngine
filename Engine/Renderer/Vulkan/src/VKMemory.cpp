@@ -39,6 +39,11 @@ VkDeviceSize CVKMemory::GetOffset(void) const
 	return m_memoryOffset + m_memoryPadding;
 }
 
+VkDeviceSize CVKMemory::GetPadding(void) const
+{
+	return m_memoryPadding;
+}
+
 bool CVKMemory::BindImage(VkImage vkImage) const
 {
 	ASSERT(vkImage);

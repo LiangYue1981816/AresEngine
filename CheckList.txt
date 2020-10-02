@@ -2,9 +2,9 @@ class CVKAllocator;				Done
 class CVKInstance;				Done
 class CVKDevice;					Done
 class CVKQueue;						Done
-class CVKMemory;
-class CVKMemoryAllocator;
-class CVKMemoryManager;
+class CVKMemory;					Done
+class CVKMemoryAllocator;	Done
+class CVKMemoryManager;		Done
 class CVKRenderer;
 class CVKSwapChain;				Done
 class CVKRenderPass;			Done

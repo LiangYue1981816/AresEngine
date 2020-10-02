@@ -18,21 +18,21 @@ CVKMemoryAllocator::CVKMemoryAllocator(CVKDevice* pDevice, uint32_t memoryTypeIn
 	allocateInfo.memoryTypeIndex = memoryTypeIndex;
 	CALL_VK_FUNCTION_RETURN(vkAllocateMemory(m_pDevice->GetDevice(), &allocateInfo, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks(), &m_vkMemory));
 
+	InitNodes();
+	InsertMemory(new CVKMemory(m_pDevice, this, memorySize, 0));
+
 	if (IsHostVisible()) {
 		vkMapMemory(m_pDevice->GetDevice(), m_vkMemory, 0, VK_WHOLE_SIZE, 0, &m_pMemoryAddress);
 	}
-
-	InitNodes();
-	InsertMemory(new CVKMemory(m_pDevice, this, memorySize, 0));
 }
 
 CVKMemoryAllocator::~CVKMemoryAllocator(void)
 {
-	FreeNodes();
-
 	if (IsHostVisible()) {
 		vkUnmapMemory(m_pDevice->GetDevice(), m_vkMemory);
 	}
+
+	FreeNodes();
 
 	vkFreeMemory(m_pDevice->GetDevice(), m_vkMemory, m_pDevice->GetInstance()->GetAllocator()->GetAllocationCallbacks());
 }
@@ -218,12 +218,8 @@ CVKMemory* CVKMemoryAllocator::MergeMemory(CVKMemory* pMemory, CVKMemory* pMemor
 	return pMemory;
 }
 
-bool IsNeedCheckAliasing(VkResourceType prevType, VkResourceType currType)
+static bool IsNeedCheckAliasing(VkResourceType prevType, VkResourceType currType)
 {
-	if (prevType == VK_RESOURCE_TYPE_UNKNOW || currType == VK_RESOURCE_TYPE_UNKNOW) {
-		return true;
-	}
-
 	if (prevType == VK_RESOURCE_TYPE_BUFFER && currType == VK_RESOURCE_TYPE_IMAGE_OPTIMAL) {
 		return true;
 	}
@@ -235,9 +231,9 @@ bool IsNeedCheckAliasing(VkResourceType prevType, VkResourceType currType)
 	return false;
 }
 
-bool IsMemoryAliasing(VkDeviceSize prevResourceOffset, VkDeviceSize prevResourceSize, VkDeviceSize currResourceOffset, VkDeviceSize bufferImageGranularity)
+static bool IsMemoryAliasing(VkDeviceSize prevResourceOffset, VkDeviceSize prevResourceSize, VkDeviceSize currResourceOffset, VkDeviceSize bufferImageGranularity)
 {
-	// http://vulkan-spec-chunked.ahcox.com/ch11s06.html
+	// https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#resources-bufferimagegranularity
 
 	VkDeviceSize prevResourceEnd = prevResourceOffset + prevResourceSize - 1;
 	VkDeviceSize prevResourceEndPage = prevResourceEnd & ~(bufferImageGranularity - 1);
